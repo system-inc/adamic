@@ -1,0 +1,177 @@
+{
+  "base": {
+    "counts": {
+      "Refused": 19,
+      "NotYet": 41,
+      "Boundary": 55
+    },
+    "rawCounts": {
+      "Refused": 29,
+      "NotYet": 64,
+      "Boundary": 93
+    },
+    "header": {
+      "checker_rejected": false,
+      "diagnostic_sites": [],
+      "diagnostics": [],
+      "latent_mode": "full",
+      "measurement": "measured on a checker-rejected program",
+      "module_format": "CommonJSBundle",
+      "status": "measurement"
+    },
+    "trailer": {
+      "findings": [],
+      "measurement": "measured on a checker-rejected program",
+      "module_format": "CommonJSBundle",
+      "relation_overflow": {
+        "per_unit": false,
+        "after_load": "",
+        "end": "",
+        "attribution": "endpoints only; any overflow conservatively marks every attempted unit because its onset is unknown",
+        "cache_sizes": {
+          "assignable": 94215,
+          "comparable": 15638,
+          "enum": 0,
+          "flaggedPairs": 0,
+          "identity": 5744,
+          "strictSubtype": 15627,
+          "subtype": 15161,
+          "ts2859": 0
+        }
+      },
+      "status": "relation_report"
+    }
+  },
+  "after": {
+    "counts": {
+      "Refused": 18,
+      "NotYet": 41,
+      "Boundary": 55
+    },
+    "rawCounts": {
+      "Refused": 28,
+      "NotYet": 64,
+      "Boundary": 93
+    },
+    "header": {
+      "checker_rejected": false,
+      "diagnostic_sites": [],
+      "diagnostics": [],
+      "latent_mode": "full",
+      "measurement": "measured on a checker-rejected program",
+      "module_format": "CommonJSBundle",
+      "status": "measurement"
+    },
+    "trailer": {
+      "findings": [],
+      "measurement": "measured on a checker-rejected program",
+      "module_format": "CommonJSBundle",
+      "relation_overflow": {
+        "per_unit": false,
+        "after_load": "",
+        "end": "",
+        "attribution": "endpoints only; any overflow conservatively marks every attempted unit because its onset is unknown",
+        "cache_sizes": {
+          "assignable": 94210,
+          "comparable": 15637,
+          "enum": 0,
+          "flaggedPairs": 0,
+          "identity": 5744,
+          "strictSubtype": 15627,
+          "subtype": 15160,
+          "ts2859": 0
+        }
+      },
+      "status": "relation_report"
+    }
+  },
+  "mutant": {
+    "counts": {
+      "Refused": 19,
+      "NotYet": 41,
+      "Boundary": 55
+    },
+    "rawCounts": {
+      "Refused": 29,
+      "NotYet": 64,
+      "Boundary": 93
+    },
+    "header": {
+      "checker_rejected": false,
+      "diagnostic_sites": [],
+      "diagnostics": [],
+      "latent_mode": "full",
+      "measurement": "measured on a checker-rejected program",
+      "module_format": "CommonJSBundle",
+      "status": "measurement"
+    },
+    "trailer": {
+      "findings": [],
+      "measurement": "measured on a checker-rejected program",
+      "module_format": "CommonJSBundle",
+      "relation_overflow": {
+        "per_unit": false,
+        "after_load": "",
+        "end": "",
+        "attribution": "endpoints only; any overflow conservatively marks every attempted unit because its onset is unknown",
+        "cache_sizes": {
+          "assignable": 94215,
+          "comparable": 15638,
+          "enum": 0,
+          "flaggedPairs": 0,
+          "identity": 5744,
+          "strictSubtype": 15627,
+          "subtype": 15161,
+          "ts2859": 0
+        }
+      },
+      "status": "relation_report"
+    }
+  },
+  "delta": {
+    "gone": [
+      [
+        "Refused",
+        "src/compiler/sys.ts:618:33",
+        "a cast the runtime can't check",
+        "src/compiler/sys.ts:618:33: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
+      ]
+    ],
+    "new": [],
+    "changed": [],
+    "goneContexts": [
+      [
+        "Refused",
+        "src/compiler/sys.ts:618:33",
+        "a cast the runtime can't check",
+        "src/compiler/sys.ts:618:33: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+        "refusal_scan",
+        "src/compiler/sys.ts:590:1"
+      ]
+    ],
+    "newContexts": []
+  },
+  "mutantDelta": {
+    "gone": [],
+    "new": [
+      [
+        "Refused",
+        "src/compiler/sys.ts:618:33",
+        "a cast the runtime can't check",
+        "src/compiler/sys.ts:618:33: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
+      ]
+    ],
+    "changed": [],
+    "goneContexts": [],
+    "newContexts": [
+      [
+        "Refused",
+        "src/compiler/sys.ts:618:33",
+        "a cast the runtime can't check",
+        "src/compiler/sys.ts:618:33: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+        "refusal_scan",
+        "src/compiler/sys.ts:590:1"
+      ]
+    ]
+  }
+}

@@ -1,0 +1,5 @@
+--- amended-sys.ts
++++ restoring-function-cast-sys.ts
+@@ -618 +618 @@
+-    const toCanonicalFilePath = createGetCanonicalFileName(useCaseSensitiveFileNames);
++    const toCanonicalFilePath = createGetCanonicalFileName(useCaseSensitiveFileNames) as (fileName: string) => Path;
