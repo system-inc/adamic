@@ -41,3 +41,15 @@ The mutant against these fixtures as tests, `TestRegionIndexStore`, `TestRegionV
 `TestRegionPushStore` in internal/oracle, hasn't run on a box yet. Expected: index_store.a and
 void_index_store.a red, each with a region in its C and heap-use-after-free natively; control.a and
 push_store.a green.
+
+# A scalar read off the parameter lets nothing out (#1jch5ez)
+
+escaping's derived now asks a Property's type: a number, a boolean or either maybe one, read off the
+parameter, is a copy and returns false once the object is visited for reads. A string stays derived,
+since it's held by reference and may be in the object's region. So `return p.x` no longer marks the
+escape on its own, which is what made this directory's first index_store.a witness nothing above.
+
+| Mutant in internal/native/region.go | Program | Named pin | Caught by |
+| --- | --- | --- | --- |
+| derived's Property arm back to `return derived(expression.Object)`, whatever the field's type | scalar_return.a | TestRegionScalarReturnGetsRegion | its C holds no region |
+| `ir.String` added to the arm's scalars | string_return.a | TestRegionStringReturnKeepsObjectOffRegion | its C holds a region, and the label read after it ends |

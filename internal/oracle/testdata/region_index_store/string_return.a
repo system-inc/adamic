@@ -1,0 +1,19 @@
+// A string read off the parameter is returned and kept past its statement (#1jch5ez's other side):
+// the label is held by reference and is made in the object's region when there is one, so name's
+// `return p.label` lets the parameter escape and make(7) stays on the heap. In a region, label would be
+// freed when its statement ends and the later print would read freed memory.
+interface P {
+	readonly x: number;
+	readonly label: string;
+}
+
+function make(n: number): P {
+	return { x: n, label: `p${n}` };
+}
+
+function name(p: P): string {
+	return p.label;
+}
+
+const kept = name(make(7));
+console.log(`${kept} ${kept.length}`);
