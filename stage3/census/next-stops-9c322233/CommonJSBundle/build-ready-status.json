@@ -1,0 +1,14 @@
+{
+  "module_format": "CommonJSBundle",
+  "command": [
+    "go",
+    "build",
+    "-o",
+    "/workspace/scratch/next-stops-9c322233-census",
+    "./stage3/census/tool"
+  ],
+  "exit_code": 0,
+  "seconds": 336.1661445120001,
+  "stopping_reason": null,
+  "process_group_cleaned": true
+}
