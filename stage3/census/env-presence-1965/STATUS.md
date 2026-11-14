@@ -11,3 +11,5 @@ The real block passes sys to setCustomPollingValues, which reads getEnvironmentV
 Ownership search includes owners.json, targets.json and every adapt.cjs. No whole pin includes the target top-level statement. Pins on System or other functions do not own this statement. No Loom submission.
 
 The first full counting oracle was invalid: its worker exited without a test summary and the container recorded one OOM kill. Nine truthy/function observations, zero missing-method and zero falsy observations are incomplete, not the gate result. Private scratch was migrated from RAM-backed /tmp to disk-backed /var/tmp, retaining /tmp paths through a symlink. The unchanged eight-worker unfiltered oracle is being retried alone.
+
+Count gate PASSED: complete unfiltered oracle, eight workers, 106,366 passing / one sanctioned API failure / zero pending, only api/typescript.d.ts differing. Nine observations: nine truthy with a function, zero truthy without, zero falsy. The only failure is unittests:: Public APIs for typescript.d.ts should be acknowledged when they change. No further OOM kill. Adaptation construction is now permitted.
