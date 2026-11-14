@@ -31,3 +31,56 @@ declaration builds, type checks, JavaScript comparisons and the whole lane are
 retained on the [resolution evidence branch](https://github.com/system-inc/adamic/tree/typescript/binding-views-resolution-evidence/stage3/census/binding-views-resolution).
 The exact implementation commit is created before these proofs run and pushed
 only after acceptance. Nothing is submitted to Loom.
+
+## Diagnostic read view amendment
+
+Base: 8e3a784aa5a601f57342c07b68f145fe56252c21. The resolution half above,
+its original pin entry, engine and restoring behavior are retained unchanged.
+The diagnostic amendment adds an `/** @internal */ export` DiagnosticReadView
+with readonly file, start and length. The public sortAndDeduplicateDiagnostics
+signature stays unchanged between an internal read-view overload and its
+read-view implementation; its body stays unchanged.
+
+The enclosing createProgram implementation is owned whole by
+95-checker-axolotl-h. Its diagnostic-owners.json therefore owns the entire
+createProgram declaration group before and after the constraint amendment,
+and the complete namespace import. Its diagnostic-owner.cjs
+recognizes precisely that amended owner on 95h replay and normalizes only the
+constraint for the existing original-owner proof. 95h's historical intermediate
+and all six folds are unchanged. The binding-views adapter invokes these
+amendment pins together with its own pins as one diagnostic group, before any
+writes. No independent late edit bypasses the 95h owner contract.
+
+All eight diagnostic reader helpers use DiagnosticReadView parameters:
+compareDiagnostics, compareDiagnosticsSkipRelatedInformation,
+compareRelatedInformation, compareMessageText, diagnosticsEqualityComparer,
+getDiagnosticFilePath, getDiagnosticCode and getDiagnosticMessage. Bodies are
+unchanged. The v1 full census demonstrated readonly-to-writable refusals through
+the inner helper chain. Correctness's ruling on the v1 stop authorizes completing all six remaining
+substitutions, and accepts the two utilities.ts:8808 changes as the same
+pre-existing refusal with its target type renamed. Results and complete raw censuses live on
+typescript/diag-read-view-evidence, under stage3/census/diag-read-view-2.
+Diagnostic owners and complete edited import declarations are pinned whole, as text
+and SHA-256. diagnostic-engine.cjs plans every file before writing, rejects
+owner drift, duplicates, partial diagnostics adaptations and mixed line endings,
+checks both JavaScript comment modes, and preserves LF/CRLF. Resolution planning
+still uses the unchanged original engine. Replay writes zero files.
+
+The existing ledger entry remains the resolution half's historical entry; this
+amendment does not add a drafted upstream bug. Nothing is submitted to Loom.
+
+The utilities.ts namespace import is already pinned whole by
+99-correctness-core-multimap. Its diagnostic-owners.json owns the read-view
+import amendment at both the binding and final MultiMap boundaries, with exact
+whole import text/SHA-256 pairs. Binding-views invokes those pins; MultiMap
+retains the type import in its own before/after pins. Replay preserves the
+current known boundary, and restoration removes only the diagnostic type import,
+retaining the baseline MultiMap runtime imports.
+
+The user accepts exactly the refusal_scan/Refused pair at mapped utilities.ts
+8808:39 and 8808:44 as "changed: target type renamed, pre-existing refusal".
+At both recursive arguments, the old reason is "optional property
+reportsUnnecessary in Diagnostic absent from structural source
+DiagnosticRelatedInformation, which can hide fields"; the new reason replaces
+Diagnostic with DiagnosticReadView and changes nothing else. Both texts remain
+in evidence. No other new or changed finding is accepted.
