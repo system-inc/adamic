@@ -123,7 +123,7 @@ func runtimeBytecodeIdentity(t *testing.T, wasi bool, mutant string) {
 	if err := os.WriteFile(main, []byte(source.String()), 0600); err != nil {
 		t.Fatal(err)
 	}
-	runtimeDirectory, _ := filepath.Abs("runtime")
+	runtimeDirectory, _ := filepath.Abs("../native_runtime/c")
 	bytecode := filepath.Join(runtimeDirectory, "regexp_compile_bytecode.c")
 	parser := filepath.Join(runtimeDirectory, "regexp_compile_parser.c")
 	if mutant == "set opcode" {

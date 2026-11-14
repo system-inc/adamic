@@ -14,7 +14,7 @@ import (
 // renamed so the archive's copy stays out, with one replacement made in the runtime's source for a mutant.
 func jsonObjectsRuntimeBinary(t *testing.T, old, replacement string) string {
 	t.Helper()
-	runtimeSource, err := os.ReadFile("runtime/json_objects.c")
+	runtimeSource, err := os.ReadFile("../native_runtime/c/json_objects.c")
 	if err != nil {
 		t.Fatal(err)
 	}

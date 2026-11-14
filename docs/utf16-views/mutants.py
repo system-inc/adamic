@@ -1,7 +1,7 @@
 from pathlib import Path
 import subprocess, os, json
 root=Path('/workspace/utf16-measure/mutants'); scratch=root.parent;env=os.environ.copy()
-index=root/'internal/native/runtime/string_index.c';append=root/'internal/native/runtime/string_append.c';index_good=index.read_text();append_good=append.read_text()
+index=root/'internal/native_runtime/c/string_index.c';append=root/'internal/native_runtime/c/string_append.c';index_good=index.read_text();append_good=append.read_text()
 mutants=[('append-keeps-cursor',append,append_good.replace('\t\tadamic_string_free_index(string);\n\t\tstring->index = NULL;','\t\t// Mutant: retain the stale index and its cursor.'),'TestStringViewAfterAppendMatchesNode','heap-buffer-overflow'),('supplementary-one-unit',index,index_good.replace('units += size == 4 ? 2 : 1;', 'units += 1;',1),'TestStringIndexMatchesNode/mixed','native lines'),('backward-return-cursor',index,index_good.replace('while (start > unit) {','while (start > unit) {\n\t\t\t\t\t*low = false;\n\t\t\t\t\treturn offset;',1),'TestStringIndexMatchesNode/mixed','mismatches')]
 rows=[]
 try:

@@ -59,7 +59,7 @@ func nodeProcessEnvironmentRuntime(t *testing.T, shard int) {
 		nodeProcessRuntimeAgreement(t, program, truth, shard)
 		return
 	}
-	data, err := os.ReadFile(filepath.Join(repository, "internal/native/runtime/host_runtime.c"))
+	data, err := os.ReadFile(filepath.Join(repository, "internal/native_runtime/c/host_runtime.c"))
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -73,7 +73,7 @@ func nodeProcessEnvironmentRuntime(t *testing.T, shard int) {
 			}
 			t.Parallel()
 			directory := t.TempDir()
-			entries, err := os.ReadDir(filepath.Join(repository, "internal/native/runtime"))
+			entries, err := os.ReadDir(filepath.Join(repository, "internal/native_runtime/c"))
 			if err != nil {
 				t.Fatal(err)
 			}
@@ -81,7 +81,7 @@ func nodeProcessEnvironmentRuntime(t *testing.T, shard int) {
 				if entry.IsDir() {
 					continue
 				}
-				data, err := os.ReadFile(filepath.Join(repository, "internal/native/runtime", entry.Name()))
+				data, err := os.ReadFile(filepath.Join(repository, "internal/native_runtime/c", entry.Name()))
 				if err != nil {
 					t.Fatal(err)
 				}

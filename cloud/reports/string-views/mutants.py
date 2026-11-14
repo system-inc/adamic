@@ -1,7 +1,7 @@
 from pathlib import Path
 import subprocess, os, json, runpy
 root=Path('/workspace/adamic'); report=root/'cloud/reports/string-views'
-share=root/'internal/native/runtime/string_share.c'; slice=root/'internal/native/runtime/string_slice_impl.h'
+share=root/'internal/native_runtime/c/string_share.c'; slice=root/'internal/native_runtime/c/string_slice_impl.h'
 mutants=[
 ('offset',share,'shared->bytes = string->bytes + offset;','shared->bytes = string->bytes + offset + 1;','TestRuntimeStringViews','./internal/native'),
 ('missing_hold',share,'adamic_retain((adamic_string *)owner);','(adamic_string *)owner;','TestNativeAgreesWithNode/internal/oracle/testdata/shared_slices','./internal/oracle'),
