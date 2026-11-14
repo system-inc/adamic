@@ -351,7 +351,7 @@ console.log(held.tag);
 func TestReachEarlyCellIsWhatItsDeclarationAssigns(t *testing.T) {
 	t.Parallel()
 	for _, probe := range []struct{ name, helper string }{
-		{"uncaptured", "function helper(): number {\n\t\treturn 1;\n\t}"},
+		{"uncaptured", "function helper(): string {\n\t\treturn 'uncaptured';\n\t}"},
 		{"captured", "function helper(): string {\n\t\treturn box.tag;\n\t}"},
 	} {
 		t.Run(probe.name, func(t *testing.T) {
