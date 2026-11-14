@@ -5,6 +5,7 @@
   "note": "Proof checkpoint; only recorded completed results are claims. Census/apply/lane acceptance remains pending until final verdict. No Loom submission.",
   "completed": [
     "main-build-compiler.result.json",
+    "main-program.ts-census.result.json",
     "candidate-utilitiesPublic.ts-census.result.json",
     "main-dts.result.json",
     "adamic-types.result.json",
