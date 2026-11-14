@@ -7,7 +7,10 @@ const before = cp.execFileSync('git', ['-C', path.resolve(process.argv[3] || bas
 const expected = fs.readFileSync(path.join(baseline, 'src/compiler/sys.ts'), 'utf8');
 const scratch = fs.mkdtempSync(path.join(os.tmpdir(), 'require-result-contract-')), file = path.join(scratch, 'src/compiler/sys.ts');
 const cases = [];
-function seed(text = before) { fs.writeFileSync(file, text); }
+function seed(text = before) {
+    fs.rmSync(path.join(scratch, 'src/recordreplay.d.ts'), {force: true});
+    fs.writeFileSync(file, text);
+}
 function snapshot() { return [fs.readFileSync(file, 'utf8'), String(fs.statSync(file, {bigint: true}).mtimeNs)]; }
 function noWrites(action) {
     const write = fs.writeFileSync; let writes = 0;
@@ -23,7 +26,7 @@ try {
     fs.cpSync(path.join(baseline, 'src'), path.join(scratch, 'src'), {recursive: true});
     for (const newline of ['\n', '\r\n']) {
         seed(before.replace(/\r\n/g, '\n').replace(/\n/g, newline));
-        assert.equal(adapt(scratch).files, 1);
+        assert.equal(adapt(scratch).files, 2);
         assert.equal(fs.readFileSync(file, 'utf8'), expected.replace(/\r\n/g, '\n').replace(/\n/g, newline));
         const old = snapshot(); noWrites(() => assert.equal(adapt(scratch).files, 0)); assert.deepEqual(snapshot(), old);
         restore(scratch);
