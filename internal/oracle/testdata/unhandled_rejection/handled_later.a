@@ -1,0 +1,14 @@
+// A later job handles an already rejected promise before this drain ends (#r7tcjjq).
+async function fails() { throw new Error('handled'); }
+async function observe(held: Promise<void>) {
+	try {
+		await Promise.resolve();
+		await held;
+	} catch (error) {
+		console.log('handled');
+	}
+}
+const held = fails();
+await observe(held);
+// Discharge the caller's same-function consumption proof after the observer.
+try { await held; } catch (error) {}
