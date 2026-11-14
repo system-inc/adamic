@@ -557,9 +557,39 @@ def wholeNumber(value):
     return isinstance(value, int) and not isinstance(value, bool)
 
 
-def darwinLegRefusal(name, record):
+# darwinToolsName is the gate tools' declaration of the pool Mac's tools, in darwin-legs beside the records and never one
+# of them: a leg's verdict depends on the Mac's Xcode build, SDK, go and Node as much as on the tree, and the gate on
+# Linux can't read the Mac's row in Loom, so the tools checkout declares them itself (Adamic Loom's ruling).
+darwinToolsName = "tools.json"
+darwinToolsPath = darwinLegsDirectory + "/" + darwinToolsName
+darwinToolsKeys = ("xcode", "sdk", "go", "node")
+
+
+def darwinTools(tools):
+    """The pool Mac's tools as the gate tools checkout declares them, darwin-legs/tools.json read from tools and never the
+    candidate's tree, so a change can't re-tool the Mac it's matched by: a JSON object of exactly darwinToolsKeys, each a
+    non-empty string. Raises ValueError naming why for anything else, a file missing or unreadable among it."""
+    try:
+        with open(os.path.join(tools, darwinToolsPath)) as handle:
+            declared = json.load(handle)
+    except OSError as error:
+        raise ValueError("%s can't be read: %s" % (darwinToolsPath, error.strerror or error))
+    except ValueError as error:
+        raise ValueError("%s isn't JSON: %s" % (darwinToolsPath, error))
+    if not isinstance(declared, dict):
+        raise ValueError("%s isn't a JSON object" % darwinToolsPath)
+    if set(declared) != set(darwinToolsKeys):
+        raise ValueError("%s names %s, not exactly %s" % (darwinToolsPath, ", ".join(sorted(declared)) or "nothing", ", ".join(darwinToolsKeys)))
+    for key in darwinToolsKeys:
+        if not isinstance(declared[key], str) or not declared[key].strip():
+            raise ValueError("%s's %s isn't a non-empty string" % (darwinToolsPath, key))
+    return declared
+
+
+def darwinLegRefusal(name, record, declaredTools):
     """Why the darwin leg record read from darwin-legs/<name> isn't green, or None when it is. Any field out of shape is
-    a reason, so a malformed record can never make the gate pass."""
+    a reason, so a malformed record can never make the gate pass. Its tools must be declaredTools exactly (darwinTools),
+    since a leg run on another Xcode, SDK, go or Node vouches for that Mac, not the one the gate tools declare."""
     if not isinstance(record, dict):
         return "not a JSON object"
     if not isinstance(record.get("tip"), str) or not lowercaseHex40.fullmatch(record["tip"]):
@@ -584,6 +614,15 @@ def darwinLegRefusal(name, record):
         return "counts.passed is %r, not above 0" % (record["counts"].get("passed"),)
     if not isinstance(record.get("darwinPaths"), str) or not lowercaseHex64.fullmatch(record["darwinPaths"]):
         return "darwinPaths isn't 64 lowercase hex"
+    if not isinstance(record.get("tools"), dict):
+        return "tools isn't an object"
+    for key in list(darwinToolsKeys) + sorted(set(record["tools"]) - set(darwinToolsKeys)):
+        if key not in declaredTools:
+            return "tools.%s is %r, which the gate tools don't declare" % (key, record["tools"][key])
+        if key not in record["tools"]:
+            return "tools.%s is missing, the gate tools declare %r" % (key, declaredTools[key])
+        if record["tools"][key] != declaredTools[key]:
+            return "tools.%s is %r, the gate tools declare %r" % (key, record["tools"][key], declaredTools[key])
     # aCheck is what adamic c said on the Mac for each darwin .a, which a-check judges by its own rules. A leg of a
     # change with no darwin .a may leave it out; one present is read whole or the record isn't green.
     if "aCheck" in record:
@@ -600,10 +639,16 @@ def darwinLegFor(tree, sha, tools, digest=None):
     """The recorded darwin leg sha's content passes on: (its record's file name, the record) for the first green record, in
     file name order, whose darwinPaths is darwinPathsDigest's at sha (digest, when the caller computed it already), or
     (None, why), why naming what it looked for or the first reason a record at that digest isn't green. A file that can't
-    be read or parsed holds no digest to match. darwinPathsDigest's DarwinPathsRefusal passes through to the caller."""
+    be read or parsed holds no digest to match. darwinPathsDigest's DarwinPathsRefusal passes through to the caller.
+    Tools the gate tools can't declare (darwinTools) leave no record green, so that's (None, why) too."""
     digest = darwinPathsDigest(tree, sha, tools) if digest is None else digest
+    try:
+        declaredTools = darwinTools(tools)
+    except ValueError as error:
+        # No record can be green when the gate can't say what tools a record must match.
+        return None, "no darwin leg record can be green: %s" % error
     directory = os.path.join(tools, darwinLegsDirectory)
-    names = sorted(name for name in os.listdir(directory) if name.endswith(".json")) if os.path.isdir(directory) else []
+    names = sorted(name for name in os.listdir(directory) if name.endswith(".json") and name != darwinToolsName) if os.path.isdir(directory) else []
     why = None
     for name in names:
         try:
@@ -613,7 +658,7 @@ def darwinLegFor(tree, sha, tools, digest=None):
             continue
         if not isinstance(record, dict) or record.get("darwinPaths") != digest:
             continue
-        refusal = darwinLegRefusal(name, record)
+        refusal = darwinLegRefusal(name, record, declaredTools)
         if refusal is None:
             return name, record
         why = why or "%s isn't green: %s" % (name, refusal)
