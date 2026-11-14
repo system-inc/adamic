@@ -1,0 +1,19 @@
+{
+  "file": "symbolWalker.ts",
+  "commit_label": "main",
+  "exit_code": 0,
+  "seconds": 18.61799034400019,
+  "timeout": false,
+  "process_group_cleaned": true,
+  "command": [
+    "/workspace/scratch/c4v7-census/scan-main",
+    "/workspace/scratch/c4v7-census/adapted-main/src/compiler",
+    "/workspace/scratch/c4v7-census/head/stage3/census/c4v7-census/part2/main/41.jsonl"
+  ],
+  "relation_report_clean": true,
+  "findings": 7,
+  "zero_lowering_units": true,
+  "validated": true,
+  ".jsonl_sha256": "59e891694bbd58b0ea5878d8a0de330ff33f46d5672982d07693c05a24e72a3b",
+  ".log_sha256": "3fd3da884c6113583043baf290eefcaa6fe31a409977c45ee27560feef977eb1"
+}

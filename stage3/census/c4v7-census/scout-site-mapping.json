@@ -1,0 +1,1746 @@
+{
+  "scout_commit": "894c8a2b2e7a5bd1fd6adc3738a6d92ae16de558",
+  "scout_branch_tip": "04a12030beefab45f602f7541795221831ba066b",
+  "scout_sys_sha256": "463e2601ab135f2435675d85a77a2976bb4c4da3b12fc6beeb3f0be9730daa92",
+  "reconstructed_scout_sys_sha256": "463e2601ab135f2435675d85a77a2976bb4c4da3b12fc6beeb3f0be9730daa92",
+  "reconstruction": "Replace the two changed timer-closure owner after pins in main sys.ts with their scout after pins; CRLF restored; full hash matches scout coverage.",
+  "owner_replacements": [
+    {
+      "owner": "createDynamicPriorityPollingWatchFile",
+      "old_after_sha256": "4872c7772b7a19e2438ec392bce88c5d6f8b9e2494bfe8e8202d5265d8288168",
+      "main_after_sha256": "25297fd35aea631bdcc99da77465ddbb9c90f33267433667838d218a75e6eb94"
+    },
+    {
+      "owner": "createFixedChunkSizePollingWatchFile",
+      "old_after_sha256": "62cbe3288dcc83f26cd6dcdcb7b8254775372dff80c7f26f43c6e9c5957c6b56",
+      "main_after_sha256": "aa22c582f1b9980409f9571bfc0db9320297a05ee72b1843750949165ba3635d"
+    }
+  ],
+  "identity_sites": 190,
+  "remapped_sites": 1,
+  "sys_context": {
+    "scout": "    }\n\n    function pollQueue(queue: (WatchedFileWithUnchangedPolls | undefined)[], pollingInterval: PollingInterval, pollIndex: number, chunkSize: number) {\n        return pollWatchedFileQueue(\n            host,\n            queue,\n            pollIndex,\n            chunkSize,\n            onWatchFileStat,",
+    "main": "    }\n\n    function pollQueue(queue: (WatchedFileWithUnchangedPolls | undefined)[], pollingInterval: PollingInterval, pollIndex: number, chunkSize: number) {\n        return pollWatchedFileQueue(\n            host,\n            queue,\n            pollIndex,\n            chunkSize,\n            onWatchFileStat,"
+  },
+  "sites": [
+    {
+      "file": "builder.ts",
+      "scout_line": 1328,
+      "main_line": 1328,
+      "column": 25,
+      "kind": "Refused",
+      "reason": "a value of type IncrementalBuildInfoEmitSignature[] | undefined seen as {}[] | undefined, which can write {} where IncrementalBuildInfoEmitSignature is read",
+      "source_identical": true
+    },
+    {
+      "file": "builder.ts",
+      "scout_line": 1372,
+      "main_line": 1372,
+      "column": 21,
+      "kind": "Refused",
+      "reason": "a value of type IncrementalBuildInfoFilePendingEmit[] | undefined seen as {}[] | undefined, which can write {} where IncrementalBuildInfoFilePendingEmit is read",
+      "source_identical": true
+    },
+    {
+      "file": "builder.ts",
+      "scout_line": 1425,
+      "main_line": 1425,
+      "column": 34,
+      "kind": "Refused",
+      "reason": "a value of type (readonly IncrementalBuildInfoFileId[])[] | undefined seen as {}[] | undefined, which can write {} where readonly IncrementalBuildInfoFileId[] is read",
+      "source_identical": true
+    },
+    {
+      "file": "builder.ts",
+      "scout_line": 1455,
+      "main_line": 1455,
+      "column": 33,
+      "kind": "Refused",
+      "reason": "a value of type IncrementalBuildInfoResolvedRoot[] | undefined seen as {}[] | undefined, which can write {} where IncrementalBuildInfoResolvedRoot is read",
+      "source_identical": true
+    },
+    {
+      "file": "builder.ts",
+      "scout_line": 1500,
+      "main_line": 1500,
+      "column": 70,
+      "kind": "Refused",
+      "reason": "a value of type IncrementalBuildInfoDiagnostic[] | undefined seen as {}[] | undefined, which can write {} where IncrementalBuildInfoDiagnostic is read",
+      "source_identical": true
+    },
+    {
+      "file": "builder.ts",
+      "scout_line": 1503,
+      "main_line": 1503,
+      "column": 33,
+      "kind": "Refused",
+      "reason": "a value of type IncrementalBuildInfoDiagnostic[] | undefined seen as {}[] | undefined, which can write {} where IncrementalBuildInfoDiagnostic is read",
+      "source_identical": true
+    },
+    {
+      "file": "builder.ts",
+      "scout_line": 1517,
+      "main_line": 1517,
+      "column": 29,
+      "kind": "Refused",
+      "reason": "a value of type IncrementalBuildInfoDiagnosticOfFile[] | undefined seen as {}[] | undefined, which can write {} where IncrementalBuildInfoDiagnosticOfFile is read",
+      "source_identical": true
+    },
+    {
+      "file": "builder.ts",
+      "scout_line": 1585,
+      "main_line": 1585,
+      "column": 40,
+      "kind": "Refused",
+      "reason": "a value of type IncrementalBuildInfoFileId[] | undefined seen as {}[] | undefined, which can write {} where IncrementalBuildInfoFileId is read",
+      "source_identical": true
+    },
+    {
+      "file": "checker.ts",
+      "scout_line": 5355,
+      "main_line": 5355,
+      "column": 34,
+      "kind": "Refused",
+      "reason": "a value of type Symbol[] | undefined seen as {}[] | undefined, which can write {} where Symbol is read",
+      "source_identical": true
+    },
+    {
+      "file": "checker.ts",
+      "scout_line": 5372,
+      "main_line": 5372,
+      "column": 30,
+      "kind": "Refused",
+      "reason": "a value of type Symbol[] | undefined seen as {}[] | undefined, which can write {} where Symbol is read",
+      "source_identical": true
+    },
+    {
+      "file": "checker.ts",
+      "scout_line": 5416,
+      "main_line": 5416,
+      "column": 37,
+      "kind": "Refused",
+      "reason": "a value of type Symbol[] seen as {}[], which can write {} where Symbol is read",
+      "source_identical": true
+    },
+    {
+      "file": "checker.ts",
+      "scout_line": 5431,
+      "main_line": 5431,
+      "column": 31,
+      "kind": "Refused",
+      "reason": "a value of type Symbol[] seen as {}[], which can write {} where Symbol is read",
+      "source_identical": true
+    },
+    {
+      "file": "checker.ts",
+      "scout_line": 5447,
+      "main_line": 5447,
+      "column": 26,
+      "kind": "Refused",
+      "reason": "a value of type Symbol[] seen as {}[], which can write {} where Symbol is read",
+      "source_identical": true
+    },
+    {
+      "file": "checker.ts",
+      "scout_line": 5608,
+      "main_line": 5608,
+      "column": 40,
+      "kind": "Refused",
+      "reason": "a value of type Symbol[] | undefined seen as {}[] | undefined, which can write {} where Symbol is read",
+      "source_identical": true
+    },
+    {
+      "file": "checker.ts",
+      "scout_line": 5616,
+      "main_line": 5616,
+      "column": 39,
+      "kind": "Refused",
+      "reason": "a value of type Symbol[] | undefined seen as {}[] | undefined, which can write {} where Symbol is read",
+      "source_identical": true
+    },
+    {
+      "file": "checker.ts",
+      "scout_line": 8287,
+      "main_line": 8287,
+      "column": 52,
+      "kind": "Refused",
+      "reason": "a value of type __String[] | undefined seen as {}[] | undefined, which can write {} where __String is read",
+      "source_identical": true
+    },
+    {
+      "file": "checker.ts",
+      "scout_line": 8290,
+      "main_line": 8290,
+      "column": 52,
+      "kind": "Refused",
+      "reason": "a value of type { name: __String; oldSymbol: Symbol; }[] | undefined seen as {}[] | undefined, which can write {} where { name: __String; oldSymbol: Symbol; } is read",
+      "source_identical": true
+    },
+    {
+      "file": "checker.ts",
+      "scout_line": 13086,
+      "main_line": 13086,
+      "column": 39,
+      "kind": "Refused",
+      "reason": "a value of type TypeParameter[] | undefined seen as {}[] | undefined, which can write {} where TypeParameter is read",
+      "source_identical": true
+    },
+    {
+      "file": "checker.ts",
+      "scout_line": 13095,
+      "main_line": 13095,
+      "column": 46,
+      "kind": "Refused",
+      "reason": "a value of type TypeParameter[] | undefined seen as {}[] | undefined, which can write {} where TypeParameter is read",
+      "source_identical": true
+    },
+    {
+      "file": "checker.ts",
+      "scout_line": 14576,
+      "main_line": 14576,
+      "column": 37,
+      "kind": "Refused",
+      "reason": "a value of type Signature[] | undefined seen as {}[] | undefined, which can write {} where Signature is read",
+      "source_identical": true
+    },
+    {
+      "file": "checker.ts",
+      "scout_line": 14592,
+      "main_line": 14592,
+      "column": 23,
+      "kind": "Refused",
+      "reason": "a value of type IndexInfo[] | undefined seen as {}[] | undefined, which can write {} where IndexInfo is read",
+      "source_identical": true
+    },
+    {
+      "file": "checker.ts",
+      "scout_line": 14650,
+      "main_line": 14650,
+      "column": 37,
+      "kind": "Refused",
+      "reason": "a value of type IndexInfo[] | undefined seen as {}[] | undefined, which can write {} where IndexInfo is read",
+      "source_identical": true
+    },
+    {
+      "file": "checker.ts",
+      "scout_line": 14656,
+      "main_line": 14656,
+      "column": 37,
+      "kind": "Refused",
+      "reason": "a value of type IndexInfo[] | undefined seen as {}[] | undefined, which can write {} where IndexInfo is read",
+      "source_identical": true
+    },
+    {
+      "file": "checker.ts",
+      "scout_line": 15272,
+      "main_line": 15272,
+      "column": 42,
+      "kind": "Refused",
+      "reason": "a value of type Type[] | undefined seen as {}[] | undefined, which can write {} where Type is read",
+      "source_identical": true
+    },
+    {
+      "file": "checker.ts",
+      "scout_line": 15274,
+      "main_line": 15274,
+      "column": 46,
+      "kind": "Refused",
+      "reason": "a value of type Type[] seen as {}[], which can write {} where Type is read",
+      "source_identical": true
+    },
+    {
+      "file": "checker.ts",
+      "scout_line": 15290,
+      "main_line": 15290,
+      "column": 46,
+      "kind": "Refused",
+      "reason": "a value of type Type[] seen as {}[], which can write {} where Type is read",
+      "source_identical": true
+    },
+    {
+      "file": "checker.ts",
+      "scout_line": 15648,
+      "main_line": 15648,
+      "column": 45,
+      "kind": "Refused",
+      "reason": "a value of type Type[] | undefined seen as {}[] | undefined, which can write {} where Type is read",
+      "source_identical": true
+    },
+    {
+      "file": "checker.ts",
+      "scout_line": 15652,
+      "main_line": 15652,
+      "column": 45,
+      "kind": "Refused",
+      "reason": "a value of type Type[] | undefined seen as {}[] | undefined, which can write {} where Type is read",
+      "source_identical": true
+    },
+    {
+      "file": "checker.ts",
+      "scout_line": 15711,
+      "main_line": 15711,
+      "column": 71,
+      "kind": "Refused",
+      "reason": "a value of type Type[] seen as {}[], which can write {} where Type is read",
+      "source_identical": true
+    },
+    {
+      "file": "checker.ts",
+      "scout_line": 16799,
+      "main_line": 16799,
+      "column": 61,
+      "kind": "Refused",
+      "reason": "a value of type Type[] | undefined seen as {}[] | undefined, which can write {} where Type is read",
+      "source_identical": true
+    },
+    {
+      "file": "checker.ts",
+      "scout_line": 16812,
+      "main_line": 16812,
+      "column": 45,
+      "kind": "Refused",
+      "reason": "a value of type Type[] | undefined seen as {}[] | undefined, which can write {} where Type is read",
+      "source_identical": true
+    },
+    {
+      "file": "checker.ts",
+      "scout_line": 16817,
+      "main_line": 16817,
+      "column": 45,
+      "kind": "Refused",
+      "reason": "a value of type Type[] | undefined seen as {}[] | undefined, which can write {} where Type is read",
+      "source_identical": true
+    },
+    {
+      "file": "checker.ts",
+      "scout_line": 16822,
+      "main_line": 16822,
+      "column": 45,
+      "kind": "Refused",
+      "reason": "a value of type Type[] | undefined seen as {}[] | undefined, which can write {} where Type is read",
+      "source_identical": true
+    },
+    {
+      "file": "checker.ts",
+      "scout_line": 16835,
+      "main_line": 16835,
+      "column": 45,
+      "kind": "Refused",
+      "reason": "a value of type Type[] | undefined seen as {}[] | undefined, which can write {} where Type is read",
+      "source_identical": true
+    },
+    {
+      "file": "checker.ts",
+      "scout_line": 17285,
+      "main_line": 17285,
+      "column": 42,
+      "kind": "Refused",
+      "reason": "a value of type Type[] | undefined seen as {}[] | undefined, which can write {} where Type is read",
+      "source_identical": true
+    },
+    {
+      "file": "checker.ts",
+      "scout_line": 17297,
+      "main_line": 17297,
+      "column": 50,
+      "kind": "Refused",
+      "reason": "a value of type Type[] | undefined seen as {}[] | undefined, which can write {} where Type is read",
+      "source_identical": true
+    },
+    {
+      "file": "checker.ts",
+      "scout_line": 17498,
+      "main_line": 17498,
+      "column": 28,
+      "kind": "Refused",
+      "reason": "a value of type Type[] | undefined seen as {}[] | undefined, which can write {} where Type is read",
+      "source_identical": true
+    },
+    {
+      "file": "checker.ts",
+      "scout_line": 18039,
+      "main_line": 18039,
+      "column": 36,
+      "kind": "Refused",
+      "reason": "a value of type StringLiteralType[] seen as {}[], which can write {} where StringLiteralType is read",
+      "source_identical": true
+    },
+    {
+      "file": "checker.ts",
+      "scout_line": 19342,
+      "main_line": 19342,
+      "column": 52,
+      "kind": "Refused",
+      "reason": "a value of type Type[] seen as {}[], which can write {} where Type is read",
+      "source_identical": true
+    },
+    {
+      "file": "checker.ts",
+      "scout_line": 19895,
+      "main_line": 19895,
+      "column": 49,
+      "kind": "Refused",
+      "reason": "a value of type Type[] seen as {}[], which can write {} where Type is read",
+      "source_identical": true
+    },
+    {
+      "file": "checker.ts",
+      "scout_line": 19996,
+      "main_line": 19996,
+      "column": 27,
+      "kind": "Refused",
+      "reason": "a value of type Identifier[] seen as {}[], which can write {} where Identifier is read",
+      "source_identical": true
+    },
+    {
+      "file": "checker.ts",
+      "scout_line": 22448,
+      "main_line": 22448,
+      "column": 53,
+      "kind": "Refused",
+      "reason": "a value of type DiagnosticRelatedInformation[] | undefined seen as {}[] | undefined, which can write {} where DiagnosticRelatedInformation is read",
+      "source_identical": true
+    },
+    {
+      "file": "checker.ts",
+      "scout_line": 22978,
+      "main_line": 22978,
+      "column": 31,
+      "kind": "Refused",
+      "reason": "a value of type Type[] | undefined seen as {}[] | undefined, which can write {} where Type is read",
+      "source_identical": true
+    },
+    {
+      "file": "checker.ts",
+      "scout_line": 26909,
+      "main_line": 26909,
+      "column": 73,
+      "kind": "Refused",
+      "reason": "a value of type Type[] | undefined seen as {}[] | undefined, which can write {} where Type is read",
+      "source_identical": true
+    },
+    {
+      "file": "checker.ts",
+      "scout_line": 26914,
+      "main_line": 26914,
+      "column": 63,
+      "kind": "Refused",
+      "reason": "a value of type Type[] | undefined seen as {}[] | undefined, which can write {} where Type is read",
+      "source_identical": true
+    },
+    {
+      "file": "checker.ts",
+      "scout_line": 32402,
+      "main_line": 32402,
+      "column": 58,
+      "kind": "Refused",
+      "reason": "a value of type Type[] | undefined seen as {}[] | undefined, which can write {} where Type is read",
+      "source_identical": true
+    },
+    {
+      "file": "checker.ts",
+      "scout_line": 32436,
+      "main_line": 32436,
+      "column": 30,
+      "kind": "Refused",
+      "reason": "a value of type Type[] | undefined seen as {}[] | undefined, which can write {} where Type is read",
+      "source_identical": true
+    },
+    {
+      "file": "checker.ts",
+      "scout_line": 33510,
+      "main_line": 33510,
+      "column": 41,
+      "kind": "Refused",
+      "reason": "a value of type ElementWithComputedPropertyName[] | undefined seen as {}[] | undefined, which can write {} where ElementWithComputedPropertyName is read",
+      "source_identical": true
+    },
+    {
+      "file": "checker.ts",
+      "scout_line": 41397,
+      "main_line": 41397,
+      "column": 46,
+      "kind": "Refused",
+      "reason": "a value of type BindingElement[] | undefined seen as {}[] | undefined, which can write {} where BindingElement is read",
+      "source_identical": true
+    },
+    {
+      "file": "checker.ts",
+      "scout_line": 41635,
+      "main_line": 41635,
+      "column": 44,
+      "kind": "Refused",
+      "reason": "a value of type TypeParameter[] | undefined seen as {}[] | undefined, which can write {} where TypeParameter is read",
+      "source_identical": true
+    },
+    {
+      "file": "checker.ts",
+      "scout_line": 41636,
+      "main_line": 41636,
+      "column": 44,
+      "kind": "Refused",
+      "reason": "a value of type TypeParameter[] | undefined seen as {}[] | undefined, which can write {} where TypeParameter is read",
+      "source_identical": true
+    },
+    {
+      "file": "checker.ts",
+      "scout_line": 43550,
+      "main_line": 43550,
+      "column": 37,
+      "kind": "Refused",
+      "reason": "a value of type Signature[] | undefined seen as {}[] | undefined, which can write {} where Signature is read",
+      "source_identical": true
+    },
+    {
+      "file": "checker.ts",
+      "scout_line": 45889,
+      "main_line": 45889,
+      "column": 33,
+      "kind": "Refused",
+      "reason": "a value of type Type[] | undefined seen as {}[] | undefined, which can write {} where Type is read",
+      "source_identical": true
+    },
+    {
+      "file": "checker.ts",
+      "scout_line": 45890,
+      "main_line": 45890,
+      "column": 34,
+      "kind": "Refused",
+      "reason": "a value of type Type[] | undefined seen as {}[] | undefined, which can write {} where Type is read",
+      "source_identical": true
+    },
+    {
+      "file": "checker.ts",
+      "scout_line": 45891,
+      "main_line": 45891,
+      "column": 32,
+      "kind": "Refused",
+      "reason": "a value of type Type[] | undefined seen as {}[] | undefined, which can write {} where Type is read",
+      "source_identical": true
+    },
+    {
+      "file": "checker.ts",
+      "scout_line": 45982,
+      "main_line": 45982,
+      "column": 40,
+      "kind": "Refused",
+      "reason": "a value of type IterationTypes[] | undefined seen as {}[] | undefined, which can write {} where IterationTypes is read",
+      "source_identical": true
+    },
+    {
+      "file": "checker.ts",
+      "scout_line": 46414,
+      "main_line": 46414,
+      "column": 47,
+      "kind": "Refused",
+      "reason": "a value of type Type[] | undefined seen as {}[] | undefined, which can write {} where Type is read",
+      "source_identical": true
+    },
+    {
+      "file": "checker.ts",
+      "scout_line": 46416,
+      "main_line": 46416,
+      "column": 40,
+      "kind": "Refused",
+      "reason": "a value of type Type[] | undefined seen as {}[] | undefined, which can write {} where Type is read",
+      "source_identical": true
+    },
+    {
+      "file": "checker.ts",
+      "scout_line": 46432,
+      "main_line": 46432,
+      "column": 38,
+      "kind": "Refused",
+      "reason": "a value of type Type[] | undefined seen as {}[] | undefined, which can write {} where Type is read",
+      "source_identical": true
+    },
+    {
+      "file": "checker.ts",
+      "scout_line": 46452,
+      "main_line": 46452,
+      "column": 34,
+      "kind": "Refused",
+      "reason": "a value of type Type[] | undefined seen as {}[] | undefined, which can write {} where Type is read",
+      "source_identical": true
+    },
+    {
+      "file": "checker.ts",
+      "scout_line": 46456,
+      "main_line": 46456,
+      "column": 34,
+      "kind": "Refused",
+      "reason": "a value of type Type[] | undefined seen as {}[] | undefined, which can write {} where Type is read",
+      "source_identical": true
+    },
+    {
+      "file": "checker.ts",
+      "scout_line": 47577,
+      "main_line": 47577,
+      "column": 53,
+      "kind": "Refused",
+      "reason": "a value of type string[] | undefined seen as {}[] | undefined, which can write {} where string is read",
+      "source_identical": true
+    },
+    {
+      "file": "checker.ts",
+      "scout_line": 51500,
+      "main_line": 51500,
+      "column": 48,
+      "kind": "Refused",
+      "reason": "a value of type Modifier[] | undefined seen as {}[] | undefined, which can write {} where Modifier is read",
+      "source_identical": true
+    },
+    {
+      "file": "commandLineParser.ts",
+      "scout_line": 3567,
+      "main_line": 3567,
+      "column": 21,
+      "kind": "Refused",
+      "reason": "a value of type string[] seen as {}[], which can write {} where string is read",
+      "source_identical": true
+    },
+    {
+      "file": "commandLineParser.ts",
+      "scout_line": 3661,
+      "main_line": 3661,
+      "column": 50,
+      "kind": "Refused",
+      "reason": "a value of type PropertyName[] | undefined seen as {}[] | undefined, which can write {} where PropertyName is read",
+      "source_identical": true
+    },
+    {
+      "file": "factory/emitNode.ts",
+      "scout_line": 251,
+      "main_line": 251,
+      "column": 31,
+      "kind": "Refused",
+      "reason": "a value of type EmitHelper[] | undefined seen as {}[] | undefined, which can write {} where EmitHelper is read",
+      "source_identical": true
+    },
+    {
+      "file": "factory/nodeFactory.ts",
+      "scout_line": 6929,
+      "main_line": 6929,
+      "column": 24,
+      "kind": "Refused",
+      "reason": "a value of type Statement[] seen as {}[], which can write {} where Statement is read",
+      "source_identical": true
+    },
+    {
+      "file": "moduleNameResolver.ts",
+      "scout_line": 2254,
+      "main_line": 2254,
+      "column": 26,
+      "kind": "Refused",
+      "reason": "a value of type string[] | undefined seen as {}[] | undefined, which can write {} where string is read",
+      "source_identical": true
+    },
+    {
+      "file": "moduleSpecifiers.ts",
+      "scout_line": 503,
+      "main_line": 503,
+      "column": 44,
+      "kind": "Refused",
+      "reason": "a value of type string[] | undefined seen as {}[] | undefined, which can write {} where string is read",
+      "source_identical": true
+    },
+    {
+      "file": "moduleSpecifiers.ts",
+      "scout_line": 524,
+      "main_line": 524,
+      "column": 46,
+      "kind": "Refused",
+      "reason": "a value of type string[] | undefined seen as {}[] | undefined, which can write {} where string is read",
+      "source_identical": true
+    },
+    {
+      "file": "moduleSpecifiers.ts",
+      "scout_line": 532,
+      "main_line": 532,
+      "column": 45,
+      "kind": "Refused",
+      "reason": "a value of type string[] | undefined seen as {}[] | undefined, which can write {} where string is read",
+      "source_identical": true
+    },
+    {
+      "file": "moduleSpecifiers.ts",
+      "scout_line": 535,
+      "main_line": 535,
+      "column": 42,
+      "kind": "Refused",
+      "reason": "a value of type string[] | undefined seen as {}[] | undefined, which can write {} where string is read",
+      "source_identical": true
+    },
+    {
+      "file": "moduleSpecifiers.ts",
+      "scout_line": 548,
+      "main_line": 548,
+      "column": 41,
+      "kind": "Refused",
+      "reason": "a value of type string[] | undefined seen as {}[] | undefined, which can write {} where string is read",
+      "source_identical": true
+    },
+    {
+      "file": "parser.ts",
+      "scout_line": 8027,
+      "main_line": 8027,
+      "column": 31,
+      "kind": "Refused",
+      "reason": "a value of type ModifierLike[] | undefined seen as {}[] | undefined, which can write {} where ModifierLike is read",
+      "source_identical": true
+    },
+    {
+      "file": "parser.ts",
+      "scout_line": 8034,
+      "main_line": 8034,
+      "column": 27,
+      "kind": "Refused",
+      "reason": "a value of type ModifierLike[] | undefined seen as {}[] | undefined, which can write {} where ModifierLike is read",
+      "source_identical": true
+    },
+    {
+      "file": "parser.ts",
+      "scout_line": 8041,
+      "main_line": 8041,
+      "column": 31,
+      "kind": "Refused",
+      "reason": "a value of type ModifierLike[] | undefined seen as {}[] | undefined, which can write {} where ModifierLike is read",
+      "source_identical": true
+    },
+    {
+      "file": "parser.ts",
+      "scout_line": 8050,
+      "main_line": 8050,
+      "column": 31,
+      "kind": "Refused",
+      "reason": "a value of type ModifierLike[] | undefined seen as {}[] | undefined, which can write {} where ModifierLike is read",
+      "source_identical": true
+    },
+    {
+      "file": "parser.ts",
+      "scout_line": 9453,
+      "main_line": 9453,
+      "column": 47,
+      "kind": "Refused",
+      "reason": "a value of type JSDocPropertyLikeTag[] | undefined seen as {}[] | undefined, which can write {} where JSDocPropertyLikeTag is read",
+      "source_identical": true
+    },
+    {
+      "file": "parser.ts",
+      "scout_line": 9642,
+      "main_line": 9642,
+      "column": 56,
+      "kind": "Refused",
+      "reason": "a value of type JSDocPropertyTag[] | undefined seen as {}[] | undefined, which can write {} where JSDocPropertyTag is read",
+      "source_identical": true
+    },
+    {
+      "file": "parser.ts",
+      "scout_line": 9700,
+      "main_line": 9700,
+      "column": 41,
+      "kind": "Refused",
+      "reason": "a value of type JSDocParameterTag[] | undefined seen as {}[] | undefined, which can write {} where JSDocParameterTag is read",
+      "source_identical": true
+    },
+    {
+      "file": "parser.ts",
+      "scout_line": 10053,
+      "main_line": 10053,
+      "column": 44,
+      "kind": "Refused",
+      "reason": "a value of type CommentDirective[] | undefined seen as {}[] | undefined, which can write {} where CommentDirective is read",
+      "source_identical": true
+    },
+    {
+      "file": "parser.ts",
+      "scout_line": 10063,
+      "main_line": 10063,
+      "column": 44,
+      "kind": "Refused",
+      "reason": "a value of type CommentDirective[] | undefined seen as {}[] | undefined, which can write {} where CommentDirective is read",
+      "source_identical": true
+    },
+    {
+      "file": "program.ts",
+      "scout_line": 3356,
+      "main_line": 3356,
+      "column": 34,
+      "kind": "Refused",
+      "reason": "a value of type StringLiteralLike[] | undefined seen as {}[] | undefined, which can write {} where StringLiteralLike is read",
+      "source_identical": true
+    },
+    {
+      "file": "program.ts",
+      "scout_line": 3374,
+      "main_line": 3374,
+      "column": 38,
+      "kind": "Refused",
+      "reason": "a value of type StringLiteralLike[] | undefined seen as {}[] | undefined, which can write {} where StringLiteralLike is read",
+      "source_identical": true
+    },
+    {
+      "file": "programDiagnostics.ts",
+      "scout_line": 313,
+      "main_line": 313,
+      "column": 38,
+      "kind": "Refused",
+      "reason": "a value of type DiagnosticWithLocation[] | undefined seen as {}[] | undefined, which can write {} where DiagnosticWithLocation is read",
+      "source_identical": true
+    },
+    {
+      "file": "scanner.ts",
+      "scout_line": 2934,
+      "main_line": 2934,
+      "column": 41,
+      "kind": "Refused",
+      "reason": "a value of type (TextRange & { value: number; })[] | undefined seen as {}[] | undefined, which can write {} where TextRange & { value: number; } is read",
+      "source_identical": true
+    },
+    {
+      "file": "scanner.ts",
+      "scout_line": 3010,
+      "main_line": 3010,
+      "column": 46,
+      "kind": "Refused",
+      "reason": "a value of type (TextRange & { name: string; })[] | undefined seen as {}[] | undefined, which can write {} where TextRange & { name: string; } is read",
+      "source_identical": true
+    },
+    {
+      "file": "scanner.ts",
+      "scout_line": 3635,
+      "main_line": 3635,
+      "column": 13,
+      "kind": "Refused",
+      "reason": "a value of type CommentDirective[] | undefined seen as {}[] | undefined, which can write {} where CommentDirective is read",
+      "source_identical": true
+    },
+    {
+      "file": "transformer.ts",
+      "scout_line": 635,
+      "main_line": 635,
+      "column": 30,
+      "kind": "Refused",
+      "reason": "a value of type EmitHelper[] | undefined seen as {}[] | undefined, which can write {} where EmitHelper is read",
+      "source_identical": true
+    },
+    {
+      "file": "transformers/classFields.ts",
+      "scout_line": 2185,
+      "main_line": 2185,
+      "column": 35,
+      "kind": "Refused",
+      "reason": "a value of type ClassElement[] | undefined seen as {}[] | undefined, which can write {} where ClassElement is read",
+      "source_identical": true
+    },
+    {
+      "file": "transformers/classFields.ts",
+      "scout_line": 2186,
+      "main_line": 2186,
+      "column": 35,
+      "kind": "Refused",
+      "reason": "a value of type ClassElement[] | undefined seen as {}[] | undefined, which can write {} where ClassElement is read",
+      "source_identical": true
+    },
+    {
+      "file": "transformers/classFields.ts",
+      "scout_line": 2187,
+      "main_line": 2187,
+      "column": 35,
+      "kind": "Refused",
+      "reason": "a value of type ClassElement[] | undefined seen as {}[] | undefined, which can write {} where ClassElement is read",
+      "source_identical": true
+    },
+    {
+      "file": "transformers/classFields.ts",
+      "scout_line": 2188,
+      "main_line": 2188,
+      "column": 35,
+      "kind": "Refused",
+      "reason": "a value of type ClassElement[] | undefined seen as {}[] | undefined, which can write {} where ClassElement is read",
+      "source_identical": true
+    },
+    {
+      "file": "transformers/declarations.ts",
+      "scout_line": 803,
+      "main_line": 803,
+      "column": 32,
+      "kind": "Refused",
+      "reason": "a value of type ParameterDeclaration[] | undefined seen as {}[] | undefined, which can write {} where ParameterDeclaration is read",
+      "source_identical": true
+    },
+    {
+      "file": "transformers/destructuring.ts",
+      "scout_line": 181,
+      "main_line": 181,
+      "column": 30,
+      "kind": "Refused",
+      "reason": "a value of type Expression[] | undefined seen as {}[] | undefined, which can write {} where Expression is read",
+      "source_identical": true
+    },
+    {
+      "file": "transformers/destructuring.ts",
+      "scout_line": 294,
+      "main_line": 294,
+      "column": 17,
+      "kind": "Refused",
+      "reason": "a value of type Expression[] | undefined seen as {}[] | undefined, which can write {} where Expression is read",
+      "source_identical": true
+    },
+    {
+      "file": "transformers/destructuring.ts",
+      "scout_line": 306,
+      "main_line": 306,
+      "column": 75,
+      "kind": "Refused",
+      "reason": "a value of type Expression[] seen as {}[], which can write {} where Expression is read",
+      "source_identical": true
+    },
+    {
+      "file": "transformers/destructuring.ts",
+      "scout_line": 315,
+      "main_line": 315,
+      "column": 37,
+      "kind": "Refused",
+      "reason": "a value of type Expression[] | undefined seen as {}[] | undefined, which can write {} where Expression is read",
+      "source_identical": true
+    },
+    {
+      "file": "transformers/destructuring.ts",
+      "scout_line": 321,
+      "main_line": 321,
+      "column": 62,
+      "kind": "Refused",
+      "reason": "a value of type Expression[] seen as {}[], which can write {} where Expression is read",
+      "source_identical": true
+    },
+    {
+      "file": "transformers/destructuring.ts",
+      "scout_line": 409,
+      "main_line": 409,
+      "column": 42,
+      "kind": "Refused",
+      "reason": "a value of type BindingOrAssignmentElement[] | undefined seen as {}[] | undefined, which can write {} where BindingOrAssignmentElement is read",
+      "source_identical": true
+    },
+    {
+      "file": "transformers/destructuring.ts",
+      "scout_line": 493,
+      "main_line": 493,
+      "column": 49,
+      "kind": "Refused",
+      "reason": "a value of type [Identifier, BindingOrAssignmentElement][] | undefined seen as {}[] | undefined, which can write {} where [Identifier, BindingOrAssignmentElement] is read",
+      "source_identical": true
+    },
+    {
+      "file": "transformers/destructuring.ts",
+      "scout_line": 494,
+      "main_line": 494,
+      "column": 42,
+      "kind": "Refused",
+      "reason": "a value of type BindingOrAssignmentElement[] | undefined seen as {}[] | undefined, which can write {} where BindingOrAssignmentElement is read",
+      "source_identical": true
+    },
+    {
+      "file": "transformers/destructuring.ts",
+      "scout_line": 497,
+      "main_line": 497,
+      "column": 42,
+      "kind": "Refused",
+      "reason": "a value of type BindingOrAssignmentElement[] | undefined seen as {}[] | undefined, which can write {} where BindingOrAssignmentElement is read",
+      "source_identical": true
+    },
+    {
+      "file": "transformers/es2015.ts",
+      "scout_line": 512,
+      "main_line": 512,
+      "column": 13,
+      "kind": "Refused",
+      "reason": "a value of type VariableDeclaration[] seen as {}[], which can write {} where VariableDeclaration is read",
+      "source_identical": true
+    },
+    {
+      "file": "transformers/es2015.ts",
+      "scout_line": 2756,
+      "main_line": 2756,
+      "column": 42,
+      "kind": "Refused",
+      "reason": "a value of type Expression[] | undefined seen as {}[] | undefined, which can write {} where Expression is read",
+      "source_identical": true
+    },
+    {
+      "file": "transformers/es2018.ts",
+      "scout_line": 218,
+      "main_line": 218,
+      "column": 13,
+      "kind": "Refused",
+      "reason": "a value of type VariableDeclaration[] seen as {}[], which can write {} where VariableDeclaration is read",
+      "source_identical": true
+    },
+    {
+      "file": "transformers/es2018.ts",
+      "scout_line": 496,
+      "main_line": 496,
+      "column": 21,
+      "kind": "Refused",
+      "reason": "a value of type ObjectLiteralElementLike[] | undefined seen as {}[] | undefined, which can write {} where ObjectLiteralElementLike is read",
+      "source_identical": true
+    },
+    {
+      "file": "transformers/es2018.ts",
+      "scout_line": 757,
+      "main_line": 757,
+      "column": 24,
+      "kind": "Refused",
+      "reason": "a value of type Statement[] seen as {}[], which can write {} where Statement is read",
+      "source_identical": true
+    },
+    {
+      "file": "transformers/es2018.ts",
+      "scout_line": 1264,
+      "main_line": 1264,
+      "column": 49,
+      "kind": "Refused",
+      "reason": "a value of type Statement[] | undefined seen as {}[] | undefined, which can write {} where Statement is read",
+      "source_identical": true
+    },
+    {
+      "file": "transformers/es2018.ts",
+      "scout_line": 1273,
+      "main_line": 1273,
+      "column": 45,
+      "kind": "Refused",
+      "reason": "a value of type Statement[] | undefined seen as {}[] | undefined, which can write {} where Statement is read",
+      "source_identical": true
+    },
+    {
+      "file": "transformers/es2018.ts",
+      "scout_line": 1307,
+      "main_line": 1307,
+      "column": 41,
+      "kind": "Refused",
+      "reason": "a value of type Statement[] | undefined seen as {}[] | undefined, which can write {} where Statement is read",
+      "source_identical": true
+    },
+    {
+      "file": "transformers/es2018.ts",
+      "scout_line": 1325,
+      "main_line": 1325,
+      "column": 41,
+      "kind": "Refused",
+      "reason": "a value of type Statement[] | undefined seen as {}[] | undefined, which can write {} where Statement is read",
+      "source_identical": true
+    },
+    {
+      "file": "transformers/esDecorators.ts",
+      "scout_line": 753,
+      "main_line": 753,
+      "column": 41,
+      "kind": "Refused",
+      "reason": "a value of type Statement[] | undefined seen as {}[] | undefined, which can write {} where Statement is read",
+      "source_identical": true
+    },
+    {
+      "file": "transformers/esDecorators.ts",
+      "scout_line": 786,
+      "main_line": 786,
+      "column": 49,
+      "kind": "Refused",
+      "reason": "a value of type Statement[] seen as {}[], which can write {} where Statement is read",
+      "source_identical": true
+    },
+    {
+      "file": "transformers/esDecorators.ts",
+      "scout_line": 914,
+      "main_line": 914,
+      "column": 50,
+      "kind": "Refused",
+      "reason": "a value of type Statement[] | undefined seen as {}[] | undefined, which can write {} where Statement is read",
+      "source_identical": true
+    },
+    {
+      "file": "transformers/esDecorators.ts",
+      "scout_line": 924,
+      "main_line": 924,
+      "column": 46,
+      "kind": "Refused",
+      "reason": "a value of type Statement[] | undefined seen as {}[] | undefined, which can write {} where Statement is read",
+      "source_identical": true
+    },
+    {
+      "file": "transformers/esnext.ts",
+      "scout_line": 201,
+      "main_line": 201,
+      "column": 21,
+      "kind": "Refused",
+      "reason": "a value of type Statement[] seen as {}[], which can write {} where Statement is read",
+      "source_identical": true
+    },
+    {
+      "file": "transformers/esnext.ts",
+      "scout_line": 397,
+      "main_line": 397,
+      "column": 20,
+      "kind": "Refused",
+      "reason": "a value of type Statement[] seen as {}[], which can write {} where Statement is read",
+      "source_identical": true
+    },
+    {
+      "file": "transformers/esnext.ts",
+      "scout_line": 590,
+      "main_line": 590,
+      "column": 38,
+      "kind": "Refused",
+      "reason": "a value of type Expression[] | undefined seen as {}[] | undefined, which can write {} where Expression is read",
+      "source_identical": true
+    },
+    {
+      "file": "transformers/legacyDecorators.ts",
+      "scout_line": 593,
+      "main_line": 593,
+      "column": 34,
+      "kind": "Refused",
+      "reason": "a value of type Expression[] | undefined seen as {}[] | undefined, which can write {} where Expression is read",
+      "source_identical": true
+    },
+    {
+      "file": "transformers/module/esnextAnd2015.ts",
+      "scout_line": 101,
+      "main_line": 101,
+      "column": 68,
+      "kind": "Refused",
+      "reason": "a value of type CallExpression[] | undefined seen as {}[] | undefined, which can write {} where CallExpression is read",
+      "source_identical": true
+    },
+    {
+      "file": "transformers/module/esnextAnd2015.ts",
+      "scout_line": 266,
+      "main_line": 266,
+      "column": 13,
+      "kind": "Refused",
+      "reason": "a value of type Statement[] | undefined seen as {}[] | undefined, which can write {} where Statement is read",
+      "source_identical": true
+    },
+    {
+      "file": "transformers/module/esnextAnd2015.ts",
+      "scout_line": 297,
+      "main_line": 297,
+      "column": 17,
+      "kind": "Refused",
+      "reason": "a value of type Statement[] | undefined seen as {}[] | undefined, which can write {} where Statement is read",
+      "source_identical": true
+    },
+    {
+      "file": "transformers/module/module.ts",
+      "scout_line": 247,
+      "main_line": 247,
+      "column": 64,
+      "kind": "Refused",
+      "reason": "a value of type CallExpression[] | undefined seen as {}[] | undefined, which can write {} where CallExpression is read",
+      "source_identical": true
+    },
+    {
+      "file": "transformers/module/module.ts",
+      "scout_line": 284,
+      "main_line": 284,
+      "column": 20,
+      "kind": "Refused",
+      "reason": "a value of type Statement[] seen as {}[], which can write {} where Statement is read",
+      "source_identical": true
+    },
+    {
+      "file": "transformers/module/module.ts",
+      "scout_line": 290,
+      "main_line": 290,
+      "column": 21,
+      "kind": "Refused",
+      "reason": "a value of type Statement[] seen as {}[], which can write {} where Statement is read",
+      "source_identical": true
+    },
+    {
+      "file": "transformers/module/module.ts",
+      "scout_line": 308,
+      "main_line": 308,
+      "column": 16,
+      "kind": "Refused",
+      "reason": "a value of type Statement[] seen as {}[], which can write {} where Statement is read",
+      "source_identical": true
+    },
+    {
+      "file": "transformers/module/module.ts",
+      "scout_line": 627,
+      "main_line": 627,
+      "column": 20,
+      "kind": "Refused",
+      "reason": "a value of type Statement[] seen as {}[], which can write {} where Statement is read",
+      "source_identical": true
+    },
+    {
+      "file": "transformers/module/module.ts",
+      "scout_line": 631,
+      "main_line": 631,
+      "column": 17,
+      "kind": "Refused",
+      "reason": "a value of type Statement[] seen as {}[], which can write {} where Statement is read",
+      "source_identical": true
+    },
+    {
+      "file": "transformers/module/module.ts",
+      "scout_line": 643,
+      "main_line": 643,
+      "column": 16,
+      "kind": "Refused",
+      "reason": "a value of type Statement[] seen as {}[], which can write {} where Statement is read",
+      "source_identical": true
+    },
+    {
+      "file": "transformers/module/module.ts",
+      "scout_line": 1485,
+      "main_line": 1485,
+      "column": 21,
+      "kind": "Refused",
+      "reason": "a value of type Statement[] | undefined seen as {}[] | undefined, which can write {} where Statement is read",
+      "source_identical": true
+    },
+    {
+      "file": "transformers/module/module.ts",
+      "scout_line": 1505,
+      "main_line": 1505,
+      "column": 17,
+      "kind": "Refused",
+      "reason": "a value of type Statement[] | undefined seen as {}[] | undefined, which can write {} where Statement is read",
+      "source_identical": true
+    },
+    {
+      "file": "transformers/module/module.ts",
+      "scout_line": 1560,
+      "main_line": 1560,
+      "column": 21,
+      "kind": "Refused",
+      "reason": "a value of type Statement[] | undefined seen as {}[] | undefined, which can write {} where Statement is read",
+      "source_identical": true
+    },
+    {
+      "file": "transformers/module/module.ts",
+      "scout_line": 1577,
+      "main_line": 1577,
+      "column": 21,
+      "kind": "Refused",
+      "reason": "a value of type Statement[] | undefined seen as {}[] | undefined, which can write {} where Statement is read",
+      "source_identical": true
+    },
+    {
+      "file": "transformers/module/module.ts",
+      "scout_line": 1604,
+      "main_line": 1604,
+      "column": 21,
+      "kind": "Refused",
+      "reason": "a value of type Statement[] | undefined seen as {}[] | undefined, which can write {} where Statement is read",
+      "source_identical": true
+    },
+    {
+      "file": "transformers/module/module.ts",
+      "scout_line": 1753,
+      "main_line": 1753,
+      "column": 17,
+      "kind": "Refused",
+      "reason": "a value of type Statement[] | undefined seen as {}[] | undefined, which can write {} where Statement is read",
+      "source_identical": true
+    },
+    {
+      "file": "transformers/module/module.ts",
+      "scout_line": 1772,
+      "main_line": 1772,
+      "column": 33,
+      "kind": "Refused",
+      "reason": "a value of type Statement[] | undefined seen as {}[] | undefined, which can write {} where Statement is read",
+      "source_identical": true
+    },
+    {
+      "file": "transformers/module/module.ts",
+      "scout_line": 1788,
+      "main_line": 1788,
+      "column": 17,
+      "kind": "Refused",
+      "reason": "a value of type Statement[] | undefined seen as {}[] | undefined, which can write {} where Statement is read",
+      "source_identical": true
+    },
+    {
+      "file": "transformers/module/module.ts",
+      "scout_line": 1805,
+      "main_line": 1805,
+      "column": 33,
+      "kind": "Refused",
+      "reason": "a value of type Statement[] | undefined seen as {}[] | undefined, which can write {} where Statement is read",
+      "source_identical": true
+    },
+    {
+      "file": "transformers/module/module.ts",
+      "scout_line": 1850,
+      "main_line": 1850,
+      "column": 44,
+      "kind": "Refused",
+      "reason": "a value of type VariableDeclaration[] | undefined seen as {}[] | undefined, which can write {} where VariableDeclaration is read",
+      "source_identical": true
+    },
+    {
+      "file": "transformers/module/module.ts",
+      "scout_line": 1853,
+      "main_line": 1853,
+      "column": 44,
+      "kind": "Refused",
+      "reason": "a value of type VariableDeclaration[] | undefined seen as {}[] | undefined, which can write {} where VariableDeclaration is read",
+      "source_identical": true
+    },
+    {
+      "file": "transformers/module/module.ts",
+      "scout_line": 1875,
+      "main_line": 1875,
+      "column": 44,
+      "kind": "Refused",
+      "reason": "a value of type VariableDeclaration[] | undefined seen as {}[] | undefined, which can write {} where VariableDeclaration is read",
+      "source_identical": true
+    },
+    {
+      "file": "transformers/module/module.ts",
+      "scout_line": 1876,
+      "main_line": 1876,
+      "column": 46,
+      "kind": "Refused",
+      "reason": "a value of type Expression[] | undefined seen as {}[] | undefined, which can write {} where Expression is read",
+      "source_identical": true
+    },
+    {
+      "file": "transformers/module/module.ts",
+      "scout_line": 1880,
+      "main_line": 1880,
+      "column": 46,
+      "kind": "Refused",
+      "reason": "a value of type Expression[] | undefined seen as {}[] | undefined, which can write {} where Expression is read",
+      "source_identical": true
+    },
+    {
+      "file": "transformers/module/module.ts",
+      "scout_line": 1886,
+      "main_line": 1886,
+      "column": 37,
+      "kind": "Refused",
+      "reason": "a value of type Statement[] | undefined seen as {}[] | undefined, which can write {} where Statement is read",
+      "source_identical": true
+    },
+    {
+      "file": "transformers/module/module.ts",
+      "scout_line": 1894,
+      "main_line": 1894,
+      "column": 37,
+      "kind": "Refused",
+      "reason": "a value of type Statement[] | undefined seen as {}[] | undefined, which can write {} where Statement is read",
+      "source_identical": true
+    },
+    {
+      "file": "transformers/module/module.ts",
+      "scout_line": 1898,
+      "main_line": 1898,
+      "column": 33,
+      "kind": "Refused",
+      "reason": "a value of type Statement[] | undefined seen as {}[] | undefined, which can write {} where Statement is read",
+      "source_identical": true
+    },
+    {
+      "file": "transformers/module/module.ts",
+      "scout_line": 2138,
+      "main_line": 2138,
+      "column": 29,
+      "kind": "Refused",
+      "reason": "a value of type Statement[] | undefined seen as {}[] | undefined, which can write {} where Statement is read",
+      "source_identical": true
+    },
+    {
+      "file": "transformers/module/system.ts",
+      "scout_line": 802,
+      "main_line": 802,
+      "column": 17,
+      "kind": "Refused",
+      "reason": "a value of type Statement[] | undefined seen as {}[] | undefined, which can write {} where Statement is read",
+      "source_identical": true
+    },
+    {
+      "file": "transformers/module/system.ts",
+      "scout_line": 816,
+      "main_line": 816,
+      "column": 40,
+      "kind": "Refused",
+      "reason": "a value of type Statement[] | undefined seen as {}[] | undefined, which can write {} where Statement is read",
+      "source_identical": true
+    },
+    {
+      "file": "transformers/module/system.ts",
+      "scout_line": 837,
+      "main_line": 837,
+      "column": 13,
+      "kind": "Refused",
+      "reason": "a value of type Statement[] | undefined seen as {}[] | undefined, which can write {} where Statement is read",
+      "source_identical": true
+    },
+    {
+      "file": "transformers/module/system.ts",
+      "scout_line": 894,
+      "main_line": 894,
+      "column": 33,
+      "kind": "Refused",
+      "reason": "a value of type Statement[] | undefined seen as {}[] | undefined, which can write {} where Statement is read",
+      "source_identical": true
+    },
+    {
+      "file": "transformers/module/system.ts",
+      "scout_line": 901,
+      "main_line": 901,
+      "column": 42,
+      "kind": "Refused",
+      "reason": "a value of type Expression[] | undefined seen as {}[] | undefined, which can write {} where Expression is read",
+      "source_identical": true
+    },
+    {
+      "file": "transformers/module/system.ts",
+      "scout_line": 909,
+      "main_line": 909,
+      "column": 37,
+      "kind": "Refused",
+      "reason": "a value of type Statement[] | undefined seen as {}[] | undefined, which can write {} where Statement is read",
+      "source_identical": true
+    },
+    {
+      "file": "transformers/module/system.ts",
+      "scout_line": 1189,
+      "main_line": 1189,
+      "column": 29,
+      "kind": "Refused",
+      "reason": "a value of type Statement[] | undefined seen as {}[] | undefined, which can write {} where Statement is read",
+      "source_identical": true
+    },
+    {
+      "file": "transformers/module/system.ts",
+      "scout_line": 1374,
+      "main_line": 1374,
+      "column": 38,
+      "kind": "Refused",
+      "reason": "a value of type Expression[] | undefined seen as {}[] | undefined, which can write {} where Expression is read",
+      "source_identical": true
+    },
+    {
+      "file": "transformers/module/system.ts",
+      "scout_line": 1992,
+      "main_line": 1992,
+      "column": 40,
+      "kind": "Refused",
+      "reason": "a value of type Identifier[] | undefined seen as {}[] | undefined, which can write {} where Identifier is read",
+      "source_identical": true
+    },
+    {
+      "file": "transformers/ts.ts",
+      "scout_line": 1070,
+      "main_line": 1070,
+      "column": 37,
+      "kind": "Refused",
+      "reason": "a value of type ClassElement[] | undefined seen as {}[] | undefined, which can write {} where ClassElement is read",
+      "source_identical": true
+    },
+    {
+      "file": "transformers/ts.ts",
+      "scout_line": 1128,
+      "main_line": 1128,
+      "column": 37,
+      "kind": "Refused",
+      "reason": "a value of type Decorator[] | undefined seen as {}[] | undefined, which can write {} where Decorator is read",
+      "source_identical": true
+    },
+    {
+      "file": "transformers/ts.ts",
+      "scout_line": 1132,
+      "main_line": 1132,
+      "column": 37,
+      "kind": "Refused",
+      "reason": "a value of type Decorator[] | undefined seen as {}[] | undefined, which can write {} where Decorator is read",
+      "source_identical": true
+    },
+    {
+      "file": "transformers/ts.ts",
+      "scout_line": 1136,
+      "main_line": 1136,
+      "column": 37,
+      "kind": "Refused",
+      "reason": "a value of type Decorator[] | undefined seen as {}[] | undefined, which can write {} where Decorator is read",
+      "source_identical": true
+    },
+    {
+      "file": "transformers/ts.ts",
+      "scout_line": 1147,
+      "main_line": 1147,
+      "column": 37,
+      "kind": "Refused",
+      "reason": "a value of type ObjectLiteralElementLike[] | undefined seen as {}[] | undefined, which can write {} where ObjectLiteralElementLike is read",
+      "source_identical": true
+    },
+    {
+      "file": "transformers/ts.ts",
+      "scout_line": 1151,
+      "main_line": 1151,
+      "column": 37,
+      "kind": "Refused",
+      "reason": "a value of type ObjectLiteralElementLike[] | undefined seen as {}[] | undefined, which can write {} where ObjectLiteralElementLike is read",
+      "source_identical": true
+    },
+    {
+      "file": "transformers/ts.ts",
+      "scout_line": 1155,
+      "main_line": 1155,
+      "column": 37,
+      "kind": "Refused",
+      "reason": "a value of type ObjectLiteralElementLike[] | undefined seen as {}[] | undefined, which can write {} where ObjectLiteralElementLike is read",
+      "source_identical": true
+    },
+    {
+      "file": "transformers/utilities.ts",
+      "scout_line": 239,
+      "main_line": 239,
+      "column": 56,
+      "kind": "Refused",
+      "reason": "a value of type ModuleExportName[] | undefined seen as {}[] | undefined, which can write {} where ModuleExportName is read",
+      "source_identical": true
+    },
+    {
+      "file": "transformers/utilities.ts",
+      "scout_line": 288,
+      "main_line": 288,
+      "column": 52,
+      "kind": "Refused",
+      "reason": "a value of type ModuleExportName[] | undefined seen as {}[] | undefined, which can write {} where ModuleExportName is read",
+      "source_identical": true
+    },
+    {
+      "file": "transformers/utilities.ts",
+      "scout_line": 327,
+      "main_line": 327,
+      "column": 40,
+      "kind": "Refused",
+      "reason": "a value of type ModuleExportName[] | undefined seen as {}[] | undefined, which can write {} where ModuleExportName is read",
+      "source_identical": true
+    },
+    {
+      "file": "transformers/utilities.ts",
+      "scout_line": 367,
+      "main_line": 367,
+      "column": 36,
+      "kind": "Refused",
+      "reason": "a value of type ModuleExportName[] | undefined seen as {}[] | undefined, which can write {} where ModuleExportName is read",
+      "source_identical": true
+    },
+    {
+      "file": "utilities.ts",
+      "scout_line": 10136,
+      "main_line": 10136,
+      "column": 31,
+      "kind": "Refused",
+      "reason": "a value of type RequireOrImportCall[] | undefined seen as {}[] | undefined, which can write {} where RequireOrImportCall is read",
+      "source_identical": true
+    },
+    {
+      "file": "builder.ts",
+      "scout_line": 544,
+      "main_line": 544,
+      "column": 66,
+      "kind": "Refused",
+      "reason": "a value of type T[] seen as (DiagnosticMessageChain | ReusableDiagnosticMessageChain)[] | undefined, which can write DiagnosticMessageChain | ReusableDiagnosticMessageChain where T is read",
+      "source_identical": true
+    },
+    {
+      "file": "builder.ts",
+      "scout_line": 550,
+      "main_line": 550,
+      "column": 66,
+      "kind": "Refused",
+      "reason": "a value of type T[] seen as (DiagnosticMessageChain | ReusableDiagnosticMessageChain)[] | undefined, which can write DiagnosticMessageChain | ReusableDiagnosticMessageChain where T is read",
+      "source_identical": true
+    },
+    {
+      "file": "builder.ts",
+      "scout_line": 553,
+      "main_line": 553,
+      "column": 65,
+      "kind": "Refused",
+      "reason": "a value of type T[] seen as (DiagnosticMessageChain | ReusableDiagnosticMessageChain)[] | undefined, which can write DiagnosticMessageChain | ReusableDiagnosticMessageChain where T is read",
+      "source_identical": true
+    },
+    {
+      "file": "parser.ts",
+      "scout_line": 3113,
+      "main_line": 3113,
+      "column": 32,
+      "kind": "Refused",
+      "reason": "a value of type T[] seen as Node[], which can write Node where T is read",
+      "source_identical": true
+    },
+    {
+      "file": "parser.ts",
+      "scout_line": 3558,
+      "main_line": 3558,
+      "column": 32,
+      "kind": "Refused",
+      "reason": "a value of type NonNullable<T>[] seen as Node[], which can write Node where NonNullable<T> is read",
+      "source_identical": true
+    },
+    {
+      "file": "parser.ts",
+      "scout_line": 3665,
+      "main_line": 3665,
+      "column": 32,
+      "kind": "Refused",
+      "reason": "a value of type TemplateSpan[] seen as Node[], which can write Node where TemplateSpan is read",
+      "source_identical": true
+    },
+    {
+      "file": "parser.ts",
+      "scout_line": 3699,
+      "main_line": 3699,
+      "column": 32,
+      "kind": "Refused",
+      "reason": "a value of type TemplateLiteralTypeSpan[] seen as Node[], which can write Node where TemplateLiteralTypeSpan is read",
+      "source_identical": true
+    },
+    {
+      "file": "parser.ts",
+      "scout_line": 4834,
+      "main_line": 4834,
+      "column": 62,
+      "kind": "Refused",
+      "reason": "a value of type TypeNode[] seen as Node[], which can write Node where TypeNode is read",
+      "source_identical": true
+    },
+    {
+      "file": "parser.ts",
+      "scout_line": 6076,
+      "main_line": 6076,
+      "column": 45,
+      "kind": "Refused",
+      "reason": "a value of type JsxChild[] seen as Node[], which can write Node where JsxChild is read",
+      "source_identical": true
+    },
+    {
+      "file": "parser.ts",
+      "scout_line": 6186,
+      "main_line": 6186,
+      "column": 32,
+      "kind": "Refused",
+      "reason": "a value of type (JsxElement | JsxExpression | JsxFragment | JsxSelfClosingElement | JsxText)[] seen as Node[], which can write Node where JsxElement | JsxExpression | JsxFragment | JsxSelfClosingElement | JsxText is read",
+      "source_identical": true
+    },
+    {
+      "file": "parser.ts",
+      "scout_line": 8054,
+      "main_line": 8054,
+      "column": 40,
+      "kind": "Refused",
+      "reason": "a value of type ModifierLike[] seen as Node[], which can write Node where ModifierLike is read",
+      "source_identical": true
+    },
+    {
+      "file": "parser.ts",
+      "scout_line": 9020,
+      "main_line": 9020,
+      "column": 59,
+      "kind": "Refused",
+      "reason": "a value of type JSDocTag[] seen as Node[], which can write Node where JSDocTag is read",
+      "source_identical": true
+    },
+    {
+      "file": "parser.ts",
+      "scout_line": 9021,
+      "main_line": 9021,
+      "column": 93,
+      "kind": "Refused",
+      "reason": "a value of type JSDocComment[] seen as Node[], which can write Node where JSDocComment is read",
+      "source_identical": true
+    },
+    {
+      "file": "parser.ts",
+      "scout_line": 9302,
+      "main_line": 9302,
+      "column": 44,
+      "kind": "Refused",
+      "reason": "a value of type JSDocComment[] seen as Node[], which can write Node where JSDocComment is read",
+      "source_identical": true
+    },
+    {
+      "file": "parser.ts",
+      "scout_line": 9508,
+      "main_line": 9508,
+      "column": 39,
+      "kind": "Refused",
+      "reason": "a value of type JSDocComment[] seen as Node[], which can write Node where JSDocComment is read",
+      "source_identical": true
+    },
+    {
+      "file": "parser.ts",
+      "scout_line": 9702,
+      "main_line": 9702,
+      "column": 40,
+      "kind": "Refused",
+      "reason": "a value of type JSDocParameterTag[] seen as Node[], which can write Node where JSDocParameterTag is read",
+      "source_identical": true
+    },
+    {
+      "file": "parser.ts",
+      "scout_line": 9863,
+      "main_line": 9863,
+      "column": 40,
+      "kind": "Refused",
+      "reason": "a value of type TypeParameterDeclaration[] seen as Node[], which can write Node where TypeParameterDeclaration is read",
+      "source_identical": true
+    },
+    {
+      "file": "utilities.ts",
+      "scout_line": 1168,
+      "main_line": 1168,
+      "column": 41,
+      "kind": "Refused",
+      "reason": "a value of type T[] seen as Statement[], which can write Statement where T is read",
+      "source_identical": true
+    },
+    {
+      "file": "utilities.ts",
+      "scout_line": 1173,
+      "main_line": 1173,
+      "column": 41,
+      "kind": "Refused",
+      "reason": "a value of type T[] seen as Statement[], which can write Statement where T is read",
+      "source_identical": true
+    },
+    {
+      "file": "utilities.ts",
+      "scout_line": 1153,
+      "main_line": 1153,
+      "column": 42,
+      "kind": "Refused",
+      "reason": "a value of type T[] seen as Statement[], which can write Statement where T is read",
+      "source_identical": true
+    },
+    {
+      "file": "utilities.ts",
+      "scout_line": 1158,
+      "main_line": 1158,
+      "column": 42,
+      "kind": "Refused",
+      "reason": "a value of type T[] seen as Statement[], which can write Statement where T is read",
+      "source_identical": true
+    },
+    {
+      "file": "sys.ts",
+      "scout_line": 307,
+      "main_line": 304,
+      "column": 13,
+      "kind": "Refused",
+      "reason": "a value of type (WatchedFileWithUnchangedPolls | undefined)[] seen as (WatchedFileWithIsClosed | undefined)[], which can write WatchedFileWithIsClosed | undefined where WatchedFileWithUnchangedPolls | undefined is read",
+      "source_identical": false
+    }
+  ]
+}

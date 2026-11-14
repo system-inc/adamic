@@ -1,0 +1,19 @@
+{
+  "file": "sys.ts",
+  "commit_label": "head",
+  "exit_code": 0,
+  "seconds": 16.903121417999955,
+  "timeout": false,
+  "process_group_cleaned": true,
+  "command": [
+    "/workspace/scratch/c4v7-census/scan-head",
+    "/workspace/scratch/c4v7-census/adapted-head/src/compiler",
+    "/workspace/scratch/c4v7-census/head/stage3/census/c4v7-census/part2/head/42.jsonl"
+  ],
+  "relation_report_clean": true,
+  "findings": 13,
+  "zero_lowering_units": true,
+  "validated": true,
+  ".jsonl_sha256": "52b16accad4bdaff206869844bb68dca43ec555676c94c18bbed5f60bfa60bde",
+  ".log_sha256": "e38b41f826169a1b511c5e8250e4269b6f6544197846c8d16452f74cde69b6b3"
+}

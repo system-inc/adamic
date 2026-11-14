@@ -1,0 +1,19 @@
+{
+  "file": "transformers/destructuring.ts",
+  "commit_label": "head",
+  "exit_code": 0,
+  "seconds": 31.22841289600001,
+  "timeout": false,
+  "process_group_cleaned": true,
+  "command": [
+    "/workspace/scratch/c4v7-census/scan-head",
+    "/workspace/scratch/c4v7-census/adapted-head/src/compiler",
+    "/workspace/scratch/c4v7-census/head/stage3/census/c4v7-census/part2/head/49.jsonl"
+  ],
+  "relation_report_clean": true,
+  "findings": 26,
+  "zero_lowering_units": true,
+  "validated": true,
+  ".jsonl_sha256": "32431cc167120ba7c7bfd8e7686fdf2af1e1d1d01741209f26ad66b762f07dce",
+  ".log_sha256": "49389f8cdd0f8f96b73199afccf7b9acf5040593cfdaf47ec902d7eaf37cd69d"
+}

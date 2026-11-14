@@ -1,0 +1,19 @@
+{
+  "file": "transformers/classFields.ts",
+  "commit_label": "main",
+  "exit_code": 0,
+  "seconds": 27.768450721000136,
+  "timeout": false,
+  "process_group_cleaned": true,
+  "command": [
+    "/workspace/scratch/c4v7-census/scan-main",
+    "/workspace/scratch/c4v7-census/adapted-main/src/compiler",
+    "/workspace/scratch/c4v7-census/head/stage3/census/c4v7-census/part2/main/45.jsonl"
+  ],
+  "relation_report_clean": true,
+  "findings": 75,
+  "zero_lowering_units": true,
+  "validated": true,
+  ".jsonl_sha256": "0a4b8e8db38e49dab72ac2ae855211860f9a1a0c2ef6ca25805e61f6b8c0bbd6",
+  ".log_sha256": "eb27b18f914b6df553e37e781d2de54334eca42a28b0b4650f0544de5a317fda"
+}
