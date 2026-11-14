@@ -1,0 +1,17 @@
+{
+  "base": "8e3a784aa5a601f57342c07b68f145fe56252c21",
+  "implementation": "a1f279e55e39e06d450da64d413d21f508017396",
+  "typescript": "050880ce59e30b356b686bd3144efe24f875ebc8",
+  "node": "v24.19.0",
+  "go": "go version go1.27.1 linux/amd64",
+  "submodules": "5360753e19e4417675a90e92a1823bea66b13918 cohere (5360753e)\n d92d9bfee114c80be2c375d72edae966176e3a4f cohere/TypeScript (d92d9bfe)",
+  "binaries": {
+    "adamic": "b7aa1a439388d231859c8ba75cc5a931811446b6ae012d1549fa0bad21e7e9d4",
+    "latent-census": "06424694553918602c8d7f532bd11df83366d48d68d5b3c96e65b41ad264b1b5"
+  },
+  "owner_after_sha256": "0c1acadba235c96ccd5a534f3fa5c05d72842192bc18167abbcd9f83567cc7c7",
+  "module_format": "CommonJSBundle",
+  "latent_full": "1",
+  "latent_assert_no_output": "1",
+  "latent_only_file": "/tmp/invoke-map-4pc8wd8/main-tree/src/compiler/sys.ts"
+}

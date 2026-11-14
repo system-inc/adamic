@@ -1,0 +1,62 @@
+{
+  "implementation": "a1f279e55e39e06d450da64d413d21f508017396",
+  "base": "8e3a784aa5a601f57342c07b68f145fe56252c21",
+  "census": {
+    "mode": "full",
+    "module_format": "CommonJSBundle",
+    "new": 0,
+    "changed": 0,
+    "gone": 1,
+    "gone_where": "sys.ts:790:87",
+    "gone_phase": "refusal_scan"
+  },
+  "restoring_mutant": "entire census byte-identical to main",
+  "stock_tsc": {
+    "version": "6.0.3",
+    "roots": 79,
+    "main": 0,
+    "amendment": 0,
+    "new": 0
+  },
+  "adamic_types": {
+    "roots": 79,
+    "main_exit": 0,
+    "amendment_exit": 0
+  },
+  "apply_exit": 0,
+  "javascript": {
+    "files": 79,
+    "byte_identical": true
+  },
+  "hereby_dts": {
+    "main_exit": 0,
+    "amendment_exit": 0,
+    "typescript.d.ts_byte_identical": true,
+    "tsserverlibrary.d.ts_byte_identical": true
+  },
+  "contract_and_witness": "outputs byte-identical to main; each exits 0",
+  "lane": {
+    "status": "pass",
+    "exit": 0,
+    "counts": {
+      "passing": 106366,
+      "failing": 1,
+      "pending": 0
+    },
+    "failed_tests": [
+      "unittests:: Public APIs for typescript.d.ts should be acknowledged when they change"
+    ],
+    "baseline_diffs": [
+      "api/typescript.d.ts"
+    ],
+    "workers": 8,
+    "runners": "all",
+    "tests": null
+  },
+  "ledger": "one Type-only line citing #4pc8wd8",
+  "loom_submitted": false,
+  "supplemental_notes": [
+    "Baseline apply cache packaging failed after adaptations, corrected by isolated amendment apply which passed.",
+    "Existing full_audit.py fixture fails its string/number condition-refusal expectation on main; legacy census/no-output audit passes."
+  ]
+}
