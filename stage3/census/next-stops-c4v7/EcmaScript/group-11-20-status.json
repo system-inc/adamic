@@ -1,0 +1,13 @@
+{
+  "module_format": "EcmaScript",
+  "command": [
+    "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+    "stage3/census/next-stops-c4v7/group.py",
+    "11",
+    "20"
+  ],
+  "exit_code": 0,
+  "seconds": 115.5595832959998,
+  "stopping_reason": null,
+  "process_group_cleaned": true
+}

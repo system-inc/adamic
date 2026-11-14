@@ -268,7 +268,7 @@ The adapted source identity check is in [source-identity.json](source-identity.j
 | optional property createProgram in IncrementalProgramOptions&lt;BuilderProgram&gt; absent from structural source IncrementalCompilationOptions, which can hide fields | 1 | 0 | 0 |
 | optional property modifiers in ArrowFunction absent from structural source never, which can hide fields | 0 | 1 | 0 |
 
-Of the scout’s 191 selected ‘seen as’ sites, 191 are present on main, **191 are gone on head** (191 removed by this head versus main), and 0 remain on head. The older scout’s sys.ts:307:13 maps to main/head sys.ts:304:13, proven by reconstructing the scout’s full sys.ts source hash from its owner pins; the other 190 sites use byte-identical source files. See [scout-site-mapping.json](scout-site-mapping.json). Exact key membership is preserved in [selected-191-pairing.json](selected-191-pairing.json).
+Of the scout’s 191 selected ‘seen as’ sites, 191 are present on main, **191 are gone on head** (191 removed by this head versus main), and 0 remain on head. The older scout’s sys.ts:307:13 maps to main/head sys.ts:304:13, proven by reconstructing the scout’s full sys.ts source hash from its owner pins; the other 190 sites use byte-identical source files. See [scout-site-mapping.json](scout-site-mapping.json). This counts removal of the selected finding, not successful lowering of its enclosing call. Exact key membership is preserved in [selected-191-pairing.json](selected-191-pairing.json).
 
 Full counts by reason, including zero-delta reasons, are in [pairing.json](pairing.json). Complete raw streams and process statuses are under `part2/`; all gone/new/changed diagnostics are retained as JSON.
 
