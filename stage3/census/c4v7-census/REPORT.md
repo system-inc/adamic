@@ -1,6 +1,6 @@
 # c4v-7 census
 
-sys.ts:304:13: Part 1 pending. scanner.ts:2934:41: Part 1 pending. **12 new refusal-scan findings.**
+sys.ts:304:13: cleared in CommonJSBundle. scanner.ts:2934:41: cleared in CommonJSBundle. EcmaScript pending. **12 new refusal-scan findings.**
 
 Compiler branch `compiler/constraint-body-rigid-3`, c4v-7, task #p0fy047. Head: `1d48ecb5a5321717daf901579e49a23291995589`; main and confirmed merge-base: `5c8338c4232c37afb304ce6865458b67655c590a`. Measurement and reporting only; no adaptation or compiler changes.
 
@@ -624,6 +624,9 @@ Fresh detached worktrees per measured commit were created in writable scratch. R
 
 The scan wrapper was copied from `typescript/promise-discard-sites` at `2dc0593b937f8fbaf6c32f8107a899f78c223966`. That branch has no promise-discard-sites README; its REPORT.md and the latent README document the procedure. Each scan binary was built once. All 158 actual compiler-file headers have `checker_rejected: false` and zero diagnostics. The fixed legacy measurement label “measured on a checker-rejected program” does not describe the input status. The inherited raw header says `latent_mode: first-error`; this label was not rewritten, while the scratch driver explicitly calls `LatentScanOnly` and zero lowering units are checked. Scratch overlays alone replace the driver call with `LatentScanOnly`; ordinary Lower remains disabled and output guards are enabled. Each compiler-file process has a 1,500-second process-group bound and cleanup; at most three run concurrently. A non-forced checkpoint push follows every batch of at most ten paired files.
 
+
 ## Part 1
 
-Pending; Part 2 was completed and pushed first. The 5c8338c4 evidence branch contains the CommonJSBundle baseline, but says EcmaScript has not started. No EcmaScript baseline will be invented.
+CommonJSBundle: all 79 roots ran twice and validated. 73 roots now stop at sys.ts:514:17 (an existing unchecked-cast refusal). The sys.ts root now stops at utilitiesPublic.ts:1280:52 (an existing unproven-predicate refusal). Five roots retain their exact baseline tuples. The lowering-phase roots are debug.ts, diagnosticInformationMap.generated.ts, and types.ts.
+
+Every root’s exact before/after tuple and source excerpts are in [the CommonJSBundle report](../next-stops-c4v7/CommonJSBundle/REPORT.md). EcmaScript is pending.
