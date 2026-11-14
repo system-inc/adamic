@@ -1,0 +1,26 @@
+{
+  "pair": "B",
+  "group": 1,
+  "files": [
+    "src/compiler/utilities.ts",
+    "src/compiler/moduleSpecifiers.ts",
+    "src/compiler/executeCommandLine.ts",
+    "src/compiler/transformers/declarations.ts",
+    "src/compiler/transformers/ts.ts",
+    "src/compiler/transformers/destructuring.ts",
+    "src/compiler/transformers/declarations/diagnostics.ts",
+    "src/compiler/transformers/jsx.ts",
+    "src/compiler/factory/parenthesizerRules.ts",
+    "src/compiler/transformers/classThis.ts",
+    "src/compiler/transformers/es2020.ts",
+    "src/compiler/symbolWalker.ts",
+    "src/compiler/builderStatePublic.ts",
+    "src/tsc/_namespaces/ts.ts"
+  ],
+  "deadline_seconds": 3600,
+  "complete": true,
+  "seconds": 1181.1365451870006,
+  "unit_first_stop_changes": 0,
+  "regressions": 0,
+  "new_process_findings": []
+}
