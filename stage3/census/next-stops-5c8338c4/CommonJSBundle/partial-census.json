@@ -540,5 +540,115 @@
     "reason": "a value of type (WatchedFileWithUnchangedPolls | undefined)[] seen as (WatchedFileWithIsClosed | undefined)[], which can write WatchedFileWithIsClosed | undefined where WatchedFileWithUnchangedPolls | undefined is read",
     "fix": "make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
     "seconds": 16.716490653
+  },
+  {
+    "module_format": "CommonJSBundle",
+    "roots": [
+      "/workspace/scratch/next-stops-5c8338c4-adapted/src/compiler/transformers/es2016.ts"
+    ],
+    "kind": "Refused",
+    "where": "/workspace/scratch/next-stops-5c8338c4-adapted/src/compiler/sys.ts:304:13",
+    "reason": "a value of type (WatchedFileWithUnchangedPolls | undefined)[] seen as (WatchedFileWithIsClosed | undefined)[], which can write WatchedFileWithIsClosed | undefined where WatchedFileWithUnchangedPolls | undefined is read",
+    "fix": "make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+    "seconds": 19.68341757
+  },
+  {
+    "module_format": "CommonJSBundle",
+    "roots": [
+      "/workspace/scratch/next-stops-5c8338c4-adapted/src/compiler/transformers/es2017.ts"
+    ],
+    "kind": "Refused",
+    "where": "/workspace/scratch/next-stops-5c8338c4-adapted/src/compiler/sys.ts:304:13",
+    "reason": "a value of type (WatchedFileWithUnchangedPolls | undefined)[] seen as (WatchedFileWithIsClosed | undefined)[], which can write WatchedFileWithIsClosed | undefined where WatchedFileWithUnchangedPolls | undefined is read",
+    "fix": "make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+    "seconds": 21.270159778
+  },
+  {
+    "module_format": "CommonJSBundle",
+    "roots": [
+      "/workspace/scratch/next-stops-5c8338c4-adapted/src/compiler/transformers/es2018.ts"
+    ],
+    "kind": "Refused",
+    "where": "/workspace/scratch/next-stops-5c8338c4-adapted/src/compiler/sys.ts:304:13",
+    "reason": "a value of type (WatchedFileWithUnchangedPolls | undefined)[] seen as (WatchedFileWithIsClosed | undefined)[], which can write WatchedFileWithIsClosed | undefined where WatchedFileWithUnchangedPolls | undefined is read",
+    "fix": "make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+    "seconds": 22.71898162
+  },
+  {
+    "module_format": "CommonJSBundle",
+    "roots": [
+      "/workspace/scratch/next-stops-5c8338c4-adapted/src/compiler/transformers/es2019.ts"
+    ],
+    "kind": "Refused",
+    "where": "/workspace/scratch/next-stops-5c8338c4-adapted/src/compiler/sys.ts:304:13",
+    "reason": "a value of type (WatchedFileWithUnchangedPolls | undefined)[] seen as (WatchedFileWithIsClosed | undefined)[], which can write WatchedFileWithIsClosed | undefined where WatchedFileWithUnchangedPolls | undefined is read",
+    "fix": "make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+    "seconds": 21.367203064999998
+  },
+  {
+    "module_format": "CommonJSBundle",
+    "roots": [
+      "/workspace/scratch/next-stops-5c8338c4-adapted/src/compiler/transformers/es2020.ts"
+    ],
+    "kind": "Refused",
+    "where": "/workspace/scratch/next-stops-5c8338c4-adapted/src/compiler/sys.ts:304:13",
+    "reason": "a value of type (WatchedFileWithUnchangedPolls | undefined)[] seen as (WatchedFileWithIsClosed | undefined)[], which can write WatchedFileWithIsClosed | undefined where WatchedFileWithUnchangedPolls | undefined is read",
+    "fix": "make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+    "seconds": 20.214734348
+  },
+  {
+    "module_format": "CommonJSBundle",
+    "roots": [
+      "/workspace/scratch/next-stops-5c8338c4-adapted/src/compiler/transformers/es2021.ts"
+    ],
+    "kind": "Refused",
+    "where": "/workspace/scratch/next-stops-5c8338c4-adapted/src/compiler/sys.ts:304:13",
+    "reason": "a value of type (WatchedFileWithUnchangedPolls | undefined)[] seen as (WatchedFileWithIsClosed | undefined)[], which can write WatchedFileWithIsClosed | undefined where WatchedFileWithUnchangedPolls | undefined is read",
+    "fix": "make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+    "seconds": 20.643181319
+  },
+  {
+    "module_format": "CommonJSBundle",
+    "roots": [
+      "/workspace/scratch/next-stops-5c8338c4-adapted/src/compiler/transformers/esDecorators.ts"
+    ],
+    "kind": "Refused",
+    "where": "/workspace/scratch/next-stops-5c8338c4-adapted/src/compiler/sys.ts:304:13",
+    "reason": "a value of type (WatchedFileWithUnchangedPolls | undefined)[] seen as (WatchedFileWithIsClosed | undefined)[], which can write WatchedFileWithIsClosed | undefined where WatchedFileWithUnchangedPolls | undefined is read",
+    "fix": "make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+    "seconds": 19.176794309
+  },
+  {
+    "module_format": "CommonJSBundle",
+    "roots": [
+      "/workspace/scratch/next-stops-5c8338c4-adapted/src/compiler/transformers/esnext.ts"
+    ],
+    "kind": "Refused",
+    "where": "/workspace/scratch/next-stops-5c8338c4-adapted/src/compiler/sys.ts:304:13",
+    "reason": "a value of type (WatchedFileWithUnchangedPolls | undefined)[] seen as (WatchedFileWithIsClosed | undefined)[], which can write WatchedFileWithIsClosed | undefined where WatchedFileWithUnchangedPolls | undefined is read",
+    "fix": "make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+    "seconds": 19.171477278
+  },
+  {
+    "module_format": "CommonJSBundle",
+    "roots": [
+      "/workspace/scratch/next-stops-5c8338c4-adapted/src/compiler/transformers/generators.ts"
+    ],
+    "kind": "Refused",
+    "where": "/workspace/scratch/next-stops-5c8338c4-adapted/src/compiler/sys.ts:304:13",
+    "reason": "a value of type (WatchedFileWithUnchangedPolls | undefined)[] seen as (WatchedFileWithIsClosed | undefined)[], which can write WatchedFileWithIsClosed | undefined where WatchedFileWithUnchangedPolls | undefined is read",
+    "fix": "make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+    "seconds": 20.439077513
+  },
+  {
+    "module_format": "CommonJSBundle",
+    "roots": [
+      "/workspace/scratch/next-stops-5c8338c4-adapted/src/compiler/transformers/jsx.ts"
+    ],
+    "kind": "Refused",
+    "where": "/workspace/scratch/next-stops-5c8338c4-adapted/src/compiler/sys.ts:304:13",
+    "reason": "a value of type (WatchedFileWithUnchangedPolls | undefined)[] seen as (WatchedFileWithIsClosed | undefined)[], which can write WatchedFileWithIsClosed | undefined where WatchedFileWithUnchangedPolls | undefined is read",
+    "fix": "make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+    "seconds": 16.615677276
   }
 ]
