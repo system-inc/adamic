@@ -5,7 +5,7 @@ were written on the Mac, where Go doesn't build, and the Red column is what read
 fail. The Linux run decides, and a mutant whose Red stays green is a check that proves nothing.
 
 The tests: `TestFiniteKeyedWritesAgreeWithNode` and `TestFiniteKeyedWriteStops`
-(internal/oracle/finite_keyed_write_test.go), `TestComputedFieldsAgreeWithNode`
+(internal/oracle/finite_keyed_write_test.go), `TestComputedFieldsWriteRefusalPin`
 (internal/oracle/element_access_fields_test.go) and `TestFiniteElementWriteStoresEachNamedFieldThenPanics`
 (internal/lower/element_access_fields_test.go).
 
@@ -22,7 +22,8 @@ internal/lower/object.go, setIndex. Old:
 New: the three lines gone.
 
 Red: every program in `TestFiniteKeyedWritesAgreeWithNode` stops at its write, "assigning an element of a
-value"; `TestComputedFieldsAgreeWithNode`, fields.a at 12:5 in those words, its stop before #13p3y0c;
+value"; `TestComputedFieldsWriteRefusalPin`, fields.a at 12:5 in those words, its stop before #13p3y0c, where it
+wants 26;
 `TestFiniteElementWriteStoresEachNamedFieldThenPanics` at its lowering; and in `TestFiniteKeyedWriteStops`
 every keyed row that stops inside finiteElementWrite (absent_optional_keyed.a, index_signature_union.a,
 readonly_constructor.a, receiver_alternatives.a, value_held_differently.a), each now in those words.

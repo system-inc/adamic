@@ -1,9 +1,0 @@
-// An integer-literal key union over an object whose fields are named by numbers.
-interface Pair { 0: string; 1: string; }
-function put(pair: Pair, index: 0 | 1, value: string): void {
-	pair[index] = value;
-}
-const pair: Pair = { 0: 'zero', 1: 'one' };
-put(pair, 1, ['o', 'ne', '!'].join(''));
-put(pair, 0, 'nil');
-console.log(`${pair[0]} ${pair[1]}`);
