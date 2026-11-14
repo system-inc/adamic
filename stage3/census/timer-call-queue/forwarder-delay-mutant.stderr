@@ -1,0 +1,53 @@
+node:assert:152
+  throw new AssertionError(obj);
+  ^
+
+AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
++ actual - expected
+
+  {
++   delay: 251,
+-   delay: 250,
+    events: [
+      [
+        'pollLowPollingIntervalQueue',
+        'pollLowPollingIntervalQueue',
+        'queue identity'
+
+    at Object.<anonymous> (/workspace/timer-call-queue-scratch/evidence/stage3/census/timer-call-queue/forwarder-witness.cjs:27:9)
+    at Module._compile (node:internal/modules/cjs/loader:1872:14)
+    at Object..js (node:internal/modules/cjs/loader:2003:10)
+    at Module.load (node:internal/modules/cjs/loader:1594:32)
+    at Module._load (node:internal/modules/cjs/loader:1396:12)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:255:19)
+    at Module.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:154:5)
+    at node:internal/main/run_main_module:33:47 {
+  generatedMessage: true,
+  code: 'ERR_ASSERTION',
+  actual: {
+    delay: 251,
+    label: 'pollLowPollingIntervalQueue',
+    events: [
+      [
+        'pollLowPollingIntervalQueue',
+        'pollLowPollingIntervalQueue',
+        'queue identity'
+      ]
+    ]
+  },
+  expected: {
+    delay: 250,
+    label: 'pollLowPollingIntervalQueue',
+    events: [
+      [
+        'pollLowPollingIntervalQueue',
+        'pollLowPollingIntervalQueue',
+        'queue identity'
+      ]
+    ]
+  },
+  operator: 'deepStrictEqual',
+  diff: 'simple'
+}
+
+Node.js v24.19.0

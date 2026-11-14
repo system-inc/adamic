@@ -1,0 +1,5 @@
+{
+  "exit": 1,
+  "caught_by": "Node trace equality: delay 251 versus 250",
+  "mutation": "actual in-memory amended block adds 1 to captured delay; source membership is checked before mutation"
+}

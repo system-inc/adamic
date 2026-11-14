@@ -1,0 +1,4 @@
+src/testRunner/unittests/tscWatch/watchApi.ts:190:        host.setTimeout = undefined;
+src/testRunner/unittests/tscWatch/watchApi.ts:191:        host.clearTimeout = undefined;
+src/tsserver/nodeServer.ts:268:    sys.setTimeout = setTimeout;
+src/tsserver/nodeServer.ts:269:    sys.clearTimeout = clearTimeout;

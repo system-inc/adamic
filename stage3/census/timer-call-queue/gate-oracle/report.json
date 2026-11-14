@@ -1,0 +1,31 @@
+{
+  "tree": "/tmp/adamic-timer-queue-baseline",
+  "nproc": 5,
+  "workers": 8,
+  "runners": "all",
+  "tests": null,
+  "node": "v24.19.0",
+  "phases": {
+    "install": {
+      "command": [
+        "npm",
+        "ci",
+        "--no-audit",
+        "--no-fund"
+      ],
+      "exit": 0,
+      "seconds": 8.47
+    },
+    "build": {
+      "command": [
+        "npm",
+        "run",
+        "build"
+      ],
+      "exit": 1,
+      "seconds": 3.587
+    }
+  },
+  "status": "fail",
+  "wall_seconds": 12.072
+}

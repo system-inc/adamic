@@ -1,0 +1,32 @@
+{
+  "1": {
+    "sha": "61603dc6761a2f1c8312a636ecb74be4a256ed86",
+    "gate_accessors_static": 0,
+    "gate_argument_writes_static": 0,
+    "gate_accessors_runtime": 0,
+    "gate_argument_writes_runtime": 0,
+    "observed_forwarder_calls": 5865,
+    "restoring_mutant": "red .call refusal; green lowers and matches Node",
+    "census": "six files; 2 gone, 0 new; all diagnostics/dependencies unchanged",
+    "node": "9 forwarders plus existing witness match",
+    "apply": "PASS",
+    "javascript": "only nine sites",
+    "types": 0,
+    "lane": "PASS"
+  },
+  "2": {
+    "sha": "6fefffa3a283c5603f7fd0a46b61db48a677f174",
+    "new_narrowing_reader_count": 0,
+    "restoring_mutant": "Refused sys.ts:272:23 returns",
+    "census": "15 gone, 0 new; dependencies unchanged",
+    "node_events": 236,
+    "node_change_callbacks": 6,
+    "node_trace_equal": true,
+    "apply": "PASS",
+    "javascript": "factory and three files selections only",
+    "types": 0,
+    "lane": "PASS"
+  },
+  "legacy_poller_control": "already vacuous on main; not used as red evidence",
+  "loom": "never submitted"
+}

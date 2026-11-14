@@ -1,0 +1,11 @@
+{
+  "red": {
+    "exit": 1,
+    "stderr": "adamic: /workspace/timer-call-queue-scratch/evidence/stage3/census/timer-call-queue/timer-call-mutant-red.ts:22:12: Adamic 0.1 refuses inherited library member call read as an own field; prototype members are not stored in an object's shape; call the method on its receiver, or wrap that call in an arrow (unbound-method)\n"
+  },
+  "green": {
+    "exit": 0,
+    "stderr": "",
+    "node_stdout": "250\nlabel\n42\n7\n"
+  }
+}

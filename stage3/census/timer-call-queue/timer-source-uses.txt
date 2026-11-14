@@ -1,0 +1,97 @@
+src/testRunner/parallel/host.ts:320:                            clearTimeout(worker.timer);
+src/testRunner/parallel/host.ts:326:                            worker.timer = setTimeout(killChild, data.payload.duration, data.payload);
+src/testRunner/parallel/worker.ts:56:     * Mixes in overrides for `resetTimeout` and `clearTimeout` to support parallel test execution in a worker.
+src/testRunner/parallel/worker.ts:60:            override resetTimeout() {
+src/testRunner/parallel/worker.ts:61:                this.clearTimeout();
+src/testRunner/parallel/worker.ts:67:            override clearTimeout() {
+src/testRunner/unittests/sys/symlinkWatching.ts:20:        ts.sys.setTimeout!(op, delay);
+src/testRunner/unittests/evaluation/awaitUsingDeclarations.ts:1803:                setTimeout(() => {
+src/testRunner/unittests/evaluation/forAwaitOf.ts:15:                    case 2: return { value: new Promise<number>(resolve => setTimeout(resolve, 100, 3)), done: false };
+src/testRunner/unittests/evaluation/forAwaitOf.ts:44:                    case 2: return { value: new Promise<number>(resolve => setTimeout(resolve, 100, 3)), done: false };
+src/testRunner/unittests/evaluation/forAwaitOf.ts:73:                    case 2: return { value: new Promise<number>(resolve => setTimeout(resolve, 100, 3)), done: false };
+src/testRunner/unittests/evaluation/forAwaitOf.ts:102:                    case 2: return { value: new Promise<number>(resolve => setTimeout(resolve, 100, 3)), done: false };
+src/testRunner/unittests/tscWatch/watchApi.ts:171:describe("unittests:: tscWatch:: watchAPI:: when watchHost does not implement setTimeout or clearTimeout", () => {
+src/testRunner/unittests/tscWatch/watchApi.ts:190:        host.setTimeout = undefined;
+src/testRunner/unittests/tscWatch/watchApi.ts:191:        host.clearTimeout = undefined;
+src/testRunner/unittests/tsserver/reloadProjects.ts:86:        host.clearTimeout(timeoutId);
+src/testRunner/unittests/helpers/virtualFileSystemWithWatch.ts:468:            setTimeout: this.setTimeout.bind(this),
+src/testRunner/unittests/helpers/virtualFileSystemWithWatch.ts:469:            clearTimeout: this.clearTimeout.bind(this),
+src/testRunner/unittests/helpers/virtualFileSystemWithWatch.ts:1103:    setTimeout(callback: (label?: unknown) => void, ms: number, label?: unknown): number {
+src/testRunner/unittests/helpers/virtualFileSystemWithWatch.ts:1111:    clearTimeout(timeoutId: unknown): void {
+src/testRunner/unittests/tsserver/session.ts:42:    setTimeout() {
+src/testRunner/unittests/tsserver/session.ts:45:    clearTimeout: ts.noop,
+src/tsserver/nodeServer.ts:268:    sys.setTimeout = setTimeout;
+src/tsserver/nodeServer.ts:269:    sys.clearTimeout = clearTimeout;
+src/lib/webworker.generated.d.ts:13823:    /** [MDN Reference](https://developer.mozilla.org/docs/Web/API/Window/clearTimeout) */
+src/lib/webworker.generated.d.ts:13824:    clearTimeout(id: number | undefined): void;
+src/lib/webworker.generated.d.ts:13836:    /** [MDN Reference](https://developer.mozilla.org/docs/Web/API/Window/setTimeout) */
+src/lib/webworker.generated.d.ts:13837:    setTimeout(handler: TimerHandler, timeout?: number, ...arguments: any[]): number;
+src/lib/webworker.generated.d.ts:14943:/** [MDN Reference](https://developer.mozilla.org/docs/Web/API/Window/clearTimeout) */
+src/lib/webworker.generated.d.ts:14944:declare function clearTimeout(id: number | undefined): void;
+src/lib/webworker.generated.d.ts:14956:/** [MDN Reference](https://developer.mozilla.org/docs/Web/API/Window/setTimeout) */
+src/lib/webworker.generated.d.ts:14957:declare function setTimeout(handler: TimerHandler, timeout?: number, ...arguments: any[]): number;
+src/server/session.ts:408:                const { setTimeout } = timerHost;
+src/server/session.ts:415:                return setTimeout.call(timerHost, () => callback(t1), timeoutDelay, t1);
+src/server/session.ts:455:            this.operationHost.getServerHost().clearTimeout(this.timerHandle);
+src/server/types.ts:33:    setTimeout(callback: (label?: unknown) => void, ms: number, label?: unknown): unknown;
+src/server/types.ts:34:    clearTimeout(timeoutId: unknown): void;
+src/server/typingInstallerAdapter.ts:244:            const { setTimeout } = timerHost;
+src/server/typingInstallerAdapter.ts:253:            return setTimeout.call(timerHost, () => callback(t1), timeoutDelay, t1);
+src/server/utilities.ts:27:            this.host.clearTimeout(pendingTimeout);
+src/server/utilities.ts:32:            const { setTimeout } = timerHost;
+src/server/utilities.ts:38:            return setTimeout.call(timerHost, () => callback(t1, t2, t3), timeoutDelay, t1);
+src/server/utilities.ts:48:        this.host.clearTimeout(pendingTimeout);
+src/server/utilities.ts:74:            const { setTimeout } = timerHost;
+src/server/utilities.ts:78:            return setTimeout.call(timerHost, () => callback(t1), timeoutDelay, t1);
+src/lib/dom.generated.d.ts:41717:    /** [MDN Reference](https://developer.mozilla.org/docs/Web/API/Window/clearTimeout) */
+src/lib/dom.generated.d.ts:41718:    clearTimeout(id: number | undefined): void;
+src/lib/dom.generated.d.ts:41730:    /** [MDN Reference](https://developer.mozilla.org/docs/Web/API/Window/setTimeout) */
+src/lib/dom.generated.d.ts:41731:    setTimeout(handler: TimerHandler, timeout?: number, ...arguments: any[]): number;
+src/lib/dom.generated.d.ts:44093:/** [MDN Reference](https://developer.mozilla.org/docs/Web/API/Window/clearTimeout) */
+src/lib/dom.generated.d.ts:44094:declare function clearTimeout(id: number | undefined): void;
+src/lib/dom.generated.d.ts:44106:/** [MDN Reference](https://developer.mozilla.org/docs/Web/API/Window/setTimeout) */
+src/lib/dom.generated.d.ts:44107:declare function setTimeout(handler: TimerHandler, timeout?: number, ...arguments: any[]): number;
+src/compiler/sys.ts:236:    setTimeout: NonNullable<System["setTimeout"]>;
+src/compiler/sys.ts:369:            const { setTimeout } = timerHost;
+src/compiler/sys.ts:374:            return setTimeout.call(timerHost, () => callback(t1, t2), timeoutDelay, t1);
+src/compiler/sys.ts:457:    setTimeout: NonNullable<System["setTimeout"]>;
+src/compiler/sys.ts:490:            const { setTimeout } = timerHost;
+src/compiler/sys.ts:494:            return setTimeout.call(timerHost, () => callback(t1), timeoutDelay, t1);
+src/compiler/sys.ts:588:    setTimeout: NonNullable<System["setTimeout"]>;
+src/compiler/sys.ts:589:    clearTimeout: NonNullable<System["clearTimeout"]>;
+src/compiler/sys.ts:604:    setTimeout,
+src/compiler/sys.ts:605:    clearTimeout,
+src/compiler/sys.ts:772:            clearTimeout(timerToUpdateChildWatches);
+src/compiler/sys.ts:779:            return setTimeout(() => callback(t1), timeoutDelay, t1);
+src/compiler/sys.ts:980:    setTimeout: NonNullable<System["setTimeout"]>;
+src/compiler/sys.ts:981:    clearTimeout: NonNullable<System["clearTimeout"]>;
+src/compiler/sys.ts:1003:    setTimeout,
+src/compiler/sys.ts:1004:    clearTimeout,
+src/compiler/sys.ts:1064:        return dynamicPollingWatchFile ||= createDynamicPriorityPollingWatchFile({ getModifiedTime, setTimeout });
+src/compiler/sys.ts:1068:        return fixedChunkSizePollingWatchFile ||= createFixedChunkSizePollingWatchFile({ getModifiedTime, setTimeout });
+src/compiler/sys.ts:1132:                setTimeout,
+src/compiler/sys.ts:1133:                clearTimeout,
+src/compiler/sys.ts:1450:    setTimeout?(callback: (label?: unknown) => void, ms: number, label?: unknown): unknown;
+src/compiler/sys.ts:1451:    clearTimeout?(timeoutId: unknown): void;
+src/compiler/sys.ts:1504:            setTimeout: (callback: (label?: unknown) => void, ms: number, label?: unknown): unknown => setTimeout(callback, ms, label),
+src/compiler/sys.ts:1505:            clearTimeout: (timeoutId: Parameters<typeof clearTimeout>[0]): void => { clearTimeout(timeoutId); },
+src/compiler/sys.ts:1602:            setTimeout: (callback: (label?: unknown) => void, ms: number, label?: unknown): unknown => setTimeout(callback, ms, label),
+src/compiler/sys.ts:1603:            clearTimeout: (timeoutId: Parameters<typeof clearTimeout>[0]): void => { clearTimeout(timeoutId); },
+src/compiler/watchPublic.ts:168:    setTimeout?(callback: (label?: unknown) => void, ms: number, label?: unknown): unknown;
+src/compiler/watchPublic.ts:170:    clearTimeout?(timeoutId: unknown): void;
+src/compiler/watchPublic.ts:856:        host.clearTimeout!(timerToInvalidateFailedLookupResolutions);
+src/compiler/watchPublic.ts:862:        if (!host.setTimeout || !host.clearTimeout) {
+src/compiler/watchPublic.ts:869:            const { setTimeout } = timerHost;
+src/compiler/watchPublic.ts:873:            return setTimeout!.call(timerHost, () => callback(t1), timeoutDelay, t1);
+src/compiler/watchPublic.ts:888:        if (!host.setTimeout || !host.clearTimeout) {
+src/compiler/watchPublic.ts:893:            host.clearTimeout(timerToUpdateProgram);
+src/compiler/watchPublic.ts:898:            const { setTimeout } = timerHost;
+src/compiler/watchPublic.ts:902:            return setTimeout!.call(timerHost, () => callback(t1), timeoutDelay, t1);
+src/compiler/watch.ts:678:        setTimeout: system.setTimeout?.bind(system) || noop,
+src/compiler/watch.ts:679:        clearTimeout: system.clearTimeout?.bind(system) || noop,
+src/compiler/tsbuildPublic.ts:2061:    if (!hostWithWatch.setTimeout || !hostWithWatch.clearTimeout) {
+src/compiler/tsbuildPublic.ts:2065:        hostWithWatch.clearTimeout(state.timerToBuildInvalidatedProject);
+src/compiler/tsbuildPublic.ts:2069:        const { setTimeout } = timerHost;
+src/compiler/tsbuildPublic.ts:2075:        return setTimeout!.call(timerHost, () => callback(t1, t2, t3), timeoutDelay, t1);
+src/harness/harnessLanguageService.ts:593:    setTimeout(_callback: (label?: unknown) => void, _ms: number, _label?: unknown): unknown {
+src/harness/harnessLanguageService.ts:598:    clearTimeout(_timeoutId: unknown): void {

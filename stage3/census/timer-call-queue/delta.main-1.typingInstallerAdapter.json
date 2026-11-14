@@ -1,0 +1,26 @@
+{
+  "file": "server/typingInstallerAdapter.ts",
+  "old": "main",
+  "new": "1",
+  "original_unique": 8,
+  "new_unique": 8,
+  "unchanged_after_line_mapping": 8,
+  "gone": [],
+  "new_findings": [],
+  "old_checker_rejected": true,
+  "new_checker_rejected": true,
+  "dependency_findings": {
+    "old_unique": 0,
+    "new_unique": 0,
+    "gone": [],
+    "new": []
+  },
+  "note": "All distinct kind/where/reason/text findings, Boundary included. Changed findings appear in both gone and new. Relocated unchanged lines map to old coordinates. No other file is discarded from raw streams.",
+  "checker_diagnostics": {
+    "old_count": 3222,
+    "new_count": 3222,
+    "gone": [],
+    "new": [],
+    "normalization": "Unchanged source lines map to old coordinates; diagnostics compare as a multiset of full text."
+  }
+}

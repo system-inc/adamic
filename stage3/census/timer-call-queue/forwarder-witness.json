@@ -1,0 +1,121 @@
+{
+  "sites": 9,
+  "results": [
+    {
+      "file": "compiler/sys.ts",
+      "originalLine": 384,
+      "delay": 250,
+      "label": "pollLowPollingIntervalQueue",
+      "events": [
+        [
+          "pollLowPollingIntervalQueue",
+          "pollLowPollingIntervalQueue",
+          "queue identity"
+        ]
+      ]
+    },
+    {
+      "file": "compiler/sys.ts",
+      "originalLine": 497,
+      "delay": 2000,
+      "label": "pollQueue",
+      "events": [
+        [
+          "pollQueue",
+          "pollQueue"
+        ]
+      ]
+    },
+    {
+      "file": "compiler/watchPublic.ts",
+      "originalLine": 867,
+      "delay": 250,
+      "label": "timerToInvalidateFailedLookupResolutions",
+      "events": [
+        [
+          "invalidateResolutionsOfFailedLookup",
+          "timerToInvalidateFailedLookupResolutions"
+        ]
+      ]
+    },
+    {
+      "file": "compiler/watchPublic.ts",
+      "originalLine": 889,
+      "delay": 250,
+      "label": "timerToUpdateProgram",
+      "events": [
+        [
+          "updateProgramWithWatchStatus",
+          "timerToUpdateProgram"
+        ]
+      ]
+    },
+    {
+      "file": "compiler/tsbuildPublic.ts",
+      "originalLine": 2067,
+      "delay": 23,
+      "label": "timerToBuildInvalidatedProject",
+      "events": [
+        [
+          "buildNextInvalidatedProject",
+          "timerToBuildInvalidatedProject",
+          "state identity",
+          true
+        ]
+      ]
+    },
+    {
+      "file": "server/utilities.ts",
+      "originalLine": 30,
+      "delay": 17,
+      "label": "operation",
+      "events": [
+        [
+          "ThrottledOperations.run",
+          "operation",
+          "self identity",
+          "cb identity"
+        ]
+      ]
+    },
+    {
+      "file": "server/utilities.ts",
+      "originalLine": 63,
+      "delay": 19,
+      "label": "self identity",
+      "events": [
+        [
+          "GcTimer.run",
+          "self identity"
+        ]
+      ]
+    },
+    {
+      "file": "server/session.ts",
+      "originalLine": 406,
+      "delay": 31,
+      "label": "action",
+      "events": [
+        [
+          "request",
+          11
+        ],
+        [
+          "action"
+        ]
+      ]
+    },
+    {
+      "file": "server/typingInstallerAdapter.ts",
+      "originalLine": 242,
+      "delay": 100,
+      "label": "before::discover",
+      "events": [
+        [
+          "send",
+          "request identity"
+        ]
+      ]
+    }
+  ]
+}

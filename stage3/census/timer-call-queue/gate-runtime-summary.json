@@ -1,0 +1,130 @@
+{
+  "process_records": 26,
+  "observations": 5865,
+  "by_site": {
+    "/tmp/adamic-timer-queue-baseline/built/local/run.js:6": 3511,
+    "/tmp/adamic-timer-queue-baseline/built/local/run.js:8": 433,
+    "/tmp/adamic-timer-queue-baseline/built/local/run.js:4": 901,
+    "/tmp/adamic-timer-queue-baseline/built/local/run.js:3": 329,
+    "/tmp/adamic-timer-queue-baseline/built/local/run.js:5": 407,
+    "/tmp/adamic-timer-queue-baseline/built/local/run.js:1": 267,
+    "/tmp/adamic-timer-queue-baseline/built/local/run.js:9": 9,
+    "/tmp/adamic-timer-queue-baseline/built/local/run.js:2": 8
+  },
+  "accessor_count": 0,
+  "argument_write_count": 0,
+  "instrumented_processes": [
+    {
+      "pid": 9978,
+      "transformed": [
+        {
+          "filename": "/tmp/adamic-timer-queue-baseline/built/local/run.js",
+          "sites": 9
+        }
+      ],
+      "sites": {
+        "/tmp/adamic-timer-queue-baseline/built/local/run.js:6": 1705,
+        "/tmp/adamic-timer-queue-baseline/built/local/run.js:8": 132,
+        "/tmp/adamic-timer-queue-baseline/built/local/run.js:4": 157,
+        "/tmp/adamic-timer-queue-baseline/built/local/run.js:3": 20,
+        "/tmp/adamic-timer-queue-baseline/built/local/run.js:5": 204
+      }
+    },
+    {
+      "pid": 9979,
+      "transformed": [
+        {
+          "filename": "/tmp/adamic-timer-queue-baseline/built/local/run.js",
+          "sites": 9
+        }
+      ],
+      "sites": {
+        "/tmp/adamic-timer-queue-baseline/built/local/run.js:6": 1234,
+        "/tmp/adamic-timer-queue-baseline/built/local/run.js:1": 3,
+        "/tmp/adamic-timer-queue-baseline/built/local/run.js:9": 9,
+        "/tmp/adamic-timer-queue-baseline/built/local/run.js:8": 111,
+        "/tmp/adamic-timer-queue-baseline/built/local/run.js:4": 231,
+        "/tmp/adamic-timer-queue-baseline/built/local/run.js:3": 27,
+        "/tmp/adamic-timer-queue-baseline/built/local/run.js:5": 109
+      }
+    },
+    {
+      "pid": 9970,
+      "transformed": [
+        {
+          "filename": "/tmp/adamic-timer-queue-baseline/built/local/run.js",
+          "sites": 9
+        }
+      ],
+      "sites": {}
+    },
+    {
+      "pid": 9993,
+      "transformed": [
+        {
+          "filename": "/tmp/adamic-timer-queue-baseline/built/local/run.js",
+          "sites": 9
+        }
+      ],
+      "sites": {}
+    },
+    {
+      "pid": 9977,
+      "transformed": [
+        {
+          "filename": "/tmp/adamic-timer-queue-baseline/built/local/run.js",
+          "sites": 9
+        }
+      ],
+      "sites": {
+        "/tmp/adamic-timer-queue-baseline/built/local/run.js:8": 190,
+        "/tmp/adamic-timer-queue-baseline/built/local/run.js:6": 572,
+        "/tmp/adamic-timer-queue-baseline/built/local/run.js:1": 264,
+        "/tmp/adamic-timer-queue-baseline/built/local/run.js:4": 513,
+        "/tmp/adamic-timer-queue-baseline/built/local/run.js:2": 8,
+        "/tmp/adamic-timer-queue-baseline/built/local/run.js:3": 282,
+        "/tmp/adamic-timer-queue-baseline/built/local/run.js:5": 94
+      }
+    },
+    {
+      "pid": 9987,
+      "transformed": [
+        {
+          "filename": "/tmp/adamic-timer-queue-baseline/built/local/run.js",
+          "sites": 9
+        }
+      ],
+      "sites": {}
+    },
+    {
+      "pid": 9985,
+      "transformed": [
+        {
+          "filename": "/tmp/adamic-timer-queue-baseline/built/local/run.js",
+          "sites": 9
+        }
+      ],
+      "sites": {}
+    },
+    {
+      "pid": 9986,
+      "transformed": [
+        {
+          "filename": "/tmp/adamic-timer-queue-baseline/built/local/run.js",
+          "sites": 9
+        }
+      ],
+      "sites": {}
+    },
+    {
+      "pid": 9999,
+      "transformed": [
+        {
+          "filename": "/tmp/adamic-timer-queue-baseline/built/local/run.js",
+          "sites": 9
+        }
+      ],
+      "sites": {}
+    }
+  ]
+}

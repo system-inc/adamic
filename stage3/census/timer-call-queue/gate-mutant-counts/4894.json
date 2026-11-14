@@ -1,0 +1,22 @@
+{
+  "pid": 4894,
+  "sites": {
+    "control": 1,
+    "assignment-mutant": 1,
+    "accessor-mutant": 1
+  },
+  "accessors": [
+    {
+      "site": "accessor-mutant",
+      "key": "setTimeout"
+    }
+  ],
+  "writes": [
+    {
+      "site": "assignment-mutant",
+      "key": "setTimeout",
+      "operation": "assignment"
+    }
+  ],
+  "transformed": []
+}

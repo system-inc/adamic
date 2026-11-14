@@ -1,0 +1,18 @@
+{
+  "census_exit": 0,
+  "refused_again": [
+    {
+      "root_kind": "",
+      "depth": 0,
+      "measurement": "measured on a checker-rejected program",
+      "unit": "/tmp/adamic-timer-queue-baseline/src/compiler/sys.ts:271:5",
+      "phase": "refusal_scan",
+      "kind": "Refused",
+      "where": "/tmp/adamic-timer-queue-baseline/src/compiler/sys.ts:272:23",
+      "reason": "a cast the runtime can't check",
+      "text": "/tmp/adamic-timer-queue-baseline/src/compiler/sys.ts:272:23: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
+    }
+  ],
+  "source_restored": true,
+  "restored_source_sha256": "d9c4e491c3b6c0e98b8b78e068734ea114028a85257da6a0d22d9077b1aedde8"
+}

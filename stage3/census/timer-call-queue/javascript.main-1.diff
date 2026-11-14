@@ -1,0 +1,141 @@
+--- main/compiler/sys.js
++++ 1/compiler/sys.js
+@@ -240,12 +240,11 @@
+     function scheduleNextPoll(pollingInterval) {
+         pollingIntervalQueue(pollingInterval).pollScheduled = (() => {
+             const timerHost = host;
+-            const { setTimeout } = timerHost;
+             const callback = pollingInterval === PollingInterval.Low ? pollLowPollingIntervalQueue : pollPollingIntervalQueue;
+             const timeoutDelay = pollingInterval;
+             const t1 = pollingInterval === PollingInterval.Low ? "pollLowPollingIntervalQueue" : "pollPollingIntervalQueue";
+             const t2 = pollingIntervalQueue(pollingInterval);
+-            return setTimeout.call(timerHost, () => callback(t1, t2), timeoutDelay, t1);
++            return timerHost.setTimeout(() => callback(t1, t2), timeoutDelay, t1);
+         })();
+     }
+ }
+@@ -345,11 +344,10 @@
+             return;
+         pollScheduled = (() => {
+             const timerHost = host;
+-            const { setTimeout } = timerHost;
+             const callback = pollQueue;
+             const timeoutDelay = PollingInterval.High;
+             const t1 = "pollQueue";
+-            return setTimeout.call(timerHost, () => callback(t1), timeoutDelay, t1);
++            return timerHost.setTimeout(() => callback(t1), timeoutDelay, t1);
+         })();
+     }
+ }
+--- main/compiler/tsbuildPublic.js
++++ 1/compiler/tsbuildPublic.js
+@@ -1312,13 +1312,12 @@
+     }
+     state.timerToBuildInvalidatedProject = (() => {
+         const timerHost = hostWithWatch;
+-        const { setTimeout } = timerHost;
+         const callback = buildNextInvalidatedProject;
+         const timeoutDelay = time;
+         const t1 = "timerToBuildInvalidatedProject";
+         const t2 = state;
+         const t3 = changeDetected;
+-        return setTimeout.call(timerHost, () => callback(t1, t2, t3), timeoutDelay, t1);
++        return timerHost.setTimeout(() => callback(t1, t2, t3), timeoutDelay, t1);
+     })();
+ }
+ function buildNextInvalidatedProject(_timeoutType, state, changeDetected) {
+--- main/compiler/watchPublic.js
++++ 1/compiler/watchPublic.js
+@@ -445,11 +445,10 @@
+         writeLog(`Scheduling invalidateFailedLookup${pending ? ", Cancelled earlier one" : ""}`);
+         timerToInvalidateFailedLookupResolutions = (() => {
+             const timerHost = host;
+-            const { setTimeout } = timerHost;
+             const callback = invalidateResolutionsOfFailedLookup;
+             const timeoutDelay = 250;
+             const t1 = "timerToInvalidateFailedLookupResolutions";
+-            return setTimeout.call(timerHost, () => callback(t1), timeoutDelay, t1);
++            return timerHost.setTimeout(() => callback(t1), timeoutDelay, t1);
+         })();
+     }
+     function invalidateResolutionsOfFailedLookup(_timeoutType) {
+@@ -471,11 +470,10 @@
+         writeLog("Scheduling update");
+         timerToUpdateProgram = (() => {
+             const timerHost = host;
+-            const { setTimeout } = timerHost;
+             const callback = updateProgramWithWatchStatus;
+             const timeoutDelay = 250;
+             const t1 = "timerToUpdateProgram";
+-            return setTimeout.call(timerHost, () => callback(t1), timeoutDelay, t1);
++            return timerHost.setTimeout(() => callback(t1), timeoutDelay, t1);
+         })();
+     }
+     function scheduleProgramReload() {
+--- main/server/session.js
++++ 1/server/session.js
+@@ -146,14 +146,13 @@
+         Debug.assert(requestId === this.operationHost.getCurrentRequestId(), "delay: incorrect request id");
+         this.setTimerHandle((() => {
+             const timerHost = this.operationHost.getServerHost();
+-            const { setTimeout } = timerHost;
+             const callback = (_label) => {
+                 this.timerHandle = undefined;
+                 this.operationHost.executeWithRequestId(requestId, () => this.executeAction(action), this.performanceData);
+             };
+             const timeoutDelay = ms;
+             const t1 = actionType;
+-            return setTimeout.call(timerHost, () => callback(t1), timeoutDelay, t1);
++            return timerHost.setTimeout(() => callback(t1), timeoutDelay, t1);
+         })());
+     }
+     executeAction(action) {
+--- main/server/typingInstallerAdapter.js
++++ 1/server/typingInstallerAdapter.js
+@@ -178,7 +178,6 @@
+         this.activeRequestCount++;
+         (() => {
+             const timerHost = this.host;
+-            const { setTimeout } = timerHost;
+             const callback = (_label) => {
+                 if (this.logger.hasLevel(LogLevel.verbose)) {
+                     this.logger.info(`TIAdapter:: Sending request:${stringifyIndented(request)}`);
+@@ -187,7 +186,7 @@
+             };
+             const timeoutDelay = TypingsInstallerAdapter.requestDelayMillis;
+             const t1 = `${request.projectName}::${request.kind}`;
+-            return setTimeout.call(timerHost, () => callback(t1), timeoutDelay, t1);
++            return timerHost.setTimeout(() => callback(t1), timeoutDelay, t1);
+         })();
+     }
+ }
+--- main/server/utilities.js
++++ 1/server/utilities.js
+@@ -24,13 +24,12 @@
+         // schedule new operation, pass arguments
+         this.pendingTimeouts.set(operationId, (() => {
+             const timerHost = this.host;
+-            const { setTimeout } = timerHost;
+             const callback = ThrottledOperations.run;
+             const timeoutDelay = delay;
+             const t1 = operationId;
+             const t2 = this;
+             const t3 = cb;
+-            return setTimeout.call(timerHost, () => callback(t1, t2, t3), timeoutDelay, t1);
++            return timerHost.setTimeout(() => callback(t1, t2, t3), timeoutDelay, t1);
+         })());
+         if (this.logger) {
+             this.logger.info(`Scheduled: ${operationId}${pendingTimeout ? ", Cancelled earlier one" : ""}`);
+@@ -69,11 +68,10 @@
+         }
+         this.timerId = (() => {
+             const timerHost = this.host;
+-            const { setTimeout } = timerHost;
+             const callback = GcTimer.run;
+             const timeoutDelay = this.delay;
+             const t1 = this;
+-            return setTimeout.call(timerHost, () => callback(t1), timeoutDelay, t1);
++            return timerHost.setTimeout(() => callback(t1), timeoutDelay, t1);
+         })();
+     }
+     static run(self) {

@@ -1,0 +1,25 @@
+case: restored-variadic-slot
+node:internal/assert/utils:77
+    throw err;
+    ^
+
+AssertionError [ERR_ASSERTION]: System: changed or half-adapted owner
+    at locate (/tmp/adamic-timer-queue-work/stage3/adapt/99-correctness-timer-closures/adapt.cjs:24:9)
+    at /tmp/adamic-timer-queue-work/stage3/adapt/99-correctness-timer-closures/adapt.cjs:40:58
+    at Array.map (<anonymous>)
+    at Object.adapt (/tmp/adamic-timer-queue-work/stage3/adapt/99-correctness-timer-closures/adapt.cjs:38:65)
+    at Object.<anonymous> (/tmp/adamic-timer-queue-work/stage3/adapt/99-correctness-timer-closures/contract.cjs:18:57)
+    at Module._compile (node:internal/modules/cjs/loader:1872:14)
+    at Object..js (node:internal/modules/cjs/loader:2003:10)
+    at Module.load (node:internal/modules/cjs/loader:1594:32)
+    at Module._load (node:internal/modules/cjs/loader:1396:12)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:255:19) {
+  generatedMessage: false,
+  code: 'ERR_ASSERTION',
+  actual: false,
+  expected: true,
+  operator: '==',
+  diff: 'simple'
+}
+
+Node.js v24.19.0

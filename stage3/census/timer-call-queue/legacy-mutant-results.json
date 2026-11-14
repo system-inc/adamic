@@ -1,0 +1,35 @@
+{
+  "results": [
+    {
+      "tree": "main",
+      "mutant": "poller",
+      "observed_exit": 0,
+      "contract_expected_nonzero": true
+    },
+    {
+      "tree": "2",
+      "mutant": "poller",
+      "observed_exit": 0,
+      "contract_expected_nonzero": true
+    },
+    {
+      "tree": "2",
+      "mutant": "request",
+      "observed_exit": 1,
+      "caught_by": "request-schedule-capture"
+    },
+    {
+      "tree": "2",
+      "mutant": "label",
+      "observed_exit": 1,
+      "caught_by": "timer-label-baseline"
+    },
+    {
+      "tree": "2",
+      "mutant": "restore-slot",
+      "observed_exit": 1,
+      "caught_by": "owner pin refusal"
+    }
+  ],
+  "limitation": "The legacy poller red control is already vacuous on main: setCustomPollingValues no longer changes PollingInterval. Not used as a red proof for either amendment. Required new restoring mutants remain red."
+}

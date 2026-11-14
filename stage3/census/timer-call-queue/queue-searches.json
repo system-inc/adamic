@@ -1,0 +1,31 @@
+[
+  {
+    "name": "tracked-recursive-queue-search",
+    "command": [
+      "git",
+      "grep",
+      "--recurse-submodules",
+      "-n",
+      "-E",
+      "PollingIntervalQueue|\\bpollingInterval\\b|\\bpollIndex\\b|\\bpollScheduled\\b"
+    ],
+    "cwd": "/tmp/adamic-timer-queue-work",
+    "exit": 0,
+    "uncompressed_bytes": 4557263,
+    "lines": 1455
+  },
+  {
+    "name": "adapted-queue-search",
+    "command": [
+      "rg",
+      "-n",
+      "PollingIntervalQueue|\\bpollingInterval\\b|\\bpollIndex\\b|\\bpollScheduled\\b",
+      "src",
+      "tests"
+    ],
+    "cwd": "/tmp/adamic-timer-queue-baseline",
+    "exit": 0,
+    "uncompressed_bytes": 1509557,
+    "lines": 11529
+  }
+]

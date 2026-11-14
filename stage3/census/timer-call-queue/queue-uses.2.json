@@ -1,0 +1,468 @@
+{
+  "owner": {
+    "metadata": [
+      {
+        "line": 277,
+        "column": 9,
+        "text": "queue.pollIndex",
+        "operation": "write"
+      },
+      {
+        "line": 277,
+        "column": 50,
+        "text": "queue.pollingInterval",
+        "operation": "read"
+      },
+      {
+        "line": 277,
+        "column": 73,
+        "text": "queue.pollIndex",
+        "operation": "read"
+      },
+      {
+        "line": 277,
+        "column": 107,
+        "text": "queue.pollingInterval",
+        "operation": "read"
+      },
+      {
+        "line": 280,
+        "column": 30,
+        "text": "queue.pollingInterval",
+        "operation": "read"
+      },
+      {
+        "line": 283,
+        "column": 26,
+        "text": "queue.pollIndex",
+        "operation": "read"
+      },
+      {
+        "line": 284,
+        "column": 13,
+        "text": "queue.pollScheduled",
+        "operation": "write"
+      },
+      {
+        "line": 296,
+        "column": 14,
+        "text": "queue.pollScheduled",
+        "operation": "read"
+      },
+      {
+        "line": 358,
+        "column": 14,
+        "text": "pollingIntervalQueue(pollingInterval).pollScheduled",
+        "operation": "read"
+      },
+      {
+        "line": 364,
+        "column": 9,
+        "text": "pollingIntervalQueue(pollingInterval).pollScheduled",
+        "operation": "write"
+      }
+    ],
+    "initializations": [
+      {
+        "line": 273,
+        "column": 18,
+        "text": "files: []",
+        "operation": "write"
+      },
+      {
+        "line": 273,
+        "column": 29,
+        "text": "pollingInterval",
+        "operation": "write"
+      },
+      {
+        "line": 273,
+        "column": 46,
+        "text": "pollIndex: 0",
+        "operation": "write"
+      },
+      {
+        "line": 273,
+        "column": 60,
+        "text": "pollScheduled: false",
+        "operation": "write"
+      }
+    ],
+    "files": [
+      {
+        "line": 277,
+        "column": 37,
+        "text": "queue.files",
+        "operation": "read"
+      },
+      {
+        "line": 279,
+        "column": 13,
+        "text": "queue.files",
+        "operation": "read"
+      },
+      {
+        "line": 348,
+        "column": 9,
+        "text": "pollingIntervalQueue(pollingInterval).files",
+        "operation": "read"
+      }
+    ],
+    "indices": [
+      {
+        "line": 315,
+        "column": 21,
+        "text": "queue[pollIndex]",
+        "operation": "write"
+      },
+      {
+        "line": 325,
+        "column": 17,
+        "text": "queue[pollIndex]",
+        "operation": "write"
+      },
+      {
+        "line": 330,
+        "column": 17,
+        "text": "queue[pollIndex]",
+        "operation": "write"
+      }
+    ],
+    "lengths": [
+      {
+        "line": 279,
+        "column": 13,
+        "text": "queue.files.length",
+        "operation": "read"
+      }
+    ],
+    "pushes": [
+      {
+        "line": 348,
+        "column": 9,
+        "text": "pollingIntervalQueue(pollingInterval).files.push",
+        "operation": "read"
+      }
+    ],
+    "identity": [
+      {
+        "line": 314,
+        "column": 21,
+        "text": "queue !== changedFilesInLastPoll"
+      },
+      {
+        "line": 322,
+        "column": 22,
+        "text": "queue === changedFilesInLastPoll"
+      }
+    ],
+    "passing": [
+      {
+        "line": 277,
+        "column": 27,
+        "text": "pollQueue(queue.files, queue.pollingInterval, queue.pollIndex, pollingChunkSize[queue.pollingInterval])"
+      },
+      {
+        "line": 290,
+        "column": 9,
+        "text": "pollQueue(changedFilesInLastPoll, PollingInterval.Low, /*pollIndex*/ 0, changedFilesInLastPoll.length)"
+      },
+      {
+        "line": 293,
+        "column": 9,
+        "text": "pollPollingIntervalQueue(_timeoutType, queue)"
+      },
+      {
+        "line": 302,
+        "column": 16,
+        "text": "pollWatchedFileQueue(\n            host,\n            queue,\n            pollIndex,\n            chunkSize,\n            onWatchFileStat,\n        )"
+      }
+    ],
+    "queueIdentifiers": [
+      {
+        "line": 247,
+        "column": 11,
+        "text": "lowPollingIntervalQueue",
+        "parent": "VariableDeclaration"
+      },
+      {
+        "line": 248,
+        "column": 11,
+        "text": "mediumPollingIntervalQueue",
+        "parent": "VariableDeclaration"
+      },
+      {
+        "line": 249,
+        "column": 11,
+        "text": "highPollingIntervalQueue",
+        "parent": "VariableDeclaration"
+      },
+      {
+        "line": 276,
+        "column": 61,
+        "text": "queue",
+        "parent": "Parameter"
+      },
+      {
+        "line": 277,
+        "column": 9,
+        "text": "queue",
+        "parent": "PropertyAccessExpression"
+      },
+      {
+        "line": 277,
+        "column": 37,
+        "text": "queue",
+        "parent": "PropertyAccessExpression"
+      },
+      {
+        "line": 277,
+        "column": 50,
+        "text": "queue",
+        "parent": "PropertyAccessExpression"
+      },
+      {
+        "line": 277,
+        "column": 73,
+        "text": "queue",
+        "parent": "PropertyAccessExpression"
+      },
+      {
+        "line": 277,
+        "column": 107,
+        "text": "queue",
+        "parent": "PropertyAccessExpression"
+      },
+      {
+        "line": 279,
+        "column": 13,
+        "text": "queue",
+        "parent": "PropertyAccessExpression"
+      },
+      {
+        "line": 280,
+        "column": 30,
+        "text": "queue",
+        "parent": "PropertyAccessExpression"
+      },
+      {
+        "line": 283,
+        "column": 26,
+        "text": "queue",
+        "parent": "PropertyAccessExpression"
+      },
+      {
+        "line": 284,
+        "column": 13,
+        "text": "queue",
+        "parent": "PropertyAccessExpression"
+      },
+      {
+        "line": 288,
+        "column": 64,
+        "text": "queue",
+        "parent": "Parameter"
+      },
+      {
+        "line": 293,
+        "column": 48,
+        "text": "queue",
+        "parent": "CallExpression"
+      },
+      {
+        "line": 296,
+        "column": 14,
+        "text": "queue",
+        "parent": "PropertyAccessExpression"
+      },
+      {
+        "line": 301,
+        "column": 24,
+        "text": "queue",
+        "parent": "Parameter"
+      },
+      {
+        "line": 304,
+        "column": 13,
+        "text": "queue",
+        "parent": "CallExpression"
+      },
+      {
+        "line": 314,
+        "column": 21,
+        "text": "queue",
+        "parent": "BinaryExpression"
+      },
+      {
+        "line": 315,
+        "column": 21,
+        "text": "queue",
+        "parent": "ElementAccessExpression"
+      },
+      {
+        "line": 322,
+        "column": 22,
+        "text": "queue",
+        "parent": "BinaryExpression"
+      },
+      {
+        "line": 325,
+        "column": 17,
+        "text": "queue",
+        "parent": "ElementAccessExpression"
+      },
+      {
+        "line": 330,
+        "column": 17,
+        "text": "queue",
+        "parent": "ElementAccessExpression"
+      },
+      {
+        "line": 339,
+        "column": 24,
+        "text": "lowPollingIntervalQueue",
+        "parent": "ReturnStatement"
+      },
+      {
+        "line": 341,
+        "column": 24,
+        "text": "mediumPollingIntervalQueue",
+        "parent": "ReturnStatement"
+      },
+      {
+        "line": 343,
+        "column": 24,
+        "text": "highPollingIntervalQueue",
+        "parent": "ReturnStatement"
+      }
+    ]
+  },
+  "helper": {
+    "metadata": [],
+    "initializations": [],
+    "files": [],
+    "indices": [
+      {
+        "line": 185,
+        "column": 29,
+        "text": "queue[pollIndex]",
+        "operation": "read"
+      },
+      {
+        "line": 190,
+        "column": 13,
+        "text": "queue[pollIndex]",
+        "operation": "write"
+      },
+      {
+        "line": 199,
+        "column": 13,
+        "text": "queue[pollIndex]",
+        "operation": "write"
+      },
+      {
+        "line": 205,
+        "column": 13,
+        "text": "queue[pollIndex]",
+        "operation": "read"
+      },
+      {
+        "line": 208,
+        "column": 17,
+        "text": "queue[definedValueCopyToIndex]",
+        "operation": "write"
+      },
+      {
+        "line": 209,
+        "column": 17,
+        "text": "queue[pollIndex]",
+        "operation": "write"
+      }
+    ],
+    "lengths": [
+      {
+        "line": 184,
+        "column": 25,
+        "text": "queue.length",
+        "operation": "read"
+      },
+      {
+        "line": 220,
+        "column": 27,
+        "text": "queue.length",
+        "operation": "read"
+      },
+      {
+        "line": 223,
+        "column": 17,
+        "text": "queue.length",
+        "operation": "write"
+      }
+    ],
+    "pushes": [],
+    "identity": [],
+    "passing": [],
+    "queueIdentifiers": [
+      {
+        "line": 177,
+        "column": 5,
+        "text": "queue",
+        "parent": "Parameter"
+      },
+      {
+        "line": 184,
+        "column": 25,
+        "text": "queue",
+        "parent": "PropertyAccessExpression"
+      },
+      {
+        "line": 185,
+        "column": 29,
+        "text": "queue",
+        "parent": "ElementAccessExpression"
+      },
+      {
+        "line": 190,
+        "column": 13,
+        "text": "queue",
+        "parent": "ElementAccessExpression"
+      },
+      {
+        "line": 199,
+        "column": 13,
+        "text": "queue",
+        "parent": "ElementAccessExpression"
+      },
+      {
+        "line": 205,
+        "column": 13,
+        "text": "queue",
+        "parent": "ElementAccessExpression"
+      },
+      {
+        "line": 208,
+        "column": 17,
+        "text": "queue",
+        "parent": "ElementAccessExpression"
+      },
+      {
+        "line": 209,
+        "column": 17,
+        "text": "queue",
+        "parent": "ElementAccessExpression"
+      },
+      {
+        "line": 220,
+        "column": 27,
+        "text": "queue",
+        "parent": "PropertyAccessExpression"
+      },
+      {
+        "line": 223,
+        "column": 17,
+        "text": "queue",
+        "parent": "PropertyAccessExpression"
+      }
+    ]
+  }
+}

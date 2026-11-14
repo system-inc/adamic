@@ -1,0 +1,38 @@
+src/compiler/types.ts:7218:    // Object.defineProperty(x, 'name', { value: any, writable?: boolean (false by default) });
+src/compiler/types.ts:7219:    // Object.defineProperty(x, 'name', { get: Function, set: Function });
+src/compiler/types.ts:7220:    // Object.defineProperty(x, 'name', { get: Function });
+src/compiler/types.ts:7221:    // Object.defineProperty(x, 'name', { set: Function });
+src/compiler/types.ts:7223:    // Object.defineProperty(exports || module.exports, 'name', ...);
+src/compiler/types.ts:7225:    // Object.defineProperty(Foo.prototype, 'name', ...);
+src/compiler/scanner.ts:1120:        Object.defineProperty(scanner, "__debugShowCurrentPositionInText", {
+src/compiler/checker.ts:31587:        // Object.defineProperty(x, "method", { value: function() { } });
+src/compiler/checker.ts:31588:        // Object.defineProperty(x, "method", { set: (x: () => void) => void });
+src/compiler/checker.ts:31589:        // Object.defineProperty(x, "method", { get: () => function() { }) });
+src/compiler/checker.ts:31602:        // Object.defineProperty(x, "method", { value() { } });
+src/compiler/checker.ts:31603:        // Object.defineProperty(x, "method", { set(x: () => void) {} });
+src/compiler/checker.ts:31604:        // Object.defineProperty(x, "method", { get() { return () => {} } });
+src/compiler/checker.ts:39759:            // The usual definition of `Object.defineProperty` will _not_ cause literal types to be preserved in the
+src/compiler/checker.ts:39780:        // Object.defineProperty assignments with writable false or no setter
+src/compiler/checker.ts:43475:                    // SyntaxKind.CallExpression - `Object.defineProperty(thing, "aField", {value: 42});`
+src/compiler/commandLineParser.ts:3052:        Object.defineProperty(options, "configFile", { enumerable: false, writable: false, value: configFile });
+src/compiler/factory/emitHelpers.ts:740:                return c > 3 && r && Object.defineProperty(target, key, r), r;
+src/compiler/factory/emitHelpers.ts:797:            if (target) Object.defineProperty(target, contextIn.name, descriptor);
+src/compiler/factory/emitHelpers.ts:965:                if (Object.defineProperty) { Object.defineProperty(cooked, "raw", { value: raw }); } else { cooked.raw = raw; }
+src/compiler/factory/emitHelpers.ts:1027:            return Object.defineProperty(f, "name", { configurable: true, value: prefix ? "".concat(prefix, " ", name) : name });
+src/compiler/factory/emitHelpers.ts:1163:                Object.defineProperty(o, k2, desc);
+src/compiler/factory/emitHelpers.ts:1177:                Object.defineProperty(o, "default", { enumerable: true, value: v });
+src/compiler/transformers/classFields.ts:350: * When --useDefineForClassFields is on, this transforms to ECMAScript semantics, with Object.defineProperty.
+src/compiler/factory/nodeFactory.ts:6097:        Object.defineProperties(node, {
+src/compiler/transformers/es2015.ts:1032:        //          Object.defineProperty(C.prototype, "prop", {
+src/compiler/transformers/esDecorators.ts:905:        //  if (metadata) Object.defineProperty(C, Symbol.metadata, { configurable: true, writable: true, value: metadata });
+src/deprecatedCompat/deprecations.ts:82:    Object.defineProperty(call, "name", { ...Object.getOwnPropertyDescriptor(call, "name"), value: name });
+src/compiler/transformers/legacyDecorators.ts:645:            // We emit `void 0` here to indicate to `__decorate` that it can invoke `Object.defineProperty` directly, but that it
+src/compiler/transformers/module/module.ts:1238:        //      Object.defineProperty(exports, "__esModule", { value: true });
+src/harness/evaluatorImpl.ts:16:    Object.defineProperty(FakeSymbol, key, Object.getOwnPropertyDescriptor(Symbol, key)!);
+src/harness/evaluatorImpl.ts:29:        Object.defineProperty(FakeSymbol, symbolName, {
+src/lib/es2015.proxy.d.ts:16:     * A trap for `Object.defineProperty()`.
+src/server/moduleSpecifierCache.ts:86:        Object.defineProperty(result, "__cache", { get: () => cache });
+src/services/exportInfoMap.ts:278:        Object.defineProperty(cache, "__cache", { value: exportInfo });
+src/services/formatting/formatting.ts:107:        Object.defineProperty(textRangeWithKind, "__debugKind", {
+src/testRunner/parallel/host.ts:486:                Object.defineProperties(stats, {
+src/testRunner/unittests/tsserver/cachingFileSystemInformation.ts:461:                { path: "/user/username/projects/project/a/b/node_modules/.staging/symbol-observable-24bcbbff/lib/index.js", content: "'use strict';\n\nObject.defineProperty(exports, \"__esModule\", {\n  value: true\n});\n\nvar _ponyfill = require('./ponyfill');\n\nvar _ponyfill2 = _interopRequireDefault(_ponyfill);\n\nfunction _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }\n\nvar root; /* global window */\n\n\nif (typeof self !== 'undefined') {\n  root = self;\n} else if (typeof window !== 'undefined') {\n  root = window;\n} else if (typeof global !== 'undefined') {\n  root = global;\n} else if (typeof module !== 'undefined') {\n  root = module;\n} else {\n  root = Function('return this')();\n}\n\nvar result = (0, _ponyfill2['default'])(root);\nexports['default'] = result;" },
