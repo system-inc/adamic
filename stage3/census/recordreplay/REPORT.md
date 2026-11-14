@@ -6,7 +6,7 @@
 | B: main 9c304036 against amendment e00ce47c6 | Pending | None moved |
 
 This is an incomplete checkpoint. The paired 79-root tables are running serially;
-the all-tsc latent first-error pieces have not started. No unmeasured result is
+the all-tsc latent first-error pieces are running in six verified disjoint groups. No unmeasured result is
 claimed. Never submitted to Loom.
 
 The read gate holds for the declaration-file form. The one-commit amendment is
@@ -65,6 +65,10 @@ The main compiler's B control is run on the same amended bytes as the head:
 A uses the original adapted source on both compilers. The adaptation inputs at
 main and CLI head are identical, so the one fresh official control tree supplies
 both sides of A. The amended adapter's exact output supplies both sides of B.
+
+Actual `hereby local` builds of both trees also exit 0. Every emitted root-level
+JavaScript bundle, including `_tsc.js` and `typescript.js`, is byte-identical;
+`gate/built-javascript.json` records each size and SHA-256.
 
 The requested next-stop scripts are retained verbatim under `next-stops/` and
 retargeted through environment paths. Their group scheduler is serial, and each
