@@ -1,2 +1,2 @@
-const collect = (...items: (string | number | string[])[]): string => items.map((item) => typeof item + ":" + String(item)).join(";");
+const collect = (...items: (string | number | string[])[]): string => items.map((item) => typeof item + ":" + (Array.isArray(item) ? item.join(",") : String(item))).join(";");
 console.log(["a", "b"].map(collect).join(" | "));
