@@ -1,0 +1,1847 @@
+[
+  {
+    "file": "review/compiler/getters-census/ast-census.cjs",
+    "line": 5,
+    "reader": "files",
+    "method": "original pure filesystem function, isolated from historical driver",
+    "source_sha256": "124f981a3a13b75dc4ae5b4d053a8ecc8fa438b37e1db4072e932b126f264a98",
+    "results": {
+      "control": {
+        "status": "pass",
+        "source_files": 712,
+        "contains_added": false,
+        "inventory_sha256": "49c3fcef5ffd1ecbcaec903cd32b4a4723add47e854d3386eb276ea5c6b1bb20",
+        "result_kind": "array"
+      },
+      "amended": {
+        "status": "pass",
+        "source_files": 713,
+        "contains_added": true,
+        "inventory_sha256": "592d37582e3af680c30dbcd6a5dec7ca5301b80249973ca478b3e2d181abe479",
+        "result_kind": "array"
+      }
+    }
+  },
+  {
+    "file": "stage3/adapt/00-setup/evidence/checker-census.cjs",
+    "line": 15,
+    "reader": "walk",
+    "method": "original pure filesystem function, isolated from historical driver",
+    "source_sha256": "da4f14efde33235db6d183307553cc2e15d2cf9aba08e7bc9f88a916616e5308",
+    "results": {
+      "control": {
+        "status": "pass",
+        "source_files": 747,
+        "contains_added": false,
+        "inventory_sha256": "ceb05ef78d74fb831571fa58b0f0e6f4424f3f638b7ca0662e96b8932eea0fb5",
+        "result_kind": "array"
+      },
+      "amended": {
+        "status": "pass",
+        "source_files": 748,
+        "contains_added": true,
+        "inventory_sha256": "1430136eb3728ec62fb200ab6efb05722123122a8ce368482785b3a867a46146",
+        "result_kind": "array"
+      }
+    }
+  },
+  {
+    "file": "stage3/adapt/20-optional-declarations/check-baselines.cjs",
+    "line": 99,
+    "reader": "baselineFiles",
+    "method": "original pure filesystem function, isolated from historical driver",
+    "source_sha256": "b30f82c9eff978d4e6db153c79dc892ec581ef073c7d3ad206357b38c351968b",
+    "results": {
+      "control": {
+        "status": "pass",
+        "source_files": 747,
+        "contains_added": false,
+        "inventory_sha256": "ceb05ef78d74fb831571fa58b0f0e6f4424f3f638b7ca0662e96b8932eea0fb5",
+        "result_kind": "object"
+      },
+      "amended": {
+        "status": "pass",
+        "source_files": 748,
+        "contains_added": true,
+        "inventory_sha256": "1430136eb3728ec62fb200ab6efb05722123122a8ce368482785b3a867a46146",
+        "result_kind": "object"
+      }
+    }
+  },
+  {
+    "file": "stage3/adapt/20-optional-declarations/check-wave1.cjs",
+    "line": 30,
+    "reader": "walk",
+    "method": "original pure filesystem function, isolated from historical driver",
+    "source_sha256": "03639b0efa7e42b3d7b936d75139fcf1603097d390f86baa3d7f1d89af7aac2f",
+    "results": {
+      "control": {
+        "status": "pass",
+        "source_files": 747,
+        "contains_added": false,
+        "inventory_sha256": "ceb05ef78d74fb831571fa58b0f0e6f4424f3f638b7ca0662e96b8932eea0fb5",
+        "result_kind": "array"
+      },
+      "amended": {
+        "status": "pass",
+        "source_files": 748,
+        "contains_added": true,
+        "inventory_sha256": "1430136eb3728ec62fb200ab6efb05722123122a8ce368482785b3a867a46146",
+        "result_kind": "array"
+      }
+    }
+  },
+  {
+    "file": "stage3/adapt/20-optional-declarations/check-wave2.cjs",
+    "line": 32,
+    "reader": "walk",
+    "method": "original pure filesystem function, isolated from historical driver",
+    "source_sha256": "a9e7ceea6372e565c596fe41352172e5ee2277455c60f5fee76d45adbe638652",
+    "results": {
+      "control": {
+        "status": "pass",
+        "source_files": 747,
+        "contains_added": false,
+        "inventory_sha256": "ceb05ef78d74fb831571fa58b0f0e6f4424f3f638b7ca0662e96b8932eea0fb5",
+        "result_kind": "array"
+      },
+      "amended": {
+        "status": "pass",
+        "source_files": 748,
+        "contains_added": true,
+        "inventory_sha256": "1430136eb3728ec62fb200ab6efb05722123122a8ce368482785b3a867a46146",
+        "result_kind": "array"
+      }
+    }
+  },
+  {
+    "file": "stage3/adapt/30-indexed-reads/check-api-baselines.cjs",
+    "line": 177,
+    "reader": "baselineFiles",
+    "method": "original pure filesystem function, isolated from historical driver",
+    "source_sha256": "8e40af6f4beb9c212a62070ef4c185d0b50db5862ba9cea930236c87b90b4e61",
+    "results": {
+      "control": {
+        "status": "pass",
+        "source_files": 747,
+        "contains_added": false,
+        "inventory_sha256": "ceb05ef78d74fb831571fa58b0f0e6f4424f3f638b7ca0662e96b8932eea0fb5",
+        "result_kind": "object"
+      },
+      "amended": {
+        "status": "pass",
+        "source_files": 748,
+        "contains_added": true,
+        "inventory_sha256": "1430136eb3728ec62fb200ab6efb05722123122a8ce368482785b3a867a46146",
+        "result_kind": "object"
+      }
+    }
+  },
+  {
+    "file": "stage3/adapt/32-indexed-reads-program/maybebind-compare.cjs",
+    "method": "no standalone pure source-directory reader; retained for caller/exclusion review",
+    "results": {}
+  },
+  {
+    "file": "stage3/adapt/32-indexed-reads-program/maybebind-mutant.cjs",
+    "line": 8,
+    "reader": "snapshot",
+    "method": "original pure filesystem function, isolated from historical driver",
+    "source_sha256": "ff12f243d2220a8b3dcfaa7bb58971b8bca319ed188c383f0d3aeb0368c45ccf",
+    "results": {
+      "control": {
+        "status": "pass",
+        "source_files": 747,
+        "contains_added": false,
+        "inventory_sha256": "ceb05ef78d74fb831571fa58b0f0e6f4424f3f638b7ca0662e96b8932eea0fb5",
+        "result_kind": "array"
+      },
+      "amended": {
+        "status": "pass",
+        "source_files": 748,
+        "contains_added": true,
+        "inventory_sha256": "1430136eb3728ec62fb200ab6efb05722123122a8ce368482785b3a867a46146",
+        "result_kind": "array"
+      }
+    }
+  },
+  {
+    "file": "stage3/adapt/33-indexed-reads-emit/check-integrated-api.cjs",
+    "line": 89,
+    "reader": "referenceFiles",
+    "method": "original pure filesystem function, isolated from historical driver",
+    "source_sha256": "979fc4c0d18d6a5c7dd349a2c9eb1784a2dfdc1c3315d3221584918d1ecbeefc",
+    "results": {
+      "control": {
+        "status": "pass",
+        "source_files": 747,
+        "contains_added": false,
+        "inventory_sha256": "ceb05ef78d74fb831571fa58b0f0e6f4424f3f638b7ca0662e96b8932eea0fb5",
+        "result_kind": "array"
+      },
+      "amended": {
+        "status": "pass",
+        "source_files": 748,
+        "contains_added": true,
+        "inventory_sha256": "1430136eb3728ec62fb200ab6efb05722123122a8ce368482785b3a867a46146",
+        "result_kind": "array"
+      }
+    }
+  },
+  {
+    "file": "stage3/adapt/40-explicit-any/brands-undefined-proof.cjs",
+    "line": 12,
+    "reader": "walk",
+    "method": "original pure filesystem function, isolated from historical driver",
+    "source_sha256": "c4a1527c60e035a4cc6e6de38d0202279dc5101eb4ed7be64ce413926cc65852",
+    "results": {
+      "control": {
+        "status": "pass",
+        "source_files": 747,
+        "contains_added": false,
+        "inventory_sha256": "ceb05ef78d74fb831571fa58b0f0e6f4424f3f638b7ca0662e96b8932eea0fb5",
+        "result_kind": "array"
+      },
+      "amended": {
+        "status": "pass",
+        "source_files": 748,
+        "contains_added": true,
+        "inventory_sha256": "1430136eb3728ec62fb200ab6efb05722123122a8ce368482785b3a867a46146",
+        "result_kind": "array"
+      }
+    }
+  },
+  {
+    "file": "stage3/adapt/40-explicit-any/class-proof.cjs",
+    "line": 9,
+    "reader": "walk",
+    "method": "original pure filesystem function, isolated from historical driver",
+    "source_sha256": "755c7324b3d3865f18bcdb7a080ce60bcd72b3a240a60f1677af3a7ee5498f21",
+    "results": {
+      "control": {
+        "status": "pass",
+        "source_files": 747,
+        "contains_added": false,
+        "inventory_sha256": "ceb05ef78d74fb831571fa58b0f0e6f4424f3f638b7ca0662e96b8932eea0fb5",
+        "result_kind": "array"
+      },
+      "amended": {
+        "status": "pass",
+        "source_files": 748,
+        "contains_added": true,
+        "inventory_sha256": "1430136eb3728ec62fb200ab6efb05722123122a8ce368482785b3a867a46146",
+        "result_kind": "array"
+      }
+    }
+  },
+  {
+    "file": "stage3/adapt/40-explicit-any/classes.cjs",
+    "line": 74,
+    "reader": "auditTree",
+    "method": "original pure filesystem function, isolated from historical driver",
+    "source_sha256": "999ed404facba498085e61a1f2de262be012dd7dbd7b83dfecabf0c3cb389838",
+    "results": {
+      "control": {
+        "status": "pass",
+        "source_files": 0,
+        "contains_added": false,
+        "inventory_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "result_kind": "undefined"
+      },
+      "amended": {
+        "status": "pass",
+        "source_files": 0,
+        "contains_added": false,
+        "inventory_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "result_kind": "undefined"
+      }
+    }
+  },
+  {
+    "file": "stage3/adapt/40-explicit-any/evidence/timer-slot/compare.cjs",
+    "line": 10,
+    "reader": "files",
+    "method": "original pure filesystem function, isolated from historical driver",
+    "source_sha256": "6015cc649f93db5541fa6f1298b842c8fb77c665c53abedb7d4b3af4a4a8803b",
+    "results": {
+      "control": {
+        "status": "pass",
+        "source_files": 747,
+        "contains_added": false,
+        "inventory_sha256": "ceb05ef78d74fb831571fa58b0f0e6f4424f3f638b7ca0662e96b8932eea0fb5",
+        "result_kind": "array"
+      },
+      "amended": {
+        "status": "pass",
+        "source_files": 748,
+        "contains_added": true,
+        "inventory_sha256": "1430136eb3728ec62fb200ab6efb05722123122a8ce368482785b3a867a46146",
+        "result_kind": "array"
+      }
+    }
+  },
+  {
+    "file": "stage3/adapt/40-explicit-any/filesystem-proof.cjs",
+    "line": 17,
+    "reader": "walk",
+    "method": "original pure filesystem function, isolated from historical driver",
+    "source_sha256": "f203f47da0646b3c1108f42fc416879fd3d23bc8d8faf0103468ad17fc120296",
+    "results": {
+      "control": {
+        "status": "pass",
+        "source_files": 747,
+        "contains_added": false,
+        "inventory_sha256": "ceb05ef78d74fb831571fa58b0f0e6f4424f3f638b7ca0662e96b8932eea0fb5",
+        "result_kind": "array"
+      },
+      "amended": {
+        "status": "pass",
+        "source_files": 748,
+        "contains_added": true,
+        "inventory_sha256": "1430136eb3728ec62fb200ab6efb05722123122a8ce368482785b3a867a46146",
+        "result_kind": "array"
+      }
+    }
+  },
+  {
+    "file": "stage3/adapt/40-explicit-any/isarray-proof.cjs",
+    "line": 9,
+    "reader": "walk",
+    "method": "original pure filesystem function, isolated from historical driver",
+    "source_sha256": "f361e0735d8d771d60e1ccb8beca4bab0be9804ee20bd7bf6898c6217ced4744",
+    "results": {
+      "control": {
+        "status": "pass",
+        "source_files": 747,
+        "contains_added": false,
+        "inventory_sha256": "ceb05ef78d74fb831571fa58b0f0e6f4424f3f638b7ca0662e96b8932eea0fb5",
+        "result_kind": "array"
+      },
+      "amended": {
+        "status": "pass",
+        "source_files": 748,
+        "contains_added": true,
+        "inventory_sha256": "1430136eb3728ec62fb200ab6efb05722123122a8ce368482785b3a867a46146",
+        "result_kind": "array"
+      }
+    }
+  },
+  {
+    "file": "stage3/adapt/40-explicit-any/retype-check.cjs",
+    "line": 10,
+    "reader": "walk",
+    "method": "original pure filesystem function, isolated from historical driver",
+    "source_sha256": "4151b9582b8f2ad70d2e66f5d123227b9bcd6fddec8831a8c2dd2447e4dce690",
+    "results": {
+      "control": {
+        "status": "pass",
+        "source_files": 747,
+        "contains_added": false,
+        "inventory_sha256": "ceb05ef78d74fb831571fa58b0f0e6f4424f3f638b7ca0662e96b8932eea0fb5",
+        "result_kind": "array"
+      },
+      "amended": {
+        "status": "pass",
+        "source_files": 748,
+        "contains_added": true,
+        "inventory_sha256": "1430136eb3728ec62fb200ab6efb05722123122a8ce368482785b3a867a46146",
+        "result_kind": "array"
+      }
+    }
+  },
+  {
+    "file": "stage3/adapt/40-explicit-any/verify.cjs",
+    "line": 11,
+    "reader": "walk",
+    "method": "original pure filesystem function, isolated from historical driver",
+    "source_sha256": "e4a9ea480d7b8d357d1630e89c9d56cd30e17605bbd3b3ecae4c63c7d18a2227",
+    "results": {
+      "control": {
+        "status": "pass",
+        "source_files": 747,
+        "contains_added": false,
+        "inventory_sha256": "ceb05ef78d74fb831571fa58b0f0e6f4424f3f638b7ca0662e96b8932eea0fb5",
+        "result_kind": "array"
+      },
+      "amended": {
+        "status": "pass",
+        "source_files": 748,
+        "contains_added": true,
+        "inventory_sha256": "1430136eb3728ec62fb200ab6efb05722123122a8ce368482785b3a867a46146",
+        "result_kind": "array"
+      }
+    }
+  },
+  {
+    "file": "stage3/adapt/41-explicit-any-remaining/prove.cjs",
+    "line": 7,
+    "reader": "walk",
+    "method": "original pure filesystem function, isolated from historical driver",
+    "source_sha256": "063a49dd2bb9f728dd525a1f15f7065f79cdb061496c9061ea1083a157c9b090",
+    "results": {
+      "control": {
+        "status": "pass",
+        "source_files": 747,
+        "contains_added": false,
+        "inventory_sha256": "ceb05ef78d74fb831571fa58b0f0e6f4424f3f638b7ca0662e96b8932eea0fb5",
+        "result_kind": "array"
+      },
+      "amended": {
+        "status": "pass",
+        "source_files": 748,
+        "contains_added": true,
+        "inventory_sha256": "1430136eb3728ec62fb200ab6efb05722123122a8ce368482785b3a867a46146",
+        "result_kind": "array"
+      }
+    }
+  },
+  {
+    "file": "stage3/adapt/43-any-returns/proof.cjs",
+    "line": 14,
+    "reader": "walk",
+    "method": "original pure filesystem function, isolated from historical driver",
+    "source_sha256": "c0cc58dc118ff5d13b1237c4369eccd3b85aed0a616626fee962cd67441c723d",
+    "results": {
+      "control": {
+        "status": "pass",
+        "source_files": 747,
+        "contains_added": false,
+        "inventory_sha256": "ceb05ef78d74fb831571fa58b0f0e6f4424f3f638b7ca0662e96b8932eea0fb5",
+        "result_kind": "array"
+      },
+      "amended": {
+        "status": "pass",
+        "source_files": 748,
+        "contains_added": true,
+        "inventory_sha256": "1430136eb3728ec62fb200ab6efb05722123122a8ce368482785b3a867a46146",
+        "result_kind": "array"
+      }
+    }
+  },
+  {
+    "file": "stage3/adapt/44-config-generics/proof.cjs",
+    "line": 9,
+    "reader": "walk",
+    "method": "original pure filesystem function, isolated from historical driver",
+    "source_sha256": "295ee370b76c7bd063bfbb3dedd28e9ec064ae04c56f378a15a84e3cbedb1d68",
+    "results": {
+      "control": {
+        "status": "pass",
+        "source_files": 747,
+        "contains_added": false,
+        "inventory_sha256": "ceb05ef78d74fb831571fa58b0f0e6f4424f3f638b7ca0662e96b8932eea0fb5",
+        "result_kind": "array"
+      },
+      "amended": {
+        "status": "pass",
+        "source_files": 748,
+        "contains_added": true,
+        "inventory_sha256": "1430136eb3728ec62fb200ab6efb05722123122a8ce368482785b3a867a46146",
+        "result_kind": "array"
+      }
+    }
+  },
+  {
+    "file": "stage3/adapt/47-host-errors/meta-spread-pin-witness.cjs",
+    "method": "no standalone pure source-directory reader; retained for caller/exclusion review",
+    "results": {}
+  },
+  {
+    "file": "stage3/adapt/48-memoize/verify.cjs",
+    "line": 49,
+    "reader": "walk",
+    "method": "original pure filesystem function, isolated from historical driver",
+    "source_sha256": "065c6e95fa025fc9e195781216ac494e777f3980d52f445fccb3b7f50153a148",
+    "results": {
+      "control": {
+        "status": "pass",
+        "source_files": 0,
+        "contains_added": false,
+        "inventory_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "result_kind": "undefined"
+      },
+      "amended": {
+        "status": "pass",
+        "source_files": 0,
+        "contains_added": false,
+        "inventory_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "result_kind": "undefined"
+      }
+    }
+  },
+  {
+    "file": "stage3/adapt/49-honest-optionals/instrumentation-audit.cjs",
+    "line": 3,
+    "reader": "visit",
+    "method": "original pure filesystem function, isolated from historical driver",
+    "source_sha256": "a37d6ea12c339043573a5bbaaf348dc81ec290283cc6120ee977aaeecba70a29",
+    "results": {
+      "control": {
+        "status": "pass",
+        "source_files": 747,
+        "contains_added": false,
+        "inventory_sha256": "ceb05ef78d74fb831571fa58b0f0e6f4424f3f638b7ca0662e96b8932eea0fb5",
+        "result_kind": "undefined"
+      },
+      "amended": {
+        "status": "pass",
+        "source_files": 748,
+        "contains_added": true,
+        "inventory_sha256": "1430136eb3728ec62fb200ab6efb05722123122a8ce368482785b3a867a46146",
+        "result_kind": "undefined"
+      }
+    }
+  },
+  {
+    "file": "stage3/adapt/49-honest-optionals/read-probe.cjs",
+    "method": "no standalone pure source-directory reader; retained for caller/exclusion review",
+    "results": {}
+  },
+  {
+    "file": "stage3/adapt/70-readonly-views/check-api.cjs",
+    "line": 136,
+    "reader": "baselineFiles",
+    "method": "original pure filesystem function, isolated from historical driver",
+    "source_sha256": "30693ada04faa460c73bfe9118481be1a77312283c9467ab7037c1edc9c97807",
+    "results": {
+      "control": {
+        "status": "pass",
+        "source_files": 747,
+        "contains_added": false,
+        "inventory_sha256": "ceb05ef78d74fb831571fa58b0f0e6f4424f3f638b7ca0662e96b8932eea0fb5",
+        "result_kind": "object"
+      },
+      "amended": {
+        "status": "pass",
+        "source_files": 748,
+        "contains_added": true,
+        "inventory_sha256": "1430136eb3728ec62fb200ab6efb05722123122a8ce368482785b3a867a46146",
+        "result_kind": "object"
+      }
+    }
+  },
+  {
+    "file": "stage3/adapt/71-writable-views/family-guards.cjs",
+    "line": 11,
+    "reader": "hashes",
+    "method": "original pure filesystem function, isolated from historical driver",
+    "source_sha256": "75642fc6b900ca3738c4efbccda27d4dc00c10be15fcc54f3b9f37910fe04920",
+    "results": {
+      "control": {
+        "status": "pass",
+        "source_files": 747,
+        "contains_added": false,
+        "inventory_sha256": "ceb05ef78d74fb831571fa58b0f0e6f4424f3f638b7ca0662e96b8932eea0fb5",
+        "result_kind": "object"
+      },
+      "amended": {
+        "status": "pass",
+        "source_files": 748,
+        "contains_added": true,
+        "inventory_sha256": "1430136eb3728ec62fb200ab6efb05722123122a8ce368482785b3a867a46146",
+        "result_kind": "object"
+      }
+    }
+  },
+  {
+    "file": "stage3/adapt/71-writable-views/plan-mutants.cjs",
+    "line": 10,
+    "reader": "hashes",
+    "method": "original pure filesystem function, isolated from historical driver",
+    "source_sha256": "331c8460253b9c9f91ef98cef6406016f9f8a936056b466e38a163cbc1ff0f98",
+    "results": {
+      "control": {
+        "status": "pass",
+        "source_files": 747,
+        "contains_added": false,
+        "inventory_sha256": "ceb05ef78d74fb831571fa58b0f0e6f4424f3f638b7ca0662e96b8932eea0fb5",
+        "result_kind": "object"
+      },
+      "amended": {
+        "status": "pass",
+        "source_files": 748,
+        "contains_added": true,
+        "inventory_sha256": "1430136eb3728ec62fb200ab6efb05722123122a8ce368482785b3a867a46146",
+        "result_kind": "object"
+      }
+    }
+  },
+  {
+    "file": "stage3/adapt/75-optional-widening/verify.cjs",
+    "method": "no standalone pure source-directory reader; retained for caller/exclusion review",
+    "results": {}
+  },
+  {
+    "file": "stage3/adapt/78-variance-marker/proofs/census.cjs",
+    "line": 15,
+    "reader": "walk",
+    "method": "original pure filesystem function, isolated from historical driver",
+    "source_sha256": "8eeac14d3eaf0e6484b39a8b33a4be1ce572855585c0e917470f2aae7e7a2f06",
+    "results": {
+      "control": {
+        "status": "pass",
+        "source_files": 747,
+        "contains_added": false,
+        "inventory_sha256": "ceb05ef78d74fb831571fa58b0f0e6f4424f3f638b7ca0662e96b8932eea0fb5",
+        "result_kind": "array"
+      },
+      "amended": {
+        "status": "pass",
+        "source_files": 748,
+        "contains_added": true,
+        "inventory_sha256": "1430136eb3728ec62fb200ab6efb05722123122a8ce368482785b3a867a46146",
+        "result_kind": "array"
+      }
+    }
+  },
+  {
+    "file": "stage3/adapt/78-variance-marker/proofs/check.cjs",
+    "line": 17,
+    "reader": "walk",
+    "method": "original pure filesystem function, isolated from historical driver",
+    "source_sha256": "0c15f1f8c16d2d934bafe557e694a2756d5c6908d8b9770ccee5c716b4f517d1",
+    "results": {
+      "control": {
+        "status": "pass",
+        "source_files": 747,
+        "contains_added": false,
+        "inventory_sha256": "ceb05ef78d74fb831571fa58b0f0e6f4424f3f638b7ca0662e96b8932eea0fb5",
+        "result_kind": "array"
+      },
+      "amended": {
+        "status": "pass",
+        "source_files": 748,
+        "contains_added": true,
+        "inventory_sha256": "1430136eb3728ec62fb200ab6efb05722123122a8ce368482785b3a867a46146",
+        "result_kind": "array"
+      }
+    }
+  },
+  {
+    "file": "stage3/adapt/79-exit-code/proofs/census.cjs",
+    "line": 15,
+    "reader": "walk",
+    "method": "original pure filesystem function, isolated from historical driver",
+    "source_sha256": "8eeac14d3eaf0e6484b39a8b33a4be1ce572855585c0e917470f2aae7e7a2f06",
+    "results": {
+      "control": {
+        "status": "pass",
+        "source_files": 747,
+        "contains_added": false,
+        "inventory_sha256": "ceb05ef78d74fb831571fa58b0f0e6f4424f3f638b7ca0662e96b8932eea0fb5",
+        "result_kind": "array"
+      },
+      "amended": {
+        "status": "pass",
+        "source_files": 748,
+        "contains_added": true,
+        "inventory_sha256": "1430136eb3728ec62fb200ab6efb05722123122a8ce368482785b3a867a46146",
+        "result_kind": "array"
+      }
+    }
+  },
+  {
+    "file": "stage3/adapt/79-exit-code/proofs/inventory.cjs",
+    "line": 4,
+    "reader": "walk",
+    "method": "original pure filesystem function, isolated from historical driver",
+    "source_sha256": "9f96cd3c187b8a5265952e2eaba0d7a78b22eda8dee0b7f4f42b8113b9129971",
+    "results": {
+      "control": {
+        "status": "pass",
+        "source_files": 747,
+        "contains_added": false,
+        "inventory_sha256": "ceb05ef78d74fb831571fa58b0f0e6f4424f3f638b7ca0662e96b8932eea0fb5",
+        "result_kind": "array"
+      },
+      "amended": {
+        "status": "pass",
+        "source_files": 748,
+        "contains_added": true,
+        "inventory_sha256": "1430136eb3728ec62fb200ab6efb05722123122a8ce368482785b3a867a46146",
+        "result_kind": "array"
+      }
+    }
+  },
+  {
+    "file": "stage3/adapt/79-exit-code/proofs/source-scope.cjs",
+    "line": 8,
+    "reader": "files",
+    "method": "original pure filesystem function, isolated from historical driver",
+    "source_sha256": "77b77010fa1b4b3f8cea649eca5facb30f6887d7e1361d560a053ab954bda3d1",
+    "results": {
+      "control": {
+        "status": "pass",
+        "source_files": 747,
+        "contains_added": false,
+        "inventory_sha256": "ceb05ef78d74fb831571fa58b0f0e6f4424f3f638b7ca0662e96b8932eea0fb5",
+        "result_kind": "array"
+      },
+      "amended": {
+        "status": "pass",
+        "source_files": 748,
+        "contains_added": true,
+        "inventory_sha256": "1430136eb3728ec62fb200ab6efb05722123122a8ce368482785b3a867a46146",
+        "result_kind": "array"
+      }
+    }
+  },
+  {
+    "file": "stage3/adapt/90-void-widening/proofs/owner-contract.cjs",
+    "line": 16,
+    "reader": "snapshot",
+    "method": "original pure filesystem function, isolated from historical driver",
+    "source_sha256": "7d80c2e29af0dadd87b05b3d8398206ac09f4ecddaab4316fcbf192d424473ba",
+    "results": {
+      "control": {
+        "status": "pass",
+        "source_files": 747,
+        "contains_added": false,
+        "inventory_sha256": "ceb05ef78d74fb831571fa58b0f0e6f4424f3f638b7ca0662e96b8932eea0fb5",
+        "result_kind": "array"
+      },
+      "amended": {
+        "status": "pass",
+        "source_files": 748,
+        "contains_added": true,
+        "inventory_sha256": "1430136eb3728ec62fb200ab6efb05722123122a8ce368482785b3a867a46146",
+        "result_kind": "array"
+      }
+    }
+  },
+  {
+    "file": "stage3/adapt/91-patcher-discard/proofs/references.cjs",
+    "line": 7,
+    "reader": "walk",
+    "method": "original pure filesystem function, isolated from historical driver",
+    "source_sha256": "66901b2c74539913faa97b05bc49d00e2c4eb8da0a53c28b784ed40e33d32ded",
+    "results": {
+      "control": {
+        "status": "pass",
+        "source_files": 747,
+        "contains_added": false,
+        "inventory_sha256": "ceb05ef78d74fb831571fa58b0f0e6f4424f3f638b7ca0662e96b8932eea0fb5",
+        "result_kind": "array"
+      },
+      "amended": {
+        "status": "pass",
+        "source_files": 748,
+        "contains_added": true,
+        "inventory_sha256": "1430136eb3728ec62fb200ab6efb05722123122a8ce368482785b3a867a46146",
+        "result_kind": "array"
+      }
+    }
+  },
+  {
+    "file": "stage3/adapt/91-patcher-discard/proofs/scope.cjs",
+    "line": 7,
+    "reader": "walk",
+    "method": "original pure filesystem function, isolated from historical driver",
+    "source_sha256": "67f63a9543562c92facc27ff88aaf22693d45849546cce175b5f31339ae7f782",
+    "results": {
+      "control": {
+        "status": "pass",
+        "source_files": 747,
+        "contains_added": false,
+        "inventory_sha256": "ceb05ef78d74fb831571fa58b0f0e6f4424f3f638b7ca0662e96b8932eea0fb5",
+        "result_kind": "array"
+      },
+      "amended": {
+        "status": "pass",
+        "source_files": 748,
+        "contains_added": true,
+        "inventory_sha256": "1430136eb3728ec62fb200ab6efb05722123122a8ce368482785b3a867a46146",
+        "result_kind": "array"
+      }
+    }
+  },
+  {
+    "file": "stage3/adapt/92-tty-host-results/proofs/check.cjs",
+    "method": "no standalone pure source-directory reader; retained for caller/exclusion review",
+    "results": {}
+  },
+  {
+    "file": "stage3/adapt/92-tty-host-results/proofs/owner-contract.cjs",
+    "line": 16,
+    "reader": "snapshot",
+    "method": "original pure filesystem function, isolated from historical driver",
+    "source_sha256": "7d80c2e29af0dadd87b05b3d8398206ac09f4ecddaab4316fcbf192d424473ba",
+    "results": {
+      "control": {
+        "status": "pass",
+        "source_files": 747,
+        "contains_added": false,
+        "inventory_sha256": "ceb05ef78d74fb831571fa58b0f0e6f4424f3f638b7ca0662e96b8932eea0fb5",
+        "result_kind": "array"
+      },
+      "amended": {
+        "status": "pass",
+        "source_files": 748,
+        "contains_added": true,
+        "inventory_sha256": "1430136eb3728ec62fb200ab6efb05722123122a8ce368482785b3a867a46146",
+        "result_kind": "array"
+      }
+    }
+  },
+  {
+    "file": "stage3/adapt/93-builtin-imports/proofs/check.cjs",
+    "line": 5,
+    "reader": "inventory",
+    "method": "original pure filesystem function, isolated from historical driver",
+    "source_sha256": "a37edebaf3f29f96c0cdda8b7cecf2e36ce9747633bb60760f3965f1813ed994",
+    "results": {
+      "control": {
+        "status": "pass",
+        "source_files": 747,
+        "contains_added": false,
+        "inventory_sha256": "ceb05ef78d74fb831571fa58b0f0e6f4424f3f638b7ca0662e96b8932eea0fb5",
+        "result_kind": "array"
+      },
+      "amended": {
+        "status": "pass",
+        "source_files": 748,
+        "contains_added": true,
+        "inventory_sha256": "1430136eb3728ec62fb200ab6efb05722123122a8ce368482785b3a867a46146",
+        "result_kind": "array"
+      }
+    }
+  },
+  {
+    "file": "stage3/adapt/93-builtin-imports/proofs/owner-contract.cjs",
+    "line": 16,
+    "reader": "snapshot",
+    "method": "original pure filesystem function, isolated from historical driver",
+    "source_sha256": "99f05be5b83fe7b4f9f705d39b60171f3bb2e073a546a3acb1282edab6c2d083",
+    "results": {
+      "control": {
+        "status": "pass",
+        "source_files": 747,
+        "contains_added": false,
+        "inventory_sha256": "ceb05ef78d74fb831571fa58b0f0e6f4424f3f638b7ca0662e96b8932eea0fb5",
+        "result_kind": "array"
+      },
+      "amended": {
+        "status": "pass",
+        "source_files": 748,
+        "contains_added": true,
+        "inventory_sha256": "1430136eb3728ec62fb200ab6efb05722123122a8ce368482785b3a867a46146",
+        "result_kind": "array"
+      }
+    }
+  },
+  {
+    "file": "stage3/adapt/95-checker-axolotl-a/verify.cjs",
+    "line": 9,
+    "reader": "walk",
+    "method": "original pure filesystem function, isolated from historical driver",
+    "source_sha256": "18ffb1b986b77f3b2129b993fc7d588f5d69c4571944a9bbaec9340d74c90bb4",
+    "results": {
+      "control": {
+        "status": "pass",
+        "source_files": 747,
+        "contains_added": false,
+        "inventory_sha256": "ceb05ef78d74fb831571fa58b0f0e6f4424f3f638b7ca0662e96b8932eea0fb5",
+        "result_kind": "array"
+      },
+      "amended": {
+        "status": "pass",
+        "source_files": 748,
+        "contains_added": true,
+        "inventory_sha256": "1430136eb3728ec62fb200ab6efb05722123122a8ce368482785b3a867a46146",
+        "result_kind": "array"
+      }
+    }
+  },
+  {
+    "file": "stage3/adapt/95-checker-axolotl-b/verify.cjs",
+    "line": 9,
+    "reader": "walk",
+    "method": "original pure filesystem function, isolated from historical driver",
+    "source_sha256": "85b586fecb2ec339a1b6dcdf2467491ed387fc7842071a1b89314011939b68d1",
+    "results": {
+      "control": {
+        "status": "pass",
+        "source_files": 747,
+        "contains_added": false,
+        "inventory_sha256": "ceb05ef78d74fb831571fa58b0f0e6f4424f3f638b7ca0662e96b8932eea0fb5",
+        "result_kind": "array"
+      },
+      "amended": {
+        "status": "pass",
+        "source_files": 748,
+        "contains_added": true,
+        "inventory_sha256": "1430136eb3728ec62fb200ab6efb05722123122a8ce368482785b3a867a46146",
+        "result_kind": "array"
+      }
+    }
+  },
+  {
+    "file": "stage3/adapt/95-checker-axolotl-c/verify.cjs",
+    "line": 10,
+    "reader": "walk",
+    "method": "original pure filesystem function, isolated from historical driver",
+    "source_sha256": "a9da22ecc840cdd2f0b6b7bcb0e06eb4d257639a9c4ddb6e1028123ec4bd77e7",
+    "results": {
+      "control": {
+        "status": "pass",
+        "source_files": 747,
+        "contains_added": false,
+        "inventory_sha256": "ceb05ef78d74fb831571fa58b0f0e6f4424f3f638b7ca0662e96b8932eea0fb5",
+        "result_kind": "array"
+      },
+      "amended": {
+        "status": "pass",
+        "source_files": 748,
+        "contains_added": true,
+        "inventory_sha256": "1430136eb3728ec62fb200ab6efb05722123122a8ce368482785b3a867a46146",
+        "result_kind": "array"
+      }
+    }
+  },
+  {
+    "file": "stage3/adapt/95-checker-axolotl-d/verify.cjs",
+    "line": 9,
+    "reader": "walk",
+    "method": "original pure filesystem function, isolated from historical driver",
+    "source_sha256": "4889930dbbf42af42d6c48f1ff0549738f0446edced97a2b01996d4cf49016bf",
+    "results": {
+      "control": {
+        "status": "pass",
+        "source_files": 747,
+        "contains_added": false,
+        "inventory_sha256": "ceb05ef78d74fb831571fa58b0f0e6f4424f3f638b7ca0662e96b8932eea0fb5",
+        "result_kind": "array"
+      },
+      "amended": {
+        "status": "pass",
+        "source_files": 748,
+        "contains_added": true,
+        "inventory_sha256": "1430136eb3728ec62fb200ab6efb05722123122a8ce368482785b3a867a46146",
+        "result_kind": "array"
+      }
+    }
+  },
+  {
+    "file": "stage3/adapt/95-checker-axolotl-e/verify.cjs",
+    "line": 8,
+    "reader": "walk",
+    "method": "original pure filesystem function, isolated from historical driver",
+    "source_sha256": "82e6feae8b1b031e17fb4339ab0a430283f52f9aaedb6549c64deb6866be4ed0",
+    "results": {
+      "control": {
+        "status": "pass",
+        "source_files": 747,
+        "contains_added": false,
+        "inventory_sha256": "ceb05ef78d74fb831571fa58b0f0e6f4424f3f638b7ca0662e96b8932eea0fb5",
+        "result_kind": "array"
+      },
+      "amended": {
+        "status": "pass",
+        "source_files": 748,
+        "contains_added": true,
+        "inventory_sha256": "1430136eb3728ec62fb200ab6efb05722123122a8ce368482785b3a867a46146",
+        "result_kind": "array"
+      }
+    }
+  },
+  {
+    "file": "stage3/adapt/95-checker-axolotl-f/verify.cjs",
+    "line": 6,
+    "reader": "walk",
+    "method": "original pure filesystem function, isolated from historical driver",
+    "source_sha256": "121128e115a2c9b5ed8efa08f20e4e05c46e038f7229b97b9dce427b3bf0eb33",
+    "results": {
+      "control": {
+        "status": "pass",
+        "source_files": 747,
+        "contains_added": false,
+        "inventory_sha256": "ceb05ef78d74fb831571fa58b0f0e6f4424f3f638b7ca0662e96b8932eea0fb5",
+        "result_kind": "array"
+      },
+      "amended": {
+        "status": "pass",
+        "source_files": 748,
+        "contains_added": true,
+        "inventory_sha256": "1430136eb3728ec62fb200ab6efb05722123122a8ce368482785b3a867a46146",
+        "result_kind": "array"
+      }
+    }
+  },
+  {
+    "file": "stage3/adapt/95-checker-axolotl-g/verify.cjs",
+    "line": 6,
+    "reader": "walk",
+    "method": "original pure filesystem function, isolated from historical driver",
+    "source_sha256": "c9e08f2933bf528f7dfd6f02432728c055950323f4a2b97cb8185a18d6f54752",
+    "results": {
+      "control": {
+        "status": "pass",
+        "source_files": 747,
+        "contains_added": false,
+        "inventory_sha256": "ceb05ef78d74fb831571fa58b0f0e6f4424f3f638b7ca0662e96b8932eea0fb5",
+        "result_kind": "array"
+      },
+      "amended": {
+        "status": "pass",
+        "source_files": 748,
+        "contains_added": true,
+        "inventory_sha256": "1430136eb3728ec62fb200ab6efb05722123122a8ce368482785b3a867a46146",
+        "result_kind": "array"
+      }
+    }
+  },
+  {
+    "file": "stage3/adapt/95-checker-axolotl-h/verify.cjs",
+    "line": 8,
+    "reader": "walk",
+    "method": "original pure filesystem function, isolated from historical driver",
+    "source_sha256": "b1a28948c520ae5c643b3be89664b619a0236b10e20f356ce96d985b82344515",
+    "results": {
+      "control": {
+        "status": "pass",
+        "source_files": 747,
+        "contains_added": false,
+        "inventory_sha256": "ceb05ef78d74fb831571fa58b0f0e6f4424f3f638b7ca0662e96b8932eea0fb5",
+        "result_kind": "array"
+      },
+      "amended": {
+        "status": "pass",
+        "source_files": 748,
+        "contains_added": true,
+        "inventory_sha256": "1430136eb3728ec62fb200ab6efb05722123122a8ce368482785b3a867a46146",
+        "result_kind": "array"
+      }
+    }
+  },
+  {
+    "file": "stage3/adapt/99-correctness-axolotl-l/compare.cjs",
+    "line": 4,
+    "reader": "files",
+    "method": "original pure filesystem function, isolated from historical driver",
+    "source_sha256": "e0a7636c90558586b146a85a07d000d040aaf41f5d0941b52825952d33d0acb7",
+    "results": {
+      "control": {
+        "status": "pass",
+        "source_files": 747,
+        "contains_added": false,
+        "inventory_sha256": "ceb05ef78d74fb831571fa58b0f0e6f4424f3f638b7ca0662e96b8932eea0fb5",
+        "result_kind": "array"
+      },
+      "amended": {
+        "status": "pass",
+        "source_files": 748,
+        "contains_added": true,
+        "inventory_sha256": "1430136eb3728ec62fb200ab6efb05722123122a8ce368482785b3a867a46146",
+        "result_kind": "array"
+      }
+    }
+  },
+  {
+    "file": "stage3/adapt/99-correctness-axolotl-m/compare.cjs",
+    "line": 5,
+    "reader": "files",
+    "method": "original pure filesystem function, isolated from historical driver",
+    "source_sha256": "4b79130a6e6a5e974d1ac12a7dfbbf11fa4d8238a1411050added00bb196dea2",
+    "results": {
+      "control": {
+        "status": "pass",
+        "source_files": 747,
+        "contains_added": false,
+        "inventory_sha256": "ceb05ef78d74fb831571fa58b0f0e6f4424f3f638b7ca0662e96b8932eea0fb5",
+        "result_kind": "array"
+      },
+      "amended": {
+        "status": "pass",
+        "source_files": 748,
+        "contains_added": true,
+        "inventory_sha256": "1430136eb3728ec62fb200ab6efb05722123122a8ce368482785b3a867a46146",
+        "result_kind": "array"
+      }
+    }
+  },
+  {
+    "file": "stage3/adapt/99-correctness-axolotl-q/compare.cjs",
+    "line": 5,
+    "reader": "files",
+    "method": "original pure filesystem function, isolated from historical driver",
+    "source_sha256": "826cf61fa2fa1e614a38ffb6b352b17610ff0d1ae4f1e0ec3e6c4e6466c9d4cf",
+    "results": {
+      "control": {
+        "status": "pass",
+        "source_files": 747,
+        "contains_added": false,
+        "inventory_sha256": "ceb05ef78d74fb831571fa58b0f0e6f4424f3f638b7ca0662e96b8932eea0fb5",
+        "result_kind": "array"
+      },
+      "amended": {
+        "status": "pass",
+        "source_files": 748,
+        "contains_added": true,
+        "inventory_sha256": "1430136eb3728ec62fb200ab6efb05722123122a8ce368482785b3a867a46146",
+        "result_kind": "array"
+      }
+    }
+  },
+  {
+    "file": "stage3/adapt/99-correctness-axolotl-r/compare-tosorted.cjs",
+    "line": 6,
+    "reader": "files",
+    "method": "original pure filesystem function, isolated from historical driver",
+    "source_sha256": "f30c7ad63924aa4c1ce8c44fbc14392f9f35c1695be6b40e7e39b0f267921062",
+    "results": {
+      "control": {
+        "status": "pass",
+        "source_files": 747,
+        "contains_added": false,
+        "inventory_sha256": "ceb05ef78d74fb831571fa58b0f0e6f4424f3f638b7ca0662e96b8932eea0fb5",
+        "result_kind": "array"
+      },
+      "amended": {
+        "status": "pass",
+        "source_files": 748,
+        "contains_added": true,
+        "inventory_sha256": "1430136eb3728ec62fb200ab6efb05722123122a8ce368482785b3a867a46146",
+        "result_kind": "array"
+      }
+    }
+  },
+  {
+    "file": "stage3/adapt/99-correctness-axolotl-r/compare.cjs",
+    "line": 6,
+    "reader": "files",
+    "method": "original pure filesystem function, isolated from historical driver",
+    "source_sha256": "7c2e53310a0f6a2c453c02a1e6e26b7e9d1c5496be8237f9a9b84c2c3cb89ae6",
+    "results": {
+      "control": {
+        "status": "pass",
+        "source_files": 747,
+        "contains_added": false,
+        "inventory_sha256": "ceb05ef78d74fb831571fa58b0f0e6f4424f3f638b7ca0662e96b8932eea0fb5",
+        "result_kind": "array"
+      },
+      "amended": {
+        "status": "pass",
+        "source_files": 748,
+        "contains_added": true,
+        "inventory_sha256": "1430136eb3728ec62fb200ab6efb05722123122a8ce368482785b3a867a46146",
+        "result_kind": "array"
+      }
+    }
+  },
+  {
+    "file": "stage3/adapt/99-correctness-axolotl-s/clear-compare.cjs",
+    "line": 6,
+    "reader": "files",
+    "method": "original pure filesystem function, isolated from historical driver",
+    "source_sha256": "a99f91be73385efa870df7dfa5aa1d2afb95bbabbe851eb6cf7e293e16a60361",
+    "results": {
+      "control": {
+        "status": "pass",
+        "source_files": 747,
+        "contains_added": false,
+        "inventory_sha256": "ceb05ef78d74fb831571fa58b0f0e6f4424f3f638b7ca0662e96b8932eea0fb5",
+        "result_kind": "array"
+      },
+      "amended": {
+        "status": "pass",
+        "source_files": 748,
+        "contains_added": true,
+        "inventory_sha256": "1430136eb3728ec62fb200ab6efb05722123122a8ce368482785b3a867a46146",
+        "result_kind": "array"
+      }
+    }
+  },
+  {
+    "file": "stage3/adapt/99-correctness-axolotl-s/compare.cjs",
+    "line": 5,
+    "reader": "files",
+    "method": "original pure filesystem function, isolated from historical driver",
+    "source_sha256": "df7b7182a74b4af307e4d2bccc307a52b86c091cf764c780d72fb7a0eb0f5b08",
+    "results": {
+      "control": {
+        "status": "pass",
+        "source_files": 747,
+        "contains_added": false,
+        "inventory_sha256": "ceb05ef78d74fb831571fa58b0f0e6f4424f3f638b7ca0662e96b8932eea0fb5",
+        "result_kind": "array"
+      },
+      "amended": {
+        "status": "pass",
+        "source_files": 748,
+        "contains_added": true,
+        "inventory_sha256": "1430136eb3728ec62fb200ab6efb05722123122a8ce368482785b3a867a46146",
+        "result_kind": "array"
+      }
+    }
+  },
+  {
+    "file": "stage3/adapt/99-correctness-axolotl-s/queue-box-compare.cjs",
+    "line": 4,
+    "reader": "inventory",
+    "method": "original pure filesystem function, isolated from historical driver",
+    "source_sha256": "a2c1022c383ff914da268057553e0bd13663f26bd28d873e8e126f182e88e4c2",
+    "results": {
+      "control": {
+        "status": "pass",
+        "source_files": 747,
+        "contains_added": false,
+        "inventory_sha256": "ceb05ef78d74fb831571fa58b0f0e6f4424f3f638b7ca0662e96b8932eea0fb5",
+        "result_kind": "array"
+      },
+      "amended": {
+        "status": "pass",
+        "source_files": 748,
+        "contains_added": true,
+        "inventory_sha256": "1430136eb3728ec62fb200ab6efb05722123122a8ce368482785b3a867a46146",
+        "result_kind": "array"
+      }
+    }
+  },
+  {
+    "file": "stage3/adapt/99-correctness-axolotl-t/debug-display-compare.cjs",
+    "line": 16,
+    "reader": "walk",
+    "method": "original pure filesystem function, isolated from historical driver",
+    "source_sha256": "f71eba1c44fe32ad5a80236876f580c228c0234a23065db93692946071ea2f41",
+    "results": {
+      "control": {
+        "status": "pass",
+        "source_files": 747,
+        "contains_added": false,
+        "inventory_sha256": "ceb05ef78d74fb831571fa58b0f0e6f4424f3f638b7ca0662e96b8932eea0fb5",
+        "result_kind": "array"
+      },
+      "amended": {
+        "status": "pass",
+        "source_files": 748,
+        "contains_added": true,
+        "inventory_sha256": "1430136eb3728ec62fb200ab6efb05722123122a8ce368482785b3a867a46146",
+        "result_kind": "array"
+      }
+    }
+  },
+  {
+    "file": "stage3/adapt/99-correctness-axolotl-u/compare.cjs",
+    "line": 6,
+    "reader": "all",
+    "method": "original pure filesystem function, isolated from historical driver",
+    "source_sha256": "22cf166f0367b65ea19ade6e14ae80b1eaba192e3d4c2569dd955d8c989502f2",
+    "results": {
+      "control": {
+        "status": "pass",
+        "source_files": 747,
+        "contains_added": false,
+        "inventory_sha256": "ceb05ef78d74fb831571fa58b0f0e6f4424f3f638b7ca0662e96b8932eea0fb5",
+        "result_kind": "array"
+      },
+      "amended": {
+        "status": "pass",
+        "source_files": 748,
+        "contains_added": true,
+        "inventory_sha256": "1430136eb3728ec62fb200ab6efb05722123122a8ce368482785b3a867a46146",
+        "result_kind": "array"
+      }
+    }
+  },
+  {
+    "file": "stage3/adapt/99-correctness-axolotl-w/compare.cjs",
+    "line": 5,
+    "reader": "files",
+    "method": "original pure filesystem function, isolated from historical driver",
+    "source_sha256": "826cf61fa2fa1e614a38ffb6b352b17610ff0d1ae4f1e0ec3e6c4e6466c9d4cf",
+    "results": {
+      "control": {
+        "status": "pass",
+        "source_files": 747,
+        "contains_added": false,
+        "inventory_sha256": "ceb05ef78d74fb831571fa58b0f0e6f4424f3f638b7ca0662e96b8932eea0fb5",
+        "result_kind": "array"
+      },
+      "amended": {
+        "status": "pass",
+        "source_files": 748,
+        "contains_added": true,
+        "inventory_sha256": "1430136eb3728ec62fb200ab6efb05722123122a8ce368482785b3a867a46146",
+        "result_kind": "array"
+      }
+    }
+  },
+  {
+    "file": "stage3/adapt/99-correctness-axolotl-y/compare.cjs",
+    "line": 5,
+    "reader": "files",
+    "method": "original pure filesystem function, isolated from historical driver",
+    "source_sha256": "826cf61fa2fa1e614a38ffb6b352b17610ff0d1ae4f1e0ec3e6c4e6466c9d4cf",
+    "results": {
+      "control": {
+        "status": "pass",
+        "source_files": 747,
+        "contains_added": false,
+        "inventory_sha256": "ceb05ef78d74fb831571fa58b0f0e6f4424f3f638b7ca0662e96b8932eea0fb5",
+        "result_kind": "array"
+      },
+      "amended": {
+        "status": "pass",
+        "source_files": 748,
+        "contains_added": true,
+        "inventory_sha256": "1430136eb3728ec62fb200ab6efb05722123122a8ce368482785b3a867a46146",
+        "result_kind": "array"
+      }
+    }
+  },
+  {
+    "file": "stage3/adapt/99-correctness-axolotl-z/elementat-step-b-compare.cjs",
+    "line": 4,
+    "reader": "inventory",
+    "method": "original pure filesystem function, isolated from historical driver",
+    "source_sha256": "dabe5254a722c2eac5c2eb0dafa607f65ab311b90116f18ccc18d2bb2dc7501f",
+    "results": {
+      "control": {
+        "status": "pass",
+        "source_files": 747,
+        "contains_added": false,
+        "inventory_sha256": "ceb05ef78d74fb831571fa58b0f0e6f4424f3f638b7ca0662e96b8932eea0fb5",
+        "result_kind": "array"
+      },
+      "amended": {
+        "status": "pass",
+        "source_files": 748,
+        "contains_added": true,
+        "inventory_sha256": "1430136eb3728ec62fb200ab6efb05722123122a8ce368482785b3a867a46146",
+        "result_kind": "array"
+      }
+    }
+  },
+  {
+    "file": "stage3/adapt/99-correctness-core-arrayof/compare.cjs",
+    "line": 4,
+    "reader": "files",
+    "method": "original pure filesystem function, isolated from historical driver",
+    "source_sha256": "afa82a19937e02a11ef1cab6e53494339271b35443a4a2dc946889563e72df69",
+    "results": {
+      "control": {
+        "status": "pass",
+        "source_files": 747,
+        "contains_added": false,
+        "inventory_sha256": "ceb05ef78d74fb831571fa58b0f0e6f4424f3f638b7ca0662e96b8932eea0fb5",
+        "result_kind": "array"
+      },
+      "amended": {
+        "status": "pass",
+        "source_files": 748,
+        "contains_added": true,
+        "inventory_sha256": "1430136eb3728ec62fb200ab6efb05722123122a8ce368482785b3a867a46146",
+        "result_kind": "array"
+      }
+    }
+  },
+  {
+    "file": "stage3/adapt/99-correctness-core-arrayof/measurement-scope.cjs",
+    "method": "no standalone pure source-directory reader; retained for caller/exclusion review",
+    "results": {}
+  },
+  {
+    "file": "stage3/adapt/99-correctness-core-assign/compare.cjs",
+    "line": 3,
+    "reader": "files",
+    "method": "original pure filesystem function, isolated from historical driver",
+    "source_sha256": "a905be92f6937549d947ef20971d22581dac82a65785621bbe4aa61add256f7b",
+    "results": {
+      "control": {
+        "status": "pass",
+        "source_files": 747,
+        "contains_added": false,
+        "inventory_sha256": "ceb05ef78d74fb831571fa58b0f0e6f4424f3f638b7ca0662e96b8932eea0fb5",
+        "result_kind": "array"
+      },
+      "amended": {
+        "status": "pass",
+        "source_files": 748,
+        "contains_added": true,
+        "inventory_sha256": "1430136eb3728ec62fb200ab6efb05722123122a8ce368482785b3a867a46146",
+        "result_kind": "array"
+      }
+    }
+  },
+  {
+    "file": "stage3/adapt/99-correctness-core-cast-message/compare-normal.cjs",
+    "line": 4,
+    "reader": "files",
+    "method": "original pure filesystem function, isolated from historical driver",
+    "source_sha256": "d4306dc5fd26b041abeab8b8ad6531ea89a79d09cbbb6bcd3fbce1261cbdcdc1",
+    "results": {
+      "control": {
+        "status": "pass",
+        "source_files": 747,
+        "contains_added": false,
+        "inventory_sha256": "ceb05ef78d74fb831571fa58b0f0e6f4424f3f638b7ca0662e96b8932eea0fb5",
+        "result_kind": "array"
+      },
+      "amended": {
+        "status": "pass",
+        "source_files": 748,
+        "contains_added": true,
+        "inventory_sha256": "1430136eb3728ec62fb200ab6efb05722123122a8ce368482785b3a867a46146",
+        "result_kind": "array"
+      }
+    }
+  },
+  {
+    "file": "stage3/adapt/99-correctness-core-clone/compare.cjs",
+    "line": 5,
+    "reader": "files",
+    "method": "original pure filesystem function, isolated from historical driver",
+    "source_sha256": "087e435c3a5014197de37c23cf5d8c83807a7cdf2c437d9f298341ed73ac45fd",
+    "results": {
+      "control": {
+        "status": "pass",
+        "source_files": 747,
+        "contains_added": false,
+        "inventory_sha256": "ceb05ef78d74fb831571fa58b0f0e6f4424f3f638b7ca0662e96b8932eea0fb5",
+        "result_kind": "array"
+      },
+      "amended": {
+        "status": "pass",
+        "source_files": 748,
+        "contains_added": true,
+        "inventory_sha256": "1430136eb3728ec62fb200ab6efb05722123122a8ce368482785b3a867a46146",
+        "result_kind": "array"
+      }
+    }
+  },
+  {
+    "file": "stage3/adapt/99-correctness-core-clone/references.cjs",
+    "method": "no standalone pure source-directory reader; retained for caller/exclusion review",
+    "results": {}
+  },
+  {
+    "file": "stage3/adapt/99-correctness-core-compare/compare.cjs",
+    "line": 4,
+    "reader": "inventory",
+    "method": "original pure filesystem function, isolated from historical driver",
+    "source_sha256": "ec9dec6500dd9629a98875db8c8f15561623a7ba477c82cfb4b91271c07f5ac2",
+    "results": {
+      "control": {
+        "status": "pass",
+        "source_files": 747,
+        "contains_added": false,
+        "inventory_sha256": "ceb05ef78d74fb831571fa58b0f0e6f4424f3f638b7ca0662e96b8932eea0fb5",
+        "result_kind": "array"
+      },
+      "amended": {
+        "status": "pass",
+        "source_files": 748,
+        "contains_added": true,
+        "inventory_sha256": "1430136eb3728ec62fb200ab6efb05722123122a8ce368482785b3a867a46146",
+        "result_kind": "array"
+      }
+    }
+  },
+  {
+    "file": "stage3/adapt/99-correctness-core-extend/reproduce/compare-source.cjs",
+    "line": 2,
+    "reader": "walk",
+    "method": "original pure filesystem function, isolated from historical driver",
+    "source_sha256": "120a265ba69d21a3cd8c43562cca3623f03e3e5368380c4d8dd2050cea09e57c",
+    "results": {
+      "control": {
+        "status": "pass",
+        "source_files": 747,
+        "contains_added": false,
+        "inventory_sha256": "ceb05ef78d74fb831571fa58b0f0e6f4424f3f638b7ca0662e96b8932eea0fb5",
+        "result_kind": "array"
+      },
+      "amended": {
+        "status": "pass",
+        "source_files": 748,
+        "contains_added": true,
+        "inventory_sha256": "1430136eb3728ec62fb200ab6efb05722123122a8ce368482785b3a867a46146",
+        "result_kind": "array"
+      }
+    }
+  },
+  {
+    "file": "stage3/adapt/99-correctness-core-extend/reproduce/map-callers.cjs",
+    "method": "no standalone pure source-directory reader; retained for caller/exclusion review",
+    "results": {}
+  },
+  {
+    "file": "stage3/adapt/99-correctness-core-getallkeys/compare.cjs",
+    "line": 5,
+    "reader": "files",
+    "method": "original pure filesystem function, isolated from historical driver",
+    "source_sha256": "4aaab682247838f61a88f81648f771324e53259da9089c63b7c0ff7be5c7e3b1",
+    "results": {
+      "control": {
+        "status": "pass",
+        "source_files": 747,
+        "contains_added": false,
+        "inventory_sha256": "ceb05ef78d74fb831571fa58b0f0e6f4424f3f638b7ca0662e96b8932eea0fb5",
+        "result_kind": "array"
+      },
+      "amended": {
+        "status": "pass",
+        "source_files": 748,
+        "contains_added": true,
+        "inventory_sha256": "1430136eb3728ec62fb200ab6efb05722123122a8ce368482785b3a867a46146",
+        "result_kind": "array"
+      }
+    }
+  },
+  {
+    "file": "stage3/adapt/99-correctness-core-getfunctionname-move/compare-normal.cjs",
+    "line": 4,
+    "reader": "files",
+    "method": "original pure filesystem function, isolated from historical driver",
+    "source_sha256": "d4306dc5fd26b041abeab8b8ad6531ea89a79d09cbbb6bcd3fbce1261cbdcdc1",
+    "results": {
+      "control": {
+        "status": "pass",
+        "source_files": 747,
+        "contains_added": false,
+        "inventory_sha256": "ceb05ef78d74fb831571fa58b0f0e6f4424f3f638b7ca0662e96b8932eea0fb5",
+        "result_kind": "array"
+      },
+      "amended": {
+        "status": "pass",
+        "source_files": 748,
+        "contains_added": true,
+        "inventory_sha256": "1430136eb3728ec62fb200ab6efb05722123122a8ce368482785b3a867a46146",
+        "result_kind": "array"
+      }
+    }
+  },
+  {
+    "file": "stage3/adapt/99-correctness-core-groupby/compare.cjs",
+    "line": 5,
+    "reader": "files",
+    "method": "original pure filesystem function, isolated from historical driver",
+    "source_sha256": "087e435c3a5014197de37c23cf5d8c83807a7cdf2c437d9f298341ed73ac45fd",
+    "results": {
+      "control": {
+        "status": "pass",
+        "source_files": 747,
+        "contains_added": false,
+        "inventory_sha256": "ceb05ef78d74fb831571fa58b0f0e6f4424f3f638b7ca0662e96b8932eea0fb5",
+        "result_kind": "array"
+      },
+      "amended": {
+        "status": "pass",
+        "source_files": 748,
+        "contains_added": true,
+        "inventory_sha256": "1430136eb3728ec62fb200ab6efb05722123122a8ce368482785b3a867a46146",
+        "result_kind": "array"
+      }
+    }
+  },
+  {
+    "file": "stage3/adapt/99-correctness-core-groupby/references.cjs",
+    "method": "no standalone pure source-directory reader; retained for caller/exclusion review",
+    "results": {}
+  },
+  {
+    "file": "stage3/adapt/99-correctness-core-levenshtein/compare.cjs",
+    "line": 4,
+    "reader": "inventory",
+    "method": "original pure filesystem function, isolated from historical driver",
+    "source_sha256": "9705f38cfac957b527e78f3a5aee682772e5f919a57224fce807d84ca9181b77",
+    "results": {
+      "control": {
+        "status": "pass",
+        "source_files": 747,
+        "contains_added": false,
+        "inventory_sha256": "ceb05ef78d74fb831571fa58b0f0e6f4424f3f638b7ca0662e96b8932eea0fb5",
+        "result_kind": "array"
+      },
+      "amended": {
+        "status": "pass",
+        "source_files": 748,
+        "contains_added": true,
+        "inventory_sha256": "1430136eb3728ec62fb200ab6efb05722123122a8ce368482785b3a867a46146",
+        "result_kind": "array"
+      }
+    }
+  },
+  {
+    "file": "stage3/adapt/99-correctness-core-multimap/compare.cjs",
+    "method": "no standalone pure source-directory reader; retained for caller/exclusion review",
+    "results": {}
+  },
+  {
+    "file": "stage3/adapt/99-correctness-core-or-predicate/audit-ts-keys.cjs",
+    "method": "no standalone pure source-directory reader; retained for caller/exclusion review",
+    "results": {}
+  },
+  {
+    "file": "stage3/adapt/99-correctness-core-or-predicate/compare.cjs",
+    "line": 5,
+    "reader": "files",
+    "method": "original pure filesystem function, isolated from historical driver",
+    "source_sha256": "2fec1802451a3bfc9242048243207dc477eaa166d407a2ae7d188f181e57f2ce",
+    "results": {
+      "control": {
+        "status": "pass",
+        "source_files": 747,
+        "contains_added": false,
+        "inventory_sha256": "ceb05ef78d74fb831571fa58b0f0e6f4424f3f638b7ca0662e96b8932eea0fb5",
+        "result_kind": "array"
+      },
+      "amended": {
+        "status": "pass",
+        "source_files": 748,
+        "contains_added": true,
+        "inventory_sha256": "1430136eb3728ec62fb200ab6efb05722123122a8ce368482785b3a867a46146",
+        "result_kind": "array"
+      }
+    }
+  },
+  {
+    "file": "stage3/adapt/99-correctness-core-takewhile/callers.cjs",
+    "method": "no standalone pure source-directory reader; retained for caller/exclusion review",
+    "results": {}
+  },
+  {
+    "file": "stage3/adapt/99-correctness-core-takewhile/compare.cjs",
+    "line": 4,
+    "reader": "inventory",
+    "method": "original pure filesystem function, isolated from historical driver",
+    "source_sha256": "a102028566e2d9afef11df50e1a245f42299fc22843edc27e063048a7108d2d9",
+    "results": {
+      "control": {
+        "status": "pass",
+        "source_files": 747,
+        "contains_added": false,
+        "inventory_sha256": "ceb05ef78d74fb831571fa58b0f0e6f4424f3f638b7ca0662e96b8932eea0fb5",
+        "result_kind": "array"
+      },
+      "amended": {
+        "status": "pass",
+        "source_files": 748,
+        "contains_added": true,
+        "inventory_sha256": "1430136eb3728ec62fb200ab6efb05722123122a8ce368482785b3a867a46146",
+        "result_kind": "array"
+      }
+    }
+  },
+  {
+    "file": "stage3/adapt/99-wasm-crypto-import/proofs/check.cjs",
+    "line": 6,
+    "reader": "inventory",
+    "method": "original pure filesystem function, isolated from historical driver",
+    "source_sha256": "4f6e54ec9a860a50aafef71fa00e3cd4f4daf6b3628b6e07b76d27766293ccad",
+    "results": {
+      "control": {
+        "status": "pass",
+        "source_files": 747,
+        "contains_added": false,
+        "inventory_sha256": "ceb05ef78d74fb831571fa58b0f0e6f4424f3f638b7ca0662e96b8932eea0fb5",
+        "result_kind": "array"
+      },
+      "amended": {
+        "status": "pass",
+        "source_files": 748,
+        "contains_added": true,
+        "inventory_sha256": "1430136eb3728ec62fb200ab6efb05722123122a8ce368482785b3a867a46146",
+        "result_kind": "array"
+      }
+    }
+  },
+  {
+    "file": "stage3/census/any-returns/inspect.cjs",
+    "line": 15,
+    "reader": "files",
+    "method": "original pure filesystem function, isolated from historical driver",
+    "source_sha256": "919b9a12b8596fb178ca60b9d768f60a843479530224f6f5ac09db3889fcff84",
+    "results": {
+      "control": {
+        "status": "pass",
+        "source_files": 712,
+        "contains_added": false,
+        "inventory_sha256": "49c3fcef5ffd1ecbcaec903cd32b4a4723add47e854d3386eb276ea5c6b1bb20",
+        "result_kind": "array"
+      },
+      "amended": {
+        "status": "pass",
+        "source_files": 713,
+        "contains_added": true,
+        "inventory_sha256": "592d37582e3af680c30dbcd6a5dec7ca5301b80249973ca478b3e2d181abe479",
+        "result_kind": "array"
+      }
+    }
+  },
+  {
+    "file": "stage3/census/deferred-reach/evidence/references.cjs",
+    "line": 5,
+    "reader": "walk",
+    "method": "original pure filesystem function, isolated from historical driver",
+    "source_sha256": "bacc7c282feb6785683aca403bd6262cb646d181e002a69669910691e0d11103",
+    "results": {
+      "control": {
+        "status": "pass",
+        "source_files": 712,
+        "contains_added": false,
+        "inventory_sha256": "49c3fcef5ffd1ecbcaec903cd32b4a4723add47e854d3386eb276ea5c6b1bb20",
+        "result_kind": "undefined"
+      },
+      "amended": {
+        "status": "pass",
+        "source_files": 713,
+        "contains_added": true,
+        "inventory_sha256": "592d37582e3af680c30dbcd6a5dec7ca5301b80249973ca478b3e2d181abe479",
+        "result_kind": "undefined"
+      }
+    }
+  },
+  {
+    "file": "stage3/census/deferred-reach/evidence/steps2-3/callback-bindings.cjs",
+    "line": 3,
+    "reader": "walk",
+    "method": "original pure filesystem function, isolated from historical driver",
+    "source_sha256": "4a1361ea0ab177765993f66800dd8bd6a2a88b7cc33df1e333eda2b4580982d6",
+    "results": {
+      "control": {
+        "status": "pass",
+        "source_files": 712,
+        "contains_added": false,
+        "inventory_sha256": "49c3fcef5ffd1ecbcaec903cd32b4a4723add47e854d3386eb276ea5c6b1bb20",
+        "result_kind": "undefined"
+      },
+      "amended": {
+        "status": "pass",
+        "source_files": 713,
+        "contains_added": true,
+        "inventory_sha256": "592d37582e3af680c30dbcd6a5dec7ca5301b80249973ca478b3e2d181abe479",
+        "result_kind": "undefined"
+      }
+    }
+  },
+  {
+    "file": "stage3/census/deferred-reach/evidence/steps2-3/classify-references.cjs",
+    "line": 3,
+    "reader": "walk",
+    "method": "original pure filesystem function, isolated from historical driver",
+    "source_sha256": "428f6fab482cac7e3c272bf8d1cd1458eedb047dd49c3056a754646ef9416cea",
+    "results": {
+      "control": {
+        "status": "pass",
+        "source_files": 712,
+        "contains_added": false,
+        "inventory_sha256": "49c3fcef5ffd1ecbcaec903cd32b4a4723add47e854d3386eb276ea5c6b1bb20",
+        "result_kind": "undefined"
+      },
+      "amended": {
+        "status": "pass",
+        "source_files": 713,
+        "contains_added": true,
+        "inventory_sha256": "592d37582e3af680c30dbcd6a5dec7ca5301b80249973ca478b3e2d181abe479",
+        "result_kind": "undefined"
+      }
+    }
+  },
+  {
+    "file": "stage3/drivers/parser/audit-range-callers.cjs",
+    "line": 17,
+    "reader": "walkFiles",
+    "method": "original pure filesystem function, isolated from historical driver",
+    "source_sha256": "be7f92f0cd8540b35c39e34b1bc219a97b9346420d8cf7dc551e1b70d5a55feb",
+    "results": {
+      "control": {
+        "status": "blocked",
+        "error": "unreviewed addRange alias/reference: {\"file\":\"src/lib/dom.generated.d.ts\",\"line\":34950,\"owner\":\"\",\"text\":\"addRange(range: Range): void;\"}"
+      },
+      "amended": {
+        "status": "blocked",
+        "error": "unreviewed addRange alias/reference: {\"file\":\"src/lib/dom.generated.d.ts\",\"line\":34950,\"owner\":\"\",\"text\":\"addRange(range: Range): void;\"}"
+      }
+    }
+  },
+  {
+    "file": "stage3/fixtures/host/source-audit.cjs",
+    "method": "no standalone pure source-directory reader; retained for caller/exclusion review",
+    "results": {}
+  },
+  {
+    "file": "stage3/fixtures/nested-functions/verify-source.cjs",
+    "method": "no standalone pure source-directory reader; retained for caller/exclusion review",
+    "results": {}
+  },
+  {
+    "file": "stage3/fixtures/objects/inventory.cjs",
+    "line": 7,
+    "reader": "walk",
+    "method": "original pure filesystem function, isolated from historical driver",
+    "source_sha256": "af23e08e139ca7080f981a1c6b2443d3d1ed685b5341d138b365cd00884569c6",
+    "results": {
+      "control": {
+        "status": "pass",
+        "source_files": 182,
+        "contains_added": false,
+        "inventory_sha256": "31a7afd5157c81cd17e38a55b87015153dd67c698001849d728f3ae93ed33438",
+        "result_kind": "undefined"
+      },
+      "amended": {
+        "status": "pass",
+        "source_files": 182,
+        "contains_added": false,
+        "inventory_sha256": "31a7afd5157c81cd17e38a55b87015153dd67c698001849d728f3ae93ed33438",
+        "result_kind": "undefined"
+      }
+    }
+  },
+  {
+    "file": "stage3/fixtures/objects/inventory.cjs",
+    "line": 44,
+    "reader": "sources",
+    "method": "original pure filesystem function, isolated from historical driver",
+    "source_sha256": "af23e08e139ca7080f981a1c6b2443d3d1ed685b5341d138b365cd00884569c6",
+    "results": {
+      "control": {
+        "status": "pass",
+        "source_files": 705,
+        "contains_added": false,
+        "inventory_sha256": "16f34f669b7df9a324fe775852ba316fb3f8c9bb4f18bb9ac8a4ce69f18e5711",
+        "result_kind": "undefined"
+      },
+      "amended": {
+        "status": "pass",
+        "source_files": 706,
+        "contains_added": true,
+        "inventory_sha256": "4b72504586216bfd1ef58f22c98c0993ca2f288f66286f1de2081abae2fbaf2c",
+        "result_kind": "undefined"
+      }
+    }
+  },
+  {
+    "file": "stage3/fixtures/predicates/extract.cjs",
+    "line": 3,
+    "reader": "scan",
+    "method": "original pure filesystem function, isolated from historical driver",
+    "source_sha256": "012dfb3b9ef1a0399d78420d0f6718a45c2e6245c5549864502ca06d1b6b42ae",
+    "results": {
+      "control": {
+        "status": "pass",
+        "source_files": 414,
+        "contains_added": false,
+        "inventory_sha256": "ebf26471795cd976d498123fdb4c2ed7367f5d2812be41815e75587267176c46",
+        "result_kind": "undefined"
+      },
+      "amended": {
+        "status": "pass",
+        "source_files": 414,
+        "contains_added": false,
+        "inventory_sha256": "ebf26471795cd976d498123fdb4c2ed7367f5d2812be41815e75587267176c46",
+        "result_kind": "undefined"
+      }
+    }
+  },
+  {
+    "file": "stage3/scouts/step09/nonnull/bundle.cjs",
+    "method": "no standalone pure source-directory reader; retained for caller/exclusion review",
+    "results": {}
+  },
+  {
+    "file": "stage3/scouts/step09/nonnull/slots-bundle.cjs",
+    "method": "no standalone pure source-directory reader; retained for caller/exclusion review",
+    "results": {}
+  }
+]

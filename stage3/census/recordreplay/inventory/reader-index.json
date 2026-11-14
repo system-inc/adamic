@@ -1,0 +1,3574 @@
+[
+  {
+    "file": "docs/tsc-generated-c/measure.py",
+    "sites": [
+      {
+        "line": 223,
+        "text": "for directory, _, files in os.walk(compiler) for file in files if file.endswith(\".ts\"))"
+      },
+      {
+        "line": 232,
+        "text": "for directory, _, files in os.walk(os.path.join(REPOSITORY, \"stage1\")):"
+      }
+    ],
+    "source_sha256": "218d1d508f749ec474c4e4fda5961f03f985a80e6cc626ed444194e9e4831bff",
+    "inventory_projections": 0,
+    "method": "static caller review; no isolated executable projection recorded"
+  },
+  {
+    "file": "internal/buildcache/relative_test.go",
+    "sites": [
+      {
+        "line": 63,
+        "text": "filepath.WalkDir(cache, func(path string, entry fs.DirEntry, err error) error {"
+      },
+      {
+        "line": 181,
+        "text": "entries, err := os.ReadDir(directory)"
+      },
+      {
+        "line": 453,
+        "text": "entries, _ := os.ReadDir(pendingDirectory(r.cache))"
+      }
+    ],
+    "source_sha256": "ef36bd48d5bb3d86ecf8434fd3e9509ff70cc33724fd2192935d0ccee9fff878",
+    "inventory_projections": 0,
+    "method": "static caller review; no isolated executable projection recorded"
+  },
+  {
+    "file": "internal/lower/cycles_census_equality_test.go",
+    "sites": [
+      {
+        "line": 46,
+        "text": "err = filepath.WalkDir(filepath.Join(root, \"src/compiler\"), func(path string, entry fs.DirEntry, err error) error {"
+      }
+    ],
+    "source_sha256": "21f008019acb466ddbed0e683733bf714c09fead7ec3c2fee966cca6e4de6775",
+    "inventory_projections": 0,
+    "method": "static caller review; no isolated executable projection recorded"
+  },
+  {
+    "file": "internal/lower/program_region_census_test.go",
+    "sites": [
+      {
+        "line": 47,
+        "text": "err = filepath.WalkDir(filepath.Join(root, \"src/compiler\"), func(path string, entry fs.DirEntry, err error) error {"
+      }
+    ],
+    "source_sha256": "42a35c8aea380b32b1141106067ffc23dfcb578fa8825a1a1c1687f5351b4563",
+    "inventory_projections": 0,
+    "method": "static caller review; no isolated executable projection recorded"
+  },
+  {
+    "file": "review/compiler/getters-census/ast-census.cjs",
+    "sites": [
+      {
+        "line": 5,
+        "text": "function files(dir) { return fs.readdirSync(dir,{withFileTypes:true}).flatMap(e => e.isDirectory()?files(path.join(dir,e.name)):e.name.endsWith('.ts')?[path.join(dir,e.name)]:[]); }"
+      }
+    ],
+    "source_sha256": "124f981a3a13b75dc4ae5b4d053a8ecc8fa438b37e1db4072e932b126f264a98",
+    "inventory_projections": 1,
+    "method": "see original-function/comprehension probes"
+  },
+  {
+    "file": "review/optional-indexing/summarize-census.py",
+    "sites": [
+      {
+        "line": 50,
+        "text": "for path in sorted(PROJECT.rglob('*.ts'))}"
+      }
+    ],
+    "source_sha256": "020fda0232f54fb8bb524944bd593707bd17d166bc2e28dbc02ea4e7b52d07b6",
+    "inventory_projections": 0,
+    "method": "static caller review; no isolated executable projection recorded"
+  },
+  {
+    "file": "stage1/cohere/lint/lint_test.go",
+    "sites": [
+      {
+        "line": 41,
+        "text": "err := filepath.WalkDir(\".\", func(path string, entry fs.DirEntry, err error) error {"
+      },
+      {
+        "line": 610,
+        "text": "err := filepath.WalkDir(filepath.Join(source, \"src/compiler\"), func(path string, entry fs.DirEntry, err error) error {"
+      }
+    ],
+    "source_sha256": "1bb8d20d6190b947903169a4fd780a22b1b60bb7bd169d522453475d4d3d6b07",
+    "inventory_projections": 0,
+    "method": "static caller review; no isolated executable projection recorded"
+  },
+  {
+    "file": "stage1/cohere/lint/oracles/oracles.go",
+    "sites": [
+      {
+        "line": 516,
+        "text": "rules, err := os.ReadDir(filepath.Join(directory, \"rules\"))"
+      },
+      {
+        "line": 686,
+        "text": "entries, err := os.ReadDir(filepath.Join(directory, \"rules\"))"
+      },
+      {
+        "line": 772,
+        "text": "err = filepath.WalkDir(capture, func(path string, entry os.DirEntry, walkErr error) error {"
+      },
+      {
+        "line": 896,
+        "text": "err := filepath.WalkDir(root, func(path string, entry fs.DirEntry, err error) error {"
+      },
+      {
+        "line": 968,
+        "text": "err := filepath.WalkDir(\".\", func(path string, entry fs.DirEntry, err error) error {"
+      }
+    ],
+    "source_sha256": "2864879dbbaf1d2966013251cb4e9393b86aa3294d8d99e9c8797960374db474",
+    "inventory_projections": 0,
+    "method": "static caller review; no isolated executable projection recorded"
+  },
+  {
+    "file": "stage1/cohere/lint/profile_test.go",
+    "sites": [
+      {
+        "line": 37,
+        "text": "err := filepath.WalkDir(filepath.Join(sourceRoot, \"src/compiler\"), func(path string, entry os.DirEntry, err error) error {"
+      },
+      {
+        "line": 85,
+        "text": "entries, err := os.ReadDir(runtime)"
+      },
+      {
+        "line": 190,
+        "text": "err := filepath.WalkDir(root, func(path string, entry os.DirEntry, err error) error {"
+      }
+    ],
+    "source_sha256": "dbedbdc233e1c6ea73eb2551512d800eb2dc27aa43fca55f50d51a03e2d6370c",
+    "inventory_projections": 0,
+    "method": "static caller review; no isolated executable projection recorded"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/no-underscore-dangle/validate.py",
+    "sites": [
+      {
+        "line": 72,
+        "text": "paths=sorted((args.compiler/'src/compiler').rglob('*.ts'))+sorted((root/'stage1').rglob('*.ts'))+sorted((root/'stage1').rglob('*.a'))"
+      },
+      {
+        "line": 76,
+        "text": "for path in owned.glob('*.a'):"
+      }
+    ],
+    "source_sha256": "47a823267b8a81a7767a040567ed33170a9275e83e2bf1777c60bf6944691fde",
+    "inventory_projections": 0,
+    "method": "static caller review; no isolated executable projection recorded"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/no-unsafe-negation/validate.py",
+    "sites": [
+      {
+        "line": 66,
+        "text": "paths=sorted((args.compiler/'src/compiler').rglob('*.ts'))+sorted((root/'stage1').rglob('*.ts'))+sorted((root/'stage1').rglob('*.a'))"
+      },
+      {
+        "line": 70,
+        "text": "for path in owned.glob('*.a'):"
+      }
+    ],
+    "source_sha256": "016e50dee92dccc39563fd039f87336d1e713dd99e2074c1f3ba799da5c1ab65",
+    "inventory_projections": 0,
+    "method": "static caller review; no isolated executable projection recorded"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/no-unsafe-optional-chaining/validate.py",
+    "sites": [
+      {
+        "line": 66,
+        "text": "paths=sorted((args.compiler/'src/compiler').rglob('*.ts'))+sorted((root/'stage1').rglob('*.ts'))+sorted((root/'stage1').rglob('*.a'))"
+      },
+      {
+        "line": 70,
+        "text": "for path in owned.glob('*.a'):"
+      }
+    ],
+    "source_sha256": "1fb920fc60688b03b39492884bb486e84ce86f00f11a6d483655b4258cea5ca3",
+    "inventory_projections": 0,
+    "method": "static caller review; no isolated executable projection recorded"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/typescript-no-this-alias/validate-owned.py",
+    "sites": [
+      {
+        "line": 66,
+        "text": "paths=sorted((args.compiler/'src/compiler').rglob('*.ts'))+sorted((root/'stage1').rglob('*.ts'))+sorted((root/'stage1').rglob('*.a'))"
+      },
+      {
+        "line": 70,
+        "text": "for path in owned.glob('*.a'):"
+      }
+    ],
+    "source_sha256": "f2d1f5c4d45becde56b57338a52a4d72493fbd2fe9588f7dd5457a1b5da7dbed",
+    "inventory_projections": 0,
+    "method": "static caller review; no isolated executable projection recorded"
+  },
+  {
+    "file": "stage1/cohere/lint/rules/typescript-no-this-alias/validation_test.go.txt",
+    "sites": [
+      {
+        "line": 53,
+        "text": "err := filepath.WalkDir(root, func(path string, entry os.DirEntry, err error) error {"
+      }
+    ],
+    "source_sha256": "930aea6d61d53dd500cabb48d4da4980a97c67bc58ad8c10cee9e7856f83e168",
+    "inventory_projections": 0,
+    "method": "static caller review; no isolated executable projection recorded"
+  },
+  {
+    "file": "stage1/cohere/lint/validation/compiler-agree-guard-main/corpus-audit.py",
+    "sites": [
+      {
+        "line": 5,
+        "text": "walk={str(p.resolve()) for p in (pathlib.Path(repo)/root).rglob('*') if p.is_file() and p.suffix in ('.ts','.a')}"
+      }
+    ],
+    "source_sha256": "256b5e557e56646870fa8e3498a799e3ecc2c3ec6d2779e2a561e7dc2d819e88",
+    "inventory_projections": 0,
+    "method": "static caller review; no isolated executable projection recorded"
+  },
+  {
+    "file": "stage1/cohere/tsprinter/oracles/oracles.go",
+    "sites": [
+      {
+        "line": 1494,
+        "text": "err := filepath.WalkDir(directory, func(path string, entry fs.DirEntry, err error) error {"
+      }
+    ],
+    "source_sha256": "deb790e7792c959c8f4104ebc0054b525fcf2175f07ccdc63fb5fe39ab66477a",
+    "inventory_projections": 0,
+    "method": "static caller review; no isolated executable projection recorded"
+  },
+  {
+    "file": "stage1/typescript/parser/parser_test.go",
+    "sites": [
+      {
+        "line": 140,
+        "text": "err = filepath.WalkDir(filepath.Join(source, \"src/compiler\"), func(path string, entry fs.DirEntry, err error) error {"
+      }
+    ],
+    "source_sha256": "8fac2f9c4faf2e6bdfb331bed66d337fbded61fe525e5064a641f8cbbd69e700",
+    "inventory_projections": 0,
+    "method": "static caller review; no isolated executable projection recorded"
+  },
+  {
+    "file": "stage3/adapt/00-setup/evidence/checker-census.cjs",
+    "sites": [
+      {
+        "line": 15,
+        "text": "const walk = dir => fs.readdirSync(dir,{withFileTypes:true}).flatMap(e => e.isDirectory() ? walk(path.join(dir,e.name)) : [path.join(dir,e.name)]);"
+      }
+    ],
+    "source_sha256": "da4f14efde33235db6d183307553cc2e15d2cf9aba08e7bc9f88a916616e5308",
+    "inventory_projections": 1,
+    "method": "see original-function/comprehension probes"
+  },
+  {
+    "file": "stage3/adapt/20-optional-declarations/check-baselines.cjs",
+    "sites": [
+      {
+        "line": 102,
+        "text": "for (const entry of fs.readdirSync(directory, { withFileTypes: true })) {"
+      }
+    ],
+    "source_sha256": "b30f82c9eff978d4e6db153c79dc892ec581ef073c7d3ad206357b38c351968b",
+    "inventory_projections": 1,
+    "method": "see original-function/comprehension probes"
+  },
+  {
+    "file": "stage3/adapt/20-optional-declarations/check-wave1.cjs",
+    "sites": [
+      {
+        "line": 30,
+        "text": "const walk = directory => fs.readdirSync(directory, { withFileTypes: true }).flatMap(entry =>"
+      }
+    ],
+    "source_sha256": "03639b0efa7e42b3d7b936d75139fcf1603097d390f86baa3d7f1d89af7aac2f",
+    "inventory_projections": 1,
+    "method": "see original-function/comprehension probes"
+  },
+  {
+    "file": "stage3/adapt/20-optional-declarations/check-wave2.cjs",
+    "sites": [
+      {
+        "line": 32,
+        "text": "const walk = directory => fs.readdirSync(directory, { withFileTypes: true }).flatMap(entry =>"
+      }
+    ],
+    "source_sha256": "a9e7ceea6372e565c596fe41352172e5ee2277455c60f5fee76d45adbe638652",
+    "inventory_projections": 1,
+    "method": "see original-function/comprehension probes"
+  },
+  {
+    "file": "stage3/adapt/30-indexed-reads/check-api-baselines.cjs",
+    "sites": [
+      {
+        "line": 180,
+        "text": "for (const entry of fs.readdirSync(directory, { withFileTypes: true })) {"
+      }
+    ],
+    "source_sha256": "8e40af6f4beb9c212a62070ef4c185d0b50db5862ba9cea930236c87b90b4e61",
+    "inventory_projections": 1,
+    "method": "see original-function/comprehension probes"
+  },
+  {
+    "file": "stage3/adapt/30-indexed-reads/getownvalues-count-pieces.py",
+    "sites": [
+      {
+        "line": 8,
+        "text": "def snapshot():return {str(p.relative_to(s/'counted')):hashlib.sha256(p.read_bytes()).hexdigest() for base in ['src','built/local'] for p in sorted((s/'counted'/base).rglob('*')) if p.is_file()}"
+      },
+      {
+        "line": 35,
+        "text": "for p in sorted((results/name).rglob('*')):"
+      },
+      {
+        "line": 40,
+        "text": "for p in sorted((directory/'calls').glob('*.jsonl')):"
+      },
+      {
+        "line": 51,
+        "text": "prep={p.name:p.read_text() for p in (s/'raw').iterdir() if p.is_file() and p.suffix in ['.json','.log'] and p.name not in ['backend-witnesses.json']}"
+      },
+      {
+        "line": 63,
+        "text": "(packed/'SHA256SUMS').write_text(''.join(hashlib.sha256(p.read_bytes()).hexdigest()+'  '+p.name+'\\n' for p in sorted(packed.iterdir()) if p.name!='SHA256SUMS'))"
+      },
+      {
+        "line": 66,
+        "text": "for p in sorted(packed.iterdir()):tf.add(p,arcname=f'piece-{piece:02d}/'+p.name)"
+      }
+    ],
+    "source_sha256": "14fec114a9f953c9bad31b94b4db886f1f9666fa50090ba232e361c2a2f2a5a2",
+    "inventory_projections": 1,
+    "method": "see original-function/comprehension probes"
+  },
+  {
+    "file": "stage3/adapt/32-indexed-reads-program/maybebind-compare.cjs",
+    "sites": [
+      {
+        "line": 115,
+        "text": "const names=fs.readdirSync(b).filter(n=>n.endsWith('.js')).sort();assert.equal(names.length,9);"
+      },
+      {
+        "line": 116,
+        "text": "assert.deepEqual(fs.readdirSync(a).filter(n=>n.endsWith('.js')).sort(),names);"
+      }
+    ],
+    "source_sha256": "01024d0a1460e3d4b2ea71c8fe65dc7dcf1b98fb19e970f56daf54db9144a4c1",
+    "inventory_projections": 0,
+    "method": "static caller review; no isolated executable projection recorded"
+  },
+  {
+    "file": "stage3/adapt/32-indexed-reads-program/maybebind-mutant.cjs",
+    "sites": [
+      {
+        "line": 8,
+        "text": "function snapshot(tree){return fs.readdirSync(path.join(tree,\"src\"),{recursive:true}).filter(f=>fs.statSync(path.join(tree,\"src\",f)).isFile()).sort().map(f=>{const p=path.join(tree,\"src\",f);return [f,crypto.createHash(\"sha256\").update(fs.readFileSync(p)).digest(\"hex\"),String(fs.statSync(p,{bigint:true}).mtimeNs)];});}"
+      }
+    ],
+    "source_sha256": "ff12f243d2220a8b3dcfaa7bb58971b8bca319ed188c383f0d3aeb0368c45ccf",
+    "inventory_projections": 1,
+    "method": "see original-function/comprehension probes"
+  },
+  {
+    "file": "stage3/adapt/32-indexed-reads-program/record-tables-census-before.py",
+    "sites": [
+      {
+        "line": 4,
+        "text": "s=Path('/workspace/scratch/gov-b');repo=Path('/workspace/adamic');out=repo/'stage3/adapt/32-indexed-reads-program';tree=s/'full-before/src/compiler';roots=sorted(tree.rglob('*.ts'));assert len(roots)==79"
+      },
+      {
+        "line": 5,
+        "text": "manifest={str(p.relative_to(s/'full-before/src')):hashlib.sha256(p.read_bytes()).hexdigest() for p in sorted((s/'full-before/src').rglob('*')) if p.is_file()};allrows=[]"
+      },
+      {
+        "line": 19,
+        "text": "assert manifest=={str(p.relative_to(s/'full-before/src')):hashlib.sha256(p.read_bytes()).hexdigest() for p in sorted((s/'full-before/src').rglob('*')) if p.is_file()};seconds=time.monotonic()-begun;assert seconds<1500"
+      },
+      {
+        "line": 21,
+        "text": "(directory/'SHA256SUMS').write_text(''.join(hashlib.sha256(p.read_bytes()).hexdigest()+'  '+p.name+'\\n' for p in sorted(directory.iterdir()) if p.is_file()))"
+      }
+    ],
+    "source_sha256": "0354cbaa3543ea6074c0ea3869b470399f168c4f2fb6cad9506e1abb26c9703b",
+    "inventory_projections": 2,
+    "method": "see original-function/comprehension probes"
+  },
+  {
+    "file": "stage3/adapt/32-indexed-reads-program/record-tables-pieces.py",
+    "sites": [
+      {
+        "line": 7,
+        "text": "def snapshot(side):return {str(p.relative_to(s/side)):hashlib.sha256(p.read_bytes()).hexdigest() for base in ['src','built/local'] for p in sorted((s/side/base).rglob('*')) if p.is_file()}"
+      },
+      {
+        "line": 28,
+        "text": "for file in sorted((directory/side/'calls'/name).glob('*.jsonl')):"
+      },
+      {
+        "line": 49,
+        "text": "for file in sorted((results/side/name).rglob('*')):"
+      },
+      {
+        "line": 66,
+        "text": "raw={p.name:p.read_text() for p in (s/'raw').iterdir() if p.is_file() and p.suffix in ['.json','.log']};(packed/'preparation.json').write_text(json.dumps(raw,indent=2)+'\\n')"
+      },
+      {
+        "line": 74,
+        "text": "(packed/'SHA256SUMS').write_text(''.join(hashlib.sha256(p.read_bytes()).hexdigest()+'  '+p.name+'\\n' for p in sorted(packed.iterdir()) if p.name!='SHA256SUMS'))"
+      },
+      {
+        "line": 77,
+        "text": "for p in sorted(packed.iterdir()):tf.add(p,arcname=f'piece-{piece:02d}/'+p.name)"
+      }
+    ],
+    "source_sha256": "b599c17438febf1780b408de53c3a4a56a6cf8d00841ef4992af4d22fc10b98a",
+    "inventory_projections": 1,
+    "method": "see original-function/comprehension probes"
+  },
+  {
+    "file": "stage3/adapt/32-indexed-reads-program/resume-archive.py",
+    "sites": [
+      {
+        "line": 14,
+        "text": "files=sorted(p for p in root.rglob('*') if p.is_file())"
+      },
+      {
+        "line": 27,
+        "text": "for p in scratch.glob('32r-*'):"
+      },
+      {
+        "line": 36,
+        "text": "source=lambda root:{str(p.relative_to(root/'src')):digest(p) for p in (root/'src').rglob('*') if p.is_file()}"
+      },
+      {
+        "line": 43,
+        "text": "artifacts=list((scratch/'32r-oracle-cache').glob('*/ready.json'));assert len(artifacts)==1"
+      }
+    ],
+    "source_sha256": "9b8c0df1a28d5618138f72d7d62b54e894f49ce040e8ea822375a5d6ecbcc576",
+    "inventory_projections": 2,
+    "method": "see original-function/comprehension probes"
+  },
+  {
+    "file": "stage3/adapt/33-indexed-reads-emit/check-integrated-api.cjs",
+    "sites": [
+      {
+        "line": 92,
+        "text": "for (const entry of fs.readdirSync(directory, {withFileTypes:true})) {"
+      }
+    ],
+    "source_sha256": "979fc4c0d18d6a5c7dd349a2c9eb1784a2dfdc1c3315d3221584918d1ecbeefc",
+    "inventory_projections": 1,
+    "method": "see original-function/comprehension probes"
+  },
+  {
+    "file": "stage3/adapt/40-explicit-any/brands-undefined-proof.cjs",
+    "sites": [
+      {
+        "line": 12,
+        "text": "const walk = d => fs.readdirSync(d, {withFileTypes:true}).flatMap(e =>"
+      },
+      {
+        "line": 99,
+        "text": "return fs.readdirSync(directory, {withFileTypes:true}).flatMap(entry => {"
+      }
+    ],
+    "source_sha256": "c4a1527c60e035a4cc6e6de38d0202279dc5101eb4ed7be64ce413926cc65852",
+    "inventory_projections": 1,
+    "method": "see original-function/comprehension probes"
+  },
+  {
+    "file": "stage3/adapt/40-explicit-any/class-proof.cjs",
+    "sites": [
+      {
+        "line": 9,
+        "text": "const walk = d => fs.readdirSync(d,{withFileTypes:true}).flatMap(e=>e.isDirectory()?walk(path.join(d,e.name)):[path.join(d,e.name)]).sort();"
+      }
+    ],
+    "source_sha256": "755c7324b3d3865f18bcdb7a080ce60bcd72b3a240a60f1677af3a7ee5498f21",
+    "inventory_projections": 1,
+    "method": "see original-function/comprehension probes"
+  },
+  {
+    "file": "stage3/adapt/40-explicit-any/classes.cjs",
+    "sites": [
+      {
+        "line": 76,
+        "text": "for (const entry of fs.readdirSync(directory, {withFileTypes: true})) {"
+      }
+    ],
+    "source_sha256": "999ed404facba498085e61a1f2de262be012dd7dbd7b83dfecabf0c3cb389838",
+    "inventory_projections": 1,
+    "method": "see original-function/comprehension probes"
+  },
+  {
+    "file": "stage3/adapt/40-explicit-any/evidence/brands-undefined-3/verify-census.py",
+    "sites": [
+      {
+        "line": 8,
+        "text": "source=work/'census'/(label+'.jsonl');records=[json.loads(s) for s in source.read_text().splitlines()];expected={str(p.resolve()) for p in (tree/'src/compiler').rglob('*.ts')};r=m.lowering_summary(records,expected,'measured on a checker-rejected program');assert records[0]['latent_mode']=='first-error'"
+      }
+    ],
+    "source_sha256": "fdce99f6695075e11d7b525456ddfe0692ce65698991c64ebfb452fe49f73ad1",
+    "inventory_projections": 1,
+    "method": "see original-function/comprehension probes"
+  },
+  {
+    "file": "stage3/adapt/40-explicit-any/evidence/readonly-views/compare-artifacts.py",
+    "sites": [
+      {
+        "line": 10,
+        "text": "files=lambda root:sorted(str(p.relative_to(root)) for p in root.rglob('*') if p.is_file())"
+      }
+    ],
+    "source_sha256": "9a7d4a98532845950a90fcd73ed7768e98870732df28ec57e5d80c000d8d315e",
+    "inventory_projections": 1,
+    "method": "see original-function/comprehension probes"
+  },
+  {
+    "file": "stage3/adapt/40-explicit-any/evidence/timer-slot/compare.cjs",
+    "sites": [
+      {
+        "line": 11,
+        "text": "return fs.readdirSync(directory, {withFileTypes: true}).flatMap(e => e.isDirectory() ? files(path.join(directory, e.name), root) : [path.relative(root, path.join(directory, e.name))]).sort();"
+      }
+    ],
+    "source_sha256": "6015cc649f93db5541fa6f1298b842c8fb77c665c53abedb7d4b3af4a4a8803b",
+    "inventory_projections": 1,
+    "method": "see original-function/comprehension probes"
+  },
+  {
+    "file": "stage3/adapt/40-explicit-any/filesystem-proof.cjs",
+    "sites": [
+      {
+        "line": 17,
+        "text": "const walk = dir => fs.readdirSync(dir, {withFileTypes: true}).flatMap(e => e.isDirectory() ? walk(path.join(dir, e.name)) : [path.join(dir, e.name)]).sort();"
+      }
+    ],
+    "source_sha256": "f203f47da0646b3c1108f42fc416879fd3d23bc8d8faf0103468ad17fc120296",
+    "inventory_projections": 1,
+    "method": "see original-function/comprehension probes"
+  },
+  {
+    "file": "stage3/adapt/40-explicit-any/isarray-proof.cjs",
+    "sites": [
+      {
+        "line": 9,
+        "text": "const walk = d => fs.readdirSync(d,{withFileTypes:true}).flatMap(e => e.isDirectory()?walk(path.join(d,e.name)):[path.join(d,e.name)]).sort();"
+      }
+    ],
+    "source_sha256": "f361e0735d8d771d60e1ccb8beca4bab0be9804ee20bd7bf6898c6217ced4744",
+    "inventory_projections": 1,
+    "method": "see original-function/comprehension probes"
+  },
+  {
+    "file": "stage3/adapt/40-explicit-any/retype-check.cjs",
+    "sites": [
+      {
+        "line": 10,
+        "text": "const walk = d => fs.readdirSync(d,{withFileTypes:true}).flatMap(e => e.isDirectory()?walk(path.join(d,e.name)):[path.join(d,e.name)]).sort();"
+      }
+    ],
+    "source_sha256": "4151b9582b8f2ad70d2e66f5d123227b9bcd6fddec8831a8c2dd2447e4dce690",
+    "inventory_projections": 1,
+    "method": "see original-function/comprehension probes"
+  },
+  {
+    "file": "stage3/adapt/40-explicit-any/verify.cjs",
+    "sites": [
+      {
+        "line": 12,
+        "text": "return fs.readdirSync(directory, {withFileTypes: true}).flatMap(entry => entry.isDirectory() ? walk(path.join(directory, entry.name)) : [path.join(directory, entry.name)]).sort();"
+      }
+    ],
+    "source_sha256": "e4a9ea480d7b8d357d1630e89c9d56cd30e17605bbd3b3ecae4c63c7d18a2227",
+    "inventory_projections": 1,
+    "method": "see original-function/comprehension probes"
+  },
+  {
+    "file": "stage3/adapt/41-explicit-any-remaining/prove.cjs",
+    "sites": [
+      {
+        "line": 7,
+        "text": "const walk = d => fs.readdirSync(d, {withFileTypes:true}).flatMap(e => e.isDirectory() ? walk(path.join(d,e.name)) : [path.join(d,e.name)]).sort();"
+      }
+    ],
+    "source_sha256": "063a49dd2bb9f728dd525a1f15f7065f79cdb061496c9061ea1083a157c9b090",
+    "inventory_projections": 1,
+    "method": "see original-function/comprehension probes"
+  },
+  {
+    "file": "stage3/adapt/43-any-returns/proof.cjs",
+    "sites": [
+      {
+        "line": 14,
+        "text": "const walk = d => fs.readdirSync(d, {withFileTypes: true}).flatMap(e => e.isDirectory() ? walk(path.join(d, e.name)) : [path.join(d, e.name)]).sort();"
+      }
+    ],
+    "source_sha256": "c0cc58dc118ff5d13b1237c4369eccd3b85aed0a616626fee962cd67441c723d",
+    "inventory_projections": 1,
+    "method": "see original-function/comprehension probes"
+  },
+  {
+    "file": "stage3/adapt/44-config-generics/proof.cjs",
+    "sites": [
+      {
+        "line": 9,
+        "text": "const walk = d => fs.readdirSync(d, {withFileTypes: true}).flatMap(e => e.isDirectory() ? walk(path.join(d, e.name)) : [path.join(d, e.name)]).sort();"
+      }
+    ],
+    "source_sha256": "295ee370b76c7bd063bfbb3dedd28e9ec064ae04c56f378a15a84e3cbedb1d68",
+    "inventory_projections": 1,
+    "method": "see original-function/comprehension probes"
+  },
+  {
+    "file": "stage3/adapt/45-regex-captures/idempotence.py",
+    "sites": [
+      {
+        "line": 16,
+        "text": "for directory, dirs, files in os.walk(root):"
+      }
+    ],
+    "source_sha256": "540849bc3f3f7fd06000a32f82cc447fa8cd1c81499929e043c87e1803f06cc1",
+    "inventory_projections": 0,
+    "method": "static caller review; no isolated executable projection recorded"
+  },
+  {
+    "file": "stage3/adapt/47-host-errors/meta-spread-pin-witness.cjs",
+    "sites": [
+      {
+        "line": 9,
+        "text": "for(const entry of fs.readdirSync(tree)){"
+      }
+    ],
+    "source_sha256": "081b1c627350b0c081a2c5fa27bfc56ff62bd31ffdb16b1621eac98331628a3a",
+    "inventory_projections": 0,
+    "method": "static caller review; no isolated executable projection recorded"
+  },
+  {
+    "file": "stage3/adapt/48-memoize/verify.cjs",
+    "sites": [
+      {
+        "line": 50,
+        "text": "for (const entry of fs.readdirSync(dir, {withFileTypes: true})) {"
+      }
+    ],
+    "source_sha256": "065c6e95fa025fc9e195781216ac494e777f3980d52f445fccb3b7f50153a148",
+    "inventory_projections": 1,
+    "method": "see original-function/comprehension probes"
+  },
+  {
+    "file": "stage3/adapt/49-honest-optionals/instrumentation-audit.cjs",
+    "sites": [
+      {
+        "line": 3,
+        "text": "function visit(dir){for(const e of fs.readdirSync(dir,{withFileTypes:true})){const file=path.join(dir,e.name);if(e.isDirectory())visit(file);else if(e.isFile())files.push(file);}}"
+      },
+      {
+        "line": 4,
+        "text": "visit(path.join(root,'src'));const built=path.join(root,'built/local');for(const n of fs.readdirSync(built).filter(n=>n.endsWith('.js')))files.push(path.join(built,n));"
+      }
+    ],
+    "source_sha256": "a37d6ea12c339043573a5bbaaf348dc81ec290283cc6120ee977aaeecba70a29",
+    "inventory_projections": 1,
+    "method": "see original-function/comprehension probes"
+  },
+  {
+    "file": "stage3/adapt/49-honest-optionals/read-probe.cjs",
+    "sites": [
+      {
+        "line": 6,
+        "text": "(async()=>{fs.mkdirSync(out,{recursive:true});await esbuild.build({entryPoints:[path.join(root,'src/tsc/tsc.ts')],bundle:true,treeShaking:false,platform:'node',format:'cjs',target:'node24',outfile:path.join(out,'checked.cjs'),banner:{js:banner},plugins:[{name:'49-read-checks',setup(build){build.onLoad({filter:/\\.ts$/},args=>{const file=path.relative(root,args.path),source=ts.createSourceFile(args.path,fs.readFileSync(args.path,'utf8'),99,true);const transform=ts.transform(source,[context=>{function visit(n){if(selected(n)){const p=source.getLineAndCharacterOfPosition(n.getStart(source)),id=file+':'+(p.line+1)+':'+(p.character+1)+' '+n.getText(source);inserted.push(id);return context.factory.createCallExpression(context.factory.createIdentifier('__49read'),undefined,[n.expression,context.factory.createStringLiteral(id)]);}return ts.visitEachChild(n,visit,context);}return s=>ts.visitNode(s,visit);}]);const text=ts.createPrinter().printFile(transform.transformed[0]);transform.dispose();return {contents:text,loader:'ts'};});}}]});assert.ok(inserted.length>100);fs.writeFileSync(path.join(out,'sites.json'),JSON.stringify(inserted,null,2)+'\\n');const lib=path.dirname(require.resolve('typescript'));for(const n of fs.readdirSync(lib).filter(n=>n.startsWith('lib.')&&n.endsWith('.d.ts')))fs.symlinkSync(path.join(lib,n),path.join(out,n));console.log('checked reads='+inserted.length);})().catch(e=>{console.error(e);process.exitCode=1;});"
+      }
+    ],
+    "source_sha256": "973c3bf90e8f28ed2905dc04adff8f4315586bb24f26a582ef4445df70e2a0b8",
+    "inventory_projections": 0,
+    "method": "static caller review; no isolated executable projection recorded"
+  },
+  {
+    "file": "stage3/adapt/52-json-values/measure.py",
+    "sites": [
+      {
+        "line": 28,
+        "text": "roots = sorted(str(p) for p in (tree / 'src/compiler').rglob('*') if p.suffix in ['.ts', '.a'])"
+      }
+    ],
+    "source_sha256": "decea2f964ee9a9cbb881e1beef7c8b6e356de88cd5a3b0773aa50fb75cce5ff",
+    "inventory_projections": 1,
+    "method": "see original-function/comprehension probes"
+  },
+  {
+    "file": "stage3/adapt/70-readonly-views/check-api.cjs",
+    "sites": [
+      {
+        "line": 139,
+        "text": "for (const entry of fs.readdirSync(directory, { withFileTypes: true })) {"
+      }
+    ],
+    "source_sha256": "30693ada04faa460c73bfe9118481be1a77312283c9467ab7037c1edc9c97807",
+    "inventory_projections": 1,
+    "method": "see original-function/comprehension probes"
+  },
+  {
+    "file": "stage3/adapt/70-readonly-views/summarize.py",
+    "sites": [
+      {
+        "line": 32,
+        "text": "for p in (tree / 'src/compiler').rglob('*.ts')}"
+      }
+    ],
+    "source_sha256": "5a938cff4dce6a46efa09930a790301d6afd2372fc399df1dc5ef492679ccdf3",
+    "inventory_projections": 1,
+    "method": "see original-function/comprehension probes"
+  },
+  {
+    "file": "stage3/adapt/71-writable-views/family-guards.cjs",
+    "sites": [
+      {
+        "line": 14,
+        "text": "for (const entry of fs.readdirSync(dir, { withFileTypes: true })) {"
+      }
+    ],
+    "source_sha256": "75642fc6b900ca3738c4efbccda27d4dc00c10be15fcc54f3b9f37910fe04920",
+    "inventory_projections": 1,
+    "method": "see original-function/comprehension probes"
+  },
+  {
+    "file": "stage3/adapt/71-writable-views/measure.py",
+    "sites": [
+      {
+        "line": 25,
+        "text": "files = {str(p.relative_to(tree)) for p in (tree / 'src/compiler').rglob('*.ts')}"
+      },
+      {
+        "line": 34,
+        "text": "for p in sorted((tree / 'src/compiler').rglob('*.ts'))}"
+      }
+    ],
+    "source_sha256": "c460b601d9fee211861611c9ac49b5b8b771482ec1b193813b41d79f536e901d",
+    "inventory_projections": 2,
+    "method": "see original-function/comprehension probes"
+  },
+  {
+    "file": "stage3/adapt/71-writable-views/plan-mutants.cjs",
+    "sites": [
+      {
+        "line": 13,
+        "text": "for (const entry of fs.readdirSync(dir, { withFileTypes: true })) {"
+      }
+    ],
+    "source_sha256": "331c8460253b9c9f91ef98cef6406016f9f8a936056b466e38a163cbc1ff0f98",
+    "inventory_projections": 1,
+    "method": "see original-function/comprehension probes"
+  },
+  {
+    "file": "stage3/adapt/71-writable-views/reconcile.py",
+    "sites": [
+      {
+        "line": 14,
+        "text": "files = {str(p.relative_to(tree)) for p in (tree / 'src/compiler').rglob('*.ts')}"
+      }
+    ],
+    "source_sha256": "16c0a8f796f0117dffd4d8da1d0b23cc1111c8351e3cb4b846326d7bf1c7915a",
+    "inventory_projections": 1,
+    "method": "see original-function/comprehension probes"
+  },
+  {
+    "file": "stage3/adapt/75-optional-widening/coverage/mutants.py",
+    "sites": [
+      {
+        "line": 39,
+        "text": "maps = sorted(args.driver_maps.glob('*.json'))"
+      },
+      {
+        "line": 64,
+        "text": "files = list(directory.glob('*.json')); assert len(files) == 1"
+      }
+    ],
+    "source_sha256": "75becef26ccc0137979d9b0217c8a0308d408ed5afce0b83a5c3c175ec55b4e1",
+    "inventory_projections": 0,
+    "method": "static caller review; no isolated executable projection recorded"
+  },
+  {
+    "file": "stage3/adapt/75-optional-widening/prepare.py",
+    "sites": [
+      {
+        "line": 53,
+        "text": "adaptations = sorted(directory for directory in (stage / 'adapt').iterdir() if directory.is_dir() and directory.name[:2] in {'00','10','20','30','40','45','46','70'})"
+      }
+    ],
+    "source_sha256": "1e386b6445881466d3f93116906fa7e2cd0e4c1840ee6402919c646aaa786b67",
+    "inventory_projections": 0,
+    "method": "static caller review; no isolated executable projection recorded"
+  },
+  {
+    "file": "stage3/adapt/75-optional-widening/verify.cjs",
+    "sites": [
+      {
+        "line": 13,
+        "text": "for (const entry of fs.readdirSync(dir,{withFileTypes:true})) {"
+      }
+    ],
+    "source_sha256": "338ae9cc02b25323084db8f8aba77aa59ab4baafd3c1a1276114873c41c0dfaa",
+    "inventory_projections": 0,
+    "method": "static caller review; no isolated executable projection recorded"
+  },
+  {
+    "file": "stage3/adapt/78-variance-marker/proofs/census.cjs",
+    "sites": [
+      {
+        "line": 15,
+        "text": "const walk = dir => fs.readdirSync(dir,{withFileTypes:true}).flatMap(e => e.isDirectory() ? walk(path.join(dir,e.name)) : [path.join(dir,e.name)]);"
+      }
+    ],
+    "source_sha256": "8eeac14d3eaf0e6484b39a8b33a4be1ce572855585c0e917470f2aae7e7a2f06",
+    "inventory_projections": 1,
+    "method": "see original-function/comprehension probes"
+  },
+  {
+    "file": "stage3/adapt/78-variance-marker/proofs/check.cjs",
+    "sites": [
+      {
+        "line": 18,
+        "text": "return fs.readdirSync(directory, {withFileTypes: true}).flatMap(e => e.isDirectory() ? walk(path.join(directory, e.name)) : [path.join(directory, e.name)]);"
+      }
+    ],
+    "source_sha256": "0c15f1f8c16d2d934bafe557e694a2756d5c6908d8b9770ccee5c716b4f517d1",
+    "inventory_projections": 1,
+    "method": "see original-function/comprehension probes"
+  },
+  {
+    "file": "stage3/adapt/78-variance-marker/proofs/compare.py",
+    "sites": [
+      {
+        "line": 29,
+        "text": "for name in sorted(p.name for p in (control / 'built/local').glob('*.js')) + ['typescript.d.ts', 'tsserverlibrary.d.ts']:"
+      },
+      {
+        "line": 49,
+        "text": "source_names = sorted(p.relative_to(control / 'src') for p in (control / 'src').rglob('*') if p.is_file())"
+      },
+      {
+        "line": 50,
+        "text": "assert source_names == sorted(p.relative_to(tree / 'src') for p in (tree / 'src').rglob('*') if p.is_file())"
+      }
+    ],
+    "source_sha256": "2a8f576f8eedb47ded5d318a49c954162cb06a34ad161cbcd9bd9325199f5b1a",
+    "inventory_projections": 2,
+    "method": "see original-function/comprehension probes"
+  },
+  {
+    "file": "stage3/adapt/79-exit-code/proofs/census.cjs",
+    "sites": [
+      {
+        "line": 15,
+        "text": "const walk = dir => fs.readdirSync(dir,{withFileTypes:true}).flatMap(e => e.isDirectory() ? walk(path.join(dir,e.name)) : [path.join(dir,e.name)]);"
+      }
+    ],
+    "source_sha256": "8eeac14d3eaf0e6484b39a8b33a4be1ce572855585c0e917470f2aae7e7a2f06",
+    "inventory_projections": 1,
+    "method": "see original-function/comprehension probes"
+  },
+  {
+    "file": "stage3/adapt/79-exit-code/proofs/compare.py",
+    "sites": [
+      {
+        "line": 44,
+        "text": "source_names = sorted(p.relative_to(control / 'src') for p in (control / 'src').rglob('*') if p.is_file())"
+      },
+      {
+        "line": 45,
+        "text": "assert source_names == sorted(p.relative_to(tree / 'src') for p in (tree / 'src').rglob('*') if p.is_file())"
+      },
+      {
+        "line": 52,
+        "text": "for p in sorted((control / 'built/local').glob('*.js')):"
+      }
+    ],
+    "source_sha256": "eef0480e1234149ae7f4e73e7d8d78b4994682db2ef7d2024a4c98cbefac595c",
+    "inventory_projections": 2,
+    "method": "see original-function/comprehension probes"
+  },
+  {
+    "file": "stage3/adapt/79-exit-code/proofs/inventory.cjs",
+    "sites": [
+      {
+        "line": 4,
+        "text": "function walk(dir){return fs.readdirSync(dir,{withFileTypes:true}).flatMap(e=>e.isDirectory()?walk(path.join(dir,e.name)):[path.join(dir,e.name)]);}"
+      }
+    ],
+    "source_sha256": "9f96cd3c187b8a5265952e2eaba0d7a78b22eda8dee0b7f4f42b8113b9129971",
+    "inventory_projections": 1,
+    "method": "see original-function/comprehension probes"
+  },
+  {
+    "file": "stage3/adapt/79-exit-code/proofs/source-scope.cjs",
+    "sites": [
+      {
+        "line": 9,
+        "text": "return fs.readdirSync(path.join(root,relative),{withFileTypes:true}).flatMap(entry=>entry.isDirectory()?files(root,path.join(relative,entry.name)):[path.join(relative,entry.name)]).sort();"
+      }
+    ],
+    "source_sha256": "77b77010fa1b4b3f8cea649eca5facb30f6887d7e1361d560a053ab954bda3d1",
+    "inventory_projections": 1,
+    "method": "see original-function/comprehension probes"
+  },
+  {
+    "file": "stage3/adapt/90-void-widening/proofs/owner-contract.cjs",
+    "sites": [
+      {
+        "line": 16,
+        "text": "function snapshot(tree){return fs.readdirSync(path.join(tree,'src'),{recursive:true,withFileTypes:true}).filter(e=>e.isFile()).map(e=>path.join(e.parentPath,e.name)).sort().map(p=>({file:path.relative(tree,p),bytes:fs.readFileSync(p),mtime:fs.statSync(p,{bigint:true}).mtimeNs}));}"
+      }
+    ],
+    "source_sha256": "7d80c2e29af0dadd87b05b3d8398206ac09f4ecddaab4316fcbf192d424473ba",
+    "inventory_projections": 1,
+    "method": "see original-function/comprehension probes"
+  },
+  {
+    "file": "stage3/adapt/91-patcher-discard/proofs/archive.py",
+    "sites": [
+      {
+        "line": 27,
+        "text": "for source in logs.glob('*.log'):compressed(source,Path(str(source)+'.gz'))"
+      },
+      {
+        "line": 35,
+        "text": "roots[label]=[dict(file=str(p.relative_to(tree)),sha256=hash(p.read_bytes())) for p in sorted((tree/'src/compiler').rglob('*.ts'))]"
+      }
+    ],
+    "source_sha256": "c89508639b262c0d382d6177279c846cfdb5a88117660373cd14aa05344d2d8e",
+    "inventory_projections": 1,
+    "method": "see original-function/comprehension probes"
+  },
+  {
+    "file": "stage3/adapt/91-patcher-discard/proofs/references.cjs",
+    "sites": [
+      {
+        "line": 7,
+        "text": "const walk = directory => fs.readdirSync(directory, {withFileTypes:true}).flatMap(e => e.isDirectory() ? walk(path.join(directory,e.name)) : [path.join(directory,e.name)]);"
+      }
+    ],
+    "source_sha256": "66901b2c74539913faa97b05bc49d00e2c4eb8da0a53c28b784ed40e33d32ded",
+    "inventory_projections": 1,
+    "method": "see original-function/comprehension probes"
+  },
+  {
+    "file": "stage3/adapt/91-patcher-discard/proofs/scope.cjs",
+    "sites": [
+      {
+        "line": 7,
+        "text": "const walk=(root,rel='src')=>fs.readdirSync(path.join(root,rel),{withFileTypes:true}).flatMap(e=>e.isDirectory()?walk(root,path.join(rel,e.name)):[path.join(rel,e.name)]).sort();"
+      }
+    ],
+    "source_sha256": "67f63a9543562c92facc27ff88aaf22693d45849546cce175b5f31339ae7f782",
+    "inventory_projections": 1,
+    "method": "see original-function/comprehension probes"
+  },
+  {
+    "file": "stage3/adapt/92-tty-host-results/proofs/archive.py",
+    "sites": [
+      {
+        "line": 14,
+        "text": "for source in logs.glob('*.log'):"
+      },
+      {
+        "line": 22,
+        "text": "roots[label]=[{'file':str(p.relative_to(tree)),'sha256':hashlib.sha256(p.read_bytes()).hexdigest()} for p in sorted((tree/'src/compiler').rglob('*.ts'))]"
+      }
+    ],
+    "source_sha256": "e623c9de555656f466268c552bfa9705b7d57adf78ab2ff654f967a35b82b512",
+    "inventory_projections": 1,
+    "method": "see original-function/comprehension probes"
+  },
+  {
+    "file": "stage3/adapt/92-tty-host-results/proofs/check.cjs",
+    "sites": [
+      {
+        "line": 50,
+        "text": "const files=tree=>{const out=[];function walk(dir){for(const e of fs.readdirSync(dir,{withFileTypes:true})){const p=path.join(dir,e.name);if(e.isDirectory())walk(p);else out.push(path.relative(tree,p));}}walk(path.join(tree,'src'));return out.sort();};"
+      }
+    ],
+    "source_sha256": "bc31af0e146373e2da727c1a77bc9152e3888108e97db0bbc5dead0af57e6157",
+    "inventory_projections": 0,
+    "method": "static caller review; no isolated executable projection recorded"
+  },
+  {
+    "file": "stage3/adapt/92-tty-host-results/proofs/owner-contract.cjs",
+    "sites": [
+      {
+        "line": 16,
+        "text": "function snapshot(tree){return fs.readdirSync(path.join(tree,'src'),{recursive:true,withFileTypes:true}).filter(e=>e.isFile()).map(e=>path.join(e.parentPath,e.name)).sort().map(p=>({file:path.relative(tree,p),bytes:fs.readFileSync(p),mtime:fs.statSync(p,{bigint:true}).mtimeNs}));}"
+      }
+    ],
+    "source_sha256": "7d80c2e29af0dadd87b05b3d8398206ac09f4ecddaab4316fcbf192d424473ba",
+    "inventory_projections": 1,
+    "method": "see original-function/comprehension probes"
+  },
+  {
+    "file": "stage3/adapt/93-builtin-imports/proofs/archive.py",
+    "sites": [
+      {
+        "line": 20,
+        "text": "for source in logs.glob('*.log'):compressed(source,Path(str(source)+'.gz'))"
+      },
+      {
+        "line": 27,
+        "text": "roots={label:[dict(file=str(p.relative_to(scratch/label)),sha256=hashlib.sha256(p.read_bytes()).hexdigest()) for p in sorted((scratch/label/'src/compiler').rglob('*.ts'))] for label in ['control','after']}"
+      }
+    ],
+    "source_sha256": "d4a3db98d8cdcb520eb6d57bd695f92190eef2b669ad284db91ac79e36823824",
+    "inventory_projections": 2,
+    "method": "see original-function/comprehension probes"
+  },
+  {
+    "file": "stage3/adapt/93-builtin-imports/proofs/check.cjs",
+    "sites": [
+      {
+        "line": 5,
+        "text": "function inventory(tree){return fs.readdirSync(path.join(tree,'src'),{recursive:true,withFileTypes:true}).filter(e=>e.isFile()).map(e=>path.relative(tree,path.join(e.parentPath,e.name))).sort();}"
+      }
+    ],
+    "source_sha256": "a37edebaf3f29f96c0cdda8b7cecf2e36ce9747633bb60760f3965f1813ed994",
+    "inventory_projections": 1,
+    "method": "see original-function/comprehension probes"
+  },
+  {
+    "file": "stage3/adapt/93-builtin-imports/proofs/owner-contract.cjs",
+    "sites": [
+      {
+        "line": 16,
+        "text": "function snapshot(tree){return fs.readdirSync(path.join(tree,'src'),{recursive:true,withFileTypes:true}).filter(e=>e.isFile()).map(e=>path.join(e.parentPath,e.name)).sort().map(p=>({file:path.relative(tree,p),bytes:fs.readFileSync(p),mtime:fs.statSync(p,{bigint:true}).mtimeNs}));}"
+      }
+    ],
+    "source_sha256": "99f05be5b83fe7b4f9f705d39b60171f3bb2e073a546a3acb1282edab6c2d083",
+    "inventory_projections": 1,
+    "method": "see original-function/comprehension probes"
+  },
+  {
+    "file": "stage3/adapt/94-axolotl-property-read/own-file.py",
+    "sites": [
+      {
+        "line": 18,
+        "text": "expected = {str(path.resolve()) for path in compiler.rglob('*') if path.is_file() and path.suffix in ('.ts', '.a')}"
+      }
+    ],
+    "source_sha256": "8b3acb8b21a5e5207d72f0cd57a62d87495977181d1d1db68103a50ead55bd7d",
+    "inventory_projections": 0,
+    "method": "static caller review; no isolated executable projection recorded"
+  },
+  {
+    "file": "stage3/adapt/95-checker-axolotl-a/verify.cjs",
+    "sites": [
+      {
+        "line": 9,
+        "text": "const walk = directory => fs.readdirSync(directory, {withFileTypes: true}).flatMap(entry => entry.isDirectory() ?"
+      }
+    ],
+    "source_sha256": "18ffb1b986b77f3b2129b993fc7d588f5d69c4571944a9bbaec9340d74c90bb4",
+    "inventory_projections": 1,
+    "method": "see original-function/comprehension probes"
+  },
+  {
+    "file": "stage3/adapt/95-checker-axolotl-b/verify.cjs",
+    "sites": [
+      {
+        "line": 9,
+        "text": "const walk=d=>fs.readdirSync(d,{withFileTypes:true}).flatMap(e=>e.isDirectory()?walk(path.join(d,e.name)):[path.join(d,e.name)]).sort();"
+      }
+    ],
+    "source_sha256": "85b586fecb2ec339a1b6dcdf2467491ed387fc7842071a1b89314011939b68d1",
+    "inventory_projections": 1,
+    "method": "see original-function/comprehension probes"
+  },
+  {
+    "file": "stage3/adapt/95-checker-axolotl-c/verify.cjs",
+    "sites": [
+      {
+        "line": 10,
+        "text": "const walk = dir => fs.readdirSync(dir,{withFileTypes:true}).flatMap(e => e.isDirectory() ? walk(path.join(dir,e.name)) : [path.join(dir,e.name)]).sort();"
+      }
+    ],
+    "source_sha256": "a9da22ecc840cdd2f0b6b7bcb0e06eb4d257639a9c4ddb6e1028123ec4bd77e7",
+    "inventory_projections": 1,
+    "method": "see original-function/comprehension probes"
+  },
+  {
+    "file": "stage3/adapt/95-checker-axolotl-d/verify.cjs",
+    "sites": [
+      {
+        "line": 9,
+        "text": "const walk = dir => fs.readdirSync(dir, {withFileTypes: true}).flatMap(e => e.isDirectory() ? walk(path.join(dir, e.name)) : [path.join(dir, e.name)]).sort();"
+      }
+    ],
+    "source_sha256": "4889930dbbf42af42d6c48f1ff0549738f0446edced97a2b01996d4cf49016bf",
+    "inventory_projections": 1,
+    "method": "see original-function/comprehension probes"
+  },
+  {
+    "file": "stage3/adapt/95-checker-axolotl-e/verify.cjs",
+    "sites": [
+      {
+        "line": 8,
+        "text": "const walk=dir=>fs.readdirSync(dir,{withFileTypes:true}).flatMap(e=>e.isDirectory()?walk(path.join(dir,e.name)):[path.join(dir,e.name)]).sort();"
+      }
+    ],
+    "source_sha256": "82e6feae8b1b031e17fb4339ab0a430283f52f9aaedb6549c64deb6866be4ed0",
+    "inventory_projections": 1,
+    "method": "see original-function/comprehension probes"
+  },
+  {
+    "file": "stage3/adapt/95-checker-axolotl-f/verify.cjs",
+    "sites": [
+      {
+        "line": 6,
+        "text": "const walk = directory => fs.readdirSync(directory, {withFileTypes: true}).flatMap(e => e.isDirectory() ? walk(path.join(directory, e.name)) : [path.join(directory, e.name)]).sort();"
+      }
+    ],
+    "source_sha256": "121128e115a2c9b5ed8efa08f20e4e05c46e038f7229b97b9dce427b3bf0eb33",
+    "inventory_projections": 1,
+    "method": "see original-function/comprehension probes"
+  },
+  {
+    "file": "stage3/adapt/95-checker-axolotl-g/verify.cjs",
+    "sites": [
+      {
+        "line": 6,
+        "text": "const walk = directory => fs.readdirSync(directory, {withFileTypes: true}).flatMap(e => e.isDirectory() ? walk(path.join(directory, e.name)) : [path.join(directory, e.name)]).sort();"
+      }
+    ],
+    "source_sha256": "c9e08f2933bf528f7dfd6f02432728c055950323f4a2b97cb8185a18d6f54752",
+    "inventory_projections": 1,
+    "method": "see original-function/comprehension probes"
+  },
+  {
+    "file": "stage3/adapt/95-checker-axolotl-h/replay.py",
+    "sites": [
+      {
+        "line": 10,
+        "text": "return {str(p.relative_to(tree)):hashlib.sha256(p.read_bytes()).hexdigest() for p in (tree/'src').rglob('*') if p.is_file()}"
+      },
+      {
+        "line": 17,
+        "text": "for directory in sorted((repo/'stage3/adapt').iterdir()):"
+      }
+    ],
+    "source_sha256": "057b3f85d39e6977a07763fbbb083bdd8ea14c612028da029ee67ffd20154a3e",
+    "inventory_projections": 1,
+    "method": "see original-function/comprehension probes"
+  },
+  {
+    "file": "stage3/adapt/95-checker-axolotl-h/verify.cjs",
+    "sites": [
+      {
+        "line": 8,
+        "text": "const walk=dir=>fs.readdirSync(dir,{withFileTypes:true}).flatMap(e=>e.isDirectory()?walk(path.join(dir,e.name)):[path.join(dir,e.name)]).sort();"
+      }
+    ],
+    "source_sha256": "b1a28948c520ae5c643b3be89664b619a0236b10e20f356ce96d985b82344515",
+    "inventory_projections": 1,
+    "method": "see original-function/comprehension probes"
+  },
+  {
+    "file": "stage3/adapt/99-correctness-axolotl-g/prove.py",
+    "sites": [
+      {
+        "line": 48,
+        "text": "roots = sorted(str(p) for p in (tree/'src/compiler').rglob('*') if p.suffix in ['.ts', '.a'])"
+      },
+      {
+        "line": 74,
+        "text": "for directory, directories, files in os.walk(repo.parent, followlinks=False):"
+      }
+    ],
+    "source_sha256": "54f56c522c56516d2423f89ea67c7803aa3d644f03608d3527f6b0803022d307",
+    "inventory_projections": 1,
+    "method": "see original-function/comprehension probes"
+  },
+  {
+    "file": "stage3/adapt/99-correctness-axolotl-l/compare.cjs",
+    "sites": [
+      {
+        "line": 4,
+        "text": "function files(root) { return fs.readdirSync(root,{recursive:true}).filter(f=>fs.statSync(path.join(root,f)).isFile()).sort(); }"
+      }
+    ],
+    "source_sha256": "e0a7636c90558586b146a85a07d000d040aaf41f5d0941b52825952d33d0acb7",
+    "inventory_projections": 1,
+    "method": "see original-function/comprehension probes"
+  },
+  {
+    "file": "stage3/adapt/99-correctness-axolotl-m/compare.cjs",
+    "sites": [
+      {
+        "line": 5,
+        "text": "function files(root){return fs.readdirSync(root,{recursive:true}).filter(f=>fs.statSync(path.join(root,f)).isFile()).sort();}"
+      }
+    ],
+    "source_sha256": "4b79130a6e6a5e974d1ac12a7dfbbf11fa4d8238a1411050added00bb196dea2",
+    "inventory_projections": 1,
+    "method": "see original-function/comprehension probes"
+  },
+  {
+    "file": "stage3/adapt/99-correctness-axolotl-q/compare.cjs",
+    "sites": [
+      {
+        "line": 5,
+        "text": "function files(root){return fs.readdirSync(root,{recursive:true}).filter(f=>fs.statSync(path.join(root,f)).isFile()).sort();}"
+      }
+    ],
+    "source_sha256": "826cf61fa2fa1e614a38ffb6b352b17610ff0d1ae4f1e0ec3e6c4e6466c9d4cf",
+    "inventory_projections": 1,
+    "method": "see original-function/comprehension probes"
+  },
+  {
+    "file": "stage3/adapt/99-correctness-axolotl-r/call-census.go.txt",
+    "sites": [
+      {
+        "line": 42,
+        "text": "err = filepath.WalkDir(filepath.Join(root, \"src/compiler\"), func(path string, entry os.DirEntry, err error) error {"
+      }
+    ],
+    "source_sha256": "35a03cb062e9cb20b9f608076f5fc30ad07adeabcbc19e8af56214586f434603",
+    "inventory_projections": 0,
+    "method": "static caller review; no isolated executable projection recorded"
+  },
+  {
+    "file": "stage3/adapt/99-correctness-axolotl-r/census-tosorted.py",
+    "sites": [
+      {
+        "line": 7,
+        "text": "roots=sorted(p.relative_to(after) for p in after.rglob('*.ts'));assert len(roots)==79"
+      },
+      {
+        "line": 8,
+        "text": "assert roots==sorted(p.relative_to(before) for p in before.rglob('*.ts'))"
+      },
+      {
+        "line": 11,
+        "text": "assert manifest=={str(p.relative_to(scratch/'after/src')):hashlib.sha256(p.read_bytes()).hexdigest() for p in sorted((scratch/'after/src').rglob('*')) if p.is_file()}"
+      },
+      {
+        "line": 46,
+        "text": "(directory/'SHA256SUMS').write_text(''.join(hashlib.sha256(p.read_bytes()).hexdigest()+'  '+p.name+'\\n' for p in sorted(directory.iterdir()) if p.is_file()))"
+      }
+    ],
+    "source_sha256": "f4ff2f662e31f5db44d305c111033c5b3d487524fafdc2fdd120a39040ba42be",
+    "inventory_projections": 1,
+    "method": "see original-function/comprehension probes"
+  },
+  {
+    "file": "stage3/adapt/99-correctness-axolotl-r/compare-tosorted.cjs",
+    "sites": [
+      {
+        "line": 6,
+        "text": "function files(root){return fs.readdirSync(root,{recursive:true}).filter(f=>fs.statSync(path.join(root,f)).isFile()).sort();}"
+      }
+    ],
+    "source_sha256": "f30c7ad63924aa4c1ce8c44fbc14392f9f35c1695be6b40e7e39b0f267921062",
+    "inventory_projections": 1,
+    "method": "see original-function/comprehension probes"
+  },
+  {
+    "file": "stage3/adapt/99-correctness-axolotl-r/compare.cjs",
+    "sites": [
+      {
+        "line": 6,
+        "text": "function files(root){return fs.readdirSync(root,{recursive:true}).filter(f=>fs.statSync(path.join(root,f)).isFile()).sort();}"
+      }
+    ],
+    "source_sha256": "7c2e53310a0f6a2c453c02a1e6e26b7e9d1c5496be8237f9a9b84c2c3cb89ae6",
+    "inventory_projections": 1,
+    "method": "see original-function/comprehension probes"
+  },
+  {
+    "file": "stage3/adapt/99-correctness-axolotl-r/finalize-tosorted.py",
+    "sites": [
+      {
+        "line": 10,
+        "text": "replay=json.loads((raw/'replay.json').read_text());assert [r['adapter'] for r in replay]==sorted(p.name for p in (repo/'stage3/adapt').iterdir() if p.is_dir())"
+      },
+      {
+        "line": 16,
+        "text": "manifest=json.loads((s/'ready-for-census.json').read_text());assert manifest=={str(p.relative_to(s/'after/src')):hashlib.sha256(p.read_bytes()).hexdigest() for p in sorted((s/'after/src').rglob('*')) if p.is_file()}"
+      },
+      {
+        "line": 69,
+        "text": "for p in Path('/proc').iterdir():"
+      },
+      {
+        "line": 77,
+        "text": "rawfiles=[p for p in sorted(raw.rglob('*')) if p.is_file() and not any(part.startswith('census-group-') for part in p.relative_to(raw).parts) and p.name!='STEP2-SHA256SUMS']"
+      }
+    ],
+    "source_sha256": "9d94fe675e72a4d1fefdedcd5d75cdac401e5c4131204a4629a1b1f183abf542",
+    "inventory_projections": 1,
+    "method": "see original-function/comprehension probes"
+  },
+  {
+    "file": "stage3/adapt/99-correctness-axolotl-r/mutants.py",
+    "sites": [
+      {
+        "line": 7,
+        "text": "def snapshot(tree):return {p.name:hashlib.sha256(p.read_bytes()).hexdigest() for p in (tree/'src/compiler').iterdir() if p.is_file()}"
+      },
+      {
+        "line": 18,
+        "text": "roots=sorted(str(p) for p in (relative/'src/compiler').rglob('*.ts'));assert len(roots)==79"
+      }
+    ],
+    "source_sha256": "83d914d8b274238910f63c50a6635dd1e751534065d050b0d83a3fa15ab19fbd",
+    "inventory_projections": 2,
+    "method": "see original-function/comprehension probes"
+  },
+  {
+    "file": "stage3/adapt/99-correctness-axolotl-r/verify-tosorted.py",
+    "sites": [
+      {
+        "line": 14,
+        "text": "roots=sorted((s/'after/src/compiler').rglob('*.ts'));assert len(roots)==79"
+      },
+      {
+        "line": 24,
+        "text": "manifest={str(p.relative_to(s/'after/src')):hashlib.sha256(p.read_bytes()).hexdigest() for p in sorted((s/'after/src').rglob('*')) if p.is_file()}"
+      }
+    ],
+    "source_sha256": "4aea6ff314679d931fc04ec62104a008c83ecc91eb246d679cf28d8af214f8af",
+    "inventory_projections": 1,
+    "method": "see original-function/comprehension probes"
+  },
+  {
+    "file": "stage3/adapt/99-correctness-axolotl-s/clear-compare.cjs",
+    "sites": [
+      {
+        "line": 6,
+        "text": "const files=root=>fs.readdirSync(root,{recursive:true}).filter(f=>fs.statSync(path.join(root,f)).isFile()).sort();"
+      }
+    ],
+    "source_sha256": "a99f91be73385efa870df7dfa5aa1d2afb95bbabbe851eb6cf7e293e16a60361",
+    "inventory_projections": 1,
+    "method": "see original-function/comprehension probes"
+  },
+  {
+    "file": "stage3/adapt/99-correctness-axolotl-s/clear-types.py",
+    "sites": [
+      {
+        "line": 9,
+        "text": "roots=sorted((tree/'src/compiler').rglob('*.ts'));assert len(roots)==79,len(roots)"
+      }
+    ],
+    "source_sha256": "0e92b3e0b37c042f1aeb053225fdc3bb3b3007cad79037372a164f14b032be35",
+    "inventory_projections": 0,
+    "method": "static caller review; no isolated executable projection recorded"
+  },
+  {
+    "file": "stage3/adapt/99-correctness-axolotl-s/compare.cjs",
+    "sites": [
+      {
+        "line": 5,
+        "text": "function files(root){return fs.readdirSync(root,{recursive:true}).filter(f=>fs.statSync(path.join(root,f)).isFile()).sort();}"
+      }
+    ],
+    "source_sha256": "df7b7182a74b4af307e4d2bccc307a52b86c091cf764c780d72fb7a0eb0f5b08",
+    "inventory_projections": 1,
+    "method": "see original-function/comprehension probes"
+  },
+  {
+    "file": "stage3/adapt/99-correctness-axolotl-s/finish-lane.py",
+    "sites": [
+      {
+        "line": 14,
+        "text": "return {str(p.relative_to(tree/'src')):hashlib.sha256(p.read_bytes()).hexdigest() for p in sorted((tree/'src').rglob('*')) if p.is_file()}"
+      }
+    ],
+    "source_sha256": "689a1a5cd3e4feb573ee6cb79aced6032a03b85d0a9e7e1fc76e51a74d13e5d6",
+    "inventory_projections": 1,
+    "method": "see original-function/comprehension probes"
+  },
+  {
+    "file": "stage3/adapt/99-correctness-axolotl-s/queue-box-after-lane.py",
+    "sites": [
+      {
+        "line": 5,
+        "text": "def manifest():return {str(p.relative_to(tree)):hashlib.sha256(p.read_bytes()).hexdigest() for base in ['src','built/local'] for p in sorted((tree/base).rglob('*')) if p.is_file()}"
+      },
+      {
+        "line": 38,
+        "text": "countRows=[json.loads(p.read_text()) for p in pathlib.Path(os.environ['QUEUE_BOX_COUNT_DIR']).glob('*.json')]"
+      }
+    ],
+    "source_sha256": "c6cacf7ca93a3809a0b146703827bc119ae55315dda13deb68de3ff36fff3c9d",
+    "inventory_projections": 1,
+    "method": "see original-function/comprehension probes"
+  },
+  {
+    "file": "stage3/adapt/99-correctness-axolotl-s/queue-box-compare.cjs",
+    "sites": [
+      {
+        "line": 4,
+        "text": "const inventory=root=>fs.readdirSync(root,{recursive:true}).filter(f=>fs.statSync(path.join(root,f)).isFile()).sort();"
+      }
+    ],
+    "source_sha256": "a2c1022c383ff914da268057553e0bd13663f26bd28d873e8e126f182e88e4c2",
+    "inventory_projections": 1,
+    "method": "see original-function/comprehension probes"
+  },
+  {
+    "file": "stage3/adapt/99-correctness-axolotl-t/debug-display-compare.cjs",
+    "sites": [
+      {
+        "line": 8,
+        "text": "for(const file of fs.readdirSync(path.join(before,'built/local')).filter(f=>f.endsWith('.js')).sort()){"
+      },
+      {
+        "line": 16,
+        "text": "const walk=root=>fs.readdirSync(root,{withFileTypes:true}).flatMap(e=>e.isDirectory()?walk(path.join(root,e.name)):[path.join(root,e.name)]);"
+      }
+    ],
+    "source_sha256": "f71eba1c44fe32ad5a80236876f580c228c0234a23065db93692946071ea2f41",
+    "inventory_projections": 1,
+    "method": "see original-function/comprehension probes"
+  },
+  {
+    "file": "stage3/adapt/99-correctness-axolotl-t/debug-display-verify-final-source.py",
+    "sites": [
+      {
+        "line": 4,
+        "text": "def inventory(root):return {str(p.relative_to(root)):p for p in sorted((root/'src').rglob('*')) if p.is_file()}"
+      }
+    ],
+    "source_sha256": "e733754e68f671f2161f5e4345ef23afb914a01ff697b8f61fa0e8819224ef10",
+    "inventory_projections": 1,
+    "method": "see original-function/comprehension probes"
+  },
+  {
+    "file": "stage3/adapt/99-correctness-axolotl-u/compare.cjs",
+    "sites": [
+      {
+        "line": 6,
+        "text": "const all=root=>fs.readdirSync(path.join(root,'src'),{recursive:true}).filter(f=>fs.statSync(path.join(root,'src',f)).isFile()).sort();"
+      }
+    ],
+    "source_sha256": "22cf166f0367b65ea19ade6e14ae80b1eaba192e3d4c2569dd955d8c989502f2",
+    "inventory_projections": 1,
+    "method": "see original-function/comprehension probes"
+  },
+  {
+    "file": "stage3/adapt/99-correctness-axolotl-w/compare.cjs",
+    "sites": [
+      {
+        "line": 5,
+        "text": "function files(root){return fs.readdirSync(root,{recursive:true}).filter(f=>fs.statSync(path.join(root,f)).isFile()).sort();}"
+      }
+    ],
+    "source_sha256": "826cf61fa2fa1e614a38ffb6b352b17610ff0d1ae4f1e0ec3e6c4e6466c9d4cf",
+    "inventory_projections": 1,
+    "method": "see original-function/comprehension probes"
+  },
+  {
+    "file": "stage3/adapt/99-correctness-axolotl-x/composition-final-matrix.py",
+    "sites": [
+      {
+        "line": 52,
+        "text": "def digest(root):return {str(f.relative_to(root)):hashlib.sha256(f.read_bytes()).hexdigest() for f in root.rglob('*') if f.is_file()}"
+      },
+      {
+        "line": 55,
+        "text": "ready=list((scratch/('oracle-cache-'+label)).glob('*/ready.json'));assert len(ready)==1;artifact=ready[0].parent;tree=Path('/workspace/bind2-'+label+'-tree')"
+      },
+      {
+        "line": 58,
+        "text": "for f in sorted((tree/'built/local').glob('*.js')):"
+      }
+    ],
+    "source_sha256": "6afa7c9931eae574ad4ceb5d6cd1bfe64cae7ac9da761f81926bae838fa1f52c",
+    "inventory_projections": 1,
+    "method": "see original-function/comprehension probes"
+  },
+  {
+    "file": "stage3/adapt/99-correctness-axolotl-x/composition-latent.py",
+    "sites": [
+      {
+        "line": 30,
+        "text": "for f in measured.iterdir():shutil.copyfile(f,raw/f.name)"
+      }
+    ],
+    "source_sha256": "7357d17eda22039c1c1bb91e3fc5807c56bddb31134a6bbe19494cfd3f3b6224",
+    "inventory_projections": 0,
+    "method": "static caller review; no isolated executable projection recorded"
+  },
+  {
+    "file": "stage3/adapt/99-correctness-axolotl-x/composition-matrix.py",
+    "sites": [
+      {
+        "line": 28,
+        "text": "roots=sorted(str(f) for f in (tree/'src/compiler').rglob('*.ts'));assert len(roots)==79"
+      },
+      {
+        "line": 37,
+        "text": "for name in (tree/'built/local').glob('*.js'):"
+      }
+    ],
+    "source_sha256": "bc4f5df8d63b70a9d8183ea6f35ae644c313c351c288fc9b572b69cd7a5e628b",
+    "inventory_projections": 1,
+    "method": "see original-function/comprehension probes"
+  },
+  {
+    "file": "stage3/adapt/99-correctness-axolotl-x/run_owned_mutant.py",
+    "sites": [
+      {
+        "line": 11,
+        "text": "for item in source.iterdir():"
+      },
+      {
+        "line": 32,
+        "text": "paths=[str(f.relative_to(repo)) for f in out.glob('mutant-*')]+[str((p/'run_owned_mutant.py').relative_to(repo)),str((p/'publish_paths.py').relative_to(repo))]"
+      }
+    ],
+    "source_sha256": "b7f9c6d57616306c73bdbfc4150d08f33371cb0cc05cf8471c45dd4c48a78cd1",
+    "inventory_projections": 0,
+    "method": "static caller review; no isolated executable projection recorded"
+  },
+  {
+    "file": "stage3/adapt/99-correctness-axolotl-y/compare.cjs",
+    "sites": [
+      {
+        "line": 5,
+        "text": "function files(root){return fs.readdirSync(root,{recursive:true}).filter(f=>fs.statSync(path.join(root,f)).isFile()).sort();}"
+      }
+    ],
+    "source_sha256": "826cf61fa2fa1e614a38ffb6b352b17610ff0d1ae4f1e0ec3e6c4e6466c9d4cf",
+    "inventory_projections": 1,
+    "method": "see original-function/comprehension probes"
+  },
+  {
+    "file": "stage3/adapt/99-correctness-axolotl-y/run-groups.py",
+    "sites": [
+      {
+        "line": 15,
+        "text": "roots = sorted((tree / 'src/compiler').rglob('*.ts'))"
+      }
+    ],
+    "source_sha256": "0fec8b71c0ed5335ca4afc7765ffc9a66fd89d26bd2eac757242781c333e6e78",
+    "inventory_projections": 0,
+    "method": "static caller review; no isolated executable projection recorded"
+  },
+  {
+    "file": "stage3/adapt/99-correctness-axolotl-y/verify.py",
+    "sites": [
+      {
+        "line": 15,
+        "text": "roots=sorted((tree/'src/compiler').rglob('*.ts'));assert len(roots)==79"
+      },
+      {
+        "line": 25,
+        "text": "mutant=Path('/workspace/y-mutant');before=Path('/workspace/y-before');names=sorted(p.relative_to(before/'src') for p in (before/'src').rglob('*') if p.is_file())"
+      }
+    ],
+    "source_sha256": "a96fc9b5df195ae3f8a4bad3f0af12a8687f9d5ccabe62b63dd58d00d81e2455",
+    "inventory_projections": 1,
+    "method": "see original-function/comprehension probes"
+  },
+  {
+    "file": "stage3/adapt/99-correctness-axolotl-z/elementat-count-pieces.py",
+    "sites": [
+      {
+        "line": 10,
+        "text": "return {str(p.relative_to(s/'counted')):hashlib.sha256(p.read_bytes()).hexdigest() for base in ['src','built/local'] for p in sorted((s/'counted'/base).rglob('*')) if p.is_file()}"
+      },
+      {
+        "line": 38,
+        "text": "for file in sorted((dir/'calls').glob('*.jsonl')):"
+      },
+      {
+        "line": 59,
+        "text": "files=sorted(p for p in dir.rglob('*') if p.is_file());(dir/'SHA256SUMS').write_text(''.join(hashlib.sha256(p.read_bytes()).hexdigest()+'  '+str(p.relative_to(dir))+'\\n' for p in files))"
+      }
+    ],
+    "source_sha256": "ea11e9584a12c7184c2d2e45d7e5cf749ffcee50ad0663cd22fee488db1c42c0",
+    "inventory_projections": 1,
+    "method": "see original-function/comprehension probes"
+  },
+  {
+    "file": "stage3/adapt/99-correctness-axolotl-z/elementat-reconcile-count.py",
+    "sites": [
+      {
+        "line": 8,
+        "text": "for file in sorted(directory.glob('*.jsonl')):"
+      },
+      {
+        "line": 25,
+        "text": "for p in (s/'counted/built/local').glob('*.js.map'):shutil.copyfile(p,folder/p.name)"
+      }
+    ],
+    "source_sha256": "b8d7e1fd44b00fe67432079b1de9149e7cd8853118cdb9c043dfe82b8245b634",
+    "inventory_projections": 0,
+    "method": "static caller review; no isolated executable projection recorded"
+  },
+  {
+    "file": "stage3/adapt/99-correctness-axolotl-z/elementat-step-b-after-lane.py",
+    "sites": [
+      {
+        "line": 5,
+        "text": "manifest={str(p.relative_to(s/'after')):hashlib.sha256(p.read_bytes()).hexdigest() for base in ['src','built/local'] for p in sorted((s/'after'/base).rglob('*')) if p.is_file()};(s/'raw/after-lane-manifest.json').write_text(json.dumps(manifest,indent=2)+'\\n')"
+      },
+      {
+        "line": 33,
+        "text": "assert manifest=={str(p.relative_to(s/'after')):hashlib.sha256(p.read_bytes()).hexdigest() for base in ['src','built/local'] for p in sorted((s/'after'/base).rglob('*')) if p.is_file()}"
+      },
+      {
+        "line": 35,
+        "text": "(directory/'piece.json').write_text(json.dumps(record,indent=2)+'\\n');(directory/'SHA256SUMS').write_text(''.join(hashlib.sha256(p.read_bytes()).hexdigest()+'  '+str(p.relative_to(directory))+'\\n' for p in sorted(directory.rglob('*')) if p.is_file()))"
+      }
+    ],
+    "source_sha256": "993ed9d0250f59a5297bad14b4829617e300ee0b6ca4b5f3dce7e8125893e4de",
+    "inventory_projections": 3,
+    "method": "see original-function/comprehension probes"
+  },
+  {
+    "file": "stage3/adapt/99-correctness-axolotl-z/elementat-step-b-census.py",
+    "sites": [
+      {
+        "line": 4,
+        "text": "repo=Path('/workspace/adamic');s=Path('/workspace/scratch/elementat-b/step-b');out=repo/'stage3/adapt/99-correctness-axolotl-z';after=s/'after/src/compiler';before=Path('/workspace/scratch/elementat-b/before/src/compiler');roots=sorted(p.relative_to(after) for p in after.rglob('*.ts'));assert len(roots)==79"
+      },
+      {
+        "line": 5,
+        "text": "manifest={str(p.relative_to(s/'after/src')):hashlib.sha256(p.read_bytes()).hexdigest() for p in sorted((s/'after/src').rglob('*')) if p.is_file()};(s/'raw/census-source-manifest.json').write_text(json.dumps(manifest,indent=2)+'\\n')"
+      },
+      {
+        "line": 28,
+        "text": "assert manifest=={str(p.relative_to(s/'after/src')):hashlib.sha256(p.read_bytes()).hexdigest() for p in sorted((s/'after/src').rglob('*')) if p.is_file()}"
+      },
+      {
+        "line": 30,
+        "text": "(out/'elementat-census.json').write_text(json.dumps(allrows,indent=2)+'\\n');(directory/'SHA256SUMS').write_text(''.join(hashlib.sha256(p.read_bytes()).hexdigest()+'  '+p.name+'\\n' for p in sorted(directory.iterdir()) if p.is_file()))"
+      }
+    ],
+    "source_sha256": "1548191579a656e4bb336dbb940b7d64a1444979f09d776a583b690643f74264",
+    "inventory_projections": 2,
+    "method": "see original-function/comprehension probes"
+  },
+  {
+    "file": "stage3/adapt/99-correctness-axolotl-z/elementat-step-b-compare.cjs",
+    "sites": [
+      {
+        "line": 4,
+        "text": "function inventory(root){return fs.readdirSync(root,{recursive:true}).filter(p=>fs.statSync(path.join(root,p)).isFile()).sort();}"
+      }
+    ],
+    "source_sha256": "dabe5254a722c2eac5c2eb0dafa607f65ab311b90116f18ccc18d2bb2dc7501f",
+    "inventory_projections": 1,
+    "method": "see original-function/comprehension probes"
+  },
+  {
+    "file": "stage3/adapt/99-correctness-axolotl-z/elementat-step-b-finalize.py",
+    "sites": [
+      {
+        "line": 161,
+        "text": "(raw/'SHA256SUMS').write_text(''.join(hashlib.sha256(p.read_bytes()).hexdigest()+'  '+str(p.relative_to(raw))+'\\n' for p in sorted(raw.rglob('*')) if p.is_file() and p.name!='SHA256SUMS'))"
+      },
+      {
+        "line": 165,
+        "text": "for sums in out.glob('*.sha256'):"
+      },
+      {
+        "line": 167,
+        "text": "for archive in out.glob('*.tar.gz'):"
+      },
+      {
+        "line": 174,
+        "text": "assert len(list(out.iterdir()))<200"
+      },
+      {
+        "line": 175,
+        "text": "print(json.dumps({'files':len(list(out.iterdir())),'moved73':len(moved),'afterLane':lane['counts'],'allChecksumsVerified':True,'allClassWitnessEquality':False}))"
+      }
+    ],
+    "source_sha256": "430f08f650543817b636a49a9466527d27b4a769772d6f3cbef5583e16b214d0",
+    "inventory_projections": 0,
+    "method": "static caller review; no isolated executable projection recorded"
+  },
+  {
+    "file": "stage3/adapt/99-correctness-axolotl-z/elementat-step-b-probes.py",
+    "sites": [
+      {
+        "line": 8,
+        "text": "roots=sorted(str(p) for p in (tree/'src/compiler').rglob('*.ts'));assert len(roots)==79;(raw/(label+'-roots.json')).write_text(json.dumps(roots,indent=2)+'\\n');assert run('types-'+label,[str(s/'bin/adamic'),'types',*roots])==0"
+      }
+    ],
+    "source_sha256": "704b44baabb49578cd839eb2ed89f3f41902d2e9640902c080559c5d49421b4e",
+    "inventory_projections": 1,
+    "method": "see original-function/comprehension probes"
+  },
+  {
+    "file": "stage3/adapt/99-correctness-axolotl-z/probe-elementat.py",
+    "sites": [
+      {
+        "line": 4,
+        "text": "manifest={str(p.relative_to(before/'src')):hashlib.sha256(p.read_bytes()).hexdigest() for p in sorted((before/'src').rglob('*')) if p.is_file()}"
+      },
+      {
+        "line": 9,
+        "text": "roots=sorted(str(p) for p in (tree/'src/compiler').rglob('*.ts'));assert len(roots)==79"
+      },
+      {
+        "line": 19,
+        "text": "assert manifest=={str(p.relative_to(before/'src')):hashlib.sha256(p.read_bytes()).hexdigest() for p in sorted((before/'src').rglob('*')) if p.is_file()}"
+      }
+    ],
+    "source_sha256": "deb7a8a05b490d2ceb50715720f0b42b1fb025bebb1d2340c95e96528a0b5a35",
+    "inventory_projections": 3,
+    "method": "see original-function/comprehension probes"
+  },
+  {
+    "file": "stage3/adapt/99-correctness-core-arrayof/after-checks.py",
+    "sites": [
+      {
+        "line": 4,
+        "text": "roots=sorted((tree/'src/compiler').rglob('*.ts'));assert len(roots)==79;(s/'roots-after.json').write_text(json.dumps(list(map(str,roots)),indent=2)+'\\n')"
+      }
+    ],
+    "source_sha256": "93560cd2dd0f9cd4783c6bc44f80865d454c2069c54f47f129e0b5a905907f35",
+    "inventory_projections": 0,
+    "method": "static caller review; no isolated executable projection recorded"
+  },
+  {
+    "file": "stage3/adapt/99-correctness-core-arrayof/census.py",
+    "sites": [
+      {
+        "line": 5,
+        "text": "return {str(p.relative_to(tree)):hashlib.sha256(p.read_bytes()).hexdigest() for p in sorted((tree/'src').rglob('*')) if p.is_file()}"
+      }
+    ],
+    "source_sha256": "cb52d8b8c60d0184593a2cee1749a6bffd6acfff203b9c20858aefd4968da9aa",
+    "inventory_projections": 1,
+    "method": "see original-function/comprehension probes"
+  },
+  {
+    "file": "stage3/adapt/99-correctness-core-arrayof/compare.cjs",
+    "sites": [
+      {
+        "line": 4,
+        "text": "function files(root){return fs.readdirSync(root,{recursive:true}).filter(f=>fs.statSync(path.join(root,f)).isFile()).sort();}"
+      }
+    ],
+    "source_sha256": "afa82a19937e02a11ef1cab6e53494339271b35443a4a2dc946889563e72df69",
+    "inventory_projections": 1,
+    "method": "see original-function/comprehension probes"
+  },
+  {
+    "file": "stage3/adapt/99-correctness-core-arrayof/count-pieces.py",
+    "sites": [
+      {
+        "line": 18,
+        "text": "return {str(p.relative_to(s/'counted')):hashlib.sha256(p.read_bytes()).hexdigest() for base in ['src','built/local'] for p in sorted((s/'counted'/base).rglob('*')) if p.is_file()}"
+      },
+      {
+        "line": 26,
+        "text": "for f in (piece/'calls').glob('*.jsonl'):"
+      }
+    ],
+    "source_sha256": "da974c04259be99498847e80d3358c3eb4cf161773aaaec24f5332c93e10faed",
+    "inventory_projections": 1,
+    "method": "see original-function/comprehension probes"
+  },
+  {
+    "file": "stage3/adapt/99-correctness-core-arrayof/finalize.py",
+    "sites": [
+      {
+        "line": 13,
+        "text": "for p in Path('/proc').iterdir():"
+      },
+      {
+        "line": 181,
+        "text": "count=sum(p.is_file() for p in own.rglob('*'));assert count<120;report['adapterDirectoryFiles']=count;report['totalChangedFiles']=count+1;(own/'PROOF.json').write_text(json.dumps(report,indent=2)+'\\n');print(json.dumps(dict(status='pass',adapterDirectoryFiles=count,totalChangedFiles=count+1,archives=archives)),flush=True)"
+      }
+    ],
+    "source_sha256": "8aff9186597c0615907120b2b72736877ed9a730654cd0aec738c2b9f52d0629",
+    "inventory_projections": 0,
+    "method": "static caller review; no isolated executable projection recorded"
+  },
+  {
+    "file": "stage3/adapt/99-correctness-core-arrayof/measurement-scope.cjs",
+    "sites": [
+      {
+        "line": 4,
+        "text": "const names=fs.readdirSync(s+'/before/src',{recursive:true}).filter(p=>fs.statSync(s+'/before/src/'+p).isFile()).sort(),changed=[];"
+      }
+    ],
+    "source_sha256": "7719b68dad9cc3c5ae20c6907f1a49e1a4d68f9c5908ce1ce6bdca795b54cb7f",
+    "inventory_projections": 0,
+    "method": "static caller review; no isolated executable projection recorded"
+  },
+  {
+    "file": "stage3/adapt/99-correctness-core-arrayof/replay.py",
+    "sites": [
+      {
+        "line": 5,
+        "text": "return {str(p.relative_to(tree/'src')):hashlib.sha256(p.read_bytes()).hexdigest() for p in sorted((tree/'src').rglob('*')) if p.is_file()}"
+      },
+      {
+        "line": 7,
+        "text": "for d in sorted((repo/'stage3/adapt').iterdir()):"
+      }
+    ],
+    "source_sha256": "334061d89c4d4c157a9267066b6217fa06a0ac242b75f0d671cd9bc6301158d0",
+    "inventory_projections": 1,
+    "method": "see original-function/comprehension probes"
+  },
+  {
+    "file": "stage3/adapt/99-correctness-core-assign/compare.cjs",
+    "sites": [
+      {
+        "line": 3,
+        "text": "const a=require('./adapt.cjs'),pin=a.owner;const [before,after,measured]=process.argv.slice(2);assert(before&&after&&measured,'usage: compare.cjs BEFORE AFTER MEASURED');const hash=x=>crypto.createHash('sha256').update(x).digest('hex');const files=root=>fs.readdirSync(root,{recursive:true}).filter(n=>fs.statSync(path.join(root,n)).isFile()).sort();"
+      }
+    ],
+    "source_sha256": "a905be92f6937549d947ef20971d22581dac82a65785621bbe4aa61add256f7b",
+    "inventory_projections": 1,
+    "method": "see original-function/comprehension probes"
+  },
+  {
+    "file": "stage3/adapt/99-correctness-core-cast-message/compare-normal.cjs",
+    "sites": [
+      {
+        "line": 4,
+        "text": "function files(dir){return fs.readdirSync(dir,{withFileTypes:true}).flatMap(e=>e.isDirectory()?files(path.join(dir,e.name)):[path.join(dir,e.name)]);}"
+      }
+    ],
+    "source_sha256": "d4306dc5fd26b041abeab8b8ad6531ea89a79d09cbbb6bcd3fbce1261cbdcdc1",
+    "inventory_projections": 1,
+    "method": "see original-function/comprehension probes"
+  },
+  {
+    "file": "stage3/adapt/99-correctness-core-cast-message/phase.py",
+    "sites": [
+      {
+        "line": 11,
+        "text": "side=sys.argv[2];roots=sorted((s/side/'src/compiler').rglob('*.ts'));assert len(roots)==79"
+      },
+      {
+        "line": 19,
+        "text": "manifest={str(p.relative_to(s/side)):hashlib.sha256(p.read_bytes()).hexdigest() for p in sorted((s/side/'src').rglob('*')) if p.is_file()};digest=hashlib.sha256(json.dumps(manifest,sort_keys=True).encode()).hexdigest();entry={'side':side,'apply':result,'sourceFiles':len(manifest),'sourceManifestSha256':digest,'status':'Apply complete, subsequent proof pending'};(directory/(side+'-apply-checkpoint.json')).write_text(json.dumps(entry,indent=2)+'\\n');(s/'raw'/(side+'-source-manifest.json')).write_text(json.dumps(manifest,sort_keys=True)+'\\n')"
+      },
+      {
+        "line": 30,
+        "text": "for adapter in sorted((r/'stage3/adapt').glob('*/adapt.cjs')):"
+      },
+      {
+        "line": 43,
+        "text": "for p in sorted(out.iterdir()):tf.add(p,arcname=p.name)"
+      }
+    ],
+    "source_sha256": "a082da86ef36a4869b9c294b35f9d849718beab6f38440e5d7c57fa62082946d",
+    "inventory_projections": 1,
+    "method": "see original-function/comprehension probes"
+  },
+  {
+    "file": "stage3/adapt/99-correctness-core-clone/compare.cjs",
+    "sites": [
+      {
+        "line": 5,
+        "text": "function files(root){return fs.readdirSync(root,{recursive:true}).filter(f=>fs.statSync(path.join(root,f)).isFile()).sort();}"
+      }
+    ],
+    "source_sha256": "087e435c3a5014197de37c23cf5d8c83807a7cdf2c437d9f298341ed73ac45fd",
+    "inventory_projections": 1,
+    "method": "see original-function/comprehension probes"
+  },
+  {
+    "file": "stage3/adapt/99-correctness-core-clone/count-pieces.py",
+    "sites": [
+      {
+        "line": 19,
+        "text": "frozen={str(p.relative_to(tree)):hashlib.sha256(p.read_bytes()).hexdigest() for top in ['src','built/local'] for p in sorted((tree/top).rglob('*')) if p.is_file()};(prep/'manifest.json').write_text(json.dumps(frozen,indent=2)+'\\n')"
+      },
+      {
+        "line": 22,
+        "text": "assert frozen=={str(p.relative_to(tree)):hashlib.sha256(p.read_bytes()).hexdigest() for top in ['src','built/local'] for p in sorted((tree/top).rglob('*')) if p.is_file()}"
+      },
+      {
+        "line": 56,
+        "text": "for file in (piece/'calls').glob('*.jsonl'):"
+      },
+      {
+        "line": 60,
+        "text": "assert frozen=={str(p.relative_to(tree)):hashlib.sha256(p.read_bytes()).hexdigest() for top in ['src','built/local'] for p in sorted((tree/top).rglob('*')) if p.is_file()},'counted source or build changed'"
+      }
+    ],
+    "source_sha256": "c039e1474faf34fce24b220f634743a93956d16b76a4d50589cf34962999122e",
+    "inventory_projections": 3,
+    "method": "see original-function/comprehension probes"
+  },
+  {
+    "file": "stage3/adapt/99-correctness-core-clone/proofs.py",
+    "sites": [
+      {
+        "line": 20,
+        "text": "tree=pathlib.Path('/workspace/core-'+name);roots=sorted(map(str,(tree/'src/compiler').rglob('*.ts')));assert len(roots)==79,len(roots)"
+      }
+    ],
+    "source_sha256": "3610afeb807d90c3a9a5257dee54ae2757de796a9e81d06bcf2586d4a3673f9e",
+    "inventory_projections": 0,
+    "method": "static caller review; no isolated executable projection recorded"
+  },
+  {
+    "file": "stage3/adapt/99-correctness-core-clone/references.cjs",
+    "sites": [
+      {
+        "line": 3,
+        "text": "const tree=process.argv[2]; const roots=fs.readdirSync(tree+'/src',{recursive:true}).filter(f=>f.endsWith('.ts')).map(f=>tree+'/src/'+f);"
+      }
+    ],
+    "source_sha256": "9ec4de8cc178f8dfd4fe29be20cc2e7bf13f6973e3043cc17a6391e47ce9c2cf",
+    "inventory_projections": 0,
+    "method": "static caller review; no isolated executable projection recorded"
+  },
+  {
+    "file": "stage3/adapt/99-correctness-core-clone/replay.py",
+    "sites": [
+      {
+        "line": 3,
+        "text": "def manifest(tree):return {str(p.relative_to(tree)):hashlib.sha256(p.read_bytes()).hexdigest() for p in sorted((tree/'src').rglob('*')) if p.is_file()}"
+      },
+      {
+        "line": 9,
+        "text": "for directory in sorted(p for p in (repo/'stage3/adapt').iterdir() if p.is_dir()):"
+      }
+    ],
+    "source_sha256": "674d99451ad9c9b8e8d99b45452a23feac080a89cb6f14afb3f09230852d5429",
+    "inventory_projections": 1,
+    "method": "see original-function/comprehension probes"
+  },
+  {
+    "file": "stage3/adapt/99-correctness-core-compare/amendment-proof.py",
+    "sites": [
+      {
+        "line": 6,
+        "text": "def manifest(tree):return {str(p.relative_to(tree)):hashlib.sha256(p.read_bytes()).hexdigest() for p in sorted(tree.rglob('*')) if p.is_file()}"
+      },
+      {
+        "line": 17,
+        "text": "roots=sorted((s/side/'src/compiler').rglob('*.ts'));assert len(roots)==79"
+      },
+      {
+        "line": 32,
+        "text": "for directory in sorted(p for p in (repo/'stage3/adapt').iterdir() if p.is_dir()):"
+      }
+    ],
+    "source_sha256": "a9067e482af19a291f88a56195cff1f37948f1f46eb147c226a5d5b3f627e531",
+    "inventory_projections": 1,
+    "method": "see original-function/comprehension probes"
+  },
+  {
+    "file": "stage3/adapt/99-correctness-core-compare/census.py",
+    "sites": [
+      {
+        "line": 4,
+        "text": "def manifest():return {str(p.relative_to(tree/'src')):hashlib.sha256(p.read_bytes()).hexdigest() for p in sorted((tree/'src').rglob('*')) if p.is_file()}"
+      }
+    ],
+    "source_sha256": "b1958641b3319290881444f7f92f9b3e1376a6b19843eee91adae806e5617ddc",
+    "inventory_projections": 1,
+    "method": "see original-function/comprehension probes"
+  },
+  {
+    "file": "stage3/adapt/99-correctness-core-compare/check-types.py",
+    "sites": [
+      {
+        "line": 3,
+        "text": "s=Path('/workspace/scratch/core-compare');side=sys.argv[1];roots=sorted((s/side/'src/compiler').rglob('*.ts'));assert len(roots)==79,len(roots);begin=time.monotonic()"
+      }
+    ],
+    "source_sha256": "c0330cfda5b4ef09160be97d9f62c5f6338234978e3ae194bfb2b520bb3631f3",
+    "inventory_projections": 0,
+    "method": "static caller review; no isolated executable projection recorded"
+  },
+  {
+    "file": "stage3/adapt/99-correctness-core-compare/close-proof.py",
+    "sites": [
+      {
+        "line": 19,
+        "text": "def manifest(root):return {str(p.relative_to(root)):hashlib.sha256(p.read_bytes()).hexdigest() for p in sorted(root.rglob('*')) if p.is_file()}"
+      },
+      {
+        "line": 38,
+        "text": "for p in sorted(raw.glob('*.diff')):"
+      },
+      {
+        "line": 44,
+        "text": "for p in sorted(s.glob('piece-[0-9][0-9].tar.gz')):shutil.copyfile(p,out/p.name)"
+      }
+    ],
+    "source_sha256": "890eeb4745dd658df4244fde0e8c20c02209343a994be08baf7b21dac99f354c",
+    "inventory_projections": 1,
+    "method": "see original-function/comprehension probes"
+  },
+  {
+    "file": "stage3/adapt/99-correctness-core-compare/compare.cjs",
+    "sites": [
+      {
+        "line": 4,
+        "text": "function inventory(root){return fs.readdirSync(root,{recursive:true}).filter(p=>fs.statSync(path.join(root,p)).isFile()).sort();}"
+      }
+    ],
+    "source_sha256": "ec9dec6500dd9629a98875db8c8f15561623a7ba477c82cfb4b91271c07f5ac2",
+    "inventory_projections": 1,
+    "method": "see original-function/comprehension probes"
+  },
+  {
+    "file": "stage3/adapt/99-correctness-core-compare/count.py",
+    "sites": [
+      {
+        "line": 18,
+        "text": "return {str(p.relative_to(s/'counted')):hashlib.sha256(p.read_bytes()).hexdigest() for base in ['src','built/local'] for p in sorted((s/'counted'/base).rglob('*')) if p.is_file()}"
+      },
+      {
+        "line": 33,
+        "text": "for file in temporary.iterdir():shutil.move(str(file),str(d/'calls'/file.name))"
+      },
+      {
+        "line": 42,
+        "text": "for f in sorted((d/'calls').glob('*.bin')):histogram.update(f.read_bytes())"
+      },
+      {
+        "line": 60,
+        "text": "files=sorted(p for p in d.rglob('*') if p.is_file());(d/'SHA256SUMS').write_text(''.join(hashlib.sha256(p.read_bytes()).hexdigest()+'  '+str(p.relative_to(d))+'\\n' for p in files))"
+      }
+    ],
+    "source_sha256": "f131240a17f04f4de1cc780434acec50d1ce98ff59ffdee94cbc6aaef9dd61fb",
+    "inventory_projections": 1,
+    "method": "see original-function/comprehension probes"
+  },
+  {
+    "file": "stage3/adapt/99-correctness-core-compare/post-measure.py",
+    "sites": [
+      {
+        "line": 30,
+        "text": "def manifest(tree):return {str(p.relative_to(tree)):hashlib.sha256(p.read_bytes()).hexdigest() for p in sorted(tree.rglob('*')) if p.is_file()}"
+      }
+    ],
+    "source_sha256": "99eae853a2c5c5365dc3a55c749da89014aca515b84bbc29461ccb807477263e",
+    "inventory_projections": 1,
+    "method": "see original-function/comprehension probes"
+  },
+  {
+    "file": "stage3/adapt/99-correctness-core-debug-messages/compare.py",
+    "sites": [
+      {
+        "line": 8,
+        "text": "before=s/'before';after=s/'after';manifests={side:{str(p.relative_to(s/side)):hash(p.read_bytes()) for p in sorted((s/side/'src').rglob('*')) if p.is_file()} for side in ['before','after']}"
+      },
+      {
+        "line": 16,
+        "text": "jsfiles=sorted(p.relative_to(before/'built/local') for p in (before/'built/local').rglob('*.js'))"
+      },
+      {
+        "line": 17,
+        "text": "assert jsfiles==sorted(p.relative_to(after/'built/local') for p in (after/'built/local').rglob('*.js'))"
+      }
+    ],
+    "source_sha256": "5a6e5d3aaf14fe80bf5a2524170a50eb57d6693f310907be53c8ef7f55593c78",
+    "inventory_projections": 2,
+    "method": "see original-function/comprehension probes"
+  },
+  {
+    "file": "stage3/adapt/99-correctness-core-debug-messages/finalize.py",
+    "sites": [
+      {
+        "line": 14,
+        "text": "for path in sorted((s/'evidence').iterdir()):"
+      },
+      {
+        "line": 21,
+        "text": "members={str(p.relative_to(s)):p.read_bytes() for p in sorted(raw.rglob('*')) if p.is_file()}"
+      },
+      {
+        "line": 34,
+        "text": "archives=sorted(u.glob('*.tar.gz'));assert all(p.stat().st_size<20_000_000 for p in archives)"
+      }
+    ],
+    "source_sha256": "fc3cf515bc3cda78264ee7ed77080579f3f8baa0171590920aeb17ecedbfe776",
+    "inventory_projections": 0,
+    "method": "static caller review; no isolated executable projection recorded"
+  },
+  {
+    "file": "stage3/adapt/99-correctness-core-debug-messages/followup.py",
+    "sites": [
+      {
+        "line": 24,
+        "text": "processes=[json.loads(p.read_text()) for p in (s/'raw/after-counter-control').glob('*.json')];assert len(processes)==1;assert all(v==1 for v in processes[0]['counts'].values());(s/'raw/after-counter-control.json').write_text(json.dumps(processes,indent=2)+'\\n')"
+      }
+    ],
+    "source_sha256": "6b0a6e43effd4f9106eaaa95858d6c977570d0c574f2b26db9859d9f088f347b",
+    "inventory_projections": 0,
+    "method": "static caller review; no isolated executable projection recorded"
+  },
+  {
+    "file": "stage3/adapt/99-correctness-core-debug-messages/replay.py",
+    "sites": [
+      {
+        "line": 6,
+        "text": "def manifest():return {str(p.relative_to(tree)):hashlib.sha256(p.read_bytes()).hexdigest() for p in sorted((tree/'src').rglob('*')) if p.is_file()}"
+      },
+      {
+        "line": 8,
+        "text": "for adapter in sorted((repo/'stage3/adapt').glob('*/adapt.cjs')):"
+      },
+      {
+        "line": 24,
+        "text": "for p in sorted(out.iterdir()):tf.add(p,arcname=p.name)"
+      }
+    ],
+    "source_sha256": "bb86ee1519ea6179f4f4af89ba4f44b25a6ccbd38ba2bcd3884ac40fdd88c0f0",
+    "inventory_projections": 1,
+    "method": "see original-function/comprehension probes"
+  },
+  {
+    "file": "stage3/adapt/99-correctness-core-debug-messages/validate.py",
+    "sites": [
+      {
+        "line": 6,
+        "text": "assert all(proof['gates'].values());assert len([p for p in u.rglob('*') if p.is_file()])<120"
+      },
+      {
+        "line": 20,
+        "text": "for p in u.iterdir():"
+      },
+      {
+        "line": 24,
+        "text": "current={str(p.relative_to(s/side)):hashlib.sha256(p.read_bytes()).hexdigest() for p in sorted((s/side/'src').rglob('*')) if p.is_file()};assert current==json.loads((u/'build-comparison.json').read_text())['sourceManifests'][side]"
+      },
+      {
+        "line": 33,
+        "text": "for d in Path('/proc').iterdir():"
+      },
+      {
+        "line": 43,
+        "text": "(u/'SHA256SUMS').write_text(''.join(hashlib.sha256(p.read_bytes()).hexdigest()+'  '+p.name+'\\n' for p in sorted(u.iterdir()) if p.is_file() and p.name!='SHA256SUMS'))"
+      }
+    ],
+    "source_sha256": "2d6af5d2eeeaac6c0a690c04560337d6027edf0bbcfb4f97a11a50d421789b78",
+    "inventory_projections": 1,
+    "method": "see original-function/comprehension probes"
+  },
+  {
+    "file": "stage3/adapt/99-correctness-core-debug-messages/work.py",
+    "sites": [
+      {
+        "line": 33,
+        "text": "side=sys.argv[2];roots=sorted((s/side/'src/compiler').rglob('*.ts'));assert len(roots)==79"
+      }
+    ],
+    "source_sha256": "4c8fac60fd32b54fd422625ba3c9206af6f66dbde382c5f1a4d62cdb335cf028",
+    "inventory_projections": 0,
+    "method": "static caller review; no isolated executable projection recorded"
+  },
+  {
+    "file": "stage3/adapt/99-correctness-core-extend/reproduce/compare-source.cjs",
+    "sites": [
+      {
+        "line": 2,
+        "text": "const s='/workspace/scratch/core-extend';function walk(p){return fs.readdirSync(p,{withFileTypes:true}).flatMap(e=>e.isDirectory()?walk(path.join(p,e.name)):[path.join(p,e.name)]);}"
+      }
+    ],
+    "source_sha256": "120a265ba69d21a3cd8c43562cca3623f03e3e5368380c4d8dd2050cea09e57c",
+    "inventory_projections": 1,
+    "method": "see original-function/comprehension probes"
+  },
+  {
+    "file": "stage3/adapt/99-correctness-core-extend/reproduce/map-callers.cjs",
+    "sites": [
+      {
+        "line": 3,
+        "text": "for(const folder of ['full-count'])for(const name of fs.readdirSync(root+'/'+folder+'/calls').filter(n=>n.endsWith('.jsonl'))){"
+      }
+    ],
+    "source_sha256": "ee393bf0082fad2540bad2ff5bc6688c54654fb65f61dcc34badfde29bf30067",
+    "inventory_projections": 0,
+    "method": "static caller review; no isolated executable projection recorded"
+  },
+  {
+    "file": "stage3/adapt/99-correctness-core-extend/reproduce/reconcile-replay.py",
+    "sites": [
+      {
+        "line": 3,
+        "text": "s=Path('/workspace/scratch/core-extend');repo=Path('/workspace/adamic');rows=json.loads((s/'paired-replay.json').read_text());expected=sorted(p.name for p in (repo/'stage3/adapt').iterdir() if p.is_dir());assert [r['adapter'] for r in rows]==expected"
+      },
+      {
+        "line": 8,
+        "text": "def manifest(root):return {str(p.relative_to(root)):hashlib.sha256(p.read_bytes()).hexdigest() for p in sorted((root/'src').rglob('*')) if p.is_file()}"
+      }
+    ],
+    "source_sha256": "b192f231aebf0a041aeee65bb245b50967f1670f8f715fb9ab1d4f9376ff898e",
+    "inventory_projections": 1,
+    "method": "see original-function/comprehension probes"
+  },
+  {
+    "file": "stage3/adapt/99-correctness-core-extend/reproduce/replay.py",
+    "sites": [
+      {
+        "line": 11,
+        "text": "def snap(tree):return {str(p.relative_to(tree)):hashlib.sha256(p.read_bytes()).hexdigest() for p in sorted((tree/'src').rglob('*')) if p.is_file()}"
+      },
+      {
+        "line": 13,
+        "text": "for directory in sorted((repo/'stage3/adapt').iterdir()):"
+      }
+    ],
+    "source_sha256": "f60541558a5f1202f2d33e1d426c88f14626950b6ea67afce8550dd37321de9a",
+    "inventory_projections": 1,
+    "method": "see original-function/comprehension probes"
+  },
+  {
+    "file": "stage3/adapt/99-correctness-core-extend/reproduce/verify-count-inputs.py",
+    "sites": [
+      {
+        "line": 4,
+        "text": "for directory,dirs,names in os.walk(before):"
+      }
+    ],
+    "source_sha256": "2508721e07e6ee80b8b0f0e69bb4cf32740e300ee742544f3587920fb8a02d40",
+    "inventory_projections": 0,
+    "method": "static caller review; no isolated executable projection recorded"
+  },
+  {
+    "file": "stage3/adapt/99-correctness-core-extend/reproduce/verify.py",
+    "sites": [
+      {
+        "line": 18,
+        "text": "roots=sorted(str(p) for p in (s/name/'src/compiler').rglob('*.ts'));assert len(roots)==79"
+      }
+    ],
+    "source_sha256": "c0410939475ccacbab1027f22cf5203660333f5b750a6b48b82ff87768220062",
+    "inventory_projections": 1,
+    "method": "see original-function/comprehension probes"
+  },
+  {
+    "file": "stage3/adapt/99-correctness-core-getallkeys/archive.py",
+    "sites": [
+      {
+        "line": 8,
+        "text": "manifest={str(p.relative_to(tree)):hashfile(p) for p in sorted((tree/'src').rglob('*')) if p.is_file()}"
+      },
+      {
+        "line": 22,
+        "text": "files=sorted(p for p in SCRATCH.rglob('*') if include(p));manifest=''.join(hashfile(p)+'  '+str(p.relative_to(SCRATCH))+'\\n' for p in files)"
+      }
+    ],
+    "source_sha256": "67e5d4bde70ded787c0887b7d204a9de0d63533019cd5d21608a513b73b77b4a",
+    "inventory_projections": 1,
+    "method": "see original-function/comprehension probes"
+  },
+  {
+    "file": "stage3/adapt/99-correctness-core-getallkeys/check-tree.py",
+    "sites": [
+      {
+        "line": 7,
+        "text": "roots=sorted(str(p) for p in (tree/'src/compiler').rglob('*.ts') if not p.name.endswith('.d.ts'))"
+      }
+    ],
+    "source_sha256": "54b90f44d0a180334505d70947d1029785d8a1ad46d998e4b0b40ce0c77bad54",
+    "inventory_projections": 1,
+    "method": "see original-function/comprehension probes"
+  },
+  {
+    "file": "stage3/adapt/99-correctness-core-getallkeys/compare.cjs",
+    "sites": [
+      {
+        "line": 5,
+        "text": "function files(root){const result=[];function walk(dir){for(const entry of fs.readdirSync(dir,{withFileTypes:true})){const name=path.join(dir,entry.name);if(entry.isDirectory())walk(name);else if(entry.isFile())result.push(path.relative(root,name));}}walk(root);return result.sort();}"
+      }
+    ],
+    "source_sha256": "4aaab682247838f61a88f81648f771324e53259da9089c63b7c0ff7be5c7e3b1",
+    "inventory_projections": 1,
+    "method": "see original-function/comprehension probes"
+  },
+  {
+    "file": "stage3/adapt/99-correctness-core-getallkeys/lane-pieces.py",
+    "sites": [
+      {
+        "line": 10,
+        "text": "def manifest():return {str(p.relative_to(tree)):hashlib.sha256(p.read_bytes()).hexdigest() for folder in ['src','built','tests/cases','tests/baselines/reference'] for p in sorted((tree/folder).rglob('*')) if p.is_file()}"
+      }
+    ],
+    "source_sha256": "b3bea5ad1bdbc3c399e256f2cceb76ccfa81d1bfb829577ef55daaccd285327e",
+    "inventory_projections": 1,
+    "method": "see original-function/comprehension probes"
+  },
+  {
+    "file": "stage3/adapt/99-correctness-core-getallkeys/replay.py",
+    "sites": [
+      {
+        "line": 6,
+        "text": "def snapshot(tree):return {str(p.relative_to(tree)):hashlib.sha256(p.read_bytes()).hexdigest() for p in (tree/'src').rglob('*') if p.is_file()}"
+      },
+      {
+        "line": 13,
+        "text": "for directory in sorted(p for p in (checkout/'stage3/adapt').iterdir() if p.is_dir()):"
+      }
+    ],
+    "source_sha256": "04cc1d76d93cddc4796f58230fc40661f902a7c164f107c02c754c6787f497fc",
+    "inventory_projections": 1,
+    "method": "see original-function/comprehension probes"
+  },
+  {
+    "file": "stage3/adapt/99-correctness-core-getallkeys/verify.py",
+    "sites": [
+      {
+        "line": 26,
+        "text": "for a in sorted((before/'built/local').rglob('*')):"
+      }
+    ],
+    "source_sha256": "ec993fb5388987bdf59dd484696a456ff71e0194d8daaf8e08e0252cb20fbebe",
+    "inventory_projections": 0,
+    "method": "static caller review; no isolated executable projection recorded"
+  },
+  {
+    "file": "stage3/adapt/99-correctness-core-getfunctionname-move/compare-normal.cjs",
+    "sites": [
+      {
+        "line": 4,
+        "text": "function files(dir){return fs.readdirSync(dir,{withFileTypes:true}).flatMap(e=>e.isDirectory()?files(path.join(dir,e.name)):[path.join(dir,e.name)]);}"
+      }
+    ],
+    "source_sha256": "d4306dc5fd26b041abeab8b8ad6531ea89a79d09cbbb6bcd3fbce1261cbdcdc1",
+    "inventory_projections": 1,
+    "method": "see original-function/comprehension probes"
+  },
+  {
+    "file": "stage3/adapt/99-correctness-core-getfunctionname-move/mutants.py",
+    "sites": [
+      {
+        "line": 5,
+        "text": "roots=sorted((tree/'src/compiler').rglob('*.ts'));assert len(roots)==79"
+      }
+    ],
+    "source_sha256": "67f991d1e6f0e75246865405ff81ccd7b1da419aeaf269165081584c7d9b3059",
+    "inventory_projections": 0,
+    "method": "static caller review; no isolated executable projection recorded"
+  },
+  {
+    "file": "stage3/adapt/99-correctness-core-getfunctionname-move/package-proof.py",
+    "sites": [
+      {
+        "line": 11,
+        "text": "root=s/side/'built/local';files=sorted(root.rglob('*.js'))+[root/'typescript.d.ts',root/'tsserverlibrary.d.ts'];manifest={str(p.relative_to(root)):sha(p) for p in files};data=json.dumps(manifest,indent=2).encode();tmp=s/(side+'-js-manifest.json');tmp.write_bytes(data)"
+      },
+      {
+        "line": 25,
+        "text": "for p in sorted((s/'evidence').glob('lane-*.tar.gz')):shutil.copy2(p,h2/p.name)"
+      },
+      {
+        "line": 32,
+        "text": "for p in sorted(raw.rglob('*')):"
+      },
+      {
+        "line": 35,
+        "text": "for p in sorted(raw.iterdir()):"
+      },
+      {
+        "line": 342,
+        "text": "archives=[{'file':p.name,'bytes':p.stat().st_size,'sha256':sha(p)} for p in sorted(out.glob('*.tar.gz'))];assert all(a['bytes']<20_000_000 for a in archives);(out/'ARCHIVES.json').write_text(json.dumps(archives,indent=2)+'\\n');print(out.name,'files',len(list(out.iterdir())),'archives',len(archives),'largest',max(a['bytes'] for a in archives))"
+      }
+    ],
+    "source_sha256": "cf1a188e19e604f6d2c0fbf00dd09da641bd86d09b8cef1170b3786d7b919a5c",
+    "inventory_projections": 0,
+    "method": "static caller review; no isolated executable projection recorded"
+  },
+  {
+    "file": "stage3/adapt/99-correctness-core-getfunctionname-move/phase.py",
+    "sites": [
+      {
+        "line": 11,
+        "text": "side=sys.argv[2];roots=sorted((s/side/'src/compiler').rglob('*.ts'));assert len(roots)==79"
+      },
+      {
+        "line": 19,
+        "text": "manifest={str(p.relative_to(s/side)):hashlib.sha256(p.read_bytes()).hexdigest() for p in sorted((s/side/'src').rglob('*')) if p.is_file()};digest=hashlib.sha256(json.dumps(manifest,sort_keys=True).encode()).hexdigest();entry={'side':side,'apply':result,'sourceFiles':len(manifest),'sourceManifestSha256':digest,'status':'Apply complete, subsequent proof pending'};(directory/(side+'-apply-checkpoint.json')).write_text(json.dumps(entry,indent=2)+'\\n');(s/'raw'/(side+'-source-manifest.json')).write_text(json.dumps(manifest,sort_keys=True)+'\\n')"
+      },
+      {
+        "line": 30,
+        "text": "for adapter in sorted((r/'stage3/adapt').glob('*/adapt.cjs')):"
+      },
+      {
+        "line": 43,
+        "text": "for p in sorted(out.iterdir()):tf.add(p,arcname=p.name)"
+      }
+    ],
+    "source_sha256": "a082da86ef36a4869b9c294b35f9d849718beab6f38440e5d7c57fa62082946d",
+    "inventory_projections": 1,
+    "method": "see original-function/comprehension probes"
+  },
+  {
+    "file": "stage3/adapt/99-correctness-core-getfunctionname-move/trace-types.py",
+    "sites": [
+      {
+        "line": 5,
+        "text": "roots=sorted((s/'head2/src/compiler').rglob('*.ts'));assert len(roots)==79"
+      }
+    ],
+    "source_sha256": "0019bbc1a9c0928cf3ac1930ec0f2bea25798ea2eba131270d9cf31d6f70b2c8",
+    "inventory_projections": 0,
+    "method": "static caller review; no isolated executable projection recorded"
+  },
+  {
+    "file": "stage3/adapt/99-correctness-core-groupby/compare.cjs",
+    "sites": [
+      {
+        "line": 5,
+        "text": "function files(root){return fs.readdirSync(root,{recursive:true}).filter(f=>fs.statSync(path.join(root,f)).isFile()).sort();}"
+      }
+    ],
+    "source_sha256": "087e435c3a5014197de37c23cf5d8c83807a7cdf2c437d9f298341ed73ac45fd",
+    "inventory_projections": 1,
+    "method": "see original-function/comprehension probes"
+  },
+  {
+    "file": "stage3/adapt/99-correctness-core-groupby/count-pieces.py",
+    "sites": [
+      {
+        "line": 19,
+        "text": "frozen={str(p.relative_to(tree)):hashlib.sha256(p.read_bytes()).hexdigest() for top in ['src','built/local'] for p in sorted((tree/top).rglob('*')) if p.is_file()};(prep/'manifest.json').write_text(json.dumps(frozen,indent=2)+'\\n')"
+      },
+      {
+        "line": 22,
+        "text": "assert frozen=={str(p.relative_to(tree)):hashlib.sha256(p.read_bytes()).hexdigest() for top in ['src','built/local'] for p in sorted((tree/top).rglob('*')) if p.is_file()}"
+      },
+      {
+        "line": 56,
+        "text": "for file in (piece/'calls').glob('*.jsonl'):"
+      },
+      {
+        "line": 60,
+        "text": "assert frozen=={str(p.relative_to(tree)):hashlib.sha256(p.read_bytes()).hexdigest() for top in ['src','built/local'] for p in sorted((tree/top).rglob('*')) if p.is_file()},'counted source or build changed'"
+      }
+    ],
+    "source_sha256": "c039e1474faf34fce24b220f634743a93956d16b76a4d50589cf34962999122e",
+    "inventory_projections": 3,
+    "method": "see original-function/comprehension probes"
+  },
+  {
+    "file": "stage3/adapt/99-correctness-core-groupby/proofs.py",
+    "sites": [
+      {
+        "line": 20,
+        "text": "tree=pathlib.Path('/workspace/core-'+name);roots=sorted(map(str,(tree/'src/compiler').rglob('*.ts')));assert len(roots)==79,len(roots)"
+      }
+    ],
+    "source_sha256": "3610afeb807d90c3a9a5257dee54ae2757de796a9e81d06bcf2586d4a3673f9e",
+    "inventory_projections": 0,
+    "method": "static caller review; no isolated executable projection recorded"
+  },
+  {
+    "file": "stage3/adapt/99-correctness-core-groupby/references.cjs",
+    "sites": [
+      {
+        "line": 3,
+        "text": "const tree=process.argv[2]; const roots=fs.readdirSync(tree+'/src',{recursive:true}).filter(f=>f.endsWith('.ts')).map(f=>tree+'/src/'+f);"
+      }
+    ],
+    "source_sha256": "9ec4de8cc178f8dfd4fe29be20cc2e7bf13f6973e3043cc17a6391e47ce9c2cf",
+    "inventory_projections": 0,
+    "method": "static caller review; no isolated executable projection recorded"
+  },
+  {
+    "file": "stage3/adapt/99-correctness-core-groupby/replay.py",
+    "sites": [
+      {
+        "line": 3,
+        "text": "def manifest(tree):return {str(p.relative_to(tree)):hashlib.sha256(p.read_bytes()).hexdigest() for p in sorted((tree/'src').rglob('*')) if p.is_file()}"
+      },
+      {
+        "line": 9,
+        "text": "for directory in sorted(p for p in (repo/'stage3/adapt').iterdir() if p.is_dir()):"
+      }
+    ],
+    "source_sha256": "674d99451ad9c9b8e8d99b45452a23feac080a89cb6f14afb3f09230852d5429",
+    "inventory_projections": 1,
+    "method": "see original-function/comprehension probes"
+  },
+  {
+    "file": "stage3/adapt/99-correctness-core-levenshtein/census.py",
+    "sites": [
+      {
+        "line": 9,
+        "text": "names=sorted(p.relative_to(s/'after/src') for p in (s/'after/src').rglob('*') if p.is_file());changed=[str(name) for name in names if (s/'after/src'/name).read_bytes()!=(tree/'src'/name).read_bytes()];assert changed==['compiler/core.ts'];(s/'mutant-scope.json').write_text(json.dumps({'sourceFiles':len(names),'changed':changed,'onlyOriginalInitializersRestored':True,'sixAssertionsRetained':True},indent=2)+'\\n')"
+      }
+    ],
+    "source_sha256": "d3be7252fadbef3b29e929b9dfec4dcfa6ec950ea447053294f2a74a55936634",
+    "inventory_projections": 1,
+    "method": "see original-function/comprehension probes"
+  },
+  {
+    "file": "stage3/adapt/99-correctness-core-levenshtein/checkpoint.py",
+    "sites": [
+      {
+        "line": 7,
+        "text": "names=sorted(p.relative_to(s/'before/src') for p in (s/'before/src').rglob('*') if p.is_file());changed=[str(n) for n in names if (s/'before/src'/n).read_bytes()!=(s/'after/src'/n).read_bytes()];assert changed==['compiler/core.ts']"
+      },
+      {
+        "line": 34,
+        "text": "print('post-apply checkpoint ready',len(list(out.iterdir())),flush=True)"
+      }
+    ],
+    "source_sha256": "d148d9828c76ffc9e122fb72b1830e2181d5daf1c28464c35a54cc55c68a957f",
+    "inventory_projections": 1,
+    "method": "see original-function/comprehension probes"
+  },
+  {
+    "file": "stage3/adapt/99-correctness-core-levenshtein/checkpoint30-six.py",
+    "sites": [
+      {
+        "line": 8,
+        "text": "def manifest():return {str(p.relative_to(tree/'src')):hashlib.sha256(p.read_bytes()).hexdigest() for p in sorted((tree/'src').rglob('*')) if p.is_file()}"
+      }
+    ],
+    "source_sha256": "d7abddc26e26536beedc9d2610dea9fd975846d01063cd0d62ec4a7018c8249c",
+    "inventory_projections": 1,
+    "method": "see original-function/comprehension probes"
+  },
+  {
+    "file": "stage3/adapt/99-correctness-core-levenshtein/compare.cjs",
+    "sites": [
+      {
+        "line": 4,
+        "text": "const inventory=root=>fs.readdirSync(root,{recursive:true}).filter(p=>fs.statSync(path.join(root,p)).isFile()).sort();"
+      }
+    ],
+    "source_sha256": "9705f38cfac957b527e78f3a5aee682772e5f919a57224fce807d84ca9181b77",
+    "inventory_projections": 1,
+    "method": "see original-function/comprehension probes"
+  },
+  {
+    "file": "stage3/adapt/99-correctness-core-levenshtein/count.py",
+    "sites": [
+      {
+        "line": 8,
+        "text": "return {str(p.relative_to(s/'counted')):hashlib.sha256(p.read_bytes()).hexdigest() for base in ['src','built/local'] for p in sorted((s/'counted'/base).rglob('*')) if p.is_file()}"
+      },
+      {
+        "line": 30,
+        "text": "for file in (directory/'calls').glob('*.jsonl'):"
+      },
+      {
+        "line": 45,
+        "text": "(directory/'SHA256SUMS').write_text(''.join(hashlib.sha256(p.read_bytes()).hexdigest()+'  '+str(p.relative_to(directory))+'\\n' for p in sorted(directory.rglob('*')) if p.is_file()))"
+      }
+    ],
+    "source_sha256": "8177ad06a9fd0186ca024297543ae3c3d0b86ae44e8eb6f96c9ec2e7fee44bc3",
+    "inventory_projections": 2,
+    "method": "see original-function/comprehension probes"
+  },
+  {
+    "file": "stage3/adapt/99-correctness-core-levenshtein/pack-proof.py",
+    "sites": [
+      {
+        "line": 109,
+        "text": "for p in s.glob(pattern):"
+      },
+      {
+        "line": 115,
+        "text": "for p in root.rglob('*'):"
+      },
+      {
+        "line": 119,
+        "text": "(evidence/'SHA256SUMS').write_text(''.join(hashlib.sha256(p.read_bytes()).hexdigest()+'  '+str(p.relative_to(evidence))+'\\n' for p in sorted(evidence.rglob('*')) if p.is_file()))"
+      },
+      {
+        "line": 125,
+        "text": "for p in s.glob('excluded-*'):"
+      },
+      {
+        "line": 129,
+        "text": "(excluded/'SHA256SUMS').write_text(''.join(hashlib.sha256(p.read_bytes()).hexdigest()+'  '+str(p.relative_to(excluded))+'\\n' for p in sorted(excluded.rglob('*')) if p.is_file()))"
+      },
+      {
+        "line": 133,
+        "text": "print(json.dumps({'files':len(list(out.iterdir())),'calls':count['calls'],'differences':0,'proof':'complete'}),flush=True)"
+      }
+    ],
+    "source_sha256": "853f0e604908301c06650529c9f08f976991d9d9122e5dd647987fd248840b02",
+    "inventory_projections": 0,
+    "method": "static caller review; no isolated executable projection recorded"
+  },
+  {
+    "file": "stage3/adapt/99-correctness-core-levenshtein/post-apply.py",
+    "sites": [
+      {
+        "line": 17,
+        "text": "roots=sorted((s/label/'src/compiler').rglob('*.ts'));assert len(roots)==79;run(label+'-final-types',[str(s/'adamic'),'types',*map(str,roots)],limit=300)"
+      }
+    ],
+    "source_sha256": "e202abb08718d33500625236e65d11863cbf67cb537cbfb9fbd1c94e51019ed6",
+    "inventory_projections": 0,
+    "method": "static caller review; no isolated executable projection recorded"
+  },
+  {
+    "file": "stage3/adapt/99-correctness-core-levenshtein/replay.py",
+    "sites": [
+      {
+        "line": 8,
+        "text": "for directory in sorted(p for p in (repo/'stage3/adapt').iterdir() if p.is_dir()):"
+      },
+      {
+        "line": 27,
+        "text": "root=s/('replay-'+label)/'src';return {str(p.relative_to(root)):hashlib.sha256(p.read_bytes()).hexdigest() for p in sorted(root.rglob('*')) if p.is_file()}"
+      }
+    ],
+    "source_sha256": "ef738133f5ea652480734ab2dfbaff7275e943a38b16f676f554ce2b75043be9",
+    "inventory_projections": 1,
+    "method": "see original-function/comprehension probes"
+  },
+  {
+    "file": "stage3/adapt/99-correctness-core-multimap/compare.cjs",
+    "sites": [
+      {
+        "line": 12,
+        "text": "const javascript=[];for(const name of fs.readdirSync(path.join(before,'built/local')).filter(n=>n.endsWith('.js'))){const a=fs.readFileSync(path.join(before,'built/local',name)),b=fs.readFileSync(path.join(after,'built/local',name));javascript.push({name,identical:a.equals(b),before:hash(a),after:hash(b)});}"
+      }
+    ],
+    "source_sha256": "ec9b4ca70054a0c6c56c89a7700c82589d67d9d5dd0fcb9dc8fcfceed7796e5a",
+    "inventory_projections": 0,
+    "method": "static caller review; no isolated executable projection recorded"
+  },
+  {
+    "file": "stage3/adapt/99-correctness-core-multimap/count-all.py",
+    "sites": [
+      {
+        "line": 5,
+        "text": "return {str(p.relative_to(tree)):hashlib.sha256(p.read_bytes()).hexdigest() for d in ['src','built','tests/cases','tests/baselines/reference'] for p in sorted((tree/d).rglob('*')) if p.is_file()}"
+      },
+      {
+        "line": 11,
+        "text": "for directory in sorted(s.glob('count-*')):"
+      },
+      {
+        "line": 14,
+        "text": "for raw in (directory/'calls').glob('*.json'):"
+      },
+      {
+        "line": 21,
+        "text": "processes[row['unit']]=list((directory/'calls').glob(row['unit']+'.*.json'))"
+      }
+    ],
+    "source_sha256": "cbca701f9c457bb7628fa8c7d4b247d56ed0fda55ea3d991c70885ad3f38b30e",
+    "inventory_projections": 1,
+    "method": "see original-function/comprehension probes"
+  },
+  {
+    "file": "stage3/adapt/99-correctness-core-multimap/replay.py",
+    "sites": [
+      {
+        "line": 4,
+        "text": "def snapshot(tree):return {str(p.relative_to(tree)):hashlib.sha256(p.read_bytes()).hexdigest() for p in (tree/'src').rglob('*') if p.is_file()}"
+      },
+      {
+        "line": 7,
+        "text": "for directory in sorted(p for p in (repo/'stage3/adapt').iterdir() if p.is_dir()):"
+      }
+    ],
+    "source_sha256": "21600a663703919637ad6bb16cc79e55f1632191f0f35db4027fcc0174c558a5",
+    "inventory_projections": 1,
+    "method": "see original-function/comprehension probes"
+  },
+  {
+    "file": "stage3/adapt/99-correctness-core-or-predicate/audit-ts-keys.cjs",
+    "sites": [
+      {
+        "line": 3,
+        "text": "const root=process.argv[2],output=process.argv[3],tracked=[...new Set([...cp.execFileSync('git',['-C',root,'ls-files','-z'],{encoding:'utf8',maxBuffer:20000000}).split('\\0').filter(Boolean),...fs.readdirSync(root+'/src',{recursive:true}).filter(f=>fs.statSync(root+'/src/'+f).isFile()).map(f=>'src/'+f)])].sort(),rows=[],nested=[],escapes=[];let scanned=0;const isTsModule=m=>m==='typescript'||/(?:^|\\/)(?:ts|typescript)\\.(?:[cm]?js|ts)$/.test(m);"
+      }
+    ],
+    "source_sha256": "fe0b8d3baa996dde5e0a341db6d049d1c1361b2913a7ad81e025585fd8b3ec51",
+    "inventory_projections": 0,
+    "method": "static caller review; no isolated executable projection recorded"
+  },
+  {
+    "file": "stage3/adapt/99-correctness-core-or-predicate/compare.cjs",
+    "sites": [
+      {
+        "line": 5,
+        "text": "function files(dir){return fs.readdirSync(dir,{recursive:true}).filter(f=>fs.statSync(path.join(dir,f)).isFile()).sort();}"
+      }
+    ],
+    "source_sha256": "2fec1802451a3bfc9242048243207dc477eaa166d407a2ae7d188f181e57f2ce",
+    "inventory_projections": 1,
+    "method": "see original-function/comprehension probes"
+  },
+  {
+    "file": "stage3/adapt/99-correctness-core-or-predicate/pack-proofs.py",
+    "sites": [
+      {
+        "line": 8,
+        "text": "for p in source.iterdir():"
+      },
+      {
+        "line": 14,
+        "text": "for p in origin.rglob('*'):"
+      },
+      {
+        "line": 19,
+        "text": "for origin in source.iterdir():"
+      },
+      {
+        "line": 21,
+        "text": "for p in origin.rglob('*'):"
+      },
+      {
+        "line": 29,
+        "text": "for p in sorted((tree/'src').rglob('*')):"
+      },
+      {
+        "line": 33,
+        "text": "for p in sorted(stage.rglob('*')):"
+      },
+      {
+        "line": 38,
+        "text": "for p in sorted(stage.rglob('*')):"
+      },
+      {
+        "line": 46,
+        "text": "print(json.dumps({'members':len(manifest)+1,'archiveBytes':archive.stat().st_size,'manifestVerified':True,'runningCensuses':active,'filesUnderDirectory':sum(p.is_file() for p in destination.rglob('*'))}))"
+      }
+    ],
+    "source_sha256": "330759c92ec048c4e064526fe0b63fc21fb751bb251be223e9ff5eba8c20e16a",
+    "inventory_projections": 0,
+    "method": "static caller review; no isolated executable projection recorded"
+  },
+  {
+    "file": "stage3/adapt/99-correctness-core-takewhile/after-lane.py",
+    "sites": [
+      {
+        "line": 8,
+        "text": "manifest=lambda:{str(p.relative_to(root/'after')):hashlib.sha256(p.read_bytes()).hexdigest() for base in ['src','built/local'] for p in sorted((root/'after'/base).rglob('*')) if p.is_file()}"
+      }
+    ],
+    "source_sha256": "b8044e012e8be805f0b1f9285b80d752eafa9138f9c12be76a57590ad158efe0",
+    "inventory_projections": 1,
+    "method": "see original-function/comprehension probes"
+  },
+  {
+    "file": "stage3/adapt/99-correctness-core-takewhile/callers.cjs",
+    "sites": [
+      {
+        "line": 4,
+        "text": "for(const relative of fs.readdirSync(root+'/src',{recursive:true}).filter(name=>name.endsWith('.ts')).sort()) {"
+      }
+    ],
+    "source_sha256": "4c3cab9bde927bc70cf682b9719741a9e52f8a1ffdf70d31dd5214fc56eea421",
+    "inventory_projections": 0,
+    "method": "static caller review; no isolated executable projection recorded"
+  },
+  {
+    "file": "stage3/adapt/99-correctness-core-takewhile/check-types.py",
+    "sites": [
+      {
+        "line": 5,
+        "text": "tree=root/side;roots=sorted(str(p) for p in (tree/'src/compiler').rglob('*.ts'));assert len(roots)==79"
+      }
+    ],
+    "source_sha256": "f1776546af82baf2d4b8ab09f4930d5b1b5fae22eb6abc905d1821626776ca90",
+    "inventory_projections": 1,
+    "method": "see original-function/comprehension probes"
+  },
+  {
+    "file": "stage3/adapt/99-correctness-core-takewhile/compare.cjs",
+    "sites": [
+      {
+        "line": 4,
+        "text": "function inventory(root){return fs.readdirSync(root,{recursive:true}).filter(p=>fs.statSync(path.join(root,p)).isFile()).sort();}"
+      }
+    ],
+    "source_sha256": "a102028566e2d9afef11df50e1a245f42299fc22843edc27e063048a7108d2d9",
+    "inventory_projections": 1,
+    "method": "see original-function/comprehension probes"
+  },
+  {
+    "file": "stage3/adapt/99-correctness-core-takewhile/count-pieces.py",
+    "sites": [
+      {
+        "line": 11,
+        "text": "return {str(p.relative_to(root/'counted')):hashlib.sha256(p.read_bytes()).hexdigest() for base in ['src','built/local'] for p in sorted((root/'counted'/base).rglob('*')) if p.is_file()}"
+      },
+      {
+        "line": 33,
+        "text": "for file in sorted((directory/'calls').glob('*.jsonl')):"
+      },
+      {
+        "line": 44,
+        "text": "(directory/'SHA256SUMS').write_text(''.join(hashlib.sha256(p.read_bytes()).hexdigest()+'  '+str(p.relative_to(directory))+'\\n' for p in sorted(directory.rglob('*')) if p.is_file()))"
+      }
+    ],
+    "source_sha256": "b20666df78fce8420d0abbc47f444b9031786b9a0a3d28c02c5d6f488a1be5e4",
+    "inventory_projections": 2,
+    "method": "see original-function/comprehension probes"
+  },
+  {
+    "file": "stage3/adapt/99-correctness-core-takewhile/prepare-count.py",
+    "sites": [
+      {
+        "line": 19,
+        "text": "manifest={str(p.relative_to(target)):hashlib.sha256(p.read_bytes()).hexdigest() for base in ['src','built/local'] for p in sorted((target/base).rglob('*')) if p.is_file()}"
+      }
+    ],
+    "source_sha256": "9a6ded6d45e97f3c4771f6ae178ed5fd072d6326de6f3ceb04606e3e18b3c1a9",
+    "inventory_projections": 1,
+    "method": "see original-function/comprehension probes"
+  },
+  {
+    "file": "stage3/adapt/99-correctness-core-takewhile/replay.py",
+    "sites": [
+      {
+        "line": 10,
+        "text": "for directory in sorted(p for p in (repo/'stage3/adapt').iterdir() if p.is_dir()):"
+      },
+      {
+        "line": 31,
+        "text": "manifest=lambda tree:{str(p.relative_to(tree/'src')):hashlib.sha256(p.read_bytes()).hexdigest() for p in sorted((tree/'src').rglob('*')) if p.is_file()}"
+      }
+    ],
+    "source_sha256": "86d8410331587469cea7239cbfe9e9ab195d01dc7f025eb3ff6838ab82a2a4eb",
+    "inventory_projections": 1,
+    "method": "see original-function/comprehension probes"
+  },
+  {
+    "file": "stage3/adapt/99-correctness-core-takewhile/whole-control.py",
+    "sites": [
+      {
+        "line": 27,
+        "text": "manifest=lambda tree:{str(p.relative_to(tree/'src')):hashlib.sha256(p.read_bytes()).hexdigest() for p in sorted((tree/'src').rglob('*')) if p.is_file()}"
+      }
+    ],
+    "source_sha256": "8f0b723d43276c4b5d2832c0179bb09a85c463bb3071a88983f3f65901cf6cb7",
+    "inventory_projections": 1,
+    "method": "see original-function/comprehension probes"
+  },
+  {
+    "file": "stage3/adapt/99-wasm-crypto-import/proofs/archive.py",
+    "sites": [
+      {
+        "line": 30,
+        "text": "order=sorted(p.name for p in (R/'stage3/adapt').iterdir() if p.is_dir());assert order[-1]==name and order[-2]=='99-correctness-axolotl-i'"
+      },
+      {
+        "line": 71,
+        "text": "for source in sorted(logs.glob('*.log')):compressed(source,Path(str(source)+'.gz'))"
+      },
+      {
+        "line": 72,
+        "text": "for source in sorted((D/'logs').glob('*.log')):"
+      },
+      {
+        "line": 74,
+        "text": "for source in sorted(logs.glob('*.log')):source.unlink()"
+      }
+    ],
+    "source_sha256": "1c0691660073d67685b58a5a2ea1b5f53cbd02c76103e8191aed02bf52f98b85",
+    "inventory_projections": 0,
+    "method": "static caller review; no isolated executable projection recorded"
+  },
+  {
+    "file": "stage3/adapt/99-wasm-crypto-import/proofs/check.cjs",
+    "sites": [
+      {
+        "line": 5,
+        "text": "function inventory(tree) { return fs.readdirSync(path.join(tree, 'src'), {recursive:true, withFileTypes:true}).filter(e => e.isFile()).map(e => path.relative(tree, path.join(e.parentPath, e.name))).sort(); }"
+      }
+    ],
+    "source_sha256": "4f6e54ec9a860a50aafef71fa00e3cd4f4daf6b3628b6e07b76d27766293ccad",
+    "inventory_projections": 1,
+    "method": "see original-function/comprehension probes"
+  },
+  {
+    "file": "stage3/adapt/99-wasm-crypto-import/proofs/recordreplay/check.py",
+    "sites": [
+      {
+        "line": 7,
+        "text": "def inventory(t):return {str(p.relative_to(t)):h(p.read_bytes()) for p in (t/'src').rglob('*') if p.is_file()}"
+      }
+    ],
+    "source_sha256": "698e08da61692c90de287d5fc83d5dd67200e1b3c074466d9dced03ba8cf3edf",
+    "inventory_projections": 1,
+    "method": "see original-function/comprehension probes"
+  },
+  {
+    "file": "stage3/adapt/99-wasm-crypto-import/proofs/scoped.py",
+    "sites": [
+      {
+        "line": 28,
+        "text": "for f in (main/'src').rglob('*'):"
+      },
+      {
+        "line": 30,
+        "text": "assert sum(f.is_file() for f in (scoped/'src').rglob('*'))==746"
+      },
+      {
+        "line": 79,
+        "text": "for p in (scoped/'built').rglob('*.tsbuildinfo'):p.unlink()"
+      },
+      {
+        "line": 84,
+        "text": "for log in (P/'logs').glob('scoped-*.log'):"
+      }
+    ],
+    "source_sha256": "1f1cc27d7d21dc03c6456470f3849ef6e4c66aa0792733c6f11a94993c1b2874",
+    "inventory_projections": 2,
+    "method": "see original-function/comprehension probes"
+  },
+  {
+    "file": "stage3/apply.py",
+    "sites": [
+      {
+        "line": 34,
+        "text": "inputs += sorted(path for path in (stage / 'adapt').rglob('*')"
+      },
+      {
+        "line": 223,
+        "text": "for directory, directories, files in os.walk(modules, followlinks=False):"
+      },
+      {
+        "line": 272,
+        "text": "adaptations = sorted(directory for directory in (stage / 'adapt').iterdir() if directory.is_dir())"
+      }
+    ],
+    "source_sha256": "8f5b9fac51c349fc0e6d75574b1e5ff4ab1f32cf2c90e512c98938812de770d2",
+    "inventory_projections": 0,
+    "method": "static caller review; no isolated executable projection recorded"
+  },
+  {
+    "file": "stage3/census/any-returns/inspect.cjs",
+    "sites": [
+      {
+        "line": 16,
+        "text": "return fs.readdirSync(directory, {withFileTypes: true}).flatMap(e => {"
+      }
+    ],
+    "source_sha256": "919b9a12b8596fb178ca60b9d768f60a843479530224f6f5ac09db3889fcff84",
+    "inventory_projections": 1,
+    "method": "see original-function/comprehension probes"
+  },
+  {
+    "file": "stage3/census/deferred-reach/evidence/references.cjs",
+    "sites": [
+      {
+        "line": 5,
+        "text": "function walk(dir){for(const e of fs.readdirSync(dir,{withFileTypes:true})){const p=path.join(dir,e.name);if(e.isDirectory())walk(p);else if(/\\.tsx?$/.test(p))files.push(p);}}"
+      }
+    ],
+    "source_sha256": "bacc7c282feb6785683aca403bd6262cb646d181e002a69669910691e0d11103",
+    "inventory_projections": 1,
+    "method": "see original-function/comprehension probes"
+  },
+  {
+    "file": "stage3/census/deferred-reach/evidence/steps2-3/callback-bindings.cjs",
+    "sites": [
+      {
+        "line": 3,
+        "text": "function walk(d){for(const e of fs.readdirSync(d,{withFileTypes:true})){const p=path.join(d,e.name);if(e.isDirectory())walk(p);else if(/\\.tsx?$/.test(p))files.push(p);}}walk(root+'/src');files.sort();"
+      }
+    ],
+    "source_sha256": "4a1361ea0ab177765993f66800dd8bd6a2a88b7cc33df1e333eda2b4580982d6",
+    "inventory_projections": 1,
+    "method": "see original-function/comprehension probes"
+  },
+  {
+    "file": "stage3/census/deferred-reach/evidence/steps2-3/classify-references.cjs",
+    "sites": [
+      {
+        "line": 3,
+        "text": "function walk(d){for(const e of fs.readdirSync(d,{withFileTypes:true})){const p=path.join(d,e.name);if(e.isDirectory())walk(p);else if(/\\.tsx?$/.test(p))files.push(p);}}walk(root+'/src');files.sort();"
+      }
+    ],
+    "source_sha256": "428f6fab482cac7e3c272bf8d1cd1458eedb047dd49c3056a754646ef9416cea",
+    "inventory_projections": 1,
+    "method": "see original-function/comprehension probes"
+  },
+  {
+    "file": "stage3/census/latent/audit_meter3.py",
+    "sites": [
+      {
+        "line": 26,
+        "text": "actual={str(p.relative_to(adapted)):hashlib.sha256(p.read_bytes()).hexdigest() for p in (adapted/'src/compiler').rglob('*.ts')}"
+      }
+    ],
+    "source_sha256": "a0c2efd04e70fe5bb0d55d381dd7888d141193ce642207d5fcd44834a399fff4",
+    "inventory_projections": 1,
+    "method": "see original-function/comprehension probes"
+  },
+  {
+    "file": "stage3/census/latent/audit_report.py",
+    "sites": [
+      {
+        "line": 17,
+        "text": "expected={str(p.relative_to(adapted)):hashlib.sha256(p.read_bytes()).hexdigest() for p in (adapted/'src/compiler').rglob('*.ts')}"
+      }
+    ],
+    "source_sha256": "1d69d3335861b99a5c3bbd3588ea0b452cd02db13ed80a9598136ac7cf783f5a",
+    "inventory_projections": 1,
+    "method": "see original-function/comprehension probes"
+  },
+  {
+    "file": "stage3/census/latent/audit_rerun2.py",
+    "sites": [
+      {
+        "line": 40,
+        "text": "actual={str(f.relative_to(adapted)):hashlib.sha256(f.read_bytes()).hexdigest() for f in (adapted/'src/compiler').rglob('*.ts')}"
+      }
+    ],
+    "source_sha256": "480649297a41b3d607fe958162fcbe79b34c9d6961e08c5367c68fd4f310d9d5",
+    "inventory_projections": 1,
+    "method": "see original-function/comprehension probes"
+  },
+  {
+    "file": "stage3/census/latent/audit_unmerged4.py",
+    "sites": [
+      {
+        "line": 23,
+        "text": "actual={str(p.relative_to(adapted)):hashlib.sha256(p.read_bytes()).hexdigest() for p in (adapted/'src/compiler').rglob('*.ts')}"
+      }
+    ],
+    "source_sha256": "954582dc01e2ed12a5d893571a48416600ca5e0938b00fed312a280fedaf2371",
+    "inventory_projections": 1,
+    "method": "see original-function/comprehension probes"
+  },
+  {
+    "file": "stage3/census/latent/evidence/deferred/finish_pair.py",
+    "sites": [
+      {
+        "line": 28,
+        "text": "for path in sorted((adapted/'src').rglob('*')) if path.is_file() and path.suffix in ('.ts','.a')}"
+      }
+    ],
+    "source_sha256": "f5e13d62ab719326bf2532205a050d5ea976927e72c87cb0c19a4d28fa61d3bd",
+    "inventory_projections": 1,
+    "method": "see original-function/comprehension probes"
+  },
+  {
+    "file": "stage3/census/latent/meter3.py",
+    "sites": [
+      {
+        "line": 20,
+        "text": "manifest=[dict(file=str(p.relative_to(adapted)),sha256=hashlib.sha256(p.read_bytes()).hexdigest(),generated='.generated.' in p.name) for p in sorted((adapted/'src/compiler').rglob('*.ts'))]"
+      },
+      {
+        "line": 31,
+        "text": "run['overlay_sha256']={p.name:hashlib.sha256(p.read_bytes()).hexdigest() for p in sorted((scratch/'meter-3-overlay').glob('*.go'))}"
+      }
+    ],
+    "source_sha256": "fcf3cad183a80730278f4e1c3009c5f18d13d6ada9fe330f474fc80697f21a0d",
+    "inventory_projections": 1,
+    "method": "see original-function/comprehension probes"
+  },
+  {
+    "file": "stage3/census/latent/rerun2.py",
+    "sites": [
+      {
+        "line": 81,
+        "text": "manifest=[dict(file=str(p.relative_to(adapted)),sha256=hashlib.sha256(p.read_bytes()).hexdigest(),generated='.generated.' in p.name) for p in sorted((adapted/'src/compiler').rglob('*.ts'))]"
+      },
+      {
+        "line": 93,
+        "text": "row['overlay_sha256']={p.name:hashlib.sha256(p.read_bytes()).hexdigest() for p in sorted((scratch/(name+'-overlay')).glob('*.go'))}"
+      }
+    ],
+    "source_sha256": "3798b3a00744073b372262ace918b4e571933b54bcdd6a7955a397fb74ebeceb",
+    "inventory_projections": 1,
+    "method": "see original-function/comprehension probes"
+  },
+  {
+    "file": "stage3/census/latent/summarize.py",
+    "sites": [
+      {
+        "line": 10,
+        "text": "manifest=[dict(file=str(p.relative_to(adapted)),sha256=hashlib.sha256(p.read_bytes()).hexdigest(),generated='.generated.' in p.name) for p in sorted((adapted/'src/compiler').rglob('*.ts'))]"
+      },
+      {
+        "line": 52,
+        "text": "run['overlay_sha256']={p.name:hashlib.sha256(p.read_bytes()).hexdigest() for p in sorted((scratch/(name+'-overlay')).glob('*.go'))}"
+      }
+    ],
+    "source_sha256": "b1b72b13a70612f48dfc8855eb9bee6a31ce7095364ceb34d38d4a40345ca45f",
+    "inventory_projections": 1,
+    "method": "see original-function/comprehension probes"
+  },
+  {
+    "file": "stage3/census/latent/unmerged4.py",
+    "sites": [
+      {
+        "line": 16,
+        "text": "manifest=[dict(file=str(p.relative_to(source)),sha256=hashlib.sha256(p.read_bytes()).hexdigest(),generated='.generated.' in p.name) for p in sorted((source/'src/compiler').rglob('*.ts'))]"
+      },
+      {
+        "line": 19,
+        "text": "row['overlay_sha256']={p.name:hashlib.sha256(p.read_bytes()).hexdigest() for p in sorted((scratch/(name+'-overlay')).glob('*.go'))}"
+      }
+    ],
+    "source_sha256": "cea8f267329dbb0e89f7c474aaf6edaf145d47929896dba85ec594932edbebf3",
+    "inventory_projections": 1,
+    "method": "see original-function/comprehension probes"
+  },
+  {
+    "file": "stage3/census/predicates/tools/audit_report.py",
+    "sites": [
+      {
+        "line": 18,
+        "text": "expected={str(p.relative_to(adapted)):hashlib.sha256(p.read_bytes()).hexdigest() for p in (adapted/'src/compiler').rglob('*.ts')}"
+      }
+    ],
+    "source_sha256": "060eebd69bfd011ceca0b7fc07b3c09472d6bb97014349bbdce31fd0c78d3104",
+    "inventory_projections": 1,
+    "method": "see original-function/comprehension probes"
+  },
+  {
+    "file": "stage3/census/predicates/tools/summarize.py",
+    "sites": [
+      {
+        "line": 11,
+        "text": "manifest=[dict(file=str(p.relative_to(adapted)),sha256=hashlib.sha256(p.read_bytes()).hexdigest(),generated='.generated.' in p.name) for p in sorted((adapted/'src/compiler').rglob('*.ts'))]"
+      },
+      {
+        "line": 55,
+        "text": "run['overlay_sha256']={p.name:hashlib.sha256(p.read_bytes()).hexdigest() for p in sorted((scratch/(name+'-overlay')).glob('*.go'))}"
+      }
+    ],
+    "source_sha256": "dea298a339219b2992e7670bd564edb82e9162b996a66456bb669ee99966bf32",
+    "inventory_projections": 1,
+    "method": "see original-function/comprehension probes"
+  },
+  {
+    "file": "stage3/census/speculative/server-run.sh",
+    "sites": [
+      {
+        "line": 51,
+        "text": "inventory = {str(p.relative_to(root)) for p in root.rglob('*') if p.is_file() and p.suffix in ('.ts', '.a')}"
+      },
+      {
+        "line": 139,
+        "text": "f\"files done: {len(list((RUN / 'records').glob('*.jsonl'))) if state['reuse'] != 'not yet proved' else 0}/{len(read(BASE / 'INPUT.json')['files'])}\","
+      },
+      {
+        "line": 155,
+        "text": "for checkpoint in sorted(RUN.glob('*.progress.json')):"
+      },
+      {
+        "line": 197,
+        "text": "if not list((RUN / 'records').glob('*.jsonl')):"
+      },
+      {
+        "line": 289,
+        "text": "for path in sorted((BASE / 'records').glob('*.jsonl.gz')):"
+      },
+      {
+        "line": 297,
+        "text": "for path in BASE.glob('*.metrics.json'):"
+      },
+      {
+        "line": 359,
+        "text": "for record in (RUN / 'records').glob('*.jsonl'):"
+      }
+    ],
+    "source_sha256": "fdffc48782dc4aa861616d7501e31c2ed42e3dbc27901ac208795dc0b0684b65",
+    "inventory_projections": 0,
+    "method": "static caller review; no isolated executable projection recorded"
+  },
+  {
+    "file": "stage3/census/speculative/verify.py",
+    "sites": [
+      {
+        "line": 37,
+        "text": "expected_sources = {str(p.relative_to(root)) for p in root.rglob('*') if p.is_file() and p.suffix in ('.ts','.a')}"
+      },
+      {
+        "line": 59,
+        "text": "total = sum(p.stat().st_size for p in root.rglob('*') if p.is_file())"
+      }
+    ],
+    "source_sha256": "9b3f459aa86e71cfad49f1cc7a8f46ada2e60a8a7447d786df26de7f363fc83d",
+    "inventory_projections": 2,
+    "method": "see original-function/comprehension probes"
+  },
+  {
+    "file": "stage3/census/summarize.py",
+    "sites": [
+      {
+        "line": 105,
+        "text": "for p in sorted((CACHE/'typescript/src/compiler').rglob('*')):"
+      }
+    ],
+    "source_sha256": "480ff2a0fb8ebdc48bd2c9b99a8f93b43f00d91ec44974c709ee27b2af9f3209",
+    "inventory_projections": 0,
+    "method": "static caller review; no isolated executable projection recorded"
+  },
+  {
+    "file": "stage3/drivers/parser/audit-range-callers.cjs",
+    "sites": [
+      {
+        "line": 18,
+        "text": "for (const entry of fs.readdirSync(dir, { withFileTypes: true }).sort((a,b) => a.name.localeCompare(b.name))) {"
+      }
+    ],
+    "source_sha256": "be7f92f0cd8540b35c39e34b1bc219a97b9346420d8cf7dc551e1b70d5a55feb",
+    "inventory_projections": 1,
+    "method": "see original-function/comprehension probes"
+  },
+  {
+    "file": "stage3/drivers/parser/jsdoc-mutants.py",
+    "sites": [
+      {
+        "line": 24,
+        "text": "for path in sorted((a.inputs / 'src/compiler').rglob('*')) if path.is_file()))"
+      }
+    ],
+    "source_sha256": "e6df07d8154df2cb6768d003b6b649449155c0f36061a84522dd1be07f3b2354",
+    "inventory_projections": 1,
+    "method": "see original-function/comprehension probes"
+  },
+  {
+    "file": "stage3/drivers/parser/measure.py",
+    "sites": [
+      {
+        "line": 44,
+        "text": "if cohere.is_dir() and not any(cohere.iterdir()): cohere.rmdir()"
+      }
+    ],
+    "source_sha256": "f1193ac4be38b77e3e0cc121246446f54a43c5b3c9c51cb13a7d588d84ff514c",
+    "inventory_projections": 0,
+    "method": "static caller review; no isolated executable projection recorded"
+  },
+  {
+    "file": "stage3/drivers/parser/run.sh",
+    "sites": [
+      {
+        "line": 34,
+        "text": "files = sorted(p.relative_to(inputs / 'src/compiler').as_posix() for p in (inputs / 'src/compiler').rglob('*') if p.is_file())"
+      }
+    ],
+    "source_sha256": "7581e223f769c503b9e9fcf33eee73ce28d4d42c8a0bbe356b46e1bd7d6185dd",
+    "inventory_projections": 0,
+    "method": "static caller review; no isolated executable projection recorded"
+  },
+  {
+    "file": "stage3/drivers/parser/verify-temporaries.py",
+    "sites": [
+      {
+        "line": 37,
+        "text": "for directory in sorted((repo / 'stage3/adapt').glob('6[0-3]-temporary-*')):"
+      }
+    ],
+    "source_sha256": "58d430dc399708dbbb9f77f6a047235d998396485bbb33a147d6799f25447aac",
+    "inventory_projections": 0,
+    "method": "static caller review; no isolated executable projection recorded"
+  },
+  {
+    "file": "stage3/drivers/scanner/run.py",
+    "sites": [
+      {
+        "line": 63,
+        "text": "files = sorted(p.relative_to(inputs).as_posix() for p in (inputs / 'src/compiler').rglob('*') if p.is_file())"
+      }
+    ],
+    "source_sha256": "d110bd5bf851bdc82a9cbffc55e7ee33dbd8afce0d800a88985e4ff017cfb2be",
+    "inventory_projections": 1,
+    "method": "see original-function/comprehension probes"
+  },
+  {
+    "file": "stage3/drivers/scanner/scratch-stops.py",
+    "sites": [
+      {
+        "line": 44,
+        "text": "originals = {p.relative_to(root).as_posix(): p.read_text() for p in root.rglob('*') if p.suffix in {'.ts', '.a'} and p.is_file()}"
+      }
+    ],
+    "source_sha256": "394eadab5128aec373c99c3f11692a2c40c0060ef42fac858ac08b65c2543a4c",
+    "inventory_projections": 1,
+    "method": "see original-function/comprehension probes"
+  },
+  {
+    "file": "stage3/evidence/two-writes/run.py",
+    "sites": [
+      {
+        "line": 32,
+        "text": "for file in sorted(counts.glob('*.json')):"
+      },
+      {
+        "line": 41,
+        "text": "'expected_exit': expected, 'process_records': len(list(counts.glob('*.json'))),"
+      }
+    ],
+    "source_sha256": "e43bdf2e710b10c1ae13ee12de355375c20692c21f45d4facaef7b70e1b03c58",
+    "inventory_projections": 0,
+    "method": "static caller review; no isolated executable projection recorded"
+  },
+  {
+    "file": "stage3/fixtures/cycles/audit.py",
+    "sites": [
+      {
+        "line": 47,
+        "text": "assert {r['file'] for r in status} == {f.relative_to(BUCKET).as_posix() for f in (p for p in BUCKET.glob('*/main.*') if p.suffix in ('.a', '.ts'))}"
+      }
+    ],
+    "source_sha256": "6ee8b1b23ebfd958f566edd5f24744d6069798fb9478ba5f8a98398e3520424d",
+    "inventory_projections": 0,
+    "method": "static caller review; no isolated executable projection recorded"
+  },
+  {
+    "file": "stage3/fixtures/host/source-audit.cjs",
+    "sites": [
+      {
+        "line": 15,
+        "text": "for (const file of fs.readdirSync(bucket).filter(name => /^\\d\\d_.*\\.(?:a|ts)$/.test(name))) {"
+      },
+      {
+        "line": 106,
+        "text": "for (const file of fs.readdirSync(bucket).filter(name => /^\\d\\d_.*\\.(?:a|ts)$/.test(name)).sort()) {"
+      },
+      {
+        "line": 115,
+        "text": "for (const file of fs.readdirSync(bucket).filter(name => /^\\d\\d_.*\\.(?:a|ts)$/.test(name)).sort()) {"
+      }
+    ],
+    "source_sha256": "394e8aff24497fe5ec4c55c28e43e983455ae4129bced564e009b55e62082529",
+    "inventory_projections": 0,
+    "method": "static caller review; no isolated executable projection recorded"
+  },
+  {
+    "file": "stage3/fixtures/nested-functions/verify-source.cjs",
+    "sites": [
+      {
+        "line": 7,
+        "text": "for (const file of fs.readdirSync(directory).filter(file => /^\\d\\d_.*\\.(?:a|ts)$/.test(file))) {"
+      }
+    ],
+    "source_sha256": "4939fcf0ebcd6f63a4371104902d00d6025cbf20692d8a212b348b54e8048d90",
+    "inventory_projections": 0,
+    "method": "static caller review; no isolated executable projection recorded"
+  },
+  {
+    "file": "stage3/fixtures/objects/inventory.cjs",
+    "sites": [
+      {
+        "line": 8,
+        "text": "for (const name of fs.readdirSync(dir).sort()) {"
+      },
+      {
+        "line": 44,
+        "text": "function sources(dir) { for (const name of fs.readdirSync(dir).sort()) { const file=path.join(dir,name); if(fs.statSync(file).isDirectory()) sources(file); else if(file.endsWith('.ts') && !file.includes('.generated.')) names.push(file); } }"
+      }
+    ],
+    "source_sha256": "af23e08e139ca7080f981a1c6b2443d3d1ed685b5341d138b365cd00884569c6",
+    "inventory_projections": 2,
+    "method": "see original-function/comprehension probes"
+  },
+  {
+    "file": "stage3/fixtures/predicates/extract.cjs",
+    "sites": [
+      {
+        "line": 3,
+        "text": "const defs=[];function scan(d){for(const e of fs.readdirSync(d,{withFileTypes:true})){let f=path.join(d,e.name);if(e.isDirectory())scan(f);else if(f.endsWith('.ts')){let sf=ts.createSourceFile(f,fs.readFileSync(f,'utf8'),99,true);function w(n){if(ts.isFunctionDeclaration(n))defs.push({name:n.name?.text,file:path.relative(root,f),line:sf.getLineAndCharacterOfPosition(n.getStart(sf)).line+1,text:n.getText(sf).replace(/\\r\\n/g,'\\n'),body:n.body});ts.forEachChild(n,w);}w(sf);}}}scan(root);"
+      }
+    ],
+    "source_sha256": "012dfb3b9ef1a0399d78420d0f6718a45c2e6245c5549864502ca06d1b6b42ae",
+    "inventory_projections": 1,
+    "method": "see original-function/comprehension probes"
+  },
+  {
+    "file": "stage3/lane/artifact.py",
+    "sites": [
+      {
+        "line": 31,
+        "text": "files = [file for file in stage.rglob('*') if file.is_file()"
+      },
+      {
+        "line": 48,
+        "text": "return digest_files(tree, [file for file in tree.rglob('*') if file.is_file()])"
+      }
+    ],
+    "source_sha256": "17a48460f44f46025f29ada928c5a796e3973ba39e9f84fce9e5dfcc4cbbdc90",
+    "inventory_projections": 1,
+    "method": "see original-function/comprehension probes"
+  },
+  {
+    "file": "stage3/lane/shard.py",
+    "sites": [
+      {
+        "line": 68,
+        "text": "for file in sorted(local.rglob('*')):"
+      },
+      {
+        "line": 175,
+        "text": "for directory, _, _ in os.walk(tree / 'scripts'):"
+      }
+    ],
+    "source_sha256": "45a355e4df13094bbfc537fb6094ef9896b47dd890fa1f08165cb4e9621ddd26",
+    "inventory_projections": 0,
+    "method": "static caller review; no isolated executable projection recorded"
+  },
+  {
+    "file": "stage3/lane/test_artifact.py",
+    "sites": [
+      {
+        "line": 58,
+        "text": "self.assertFalse(any(cache.glob('*/ready.json')))"
+      },
+      {
+        "line": 70,
+        "text": "self.assertFalse(any((self.root / 'cache').glob('*/ready.json')))"
+      }
+    ],
+    "source_sha256": "2688ccc319692a9a4533798ec2512128a3d8f36b261f0f58d97dd12c53399228",
+    "inventory_projections": 0,
+    "method": "static caller review; no isolated executable projection recorded"
+  },
+  {
+    "file": "stage3/ledger/checker-259/rerun-2026-10-08/run-census.py",
+    "sites": [
+      {
+        "line": 16,
+        "text": "roots = sorted(str(p) for p in (args.tree / 'src/compiler').rglob('*.ts'))"
+      }
+    ],
+    "source_sha256": "182e214a1f39e38c112b8ee5d4e8e73feff52233837b4d9a631e73fbc27e8301",
+    "inventory_projections": 1,
+    "method": "see original-function/comprehension probes"
+  },
+  {
+    "file": "stage3/meter/compiler_test.py",
+    "sites": [
+      {
+        "line": 180,
+        "text": "run, = (self.repository / 'stage3/meter/runs').iterdir()"
+      },
+      {
+        "line": 201,
+        "text": "run, = (self.repository / 'stage3/meter/runs').iterdir()"
+      },
+      {
+        "line": 293,
+        "text": "for path in run.rglob('*.jsonl.gz'):"
+      }
+    ],
+    "source_sha256": "e62b46811dd2933679703d571facfac0f70c59fa34a88013510ef82d156b017a",
+    "inventory_projections": 0,
+    "method": "static caller review; no isolated executable projection recorded"
+  },
+  {
+    "file": "stage3/meter/report.py",
+    "sites": [
+      {
+        "line": 46,
+        "text": "expected = {str(path.resolve()) for path in (tree / 'src/compiler').rglob('*')"
+      },
+      {
+        "line": 453,
+        "text": "expected = {str(path.resolve()): path for path in compiler.rglob('*') if path.is_file()}"
+      },
+      {
+        "line": 561,
+        "text": "for path in committed_runs.rglob('report.json'):"
+      }
+    ],
+    "source_sha256": "c06b802d7f886a77e24aa253abb820085d6e4b7b2d67b5f1807e904f71f1e39c",
+    "inventory_projections": 1,
+    "method": "see original-function/comprehension probes"
+  },
+  {
+    "file": "stage3/meter/report_test.py",
+    "sites": [
+      {
+        "line": 29,
+        "text": "self.records.append({'roots': sorted(str(path) for path in compiler.glob('*.ts')), 'kind': 'checker'})"
+      },
+      {
+        "line": 92,
+        "text": "for path in sorted((self.tree / 'src/compiler').glob('*.ts'))]"
+      },
+      {
+        "line": 561,
+        "text": "for path in sorted((self.tree / 'src/compiler').glob('*.ts'))]"
+      }
+    ],
+    "source_sha256": "b77e0705109cd2f3ab15396cb06180efe62805833680093ffc64e82c1a3cddeb",
+    "inventory_projections": 2,
+    "method": "see original-function/comprehension probes"
+  },
+  {
+    "file": "stage3/performance/allocation/run.py",
+    "sites": [
+      {
+        "line": 84,
+        "text": "for item in tree.rglob('*'):"
+      },
+      {
+        "line": 94,
+        "text": "'harness_hashes': {p.name: sha(p) for p in ROOT.glob('*') if p.is_file()}})"
+      },
+      {
+        "line": 123,
+        "text": "for path in out.rglob('*.heapsnapshot'):"
+      }
+    ],
+    "source_sha256": "30810e63b700d8ac334187f2f0526580e6d74fa621e881d7959aa69f5385ee7f",
+    "inventory_projections": 0,
+    "method": "static caller review; no isolated executable projection recorded"
+  },
+  {
+    "file": "stage3/performance/measure.py",
+    "sites": [
+      {
+        "line": 166,
+        "text": "sources = sorted(cwd.glob('src/**/*.ts')) if name == 'mitt' else sorted((cwd / 'packages/zod/src').glob('**/*.ts'))"
+      },
+      {
+        "line": 189,
+        "text": "for path in inputs.rglob('*'):"
+      },
+      {
+        "line": 192,
+        "text": "hashes.update({'stock-lib/' + p.name: digest(p) for p in lib.glob('lib*.d.ts')})"
+      },
+      {
+        "line": 241,
+        "text": "largest = max(accepted, key=lambda item: sum(p.stat().st_size for p in item[1].rglob('*.ts') if '.git' not in p.parts and 'node_modules' not in p.parts))"
+      }
+    ],
+    "source_sha256": "d1a89489209ee47ce403c9164fef425625e267b968d896071c6d92703226e23c",
+    "inventory_projections": 0,
+    "method": "static caller review; no isolated executable projection recorded"
+  },
+  {
+    "file": "stage3/scouts/step09/nonnull/bundle.cjs",
+    "sites": [
+      {
+        "line": 49,
+        "text": "for(const name of fs.readdirSync(lib).filter(n=>n.startsWith('lib.')&&n.endsWith('.d.ts'))){const dest=path.join(out,name);if(!fs.existsSync(dest))fs.symlinkSync(path.join(lib,name),dest);}"
+      }
+    ],
+    "source_sha256": "fa7e49bde4e641390a4e9c75fce5a4bcfd5eb6ae1c5194d052ab140ff8e3e415",
+    "inventory_projections": 0,
+    "method": "static caller review; no isolated executable projection recorded"
+  },
+  {
+    "file": "stage3/scouts/step09/nonnull/slots-bundle.cjs",
+    "sites": [
+      {
+        "line": 10,
+        "text": "const lib=path.dirname(require.resolve('typescript'));for(const name of fs.readdirSync(lib).filter(n=>n.startsWith('lib.')&&n.endsWith('.d.ts')))fs.symlinkSync(path.join(lib,name),path.join(out,name));"
+      }
+    ],
+    "source_sha256": "0f807624d7bda96974f5dbca1b410b97eec8800613dd987e80581b57674c6940",
+    "inventory_projections": 0,
+    "method": "static caller review; no isolated executable projection recorded"
+  }
+]

@@ -1,0 +1,17 @@
+package main
+import ("os";"path/filepath";"encoding/json")
+func main(){var paths []string
+	err := filepath.WalkDir(os.Args[1], func(path string, entry os.DirEntry, err error) error {
+		if err != nil {
+			return err
+		}
+		if !entry.IsDir() && (filepath.Ext(path) == ".ts" || filepath.Ext(path) == ".a") {
+			paths = append(paths, path)
+		}
+		return nil
+	})
+	if err != nil {
+		panic(err)
+	}
+
+json.NewEncoder(os.Stdout).Encode(map[string]any{"paths":paths})}

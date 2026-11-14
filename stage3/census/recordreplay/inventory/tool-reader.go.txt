@@ -1,0 +1,25 @@
+package main
+import ("os";"path/filepath";"encoding/json";"strings")
+func main(){var paths []string
+var entries []string; nonSourceOnly:=false
+	err := filepath.WalkDir(os.Args[1], func(path string, entry os.DirEntry, err error) error {
+		if err != nil {
+			return err
+		}
+		// These programs are dedicated runtime-failure pins, not census inputs.
+		if entry.IsDir() && strings.HasSuffix(filepath.ToSlash(path), "/oracle/testdata/bind_runtime") {
+			return filepath.SkipDir
+		}
+		if !entry.IsDir() && (filepath.Ext(path) == ".ts" || filepath.Ext(path) == ".a") {
+			paths = append(paths, path)
+		}
+		if !entry.IsDir() && (nonSourceOnly && filepath.Ext(path) != ".ts" && filepath.Ext(path) != ".a" || !nonSourceOnly) {
+			entries = append(entries, path)
+		}
+		return nil
+	})
+	if err != nil {
+		panic(err)
+	}
+
+json.NewEncoder(os.Stdout).Encode(map[string]any{"paths":paths,"entries":entries})}

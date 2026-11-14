@@ -1,25 +1,43 @@
 # Recordreplay amendment and paired censuses
 
-| Pair | 79-root first stops, both formats | Full sys.ts unit first stops |
-|---|---|---|
-| A: main 9c304036 against CLI 7ccad5b5 | Incomplete: 10 main/CommonJSBundle controls; no complete pair | None moved |
-| B: main 9c304036 against amendment e00ce47c6 | Not started | None moved |
+| Pair | Every moved existing unit first stop (all units) | New process findings (all-unit first-error census) | 79-root tables |
+|---|---|---|---|
+| A: main 9c304036 → CLI 7ccad5b5 | None | None | Not run by decision |
+| B: original main → amended CLI | None | None | Not run by decision |
 
-This run is **stopped and incomplete** after the user interrupted the wait.
-All orchestration sessions ended, and the orphaned census child was stopped.
-No remaining census or push job is running. Never submitted to Loom.
+The revised requested census work is complete. A covers all **4,563 units**.
+B covers the same **4,563 existing units**, plus one new erased import unit at
+`src/compiler/sys.ts:56:1` with no finding. No existing unit first stop moved;
+there are no new all-unit first-error findings naming process. Every moved unit
+and every new process finding is therefore listed above (empty in both pairs).
+`first-error/B-native-every-change.md` records the source-changing comparison;
+`first-error/B-native-source.json` retains every common-unit comparison and the
+added import. The six same-input B pairs contain 4,564 units, paired by read with
+`stage3/census/pair`; they are not mislabeled as identical-source native pairs.
+All twelve pieces completed, with disjoint file groups covering all 81 entry
+implementation sources. The former interruption is historical (`STOPPED.json`);
+`COMPLETE.json` and `first-error/summary.json` describe the final census state.
 
-Completed: the amendment, both full sys.ts pairs, all six A all-unit pieces,
-and five of six B all-unit pieces. The eleven paired pieces have **zero moved
-unit first stops and zero new process findings**. A covers all **4,563 units**.
-The final B piece has a complete base stream and an explicitly partial head
-stream; it is not counted as a completed pair. `STOPPED.json` and
-`first-error/summary.json` record the stopping reason and partial evidence.
+The final B piece was rerun fresh on both sides, serially, then committed and
+pushed as `ff98b0e62`. It took **926.028 seconds** total, below its 60-minute
+bound. Baseline peak RSS: **1,557,716 KiB**; head: **1,541,608 KiB**. Both exited 0.
+Earlier partial evidence is retained under that piece's `interrupted/` directory
+and excluded from accepted results. All-unit maximum accepted child RSS remains
+**2,527,056 KiB**. Per-child resource records retain exact commands and peaks.
 
-The 79-root tables are incomplete: **10 of 632 required serial root children**
-finished, each observed twice. These are the first ten main/CommonJSBundle
-controls, all stopping at sys.ts:790:87's InvokeMap variance refusal. No complete
-paired root table is claimed. Lower's whole-request condition remains unverified.
+**The 79-root tables in both formats are not run by decision**, as explicitly
+requested: the earlier `sys.ts:790:87` first wall masks the read at 1588. The ten
+historical exploratory main/CommonJS controls all observed that 790 wall; they
+are not a completed paired table or a measurement of all 79 roots. No further
+ordinary root census was run. This report does not claim the omitted tables
+verify Lower's root-level condition.
+
+The accepted source amendment remains the one commit `e00ce47c6` on `7ccad5b5`.
+Follow-up `e731288ba` repairs only its own inventory proof code/records; adapted
+source and accepted gate bytes remain unchanged. Both are pushed on
+`typescript/recordreplay-amend-1`. Census evidence is on
+`typescript/recordreplay-census`. All pushes are new commits, never force.
+Never submitted to Loom.
 
 The read gate holds for the declaration-file form. The one-commit amendment is
 pushed to `typescript/recordreplay-amend-1` at `e00ce47c6`, directly on `7ccad5b5`.
@@ -75,8 +93,7 @@ It exposes `sys.ts:1613:46: reading modulePath` and two continuation boundaries,
 with **zero new findings naming process**. No unit's earlier first stop moves.
 The main compiler's B control is run on the same amended bytes as the head:
 `stage3/census/pair` requires identical adapted source and unit eligibility.
-The ordinary B table retains original main source on its baseline side; the
-native source-changing full comparison is also retained in
+No ordinary B table was run. The native source-changing full comparison is retained in
 `full-sys/B-native-every-change.md`. The same-input B latent comparison is an
 additional controlled observation, not a replacement for the source-changing
 observations. A uses the original adapted source on both compilers. The adaptation inputs at
@@ -87,10 +104,7 @@ Actual `hereby local` builds of both trees also exit 0. Every emitted root-level
 JavaScript bundle, including `_tsc.js` and `typescript.js`, is byte-identical;
 `gate/built-javascript.json` records each size and SHA-256.
 
-The requested next-stop scripts are retained verbatim under `next-stops/` and
-retargeted through environment paths. Their group scheduler is serial, and each
-root is observed twice by the unchanged ordinary tool. The census binaries have
-no backend and the latent binaries retain the no-output guards. All worktrees, generated source, measurement outputs, upstream source and
+All worktrees, generated source, measurement outputs, upstream source and
 configured measurement/build caches are under `/workspace/scratch/recordreplay`.
 Setup deviation: the initial API `npm ci` ran before `npm_config_cache` was
 redirected and wrote to the default `/home/agent/.npm` cache. Subsequent installs
@@ -104,11 +118,13 @@ Node types: all 81 resolved implementation files are covered, with zero diagnost
 for the control and both candidates and byte-identical JavaScript for all 81.
 See `gate/complete-entry-stock.json` and the complete diagnostic/hash records.
 
-Peak RSS for completed observations is retained per child. The accepted all-unit
-child maximum so far is 2527056 KiB; the first ten ordinary children peak at 896268 KiB.
-The interrupted head stream has no accepted peak measurement.
 
-To continue, measure the final B group as a fresh bounded pair, then resume the
-ordinary recipe using its existing complete root files. The historical
-`first-error.py` contains the old paused-scheduler PID and must not be rerun
-unmodified. Do not run the final audit until every required observation exists.
+Inventory audit: the amended tree has 748 source files against the current
+747-file control. The old 746-file count was already stale. The repaired 99
+checker and scoped inventory segment pass; lane/apply identities, source
+roundtrips and fresh speculative manifests include the added declaration.
+Historical 91/92/93 scope checks and two foreign 746-count guards reject it;
+only 99's own records/code were repaired. See [inventory/README.md](inventory/README.md)
+for every tested contract, negative controls, per-reader index and execution
+limitations. Static-only historical candidates were not run as whole drivers;
+this is not a claim of exhaustive historical-reader execution.

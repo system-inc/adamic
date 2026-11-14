@@ -1,0 +1,839 @@
+[
+  {
+    "file": "stage3/adapt/32-indexed-reads-program/maybebind-compare.cjs",
+    "line": 115,
+    "guard": "assert.equal(names.length,9)",
+    "method": "original first inventory guard with original read-only local declarations; historical driver not run",
+    "results": {
+      "control": {
+        "status": "context_required",
+        "error": "beforeTree is not defined"
+      },
+      "amended": {
+        "status": "context_required",
+        "error": "beforeTree is not defined"
+      }
+    }
+  },
+  {
+    "file": "stage3/adapt/32-indexed-reads-program/maybebind-compare.cjs",
+    "line": 133,
+    "guard": "assert.equal(bi.renameAudit.length,ai.renameAudit.length,'remaining binding declaration count')",
+    "method": "original first inventory guard with original read-only local declarations; historical driver not run",
+    "results": {
+      "control": {
+        "status": "context_required",
+        "error": "b is not defined"
+      },
+      "amended": {
+        "status": "context_required",
+        "error": "b is not defined"
+      }
+    }
+  },
+  {
+    "file": "stage3/adapt/32-indexed-reads-program/maybebind-mutant.cjs",
+    "line": 11,
+    "guard": "assert.equal(second.status,0,second.stderr)",
+    "method": "original first inventory guard with original read-only local declarations; historical driver not run",
+    "results": {
+      "control": {
+        "status": "context_required",
+        "error": "good is not defined"
+      },
+      "amended": {
+        "status": "context_required",
+        "error": "good is not defined"
+      }
+    }
+  },
+  {
+    "file": "stage3/adapt/32-indexed-reads-program/maybebind-mutant.cjs",
+    "line": 17,
+    "guard": "assert.deepEqual(snapshot(tree),before,name+\" wrote files\")",
+    "method": "original first inventory guard with original read-only local declarations; historical driver not run",
+    "results": {
+      "control": {
+        "status": "context_required",
+        "error": "name is not defined"
+      },
+      "amended": {
+        "status": "context_required",
+        "error": "name is not defined"
+      }
+    }
+  },
+  {
+    "file": "stage3/adapt/40-explicit-any/brands-undefined-proof.cjs",
+    "line": 147,
+    "guard": "assert.equal(Object.entries(state.sources).reduce((n,[file,text]) => n + project(text,file).count,0),36)",
+    "method": "original first inventory guard with original read-only local declarations; historical driver not run",
+    "results": {
+      "control": {
+        "status": "context_required",
+        "error": "contracts is not defined"
+      },
+      "amended": {
+        "status": "context_required",
+        "error": "contracts is not defined"
+      }
+    }
+  },
+  {
+    "file": "stage3/adapt/40-explicit-any/brands-undefined-proof.cjs",
+    "line": 154,
+    "guard": "assert.deepEqual(after.js,before.js,'all emitted JavaScript bytes and file names')",
+    "method": "original first inventory guard with original read-only local declarations; historical driver not run",
+    "results": {
+      "control": {
+        "status": "context_required",
+        "error": "proof is not defined"
+      },
+      "amended": {
+        "status": "context_required",
+        "error": "proof is not defined"
+      }
+    }
+  },
+  {
+    "file": "stage3/adapt/40-explicit-any/class-proof.cjs",
+    "line": 130,
+    "guard": "assert.equal(state.contracts.length,className==='enum-display'?1:rules.length)",
+    "method": "original first inventory guard with original read-only local declarations; historical driver not run",
+    "results": {
+      "control": {
+        "status": "context_required",
+        "error": "Cannot read properties of undefined (reading 'length')"
+      },
+      "amended": {
+        "status": "context_required",
+        "error": "Cannot read properties of undefined (reading 'length')"
+      }
+    }
+  },
+  {
+    "file": "stage3/adapt/40-explicit-any/class-proof.cjs",
+    "line": 146,
+    "guard": "assert.deepEqual(Object.keys(after.texts),Object.keys(before.texts))",
+    "method": "original first inventory guard with original read-only local declarations; historical driver not run",
+    "results": {
+      "control": {
+        "status": "context_required",
+        "error": "statePath is not defined"
+      },
+      "amended": {
+        "status": "context_required",
+        "error": "statePath is not defined"
+      }
+    }
+  },
+  {
+    "file": "stage3/adapt/40-explicit-any/evidence/timer-slot/compare.cjs",
+    "line": 14,
+    "guard": "assert.deepEqual(files(path.join(retyped, 'src')), sourceFiles)",
+    "method": "original first inventory guard with original read-only local declarations; historical driver not run",
+    "results": {
+      "control": {
+        "status": "pass"
+      },
+      "amended": {
+        "status": "reject",
+        "error": "Expected values to be strictly deep-equal:\n+ actual - expected\n... Skipped lines\n\n  [\n    'compiler/_namespaces/ts.moduleSpecifiers.ts',\n    'compiler/_namespaces/ts.performance.ts',\n    'compiler/_namespaces/ts.ts',\n    'compiler/binder.ts',\n...\n    'loc/lcl/trk/diagnosticMessages/diagnosticMessages.generated.json.lcl',\n+   'recordreplay.d.ts',\n    'server/_namespaces/ts.server.protocol.ts',\n    'server/_namespaces/ts.server.ts',\n    'server/_namespaces/ts.ts',\n    'server/editorServices.ts',\n "
+      }
+    }
+  },
+  {
+    "file": "stage3/adapt/40-explicit-any/isarray-proof.cjs",
+    "line": 60,
+    "guard": "assert.deepEqual(after.js,before.js,'every emitted JavaScript file and byte')",
+    "method": "original first inventory guard with original read-only local declarations; historical driver not run",
+    "results": {
+      "control": {
+        "status": "context_required",
+        "error": "file is not defined"
+      },
+      "amended": {
+        "status": "context_required",
+        "error": "file is not defined"
+      }
+    }
+  },
+  {
+    "file": "stage3/adapt/40-explicit-any/retype-check.cjs",
+    "line": 26,
+    "guard": "assert.deepEqual(files,walk(path.join(after,'src/compiler')).filter(f=>f.endsWith('.ts')).map(f=>path.relative(after,f)))",
+    "method": "original first inventory guard with original read-only local declarations; historical driver not run",
+    "results": {
+      "control": {
+        "status": "pass"
+      },
+      "amended": {
+        "status": "pass"
+      }
+    }
+  },
+  {
+    "file": "stage3/adapt/44-config-generics/proof.cjs",
+    "line": 17,
+    "guard": "assert.deepEqual(walk(path.join(after, 'src')).filter(f => f.endsWith('.ts')).map(f => path.relative(after, f)), sourceFiles.map(f => path.relative(before, f)), 'exact source file set')",
+    "method": "original first inventory guard with original read-only local declarations; historical driver not run",
+    "results": {
+      "control": {
+        "status": "context_required",
+        "error": "file is not defined"
+      },
+      "amended": {
+        "status": "context_required",
+        "error": "file is not defined"
+      }
+    }
+  },
+  {
+    "file": "stage3/adapt/78-variance-marker/proofs/check.cjs",
+    "line": 21,
+    "guard": "assert.deepEqual(walk(path.join(after, 'src')).map(f => path.relative(after, f)).sort(), all)",
+    "method": "original first inventory guard with original read-only local declarations; historical driver not run",
+    "results": {
+      "control": {
+        "status": "context_required",
+        "error": "relative is not defined"
+      },
+      "amended": {
+        "status": "context_required",
+        "error": "relative is not defined"
+      }
+    }
+  },
+  {
+    "file": "stage3/adapt/79-exit-code/proofs/source-scope.cjs",
+    "line": 11,
+    "guard": "assert.deepEqual(files(after),all)",
+    "method": "original first inventory guard with original read-only local declarations; historical driver not run",
+    "results": {
+      "control": {
+        "status": "pass"
+      },
+      "amended": {
+        "status": "reject",
+        "error": "Expected values to be strictly deep-equal:\n+ actual - expected\n... Skipped lines\n\n  [\n    'src/compiler/_namespaces/ts.moduleSpecifiers.ts',\n    'src/compiler/_namespaces/ts.performance.ts',\n    'src/compiler/_namespaces/ts.ts',\n    'src/compiler/binder.ts',\n...\n    'src/loc/lcl/trk/diagnosticMessages/diagnosticMessages.generated.json.lcl',\n+   'src/recordreplay.d.ts',\n    'src/server/_namespaces/ts.server.protocol.ts',\n    'src/server/_namespaces/ts.server.ts',\n    'src/server/_namespaces/ts.ts"
+      }
+    }
+  },
+  {
+    "file": "stage3/adapt/90-void-widening/proofs/owner-contract.cjs",
+    "line": 17,
+    "guard": "assert.deepEqual(actual.map(x=>[x.file,x.bytes]),expected.map(x=>[x.file,x.bytes]))",
+    "method": "original first inventory guard with original read-only local declarations; historical driver not run",
+    "results": {
+      "control": {
+        "status": "context_required",
+        "error": "expected is not defined"
+      },
+      "amended": {
+        "status": "context_required",
+        "error": "expected is not defined"
+      }
+    }
+  },
+  {
+    "file": "stage3/adapt/90-void-widening/proofs/owner-contract.cjs",
+    "line": 38,
+    "guard": "assert.equal(JSON.parse(rerun).files,0)",
+    "method": "original first inventory guard with original read-only local declarations; historical driver not run",
+    "results": {
+      "control": {
+        "status": "context_required",
+        "error": "work is not defined"
+      },
+      "amended": {
+        "status": "context_required",
+        "error": "work is not defined"
+      }
+    }
+  },
+  {
+    "file": "stage3/adapt/90-void-widening/proofs/owner-contract.cjs",
+    "line": 45,
+    "guard": "assert.deepEqual(snapshot(work),saved,'refusal wrote source')",
+    "method": "original first inventory guard with original read-only local declarations; historical driver not run",
+    "results": {
+      "control": {
+        "status": "context_required",
+        "error": "work is not defined"
+      },
+      "amended": {
+        "status": "context_required",
+        "error": "work is not defined"
+      }
+    }
+  },
+  {
+    "file": "stage3/adapt/91-patcher-discard/proofs/references.cjs",
+    "line": 51,
+    "guard": "assert(rows.every(r=>r.callers.length===0),'registrant or value alias exists')",
+    "method": "original first inventory guard with original read-only local declarations; historical driver not run",
+    "results": {
+      "control": {
+        "status": "context_required",
+        "error": "candidates is not defined"
+      },
+      "amended": {
+        "status": "context_required",
+        "error": "candidates is not defined"
+      }
+    }
+  },
+  {
+    "file": "stage3/adapt/91-patcher-discard/proofs/scope.cjs",
+    "line": 8,
+    "guard": "assert.deepEqual(walk(after),files)",
+    "method": "original first inventory guard with original read-only local declarations; historical driver not run",
+    "results": {
+      "control": {
+        "status": "pass"
+      },
+      "amended": {
+        "status": "reject",
+        "error": "Expected values to be strictly deep-equal:\n+ actual - expected\n... Skipped lines\n\n  [\n    'src/compiler/_namespaces/ts.moduleSpecifiers.ts',\n    'src/compiler/_namespaces/ts.performance.ts',\n    'src/compiler/_namespaces/ts.ts',\n    'src/compiler/binder.ts',\n...\n    'src/loc/lcl/trk/diagnosticMessages/diagnosticMessages.generated.json.lcl',\n+   'src/recordreplay.d.ts',\n    'src/server/_namespaces/ts.server.protocol.ts',\n    'src/server/_namespaces/ts.server.ts',\n    'src/server/_namespaces/ts.ts"
+      }
+    }
+  },
+  {
+    "file": "stage3/adapt/92-tty-host-results/proofs/check.cjs",
+    "line": 51,
+    "guard": "assert.deepEqual(files(after),names)",
+    "method": "original first inventory guard with original read-only local declarations; historical driver not run",
+    "results": {
+      "control": {
+        "status": "pass"
+      },
+      "amended": {
+        "status": "reject",
+        "error": "Expected values to be strictly deep-equal:\n+ actual - expected\n... Skipped lines\n\n  [\n    'src/compiler/_namespaces/ts.moduleSpecifiers.ts',\n    'src/compiler/_namespaces/ts.performance.ts',\n    'src/compiler/_namespaces/ts.ts',\n    'src/compiler/binder.ts',\n...\n    'src/loc/lcl/trk/diagnosticMessages/diagnosticMessages.generated.json.lcl',\n+   'src/recordreplay.d.ts',\n    'src/server/_namespaces/ts.server.protocol.ts',\n    'src/server/_namespaces/ts.server.ts',\n    'src/server/_namespaces/ts.ts"
+      }
+    }
+  },
+  {
+    "file": "stage3/adapt/92-tty-host-results/proofs/owner-contract.cjs",
+    "line": 17,
+    "guard": "assert.deepEqual(actual.map(x=>[x.file,x.bytes]),expected.map(x=>[x.file,x.bytes]))",
+    "method": "original first inventory guard with original read-only local declarations; historical driver not run",
+    "results": {
+      "control": {
+        "status": "context_required",
+        "error": "expected is not defined"
+      },
+      "amended": {
+        "status": "context_required",
+        "error": "expected is not defined"
+      }
+    }
+  },
+  {
+    "file": "stage3/adapt/92-tty-host-results/proofs/owner-contract.cjs",
+    "line": 38,
+    "guard": "assert.equal(JSON.parse(rerun).files,0)",
+    "method": "original first inventory guard with original read-only local declarations; historical driver not run",
+    "results": {
+      "control": {
+        "status": "context_required",
+        "error": "work is not defined"
+      },
+      "amended": {
+        "status": "context_required",
+        "error": "work is not defined"
+      }
+    }
+  },
+  {
+    "file": "stage3/adapt/92-tty-host-results/proofs/owner-contract.cjs",
+    "line": 45,
+    "guard": "assert.deepEqual(snapshot(work),saved,'refusal wrote source')",
+    "method": "original first inventory guard with original read-only local declarations; historical driver not run",
+    "results": {
+      "control": {
+        "status": "context_required",
+        "error": "work is not defined"
+      },
+      "amended": {
+        "status": "context_required",
+        "error": "work is not defined"
+      }
+    }
+  },
+  {
+    "file": "stage3/adapt/93-builtin-imports/proofs/check.cjs",
+    "line": 21,
+    "guard": "assert.deepEqual(inventory(after),names,'source inventory changed')",
+    "method": "original first inventory guard with original read-only local declarations; historical driver not run",
+    "results": {
+      "control": {
+        "status": "pass"
+      },
+      "amended": {
+        "status": "reject",
+        "error": "source inventory changed\n+ actual - expected\n... Skipped lines\n\n  [\n    'src/compiler/_namespaces/ts.moduleSpecifiers.ts',\n    'src/compiler/_namespaces/ts.performance.ts',\n    'src/compiler/_namespaces/ts.ts',\n    'src/compiler/binder.ts',\n...\n    'src/loc/lcl/trk/diagnosticMessages/diagnosticMessages.generated.json.lcl',\n+   'src/recordreplay.d.ts',\n    'src/server/_namespaces/ts.server.protocol.ts',\n    'src/server/_namespaces/ts.server.ts',\n    'src/server/_namespaces/ts.ts',\n    'src/server"
+      }
+    }
+  },
+  {
+    "file": "stage3/adapt/93-builtin-imports/proofs/owner-contract.cjs",
+    "line": 17,
+    "guard": "assert.deepEqual(actual.map(x=>[x.file,x.bytes]),expected.map(x=>[x.file,x.bytes]))",
+    "method": "original first inventory guard with original read-only local declarations; historical driver not run",
+    "results": {
+      "control": {
+        "status": "context_required",
+        "error": "expected is not defined"
+      },
+      "amended": {
+        "status": "context_required",
+        "error": "expected is not defined"
+      }
+    }
+  },
+  {
+    "file": "stage3/adapt/93-builtin-imports/proofs/owner-contract.cjs",
+    "line": 38,
+    "guard": "assert.equal(JSON.parse(rerun).files,0)",
+    "method": "original first inventory guard with original read-only local declarations; historical driver not run",
+    "results": {
+      "control": {
+        "status": "context_required",
+        "error": "work is not defined"
+      },
+      "amended": {
+        "status": "context_required",
+        "error": "work is not defined"
+      }
+    }
+  },
+  {
+    "file": "stage3/adapt/93-builtin-imports/proofs/owner-contract.cjs",
+    "line": 45,
+    "guard": "assert.deepEqual(snapshot(work),saved,'refusal wrote source')",
+    "method": "original first inventory guard with original read-only local declarations; historical driver not run",
+    "results": {
+      "control": {
+        "status": "context_required",
+        "error": "work is not defined"
+      },
+      "amended": {
+        "status": "context_required",
+        "error": "work is not defined"
+      }
+    }
+  },
+  {
+    "file": "stage3/adapt/93-builtin-imports/proofs/owner-contract.cjs",
+    "line": 60,
+    "guard": "assert.deepEqual(snapshot(work),original)",
+    "method": "original first inventory guard with original read-only local declarations; historical driver not run",
+    "results": {
+      "control": {
+        "status": "context_required",
+        "error": "work is not defined"
+      },
+      "amended": {
+        "status": "context_required",
+        "error": "work is not defined"
+      }
+    }
+  },
+  {
+    "file": "stage3/adapt/95-checker-axolotl-b/verify.cjs",
+    "line": 19,
+    "guard": "assert.equal(actual.assertions.length-old.assertions.length,8,'all eight required-read edits must be present')",
+    "method": "original first inventory guard with original read-only local declarations; historical driver not run",
+    "results": {
+      "control": {
+        "status": "context_required",
+        "error": "beforeTree is not defined"
+      },
+      "amended": {
+        "status": "context_required",
+        "error": "beforeTree is not defined"
+      }
+    }
+  },
+  {
+    "file": "stage3/adapt/99-correctness-axolotl-l/compare.cjs",
+    "line": 7,
+    "guard": "assert.deepEqual(names,files(after+'/src'))",
+    "method": "original first inventory guard with original read-only local declarations; historical driver not run",
+    "results": {
+      "control": {
+        "status": "pass"
+      },
+      "amended": {
+        "status": "reject",
+        "error": "Expected values to be strictly deep-equal:\n+ actual - expected\n... Skipped lines\n\n  [\n    'compiler/_namespaces/ts.moduleSpecifiers.ts',\n    'compiler/_namespaces/ts.performance.ts',\n    'compiler/_namespaces/ts.ts',\n    'compiler/binder.ts',\n...\n    'loc/lcl/trk/diagnosticMessages/diagnosticMessages.generated.json.lcl',\n-   'recordreplay.d.ts',\n    'server/_namespaces/ts.server.protocol.ts',\n    'server/_namespaces/ts.server.ts',\n    'server/_namespaces/ts.ts',\n    'server/editorServices.ts',\n "
+      }
+    }
+  },
+  {
+    "file": "stage3/adapt/99-correctness-axolotl-m/compare.cjs",
+    "line": 7,
+    "guard": "assert.deepEqual(names,files(tree+'/src'))",
+    "method": "original first inventory guard with original read-only local declarations; historical driver not run",
+    "results": {
+      "control": {
+        "status": "pass"
+      },
+      "amended": {
+        "status": "reject",
+        "error": "Expected values to be strictly deep-equal:\n+ actual - expected\n... Skipped lines\n\n  [\n    'compiler/_namespaces/ts.moduleSpecifiers.ts',\n    'compiler/_namespaces/ts.performance.ts',\n    'compiler/_namespaces/ts.ts',\n    'compiler/binder.ts',\n...\n    'loc/lcl/trk/diagnosticMessages/diagnosticMessages.generated.json.lcl',\n-   'recordreplay.d.ts',\n    'server/_namespaces/ts.server.protocol.ts',\n    'server/_namespaces/ts.server.ts',\n    'server/_namespaces/ts.ts',\n    'server/editorServices.ts',\n "
+      }
+    }
+  },
+  {
+    "file": "stage3/adapt/99-correctness-axolotl-q/compare.cjs",
+    "line": 7,
+    "guard": "assert.deepEqual(names,files(tree+'/src'))",
+    "method": "original first inventory guard with original read-only local declarations; historical driver not run",
+    "results": {
+      "control": {
+        "status": "pass"
+      },
+      "amended": {
+        "status": "reject",
+        "error": "Expected values to be strictly deep-equal:\n+ actual - expected\n... Skipped lines\n\n  [\n    'compiler/_namespaces/ts.moduleSpecifiers.ts',\n    'compiler/_namespaces/ts.performance.ts',\n    'compiler/_namespaces/ts.ts',\n    'compiler/binder.ts',\n...\n    'loc/lcl/trk/diagnosticMessages/diagnosticMessages.generated.json.lcl',\n-   'recordreplay.d.ts',\n    'server/_namespaces/ts.server.protocol.ts',\n    'server/_namespaces/ts.server.ts',\n    'server/_namespaces/ts.ts',\n    'server/editorServices.ts',\n "
+      }
+    }
+  },
+  {
+    "file": "stage3/adapt/99-correctness-axolotl-r/compare-tosorted.cjs",
+    "line": 8,
+    "guard": "assert.deepEqual(names,files(tree+'/src'))",
+    "method": "original first inventory guard with original read-only local declarations; historical driver not run",
+    "results": {
+      "control": {
+        "status": "pass"
+      },
+      "amended": {
+        "status": "reject",
+        "error": "Expected values to be strictly deep-equal:\n+ actual - expected\n... Skipped lines\n\n  [\n    'compiler/_namespaces/ts.moduleSpecifiers.ts',\n    'compiler/_namespaces/ts.performance.ts',\n    'compiler/_namespaces/ts.ts',\n    'compiler/binder.ts',\n...\n    'loc/lcl/trk/diagnosticMessages/diagnosticMessages.generated.json.lcl',\n-   'recordreplay.d.ts',\n    'server/_namespaces/ts.server.protocol.ts',\n    'server/_namespaces/ts.server.ts',\n    'server/_namespaces/ts.ts',\n    'server/editorServices.ts',\n "
+      }
+    }
+  },
+  {
+    "file": "stage3/adapt/99-correctness-axolotl-r/compare.cjs",
+    "line": 7,
+    "guard": "assert.deepEqual(names,files(after+'/src'))",
+    "method": "original first inventory guard with original read-only local declarations; historical driver not run",
+    "results": {
+      "control": {
+        "status": "pass"
+      },
+      "amended": {
+        "status": "reject",
+        "error": "Expected values to be strictly deep-equal:\n+ actual - expected\n... Skipped lines\n\n  [\n    'compiler/_namespaces/ts.moduleSpecifiers.ts',\n    'compiler/_namespaces/ts.performance.ts',\n    'compiler/_namespaces/ts.ts',\n    'compiler/binder.ts',\n...\n    'loc/lcl/trk/diagnosticMessages/diagnosticMessages.generated.json.lcl',\n-   'recordreplay.d.ts',\n    'server/_namespaces/ts.server.protocol.ts',\n    'server/_namespaces/ts.server.ts',\n    'server/_namespaces/ts.ts',\n    'server/editorServices.ts',\n "
+      }
+    }
+  },
+  {
+    "file": "stage3/adapt/99-correctness-axolotl-s/clear-compare.cjs",
+    "line": 7,
+    "guard": "assert.deepEqual(names,files(after+'/src'))",
+    "method": "original first inventory guard with original read-only local declarations; historical driver not run",
+    "results": {
+      "control": {
+        "status": "pass"
+      },
+      "amended": {
+        "status": "reject",
+        "error": "Expected values to be strictly deep-equal:\n+ actual - expected\n... Skipped lines\n\n  [\n    'compiler/_namespaces/ts.moduleSpecifiers.ts',\n    'compiler/_namespaces/ts.performance.ts',\n    'compiler/_namespaces/ts.ts',\n    'compiler/binder.ts',\n...\n    'loc/lcl/trk/diagnosticMessages/diagnosticMessages.generated.json.lcl',\n-   'recordreplay.d.ts',\n    'server/_namespaces/ts.server.protocol.ts',\n    'server/_namespaces/ts.server.ts',\n    'server/_namespaces/ts.ts',\n    'server/editorServices.ts',\n "
+      }
+    }
+  },
+  {
+    "file": "stage3/adapt/99-correctness-axolotl-s/compare.cjs",
+    "line": 6,
+    "guard": "assert.deepEqual(files(after+'/src'),names)",
+    "method": "original first inventory guard with original read-only local declarations; historical driver not run",
+    "results": {
+      "control": {
+        "status": "pass"
+      },
+      "amended": {
+        "status": "reject",
+        "error": "Expected values to be strictly deep-equal:\n+ actual - expected\n... Skipped lines\n\n  [\n    'compiler/_namespaces/ts.moduleSpecifiers.ts',\n    'compiler/_namespaces/ts.performance.ts',\n    'compiler/_namespaces/ts.ts',\n    'compiler/binder.ts',\n...\n    'loc/lcl/trk/diagnosticMessages/diagnosticMessages.generated.json.lcl',\n+   'recordreplay.d.ts',\n    'server/_namespaces/ts.server.protocol.ts',\n    'server/_namespaces/ts.server.ts',\n    'server/_namespaces/ts.ts',\n    'server/editorServices.ts',\n "
+      }
+    }
+  },
+  {
+    "file": "stage3/adapt/99-correctness-axolotl-s/queue-box-compare.cjs",
+    "line": 5,
+    "guard": "assert.deepEqual(inventory(after+'/src'),names)",
+    "method": "original first inventory guard with original read-only local declarations; historical driver not run",
+    "results": {
+      "control": {
+        "status": "pass"
+      },
+      "amended": {
+        "status": "reject",
+        "error": "Expected values to be strictly deep-equal:\n+ actual - expected\n... Skipped lines\n\n  [\n    'compiler/_namespaces/ts.moduleSpecifiers.ts',\n    'compiler/_namespaces/ts.performance.ts',\n    'compiler/_namespaces/ts.ts',\n    'compiler/binder.ts',\n...\n    'loc/lcl/trk/diagnosticMessages/diagnosticMessages.generated.json.lcl',\n+   'recordreplay.d.ts',\n    'server/_namespaces/ts.server.protocol.ts',\n    'server/_namespaces/ts.server.ts',\n    'server/_namespaces/ts.ts',\n    'server/editorServices.ts',\n "
+      }
+    }
+  },
+  {
+    "file": "stage3/adapt/99-correctness-axolotl-w/compare.cjs",
+    "line": 7,
+    "guard": "assert.deepEqual(names,files(tree+'/src'))",
+    "method": "original first inventory guard with original read-only local declarations; historical driver not run",
+    "results": {
+      "control": {
+        "status": "pass"
+      },
+      "amended": {
+        "status": "reject",
+        "error": "Expected values to be strictly deep-equal:\n+ actual - expected\n... Skipped lines\n\n  [\n    'compiler/_namespaces/ts.moduleSpecifiers.ts',\n    'compiler/_namespaces/ts.performance.ts',\n    'compiler/_namespaces/ts.ts',\n    'compiler/binder.ts',\n...\n    'loc/lcl/trk/diagnosticMessages/diagnosticMessages.generated.json.lcl',\n-   'recordreplay.d.ts',\n    'server/_namespaces/ts.server.protocol.ts',\n    'server/_namespaces/ts.server.ts',\n    'server/_namespaces/ts.ts',\n    'server/editorServices.ts',\n "
+      }
+    }
+  },
+  {
+    "file": "stage3/adapt/99-correctness-axolotl-y/compare.cjs",
+    "line": 7,
+    "guard": "assert.deepEqual(names,files(tree+'/src'))",
+    "method": "original first inventory guard with original read-only local declarations; historical driver not run",
+    "results": {
+      "control": {
+        "status": "pass"
+      },
+      "amended": {
+        "status": "reject",
+        "error": "Expected values to be strictly deep-equal:\n+ actual - expected\n... Skipped lines\n\n  [\n    'compiler/_namespaces/ts.moduleSpecifiers.ts',\n    'compiler/_namespaces/ts.performance.ts',\n    'compiler/_namespaces/ts.ts',\n    'compiler/binder.ts',\n...\n    'loc/lcl/trk/diagnosticMessages/diagnosticMessages.generated.json.lcl',\n-   'recordreplay.d.ts',\n    'server/_namespaces/ts.server.protocol.ts',\n    'server/_namespaces/ts.server.ts',\n    'server/_namespaces/ts.ts',\n    'server/editorServices.ts',\n "
+      }
+    }
+  },
+  {
+    "file": "stage3/adapt/99-correctness-axolotl-z/elementat-step-b-compare.cjs",
+    "line": 5,
+    "guard": "assert.deepEqual(names,inventory(after+'/src'))",
+    "method": "original first inventory guard with original read-only local declarations; historical driver not run",
+    "results": {
+      "control": {
+        "status": "pass"
+      },
+      "amended": {
+        "status": "reject",
+        "error": "Expected values to be strictly deep-equal:\n+ actual - expected\n... Skipped lines\n\n  [\n    'compiler/_namespaces/ts.moduleSpecifiers.ts',\n    'compiler/_namespaces/ts.performance.ts',\n    'compiler/_namespaces/ts.ts',\n    'compiler/binder.ts',\n...\n    'loc/lcl/trk/diagnosticMessages/diagnosticMessages.generated.json.lcl',\n-   'recordreplay.d.ts',\n    'server/_namespaces/ts.server.protocol.ts',\n    'server/_namespaces/ts.server.ts',\n    'server/_namespaces/ts.ts',\n    'server/editorServices.ts',\n "
+      }
+    }
+  },
+  {
+    "file": "stage3/adapt/99-correctness-core-arrayof/compare.cjs",
+    "line": 7,
+    "guard": "assert.deepEqual(names,files(after+'/src'))",
+    "method": "original first inventory guard with original read-only local declarations; historical driver not run",
+    "results": {
+      "control": {
+        "status": "pass"
+      },
+      "amended": {
+        "status": "reject",
+        "error": "Expected values to be strictly deep-equal:\n+ actual - expected\n... Skipped lines\n\n  [\n    'compiler/_namespaces/ts.moduleSpecifiers.ts',\n    'compiler/_namespaces/ts.performance.ts',\n    'compiler/_namespaces/ts.ts',\n    'compiler/binder.ts',\n...\n    'loc/lcl/trk/diagnosticMessages/diagnosticMessages.generated.json.lcl',\n-   'recordreplay.d.ts',\n    'server/_namespaces/ts.server.protocol.ts',\n    'server/_namespaces/ts.server.ts',\n    'server/_namespaces/ts.ts',\n    'server/editorServices.ts',\n "
+      }
+    }
+  },
+  {
+    "file": "stage3/adapt/99-correctness-core-arrayof/measurement-scope.cjs",
+    "line": 6,
+    "guard": "assert.equal(norm(a).replace(pin.before,pin.after),norm(b))",
+    "method": "original first inventory guard with original read-only local declarations; historical driver not run",
+    "results": {
+      "control": {
+        "status": "context_required",
+        "error": "s is not defined"
+      },
+      "amended": {
+        "status": "context_required",
+        "error": "s is not defined"
+      }
+    }
+  },
+  {
+    "file": "stage3/adapt/99-correctness-core-assign/compare.cjs",
+    "line": 4,
+    "guard": "assert.deepEqual(names,files(after+'/src'))",
+    "method": "original first inventory guard with original read-only local declarations; historical driver not run",
+    "results": {
+      "control": {
+        "status": "pass"
+      },
+      "amended": {
+        "status": "reject",
+        "error": "Expected values to be strictly deep-equal:\n+ actual - expected\n... Skipped lines\n\n  [\n    'compiler/_namespaces/ts.moduleSpecifiers.ts',\n    'compiler/_namespaces/ts.performance.ts',\n    'compiler/_namespaces/ts.ts',\n    'compiler/binder.ts',\n...\n    'loc/lcl/trk/diagnosticMessages/diagnosticMessages.generated.json.lcl',\n-   'recordreplay.d.ts',\n    'server/_namespaces/ts.server.protocol.ts',\n    'server/_namespaces/ts.server.ts',\n    'server/_namespaces/ts.ts',\n    'server/editorServices.ts',\n "
+      }
+    }
+  },
+  {
+    "file": "stage3/adapt/99-correctness-core-cast-message/compare-normal.cjs",
+    "line": 5,
+    "guard": "assert.deepEqual(oldSources.map(f=>path.relative(before,f)),newSources.map(f=>path.relative(after,f)))",
+    "method": "original first inventory guard with original read-only local declarations; historical driver not run",
+    "results": {
+      "control": {
+        "status": "context_required",
+        "error": "s is not defined"
+      },
+      "amended": {
+        "status": "context_required",
+        "error": "s is not defined"
+      }
+    }
+  },
+  {
+    "file": "stage3/adapt/99-correctness-core-clone/compare.cjs",
+    "line": 7,
+    "guard": "assert.deepEqual(names,files(tree+'/src'))",
+    "method": "original first inventory guard with original read-only local declarations; historical driver not run",
+    "results": {
+      "control": {
+        "status": "pass"
+      },
+      "amended": {
+        "status": "reject",
+        "error": "Expected values to be strictly deep-equal:\n+ actual - expected\n... Skipped lines\n\n  [\n    'compiler/_namespaces/ts.moduleSpecifiers.ts',\n    'compiler/_namespaces/ts.performance.ts',\n    'compiler/_namespaces/ts.ts',\n    'compiler/binder.ts',\n...\n    'loc/lcl/trk/diagnosticMessages/diagnosticMessages.generated.json.lcl',\n-   'recordreplay.d.ts',\n    'server/_namespaces/ts.server.protocol.ts',\n    'server/_namespaces/ts.server.ts',\n    'server/_namespaces/ts.ts',\n    'server/editorServices.ts',\n "
+      }
+    }
+  },
+  {
+    "file": "stage3/adapt/99-correctness-core-compare/compare.cjs",
+    "line": 5,
+    "guard": "assert.deepEqual(names,inventory(after+'/src'))",
+    "method": "original first inventory guard with original read-only local declarations; historical driver not run",
+    "results": {
+      "control": {
+        "status": "pass"
+      },
+      "amended": {
+        "status": "reject",
+        "error": "Expected values to be strictly deep-equal:\n+ actual - expected\n... Skipped lines\n\n  [\n    'compiler/_namespaces/ts.moduleSpecifiers.ts',\n    'compiler/_namespaces/ts.performance.ts',\n    'compiler/_namespaces/ts.ts',\n    'compiler/binder.ts',\n...\n    'loc/lcl/trk/diagnosticMessages/diagnosticMessages.generated.json.lcl',\n-   'recordreplay.d.ts',\n    'server/_namespaces/ts.server.protocol.ts',\n    'server/_namespaces/ts.server.ts',\n    'server/_namespaces/ts.ts',\n    'server/editorServices.ts',\n "
+      }
+    }
+  },
+  {
+    "file": "stage3/adapt/99-correctness-core-extend/reproduce/compare-source.cjs",
+    "line": 3,
+    "guard": "assert.deepEqual(files,other)",
+    "method": "original first inventory guard with original read-only local declarations; historical driver not run",
+    "results": {
+      "control": {
+        "status": "context_required",
+        "error": "s is not defined"
+      },
+      "amended": {
+        "status": "context_required",
+        "error": "s is not defined"
+      }
+    }
+  },
+  {
+    "file": "stage3/adapt/99-correctness-core-getallkeys/compare.cjs",
+    "line": 8,
+    "guard": "assert.deepEqual(sourceFiles,files(path.join(after,'src')))",
+    "method": "original first inventory guard with original read-only local declarations; historical driver not run",
+    "results": {
+      "control": {
+        "status": "pass"
+      },
+      "amended": {
+        "status": "reject",
+        "error": "Expected values to be strictly deep-equal:\n+ actual - expected\n... Skipped lines\n\n  [\n    'compiler/_namespaces/ts.moduleSpecifiers.ts',\n    'compiler/_namespaces/ts.performance.ts',\n    'compiler/_namespaces/ts.ts',\n    'compiler/binder.ts',\n...\n    'loc/lcl/trk/diagnosticMessages/diagnosticMessages.generated.json.lcl',\n-   'recordreplay.d.ts',\n    'server/_namespaces/ts.server.protocol.ts',\n    'server/_namespaces/ts.server.ts',\n    'server/_namespaces/ts.ts',\n    'server/editorServices.ts',\n "
+      }
+    }
+  },
+  {
+    "file": "stage3/adapt/99-correctness-core-getfunctionname-move/compare-normal.cjs",
+    "line": 5,
+    "guard": "assert.deepEqual(oldSources.map(f=>path.relative(before,f)),newSources.map(f=>path.relative(after,f)))",
+    "method": "original first inventory guard with original read-only local declarations; historical driver not run",
+    "results": {
+      "control": {
+        "status": "context_required",
+        "error": "s is not defined"
+      },
+      "amended": {
+        "status": "context_required",
+        "error": "s is not defined"
+      }
+    }
+  },
+  {
+    "file": "stage3/adapt/99-correctness-core-groupby/compare.cjs",
+    "line": 7,
+    "guard": "assert.deepEqual(names,files(tree+'/src'))",
+    "method": "original first inventory guard with original read-only local declarations; historical driver not run",
+    "results": {
+      "control": {
+        "status": "pass"
+      },
+      "amended": {
+        "status": "reject",
+        "error": "Expected values to be strictly deep-equal:\n+ actual - expected\n... Skipped lines\n\n  [\n    'compiler/_namespaces/ts.moduleSpecifiers.ts',\n    'compiler/_namespaces/ts.performance.ts',\n    'compiler/_namespaces/ts.ts',\n    'compiler/binder.ts',\n...\n    'loc/lcl/trk/diagnosticMessages/diagnosticMessages.generated.json.lcl',\n-   'recordreplay.d.ts',\n    'server/_namespaces/ts.server.protocol.ts',\n    'server/_namespaces/ts.server.ts',\n    'server/_namespaces/ts.ts',\n    'server/editorServices.ts',\n "
+      }
+    }
+  },
+  {
+    "file": "stage3/adapt/99-correctness-core-levenshtein/compare.cjs",
+    "line": 5,
+    "guard": "assert.deepEqual(names,inventory(after+'/src'))",
+    "method": "original first inventory guard with original read-only local declarations; historical driver not run",
+    "results": {
+      "control": {
+        "status": "pass"
+      },
+      "amended": {
+        "status": "reject",
+        "error": "Expected values to be strictly deep-equal:\n+ actual - expected\n... Skipped lines\n\n  [\n    'compiler/_namespaces/ts.moduleSpecifiers.ts',\n    'compiler/_namespaces/ts.performance.ts',\n    'compiler/_namespaces/ts.ts',\n    'compiler/binder.ts',\n...\n    'loc/lcl/trk/diagnosticMessages/diagnosticMessages.generated.json.lcl',\n-   'recordreplay.d.ts',\n    'server/_namespaces/ts.server.protocol.ts',\n    'server/_namespaces/ts.server.ts',\n    'server/_namespaces/ts.ts',\n    'server/editorServices.ts',\n "
+      }
+    }
+  },
+  {
+    "file": "stage3/adapt/99-correctness-core-or-predicate/compare.cjs",
+    "line": 6,
+    "guard": "assert.deepEqual(sourceNames,files(after+'/src'))",
+    "method": "original first inventory guard with original read-only local declarations; historical driver not run",
+    "results": {
+      "control": {
+        "status": "pass"
+      },
+      "amended": {
+        "status": "reject",
+        "error": "Expected values to be strictly deep-equal:\n+ actual - expected\n... Skipped lines\n\n  [\n    'compiler/_namespaces/ts.moduleSpecifiers.ts',\n    'compiler/_namespaces/ts.performance.ts',\n    'compiler/_namespaces/ts.ts',\n    'compiler/binder.ts',\n...\n    'loc/lcl/trk/diagnosticMessages/diagnosticMessages.generated.json.lcl',\n-   'recordreplay.d.ts',\n    'server/_namespaces/ts.server.protocol.ts',\n    'server/_namespaces/ts.server.ts',\n    'server/_namespaces/ts.ts',\n    'server/editorServices.ts',\n "
+      }
+    }
+  },
+  {
+    "file": "stage3/adapt/99-correctness-core-takewhile/compare.cjs",
+    "line": 5,
+    "guard": "assert.deepEqual(names,inventory(after+'/src'))",
+    "method": "original first inventory guard with original read-only local declarations; historical driver not run",
+    "results": {
+      "control": {
+        "status": "pass"
+      },
+      "amended": {
+        "status": "reject",
+        "error": "Expected values to be strictly deep-equal:\n+ actual - expected\n... Skipped lines\n\n  [\n    'compiler/_namespaces/ts.moduleSpecifiers.ts',\n    'compiler/_namespaces/ts.performance.ts',\n    'compiler/_namespaces/ts.ts',\n    'compiler/binder.ts',\n...\n    'loc/lcl/trk/diagnosticMessages/diagnosticMessages.generated.json.lcl',\n-   'recordreplay.d.ts',\n    'server/_namespaces/ts.server.protocol.ts',\n    'server/_namespaces/ts.server.ts',\n    'server/_namespaces/ts.ts',\n    'server/editorServices.ts',\n "
+      }
+    }
+  },
+  {
+    "file": "stage3/adapt/99-wasm-crypto-import/proofs/check.cjs",
+    "line": 34,
+    "guard": "assert(!names.includes(added), 'before tree already holds the amendment declaration')",
+    "method": "original first inventory guard with original read-only local declarations; historical driver not run",
+    "results": {
+      "control": {
+        "status": "context_required",
+        "error": "added is not defined"
+      },
+      "amended": {
+        "status": "context_required",
+        "error": "added is not defined"
+      }
+    }
+  }
+]

@@ -1,0 +1,106 @@
+{
+  "lane/artifact.payload_digest": {
+    "status": "pass",
+    "amended_src_files": 748,
+    "contains_added": true,
+    "digest_with_added": "a748030b623888775671ed14f50f70492d5732b331910f400fa927301d3c4430",
+    "digest_without_added_only": "5384b14cdfe7d754a06911a027e42bc0b390733bd84b7af4025173fcb00bc1d0",
+    "added_file_changes_identity": true,
+    "scope": "source-only payload fixture containing byte-identical full amended src; unrelated build/tests omitted"
+  },
+  "apply.product_key": {
+    "status": "pass",
+    "unamended_inputs_key": "5e0246e3d4b2dd681e75feeab435eab0bcfa4d6f069a4c15c4ee65ae92ba35b9",
+    "amended_working_inputs_key": "dc355ae00507ef4c43a77692c5b973f07a1950557a2bfd715c4c137c8af20740",
+    "different": true,
+    "note": "observed before writing new proof evidence; evidence itself also participates in future keys"
+  },
+  "apply.save_product/restore_product": {
+    "status": "pass",
+    "src_files": 748,
+    "added_file_roundtrip_sha256": "852303f7321f71544a7f24dfd561188599c822e52d2a7e961fe85a22e13f2dc9",
+    "manifest": {
+      "format": "adamic-stage3-tree-v1",
+      "key": "inventory-probe-dc355ae00507ef4c43a77692c5b973f07a1950557a2bfd715c4c137c8af20740",
+      "parts": [
+        {
+          "sha256": "c9c5844b2ae70f642ba5f38ccc5d43c5829f0faa3bee3c099f2a59c622e810ba",
+          "size": 5702809,
+          "suffix": "p000"
+        }
+      ],
+      "sha256": "c9c5844b2ae70f642ba5f38ccc5d43c5829f0faa3bee3c099f2a59c622e810ba",
+      "size": 5702809
+    },
+    "scope": "private source-only payload fixture; not published as a production build product"
+  },
+  "lane/view.make_view": {
+    "status": "pass",
+    "src_files": 748,
+    "src_is_symlink": true,
+    "added_visible": true
+  },
+  "fixed_python_guards_before_repair": [
+    {
+      "file": "stage3/adapt/99-correctness-core-compare/close-proof.py",
+      "line": 20,
+      "source": "assert expected==actual and len(actual)==746",
+      "results": {
+        "control": {
+          "status": "reject",
+          "actual": 747,
+          "expected": 746
+        },
+        "amended": {
+          "status": "reject",
+          "actual": 748,
+          "expected": 746
+        }
+      }
+    },
+    {
+      "file": "stage3/adapt/99-wasm-crypto-import/proofs/scoped.py",
+      "line": 30,
+      "source": "assert sum(f.is_file() for f in (scoped/'src').rglob('*'))==746",
+      "results": {
+        "control": {
+          "status": "reject",
+          "actual": 747,
+          "expected": 746
+        },
+        "amended": {
+          "status": "reject",
+          "actual": 748,
+          "expected": 746
+        }
+      }
+    },
+    {
+      "file": "stage3/drivers/tsc-entry/verify-references.py",
+      "line": 42,
+      "source": "assert len(i['after'])==746 and i['previous']==i['after'] and not i['built_compiler_declarations_exist'] and not i['publication_compiler_diff']",
+      "results": {
+        "control": {
+          "status": "reject",
+          "actual": 747,
+          "expected": 746
+        },
+        "amended": {
+          "status": "reject",
+          "actual": 748,
+          "expected": 746
+        }
+      }
+    }
+  ],
+  "speculative.server.source_checks/fresh": {
+    "status": "reject",
+    "reason": "source inventory changed",
+    "files": 713
+  },
+  "speculative.server.source_checks/stale_names": {
+    "status": "reject",
+    "reason": "source inventory changed",
+    "files": 712
+  }
+}
