@@ -1,8 +1,8 @@
 {
   "status": "PASS",
-  "compiler": "/workspace/scratch/s-bin/adamic-base",
-  "compilerSha256": "f52de08475e75f7812c169666a642859cb2df4fd9d7d348335de83275193a10f",
-  "bodyScope": "Exact adapted bodies; filterMutate instantiated with number; clear parameter specialized to number[] to examine concrete storage. Each control changes only the truncation statement.",
+  "compiler": "/tmp/53r37a3-never-refused/head8/adamic",
+  "compilerSha256": "7c2d7e4ff958cd430d0710020363181c769d54745f5879e70b900e7b186540d8",
+  "bodyScope": "Exact current adapted bodies, each instantiated with number[] at its call. Each control changes only the truncation statement.",
   "cases": [
     {
       "owner": "filterMutate",
@@ -19,8 +19,8 @@
       "state": "length",
       "file": "filterMutate-mutant-length.ts",
       "exit": 1,
-      "classification": "NotYet",
-      "diagnostic": "adamic: /workspace/adamic/stage3/adapt/99-correctness-axolotl-s/filterMutate-mutant-length.ts:9:5: stage 0 can't lower assigning a field of a value yet",
+      "classification": "Refused",
+      "diagnostic": "adamic: /tmp/cn4yapb-scout-20261112/source/stage3/adapt/99-correctness-axolotl-s/filterMutate-mutant-length.ts:9:5: Adamic 0.1 refuses assigning a non-tuple array's length: array writes must preserve its existing indices; build a new array with slice, or use push, pop or splice",
       "log": "filterMutate-mutant-length.log",
       "sourceSha256": "5172c3c87304fb124974533af8f0916b999c78d7386a441f218bb5bf9b7b8662"
     },
@@ -32,17 +32,17 @@
       "classification": "lowered",
       "diagnostic": "",
       "log": "clear-mutant-splice.log",
-      "sourceSha256": "b5bfd8e5b95d304b743587caba2d6607f4b7b8ee99d56f59c5eee901e2697d01"
+      "sourceSha256": "b8c0be6e44ab647f36b8164414c46630d5461a320b9fa0a4aec50397bf6c56b8"
     },
     {
       "owner": "clear",
       "state": "length",
       "file": "clear-mutant-length.ts",
       "exit": 1,
-      "classification": "NotYet",
-      "diagnostic": "adamic: /workspace/adamic/stage3/adapt/99-correctness-axolotl-s/clear-mutant-length.ts:2:5: stage 0 can't lower assigning a field of a value yet",
+      "classification": "Refused",
+      "diagnostic": "adamic: /tmp/cn4yapb-scout-20261112/source/stage3/adapt/99-correctness-axolotl-s/clear-mutant-length.ts:2:5: Adamic 0.1 refuses assigning a non-tuple array's length: array writes must preserve its existing indices; build a new array with slice, or use push, pop or splice",
       "log": "clear-mutant-length.log",
-      "sourceSha256": "93a8c752a1b541391c80ddde3efb8e673971d4fd464b88ca320853beb77f6270"
+      "sourceSha256": "a6ecd2615ad7f34fc240b4fae977a4e2e499ce31af2fe9ed4a73feae2eb534e4"
     }
   ]
 }

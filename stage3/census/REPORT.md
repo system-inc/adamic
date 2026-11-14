@@ -109,6 +109,7 @@ Each input is an actual `.a` file. TS1484 and TS2724 share `repro/support.a`, wh
 Use explicit type imports; runtime import effects must remain.
 
 ```typescript
+// a-check: type error TS1484
 import { Item } from "../support.a"; const value: Item = {count: 1}; console.log(String(value.count));
 ```
 
@@ -119,6 +120,7 @@ Observed: `checker: TS1484`. Example original location: `src/compiler/binder.ts:
 Make the original truthiness test explicit; preserve JS coercion.
 
 ```typescript
+// census repro (Oct 7): refused a number as a condition then; the language accepts it now
 const value = 1; if (value) { console.log(String(value)); }
 ```
 
@@ -139,6 +141,7 @@ Observed: `NotYet: a function inside a function (a closure)`. Example original l
 Replace each assertion with proven narrowing or a loud checked unwrap.
 
 ```typescript
+// a-check: refused the non-null assertion !
 function read(value: number | undefined): number { return value!; } console.log(String(read(1)));
 ```
 
@@ -149,6 +152,7 @@ Observed: `Refused: the non-null assertion !`. Example original location: `src/c
 Required argument, optional value, array density, and generic contracts need site review.
 
 ```typescript
+// a-check: type error TS2345
 function take(value: number): number { return value; } const values: number[] = []; console.log(String(take(values[0])));
 ```
 
@@ -189,6 +193,7 @@ Observed: `checker: TS7030`. Example original location: `src/compiler/binder.ts:
 Assignment buckets include optional reads, generics and narrowing; no blanket repair.
 
 ```typescript
+// a-check: type error TS2322
 const values: number[] = []; const value: number = values[0]; console.log(String(value));
 ```
 
@@ -206,19 +211,21 @@ Observed: `Refused: a type predicate`. Example original location: `src/compiler/
 
 **11. explicit any (b)**
 
-Adamic intentionally forbids unproven any; observed stage-0 spelling can be NotYet.
+Adamic refuses unproven any; type it unknown and narrow it, or give it its real type.
 
 ```typescript
+// a-check: refused a value of type any: any has no proven type
 let value: any = 1; console.log(String(value));
 ```
 
-Observed: `NotYet: a value of type any`. Example original location: `src/compiler/builder.ts:1074:88`.
+Recorded at the census base: `NotYet: a value of type any`. Example original location: `src/compiler/builder.ts:1074:88`.
 
 **12. TS2532 (c)**
 
 Required indexed read needs a density/bounds contract or explicit missing handling.
 
 ```typescript
+// a-check: type error TS2532
 const values: number[] = []; console.log(String(values[0].toString()));
 ```
 
@@ -229,6 +236,7 @@ Observed: `checker: TS2532`. Example original location: `src/compiler/binder.ts:
 Required value must be proven present; preserve legitimate absence.
 
 ```typescript
+// a-check: type error TS18048
 const values: number[] = []; const value = values[0]; console.log(String(value.toString()));
 ```
 
@@ -239,6 +247,7 @@ Observed: `checker: TS18048`. Example original location: `src/compiler/binder.ts
 Truthful optional declaration may permit present undefined, preserving the write and key.
 
 ```typescript
+// a-check: type error TS2412
 interface Slot { value?: number; } const slot: Slot = {}; slot.value = undefined;
 ```
 
@@ -249,6 +258,7 @@ Observed: `checker: TS2412`. Example original location: `src/compiler/binder.ts:
 Use an explicit if with identical single evaluation and truthiness semantics.
 
 ```typescript
+// census repro (Oct 7): refused ||= then; the language accepts it now
 let value = false; value ||= true; console.log(String(value));
 ```
 
@@ -259,6 +269,7 @@ Observed: `Refused: ||=`. Example original location: `src/compiler/binder.ts:195
 Represent intentionally materialized undefined in the owned optional declaration.
 
 ```typescript
+// a-check: type error TS2375
 interface Slot { value?: number; } const slot: Slot = {value: undefined}; console.log(String(slot.value));
 ```
 
@@ -269,6 +280,7 @@ Observed: `checker: TS2375`. Example original location: `src/compiler/builder.ts
 Fetch/generate upstream inputs first; this corpus has missing Diagnostics exports, not a proven language gap.
 
 ```typescript
+// a-check: type error TS2724
 import { Diagnostics } from "../support.a"; console.log(String(Diagnostics));
 ```
 
@@ -289,6 +301,7 @@ Observed: `checker: TS7029`. Example original location: `src/compiler/binder.ts:
 Align optional representation across owned parameter views; generic mismatch cases need review.
 
 ```typescript
+// a-check: type error TS2379
 function take(value: {count?: number}): void { console.log(String(value.count)); } take({count: undefined});
 ```
 
@@ -299,6 +312,7 @@ Observed: `checker: TS2379`. Example original location: `src/compiler/builder.ts
 Sequence statements while retaining value and evaluation order.
 
 ```typescript
+// census repro (Oct 7): refused the comma operator then; the language accepts it now
 function one(): number { console.log(String("one")); return 1; } const value = (one(), 2); console.log(String(value));
 ```
 
@@ -309,6 +323,7 @@ Observed: `Refused: the comma operator`. Example original location: `src/compile
 Iterable presence, element contracts, and custom iterator representation need review.
 
 ```typescript
+// a-check: type error TS2488
 const entries = new Map<string, number>(); const [key, value] = entries.entries().next().value;
 ```
 
@@ -319,6 +334,7 @@ Observed: `checker: TS2488`. Example original location: `src/compiler/builder.ts
 Live namespace objects, merging, exports and initialization need a language decision.
 
 ```typescript
+// census repro (Oct 7): refused a namespace then; the language accepts it now
 namespace Values { export const count = 1; } console.log(String(Values.count));
 ```
 
@@ -329,6 +345,7 @@ Observed: `checker: TS1294; policy probe Refused: a namespace`. Example original
 Choose exact object-key semantics or a reviewed Map source migration.
 
 ```typescript
+// census repro (Oct 7): refused an index signature then; the language accepts it now
 interface Values { [key: string]: number; } const values: Values = {}; console.log(String(values));
 ```
 
@@ -339,6 +356,7 @@ Observed: `Refused: an index signature`. Example original location: `src/compile
 Union/property access needs a real discriminant or generic contract proof.
 
 ```typescript
+// a-check: type error TS2339
 function read(value: {kind: "a"; count: number} | {kind: "b"}): number { return value.count; }
 ```
 
@@ -349,6 +367,7 @@ Observed: `checker: TS2339`. Example original location: `src/compiler/checker.ts
 An optional lookup key must be proved present at its original read.
 
 ```typescript
+// a-check: type error TS2538
 const values: {[key: string]: number} = {}; const keys: string[] = []; console.log(String(values[keys[0]]));
 ```
 
@@ -359,6 +378,7 @@ Observed: `checker: TS2538`. Example original location: `src/compiler/commandLin
 Only a single leading spread is sound; review hidden keys before rewriting.
 
 ```typescript
+// a-check: refused a spread after the first field
 const source = {count: 1}; const value = {label: "x", ...source}; console.log(String(value.count));
 ```
 
@@ -369,6 +389,7 @@ Observed: `Refused: a spread after the first field`. Example original location: 
 Overload selection is a bucket; iterator, element and callable contracts differ by site.
 
 ```typescript
+// a-check: type error TS2769
 const values = new Map<string, number>([[1, 2]]); console.log(String(values.size));
 ```
 
@@ -389,6 +410,7 @@ Observed: `Refused: a label`. Example original location: `src/compiler/checker.t
 Narrow the actual thrown value; upstream catch-any behavior is not a proof.
 
 ```typescript
+// a-check: type error TS18046
 try { throw new Error("x"); } catch (error) { console.log(String(error.message)); }
 ```
 
@@ -399,6 +421,7 @@ Observed: `checker: TS18046`. Example original location: `src/compiler/commandLi
 Host declarations and native Node host APIs are separate prerequisites.
 
 ```typescript
+// a-check: type error TS2591
 console.log(String(process.cwd()));
 ```
 
@@ -417,6 +440,7 @@ Observed: `Refused: an ExportDeclaration`.
 **the void operator (b)**, [repro/r32/main.a](repro/r32/main.a). Retain evaluation and undefined result; special return adaptation is tooling-only.
 
 ```typescript
+// census repro (Oct 7): refused the void operator then; the language accepts it now
 console.log(String(void 0));
 ```
 
@@ -425,6 +449,7 @@ Observed: `Refused: the void operator`.
 **a definite assignment assertion ! (b)**, [repro/r33/main.a](repro/r33/main.a). Initialize the declared slot or represent absence honestly.
 
 ```typescript
+// census repro (Oct 7): refused a definite assignment assertion ! then; the language accepts it now
 class Value { count!: number; } console.log(String(new Value().count));
 ```
 
@@ -434,7 +459,7 @@ Observed: `Refused: a definite assignment assertion !`.
 
 Complete original-source counts: **11 index signatures in 7 files**, **5 explicit `Record<string, T>` references in 4 files**, **0 mapped-type nodes whose constraint resolves to unrestricted string**, and **68 element-access sites whose receiver has a string index type**. The latter captures aliases such as `MapLike<T>` and string-keyed interfaces; it is not 68 independent dictionary declarations. `data/string_lookups.json` retains receiver, key and value types with all locations. Numeric mapped keys, finite string unions, and arrays are separate forms; the unrestricted-string test does not sweep them in.
 
-**210 explicit any tokens in 28 original files**. This counts annotations/type arguments, not inferred-any values or transitive contamination. The minimal any program actually returns `NotYet: a value of type any`, although doctrine refuses any on purpose. Do not read that diagnostic spelling as permission to implement unsound any.
+**210 explicit any tokens in 28 original files**. This counts annotations/type arguments, not inferred-any values or transitive contamination. The measured base returned `NotYet: a value of type any`; that historical observation is unchanged. Current stage 0 returns `Refused: a value of type any: any has no proven type`. Reproducer r12 now states that refusal in its first-line a-check promise; the added header moves its current diagnostic from 1:5 to 2:5. No census count was refreshed.
 
 Post-creation ledger: **16 writes** to properties absent from a directly initialized literal: **13 object writes and 3 array metadata writes**. All 16 names exist in their declared receiver types. These are source-shape candidates, not 16 proven illegal expandos: a declared optional slot may be represented by a fixed shape. The array example in `sys.ts` assigns `pollingInterval`, `pollIndex`, and `pollScheduled` after constructing `[]` through assertions. There are **0 direct function-declaration expando writes** in this narrowly defined scan. The ledger does not follow factory calls, arbitrary alias chains, prototype mutation, `Object.assign`, or values of any; it is a lower bound, not an exhaustive dynamic expando census. Original source has 4,101 assertion sites, which are recorded without falsely classifying all supported `as const`, upcasts, or checked downcasts as blockers.
 
