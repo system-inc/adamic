@@ -238,3 +238,14 @@ file count, below 300. Historical two-site evidence is retained separately.
 MultiMap amendment (task b5w3ycg, wave row 7): 94-correctness-multimap first exports multiMapAddValue and multiMapRemoveValue. 95h owns the two createProgram calls in findSourceFileWorker and addFileIncludeReason and rewrites them to multiMapAddValue; its whole createProgram after-pin includes both calls. The pinned import gap adds multiMapAddValue. Other calls and the final plain Map representation belong to 99-correctness-core-multimap. The interim names remain because a later rename would touch this pinned owner.
 
 verify.cjs independently reconstructs the two MultiMap calls and pinned import gap, and contract.cjs checks the three partial MultiMap states with refusal reasons, zero writes and unchanged file hashes ([mutant evidence](tooling-mutant-evidence.json)).
+
+
+## Binding-view amendment (#ty5myjt, Compiler accept)
+
+This adaptation owns createProgram whole, so it also installs the measured
+getDiagnosticsHelper overloads for DiagnosticWithLocation and Diagnostic over
+the unchanged implementation. diagnostics-overloads.json pins the complete
+overload group and enclosing owner before and after; diagnostics-overloads.cjs
+checks exact text and both comment-mode JavaScript emits before planning writes.
+See ../99-correctness-binding-views/README.md for the companion resolution view,
+restoring mutant and shared proof evidence.
