@@ -23,7 +23,8 @@
 // Past 1 MB a region grows by 2 MB blocks, each aligned to 2 MB and madvised for a huge page, on
 // Linux (#cgn2cwt): trees' regions took 1,969 more 1 MB blocks after the ladder, about 2.3 GB that
 // faulted in a 4 KB page at a time, 626K faults and most of its system time. One fault backs a whole
-// huge block. A huge block is never cached, so what a thread keeps idle is still the cap.
+// huge block. A thread keeps one huge block idle when the cap holds it whole (cached_huge), so a
+// cap below 2 MB never keeps one and what a thread keeps idle is still the cap.
 
 // mmap's MAP_ANONYMOUS under -std=c11 on glibc (the block cache below).
 #define _DEFAULT_SOURCE
@@ -105,6 +106,10 @@ static size_t object_size(size_t count) {
 #define BLOCK_HUGE ((size_t)2097152)
 static _Thread_local adamic_region_block *cached[BLOCK_SIZES];
 static _Thread_local size_t cached_bytes;
+#ifdef REGION_BLOCK_HUGE
+// cached_huge is the one huge block a thread keeps, counted in cached_bytes with the standard lists.
+static _Thread_local adamic_region_block *cached_huge;
+#endif
 
 static void count_block(bool made) {
 #ifdef ADAMIC_COUNT
@@ -146,6 +151,12 @@ static adamic_region_block *block_take(size_t total, size_t size) {
 	adamic_region_block *block;
 #ifdef REGION_BLOCK_HUGE
 	if (total == BLOCK_HUGE && total - sizeof *block >= size) {
+		if (cached_huge != NULL) {
+			block = cached_huge;
+			cached_huge = NULL;
+			cached_bytes -= BLOCK_HUGE;
+			return block;
+		}
 		void *mapped = huge_map();
 		// As for a standard block, a failed mapping leaves this one to malloc.
 		if (mapped != NULL) {
@@ -199,9 +210,17 @@ static void block_free(adamic_region_block *block) {
 	free(block);
 }
 
-// block_give keeps a standard mapped block within the cap and frees the rest. A huge block has no
-// list, so it's unmapped whatever the cap, as is a malloc block (mapping 0, no size of its own).
+// block_give keeps a standard mapped block within the cap and frees the rest. A huge block is kept in
+// the one slot when it's empty and the cap holds the block whole, and unmapped otherwise. A malloc
+// block (mapping 0, no size of its own) is always freed.
 static void block_give(adamic_region_block *block) {
+#ifdef REGION_BLOCK_HUGE
+	if (block->mapping == BLOCK_HUGE && cached_huge == NULL && cached_bytes + BLOCK_HUGE <= ADAMIC_REGION_BLOCK_CACHE) {
+		cached_huge = block;
+		cached_bytes += BLOCK_HUGE;
+		return;
+	}
+#endif
 #ifndef REGION_BLOCK_CACHE_OFF
 	int index = size_index(block->mapping);
 	if (index >= 0 && cached_bytes + block->mapping <= ADAMIC_REGION_BLOCK_CACHE) {
@@ -226,6 +245,12 @@ void adamic_region_thread_end(void) {
 			cached[index] = next;
 		}
 	}
+#ifdef REGION_BLOCK_HUGE
+	if (cached_huge != NULL) {
+		block_free(cached_huge);
+		cached_huge = NULL;
+	}
+#endif
 	cached_bytes = 0;
 }
 
