@@ -1,6 +1,6 @@
 # Promise-discard sites in TypeScript’s compiler
 
-**0 new-reason sites observed in the 79-file census so far: 21/79 files attempted (20 full, 1 scan only). Both controls passed; coverage is incomplete.**
+**0 new-reason sites observed in the 79-file census so far: 41/79 files attempted (20 full, 21 scan only). Both controls passed; coverage is incomplete.**
 
 No compiler finding’s reason or text contains `an unawaited async task`. Control findings are excluded from this count.
 
@@ -66,26 +66,26 @@ The measurement-only wrapper in scan-only.go.txt invokes the existing latentScan
 | factory/emitHelpers.ts | full | ran | 0 | 73.803 | False | 47 | 0 |
 | factory/emitNode.ts | full | ran | 0 | 37.801 | False | 26 | 0 |
 | factory/nodeChildren.ts | full | ran | 0 | 72.538 | False | 16 | 0 |
-| factory/nodeConverters.ts | not measured | not run | | | | unknown | unknown |
-| factory/nodeFactory.ts | not measured | not run | | | | unknown | unknown |
-| factory/nodeTests.ts | not measured | not run | | | | unknown | unknown |
-| factory/parenthesizerRules.ts | not measured | not run | | | | unknown | unknown |
-| factory/utilities.ts | not measured | not run | | | | unknown | unknown |
-| factory/utilitiesPublic.ts | not measured | not run | | | | unknown | unknown |
-| hostErrors.ts | not measured | not run | | | | unknown | unknown |
-| moduleNameResolver.ts | not measured | not run | | | | unknown | unknown |
-| moduleSpecifiers.ts | not measured | not run | | | | unknown | unknown |
-| parser.ts | not measured | not run | | | | unknown | unknown |
-| path.ts | not measured | not run | | | | unknown | unknown |
-| performance.ts | not measured | not run | | | | unknown | unknown |
-| performanceCore.ts | not measured | not run | | | | unknown | unknown |
-| program.ts | not measured | not run | | | | unknown | unknown |
-| programDiagnostics.ts | not measured | not run | | | | unknown | unknown |
-| resolutionCache.ts | not measured | not run | | | | unknown | unknown |
-| scanner.ts | not measured | not run | | | | unknown | unknown |
-| semver.ts | not measured | not run | | | | unknown | unknown |
-| sourcemap.ts | not measured | not run | | | | unknown | unknown |
-| symbolWalker.ts | not measured | not run | | | | unknown | unknown |
+| factory/nodeConverters.ts | scan only | ran | 0 | 23.876 | False | 19 | 0 |
+| factory/nodeFactory.ts | scan only | ran | 0 | 28.785 | False | 421 | 0 |
+| factory/nodeTests.ts | scan only | ran | 0 | 56.724 | False | 4 | 0 |
+| factory/parenthesizerRules.ts | scan only | ran | 0 | 24.829 | False | 17 | 0 |
+| factory/utilities.ts | scan only | ran | 0 | 26.433 | False | 83 | 0 |
+| factory/utilitiesPublic.ts | scan only | ran | 0 | 18.847 | False | 0 | 0 |
+| hostErrors.ts | scan only | ran | 0 | 18.947 | False | 0 | 0 |
+| moduleNameResolver.ts | scan only | ran | 0 | 20.438 | False | 43 | 0 |
+| moduleSpecifiers.ts | scan only | ran | 0 | 24.795 | False | 45 | 0 |
+| parser.ts | scan only | ran | 0 | 43.282 | False | 168 | 0 |
+| path.ts | scan only | ran | 0 | 18.591 | False | 0 | 0 |
+| performance.ts | scan only | ran | 0 | 18.648 | False | 0 | 0 |
+| performanceCore.ts | scan only | ran | 0 | 17.457 | False | 0 | 0 |
+| program.ts | scan only | ran | 0 | 30.859 | False | 87 | 0 |
+| programDiagnostics.ts | scan only | ran | 0 | 26.118 | False | 13 | 0 |
+| resolutionCache.ts | scan only | ran | 0 | 20.689 | False | 29 | 0 |
+| scanner.ts | scan only | ran | 0 | 22.737 | False | 4 | 0 |
+| semver.ts | scan only | ran | 0 | 18.535 | False | 0 | 0 |
+| sourcemap.ts | scan only | ran | 0 | 18.008 | False | 18 | 0 |
+| symbolWalker.ts | scan only | ran | 0 | 16.768 | False | 7 | 0 |
 | sys.ts | not measured | not run | | | | unknown | unknown |
 | tracing.ts | not measured | not run | | | | unknown | unknown |
 | transformer.ts | not measured | not run | | | | unknown | unknown |
@@ -135,5 +135,6 @@ Findings are deduplicated by (kind, where, reason, text). Full-mode totals can i
 
 | Batch | Files | Workers | Free bytes | Available bytes | Cgroup current bytes | Limit bytes |
 |---|---:|---:|---:|---:|---:|---:|
+| 1-20 of 58 | 20 | 4 | 17549721600 | 17802444800 | 654712832 | 17179869184 |
 
 The continuation records memory immediately before each batch. Four workers are used when at least 8 GiB of effective available memory remains. Checkpoints are committed and pushed after every 20 new results, plus the final partial batch. The earlier interruption and sandbox bookkeeping stop were preserved; this continuation performs writes only in the writable scratch worktree.

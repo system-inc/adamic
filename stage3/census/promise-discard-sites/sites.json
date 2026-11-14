@@ -374,6 +374,400 @@
       "mode": "full",
       "raw_path": "/workspace/scratch/promise-discard-sites-run/raw/factory_nodeChildren.ts.jsonl",
       "log_path": "/workspace/scratch/promise-discard-sites-run/raw/factory_nodeChildren.ts.log"
+    },
+    {
+      "file": "factory/nodeConverters.ts",
+      "status": "ran",
+      "exit": 0,
+      "seconds": 23.876,
+      "timeout": false,
+      "total_findings": 19,
+      "observed_findings": 19,
+      "compiler_findings": 19,
+      "kinds": {
+        "Refused": 19
+      },
+      "new_reason_findings": [],
+      "sha256": "0a602b0797c341c03a053276f778d7b245fc7cd8160c0a04e8c96fcf67ddcf19",
+      "raw_sha256": "1af79ef61ac5b71122ee8554da1a74158c471262577841419674d73abe7ac01e",
+      "parse_error": null,
+      "mode": "scan only",
+      "raw_path": "/workspace/scratch/promise-discard-sites-run/raw/scan-factory_nodeConverters.ts.jsonl",
+      "log_path": "/workspace/scratch/promise-discard-sites-run/raw/scan-factory_nodeConverters.ts.log"
+    },
+    {
+      "file": "factory/nodeFactory.ts",
+      "status": "ran",
+      "exit": 0,
+      "seconds": 28.785,
+      "timeout": false,
+      "total_findings": 421,
+      "observed_findings": 421,
+      "compiler_findings": 421,
+      "kinds": {
+        "Refused": 419,
+        "NotYet": 2
+      },
+      "new_reason_findings": [],
+      "sha256": "bfac415cab939ce57ea75c724782afd5ab264d10c7188605aaef7485be0569de",
+      "raw_sha256": "bf03953236b61aad86fe0f667cfc6eb621815d7f9284f2520b7f68588d2cdb7a",
+      "parse_error": null,
+      "mode": "scan only",
+      "raw_path": "/workspace/scratch/promise-discard-sites-run/raw/scan-factory_nodeFactory.ts.jsonl",
+      "log_path": "/workspace/scratch/promise-discard-sites-run/raw/scan-factory_nodeFactory.ts.log"
+    },
+    {
+      "file": "factory/nodeTests.ts",
+      "status": "ran",
+      "exit": 0,
+      "seconds": 56.724,
+      "timeout": false,
+      "total_findings": 4,
+      "observed_findings": 4,
+      "compiler_findings": 4,
+      "kinds": {
+        "NotYet": 4
+      },
+      "new_reason_findings": [],
+      "sha256": "76e4df7ca846537338824b3e797f41bea972414342cc50af974143e6ff00dd9d",
+      "raw_sha256": "f3cf96257cd3f28640df94e38fb228e052144b47cf087471d639d9a397cbd330",
+      "parse_error": null,
+      "mode": "scan only",
+      "raw_path": "/workspace/scratch/promise-discard-sites-run/raw/scan-factory_nodeTests.ts.jsonl",
+      "log_path": "/workspace/scratch/promise-discard-sites-run/raw/scan-factory_nodeTests.ts.log"
+    },
+    {
+      "file": "factory/parenthesizerRules.ts",
+      "status": "ran",
+      "exit": 0,
+      "seconds": 24.829,
+      "timeout": false,
+      "total_findings": 17,
+      "observed_findings": 17,
+      "compiler_findings": 17,
+      "kinds": {
+        "Refused": 17
+      },
+      "new_reason_findings": [],
+      "sha256": "5da381eef0cade341e64da61e13adc45f5757234d0ad02c99a4f03047aa16c09",
+      "raw_sha256": "c5988e41b4c1c894789d35df2ec0dcc714de657e37cacf47d08e8033f586ecc6",
+      "parse_error": null,
+      "mode": "scan only",
+      "raw_path": "/workspace/scratch/promise-discard-sites-run/raw/scan-factory_parenthesizerRules.ts.jsonl",
+      "log_path": "/workspace/scratch/promise-discard-sites-run/raw/scan-factory_parenthesizerRules.ts.log"
+    },
+    {
+      "file": "factory/utilities.ts",
+      "status": "ran",
+      "exit": 0,
+      "seconds": 26.433,
+      "timeout": false,
+      "total_findings": 83,
+      "observed_findings": 83,
+      "compiler_findings": 83,
+      "kinds": {
+        "Refused": 81,
+        "NotYet": 2
+      },
+      "new_reason_findings": [],
+      "sha256": "afb40be9808cda5f7699bc77fa142c3ce8e174f6bd94cda5ba393b314e7f4230",
+      "raw_sha256": "16b7c192663d339a27b5a39453495f21bd438d6a42387ff802ead07b199f3fe6",
+      "parse_error": null,
+      "mode": "scan only",
+      "raw_path": "/workspace/scratch/promise-discard-sites-run/raw/scan-factory_utilities.ts.jsonl",
+      "log_path": "/workspace/scratch/promise-discard-sites-run/raw/scan-factory_utilities.ts.log"
+    },
+    {
+      "file": "factory/utilitiesPublic.ts",
+      "status": "ran",
+      "exit": 0,
+      "seconds": 18.847,
+      "timeout": false,
+      "total_findings": 0,
+      "observed_findings": 0,
+      "compiler_findings": 0,
+      "kinds": {},
+      "new_reason_findings": [],
+      "sha256": "c76d8d62b84fbd66bc900772b450dd80653dfe4e66791d5fb26c01f3ea636352",
+      "raw_sha256": "0c7dc3651834996e406036b21747b25570e632e207a768f9346a175cc2106c0f",
+      "parse_error": null,
+      "mode": "scan only",
+      "raw_path": "/workspace/scratch/promise-discard-sites-run/raw/scan-factory_utilitiesPublic.ts.jsonl",
+      "log_path": "/workspace/scratch/promise-discard-sites-run/raw/scan-factory_utilitiesPublic.ts.log"
+    },
+    {
+      "file": "hostErrors.ts",
+      "status": "ran",
+      "exit": 0,
+      "seconds": 18.947,
+      "timeout": false,
+      "total_findings": 0,
+      "observed_findings": 0,
+      "compiler_findings": 0,
+      "kinds": {},
+      "new_reason_findings": [],
+      "sha256": "f4cfdc4cacfdaea6a3d2899b30ceb33974acfe02d2542549e993e4dfd8cb856c",
+      "raw_sha256": "d01495b8f39d40dc8470357984b8f316dd0bd0a7532441eefcfd068e561cc48e",
+      "parse_error": null,
+      "mode": "scan only",
+      "raw_path": "/workspace/scratch/promise-discard-sites-run/raw/scan-hostErrors.ts.jsonl",
+      "log_path": "/workspace/scratch/promise-discard-sites-run/raw/scan-hostErrors.ts.log"
+    },
+    {
+      "file": "moduleNameResolver.ts",
+      "status": "ran",
+      "exit": 0,
+      "seconds": 20.438,
+      "timeout": false,
+      "total_findings": 43,
+      "observed_findings": 43,
+      "compiler_findings": 43,
+      "kinds": {
+        "Refused": 41,
+        "NotYet": 2
+      },
+      "new_reason_findings": [],
+      "sha256": "e1a374f124a8d33d656059239217d058cbcb8ed501ac4ff76047e750847e2dbd",
+      "raw_sha256": "21ab7787658f3cb09b93f5bc0ee0c5ff820c03140737a111fcefed8bfc93d0e6",
+      "parse_error": null,
+      "mode": "scan only",
+      "raw_path": "/workspace/scratch/promise-discard-sites-run/raw/scan-moduleNameResolver.ts.jsonl",
+      "log_path": "/workspace/scratch/promise-discard-sites-run/raw/scan-moduleNameResolver.ts.log"
+    },
+    {
+      "file": "moduleSpecifiers.ts",
+      "status": "ran",
+      "exit": 0,
+      "seconds": 24.795,
+      "timeout": false,
+      "total_findings": 45,
+      "observed_findings": 45,
+      "compiler_findings": 45,
+      "kinds": {
+        "Refused": 45
+      },
+      "new_reason_findings": [],
+      "sha256": "c47362305fba2170d24acf89f8e4ab97949639510fe4f4e9849a7a27ddeefccd",
+      "raw_sha256": "73d2cb8882135620a6f58d98410252ad0ed241465ed2aee6ae8cbfc8b8ea40d6",
+      "parse_error": null,
+      "mode": "scan only",
+      "raw_path": "/workspace/scratch/promise-discard-sites-run/raw/scan-moduleSpecifiers.ts.jsonl",
+      "log_path": "/workspace/scratch/promise-discard-sites-run/raw/scan-moduleSpecifiers.ts.log"
+    },
+    {
+      "file": "parser.ts",
+      "status": "ran",
+      "exit": 0,
+      "seconds": 43.282,
+      "timeout": false,
+      "total_findings": 168,
+      "observed_findings": 168,
+      "compiler_findings": 168,
+      "kinds": {
+        "Refused": 166,
+        "NotYet": 2
+      },
+      "new_reason_findings": [],
+      "sha256": "f45d616292f311841069bd036008dc9630c3a51f3da3e0789b1701f8478542af",
+      "raw_sha256": "16139fd381d0d8ab796d2c0f376c3b335d5335a50c1c9cde978894d945f5d8bd",
+      "parse_error": null,
+      "mode": "scan only",
+      "raw_path": "/workspace/scratch/promise-discard-sites-run/raw/scan-parser.ts.jsonl",
+      "log_path": "/workspace/scratch/promise-discard-sites-run/raw/scan-parser.ts.log"
+    },
+    {
+      "file": "path.ts",
+      "status": "ran",
+      "exit": 0,
+      "seconds": 18.591,
+      "timeout": false,
+      "total_findings": 0,
+      "observed_findings": 0,
+      "compiler_findings": 0,
+      "kinds": {},
+      "new_reason_findings": [],
+      "sha256": "eda8a859be0cf125e8d7de639d86aeb6d105d86687a3ceba8f03e5926b044d3b",
+      "raw_sha256": "2e7e31f01eeea26dbe001ff8ea50a4770095b2f1942124c694bd0ddd0a9ad50e",
+      "parse_error": null,
+      "mode": "scan only",
+      "raw_path": "/workspace/scratch/promise-discard-sites-run/raw/scan-path.ts.jsonl",
+      "log_path": "/workspace/scratch/promise-discard-sites-run/raw/scan-path.ts.log"
+    },
+    {
+      "file": "performance.ts",
+      "status": "ran",
+      "exit": 0,
+      "seconds": 18.648,
+      "timeout": false,
+      "total_findings": 0,
+      "observed_findings": 0,
+      "compiler_findings": 0,
+      "kinds": {},
+      "new_reason_findings": [],
+      "sha256": "039c61441f42f71a5635372b188cec7c173d6a10adccd9ef44e7d8d2dc72b2e3",
+      "raw_sha256": "d3879443814826bc1ece6ee05c2e8697ace528f8205b77151fb50204655c81d4",
+      "parse_error": null,
+      "mode": "scan only",
+      "raw_path": "/workspace/scratch/promise-discard-sites-run/raw/scan-performance.ts.jsonl",
+      "log_path": "/workspace/scratch/promise-discard-sites-run/raw/scan-performance.ts.log"
+    },
+    {
+      "file": "performanceCore.ts",
+      "status": "ran",
+      "exit": 0,
+      "seconds": 17.457,
+      "timeout": false,
+      "total_findings": 0,
+      "observed_findings": 0,
+      "compiler_findings": 0,
+      "kinds": {},
+      "new_reason_findings": [],
+      "sha256": "8b1993ab380a178b24fed0dcc9e7dc312172a3e3be642ee1b533161f792f0dae",
+      "raw_sha256": "f9e5ad6765b869b7fc9fc20423a3b356a9a2ebad682253c0fb500dc952c75a48",
+      "parse_error": null,
+      "mode": "scan only",
+      "raw_path": "/workspace/scratch/promise-discard-sites-run/raw/scan-performanceCore.ts.jsonl",
+      "log_path": "/workspace/scratch/promise-discard-sites-run/raw/scan-performanceCore.ts.log"
+    },
+    {
+      "file": "program.ts",
+      "status": "ran",
+      "exit": 0,
+      "seconds": 30.859,
+      "timeout": false,
+      "total_findings": 87,
+      "observed_findings": 87,
+      "compiler_findings": 87,
+      "kinds": {
+        "Refused": 85,
+        "NotYet": 2
+      },
+      "new_reason_findings": [],
+      "sha256": "0ed189a95d2204a4c8a0e7bd6602d09cd85e1705ea9495f224905a24f16f3688",
+      "raw_sha256": "db2d774497a10f3b203792e2c1d581adbf2959d431e1f238431bb09d86d7e0c2",
+      "parse_error": null,
+      "mode": "scan only",
+      "raw_path": "/workspace/scratch/promise-discard-sites-run/raw/scan-program.ts.jsonl",
+      "log_path": "/workspace/scratch/promise-discard-sites-run/raw/scan-program.ts.log"
+    },
+    {
+      "file": "programDiagnostics.ts",
+      "status": "ran",
+      "exit": 0,
+      "seconds": 26.118,
+      "timeout": false,
+      "total_findings": 13,
+      "observed_findings": 13,
+      "compiler_findings": 13,
+      "kinds": {
+        "Refused": 12,
+        "NotYet": 1
+      },
+      "new_reason_findings": [],
+      "sha256": "f21e11db92536734d00e4404d895424dc50ddc8cfa1b3a69038e5c331d104fda",
+      "raw_sha256": "c111a7c55d60bf80cdf976fcd9a64fd32820990801a40f8f2ead7aec30e6ab8a",
+      "parse_error": null,
+      "mode": "scan only",
+      "raw_path": "/workspace/scratch/promise-discard-sites-run/raw/scan-programDiagnostics.ts.jsonl",
+      "log_path": "/workspace/scratch/promise-discard-sites-run/raw/scan-programDiagnostics.ts.log"
+    },
+    {
+      "file": "resolutionCache.ts",
+      "status": "ran",
+      "exit": 0,
+      "seconds": 20.689,
+      "timeout": false,
+      "total_findings": 29,
+      "observed_findings": 29,
+      "compiler_findings": 29,
+      "kinds": {
+        "Refused": 29
+      },
+      "new_reason_findings": [],
+      "sha256": "a2a02f0f675ff9c65c350da8af0868ff8b30604559d222aa7bbe68a010742ed8",
+      "raw_sha256": "986f656aa79956dbb026cc9818eaae8eec2c30131ec729e42df7853b37c36c97",
+      "parse_error": null,
+      "mode": "scan only",
+      "raw_path": "/workspace/scratch/promise-discard-sites-run/raw/scan-resolutionCache.ts.jsonl",
+      "log_path": "/workspace/scratch/promise-discard-sites-run/raw/scan-resolutionCache.ts.log"
+    },
+    {
+      "file": "scanner.ts",
+      "status": "ran",
+      "exit": 0,
+      "seconds": 22.737,
+      "timeout": false,
+      "total_findings": 4,
+      "observed_findings": 4,
+      "compiler_findings": 4,
+      "kinds": {
+        "Refused": 4
+      },
+      "new_reason_findings": [],
+      "sha256": "ce1353745d5c22c89aac2d1fe4b2f3f73e4717d933064cede79b866aa1546df2",
+      "raw_sha256": "fbfb6192669c894c1653010d1bc2b27bdc10f1e2743a1fc881731a27a6e8f5ed",
+      "parse_error": null,
+      "mode": "scan only",
+      "raw_path": "/workspace/scratch/promise-discard-sites-run/raw/scan-scanner.ts.jsonl",
+      "log_path": "/workspace/scratch/promise-discard-sites-run/raw/scan-scanner.ts.log"
+    },
+    {
+      "file": "semver.ts",
+      "status": "ran",
+      "exit": 0,
+      "seconds": 18.535,
+      "timeout": false,
+      "total_findings": 0,
+      "observed_findings": 0,
+      "compiler_findings": 0,
+      "kinds": {},
+      "new_reason_findings": [],
+      "sha256": "d05533ad8eafcb2f6aa2bb916ed3b84e26484ca8907aefa6e931de97af60ab25",
+      "raw_sha256": "cd2c8ca692e6e8289e56fccc643cddba852239408307862654eac40d51ae52b8",
+      "parse_error": null,
+      "mode": "scan only",
+      "raw_path": "/workspace/scratch/promise-discard-sites-run/raw/scan-semver.ts.jsonl",
+      "log_path": "/workspace/scratch/promise-discard-sites-run/raw/scan-semver.ts.log"
+    },
+    {
+      "file": "sourcemap.ts",
+      "status": "ran",
+      "exit": 0,
+      "seconds": 18.008,
+      "timeout": false,
+      "total_findings": 18,
+      "observed_findings": 18,
+      "compiler_findings": 18,
+      "kinds": {
+        "Refused": 18
+      },
+      "new_reason_findings": [],
+      "sha256": "21b405e7d70573550a4b412d924c96e1a8107c5f6f6265a51e3d6f6fb66af255",
+      "raw_sha256": "3b24c8452dd2a13d8d6188d0efac040ce590c39de59fc53bb4c07af103950acc",
+      "parse_error": null,
+      "mode": "scan only",
+      "raw_path": "/workspace/scratch/promise-discard-sites-run/raw/scan-sourcemap.ts.jsonl",
+      "log_path": "/workspace/scratch/promise-discard-sites-run/raw/scan-sourcemap.ts.log"
+    },
+    {
+      "file": "symbolWalker.ts",
+      "status": "ran",
+      "exit": 0,
+      "seconds": 16.768,
+      "timeout": false,
+      "total_findings": 7,
+      "observed_findings": 7,
+      "compiler_findings": 7,
+      "kinds": {
+        "Refused": 7
+      },
+      "new_reason_findings": [],
+      "sha256": "c5283ccbff1fd935cc97866a4e3672aa805877a09844530814097497c1bad055",
+      "raw_sha256": "c53bd67378f7fbbb7e283f95520e8d5e14b56c93d33297e24b7144ed75e4b945",
+      "parse_error": null,
+      "mode": "scan only",
+      "raw_path": "/workspace/scratch/promise-discard-sites-run/raw/scan-symbolWalker.ts.jsonl",
+      "log_path": "/workspace/scratch/promise-discard-sites-run/raw/scan-symbolWalker.ts.log"
     }
   ],
   "new_reason_sites": [],
@@ -414,7 +808,7 @@
     "log": "/workspace/scratch/promise-discard-sites-run/control.ts 3 1 measured on a checker-rejected program\n"
   },
   "coverage": {
-    "ran": 20,
+    "ran": 40,
     "timed_out": 1
   },
   "expected_files": 79,
@@ -708,14 +1102,154 @@
       "exit": 0,
       "seconds": 72.538,
       "total_findings": 16
+    },
+    "factory/nodeConverters.ts": {
+      "mode": "scan only",
+      "status": "ran",
+      "exit": 0,
+      "seconds": 23.876,
+      "total_findings": 19
+    },
+    "factory/nodeFactory.ts": {
+      "mode": "scan only",
+      "status": "ran",
+      "exit": 0,
+      "seconds": 28.785,
+      "total_findings": 421
+    },
+    "factory/nodeTests.ts": {
+      "mode": "scan only",
+      "status": "ran",
+      "exit": 0,
+      "seconds": 56.724,
+      "total_findings": 4
+    },
+    "factory/parenthesizerRules.ts": {
+      "mode": "scan only",
+      "status": "ran",
+      "exit": 0,
+      "seconds": 24.829,
+      "total_findings": 17
+    },
+    "factory/utilities.ts": {
+      "mode": "scan only",
+      "status": "ran",
+      "exit": 0,
+      "seconds": 26.433,
+      "total_findings": 83
+    },
+    "factory/utilitiesPublic.ts": {
+      "mode": "scan only",
+      "status": "ran",
+      "exit": 0,
+      "seconds": 18.847,
+      "total_findings": 0
+    },
+    "hostErrors.ts": {
+      "mode": "scan only",
+      "status": "ran",
+      "exit": 0,
+      "seconds": 18.947,
+      "total_findings": 0
+    },
+    "moduleNameResolver.ts": {
+      "mode": "scan only",
+      "status": "ran",
+      "exit": 0,
+      "seconds": 20.438,
+      "total_findings": 43
+    },
+    "moduleSpecifiers.ts": {
+      "mode": "scan only",
+      "status": "ran",
+      "exit": 0,
+      "seconds": 24.795,
+      "total_findings": 45
+    },
+    "parser.ts": {
+      "mode": "scan only",
+      "status": "ran",
+      "exit": 0,
+      "seconds": 43.282,
+      "total_findings": 168
+    },
+    "path.ts": {
+      "mode": "scan only",
+      "status": "ran",
+      "exit": 0,
+      "seconds": 18.591,
+      "total_findings": 0
+    },
+    "performance.ts": {
+      "mode": "scan only",
+      "status": "ran",
+      "exit": 0,
+      "seconds": 18.648,
+      "total_findings": 0
+    },
+    "performanceCore.ts": {
+      "mode": "scan only",
+      "status": "ran",
+      "exit": 0,
+      "seconds": 17.457,
+      "total_findings": 0
+    },
+    "program.ts": {
+      "mode": "scan only",
+      "status": "ran",
+      "exit": 0,
+      "seconds": 30.859,
+      "total_findings": 87
+    },
+    "programDiagnostics.ts": {
+      "mode": "scan only",
+      "status": "ran",
+      "exit": 0,
+      "seconds": 26.118,
+      "total_findings": 13
+    },
+    "resolutionCache.ts": {
+      "mode": "scan only",
+      "status": "ran",
+      "exit": 0,
+      "seconds": 20.689,
+      "total_findings": 29
+    },
+    "scanner.ts": {
+      "mode": "scan only",
+      "status": "ran",
+      "exit": 0,
+      "seconds": 22.737,
+      "total_findings": 4
+    },
+    "semver.ts": {
+      "mode": "scan only",
+      "status": "ran",
+      "exit": 0,
+      "seconds": 18.535,
+      "total_findings": 0
+    },
+    "sourcemap.ts": {
+      "mode": "scan only",
+      "status": "ran",
+      "exit": 0,
+      "seconds": 18.008,
+      "total_findings": 18
+    },
+    "symbolWalker.ts": {
+      "mode": "scan only",
+      "status": "ran",
+      "exit": 0,
+      "seconds": 16.768,
+      "total_findings": 7
     }
   },
   "effective_coverage": {
     "full": 20,
-    "scan only": 1,
+    "scan only": 21,
     "timed out": 0,
     "failed": 0,
-    "not measured": 58,
+    "not measured": 38,
     "original_full_timeouts": 1
   },
   "stop_history": [
@@ -726,6 +1260,39 @@
     }
   ],
   "continuation_binary_sha256": "7d292836d48dc58b8b858f75193e5b6e1261adbbbb94f437358c6fa05beb1fc5",
-  "scan_batches": [],
+  "scan_batches": [
+    {
+      "batch": "1-20 of 58",
+      "utc": "2026-11-14T00:08:58Z",
+      "files": [
+        "factory/nodeConverters.ts",
+        "factory/nodeFactory.ts",
+        "factory/nodeTests.ts",
+        "factory/parenthesizerRules.ts",
+        "factory/utilities.ts",
+        "factory/utilitiesPublic.ts",
+        "hostErrors.ts",
+        "moduleNameResolver.ts",
+        "moduleSpecifiers.ts",
+        "parser.ts",
+        "path.ts",
+        "performance.ts",
+        "performanceCore.ts",
+        "program.ts",
+        "programDiagnostics.ts",
+        "resolutionCache.ts",
+        "scanner.ts",
+        "semver.ts",
+        "sourcemap.ts",
+        "symbolWalker.ts"
+      ],
+      "concurrency": 4,
+      "mem_free_bytes": 17549721600,
+      "mem_available_bytes": 17802444800,
+      "cgroup_current_bytes": 654712832,
+      "cgroup_limit_bytes": 17179869184,
+      "effective_available_bytes": 16629145600
+    }
+  ],
   "census_complete": false
 }
