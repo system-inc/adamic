@@ -1,0 +1,14 @@
+{
+  "command": [
+    "rg",
+    "-n",
+    "createSingleWatcherPerName|getFirstJSDocTag",
+    "stage3/adapt",
+    "-g",
+    "owners.json"
+  ],
+  "exit_code": 1,
+  "stdout": "",
+  "stderr": "",
+  "interpretation": "No owning adaptation pins either named function in stage3/adapt/**/owners.json."
+}
