@@ -126,16 +126,12 @@ export function createQueue<T>(items?: readonly T[]): Queue<T> {
 The meter does not instantiate filterMutate. direct-mutant.cjs instead copies
 its exact adapted body into a minimal program, calls it with T=number and compiles
 it with this tree's ordinary compiler. The control changes only the splice back
-to length assignment. The splice program lowers; its restored control is NotYet
-at filterMutate-mutant-length.ts:9:5: "assigning a field of a value".
-
-clear's copied body uses a concrete number[] parameter for this minimal storage
-probe. Both clear controls have that same signature and call; only truncation
-differs. The splice program lowers; its restored control is NotYet at
-clear-mutant-length.ts:2:5 with the same reason. This does not claim that the real
-unknown[] clear owner has lowered: its separate erased-storage wall is recorded
-in the census. The first un-specialized attempt refused the mutable number[]
-to unknown[] relation; clear-erased-attempt-*.log retains that result.
+to length assignment. At the current #53r37a3 compiler both restored controls are
+**Refused**: `assigning a non-tuple array's length: array writes must preserve its existing indices`,
+at filterMutate-mutant-length.ts:9:5 and clear-mutant-length.ts:2:5. Both splice
+controls lower. The generator uses the current generic owners and instantiates
+each with number[]; only its truncation statement differs between the pair.
+The earlier unknown[] clear attempt in clear-erased-attempt-*.log remains historical.
 
 direct-mutant-result.json records exact diagnostics, exits, source hashes and
 the ordinary compiler hash. The C output and diagnostics are retained in the

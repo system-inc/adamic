@@ -1,7 +1,12 @@
 from pathlib import Path
-import json,subprocess,time
-r=Path('/workspace/scratch/native3-next-probes');r.mkdir(exist_ok=True)
-previous=json.loads(Path('/workspace/adamic/stage3/drivers/scanner/evidence/native3-records/witnesses/results.json').read_text());old={x['name']:x['source'] for x in previous}
+import argparse,hashlib,json,subprocess,time
+repository=Path(__file__).resolve().parents[5]
+parser=argparse.ArgumentParser(description='Refresh selected minimal scanner witnesses with an explicit compiler.')
+parser.add_argument('--compiler',type=Path,required=True)
+parser.add_argument('--output',type=Path,required=True)
+parser.add_argument('--case',action='append',default=[])
+args=parser.parse_args();compiler=args.compiler.resolve();r=args.output.resolve();r.mkdir(parents=True,exist_ok=True)
+previous=json.loads((repository/'stage3/drivers/scanner/evidence/native3-records/witnesses/results.json').read_text());old={x['name']:x['source'] for x in previous}
 programs={
 '01-index':old['01-index'],
 '02-mutable-namespace':'export namespace Debug { export let isDebugging = false; }\nconsole.log("ok");\n',
@@ -20,11 +25,19 @@ programs={
 '15-never-string':'export function stopped(): never { throw new Error("placeholder"); }\nexport function name(): string | undefined { return stopped(); }\nconsole.log("ok");\n',
 }
 rows=[]
+assert not set(args.case)-programs.keys(), 'unknown witness case'
 for name,source in programs.items():
- f=r/(name+'.a');f.write_text(source);row={'name':name,'source':source}
- for kind,command in [('node',['node','--disable-warning=ExperimentalWarning','/workspace/scanner-native3-next/oracle/node.mjs',str(f)]),('build',['/workspace/scratch/scanner-next-adamic','build',str(f),'-o',str(r/(name+'.native'))])]:
+ if args.case and name not in args.case:continue
+ f=Path(__file__).resolve().parent/'witnesses'/(name+'.a')
+ assert f.read_text()==source, f'generator and tracked witness differ: {name}'
+ row={'name':name,'source':source,'source_sha256':hashlib.sha256(f.read_bytes()).hexdigest(),'compiler_sha256':hashlib.sha256(compiler.read_bytes()).hexdigest()}
+ for kind,command in [('node',['node','--disable-warning=ExperimentalWarning',str(repository/'oracle/node.mjs'),str(f)]),('build',[str(compiler),'build',str(f),'-o',str(r/(name+'.native'))])]:
   start=time.monotonic()
-  with (r/(name+'.'+kind+'.stdout')).open('wb') as out,(r/(name+'.'+kind+'.stderr')).open('wb') as err:row[kind+'_exit']=subprocess.run(command,cwd='/workspace/scanner-native3-next',stdout=out,stderr=err).returncode
+  with (r/(name+'.'+kind+'.stdout')).open('wb') as out,(r/(name+'.'+kind+'.stderr')).open('wb') as err:row[kind+'_exit']=subprocess.run(command,cwd=repository,stdout=out,stderr=err).returncode
   row[kind+'_seconds']=time.monotonic()-start;row[kind+'_stdout']=(r/(name+'.'+kind+'.stdout')).read_text();row[kind+'_stderr']=(r/(name+'.'+kind+'.stderr')).read_text()
+ if name in ['10-any','14-any-callback']:
+  assert row['node_exit']==0 and row['node_stdout']=='ok\n' and row['build_exit']==1
+  assert 'Adamic 0.1 refuses a value of type any: any has no proven type' in row['build_stderr']
+  row['classification']='Refused'
  rows.append(row);print(json.dumps(row),flush=True)
 (r/'results.json').write_text(json.dumps(rows,indent=2)+'\n')

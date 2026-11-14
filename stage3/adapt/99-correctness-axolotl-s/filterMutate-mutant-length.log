@@ -1,1 +1,1 @@
-adamic: /workspace/adamic/stage3/adapt/99-correctness-axolotl-s/filterMutate-mutant-length.ts:9:5: stage 0 can't lower assigning a field of a value yet
+adamic: /tmp/cn4yapb-scout-20261112/source/stage3/adapt/99-correctness-axolotl-s/filterMutate-mutant-length.ts:9:5: Adamic 0.1 refuses assigning a non-tuple array's length: array writes must preserve its existing indices; build a new array with slice, or use push, pop or splice

@@ -61,13 +61,13 @@ func TestRecordGuardedReadRefused(t *testing.T) {
 
 // Two ways a record could reach a union or maybe read are stopped earlier today: a predicate that
 // narrows a record to a subtype (the narrower direction of rule c's only road in), and a record
-// laundered through any. Each pins its current stop. When one moves, because predicates or any start
-// to lower, this goes red, and that fixture belongs with the reached_ ones, stopped at the read.
+// laundered through any. Each pins its current stop. The any road is a language refusal, not a future
+// record-storage entrance; pin its Refused kind and complete rule.
 func TestRecordGuardedReadStopsEarlier(t *testing.T) {
 	t.Parallel()
 	for name, want := range map[string]struct{ where, what string }{
 		"early_predicate": {":7:41", "a type predicate whose return is not proven"},
-		"early_any":       {":5:7", "a value of type any"},
+		"early_any":       {":5:7", "a value of type any: any has no proven type"},
 	} {
 		t.Run(name, func(t *testing.T) {
 			t.Parallel()
@@ -80,7 +80,7 @@ func TestRecordGuardedReadStopsEarlier(t *testing.T) {
 			var notYet *lower.NotYet
 			switch {
 			case errors.As(err, &refused) && refused.Where == path+want.where && strings.HasPrefix(refused.What, want.what):
-			case errors.As(err, &notYet) && notYet.Where == path+want.where && strings.HasPrefix(notYet.What, want.what):
+			case name != "early_any" && errors.As(err, &notYet) && notYet.Where == path+want.where && strings.HasPrefix(notYet.What, want.what):
 			default:
 				t.Fatalf("want the earlier stop %q at %s, got %v", want.what, want.where, err)
 			}

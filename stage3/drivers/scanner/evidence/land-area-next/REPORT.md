@@ -1,3 +1,10 @@
+Current minimal-witness refresh (#53r37a3): `10-any.a` and `14-any-callback.a`
+now stop with **Refused**, `a value of type any: any has no proven type`.
+Their refreshed rows in `witnesses/results.json` and `witnesses-final.log` carry
+compiler and source hashes. Their Node observations remain `ok\n`, exit 0.
+The ordered scanner walk, `stops.json`, and initial `witnesses.log` below remain
+historical measurements; this refresh did not rerun that full scanner walk.
+
 The combined merge conflicts in 44 paths; scanner measurement uses cloud/land-area-next alone.
 Base 28285421 contains compiler area-next 337aa466; pinned combined branch is 2648ad33.
 Compiler built in 185.816s; both real scanner modes stop at corePublic.ts:9:5, MapLike's index signature.

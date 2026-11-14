@@ -16,7 +16,7 @@ examples = {
 'TS7030': ('b', 'Explicit undefined return only for a declared optional-return contract; inferred contracts need review.', 'function read(flag: boolean): number | undefined { if (flag) { return 1; } } console.log(read(false));'),
 'TS2322': ('c', 'Assignment buckets include optional reads, generics and narrowing; no blanket repair.', 'const values: number[] = []; const value: number = values[0]; console.log(value);'),
 'a type predicate': ('c', 'Verify guards and assert functions, or narrow at use; cannot trust arbitrary predicates.', 'function isNumber(value: unknown): value is number { return typeof value === "number"; } console.log(isNumber(1));'),
-'explicit any': ('b', 'Adamic intentionally forbids unproven any; observed stage-0 spelling can be NotYet.', 'let value: any = 1; console.log(value);'),
+'explicit any': ('b', 'Adamic refuses unproven any; type it unknown and narrow it, or give it its real type.', '// a-check: refused a value of type any: any has no proven type\nlet value: any = 1; console.log(value);'),
 'TS2532': ('c', 'Required indexed read needs a density/bounds contract or explicit missing handling.', 'const values: number[] = []; console.log(values[0].toString());'),
 'TS18048': ('c', 'Required value must be proven present; preserve legitimate absence.', 'const values: number[] = []; const value = values[0]; console.log(value.toString());'),
 'TS2412': ('b', 'Truthful optional declaration may permit present undefined, preserving the write and key.', 'interface Slot { value?: number; } const slot: Slot = {}; slot.value = undefined;'),
