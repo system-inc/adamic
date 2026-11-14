@@ -16,3 +16,11 @@ Upstream sys.ts:1380 is in `patchWriteFileEnsuringDirectory`, not the missing-en
 Pristine upstream `npm ci` and `node_modules/.bin/hereby dts` succeeded. Each public member conversion was built separately, resetting source between variants. The generated `typescript.d.ts` has exactly one removed and one added line per road; `tsserverlibrary.d.ts` is byte-identical (empty diff). Exact diffs are adjacent to this report. These are pristine upstream measurements, not yet the adapted-tree declaration builds or 79-root checks.
 
 The resolved upstream reader inventory is in `readers-upstream.json`: 526 explicit member accesses/destructuring entries, including homonyms; 35 resolve directly to the two requested public member declarations. This inventory includes harness and src test runners. Dynamic computed keys and structural implementations require further audit; this checkpoint does not claim a complete reader proof.
+
+## Adapted baseline control
+
+Baseline apply exited 0. Coordinates match the request: sys.ts:1385:31 and sys.ts:1612:77. Stock tsc 6.0.3 CLI passes the 79 compiler roots (zero diagnostics) with pinned Node ambient types. An initial stock API setup omitted those ambient types and was corrected; its missing-Node diagnostics are not compiler regressions.
+
+The full single-file CommonJSBundle census exited 0 in 350.052 seconds, using LATENT_FULL=1, LATENT_ASSERT_NO_OUTPUT=1 and LATENT_ONLY_FILE selecting the complete sys.ts. It reports zero checker diagnostics and checker_rejected:false. Its historical generic measurement label does not override that header. Both requested refusal sites are present. There are 185 raw finding events, 59 unique non-Boundary findings: 41 NotYet and 18 Refused. The control stream, timings, apply log, exact tsc config/result and source manifest are retained. This is a census, not successful native compilation.
+
+`READERS.md` lists the 35 resolved public-member references on the adapted baseline; the full 526-entry inventory includes homonyms and the harness/tests.
