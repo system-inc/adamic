@@ -5,6 +5,16 @@ base=Path(__file__).resolve().parent;mode=os.environ['CENSUS_MODULE_FORMAT'];out
 read=lambda n:json.loads((out/n).read_text())
 groups=read('grouped-first-stops.json');comparisons=read('comparison.json')
 s=['# Next stops: '+mode,'','Measured compiler/apply commit: `7534c1d7575db02bb7b6512119e0685987b7e333`. Roots and locations are relative to `src/compiler/`. Two ordinary observations per root agree except timing.','','| Roots | Location | Kind | Exact reason | Phase | Owner |','| ---: | --- | --- | --- | --- | --- |']
+lead=['## Stops and movement from ff4ce03f','']
+for g in groups:
+ members=[c for c in comparisons if c['root'] in g['roots']]
+ moved=sum(not c['unchanged'] for c in members)
+ lead+=['- '+str(g['count'])+' roots: '+g['where']+'; '+g['kind']+'; '+g['reason']+'. '+str(moved)+' moved, '+str(len(members)-moved)+' unchanged.']
+lead+=['','## Adapted source at new stops','']
+for e in read('source-evidence.json'):
+ if any(not c['unchanged'] and c['after']==[e['where'],e['kind'],e['reason']] for c in comparisons):
+  lead+=['### '+e['where'],'','```typescript',e['adapted_line'],'```','','Phase: '+e['phase']+'. Owner: '+e['owner']+'.','',e.get('owner_basis',''),'']
+s=s[:4]+lead+s[4:]
 for g in groups:s.append('| '+' | '.join([str(g['count']),g['where'],g['kind'],g['reason'].replace('|','\\|').replace('<','&lt;').replace('>','&gt;'),g['phase'],g['owner']])+' |')
 s+=['','## Root membership','']
 for g in groups:s+=['- '+g['where']+' '+g['kind']+': '+', '.join('`'+r+'`' for r in g['roots'])]
