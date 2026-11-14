@@ -1,0 +1,2676 @@
+[
+  {
+    "original_scout_line": 1328,
+    "key": [
+      "Refused",
+      "builder.ts",
+      1328,
+      25,
+      "a value of type IncrementalBuildInfoEmitSignature[] | undefined seen as {}[] | undefined, which can write {} where IncrementalBuildInfoEmitSignature is read"
+    ],
+    "present_before": true,
+    "present_after": false,
+    "gone": true,
+    "removed_by_head": true
+  },
+  {
+    "original_scout_line": 1372,
+    "key": [
+      "Refused",
+      "builder.ts",
+      1372,
+      21,
+      "a value of type IncrementalBuildInfoFilePendingEmit[] | undefined seen as {}[] | undefined, which can write {} where IncrementalBuildInfoFilePendingEmit is read"
+    ],
+    "present_before": true,
+    "present_after": false,
+    "gone": true,
+    "removed_by_head": true
+  },
+  {
+    "original_scout_line": 1425,
+    "key": [
+      "Refused",
+      "builder.ts",
+      1425,
+      34,
+      "a value of type (readonly IncrementalBuildInfoFileId[])[] | undefined seen as {}[] | undefined, which can write {} where readonly IncrementalBuildInfoFileId[] is read"
+    ],
+    "present_before": true,
+    "present_after": false,
+    "gone": true,
+    "removed_by_head": true
+  },
+  {
+    "original_scout_line": 1455,
+    "key": [
+      "Refused",
+      "builder.ts",
+      1455,
+      33,
+      "a value of type IncrementalBuildInfoResolvedRoot[] | undefined seen as {}[] | undefined, which can write {} where IncrementalBuildInfoResolvedRoot is read"
+    ],
+    "present_before": true,
+    "present_after": false,
+    "gone": true,
+    "removed_by_head": true
+  },
+  {
+    "original_scout_line": 1500,
+    "key": [
+      "Refused",
+      "builder.ts",
+      1500,
+      70,
+      "a value of type IncrementalBuildInfoDiagnostic[] | undefined seen as {}[] | undefined, which can write {} where IncrementalBuildInfoDiagnostic is read"
+    ],
+    "present_before": true,
+    "present_after": false,
+    "gone": true,
+    "removed_by_head": true
+  },
+  {
+    "original_scout_line": 1503,
+    "key": [
+      "Refused",
+      "builder.ts",
+      1503,
+      33,
+      "a value of type IncrementalBuildInfoDiagnostic[] | undefined seen as {}[] | undefined, which can write {} where IncrementalBuildInfoDiagnostic is read"
+    ],
+    "present_before": true,
+    "present_after": false,
+    "gone": true,
+    "removed_by_head": true
+  },
+  {
+    "original_scout_line": 1517,
+    "key": [
+      "Refused",
+      "builder.ts",
+      1517,
+      29,
+      "a value of type IncrementalBuildInfoDiagnosticOfFile[] | undefined seen as {}[] | undefined, which can write {} where IncrementalBuildInfoDiagnosticOfFile is read"
+    ],
+    "present_before": true,
+    "present_after": false,
+    "gone": true,
+    "removed_by_head": true
+  },
+  {
+    "original_scout_line": 1585,
+    "key": [
+      "Refused",
+      "builder.ts",
+      1585,
+      40,
+      "a value of type IncrementalBuildInfoFileId[] | undefined seen as {}[] | undefined, which can write {} where IncrementalBuildInfoFileId is read"
+    ],
+    "present_before": true,
+    "present_after": false,
+    "gone": true,
+    "removed_by_head": true
+  },
+  {
+    "original_scout_line": 5355,
+    "key": [
+      "Refused",
+      "checker.ts",
+      5355,
+      34,
+      "a value of type Symbol[] | undefined seen as {}[] | undefined, which can write {} where Symbol is read"
+    ],
+    "present_before": true,
+    "present_after": false,
+    "gone": true,
+    "removed_by_head": true
+  },
+  {
+    "original_scout_line": 5372,
+    "key": [
+      "Refused",
+      "checker.ts",
+      5372,
+      30,
+      "a value of type Symbol[] | undefined seen as {}[] | undefined, which can write {} where Symbol is read"
+    ],
+    "present_before": true,
+    "present_after": false,
+    "gone": true,
+    "removed_by_head": true
+  },
+  {
+    "original_scout_line": 5416,
+    "key": [
+      "Refused",
+      "checker.ts",
+      5416,
+      37,
+      "a value of type Symbol[] seen as {}[], which can write {} where Symbol is read"
+    ],
+    "present_before": true,
+    "present_after": false,
+    "gone": true,
+    "removed_by_head": true
+  },
+  {
+    "original_scout_line": 5431,
+    "key": [
+      "Refused",
+      "checker.ts",
+      5431,
+      31,
+      "a value of type Symbol[] seen as {}[], which can write {} where Symbol is read"
+    ],
+    "present_before": true,
+    "present_after": false,
+    "gone": true,
+    "removed_by_head": true
+  },
+  {
+    "original_scout_line": 5447,
+    "key": [
+      "Refused",
+      "checker.ts",
+      5447,
+      26,
+      "a value of type Symbol[] seen as {}[], which can write {} where Symbol is read"
+    ],
+    "present_before": true,
+    "present_after": false,
+    "gone": true,
+    "removed_by_head": true
+  },
+  {
+    "original_scout_line": 5608,
+    "key": [
+      "Refused",
+      "checker.ts",
+      5608,
+      40,
+      "a value of type Symbol[] | undefined seen as {}[] | undefined, which can write {} where Symbol is read"
+    ],
+    "present_before": true,
+    "present_after": false,
+    "gone": true,
+    "removed_by_head": true
+  },
+  {
+    "original_scout_line": 5616,
+    "key": [
+      "Refused",
+      "checker.ts",
+      5616,
+      39,
+      "a value of type Symbol[] | undefined seen as {}[] | undefined, which can write {} where Symbol is read"
+    ],
+    "present_before": true,
+    "present_after": false,
+    "gone": true,
+    "removed_by_head": true
+  },
+  {
+    "original_scout_line": 8287,
+    "key": [
+      "Refused",
+      "checker.ts",
+      8287,
+      52,
+      "a value of type __String[] | undefined seen as {}[] | undefined, which can write {} where __String is read"
+    ],
+    "present_before": true,
+    "present_after": false,
+    "gone": true,
+    "removed_by_head": true
+  },
+  {
+    "original_scout_line": 8290,
+    "key": [
+      "Refused",
+      "checker.ts",
+      8290,
+      52,
+      "a value of type { name: __String; oldSymbol: Symbol; }[] | undefined seen as {}[] | undefined, which can write {} where { name: __String; oldSymbol: Symbol; } is read"
+    ],
+    "present_before": true,
+    "present_after": false,
+    "gone": true,
+    "removed_by_head": true
+  },
+  {
+    "original_scout_line": 13086,
+    "key": [
+      "Refused",
+      "checker.ts",
+      13086,
+      39,
+      "a value of type TypeParameter[] | undefined seen as {}[] | undefined, which can write {} where TypeParameter is read"
+    ],
+    "present_before": true,
+    "present_after": false,
+    "gone": true,
+    "removed_by_head": true
+  },
+  {
+    "original_scout_line": 13095,
+    "key": [
+      "Refused",
+      "checker.ts",
+      13095,
+      46,
+      "a value of type TypeParameter[] | undefined seen as {}[] | undefined, which can write {} where TypeParameter is read"
+    ],
+    "present_before": true,
+    "present_after": false,
+    "gone": true,
+    "removed_by_head": true
+  },
+  {
+    "original_scout_line": 14576,
+    "key": [
+      "Refused",
+      "checker.ts",
+      14576,
+      37,
+      "a value of type Signature[] | undefined seen as {}[] | undefined, which can write {} where Signature is read"
+    ],
+    "present_before": true,
+    "present_after": false,
+    "gone": true,
+    "removed_by_head": true
+  },
+  {
+    "original_scout_line": 14592,
+    "key": [
+      "Refused",
+      "checker.ts",
+      14592,
+      23,
+      "a value of type IndexInfo[] | undefined seen as {}[] | undefined, which can write {} where IndexInfo is read"
+    ],
+    "present_before": true,
+    "present_after": false,
+    "gone": true,
+    "removed_by_head": true
+  },
+  {
+    "original_scout_line": 14650,
+    "key": [
+      "Refused",
+      "checker.ts",
+      14650,
+      37,
+      "a value of type IndexInfo[] | undefined seen as {}[] | undefined, which can write {} where IndexInfo is read"
+    ],
+    "present_before": true,
+    "present_after": false,
+    "gone": true,
+    "removed_by_head": true
+  },
+  {
+    "original_scout_line": 14656,
+    "key": [
+      "Refused",
+      "checker.ts",
+      14656,
+      37,
+      "a value of type IndexInfo[] | undefined seen as {}[] | undefined, which can write {} where IndexInfo is read"
+    ],
+    "present_before": true,
+    "present_after": false,
+    "gone": true,
+    "removed_by_head": true
+  },
+  {
+    "original_scout_line": 15272,
+    "key": [
+      "Refused",
+      "checker.ts",
+      15272,
+      42,
+      "a value of type Type[] | undefined seen as {}[] | undefined, which can write {} where Type is read"
+    ],
+    "present_before": true,
+    "present_after": false,
+    "gone": true,
+    "removed_by_head": true
+  },
+  {
+    "original_scout_line": 15274,
+    "key": [
+      "Refused",
+      "checker.ts",
+      15274,
+      46,
+      "a value of type Type[] seen as {}[], which can write {} where Type is read"
+    ],
+    "present_before": true,
+    "present_after": false,
+    "gone": true,
+    "removed_by_head": true
+  },
+  {
+    "original_scout_line": 15290,
+    "key": [
+      "Refused",
+      "checker.ts",
+      15290,
+      46,
+      "a value of type Type[] seen as {}[], which can write {} where Type is read"
+    ],
+    "present_before": true,
+    "present_after": false,
+    "gone": true,
+    "removed_by_head": true
+  },
+  {
+    "original_scout_line": 15648,
+    "key": [
+      "Refused",
+      "checker.ts",
+      15648,
+      45,
+      "a value of type Type[] | undefined seen as {}[] | undefined, which can write {} where Type is read"
+    ],
+    "present_before": true,
+    "present_after": false,
+    "gone": true,
+    "removed_by_head": true
+  },
+  {
+    "original_scout_line": 15652,
+    "key": [
+      "Refused",
+      "checker.ts",
+      15652,
+      45,
+      "a value of type Type[] | undefined seen as {}[] | undefined, which can write {} where Type is read"
+    ],
+    "present_before": true,
+    "present_after": false,
+    "gone": true,
+    "removed_by_head": true
+  },
+  {
+    "original_scout_line": 15711,
+    "key": [
+      "Refused",
+      "checker.ts",
+      15711,
+      71,
+      "a value of type Type[] seen as {}[], which can write {} where Type is read"
+    ],
+    "present_before": true,
+    "present_after": false,
+    "gone": true,
+    "removed_by_head": true
+  },
+  {
+    "original_scout_line": 16799,
+    "key": [
+      "Refused",
+      "checker.ts",
+      16799,
+      61,
+      "a value of type Type[] | undefined seen as {}[] | undefined, which can write {} where Type is read"
+    ],
+    "present_before": true,
+    "present_after": false,
+    "gone": true,
+    "removed_by_head": true
+  },
+  {
+    "original_scout_line": 16812,
+    "key": [
+      "Refused",
+      "checker.ts",
+      16812,
+      45,
+      "a value of type Type[] | undefined seen as {}[] | undefined, which can write {} where Type is read"
+    ],
+    "present_before": true,
+    "present_after": false,
+    "gone": true,
+    "removed_by_head": true
+  },
+  {
+    "original_scout_line": 16817,
+    "key": [
+      "Refused",
+      "checker.ts",
+      16817,
+      45,
+      "a value of type Type[] | undefined seen as {}[] | undefined, which can write {} where Type is read"
+    ],
+    "present_before": true,
+    "present_after": false,
+    "gone": true,
+    "removed_by_head": true
+  },
+  {
+    "original_scout_line": 16822,
+    "key": [
+      "Refused",
+      "checker.ts",
+      16822,
+      45,
+      "a value of type Type[] | undefined seen as {}[] | undefined, which can write {} where Type is read"
+    ],
+    "present_before": true,
+    "present_after": false,
+    "gone": true,
+    "removed_by_head": true
+  },
+  {
+    "original_scout_line": 16835,
+    "key": [
+      "Refused",
+      "checker.ts",
+      16835,
+      45,
+      "a value of type Type[] | undefined seen as {}[] | undefined, which can write {} where Type is read"
+    ],
+    "present_before": true,
+    "present_after": false,
+    "gone": true,
+    "removed_by_head": true
+  },
+  {
+    "original_scout_line": 17285,
+    "key": [
+      "Refused",
+      "checker.ts",
+      17285,
+      42,
+      "a value of type Type[] | undefined seen as {}[] | undefined, which can write {} where Type is read"
+    ],
+    "present_before": true,
+    "present_after": false,
+    "gone": true,
+    "removed_by_head": true
+  },
+  {
+    "original_scout_line": 17297,
+    "key": [
+      "Refused",
+      "checker.ts",
+      17297,
+      50,
+      "a value of type Type[] | undefined seen as {}[] | undefined, which can write {} where Type is read"
+    ],
+    "present_before": true,
+    "present_after": false,
+    "gone": true,
+    "removed_by_head": true
+  },
+  {
+    "original_scout_line": 17498,
+    "key": [
+      "Refused",
+      "checker.ts",
+      17498,
+      28,
+      "a value of type Type[] | undefined seen as {}[] | undefined, which can write {} where Type is read"
+    ],
+    "present_before": true,
+    "present_after": false,
+    "gone": true,
+    "removed_by_head": true
+  },
+  {
+    "original_scout_line": 18039,
+    "key": [
+      "Refused",
+      "checker.ts",
+      18039,
+      36,
+      "a value of type StringLiteralType[] seen as {}[], which can write {} where StringLiteralType is read"
+    ],
+    "present_before": true,
+    "present_after": false,
+    "gone": true,
+    "removed_by_head": true
+  },
+  {
+    "original_scout_line": 19342,
+    "key": [
+      "Refused",
+      "checker.ts",
+      19342,
+      52,
+      "a value of type Type[] seen as {}[], which can write {} where Type is read"
+    ],
+    "present_before": true,
+    "present_after": false,
+    "gone": true,
+    "removed_by_head": true
+  },
+  {
+    "original_scout_line": 19895,
+    "key": [
+      "Refused",
+      "checker.ts",
+      19895,
+      49,
+      "a value of type Type[] seen as {}[], which can write {} where Type is read"
+    ],
+    "present_before": true,
+    "present_after": false,
+    "gone": true,
+    "removed_by_head": true
+  },
+  {
+    "original_scout_line": 19996,
+    "key": [
+      "Refused",
+      "checker.ts",
+      19996,
+      27,
+      "a value of type Identifier[] seen as {}[], which can write {} where Identifier is read"
+    ],
+    "present_before": true,
+    "present_after": false,
+    "gone": true,
+    "removed_by_head": true
+  },
+  {
+    "original_scout_line": 22448,
+    "key": [
+      "Refused",
+      "checker.ts",
+      22448,
+      53,
+      "a value of type DiagnosticRelatedInformation[] | undefined seen as {}[] | undefined, which can write {} where DiagnosticRelatedInformation is read"
+    ],
+    "present_before": true,
+    "present_after": false,
+    "gone": true,
+    "removed_by_head": true
+  },
+  {
+    "original_scout_line": 22978,
+    "key": [
+      "Refused",
+      "checker.ts",
+      22978,
+      31,
+      "a value of type Type[] | undefined seen as {}[] | undefined, which can write {} where Type is read"
+    ],
+    "present_before": true,
+    "present_after": false,
+    "gone": true,
+    "removed_by_head": true
+  },
+  {
+    "original_scout_line": 26909,
+    "key": [
+      "Refused",
+      "checker.ts",
+      26909,
+      73,
+      "a value of type Type[] | undefined seen as {}[] | undefined, which can write {} where Type is read"
+    ],
+    "present_before": true,
+    "present_after": false,
+    "gone": true,
+    "removed_by_head": true
+  },
+  {
+    "original_scout_line": 26914,
+    "key": [
+      "Refused",
+      "checker.ts",
+      26914,
+      63,
+      "a value of type Type[] | undefined seen as {}[] | undefined, which can write {} where Type is read"
+    ],
+    "present_before": true,
+    "present_after": false,
+    "gone": true,
+    "removed_by_head": true
+  },
+  {
+    "original_scout_line": 32402,
+    "key": [
+      "Refused",
+      "checker.ts",
+      32402,
+      58,
+      "a value of type Type[] | undefined seen as {}[] | undefined, which can write {} where Type is read"
+    ],
+    "present_before": true,
+    "present_after": false,
+    "gone": true,
+    "removed_by_head": true
+  },
+  {
+    "original_scout_line": 32436,
+    "key": [
+      "Refused",
+      "checker.ts",
+      32436,
+      30,
+      "a value of type Type[] | undefined seen as {}[] | undefined, which can write {} where Type is read"
+    ],
+    "present_before": true,
+    "present_after": false,
+    "gone": true,
+    "removed_by_head": true
+  },
+  {
+    "original_scout_line": 33510,
+    "key": [
+      "Refused",
+      "checker.ts",
+      33510,
+      41,
+      "a value of type ElementWithComputedPropertyName[] | undefined seen as {}[] | undefined, which can write {} where ElementWithComputedPropertyName is read"
+    ],
+    "present_before": true,
+    "present_after": false,
+    "gone": true,
+    "removed_by_head": true
+  },
+  {
+    "original_scout_line": 41397,
+    "key": [
+      "Refused",
+      "checker.ts",
+      41397,
+      46,
+      "a value of type BindingElement[] | undefined seen as {}[] | undefined, which can write {} where BindingElement is read"
+    ],
+    "present_before": true,
+    "present_after": false,
+    "gone": true,
+    "removed_by_head": true
+  },
+  {
+    "original_scout_line": 41635,
+    "key": [
+      "Refused",
+      "checker.ts",
+      41635,
+      44,
+      "a value of type TypeParameter[] | undefined seen as {}[] | undefined, which can write {} where TypeParameter is read"
+    ],
+    "present_before": true,
+    "present_after": false,
+    "gone": true,
+    "removed_by_head": true
+  },
+  {
+    "original_scout_line": 41636,
+    "key": [
+      "Refused",
+      "checker.ts",
+      41636,
+      44,
+      "a value of type TypeParameter[] | undefined seen as {}[] | undefined, which can write {} where TypeParameter is read"
+    ],
+    "present_before": true,
+    "present_after": false,
+    "gone": true,
+    "removed_by_head": true
+  },
+  {
+    "original_scout_line": 43550,
+    "key": [
+      "Refused",
+      "checker.ts",
+      43550,
+      37,
+      "a value of type Signature[] | undefined seen as {}[] | undefined, which can write {} where Signature is read"
+    ],
+    "present_before": true,
+    "present_after": false,
+    "gone": true,
+    "removed_by_head": true
+  },
+  {
+    "original_scout_line": 45889,
+    "key": [
+      "Refused",
+      "checker.ts",
+      45889,
+      33,
+      "a value of type Type[] | undefined seen as {}[] | undefined, which can write {} where Type is read"
+    ],
+    "present_before": true,
+    "present_after": false,
+    "gone": true,
+    "removed_by_head": true
+  },
+  {
+    "original_scout_line": 45890,
+    "key": [
+      "Refused",
+      "checker.ts",
+      45890,
+      34,
+      "a value of type Type[] | undefined seen as {}[] | undefined, which can write {} where Type is read"
+    ],
+    "present_before": true,
+    "present_after": false,
+    "gone": true,
+    "removed_by_head": true
+  },
+  {
+    "original_scout_line": 45891,
+    "key": [
+      "Refused",
+      "checker.ts",
+      45891,
+      32,
+      "a value of type Type[] | undefined seen as {}[] | undefined, which can write {} where Type is read"
+    ],
+    "present_before": true,
+    "present_after": false,
+    "gone": true,
+    "removed_by_head": true
+  },
+  {
+    "original_scout_line": 45982,
+    "key": [
+      "Refused",
+      "checker.ts",
+      45982,
+      40,
+      "a value of type IterationTypes[] | undefined seen as {}[] | undefined, which can write {} where IterationTypes is read"
+    ],
+    "present_before": true,
+    "present_after": false,
+    "gone": true,
+    "removed_by_head": true
+  },
+  {
+    "original_scout_line": 46414,
+    "key": [
+      "Refused",
+      "checker.ts",
+      46414,
+      47,
+      "a value of type Type[] | undefined seen as {}[] | undefined, which can write {} where Type is read"
+    ],
+    "present_before": true,
+    "present_after": false,
+    "gone": true,
+    "removed_by_head": true
+  },
+  {
+    "original_scout_line": 46416,
+    "key": [
+      "Refused",
+      "checker.ts",
+      46416,
+      40,
+      "a value of type Type[] | undefined seen as {}[] | undefined, which can write {} where Type is read"
+    ],
+    "present_before": true,
+    "present_after": false,
+    "gone": true,
+    "removed_by_head": true
+  },
+  {
+    "original_scout_line": 46432,
+    "key": [
+      "Refused",
+      "checker.ts",
+      46432,
+      38,
+      "a value of type Type[] | undefined seen as {}[] | undefined, which can write {} where Type is read"
+    ],
+    "present_before": true,
+    "present_after": false,
+    "gone": true,
+    "removed_by_head": true
+  },
+  {
+    "original_scout_line": 46452,
+    "key": [
+      "Refused",
+      "checker.ts",
+      46452,
+      34,
+      "a value of type Type[] | undefined seen as {}[] | undefined, which can write {} where Type is read"
+    ],
+    "present_before": true,
+    "present_after": false,
+    "gone": true,
+    "removed_by_head": true
+  },
+  {
+    "original_scout_line": 46456,
+    "key": [
+      "Refused",
+      "checker.ts",
+      46456,
+      34,
+      "a value of type Type[] | undefined seen as {}[] | undefined, which can write {} where Type is read"
+    ],
+    "present_before": true,
+    "present_after": false,
+    "gone": true,
+    "removed_by_head": true
+  },
+  {
+    "original_scout_line": 47577,
+    "key": [
+      "Refused",
+      "checker.ts",
+      47577,
+      53,
+      "a value of type string[] | undefined seen as {}[] | undefined, which can write {} where string is read"
+    ],
+    "present_before": true,
+    "present_after": false,
+    "gone": true,
+    "removed_by_head": true
+  },
+  {
+    "original_scout_line": 51500,
+    "key": [
+      "Refused",
+      "checker.ts",
+      51500,
+      48,
+      "a value of type Modifier[] | undefined seen as {}[] | undefined, which can write {} where Modifier is read"
+    ],
+    "present_before": true,
+    "present_after": false,
+    "gone": true,
+    "removed_by_head": true
+  },
+  {
+    "original_scout_line": 3567,
+    "key": [
+      "Refused",
+      "commandLineParser.ts",
+      3567,
+      21,
+      "a value of type string[] seen as {}[], which can write {} where string is read"
+    ],
+    "present_before": true,
+    "present_after": false,
+    "gone": true,
+    "removed_by_head": true
+  },
+  {
+    "original_scout_line": 3661,
+    "key": [
+      "Refused",
+      "commandLineParser.ts",
+      3661,
+      50,
+      "a value of type PropertyName[] | undefined seen as {}[] | undefined, which can write {} where PropertyName is read"
+    ],
+    "present_before": true,
+    "present_after": false,
+    "gone": true,
+    "removed_by_head": true
+  },
+  {
+    "original_scout_line": 251,
+    "key": [
+      "Refused",
+      "factory/emitNode.ts",
+      251,
+      31,
+      "a value of type EmitHelper[] | undefined seen as {}[] | undefined, which can write {} where EmitHelper is read"
+    ],
+    "present_before": true,
+    "present_after": false,
+    "gone": true,
+    "removed_by_head": true
+  },
+  {
+    "original_scout_line": 6929,
+    "key": [
+      "Refused",
+      "factory/nodeFactory.ts",
+      6929,
+      24,
+      "a value of type Statement[] seen as {}[], which can write {} where Statement is read"
+    ],
+    "present_before": true,
+    "present_after": false,
+    "gone": true,
+    "removed_by_head": true
+  },
+  {
+    "original_scout_line": 2254,
+    "key": [
+      "Refused",
+      "moduleNameResolver.ts",
+      2254,
+      26,
+      "a value of type string[] | undefined seen as {}[] | undefined, which can write {} where string is read"
+    ],
+    "present_before": true,
+    "present_after": false,
+    "gone": true,
+    "removed_by_head": true
+  },
+  {
+    "original_scout_line": 503,
+    "key": [
+      "Refused",
+      "moduleSpecifiers.ts",
+      503,
+      44,
+      "a value of type string[] | undefined seen as {}[] | undefined, which can write {} where string is read"
+    ],
+    "present_before": true,
+    "present_after": false,
+    "gone": true,
+    "removed_by_head": true
+  },
+  {
+    "original_scout_line": 524,
+    "key": [
+      "Refused",
+      "moduleSpecifiers.ts",
+      524,
+      46,
+      "a value of type string[] | undefined seen as {}[] | undefined, which can write {} where string is read"
+    ],
+    "present_before": true,
+    "present_after": false,
+    "gone": true,
+    "removed_by_head": true
+  },
+  {
+    "original_scout_line": 532,
+    "key": [
+      "Refused",
+      "moduleSpecifiers.ts",
+      532,
+      45,
+      "a value of type string[] | undefined seen as {}[] | undefined, which can write {} where string is read"
+    ],
+    "present_before": true,
+    "present_after": false,
+    "gone": true,
+    "removed_by_head": true
+  },
+  {
+    "original_scout_line": 535,
+    "key": [
+      "Refused",
+      "moduleSpecifiers.ts",
+      535,
+      42,
+      "a value of type string[] | undefined seen as {}[] | undefined, which can write {} where string is read"
+    ],
+    "present_before": true,
+    "present_after": false,
+    "gone": true,
+    "removed_by_head": true
+  },
+  {
+    "original_scout_line": 548,
+    "key": [
+      "Refused",
+      "moduleSpecifiers.ts",
+      548,
+      41,
+      "a value of type string[] | undefined seen as {}[] | undefined, which can write {} where string is read"
+    ],
+    "present_before": true,
+    "present_after": false,
+    "gone": true,
+    "removed_by_head": true
+  },
+  {
+    "original_scout_line": 8027,
+    "key": [
+      "Refused",
+      "parser.ts",
+      8027,
+      31,
+      "a value of type ModifierLike[] | undefined seen as {}[] | undefined, which can write {} where ModifierLike is read"
+    ],
+    "present_before": true,
+    "present_after": false,
+    "gone": true,
+    "removed_by_head": true
+  },
+  {
+    "original_scout_line": 8034,
+    "key": [
+      "Refused",
+      "parser.ts",
+      8034,
+      27,
+      "a value of type ModifierLike[] | undefined seen as {}[] | undefined, which can write {} where ModifierLike is read"
+    ],
+    "present_before": true,
+    "present_after": false,
+    "gone": true,
+    "removed_by_head": true
+  },
+  {
+    "original_scout_line": 8041,
+    "key": [
+      "Refused",
+      "parser.ts",
+      8041,
+      31,
+      "a value of type ModifierLike[] | undefined seen as {}[] | undefined, which can write {} where ModifierLike is read"
+    ],
+    "present_before": true,
+    "present_after": false,
+    "gone": true,
+    "removed_by_head": true
+  },
+  {
+    "original_scout_line": 8050,
+    "key": [
+      "Refused",
+      "parser.ts",
+      8050,
+      31,
+      "a value of type ModifierLike[] | undefined seen as {}[] | undefined, which can write {} where ModifierLike is read"
+    ],
+    "present_before": true,
+    "present_after": false,
+    "gone": true,
+    "removed_by_head": true
+  },
+  {
+    "original_scout_line": 9453,
+    "key": [
+      "Refused",
+      "parser.ts",
+      9453,
+      47,
+      "a value of type JSDocPropertyLikeTag[] | undefined seen as {}[] | undefined, which can write {} where JSDocPropertyLikeTag is read"
+    ],
+    "present_before": true,
+    "present_after": false,
+    "gone": true,
+    "removed_by_head": true
+  },
+  {
+    "original_scout_line": 9642,
+    "key": [
+      "Refused",
+      "parser.ts",
+      9642,
+      56,
+      "a value of type JSDocPropertyTag[] | undefined seen as {}[] | undefined, which can write {} where JSDocPropertyTag is read"
+    ],
+    "present_before": true,
+    "present_after": false,
+    "gone": true,
+    "removed_by_head": true
+  },
+  {
+    "original_scout_line": 9700,
+    "key": [
+      "Refused",
+      "parser.ts",
+      9700,
+      41,
+      "a value of type JSDocParameterTag[] | undefined seen as {}[] | undefined, which can write {} where JSDocParameterTag is read"
+    ],
+    "present_before": true,
+    "present_after": false,
+    "gone": true,
+    "removed_by_head": true
+  },
+  {
+    "original_scout_line": 10053,
+    "key": [
+      "Refused",
+      "parser.ts",
+      10053,
+      44,
+      "a value of type CommentDirective[] | undefined seen as {}[] | undefined, which can write {} where CommentDirective is read"
+    ],
+    "present_before": true,
+    "present_after": false,
+    "gone": true,
+    "removed_by_head": true
+  },
+  {
+    "original_scout_line": 10063,
+    "key": [
+      "Refused",
+      "parser.ts",
+      10063,
+      44,
+      "a value of type CommentDirective[] | undefined seen as {}[] | undefined, which can write {} where CommentDirective is read"
+    ],
+    "present_before": true,
+    "present_after": false,
+    "gone": true,
+    "removed_by_head": true
+  },
+  {
+    "original_scout_line": 3356,
+    "key": [
+      "Refused",
+      "program.ts",
+      3356,
+      34,
+      "a value of type StringLiteralLike[] | undefined seen as {}[] | undefined, which can write {} where StringLiteralLike is read"
+    ],
+    "present_before": true,
+    "present_after": false,
+    "gone": true,
+    "removed_by_head": true
+  },
+  {
+    "original_scout_line": 3374,
+    "key": [
+      "Refused",
+      "program.ts",
+      3374,
+      38,
+      "a value of type StringLiteralLike[] | undefined seen as {}[] | undefined, which can write {} where StringLiteralLike is read"
+    ],
+    "present_before": true,
+    "present_after": false,
+    "gone": true,
+    "removed_by_head": true
+  },
+  {
+    "original_scout_line": 313,
+    "key": [
+      "Refused",
+      "programDiagnostics.ts",
+      313,
+      38,
+      "a value of type DiagnosticWithLocation[] | undefined seen as {}[] | undefined, which can write {} where DiagnosticWithLocation is read"
+    ],
+    "present_before": true,
+    "present_after": false,
+    "gone": true,
+    "removed_by_head": true
+  },
+  {
+    "original_scout_line": 2934,
+    "key": [
+      "Refused",
+      "scanner.ts",
+      2934,
+      41,
+      "a value of type (TextRange & { value: number; })[] | undefined seen as {}[] | undefined, which can write {} where TextRange & { value: number; } is read"
+    ],
+    "present_before": true,
+    "present_after": false,
+    "gone": true,
+    "removed_by_head": true
+  },
+  {
+    "original_scout_line": 3010,
+    "key": [
+      "Refused",
+      "scanner.ts",
+      3010,
+      46,
+      "a value of type (TextRange & { name: string; })[] | undefined seen as {}[] | undefined, which can write {} where TextRange & { name: string; } is read"
+    ],
+    "present_before": true,
+    "present_after": false,
+    "gone": true,
+    "removed_by_head": true
+  },
+  {
+    "original_scout_line": 3635,
+    "key": [
+      "Refused",
+      "scanner.ts",
+      3635,
+      13,
+      "a value of type CommentDirective[] | undefined seen as {}[] | undefined, which can write {} where CommentDirective is read"
+    ],
+    "present_before": true,
+    "present_after": false,
+    "gone": true,
+    "removed_by_head": true
+  },
+  {
+    "original_scout_line": 635,
+    "key": [
+      "Refused",
+      "transformer.ts",
+      635,
+      30,
+      "a value of type EmitHelper[] | undefined seen as {}[] | undefined, which can write {} where EmitHelper is read"
+    ],
+    "present_before": true,
+    "present_after": false,
+    "gone": true,
+    "removed_by_head": true
+  },
+  {
+    "original_scout_line": 2185,
+    "key": [
+      "Refused",
+      "transformers/classFields.ts",
+      2185,
+      35,
+      "a value of type ClassElement[] | undefined seen as {}[] | undefined, which can write {} where ClassElement is read"
+    ],
+    "present_before": true,
+    "present_after": false,
+    "gone": true,
+    "removed_by_head": true
+  },
+  {
+    "original_scout_line": 2186,
+    "key": [
+      "Refused",
+      "transformers/classFields.ts",
+      2186,
+      35,
+      "a value of type ClassElement[] | undefined seen as {}[] | undefined, which can write {} where ClassElement is read"
+    ],
+    "present_before": true,
+    "present_after": false,
+    "gone": true,
+    "removed_by_head": true
+  },
+  {
+    "original_scout_line": 2187,
+    "key": [
+      "Refused",
+      "transformers/classFields.ts",
+      2187,
+      35,
+      "a value of type ClassElement[] | undefined seen as {}[] | undefined, which can write {} where ClassElement is read"
+    ],
+    "present_before": true,
+    "present_after": false,
+    "gone": true,
+    "removed_by_head": true
+  },
+  {
+    "original_scout_line": 2188,
+    "key": [
+      "Refused",
+      "transformers/classFields.ts",
+      2188,
+      35,
+      "a value of type ClassElement[] | undefined seen as {}[] | undefined, which can write {} where ClassElement is read"
+    ],
+    "present_before": true,
+    "present_after": false,
+    "gone": true,
+    "removed_by_head": true
+  },
+  {
+    "original_scout_line": 803,
+    "key": [
+      "Refused",
+      "transformers/declarations.ts",
+      803,
+      32,
+      "a value of type ParameterDeclaration[] | undefined seen as {}[] | undefined, which can write {} where ParameterDeclaration is read"
+    ],
+    "present_before": true,
+    "present_after": false,
+    "gone": true,
+    "removed_by_head": true
+  },
+  {
+    "original_scout_line": 181,
+    "key": [
+      "Refused",
+      "transformers/destructuring.ts",
+      181,
+      30,
+      "a value of type Expression[] | undefined seen as {}[] | undefined, which can write {} where Expression is read"
+    ],
+    "present_before": true,
+    "present_after": false,
+    "gone": true,
+    "removed_by_head": true
+  },
+  {
+    "original_scout_line": 294,
+    "key": [
+      "Refused",
+      "transformers/destructuring.ts",
+      294,
+      17,
+      "a value of type Expression[] | undefined seen as {}[] | undefined, which can write {} where Expression is read"
+    ],
+    "present_before": true,
+    "present_after": false,
+    "gone": true,
+    "removed_by_head": true
+  },
+  {
+    "original_scout_line": 306,
+    "key": [
+      "Refused",
+      "transformers/destructuring.ts",
+      306,
+      75,
+      "a value of type Expression[] seen as {}[], which can write {} where Expression is read"
+    ],
+    "present_before": true,
+    "present_after": false,
+    "gone": true,
+    "removed_by_head": true
+  },
+  {
+    "original_scout_line": 315,
+    "key": [
+      "Refused",
+      "transformers/destructuring.ts",
+      315,
+      37,
+      "a value of type Expression[] | undefined seen as {}[] | undefined, which can write {} where Expression is read"
+    ],
+    "present_before": true,
+    "present_after": false,
+    "gone": true,
+    "removed_by_head": true
+  },
+  {
+    "original_scout_line": 321,
+    "key": [
+      "Refused",
+      "transformers/destructuring.ts",
+      321,
+      62,
+      "a value of type Expression[] seen as {}[], which can write {} where Expression is read"
+    ],
+    "present_before": true,
+    "present_after": false,
+    "gone": true,
+    "removed_by_head": true
+  },
+  {
+    "original_scout_line": 409,
+    "key": [
+      "Refused",
+      "transformers/destructuring.ts",
+      409,
+      42,
+      "a value of type BindingOrAssignmentElement[] | undefined seen as {}[] | undefined, which can write {} where BindingOrAssignmentElement is read"
+    ],
+    "present_before": true,
+    "present_after": false,
+    "gone": true,
+    "removed_by_head": true
+  },
+  {
+    "original_scout_line": 493,
+    "key": [
+      "Refused",
+      "transformers/destructuring.ts",
+      493,
+      49,
+      "a value of type [Identifier, BindingOrAssignmentElement][] | undefined seen as {}[] | undefined, which can write {} where [Identifier, BindingOrAssignmentElement] is read"
+    ],
+    "present_before": true,
+    "present_after": false,
+    "gone": true,
+    "removed_by_head": true
+  },
+  {
+    "original_scout_line": 494,
+    "key": [
+      "Refused",
+      "transformers/destructuring.ts",
+      494,
+      42,
+      "a value of type BindingOrAssignmentElement[] | undefined seen as {}[] | undefined, which can write {} where BindingOrAssignmentElement is read"
+    ],
+    "present_before": true,
+    "present_after": false,
+    "gone": true,
+    "removed_by_head": true
+  },
+  {
+    "original_scout_line": 497,
+    "key": [
+      "Refused",
+      "transformers/destructuring.ts",
+      497,
+      42,
+      "a value of type BindingOrAssignmentElement[] | undefined seen as {}[] | undefined, which can write {} where BindingOrAssignmentElement is read"
+    ],
+    "present_before": true,
+    "present_after": false,
+    "gone": true,
+    "removed_by_head": true
+  },
+  {
+    "original_scout_line": 512,
+    "key": [
+      "Refused",
+      "transformers/es2015.ts",
+      512,
+      13,
+      "a value of type VariableDeclaration[] seen as {}[], which can write {} where VariableDeclaration is read"
+    ],
+    "present_before": true,
+    "present_after": false,
+    "gone": true,
+    "removed_by_head": true
+  },
+  {
+    "original_scout_line": 2756,
+    "key": [
+      "Refused",
+      "transformers/es2015.ts",
+      2756,
+      42,
+      "a value of type Expression[] | undefined seen as {}[] | undefined, which can write {} where Expression is read"
+    ],
+    "present_before": true,
+    "present_after": false,
+    "gone": true,
+    "removed_by_head": true
+  },
+  {
+    "original_scout_line": 218,
+    "key": [
+      "Refused",
+      "transformers/es2018.ts",
+      218,
+      13,
+      "a value of type VariableDeclaration[] seen as {}[], which can write {} where VariableDeclaration is read"
+    ],
+    "present_before": true,
+    "present_after": false,
+    "gone": true,
+    "removed_by_head": true
+  },
+  {
+    "original_scout_line": 496,
+    "key": [
+      "Refused",
+      "transformers/es2018.ts",
+      496,
+      21,
+      "a value of type ObjectLiteralElementLike[] | undefined seen as {}[] | undefined, which can write {} where ObjectLiteralElementLike is read"
+    ],
+    "present_before": true,
+    "present_after": false,
+    "gone": true,
+    "removed_by_head": true
+  },
+  {
+    "original_scout_line": 757,
+    "key": [
+      "Refused",
+      "transformers/es2018.ts",
+      757,
+      24,
+      "a value of type Statement[] seen as {}[], which can write {} where Statement is read"
+    ],
+    "present_before": true,
+    "present_after": false,
+    "gone": true,
+    "removed_by_head": true
+  },
+  {
+    "original_scout_line": 1264,
+    "key": [
+      "Refused",
+      "transformers/es2018.ts",
+      1264,
+      49,
+      "a value of type Statement[] | undefined seen as {}[] | undefined, which can write {} where Statement is read"
+    ],
+    "present_before": true,
+    "present_after": false,
+    "gone": true,
+    "removed_by_head": true
+  },
+  {
+    "original_scout_line": 1273,
+    "key": [
+      "Refused",
+      "transformers/es2018.ts",
+      1273,
+      45,
+      "a value of type Statement[] | undefined seen as {}[] | undefined, which can write {} where Statement is read"
+    ],
+    "present_before": true,
+    "present_after": false,
+    "gone": true,
+    "removed_by_head": true
+  },
+  {
+    "original_scout_line": 1307,
+    "key": [
+      "Refused",
+      "transformers/es2018.ts",
+      1307,
+      41,
+      "a value of type Statement[] | undefined seen as {}[] | undefined, which can write {} where Statement is read"
+    ],
+    "present_before": true,
+    "present_after": false,
+    "gone": true,
+    "removed_by_head": true
+  },
+  {
+    "original_scout_line": 1325,
+    "key": [
+      "Refused",
+      "transformers/es2018.ts",
+      1325,
+      41,
+      "a value of type Statement[] | undefined seen as {}[] | undefined, which can write {} where Statement is read"
+    ],
+    "present_before": true,
+    "present_after": false,
+    "gone": true,
+    "removed_by_head": true
+  },
+  {
+    "original_scout_line": 753,
+    "key": [
+      "Refused",
+      "transformers/esDecorators.ts",
+      753,
+      41,
+      "a value of type Statement[] | undefined seen as {}[] | undefined, which can write {} where Statement is read"
+    ],
+    "present_before": true,
+    "present_after": false,
+    "gone": true,
+    "removed_by_head": true
+  },
+  {
+    "original_scout_line": 786,
+    "key": [
+      "Refused",
+      "transformers/esDecorators.ts",
+      786,
+      49,
+      "a value of type Statement[] seen as {}[], which can write {} where Statement is read"
+    ],
+    "present_before": true,
+    "present_after": false,
+    "gone": true,
+    "removed_by_head": true
+  },
+  {
+    "original_scout_line": 914,
+    "key": [
+      "Refused",
+      "transformers/esDecorators.ts",
+      914,
+      50,
+      "a value of type Statement[] | undefined seen as {}[] | undefined, which can write {} where Statement is read"
+    ],
+    "present_before": true,
+    "present_after": false,
+    "gone": true,
+    "removed_by_head": true
+  },
+  {
+    "original_scout_line": 924,
+    "key": [
+      "Refused",
+      "transformers/esDecorators.ts",
+      924,
+      46,
+      "a value of type Statement[] | undefined seen as {}[] | undefined, which can write {} where Statement is read"
+    ],
+    "present_before": true,
+    "present_after": false,
+    "gone": true,
+    "removed_by_head": true
+  },
+  {
+    "original_scout_line": 201,
+    "key": [
+      "Refused",
+      "transformers/esnext.ts",
+      201,
+      21,
+      "a value of type Statement[] seen as {}[], which can write {} where Statement is read"
+    ],
+    "present_before": true,
+    "present_after": false,
+    "gone": true,
+    "removed_by_head": true
+  },
+  {
+    "original_scout_line": 397,
+    "key": [
+      "Refused",
+      "transformers/esnext.ts",
+      397,
+      20,
+      "a value of type Statement[] seen as {}[], which can write {} where Statement is read"
+    ],
+    "present_before": true,
+    "present_after": false,
+    "gone": true,
+    "removed_by_head": true
+  },
+  {
+    "original_scout_line": 590,
+    "key": [
+      "Refused",
+      "transformers/esnext.ts",
+      590,
+      38,
+      "a value of type Expression[] | undefined seen as {}[] | undefined, which can write {} where Expression is read"
+    ],
+    "present_before": true,
+    "present_after": false,
+    "gone": true,
+    "removed_by_head": true
+  },
+  {
+    "original_scout_line": 593,
+    "key": [
+      "Refused",
+      "transformers/legacyDecorators.ts",
+      593,
+      34,
+      "a value of type Expression[] | undefined seen as {}[] | undefined, which can write {} where Expression is read"
+    ],
+    "present_before": true,
+    "present_after": false,
+    "gone": true,
+    "removed_by_head": true
+  },
+  {
+    "original_scout_line": 101,
+    "key": [
+      "Refused",
+      "transformers/module/esnextAnd2015.ts",
+      101,
+      68,
+      "a value of type CallExpression[] | undefined seen as {}[] | undefined, which can write {} where CallExpression is read"
+    ],
+    "present_before": true,
+    "present_after": false,
+    "gone": true,
+    "removed_by_head": true
+  },
+  {
+    "original_scout_line": 266,
+    "key": [
+      "Refused",
+      "transformers/module/esnextAnd2015.ts",
+      266,
+      13,
+      "a value of type Statement[] | undefined seen as {}[] | undefined, which can write {} where Statement is read"
+    ],
+    "present_before": true,
+    "present_after": false,
+    "gone": true,
+    "removed_by_head": true
+  },
+  {
+    "original_scout_line": 297,
+    "key": [
+      "Refused",
+      "transformers/module/esnextAnd2015.ts",
+      297,
+      17,
+      "a value of type Statement[] | undefined seen as {}[] | undefined, which can write {} where Statement is read"
+    ],
+    "present_before": true,
+    "present_after": false,
+    "gone": true,
+    "removed_by_head": true
+  },
+  {
+    "original_scout_line": 247,
+    "key": [
+      "Refused",
+      "transformers/module/module.ts",
+      247,
+      64,
+      "a value of type CallExpression[] | undefined seen as {}[] | undefined, which can write {} where CallExpression is read"
+    ],
+    "present_before": true,
+    "present_after": false,
+    "gone": true,
+    "removed_by_head": true
+  },
+  {
+    "original_scout_line": 284,
+    "key": [
+      "Refused",
+      "transformers/module/module.ts",
+      284,
+      20,
+      "a value of type Statement[] seen as {}[], which can write {} where Statement is read"
+    ],
+    "present_before": true,
+    "present_after": false,
+    "gone": true,
+    "removed_by_head": true
+  },
+  {
+    "original_scout_line": 290,
+    "key": [
+      "Refused",
+      "transformers/module/module.ts",
+      290,
+      21,
+      "a value of type Statement[] seen as {}[], which can write {} where Statement is read"
+    ],
+    "present_before": true,
+    "present_after": false,
+    "gone": true,
+    "removed_by_head": true
+  },
+  {
+    "original_scout_line": 308,
+    "key": [
+      "Refused",
+      "transformers/module/module.ts",
+      308,
+      16,
+      "a value of type Statement[] seen as {}[], which can write {} where Statement is read"
+    ],
+    "present_before": true,
+    "present_after": false,
+    "gone": true,
+    "removed_by_head": true
+  },
+  {
+    "original_scout_line": 627,
+    "key": [
+      "Refused",
+      "transformers/module/module.ts",
+      627,
+      20,
+      "a value of type Statement[] seen as {}[], which can write {} where Statement is read"
+    ],
+    "present_before": true,
+    "present_after": false,
+    "gone": true,
+    "removed_by_head": true
+  },
+  {
+    "original_scout_line": 631,
+    "key": [
+      "Refused",
+      "transformers/module/module.ts",
+      631,
+      17,
+      "a value of type Statement[] seen as {}[], which can write {} where Statement is read"
+    ],
+    "present_before": true,
+    "present_after": false,
+    "gone": true,
+    "removed_by_head": true
+  },
+  {
+    "original_scout_line": 643,
+    "key": [
+      "Refused",
+      "transformers/module/module.ts",
+      643,
+      16,
+      "a value of type Statement[] seen as {}[], which can write {} where Statement is read"
+    ],
+    "present_before": true,
+    "present_after": false,
+    "gone": true,
+    "removed_by_head": true
+  },
+  {
+    "original_scout_line": 1485,
+    "key": [
+      "Refused",
+      "transformers/module/module.ts",
+      1485,
+      21,
+      "a value of type Statement[] | undefined seen as {}[] | undefined, which can write {} where Statement is read"
+    ],
+    "present_before": true,
+    "present_after": false,
+    "gone": true,
+    "removed_by_head": true
+  },
+  {
+    "original_scout_line": 1505,
+    "key": [
+      "Refused",
+      "transformers/module/module.ts",
+      1505,
+      17,
+      "a value of type Statement[] | undefined seen as {}[] | undefined, which can write {} where Statement is read"
+    ],
+    "present_before": true,
+    "present_after": false,
+    "gone": true,
+    "removed_by_head": true
+  },
+  {
+    "original_scout_line": 1560,
+    "key": [
+      "Refused",
+      "transformers/module/module.ts",
+      1560,
+      21,
+      "a value of type Statement[] | undefined seen as {}[] | undefined, which can write {} where Statement is read"
+    ],
+    "present_before": true,
+    "present_after": false,
+    "gone": true,
+    "removed_by_head": true
+  },
+  {
+    "original_scout_line": 1577,
+    "key": [
+      "Refused",
+      "transformers/module/module.ts",
+      1577,
+      21,
+      "a value of type Statement[] | undefined seen as {}[] | undefined, which can write {} where Statement is read"
+    ],
+    "present_before": true,
+    "present_after": false,
+    "gone": true,
+    "removed_by_head": true
+  },
+  {
+    "original_scout_line": 1604,
+    "key": [
+      "Refused",
+      "transformers/module/module.ts",
+      1604,
+      21,
+      "a value of type Statement[] | undefined seen as {}[] | undefined, which can write {} where Statement is read"
+    ],
+    "present_before": true,
+    "present_after": false,
+    "gone": true,
+    "removed_by_head": true
+  },
+  {
+    "original_scout_line": 1753,
+    "key": [
+      "Refused",
+      "transformers/module/module.ts",
+      1753,
+      17,
+      "a value of type Statement[] | undefined seen as {}[] | undefined, which can write {} where Statement is read"
+    ],
+    "present_before": true,
+    "present_after": false,
+    "gone": true,
+    "removed_by_head": true
+  },
+  {
+    "original_scout_line": 1772,
+    "key": [
+      "Refused",
+      "transformers/module/module.ts",
+      1772,
+      33,
+      "a value of type Statement[] | undefined seen as {}[] | undefined, which can write {} where Statement is read"
+    ],
+    "present_before": true,
+    "present_after": false,
+    "gone": true,
+    "removed_by_head": true
+  },
+  {
+    "original_scout_line": 1788,
+    "key": [
+      "Refused",
+      "transformers/module/module.ts",
+      1788,
+      17,
+      "a value of type Statement[] | undefined seen as {}[] | undefined, which can write {} where Statement is read"
+    ],
+    "present_before": true,
+    "present_after": false,
+    "gone": true,
+    "removed_by_head": true
+  },
+  {
+    "original_scout_line": 1805,
+    "key": [
+      "Refused",
+      "transformers/module/module.ts",
+      1805,
+      33,
+      "a value of type Statement[] | undefined seen as {}[] | undefined, which can write {} where Statement is read"
+    ],
+    "present_before": true,
+    "present_after": false,
+    "gone": true,
+    "removed_by_head": true
+  },
+  {
+    "original_scout_line": 1850,
+    "key": [
+      "Refused",
+      "transformers/module/module.ts",
+      1850,
+      44,
+      "a value of type VariableDeclaration[] | undefined seen as {}[] | undefined, which can write {} where VariableDeclaration is read"
+    ],
+    "present_before": true,
+    "present_after": false,
+    "gone": true,
+    "removed_by_head": true
+  },
+  {
+    "original_scout_line": 1853,
+    "key": [
+      "Refused",
+      "transformers/module/module.ts",
+      1853,
+      44,
+      "a value of type VariableDeclaration[] | undefined seen as {}[] | undefined, which can write {} where VariableDeclaration is read"
+    ],
+    "present_before": true,
+    "present_after": false,
+    "gone": true,
+    "removed_by_head": true
+  },
+  {
+    "original_scout_line": 1875,
+    "key": [
+      "Refused",
+      "transformers/module/module.ts",
+      1875,
+      44,
+      "a value of type VariableDeclaration[] | undefined seen as {}[] | undefined, which can write {} where VariableDeclaration is read"
+    ],
+    "present_before": true,
+    "present_after": false,
+    "gone": true,
+    "removed_by_head": true
+  },
+  {
+    "original_scout_line": 1876,
+    "key": [
+      "Refused",
+      "transformers/module/module.ts",
+      1876,
+      46,
+      "a value of type Expression[] | undefined seen as {}[] | undefined, which can write {} where Expression is read"
+    ],
+    "present_before": true,
+    "present_after": false,
+    "gone": true,
+    "removed_by_head": true
+  },
+  {
+    "original_scout_line": 1880,
+    "key": [
+      "Refused",
+      "transformers/module/module.ts",
+      1880,
+      46,
+      "a value of type Expression[] | undefined seen as {}[] | undefined, which can write {} where Expression is read"
+    ],
+    "present_before": true,
+    "present_after": false,
+    "gone": true,
+    "removed_by_head": true
+  },
+  {
+    "original_scout_line": 1886,
+    "key": [
+      "Refused",
+      "transformers/module/module.ts",
+      1886,
+      37,
+      "a value of type Statement[] | undefined seen as {}[] | undefined, which can write {} where Statement is read"
+    ],
+    "present_before": true,
+    "present_after": false,
+    "gone": true,
+    "removed_by_head": true
+  },
+  {
+    "original_scout_line": 1894,
+    "key": [
+      "Refused",
+      "transformers/module/module.ts",
+      1894,
+      37,
+      "a value of type Statement[] | undefined seen as {}[] | undefined, which can write {} where Statement is read"
+    ],
+    "present_before": true,
+    "present_after": false,
+    "gone": true,
+    "removed_by_head": true
+  },
+  {
+    "original_scout_line": 1898,
+    "key": [
+      "Refused",
+      "transformers/module/module.ts",
+      1898,
+      33,
+      "a value of type Statement[] | undefined seen as {}[] | undefined, which can write {} where Statement is read"
+    ],
+    "present_before": true,
+    "present_after": false,
+    "gone": true,
+    "removed_by_head": true
+  },
+  {
+    "original_scout_line": 2138,
+    "key": [
+      "Refused",
+      "transformers/module/module.ts",
+      2138,
+      29,
+      "a value of type Statement[] | undefined seen as {}[] | undefined, which can write {} where Statement is read"
+    ],
+    "present_before": true,
+    "present_after": false,
+    "gone": true,
+    "removed_by_head": true
+  },
+  {
+    "original_scout_line": 802,
+    "key": [
+      "Refused",
+      "transformers/module/system.ts",
+      802,
+      17,
+      "a value of type Statement[] | undefined seen as {}[] | undefined, which can write {} where Statement is read"
+    ],
+    "present_before": true,
+    "present_after": false,
+    "gone": true,
+    "removed_by_head": true
+  },
+  {
+    "original_scout_line": 816,
+    "key": [
+      "Refused",
+      "transformers/module/system.ts",
+      816,
+      40,
+      "a value of type Statement[] | undefined seen as {}[] | undefined, which can write {} where Statement is read"
+    ],
+    "present_before": true,
+    "present_after": false,
+    "gone": true,
+    "removed_by_head": true
+  },
+  {
+    "original_scout_line": 837,
+    "key": [
+      "Refused",
+      "transformers/module/system.ts",
+      837,
+      13,
+      "a value of type Statement[] | undefined seen as {}[] | undefined, which can write {} where Statement is read"
+    ],
+    "present_before": true,
+    "present_after": false,
+    "gone": true,
+    "removed_by_head": true
+  },
+  {
+    "original_scout_line": 894,
+    "key": [
+      "Refused",
+      "transformers/module/system.ts",
+      894,
+      33,
+      "a value of type Statement[] | undefined seen as {}[] | undefined, which can write {} where Statement is read"
+    ],
+    "present_before": true,
+    "present_after": false,
+    "gone": true,
+    "removed_by_head": true
+  },
+  {
+    "original_scout_line": 901,
+    "key": [
+      "Refused",
+      "transformers/module/system.ts",
+      901,
+      42,
+      "a value of type Expression[] | undefined seen as {}[] | undefined, which can write {} where Expression is read"
+    ],
+    "present_before": true,
+    "present_after": false,
+    "gone": true,
+    "removed_by_head": true
+  },
+  {
+    "original_scout_line": 909,
+    "key": [
+      "Refused",
+      "transformers/module/system.ts",
+      909,
+      37,
+      "a value of type Statement[] | undefined seen as {}[] | undefined, which can write {} where Statement is read"
+    ],
+    "present_before": true,
+    "present_after": false,
+    "gone": true,
+    "removed_by_head": true
+  },
+  {
+    "original_scout_line": 1189,
+    "key": [
+      "Refused",
+      "transformers/module/system.ts",
+      1189,
+      29,
+      "a value of type Statement[] | undefined seen as {}[] | undefined, which can write {} where Statement is read"
+    ],
+    "present_before": true,
+    "present_after": false,
+    "gone": true,
+    "removed_by_head": true
+  },
+  {
+    "original_scout_line": 1374,
+    "key": [
+      "Refused",
+      "transformers/module/system.ts",
+      1374,
+      38,
+      "a value of type Expression[] | undefined seen as {}[] | undefined, which can write {} where Expression is read"
+    ],
+    "present_before": true,
+    "present_after": false,
+    "gone": true,
+    "removed_by_head": true
+  },
+  {
+    "original_scout_line": 1992,
+    "key": [
+      "Refused",
+      "transformers/module/system.ts",
+      1992,
+      40,
+      "a value of type Identifier[] | undefined seen as {}[] | undefined, which can write {} where Identifier is read"
+    ],
+    "present_before": true,
+    "present_after": false,
+    "gone": true,
+    "removed_by_head": true
+  },
+  {
+    "original_scout_line": 1070,
+    "key": [
+      "Refused",
+      "transformers/ts.ts",
+      1070,
+      37,
+      "a value of type ClassElement[] | undefined seen as {}[] | undefined, which can write {} where ClassElement is read"
+    ],
+    "present_before": true,
+    "present_after": false,
+    "gone": true,
+    "removed_by_head": true
+  },
+  {
+    "original_scout_line": 1128,
+    "key": [
+      "Refused",
+      "transformers/ts.ts",
+      1128,
+      37,
+      "a value of type Decorator[] | undefined seen as {}[] | undefined, which can write {} where Decorator is read"
+    ],
+    "present_before": true,
+    "present_after": false,
+    "gone": true,
+    "removed_by_head": true
+  },
+  {
+    "original_scout_line": 1132,
+    "key": [
+      "Refused",
+      "transformers/ts.ts",
+      1132,
+      37,
+      "a value of type Decorator[] | undefined seen as {}[] | undefined, which can write {} where Decorator is read"
+    ],
+    "present_before": true,
+    "present_after": false,
+    "gone": true,
+    "removed_by_head": true
+  },
+  {
+    "original_scout_line": 1136,
+    "key": [
+      "Refused",
+      "transformers/ts.ts",
+      1136,
+      37,
+      "a value of type Decorator[] | undefined seen as {}[] | undefined, which can write {} where Decorator is read"
+    ],
+    "present_before": true,
+    "present_after": false,
+    "gone": true,
+    "removed_by_head": true
+  },
+  {
+    "original_scout_line": 1147,
+    "key": [
+      "Refused",
+      "transformers/ts.ts",
+      1147,
+      37,
+      "a value of type ObjectLiteralElementLike[] | undefined seen as {}[] | undefined, which can write {} where ObjectLiteralElementLike is read"
+    ],
+    "present_before": true,
+    "present_after": false,
+    "gone": true,
+    "removed_by_head": true
+  },
+  {
+    "original_scout_line": 1151,
+    "key": [
+      "Refused",
+      "transformers/ts.ts",
+      1151,
+      37,
+      "a value of type ObjectLiteralElementLike[] | undefined seen as {}[] | undefined, which can write {} where ObjectLiteralElementLike is read"
+    ],
+    "present_before": true,
+    "present_after": false,
+    "gone": true,
+    "removed_by_head": true
+  },
+  {
+    "original_scout_line": 1155,
+    "key": [
+      "Refused",
+      "transformers/ts.ts",
+      1155,
+      37,
+      "a value of type ObjectLiteralElementLike[] | undefined seen as {}[] | undefined, which can write {} where ObjectLiteralElementLike is read"
+    ],
+    "present_before": true,
+    "present_after": false,
+    "gone": true,
+    "removed_by_head": true
+  },
+  {
+    "original_scout_line": 239,
+    "key": [
+      "Refused",
+      "transformers/utilities.ts",
+      239,
+      56,
+      "a value of type ModuleExportName[] | undefined seen as {}[] | undefined, which can write {} where ModuleExportName is read"
+    ],
+    "present_before": true,
+    "present_after": false,
+    "gone": true,
+    "removed_by_head": true
+  },
+  {
+    "original_scout_line": 288,
+    "key": [
+      "Refused",
+      "transformers/utilities.ts",
+      288,
+      52,
+      "a value of type ModuleExportName[] | undefined seen as {}[] | undefined, which can write {} where ModuleExportName is read"
+    ],
+    "present_before": true,
+    "present_after": false,
+    "gone": true,
+    "removed_by_head": true
+  },
+  {
+    "original_scout_line": 327,
+    "key": [
+      "Refused",
+      "transformers/utilities.ts",
+      327,
+      40,
+      "a value of type ModuleExportName[] | undefined seen as {}[] | undefined, which can write {} where ModuleExportName is read"
+    ],
+    "present_before": true,
+    "present_after": false,
+    "gone": true,
+    "removed_by_head": true
+  },
+  {
+    "original_scout_line": 367,
+    "key": [
+      "Refused",
+      "transformers/utilities.ts",
+      367,
+      36,
+      "a value of type ModuleExportName[] | undefined seen as {}[] | undefined, which can write {} where ModuleExportName is read"
+    ],
+    "present_before": true,
+    "present_after": false,
+    "gone": true,
+    "removed_by_head": true
+  },
+  {
+    "original_scout_line": 10136,
+    "key": [
+      "Refused",
+      "utilities.ts",
+      10136,
+      31,
+      "a value of type RequireOrImportCall[] | undefined seen as {}[] | undefined, which can write {} where RequireOrImportCall is read"
+    ],
+    "present_before": true,
+    "present_after": false,
+    "gone": true,
+    "removed_by_head": true
+  },
+  {
+    "original_scout_line": 544,
+    "key": [
+      "Refused",
+      "builder.ts",
+      544,
+      66,
+      "a value of type T[] seen as (DiagnosticMessageChain | ReusableDiagnosticMessageChain)[] | undefined, which can write DiagnosticMessageChain | ReusableDiagnosticMessageChain where T is read"
+    ],
+    "present_before": true,
+    "present_after": false,
+    "gone": true,
+    "removed_by_head": true
+  },
+  {
+    "original_scout_line": 550,
+    "key": [
+      "Refused",
+      "builder.ts",
+      550,
+      66,
+      "a value of type T[] seen as (DiagnosticMessageChain | ReusableDiagnosticMessageChain)[] | undefined, which can write DiagnosticMessageChain | ReusableDiagnosticMessageChain where T is read"
+    ],
+    "present_before": true,
+    "present_after": false,
+    "gone": true,
+    "removed_by_head": true
+  },
+  {
+    "original_scout_line": 553,
+    "key": [
+      "Refused",
+      "builder.ts",
+      553,
+      65,
+      "a value of type T[] seen as (DiagnosticMessageChain | ReusableDiagnosticMessageChain)[] | undefined, which can write DiagnosticMessageChain | ReusableDiagnosticMessageChain where T is read"
+    ],
+    "present_before": true,
+    "present_after": false,
+    "gone": true,
+    "removed_by_head": true
+  },
+  {
+    "original_scout_line": 3113,
+    "key": [
+      "Refused",
+      "parser.ts",
+      3113,
+      32,
+      "a value of type T[] seen as Node[], which can write Node where T is read"
+    ],
+    "present_before": true,
+    "present_after": false,
+    "gone": true,
+    "removed_by_head": true
+  },
+  {
+    "original_scout_line": 3558,
+    "key": [
+      "Refused",
+      "parser.ts",
+      3558,
+      32,
+      "a value of type NonNullable<T>[] seen as Node[], which can write Node where NonNullable<T> is read"
+    ],
+    "present_before": true,
+    "present_after": false,
+    "gone": true,
+    "removed_by_head": true
+  },
+  {
+    "original_scout_line": 3665,
+    "key": [
+      "Refused",
+      "parser.ts",
+      3665,
+      32,
+      "a value of type TemplateSpan[] seen as Node[], which can write Node where TemplateSpan is read"
+    ],
+    "present_before": true,
+    "present_after": false,
+    "gone": true,
+    "removed_by_head": true
+  },
+  {
+    "original_scout_line": 3699,
+    "key": [
+      "Refused",
+      "parser.ts",
+      3699,
+      32,
+      "a value of type TemplateLiteralTypeSpan[] seen as Node[], which can write Node where TemplateLiteralTypeSpan is read"
+    ],
+    "present_before": true,
+    "present_after": false,
+    "gone": true,
+    "removed_by_head": true
+  },
+  {
+    "original_scout_line": 4834,
+    "key": [
+      "Refused",
+      "parser.ts",
+      4834,
+      62,
+      "a value of type TypeNode[] seen as Node[], which can write Node where TypeNode is read"
+    ],
+    "present_before": true,
+    "present_after": false,
+    "gone": true,
+    "removed_by_head": true
+  },
+  {
+    "original_scout_line": 6076,
+    "key": [
+      "Refused",
+      "parser.ts",
+      6076,
+      45,
+      "a value of type JsxChild[] seen as Node[], which can write Node where JsxChild is read"
+    ],
+    "present_before": true,
+    "present_after": false,
+    "gone": true,
+    "removed_by_head": true
+  },
+  {
+    "original_scout_line": 6186,
+    "key": [
+      "Refused",
+      "parser.ts",
+      6186,
+      32,
+      "a value of type (JsxElement | JsxExpression | JsxFragment | JsxSelfClosingElement | JsxText)[] seen as Node[], which can write Node where JsxElement | JsxExpression | JsxFragment | JsxSelfClosingElement | JsxText is read"
+    ],
+    "present_before": true,
+    "present_after": false,
+    "gone": true,
+    "removed_by_head": true
+  },
+  {
+    "original_scout_line": 8054,
+    "key": [
+      "Refused",
+      "parser.ts",
+      8054,
+      40,
+      "a value of type ModifierLike[] seen as Node[], which can write Node where ModifierLike is read"
+    ],
+    "present_before": true,
+    "present_after": false,
+    "gone": true,
+    "removed_by_head": true
+  },
+  {
+    "original_scout_line": 9020,
+    "key": [
+      "Refused",
+      "parser.ts",
+      9020,
+      59,
+      "a value of type JSDocTag[] seen as Node[], which can write Node where JSDocTag is read"
+    ],
+    "present_before": true,
+    "present_after": false,
+    "gone": true,
+    "removed_by_head": true
+  },
+  {
+    "original_scout_line": 9021,
+    "key": [
+      "Refused",
+      "parser.ts",
+      9021,
+      93,
+      "a value of type JSDocComment[] seen as Node[], which can write Node where JSDocComment is read"
+    ],
+    "present_before": true,
+    "present_after": false,
+    "gone": true,
+    "removed_by_head": true
+  },
+  {
+    "original_scout_line": 9302,
+    "key": [
+      "Refused",
+      "parser.ts",
+      9302,
+      44,
+      "a value of type JSDocComment[] seen as Node[], which can write Node where JSDocComment is read"
+    ],
+    "present_before": true,
+    "present_after": false,
+    "gone": true,
+    "removed_by_head": true
+  },
+  {
+    "original_scout_line": 9508,
+    "key": [
+      "Refused",
+      "parser.ts",
+      9508,
+      39,
+      "a value of type JSDocComment[] seen as Node[], which can write Node where JSDocComment is read"
+    ],
+    "present_before": true,
+    "present_after": false,
+    "gone": true,
+    "removed_by_head": true
+  },
+  {
+    "original_scout_line": 9702,
+    "key": [
+      "Refused",
+      "parser.ts",
+      9702,
+      40,
+      "a value of type JSDocParameterTag[] seen as Node[], which can write Node where JSDocParameterTag is read"
+    ],
+    "present_before": true,
+    "present_after": false,
+    "gone": true,
+    "removed_by_head": true
+  },
+  {
+    "original_scout_line": 9863,
+    "key": [
+      "Refused",
+      "parser.ts",
+      9863,
+      40,
+      "a value of type TypeParameterDeclaration[] seen as Node[], which can write Node where TypeParameterDeclaration is read"
+    ],
+    "present_before": true,
+    "present_after": false,
+    "gone": true,
+    "removed_by_head": true
+  },
+  {
+    "original_scout_line": 1168,
+    "key": [
+      "Refused",
+      "utilities.ts",
+      1168,
+      41,
+      "a value of type T[] seen as Statement[], which can write Statement where T is read"
+    ],
+    "present_before": true,
+    "present_after": false,
+    "gone": true,
+    "removed_by_head": true
+  },
+  {
+    "original_scout_line": 1173,
+    "key": [
+      "Refused",
+      "utilities.ts",
+      1173,
+      41,
+      "a value of type T[] seen as Statement[], which can write Statement where T is read"
+    ],
+    "present_before": true,
+    "present_after": false,
+    "gone": true,
+    "removed_by_head": true
+  },
+  {
+    "original_scout_line": 1153,
+    "key": [
+      "Refused",
+      "utilities.ts",
+      1153,
+      42,
+      "a value of type T[] seen as Statement[], which can write Statement where T is read"
+    ],
+    "present_before": true,
+    "present_after": false,
+    "gone": true,
+    "removed_by_head": true
+  },
+  {
+    "original_scout_line": 1158,
+    "key": [
+      "Refused",
+      "utilities.ts",
+      1158,
+      42,
+      "a value of type T[] seen as Statement[], which can write Statement where T is read"
+    ],
+    "present_before": true,
+    "present_after": false,
+    "gone": true,
+    "removed_by_head": true
+  },
+  {
+    "original_scout_line": 307,
+    "key": [
+      "Refused",
+      "sys.ts",
+      304,
+      13,
+      "a value of type (WatchedFileWithUnchangedPolls | undefined)[] seen as (WatchedFileWithIsClosed | undefined)[], which can write WatchedFileWithIsClosed | undefined where WatchedFileWithUnchangedPolls | undefined is read"
+    ],
+    "present_before": true,
+    "present_after": false,
+    "gone": true,
+    "removed_by_head": true
+  }
+]

@@ -1,0 +1,583 @@
+[
+  {
+    "root_kind": "",
+    "depth": 0,
+    "measurement": "measured on a checker-rejected program",
+    "unit": "builder.ts:1258:1",
+    "phase": "refusal_scan",
+    "kind": "NotYet",
+    "where": "builder.ts:1332:30",
+    "reason": "an element of an array literal a type argument is inferred from, whose type in its constraint {} can't be read",
+    "text": "builder.ts:1332:30: stage 0 can't lower an element of an array literal a type argument is inferred from, whose type in its constraint {} can't be read yet",
+    "raw_text": "/workspace/scratch/c4v7-census/adapted-head/src/compiler/builder.ts:1332:30: stage 0 can't lower an element of an array literal a type argument is inferred from, whose type in its constraint {} can't be read yet",
+    "raw_where": "/workspace/scratch/c4v7-census/adapted-head/src/compiler/builder.ts:1332:30",
+    "rule": null,
+    "registered_rule": {
+      "order": 3350,
+      "name": "constraintRelationRefusal",
+      "source": "internal/lower/constraint_relation.go:67",
+      "emitter": "judgeBoundArray",
+      "emitter_source": "internal/lower/constraint_relation.go:356"
+    },
+    "source_line": "                            [fileId, !isString(emitSignature) && emitSignature[0] === actualSignature ? emptyArray as [] : emitSignature],",
+    "enclosing_function": {
+      "name": "ArrowFunction@1315:60",
+      "where": "builder.ts:1315:60",
+      "signature": "([key, value]): IncrementalMultiFileEmitBuildInfoFileInfo =>"
+    },
+    "enclosing_functions": [
+      {
+        "name": "ArrowFunction@1315:60",
+        "where": "builder.ts:1315:60",
+        "signature": "([key, value]): IncrementalMultiFileEmitBuildInfoFileInfo =>"
+      },
+      {
+        "name": "getBuildInfo",
+        "where": "builder.ts:1258:1",
+        "signature": "function getBuildInfo(state: BuilderProgramStateWithDefinedProgram): BuildInfo"
+      }
+    ],
+    "generic_bodies": [],
+    "slot": {
+      "kind": "argument",
+      "index": 2,
+      "callee": "append",
+      "argument": "emitSignature === undefined ?\r\n                            fileId : // There is no emit, encode as false\r\n                            // fileId, signature: emptyArray if signature only differs in dtsMap option than our own compilerOptions otherwise EmitSignature\r\n                            [fileId, !isString(emitSignature) && emitSignature[0] === actualSignature ? emptyArray as [] : emitSignature]"
+    }
+  },
+  {
+    "root_kind": "",
+    "depth": 0,
+    "measurement": "measured on a checker-rejected program",
+    "unit": "builder.ts:1258:1",
+    "phase": "refusal_scan",
+    "kind": "NotYet",
+    "where": "builder.ts:1376:26",
+    "reason": "an element of an array literal a type argument is inferred from, whose type in its constraint {} can't be read",
+    "text": "builder.ts:1376:26: stage 0 can't lower an element of an array literal a type argument is inferred from, whose type in its constraint {} can't be read yet",
+    "raw_text": "/workspace/scratch/c4v7-census/adapted-head/src/compiler/builder.ts:1376:26: stage 0 can't lower an element of an array literal a type argument is inferred from, whose type in its constraint {} can't be read yet",
+    "raw_where": "/workspace/scratch/c4v7-census/adapted-head/src/compiler/builder.ts:1376:26",
+    "rule": null,
+    "registered_rule": {
+      "order": 3350,
+      "name": "constraintRelationRefusal",
+      "source": "internal/lower/constraint_relation.go:67",
+      "emitter": "judgeBoundArray",
+      "emitter_source": "internal/lower/constraint_relation.go:356"
+    },
+    "source_line": "                        [fileId] : // Pending on Dts only",
+    "enclosing_function": {
+      "name": "getBuildInfo",
+      "where": "builder.ts:1258:1",
+      "signature": "function getBuildInfo(state: BuilderProgramStateWithDefinedProgram): BuildInfo"
+    },
+    "enclosing_functions": [
+      {
+        "name": "getBuildInfo",
+        "where": "builder.ts:1258:1",
+        "signature": "function getBuildInfo(state: BuilderProgramStateWithDefinedProgram): BuildInfo"
+      }
+    ],
+    "generic_bodies": [],
+    "slot": {
+      "kind": "argument",
+      "index": 2,
+      "callee": "append",
+      "argument": "pendingEmit === fullEmitForOptions ?\r\n                        fileId : // Pending full emit per options\r\n                        pendingEmit === BuilderFileEmit.Dts ?\r\n                        [fileId] : // Pending on Dts only\r\n                        [fileId, pendingEmit]"
+    }
+  },
+  {
+    "root_kind": "",
+    "depth": 0,
+    "measurement": "measured on a checker-rejected program",
+    "unit": "builder.ts:1258:1",
+    "phase": "refusal_scan",
+    "kind": "NotYet",
+    "where": "builder.ts:1455:42",
+    "reason": "an element of an array literal a type argument is inferred from, whose type in its constraint {} can't be read",
+    "text": "builder.ts:1455:42: stage 0 can't lower an element of an array literal a type argument is inferred from, whose type in its constraint {} can't be read yet",
+    "raw_text": "/workspace/scratch/c4v7-census/adapted-head/src/compiler/builder.ts:1455:42: stage 0 can't lower an element of an array literal a type argument is inferred from, whose type in its constraint {} can't be read yet",
+    "raw_where": "/workspace/scratch/c4v7-census/adapted-head/src/compiler/builder.ts:1455:42",
+    "rule": null,
+    "registered_rule": {
+      "order": 3350,
+      "name": "constraintRelationRefusal",
+      "source": "internal/lower/constraint_relation.go:67",
+      "emitter": "judgeBoundArray",
+      "emitter_source": "internal/lower/constraint_relation.go:356"
+    },
+    "source_line": "                result = append(result, [toFileId(file.resolvedPath), toFileId(path)]);",
+    "enclosing_function": {
+      "name": "ArrowFunction@1452:31",
+      "where": "builder.ts:1452:31",
+      "signature": "path =>"
+    },
+    "enclosing_functions": [
+      {
+        "name": "ArrowFunction@1452:31",
+        "where": "builder.ts:1452:31",
+        "signature": "path =>"
+      },
+      {
+        "name": "toResolvedRoot",
+        "where": "builder.ts:1450:5",
+        "signature": "function toResolvedRoot(): IncrementalBuildInfoResolvedRoot[] | undefined"
+      },
+      {
+        "name": "getBuildInfo",
+        "where": "builder.ts:1258:1",
+        "signature": "function getBuildInfo(state: BuilderProgramStateWithDefinedProgram): BuildInfo"
+      }
+    ],
+    "generic_bodies": [],
+    "slot": {
+      "kind": "argument",
+      "index": 2,
+      "callee": "append",
+      "argument": "[toFileId(file.resolvedPath), toFileId(path)]"
+    }
+  },
+  {
+    "root_kind": "",
+    "depth": 0,
+    "measurement": "measured on a checker-rejected program",
+    "unit": "builder.ts:1258:1",
+    "phase": "refusal_scan",
+    "kind": "NotYet",
+    "where": "builder.ts:1504:21",
+    "reason": "an element of an array literal a type argument is inferred from, whose type in its constraint {} can't be read",
+    "text": "builder.ts:1504:21: stage 0 can't lower an element of an array literal a type argument is inferred from, whose type in its constraint {} can't be read yet",
+    "raw_text": "/workspace/scratch/c4v7-census/adapted-head/src/compiler/builder.ts:1504:21: stage 0 can't lower an element of an array literal a type argument is inferred from, whose type in its constraint {} can't be read yet",
+    "raw_where": "/workspace/scratch/c4v7-census/adapted-head/src/compiler/builder.ts:1504:21",
+    "rule": null,
+    "registered_rule": {
+      "order": 3350,
+      "name": "constraintRelationRefusal",
+      "source": "internal/lower/constraint_relation.go:67",
+      "emitter": "judgeBoundArray",
+      "emitter_source": "internal/lower/constraint_relation.go:356"
+    },
+    "source_line": "                    toFileId(key),",
+    "enclosing_function": {
+      "name": "ArrowFunction@1497:33",
+      "where": "builder.ts:1497:33",
+      "signature": "(_value, key) =>"
+    },
+    "enclosing_functions": [
+      {
+        "name": "ArrowFunction@1497:33",
+        "where": "builder.ts:1497:33",
+        "signature": "(_value, key) =>"
+      },
+      {
+        "name": "toIncrementalBuildInfoDiagnostics",
+        "where": "builder.ts:1495:5",
+        "signature": "function toIncrementalBuildInfoDiagnostics()"
+      },
+      {
+        "name": "getBuildInfo",
+        "where": "builder.ts:1258:1",
+        "signature": "function getBuildInfo(state: BuilderProgramStateWithDefinedProgram): BuildInfo"
+      }
+    ],
+    "generic_bodies": [],
+    "slot": {
+      "kind": "argument",
+      "index": 2,
+      "callee": "append",
+      "argument": "[\r\n                    toFileId(key),\r\n                    toReusableDiagnostic(value, key),\r\n                ]"
+    }
+  },
+  {
+    "root_kind": "",
+    "depth": 0,
+    "measurement": "measured on a checker-rejected program",
+    "unit": "builder.ts:1258:1",
+    "phase": "refusal_scan",
+    "kind": "NotYet",
+    "where": "builder.ts:1518:17",
+    "reason": "an element of an array literal a type argument is inferred from, whose type in its constraint {} can't be read",
+    "text": "builder.ts:1518:17: stage 0 can't lower an element of an array literal a type argument is inferred from, whose type in its constraint {} can't be read yet",
+    "raw_text": "/workspace/scratch/c4v7-census/adapted-head/src/compiler/builder.ts:1518:17: stage 0 can't lower an element of an array literal a type argument is inferred from, whose type in its constraint {} can't be read yet",
+    "raw_where": "/workspace/scratch/c4v7-census/adapted-head/src/compiler/builder.ts:1518:17",
+    "rule": null,
+    "registered_rule": {
+      "order": 3350,
+      "name": "constraintRelationRefusal",
+      "source": "internal/lower/constraint_relation.go:67",
+      "emitter": "judgeBoundArray",
+      "emitter_source": "internal/lower/constraint_relation.go:356"
+    },
+    "source_line": "                toFileId(key),",
+    "enclosing_function": {
+      "name": "toIncrementalBuildInfoEmitDiagnostics",
+      "where": "builder.ts:1512:5",
+      "signature": "function toIncrementalBuildInfoEmitDiagnostics()"
+    },
+    "enclosing_functions": [
+      {
+        "name": "toIncrementalBuildInfoEmitDiagnostics",
+        "where": "builder.ts:1512:5",
+        "signature": "function toIncrementalBuildInfoEmitDiagnostics()"
+      },
+      {
+        "name": "getBuildInfo",
+        "where": "builder.ts:1258:1",
+        "signature": "function getBuildInfo(state: BuilderProgramStateWithDefinedProgram): BuildInfo"
+      }
+    ],
+    "generic_bodies": [],
+    "slot": {
+      "kind": "argument",
+      "index": 2,
+      "callee": "append",
+      "argument": "[\r\n                toFileId(key),\r\n                toReusableDiagnostic(value, key),\r\n            ]"
+    }
+  },
+  {
+    "root_kind": "",
+    "depth": 0,
+    "measurement": "measured on a checker-rejected program",
+    "unit": "program.ts:1516:1",
+    "phase": "refusal_scan",
+    "kind": "Refused",
+    "where": "program.ts:2796:16",
+    "reason": "a value of type DiagnosticWithLocation seen as Diagnostic, which can write SourceFile | undefined where SourceFile is read",
+    "text": "program.ts:2796:16: Adamic 0.1 refuses a value of type DiagnosticWithLocation seen as Diagnostic, which can write SourceFile | undefined where SourceFile is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+    "raw_text": "/workspace/scratch/c4v7-census/adapted-head/src/compiler/program.ts:2796:16: Adamic 0.1 refuses a value of type DiagnosticWithLocation seen as Diagnostic, which can write SourceFile | undefined where SourceFile is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+    "raw_where": "/workspace/scratch/c4v7-census/adapted-head/src/compiler/program.ts:2796:16",
+    "rule": "adamic/invariant-mutable",
+    "registered_rule": {
+      "order": 3350,
+      "name": "constraintRelationRefusal",
+      "source": "internal/lower/constraint_relation.go:67",
+      "emitter": "constraintRelation -> judgeBinding -> wideningRefusal",
+      "emitter_source": "internal/lower/constraint_relation.go:90"
+    },
+    "binding": {
+      "parameter": "T",
+      "argument": "DiagnosticWithLocation",
+      "constraint": "Diagnostic",
+      "callee": "getDiagnosticsHelper",
+      "declaration": "program.ts:2779"
+    },
+    "source_line": "        return getDiagnosticsHelper(sourceFile, getSyntacticDiagnosticsForFile, cancellationToken);",
+    "enclosing_function": {
+      "name": "getSyntacticDiagnostics",
+      "where": "program.ts:2795:5",
+      "signature": "function getSyntacticDiagnostics(sourceFile?: SourceFile, cancellationToken?: CancellationToken): readonly DiagnosticWithLocation[]"
+    },
+    "enclosing_functions": [
+      {
+        "name": "getSyntacticDiagnostics",
+        "where": "program.ts:2795:5",
+        "signature": "function getSyntacticDiagnostics(sourceFile?: SourceFile, cancellationToken?: CancellationToken): readonly DiagnosticWithLocation[]"
+      },
+      {
+        "name": "createProgram",
+        "where": "program.ts:1516:1",
+        "signature": "export function createProgram(_rootNamesOrOptions: readonly string[] | CreateProgramOptions, _options?: CompilerOptions, _host?: CompilerHost, _oldProgram?: Program, _configFileParsingDiagnostics?: readonly Diagnostic[]): Program"
+      }
+    ],
+    "generic_bodies": [],
+    "slot": {
+      "kind": "return",
+      "value": "getDiagnosticsHelper(sourceFile, getSyntacticDiagnosticsForFile, cancellationToken)"
+    }
+  },
+  {
+    "root_kind": "",
+    "depth": 0,
+    "measurement": "measured on a checker-rejected program",
+    "unit": "program.ts:1516:1",
+    "phase": "refusal_scan",
+    "kind": "Refused",
+    "where": "program.ts:2829:16",
+    "reason": "a value of type DiagnosticWithLocation seen as Diagnostic, which can write SourceFile | undefined where SourceFile is read",
+    "text": "program.ts:2829:16: Adamic 0.1 refuses a value of type DiagnosticWithLocation seen as Diagnostic, which can write SourceFile | undefined where SourceFile is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+    "raw_text": "/workspace/scratch/c4v7-census/adapted-head/src/compiler/program.ts:2829:16: Adamic 0.1 refuses a value of type DiagnosticWithLocation seen as Diagnostic, which can write SourceFile | undefined where SourceFile is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+    "raw_where": "/workspace/scratch/c4v7-census/adapted-head/src/compiler/program.ts:2829:16",
+    "rule": "adamic/invariant-mutable",
+    "registered_rule": {
+      "order": 3350,
+      "name": "constraintRelationRefusal",
+      "source": "internal/lower/constraint_relation.go:67",
+      "emitter": "constraintRelation -> judgeBinding -> wideningRefusal",
+      "emitter_source": "internal/lower/constraint_relation.go:90"
+    },
+    "binding": {
+      "parameter": "T",
+      "argument": "DiagnosticWithLocation",
+      "constraint": "Diagnostic",
+      "callee": "getDiagnosticsHelper",
+      "declaration": "program.ts:2779"
+    },
+    "source_line": "        return getDiagnosticsHelper(sourceFile, getDeclarationDiagnosticsForFile, cancellationToken);",
+    "enclosing_function": {
+      "name": "getDeclarationDiagnostics",
+      "where": "program.ts:2828:5",
+      "signature": "function getDeclarationDiagnostics(sourceFile?: SourceFile, cancellationToken?: CancellationToken): readonly DiagnosticWithLocation[]"
+    },
+    "enclosing_functions": [
+      {
+        "name": "getDeclarationDiagnostics",
+        "where": "program.ts:2828:5",
+        "signature": "function getDeclarationDiagnostics(sourceFile?: SourceFile, cancellationToken?: CancellationToken): readonly DiagnosticWithLocation[]"
+      },
+      {
+        "name": "createProgram",
+        "where": "program.ts:1516:1",
+        "signature": "export function createProgram(_rootNamesOrOptions: readonly string[] | CreateProgramOptions, _options?: CompilerOptions, _host?: CompilerHost, _oldProgram?: Program, _configFileParsingDiagnostics?: readonly Diagnostic[]): Program"
+      }
+    ],
+    "generic_bodies": [],
+    "slot": {
+      "kind": "return",
+      "value": "getDiagnosticsHelper(sourceFile, getDeclarationDiagnosticsForFile, cancellationToken)"
+    }
+  },
+  {
+    "root_kind": "",
+    "depth": 0,
+    "measurement": "measured on a checker-rejected program",
+    "unit": "resolutionCache.ts:579:1",
+    "phase": "refusal_scan",
+    "kind": "Refused",
+    "where": "resolutionCache.ts:774:17",
+    "reason": "a value of type ResolvedModuleFull seen as ResolutionWithResolvedFileName, which can write string | undefined where string is read",
+    "text": "resolutionCache.ts:774:17: Adamic 0.1 refuses a value of type ResolvedModuleFull seen as ResolutionWithResolvedFileName, which can write string | undefined where string is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+    "raw_text": "/workspace/scratch/c4v7-census/adapted-head/src/compiler/resolutionCache.ts:774:17: Adamic 0.1 refuses a value of type ResolvedModuleFull seen as ResolutionWithResolvedFileName, which can write string | undefined where string is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+    "raw_where": "/workspace/scratch/c4v7-census/adapted-head/src/compiler/resolutionCache.ts:774:17",
+    "rule": "adamic/invariant-mutable",
+    "registered_rule": {
+      "order": 3350,
+      "name": "constraintRelationRefusal",
+      "source": "internal/lower/constraint_relation.go:67",
+      "emitter": "constraintRelation -> judgeBinding -> wideningRefusal",
+      "emitter_source": "internal/lower/constraint_relation.go:90"
+    },
+    "binding": {
+      "parameter": "R",
+      "argument": "ResolvedModuleFull",
+      "constraint": "ResolutionWithResolvedFileName",
+      "callee": "stopWatchFailedLookupLocationOfResolution",
+      "declaration": "resolutionCache.ts:1379"
+    },
+    "source_line": "                stopWatchFailedLookupLocationOfResolution(",
+    "enclosing_function": {
+      "name": "ArrowFunction@772:35",
+      "where": "resolutionCache.ts:772:35",
+      "signature": "(resolution, libFileName) =>"
+    },
+    "enclosing_functions": [
+      {
+        "name": "ArrowFunction@772:35",
+        "where": "resolutionCache.ts:772:35",
+        "signature": "(resolution, libFileName) =>"
+      },
+      {
+        "name": "cleanupLibResolutionWatching",
+        "where": "resolutionCache.ts:771:5",
+        "signature": "function cleanupLibResolutionWatching(newProgram: Program | undefined)"
+      },
+      {
+        "name": "createResolutionCache",
+        "where": "resolutionCache.ts:579:1",
+        "signature": "export function createResolutionCache(resolutionHost: ResolutionCacheHost, rootDirForResolution: string, logChangesWhenResolvingModule: boolean): ResolutionCache"
+      }
+    ],
+    "generic_bodies": [],
+    "slot": {
+      "kind": "argument",
+      "index": 1,
+      "callee": "resolvedLibraries.forEach",
+      "argument": "(resolution, libFileName) => {\r\n            if (!newProgram?.resolvedLibReferences?.has(libFileName)) {\r\n                stopWatchFailedLookupLocationOfResolution(\r\n                    resolution,\r\n                    resolutionHost.toPath(getInferredLibraryNameResolveFrom(resolutionHost.getCompilationSettings(), getCurrentDirectory(), libFileName)),\r\n                    getResolvedModuleFromResolution,\r\n                );\r\n                resolvedLibraries.delete(libFileName);\r\n            }\r\n        }"
+    }
+  },
+  {
+    "root_kind": "",
+    "depth": 0,
+    "measurement": "measured on a checker-rejected program",
+    "unit": "resolutionCache.ts:579:1",
+    "phase": "refusal_scan",
+    "kind": "Refused",
+    "where": "resolutionCache.ts:1053:13",
+    "reason": "a value of type ResolvedModuleFull seen as ResolutionWithResolvedFileName, which can write string | undefined where string is read",
+    "text": "resolutionCache.ts:1053:13: Adamic 0.1 refuses a value of type ResolvedModuleFull seen as ResolutionWithResolvedFileName, which can write string | undefined where string is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+    "raw_text": "/workspace/scratch/c4v7-census/adapted-head/src/compiler/resolutionCache.ts:1053:13: Adamic 0.1 refuses a value of type ResolvedModuleFull seen as ResolutionWithResolvedFileName, which can write string | undefined where string is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+    "raw_where": "/workspace/scratch/c4v7-census/adapted-head/src/compiler/resolutionCache.ts:1053:13",
+    "rule": "adamic/invariant-mutable",
+    "registered_rule": {
+      "order": 3350,
+      "name": "constraintRelationRefusal",
+      "source": "internal/lower/constraint_relation.go:67",
+      "emitter": "constraintRelation -> judgeBinding -> wideningRefusal",
+      "emitter_source": "internal/lower/constraint_relation.go:90"
+    },
+    "binding": {
+      "parameter": "R",
+      "argument": "ResolvedModuleFull",
+      "constraint": "ResolutionWithResolvedFileName",
+      "callee": "watchFailedLookupLocationsOfExternalModuleResolutions",
+      "declaration": "resolutionCache.ts:1102"
+    },
+    "source_line": "            watchFailedLookupLocationsOfExternalModuleResolutions(libraryName, resolution, path, getResolvedModuleFromResolution, /*deferWatchingNonRelativeResolution*/ false);",
+    "enclosing_function": {
+      "name": "resolveLibrary",
+      "where": "resolutionCache.ts:1041:5",
+      "signature": "function resolveLibrary(\r\n        libraryName: string,\r\n        resolveFrom: string,\r\n        options: CompilerOptions,\r\n        libFileName: string,\r\n    )"
+    },
+    "enclosing_functions": [
+      {
+        "name": "resolveLibrary",
+        "where": "resolutionCache.ts:1041:5",
+        "signature": "function resolveLibrary(\r\n        libraryName: string,\r\n        resolveFrom: string,\r\n        options: CompilerOptions,\r\n        libFileName: string,\r\n    )"
+      },
+      {
+        "name": "createResolutionCache",
+        "where": "resolutionCache.ts:579:1",
+        "signature": "export function createResolutionCache(resolutionHost: ResolutionCacheHost, rootDirForResolution: string, logChangesWhenResolvingModule: boolean): ResolutionCache"
+      }
+    ],
+    "generic_bodies": [],
+    "slot": null
+  },
+  {
+    "root_kind": "",
+    "depth": 0,
+    "measurement": "measured on a checker-rejected program",
+    "unit": "resolutionCache.ts:579:1",
+    "phase": "refusal_scan",
+    "kind": "Refused",
+    "where": "resolutionCache.ts:1056:17",
+    "reason": "a value of type ResolvedModuleFull seen as ResolutionWithResolvedFileName, which can write string | undefined where string is read",
+    "text": "resolutionCache.ts:1056:17: Adamic 0.1 refuses a value of type ResolvedModuleFull seen as ResolutionWithResolvedFileName, which can write string | undefined where string is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+    "raw_text": "/workspace/scratch/c4v7-census/adapted-head/src/compiler/resolutionCache.ts:1056:17: Adamic 0.1 refuses a value of type ResolvedModuleFull seen as ResolutionWithResolvedFileName, which can write string | undefined where string is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+    "raw_where": "/workspace/scratch/c4v7-census/adapted-head/src/compiler/resolutionCache.ts:1056:17",
+    "rule": "adamic/invariant-mutable",
+    "registered_rule": {
+      "order": 3350,
+      "name": "constraintRelationRefusal",
+      "source": "internal/lower/constraint_relation.go:67",
+      "emitter": "constraintRelation -> judgeBinding -> wideningRefusal",
+      "emitter_source": "internal/lower/constraint_relation.go:90"
+    },
+    "binding": {
+      "parameter": "R",
+      "argument": "ResolvedModuleFull",
+      "constraint": "ResolutionWithResolvedFileName",
+      "callee": "stopWatchFailedLookupLocationOfResolution",
+      "declaration": "resolutionCache.ts:1379"
+    },
+    "source_line": "                stopWatchFailedLookupLocationOfResolution(existingResolution, path, getResolvedModuleFromResolution);",
+    "enclosing_function": {
+      "name": "resolveLibrary",
+      "where": "resolutionCache.ts:1041:5",
+      "signature": "function resolveLibrary(\r\n        libraryName: string,\r\n        resolveFrom: string,\r\n        options: CompilerOptions,\r\n        libFileName: string,\r\n    )"
+    },
+    "enclosing_functions": [
+      {
+        "name": "resolveLibrary",
+        "where": "resolutionCache.ts:1041:5",
+        "signature": "function resolveLibrary(\r\n        libraryName: string,\r\n        resolveFrom: string,\r\n        options: CompilerOptions,\r\n        libFileName: string,\r\n    )"
+      },
+      {
+        "name": "createResolutionCache",
+        "where": "resolutionCache.ts:579:1",
+        "signature": "export function createResolutionCache(resolutionHost: ResolutionCacheHost, rootDirForResolution: string, logChangesWhenResolvingModule: boolean): ResolutionCache"
+      }
+    ],
+    "generic_bodies": [],
+    "slot": null
+  },
+  {
+    "root_kind": "",
+    "depth": 0,
+    "measurement": "measured on a checker-rejected program",
+    "unit": "resolutionCache.ts:579:1",
+    "phase": "refusal_scan",
+    "kind": "Refused",
+    "where": "resolutionCache.ts:1471:9",
+    "reason": "a value of type ResolvedModuleFull seen as ResolutionWithResolvedFileName, which can write string | undefined where string is read",
+    "text": "resolutionCache.ts:1471:9: Adamic 0.1 refuses a value of type ResolvedModuleFull seen as ResolutionWithResolvedFileName, which can write string | undefined where string is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+    "raw_text": "/workspace/scratch/c4v7-census/adapted-head/src/compiler/resolutionCache.ts:1471:9: Adamic 0.1 refuses a value of type ResolvedModuleFull seen as ResolutionWithResolvedFileName, which can write string | undefined where string is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+    "raw_where": "/workspace/scratch/c4v7-census/adapted-head/src/compiler/resolutionCache.ts:1471:9",
+    "rule": "adamic/invariant-mutable",
+    "registered_rule": {
+      "order": 3350,
+      "name": "constraintRelationRefusal",
+      "source": "internal/lower/constraint_relation.go:67",
+      "emitter": "constraintRelation -> judgeBinding -> wideningRefusal",
+      "emitter_source": "internal/lower/constraint_relation.go:90"
+    },
+    "binding": {
+      "parameter": "R",
+      "argument": "ResolvedModuleFull",
+      "constraint": "ResolutionWithResolvedFileName",
+      "callee": "removeResolutionsOfFileFromCache",
+      "declaration": "resolutionCache.ts:1435"
+    },
+    "source_line": "        removeResolutionsOfFileFromCache(resolvedModuleNames, filePath, getResolvedModuleFromResolution);",
+    "enclosing_function": {
+      "name": "removeResolutionsOfFile",
+      "where": "resolutionCache.ts:1470:5",
+      "signature": "function removeResolutionsOfFile(filePath: Path)"
+    },
+    "enclosing_functions": [
+      {
+        "name": "removeResolutionsOfFile",
+        "where": "resolutionCache.ts:1470:5",
+        "signature": "function removeResolutionsOfFile(filePath: Path)"
+      },
+      {
+        "name": "createResolutionCache",
+        "where": "resolutionCache.ts:579:1",
+        "signature": "export function createResolutionCache(resolutionHost: ResolutionCacheHost, rootDirForResolution: string, logChangesWhenResolvingModule: boolean): ResolutionCache"
+      }
+    ],
+    "generic_bodies": [],
+    "slot": null
+  },
+  {
+    "root_kind": "",
+    "depth": 0,
+    "measurement": "measured on a checker-rejected program",
+    "unit": "transformers/ts.ts:235:1",
+    "phase": "refusal_scan",
+    "kind": "Refused",
+    "where": "transformers/ts.ts:1054:13",
+    "reason": "optional property modifiers in ArrowFunction absent from structural source never, which can hide fields",
+    "text": "transformers/ts.ts:1054:13: Adamic 0.1 refuses optional property modifiers in ArrowFunction absent from structural source never, which can hide fields; declare modifiers on the source type, or build a fresh object with known fields (adamic/no-optional-widening)",
+    "raw_text": "/workspace/scratch/c4v7-census/adapted-head/src/compiler/transformers/ts.ts:1054:13: Adamic 0.1 refuses optional property modifiers in ArrowFunction absent from structural source never, which can hide fields; declare modifiers on the source type, or build a fresh object with known fields (adamic/no-optional-widening)",
+    "raw_where": "/workspace/scratch/c4v7-census/adapted-head/src/compiler/transformers/ts.ts:1054:13",
+    "rule": "adamic/no-optional-widening",
+    "diagnostic_emitter": {
+      "name": "optionalWideningRefusal",
+      "source": "internal/lower/optional_widening.go:380"
+    },
+    "source_line": "            filter(constructor.parameters, (p): p is ParameterPropertyDeclaration => isParameterPropertyDeclaration(p, constructor));",
+    "enclosing_function": {
+      "name": "transformClassMembers",
+      "where": "transformers/ts.ts:1048:5",
+      "signature": "function transformClassMembers(node: ClassDeclaration | ClassExpression)"
+    },
+    "enclosing_functions": [
+      {
+        "name": "transformClassMembers",
+        "where": "transformers/ts.ts:1048:5",
+        "signature": "function transformClassMembers(node: ClassDeclaration | ClassExpression)"
+      },
+      {
+        "name": "transformTypeScript",
+        "where": "transformers/ts.ts:235:1",
+        "signature": "export function transformTypeScript(context: TransformationContext): Transformer<SourceFile | Bundle>"
+      }
+    ],
+    "generic_bodies": [],
+    "slot": {
+      "kind": "initializer",
+      "binding": "parametersWithPropertyAssignments",
+      "value": "constructor &&\r\n            filter(constructor.parameters, (p): p is ParameterPropertyDeclaration => isParameterPropertyDeclaration(p, constructor))"
+    }
+  }
+]

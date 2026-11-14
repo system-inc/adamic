@@ -41,8 +41,13 @@ for (const f of findings) {
   f.registered_rule={order:3350,name:'constraintRelationRefusal',source:'internal/lower/constraint_relation.go:67',emitter:'judgeBoundArray',emitter_source:'internal/lower/constraint_relation.go:356'};
  }
  if(f.reason.startsWith('a value of type DiagnosticWithLocation seen as Diagnostic') || f.reason.startsWith('a value of type ResolvedModuleFull seen as ResolutionWithResolvedFileName')) {
-  f.registered_rule={order:3350,name:'constraintRelationRefusal',source:'internal/lower/constraint_relation.go:67',emitter:'constraintRelation -> judgeBinding -> wideningRefusal',emitter_source:'internal/lower/constraint_relation.go:92'};
+  f.registered_rule={order:3350,name:'constraintRelationRefusal',source:'internal/lower/constraint_relation.go:67',emitter:'constraintRelation -> judgeBinding -> wideningRefusal',emitter_source:'internal/lower/constraint_relation.go:90'};
   f.binding=f.reason.startsWith('a value of type DiagnosticWithLocation') ? {parameter:'T',argument:'DiagnosticWithLocation',constraint:'Diagnostic',callee:'getDiagnosticsHelper',declaration:'program.ts:2779'} : {parameter:'R',argument:'ResolvedModuleFull',constraint:'ResolutionWithResolvedFileName',source:'resolutionCache.ts:1102,1379,1435 generic helper signatures'};
+ }
+ if(f.where==='transformers/ts.ts:1054:13') f.diagnostic_emitter={name:'optionalWideningRefusal',source:'internal/lower/optional_widening.go:380'};
+ if(file==='resolutionCache.ts' && f.binding) {
+  const calls={774:['stopWatchFailedLookupLocationOfResolution',1379],1053:['watchFailedLookupLocationsOfExternalModuleResolutions',1102],1056:['stopWatchFailedLookupLocationOfResolution',1379],1471:['removeResolutionsOfFileFromCache',1435]};
+  if(calls[line]) {f.binding.callee=calls[line][0];f.binding.declaration=`resolutionCache.ts:${calls[line][1]}`;delete f.binding.source;}
  }
  f.source_line=sf.text.split(/\r?\n/)[line-1];f.enclosing_function=functions[0]||null;f.enclosing_functions=functions;f.generic_bodies=generics;f.slot=slot;
 }

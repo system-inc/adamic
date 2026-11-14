@@ -11,12 +11,15 @@ for i,f in enumerate(new,1):
  owner=f['enclosing_function'];generics=f['generic_bodies']
  rule=f.get('registered_rule')
  lines += [f"### {i}. {f['where']}",'',f"Kind: `{f['kind']}`. Rule: `{f['rule'] or 'none emitted'}`. Phase: `{f['phase']}`.",'','Reason: '+f['reason'],'','Text:','','```text',f['raw_text'],'```','','Adapted source line:','','```typescript',f['source_line'],'```','','Enclosing function: '+(f"`{owner['name']}` at `{owner['where']}`" if owner else 'module scope')+'.']
+ if f.get('enclosing_functions'):lines+=['','Enclosing function chain: '+ ' → '.join('`'+g['name']+'` (`'+g['where']+'`)' for g in f['enclosing_functions'])+'.']
+ if f.get('diagnostic_emitter'):lines+=['','Diagnostic emitter: `'+f['diagnostic_emitter']['name']+'` at `'+f['diagnostic_emitter']['source']+'`.']
  if rule:lines+=['','Registered rule: `'+str(rule['order'])+' '+rule['name']+'`; emitter `'+rule['emitter']+'` at `'+rule['emitter_source']+'`.']
  if f.get('binding'):lines+=['','Binding judged at the call: `'+json.dumps(f['binding'],ensure_ascii=False)+'`.']
  if generics:
   for g in generics:lines+=['','Generic body: `'+g['name']+'` at `'+g['where']+'`; parameters: `'+', '.join(g['typeParameters'])+'`.']
   lines+=['','Slot at the finding: `'+json.dumps(f['slot'],ensure_ascii=False)+'`.']
  else:lines+=['','The finding is outside a generic body.']
+ if not generics and f.get('slot'):lines+=['','Syntactic slot context: `'+json.dumps(f['slot'],ensure_ascii=False)+'`.']
  lines+=['']
 lines+=['## Setup and bounds','','Fresh detached worktrees per measured commit were created in writable scratch. Recursive submodules initialized successfully at both commits; no credential error occurred. Upstream TypeScript HEAD and peeled v6.0.3 both equal `050880ce59e30b356b686bd3144efe24f875ebc8`. Each stage3/api install passed. The initial npm calls used the default npm cache; they were repeated successfully with an explicit scratch cache and logs. All census inputs, overlays, outputs, build products, Go caches, and subsequent npm caches use scratch. The shared checkout was not modified.','','The scan wrapper was copied from `typescript/promise-discard-sites` at `2dc0593b937f8fbaf6c32f8107a899f78c223966`. That branch has no promise-discard-sites README; its REPORT.md and the latent README document the procedure. Each scan binary was built once. The inherited raw header says `latent_mode: first-error`; this label was not rewritten, while the scratch driver explicitly calls `LatentScanOnly` and zero lowering units are checked. Scratch overlays alone replace the driver call with `LatentScanOnly`; ordinary Lower remains disabled and output guards are enabled. Each compiler-file process has a 1,500-second process-group bound and cleanup; at most three run concurrently. A non-forced checkpoint push follows every batch of at most ten paired files.','','## Part 1','','Pending; Part 2 was completed and pushed first. The 5c8338c4 evidence branch contains the CommonJSBundle baseline, but says EcmaScript has not started. No EcmaScript baseline will be invented.']
 (OUT/'REPORT.md').write_text('\n'.join(lines)+'\n')

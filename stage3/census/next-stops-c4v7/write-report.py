@@ -11,10 +11,11 @@ for g in groups:s+=['- '+g['where']+' '+g['kind']+': '+', '.join('`'+r+'`' for r
 accepted=[r for g in groups if g['kind']=='accepted' for r in g['roots']]
 s+=['','Files lowering whole: '+str(len(accepted))+'/79: '+', '.join(accepted)+'. No native-output success is claimed.','','## Comparison with 5c8338c4','','Baseline: typescript/next-stops-5c8338c4 at `5c8338c4232c37afb304ce6865458b67655c590a`.','',str(sum(c['unchanged'] for c in comparisons))+' unchanged exact tuples; '+str(sum(not c['unchanged'] for c in comparisons))+' changed.','']
 former={c['root'] for c in comparisons if c['before'][0]=='sys.ts:304:13'};assert len(former)==73
-s+=['The former 73 sys.ts:290:19 roots now go to:','']
+s+=['The former 73 sys.ts:304:13 roots now go to:','']
 for g in groups:
  n=len(former.intersection(g['roots']))
  if n:s+=['- '+str(n)+' to '+g['where']+': '+g['reason']]
+if mode=='EcmaScript':s+=['','The before column is the measured CommonJSBundle baseline reference. The source branch has no measured EcmaScript baseline.','']
 s+=['','| Root | Before (location; kind; exact reason) | After (location; kind; exact reason) |','| --- | --- | --- |']
 for c in comparisons:s+=['| '+c['root']+' | '+'; '.join(c['before']).replace('|','\\|').replace('<','&lt;').replace('>','&gt;')+' | '+'; '.join(c['after']).replace('|','\\|').replace('<','&lt;').replace('>','&gt;')+' |']
 s+=['','## Adapted source at stops','']
