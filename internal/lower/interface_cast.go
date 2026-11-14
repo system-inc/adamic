@@ -129,24 +129,8 @@ func (l *lowering) viewWalkWhole(modules []*ast.SourceFile, fields map[string]bo
 		if refused != nil {
 			return true
 		}
-		// An accessor slot still needs a conversion the checked read boundary can't emit. An
-		// optional slot or receiver is emission's to judge, at the read (unemittableCheckedViewRead).
-		if part.Kind == ast.KindPropertyAccessExpression && l.checkedViewReceiverField(part, l.checker.GetTypeAtLocation(part.AsPropertyAccessExpression().Expression), part.Name().Text()) {
-			access := part.AsPropertyAccessExpression()
-			if base, _ := l.representation(l.checker.GetTypeAtLocation(access.Expression)); base == ir.Object {
-				field := l.checker.GetSymbolAtLocation(part.Name())
-				if field != nil && len(l.checker.GetSignaturesOfType(l.checker.GetTypeOfSymbol(field), checker.SignatureKindCall)) == 0 && accessorSymbol(field) {
-					refused = l.notYet(part, checkedFieldAliasAccessor)
-				}
-			}
-		}
-		if part.Kind == ast.KindPropertyAccessExpression && l.checkedViewReceiverField(part, l.checker.GetTypeAtLocation(part.AsPropertyAccessExpression().Expression), part.Name().Text()) && ast.IsAssignmentTarget(part) {
-			if symbol := l.checker.GetSymbolAtLocation(part.Name()); symbol != nil {
-				of, _ := l.representation(l.checker.GetTypeOfSymbol(symbol))
-				if of == ir.Object {
-					refused = l.notYet(part, "writing a checked object field without its source-slot type certificate")
-				}
-			}
+		if part.Kind == ast.KindPropertyAccessExpression {
+			_, refused = l.judgeViewAccess(part, false)
 		}
 		// A getter named as a contract field is judged by what can reach this view, once lowering
 		// is done (refuseReachedContractGetters), never by its name alone (#c7w6j0y).
@@ -165,6 +149,35 @@ func (l *lowering) viewWalkWhole(modules []*ast.SourceFile, fields map[string]bo
 		return nil, refused
 	}
 	return getters, nil
+}
+
+// judgeViewAccess is the one judgment both of view's walks make of a property access: whether a checked view
+// reaches it, and the refusal that carries, a write's overriding an accessor's at one access. known is an access
+// the indexed walk already found checked, which a check never stops being. Both walks call it so a rule changed
+// here changes in production's walk and the whole walk alike (Lower, #q1hyhzc).
+func (l *lowering) judgeViewAccess(part *ast.Node, known bool) (bool, error) {
+	access := part.AsPropertyAccessExpression()
+	if !known && !l.checkedViewReceiverField(part, l.checker.GetTypeAtLocation(access.Expression), part.Name().Text()) {
+		return false, nil
+	}
+	var refused error
+	// An accessor slot still needs a conversion the checked read boundary can't emit. An
+	// optional slot or receiver is emission's to judge, at the read (unemittableCheckedViewRead).
+	if base, _ := l.representation(l.checker.GetTypeAtLocation(access.Expression)); base == ir.Object {
+		field := l.checker.GetSymbolAtLocation(part.Name())
+		if field != nil && len(l.checker.GetSignaturesOfType(l.checker.GetTypeOfSymbol(field), checker.SignatureKindCall)) == 0 && accessorSymbol(field) {
+			refused = l.notYet(part, checkedFieldAliasAccessor)
+		}
+	}
+	if ast.IsAssignmentTarget(part) {
+		if symbol := l.checker.GetSymbolAtLocation(part.Name()); symbol != nil {
+			of, _ := l.representation(l.checker.GetTypeOfSymbol(symbol))
+			if of == ir.Object {
+				refused = l.notYet(part, "writing a checked object field without its source-slot type certificate")
+			}
+		}
+	}
+	return true, refused
 }
 
 const checkedFieldAliasAccessor = "a checked field alias of an accessor"
