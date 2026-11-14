@@ -1,0 +1,29 @@
+{
+  "pair": "A",
+  "group": 5,
+  "files": [
+    "src/compiler/utilitiesPublic.ts",
+    "src/compiler/diagnosticInformationMap.generated.ts",
+    "src/compiler/program.ts",
+    "src/compiler/emitter.ts",
+    "src/compiler/transformers/es2015.ts",
+    "src/compiler/binder.ts",
+    "src/compiler/transformers/generators.ts",
+    "src/compiler/watch.ts",
+    "src/compiler/transformers/module/module.ts",
+    "src/compiler/transformers/es2018.ts",
+    "src/compiler/transformer.ts",
+    "src/compiler/transformers/esnext.ts",
+    "src/compiler/tracing.ts",
+    "src/compiler/programDiagnostics.ts",
+    "src/compiler/factory/nodeConverters.ts",
+    "src/compiler/transformers/es2016.ts",
+    "src/compiler/transformers/es2019.ts"
+  ],
+  "deadline_seconds": 3600,
+  "complete": true,
+  "seconds": 960.9592345310002,
+  "unit_first_stop_changes": 0,
+  "regressions": 0,
+  "new_process_findings": []
+}
