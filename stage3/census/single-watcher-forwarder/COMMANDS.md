@@ -175,3 +175,27 @@ Setup, initial failures, branch creation and checkpoint commands are also listed
   ```sh
   stage3/apply.sh --key
   ```
+
+- Exit **0**, lane (890.821 seconds):
+
+  ```sh
+  stage3/lane/run.sh /workspace/scratch/single-watcher-lane
+  ```
+
+- Exit **0**, verify-lane (0.102 seconds):
+
+  ```sh
+  node /workspace/scratch/single-watcher-evidence/verify.cjs --lane
+  ```
+
+- Exit **0**, commit-adaptation (0.146 seconds):
+
+  ```sh
+  git commit -m 'stage3: type single-watcher forwarders at their two callers (Adamic Road C #1vkqj9w)'
+  ```
+
+- Exit **0**, push-adaptation (1.946 seconds):
+
+  ```sh
+  git push origin HEAD:refs/heads/typescript/single-watcher-forwarder-1
+  ```

@@ -1,0 +1,89 @@
+{
+  "adaptation_branch": "typescript/single-watcher-forwarder-1",
+  "adaptation_sha": "6e7cd200b12ff20ba7177862d094bc1bb12e9f2e",
+  "parent": "10f8f6b4d0f7ce9d56f2558752eab3f095b6d9b2",
+  "commit_count": 1,
+  "working_tree_clean": true,
+  "lane": {
+    "commit": "10f8f6b4d0f7ce9d56f2558752eab3f095b6d9b2",
+    "apply_exit": 0,
+    "oracle_exit": 1,
+    "platform": {
+      "os": "linux",
+      "arch": "x64",
+      "node": "v24.19.0"
+    },
+    "wall_seconds": 889.794
+  },
+  "lane_verdict": "PASS stage3 landing lane [causes: timeout=0, baseline-content=1, baseline-missing=0, exception=0, other=0]",
+  "counts": {
+    "passing": 106366,
+    "failing": 1,
+    "pending": 0
+  },
+  "census": {
+    "adapted": {
+      "units": 136,
+      "raw_findings": 189,
+      "unique_all": 118,
+      "unique_refused_notyet": 63,
+      "kind_counts_unique": {
+        "Boundary": 55,
+        "NotYet": 41,
+        "Refused": 22
+      },
+      "exact_added": 45,
+      "exact_gone": 45,
+      "source_aligned_added": 2,
+      "source_aligned_gone": 2,
+      "source_aligned_changes": 1,
+      "helper_cast_survives": false,
+      "checker_diagnostics": 0,
+      "seconds": 99.13867998123169,
+      "unit_statuses": {
+        "attempted": 133,
+        "deferred_generic_instantiation": 3
+      }
+    },
+    "mutant": {
+      "units": 136,
+      "raw_findings": 190,
+      "unique_all": 118,
+      "unique_refused_notyet": 63,
+      "kind_counts_unique": {
+        "Refused": 23,
+        "Boundary": 55,
+        "NotYet": 40
+      },
+      "exact_added": 82,
+      "exact_gone": 82,
+      "source_aligned_added": 0,
+      "source_aligned_gone": 0,
+      "source_aligned_changes": 0,
+      "helper_cast_survives": true,
+      "checker_diagnostics": 0,
+      "seconds": 103.15760064125061,
+      "unit_statuses": {
+        "attempted": 133,
+        "deferred_generic_instantiation": 3
+      }
+    },
+    "base": {
+      "units": 136,
+      "raw_findings": 190,
+      "unique_all": 118,
+      "kind_counts_unique": {
+        "NotYet": 40,
+        "Refused": 23,
+        "Boundary": 55
+      },
+      "unique_refused_notyet": 63,
+      "unit_statuses": {
+        "attempted": 133,
+        "deferred_generic_instantiation": 3
+      }
+    }
+  },
+  "setup_deviation": "Initial npm and baseline apply used default cache/temp paths; subsequent commands use explicit scratch caches.",
+  "loom_submitted": false
+}

@@ -44,3 +44,9 @@ the corrected raw-string search and AST count are the recorded inventories.
 The first census comparison exited 1 because its status object omitted seconds.
 The measured durations were restored from commands.jsonl, the driver was fixed,
 and the comparison exited 0. No measurement or finding was changed or rerun.
+
+Final adaptation commit/push both exit 0 and appear in commands.jsonl.gz.
+The adaptation commit is 6e7cd200b12ff20ba7177862d094bc1bb12e9f2e, with exactly the requested parent and one commit.
+The lane ran while that exact adaptation was staged, so execution.json records
+the base commit; provenance.json pins all adapter bytes and final verification
+confirms those pins still match the committed files.
