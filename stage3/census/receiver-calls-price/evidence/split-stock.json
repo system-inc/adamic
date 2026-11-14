@@ -1,0 +1,27 @@
+{
+  "command": [
+    "node",
+    "/workspace/scratch/receiver-calls-price/stage3/api/node_modules/typescript/lib/tsc.js",
+    "--project",
+    "src/compiler/tsconfig.json",
+    "--noEmit",
+    "--strictFunctionTypes",
+    "true",
+    "--incremental",
+    "false",
+    "--composite",
+    "false",
+    "--pretty",
+    "false",
+    "--noErrorTruncation"
+  ],
+  "cwd": "/workspace/scratch/receiver-split",
+  "exit": 0,
+  "timeout": false,
+  "limit_seconds": null,
+  "wall_seconds": 13.703,
+  "peak_process_tree_rss_kib": 705488,
+  "sampling_interval_seconds": 0.2,
+  "samples": 69,
+  "max_descendant_rss_kib": 705592
+}
