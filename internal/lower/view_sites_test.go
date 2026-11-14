@@ -16,23 +16,25 @@ import (
 )
 
 // viewSitesCasts makes three casts into checked views, Other's first, in .ts, which keeps a cast's first tag checked
-// where .a refuses a downcast whose checks no proof erases. read's x.b has the union One | Two
-// for its receiver, which no view registers until One's: Other's walk finds it unchecked, and One's
-// viewSchema then adds One:b, so One's walk must ask x.b again and register the union's key for b.
+// where .a refuses a downcast whose checks no proof erases. either.b, read at the top level after them, has the
+// union One | Two for its receiver, and nothing lowers it before One's view: Other's walk judges it unchecked, One's
+// viewSchema then adds One:b, and One's walk must ask it again and register the union's key for b. A function body
+// holding the read wouldn't do: bodies are lowered before the top level's casts, and the read itself registers it.
 const viewSitesCasts = `interface Base {readonly kind:'one'|'two'|'other'}
 interface One extends Base {readonly kind:'one';readonly b:number}
 interface Two extends Base {readonly kind:'two';readonly b:number}
 interface Other extends Base {readonly kind:'other';readonly c:number}
-function read(x:One|Two):number {return x.b;}
 const other={kind:'other' as const,c:3};
 const otherHeld:Base=other;
 console.log(String((otherHeld as Other).c));
 const one={kind:'one' as const,b:5};
 const oneHeld:Base=one;
-console.log(String(read(oneHeld as One)));
+const viewed:One=oneHeld as One;
 const two={kind:'two' as const,b:7};
 const twoHeld:Base=two;
-console.log(String(read(twoHeld as Two)));
+const pick:boolean=String(one.b)==="5";
+const either:One|Two=pick?viewed:twoHeld as Two;
+console.log(String(either.b));
 `
 
 // viewSitesTwoWrites writes a checked object field twice, on lines 5 and 6, so its view has two
@@ -68,13 +70,27 @@ func TestViewSiteIndexIsBuiltOncePerLowering(t *testing.T) {
 	}
 }
 
-// An access found unchecked is asked again once a key of its name is added: x.b, unchecked at Other's
-// view, is checked through its union once One's view registers One:b, so lowering ends with the union's
-// own key for b, as the whole walk left it. Mutant: the dirty-name recheck skipped, so only a name never
+// An access found unchecked is asked again once a key of its name is added: either.b, unchecked at Other's
+// view, is checked through its union once One's view registers One:b, and One's walk registers the union's
+// own key for b, as the whole walk does at that call. Mutant: the dirty-name recheck skipped, so only a name never
 // judged is asked, x.b stays unchecked, and this and TestViewWalkIndexedAgreesWithWhole go red.
+//
+// Not parallel: it lowers with viewWalkCompare on, so One's walk is held to the whole walk's at that call. The key
+// would be registered by the time lowering ends either way, since either.b's own lowering registers it, so only the
+// call-by-call comparison can tell the recheck was made.
 func TestViewSiteAskedAgainWhenItsNameGainsAKey(t *testing.T) {
-	t.Parallel()
-	keyed, err := lowerKeyed(t, writeAgreementSource(t, "main.ts", viewSitesCasts))
+	viewWalkCompare.Store(true)
+	defer viewWalkCompare.Store(false)
+	var keyed keyedProgram
+	var err error
+	func() {
+		defer func() {
+			if failure := recover(); failure != nil {
+				t.Fatalf("%v", failure)
+			}
+		}()
+		keyed, err = lowerKeyed(t, writeAgreementSource(t, "main.ts", viewSitesCasts))
+	}()
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -93,7 +109,7 @@ func TestViewSiteAskedAgainWhenItsNameGainsAKey(t *testing.T) {
 	var receiver *checker.Type
 	var visit ast.Visitor
 	visit = func(node *ast.Node) bool {
-		if node.Kind == ast.KindPropertyAccessExpression && node.Name().Text() == "b" && ast.IsIdentifier(node.AsPropertyAccessExpression().Expression) && node.AsPropertyAccessExpression().Expression.Text() == "x" {
+		if node.Kind == ast.KindPropertyAccessExpression && node.Name().Text() == "b" && ast.IsIdentifier(node.AsPropertyAccessExpression().Expression) && node.AsPropertyAccessExpression().Expression.Text() == "either" {
 			receiver = keyed.lowering.checker.GetTypeAtLocation(node.AsPropertyAccessExpression().Expression)
 		}
 		node.ForEachChild(visit)
@@ -101,10 +117,10 @@ func TestViewSiteAskedAgainWhenItsNameGainsAKey(t *testing.T) {
 	}
 	keyed.entry.AsNode().ForEachChild(visit)
 	if receiver == nil || receiver.Flags()&checker.TypeFlagsUnion == 0 {
-		t.Fatal("the fixture has no x.b through a union receiver")
+		t.Fatal("the fixture has no either.b through a union receiver")
 	}
 	if !keyed.lowering.result.CheckedFields[ir.CheckedFieldKey(int(receiver.Id()), "b")] {
-		t.Fatalf("x.b through %s isn't checked: One's view registered One:b after Other's walk judged x.b, and nothing asked it again", keyed.lowering.checker.TypeToString(receiver))
+		t.Fatalf("either.b through %s isn't checked: One's view registered One:b after Other's walk judged x.b, and nothing asked it again", keyed.lowering.checker.TypeToString(receiver))
 	}
 }
 
