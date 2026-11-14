@@ -14,7 +14,7 @@ import (
 
 var updateDynamicKeyedNames = flag.Bool("update-dynamic-keyed-names", false, "regenerate runtime/dynamic_keyed_names.h")
 
-// dynamicKeyedNamesHeader is runtime/dynamic_keyed_names.h, written from internal/ir's one table of a
+// dynamicKeyedNamesHeader is internal/native_runtime/c/dynamic_keyed_names.h, written from internal/ir's one table of a
 // run-time key read's stops and names, which the JavaScript backend emits from too.
 func dynamicKeyedNamesHeader() []byte {
 	var text bytes.Buffer
@@ -100,17 +100,17 @@ func snakeCase(name string) string {
 // The runtime's copy of the stop table is internal/ir's, byte for byte, so a stop added or reworded
 // in Go reaches both backends or this goes red. Mutant: one message changed in the header.
 //
-// Not parallel: the update flag rewrites the checked-in runtime/dynamic_keyed_names.h.
+// Not parallel: the update flag rewrites the checked-in internal/native_runtime/c/dynamic_keyed_names.h.
 func TestDynamicKeyedNamesHeaderIsCurrent(t *testing.T) {
 	want := dynamicKeyedNamesHeader()
 	if *updateDynamicKeyedNames {
-		if err := os.WriteFile("runtime/dynamic_keyed_names.h", want, 0o644); err != nil {
+		if err := os.WriteFile("../native_runtime/c/dynamic_keyed_names.h", want, 0o644); err != nil {
 			t.Fatal(err)
 		}
 		return
 	}
-	got, err := os.ReadFile("runtime/dynamic_keyed_names.h")
+	got, err := os.ReadFile("../native_runtime/c/dynamic_keyed_names.h")
 	if err != nil || !bytes.Equal(got, want) {
-		t.Fatal("runtime/dynamic_keyed_names.h is stale; run with -update-dynamic-keyed-names", err)
+		t.Fatal("internal/native_runtime/c/dynamic_keyed_names.h is stale; run with -update-dynamic-keyed-names", err)
 	}
 }

@@ -66,7 +66,7 @@ func TestProfileArtifacts(t *testing.T) {
 	if err := native.Build(source, filepath.Join(directory, "counted"), native.Options{Count: true}); err != nil {
 		t.Fatal(err)
 	}
-	paths := corpusfiles.Repository(t, repository, []string{"internal/native/runtime"}, []string{"*.c", "*.h"})
+	paths := corpusfiles.Repository(t, repository, []string{"internal/native_runtime/c"}, []string{"*.c", "*.h"})
 	units := []string{filepath.Join(directory, "main.c")}
 	for _, sourcePath := range paths {
 		name := filepath.Base(sourcePath)

@@ -7,7 +7,7 @@ import sys
 import tempfile
 
 parent = sys.argv[1] if len(sys.argv) > 1 else "0f67284"
-root = pathlib.Path("internal/native/runtime")
+root = pathlib.Path("internal/native_runtime/c")
 names = subprocess.check_output(
     ["git", "ls-tree", "--name-only", parent, "internal/native/runtime/"]
 ).decode().splitlines()

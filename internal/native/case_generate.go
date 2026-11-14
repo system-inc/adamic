@@ -1,6 +1,6 @@
 //go:build ignore
 
-// case_generate writes runtime/case_tables.h: the tables toUpperCase and toLowerCase map by, from the
+// case_generate writes internal/native_runtime/c/case_tables.h: the tables toUpperCase and toLowerCase map by, from the
 // Unicode Character Database of the Unicode version Node reports (process.versions.unicode).
 //
 // JavaScript's case mapping is Unicode's full, locale-independent mapping: UnicodeData.txt's simple
@@ -47,7 +47,7 @@ var pinned = map[string]string{
 
 func main() {
 	data := flag.String("data", "", "a directory holding the files, instead of fetching them")
-	output := flag.String("output", filepath.Join("runtime", "case_tables.h"), "where to write the tables")
+	output := flag.String("output", filepath.Join("../native_runtime/c", "case_tables.h"), "where to write the tables")
 	flag.Parse()
 
 	files := map[string][]byte{}

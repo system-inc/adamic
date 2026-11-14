@@ -8,6 +8,7 @@ import (
 
 	"github.com/system-inc/adamic/internal/load"
 	"github.com/system-inc/adamic/internal/lower"
+	"github.com/system-inc/adamic/internal/native_runtime"
 	"github.com/system-inc/adamic/internal/toolchain"
 )
 
@@ -26,7 +27,7 @@ func TestTSGoBuildSeesTheProgramsFeatures(t *testing.T) {
 	}
 	source := C(program)
 	directory := t.TempDir()
-	entries, err := runtime.ReadDir("runtime")
+	entries, err := native_runtime.Sources.ReadDir("c")
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -34,7 +35,7 @@ func TestTSGoBuildSeesTheProgramsFeatures(t *testing.T) {
 		if entry.IsDir() {
 			continue
 		}
-		contents, err := runtime.ReadFile("runtime/" + entry.Name())
+		contents, err := native_runtime.Sources.ReadFile("c/" + entry.Name())
 		if err != nil {
 			t.Fatal(err)
 		}

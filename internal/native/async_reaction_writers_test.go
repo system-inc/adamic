@@ -65,7 +65,8 @@ func reactionWriterFailures(source string) (writers, failures []string) {
 func TestAsyncReactionWritersMarkHandled(t *testing.T) {
 	t.Parallel()
 	writers := 0
-	err := filepath.WalkDir("runtime", func(path string, entry os.DirEntry, err error) error {
+	// Reads: internal/native_runtime/c/*
+	err := filepath.WalkDir("../native_runtime/c", func(path string, entry os.DirEntry, err error) error {
 		if err != nil || entry.IsDir() || (filepath.Ext(path) != ".c" && filepath.Ext(path) != ".h") {
 			return err
 		}
