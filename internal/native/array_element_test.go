@@ -422,7 +422,7 @@ var scalarElementFunction = regexp.MustCompile(`(?s)enum adamic_ir_type adamic_a
 // text of it compiled here (so a mutant of that text is what runs).
 func scalarElementHarness(t *testing.T, mutant func(string) string) string {
 	t.Helper()
-	contents, err := os.ReadFile("runtime/array.c")
+	contents, err := os.ReadFile("../native_runtime/c/array.c")
 	if err != nil {
 		t.Fatal(err)
 	}

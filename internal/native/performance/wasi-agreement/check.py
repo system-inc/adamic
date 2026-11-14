@@ -12,7 +12,7 @@ def observe(args,combined=False):
  return dict(exit=r.returncode,stdout=r.stdout.decode(),stderr='' if combined else r.stderr.decode())
 node=['node','--disable-warning=ExperimentalWarning']
 compiler=root/'adamic';run(['go','build','-o',str(compiler),'./cmd/adamic'])
-rt=root/'runtime';shutil.copytree(repo/'internal/native/runtime',rt,dirs_exist_ok=True)
+rt=root/'runtime';shutil.copytree(repo/'internal/native_runtime/c',rt,dirs_exist_ok=True)
 objects=root/'objects';objects.mkdir(exist_ok=True)
 for p in sorted(rt.glob('*.c')):
  print('compile',p.name,flush=True);run([clang,*flags,'-I',str(rt),'-c',str(p),'-o',str(objects/(p.name+'.o'))])

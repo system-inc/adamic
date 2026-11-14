@@ -15,6 +15,7 @@ import (
 	"testing"
 
 	"github.com/system-inc/adamic/internal/buildcache"
+	"github.com/system-inc/adamic/internal/native_runtime"
 )
 
 var primitiveCases = []string{
@@ -121,7 +122,7 @@ func primitiveMutants(t *testing.T) string {
 	flags := Flags(Options{Sanitize: true, Count: true})
 	inputs := buildcache.Inputs{
 		Name:      "primitive-mutants",
-		Files:     []string{"internal/native/runtime", "internal/native/testdata/to-primitive/runtime.c", "internal/native/to_primitive_test.go", "internal/native/split_units_test.go", "internal/native/runtime_mutants_test.go", "internal/native/native.go", "internal/native/library.go"},
+		Files:     []string{"internal/native_runtime/c", "internal/native/testdata/to-primitive/runtime.c", "internal/native/to_primitive_test.go", "internal/native/split_units_test.go", "internal/native/runtime_mutants_test.go", "internal/native/native.go", "internal/native/library.go"},
 		Flags:     slices.Clone(flags),
 		Toolchain: []string{buildcache.CompilerReport("clang")},
 	}
@@ -133,7 +134,7 @@ func primitiveMutants(t *testing.T) string {
 		t.Fatal(err)
 	}
 	return buildcache.Product(t, inputs, func(directory string) error {
-		files, err := readRuntime(runtime, "runtime")
+		files, err := readRuntime(native_runtime.Sources, "c")
 		if err != nil {
 			return err
 		}

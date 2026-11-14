@@ -385,8 +385,8 @@ func buildParallelProgram(t *testing.T, code, binary string, options native.Opti
 		return
 	}
 	directory := t.TempDir()
-	// Reads: internal/native/runtime/regexp_replace.c
-	root := filepath.Join(repository, "internal/native/runtime")
+	// Reads: internal/native_runtime/c/regexp_replace.c
+	root := filepath.Join(repository, "internal/native_runtime/c")
 	files, err := os.ReadDir(root)
 	if err != nil {
 		t.Fatal(err)
