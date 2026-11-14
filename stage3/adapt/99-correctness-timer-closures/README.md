@@ -26,12 +26,12 @@ all ten supplied closures ignore it. Node and TestServerHost both forward it.
 
 The expressions are replaced by immediately invoked blocks to preserve their
 position inside surrounding assignments and calls. Each block evaluates the
-original receiver and timer member first, captures the callback, evaluates the
-delay, then captures all tails left to right. A captured method is invoked with
-Function.call and its original receiver. WatchHost and the solution builder use
-a non-null assertion on that captured method under the original presence guards.
-There are no optional calls. Nine calls use a destructured local's call method;
-the recursive watcher already receives a destructured local and calls it directly.
+original receiver first, captures the callback, evaluates the delay, then
+captures all tails left to right. The nine receiver-based blocks then read and
+call timerHost.setTimeout. WatchHost and the solution builder keep their original
+presence guards and assert timerHost.setTimeout! at the receiver call. There are
+no optional calls. The recursive watcher already receives a destructured local
+and still calls it directly.
 The IIFE does not defer any schedule-time read until firing.
 
 The two static callbacks use their explicit self parameters. The session and
@@ -97,3 +97,20 @@ Evidence and commands are on `typescript/timer-ambient-delete-evidence-3`, under
 `stage3/census/timer-ambient-delete-3/`, including both 79-root checks, the
 restored-ambient and property-slot mutants, the Node cancellation witness,
 full apply and replay, 398 shards, and the full-mode census pair.
+
+## Receiver-call amendment
+
+Adamic and Compiler, task #0gj665k, Nov 14 00:59Z; implementation #5vc7nbf.
+This is JavaScript-changing: the nine blocks move the timer member read after
+the argument captures. No capture, callback, delay, tail or presence guard changes.
+The unused destructured method locals are removed.
+
+The reorder is admitted only after both counts are zero across source, harness
+and tests and in the whole lane oracle: timer-host setTimeout/clearTimeout
+accessors, and argument expressions able to write either receiver method.
+The audit, coverage limitations and actual run results are retained with the
+separate evidence.
+
+Proof streams, every file's full census delta, the mutant red/green fixture,
+Node witnesses and lane receipts belong on typescript/timer-call-queue-evidence,
+under stage3/census/timer-call-queue/.
