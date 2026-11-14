@@ -1,0 +1,2599 @@
+{
+  "schema_version": 1,
+  "normalization": true,
+  "source_hashes": {
+    "src/tsc/tsc.ts": "fc07517d814068f7225dd8a7e93931f7d4e4ade9d0d63583e7a61b98285cc332",
+    "src/compiler/corePublic.ts": "579512600ac65a6312f761f46db67357483c010e8e2c271cb03cce67328b32e7",
+    "src/compiler/core.ts": "6925a744b191c13ebe1425ec76a994b51cb2ab1c81f19b2c7958a4ed1e89311b",
+    "src/compiler/debug.ts": "08d94ea6111c6a4ec61b2f56189702ed262bdcaaea037e8aba87ef9c87a6d22a",
+    "src/compiler/semver.ts": "d05533ad8eafcb2f6aa2bb916ed3b84e26484ca8907aefa6e931de97af60ab25",
+    "src/compiler/_namespaces/ts.performance.ts": "e3d39c7ea64f27347b698a1951a76a014cd0c1c51565d6ed9182d7d4f064ddda",
+    "src/compiler/factory/emitNode.ts": "528071d2a75956b4cc578b5d3a2344190d9a2ab5c31b56adfd84c10a2ce045cd",
+    "src/compiler/utilitiesPublic.ts": "ede1a3cc3ed3acbecc692d2097ac8cd01553bf4ab7e5e265cccda593ffb89c1f",
+    "src/compiler/binder.ts": "7d2fe86cb48e04e45b5b260d8029116f57660aa1a00efaaa180f0dda6837d370",
+    "src/compiler/factory/nodeTests.ts": "76e4df7ca846537338824b3e797f41bea972414342cc50af974143e6ff00dd9d",
+    "src/compiler/parser.ts": "f45d616292f311841069bd036008dc9630c3a51f3da3e0789b1701f8478542af",
+    "src/compiler/factory/emitHelpers.ts": "91b00027e787379b88b6bf7bbf7a0ec8ae57e0d92233e6ddf7f4aa61d90c82ab",
+    "src/compiler/factory/nodeFactory.ts": "bfac415cab939ce57ea75c724782afd5ab264d10c7188605aaef7485be0569de",
+    "src/compiler/commandLineParser.ts": "49b442aa6b10782edf3ca9dcecdec5c92ef46a9fbe6c928ccd0bf1c088382636",
+    "src/compiler/utilities.ts": "e5bd0c0a49b3118b8e8fd2c0373c80e32b9607b85379eca38c196b6b71fc38bf",
+    "src/compiler/transformers/taggedTemplate.ts": "54dce15f9a14c4732701706abac28c4fc77ed2eab6496b931bf0429d1df22bdb",
+    "src/compiler/visitorPublic.ts": "ef2085cb0d14c6dbd475644daf7388cf7ec4f64c0b6a5570ba79dd2ffd72b8d5",
+    "src/compiler/transformers/classFields.ts": "67337f0d2a1b78d8de9776ab5d09e32b09d3424b1339a2de26045d349eb959d8",
+    "src/compiler/transformers/esDecorators.ts": "572d9ed4aaffe4a4da286122477601fe45ad2cf9354025333b3cabe538e6f7b0",
+    "src/compiler/transformers/module/impliedNodeFormatDependent.ts": "eb48d82834522a78c7b80cf768e0874e17a9f4dc819f673e5ec63c49fdb43d26",
+    "src/compiler/builder.ts": "03cd217e69a1d3f9c0c05271a6f445d2bf302dd2ab0f117d446a02b8f264da7c",
+    "src/compiler/builderPublic.ts": "1c4590cf725470dec54734bdb4711c330540c6c3871e791f2feebd39d787f629",
+    "src/compiler/tsbuildPublic.ts": "c8cc663fe62e206dd53ec96692e2b50a60a7bb37c928d49bb2f817700ac4b654",
+    "src/compiler/expressionToTypeNode.ts": "501917c5a675172b9f0605af0a98a0c6b71f8890cb404ea851f23d28bfba2f61",
+    "src/compiler/_namespaces/ts.ts": "fd8a88f2067f9d0a44de7d121ed7c38a3b5effd26cf3ceccbb861255aa879a5b"
+  },
+  "raw_findings": {
+    "per_reason": {
+      "Object enumeration with getter or accessor descriptors": {
+        "before": 4,
+        "after": 4,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "Object.fromEntries": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "RegExp with a nonconstant pattern": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a BaseParsedCommandLine seen as ParsedCommandLine (fixed objects and records have different storage; copy explicitly)": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a BuildOptions seen as { extendedDiagnostics?: boolean; diagnostics?: boolean; } (fixed objects and records have different storage; copy explicitly)": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a CompilerOptions seen as MapLike<TsConfigSourceFile | CompilerOptionsValue> (fixed objects and records have different storage; copy explicitly)": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a CompilerOptions seen as MapLike<string | number | boolean | string[] | PluginImport[] | ProjectReference[] | (string | number)[] | MapLike<string[]> | TsConfigSourceFile | null | undefined> (fixed objects and records have different storage; copy explicitly)": {
+        "before": 2,
+        "after": 2,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a CompilerOptions seen as OptionsBase (fixed objects and records have different storage; copy explicitly)": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a Map of CompilerOptionsValue": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a Map or Set going where a plain object type is held": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a Map<string, JsxEmit> where Map<string, string | number> goes: its JsxEmit elements are stored as number and read there as string | number, held as a boxed union (build it as the slot's type where it's made, or copy its elements into one)": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a MapLike<string | number | boolean | string[] | PluginImport[] | ProjectReference[] | (string | number)[] | MapLike<string[]> | null | undefined> | undefined seen as WatchOptions | undefined (fixed objects and records have different storage; copy explicitly)": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a Record<string, CompilerOptionsValue> seen as CompilerOptions (fixed objects and records have different storage; copy explicitly)": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a SpreadElement": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a WatchOptions seen as MapLike<string | number | boolean | string[] | PluginImport[] | ProjectReference[] | (string | number)[] | MapLike<string[]> | null | undefined> (fixed objects and records have different storage; copy explicitly)": {
+        "before": 2,
+        "after": 2,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a WatchOptions seen as OptionsBase (fixed objects and records have different storage; copy explicitly)": {
+        "before": 2,
+        "after": 2,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a WatchOptions | undefined seen as OptionsBase | undefined (fixed objects and records have different storage; copy explicitly)": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a boolean | undefined variable a function value captures": {
+        "before": 2,
+        "after": 2,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a call spreading elements that cannot be packed": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a call through ?. (an optional call)": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a case whose type differs from the switch's": {
+        "before": 2,
+        "after": 2,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a cast that makes a viewed readonly array writable": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a cast the runtime can't check": {
+        "before": 92,
+        "after": 92,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a checked predicate target whose base has no required field to check ({ [key: string]: unknown; })": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a checked predicate target whose check would read past the depth bound (BuilderProgramStateWithDefinedProgram)": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a checked predicate target whose check would read past the depth bound (CircularBuildOrder)": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a checked predicate target whose check would read past the depth bound (CommandLineOptionOfCustomType)": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a checked predicate target whose check would read past the depth bound (IncrementalBundleEmitBuildInfo)": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a dynamic getter or method read, or a nullable field (runtime dispatch, slot tags and narrowed rereads)": {
+        "before": 2,
+        "after": 2,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a filter callback that doesn't return a boolean": {
+        "before": 2,
+        "after": 2,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a function returning CanonicalKey": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a function returning ImmediatelyInvokedArrowFunction": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a function returning U | undefined": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a function taking Path seen as one taking string (tsc relates a method's parameters both ways), so it can be handed what it can't take": {
+        "before": 2,
+        "after": 2,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a function taking Visitor seen as one taking Visitor<TIn, Node | undefined> (tsc relates a method's parameters both ways), so it can be handed what it can't take": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a function taking boolean seen as one taking boolean | undefined (tsc relates a method's parameters both ways), so it can be handed what it can't take": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a generic instantiated at void whose body reads the value: getPropFromRaw's T = void (read from the signature), read at /workspace/scratch/recordreplay/candidate2/src/compiler/commandLineParser.ts:3253:24 as a returned value": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a member typed any (config, declared): any has no proven type, so every read of it through a typed view is unchecked": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a method read as a value (createExpressionStatement would lose its object, and this with it)": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a method read as a value (getBuildInfo would lose its object, and this with it)": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a method read as a value (getCanonicalFileName would lose its object, and this with it)": {
+        "before": 5,
+        "after": 5,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a method read as a value (getParsedCommandLine would lose its object, and this with it)": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a method read as a value (getSourceFile would lose its object, and this with it)": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a method read as a value (hasChangedEmitSignature would lose its object, and this with it)": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a method sharing its name with a getter; rename the getter or use a callable arrow field in the interface and implementation": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a narrowed union member whose object tag cannot be checked with typeof; keep differently held object kinds in separately typed variables": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a primitive brand member __canonicalKey whose type is not void": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a read narrowed to undefined of a binding a call may write": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a read the checker narrowed to never of a binding a call may write": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a structural relation deeper than 64 type pairs while checking promise-returning functions seen as void-returning": {
+        "before": 3,
+        "after": 3,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a template interpolating a union with an object, an array, a map or a function in it": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a template interpolating an object, an array, a map, a function or undefined": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a value of type ((node: PrivateIdentifierPropertyDeclaration, modifiers: ModifiersArray | undefined) => ObjectLiteralExpression) | undefined seen as ((node: PropertyDeclaration & { readonly name: PrivateIdentifier; }, modifiers: ModifiersArray | undefined) => Expression) | undefined, whose readonly field name becomes writable: a readonly field may hold something narrower than PrivateIdentifier, which a write of PrivateIdentifier would replace": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a value of type (chain: DiagnosticMessageChain | ReusableDiagnosticMessageChain) => RepopulateDiagnosticChainInfo | undefined seen as (chain: DiagnosticMessageChain) => RepopulateDiagnosticChainInfo | undefined, which can write ReusableDiagnosticMessageChain[] | undefined where DiagnosticMessageChain[] | undefined is read": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a value of type (node: PrivateIdentifierGetAccessorDeclaration, modifiers: ModifiersArray | undefined) => ObjectLiteralExpression seen as ((node: GetAccessorDeclaration & { readonly name: PrivateIdentifier; }, modifiers: ModifiersArray | undefined) => Expression) | undefined, whose readonly field name becomes writable: a readonly field may hold something narrower than PrivateIdentifier, which a write of PrivateIdentifier would replace": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a value of type (node: PrivateIdentifierMethodDeclaration, modifiers: ModifiersArray | undefined) => ObjectLiteralExpression seen as ((node: MethodDeclaration & { readonly name: PrivateIdentifier; }, modifiers: ModifiersArray | undefined) => Expression) | undefined, whose readonly field name becomes writable: a readonly field may hold something narrower than PrivateIdentifier, which a write of PrivateIdentifier would replace": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a value of type (node: PrivateIdentifierSetAccessorDeclaration, modifiers: ModifiersArray | undefined) => ObjectLiteralExpression seen as ((node: SetAccessorDeclaration & { readonly name: PrivateIdentifier; }, modifiers: ModifiersArray | undefined) => Expression) | undefined, whose readonly field name becomes writable: a readonly field may hold something narrower than PrivateIdentifier, which a write of PrivateIdentifier would replace": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a value of type (sourceFile: SourceFile | undefined, cancellationToken: CancellationToken | undefined) => readonly DiagnosticWithLocation[] seen as (sourceFile?: SourceFile | undefined, cancellationToken?: CancellationToken | undefined) => readonly Diagnostic[], which can write SourceFile | undefined where SourceFile is read": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a value of type Block seen as TextRange, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace": {
+        "before": 2,
+        "after": 2,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a value of type BuilderProgramState seen as ReusableBuilderProgramState, which can write Map<Path, readonly Diagnostic[] | readonly ReusableDiagnostic[]> where Map<Path, readonly Diagnostic[]> is read": {
+        "before": 9,
+        "after": 9,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a value of type BuilderProgramStateWithDefinedProgram seen as BuilderProgramState, which can write Program | undefined where Program is read": {
+        "before": 12,
+        "after": 12,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a value of type CallExpression seen as TextRange, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace": {
+        "before": 10,
+        "after": 10,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a value of type ClassElement seen as TextRange, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a value of type ClassStaticBlockDeclaration | PropertyDeclaration seen as TextRange, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace": {
+        "before": 2,
+        "after": 2,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a value of type CompilerOptions | TypeAcquisition | WatchOptions | undefined seen as CompilerOptions | TypeAcquisition | WatchOptions, which can write TsConfigSourceFile | CompilerOptionsValue where CompilerOptionsValue is read": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a value of type CompilerOptionsValue seen as TsConfigSourceFile | CompilerOptionsValue, which can write string | number where string is read": {
+        "before": 5,
+        "after": 5,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a value of type ConstructorDeclaration seen as TextRange, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a value of type Diagnostic seen as Diagnostic, which can write SourceFile | undefined where SourceFile is read": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a value of type DiagnosticMessageChain seen as DiagnosticMessageChain | ReusableDiagnosticMessageChain, which can write ReusableDiagnosticMessageChain[] | undefined where DiagnosticMessageChain[] | undefined is read": {
+        "before": 2,
+        "after": 2,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a value of type DiagnosticMessageChain | { messageText: string; category: DiagnosticCategory; code: number; repopulateInfo?: () => RepopulateDiagnosticChainInfo; canonicalHead?: CanonicalDiagnostic; next: ... | undefined; } seen as ReusableDiagnosticMessageChain, which can write ReusableDiagnosticMessageChain[] | undefined where DiagnosticMessageChain[] | undefined is read": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a value of type DiagnosticMessageChain[] seen as ReusableDiagnosticMessageChain[] | undefined, which can write ReusableDiagnosticMessageChain where DiagnosticMessageChain is read": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a value of type DiagnosticMessageChain[] seen as ReusableDiagnosticMessageChain[], which can write ReusableDiagnosticMessageChain[] | undefined where DiagnosticMessageChain[] | undefined is read": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a value of type DiagnosticWithLocation seen as Diagnostic, which can write SourceFile | undefined where SourceFile is read": {
+        "before": 5,
+        "after": 5,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a value of type DiagnosticWithLocation | undefined seen as Diagnostic | undefined, which can write SourceFile | undefined where SourceFile is read": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a value of type Expression seen as SourceMapRange | undefined, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace": {
+        "before": 4,
+        "after": 4,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a value of type Expression seen as TextRange, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace": {
+        "before": 16,
+        "after": 16,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a value of type GeneratedIdentifier seen as Identifier, whose readonly field emitNode becomes writable: a readonly field may hold something narrower than EmitNode & { autoGenerate: AutoGenerateInfo; }, which a write of EmitNode | undefined would replace": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a value of type Identifier seen as SourceMapRange | undefined, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace": {
+        "before": 2,
+        "after": 2,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a value of type Identifier seen as TextRange, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace": {
+        "before": 4,
+        "after": 4,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a value of type Identifier | TextRange seen as SourceMapRange | undefined, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace": {
+        "before": 3,
+        "after": 3,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a value of type Identifier | undefined seen as Identifier | TextRange, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace": {
+        "before": 3,
+        "after": 3,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a value of type ImmediatelyInvokedArrowFunction seen as TextRange, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a value of type IncrementalMultiFileEmitBuildInfoFileInfo": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a value of type LeftHandSideExpression & GeneratedIdentifier seen as Expression, which can write EmitNode | undefined where EmitNode & { autoGenerate: AutoGenerateInfo; } is read": {
+        "before": 2,
+        "after": 2,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a value of type Map<Path, Diagnostic[]> seen as Map<Path, readonly Diagnostic[]> | undefined, which can write readonly Diagnostic[] where Diagnostic[] is read": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a value of type Map<Path, FileWatcher> seen as Map<string, FileWatcher>, which can write string where Path is read": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a value of type Map<Path, readonly ReusableDiagnostic[]> seen as Map<Path, readonly Diagnostic[] | readonly ReusableDiagnostic[]>, which can write readonly Diagnostic[] | readonly ReusableDiagnostic[] where readonly ReusableDiagnostic[] is read": {
+        "before": 2,
+        "after": 2,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a value of type Map<Path, readonly ReusableDiagnostic[]> | undefined seen as Map<Path, readonly Diagnostic[] | readonly ReusableDiagnostic[]> | undefined, which can write readonly Diagnostic[] | readonly ReusableDiagnostic[] where readonly ReusableDiagnostic[] is read": {
+        "before": 2,
+        "after": 2,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a value of type Map<ResolvedConfigFilePath, BuildInfoCacheEntry> seen as Map<ResolvedConfigFilePath, unknown>, which can write unknown where BuildInfoCacheEntry is read": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a value of type Map<ResolvedConfigFilePath, ConfigFileCacheEntry> seen as Map<ResolvedConfigFilePath, unknown>, which can write unknown where ConfigFileCacheEntry is read": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a value of type Map<ResolvedConfigFilePath, Map<Path, Date>> seen as Map<ResolvedConfigFilePath, unknown>, which can write unknown where Map<Path, Date> is read": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a value of type Map<ResolvedConfigFilePath, ProgramUpdateLevel> seen as Map<ResolvedConfigFilePath, unknown>, which can write unknown where ProgramUpdateLevel is read": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a value of type Map<ResolvedConfigFilePath, Set<string> | undefined> seen as Map<ResolvedConfigFilePath, unknown>, which can write unknown where Set<string> | undefined is read": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a value of type Map<ResolvedConfigFilePath, T> seen as Map<ResolvedConfigFilePath, unknown>, which can write unknown where T is read": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a value of type Map<ResolvedConfigFilePath, UpToDateStatus> seen as Map<ResolvedConfigFilePath, unknown>, which can write unknown where UpToDateStatus is read": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a value of type Map<ResolvedConfigFilePath, readonly Diagnostic[]> seen as Map<ResolvedConfigFilePath, unknown>, which can write unknown where readonly Diagnostic[] is read": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a value of type Map<ResolvedConfigFilePath, true> seen as Map<ResolvedConfigFilePath, unknown>, which can write unknown where true is read": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a value of type Map<string, ImportsNotUsedAsValues> seen as \"boolean\" | \"list\" | \"listOrElement\" | \"number\" | \"object\" | \"string\" | Map<string, string | number>, which can write string | number where ImportsNotUsedAsValues is read": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a value of type Map<string, JsxEmit> seen as Map<string, string | number>, which can write string | number where JsxEmit is read": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a value of type Map<string, ModuleDetectionKind> seen as \"boolean\" | \"list\" | \"listOrElement\" | \"number\" | \"object\" | \"string\" | Map<string, string | number>, which can write string | number where ModuleDetectionKind is read": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a value of type Map<string, ModuleResolutionKind> seen as \"boolean\" | \"list\" | \"listOrElement\" | \"number\" | \"object\" | \"string\" | Map<string, string | number>, which can write string | number where ModuleResolutionKind is read": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a value of type Map<string, NewLineKind> seen as \"boolean\" | \"list\" | \"listOrElement\" | \"number\" | \"object\" | \"string\" | Map<string, string | number>, which can write string | number where NewLineKind is read": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a value of type Map<string, PollingWatchKind> seen as \"boolean\" | \"list\" | \"listOrElement\" | \"number\" | \"object\" | \"string\" | Map<string, string | number>, which can write string | number where PollingWatchKind is read": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a value of type Map<string, WatchDirectoryKind> seen as \"boolean\" | \"list\" | \"listOrElement\" | \"number\" | \"object\" | \"string\" | Map<string, string | number>, which can write string | number where WatchDirectoryKind is read": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a value of type Map<string, WatchFileKind> seen as \"boolean\" | \"list\" | \"listOrElement\" | \"number\" | \"object\" | \"string\" | Map<string, string | number>, which can write string | number where WatchFileKind is read": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a value of type Map<string, string> seen as Map<string, string | number>, which can write string | number where string is read": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a value of type MapLike<string | number | boolean | string[] | PluginImport[] | ProjectReference[] | (string | number)[] | MapLike<string[]> | TsConfigSourceFile | null | undefined> seen as OptionsBase | undefined, which can write string | number where string is read": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a value of type MethodDeclaration | PropertyAssignment | AccessorDeclaration seen as TextRange, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a value of type Node seen as Node | SourceMapRange, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a value of type Node seen as Node | TextRange, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a value of type Node | SourceMapRange seen as SourceMapRange, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a value of type Node | TextRange seen as TextRange, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a value of type NodeArray<ClassElement> seen as TextRange, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace": {
+        "before": 2,
+        "after": 2,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a value of type NodeArray<Statement> seen as TextRange, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace": {
+        "before": 3,
+        "after": 3,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a value of type NonNullable<T>": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a value of type ParameterDeclaration seen as SourceMapRange | undefined, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a value of type ParameterDeclaration seen as TextRange, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace": {
+        "before": 2,
+        "after": 2,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a value of type ParameterDeclaration | PropertyDeclaration | PropertySignature | SignatureDeclaration seen as Mutable<ParameterDeclaration | PropertyDeclaration | PropertySignature | SignatureDeclaration>, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a value of type ParseConfigHost seen as ModuleResolutionHost, which can write boolean | (() => boolean) | undefined where boolean is read": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a value of type Path[] seen as string[], which can write string where Path is read": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a value of type PrimitiveLiteral": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a value of type PrivateEnvironment<{ className: undefined; weakSetName: undefined; }, PrivateIdentifierInfo> seen as PrivateEnvironment<PrivateEnvironmentData, PrivateIdentifierInfo>, which can write Identifier | undefined where undefined is read": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a value of type PrivateIdentifierInExpression": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a value of type PropertyAccessExpression seen as TextRange, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a value of type PropertyDeclaration seen as TextRange, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a value of type PropertyName seen as SourceMapRange | undefined, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a value of type Readonly<ReusableBuilderProgramState> | undefined seen as BuilderState | undefined, whose readonly field fileInfos becomes writable: a readonly field may hold something narrower than Map<Path, FileInfo>, which a write of Map<Path, FileInfo> would replace": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a value of type SolutionBuilderHost<T> seen as ModuleResolutionHost, whose method useCaseSensitiveFileNames becomes a writable field: a write of boolean | (() => boolean) | undefined would replace a method of type () => boolean": {
+        "before": 3,
+        "after": 3,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a value of type SolutionBuilderWithWatchHost<T> seen as WatchFactoryHost & { trace?(s: string): void; }, whose method useCaseSensitiveFileNames becomes a writable field: a write of boolean | (() => boolean) would replace a method of type () => boolean": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a value of type StringLiteral seen as Mutable<StringLiteral>, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a value of type StringLiteral seen as TextRange, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a value of type T seen as TextRange, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a value of type TsConfigSourceFile | CompilerOptionsValue seen as string | number | boolean | PluginImport[] | ProjectReference[] | (string | number)[] | MapLike<string[]> | TsConfigSourceFile | null | undefined, which can write string | number where string is read": {
+        "before": 2,
+        "after": 2,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a value of type TypeAcquisition seen as CompilerOptions | TypeAcquisition, which can write TsConfigSourceFile | CompilerOptionsValue where CompilerOptionsValue is read": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a value of type any: any has no proven type": {
+        "before": 8,
+        "after": 8,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a value of type never": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a value of type never[] seen as (SourceMapRange | undefined)[], which can write SourceMapRange | undefined where never is read": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a value of type never[] seen as Diagnostic[], which can write Diagnostic where never is read": {
+        "before": 2,
+        "after": 2,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a value of type never[] seen as ProjectReference[], which can write ProjectReference where never is read": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a value of type never[] seen as ResolvedConfigFileName[], which can write ResolvedConfigFileName where never is read": {
+        "before": 2,
+        "after": 2,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a value of type number[] seen as string | (string | number)[] | undefined, which can write string | number where number is read": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a value of type readonly DiagnosticWithLocation[] seen as readonly Diagnostic[], which can write SourceFile | undefined where SourceFile is read": {
+        "before": 2,
+        "after": 2,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a value of type readonly IncrementalBundleEmitBuildInfoFileInfo[] | readonly IncrementalMultiFileEmitBuildInfoFileInfo[] where an array goes": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a value of type string | FileInfo | { version: string; signature: false; affectsGlobalScope: true | undefined; impliedFormat: ResolutionMode; } seen as IncrementalMultiFileEmitBuildInfoFileInfo, which can write string | false | undefined where string | undefined is read": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a value of type string | number | boolean | string[] | PluginImport[] | ProjectReference[] | (string | number)[] | MapLike<string[]> seen as CompilerOptionsValue, which can write string | number where string is read": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a value of type string[] seen as CompilerOptionsValue, which can write string | number where string is read": {
+        "before": 5,
+        "after": 5,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a value of type string[] seen as string | (string | number)[] | undefined, which can write string | number where string is read": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a value of type string[] | PluginImport[] | ProjectReference[] | (string | number)[] seen as unknown[], which can write unknown where string is read": {
+        "before": 2,
+        "after": 2,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a value of type { prepend?: boolean | undefined; circular?: boolean | undefined; path: string; originalPath: undefined; }[] | undefined seen as readonly ProjectReference[] | undefined, which can write string | undefined where undefined is read": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a value of type { referencedName: StringLiteral; name: PropertyName; } | { referencedName: Identifier; name: ComputedPropertyName; } seen as { referencedName: Expression | undefined; name: PropertyName | undefined; }, which can write Expression | undefined where StringLiteral is read": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a write through a union to a slot (SourceMapRange | undefined)[] doesn't name": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a { config?: any; error?: Diagnostic | undefined; } seen as { config?: AdamicJsonRecoveryObject; error?: Diagnostic | undefined; } (fixed objects and records have different storage; copy explicitly)": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a {} | undefined seen as AdamicJsonRecoveryValue | undefined (fixed objects and records have different storage; copy explicitly)": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a {} | undefined seen as TsConfigSourceFile | CompilerOptionsValue (fixed objects and records have different storage; copy explicitly)": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "an array going where a plain object type is held": {
+        "before": 2,
+        "after": 2,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "an assignment result with different storage": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "an assignment used as a value whose target write type Diagnostic cannot be read as void": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "an assignment used as a value whose target write type Diagnostic[] | undefined cannot be read as void": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "an assignment used as a value whose target write type Program | undefined cannot be read as void": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "an assignment value to a member": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "an element of an array literal a type argument is inferred from, whose type in its constraint {} can't be read": {
+        "before": 5,
+        "after": 5,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "an indexed mutation without a closed const literal origin": {
+        "before": 2,
+        "after": 2,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "an object refinement using an open numeric enum as a literal tag": {
+        "before": 106,
+        "after": 106,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "an object with a nullable field viewed as unknown or object (null and undefined slot tags)": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "an optional Map get through a structural receiver": {
+        "before": 2,
+        "after": 2,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "an unproven relation from SolutionBuilderHost<T> | SolutionBuilderWithWatchHost<T> to SolutionBuilderHost<T>: optional field reportErrorSummary has no proven compatible presence/type": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "an unproven relation from SolutionBuilderHostBase<T> to SolutionBuilderHost<T>: optional field reportErrorSummary has no proven compatible presence/type": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "an unproven relation from string to T: the source is not assignable to the target": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "an unproven value assigned to a numeric literal or enum member slot BuildStep.Done": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "an unproven value assigned to a numeric literal or enum member slot BuilderFileEmit.Js | BuilderFileEmit.JsMap | BuilderFileEmit.JsInlineMap | BuilderFileEmit.DtsErrors | BuilderFileEmit.DtsEmit | ... 5 more ... | BuilderFileEmit.All": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "an unproven value assigned to a numeric literal or enum member slot BuilderFileEmit.None": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "an unproven value assigned to a numeric literal or enum member slot CompilerOptions | BuilderFileEmit": {
+        "before": 5,
+        "after": 5,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "an unproven value assigned to a numeric literal or enum member slot SyntaxKind.ClassStaticBlockDeclaration": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "an unproven value assigned to a numeric literal or enum member slot SyntaxKind.ExpressionWithTypeArguments": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "an unrestricted dictionary write that can violate named property all; use a literal key or a value accepted by every named property": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "an unrestricted dictionary write that can violate named property configFile; use a literal key or a value accepted by every named property": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "checked predicate overload target NonIncrementalBuildInfo": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "forEach with a callback returning boolean | undefined": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "in when a possibly absent spread has no property presence descriptors": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "inherited library member push read as an own field": {
+        "before": 2,
+        "after": 2,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "instanceof against a value that isn't a declared class": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "method bind with an assigned receiver identifier": {
+        "before": 3,
+        "after": 3,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "optional chaining to .size on a value": {
+        "before": 3,
+        "after": 3,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "optional property all in CompilerOptions absent from structural source object, which can hide fields": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "optional property id in ArrayBindingPattern absent from structural source never, which can hide fields": {
+        "before": 6,
+        "after": 6,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "optional property id in AssignmentExpression<EqualsToken> & { readonly left: Identifier; readonly right: WrappedExpression<AnonymousFunctionDefinition>; } absent from structural source never, which can hide fields": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "optional property id in BigIntLiteral absent from structural source never, which can hide fields": {
+        "before": 2,
+        "after": 2,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "optional property id in FalseLiteral absent from structural source never, which can hide fields": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "optional property id in PrivateIdentifier absent from structural source never, which can hide fields": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "optional property onUnRecoverableConfigFileDiagnostic in ProgramHost<T> & { onUnRecoverableConfigFileDiagnostic?: DiagnosticReporter; } absent from structural source SolutionBuilderHost<T>, which can hide fields": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "optional property repopulateInfo in DiagnosticMessageChain absent from structural source SerializedDiagnosticMessageChain, which can hide fields": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "optional property reportsUnnecessary in Diagnostic absent from structural source DiagnosticRelatedInformation, which can hide fields": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "optional property reportsUnnecessary in ReusableDiagnostic absent from structural source ReusableDiagnosticRelatedInformation, which can hide fields": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "optional property source in SourceMapRange absent from structural source TextRange, which can hide fields": {
+        "before": 11,
+        "after": 11,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "optional property textSourceNode in StringLiteral absent from structural source never, which can hide fields": {
+        "before": 2,
+        "after": 2,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "optional property watchOptions in TSConfig & { watchOptions?: object | undefined; } absent from structural source { include: readonly string[] | undefined; exclude: readonly string[] | undefined; }, which can hide fields": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "optional record property access": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "overload 1 of arrayFrom result U[] cannot be served by implementation result (T | U)[]": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "overload 1 of convertOptionsFromJson result WatchOptions | undefined cannot be served by implementation result CompilerOptions | TypeAcquisition | WatchOptions | undefined": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "overload 1 of convertOrRepopulateDiagnosticMessageChainArray parameter array cannot be served by implementation parameter array": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "overload 1 of createBuilderProgram result SemanticDiagnosticsBuilderProgram cannot be served by implementation result BuilderProgram | undefined": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "overload 1 of filter result U[] cannot be served by implementation result readonly T[] | undefined": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "overload 1 of getSupportedExtensionsWithJsonIfResolveJsonModule parameter supportedExtensions cannot be served by implementation parameter supportedExtensions": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "overload 1 of sameMap result U[] cannot be served by implementation result readonly U[] | undefined": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "overload 1 of visitNode parameter node cannot be served by implementation parameter node": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "overload 2 of arrayToMap result Map<K, V2> cannot be served by implementation result Map<K, V1 | V2>": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "overload 2 of getParseTreeNode result T | undefined cannot be served by implementation result Node | undefined": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "writing a checked object field that may hold undefined or null, whose checked write can't change the representation its slot holds": {
+        "before": 6,
+        "after": 6,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "writing a checked object field without its source-slot type certificate": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "writing a possibly absent optional own field": {
+        "before": 6,
+        "after": 6,
+        "lowered": 0,
+        "moved_by_reason": {}
+      }
+    },
+    "lowered": [],
+    "moved": [],
+    "new_findings": [],
+    "new_sites": [],
+    "unit_first_stop_delta": [],
+    "regressions": [],
+    "totals": {
+      "before": {
+        "NotYet": 96,
+        "Refused": 460
+      },
+      "after": {
+        "NotYet": 96,
+        "Refused": 460
+      }
+    },
+    "panics": {
+      "before": [],
+      "after": []
+    }
+  },
+  "distinct_reads": {
+    "per_reason": {
+      "Object enumeration with getter or accessor descriptors": {
+        "before": 4,
+        "after": 4,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "Object.fromEntries": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "RegExp with a nonconstant pattern": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a BaseParsedCommandLine seen as ParsedCommandLine (fixed objects and records have different storage; copy explicitly)": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a BuildOptions seen as { extendedDiagnostics?: boolean; diagnostics?: boolean; } (fixed objects and records have different storage; copy explicitly)": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a CompilerOptions seen as MapLike<TsConfigSourceFile | CompilerOptionsValue> (fixed objects and records have different storage; copy explicitly)": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a CompilerOptions seen as MapLike<string | number | boolean | string[] | PluginImport[] | ProjectReference[] | (string | number)[] | MapLike<string[]> | TsConfigSourceFile | null | undefined> (fixed objects and records have different storage; copy explicitly)": {
+        "before": 2,
+        "after": 2,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a CompilerOptions seen as OptionsBase (fixed objects and records have different storage; copy explicitly)": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a Map of CompilerOptionsValue": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a Map or Set going where a plain object type is held": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a Map<string, JsxEmit> where Map<string, string | number> goes: its JsxEmit elements are stored as number and read there as string | number, held as a boxed union (build it as the slot's type where it's made, or copy its elements into one)": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a MapLike<string | number | boolean | string[] | PluginImport[] | ProjectReference[] | (string | number)[] | MapLike<string[]> | null | undefined> | undefined seen as WatchOptions | undefined (fixed objects and records have different storage; copy explicitly)": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a Record<string, CompilerOptionsValue> seen as CompilerOptions (fixed objects and records have different storage; copy explicitly)": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a SpreadElement": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a WatchOptions seen as MapLike<string | number | boolean | string[] | PluginImport[] | ProjectReference[] | (string | number)[] | MapLike<string[]> | null | undefined> (fixed objects and records have different storage; copy explicitly)": {
+        "before": 2,
+        "after": 2,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a WatchOptions seen as OptionsBase (fixed objects and records have different storage; copy explicitly)": {
+        "before": 2,
+        "after": 2,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a WatchOptions | undefined seen as OptionsBase | undefined (fixed objects and records have different storage; copy explicitly)": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a boolean | undefined variable a function value captures": {
+        "before": 2,
+        "after": 2,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a call spreading elements that cannot be packed": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a call through ?. (an optional call)": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a case whose type differs from the switch's": {
+        "before": 2,
+        "after": 2,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a cast that makes a viewed readonly array writable": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a cast the runtime can't check": {
+        "before": 92,
+        "after": 92,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a checked predicate target whose base has no required field to check ({ [key: string]: unknown; })": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a checked predicate target whose check would read past the depth bound (BuilderProgramStateWithDefinedProgram)": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a checked predicate target whose check would read past the depth bound (CircularBuildOrder)": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a checked predicate target whose check would read past the depth bound (CommandLineOptionOfCustomType)": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a checked predicate target whose check would read past the depth bound (IncrementalBundleEmitBuildInfo)": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a dynamic getter or method read, or a nullable field (runtime dispatch, slot tags and narrowed rereads)": {
+        "before": 2,
+        "after": 2,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a filter callback that doesn't return a boolean": {
+        "before": 2,
+        "after": 2,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a function returning CanonicalKey": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a function returning ImmediatelyInvokedArrowFunction": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a function returning U | undefined": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a function taking Path seen as one taking string (tsc relates a method's parameters both ways), so it can be handed what it can't take": {
+        "before": 2,
+        "after": 2,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a function taking Visitor seen as one taking Visitor<TIn, Node | undefined> (tsc relates a method's parameters both ways), so it can be handed what it can't take": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a function taking boolean seen as one taking boolean | undefined (tsc relates a method's parameters both ways), so it can be handed what it can't take": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a generic instantiated at void whose body reads the value: getPropFromRaw's T = void (read from the signature), read at /workspace/scratch/recordreplay/candidate2/src/compiler/commandLineParser.ts:3253:24 as a returned value": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a member typed any (config, declared): any has no proven type, so every read of it through a typed view is unchecked": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a method read as a value (createExpressionStatement would lose its object, and this with it)": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a method read as a value (getBuildInfo would lose its object, and this with it)": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a method read as a value (getCanonicalFileName would lose its object, and this with it)": {
+        "before": 5,
+        "after": 5,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a method read as a value (getParsedCommandLine would lose its object, and this with it)": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a method read as a value (getSourceFile would lose its object, and this with it)": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a method read as a value (hasChangedEmitSignature would lose its object, and this with it)": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a method sharing its name with a getter; rename the getter or use a callable arrow field in the interface and implementation": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a narrowed union member whose object tag cannot be checked with typeof; keep differently held object kinds in separately typed variables": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a primitive brand member __canonicalKey whose type is not void": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a read narrowed to undefined of a binding a call may write": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a read the checker narrowed to never of a binding a call may write": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a structural relation deeper than 64 type pairs while checking promise-returning functions seen as void-returning": {
+        "before": 3,
+        "after": 3,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a template interpolating a union with an object, an array, a map or a function in it": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a template interpolating an object, an array, a map, a function or undefined": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a value of type ((node: PrivateIdentifierPropertyDeclaration, modifiers: ModifiersArray | undefined) => ObjectLiteralExpression) | undefined seen as ((node: PropertyDeclaration & { readonly name: PrivateIdentifier; }, modifiers: ModifiersArray | undefined) => Expression) | undefined, whose readonly field name becomes writable: a readonly field may hold something narrower than PrivateIdentifier, which a write of PrivateIdentifier would replace": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a value of type (chain: DiagnosticMessageChain | ReusableDiagnosticMessageChain) => RepopulateDiagnosticChainInfo | undefined seen as (chain: DiagnosticMessageChain) => RepopulateDiagnosticChainInfo | undefined, which can write ReusableDiagnosticMessageChain[] | undefined where DiagnosticMessageChain[] | undefined is read": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a value of type (node: PrivateIdentifierGetAccessorDeclaration, modifiers: ModifiersArray | undefined) => ObjectLiteralExpression seen as ((node: GetAccessorDeclaration & { readonly name: PrivateIdentifier; }, modifiers: ModifiersArray | undefined) => Expression) | undefined, whose readonly field name becomes writable: a readonly field may hold something narrower than PrivateIdentifier, which a write of PrivateIdentifier would replace": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a value of type (node: PrivateIdentifierMethodDeclaration, modifiers: ModifiersArray | undefined) => ObjectLiteralExpression seen as ((node: MethodDeclaration & { readonly name: PrivateIdentifier; }, modifiers: ModifiersArray | undefined) => Expression) | undefined, whose readonly field name becomes writable: a readonly field may hold something narrower than PrivateIdentifier, which a write of PrivateIdentifier would replace": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a value of type (node: PrivateIdentifierSetAccessorDeclaration, modifiers: ModifiersArray | undefined) => ObjectLiteralExpression seen as ((node: SetAccessorDeclaration & { readonly name: PrivateIdentifier; }, modifiers: ModifiersArray | undefined) => Expression) | undefined, whose readonly field name becomes writable: a readonly field may hold something narrower than PrivateIdentifier, which a write of PrivateIdentifier would replace": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a value of type (sourceFile: SourceFile | undefined, cancellationToken: CancellationToken | undefined) => readonly DiagnosticWithLocation[] seen as (sourceFile?: SourceFile | undefined, cancellationToken?: CancellationToken | undefined) => readonly Diagnostic[], which can write SourceFile | undefined where SourceFile is read": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a value of type Block seen as TextRange, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace": {
+        "before": 2,
+        "after": 2,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a value of type BuilderProgramState seen as ReusableBuilderProgramState, which can write Map<Path, readonly Diagnostic[] | readonly ReusableDiagnostic[]> where Map<Path, readonly Diagnostic[]> is read": {
+        "before": 9,
+        "after": 9,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a value of type BuilderProgramStateWithDefinedProgram seen as BuilderProgramState, which can write Program | undefined where Program is read": {
+        "before": 12,
+        "after": 12,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a value of type CallExpression seen as TextRange, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace": {
+        "before": 10,
+        "after": 10,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a value of type ClassElement seen as TextRange, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a value of type ClassStaticBlockDeclaration | PropertyDeclaration seen as TextRange, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace": {
+        "before": 2,
+        "after": 2,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a value of type CompilerOptions | TypeAcquisition | WatchOptions | undefined seen as CompilerOptions | TypeAcquisition | WatchOptions, which can write TsConfigSourceFile | CompilerOptionsValue where CompilerOptionsValue is read": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a value of type CompilerOptionsValue seen as TsConfigSourceFile | CompilerOptionsValue, which can write string | number where string is read": {
+        "before": 5,
+        "after": 5,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a value of type ConstructorDeclaration seen as TextRange, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a value of type Diagnostic seen as Diagnostic, which can write SourceFile | undefined where SourceFile is read": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a value of type DiagnosticMessageChain seen as DiagnosticMessageChain | ReusableDiagnosticMessageChain, which can write ReusableDiagnosticMessageChain[] | undefined where DiagnosticMessageChain[] | undefined is read": {
+        "before": 2,
+        "after": 2,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a value of type DiagnosticMessageChain | { messageText: string; category: DiagnosticCategory; code: number; repopulateInfo?: () => RepopulateDiagnosticChainInfo; canonicalHead?: CanonicalDiagnostic; next: ... | undefined; } seen as ReusableDiagnosticMessageChain, which can write ReusableDiagnosticMessageChain[] | undefined where DiagnosticMessageChain[] | undefined is read": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a value of type DiagnosticMessageChain[] seen as ReusableDiagnosticMessageChain[] | undefined, which can write ReusableDiagnosticMessageChain where DiagnosticMessageChain is read": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a value of type DiagnosticMessageChain[] seen as ReusableDiagnosticMessageChain[], which can write ReusableDiagnosticMessageChain[] | undefined where DiagnosticMessageChain[] | undefined is read": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a value of type DiagnosticWithLocation seen as Diagnostic, which can write SourceFile | undefined where SourceFile is read": {
+        "before": 5,
+        "after": 5,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a value of type DiagnosticWithLocation | undefined seen as Diagnostic | undefined, which can write SourceFile | undefined where SourceFile is read": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a value of type Expression seen as SourceMapRange | undefined, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace": {
+        "before": 4,
+        "after": 4,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a value of type Expression seen as TextRange, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace": {
+        "before": 16,
+        "after": 16,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a value of type GeneratedIdentifier seen as Identifier, whose readonly field emitNode becomes writable: a readonly field may hold something narrower than EmitNode & { autoGenerate: AutoGenerateInfo; }, which a write of EmitNode | undefined would replace": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a value of type Identifier seen as SourceMapRange | undefined, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace": {
+        "before": 2,
+        "after": 2,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a value of type Identifier seen as TextRange, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace": {
+        "before": 4,
+        "after": 4,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a value of type Identifier | TextRange seen as SourceMapRange | undefined, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace": {
+        "before": 3,
+        "after": 3,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a value of type Identifier | undefined seen as Identifier | TextRange, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace": {
+        "before": 3,
+        "after": 3,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a value of type ImmediatelyInvokedArrowFunction seen as TextRange, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a value of type IncrementalMultiFileEmitBuildInfoFileInfo": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a value of type LeftHandSideExpression & GeneratedIdentifier seen as Expression, which can write EmitNode | undefined where EmitNode & { autoGenerate: AutoGenerateInfo; } is read": {
+        "before": 2,
+        "after": 2,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a value of type Map<Path, Diagnostic[]> seen as Map<Path, readonly Diagnostic[]> | undefined, which can write readonly Diagnostic[] where Diagnostic[] is read": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a value of type Map<Path, FileWatcher> seen as Map<string, FileWatcher>, which can write string where Path is read": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a value of type Map<Path, readonly ReusableDiagnostic[]> seen as Map<Path, readonly Diagnostic[] | readonly ReusableDiagnostic[]>, which can write readonly Diagnostic[] | readonly ReusableDiagnostic[] where readonly ReusableDiagnostic[] is read": {
+        "before": 2,
+        "after": 2,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a value of type Map<Path, readonly ReusableDiagnostic[]> | undefined seen as Map<Path, readonly Diagnostic[] | readonly ReusableDiagnostic[]> | undefined, which can write readonly Diagnostic[] | readonly ReusableDiagnostic[] where readonly ReusableDiagnostic[] is read": {
+        "before": 2,
+        "after": 2,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a value of type Map<ResolvedConfigFilePath, BuildInfoCacheEntry> seen as Map<ResolvedConfigFilePath, unknown>, which can write unknown where BuildInfoCacheEntry is read": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a value of type Map<ResolvedConfigFilePath, ConfigFileCacheEntry> seen as Map<ResolvedConfigFilePath, unknown>, which can write unknown where ConfigFileCacheEntry is read": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a value of type Map<ResolvedConfigFilePath, Map<Path, Date>> seen as Map<ResolvedConfigFilePath, unknown>, which can write unknown where Map<Path, Date> is read": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a value of type Map<ResolvedConfigFilePath, ProgramUpdateLevel> seen as Map<ResolvedConfigFilePath, unknown>, which can write unknown where ProgramUpdateLevel is read": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a value of type Map<ResolvedConfigFilePath, Set<string> | undefined> seen as Map<ResolvedConfigFilePath, unknown>, which can write unknown where Set<string> | undefined is read": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a value of type Map<ResolvedConfigFilePath, T> seen as Map<ResolvedConfigFilePath, unknown>, which can write unknown where T is read": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a value of type Map<ResolvedConfigFilePath, UpToDateStatus> seen as Map<ResolvedConfigFilePath, unknown>, which can write unknown where UpToDateStatus is read": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a value of type Map<ResolvedConfigFilePath, readonly Diagnostic[]> seen as Map<ResolvedConfigFilePath, unknown>, which can write unknown where readonly Diagnostic[] is read": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a value of type Map<ResolvedConfigFilePath, true> seen as Map<ResolvedConfigFilePath, unknown>, which can write unknown where true is read": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a value of type Map<string, ImportsNotUsedAsValues> seen as \"boolean\" | \"list\" | \"listOrElement\" | \"number\" | \"object\" | \"string\" | Map<string, string | number>, which can write string | number where ImportsNotUsedAsValues is read": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a value of type Map<string, JsxEmit> seen as Map<string, string | number>, which can write string | number where JsxEmit is read": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a value of type Map<string, ModuleDetectionKind> seen as \"boolean\" | \"list\" | \"listOrElement\" | \"number\" | \"object\" | \"string\" | Map<string, string | number>, which can write string | number where ModuleDetectionKind is read": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a value of type Map<string, ModuleResolutionKind> seen as \"boolean\" | \"list\" | \"listOrElement\" | \"number\" | \"object\" | \"string\" | Map<string, string | number>, which can write string | number where ModuleResolutionKind is read": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a value of type Map<string, NewLineKind> seen as \"boolean\" | \"list\" | \"listOrElement\" | \"number\" | \"object\" | \"string\" | Map<string, string | number>, which can write string | number where NewLineKind is read": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a value of type Map<string, PollingWatchKind> seen as \"boolean\" | \"list\" | \"listOrElement\" | \"number\" | \"object\" | \"string\" | Map<string, string | number>, which can write string | number where PollingWatchKind is read": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a value of type Map<string, WatchDirectoryKind> seen as \"boolean\" | \"list\" | \"listOrElement\" | \"number\" | \"object\" | \"string\" | Map<string, string | number>, which can write string | number where WatchDirectoryKind is read": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a value of type Map<string, WatchFileKind> seen as \"boolean\" | \"list\" | \"listOrElement\" | \"number\" | \"object\" | \"string\" | Map<string, string | number>, which can write string | number where WatchFileKind is read": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a value of type Map<string, string> seen as Map<string, string | number>, which can write string | number where string is read": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a value of type MapLike<string | number | boolean | string[] | PluginImport[] | ProjectReference[] | (string | number)[] | MapLike<string[]> | TsConfigSourceFile | null | undefined> seen as OptionsBase | undefined, which can write string | number where string is read": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a value of type MethodDeclaration | PropertyAssignment | AccessorDeclaration seen as TextRange, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a value of type Node seen as Node | SourceMapRange, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a value of type Node seen as Node | TextRange, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a value of type Node | SourceMapRange seen as SourceMapRange, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a value of type Node | TextRange seen as TextRange, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a value of type NodeArray<ClassElement> seen as TextRange, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace": {
+        "before": 2,
+        "after": 2,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a value of type NodeArray<Statement> seen as TextRange, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace": {
+        "before": 3,
+        "after": 3,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a value of type NonNullable<T>": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a value of type ParameterDeclaration seen as SourceMapRange | undefined, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a value of type ParameterDeclaration seen as TextRange, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace": {
+        "before": 2,
+        "after": 2,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a value of type ParameterDeclaration | PropertyDeclaration | PropertySignature | SignatureDeclaration seen as Mutable<ParameterDeclaration | PropertyDeclaration | PropertySignature | SignatureDeclaration>, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a value of type ParseConfigHost seen as ModuleResolutionHost, which can write boolean | (() => boolean) | undefined where boolean is read": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a value of type Path[] seen as string[], which can write string where Path is read": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a value of type PrimitiveLiteral": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a value of type PrivateEnvironment<{ className: undefined; weakSetName: undefined; }, PrivateIdentifierInfo> seen as PrivateEnvironment<PrivateEnvironmentData, PrivateIdentifierInfo>, which can write Identifier | undefined where undefined is read": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a value of type PrivateIdentifierInExpression": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a value of type PropertyAccessExpression seen as TextRange, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a value of type PropertyDeclaration seen as TextRange, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a value of type PropertyName seen as SourceMapRange | undefined, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a value of type Readonly<ReusableBuilderProgramState> | undefined seen as BuilderState | undefined, whose readonly field fileInfos becomes writable: a readonly field may hold something narrower than Map<Path, FileInfo>, which a write of Map<Path, FileInfo> would replace": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a value of type SolutionBuilderHost<T> seen as ModuleResolutionHost, whose method useCaseSensitiveFileNames becomes a writable field: a write of boolean | (() => boolean) | undefined would replace a method of type () => boolean": {
+        "before": 3,
+        "after": 3,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a value of type SolutionBuilderWithWatchHost<T> seen as WatchFactoryHost & { trace?(s: string): void; }, whose method useCaseSensitiveFileNames becomes a writable field: a write of boolean | (() => boolean) would replace a method of type () => boolean": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a value of type StringLiteral seen as Mutable<StringLiteral>, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a value of type StringLiteral seen as TextRange, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a value of type T seen as TextRange, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a value of type TsConfigSourceFile | CompilerOptionsValue seen as string | number | boolean | PluginImport[] | ProjectReference[] | (string | number)[] | MapLike<string[]> | TsConfigSourceFile | null | undefined, which can write string | number where string is read": {
+        "before": 2,
+        "after": 2,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a value of type TypeAcquisition seen as CompilerOptions | TypeAcquisition, which can write TsConfigSourceFile | CompilerOptionsValue where CompilerOptionsValue is read": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a value of type any: any has no proven type": {
+        "before": 8,
+        "after": 8,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a value of type never": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a value of type never[] seen as (SourceMapRange | undefined)[], which can write SourceMapRange | undefined where never is read": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a value of type never[] seen as Diagnostic[], which can write Diagnostic where never is read": {
+        "before": 2,
+        "after": 2,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a value of type never[] seen as ProjectReference[], which can write ProjectReference where never is read": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a value of type never[] seen as ResolvedConfigFileName[], which can write ResolvedConfigFileName where never is read": {
+        "before": 2,
+        "after": 2,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a value of type number[] seen as string | (string | number)[] | undefined, which can write string | number where number is read": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a value of type readonly DiagnosticWithLocation[] seen as readonly Diagnostic[], which can write SourceFile | undefined where SourceFile is read": {
+        "before": 2,
+        "after": 2,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a value of type readonly IncrementalBundleEmitBuildInfoFileInfo[] | readonly IncrementalMultiFileEmitBuildInfoFileInfo[] where an array goes": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a value of type string | FileInfo | { version: string; signature: false; affectsGlobalScope: true | undefined; impliedFormat: ResolutionMode; } seen as IncrementalMultiFileEmitBuildInfoFileInfo, which can write string | false | undefined where string | undefined is read": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a value of type string | number | boolean | string[] | PluginImport[] | ProjectReference[] | (string | number)[] | MapLike<string[]> seen as CompilerOptionsValue, which can write string | number where string is read": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a value of type string[] seen as CompilerOptionsValue, which can write string | number where string is read": {
+        "before": 5,
+        "after": 5,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a value of type string[] seen as string | (string | number)[] | undefined, which can write string | number where string is read": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a value of type string[] | PluginImport[] | ProjectReference[] | (string | number)[] seen as unknown[], which can write unknown where string is read": {
+        "before": 2,
+        "after": 2,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a value of type { prepend?: boolean | undefined; circular?: boolean | undefined; path: string; originalPath: undefined; }[] | undefined seen as readonly ProjectReference[] | undefined, which can write string | undefined where undefined is read": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a value of type { referencedName: StringLiteral; name: PropertyName; } | { referencedName: Identifier; name: ComputedPropertyName; } seen as { referencedName: Expression | undefined; name: PropertyName | undefined; }, which can write Expression | undefined where StringLiteral is read": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a write through a union to a slot (SourceMapRange | undefined)[] doesn't name": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a { config?: any; error?: Diagnostic | undefined; } seen as { config?: AdamicJsonRecoveryObject; error?: Diagnostic | undefined; } (fixed objects and records have different storage; copy explicitly)": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a {} | undefined seen as AdamicJsonRecoveryValue | undefined (fixed objects and records have different storage; copy explicitly)": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "a {} | undefined seen as TsConfigSourceFile | CompilerOptionsValue (fixed objects and records have different storage; copy explicitly)": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "an array going where a plain object type is held": {
+        "before": 2,
+        "after": 2,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "an assignment result with different storage": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "an assignment used as a value whose target write type Diagnostic cannot be read as void": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "an assignment used as a value whose target write type Diagnostic[] | undefined cannot be read as void": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "an assignment used as a value whose target write type Program | undefined cannot be read as void": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "an assignment value to a member": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "an element of an array literal a type argument is inferred from, whose type in its constraint {} can't be read": {
+        "before": 5,
+        "after": 5,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "an indexed mutation without a closed const literal origin": {
+        "before": 2,
+        "after": 2,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "an object refinement using an open numeric enum as a literal tag": {
+        "before": 84,
+        "after": 84,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "an object with a nullable field viewed as unknown or object (null and undefined slot tags)": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "an optional Map get through a structural receiver": {
+        "before": 2,
+        "after": 2,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "an unproven relation from SolutionBuilderHost<T> | SolutionBuilderWithWatchHost<T> to SolutionBuilderHost<T>: optional field reportErrorSummary has no proven compatible presence/type": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "an unproven relation from SolutionBuilderHostBase<T> to SolutionBuilderHost<T>: optional field reportErrorSummary has no proven compatible presence/type": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "an unproven relation from string to T: the source is not assignable to the target": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "an unproven value assigned to a numeric literal or enum member slot BuildStep.Done": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "an unproven value assigned to a numeric literal or enum member slot BuilderFileEmit.Js | BuilderFileEmit.JsMap | BuilderFileEmit.JsInlineMap | BuilderFileEmit.DtsErrors | BuilderFileEmit.DtsEmit | ... 5 more ... | BuilderFileEmit.All": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "an unproven value assigned to a numeric literal or enum member slot BuilderFileEmit.None": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "an unproven value assigned to a numeric literal or enum member slot CompilerOptions | BuilderFileEmit": {
+        "before": 5,
+        "after": 5,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "an unproven value assigned to a numeric literal or enum member slot SyntaxKind.ClassStaticBlockDeclaration": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "an unproven value assigned to a numeric literal or enum member slot SyntaxKind.ExpressionWithTypeArguments": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "an unrestricted dictionary write that can violate named property all; use a literal key or a value accepted by every named property": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "an unrestricted dictionary write that can violate named property configFile; use a literal key or a value accepted by every named property": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "checked predicate overload target NonIncrementalBuildInfo": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "forEach with a callback returning boolean | undefined": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "in when a possibly absent spread has no property presence descriptors": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "inherited library member push read as an own field": {
+        "before": 2,
+        "after": 2,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "instanceof against a value that isn't a declared class": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "method bind with an assigned receiver identifier": {
+        "before": 3,
+        "after": 3,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "optional chaining to .size on a value": {
+        "before": 3,
+        "after": 3,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "optional property all in CompilerOptions absent from structural source object, which can hide fields": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "optional property id in ArrayBindingPattern absent from structural source never, which can hide fields": {
+        "before": 6,
+        "after": 6,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "optional property id in AssignmentExpression<EqualsToken> & { readonly left: Identifier; readonly right: WrappedExpression<AnonymousFunctionDefinition>; } absent from structural source never, which can hide fields": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "optional property id in BigIntLiteral absent from structural source never, which can hide fields": {
+        "before": 2,
+        "after": 2,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "optional property id in FalseLiteral absent from structural source never, which can hide fields": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "optional property id in PrivateIdentifier absent from structural source never, which can hide fields": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "optional property onUnRecoverableConfigFileDiagnostic in ProgramHost<T> & { onUnRecoverableConfigFileDiagnostic?: DiagnosticReporter; } absent from structural source SolutionBuilderHost<T>, which can hide fields": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "optional property repopulateInfo in DiagnosticMessageChain absent from structural source SerializedDiagnosticMessageChain, which can hide fields": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "optional property reportsUnnecessary in Diagnostic absent from structural source DiagnosticRelatedInformation, which can hide fields": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "optional property reportsUnnecessary in ReusableDiagnostic absent from structural source ReusableDiagnosticRelatedInformation, which can hide fields": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "optional property source in SourceMapRange absent from structural source TextRange, which can hide fields": {
+        "before": 11,
+        "after": 11,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "optional property textSourceNode in StringLiteral absent from structural source never, which can hide fields": {
+        "before": 2,
+        "after": 2,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "optional property watchOptions in TSConfig & { watchOptions?: object | undefined; } absent from structural source { include: readonly string[] | undefined; exclude: readonly string[] | undefined; }, which can hide fields": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "optional record property access": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "overload 1 of arrayFrom result U[] cannot be served by implementation result (T | U)[]": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "overload 1 of convertOptionsFromJson result WatchOptions | undefined cannot be served by implementation result CompilerOptions | TypeAcquisition | WatchOptions | undefined": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "overload 1 of convertOrRepopulateDiagnosticMessageChainArray parameter array cannot be served by implementation parameter array": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "overload 1 of createBuilderProgram result SemanticDiagnosticsBuilderProgram cannot be served by implementation result BuilderProgram | undefined": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "overload 1 of filter result U[] cannot be served by implementation result readonly T[] | undefined": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "overload 1 of getSupportedExtensionsWithJsonIfResolveJsonModule parameter supportedExtensions cannot be served by implementation parameter supportedExtensions": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "overload 1 of sameMap result U[] cannot be served by implementation result readonly U[] | undefined": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "overload 1 of visitNode parameter node cannot be served by implementation parameter node": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "overload 2 of arrayToMap result Map<K, V2> cannot be served by implementation result Map<K, V1 | V2>": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "overload 2 of getParseTreeNode result T | undefined cannot be served by implementation result Node | undefined": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "writing a checked object field that may hold undefined or null, whose checked write can't change the representation its slot holds": {
+        "before": 6,
+        "after": 6,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "writing a checked object field without its source-slot type certificate": {
+        "before": 1,
+        "after": 1,
+        "lowered": 0,
+        "moved_by_reason": {}
+      },
+      "writing a possibly absent optional own field": {
+        "before": 6,
+        "after": 6,
+        "lowered": 0,
+        "moved_by_reason": {}
+      }
+    },
+    "lowered": [],
+    "moved": [],
+    "new_findings": [],
+    "new_sites": [],
+    "unit_first_stop_delta": [],
+    "regressions": [],
+    "totals": {
+      "before": {
+        "NotYet": 96,
+        "Refused": 438
+      },
+      "after": {
+        "NotYet": 96,
+        "Refused": 438
+      }
+    },
+    "panics": {
+      "before": [],
+      "after": []
+    }
+  }
+}
