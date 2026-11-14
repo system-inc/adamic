@@ -17,6 +17,9 @@ struct adamic_async_reaction {
 typedef struct pending pending;
 struct pending { adamic_async_promise *promise; pending *next; };
 static pending *subscriptions;
+/* Like subscriptions, only the loop thread owns this rejection queue. Parallel
+ * work cannot create or share promises; host workers publish bytes, not values. */
+static pending *unhandled_first, *unhandled_last;
 static adamic_async_reaction *jobs, *jobs_last;
 
 /* Loop-thread-only abandonment cleanup; records borrow frames, never own protocol edges. */
@@ -45,6 +48,7 @@ void adamic_async_forget_cleanup(adamic_async_frame *frame) { (void)take_cleanup
 adamic_async_promise *adamic_async_new(void) {
     adamic_async_promise *promise = adamic_allocate(sizeof *promise, adamic_kind_async_promise);
     promise->settled = promise->rejected = promise->references = false;
+    promise->handled = false;
     promise->value = (adamic_value){.number = 0};
     promise->first = promise->last = NULL;
     return promise;
@@ -74,6 +78,7 @@ static void clear_wait(adamic_async_reaction *reaction) {
 }
 void adamic_async_await(adamic_async_frame *frame, adamic_async_promise *promise) {
     assert(frame->waiting == NULL);
+    promise->handled = true;
     adamic_async_reaction *reaction = adamic_allocate(sizeof *reaction, adamic_kind_async_reaction);
     reaction->frame = adamic_retain(frame);
     reaction->promise = NULL;
@@ -101,13 +106,20 @@ void adamic_async_await(adamic_async_frame *frame, adamic_async_promise *promise
 void adamic_async_settle(adamic_async_promise *promise, adamic_value value, bool references, bool rejected) {
     if (promise->settled) return;
     /* Each queued reaction takes its promise before clear_wait releases the
-     * frame edge. Those owners survive unregister; no temporary self-hold is
-     * needed. Without reactions there is no registry or waiting edge to drop. */
+     * frame edge. Those owners, or the rejection queue's hold below, survive
+     * unregister; no temporary self-hold is needed. */
     promise->settled = true;
     promise->rejected = rejected;
     promise->references = references;
     promise->value = value;
     if (references) adamic_retain(value.reference);
+    if (rejected && !promise->handled) {
+        pending *entry = malloc(sizeof *entry);
+        if (entry == NULL) adamic_panic("out of memory", 13);
+        *entry = (pending){adamic_retain(promise), NULL};
+        if (unhandled_last != NULL) unhandled_last->next = entry; else unhandled_first = entry;
+        unhandled_last = entry;
+    }
     adamic_async_reaction *reaction = promise->first;
 #ifndef ADAMIC_ASYNC_SETTLE_CYCLE_MUTANT
     promise->first = promise->last = NULL;
@@ -168,6 +180,23 @@ static bool source_closes_waiting(void);
 #include "timers_impl.h"
 #include "sources_impl.h"
 
+/* A queue entry owns its promise until this checkpoint, even if the caller
+ * discarded the result. A later await in the same drain can still handle it. */
+static void check_unhandled(void) {
+    while (unhandled_first != NULL) {
+        pending *entry = unhandled_first;
+        adamic_async_promise *promise = entry->promise;
+        if (promise->rejected && !promise->handled) {
+            if (!promise->references) adamic_panic("compiler bug: an unhandled rejection whose reason is not a reference", 68);
+            adamic_thrown = promise->value.reference;
+            adamic_uncaught();
+        }
+        unhandled_first = entry->next;
+        if (unhandled_first == NULL) unhandled_last = NULL;
+        free(entry);
+        adamic_release(promise);
+    }
+}
 void adamic_async_teardown(void) {
 #ifdef ADAMIC_NODE_HOST
     adamic_fs_file_watch_shutdown();
@@ -177,6 +206,7 @@ void adamic_async_teardown(void) {
     source_shutdown();
     host_shutdown();
     while (subscriptions != NULL) abandon(subscriptions->promise, false);
+    check_unhandled();
 }
 static void drain_jobs(void) {
     while (jobs != NULL) {
@@ -190,6 +220,7 @@ static void drain_jobs(void) {
     /* Node's ticks after the microtasks: a warning a job's setTimeout gave, or main's, which the
      * oracle's ES module runner writes only once main's jobs are done (timers_impl.h). */
     timer_warnings_flush();
+    check_unhandled();
 }
 void adamic_async_run(void) {
     /* A resolved await is a microtask, not a host turn. Run queued jobs before
