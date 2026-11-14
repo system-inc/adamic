@@ -1,0 +1,18 @@
+{
+  "file": "builderPublic.ts",
+  "commit_label": "head",
+  "exit_code": 0,
+  "seconds": 18.239295615999936,
+  "timeout": false,
+  "process_group_cleaned": true,
+  "command": [
+    "/workspace/scratch/c4v7-census/scan-head",
+    "/workspace/scratch/c4v7-census/adapted-head/src/compiler",
+    "/workspace/scratch/c4v7-census/head/stage3/census/c4v7-census/part2/head/06.jsonl"
+  ],
+  "findings": 0,
+  "zero_lowering_units": true,
+  "validated": true,
+  ".jsonl_sha256": "0f7987af2f08ef721359331998c1faeb1a9a6ef9c6ecd8a0863f87efbdec3b69",
+  ".log_sha256": "066c59c7aeb024c8029e4d0651a7b54fdcb12250ac1e4791b5f96f8ab98ffa69"
+}

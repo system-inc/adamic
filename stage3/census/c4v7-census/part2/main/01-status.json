@@ -1,0 +1,18 @@
+{
+  "file": "_namespaces/ts.moduleSpecifiers.ts",
+  "commit_label": "main",
+  "exit_code": 0,
+  "seconds": 19.635634148999998,
+  "timeout": false,
+  "process_group_cleaned": true,
+  "command": [
+    "/workspace/scratch/c4v7-census/scan-main",
+    "/workspace/scratch/c4v7-census/adapted-main/src/compiler",
+    "/workspace/scratch/c4v7-census/head/stage3/census/c4v7-census/part2/main/01.jsonl"
+  ],
+  "findings": 0,
+  "zero_lowering_units": true,
+  "validated": true,
+  ".jsonl_sha256": "d5f4b3f783ab32ccb02af55fa616cb18a56493b902cf22309d2c36afe5a33331",
+  ".log_sha256": "c6eb27c2b1912e750b4e32f45383553b24eb3bd2c563287dbdc61136d155eff5"
+}

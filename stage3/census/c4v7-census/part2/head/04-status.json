@@ -1,0 +1,18 @@
+{
+  "file": "binder.ts",
+  "commit_label": "head",
+  "exit_code": 0,
+  "seconds": 43.178784509000025,
+  "timeout": false,
+  "process_group_cleaned": true,
+  "command": [
+    "/workspace/scratch/c4v7-census/scan-head",
+    "/workspace/scratch/c4v7-census/adapted-head/src/compiler",
+    "/workspace/scratch/c4v7-census/head/stage3/census/c4v7-census/part2/head/04.jsonl"
+  ],
+  "findings": 169,
+  "zero_lowering_units": true,
+  "validated": true,
+  ".jsonl_sha256": "5d137928711652abb1249e7ead6fdd89eaba14a1000ed3345587d14876576883",
+  ".log_sha256": "45b98c2637fdb786598fdf1900db0a0acdbb29d089ca654c662ecccafb5acfc5"
+}

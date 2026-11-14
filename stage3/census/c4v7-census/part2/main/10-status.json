@@ -1,0 +1,18 @@
+{
+  "file": "commandLineParser.ts",
+  "commit_label": "main",
+  "exit_code": 0,
+  "seconds": 24.58319535999999,
+  "timeout": false,
+  "process_group_cleaned": true,
+  "command": [
+    "/workspace/scratch/c4v7-census/scan-main",
+    "/workspace/scratch/c4v7-census/adapted-main/src/compiler",
+    "/workspace/scratch/c4v7-census/head/stage3/census/c4v7-census/part2/main/10.jsonl"
+  ],
+  "findings": 92,
+  "zero_lowering_units": true,
+  "validated": true,
+  ".jsonl_sha256": "1546525d320f7ffa64eeb1718ab1d4fa985fa09e4d03f29823bb61222d00ff9b",
+  ".log_sha256": "7f0c2dda7046982b73a7aad86b499ad91e4382b85979c586b2267d88bc011513"
+}
