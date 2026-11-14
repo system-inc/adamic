@@ -17,6 +17,7 @@ import (
 
 	"github.com/system-inc/adamic/internal/buildcache/location"
 	"github.com/system-inc/adamic/internal/ir"
+	"github.com/system-inc/adamic/internal/native_runtime"
 	"github.com/system-inc/adamic/internal/toolchain"
 )
 
@@ -190,8 +191,8 @@ func runtimeInputs(directory string, options Options, extraFlags []string) ([]ru
 	if err := ValidateOptions(options); err != nil {
 		return nil, nil, "", "", err
 	}
-	var sources fs.FS = runtime
-	root := "runtime"
+	var sources fs.FS = native_runtime.Sources
+	root := "c"
 	if directory != "" {
 		sources, root = os.DirFS(directory), "."
 	}
@@ -292,7 +293,7 @@ func readRuntime(sources fs.FS, root string) ([]runtimeFile, error) {
 // units included: the runtime as its sources say it, with nothing of the machine or the compiler that builds it, so it is
 // the same on every machine. internal/oracle's counts table keys each row by it (countDigest).
 func RuntimeSourceDigest() (string, error) {
-	files, err := readRuntime(runtime, "runtime")
+	files, err := readRuntime(native_runtime.Sources, "c")
 	if err != nil {
 		return "", fmt.Errorf("native: runtime: %w", err)
 	}

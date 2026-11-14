@@ -50,7 +50,7 @@ The generic oracle covers number, string, boolean, object and array fields, base
 
 Collapsing the class cache to representation labels failed the separate-layout assertion for object fields. Comparing descriptors instead of erased identities changed Node/native ancestor results with both exiting successfully. Omitting base substitution failed the generic layout test. Native and lowering package tests, filtered oracles, vet and the complete counts update passed; all 173 pre-branch rows still have no regression.
 
-Additional integration files for this step are `internal/ir/ir.go` (erased identity metadata), `internal/javascript/javascript.go` (matching erased ancestry tests), and `internal/native/runtime/adamic.h` (the descriptor identity). The oracle registration, counts table and new `internal/oracle/testdata/class_inheritance_generic.a` hold the generic fixture. Fresh structural literals are checked through their constituent class values rather than treated as pre-existing mutable views; spreads retain the aggregate check.
+Additional integration files for this step are `internal/ir/ir.go` (erased identity metadata), `internal/javascript/javascript.go` (matching erased ancestry tests), and `internal/native_runtime/c/adamic.h` (the descriptor identity). The oracle registration, counts table and new `internal/oracle/testdata/class_inheritance_generic.a` hold the generic fixture. Fresh structural literals are checked through their constituent class values rather than treated as pre-existing mutable views; spreads retain the aggregate check.
 
 ## Conditional construction
 
@@ -107,9 +107,9 @@ Files outside the original new lowering/native files and `internal/lower/class.g
 | `internal/lower/object.go` | Qualify private fields by declaring class. |
 | `internal/lower/refusals.go` | Apply override and nominal-view checks before lowering. |
 | `internal/native/borrow.go` | Visit ancestry operands while classifying the test as pure. |
-| `internal/native/runtime/heap.c` | Use the class destructor chain with iterative teardown. |
-| `internal/native/runtime/object.c` | Give plain and copied objects no class identity. |
-| `internal/native/runtime/region.c` | Release region children through the shared class helper. |
+| `internal/native_runtime/c/heap.c` | Use the class destructor chain with iterative teardown. |
+| `internal/native_runtime/c/object.c` | Give plain and copied objects no class identity. |
+| `internal/native_runtime/c/region.c` | Release region children through the shared class helper. |
 | `internal/oracle/testdata/class_identity.a` | Test spread identity loss and instanceof side effects. |
 | `internal/oracle/testdata/class_inheritance.a` | Test dispatch, ancestry, abstracts, Weak and private fields. |
 | `internal/oracle/testdata/class_inheritance_exceptions.a` | Test virtual throws and failed-construction cleanup. |
@@ -118,7 +118,7 @@ Files outside the original new lowering/native files and `internal/lower/class.g
 | `internal/native/region.go` | Join virtual escapes and recognize class allocators. |
 | `internal/native/reuse.go` | Normalize virtual parameter ownership and follow all targets for moves. |
 | `internal/native/emit.go` | Small hooks for region calls, field ownership and named errors. |
-| `internal/native/runtime/adamic.h` | Add erased class identity to descriptors. |
+| `internal/native_runtime/c/adamic.h` | Add erased class identity to descriptors. |
 | `internal/ir/ir.go` | Carry erased identity and constructor ReferenceError names. |
 | `internal/javascript/javascript.go` | Match erased identity and named errors in the second backend. |
 | `internal/fresh/fresh.go` | Analyze virtual calls, ancestry operands and error-name operands. |

@@ -16,12 +16,13 @@ import (
 	"time"
 
 	"github.com/system-inc/adamic/internal/buildcache/location"
+	"github.com/system-inc/adamic/internal/native_runtime"
 	"github.com/system-inc/adamic/internal/toolchain"
 )
 
 func TestRuntimeKeyIncludesEveryInput(t *testing.T) {
 	t.Parallel()
-	files, err := readRuntime(runtime, "runtime")
+	files, err := readRuntime(native_runtime.Sources, "c")
 	if err != nil {
 		t.Fatal(err)
 	}

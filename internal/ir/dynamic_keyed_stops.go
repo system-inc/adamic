@@ -5,7 +5,7 @@ import "strings"
 // DynamicKeyedStop is one of the places a run-time key read (DynamicKeyedProperty) stops, naming why,
 // where the representation can't answer as Node does. Each backend's stop prints its Message and then
 // " (reading 'key')", so the two stop byte for byte alike. This table is the only one: the JavaScript
-// backend emits it into its helper, and internal/native/runtime/dynamic_keyed_names.h is written from
+// backend emits it into its helper, and internal/native_runtime/c/dynamic_keyed_names.h is written from
 // it (TestDynamicKeyedNamesHeaderIsCurrent), so no list is written twice by hand.
 type DynamicKeyedStop struct {
 	Name    string

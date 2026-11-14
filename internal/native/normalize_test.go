@@ -240,7 +240,7 @@ func normalizeHarnessBinary(t *testing.T) (binary, oracle string) {
 	// the source's bytes key it beside the flags.
 	directory := buildcache.Product(t, buildcache.Inputs{
 		Name:      "normalization-probe",
-		Files:     []string{"internal/native"},
+		Files:     []string{"internal/native", "internal/native_runtime"},
 		Flags:     append(Flags(options), fmt.Sprintf("source=%x", sha256.Sum256([]byte(source))), "ADAMIC_NATIVE_SPLIT="+os.Getenv("ADAMIC_NATIVE_SPLIT")),
 		Toolchain: []string{buildcache.CompilerReport("clang")},
 	}, func(directory string) error {

@@ -311,7 +311,7 @@ func regexWitnessRuntime(t testing.TB, request RuntimeRequest, part int) string 
 	t.Helper()
 	files := []string{"internal/native/regexp_test.go", "internal/native/library.go", "internal/native/native.go", "internal/native/target.go"}
 	for _, file := range request.files {
-		files = append(files, "internal/native/runtime/"+file.name)
+		files = append(files, "internal/native_runtime/c/"+file.name)
 	}
 	return buildcache.Product(t, buildcache.Inputs{
 		Name: fmt.Sprintf("regexp-bytecode-witness-runtime-%d", part), Files: files, Flags: request.Portable,

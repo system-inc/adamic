@@ -104,7 +104,7 @@ func grainProduct(t *testing.T, name, target string) grainProducts {
 		}
 		options := native.Options{Sanitize: sanitize}
 		flags := append(native.Flags(options), fmt.Sprintf("source=%x", sha256.Sum256(source)), "ADAMIC_NATIVE_SPLIT="+os.Getenv("ADAMIC_NATIVE_SPLIT"))
-		dir := buildcache.Product(t, buildcache.Inputs{Name: fmt.Sprintf("markdown-grain-%s-native-%t", name, sanitize), Files: []string{"internal/native"}, Flags: flags, Toolchain: nativeTools}, func(dir string) error { return native.Build(string(source), filepath.Join(dir, "port"), options) })
+		dir := buildcache.Product(t, buildcache.Inputs{Name: fmt.Sprintf("markdown-grain-%s-native-%t", name, sanitize), Files: []string{"internal/native", "internal/native_runtime"}, Flags: flags, Toolchain: nativeTools}, func(dir string) error { return native.Build(string(source), filepath.Join(dir, "port"), options) })
 		if sanitize {
 			p.sanitized = filepath.Join(dir, "port")
 		} else {

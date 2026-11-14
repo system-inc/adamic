@@ -1,6 +1,6 @@
 //go:build ignore
 
-// normalize_generate writes runtime/normalize_tables.h: what String.prototype.normalize needs, from
+// normalize_generate writes internal/native_runtime/c/normalize_tables.h: what String.prototype.normalize needs, from
 // the Unicode Character Database of the Unicode version Node reports (process.versions.unicode).
 //
 // UAX #15 normalization takes three things from it: each code point's canonical combining class and
@@ -44,7 +44,7 @@ var pinned = map[string]string{
 
 func main() {
 	data := flag.String("data", "", "a directory holding the files, instead of fetching them")
-	output := flag.String("output", filepath.Join("runtime", "normalize_tables.h"), "where to write the tables")
+	output := flag.String("output", filepath.Join("../native_runtime/c", "normalize_tables.h"), "where to write the tables")
 	flag.Parse()
 
 	files := map[string][]byte{}

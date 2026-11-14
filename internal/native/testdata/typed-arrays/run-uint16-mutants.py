@@ -4,7 +4,7 @@ import os
 import subprocess
 
 root = Path(__file__).resolve().parents[4]
-path = root / 'internal/native/runtime/typed_array.c'
+path = root / 'internal/native_runtime/c/typed_array.c'
 original = path.read_text()
 logs = Path('/tmp/adamic-uint16-mutants')
 logs.mkdir(exist_ok=True)

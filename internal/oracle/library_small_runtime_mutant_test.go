@@ -20,7 +20,7 @@ func librarySmallRuntimeMutant(t *testing.T, fixture, rule string) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	runtime, err := os.ReadFile(filepath.Join(repository, "internal/native/runtime/regexp_replace.c"))
+	runtime, err := os.ReadFile(filepath.Join(repository, "internal/native_runtime/c/regexp_replace.c"))
 	if err != nil {
 		t.Fatal(err)
 	}

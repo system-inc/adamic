@@ -80,7 +80,7 @@ func prepareMode(root string, test262 string, work string, buildAdamic adamicBui
 		}
 	}
 	done()
-	include := filepath.Join(root, "internal", "native", "runtime")
+	include := filepath.Join(root, "internal", "native_runtime", "c")
 	var err error
 	done = profile.preparing("cache-context")
 	identityPath := adamic

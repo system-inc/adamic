@@ -13,8 +13,8 @@ import sys
 root = Path(__file__).resolve().parents[2]
 logs = Path('/tmp/host-buffer-mutants')
 logs.mkdir(exist_ok=True)
-buffer = 'internal/native/runtime/node_buffer.c'
-crypto = 'internal/native/runtime/node_crypto.c'
+buffer = 'internal/native_runtime/c/node_buffer.c'
+crypto = 'internal/native_runtime/c/node_crypto.c'
 lower = 'internal/lower/object.go'
 mutants = [
     ('from_utf8_surrogate', buffer, '(unsigned)adamic_utf8_at(text, (double)at)', '(unsigned char)text->bytes[at]', 'encodings'),

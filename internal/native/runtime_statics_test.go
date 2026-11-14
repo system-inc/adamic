@@ -10,7 +10,8 @@ import (
 	"testing"
 )
 
-var runtimeStaticsDirectory = flag.String("runtime-statics-directory", "runtime", "runtime source directory for inventory review")
+// Reads: internal/native_runtime/c/*
+var runtimeStaticsDirectory = flag.String("runtime-statics-directory", "../native_runtime/c", "runtime source directory for inventory review")
 
 var listRuntimeStatics = flag.Bool("runtime-statics-list", false, "print the runtime storage inventory")
 

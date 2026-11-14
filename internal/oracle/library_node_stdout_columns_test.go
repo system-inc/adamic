@@ -86,11 +86,11 @@ func stdoutColumnsProducts(t *testing.T) string {
 		if err := native.BuildSharedProbe(shim, filepath.Join(directory, "ioctl.so")); err != nil {
 			return err
 		}
-		source, err := read("internal/native/runtime/adamic.c")
+		source, err := read("internal/native_runtime/c/adamic.c")
 		if err != nil {
 			return err
 		}
-		header, err := read("internal/native/runtime/stdout_tty_impl.h")
+		header, err := read("internal/native_runtime/c/stdout_tty_impl.h")
 		if err != nil {
 			return err
 		}

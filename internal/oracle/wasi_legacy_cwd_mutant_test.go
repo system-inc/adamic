@@ -50,7 +50,7 @@ int main(void) {
 	if difference := disagreement(truth, control); difference != "" {
 		t.Fatalf("%s: Node %+v, WASI %+v", difference, truth, control)
 	}
-	data, err := os.ReadFile(filepath.Join(repository, "internal/native/runtime/input.c"))
+	data, err := os.ReadFile(filepath.Join(repository, "internal/native_runtime/c/input.c"))
 	if err != nil {
 		t.Fatal(err)
 	}

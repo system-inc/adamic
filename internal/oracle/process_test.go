@@ -84,7 +84,7 @@ func processOutputProgramWith(t *testing.T, source, mutation string, options nat
 	program, path, script := processOutputSources(t, source)
 	code := native.C(program)
 	if mutation != "" {
-		data, err := os.ReadFile(filepath.Join(repository, "internal/native/runtime/adamic.c"))
+		data, err := os.ReadFile(filepath.Join(repository, "internal/native_runtime/c/adamic.c"))
 		if err != nil {
 			t.Fatal(err)
 		}
@@ -599,7 +599,7 @@ func TestProcessExitNormalizationMutant(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	data, err := os.ReadFile(filepath.Join(repository, "internal/native/runtime/process.c"))
+	data, err := os.ReadFile(filepath.Join(repository, "internal/native_runtime/c/process.c"))
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -648,7 +648,7 @@ func processExitValidationCode(t *testing.T, shard int) {
 		nodeProcessRuntimeAgreement(t, program, truth, shard)
 		return
 	}
-	data, err := os.ReadFile(filepath.Join(repository, "internal/native/runtime/process.c"))
+	data, err := os.ReadFile(filepath.Join(repository, "internal/native_runtime/c/process.c"))
 	if err != nil {
 		t.Fatal(err)
 	}

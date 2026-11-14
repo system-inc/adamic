@@ -72,7 +72,7 @@ usage error.
 | --- | --- | --- | --- |
 | `-o <out>` | `build`, required | the binary's path; a relative one is under the working directory | `cmd/adamic/main.go:run`, `cmd/adamic/tsgo.go:buildWithNativeExports` |
 | `--target wasm32-wasi` | `build` | a WebAssembly module for WASI instead of a host binary. The only value accepted; any other, a second `--target`, or a missing value is a usage error | `cmd/adamic/tsgo.go:buildWithNative` |
-| `--count` | `build` | the binary counts allocations, frees, retains, releases, peak and regions and writes `adamic: counts: ...` to stderr as it exits (`-DADAMIC_COUNT`) | `cmd/adamic/tsgo.go:buildWithNative`, `internal/native/native.go:Flags`, `internal/native/runtime/count.c:18-34` |
+| `--count` | `build` | the binary counts allocations, frees, retains, releases, peak and regions and writes `adamic: counts: ...` to stderr as it exits (`-DADAMIC_COUNT`) | `cmd/adamic/tsgo.go:buildWithNative`, `internal/native/native.go:Flags`, `internal/native_runtime/c/count.c:18-34` |
 | `--debug` | `build` | writes `#line` directives and sets the compile directory to the entry's, so a debugger stops on and opens the `.a` lines its frames came from (native builds only: wasm32-wasi refuses it; with `--sanitize`, rows before the first `#line` keep their generated names); off the flag the C is byte for byte the same; debug paths are proven on Linux; macOS isn't verified yet. | `cmd/adamic/tsgo.go:buildWithNativeExports` |
 | `--sanitize` | `build`, native only | `-O1 -g -fsanitize=address,undefined -fno-sanitize-recover=all` in place of the release flags | `cmd/adamic/tsgo.go:buildWithNative`, `internal/native/native.go:Flags` |
 | `--tsgo <archive>` | `build`, native only | links a prebuilt typescript-go checker archive for programs that use it; a second `--tsgo` or a missing value is a usage error | `cmd/adamic/tsgo.go:buildWithNative` |
@@ -141,16 +141,16 @@ pins 3 and that the message keeps `-o` as typed, on Linux, where a removed worki
 
 | Code | Means | Where |
 | --- | --- | --- |
-| 0, or the program's own exit code | the program finished; `main` returns the stored exit code, 0 when none was set | `internal/native/emit.go:cProgram`, `internal/native/runtime/host_runtime.c:102-105` |
-| 70 | a panic: an uncaught throw, a failed inserted check (non-null assertion, checked cast), stack exhaustion, out of memory, an index written out of range, and the runtime's other checked failures. stderr gets `adamic: panic: <message>` after everything the program printed | `internal/native/runtime/adamic.c:325-344`, `internal/native/runtime/exceptions.c:73-90` |
-| 70, silently | stdout or stderr couldn't be written (a closed pipe), or a closed standard descriptor couldn't be reopened on `/dev/null` at startup | `internal/native/runtime/adamic.c:93-103,250-258` |
-| a signal | a catchable stop signal flushes output and re-raises; SIGPIPE, SIGXFSZ and SIGUSR1 are ignored | `internal/native/runtime/adamic.c:137-173,281-290` |
-| SIGABRT | an internal async-loop failure | `internal/native/runtime/async.c:171`, `internal/native/runtime/async_host_impl.h` |
+| 0, or the program's own exit code | the program finished; `main` returns the stored exit code, 0 when none was set | `internal/native/emit.go:cProgram`, `internal/native_runtime/c/host_runtime.c:102-105` |
+| 70 | a panic: an uncaught throw, a failed inserted check (non-null assertion, checked cast), stack exhaustion, out of memory, an index written out of range, and the runtime's other checked failures. stderr gets `adamic: panic: <message>` after everything the program printed | `internal/native_runtime/c/adamic.c:325-344`, `internal/native_runtime/c/exceptions.c:73-90` |
+| 70, silently | stdout or stderr couldn't be written (a closed pipe), or a closed standard descriptor couldn't be reopened on `/dev/null` at startup | `internal/native_runtime/c/adamic.c:93-103,250-258` |
+| a signal | a catchable stop signal flushes output and re-raises; SIGPIPE, SIGXFSZ and SIGUSR1 are ignored | `internal/native_runtime/c/adamic.c:137-173,281-290` |
+| SIGABRT | an internal async-loop failure | `internal/native_runtime/c/async.c:171`, `internal/native_runtime/c/async_host_impl.h` |
 | the sanitizers' own | under `--sanitize`, ASan and UBSan exit with their defaults; nothing sets `ASAN_OPTIONS` for a user build | `internal/native/native.go:Flags` |
 
-70 is EX_SOFTWARE (`internal/native/runtime/adamic.h:1438`). `process.exit` and `process.exitCode`
+70 is EX_SOFTWARE (`internal/native_runtime/c/adamic.h:1438`). `process.exit` and `process.exitCode`
 use Node-compatible status validation (`internal/lower/process.go:lowering.processValue`,
-`internal/native/runtime/process.c:58-69`). A `--count` imbalance never changes the exit code; the counts line is for
+`internal/native_runtime/c/process.c:58-69`). A `--count` imbalance never changes the exit code; the counts line is for
 the test harness to judge (`internal/leakcheck/leakcheck.go:Unbalanced`).
 
 `adamic js` output panics the same way, `adamic: panic: <message>` and 70, but only where its
@@ -158,7 +158,7 @@ the test harness to judge (`internal/leakcheck/leakcheck.go:Unbalanced`).
 `oracle/adamic.mjs:34-55`), which only the oracle's loader arranges (`oracle/node.mjs`). Under plain
 `node` the import doesn't resolve.
 
-A wasm32-wasi panic leaves through the same `_exit(70)` (`internal/native/runtime/adamic.c:334-343`);
+A wasm32-wasi panic leaves through the same `_exit(70)` (`internal/native_runtime/c/adamic.c:334-343`);
 `TestWASIRequestThrows` sees 70 and `adamic: panic: Error: boundary` from the request host
 (`cmd/adamic/request_test.go:TestWASIRequestThrows`).
 
@@ -199,10 +199,10 @@ the test harness.
 
 | Variable | Effect | Code |
 | --- | --- | --- |
-| `ADAMIC_THREADS` | worker threads, an integer from 1 to 4096; anything else panics (70) | `internal/native/runtime/parallel.c:126-132` |
-| `ADAMIC_LEAK_CHECK` | an intentional exit writes `adamic: intentional exit: status N` for the leak harness | `internal/native/runtime/adamic.c:368-373` |
-| `ADAMIC_TSGO_PROFILE`, `ADAMIC_TSGO_TIMING` | tsgo builds only: checker profiling and timing | `internal/native/runtime/tsgo.c:16-17` |
-| `TMPDIR`, `TMP`, `TEMP` | `os.tmpdir()` | `internal/native/runtime/node_process.c:386-393` |
+| `ADAMIC_THREADS` | worker threads, an integer from 1 to 4096; anything else panics (70) | `internal/native_runtime/c/parallel.c:126-132` |
+| `ADAMIC_LEAK_CHECK` | an intentional exit writes `adamic: intentional exit: status N` for the leak harness | `internal/native_runtime/c/adamic.c:368-373` |
+| `ADAMIC_TSGO_PROFILE`, `ADAMIC_TSGO_TIMING` | tsgo builds only: checker profiling and timing | `internal/native_runtime/c/tsgo.c:16-17` |
+| `TMPDIR`, `TMP`, `TEMP` | `os.tmpdir()` | `internal/native_runtime/c/node_process.c:386-393` |
 
 ## Toolchain
 

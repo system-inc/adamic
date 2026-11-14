@@ -6,14 +6,14 @@ root = pathlib.Path(__file__).resolve().parents[3]
 command = ['go', 'test', '-v', '-count=1', '-timeout', '90s', '-run', '^TestRegExpSearchNode$', './internal/native']
 mutants = [
  ('ascii-fold-not-canonicalized', 'internal/regexp/native_search.go', 'i.set.contains(canonicalize(c, i.flags))', 'i.set.contains(c)', 1),
- ('anchor-checked-before-surrogate-rewind', 'internal/native/runtime/regexp.c', 'if (p->anchored && at != 0)', 'if (p->anchored && start != 0)', 1),
- ('workspace-heap-block-leaked', 'internal/native/runtime/regexp.c', 'if (frame->allocation_on_heap)\n\t\t\tfree(frame);', 'if (frame->allocation_on_heap)\n\t\t\t(void)frame;', 1),
+ ('anchor-checked-before-surrogate-rewind', 'internal/native_runtime/c/regexp.c', 'if (p->anchored && at != 0)', 'if (p->anchored && start != 0)', 1),
+ ('workspace-heap-block-leaked', 'internal/native_runtime/c/regexp.c', 'if (frame->allocation_on_heap)\n\t\t\tfree(frame);', 'if (frame->allocation_on_heap)\n\t\t\t(void)frame;', 1),
  ('anchor-ignores-multiline', 'internal/regexp/native_search.go', 'i.assertion == Start && !i.flags.Multiline', 'i.assertion == Start', 1),
- ('unicode-pair-truncated', 'internal/native/runtime/regexp.c', 'if (point > 0xffff) {', 'if (point > 0xffff && false) {', 1),
+ ('unicode-pair-truncated', 'internal/native_runtime/c/regexp.c', 'if (point > 0xffff) {', 'if (point > 0xffff && false) {', 1),
  ('first-set-drops-alternative', 'internal/regexp/native_search.go', 'a[0] | b[0], a[1] | b[1]', 'a[0] | (b[0] & 0), a[1] | (b[1] & 0)', 2),
  ('prefix-changes-literal', 'internal/regexp/native_search.go', 'prefix = append(prefix, i.set.ranges[0].From)', 'prefix = append(prefix, i.set.ranges[0].From + 1)', 1),
  ('straight-line-capture-offset', 'internal/regexp/native_search.go', 'captures[%d]=at;', 'captures[%d]=at+1;', 1),
- ('saved-captures-not-copied', 'internal/native/runtime/regexp.c', 'memcpy(result.captures, state->captures, 2 * (p->captures + 1) * sizeof *result.captures);', 'memset(result.captures, -1, 2 * (p->captures + 1) * sizeof *result.captures);', 1),
+ ('saved-captures-not-copied', 'internal/native_runtime/c/regexp.c', 'memcpy(result.captures, state->captures, 2 * (p->captures + 1) * sizeof *result.captures);', 'memset(result.captures, -1, 2 * (p->captures + 1) * sizeof *result.captures);', 1),
 ]
 for name, file, old, new, count in mutants:
  target=root/file

@@ -72,7 +72,7 @@ func TestPlainMethodsKnowEveryRecordMaker(t *testing.T) {
 			t.Errorf("%s (%s) no longer makes a record; drop it here and check plainMethods", name, node)
 		}
 	}
-	runtime, err := filepath.Glob(filepath.Join("..", "native", "runtime", "*.c"))
+	runtime, err := filepath.Glob(filepath.Join("..", "native_runtime", "c", "*.c"))
 	if err != nil {
 		t.Fatal(err)
 	}

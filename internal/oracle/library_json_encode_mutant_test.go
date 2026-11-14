@@ -14,7 +14,7 @@ import (
 // build with -Werror, exit zero and leak nothing; only the byte oracle may kill it.
 func TestJSONEncodeNativeMutants(t *testing.T) {
 	t.Parallel()
-	original, err := os.ReadFile(filepath.Join(repository, "internal/native/runtime/json_encode.c"))
+	original, err := os.ReadFile(filepath.Join(repository, "internal/native_runtime/c/json_encode.c"))
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -91,7 +91,7 @@ func TestJSONEncodePlainStringifyMutant(t *testing.T) {
 
 func TestJSONEncodeNativeStringMetadata(t *testing.T) {
 	t.Parallel()
-	runtime, err := os.ReadFile(filepath.Join(repository, "internal/native/runtime/json_encode.c"))
+	runtime, err := os.ReadFile(filepath.Join(repository, "internal/native_runtime/c/json_encode.c"))
 	if err != nil {
 		t.Fatal(err)
 	}

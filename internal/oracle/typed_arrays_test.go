@@ -95,7 +95,7 @@ func TestTypedArrayIntegerBoundsMutant(t *testing.T) {
 	if strings.Count(control, "adamic_typed_array_get_integer(") != 13 || strings.Count(control, "adamic_typed_array_set_integer(") != 4 {
 		t.Fatal("all four kinds must use integer reads and writes")
 	}
-	header, err := os.ReadFile(filepath.Join(repository, "internal/native/runtime/adamic.h"))
+	header, err := os.ReadFile(filepath.Join(repository, "internal/native_runtime/c/adamic.h"))
 	if err != nil {
 		t.Fatal(err)
 	}

@@ -24,7 +24,7 @@ func TestDateISOStringRuntimeMutantsAreCaught(t *testing.T) {
 	if truth.exitCode != 0 || len(truth.stderr) != 0 {
 		t.Fatalf("Node fixture: %+v", truth)
 	}
-	original, err := os.ReadFile(filepath.Join(repository, "internal/native/runtime/date.c"))
+	original, err := os.ReadFile(filepath.Join(repository, "internal/native_runtime/c/date.c"))
 	if err != nil {
 		t.Fatal(err)
 	}

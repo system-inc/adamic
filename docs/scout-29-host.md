@@ -18,7 +18,7 @@ landing results. Linux validation is reported separately; macOS is not executed.
 
 ## Result and ownership
 
-Existing native entry points are declared in [prelude.d.ts](../internal/load/prelude.d.ts), lowered in [input.go](../internal/lower/input.go), emitted in [emit_expressions.go](../internal/native/emit_expressions.go), and implemented in [input.c](../internal/native/runtime/input.c) and [directory.c](../internal/native/runtime/directory.c).
+Existing native entry points are declared in [prelude.d.ts](../internal/load/prelude.d.ts), lowered in [input.go](../internal/lower/input.go), emitted in [emit_expressions.go](../internal/native/emit_expressions.go), and implemented in [input.c](../internal/native_runtime/c/input.c) and [directory.c](../internal/native_runtime/c/directory.c).
 
 The shipping native surface is the `'adamic'` file/argument API and one-string console output. **There are no shipping Node `fs`, `path`, `process`, `os`, Buffer, performance or inspector bindings in this base.** Existing file/status/directory/argv primitives are useful partial implementations, not working imports of Node modules. A scratch native-source probe importing `readFileSync` from `node:fs` stops at checker error TS2591. `internal/lower/optional_node_host.go` still returns false for the future Node-host argument-consumption hook.
 
@@ -402,7 +402,7 @@ Branch `runtime/host-exit-clocks`, based on named-fetch `origin/area/runtime` at
 
 ### C contract library binds
 
-[host_runtime.h](../internal/native/runtime/host_runtime.h) declares each entry with a short contract; [host_runtime.c](../internal/native/runtime/host_runtime.c) implements observations, clock state and metrics. Raw output and immediate termination live beside the existing output buffer in [adamic.c](../internal/native/runtime/adamic.c). Inputs are borrowed during calls, owned strings/arrays are released by their caller, and startup argv storage lives for the process lifetime. Observations are called on the language thread; environment mutation from Adamic is not exposed.
+[host_runtime.h](../internal/native_runtime/c/host_runtime.h) declares each entry with a short contract; [host_runtime.c](../internal/native_runtime/c/host_runtime.c) implements observations, clock state and metrics. Raw output and immediate termination live beside the existing output buffer in [adamic.c](../internal/native_runtime/c/adamic.c). Inputs are borrowed during calls, owned strings/arrays are released by their caller, and startup argv storage lives for the process lifetime. Observations are called on the language thread; environment mutation from Adamic is not exposed.
 
 | Entry point | Binding contract |
 | --- | --- |

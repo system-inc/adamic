@@ -13,6 +13,7 @@ import (
 	"github.com/system-inc/adamic/internal/javascript"
 	"github.com/system-inc/adamic/internal/load"
 	"github.com/system-inc/adamic/internal/lower"
+	"github.com/system-inc/adamic/internal/native_runtime"
 )
 
 func TestLongUnicodePortabilityClang(t *testing.T) {
@@ -98,7 +99,7 @@ func longUnicodePortability(t *testing.T, compiler string) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	files, err := readRuntime(runtime, "runtime")
+	files, err := readRuntime(native_runtime.Sources, "c")
 	if err != nil {
 		t.Fatal(err)
 	}

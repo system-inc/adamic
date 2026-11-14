@@ -220,8 +220,8 @@ func compilationProductKinds(t *testing.T, kinds []string) string {
 				if err := os.WriteFile(filepath.Join(dir, "main.c"), source, 0644); err != nil {
 					return err
 				}
-				// Reads: internal/native/runtime/*.[ch]
-				entries, err := os.ReadDir(filepath.Join(repository, "internal/native/runtime"))
+				// Reads: internal/native_runtime/c/*.[ch]
+				entries, err := os.ReadDir(filepath.Join(repository, "internal/native_runtime/c"))
 				if err != nil {
 					return err
 				}
@@ -230,7 +230,7 @@ func compilationProductKinds(t *testing.T, kinds []string) string {
 					if !strings.HasSuffix(entry.Name(), ".c") && !strings.HasSuffix(entry.Name(), ".h") {
 						continue
 					}
-					data, err := os.ReadFile(filepath.Join(repository, "internal/native/runtime", entry.Name()))
+					data, err := os.ReadFile(filepath.Join(repository, "internal/native_runtime/c", entry.Name()))
 					if err != nil {
 						return err
 					}

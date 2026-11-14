@@ -77,7 +77,8 @@ func decodeASCIIDecoder(t *testing.T, target string) string {
 	if err != nil {
 		t.Fatal(err)
 	}
-	runtimeDirectory := "internal/native/runtime"
+	// Reads: internal/native_runtime/c/*.c
+	runtimeDirectory := "internal/native_runtime/c"
 	inputs := buildcache.Inputs{
 		Name:  "decode-ascii-" + target,
 		Files: []string{runtimeDirectory, "internal/native/decode_ascii/probe.c", "internal/native/decode_ascii/baseline.c", "internal/native/decode_ascii_cache_test.go"},

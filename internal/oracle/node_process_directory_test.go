@@ -71,7 +71,7 @@ func nodeProcessDirectoryRuntime(t *testing.T, shard int) {
 		nodeProcessRuntimeAgreement(t, program, truth, shard)
 		return
 	}
-	data, err := os.ReadFile(filepath.Join(repository, "internal/native/runtime/node_process.c"))
+	data, err := os.ReadFile(filepath.Join(repository, "internal/native_runtime/c/node_process.c"))
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -149,7 +149,7 @@ func nodeProcessDirectorySymlinksRuntime(t *testing.T, shard int) {
 		t.Skip("set ADAMIC_ORACLE_WASI=1")
 	}
 	{
-		data, err := os.ReadFile(filepath.Join(repository, "internal/native/runtime/node_process.c"))
+		data, err := os.ReadFile(filepath.Join(repository, "internal/native_runtime/c/node_process.c"))
 		if err != nil {
 			t.Fatal(err)
 		}

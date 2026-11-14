@@ -45,8 +45,8 @@ specifies the error type, not this engine-specific wording.
 
 ## Compiler C contract
 
-Declarations are in `internal/native/runtime/adamic.h`; implementation is in
-`internal/native/runtime/exceptions.c`:
+Declarations are in `internal/native_runtime/c/adamic.h`; implementation is in
+`internal/native_runtime/c/exceptions.c`:
 
 ```c
 adamic_primitive adamic_ordinary_to_primitive(

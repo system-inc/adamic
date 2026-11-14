@@ -67,7 +67,7 @@ func TestRegExpRuntimePropertiesGenerated(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	committed, err := os.ReadFile("runtime/regexp_compile_tables.h")
+	committed, err := os.ReadFile("../native_runtime/c/regexp_compile_tables.h")
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -192,7 +192,7 @@ func TestRegExpRuntimePropertyIdentity(t *testing.T) {
 	if err := os.WriteFile(main, []byte(source), 0o644); err != nil {
 		t.Fatal(err)
 	}
-	runtimeDirectory, err := filepath.Abs("runtime")
+	runtimeDirectory, err := filepath.Abs("../native_runtime/c")
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -220,7 +220,7 @@ func TestRegExpRuntimePropertiesWASI(t *testing.T) {
 	if err := os.WriteFile(main, []byte(source), 0o644); err != nil {
 		t.Fatal(err)
 	}
-	runtimeDirectory, err := filepath.Abs("runtime")
+	runtimeDirectory, err := filepath.Abs("../native_runtime/c")
 	if err != nil {
 		t.Fatal(err)
 	}

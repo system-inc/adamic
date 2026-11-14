@@ -105,8 +105,8 @@ func TestProgramRegionConstructedOrderMutant(t *testing.T) {
 	t.Parallel()
 	oracle, checked, _ := programConstructed(t)
 	directory := t.TempDir()
-	sources := filepath.Join(repository, "internal/native/runtime")
-	// Reads: internal/native/runtime/*
+	sources := filepath.Join(repository, "internal/native_runtime/c")
+	// Reads: internal/native_runtime/c/*
 	entries, err := os.ReadDir(sources)
 	if err != nil {
 		t.Fatal(err)

@@ -15,7 +15,7 @@ import (
 
 func programHostMeasuredBuild(t *testing.T, enabled bool) string {
 	t.Helper()
-	return buildcache.Product(t, buildcache.Inputs{Name: fmt.Sprint("program-host-counted-", enabled), Files: []string{"internal/oracle/program_region_measure_test.go", "stage3/fixtures/host/14_getCurrentDirectory.a", "internal/lower", "internal/native"}}, func(directory string) error {
+	return buildcache.Product(t, buildcache.Inputs{Name: fmt.Sprint("program-host-counted-", enabled), Files: []string{"internal/oracle/program_region_measure_test.go", "stage3/fixtures/host/14_getCurrentDirectory.a", "internal/lower", "internal/native", "internal/native_runtime"}}, func(directory string) error {
 		absolute, err := filepath.Abs("../../stage3/fixtures/host/14_getCurrentDirectory.a")
 		if err != nil {
 			return err

@@ -18,7 +18,7 @@ func jsonEncoderRecordView(t *testing.T, wasm bool) {
 		}
 		options = Options{Target: "wasm32-wasi", Count: true}
 	}
-	encoder, err := os.ReadFile("runtime/json_stringify.c")
+	encoder, err := os.ReadFile("../native_runtime/c/json_stringify.c")
 	if err != nil {
 		t.Fatal(err)
 	}

@@ -110,7 +110,7 @@ func fsWatchProduct(t *testing.T, fixture, variant string) string {
 		if err := os.Mkdir(runtimeDirectory, 0700); err != nil {
 			return err
 		}
-		entries, err := os.ReadDir("../native/runtime")
+		entries, err := os.ReadDir("../native_runtime/c")
 		if err != nil {
 			return err
 		}
@@ -119,7 +119,7 @@ func fsWatchProduct(t *testing.T, fixture, variant string) string {
 			if entry.IsDir() {
 				continue
 			}
-			data, err := os.ReadFile(filepath.Join("../native/runtime", entry.Name()))
+			data, err := os.ReadFile(filepath.Join("../native_runtime/c", entry.Name()))
 			if err != nil {
 				return err
 			}

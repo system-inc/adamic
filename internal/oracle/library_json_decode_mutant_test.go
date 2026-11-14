@@ -73,7 +73,7 @@ func jsonDecodeValidationKeys() []string {
 }
 
 func runJSONDecodeValidationMutantsShard(t *testing.T, shard int) {
-	original, err := os.ReadFile(filepath.Join(repository, "internal/native/runtime/json_decode.c"))
+	original, err := os.ReadFile(filepath.Join(repository, "internal/native_runtime/c/json_decode.c"))
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -116,7 +116,7 @@ func inlineDecodeMutant(runtime, code string) string {
 }
 func TestJSONDecodeParserMutants(t *testing.T) {
 	t.Parallel()
-	original, err := os.ReadFile(filepath.Join(repository, "internal/native/runtime/json_decode.c"))
+	original, err := os.ReadFile(filepath.Join(repository, "internal/native_runtime/c/json_decode.c"))
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -152,7 +152,7 @@ func TestJSONDecodeParserMutants(t *testing.T) {
 }
 func TestJSONDecodeErrorLeakMutant(t *testing.T) {
 	t.Parallel()
-	original, err := os.ReadFile(filepath.Join(repository, "internal/native/runtime/json_decode.c"))
+	original, err := os.ReadFile(filepath.Join(repository, "internal/native_runtime/c/json_decode.c"))
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -186,7 +186,7 @@ func TestJSONDecodeErrorLeakMutant(t *testing.T) {
 
 func TestJSONDecodeFieldPresenceMutants(t *testing.T) {
 	t.Parallel()
-	original, err := os.ReadFile(filepath.Join(repository, "internal/native/runtime/json_decode.c"))
+	original, err := os.ReadFile(filepath.Join(repository, "internal/native_runtime/c/json_decode.c"))
 	if err != nil {
 		t.Fatal(err)
 	}

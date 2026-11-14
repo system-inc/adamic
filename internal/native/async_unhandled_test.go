@@ -32,7 +32,8 @@ func asyncUnhandledBuild(t *testing.T, variant string, options native.Options) s
 		err = native.Build(code, binary, options)
 	} else {
 		directory := t.TempDir()
-		entries, readErr := os.ReadDir("runtime")
+		// Reads: internal/native_runtime/c/*
+		entries, readErr := os.ReadDir("../native_runtime/c")
 		if readErr != nil {
 			t.Fatal(readErr)
 		}
@@ -40,7 +41,7 @@ func asyncUnhandledBuild(t *testing.T, variant string, options native.Options) s
 			if entry.IsDir() || (!strings.HasSuffix(entry.Name(), ".c") && !strings.HasSuffix(entry.Name(), ".h")) {
 				continue
 			}
-			contents, readErr := os.ReadFile(filepath.Join("runtime", entry.Name()))
+			contents, readErr := os.ReadFile(filepath.Join("../native_runtime/c", entry.Name()))
 			if readErr != nil {
 				t.Fatal(readErr)
 			}

@@ -124,7 +124,7 @@ macro is added. Linux validation does not stand in for that pending Darwin check
 ## C entry points for library
 
 Declarations and one contract comment per entry point live in
-internal/native/runtime/timers.h. Include that header, not timers_impl.h.
+internal/native_runtime/c/timers.h. Include that header, not timers_impl.h.
 
 ```c
 // Borrow the one native provider. Its identity is immutable for the process.

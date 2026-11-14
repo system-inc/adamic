@@ -68,7 +68,7 @@ int main(void) {
 	if !wasm {
 		return
 	}
-	data, err := os.ReadFile(filepath.Join(repository, "internal/native/runtime/node_fs_file.c"))
+	data, err := os.ReadFile(filepath.Join(repository, "internal/native_runtime/c/node_fs_file.c"))
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -169,7 +169,7 @@ int main(void) {
 	if actual.exitCode != 70 || wasiRefusalReason(actual) != "fs.utimesSync timestamp precision or range is unavailable" {
 		t.Fatalf("want precision refusal: %+v", actual)
 	}
-	data, err := os.ReadFile(filepath.Join(repository, "internal/native/runtime/node_fs_file.c"))
+	data, err := os.ReadFile(filepath.Join(repository, "internal/native_runtime/c/node_fs_file.c"))
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -204,7 +204,7 @@ func wasiFileMutantImplementation(t *testing.T, data []byte) string {
 		if strings.Count(implementation, include) != 1 {
 			t.Fatal("watch implementation include changed: " + name)
 		}
-		header, err := os.ReadFile(filepath.Join(repository, "internal/native/runtime", name))
+		header, err := os.ReadFile(filepath.Join(repository, "internal/native_runtime/c", name))
 		if err != nil {
 			t.Fatal(err)
 		}

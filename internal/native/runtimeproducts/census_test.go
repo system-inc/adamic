@@ -35,8 +35,10 @@ import (
 const modulePath = "github.com/system-inc/adamic"
 
 // leanSlice are the packages of the tree a lean build's recipe keys whole, buildcache's own and what it links
-// (buildcache's leanRecipeOf): a build may reach them as it likes.
-var leanSlice = []string{modulePath + "/internal/buildcache", modulePath + "/internal/buildcache/location", modulePath + "/internal/toolchain"}
+// (buildcache's leanRecipeOf): a build may reach them as it likes. internal/native_runtime holds the C the archives
+// are built from, embedded (native_runtime.Sources), and runtimeFiles names its C and its one Go file, so every
+// embedded file is in the archive's key (#tb722h2 H1).
+var leanSlice = []string{modulePath + "/internal/buildcache", modulePath + "/internal/buildcache/location", modulePath + "/internal/native_runtime", modulePath + "/internal/toolchain"}
 
 // pureConstructors are the standard library calls an initializer may make and still only set its own variable: no
 // effect on the process, the environment, the working directory or a file (Node's rail 1, (c)). The one list of them,

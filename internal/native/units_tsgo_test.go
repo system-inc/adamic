@@ -90,7 +90,7 @@ func splitTSGoBaseline(t *testing.T, source, archive string) string {
 	}
 	directory := buildcache.Product(t, buildcache.Inputs{
 		Name:      "split-tsgo-baseline",
-		Files:     []string{"internal/native", "bridge/tsgo"},
+		Files:     []string{"internal/native", "internal/native_runtime", "bridge/tsgo"},
 		Flags:     []string{fmt.Sprintf("source=%x", sha256.Sum256([]byte(source))), fmt.Sprintf("archive=%x", sha256.Sum256(archiveBytes)), "options=" + string(optionBytes)},
 		Toolchain: []string{buildcache.CompilerReport("clang")},
 	}, func(directory string) error {
@@ -134,7 +134,7 @@ func splitTSGoSplit(t *testing.T, source, archive string) string {
 	}
 	directory := buildcache.Product(t, buildcache.Inputs{
 		Name:      "split-tsgo-split",
-		Files:     []string{"internal/native", "bridge/tsgo"},
+		Files:     []string{"internal/native", "internal/native_runtime", "bridge/tsgo"},
 		Flags:     []string{fmt.Sprintf("source=%x", sha256.Sum256([]byte(source))), fmt.Sprintf("archive=%x", sha256.Sum256(archiveBytes)), "options=" + string(optionBytes), "uncached=1"},
 		Toolchain: []string{buildcache.CompilerReport("clang")},
 	}, func(directory string) error {

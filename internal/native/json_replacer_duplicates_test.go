@@ -10,6 +10,7 @@ import (
 
 	"github.com/system-inc/adamic/internal/load"
 	"github.com/system-inc/adamic/internal/lower"
+	"github.com/system-inc/adamic/internal/native_runtime"
 )
 
 func TestJSONReplacerDuplicatesRecordMutant(t *testing.T) {
@@ -42,7 +43,7 @@ func jsonReplacerDedupMutant(t *testing.T, fixture string) {
 		t.Fatal(err)
 	}
 	want := jsonReplacerRun(t, "node", "--disable-warning=ExperimentalWarning", runner, path)
-	files, err := readRuntime(runtime, "runtime")
+	files, err := readRuntime(native_runtime.Sources, "c")
 	if err != nil {
 		t.Fatal(err)
 	}

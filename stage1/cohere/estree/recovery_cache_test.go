@@ -159,7 +159,7 @@ func recoveryStableNative(repo, directory, source string) error {
 			enabled[feature] = true
 		}
 	}
-	inputs, err := filepath.Glob(filepath.Join(repo, "internal/native/runtime/*"))
+	inputs, err := filepath.Glob(filepath.Join(repo, "internal/native_runtime/c/*"))
 	if err != nil {
 		return err
 	}
@@ -236,7 +236,7 @@ func recoveryNativeRecipe(t *testing.T, setup *recoverySetup) (string, string) {
 	source := recoveryNativeRecipeSource
 	inputs := buildcache.Inputs{
 		Name:      "estree-native-recipe-proof-a",
-		Files:     []string{"internal/native/runtime", "internal/native/native.go", "internal/native/library.go", "internal/native/clang_in.go", "stage1/cohere/estree/recovery_cache_test.go"},
+		Files:     []string{"internal/native_runtime/c", "internal/native/native.go", "internal/native/library.go", "internal/native/clang_in.go", "stage1/cohere/estree/recovery_cache_test.go"},
 		Flags:     append(native.Flags(native.Options{Sanitize: true}), source),
 		Toolchain: []string{runtime.GOOS, runtime.GOARCH, buildcache.CompilerReport("clang"), buildcache.Tool("getconf", "GNU_LIBC_VERSION")},
 	}

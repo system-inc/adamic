@@ -24,7 +24,7 @@ func programParseBuild(t *testing.T, enabled bool) string {
 }
 func programParseBuildKind(t *testing.T, enabled, sanitized bool) string {
 	t.Helper()
-	return buildcache.Product(t, buildcache.Inputs{Name: fmt.Sprint("program-parse-", enabled, "-", sanitized), Files: []string{"internal/oracle/program_region_parse_test.go", "internal/oracle/testdata/program_region", "internal/lower", "internal/native", "stage1/typescript/parser", "stage1/typescript/scanner"}}, func(directory string) error {
+	return buildcache.Product(t, buildcache.Inputs{Name: fmt.Sprint("program-parse-", enabled, "-", sanitized), Files: []string{"internal/oracle/program_region_parse_test.go", "internal/oracle/testdata/program_region", "internal/lower", "internal/native", "internal/native_runtime", "stage1/typescript/parser", "stage1/typescript/scanner"}}, func(directory string) error {
 		data, err := os.ReadFile(filepath.Join(programParseLower(t, enabled), "code.c"))
 		if err != nil {
 			return err
