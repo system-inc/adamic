@@ -20,8 +20,9 @@ import (
 // put, whose `const wide: {}[] = to` wrote a 1 into a string[]; b02 and b03 are its Map and field forms,
 // and b04 its readonly form, which lowers. r1 to r8 are Language's roads to the same widening inside
 // f<T extends {}>(xs: T[]): an explicit type argument to an inner generic, a Set, a mutable tuple, a
-// Record, a method seen bivariantly, a generic class's field in a method, a nested closure, and
-// T extends U seen as U. q01 to q03 are sys.ts:304's pollWatchedFileQueue<T extends
+// Record, a method seen bivariantly (r5 a method, r5b a property holding a function, each seen as a
+// method taking {}, the one target tsc relates bivariantly), a generic class's field in a method, a
+// nested closure, and T extends U seen as U. q01 to q03 are sys.ts:304's pollWatchedFileQueue<T extends
 // WatchedFileWithIsClosed> handed a queue of a subtype, which reads T out of the queue and writes it
 // back: q01 alone, q02 with sys.ts's host and its callbackOnWatchFileStat?.(...), which stops at the
 // optional call, and q03 with that call written as a checked one. Each program's stop is pinned in its
@@ -81,8 +82,8 @@ func TestGenericBodyKeepsTypeParameterRigid(t *testing.T) {
 		})
 	}
 	// A program lost from the directory must fail here, not shrink the walk.
-	if programs != 38 {
-		t.Fatalf("found %d programs, want 38", programs)
+	if programs != 40 {
+		t.Fatalf("found %d programs, want 40", programs)
 	}
 }
 
