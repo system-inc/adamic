@@ -195,9 +195,10 @@ const (
 const nodeSetTimeoutForwards = 3
 
 // nodeTimerValueName is the timer a node reads as a value, by its library declaration: an identifier
-// that isn't a call's callee, a property's name, a typeof's operand, a qualified namespace member's
-// receiver or part of a type, or a shorthand property's name whose value is the global
-// ({ setTimeout }). It's empty for anything else; a direct call is nodeTimer's.
+// that isn't a call's callee, a property's name, a value typeof's operand, a qualified namespace
+// member's receiver, part of a type, or a type query's name (Parameters<typeof clearTimeout>, which the
+// checker counts as an expression but nothing runs, #7yz6rtp), or a shorthand property's name whose
+// value is the global ({ setTimeout }). It's empty for anything else; a direct call is nodeTimer's.
 func (l *lowering) nodeTimerValueName(node *ast.Node) string {
 	var symbol *ast.Symbol
 	if node.Parent != nil && node.Parent.Kind == ast.KindShorthandPropertyAssignment && node.Parent.Name() == node {
@@ -206,7 +207,7 @@ func (l *lowering) nodeTimerValueName(node *ast.Node) string {
 			symbol = l.checker.GetAliasedSymbol(symbol)
 		}
 	} else {
-		if node.Kind != ast.KindIdentifier || !ast.IsExpressionNode(node) || ast.IsPartOfTypeNode(node) || called(node) {
+		if node.Kind != ast.KindIdentifier || !ast.IsExpressionNode(node) || ast.IsPartOfTypeNode(node) || inTypeQuery(node) || called(node) {
 			return ""
 		}
 		if node.Parent != nil && node.Parent.Kind == ast.KindPropertyAccessExpression && node.Parent.Name() == node {

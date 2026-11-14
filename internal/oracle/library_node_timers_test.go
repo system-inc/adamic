@@ -20,11 +20,12 @@ import (
 // getNodeSystem does (sys.ts:1499), through required methods and through optional ones; label holds
 // the label setTimeout's value forwards to its callback, views the value widened to string views of
 // it every way a program can, and program_widened a program function widened the same way, which
-// forwards nothing, as on Node.
+// forwards nothing, as on Node. type_query names clearTimeout in a forwarder's parameter type, as tsc's
+// adapted getNodeSystem does (#7yz6rtp), which is no read of it as a value.
 var timerSourceFixtures = []string{"forwarded", "fewer_parameters", "clear_then_set", "order", "callback_throw", "clear_kinds",
 	"delay_nan", "delay_negative", "delay_overflow", "delay_nan_twice", "delay_negative_twice", "delay_overflow_twice", "delay_kinds",
 	"delay_order_main", "delay_order_callback", "delay_order_job", "delay_computed",
-	"list_order", "fresh_start", "value_read", "optional", "label", "views", "program_widened"}
+	"list_order", "fresh_start", "value_read", "optional", "label", "views", "program_widened", "type_query"}
 
 func init() {
 	for _, name := range timerSourceFixtures {
