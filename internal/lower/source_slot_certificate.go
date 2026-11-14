@@ -1,6 +1,8 @@
 package lower
 
 import (
+	"reflect"
+
 	"github.com/microsoft/TypeScript/tsc/shim/ast"
 	"github.com/microsoft/TypeScript/tsc/shim/checker"
 	"github.com/system-inc/adamic/internal/ir"
@@ -58,6 +60,27 @@ type sourceSlotWrite struct {
 type sourceSlot struct {
 	writes   []sourceSlotWrite
 	declared []*checker.Type
+}
+
+// sourceSlotNamedKinds are the IR kinds other than ir.Property that name a field, each judged without a
+// check: none reads a fixed object's slot at a type's claim. DynamicProperty reads by the allocation's
+// own runtime shape and gives a tagged union, as DynamicKeyedProperty and HasOwn do by a key; HasProperty,
+// HasAccessor and OwnFunction test presence, or whether a function is there, reading no value;
+// PhantomMember reads a primitive, and the regexp kinds a regexp's result; SetProperty is a write, judged
+// at view; Labeled names a label. The kinds that read an object without naming a field are judged
+// elsewhere: CheckedCast tests a tag at run time, ObjectCall's values and entries are checked or scalar
+// only and its assign is a copy (checkViewCopies), JSONStringify and JSONEncode are
+// sourceSlotWholeReads', and the record and map kinds read records and maps, which no fixed object is.
+var sourceSlotNamedKinds = map[reflect.Type]bool{
+	reflect.TypeOf(ir.DynamicProperty{}): true,
+	reflect.TypeOf(ir.HasProperty{}):     true,
+	reflect.TypeOf(ir.HasAccessor{}):     true,
+	reflect.TypeOf(ir.OwnFunction{}):     true,
+	reflect.TypeOf(ir.PhantomMember{}):   true,
+	reflect.TypeOf(ir.RegExpProperty{}):  true,
+	reflect.TypeOf(ir.RegExpGroup{}):     true,
+	reflect.TypeOf(ir.SetProperty{}):     true,
+	reflect.TypeOf(ir.Labeled{}):         true,
 }
 
 // recordSourceSlotWrite records target, an object field write through a checked view whose stop is
@@ -134,10 +157,27 @@ func (l *lowering) certifySourceSlots() error {
 			return false
 		}
 		read, isProperty := node.(ir.Property)
-		if !isProperty || slots[read.Name] == nil {
+		if !isProperty {
+			// Any other kind that names a written field is judged by sourceSlotNamedKinds, and one it
+			// doesn't list keeps the stop: ir.BoundMethod, which resolves the slot as a closure with no
+			// check of what it holds, and any kind added after this.
+			if named := reflect.ValueOf(node).FieldByName("Name"); named.IsValid() && named.Kind() == reflect.String && slots[named.String()] != nil && !sourceSlotNamedKinds[reflect.TypeOf(node)] {
+				refused = slots[named.String()].writes[0].stop
+				return false
+			}
+			return true
+		}
+		if slots[read.Name] == nil {
 			return true
 		}
 		slot := slots[read.Name]
+		if read.Method {
+			// A callee's read takes the object's own function value, or its class's method, and a
+			// checked read of one isn't emitted the way a field's is (readiness keeps its view only for
+			// a certified callable), so a written name read as a method keeps the stop.
+			refused = slot.writes[0].stop
+			return false
+		}
 		if read.ViewTypeID == 0 {
 			// A read lowering made as a check of its own (a predicate's tag test, a speculation's field
 			// check) carries its view. One with neither names no type to hold the slot to.
@@ -165,9 +205,18 @@ func (l *lowering) certifySourceSlots() error {
 		}
 		return true
 	}
+	// Every body lowering has made is in Main or Functions here: a class names its constructor,
+	// methods and accessors by function index, and its field values are its layout's, walked too. The
+	// passes after this one move statements (exceptions, NormalizeAsync) or clone a read judged here
+	// (finishAccessors' fallbacks), and a checked read stays checked wherever it goes, since its key is
+	// in CheckedFields.
 	walk(l.result.Main, inspect)
 	for _, function := range l.result.Functions {
 		walk(function.Body, inspect)
+	}
+	for _, class := range l.result.Classes {
+		walk(class.Fields, inspect)
+		walk(class.PublicFields, inspect)
 	}
 	if refused != nil {
 		return refused
