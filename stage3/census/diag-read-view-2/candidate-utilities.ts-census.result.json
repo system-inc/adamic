@@ -1,0 +1,18 @@
+{
+  "label": "candidate-utilities.ts-census",
+  "args": [
+    "/workspace/scratch/diag-read-view-2/latent",
+    "/workspace/scratch/diag-read-view-2/candidate-tree/src/compiler",
+    "/workspace/scratch/diag-read-view-2/raw/candidate-utilities.ts.jsonl"
+  ],
+  "cwd": "/workspace/scratch/diag-read-view-2/repo",
+  "extra": {
+    "LATENT_FULL": "1",
+    "LATENT_ASSERT_NO_OUTPUT": "1",
+    "LATENT_ONLY_FILE": "/workspace/scratch/diag-read-view-2/candidate-tree/src/compiler/utilities.ts",
+    "CENSUS_MODULE_FORMAT": "CommonJSBundle"
+  },
+  "exit": 0,
+  "seconds": 572.2511800510001,
+  "limit": 6000
+}

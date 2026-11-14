@@ -96,6 +96,24 @@
       "seconds": 215.36307493500044,
       "limit": 6000
     },
+    "main-utilities.ts-census.result.json": {
+      "label": "main-utilities.ts-census",
+      "args": [
+        "/workspace/scratch/diag-read-view-2/latent",
+        "/workspace/scratch/diag-read-view-2/main-tree/src/compiler",
+        "/workspace/scratch/diag-read-view-2/raw/main-utilities.ts.jsonl"
+      ],
+      "cwd": "/workspace/scratch/diag-read-view-2/repo",
+      "extra": {
+        "LATENT_FULL": "1",
+        "LATENT_ASSERT_NO_OUTPUT": "1",
+        "LATENT_ONLY_FILE": "/workspace/scratch/diag-read-view-2/main-tree/src/compiler/utilities.ts",
+        "CENSUS_MODULE_FORMAT": "CommonJSBundle"
+      },
+      "exit": 0,
+      "seconds": 571.2955761339999,
+      "limit": 6000
+    },
     "main-dts.result.json": {
       "label": "main-dts",
       "args": [
@@ -106,6 +124,24 @@
       "extra": {},
       "exit": 0,
       "seconds": 69.20705238899973,
+      "limit": 6000
+    },
+    "candidate-utilities.ts-census.result.json": {
+      "label": "candidate-utilities.ts-census",
+      "args": [
+        "/workspace/scratch/diag-read-view-2/latent",
+        "/workspace/scratch/diag-read-view-2/candidate-tree/src/compiler",
+        "/workspace/scratch/diag-read-view-2/raw/candidate-utilities.ts.jsonl"
+      ],
+      "cwd": "/workspace/scratch/diag-read-view-2/repo",
+      "extra": {
+        "LATENT_FULL": "1",
+        "LATENT_ASSERT_NO_OUTPUT": "1",
+        "LATENT_ONLY_FILE": "/workspace/scratch/diag-read-view-2/candidate-tree/src/compiler/utilities.ts",
+        "CENSUS_MODULE_FORMAT": "CommonJSBundle"
+      },
+      "exit": 0,
+      "seconds": 572.2511800510001,
       "limit": 6000
     },
     "candidate-build-compiler.result.json": {
@@ -121,6 +157,24 @@
       "seconds": 9.406476033000217,
       "limit": 6000
     },
+    "main-types.ts-census.result.json": {
+      "label": "main-types.ts-census",
+      "args": [
+        "/workspace/scratch/diag-read-view-2/latent",
+        "/workspace/scratch/diag-read-view-2/main-tree/src/compiler",
+        "/workspace/scratch/diag-read-view-2/raw/main-types.ts.jsonl"
+      ],
+      "cwd": "/workspace/scratch/diag-read-view-2/repo",
+      "extra": {
+        "LATENT_FULL": "1",
+        "LATENT_ASSERT_NO_OUTPUT": "1",
+        "LATENT_ONLY_FILE": "/workspace/scratch/diag-read-view-2/main-tree/src/compiler/types.ts",
+        "CENSUS_MODULE_FORMAT": "CommonJSBundle"
+      },
+      "exit": 0,
+      "seconds": 109.64553353000065,
+      "limit": 6000
+    },
     "candidate-dts.result.json": {
       "label": "candidate-dts",
       "args": [
@@ -131,6 +185,24 @@
       "extra": {},
       "exit": 0,
       "seconds": 61.5299575250001,
+      "limit": 6000
+    },
+    "candidate-types.ts-census.result.json": {
+      "label": "candidate-types.ts-census",
+      "args": [
+        "/workspace/scratch/diag-read-view-2/latent",
+        "/workspace/scratch/diag-read-view-2/candidate-tree/src/compiler",
+        "/workspace/scratch/diag-read-view-2/raw/candidate-types.ts.jsonl"
+      ],
+      "cwd": "/workspace/scratch/diag-read-view-2/repo",
+      "extra": {
+        "LATENT_FULL": "1",
+        "LATENT_ASSERT_NO_OUTPUT": "1",
+        "LATENT_ONLY_FILE": "/workspace/scratch/diag-read-view-2/candidate-tree/src/compiler/types.ts",
+        "CENSUS_MODULE_FORMAT": "CommonJSBundle"
+      },
+      "exit": 0,
+      "seconds": 112.19919559999926,
       "limit": 6000
     },
     "candidate-program.ts-census.result.json": {
