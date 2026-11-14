@@ -1,0 +1,11 @@
+// tsc types the write as count's type and label's together, undefined alone, so clearing either field
+// is honest. The fields are held two ways (a packed number | undefined and a string reference), and the
+// value, held once before the key is tested, can't take either form after: it stops, where
+// o.count = undefined and o.label = undefined each lower.
+interface Slots { count: number | undefined; label: string | undefined; }
+function clear(slots: Slots, key: 'count' | 'label'): void {
+	slots[key] = undefined;
+}
+const slots: Slots = { count: 1, label: ['fir', 'st'].join('') };
+clear(slots, 'label');
+console.log(`${String(slots.count)} ${String(slots.label)}`);

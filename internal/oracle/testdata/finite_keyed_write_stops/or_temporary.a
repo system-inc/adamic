@@ -1,0 +1,10 @@
+// p3 on #13p3y0c: the receiver is held in a const first. Refused at the {} until #7n03qzg lands.
+interface Levels { Low: number; Medium: number; High: number; }
+function set(level: keyof Levels): Partial<Levels> | undefined {
+	let c: Partial<Levels> | undefined;
+	const t = c || (c = {});
+	t[level] = 2;
+	return c;
+}
+const t = set('High');
+console.log(String(t?.High));

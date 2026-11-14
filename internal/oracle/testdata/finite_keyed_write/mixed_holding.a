@@ -1,0 +1,11 @@
+// The named fields are held two ways, a number and a packed number | undefined, so the value is held as
+// it came and each arm fits it to its own field, as o.count = value and o.spare = value each would.
+interface Slots { count: number; spare: number | undefined; }
+function put(slots: Slots, key: 'count' | 'spare', value: number): void {
+	slots[key] = value;
+}
+const slots: Slots = { count: 1, spare: undefined };
+console.log(`${slots.count} ${String(slots.spare)}`);
+put(slots, 'spare', 7);
+put(slots, 'count', 8);
+console.log(`${slots.count} ${String(slots.spare)}`);
