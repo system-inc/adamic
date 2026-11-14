@@ -40,6 +40,10 @@ for (const f of findings) {
  if(f.reason.startsWith('an element of an array literal a type argument is inferred from')) {
   f.registered_rule={order:3350,name:'constraintRelationRefusal',source:'internal/lower/constraint_relation.go:67',emitter:'judgeBoundArray',emitter_source:'internal/lower/constraint_relation.go:356'};
  }
+ if(f.reason.startsWith('a value of type DiagnosticWithLocation seen as Diagnostic') || f.reason.startsWith('a value of type ResolvedModuleFull seen as ResolutionWithResolvedFileName')) {
+  f.registered_rule={order:3350,name:'constraintRelationRefusal',source:'internal/lower/constraint_relation.go:67',emitter:'constraintRelation -> judgeBinding -> wideningRefusal',emitter_source:'internal/lower/constraint_relation.go:92'};
+  f.binding=f.reason.startsWith('a value of type DiagnosticWithLocation') ? {parameter:'T',argument:'DiagnosticWithLocation',constraint:'Diagnostic',callee:'getDiagnosticsHelper',declaration:'program.ts:2779'} : {parameter:'R',argument:'ResolvedModuleFull',constraint:'ResolutionWithResolvedFileName',source:'resolutionCache.ts:1102,1379,1435 generic helper signatures'};
+ }
  f.source_line=sf.text.split(/\r?\n/)[line-1];f.enclosing_function=functions[0]||null;f.enclosing_functions=functions;f.generic_bodies=generics;f.slot=slot;
 }
 fs.writeFileSync(path.join(base,'new-findings-attributed.json'),JSON.stringify(findings,null,2)+'\n');

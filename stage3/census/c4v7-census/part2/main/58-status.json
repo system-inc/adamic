@@ -1,0 +1,19 @@
+{
+  "file": "transformers/esnext.ts",
+  "commit_label": "main",
+  "exit_code": 0,
+  "seconds": 22.483604224000374,
+  "timeout": false,
+  "process_group_cleaned": true,
+  "command": [
+    "/workspace/scratch/c4v7-census/scan-main",
+    "/workspace/scratch/c4v7-census/adapted-main/src/compiler",
+    "/workspace/scratch/c4v7-census/head/stage3/census/c4v7-census/part2/main/58.jsonl"
+  ],
+  "relation_report_clean": true,
+  "findings": 28,
+  "zero_lowering_units": true,
+  "validated": true,
+  ".jsonl_sha256": "099cd11cffbe37d18287d821bf57cef3c28a53e4160e4cf95661515111e37e9e",
+  ".log_sha256": "4f7e617d3bffa054f9f0fafb16f2493786e74d0f509f6cc2e2f376dd7945a28f"
+}

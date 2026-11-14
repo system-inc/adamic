@@ -1,0 +1,19 @@
+{
+  "file": "transformers/es2019.ts",
+  "commit_label": "main",
+  "exit_code": 0,
+  "seconds": 25.238157381000292,
+  "timeout": false,
+  "process_group_cleaned": true,
+  "command": [
+    "/workspace/scratch/c4v7-census/scan-main",
+    "/workspace/scratch/c4v7-census/adapted-main/src/compiler",
+    "/workspace/scratch/c4v7-census/head/stage3/census/c4v7-census/part2/main/54.jsonl"
+  ],
+  "relation_report_clean": true,
+  "findings": 1,
+  "zero_lowering_units": true,
+  "validated": true,
+  ".jsonl_sha256": "c1b6520ea479fbb02cd8bdefd650ae5e33f8a7da2c9a0c165a795a8303ba7b0d",
+  ".log_sha256": "cd20ad3a37e5762a616e6adb535e8c295f2ab1b7912c1e58d72c9237691be1e7"
+}

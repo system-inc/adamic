@@ -1,0 +1,19 @@
+{
+  "file": "transformers/esDecorators.ts",
+  "commit_label": "head",
+  "exit_code": 0,
+  "seconds": 32.568446340000264,
+  "timeout": false,
+  "process_group_cleaned": true,
+  "command": [
+    "/workspace/scratch/c4v7-census/scan-head",
+    "/workspace/scratch/c4v7-census/adapted-head/src/compiler",
+    "/workspace/scratch/c4v7-census/head/stage3/census/c4v7-census/part2/head/57.jsonl"
+  ],
+  "relation_report_clean": true,
+  "findings": 97,
+  "zero_lowering_units": true,
+  "validated": true,
+  ".jsonl_sha256": "c4123b8bdad31f51d4bda26e8db2fda51860ceeb030683933c62c5ad64da1515",
+  ".log_sha256": "beec5200616b6bbf413fa4beea331e6557290efd68e9aaed58cc0f992fa41db4"
+}
