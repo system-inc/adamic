@@ -22,7 +22,9 @@ for row,c in zip(rows,comparisons):
  root=row['roots'][0].split('/src/compiler/')[-1];after=[row.get('where','-').split('/src/compiler/')[-1],row['kind'],row.get('reason','-')]
  assert c['root']==root and c['before']==baseline[root] and c['after']==after and c['unchanged']==(c['before']==after)
 sha=json.loads((base/'provenance.json').read_text())['sha']
-assert all(n.startswith(('stage3/census/next-stops-c4v7/','stage3/census/c4v7-census/')) for n in subprocess.check_output(['git','diff',sha,'--name-only'],text=True).splitlines())
+changed=subprocess.check_output(['git','diff',sha,'--name-only'],text=True).splitlines()+subprocess.check_output(['git','ls-files','--others','--exclude-standard'],text=True).splitlines()
+assert all(n.startswith(('stage3/census/next-stops-c4v7/','stage3/census/c4v7-census/')) for n in changed)
+assert not [n for n in changed if n.endswith('.go')], 'New stage3 Go evidence must be .go.txt'
 assert not [p for p in base.rglob('*') if p.is_file() and p.stat().st_size>20_000_000]
 statuses={str(p.relative_to(base)):json.loads(p.read_text()) for p in base.rglob('*-status.json')}
 assert all(isinstance(s['exit_code'],int) and s['seconds']<1800 and s['process_group_cleaned'] for s in statuses.values())
