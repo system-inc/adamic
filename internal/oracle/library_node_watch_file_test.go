@@ -359,13 +359,15 @@ func TestWatchFileProductOrderIsCurrent(t *testing.T) {
 	}
 }
 
-// Explicit undefined throws at registration, before any listener or poller is retained. The caught
-// row also passes a present number through the same optional parameter. Skipping the native raise
-// reds interval_undefined while the uncaught row holds the runner's exact stderr and exit.
+// Explicit undefined throws ERR_INVALID_ARG_TYPE as Node does, before any listener or poller is
+// retained. The caught rows pass a present number and hold argument order and the release of an
+// owned path into the catch. Skipping the native raise reds interval_undefined; the uncaught row
+// holds the runner's exact stderr and exit.
 func TestWatchFileUndefinedIntervalMatchesNode(t *testing.T) {
 	t.Parallel()
 	const message = "The \"interval\" argument must be of type number. Received undefined"
 	const coded = "TypeError [ERR_INVALID_ARG_TYPE]: " + message
+	const caught = "TypeError\nERR_INVALID_ARG_TYPE\n" + message + "\n" + coded + "\n"
 	for _, name := range []string{"interval_undefined", "interval_undefined_uncaught"} {
 		t.Run(name, func(t *testing.T) {
 			t.Parallel()
@@ -375,7 +377,7 @@ func TestWatchFileUndefinedIntervalMatchesNode(t *testing.T) {
 				t.Fatal(err)
 			}
 			truth := watchFileNode(t, path)
-			want := run{stdout: []byte("TypeError\nERR_INVALID_ARG_TYPE\n" + message + "\n" + coded + "\naccepted\n")}
+			want := run{stdout: []byte(caught + "accepted\npath\npersistent\n" + caught)}
 			if name == "interval_undefined_uncaught" {
 				want = run{stdout: []byte("before\n"), stderr: []byte("adamic: panic: " + coded + "\n"), exitCode: 70}
 			}
