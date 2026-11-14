@@ -23,10 +23,11 @@ import (
 // keys only grow. The walk now runs over an index of the program's accesses built once, and asks again
 // only the accesses whose name gained a key since view last judged them (viewWalkIndexed).
 
-// viewSiteIndex is every property access and every named getter of a program's modules, each in the
-// preorder view's walk visits them: ForEachChild over each module node, in module order. It's a function
-// of the program alone, so one serves every lowering of a latent run (stage3/census/latent's statecopy
-// shares it); modules is the order it was built from, and a different one builds it again.
+// viewSiteIndex is every property access, every element access a write targets (judgeViewKeyedWrite,
+// #13p3y0c) and every named getter of a program's modules, each in the preorder view's walk visits
+// them: ForEachChild over each module node, in module order. It's a function of the program alone, so
+// one serves every lowering of a latent run (stage3/census/latent's statecopy shares it); modules is
+// the order it was built from, and a different one builds it again.
 type viewSiteIndex struct {
 	modules  []*ast.SourceFile
 	accesses []*ast.Node
@@ -51,7 +52,7 @@ func (index *viewSiteIndex) sites(modules []*ast.SourceFile) *viewSiteIndex {
 	// viewWalkWhole's recursion, without its stop, so the order is its order.
 	var visit ast.Visitor
 	visit = func(part *ast.Node) bool {
-		if part.Kind == ast.KindPropertyAccessExpression {
+		if part.Kind == ast.KindPropertyAccessExpression || (part.Kind == ast.KindElementAccessExpression && ast.IsAssignmentTarget(part)) {
 			index.accesses = append(index.accesses, part)
 		}
 		if part.Kind == ast.KindGetAccessor && part.Name() != nil {
@@ -118,6 +119,14 @@ func (l *lowering) viewWalkIndexed(modules []*ast.SourceFile, fields map[string]
 	// another count.
 	stale := map[string]bool{}
 	for _, part := range index.accesses {
+		// A keyed write is asked every walk, as the whole walk asks it, in its place in preorder, so the
+		// first refusal is the whole walk's.
+		if part.Kind == ast.KindElementAccessExpression {
+			if refused := l.judgeViewKeyedWrite(part); refused != nil {
+				return nil, refused
+			}
+			continue
+		}
 		name := part.Name().Text()
 		known := l.viewSiteTrue[part]
 		if !known {

@@ -104,7 +104,7 @@ relabel(labelled);`, ".ts")
 
 // viewWriteProducers are the functions that make a SetProperty with a ViewReceiverTypeID, each through
 // viewWriteReceiverTypeID, which the walk has to see or it proved nothing about them.
-var viewWriteProducers = []string{"increment", "setProperty", "updateProperty", "logicalAssignment"}
+var viewWriteProducers = []string{"increment", "fieldStore", "updateProperty", "logicalAssignment"}
 
 // Every SetProperty a view may check takes its ViewReceiverTypeID from viewWriteReceiverTypeID, so
 // checkViewOptionalWrites sees every write to an optional field (Lower's ruling, Nov 2). The test reads

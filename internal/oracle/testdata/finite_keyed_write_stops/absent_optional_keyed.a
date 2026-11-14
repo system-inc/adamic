@@ -1,0 +1,13 @@
+// absent_optional_named.a's twin, the key a union naming pending and errors: the arm for pending is
+// judged as state.pending = false is (absentOptionalFieldWrite), so it stops in the same words.
+interface State {
+	pending?: boolean;
+	errors: boolean;
+}
+function flag(): 'pending' | 'errors' {
+	return 'pending';
+}
+const state: State = { errors: true };
+console.log(String(state.pending));
+state[flag()] = false;
+console.log(String(state.pending));
