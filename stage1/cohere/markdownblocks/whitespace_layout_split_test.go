@@ -24,9 +24,9 @@ import (
 
 	"github.com/system-inc/adamic/internal/buildcache"
 	"github.com/system-inc/adamic/internal/childguard"
+	"github.com/system-inc/adamic/internal/compilerinputs"
 	"github.com/system-inc/adamic/internal/javascript"
 	"github.com/system-inc/adamic/internal/native"
-	"github.com/system-inc/adamic/internal/toolchain"
 	"github.com/system-inc/adamic/stage1/cohere/markdownblocks/oracles"
 )
 
@@ -625,14 +625,11 @@ func whitespaceLayoutPolicyMutant(t *testing.T, ctx context.Context, cases strin
 	t.Logf("%s caught by Go policy document classification", m.name)
 }
 
-// loweringCompilerInputs are the in-repository sources the compiler that lowers a port links, and the module files
-// that pin them, by the precise directories `go list -deps` names (all of cohere/internal would hash 92 MB of lint for
-// about 5.6 MB used). TestLoweringInputsCoverCompilerDependencies keeps the list complete and every entry needed.
-var loweringCompilerInputs = []string{
-	"internal", "go.mod", "go.work", "bridge/tsgo", "cohere/TypeScript/tsc", "cohere/TypeScript-shim",
-	"cohere/go.mod", "cohere/go.sum", "cohere/unicode_properties",
-	"cohere/static_single_assignment",
-}
+// loweringCompilerInputs is the generated compiler projection for this product.
+// tsc stays whole and internal stays coarse to retain the existing key's coverage,
+// including tsc's baselines and unrelated internal packages. These are explicit
+// coarsenings of derived inputs, not a second inventory of compiler dependencies.
+var loweringCompilerInputs = compilerinputs.Markdownblocks()
 
 func whitespaceLayoutBuildFiles() []string {
 	files := append([]string(nil), loweringCompilerInputs...)
@@ -652,32 +649,18 @@ func whitespaceLayoutBuildFiles() []string {
 
 // The lowered ports are keyed by whitespaceLayoutBuildFiles, so it must cover every in-repository package the
 // compiler links and every module file that pins one, or an untraced cache could serve a stale port. Each listed
-// compiler input, dropped alone, must leave a gap, so the list carries nothing the compiler doesn't use.
+// compiler input, dropped alone, must leave a gap, so each coarse entry covers a linked dependency.
 func TestLoweringInputsCoverCompilerDependencies(t *testing.T) {
 	t.Parallel()
-	root := markdownLayoutProductRoot(t)
-	// toolchain's go, under its environment, in the repository root with PWD set to it, so go.work resolves there.
-	command := toolchain.CommandIn(root, "go", "list", "-deps", "-f", "{{if not .Standard}}{{.Dir}}\t{{with .Module}}{{.GoMod}}{{end}}{{end}}", "./internal/load", "./internal/lower", "./internal/native", "./internal/javascript")
-	listing, err := combinedOutput(command)
+	// The central exact-output guard holds this committed root set to live go list.
+	// This guard retains coverage and necessity without running another dependency scan.
+	linked, err := compilerinputs.InputsFor([]string{"./internal/load", "./internal/lower", "./internal/native", "./internal/javascript"})
 	if err != nil {
-		t.Fatalf("go list: %v\n%s", err, listing)
+		t.Fatal(err)
 	}
-	needed := map[string]bool{"go.work": true}
-	inside := func(path string) (string, bool) {
-		relative, err := filepath.Rel(root, path)
-		return filepath.ToSlash(relative), err == nil && relative != ".." && !strings.HasPrefix(relative, ".."+string(filepath.Separator))
-	}
-	for _, line := range strings.Split(strings.TrimSpace(string(listing)), "\n") {
-		directory, goMod, _ := strings.Cut(line, "\t")
-		if relative, ok := inside(directory); ok {
-			needed[relative] = true
-		}
-		if relative, ok := inside(goMod); ok && goMod != "" {
-			needed[relative] = true
-			if _, err := os.Stat(filepath.Join(filepath.Dir(goMod), "go.sum")); err == nil {
-				needed[filepath.ToSlash(filepath.Join(filepath.Dir(relative), "go.sum"))] = true
-			}
-		}
+	needed := map[string]bool{}
+	for _, input := range linked {
+		needed[input] = true
 	}
 	if gaps := loweringInputGaps(whitespaceLayoutBuildFiles(), needed); len(gaps) > 0 {
 		t.Fatalf("whitespaceLayoutBuildFiles misses lowering inputs: %s", strings.Join(gaps, ", "))
