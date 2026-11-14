@@ -140,10 +140,7 @@ func (l *lowering) mergedFieldRead(node *ast.Node) error {
 	if _, err := l.strictViewContract(node, l.checker.GetTypeOfSymbol(field)); err != nil {
 		return err
 	}
-	if l.result.CheckedFields == nil {
-		l.result.CheckedFields = map[string]bool{}
-	}
-	l.result.CheckedFields[field.Name] = true
+	l.markCheckedField(field.Name, field.Name)
 	return nil
 }
 

@@ -386,6 +386,15 @@ type lowering struct {
 	// (view_widened.go).
 	viewSources []viewSource
 	viewTypes   map[int]*checker.Type
+	// viewSites is every property access and named getter of the program's modules, in view's preorder,
+	// built once and shared by every lowering a latent run makes (view_sites.go, #q1hyhzc).
+	// checkedFieldWrites counts, by field name, the CheckedFields keys markCheckedField added;
+	// viewSiteSeen is a name's count when view last judged its accesses, and viewSiteTrue the accesses
+	// it found checked, which stay checked since keys only grow.
+	viewSites          *viewSiteIndex
+	checkedFieldWrites map[string]int
+	viewSiteSeen       map[string]int
+	viewSiteTrue       map[*ast.Node]bool
 	// overloadCheckCalls holds every overload result check function (overloadResultCheck), whose call is
 	// where its value enters a view (checkViewWidenedReads).
 	overloadCheckCalls map[int]bool

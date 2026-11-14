@@ -116,6 +116,10 @@ func latentFull(ctx context.Context, program *load.Program, emit func(LatentFile
 func latentFullSelected(ctx context.Context, program *load.Program, emit func(LatentFile), selection *latentReplaySelection) {
 	var facts *latentProgramFacts
  var modules []*ast.SourceFile
+	// One site index for the run, as latentRun's: a function of the program alone, checked against the module order at
+	// every view, so sharing it changes no answer (view_sites.go, #q1hyhzc). Each unit is a snapshot of its file's base,
+	// which shares the holder, so without it every unit built its own.
+	viewSites := &viewSiteIndex{}
 
 	for _, file := range program.Files() {
 		if !latentFileSelected(program.FileName(file)) {
@@ -129,7 +133,7 @@ func latentFullSelected(ctx context.Context, program *load.Program, emit func(La
 		record := LatentFile{Measurement: LatentMeasurementLabel, File: program.FileName(file), Declarations: latentDeclarations(program, file), Units: []LatentUnit{}}
 		checker, release := program.Checker(ctx, file)
 		fresh := func() *lowering {
-			return &lowering{moduleFormat: moduleformat.Resolve(ModuleFormatCommonJSBundle, ModuleFormatEcmaScript), program: program, checker: checker, result: &ir.Program{}, this: -1, functionIndex: -1}
+			return &lowering{moduleFormat: moduleformat.Resolve(ModuleFormatCommonJSBundle, ModuleFormatEcmaScript), program: program, checker: checker, result: &ir.Program{}, this: -1, functionIndex: -1, viewSites: viewSites}
 		}
 		if selection == nil {
 			func() {

@@ -340,6 +340,9 @@ func latentRun(ctx context.Context, program *load.Program, emit func(LatentFile)
 	typeStrings := map[*checker.Type]string{}
 	// And one map of numeric enums, a function of the enum symbol alone (numericEnum, #e0k9s2t).
 	numericEnums := map[*ast.Symbol]bool{}
+	// And one index of the program's property accesses and getters, a function of the program alone, which each
+	// view walks in place of every module's nodes (view_sites.go, #q1hyhzc: 51 s of the census's 183 s of unit time).
+	viewSites := &viewSiteIndex{}
 	var facts *latentProgramFacts
  var modules []*ast.SourceFile
 	for _, file := range program.Files() {
@@ -348,7 +351,7 @@ func latentRun(ctx context.Context, program *load.Program, emit func(LatentFile)
 		record := LatentFile{Measurement: LatentMeasurementLabel, File: program.FileName(file), Declarations: latentDeclarations(program, file), Units: []LatentUnit{}}
 		checker, release := program.Checker(ctx, file)
 		fresh := func() *lowering {
-			return &lowering{moduleFormat: moduleformat.Resolve(ModuleFormatCommonJSBundle, ModuleFormatEcmaScript), program: program, checker: checker, result: &ir.Program{}, this: -1, functionIndex: -1, sourceIdentities: identities, typeStrings: typeStrings, numericEnums: numericEnums}
+			return &lowering{moduleFormat: moduleformat.Resolve(ModuleFormatCommonJSBundle, ModuleFormatEcmaScript), program: program, checker: checker, result: &ir.Program{}, this: -1, functionIndex: -1, sourceIdentities: identities, typeStrings: typeStrings, numericEnums: numericEnums, viewSites: viewSites}
 		}
 		func() {
 			defer func() {
