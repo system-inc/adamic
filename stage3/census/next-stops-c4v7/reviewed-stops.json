@@ -7,5 +7,14 @@
     "owner": "createSingleWatcherPerName in adapted upstream sys.ts",
     "emitter": "internal/lower/cast_proof.go:155 castRefusal (rule 1900), castProof refusal at line 195",
     "owner_basis": "Inside generic body createSingleWatcherPerName<T extends FileWatcherCallback | FsWatchCallback> at sys.ts:498. The callback expression is cast as T in createWatcher argument 1 (whose parameter is callback: T). The same finding is already present in both main and head scan-only streams."
+  },
+  {
+    "where": "utilitiesPublic.ts:1280:52",
+    "kind": "Refused",
+    "reason": "an unproven predicate argument for parameter predicate (argument \"predicate\")",
+    "phase": "refusal_scan",
+    "owner": "getFirstJSDocTag in adapted upstream utilitiesPublic.ts",
+    "emitter": "internal/lower/predicates.go:708 predicateArgumentsRefusal (rule 1700), refusal at line 779",
+    "owner_basis": "Inside generic body getFirstJSDocTag<T extends JSDocTag> at utilitiesPublic.ts:1279. The forwarded predicate parameter is argument 2 of find, in its predicate slot. The same finding is already present in both main and head scan-only streams."
   }
 ]
