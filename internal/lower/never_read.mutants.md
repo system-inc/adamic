@@ -61,3 +61,27 @@ to it. Run with B, the call puts A back, and both backends stop at exit 70 ("unr
 Node prints seen 0. So narrowedNeverReadGap still holds a road the earliest narrowing doesn't: the enum
 trap isn't judged by what runs between. The same shape through a property (holder.e) stops that way on
 main with the rule in.
+
+## 4. enum_never's read judged by nothing (#afs4xvb)
+
+In internal/lower/expression.go and internal/lower/object.go, each `if err := l.enumNeverReadGap(...); err
+!= nil {` becomes `if err := error(nil); err != nil {`.
+
+Expected: TestEnumNeverAcrossAWriteIsNotYet goes red at path, deep and switch_default, .a and .ts, each
+lowering to enum_never's trap, which exits 70 where Node prints seen 0 (J-xz537sq). The let row stays not
+yet, at narrowedNeverReadGap.
+
+## 5. An element read always counted as code
+
+In internal/lower/narrowed_nullish.go, elementReadRunsNothing returns false.
+
+Expected: TestEnumNeverWithNothingBetweenTraps goes red at index, .a and .ts: the later checks' values[0]
+reads count as code between the earliest narrowing and the read, and a name a number spells stops then.
+
+## 6. The switch's scrutinee judged by nothing
+
+In internal/lower/object.go, `if err := l.enumSwitchScrutineeGap(statement.Expression); err != nil {`
+becomes `if err := error(nil); err != nil {`.
+
+Expected: TestEnumNeverAcrossAWriteIsNotYet goes red at switch_implicit, .a and .ts, lowering to the
+implicit default's trap, which exits 70 where Node prints after (J-xz537sq).

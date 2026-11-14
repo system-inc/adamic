@@ -584,6 +584,9 @@ func (l *lowering) value(node *ast.Node) (ir.Expression, error) {
 		return value, err
 	}
 	if identity := l.enumNeverIdentity(node, map[*ast.Node]bool{}); identity != nil {
+		if err := l.enumNeverReadGap(node); err != nil {
+			return nil, err
+		}
 		value, err := l.enumNeverValue(node)
 		if err != nil {
 			return nil, err
