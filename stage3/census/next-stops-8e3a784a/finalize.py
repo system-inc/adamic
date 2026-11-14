@@ -9,6 +9,11 @@ keys=['kind','where','reason','fix','diagnostics']
 assert [r['roots'] for r in records[modes[0]]]==[r['roots'] for r in records[modes[1]]]
 matching=sum({k:a.get(k) for k in keys}=={k:b.get(k) for k in keys} for a,b in zip(*(records[m] for m in modes)))
 assert all((base/m/'validation.json').exists() for m in modes)
+for m in modes:
+ comparisons=json.loads((base/m/'comparison.json').read_text())
+ former=[c for c in comparisons if c['before'][0]=='sys.ts:618:33']
+ assert len(former)==73 and all(c['after'][0]=='sys.ts:790:87' for c in former)
+
 p=json.loads((base/'provenance.json').read_text())
 s=['# Next stops on 8e3a784a', '', 'Measured commit: `'+p['sha']+'`. Parent: `'+p['parent']+'`. Baseline: typescript/next-stops-7534c1d7 at `'+p['baseline']+'` (both formats).', '', '## Stops and movement from 7534c1d7', '']
 for m in modes:
