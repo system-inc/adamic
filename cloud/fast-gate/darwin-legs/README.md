@@ -71,13 +71,20 @@ file <path> <blob sha>\n
 ```
 
 - `dir`: one for every directory inside the checkout that
-  `GOOS=darwin GOARCH=arm64 CGO_ENABLED=1 GOFLAGS=-mod=readonly go list -deps -test -f '{{.Dir}}' ./internal/apple/...`
+  `GOOS=darwin GOARCH=arm64 CGO_ENABLED=1 GOFLAGS=-mod=readonly go list -deps -test -f '{{.Dir}}' ./internal/apple/... <compilers>`
   names, the Mac's build of the package with its tests' imports, so its whole in-module dependency closure
-  (internal/lower, internal/ir, internal/native and more). Each is the path relative to the checkout, listed once, and
-  `git rev-parse <commit>:<path>`, its tree object. A directory at or inside a gitlink (a submodule) is the gitlink's
-  path and its commit object instead. The standard library and modules outside the checkout drop out; the module files
-  pin those. A tree object takes the directory's subdirectories too, conservatively: a main that moved a listed
-  package's testdata, or a package below one, moves the digest though go may read neither.
+  (internal/lower, internal/ir, internal/native and more). `<compilers>` are the declared compilers of internal/apple:
+  every directory `cloud/fast-gate/compiler-dependencies.json` declares for internal/apple or a package below it, read
+  as the gate's census reads the map (the tools checkout's, with the checkout's entries laid over it), each as
+  `./<dir>`, sorted. They're there because the leg's tests build `./cmd/adamic` at run time and run `adamic c`
+  (internal/apple/generate's tests, through buildcache.Adamic), and cmd/adamic is a main package that go list of
+  `./internal/apple/...` never names, so an edit to cmd/adamic, or to what only it imports, would otherwise move the
+  binary the leg runs and no line. A map that can't be read is refused, never a digest without them; a map that
+  declares no internal/apple package lists `./internal/apple/...` alone. Each listed directory is the path relative to
+  the checkout, listed once, and `git rev-parse <commit>:<path>`, its tree object. A directory at or inside a gitlink (a
+  submodule) is the gitlink's path and its commit object instead. The standard library and modules outside the checkout
+  drop out; the module files pin those. A tree object takes the directory's subdirectories too, conservatively: a main
+  that moved a listed package's testdata, or a package below one, moves the digest though go may read neither.
 - `file`: one for each of `go.mod`, `go.sum`, `go.work` and `go.work.sum` present at the commit's root.
 - `<mode>`: one for every entry of `git ls-tree -r --full-tree <commit>` whose first rule in the tools checkout's
   `executors.txt` is `darwin`.
