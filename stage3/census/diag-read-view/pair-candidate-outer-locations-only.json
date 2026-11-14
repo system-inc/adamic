@@ -1,0 +1,106 @@
+{
+  "program.ts": {
+    "before": 528,
+    "after": 526,
+    "new": [],
+    "removed": [
+      {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "/workspace/scratch/diag-read-view-1/main-tree/src/compiler/program.ts:2795:5",
+        "phase": "refusal_scan",
+        "kind": "Refused",
+        "where": "/workspace/scratch/diag-read-view-1/main-tree/src/compiler/program.ts:2796:16",
+        "reason": "a value of type DiagnosticWithLocation seen as Diagnostic, which can write SourceFile | undefined where SourceFile is read",
+        "text": "/workspace/scratch/diag-read-view-1/main-tree/src/compiler/program.ts:2796:16: Adamic 0.1 refuses a value of type DiagnosticWithLocation seen as Diagnostic, which can write SourceFile | undefined where SourceFile is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)"
+      },
+      {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "/workspace/scratch/diag-read-view-1/main-tree/src/compiler/program.ts:2828:5",
+        "phase": "refusal_scan",
+        "kind": "Refused",
+        "where": "/workspace/scratch/diag-read-view-1/main-tree/src/compiler/program.ts:2829:16",
+        "reason": "a value of type DiagnosticWithLocation seen as Diagnostic, which can write SourceFile | undefined where SourceFile is read",
+        "text": "/workspace/scratch/diag-read-view-1/main-tree/src/compiler/program.ts:2829:16: Adamic 0.1 refuses a value of type DiagnosticWithLocation seen as Diagnostic, which can write SourceFile | undefined where SourceFile is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)"
+      }
+    ],
+    "changed": [
+      {
+        "mappedSite": [
+          "lowering",
+          "Refused",
+          "src/compiler/program.ts:1579:31"
+        ],
+        "before": [
+          {
+            "root_kind": "",
+            "depth": 0,
+            "measurement": "measured on a checker-rejected program",
+            "unit": "/workspace/scratch/diag-read-view-1/main-tree/src/compiler/program.ts:1516:1",
+            "phase": "lowering",
+            "kind": "Refused",
+            "where": "/workspace/scratch/diag-read-view-1/main-tree/src/compiler/program.ts:1579:31",
+            "reason": "a generic instantiated at void whose body reads the value: parseConfigHostFromCompilerHostLike's T = void (read from the signature), read at /workspace/scratch/diag-read-view-1/main-tree/src/compiler/program.ts:5106:54 as a binding's initializer",
+            "text": "/workspace/scratch/diag-read-view-1/main-tree/src/compiler/program.ts:1579:31: Adamic 0.1 refuses a generic instantiated at void whose body reads the value: parseConfigHostFromCompilerHostLike's T = void (read from the signature), read at /workspace/scratch/diag-read-view-1/main-tree/src/compiler/program.ts:5106:54 as a binding's initializer; give the function a return type, or don't hand a void container to a generic that reads its elements (adamic/no-void-read)"
+          }
+        ],
+        "after": [
+          {
+            "root_kind": "",
+            "depth": 0,
+            "measurement": "measured on a checker-rejected program",
+            "unit": "/workspace/scratch/diag-read-view-1/candidate-tree/src/compiler/program.ts:1517:1",
+            "phase": "lowering",
+            "kind": "Refused",
+            "where": "/workspace/scratch/diag-read-view-1/candidate-tree/src/compiler/program.ts:1580:31",
+            "reason": "a generic instantiated at void whose body reads the value: parseConfigHostFromCompilerHostLike's T = void (read from the signature), read at /workspace/scratch/diag-read-view-1/candidate-tree/src/compiler/program.ts:5107:54 as a binding's initializer",
+            "text": "/workspace/scratch/diag-read-view-1/candidate-tree/src/compiler/program.ts:1580:31: Adamic 0.1 refuses a generic instantiated at void whose body reads the value: parseConfigHostFromCompilerHostLike's T = void (read from the signature), read at /workspace/scratch/diag-read-view-1/candidate-tree/src/compiler/program.ts:5107:54 as a binding's initializer; give the function a return type, or don't hand a void container to a generic that reads its elements (adamic/no-void-read)"
+          }
+        ]
+      },
+      {
+        "mappedSite": [
+          "lowering",
+          "Refused",
+          "src/compiler/program.ts:4396:13"
+        ],
+        "before": [
+          {
+            "root_kind": "",
+            "depth": 0,
+            "measurement": "measured on a checker-rejected program",
+            "unit": "/workspace/scratch/diag-read-view-1/main-tree/src/compiler/program.ts:4076:5",
+            "phase": "lowering",
+            "kind": "Refused",
+            "where": "/workspace/scratch/diag-read-view-1/main-tree/src/compiler/program.ts:4396:13",
+            "reason": "a generic instantiated at void whose body reads the value: forEachEmittedFile's T = void, read at /workspace/scratch/diag-read-view-1/main-tree/src/compiler/emitter.ts:461:21 as a value",
+            "text": "/workspace/scratch/diag-read-view-1/main-tree/src/compiler/program.ts:4396:13: Adamic 0.1 refuses a generic instantiated at void whose body reads the value: forEachEmittedFile's T = void, read at /workspace/scratch/diag-read-view-1/main-tree/src/compiler/emitter.ts:461:21 as a value; give the function a return type, or don't hand a void container to a generic that reads its elements (adamic/no-void-read)"
+          }
+        ],
+        "after": [
+          {
+            "root_kind": "",
+            "depth": 0,
+            "measurement": "measured on a checker-rejected program",
+            "unit": "/workspace/scratch/diag-read-view-1/candidate-tree/src/compiler/program.ts:4077:5",
+            "phase": "lowering",
+            "kind": "Refused",
+            "where": "/workspace/scratch/diag-read-view-1/candidate-tree/src/compiler/program.ts:4397:13",
+            "reason": "a generic instantiated at void whose body reads the value: forEachEmittedFile's T = void, read at /workspace/scratch/diag-read-view-1/candidate-tree/src/compiler/emitter.ts:461:21 as a value",
+            "text": "/workspace/scratch/diag-read-view-1/candidate-tree/src/compiler/program.ts:4397:13: Adamic 0.1 refuses a generic instantiated at void whose body reads the value: forEachEmittedFile's T = void, read at /workspace/scratch/diag-read-view-1/candidate-tree/src/compiler/emitter.ts:461:21 as a value; give the function a return type, or don't hand a void container to a generic that reads its elements (adamic/no-void-read)"
+          }
+        ]
+      }
+    ]
+  },
+  "utilitiesPublic.ts": {
+    "before": 217,
+    "after": 217,
+    "new": [],
+    "removed": [],
+    "changed": []
+  }
+}

@@ -1,0 +1,11 @@
+{
+  "utilitiesImportOwner": {
+    "adapted": true,
+    "edits": []
+  },
+  "additionalWholeAdapterReplay": {
+    "baselineAndCandidateSysByteIdentical": true,
+    "reason": "src/compiler/sys.ts: changed or half-adapted owner createDirectoryWatcherSupportingRecursive.createDirectoryWatcher",
+    "scope": "existing later recursive-watcher amendment; not a new diagnostic finding"
+  }
+}

@@ -1,0 +1,10 @@
+{
+  "reason": "User stop condition: optional-widening changed findings cannot be removed inside the specified read-view/comparator shape. Remaining measurements are cancelled and are not passes.",
+  "processes": [
+    {
+      "pid": 17036,
+      "group": 17036,
+      "command": "python3 /workspace/scratch/diag-read-view-1/repo/stage3/lane/run.py /workspace/scratch/diag-read-view-1/lane"
+    }
+  ]
+}

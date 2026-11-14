@@ -1,7 +1,229 @@
 {
+  "program.ts": {
+    "before": 528,
+    "after": 526,
+    "new": [],
+    "removed": [
+      {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "/workspace/scratch/diag-read-view-1/main-tree/src/compiler/program.ts:2795:5",
+        "phase": "refusal_scan",
+        "kind": "Refused",
+        "where": "/workspace/scratch/diag-read-view-1/main-tree/src/compiler/program.ts:2796:16",
+        "reason": "a value of type DiagnosticWithLocation seen as Diagnostic, which can write SourceFile | undefined where SourceFile is read",
+        "text": "/workspace/scratch/diag-read-view-1/main-tree/src/compiler/program.ts:2796:16: Adamic 0.1 refuses a value of type DiagnosticWithLocation seen as Diagnostic, which can write SourceFile | undefined where SourceFile is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)"
+      },
+      {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "/workspace/scratch/diag-read-view-1/main-tree/src/compiler/program.ts:2828:5",
+        "phase": "refusal_scan",
+        "kind": "Refused",
+        "where": "/workspace/scratch/diag-read-view-1/main-tree/src/compiler/program.ts:2829:16",
+        "reason": "a value of type DiagnosticWithLocation seen as Diagnostic, which can write SourceFile | undefined where SourceFile is read",
+        "text": "/workspace/scratch/diag-read-view-1/main-tree/src/compiler/program.ts:2829:16: Adamic 0.1 refuses a value of type DiagnosticWithLocation seen as Diagnostic, which can write SourceFile | undefined where SourceFile is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)"
+      }
+    ],
+    "changed": []
+  },
   "utilitiesPublic.ts": {
     "before": 217,
     "after": 217,
+    "new": [],
+    "removed": [],
+    "changed": []
+  },
+  "utilities.ts": {
+    "before": 984,
+    "after": 994,
+    "new": [
+      {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "/workspace/scratch/diag-read-view-1/candidate-tree/src/compiler/utilities.ts:8783:1",
+        "phase": "refusal_scan",
+        "kind": "Refused",
+        "where": "/workspace/scratch/diag-read-view-1/candidate-tree/src/compiler/utilities.ts:8784:53",
+        "reason": "a value of type DiagnosticReadView seen as Diagnostic, whose readonly field file becomes writable: a readonly field may hold something narrower than SourceFile | undefined, which a write of SourceFile | undefined would replace",
+        "text": "/workspace/scratch/diag-read-view-1/candidate-tree/src/compiler/utilities.ts:8784:53: Adamic 0.1 refuses a value of type DiagnosticReadView seen as Diagnostic, whose readonly field file becomes writable: a readonly field may hold something narrower than SourceFile | undefined, which a write of SourceFile | undefined would replace; keep file readonly in the type it's seen as, or copy the value ({ ...value }) (adamic/invariant-mutable)"
+      },
+      {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "/workspace/scratch/diag-read-view-1/candidate-tree/src/compiler/utilities.ts:8783:1",
+        "phase": "refusal_scan",
+        "kind": "Refused",
+        "where": "/workspace/scratch/diag-read-view-1/candidate-tree/src/compiler/utilities.ts:8784:57",
+        "reason": "a value of type DiagnosticReadView seen as Diagnostic, whose readonly field file becomes writable: a readonly field may hold something narrower than SourceFile | undefined, which a write of SourceFile | undefined would replace",
+        "text": "/workspace/scratch/diag-read-view-1/candidate-tree/src/compiler/utilities.ts:8784:57: Adamic 0.1 refuses a value of type DiagnosticReadView seen as Diagnostic, whose readonly field file becomes writable: a readonly field may hold something narrower than SourceFile | undefined, which a write of SourceFile | undefined would replace; keep file readonly in the type it's seen as, or copy the value ({ ...value }) (adamic/invariant-mutable)"
+      },
+      {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "/workspace/scratch/diag-read-view-1/candidate-tree/src/compiler/utilities.ts:8783:1",
+        "phase": "refusal_scan",
+        "kind": "Refused",
+        "where": "/workspace/scratch/diag-read-view-1/candidate-tree/src/compiler/utilities.ts:8785:35",
+        "reason": "a value of type DiagnosticReadView seen as Diagnostic, whose readonly field file becomes writable: a readonly field may hold something narrower than SourceFile | undefined, which a write of SourceFile | undefined would replace",
+        "text": "/workspace/scratch/diag-read-view-1/candidate-tree/src/compiler/utilities.ts:8785:35: Adamic 0.1 refuses a value of type DiagnosticReadView seen as Diagnostic, whose readonly field file becomes writable: a readonly field may hold something narrower than SourceFile | undefined, which a write of SourceFile | undefined would replace; keep file readonly in the type it's seen as, or copy the value ({ ...value }) (adamic/invariant-mutable)"
+      },
+      {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "/workspace/scratch/diag-read-view-1/candidate-tree/src/compiler/utilities.ts:8783:1",
+        "phase": "refusal_scan",
+        "kind": "Refused",
+        "where": "/workspace/scratch/diag-read-view-1/candidate-tree/src/compiler/utilities.ts:8785:39",
+        "reason": "a value of type DiagnosticReadView seen as Diagnostic, whose readonly field file becomes writable: a readonly field may hold something narrower than SourceFile | undefined, which a write of SourceFile | undefined would replace",
+        "text": "/workspace/scratch/diag-read-view-1/candidate-tree/src/compiler/utilities.ts:8785:39: Adamic 0.1 refuses a value of type DiagnosticReadView seen as Diagnostic, whose readonly field file becomes writable: a readonly field may hold something narrower than SourceFile | undefined, which a write of SourceFile | undefined would replace; keep file readonly in the type it's seen as, or copy the value ({ ...value }) (adamic/invariant-mutable)"
+      },
+      {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "/workspace/scratch/diag-read-view-1/candidate-tree/src/compiler/utilities.ts:8923:1",
+        "phase": "refusal_scan",
+        "kind": "Refused",
+        "where": "/workspace/scratch/diag-read-view-1/candidate-tree/src/compiler/utilities.ts:8924:37",
+        "reason": "a value of type DiagnosticReadView seen as Diagnostic, whose readonly field file becomes writable: a readonly field may hold something narrower than SourceFile | undefined, which a write of SourceFile | undefined would replace",
+        "text": "/workspace/scratch/diag-read-view-1/candidate-tree/src/compiler/utilities.ts:8924:37: Adamic 0.1 refuses a value of type DiagnosticReadView seen as Diagnostic, whose readonly field file becomes writable: a readonly field may hold something narrower than SourceFile | undefined, which a write of SourceFile | undefined would replace; keep file readonly in the type it's seen as, or copy the value ({ ...value }) (adamic/invariant-mutable)"
+      },
+      {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "/workspace/scratch/diag-read-view-1/candidate-tree/src/compiler/utilities.ts:8923:1",
+        "phase": "refusal_scan",
+        "kind": "Refused",
+        "where": "/workspace/scratch/diag-read-view-1/candidate-tree/src/compiler/utilities.ts:8925:37",
+        "reason": "a value of type DiagnosticReadView seen as Diagnostic, whose readonly field file becomes writable: a readonly field may hold something narrower than SourceFile | undefined, which a write of SourceFile | undefined would replace",
+        "text": "/workspace/scratch/diag-read-view-1/candidate-tree/src/compiler/utilities.ts:8925:37: Adamic 0.1 refuses a value of type DiagnosticReadView seen as Diagnostic, whose readonly field file becomes writable: a readonly field may hold something narrower than SourceFile | undefined, which a write of SourceFile | undefined would replace; keep file readonly in the type it's seen as, or copy the value ({ ...value }) (adamic/invariant-mutable)"
+      },
+      {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "/workspace/scratch/diag-read-view-1/candidate-tree/src/compiler/utilities.ts:8923:1",
+        "phase": "refusal_scan",
+        "kind": "Refused",
+        "where": "/workspace/scratch/diag-read-view-1/candidate-tree/src/compiler/utilities.ts:8926:39",
+        "reason": "a value of type DiagnosticReadView seen as Diagnostic, whose readonly field file becomes writable: a readonly field may hold something narrower than SourceFile | undefined, which a write of SourceFile | undefined would replace",
+        "text": "/workspace/scratch/diag-read-view-1/candidate-tree/src/compiler/utilities.ts:8926:39: Adamic 0.1 refuses a value of type DiagnosticReadView seen as Diagnostic, whose readonly field file becomes writable: a readonly field may hold something narrower than SourceFile | undefined, which a write of SourceFile | undefined would replace; keep file readonly in the type it's seen as, or copy the value ({ ...value }) (adamic/invariant-mutable)"
+      },
+      {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "/workspace/scratch/diag-read-view-1/candidate-tree/src/compiler/utilities.ts:8923:1",
+        "phase": "refusal_scan",
+        "kind": "Refused",
+        "where": "/workspace/scratch/diag-read-view-1/candidate-tree/src/compiler/utilities.ts:8927:39",
+        "reason": "a value of type DiagnosticReadView seen as Diagnostic, whose readonly field file becomes writable: a readonly field may hold something narrower than SourceFile | undefined, which a write of SourceFile | undefined would replace",
+        "text": "/workspace/scratch/diag-read-view-1/candidate-tree/src/compiler/utilities.ts:8927:39: Adamic 0.1 refuses a value of type DiagnosticReadView seen as Diagnostic, whose readonly field file becomes writable: a readonly field may hold something narrower than SourceFile | undefined, which a write of SourceFile | undefined would replace; keep file readonly in the type it's seen as, or copy the value ({ ...value }) (adamic/invariant-mutable)"
+      },
+      {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "/workspace/scratch/diag-read-view-1/candidate-tree/src/compiler/utilities.ts:8923:1",
+        "phase": "refusal_scan",
+        "kind": "Refused",
+        "where": "/workspace/scratch/diag-read-view-1/candidate-tree/src/compiler/utilities.ts:8928:62",
+        "reason": "a value of type DiagnosticReadView seen as Diagnostic, whose readonly field file becomes writable: a readonly field may hold something narrower than SourceFile | undefined, which a write of SourceFile | undefined would replace",
+        "text": "/workspace/scratch/diag-read-view-1/candidate-tree/src/compiler/utilities.ts:8928:62: Adamic 0.1 refuses a value of type DiagnosticReadView seen as Diagnostic, whose readonly field file becomes writable: a readonly field may hold something narrower than SourceFile | undefined, which a write of SourceFile | undefined would replace; keep file readonly in the type it's seen as, or copy the value ({ ...value }) (adamic/invariant-mutable)"
+      },
+      {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "/workspace/scratch/diag-read-view-1/candidate-tree/src/compiler/utilities.ts:8923:1",
+        "phase": "refusal_scan",
+        "kind": "Refused",
+        "where": "/workspace/scratch/diag-read-view-1/candidate-tree/src/compiler/utilities.ts:8928:89",
+        "reason": "a value of type DiagnosticReadView seen as Diagnostic, whose readonly field file becomes writable: a readonly field may hold something narrower than SourceFile | undefined, which a write of SourceFile | undefined would replace",
+        "text": "/workspace/scratch/diag-read-view-1/candidate-tree/src/compiler/utilities.ts:8928:89: Adamic 0.1 refuses a value of type DiagnosticReadView seen as Diagnostic, whose readonly field file becomes writable: a readonly field may hold something narrower than SourceFile | undefined, which a write of SourceFile | undefined would replace; keep file readonly in the type it's seen as, or copy the value ({ ...value }) (adamic/invariant-mutable)"
+      }
+    ],
+    "removed": [],
+    "changed": [
+      {
+        "mappedSite": [
+          "refusal_scan",
+          "Refused",
+          "src/compiler/utilities.ts:8808:39"
+        ],
+        "before": [
+          {
+            "root_kind": "",
+            "depth": 0,
+            "measurement": "measured on a checker-rejected program",
+            "unit": "/workspace/scratch/diag-read-view-1/main-tree/src/compiler/utilities.ts:8801:1",
+            "phase": "refusal_scan",
+            "kind": "Refused",
+            "where": "/workspace/scratch/diag-read-view-1/main-tree/src/compiler/utilities.ts:8808:39",
+            "reason": "optional property reportsUnnecessary in Diagnostic absent from structural source DiagnosticRelatedInformation, which can hide fields",
+            "text": "/workspace/scratch/diag-read-view-1/main-tree/src/compiler/utilities.ts:8808:39: Adamic 0.1 refuses optional property reportsUnnecessary in Diagnostic absent from structural source DiagnosticRelatedInformation, which can hide fields; declare reportsUnnecessary on the source type, or build a fresh object with known fields (adamic/no-optional-widening)"
+          }
+        ],
+        "after": [
+          {
+            "root_kind": "",
+            "depth": 0,
+            "measurement": "measured on a checker-rejected program",
+            "unit": "/workspace/scratch/diag-read-view-1/candidate-tree/src/compiler/utilities.ts:8802:1",
+            "phase": "refusal_scan",
+            "kind": "Refused",
+            "where": "/workspace/scratch/diag-read-view-1/candidate-tree/src/compiler/utilities.ts:8809:39",
+            "reason": "optional property reportsUnnecessary in DiagnosticReadView absent from structural source DiagnosticRelatedInformation, which can hide fields",
+            "text": "/workspace/scratch/diag-read-view-1/candidate-tree/src/compiler/utilities.ts:8809:39: Adamic 0.1 refuses optional property reportsUnnecessary in DiagnosticReadView absent from structural source DiagnosticRelatedInformation, which can hide fields; declare reportsUnnecessary on the source type, or build a fresh object with known fields (adamic/no-optional-widening)"
+          }
+        ]
+      },
+      {
+        "mappedSite": [
+          "refusal_scan",
+          "Refused",
+          "src/compiler/utilities.ts:8808:44"
+        ],
+        "before": [
+          {
+            "root_kind": "",
+            "depth": 0,
+            "measurement": "measured on a checker-rejected program",
+            "unit": "/workspace/scratch/diag-read-view-1/main-tree/src/compiler/utilities.ts:8801:1",
+            "phase": "refusal_scan",
+            "kind": "Refused",
+            "where": "/workspace/scratch/diag-read-view-1/main-tree/src/compiler/utilities.ts:8808:44",
+            "reason": "optional property reportsUnnecessary in Diagnostic absent from structural source DiagnosticRelatedInformation, which can hide fields",
+            "text": "/workspace/scratch/diag-read-view-1/main-tree/src/compiler/utilities.ts:8808:44: Adamic 0.1 refuses optional property reportsUnnecessary in Diagnostic absent from structural source DiagnosticRelatedInformation, which can hide fields; declare reportsUnnecessary on the source type, or build a fresh object with known fields (adamic/no-optional-widening)"
+          }
+        ],
+        "after": [
+          {
+            "root_kind": "",
+            "depth": 0,
+            "measurement": "measured on a checker-rejected program",
+            "unit": "/workspace/scratch/diag-read-view-1/candidate-tree/src/compiler/utilities.ts:8802:1",
+            "phase": "refusal_scan",
+            "kind": "Refused",
+            "where": "/workspace/scratch/diag-read-view-1/candidate-tree/src/compiler/utilities.ts:8809:44",
+            "reason": "optional property reportsUnnecessary in DiagnosticReadView absent from structural source DiagnosticRelatedInformation, which can hide fields",
+            "text": "/workspace/scratch/diag-read-view-1/candidate-tree/src/compiler/utilities.ts:8809:44: Adamic 0.1 refuses optional property reportsUnnecessary in DiagnosticReadView absent from structural source DiagnosticRelatedInformation, which can hide fields; declare reportsUnnecessary on the source type, or build a fresh object with known fields (adamic/no-optional-widening)"
+          }
+        ]
+      }
+    ]
+  },
+  "types.ts": {
+    "before": 0,
+    "after": 0,
     "new": [],
     "removed": [],
     "changed": []

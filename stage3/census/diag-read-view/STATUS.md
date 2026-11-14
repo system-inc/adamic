@@ -2,16 +2,67 @@
   "implementation": "18ae2912bd4adca63ca8bbd6952736fcdc996b95",
   "base": "8e3a784aa5a601f57342c07b68f145fe56252c21",
   "upstream": "050880ce59e30b356b686bd3144efe24f875ebc8",
-  "note": "Proof checkpoint; only recorded completed results are claims. Census/apply/lane acceptance remains pending until final verdict. No Loom submission.",
+  "note": "Stopped at the strict full-census changed-finding gate. No successful final apply or whole lane is claimed. No Loom submission.",
   "completed": [
+    "mutant-program.ts-census.result.json",
     "main-build-compiler.result.json",
     "main-program.ts-census.result.json",
     "candidate-utilitiesPublic.ts-census.result.json",
+    "main-utilities.ts-census.result.json",
     "main-dts.result.json",
+    "candidate-utilities.ts-census.result.json",
     "adamic-types.result.json",
     "candidate-build-compiler.result.json",
+    "main-types.ts-census.result.json",
     "candidate-dts.result.json",
+    "candidate-types.ts-census.result.json",
+    "candidate-program.ts-census.result.json",
     "candidate-apply.result.json",
-    "main-utilitiesPublic.ts-census.result.json"
-  ]
+    "main-utilitiesPublic.ts-census.result.json",
+    "whole-lane.result.json"
+  ],
+  "status": "STOPPED_UNACCEPTED",
+  "stop": {
+    "status": "STOPPED_UNACCEPTED",
+    "candidate": "18ae2912bd4adca63ca8bbd6952736fcdc996b95",
+    "parent": "8e3a784aa5a601f57342c07b68f145fe56252c21",
+    "comparatorsChanged": [
+      "compareDiagnostics",
+      "diagnosticsEqualityComparer"
+    ],
+    "censuses": {
+      "program.ts": {
+        "new": 0,
+        "changed": 0,
+        "removed": 2
+      },
+      "utilitiesPublic.ts": {
+        "new": 0,
+        "changed": 0,
+        "removed": 0
+      },
+      "utilities.ts": {
+        "new": 10,
+        "changed": 2,
+        "removed": 0
+      },
+      "types.ts": {
+        "new": 0,
+        "changed": 0,
+        "removed": 0
+      }
+    },
+    "fullCensusRuns": 9,
+    "allFullCensusRunsExitZeroWithin100Minutes": true,
+    "reason": "The optional-widening findings at mapped utilities.ts:8808:39 and :8808:44 change their reason target from Diagnostic to DiagnosticReadView. All allowed comparator parameter substitutions preserve DiagnosticRelatedInformation recursive arguments without reportsUnnecessary and the DiagnosticReadView target that has it. Removing or reclassifying these changed findings is outside the specified shape and strict pairing rule.",
+    "lane": "Cancelled under the user stop condition during normal apply; oracle was not run. No final apply or 106366-lane pass is claimed.",
+    "firstApply": "Stopped at the existing whole utilities import pin; corrected by an amendment in core-multimap and verified at that owner boundary.",
+    "implementationBranch": "typescript/diag-read-view-1: unaccepted review candidate, no acceptance or Loom submission",
+    "ledger": "Unchanged; no README convention requires a new diagnostic-amendment ledger entry.",
+    "laneInputs": "All 29 sanctioned proof inputs unchanged; no lane regeneration required.",
+    "toolSha256": {
+      "latent": "1dc7fe47ecde831c307ddcd87c6e3d0d58aff71c53ac2222718f6b0ab3fa1502",
+      "adamic": "fc615424e811f79367d6db1ab797eb830f117f32e14be46c1142cae818cb1b3b"
+    }
+  }
 }

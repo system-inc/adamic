@@ -1,0 +1,44 @@
+{
+  "scope": "read-only stock checker facts explaining the already observed full-census stop; not a replacement census",
+  "currentTwoComparatorParameters": {
+    "expression": "compareDiagnostics(d1i, d2i)",
+    "argumentTypes": [
+      "DiagnosticRelatedInformation",
+      "DiagnosticRelatedInformation"
+    ],
+    "argumentHasReportsUnnecessary": [
+      false,
+      false
+    ],
+    "targetParameterTypes": [
+      "DiagnosticReadView",
+      "DiagnosticReadView"
+    ],
+    "targetHasReportsUnnecessary": [
+      true,
+      true
+    ],
+    "comparatorParameterType": "Diagnostic"
+  },
+  "virtualAllEightComparatorParameters": {
+    "expression": "compareDiagnostics(d1i, d2i)",
+    "argumentTypes": [
+      "DiagnosticRelatedInformation",
+      "DiagnosticRelatedInformation"
+    ],
+    "argumentHasReportsUnnecessary": [
+      false,
+      false
+    ],
+    "targetParameterTypes": [
+      "DiagnosticReadView",
+      "DiagnosticReadView"
+    ],
+    "targetHasReportsUnnecessary": [
+      true,
+      true
+    ],
+    "comparatorParameterType": "DiagnosticReadView"
+  },
+  "explanation": "All allowed comparator parameter changes leave both recursive call arguments DiagnosticRelatedInformation and the target DiagnosticReadView. The source lacks reportsUnnecessary and the target retains it through Diagnostic. Removing these changed optional-widening findings requires modifying the field types, interface members, recursive call, or comparator overload shape outside the requested amendment."
+}

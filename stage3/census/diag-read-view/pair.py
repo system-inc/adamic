@@ -15,7 +15,13 @@ for file in (sys.argv[2:] or files):
   for f in findings:
    where=f.get('where','').removeprefix(str(s/(label+'-tree'))+'/');m=re.match(r'(.*):(\d+):(\d+)$',where)
    if label!='main' and m and m[1] in maps:where=f'{m[1]}:{maps[m[1]].get(int(m[2]),"inserted-"+m[2])}:{m[3]}'
-   key=(f.get('phase',''),f.get('kind',''),where,f.get('reason',''));unique[key]=f
+   reason=f.get('reason','').replace(str(s/(label+'-tree'))+'/', '')
+   def mapped_reference(match):
+    name,ln,column=match.groups()
+    if label!='main' and name in maps:ln=str(maps[name].get(int(ln),'inserted-'+ln))
+    return name+':'+ln+':'+column
+   reason=re.sub(r'(src/[A-Za-z0-9_./-]+\.(?:ts|a)):(\d+):(\d+)',mapped_reference,reason)
+   key=(f.get('phase',''),f.get('kind',''),where,reason);unique[key]=f
   return unique
  before=read('main');after=read(side);added=set(after)-set(before);removed=set(before)-set(after);changed=[];changedAdded=set();changedRemoved=set()
  for site in sorted({k[:3] for k in added}&{k[:3] for k in removed}):
