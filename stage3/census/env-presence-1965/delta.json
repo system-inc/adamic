@@ -1,0 +1,47 @@
+{
+  "before": 185,
+  "after": 182,
+  "new": [],
+  "gone": [
+    {
+      "depth": 0,
+      "kind": "Refused",
+      "measurement": "measured on a checker-clean entry-root program",
+      "phase": "refusal_scan",
+      "reason": "a method read as a value (getEnvironmentVariable would lose its object, and this with it)",
+      "root_kind": "",
+      "text": "<tree>/src/compiler/sys.ts:1965:12: Adamic 0.1 refuses a method read as a value (getEnvironmentVariable would lose its object, and this with it); call it in an arrow that keeps the object: (name) => sys.getEnvironmentVariable(name) (unbound-method)",
+      "unit": "<tree>/src/compiler/sys.ts:1965:1",
+      "where": "<tree>/src/compiler/sys.ts:1965:12"
+    },
+    {
+      "depth": 0,
+      "kind": "NotYet",
+      "measurement": "measured on a checker-clean entry-root program",
+      "phase": "lowering",
+      "reason": "a literal method through a view that erases its receiver",
+      "root_kind": "",
+      "text": "<tree>/src/compiler/sys.ts:1965:12: stage 0 can't lower a literal method through a view that erases its receiver yet",
+      "unit": "<tree>/src/compiler/sys.ts:1965:1",
+      "where": "<tree>/src/compiler/sys.ts:1965:12"
+    },
+    {
+      "depth": 0,
+      "kind": "Boundary",
+      "measurement": "measured on a checker-clean entry-root program",
+      "phase": "lowering",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "root_kind": "",
+      "text": "<tree>/src/compiler/sys.ts:1965:12: stage 0 can't lower a literal method through a view that erases its receiver yet",
+      "unit": "<tree>/src/compiler/sys.ts:1965:1",
+      "where": "<tree>/src/compiler/sys.ts:1965:1"
+    }
+  ],
+  "changed": [],
+  "counts": {
+    "new": 0,
+    "gone": 3,
+    "changed": 0
+  },
+  "identity": "full fields and diagnostic text; absolute tree prefix normalized; mechanical byte spans omitted (raw retained)"
+}

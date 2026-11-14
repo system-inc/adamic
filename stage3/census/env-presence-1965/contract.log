@@ -1,0 +1,12 @@
+{
+  "status": "PASS",
+  "tests": [
+    "CRLF: adapt / no-write replay / exact mutant / no-write mutant replay",
+    "LF: adapt / no-write replay / exact mutant / no-write mutant replay",
+    "owner drift: refused with zero writes",
+    "half adapted: refused with zero writes",
+    "duplicate: refused with zero writes",
+    "mixed line endings: refused with zero writes",
+    "mixed before and after: refused with zero writes"
+  ]
+}
