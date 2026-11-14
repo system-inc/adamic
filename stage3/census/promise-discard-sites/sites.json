@@ -1179,6 +1179,373 @@
       "mode": "scan only",
       "raw_path": "/workspace/scratch/promise-discard-sites-run/raw/scan-transformers_legacyDecorators.ts.jsonl",
       "log_path": "/workspace/scratch/promise-discard-sites-run/raw/scan-transformers_legacyDecorators.ts.log"
+    },
+    {
+      "file": "transformers/module/esnextAnd2015.ts",
+      "status": "ran",
+      "exit": 0,
+      "seconds": 27.186,
+      "timeout": false,
+      "total_findings": 13,
+      "observed_findings": 13,
+      "compiler_findings": 13,
+      "kinds": {
+        "Refused": 10,
+        "NotYet": 3
+      },
+      "new_reason_findings": [],
+      "sha256": "82d4f952ddda7492e07921cca7e31f6147ef2d6c4b8447d10fc614c38c32bc52",
+      "raw_sha256": "601eec7fed29a5301a4ab2aee13435cc46a62d8f35dc3cdf095c40076b58411b",
+      "parse_error": null,
+      "mode": "scan only",
+      "raw_path": "/workspace/scratch/promise-discard-sites-run/raw/scan-transformers_module_esnextAnd2015.ts.jsonl",
+      "log_path": "/workspace/scratch/promise-discard-sites-run/raw/scan-transformers_module_esnextAnd2015.ts.log"
+    },
+    {
+      "file": "transformers/module/impliedNodeFormatDependent.ts",
+      "status": "ran",
+      "exit": 0,
+      "seconds": 20.867,
+      "timeout": false,
+      "total_findings": 1,
+      "observed_findings": 1,
+      "compiler_findings": 1,
+      "kinds": {
+        "Refused": 1
+      },
+      "new_reason_findings": [],
+      "sha256": "eb48d82834522a78c7b80cf768e0874e17a9f4dc819f673e5ec63c49fdb43d26",
+      "raw_sha256": "2116f3c95d1bfa55332a67c4d0d12376816b6b19dc58bfd3b31b402fea5e4844",
+      "parse_error": null,
+      "mode": "scan only",
+      "raw_path": "/workspace/scratch/promise-discard-sites-run/raw/scan-transformers_module_impliedNodeFormatDependent.ts.jsonl",
+      "log_path": "/workspace/scratch/promise-discard-sites-run/raw/scan-transformers_module_impliedNodeFormatDependent.ts.log"
+    },
+    {
+      "file": "transformers/module/module.ts",
+      "status": "ran",
+      "exit": 0,
+      "seconds": 32.996,
+      "timeout": false,
+      "total_findings": 98,
+      "observed_findings": 98,
+      "compiler_findings": 98,
+      "kinds": {
+        "Refused": 94,
+        "NotYet": 4
+      },
+      "new_reason_findings": [],
+      "sha256": "a0fb602c1403c3c6f13c398360ec6bb0adfeb8592975e5574cb6bdfb694abe8b",
+      "raw_sha256": "2a41015d9205f38e6eefd5a147a563645277bbf94c362fc69e40de0188d465a0",
+      "parse_error": null,
+      "mode": "scan only",
+      "raw_path": "/workspace/scratch/promise-discard-sites-run/raw/scan-transformers_module_module.ts.jsonl",
+      "log_path": "/workspace/scratch/promise-discard-sites-run/raw/scan-transformers_module_module.ts.log"
+    },
+    {
+      "file": "transformers/module/system.ts",
+      "status": "ran",
+      "exit": 0,
+      "seconds": 32.842,
+      "timeout": false,
+      "total_findings": 51,
+      "observed_findings": 51,
+      "compiler_findings": 51,
+      "kinds": {
+        "Refused": 47,
+        "NotYet": 4
+      },
+      "new_reason_findings": [],
+      "sha256": "cdcd5353acc1d86e687e96fefc4793cc0e862c5bbf84e5ab30b80c2f7997600e",
+      "raw_sha256": "e9840cae0db1e678390bfed2e4ab8063fba75de091156f3e2f050e390f9e1c6b",
+      "parse_error": null,
+      "mode": "scan only",
+      "raw_path": "/workspace/scratch/promise-discard-sites-run/raw/scan-transformers_module_system.ts.jsonl",
+      "log_path": "/workspace/scratch/promise-discard-sites-run/raw/scan-transformers_module_system.ts.log"
+    },
+    {
+      "file": "transformers/namedEvaluation.ts",
+      "status": "ran",
+      "exit": 0,
+      "seconds": 25.64,
+      "timeout": false,
+      "total_findings": 28,
+      "observed_findings": 28,
+      "compiler_findings": 28,
+      "kinds": {
+        "Refused": 28
+      },
+      "new_reason_findings": [],
+      "sha256": "deafcefca9d2923da8a177dc0d47f898f5ba652b8c54bca512df91335c032950",
+      "raw_sha256": "a6c69722216b38f7798d27f97754f20be944800a3e16057a16e5981f8b170611",
+      "parse_error": null,
+      "mode": "scan only",
+      "raw_path": "/workspace/scratch/promise-discard-sites-run/raw/scan-transformers_namedEvaluation.ts.jsonl",
+      "log_path": "/workspace/scratch/promise-discard-sites-run/raw/scan-transformers_namedEvaluation.ts.log"
+    },
+    {
+      "file": "transformers/taggedTemplate.ts",
+      "status": "ran",
+      "exit": 0,
+      "seconds": 17.158,
+      "timeout": false,
+      "total_findings": 1,
+      "observed_findings": 1,
+      "compiler_findings": 1,
+      "kinds": {
+        "Refused": 1
+      },
+      "new_reason_findings": [],
+      "sha256": "54dce15f9a14c4732701706abac28c4fc77ed2eab6496b931bf0429d1df22bdb",
+      "raw_sha256": "c07956ea82dadc655d652620075526751c005cc216edde190c70a989ccb5049b",
+      "parse_error": null,
+      "mode": "scan only",
+      "raw_path": "/workspace/scratch/promise-discard-sites-run/raw/scan-transformers_taggedTemplate.ts.jsonl",
+      "log_path": "/workspace/scratch/promise-discard-sites-run/raw/scan-transformers_taggedTemplate.ts.log"
+    },
+    {
+      "file": "transformers/ts.ts",
+      "status": "ran",
+      "exit": 0,
+      "seconds": 40.851,
+      "timeout": false,
+      "total_findings": 76,
+      "observed_findings": 76,
+      "compiler_findings": 76,
+      "kinds": {
+        "Refused": 72,
+        "NotYet": 4
+      },
+      "new_reason_findings": [],
+      "sha256": "58634091ee8e9c336671b0c457b91d1cbdb71ef37eccfa556aedc07192743868",
+      "raw_sha256": "e5b67562fc3a9b18e5986fc1b0621ce5e70bf9542112e85dd6d51b957ef7a099",
+      "parse_error": null,
+      "mode": "scan only",
+      "raw_path": "/workspace/scratch/promise-discard-sites-run/raw/scan-transformers_ts.ts.jsonl",
+      "log_path": "/workspace/scratch/promise-discard-sites-run/raw/scan-transformers_ts.ts.log"
+    },
+    {
+      "file": "transformers/typeSerializer.ts",
+      "status": "ran",
+      "exit": 0,
+      "seconds": 27.494,
+      "timeout": false,
+      "total_findings": 9,
+      "observed_findings": 9,
+      "compiler_findings": 9,
+      "kinds": {
+        "Refused": 8,
+        "NotYet": 1
+      },
+      "new_reason_findings": [],
+      "sha256": "a75c306ae73a703900dac43f02767a40bd60dbae5f453af753406ea2169666dd",
+      "raw_sha256": "65e751ffc083dfe5b6e296f3ca69c17d739eca2668bbf08a2943f967b6335914",
+      "parse_error": null,
+      "mode": "scan only",
+      "raw_path": "/workspace/scratch/promise-discard-sites-run/raw/scan-transformers_typeSerializer.ts.jsonl",
+      "log_path": "/workspace/scratch/promise-discard-sites-run/raw/scan-transformers_typeSerializer.ts.log"
+    },
+    {
+      "file": "transformers/utilities.ts",
+      "status": "ran",
+      "exit": 0,
+      "seconds": 31.701,
+      "timeout": false,
+      "total_findings": 23,
+      "observed_findings": 23,
+      "compiler_findings": 23,
+      "kinds": {
+        "Refused": 20,
+        "NotYet": 3
+      },
+      "new_reason_findings": [],
+      "sha256": "f839fdc1603f18a8b22e8a0bc8f02f373299d78a872938216573af92348c3dc3",
+      "raw_sha256": "ac1f23c6d49df3f217b34b7d4a4f160fd9885852fe611d22eb50a246699db2fd",
+      "parse_error": null,
+      "mode": "scan only",
+      "raw_path": "/workspace/scratch/promise-discard-sites-run/raw/scan-transformers_utilities.ts.jsonl",
+      "log_path": "/workspace/scratch/promise-discard-sites-run/raw/scan-transformers_utilities.ts.log"
+    },
+    {
+      "file": "tsbuild.ts",
+      "status": "ran",
+      "exit": 0,
+      "seconds": 17.899,
+      "timeout": false,
+      "total_findings": 0,
+      "observed_findings": 0,
+      "compiler_findings": 0,
+      "kinds": {},
+      "new_reason_findings": [],
+      "sha256": "0bcbfbb3c4a9ed2dd502417150f730ed84704486982fed8b10b524206dcb716f",
+      "raw_sha256": "eaec2670d2e0db730a17e0c3d70c7ec4eb2542013a6df7cd3fffbe18f8fe1cef",
+      "parse_error": null,
+      "mode": "scan only",
+      "raw_path": "/workspace/scratch/promise-discard-sites-run/raw/scan-tsbuild.ts.jsonl",
+      "log_path": "/workspace/scratch/promise-discard-sites-run/raw/scan-tsbuild.ts.log"
+    },
+    {
+      "file": "tsbuildPublic.ts",
+      "status": "ran",
+      "exit": 0,
+      "seconds": 55.021,
+      "timeout": false,
+      "total_findings": 59,
+      "observed_findings": 59,
+      "compiler_findings": 59,
+      "kinds": {
+        "Refused": 58,
+        "NotYet": 1
+      },
+      "new_reason_findings": [],
+      "sha256": "3920d22f6114f9bc45c33953742cdb3d3f91ae3cbf2d5d60fe055249e7d59aaf",
+      "raw_sha256": "5e93aee7778a2c69ef33368b10fa156b5c238e95197c925d9248ad6550f76529",
+      "parse_error": null,
+      "mode": "scan only",
+      "raw_path": "/workspace/scratch/promise-discard-sites-run/raw/scan-tsbuildPublic.ts.jsonl",
+      "log_path": "/workspace/scratch/promise-discard-sites-run/raw/scan-tsbuildPublic.ts.log"
+    },
+    {
+      "file": "types.ts",
+      "status": "ran",
+      "exit": 0,
+      "seconds": 18.718,
+      "timeout": false,
+      "total_findings": 0,
+      "observed_findings": 0,
+      "compiler_findings": 0,
+      "kinds": {},
+      "new_reason_findings": [],
+      "sha256": "9ea21756807ff1656c2c9f9ae5d279db12223332618d671dacf458016587068c",
+      "raw_sha256": "83c14e7b3aa72b07fa49063922fcf6e085f95269a1e24c3bdc293c9b18d040f7",
+      "parse_error": null,
+      "mode": "scan only",
+      "raw_path": "/workspace/scratch/promise-discard-sites-run/raw/scan-types.ts.jsonl",
+      "log_path": "/workspace/scratch/promise-discard-sites-run/raw/scan-types.ts.log"
+    },
+    {
+      "file": "utilities.ts",
+      "status": "ran",
+      "exit": 0,
+      "seconds": 58.151,
+      "timeout": false,
+      "total_findings": 243,
+      "observed_findings": 243,
+      "compiler_findings": 243,
+      "kinds": {
+        "Refused": 235,
+        "NotYet": 8
+      },
+      "new_reason_findings": [],
+      "sha256": "e5bd0c0a49b3118b8e8fd2c0373c80e32b9607b85379eca38c196b6b71fc38bf",
+      "raw_sha256": "d762edad5c842e686e1ed9442bc35aa4e80a3a2cd24fb0d5886bff6e9734069c",
+      "parse_error": null,
+      "mode": "scan only",
+      "raw_path": "/workspace/scratch/promise-discard-sites-run/raw/scan-utilities.ts.jsonl",
+      "log_path": "/workspace/scratch/promise-discard-sites-run/raw/scan-utilities.ts.log"
+    },
+    {
+      "file": "utilitiesPublic.ts",
+      "status": "ran",
+      "exit": 0,
+      "seconds": 44.864,
+      "timeout": false,
+      "total_findings": 34,
+      "observed_findings": 34,
+      "compiler_findings": 34,
+      "kinds": {
+        "Refused": 30,
+        "NotYet": 4
+      },
+      "new_reason_findings": [],
+      "sha256": "ede1a3cc3ed3acbecc692d2097ac8cd01553bf4ab7e5e265cccda593ffb89c1f",
+      "raw_sha256": "115f52a418c7ffa46e7956d11cc21a7028213aa1e0fa1ac06bb09d18fc3b355f",
+      "parse_error": null,
+      "mode": "scan only",
+      "raw_path": "/workspace/scratch/promise-discard-sites-run/raw/scan-utilitiesPublic.ts.jsonl",
+      "log_path": "/workspace/scratch/promise-discard-sites-run/raw/scan-utilitiesPublic.ts.log"
+    },
+    {
+      "file": "visitorPublic.ts",
+      "status": "ran",
+      "exit": 0,
+      "seconds": 27.415,
+      "timeout": false,
+      "total_findings": 42,
+      "observed_findings": 42,
+      "compiler_findings": 42,
+      "kinds": {
+        "Refused": 16,
+        "NotYet": 26
+      },
+      "new_reason_findings": [],
+      "sha256": "ef2085cb0d14c6dbd475644daf7388cf7ec4f64c0b6a5570ba79dd2ffd72b8d5",
+      "raw_sha256": "96153e72c96a8f9b2bb9d6305dc082512237f4803848435c133b689c7c04b5c1",
+      "parse_error": null,
+      "mode": "scan only",
+      "raw_path": "/workspace/scratch/promise-discard-sites-run/raw/scan-visitorPublic.ts.jsonl",
+      "log_path": "/workspace/scratch/promise-discard-sites-run/raw/scan-visitorPublic.ts.log"
+    },
+    {
+      "file": "watch.ts",
+      "status": "ran",
+      "exit": 0,
+      "seconds": 17.901,
+      "timeout": false,
+      "total_findings": 17,
+      "observed_findings": 17,
+      "compiler_findings": 17,
+      "kinds": {
+        "Refused": 17
+      },
+      "new_reason_findings": [],
+      "sha256": "f307d503114bddb404dcd96bf9e4f53f0c341d722da09959ebb6f1cd4cd93e99",
+      "raw_sha256": "038a9b425753e24278a7f53bf3957c34e95f34a8318a6425f2be568a5fb0a23f",
+      "parse_error": null,
+      "mode": "scan only",
+      "raw_path": "/workspace/scratch/promise-discard-sites-run/raw/scan-watch.ts.jsonl",
+      "log_path": "/workspace/scratch/promise-discard-sites-run/raw/scan-watch.ts.log"
+    },
+    {
+      "file": "watchPublic.ts",
+      "status": "ran",
+      "exit": 0,
+      "seconds": 16.977,
+      "timeout": false,
+      "total_findings": 33,
+      "observed_findings": 33,
+      "compiler_findings": 33,
+      "kinds": {
+        "Refused": 32,
+        "NotYet": 1
+      },
+      "new_reason_findings": [],
+      "sha256": "b54b0dd7d9de0ff9ffce55ececa2406190c8d9191d44f3bdfd90396617e58f74",
+      "raw_sha256": "57fb86fa4e6700cea1c131281ef350c0aaa94694b9835ce6b97f3a19f999b8da",
+      "parse_error": null,
+      "mode": "scan only",
+      "raw_path": "/workspace/scratch/promise-discard-sites-run/raw/scan-watchPublic.ts.jsonl",
+      "log_path": "/workspace/scratch/promise-discard-sites-run/raw/scan-watchPublic.ts.log"
+    },
+    {
+      "file": "watchUtilities.ts",
+      "status": "ran",
+      "exit": 0,
+      "seconds": 16.022,
+      "timeout": false,
+      "total_findings": 14,
+      "observed_findings": 14,
+      "compiler_findings": 14,
+      "kinds": {
+        "Refused": 14
+      },
+      "new_reason_findings": [],
+      "sha256": "0b21eff41ad63e993f7b676f56ddf79bd4606fa232ce33d9cd68239a1f49bd93",
+      "raw_sha256": "c3cdaa0069e0cb6c8a7ba5cdb9e6c56ef2bdd7c779cc9d4717041445cca5d22b",
+      "parse_error": null,
+      "mode": "scan only",
+      "raw_path": "/workspace/scratch/promise-discard-sites-run/raw/scan-watchUtilities.ts.jsonl",
+      "log_path": "/workspace/scratch/promise-discard-sites-run/raw/scan-watchUtilities.ts.log"
     }
   ],
   "new_reason_sites": [],
@@ -1219,7 +1586,7 @@
     "log": "/workspace/scratch/promise-discard-sites-run/control.ts 3 1 measured on a checker-rejected program\n"
   },
   "coverage": {
-    "ran": 60,
+    "ran": 78,
     "timed_out": 1
   },
   "expected_files": 79,
@@ -1793,14 +2160,140 @@
       "exit": 0,
       "seconds": 24.959,
       "total_findings": 18
+    },
+    "transformers/module/esnextAnd2015.ts": {
+      "mode": "scan only",
+      "status": "ran",
+      "exit": 0,
+      "seconds": 27.186,
+      "total_findings": 13
+    },
+    "transformers/module/impliedNodeFormatDependent.ts": {
+      "mode": "scan only",
+      "status": "ran",
+      "exit": 0,
+      "seconds": 20.867,
+      "total_findings": 1
+    },
+    "transformers/module/module.ts": {
+      "mode": "scan only",
+      "status": "ran",
+      "exit": 0,
+      "seconds": 32.996,
+      "total_findings": 98
+    },
+    "transformers/module/system.ts": {
+      "mode": "scan only",
+      "status": "ran",
+      "exit": 0,
+      "seconds": 32.842,
+      "total_findings": 51
+    },
+    "transformers/namedEvaluation.ts": {
+      "mode": "scan only",
+      "status": "ran",
+      "exit": 0,
+      "seconds": 25.64,
+      "total_findings": 28
+    },
+    "transformers/taggedTemplate.ts": {
+      "mode": "scan only",
+      "status": "ran",
+      "exit": 0,
+      "seconds": 17.158,
+      "total_findings": 1
+    },
+    "transformers/ts.ts": {
+      "mode": "scan only",
+      "status": "ran",
+      "exit": 0,
+      "seconds": 40.851,
+      "total_findings": 76
+    },
+    "transformers/typeSerializer.ts": {
+      "mode": "scan only",
+      "status": "ran",
+      "exit": 0,
+      "seconds": 27.494,
+      "total_findings": 9
+    },
+    "transformers/utilities.ts": {
+      "mode": "scan only",
+      "status": "ran",
+      "exit": 0,
+      "seconds": 31.701,
+      "total_findings": 23
+    },
+    "tsbuild.ts": {
+      "mode": "scan only",
+      "status": "ran",
+      "exit": 0,
+      "seconds": 17.899,
+      "total_findings": 0
+    },
+    "tsbuildPublic.ts": {
+      "mode": "scan only",
+      "status": "ran",
+      "exit": 0,
+      "seconds": 55.021,
+      "total_findings": 59
+    },
+    "types.ts": {
+      "mode": "scan only",
+      "status": "ran",
+      "exit": 0,
+      "seconds": 18.718,
+      "total_findings": 0
+    },
+    "utilities.ts": {
+      "mode": "scan only",
+      "status": "ran",
+      "exit": 0,
+      "seconds": 58.151,
+      "total_findings": 243
+    },
+    "utilitiesPublic.ts": {
+      "mode": "scan only",
+      "status": "ran",
+      "exit": 0,
+      "seconds": 44.864,
+      "total_findings": 34
+    },
+    "visitorPublic.ts": {
+      "mode": "scan only",
+      "status": "ran",
+      "exit": 0,
+      "seconds": 27.415,
+      "total_findings": 42
+    },
+    "watch.ts": {
+      "mode": "scan only",
+      "status": "ran",
+      "exit": 0,
+      "seconds": 17.901,
+      "total_findings": 17
+    },
+    "watchPublic.ts": {
+      "mode": "scan only",
+      "status": "ran",
+      "exit": 0,
+      "seconds": 16.977,
+      "total_findings": 33
+    },
+    "watchUtilities.ts": {
+      "mode": "scan only",
+      "status": "ran",
+      "exit": 0,
+      "seconds": 16.022,
+      "total_findings": 14
     }
   },
   "effective_coverage": {
     "full": 20,
-    "scan only": 41,
+    "scan only": 59,
     "timed out": 0,
     "failed": 0,
-    "not measured": 18,
+    "not measured": 0,
     "original_full_timeouts": 1
   },
   "stop_history": [
@@ -1875,7 +2368,37 @@
       "cgroup_current_bytes": 681111552,
       "cgroup_limit_bytes": 17179869184,
       "effective_available_bytes": 16601726976
+    },
+    {
+      "batch": "41-58 of 58",
+      "utc": "2026-11-14T00:13:43Z",
+      "files": [
+        "transformers/module/esnextAnd2015.ts",
+        "transformers/module/impliedNodeFormatDependent.ts",
+        "transformers/module/module.ts",
+        "transformers/module/system.ts",
+        "transformers/namedEvaluation.ts",
+        "transformers/taggedTemplate.ts",
+        "transformers/ts.ts",
+        "transformers/typeSerializer.ts",
+        "transformers/utilities.ts",
+        "tsbuild.ts",
+        "tsbuildPublic.ts",
+        "types.ts",
+        "utilities.ts",
+        "utilitiesPublic.ts",
+        "visitorPublic.ts",
+        "watch.ts",
+        "watchPublic.ts",
+        "watchUtilities.ts"
+      ],
+      "concurrency": 4,
+      "mem_free_bytes": 17516654592,
+      "mem_available_bytes": 17786789888,
+      "cgroup_current_bytes": 683450368,
+      "cgroup_limit_bytes": 17179869184,
+      "effective_available_bytes": 16599298048
     }
   ],
-  "census_complete": false
+  "census_complete": true
 }

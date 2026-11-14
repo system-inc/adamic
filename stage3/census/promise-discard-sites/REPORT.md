@@ -1,6 +1,6 @@
 # Promise-discard sites in TypeScript’s compiler
 
-**0 new-reason sites observed in the 79-file census so far: 61/79 files attempted (20 full, 41 scan only). Both controls passed; coverage is incomplete.**
+**0 new-reason sites across all 79 compiler files: 20 measured in full mode and 59 scan only. Both controls passed.**
 
 No compiler finding’s reason or text contains `an unawaited async task`. Control findings are excluded from this count.
 
@@ -106,24 +106,24 @@ The measurement-only wrapper in scan-only.go.txt invokes the existing latentScan
 | transformers/generators.ts | scan only | ran | 0 | 30.021 | False | 83 | 0 |
 | transformers/jsx.ts | scan only | ran | 0 | 26.46 | False | 14 | 0 |
 | transformers/legacyDecorators.ts | scan only | ran | 0 | 24.959 | False | 18 | 0 |
-| transformers/module/esnextAnd2015.ts | not measured | not run | | | | unknown | unknown |
-| transformers/module/impliedNodeFormatDependent.ts | not measured | not run | | | | unknown | unknown |
-| transformers/module/module.ts | not measured | not run | | | | unknown | unknown |
-| transformers/module/system.ts | not measured | not run | | | | unknown | unknown |
-| transformers/namedEvaluation.ts | not measured | not run | | | | unknown | unknown |
-| transformers/taggedTemplate.ts | not measured | not run | | | | unknown | unknown |
-| transformers/ts.ts | not measured | not run | | | | unknown | unknown |
-| transformers/typeSerializer.ts | not measured | not run | | | | unknown | unknown |
-| transformers/utilities.ts | not measured | not run | | | | unknown | unknown |
-| tsbuild.ts | not measured | not run | | | | unknown | unknown |
-| tsbuildPublic.ts | not measured | not run | | | | unknown | unknown |
-| types.ts | not measured | not run | | | | unknown | unknown |
-| utilities.ts | not measured | not run | | | | unknown | unknown |
-| utilitiesPublic.ts | not measured | not run | | | | unknown | unknown |
-| visitorPublic.ts | not measured | not run | | | | unknown | unknown |
-| watch.ts | not measured | not run | | | | unknown | unknown |
-| watchPublic.ts | not measured | not run | | | | unknown | unknown |
-| watchUtilities.ts | not measured | not run | | | | unknown | unknown |
+| transformers/module/esnextAnd2015.ts | scan only | ran | 0 | 27.186 | False | 13 | 0 |
+| transformers/module/impliedNodeFormatDependent.ts | scan only | ran | 0 | 20.867 | False | 1 | 0 |
+| transformers/module/module.ts | scan only | ran | 0 | 32.996 | False | 98 | 0 |
+| transformers/module/system.ts | scan only | ran | 0 | 32.842 | False | 51 | 0 |
+| transformers/namedEvaluation.ts | scan only | ran | 0 | 25.64 | False | 28 | 0 |
+| transformers/taggedTemplate.ts | scan only | ran | 0 | 17.158 | False | 1 | 0 |
+| transformers/ts.ts | scan only | ran | 0 | 40.851 | False | 76 | 0 |
+| transformers/typeSerializer.ts | scan only | ran | 0 | 27.494 | False | 9 | 0 |
+| transformers/utilities.ts | scan only | ran | 0 | 31.701 | False | 23 | 0 |
+| tsbuild.ts | scan only | ran | 0 | 17.899 | False | 0 | 0 |
+| tsbuildPublic.ts | scan only | ran | 0 | 55.021 | False | 59 | 0 |
+| types.ts | scan only | ran | 0 | 18.718 | False | 0 | 0 |
+| utilities.ts | scan only | ran | 0 | 58.151 | False | 243 | 0 |
+| utilitiesPublic.ts | scan only | ran | 0 | 44.864 | False | 34 | 0 |
+| visitorPublic.ts | scan only | ran | 0 | 27.415 | False | 42 | 0 |
+| watch.ts | scan only | ran | 0 | 17.901 | False | 17 | 0 |
+| watchPublic.ts | scan only | ran | 0 | 16.977 | False | 33 | 0 |
+| watchUtilities.ts | scan only | ran | 0 | 16.022 | False | 14 | 0 |
 
 ## What this cannot see
 
@@ -137,5 +137,6 @@ Findings are deduplicated by (kind, where, reason, text). Full-mode totals can i
 |---|---:|---:|---:|---:|---:|---:|
 | 1-20 of 58 | 20 | 4 | 17549721600 | 17802444800 | 654712832 | 17179869184 |
 | 21-40 of 58 | 20 | 4 | 17354866688 | 17622642688 | 681111552 | 17179869184 |
+| 41-58 of 58 | 18 | 4 | 17516654592 | 17786789888 | 683450368 | 17179869184 |
 
 The continuation records memory immediately before each batch. Four workers are used when at least 8 GiB of effective available memory remains. Checkpoints are committed and pushed after every 20 new results, plus the final partial batch. The earlier interruption and sandbox bookkeeping stop were preserved; this continuation performs writes only in the writable scratch worktree.
