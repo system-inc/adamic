@@ -5,7 +5,7 @@ shard=$1; shards=$2
 . "$HOME/adamic-tools/env.sh" > /dev/null 2>&1 || { echo "VERDICT FAIL env"; exit 3; }
 git -c protocol.file.allow=always submodule update --init --recursive --depth 1 > /tmp/q1c-sub.log 2>&1 || { echo "VERDICT FAIL submodules"; exit 3; }
 head=$(git log --format=%H -1 --invert-grep --grep='^proof: ' HEAD)
-base=5d334653fa
+base=7534c1d7575d
 T=$(mktemp -d /tmp/q1c.XXXXXX)
 echo "head $head base $(git rev-parse --short=12 $base) on $(hostname), $(nproc) cores, load $(cut -d' ' -f1-3 /proc/loadavg), shard $shard of $shards"
 git diff --quiet "$head" HEAD -- internal stage3 cmd || { echo "VERDICT FAIL the proof commits touch code"; exit 3; }

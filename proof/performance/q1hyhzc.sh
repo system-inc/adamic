@@ -2,7 +2,7 @@
 set -u
 . "$HOME/adamic-tools/env.sh" > /dev/null 2>&1 || { echo "VERDICT FAIL env"; exit 3; }
 git -c protocol.file.allow=always submodule update --init --recursive --depth 1 > /tmp/q1-sub.log 2>&1 || { echo "VERDICT FAIL submodules"; tail -3 /tmp/q1-sub.log; exit 3; }
-echo "head $(git rev-parse HEAD^) on $(hostname), $(nproc) cores, load $(cut -d' ' -f1-3 /proc/loadavg)"
+echo "head $(git log --format=%H -1 --invert-grep --grep='^proof: ' HEAD) on $(hostname), $(nproc) cores, load $(cut -d' ' -f1-3 /proc/loadavg)"
 bad=0
 step() { local name=$1; shift; local start=$(date +%s); "$@" > /tmp/q1-$name.log 2>&1; local code=$?; echo "$([ $code = 0 ] && echo PASS || echo FAIL) $name exit $code, $(( $(date +%s) - start )) s"; [ $code = 0 ] || { grep -E '^(--- FAIL|FAIL|panic|.*_test.go:[0-9]+:)' /tmp/q1-$name.log | head -12; bad=1; }; return $code; }
 pins='^(TestViewSiteIndexIsBuiltOncePerLowering|TestViewSiteAskedAgainWhenItsNameGainsAKey|TestViewRefusesItsFirstSiteInPreorder|TestViewWalkIndexedAgreesWithWhole|TestViewReceiverCallersAreClassified|TestCheckedFieldsAreWrittenThroughMarkCheckedField)$'
@@ -28,6 +28,10 @@ focused)
   ;;
 whole)
   step lower go test -count=1 -timeout 40m ./internal/lower/
+  ;;
+fixtures)
+  step fixtures go test -count=1 -timeout 40m ./stage3/fixtures/...
+  grep -E '^(ok|FAIL|---)' /tmp/q1-fixtures.log | head -12
   ;;
 esac
 git status --porcelain | grep -v '^??' | head -3
