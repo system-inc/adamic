@@ -1,3 +1,9 @@
+# Sourcemap buffer-clear amendment
+
+JavaScript-changing (byte-different, value-identical): the private mappingCharCodes buffer in createSourceMapGenerator.flushMappingBuffer is cleared with splice(0). The entire nested owner is pinned before and after, including its parent identity. All owners in both files are validated before writes. Previous complete 99s outputs migrate as a whole; mixed owners and foreign changes inside a pinned owner are refused.
+
+Run `NODE_PATH=stage3/api/node_modules node stage3/adapt/99-correctness-axolotl-s/contract.cjs APPLIED_TREE` for owner integrity and replay, and the same witness.cjs for Node equivalence. The restoring mutant is observed using Workers e8a1529e's full single-file latent census, not the standalone lowering probe (whose earlier apply NotYet remains documented). See SOURCEMAP-PROOF.md and the separate evidence branch typescript/sourcemap-splice-evidence, directory stage3/census/sourcemap-splice-evidence. Use the house `adamic types` check over all compiler roots together.
+
 # Generic clear amendment
 
 Task sdhn5pe amends 99s's whole-owner pin to `export function clear<T>(array: T[]): void { array.splice(0); }`. Each caller infers its concrete mutable element type, retaining storage information for Lower. The splice body and every caller are unchanged. This amendment is type-only and adds no ledger line. Fully adapted previous 99s states migrate as a whole; mixed or changed owners are still refused before any write. See CLEAR-GENERIC-PROOF.md for current evidence.
