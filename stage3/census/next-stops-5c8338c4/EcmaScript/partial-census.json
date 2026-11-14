@@ -1,0 +1,112 @@
+[
+  {
+    "module_format": "EcmaScript",
+    "roots": [
+      "/workspace/scratch/next-stops-5c8338c4-adapted/src/compiler/_namespaces/ts.moduleSpecifiers.ts"
+    ],
+    "kind": "Refused",
+    "where": "/workspace/scratch/next-stops-5c8338c4-adapted/src/compiler/sys.ts:304:13",
+    "reason": "a value of type (WatchedFileWithUnchangedPolls | undefined)[] seen as (WatchedFileWithIsClosed | undefined)[], which can write WatchedFileWithIsClosed | undefined where WatchedFileWithUnchangedPolls | undefined is read",
+    "fix": "make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+    "seconds": 23.257910045
+  },
+  {
+    "module_format": "EcmaScript",
+    "roots": [
+      "/workspace/scratch/next-stops-5c8338c4-adapted/src/compiler/_namespaces/ts.performance.ts"
+    ],
+    "kind": "Refused",
+    "where": "/workspace/scratch/next-stops-5c8338c4-adapted/src/compiler/sys.ts:304:13",
+    "reason": "a value of type (WatchedFileWithUnchangedPolls | undefined)[] seen as (WatchedFileWithIsClosed | undefined)[], which can write WatchedFileWithIsClosed | undefined where WatchedFileWithUnchangedPolls | undefined is read",
+    "fix": "make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+    "seconds": 23.030259224
+  },
+  {
+    "module_format": "EcmaScript",
+    "roots": [
+      "/workspace/scratch/next-stops-5c8338c4-adapted/src/compiler/_namespaces/ts.ts"
+    ],
+    "kind": "Refused",
+    "where": "/workspace/scratch/next-stops-5c8338c4-adapted/src/compiler/sys.ts:304:13",
+    "reason": "a value of type (WatchedFileWithUnchangedPolls | undefined)[] seen as (WatchedFileWithIsClosed | undefined)[], which can write WatchedFileWithIsClosed | undefined where WatchedFileWithUnchangedPolls | undefined is read",
+    "fix": "make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+    "seconds": 22.729908055
+  },
+  {
+    "module_format": "EcmaScript",
+    "roots": [
+      "/workspace/scratch/next-stops-5c8338c4-adapted/src/compiler/binder.ts"
+    ],
+    "kind": "Refused",
+    "where": "/workspace/scratch/next-stops-5c8338c4-adapted/src/compiler/sys.ts:304:13",
+    "reason": "a value of type (WatchedFileWithUnchangedPolls | undefined)[] seen as (WatchedFileWithIsClosed | undefined)[], which can write WatchedFileWithIsClosed | undefined where WatchedFileWithUnchangedPolls | undefined is read",
+    "fix": "make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+    "seconds": 20.05320595
+  },
+  {
+    "module_format": "EcmaScript",
+    "roots": [
+      "/workspace/scratch/next-stops-5c8338c4-adapted/src/compiler/builder.ts"
+    ],
+    "kind": "Refused",
+    "where": "/workspace/scratch/next-stops-5c8338c4-adapted/src/compiler/sys.ts:304:13",
+    "reason": "a value of type (WatchedFileWithUnchangedPolls | undefined)[] seen as (WatchedFileWithIsClosed | undefined)[], which can write WatchedFileWithIsClosed | undefined where WatchedFileWithUnchangedPolls | undefined is read",
+    "fix": "make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+    "seconds": 18.905199151
+  },
+  {
+    "module_format": "EcmaScript",
+    "roots": [
+      "/workspace/scratch/next-stops-5c8338c4-adapted/src/compiler/builderPublic.ts"
+    ],
+    "kind": "Refused",
+    "where": "/workspace/scratch/next-stops-5c8338c4-adapted/src/compiler/sys.ts:304:13",
+    "reason": "a value of type (WatchedFileWithUnchangedPolls | undefined)[] seen as (WatchedFileWithIsClosed | undefined)[], which can write WatchedFileWithIsClosed | undefined where WatchedFileWithUnchangedPolls | undefined is read",
+    "fix": "make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+    "seconds": 19.667586367
+  },
+  {
+    "module_format": "EcmaScript",
+    "roots": [
+      "/workspace/scratch/next-stops-5c8338c4-adapted/src/compiler/builderState.ts"
+    ],
+    "kind": "Refused",
+    "where": "/workspace/scratch/next-stops-5c8338c4-adapted/src/compiler/sys.ts:304:13",
+    "reason": "a value of type (WatchedFileWithUnchangedPolls | undefined)[] seen as (WatchedFileWithIsClosed | undefined)[], which can write WatchedFileWithIsClosed | undefined where WatchedFileWithUnchangedPolls | undefined is read",
+    "fix": "make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+    "seconds": 19.165108421
+  },
+  {
+    "module_format": "EcmaScript",
+    "roots": [
+      "/workspace/scratch/next-stops-5c8338c4-adapted/src/compiler/builderStatePublic.ts"
+    ],
+    "kind": "Refused",
+    "where": "/workspace/scratch/next-stops-5c8338c4-adapted/src/compiler/sys.ts:304:13",
+    "reason": "a value of type (WatchedFileWithUnchangedPolls | undefined)[] seen as (WatchedFileWithIsClosed | undefined)[], which can write WatchedFileWithIsClosed | undefined where WatchedFileWithUnchangedPolls | undefined is read",
+    "fix": "make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+    "seconds": 19.593128769
+  },
+  {
+    "module_format": "EcmaScript",
+    "roots": [
+      "/workspace/scratch/next-stops-5c8338c4-adapted/src/compiler/checker.ts"
+    ],
+    "kind": "Refused",
+    "where": "/workspace/scratch/next-stops-5c8338c4-adapted/src/compiler/sys.ts:304:13",
+    "reason": "a value of type (WatchedFileWithUnchangedPolls | undefined)[] seen as (WatchedFileWithIsClosed | undefined)[], which can write WatchedFileWithIsClosed | undefined where WatchedFileWithUnchangedPolls | undefined is read",
+    "fix": "make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+    "seconds": 18.935973055
+  },
+  {
+    "module_format": "EcmaScript",
+    "roots": [
+      "/workspace/scratch/next-stops-5c8338c4-adapted/src/compiler/commandLineParser.ts"
+    ],
+    "kind": "Refused",
+    "where": "/workspace/scratch/next-stops-5c8338c4-adapted/src/compiler/sys.ts:304:13",
+    "reason": "a value of type (WatchedFileWithUnchangedPolls | undefined)[] seen as (WatchedFileWithIsClosed | undefined)[], which can write WatchedFileWithIsClosed | undefined where WatchedFileWithUnchangedPolls | undefined is read",
+    "fix": "make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)",
+    "seconds": 16.455766221
+  }
+]
