@@ -1,0 +1,14 @@
+Using /workspace/scratch/diag-read-view-1/candidate-tree/Herebyfile.mjs to run dts
+Starting generate-diagnostics
+> /workspace/adamic-tools/bin/node scripts/processDiagnosticMessages.mjs src/compiler/diagnosticMessages.json
+Reading diagnostics from src/compiler/diagnosticMessages.json
+Finished generate-diagnostics in 355ms
+Starting build-services
+Finished build-services in 1m 0.5s
+Starting dts-services
+> /workspace/adamic-tools/bin/node ./scripts/dtsBundler.mjs --entrypoint ./built/local/typescript/typescript.d.ts --output ./built/local/typescript.d.ts
+Bundling ./built/local/typescript/typescript.d.ts to ./built/local/typescript.d.ts and ./built/local/typescript.internal.d.ts
+Finished dts-services in 10.4s
+Starting dts-lssl
+Finished dts-lssl in 12ms
+Completed dts in 1m 11.3s

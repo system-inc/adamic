@@ -1,0 +1,5 @@
+from pathlib import Path
+p=Path('/workspace/scratch/diag-read-view-1/make-pins.cjs');t=p.read_text();t=t.replace("pin('program.ts',['getDiagnosticsHelper'],x=>x.replace('T extends Diagnostic>','T extends DiagnosticReadView>'));", "pin('program.ts',['createProgram'],x=>{assert.equal(x.split('getDiagnosticsHelper<T extends Diagnostic>').length,2);return x.replace('getDiagnosticsHelper<T extends Diagnostic>','getDiagnosticsHelper<T extends DiagnosticReadView>')});")
+t=t.replace("fs.writeFileSync(dir+'/owners.json',JSON.stringify(pins,null,2)+'\\n');", "fs.writeFileSync(dir+'/owners.json',JSON.stringify(pins.filter(p=>p.file!=='program.ts'),null,2)+'\\n');\nfs.writeFileSync(r+'/stage3/adapt/95-checker-axolotl-h/diagnostic-owners.json',JSON.stringify(pins.filter(p=>p.file==='program.ts'),null,2)+'\\n');")
+p.write_text(t)
+a=Path('/workspace/scratch/diag-read-view-1/amended-adapt.cjs');t=a.read_text().replace("const diagnostics = owners.filter(pin => pin.names);", "const diagnostics = [...require('../95-checker-axolotl-h/diagnostic-owners.json'), ...owners.filter(pin => pin.names)];");a.write_text(t)

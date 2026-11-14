@@ -1,0 +1,58 @@
+{
+  "apply": {
+    "result": {
+      "files": 4,
+      "edits": 4,
+      "javascriptChanging": false
+    },
+    "writes": 4
+  },
+  "replay": {
+    "result": {
+      "files": 0,
+      "edits": 0,
+      "javascriptChanging": false
+    },
+    "writes": 0
+  },
+  "mutant": {
+    "result": {
+      "files": 5,
+      "edits": 5,
+      "javascriptChanging": false
+    },
+    "writes": 5
+  },
+  "drift": {
+    "error": "DiagnosticWithLocation + DiagnosticReadView: owner drift or half adaptation\n+ actual - expected\n\n+ 'export interface DiagnosticWithLocation extends Diagnostic { /* drift */\\n' +\n- 'export interface DiagnosticWithLocation extends Diagnostic {\\n' +\n    '    file: SourceFile;\\n' +\n    '    start: number;\\n' +\n    '    length: number;\\n' +\n    '}'\n",
+    "writes": 0
+  },
+  "duplicate": {
+    "error": "mixed line endings",
+    "writes": 0
+  },
+  "mixed": {
+    "error": "mixed line endings",
+    "writes": 0
+  },
+  "half": {
+    "error": "half-adapted diagnostic tree",
+    "writes": 0
+  },
+  "lf": {
+    "result": {
+      "files": 4,
+      "edits": 4,
+      "javascriptChanging": false
+    },
+    "writes": 4
+  },
+  "crlf": {
+    "result": {
+      "files": 4,
+      "edits": 4,
+      "javascriptChanging": false
+    },
+    "writes": 4
+  }
+}

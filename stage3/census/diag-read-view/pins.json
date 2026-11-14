@@ -1,0 +1,54 @@
+[
+  {
+    "file": "resolutionCache.ts",
+    "owner": "SourceFile (all edited resolution owners)"
+  },
+  {
+    "file": "program.ts",
+    "owner": "@import",
+    "beforeCount": 1,
+    "afterCount": 2
+  },
+  {
+    "file": "utilitiesPublic.ts",
+    "owner": "@import",
+    "beforeCount": 1,
+    "afterCount": 2
+  },
+  {
+    "file": "utilities.ts",
+    "owner": "@import",
+    "beforeCount": 1,
+    "afterCount": 2
+  },
+  {
+    "file": "types.ts",
+    "owner": "DiagnosticWithLocation + DiagnosticReadView",
+    "beforeCount": 1,
+    "afterCount": 2
+  },
+  {
+    "file": "program.ts",
+    "owner": "createProgram",
+    "beforeCount": 3,
+    "afterCount": 3
+  },
+  {
+    "file": "utilitiesPublic.ts",
+    "owner": "sortAndDeduplicateDiagnostics",
+    "beforeCount": 1,
+    "afterCount": 3
+  },
+  {
+    "file": "utilities.ts",
+    "owner": "compareDiagnostics",
+    "beforeCount": 1,
+    "afterCount": 1
+  },
+  {
+    "file": "utilities.ts",
+    "owner": "diagnosticsEqualityComparer",
+    "beforeCount": 1,
+    "afterCount": 1
+  }
+]
