@@ -1,0 +1,6 @@
+const s = 'x'.repeat(2 ** 28);
+try {
+	console.log(String([s, s, s].join('').length));
+} catch (error) {
+	if (error instanceof Error && error.name === 'RangeError') console.log(error.name + ': ' + error.message);
+}
