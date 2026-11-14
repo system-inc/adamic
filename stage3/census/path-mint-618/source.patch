@@ -1,0 +1,42 @@
+--- main/src/compiler/sys.ts
++++ amendment/src/compiler/sys.ts
+@@ -615,7 +615,7 @@
+     let timerToUpdateChildWatches: any;
+ 
+     const filePathComparer = getStringComparer(!useCaseSensitiveFileNames);
+-    const toCanonicalFilePath = createGetCanonicalFileName(useCaseSensitiveFileNames) as (fileName: string) => Path;
++    const toCanonicalFilePath = createGetCanonicalFileName(useCaseSensitiveFileNames);
+ 
+     return (dirName, callback, recursive, options) =>
+         recursive ?
+@@ -631,7 +631,7 @@
+         callback?: DirectoryWatcherCallback,
+         link?: string,
+     ): ChildDirectoryWatcher {
+-        const dirPath = toCanonicalFilePath(dirName);
++        const dirPath = (toCanonicalFilePath(dirName) as Path);
+         let directoryWatcher = cache.get(dirPath);
+         if (directoryWatcher) {
+             directoryWatcher.refCount++;
+@@ -730,10 +730,10 @@
+         cache.get(dirPath)?.links?.forEach(link => {
+             const toPathInLink = (fileName: string) => combinePaths(link, getRelativePathFromDirectory(dirName, fileName, toCanonicalFilePath));
+             if (invokeMap) {
+-                invokeCallbacks(link, toCanonicalFilePath(link), invokeMap, fileNames?.map(toPathInLink));
++                invokeCallbacks(link, (toCanonicalFilePath(link) as Path), invokeMap, fileNames?.map(toPathInLink));
+             }
+             else {
+-                invokeCallbacks(link, toCanonicalFilePath(link), toPathInLink(fileName!));
++                invokeCallbacks(link, (toCanonicalFilePath(link) as Path), toPathInLink(fileName!));
+             }
+         });
+     }
+@@ -815,7 +815,7 @@
+         parentWatcher.childWatches = emptyArray;
+         for (const childWatcher of existingChildWatches) {
+             childWatcher.close();
+-            removeChildWatches(cache.get(toCanonicalFilePath(childWatcher.dirName)));
++            removeChildWatches(cache.get((toCanonicalFilePath(childWatcher.dirName) as Path)));
+         }
+     }
+ 

@@ -29,3 +29,14 @@ roots for both trees (0 new). All 604 emitted JavaScript files have identical
 SHA-256 values, with no added or removed output file. Upstream baseline `hereby
 dts` passes. Amendment census, mutant, declarations, types and whole lane are
 still pending; this checkpoint is not acceptance.
+
+## Lane and declaration checkpoint
+
+The whole unfiltered lane passes at the implementation commit: 106,366 passing,
+one sanctioned Public APIs failure, zero pending. Apply/install/build exit 0;
+tests/oracle exit 1 as required. No timeout, exception or other failure.
+Both upstream `hereby dts` outputs are byte-identical to main. Final adaptation
+replay writes zero files and preserves bytes and mtimes across all nine files.
+The existing timer witnesses are byte-identical. All 747 source files compare
+with only sys.ts changed, exactly by the five road (b) replacements.
+Amendment census, restoring mutant and amendment Adamic types remain pending.
