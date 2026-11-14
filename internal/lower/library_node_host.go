@@ -564,6 +564,7 @@ func (l *lowering) nodeStdoutUseRefusal(node *ast.Node) (bool, error) {
 
 // nodeWatchFile binds only the stat-polling forms used by sys.ts. The returned
 // StatWatcher is not exposed: cancellation uses the original listener identity.
+// An explicitly undefined interval throws ERR_INVALID_ARG_TYPE as Node does.
 func (l *lowering) nodeWatchFile(node *ast.Node) (ir.Expression, bool, error) {
 	name := l.nodeLibraryMember(node)
 	if name != "node:fs.watchFile" && name != "node:fs.unwatchFile" {
