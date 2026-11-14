@@ -858,3 +858,5 @@ mutants restore their sites, every JavaScript hunk stays inside dumpTypes, and
   one reader. Adaptation 20's rule still governs every other member. Evidence:
   typescript/sourcefile-like-position-evidence,
   stage3/census/sourcefile-like-position.
+
+- **JavaScript-changing, timer receiver calls (Adamic and Compiler, #0gj665k, Nov 14 00:59Z; #5vc7nbf):** the nine timer-closures blocks call timerHost.setTimeout on its receiver after the captures, reordering the member read after argument evaluation. Timer accessors: 0 across source/harness/tests and 0 at run time; argument expressions writing the receiver's setTimeout or clearTimeout: 0 statically and 0 at run time (5,865 observed forwarder calls). Guards and receiver non-null assertions remain. Evidence: typescript/timer-call-queue-evidence, stage3/census/timer-call-queue/.

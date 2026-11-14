@@ -6,11 +6,11 @@ const inventory = require('./inventory.json');
 const timerChanges = [
   [
     "host.setTimeout(invalidateResolutionsOfFailedLookup, 250, \"timerToInvalidateFailedLookupResolutions\")",
-    "(() => {\n            const timerHost = host;\n            const { setTimeout } = timerHost;\n            const callback = invalidateResolutionsOfFailedLookup;\n            const timeoutDelay = 250;\n            const t1 = \"timerToInvalidateFailedLookupResolutions\";\n            return setTimeout!.call(timerHost, () => callback(t1), timeoutDelay, t1);\n        })()"
+    "(() => {\n            const timerHost = host;\n            const callback = invalidateResolutionsOfFailedLookup;\n            const timeoutDelay = 250;\n            const t1 = \"timerToInvalidateFailedLookupResolutions\";\n            return timerHost.setTimeout!(() => callback(t1), timeoutDelay, t1);\n        })()"
   ],
   [
     "host.setTimeout(updateProgramWithWatchStatus, 250, \"timerToUpdateProgram\")",
-    "(() => {\n            const timerHost = host;\n            const { setTimeout } = timerHost;\n            const callback = updateProgramWithWatchStatus;\n            const timeoutDelay = 250;\n            const t1 = \"timerToUpdateProgram\";\n            return setTimeout!.call(timerHost, () => callback(t1), timeoutDelay, t1);\n        })()"
+    "(() => {\n            const timerHost = host;\n            const callback = updateProgramWithWatchStatus;\n            const timeoutDelay = 250;\n            const t1 = \"timerToUpdateProgram\";\n            return timerHost.setTimeout!(() => callback(t1), timeoutDelay, t1);\n        })()"
   ],
   [
     "function invalidateResolutionsOfFailedLookup() {",

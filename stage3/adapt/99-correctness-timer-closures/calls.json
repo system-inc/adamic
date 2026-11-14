@@ -3,8 +3,8 @@
     "file": "compiler/sys.ts",
     "originalLine": 384,
     "before": "host.setTimeout(pollingInterval === PollingInterval.Low ? pollLowPollingIntervalQueue : pollPollingIntervalQueue, pollingInterval, pollingInterval === PollingInterval.Low ? \"pollLowPollingIntervalQueue\" : \"pollPollingIntervalQueue\", pollingIntervalQueue(pollingInterval))",
-    "after": "(() => {\n            const timerHost = host;\n            const { setTimeout } = timerHost;\n            const callback = pollingInterval === PollingInterval.Low ? pollLowPollingIntervalQueue : pollPollingIntervalQueue;\n            const timeoutDelay = pollingInterval;\n            const t1 = pollingInterval === PollingInterval.Low ? \"pollLowPollingIntervalQueue\" : \"pollPollingIntervalQueue\";\n            const t2 = pollingIntervalQueue(pollingInterval);\n            return setTimeout.call(timerHost, () => callback(t1, t2), timeoutDelay, t1);\n        })()",
-    "callForm": "destructured local setTimeout.call(timerHost, ...)",
+    "after": "(() => {\n            const timerHost = host;\n            const callback = pollingInterval === PollingInterval.Low ? pollLowPollingIntervalQueue : pollPollingIntervalQueue;\n            const timeoutDelay = pollingInterval;\n            const t1 = pollingInterval === PollingInterval.Low ? \"pollLowPollingIntervalQueue\" : \"pollPollingIntervalQueue\";\n            const t2 = pollingIntervalQueue(pollingInterval);\n            return timerHost.setTimeout(() => callback(t1, t2), timeoutDelay, t1);\n        })()",
+    "callForm": "receiver timerHost.setTimeout(...)",
     "optionalCall": false,
     "tailCount": 2
   },
@@ -12,8 +12,8 @@
     "file": "compiler/sys.ts",
     "originalLine": 497,
     "before": "host.setTimeout(pollQueue, PollingInterval.High, \"pollQueue\")",
-    "after": "(() => {\n            const timerHost = host;\n            const { setTimeout } = timerHost;\n            const callback = pollQueue;\n            const timeoutDelay = PollingInterval.High;\n            const t1 = \"pollQueue\";\n            return setTimeout.call(timerHost, () => callback(t1), timeoutDelay, t1);\n        })()",
-    "callForm": "destructured local setTimeout.call(timerHost, ...)",
+    "after": "(() => {\n            const timerHost = host;\n            const callback = pollQueue;\n            const timeoutDelay = PollingInterval.High;\n            const t1 = \"pollQueue\";\n            return timerHost.setTimeout(() => callback(t1), timeoutDelay, t1);\n        })()",
+    "callForm": "receiver timerHost.setTimeout(...)",
     "optionalCall": false,
     "tailCount": 1
   },
@@ -30,8 +30,8 @@
     "file": "compiler/watchPublic.ts",
     "originalLine": 867,
     "before": "host.setTimeout(invalidateResolutionsOfFailedLookup, 250, \"timerToInvalidateFailedLookupResolutions\")",
-    "after": "(() => {\n            const timerHost = host;\n            const { setTimeout } = timerHost;\n            const callback = invalidateResolutionsOfFailedLookup;\n            const timeoutDelay = 250;\n            const t1 = \"timerToInvalidateFailedLookupResolutions\";\n            return setTimeout!.call(timerHost, () => callback(t1), timeoutDelay, t1);\n        })()",
-    "callForm": "destructured local setTimeout!.call(timerHost, ...)",
+    "after": "(() => {\n            const timerHost = host;\n            const callback = invalidateResolutionsOfFailedLookup;\n            const timeoutDelay = 250;\n            const t1 = \"timerToInvalidateFailedLookupResolutions\";\n            return timerHost.setTimeout!(() => callback(t1), timeoutDelay, t1);\n        })()",
+    "callForm": "receiver timerHost.setTimeout!(...)",
     "optionalCall": false,
     "tailCount": 1
   },
@@ -39,8 +39,8 @@
     "file": "compiler/watchPublic.ts",
     "originalLine": 889,
     "before": "host.setTimeout(updateProgramWithWatchStatus, 250, \"timerToUpdateProgram\")",
-    "after": "(() => {\n            const timerHost = host;\n            const { setTimeout } = timerHost;\n            const callback = updateProgramWithWatchStatus;\n            const timeoutDelay = 250;\n            const t1 = \"timerToUpdateProgram\";\n            return setTimeout!.call(timerHost, () => callback(t1), timeoutDelay, t1);\n        })()",
-    "callForm": "destructured local setTimeout!.call(timerHost, ...)",
+    "after": "(() => {\n            const timerHost = host;\n            const callback = updateProgramWithWatchStatus;\n            const timeoutDelay = 250;\n            const t1 = \"timerToUpdateProgram\";\n            return timerHost.setTimeout!(() => callback(t1), timeoutDelay, t1);\n        })()",
+    "callForm": "receiver timerHost.setTimeout!(...)",
     "optionalCall": false,
     "tailCount": 1
   },
@@ -48,8 +48,8 @@
     "file": "compiler/tsbuildPublic.ts",
     "originalLine": 2067,
     "before": "hostWithWatch.setTimeout(buildNextInvalidatedProject, time, \"timerToBuildInvalidatedProject\", state, changeDetected)",
-    "after": "(() => {\n        const timerHost = hostWithWatch;\n        const { setTimeout } = timerHost;\n        const callback = buildNextInvalidatedProject;\n        const timeoutDelay = time;\n        const t1 = \"timerToBuildInvalidatedProject\";\n        const t2 = state;\n        const t3 = changeDetected;\n        return setTimeout!.call(timerHost, () => callback(t1, t2, t3), timeoutDelay, t1);\n    })()",
-    "callForm": "destructured local setTimeout!.call(timerHost, ...)",
+    "after": "(() => {\n        const timerHost = hostWithWatch;\n        const callback = buildNextInvalidatedProject;\n        const timeoutDelay = time;\n        const t1 = \"timerToBuildInvalidatedProject\";\n        const t2 = state;\n        const t3 = changeDetected;\n        return timerHost.setTimeout!(() => callback(t1, t2, t3), timeoutDelay, t1);\n    })()",
+    "callForm": "receiver timerHost.setTimeout!(...)",
     "optionalCall": false,
     "tailCount": 3
   },
@@ -57,8 +57,8 @@
     "file": "server/utilities.ts",
     "originalLine": 30,
     "before": "this.host.setTimeout(ThrottledOperations.run, delay, operationId, this, cb)",
-    "after": "(() => {\n            const timerHost = this.host;\n            const { setTimeout } = timerHost;\n            const callback = ThrottledOperations.run;\n            const timeoutDelay = delay;\n            const t1 = operationId;\n            const t2 = this;\n            const t3 = cb;\n            return setTimeout.call(timerHost, () => callback(t1, t2, t3), timeoutDelay, t1);\n        })()",
-    "callForm": "destructured local setTimeout.call(timerHost, ...)",
+    "after": "(() => {\n            const timerHost = this.host;\n            const callback = ThrottledOperations.run;\n            const timeoutDelay = delay;\n            const t1 = operationId;\n            const t2 = this;\n            const t3 = cb;\n            return timerHost.setTimeout(() => callback(t1, t2, t3), timeoutDelay, t1);\n        })()",
+    "callForm": "receiver timerHost.setTimeout(...)",
     "optionalCall": false,
     "tailCount": 3
   },
@@ -66,8 +66,8 @@
     "file": "server/utilities.ts",
     "originalLine": 63,
     "before": "this.host.setTimeout(GcTimer.run, this.delay, this)",
-    "after": "(() => {\n            const timerHost = this.host;\n            const { setTimeout } = timerHost;\n            const callback = GcTimer.run;\n            const timeoutDelay = this.delay;\n            const t1 = this;\n            return setTimeout.call(timerHost, () => callback(t1), timeoutDelay, t1);\n        })()",
-    "callForm": "destructured local setTimeout.call(timerHost, ...)",
+    "after": "(() => {\n            const timerHost = this.host;\n            const callback = GcTimer.run;\n            const timeoutDelay = this.delay;\n            const t1 = this;\n            return timerHost.setTimeout(() => callback(t1), timeoutDelay, t1);\n        })()",
+    "callForm": "receiver timerHost.setTimeout(...)",
     "optionalCall": false,
     "tailCount": 1
   },
@@ -75,8 +75,8 @@
     "file": "server/session.ts",
     "originalLine": 406,
     "before": "this.operationHost.getServerHost().setTimeout(\n                () => {\n                    this.timerHandle = undefined;\n                    this.operationHost.executeWithRequestId(requestId, () => this.executeAction(action), this.performanceData);\n                },\n                ms,\n                actionType,\n            )",
-    "after": "(() => {\n                const timerHost = this.operationHost.getServerHost();\n                const { setTimeout } = timerHost;\n                const callback = (_label?: unknown) => {\n                    this.timerHandle = undefined;\n                    this.operationHost.executeWithRequestId(requestId, () => this.executeAction(action), this.performanceData);\n                };\n                const timeoutDelay = ms;\n                const t1 = actionType;\n                return setTimeout.call(timerHost, () => callback(t1), timeoutDelay, t1);\n            })()",
-    "callForm": "destructured local setTimeout.call(timerHost, ...)",
+    "after": "(() => {\n                const timerHost = this.operationHost.getServerHost();\n                const callback = (_label?: unknown) => {\n                    this.timerHandle = undefined;\n                    this.operationHost.executeWithRequestId(requestId, () => this.executeAction(action), this.performanceData);\n                };\n                const timeoutDelay = ms;\n                const t1 = actionType;\n                return timerHost.setTimeout(() => callback(t1), timeoutDelay, t1);\n            })()",
+    "callForm": "receiver timerHost.setTimeout(...)",
     "optionalCall": false,
     "tailCount": 1
   },
@@ -84,8 +84,8 @@
     "file": "server/typingInstallerAdapter.ts",
     "originalLine": 242,
     "before": "this.host.setTimeout(\n            () => {\n                if (this.logger.hasLevel(LogLevel.verbose)) {\n                    this.logger.info(`TIAdapter:: Sending request:${stringifyIndented(request)}`);\n                }\n                this.installer.send(request);\n            },\n            TypingsInstallerAdapter.requestDelayMillis,\n            `${request.projectName}::${request.kind}`,\n        )",
-    "after": "(() => {\n            const timerHost = this.host;\n            const { setTimeout } = timerHost;\n            const callback = (_label?: unknown) => {\n                if (this.logger.hasLevel(LogLevel.verbose)) {\n                    this.logger.info(`TIAdapter:: Sending request:${stringifyIndented(request)}`);\n                }\n                this.installer.send(request);\n            };\n            const timeoutDelay = TypingsInstallerAdapter.requestDelayMillis;\n            const t1 = `${request.projectName}::${request.kind}`;\n            return setTimeout.call(timerHost, () => callback(t1), timeoutDelay, t1);\n        })()",
-    "callForm": "destructured local setTimeout.call(timerHost, ...)",
+    "after": "(() => {\n            const timerHost = this.host;\n            const callback = (_label?: unknown) => {\n                if (this.logger.hasLevel(LogLevel.verbose)) {\n                    this.logger.info(`TIAdapter:: Sending request:${stringifyIndented(request)}`);\n                }\n                this.installer.send(request);\n            };\n            const timeoutDelay = TypingsInstallerAdapter.requestDelayMillis;\n            const t1 = `${request.projectName}::${request.kind}`;\n            return timerHost.setTimeout(() => callback(t1), timeoutDelay, t1);\n        })()",
+    "callForm": "receiver timerHost.setTimeout(...)",
     "optionalCall": false,
     "tailCount": 1
   }
