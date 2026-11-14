@@ -58,7 +58,7 @@ func TestNodeHostCallbackParameterViews(t *testing.T) {
 	for _, probe := range []struct{ name, parameter, want string }{
 		{"honest", "Stats", ""},
 		{"h11", "{ blocks:number }", "node:fs.StatsBase.blocks"},
-		{"any", "any", "any"},
+		{"any", "any", "a value of type any: any has no proven type"},
 	} {
 		t.Run(probe.name, func(t *testing.T) {
 			_, err := lowerSource(t, prefix+`function listener(curr: `+probe.parameter+`):void{} hand(listener);`)
@@ -69,8 +69,15 @@ func TestNodeHostCallbackParameterViews(t *testing.T) {
 				return
 			}
 			var notYet *NotYet
-			if !errors.As(err, &notYet) || !strings.Contains(err.Error(), probe.want) {
-				t.Fatalf("want NotYet %q, got %v", probe.want, err)
+			var refused *Refused
+			kind := errors.As(err, &notYet)
+			wantKind := "NotYet"
+			if probe.name == "any" {
+				wantKind = "Refused"
+				kind = errors.As(err, &refused)
+			}
+			if !kind || !strings.Contains(err.Error(), probe.want) {
+				t.Fatalf("want %s with %q, got %v", wantKind, probe.want, err)
 			}
 		})
 	}

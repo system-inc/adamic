@@ -5,8 +5,8 @@
 #include <math.h>
 #include <stdbool.h>
 
-static adamic_string adamic_string_literal_ca5e7af767c47607cf3c865e9e23e6e9 = ADAMIC_STRING_UNITS("non-null assertion failed at /workspace/adamic/stage3/adapt/99-correctness-axolotl-s/filterMutate-mutant-splice.ts:4:15: array[i]! is null or undefined", 151);
-static adamic_string adamic_string_literal_018f8a52fd622ff1ac776c09f83649af = ADAMIC_STRING_UNITS("non-null assertion failed at /workspace/adamic/stage3/adapt/99-correctness-axolotl-s/filterMutate-mutant-splice.ts:5:31: array[i]! is null or undefined", 151);
+static adamic_string adamic_string_literal_23dee9e5c2252e8eb064c1a1c61f9336 = ADAMIC_STRING_UNITS("non-null assertion failed at /tmp/cn4yapb-scout-20261112/source/stage3/adapt/99-correctness-axolotl-s/filterMutate-mutant-splice.ts:4:15: array[i]! is null or undefined", 168);
+static adamic_string adamic_string_literal_af0368a147c28939a54fe8ff7b1c16b3 = ADAMIC_STRING_UNITS("non-null assertion failed at /tmp/cn4yapb-scout-20261112/source/stage3/adapt/99-correctness-axolotl-s/filterMutate-mutant-splice.ts:5:31: array[i]! is null or undefined", 168);
 
 static adamic_array * adamic_global_203123299825331757366479153671212691992_values = NULL;
 static bool adamic_global_203123299825331757366479153671212691992_values_ready = false;
@@ -40,7 +40,7 @@ static void adamic_function_filterMutate_mutant_splice_ts_filterMutate_522c2e095
 					adamic_value *adamic_temporary_body__3c4e2e512696712541bdbbbf9e2be817_4 = adamic_array_at_integer(adamic_local_321979525905508302408959245207930799855_array, adamic_local_209642834527933106424813114738123296293_i);
 					adamic_maybe_number adamic_temporary_body__3c4e2e512696712541bdbbbf9e2be817_5 = adamic_temporary_body__3c4e2e512696712541bdbbbf9e2be817_4 == NULL ? (adamic_maybe_number){false, 0.0} : ((adamic_maybe_number){true, adamic_temporary_body__3c4e2e512696712541bdbbbf9e2be817_4->number});
 					if (!(adamic_temporary_body__3c4e2e512696712541bdbbbf9e2be817_5.present)) {
-						adamic_panic((&adamic_string_literal_ca5e7af767c47607cf3c865e9e23e6e9)->bytes, (&adamic_string_literal_ca5e7af767c47607cf3c865e9e23e6e9)->length);
+						adamic_panic((&adamic_string_literal_23dee9e5c2252e8eb064c1a1c61f9336)->bytes, (&adamic_string_literal_23dee9e5c2252e8eb064c1a1c61f9336)->length);
 					}
 					adamic_value adamic_temporary_body__3c4e2e512696712541bdbbbf9e2be817_6 = adamic_local_93158582112207383016939700333920906616_f->code(adamic_local_93158582112207383016939700333920906616_f, (adamic_value[]){{.number = adamic_temporary_body__3c4e2e512696712541bdbbbf9e2be817_5.number}, {.number = ((double)adamic_local_209642834527933106424813114738123296293_i)}, {.reference = adamic_local_321979525905508302408959245207930799855_array}});
 					bool adamic_temporary_body__3c4e2e512696712541bdbbbf9e2be817_7 = adamic_temporary_body__3c4e2e512696712541bdbbbf9e2be817_6.boolean;
@@ -49,7 +49,7 @@ static void adamic_function_filterMutate_mutant_splice_ts_filterMutate_522c2e095
 							adamic_value *adamic_temporary_body__3c4e2e512696712541bdbbbf9e2be817_8 = adamic_array_at_integer(adamic_local_321979525905508302408959245207930799855_array, adamic_local_209642834527933106424813114738123296293_i);
 							adamic_maybe_number adamic_temporary_body__3c4e2e512696712541bdbbbf9e2be817_9 = adamic_temporary_body__3c4e2e512696712541bdbbbf9e2be817_8 == NULL ? (adamic_maybe_number){false, 0.0} : ((adamic_maybe_number){true, adamic_temporary_body__3c4e2e512696712541bdbbbf9e2be817_8->number});
 							if (!(adamic_temporary_body__3c4e2e512696712541bdbbbf9e2be817_9.present)) {
-								adamic_panic((&adamic_string_literal_018f8a52fd622ff1ac776c09f83649af)->bytes, (&adamic_string_literal_018f8a52fd622ff1ac776c09f83649af)->length);
+								adamic_panic((&adamic_string_literal_af0368a147c28939a54fe8ff7b1c16b3)->bytes, (&adamic_string_literal_af0368a147c28939a54fe8ff7b1c16b3)->length);
 							}
 							adamic_array_set(adamic_local_321979525905508302408959245207930799855_array, adamic_local_149796721744197443038802396958614723913_outIndex, (adamic_value){.number = adamic_temporary_body__3c4e2e512696712541bdbbbf9e2be817_9.number});
 							adamic_local_149796721744197443038802396958614723913_outIndex = (adamic_local_149796721744197443038802396958614723913_outIndex + (0x1p+00));

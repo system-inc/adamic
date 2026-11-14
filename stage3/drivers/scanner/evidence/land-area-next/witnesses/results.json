@@ -110,14 +110,17 @@
   {
     "name": "10-any",
     "source": "function report(value: any): void { console.log(\"ok\"); }\nreport(\"value\");\n",
+    "source_sha256": "41934416bbb4ee72ab30f18baf5a192db0c2875e6e21e1d805b23692fdaa11f0",
+    "compiler_sha256": "7c2d7e4ff958cd430d0710020363181c769d54745f5879e70b900e7b186540d8",
     "node_exit": 0,
-    "node_seconds": 0.07743363900044642,
+    "node_seconds": 0.07267908701032866,
     "node_stdout": "ok\n",
     "node_stderr": "",
     "build_exit": 1,
-    "build_seconds": 0.03941019400008372,
+    "build_seconds": 0.03877886499685701,
     "build_stdout": "",
-    "build_stderr": "adamic: /workspace/scratch/native3-next-probes/10-any.a:1:17: stage 0 can't lower a value of type any yet\n"
+    "build_stderr": "adamic: /tmp/cn4yapb-scout-20261112/source/stage3/drivers/scanner/evidence/land-area-next/witnesses/10-any.a:1:17: Adamic 0.1 refuses a value of type any: any has no proven type; type it unknown and narrow it where it's read, or give it its real type\n",
+    "classification": "Refused"
   },
   {
     "name": "11-computed-field",
@@ -158,14 +161,17 @@
   {
     "name": "14-any-callback",
     "source": "const callback = (value: any): void => { console.log(\"ok\"); };\ncallback(\"value\");\n",
+    "source_sha256": "d97bb7111c00e47e54032a068adfec3401906ae604943a9d5a817dffa1b58940",
+    "compiler_sha256": "7c2d7e4ff958cd430d0710020363181c769d54745f5879e70b900e7b186540d8",
     "node_exit": 0,
-    "node_seconds": 0.08089365900013945,
+    "node_seconds": 0.10850779501197394,
     "node_stdout": "ok\n",
     "node_stderr": "",
     "build_exit": 1,
-    "build_seconds": 0.04085122600008617,
+    "build_seconds": 0.04119885800173506,
     "build_stdout": "",
-    "build_stderr": "adamic: /workspace/scratch/native3-next-probes/14-any-callback.a:1:19: stage 0 can't lower a value of type any yet\n"
+    "build_stderr": "adamic: /tmp/cn4yapb-scout-20261112/source/stage3/drivers/scanner/evidence/land-area-next/witnesses/14-any-callback.a:1:19: Adamic 0.1 refuses a value of type any: any has no proven type; type it unknown and narrow it where it's read, or give it its real type\n",
+    "classification": "Refused"
   },
   {
     "name": "15-never-string",
