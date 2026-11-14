@@ -594,7 +594,7 @@ func (l *lowering) destructuredField(where *ast.Node, destructured *checker.Type
 		return nil, l.prototypeRead(where, field)
 	}
 	if property.Flags&ast.SymbolFlagsMethod != 0 {
-		return nil, &Refused{Where: l.program.Where(where), What: "a method in object destructuring", Fix: "call it on its receiver or wrap that call in an arrow; destructuring would lose this"}
+		return nil, &Refused{Where: l.program.Where(where), What: "a method in object destructuring", Fix: "call " + field + " on its receiver or wrap that call in an arrow, since destructuring would lose this; if nothing that fills " + field + " reads this, declare it as a function-typed property (" + field + ": (...) => T) instead of a method"}
 	}
 	for _, root := range l.checker.GetRootSymbols(property) {
 		for _, declaration := range root.Declarations {

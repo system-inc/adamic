@@ -1,0 +1,6 @@
+// Spec: a detached method's `this` is typed as the class and is `undefined` at runtime
+// Expect: lowers
+interface H { f(): number }
+class C { x = 1; f(): number { return this.x; } }
+const h: H = new C();
+console.log(String(h.f()));
