@@ -1,0 +1,42 @@
+// Measurement-only helper compiled solely in the scratch lower overlay.
+package lower
+
+import (
+ "context"
+ "encoding/json"
+ "fmt"
+ "os"
+ "strings"
+ "github.com/microsoft/TypeScript/tsc/shim/ast"
+ "github.com/microsoft/TypeScript/tsc/shim/checker"
+ "github.com/system-inc/adamic/internal/load"
+)
+
+func ScoutSignature(ctx context.Context, program *load.Program) {
+ for _, file := range program.Files() {
+  if !strings.HasSuffix(program.FileName(file), "/scanner.ts") { continue }
+  checked, release := program.Checker(ctx, file)
+  l := &lowering{program:program, checker:checked}
+  show := func(t *checker.Type) string { if t == nil { return "<nil>" }; return checked.TypeToString(t) }
+  var visit ast.Visitor
+  visit = func(n *ast.Node) bool {
+   if n.Kind == ast.KindCallExpression && strings.HasSuffix(program.Where(n), ":2934:34") {
+    if os.Getenv("SCOUT_CONTEXT_FIRST") == "1" { _ = l.slotType(n.AsCallExpression().Arguments.Nodes[0]) }
+    sig := checked.GetResolvedSignature(n)
+    row := map[string]any{"signature":checked.SignatureToStringEx(sig,nil,0,nil), "where":program.Where(n), "declaration":program.Where(sig.Declaration()), "return":show(checked.GetReturnTypeOfSignature(sig)), "remaining_type_parameters":len(sig.TypeParameters())}
+    parameters := []string{}
+    for i := range sig.Parameters() { parameters = append(parameters, show(checked.GetTypeAtPosition(sig,i))) }
+    row["parameters"] = parameters
+    arguments := []map[string]string{}
+    for _, a := range n.AsCallExpression().Arguments.Nodes { arguments = append(arguments,map[string]string{"where":program.Where(a),"own":show(checked.GetTypeAtLocation(a)),"contextual":show(l.slotType(a))}) }
+    row["arguments"] = arguments
+    bindings := []map[string]string{}
+    _ = l.signatureTypeArgumentBindings(n,sig,func(b typeArgumentBinding) error { bindings = append(bindings,map[string]string{"parameter":show(b.parameter),"argument":show(b.argument),"constraint":show(b.constraint)});return nil })
+    row["type_arguments"] = bindings
+    bytes, _ := json.MarshalIndent(row,"","  "); fmt.Fprintln(os.Stdout,string(bytes))
+   }
+   n.ForEachChild(visit);return false
+  }
+  visit(file.AsNode());release()
+ }
+}

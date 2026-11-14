@@ -1,0 +1,28 @@
+{
+  "stockVersion": "6.0.3",
+  "diagnostics": 2230,
+  "where": {
+    "line": 2928,
+    "character": 33
+  },
+  "signature": "(to: { pos: number; end: number; value: number; }[] | undefined, value: { pos: number; end: number; value: number; }): { pos: number; end: number; value: number; }[]",
+  "typeArguments": [
+    "{ pos: number; end: number; value: number; }"
+  ],
+  "parameters": [
+    "{ pos: number; end: number; value: number; }[] | undefined",
+    "{ pos: number; end: number; value: number; }"
+  ],
+  "arguments": [
+    {
+      "text": "decimalEscapes",
+      "own": "(TextRange & { value: number; })[] | undefined",
+      "contextual": "{ pos: number; end: number; value: number; }[] | undefined"
+    },
+    {
+      "text": "{ pos: start, end: pos, value: +tokenValue }",
+      "own": "{ pos: number; end: number; value: number; }",
+      "contextual": "{ pos: number; end: number; value: number; }"
+    }
+  ]
+}

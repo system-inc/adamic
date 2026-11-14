@@ -1,0 +1,60 @@
+{
+  "main": "894c8a2b2e7a5bd1fd6adc3738a6d92ae16de558",
+  "wrapper_branch": "2dc0593b937f8fbaf6c32f8107a899f78c223966",
+  "upstream": "050880ce59e30b356b686bd3144efe24f875ebc8",
+  "cohere": "5360753e19e4417675a90e92a1823bea66b13918",
+  "native_checker": "d92d9bfee114c80be2c375d72edae966176e3a4f",
+  "census_binary_sha256": "03fd9631988138f281ace83e1c9781ce4be1fe7eaf0c541d2ee879cd45433651",
+  "probe_binary_sha256": "b11f9c6f1d2cc46069bed189f359074392129977a7b1f820d47f439ab17410b5",
+  "overlay_sha256": {
+    "internal_load_latent_hook.go": "154155d62954f677731f302b7dc57a3aab914ff373618fd9efc0a1bf3d68b5a4",
+    "internal_load_load.go": "fb7e14fd673f689330564b6486c5db6e0722bf5b3a8fab103322bd7d49f3eb07",
+    "internal_lower_entries_records.go": "50678750c15518faf7d614399542e2014999207a72da48f3f453dfac38900040",
+    "internal_lower_expression.go": "447aecc37daaf74a721ad77fc07760f43c01f9c7ad937c931e786b8e506fa1f1",
+    "internal_lower_functions.go": "ddcf50645205fc8686bc21bdd6220087965e6463336a2067ce377a5c8b2fd820",
+    "internal_lower_generic.go": "65fd3364373ced517d0543a94007a37d2f87e45223f20945577b43e8d81a2ed8",
+    "internal_lower_latent_deferred_probe_test.go": "a59311fe81ce15b510fe53648f7fc6a2c3004061e44d718b2105a46cdb96ea6b",
+    "internal_lower_latent_full.go": "99b8f7fa928e3dd6884068b9c858e4d8c9a65eb1e3b7a5c2ee0f71c19f45342f",
+    "internal_lower_latent_hook.go": "902576a6385d5494e9520730b30683a8486c5222c266ae557e9acbb3f6dd0a6f",
+    "internal_lower_latent_pass_ledger.go": "9b0b388ba153cbfda281a431de64da0355e9bbefe2c1600f00631a388a140902",
+    "internal_lower_latent_piece.go": "ae04c70b5cd7c746e9f2ffdd61147ab8d92056bea29342b5be9feee4fd84afee",
+    "internal_lower_latent_progress.go": "bdb2684110c5e6c160909c0d36cf975778a9b8f8f46273df8b3d75729be494c3",
+    "internal_lower_latent_relation_overflow.go": "1630d2346899454d170faff069c67e6cdeea959cba13477e4a8a3d6026e4cf63",
+    "internal_lower_latent_replay.go": "4dd0d8bc81da16d543f3d278d53a7e67307d3113df8f3b6611fe22c62e674b1d",
+    "internal_lower_latent_scoped_tail.go": "4c84db89648acc9407962025de626bf06615cd7061da57b86628e0ad5c99767d",
+    "internal_lower_latent_scoped_tail_test.go": "d934c6fe78b5183d756b5b24f6be568ecf28b80f819ab0fd54003c1696f83d0a",
+    "internal_lower_latent_speculative.go": "6fae169360682ca61b5338feee8fa325d45df9ad4d3fe26e776790ec0378a73e",
+    "internal_lower_latent_state.go": "ab25be756f52d6c68fb81e469dd1ff7e1853a0c0086335454c508035d9553052",
+    "internal_lower_latent_timing.go": "080b7937b2ec03c1837ec639a7916056fbf2c439f5491c321fc972899f41ad3f",
+    "internal_lower_latent_units.go": "c61cf27ccdc3a0ffe19caf8c16d088636adeed63a114326a46ab560393ee1752",
+    "internal_lower_locals.go": "fa21e0661addb989a3b89a418814a1e7ff8af9d6f89040fc7293c6bc83034602",
+    "internal_lower_lower.go": "8828d23b881db7e1f0b2061f92f4431aa144fa61e23dba1e886351c01b5af45a",
+    "internal_lower_refusals.go": "35e3116e30afb2174e1630f2fbbe2649ac41c508ee2edc7676f53da03d387cb5",
+    "internal_lower_statements.go": "998f023e06e66357c4a741a021ca9db4c3115934e00ec652a1a121c31718c88e",
+    "scan-only.go": "fa11a5f7343a507bc09ae2262b4007534b7971b721d7009f8386f11df8bc2aa2",
+    "signature.go": "5ef596e7c5643b2d2eacfa17e9aea6e0ed3cb5fcd665b6a552f7de77a4f9903b",
+    "stage3_census_latent_replay_worker_main.go": "70d936e625ff77e3e1243061f73b60544abf9d17e30b0a6118448283d563b2d5",
+    "stage3_census_latent_tool_main.go": "e9ddb437d18c0840098d134d47cc1dd3642e0b26531265342bc1893ec46f2b87",
+    "stage3_census_latent_tool_relation_overflow_test.go": "e63247a585d0722fcbfe1a9f32b9f4e672d48f6f4520b7459100b94d61907c6c"
+  },
+  "versions": {
+    "go": "go1.27.1 linux/amd64",
+    "node": "v24.19.0",
+    "npm": "11.9.0",
+    "git": "2.52.0"
+  },
+  "setup": {
+    "submodule_update": 0,
+    "npm_ci": 0,
+    "apply": 0,
+    "initial_build": 0,
+    "probe_build": 0
+  },
+  "note": "Overlay hashes identify the second probe build, adding root/query-order controls. Both binaries use the same unchanged scan-only wrapper. No production compiler source was edited.",
+  "unfinished_combined_run": {
+    "seconds_observed": 701.933,
+    "file_records_emitted": 0,
+    "used_in_counts": false,
+    "reason": "Environment refresh interrupted its parent. The continuing combined child was then deliberately terminated to switch to checkpointed independent per-file processes. Its header alone is not coverage evidence."
+  }
+}

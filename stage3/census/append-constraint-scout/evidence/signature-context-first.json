@@ -1,0 +1,30 @@
+{
+  "arguments": [
+    {
+      "contextual": "{ pos: number; end: number; value: number; }[] | undefined",
+      "own": "(TextRange & { value: number; })[] | undefined",
+      "where": "/workspace/scratch/append-scout-adapted/src/compiler/scanner.ts:2934:41"
+    },
+    {
+      "contextual": "{ pos: number; end: number; value: number; }",
+      "own": "{ pos: number; end: number; value: number; }",
+      "where": "/workspace/scratch/append-scout-adapted/src/compiler/scanner.ts:2934:57"
+    }
+  ],
+  "declaration": "/workspace/scratch/append-scout-adapted/src/compiler/core.ts:933:1",
+  "parameters": [
+    "{ pos: number; end: number; value: number; }[] | undefined",
+    "{ pos: number; end: number; value: number; }"
+  ],
+  "remaining_type_parameters": 0,
+  "return": "{ pos: number; end: number; value: number; }[]",
+  "signature": "(to: { pos: number; end: number; value: number; }[] | undefined, value: { pos: number; end: number; value: number; }): { pos: number; end: number; value: number; }[]",
+  "type_arguments": [
+    {
+      "argument": "{ pos: number; end: number; value: number; }",
+      "constraint": "{}",
+      "parameter": "T"
+    }
+  ],
+  "where": "/workspace/scratch/append-scout-adapted/src/compiler/scanner.ts:2934:34"
+}
