@@ -17,8 +17,8 @@ import (
 // Each stop_ program is that read under a ?. in one form, a property, a library call, a push, an element,
 // a chain, a template, an if and a try, and a number's toFixed (stop_scalar.ts, whose Unwrap would stop
 // where Node reads undefined), and it's NotYet at compile time now, a loud stop where the catchable throw
-// was. The same read in parentheses, (r["k"])?.length, panics in recordLiteralRead on
-// main, a bug of its own, so it isn't one of them. Each agree_ program is a control held to Node on
+// was. The same read in parentheses in a try (stop_try_paren_length.ts) is one of them since #grc95d6,
+// whose fix judges the access inside the parentheses, where this stop finds it. Each agree_ program is a control held to Node on
 // release, sanitized native and JavaScript: a key never narrowed, whose read is a maybe the ?. tests; a
 // plain read after the delete, where Node throws too and both catch it; and a narrowed key still present.
 func TestNarrowedRecordReadUnderOptional(t *testing.T) {
@@ -72,7 +72,7 @@ func TestNarrowedRecordReadUnderOptional(t *testing.T) {
 		})
 	}
 	// A program lost from the directory must fail here, not shrink the walk.
-	if stops != 9 || controls != 3 {
-		t.Fatalf("%d stop and %d control programs in %s, want 9 and 3", stops, controls, directory)
+	if stops != 10 || controls != 3 {
+		t.Fatalf("%d stop and %d control programs in %s, want 10 and 3", stops, controls, directory)
 	}
 }
