@@ -164,7 +164,7 @@ function compileWorkerDecode(descriptor) {
 		if (readers[index]) return readers[index];
 		let read;
 		// Install a forward reference before descending, for recursive graphs.
-		readers[index] = (value, path) => read(value, path);
+		readers[index] = (value, path, index) => read(value, path, index);
 		const node = descriptor.nodes[index];
 		const expected = node.expected;
 		switch (node.kind) {
