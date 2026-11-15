@@ -104,10 +104,21 @@ head, base = rows(sys.argv[1]), rows(sys.argv[2])
 same = head == base
 print(f"verdicts: {len(head)} head rows, {len(base)} base rows, {'identical' if same else 'DIFFER'}")
 if not same:
+    def walk(a, b, path, out):
+        if isinstance(a, dict) and isinstance(b, dict):
+            for key in sorted(set(a) | set(b)):
+                walk(a.get(key, "<absent>"), b.get(key, "<absent>"), path + "." + key, out)
+        elif isinstance(a, list) and isinstance(b, list) and len(a) == len(b):
+            for index, (x, y) in enumerate(zip(a, b)):
+                walk(x, y, f"{path}[{index}]", out)
+        elif a != b:
+            out.append(f"    {path}: head {json.dumps(a)[:160]} | base {json.dumps(b)[:160]}")
     for index, (a, b) in enumerate(zip(head, base)):
         if a != b:
-            print(f"  first difference at row {index}:\n    head {a[:300]}\n    base {b[:300]}")
-            break
+            out = []
+            walk(json.loads(a), json.loads(b), "", out)
+            print(f"  row {index} differs in {len(out)} fields:")
+            print("\n".join(out[:20]))
     sys.exit(1)
 PYTHON
 echo "VERDICT OK logs in $O"
