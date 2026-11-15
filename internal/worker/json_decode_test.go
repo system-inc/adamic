@@ -280,3 +280,44 @@ for(const [kind,valid,invalid] of [['number',1,'bad'],['string','ok',7],['boolea
 		t.Fatalf("lazy scalar paths, projection and copy: %v\n%s", err, output)
 	}
 }
+
+func TestWorkerDecodeJSONNestedArrayScalarFailurePaths(t *testing.T) {
+	t.Parallel()
+	schema := `{"root":0,"nodes":[{"kind":"array","expected":"number[][][]","children":[1]},{"kind":"array","expected":"number[][]","children":[2]},{"kind":"array","expected":"number[]","children":[3]},{"kind":"number","expected":"number"}]}`
+	checkWorkerDecodeJSONNestedScalarPath(t, schema, `[[[0]],[[1,2,3]]]`, `[[[0]],[[1,2,"bad"]]]`, "at $[1][0][2]: expected number, found string")
+}
+
+func TestWorkerDecodeJSONRecordNestedArrayScalarFailurePaths(t *testing.T) {
+	t.Parallel()
+	schema := `{"root":0,"nodes":[{"kind":"object","expected":"Rows","fields":[{"name":"rows","node":1}]},{"kind":"array","expected":"number[][]","children":[2]},{"kind":"array","expected":"number[]","children":[3]},{"kind":"number","expected":"number"}]}`
+	checkWorkerDecodeJSONNestedScalarPath(t, schema, `{"rows":[[0],[1],[2,3]]}`, `{"rows":[[0],[1],[2,false]]}`, "at $.rows[2][1]: expected number, found boolean")
+}
+
+func checkWorkerDecodeJSONNestedScalarPath(t *testing.T, schema, valid, invalid, message string) {
+	t.Helper()
+	runtime := filepath.Join(t.TempDir(), "decoder.mjs")
+	write(t, runtime, jsonDecodeRuntime+"\nexport { compileWorkerDecode };\n")
+	script := `import assert from 'node:assert/strict';
+import {pathToFileURL} from 'node:url';
+const {decodeJson,compileWorkerDecode}=await import(pathToFileURL(process.argv[1]));
+const schema=JSON.parse(process.argv[2]),valid=JSON.parse(process.argv[3]);
+assert.deepEqual(decodeJson(process.argv[4],schema),{kind:'Error',message:process.argv[5]});
+const decoded=decodeJson(process.argv[3],schema);
+assert.deepEqual(decoded,{kind:'Ok',value:valid});
+function freshCopy(actual,source){
+ if(source!==null&&typeof source==='object'){
+  assert.notStrictEqual(actual,source);
+  for(const key of Object.keys(source))freshCopy(actual[key],source[key]);
+ }
+}
+const projected=compileWorkerDecode(schema)(valid,'$');
+assert.deepEqual(projected,valid);
+freshCopy(projected,valid);
+const second=decodeJson(process.argv[3],schema);
+assert.deepEqual(second,decoded);
+freshCopy(second.value,decoded.value);`
+	command := exec.CommandContext(t.Context(), "node", "--input-type=module", "-e", script, runtime, schema, valid, invalid, message)
+	if output, err := command.CombinedOutput(); err != nil {
+		t.Fatalf("nested scalar error path and fresh copy: %v\n%s", err, output)
+	}
+}
