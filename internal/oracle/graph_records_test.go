@@ -43,8 +43,14 @@ console.log(` + "`${a.name} ${a.rs.length}`" + `);
 `, "a record written into a graph slot"},
 		// A captured variable assigned again with a record holding the closure that captures it: the cell
 		// holds the record, the record the closure, the closure the cell. It's a function's local, since a
-		// top-level variable is a global, whose cell never seeds.
-		{"a reassigned captured variable holding a record", graphRecordNode + `function run(): number {
+		// top-level variable is a global, whose cell never seeds. Its graph has no record fields: with
+		// graphRecordNode's, the prefix's own push seed stops first, since a node's record field can hold
+		// nodes back (#t5q4prw), and the cell's stop would go untested.
+		{"a reassigned captured variable holding a record", `interface Node { name: string; next: Node[] }
+const a: Node = { name: 'a' + '', next: [] };
+const b: Node = { name: 'b' + '', next: [a] };
+a.next.push(b);
+function run(): number {
   let table: Record<string, () => number> = {};
   const size = (): number => (table['size'] === undefined ? 0 : 1);
   table = { size: size };
