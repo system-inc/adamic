@@ -3,7 +3,8 @@
  * that is tested for truthiness alone, recursively: the test of ?:, an if, a chain of &&, an && nested on
  * either side of another in an if, the operand of !, a while, and a test on both sides of an &&. Each
  * runs over a class's required method, which method presence folds, and an optional member, given
- * and missing, which shape 1 reads off its slot. Node prints, a line per flag pair:
+ * and missing, which shape 1 reads off its slot. A guarded branch calls m where tsc can see it's always
+ * defined (TS2774). Node prints, a line per flag pair:
  * abcd falsefg | ---- true-- | abcd falsefg, then a--- falsefg | ---- true-- | a--- falsefg, then
  * ---- true-g | ---- true-- | ---- true-g twice.
  */
@@ -43,24 +44,24 @@ function optional(flag: boolean, other: boolean, h: Maybe): string {
 	}
 	let g = '-';
 	if (h.m && h.m) {
-		g = 'g';
+		g = h.m() > 0 ? 'g' : '?';
 	}
 	return a + b + c + d + ' ' + e + f + g;
 }
 
 function method(flag: boolean, other: boolean): string {
-	const a = flag && counter.m ? 'a' : '-';
+	const a = flag && counter.m ? (counter.m() > 0 ? 'a' : '?') : '-';
 	let b = '-';
 	if (flag && other && counter.m) {
-		b = 'b';
+		b = counter.m() > 0 ? 'b' : '?';
 	}
 	let c = '-';
 	if (flag && (other && counter.m)) {
-		c = 'c';
+		c = counter.m() > 0 ? 'c' : '?';
 	}
 	let d = '-';
 	if ((flag && counter.m) && other) {
-		d = 'd';
+		d = counter.m() > 0 ? 'd' : '?';
 	}
 	const e = String(!(flag && counter.m));
 	let f = '-';
@@ -70,7 +71,7 @@ function method(flag: boolean, other: boolean): string {
 	}
 	let g = '-';
 	if (counter.m && counter.m) {
-		g = 'g';
+		g = counter.m() > 0 ? 'g' : '?';
 	}
 	return a + b + c + d + ' ' + e + f + g;
 }
