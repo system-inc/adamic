@@ -59,7 +59,11 @@ case $(uname -m) in
 esac
 
 # Go. Any Go from 1.21 on fetches the version go.mod names by itself (GOTOOLCHAIN=auto), so an
-# installed one is enough; otherwise the newest stable release goes in $tools/go.
+# installed one is enough; otherwise go.mod's own toolchain goes in $tools/go, checked against its pinned sha256 before it
+# unpacks. Never go.dev's newest: auto never switches down, so a newer one laid stays, and a sealed image (GOTOOLCHAIN=local,
+# offline) ran go1.27.4 against go.mod's go1.27.1 (images 1.0.6 to 1.0.10, Azure's read on #zwzer5f, #6ge8a4w). The pin
+# moves with go.mod's toolchain line: a toolchain this file has no digest for refuses here, never downloads unchecked.
+goPinned=go1.27.1
 export GOTOOLCHAIN=auto
 # Some cloud boxes reach proxy.golang.org but not storage.googleapis.com, where it redirects module
 # downloads, and answer 403. The default proxy list falls back to direct only on 404 and 410, so a
@@ -70,8 +74,18 @@ prepareGo() {
 # Only a go that answers `go version` counts: some images ship an unrelated /usr/bin/go.
 realGo() { "$1" version 2> /dev/null | grep -q '^go version go1\.'; }
 if ! { command -v go > /dev/null 2>&1 && realGo go; } && ! realGo "$tools/go/bin/go"; then
-	goVersion=$(curl -fsSL 'https://go.dev/VERSION?m=text' | head -n 1)
-	curl -fsSL "https://dl.google.com/go/$goVersion.linux-$goArchitecture.tar.gz" | tar --no-same-owner -xz -C "$tools"
+	goVersion=$(awk '$1 == "toolchain" { print $2 }' "$repository/go.mod")
+	[ "$goVersion" = "$goPinned" ] ||
+		{ echo "setup: go.mod's toolchain is ${goVersion:-none}, and setup.sh pins $goPinned's digests; move goPinned and its digests with it" >&2; return 1; }
+	case $goArchitecture in
+		amd64) goDigest=63d339f0da5ab53635a56f2490a7984dfe12dfcff22ad749f63edaf590168445 ;;
+		arm64) goDigest=3450b45a3f9ee8568792736a5c5e70a1f2e9b36c35a8f74958c03e51d7d92bec ;;
+	esac
+	curl -fsSL "https://dl.google.com/go/$goVersion.linux-$goArchitecture.tar.gz" -o "$run/go.tar.gz"
+	echo "$goDigest  $run/go.tar.gz" | sha256sum -c --quiet - ||
+		{ echo "setup: $goVersion.linux-$goArchitecture.tar.gz doesn't match its pinned sha256" >&2; return 1; }
+	tar --no-same-owner -xz -C "$tools" -f "$run/go.tar.gz"
+	rm -f "$run/go.tar.gz"
 fi
 [ -x "$tools/go/bin/go" ] && export PATH="$tools/go/bin:$PATH"
 (cd "$repository" && go version)

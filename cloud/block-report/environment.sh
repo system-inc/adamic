@@ -144,6 +144,10 @@ goRoot=$(cd "$checkout" && GOTOOLCHAIN=auto go env GOROOT)
 export PATH="$goRoot/bin:$PATH" GOTOOLCHAIN=local
 (cd "$checkout" && go list -m) >> "$log" 2>&1 || { echo "block-env: $goRoot/bin/go can't load go.work at GOTOOLCHAIN=local" >&2; exit 1; }
 goVersion=$(go version)
+# The image's Go is go.mod's toolchain exactly, never a newer one auto wouldn't switch down from: a sealed job runs it
+# offline under GOTOOLCHAIN=local, and the house builds with go.mod's (#zwzer5f, Node's condition for 1.0.11).
+goWanted=$(awk '$1 == "toolchain" { print $2 }' "$checkout/go.mod")
+[ "$(go env GOVERSION)" = "$goWanted" ] || { echo "block-env: the laid Go is $(go env GOVERSION), and go.mod's toolchain is ${goWanted:-none}" >&2; exit 1; }
 nodeVersion=$(node --version)
 command -v clang > /dev/null || { echo "block-env: setup.sh's env.sh puts no clang on PATH" >&2; exit 1; }
 clangPath=$(readlink -f "$(command -v clang)")
