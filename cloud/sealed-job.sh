@@ -33,18 +33,22 @@ mkdir -p "$npm_config_logs_dir" || sealedJobFail "couldn't make npm's log direct
 # empty and git refuses a commit with no name. A house box's own identity is never overridden.
 export GIT_AUTHOR_NAME="${GIT_AUTHOR_NAME:-sealed-job}" GIT_AUTHOR_EMAIL="${GIT_AUTHOR_EMAIL:-sealed-job@loom.invalid}"
 export GIT_COMMITTER_NAME="${GIT_COMMITTER_NAME:-sealed-job}" GIT_COMMITTER_EMAIL="${GIT_COMMITTER_EMAIL:-sealed-job@loom.invalid}"
-# The image's TypeScript source is root's and the job runs as its own user, so git calls it dubious and the corpus can't
-# read its pin (J-hstk35n: internal/lower's census products). It's named safe alone, appended to any git config the
-# environment already carries.
-sealedGitConfigs=${GIT_CONFIG_COUNT:-0}
-export GIT_CONFIG_COUNT=$((sealedGitConfigs + 1))
-export "GIT_CONFIG_KEY_$sealedGitConfigs=safe.directory" "GIT_CONFIG_VALUE_$sealedGitConfigs=/opt/adamic-block/typescript-source"
-unset sealedGitConfigs
-# A test that runs git with a cleaned environment never sees the line above, so the job's own global config (its empty
-# HOME) names it too (Azure's read on #1ndpe51: the pin is there, git refused it on ownership alone).
-git config --global --get-all safe.directory 2> /dev/null | grep -qxF /opt/adamic-block/typescript-source ||
-	git config --global --add safe.directory /opt/adamic-block/typescript-source ||
-	sealedJobFail "couldn't name the image's TypeScript source safe in the job's git config" || return 1
+
+# sealed_typescript_source: the image's TypeScript source becomes the job's own copy, under the tree, and
+# ADAMIC_TYPESCRIPT_SOURCE names it. The image's copy is root's and the job runs as its own user, so git calls it dubious
+# and the corpus can't read its pin (J-hstk35n, J-6nnj4ys: internal/lower's census products). No config can name it
+# safe for that reader: internal/buildcache's PinnedGit runs git with GIT_CONFIG_GLOBAL=/dev/null and no system config,
+# and git ignores safe.directory given by -c or the environment. A copy the job owns is block-report's road
+# (cloud/block-report/run.sh). sealed_products calls it; a command that reads the source some other way can too.
+sealed_typescript_source() {
+	local source="${ADAMIC_TYPESCRIPT_SOURCE:-}" copy="$PWD/.sealed-typescript-source" begun=$SECONDS
+	[ -n "$source" ] || sealedJobFail "ADAMIC_TYPESCRIPT_SOURCE is unset: source the image's environment.sh first" || return 1
+	[ "$source" != "$copy" ] || return 0
+	[ ! -e "$copy" ] || sealedJobFail "$copy is already there, and isn't ADAMIC_TYPESCRIPT_SOURCE" || return 1
+	cp -a "$source" "$copy" || sealedJobFail "copying $source to $copy failed" || return 1
+	export ADAMIC_TYPESCRIPT_SOURCE="$copy"
+	echo "sealed-job: the image's TypeScript source copied to $copy in $((SECONDS - begun)) s, the job's own"
+}
 
 # sealed_git: the tree as laid becomes one commit, HEAD, in a .git of the job's own, read back clean. Run from the tree's
 # root. It refuses a tree that already has a .git, so a house box's real history is never covered over.
@@ -53,7 +57,8 @@ sealed_git() {
 	[ ! -e .git ] || sealedJobFail "this tree already has a .git; sealed_git is for a laid tree with none" || return 1
 	git init -q || sealedJobFail "git init failed" || return 1
 	# The build cache this preamble puts under the tree is never part of the tree as laid
-	printf '%s\n' /.sealed-build-cache/ >> .git/info/exclude || sealedJobFail "couldn't keep the build cache out of the commit" || return 1
+	printf '%s\n' /.sealed-build-cache/ /.sealed-typescript-source/ >> .git/info/exclude ||
+		sealedJobFail "couldn't keep the build cache and the TypeScript copy out of the commit" || return 1
 	git add -A || sealedJobFail "git add failed" || return 1
 	git -c user.name=sealed-job -c user.email=sealed-job@loom.invalid -c commit.gpgsign=false commit -q --no-verify \
 		-m "the tree as laid" || sealedJobFail "git commit failed" || return 1
@@ -108,6 +113,7 @@ for name in sys.argv[2:]:
 print(' '.join('./' + path for path in sorted(union)))
 PYTHON
 	) || sealedJobFail "couldn't read the products to settle" || return 1
+	sealed_typescript_source || return 1
 	# The package list is held to plain paths above, so it splits as words here.
 	# shellcheck disable=SC2086
 	go test -count=1 -run '^TestProduct_' $packages < /dev/null >&2 || sealedJobFail "the products didn't settle over $packages" || return 1
