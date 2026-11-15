@@ -1,9 +1,50 @@
 <!-- HEAD11 START -->
-# -11 catch follow-up — measurement in progress
+# -11 catch follow-up
 
-Head: `8843e0ab7b4cfaa547c08e438ca39442a4774fc6`; parent/main base: `89614cc0f9d6aa7b7fe96b56c5c6c1c3eace9825`. The parent diff was inspected before measurement. It is one commit on that main and includes the full loose-slot feature, not only the catch amendment. Artifacts for this follow-up live in [head11](head11).
+Head: `8843e0ab7b4cfaa547c08e438ca39442a4774fc6`. Parent and main base: **`89614cc0f9d6aa7b7fe96b56c5c6c1c3eace9825`**. It is one commit on that main. Its parent diff was read first: it contains the full loose-slot feature; the catch amendment relative to -7 adds `looseCaughtRoad`, caught-value collection, the catch-cell links, and the caught-source judgment. The seven older blocking roads remain premises of the narrowing.
 
-The rebuilt instrument remains a **partial type-level count, not a lowering**. Catch-clause bindings, closure captures, and direct arguments to unknown-typed parameters will have separate AST/checker inventories; helper text inside template strings is excluded. Controls and counts are pending. The original -7 report below is preserved.
+This follow-up uses the same source/capture reconstruction, rebuilt against -11 with its own catch judgment: **a partial type-level count, not a lowering**. The published -7 report is preserved below.
+
+## Controls at -11
+
+The logging-helper shape described in the request stops; the message-extraction twin lowers. Exact Language u00/u00b files were not present in this repository, so these fixtures are explicitly labeled reconstructions of the specified shape, not byte-identical Language originals. The committed c04 fixture is also tested unchanged. See [control sources and provenance](head11/controls).
+
+| Control | Production | Probe events / sites | Captured catch binding | H.every / caughtEvery | Wall seconds: production / probe | Peak RSS KiB: production / probe |
+| --- | --- | ---: | --- | --- | ---: | ---: |
+| c04 | accepted | 0/0 | 1 | false / false | 0.127243 / 0.180282 | 31844 / 30260 |
+| u00-reconstructed | NotYet | 2/1 | 1 | true / false | 0.075572 / 0.084713 | 32644 / 29940 |
+| u00b-reconstructed | accepted | 0/0 | 0 | true / false | 0.180380 / 0.079310 | 31972 / 29812 |
+
+u00’s probe reports two Error-source events at **one** catch binding (explicit throw and library Error); production stops at that binding. u00b keeps the unknown-parameter call and H.every=true but captures the extracted string. c04 has a captured catch binding, H.every=false, and lowers. Thus the positive/negative controls exercise the narrowing and the requested H interaction.
+
+## 1. Catch bindings and denominators
+
+**0 stopped captured catch bindings.** Of 24 real catch clauses, 7 have a binding and 17 omit it; **0 bindings are captured by a closure**. Separately, **5 calls** pass a catch binding directly to an unknown-typed parameter, all with an unknown-typed source and each independently making H every shape. The two necessary conditions of the requested u00 shape do not meet here: unknown calls exist, captured catch bindings do not.
+
+An independent TypeScript 6.0.3 AST/checker audit agrees exactly, including the five call locations. Template strings in `factory/emitHelpers.ts` contain textual catches and closures but are not compiler catch AST nodes. The seven actual bound clauses and all five calls/unknown parameter declarations are quoted in [CATCHES.md](head11/CATCHES.md). There is no stopped catch binding for which a capturing-closure/H-witness triple can be supplied.
+
+The whole-program walk has H.every=true, caughtEvery=true, 33 candidates, 190 explicit H types, and 4457 shapes over 799,863 non-type AST nodes. The head’s caught-road collection is global; it is not a per-try throw analysis.
+
+## 2. The original 22, paired by site
+
+**22 stand; 0 gone; 0 new.** The rebuilt probe reads 22 events at 22 distinct sites: 7 captured, 9 literal init, 6 write. None is a captured catch-cell stop. The existing caught-value literal initialization at `sys.ts:1643:72` is marked separately. Every old/new site pair, its classification, and quoted source line are in [SITE-PAIRS.md](head11/SITE-PAIRS.md).
+
+## 3. Production next-stop table
+
+Checkpoint: 37/79 pairs completed; 37 unchanged and 0 changed among completed pairs. Unmeasured roots are not assumed unchanged. [Completed rows](head11/NEXT-STOPS.md).
+
+## Method, limits, resources and reproduction
+
+The original probe’s partial source model and limitations remain: synthetic lowering-created stores, concrete generic instantiations, carried slots, retained/bound/accessor captures, closed-frame proofs, IR scalar facts, and transformed async frames are not reconstructed. Catch binding registration and its source capture inventory are explicit; the new head’s `looseEntry` gathers `looseCaughtRoad`, and captured catches use `looseCaughtCell`/`looseCaught`/`looseReaches` after gathering. No production lowering source is overlaid in the next-stop binaries. Inventory calls are direct identifier arguments (parentheses allowed); aliases and derived values are outside that denominator. No census result here is an exhaustive production lowering count.
+
+Fresh detached worktrees were made for both SHAs, with recursive depth-1 submodules, locked API installs, pinned TypeScript `050880ce59e30b356b686bd3144efe24f875ebc8`, and separate stage3/apply outputs. GOTMPDIR, TMPDIR, GOCACHE and Adamic caches remain in scratch. All 79 compiler input files are byte-identical across the two new worktrees and the -7 run; pairing needs no line relocation. Source/binary hashes and the parent diff are archived under [head11/evidence](head11/evidence).
+
+- Head partial type-level count: **28.929107 s**, **1231028 KiB** peak RSS.
+- Independent TypeScript inventory: **4.375036 s**, **515592 KiB** peak RSS.
+- base: 37 completed children; summed wall **581.547495 s**; maximum child peak **939368 KiB**.
+- head: 37 completed children; summed wall **591.954776 s**; maximum child peak **926940 KiB**.
+
+Every reported process has a wall/peak-RSS wait4 receipt. Child wall times can overlap; these are resource records, not isolated speed comparisons. Setup/build times are excluded. Control receipts retain the final exercised sources. `head11/build.py`, `build_type.py`, `runs.py`, `groups.py` and `independent_audit.cjs` archive the exact procedure; scripts use the recorded scratch prefix. Only `.go.txt` probe sources are committed. Nothing submitted or merged.
 <!-- HEAD11 END -->
 
 ---
