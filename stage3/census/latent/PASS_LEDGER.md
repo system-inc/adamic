@@ -5,7 +5,10 @@ The one ordered definition is `pass_ledger.go.txt`; `pass_ledger.go` constructs
 owned metadata entries from it. The 30-step audit inventory now has a 31st
 production step: `checkInspectorDoomedContracts`, after `voidDiscards`. A 32nd,
 `checkFlowLiveness`, follows it (#p2n17c4 H3). A 33rd, `checkOptionalMemberPresence`, runs
-after `checkViewOptionalWrites` (#p2n17c4 shape 1).
+after `checkViewOptionalWrites` (#p2n17c4 shape 1). A 34th,
+`checkRegExpServedValues`, follows `checkLibrarySpreads` (#hxgbart): it judges by a
+flag any relation in the program sets, so a body alone can't measure it, and it's
+`not_run_whole_program`.
 
 Each independently attempted unit gets `pass_ledger` beside its status and
 instantiation metadata in the census JSONL. First-error, full and speculative
@@ -14,7 +17,7 @@ and checker-excluded declarations have no independent pass measurement and do
 not acquire a ledger merely because a caller instantiated them.
 
 For a body without a lowering stop, entries are `not_run_scoped`, except
-`findCycles`, the Program-region gate, plan application and the ownership query,
+`findCycles`, `checkRegExpServedValues`, the Program-region gate, plan application and the ownership query,
 which are `not_run_whole_program`. A body stop, including a recovered partial
 body or panic, takes precedence: every entry is
 `not_reached_lowering_stop`. Syntax/contract scan findings alone are not body

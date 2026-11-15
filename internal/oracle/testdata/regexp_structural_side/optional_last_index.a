@@ -1,0 +1,4 @@
+interface Maybe { test?: (text: string) => boolean }
+const r = /a/g;
+function run(v: Maybe): void { console.log(String(v.test?.('xa'))); }
+run(r); run(r); run(r);

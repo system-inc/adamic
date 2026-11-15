@@ -1,0 +1,5 @@
+interface Maybe { readonly test?: (text: string) => boolean }
+const trigger: Maybe = /a/;
+const record: Record<string, (text: string) => boolean> = { test: (_text: string): boolean => true };
+const f = record.test;
+console.log(f === undefined ? 'missing' : 'function');
