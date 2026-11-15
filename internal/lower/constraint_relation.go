@@ -330,9 +330,16 @@ func (l *lowering) judgeBoundObject(literal *ast.Node, target *checker.Type) err
 
 // judgeBoundArray judges an array literal a binding is inferred from against target: each element
 // against the element type, or a tuple's against its place, and a spread's value against the array.
-// Into anything else, or a tuple past a spread, it fails closed.
+// A target that declares nothing to read through (declaresNothing), append<T extends {}>'s value: T
+// handed tsc's builder.ts's [fileId, ...] (#x856a4v), has no element type, and needs none: it can't
+// hide a field or widen a slot through an element, so the literal is judged whole as its type, as
+// judgeBoundObject judges a literal no member takes. Into anything else, or a tuple past a spread, it
+// fails closed.
 func (l *lowering) judgeBoundArray(literal *ast.Node, target *checker.Type) error {
 	array := l.checker.GetNonNullableType(target)
+	if l.declaresNothing(array) {
+		return l.judgeBinding(literal, nil, l.checker.GetTypeAtLocation(literal), target)
+	}
 	elements := literal.AsArrayLiteralExpression().Elements.Nodes
 	for index, element := range elements {
 		if element.Kind == ast.KindOmittedExpression {
@@ -362,6 +369,16 @@ func (l *lowering) judgeBoundArray(literal *ast.Node, target *checker.Type) erro
 		}
 	}
 	return nil
+}
+
+// declaresNothing is whether a type declares nothing a value can be read or written through: unknown,
+// object, or an object type with no properties, no index signatures and no call or construct signatures,
+// {} among them. An array or a tuple declares its length and its elements, so it's never one.
+func (l *lowering) declaresNothing(proven *checker.Type) bool {
+	if proven.Flags()&(checker.TypeFlagsUnknown|checker.TypeFlagsNonPrimitive) != 0 {
+		return true
+	}
+	return proven.Flags()&checker.TypeFlagsObject != 0 && len(l.checker.GetPropertiesOfType(proven)) == 0 && len(l.checker.GetIndexInfosOfType(proven)) == 0 && len(l.checker.GetSignaturesOfType(proven, checker.SignatureKindCall)) == 0 && len(l.checker.GetSignaturesOfType(proven, checker.SignatureKindConstruct)) == 0
 }
 
 // libraryTypeParameter is whether a type parameter is declared in the bundled library or the prelude,
