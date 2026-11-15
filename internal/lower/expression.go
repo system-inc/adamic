@@ -398,14 +398,14 @@ func (l *lowering) sameKeeping(from *checker.Type, to *checker.Type, visited map
 // sameKeepingWalk is sameKeeping's walk of what each side keeps weakly or strongly, and of each
 // function's slots by representation.
 func (l *lowering) sameKeepingWalk(from *checker.Type, to *checker.Type, visited map[[2]*checker.Type]bool) bool {
-	return l.sameKeepingWalkMode(from, to, visited, false, nil)
+	return l.sameKeepingWalkMode(from, to, visited, false, nil, false)
 }
 
 type keepingNesting struct {
 	from, to typeNesting
 }
 
-func (l *lowering) sameKeepingWalkMode(from, to *checker.Type, visited map[[2]*checker.Type]bool, weakOnly bool, nesting *keepingNesting) bool {
+func (l *lowering) sameKeepingWalkMode(from, to *checker.Type, visited map[[2]*checker.Type]bool, weakOnly bool, nesting *keepingNesting, insideSlot bool) bool {
 	if from == to {
 		return true
 	}
@@ -430,6 +430,33 @@ func (l *lowering) sameKeepingWalkMode(from, to *checker.Type, visited map[[2]*c
 		if toCount <= 1 && l.present(to) == nil {
 			return true
 		}
+		// A value written into a Weak slot may create a Weak. Below that value's
+		// boundary, a view must preserve each stored member's own keeping.
+		if insideSlot {
+			weakMembers := func(members []*checker.Type) (map[*checker.Type]bool, map[*checker.Type]bool) {
+				weak, strong := map[*checker.Type]bool{}, map[*checker.Type]bool{}
+				for _, member := range members {
+					if target := l.weakTarget(member); target != nil {
+						weak[target] = true
+					} else {
+						strong[member] = true
+					}
+				}
+				return weak, strong
+			}
+			fromWeak, fromStrong := weakMembers(fromMembers)
+			toWeak, toStrong := weakMembers(toMembers)
+			for target := range fromWeak {
+				if !toWeak[target] || toStrong[target] {
+					return false
+				}
+			}
+			for target := range toWeak {
+				if !fromWeak[target] || fromStrong[target] {
+					return false
+				}
+			}
+		}
 		// Visited stays per mode: ordinary starts fresh here; weak-only never returns to ordinary, so its same cannot excuse an ordinary representation check.
 		if !weakOnly {
 			visited = map[[2]*checker.Type]bool{}
@@ -446,7 +473,7 @@ func (l *lowering) sameKeepingWalkMode(from, to *checker.Type, visited map[[2]*c
 				if (member.Flags()&nullish != 0) != (target.Flags()&nullish != 0) {
 					continue
 				}
-				if !l.sameKeepingWalkMode(member, target, visited, true, nesting) {
+				if !l.sameKeepingWalkMode(member, target, visited, true, nesting, insideSlot) {
 					return false
 				}
 			}
@@ -468,15 +495,15 @@ func (l *lowering) sameKeepingWalkMode(from, to *checker.Type, visited map[[2]*c
 		return false
 	}
 	if a, b := l.recordElement(from), l.recordElement(to); a != nil && b != nil {
-		return l.sameKeepingWalkMode(a, b, visited, weakOnly, nesting)
+		return l.sameKeepingWalkMode(a, b, visited, weakOnly, nesting, true)
 	}
 	same := func(inside, viewed *checker.Type) bool {
 		if weakOnly {
-			return l.keepsWeak(inside) == l.keepsWeak(viewed) && l.sameKeepingWalkMode(inside, viewed, visited, true, nesting)
+			return l.keepsWeak(inside) == l.keepsWeak(viewed) && l.sameKeepingWalkMode(inside, viewed, visited, true, nesting, true)
 		}
 		fromKept, _ := l.kept(inside)
 		toKept, _ := l.kept(viewed)
-		return (fromKept == ir.Weak) == (toKept == ir.Weak) && l.sameKeepingWalkMode(inside, viewed, visited, weakOnly, nesting)
+		return (fromKept == ir.Weak) == (toKept == ir.Weak) && l.sameKeepingWalkMode(inside, viewed, visited, weakOnly, nesting, true)
 	}
 	fromSignatures := l.checker.GetSignaturesOfType(from, checker.SignatureKindCall)
 	toSignatures := l.checker.GetSignaturesOfType(to, checker.SignatureKindCall)
@@ -498,8 +525,7 @@ func (l *lowering) sameKeepingWalkMode(from, to *checker.Type, visited map[[2]*c
 			toParameters = nil
 		}
 		for index := 0; index < len(fromParameters) && index < len(toParameters); index++ {
-			// Arguments flow from the view's parameter into the function's own parameter.
-			if !sameCallable(l.checker.GetTypeOfSymbol(toParameters[index]), l.checker.GetTypeOfSymbol(fromParameters[index])) {
+			if !sameCallable(l.checker.GetTypeOfSymbol(fromParameters[index]), l.checker.GetTypeOfSymbol(toParameters[index])) {
 				return false
 			}
 		}
@@ -516,7 +542,7 @@ func (l *lowering) sameKeepingWalkMode(from, to *checker.Type, visited map[[2]*c
 				collected = max(collected, len(fromParameters))
 			}
 			for position := rest; position < collected; position++ {
-				if !sameCallable(l.checker.GetTypeAtPosition(toSignatures[0], position), l.elementTypeOfArray(l.checker.GetTypeOfSymbol(fromParameters[rest]))) {
+				if !sameCallable(l.elementTypeOfArray(l.checker.GetTypeOfSymbol(fromParameters[rest])), l.checker.GetTypeAtPosition(toSignatures[0], position)) {
 					return false
 				}
 			}
@@ -571,7 +597,7 @@ func (l *lowering) sameKeepingStorage(from, to *checker.Type, visited map[[2]*ch
 		if l.keepingCallable(inside) || l.keepingCallable(viewed) {
 			return true
 		}
-		return l.keepsWeak(inside) == l.keepsWeak(viewed) && l.sameKeepingWalkMode(inside, viewed, visited, true, nesting)
+		return l.keepsWeak(inside) == l.keepsWeak(viewed) && l.sameKeepingWalkMode(inside, viewed, visited, true, nesting, true)
 	}
 	if from.ObjectFlags()&checker.ObjectFlagsReference != 0 && to.ObjectFlags()&checker.ObjectFlagsReference != 0 && (l.isArrayType(from) || checker.IsTupleType(from) || l.isLibraryType(from, "Map", "ReadonlyMap", "Set", "ReadonlySet")) {
 		fromArguments, toArguments := l.typeArguments(from), l.typeArguments(to)

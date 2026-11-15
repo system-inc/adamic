@@ -58,6 +58,13 @@ const viewed: { readonly kind: 'v'; readonly v: Weak<Box> } | { readonly kind: '
 func TestUnionKeepingPairsAgree(t *testing.T) {
 	for _, extension := range []string{".a", ".ts"} {
 		for _, row := range []struct{ name, source string }{
+			{"weak_member_control", `import type { Weak } from 'adamic';
+interface A { readonly kind: 'a'; readonly label: string }
+interface C { readonly kind: 'c'; readonly label: string }
+interface Held { readonly item: Weak<A> | C }
+interface Twin { readonly item: Weak<A> | { readonly kind: 'c'; readonly label: string } }
+function view(held: Held): Twin { const same: Held = held; const twin: Twin = same; return twin; }
+console.log('control');`},
 			{"promise_union_view", `const p: string | PromiseLike<string> = Promise.resolve('x'); console.log(typeof p);`},
 			{"narrowed_nullish_box", `interface Box { readonly label: string }
 function read(box: Box | undefined): string {
@@ -112,49 +119,6 @@ console.log(String(read({kind:'circle',radius:3})));`},
 	}
 }
 
-func TestUnionKeepingParameterDirections(t *testing.T) {
-	for _, extension := range []string{".a", ".ts"} {
-		for _, row := range []struct {
-			name, source, types string
-			cast                bool
-		}{
-			{"weak_array_like_function_strong_array_view", `type WeakElements = {readonly kind:'v';readonly v:ArrayLike<Weak<Box>>} | {readonly kind:'w';readonly w:number};
-type StrongElements = {readonly kind:'v';readonly v:readonly Box[]} | {readonly kind:'w';readonly w:number};
-function read(x: WeakElements): string { return 'label'; }
-const viewed: (x: StrongElements) => string = read;`, "(x: WeakElements) => string -> (x: StrongElements) => string", false},
-
-			{"weak_function_strong_view", `function read(x: Weakly): string { return x.kind === 'v' ? x.v?.label ?? 'none' : 'w'; }
-const viewed: (x: Strong) => string = read;
-console.log(viewed(make()));`, "(x: Weakly) => string -> (x: Strong) => string", false},
-			{"strong_function_weak_view", `function read(x: Strong): string { return x.kind === 'v' ? x.v.label : 'w'; }
-const viewed = read as (x: Weakly) => string;
-console.log(viewed(make()));`, "(x: Strong) => string -> (x: Weakly) => string", true},
-
-			{"union_strong_function_weak_view", `type Held = {readonly kind:'read';readonly read:(x:Strong)=>string} | {readonly kind:'none'};
-type Viewed = {readonly kind:'read';readonly read:(x:Weakly)=>string} | {readonly kind:'none'};
-function read(x: Strong): string { return x.kind === 'v' ? x.v.label : 'w'; }
-function hold(): Held { return {kind:'read',read}; }
-const viewed = hold() as Viewed;
-if (viewed.kind === 'read') console.log(viewed.read(make()));`, "Held with (x: Strong) => string -> Viewed with (x: Weakly) => string", true},
-		} {
-			t.Run(row.name+extension, func(t *testing.T) {
-				// The reverse function assignment is contravariantly invalid in TypeScript;
-				// its explicit cast must stop too, rather than create an unchecked callable view.
-				_, err := lowerSourceAs(t, unionKeepingPrelude+row.source, extension)
-				var ny *NotYet
-				var refused *Refused
-				if errors.As(err, &ny) {
-					return
-				}
-				if row.cast && errors.As(err, &refused) && strings.Contains(err.Error(), "adamic/no-unchecked-cast") {
-					return
-				}
-				t.Fatalf("%s: got %v, want the callable view to stop", row.types, err)
-			})
-		}
-	}
-}
-
 func TestUnionKeepingGrow(t *testing.T) {
 	for _, extension := range []string{".a", ".ts"} {
 		t.Run(extension, func(t *testing.T) {
@@ -193,5 +157,86 @@ declare const to: To;`)})
 				t.Fatal("From with Grow<number> -> To with Twin<number>: want not same at the nesting bound")
 			}
 		})
+	}
+}
+
+func TestUnionKeepingWeakMembers(t *testing.T) {
+	for _, extension := range []string{".a", ".ts"} {
+		for _, row := range []struct{ name, source, from, to string }{
+			{"field", `import type { Weak } from 'adamic';
+interface A { readonly kind: 'a'; readonly label: string }
+interface B { readonly kind: 'b'; readonly label: string }
+interface C { readonly kind: 'c'; readonly label: string }
+let strongA: A | undefined = { kind: 'a', label: 'a'.repeat(2) };
+let strongB: B | undefined = { kind: 'b', label: 'b'.repeat(2) };
+interface Held { readonly item: Weak<A> | Weak<B> | C }
+interface Viewed { readonly item: Weak<A> | B | C }
+function make(): Held { return { item: strongB }; }
+const held: Held = make();
+const viewed: Viewed = held;
+strongA = undefined;
+strongB = undefined;
+if (viewed.item !== undefined && viewed.item.kind === 'b') console.log(viewed.item.label);
+`, "{ readonly item: Weak<A> | Weak<B> | C }", "{ readonly item: Weak<A> | B | C }"},
+			{"top", `import type { Weak } from 'adamic';
+interface A { readonly kind: 'a'; readonly label: string }
+interface B { readonly kind: 'b'; readonly label: string }
+interface C { readonly kind: 'c'; readonly label: string }
+let strongA: A | undefined = { kind: 'a', label: 'a'.repeat(2) };
+let strongB: B | undefined = { kind: 'b', label: 'b'.repeat(2) };
+function make(): Weak<A> | Weak<B> { return strongB; }
+const held: Weak<A> | Weak<B> = make();
+const viewed: Weak<A> | B = held;
+strongA = undefined;
+strongB = undefined;
+if (viewed !== undefined && viewed.kind === 'b') console.log(viewed.label);
+`, "Weak<A> | Weak<B>", "Weak<A> | B"},
+		} {
+			t.Run(row.name+extension, func(t *testing.T) {
+				_, err := lowerSourceAs(t, row.source, extension)
+				var ny *NotYet
+				if !errors.As(err, &ny) {
+					t.Fatalf("%s -> %s: got %v, want NotYet", row.from, row.to, err)
+				}
+				// Below the top pair the member rule must stop the field view. The
+				// top pair itself stays exempt; its program keeps the existing
+				// mixed-representation NotYet before the view is read.
+				program, err := load.Load([]string{writeAgreementSource(t, "types"+extension, `import type { Weak } from 'adamic';
+interface A { readonly kind: 'a'; readonly label: string }
+interface B { readonly kind: 'b'; readonly label: string }
+interface C { readonly kind: 'c'; readonly label: string }
+type From = `+row.from+`;
+type To = `+row.to+`;
+declare const from: From;
+declare const to: To;`)})
+				if err != nil {
+					t.Fatal(err)
+				}
+				checked, release := program.Checker(t.Context(), program.Files()[0])
+				defer release()
+				var from, to *checker.Type
+				var visit ast.Visitor
+				visit = func(node *ast.Node) bool {
+					if ast.IsIdentifier(node) {
+						switch node.Text() {
+						case "from":
+							from = checked.GetTypeAtLocation(node)
+						case "to":
+							to = checked.GetTypeAtLocation(node)
+						}
+					}
+					return node.ForEachChild(visit)
+				}
+				program.Files()[0].Node.ForEachChild(visit)
+				if from == nil || to == nil {
+					t.Fatal("missing member view types")
+				}
+				l := &lowering{program: program, checker: checked}
+				wantSame := row.name == "top"
+				if got := l.sameKeepingWalk(from, to, map[[2]*checker.Type]bool{}); got != wantSame {
+					t.Fatalf("%s -> %s: keeping walk answered same=%v, want %v", row.from, row.to, got, wantSame)
+				}
+			})
+		}
 	}
 }

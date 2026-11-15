@@ -36,22 +36,10 @@ The command exits 1. `TestUnionKeepingPairs/later_weak_member.a` and
 The first target has no `v`; the second target changes `v` from strong to Weak.
 The file was restored. Output: `/workspace/scratch/pmfdg6q/storage/first-target-mutant.log`.
 
-## Parameter direction
-
-Undo the argument direction in both parameter calls to `sameCallable`, passing the
-function parameter before the view parameter again.
-
-```
-go test ./internal/lower -run '^TestUnionKeepingParameterDirections$' -v -count=1 -timeout 2m
-```
-
-The command exits 0: this mutant survives the remaining pins. Both directions of
-the direct Weak-slot function view still stop. The direct array-like function
-view also stops when the flip is undone, since storage mode compares index values
-in both directions. The production flip is retained. No existing fixture was
-changed to manufacture a failure.
-
-The file was restored. Output: `/workspace/scratch/pmfdg6q/storage/direction-mutant.log`.
+The parameter-direction mutant and its dedicated pin were removed. With no
+assignability calls, the cross product of union member pairs is symmetric:
+reversing direction changes no answer. The ordinary fixed-parameter and
+rest-element comparisons therefore use main's order.
 
 ## Descend into signatures again
 
@@ -72,3 +60,27 @@ stage 0 can't lower a Promise<string> seen as a string | PromiseLike<string> (on
 
 The nesting bound fails closed instead of overflowing. The file was restored.
 Output: `/workspace/scratch/pmfdg6q/storage/signatures-mutant.log`.
+
+## Stored Weak member identity
+
+Remove the `insideSlot` member-identity block from the union walk.
+
+```
+go test ./internal/lower -run '^TestUnionKeepingWeakMembers$/^field' -v -count=1 -timeout 10m
+```
+
+The command exits 1. `TestUnionKeepingWeakMembers/field.a` and
+`TestUnionKeepingWeakMembers/field.ts` both fail with `got <nil>, want NotYet`.
+The types are `{ readonly item: Weak<A> | Weak<B> | C }` and
+`{ readonly item: Weak<A> | B | C }`. The view loses B's Weak keeping while both
+whole field unions still contain a Weak member.
+
+The rule runs only below the top value pair, through stored contents or a
+callable parameter or result. Ordinary writes from `Named` into
+`Weak<Counted | Named>` still lower. The top-level mixed-representation view
+retains its existing NotYet, and the keeping walk's top pair stays exempt.
+
+The file was restored. Output:
+`/workspace/scratch/pmfdg6q/member-scope/member-rule-mutant.log`.
+The runtime probe report is
+`/workspace/scratch/pmfdg6q/weak-member-probes/report.md`.
