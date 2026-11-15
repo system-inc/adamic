@@ -1,0 +1,15 @@
+{
+  "command": [
+    "/workspace/scratch/receiver-split/latent",
+    "/workspace/scratch/receiver-split/baseline/src/compiler",
+    "/workspace/scratch/receiver-split/census/base__transformers__esDecorators.jsonl"
+  ],
+  "exit": 0,
+  "wall_seconds": 98.941,
+  "environment": {
+    "LATENT_FULL": "1",
+    "LATENT_ASSERT_NO_OUTPUT": "1",
+    "CENSUS_MODULE_FORMAT": "CommonJSBundle",
+    "LATENT_ONLY_FILE": "/workspace/scratch/receiver-split/baseline/src/compiler/transformers/esDecorators.ts"
+  }
+}

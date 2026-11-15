@@ -1,0 +1,15 @@
+{
+  "command": [
+    "/workspace/scratch/receiver-split/latent",
+    "/workspace/scratch/receiver-split/tree-transformers/src/compiler",
+    "/workspace/scratch/receiver-split/census/change__transformers__es2016.jsonl"
+  ],
+  "exit": 0,
+  "wall_seconds": 24.709,
+  "environment": {
+    "LATENT_FULL": "1",
+    "LATENT_ASSERT_NO_OUTPUT": "1",
+    "CENSUS_MODULE_FORMAT": "CommonJSBundle",
+    "LATENT_ONLY_FILE": "/workspace/scratch/receiver-split/tree-transformers/src/compiler/transformers/es2016.ts"
+  }
+}

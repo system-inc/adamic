@@ -29,3 +29,7 @@ The first pairing wrapper conservatively stopped on printer var multiplicity att
 AST scope audit: all 17 transformer destructures are directly in top-level factory bodies, with context introduced by that factory parameter. All 52 new arrows are directly in the same body, and all 17 factory property bindings remain. No nested per-node or visitor-call placement is eligible to lift. Dynamic counts remain pending.
 
 The remaining 16 transformer file pairs and all runtime/checker/integration/declaration proofs are still pending; none of the three adaptations is yet certified or pushed.
+
+## 13 complete file pairs
+
+All 13 completed CommonJSBundle pairs have 0 new and 0 changed findings outside targets. Complete command receipts and the sizes/sha256 of all completed raw traces and logs are included in this checkpoint. The remaining pairs and the checker, runtime, declaration, fresh-apply and unfiltered lane proofs are still pending.
