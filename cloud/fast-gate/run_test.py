@@ -131,6 +131,22 @@ class FakeProcess:
         return "".join(self.lines), ""
 
 
+class MainRunsLast(unittest.TestCase):
+    """Run as a script, unittest.main() runs only the classes defined above it, so a main left mid-file skips every class
+    below it in silence: until Nov 15, 2026 eleven classes (WASIUnits through CensusMemoryFloors) never ran under
+    python3 cloud/fast-gate/run_test.py. This class sits above every other test class, so it runs wherever main stands."""
+
+    def test_no_test_class_is_defined_after_unittest_main(self):
+        import ast
+        with open(os.path.abspath(__file__)) as handle:
+            module = ast.parse(handle.read())
+        mains = [index for index, node in enumerate(module.body)
+                 if isinstance(node, ast.If) and "__main__" in ast.unparse(node.test)]
+        self.assertEqual(len(mains), 1, "run_test.py has exactly one if __name__ == \"__main__\" block")
+        after = [node.name for node in module.body[mains[0] + 1:] if isinstance(node, ast.ClassDef)]
+        self.assertEqual(after, [], "these classes are defined after unittest.main(), so a script run never runs them")
+
+
 class FailClosed(unittest.TestCase):
     def setUp(self):
         self.directory = tempfile.mkdtemp()
@@ -2844,10 +2860,6 @@ class CacheDrainMutants(unittest.TestCase):
         self.assertEqual(len(result.failures), 2, result.failures)
 
 
-if __name__ == "__main__":
-    unittest.main()
-
-
 class WASIUnits(unittest.TestCase):
     """Main 7e403e44 split TestWASI's fixtures into top-level units: the whole gate's wasi phase enumerates them by
     name instead of crashing on the missing TestWASI (Oct 9 06:35Z: every pool whole gate's --list-units died)."""
@@ -3721,3 +3733,7 @@ class CensusMemoryFloors(unittest.TestCase):
             with self.assertRaises(ValueError, msg=floors) as raised:
                 self.census({"stage1/cohere/fresh/budget_test.go": self.reader}, floors, changed=[])
             self.assertNotIsInstance(raised.exception, run.ChangeRefusal)
+
+
+if __name__ == "__main__":
+    unittest.main()
