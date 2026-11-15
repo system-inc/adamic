@@ -97,9 +97,13 @@ type looseInit struct {
 	field  string
 }
 
-// looseEntry gathers H at one node (the comment above names the sites).
+// looseEntry gathers H at one node (the comment above names the sites). A Program region's discovery
+// lowering gathers nothing (looseSlotStop).
 func (f *cycleFinder) looseEntry(node *ast.Node) {
 	l := f.l
+	if l.programDiscovery {
+		return
+	}
 	switch node.Kind {
 	case ast.KindShorthandPropertyAssignment:
 		symbol := l.checker.GetShorthandAssignmentValueSymbol(node)
@@ -690,7 +694,13 @@ type looseWrite struct {
 
 // looseSlotStop judges the program's loose slots (the comment at the top of this file): H is gathered first,
 // from looseEntry's sites and every literal's loose initialization, then each entry is judged against it.
+// A Program region's discovery lowering neither gathers nor judges: the lowering after it judges every
+// write, and H's checker queries in discovery changed what that lowering made (PlainReceivers' validity,
+// J-x0szpve), since both share one checker.
 func (f *cycleFinder) looseSlotStop() error {
+	if f.l.programDiscovery {
+		return nil
+	}
 	inits := []looseInit{}
 	for _, made := range f.l.looseInits {
 		if made.slot != nil && !f.holdsLoose(made.slot) {
