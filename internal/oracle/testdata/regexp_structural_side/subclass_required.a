@@ -1,0 +1,5 @@
+interface Tester { test(text: string): boolean }
+class R extends RegExp {}
+const r = new R('a');
+function run(v: Tester): void { console.log(String(v.test('xa'))); }
+run(r);

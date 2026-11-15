@@ -814,6 +814,7 @@ func (l *lowering) viewedField(node *ast.Node, property ir.Property) ir.Property
 		property.ViewType = l.checker.TypeToString(declared)
 		property.ViewAllowed = l.viewLiterals(declared)
 	}
+	l.recordRegExpServedRead(node, property)
 	return property
 }
 

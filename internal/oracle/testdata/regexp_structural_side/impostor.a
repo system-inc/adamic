@@ -1,0 +1,4 @@
+interface Maybe { test?: (text: string) => boolean }
+const t: Maybe = { source: 'a', flags: '', lastIndex: 0, test: undefined };
+console.log(String(t.test?.('a')));
+console.log(t.test === undefined ? 'no test' : 'has test');

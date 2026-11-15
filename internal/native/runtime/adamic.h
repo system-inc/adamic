@@ -751,6 +751,7 @@ adamic_maybe_number adamic_object_maybe_number(const adamic_object *object, cons
 adamic_maybe_boolean adamic_object_maybe_boolean(const adamic_object *object, const char *name, adamic_slot_cache *cache);
 // Optional own fields may be absent; NULL then asks the reader to produce typed undefined.
 adamic_value *adamic_object_optional_find(const adamic_object *object, const char *name, adamic_slot_cache *cache);
+bool adamic_object_optional_function_present(const adamic_object *, const char *, adamic_slot_cache *, const char *);
 static inline adamic_value *adamic_object_optional_field(const adamic_object *object, const char *name, adamic_slot_cache *cache) {
 	uint64_t packed = __atomic_load_n(&cache->packed, __ATOMIC_RELAXED);
 	if ((packed & ADAMIC_SLOT_SHAPE_MASK) != (uintptr_t)object->shape) {

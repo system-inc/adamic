@@ -18,6 +18,7 @@ var latentPostLoweringSteps = []latent.PassStep{
 	{Name: "checkIterableViews"},
 	{Name: "exceptions"},
 	{Name: "checkLibrarySpreads"},
+	{Name: "checkRegExpServedValues", WholeProgram: true},
 	{Name: "checkAccessorSpreads"},
 	{Name: "checkRecordGuardedReads", Scoped: true},
 	{Name: "checkDynamicKeyedGetters"},

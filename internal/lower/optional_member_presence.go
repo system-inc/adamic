@@ -144,6 +144,13 @@ func (l *lowering) checkOptionalMemberPresence() error {
 		walk(function.Body, inspect)
 	}
 	graph := l.flowGraph(&numbered)
+	var regexpGraph *allocationFlowGraph
+	if l.regexpServedView {
+		// Allocations use negative sites. Reserve one positive site for this proof
+		// alone, so a RegExp is known without admitting any other host source.
+		regexpGraph = l.flowGraph(&numbered)
+		regexpGraph.entry = regexpPresenceEntry
+	}
 	judged := map[optionalPresenceKey]bool{}
 	for _, read := range l.optionalPresenceReads {
 		key := optionalPresenceKey{where: read.where, name: read.name}
@@ -163,7 +170,17 @@ func (l *lowering) checkOptionalMemberPresence() error {
 		}
 		switch {
 		case len(found[key]) == 1 && len(dispatched) == 0:
-			if err := l.judgePresenceReceiver(read, tested, presenceReachOf(graph, graph.ReachingAllocations(found[key][0].Object), nil, read.name)); err != nil {
+			receiverGraph := graph
+			served := read.name == "test" && l.regexpServedView && l.regexpServedPresence(read.node)
+			if served {
+				receiverGraph = regexpGraph
+			}
+			allocations := receiverGraph.ReachingAllocations(found[key][0].Object)
+			if served {
+				// Only the proved RegExp allocations bypass the own-slot judgment.
+				allocations.Sites = withoutRegExpPresenceSite(allocations.Sites)
+			}
+			if err := l.judgePresenceReceiver(read, tested, presenceReachOf(receiverGraph, allocations, nil, read.name)); err != nil {
 				return err
 			}
 		case len(found[key]) == 0 && len(dispatched) > 0:
@@ -249,4 +266,17 @@ func (l *lowering) judgePresenceReceiver(read optionalPresenceRead, tested strin
 // named name, its accessors' own entries aside (DynamicKeyedMethodNames).
 func (l *lowering) classChainHasMethod(class int, name string) bool {
 	return slices.Contains(l.result.DynamicKeyedMethodNames(class), name)
+}
+
+// This proof distinguishes only RegExp construction; every other host remains unknown.
+func regexpPresenceEntry(value ir.Expression) int {
+	if _, ok := value.(ir.RegExpNew); ok {
+		return 1
+	}
+	return 0
+}
+
+// Never edit a memoized allocation set when removing the proof's RegExp marker.
+func withoutRegExpPresenceSite(sites []int) []int {
+	return slices.DeleteFunc(slices.Clone(sites), func(site int) bool { return site == 1 })
 }

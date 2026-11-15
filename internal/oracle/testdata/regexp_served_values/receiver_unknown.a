@@ -1,0 +1,4 @@
+interface Maybe { readonly test?: (text: string) => boolean }
+const trigger: Maybe = /a/;
+function read(v: unknown): void { console.log(String(v.test !== undefined)); }
+read(/b/);
