@@ -38,5 +38,45 @@
     "head_binds": [],
     "head_exit": 0,
     "head_seconds": 14.206587791442871
+  },
+  {
+    "root": "builder.ts",
+    "priority_caller": true,
+    "base_run": {
+      "checker_diagnostics": null,
+      "error": "/workspace/bind-extra-parameters-scratch/adapted/src/compiler/sys.ts:1385:31: Adamic 0.1 refuses a method read as a value (writeFile would lose its object, and this with it); call it in an arrow that keeps the object: (path, data, writeByteOrderMark) => sys.writeFile(path, data, writeByteOrderMark) (unbound-method)",
+      "kind": "Refused",
+      "measurement": "no output; exact whole-program production-tail seam",
+      "module_format": "CommonJSBundle",
+      "reason": "a method read as a value (writeFile would lose its object, and this with it)",
+      "record": "run",
+      "roots": [
+        "/workspace/bind-extra-parameters-scratch/adapted/src/compiler/builder.ts"
+      ],
+      "seam_reached": 0,
+      "status": "production_stop",
+      "where": "/workspace/bind-extra-parameters-scratch/adapted/src/compiler/sys.ts:1385:31"
+    },
+    "base_binds": [],
+    "base_exit": 0,
+    "base_seconds": 18.365189790725708,
+    "head_run": {
+      "checker_diagnostics": null,
+      "error": "/workspace/bind-extra-parameters-scratch/adapted/src/compiler/sys.ts:1385:31: Adamic 0.1 refuses a method read as a value (writeFile would lose its object, and this with it); call it in an arrow that keeps the object: (path, data, writeByteOrderMark) => sys.writeFile(path, data, writeByteOrderMark) (unbound-method)",
+      "kind": "Refused",
+      "measurement": "no output; exact whole-program production-tail seam",
+      "module_format": "CommonJSBundle",
+      "reason": "a method read as a value (writeFile would lose its object, and this with it)",
+      "record": "run",
+      "roots": [
+        "/workspace/bind-extra-parameters-scratch/adapted/src/compiler/builder.ts"
+      ],
+      "seam_reached": 0,
+      "status": "production_stop",
+      "where": "/workspace/bind-extra-parameters-scratch/adapted/src/compiler/sys.ts:1385:31"
+    },
+    "head_binds": [],
+    "head_exit": 0,
+    "head_seconds": 15.634642601013184
   }
 ]

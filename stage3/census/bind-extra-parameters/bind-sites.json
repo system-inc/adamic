@@ -1,0 +1,820 @@
+{
+  "typescript": "6.0.3",
+  "files": 81,
+  "latent_candidate_units": 10694,
+  "sources": [
+    {
+      "file": "src/compiler/_namespaces/ts.moduleSpecifiers.ts",
+      "sha256": "d858679e4d64f2879cb625cecf199bb93f44e414e3c34fd55540fcccfef9c07e",
+      "bytes": 111
+    },
+    {
+      "file": "src/compiler/_namespaces/ts.performance.ts",
+      "sha256": "e3d39c7ea64f27347b698a1951a76a014cd0c1c51565d6ed9182d7d4f064ddda",
+      "bytes": 101
+    },
+    {
+      "file": "src/compiler/_namespaces/ts.ts",
+      "sha256": "fd8a88f2067f9d0a44de7d121ed7c38a3b5effd26cf3ceccbb861255aa879a5b",
+      "bytes": 3323
+    },
+    {
+      "file": "src/compiler/binder.ts",
+      "sha256": "7d2fe86cb48e04e45b5b260d8029116f57660aa1a00efaaa180f0dda6837d370",
+      "bytes": 195526
+    },
+    {
+      "file": "src/compiler/builder.ts",
+      "sha256": "03cd217e69a1d3f9c0c05271a6f445d2bf302dd2ab0f117d446a02b8f264da7c",
+      "bytes": 118708
+    },
+    {
+      "file": "src/compiler/builderPublic.ts",
+      "sha256": "1c4590cf725470dec54734bdb4711c330540c6c3871e791f2feebd39d787f629",
+      "bytes": 11609
+    },
+    {
+      "file": "src/compiler/builderState.ts",
+      "sha256": "718fe1a92440b7bafbe9fb4bddfd35d5c77bf0408fcefab8edf21b38558c8d5a",
+      "bytes": 26209
+    },
+    {
+      "file": "src/compiler/builderStatePublic.ts",
+      "sha256": "271f9512e20d7f04fe1d68394fbd8647ce022c9978bf80e6fab681dd453c52dc",
+      "bytes": 392
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "sha256": "a3c87ee5a2dd3f55fae2ced5a4c6c22bcde071db2b901af710faea85959bd9fa",
+      "bytes": 3155948
+    },
+    {
+      "file": "src/compiler/commandLineParser.ts",
+      "sha256": "49b442aa6b10782edf3ca9dcecdec5c92ef46a9fbe6c928ccd0bf1c088382636",
+      "bytes": 185569
+    },
+    {
+      "file": "src/compiler/core.ts",
+      "sha256": "6925a744b191c13ebe1425ec76a994b51cb2ab1c81f19b2c7958a4ed1e89311b",
+      "bytes": 93355
+    },
+    {
+      "file": "src/compiler/corePublic.ts",
+      "sha256": "579512600ac65a6312f761f46db67357483c010e8e2c271cb03cce67328b32e7",
+      "bytes": 1330
+    },
+    {
+      "file": "src/compiler/debug.ts",
+      "sha256": "08d94ea6111c6a4ec61b2f56189702ed262bdcaaea037e8aba87ef9c87a6d22a",
+      "bytes": 29764
+    },
+    {
+      "file": "src/compiler/diagnosticInformationMap.generated.ts",
+      "sha256": "0cfeabc14c72149bf65f0b5cb72f251adc45064edccebe30871b4efd73b97e89",
+      "bytes": 579194
+    },
+    {
+      "file": "src/compiler/emitter.ts",
+      "sha256": "5b95b642df7bb717028545938847f9ccd626119f47145efc247b2e1f27c05cb7",
+      "bytes": 274785
+    },
+    {
+      "file": "src/compiler/executeCommandLine.ts",
+      "sha256": "279c6c1fc40e45025b07244c0b3ce84b6e28a1cc901ac9d789fae0911aed67fb",
+      "bytes": 54191
+    },
+    {
+      "file": "src/compiler/expressionToTypeNode.ts",
+      "sha256": "501917c5a675172b9f0605af0a98a0c6b71f8890cb404ea851f23d28bfba2f61",
+      "bytes": 70491
+    },
+    {
+      "file": "src/compiler/factory/baseNodeFactory.ts",
+      "sha256": "df7514118add76c4eb81106635f9cd3f3e0fcb5e3b1fb6627fac717f537fc4d8",
+      "bytes": 2682
+    },
+    {
+      "file": "src/compiler/factory/emitHelpers.ts",
+      "sha256": "91b00027e787379b88b6bf7bbf7a0ec8ae57e0d92233e6ddf7f4aa61d90c82ab",
+      "bytes": 69204
+    },
+    {
+      "file": "src/compiler/factory/emitNode.ts",
+      "sha256": "528071d2a75956b4cc578b5d3a2344190d9a2ab5c31b56adfd84c10a2ce045cd",
+      "bytes": 12800
+    },
+    {
+      "file": "src/compiler/factory/nodeChildren.ts",
+      "sha256": "bdca6c9b147ecfbe4ec11fc9c09ab5ceeba04e94626ee470d7256d5698c6cf86",
+      "bytes": 2252
+    },
+    {
+      "file": "src/compiler/factory/nodeConverters.ts",
+      "sha256": "0a602b0797c341c03a053276f778d7b245fc7cd8160c0a04e8c96fcf67ddcf19",
+      "bytes": 7275
+    },
+    {
+      "file": "src/compiler/factory/nodeFactory.ts",
+      "sha256": "bfac415cab939ce57ea75c724782afd5ab264d10c7188605aaef7485be0569de",
+      "bytes": 336651
+    },
+    {
+      "file": "src/compiler/factory/nodeTests.ts",
+      "sha256": "76e4df7ca846537338824b3e797f41bea972414342cc50af974143e6ff00dd9d",
+      "bytes": 37936
+    },
+    {
+      "file": "src/compiler/factory/parenthesizerRules.ts",
+      "sha256": "5da381eef0cade341e64da61e13adc45f5757234d0ad02c99a4f03047aa16c09",
+      "bytes": 34072
+    },
+    {
+      "file": "src/compiler/factory/utilities.ts",
+      "sha256": "afb40be9808cda5f7699bc77fa142c3ce8e174f6bd94cda5ba393b314e7f4230",
+      "bytes": 76635
+    },
+    {
+      "file": "src/compiler/factory/utilitiesPublic.ts",
+      "sha256": "c76d8d62b84fbd66bc900772b450dd80653dfe4e66791d5fb26c01f3ea636352",
+      "bytes": 2131
+    },
+    {
+      "file": "src/compiler/hostErrors.ts",
+      "sha256": "f4cfdc4cacfdaea6a3d2899b30ceb33974acfe02d2542549e993e4dfd8cb856c",
+      "bytes": 758
+    },
+    {
+      "file": "src/compiler/moduleNameResolver.ts",
+      "sha256": "e1a374f124a8d33d656059239217d058cbcb8ed501ac4ff76047e750847e2dbd",
+      "bytes": 181882
+    },
+    {
+      "file": "src/compiler/moduleSpecifiers.ts",
+      "sha256": "c47362305fba2170d24acf89f8e4ab97949639510fe4f4e9849a7a27ddeefccd",
+      "bytes": 80070
+    },
+    {
+      "file": "src/compiler/parser.ts",
+      "sha256": "f45d616292f311841069bd036008dc9630c3a51f3da3e0789b1701f8478542af",
+      "bytes": 541346
+    },
+    {
+      "file": "src/compiler/path.ts",
+      "sha256": "eda8a859be0cf125e8d7de639d86aeb6d105d86687a3ceba8f03e5926b044d3b",
+      "bytes": 44302
+    },
+    {
+      "file": "src/compiler/performance.ts",
+      "sha256": "039c61441f42f71a5635372b188cec7c173d6a10adccd9ef44e7d8d2dc72b2e3",
+      "bytes": 6161
+    },
+    {
+      "file": "src/compiler/performanceCore.ts",
+      "sha256": "8b1993ab380a178b24fed0dcc9e7dc312172a3e3be642ee1b533161f792f0dae",
+      "bytes": 3360
+    },
+    {
+      "file": "src/compiler/program.ts",
+      "sha256": "0ed189a95d2204a4c8a0e7bd6602d09cd85e1705ea9495f224905a24f16f3688",
+      "bytes": 271535
+    },
+    {
+      "file": "src/compiler/programDiagnostics.ts",
+      "sha256": "f21e11db92536734d00e4404d895424dc50ddc8cfa1b3a69038e5c331d104fda",
+      "bytes": 21401
+    },
+    {
+      "file": "src/compiler/resolutionCache.ts",
+      "sha256": "78c59ccda17d3a62475b329e59e5ea4bf3d2421968862c84c8135c1eed4bb424",
+      "bytes": 82320
+    },
+    {
+      "file": "src/compiler/scanner.ts",
+      "sha256": "ce1353745d5c22c89aac2d1fe4b2f3f73e4717d933064cede79b866aa1546df2",
+      "bytes": 219806
+    },
+    {
+      "file": "src/compiler/semver.ts",
+      "sha256": "d05533ad8eafcb2f6aa2bb916ed3b84e26484ca8907aefa6e931de97af60ab25",
+      "bytes": 17970
+    },
+    {
+      "file": "src/compiler/sourcemap.ts",
+      "sha256": "75860c5f0528bc731ca49bf01872234981a9932b6a3db78ee4623891b485773f",
+      "bytes": 32291
+    },
+    {
+      "file": "src/compiler/symbolWalker.ts",
+      "sha256": "c5283ccbff1fd935cc97866a4e3672aa805877a09844530814097497c1bad055",
+      "bytes": 8433
+    },
+    {
+      "file": "src/compiler/sys.ts",
+      "sha256": "98e335189c5871ac594dcc71c5d292a8bcb6db8ba49836f69dac3bcb04e39703",
+      "bytes": 86936
+    },
+    {
+      "file": "src/compiler/tracing.ts",
+      "sha256": "b05a3eb580f5bfffb6a91d8acf904fedf974f48ee48da00a1c34ec010c83fa62",
+      "bytes": 15299
+    },
+    {
+      "file": "src/compiler/transformer.ts",
+      "sha256": "16c361fa82114c5eef3824fbe9a6b06f6ab9a9e2b29bf1ba173bfcf6927337e3",
+      "bytes": 30053
+    },
+    {
+      "file": "src/compiler/transformers/classFields.ts",
+      "sha256": "67337f0d2a1b78d8de9776ab5d09e32b09d3424b1339a2de26045d349eb959d8",
+      "bytes": 156729
+    },
+    {
+      "file": "src/compiler/transformers/classThis.ts",
+      "sha256": "c5d8468a61bd39eae079782d57ef4d23653205e5c2c62ba7d7d70345c1e678fd",
+      "bytes": 5565
+    },
+    {
+      "file": "src/compiler/transformers/declarations.ts",
+      "sha256": "fb332d121c3ae8352db17052dd173ea14968951f8cdd3ba9de89e58147ae2bdd",
+      "bytes": 99946
+    },
+    {
+      "file": "src/compiler/transformers/declarations/diagnostics.ts",
+      "sha256": "b1ba366b350ca654bc9b5c627e846bf86dd120a706e2c5edeb500ac28627e24d",
+      "bytes": 47414
+    },
+    {
+      "file": "src/compiler/transformers/destructuring.ts",
+      "sha256": "7a922ef2441bd168ff02f167d6b51f97f3b67969ed49e402978cb15614746092",
+      "bytes": 30894
+    },
+    {
+      "file": "src/compiler/transformers/es2015.ts",
+      "sha256": "b3cd96874cfbdc0655f27e063213873f823f32437e8d747bf4ec13472a559918",
+      "bytes": 231854
+    },
+    {
+      "file": "src/compiler/transformers/es2016.ts",
+      "sha256": "8d1a1b41e2db124d01446b6eddd9c3eda62925cc550ab47c9e527f6aa0d217c7",
+      "bytes": 4519
+    },
+    {
+      "file": "src/compiler/transformers/es2017.ts",
+      "sha256": "a7e509c413a72c05f3c054439d930d5fab25b36ccda29975506d34a01d6b8d6e",
+      "bytes": 50205
+    },
+    {
+      "file": "src/compiler/transformers/es2018.ts",
+      "sha256": "c9b798b0542a7f72877004143b8a768e808b9508ef7887b33beb6012a8ab7239",
+      "bytes": 69990
+    },
+    {
+      "file": "src/compiler/transformers/es2019.ts",
+      "sha256": "ae15589fd2633e2767f722ddf80c74169a035b3e06cceafda6c97cd75e202293",
+      "bytes": 1563
+    },
+    {
+      "file": "src/compiler/transformers/es2020.ts",
+      "sha256": "664b313db73f4845247c950dbcdaf8c0a90d92cdd56d7f389f1b81a782a1dd4a",
+      "bytes": 13128
+    },
+    {
+      "file": "src/compiler/transformers/es2021.ts",
+      "sha256": "e741ba5654e243cd2d94e4d9c000a8dbdc83f5cca6d1cad6a0d4cb8b75825684",
+      "bytes": 4144
+    },
+    {
+      "file": "src/compiler/transformers/esDecorators.ts",
+      "sha256": "572d9ed4aaffe4a4da286122477601fe45ad2cf9354025333b3cabe538e6f7b0",
+      "bytes": 127406
+    },
+    {
+      "file": "src/compiler/transformers/esnext.ts",
+      "sha256": "112a60322a57f7a60835cd1a3e5206556def471d9faae7284ecfe10885d7c12e",
+      "bytes": 32654
+    },
+    {
+      "file": "src/compiler/transformers/generators.ts",
+      "sha256": "503850d4681b64d51f5ee6cc3c52e1d0ebd6828870f1bd4f4de3cdc0eb3eccd3",
+      "bytes": 124532
+    },
+    {
+      "file": "src/compiler/transformers/jsx.ts",
+      "sha256": "a6152ff5eb16419db8e22e03f942b797e3ed828d095fc74f088d66c11b09f295",
+      "bytes": 36259
+    },
+    {
+      "file": "src/compiler/transformers/legacyDecorators.ts",
+      "sha256": "bf5969c47028f08ffbc4388dde8dbb3c949e0f495ec0bb468175ae4666c260b0",
+      "bytes": 36740
+    },
+    {
+      "file": "src/compiler/transformers/module/esnextAnd2015.ts",
+      "sha256": "82d4f952ddda7492e07921cca7e31f6147ef2d6c4b8447d10fc614c38c32bc52",
+      "bytes": 18691
+    },
+    {
+      "file": "src/compiler/transformers/module/impliedNodeFormatDependent.ts",
+      "sha256": "eb48d82834522a78c7b80cf768e0874e17a9f4dc819f673e5ec63c49fdb43d26",
+      "bytes": 3750
+    },
+    {
+      "file": "src/compiler/transformers/module/module.ts",
+      "sha256": "a0fb602c1403c3c6f13c398360ec6bb0adfeb8592975e5574cb6bdfb694abe8b",
+      "bytes": 111833
+    },
+    {
+      "file": "src/compiler/transformers/module/system.ts",
+      "sha256": "cdcd5353acc1d86e687e96fefc4793cc0e862c5bbf84e5ab30b80c2f7997600e",
+      "bytes": 85511
+    },
+    {
+      "file": "src/compiler/transformers/namedEvaluation.ts",
+      "sha256": "deafcefca9d2923da8a177dc0d47f898f5ba652b8c54bca512df91335c032950",
+      "bytes": 22318
+    },
+    {
+      "file": "src/compiler/transformers/taggedTemplate.ts",
+      "sha256": "54dce15f9a14c4732701706abac28c4fc77ed2eab6496b931bf0429d1df22bdb",
+      "bytes": 5489
+    },
+    {
+      "file": "src/compiler/transformers/ts.ts",
+      "sha256": "58634091ee8e9c336671b0c457b91d1cbdb71ef37eccfa556aedc07192743868",
+      "bytes": 116761
+    },
+    {
+      "file": "src/compiler/transformers/typeSerializer.ts",
+      "sha256": "a75c306ae73a703900dac43f02767a40bd60dbae5f453af753406ea2169666dd",
+      "bytes": 28972
+    },
+    {
+      "file": "src/compiler/transformers/utilities.ts",
+      "sha256": "f839fdc1603f18a8b22e8a0bc8f02f373299d78a872938216573af92348c3dc3",
+      "bytes": 35851
+    },
+    {
+      "file": "src/compiler/tsbuild.ts",
+      "sha256": "0bcbfbb3c4a9ed2dd502417150f730ed84704486982fed8b10b524206dcb716f",
+      "bytes": 5332
+    },
+    {
+      "file": "src/compiler/tsbuildPublic.ts",
+      "sha256": "c8cc663fe62e206dd53ec96692e2b50a60a7bb37c928d49bb2f817700ac4b654",
+      "bytes": 115008
+    },
+    {
+      "file": "src/compiler/types.ts",
+      "sha256": "13253d7b128f6a7fda40a52f603e69fcdd2b0786e426c3c5cd4d9bc729ff4609",
+      "bytes": 493977
+    },
+    {
+      "file": "src/compiler/utilities.ts",
+      "sha256": "e5bd0c0a49b3118b8e8fd2c0373c80e32b9607b85379eca38c196b6b71fc38bf",
+      "bytes": 515385
+    },
+    {
+      "file": "src/compiler/utilitiesPublic.ts",
+      "sha256": "ede1a3cc3ed3acbecc692d2097ac8cd01553bf4ab7e5e265cccda593ffb89c1f",
+      "bytes": 104648
+    },
+    {
+      "file": "src/compiler/visitorPublic.ts",
+      "sha256": "ef2085cb0d14c6dbd475644daf7388cf7ec4f64c0b6a5570ba79dd2ffd72b8d5",
+      "bytes": 88114
+    },
+    {
+      "file": "src/compiler/watch.ts",
+      "sha256": "f307d503114bddb404dcd96bf9e4f53f0c341d722da09959ebb6f1cd4cd93e99",
+      "bytes": 45864
+    },
+    {
+      "file": "src/compiler/watchPublic.ts",
+      "sha256": "54741334bd8c649da5f5b6828da0763aea0c5ad6690f1c509d9adba2bfe28af1",
+      "bytes": 61966
+    },
+    {
+      "file": "src/compiler/watchUtilities.ts",
+      "sha256": "0b21eff41ad63e993f7b676f56ddf79bd4606fa232ce33d9cd68239a1f49bd93",
+      "bytes": 35634
+    },
+    {
+      "file": "src/tsc/_namespaces/ts.ts",
+      "sha256": "4b028aefe422d79561899f8b5720d88dcaa6564f9051f54dcfe4b025b362db15",
+      "bytes": 104
+    },
+    {
+      "file": "src/tsc/tsc.ts",
+      "sha256": "fc07517d814068f7225dd8a7e93931f7d4e4ade9d0d63583e7a61b98285cc332",
+      "bytes": 608
+    }
+  ],
+  "sites": [
+    {
+      "kind": "maybeBind_call",
+      "site": "src/compiler/binder.ts:1968:36",
+      "unit": "src/compiler/binder.ts:1966:9",
+      "expression": "maybeBind(left)",
+      "line": "                const maybeBound = maybeBind(left);"
+    },
+    {
+      "kind": "maybeBind_call",
+      "site": "src/compiler/binder.ts:1984:36",
+      "unit": "src/compiler/binder.ts:1982:9",
+      "expression": "maybeBind(right)",
+      "line": "                const maybeBound = maybeBind(right);"
+    },
+    {
+      "kind": "bind",
+      "site": "src/compiler/builder.ts:1750:30",
+      "unit": "src/compiler/builder.ts:1743:5",
+      "expression": "host.writeFile?.bind(host)",
+      "line": "                writeFile || host.writeFile?.bind(host),"
+    },
+    {
+      "kind": "bind",
+      "site": "src/compiler/builder.ts:1838:34",
+      "unit": "src/compiler/builder.ts:1764:5",
+      "expression": "host.writeFile?.bind(host)",
+      "line": "                    writeFile || host.writeFile?.bind(host),"
+    },
+    {
+      "kind": "bind",
+      "site": "src/compiler/builder.ts:1937:78",
+      "unit": "src/compiler/builder.ts:1932:5",
+      "expression": "host.writeFile?.bind(host)",
+      "line": "        if (!getEmitDeclarations(state.compilerOptions)) return writeFile || host.writeFile?.bind(host);"
+    },
+    {
+      "kind": "bind",
+      "site": "src/compiler/checker.ts:54284:26",
+      "unit": "src/compiler/checker.ts:54280:1",
+      "expression": "host.getSymlinkCache?.bind(host)",
+      "line": "        getSymlinkCache: host.getSymlinkCache?.bind(host),"
+    },
+    {
+      "kind": "bind",
+      "site": "src/compiler/checker.ts:54295:40",
+      "unit": "src/compiler/checker.ts:54280:1",
+      "expression": "host.getGlobalTypingsCacheLocation?.bind(host)",
+      "line": "        getGlobalTypingsCacheLocation: host.getGlobalTypingsCacheLocation?.bind(host),"
+    },
+    {
+      "kind": "bind",
+      "site": "src/compiler/core.ts:1520:12",
+      "unit": "src/compiler/core.ts:1519:1",
+      "expression": "fn?.bind(obj)",
+      "line": "    return fn?.bind(obj);"
+    },
+    {
+      "kind": "bind",
+      "site": "src/compiler/program.ts:495:21",
+      "unit": "src/compiler/program.ts:449:1",
+      "expression": "system.createHash?.bind(system)",
+      "line": "        createHash: system.createHash?.bind(system),"
+    },
+    {
+      "kind": "bind",
+      "site": "src/compiler/program.ts:1605:42",
+      "unit": "src/compiler/program.ts:1516:1",
+      "expression": "host.resolveModuleNameLiterals.bind(host)",
+      "line": "        actualResolveModuleNamesWorker = host.resolveModuleNameLiterals.bind(host);"
+    },
+    {
+      "kind": "bind",
+      "site": "src/compiler/program.ts:1651:58",
+      "unit": "src/compiler/program.ts:1516:1",
+      "expression": "host.resolveTypeReferenceDirectiveReferences.bind(host)",
+      "line": "        actualResolveTypeReferenceDirectiveNamesWorker = host.resolveTypeReferenceDirectiveReferences.bind(host);"
+    },
+    {
+      "kind": "bind",
+      "site": "src/compiler/program.ts:1687:32",
+      "unit": "src/compiler/program.ts:1516:1",
+      "expression": "host.resolveLibrary.bind(host)",
+      "line": "        actualResolveLibrary = host.resolveLibrary.bind(host);"
+    },
+    {
+      "kind": "bind",
+      "site": "src/compiler/program.ts:1735:22",
+      "unit": "src/compiler/program.ts:1516:1",
+      "expression": "host.readFile.bind(host)",
+      "line": "    const readFile = host.readFile.bind(host) as typeof host.readFile;"
+    },
+    {
+      "kind": "bind",
+      "site": "src/compiler/program.ts:1951:19",
+      "unit": "src/compiler/program.ts:1516:1",
+      "expression": "host.realpath?.bind(host)",
+      "line": "        realpath: host.realpath?.bind(host),"
+    },
+    {
+      "kind": "bind",
+      "site": "src/compiler/program.ts:1957:40",
+      "unit": "src/compiler/program.ts:1516:1",
+      "expression": "host.getGlobalTypingsCacheLocation?.bind(host)",
+      "line": "        getGlobalTypingsCacheLocation: host.getGlobalTypingsCacheLocation?.bind(host),"
+    },
+    {
+      "kind": "bind",
+      "site": "src/compiler/program.ts:2627:23",
+      "unit": "src/compiler/program.ts:2599:5",
+      "expression": "host.realpath?.bind(host)",
+      "line": "            realpath: host.realpath?.bind(host),"
+    },
+    {
+      "kind": "bind",
+      "site": "src/compiler/program.ts:2633:25",
+      "unit": "src/compiler/program.ts:2599:5",
+      "expression": "host.createHash?.bind(host)",
+      "line": "            createHash: host.createHash?.bind(host),"
+    },
+    {
+      "kind": "bind",
+      "site": "src/compiler/program.ts:2635:20",
+      "unit": "src/compiler/program.ts:2599:5",
+      "expression": "host.trace?.bind(host)",
+      "line": "            trace: host.trace?.bind(host),"
+    },
+    {
+      "kind": "bind",
+      "site": "src/compiler/program.ts:5115:26",
+      "unit": "src/compiler/program.ts:5104:1",
+      "expression": "directoryStructureHost.directoryExists?.bind(directoryStructureHost)",
+      "line": "        directoryExists: directoryStructureHost.directoryExists?.bind(directoryStructureHost),"
+    },
+    {
+      "kind": "bind",
+      "site": "src/compiler/program.ts:5116:25",
+      "unit": "src/compiler/program.ts:5104:1",
+      "expression": "directoryStructureHost.getDirectories?.bind(directoryStructureHost)",
+      "line": "        getDirectories: directoryStructureHost.getDirectories?.bind(directoryStructureHost),"
+    },
+    {
+      "kind": "bind",
+      "site": "src/compiler/program.ts:5117:19",
+      "unit": "src/compiler/program.ts:5104:1",
+      "expression": "directoryStructureHost.realpath?.bind(directoryStructureHost)",
+      "line": "        realpath: directoryStructureHost.realpath?.bind(directoryStructureHost),"
+    },
+    {
+      "kind": "bind",
+      "site": "src/compiler/tsbuildPublic.ts:301:16",
+      "unit": "src/compiler/tsbuildPublic.ts:294:1",
+      "expression": "system.now?.bind(system)",
+      "line": "    host.now = system.now?.bind(system); // For testing"
+    },
+    {
+      "kind": "bind",
+      "site": "src/compiler/tsbuildPublic.ts:437:46",
+      "unit": "src/compiler/tsbuildPublic.ts:428:1",
+      "expression": "host.resolveModuleNameLiterals?.bind(host)",
+      "line": "    compilerHost.resolveModuleNameLiterals = host.resolveModuleNameLiterals?.bind(host);"
+    },
+    {
+      "kind": "bind",
+      "site": "src/compiler/tsbuildPublic.ts:438:60",
+      "unit": "src/compiler/tsbuildPublic.ts:428:1",
+      "expression": "host.resolveTypeReferenceDirectiveReferences?.bind(host)",
+      "line": "    compilerHost.resolveTypeReferenceDirectiveReferences = host.resolveTypeReferenceDirectiveReferences?.bind(host);"
+    },
+    {
+      "kind": "bind",
+      "site": "src/compiler/tsbuildPublic.ts:439:35",
+      "unit": "src/compiler/tsbuildPublic.ts:428:1",
+      "expression": "host.resolveLibrary?.bind(host)",
+      "line": "    compilerHost.resolveLibrary = host.resolveLibrary?.bind(host);"
+    },
+    {
+      "kind": "bind",
+      "site": "src/compiler/tsbuildPublic.ts:440:39",
+      "unit": "src/compiler/tsbuildPublic.ts:428:1",
+      "expression": "host.resolveModuleNames?.bind(host)",
+      "line": "    compilerHost.resolveModuleNames = host.resolveModuleNames?.bind(host);"
+    },
+    {
+      "kind": "bind",
+      "site": "src/compiler/tsbuildPublic.ts:441:51",
+      "unit": "src/compiler/tsbuildPublic.ts:428:1",
+      "expression": "host.resolveTypeReferenceDirectives?.bind(host)",
+      "line": "    compilerHost.resolveTypeReferenceDirectives = host.resolveTypeReferenceDirectives?.bind(host);"
+    },
+    {
+      "kind": "bind",
+      "site": "src/compiler/tsbuildPublic.ts:442:45",
+      "unit": "src/compiler/tsbuildPublic.ts:428:1",
+      "expression": "host.getModuleResolutionCache?.bind(host)",
+      "line": "    compilerHost.getModuleResolutionCache = host.getModuleResolutionCache?.bind(host);"
+    },
+    {
+      "kind": "bind",
+      "site": "src/compiler/tsbuildPublic.ts:499:16",
+      "unit": "src/compiler/tsbuildPublic.ts:428:1",
+      "expression": "host.trace?.bind(host)",
+      "line": "        write: host.trace?.bind(host),"
+    },
+    {
+      "kind": "bind",
+      "site": "src/compiler/watch.ts:676:20",
+      "unit": "src/compiler/watch.ts:672:1",
+      "expression": "system.watchFile?.bind(system)",
+      "line": "        watchFile: system.watchFile?.bind(system) || returnNoopFileWatcher,"
+    },
+    {
+      "kind": "bind",
+      "site": "src/compiler/watch.ts:677:25",
+      "unit": "src/compiler/watch.ts:672:1",
+      "expression": "system.watchDirectory?.bind(system)",
+      "line": "        watchDirectory: system.watchDirectory?.bind(system) || returnNoopFileWatcher,"
+    },
+    {
+      "kind": "bind",
+      "site": "src/compiler/watch.ts:678:21",
+      "unit": "src/compiler/watch.ts:672:1",
+      "expression": "system.setTimeout?.bind(system)",
+      "line": "        setTimeout: system.setTimeout?.bind(system) || noop,"
+    },
+    {
+      "kind": "bind",
+      "site": "src/compiler/watch.ts:679:23",
+      "unit": "src/compiler/watch.ts:672:1",
+      "expression": "system.clearTimeout?.bind(system)",
+      "line": "        clearTimeout: system.clearTimeout?.bind(system) || noop,"
+    },
+    {
+      "kind": "bind",
+      "site": "src/compiler/watch.ts:760:32",
+      "unit": "src/compiler/watch.ts:753:1",
+      "expression": "host.getDefaultLibLocation?.bind(host)",
+      "line": "        getDefaultLibLocation: host.getDefaultLibLocation?.bind(host),"
+    },
+    {
+      "kind": "bind",
+      "site": "src/compiler/watch.ts:773:16",
+      "unit": "src/compiler/watch.ts:753:1",
+      "expression": "host.trace?.bind(host)",
+      "line": "        trace: host.trace?.bind(host),"
+    },
+    {
+      "kind": "bind",
+      "site": "src/compiler/watch.ts:774:26",
+      "unit": "src/compiler/watch.ts:753:1",
+      "expression": "directoryStructureHost.directoryExists?.bind(directoryStructureHost)",
+      "line": "        directoryExists: directoryStructureHost.directoryExists?.bind(directoryStructureHost),"
+    },
+    {
+      "kind": "bind",
+      "site": "src/compiler/watch.ts:775:25",
+      "unit": "src/compiler/watch.ts:753:1",
+      "expression": "directoryStructureHost.getDirectories?.bind(directoryStructureHost)",
+      "line": "        getDirectories: directoryStructureHost.getDirectories?.bind(directoryStructureHost),"
+    },
+    {
+      "kind": "bind",
+      "site": "src/compiler/watch.ts:776:19",
+      "unit": "src/compiler/watch.ts:753:1",
+      "expression": "host.realpath?.bind(host)",
+      "line": "        realpath: host.realpath?.bind(host),"
+    },
+    {
+      "kind": "bind",
+      "site": "src/compiler/watch.ts:777:33",
+      "unit": "src/compiler/watch.ts:753:1",
+      "expression": "host.getEnvironmentVariable?.bind(host)",
+      "line": "        getEnvironmentVariable: host.getEnvironmentVariable?.bind(host) || (() => \"\"),"
+    },
+    {
+      "kind": "bind",
+      "site": "src/compiler/watch.ts:778:21",
+      "unit": "src/compiler/watch.ts:753:1",
+      "expression": "host.createHash?.bind(host)",
+      "line": "        createHash: host.createHash?.bind(host),"
+    },
+    {
+      "kind": "bind",
+      "site": "src/compiler/watch.ts:779:24",
+      "unit": "src/compiler/watch.ts:753:1",
+      "expression": "host.readDirectory?.bind(host)",
+      "line": "        readDirectory: host.readDirectory?.bind(host),"
+    },
+    {
+      "kind": "bind",
+      "site": "src/compiler/watch.ts:855:19",
+      "unit": "src/compiler/watch.ts:842:1",
+      "expression": "system.realpath?.bind(system)",
+      "line": "        realpath: system.realpath?.bind(system),"
+    },
+    {
+      "kind": "bind",
+      "site": "src/compiler/watch.ts:856:33",
+      "unit": "src/compiler/watch.ts:842:1",
+      "expression": "system.getEnvironmentVariable?.bind(system)",
+      "line": "        getEnvironmentVariable: system.getEnvironmentVariable?.bind(system),"
+    },
+    {
+      "kind": "bind",
+      "site": "src/compiler/watch.ts:860:21",
+      "unit": "src/compiler/watch.ts:842:1",
+      "expression": "system.createHash?.bind(system)",
+      "line": "        createHash: system.createHash?.bind(system),"
+    },
+    {
+      "kind": "bind",
+      "site": "src/compiler/watch.ts:863:14",
+      "unit": "src/compiler/watch.ts:842:1",
+      "expression": "system.now?.bind(system)",
+      "line": "        now: system.now?.bind(system),"
+    },
+    {
+      "kind": "bind",
+      "site": "src/compiler/watchPublic.ts:124:23",
+      "unit": "src/compiler/watchPublic.ts:122:1",
+      "expression": "system.createHash?.bind(system)",
+      "line": "    host.createHash = system.createHash?.bind(system);"
+    },
+    {
+      "kind": "bind",
+      "site": "src/compiler/watchPublic.ts:505:56",
+      "unit": "src/compiler/watchPublic.ts:419:1",
+      "expression": "host.useSourceOfProjectReferenceRedirect?.bind(host)",
+      "line": "    compilerHost.useSourceOfProjectReferenceRedirect = host.useSourceOfProjectReferenceRedirect?.bind(host);"
+    },
+    {
+      "kind": "bind",
+      "site": "src/compiler/watchPublic.ts:528:46",
+      "unit": "src/compiler/watchPublic.ts:419:1",
+      "expression": "host.resolveModuleNameLiterals?.bind(host)",
+      "line": "    compilerHost.resolveModuleNameLiterals = host.resolveModuleNameLiterals?.bind(host);"
+    },
+    {
+      "kind": "bind",
+      "site": "src/compiler/watchPublic.ts:529:39",
+      "unit": "src/compiler/watchPublic.ts:419:1",
+      "expression": "host.resolveModuleNames?.bind(host)",
+      "line": "    compilerHost.resolveModuleNames = host.resolveModuleNames?.bind(host);"
+    },
+    {
+      "kind": "bind",
+      "site": "src/compiler/watchPublic.ts:531:50",
+      "unit": "src/compiler/watchPublic.ts:419:1",
+      "expression": "resolutionCache.resolveModuleNameLiterals.bind(resolutionCache)",
+      "line": "        compilerHost.resolveModuleNameLiterals = resolutionCache.resolveModuleNameLiterals.bind(resolutionCache);"
+    },
+    {
+      "kind": "bind",
+      "site": "src/compiler/watchPublic.ts:533:60",
+      "unit": "src/compiler/watchPublic.ts:419:1",
+      "expression": "host.resolveTypeReferenceDirectiveReferences?.bind(host)",
+      "line": "    compilerHost.resolveTypeReferenceDirectiveReferences = host.resolveTypeReferenceDirectiveReferences?.bind(host);"
+    },
+    {
+      "kind": "bind",
+      "site": "src/compiler/watchPublic.ts:534:51",
+      "unit": "src/compiler/watchPublic.ts:419:1",
+      "expression": "host.resolveTypeReferenceDirectives?.bind(host)",
+      "line": "    compilerHost.resolveTypeReferenceDirectives = host.resolveTypeReferenceDirectives?.bind(host);"
+    },
+    {
+      "kind": "bind",
+      "site": "src/compiler/watchPublic.ts:536:64",
+      "unit": "src/compiler/watchPublic.ts:419:1",
+      "expression": "resolutionCache.resolveTypeReferenceDirectiveReferences.bind(resolutionCache)",
+      "line": "        compilerHost.resolveTypeReferenceDirectiveReferences = resolutionCache.resolveTypeReferenceDirectiveReferences.bind(resolutionCache);"
+    },
+    {
+      "kind": "bind",
+      "site": "src/compiler/watchPublic.ts:539:9",
+      "unit": "src/compiler/watchPublic.ts:419:1",
+      "expression": "resolutionCache.resolveLibrary.bind(resolutionCache)",
+      "line": "        resolutionCache.resolveLibrary.bind(resolutionCache) :"
+    },
+    {
+      "kind": "bind",
+      "site": "src/compiler/watchPublic.ts:540:9",
+      "unit": "src/compiler/watchPublic.ts:419:1",
+      "expression": "host.resolveLibrary.bind(host)",
+      "line": "        host.resolveLibrary.bind(host);"
+    },
+    {
+      "kind": "bind",
+      "site": "src/compiler/watchPublic.ts:542:9",
+      "unit": "src/compiler/watchPublic.ts:419:1",
+      "expression": "host.getModuleResolutionCache?.bind(host)",
+      "line": "        host.getModuleResolutionCache?.bind(host) :"
+    },
+    {
+      "kind": "bind",
+      "site": "src/compiler/watchPublic.ts:548:9",
+      "unit": "src/compiler/watchPublic.ts:419:1",
+      "expression": "host.hasInvalidatedResolutions?.bind(host)",
+      "line": "        host.hasInvalidatedResolutions?.bind(host) || returnTrue :"
+    },
+    {
+      "kind": "bind",
+      "site": "src/compiler/watchPublic.ts:551:9",
+      "unit": "src/compiler/watchPublic.ts:419:1",
+      "expression": "host.hasInvalidatedLibResolutions?.bind(host)",
+      "line": "        host.hasInvalidatedLibResolutions?.bind(host) || returnTrue :"
+    }
+  ]
+}

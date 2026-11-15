@@ -6,7 +6,7 @@
 
 **Control passes: head has 1 new-bind stop; base has 0 bind-check stops.** Both have known reach to `seen_value`: **2 declared parameters / 1 bound-type parameter**. Whole-program `opaqueCalls=true`; no projection is needed for this direct reach, so it remains known. The head stops on it. A known reach with extra parameters is therefore not automatically an unblocked wrong answer.
 
-**tsc coverage so far: 1 production roots attempted; 0 roots reached the whole-program seam; 0 distinct bind sites observed.** These root attempts are a partial reachability fallback, not the requested all-unit seam. An early production stop leaves all later bind sites uncovered; their counts and reach are **unknown**, not zero.
+**tsc coverage so far: 2 production roots attempted; 0 roots reached the whole-program seam; 0 distinct bind sites observed.** These root attempts are a partial reachability fallback, not the requested all-unit seam. An early production stop leaves all later bind sites uncovered; their counts and reach are **unknown**, not zero.
 
 ### (a) Sites where the head check fires
 
@@ -21,6 +21,7 @@ No tsc sites established in the covered seam observations. All uncovered sites r
 | Root | Base outcome | Head outcome | Head seam reached | Observed bind sites |
 | --- | --- | --- | ---: | ---: |
 | core.ts | Refused src/compiler/sys.ts:1385:31 a method read as a value (writeFile would lose its object, and this with it) | Refused src/compiler/sys.ts:1385:31 a method read as a value (writeFile would lose its object, and this with it) | 0 | 0 |
+| builder.ts | Refused src/compiler/sys.ts:1385:31 a method read as a value (writeFile would lose its object, and this with it) | Refused src/compiler/sys.ts:1385:31 a method read as a value (writeFile would lose its object, and this with it) | 0 | 0 |
 
 [Seam method, limits and exact instrumentation](SEAM-METHOD.md). [Control records](SEAM-CONTROL.json). [Root-attempt summaries](seam-roots.json). [All source bind sites and explicit coverage](BIND-SITES.md).
 
@@ -68,6 +69,8 @@ Raw files remain in scratch. [receipts.json](receipts.json) gives every complete
 | `/workspace/bind-extra-parameters-scratch/results/full-sys.ts/head.jsonl` | 606190 | `e0adf0696cbd052e98b7742c5398293bf898b9dc1e41cc7eebe4b6f055cfde87` |
 | `/workspace/bind-extra-parameters-scratch/results/seam-control/base.jsonl` | 1486 | `3d637ef6e79e8d53f9084d2b57f493c2f35c23f8108dfa3208850ba0c9fc3651` |
 | `/workspace/bind-extra-parameters-scratch/results/seam-control/head.jsonl` | 1937 | `78a2dc744c486db9150892532df436af47d666787865a0540848d9ddaa201154` |
+| `/workspace/bind-extra-parameters-scratch/results/seam-root-builder.ts/base.jsonl` | 798 | `a7e4cbf94fba7d5faa393b36d2cbd0579c829aab4d097f2030fa2674758f6d96` |
+| `/workspace/bind-extra-parameters-scratch/results/seam-root-builder.ts/head.jsonl` | 798 | `a7e4cbf94fba7d5faa393b36d2cbd0579c829aab4d097f2030fa2674758f6d96` |
 | `/workspace/bind-extra-parameters-scratch/results/seam-root-core.ts/base.jsonl` | 795 | `08a2b32e6029bbbee3b8f891ba7d0e2f90d9e4685a2e8e92c577bae8087f98d5` |
 | `/workspace/bind-extra-parameters-scratch/results/seam-root-core.ts/head.jsonl` | 795 | `08a2b32e6029bbbee3b8f891ba7d0e2f90d9e4685a2e8e92c577bae8087f98d5` |
 | `/workspace/bind-extra-parameters-scratch/base-census` | 37034753 | `6e743e95e82388375ceb361870271932645d08ecacb0233ca0fc2b4413f218f6` |
