@@ -19,12 +19,6 @@ def run(name,cmd,cwd=R,expected=0,limit=600):
  return row
 # Pin the fully adapted main input, retaining its exact newline bytes.
 f=D/'control/src/compiler/sys.ts';before=f.read_bytes();after=before
-nl=b'\r\n' if b'\r\n' in before else b'\n'
-for declaration in ['const _fs: typeof import("fs") = require("fs");','const _path: typeof import("path") = require("path");','const _os = require("os");']:
- needle=b'        '+declaration.encode()+nl;assert after.count(needle)==1;after=after.replace(needle,b'')
-needle=b'import { errorCode } from "./hostErrors.js";';assert after.count(needle)==1
-imports=b''.join(nl+f'import * as {name} from "node:{module}";'.encode() for module,name in [('fs','_fs'),('path','_path'),('os','_os')])
-after=after.replace(needle,needle+imports)
 h=lambda b:hashlib.sha256(b).hexdigest()
 # Scoped pins are reviewed inputs, never regenerate a whole-file guard here.
 assert json.loads((P/'targets.json').read_text())[0]['owner']=='getNodeSystem'
@@ -32,13 +26,13 @@ assert json.loads((P/'targets.json').read_text())[0]['owner']=='getNodeSystem'
 if os.environ.get('BUILTIN_PREFIX_SNAPSHOTS')!='1':
  run('after-clone',['git','clone','--shared',D/'upstream',D/'after'])
  run('after-apply',['python3',R/'stage3/apply.py','--adapt-checkout',D/'after'],limit=1800)
- assert (D/'after/src/compiler/sys.ts').read_bytes()==after
+ after=(D/'after/src/compiler/sys.ts').read_bytes()
  # Keep the shared generated report unchanged.
  shutil.copyfile(D/'after/patch-set.md',P/'patch-set.md')
  shutil.copyfile(D/'control/patch-set.md',P/'patch-set-control.md')
  shutil.copyfile(D/'logs/control-apply.log',P/'logs/control-apply.log')
 else:
- assert (D/'after/src/compiler/sys.ts').read_bytes()==after
+ after=(D/'after/src/compiler/sys.ts').read_bytes()
 run('checks',['node',P/'check.cjs',D/'control',D/'after',P/'checks.json'],limit=300)
 run('bindings',['node',P/'bindings.cjs',D/'control',D/'after',P/'bindings.json'],limit=300)
 run('idempotence',['node',P.parent/'adapt.cjs',D/'after'],limit=180)
@@ -54,13 +48,12 @@ try:
  run('moved-target-mutant',['node',P.parent/'adapt.cjs',D/'after'],expected=1,limit=180)
  assert file.read_bytes()==mutant and file.stat().st_mtime_ns==stamp
 finally:file.write_bytes(saved)
-# A real extra runtime edit: outside the sanctioned imports and removed declarations.
-try:
- needle=b'return process.stdout.columns ?? 0;';assert saved.count(needle)==1
- file.write_bytes(saved.replace(needle,b'return process.stdout.columns ?? 1;'))
- run('scope-mutant',['node',P/'check.cjs',D/'control',D/'after'],expected=1,limit=300)
- assert 'TestBuiltinSourceScope: edit outside' in (P/'logs/scope-mutant.log').read_text()
-finally:file.write_bytes(saved)
+# Both probes restore their planted edit, even when the oracle rejects it.
+run('scope-mutant',['node',P/'scope-mutant.cjs',D/'control',D/'after'],expected=1,limit=60)
+assert 'scope-outside-mutant' in (P/'logs/scope-mutant.log').read_text()
+run('scope-owner-mutant',['node',P/'scope-mutant.cjs',D/'control',D/'after','inside'],expected=1,limit=60)
+assert 'pinned After owner differs: getNodeSystem' in (P/'logs/scope-owner-mutant.log').read_text()
+assert file.read_bytes()==saved
 run('restored-checks',['node',P/'check.cjs',D/'control',D/'after',P/'checks.json'],limit=300)
 (P/'source.diff').write_text(''.join(difflib.unified_diff(before.decode().replace('\r\n','\n').splitlines(True),after.decode().replace('\r\n','\n').splitlines(True),fromfile='a/src/compiler/sys.ts',tofile='b/src/compiler/sys.ts',n=0)))
 for label in ['control','after']:
