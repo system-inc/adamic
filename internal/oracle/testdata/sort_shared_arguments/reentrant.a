@@ -1,0 +1,17 @@
+// The witness for the shared argument array (#367nnz2): each comparison of the outer sort runs a
+// second adamicSort before it answers, with a closure comparator of its own that captures the outer
+// comparator's left, and the outer comparator reads its left and right after that sort returns. A
+// closure that read the pair from values after a call, rather than from the copies its entry makes,
+// would read a pair the inner sort had written.
+const offsets = [9, 4, 7];
+const outer = [30, 10, 20, 50, 40].slice().sort((left: number, right: number) => {
+	const inner = offsets.slice().sort((first: number, second: number) => left > 0 ? first - second : second - first);
+	const smallest = inner[0] ?? 0;
+	return smallest + left - (smallest + right);
+});
+console.log(outer.join(','));
+const words = ['ccc', 'a', 'bb'].slice().sort((left: string, right: string) => {
+	const lengths = [left.length, right.length].sort((first: number, second: number) => second - first);
+	return (lengths[0] ?? 0) * (left.length - right.length);
+});
+console.log(words.join(','));
