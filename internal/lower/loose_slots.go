@@ -232,10 +232,11 @@ var looseCaughtNames = map[string]bool{"reject": true, "throw": true, "abort": t
 //
 // The narrowing is sound today because no road loads a program's reference into a caught value: seven
 // older stops hold every such road shut (Language on #kaz4pk8 at 03:21Z, J-4dyvf5x, J-212xdwk and
-// J-n1gttw4). They are an Error subclass ("a computed class base"), new Error with options, a write to an
-// Error's cause ("writing a possibly absent optional own field"), a non-Error throw, a non-Error
-// rejection ("Promise rejection with a non-Error"), AggregateError (stopped as a non-Error throw), and a
-// host error whose fields hold program values. Each of those stops points back here. A head that lifts any
+// J-n1gttw4). They are an Error subclass ("a base that isn't a declared class", or "a computed class base"
+// for a base written as an expression), new Error with options, a write to an Error's cause ("writing a
+// possibly absent optional own field"), a non-Error throw, a non-Error rejection ("Promise rejection with
+// a non-Error"), AggregateError (stopped as a non-Error throw), and a host error whose fields hold program
+// values. Each of those stops points back here. A head that lifts any
 // one reruns Language's u01 to u05 and v01 to v02, this narrowing's stop pins, by the counted build before
 // it submits.
 func (f *cycleFinder) looseCaughtRoad(node *ast.Node) {

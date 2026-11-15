@@ -157,7 +157,7 @@ func TestAsyncRepeatedBindingsLower(t *testing.T) {
 // wall lifts, the value it lets into the thrown value enters H, and the row must stop at the loose-slot
 // stop instead, by the finder's own reach, or go red here.
 var asyncCatchRoads = []struct{ name, wall, source string }{
-	{"a thrown Error subclass holding readers", "a computed class base",
+	{"a thrown Error subclass holding readers", "a base that isn't a declared class",
 		"class Carrier extends Error { readers: (() => string)[] = []; }\nasync function run(): Promise<void> { const readers: (() => string)[] = []; try { const carrier = new Carrier(\"carried\"); carrier.readers = readers; throw carrier; } catch (held) { if (held instanceof Error) { readers.push(() => held.message); } } await Promise.resolve(); console.log(String(readers.length)); }\nawait run();\n"},
 	{"an Error whose cause is readers", "writing a possibly absent optional own field",
 		"async function run(): Promise<void> { const readers: (() => string)[] = []; try { const error = new Error(\"carried\"); error.cause = readers; throw error; } catch (held) { if (held instanceof Error) { readers.push(() => held.message); } } await Promise.resolve(); console.log(String(readers.length)); }\nawait run();\n"},
