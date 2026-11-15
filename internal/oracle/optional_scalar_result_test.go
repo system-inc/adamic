@@ -6,6 +6,17 @@ import (
 	"testing"
 )
 
+// optionalScalarResultPrograms are TestOptionalScalarResults' programs, counted rows of their own, since
+// they're .ts, outside the oracle's fixtures.
+var optionalScalarResultPrograms = []string{"array_local.ts", "map_value.ts", "record_graph.ts", "record_missing.ts", "string_receiver.ts"}
+
+func init() {
+	for _, name := range optionalScalarResultPrograms {
+		path := "internal/oracle/testdata/optional_scalar_result/" + name
+		additionalFixtureCounts = append(additionalFixtureCounts, countCase{path, func(t *testing.T) (string, func() string) { return counted(t, path, false, nil, false, false) }})
+	}
+}
+
 // A library call through ?. whose result is a number or a boolean holds that result as a maybe,
 // since optionalIntrinsic tests the receiver whatever its type says: a record's value read can be
 // missing where the type holds none (#qgthc6g, Language's find on #t5q4prw). Held as the scalar the
@@ -35,7 +46,7 @@ func TestOptionalScalarResults(t *testing.T) {
 		})
 	}
 	// A program lost from the directory must fail here, not shrink the walk.
-	if programs != 5 {
-		t.Fatalf("%d programs in %s, want 5", programs, directory)
+	if programs != len(optionalScalarResultPrograms) {
+		t.Fatalf("%d programs in %s, want the %d optionalScalarResultPrograms counts", programs, directory, len(optionalScalarResultPrograms))
 	}
 }
