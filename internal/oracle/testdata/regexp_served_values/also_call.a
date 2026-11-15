@@ -1,0 +1,5 @@
+interface Maybe { readonly test?: (text: string) => boolean }
+interface Also { readonly test?: (text: string) => boolean }
+const first: Maybe = /a/;
+function run(v: Also): void { console.log(String(v.test?.('xa'))); if (v.test !== undefined) console.log(String(v.test('xa'))); }
+run(first);

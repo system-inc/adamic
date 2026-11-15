@@ -226,6 +226,7 @@ func (l *lowering) destructuringAssignment(pattern *ast.Node, valueNode *ast.Nod
 // not lowered yet.
 func (l *lowering) objectDestructuringAssignment(pattern *ast.Node, valueNode *ast.Node) ([]ir.Statement, error) {
 	destructured := l.checker.GetTypeAtLocation(valueNode)
+	l.recordRegExpServedWhole(pattern, destructured, ir.Property{}, false)
 	if destructured.Flags()&checker.TypeFlagsUnionOrIntersection != 0 {
 		return nil, l.notYet(pattern, "destructuring a union or an intersection into { names }")
 	}

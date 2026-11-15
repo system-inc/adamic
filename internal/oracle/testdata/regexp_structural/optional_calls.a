@@ -1,0 +1,8 @@
+interface Maybe { test?: (text: string) => boolean }
+function run(value: Maybe): void {
+	console.log(String(value.test?.('xa')));
+	if (value.test !== undefined) console.log(String(value.test('xa')));
+}
+run(/a/);
+run({});
+run({ test: (text: string): boolean => text === 'xa' });

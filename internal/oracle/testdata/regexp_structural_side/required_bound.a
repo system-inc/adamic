@@ -1,0 +1,4 @@
+interface Tester { test(text: string): boolean }
+const t: Tester = /a/;
+const f = t.test.bind(t);
+console.log(String(f('xa')));

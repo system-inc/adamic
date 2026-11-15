@@ -1,0 +1,3 @@
+interface Maybe { test?: (text: string) => boolean }
+const t: Maybe = /a/;
+console.log(typeof t.test);

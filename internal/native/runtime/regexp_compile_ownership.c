@@ -7,6 +7,7 @@ static const bool regex_owned_references[] = {false,false,true,true,false,false,
 static const adamic_field_kind regex_owned_kinds[] = {adamic_field_number,adamic_field_number,adamic_field_reference,adamic_field_reference,adamic_field_boolean,adamic_field_boolean,adamic_field_boolean,adamic_field_boolean,adamic_field_boolean,adamic_field_boolean,adamic_field_boolean,adamic_field_boolean,adamic_field_reference};
 static const adamic_shape regex_owned_shape = {13,regex_owned_names,regex_owned_references,&adamic_host_methods,regex_owned_kinds};
 adamic_object *adamic_regex_new_owned(const adamic_regex_program *program,adamic_string *source,adamic_string *flags,adamic_array *storage) {
+    adamic_regex_owned_shape_publish(&regex_owned_shape);
     adamic_object *plain=adamic_regex_new(program,source,flags);
     adamic_object *result=adamic_object_new(&regex_owned_shape);
     memcpy(result->slots,plain->slots,12*sizeof(*result->slots));

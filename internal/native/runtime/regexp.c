@@ -424,6 +424,27 @@ static const bool regex_references[] = {false, false, true,	 true,	false, false,
 										false, false, false, false, false, false};
 static const adamic_field_kind regex_kinds[] = {adamic_field_number, adamic_field_number, adamic_field_reference, adamic_field_reference, adamic_field_boolean, adamic_field_boolean, adamic_field_boolean, adamic_field_boolean, adamic_field_boolean, adamic_field_boolean, adamic_field_boolean, adamic_field_boolean};
 static const adamic_shape regex_shape = {12, regex_names, regex_references, &adamic_host_methods, regex_kinds};
+// Structural views read the prototype, never a synthetic own slot. Dynamic patterns publish
+// their distinct shape by address; a program object with similar field names cannot match it.
+static const void *_Atomic regex_owned_shape_address;
+void adamic_regex_owned_shape_publish(const adamic_shape *shape) {
+    atomic_store_explicit(&regex_owned_shape_address, shape, memory_order_release);
+}
+static bool regex_object(const adamic_object *object) {
+    return object->shape == &regex_shape || object->shape == atomic_load_explicit(&regex_owned_shape_address, memory_order_acquire);
+}
+static adamic_value regex_test_method(adamic_object *self, adamic_value *arguments) {
+    return (adamic_value){.boolean = adamic_regex_test(self, arguments[0].reference)};
+}
+bool adamic_regex_method(const adamic_object *object, const char *name, adamic_method_entry *method) {
+    if (!regex_object(object) || strcmp(name, "test") != 0) return false;
+#ifdef ADAMIC_CLOSURE_CONVENTION
+    *method = (adamic_method_entry){.code = regex_test_method};
+#else
+    *method = regex_test_method;
+#endif
+    return true;
+}
 adamic_object *adamic_regex_new(const adamic_regex_program *program, adamic_string *source,
 								adamic_string *flags) {
 	adamic_object *result = adamic_object_new(&regex_shape);

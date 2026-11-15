@@ -1,0 +1,4 @@
+interface Maybe { test?: (text: string) => boolean }
+const v: Maybe = { test: (text: string): boolean => text === 'a' };
+const f = v.test;
+if (f !== undefined) console.log(String(f('a')));

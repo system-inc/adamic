@@ -1,0 +1,4 @@
+import { parallelMap } from 'adamic';
+interface Maybe { test?: (text: string) => boolean }
+const values: readonly Maybe[] = [/a/, /a/];
+console.log(parallelMap(values, v => String(v.test?.('xa'))).join(','));

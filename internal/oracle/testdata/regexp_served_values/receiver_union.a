@@ -1,0 +1,4 @@
+interface Maybe { readonly test?: (text: string) => boolean }
+const trigger: Maybe = /a/;
+function read(v: RegExp | Maybe): void { const f = v.test; console.log(f === undefined ? 'missing' : 'function'); }
+read(/b/);

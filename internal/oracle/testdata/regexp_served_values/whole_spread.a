@@ -1,0 +1,5 @@
+interface Maybe { readonly test?: (text: string) => boolean }
+const trigger: Maybe = /a/;
+const unrelated = { test: (_text: string): boolean => true };
+const copy = { ...unrelated };
+console.log(String(copy.test('a')));
