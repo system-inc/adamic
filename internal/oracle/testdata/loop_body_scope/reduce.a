@@ -1,0 +1,14 @@
+// reduce with a rest packed in each iteration (#9grybqc): spread's type is admitted by each
+// callback's, so each call collects spread's rest from the accumulator, the element, the index's
+// number and the array. The pack holds the accumulator the call was handed, which the loop lets go
+// of and replaces after the call, so the old one is freed with the pack. Node prints:
+//
+//	string:x;number:1;object:y,z
+//	>ant0bee1cat2dog3
+//	dogcatbeeant<
+const spread = (...items: (string | number | string[])[]): string =>
+	items.map((item) => typeof item + ':' + (Array.isArray(item) ? item.join(',') : String(item))).join(';');
+console.log(spread('x', 1, ['y', 'z']));
+const words = 'ant bee cat dog'.split(' ');
+console.log(words.reduce((total, word, index) => `${total}${word}${index}`, '>'));
+console.log(words.reduce((total, word) => `${word}${total}`, '<'));
