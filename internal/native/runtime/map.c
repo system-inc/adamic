@@ -39,6 +39,29 @@ adamic_map *adamic_map_new(bool string_keys, bool reference_values) {
 	return map;
 }
 
+// A known first table fits its entries; zero keeps the ordinary lazy start.
+adamic_map *adamic_map_new_sized(bool string_keys, bool reference_values, size_t entries) {
+	adamic_map *map = adamic_map_new(string_keys, reference_values);
+	if (entries == 0) {
+		return map;
+	}
+	size_t capacity = 1;
+	while (capacity < entries) {
+		if (capacity > SIZE_MAX / 2) {
+			adamic_panic("out of memory", sizeof "out of memory" - 1);
+		}
+		capacity *= 2;
+	}
+	if (capacity > SIZE_MAX / sizeof *map->entries || capacity > SIZE_MAX / 2 / sizeof *map->buckets) {
+		adamic_panic("out of memory", sizeof "out of memory" - 1);
+	}
+	map->entries = allocate_zeroed(capacity, sizeof *map->entries);
+	map->buckets = allocate_zeroed(capacity * 2, sizeof *map->buckets);
+	map->capacity = capacity;
+	map->bucket_count = capacity * 2;
+	return map;
+}
+
 adamic_map *adamic_map_new_booleans(bool reference_values) {
 	adamic_map *map = adamic_map_new(false, reference_values);
 	map->boolean_keys = true;

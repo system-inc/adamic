@@ -1086,6 +1086,8 @@ adamic_closure *adamic_intl_collator_compare(const adamic_object *collator);
 bool adamic_map_iterator_next(adamic_map_iterator *iterator, union adamic_value *key, union adamic_value *value);
 
 adamic_map *adamic_map_new(bool string_keys, bool reference_values);
+// Nonzero entries fit the first table; zero is the ordinary lazy map.
+adamic_map *adamic_map_new_sized(bool string_keys, bool reference_values, size_t entries);
 // adamic_map_relocated fixes a map copied byte for byte from one allocation to another (a graph
 // region's adoption) before the old allocation is freed: pointers into the map itself move with it.
 void adamic_map_relocated(const adamic_map *from, adamic_map *to);
@@ -1133,6 +1135,8 @@ typedef adamic_object adamic_record_iterator;
 // (record.c): counted references, numbers or booleans, a number or a boolean possibly packed with
 // undefined (adamic_maybe_number_pack, adamic_maybe_boolean_pack).
 adamic_record *adamic_record_new(adamic_field_kind values);
+// Known keys fit a power-of-two table; unknown sizes use new's four-entry start.
+adamic_record *adamic_record_new_capacity(adamic_field_kind values, size_t keys);
 // new_graph is a record of references that's a graph member: its table and wrapper adopted and merged
 // at birth, one region. Every write takes its key and value into the table after the refusal check,
 // and a refused write releases them plainly (record.c). No other kind of value has one.

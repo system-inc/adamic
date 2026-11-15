@@ -34,15 +34,19 @@ static adamic_map *table(const adamic_record *record) {
 	return record->slots[0].reference;
 }
 
-adamic_record *adamic_record_new(adamic_field_kind values) {
+adamic_record *adamic_record_new_capacity(adamic_field_kind values, size_t keys) {
 	const adamic_shape *shape = values == adamic_field_number ? &record_number_shape : values == adamic_field_boolean ? &record_boolean_shape : values == adamic_field_reference ? &record_reference_shape : NULL;
 	if (shape == NULL) {
 		static const char message[] = "compiler bug: a record of unknown value kind";
 		adamic_panic(message, sizeof message - 1);
 	}
 	adamic_record *record = adamic_object_new(shape);
-	record->slots[0].reference = adamic_map_new(true, values == adamic_field_reference);
+	record->slots[0].reference = adamic_map_new_sized(true, values == adamic_field_reference, keys);
 	return record;
+}
+
+adamic_record *adamic_record_new(adamic_field_kind values) {
+	return adamic_record_new_capacity(values, 4);
 }
 
 adamic_record *adamic_record_new_graph(adamic_field_kind values) {
