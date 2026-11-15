@@ -31,7 +31,7 @@ The whole-program walk has H.every=true, caughtEvery=true, 33 candidates, 190 ex
 
 ## 3. Production next-stop table
 
-Checkpoint: 37/79 pairs completed; 37 unchanged and 0 changed among completed pairs. Unmeasured roots are not assumed unchanged. [Completed rows](head11/NEXT-STOPS.md).
+Checkpoint: 51/79 pairs completed; 51 unchanged and 0 changed among completed pairs. Unmeasured roots are not assumed unchanged. [Completed rows](head11/NEXT-STOPS.md).
 
 ## Method, limits, resources and reproduction
 
@@ -41,8 +41,8 @@ Fresh detached worktrees were made for both SHAs, with recursive depth-1 submodu
 
 - Head partial type-level count: **28.929107 s**, **1231028 KiB** peak RSS.
 - Independent TypeScript inventory: **4.375036 s**, **515592 KiB** peak RSS.
-- base: 37 completed children; summed wall **581.547495 s**; maximum child peak **939368 KiB**.
-- head: 37 completed children; summed wall **591.954776 s**; maximum child peak **926940 KiB**.
+- base: 51 completed children; summed wall **814.244003 s**; maximum child peak **939368 KiB**.
+- head: 51 completed children; summed wall **826.111486 s**; maximum child peak **929752 KiB**.
 
 Every reported process has a wall/peak-RSS wait4 receipt. Child wall times can overlap; these are resource records, not isolated speed comparisons. Setup/build times are excluded. Control receipts retain the final exercised sources. `head11/build.py`, `build_type.py`, `runs.py`, `groups.py` and `independent_audit.cjs` archive the exact procedure; scripts use the recorded scratch prefix. Only `.go.txt` probe sources are committed. Nothing submitted or merged.
 <!-- HEAD11 END -->
