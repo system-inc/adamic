@@ -8,7 +8,7 @@
 # step that fails, so the `&&` stops the job before its command. A rented machine runs the job in a laid tree with no
 # .git, an empty HOME at /tmp/home and a read-only /opt/adamic-block, so:
 #   - TMPDIR is made, since the job's tools write there first;
-#   - the build cache lives under it (ADAMIC_BUILD_CACHE_DIR): internal/native's debug products refuse the home
+#   - the build cache lives under the tree (ADAMIC_BUILD_CACHE_DIR), on the data disk: internal/native's debug products refuse the home
 #     cache (Apple's J-7me59b7 and J-8xkd55x);
 #   - npm's logs go under it, since /opt/adamic-block/npmcache/_logs is read-only (WebAssembly);
 #   - sealed_git gives the job a one-commit git of the tree as laid, for a mutant script that restores a file with
@@ -24,7 +24,8 @@ sealedJobFail() {
 
 [ -n "${TMPDIR:-}" ] || export TMPDIR=/tmp/sealed-job
 mkdir -p "$TMPDIR" || sealedJobFail "couldn't make TMPDIR $TMPDIR" || return 1
-export ADAMIC_BUILD_CACHE_DIR="$TMPDIR/buildcache"
+# Under the tree, on the machine's data disk, not the small private /tmp (adamic-loom on #1ndpe51)
+export ADAMIC_BUILD_CACHE_DIR="$PWD/.sealed-build-cache"
 mkdir -p "$ADAMIC_BUILD_CACHE_DIR" || sealedJobFail "couldn't make the build cache $ADAMIC_BUILD_CACHE_DIR" || return 1
 export npm_config_logs_dir="$TMPDIR/npm-logs"
 mkdir -p "$npm_config_logs_dir" || sealedJobFail "couldn't make npm's log directory $npm_config_logs_dir" || return 1
@@ -46,6 +47,8 @@ sealed_git() {
 	[ -f go.work ] || [ -f go.mod ] || sealedJobFail "sealed_git runs from the tree's root" || return 1
 	[ ! -e .git ] || sealedJobFail "this tree already has a .git; sealed_git is for a laid tree with none" || return 1
 	git init -q || sealedJobFail "git init failed" || return 1
+	# The build cache this preamble puts under the tree is never part of the tree as laid
+	printf '%s\n' /.sealed-build-cache/ >> .git/info/exclude || sealedJobFail "couldn't keep the build cache out of the commit" || return 1
 	git add -A || sealedJobFail "git add failed" || return 1
 	git -c user.name=sealed-job -c user.email=sealed-job@loom.invalid -c commit.gpgsign=false commit -q --no-verify \
 		-m "the tree as laid" || sealedJobFail "git commit failed" || return 1
