@@ -152,6 +152,8 @@ p('For string-returning and void targets, unrelated `combinePaths(path: string, 
 p()
 p('**Stopping reason / remaining coverage:** exact per-site, exhaustive implementation-flow sets and a complete reconstruction of specialized/generated IR closure records are not established by these API analyses. In particular, a field-name join is not a receiver-flow proof and a stock-checker generic signature is not a record of every concrete Adamic specialization. Publishing the 15/19 projection as an unconditional 56-site a/b/c verdict would hide that gap. There are no observed native tsc wrong answers or new whole-program stops in this report. The rule and all 56 sites/types are complete; exhaustive flow certification is partial.')
 p()
+if (here/'USES.md').exists():
+ p((here/'USES.md').read_text().rstrip());p()
 p('## Reproduction and provenance')
 p()
 p('Pins: rule `ba619e28774130e24331c3026a938cd6f3cd6a34`; adapters/base `55c375d9d245b580c010c3e0b5659f2849f24fb6`; TypeScript v6.0.3 `050880ce59e30b356b686bd3144efe24f875ebc8`; cohere `5360753e19e4417675a90e92a1823bea66b13918`; cohere/TypeScript `d92d9bfee114c80be2c375d72edae966176e3a4f`. Both Adamic worktrees were fresh detached worktrees; the report branch was subsequently created on the main worktree. Recursive depth-one submodule initialization and `npm ci` in stage3/api succeeded.')

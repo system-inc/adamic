@@ -1,0 +1,34 @@
+{
+  "a_star_origins": 15,
+  "with_non_direct_use": 6,
+  "sites": [
+    "B10",
+    "B22",
+    "B26",
+    "B27",
+    "B47",
+    "B48"
+  ],
+  "guard_inclusive_may_use_count": 11,
+  "guard_inclusive_sites": [
+    "B03",
+    "B10",
+    "B14",
+    "B22",
+    "B24",
+    "B26",
+    "B27",
+    "B35",
+    "B47",
+    "B48",
+    "B49"
+  ],
+  "identified_extra_argument_callers": [],
+  "unresolved_recorded_caller_vectors": [],
+  "records": 50,
+  "source_reads_scanned": 257367,
+  "source_calls_scanned": 52426,
+  "source_object_spreads_scanned": 51,
+  "unmodeled_carriers": [],
+  "scope": "79 roots; may-use audit; external callers excluded"
+}
