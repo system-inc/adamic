@@ -37,9 +37,9 @@ The #3zex15c precedent (`typescript/view-guard-roads-census`, `c13c98f7e920082c5
 
 ## CommonJSBundle ordinary 79-root table
 
-10/79 roots completed twice with matching first-stop tuples. 0 completed roots have the new reason as their first stop. Table incomplete; remaining roots have no result yet.
+20/79 roots completed twice with matching first-stop tuples. 0 completed roots have the new reason as their first stop. Table incomplete; remaining roots have no result yet.
 
-- `corePublic.ts`: pending.
+- `corePublic.ts`: **accepted**; no stop, including no new record-cycle stop.
 - `hostErrors.ts`: pending.
 
 The production driver is built without any overlay from the exact head. The scripts from `typescript/next-stops-8e3a784a` (`d8a5019190cf3c176f1b11385d6437c06f04ba4e`) are retargeted here; the group executor is reduced from three workers to one. Each root is inspected twice by the unchanged ordinary driver. The separately running main 79-root table is not reproduced or claimed here. Roots stopped before the tail do not supply negative record-cycle evidence.
@@ -56,6 +56,16 @@ The production driver is built without any overlay from the exact head. The scri
 | 8 | builderStatePublic.ts | Refused | src/compiler/sys.ts:1385:31 | a method read as a value (writeFile would lose its object, and this with it) |
 | 9 | checker.ts | Refused | src/compiler/sys.ts:1385:31 | a method read as a value (writeFile would lose its object, and this with it) |
 | 10 | commandLineParser.ts | Refused | src/compiler/sys.ts:1385:31 | a method read as a value (writeFile would lose its object, and this with it) |
+| 11 | core.ts | Refused | src/compiler/sys.ts:1385:31 | a method read as a value (writeFile would lose its object, and this with it) |
+| 12 | corePublic.ts | accepted | — |  |
+| 13 | debug.ts | NotYet | src/compiler/semver.ts:71:9 | a namespace read before runtime initialization, directly or through a reachable call; move that read or call after the namespace declaration |
+| 14 | diagnosticInformationMap.generated.ts | NotYet | src/compiler/commandLineParser.ts:293:35 | reading an enum before its runtime initialization; move the call after the enum declaration |
+| 15 | emitter.ts | Refused | src/compiler/sys.ts:1385:31 | a method read as a value (writeFile would lose its object, and this with it) |
+| 16 | executeCommandLine.ts | Refused | src/compiler/sys.ts:1385:31 | a method read as a value (writeFile would lose its object, and this with it) |
+| 17 | expressionToTypeNode.ts | Refused | src/compiler/sys.ts:1385:31 | a method read as a value (writeFile would lose its object, and this with it) |
+| 18 | baseNodeFactory.ts | Refused | src/compiler/sys.ts:1385:31 | a method read as a value (writeFile would lose its object, and this with it) |
+| 19 | emitHelpers.ts | Refused | src/compiler/sys.ts:1385:31 | a method read as a value (writeFile would lose its object, and this with it) |
+| 20 | emitNode.ts | Refused | src/compiler/sys.ts:1385:31 | a method read as a value (writeFile would lose its object, and this with it) |
 
 ## Reproduction and receipts
 

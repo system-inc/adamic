@@ -74,6 +74,17 @@
     "seconds": 27.30815393499995,
     "peak_rss_kib": 1473804
   },
+  "table-11-20.receipt.json": {
+    "command": [
+      "python3",
+      "/workspace/scratch/record-cycle/table/group.py",
+      "11",
+      "20"
+    ],
+    "exit": 0,
+    "seconds": 209.71002337100003,
+    "peak_rss_kib": 896036
+  },
   "head-negative.receipt.json": {
     "command": [
       "/workspace/scratch/record-cycle/head-census",
