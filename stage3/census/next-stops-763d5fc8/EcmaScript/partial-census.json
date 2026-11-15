@@ -320,5 +320,115 @@
     "reason": "a method read as a value (writeFile would lose its object, and this with it)",
     "fix": "call it in an arrow that keeps the object: (path, data, writeByteOrderMark) => sys.writeFile(path, data, writeByteOrderMark) (unbound-method)",
     "seconds": 18.446810141
+  },
+  {
+    "module_format": "EcmaScript",
+    "roots": [
+      "/workspace/scratch/next-stops-763d5fc8-adapted/src/compiler/parser.ts"
+    ],
+    "kind": "Refused",
+    "where": "/workspace/scratch/next-stops-763d5fc8-adapted/src/compiler/sys.ts:1387:5",
+    "reason": "a method read as a value (writeFile would lose its object, and this with it)",
+    "fix": "call it in an arrow that keeps the object: (path, data, writeByteOrderMark) => sys.writeFile(path, data, writeByteOrderMark) (unbound-method)",
+    "seconds": 19.159940432
+  },
+  {
+    "module_format": "EcmaScript",
+    "roots": [
+      "/workspace/scratch/next-stops-763d5fc8-adapted/src/compiler/path.ts"
+    ],
+    "kind": "Refused",
+    "where": "/workspace/scratch/next-stops-763d5fc8-adapted/src/compiler/sys.ts:1387:5",
+    "reason": "a method read as a value (writeFile would lose its object, and this with it)",
+    "fix": "call it in an arrow that keeps the object: (path, data, writeByteOrderMark) => sys.writeFile(path, data, writeByteOrderMark) (unbound-method)",
+    "seconds": 18.827492762
+  },
+  {
+    "module_format": "EcmaScript",
+    "roots": [
+      "/workspace/scratch/next-stops-763d5fc8-adapted/src/compiler/performance.ts"
+    ],
+    "kind": "Refused",
+    "where": "/workspace/scratch/next-stops-763d5fc8-adapted/src/compiler/sys.ts:1387:5",
+    "reason": "a method read as a value (writeFile would lose its object, and this with it)",
+    "fix": "call it in an arrow that keeps the object: (path, data, writeByteOrderMark) => sys.writeFile(path, data, writeByteOrderMark) (unbound-method)",
+    "seconds": 17.55236308
+  },
+  {
+    "module_format": "EcmaScript",
+    "roots": [
+      "/workspace/scratch/next-stops-763d5fc8-adapted/src/compiler/performanceCore.ts"
+    ],
+    "kind": "Refused",
+    "where": "/workspace/scratch/next-stops-763d5fc8-adapted/src/compiler/sys.ts:1387:5",
+    "reason": "a method read as a value (writeFile would lose its object, and this with it)",
+    "fix": "call it in an arrow that keeps the object: (path, data, writeByteOrderMark) => sys.writeFile(path, data, writeByteOrderMark) (unbound-method)",
+    "seconds": 20.316049538
+  },
+  {
+    "module_format": "EcmaScript",
+    "roots": [
+      "/workspace/scratch/next-stops-763d5fc8-adapted/src/compiler/program.ts"
+    ],
+    "kind": "Refused",
+    "where": "/workspace/scratch/next-stops-763d5fc8-adapted/src/compiler/sys.ts:1387:5",
+    "reason": "a method read as a value (writeFile would lose its object, and this with it)",
+    "fix": "call it in an arrow that keeps the object: (path, data, writeByteOrderMark) => sys.writeFile(path, data, writeByteOrderMark) (unbound-method)",
+    "seconds": 17.67299634
+  },
+  {
+    "module_format": "EcmaScript",
+    "roots": [
+      "/workspace/scratch/next-stops-763d5fc8-adapted/src/compiler/programDiagnostics.ts"
+    ],
+    "kind": "Refused",
+    "where": "/workspace/scratch/next-stops-763d5fc8-adapted/src/compiler/sys.ts:1387:5",
+    "reason": "a method read as a value (writeFile would lose its object, and this with it)",
+    "fix": "call it in an arrow that keeps the object: (path, data, writeByteOrderMark) => sys.writeFile(path, data, writeByteOrderMark) (unbound-method)",
+    "seconds": 19.362719519
+  },
+  {
+    "module_format": "EcmaScript",
+    "roots": [
+      "/workspace/scratch/next-stops-763d5fc8-adapted/src/compiler/resolutionCache.ts"
+    ],
+    "kind": "Refused",
+    "where": "/workspace/scratch/next-stops-763d5fc8-adapted/src/compiler/sys.ts:1387:5",
+    "reason": "a method read as a value (writeFile would lose its object, and this with it)",
+    "fix": "call it in an arrow that keeps the object: (path, data, writeByteOrderMark) => sys.writeFile(path, data, writeByteOrderMark) (unbound-method)",
+    "seconds": 19.799107766
+  },
+  {
+    "module_format": "EcmaScript",
+    "roots": [
+      "/workspace/scratch/next-stops-763d5fc8-adapted/src/compiler/scanner.ts"
+    ],
+    "kind": "Refused",
+    "where": "/workspace/scratch/next-stops-763d5fc8-adapted/src/compiler/sys.ts:1387:5",
+    "reason": "a method read as a value (writeFile would lose its object, and this with it)",
+    "fix": "call it in an arrow that keeps the object: (path, data, writeByteOrderMark) => sys.writeFile(path, data, writeByteOrderMark) (unbound-method)",
+    "seconds": 19.844406667
+  },
+  {
+    "module_format": "EcmaScript",
+    "roots": [
+      "/workspace/scratch/next-stops-763d5fc8-adapted/src/compiler/semver.ts"
+    ],
+    "kind": "Refused",
+    "where": "/workspace/scratch/next-stops-763d5fc8-adapted/src/compiler/sys.ts:1387:5",
+    "reason": "a method read as a value (writeFile would lose its object, and this with it)",
+    "fix": "call it in an arrow that keeps the object: (path, data, writeByteOrderMark) => sys.writeFile(path, data, writeByteOrderMark) (unbound-method)",
+    "seconds": 19.560284279
+  },
+  {
+    "module_format": "EcmaScript",
+    "roots": [
+      "/workspace/scratch/next-stops-763d5fc8-adapted/src/compiler/sourcemap.ts"
+    ],
+    "kind": "Refused",
+    "where": "/workspace/scratch/next-stops-763d5fc8-adapted/src/compiler/sys.ts:1387:5",
+    "reason": "a method read as a value (writeFile would lose its object, and this with it)",
+    "fix": "call it in an arrow that keeps the object: (path, data, writeByteOrderMark) => sys.writeFile(path, data, writeByteOrderMark) (unbound-method)",
+    "seconds": 16.507430936
   }
 ]
