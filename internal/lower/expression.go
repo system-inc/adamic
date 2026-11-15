@@ -426,6 +426,7 @@ func (l *lowering) sameKeepingWalkMode(from, to *checker.Type, visited map[[2]*c
 		if toCount <= 1 && l.present(to) == nil {
 			return true
 		}
+		// Visited stays per mode: ordinary starts fresh here; weak-only never returns to ordinary, so its same cannot excuse an ordinary representation check.
 		if !weakOnly {
 			visited = map[[2]*checker.Type]bool{}
 		}
@@ -435,22 +436,14 @@ func (l *lowering) sameKeepingWalkMode(from, to *checker.Type, visited map[[2]*c
 		}
 		visited[pair] = true
 		for _, member := range fromMembers {
-			if !l.checker.IsTypeAssignableTo(member, to) {
-				continue
-			}
-			matched := false
 			for _, target := range toMembers {
 				const nullish = checker.TypeFlagsUndefined | checker.TypeFlagsNull
-				if (member.Flags()&nullish != 0) != (target.Flags()&nullish != 0) || !l.checker.IsTypeAssignableTo(member, target) {
+				if (member.Flags()&nullish != 0) != (target.Flags()&nullish != 0) {
 					continue
 				}
-				matched = true
 				if !l.sameKeepingWalkMode(member, target, visited, true) {
 					return false
 				}
-			}
-			if !matched {
-				return false
 			}
 		}
 		return true
@@ -470,6 +463,9 @@ func (l *lowering) sameKeepingWalkMode(from, to *checker.Type, visited map[[2]*c
 		return l.sameKeepingWalkMode(a, b, visited, weakOnly)
 	}
 	same := func(inside, viewed *checker.Type) bool {
+		if weakOnly {
+			return l.keepsWeak(inside) == l.keepsWeak(viewed) && l.sameKeepingWalkMode(inside, viewed, visited, true)
+		}
 		fromKept, _ := l.kept(inside)
 		toKept, _ := l.kept(viewed)
 		return (fromKept == ir.Weak) == (toKept == ir.Weak) && l.sameKeepingWalkMode(inside, viewed, visited, weakOnly)
@@ -808,6 +804,25 @@ func (l *lowering) present(proven *checker.Type) *checker.Type {
 		return nil
 	}
 	return proven
+}
+
+// keepsWeak reads retention from Weak brands without representation's checker relations.
+func (l *lowering) keepsWeak(proven *checker.Type) bool {
+	if l.weakTarget(proven) != nil {
+		return true
+	}
+	proven = l.concrete(proven)
+	if proven.Flags()&checker.TypeFlagsTypeParameter != 0 {
+		return l.substitution[proven] == ir.Weak
+	}
+	if proven.Flags()&checker.TypeFlagsUnion != 0 {
+		for _, member := range proven.Types() {
+			if l.weakTarget(member) != nil {
+				return true
+			}
+		}
+	}
+	return false
 }
 
 // kept is how an element or a map's value of a type is kept: as its representation, except that one

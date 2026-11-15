@@ -29,6 +29,9 @@ console.log(viewed(make()));`, "(x: Weakly) => string -> (x: Strong) => string"}
 			{"p8", `const strong: readonly Strong[] = [make()];
 const viewed: readonly Weakly[] = strong;
 const item = viewed[0]; if (item !== undefined && item.kind === 'v') console.log(item.v?.label ?? 'none');`, "readonly Strong[] -> readonly Weakly[]"},
+			{"later_weak_member", `const strong: Strong = make();
+const viewed: { readonly kind: 'w'; readonly w: number } | { readonly kind: 'v'; readonly v: Weak<Box> } = strong;
+if (viewed.kind === 'v') console.log(viewed.v?.label ?? 'none');`, "Strong -> { readonly kind: 'w'; readonly w: number } | { readonly kind: 'v'; readonly v: Weak<Box> }"},
 			{"whole_view_only", `function makeWide(): { readonly kind: 'v' | 'w'; readonly v: Box } { return { kind: 'v', v: { label: 'label' } }; }
 const viewed: { readonly kind: 'v'; readonly v: Weak<Box> } | { readonly kind: 'w'; readonly v: Weak<Box> } = makeWide();`, "{ readonly kind: 'v' | 'w'; readonly v: Box } -> { readonly kind: 'v'; readonly v: Weak<Box> } | { readonly kind: 'w'; readonly v: Weak<Box> }"},
 		} {
@@ -51,6 +54,30 @@ const viewed: { readonly kind: 'v'; readonly v: Weak<Box> } | { readonly kind: '
 func TestUnionKeepingPairsAgree(t *testing.T) {
 	for _, extension := range []string{".a", ".ts"} {
 		for _, row := range []struct{ name, source string }{
+			{"narrowed_nullish_box", `interface Box { readonly label: string }
+function read(box: Box | undefined): string {
+    if (box === undefined) return 'none';
+    const viewed: Box = box;
+    return viewed.label;
+}
+console.log(read({label:'label'})); console.log(read(undefined));`},
+			{"range_iterator", `class RangeIterator {
+    index = 0;
+    readonly limit: number;
+    constructor(limit: number) { this.limit = limit; }
+    [Symbol.iterator](): RangeIterator { return this; }
+    next(): { readonly done: boolean; readonly value: number } {
+        const value = this.index;
+        this.index++;
+        return { done: value >= this.limit, value };
+    }
+}
+class Range {
+    readonly limit: number;
+    constructor(limit: number) { this.limit = limit; }
+    [Symbol.iterator](): RangeIterator { return new RangeIterator(this.limit); }
+}
+console.log(Array.from(new Range(3)).join(','));`},
 			{"weak_union_write", `import type { Weak } from 'adamic';
 interface Named { readonly kind:'Named'; readonly name:string }
 interface Counted { readonly kind:'Counted'; readonly count:number }
@@ -75,6 +102,60 @@ console.log(String(read({kind:'circle',radius:3})));`},
 					source = strings.Replace(source, "if (shape.kind === 'circle') return (shape as Circle).radius; return 0;", "return (shape as Circle).radius;", 1)
 				}
 				lowersAndAgreesWithNodeAs(t, source, extension)
+			})
+		}
+	}
+}
+
+func TestUnionKeepingParameterDirections(t *testing.T) {
+	for _, extension := range []string{".a", ".ts"} {
+		for _, row := range []struct {
+			name, source, types string
+			cast                bool
+		}{
+			{"weak_array_like_function_strong_array_view", `type WeakElements = {readonly kind:'v';readonly v:ArrayLike<Weak<Box>>} | {readonly kind:'w';readonly w:number};
+type StrongElements = {readonly kind:'v';readonly v:readonly Box[]} | {readonly kind:'w';readonly w:number};
+function read(x: WeakElements): string { return 'label'; }
+const viewed: (x: StrongElements) => string = read;`, "(x: WeakElements) => string -> (x: StrongElements) => string", false},
+			{"union_weak_array_like_function_strong_array_view", `type WeakElements = {readonly kind:'v';readonly v:ArrayLike<Weak<Box>>} | {readonly kind:'w';readonly w:number};
+type StrongElements = {readonly kind:'v';readonly v:readonly Box[]} | {readonly kind:'w';readonly w:number};
+type Held = {readonly kind:'read';readonly read:(x:WeakElements)=>string} | {readonly kind:'none'};
+type Viewed = {readonly kind:'read';readonly read:(x:StrongElements)=>string} | {readonly kind:'none'};
+function read(x: WeakElements): string { return 'label'; }
+function hold(): Held { return {kind:'read',read}; }
+const viewed: Viewed = hold();`, "Held with (x: WeakElements) => string -> Viewed with (x: StrongElements) => string", false},
+			{"weak_function_strong_view", `function read(x: Weakly): string { return x.kind === 'v' ? x.v?.label ?? 'none' : 'w'; }
+const viewed: (x: Strong) => string = read;
+console.log(viewed(make()));`, "(x: Weakly) => string -> (x: Strong) => string", false},
+			{"strong_function_weak_view", `function read(x: Strong): string { return x.kind === 'v' ? x.v.label : 'w'; }
+const viewed = read as (x: Weakly) => string;
+console.log(viewed(make()));`, "(x: Strong) => string -> (x: Weakly) => string", true},
+			{"union_weak_function_strong_view", `type Held = {readonly kind:'read';readonly read:(x:Weakly)=>string} | {readonly kind:'none'};
+type Viewed = {readonly kind:'read';readonly read:(x:Strong)=>string} | {readonly kind:'none'};
+function read(x: Weakly): string { return x.kind === 'v' ? x.v?.label ?? 'none' : 'w'; }
+function hold(): Held { return {kind:'read',read}; }
+const viewed: Viewed = hold();
+if (viewed.kind === 'read') console.log(viewed.read(make()));`, "Held with (x: Weakly) => string -> Viewed with (x: Strong) => string", false},
+			{"union_strong_function_weak_view", `type Held = {readonly kind:'read';readonly read:(x:Strong)=>string} | {readonly kind:'none'};
+type Viewed = {readonly kind:'read';readonly read:(x:Weakly)=>string} | {readonly kind:'none'};
+function read(x: Strong): string { return x.kind === 'v' ? x.v.label : 'w'; }
+function hold(): Held { return {kind:'read',read}; }
+const viewed = hold() as Viewed;
+if (viewed.kind === 'read') console.log(viewed.read(make()));`, "Held with (x: Strong) => string -> Viewed with (x: Weakly) => string", true},
+		} {
+			t.Run(row.name+extension, func(t *testing.T) {
+				// The reverse function assignment is contravariantly invalid in TypeScript;
+				// its explicit cast must stop too, rather than create an unchecked callable view.
+				_, err := lowerSourceAs(t, unionKeepingPrelude+row.source, extension)
+				var ny *NotYet
+				var refused *Refused
+				if errors.As(err, &ny) {
+					return
+				}
+				if row.cast && errors.As(err, &refused) && strings.Contains(err.Error(), "adamic/no-unchecked-cast") {
+					return
+				}
+				t.Fatalf("%s: got %v, want the callable view to stop", row.types, err)
 			})
 		}
 	}
