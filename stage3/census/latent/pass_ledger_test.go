@@ -293,7 +293,9 @@ func TestLatentPassLedgerOnlyRecordsOmissionsPb47(t *testing.T) {
 				t.Fatalf("entry %d: %+v, want %s", i, entry, want)
 			}
 		}
-		if whole != 4 {
+		// findCycles, checkRegExpServedValues, the Program-region gate, plan application and the
+		// ownership query: adding a whole-program step changes this count on purpose.
+		if whole != 5 {
 			t.Fatalf("whole-program-only steps: %d", whole)
 		}
 	}
