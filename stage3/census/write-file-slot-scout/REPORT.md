@@ -1,3 +1,5 @@
+Published adaptation: [`c0190b715011085c82fa2eefb9b59dcf4e23b95d`](https://github.com/system-inc/adamic/commit/c0190b715011085c82fa2eefb9b59dcf4e23b95d) on `typescript/write-file-construct-1`, one commit above the requested parent. [Publication receipt and final main merge](construct-1/PUBLICATION.json); executable code, pins and ledger match the fresh-tested freeze byte for byte. Nothing submitted.
+
 ## Adaptation acceptance on the requested ledger chain
 
 | Road | Target gone | New / changed sys.ts findings | JavaScript change | Public declaration change |

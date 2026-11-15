@@ -1,0 +1,22 @@
+{
+  "publishedCommit": "c0190b715011085c82fa2eefb9b59dcf4e23b95d",
+  "publishedBranch": "typescript/write-file-construct-1",
+  "parent": "a77ca4a82271f18c142d8843ea76604b30d3833d",
+  "commitsAboveParent": 1,
+  "main": "89614cc0f9d6aa7b7fe96b56c5c6c1c3eace9825",
+  "publishedProofMerge": "022c112f0916af874eae930d6c751e67e94718fe",
+  "freshTestedFrozenMerge": "0adcd82e25a88f32c50f625c21a0f127853537c1",
+  "mergeDeltaDocumentationOnly": [
+    "stage3/adapt/93-builtin-imports/README.md",
+    "stage3/adapt/99-correctness-write-file-construct/PROOF.md",
+    "stage3/adapt/99-correctness-write-file-construct/README.md",
+    "stage3/adapt/99-correctness-write-file-view/PROOF.md",
+    "stage3/adapt/99-correctness-write-file-view/README.md",
+    "stage3/adapt/99-wasm-crypto-import/PROOF-watch-directory.md",
+    "stage3/adapt/99-wasm-crypto-import/README.md"
+  ],
+  "codePinsLedgerByteIdenticalToFreshTestedMerge": true,
+  "freshOutput747FilesByteIdenticalToOnceTestedLane": true,
+  "immutableAcceptanceEvidence": "6b362fe55551e862c3d8775047e0e2dc41317a45",
+  "submitted": false
+}
