@@ -122,7 +122,8 @@ func graphFlowOperands[T ir.Expression](pick func(T) []ir.Expression) func(ir.Ex
 // are where the IR or its emitter says what the value is.
 var graphFlowRules = map[reflect.Type]graphFlowRule{
 	// Planned: an allocation carrying GraphTypes, whose site follow marks in program.GraphTypes.
-	reflect.TypeFor[ir.ObjectLiteral](): {class: graphFlowPlanned, why: "a new object (ir.go:509); a class's is planned through Classes[].Graph too (native graph_regions.go:22)"},
+	reflect.TypeFor[ir.ObjectLiteral](): {class: graphFlowPlanned, why: "a new object (ir.go:509); a class's is planned through Classes[].Graph too (native graph_regions.go:28)"},
+	reflect.TypeFor[ir.RecordLiteral](): {class: graphFlowPlanned, why: "a new record (records.go:26), made a graph member by adamic_record_new_graph when planned (native emit_records.go:112); its entries are demanded where it's made (graph_flow.go's members), and its spread's values were planned where they were stored (#1vb0x5s)"},
 	reflect.TypeFor[ir.ArrayLiteral]():  {class: graphFlowPlanned, why: "a new array (ir.go:590)"},
 	reflect.TypeFor[ir.MapNew]():        {class: graphFlowPlanned, why: "a new Map (ir.go:979)"},
 	reflect.TypeFor[ir.SetNew]():        {class: graphFlowPlanned, why: "a new Set (ir.go:1046)"},
@@ -307,7 +308,6 @@ var graphFlowRules = map[reflect.Type]graphFlowRule{
 	reflect.TypeFor[ir.JoinEnter]():                {class: graphFlowCannotHold, why: "a boolean (unknown.go:90)"},
 	reflect.TypeFor[ir.JoinLeave]():                {class: graphFlowCannotHold, why: "void (unknown.go:95)"},
 	reflect.TypeFor[ir.RecordStorage]():            {class: graphFlowCannotHold, why: "a boolean (records.go:51)"},
-	reflect.TypeFor[ir.RecordLiteral]():            {class: graphFlowCannotHold, why: "a new record (records.go:31), never reached here: graphType selects no record type (only arrays, tuples, maps and sets join as caches, graph_types.go:262), so no demand follow walks names one. A record held on a cycle is the cycle rule's, not this pass's: #a9e21hc measured it leaking on main and adds its stop"},
 	reflect.TypeFor[ir.RegExpNew]():                {class: graphFlowCannotHold, why: "a pattern of its source and flags (regexp.go:12)"},
 	reflect.TypeFor[ir.RegExpCall]():               {class: graphFlowCannotHold, why: "a string, a number, a boolean, or match arrays of strings and their iterator (regexp.go:23)"},
 	reflect.TypeFor[ir.RegExpProperty]():           {class: graphFlowCannotHold, why: "a match's index, input or groups, numbers and strings (regexp.go:47)"},
