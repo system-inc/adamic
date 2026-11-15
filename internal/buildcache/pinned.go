@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"io"
 	"os"
+	"path/filepath"
 	"regexp"
 	"slices"
 	"sort"
@@ -21,6 +22,11 @@ var commitPattern = regexp.MustCompile(`^[0-9a-f]{40}$`)
 // pinnedKeying runs PinnedGit's git as key-time work: keying, swapped by a test that asks whether it ran there.
 var pinnedKeying = keying
 
+// pinnedEnvironment is environment PinnedGit's git runs with after its own settings: empty, but for a test that has git
+// take every checkout as another user's (GIT_TEST_ASSUME_DIFFERENT_OWNER), which toolchain's environment never carries
+// from the caller's.
+var pinnedEnvironment []string
+
 // PinnedGit runs git with arguments on root's own objects as key-time work (Keying), for a product built from a pinned
 // commit's files (json's pinned corpus, #jwn3n9q). A traced build may not read .git, since nothing there is a file a key
 // can name; but a commit id names its tree and every blob under it, so a key that names the commit names all of it, and
@@ -28,8 +34,15 @@ var pinnedKeying = keying
 // names, so the product's key always moves with the pin. git runs with replace objects and grafts off, no system or
 // global configuration and no transport (protocol.allow=never, GIT_NO_LAZY_FETCH), so its answer about the commit is
 // the commit's alone: a replace ref or a graft could answer with another commit's bytes under this id, a user's config
-// could change how it prints, and a fetch would read the network. arguments must ask only about commit and the objects
-// under it; stdin, when given, is git's standard input.
+// could change how it prints, and a fetch would read the network. The checkout may be another user's, as a sealed
+// job's dynamic uid reads the image's root-owned TypeScript checkout, and git refuses a checkout it doesn't own unless
+// a safe.directory names it, which no system or global configuration can do here (#1ndpe51). So git runs with one
+// safe.directory naming exactly the root it was handed, never a wildcard or a prefix, and the pin then checks that
+// root's bytes by commit; on a checkout that is the caller's own it changes nothing. git compares it with the
+// checkout's top level as it finds it, physically, so it is root made absolute with its links resolved, and a root
+// that doesn't resolve is refused, never exempted by a looser name. root must be the checkout's top level: below it,
+// on another user's checkout, git refuses. arguments must ask only about commit and the objects under it; stdin, when
+// given, is git's standard input.
 func PinnedGit(root string, inputs Inputs, commit string, stdin []byte, arguments ...string) ([]byte, error) {
 	if !commitPattern.MatchString(commit) {
 		return nil, fmt.Errorf("pinned git for %s: %q isn't a full commit id", inputs.Name, commit)
@@ -40,7 +53,16 @@ func PinnedGit(root string, inputs Inputs, commit string, stdin []byte, argument
 	var output []byte
 	var err error
 	pinnedKeying(func() {
-		command := toolchain.GitCommandIn(root, append([]string{"-c", "protocol.allow=never", "-c", "core.quotePath=true"}, arguments...)...)
+		var checkout string
+		if checkout, err = filepath.Abs(root); err == nil {
+			checkout, err = filepath.EvalSymlinks(checkout)
+		}
+		if err != nil {
+			err = fmt.Errorf("pinned git for %s: the checkout at %s has no resolved path for its safe.directory: %w", inputs.Name, root, err)
+			return
+		}
+		command := toolchain.GitCommandIn(root, append([]string{"-c", "protocol.allow=never", "-c", "core.quotePath=true",
+			"-c", "safe.directory=" + checkout}, arguments...)...)
 		if command.Err != nil {
 			err = command.Err
 			return
@@ -52,6 +74,7 @@ func PinnedGit(root string, inputs Inputs, commit string, stdin []byte, argument
 		if target := os.Getenv("GIT_TRACE2_EVENT"); target != "" {
 			command.Env = append(command.Env, "GIT_TRACE2_EVENT="+target)
 		}
+		command.Env = append(command.Env, pinnedEnvironment...)
 		command.Stdin = bytes.NewReader(stdin)
 		var stderr bytes.Buffer
 		command.Stderr = &stderr

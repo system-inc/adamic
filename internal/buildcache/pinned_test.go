@@ -83,3 +83,36 @@ func TestPinnedGitWritesTheCallersTraceTwoEvents(t *testing.T) {
 		t.Fatalf("the trace2 events read %q: %v", content, err)
 	}
 }
+
+// A checkout another user owns, as a sealed job's dynamic uid reads the image's root-owned TypeScript checkout, is read
+// through PinnedGit's one safe.directory, which names exactly the root it was handed: the same checkout asked through a
+// directory below its top level is still refused as dubious, where a wildcard would read it (#1ndpe51). git takes every
+// checkout as another user's here (GIT_TEST_ASSUME_DIFFERENT_OWNER, as git's own t0033 does), and the control shows it
+// refuses this one with no exemption, so the read is the exemption's. Mutants: the exemption dropped; its value `*`.
+// Not parallel: it sets the package-level pinnedEnvironment.
+func TestPinnedGitExemptsExactlyTheRootItWasHanded(t *testing.T) {
+	root, pinned, _ := pinnedRepository(t)
+	inputs := Inputs{Name: "pinned corpus", Flags: []string{"repository JSON at " + pinned}}
+	below := filepath.Join(root, "below")
+	if err := os.Mkdir(below, 0o755); err != nil {
+		t.Fatal(err)
+	}
+	foreign := "GIT_TEST_ASSUME_DIFFERENT_OWNER=1"
+	control := toolchain.GitCommandIn(root, "cat-file", "-e", pinned+"^{commit}")
+	// The control runs as PinnedGit's git does, with no system or global configuration, so a box's own safe.directory
+	// can't read the checkout for it.
+	control.Env = append(control.Env, "GIT_CONFIG_NOSYSTEM=1", "GIT_CONFIG_GLOBAL=/dev/null", foreign)
+	if output, err := control.CombinedOutput(); err == nil || !strings.Contains(string(output), "dubious ownership") {
+		t.Fatalf("git with no exemption read the checkout taken as another user's (%v), so this test proves nothing: %s", err, output)
+	}
+	previous := pinnedEnvironment
+	pinnedEnvironment = []string{foreign}
+	t.Cleanup(func() { pinnedEnvironment = previous })
+	files, err := PinnedFiles(root, inputs, pinned, "JSON", func(path string) bool { return strings.HasSuffix(path, ".json") })
+	if err != nil || len(files) != 1 || files[0].Path != "a.json" || string(files[0].Data) != `{"pinned":true}` {
+		t.Fatalf("the exempted root, another user's checkout, read %q: %v", files, err)
+	}
+	if _, err := PinnedGit(below, inputs, pinned, nil, "cat-file", "-e", pinned+"^{commit}"); err == nil || !strings.Contains(err.Error(), "dubious ownership") {
+		t.Fatalf("a directory below another user's checkout, which the exemption doesn't name, read: %v", err)
+	}
+}
