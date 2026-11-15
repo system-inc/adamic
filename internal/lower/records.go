@@ -239,6 +239,17 @@ func (l *lowering) recordExpression(node *ast.Node) (ir.Expression, bool, error)
 			return nil, true, err
 		}
 		if !l.includesUndefined(here) && !recordTagObservation(node) {
+			// Read through ?., the value goes to ?.'s own test unchecked, as narrowed.go's defined leaves a
+			// reference: Node reads undefined there and throws nothing, so the Defined below would throw a
+			// TypeError a try catches where Node takes no branch (#70kdt66, J-xgt44wh). A reference reaches
+			// ?. as a null one, which its test reads absent. A scalar held as a maybe isn't shown to reach
+			// every ?. as one yet, so it stops.
+			if optionalReceiver(node) {
+				if read.Type().IsReference() && read.Type() != ir.Union {
+					return read, true, nil
+				}
+				return nil, true, l.notYet(node, "a record value of a scalar the checker narrowed present, read through ?., where a call since the narrowing may have removed it")
+			}
 			if narrowed, known := l.representation(here); known && read.Type().IsMaybe() && !narrowed.IsMaybe() {
 				read = ir.Unwrap{Value: read}
 			}
