@@ -1,7 +1,8 @@
 """Reproduction recipe: CommonJSBundle only, fresh main baseline and head.
 Create detached scratch worktrees at the SHAs in provenance.json, recursively initialize
 submodules with --depth 1, clone TypeScript v6.0.3 at the pinned upstream SHA, and npm ci
-in head/stage3/api. Source /workspace/scratch/next-stops-37d96306/env.sh.
+in each worktree/stage3/api. Copy env.sh.txt to scratch/env.sh, create its cache/temp
+directories, then source /workspace/scratch/next-stops-37d96306/env.sh.
 The unchanged stage3 tree is identical at both SHAs: build one adapted tree:
   CENSUS_REVISION=head python3 REPORT_DIR/run.py apply bash stage3/apply.sh --build-product /workspace/scratch/next-stops-37d96306/adapted
 Build each ordinary tool from its own worktree:
