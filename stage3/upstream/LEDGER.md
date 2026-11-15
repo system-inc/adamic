@@ -886,3 +886,5 @@ mutants restore their sites, every JavaScript hunk stays inside dumpTypes, and
 - **JavaScript-changing, value-identical watchDirectory boundary forwarder (#cyjqp5f):** 99-wasm-crypto-import amends getNodeSystem with the exact System.watchDirectory parameter list and forwards `!!recursive`; all 13 downstream reads treat undefined as false, and the inner boolean contract stays unchanged. Evidence: typescript/watch-directory-1533-evidence, stage3/census/watch-directory-1533-forwarder/.
 
 - **JavaScript-changing, value-identical; #trxxkge: 46 parser callee rewrites call through factory, measured at 18,022,708 added per-use property reads per complete lane run.** Evidence: typescript/receiver-split-evidence; stage3/adapt/99-correctness-receiver-parser/PROOF.md.
+
+- **JavaScript-changing, value-identical; #trxxkge: 52 exact-parameter forwarding arrows at 17 original factory scopes, with 189,211 forwarding calls and 1,601,433 arrow creations per complete lane run.** Evidence: typescript/receiver-split-evidence; stage3/adapt/99-correctness-receiver-transformers/PROOF.md.
