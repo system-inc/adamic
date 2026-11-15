@@ -2757,6 +2757,24 @@
     "internal/lower TestProduct_NeverRefusalAnyMutant": [],
     "internal/lower TestProduct_NeverRefusalEvalMutant": [],
     "internal/lower TestProduct_NeverRefusalFunctionMutant": [],
-    "internal/lower TestProduct_NeverRefusalArrayMutant": []
+    "internal/lower TestProduct_NeverRefusalArrayMutant": [],
+    "internal/worker TestProduct_WorkerdAsync": [
+      "internal/worker TestProduct_WorkerCompiler"
+    ],
+    "internal/worker TestProduct_WorkerAsyncAwaitMutant": [
+      "internal/worker TestProduct_WorkerChecks"
+    ],
+    "internal/worker TestProduct_WorkerAsyncTryMutant": [
+      "internal/worker TestProduct_WorkerChecks"
+    ],
+    "internal/worker TestProduct_WorkerAsyncContractMutant": [
+      "internal/worker TestProduct_WorkerChecks"
+    ],
+    "internal/worker TestProduct_WorkerAsyncWasmMutant": [
+      "internal/worker TestProduct_WorkerChecks"
+    ],
+    "internal/worker TestProduct_WorkerAsyncNeedleMutant": [
+      "internal/worker TestProduct_WorkerChecks"
+    ]
   }
 }

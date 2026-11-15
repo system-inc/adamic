@@ -1,0 +1,32 @@
+import { panic } from 'adamic';
+import type { HttpRequest, HttpResponse } from 'adamic/http';
+
+async function text(path: string): Promise<string> { return path; }
+async function rejected(): Promise<string> {
+    return await Promise.reject(new Error('helper rejected'));
+}
+async function thrown(): Promise<string> { throw new Error('helper threw'); }
+async function failed(): Promise<string> {
+    await text('ready');
+    panic('helper panic');
+}
+export async function handle(request: HttpRequest): Promise<HttpResponse> {
+    if (request.path === '/panic') {
+        await text('ready');
+        panic('after await');
+    }
+    if (request.path === '/reject') {
+        const body = await rejected();
+        return { status: 200, headers: [], body };
+    }
+    if (request.path === '/throw-error') {
+        const body = await thrown();
+        return { status: 200, headers: [], body };
+    }
+    if (request.path === '/helper-panic') {
+        const body = await failed();
+        return { status: 200, headers: [], body };
+    }
+    const path = await text(request.path);
+    return { status: 200, headers: [{ name: 'content-type', value: 'text/plain; charset=utf-8' }], body: request.method + ' ' + path + ' ' + request.body };
+}
