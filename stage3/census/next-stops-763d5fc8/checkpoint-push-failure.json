@@ -15,5 +15,10 @@
     "ls-remote",
     "origin"
   ],
-  "read_check_error": "fatal: could not read Username for 'https://github.com': No such device or address"
+  "read_check_error": "fatal: could not read Username for 'https://github.com': No such device or address",
+  "recovery": {
+    "user_requested_retry_exit_code": 0,
+    "pushed_commit": "c1b91e0e156e3691f5396715ee439faf5da820a4",
+    "branch": "typescript/next-stops-763d5fc8-checkpoint"
+  }
 }
