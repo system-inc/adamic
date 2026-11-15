@@ -1,0 +1,65 @@
+{
+  "parser": {
+    "command": {
+      "command": [
+        "/workspace/scratch/receiver-split/adamic/stage3/apply.sh",
+        "/workspace/scratch/receiver-split/applied-parser"
+      ],
+      "cwd": "/workspace/scratch/receiver-split/adamic",
+      "exit": 0,
+      "wall_seconds": 426.607,
+      "log": {
+        "path": "/workspace/scratch/receiver-split/results/parser-apply.log",
+        "bytes": 844532,
+        "sha256": "3dca67ae3c2127e7574e78614ae3a5c85a9d1a8029bf3467458ba37c27ba61b2"
+      }
+    },
+    "source": {
+      "compilerRoots": 79,
+      "identicalToIndependentlyBuiltTree": true,
+      "inventorySha256": "2f4837a0083a90707eee255cdc22724059ca95d0da722fd5d863f1a963dd52d1"
+    }
+  },
+  "transformers": {
+    "command": {
+      "command": [
+        "/workspace/scratch/receiver-split/adamic/stage3/apply.sh",
+        "/workspace/scratch/receiver-split/applied-transformers"
+      ],
+      "cwd": "/workspace/scratch/receiver-split/adamic",
+      "exit": 0,
+      "wall_seconds": 454.684,
+      "log": {
+        "path": "/workspace/scratch/receiver-split/results/transformers-apply.log",
+        "bytes": 844581,
+        "sha256": "7a44f39de28ca54f4d328b3fc6af015b9a6658b44d45648daadb610340d0a099"
+      }
+    },
+    "source": {
+      "compilerRoots": 79,
+      "identicalToIndependentlyBuiltTree": true,
+      "inventorySha256": "ab84c0e8472fccb1d9a0f89f051ace8b94c8fc0ef73dd09060d92c9314eb39dc"
+    }
+  },
+  "printer": {
+    "command": {
+      "command": [
+        "/workspace/scratch/receiver-split/adamic/stage3/apply.sh",
+        "/workspace/scratch/receiver-split/applied-printer"
+      ],
+      "cwd": "/workspace/scratch/receiver-split/adamic",
+      "exit": 0,
+      "wall_seconds": 676.738,
+      "log": {
+        "path": "/workspace/scratch/receiver-split/results/printer-apply.log",
+        "bytes": 844911,
+        "sha256": "36ae930ae2996a97b7a9d8950bd8ba6925b0e759c7efd30caa93f2378cf4cc3a"
+      }
+    },
+    "source": {
+      "compilerRoots": 79,
+      "identicalToIndependentlyBuiltTree": true,
+      "inventorySha256": "8296cd8a8edf47cbc092f2454ea16c651e2e06e3c0d0ebb2ee6a32ca709b24e9"
+    }
+  }
+}

@@ -41,3 +41,7 @@ All 38 full single-file CommonJSBundle runs completed successfully, with zero ch
 The final overload-aware whole-owner guards passed creation, zero-write replay, restoration and atomic-refusal controls. Stock emitted JavaScript is identical outside the 46 parser callee rewrites, the 52 transformer forwarding declarations, and the printer view/aliases. Negative safety controls detect all five unsafe cases with zero compiler-source writes. Stock TypeScript 6.0.3 API and CLI checks and adamic types are 0 on all three independent trees; API/types roots are explicitly 79. Each real restoring mutant reproduces all 79 baseline compiler files byte-for-byte. hereby dts produces byte-identical typescript.d.ts (593,536 bytes) and tsserverlibrary.d.ts (866 bytes) for every part.
 
 Fresh single-part apply runs, complete unfiltered ordinary/counting lanes, dynamic receiver counts, final ledger lines and the three adaptation pushes remain pending.
+
+## All three independent fresh apply runs passed
+
+Each fresh stage3/apply.sh run installed only its own new receiver directory. Parser, transformers and printer all exited 0, and each resulting 79-file compiler inventory is byte-identical to its independently constructed tree. Command/log hash receipts and source-inventory hashes are retained here. The ordinary and counting unfiltered lanes, dynamic receiver observations, final ledger files and adaptation branch pushes remain pending.
