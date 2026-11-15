@@ -50,17 +50,17 @@ adamic_record *adamic_record_new_graph(adamic_field_kind values) {
 		static const char message[] = "compiler bug: a graph record of values that aren't references";
 		adamic_panic(message, sizeof message - 1);
 	}
-	// Adoption moves an allocation, so each pointer is the one adoption returns. The table is adopted
-	// before the wrapper's slot names it, then the wrapper, whose adoption counts its edge to the table
-	// as one out of its own region, and the merge takes that count off: one region, not two. Joining
-	// them at birth retains nothing past the record's own life, since the table is the wrapper's alone:
-	// table() is static to this file and no reader retains what it returns, which
-	// record_table_guard_test.go holds for every runtime file.
-	adamic_record *record = adamic_object_new(&record_reference_shape);
-	adamic_map *map = adamic_map_new(true, true);
-	map = adamic_graph_adopt_owned(map, sizeof *map);
+	// The table and the wrapper are made in graph storage, so neither moves, as adoption would move
+	// them: no copy, no original freed. The table is born before the wrapper's slot names it, then the
+	// wrapper, whose birth counts its edge to the table as one out of its own region, and the merge
+	// takes that count off: one region, not two. Joining them at birth retains nothing past the
+	// record's own life, since the table is the wrapper's alone: table() is static to this file and no
+	// reader retains what it returns, which record_table_guard_test.go holds for every runtime file.
+	adamic_record *record = adamic_object_new_graph(&record_reference_shape);
+	adamic_map *map = adamic_map_new_graph(true, true);
+	adamic_graph_born(map);
 	record->slots[0].reference = map;
-	record = adamic_graph_adopt_owned(record, adamic_object_allocation_size(record));
+	adamic_graph_born(record);
 	adamic_graph_merge(record, map);
 	return record;
 }

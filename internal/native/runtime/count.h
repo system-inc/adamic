@@ -28,6 +28,10 @@ typedef struct adamic_counts {
 	_Atomic size_t graph_merges;
 	// graph_searched is how many counted edges merges' searches read (graph_regions.c's between).
 	_Atomic size_t graph_searched;
+	// graph_moves is how many values graph adoption moved into graph storage, a copy and a free each
+	// (graph_regions.c's adamic_graph_adopt); a value born there (adamic_heap_graph_allocate) isn't
+	// one. A harness reads it, never a counts line, so every line keeps its columns.
+	_Atomic size_t graph_moves;
 	// region_blocks is the blocks region.c asked malloc for and region_blocks_freed the ones it gave
 	// back: once every thread's cache is let go (adamic_region_thread_end), they're equal (#yecmp1d).
 	_Atomic size_t region_blocks;

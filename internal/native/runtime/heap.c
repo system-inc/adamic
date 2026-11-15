@@ -466,6 +466,26 @@ void *adamic_heap_graph_storage(void *value, size_t size) {
 	return heap;
 }
 
+// A value born in graph storage: size bytes behind the graph-only prefix, as adamic_heap_graph_storage
+// leaves a moved one, with no copy made and no original to free. It's one heap value made, counted as
+// adamic_allocate counts one, so the counts match a value made and then moved, whose move counts
+// nothing. Its fields are the caller's to fill, and it's no region's until adamic_graph_born.
+void *adamic_heap_graph_allocate(size_t size, enum adamic_kind kind) {
+	if (size > SIZE_MAX - sizeof(adamic_graph_header)) {
+		adamic_panic("region allocation too large", sizeof "region allocation too large" - 1);
+	}
+	ADAMIC_COUNT_ALLOCATION();
+	adamic_heap *storage = allocate_storage(size + sizeof(adamic_graph_header), kind);
+	uint32_t slab = storage->slab;
+	adamic_graph_header *prefix = (adamic_graph_header *)storage;
+	adamic_heap *heap = (adamic_heap *)(prefix + 1);
+	*prefix = (adamic_graph_header){NULL, NULL};
+	heap->references = 1;
+	heap->kind = kind;
+	heap->slab = slab | ADAMIC_GRAPH_FLAG;
+	return heap;
+}
+
 void *adamic_heap_program_storage(void *value, size_t size) {
     adamic_heap *heap = adamic_heap_graph_storage(value, size);
     heap->slab = (heap->slab & ~ADAMIC_GRAPH_FLAG) | ADAMIC_PROGRAM_FLAG;

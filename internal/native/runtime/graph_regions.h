@@ -27,6 +27,14 @@ const char *adamic_region_unmovable(const adamic_heap *heap);
 void *adamic_graph_adopt(void *value, size_t size);
 void *adamic_heap_graph_storage(void *value, size_t size);
 void *adamic_heap_program_storage(void *value, size_t size);
+// Born in graph storage, with no move: adamic_heap_graph_allocate makes a value there, as
+// adamic_allocate makes one, and adamic_graph_born gives a new graph allocation, made there or just
+// adopted, what adamic_graph_adopt_owned gives after its move: the counts its initialized member slots
+// hold, kept as counted edges out of a region of one. The map and object twins are made that way.
+void *adamic_heap_graph_allocate(size_t size, enum adamic_kind kind);
+void adamic_graph_born(void *value);
+adamic_map *adamic_map_new_graph(bool string_keys, bool reference_values);
+adamic_object *adamic_object_new_graph(const adamic_shape *shape);
 void adamic_graph_merge(void *left, void *right);
 void adamic_graph_retain(void *value);
 bool adamic_graph_release_last(void *value);

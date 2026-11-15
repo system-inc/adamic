@@ -14,13 +14,14 @@ import (
 	"github.com/system-inc/adamic/internal/buildcache"
 )
 
-// A record can be a graph member (#1vb0x5s, step 1): adamic_record_new_graph adopts its table and its
-// wrapper and merges them at birth, one region, every write takes its key and value into the table
-// after the refusal check, and a refused write releases them plainly. No emitter calls it yet, so these
-// drive the runtime alone, as graph_region_of_one_test.go's harness does, judged by ASan and by the
-// counted build: allocations equal frees, and the graph region reports, one line for each region or
-// lone member as its last release frees it, with its member count. LeakSanitizer alone isn't trusted
-// here, since it misses small cycles.
+// A record can be a graph member (#1vb0x5s, step 1): adamic_record_new_graph makes its table and its
+// wrapper in graph storage, with no adoption move (#chncwr5), and merges them at birth, one region,
+// every write takes its key and value into the table after the refusal check, and a refused write
+// releases them plainly. No emitter calls it yet, so these drive the runtime alone, as
+// graph_region_of_one_test.go's harness does, judged by ASan and by the counted build: allocations
+// equal frees, and the graph region reports, one line for each region or lone member as its last
+// release frees it, with its member count. LeakSanitizer alone isn't trusted here, since it misses
+// small cycles.
 //
 // Mutants, each a rewrite of record.c by exact match, each red on the row it names:
 //   - M1, adamic_record_new_graph adopts nothing and returns a plain record: "closed" leaks its cycle.
@@ -30,6 +31,7 @@ import (
 //   - M4, let_go drops through adamic_graph_drop again: "refused-member-of-another-graph" takes a
 //     counted edge off that the refused write never made, and the record's region panics as it frees.
 //   - M5, adamic_record_new_graph skips its merge: "regions" finds two regions where one belongs.
+//   - M6, adamic_record_new_graph adopts its table and wrapper by move again: "moves" counts two.
 const recordGraphHarness = `#include "adamic.h"
 #include "graph_regions.h"
 #include <stdio.h>
@@ -144,13 +146,20 @@ int main(int count, char **arguments) {
   adamic_release(x);
   adamic_release(y);
  } else if (strcmp(mode, "regions") == 0) {
-  // The counted build counts each region made and each union. A birth's two adoptions make two, the
-  // table's and the wrapper's, and its merge unites them: what's left is made less merged, since a
-  // birth unites two regions and never a region and a lone member.
+  // The counted build counts each region made and each union. A birth makes two, the table's and the
+  // wrapper's, and its merge unites them: what's left is made less merged, since a birth unites two
+  // regions and never a region and a lone member.
   size_t made = adamic_counted.graph_regions, merged = adamic_counted.graph_merges;
   adamic_record *record = adamic_record_new_graph(adamic_field_reference);
   fprintf(stderr, "record graph: regions made %zu merged %zu\n", (size_t)adamic_counted.graph_regions - made, (size_t)adamic_counted.graph_merges - merged);
   adamic_release(record);
+ } else if (strcmp(mode, "moves") == 0) {
+  // The counted build counts each value graph adoption moves, a copy and a free. Making and freeing a
+  // graph record moves none: its table and wrapper are graph storage from birth.
+  size_t moved = adamic_counted.graph_moves;
+  adamic_record *record = adamic_record_new_graph(adamic_field_reference);
+  adamic_release(record);
+  fprintf(stderr, "record graph: moved %zu\n", (size_t)adamic_counted.graph_moves - moved);
  } else if (strcmp(mode, "plain") == 0) {
   // A record that's no graph member holds a graph node by a plain count, as before.
   adamic_object *n = node("n");
@@ -186,6 +195,8 @@ var recordGraphModes = []recordGraphMode{
 	{"refused-member-of-another-graph", "1\n0\nx\ny\n", []int{3, 2}},
 	// The wrapper and the table, one region.
 	{"regions", "", []int{2}},
+	// The wrapper and the table, one region, and neither moved.
+	{"moves", "", []int{2}},
 	// The node alone, freed by the plain table's release.
 	{"plain", "n\n", []int{1}},
 }
@@ -194,6 +205,7 @@ var (
 	recordGraphCounts = regexp.MustCompile(`(?m)^adamic: counts: allocations (\d+) frees (\d+) retains \d+ releases \d+ peak \d+ regions (\d+)\n\z`)
 	recordGraphReport = regexp.MustCompile(`(?m)^adamic: graph region: live (\d+) `)
 	recordGraphBirth  = regexp.MustCompile(`(?m)^record graph: regions made (\d+) merged (\d+)$`)
+	recordGraphMoves  = regexp.MustCompile(`(?m)^record graph: moved (\d+)$`)
 )
 
 type recordGraphRun struct {
@@ -270,6 +282,19 @@ func recordGraphRed(mode recordGraphMode, counted bool, run recordGraphRun) stri
 			return fmt.Sprintf("a graph record's birth left %d regions (made %d, merged %d), want 1", made-merged, made, merged)
 		}
 	}
+	if mode.name == "moves" {
+		moves := recordGraphMoves.FindStringSubmatch(run.stderr)
+		if moves == nil {
+			return "no moves line"
+		}
+		moved, err := strconv.Atoi(moves[1])
+		if err != nil {
+			return fmt.Sprintf("unreadable moves line: %v", err)
+		}
+		if moved != 0 {
+			return fmt.Sprintf("making and freeing a graph record moved %d values into graph storage, want 0", moved)
+		}
+	}
 	return ""
 }
 
@@ -303,7 +328,7 @@ func TestRecordGraph(t *testing.T) {
 // after, and the row reds names goes red.
 var recordGraphMutations = []struct{ name, before, after, reds string }{
 	// M1 reds closed.
-	{"M1-no-adoption", "\tmap = adamic_graph_adopt_owned(map, sizeof *map);\n\trecord->slots[0].reference = map;\n\trecord = adamic_graph_adopt_owned(record, adamic_object_allocation_size(record));\n\tadamic_graph_merge(record, map);\n", "\trecord->slots[0].reference = map;\n", "closed"},
+	{"M1-no-adoption", "\tadamic_record *record = adamic_object_new_graph(&record_reference_shape);\n\tadamic_map *map = adamic_map_new_graph(true, true);\n\tadamic_graph_born(map);\n\trecord->slots[0].reference = map;\n\tadamic_graph_born(record);\n\tadamic_graph_merge(record, map);\n", "\tadamic_record *record = adamic_object_new(&record_reference_shape);\n\tadamic_map *map = adamic_map_new(true, true);\n\trecord->slots[0].reference = map;\n", "closed"},
 	// M2 reds closed.
 	{"M2-no-take", "\t\tadamic_graph_take(map, key);\n\t\tif (map->reference_values) { adamic_graph_take(map, value.reference); }\n", "", "closed"},
 	// M3 reds refused-readonly.
@@ -312,6 +337,8 @@ var recordGraphMutations = []struct{ name, before, after, reds string }{
 	{"M4-let-go-drops", "\tadamic_release(key);\n\tif (map->reference_values) {\n\t\tadamic_release(value.reference);\n\t}\n", "\tif (adamic_graph_is(map)) { adamic_graph_drop(map, key); } else { adamic_release(key); }\n\tif (map->reference_values) {\n\t\tif (adamic_graph_is(map)) { adamic_graph_drop(map, value.reference); } else { adamic_release(value.reference); }\n\t}\n", "refused-member-of-another-graph"},
 	// M5 reds regions.
 	{"M5-no-merge", "\tadamic_graph_merge(record, map);\n", "", "regions"},
+	// M6 reds moves.
+	{"M6-adopted-by-move", "\tadamic_record *record = adamic_object_new_graph(&record_reference_shape);\n\tadamic_map *map = adamic_map_new_graph(true, true);\n\tadamic_graph_born(map);\n\trecord->slots[0].reference = map;\n\tadamic_graph_born(record);\n", "\tadamic_record *record = adamic_object_new(&record_reference_shape);\n\tadamic_map *map = adamic_map_new(true, true);\n\tmap = adamic_graph_adopt_owned(map, sizeof *map);\n\trecord->slots[0].reference = map;\n\trecord = adamic_graph_adopt_owned(record, adamic_object_allocation_size(record));\n", "moves"},
 }
 
 // recordGraphMutants is the record-graph-mutants product: the harness linked against each mutant's
