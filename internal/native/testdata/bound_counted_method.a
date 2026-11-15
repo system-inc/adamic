@@ -1,6 +1,8 @@
-// The zero-argument view admits both optional parameter representations.
-// NumberHost needs counted dispatch without reading arguments or collecting rest.
-interface View { m(): string; }
+// The view names the optional parameter, so the bind hides none (#04f5s0s stops a
+// bind whose target declares parameters its bound type doesn't name), and the call
+// passes none. NumberHost needs counted dispatch without reading arguments or
+// collecting rest; BooleanHost keeps the boolean optional representation beside it.
+interface View { m(value?: number): string; }
 class NumberHost {
     m(value?: number): string { return `number:${value ?? 7}`; }
 }
