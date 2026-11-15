@@ -1,0 +1,26 @@
+{
+  "command": [
+    "node",
+    "/workspace/scratch/receiver-split/adamic/stage3/api/node_modules/typescript/lib/tsc.js",
+    "--project",
+    "src/compiler/tsconfig.json",
+    "--noEmit",
+    "--strictFunctionTypes",
+    "true",
+    "--incremental",
+    "false",
+    "--composite",
+    "false",
+    "--pretty",
+    "false",
+    "--noErrorTruncation"
+  ],
+  "cwd": "/workspace/scratch/receiver-split/tree-parser",
+  "exit": 0,
+  "wall_seconds": 13.056,
+  "log": {
+    "path": "/workspace/scratch/receiver-split/results/parser-stock-tsc.log",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  }
+}

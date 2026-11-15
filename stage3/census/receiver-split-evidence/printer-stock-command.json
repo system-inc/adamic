@@ -1,0 +1,17 @@
+{
+  "command": [
+    "node",
+    "/workspace/scratch/receiver-split/stock-check.cjs",
+    "/workspace/scratch/receiver-split/tree-printer",
+    "/workspace/scratch/receiver-split/results/printer-stock-ast.json",
+    "28"
+  ],
+  "cwd": "/workspace/scratch/receiver-split/adamic",
+  "exit": 0,
+  "wall_seconds": 13.194,
+  "log": {
+    "path": "/workspace/scratch/receiver-split/results/printer-stock-command.log",
+    "bytes": 117,
+    "sha256": "ad8633f6043cc69d948eb2b990c0252d9cca9d3e87a2914645c2d1ed9ab43ac1"
+  }
+}

@@ -33,3 +33,11 @@ The remaining 16 transformer file pairs and all runtime/checker/integration/decl
 ## 13 complete file pairs
 
 All 13 completed CommonJSBundle pairs have 0 new and 0 changed findings outside targets. Complete command receipts and the sizes/sha256 of all completed raw traces and logs are included in this checkpoint. The remaining pairs and the checker, runtime, declaration, fresh-apply and unfiltered lane proofs are still pending.
+
+## All complete source censuses and checker/declaration proofs
+
+All 38 full single-file CommonJSBundle runs completed successfully, with zero checker diagnostics and complete relation trailers. All 19 pairs have 0 new and 0 changed findings outside targets. The seven historically hidden transformer sites still need the AST removal proof; no native body certification is inferred from their unchanged census counts.
+
+The final overload-aware whole-owner guards passed creation, zero-write replay, restoration and atomic-refusal controls. Stock emitted JavaScript is identical outside the 46 parser callee rewrites, the 52 transformer forwarding declarations, and the printer view/aliases. Negative safety controls detect all five unsafe cases with zero compiler-source writes. Stock TypeScript 6.0.3 API and CLI checks and adamic types are 0 on all three independent trees; API/types roots are explicitly 79. Each real restoring mutant reproduces all 79 baseline compiler files byte-for-byte. hereby dts produces byte-identical typescript.d.ts (593,536 bytes) and tsserverlibrary.d.ts (866 bytes) for every part.
+
+Fresh single-part apply runs, complete unfiltered ordinary/counting lanes, dynamic receiver counts, final ledger lines and the three adaptation pushes remain pending.

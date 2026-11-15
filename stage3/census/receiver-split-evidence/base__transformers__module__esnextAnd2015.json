@@ -1,0 +1,15 @@
+{
+  "command": [
+    "/workspace/scratch/receiver-split/latent",
+    "/workspace/scratch/receiver-split/baseline/src/compiler",
+    "/workspace/scratch/receiver-split/census/base__transformers__module__esnextAnd2015.jsonl"
+  ],
+  "exit": 0,
+  "wall_seconds": 59.989,
+  "environment": {
+    "LATENT_FULL": "1",
+    "LATENT_ASSERT_NO_OUTPUT": "1",
+    "CENSUS_MODULE_FORMAT": "CommonJSBundle",
+    "LATENT_ONLY_FILE": "/workspace/scratch/receiver-split/baseline/src/compiler/transformers/module/esnextAnd2015.ts"
+  }
+}

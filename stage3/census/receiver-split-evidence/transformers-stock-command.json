@@ -1,0 +1,17 @@
+{
+  "command": [
+    "node",
+    "/workspace/scratch/receiver-split/stock-check.cjs",
+    "/workspace/scratch/receiver-split/tree-transformers",
+    "/workspace/scratch/receiver-split/results/transformers-stock-ast.json",
+    "12"
+  ],
+  "cwd": "/workspace/scratch/receiver-split/adamic",
+  "exit": 0,
+  "wall_seconds": 13.268,
+  "log": {
+    "path": "/workspace/scratch/receiver-split/results/transformers-stock-command.log",
+    "bytes": 117,
+    "sha256": "b5c1f99d3c082ea99b522aca4573d6418ea0c4139c53317289f43c27783964c9"
+  }
+}

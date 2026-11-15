@@ -268,5 +268,133 @@
         "reason": "a method in object destructuring"
       }
     ]
+  },
+  {
+    "file": "src/compiler/transformers/legacyDecorators.ts",
+    "part": "transformers",
+    "pairing": "multiset (kind, phase, reason, message with source position stripped); identical-key multiplicities retain outside-target originals first; target removal also checked by AST",
+    "baseFindings": 300,
+    "changeFindings": 298,
+    "paired": 298,
+    "outsideTargetsNew": 0,
+    "outsideTargetsRemoved": 0,
+    "newFindings": 0,
+    "removedFindings": 2,
+    "changedOutsideTargets": 0,
+    "removedTargetReasons": [
+      {
+        "kind": "Boundary",
+        "phase": "lowering",
+        "reason": "failed statement; state rolled back; continued at next statement or declaration"
+      },
+      {
+        "kind": "Refused",
+        "phase": "lowering",
+        "reason": "a method in object destructuring"
+      }
+    ]
+  },
+  {
+    "file": "src/compiler/transformers/module/esnextAnd2015.ts",
+    "part": "transformers",
+    "pairing": "multiset (kind, phase, reason, message with source position stripped); identical-key multiplicities retain outside-target originals first; target removal also checked by AST",
+    "baseFindings": 122,
+    "changeFindings": 120,
+    "paired": 120,
+    "outsideTargetsNew": 0,
+    "outsideTargetsRemoved": 0,
+    "newFindings": 0,
+    "removedFindings": 2,
+    "changedOutsideTargets": 0,
+    "removedTargetReasons": [
+      {
+        "kind": "Boundary",
+        "phase": "lowering",
+        "reason": "failed statement; state rolled back; continued at next statement or declaration"
+      },
+      {
+        "kind": "Refused",
+        "phase": "lowering",
+        "reason": "a method in object destructuring"
+      }
+    ]
+  },
+  {
+    "file": "src/compiler/transformers/module/module.ts",
+    "part": "transformers",
+    "pairing": "multiset (kind, phase, reason, message with source position stripped); identical-key multiplicities retain outside-target originals first; target removal also checked by AST",
+    "baseFindings": 405,
+    "changeFindings": 405,
+    "paired": 405,
+    "outsideTargetsNew": 0,
+    "outsideTargetsRemoved": 0,
+    "newFindings": 0,
+    "removedFindings": 0,
+    "changedOutsideTargets": 0,
+    "removedTargetReasons": []
+  },
+  {
+    "file": "src/compiler/transformers/module/system.ts",
+    "part": "transformers",
+    "pairing": "multiset (kind, phase, reason, message with source position stripped); identical-key multiplicities retain outside-target originals first; target removal also checked by AST",
+    "baseFindings": 419,
+    "changeFindings": 417,
+    "paired": 417,
+    "outsideTargetsNew": 0,
+    "outsideTargetsRemoved": 0,
+    "newFindings": 0,
+    "removedFindings": 2,
+    "changedOutsideTargets": 0,
+    "removedTargetReasons": [
+      {
+        "kind": "Boundary",
+        "phase": "lowering",
+        "reason": "failed statement; state rolled back; continued at next statement or declaration"
+      },
+      {
+        "kind": "Refused",
+        "phase": "lowering",
+        "reason": "a method in object destructuring"
+      }
+    ]
+  },
+  {
+    "file": "src/compiler/transformers/ts.ts",
+    "part": "transformers",
+    "pairing": "multiset (kind, phase, reason, message with source position stripped); identical-key multiplicities retain outside-target originals first; target removal also checked by AST",
+    "baseFindings": 674,
+    "changeFindings": 674,
+    "paired": 674,
+    "outsideTargetsNew": 0,
+    "outsideTargetsRemoved": 0,
+    "newFindings": 0,
+    "removedFindings": 0,
+    "changedOutsideTargets": 0,
+    "removedTargetReasons": []
+  },
+  {
+    "file": "src/compiler/transformers/typeSerializer.ts",
+    "part": "transformers",
+    "pairing": "multiset (kind, phase, reason, message with source position stripped); identical-key multiplicities retain outside-target originals first; target removal also checked by AST",
+    "baseFindings": 97,
+    "changeFindings": 95,
+    "paired": 95,
+    "outsideTargetsNew": 0,
+    "outsideTargetsRemoved": 0,
+    "newFindings": 0,
+    "removedFindings": 2,
+    "changedOutsideTargets": 0,
+    "removedTargetReasons": [
+      {
+        "kind": "Refused",
+        "phase": "lowering",
+        "reason": "a method in object destructuring"
+      },
+      {
+        "kind": "Boundary",
+        "phase": "lowering",
+        "reason": "failed statement; state rolled back; continued at next statement or declaration"
+      }
+    ]
   }
 ]
