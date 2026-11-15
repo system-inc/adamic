@@ -309,6 +309,13 @@ func generate(repository, lowerInput string) []byte {
 						// judged accesses beside it, checkedFieldWrites, viewSiteSeen and viewSiteTrue, are deep copies,
 						// and roll back with CheckedFields.
 						expr = "value." + id.Name
+					} else if name == "lowering" && id.Name == "placeholderSlots" && printed(field.Type) == "*placeholderSlotCache" {
+						// Shared on purpose, as viewSites is: notePlaceholderSlots' answer by checker and program, a
+						// function of the two alone, which a lowering under a type mapper or a kept slot neither reads
+						// nor fills (placeholder.go, #6xt6p1f). A lowering only ever clones its maps out, so a copy
+						// sharing the holder can't write into another lowering's answer, and the PlaceholderSources and
+						// PlaceholderViews it holds are deep copies with the rest of its IR.
+						expr = "value." + id.Name
 					} else {
 						expr = g.copyField(name, id, field)
 					}
