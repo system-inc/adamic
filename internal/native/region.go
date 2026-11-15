@@ -198,7 +198,17 @@ func (plan *regionPlan) escaping(body []ir.Statement, parameter int) bool {
 		case ir.Read:
 			return expression.Local == parameter
 		case ir.Property:
-			return derived(expression.Object)
+			// A number or a boolean read off the parameter is a copy, and can't carry the object out: the
+			// object is looked at, and the value is no part of it (#1jch5ez). A string field is held by
+			// reference and may be in the object's region, so it stays derived.
+			if derived(expression.Object) {
+				switch expression.Of {
+				case ir.Number, ir.Boolean, ir.MaybeNumber, ir.MaybeBoolean:
+					return false
+				}
+				return true
+			}
+			return false
 		case ir.Narrow:
 			return derived(expression.Value)
 		case ir.Defined:
