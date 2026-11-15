@@ -91,7 +91,7 @@ type cycleFinder struct {
 	// recordCells the captured cells graphTypes seeds, each judged once the graph types are selected
 	// (judgeRecordSlots).
 	recordSlots []recordSlotNote
-	recordCells []int
+	recordCells []recordSlotNote
 	// recordStop is the first of them that can hold a record of a type graphTypes didn't select, which
 	// no graph region holds, returned by graphTypes after the boundary's refusals.
 	recordStop error
