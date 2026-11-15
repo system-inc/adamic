@@ -143,11 +143,15 @@ func TestTheNoWriteProofRefusesWhatTheProcessCouldChange(t *testing.T) {
 	}
 }
 
-// The read-only mount proof holds only when every mount at or under the root is read-only, as mountinfo has them: a
-// mount point is under the root by whole path components, and its octal escapes are decoded.
+// The read-only mount proof holds only when every mount at or under the root is read-only, as mountinfo has them, and
+// so is every mount of the root's filesystem that reaches the root's part of it: a mount point is under the root by
+// whole path components, and its octal escapes are decoded. A root on no mount mountinfo names proves nothing.
 // Mutant: mountinfo not asked, only the root's own mount: "a writable mount below" goes red.
 // Mutant: under the root by string prefix: "a writable sibling" goes red.
 // Mutant: escapes not decoded: "an escaped writable mount below" goes red.
+// Mutant: matched by path only, the device pass skipped: "a read-only bind whose filesystem is mounted writable above"
+// goes red.
+// Mutant: a root on no mount named taken as proven: "the root's own mount missing" goes red.
 func TestAReadOnlyMountHoldsOnlyWhenEveryMountUnderTheRootIsReadOnly(t *testing.T) {
 	t.Parallel()
 	for name, test := range map[string]struct {
@@ -162,6 +166,16 @@ func TestAReadOnlyMountHoldsOnlyWhenEveryMountUnderTheRootIsReadOnly(t *testing.
 			"24 21 0:23 / /src-other rw,relatime - ext4 /dev/sdb1 rw\n", true},
 		"an escaped writable mount below": {"/src tree", "22 1 0:21 / /src\\040tree ro,relatime - ext4 /dev/sda1 ro\n" +
 			"23 22 0:22 / /src\\040tree/cache rw,relatime - tmpfs tmpfs rw\n", false},
+		"a read-only bind whose filesystem is mounted writable above": {"/var/lib/job/tree", "21 0 8:2 / / ro,relatime - ext4 /dev/sda2 ro\n" +
+			"29 21 8:1 /job /var/lib/job rw,relatime - ext4 /dev/sda1 rw\n" +
+			"30 21 8:1 /job/tree /var/lib/job/tree ro,relatime - ext4 /dev/sda1 rw\n", false},
+		"a read-only bind whose filesystem is mounted writable for another subtree": {"/var/lib/job/tree", "21 0 8:2 / / ro,relatime - ext4 /dev/sda2 ro\n" +
+			"29 21 8:1 /other /mnt/other rw,relatime - ext4 /dev/sda1 rw\n" +
+			"30 21 8:1 /job/tree /var/lib/job/tree ro,relatime - ext4 /dev/sda1 rw\n", true},
+		"a read-only bind and another device writable above": {"/var/lib/job/tree", "21 0 8:2 / / ro,relatime - ext4 /dev/sda2 ro\n" +
+			"29 21 8:3 /job /var/lib/job rw,relatime - ext4 /dev/sdb1 rw\n" +
+			"30 29 8:1 /job/tree /var/lib/job/tree ro,relatime - ext4 /dev/sda1 rw\n", true},
+		"the root's own mount missing": {"/var/lib/job/tree", "29 1 8:1 /other /mnt/other ro,relatime - ext4 /dev/sda1 ro\n", false},
 	} {
 		t.Run(name, func(t *testing.T) {
 			t.Parallel()
@@ -181,8 +195,8 @@ func TestTheReadOnlyMountProofNeedsMountinfo(t *testing.T) {
 		mountInfo func() ([]byte, error)
 		want      string
 	}{
-		"unreadable":     {func() ([]byte, error) { return nil, errors.New("no /proc here") }, "/proc/self/mountinfo: no /proc here"},
-		"no mount below": {func() ([]byte, error) { return []byte{}, nil }, ""},
+		"unreadable":            {func() ([]byte, error) { return nil, errors.New("no /proc here") }, "/proc/self/mountinfo: no /proc here"},
+		"read-only, none below": {func() ([]byte, error) { return []byte("21 0 8:1 / / ro,relatime - ext4 /dev/sda1 ro\n"), nil }, ""},
 	} {
 		t.Run(name, func(t *testing.T) {
 			t.Parallel()
