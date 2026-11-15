@@ -398,24 +398,81 @@ func (l *lowering) sameKeeping(from *checker.Type, to *checker.Type, visited map
 // sameKeepingWalk is sameKeeping's walk of what each side keeps weakly or strongly, and of each
 // function's slots by representation.
 func (l *lowering) sameKeepingWalk(from *checker.Type, to *checker.Type, visited map[[2]*checker.Type]bool) bool {
+	return l.sameKeepingWalkMode(from, to, visited, false)
+}
+
+func (l *lowering) sameKeepingWalkMode(from, to *checker.Type, visited map[[2]*checker.Type]bool, weakOnly bool) bool {
+	if from == to {
+		return true
+	}
+	members := func(t *checker.Type) ([]*checker.Type, int) {
+		parts := []*checker.Type{t}
+		if t.Flags()&checker.TypeFlagsUnion != 0 {
+			parts = t.Types()
+		}
+		present := 0
+		for _, part := range parts {
+			if part.Flags()&(checker.TypeFlagsUndefined|checker.TypeFlagsNull) == 0 {
+				present++
+			}
+		}
+		return parts, present
+	}
+	fromMembers, fromCount := members(from)
+	toMembers, toCount := members(to)
+	// Compare unions before present erases them, including unions reached through slots.
+	// Only retention is new here: these unions previously skipped callable slot checks.
+	if fromCount > 1 || toCount > 1 {
+		if toCount <= 1 && l.present(to) == nil {
+			return true
+		}
+		if !weakOnly {
+			visited = map[[2]*checker.Type]bool{}
+		}
+		pair := [2]*checker.Type{from, to}
+		if visited[pair] {
+			return true
+		}
+		visited[pair] = true
+		for _, member := range fromMembers {
+			if !l.checker.IsTypeAssignableTo(member, to) {
+				continue
+			}
+			matched := false
+			for _, target := range toMembers {
+				const nullish = checker.TypeFlagsUndefined | checker.TypeFlagsNull
+				if (member.Flags()&nullish != 0) != (target.Flags()&nullish != 0) || !l.checker.IsTypeAssignableTo(member, target) {
+					continue
+				}
+				matched = true
+				if !l.sameKeepingWalkMode(member, target, visited, true) {
+					return false
+				}
+			}
+			if !matched {
+				return false
+			}
+		}
+		return true
+	}
 	from, to = l.present(from), l.present(to)
 	if from == nil || to == nil || from == to || visited[[2]*checker.Type{from, to}] {
 		return true
 	}
 	visited[[2]*checker.Type{from, to}] = true
-	if fromKind, toKind := l.typedArrayKind(from), l.typedArrayKind(to); fromKind != 0 || toKind != 0 {
+	if fromKind, toKind := l.typedArrayKind(from), l.typedArrayKind(to); !weakOnly && (fromKind != 0 || toKind != 0) {
 		return fromKind != 0 && fromKind == toKind
 	}
-	if !l.nodeBufferView(from, to) {
+	if !weakOnly && !l.nodeBufferView(from, to) {
 		return false
 	}
 	if a, b := l.recordElement(from), l.recordElement(to); a != nil && b != nil {
-		return l.sameKeepingWalk(a, b, visited)
+		return l.sameKeepingWalkMode(a, b, visited, weakOnly)
 	}
 	same := func(inside, viewed *checker.Type) bool {
 		fromKept, _ := l.kept(inside)
 		toKept, _ := l.kept(viewed)
-		return (fromKept == ir.Weak) == (toKept == ir.Weak) && l.sameKeepingWalk(inside, viewed, visited)
+		return (fromKept == ir.Weak) == (toKept == ir.Weak) && l.sameKeepingWalkMode(inside, viewed, visited, weakOnly)
 	}
 	fromSignatures := l.checker.GetSignaturesOfType(from, checker.SignatureKindCall)
 	toSignatures := l.checker.GetSignaturesOfType(to, checker.SignatureKindCall)
@@ -429,7 +486,7 @@ func (l *lowering) sameKeepingWalk(from *checker.Type, to *checker.Type, visited
 			return !(fromKept == ir.Union && !toKept.IsReference() || toKept == ir.Union && !fromKept.IsReference()) && same(inside, viewed)
 		}
 		// Intrinsic callback adapters call the source signature, not the library's wider view.
-		if declaration := toSignatures[0].Declaration(); declaration != nil && load.IsLibrary(ast.GetSourceFileOfNode(declaration)) {
+		if declaration := toSignatures[0].Declaration(); weakOnly || declaration != nil && load.IsLibrary(ast.GetSourceFileOfNode(declaration)) {
 			sameCallable = same
 		}
 		fromParameters, toParameters := fromSignatures[0].Parameters(), toSignatures[0].Parameters()
@@ -437,7 +494,8 @@ func (l *lowering) sameKeepingWalk(from *checker.Type, to *checker.Type, visited
 			toParameters = nil
 		}
 		for index := 0; index < len(fromParameters) && index < len(toParameters); index++ {
-			if !sameCallable(l.checker.GetTypeOfSymbol(fromParameters[index]), l.checker.GetTypeOfSymbol(toParameters[index])) {
+			// Arguments flow from the view's parameter into the function's own parameter.
+			if !sameCallable(l.checker.GetTypeOfSymbol(toParameters[index]), l.checker.GetTypeOfSymbol(fromParameters[index])) {
 				return false
 			}
 		}
@@ -454,7 +512,7 @@ func (l *lowering) sameKeepingWalk(from *checker.Type, to *checker.Type, visited
 				collected = max(collected, len(fromParameters))
 			}
 			for position := rest; position < collected; position++ {
-				if !sameCallable(l.elementTypeOfArray(l.checker.GetTypeOfSymbol(fromParameters[rest])), l.checker.GetTypeAtPosition(toSignatures[0], position)) {
+				if !sameCallable(l.checker.GetTypeAtPosition(toSignatures[0], position), l.elementTypeOfArray(l.checker.GetTypeOfSymbol(fromParameters[rest]))) {
 					return false
 				}
 			}
@@ -470,8 +528,15 @@ func (l *lowering) sameKeepingWalk(from *checker.Type, to *checker.Type, visited
 	default:
 		for _, viewed := range l.checker.GetPropertiesOfType(to) {
 			if viewed.Flags&ast.SymbolFlagsMethod != 0 {
-				if inside := l.checker.GetPropertyOfType(from, viewed.Name); inside != nil && !l.sameWeakMethodSlots(l.checker.GetTypeOfSymbol(inside), l.checker.GetTypeOfSymbol(viewed)) {
-					return false
+				if inside := l.checker.GetPropertyOfType(from, viewed.Name); inside != nil {
+					a, b := l.checker.GetTypeOfSymbol(inside), l.checker.GetTypeOfSymbol(viewed)
+					if weakOnly {
+						if !same(a, b) {
+							return false
+						}
+					} else if !l.sameWeakMethodSlots(a, b) {
+						return false
+					}
 				}
 				continue
 			}
