@@ -34,7 +34,18 @@ import (
 // element and entry lowering makes into a loose slot, read in the instantiation being lowered. A value
 // that is itself unknown, object, any or a type parameter makes H every shape (looseSlots.every): its type says
 // nothing of what it holds. So does a captured variable typed loose whose values don't all arrive by a
-// site above: a parameter, a catch binding, a destructured or a loop binding (looseCellEvery).
+// site above: a parameter, a destructured or a loop binding (looseCellEvery).
+//
+// A catch binding holds what can be caught (#kaz4pk8, Adamic at 03:13Z): every value reaching a catch
+// passes a throw, a rejection or a host throw, so a captured catch binding is judged by those operands
+// (looseCaught) rather than as every shape. looseCaughtRoad reads them in the same walk: a throw's
+// operand, the arguments of a direct call of a member named reject, throw or abort (Promise.reject, a
+// generator's or an iterator's throw, an abort's reason, which throwIfAborted or a host rejection throws
+// later), and lib's Error for what the runtime and the library throw. A road the walk can't read makes
+// what's caught every shape, as before: an operand that is itself loose (a rethrow of a caught value
+// among them), any other read of reject, throw, abort or withResolvers (taken as a value, by element
+// access or destructured), and a Promise made by new, whose executor's reject can be handed anything.
+// Error's cause is unknown, so a caught Error reaches H like any loose slot.
 //
 // Where an any can still reach a store: a library declaration's any (JSON.parse's result, an any callback
 // parameter, Function.prototype.call's arguments), and any any an adaptation left in tsc's sources. An
@@ -84,6 +95,11 @@ type looseSlots struct {
 	// everything is every type a value can be, valid while shapes holds everythingShapes types.
 	everything       []cycleNode
 	everythingShapes int
+	// caught is what a catch binding can hold (looseCaught), caughtEvery whether a road into a catch the
+	// walk can't read makes it every shape, and caughtLibrary whether lib's Error has joined caught.
+	caught        []*checker.Type
+	caughtEvery   bool
+	caughtLibrary bool
 }
 
 // looseInit is a literal's field, element or entry lowering made: the literal's type (holder), the
@@ -104,6 +120,7 @@ func (f *cycleFinder) looseEntry(node *ast.Node) {
 	if l.programDiscovery {
 		return
 	}
+	f.looseCaughtRoad(node)
 	switch node.Kind {
 	case ast.KindShorthandPropertyAssignment:
 		symbol := l.checker.GetShorthandAssignmentValueSymbol(node)
@@ -155,7 +172,7 @@ func (f *cycleFinder) looseEntry(node *ast.Node) {
 		return
 	case ast.KindThrowStatement:
 		if thrown := node.AsThrowStatement().Expression; thrown != nil {
-			f.looseHold(l.checker.GetTypeAtLocation(thrown))
+			f.looseCatch(l.checker.GetTypeAtLocation(thrown))
 		}
 		return
 	case ast.KindForOfStatement, ast.KindForInStatement:
@@ -192,6 +209,89 @@ func (f *cycleFinder) looseEntry(node *ast.Node) {
 	}
 	f.looseKeep(looseReceiver(node), source)
 	f.looseKeep(f.looseVariable(node), source)
+}
+
+// looseCaughtNames are the members whose call throws or rejects with a value it's handed, now or later
+// (looseCaughtRoad): true where a direct call's arguments are what it can throw, false where it hands out
+// a function that can (Promise.withResolvers' reject), so any read of it is a road the walk can't follow.
+var looseCaughtNames = map[string]bool{"reject": true, "throw": true, "abort": true, "withResolvers": false}
+
+// looseCaughtRoad reads a road into a catch at one node, other than a throw (the comment at the top of this
+// file). A member of looseCaughtNames is matched by name alone, a user method's too: its arguments joining
+// what's caught only widens it.
+func (f *cycleFinder) looseCaughtRoad(node *ast.Node) {
+	l := f.l
+	switch node.Kind {
+	case ast.KindNewExpression:
+		if l.isLibraryType(l.checker.GetTypeAtLocation(node), "Promise") {
+			f.loose.caughtEvery = true
+		}
+	case ast.KindPropertyAccessExpression:
+		name := node.AsPropertyAccessExpression().Name()
+		if name == nil {
+			return
+		}
+		forwards, named := looseCaughtNames[name.Text()]
+		if !named {
+			return
+		}
+		site, parent := looseSite(node)
+		if forwards && parent != nil && parent.Kind == ast.KindCallExpression && parent.AsCallExpression().Expression == site {
+			for _, argument := range parent.AsCallExpression().Arguments.Nodes {
+				f.looseCatch(l.checker.GetTypeAtLocation(argument))
+			}
+			return
+		}
+		f.loose.caughtEvery = true
+	case ast.KindElementAccessExpression:
+		if argument := node.AsElementAccessExpression().ArgumentExpression; argument != nil && ast.IsStringLiteralLike(argument) {
+			if _, named := looseCaughtNames[argument.Text()]; named {
+				f.loose.caughtEvery = true
+			}
+		}
+	case ast.KindBindingElement:
+		name := node.PropertyNameOrName()
+		if name != nil && (ast.IsIdentifier(name) || ast.IsStringLiteralLike(name)) {
+			if _, named := looseCaughtNames[name.Text()]; named {
+				f.loose.caughtEvery = true
+			}
+		}
+	}
+}
+
+// looseCatch adds a value that can reach a catch to what's caught, and to H, since a catch binding is a
+// loose slot; a value that is itself loose makes both every shape.
+func (f *cycleFinder) looseCatch(source *checker.Type) {
+	if source == nil {
+		return
+	}
+	if looseSource(source) {
+		f.loose.caughtEvery = true
+	}
+	f.loose.caught = append(f.loose.caught, source)
+	f.looseHold(source)
+}
+
+// looseCaught is what a catch binding can hold: every operand looseCatch read, and lib's Error for what the
+// runtime and the library throw (a TypeError, a RangeError, a coded host error), whose fields are strings
+// beside cause, a loose slot. With no Error to read, what's caught is every shape.
+func (f *cycleFinder) looseCaught() []*checker.Type {
+	if !f.loose.caughtLibrary {
+		f.loose.caughtLibrary = true
+		if symbol := f.l.checker.GetGlobalSymbol("Error", ast.SymbolFlagsInterface, nil); symbol != nil {
+			f.loose.caught = append(f.loose.caught, f.l.checker.GetDeclaredTypeOfSymbol(symbol))
+		} else {
+			f.loose.caughtEvery = true
+		}
+	}
+	return f.loose.caught
+}
+
+// looseCaughtCell is whether a captured variable is a catch binding judged by what's caught (looseCaught)
+// rather than as every shape, which it is whenever every road into a catch is one the walk reads.
+func (f *cycleFinder) looseCaughtCell(local int) bool {
+	node := f.l.localNodes[local]
+	return node != nil && node.Parent != nil && node.Parent.Kind == ast.KindVariableDeclaration && node.Parent.Parent != nil && node.Parent.Parent.Kind == ast.KindCatchClause && !f.loose.caughtEvery
 }
 
 // looseEnter adds source to H when target holds a loose slot, and says whether it did.
@@ -429,11 +529,11 @@ func (f *cycleFinder) looseFields(proven *checker.Type) bool {
 
 // looseCellEvery is whether a captured variable typed loose can hold values no site looseEntry reads put
 // there: anything but a variable a declaration statement declares (a parameter's argument may come from a
-// callback's caller, a catch binding's from a throw, a loop or destructured binding's from what it
-// reads), so it holds every shape.
+// callback's caller, a loop or destructured binding's from what it reads), so it holds every shape. A
+// catch binding is judged by what's caught instead (looseCaughtCell), unless that's every shape.
 func (f *cycleFinder) looseCellEvery(local int) bool {
 	proven := f.l.localTypes[local]
-	if proven == nil || !f.holdsLoose(proven) {
+	if proven == nil || !f.holdsLoose(proven) || f.looseCaughtCell(local) {
 		return false
 	}
 	node := f.l.localNodes[local]
@@ -502,6 +602,14 @@ func (f *cycleFinder) looseLinksOf(node cycleNode) []cycleNode {
 	}
 	if node.cell != 0 && f.looseCellEvery(node.cell-1) {
 		return append(append([]cycleNode{}, links...), f.looseAll()...)
+	}
+	if node.cell != 0 && f.looseCaughtCell(node.cell-1) {
+		// A catch binding's cell holds what's caught, lib's Error included, beside H.
+		caught := append([]cycleNode{}, links...)
+		for _, each := range f.looseCaught() {
+			caught = append(caught, cycleNode{proven: each})
+		}
+		return caught
 	}
 	return links
 }
@@ -720,6 +828,14 @@ func (f *cycleFinder) looseSlotStop() error {
 // and each literal's initialization, and the first that can reach back stops.
 func (f *cycleFinder) looseEntryStop(inits []looseInit) error {
 	l := f.l
+	// What's caught is read whole, lib's Error included, before anything is judged by it, in a program with
+	// a captured catch binding typed loose, the only one that asks.
+	for local, declared := range l.result.Locals {
+		if declared.Captured && !declared.Global && l.localTypes[local] != nil && f.holdsLoose(l.localTypes[local]) && f.looseCaughtCell(local) {
+			f.looseCaught()
+			break
+		}
+	}
 	writes := f.looseWrites()
 	for _, write := range writes {
 		if write.value != nil && looseScalar(write.value) {
@@ -744,6 +860,21 @@ func (f *cycleFinder) looseEntryStop(inits []looseInit) error {
 				continue
 			}
 			return write.stop(write.what + ", written a value of type " + l.checker.TypeToString(source) + " that can reach back to " + looseBack(l, write) + " through what a value held as unknown or object can be: " + looseStopWords)
+		}
+	}
+	for local, declared := range l.result.Locals {
+		if !declared.Captured || declared.Global || l.localTypes[local] == nil || !f.holdsLoose(l.localTypes[local]) || !f.looseCaughtCell(local) || l.closedFrameInput(local) {
+			continue
+		}
+		for _, caught := range f.looseCaught() {
+			if !f.looseReaches(caught, cycleNode{cell: local + 1}) {
+				continue
+			}
+			what := "'" + declared.Name + "', a catch binding a function value captures, of type " + l.checker.TypeToString(l.localTypes[local]) + ", which can hold a caught value of type " + l.checker.TypeToString(caught) + " that can reach its own cell back through what a value held as unknown or object can be: " + looseStopWords
+			if node := l.localNodes[local]; node != nil {
+				return l.notYet(node, what)
+			}
+			return &NotYet{Where: l.result.Source, What: what}
 		}
 	}
 	for local, declared := range l.result.Locals {

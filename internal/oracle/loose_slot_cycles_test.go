@@ -22,8 +22,13 @@ const looseSlotWords = "a cycle the cycle finder can't follow through unknown or
 // generic T), three loose hops (l09) and Lower's k17 (a captured unknown) and k18 (a cycle entering a loose
 // slot by an initializer and closing at a declared slot). l03 and l09 are the roads back only through a
 // type H holds itself, never through a field of one, which is what the mutant narrowing H to its entries'
-// fields loses. Each stops where the value enters the loose slot, at the line and column given. A road
-// another wall already stops (other) is held to stopping, whichever stop it is.
+// fields loses. l10 to l12 are Runtime's and Adamic's roads into a captured catch binding (#kaz4pk8,
+// 03:13Z), which is judged by what can be caught: a thrown Error subclass holding the readers array, an
+// Error whose cause is the readers array (stopped at the cause's write) and Promise.reject(readers) reaching
+// an awaited catch (stopped at the binding). Stage 0 can't extend Error yet ("a base that isn't a declared
+// class"), so l10 stops at that wall first, and must reach this stop the day Error subclasses lower. Each
+// stops where the value enters the loose slot, at the line and column given. A road another wall already
+// stops (other) is held to stopping, whichever stop it is.
 var looseSlotStops = []struct {
 	name, at string
 	other    bool
@@ -52,13 +57,18 @@ var looseSlotStops = []struct {
 	{name: "l07_object_assign", other: true},
 	{name: "l08_generic_t", at: ":3:5"},
 	{name: "l09_three_hops", at: ":7:1"},
+	{name: "l10_catch_subclass_readers", other: true},
+	{name: "l11_catch_cause_readers", at: ":5:9"},
+	{name: "l12_catch_reject_readers", at: ":5:14"},
 }
 
 // looseSlotControls must lower and let go of everything: the controls of #t5q4prw and #kaz4pk8 (g07,
 // g09c, g09d, g10, k02, k07, k08, k09, k16), a leaf object written into unknown (c01), a Node handed to
-// an unknown parameter that stores it nowhere (c02) and a generator whose TNext is unknown collected by
-// new Map (c03: only its yield type is stored, as generators/new_map_plain.a's). region is whether it
-// forms a graph region, as g09c, g10, k02, k07 and k08 did before the stop.
+// an unknown parameter that stores it nowhere (c02), a generator whose TNext is unknown collected by new
+// Map (c03: only its yield type is stored, as generators/new_map_plain.a's) and internal/lower's
+// TestAsyncRepeatedBindingsLower row 004 (c04: a catch binding captured in a loop around an await, where
+// every throw is a new Error and nothing writes readers into a loose slot, so what's caught can't reach it).
+// region is whether it forms a graph region, as g09c, g10, k02, k07 and k08 did before the stop.
 var looseSlotControls = []struct {
 	name, want string
 	region     bool
@@ -75,6 +85,7 @@ var looseSlotControls = []struct {
 	{name: "c01_leaf_object", want: "a\n"},
 	{name: "c02_unknown_parameter", want: "object a\n"},
 	{name: "c03_generator_next_unknown", want: "2\nk0,k1\n"},
+	{name: "c04_catch_capture_errors", want: "item0\nitem1\nitem2\n"},
 }
 
 // looseSlotSource writes a pin's committed text into a file of its own.
