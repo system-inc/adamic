@@ -1,0 +1,6 @@
+interface Maybe { test?: (text: string) => boolean }
+type Alias = Maybe;
+const t: Maybe = /a/;
+const v: Alias = t;
+const f = v.test;
+console.log(f === undefined ? 'missing' : 'function');

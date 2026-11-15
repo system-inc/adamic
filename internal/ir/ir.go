@@ -10,6 +10,8 @@ import "fmt"
 
 // Program is one compiled Adamic program.
 type Program struct {
+	// RegExpServedView confines prototype presence emission to programs serving RegExp test.
+	RegExpServedView     bool
 	ProgramRegion        bool
 	ProgramTypes         SortedMap[int, bool]
 	GraphTypes           SortedMap[int, bool]

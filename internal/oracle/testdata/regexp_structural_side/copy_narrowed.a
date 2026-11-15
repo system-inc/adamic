@@ -1,0 +1,7 @@
+interface Maybe { test?: (text: string) => boolean }
+const t: Maybe = /a/;
+const f = t.test;
+if (f !== undefined) {
+	const o: Maybe = { test: f };
+	try { console.log(String(o.test?.('a'))); } catch (e) { if (e instanceof Error) console.log(e.name + ': ' + e.message); }
+}

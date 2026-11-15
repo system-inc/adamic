@@ -1,0 +1,6 @@
+interface Maybe { test?: (text: string) => boolean }
+function describe(value: Maybe): void {
+	console.log(String('test' in value));
+}
+describe(/a/);
+describe({});
