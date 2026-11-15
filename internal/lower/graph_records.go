@@ -88,7 +88,9 @@ func (f *cycleFinder) reassigned(local int) bool {
 
 // recordWritten reports whether lowering made any write into a record: a write site whose holder is a
 // record, or a union with a record among its members (set, defineHidden, ??=, a computed key, or the
-// entries form's field write). It fails closed: a record written anywhere makes every empty literal count.
+// entries form's field write). Object.assign with a record as its target never lowers, so it makes no
+// write site: it's NotYet in records.go's recordObjectCallArguments. It fails closed: a record written
+// anywhere makes every empty literal count.
 func (f *cycleFinder) recordWritten() bool {
 	if f.recordWrites == 0 {
 		f.recordWrites = -1
