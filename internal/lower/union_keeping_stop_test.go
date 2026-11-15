@@ -1,11 +1,19 @@
 package lower
 
 import (
+	"context"
 	"errors"
 	"fmt"
+	"os"
 	"path/filepath"
 	"strings"
 	"testing"
+
+	"github.com/microsoft/TypeScript/tsc/shim/ast"
+	"github.com/microsoft/TypeScript/tsc/shim/checker"
+	"github.com/microsoft/TypeScript/tsc/shim/core"
+	"github.com/microsoft/TypeScript/tsc/shim/parser"
+	"github.com/system-inc/adamic/internal/load"
 )
 
 func TestUnionKeepingAssignments(t *testing.T) {
@@ -222,43 +230,148 @@ func TestUnionKeepingDepthLimit(t *testing.T) {
 		fmt.Fprintf(&source, "type Level%d = { readonly next: Level%d };\n", depth, depth-1)
 	}
 	source.WriteString(`type Held = { readonly kind: 'v'; readonly v: Level70 } | { readonly kind: 'w'; readonly w: number };
+type Twin = { readonly kind: 'v'; readonly v: Level70 } | { readonly kind: 'w'; readonly w: number };
 function make(): Held { return { kind: 'w', w: 1 }; }
 const held: Held = make();
-console.log(held.kind);
+const twin: Twin = held;
+console.log(twin.kind);
 `)
 	for _, extension := range []string{".a", ".ts"} {
 		t.Run(extension, func(t *testing.T) {
 			program, err := lowerSourceAs(t, source.String(), extension)
 			var stop *NotYet
-			if !errors.As(err, &stop) || program != nil || filepath.Base(stop.Where) != "main"+extension+":74:20" {
-				t.Fatalf("want fail-closed depth NotYet at 74:20, got program=%v error=%v", program != nil, err)
+			if !errors.As(err, &stop) || program != nil || filepath.Base(stop.Where) != "main"+extension+":76:20" {
+				t.Fatalf("want fail-closed depth NotYet at 76:20, got program=%v error=%v", program != nil, err)
 			}
 			t.Log(err)
 		})
 	}
 }
 
-// The Weak is hidden only in T here. A direct T witness supplies the mapper;
-// main does not infer T from the union alias alone.
+// An identical mapped Weak union is an identity view, so it stays admitted.
 func TestUnionKeepingMappedWeakArgument(t *testing.T) {
 	const source = `import type { Weak } from 'adamic';
 interface Box { readonly label: string }
 type Held<T> = { readonly kind: 'v'; readonly v: T } | { readonly kind: 'w'; readonly w: number };
-function copy<T>(x: Held<T>, witness: T): Held<T> {
- const seen: Held<T> = x;
- return seen;
-}
-const got = copy<Weak<Box>>({ kind: 'v', v: { label: 'new'.repeat(2) } }, undefined);
+function copy<T>(x: Held<T>, witness: T): Held<T> { const seen: Held<T> = x; return seen; }
+const box: Box = { label: 'new'.repeat(2) };
+const got = copy<Weak<Box>>({ kind: 'v', v: box }, box);
 if (got.kind === 'v' && got.v !== undefined) console.log(got.v.label);
+`
+	for _, extension := range []string{".a", ".ts"} {
+		t.Run(extension, func(t *testing.T) { lowersAndAgreesWithNodeAs(t, source, extension) })
+	}
+}
+
+func TestUnionKeepingRegExpLibrary(t *testing.T) {
+	const source = `const p: string | RegExp = "[[/]/";
+const regex = new RegExp(p, 'u');
+console.log(regex.source + '|' + regex.flags + '|' + String(regex.test('//')));
+`
+	for _, extension := range []string{".a", ".ts"} {
+		t.Run(extension, func(t *testing.T) { lowersAndAgreesWithNodeAs(t, source, extension) })
+	}
+}
+
+func TestUnionKeepingRecursiveNoWeak(t *testing.T) {
+	const source = `type N = { readonly parent?: N; readonly kind: 'a' } | { readonly parent?: N; readonly kind: 'b' };
+type Twin = { readonly parent?: Twin; readonly kind: 'a' } | { readonly parent?: Twin; readonly kind: 'b' };
+function make(): N { return { kind: 'a' }; }
+const first: N = make();
+const same: N = first;
+const twin: Twin = same;
+console.log(twin.kind);
+`
+	for _, extension := range []string{".a", ".ts"} {
+		t.Run(extension, func(t *testing.T) { lowersAndAgreesWithNodeAs(t, source, extension) })
+	}
+}
+
+func TestUnionKeepingLibraryWeakArgument(t *testing.T) {
+	const source = `import type { Weak } from 'adamic';
+interface Box { readonly label: string }
+type Weakly = { readonly kind: 'v'; readonly v: readonly Weak<Box>[] } | { readonly kind: 'w'; readonly w: number };
+type Strong = { readonly kind: 'v'; readonly v: readonly (Box | undefined)[] } | { readonly kind: 'w'; readonly w: number };
+function make(box: Box): Weakly { return { kind: 'v', v: [box] }; }
+const first: Weakly = make({ label: 'new'.repeat(2) });
+const second: Strong = first;
+console.log(second.kind);
 `
 	for _, extension := range []string{".a", ".ts"} {
 		t.Run(extension, func(t *testing.T) {
 			program, err := lowerSourceAs(t, source, extension)
 			var stop *NotYet
-			if !errors.As(err, &stop) || program != nil || filepath.Base(stop.Where) != "main"+extension+":5:24" {
-				t.Fatalf("want mapped Weak argument NotYet at 5:24, got program=%v error=%v", program != nil, err)
+			if !errors.As(err, &stop) || program != nil || filepath.Base(stop.Where) != "main"+extension+":7:24" {
+				t.Fatalf("want library Weak argument NotYet at 7:24, got program=%v error=%v", program != nil, err)
 			}
 			t.Log(err)
+		})
+	}
+}
+
+func TestUnionKeepingPreludeDoesNotHideWeak(t *testing.T) {
+	source, err := os.ReadFile("../load/prelude.d.ts")
+	if err != nil {
+		t.Fatal(err)
+	}
+	file := parser.ParseSourceFile(ast.SourceFileParseOptions{}, string(source), core.ScriptKindTS)
+	weakAliases := 0
+	var visit ast.Visitor
+	visit = func(node *ast.Node) bool {
+		if node.Kind == ast.KindTypeAliasDeclaration && node.Name().Text() == "Weak" {
+			weakAliases++
+			return false
+		}
+		if ast.IsIdentifier(node) && (node.Text() == "Weak" || node.Text() == "WeakBrand") && !ast.IsDeclarationName(node) && ast.IsPartOfTypeNode(node) {
+			t.Errorf("prelude type outside Weak names %s", node.Text())
+		}
+		return node.ForEachChild(visit)
+	}
+	file.AsNode().ForEachChild(visit)
+	if weakAliases != 1 {
+		t.Fatalf("want exactly one allowed Weak alias, got %d", weakAliases)
+	}
+}
+
+// The loader checks roots as modules, so this Array declaration stays local.
+// No accepted program merge is available to mutate; keep the all-declarations
+// production condition even though this frontend boundary prevents the merge.
+func TestUnionKeepingLocalArrayDoesNotMerge(t *testing.T) {
+	const source = `interface Box { readonly label: string }
+type Weak<T extends object> = import('adamic').Weak<T>;
+interface Array<T> { held?: Weak<Box> }
+const values: number[] = [];
+console.log(String(values.length));
+`
+	for _, extension := range []string{".a", ".ts"} {
+		t.Run(extension, func(t *testing.T) {
+			program, err := load.Load([]string{writeAgreementSource(t, "main"+extension, source)})
+			if err != nil {
+				t.Fatal(err)
+			}
+			checked, release := program.Checker(context.Background(), program.Files()[0])
+			defer release()
+			var array, local *checker.Type
+			var visit ast.Visitor
+			visit = func(node *ast.Node) bool {
+				if node.Kind == ast.KindArrayType {
+					array = checked.GetTypeAtLocation(node)
+				}
+				if node.Kind == ast.KindInterfaceDeclaration && node.Name().Text() == "Array" {
+					local = checked.GetTypeAtLocation(node.Name())
+				}
+				return node.ForEachChild(visit)
+			}
+			program.Files()[0].AsNode().ForEachChild(visit)
+			if array == nil || local == nil {
+				t.Fatal("missing local or library Array type")
+			}
+			if checked.GetPropertyOfType(array, "held") != nil {
+				t.Fatal("module-local Array merged held into library Array")
+			}
+			if checked.GetPropertyOfType(local, "held") == nil {
+				t.Fatal("local Array declaration lost held")
+			}
 		})
 	}
 }

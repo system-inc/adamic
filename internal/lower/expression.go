@@ -398,7 +398,7 @@ func (l *lowering) sameKeeping(from *checker.Type, to *checker.Type, visited map
 // mentionsWeak scans each generic instance through its mapper. Any, unknown,
 // never, primitives, literals (including true and false), and unmapped type
 // parameters are known leaves: no Weak sits structurally inside those types.
-// Unhandled kinds and references cut short by the depth or visited limit fail closed.
+// Unhandled kinds and references cut short by the depth limit fail closed; a path revisit adds no Weak.
 func (l *lowering) mentionsWeak(t *checker.Type, visited map[*checker.Type]bool) bool {
 	t = l.concrete(t)
 	if t == nil {
@@ -410,7 +410,10 @@ func (l *lowering) mentionsWeak(t *checker.Type, visited map[*checker.Type]bool)
 	if t.Flags()&(checker.TypeFlagsAnyOrUnknown|checker.TypeFlagsNever|checker.TypeFlagsPrimitive|checker.TypeFlagsTypeParameter) != 0 {
 		return false
 	}
-	if visited[t] || len(visited) >= 64 {
+	if visited[t] {
+		return false
+	}
+	if len(visited) >= 64 {
 		return true
 	}
 	visited[t] = true
@@ -428,13 +431,33 @@ func (l *lowering) mentionsWeak(t *checker.Type, visited map[*checker.Type]bool)
 		}
 		return len(t.Types()) == 0
 	}
-	if t.Flags()&checker.TypeFlagsObject == 0 || t.ObjectFlags()&checker.ObjectFlagsObjectTypeKindMask == 0 || t.ObjectFlags()&(checker.ObjectFlagsMapped|checker.ObjectFlagsReverseMapped|checker.ObjectFlagsEvolvingArray) != 0 {
+	if t.Flags()&checker.TypeFlagsObject == 0 {
 		return true
 	}
 	for _, argument := range l.typeArguments(t) {
 		if l.mentionsWeak(argument, visited) {
 			return true
 		}
+	}
+	// Library and prelude declarations cannot name Adamic Weak except for
+	// Weak itself, checked above. It can enter those objects only through
+	// alias/reference arguments, already walked. Require every declaration:
+	// a program may merge its own Weak-holding members into a library type.
+	if symbol := t.Symbol(); symbol != nil && len(symbol.Declarations) != 0 {
+		library := true
+		for _, declaration := range symbol.Declarations {
+			file := ast.GetSourceFileOfNode(declaration)
+			if !load.IsLibrary(file) && !load.IsPrelude(file) {
+				library = false
+				break
+			}
+		}
+		if library {
+			return false
+		}
+	}
+	if t.ObjectFlags()&checker.ObjectFlagsObjectTypeKindMask == 0 || t.ObjectFlags()&(checker.ObjectFlagsMapped|checker.ObjectFlagsReverseMapped|checker.ObjectFlagsEvolvingArray) != 0 {
+		return true
 	}
 	for _, property := range l.checker.GetPropertiesOfType(t) {
 		if l.mentionsWeak(l.checker.GetTypeOfSymbol(property), visited) {
@@ -464,6 +487,10 @@ func (l *lowering) mentionsWeak(t *checker.Type, visited map[*checker.Type]bool)
 // sameKeepingWalk is sameKeeping's walk of what each side keeps weakly or strongly, and of each
 // function's slots by representation.
 func (l *lowering) sameKeepingWalk(from *checker.Type, to *checker.Type, visited map[[2]*checker.Type]bool) bool {
+	concreteFrom, concreteTo := l.concrete(from), l.concrete(to)
+	if concreteFrom != nil && concreteFrom == concreteTo {
+		return true
+	}
 	// present cannot name one member of a multi-value union, so the walk
 	// would answer same unjudged. A strong slot read as weak crashes natively
 	// (#pmfdg6q, p5 to p8). Splitting members is the follow-up.

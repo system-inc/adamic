@@ -1,65 +1,66 @@
-# Union keeping stop mutants
+# Union keeping stop: library and recursion repairs
 
-The stop rejects a multi-value union when either side mentions Weak, including
-when the scan cannot prove the type free of Weak. Member-by-member splitting is
-the follow-up, preserved separately from this narrow head.
+This head is stacked on 37d96306. It changes a path revisit to false, retains
+64 active types as a fail-closed limit, and caches nothing across queries.
+Concrete identity is checked before the conservative union stop.
 
-## Remove the stop
+## Library members walked again
 
-Remove the pre-`present` guard in `sameKeepingWalk`, retaining `mentionsWeak`.
-Run `go test ./internal/lower -run '^TestUnionKeepingAssignments$' -v`.
+Remove the all-library declaration shortcut in `mentionsWeak`, retaining the
+argument walks. Run:
 
-Observed exit 1: all fourteen p5–p8 rows lower again and fail with
-`want assignment NotYet, got program=true error=<nil>`. The rows are p5 and p6
-before/after, p7, and p8 before/after, each in `.a` and `.ts`. Both p9 rows keep
-their original stop and pass. Named red test:
-`TestUnionKeepingAssignments/p5_after.a`.
+```
+go test ./internal/lower -run '^TestUnionKeepingRegExpLibrary$' -v
+```
 
-P7 uses a function declaration instead of an explicitly typed arrow initializer.
-Otherwise the conservative stop rejects the initializer's identical Weak-union
-function view before reaching the cross-view assignment. The declaration leaves
-the measured assignment at line 7, column 117.
+The pin uses `const p: string | RegExp = "[[/]/"`, constructs `new RegExp(p,
+'u')`, and prints source, flags and the match result, like
+`RegExpUnicodeClassSource`. Observed exit 1 in both extensions: the mutant refuses the initializer at
+line 1, column 28 with the weak sentence. Named red tests:
+`TestUnionKeepingRegExpLibrary/.a` and `.ts`.
 
-## Search only top-level members
+## A path revisit answers true
 
-Replace `mentionsWeak` with a scan that asks `weakTarget` only of the root and
-its immediate union/intersection members, without descending into properties,
-arguments or signatures. Run
-`go test ./internal/lower -run '^TestUnionKeepingNestedWeak$' -v`.
+Change only the visited-path arm from false to true. Run:
 
-Observed exit 1: both `.a` and `.ts` lower again and fail with
-`want nested Weak assignment NotYet at 7:24, got program=true error=<nil>`.
-Named red tests: `TestUnionKeepingNestedWeak/.a` and
-`TestUnionKeepingNestedWeak/.ts`.
+```
+go test ./internal/lower -run '^TestUnionKeepingRecursiveNoWeak$' -v
+```
 
-The field is two levels deep: `v: { readonly inner: Weak<Box> }`, viewed from
-the same discriminated union whose `inner` is strong. The non-mutant has an
-assignment `NotYet` at line 7, column 24 in both extensions.
+The pin views a recursive readonly union both as itself and as a structural
+twin. Identity admits the first view; the twin must complete its Weak search
+without treating a cycle as a Weak. Observed exit 1 in both extensions: the mutant refuses the twin view at
+line 6, column 20 with the weak sentence. Named red tests:
+`TestUnionKeepingRecursiveNoWeak/.a` and `.ts`.
 
-Both mutants were built with Go overlays; the mutant replacements were never
-written to production files. The fixed source was checked against its saved
-copy after the stop-removal run.
+Both mutants are measured with build overlays. Production files are never
+replaced by their mutant versions, and the fixed source is compared afterward.
 
-## Leaves, limits and generic instances
+## Library arguments and declaration ownership
 
-`any`, `unknown`, `never`, primitives/literals (including booleans), and type
-parameters are known leaves. They contain no structural Weak child to walk.
-The scanner first applies the current generic mapper; the stop also counts
-members of the concrete instance, rather than a generic union that collapses
-under substitution. Unhandled kinds, recursive references cut short by the
-active visited set, and scans reaching 64 active types fail closed.
+`weakTarget` is asked before any library shortcut. Alias and reference arguments
+are walked before skipping library properties, index values and signatures.
+`TestUnionKeepingLibraryWeakArgument` views a union holding readonly Weak<Box>[]
+as its strong twin. The twin retains undefined, so TypeScript accepts the view;
+the assignment stops at line 7, column 24 in both extensions.
 
-`TestUnionKeepingDepthLimit` reaches that arm from a program with 70 finite
-readonly object levels and no Weak. In both extensions it stops at the union
-initializer, line 74, column 20, rather than declaring an incomplete scan safe.
+The shortcut requires every symbol declaration to satisfy `load.IsLibrary` or
+`load.IsPrelude`, and requires at least one declaration. The prelude's own Weak
+alias is the sole permitted type reference to Weak/WeakBrand there;
+`TestUnionKeepingPreludeDoesNotHideWeak` walks its declarations to guard this
+assumption. A directly written Weak is still found before the shortcut.
 
-`TestUnionKeepingGenericWeakInstance` uses the requested generic return form
-with `T extends object`, the constraint required by the prelude's `Weak<T>`.
-Called with `T = Box`, it stops at `return x`, line 4, column 9, in `.a` and `.ts`.
-`TestUnionKeepingMappedWeakArgument` additionally hides Weak only inside `T`.
-A direct T witness supplies the mapper (main does not infer it from the union
-alias alone); the `T = Weak<Box>` instance stops at line 5, column 24.
+The loader treats source files as modules: a top-level interface Array<T> is
+local, not a merge with the library Array. `TestUnionKeepingLocalArrayDoesNotMerge`
+pins the local held member and the absence of held from the library array, in
+both extensions. No accepted program merge pin or any-declaration mutant is
+claimed. The conservative every-declaration condition is retained unchanged.
 
-The checked-downcast and `box?.name ?? 'none'` controls, and the no-Weak union
-controls, remain held to source Node. The split follow-up patch is kept outside
-this branch; this commit does not change generic inference or split unions.
+## Preserved stops and identity
+
+The p5–p8 assignment pins, two-deep Weak pin and generic view<Box> return pin
+remain NotYet. P9 keeps its original stop. P7 uses a function declaration to
+reach its cross-view assignment instead of stopping at a typed arrow initializer.
+Known leaves, checked downcasts, optional reads and no-Weak union controls retain
+their behavior. An identical mapped Weak union now lowers and agrees with Node.
+The depth-limit pin uses distinct twins and stops at line 76, column 20.
