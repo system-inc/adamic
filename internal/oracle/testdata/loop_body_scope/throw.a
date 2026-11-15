@@ -1,0 +1,33 @@
+// A throw from a callback whose call packed a rest in the loop's iteration (#9grybqc): the way out
+// lets go of the iteration's pack, inside the loop where C names it, and then of what the statement
+// owns (the array map made so far, reduce's accumulator), as a throw from inside an aside does
+// (#pjr22te). Under the leak check, a pack the throw skipped is a leak. Node prints:
+//
+//	string:x;number:1;object:y,z
+//	ant0 bee1
+//	>ant0bee1
+//	too long at 2: wasp
+//	too long at 2: wasp
+const spread = (...items: (string | number | string[])[]): string =>
+	items.map((item) => typeof item + ':' + (Array.isArray(item) ? item.join(',') : String(item))).join(';');
+console.log(spread('x', 1, ['y', 'z']));
+function checked(word: string, index: number): string {
+	if (word.length > 3) {
+		throw new Error(`too long at ${index}: ${word}`);
+	}
+	return `${word}${index}`;
+}
+const words = 'ant bee wasp cat'.split(' ');
+for (const limit of [2, 4]) {
+	const some = words.slice(0, limit);
+	try {
+		console.log(some.map((word, index) => checked(word, index)).join(' '));
+	} catch (error) {
+		console.log(error instanceof Error ? error.message : '?');
+	}
+	try {
+		console.log(some.reduce((total, word, index) => total + checked(word, index), '>'));
+	} catch (error) {
+		console.log(error instanceof Error ? error.message : '?');
+	}
+}

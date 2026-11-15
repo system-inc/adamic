@@ -2,6 +2,7 @@ package native
 
 import (
 	"fmt"
+	"slices"
 	"strings"
 
 	"github.com/system-inc/adamic/internal/ir"
@@ -18,16 +19,21 @@ func (e *emitter) closureArguments(call ir.CallClosure) (string, string) {
 			value := packedParameter(of, packed+"->elements", packed+"->length", index)
 			slots = append(slots, fmt.Sprintf("{.%s = %s}", member(of), slotted(of, value)))
 		}
-		return e.closureSlots(call, slots, packed+"->elements", packed+"->length"), packed + "->length"
+		return e.closureSlots(call, slots, nil, packed+"->elements", packed+"->length"), packed + "->length"
 	}
-	slots := []string{}
+	slots, of := []string{}, []ir.Type{}
 	for _, argument := range call.Arguments {
 		slots = append(slots, fmt.Sprintf("{.%s = %s}", member(argument.Type()), slotted(argument.Type(), e.value(argument))))
+		of = append(of, argument.Type())
 	}
-	return e.closureSlots(call, slots, "", fmt.Sprint(len(call.Arguments))), fmt.Sprint(len(call.Arguments))
+	return e.closureSlots(call, slots, of, "", fmt.Sprint(len(call.Arguments))), fmt.Sprint(len(call.Arguments))
 }
 
-func (e *emitter) closureSlots(call ir.CallClosure, slots []string, source, count string) string {
+// closureSlots is a call's packed slots: the fixed ones, padded, and each rest tail collected from
+// source, or from slots when source is "". of is each of slots' type when the caller made them, which
+// collecting a rest from them reads (copyRest); nil when source is a pack made at run time, or when
+// what slots hold isn't known here.
+func (e *emitter) closureSlots(call ir.CallClosure, slots []string, of []ir.Type, source, count string) string {
 	layout := e.program.ClosureArgumentLayout(call)
 	if source == "" && len(slots) > 0 {
 		source = "(adamic_value[]){" + strings.Join(slots, ", ") + "}"
@@ -53,16 +59,22 @@ func (e *emitter) closureSlots(call ir.CallClosure, slots []string, source, coun
 		entries = append(entries, fmt.Sprintf("[%d] = %s", index, slot))
 	}
 	for _, rest := range layout.Rest {
-		array := e.restArray(source, count, rest.Start, rest)
+		array := e.restArray(source, count, rest.Start, rest, of)
 		entries = append(entries, fmt.Sprintf("[%d] = {.reference = %s}", e.program.RestArgumentSlots[rest], array))
 	}
 
 	return "(adamic_value[]){" + strings.Join(entries, ", ") + "}"
 }
 
-func (e *emitter) callbackCall(callback string, expression ir.Expression, kind int, slots ...string) string {
+// callbackCall is a call a loop the emitter writes makes through a callback, slots its arguments
+// and of their types: an element's, the index's number, the array's. A pack it makes is the loop
+// body's own, so it's made inside an iteration (emit_ownership.go).
+func (e *emitter) callbackCall(callback string, expression ir.Expression, kind int, of []ir.Type, slots ...string) string {
+	if len(of) != len(slots) {
+		panic(fmt.Sprintf("native: compiler bug: a callback call's %d slots come with %d types", len(slots), len(of)))
+	}
 	call := ir.CallClosure{Closure: expression, FunctionType: kind}
-	packed := e.closureSlots(call, slots, "", fmt.Sprint(len(slots)))
+	packed := e.closureSlots(call, slots, of, "", fmt.Sprint(len(slots)))
 	return e.packedClosureCall(call, callback, packed, fmt.Sprint(len(slots)))
 }
 
@@ -75,7 +87,7 @@ func (e *emitter) closureComparator(sort ir.ArraySort) string {
 		return "adamic_compare_closure"
 	}
 	adapter := emitter{program: e.program, reuse: e.reuse, indent: 1, scopes: [][]string{{}}}
-	packed := adapter.closureSlots(call, []string{"left", "right"}, "", "2")
+	packed := adapter.closureSlots(call, []string{"left", "right"}, []ir.Type{sort.Element, sort.Element}, "", "2")
 	adapter.line("adamic_closure *compare = context;")
 	adapter.line("double result = %s.number;", adapter.packedClosureCall(call, "compare", packed, "2"))
 	// What packing the call made, a rest tail for a comparator that collects one above all, is the
@@ -123,14 +135,27 @@ func packedParameter(of ir.Type, packed, count string, index int) string {
 // restArray packs a tail for a spread or closure call, copying from start, which counts a
 // receiver where the packed source holds one, as rest.Start doesn't. It's made where an array
 // literal of the rest's type would be, so in a graph program a pack on a cycle lives in the
-// region (#2zhhwaz).
-func (e *emitter) restArray(packed, count string, start int, rest ir.RestArguments) string {
+// region (#2zhhwaz). of is each packed slot's type, or nil (closureSlots).
+func (e *emitter) restArray(packed, count string, start int, rest ir.RestArguments, of []ir.Type) string {
 	result := e.graphArray(fmt.Sprintf("adamic_array_make(0, %s)", arrayElement(rest.Element)), e.program.RestGraphTypes[rest])
-	e.copyRest(result, packed, count, start, rest.Element)
+	e.copyRest(result, packed, count, start, rest.Element, of)
 	return result
 }
 
-func (e *emitter) copyRest(result, packed, count string, start int, element ir.Type) {
+// copyRest pushes the packed slots from start to count onto a rest array of element. Slots the rest
+// holds as they are (every one a reference, into a rest of references, or every one the element's
+// own type) are copied by a loop, as is a pack made at run time (of nil), whose slots lowering made
+// the rest's. A pack whose slots aren't all that, as a callback's (an element, the index's number,
+// the array), is pushed slot by slot, each made what the rest holds (restSlot): only a reference is
+// retained, since a number's bits retained as a pointer write a count into memory that has none
+// (#9grybqc).
+func (e *emitter) copyRest(result, packed, count string, start int, element ir.Type, of []ir.Type) {
+	if slices.ContainsFunc(of[min(start, len(of)):], func(slot ir.Type) bool { return !restHoldsAlike(element, slot) }) {
+		for index := start; index < len(of); index++ {
+			e.line("adamic_array_push(%s, %s);", result, e.restSlot(result, fmt.Sprintf("%s[%d]", packed, index), of[index], element))
+		}
+		return
+	}
 	index := e.temporary()
 	e.line("for (size_t %s = %d; %s < %s; %s++) {", index, start, index, count, index)
 	if element.IsReference() {
@@ -141,13 +166,56 @@ func (e *emitter) copyRest(result, packed, count string, start int, element ir.T
 	e.line("}")
 }
 
+// restHoldsAlike says a rest of element holds a slot of type slot as the slot is: a reference among
+// references, or a scalar of the element's own type.
+func restHoldsAlike(element, slot ir.Type) bool {
+	return element.IsReference() && slot.IsReference() || element == slot
+}
+
+// restSlot is the packed slot of type of as an element of a rest array of element: a reference
+// retained, a number or a boolean boxed where the rest is a union's (its count the rest's, as
+// lowering's fit boxes an argument to a rest of a union), a scalar made the rest's maybe, and a
+// scalar as it is where it's the element's type. Any other slot is one the rest's element doesn't
+// admit, which reaches the pack only for a target the call never runs: the layout collects the rest
+// of every function its type admits (ir.ClosureArgumentLayout), and lowering refuses to let a rest
+// function be seen through a type that hides its rest (restHiddenByView), so the function that runs
+// is never one whose rest this is. It's undefined there, a word no count is taken through.
+func (e *emitter) restSlot(result, slot string, of, element ir.Type) string {
+	value := unslotted(of, slot+"."+member(of))
+	switch {
+	case of.IsReference() && element.IsReference():
+		return fmt.Sprintf("(adamic_value){.reference = %s}", e.heldReferenceIn(result, value))
+	case of == element:
+		return slot
+	case element == ir.Union && (of == ir.Number || of == ir.Boolean || of.IsMaybe()):
+		boxed, fresh := converted(of, ir.Union, value)
+		if !fresh {
+			// A boolean's box is a constant one, retained as any reference the rest holds.
+			boxed = e.heldReferenceIn(result, boxed)
+		}
+		return fmt.Sprintf("(adamic_value){.reference = %s}", boxed)
+	case element.IsMaybe() && of == element.Present():
+		return fmt.Sprintf("(adamic_value){.%s = %s}", member(element), slotted(element, maybe(element, value)))
+	}
+	// Undefined, never the slot's own value: no function that reads this rest runs with this pack.
+	// Lowering holds a type that admits a number or a boolean as a union (lower's representation:
+	// unknown, object and {} among them), so a scalar reaches here only into a rest whose element's
+	// type doesn't admit it, or holding undefined itself, where undefined is the value. The function
+	// that runs is the closure in the callback's or callee's slot, and a rest function reaches a slot
+	// whose type hides its rest only past restHiddenByView, which stops it as NotYet; where the type
+	// shows the rest, TypeScript's strictFunctionTypes checked each argument against its element.
+	// So this rest is read only by a target the call never runs, as q1's collect, which its layout
+	// collects only because its type is assignable to map's callback (#9grybqc).
+	return fmt.Sprintf("(adamic_value){.%s = %s}", member(element), slotted(element, missingArgument(element)))
+}
+
 func (e *emitter) spreadArguments(call ir.Call) []string {
 	function := e.program.Functions[call.Function]
 	packed := e.packCallArguments(call.Arguments, call.Spread)
 	values := []string{}
 	for index, parameter := range function.Parameters {
 		if function.RestElement != 0 && index == len(function.Parameters)-1 {
-			value := e.restArray(packed+"->elements", packed+"->length", index, ir.FunctionRestArguments(function))
+			value := e.restArray(packed+"->elements", packed+"->length", index, ir.FunctionRestArguments(function), nil)
 			if e.reuse.callConsumes(e.program, call, index) {
 				value = "adamic_retain(" + value + ")"
 			}

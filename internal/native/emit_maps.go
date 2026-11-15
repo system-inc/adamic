@@ -38,48 +38,48 @@ func (e *emitter) mapForEach(visit ir.MapForEach) string {
 	e.line("adamic_map_iterator *%s = adamic_map_iterate(%s);", iterator, collection)
 	e.line("adamic_value %s, %s;", key, value)
 	e.line("while (adamic_map_iterator_next(%s, &%s, &%s)) {", iterator, key, value)
-	e.indent++
-	hold := func(slot string, of ir.Type, how string) {
-		if of.IsReference() {
-			e.line("%s(%s.reference);", how, slot)
+	e.iteration(func(func()) {
+		hold := func(slot string, of ir.Type, how string) {
+			if of.IsReference() {
+				e.line("%s(%s.reference);", how, slot)
+			}
 		}
-	}
-	first := value
-	if visit.Set {
-		first = key
-	} else {
-		hold(value, visit.Value, "adamic_retain")
-	}
-	call := e.callbackCall(callback, visit.Callback, visit.CallbackType, first, key, fmt.Sprintf("{.reference = %s}", collection))
-	// A throw lets go of the value held across the call, and the iterator.
+		first, firstType := value, visit.Value
+		if visit.Set {
+			first, firstType = key, visit.Key
+		} else {
+			hold(value, visit.Value, "adamic_retain")
+		}
+		call := e.callbackCall(callback, visit.Callback, visit.CallbackType, []ir.Type{firstType, visit.Key, ir.Map}, first, key, fmt.Sprintf("{.reference = %s}", collection))
+		// A throw lets go of the value held across the call, and the iterator.
 
-	holds := []string{}
-	if !visit.Set && visit.Value.IsReference() {
-		holds = append(holds, value+".reference")
-	}
-	holds = append(holds, iterator)
-	// A callback typed void may still return a value, which forEach lets go of as any void call does.
-	discard := ir.DiscardNothing
-	if visit.Returns == 0 {
-		discard = e.program.ClosureDiscard(visit)
-	}
-	if visit.Returns.IsReference() {
-		// A callback's result comes back owned, and forEach has no use for it.
-		e.line("adamic_value %s = %s;", answer, call)
-		e.closureThrown(holds...)
-		e.line("adamic_release(%s.reference);", answer)
-	} else if e.discarding(discard) {
-		e.line("adamic_value %s = %s;", answer, call)
-		e.closureThrown(holds...)
-		e.line("%s", e.discard(discard, callback, answer))
-	} else {
-		e.line("%s;", call)
-		e.closureThrown(holds...)
-	}
-	if !visit.Set {
-		hold(value, visit.Value, "adamic_release")
-	}
-	e.indent--
+		holds := []string{}
+		if !visit.Set && visit.Value.IsReference() {
+			holds = append(holds, value+".reference")
+		}
+		holds = append(holds, iterator)
+		// A callback typed void may still return a value, which forEach lets go of as any void call does.
+		discard := ir.DiscardNothing
+		if visit.Returns == 0 {
+			discard = e.program.ClosureDiscard(visit)
+		}
+		if visit.Returns.IsReference() {
+			// A callback's result comes back owned, and forEach has no use for it.
+			e.line("adamic_value %s = %s;", answer, call)
+			e.closureThrown(holds...)
+			e.line("adamic_release(%s.reference);", answer)
+		} else if e.discarding(discard) {
+			e.line("adamic_value %s = %s;", answer, call)
+			e.closureThrown(holds...)
+			e.line("%s", e.discard(discard, callback, answer))
+		} else {
+			e.line("%s;", call)
+			e.closureThrown(holds...)
+		}
+		if !visit.Set {
+			hold(value, visit.Value, "adamic_release")
+		}
+	})
 	e.line("}")
 	e.line("adamic_release(%s);", iterator)
 	return "0"
