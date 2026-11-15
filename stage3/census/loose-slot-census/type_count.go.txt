@@ -1,0 +1,69 @@
+// Scratch-only type-level instrument. Never produces executable IR.
+package lower
+import (
+ "context"
+ "fmt"
+ "github.com/microsoft/TypeScript/tsc/shim/ast"
+ "github.com/microsoft/TypeScript/tsc/shim/checker"
+ "github.com/system-inc/adamic/internal/ir"
+ "github.com/system-inc/adamic/internal/load"
+)
+type LooseCensusEvent struct { Form, Where, Source, Slot, Holder string }
+type LooseCensusResult struct { Files, Nodes, Candidates, HTypes, Shapes int; HEvery bool; Events []LooseCensusEvent }
+type looseCensusCandidate struct {form string; node *ast.Node; source,slot,holder *checker.Type; cell int}
+func LooseCensus(ctx context.Context,p *load.Program,disabled bool)(LooseCensusResult,error){
+ files:=p.Files();if len(files)==0{return LooseCensusResult{},fmt.Errorf("no files")}
+ c,release:=p.Checker(ctx,files[0]);defer release()
+ l:= &lowering{program:p,checker:c,result:&ir.Program{},this:-1,functionIndex:-1,entry:files[0],localTypes:map[int]*checker.Type{},localNodes:map[int]*ast.Node{}}
+ f:= &cycleFinder{l:l,where:map[*checker.Type]*ast.Node{}}
+ result:=LooseCensusResult{Files:len(files),Events:[]LooseCensusEvent{}}
+ nodes:=[]*ast.Node{}; functions:=map[*ast.Node]int{};locals:=map[*ast.Symbol]int{}
+ owner:=func(n *ast.Node)*ast.Node{for n!=nil{if ast.IsFunctionLike(n){return n};n=n.Parent};return nil}
+ var walk ast.Visitor
+ walk=func(n *ast.Node)bool{if ast.IsPartOfTypeNode(n){return false};nodes=append(nodes,n);if ast.IsFunctionLike(n)&&n.Body()!=nil{functions[n]=len(l.result.Functions);l.result.Functions=append(l.result.Functions,ir.Function{Closure:true})};return n.ForEachChild(walk)}
+ for _,file:=range files{file.AsNode().ForEachChild(walk)}
+ for _,n:=range nodes{if !ast.IsIdentifier(n)||!ast.IsDeclarationName(n){continue};s:=c.GetSymbolAtLocation(n);if s==nil||s.ValueDeclaration==nil{continue};d:=s.ValueDeclaration
+ if d.Kind!=ast.KindVariableDeclaration&&d.Kind!=ast.KindParameter&&d.Kind!=ast.KindBindingElement{continue}
+ own:=owner(d.Parent);if own==nil{continue};index,ok:=functions[own];if !ok{continue};if _,ok:=locals[s];ok{continue}
+ i:=len(l.result.Locals);locals[s]=i;l.result.Locals=append(l.result.Locals,ir.Local{Name:n.Text(),Function:index});l.localTypes[i]=c.GetTypeAtLocation(n);l.localNodes[i]=n
+ }
+ for _,n:=range nodes{if !ast.IsIdentifier(n)||ast.IsDeclarationName(n){continue};s:=c.GetSymbolAtLocation(n);i,ok:=locals[s];if !ok{continue};use:=owner(n.Parent);decl:=owner(s.ValueDeclaration.Parent);if use==nil||use==decl{continue};j,ok:=functions[use];if !ok{continue};l.result.Locals[i].Captured=true;l.result.Functions[j].Environment=append(l.result.Functions[j].Environment,i)}
+ for _,n:=range nodes{if index,ok:=functions[n];ok{l.closureRecords=append(l.closureRecords,closureRecord{proven:c.GetTypeAtLocation(n),function:index,node:n})}}
+ for i,d:=range l.result.Locals{if d.Captured&&f.looseCellEvery(i){f.loose.every=true}}
+ candidates:=[]looseCensusCandidate{}
+ add:=func(form string,n *ast.Node,source,slot,holder *checker.Type,cell int){if source!=nil&&slot!=nil&&f.holdsLoose(slot){candidates=append(candidates,looseCensusCandidate{form,n,source,slot,holder,cell})}}
+ for _,n:=range nodes{
+  f.libraryIteratorMade(n);f.looseEntry(n)
+  switch{case n.Kind==ast.KindObjectLiteralExpression:f.shape(c.GetTypeAtLocation(n),n)
+  case n.Kind==ast.KindArrayLiteralExpression||n.Kind==ast.KindCallExpression||n.Kind==ast.KindNewExpression:f.made(c.GetTypeAtLocation(n),n)
+  case ast.IsIdentifier(n)||n.Kind==ast.KindThisKeyword||n.Kind==ast.KindPropertyAccessExpression||n.Kind==ast.KindElementAccessExpression:
+   if !ast.IsIdentifier(n)||ast.IsDeclarationName(n)||ast.IsExpressionNode(n){f.use(c.GetTypeAtLocation(n),n)}
+  }
+  switch n.Kind{
+  case ast.KindObjectLiteralExpression,ast.KindArrayLiteralExpression,ast.KindNewExpression:l.noteLooseInit(n)
+  case ast.KindBinaryExpression:
+   b:=n.AsBinaryExpression();if b.OperatorToken.Kind!=ast.KindEqualsToken&&!logicalAssignment(b.OperatorToken.Kind){break};left:=ast.SkipParentheses(b.Left);source:=c.GetTypeAtLocation(b.Right)
+   switch left.Kind{case ast.KindPropertyAccessExpression:add("write",left.AsPropertyAccessExpression().Expression,source,c.GetTypeAtLocation(left),c.GetTypeAtLocation(left.AsPropertyAccessExpression().Expression),0)
+   case ast.KindElementAccessExpression:add("write",left.AsElementAccessExpression().Expression,source,c.GetTypeAtLocation(left),c.GetTypeAtLocation(left.AsElementAccessExpression().Expression),0)
+   case ast.KindIdentifier:if i,ok:=locals[c.GetSymbolAtLocation(left)];ok&&l.result.Locals[i].Captured{add("captured",n,source,l.localTypes[i],nil,i+1)} }
+  case ast.KindVariableDeclaration:
+   d:=n.AsVariableDeclaration();if d.Initializer!=nil&&d.Name()!=nil{if i,ok:=locals[c.GetSymbolAtLocation(d.Name())];ok&&l.result.Locals[i].Captured{add("captured",d.Name(),c.GetTypeAtLocation(d.Initializer),l.localTypes[i],nil,i+1)}}
+  case ast.KindPropertyDeclaration:
+   d:=n.AsPropertyDeclaration();if d.Initializer!=nil&&n.Parent!=nil&&n.Parent.Name()!=nil{sym:=c.GetSymbolAtLocation(n.Parent.Name());if sym!=nil{add("write",n,c.GetTypeAtLocation(d.Initializer),c.GetTypeAtLocation(n),c.GetDeclaredTypeOfSymbol(sym),0)}}
+  case ast.KindCallExpression:
+   call:=n.AsCallExpression();expr:=ast.SkipParentheses(call.Expression);if expr.Kind!=ast.KindPropertyAccessExpression{break};a:=expr.AsPropertyAccessExpression();holder:=c.GetTypeAtLocation(a.Expression);name:=a.Name().Text();args:=call.Arguments.Nodes
+   library:=l.isArrayType(holder)||l.isLibraryType(holder,"Map","Set","ReadonlyMap","ReadonlySet");if !library{break}
+   types:=c.GetTypeArguments(holder);if len(types)==0{break}
+   put:=func(i,j int){if i<len(args)&&j<len(types){add("write",a.Expression,c.GetTypeAtLocation(args[i]),types[j],holder,0)}}
+   switch name{case "push","unshift":for i:=range args{put(i,0)};case "fill","add":put(0,0);case "splice":for i:=2;i<len(args);i++{put(i,0)};case "set":put(0,0);put(1,1)}
+  }
+ }
+ inits:=[]looseInit{}
+ for _,made:=range l.looseInits{if made.slot!=nil&&!f.holdsLoose(made.slot){continue};if made.slot==nil&&!f.looseFields(made.holder)&&!f.holdsLoose(made.holder){continue};f.looseHold(made.value);inits=append(inits,made)}
+ for _,made:=range inits{slot:=made.slot;if slot==nil{slot=made.value};candidates=append(candidates,looseCensusCandidate{"literal init",made.node,made.value,slot,made.holder,0})}
+ for i,d:=range l.result.Locals{if d.Captured&&f.looseCellEvery(i){candidates=append(candidates,looseCensusCandidate{"captured",l.localNodes[i],l.localTypes[i],l.localTypes[i],nil,i+1})}}
+ result.Nodes=len(nodes);result.Candidates=len(candidates);result.HEvery=f.loose.every;result.HTypes=len(f.loose.entries);result.Shapes=len(f.shapes)
+ if disabled{return result,nil}
+ for _,site:=range candidates{if site.source==nil||viewPairScalar(site.source){continue};target:=cycleNode{proven:site.holder,cell:site.cell};if !f.looseReaches(site.source,target){continue};holder:="own cell";if site.holder!=nil{holder=c.TypeToString(site.holder)};slot:="loose field";if site.slot!=nil{slot=c.TypeToString(site.slot)};result.Events=append(result.Events,LooseCensusEvent{site.form,p.Where(site.node),c.TypeToString(site.source),slot,holder})}
+ return result,nil
+}

@@ -1,0 +1,68 @@
+// Census runs the real stage-0 gate. It never lowers a checker-rejected program.
+package main
+
+import (
+	"context"
+	"encoding/json"
+	"errors"
+	
+	"github.com/system-inc/adamic/stage3/census/moduleformat"
+	"os"
+	
+	
+	
+	"time"
+
+	"github.com/system-inc/adamic/internal/load"
+	"github.com/system-inc/adamic/internal/lower"
+)
+
+type run struct {
+	ModuleFormat string   `json:"module_format"`
+	Roots        []string `json:"roots"`
+	Diagnostics  []string `json:"diagnostics,omitempty"`
+	Kind         string   `json:"kind"`
+	Where        string   `json:"where,omitempty"`
+	Reason       string   `json:"reason,omitempty"`
+	Fix          string   `json:"fix,omitempty"`
+	Seconds      float64  `json:"seconds"`
+}
+
+func inspect(paths []string) run {
+	started := time.Now()
+	result := run{Roots: paths, ModuleFormat: moduleformat.Name()}
+	program, err := load.Load(paths)
+	if err == nil {
+		_, err = lower.LowerWithOptions(context.Background(), program, lower.Options{ModuleFormat: moduleformat.Resolve(lower.ModuleFormatCommonJSBundle, lower.ModuleFormatEcmaScript), ProgramRegion: os.Getenv("ADAMIC_PROGRAM_REGION") == "1", OwnershipQuery: os.Getenv("ADAMIC_OWNERSHIP_QUERY") == "1"})
+		result.Kind = "accepted"
+	}
+	if err != nil {
+		var checked *load.CheckError
+		var refused *lower.Refused
+		var notYet *lower.NotYet
+		switch {
+		case errors.As(err, &checked):
+			result.Kind = "checker"
+			result.Diagnostics = checked.Diagnostics
+		case errors.As(err, &refused):
+			result.Kind = "Refused"
+			result.Where = refused.Where
+			result.Reason = refused.What
+			result.Fix = refused.Fix
+		case errors.As(err, &notYet):
+			result.Kind = "NotYet"
+			result.Where = notYet.Where
+			result.Reason = notYet.What
+		default:
+			result.Kind = "error"
+			result.Reason = err.Error()
+		}
+	}
+	result.Seconds = time.Since(started).Seconds()
+	return result
+}
+
+func main() {
+ output,err:=os.Create(os.Args[2]); if err!=nil {panic(err)}; defer output.Close()
+ if err:=json.NewEncoder(output).Encode(inspect([]string{os.Args[1]}));err!=nil{panic(err)}
+}
