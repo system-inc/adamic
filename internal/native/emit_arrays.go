@@ -41,132 +41,139 @@ func (e *emitter) arrayVisit(visit ir.ArrayVisit) string {
 	} else {
 		e.line("for (size_t %s = 0; %s < %s; %s++) {", index, index, count, index)
 	}
-	e.indent++
-	search := visit.Method == "find" || visit.Method == "findIndex" || visit.Method == "findLast" || visit.Method == "findLastIndex"
-	present := "true"
-	if search {
-		present = e.temporary()
-		e.line("bool %s = %s < %s->length;", present, index, source)
-		if !visit.SearchUndefined {
-			e.declarations = append(e.declarations, "#include <stdio.h>")
-			e.line("if (!(%s)) {", present)
-			e.line("\tchar message[sizeof %s + 128];", cString(visit.SearchElementName))
-			e.line("\tint length = snprintf(message, sizeof message, %s, %s);", cString(visit.Method+": index %zu is undefined; element type %s does not admit undefined"), index+", "+cString(visit.SearchElementName))
-			e.line("\tadamic_panic(message, (size_t)length < sizeof message ? (size_t)length : sizeof message - 1);")
-			e.line("}")
+	e.iteration(func(leave func()) {
+		search := visit.Method == "find" || visit.Method == "findIndex" || visit.Method == "findLast" || visit.Method == "findLastIndex"
+		present := "true"
+		if search {
+			present = e.temporary()
+			e.line("bool %s = %s < %s->length;", present, index, source)
+			if !visit.SearchUndefined {
+				e.declarations = append(e.declarations, "#include <stdio.h>")
+				e.line("if (!(%s)) {", present)
+				e.line("\tchar message[sizeof %s + 128];", cString(visit.SearchElementName))
+				e.line("\tint length = snprintf(message, sizeof message, %s, %s);", cString(visit.Method+": index %zu is undefined; element type %s does not admit undefined"), index+", "+cString(visit.SearchElementName))
+				e.line("\tadamic_panic(message, (size_t)length < sizeof message ? (size_t)length : sizeof message - 1);")
+				e.line("}")
+			}
+		} else {
+			e.line("if (%s >= %s->length) continue;", index, source)
 		}
-	} else {
-		e.line("if (%s >= %s->length) continue;", index, source)
-	}
-	missing := "{.reference = NULL}"
-	if visit.Element.IsMaybe() {
-		missing = fmt.Sprintf("{.%s = %s}", member(visit.Element), slotted(visit.Element, zero(visit.Element)))
-	}
-	if visit.ElementCheck != nil {
-		e.line("adamic_value %s = (%s) ? %s.payload : (adamic_value)%s;", element, present, e.checkedElement(visit.ElementCheck, source, index, false, visit.Element), missing)
-	} else {
-		e.line("adamic_value %s = (%s) ? %s->elements[%s] : (adamic_value)%s;", element, present, source, index, missing)
-	}
-	if references && visit.ElementCheck == nil {
-		e.line("adamic_retain(%s.reference);", element)
-	}
-	argument, fresh := element, false
-	if search && visit.SearchFirst != 0 && visit.SearchFirst != visit.Element {
-		value, allocated := converted(visit.Element, visit.SearchFirst, unslotted(visit.Element, element+"."+member(visit.Element)))
-		if visit.SearchNull {
-			value = fmt.Sprintf("(%s.reference != NULL ? %s : &adamic_null)", element, value)
+		missing := "{.reference = NULL}"
+		if visit.Element.IsMaybe() {
+			missing = fmt.Sprintf("{.%s = %s}", member(visit.Element), slotted(visit.Element, zero(visit.Element)))
 		}
-		fresh = allocated
-		argument = e.temporary()
-		absent := missingArgument(visit.SearchFirst)
-		e.line("adamic_value %s = {.%s = %s};", argument, member(visit.SearchFirst), slotted(visit.SearchFirst, fmt.Sprintf("(%s) ? %s : %s", present, value, absent)))
-	}
-	call := e.callbackCall(callback, visit.Callback, visit.CallbackType, argument, fmt.Sprintf("{.number = (double)%s}", index), fmt.Sprintf("{.reference = %s}", source))
-	// A callback typed void may still return a value, which forEach lets go of as any void call does.
-	discard := ir.DiscardNothing
-	if visit.Method == "forEach" && visit.Returns == 0 {
-		discard = e.program.ClosureDiscard(visit)
-	}
-	if visit.Method == "forEach" && !visit.Returns.IsReference() && !e.discarding(discard) {
-		e.line("%s;", call)
-	} else {
-		e.line("adamic_value %s = %s;", answer, call)
-	}
-	if fresh {
-		e.line("adamic_release(%s.reference);", argument)
-	}
-	// The element held across the call is let go; what the visit made so far is the statement's.
-	if references {
-		e.closureThrown(element + ".reference")
-	} else {
-		e.closureThrown()
-	}
-	release := func() {
-		if references {
-			e.line("adamic_release(%s.reference);", element)
-		}
-	}
-	switch visit.Method {
-	case "forEach":
-		if visit.Returns.IsReference() {
-			// A callback's result comes back owned, and forEach has no use for it.
-			e.line("adamic_release(%s.reference);", answer)
-		}
-		if e.discarding(discard) {
-			e.line("%s", e.discard(discard, callback, answer))
-		}
-		release()
-	case "filter":
-		e.line("if (%s.boolean) {", answer)
-		if references && e.graphTypes(visit.GraphTypes) {
-			e.line("\t%s.reference = adamic_graph_take(%s, %s.reference);", element, result, element)
-		}
-		e.line("\tadamic_array_push(%s, %s);", result, element)
-		if references {
-			e.line("} else {")
-			e.line("\tadamic_release(%s.reference);", element)
-		}
-		e.line("}")
-	case "find", "findLast":
-		e.line("if (%s.boolean) {", answer)
 		if visit.ElementCheck != nil {
-			snapshot, again := e.temporary(), e.temporary()
-			e.line("adamic_array %s = {.length=1,.references=%t,.element=%s,.elements=&%s};", snapshot, references, arrayElement(visit.Element), element)
-			e.line("adamic_value %s = %s.payload;", again, e.checkedElement(visit.ElementCheck, "&"+snapshot, "0", false, visit.Element))
+			e.line("adamic_value %s = (%s) ? %s.payload : (adamic_value)%s;", element, present, e.checkedElement(visit.ElementCheck, source, index, false, visit.Element), missing)
+		} else {
+			e.line("adamic_value %s = (%s) ? %s->elements[%s] : (adamic_value)%s;", element, present, source, index, missing)
+		}
+		if references && visit.ElementCheck == nil {
+			e.line("adamic_retain(%s.reference);", element)
+		}
+		argument, argumentType, fresh := element, visit.Element, false
+		if search && visit.SearchFirst != 0 && visit.SearchFirst != visit.Element {
+			argumentType = visit.SearchFirst
+			value, allocated := converted(visit.Element, visit.SearchFirst, unslotted(visit.Element, element+"."+member(visit.Element)))
+			if visit.SearchNull {
+				value = fmt.Sprintf("(%s.reference != NULL ? %s : &adamic_null)", element, value)
+			}
+			fresh = allocated
+			argument = e.temporary()
+			absent := missingArgument(visit.SearchFirst)
+			e.line("adamic_value %s = {.%s = %s};", argument, member(visit.SearchFirst), slotted(visit.SearchFirst, fmt.Sprintf("(%s) ? %s : %s", present, value, absent)))
+		}
+		call := e.callbackCall(callback, visit.Callback, visit.CallbackType, []ir.Type{argumentType, ir.Number, ir.Array}, argument, fmt.Sprintf("{.number = (double)%s}", index), fmt.Sprintf("{.reference = %s}", source))
+		// A callback typed void may still return a value, which forEach lets go of as any void call does.
+		discard := ir.DiscardNothing
+		if visit.Method == "forEach" && visit.Returns == 0 {
+			discard = e.program.ClosureDiscard(visit)
+		}
+		if visit.Method == "forEach" && !visit.Returns.IsReference() && !e.discarding(discard) {
+			e.line("%s;", call)
+		} else {
+			e.line("adamic_value %s = %s;", answer, call)
+		}
+		if fresh {
+			e.line("adamic_release(%s.reference);", argument)
+		}
+		// The element held across the call is let go; what the visit made so far is the statement's.
+		if references {
+			e.closureThrown(element + ".reference")
+		} else {
+			e.closureThrown()
+		}
+		release := func() {
 			if references {
 				e.line("adamic_release(%s.reference);", element)
 			}
-			e.line("%s = %s;", element, again)
 		}
-		if visit.Type().IsMaybe() {
-			found := element + "." + member(visit.Element)
-			if visit.Element.IsMaybe() {
-				found = unslotted(visit.Element, found)
-			} else {
-				found = maybe(visit.Type(), found)
-			}
-			e.line("\t%s = (%s) ? %s : %s;", result, present, found, zero(visit.Type()))
-		} else {
-			e.line("\t%s = %s.reference;", result, element)
-		}
-		e.line("\tbreak;")
-		e.line("}")
-		release()
-	default:
-		release()
-		found, value := answer+".boolean", "true"
 		switch visit.Method {
-		case "every":
-			found, value = "!"+found, "false"
-		case "findIndex", "findLastIndex":
-			value = "(double)" + index
+		case "forEach":
+			if visit.Returns.IsReference() {
+				// A callback's result comes back owned, and forEach has no use for it.
+				e.line("adamic_release(%s.reference);", answer)
+			}
+			if e.discarding(discard) {
+				e.line("%s", e.discard(discard, callback, answer))
+			}
+			release()
+		case "filter":
+			e.line("if (%s.boolean) {", answer)
+			if references && e.graphTypes(visit.GraphTypes) {
+				e.line("\t%s.reference = adamic_graph_take(%s, %s.reference);", element, result, element)
+			}
+			e.line("\tadamic_array_push(%s, %s);", result, element)
+			if references {
+				e.line("} else {")
+				e.line("\tadamic_release(%s.reference);", element)
+			}
+			e.line("}")
+		case "find", "findLast":
+			e.line("if (%s.boolean) {", answer)
+			if visit.ElementCheck != nil {
+				snapshot, again := e.temporary(), e.temporary()
+				e.line("adamic_array %s = {.length=1,.references=%t,.element=%s,.elements=&%s};", snapshot, references, arrayElement(visit.Element), element)
+				e.line("adamic_value %s = %s.payload;", again, e.checkedElement(visit.ElementCheck, "&"+snapshot, "0", false, visit.Element))
+				if references {
+					e.line("adamic_release(%s.reference);", element)
+				}
+				e.line("%s = %s;", element, again)
+			}
+			if visit.Type().IsMaybe() {
+				found := element + "." + member(visit.Element)
+				if visit.Element.IsMaybe() {
+					found = unslotted(visit.Element, found)
+				} else {
+					found = maybe(visit.Type(), found)
+				}
+				e.line("\t%s = (%s) ? %s : %s;", result, present, found, zero(visit.Type()))
+			} else {
+				e.line("\t%s = %s.reference;", result, element)
+			}
+			e.indent++
+			leave()
+			e.line("break;")
+			e.indent--
+			e.line("}")
+			release()
+		default:
+			release()
+			found, value := answer+".boolean", "true"
+			switch visit.Method {
+			case "every":
+				found, value = "!"+found, "false"
+			case "findIndex", "findLastIndex":
+				value = "(double)" + index
+			}
+			e.line("if (%s) {", found)
+			e.line("\t%s = %s;", result, value)
+			e.indent++
+			leave()
+			e.line("break;")
+			e.indent--
+			e.line("}")
 		}
-		e.line("if (%s) {", found)
-		e.line("\t%s = %s;", result, value)
-		e.line("\tbreak;")
-		e.line("}")
-	}
-	e.indent--
+	})
 	e.line("}")
 	return result
 }
@@ -188,36 +195,36 @@ func (e *emitter) arrayReduce(reduce ir.ArrayReduce) string {
 	count, index, element, answer := e.temporary(), e.temporary(), e.temporary(), e.temporary()
 	e.line("size_t %s = %s->length;", count, source)
 	e.line("for (size_t %s = 0; %s < %s; %s++) {", index, index, count, index)
-	e.indent++
-	e.line("if (%s >= %s->length) {", index, source)
-	e.line("\tcontinue;")
-	e.line("}")
-	if reduce.ElementCheck != nil {
-		e.line("adamic_value %s = %s.payload;", element, e.checkedElement(reduce.ElementCheck, source, index, false, reduce.Element))
-	} else {
-		e.line("adamic_value %s = %s->elements[%s];", element, source, index)
-	}
-	if reduce.Element.IsReference() && reduce.ElementCheck == nil {
-		e.line("adamic_retain(%s.reference);", element)
-	}
-	call := e.callbackCall(callback, reduce.Callback, reduce.CallbackType, fmt.Sprintf("{.%s = %s}", member(reduce.Result), slotted(reduce.Result, accumulator)), element, fmt.Sprintf("{.number = (double)%s}", index), fmt.Sprintf("{.reference = %s}", source))
-	e.line("adamic_value %s = %s;", answer, call)
-	// The element held across the call is let go; the accumulator is the statement's.
-	if reduce.Element.IsReference() {
-		e.closureThrown(element + ".reference")
-	} else {
-		e.closureThrown()
-	}
-	if reduce.Element.IsReference() {
-		e.line("adamic_release(%s.reference);", element)
-	}
-	if reduce.Result.IsReference() {
-		e.line("adamic_release(%s);", accumulator)
-		e.line("%s = (%s)%s.reference;", accumulator, cType(reduce.Result), answer)
-	} else {
-		e.line("%s = %s;", accumulator, unslotted(reduce.Result, answer+"."+member(reduce.Result)))
-	}
-	e.indent--
+	e.iteration(func(func()) {
+		e.line("if (%s >= %s->length) {", index, source)
+		e.line("\tcontinue;")
+		e.line("}")
+		if reduce.ElementCheck != nil {
+			e.line("adamic_value %s = %s.payload;", element, e.checkedElement(reduce.ElementCheck, source, index, false, reduce.Element))
+		} else {
+			e.line("adamic_value %s = %s->elements[%s];", element, source, index)
+		}
+		if reduce.Element.IsReference() && reduce.ElementCheck == nil {
+			e.line("adamic_retain(%s.reference);", element)
+		}
+		call := e.callbackCall(callback, reduce.Callback, reduce.CallbackType, []ir.Type{reduce.Result, reduce.Element, ir.Number, ir.Array}, fmt.Sprintf("{.%s = %s}", member(reduce.Result), slotted(reduce.Result, accumulator)), element, fmt.Sprintf("{.number = (double)%s}", index), fmt.Sprintf("{.reference = %s}", source))
+		e.line("adamic_value %s = %s;", answer, call)
+		// The element held across the call is let go; the accumulator is the statement's.
+		if reduce.Element.IsReference() {
+			e.closureThrown(element + ".reference")
+		} else {
+			e.closureThrown()
+		}
+		if reduce.Element.IsReference() {
+			e.line("adamic_release(%s.reference);", element)
+		}
+		if reduce.Result.IsReference() {
+			e.line("adamic_release(%s);", accumulator)
+			e.line("%s = (%s)%s.reference;", accumulator, cType(reduce.Result), answer)
+		} else {
+			e.line("%s = %s;", accumulator, unslotted(reduce.Result, answer+"."+member(reduce.Result)))
+		}
+	})
 	e.line("}")
 	return accumulator
 }

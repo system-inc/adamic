@@ -14,9 +14,9 @@ func (e *emitter) aside(expression ir.Expression) (string, string, []string) {
 	return e.asideWith(func() string { return e.value(expression) })
 }
 
-// asideScope is an open aside's scope, by its index in scopes, and how many lists outerOwned held
-// with the aside's own: a check in a statement begun outside the aside lets go of the scope where the
-// check is (thrownSite).
+// asideScope is an open aside's scope, or an iteration's (iteration), by its index in scopes, and how
+// many lists outerOwned held with the aside's own: a check in a statement begun outside the aside
+// lets go of the scope where the check is (thrownSite).
 type asideScope struct {
 	scope int
 	level int

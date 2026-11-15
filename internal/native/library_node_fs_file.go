@@ -129,7 +129,7 @@ func (e *emitter) timerInvoke(call ir.NodeFSFile) string {
 	// The count is the call site's own, known here, and a callback that takes none reads no argument.
 	adapter.line("(void)argc;")
 	adapter.line("(void)arguments;")
-	packed := adapter.closureSlots(through, slots, "", fmt.Sprint(count))
+	packed := adapter.closureSlots(through, slots, nil, "", fmt.Sprint(count))
 	invoked := adapter.packedClosureCall(through, "callback", packed, fmt.Sprint(count))
 	if discard := e.program.ClosureDiscard(through); adapter.discarding(discard) {
 		adapter.line("adamic_value result = %s;", invoked)

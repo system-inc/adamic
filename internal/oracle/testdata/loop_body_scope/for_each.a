@@ -1,0 +1,23 @@
+// An array's forEach with a rest packed in each iteration (#9grybqc): note's type is admitted by
+// each callback's, so each call collects note's rest from the element, the index's number and the
+// array. note returns nothing, as the callbacks do. Node prints:
+//
+//	string:x;number:1;object:y,z
+//	0=ant 1=bee 2=cat 3=dog
+//	ANT
+//	BEE
+//	CAT
+//	DOG
+const note = (...items: (string | number | string[])[]): void => {
+	console.log(items.map((item) => typeof item + ':' + (Array.isArray(item) ? item.join(',') : String(item))).join(';'));
+};
+note('x', 1, ['y', 'z']);
+const words = 'ant bee cat dog'.split(' ');
+const seen: string[] = [];
+words.forEach((word, index) => {
+	seen.push(`${index}=${word}`);
+});
+console.log(seen.join(' '));
+words.forEach((word) => {
+	console.log(word.toUpperCase());
+});
