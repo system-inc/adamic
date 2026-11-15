@@ -1,15 +1,15 @@
 // object.c: plain objects, each carrying its shape.
 
 #include "adamic.h"
+#include "graph_regions.h"
 #include "view_unions_mixed.h"
 
 #include <string.h>
 #include <stdio.h>
 #include <stdlib.h>
 
-adamic_object *adamic_object_new(const adamic_shape *shape) {
-	adamic_shape_check(shape);
-	adamic_object *object = adamic_allocate(adamic_object_size(shape->count), adamic_kind_object);
+// empty makes new storage an object of shape with every field zeroed, wherever the storage came from.
+static adamic_object *empty(adamic_object *object, const adamic_shape *shape) {
 	object->shape = shape;
 	object->class = NULL;
 	object->frozen = false;
@@ -20,6 +20,18 @@ adamic_object *adamic_object_new(const adamic_shape *shape) {
 	memset(adamic_object_field_types(object), 0, shape->count);
 	adamic_error_initialize(object);
 	return object;
+}
+
+adamic_object *adamic_object_new(const adamic_shape *shape) {
+	adamic_shape_check(shape);
+	return empty(adamic_allocate(adamic_object_size(shape->count), adamic_kind_object), shape);
+}
+
+// An object born in graph storage, as a graph record's wrapper is (record.c): no region's until
+// adamic_graph_born, and never moved.
+adamic_object *adamic_object_new_graph(const adamic_shape *shape) {
+	adamic_shape_check(shape);
+	return empty(adamic_heap_graph_allocate(adamic_object_size(shape->count), adamic_kind_object), shape);
 }
 
 // field_owned is adamic_object_field that also says which object holds the slot: a constructor's

@@ -22,8 +22,8 @@ static void *allocate_zeroed(size_t count, size_t size) {
 	return memory;
 }
 
-adamic_map *adamic_map_new(bool string_keys, bool reference_values) {
-	adamic_map *map = adamic_allocate(sizeof *map, adamic_kind_map);
+// empty makes new storage an empty map, wherever the storage came from.
+static adamic_map *empty(adamic_map *map, bool string_keys, bool reference_values) {
 	map->count = 0;
 	map->used = 0;
 	map->capacity = 0;
@@ -37,6 +37,16 @@ adamic_map *adamic_map_new(bool string_keys, bool reference_values) {
 	map->reference_values = reference_values;
 	map->iterating = 0;
 	return map;
+}
+
+adamic_map *adamic_map_new(bool string_keys, bool reference_values) {
+	return empty(adamic_allocate(sizeof(adamic_map), adamic_kind_map), string_keys, reference_values);
+}
+
+// A map born in graph storage, as a graph record's table is (record.c): no region's until
+// adamic_graph_born, and never moved.
+adamic_map *adamic_map_new_graph(bool string_keys, bool reference_values) {
+	return empty(adamic_heap_graph_allocate(sizeof(adamic_map), adamic_kind_map), string_keys, reference_values);
 }
 
 adamic_map *adamic_map_new_booleans(bool reference_values) {
