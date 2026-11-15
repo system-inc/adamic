@@ -69,6 +69,7 @@ adamic_object *adamic_regex_compile_new(adamic_string *pattern, adamic_string *f
 adamic_object *adamic_regex_new_owned(const adamic_regex_program *, adamic_string *, adamic_string *, adamic_array *);
 void adamic_regex_owned_shape_publish(const adamic_shape *);
 bool adamic_regex_method(const adamic_object *, const char *, adamic_method_entry *);
+bool adamic_regex_function_method(const adamic_closure *, const adamic_object *, adamic_method_entry *);
 adamic_closure *adamic_regex_prototype_function(const adamic_object *, const char *);
 adamic_closure *adamic_object_optional_closure(const adamic_object *, const char *, adamic_slot_cache *, const char *);
 bool adamic_regex_test(adamic_object *regex, adamic_string *input);

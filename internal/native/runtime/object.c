@@ -191,7 +191,10 @@ adamic_closure *adamic_object_callee(const adamic_object *object, const char *na
 		adamic_slot_cache_store(cache, shape, slot);
 	}
 	if (slot < shape->count) {
-		return object->slots[slot].reference;
+		adamic_closure *function = object->slots[slot].reference;
+		// A copied RegExp prototype function needs this receiver, just as an inherited one does.
+		if (adamic_regex_function_method(function, object, method)) { return NULL; }
+		return function;
 	}
 	*method = shape->methods->code[slot - shape->count];
 	return NULL;
