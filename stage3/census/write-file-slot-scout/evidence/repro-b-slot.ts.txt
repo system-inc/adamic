@@ -1,0 +1,21 @@
+interface System {
+writeFile(path: string, data: string, writeByteOrderMark?: boolean): void;
+directoryExists(path: string): boolean;
+createDirectory(path: string): void;
+}
+export function patchWriteFileEnsuringDirectory(sys: System): void {
+    // patch writefile to create folder before writing the file
+    const writeFileView: { readonly writeFile: System["writeFile"]; } = sys;
+    const originalWriteFile = writeFileView.writeFile;
+    const writeFileSlot: { writeFile: System["writeFile"] } = sys;
+    writeFileSlot.writeFile = (path, data, writeBom) =>
+        writeFileEnsuringDirectories(
+            path,
+            data,
+            !!writeBom,
+            (path, data, writeByteOrderMark) => originalWriteFile.call(sys, path, data, writeByteOrderMark),
+            path => sys.createDirectory(path),
+            path => sys.directoryExists(path),
+        );
+}
+function writeFileEnsuringDirectories(path: string, data: string, bom: boolean, write: (path: string, data: string, bom: boolean) => void, create: (path: string) => void, exists: (path: string) => boolean): void { if (!exists("parent")) create("parent"); write(path, data, bom); }

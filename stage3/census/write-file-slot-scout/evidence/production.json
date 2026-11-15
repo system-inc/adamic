@@ -1,0 +1,41 @@
+{
+  "main": {
+    "command": [
+      "/workspace/scratch/write-file-slot-measure/adamic",
+      "js",
+      "/workspace/scratch/write-file-slot-measure/main/src/compiler/sys.ts",
+      "--module-format",
+      "commonjs-bundle"
+    ],
+    "exit": 1,
+    "stdoutBytes": 0,
+    "stderr": "adamic: /workspace/scratch/write-file-slot-measure/main/src/compiler/utilitiesPublic.ts:1284:52: Adamic 0.1 refuses an unproven predicate argument for parameter predicate (argument \"predicate\"); pass a named function or arrow whose body proves both predicate branches; return a boolean and narrow at the caller (adamic/no-type-predicate)\n",
+    "seconds": 33.0935932729999
+  },
+  "a-construction": {
+    "command": [
+      "/workspace/scratch/write-file-slot-measure/adamic",
+      "js",
+      "/workspace/scratch/write-file-slot-measure/a-construction/src/compiler/sys.ts",
+      "--module-format",
+      "commonjs-bundle"
+    ],
+    "exit": 1,
+    "stdoutBytes": 0,
+    "stderr": "adamic: /workspace/scratch/write-file-slot-measure/a-construction/src/compiler/utilitiesPublic.ts:1284:52: Adamic 0.1 refuses an unproven predicate argument for parameter predicate (argument \"predicate\"); pass a named function or arrow whose body proves both predicate branches; return a boolean and narrow at the caller (adamic/no-type-predicate)\n",
+    "seconds": 18.586877946999948
+  },
+  "b-slot": {
+    "command": [
+      "/workspace/scratch/write-file-slot-measure/adamic",
+      "js",
+      "/workspace/scratch/write-file-slot-measure/b-slot/src/compiler/sys.ts",
+      "--module-format",
+      "commonjs-bundle"
+    ],
+    "exit": 1,
+    "stdoutBytes": 0,
+    "stderr": "adamic: /workspace/scratch/write-file-slot-measure/b-slot/src/compiler/utilitiesPublic.ts:1284:52: Adamic 0.1 refuses an unproven predicate argument for parameter predicate (argument \"predicate\"); pass a named function or arrow whose body proves both predicate branches; return a boolean and narrow at the caller (adamic/no-type-predicate)\n",
+    "seconds": 16.927769943000158
+  }
+}

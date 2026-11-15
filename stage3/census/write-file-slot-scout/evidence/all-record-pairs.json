@@ -1,0 +1,39 @@
+{
+  "main": {
+    "rawRecords": 180,
+    "distinctNormalizedTuples": 60,
+    "added": [],
+    "removed": []
+  },
+  "a-construction": {
+    "rawRecords": 184,
+    "distinctNormalizedTuples": 60,
+    "added": [
+      {
+        "key": [
+          "Refused",
+          "lowering",
+          "inherited library member call read as an own field",
+          "Adamic 0.1 refuses inherited library member call read as an own field; prototype members are not stored in an object's shape; call the method on its receiver, or wrap that call in an arrow (unbound-method)"
+        ],
+        "count": 2
+      },
+      {
+        "key": [
+          "Boundary",
+          "lowering",
+          "failed statement; state rolled back; continued at next statement or declaration",
+          "Adamic 0.1 refuses inherited library member call read as an own field; prototype members are not stored in an object's shape; call the method on its receiver, or wrap that call in an arrow (unbound-method)"
+        ],
+        "count": 2
+      }
+    ],
+    "removed": []
+  },
+  "b-slot": {
+    "rawRecords": 180,
+    "distinctNormalizedTuples": 60,
+    "added": [],
+    "removed": []
+  }
+}

@@ -1,0 +1,21 @@
+--- main/src/compiler/sys.ts
++++ a/src/compiler/sys.ts
+@@ -1532,0 +1533,10 @@
++        const originalWriteFile = writeFile;
++        const wrappedWriteFile: System["writeFile"] = (path, data, writeBom) =>
++            writeFileEnsuringDirectories(
++                path,
++                data,
++                !!writeBom,
++                (path, data, writeByteOrderMark) => originalWriteFile.call(nodeSystem, path, data, writeByteOrderMark),
++                path => nodeSystem.createDirectory(path),
++                path => nodeSystem.directoryExists(path),
++            );
+@@ -1547 +1557 @@
+-            writeFile,
++            writeFile: wrappedWriteFile,
+@@ -1980,4 +1989,0 @@
+-    if (sys) {
+-        // patch writefile to create folder before writing the file
+-        patchWriteFileEnsuringDirectory(sys);
+-    }

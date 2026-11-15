@@ -1,0 +1,5 @@
+--- main/src/compiler/sys.ts
++++ hidden/src/compiler/sys.ts
+@@ -1387 +1387 @@
+-    sys.writeFile = (path, data, writeBom) =>
++    const unusedWriteFile: System["writeFile"] = (path, data, writeBom) =>

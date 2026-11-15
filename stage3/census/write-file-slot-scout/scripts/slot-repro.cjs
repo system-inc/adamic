@@ -1,0 +1,10 @@
+const fs=require('fs'),path=require('path'),cp=require('child_process'),assert=require('assert/strict'),ts=require('/workspace/scratch/write-file-slot-scout/stage3/api/node_modules/typescript');
+const r='/workspace/scratch/write-file-slot-measure',out={};
+for(const n of ['main','b-slot']){const text=fs.readFileSync(`${r}/${n}/src/compiler/sys.ts`,'utf8'),s=ts.createSourceFile('sys.ts',text,ts.ScriptTarget.Latest,true),owner=s.statements.find(x=>ts.isFunctionDeclaration(x)&&x.name?.text==='patchWriteFileEnsuringDirectory'),system=s.statements.find(x=>ts.isInterfaceDeclaration(x)&&x.name.text==='System');const members=system.members.filter(x=>['writeFile','createDirectory','directoryExists'].includes(x.name?.getText(s))).map(x=>x.getText(s));assert.equal(members.length,3);
+const stub=`function writeFileEnsuringDirectories(path: string, data: string, bom: boolean, write: (path: string, data: string, bom: boolean) => void, create: (path: string) => void, exists: (path: string) => boolean): void { if (!exists("parent")) create("parent"); write(path, data, bom); }`;
+const source='interface System {\n'+members.join('\n')+'\n}\n'+owner.getText(s)+'\n'+stub+'\n';const file=`${r}/repro-${n}.ts`;fs.writeFileSync(file,source);const cmd=[`${r}/adamic`,'js',file,'--module-format','commonjs-bundle'];const p=cp.spawnSync(cmd[0],cmd.slice(1),{encoding:'utf8',maxBuffer:50e6});out[n]={source:'real exact helper body and three real System method signatures; filesystem helper is a focused stub',command:cmd,exit:p.status,stdoutBytes:p.stdout.length,stderr:p.stderr};console.log(n,JSON.stringify(out[n]));}
+assert(out.main.stderr.includes('a method read as a value (writeFile would lose its object'));
+assert(!out['b-slot'].stderr.includes('a method read as a value (writeFile would lose its object'));
+assert(out['b-slot'].stderr.includes('inherited library member call read as an own field'));
+assert.equal(out.main.stdoutBytes,0);assert.equal(out['b-slot'].stdoutBytes,0);
+fs.writeFileSync(r+'/slot-repro.json',JSON.stringify(out,null,2)+'\n');

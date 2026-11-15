@@ -1,0 +1,31 @@
+--- main/sys.js
++++ a/sys.js
+@@ -1035,6 +1035,8 @@
+             fsWatchWithTimestamp: isMacOs,
+             sysLog,
+         });
++        const originalWriteFile = writeFile;
++        const wrappedWriteFile = (path, data, writeBom) => writeFileEnsuringDirectories(path, data, !!writeBom, (path, data, writeByteOrderMark) => originalWriteFile.call(nodeSystem, path, data, writeByteOrderMark), path => nodeSystem.createDirectory(path), path => nodeSystem.directoryExists(path));
+         const nodeSystem = {
+             args: process.argv.slice(2),
+             newLine: _os.EOL,
+@@ -1049,7 +1051,7 @@
+                 return !!process.stdout.isTTY;
+             },
+             readFile,
+-            writeFile,
++            writeFile: wrappedWriteFile,
+             watchFile,
+             watchDirectory,
+             preferNonRecursiveWatch: !fsSupportsRecursiveFsWatch,
+@@ -1450,10 +1452,6 @@
+     if (isNodeLikeSystem()) {
+         sys = getNodeSystem();
+     }
+-    if (sys) {
+-        // patch writefile to create folder before writing the file
+-        patchWriteFileEnsuringDirectory(sys);
+-    }
+     return sys;
+ })();
+ /** @internal @knipignore */

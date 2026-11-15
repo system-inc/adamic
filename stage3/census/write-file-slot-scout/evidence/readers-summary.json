@@ -1,0 +1,173 @@
+{
+  "accesses": 479,
+  "kinds": {
+    "value": 15,
+    "call": 455,
+    "write": 9
+  },
+  "bindings": [],
+  "patchReferences": [
+    {
+      "where": "src/compiler/sys.ts:1378:17",
+      "text": "export function patchWriteFileEnsuringDirectory(sys: System): void {\r\n    // patch writefile to create folder before writing the file\r\n    const originalWriteFile = sys.writeFile;\r\n    sys.writeFile = (path, data, writeBom) =>\r\n        writeFileEnsuringDirectories(\r\n            path,\r\n            data,\r\n            !!writeBom,\r\n            (path, data, writeByteOrderMark) => originalWriteFile.call(sys, path, data, writeByteOrderMark),\r\n            path => sys.createDirectory(path),\r\n            "
+    },
+    {
+      "where": "src/compiler/sys.ts:1961:9",
+      "text": "patchWriteFileEnsuringDirectory(sys)"
+    },
+    {
+      "where": "src/testRunner/unittests/helpers/virtualFileSystemWithWatch.ts:52:5",
+      "text": "patchWriteFileEnsuringDirectory"
+    },
+    {
+      "where": "src/testRunner/unittests/helpers/virtualFileSystemWithWatch.ts:561:9",
+      "text": "patchWriteFileEnsuringDirectory(host)"
+    }
+  ],
+  "nonCalls": [
+    {
+      "where": "src/compiler/builder.ts:1727:46",
+      "kind": "value",
+      "expression": "host.writeFile",
+      "context": "maybeBind(host, host.writeFile)"
+    },
+    {
+      "where": "src/compiler/builder.ts:1815:50",
+      "kind": "value",
+      "expression": "host.writeFile",
+      "context": "maybeBind(host, host.writeFile)"
+    },
+    {
+      "where": "src/compiler/builder.ts:1914:94",
+      "kind": "value",
+      "expression": "host.writeFile",
+      "context": "maybeBind(host, host.writeFile)"
+    },
+    {
+      "where": "src/compiler/builder.ts:1966:22",
+      "kind": "value",
+      "expression": "host.writeFile",
+      "context": "if (host.writeFile) host.writeFile(fileName, text, writeByteOrderMark, onError, sourceFiles, data);\r\n            else state.program.writeFile(fileName, text, writeByteOrderMark, onError, sourceFiles, data);"
+    },
+    {
+      "where": "src/compiler/program.ts:529:31",
+      "kind": "value",
+      "expression": "host.writeFile",
+      "context": "originalWriteFile = host.writeFile"
+    },
+    {
+      "where": "src/compiler/program.ts:582:9",
+      "kind": "write",
+      "expression": "host.writeFile",
+      "context": "host.writeFile = (fileName, data, ...rest) => {\r\n            const key = toPath(fileName);\r\n            fileExistsCache.delete(key);\r\n\r\n            const value = readFileCache.get(key);\r\n            if (value !== undefined && value !== data) {\r\n                readFileCache.delete(key);\r\n                sourceFileCache.forEach(map => map.delete(key));\r\n            }\r\n            else if (getSourceFileWithCache) {\r\n                sourceFileCache.forEach(map => {\r\n                    const sourceFile = map.get(key);\r\n                    if (sourceFile && sourceFile.text !== data) {\r\n           "
+    },
+    {
+      "where": "src/compiler/sys.ts:1380:31",
+      "kind": "value",
+      "expression": "sys.writeFile",
+      "context": "originalWriteFile = sys.writeFile"
+    },
+    {
+      "where": "src/compiler/sys.ts:1381:5",
+      "kind": "write",
+      "expression": "sys.writeFile",
+      "context": "sys.writeFile = (path, data, writeBom) =>\r\n        writeFileEnsuringDirectories(\r\n            path,\r\n            data,\r\n            !!writeBom,\r\n            (path, data, writeByteOrderMark) => originalWriteFile.call(sys, path, data, writeByteOrderMark),\r\n            path => sys.createDirectory(path),\r\n            path => sys.directoryExists(path),\r\n        )"
+    },
+    {
+      "where": "src/compiler/tsbuildPublic.ts:787:5",
+      "kind": "write",
+      "expression": "host.writeFile",
+      "context": "host.writeFile = cache.originalWriteFile"
+    },
+    {
+      "where": "src/compiler/tsbuildPublic.ts:1117:39",
+      "kind": "value",
+      "expression": "compilerHost.writeFile",
+      "context": "writeFileCallback || compilerHost.writeFile"
+    },
+    {
+      "where": "src/compiler/watch.ts:764:49",
+      "kind": "value",
+      "expression": "host.writeFile",
+      "context": "host.writeFile!"
+    },
+    {
+      "where": "src/compiler/watchPublic.ts:663:9",
+      "kind": "write",
+      "expression": "compilerHost.writeFile",
+      "context": "compilerHost.writeFile = originalWriteFile!"
+    },
+    {
+      "where": "src/compiler/watchUtilities.ts:133:20",
+      "kind": "value",
+      "expression": "host.writeFile",
+      "context": "host.writeFile && writeFile"
+    },
+    {
+      "where": "src/compiler/watchUtilities.ts:221:16",
+      "kind": "value",
+      "expression": "host.writeFile",
+      "context": "host.writeFile!"
+    },
+    {
+      "where": "src/testRunner/unittests/customTransforms.ts:24:58",
+      "kind": "value",
+      "expression": "host.writeFile",
+      "context": "program.emit(/*targetSourceFile*/ undefined, host.writeFile, /*cancellationToken*/ undefined, /*emitOnlyDtsFiles*/ false, customTransformers)"
+    },
+    {
+      "where": "src/testRunner/unittests/helpers/baseline.ts:460:31",
+      "kind": "value",
+      "expression": "sys.writeFile",
+      "context": "originalWriteFile = sys.writeFile"
+    },
+    {
+      "where": "src/testRunner/unittests/helpers/baseline.ts:461:5",
+      "kind": "write",
+      "expression": "sys.writeFile",
+      "context": "sys.writeFile = (fileName: string, content: string, writeByteOrderMark: boolean) => {\r\n        if (ts.isBuildInfoFile(fileName)) {\r\n            const buildInfo = ts.getBuildInfo(fileName, content);\r\n            if (buildInfo) {\r\n                buildInfo.version = version;\r\n                return originalWriteFile.call(sys, fileName, ts.getBuildInfoText(buildInfo), writeByteOrderMark);\r\n            }\r\n        }\r\n        return originalWriteFile.call(sys, fileName, content, writeByteOrderMark);\r\n    }"
+    },
+    {
+      "where": "src/testRunner/unittests/helpers/solutionBuilder.ts:64:35",
+      "kind": "value",
+      "expression": "sys.writeFile",
+      "context": "originalWriteFile = sys.writeFile"
+    },
+    {
+      "where": "src/testRunner/unittests/helpers/solutionBuilder.ts:78:9",
+      "kind": "write",
+      "expression": "sys.writeFile",
+      "context": "sys.writeFile = originalWriteFile"
+    },
+    {
+      "where": "src/testRunner/unittests/helpers/solutionBuilder.ts:99:37",
+      "kind": "value",
+      "expression": "sys.writeFile",
+      "context": "originalWriteFile = sys.writeFile"
+    },
+    {
+      "where": "src/testRunner/unittests/helpers/solutionBuilder.ts:104:17",
+      "kind": "write",
+      "expression": "sys.writeFile",
+      "context": "sys.writeFile = originalWriteFile"
+    },
+    {
+      "where": "src/testRunner/unittests/helpers/tscWatch.ts:230:5",
+      "kind": "write",
+      "expression": "compilerHost.writeFile",
+      "context": "compilerHost.writeFile = ts.notImplemented"
+    },
+    {
+      "where": "src/testRunner/unittests/helpers/virtualFileSystemWithWatch.ts:1383:31",
+      "kind": "value",
+      "expression": "host.writeFile",
+      "context": "originalWriteFile = host.writeFile"
+    },
+    {
+      "where": "src/testRunner/unittests/helpers/virtualFileSystemWithWatch.ts:1385:5",
+      "kind": "write",
+      "expression": "host.writeFile",
+      "context": "host.writeFile = (fileName, content) => {\r\n        originalWriteFile.call(host, fileName, content);\r\n        const path = host.toFullPath(fileName);\r\n        host.writtenFiles.set(path, (host.writtenFiles.get(path) || 0) + 1);\r\n    }"
+    }
+  ]
+}

@@ -1,0 +1,47 @@
+{
+  "main": {
+    "stripInternal": true,
+    "emitSkipped": false,
+    "emitDiagnostics": [],
+    "command": [
+      "node",
+      "/workspace/scratch/write-file-slot-typescript/scripts/dtsBundler.mjs",
+      "--entrypoint",
+      "/workspace/scratch/write-file-slot-measure/declarations/main/typescript/typescript.d.ts",
+      "--output",
+      "/workspace/scratch/write-file-slot-measure/declarations/main/typescript.d.ts"
+    ],
+    "bundlerExit": 0,
+    "sha256": "f03adcf915df559d616fcafd75181d3423eaa0f272237482cedbd025525c9516"
+  },
+  "a-construction": {
+    "stripInternal": true,
+    "emitSkipped": false,
+    "emitDiagnostics": [],
+    "command": [
+      "node",
+      "/workspace/scratch/write-file-slot-typescript/scripts/dtsBundler.mjs",
+      "--entrypoint",
+      "/workspace/scratch/write-file-slot-measure/declarations/a-construction/typescript/typescript.d.ts",
+      "--output",
+      "/workspace/scratch/write-file-slot-measure/declarations/a-construction/typescript.d.ts"
+    ],
+    "bundlerExit": 0,
+    "sha256": "f03adcf915df559d616fcafd75181d3423eaa0f272237482cedbd025525c9516"
+  },
+  "b-slot": {
+    "stripInternal": true,
+    "emitSkipped": false,
+    "emitDiagnostics": [],
+    "command": [
+      "node",
+      "/workspace/scratch/write-file-slot-typescript/scripts/dtsBundler.mjs",
+      "--entrypoint",
+      "/workspace/scratch/write-file-slot-measure/declarations/b-slot/typescript/typescript.d.ts",
+      "--output",
+      "/workspace/scratch/write-file-slot-measure/declarations/b-slot/typescript.d.ts"
+    ],
+    "bundlerExit": 0,
+    "sha256": "f03adcf915df559d616fcafd75181d3423eaa0f272237482cedbd025525c9516"
+  }
+}

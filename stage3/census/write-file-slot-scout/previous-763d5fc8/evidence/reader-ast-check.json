@@ -1,0 +1,15 @@
+{
+  "comparisons": [],
+  "calls": [
+    {
+      "file": "src/compiler/sys.ts",
+      "line": 1961,
+      "text": "patchWriteFileEnsuringDirectory(sys)"
+    },
+    {
+      "file": "src/testRunner/unittests/helpers/virtualFileSystemWithWatch.ts",
+      "line": 561,
+      "text": "patchWriteFileEnsuringDirectory(host)"
+    }
+  ]
+}

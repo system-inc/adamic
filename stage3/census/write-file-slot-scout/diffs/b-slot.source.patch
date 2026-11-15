@@ -1,0 +1,12 @@
+--- main/src/compiler/sys.ts
++++ b-slot/src/compiler/sys.ts
+@@ -1384,7 +1384,8 @@
+     // patch writefile to create folder before writing the file
+     const writeFileView: { readonly writeFile: System["writeFile"]; } = sys;
+     const originalWriteFile = writeFileView.writeFile;
+-    sys.writeFile = (path, data, writeBom) =>
++    const writeFileSlot: { writeFile: System["writeFile"] } = sys;
++    writeFileSlot.writeFile = (path, data, writeBom) =>
+         writeFileEnsuringDirectories(
+             path,
+             data,

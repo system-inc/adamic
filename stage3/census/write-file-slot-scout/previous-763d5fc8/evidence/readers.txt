@@ -1,0 +1,242 @@
+/workspace/scratch/write-file-slot-ts/src/testRunner/unittests/tsbuildWatch/demo.ts:15:            sys.writeFile(
+/workspace/scratch/write-file-slot-ts/src/testRunner/unittests/tsbuildWatch/demo.ts:28:                edit: sys => sys.writeFile("core/tsconfig.json", getFsContentsForDemoProjectReferencesCoreConfig()),
+/workspace/scratch/write-file-slot-ts/src/testRunner/unittests/tsbuildWatch/programUpdates.ts:103:                        edit: sys => sys.writeFile("core/newfile.ts", `export const newFileConst = 30;`),
+/workspace/scratch/write-file-slot-ts/src/testRunner/unittests/tsbuildWatch/programUpdates.ts:129:                    sys.writeFile(
+/workspace/scratch/write-file-slot-ts/src/testRunner/unittests/tsbuildWatch/programUpdates.ts:154:                edit: sys => sys.writeFile("logic/tsconfig.json", getFsContentsForSampleProjectReferencesLogicConfig()),
+/workspace/scratch/write-file-slot-ts/src/testRunner/unittests/tsbuildWatch/programUpdates.ts:252:                    edit: sys => sys.writeFile(libraryTs.path, libraryTs.content.replace(/message/g, "message2")),
+/workspace/scratch/write-file-slot-ts/src/testRunner/unittests/tsbuildWatch/programUpdates.ts:261:                    edit: sys => sys.writeFile(libraryTs.path, libraryTs.content),
+/workspace/scratch/write-file-slot-ts/src/testRunner/unittests/tsbuildWatch/programUpdates.ts:355:                edit: sys => sys.writeFile(fileWithError.path, fileWithFixedError.content),
+/workspace/scratch/write-file-slot-ts/src/testRunner/unittests/tsbuildWatch/programUpdates.ts:361:                edit: sys => sys.writeFile(fileWithoutError.path, fileWithoutError.content.replace(/myClass/g, "myClass2")),
+/workspace/scratch/write-file-slot-ts/src/testRunner/unittests/tsbuildWatch/programUpdates.ts:396:                    edit: sys => sys.writeFile(fileWithError.path, fileWithError.content),
+/workspace/scratch/write-file-slot-ts/src/testRunner/unittests/tsbuildWatch/programUpdates.ts:478:                    sys.writeFile(
+/workspace/scratch/write-file-slot-ts/src/testRunner/unittests/tsbuildWatch/programUpdates.ts:500:                edit: sys => sys.writeFile("core/file3.ts", `export const y = 10;`),
+/workspace/scratch/write-file-slot-ts/src/testRunner/unittests/tsbuildWatch/programUpdates.ts:513:            sys.writeFile(
+/workspace/scratch/write-file-slot-ts/src/testRunner/unittests/tsbuildWatch/programUpdates.ts:525:                edit: sys => sys.writeFile("core/file3.ts", `export const y = 10;`),
+/workspace/scratch/write-file-slot-ts/src/testRunner/unittests/tsbuildWatch/programUpdates.ts:640:                    sys.writeFile(
+/workspace/scratch/write-file-slot-ts/src/testRunner/unittests/tsbuildWatch/programUpdates.ts:656:                    sys.writeFile(
+/workspace/scratch/write-file-slot-ts/src/testRunner/unittests/tsbuildWatch/programUpdates.ts:668:                    sys.writeFile(
+/workspace/scratch/write-file-slot-ts/src/testRunner/unittests/tsbuildWatch/programUpdates.ts:678:                edit: sys => sys.writeFile("/user/username/projects/project/alpha.tsconfig.json", "{}"),
+/workspace/scratch/write-file-slot-ts/src/testRunner/unittests/tsbuildWatch/programUpdates.ts:689:                    sys.writeFile(
+/workspace/scratch/write-file-slot-ts/src/testRunner/unittests/tsbuildWatch/programUpdates.ts:700:                    sys.writeFile(
+/workspace/scratch/write-file-slot-ts/src/testRunner/unittests/tsbuildWatch/watchEnvironment.ts:40:                    edit: sys => sys.writeFile(typing.path, `${typing.content}export const typing1 = 10;`),
+/workspace/scratch/write-file-slot-ts/src/testRunner/unittests/tsbuildWatch/watchEnvironment.ts:57:                    edit: sys => sys.writeFile(typing.path, typing.content),
+/workspace/scratch/write-file-slot-ts/src/testRunner/unittests/tsbuildWatch/watchEnvironment.ts:74:                    edit: sys => sys.writeFile(typing.path, `${typing.content}export const typing1 = 10;`),
+/workspace/scratch/write-file-slot-ts/src/testRunner/unittests/tsbuildWatch/configFileErrors.ts:58:                        sys.writeFile(
+/workspace/scratch/write-file-slot-ts/src/testRunner/unittests/tsbuildWatch/noEmit.ts:27:                    edit: sys => sys.writeFile(`/user/username/projects/myproject/a.js`, sys.readFile(`/user/username/projects/myproject/a.js`)!),
+/workspace/scratch/write-file-slot-ts/src/testRunner/unittests/tsbuildWatch/noEmit.ts:33:                    edit: sys => sys.writeFile(`/user/username/projects/myproject/a.js`, "const x = 10;"),
+/workspace/scratch/write-file-slot-ts/src/testRunner/unittests/tsserver/projectReferences.ts:1913:                if (change !== undefined) host.writeFile(config.path, change);
+/workspace/scratch/write-file-slot-ts/src/testRunner/unittests/helpers/baseline.ts:137:        sys.writeFile(`${mapFile}.baseline.txt`, text);
+/workspace/scratch/write-file-slot-ts/src/testRunner/unittests/helpers/baseline.ts:294:    sys.writeFile(`${buildInfoPath}.readable.baseline.txt`, jsonToReadableText(result));
+/workspace/scratch/write-file-slot-ts/src/testRunner/unittests/helpers/baseline.ts:410:    if (!buildInfo) return sys.writeFile(`${buildInfoPath}.baseline.txt`, "Error reading valid buildinfo file");
+/workspace/scratch/write-file-slot-ts/src/testRunner/unittests/helpers/baseline.ts:460:    const originalWriteFile = sys.writeFile;
+/workspace/scratch/write-file-slot-ts/src/testRunner/unittests/helpers/baseline.ts:461:    sys.writeFile = (fileName: string, content: string, writeByteOrderMark: boolean) => {
+/workspace/scratch/write-file-slot-ts/src/testRunner/unittests/helpers/monorepoSymlinkedSiblingPackages.ts:232:                                edit: sys => sys.writeFile("/home/src/projects/a/2/unrelated/somethingUnrelated.ts", "export const a = 10;"),
+/workspace/scratch/write-file-slot-ts/src/testRunner/unittests/helpers/monorepoSymlinkedSiblingPackages.ts:240:                                edit: sys => sys.writeFile("/home/src/projects/c/4/unrelated/somethingUnrelated.ts", "export const a = 10;"),
+/workspace/scratch/write-file-slot-ts/src/testRunner/unittests/helpers/monorepoSymlinkedSiblingPackages.ts:250:                                edit: sys => sys.writeFile("/home/src/projects/a/2/unrelated/anotherFile.ts", "export const a = 10;"),
+/workspace/scratch/write-file-slot-ts/src/testRunner/unittests/helpers/monorepoSymlinkedSiblingPackages.ts:258:                                edit: sys => sys.writeFile("/home/src/projects/c/4/unrelated/anotherFile.ts", "export const a = 10;"),
+/workspace/scratch/write-file-slot-ts/src/testRunner/unittests/helpers/solutionBuilder.ts:64:        const originalWriteFile = sys.writeFile;
+/workspace/scratch/write-file-slot-ts/src/testRunner/unittests/helpers/solutionBuilder.ts:78:        sys.writeFile = originalWriteFile;
+/workspace/scratch/write-file-slot-ts/src/testRunner/unittests/helpers/solutionBuilder.ts:99:                originalWriteFile = sys.writeFile;
+/workspace/scratch/write-file-slot-ts/src/testRunner/unittests/helpers/solutionBuilder.ts:104:                sys.writeFile = originalWriteFile;
+/workspace/scratch/write-file-slot-ts/src/testRunner/unittests/tsc/ignoreConfig.ts:16:        sys.writeFile(
+/workspace/scratch/write-file-slot-ts/src/testRunner/unittests/helpers/alternateResult.ts:117:                edit: sys => sys.writeFile("/home/src/projects/project/node_modules/@types/bar/index.d.ts", getFsContentsForAlternateResultDts("bar")),
+/workspace/scratch/write-file-slot-ts/src/testRunner/unittests/helpers/alternateResult.ts:125:                edit: sys => sys.writeFile("/home/src/projects/project/node_modules/foo/index.d.ts", getFsContentsForAlternateResultDts("foo")),
+/workspace/scratch/write-file-slot-ts/src/testRunner/unittests/helpers/alternateResult.ts:133:                edit: sys => sys.writeFile("/home/src/projects/project/node_modules/@types/bar/package.json", getFsConentsForAlternateResultAtTypesPackageJson("bar", /*addTypesCondition*/ true)),
+/workspace/scratch/write-file-slot-ts/src/testRunner/unittests/helpers/alternateResult.ts:141:                edit: sys => sys.writeFile("/home/src/projects/project/node_modules/foo/package.json", getFsContentsForAlternateResultPackageJson("foo", /*addTypes*/ true, /*addTypesCondition*/ true)),
+/workspace/scratch/write-file-slot-ts/src/testRunner/unittests/helpers/alternateResult.ts:149:                edit: sys => sys.writeFile("/home/src/projects/project/node_modules/@types/bar2/package.json", getFsConentsForAlternateResultAtTypesPackageJson("bar2", /*addTypesCondition*/ false)),
+/workspace/scratch/write-file-slot-ts/src/testRunner/unittests/helpers/alternateResult.ts:157:                edit: sys => sys.writeFile("/home/src/projects/project/node_modules/foo2/package.json", getFsContentsForAlternateResultPackageJson("foo2", /*addTypes*/ true, /*addTypesCondition*/ false)),
+/workspace/scratch/write-file-slot-ts/src/testRunner/unittests/helpers/alternateResult.ts:181:                edit: sys => sys.writeFile("/home/src/projects/project/node_modules/@types/bar2/index.d.ts", getFsContentsForAlternateResultDts("bar2")),
+/workspace/scratch/write-file-slot-ts/src/testRunner/unittests/helpers/alternateResult.ts:189:                edit: sys => sys.writeFile("/home/src/projects/project/node_modules/foo2/index.d.ts", getFsContentsForAlternateResultDts("foo2")),
+/workspace/scratch/write-file-slot-ts/src/testRunner/unittests/tsc/incremental.ts:146:                    sys.writeFile(`/home/src/workspaces/project/src/newFile.ts`, "function foo() { return 20; }");
+/workspace/scratch/write-file-slot-ts/src/testRunner/unittests/tsc/incremental.ts:157:                edit: sys => sys.writeFile(`/home/src/workspaces/project/src/fileNotFound.ts`, "function something2() { return 20; }"),
+/workspace/scratch/write-file-slot-ts/src/testRunner/unittests/tsc/incremental.ts:239:                edit: sys => sys.writeFile("/home/src/workspaces/projects/project1/class3.ts", `class class3 {}`),
+/workspace/scratch/write-file-slot-ts/src/testRunner/unittests/tsc/incremental.ts:247:                edit: sys => sys.writeFile("/home/src/workspaces/projects/project1/class3.d.ts", `declare class class3 {}`),
+/workspace/scratch/write-file-slot-ts/src/testRunner/unittests/tsc/incremental.ts:253:                    sys.writeFile("/home/src/workspaces/projects/project1/temp/file.d.ts", `declare class file {}`);
+/workspace/scratch/write-file-slot-ts/src/testRunner/unittests/tsc/incremental.ts:262:                edit: sys => sys.writeFile("/home/src/workspaces/projects/project1/class3.d.ts", `declare class class3 {}`),
+/workspace/scratch/write-file-slot-ts/src/testRunner/unittests/tsc/incremental.ts:314:            edit: sys => sys.writeFile("/home/src/workspaces/project/constants.ts", "export default 2;"),
+/workspace/scratch/write-file-slot-ts/src/testRunner/unittests/tsc/incremental.ts:333:            edit: sys => sys.writeFile("/home/src/workspaces/project/constants.ts", "export default 2;"),
+/workspace/scratch/write-file-slot-ts/src/testRunner/unittests/tsc/incremental.ts:435:                    sys.writeFile("/home/src/workspaces/project/tsconfig.json", jsonToReadableText(config));
+/workspace/scratch/write-file-slot-ts/src/testRunner/unittests/helpers/noCheck.ts:26:            edit: sys => sys.writeFile("/home/src/workspaces/project/a.ts", `export const a = "hello";`),
+/workspace/scratch/write-file-slot-ts/src/testRunner/unittests/helpers/noCheck.ts:30:            edit: sys => sys.writeFile("/home/src/workspaces/project/a.ts", aText),
+/workspace/scratch/write-file-slot-ts/src/testRunner/unittests/helpers/noCheck.ts:74:                            edit: sys => sys.writeFile("/home/src/workspaces/project/c.ts", `export const c: number = "hello";`),
+/workspace/scratch/write-file-slot-ts/src/testRunner/unittests/helpers/virtualFileSystemWithWatch.ts:52:    patchWriteFileEnsuringDirectory,
+/workspace/scratch/write-file-slot-ts/src/testRunner/unittests/helpers/virtualFileSystemWithWatch.ts:561:        patchWriteFileEnsuringDirectory(host);
+/workspace/scratch/write-file-slot-ts/src/testRunner/unittests/helpers/noEmitOnError.ts:120:                                edit: sys => sys.writeFile("src/main.ts", fixedErrorContent),
+/workspace/scratch/write-file-slot-ts/src/testRunner/unittests/helpers/noEmitOnError.ts:153:                        edit: sys => sys.writeFile(`/user/username/projects/noEmitOnError/src/main.ts`, mainErrorContent),
+/workspace/scratch/write-file-slot-ts/src/testRunner/unittests/helpers/noEmitOnError.ts:161:                    edit: sys => sys.writeFile(`/user/username/projects/noEmitOnError/src/main.ts`, sys.readFile(`/user/username/projects/noEmitOnError/src/main.ts`)!),
+/workspace/scratch/write-file-slot-ts/src/testRunner/unittests/helpers/noEmitOnError.ts:166:                    edit: sys => sys.writeFile(`/user/username/projects/noEmitOnError/src/main.ts`, fixedErrorContent),
+/workspace/scratch/write-file-slot-ts/src/testRunner/unittests/helpers/noEmitOnError.ts:171:                    edit: sys => sys.writeFile(`/user/username/projects/noEmitOnError/src/main.ts`, sys.readFile(`/user/username/projects/noEmitOnError/src/main.ts`)!),
+/workspace/scratch/write-file-slot-ts/src/testRunner/unittests/helpers/noEmit.ts:189:            edit: sys => sys.writeFile("/home/src/projects/project/a.ts", aContent.replace("private", "public")),
+/workspace/scratch/write-file-slot-ts/src/testRunner/unittests/helpers/noEmit.ts:229:                            sys => sys.writeFile("/home/src/projects/project/b.ts", `export const b = 10;`) :
+/workspace/scratch/write-file-slot-ts/src/testRunner/unittests/helpers/noEmit.ts:260:                        edit: sys => sys.writeFile("/home/src/projects/project/c.ts", aContent.replace("a", "c").replace("private", "public")),
+/workspace/scratch/write-file-slot-ts/src/testRunner/unittests/helpers/noEmit.ts:301:                        if (asModules) sys.writeFile("/home/src/projects/project/b.ts", `export const b = 10;`);
+/workspace/scratch/write-file-slot-ts/src/testRunner/unittests/helpers/noEmit.ts:355:                    edit: sys => sys.writeFile("/home/src/projects/project/a.ts", fixedATsContent),
+/workspace/scratch/write-file-slot-ts/src/testRunner/unittests/helpers/noEmit.ts:366:                    edit: sys => sys.writeFile("/home/src/projects/project/a.ts", aTsContent),
+/workspace/scratch/write-file-slot-ts/src/testRunner/unittests/helpers/noEmit.ts:410:                    edit: sys => sys.writeFile("/home/src/projects/project/a.ts", fixedATsContent),
+/workspace/scratch/write-file-slot-ts/src/testRunner/unittests/helpers/noEmit.ts:416:                        sys.writeFile(
+/workspace/scratch/write-file-slot-ts/src/testRunner/unittests/helpers/noEmit.ts:427:                        sys.writeFile(
+/workspace/scratch/write-file-slot-ts/src/testRunner/unittests/helpers/noEmit.ts:440:                    edit: sys => sys.writeFile("/home/src/projects/project/a.ts", aTsContent),
+/workspace/scratch/write-file-slot-ts/src/testRunner/unittests/helpers/noEmit.ts:446:                        sys.writeFile(
+/workspace/scratch/write-file-slot-ts/src/testRunner/unittests/helpers/noEmit.ts:457:                        sys.writeFile(
+/workspace/scratch/write-file-slot-ts/src/testRunner/unittests/helpers/libraryResolution.ts:66:                    sys.writeFile(
+/workspace/scratch/write-file-slot-ts/src/testRunner/unittests/helpers/libraryResolution.ts:86:                    sys.writeFile(
+/workspace/scratch/write-file-slot-ts/src/testRunner/unittests/tsbuild/demo.ts:21:            sys.writeFile(
+/workspace/scratch/write-file-slot-ts/src/testRunner/unittests/tsbuild/sample.ts:39:                sys.writeFile(
+/workspace/scratch/write-file-slot-ts/src/testRunner/unittests/tsbuild/sample.ts:54:                sys.writeFile(
+/workspace/scratch/write-file-slot-ts/src/testRunner/unittests/tsbuild/sample.ts:137:                    edit: sys => sys.writeFile("tests/index.ts", "const m = 10;"),
+/workspace/scratch/write-file-slot-ts/src/testRunner/unittests/tsbuild/sample.ts:245:                sys.writeFile("tests/tsconfig.base.json", jsonToReadableText({ compilerOptions: { target: "es2015" } }));
+/workspace/scratch/write-file-slot-ts/src/testRunner/unittests/tsbuild/sample.ts:250:                edit: sys => sys.writeFile("tests/tsconfig.base.json", jsonToReadableText({ compilerOptions: {} })),
+/workspace/scratch/write-file-slot-ts/src/testRunner/unittests/tsbuild/sample.ts:485:                sys.writeFile(
+/workspace/scratch/write-file-slot-ts/src/testRunner/unittests/tsbuild/sample.ts:506:                sys.writeFile(
+/workspace/scratch/write-file-slot-ts/src/testRunner/unittests/tsbuild/sample.ts:510:                sys.writeFile(
+/workspace/scratch/write-file-slot-ts/src/testRunner/unittests/tsbuild/sample.ts:514:                sys.writeFile(
+/workspace/scratch/write-file-slot-ts/src/testRunner/unittests/tsbuild/sample.ts:523:                sys.writeFile(
+/workspace/scratch/write-file-slot-ts/src/testRunner/unittests/tsbuild/sample.ts:547:                sys.writeFile(
+/workspace/scratch/write-file-slot-ts/src/testRunner/unittests/tsbuild/sample.ts:568:                sys.writeFile(
+/workspace/scratch/write-file-slot-ts/src/testRunner/unittests/tsbuild/sample.ts:597:                sys.writeFile(
+/workspace/scratch/write-file-slot-ts/src/testRunner/unittests/tsbuild/sample.ts:614:                sys.writeFile(
+/workspace/scratch/write-file-slot-ts/src/testRunner/unittests/tsbuild/transitiveReferences.ts:8:        sys.writeFile(
+/workspace/scratch/write-file-slot-ts/src/testRunner/unittests/tsbuild/transitiveReferences.ts:13:        sys.writeFile(
+/workspace/scratch/write-file-slot-ts/src/testRunner/unittests/tsbuild/graphOrdering.ts:81:            sys.writeFile(`/home/src/workspaces/project/${proj}/${proj}.ts`, "export {}");
+/workspace/scratch/write-file-slot-ts/src/testRunner/unittests/tsbuild/graphOrdering.ts:88:            sys.writeFile(configFileName, configContent);
+/workspace/scratch/write-file-slot-ts/src/testRunner/unittests/tsbuild/configFileErrors.ts:84:                        sys.writeFile(
+/workspace/scratch/write-file-slot-ts/src/testRunner/unittests/tsbuild/referencesWithRootDirInParent.ts:68:            sys.writeFile(
+/workspace/scratch/write-file-slot-ts/src/testRunner/unittests/tsbuild/referencesWithRootDirInParent.ts:75:            sys.writeFile(
+/workspace/scratch/write-file-slot-ts/src/testRunner/unittests/tsbuild/referencesWithRootDirInParent.ts:91:            sys.writeFile(
+/workspace/scratch/write-file-slot-ts/src/testRunner/unittests/tsbuild/referencesWithRootDirInParent.ts:98:            sys.writeFile(
+/workspace/scratch/write-file-slot-ts/src/testRunner/unittests/tsbuild/referencesWithRootDirInParent.ts:113:            sys.writeFile(
+/workspace/scratch/write-file-slot-ts/src/testRunner/unittests/tsbuild/referencesWithRootDirInParent.ts:120:            sys.writeFile(
+/workspace/scratch/write-file-slot-ts/src/testRunner/unittests/tsbuild/referencesWithRootDirInParent.ts:144:            sys.writeFile(
+/workspace/scratch/write-file-slot-ts/src/testRunner/unittests/tsbuild/referencesWithRootDirInParent.ts:151:            sys.writeFile(
+/workspace/scratch/write-file-slot-ts/src/testRunner/unittests/sys/symlinkWatching.ts:76:                delayedOp(() => sys.writeFile(getFileName?.(onFile) ?? onFile, "export const x = 100;"), 100);
+/workspace/scratch/write-file-slot-ts/src/testRunner/unittests/sys/symlinkWatching.ts:336:                        sys.writeFile(`${dir}/init.ts`, "export const x = 100;");
+/workspace/scratch/write-file-slot-ts/src/testRunner/unittests/sys/symlinkWatching.ts:340:                        sys.writeFile(fileName(opType), "export const x = 100;");
+/workspace/scratch/write-file-slot-ts/src/testRunner/unittests/sys/symlinkWatching.ts:344:                        sys.writeFile(fileName(opType), "export const x2 = 100;");
+/workspace/scratch/write-file-slot-ts/src/testRunner/unittests/sys/symlinkWatching.ts:575:                    sys.writeFile(`${dir}/sub/folder/init.ts`, "export const x = 100;");
+/workspace/scratch/write-file-slot-ts/src/testRunner/unittests/sys/symlinkWatching.ts:576:                    sys.writeFile(`${dir}2/sub/folder/init.ts`, "export const x = 100;");
+/workspace/scratch/write-file-slot-ts/src/testRunner/unittests/sys/symlinkWatching.ts:583:                    sys.writeFile(fileName(dir, link, opType), "export const x = 100;");
+/workspace/scratch/write-file-slot-ts/src/testRunner/unittests/sys/symlinkWatching.ts:590:                    sys.writeFile(fileName(dir, link, opType), "export const x2 = 100;");
+/workspace/scratch/write-file-slot-ts/src/testRunner/unittests/sys/symlinkWatching.ts:693:                ts.sys.writeFile(`${root}/polling/file.ts`, "export const x = 10;");
+/workspace/scratch/write-file-slot-ts/src/testRunner/unittests/sys/symlinkWatching.ts:706:                ts.sys.writeFile(`${root}/fsevents/file.ts`, "export const x = 10;");
+/workspace/scratch/write-file-slot-ts/src/testRunner/unittests/sys/symlinkWatching.ts:719:                ts.sys.writeFile(`${root}/dirpolling/file.ts`, "export const x = 10;");
+/workspace/scratch/write-file-slot-ts/src/testRunner/unittests/sys/symlinkWatching.ts:733:                ts.sys.writeFile(`${root}/dirfsevents/file.ts`, "export const x = 10;");
+/workspace/scratch/write-file-slot-ts/src/testRunner/unittests/sys/symlinkWatching.ts:763:            ts.sys.writeFile(`${root}/${recursiveName}/sub/folder/file.ts`, "export const x = 10;");
+/workspace/scratch/write-file-slot-ts/src/testRunner/unittests/sys/symlinkWatching.ts:764:            ts.sys.writeFile(`${root}/${recursiveName}2/sub/folder/file.ts`, "export const x = 10;");
+/workspace/scratch/write-file-slot-ts/src/testRunner/unittests/tscWatch/emitAndErrorUpdates.ts:105:                        edit: sys => sys.writeFile(cFile.path, cFile.content.replace("d", "d2")),
+/workspace/scratch/write-file-slot-ts/src/testRunner/unittests/tscWatch/emitAndErrorUpdates.ts:110:                        edit: sys => sys.writeFile(cFile.path, cFile.content.replace("d2", "d")),
+/workspace/scratch/write-file-slot-ts/src/testRunner/unittests/tscWatch/emitAndErrorUpdates.ts:115:                        edit: sys => sys.writeFile(cFile.path, cFile.content.replace("d", "d2")),
+/workspace/scratch/write-file-slot-ts/src/testRunner/unittests/tscWatch/emitAndErrorUpdates.ts:213:                    edit: sys => sys.writeFile(aFile.path, aFile.content.replace("x2", "x")),
+/workspace/scratch/write-file-slot-ts/src/testRunner/unittests/tscWatch/emitAndErrorUpdates.ts:218:                    edit: sys => sys.writeFile(aFile.path, aFile.content.replace("x: number", "x2: number")),
+/workspace/scratch/write-file-slot-ts/src/testRunner/unittests/tscWatch/emitAndErrorUpdates.ts:223:                    edit: sys => sys.writeFile(aFile.path, aFile.content.replace("x2", "x")),
+/workspace/scratch/write-file-slot-ts/src/testRunner/unittests/tscWatch/emitAndErrorUpdates.ts:284:                        edit: sys => sys.writeFile(lib1ToolsInterface.path, lib1ToolsInterface.content.replace("title", "title2")),
+/workspace/scratch/write-file-slot-ts/src/testRunner/unittests/tscWatch/emitAndErrorUpdates.ts:289:                        edit: sys => sys.writeFile(lib1ToolsInterface.path, lib1ToolsInterface.content.replace("title2", "title")),
+/workspace/scratch/write-file-slot-ts/src/testRunner/unittests/tscWatch/emitAndErrorUpdates.ts:294:                        edit: sys => sys.writeFile(lib1ToolsInterface.path, lib1ToolsInterface.content.replace("title", "title2")),
+/workspace/scratch/write-file-slot-ts/src/testRunner/unittests/tscWatch/emit.ts:28:                    edit: sys => sys.writeFile("/home/src/projects/a/a.ts", "let x = 11"),
+/workspace/scratch/write-file-slot-ts/src/testRunner/unittests/tscWatch/emit.ts:33:                    edit: sys => sys.writeFile("/home/src/projects/a/a.ts", "let xy = 11"),
+/workspace/scratch/write-file-slot-ts/src/testRunner/unittests/tscWatch/emit.ts:156:        sys.writeFile(moduleFile1Path, `export var T: number;export function Foo() { };`);
+/workspace/scratch/write-file-slot-ts/src/testRunner/unittests/tscWatch/emit.ts:170:                edit: sys => sys.writeFile(moduleFile1Path, `export var T: number;export function Foo() { console.log('hi'); };`),
+/workspace/scratch/write-file-slot-ts/src/testRunner/unittests/tscWatch/emit.ts:181:                edit: sys => sys.writeFile(file1Consumer1Path, `export let y = Foo();`),
+/workspace/scratch/write-file-slot-ts/src/testRunner/unittests/tscWatch/emit.ts:187:                edit: sys => sys.writeFile(file1Consumer1Path, `import {Foo} from "./moduleFile1";let y = Foo();`),
+/workspace/scratch/write-file-slot-ts/src/testRunner/unittests/tscWatch/emit.ts:192:                edit: sys => sys.writeFile(moduleFile1Path, `export let y = Foo();`),
+/workspace/scratch/write-file-slot-ts/src/testRunner/unittests/tscWatch/emit.ts:200:                    sys.writeFile(file1Consumer1Path, `import {Foo} from "./moduleFile1";let y = Foo();`);
+/workspace/scratch/write-file-slot-ts/src/testRunner/unittests/tscWatch/emit.ts:228:                    sys.writeFile("/home/src/projects/a/b/file1Consumer3.ts", `import {Foo} from "./moduleFile1"; let y = Foo();`);
+/workspace/scratch/write-file-slot-ts/src/testRunner/unittests/tscWatch/emit.ts:293:                    sys.writeFile(moduleFile1Path, `export var T2: number;export function Foo() { };`);
+/workspace/scratch/write-file-slot-ts/src/testRunner/unittests/tscWatch/emit.ts:357:                edit: sys => sys.writeFile(moduleFile2Path, "export var Foo4 = 10;"),
+/workspace/scratch/write-file-slot-ts/src/testRunner/unittests/tscWatch/watchEnvironment.ts:56:                edit: sys => sys.writeFile("/a/username/projects/project/typescript.ts", "var zz30 = 100;"),
+/workspace/scratch/write-file-slot-ts/src/testRunner/unittests/tscWatch/watchEnvironment.ts:130:                edit: sys => sys.writeFile("/user/username/projects/project/commonFile1.ts", "var zz30 = 100;"),
+/workspace/scratch/write-file-slot-ts/src/testRunner/unittests/tscWatch/watchEnvironment.ts:346:                    edit: sys => sys.writeFile(`/user/username/projects/myproject/node_modules/file2/index.d.ts`, `export const x = 10;`),
+/workspace/scratch/write-file-slot-ts/src/testRunner/unittests/tscWatch/watchEnvironment.ts:396:                    edit: sys => sys.writeFile(`/user/username/projects/myproject/src/file3.ts`, `export const y = 10;`),
+/workspace/scratch/write-file-slot-ts/src/testRunner/unittests/tscWatch/watchEnvironment.ts:857:                edit: sys => sys.writeFile("/user/username/projects/project/main.ts", ""),
+/workspace/scratch/write-file-slot-ts/src/testRunner/unittests/tscWatch/programUpdates.ts:138:                edit: sys => sys.writeFile(commonFile2.path, commonFile2.content),
+/workspace/scratch/write-file-slot-ts/src/testRunner/unittests/tscWatch/programUpdates.ts:189:                edit: sys => sys.writeFile(commonFile2.path, commonFile2.content),
+/workspace/scratch/write-file-slot-ts/src/testRunner/unittests/tscWatch/programUpdates.ts:213:                edit: sys => sys.writeFile(commonFile2.path, commonFile2.content),
+/workspace/scratch/write-file-slot-ts/src/testRunner/unittests/tscWatch/programUpdates.ts:245:                    sys.writeFile(
+/workspace/scratch/write-file-slot-ts/src/testRunner/unittests/tscWatch/programUpdates.ts:501:                    sys.writeFile(
+/workspace/scratch/write-file-slot-ts/src/testRunner/unittests/tscWatch/programUpdates.ts:677:                sys.writeFile(configFilePath, jsonToReadableText({ compilerOptions: { module: "none" } }));
+/workspace/scratch/write-file-slot-ts/src/testRunner/unittests/tscWatch/programUpdates.ts:755:                edit: sys => sys.writeFile("/user/username/workspace/solution/projects/project/f2.ts", "let y = 1"),
+/workspace/scratch/write-file-slot-ts/src/testRunner/unittests/tscWatch/programUpdates.ts:786:                edit: sys => sys.writeFile(configFilePath, jsonToReadableText({ compilerOptions: {}, files: ["f1.ts", "f2.ts"] })),
+/workspace/scratch/write-file-slot-ts/src/testRunner/unittests/tscWatch/programUpdates.ts:817:                edit: sys => sys.writeFile(`/user/username/projects/myproject/new-file.ts`, "export const z = 1;"),
+/workspace/scratch/write-file-slot-ts/src/testRunner/unittests/tscWatch/programUpdates.ts:849:                edit: sys => sys.writeFile(`/user/username/projects/myproject/Project/file2.ts`, "export const y = 10;"),
+/workspace/scratch/write-file-slot-ts/src/testRunner/unittests/tscWatch/programUpdates.ts:880:                edit: sys => sys.writeFile(configFilePath, jsonToReadableText({ compilerOptions: { outFile: "out.js" }, files: ["f1.ts", "f2.ts"] })),
+/workspace/scratch/write-file-slot-ts/src/testRunner/unittests/tscWatch/programUpdates.ts:1007:                    sys.writeFile(
+/workspace/scratch/write-file-slot-ts/src/testRunner/unittests/tscWatch/programUpdates.ts:1178:                edit: sys => sys.writeFile("/users/username/projects/project/moduleFile.ts", "export function bar() { }"),
+/workspace/scratch/write-file-slot-ts/src/testRunner/unittests/tscWatch/programUpdates.ts:1249:                    sys.writeFile(
+/workspace/scratch/write-file-slot-ts/src/testRunner/unittests/tscWatch/programUpdates.ts:1262:                    sys.writeFile(
+/workspace/scratch/write-file-slot-ts/src/testRunner/unittests/tscWatch/programUpdates.ts:1382:                    sys.writeFile(
+/workspace/scratch/write-file-slot-ts/src/testRunner/unittests/tscWatch/programUpdates.ts:1427:                        edit: sys => sys.writeFile(`/user/username/projects/myproject/src/file3.ts`, `export const y = 10;`),
+/workspace/scratch/write-file-slot-ts/src/testRunner/unittests/tscWatch/programUpdates.ts:1489:                    sys.writeFile(
+/workspace/scratch/write-file-slot-ts/src/testRunner/unittests/tscWatch/programUpdates.ts:1598:                edit: sys => sys.writeFile(`/user/username/projects/myproject/tsconfig.json`, jsonToReadableText({ compilerOptions: { strictNullChecks: true } })),
+/workspace/scratch/write-file-slot-ts/src/testRunner/unittests/tscWatch/programUpdates.ts:1603:                edit: sys => sys.writeFile(`/user/username/projects/myproject/tsconfig.json`, jsonToReadableText({ compilerOptions: { strict: true, alwaysStrict: false, ignoreDeprecations: "6.0" } })), // Avoid changing 'alwaysStrict' or must re-bind
+/workspace/scratch/write-file-slot-ts/src/testRunner/unittests/tscWatch/programUpdates.ts:1608:                edit: sys => sys.writeFile(`/user/username/projects/myproject/tsconfig.json`, jsonToReadableText({ compilerOptions: {} })),
+/workspace/scratch/write-file-slot-ts/src/testRunner/unittests/tscWatch/programUpdates.ts:1644:                edit: sys => sys.writeFile(`/user/username/projects/myproject/tsconfig.json`, jsonToReadableText({ compilerOptions: { noErrorTruncation: true } })),
+/workspace/scratch/write-file-slot-ts/src/testRunner/unittests/tscWatch/programUpdates.ts:1672:                edit: sys => sys.writeFile(`/user/username/projects/project/tsconfig.json`, jsonToReadableText({ compilerOptions: { target: "es6", useDefineForClassFields: true } })),
+/workspace/scratch/write-file-slot-ts/src/testRunner/unittests/tscWatch/programUpdates.ts:1705:                    sys.writeFile(
+/workspace/scratch/write-file-slot-ts/src/testRunner/unittests/tscWatch/programUpdates.ts:1716:                    sys.writeFile(
+/workspace/scratch/write-file-slot-ts/src/testRunner/unittests/tscWatch/programUpdates.ts:1752:                edit: sys => sys.writeFile(`/user/username/projects/project/tsconfig.json`, jsonToReadableText({ compilerOptions: { forceConsistentCasingInFileNames: true } })),
+/workspace/scratch/write-file-slot-ts/src/testRunner/unittests/tscWatch/programUpdates.ts:1783:                edit: sys => sys.writeFile(`/user/username/projects/myproject/tsconfig.json`, jsonToReadableText({ compilerOptions: { moduleResolution: "node", resolveJsonModule: true } })),
+/workspace/scratch/write-file-slot-ts/src/testRunner/unittests/tscWatch/programUpdates.ts:1814:                    sys.writeFile(
+/workspace/scratch/write-file-slot-ts/src/testRunner/unittests/tscWatch/programUpdates.ts:1858:                            edit: sys => sys.writeFile(aFile.path, aFile.content.replace(fieldWithoutReadonly, "var x: string;")),
+/workspace/scratch/write-file-slot-ts/src/testRunner/unittests/tscWatch/programUpdates.ts:1863:                            edit: sys => sys.writeFile(aFile.path, aFile.content),
+/workspace/scratch/write-file-slot-ts/src/testRunner/unittests/tscWatch/programUpdates.ts:1901:            edit: sys => sys.writeFile(`/user/username/projects/myproject/tsconfig.json`, configFileContent),
+/workspace/scratch/write-file-slot-ts/src/testRunner/unittests/tscWatch/programUpdates.ts:1980:                edit: sys => sys.writeFile(`/user/username/projects/myproject/a.ts`, `export const a: number = 1`),
+/workspace/scratch/write-file-slot-ts/src/testRunner/unittests/tscWatch/programUpdates.ts:2017:                    sys.writeFile(
+/workspace/scratch/write-file-slot-ts/src/testRunner/unittests/tscWatch/programUpdates.ts:2053:                edit: sys => sys.writeFile(`/user/username/projects/myproject/tsconfig.json`, '{ "compilerOptions": { "jsx": "react" } }'),
+/workspace/scratch/write-file-slot-ts/src/testRunner/unittests/tscWatch/programUpdates.ts:2082:                edit: sys => sys.writeFile(`/user/username/projects/myproject/tsconfig.json`, '{ "compilerOptions": { "jsx": "preserve" } }'),
+/workspace/scratch/write-file-slot-ts/src/testRunner/unittests/tscWatch/programUpdates.ts:2213:                edit: sys => sys.writeFile(`/user/username/projects/myproject/client/linktofolder2/module3.ts`, `import * as M from "folder1/module1";`),
+/workspace/scratch/write-file-slot-ts/src/testRunner/unittests/tscWatch/programUpdates.ts:2267:                edit: sys => sys.writeFile(`/user/username/projects/myproject/projects/project1/class3.ts`, `class class3 {}`),
+/workspace/scratch/write-file-slot-ts/src/testRunner/unittests/tscWatch/programUpdates.ts:2272:                edit: sys => sys.writeFile(`/user/username/projects/myproject/projects/project1/class3.d.ts`, `declare class class3 {}`),
+/workspace/scratch/write-file-slot-ts/src/testRunner/unittests/tscWatch/programUpdates.ts:2287:                edit: sys => sys.writeFile(`/user/username/projects/myproject/projects/project1/class3.d.ts`, `declare class class3 {}`),
+/workspace/scratch/write-file-slot-ts/src/testRunner/unittests/tscWatch/programUpdates.ts:2314:                edit: sys => sys.writeFile(`/user/username/projects/myproject/foo`, ``),
+/workspace/scratch/write-file-slot-ts/src/testRunner/unittests/tscWatch/programUpdates.ts:2351:                    sys.writeFile(
+/workspace/scratch/write-file-slot-ts/src/testRunner/unittests/tscWatch/programUpdates.ts:2396:                    sys.writeFile(
+/workspace/scratch/write-file-slot-ts/src/testRunner/unittests/tscWatch/programUpdates.ts:2440:                    sys.writeFile(
+/workspace/scratch/write-file-slot-ts/src/testRunner/unittests/tscWatch/programUpdates.ts:2479:                    sys.writeFile(
+/workspace/scratch/write-file-slot-ts/src/testRunner/unittests/tscWatch/watchApi.ts:115:                                sys.writeFile(`/user/username/projects/myproject/other.ts`, "export function foo() {}");
+/workspace/scratch/write-file-slot-ts/src/testRunner/unittests/tscWatch/watchApi.ts:202:                edit: sys => sys.writeFile(`/user/username/projects/myproject/bar.ts`, "const y =10;"),
+/workspace/scratch/write-file-slot-ts/src/testRunner/unittests/tscWatch/watchApi.ts:249:                edit: sys => sys.writeFile(`/user/username/projects/myproject/other2.vue`, otherFile.content),
+/workspace/scratch/write-file-slot-ts/src/testRunner/unittests/tscWatch/watchApi.ts:447:                applyChangeForBuilderTest(baseline, emitBaseline, sys, emitSys, sys => sys.writeFile(mainFile.path, fixed), "Fix error");
+/workspace/scratch/write-file-slot-ts/src/testRunner/unittests/tscWatch/watchApi.ts:467:            applyEdit(sys, baseline, sys => sys.writeFile(mainFile.path, "export const x = 10;"), "Fix error");
+/workspace/scratch/write-file-slot-ts/src/testRunner/unittests/tscWatch/watchApi.ts:583:                        sys.writeFile(`/user/username/projects/myproject/projects/project1/class3.ts`, `class class3 {}`);
+/workspace/scratch/write-file-slot-ts/src/testRunner/unittests/tscWatch/watchApi.ts:594:                    edit: sys => sys.writeFile(`/user/username/projects/myproject/projects/project1/class3.d.ts`, `declare class class3 {}`),
+/workspace/scratch/write-file-slot-ts/src/testRunner/unittests/tscWatch/watchApi.ts:615:                        sys.writeFile(`/user/username/projects/myproject/projects/project1/class3.ts`, `class class3 {}`);
+/workspace/scratch/write-file-slot-ts/src/testRunner/unittests/tscWatch/watchApi.ts:621:                    edit: sys => sys.writeFile(`/user/username/projects/myproject/projects/project1/class3.d.ts`, `declare class class3 {}`),
+/workspace/scratch/write-file-slot-ts/src/testRunner/unittests/tscWatch/watchApi.ts:636:                    edit: sys => sys.writeFile(`/user/username/projects/myproject/projects/project1/class3.d.ts`, `declare class class3 {}`),
+/workspace/scratch/write-file-slot-ts/src/testRunner/unittests/tscWatch/watchApi.ts:676:                            sys.writeFile(`/user/username/projects/myproject/b.ts`, `export const y = 10;`);
+/workspace/scratch/write-file-slot-ts/src/testRunner/unittests/tscWatch/watchApi.ts:796:                        sys.writeFile(
+/workspace/scratch/write-file-slot-ts/src/testRunner/unittests/tscWatch/watchApi.ts:821:                        sys.writeFile(
+/workspace/scratch/write-file-slot-ts/src/testRunner/unittests/tscWatch/watchApi.ts:834:                        sys.writeFile(
+/workspace/scratch/write-file-slot-ts/src/testRunner/unittests/tscWatch/resolveJsonModuleWithIncremental.ts:19:            edit: sys => sys.writeFile("/home/src/projects/project/tsconfig.json", jsonToReadableText({ compilerOptions: { resolveJsonModule: false } })),
+/workspace/scratch/write-file-slot-ts/src/testRunner/unittests/tscWatch/resolutionCache.ts:55:                        sys.writeFile(
+/workspace/scratch/write-file-slot-ts/src/testRunner/unittests/tscWatch/resolutionCache.ts:74:                        sys.writeFile(root.path, `import {x} from "f2"`);
+/workspace/scratch/write-file-slot-ts/src/testRunner/unittests/tscWatch/resolutionCache.ts:93:                        sys.writeFile(root.path, `import {x} from "f1"`);
+/workspace/scratch/write-file-slot-ts/src/testRunner/unittests/tscWatch/resolutionCache.ts:153:                    sys.writeFile(root.path, `import {y} from "bar"`);
+/workspace/scratch/write-file-slot-ts/src/testRunner/unittests/tscWatch/resolutionCache.ts:154:                    sys.writeFile(imported.path, imported.content);
+/workspace/scratch/write-file-slot-ts/src/testRunner/unittests/tscWatch/resolutionCache.ts:223:                        sys.writeFile(imported.path, imported.content);
+/workspace/scratch/write-file-slot-ts/src/testRunner/unittests/tscWatch/forceConsistentCasingInFileNames.ts:49:                edit: sys => sys.writeFile(anotherFile.path, anotherFile.content.replace("./logger", "./Logger")),
+/workspace/scratch/write-file-slot-ts/src/testRunner/unittests/tscWatch/forceConsistentCasingInFileNames.ts:416:                    sys.writeFile(
+/workspace/scratch/write-file-slot-ts/src/compiler/program.ts:424:            // NOTE: If patchWriteFileEnsuringDirectory has been called,
+/workspace/scratch/write-file-slot-ts/src/compiler/executeCommandLine.ts:1300:        sys.writeFile(file, generateTSConfig(options, sys.newLine));
+/workspace/scratch/write-file-slot-ts/src/testRunner/unittests/tscWatch/libraryResolution.ts:49:                    sys.writeFile(
+/workspace/scratch/write-file-slot-ts/src/testRunner/unittests/tscWatch/libraryResolution.ts:61:                    sys.writeFile(
+/workspace/scratch/write-file-slot-ts/src/testRunner/unittests/tscWatch/projectsWithReferences.ts:52:                        sys.writeFile(
+/workspace/scratch/write-file-slot-ts/src/testRunner/unittests/tscWatch/projectsWithReferences.ts:79:        sys.writeFile(config, jsonToReadableText(configJson));
+/workspace/scratch/write-file-slot-ts/src/testRunner/unittests/tscWatch/projectsWithReferences.ts:135:                    edit: sys => sys.writeFile("tsconfig.b.json", getFsContentsForTransitiveReferencesBConfig(withNodeNext)),
+/workspace/scratch/write-file-slot-ts/src/testRunner/unittests/tscWatch/projectsWithReferences.ts:145:                    edit: sys => sys.writeFile("tsconfig.a.json", getFsContentsForTransitiveReferencesAConfig(withNodeNext)),
+/workspace/scratch/write-file-slot-ts/src/testRunner/unittests/tscWatch/projectsWithReferences.ts:160:            sys.writeFile(
+/workspace/scratch/write-file-slot-ts/src/testRunner/unittests/tscWatch/projectsWithReferences.ts:168:            sys.writeFile("/user/username/projects/transitiveReferences/b.ts", `import {A} from "a";export const b = new A();`);
+/workspace/scratch/write-file-slot-ts/src/testRunner/unittests/tscWatch/projectsWithReferences.ts:254:                    sys.writeFile(
+/workspace/scratch/write-file-slot-ts/src/testRunner/unittests/tscWatch/projectsWithReferences.ts:272:                    sys.writeFile(
+/workspace/scratch/write-file-slot-ts/src/testRunner/unittests/tscWatch/projectsWithReferences.ts:359:                    sys.writeFile(
+/workspace/scratch/write-file-slot-ts/src/testRunner/unittests/tscWatch/projectsWithReferences.ts:376:                    sys.writeFile(
+/workspace/scratch/write-file-slot-ts/src/compiler/sys.ts:1378:export function patchWriteFileEnsuringDirectory(sys: System): void {
+/workspace/scratch/write-file-slot-ts/src/compiler/sys.ts:1380:    const originalWriteFile = sys.writeFile;
+/workspace/scratch/write-file-slot-ts/src/compiler/sys.ts:1381:    sys.writeFile = (path, data, writeBom) =>
+/workspace/scratch/write-file-slot-ts/src/compiler/sys.ts:1961:        patchWriteFileEnsuringDirectory(sys);
+/workspace/scratch/write-file-slot-ts/src/harness/fakesHosts.ts:327:        this.sys.writeFile(fileName, content);
+/workspace/scratch/write-file-slot-ts/src/harness/harnessIO.ts:126:        writeFile: (path, content) => ts.sys.writeFile(path, content),
+/workspace/scratch/write-file-slot-ts/src/testRunner/unittests/tscWatch/moduleResolution.ts:186:                        sys.writeFile(
+/workspace/scratch/write-file-slot-ts/src/testRunner/unittests/tscWatch/moduleResolution.ts:201:                    edit: sys => sys.writeFile(`/user/username/projects/myproject/package.json`, jsonToReadableText({ name: "app", version: "1.0.0" })),
+/workspace/scratch/write-file-slot-ts/src/testRunner/unittests/tscWatch/moduleResolution.ts:218:                        sys.writeFile(
+/workspace/scratch/write-file-slot-ts/src/testRunner/unittests/tscWatch/moduleResolution.ts:255:                    edit: sys => sys.writeFile(`/user/username/projects/myproject/package.json`, jsonToReadableText({ name: "app", version: "1.0.0" })),
+/workspace/scratch/write-file-slot-ts/src/testRunner/unittests/tscWatch/moduleResolution.ts:264:                        sys.writeFile(
+/workspace/scratch/write-file-slot-ts/src/testRunner/unittests/tscWatch/moduleResolution.ts:287:                    edit: sys => sys.writeFile(`/user/username/projects/myproject/package.json`, jsonToReadableText({ name: "app", version: "1.0.0" })),

@@ -1,0 +1,12 @@
+--- main/sys.js
++++ b/sys.js
+@@ -856,7 +856,8 @@
+ export function patchWriteFileEnsuringDirectory(sys) {
+     const writeFileView = sys;
+     const originalWriteFile = writeFileView.writeFile;
+-    sys.writeFile = (path, data, writeBom) => writeFileEnsuringDirectories(path, data, !!writeBom, (path, data, writeByteOrderMark) => originalWriteFile.call(sys, path, data, writeByteOrderMark), path => sys.createDirectory(path), path => sys.directoryExists(path));
++    const writeFileSlot = sys;
++    writeFileSlot.writeFile = (path, data, writeBom) => writeFileEnsuringDirectories(path, data, !!writeBom, (path, data, writeByteOrderMark) => originalWriteFile.call(sys, path, data, writeByteOrderMark), path => sys.createDirectory(path), path => sys.directoryExists(path));
+ }
+ export let sys = (() => {
+     const byteOrderMarkIndicator = "\uFEFF";

@@ -1,0 +1,230 @@
+{
+  "main": {
+    "constructed": [
+      {
+        "rawInSlot": true,
+        "name": "writeFile",
+        "length": 3
+      }
+    ],
+    "final": {
+      "name": "",
+      "length": 3,
+      "rawInSlot": false
+    },
+    "events": [
+      [
+        "ensure",
+        "parent/one",
+        "data",
+        false
+      ],
+      [
+        "mkdir",
+        "parent"
+      ],
+      [
+        "own-call-1",
+        "parent/one",
+        "data",
+        false
+      ],
+      [
+        "open",
+        "parent/one",
+        "w"
+      ],
+      [
+        "write",
+        7,
+        "data",
+        null,
+        "utf8"
+      ],
+      [
+        "close",
+        7
+      ],
+      [
+        "ensure",
+        "parent/two",
+        "data2",
+        true
+      ],
+      [
+        "own-call-2",
+        "parent/two",
+        "data2",
+        true
+      ],
+      [
+        "open",
+        "parent/two",
+        "w"
+      ],
+      [
+        "write",
+        7,
+        "﻿data2",
+        null,
+        "utf8"
+      ],
+      [
+        "close",
+        7
+      ]
+    ]
+  },
+  "a-construction": {
+    "constructed": [
+      {
+        "rawInSlot": false,
+        "name": "patchedWriteFile",
+        "length": 3
+      }
+    ],
+    "final": {
+      "name": "patchedWriteFile",
+      "length": 3,
+      "rawInSlot": false
+    },
+    "events": [
+      [
+        "ensure",
+        "parent/one",
+        "data",
+        false
+      ],
+      [
+        "mkdir",
+        "parent"
+      ],
+      [
+        "own-call-1",
+        "parent/one",
+        "data",
+        false
+      ],
+      [
+        "open",
+        "parent/one",
+        "w"
+      ],
+      [
+        "write",
+        7,
+        "data",
+        null,
+        "utf8"
+      ],
+      [
+        "close",
+        7
+      ],
+      [
+        "ensure",
+        "parent/two",
+        "data2",
+        true
+      ],
+      [
+        "own-call-2",
+        "parent/two",
+        "data2",
+        true
+      ],
+      [
+        "open",
+        "parent/two",
+        "w"
+      ],
+      [
+        "write",
+        7,
+        "﻿data2",
+        null,
+        "utf8"
+      ],
+      [
+        "close",
+        7
+      ]
+    ]
+  },
+  "b-slot": {
+    "constructed": [
+      {
+        "rawInSlot": true,
+        "name": "writeFile",
+        "length": 3
+      }
+    ],
+    "final": {
+      "name": "",
+      "length": 3,
+      "rawInSlot": false
+    },
+    "events": [
+      [
+        "ensure",
+        "parent/one",
+        "data",
+        false
+      ],
+      [
+        "mkdir",
+        "parent"
+      ],
+      [
+        "own-call-1",
+        "parent/one",
+        "data",
+        false
+      ],
+      [
+        "open",
+        "parent/one",
+        "w"
+      ],
+      [
+        "write",
+        7,
+        "data",
+        null,
+        "utf8"
+      ],
+      [
+        "close",
+        7
+      ],
+      [
+        "ensure",
+        "parent/two",
+        "data2",
+        true
+      ],
+      [
+        "own-call-2",
+        "parent/two",
+        "data2",
+        true
+      ],
+      [
+        "open",
+        "parent/two",
+        "w"
+      ],
+      [
+        "write",
+        7,
+        "﻿data2",
+        null,
+        "utf8"
+      ],
+      [
+        "close",
+        7
+      ]
+    ]
+  }
+}

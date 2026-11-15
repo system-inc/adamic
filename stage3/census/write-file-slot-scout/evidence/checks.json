@@ -1,0 +1,57 @@
+{
+  "main": {
+    "rootCount": 79,
+    "command": [
+      "node",
+      "/workspace/scratch/write-file-slot-scout/stage3/api/node_modules/typescript/lib/tsc.js",
+      "--project",
+      "/workspace/scratch/write-file-slot-measure/main.tsconfig.json",
+      "--pretty",
+      "false"
+    ],
+    "stockTscExit": 0,
+    "changedSourceFiles": [],
+    "sysSha256": "04de8aeb5f32caadd83d2ae6695d40097d7008a50a3a566d983cefd72a381a31",
+    "systemSha256": "d81501788e981b02ec97aab31f072333e4c47a39f403417dacbf89d30e68a49c",
+    "sysDeclarationSha256": "7d2494ea1e2e0bd432000ff54535f5050a6190322ef269a61e4c06b6501d2d0c",
+    "transpileDeclarationDiagnosticCount": 0
+  },
+  "a-construction": {
+    "rootCount": 79,
+    "command": [
+      "node",
+      "/workspace/scratch/write-file-slot-scout/stage3/api/node_modules/typescript/lib/tsc.js",
+      "--project",
+      "/workspace/scratch/write-file-slot-measure/a-construction.tsconfig.json",
+      "--pretty",
+      "false"
+    ],
+    "stockTscExit": 0,
+    "changedSourceFiles": [
+      "src/compiler/sys.ts"
+    ],
+    "sysSha256": "a5499b5f2143f1d1aead0f3ec7bcd1bfb5ff37aa8ec06efdfed03fa4a509ed56",
+    "systemSha256": "d81501788e981b02ec97aab31f072333e4c47a39f403417dacbf89d30e68a49c",
+    "sysDeclarationSha256": "7d2494ea1e2e0bd432000ff54535f5050a6190322ef269a61e4c06b6501d2d0c",
+    "transpileDeclarationDiagnosticCount": 0
+  },
+  "b-slot": {
+    "rootCount": 79,
+    "command": [
+      "node",
+      "/workspace/scratch/write-file-slot-scout/stage3/api/node_modules/typescript/lib/tsc.js",
+      "--project",
+      "/workspace/scratch/write-file-slot-measure/b-slot.tsconfig.json",
+      "--pretty",
+      "false"
+    ],
+    "stockTscExit": 0,
+    "changedSourceFiles": [
+      "src/compiler/sys.ts"
+    ],
+    "sysSha256": "3a653d30aad8b8317e8a750c03ba04ee931e57429511df2bca81f900831e57d5",
+    "systemSha256": "d81501788e981b02ec97aab31f072333e4c47a39f403417dacbf89d30e68a49c",
+    "sysDeclarationSha256": "7d2494ea1e2e0bd432000ff54535f5050a6190322ef269a61e4c06b6501d2d0c",
+    "transpileDeclarationDiagnosticCount": 0
+  }
+}

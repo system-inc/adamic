@@ -1,0 +1,28 @@
+{
+  "main": {
+    "source": "real exact helper body and three real System method signatures; filesystem helper is a focused stub",
+    "command": [
+      "/workspace/scratch/write-file-slot-measure/adamic",
+      "js",
+      "/workspace/scratch/write-file-slot-measure/repro-main.ts",
+      "--module-format",
+      "commonjs-bundle"
+    ],
+    "exit": 1,
+    "stdoutBytes": 0,
+    "stderr": "adamic: /workspace/scratch/write-file-slot-measure/repro-main.ts:10:5: Adamic 0.1 refuses a method read as a value (writeFile would lose its object, and this with it); call it in an arrow that keeps the object: (path, data, writeByteOrderMark) => sys.writeFile(path, data, writeByteOrderMark) (unbound-method)\n"
+  },
+  "b-slot": {
+    "source": "real exact helper body and three real System method signatures; filesystem helper is a focused stub",
+    "command": [
+      "/workspace/scratch/write-file-slot-measure/adamic",
+      "js",
+      "/workspace/scratch/write-file-slot-measure/repro-b-slot.ts",
+      "--module-format",
+      "commonjs-bundle"
+    ],
+    "exit": 1,
+    "stdoutBytes": 0,
+    "stderr": "adamic: /workspace/scratch/write-file-slot-measure/repro-b-slot.ts:16:49: Adamic 0.1 refuses inherited library member call read as an own field; prototype members are not stored in an object's shape; call the method on its receiver, or wrap that call in an arrow (unbound-method)\n"
+  }
+}
