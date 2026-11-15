@@ -24,7 +24,7 @@ former={c['root'] for c in comparisons if c['before'][0]=='sys.ts:790:87'};asser
 s+=['The former 73 sys.ts:790:87 roots now go to:','']
 for g in groups:
  n=len(former.intersection(g['roots']))
- if n:s+=['- '+str(n)+' to '+g['where']+': '+g['reason']]
+ if n:s+=['- '+str(n)+' to '+g['where']+': '+g['reason']+'. '+('This is the first of the nine supplied refusal-scan candidates.' if g['where']=='sys.ts:1385:31' else 'This is not sys.ts:1385:31.')]
 s+=['','| Root | Before (location; kind; exact reason) | After (location; kind; exact reason) |','| --- | --- | --- |']
 for c in comparisons:s+=['| '+c['root']+' | '+'; '.join(c['before']).replace('|','\\|').replace('<','&lt;').replace('>','&gt;')+' | '+'; '.join(c['after']).replace('|','\\|').replace('<','&lt;').replace('>','&gt;')+' |']
 s+=['','## Adapted source at stops','']
