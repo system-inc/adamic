@@ -92,9 +92,9 @@ func JavaScriptWith(program *ir.Program, options Options) string {
 	// object.name(...) through an interface: the object's own function value, or else its class's
 	// method (on the prototype its constructor gave it), called with the object as this.
 	if counted {
-		builder.WriteString("const adamicCallee = (object, name) => { if (Object.hasOwn(object, name)) { const fn = object[name]; return fn.receiver ? { code: (closure, values) => adamicCall(fn, [object, ...values]) } : fn; } const methods = adamicStaticMethods.get(object); const fn = methods && Object.hasOwn(methods, name) ? methods[name] : object[name]; return { code: (closure, values) => adamicDirect(fn, [object, ...values]) }; };\n")
+		builder.WriteString("const adamicCallee = (object, name) => { if (Object.hasOwn(object, name)) { const fn = object[name]; return fn.receiver ? { code: (closure, values) => adamicCall(fn, [object, ...values]) } : fn; } const methods = adamicStaticMethods.get(object); const fn = methods && Object.hasOwn(methods, name) ? methods[name] : object[name]; if (fn === RegExp.prototype.test) return { code: (closure, values) => Reflect.apply(fn, object, values) }; return { code: (closure, values) => adamicDirect(fn, [object, ...values]) }; };\n")
 	} else {
-		builder.WriteString("const adamicCallee = (object, name) => { if (Object.hasOwn(object, name)) { const fn = object[name]; return fn.receiver ? { code: (closure, values) => adamicCall(fn, [object, ...values]) } : fn; } const methods = adamicStaticMethods.get(object); const fn = methods && Object.hasOwn(methods, name) ? methods[name] : object[name]; return { code: (closure, values) => fn(object, ...values) }; };\n")
+		builder.WriteString("const adamicCallee = (object, name) => { if (Object.hasOwn(object, name)) { const fn = object[name]; return fn.receiver ? { code: (closure, values) => adamicCall(fn, [object, ...values]) } : fn; } const methods = adamicStaticMethods.get(object); const fn = methods && Object.hasOwn(methods, name) ? methods[name] : object[name]; if (fn === RegExp.prototype.test) return { code: (closure, values) => Reflect.apply(fn, object, values) }; return { code: (closure, values) => fn(object, ...values) }; };\n")
 	}
 	builder.WriteString("const adamicOptionalCall = (object, name, values) => object === undefined ? undefined : adamicCall(adamicCallee(object, name), values());\n")
 	// callback?.(...) on a function value: undefined, with the arguments not evaluated, where the value,
@@ -103,7 +103,7 @@ func JavaScriptWith(program *ir.Program, options Options) string {
 	// object.name?.(...) through an interface: what adamicCallee finds, read once and before the
 	// arguments, called; undefined, with the arguments not evaluated, where it finds undefined or null,
 	// or where object?.name?.(...)'s object is undefined or null.
-	optionalMethodCall := "const adamicOptionalMethodCall = (object, name, values, optionalObject) => { if (optionalObject && object == null) return undefined; const own = Object.hasOwn(object, name); const methods = own ? undefined : adamicStaticMethods.get(object); const fn = own ? object[name] : methods && Object.hasOwn(methods, name) ? methods[name] : object[name]; if (fn == null) return undefined; return own ? adamicCall(fn, fn.receiver ? [object, ...values()] : values()) : "
+	optionalMethodCall := "const adamicOptionalMethodCall = (object, name, values, optionalObject) => { if (optionalObject && object == null) return undefined; const own = Object.hasOwn(object, name); const methods = own ? undefined : adamicStaticMethods.get(object); const fn = own ? object[name] : methods && Object.hasOwn(methods, name) ? methods[name] : object[name]; if (fn == null) return undefined; if (fn === RegExp.prototype.test) return Reflect.apply(RegExp.prototype.test, object, values()); return own ? adamicCall(fn, fn.receiver ? [object, ...values()] : values()) : "
 	if counted {
 		builder.WriteString(optionalMethodCall + "adamicDirect(fn, [object, ...values()]); };\n")
 	} else {
@@ -1185,19 +1185,7 @@ func (e *emitter) valueRaw(expression ir.Expression) string {
 		}
 		return "(" + e.value(expression.Value) + ")" + operator + quote(expression.Name) + "]"
 	case ir.Property:
-		if expression.Unset && expression.View != "" {
-			return fmt.Sprintf("adamicPlaceholderViewField(%s, %s, %s, %d, %s, [%s], %t, %t)", e.value(expression.Object), quote(expression.Name), quote(expression.View), expression.UnsetType, quote(expression.ViewType), e.values(expression.ViewAllowed), expression.Optional, expression.Absent)
-		}
-		if expression.View != "" {
-			return e.checkedViewField(expression)
-		}
-		if expression.Readiness != "" {
-			return fmt.Sprintf("adamicReadField(%s, %s, %s, %t, %t)", e.value(expression.Object), quote(expression.Name), quote(expression.Readiness), expression.Optional, expression.Absent)
-		}
-		if expression.Optional {
-			return e.value(expression.Object) + "?.[" + quote(expression.Name) + "]"
-		}
-		return e.value(expression.Object) + "[" + quote(expression.Name) + "]"
+		return e.objectFieldRead(expression)
 	case ir.ArrayLiteral:
 		elements := []string{}
 		for index, element := range expression.Elements {

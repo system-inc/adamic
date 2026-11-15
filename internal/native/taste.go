@@ -39,8 +39,18 @@ func (e *emitter) toBoolean(of ir.Type, value string) string {
 }
 
 func (e *emitter) logicalValue(expression ir.Logical) string {
-	left := e.snapshot(expression.Left.Type(), e.value(expression.Left))
-	condition := e.toBoolean(expression.Left.Type(), left)
+	left, condition := "", ""
+	presence := false
+	if !expression.KeepTruthy {
+		condition, presence = e.optionalFunctionPresence(expression.Left)
+	}
+	if presence {
+		// An && keeps only the missing left, never the prototype function.
+		left = "NULL"
+	} else {
+		left = e.snapshot(expression.Left.Type(), e.value(expression.Left))
+		condition = e.toBoolean(expression.Left.Type(), left)
+	}
 	if !expression.KeepTruthy {
 		condition = "!(" + condition + ")"
 	}

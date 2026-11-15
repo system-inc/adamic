@@ -1,0 +1,4 @@
+interface Maybe { test?: (text: string) => boolean }
+const holder: { readonly inner?: Maybe } = { inner: /a/ };
+const v = holder.inner;
+if (v !== undefined) { const f = v.test; console.log(f === undefined ? 'missing' : 'function'); }
