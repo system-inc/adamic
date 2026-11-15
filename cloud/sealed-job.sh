@@ -40,6 +40,11 @@ sealedGitConfigs=${GIT_CONFIG_COUNT:-0}
 export GIT_CONFIG_COUNT=$((sealedGitConfigs + 1))
 export "GIT_CONFIG_KEY_$sealedGitConfigs=safe.directory" "GIT_CONFIG_VALUE_$sealedGitConfigs=/opt/adamic-block/typescript-source"
 unset sealedGitConfigs
+# A test that runs git with a cleaned environment never sees the line above, so the job's own global config (its empty
+# HOME) names it too (Azure's read on #1ndpe51: the pin is there, git refused it on ownership alone).
+git config --global --get-all safe.directory 2> /dev/null | grep -qxF /opt/adamic-block/typescript-source ||
+	git config --global --add safe.directory /opt/adamic-block/typescript-source ||
+	sealedJobFail "couldn't name the image's TypeScript source safe in the job's git config" || return 1
 
 # sealed_git: the tree as laid becomes one commit, HEAD, in a .git of the job's own, read back clean. Run from the tree's
 # root. It refuses a tree that already has a .git, so a house box's real history is never covered over.
