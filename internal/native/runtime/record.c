@@ -45,6 +45,26 @@ adamic_record *adamic_record_new(adamic_field_kind values) {
 	return record;
 }
 
+adamic_record *adamic_record_new_graph(adamic_field_kind values) {
+	if (values != adamic_field_reference) {
+		static const char message[] = "compiler bug: a graph record of values that aren't references";
+		adamic_panic(message, sizeof message - 1);
+	}
+	// Adoption moves an allocation, so each pointer is the one adoption returns. The table is adopted
+	// before the wrapper's slot names it, then the wrapper, whose adoption counts its edge to the table
+	// as one out of its own region, and the merge takes that count off: one region, not two. Joining
+	// them at birth retains nothing past the record's own life, since the table is the wrapper's alone:
+	// table() is static to this file and no reader retains what it returns, which
+	// record_table_guard_test.go holds for every runtime file.
+	adamic_record *record = adamic_object_new(&record_reference_shape);
+	adamic_map *map = adamic_map_new(true, true);
+	map = adamic_graph_adopt_owned(map, sizeof *map);
+	record->slots[0].reference = map;
+	record = adamic_graph_adopt_owned(record, adamic_object_allocation_size(record));
+	adamic_graph_merge(record, map);
+	return record;
+}
+
 adamic_value *adamic_record_get_own(const adamic_record *record, const adamic_string *key) {
 	return adamic_map_get(table(record), (adamic_value){.reference = (void *)key});
 }
@@ -117,16 +137,32 @@ static adamic_map_entry *entry_of(adamic_value *slot) {
 	return (adamic_map_entry *)((char *)slot - offsetof(adamic_map_entry, value));
 }
 
-// let_go releases the key and value a refused write was handed, as adamic_map_set lets go of the
-// key it already has and the value it replaces.
+// take_in has a graph table take the key and value a write is about to store, as a graph Map's
+// writer does: after any refusal, so a refused write takes nothing, and before adamic_map_set writes
+// the slot, the store order graph_regions.h's adamic_graph_hold states. A table that's no graph
+// member takes nothing, at the cost of one branch.
+static void take_in(adamic_map *map, adamic_string *key, adamic_value value) {
+	if (adamic_graph_is(map)) {
+		adamic_graph_take(map, key);
+		if (map->reference_values) { adamic_graph_take(map, value.reference); }
+	}
+}
+
+// let_go releases the key and value a refused write was handed. The caller handed each as an owned
+// outside reference, and adamic_release drops exactly that outside count, on a graph member of this
+// region or another one too (adamic_graph_release_last). A refused write took neither, so
+// adamic_graph_drop would be wrong for a graph table: on a value already in the table's region it
+// returns without a release, a leak, and on another region's member it takes off a counted edge this
+// write never made.
 static void let_go(adamic_map *map, adamic_string *key, adamic_value value) {
-	if (adamic_graph_is(map)) { adamic_graph_drop(map, key); } else { adamic_release(key); }
+	adamic_release(key);
 	if (map->reference_values) {
-		if (adamic_graph_is(map)) { adamic_graph_drop(map, value.reference); } else { adamic_release(value.reference); }
+		adamic_release(value.reference);
 	}
 }
 
 void adamic_record_define(adamic_record *record, adamic_string *key, adamic_value value) {
+	take_in(table(record), key, value);
 	adamic_map_set(table(record), (adamic_value){.reference = key}, value);
 }
 
@@ -189,6 +225,7 @@ bool adamic_record_define_hidden(adamic_record *record, adamic_string *key, adam
 		let_go(map, key, value);
 		return same;
 	}
+	take_in(map, key, value);
 	if (slot != NULL) {
 		// Set finds the same entry and replaces its value there, so the key keeps its place, and it
 		// stays configurable, as the descriptor doesn't say otherwise.
@@ -232,6 +269,7 @@ bool adamic_record_set_checked(adamic_record *record, adamic_string *key, adamic
 		let_go(map, key, value);
 		return false;
 	}
+	take_in(map, key, value);
 	adamic_map_set(map, (adamic_value){.reference = key}, value);
 	return true;
 }

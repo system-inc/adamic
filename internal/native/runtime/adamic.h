@@ -1133,6 +1133,10 @@ typedef adamic_object adamic_record_iterator;
 // (record.c): counted references, numbers or booleans, a number or a boolean possibly packed with
 // undefined (adamic_maybe_number_pack, adamic_maybe_boolean_pack).
 adamic_record *adamic_record_new(adamic_field_kind values);
+// new_graph is a record of references that's a graph member: its table and wrapper adopted and merged
+// at birth, one region. Every write takes its key and value into the table after the refusal check,
+// and a refused write releases them plainly (record.c). No other kind of value has one.
+adamic_record *adamic_record_new_graph(adamic_field_kind values);
 bool adamic_record_is(const adamic_object *object);
 adamic_field_kind adamic_record_values(const adamic_record *record);
 adamic_value adamic_record_view(const adamic_record *, const char *, unsigned char, const char *, const char *);

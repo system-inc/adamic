@@ -488,6 +488,10 @@ Its result may now name a placeholder too: `same(node)` returns the argument, pr
 
 The two masked mutants drop conditions that keep the abstract reach sound when code the callee can't see adds links. Every link such code could add is itself a write into a cycle-capable slot (every edge on a cycle is one), judged in that code with its parameters outside, and refused there; so no whole program is accepted by those mutants that the proof refuses. They're kept because the proof's argument rests on them, not because a probe needs them.
 
+### Records in graph regions
+
+A record can be a graph region member (#1vb0x5s, step 1; in the runtime, not yet emitted). `adamic_record_new_graph` adopts the table and the wrapper and merges them at birth, so a graph record is one region, not two; that's safe because the table is the wrapper's alone (`record_table_guard_test.go`). Every write takes its key and value into the table after the readonly or fixed refusal check and before the slot is written. A refused write took nothing, so it releases what it was handed plainly, with `adamic_release`: `adamic_graph_drop` would release nothing for a value already in the region, and take an edge that was never made off another region's member. `record_graph_test.go` holds each with the counted build, ASan and a mutant.
+
 ## Async suspension ownership
 
 Async bodies use the ordinary IR and a counted suspension frame. The active
