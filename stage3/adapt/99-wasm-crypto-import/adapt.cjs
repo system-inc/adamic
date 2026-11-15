@@ -7,6 +7,39 @@ const ts = require('typescript');
 const {compiler, nodes} = require('../47-host-errors/adapt.cjs');
 const manifest = require('./proofs/targets.json');
 const local = '_crypto';
+const watchDirectorySpec = require('./proofs/watch-directory.json');
+function watchDirectoryProperty(file) {
+    const owner = one(nodes(ts, file, n => ts.isFunctionDeclaration(n) && n.name?.text === 'getNodeSystem'), 'getNodeSystem');
+    const declaration = one(nodes(ts, owner, n => ts.isVariableDeclaration(n) && n.name.getText(file) === 'nodeSystem'), 'nodeSystem declaration');
+    assert(ts.isObjectLiteralExpression(declaration.initializer), 'nodeSystem must be an object literal');
+    return one(declaration.initializer.properties.filter(n => n.name?.getText(file) === 'watchDirectory'), 'nodeSystem watchDirectory');
+}
+function validateWatchDirectory(text) {
+    const file = ts.createSourceFile('sys.ts', text, ts.ScriptTarget.Latest, true);
+    const property = watchDirectoryProperty(file);
+    assert.equal(property.getText(file), watchDirectorySpec.after, 'watchDirectory forwarder drift');
+    assert(ts.isPropertyAssignment(property) && ts.isArrowFunction(property.initializer));
+    const arrow = property.initializer;
+    const system = one(file.statements.filter(n => ts.isInterfaceDeclaration(n) && n.name.text === 'System'), 'System interface');
+    const slot = one(system.members.filter(n => n.name?.getText(file) === 'watchDirectory'), 'System.watchDirectory');
+    const parameters = node => node.parameters.map(p => {
+        assert(!p.dotDotDotToken && !p.initializer, 'no rest or default parameters');
+        return [p.name.getText(file), p.type?.getText(file), !!p.questionToken];
+    });
+    assert.deepEqual(parameters(arrow), parameters(slot), 'forwarder must exactly match System.watchDirectory');
+    assert(ts.isCallExpression(arrow.body) && arrow.body.expression.getText(file) === 'watchDirectory');
+    assert.deepEqual(arrow.body.arguments.map(n => n.getText(file)), ['path', 'callback', '!!recursive', 'options']);
+    return property;
+}
+function forwardWatchDirectory(text) {
+    const file = ts.createSourceFile('sys.ts', text, ts.ScriptTarget.Latest, true);
+    const property = watchDirectoryProperty(file);
+    assert(ts.isShorthandPropertyAssignment(property) && property.getText(file) === watchDirectorySpec.before, 'watchDirectory shorthand drift');
+    const after = text.slice(0, property.getStart(file)) + watchDirectorySpec.after + text.slice(property.end);
+    validateWatchDirectory(after);
+    return after;
+}
+
 const resolveHost = require('./proofs/resolve-host.json');
 function forwardResolveHost(text) {
     for (const [before, after] of [[resolveHost.before, resolveHost.after], [resolveHost.annotationBefore, resolveHost.annotationAfter]]) {
@@ -156,7 +189,8 @@ function adapt(tree) {
         text = text.slice(0, edit.start) + edit.text + text.slice(edit.end);
         boundary = edit.start;
     }
-    if (!done) text = forwardResolveHost(annotateRequire(text));
+    if (!done) text = forwardWatchDirectory(forwardResolveHost(annotateRequire(text)));
+    validateWatchDirectory(text);
     const changedFile = ts.createSourceFile(file.fileName, text, ts.ScriptTarget.Latest, true);
     const changedOwner = one(nodes(ts, changedFile, n => ts.isFunctionDeclaration(n) && n.name?.text === 'getNodeSystem'), 'changed getNodeSystem');
     assert.equal(hash(ownerText(changedOwner.getText(changedFile))), manifest[0].ownerAfterSha256, 'unreviewed crypto owner change');
@@ -171,7 +205,7 @@ function adapt(tree) {
     if (edits.length) fs.writeFileSync(file.fileName, text);
     return {files: edits.length ? 1 : 0, javascriptChanging: true, before: checked.evidence, after: post.evidence};
 }
-module.exports = {adapt, validateBindings, plannedProgram, blockLines, importText, annotateRequire, requireBefore, requireAfter, forwardResolveHost};
+module.exports = {adapt, validateBindings, plannedProgram, blockLines, importText, annotateRequire, requireBefore, requireAfter, forwardResolveHost, forwardWatchDirectory, validateWatchDirectory, watchDirectoryProperty};
 if (require.main === module) {
     assert.equal(process.argv.length, 3, 'usage: node adapt.cjs <tree>');
     console.log(JSON.stringify(adapt(path.resolve(process.argv[2])), null, 2));
