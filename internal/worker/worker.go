@@ -47,7 +47,7 @@ func CheckSignature(ctx context.Context, program *load.Program) error {
 	}
 	found := "no exported handle"
 	refuse := func() error {
-		return fmt.Errorf("%s: refused: worker handle must be (request: HttpRequest) => HttpResponse from 'adamic/http'; found %s\n  fix: import type { HttpRequest, HttpResponse } from 'adamic/http'; export function handle(request: HttpRequest): HttpResponse { ... }", program.FileName(entry), found)
+		return fmt.Errorf("%s: refused: worker handle must be function handle(request: HttpRequest): HttpResponse or async function handle(request: HttpRequest): Promise<HttpResponse>, using the exact types from 'adamic/http'; found %s\n  fix: import type { HttpRequest, HttpResponse } from 'adamic/http'; export a synchronous handle returning HttpResponse, or an async handle returning Promise<HttpResponse>", program.FileName(entry), found)
 	}
 	if exported == nil {
 		return refuse()
@@ -87,10 +87,31 @@ func CheckSignature(ctx context.Context, program *load.Program) error {
 		return fmt.Errorf("worker: missing HttpRequest or HttpResponse in the adamic prelude")
 	}
 	signature := signatures[0]
-	if len(signature.Parameters()) != 1 || types.GetTypeOfSymbolAtLocation(signature.Parameters()[0], declaration) != requestType || types.GetReturnTypeOfSignature(signature) != responseType {
+	result := types.GetReturnTypeOfSignature(signature)
+	if ast.HasSyntacticModifier(declaration, ast.ModifierFlagsAsync) {
+		if !workerLibraryPromise(result) {
+			return refuse()
+		}
+		arguments := types.GetTypeArguments(result)
+		if len(arguments) != 1 {
+			return refuse()
+		}
+		result = arguments[0]
+	}
+	if len(signature.Parameters()) != 1 || types.GetTypeOfSymbolAtLocation(signature.Parameters()[0], declaration) != requestType || result != responseType {
 		return refuse()
 	}
 	return nil
+}
+
+// The Promise must come from the bundled library, not a structural thenable or a
+// program declaration named Promise. Its single payload is checked by identity.
+func workerLibraryPromise(proven *checker.Type) bool {
+	if proven.Flags()&checker.TypeFlagsObject == 0 {
+		return false
+	}
+	symbol := proven.Symbol()
+	return symbol != nil && symbol.Name == "Promise" && len(symbol.Declarations) != 0 && load.IsLibrary(ast.GetSourceFileOfNode(symbol.Declarations[0]))
 }
 
 // refuseDroppedExports refuses each value export of the entry that lowering didn't keep. Lowering keeps
@@ -183,6 +204,41 @@ export default {
 `
 }
 
+// Keep the synchronous bridge byte-for-byte unchanged, including its scheduling.
+func asyncBridge(handlerImport string) (string, error) {
+	return awaitHandlerCall(Bridge(handlerImport))
+}
+
+func awaitHandlerCall(bridge string) (string, error) {
+	const needle = "output = handle(input);"
+	if count := strings.Count(bridge, needle); count != 1 {
+		return "", fmt.Errorf("worker: refused async bridge: expected exactly one %q, found %d; fix: restore the generated handler call", needle, count)
+	}
+	return strings.Replace(bridge, needle, "output = await handle(input);", 1), nil
+}
+
+// Refuse before lowering or choosing a split: an async entry never becomes a
+// JavaScript leftover beside selected Wasm functions in this first async head.
+func refuseAsyncWasm(program *load.Program, asyncHandle bool, names []string) error {
+	if len(names) == 0 {
+		return nil
+	}
+	if asyncHandle {
+		return fmt.Errorf("worker: refused --wasm with async handle; fix: omit --wasm for an async handle")
+	}
+	for _, statement := range program.Files()[0].Statements.Nodes {
+		if statement.Kind != ast.KindFunctionDeclaration || statement.Name() == nil || !ast.HasSyntacticModifier(statement, ast.ModifierFlagsAsync) {
+			continue
+		}
+		for _, name := range names {
+			if statement.Name().Text() == name {
+				return fmt.Errorf("worker: refused Wasm function %q: async functions cannot cross the Wasm boundary; fix: keep it in JavaScript and omit it from --wasm", name)
+			}
+		}
+	}
+	return nil
+}
+
 // Build checks and lowers before writing anything, including on a signature refusal.
 func Build(entry, output string) error {
 	return BuildWith(entry, output, Options{})
@@ -197,6 +253,8 @@ func BuildWith(entry, output string, options Options) error {
 		return err
 	}
 	types, release := program.Checker(context.Background(), program.Files()[0])
+	asyncHandle := false
+	genericExport := ""
 	for _, exported := range types.GetExportsOfModule(program.Files()[0].AsNode().Symbol()) {
 		if types.GetTypeOnlyAliasDeclaration(exported) != nil {
 			continue
@@ -206,13 +264,23 @@ func BuildWith(entry, output string, options Options) error {
 			target = types.GetAliasedSymbol(target)
 		}
 		for _, declaration := range target.Declarations {
+			if exported.Name == "handle" {
+				asyncHandle = ast.HasSyntacticModifier(declaration, ast.ModifierFlagsAsync)
+			}
 			if declaration.Kind == ast.KindFunctionDeclaration && len(declaration.TypeParameters()) != 0 {
-				release()
-				return fmt.Errorf("worker: exported generic function %s is not yet supported; fix: export a concrete function", exported.Name)
+				if genericExport == "" {
+					genericExport = exported.Name
+				}
 			}
 		}
 	}
 	release()
+	if err := refuseAsyncWasm(program, asyncHandle, options.Wasm); err != nil {
+		return err
+	}
+	if genericExport != "" {
+		return fmt.Errorf("worker: exported generic function %s is not yet supported; fix: export a concrete function", genericExport)
+	}
 	lowered, err := lower.Lower(context.Background(), program)
 	if err != nil {
 		return err
@@ -233,6 +301,12 @@ func BuildWith(entry, output string, options Options) error {
 	var wasm []workerFile
 	var imports string
 	bridge := Bridge("./handler.mjs")
+	if asyncHandle {
+		bridge, err = asyncBridge("./handler.mjs")
+		if err != nil {
+			return err
+		}
+	}
 	if len(options.Wasm) != 0 {
 		backend.ExternalFunctions, imports, wasm, err = wasmFiles(entry, program, lowered, options)
 		if err != nil {

@@ -1,0 +1,7 @@
+{"method":"GET","url":"https://worker.test/first","headers":[],"body":null}
+{"method":"POST","url":"https://worker.test/second","headers":[],"body":"héllo"}
+{"method":"GET","url":"https://worker.test/panic","headers":[],"body":null}
+{"method":"GET","url":"https://worker.test/helper-panic","headers":[],"body":null}
+{"method":"GET","url":"https://worker.test/reject","headers":[],"body":null}
+{"method":"GET","url":"https://worker.test/throw-error","headers":[],"body":null}
+{"method":"GET","url":"https://worker.test/recovered","headers":[],"body":null}
