@@ -244,4 +244,39 @@ var workerJSONDecodeMutants = []struct{ name, before, after string }{
 	{"missing-required", "if (field.optional) continue;", "if (field.optional || name === 'required') continue;"},
 	{"reject-extra", "const result = {};", "const result = {}; if (Object.keys(value).some(name => !fields.some(field => field.name === name))) workerJsonMismatch(expected, path, value);"},
 	{"reword-error", "missing field ${name}", "required field ${name} is missing"},
+	// Failure-path-only mutant; direct pin: TestWorkerDecodeJSONLazyScalarFailurePaths.
+	{"lazy-scalar-index-plus-one", "index === undefined ? parentPath : `${parentPath}[${index}]`", "index === undefined ? parentPath : `${parentPath}[${index + 1}]`"},
+}
+
+// Pin scalar failure locations separately from the corpus, and retain projection
+// and copying while optimizing only successful scalar-array reads.
+func TestWorkerDecodeJSONLazyScalarFailurePaths(t *testing.T) {
+	t.Parallel()
+	runtime := filepath.Join(t.TempDir(), "decoder.mjs")
+	write(t, runtime, jsonDecodeRuntime+"\nexport { compileWorkerDecode };\n")
+	script := `import assert from 'node:assert/strict';
+import {pathToFileURL} from 'node:url';
+const {decodeJson,compileWorkerDecode}=await import(pathToFileURL(process.argv[1]));
+for(const [kind,valid,invalid] of [['number',1,'bad'],['string','ok',7],['boolean',true,7],['literal','yes','no']]){
+ const expected=kind==='literal'?'"yes"':kind;
+ const leaf={kind,expected,...(kind==='literal'?{of:3,literalUnits:[121,101,115]}:{})};
+ const schema={root:0,nodes:[{kind:'object',expected:'Envelope',fields:[{name:'values',node:1},{name:'label',node:3,optional:true}]},{kind:'array',expected:'readonly '+expected+'[]',children:[2]},leaf,{kind:'string',expected:'string'}]};
+ for(const index of [0,1]){
+  const values=[valid,valid];values[index]=invalid;
+  const found=invalid===null?'null':typeof invalid;
+  assert.deepEqual(decodeJson(JSON.stringify({values}),schema),{kind:'Error',message:'at $.values['+index+']: expected '+expected+', found '+found});
+ }
+ const parsed={label:'first',values:[valid,valid],extra:'hidden'};
+ const projected=compileWorkerDecode(schema)(parsed,'$');
+ assert.notStrictEqual(projected,parsed);
+ assert.notStrictEqual(projected.values,parsed.values);
+ assert.deepEqual(projected.values,parsed.values);
+ assert.deepEqual(Object.keys(projected),['values','label']);
+ assert(!Object.hasOwn(projected,'extra'));
+ assert.deepEqual(decodeJson('{}',schema),{kind:'Error',message:'at $: missing field values'});
+}`
+	command := exec.CommandContext(t.Context(), "node", "--input-type=module", "-e", script, runtime)
+	if output, err := command.CombinedOutput(); err != nil {
+		t.Fatalf("lazy scalar paths, projection and copy: %v\n%s", err, output)
+	}
 }

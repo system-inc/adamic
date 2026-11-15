@@ -11,6 +11,10 @@ containers even in dropped fields and overwritten duplicates. JSON syntax failur
 and nesting above 128 route through the original hand parser for exact native
 error wording and UTF-16 positions. Only then do compiled validation closures build
 fresh declared-order objects, omit absent optional fields, and drop extra fields.
+Array readers retain a fresh copied array, filled by a preallocated loop. Scalar
+array elements pass their parent path and index separately; only a failed scalar
+check formats the indexed error path. Aggregate-element and record-field paths
+keep their existing formatting and projection behavior.
 
 Valid duplicates (last wins, including earlier wrong shapes), lone high/low
 surrogates and pairs in keys or values stay on the fast path. Explicit comparisons
