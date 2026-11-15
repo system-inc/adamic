@@ -122,6 +122,20 @@ for (let i = 0; i < 10; i++) {
 }
 console.log(` + "`${total}`" + `);
 `, "a record written into a graph slot"},
+		// The closure that captures the record is written through a const alias, not as a literal, so the
+		// write is read by the slot's type and stops by falling back (Runtime's road on #t5q4prw).
+		{"a record captured by a closure written through an alias", `interface Node { name: string; count: () => number }
+function make(name: string): Node { return { name, count: () => 0 }; }
+let total = 0;
+for (let i = 0; i < 10; i++) {
+  const a = make(` + "`a${i}`" + `);
+  const rec: Record<string, Node> = { k: a };
+  const counter = (): number => Object.keys(rec).length;
+  a.count = counter;
+  total += a.count();
+}
+console.log(` + "`${total}`" + `);
+`, "a record written into a graph slot"},
 		// The two shapes above with no record: each cycle is the graph plan's, and frees whole.
 		{"the field shape with no record", `interface Box { n: Node | undefined }
 interface Node { name: string; box: Box }
