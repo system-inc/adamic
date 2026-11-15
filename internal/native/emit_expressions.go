@@ -440,27 +440,29 @@ func (e *emitter) evaluate(expression ir.Expression) string {
 		e.line("\t\tstatic const char message[] = \"map: the array shrank while it was being mapped\";")
 		e.line("\t\tadamic_panic(message, sizeof message - 1);")
 		e.line("\t}")
-		e.indent++
-		element := e.temporary()
-		input := fmt.Sprintf("%s->elements[%s]", source, index)
-		checked := ""
-		if expression.ElementCheck != nil {
-			checked = e.temporary()
-			e.line("adamic_value %s = %s.payload;", checked, e.checkedElement(expression.ElementCheck, source, index, false, expression.Element))
-			input = checked
-		}
-		call := e.callbackCall(callback, expression.Callback, expression.CallbackType, input, fmt.Sprintf("{.number = (double)%s}", index), fmt.Sprintf("{.reference = %s}", source))
-		e.line("adamic_value %s = %s;", element, call)
-		if checked != "" && expression.Element.IsReference() {
-			e.line("adamic_release(%s.reference);", checked)
-		}
-		// What's mapped so far is the statement's, let go with its temporaries.
-		e.closureThrown()
-		if e.graphTypes(expression.GraphTypes) && expression.Result.IsReference() {
-			e.line("%s.reference = adamic_graph_take(%s, %s.reference);", element, mapped, element)
-		}
-		e.line("adamic_array_push(%s, %s);", mapped, element)
-		e.indent--
+		e.iteration(func(func()) {
+			element := e.temporary()
+			input := fmt.Sprintf("%s->elements[%s]", source, index)
+			checked := ""
+			if expression.ElementCheck != nil {
+				checked = e.temporary()
+				e.line("adamic_value %s = %s.payload;", checked, e.checkedElement(expression.ElementCheck, source, index, false, expression.Element))
+				input = checked
+			}
+			call := e.callbackCall(callback, expression.Callback, expression.CallbackType, []ir.Type{expression.Element, ir.Number, ir.Array}, input, fmt.Sprintf("{.number = (double)%s}", index), fmt.Sprintf("{.reference = %s}", source))
+			e.line("adamic_value %s = %s;", element, call)
+			if checked != "" && expression.Element.IsReference() {
+				e.line("adamic_release(%s.reference);", checked)
+			}
+			// What's mapped so far is the statement's, let go with its temporaries.
+			e.closureThrown()
+			if e.graphTypes(expression.GraphTypes) && expression.Result.IsReference() {
+				e.line("%s.reference = adamic_graph_take(%s, %s.reference);", element, mapped, element)
+			}
+			// The callback's result comes back owned, and the array takes it as it is: it was never
+			// the iteration's.
+			e.line("adamic_array_push(%s, %s);", mapped, element)
+		})
 		e.line("}")
 		return mapped
 	case ir.ArrayVisit:
