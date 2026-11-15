@@ -351,7 +351,10 @@ def first_failures(stream, name):
             first = '(package)'
             lines = stream['buildOutput'].get(stream['failedBuild'].get(package, ''), []) + stream['packageOutput'][package]
         shown = [line.rstrip()[:240] for line in lines if line.strip() and not line.startswith(('=== RUN', '=== PAUSE', '=== CONT'))]
-        print(json.dumps({'package': package, 'stream': name, 'firstFailure': first, 'lines': shown[:14]}))
+        # Its first four lines and its last ten: a test's own log lines come first and its failure last, so a cut at the
+        # front alone showed markdowninline's corpus log and never its cause (J-es4wbkq).
+        kept = shown if len(shown) <= 14 else shown[:4] + ['... %d lines ...' % (len(shown) - 14)] + shown[-10:]
+        print(json.dumps({'package': package, 'stream': name, 'firstFailure': first, 'lines': kept}))
 
 tests = read(os.path.join(out, 'test.jsonl'))
 products = read(os.path.join(out, 'products.jsonl'))
@@ -363,6 +366,11 @@ counts = collections.Counter(row['outcome'] for row in packages.values())
 print("This is the block's own tests run without loom, not the house's build of the tree. Nothing in it is a key, and nothing compares keys.")
 print(json.dumps({'sha': sha, 'started': started, 'vetExit': int(vet), 'buildExit': int(build), 'testExit': int(test),
                   'goFlags': flags, 'packages': len(packages), 'ok': counts['ok'], 'failed': counts['failed'], 'skipped': counts['skipped']}))
+# A vet or build that failed says why: its log's last twenty lines (J-es4wbkq: build exited 1 and the report said no more).
+for step, code in (('vet', vet), ('build', build)):
+    if int(code) != 0:
+        logged = [line.rstrip()[:240] for line in open(os.path.join(out, step + '.log'), errors='replace') if line.strip()]
+        print(json.dumps({'step': step, 'exit': int(code), 'tail': logged[-20:]}))
 for package, row in packages.items():
     print(json.dumps({'package': package, 'outcome': row['outcome'], 'seconds': row['seconds'], 'failingTests': tests['failing'].get(package, [])}))
 failed_waves = [int(wave) for wave, code in waves if code != '0']
