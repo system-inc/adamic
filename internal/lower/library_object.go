@@ -14,6 +14,12 @@ func (l *lowering) objectCall(node *ast.Node, name string) (ir.Expression, bool,
 }
 
 func (l *lowering) objectCallArguments(node *ast.Node, name string, written []*ast.Node) (ir.Expression, bool, error) {
+	// Class whole readers before record dispatch or a shape refusal can consume the call.
+	reader := ir.ObjectCall{Method: name, Checked: true}
+	class := viewReadOf(l.result, reader)
+	for _, argument := range written {
+		l.recordRegExpServedWhole(node, l.checker.GetTypeAtLocation(argument), reader, class == viewReadsNoField)
+	}
 	if value, handled, err := l.recordObjectCallArguments(node, name, written); handled {
 		return value, true, err
 	}

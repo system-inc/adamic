@@ -293,6 +293,7 @@ func (l *lowering) expression(node *ast.Node) (ir.Expression, error) {
 	}
 	l.noteOverloadCall(node)
 	value, err := l.value(node)
+	l.recordRegExpServedRead(node, value)
 	if err == nil {
 		value = l.graphAllocation(value, node)
 		if err := l.noteViewArrayStorage(node, value); err != nil {
