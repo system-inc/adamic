@@ -249,22 +249,20 @@ func (l *lowering) noteClassInitializer(class, root *ast.Node) {
 	l.classInitializers[class][root] = true
 }
 
-// checkOverloadResults is the guard behind overloadResultCheck, run once lowering is done. It walks
-// module statements, bodies recorded in functionNodes, and the instance field expressions, static
-// field expressions and static block bodies recorded in classInitializers when they actually lower.
-// It never descends into nested functions or classes. Unconstructed instance initializers are absent;
-// generic class initialization stays on the call notes. Every narrow overload call in these roots
-// must be settled (checked, proven or erased), even if a lowering road failed to note it. Missing or
-// unsettled calls are compiler bugs because censusOverload accepted the promise only on that condition.
-func (l *lowering) checkOverloadResults(modules []*ast.SourceFile) {
+// walkLoweredRegions calls each with every node lowering actually lowered, once lowering is done: it
+// walks module statements, bodies recorded in functionNodes, and the instance field expressions, static
+// field expressions and static block bodies recorded in classInitializers when they actually lower. It
+// never descends into nested functions or classes, each of which is its own region when it lowers.
+// Unconstructed instance initializers are absent; generic class initialization stays on the call notes.
+// A body lowering never lowers, such as an uncalled generic function's, is no region. checkOverloadResults
+// and checkCheckedPredicateParameters each judge these regions, so the two can't walk apart.
+func (l *lowering) walkLoweredRegions(modules []*ast.SourceFile, each func(node *ast.Node)) {
 	var visit func(node *ast.Node) bool
 	visit = func(node *ast.Node) bool {
 		if ast.IsFunctionLike(node) || ast.IsClassLike(node) {
 			return false
 		}
-		if l.narrowOverloadCall(node) && !l.overloadCalls[node] {
-			panic(fmt.Sprintf("lower: compiler bug: a call to an overload accepted narrow at %s lowered without its result check", l.program.Where(node)))
-		}
+		each(node)
 		node.ForEachChild(visit)
 		return false
 	}
@@ -281,6 +279,18 @@ func (l *lowering) checkOverloadResults(modules []*ast.SourceFile) {
 			visit(root)
 		}
 	}
+}
+
+// checkOverloadResults is the guard behind overloadResultCheck, run once lowering is done. Every narrow
+// overload call in the lowered regions (walkLoweredRegions) must be settled (checked, proven or erased),
+// even if a lowering road failed to note it. Missing or unsettled calls are compiler bugs because
+// censusOverload accepted the promise only on that condition.
+func (l *lowering) checkOverloadResults(modules []*ast.SourceFile) {
+	l.walkLoweredRegions(modules, func(node *ast.Node) {
+		if l.narrowOverloadCall(node) && !l.overloadCalls[node] {
+			panic(fmt.Sprintf("lower: compiler bug: a call to an overload accepted narrow at %s lowered without its result check", l.program.Where(node)))
+		}
+	})
 	for node, settled := range l.overloadCalls {
 		if !settled {
 			panic(fmt.Sprintf("lower: compiler bug: a call to an overload accepted narrow at %s lowered without its result check", l.program.Where(node)))
