@@ -1,3 +1,13 @@
+<!-- HEAD11 START -->
+# -11 catch follow-up — measurement in progress
+
+Head: `8843e0ab7b4cfaa547c08e438ca39442a4774fc6`; parent/main base: `89614cc0f9d6aa7b7fe96b56c5c6c1c3eace9825`. The parent diff was inspected before measurement. It is one commit on that main and includes the full loose-slot feature, not only the catch amendment. Artifacts for this follow-up live in [head11](head11).
+
+The rebuilt instrument remains a **partial type-level count, not a lowering**. Catch-clause bindings, closure captures, and direct arguments to unknown-typed parameters will have separate AST/checker inventories; helper text inside template strings is excluded. Controls and counts are pending. The original -7 report below is preserved.
+<!-- HEAD11 END -->
+
+---
+
 # Loose-slot census
 
 ## Control first

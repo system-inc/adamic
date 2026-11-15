@@ -1,0 +1,438 @@
+// Scratch-only type-level instrument. Never produces executable IR.
+package lower
+
+import (
+	"context"
+	"fmt"
+	"github.com/microsoft/TypeScript/tsc/shim/ast"
+	"github.com/microsoft/TypeScript/tsc/shim/checker"
+	"github.com/system-inc/adamic/internal/ir"
+	"github.com/system-inc/adamic/internal/load"
+	"os"
+)
+
+type LooseCensusEvent struct {
+	Form, Where, Source, Slot, Holder string
+	Catch                             bool
+}
+type LooseCatchClosure struct{ Where, Text string }
+type LooseCatchArgument struct {
+	Where, ArgumentWhere, BindingWhere, ArgumentType, Parameter, ParameterType, ParameterWhere string
+	MakesHEvery                                                                                bool
+}
+type LooseCatchBinding struct {
+	Where, ClauseWhere, Name, Type               string
+	Bound, Captured, NarrowingAvailable, Stopped bool
+	Closures                                     []LooseCatchClosure
+	UnknownCalls                                 []LooseCatchArgument
+}
+type LooseCensusResult struct {
+	Files, Nodes, Candidates, HTypes, Shapes int
+	HEvery                                   bool
+	Events                                   []LooseCensusEvent
+	Catches                                  []LooseCatchBinding
+	UnknownCatchCalls                        []LooseCatchArgument
+	CaughtEvery                              bool
+	CaughtTypes                              []string
+}
+type looseCensusCandidate struct {
+	form                 string
+	node                 *ast.Node
+	source, slot, holder *checker.Type
+	cell                 int
+}
+
+func LooseCensus(ctx context.Context, p *load.Program, disabled bool) (LooseCensusResult, error) {
+	files := p.Files()
+	if len(files) == 0 {
+		return LooseCensusResult{}, fmt.Errorf("no files")
+	}
+	c, release := p.Checker(ctx, files[0])
+	defer release()
+	l := &lowering{program: p, checker: c, result: &ir.Program{}, this: -1, functionIndex: -1, entry: files[0], localTypes: map[int]*checker.Type{}, localNodes: map[int]*ast.Node{}}
+	f := &cycleFinder{l: l, where: map[*checker.Type]*ast.Node{}}
+	result := LooseCensusResult{Files: len(files), Events: []LooseCensusEvent{}}
+	nodes := []*ast.Node{}
+	functions := map[*ast.Node]int{}
+	locals := map[*ast.Symbol]int{}
+	owner := func(n *ast.Node) *ast.Node {
+		for n != nil {
+			if ast.IsFunctionLike(n) {
+				return n
+			}
+			n = n.Parent
+		}
+		return nil
+	}
+	var walk ast.Visitor
+	walk = func(n *ast.Node) bool {
+		if ast.IsPartOfTypeNode(n) {
+			return false
+		}
+		nodes = append(nodes, n)
+		if ast.IsFunctionLike(n) && n.Body() != nil {
+			functions[n] = len(l.result.Functions)
+			l.result.Functions = append(l.result.Functions, ir.Function{Closure: true})
+		}
+		return n.ForEachChild(walk)
+	}
+	for _, file := range files {
+		file.AsNode().ForEachChild(walk)
+	}
+	fmt.Fprintf(os.Stderr, "source nodes=%d files=%d\n", len(nodes), len(files))
+	for _, n := range nodes {
+		if !ast.IsIdentifier(n) || (!ast.IsDeclarationName(n) && !looseCensusCatchName(n)) {
+			continue
+		}
+		s := c.GetSymbolAtLocation(n)
+		if s == nil || s.ValueDeclaration == nil {
+			continue
+		}
+		d := s.ValueDeclaration
+		if d.Kind != ast.KindVariableDeclaration && d.Kind != ast.KindParameter && d.Kind != ast.KindBindingElement {
+			continue
+		}
+		own := owner(d.Parent)
+		index := -1
+		if own != nil {
+			var ok bool
+			index, ok = functions[own]
+			if !ok {
+				continue
+			}
+		} else if !looseCensusCatchName(n) {
+			continue
+		}
+		if _, ok := locals[s]; ok {
+			continue
+		}
+		i := len(l.result.Locals)
+		locals[s] = i
+		l.result.Locals = append(l.result.Locals, ir.Local{Name: n.Text(), Function: index})
+		l.localTypes[i] = c.GetTypeAtLocation(n)
+		l.localNodes[i] = n
+	}
+	for _, n := range nodes {
+		if !ast.IsIdentifier(n) || (ast.IsDeclarationName(n) && (n.Parent == nil || n.Parent.Kind != ast.KindShorthandPropertyAssignment)) {
+			continue
+		}
+		s := c.GetSymbolAtLocation(n)
+		if n.Parent != nil && n.Parent.Kind == ast.KindShorthandPropertyAssignment {
+			if held := c.GetShorthandAssignmentValueSymbol(n.Parent); held != nil && held.ValueDeclaration != nil && held.ValueDeclaration.Name() != nil && looseCensusCatchName(held.ValueDeclaration.Name()) {
+				s = held
+			}
+		}
+		i, ok := locals[s]
+		if !ok {
+			continue
+		}
+		use := owner(n.Parent)
+		decl := owner(s.ValueDeclaration.Parent)
+		if use == nil || use == decl {
+			continue
+		}
+		l.result.Locals[i].Captured = true
+		for fn := use; fn != nil && fn != decl; fn = owner(fn.Parent) {
+			if j, ok := functions[fn]; ok {
+				l.result.Functions[j].Environment = append(l.result.Functions[j].Environment, i)
+			}
+		}
+	}
+	for _, n := range nodes {
+		if index, ok := functions[n]; ok {
+			l.closureRecords = append(l.closureRecords, closureRecord{proven: c.GetTypeAtLocation(n), function: index, node: n})
+		}
+	}
+	for i, d := range l.result.Locals {
+		if d.Captured && f.looseCellEvery(i) {
+			f.loose.every = true
+		}
+	}
+	candidates := []looseCensusCandidate{}
+	add := func(form string, n *ast.Node, source, slot, holder *checker.Type, cell int) {
+		if source != nil && slot != nil && f.holdsLoose(slot) {
+			candidates = append(candidates, looseCensusCandidate{form, n, source, slot, holder, cell})
+		}
+	}
+	// Assignment-pattern literals are store targets, not initialized values.
+	pattern := func(n *ast.Node) bool {
+		for n.Parent != nil {
+			p := n.Parent
+			switch p.Kind {
+			case ast.KindParenthesizedExpression, ast.KindObjectLiteralExpression, ast.KindArrayLiteralExpression, ast.KindSpreadElement, ast.KindSpreadAssignment:
+				n = p
+			case ast.KindPropertyAssignment:
+				if p.AsPropertyAssignment().Initializer != n {
+					return false
+				}
+				n = p
+			case ast.KindBinaryExpression:
+				return p.AsBinaryExpression().Left == n && p.AsBinaryExpression().OperatorToken.Kind == ast.KindEqualsToken
+			default:
+				return false
+			}
+		}
+		return false
+	}
+	for ni, n := range nodes {
+		if ni%10000 == 0 {
+			fmt.Fprintf(os.Stderr, "gather %d/%d\n", ni, len(nodes))
+		}
+		f.libraryIteratorMade(n)
+		f.looseEntry(n)
+		switch {
+		case n.Kind == ast.KindObjectLiteralExpression:
+			f.shape(c.GetTypeAtLocation(n), n)
+		case n.Kind == ast.KindArrayLiteralExpression || n.Kind == ast.KindCallExpression || n.Kind == ast.KindNewExpression:
+			f.made(c.GetTypeAtLocation(n), n)
+		case ast.IsIdentifier(n) || n.Kind == ast.KindThisKeyword || n.Kind == ast.KindPropertyAccessExpression || n.Kind == ast.KindElementAccessExpression:
+			if !ast.IsIdentifier(n) || ast.IsDeclarationName(n) || ast.IsExpressionNode(n) {
+				f.use(c.GetTypeAtLocation(n), n)
+			}
+		}
+		switch n.Kind {
+		case ast.KindObjectLiteralExpression, ast.KindArrayLiteralExpression, ast.KindNewExpression:
+			if !pattern(n) {
+				l.noteLooseInit(n)
+			}
+		case ast.KindBinaryExpression:
+			b := n.AsBinaryExpression()
+			if b.OperatorToken.Kind != ast.KindEqualsToken && !logicalAssignment(b.OperatorToken.Kind) {
+				break
+			}
+			left := ast.SkipParentheses(b.Left)
+			source := c.GetTypeAtLocation(b.Right)
+			switch left.Kind {
+			case ast.KindPropertyAccessExpression:
+				add("write", left.AsPropertyAccessExpression().Expression, source, c.GetTypeAtLocation(left), c.GetTypeAtLocation(left.AsPropertyAccessExpression().Expression), 0)
+			case ast.KindElementAccessExpression:
+				add("write", left.AsElementAccessExpression().Expression, source, c.GetTypeAtLocation(left), c.GetTypeAtLocation(left.AsElementAccessExpression().Expression), 0)
+			case ast.KindIdentifier:
+				if i, ok := locals[c.GetSymbolAtLocation(left)]; ok && l.result.Locals[i].Captured {
+					add("captured", n, source, l.localTypes[i], nil, i+1)
+				}
+			}
+		case ast.KindVariableDeclaration:
+			d := n.AsVariableDeclaration()
+			if d.Initializer != nil && d.Name() != nil {
+				if i, ok := locals[c.GetSymbolAtLocation(d.Name())]; ok && l.result.Locals[i].Captured {
+					add("captured", d.Name(), c.GetTypeAtLocation(d.Initializer), l.localTypes[i], nil, i+1)
+				}
+			}
+		case ast.KindPropertyDeclaration:
+			d := n.AsPropertyDeclaration()
+			if d.Initializer != nil && n.Parent != nil && n.Parent.Name() != nil {
+				sym := c.GetSymbolAtLocation(n.Parent.Name())
+				if sym != nil {
+					holder := checker.Checker_getDeclaredTypeOfSymbol(c, sym)
+					if ast.HasSyntacticModifier(n, ast.ModifierFlagsStatic) {
+						holder = c.GetTypeOfSymbol(sym)
+					}
+					add("write", n, c.GetTypeAtLocation(d.Initializer), c.GetTypeAtLocation(n), holder, 0)
+				}
+			}
+		case ast.KindCallExpression:
+			call := n.AsCallExpression()
+			expr := ast.SkipParentheses(call.Expression)
+			if expr.Kind != ast.KindPropertyAccessExpression {
+				break
+			}
+			a := expr.AsPropertyAccessExpression()
+			holder := c.GetTypeAtLocation(a.Expression)
+			name := a.Name().Text()
+			args := call.Arguments.Nodes
+			library := l.isArrayType(holder) || l.isLibraryType(holder, "Map", "Set", "ReadonlyMap", "ReadonlySet")
+			if !library {
+				break
+			}
+			types := c.GetTypeArguments(holder)
+			if len(types) == 0 {
+				break
+			}
+			put := func(i, j int) {
+				if i < len(args) && j < len(types) {
+					add("write", a.Expression, c.GetTypeAtLocation(args[i]), types[j], holder, 0)
+				}
+			}
+			switch name {
+			case "push", "unshift":
+				for i := range args {
+					put(i, 0)
+				}
+			case "fill", "add":
+				put(0, 0)
+			case "splice":
+				for i := 2; i < len(args); i++ {
+					put(i, 0)
+				}
+			case "set":
+				put(0, 0)
+				put(1, 1)
+			}
+		}
+	}
+	inits := []looseInit{}
+	for _, made := range l.looseInits {
+		if made.slot != nil && !f.holdsLoose(made.slot) {
+			continue
+		}
+		if made.slot == nil && !f.looseFields(made.holder) && !f.holdsLoose(made.holder) {
+			continue
+		}
+		f.looseHold(made.value)
+		inits = append(inits, made)
+	}
+	for _, made := range inits {
+		slot := made.slot
+		if slot == nil {
+			slot = made.value
+		}
+		candidates = append(candidates, looseCensusCandidate{"literal init", made.node, made.value, slot, made.holder, 0})
+	}
+	for i, d := range l.result.Locals {
+		if d.Captured && l.localTypes[i] != nil && f.holdsLoose(l.localTypes[i]) && f.looseCaughtCell(i) {
+			f.looseCaught()
+			break
+		}
+	}
+	for i, d := range l.result.Locals {
+		if !d.Captured || l.localTypes[i] == nil || !f.holdsLoose(l.localTypes[i]) {
+			continue
+		}
+		if f.looseCaughtCell(i) {
+			for _, caught := range f.looseCaught() {
+				candidates = append(candidates, looseCensusCandidate{"captured", l.localNodes[i], caught, l.localTypes[i], nil, i + 1})
+			}
+		} else if f.looseCellEvery(i) {
+			candidates = append(candidates, looseCensusCandidate{"captured", l.localNodes[i], l.localTypes[i], l.localTypes[i], nil, i + 1})
+		}
+	}
+	looseCensusCatchInventory(&result, l, f, nodes, functions, locals)
+	result.CaughtEvery = f.loose.caughtEvery
+	for _, caught := range f.loose.caught {
+		result.CaughtTypes = append(result.CaughtTypes, c.TypeToString(caught))
+	}
+	result.Nodes = len(nodes)
+	result.Candidates = len(candidates)
+	result.HEvery = f.loose.every
+	result.HTypes = len(f.loose.entries)
+	result.Shapes = len(f.shapes)
+	if disabled {
+		return result, nil
+	}
+	for si, site := range candidates {
+		if si%1000 == 0 {
+			fmt.Fprintf(os.Stderr, "judge %d/%d\n", si, len(candidates))
+		}
+		if site.source == nil || viewPairScalar(site.source) {
+			continue
+		}
+		target := cycleNode{proven: site.holder, cell: site.cell}
+		if !f.looseReaches(site.source, target) {
+			continue
+		}
+		holder := "own cell"
+		if site.holder != nil {
+			holder = c.TypeToString(site.holder)
+		}
+		slot := "loose field"
+		if site.slot != nil {
+			slot = c.TypeToString(site.slot)
+		}
+		result.Events = append(result.Events, LooseCensusEvent{Form: site.form, Where: p.Where(site.node), Source: c.TypeToString(site.source), Slot: slot, Holder: holder, Catch: site.cell != 0 && looseCensusCatchName(l.localNodes[site.cell-1])})
+	}
+	for i := range result.Catches {
+		for _, event := range result.Events {
+			if event.Catch && event.Where == result.Catches[i].Where {
+				result.Catches[i].Stopped = true
+			}
+		}
+	}
+	return result, nil
+}
+
+func looseCensusCatchName(n *ast.Node) bool {
+	return n != nil && n.Parent != nil && n.Parent.Kind == ast.KindVariableDeclaration && n.Parent.Parent != nil && n.Parent.Parent.Kind == ast.KindCatchClause
+}
+func looseCensusCatchInventory(result *LooseCensusResult, l *lowering, f *cycleFinder, nodes []*ast.Node, functions map[*ast.Node]int, locals map[*ast.Symbol]int) {
+	c := l.checker
+	bindings := map[*ast.Symbol]int{}
+	for _, n := range nodes {
+		if n.Kind != ast.KindCatchClause {
+			continue
+		}
+		record := LooseCatchBinding{ClauseWhere: l.program.Where(n), Closures: []LooseCatchClosure{}, UnknownCalls: []LooseCatchArgument{}}
+		d := n.AsCatchClause().VariableDeclaration
+		if d != nil && d.Name() != nil {
+			record.Bound = true
+			name := d.Name()
+			record.Where = l.program.Where(name)
+			if ast.IsIdentifier(name) {
+				record.Name = name.Text()
+				symbol := c.GetSymbolAtLocation(name)
+				bindings[symbol] = len(result.Catches)
+				record.Type = c.TypeToString(c.GetTypeAtLocation(name))
+				if local, ok := locals[symbol]; ok {
+					record.Captured = l.result.Locals[local].Captured
+					record.NarrowingAvailable = f.looseCaughtCell(local)
+					for _, fn := range nodes {
+						index, ok := functions[fn]
+						if !ok {
+							continue
+						}
+						holds := false
+						for _, held := range l.result.Functions[index].Environment {
+							if held == local {
+								holds = true
+								break
+							}
+						}
+						if holds {
+							sf := ast.GetSourceFileOfNode(fn)
+							record.Closures = append(record.Closures, LooseCatchClosure{Where: l.program.Where(fn), Text: sf.Text()[fn.Pos():fn.End()]})
+						}
+					}
+				}
+			} else {
+				record.Name = "<binding pattern>"
+			}
+		}
+		result.Catches = append(result.Catches, record)
+	}
+	for _, n := range nodes {
+		if n.Kind != ast.KindCallExpression {
+			continue
+		}
+		call := n.AsCallExpression()
+		for ai, arg := range call.Arguments.Nodes {
+			value := ast.SkipParentheses(arg)
+			if !ast.IsIdentifier(value) {
+				continue
+			}
+			symbol := c.GetSymbolAtLocation(value)
+			ci, ok := bindings[symbol]
+			if !ok {
+				continue
+			}
+			signature := c.GetResolvedSignature(n)
+			if signature == nil || len(signature.Parameters()) == 0 {
+				continue
+			}
+			parameter := signature.Parameters()[min(ai, len(signature.Parameters())-1)]
+			target := c.GetTypeOfSymbol(parameter)
+			if len(parameter.Declarations) > 0 && parameter.Declarations[0].Kind == ast.KindParameter && parameter.Declarations[0].AsParameterDeclaration().DotDotDotToken != nil {
+				target = l.elementTypeOfArray(target)
+			}
+			if target == nil || target.Flags()&checker.TypeFlagsUnknown == 0 {
+				continue
+			}
+			source := c.GetTypeAtLocation(arg)
+			entry := LooseCatchArgument{Where: l.program.Where(n), ArgumentWhere: l.program.Where(arg), BindingWhere: result.Catches[ci].Where, ArgumentType: c.TypeToString(source), Parameter: parameter.Name, ParameterType: c.TypeToString(target), MakesHEvery: looseSource(source)}
+			if len(parameter.Declarations) > 0 {
+				entry.ParameterWhere = l.program.Where(parameter.Declarations[0])
+			}
+			result.UnknownCatchCalls = append(result.UnknownCatchCalls, entry)
+			result.Catches[ci].UnknownCalls = append(result.Catches[ci].UnknownCalls, entry)
+		}
+	}
+}

@@ -1,0 +1,22 @@
+const log = (error: unknown): void => { console.log(typeof error); };
+async function run(): Promise<void> {
+    const readers: (() => string)[] = [];
+    let i = 0;
+    while (i < 3) {
+        try {
+            throw new Error(`item${i}`);
+        } catch (held) {
+            log(held);
+            if (held instanceof Error) {
+                const message = held.message;
+                readers.push(() => message);
+            }
+        }
+        await Promise.resolve();
+        i++;
+    }
+    for (const read of readers) {
+        console.log(read());
+    }
+}
+await run();
