@@ -1,0 +1,50 @@
+[
+  {
+    "name": "bind-stop",
+    "target_stop": true,
+    "completed": false,
+    "stops": 2
+  },
+  {
+    "name": "bind-stop-first-error-mutant",
+    "target_stop": false,
+    "completed": false,
+    "stops": 1
+  },
+  {
+    "name": "bind-clean",
+    "target_stop": false,
+    "completed": true,
+    "stops": 1
+  },
+  {
+    "name": "bind-clean-first-error-mutant",
+    "target_stop": false,
+    "completed": false,
+    "stops": 1
+  },
+  {
+    "name": "record-stop",
+    "target_stop": true,
+    "completed": false,
+    "stops": 2
+  },
+  {
+    "name": "record-stop-first-error-mutant",
+    "target_stop": false,
+    "completed": false,
+    "stops": 1
+  },
+  {
+    "name": "record-clean",
+    "target_stop": false,
+    "completed": true,
+    "stops": 1
+  },
+  {
+    "name": "record-clean-first-error-mutant",
+    "target_stop": false,
+    "completed": false,
+    "stops": 1
+  }
+]

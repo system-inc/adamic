@@ -1,0 +1,28 @@
+{
+  "base": "763d5fc83558ae8ceb0202189b18430dff499ab8",
+  "typescript": "050880ce59e30b356b686bd3144efe24f875ebc8",
+  "language_head": "ba619e28774130e24331c3026a938cd6f3cd6a34",
+  "memory_head": "b529db907bca6564edd2244ac8e5d102b85cf7e8",
+  "cohere": "5360753e19e4417675a90e92a1823bea66b13918",
+  "checker": "d92d9bfee114c80be2c375d72edae966176e3a4f",
+  "module_format": "CommonJSBundle",
+  "compiler_ts_files": 79,
+  "toolchain": "go1.27.1 linux/amd64",
+  "sys_runtime_env": {
+    "GOMEMLIMIT": "10GiB"
+  },
+  "measurement": "wall_seconds and Linux wait4 ru_maxrss in KiB; child process including load/lower, excluding build and adaptation",
+  "archived_overlay_byte_identical": true,
+  "final_binary_sha256": "f5d2dfca89c30a7aef936dc4bc81764320ddf0b120b829e797a7933c485ccf25",
+  "sys_final": {
+    "wall_seconds": 272.67450642099993,
+    "peak_rss_kib": 1912264,
+    "exit_code": 0
+  },
+  "sys_underlying_abort": {
+    "Rule": "lowering.declareModule",
+    "Site": "/workspace/scratch/whole-program-state/adapted/src/compiler/core.ts:261:1",
+    "Words": "overload 1 of filter result U[] cannot be served by implementation result readonly T[] | undefined"
+  },
+  "archive_heads_match_commits": true
+}
