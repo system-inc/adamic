@@ -60,9 +60,15 @@ var cycleComparisonInputs = sync.OnceValues(func() ([]string, error) {
 const cycleEqualityShardCount = 128
 
 func cycleComparisonShard(path string) uint64 {
+	return nameShard(path, cycleEqualityShardCount)
+}
+
+// nameShard is which of count shards name falls in, by its FNV-1a hash, so a name keeps its shard while others come
+// and go. The cycle finder's equality shards and the view walk's divide their programs by it.
+func nameShard(name string, count uint64) uint64 {
 	h := fnv.New64a()
-	h.Write([]byte(path))
-	return h.Sum64() % cycleEqualityShardCount
+	h.Write([]byte(name))
+	return h.Sum64() % count
 }
 
 // Compare the entire IR as well as refusal identity, rather than just admission.
