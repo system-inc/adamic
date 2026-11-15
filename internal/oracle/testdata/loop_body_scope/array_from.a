@@ -1,0 +1,21 @@
+// Array.from({ length }, callback) with a rest packed in each iteration (#9grybqc). The callback that
+// takes no parameter admits spread and loose, and the one that takes undefined and the index admits
+// loose, so each call collects a rest from undefined and the index's number, boxed. Node prints:
+//
+//	string:x;number:1;object:y,z
+//	x/2/undefined
+//	#1 #2 #3 #4
+//	0 1 4
+const spread = (...items: (string | number | string[])[]): string =>
+	items.map((item) => typeof item + ':' + (Array.isArray(item) ? item.join(',') : String(item))).join(';');
+const loose = (...items: (string | number | undefined)[]): string => items.map((item) => String(item)).join('/');
+console.log(spread('x', 1, ['y', 'z']));
+console.log(loose('x', 2, undefined));
+let made = 0;
+const labels = Array.from({ length: 4 }, (): string => {
+	made += 1;
+	return `#${made}`;
+});
+console.log(labels.join(' '));
+const squares = Array.from({ length: 3 }, (_: undefined, index: number): string => `${index * index}`);
+console.log(squares.join(' '));

@@ -22,22 +22,23 @@ func (e *emitter) arrayFrom(from ir.ArrayFrom) string {
 	e.adoptGraph(made, "sizeof *"+made, e.graphTypes(from.GraphTypes) && !from.ProgramRegion)
 	e.programArray(made, from.ProgramRegion)
 	e.line("for (size_t %s = 0; %s < %s; %s++) {", index, index, count, index)
-	// Undefined as the first parameter holds it: a null reference, or a packed word.
-	undefined := "{.reference = NULL}"
+	// Undefined as the first parameter holds it: a null reference, which a union holds as its
+	// undefined, or a packed word.
+	undefined, first := "{.reference = NULL}", ir.Union
 	if from.First.IsMaybe() {
-		undefined = fmt.Sprintf("{.%s = %s}", member(from.First), slotted(from.First, zero(from.First)))
+		undefined, first = fmt.Sprintf("{.%s = %s}", member(from.First), slotted(from.First, zero(from.First))), from.First
 	}
-	e.indent++
-	element := e.temporary()
-	call := e.callbackCall(callback, from.Callback, from.CallbackType, undefined, fmt.Sprintf("{.number = (double)%s}", index))
-	e.line("adamic_value %s = %s;", element, call)
-	// What's made so far is the statement's, let go with its temporaries.
-	e.closureThrown()
-	if e.graphTypes(from.GraphTypes) && from.Element.IsReference() {
-		e.line("%s.reference = adamic_graph_take(%s, %s.reference);", element, made, element)
-	}
-	e.line("adamic_array_push(%s, %s);", made, element)
-	e.indent--
+	e.iteration(func(func()) {
+		element := e.temporary()
+		call := e.callbackCall(callback, from.Callback, from.CallbackType, []ir.Type{first, ir.Number}, undefined, fmt.Sprintf("{.number = (double)%s}", index))
+		e.line("adamic_value %s = %s;", element, call)
+		// What's made so far is the statement's, let go with its temporaries.
+		e.closureThrown()
+		if e.graphTypes(from.GraphTypes) && from.Element.IsReference() {
+			e.line("%s.reference = adamic_graph_take(%s, %s.reference);", element, made, element)
+		}
+		e.line("adamic_array_push(%s, %s);", made, element)
+	})
 	e.line("}")
 	return made
 }
