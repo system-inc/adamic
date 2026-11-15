@@ -1,0 +1,101 @@
+// Measurement overlay only. No IR crosses this API.
+package lower
+
+import (
+	"context"
+	"fmt"
+	"github.com/microsoft/TypeScript/tsc/shim/ast"
+	"github.com/system-inc/adamic/internal/load"
+	"os"
+)
+
+const ScanAllScope = "One root import-closure run. Records refusal-scan stops only, plus the first declaration, body or tail stop reached; blind past that first stop. A zero for a body or tail rule is never a pass. Preparation failures can prevent scanning entirely."
+
+type ScoutStop struct{ Kind, Rule, Site, Words string }
+type ScoutReport struct {
+	Scope             string
+	Stops             []ScoutStop
+	Completed         bool
+	Functions, Locals int
+	Boundary          string
+	UnderlyingAbort   *ScoutStop
+}
+
+var scoutPhase string
+var scoutScanning bool
+var scoutStops []ScoutStop
+var scoutUnderlying *ScoutStop
+
+func scoutDescribe(err error) ScoutStop {
+	kind := "first declaration/body/tail stop"
+	if scoutScanning || scoutPhase == "lowering.scoutRefuse" {
+		kind = "scan stop"
+	}
+	stop := ScoutStop{Kind: kind, Rule: scoutPhase, Words: err.Error()}
+	switch e := err.(type) {
+	case *NotYet:
+		stop.Site = e.Where
+		stop.Words = e.What
+	case *Refused:
+		stop.Site = e.Where
+		stop.Words = e.What
+	}
+	return stop
+}
+func latentRecord(err error) {
+	if err != nil {
+		scoutStops = append(scoutStops, scoutDescribe(err))
+	}
+}
+
+// Single invocation per process, as the census runner uses. Panic is a boundary,
+// never evidence that a later pass ran or that missing edges are harmless.
+func Scout(ctx context.Context, p *load.Program) (r ScoutReport) {
+	r.Scope = ScanAllScope
+	scoutStops = nil
+	scoutUnderlying = nil
+	scoutPhase = "entry"
+	defer func() {
+		if e := recover(); e != nil {
+			r.Boundary = "panic: " + fmt.Sprint(e)
+		}
+		r.Stops = scoutStops
+		r.UnderlyingAbort = scoutUnderlying
+	}()
+	result, err := scoutLowerWithOptions(ctx, p, Options{ModuleFormat: ModuleFormatCommonJSBundle})
+	if err != nil {
+		switch scoutPhase {
+		case "entry", "lowering.moduleOrder", "lowering.collectViewedElements", "lowering.enumInitialization", "lowering.namespaceInitialization":
+			scoutUnderlying = nil
+			r.Boundary = "preparation abort before scan at " + scoutPhase + ": " + err.Error()
+			return
+		}
+		if scoutUnderlying != nil {
+			scoutStops = append(scoutStops, *scoutUnderlying)
+		} else {
+			latentRecord(err)
+		}
+		r.Boundary = "production abort at " + scoutPhase
+		return
+	}
+	scoutUnderlying = nil
+	r.Completed = true
+	r.Functions = len(result.Functions)
+	r.Locals = len(result.Locals)
+	return
+}
+
+func (l *lowering) scoutRefuse(m *ast.SourceFile) error {
+	if os.Getenv("SCAN_ALL_MUTANT_FIRST_ERROR") == "1" {
+		return l.refuse(m)
+	}
+	scoutScanning = true
+	scoutPhase = "refusal_scan/suppression-directive"
+	defer func() { scoutScanning = false }()
+	err := l.latentRefuse(m)
+	if l.refusal.deferred != nil {
+		scoutPhase = "refusal_scan/deferred"
+		latentRecord(l.refusal.deferred)
+	}
+	return err
+}
