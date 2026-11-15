@@ -340,6 +340,11 @@ type lowering struct {
 	// recorded before its literal lowers, so one whose literal then fails, or that a rolled-back
 	// speculative lowering made, stays listed; that can only over-stop, which fails closed.
 	graphNodeArrays []graphNodeArraySite
+	// graphRecords are the record literals, each with its own record type, which graphTypes reads in a
+	// graph program: a record never joins a graph region, so one its own values can reach back is a
+	// counted node on a cycle (#t5q4prw). Like graphNodeArrays, a site from a literal that then fails
+	// stays listed, which can only over-stop.
+	graphRecords []graphRecordSite
 	// dynamicKeyedSite is the first run-time key read (reflectGet or viewKeyedRead), where
 	// checkDynamicKeyedGetters says why a class getter keeps the program from reading by a run-time key.
 	dynamicKeyedSite *ast.Node

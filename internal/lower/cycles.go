@@ -390,7 +390,7 @@ func (f *cycleFinder) slotsOf(holder *checker.Type) error {
 			if write == nil {
 				continue
 			}
-			f.noteRecordSlot(element, write)
+			f.noteRecordSlot(element, holder, write)
 			target := f.present(element)
 			return &Refused{
 				cycle: true,
@@ -411,7 +411,7 @@ func (f *cycleFinder) slotsOf(holder *checker.Type) error {
 		arguments := l.checker.GetTypeArguments(holder)
 		if len(arguments) == 1 && f.reaches(arguments[0], cycleNode{proven: holder}) {
 			if write := f.cycleUnproven(fresh.WriteSetElement, holder, ""); write != nil {
-				f.noteRecordSlot(arguments[0], write)
+				f.noteRecordSlot(arguments[0], holder, write)
 				return &Refused{
 					cycle: true,
 					Where: l.program.Where(f.where[holder]),
@@ -424,7 +424,7 @@ func (f *cycleFinder) slotsOf(holder *checker.Type) error {
 		arguments := l.checker.GetTypeArguments(holder)
 		if len(arguments) == 2 && f.reaches(arguments[0], cycleNode{proven: holder}) {
 			if write := f.cycleUnproven(fresh.WriteMapEntry, holder, ""); write != nil {
-				f.noteRecordSlot(arguments[0], write)
+				f.noteRecordSlot(arguments[0], holder, write)
 				return &Refused{
 					cycle: true,
 					Where: l.program.Where(f.where[holder]),
@@ -435,7 +435,7 @@ func (f *cycleFinder) slotsOf(holder *checker.Type) error {
 		}
 		if len(arguments) == 2 && !f.weak(arguments[1]) && f.reaches(arguments[1], cycleNode{proven: holder}) {
 			if write := f.cycleUnproven(fresh.WriteMapEntry, holder, ""); write != nil {
-				f.noteRecordSlot(arguments[1], write)
+				f.noteRecordSlot(arguments[1], holder, write)
 				return &Refused{
 					cycle: true,
 					Where: l.program.Where(f.where[holder]),
@@ -459,7 +459,7 @@ func (f *cycleFinder) slotsOf(holder *checker.Type) error {
 			if write == nil {
 				continue
 			}
-			f.noteRecordSlot(proven, write)
+			f.noteRecordSlot(proven, holder, write)
 			where := f.where[holder]
 			if len(field.Declarations) > 0 {
 				where = field.Declarations[0]
