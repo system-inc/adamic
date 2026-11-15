@@ -1,16 +1,33 @@
 {
-  "command": [
-    "node",
-    "/workspace/scratch/receiver-split/adamic/stage3/census/receiver-calls-price/printer-controls-new.cjs",
-    "/workspace/scratch/receiver-split/tree-printer",
-    "/workspace/scratch/receiver-split/results/printer-runtime-controls.json"
+  "pass": true,
+  "defaultGettersReadOnce": {
+    "hasGlobalName": 1,
+    "onEmitNode": 1,
+    "isEmitNotificationEnabled": 1,
+    "substituteNode": 1,
+    "onBeforeEmitNode": 1,
+    "onAfterEmitNode": 1,
+    "onBeforeEmitNodeArray": 1,
+    "onAfterEmitNodeArray": 1,
+    "onBeforeEmitToken": 1,
+    "onAfterEmitToken": 1
+  },
+  "getterOrder": [
+    "hasGlobalName",
+    "onEmitNode",
+    "isEmitNotificationEnabled",
+    "substituteNode",
+    "onBeforeEmitNode",
+    "onAfterEmitNode",
+    "onBeforeEmitNodeArray",
+    "onAfterEmitNodeArray",
+    "onBeforeEmitToken",
+    "onAfterEmitToken"
   ],
-  "cwd": "/workspace/scratch/receiver-split/adamic",
-  "exit": 0,
-  "wall_seconds": 0.312,
-  "log": {
-    "path": "/workspace/scratch/receiver-split/results/printer-runtime-controls.log",
-    "bytes": 115,
-    "sha256": "cb892acd305e7cfb414d78f20fd376796abf7438c71dd6d19bf4710e80dc9ac6"
-  }
+  "sameReceiverInGetters": true,
+  "suppliedHandlerBareThisPreserved": true,
+  "suppliedNotifications": 6,
+  "explicitSentinelFunctionsPreserved": true,
+  "printed": "const answer = 42;\n",
+  "printedSha256": "8691f74ea796569734dafffbbcb79088362b52c3cef154aa0d8f32696d2d4737"
 }

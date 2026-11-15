@@ -1,0 +1,138 @@
+[
+  {
+    "file": "src/compiler/transformers/ts.ts",
+    "siteExecutions": 49199,
+    "beforeForwardingArrowCreations": 0,
+    "builtForwardingArrowCreations": 245995,
+    "forwardingCalls": 16794,
+    "scopeLift": "none; direct factory body"
+  },
+  {
+    "file": "src/compiler/transformers/classFields.ts",
+    "siteExecutions": 49199,
+    "beforeForwardingArrowCreations": 0,
+    "builtForwardingArrowCreations": 295194,
+    "forwardingCalls": 12423,
+    "scopeLift": "none; direct factory body"
+  },
+  {
+    "file": "src/compiler/transformers/typeSerializer.ts",
+    "siteExecutions": 402,
+    "beforeForwardingArrowCreations": 0,
+    "builtForwardingArrowCreations": 402,
+    "forwardingCalls": 38,
+    "scopeLift": "none; direct factory body"
+  },
+  {
+    "file": "src/compiler/transformers/legacyDecorators.ts",
+    "siteExecutions": 1027,
+    "beforeForwardingArrowCreations": 0,
+    "builtForwardingArrowCreations": 2054,
+    "forwardingCalls": 1627,
+    "scopeLift": "none; direct factory body"
+  },
+  {
+    "file": "src/compiler/transformers/esDecorators.ts",
+    "siteExecutions": 46653,
+    "beforeForwardingArrowCreations": 0,
+    "builtForwardingArrowCreations": 186612,
+    "forwardingCalls": 6469,
+    "scopeLift": "none; direct factory body"
+  },
+  {
+    "file": "src/compiler/transformers/es2017.ts",
+    "siteExecutions": 36281,
+    "beforeForwardingArrowCreations": 0,
+    "builtForwardingArrowCreations": 145124,
+    "forwardingCalls": 7645,
+    "scopeLift": "none; direct factory body"
+  },
+  {
+    "file": "src/compiler/transformers/es2018.ts",
+    "siteExecutions": 36628,
+    "beforeForwardingArrowCreations": 0,
+    "builtForwardingArrowCreations": 146512,
+    "forwardingCalls": 55851,
+    "scopeLift": "none; direct factory body"
+  },
+  {
+    "file": "src/compiler/transformers/es2020.ts",
+    "siteExecutions": 36871,
+    "beforeForwardingArrowCreations": 0,
+    "builtForwardingArrowCreations": 36871,
+    "forwardingCalls": 432,
+    "scopeLift": "none; direct factory body"
+  },
+  {
+    "file": "src/compiler/transformers/es2021.ts",
+    "siteExecutions": 37105,
+    "beforeForwardingArrowCreations": 0,
+    "builtForwardingArrowCreations": 37105,
+    "forwardingCalls": 36,
+    "scopeLift": "none; direct factory body"
+  },
+  {
+    "file": "src/compiler/transformers/esnext.ts",
+    "siteExecutions": 47449,
+    "beforeForwardingArrowCreations": 0,
+    "builtForwardingArrowCreations": 189796,
+    "forwardingCalls": 3387,
+    "scopeLift": "none; direct factory body"
+  },
+  {
+    "file": "src/compiler/transformers/jsx.ts",
+    "siteExecutions": 590,
+    "beforeForwardingArrowCreations": 0,
+    "builtForwardingArrowCreations": 590,
+    "forwardingCalls": 148,
+    "scopeLift": "none; direct factory body"
+  },
+  {
+    "file": "src/compiler/transformers/es2016.ts",
+    "siteExecutions": 36212,
+    "beforeForwardingArrowCreations": 0,
+    "builtForwardingArrowCreations": 36212,
+    "forwardingCalls": 228,
+    "scopeLift": "none; direct factory body"
+  },
+  {
+    "file": "src/compiler/transformers/es2015.ts",
+    "siteExecutions": 3754,
+    "beforeForwardingArrowCreations": 0,
+    "builtForwardingArrowCreations": 18770,
+    "forwardingCalls": 36312,
+    "scopeLift": "none; direct factory body"
+  },
+  {
+    "file": "src/compiler/transformers/generators.ts",
+    "siteExecutions": 3754,
+    "beforeForwardingArrowCreations": 0,
+    "builtForwardingArrowCreations": 18770,
+    "forwardingCalls": 4142,
+    "scopeLift": "none; direct factory body"
+  },
+  {
+    "file": "src/compiler/transformers/module/module.ts",
+    "siteExecutions": 48396,
+    "beforeForwardingArrowCreations": 0,
+    "builtForwardingArrowCreations": 193584,
+    "forwardingCalls": 25281,
+    "scopeLift": "none; direct factory body"
+  },
+  {
+    "file": "src/compiler/transformers/module/system.ts",
+    "siteExecutions": 618,
+    "beforeForwardingArrowCreations": 0,
+    "builtForwardingArrowCreations": 1854,
+    "forwardingCalls": 2493,
+    "scopeLift": "none; direct factory body"
+  },
+  {
+    "file": "src/compiler/transformers/module/esnextAnd2015.ts",
+    "siteExecutions": 45988,
+    "beforeForwardingArrowCreations": 0,
+    "builtForwardingArrowCreations": 45988,
+    "forwardingCalls": 15905,
+    "scopeLift": "none; direct factory body"
+  }
+]

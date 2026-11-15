@@ -1,51 +1,32 @@
-# Receiver split build checkpoint
+# Receiver split: final proof
 
-Status: generated and guarded; full proof pending. No adaptation is certified by this checkpoint. No Loom submission.
+All three independent adaptations are complete. No Loom submission.
 
-Base: `8ada94542fbdcb5c1d1689e27564e471eae241b8`, fresh detached scratch worktree. Recursive shallow submodules initialized. Upstream clone: v6.0.3, `050880ce59e30b356b686bd3144efe24f875ebc8`. Locked stage3/api npm ci passed. Baseline stage3/apply.sh passed.
+| Branch | One-commit SHA |
+| --- | --- |
+| typescript/receiver-parser-1 | `3a5dbe2d025478c588c9c5bbc96b4829a81596bf` |
+| typescript/receiver-transformers-1 | `2dbef8ed2a76a32f4be306b9885cc0797e6e43b5` |
+| typescript/receiver-printer-1 | `457a0447edd202b88af3d86243b5958a045d5bb6` |
 
-The unmodified split-codemod.cjs from accepted `24c61e74d26caa79c0f313112902e325d090afcd` generated all 19 files. Its complete rewrite receipt is byte-for-byte identical to the accepted receipt: 79 roots, 19 sites, 46 parser uses, 52 transformer arrows. A second run with --verify reproduced all 19 generated files byte-for-byte. The safety scan found no new failure. The public-site inventory supplied to it was reconstructed from the accepted split-rewrite.json (file, site, kind); the generator reads no member inventory for its edits.
+Each adaptation commit has sole parent 8ada94542fbdcb5c1d1689e27564e471eae241b8 and contains its own directory plus its own stage3/upstream/LEDGER.md entry citing #trxxkge. The evidence branch contains checkpoint history and final receipts.
 
-The adapters pin complete enclosing owners and changed namespace imports, before/after text and sha256. They preserve homogeneous source line endings and reject mixed endings. Real-adapter virtual-filesystem controls pass for creation, zero-write replay, exact-byte restoring mutants, duplicates, drift, partial owners, and mixed endings; transformers additionally reject a half-adapted multi-file tree before writing. Output matches normalized generator output; source replacements were never hand-edited.
+## Generation and guards
 
-The required prior owner grep is retained in owner-grep.json. None of the 19 enclosing owners has an existing whole-owner pin. Existing nested-owner pins remain unchanged. Each transformer destructure is directly in its transformer/serializer function body; none is in a nested per-node visitor. Individual scope decisions and dynamic counts remain to be proved.
+A fresh detached scratch worktree, recursive shallow submodules, locked stage3/api install and shallow upstream v6.0.3 clone (050880ce59e30b356b686bd3144efe24f875ebc8) were used. The unmodified accepted split-codemod.cjs at 24c61e74d26caa79c0f313112902e325d090afcd regenerated all 19 files: the complete receipt equals the accepted one, and --verify reproduced every generated file byte-for-byte. No new safety-scan failure occurred. Replacement source was never hand-edited.
 
-Remaining: full single-file CommonJSBundle censuses and required pairing, stock and Adamic type checks, real apply integration, JavaScript scope comparison, declarations, complete unfiltered lanes, dynamic receiver controls and counts, ledger entries, and the three adaptation branch pushes.
+Whole enclosing owners, changed imports and the 34 nearest parser function owners (full overload groups) are pinned before/after with text and sha256. Required prior greps found no existing whole-owner amendment. Adapters pass drift, duplicates, partial/half-tree, mixed-ending and zero-write replay controls; real restoring mutants restore all 79 baseline compiler files byte-for-byte.
 
-Raw sources and logs remain in scratch; raw-manifest.json records sizes and sha256. This checkpoint adds no Go files.
+## Proof results
 
-## Census checkpoint
+- All 38 complete single-file CommonJSBundle runs completed with zero checker diagnostics and complete trailers. Every file pairs by (kind, phase, reason, position-stripped message), with 0 new and 0 changed outside targets. Exact pairing is published in each directory's proofs/census.json. The initial printer multiplicity attribution conservatively stopped; unchanged-source mapping subsequently proves the two removals are exactly line 1215, with the pairing key unchanged. Both raw attempts remain hashed. Seven historically hidden transformer sites have unchanged finding counts; AST inventories independently prove their bindings removed, without claiming their bodies lowered.
+- Each independent tree: stock tsc 6.0.3 API 0 diagnostics over 79 roots, CLI exit 0, adamic types exit 0, fresh single-part stage3/apply.sh exit 0. All 79 applied compiler files equal the independent tree.
+- Complete stock emitted JavaScript comparisons are identical outside the rewritten sites. hereby dts declarations are byte-identical: typescript.d.ts 593536 bytes, sha256 f03adcf915df559d616fcafd75181d3423eaa0f272237482cedbd025525c9516; tsserverlibrary.d.ts 866 bytes, sha256 cee9e9bf9a8f67388ee878afd5e172189421bae6625076b774d68563d036fbfd.
+- All six unfiltered whole lanes (ordinary and counting for each part): 106366 passing, 1 sanctioned Public APIs/typescript.d.ts acknowledgement row, 0 pending. Sole baseline diff api/typescript.d.ts. All runners, eight workers, unchanged 40000 ms hook; install and build exit 0. No timeout, exception or other failure.
+- Each counted lane: 0 observed post-creation setter/assignment/defineProperty writes; 0 direct member identity and length reads, including forwarding callees; 0 new-arrow length reads; 0 implementation this reads by AST, 0 parse failures. Positive controls prove actual instrumentation observations and deliberate this detection. Broad unrelated shared-function bind length and preserved printer sentinel identity observations are reported separately; no blanket zero is claimed. Counting copies preserve all cases/reference inputs.
+- Printer controls preserve getter receiver/order, once-only aliases/default resolution, bare callback this, sentinels and printed output; both defaults separately have 0 AST this reads.
 
-The guarded new-base census tool built, and its continuation, attribution, mutant and no-output audit passed. The first full CommonJSBundle pair, es2021.ts, has 27 base / 25 changed findings: all 25 surviving records pair by (kind, phase, reason, message with source positions stripped), with 0 new and 0 changed outside the target. The two removals are the target method-destructuring finding and its boundary. The printer baseline completed with 1,430 findings and zero checker diagnostics; its changed run is pending.
+Parser: 46 rewritten calls, 18022708 per-use property reads. Transformers: 189211 forwarding calls and 1601433 arrow creations per lane. All 17 destructures and 52 arrows are directly at the original top-level factory scope; no per-node site is eligible for lifting. scope.json reports every site's count before/after the unchanged scope decision. Printer: 739160 alias reads over 73916 entries. All three ledger lines classify JavaScript-changing and value-identical.
 
-The parser audit was expanded to the 34 nearest function owners containing the 46 rewritten calls, in addition to the namespace. No existing whole-owner amendment was found there either. Stronger nested owner pins have been prepared; their final adapter control rerun is pending. Checkpoint recipe files retain their original hashes; stronger recipe versions use new v2 names.
+Each source directory's PROOF.md and proofs/ contain the full per-part summaries and command receipts. final-proof-status.json, ledger.json and source-commits.json index the result. Raw files remain in /workspace/scratch/receiver-split; raw-manifest-final.json records their paths, byte sizes and sha256. No Go source was added; one heavy job ran at a time, with scratch Go/npm/temp caches.
 
-## Parser and printer full pairs complete
-
-Parser: 3,183 base / 3,181 changed findings, all 3,181 survivors paired and exactly the two target destructuring records removed. Printer: 1,430 base / 1,428 changed findings, all 1,428 survivors paired and exactly the two target var records removed. Both have 0 new and 0 changed findings outside targets. The complete printer record has 0 findings at the readonly view and all ten aliases.
-
-The first pairing wrapper conservatively stopped on printer var multiplicity attribution, not on a new or changed finding. The position-stripped key correctly paired all survivors but left indistinguishable later var records as removals. An independent unchanged-source line map proves all other createPrinter var records retain their source sites, and that the two removals are precisely line 1215. The corrected attribution keeps the required pairing key unchanged. Both wrapper versions and all completed raw files remain in scratch.
-
-AST scope audit: all 17 transformer destructures are directly in top-level factory bodies, with context introduced by that factory parameter. All 52 new arrows are directly in the same body, and all 17 factory property bindings remain. No nested per-node or visitor-call placement is eligible to lift. Dynamic counts remain pending.
-
-The remaining 16 transformer file pairs and all runtime/checker/integration/declaration proofs are still pending; none of the three adaptations is yet certified or pushed.
-
-## 13 complete file pairs
-
-All 13 completed CommonJSBundle pairs have 0 new and 0 changed findings outside targets. Complete command receipts and the sizes/sha256 of all completed raw traces and logs are included in this checkpoint. The remaining pairs and the checker, runtime, declaration, fresh-apply and unfiltered lane proofs are still pending.
-
-## All complete source censuses and checker/declaration proofs
-
-All 38 full single-file CommonJSBundle runs completed successfully, with zero checker diagnostics and complete relation trailers. All 19 pairs have 0 new and 0 changed findings outside targets. The seven historically hidden transformer sites still need the AST removal proof; no native body certification is inferred from their unchanged census counts.
-
-The final overload-aware whole-owner guards passed creation, zero-write replay, restoration and atomic-refusal controls. Stock emitted JavaScript is identical outside the 46 parser callee rewrites, the 52 transformer forwarding declarations, and the printer view/aliases. Negative safety controls detect all five unsafe cases with zero compiler-source writes. Stock TypeScript 6.0.3 API and CLI checks and adamic types are 0 on all three independent trees; API/types roots are explicitly 79. Each real restoring mutant reproduces all 79 baseline compiler files byte-for-byte. hereby dts produces byte-identical typescript.d.ts (593,536 bytes) and tsserverlibrary.d.ts (866 bytes) for every part.
-
-Fresh single-part apply runs, complete unfiltered ordinary/counting lanes, dynamic receiver counts, final ledger lines and the three adaptation pushes remain pending.
-
-## All three independent fresh apply runs passed
-
-Each fresh stage3/apply.sh run installed only its own new receiver directory. Parser, transformers and printer all exited 0, and each resulting 79-file compiler inventory is byte-identical to its independently constructed tree. Command/log hash receipts and source-inventory hashes are retained here. The ordinary and counting unfiltered lanes, dynamic receiver observations, final ledger files and adaptation branch pushes remain pending.
-
-## All ordinary whole lanes passed the sanctioned outcome
-
-Each independent tree completed all runners with eight workers, no filter and the unchanged timeout: 106,366 passing, one failing, zero pending. Every sole failure is unittests:: Public APIs for typescript.d.ts should be acknowledged when they change, with only api/typescript.d.ts differing. Timeouts, exceptions and all other causes are 0. Each locked install and normal build exits 0. Summaries/command receipts are published; full raw reports, baseline diffs and logs remain in scratch with hashes and sizes. Printer getter order/receiver, bare callback this, default/sentinel controls and both default implementation AST checks passed. Counting lanes and final adaptation pushes remain pending.
+During final publication, three result/receipt filename collisions were found. Tiny witness checks were rerun into distinct filenames; published witness JSON contains results, while original command receipts and scratch artifacts remain preserved. All assertions passed.
