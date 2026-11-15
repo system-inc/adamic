@@ -2,7 +2,6 @@
 from pathlib import Path
 import collections,json,re
 out=Path(__file__).resolve().parent
-s=out.parents[3].parent # executable scripts use the explicit scratch root below
 s=Path('/workspace/loose-slot-scratch')
 def normal(record,which):
  v=record.copy();v.pop('seconds',None);v.pop('roots',None)
@@ -46,10 +45,12 @@ for n,a,b in differences:lines += [f'- `{n}`: {label(a)} → {label(b)}.']
 if not differences:lines+=['There are no changed roots to list.']
 groups=collections.Counter((a['kind'],a.get('where'),a.get('reason'))for _,a,_ in pairs)
 for (kind,where,reason),count in groups.items():lines += [f'- {count} root(s): `{where or "—"}`; {kind}; {reason or "—"}.']
+wall=[(n,a,b)for n,a,b in pairs if a.get('where')=='sys.ts:1387:5' and a.get('kind')=='Refused']
+lines += ['',f'The **{len(wall)} roots** at main’s `sys.ts:1387:5` wall have **{sum(a==b for _,a,b in wall)} unchanged** exact tuples.']
 lines+=['','For the two main roots that lower whole:']
 for n,a,b in pairs:
- if n in ['corePublic.ts','hostErrors.ts']:lines += [f'- `{n}` at head: **{label(b)}**.']
-lines+=['','`findCycles` is late, not literally last: `lower.go:215` follows all module scans, declarations, bodies and preceding tail transformations; bind/view checks and finalization follow it. Earlier walls cannot reach this stop first. `graph_types.go:132` invokes the loose-slot stop before the no-seeds return. The whole commit message and all of `loose_slots.go` were read.','', '## Sites past the walls: partial type-level source count','',f'**{len(events)} observed events; {len(sites)} distinct exact source sites.** The exhaustive production site count remains **UNKNOWN**. This is a **partial type-level count, not a lowering**, and is conditional on the reconstructed source metadata described below. It is not a count of newly failing production roots. H was gathered over the complete 79-file input before judgment: {type_data["Nodes"]} non-type AST nodes; {type_data["Candidates"]} candidate entries; {type_data["HTypes"]} distinct explicit H types; H.every={type_data["HEvery"]}; {type_data["Shapes"]} shapes.','',f'Whole-program type run: **{resource["seconds"]:.6f} seconds**, **{resource["peak_rss_KiB"]} KiB** peak RSS. Each site, with its quoted source line, is in [SITES.md](SITES.md). The raw event list retains each event’s source, slot and holder types.','', '| Form | Events | Distinct sites |','| --- | ---: | ---: |']
+ if n in ['corePublic.ts','hostErrors.ts']:lines += [f'- `{n}` at head: **{b["kind"]}**; no first stop and no loose-slot NotYet.' if b['kind']=='accepted' else f'- `{n}` at head: **{label(b)}**.']
+lines+=['','`findCycles` is late, not literally last: `lower.go:215` follows all module scans, declarations, bodies and preceding tail transformations; bind/view checks and finalization follow it. Earlier stopping gates cannot meet this stop first. Source-text order is not pass order: a type observation at sys.ts:364 does not precede the root’s existing production wall merely because its line number is smaller. `graph_types.go:132` invokes the loose-slot stop before the no-seeds return. The whole commit message and all of `loose_slots.go` were read.','', '## Sites past the walls: partial type-level source count','',f'**{len(events)} observed events; {len(sites)} distinct exact source sites.** The exhaustive production site count remains **UNKNOWN**. This is a **partial type-level count, not a lowering**, and is conditional on the reconstructed source metadata described below. It is not a count of newly failing production roots. H was gathered over the complete 79-file input before judgment: {type_data["Nodes"]} non-type AST nodes; {type_data["Candidates"]} candidate entries; {type_data["HTypes"]} distinct explicit H types; H.every={type_data["HEvery"]}; {type_data["Shapes"]} shapes.','',f'Whole-program type run: **{resource["seconds"]:.6f} seconds**, **{resource["peak_rss_KiB"]} KiB** peak RSS. Each site, with its quoted source line, is in [SITES.md](SITES.md). The raw event list retains each event’s source, slot and holder types.','', '| Form | Events | Distinct sites |','| --- | ---: | ---: |']
 for form,es in sorted(byform.items()):lines += [f'| {form} | {len(es)} | {distinct(es)} |']
 for form in ['write','literal init','captured']:
  if form not in byform:lines += [f'| {form} | 0 | 0 |']
@@ -63,6 +64,11 @@ lines += ['','Distinct sites are `(adapted file, start line, start column)`, not
 for which in ['main','head']:
  resources=[json.loads((out/'evidence'/which/f'root-{i:02}.time.json').read_text())for i in range(1,80)]
  lines += [f'- {which}: summed wall {sum(x["seconds"]for x in resources):.6f} s; largest per-root peak RSS {max(x["peak_rss_KiB"]for x in resources)} KiB.']
+interrupted=list((out/'evidence/interrupted').glob('*.time.json'))
+for path in interrupted:
+ v=json.loads(path.read_text());lines += [f'- Interrupted scheduling-transition run `{path.name}`: {v["seconds"]:.6f} s, {v["peak_rss_KiB"]} KiB, exit {v["exit_code"]}; the root was rerun successfully. This receipt is excluded from the 79-root comparison.']
+mutant=json.loads((out/'evidence/type-whole-mutant.json').read_text());assert not mutant['Events'];assert {k:v for k,v in mutant.items()if k!='Events'}=={k:v for k,v in type_data.items()if k!='Events'}
+v=json.loads((out/'evidence/type-whole-mutant.time.json').read_text());lines += ['',f'The whole-program stop-disabled mutant also reads 0 events with identical gathering statistics: {v["seconds"]:.6f} s and {v["peak_rss_KiB"]} KiB. Per-child times include scheduling contention from up to two independent measurements; they are resource receipts, not an isolated compiler-speed comparison.']
 lines+=['','Nothing was submitted or merged. Only the census directory is committed on the authorized new branch. No production compiler edit or native-output success is claimed.']
 (out/'REPORT.md').write_text('\n'.join(lines)+'\n')
 print(summary, 'events',len(events),'sites',len(sites))
