@@ -2,6 +2,7 @@ package lower
 
 import (
 	"errors"
+	"fmt"
 	"github.com/system-inc/adamic/internal/fresh"
 	"github.com/system-inc/adamic/internal/ir"
 	"strings"
@@ -117,23 +118,59 @@ func TestAsyncReaderRefusals(t *testing.T) {
 	}
 }
 
+// asyncRepeatedLoops are the loops TestAsyncRepeatedBindingsLower and TestAsyncRepeatedCatchCaptureStops
+// put a body in, each with an await, so every iteration's bindings are the frame's again.
+var asyncRepeatedLoops = []string{
+	"while (i < 3) { BODY await Promise.resolve(); i++; }",
+	"for (; i < 3; i++) { BODY await Promise.resolve(); }",
+	"do { BODY await Promise.resolve(); i++; } while (i < 3);",
+}
+
+// asyncRepeatedSource is a loop of asyncRepeatedLoops holding body, in an async function that keeps readers.
+func asyncRepeatedSource(loop, body string) string {
+	return "async function run(): Promise<void> { const readers: (() => string)[] = []; let i = 0; " + strings.ReplaceAll(loop, "BODY", body) + " } await run();"
+}
+
+// The second body is the catch's twin of TestAsyncRepeatedCatchCaptureStops (Adamic on #kaz4pk8 at 03:12Z):
+// the closure captures a string read from the caught value, never the caught value.
 func TestAsyncRepeatedBindingsLower(t *testing.T) {
 	t.Parallel()
 	for _, body := range []string{
 		"if (true) { const held = `item${i}`; readers.push(() => held); }",
-		"try { throw new Error(`item${i}`); } catch (held) { if (held instanceof Error) { readers.push(() => held.message); } }",
+		"try { throw new Error(`item${i}`); } catch (held) { const message = held instanceof Error ? held.message : String(held); readers.push(() => message); }",
 	} {
-		for _, loop := range []string{
-			"while (i < 3) { BODY await Promise.resolve(); i++; }",
-			"for (; i < 3; i++) { BODY await Promise.resolve(); }",
-			"do { BODY await Promise.resolve(); i++; } while (i < 3);",
-		} {
-			source := "async function run(): Promise<void> { const readers: (() => string)[] = []; let i = 0; " + strings.ReplaceAll(loop, "BODY", body) + " } await run();"
+		for _, loop := range asyncRepeatedLoops {
+			source := asyncRepeatedSource(loop, body)
 			_, err := lowerSource(t, source)
 			if err != nil {
 				t.Fatalf("repeated binding must lower: %s: %v", source, err)
 			}
 		}
+	}
+}
+
+// A catch binding captured by a closure kept in readers stops at lower's loose-slot stop until #yeep0sx (the
+// link), and goes red here the day it lands, to be turned back into a row of TestAsyncRepeatedBindingsLower
+// (rulings.md:338 and :339, Adamic on #kaz4pk8 at 03:12Z). A caught value is typed unknown and can be any
+// shape, an Error included, since Error's cause is unknown: so the binding's cell can reach the closure
+// that holds it, through readers.
+func TestAsyncRepeatedCatchCaptureStops(t *testing.T) {
+	t.Parallel()
+	const body = "try { throw new Error(`item${i}`); } catch (held) { if (held instanceof Error) { readers.push(() => held.message); } }"
+	const what = "'held', a variable a function value captures, of type unknown, bound to whatever its callers or what it reads hand it, which can reach its own cell back through what a value held as unknown or object can be: " + looseStopWords
+	for _, loop := range asyncRepeatedLoops {
+		source := asyncRepeatedSource(loop, body)
+		_, err := lowerSource(t, source)
+		var notYet *NotYet
+		if !errors.As(err, &notYet) {
+			t.Fatalf("got %v, want the loose-slot stop, a NotYet, until #yeep0sx: %s", err, source)
+		}
+		// The stop is at the catch's binding.
+		at := fmt.Sprintf("main.a:1:%d", strings.Index(source, "catch (held)")+len("catch (")+1)
+		if !strings.HasSuffix(notYet.Where, at) || notYet.What != what {
+			t.Fatalf("got %s: %s, want %s: %s", notYet.Where, notYet.What, at, what)
+		}
+		t.Logf("stop: %v", err)
 	}
 }
 
