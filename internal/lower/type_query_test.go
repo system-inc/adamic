@@ -14,26 +14,22 @@ func TestTypeQueryOfHostMemberIsNoUse(t *testing.T) {
 	// The alias is exported and nothing holds a value of it, so a row stops only where its name is judged.
 	const use = "\nconsole.log('typed');\n"
 	for _, row := range []struct{ name, source, extension string }{
-		{"clearTimeout", "import 'node:timers';\nexport type Held = typeof clearTimeout;"},
-		{"setTimeout", "import 'node:timers';\nexport type Held = typeof setTimeout;"},
-		{"clearTimeout parameter", "import 'node:timers';\nexport type Held = Parameters<typeof clearTimeout>[0];"},
-		{"realpathSync", "import * as fs from 'node:fs';\nexport type Held = typeof fs.realpathSync;"},
-		{"realpathSync.native", "import * as fs from 'node:fs';\nexport type Held = typeof fs.realpathSync.native;"},
-		{"stdout", "import 'node:process';\nexport type Held = typeof process.stdout;"},
-		{"env", "import 'node:process';\nexport type Held = typeof process.env;"},
-		{"platform", "import 'node:process';\nexport type Held = typeof process.platform;"},
-		{"process", "import 'node:process';\nexport type Held = typeof process;"},
-		{"stackTraceLimit", "import 'node:process';\nexport type Held = typeof Error.stackTraceLimit;"},
+		{"clearTimeout", "import 'node:timers';\nexport type Held = typeof clearTimeout;", ".a"},
+		{"setTimeout", "import 'node:timers';\nexport type Held = typeof setTimeout;", ".a"},
+		{"clearTimeout parameter", "import 'node:timers';\nexport type Held = Parameters<typeof clearTimeout>[0];", ".a"},
+		{"realpathSync", "import * as fs from 'node:fs';\nexport type Held = typeof fs.realpathSync;", ".a"},
+		{"realpathSync.native", "import * as fs from 'node:fs';\nexport type Held = typeof fs.realpathSync.native;", ".a"},
+		{"stdout", "import 'node:process';\nexport type Held = typeof process.stdout;", ".a"},
+		{"env", "import 'node:process';\nexport type Held = typeof process.env;", ".a"},
+		{"platform", "import 'node:process';\nexport type Held = typeof process.platform;", ".a"},
+		{"process", "import 'node:process';\nexport type Held = typeof process;", ".a"},
+		{"stackTraceLimit", "import 'node:process';\nexport type Held = typeof Error.stackTraceLimit;", ".a"},
 		// A host binding is declared ambiently, which only .ts admits (host_bindings/shadow/performance.ts).
 		{"onProfilerEvent", "declare let onProfilerEvent: ((eventName: string) => void) | undefined;\nexport type Held = typeof onProfilerEvent;", ".ts"},
 	} {
 		t.Run(row.name, func(t *testing.T) {
 			t.Parallel()
-			extension := row.extension
-			if extension == "" {
-				extension = ".a"
-			}
-			if _, err := lowerSourceAs(t, row.source+use, extension); err != nil {
+			if _, err := lowerSourceAs(t, row.source+use, row.extension); err != nil {
 				t.Fatal(err)
 			}
 		})
