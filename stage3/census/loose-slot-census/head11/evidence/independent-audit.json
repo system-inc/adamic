@@ -57,151 +57,236 @@
       "Bound": true,
       "Name": "e",
       "BindingWhere": "/workspace/loose-slot-scratch/eleven/adapted-head/src/compiler/commandLineParser.ts:2301:12",
-      "Captures": []
+      "Captures": [],
+      "References": [
+        {
+          "Where": "/workspace/loose-slot-scratch/eleven/adapted-head/src/compiler/commandLineParser.ts:2302:109",
+          "ParentWhere": "/workspace/loose-slot-scratch/eleven/adapted-head/src/compiler/commandLineParser.ts:2302:98",
+          "ParentKind": "CallExpression",
+          "ClosureWhere": null
+        }
+      ]
     },
     {
       "ClauseWhere": "/workspace/loose-slot-scratch/eleven/adapted-head/src/compiler/moduleSpecifiers.ts:156:5",
       "Bound": false,
       "BindingWhere": null,
-      "Captures": []
+      "Captures": [],
+      "References": []
     },
     {
       "ClauseWhere": "/workspace/loose-slot-scratch/eleven/adapted-head/src/compiler/performanceCore.ts:44:9",
       "Bound": false,
       "BindingWhere": null,
-      "Captures": []
+      "Captures": [],
+      "References": []
     },
     {
       "ClauseWhere": "/workspace/loose-slot-scratch/eleven/adapted-head/src/compiler/program.ts:406:9",
       "Bound": true,
       "Name": "e",
       "BindingWhere": "/workspace/loose-slot-scratch/eleven/adapted-head/src/compiler/program.ts:406:16",
-      "Captures": []
+      "Captures": [],
+      "References": [
+        {
+          "Where": "/workspace/loose-slot-scratch/eleven/adapted-head/src/compiler/program.ts:408:43",
+          "ParentWhere": "/workspace/loose-slot-scratch/eleven/adapted-head/src/compiler/program.ts:408:32",
+          "ParentKind": "CallExpression",
+          "ClosureWhere": null
+        }
+      ]
     },
     {
       "ClauseWhere": "/workspace/loose-slot-scratch/eleven/adapted-head/src/compiler/program.ts:441:9",
       "Bound": true,
       "Name": "e",
       "BindingWhere": "/workspace/loose-slot-scratch/eleven/adapted-head/src/compiler/program.ts:441:16",
-      "Captures": []
+      "Captures": [],
+      "References": [
+        {
+          "Where": "/workspace/loose-slot-scratch/eleven/adapted-head/src/compiler/program.ts:443:43",
+          "ParentWhere": "/workspace/loose-slot-scratch/eleven/adapted-head/src/compiler/program.ts:443:32",
+          "ParentKind": "CallExpression",
+          "ClosureWhere": null
+        }
+      ]
     },
     {
       "ClauseWhere": "/workspace/loose-slot-scratch/eleven/adapted-head/src/compiler/program.ts:2849:9",
       "Bound": true,
       "Name": "e",
       "BindingWhere": "/workspace/loose-slot-scratch/eleven/adapted-head/src/compiler/program.ts:2849:16",
-      "Captures": []
+      "Captures": [],
+      "References": [
+        {
+          "Where": "/workspace/loose-slot-scratch/eleven/adapted-head/src/compiler/program.ts:2850:17",
+          "ParentWhere": "/workspace/loose-slot-scratch/eleven/adapted-head/src/compiler/program.ts:2850:17",
+          "ParentKind": "BinaryExpression",
+          "ClosureWhere": null
+        },
+        {
+          "Where": "/workspace/loose-slot-scratch/eleven/adapted-head/src/compiler/program.ts:2856:19",
+          "ParentWhere": "/workspace/loose-slot-scratch/eleven/adapted-head/src/compiler/program.ts:2856:13",
+          "ParentKind": "ThrowStatement",
+          "ClosureWhere": null
+        }
+      ]
     },
     {
       "ClauseWhere": "/workspace/loose-slot-scratch/eleven/adapted-head/src/compiler/sourcemap.ts:432:5",
       "Bound": false,
       "BindingWhere": null,
-      "Captures": []
+      "Captures": [],
+      "References": []
     },
     {
       "ClauseWhere": "/workspace/loose-slot-scratch/eleven/adapted-head/src/compiler/sys.ts:1281:13",
       "Bound": true,
       "Name": "e",
       "BindingWhere": "/workspace/loose-slot-scratch/eleven/adapted-head/src/compiler/sys.ts:1281:20",
-      "Captures": []
+      "Captures": [],
+      "References": [
+        {
+          "Where": "/workspace/loose-slot-scratch/eleven/adapted-head/src/compiler/sys.ts:1285:54",
+          "ParentWhere": "/workspace/loose-slot-scratch/eleven/adapted-head/src/compiler/sys.ts:1285:43",
+          "ParentKind": "CallExpression",
+          "ClosureWhere": null
+        }
+      ]
     },
     {
       "ClauseWhere": "/workspace/loose-slot-scratch/eleven/adapted-head/src/compiler/sys.ts:1562:21",
       "Bound": true,
       "Name": "e",
       "BindingWhere": "/workspace/loose-slot-scratch/eleven/adapted-head/src/compiler/sys.ts:1562:28",
-      "Captures": []
+      "Captures": [],
+      "References": [
+        {
+          "Where": "/workspace/loose-slot-scratch/eleven/adapted-head/src/compiler/sys.ts:1563:39",
+          "ParentWhere": "/workspace/loose-slot-scratch/eleven/adapted-head/src/compiler/sys.ts:1563:29",
+          "ParentKind": "CallExpression",
+          "ClosureWhere": null
+        },
+        {
+          "Where": "/workspace/loose-slot-scratch/eleven/adapted-head/src/compiler/sys.ts:1565:35",
+          "ParentWhere": "/workspace/loose-slot-scratch/eleven/adapted-head/src/compiler/sys.ts:1565:29",
+          "ParentKind": "ThrowStatement",
+          "ClosureWhere": null
+        }
+      ]
     },
     {
       "ClauseWhere": "/workspace/loose-slot-scratch/eleven/adapted-head/src/compiler/sys.ts:1609:17",
       "Bound": false,
       "BindingWhere": null,
-      "Captures": []
+      "Captures": [],
+      "References": []
     },
     {
       "ClauseWhere": "/workspace/loose-slot-scratch/eleven/adapted-head/src/compiler/sys.ts:1642:17",
       "Bound": true,
       "Name": "error",
       "BindingWhere": "/workspace/loose-slot-scratch/eleven/adapted-head/src/compiler/sys.ts:1642:24",
-      "Captures": []
+      "Captures": [],
+      "References": [
+        {
+          "Where": "/workspace/loose-slot-scratch/eleven/adapted-head/src/compiler/sys.ts:1643:72",
+          "ParentWhere": "/workspace/loose-slot-scratch/eleven/adapted-head/src/compiler/sys.ts:1643:72",
+          "ParentKind": "ShorthandPropertyAssignment",
+          "ClosureWhere": null
+        }
+      ]
     },
     {
       "ClauseWhere": "/workspace/loose-slot-scratch/eleven/adapted-head/src/compiler/sys.ts:1655:13",
       "Bound": false,
       "BindingWhere": null,
-      "Captures": []
+      "Captures": [],
+      "References": []
     },
     {
       "ClauseWhere": "/workspace/loose-slot-scratch/eleven/adapted-head/src/compiler/sys.ts:1725:25",
       "Bound": false,
       "BindingWhere": null,
-      "Captures": []
+      "Captures": [],
+      "References": []
     },
     {
       "ClauseWhere": "/workspace/loose-slot-scratch/eleven/adapted-head/src/compiler/sys.ts:1813:13",
       "Bound": false,
       "BindingWhere": null,
-      "Captures": []
+      "Captures": [],
+      "References": []
     },
     {
       "ClauseWhere": "/workspace/loose-slot-scratch/eleven/adapted-head/src/compiler/sys.ts:1898:13",
       "Bound": false,
       "BindingWhere": null,
-      "Captures": []
+      "Captures": [],
+      "References": []
     },
     {
       "ClauseWhere": "/workspace/loose-slot-scratch/eleven/adapted-head/src/compiler/sys.ts:1942:13",
       "Bound": false,
       "BindingWhere": null,
-      "Captures": []
+      "Captures": [],
+      "References": []
     },
     {
       "ClauseWhere": "/workspace/loose-slot-scratch/eleven/adapted-head/src/compiler/sys.ts:1955:13",
       "Bound": false,
       "BindingWhere": null,
-      "Captures": []
+      "Captures": [],
+      "References": []
     },
     {
       "ClauseWhere": "/workspace/loose-slot-scratch/eleven/adapted-head/src/compiler/sys.ts:1964:13",
       "Bound": false,
       "BindingWhere": null,
-      "Captures": []
+      "Captures": [],
+      "References": []
     },
     {
       "ClauseWhere": "/workspace/loose-slot-scratch/eleven/adapted-head/src/compiler/tracing.ts:234:17",
       "Bound": false,
       "BindingWhere": null,
-      "Captures": []
+      "Captures": [],
+      "References": []
     },
     {
       "ClauseWhere": "/workspace/loose-slot-scratch/eleven/adapted-head/src/compiler/utilities.ts:6741:5",
       "Bound": false,
       "BindingWhere": null,
-      "Captures": []
+      "Captures": [],
+      "References": []
     },
     {
       "ClauseWhere": "/workspace/loose-slot-scratch/eleven/adapted-head/src/compiler/utilities.ts:7812:5",
       "Bound": false,
       "BindingWhere": null,
-      "Captures": []
+      "Captures": [],
+      "References": []
     },
     {
       "ClauseWhere": "/workspace/loose-slot-scratch/eleven/adapted-head/src/compiler/utilitiesPublic.ts:745:9",
       "Bound": false,
       "BindingWhere": null,
-      "Captures": []
+      "Captures": [],
+      "References": []
     },
     {
       "ClauseWhere": "/workspace/loose-slot-scratch/eleven/adapted-head/src/compiler/utilitiesPublic.ts:755:9",
       "Bound": false,
       "BindingWhere": null,
-      "Captures": []
+      "Captures": [],
+      "References": []
     },
     {
       "ClauseWhere": "/workspace/loose-slot-scratch/eleven/adapted-head/src/compiler/watchUtilities.ts:202:9",
       "Bound": false,
       "BindingWhere": null,
-      "Captures": []
+      "Captures": [],
+      "References": []
     }
   ]
 }

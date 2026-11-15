@@ -10,8 +10,9 @@ const owner=n=>{for(;n;n=n.parent)if(ts.isFunctionLike(n))return n;return undefi
 const nodes=[];const visit=n=>{nodes.push(n);ts.forEachChild(n,visit);};
 for(const file of roots)visit(program.getSourceFile(file));
 const catches=[],symbols=new Map();
-for(const n of nodes){if(!ts.isCatchClause(n))continue;const d=n.variableDeclaration;const r={ClauseWhere:where(n),Bound:!!d,Name:d?.name.getText(),BindingWhere:d?where(d.name):null,Captures:[]};
- if(d&&ts.isIdentifier(d.name)){const sym=checker.getSymbolAtLocation(d.name);symbols.set(sym,r);const outer=owner(n.parent),seen=new Set();const scan=x=>{if(ts.isTypeNode(x))return;if(ts.isIdentifier(x)&&checker.getSymbolAtLocation(x)===sym){const own=owner(x.parent);if(own&&own!==outer&&!seen.has(own)){seen.add(own);r.Captures.push({Where:where(own),Text:own.getText()});}}ts.forEachChild(x,scan);};scan(n.block);}
+const symbol=n=>ts.isShorthandPropertyAssignment(n.parent)&&n.parent.name===n?checker.getShorthandAssignmentValueSymbol(n.parent):checker.getSymbolAtLocation(n);
+for(const n of nodes){if(!ts.isCatchClause(n))continue;const d=n.variableDeclaration;const r={ClauseWhere:where(n),Bound:!!d,Name:d?.name.getText(),BindingWhere:d?where(d.name):null,Captures:[],References:[]};
+ if(d&&ts.isIdentifier(d.name)){const sym=checker.getSymbolAtLocation(d.name);symbols.set(sym,r);const outer=owner(n.parent),seen=new Set();const scan=x=>{if(ts.isTypeNode(x))return;if(ts.isIdentifier(x)&&symbol(x)===sym){const own=owner(x.parent);r.References.push({Where:where(x),ParentWhere:where(x.parent),ParentKind:ts.SyntaxKind[x.parent.kind],ClosureWhere:own&&own!==outer?where(own):null});if(own&&own!==outer&&!seen.has(own)){seen.add(own);r.Captures.push({Where:where(own),Text:own.getText()});}}ts.forEachChild(x,scan);};scan(n.block);}
  catches.push(r);
 }
 const calls=[];
