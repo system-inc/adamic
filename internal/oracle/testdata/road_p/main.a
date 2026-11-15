@@ -1,10 +1,11 @@
 /*
  * Road P (#p2n17c4, rulings.md:117 applied to the right of an &&): a presence test on the right of an &&
  * that is tested for truthiness alone, recursively: the test of ?:, an if, a chain of &&, an && nested on
- * either side of another in an if, the operand of !, and a while. Each runs over a class's required
- * method, which method presence folds, and an optional member, given and missing, which shape 1 reads off
- * its slot. Node prints, a line per flag pair: abcd falsef | ---- true- | abcd falsef, then
- * a--- falsef | ---- true- | a--- falsef, then ---- true- | ---- true- | ---- true- twice.
+ * either side of another in an if, the operand of !, a while, and a test on both sides of an &&. Each
+ * runs over a class's required method, which method presence folds, and an optional member, given
+ * and missing, which shape 1 reads off its slot. Node prints, a line per flag pair:
+ * abcd falsefg | ---- true-- | abcd falsefg, then a--- falsefg | ---- true-- | a--- falsefg, then
+ * ---- true-g | ---- true-- | ---- true-g twice.
  */
 class Counter {
 	m(): number {
@@ -40,7 +41,11 @@ function optional(flag: boolean, other: boolean, h: Maybe): string {
 		f = 'f';
 		break;
 	}
-	return a + b + c + d + ' ' + e + f;
+	let g = '-';
+	if (h.m && h.m) {
+		g = 'g';
+	}
+	return a + b + c + d + ' ' + e + f + g;
 }
 
 function method(flag: boolean, other: boolean): string {
@@ -63,7 +68,11 @@ function method(flag: boolean, other: boolean): string {
 		f = 'f';
 		break;
 	}
-	return a + b + c + d + ' ' + e + f;
+	let g = '-';
+	if (counter.m && counter.m) {
+		g = 'g';
+	}
+	return a + b + c + d + ' ' + e + f + g;
 }
 
 function line(flag: boolean, other: boolean): string {
