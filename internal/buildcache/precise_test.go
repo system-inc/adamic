@@ -188,7 +188,7 @@ func (r *rig) settle(t *testing.T) Settlement {
 			t.Fatal(err)
 		}
 	}
-	settlement, err := Settle(r.trace, strings.NewReader(strings.Join(r.lines, "\n")+"\n"), before)
+	settlement, err := Settle(r.trace, strings.NewReader(strings.Join(r.lines, "\n")+"\n"), before, "")
 	if err != nil {
 		t.Fatal(err)
 	}

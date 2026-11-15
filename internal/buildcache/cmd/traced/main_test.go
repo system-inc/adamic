@@ -76,6 +76,21 @@ func TestARunStartsFromTheWavesTreeState(t *testing.T) {
 	}
 }
 
+// The report's file is read once, made absolute, and taken out of the environment the command inherits, so the command
+// can't find the report traced writes its verdict to (a neverStarted line beside exit 4 is traced's alone).
+// Mutants: the variable left set; the path left relative.
+// Not parallel: t.Setenv(ADAMIC_TRACE_REPORT), which is process-wide.
+func TestTheReportsFileNeverReachesTheCommand(t *testing.T) {
+	t.Setenv("ADAMIC_TRACE_REPORT", "logs/product-1.trace.jsonl")
+	report := traceReport()
+	if !filepath.IsAbs(report) || !strings.HasSuffix(report, filepath.Join("logs", "product-1.trace.jsonl")) {
+		t.Errorf("the report's file read as %q", report)
+	}
+	if _, set := os.LookupEnv("ADAMIC_TRACE_REPORT"); set {
+		t.Error("ADAMIC_TRACE_REPORT is still set for the command")
+	}
+}
+
 // A run strace complained and failed under before the trace held the command's exit is lost to the tracer (#j4hwdks),
 // never a settled-nothing fill; a run whose command exited, one strace passed, and one strace failed silently (the
 // command killed) aren't. Mutants: the command's exit ignored; strace's status ignored; a failure with no complaint

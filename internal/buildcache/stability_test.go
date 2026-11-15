@@ -13,15 +13,14 @@ import (
 // relative to the cache, the trace's report is bookkeeping, and the tree's own parents stay above. Mutants: above before
 // the walk to a known place (../trees-2 against ../trees-3); no above cache (each run's absolute node_modules); the
 // report not bookkeeping (each run's absolute report).
-// Not parallel: it sets ADAMIC_TRACE_REPORT.
 func TestTwoRunsOfOneTreeClassWhatTheyLookForAlike(t *testing.T) {
+	t.Parallel()
 	root := "/work/adamic"
 	classes := func(run string) []classed {
 		t.Helper()
 		directory := filepath.Join("/work", run, "e329")
 		cache := filepath.Join(directory, "cache")
-		t.Setenv("ADAMIC_TRACE_REPORT", filepath.Join(directory, "logs", "product-388.trace.jsonl"))
-		facts, err := settleFacts(root, cache, filepath.Join(cache, "trace-1"))
+		facts, err := settleFacts(root, cache, filepath.Join(cache, "trace-1"), filepath.Join(directory, "logs", "product-388.trace.jsonl"))
 		if err != nil {
 			t.Fatal(err)
 		}
@@ -108,7 +107,7 @@ func TestAListingOfTheCachesParentsIsKeyedBesideTheCache(t *testing.T) {
 			}
 		}
 		os.WriteFile(filepath.Join(home, "package.json"), []byte("{}\n"), 0o644)
-		facts, err := settleFacts(filepath.Join(home, "loom-trees", "adamic"), cache, filepath.Join(cache, "trace-1"))
+		facts, err := settleFacts(filepath.Join(home, "loom-trees", "adamic"), cache, filepath.Join(cache, "trace-1"), "")
 		if err != nil {
 			t.Fatal(err)
 		}
@@ -153,7 +152,7 @@ func TestALookupBelowTheCachesChainUnderTheHomeIsKeyedBesideTheCache(t *testing.
 		if err := os.MkdirAll(cache, 0o755); err != nil {
 			t.Fatal(err)
 		}
-		facts, err := settleFacts(filepath.Join(home, "tree"), cache, filepath.Join(cache, "trace-1"))
+		facts, err := settleFacts(filepath.Join(home, "tree"), cache, filepath.Join(cache, "trace-1"), "")
 		if err != nil {
 			t.Fatal(err)
 		}
@@ -193,7 +192,7 @@ func TestGoLookingForItsCachedTestMainIsNoTreeRead(t *testing.T) {
 	var classes [][]classed
 	for _, cache := range []string{"/home/ahra/.cache/go-build", "/home/ahra/loom-sums/s1/gocache"} {
 		t.Setenv("GOCACHE", cache)
-		facts, err := settleFacts(root, filepath.Join(t.TempDir(), "cache"), filepath.Join(t.TempDir(), "trace-1"))
+		facts, err := settleFacts(root, filepath.Join(t.TempDir(), "cache"), filepath.Join(t.TempDir(), "trace-1"), "")
 		if err != nil {
 			t.Fatal(err)
 		}
@@ -242,16 +241,15 @@ func TestAPathAboveTheCacheIsValuedBesideIt(t *testing.T) {
 // ~/loom-serve on a runner, so 29 of 39 product packages moved): the C stack as the machine's system, a path at the top
 // as absolute, a file in home as home's. The tree's own parents and what sits just above it stay relative, the same
 // at any depth. Mutant: a landed lookup keyed relative to the tree (the two depths class it apart).
-// Not parallel: it sets ADAMIC_TRACE_REPORT.
 func TestALookupThatClimbsToHomeOrPastItIsKeyedWhereItLands(t *testing.T) {
+	t.Parallel()
 	// A home no machine has: on a box whose home is /home/ahra, ~/.adamic-tools is a real link to the tools directory,
 	// and classifyPath rightly resolves it there, so the test failed on Workshop every run while it passed on a Mac.
 	home := "/home/adamic-no-such-home"
 	classes := func(root string) []classed {
 		t.Helper()
 		cache := filepath.Join(home, "loom-builder", "trees", "e329", "cache")
-		t.Setenv("ADAMIC_TRACE_REPORT", filepath.Join(home, "loom-builder", "trees", "e329", "logs", "product-1.trace.jsonl"))
-		facts, err := settleFacts(root, cache, filepath.Join(cache, "trace-1"))
+		facts, err := settleFacts(root, cache, filepath.Join(cache, "trace-1"), filepath.Join(home, "loom-builder", "trees", "e329", "logs", "product-1.trace.jsonl"))
 		if err != nil {
 			t.Fatal(err)
 		}
@@ -309,7 +307,7 @@ func TestAReadThroughEveryToolsSpellingIsTheRootsRead(t *testing.T) {
 	t.Setenv("ADAMIC_TOOLS", tools)
 	for _, home := range []string{box, unit} {
 		t.Setenv("HOME", home)
-		facts, err := settleFacts(filepath.Join(t.TempDir(), "adamic"), cache, filepath.Join(cache, "trace-1"))
+		facts, err := settleFacts(filepath.Join(t.TempDir(), "adamic"), cache, filepath.Join(cache, "trace-1"), "")
 		if err != nil {
 			t.Fatal(err)
 		}
@@ -321,7 +319,7 @@ func TestAReadThroughEveryToolsSpellingIsTheRootsRead(t *testing.T) {
 	}
 	t.Setenv("ADAMIC_TOOLS", "")
 	t.Setenv("HOME", box)
-	facts, err := settleFacts(filepath.Join(t.TempDir(), "adamic"), cache, filepath.Join(cache, "trace-1"))
+	facts, err := settleFacts(filepath.Join(t.TempDir(), "adamic"), cache, filepath.Join(cache, "trace-1"), "")
 	if err != nil {
 		t.Fatal(err)
 	}
