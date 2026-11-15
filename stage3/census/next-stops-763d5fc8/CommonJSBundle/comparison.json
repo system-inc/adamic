@@ -1,0 +1,702 @@
+[
+  {
+    "root": "_namespaces/ts.moduleSpecifiers.ts",
+    "before": [
+      "sys.ts:1385:31",
+      "Refused",
+      "a method read as a value (writeFile would lose its object, and this with it)"
+    ],
+    "after": [
+      "sys.ts:1387:5",
+      "Refused",
+      "a method read as a value (writeFile would lose its object, and this with it)"
+    ],
+    "unchanged": false
+  },
+  {
+    "root": "_namespaces/ts.performance.ts",
+    "before": [
+      "sys.ts:1385:31",
+      "Refused",
+      "a method read as a value (writeFile would lose its object, and this with it)"
+    ],
+    "after": [
+      "sys.ts:1387:5",
+      "Refused",
+      "a method read as a value (writeFile would lose its object, and this with it)"
+    ],
+    "unchanged": false
+  },
+  {
+    "root": "_namespaces/ts.ts",
+    "before": [
+      "sys.ts:1385:31",
+      "Refused",
+      "a method read as a value (writeFile would lose its object, and this with it)"
+    ],
+    "after": [
+      "sys.ts:1387:5",
+      "Refused",
+      "a method read as a value (writeFile would lose its object, and this with it)"
+    ],
+    "unchanged": false
+  },
+  {
+    "root": "binder.ts",
+    "before": [
+      "sys.ts:1385:31",
+      "Refused",
+      "a method read as a value (writeFile would lose its object, and this with it)"
+    ],
+    "after": [
+      "sys.ts:1387:5",
+      "Refused",
+      "a method read as a value (writeFile would lose its object, and this with it)"
+    ],
+    "unchanged": false
+  },
+  {
+    "root": "builder.ts",
+    "before": [
+      "sys.ts:1385:31",
+      "Refused",
+      "a method read as a value (writeFile would lose its object, and this with it)"
+    ],
+    "after": [
+      "sys.ts:1387:5",
+      "Refused",
+      "a method read as a value (writeFile would lose its object, and this with it)"
+    ],
+    "unchanged": false
+  },
+  {
+    "root": "builderPublic.ts",
+    "before": [
+      "sys.ts:1385:31",
+      "Refused",
+      "a method read as a value (writeFile would lose its object, and this with it)"
+    ],
+    "after": [
+      "sys.ts:1387:5",
+      "Refused",
+      "a method read as a value (writeFile would lose its object, and this with it)"
+    ],
+    "unchanged": false
+  },
+  {
+    "root": "builderState.ts",
+    "before": [
+      "sys.ts:1385:31",
+      "Refused",
+      "a method read as a value (writeFile would lose its object, and this with it)"
+    ],
+    "after": [
+      "sys.ts:1387:5",
+      "Refused",
+      "a method read as a value (writeFile would lose its object, and this with it)"
+    ],
+    "unchanged": false
+  },
+  {
+    "root": "builderStatePublic.ts",
+    "before": [
+      "sys.ts:1385:31",
+      "Refused",
+      "a method read as a value (writeFile would lose its object, and this with it)"
+    ],
+    "after": [
+      "sys.ts:1387:5",
+      "Refused",
+      "a method read as a value (writeFile would lose its object, and this with it)"
+    ],
+    "unchanged": false
+  },
+  {
+    "root": "checker.ts",
+    "before": [
+      "sys.ts:1385:31",
+      "Refused",
+      "a method read as a value (writeFile would lose its object, and this with it)"
+    ],
+    "after": [
+      "sys.ts:1387:5",
+      "Refused",
+      "a method read as a value (writeFile would lose its object, and this with it)"
+    ],
+    "unchanged": false
+  },
+  {
+    "root": "commandLineParser.ts",
+    "before": [
+      "sys.ts:1385:31",
+      "Refused",
+      "a method read as a value (writeFile would lose its object, and this with it)"
+    ],
+    "after": [
+      "sys.ts:1387:5",
+      "Refused",
+      "a method read as a value (writeFile would lose its object, and this with it)"
+    ],
+    "unchanged": false
+  },
+  {
+    "root": "core.ts",
+    "before": [
+      "sys.ts:1385:31",
+      "Refused",
+      "a method read as a value (writeFile would lose its object, and this with it)"
+    ],
+    "after": [
+      "sys.ts:1387:5",
+      "Refused",
+      "a method read as a value (writeFile would lose its object, and this with it)"
+    ],
+    "unchanged": false
+  },
+  {
+    "root": "corePublic.ts",
+    "before": [
+      "-",
+      "accepted",
+      "-"
+    ],
+    "after": [
+      "-",
+      "accepted",
+      "-"
+    ],
+    "unchanged": true
+  },
+  {
+    "root": "debug.ts",
+    "before": [
+      "semver.ts:71:9",
+      "NotYet",
+      "a namespace read before runtime initialization, directly or through a reachable call; move that read or call after the namespace declaration"
+    ],
+    "after": [
+      "semver.ts:71:9",
+      "NotYet",
+      "a namespace read before runtime initialization, directly or through a reachable call; move that read or call after the namespace declaration"
+    ],
+    "unchanged": true
+  },
+  {
+    "root": "diagnosticInformationMap.generated.ts",
+    "before": [
+      "commandLineParser.ts:293:35",
+      "NotYet",
+      "reading an enum before its runtime initialization; move the call after the enum declaration"
+    ],
+    "after": [
+      "commandLineParser.ts:293:35",
+      "NotYet",
+      "reading an enum before its runtime initialization; move the call after the enum declaration"
+    ],
+    "unchanged": true
+  },
+  {
+    "root": "emitter.ts",
+    "before": [
+      "sys.ts:1385:31",
+      "Refused",
+      "a method read as a value (writeFile would lose its object, and this with it)"
+    ],
+    "after": [
+      "sys.ts:1387:5",
+      "Refused",
+      "a method read as a value (writeFile would lose its object, and this with it)"
+    ],
+    "unchanged": false
+  },
+  {
+    "root": "executeCommandLine.ts",
+    "before": [
+      "sys.ts:1385:31",
+      "Refused",
+      "a method read as a value (writeFile would lose its object, and this with it)"
+    ],
+    "after": [
+      "sys.ts:1387:5",
+      "Refused",
+      "a method read as a value (writeFile would lose its object, and this with it)"
+    ],
+    "unchanged": false
+  },
+  {
+    "root": "expressionToTypeNode.ts",
+    "before": [
+      "sys.ts:1385:31",
+      "Refused",
+      "a method read as a value (writeFile would lose its object, and this with it)"
+    ],
+    "after": [
+      "sys.ts:1387:5",
+      "Refused",
+      "a method read as a value (writeFile would lose its object, and this with it)"
+    ],
+    "unchanged": false
+  },
+  {
+    "root": "factory/baseNodeFactory.ts",
+    "before": [
+      "sys.ts:1385:31",
+      "Refused",
+      "a method read as a value (writeFile would lose its object, and this with it)"
+    ],
+    "after": [
+      "sys.ts:1387:5",
+      "Refused",
+      "a method read as a value (writeFile would lose its object, and this with it)"
+    ],
+    "unchanged": false
+  },
+  {
+    "root": "factory/emitHelpers.ts",
+    "before": [
+      "sys.ts:1385:31",
+      "Refused",
+      "a method read as a value (writeFile would lose its object, and this with it)"
+    ],
+    "after": [
+      "sys.ts:1387:5",
+      "Refused",
+      "a method read as a value (writeFile would lose its object, and this with it)"
+    ],
+    "unchanged": false
+  },
+  {
+    "root": "factory/emitNode.ts",
+    "before": [
+      "sys.ts:1385:31",
+      "Refused",
+      "a method read as a value (writeFile would lose its object, and this with it)"
+    ],
+    "after": [
+      "sys.ts:1387:5",
+      "Refused",
+      "a method read as a value (writeFile would lose its object, and this with it)"
+    ],
+    "unchanged": false
+  },
+  {
+    "root": "factory/nodeChildren.ts",
+    "before": [
+      "sys.ts:1385:31",
+      "Refused",
+      "a method read as a value (writeFile would lose its object, and this with it)"
+    ],
+    "after": [
+      "sys.ts:1387:5",
+      "Refused",
+      "a method read as a value (writeFile would lose its object, and this with it)"
+    ],
+    "unchanged": false
+  },
+  {
+    "root": "factory/nodeConverters.ts",
+    "before": [
+      "sys.ts:1385:31",
+      "Refused",
+      "a method read as a value (writeFile would lose its object, and this with it)"
+    ],
+    "after": [
+      "sys.ts:1387:5",
+      "Refused",
+      "a method read as a value (writeFile would lose its object, and this with it)"
+    ],
+    "unchanged": false
+  },
+  {
+    "root": "factory/nodeFactory.ts",
+    "before": [
+      "sys.ts:1385:31",
+      "Refused",
+      "a method read as a value (writeFile would lose its object, and this with it)"
+    ],
+    "after": [
+      "sys.ts:1387:5",
+      "Refused",
+      "a method read as a value (writeFile would lose its object, and this with it)"
+    ],
+    "unchanged": false
+  },
+  {
+    "root": "factory/nodeTests.ts",
+    "before": [
+      "sys.ts:1385:31",
+      "Refused",
+      "a method read as a value (writeFile would lose its object, and this with it)"
+    ],
+    "after": [
+      "sys.ts:1387:5",
+      "Refused",
+      "a method read as a value (writeFile would lose its object, and this with it)"
+    ],
+    "unchanged": false
+  },
+  {
+    "root": "factory/parenthesizerRules.ts",
+    "before": [
+      "sys.ts:1385:31",
+      "Refused",
+      "a method read as a value (writeFile would lose its object, and this with it)"
+    ],
+    "after": [
+      "sys.ts:1387:5",
+      "Refused",
+      "a method read as a value (writeFile would lose its object, and this with it)"
+    ],
+    "unchanged": false
+  },
+  {
+    "root": "factory/utilities.ts",
+    "before": [
+      "sys.ts:1385:31",
+      "Refused",
+      "a method read as a value (writeFile would lose its object, and this with it)"
+    ],
+    "after": [
+      "sys.ts:1387:5",
+      "Refused",
+      "a method read as a value (writeFile would lose its object, and this with it)"
+    ],
+    "unchanged": false
+  },
+  {
+    "root": "factory/utilitiesPublic.ts",
+    "before": [
+      "sys.ts:1385:31",
+      "Refused",
+      "a method read as a value (writeFile would lose its object, and this with it)"
+    ],
+    "after": [
+      "sys.ts:1387:5",
+      "Refused",
+      "a method read as a value (writeFile would lose its object, and this with it)"
+    ],
+    "unchanged": false
+  },
+  {
+    "root": "hostErrors.ts",
+    "before": [
+      "-",
+      "accepted",
+      "-"
+    ],
+    "after": [
+      "-",
+      "accepted",
+      "-"
+    ],
+    "unchanged": true
+  },
+  {
+    "root": "moduleNameResolver.ts",
+    "before": [
+      "sys.ts:1385:31",
+      "Refused",
+      "a method read as a value (writeFile would lose its object, and this with it)"
+    ],
+    "after": [
+      "sys.ts:1387:5",
+      "Refused",
+      "a method read as a value (writeFile would lose its object, and this with it)"
+    ],
+    "unchanged": false
+  },
+  {
+    "root": "moduleSpecifiers.ts",
+    "before": [
+      "sys.ts:1385:31",
+      "Refused",
+      "a method read as a value (writeFile would lose its object, and this with it)"
+    ],
+    "after": [
+      "sys.ts:1387:5",
+      "Refused",
+      "a method read as a value (writeFile would lose its object, and this with it)"
+    ],
+    "unchanged": false
+  },
+  {
+    "root": "parser.ts",
+    "before": [
+      "sys.ts:1385:31",
+      "Refused",
+      "a method read as a value (writeFile would lose its object, and this with it)"
+    ],
+    "after": [
+      "sys.ts:1387:5",
+      "Refused",
+      "a method read as a value (writeFile would lose its object, and this with it)"
+    ],
+    "unchanged": false
+  },
+  {
+    "root": "path.ts",
+    "before": [
+      "sys.ts:1385:31",
+      "Refused",
+      "a method read as a value (writeFile would lose its object, and this with it)"
+    ],
+    "after": [
+      "sys.ts:1387:5",
+      "Refused",
+      "a method read as a value (writeFile would lose its object, and this with it)"
+    ],
+    "unchanged": false
+  },
+  {
+    "root": "performance.ts",
+    "before": [
+      "sys.ts:1385:31",
+      "Refused",
+      "a method read as a value (writeFile would lose its object, and this with it)"
+    ],
+    "after": [
+      "sys.ts:1387:5",
+      "Refused",
+      "a method read as a value (writeFile would lose its object, and this with it)"
+    ],
+    "unchanged": false
+  },
+  {
+    "root": "performanceCore.ts",
+    "before": [
+      "sys.ts:1385:31",
+      "Refused",
+      "a method read as a value (writeFile would lose its object, and this with it)"
+    ],
+    "after": [
+      "sys.ts:1387:5",
+      "Refused",
+      "a method read as a value (writeFile would lose its object, and this with it)"
+    ],
+    "unchanged": false
+  },
+  {
+    "root": "program.ts",
+    "before": [
+      "sys.ts:1385:31",
+      "Refused",
+      "a method read as a value (writeFile would lose its object, and this with it)"
+    ],
+    "after": [
+      "sys.ts:1387:5",
+      "Refused",
+      "a method read as a value (writeFile would lose its object, and this with it)"
+    ],
+    "unchanged": false
+  },
+  {
+    "root": "programDiagnostics.ts",
+    "before": [
+      "sys.ts:1385:31",
+      "Refused",
+      "a method read as a value (writeFile would lose its object, and this with it)"
+    ],
+    "after": [
+      "sys.ts:1387:5",
+      "Refused",
+      "a method read as a value (writeFile would lose its object, and this with it)"
+    ],
+    "unchanged": false
+  },
+  {
+    "root": "resolutionCache.ts",
+    "before": [
+      "sys.ts:1385:31",
+      "Refused",
+      "a method read as a value (writeFile would lose its object, and this with it)"
+    ],
+    "after": [
+      "sys.ts:1387:5",
+      "Refused",
+      "a method read as a value (writeFile would lose its object, and this with it)"
+    ],
+    "unchanged": false
+  },
+  {
+    "root": "scanner.ts",
+    "before": [
+      "sys.ts:1385:31",
+      "Refused",
+      "a method read as a value (writeFile would lose its object, and this with it)"
+    ],
+    "after": [
+      "sys.ts:1387:5",
+      "Refused",
+      "a method read as a value (writeFile would lose its object, and this with it)"
+    ],
+    "unchanged": false
+  },
+  {
+    "root": "semver.ts",
+    "before": [
+      "sys.ts:1385:31",
+      "Refused",
+      "a method read as a value (writeFile would lose its object, and this with it)"
+    ],
+    "after": [
+      "sys.ts:1387:5",
+      "Refused",
+      "a method read as a value (writeFile would lose its object, and this with it)"
+    ],
+    "unchanged": false
+  },
+  {
+    "root": "sourcemap.ts",
+    "before": [
+      "sys.ts:1385:31",
+      "Refused",
+      "a method read as a value (writeFile would lose its object, and this with it)"
+    ],
+    "after": [
+      "sys.ts:1387:5",
+      "Refused",
+      "a method read as a value (writeFile would lose its object, and this with it)"
+    ],
+    "unchanged": false
+  },
+  {
+    "root": "symbolWalker.ts",
+    "before": [
+      "sys.ts:1385:31",
+      "Refused",
+      "a method read as a value (writeFile would lose its object, and this with it)"
+    ],
+    "after": [
+      "sys.ts:1387:5",
+      "Refused",
+      "a method read as a value (writeFile would lose its object, and this with it)"
+    ],
+    "unchanged": false
+  },
+  {
+    "root": "sys.ts",
+    "before": [
+      "utilitiesPublic.ts:1280:52",
+      "Refused",
+      "an unproven predicate argument for parameter predicate (argument \"predicate\")"
+    ],
+    "after": [
+      "utilitiesPublic.ts:1280:52",
+      "Refused",
+      "an unproven predicate argument for parameter predicate (argument \"predicate\")"
+    ],
+    "unchanged": true
+  },
+  {
+    "root": "tracing.ts",
+    "before": [
+      "sys.ts:1385:31",
+      "Refused",
+      "a method read as a value (writeFile would lose its object, and this with it)"
+    ],
+    "after": [
+      "sys.ts:1387:5",
+      "Refused",
+      "a method read as a value (writeFile would lose its object, and this with it)"
+    ],
+    "unchanged": false
+  },
+  {
+    "root": "transformer.ts",
+    "before": [
+      "sys.ts:1385:31",
+      "Refused",
+      "a method read as a value (writeFile would lose its object, and this with it)"
+    ],
+    "after": [
+      "sys.ts:1387:5",
+      "Refused",
+      "a method read as a value (writeFile would lose its object, and this with it)"
+    ],
+    "unchanged": false
+  },
+  {
+    "root": "transformers/classFields.ts",
+    "before": [
+      "sys.ts:1385:31",
+      "Refused",
+      "a method read as a value (writeFile would lose its object, and this with it)"
+    ],
+    "after": [
+      "sys.ts:1387:5",
+      "Refused",
+      "a method read as a value (writeFile would lose its object, and this with it)"
+    ],
+    "unchanged": false
+  },
+  {
+    "root": "transformers/classThis.ts",
+    "before": [
+      "sys.ts:1385:31",
+      "Refused",
+      "a method read as a value (writeFile would lose its object, and this with it)"
+    ],
+    "after": [
+      "sys.ts:1387:5",
+      "Refused",
+      "a method read as a value (writeFile would lose its object, and this with it)"
+    ],
+    "unchanged": false
+  },
+  {
+    "root": "transformers/declarations/diagnostics.ts",
+    "before": [
+      "sys.ts:1385:31",
+      "Refused",
+      "a method read as a value (writeFile would lose its object, and this with it)"
+    ],
+    "after": [
+      "sys.ts:1387:5",
+      "Refused",
+      "a method read as a value (writeFile would lose its object, and this with it)"
+    ],
+    "unchanged": false
+  },
+  {
+    "root": "transformers/declarations.ts",
+    "before": [
+      "sys.ts:1385:31",
+      "Refused",
+      "a method read as a value (writeFile would lose its object, and this with it)"
+    ],
+    "after": [
+      "sys.ts:1387:5",
+      "Refused",
+      "a method read as a value (writeFile would lose its object, and this with it)"
+    ],
+    "unchanged": false
+  },
+  {
+    "root": "transformers/destructuring.ts",
+    "before": [
+      "sys.ts:1385:31",
+      "Refused",
+      "a method read as a value (writeFile would lose its object, and this with it)"
+    ],
+    "after": [
+      "sys.ts:1387:5",
+      "Refused",
+      "a method read as a value (writeFile would lose its object, and this with it)"
+    ],
+    "unchanged": false
+  },
+  {
+    "root": "transformers/es2015.ts",
+    "before": [
+      "sys.ts:1385:31",
+      "Refused",
+      "a method read as a value (writeFile would lose its object, and this with it)"
+    ],
+    "after": [
+      "sys.ts:1387:5",
+      "Refused",
+      "a method read as a value (writeFile would lose its object, and this with it)"
+    ],
+    "unchanged": false
+  }
+]

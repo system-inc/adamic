@@ -1,0 +1,19 @@
+{
+  "command": [
+    "git",
+    "push",
+    "origin",
+    "HEAD:refs/heads/typescript/next-stops-763d5fc8-checkpoint"
+  ],
+  "exit_code": 128,
+  "error": "fatal: could not read Username for 'https://github.com': No such device or address",
+  "local_checkpoint": "c61309f47f08a0bcf5599ced090d225dc77a4bb3",
+  "last_confirmed_pushed_checkpoint": "a40780236",
+  "retry_exit_code": 128,
+  "read_check": [
+    "git",
+    "ls-remote",
+    "origin"
+  ],
+  "read_check_error": "fatal: could not read Username for 'https://github.com': No such device or address"
+}
