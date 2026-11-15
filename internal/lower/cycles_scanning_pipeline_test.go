@@ -13,10 +13,11 @@ import (
 // rewrites the IR or adds to its string table, so leaving one out can't make the two modes'
 // programs differ, only which of two stops a program reports first.
 var scanningPipelineExempt = map[string]string{
-	"lowering.checkOverloadResults":    "judges that every call to a narrow overload was settled; reads lowering's notes, rewrites nothing",
-	"lowering.checkRecordGuardedReads": "judges guarded record reads; reads the IR, rewrites nothing",
-	"lowering.checkViewOptionalWrites": "judges writes to optional fields; reads the IR, rewrites nothing",
-	"checkFlowLiveness":                "judges that no function a flow graph took to never run is named after it was built; reads the IR, rewrites nothing",
+	"lowering.checkOverloadResults":            "judges that every call to a narrow overload was settled; reads lowering's notes, rewrites nothing",
+	"lowering.checkRecordGuardedReads":         "judges guarded record reads; reads the IR, rewrites nothing",
+	"lowering.checkViewOptionalWrites":         "judges writes to optional fields; reads the IR, rewrites nothing",
+	"checkFlowLiveness":                        "judges that no function a flow graph took to never run is named after it was built; reads the IR, rewrites nothing",
+	"lowering.checkCheckedPredicateParameters": "judges that every predicate parameter admitted for its checked closure was built as one and that no function it can call observes its argument count; reads lowering's notes and the IR, rewrites nothing",
 }
 
 // The frozen scanning reference (scanLowerWithElementKey) and the real pipeline
