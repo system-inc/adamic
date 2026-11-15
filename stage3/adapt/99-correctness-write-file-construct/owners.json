@@ -1,0 +1,29 @@
+{
+  "version": 1,
+  "owners": [
+    {
+      "file": "src/compiler/sys.ts",
+      "owner": "sys initializer final patch statement"
+    },
+    {
+      "file": "src/testRunner/unittests/helpers/virtualFileSystemWithWatch.ts",
+      "owner": "ts import and module-local patchWriteFileEnsuringDirectory"
+    }
+  ],
+  "pins": {
+    "tailBefore": "    if (sys) {\n        // patch writefile to create folder before writing the file\n        patchWriteFileEnsuringDirectory(sys);\n    }\n",
+    "tailAfter": "",
+    "importBefore": "import {\n    append,\n    arrayFrom,\n    clear,\n    clone,\n    combinePaths,\n    compareStringsCaseSensitive,\n    createGetCanonicalFileName,\n    createSystemWatchFunctions,\n    Debug,\n    directorySeparator,\n    emptyArray,\n    FileSystemEntryKind,\n    FileWatcherCallback,\n    FileWatcherEventKind,\n    filterMutate,\n    FormatDiagnosticsHost,\n    FsWatchCallback,\n    FsWatchWorkerWatcher,\n    generateDjb2Hash,\n    getBaseFileName,\n    getDirectoryPath,\n    getNormalizedAbsolutePath,\n    getRelativePathToDirectoryOrUrl,\n    hasProperty,\n    HostWatchDirectory,\n    HostWatchFile,\n    insertSorted,\n    isArray,\n    isString,\n    libMap,\n    mapDefined,\n    matchFiles,\n    ModuleImportResult,\n    ModuleResolutionHost,\n    noop,\n    patchWriteFileEnsuringDirectory,\n    Path,\n    PollingInterval,\n    server,\n    SortedArray,\n    sys,\n    targetToLibMap,\n    toPath,\n} from \"../../_namespaces/ts.js\";",
+    "importAfter": "import {\n    append,\n    arrayFrom,\n    clear,\n    clone,\n    combinePaths,\n    compareStringsCaseSensitive,\n    createGetCanonicalFileName,\n    createSystemWatchFunctions,\n    Debug,\n    directorySeparator,\n    emptyArray,\n    FileSystemEntryKind,\n    FileWatcherCallback,\n    FileWatcherEventKind,\n    filterMutate,\n    FormatDiagnosticsHost,\n    FsWatchCallback,\n    FsWatchWorkerWatcher,\n    generateDjb2Hash,\n    getBaseFileName,\n    getDirectoryPath,\n    getNormalizedAbsolutePath,\n    getRelativePathToDirectoryOrUrl,\n    hasProperty,\n    HostWatchDirectory,\n    HostWatchFile,\n    insertSorted,\n    isArray,\n    isString,\n    libMap,\n    mapDefined,\n    matchFiles,\n    ModuleImportResult,\n    ModuleResolutionHost,\n    noop,\n    Path,\n    PollingInterval,\n    server,\n    SortedArray,\n    sys,\n    targetToLibMap,\n    toPath,\n} from \"../../_namespaces/ts.js\";",
+    "dependency": "import { System, writeFileEnsuringDirectories } from \"../../_namespaces/ts.js\";\n",
+    "localHelper": "function patchWriteFileEnsuringDirectory(sys: System): void {\n    // patch writefile to create folder before writing the file\n    const writeFileView: { readonly writeFile: System[\"writeFile\"]; } = sys;\n    const originalWriteFile = writeFileView.writeFile;\n    sys.writeFile = (path, data, writeBom) =>\n        writeFileEnsuringDirectories(\n            path,\n            data,\n            !!writeBom,\n            (path, data, writeByteOrderMark) => originalWriteFile.call(sys, path, data, writeByteOrderMark),\n            path => sys.createDirectory(path),\n            path => sys.directoryExists(path),\n        );\n}"
+  },
+  "hashes": {
+    "tailBefore": "d432b684acabd9981e8330ab8f704493f9d6ac8b676a1368e082b193f513de3a",
+    "tailAfter": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "importBefore": "1d77eb3691751472865285c4d3a3b2754e18f5c2a9965b04581ca4fbf63db1d0",
+    "importAfter": "b8e788ed38789b1263ef8f2f19f2dd4550ba3c9f81ee4166df86fa97e1b167df",
+    "dependency": "a9779caeff9ebe2601fa8758d5ae11a865e0cf99401c24a1d2b694b2b44d405a",
+    "localHelper": "7362e3945b8af118d6db181c7eb508570975f11016ad7575cd82898b4d4a9767"
+  }
+}

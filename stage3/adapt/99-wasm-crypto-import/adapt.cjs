@@ -140,7 +140,7 @@ function plannedProgram(program, file, text) {
         : original(name, language, onError, shouldCreateNewSourceFile);
     return ts.createProgram(program.getRootFileNames(), program.getCompilerOptions(), host);
 }
-function adapt(tree) {
+function adapt(tree, options = {}) {
     assert.equal(ts.version, '6.0.3');
     const program = compiler(tree, ts);
     const file = program.getSourceFile(path.join(tree, manifest[0].file));
@@ -148,9 +148,14 @@ function adapt(tree) {
     assert(!file.text.includes('\r\n') || !file.text.replace(/\r\n/g, '').includes('\n'), 'mixed line endings');
     const owner = one(nodes(ts, file, n => ts.isFunctionDeclaration(n) && n.name?.text === 'getNodeSystem'), 'getNodeSystem');
     const digest = hash(ownerText(owner.getText(file)));
-    assert([manifest[0].ownerBeforeSha256, manifest[0].ownerAfterSha256].includes(digest), 'uninventoried owner: getNodeSystem');
-    const done = digest === manifest[0].ownerAfterSha256;
-    assert.equal(ownerText(owner.getText(file)), done ? manifest[0].ownerAfterText : manifest[0].ownerBeforeText, 'owner text drift');
+    if (options.pinOnly && digest !== manifest[0].ownerBeforeSha256) {
+        const restored = require('../93-builtin-imports/adapt.cjs').restoreWriter(file.text);
+        const restoredFile = ts.createSourceFile('sys.ts', restored, ts.ScriptTarget.Latest, true);
+        const legacy = one(nodes(ts, restoredFile, n => ts.isFunctionDeclaration(n) && n.name?.text === 'getNodeSystem'), 'legacy predecessor');
+        assert.equal(hash(ownerText(legacy.getText(restoredFile))), manifest[0].ownerBeforeSha256, 'pin predecessor changed beyond writer construction');
+    } else assert([manifest[0].ownerBeforeSha256, manifest[0].ownerAfterSha256].includes(digest), 'uninventoried owner: getNodeSystem');
+    const done = !options.pinOnly && digest === manifest[0].ownerAfterSha256;
+    if (!options.pinOnly) assert.equal(ownerText(owner.getText(file)), done ? manifest[0].ownerAfterText : manifest[0].ownerBeforeText, 'owner text drift');
     const imports = file.statements.filter(n => ts.isImportDeclaration(n) && n.moduleSpecifier.text.startsWith('node:'));
     assert.equal(hash(imports.map(n => n.getText(file)).join('\n')), done ? manifest[0].importsAfterSha256 : manifest[0].importsBeforeSha256, 'uninventoried node: import block');
     const checked = validateBindings(program, file, done);
@@ -193,8 +198,10 @@ function adapt(tree) {
     validateWatchDirectory(text);
     const changedFile = ts.createSourceFile(file.fileName, text, ts.ScriptTarget.Latest, true);
     const changedOwner = one(nodes(ts, changedFile, n => ts.isFunctionDeclaration(n) && n.name?.text === 'getNodeSystem'), 'changed getNodeSystem');
-    assert.equal(hash(ownerText(changedOwner.getText(changedFile))), manifest[0].ownerAfterSha256, 'unreviewed crypto owner change');
-    assert.equal(ownerText(changedOwner.getText(changedFile)), manifest[0].ownerAfterText, 'unreviewed owner text');
+    if (!options.pinOnly) {
+        assert.equal(hash(ownerText(changedOwner.getText(changedFile))), manifest[0].ownerAfterSha256, 'unreviewed crypto owner change');
+        assert.equal(ownerText(changedOwner.getText(changedFile)), manifest[0].ownerAfterText, 'unreviewed owner text');
+    }
     const changedImports = changedFile.statements.filter(n => ts.isImportDeclaration(n) && n.moduleSpecifier.text.startsWith('node:'));
     assert.equal(hash(changedImports.map(n => n.getText(changedFile)).join('\n')), manifest[0].importsAfterSha256, 'unreviewed crypto import change');
     assert.equal(ts.createSourceFile(file.fileName, text, ts.ScriptTarget.Latest, true).parseDiagnostics.length, 0);
@@ -202,11 +209,17 @@ function adapt(tree) {
     const post = validateBindings(planned, planned.getSourceFile(file.fileName), true);
     assert.equal(fs.readFileSync(file.fileName, 'utf8'), file.text, 'source changed while planning');
     // Validate all original bindings, planned bindings and scoped hashes before the sole write.
+    if (options.pinOnly) {
+        const pin = {...manifest[0], ownerBeforeSha256: digest, ownerAfterSha256: hash(ownerText(changedOwner.getText(changedFile))), ownerBeforeText:ownerText(owner.getText(file)), ownerAfterText:ownerText(changedOwner.getText(changedFile))};
+        fs.writeFileSync(path.join(__dirname,'proofs/targets.json'),JSON.stringify([pin],null,2)+'\n');
+        return {pinsRegenerated:true,sourceWrites:0,watchDirectory1533Preserved:true};
+    }
     if (edits.length) fs.writeFileSync(file.fileName, text);
     return {files: edits.length ? 1 : 0, javascriptChanging: true, before: checked.evidence, after: post.evidence};
 }
 module.exports = {adapt, validateBindings, plannedProgram, blockLines, importText, annotateRequire, requireBefore, requireAfter, forwardResolveHost, forwardWatchDirectory, validateWatchDirectory, watchDirectoryProperty};
 if (require.main === module) {
+    if (process.argv[2] === '--pin') { assert.equal(process.argv.length,4); console.log(JSON.stringify(adapt(path.resolve(process.argv[3]),{pinOnly:true}))); process.exit(0); }
     assert.equal(process.argv.length, 3, 'usage: node adapt.cjs <tree>');
     console.log(JSON.stringify(adapt(path.resolve(process.argv[2])), null, 2));
 }

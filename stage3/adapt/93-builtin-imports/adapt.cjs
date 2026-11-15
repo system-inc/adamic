@@ -64,7 +64,49 @@ function plannedProgram(program, file, text) {
         : original(name, language, onError, shouldCreateNewSourceFile);
     return ts.createProgram(program.getRootFileNames(), program.getCompilerOptions(), host);
 }
-function adapt(tree) {
+// a-prime: construction belongs to this whole getNodeSystem owner.
+const writerWrapper = `        const patchedWriteFile: System["writeFile"] = (path, data, writeBom) =>
+            writeFileEnsuringDirectories(
+                path,
+                data,
+                !!writeBom,
+                (path, data, writeByteOrderMark) => writeFile(path, data, writeByteOrderMark),
+                path => nodeSystem.createDirectory(path),
+                path => nodeSystem.directoryExists(path),
+            );
+`;
+function rewriteWriter(raw, restoring = false) {
+    const text = raw, wrapper = raw.includes('\r\n') ? writerWrapper.replace(/\n/g, '\r\n') : writerWrapper;
+    const file = ts.createSourceFile('sys.ts', text, ts.ScriptTarget.Latest, true);
+    assert.equal(file.parseDiagnostics.length, 0, 'writer parse error');
+    const owner = nodes(ts, file, n => ts.isFunctionDeclaration(n) && n.name?.text === 'getNodeSystem');
+    assert.equal(owner.length, 1, 'writer getNodeSystem count');
+    const stores = nodes(ts, owner[0], n => ts.isVariableDeclaration(n) && n.name.getText(file) === 'nodeSystem');
+    assert.equal(stores.length, 1); assert(ts.isObjectLiteralExpression(stores[0].initializer));
+    const props = stores[0].initializer.properties.filter(n => n.name?.getText(file) === 'writeFile'); assert.equal(props.length, 1);
+    const declarations = nodes(ts, owner[0], n => ts.isVariableDeclaration(n) && n.name.getText(file) === 'patchedWriteFile');
+    const local = nodes(ts, owner[0], n => ts.isFunctionDeclaration(n) && n.name?.text === 'writeFile'); assert.equal(local.length, 1);
+    assert.equal(nodes(ts, local[0], n => n.kind === ts.SyntaxKind.ThisKeyword).length, 0, 'raw writer reads this');
+    assert.deepEqual(nodes(ts, local[0], ts.isCallExpression).map(n => n.expression.getText(file)), ['_fs.openSync', '_fs.writeSync', '_fs.closeSync'], 'raw writer callees drift');
+    const done = declarations.length === 1; let after = text;
+    if (done) {
+        assert.equal(text.split(wrapper).length, 2, 'writer wrapper drift');
+        assert.equal(props[0].getText(file), 'writeFile: patchedWriteFile', 'writer slot drift');
+        if (restoring) after = text.replace(wrapper, '').replace('            writeFile: patchedWriteFile,', '            writeFile,');
+    } else {
+        assert.equal(declarations.length, 0); assert(ts.isShorthandPropertyAssignment(props[0]));
+        if (!restoring) {
+            const statement = stores[0].parent.parent, start = text.lastIndexOf('\n', statement.getStart(file)-1)+1;
+            after = text.slice(0,start)+wrapper+text.slice(start);
+            assert.equal(after.split('            writeFile,').length,2);
+            after = after.replace('            writeFile,','            writeFile: patchedWriteFile,');
+        }
+    }
+    return after;
+}
+const constructWriter = text => rewriteWriter(text);
+const restoreWriter = text => rewriteWriter(text, true);
+function adapt(tree, options = {}) {
     assert.equal(ts.version, '6.0.3');
     const program = compiler(tree, ts);
     const file = program.getSourceFile(path.join(tree, manifest[0].file));
@@ -74,6 +116,7 @@ function adapt(tree) {
     const owner = owners[0], digest = hash(owner.getText(file));
     assert([manifest[0].ownerBeforeSha256, manifest[0].ownerAfterSha256].includes(digest), 'target owner moved: getNodeSystem');
     const done = digest === manifest[0].ownerAfterSha256;
+    assert(!options.pinOnly || !done, "pin generation requires predecessor state");
     const importAnchor = source => {
         const anchors = source.statements.filter(n => ts.isImportDeclaration(n) && n.moduleSpecifier.text === './hostErrors.js');
         assert.equal(anchors.length, 1, 'hostErrors import anchor moved');
@@ -118,21 +161,28 @@ function adapt(tree) {
     assert.equal(insertions, done ? 0 : 1, 'builtin import insertion count');
     let text = file.text;
     for (const edit of edits.sort((a,b) => b.start-a.start)) text = text.slice(0,edit.start)+edit.text+text.slice(edit.end);
+    if (!done) text = constructWriter(text);
     const changed = ts.createSourceFile(file.fileName, text, ts.ScriptTarget.Latest, true);
     const changedOwners = nodes(ts, changed, n => ts.isFunctionDeclaration(n) && n.name?.text === 'getNodeSystem');
     assert.equal(changedOwners.length, 1);
-    assert.equal(hash(changedOwners[0].getText(changed)), manifest[0].ownerAfterSha256, 'unreviewed builtin owner change');
+    if (!options.pinOnly) assert.equal(hash(changedOwners[0].getText(changed)), manifest[0].ownerAfterSha256, 'unreviewed builtin owner change');
     assert.equal(hash(importText(changed)), manifest[0].importsAfterSha256, 'unreviewed import change');
     assert.equal(ts.createSourceFile(file.fileName,text,ts.ScriptTarget.Latest,true).parseDiagnostics.length,0);
     const planned = plannedProgram(program, file, text);
     validateBindings(planned, planned.getSourceFile(file.fileName), true);
     // Validate all bindings and the full planned bytes before the sole write.
     assert.equal(fs.readFileSync(file.fileName,'utf8'),file.text,'source changed while planning');
+    if (options.pinOnly) {
+        const pins = [{...manifest[0], ownerBeforeSha256:digest, ownerAfterSha256:hash(changedOwners[0].getText(changed))}];
+        fs.writeFileSync(path.join(__dirname,'proofs/targets.json'),JSON.stringify(pins,null,2)+'\n');
+        return {pinsRegenerated:true,sourceWrites:0};
+    }
     if (edits.length) fs.writeFileSync(file.fileName,text);
     return {files: edits.length ? 1 : 0, javascriptChanging: true, sites: checked.evidence, qualifiedUses: checked.qualifiedUses, qualifiedUseLines: checked.qualifiedUseLines};
 }
-module.exports = {adapt, targets, validateBindings, plannedProgram};
+module.exports = {adapt, targets, validateBindings, plannedProgram, constructWriter, restoreWriter, writerWrapper};
 if (require.main === module) {
+    if (process.argv[2] === '--pin') { assert.equal(process.argv.length,4); console.log(JSON.stringify(adapt(path.resolve(process.argv[3]),{pinOnly:true}))); process.exit(0); }
     assert.equal(process.argv.length,3,'usage: node adapt.cjs <tree>');
     console.log(JSON.stringify(adapt(path.resolve(process.argv[2])),null,2));
 }

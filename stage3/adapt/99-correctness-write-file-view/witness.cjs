@@ -22,6 +22,8 @@ function run(text,ownCall){
  assert.equal(events.filter(e=>e[0]==='getter').length,1);assert(!events.some(e=>e[0]==='later-writer'));
  return events;
 }
-const pin=owners[0];assert.equal(digest(pin.before),pin.ownerBeforeSha256);assert.equal(digest(pin.after),pin.ownerAfterSha256);
-const cases=[];for(const ownCall of [false,true]){const before=run(pin.before,ownCall),after=run(pin.after,ownCall);assert.deepEqual(after,before);cases.push({ownCall,before,after});}
+const pin=owners[0];assert.equal(digest(pin.before),pin.ownerBeforeSha256);assert.equal(digest(pin.captured),pin.ownerCapturedSha256);
+const cases=[];for(const ownCall of [false,true]){const before=run(pin.before,ownCall),after=run(pin.captured,ownCall);assert.deepEqual(after,before);cases.push({ownCall,before,after});}
 console.log(JSON.stringify({owner:pin.owner,source:'whole pinned owners with an in-memory private capture hook',receiverSensitive:true,getterReadOnce:true,laterReassignment:true,identityPreserved:true,ownCallPreserved:true,cases},null,2));
+
+if(process.argv[2]) { const fs=require('fs'),path=require('path'); const text=fs.readFileSync(path.join(process.argv[2],'src/testRunner/unittests/helpers/virtualFileSystemWithWatch.ts'),'utf8').replace(/\r\n/g,'\n');assert(text.includes(pin.captured.replace(/^export /,'')),'moved local helper differs from landed capture'); }
