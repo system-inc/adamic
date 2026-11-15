@@ -1,0 +1,23 @@
+{
+  "original": "8499a514fc1d4bbab019594dfeef0e09fc4b5bbf",
+  "candidate": "63f46490764862fef5af3ce6793557d4000994bc",
+  "parent": "c2f3c21f72b04e4c3acf7731913f0fc8ab89c2ca",
+  "byteIdentical": [
+    "stage3/adapt/93-builtin-imports/README.md",
+    "stage3/adapt/93-builtin-imports/adapt.cjs",
+    "stage3/adapt/93-builtin-imports/proofs/targets.json",
+    "stage3/adapt/99-correctness-single-watcher-forwarder/README.md",
+    "stage3/adapt/99-correctness-single-watcher-forwarder/adapt.cjs",
+    "stage3/adapt/99-correctness-single-watcher-forwarder/owners.json"
+  ],
+  "differing": [
+    "stage3/adapt/99-correctness-core-multimap/README.md",
+    "stage3/adapt/99-correctness-core-multimap/owners.json",
+    "stage3/adapt/99-correctness-timer-closures/README.md",
+    "stage3/adapt/99-correctness-timer-closures/owners.json",
+    "stage3/adapt/99-wasm-crypto-import/README.md",
+    "stage3/adapt/99-wasm-crypto-import/adapt.cjs",
+    "stage3/adapt/99-wasm-crypto-import/proofs/targets.json",
+    "stage3/upstream/LEDGER.md"
+  ]
+}
