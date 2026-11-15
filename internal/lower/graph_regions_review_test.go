@@ -124,6 +124,41 @@ func TestGraphDynamicShapeAdoptionIsRefused(t *testing.T) {
 		t.Fatalf("dynamic graph adoption: %v", err)
 	}
 }
+
+// An empty record, {} on a graph object, holds nothing when made, so reachesRecord skips it in a program
+// that writes into no record (#t5q4prw). Once one is written, every road that fills it must still stop. Each one
+// is held here, filling r to close the cycle: the set, ??= and defineHidden writes (fresh's
+// WriteMapEntry, which graphTypes' slotsOf over the record type refuses), a computed key (lowered as the
+// set), a write in a callee, and Object.assign with the record as its target (NotYet in records.go's
+// recordObjectCallArguments).
+func TestGraphEmptyRecordFilledLaterStops(t *testing.T) {
+	t.Parallel()
+	const node = "interface Node { name: string; next: Node[]; r: Record<string, Node[]> }\n" +
+		"const a: Node = { name: 'a' + '', next: [], r: {} };\n" +
+		"const b: Node = { name: 'b' + '', next: [a], r: {} };\n" +
+		"a.next.push(b);\n"
+	for _, road := range []struct{ name, source string }{
+		{"set", "a.r['k'] = a.next;\n"},
+		{"coalesce", "a.r['k'] ??= a.next;\n"},
+		{"computed key", "const key = 'k' + '';\na.r[key] = a.next;\n"},
+		{"callee", "function put(n: Node): void { n.r['k'] = n.next; }\nput(a);\n"},
+		{"defineHidden", "Object.defineProperty(a.r, 'k', { enumerable: false, writable: false, value: a.next });\n"},
+		{"assign", "Object.assign(a.r, { k: a.next });\n"},
+		// The record is written a container, an unproven local, and a later push into that container
+		// closes the cycle: a seed into Node[] only reachesRecord sees (Language's e05).
+		{"push into a stored value", "const list: Node[] = [];\na.r['k'] = list;\nlist.push(a);\n"},
+	} {
+		t.Run(road.name, func(t *testing.T) {
+			t.Parallel()
+			if _, err := lowerSource(t, node+road.source+"console.log(a.name);\n"); err == nil {
+				t.Fatal("a cycle closed by a write into an empty record lowered")
+			} else {
+				t.Log(err)
+			}
+		})
+	}
+}
+
 func TestGraphRecordCycleStaysRefused(t *testing.T) {
 	t.Parallel()
 	_, err := lowerSource(t, `interface Ring {self:Ring|undefined;[key:string]:Ring|undefined} const ring:Ring={self:undefined};ring.self=ring;console.log(Object.keys(ring).join(','));`)

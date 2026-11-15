@@ -86,6 +86,39 @@ func (f *cycleFinder) reassigned(local int) bool {
 	return f.assigned[local]
 }
 
+// recordWritten reports whether lowering made any write into a record: a write site whose holder is a
+// record, or a union with a record among its members (set, defineHidden, ??=, a computed key, or the
+// entries form's field write). It fails closed: a record written anywhere makes every empty literal count.
+func (f *cycleFinder) recordWritten() bool {
+	if f.recordWrites == 0 {
+		f.recordWrites = -1
+		for _, site := range f.l.writeSites {
+			if site.holder != nil && len(f.recordElementsOf(site.holder)) != 0 {
+				f.recordWrites = 1
+				break
+			}
+		}
+	}
+	return f.recordWrites > 0
+}
+
+// recordElementsOf is the value types of the records a value of the type can be: its own, or each record
+// arm's of a union.
+func (f *cycleFinder) recordElementsOf(proven *checker.Type) []*checker.Type {
+	if element := f.l.recordElement(proven); element != nil {
+		return []*checker.Type{element}
+	}
+	var elements []*checker.Type
+	if proven.Flags()&checker.TypeFlagsUnion != 0 {
+		for _, member := range proven.Types() {
+			if element := f.l.recordElement(member); element != nil {
+				elements = append(elements, element)
+			}
+		}
+	}
+	return elements
+}
+
 // graphRecordSite is one record literal: where, the record type it's built as, and whether it's empty, {}
 // with no entry and no spread, which holds nothing when it's made.
 type graphRecordSite struct {
@@ -117,11 +150,14 @@ func (l *lowering) recordLiteralType(node *ast.Node) *checker.Type {
 func (f *cycleFinder) reachesRecord(value, holder *checker.Type) bool {
 	judged := map[*checker.Type]bool{}
 	for index := range f.l.graphRecords {
-		// An empty literal holds nothing when it's made, so nothing in it can lead back to the holder. A
-		// value enters it later only by a write into the record, which graphTypes refuses when it can
-		// close a cycle (its slotsOf over every record type), so the empty r: {} a graph object starts
-		// with stops nothing here (TestGraphFlowWriters' programs, a false stop at 7e4d4fb9).
-		if f.l.graphRecords[index].empty {
+		// An empty literal holds nothing when it's made, and in a program that writes into no record it
+		// holds nothing ever, so nothing in it can lead back to the holder: the empty r: {} a graph object
+		// starts with and never writes stops nothing (TestGraphFlowWriters' programs, a false stop at
+		// 7e4d4fb9). Once any record is written, an empty one counts as any other: a write into it may be
+		// excused as fresh by graphTypes' slotsOf over the record type and still put a container on the
+		// cycle that a later write into that container closes, which only this stop sees (Language's e05
+		// on #t5q4prw). TestGraphEmptyRecordFilledLaterStops holds every road that fills one.
+		if f.l.graphRecords[index].empty && !f.recordWritten() {
 			continue
 		}
 		record := f.l.graphRecords[index].record
