@@ -360,7 +360,9 @@ func TestConstantRecordsInFunctions(t *testing.T) {
 // constantRecords never runs there (Emit on #j2qkavx): the region version of build, whose literal
 // holds 20 closed records, keeps ordinary emission while its heap version batches. The emitter-state
 // probes pin each condition alone. Mutant (internal/native/testdata/constant-records-region.mutants.md):
-// the region refusal dropped, and both the probes and the region version's body go red.
+// the region refusal dropped, and both the probes and the region version's body go red. No run can see
+// the refusal today, since an array literal is never region-made, so this body check is the guard: if
+// region.go ever makes array literals in a region, it is what fails first (Emit's should on #j2qkavx).
 func TestConstantRecordsStayOutOfRegions(t *testing.T) {
 	t.Parallel()
 	literal := ir.ArrayLiteral{Element: ir.Object}
