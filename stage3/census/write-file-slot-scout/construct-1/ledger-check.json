@@ -1,0 +1,15 @@
+{
+  "parent": "a77ca4a82271f18c142d8843ea76604b30d3833d",
+  "parentBytes": 64969,
+  "parentSha256": "50b01bab5a525f13dc3f587af8cd1f99f86caba7c6035b98ab75f8930232bdbd",
+  "prefixByteIdentical": true,
+  "parentLinesRemoved": 0,
+  "append": "\n- 99-correctness-write-file-construct (amends 93-builtin-imports, 99-wasm-crypto-import, 99-correctness-write-file-view): JavaScript-changing; wrapper .name \"\" -> \"patchedWriteFile\" (0 .name/.length readers in 479-access audit); ts loses patchWriteFileEnsuringDirectory (0 adapted reads over the lane, 27 firing controls); raw writer never in slot; direct local call has receiver undefined, body reads no this, and Node path has 0 .call reads. Harness helper moved unchanged; System public d.ts byte-identical. Evidence: typescript/write-file-slot-scout@de29fb07566f3eb82a1895fe6561ce13e61f5139, road (a\u2032).\n",
+  "newDirectoryFiles": [
+    "PROOF.md",
+    "README.md",
+    "adapt.cjs",
+    "mutant.cjs",
+    "owners.json"
+  ]
+}

@@ -1,0 +1,42 @@
+[
+  {
+    "name": "actual93-before",
+    "exit": 0
+  },
+  {
+    "name": "actual93-after",
+    "exit": 0
+  },
+  {
+    "name": "actual99-before",
+    "exit": 0
+  },
+  {
+    "name": "actual99-after",
+    "exit": 0
+  },
+  {
+    "name": "93-built-witness",
+    "command": [
+      "node",
+      "/workspace/scratch/write-file-construct-proof/stage3/adapt/93-builtin-imports/proofs/built-witness.cjs",
+      "/workspace/scratch/write-file-construct-run/actual93-before",
+      "/workspace/scratch/write-file-construct-run/actual93-after",
+      "/workspace/scratch/write-file-construct-run/actual-93-built-fixture",
+      "/workspace/scratch/write-file-construct-run/actual-93-built-witness.json"
+    ],
+    "exit": 0
+  },
+  {
+    "name": "99-built-witness",
+    "command": [
+      "node",
+      "/workspace/scratch/write-file-construct-proof/stage3/adapt/99-wasm-crypto-import/proofs/built-witness.cjs",
+      "/workspace/scratch/write-file-construct-run/actual99-before",
+      "/workspace/scratch/write-file-construct-run/actual99-after",
+      "/workspace/scratch/write-file-construct-run/actual-99-built-fixture",
+      "/workspace/scratch/write-file-construct-run/actual-99-built-witness.json"
+    ],
+    "exit": 0
+  }
+]

@@ -1,0 +1,30 @@
+{
+  "control": {
+    "byteIdentical": true,
+    "diffBytes": 0,
+    "sha256": "f03adcf915df559d616fcafd75181d3423eaa0f272237482cedbd025525c9516"
+  },
+  "upstream": {
+    "byteIdentical": false,
+    "inheritedDiffUnchanged": true,
+    "newDeltaBytes": 0,
+    "controlDiffBytes": 78408,
+    "candidateDiffBytes": 78410,
+    "sha256": "c967e03c8dbb4770f7e2f0b71b5d13593de679a41cc2b60266c4b69f1342a263"
+  },
+  "typescript.internal.d.ts": {
+    "diffBytes": 598
+  },
+  "typescript.js": {
+    "diffBytes": 2788
+  },
+  "run.js": {
+    "diffBytes": 3956
+  },
+  "_tsc.js": {
+    "diffBytes": 1813
+  },
+  "tsc.js": {
+    "diffBytes": 0
+  }
+}

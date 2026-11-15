@@ -1,0 +1,41 @@
+[
+  {
+    "name": "93-actual-legacy-check",
+    "command": [
+      "node",
+      "/workspace/scratch/write-file-construct-final/stage3/adapt/93-builtin-imports/proofs/check.cjs",
+      "/workspace/scratch/write-file-construct-run/actual93-before",
+      "/workspace/scratch/write-file-construct-run/actual93-after"
+    ],
+    "exit": 1
+  },
+  {
+    "name": "93-actual-legacy-scope-mutant",
+    "command": [
+      "node",
+      "/workspace/scratch/write-file-construct-final/stage3/adapt/93-builtin-imports/proofs/scope-mutant.cjs",
+      "/workspace/scratch/write-file-construct-run/actual93-before",
+      "/workspace/scratch/write-file-construct-run/actual93-after"
+    ],
+    "exit": 1
+  },
+  {
+    "name": "view-actual-contract",
+    "command": [
+      "node",
+      "/workspace/scratch/write-file-construct-final/stage3/adapt/99-correctness-write-file-view/contract.cjs",
+      "/workspace/scratch/write-file-construct-run/actual-view-before"
+    ],
+    "exit": 0
+  },
+  {
+    "name": "construct-actual-contract",
+    "command": [
+      "node",
+      "/workspace/scratch/write-file-construct-final/stage3/adapt/99-correctness-write-file-construct/adapt.cjs",
+      "--proof",
+      "/workspace/scratch/write-file-construct-run/actual-construct-before"
+    ],
+    "exit": 0
+  }
+]

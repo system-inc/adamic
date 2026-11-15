@@ -1,0 +1,23 @@
+{
+  "frozenCommit": "51104a74ba9e981fe93404e21e9c66298e47425f",
+  "merge": "0adcd82e25a88f32c50f625c21a0f127853537c1",
+  "main": "89614cc0f9d6aa7b7fe96b56c5c6c1c3eace9825",
+  "finalImplementationMatchesFrozenCodePinsLedger": true,
+  "productionAndCensusGoSourceIdenticalToMeasuredMerge": true,
+  "files": {
+    "stage3/adapt/93-builtin-imports/adapt.cjs": "8e13a137346ef067d87699302e4e0d402b43d1b0f399feac8bce2eb236c90d5b",
+    "stage3/adapt/93-builtin-imports/proofs/targets.json": "cae405e0b1ec5dba098aa7cf00858a3d5b627d83c20b9aa58f688ef34ec388e6",
+    "stage3/adapt/99-correctness-write-file-construct/adapt.cjs": "d9596a05303a1ceea71e39dc5367739a44dde017cdda324a6de2ff83149a1a29",
+    "stage3/adapt/99-correctness-write-file-construct/mutant.cjs": "b0d831623b6a2ef48384e031ea6ffbecfe570278ef9632d37da5e13d72b9de27",
+    "stage3/adapt/99-correctness-write-file-construct/owners.json": "f9f19da4ea3e607e167d8e5b1f7f6a4b8002f32da4240f012caf9bf3f5250fa0",
+    "stage3/adapt/99-correctness-write-file-view/adapt.cjs": "f1bd8760fae63482ba0a1c61ef76a6fdec27e4a86922534cd47e078c78aa789b",
+    "stage3/adapt/99-correctness-write-file-view/contract.cjs": "a9c90ee519e347bbe02c2d89521c9317823799613afeea9df514839e5d9f763b",
+    "stage3/adapt/99-correctness-write-file-view/mutant.cjs": "c230831928c6f052655ea71b1f87bac84456589145403c0d9cbc3cda251a4575",
+    "stage3/adapt/99-correctness-write-file-view/owners.json": "edb4941cde8f1985ed26584f0d90bedb6f8b26343b407f3962c88eb8780a8713",
+    "stage3/adapt/99-correctness-write-file-view/witness.cjs": "9f0f94eacec46475b6a7f3515d65225e6f0c58f225fef24aa197f13d2a57e9dd",
+    "stage3/adapt/99-wasm-crypto-import/adapt.cjs": "8a3f4ed2585e68ff6e9a401897665aab342595406dddb68096a3d2f8b6a1a619",
+    "stage3/adapt/99-wasm-crypto-import/proofs/scope-mutant.cjs": "2e723faed9e20aa5f29bb472e120ce2d504ce646466ee2a9a668235342f932e0",
+    "stage3/adapt/99-wasm-crypto-import/proofs/targets.json": "b0e0e5001d3885141c1325d0765fec03c64a30f9daa65d77b82142583393875c",
+    "stage3/upstream/LEDGER.md": "6c270122eb9679b886e93aef987bff85a27b3c9344ba310f2ed706520389e8dd"
+  }
+}

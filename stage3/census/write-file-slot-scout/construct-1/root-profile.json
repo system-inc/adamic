@@ -1,0 +1,85 @@
+{
+  "control": {
+    "roots": 79,
+    "groups": [
+      {
+        "count": 73,
+        "kind": "Refused",
+        "where": "src/compiler/sys.ts:1387:5",
+        "reason": "a method read as a value (writeFile would lose its object, and this with it)"
+      },
+      {
+        "count": 2,
+        "kind": "accepted",
+        "where": "",
+        "reason": ""
+      },
+      {
+        "count": 1,
+        "kind": "NotYet",
+        "where": "src/compiler/commandLineParser.ts:293:35",
+        "reason": "reading an enum before its runtime initialization; move the call after the enum declaration"
+      },
+      {
+        "count": 1,
+        "kind": "NotYet",
+        "where": "src/compiler/diagnosticInformationMap.generated.ts:13:45",
+        "reason": "reading an enum before its runtime initialization; move the call after the enum declaration"
+      },
+      {
+        "count": 1,
+        "kind": "NotYet",
+        "where": "src/compiler/semver.ts:71:9",
+        "reason": "a namespace read before runtime initialization, directly or through a reachable call; move that read or call after the namespace declaration"
+      },
+      {
+        "count": 1,
+        "kind": "Refused",
+        "where": "src/compiler/utilitiesPublic.ts:1284:52",
+        "reason": "an unproven predicate argument for parameter predicate (argument \"predicate\")"
+      }
+    ]
+  },
+  "candidate": {
+    "roots": 79,
+    "groups": [
+      {
+        "count": 73,
+        "kind": "NotYet",
+        "where": "src/compiler/sys.ts:1481:57",
+        "reason": "node:timers.clearTimeout value needs exactly (timeoutId: unknown) => void, not (timeout: unknown) => void with no slot"
+      },
+      {
+        "count": 2,
+        "kind": "accepted",
+        "where": "",
+        "reason": ""
+      },
+      {
+        "count": 1,
+        "kind": "NotYet",
+        "where": "src/compiler/commandLineParser.ts:293:35",
+        "reason": "reading an enum before its runtime initialization; move the call after the enum declaration"
+      },
+      {
+        "count": 1,
+        "kind": "NotYet",
+        "where": "src/compiler/diagnosticInformationMap.generated.ts:13:45",
+        "reason": "reading an enum before its runtime initialization; move the call after the enum declaration"
+      },
+      {
+        "count": 1,
+        "kind": "NotYet",
+        "where": "src/compiler/semver.ts:71:9",
+        "reason": "a namespace read before runtime initialization, directly or through a reachable call; move that read or call after the namespace declaration"
+      },
+      {
+        "count": 1,
+        "kind": "Refused",
+        "where": "src/compiler/utilitiesPublic.ts:1284:52",
+        "reason": "an unproven predicate argument for parameter predicate (argument \"predicate\")"
+      }
+    ]
+  },
+  "wallSeconds": 2566.8762422729997
+}

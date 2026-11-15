@@ -1,0 +1,65 @@
+--- /workspace/scratch/write-file-construct-run/control-adapted/src/compiler/sys.ts
++++ /workspace/scratch/write-file-construct-run/lane/adapted-tree/src/compiler/sys.ts
+@@ -1375,26 +1375,6 @@
+     }
+ }
+ 
+-/**
+- * patch writefile to create folder before writing the file
+- *
+- * @internal
+- */
+-export function patchWriteFileEnsuringDirectory(sys: System): void {
+-    // patch writefile to create folder before writing the file
+-    const writeFileView: { readonly writeFile: System["writeFile"]; } = sys;
+-    const originalWriteFile = writeFileView.writeFile;
+-    sys.writeFile = (path, data, writeBom) =>
+-        writeFileEnsuringDirectories(
+-            path,
+-            data,
+-            !!writeBom,
+-            (path, data, writeByteOrderMark) => originalWriteFile.call(sys, path, data, writeByteOrderMark),
+-            path => sys.createDirectory(path),
+-            path => sys.directoryExists(path),
+-        );
+-}
+-
+ export type BufferEncoding = "ascii" | "utf8" | "utf-8" | "utf16le" | "ucs2" | "ucs-2" | "base64" | "latin1" | "binary" | "hex";
+ 
+ // TODO: GH#18217 Methods on System are often used as if they are certainly defined
+@@ -1515,6 +1495,15 @@
+             fsWatchWithTimestamp: isMacOs,
+             sysLog,
+         });
++        const patchedWriteFile: System["writeFile"] = (path, data, writeBom) =>
++            writeFileEnsuringDirectories(
++                path,
++                data,
++                !!writeBom,
++                (path, data, writeByteOrderMark) => writeFile(path, data, writeByteOrderMark),
++                path => nodeSystem.createDirectory(path),
++                path => nodeSystem.directoryExists(path),
++            );
+         interface NodeResolutionSystem extends System {
+             trace?(s: string): void;
+             getGlobalTypingsCacheLocation?(): string | undefined;
+@@ -1544,7 +1533,7 @@
+                 return !!process.stdout.isTTY;
+             },
+             readFile,
+-            writeFile,
++            writeFile: patchedWriteFile,
+             watchFile,
+             watchDirectory: (path: string, callback: DirectoryWatcherCallback, recursive?: boolean, options?: WatchOptions) => watchDirectory(path, callback, !!recursive, options),
+             preferNonRecursiveWatch: !fsSupportsRecursiveFsWatch,
+@@ -1977,10 +1966,6 @@
+     if (isNodeLikeSystem()) {
+         sys = getNodeSystem();
+     }
+-    if (sys) {
+-        // patch writefile to create folder before writing the file
+-        patchWriteFileEnsuringDirectory(sys);
+-    }
+     return sys!;
+ })();
+ 

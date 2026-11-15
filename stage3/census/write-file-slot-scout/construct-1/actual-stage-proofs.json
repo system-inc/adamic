@@ -1,0 +1,60 @@
+[
+  {
+    "name": "93-prefix-context-identity",
+    "wholeSourceIdentity": {
+      "before": false,
+      "after": false
+    }
+  },
+  {
+    "name": "93-actual-owner-contract",
+    "command": [
+      "node",
+      "/workspace/scratch/write-file-construct-final/stage3/adapt/93-builtin-imports/proofs/owner-contract.cjs",
+      "/workspace/scratch/write-file-construct-run/actual93-before",
+      "/workspace/scratch/write-file-construct-run/actual93-after",
+      "/workspace/scratch/write-file-construct-run/93-actual-owner-contract"
+    ],
+    "exit": 0
+  },
+  {
+    "name": "93-actual-bindings",
+    "command": [
+      "node",
+      "/workspace/scratch/write-file-construct-final/stage3/adapt/93-builtin-imports/proofs/bindings.cjs",
+      "/workspace/scratch/write-file-construct-run/actual93-before",
+      "/workspace/scratch/write-file-construct-run/actual93-after",
+      "/workspace/scratch/write-file-construct-run/93-actual-bindings.json"
+    ],
+    "exit": 0
+  },
+  {
+    "name": "99-prefix-context-identity",
+    "wholeSourceIdentity": {
+      "before": false,
+      "after": false
+    }
+  },
+  {
+    "name": "99-actual-bindings",
+    "command": [
+      "node",
+      "/workspace/scratch/write-file-construct-final/stage3/adapt/99-wasm-crypto-import/proofs/bindings.cjs",
+      "/workspace/scratch/write-file-construct-run/actual99-before",
+      "/workspace/scratch/write-file-construct-run/actual99-after",
+      "/workspace/scratch/write-file-construct-run/99-actual-bindings.json"
+    ],
+    "exit": 0
+  },
+  {
+    "name": "99-actual-source-transpile-check",
+    "command": [
+      "node",
+      "/workspace/scratch/write-file-construct-final/stage3/adapt/99-wasm-crypto-import/proofs/check.cjs",
+      "/workspace/scratch/write-file-construct-run/actual99-before",
+      "/workspace/scratch/write-file-construct-run/actual99-after",
+      "/workspace/scratch/write-file-construct-run/99-actual-checks.json"
+    ],
+    "exit": 0
+  }
+]

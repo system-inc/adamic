@@ -1,0 +1,35 @@
+{
+  "typescript": "6.0.3",
+  "rootCount": 79,
+  "stockCommand": [
+    "node",
+    "/workspace/scratch/write-file-construct-proof/stage3/api/node_modules/typescript/lib/tsc.js",
+    "--project",
+    "/workspace/scratch/write-file-construct-run/stock.tsconfig.json",
+    "--pretty",
+    "false"
+  ],
+  "stockExit": 0,
+  "changedSourceFiles": [
+    "src/compiler/sys.ts",
+    "src/testRunner/unittests/helpers/virtualFileSystemWithWatch.ts"
+  ],
+  "sourceCount": 747,
+  "actualCRLFHelperBodyByteIdentical": true,
+  "actualCRLFHelperBodySha256": "20bd9198a1ce748e0dcc47bc12ac3f2fe2efc566bece591ef8c3f10e64ed9f23",
+  "publicSystemByteIdentical": true,
+  "emits": {
+    "src/compiler/sys.ts": {
+      "main-sys.ts.comments-true.js": "73991300ed6071d86b93a462221e0bf62c4ad1960c184da4654c4126e94329cb",
+      "main-sys.ts.comments-false.js": "8cd2a236b5b2b5941b2a97dd91f2ad9644c341751f403d1db2b5f05c53c22a15",
+      "candidate-sys.ts.comments-true.js": "65a75b9b5523d6000d29704e77b8e397e0f172c5bc4fbae4823a3463c8ffc38a",
+      "candidate-sys.ts.comments-false.js": "9c45af6a87d5a8ec13d24ac55ec7c783fe98ef647e5665f51b1dcb4039e46268"
+    },
+    "src/testRunner/unittests/helpers/virtualFileSystemWithWatch.ts": {
+      "main-virtualFileSystemWithWatch.ts.comments-true.js": "cc3a356020925e47bff8a4fb9edfa501fdea8299022f7dc90493f352412246e5",
+      "main-virtualFileSystemWithWatch.ts.comments-false.js": "9f97843c561c2679c68e037c7841f5a346e81845681590a0423dc61cad6ff043",
+      "candidate-virtualFileSystemWithWatch.ts.comments-true.js": "f91784ce115af7cd4fe07bd843db6c9f9d0f044073b4ec3470df0d4400bcb334",
+      "candidate-virtualFileSystemWithWatch.ts.comments-false.js": "e5937cbeec454772f59edf983b73420ff2a2dd728ea9a7939b930ab6b77fcb62"
+    }
+  }
+}

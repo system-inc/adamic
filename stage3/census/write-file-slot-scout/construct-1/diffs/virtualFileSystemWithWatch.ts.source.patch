@@ -1,0 +1,34 @@
+--- /workspace/scratch/write-file-construct-run/control-adapted/src/testRunner/unittests/helpers/virtualFileSystemWithWatch.ts
++++ /workspace/scratch/write-file-construct-run/lane/adapted-tree/src/testRunner/unittests/helpers/virtualFileSystemWithWatch.ts
+@@ -1,3 +1,4 @@
++import { System, writeFileEnsuringDirectories } from "../../_namespaces/ts.js";
+ import {
+     harnessSessionCurrentDirectory,
+     harnessTypingInstallerCacheLocation,
+@@ -49,7 +50,6 @@
+     ModuleImportResult,
+     ModuleResolutionHost,
+     noop,
+-    patchWriteFileEnsuringDirectory,
+     Path,
+     PollingInterval,
+     server,
+@@ -1402,3 +1402,18 @@
+             Debug.assertNever(osFlavor);
+     }
+ }
++
++function patchWriteFileEnsuringDirectory(sys: System): void {
++    // patch writefile to create folder before writing the file
++    const writeFileView: { readonly writeFile: System["writeFile"]; } = sys;
++    const originalWriteFile = writeFileView.writeFile;
++    sys.writeFile = (path, data, writeBom) =>
++        writeFileEnsuringDirectories(
++            path,
++            data,
++            !!writeBom,
++            (path, data, writeByteOrderMark) => originalWriteFile.call(sys, path, data, writeByteOrderMark),
++            path => sys.createDirectory(path),
++            path => sys.directoryExists(path),
++        );
++}

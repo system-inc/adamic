@@ -1,0 +1,135 @@
+[
+  {
+    "name": "construct-restoring-mutant",
+    "command": [
+      "node",
+      "/workspace/scratch/write-file-construct-proof/stage3/adapt/99-correctness-write-file-construct/mutant.cjs",
+      "/workspace/scratch/write-file-construct-run/construct-mutant"
+    ],
+    "exit": 0
+  },
+  {
+    "name": "construct-restoring-mutant-replay",
+    "command": [
+      "node",
+      "/workspace/scratch/write-file-construct-proof/stage3/adapt/99-correctness-write-file-construct/mutant.cjs",
+      "/workspace/scratch/write-file-construct-run/construct-mutant"
+    ],
+    "exit": 0
+  },
+  {
+    "name": "construct-mutant-production-entry",
+    "command": [
+      "/workspace/scratch/write-file-construct-run/adamic",
+      "js",
+      "/workspace/scratch/write-file-construct-run/construct-mutant/src/tsc/tsc.ts",
+      "--module-format",
+      "commonjs-bundle"
+    ],
+    "exit": 1
+  },
+  {
+    "name": "99-ternary-mutant-valid-fixture",
+    "command": [
+      "node",
+      "/workspace/scratch/write-file-construct-proof/stage3/adapt/99-wasm-crypto-import/proofs/ternary-mutant.cjs",
+      "/workspace/scratch/write-file-construct-run/prefix99-after"
+    ],
+    "exit": 1
+  },
+  {
+    "name": "99-require-result-restore-mutant",
+    "command": [
+      "node",
+      "/workspace/scratch/write-file-construct-proof/stage3/adapt/99-wasm-crypto-import/require-result-mutant.cjs",
+      "/workspace/scratch/write-file-construct-run/construct-mutant",
+      "restore"
+    ],
+    "exit": 0
+  },
+  {
+    "name": "99-require-result-restore-refused",
+    "command": [
+      "node",
+      "/workspace/scratch/write-file-construct-proof/stage3/adapt/99-wasm-crypto-import/adapt.cjs",
+      "/workspace/scratch/write-file-construct-run/construct-mutant"
+    ],
+    "exit": 1
+  },
+  {
+    "name": "99-resolve-host-restore-mutant",
+    "command": [
+      "node",
+      "/workspace/scratch/write-file-construct-proof/stage3/adapt/99-wasm-crypto-import/resolve-host-mutant.cjs",
+      "/workspace/scratch/write-file-construct-run/construct-mutant",
+      "restore"
+    ],
+    "exit": 0
+  },
+  {
+    "name": "99-resolve-host-restore-refused",
+    "command": [
+      "node",
+      "/workspace/scratch/write-file-construct-proof/stage3/adapt/99-wasm-crypto-import/adapt.cjs",
+      "/workspace/scratch/write-file-construct-run/construct-mutant"
+    ],
+    "exit": 1
+  },
+  {
+    "name": "99-watch-directory-restore-mutant",
+    "command": [
+      "node",
+      "/workspace/scratch/write-file-construct-proof/stage3/adapt/99-wasm-crypto-import/watch-directory-mutant.cjs",
+      "/workspace/scratch/write-file-construct-run/construct-mutant",
+      "restore"
+    ],
+    "exit": 0
+  },
+  {
+    "name": "99-watch-directory-restore-refused",
+    "command": [
+      "node",
+      "/workspace/scratch/write-file-construct-proof/stage3/adapt/99-wasm-crypto-import/adapt.cjs",
+      "/workspace/scratch/write-file-construct-run/construct-mutant"
+    ],
+    "exit": 1
+  },
+  {
+    "name": "99-watch-directory-unnormalized-mutant",
+    "command": [
+      "node",
+      "/workspace/scratch/write-file-construct-proof/stage3/adapt/99-wasm-crypto-import/watch-directory-mutant.cjs",
+      "/workspace/scratch/write-file-construct-run/construct-mutant",
+      "unnormalized"
+    ],
+    "exit": 0
+  },
+  {
+    "name": "99-watch-directory-unnormalized-refused",
+    "command": [
+      "node",
+      "/workspace/scratch/write-file-construct-proof/stage3/adapt/99-wasm-crypto-import/adapt.cjs",
+      "/workspace/scratch/write-file-construct-run/construct-mutant"
+    ],
+    "exit": 1
+  },
+  {
+    "name": "99-watch-directory-optional-contract-mutant",
+    "command": [
+      "node",
+      "/workspace/scratch/write-file-construct-proof/stage3/adapt/99-wasm-crypto-import/watch-directory-mutant.cjs",
+      "/workspace/scratch/write-file-construct-run/construct-mutant",
+      "optional-contract"
+    ],
+    "exit": 0
+  },
+  {
+    "name": "99-watch-directory-optional-contract-refused",
+    "command": [
+      "node",
+      "/workspace/scratch/write-file-construct-proof/stage3/adapt/99-wasm-crypto-import/adapt.cjs",
+      "/workspace/scratch/write-file-construct-run/construct-mutant"
+    ],
+    "exit": 1
+  }
+]

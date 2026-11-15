@@ -1,3 +1,45 @@
+## Adaptation acceptance on the requested ledger chain
+
+| Road | Target gone | New / changed sys.ts findings | JavaScript change | Public declaration change |
+|---|---|---|---|---|
+| (a′), adapted in typescript/write-file-construct-1 | Yes, all 73 advance to NotYet sys.ts:1481:57 | 0 / 0; one old finding gone | Yes: named construction wrapper, direct call, no raw slot exposure, internal export removed; harness helper moved | None against parent+main; System remains a method |
+
+Base: a77ca4a82271f18c142d8843ea76604b30d3833d. Re-fetched main:
+89614cc0f9d6aa7b7fe96b56c5c6c1c3eace9825. The full 79-root table has 73 moves and
+six unchanged outcomes. Full sys.ts: 51 → 50 unique findings, 1 gone / 0 new / 0
+changed; old lowering refusal at 1392:49 is gone. Stock tsc and adamic types exit 0
+on all 79 roots. StripInternal + upstream public bundler is byte-identical to the
+parent+main control (f03adcf915df559d616fcafd75181d3423eaa0f272237482cedbd025525c9516);
+stock API differences are inherited unchanged. The first getNodeSystem scan stop
+is 1481:57; the removed helper has no remaining sys.ts unit.
+
+The once-run whole lane is PASS: 106,366 passing, 0 pending, only the sanctioned
+API row. A separate fresh application of the frozen implementation merged with
+main is green; all 747 output source files match that once-tested tree exactly.
+Its restoring mutant exactly restores all 747 parent+main source files, preserving
+1965, 1533 and the receiver chain. Every owning directory's relevant contracts,
+bindings, built witnesses and mutants are recorded with exits; 93's legacy red
+checks are also measured on main itself.
+
+The four touched directories and why are in [the ownership audit](construct-1/OWNERSHIP.md).
+Pins were regenerated only by their own tools. TestServerHost and createServerHost
+stay byte-identical, so their timer-closures owner is not amended. The ledger keeps
+the parent's exact bytes with zero parent lines removed.
+
+The real-body witness repeats 29 equal Node events and 10 equal harness events.
+Writer name changes from empty to patchedWriteFile, length stays 3, raw writer
+never occupies the slot, direct receiver is undefined with no this reads, and own
+.call control changes 5 → 0. Runtime ts keys change 2256 → 2255, losing only the
+internal helper; remaining order and descriptor flags agree. The accepted reader
+conditions remain cited to de29fb07566f3eb82a1895fe6561ce13e61f5139 below: zero
+name/length readers among 479 accesses, zero adapted ts helper reads, 27 controls.
+
+[Acceptance index](construct-1/ACCEPTANCE.json), [all 79 roots](construct-1/production-roots.md),
+[full census pair](construct-1/pairs.json), [fresh-source identity](construct-1/final-source-identity.json),
+[proof inputs and receipts](construct-1/README.md). Nothing submitted.
+
+---
+
 # Follow-up: road (a′), direct construction writer and harness-only helper
 
 | Road | Production target | Full sys.ts census vs main | JavaScript | Public bundled declaration | Whole move lane |

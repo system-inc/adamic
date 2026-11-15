@@ -1,0 +1,103 @@
+--- /workspace/scratch/write-file-construct-run/control-adapted/built/local/run.js
++++ /workspace/scratch/write-file-construct-run/lane/adapted-tree/built/local/run.js
+@@ -5560,18 +5560,6 @@
+     });
+   }
+ }
+-function patchWriteFileEnsuringDirectory(sys2) {
+-  const writeFileView = sys2;
+-  const originalWriteFile = writeFileView.writeFile;
+-  sys2.writeFile = (path3, data, writeBom) => writeFileEnsuringDirectories(
+-    path3,
+-    data,
+-    !!writeBom,
+-    (path4, data2, writeByteOrderMark) => originalWriteFile.call(sys2, path4, data2, writeByteOrderMark),
+-    (path4) => sys2.createDirectory(path4),
+-    (path4) => sys2.directoryExists(path4)
+-  );
+-}
+ function setSys(s) {
+   sys = s;
+ }
+@@ -5646,6 +5634,14 @@
+           fsWatchWithTimestamp: isMacOs,
+           sysLog
+         });
++        const patchedWriteFile = (path3, data, writeBom) => writeFileEnsuringDirectories(
++          path3,
++          data,
++          !!writeBom,
++          (path4, data2, writeByteOrderMark) => writeFile2(path4, data2, writeByteOrderMark),
++          (path4) => nodeSystem.createDirectory(path4),
++          (path4) => nodeSystem.directoryExists(path4)
++        );
+         const nodeSystem = {
+           args: process.argv.slice(2),
+           newLine: _os.EOL,
+@@ -5660,7 +5656,7 @@
+             return !!process.stdout.isTTY;
+           },
+           readFile,
+-          writeFile: writeFile2,
++          writeFile: patchedWriteFile,
+           watchFile: watchFile3,
+           watchDirectory: (path3, callback, recursive, options) => watchDirectory(path3, callback, !!recursive, options),
+           preferNonRecursiveWatch: !fsSupportsRecursiveFsWatch,
+@@ -6019,9 +6015,6 @@
+       let sys2;
+       if (isNodeLikeSystem()) {
+         sys2 = getNodeSystem();
+-      }
+-      if (sys2) {
+-        patchWriteFileEnsuringDirectory(sys2);
+       }
+       return sys2;
+     })();
+@@ -198474,7 +198467,6 @@
+   parsePseudoBigInt: () => parsePseudoBigInt,
+   parseValidBigInt: () => parseValidBigInt,
+   pasteEdits: () => ts_PasteEdits_exports,
+-  patchWriteFileEnsuringDirectory: () => patchWriteFileEnsuringDirectory,
+   pathContainsNodeModules: () => pathContainsNodeModules,
+   pathIsAbsolute: () => pathIsAbsolute,
+   pathIsBareSpecifier: () => pathIsBareSpecifier,
+@@ -201789,7 +201781,6 @@
+   parsePseudoBigInt: () => parsePseudoBigInt,
+   parseValidBigInt: () => parseValidBigInt,
+   pasteEdits: () => ts_PasteEdits_exports,
+-  patchWriteFileEnsuringDirectory: () => patchWriteFileEnsuringDirectory,
+   pathContainsNodeModules: () => pathContainsNodeModules,
+   pathIsAbsolute: () => pathIsAbsolute,
+   pathIsBareSpecifier: () => pathIsBareSpecifier,
+@@ -210956,7 +210947,6 @@
+   parsePseudoBigInt: () => parsePseudoBigInt,
+   parseValidBigInt: () => parseValidBigInt,
+   pasteEdits: () => ts_PasteEdits_exports,
+-  patchWriteFileEnsuringDirectory: () => patchWriteFileEnsuringDirectory,
+   pathContainsNodeModules: () => pathContainsNodeModules,
+   pathIsAbsolute: () => pathIsAbsolute,
+   pathIsBareSpecifier: () => pathIsBareSpecifier,
+@@ -236267,10 +236257,23 @@
+       Debug.assertNever(osFlavor);
+   }
+ }
++function patchWriteFileEnsuringDirectory(sys2) {
++  const writeFileView = sys2;
++  const originalWriteFile = writeFileView.writeFile;
++  sys2.writeFile = (path3, data, writeBom) => writeFileEnsuringDirectories(
++    path3,
++    data,
++    !!writeBom,
++    (path4, data2, writeByteOrderMark) => originalWriteFile.call(sys2, path4, data2, writeByteOrderMark),
++    (path4) => sys2.createDirectory(path4),
++    (path4) => sys2.directoryExists(path4)
++  );
++}
+ var libFile, TestServerHostOsFlavor, exitMessage, Callbacks, Tsc_WatchFile, Tsc_WatchDirectory, SerializeOutputOrder, TestServerHost2;
+ var init_virtualFileSystemWithWatch = __esm({
+   "src/testRunner/unittests/helpers/virtualFileSystemWithWatch.ts"() {
+     "use strict";
++    init_ts9();
+     init_harnessLanguageService();
+     init_tsserverLogger();
+     init_watchUtils();

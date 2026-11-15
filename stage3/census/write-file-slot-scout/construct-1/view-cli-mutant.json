@@ -1,0 +1,32 @@
+{
+  "runs": [
+    {
+      "name": "restore",
+      "command": [
+        "node",
+        "/workspace/scratch/write-file-construct-impl/stage3/adapt/99-correctness-write-file-view/mutant.cjs",
+        "/workspace/scratch/write-file-construct-run/view-cli-mutant"
+      ],
+      "exit": 0
+    },
+    {
+      "name": "replay",
+      "command": [
+        "node",
+        "/workspace/scratch/write-file-construct-impl/stage3/adapt/99-correctness-write-file-view/mutant.cjs",
+        "/workspace/scratch/write-file-construct-run/view-cli-mutant"
+      ],
+      "exit": 0
+    },
+    {
+      "name": "remove",
+      "command": [
+        "node",
+        "/workspace/scratch/write-file-construct-impl/stage3/adapt/99-correctness-write-file-view/adapt.cjs",
+        "/workspace/scratch/write-file-construct-run/view-cli-mutant"
+      ],
+      "exit": 0
+    }
+  ],
+  "roundTripExactSourceBytes": true
+}

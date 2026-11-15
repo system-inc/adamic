@@ -1,0 +1,41 @@
+{
+  "remainingKeyOrderIdentical": true,
+  "writerDescriptorFlags": {
+    "main": {
+      "writable": true,
+      "enumerable": true,
+      "configurable": true,
+      "ownPrototype": false
+    },
+    "candidate": {
+      "writable": true,
+      "enumerable": true,
+      "configurable": true,
+      "ownPrototype": false
+    }
+  },
+  "removed": [
+    "patchWriteFileEnsuringDirectory"
+  ],
+  "added": [],
+  "keyCounts": {
+    "main": 2256,
+    "candidate": 2255
+  },
+  "helper": {
+    "before": "function",
+    "after": "undefined",
+    "mainHasOwn": true,
+    "candidateHasOwn": false
+  },
+  "writerMetadata": {
+    "main": {
+      "name": "",
+      "length": 3
+    },
+    "candidate": {
+      "name": "patchedWriteFile",
+      "length": 3
+    }
+  }
+}

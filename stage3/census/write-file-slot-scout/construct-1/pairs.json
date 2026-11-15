@@ -1,0 +1,338 @@
+{
+  "main": {
+    "header": {
+      "checker_rejected": false,
+      "diagnostic_sites": [],
+      "diagnostics": [],
+      "latent_mode": "full",
+      "measurement": "measured on a checker-rejected program",
+      "module_format": "CommonJSBundle",
+      "status": "measurement"
+    },
+    "units": 136,
+    "rawRecords": 176,
+    "uniqueSites": 51,
+    "allNormalizedTuples": 56
+  },
+  "candidate": {
+    "header": {
+      "checker_rejected": false,
+      "diagnostic_sites": [],
+      "diagnostics": [],
+      "latent_mode": "full",
+      "measurement": "measured on a checker-rejected program",
+      "module_format": "CommonJSBundle",
+      "status": "measurement"
+    },
+    "units": 135,
+    "rawRecords": 174,
+    "uniqueSites": 50,
+    "allNormalizedTuples": 54
+  },
+  "newUnique": [],
+  "goneUnique": [
+    {
+      "root_kind": "",
+      "depth": 0,
+      "measurement": "measured on a checker-rejected program",
+      "unit": "/workspace/scratch/write-file-construct-run/control-adapted/src/compiler/sys.ts:1383:1",
+      "phase": "lowering",
+      "kind": "Refused",
+      "where": "/workspace/scratch/write-file-construct-run/control-adapted/src/compiler/sys.ts:1392:49",
+      "reason": "inherited library member call read as an own field",
+      "text": "/workspace/scratch/write-file-construct-run/control-adapted/src/compiler/sys.ts:1392:49: Adamic 0.1 refuses inherited library member call read as an own field; prototype members are not stored in an object's shape; call the method on its receiver, or wrap that call in an arrow (unbound-method)"
+    }
+  ],
+  "changedUnique": 0,
+  "allRecordAdded": [],
+  "allRecordGone": [
+    {
+      "key": [
+        "Refused",
+        "lowering",
+        "inherited library member call read as an own field",
+        "Adamic 0.1 refuses inherited library member call read as an own field; prototype members are not stored in an object's shape; call the method on its receiver, or wrap that call in an arrow (unbound-method)"
+      ],
+      "count": 1
+    },
+    {
+      "key": [
+        "Boundary",
+        "lowering",
+        "failed statement; state rolled back; continued at next statement or declaration",
+        "Adamic 0.1 refuses inherited library member call read as an own field; prototype members are not stored in an object's shape; call the method on its receiver, or wrap that call in an arrow (unbound-method)"
+      ],
+      "count": 1
+    }
+  ],
+  "candidateOwnerStops": [
+    {
+      "root_kind": "",
+      "depth": 0,
+      "measurement": "measured on a checker-rejected program",
+      "unit": "/workspace/scratch/write-file-construct-run/lane/adapted-tree/src/compiler/sys.ts:1454:5",
+      "phase": "refusal_scan",
+      "kind": "NotYet",
+      "where": "/workspace/scratch/write-file-construct-run/lane/adapted-tree/src/compiler/sys.ts:1481:57",
+      "reason": "node:timers.clearTimeout value needs exactly (timeoutId: unknown) => void, not (timeout: unknown) => void with no slot",
+      "text": "/workspace/scratch/write-file-construct-run/lane/adapted-tree/src/compiler/sys.ts:1481:57: stage 0 can't lower node:timers.clearTimeout value needs exactly (timeoutId: unknown) => void, not (timeout: unknown) => void with no slot yet",
+      "unitName": "getNodeSystem"
+    },
+    {
+      "root_kind": "",
+      "depth": 0,
+      "measurement": "measured on a checker-rejected program",
+      "unit": "/workspace/scratch/write-file-construct-run/lane/adapted-tree/src/compiler/sys.ts:1454:5",
+      "phase": "refusal_scan",
+      "kind": "Refused",
+      "where": "/workspace/scratch/write-file-construct-run/lane/adapted-tree/src/compiler/sys.ts:1537:13",
+      "reason": "a function taking PollingInterval seen as one taking number | undefined (tsc relates a method's parameters both ways), so it can be handed what it can't take",
+      "text": "/workspace/scratch/write-file-construct-run/lane/adapted-tree/src/compiler/sys.ts:1537:13: Adamic 0.1 refuses a function taking PollingInterval seen as one taking number | undefined (tsc relates a method's parameters both ways), so it can be handed what it can't take; write the method as a property holding a function (handle: (animal: Animal) => void), which tsc checks one way, or take the wider type in the method (method-signature-style)",
+      "unitName": "getNodeSystem"
+    },
+    {
+      "root_kind": "",
+      "depth": 0,
+      "measurement": "measured on a checker-rejected program",
+      "unit": "/workspace/scratch/write-file-construct-run/lane/adapted-tree/src/compiler/sys.ts:1454:5",
+      "phase": "refusal_scan",
+      "kind": "NotYet",
+      "where": "/workspace/scratch/write-file-construct-run/lane/adapted-tree/src/compiler/sys.ts:1593:192",
+      "reason": "a namespace object used as a value; no runtime container is emitted, so identity, receiver behavior, live export aliases and staged properties are not represented; use qualified members or named module imports",
+      "text": "/workspace/scratch/write-file-construct-run/lane/adapted-tree/src/compiler/sys.ts:1593:192: stage 0 can't lower a namespace object used as a value; no runtime container is emitted, so identity, receiver behavior, live export aliases and staged properties are not represented; use qualified members or named module imports yet",
+      "unitName": "getNodeSystem"
+    },
+    {
+      "root_kind": "",
+      "depth": 0,
+      "measurement": "measured on a checker-rejected program",
+      "unit": "/workspace/scratch/write-file-construct-run/lane/adapted-tree/src/compiler/sys.ts:1454:5",
+      "phase": "refusal_scan",
+      "kind": "NotYet",
+      "where": "/workspace/scratch/write-file-construct-run/lane/adapted-tree/src/compiler/sys.ts:1603:57",
+      "reason": "node:timers.clearTimeout value needs exactly (timeoutId: unknown) => void, not (timeout: unknown) => void with no slot",
+      "text": "/workspace/scratch/write-file-construct-run/lane/adapted-tree/src/compiler/sys.ts:1603:57: stage 0 can't lower node:timers.clearTimeout value needs exactly (timeoutId: unknown) => void, not (timeout: unknown) => void with no slot yet",
+      "unitName": "getNodeSystem"
+    },
+    {
+      "root_kind": "",
+      "depth": 0,
+      "measurement": "measured on a checker-rejected program",
+      "unit": "/workspace/scratch/write-file-construct-run/lane/adapted-tree/src/compiler/sys.ts:1454:5",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/workspace/scratch/write-file-construct-run/lane/adapted-tree/src/compiler/sys.ts:1832:24",
+      "reason": "reading byteOrderMarkIndicator",
+      "text": "/workspace/scratch/write-file-construct-run/lane/adapted-tree/src/compiler/sys.ts:1832:24: stage 0 can't lower reading byteOrderMarkIndicator yet",
+      "unitName": "getNodeSystem"
+    },
+    {
+      "root_kind": "",
+      "depth": 0,
+      "measurement": "measured on a checker-rejected program",
+      "unit": "/workspace/scratch/write-file-construct-run/lane/adapted-tree/src/compiler/sys.ts:1454:5",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/workspace/scratch/write-file-construct-run/lane/adapted-tree/src/compiler/sys.ts:1832:17",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/workspace/scratch/write-file-construct-run/lane/adapted-tree/src/compiler/sys.ts:1832:24: stage 0 can't lower reading byteOrderMarkIndicator yet",
+      "start": 83728,
+      "end": 83783,
+      "unitName": "getNodeSystem"
+    },
+    {
+      "root_kind": "",
+      "depth": 0,
+      "measurement": "measured on a checker-rejected program",
+      "unit": "/workspace/scratch/write-file-construct-run/lane/adapted-tree/src/compiler/sys.ts:1454:5",
+      "phase": "lowering",
+      "kind": "Refused",
+      "where": "/workspace/scratch/write-file-construct-run/lane/adapted-tree/src/compiler/sys.ts:1883:17",
+      "reason": "sort without a comparator",
+      "text": "/workspace/scratch/write-file-construct-run/lane/adapted-tree/src/compiler/sys.ts:1883:17: Adamic 0.1 refuses sort without a comparator; pass one: the default compares numbers as strings, so [10, 9, 1].sort() is [1, 10, 9]",
+      "unitName": "getNodeSystem"
+    },
+    {
+      "root_kind": "",
+      "depth": 0,
+      "measurement": "measured on a checker-rejected program",
+      "unit": "/workspace/scratch/write-file-construct-run/lane/adapted-tree/src/compiler/sys.ts:1454:5",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/workspace/scratch/write-file-construct-run/lane/adapted-tree/src/compiler/sys.ts:1883:17",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/workspace/scratch/write-file-construct-run/lane/adapted-tree/src/compiler/sys.ts:1883:17: Adamic 0.1 refuses sort without a comparator; pass one: the default compares numbers as strings, so [10, 9, 1].sort() is [1, 10, 9]",
+      "start": 85703,
+      "end": 85734,
+      "unitName": "getNodeSystem"
+    },
+    {
+      "root_kind": "",
+      "depth": 0,
+      "measurement": "measured on a checker-rejected program",
+      "unit": "/workspace/scratch/write-file-construct-run/lane/adapted-tree/src/compiler/sys.ts:1454:5",
+      "phase": "lowering",
+      "kind": "Refused",
+      "where": "/workspace/scratch/write-file-construct-run/lane/adapted-tree/src/compiler/sys.ts:1884:17",
+      "reason": "sort without a comparator",
+      "text": "/workspace/scratch/write-file-construct-run/lane/adapted-tree/src/compiler/sys.ts:1884:17: Adamic 0.1 refuses sort without a comparator; pass one: the default compares numbers as strings, so [10, 9, 1].sort() is [1, 10, 9]",
+      "unitName": "getNodeSystem"
+    },
+    {
+      "root_kind": "",
+      "depth": 0,
+      "measurement": "measured on a checker-rejected program",
+      "unit": "/workspace/scratch/write-file-construct-run/lane/adapted-tree/src/compiler/sys.ts:1454:5",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/workspace/scratch/write-file-construct-run/lane/adapted-tree/src/compiler/sys.ts:1884:17",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/workspace/scratch/write-file-construct-run/lane/adapted-tree/src/compiler/sys.ts:1884:17: Adamic 0.1 refuses sort without a comparator; pass one: the default compares numbers as strings, so [10, 9, 1].sort() is [1, 10, 9]",
+      "start": 85734,
+      "end": 85771,
+      "unitName": "getNodeSystem"
+    },
+    {
+      "root_kind": "",
+      "depth": 0,
+      "measurement": "measured on a checker-rejected program",
+      "unit": "/workspace/scratch/write-file-construct-run/lane/adapted-tree/src/compiler/sys.ts:1454:5",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/workspace/scratch/write-file-construct-run/lane/adapted-tree/src/compiler/sys.ts:1522:15",
+      "reason": "a function value that captures the variable its own initializer declares",
+      "text": "/workspace/scratch/write-file-construct-run/lane/adapted-tree/src/compiler/sys.ts:1522:15: stage 0 can't lower a function value that captures the variable its own initializer declares yet",
+      "unitName": "getNodeSystem"
+    },
+    {
+      "root_kind": "",
+      "depth": 0,
+      "measurement": "measured on a checker-rejected program",
+      "unit": "/workspace/scratch/write-file-construct-run/lane/adapted-tree/src/compiler/sys.ts:1454:5",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/workspace/scratch/write-file-construct-run/lane/adapted-tree/src/compiler/sys.ts:1549:25",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/workspace/scratch/write-file-construct-run/lane/adapted-tree/src/compiler/sys.ts:1522:15: stage 0 can't lower a function value that captures the variable its own initializer declares yet",
+      "start": 70023,
+      "end": 70078,
+      "unitName": "getNodeSystem"
+    },
+    {
+      "root_kind": "",
+      "depth": 0,
+      "measurement": "measured on a checker-rejected program",
+      "unit": "/workspace/scratch/write-file-construct-run/lane/adapted-tree/src/compiler/sys.ts:1454:5",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/workspace/scratch/write-file-construct-run/lane/adapted-tree/src/compiler/sys.ts:1554:29",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/workspace/scratch/write-file-construct-run/lane/adapted-tree/src/compiler/sys.ts:1522:15: stage 0 can't lower a function value that captures the variable its own initializer declares yet",
+      "start": 70192,
+      "end": 70321,
+      "unitName": "getNodeSystem"
+    },
+    {
+      "root_kind": "",
+      "depth": 0,
+      "measurement": "measured on a checker-rejected program",
+      "unit": "/workspace/scratch/write-file-construct-run/lane/adapted-tree/src/compiler/sys.ts:1454:5",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/workspace/scratch/write-file-construct-run/lane/adapted-tree/src/compiler/sys.ts:1552:56",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/workspace/scratch/write-file-construct-run/lane/adapted-tree/src/compiler/sys.ts:1522:15: stage 0 can't lower a function value that captures the variable its own initializer declares yet",
+      "start": 70190,
+      "end": 70348,
+      "unitName": "getNodeSystem"
+    },
+    {
+      "root_kind": "",
+      "depth": 0,
+      "measurement": "measured on a checker-rejected program",
+      "unit": "/workspace/scratch/write-file-construct-run/lane/adapted-tree/src/compiler/sys.ts:1454:5",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/workspace/scratch/write-file-construct-run/lane/adapted-tree/src/compiler/sys.ts:1552:25",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/workspace/scratch/write-file-construct-run/lane/adapted-tree/src/compiler/sys.ts:1522:15: stage 0 can't lower a function value that captures the variable its own initializer declares yet",
+      "start": 70134,
+      "end": 70348,
+      "unitName": "getNodeSystem"
+    },
+    {
+      "root_kind": "",
+      "depth": 0,
+      "measurement": "measured on a checker-rejected program",
+      "unit": "/workspace/scratch/write-file-construct-run/lane/adapted-tree/src/compiler/sys.ts:1454:5",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/workspace/scratch/write-file-construct-run/lane/adapted-tree/src/compiler/sys.ts:1548:21",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/workspace/scratch/write-file-construct-run/lane/adapted-tree/src/compiler/sys.ts:1522:15: stage 0 can't lower a function value that captures the variable its own initializer declares yet",
+      "start": 69825,
+      "end": 70371,
+      "unitName": "getNodeSystem"
+    },
+    {
+      "root_kind": "",
+      "depth": 0,
+      "measurement": "measured on a checker-rejected program",
+      "unit": "/workspace/scratch/write-file-construct-run/lane/adapted-tree/src/compiler/sys.ts:1454:5",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/workspace/scratch/write-file-construct-run/lane/adapted-tree/src/compiler/sys.ts:1545:65",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/workspace/scratch/write-file-construct-run/lane/adapted-tree/src/compiler/sys.ts:1522:15: stage 0 can't lower a function value that captures the variable its own initializer declares yet",
+      "start": 69823,
+      "end": 70390,
+      "unitName": "getNodeSystem"
+    },
+    {
+      "root_kind": "",
+      "depth": 0,
+      "measurement": "measured on a checker-rejected program",
+      "unit": "/workspace/scratch/write-file-construct-run/lane/adapted-tree/src/compiler/sys.ts:1454:5",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/workspace/scratch/write-file-construct-run/lane/adapted-tree/src/compiler/sys.ts:1545:17",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/workspace/scratch/write-file-construct-run/lane/adapted-tree/src/compiler/sys.ts:1522:15: stage 0 can't lower a function value that captures the variable its own initializer declares yet",
+      "start": 69758,
+      "end": 70390,
+      "unitName": "getNodeSystem"
+    },
+    {
+      "root_kind": "",
+      "depth": 0,
+      "measurement": "measured on a checker-rejected program",
+      "unit": "/workspace/scratch/write-file-construct-run/lane/adapted-tree/src/compiler/sys.ts:1454:5",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/workspace/scratch/write-file-construct-run/lane/adapted-tree/src/compiler/sys.ts:1593:191",
+      "reason": "process.recordreplay as a value (use its supported process operation directly)",
+      "text": "/workspace/scratch/write-file-construct-run/lane/adapted-tree/src/compiler/sys.ts:1593:191: stage 0 can't lower process.recordreplay as a value (use its supported process operation directly) yet",
+      "unitName": "getNodeSystem"
+    },
+    {
+      "root_kind": "",
+      "depth": 0,
+      "measurement": "measured on a checker-rejected program",
+      "unit": "/workspace/scratch/write-file-construct-run/lane/adapted-tree/src/compiler/sys.ts:1454:5",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/workspace/scratch/write-file-construct-run/lane/adapted-tree/src/compiler/sys.ts:1522:9",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/workspace/scratch/write-file-construct-run/lane/adapted-tree/src/compiler/sys.ts:1593:191: stage 0 can't lower process.recordreplay as a value (use its supported process operation directly) yet",
+      "start": 68747,
+      "end": 74677,
+      "unitName": "getNodeSystem"
+    }
+  ],
+  "pairKey": [
+    "kind",
+    "phase",
+    "reason",
+    "message without position prefix"
+  ]
+}
