@@ -23,6 +23,9 @@ waits[prefix + "TestProduct_WorkerComputeCorpus"] = [compiler]
 waits[prefix + "TestProduct_WorkerComputeSieveMutant"] = [compiler]
 waits[prefix + "TestProduct_WorkerdJavaScript"] = [compiler]
 waits[prefix + "TestProduct_WorkerdWebAssembly"] = [compiler]
+waits[prefix + "TestProduct_WorkerdAsync"] = [compiler]
+for name in ["Await", "Try", "Contract", "Wasm", "Needle"]:
+    waits[prefix + "TestProduct_WorkerAsync" + name + "Mutant"] = [checks]
 # The Wasm shards build different variants with the one unmutated compiler and the one wasm32-wasi runtime, so each
 # waits on what it reads and nothing else: the compiler, and the transform seed, which builds that runtime first and
 # which the counted variant copies (products_test.go's workerWasmProduct). The shards ran one after another, each on
@@ -46,6 +49,7 @@ for index in range(products['TestProduct_WorkerWasmMutants']):
     waits[prefix + f'TestProduct_WorkerWasmMutants_{index:03}'] = [compiler, checks, seed]
 path = root / 'cloud/fast-gate/product-order.json'
 order = json.loads(path.read_text())
-order['waits'] = {key: value for key, value in order['waits'].items() if not key.startswith(prefix)}
+order['waits'] = {key: waits.get(key, value) for key, value in order['waits'].items()
+                  if not key.startswith(prefix) or key in waits}
 order['waits'].update(waits)
 path.write_text(json.dumps(order, indent=2) + '\n')
