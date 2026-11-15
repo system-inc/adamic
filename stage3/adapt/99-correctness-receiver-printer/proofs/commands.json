@@ -1,0 +1,246 @@
+{
+  "stock-command": {
+    "command": [
+      "node",
+      "/workspace/scratch/receiver-split/stock-check.cjs",
+      "/workspace/scratch/receiver-split/tree-printer",
+      "/workspace/scratch/receiver-split/results/printer-stock-ast.json",
+      "28"
+    ],
+    "cwd": "/workspace/scratch/receiver-split/adamic",
+    "exit": 0,
+    "wall_seconds": 13.194,
+    "log": {
+      "path": "/workspace/scratch/receiver-split/results/printer-stock-command.log",
+      "bytes": 117,
+      "sha256": "ad8633f6043cc69d948eb2b990c0252d9cca9d3e87a2914645c2d1ed9ab43ac1"
+    }
+  },
+  "stock-tsc": {
+    "command": [
+      "node",
+      "/workspace/scratch/receiver-split/adamic/stage3/api/node_modules/typescript/lib/tsc.js",
+      "--project",
+      "src/compiler/tsconfig.json",
+      "--noEmit",
+      "--strictFunctionTypes",
+      "true",
+      "--incremental",
+      "false",
+      "--composite",
+      "false",
+      "--pretty",
+      "false",
+      "--noErrorTruncation"
+    ],
+    "cwd": "/workspace/scratch/receiver-split/tree-printer",
+    "exit": 0,
+    "wall_seconds": 12.481,
+    "log": {
+      "path": "/workspace/scratch/receiver-split/results/printer-stock-tsc.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  },
+  "adamic-types": {
+    "command": [
+      "/workspace/scratch/receiver-split/adamic-bin",
+      "types",
+      "/workspace/scratch/receiver-split/tree-printer/src/compiler/_namespaces/ts.moduleSpecifiers.ts",
+      "/workspace/scratch/receiver-split/tree-printer/src/compiler/_namespaces/ts.performance.ts",
+      "/workspace/scratch/receiver-split/tree-printer/src/compiler/_namespaces/ts.ts",
+      "/workspace/scratch/receiver-split/tree-printer/src/compiler/binder.ts",
+      "/workspace/scratch/receiver-split/tree-printer/src/compiler/builder.ts",
+      "/workspace/scratch/receiver-split/tree-printer/src/compiler/builderPublic.ts",
+      "/workspace/scratch/receiver-split/tree-printer/src/compiler/builderState.ts",
+      "/workspace/scratch/receiver-split/tree-printer/src/compiler/builderStatePublic.ts",
+      "/workspace/scratch/receiver-split/tree-printer/src/compiler/checker.ts",
+      "/workspace/scratch/receiver-split/tree-printer/src/compiler/commandLineParser.ts",
+      "/workspace/scratch/receiver-split/tree-printer/src/compiler/core.ts",
+      "/workspace/scratch/receiver-split/tree-printer/src/compiler/corePublic.ts",
+      "/workspace/scratch/receiver-split/tree-printer/src/compiler/debug.ts",
+      "/workspace/scratch/receiver-split/tree-printer/src/compiler/diagnosticInformationMap.generated.ts",
+      "/workspace/scratch/receiver-split/tree-printer/src/compiler/emitter.ts",
+      "/workspace/scratch/receiver-split/tree-printer/src/compiler/executeCommandLine.ts",
+      "/workspace/scratch/receiver-split/tree-printer/src/compiler/expressionToTypeNode.ts",
+      "/workspace/scratch/receiver-split/tree-printer/src/compiler/factory/baseNodeFactory.ts",
+      "/workspace/scratch/receiver-split/tree-printer/src/compiler/factory/emitHelpers.ts",
+      "/workspace/scratch/receiver-split/tree-printer/src/compiler/factory/emitNode.ts",
+      "/workspace/scratch/receiver-split/tree-printer/src/compiler/factory/nodeChildren.ts",
+      "/workspace/scratch/receiver-split/tree-printer/src/compiler/factory/nodeConverters.ts",
+      "/workspace/scratch/receiver-split/tree-printer/src/compiler/factory/nodeFactory.ts",
+      "/workspace/scratch/receiver-split/tree-printer/src/compiler/factory/nodeTests.ts",
+      "/workspace/scratch/receiver-split/tree-printer/src/compiler/factory/parenthesizerRules.ts",
+      "/workspace/scratch/receiver-split/tree-printer/src/compiler/factory/utilities.ts",
+      "/workspace/scratch/receiver-split/tree-printer/src/compiler/factory/utilitiesPublic.ts",
+      "/workspace/scratch/receiver-split/tree-printer/src/compiler/hostErrors.ts",
+      "/workspace/scratch/receiver-split/tree-printer/src/compiler/moduleNameResolver.ts",
+      "/workspace/scratch/receiver-split/tree-printer/src/compiler/moduleSpecifiers.ts",
+      "/workspace/scratch/receiver-split/tree-printer/src/compiler/parser.ts",
+      "/workspace/scratch/receiver-split/tree-printer/src/compiler/path.ts",
+      "/workspace/scratch/receiver-split/tree-printer/src/compiler/performance.ts",
+      "/workspace/scratch/receiver-split/tree-printer/src/compiler/performanceCore.ts",
+      "/workspace/scratch/receiver-split/tree-printer/src/compiler/program.ts",
+      "/workspace/scratch/receiver-split/tree-printer/src/compiler/programDiagnostics.ts",
+      "/workspace/scratch/receiver-split/tree-printer/src/compiler/resolutionCache.ts",
+      "/workspace/scratch/receiver-split/tree-printer/src/compiler/scanner.ts",
+      "/workspace/scratch/receiver-split/tree-printer/src/compiler/semver.ts",
+      "/workspace/scratch/receiver-split/tree-printer/src/compiler/sourcemap.ts",
+      "/workspace/scratch/receiver-split/tree-printer/src/compiler/symbolWalker.ts",
+      "/workspace/scratch/receiver-split/tree-printer/src/compiler/sys.ts",
+      "/workspace/scratch/receiver-split/tree-printer/src/compiler/tracing.ts",
+      "/workspace/scratch/receiver-split/tree-printer/src/compiler/transformer.ts",
+      "/workspace/scratch/receiver-split/tree-printer/src/compiler/transformers/classFields.ts",
+      "/workspace/scratch/receiver-split/tree-printer/src/compiler/transformers/classThis.ts",
+      "/workspace/scratch/receiver-split/tree-printer/src/compiler/transformers/declarations/diagnostics.ts",
+      "/workspace/scratch/receiver-split/tree-printer/src/compiler/transformers/declarations.ts",
+      "/workspace/scratch/receiver-split/tree-printer/src/compiler/transformers/destructuring.ts",
+      "/workspace/scratch/receiver-split/tree-printer/src/compiler/transformers/es2015.ts",
+      "/workspace/scratch/receiver-split/tree-printer/src/compiler/transformers/es2016.ts",
+      "/workspace/scratch/receiver-split/tree-printer/src/compiler/transformers/es2017.ts",
+      "/workspace/scratch/receiver-split/tree-printer/src/compiler/transformers/es2018.ts",
+      "/workspace/scratch/receiver-split/tree-printer/src/compiler/transformers/es2019.ts",
+      "/workspace/scratch/receiver-split/tree-printer/src/compiler/transformers/es2020.ts",
+      "/workspace/scratch/receiver-split/tree-printer/src/compiler/transformers/es2021.ts",
+      "/workspace/scratch/receiver-split/tree-printer/src/compiler/transformers/esDecorators.ts",
+      "/workspace/scratch/receiver-split/tree-printer/src/compiler/transformers/esnext.ts",
+      "/workspace/scratch/receiver-split/tree-printer/src/compiler/transformers/generators.ts",
+      "/workspace/scratch/receiver-split/tree-printer/src/compiler/transformers/jsx.ts",
+      "/workspace/scratch/receiver-split/tree-printer/src/compiler/transformers/legacyDecorators.ts",
+      "/workspace/scratch/receiver-split/tree-printer/src/compiler/transformers/module/esnextAnd2015.ts",
+      "/workspace/scratch/receiver-split/tree-printer/src/compiler/transformers/module/impliedNodeFormatDependent.ts",
+      "/workspace/scratch/receiver-split/tree-printer/src/compiler/transformers/module/module.ts",
+      "/workspace/scratch/receiver-split/tree-printer/src/compiler/transformers/module/system.ts",
+      "/workspace/scratch/receiver-split/tree-printer/src/compiler/transformers/namedEvaluation.ts",
+      "/workspace/scratch/receiver-split/tree-printer/src/compiler/transformers/taggedTemplate.ts",
+      "/workspace/scratch/receiver-split/tree-printer/src/compiler/transformers/ts.ts",
+      "/workspace/scratch/receiver-split/tree-printer/src/compiler/transformers/typeSerializer.ts",
+      "/workspace/scratch/receiver-split/tree-printer/src/compiler/transformers/utilities.ts",
+      "/workspace/scratch/receiver-split/tree-printer/src/compiler/tsbuild.ts",
+      "/workspace/scratch/receiver-split/tree-printer/src/compiler/tsbuildPublic.ts",
+      "/workspace/scratch/receiver-split/tree-printer/src/compiler/types.ts",
+      "/workspace/scratch/receiver-split/tree-printer/src/compiler/utilities.ts",
+      "/workspace/scratch/receiver-split/tree-printer/src/compiler/utilitiesPublic.ts",
+      "/workspace/scratch/receiver-split/tree-printer/src/compiler/visitorPublic.ts",
+      "/workspace/scratch/receiver-split/tree-printer/src/compiler/watch.ts",
+      "/workspace/scratch/receiver-split/tree-printer/src/compiler/watchPublic.ts",
+      "/workspace/scratch/receiver-split/tree-printer/src/compiler/watchUtilities.ts"
+    ],
+    "cwd": "/workspace/scratch/receiver-split/adamic",
+    "exit": 0,
+    "wall_seconds": 4.128,
+    "log": {
+      "path": "/workspace/scratch/receiver-split/results/printer-adamic-types.log",
+      "bytes": 7678600,
+      "sha256": "788d70781eccaa7079c1771e0796cd0ce49e11ac6767d1a8d59197b5eed7bd71"
+    }
+  },
+  "mutant": {
+    "command": [
+      "node",
+      "/workspace/scratch/receiver-split/adamic/stage3/adapt/99-correctness-receiver-printer/mutant.cjs",
+      "/workspace/scratch/receiver-split/mutant-printer"
+    ],
+    "cwd": "/workspace/scratch/receiver-split/adamic",
+    "exit": 0,
+    "wall_seconds": 0.447,
+    "log": {
+      "path": "/workspace/scratch/receiver-split/results/printer-mutant.log",
+      "bytes": 77,
+      "sha256": "26859bac3c03192b8764ddb49f01a70aba97bbf42881555a118a1ed09a763d92"
+    }
+  },
+  "dts": {
+    "command": [
+      "/workspace/scratch/receiver-split/tree-printer/node_modules/.bin/hereby",
+      "dts"
+    ],
+    "cwd": "/workspace/scratch/receiver-split/tree-printer",
+    "exit": 0,
+    "wall_seconds": 24.709,
+    "log": {
+      "path": "/workspace/scratch/receiver-split/results/printer-dts.log",
+      "bytes": 774,
+      "sha256": "6a655bf84c257b2afd993c5e6540bc955d0cc33086622ec520bb29e7bc59aaef"
+    }
+  },
+  "apply": {
+    "command": [
+      "/workspace/scratch/receiver-split/adamic/stage3/apply.sh",
+      "/workspace/scratch/receiver-split/applied-printer"
+    ],
+    "cwd": "/workspace/scratch/receiver-split/adamic",
+    "exit": 0,
+    "wall_seconds": 676.738,
+    "log": {
+      "path": "/workspace/scratch/receiver-split/results/printer-apply.log",
+      "bytes": 844911,
+      "sha256": "36ae930ae2996a97b7a9d8950bd8ba6925b0e759c7efd30caa93f2378cf4cc3a"
+    }
+  },
+  "lane": {
+    "command": [
+      "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+      "/workspace/scratch/receiver-split/adamic/stage3/oracle/run.py",
+      "/workspace/scratch/receiver-split/tree-printer",
+      "/workspace/scratch/receiver-split/printer-lane"
+    ],
+    "cwd": "/workspace/scratch/receiver-split/adamic",
+    "exit": 1,
+    "wall_seconds": 522.264,
+    "log": {
+      "path": "/workspace/scratch/receiver-split/results/printer-lane.log",
+      "bytes": 169490,
+      "sha256": "af6d14f38dd943cd3a03027c1a6eb99b108130462568859babf33c547962a86d"
+    }
+  },
+  "instrument": {
+    "command": [
+      "node",
+      "/workspace/scratch/receiver-split/adamic/stage3/census/receiver-calls-price/count-instrument.cjs",
+      "/workspace/scratch/receiver-split/counting-printer",
+      "/workspace/scratch/receiver-split/count-heat.json",
+      "/workspace/scratch/receiver-split/results/printer-instrument.json"
+    ],
+    "cwd": "/workspace/scratch/receiver-split/adamic",
+    "exit": 0,
+    "wall_seconds": 12.954,
+    "log": {
+      "path": "/workspace/scratch/receiver-split/results/printer-instrument.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  },
+  "counting-lane": {
+    "command": [
+      "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+      "/workspace/scratch/receiver-split/adamic/stage3/oracle/run.py",
+      "/workspace/scratch/receiver-split/counting-printer",
+      "/workspace/scratch/receiver-split/printer-counting-lane"
+    ],
+    "cwd": "/workspace/scratch/receiver-split/adamic",
+    "exit": 1,
+    "wall_seconds": 547.738,
+    "log": {
+      "path": "/workspace/scratch/receiver-split/results/printer-counting-lane.log",
+      "bytes": 169490,
+      "sha256": "8138b3b8c9292fac19ca750baa6370feefc279897e72a9966772aff5987f6d2a"
+    }
+  },
+  "aggregate": {
+    "command": [
+      "node",
+      "/workspace/scratch/receiver-split/adamic/stage3/census/receiver-calls-price/split-aggregate.cjs",
+      "/workspace/scratch/receiver-split/printer-snapshots",
+      "/workspace/scratch/receiver-split/results/printer-counts-raw.json"
+    ],
+    "cwd": "/workspace/scratch/receiver-split/adamic",
+    "exit": 0,
+    "wall_seconds": 1.001,
+    "log": {
+      "path": "/workspace/scratch/receiver-split/results/printer-aggregate.log",
+      "bytes": 359,
+      "sha256": "487ca327e4b4bfbb8daac79d520681353cc3aefab7962649467c2ebc01439a45"
+    }
+  }
+}

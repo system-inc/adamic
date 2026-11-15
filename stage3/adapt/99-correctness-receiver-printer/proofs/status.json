@@ -1,0 +1,27 @@
+{
+  "complete": true,
+  "directory": "99-correctness-receiver-printer",
+  "base": "8ada94542fbdcb5c1d1689e27564e471eae241b8",
+  "upstream": "050880ce59e30b356b686bd3144efe24f875ebc8",
+  "recipe": "24c61e74d26caa79c0f313112902e325d090afcd",
+  "censusFiles": 1,
+  "newOutsideTargets": 0,
+  "changedOutsideTargets": 0,
+  "stockApiDiagnostics": 0,
+  "stockCliExit": 0,
+  "adamicTypesExit": 0,
+  "rootCount": 79,
+  "applyExit": 0,
+  "ordinaryLane": {
+    "passing": 106366,
+    "failing": 1,
+    "pending": 0
+  },
+  "countingLane": {
+    "passing": 106366,
+    "failing": 1,
+    "pending": 0
+  },
+  "declarationsByteIdentical": true,
+  "ledger": "JavaScript-changing, value-identical; #trxxkge: readonly PrintHandlers property view and ten once-resolved aliases (option (i)), measured at 739,160 alias reads over 73,916 printer entries, with no forwarding calls."
+}
