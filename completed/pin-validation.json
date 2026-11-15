@@ -1,0 +1,42 @@
+[
+  {
+    "directory": "93-builtin-imports",
+    "manifest": "proofs/targets.json",
+    "statesChecked": 2,
+    "regeneratedByteIdentical": true,
+    "hashImplementation": "directory adapt.cjs own digest/hash; crypto also scoped-hashes.cjs",
+    "checkpointSource": "full apply immediate before/after refs"
+  },
+  {
+    "directory": "99-correctness-core-multimap",
+    "manifest": "owners.json",
+    "statesChecked": 80,
+    "regeneratedByteIdentical": true,
+    "hashImplementation": "directory adapt.cjs own digest/hash; crypto also scoped-hashes.cjs",
+    "checkpointSource": "full apply immediate before/after refs"
+  },
+  {
+    "directory": "99-correctness-single-watcher-forwarder",
+    "manifest": "owners.json",
+    "statesChecked": 8,
+    "regeneratedByteIdentical": true,
+    "hashImplementation": "directory adapt.cjs own digest/hash; crypto also scoped-hashes.cjs",
+    "checkpointSource": "full apply immediate before/after refs"
+  },
+  {
+    "directory": "99-correctness-timer-closures",
+    "manifest": "owners.json",
+    "statesChecked": 26,
+    "regeneratedByteIdentical": true,
+    "hashImplementation": "directory adapt.cjs own digest/hash; crypto also scoped-hashes.cjs",
+    "checkpointSource": "full apply immediate before/after refs"
+  },
+  {
+    "directory": "99-wasm-crypto-import",
+    "manifest": "proofs/targets.json",
+    "statesChecked": 2,
+    "regeneratedByteIdentical": true,
+    "hashImplementation": "directory adapt.cjs own digest/hash; crypto also scoped-hashes.cjs",
+    "checkpointSource": "full apply immediate before/after refs"
+  }
+]

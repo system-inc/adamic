@@ -1,0 +1,53 @@
+{
+  "status": "pass with user-authorized 93 scope-oracle exception",
+  "candidate": "63f46490764862fef5af3ce6793557d4000994bc",
+  "proofMerge": "269c168bb3fc801034347c44f5af27eafa6c3d78",
+  "baselineMerge": "0945d4355cad5afad46d35b14a18950db3775ade",
+  "fullApply": {
+    "before": 0,
+    "after": 0
+  },
+  "census": {
+    "beforeExit": 0,
+    "afterExit": 0,
+    "removed": 1,
+    "new": 0,
+    "changed": 0,
+    "target1532Gone": true
+  },
+  "pinRegeneration": "all five manifests byte-identical",
+  "stockFinal": {
+    "baseline": {
+      "roots": 79,
+      "diagnostics": 0
+    },
+    "candidate": {
+      "roots": 79,
+      "diagnostics": 0
+    }
+  },
+  "declarationsIdentical": true,
+  "scopeOracleException": {
+    "script": "93-builtin-imports/proofs/check.cjs",
+    "mainExit": 1,
+    "chainMainExit": 1,
+    "candidateMainExit": 1,
+    "userWaived": true,
+    "dependentScopeMutantExit": 1,
+    "dependentScopeMutantNotIndependentEvidence": true
+  },
+  "resolvedAttempts": {
+    "crypto-require-result-contract": "crypto-require-result-contract-retry",
+    "crypto-watch-directory-contract": "crypto-watch-directory-contract-retry",
+    "builtin-built-witness": "builtin-built-witness-retry",
+    "crypto-built-witness": "crypto-built-witness-retry",
+    "census-pair-comparison": "census-pair-comparison-published",
+    "census-pair-comparison-corrected-reference": "census-pair-comparison-published"
+  },
+  "remainingUnexpectedFailures": [],
+  "commandReceipts": 63,
+  "laneFilesRegenerated": false,
+  "implementationPushed": true,
+  "implementationRemoteBranch": "typescript/watch-file-check-1532-2",
+  "remoteVerifiedSha": "63f46490764862fef5af3ce6793557d4000994bc"
+}

@@ -1,0 +1,33 @@
+{
+  "passed": true,
+  "checks": [
+    {
+      "name": "first call reverted",
+      "exit": 1,
+      "noWrites": true,
+      "stderrSha256": "cd6df67fc431f9686ca78eb64076d62ed693fdea0274d22a670b22a9d0628376",
+      "stderrExcerpt": "node:internal/assert/utils:77\n    throw err;\n    ^\n\nAssertionError [ERR_ASSERTION]: half-adapted MultiMap owner\n    at Object.inspect (/workspace/scratch/watch-file-1532-merge/stage3/adapt/95-checker-axolotl-h/multimap.cjs:7:2)"
+    },
+    {
+      "name": "second call reverted",
+      "exit": 1,
+      "noWrites": true,
+      "stderrSha256": "cd6df67fc431f9686ca78eb64076d62ed693fdea0274d22a670b22a9d0628376",
+      "stderrExcerpt": "node:internal/assert/utils:77\n    throw err;\n    ^\n\nAssertionError [ERR_ASSERTION]: half-adapted MultiMap owner\n    at Object.inspect (/workspace/scratch/watch-file-1532-merge/stage3/adapt/95-checker-axolotl-h/multimap.cjs:7:2)"
+    },
+    {
+      "name": "import gap reverted",
+      "exit": 1,
+      "noWrites": true,
+      "stderrSha256": "f3a85eeca89467ac2c8dcfea5783b2be5d66c8ba4e73fa9b30a17327f3c22b20",
+      "stderrExcerpt": "node:internal/assert/utils:77\n    throw err;\n    ^\n\nAssertionError [ERR_ASSERTION]: MultiMap free-helper symbol\n    at Object.inspect (/workspace/scratch/watch-file-1532-merge/stage3/adapt/95-checker-axolotl-h/multimap.cjs:5:429)"
+    },
+    {
+      "name": "whole owner drift",
+      "exit": 1,
+      "noWrites": true,
+      "stderrSha256": "a09e1bab4a5ecbc72cb48ee2f87cc7f5376c83c14851dc0b7541c881485e7ba8",
+      "stderrExcerpt": "node:assert:152\n  throw new AssertionError(obj);\n  ^\n\nAssertionError [ERR_ASSERTION]: writer owner shape: createProgram\n+ actual - expected"
+    }
+  ]
+}

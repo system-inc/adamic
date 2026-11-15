@@ -1,0 +1,33 @@
+{
+  "results": [
+    {
+      "name": "builtin-built-witness",
+      "matchedExpected": false
+    },
+    {
+      "name": "crypto-built-witness",
+      "matchedExpected": false
+    },
+    {
+      "name": "resolution-host-runtime-fixture",
+      "matchedExpected": true
+    },
+    {
+      "name": "dynamic-interval-original-witness",
+      "matchedExpected": true
+    },
+    {
+      "name": "non-dynamic-interval-10-fixture",
+      "matchedExpected": true
+    },
+    {
+      "name": "dynamic-interval-guard-check",
+      "matchedExpected": true
+    },
+    {
+      "name": "dynamic-interval-restored-guard-mutant",
+      "matchedExpected": true
+    }
+  ],
+  "allExpected": false
+}

@@ -1,0 +1,218 @@
+[
+  {
+    "class": "missing",
+    "operation": "Add",
+    "equalReturnContents": true,
+    "equalMapContents": true,
+    "addReturnsStoredArray": true,
+    "legacyOwnKeys": [
+      "add",
+      "remove"
+    ],
+    "plainOwnKeys": []
+  },
+  {
+    "class": "missing",
+    "operation": "Remove",
+    "equalReturnContents": true,
+    "equalMapContents": true,
+    "addReturnsStoredArray": false,
+    "legacyOwnKeys": [
+      "add",
+      "remove"
+    ],
+    "plainOwnKeys": []
+  },
+  {
+    "class": "empty",
+    "operation": "Add",
+    "equalReturnContents": true,
+    "equalMapContents": true,
+    "addReturnsStoredArray": true,
+    "legacyOwnKeys": [
+      "add",
+      "remove"
+    ],
+    "plainOwnKeys": []
+  },
+  {
+    "class": "empty",
+    "operation": "Remove",
+    "equalReturnContents": true,
+    "equalMapContents": true,
+    "addReturnsStoredArray": false,
+    "legacyOwnKeys": [
+      "add",
+      "remove"
+    ],
+    "plainOwnKeys": []
+  },
+  {
+    "class": "singleton-present",
+    "operation": "Add",
+    "equalReturnContents": true,
+    "equalMapContents": true,
+    "addReturnsStoredArray": true,
+    "legacyOwnKeys": [
+      "add",
+      "remove"
+    ],
+    "plainOwnKeys": []
+  },
+  {
+    "class": "singleton-present",
+    "operation": "Remove",
+    "equalReturnContents": true,
+    "equalMapContents": true,
+    "addReturnsStoredArray": false,
+    "legacyOwnKeys": [
+      "add",
+      "remove"
+    ],
+    "plainOwnKeys": []
+  },
+  {
+    "class": "singleton-absent",
+    "operation": "Add",
+    "equalReturnContents": true,
+    "equalMapContents": true,
+    "addReturnsStoredArray": true,
+    "legacyOwnKeys": [
+      "add",
+      "remove"
+    ],
+    "plainOwnKeys": []
+  },
+  {
+    "class": "singleton-absent",
+    "operation": "Remove",
+    "equalReturnContents": true,
+    "equalMapContents": true,
+    "addReturnsStoredArray": false,
+    "legacyOwnKeys": [
+      "add",
+      "remove"
+    ],
+    "plainOwnKeys": []
+  },
+  {
+    "class": "multiple-present",
+    "operation": "Add",
+    "equalReturnContents": true,
+    "equalMapContents": true,
+    "addReturnsStoredArray": true,
+    "legacyOwnKeys": [
+      "add",
+      "remove"
+    ],
+    "plainOwnKeys": []
+  },
+  {
+    "class": "multiple-present",
+    "operation": "Remove",
+    "equalReturnContents": true,
+    "equalMapContents": true,
+    "addReturnsStoredArray": false,
+    "legacyOwnKeys": [
+      "add",
+      "remove"
+    ],
+    "plainOwnKeys": []
+  },
+  {
+    "class": "multiple-absent",
+    "operation": "Add",
+    "equalReturnContents": true,
+    "equalMapContents": true,
+    "addReturnsStoredArray": true,
+    "legacyOwnKeys": [
+      "add",
+      "remove"
+    ],
+    "plainOwnKeys": []
+  },
+  {
+    "class": "multiple-absent",
+    "operation": "Remove",
+    "equalReturnContents": true,
+    "equalMapContents": true,
+    "addReturnsStoredArray": false,
+    "legacyOwnKeys": [
+      "add",
+      "remove"
+    ],
+    "plainOwnKeys": []
+  },
+  {
+    "class": "undefined",
+    "operation": "Add",
+    "equalReturnContents": true,
+    "equalMapContents": true,
+    "addReturnsStoredArray": true,
+    "legacyOwnKeys": [
+      "add",
+      "remove"
+    ],
+    "plainOwnKeys": []
+  },
+  {
+    "class": "undefined",
+    "operation": "Remove",
+    "equalReturnContents": true,
+    "equalMapContents": true,
+    "addReturnsStoredArray": false,
+    "legacyOwnKeys": [
+      "add",
+      "remove"
+    ],
+    "plainOwnKeys": []
+  },
+  {
+    "class": "NaN",
+    "operation": "Add",
+    "equalReturnContents": true,
+    "equalMapContents": true,
+    "addReturnsStoredArray": true,
+    "legacyOwnKeys": [
+      "add",
+      "remove"
+    ],
+    "plainOwnKeys": []
+  },
+  {
+    "class": "NaN",
+    "operation": "Remove",
+    "equalReturnContents": true,
+    "equalMapContents": true,
+    "addReturnsStoredArray": false,
+    "legacyOwnKeys": [
+      "add",
+      "remove"
+    ],
+    "plainOwnKeys": []
+  },
+  {
+    "class": "sparse",
+    "operation": "Add",
+    "equalReturnContents": true,
+    "equalMapContents": true,
+    "addReturnsStoredArray": true,
+    "legacyOwnKeys": [
+      "add",
+      "remove"
+    ],
+    "plainOwnKeys": []
+  },
+  {
+    "class": "sparse",
+    "operation": "Remove",
+    "equalReturnContents": true,
+    "equalMapContents": true,
+    "addReturnsStoredArray": false,
+    "legacyOwnKeys": [
+      "add",
+      "remove"
+    ],
+    "plainOwnKeys": []
+  }
+]

@@ -1,3 +1,7 @@
+# Completed: watch-file 1532 re-cut validated
+
+See [completed/README.md](completed/README.md) and [completed/verification.json](completed/verification.json). Candidate `63f46490764862fef5af3ce6793557d4000994bc` passes the remaining proof with the user-authorized 93 scope-oracle exception. Earlier stop reports remain below as history.
+
 # Latest result: chain-plus-main also fails 93 single-step check
 
 See [recheck93/README.md](recheck93/README.md). Main, chain-plus-main and candidate-plus-main all return adapter exit 0 and check exit 1 on the immediate single-step pair. Stopped as explicitly requested.

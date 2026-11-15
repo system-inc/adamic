@@ -1,0 +1,333 @@
+{
+  "passed": true,
+  "checks": [
+    {
+      "check": "late replay bytes and mtime",
+      "pass": true
+    },
+    {
+      "check": "whole owner drift refuses without writes",
+      "file": "src/compiler/core.ts",
+      "owner": [
+        "arrayToMultiMap"
+      ],
+      "pass": true
+    },
+    {
+      "check": "whole owner drift refuses without writes",
+      "file": "src/compiler/sys.ts",
+      "owner": [
+        "createUseFsEventsOnParentDirectoryWatchFile",
+        "nonPollingWatchFile"
+      ],
+      "pass": true
+    },
+    {
+      "check": "whole owner drift refuses without writes",
+      "file": "src/compiler/sys.ts",
+      "owner": [
+        "createDirectoryWatcherSupportingRecursive",
+        "createDirectoryWatcher"
+      ],
+      "pass": true
+    },
+    {
+      "check": "whole owner drift refuses without writes",
+      "file": "src/compiler/sys.ts",
+      "owner": "./_namespaces/ts.js",
+      "pass": true
+    },
+    {
+      "check": "whole owner drift refuses without writes",
+      "file": "src/compiler/utilities.ts",
+      "owner": [
+        "createSymlinkCache"
+      ],
+      "pass": true
+    },
+    {
+      "check": "whole owner drift refuses without writes",
+      "file": "src/compiler/utilities.ts",
+      "owner": "./_namespaces/ts.js",
+      "pass": true
+    },
+    {
+      "check": "whole owner drift refuses without writes",
+      "file": "src/compiler/checker.ts",
+      "owner": [
+        "createTypeChecker",
+        "createNodeBuilder",
+        "mapToTypeNodes"
+      ],
+      "pass": true
+    },
+    {
+      "check": "whole owner drift refuses without writes",
+      "file": "src/compiler/checker.ts",
+      "owner": "./_namespaces/ts.js",
+      "pass": true
+    },
+    {
+      "check": "whole owner drift refuses without writes",
+      "file": "src/services/exportInfoMap.ts",
+      "owner": [
+        "createCacheableExportInfoMap"
+      ],
+      "pass": true
+    },
+    {
+      "check": "whole owner drift refuses without writes",
+      "file": "src/services/exportInfoMap.ts",
+      "owner": "./_namespaces/ts.js",
+      "pass": true
+    },
+    {
+      "check": "whole owner drift refuses without writes",
+      "file": "src/services/services.ts",
+      "owner": [
+        "SourceFileObject",
+        "computeNamedDeclarations",
+        "addDeclaration"
+      ],
+      "pass": true
+    },
+    {
+      "check": "whole owner drift refuses without writes",
+      "file": "src/services/services.ts",
+      "owner": "./_namespaces/ts.js",
+      "pass": true
+    },
+    {
+      "check": "whole owner drift refuses without writes",
+      "file": "src/services/codeFixProvider.ts",
+      "owner": [
+        "registerCodeFix"
+      ],
+      "pass": true
+    },
+    {
+      "check": "whole owner drift refuses without writes",
+      "file": "src/services/codeFixProvider.ts",
+      "owner": "./_namespaces/ts.js",
+      "pass": true
+    },
+    {
+      "check": "whole owner drift refuses without writes",
+      "file": "src/services/codefixes/convertToAsyncFunction.ts",
+      "owner": [
+        "renameCollidingVarNames"
+      ],
+      "pass": true
+    },
+    {
+      "check": "whole owner drift refuses without writes",
+      "file": "src/services/codefixes/convertToAsyncFunction.ts",
+      "owner": "../_namespaces/ts.js",
+      "pass": true
+    },
+    {
+      "check": "whole owner drift refuses without writes",
+      "file": "src/services/codefixes/convertToEsModule.ts",
+      "owner": [
+        "collectFreeIdentifiers"
+      ],
+      "pass": true
+    },
+    {
+      "check": "whole owner drift refuses without writes",
+      "file": "src/services/codefixes/convertToEsModule.ts",
+      "owner": "../_namespaces/ts.js",
+      "pass": true
+    },
+    {
+      "check": "whole owner drift refuses without writes",
+      "file": "src/services/codefixes/importFixes.ts",
+      "owner": [
+        "createExistingImportMap"
+      ],
+      "pass": true
+    },
+    {
+      "check": "whole owner drift refuses without writes",
+      "file": "src/services/codefixes/importFixes.ts",
+      "owner": [
+        "getExportInfos",
+        "addSymbol"
+      ],
+      "pass": true
+    },
+    {
+      "check": "whole owner drift refuses without writes",
+      "file": "src/services/codefixes/importFixes.ts",
+      "owner": "../_namespaces/ts.js",
+      "pass": true
+    },
+    {
+      "check": "whole owner drift refuses without writes",
+      "file": "src/services/codefixes/inferFromUsage.ts",
+      "owner": [
+        "inferTypeFromReferences",
+        "combineAnonymousTypes"
+      ],
+      "pass": true
+    },
+    {
+      "check": "whole owner drift refuses without writes",
+      "file": "src/services/codefixes/inferFromUsage.ts",
+      "owner": "../_namespaces/ts.js",
+      "pass": true
+    },
+    {
+      "check": "whole owner drift refuses without writes",
+      "file": "src/services/textChanges.ts",
+      "owner": [
+        "ChangeTracker",
+        "insertStatementsInNewFile"
+      ],
+      "pass": true
+    },
+    {
+      "check": "whole owner drift refuses without writes",
+      "file": "src/services/textChanges.ts",
+      "owner": "./_namespaces/ts.js",
+      "pass": true
+    },
+    {
+      "check": "whole owner drift refuses without writes",
+      "file": "src/server/scriptInfo.ts",
+      "owner": [
+        "ScriptInfo",
+        "ensureRealPath"
+      ],
+      "pass": true
+    },
+    {
+      "check": "whole owner drift refuses without writes",
+      "file": "src/server/scriptInfo.ts",
+      "owner": "./_namespaces/ts.js",
+      "pass": true
+    },
+    {
+      "check": "whole owner drift refuses without writes",
+      "file": "src/server/editorServices.ts",
+      "owner": [
+        "ProjectService",
+        "getSymlinkedProjects",
+        "combineProjects"
+      ],
+      "pass": true
+    },
+    {
+      "check": "whole owner drift refuses without writes",
+      "file": "src/server/editorServices.ts",
+      "owner": [
+        "ProjectService",
+        "deleteScriptInfo"
+      ],
+      "pass": true
+    },
+    {
+      "check": "whole owner drift refuses without writes",
+      "file": "src/server/editorServices.ts",
+      "owner": "./_namespaces/ts.js",
+      "pass": true
+    },
+    {
+      "check": "whole owner drift refuses without writes",
+      "file": "src/harness/watchUtils.ts",
+      "owner": [
+        "createWatchUtils",
+        "initializeWatches",
+        "add"
+      ],
+      "pass": true
+    },
+    {
+      "check": "whole owner drift refuses without writes",
+      "file": "src/harness/watchUtils.ts",
+      "owner": [
+        "createWatchUtils",
+        "initializeWatches",
+        "remove"
+      ],
+      "pass": true
+    },
+    {
+      "check": "whole owner drift refuses without writes",
+      "file": "src/harness/watchUtils.ts",
+      "owner": "./_namespaces/ts.js",
+      "pass": true
+    },
+    {
+      "check": "whole owner drift refuses without writes",
+      "file": "src/harness/fourslashImpl.ts",
+      "owner": [
+        "TestState",
+        "rangesByText"
+      ],
+      "pass": true
+    },
+    {
+      "check": "whole owner drift refuses without writes",
+      "file": "src/testRunner/unittests/tsserver/cachingFileSystemInformation.ts",
+      "owner": [
+        "createLoggerTrackingHostCalls",
+        "setCallsTrackingWithSingleArgFn"
+      ],
+      "pass": true
+    },
+    {
+      "check": "whole owner drift refuses without writes",
+      "file": "src/testRunner/unittests/tsserver/cachingFileSystemInformation.ts",
+      "owner": [
+        "createLoggerTrackingHostCalls",
+        "setCallsTrackingWithFiveArgFn"
+      ],
+      "pass": true
+    },
+    {
+      "check": "whole owner drift refuses without writes",
+      "file": "src/compiler/core.ts",
+      "owner": [
+        "MultiMap"
+      ],
+      "pass": true
+    },
+    {
+      "check": "whole owner drift refuses without writes",
+      "file": "src/compiler/core.ts",
+      "owner": [
+        "createMultiMap"
+      ],
+      "pass": true
+    },
+    {
+      "check": "whole owner drift refuses without writes",
+      "file": "src/compiler/core.ts",
+      "owner": [
+        "multiMapAdd"
+      ],
+      "pass": true
+    },
+    {
+      "check": "whole owner drift refuses without writes",
+      "file": "src/compiler/core.ts",
+      "owner": [
+        "multiMapRemove"
+      ],
+      "pass": true
+    },
+    {
+      "check": "half tree refuses",
+      "pass": true
+    },
+    {
+      "check": "CRLF preserved",
+      "pass": true
+    },
+    {
+      "check": "early insertion and helper drift",
+      "pass": true
+    }
+  ]
+}

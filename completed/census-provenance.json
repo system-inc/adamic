@@ -1,0 +1,36 @@
+{
+  "sameCompilerPopulation": true,
+  "changedSourceFiles": [
+    "compiler/sys.ts"
+  ],
+  "sourceRestored": true,
+  "binarySha256": "2cde93f827fad406f6b20396c3fca331d217133631ab3531db83d2af59a380e9",
+  "runs": [
+    {
+      "side": "before",
+      "sourceSha256": "e1e13dcdaf100a3217997a70d96156f0fd283a375c3f0b19d243c55e1bb08457",
+      "environment": {
+        "LATENT_FULL": "1",
+        "LATENT_ASSERT_NO_OUTPUT": "1",
+        "LATENT_ONLY_FILE": "/workspace/scratch/watch-file-proof/resume/before/src/compiler/sys.ts",
+        "LATENT_TIMES": "/workspace/scratch/watch-file-proof/resume/census-before-times.jsonl",
+        "CENSUS_MODULE_FORMAT": "CommonJSBundle",
+        "GOMAXPROCS": "2",
+        "GOMEMLIMIT": "6GiB"
+      }
+    },
+    {
+      "side": "after",
+      "sourceSha256": "198b06a41bbe41e8a83464ea4f5f96ac875b2c593bba4c165afcfc5f04089908",
+      "environment": {
+        "LATENT_FULL": "1",
+        "LATENT_ASSERT_NO_OUTPUT": "1",
+        "LATENT_ONLY_FILE": "/workspace/scratch/watch-file-proof/resume/before/src/compiler/sys.ts",
+        "LATENT_TIMES": "/workspace/scratch/watch-file-proof/resume/census-after-times.jsonl",
+        "CENSUS_MODULE_FORMAT": "CommonJSBundle",
+        "GOMAXPROCS": "2",
+        "GOMEMLIMIT": "6GiB"
+      }
+    }
+  ]
+}

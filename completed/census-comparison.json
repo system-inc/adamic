@@ -1,0 +1,35 @@
+{
+  "pairingKey": [
+    "kind",
+    "phase",
+    "reason",
+    "message with source positions stripped"
+  ],
+  "beforeUniqueFindings": 105,
+  "afterUniqueFindings": 104,
+  "paired": 104,
+  "gone": [
+    {
+      "root_kind": "",
+      "depth": 0,
+      "measurement": "measured on a checker-rejected program",
+      "unit": "/workspace/scratch/watch-file-proof/resume/before/src/compiler/sys.ts:1474:5",
+      "phase": "refusal_scan",
+      "kind": "Refused",
+      "where": "/workspace/scratch/watch-file-proof/resume/before/src/compiler/sys.ts:1548:13",
+      "reason": "a function taking PollingInterval seen as one taking number | undefined (tsc relates a method's parameters both ways), so it can be handed what it can't take",
+      "text": "/workspace/scratch/watch-file-proof/resume/before/src/compiler/sys.ts:1548:13: Adamic 0.1 refuses a function taking PollingInterval seen as one taking number | undefined (tsc relates a method's parameters both ways), so it can be handed what it can't take; write the method as a property holding a function (handle: (animal: Animal) => void), which tsc checks one way, or take the wider type in the method (method-signature-style)"
+    }
+  ],
+  "new": [],
+  "changed": [],
+  "target": {
+    "originalSite": "sys.ts:1532:13",
+    "reference": "original cead-check-1532/sys-main.ts.gz",
+    "adaptedBaselineSite": "sys.ts:1548:13",
+    "sourceProperty": "nodeSystem.watchFile",
+    "gone": true
+  },
+  "beforeCheckerDiagnostics": [],
+  "afterCheckerDiagnostics": []
+}
