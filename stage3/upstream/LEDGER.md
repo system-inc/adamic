@@ -888,3 +888,5 @@ mutants restore their sites, every JavaScript hunk stays inside dumpTypes, and
 - **JavaScript-changing, value-identical; #trxxkge: 46 parser callee rewrites call through factory, measured at 18,022,708 added per-use property reads per complete lane run.** Evidence: typescript/receiver-split-evidence; stage3/adapt/99-correctness-receiver-parser/PROOF.md.
 
 - **JavaScript-changing, value-identical; #trxxkge: 52 exact-parameter forwarding arrows at 17 original factory scopes, with 189,211 forwarding calls and 1,601,433 arrow creations per complete lane run.** Evidence: typescript/receiver-split-evidence; stage3/adapt/99-correctness-receiver-transformers/PROOF.md.
+
+- **JavaScript-changing, value-identical; #trxxkge: readonly PrintHandlers property view and ten once-resolved aliases (option (i)), measured at 739,160 alias reads over 73,916 printer entries, with no forwarding calls.** Evidence: typescript/receiver-split-evidence; stage3/adapt/99-correctness-receiver-printer/PROOF.md.
