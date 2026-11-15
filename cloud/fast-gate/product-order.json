@@ -2775,6 +2775,28 @@
     ],
     "internal/worker TestProduct_WorkerAsyncNeedleMutant": [
       "internal/worker TestProduct_WorkerChecks"
+    ],
+    "internal/worker TestProduct_WorkerdEnvironment": [
+      "internal/worker TestProduct_WorkerCompiler"
+    ],
+    "internal/worker TestProduct_WorkerEnvironmentValidationMutant": [
+      "internal/worker TestProduct_WorkerChecks"
+    ],
+    "internal/worker TestProduct_WorkerEnvironmentProjectionMutant": [
+      "internal/worker TestProduct_WorkerChecks"
+    ],
+    "internal/worker TestProduct_WorkerEnvironmentContractMutant": [
+      "internal/worker TestProduct_WorkerChecks"
+    ],
+    "internal/worker TestProduct_WorkerEnvironmentPrivacyMutant": [
+      "internal/worker TestProduct_WorkerChecks"
+    ],
+    "internal/worker TestProduct_WorkerdEnvironmentWasm": [
+      "internal/worker TestProduct_WorkerCompiler",
+      "internal/worker TestProduct_WorkerWasmTransform"
+    ],
+    "internal/worker TestProduct_WorkerEnvironmentWasmNeedleMutant": [
+      "internal/worker TestProduct_WorkerChecks"
     ]
   }
 }

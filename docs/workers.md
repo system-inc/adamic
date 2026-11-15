@@ -12,6 +12,16 @@ Promise and the exact types from `'adamic/http'`. The command checks the signatu
 anything. Module statements run once at startup. Exported generic functions are
 refused; export a concrete function instead.
 
+Both shapes may add a second parameter `environment: Environment`. `Environment`
+must be a program-declared, non-generic interface with required readonly properties
+of exactly `string` type. Inline types, index signatures and methods are refused.
+The bridge copies only its declared names, in declaration order, into a fresh object.
+Missing or non-string bindings log `environment binding "NAME" is missing or not a string`
+and return status 500 with body `internal error`; values are never logged. Undeclared
+bindings are not exposed. A synchronous environment handler can call selected Wasm
+functions through the same bridge. Wasm bridge assembly refuses missing or duplicate
+export markers before output is written. This head needs no `adamic/workers` prelude module.
+
 The bridge passes `method` and the whole `url` unchanged, `path` as the URL's
 percent-encoded pathname, decoded query fields in search parameter order,
 lowercase headers in Request header iteration order, and `body` from

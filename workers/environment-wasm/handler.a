@@ -1,0 +1,11 @@
+import type { HttpRequest, HttpResponse } from 'adamic/http';
+interface Environment { readonly PREFIX: string; }
+export function compute(limit: number): number {
+    let result = 0;
+    for (let value = 1; value <= limit; value += 1) result += value;
+    return result;
+}
+export function handle(request: HttpRequest, environment: Environment): HttpResponse {
+    return { status: 200, headers: [{ name: 'content-type', value: 'text/plain; charset=utf-8' }],
+        body: environment.PREFIX + ':' + compute(request.path.length) };
+}
