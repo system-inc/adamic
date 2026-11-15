@@ -14,6 +14,12 @@ func (l *lowering) objectCall(node *ast.Node, name string) (ir.Expression, bool,
 }
 
 func (l *lowering) objectCallArguments(node *ast.Node, name string, written []*ast.Node) (ir.Expression, bool, error) {
+	// Class whole readers before record dispatch or a shape refusal can consume the call.
+	reader := ir.ObjectCall{Method: name, Checked: true}
+	class := viewReadOf(l.result, reader)
+	for _, argument := range written {
+		l.recordRegExpServedWhole(node, l.checker.GetTypeAtLocation(argument), reader, class == viewReadsNoField)
+	}
 	if value, handled, err := l.recordObjectCallArguments(node, name, written); handled {
 		return value, true, err
 	}
@@ -65,13 +71,6 @@ func (l *lowering) objectCallArguments(node *ast.Node, name string, written []*a
 		}
 		call.Arguments = []ir.Expression{fit(value, ir.Union)}
 	case "keys", "values", "entries", "freeze", "hasOwn", "assign":
-		// Class the reader before a shape refusal can leave it without an expression.
-		reader := call
-		reader.Checked = true
-		class := viewReadOf(l.result, reader)
-		for _, argument := range written {
-			l.recordRegExpServedWhole(node, l.checker.GetTypeAtLocation(argument), reader, class == viewReadsNoField)
-		}
 		if name == "keys" && !l.includesUndefined(l.checker.GetTypeAtLocation(written[0])) {
 			if _, _, known := l.nodeArrayLayoutOf(l.checker.GetTypeAtLocation(written[0])); known {
 				value, err := l.expression(written[0])

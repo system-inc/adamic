@@ -1,0 +1,5 @@
+type Picked = Pick<RegExp, 'test'>;
+const related: Picked = /a/;
+const unrelated = { test: (_text: string): boolean => true };
+const f = unrelated.test;
+console.log(String(f('a')));

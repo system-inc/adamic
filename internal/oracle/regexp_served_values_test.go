@@ -10,6 +10,7 @@ import (
 )
 
 var regexpServedValueRows = []struct{ name, path, stdout, diagnostic string }{
+	{"mapped_trigger", "internal/oracle/testdata/regexp_served_values/mapped_trigger.a", "true\n", ":4:11: stage 0 can't lower test read as a value, in a program where a RegExp reaches a view naming test, which Adamic can't give a receiver to yet"},
 	{"other_key", "internal/oracle/testdata/regexp_served_values/other_key.a", "a\n", ""},
 	{"record_dot", "internal/oracle/testdata/regexp_served_values/record_dot.a", "function\n", ":4:11: stage 0 can't lower test read as a value, in a program where a RegExp reaches a view naming test, which Adamic can't give a receiver to yet"},
 	{"record_key", "internal/oracle/testdata/regexp_served_values/record_key.a", "function\n", ":4:11: stage 0 can't lower test read as a value, in a program where a RegExp reaches a view naming test, which Adamic can't give a receiver to yet"},

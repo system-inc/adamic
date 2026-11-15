@@ -215,7 +215,7 @@ func (l *lowering) optionalWidened(source, target *checker.Type, skip map[string
 			}
 			continue
 		}
-		if programDeclared(property) && libraryServedRegExpTest(declared) {
+		if libraryServedRegExpTest(declared) {
 			l.regexpServedView = true
 		}
 		// A view the program declares, naming a member the source has only as a lib-declared member the
