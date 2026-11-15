@@ -1,4 +1,18 @@
 {
+  "build-main.receipt.json": {
+    "command": [
+      "go",
+      "build",
+      "-buildvcs=false",
+      "-overlay=/workspace/scratch/record-cycle/main-overlay/overlay.json",
+      "-o",
+      "/workspace/scratch/record-cycle/main-census",
+      "./stage3/census/latent/tool"
+    ],
+    "exit": 0,
+    "seconds": 172.808347594,
+    "peak_rss_kib": 2315176
+  },
   "build-head.receipt.json": {
     "command": [
       "go",
@@ -26,6 +40,26 @@
     "exit": 0,
     "seconds": 24.645549806999952,
     "peak_rss_kib": 1476456
+  },
+  "main-tsc.receipt.json": {
+    "command": [
+      "/workspace/scratch/record-cycle/main-census",
+      "/workspace/scratch/record-cycle/adapted/src/tsc/tsc.ts",
+      "/workspace/scratch/record-cycle/main-tsc.jsonl"
+    ],
+    "exit": 2,
+    "seconds": 15.768772248999994,
+    "peak_rss_kib": 893884
+  },
+  "main-positive.receipt.json": {
+    "command": [
+      "/workspace/scratch/record-cycle/main-census",
+      "/workspace/scratch/record-cycle/fixtures/cycle.a",
+      "/workspace/scratch/record-cycle/main-positive.jsonl"
+    ],
+    "exit": 0,
+    "seconds": 0.11467819199992846,
+    "peak_rss_kib": 33728
   },
   "build-ordinary.receipt.json": {
     "command": [
@@ -59,6 +93,16 @@
     "exit": 0,
     "seconds": 0.11484261999999035,
     "peak_rss_kib": 33864
+  },
+  "main-negative.receipt.json": {
+    "command": [
+      "/workspace/scratch/record-cycle/main-census",
+      "/workspace/scratch/record-cycle/fixtures/acyclic.a",
+      "/workspace/scratch/record-cycle/main-negative.jsonl"
+    ],
+    "exit": 0,
+    "seconds": 0.11455470799978684,
+    "peak_rss_kib": 33644
   },
   "head-tsc.receipt.json": {
     "command": [

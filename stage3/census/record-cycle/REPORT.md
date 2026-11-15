@@ -24,8 +24,8 @@ For the head unit-end observation, each recorded literal is presented alone to t
 
 | Same-driver fixture | Head calls | Head hits | Main hits |
 | --- | ---: | ---: | ---: |
-| Record reaches its own type | 2 | 2 | pending |
-| Graph with acyclic string record | 3 | 0 | pending |
+| Record reaches its own type | 2 | 2 | 0 |
+| Graph with acyclic string record | 3 | 0 | 0 |
 
 The positive fixture’s type path is `Record<string, Node>` values → `Node` → `Node.box: Box` → `Box.r: Record<string, Node>`. The real allocation rule also judges the empty record in `make`, since it uses the allocation’s record and element types. Its two head hits prove the unit-end seam invokes the real check. The negative fixture has a separate `Node[]` graph cycle, while each record has string elements and cannot reach a record type. Fixture text is preserved as `cycle.a.txt` and `acyclic.a.txt`.
 

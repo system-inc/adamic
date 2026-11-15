@@ -30,6 +30,11 @@
     "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
   },
   {
+    "path": "/workspace/scratch/record-cycle/build-main.receipt.json",
+    "bytes": 306,
+    "sha256": "e9371ebf4600954137f2cb1234906a044c99c73358e0f8e50efc3ae906d5db73"
+  },
+  {
     "path": "/workspace/scratch/record-cycle/build-ordinary.log",
     "bytes": 0,
     "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
@@ -260,6 +265,21 @@
     "sha256": "f953adb86ce80b5ab252e1bfffa6b8ffa340d6c934768bcf1bb085b24dca5c07"
   },
   {
+    "path": "/workspace/scratch/record-cycle/main-negative.jsonl",
+    "bytes": 14280,
+    "sha256": "c45f0b11da8594f3367998a9877188a9054f90213e43628935a0749f238ed996"
+  },
+  {
+    "path": "/workspace/scratch/record-cycle/main-negative.log",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "path": "/workspace/scratch/record-cycle/main-negative.receipt.json",
+    "bytes": 262,
+    "sha256": "1bf84851516866996a92e92048ce1c7abe325aaad341d1caf6bccd2692170bd3"
+  },
+  {
     "path": "/workspace/scratch/record-cycle/main-npm-ci.log",
     "bytes": 27,
     "sha256": "3605601719fc05b99174b85126bdfaa6796aa443bed687435b4f274736f8ee2d"
@@ -420,9 +440,39 @@
     "sha256": "7408e0c0040051456b59bac0d8afd9b0bc152d2bd0120e954919b2d9c926c555"
   },
   {
+    "path": "/workspace/scratch/record-cycle/main-positive.jsonl",
+    "bytes": 14682,
+    "sha256": "fc34f0b69670b1ea1a4a94712b16d12dda56661ec15bbd4f11211dcd3a9ca47b"
+  },
+  {
+    "path": "/workspace/scratch/record-cycle/main-positive.log",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "path": "/workspace/scratch/record-cycle/main-positive.receipt.json",
+    "bytes": 260,
+    "sha256": "5d4afadae0fd19617d7af2bae6cf7baa7eba359d311be801ff06627ad7d71116"
+  },
+  {
     "path": "/workspace/scratch/record-cycle/main-submodules.log",
     "bytes": 660,
     "sha256": "280dc3211838d9f3db6b5381caef64d7badc02fb224d7d342746e3bccbe720b2"
+  },
+  {
+    "path": "/workspace/scratch/record-cycle/main-tsc.jsonl",
+    "bytes": 445,
+    "sha256": "8c3f23ed408000037df25cefaefb6cd1ebc2c6ddbbd51b32f15e542807165b54"
+  },
+  {
+    "path": "/workspace/scratch/record-cycle/main-tsc.log",
+    "bytes": 367,
+    "sha256": "4daffbe124389376595717175dc269cf639fb8b02b71b063a9c0b37538545f4e"
+  },
+  {
+    "path": "/workspace/scratch/record-cycle/main-tsc.receipt.json",
+    "bytes": 261,
+    "sha256": "6983dec261d51b3159d0b9a465a21080d9477cfdc071da41a8637260ab37835e"
   },
   {
     "path": "/workspace/scratch/record-cycle/measure.py",
@@ -468,6 +518,11 @@
     "path": "/workspace/scratch/record-cycle/table/run.py",
     "bytes": 1568,
     "sha256": "536483e42507d4ef528febbd83c58987d8ca4f40f50e626879e1712508921d5c"
+  },
+  {
+    "path": "/workspace/scratch/record-cycle/table-all.sh",
+    "bytes": 781,
+    "sha256": "55d2bf22d8f955f78670cfaf7eb75990b76920d80ab976df51adf61aaf510c7c"
   },
   {
     "path": "/workspace/scratch/record-cycle/typescript-clone.log",
