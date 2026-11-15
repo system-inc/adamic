@@ -1,3 +1,33 @@
+Current scope proof (#p97jpsy)
+
+The gate is TestBuiltinImportsP97jpsySingleStepScope in stage3/lane/adaptedtree.
+It reads TestProduct_Stage3AdaptedTree's tree at apply.py's
+refs/stage3/93-builtin-imports-before and -after, extracting src into its own
+temporary directories. It runs check.cjs, both scope-mutant.cjs modes, then the
+restored check. It never adapts or writes the product and never runs Go.
+
+The oracle reads targets.json. Each whole-owner before/after SHA-256
+authenticates the corresponding AST text from the two snapshots before the
+after-text is replaced with the before-text. The remaining source must be byte
+identical, including CRLF, indentation and trailing whitespace. All other src
+files and the source inventory remain exact. New pinned owners participate
+without a separate oracle allowlist. The removed declarations are inside the
+pinned getNodeSystem; the three import insertions retain their separate exact
+undo. Both comments-retained and comments-removed transpiles of the restored
+source must equal the before transpile.
+
+The default mutant adds /* scope-outside-mutant */ before the unrelated
+getFileWatcherEventKind declaration in sys.ts, outside the pinned owner. The
+check must exit 1 naming that marker, file and line. The inside mode inserts
+/* scope-inside-mutant */ into getNodeSystem. The check must exit 1 naming the
+pinned After owner getNodeSystem. Both edits are valid TypeScript; only the
+scope oracle is run to reject them. Both restore saved bytes in finally.
+
+stage3/lane/adaptedtree already has a compiler-dependencies.json entry covering
+the compiler dependencies, so no census change is needed.
+
+Historical evidence below predates these mutants and the owner-derived oracle.
+
 Mutant evidence for #he8tysb head 1 revision's exact-source scope proof.
 
 The with-93 tree gets one extra edit to a private ambient declaration:
