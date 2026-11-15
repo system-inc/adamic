@@ -295,3 +295,108 @@ func TestConstantNumbersSmallFunctionsInline(t *testing.T) {
 		t.Fatalf("checked %d functions, want 3", seen)
 	}
 }
+
+// constantRecordRows is n closed records of one layout, as a literal's source text.
+func constantRecordRows(n int) string {
+	rows := make([]string, n)
+	for index := range rows {
+		rows[index] = fmt.Sprintf("{value:%d,done:false}", index)
+	}
+	return "[" + strings.Join(rows, ",") + "]"
+}
+
+// constantFunctionBodies is each named function's emitted C body, its heap version and, for a
+// fresh function, its region version (regionFunctionName).
+func constantFunctionBodies(t *testing.T, code string, program *ir.Program, name string) (heap, region string) {
+	t.Helper()
+	declarations, err := splitDeclarations(code)
+	if err != nil {
+		t.Fatal(err)
+	}
+	names := &emitter{program: program}
+	for index, function := range program.Functions {
+		if function.Name != name {
+			continue
+		}
+		for _, d := range declarations {
+			if !d.function {
+				continue
+			}
+			body := code[d.tokens[d.body].end:d.tokens[len(d.tokens)-1].start]
+			switch d.name {
+			case names.functionName(index):
+				heap = body
+			case names.regionFunctionName(index):
+				region = body
+			}
+		}
+	}
+	return heap, region
+}
+
+// A function's literal of closed records batches into a table and one bounded loop, as a module's
+// does, so a large one isn't thousands of stores in one function (#j2qkavx: objects.a's run was
+// 10,296 lines, 104 s of clang for wasm32). Every record is fresh: the witness holds it to Node and
+// the JavaScript backend under ASan with leak checking, counts balanced, and the mutation shows one
+// call's records aren't another's.
+func TestConstantRecordsInFunctions(t *testing.T) {
+	t.Parallel()
+	source := "function rows():{value:number,done:boolean}[]{return " + constantRecordRows(24) + ";}" +
+		"const first=rows();const second=rows();const head=first[3];if(head!==undefined){head.done=true;head.value=99;}" +
+		"let total=0;let done=0;for(const row of first){total+=row.value;if(row.done){done+=1;}}for(const row of second){total+=row.value;if(row.done){done+=1;}}" +
+		"console.log(total.toString()+':'+done.toString()+':'+first.length.toString());"
+	var program *ir.Program
+	code := constantTableConfiguredWitness(t, source, "adamic_record_table_", true, true, func(p *ir.Program) { program = p })
+	heap, _ := constantFunctionBodies(t, code, program, "rows")
+	if !strings.Contains(heap, "adamic_initialize_record_table_copy_") {
+		t.Fatal("a function's closed records kept one store a field: rows doesn't call the table copy")
+	}
+	if strings.Count(heap, "adamic_object_new(") != 0 {
+		t.Fatal("rows still makes its records one at a time")
+	}
+}
+
+// A fresh function's region version makes what it returns in the region it was handed, and
+// constantRecords never runs there (Emit on #j2qkavx): the region version of build, whose literal
+// holds 20 closed records, keeps ordinary emission while its heap version batches. The emitter-state
+// probes pin each condition alone. Mutant (internal/native/testdata/constant-records-region.mutants.md):
+// the region refusal dropped, and both the probes and the region version's body go red.
+func TestConstantRecordsStayOutOfRegions(t *testing.T) {
+	t.Parallel()
+	literal := ir.ArrayLiteral{Element: ir.Object}
+	for index := range 16 {
+		literal.Elements = append(literal.Elements, ir.ObjectLiteral{Fields: []ir.Field{{Name: "value", Value: ir.NumberConstant{Value: float64(index)}}}})
+	}
+	for _, probe := range []struct {
+		name  string
+		state emitter
+		want  bool
+	}{
+		// constantRecords reads no function, so these probe the region state alone; the source halves of
+		// this test and TestConstantRecordsInFunctions pin a real function's emission.
+		{"no region state", emitter{}, true},
+		{"a fresh function's region version", emitter{inRegion: true}, false},
+		{"a literal handed a region", emitter{regionLiteralDepth: 1}, false},
+	} {
+		state := probe.state
+		state.program = &ir.Program{}
+		if _, ok := state.constantRecords(literal); ok != probe.want {
+			t.Errorf("%s: constantRecords took the table %t, want %t", probe.name, ok, probe.want)
+		}
+	}
+	source := "function build():{rows:{value:number,done:boolean}[]}{return {rows:" + constantRecordRows(20) + "};}" +
+		"function count(holder:{rows:{value:number,done:boolean}[]}):number{return holder.rows.length;}" +
+		"let total=0;for(let round=0;round<3;round+=1){total+=count(build());}console.log(total.toString());"
+	var program *ir.Program
+	code := constantTableConfiguredWitness(t, source, "adamic_record_table_", true, true, func(p *ir.Program) { program = p })
+	heap, region := constantFunctionBodies(t, code, program, "build")
+	if region == "" {
+		t.Fatal("build has no region version, so this pin holds nothing: count(build()) must hand it a region")
+	}
+	if strings.Contains(region, "adamic_initialize_record_table_copy_") {
+		t.Fatal("build's region version batched its records into the table")
+	}
+	if !strings.Contains(heap, "adamic_initialize_record_table_copy_") {
+		t.Fatal("build's heap version kept one store a field")
+	}
+}

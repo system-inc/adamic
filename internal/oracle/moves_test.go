@@ -24,9 +24,10 @@ import (
 )
 
 // objects.a has quadratic lowering and large native builds. Its dedicated products
-// and TestMovesAgreesWithNode variants hold it to source and backend Node; the
-// determinism product compares two independent compiler processes. Keep it out of
-// every generic fixture family, including native, WASI, counts and determinism.
+// and TestMovesAgreesWithNode variants hold it to source and backend Node, wasm32
+// included (TestMovesAgreesWithNode_wasm32); the determinism product compares two
+// independent compiler processes. Keep it out of every generic fixture family,
+// including native, WASI, counts and determinism.
 func init() {
 	fixtures = slices.DeleteFunc(fixtures, func(fixture struct {
 		path    string
@@ -63,6 +64,31 @@ func TestMovesAgreesWithNode_tsan(t *testing.T) {
 		t.Skip("platform-specific allocator or sanitizer")
 	}
 	moveNativeVariant(t, "tsan")
+}
+
+// objects.a as a wasm32-wasi command, from the moves product's C, held to the same Node source,
+// where parallelMap runs its single-thread path (docs/wasm-limits.md). Its run's 2,048 closed records
+// go through constantRecords' table, so clang compiles it in seconds: as 2,048 inline allocations it
+// took 104 s at -Oz for wasm32, and no unit could hold it (#j2qkavx).
+func TestMovesAgreesWithNode_wasm32(t *testing.T) {
+	t.Parallel()
+	if os.Getenv("ADAMIC_ORACLE_WASI") != "1" {
+		t.Skip("set ADAMIC_ORACLE_WASI=1")
+	}
+	path, err := filepath.Abs(filepath.Join(repository, moveObjectsPath))
+	if err != nil {
+		t.Fatal(err)
+	}
+	source := onNode(t, path)
+	if source.exitCode != 0 {
+		t.Fatalf("Node: %+v", source)
+	}
+	started := time.Now()
+	observed := onWASI(t, moveSourceFile(t, "program.c"))
+	if difference := disagreement(source, observed); difference != "" {
+		t.Fatalf("%s: exit %d stdout %q stderr %q", difference, observed.exitCode, observed.stdout, observed.stderr)
+	}
+	t.Logf("wasm32 build and run: %s", time.Since(started))
 }
 
 func TestMovesRefusals(t *testing.T) {
