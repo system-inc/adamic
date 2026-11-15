@@ -4,7 +4,7 @@
 
 **Positive control passed.** Production head returns NotYet at `arrays.a:48:1`, ending “a cycle the cycle finder can't follow through unknown or object (#yeep0sx links these slots)”. The same complete program, copied alone into a control directory, yields **0 latent findings**, including the relation trailer, with `LATENT_FULL=1` and `LATENT_ASSERT_NO_OUTPUT=1`. Thus the latent zero demonstrably cannot count this stop.
 
-The private type instrument sees **9 events**, including that exact `:48:1` write. Disabling its stop judgment yields **0 events**, with the same H/candidate gathering. This is a type-level mutant, not a compiler acceptance claim.
+The private type instrument sees **9 events at 9 distinct sites**, including that exact `:48:1` write. Disabling its stop judgment yields **0 events**, with the same H/candidate gathering. This is a type-level mutant, not a compiler acceptance claim.
 
 | Run | Observation | Wall seconds | Peak RSS KiB |
 | --- | --- | ---: | ---: |
@@ -13,7 +13,7 @@ The private type instrument sees **9 events**, including that exact `:48:1` writ
 | type-level instrument | 9 events; includes arrays.a:48:1 | 0.079163 | 30300 |
 | stop-disabled mutant | 0 events | 0.068879 | 30556 |
 
-Raw control observations and per-process resource receipts are in [evidence/controls](evidence/controls). `latent/make_overlay.py` replaces the production orchestration through `lowerChecked` with a no-output return, and its units never invoke `findCycles`. This explains the observed blindness.
+Each control event’s source line is quoted in [CONTROL-SITES.md](CONTROL-SITES.md). Raw control observations and per-process resource receipts are in [evidence/controls](evidence/controls). `latent/make_overlay.py` replaces the production orchestration through `lowerChecked` with a no-output return, and its units never invoke `findCycles`. This explains the observed blindness.
 
 ## Production next stops
 
