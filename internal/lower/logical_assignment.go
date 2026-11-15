@@ -104,6 +104,8 @@ func (l *lowering) logicalAssignment(node *ast.Node) (ir.Expression, error) {
 				}
 				field := l.checker.GetPropertyOfType(l.checker.GetTypeAtLocation(access.Expression), text)
 				if field != nil && field.Flags&ast.SymbolFlagsOptional != 0 {
+					// An Error's cause written by ??=, ||= or &&= stops here. Lifting this stop reopens a road
+					// into a catch, which the catch narrowing stands on (looseCaughtRoad, loose_slots.go).
 					return nil, l.notYet(target, "writing a possibly absent optional own field")
 				}
 				if field != nil && accessorSymbol(field) {
