@@ -100,6 +100,8 @@ func TestRulesRefuseMistakes(t *testing.T) {
 		{"witness at past midnight", `{"blocks": {"on": true, "budget": 2}, "restack": {"on": false}, "witness": {"every": 10, "hours": 4, "machines": ["Pupa"], "at": "24:00"}}`, `witness's at is "24:00"`},
 		{"witness at without its zero", `{"blocks": {"on": true, "budget": 2}, "restack": {"on": false}, "witness": {"every": 10, "hours": 4, "machines": ["Pupa"], "at": "9:00"}}`, `witness's at is "9:00"`},
 		{"witness at null", `{"blocks": {"on": true, "budget": 2}, "restack": {"on": false}, "witness": {"every": 10, "hours": 4, "machines": ["Pupa"], "at": null}}`, "witness's at is null"},
+		{"witness at beside fullBlock with no machines", `{"blocks": {"on": true, "budget": 2}, "restack": {"on": false}, "witness": {"every": 1000, "hours": 36, "at": "10:00", "fullBlock": {"box": "Eve", "hours": 24}}}`, "absent only beside fullBlock with no at"},
+		{"witness machines null beside fullBlock", `{"blocks": {"on": true, "budget": 2}, "restack": {"on": false}, "witness": {"every": 1000, "hours": 36, "machines": null, "fullBlock": {"box": "Eve", "hours": 24}}}`, "a list of 1 to 8 box names"},
 		{"witness fullBlock null", `{"blocks": {"on": true, "budget": 2}, "restack": {"on": false}, "witness": {"every": 10, "hours": 4, "machines": ["Pupa"], "fullBlock": null}}`, "exactly {box, hours}"},
 		{"witness fullBlock without hours", `{"blocks": {"on": true, "budget": 2}, "restack": {"on": false}, "witness": {"every": 10, "hours": 4, "machines": ["Pupa"], "fullBlock": {"box": "Adam"}}}`, "exactly {box, hours}"},
 		{"witness fullBlock unknown field", `{"blocks": {"on": true, "budget": 2}, "restack": {"on": false}, "witness": {"every": 10, "hours": 4, "machines": ["Pupa"], "fullBlock": {"box": "Adam", "hours": 24, "on": true}}}`, `unknown field "on"`},
@@ -276,5 +278,23 @@ func TestRulesReadSizingByItsNames(t *testing.T) {
 	}
 	if sizing := rules.Blocks.Sizing; sizing == nil || *sizing.Minimum != 3 || *sizing.Maximum != 16 {
 		t.Fatalf("sizing read as %+v, want minimum 3 and maximum 16", sizing)
+	}
+}
+
+// The full block's rule alone reads here as the lander and the queue take it (#y9xkr81, Adamic Loom's ruling on
+// #r9sbvck): every, hours and fullBlock, no machines and no at, so Home leaves the rule. Mutant: machines required again
+// (this file refused, "a list of 1 to 8 box names").
+func TestRulesTakeAFullBlockAlone(t *testing.T) {
+	t.Parallel()
+	rules, err := ParseRules([]byte(`{"blocks": {"on": true, "budget": 2}, "restack": {"on": false}, "witness": {"every": 1000, "hours": 36, "fullBlock": {"box": "Eve", "hours": 24}}}`))
+	if err != nil {
+		t.Fatal(err)
+	}
+	witness := rules.Witness
+	if witness == nil || witness.Every != 1000 || witness.Hours != 36 || witness.Machines != nil || witness.At != nil {
+		t.Fatalf("witness read as %+v, want every 1000, hours 36, no machines and no at", witness)
+	}
+	if witness.FullBlock == nil || witness.FullBlock.Box != "Eve" || witness.FullBlock.Hours != 24 {
+		t.Fatalf("fullBlock read as %+v, want {Eve, 24}", witness.FullBlock)
 	}
 }
