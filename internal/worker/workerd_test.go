@@ -40,6 +40,7 @@ func workerdLoopback(address string) error {
 type workerdServer struct {
 	address string
 	process *os.Process
+	logPath string
 }
 
 // startWorkerd owns the server's whole process group until Cleanup has waited.
@@ -184,7 +185,7 @@ const config :Workerd.Config = (services = [(name = "compute", worker = (modules
 	select {
 	case err := <-ready:
 		if err == nil {
-			return &workerdServer{address, command.Process}, nil
+			return &workerdServer{address: address, process: command.Process, logPath: logPath}, nil
 		}
 		stop()
 		report, _ := os.ReadFile(logPath)

@@ -6,8 +6,9 @@ Run `adamic worker entry.a --out output`. The output directory contains
 `wrangler.toml` (main, entry base name, and pinned compatibility date).
 Run wrangler from that directory. No `nodejs_compat` is needed.
 
-The entry must export a synchronous function `handle(request: HttpRequest): HttpResponse`,
-using the types from `'adamic/http'`. The command checks the signature before writing
+The entry must export `function handle(request: HttpRequest): HttpResponse` or
+`async function handle(request: HttpRequest): Promise<HttpResponse>`, using the library
+Promise and the exact types from `'adamic/http'`. The command checks the signature before writing
 anything. Module statements run once at startup. Exported generic functions are
 refused; export a concrete function instead.
 
@@ -19,7 +20,8 @@ returns the handler's status and body. Headers and Response retain the platform'
 normalization rules, including combining repeated header names.
 
 An `AdamicPanic` is logged with `console.error(message)` and becomes status 500
-with body `internal error`; later requests still run. Other errors propagate.
+with body `internal error`; later requests still run. Other errors propagate, including ordinary Error rejections from async handlers.
+The async bridge awaits inside its panic boundary; the synchronous bridge is unchanged.
 File and argument functions panic with `<name>: not available on Workers`.
 The Workers UTF-8 functions use TextEncoder; the independent Node oracle uses Buffer.
 
@@ -43,6 +45,8 @@ its CompiledWasm rule. Building requires Node 24 for crossing generation and the
 WASI SDK (`bash cloud/setup.sh --wasi-sdk`, then source the printed environment).
 The [Wasm ABI](wasm-abi.md) defines the supported signatures and ownership.
 
+An async handle refuses every `--wasm` selection before output is written. Selecting
+an async function also refuses; async functions remain outside this crossing.
 Selection requires top-level entry declarations with ABI version 1 signatures.
 The interim purity check follows direct and bounded callback callees and refuses
 console, Adamic file/argument I/O, module-global reads and writes, and unbounded
