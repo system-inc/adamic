@@ -1,0 +1,27 @@
+{
+  "complete": true,
+  "directory": "99-correctness-receiver-parser",
+  "base": "8ada94542fbdcb5c1d1689e27564e471eae241b8",
+  "upstream": "050880ce59e30b356b686bd3144efe24f875ebc8",
+  "recipe": "24c61e74d26caa79c0f313112902e325d090afcd",
+  "censusFiles": 1,
+  "newOutsideTargets": 0,
+  "changedOutsideTargets": 0,
+  "stockApiDiagnostics": 0,
+  "stockCliExit": 0,
+  "adamicTypesExit": 0,
+  "rootCount": 79,
+  "applyExit": 0,
+  "ordinaryLane": {
+    "passing": 106366,
+    "failing": 1,
+    "pending": 0
+  },
+  "countingLane": {
+    "passing": 106366,
+    "failing": 1,
+    "pending": 0
+  },
+  "declarationsByteIdentical": true,
+  "ledger": "JavaScript-changing, value-identical; #trxxkge: 46 parser callee rewrites call through factory, measured at 18,022,708 added per-use property reads per complete lane run."
+}
