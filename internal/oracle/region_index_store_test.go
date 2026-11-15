@@ -85,3 +85,25 @@ func TestRegionPushStoreKeepsObjectOffRegion(t *testing.T) {
 		t.Fatal("push_store.a's C holds a region: the object pushed onto outer is freed when its statement ends")
 	}
 }
+
+// A number returned off the parameter is a copy, so it lets nothing out, and the statement keeps its
+// region (#1jch5ez). Mutant: region.go's derived follows every Property to its object again, and
+// look's return marks the escape, so this program's C holds no region.
+func TestRegionScalarReturnGetsRegion(t *testing.T) {
+	t.Parallel()
+	code := regionIndexStoreAgrees(t, "scalar_return.a", "7\n")
+	if !strings.Contains(code, "ADAMIC_REGION") {
+		t.Fatal("scalar_return.a's statement holds no region: returning p.x was taken for the parameter escaping")
+	}
+}
+
+// A string returned off the parameter is held by reference, so it lets the parameter escape and the
+// object stays on the heap (#1jch5ez's other side). Mutant: String among derived's scalars, and this
+// program's C holds a region whose label is read after the region ends, which ASan reports.
+func TestRegionStringReturnKeepsObjectOffRegion(t *testing.T) {
+	t.Parallel()
+	code := regionIndexStoreAgrees(t, "string_return.a", "p7 2\n")
+	if strings.Contains(code, "ADAMIC_REGION") {
+		t.Fatal("string_return.a's C holds a region: the label returned out of the region is read after it ends")
+	}
+}
