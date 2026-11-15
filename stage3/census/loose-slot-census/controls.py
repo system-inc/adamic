@@ -14,6 +14,6 @@ assert records[-1]['status']=='relation_report'
 assert all(not x.get('findings') for x in records)
 print('latent records',[(x.get('file'),len(x.get('findings',[]) or [])) for x in records],flush=True)
 run([s/'type-count',fixture,out/'arrays-type.json'],out/'arrays-type',cwd=r)
-run([s/'type-count',fixture,out/'arrays-mutant.json'],out/'arrays-mutant',cwd=r,env=dict(os.environ,LOOSE_MUTANT_DISABLED='1'))
+run([s/'type-count-mutant',fixture,out/'arrays-mutant.json'],out/'arrays-mutant',cwd=r,env=dict(os.environ,LOOSE_MUTANT_DISABLED='0'))
 a=json.loads((out/'arrays-type.json').read_text());m=json.loads((out/'arrays-mutant.json').read_text())
 assert any(x['Where'].endswith('arrays.a:48:1') for x in a['Events']);assert not m['Events'];assert {k:v for k,v in a.items() if k!='Events'}=={k:v for k,v in m.items() if k!='Events'};print('instrument events',len(a['Events']),'mutant',len(m['Events']),flush=True)

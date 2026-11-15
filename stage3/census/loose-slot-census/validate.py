@@ -31,8 +31,11 @@ for where in sites:
  p,line,col=where.rsplit(':',2);file=str(Path(p).relative_to(s/'adapted-head/src/compiler'));assert f'## {file}:{line}:{col}'in listing;assert Path(p).read_text().splitlines()[int(line)-1]in listing
 report=(out/'REPORT.md').read_text();assert report.index('## Control first')<report.index('## Production next stops')<report.index('## Sites past the walls');assert 'UNKNOWN'in report and 'partial type-level'in report
 hashes=read(out/'evidence/binary-sha256.json')
-for name in ['head-census','main-census','latent','type-count']:assert hashlib.sha256((s/name).read_bytes()).hexdigest()==hashes[name]
+for name in ['head-census','main-census','latent','type-count','type-count-mutant']:assert hashlib.sha256((s/name).read_bytes()).hexdigest()==hashes[name]
 assert hashlib.sha256((out/'type_count.go.txt').read_bytes()).hexdigest()==hashes['type-instrument-source']
+assert hashlib.sha256((s/'mutant-loose-slots.go').read_bytes()).hexdigest()==hashes['mutant-loose-slots-source']
+assert read(out/'evidence/type-whole-mutant.time.json')['command'][0]==str(s/'type-count-mutant')
+assert 'judge 0/33' in (out/'evidence/type-whole-mutant.log').read_text()
 changed=subprocess.check_output(['git','diff','--name-only','7e8cfaafb'],cwd=repo,text=True).splitlines();assert all(p.startswith('stage3/census/loose-slot-census/')for p in changed);assert not any(p.endswith('.go')for p in changed)
 result={'status':'passed','production_observations':158,'roots_per_sha':79,'unchanged_pairs':79-len(diff),'changed_indices':diff,'positive_control':'arrays production stop / latent zero / type positive / mutant zero','captured_and_literal_controls':'k17 and k18 exact-site match','type_observed_events':len(typed['Events']),'type_distinct_sites':len(sites),'type_forms':dict(collections.Counter(e['Form']for e in typed['Events'])),'exhaustive_production_site_count':'UNKNOWN','whole_mutant_events':0,'site_quotes_verified':len(sites),'ordinary_lower_source_edits':0}
 (out/'evidence/validation.json').write_text(json.dumps(result,indent=2)+'\n');print(result)

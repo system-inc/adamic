@@ -1,0 +1,42 @@
+--- head/internal/lower/loose_slots.go
++++ scratch-only/mutant-loose-slots.go
+@@ -518,38 +518,7 @@
+ // looseReaches reports whether a value of the type, every shape when it's loose itself, can reach target
+ // with H linked in.
+ func (f *cycleFinder) looseReaches(value *checker.Type, target cycleNode) bool {
+-	start := []cycleNode{{proven: value}}
+-	if looseSource(value) {
+-		// Every shape includes the holder itself, so a value that can be anything reaches it at once.
+-		if target.proven != nil {
+-			return true
+-		}
+-		start = f.looseAll()
+-	}
+-	// A start that is the target already, as a holder among every shape is, needs no search.
+-	for _, node := range start {
+-		if f.looseArrived(node, target) {
+-			return true
+-		}
+-	}
+-	visited := map[cycleNode]bool{}
+-	queue := append([]cycleNode{}, start...)
+-	for len(queue) != 0 {
+-		node := queue[len(queue)-1]
+-		queue = queue[:len(queue)-1]
+-		if node.proven != nil {
+-			node.proven = f.literalType(node.proven)
+-		}
+-		if visited[node] {
+-			continue
+-		}
+-		visited[node] = true
+-		if f.looseArrived(node, target) {
+-			return true
+-		}
+-		queue = append(queue, f.looseLinksOf(node)...)
+-	}
+-	return false
++ return false
+ }
+ 
+ // looseScalar is whether an IR value holds no reference whatever it's boxed as: a number, a boolean, a

@@ -4,7 +4,7 @@
 
 **Positive control passed.** Production head returns NotYet at `arrays.a:48:1`, ending “a cycle the cycle finder can't follow through unknown or object (#yeep0sx links these slots)”. The same complete program, copied alone into a control directory, yields **0 latent findings**, including the relation trailer, with `LATENT_FULL=1` and `LATENT_ASSERT_NO_OUTPUT=1`. Thus the latent zero demonstrably cannot count this stop.
 
-The private type instrument sees **9 events at 9 distinct sites**, including that exact `:48:1` write. Disabling its stop judgment yields **0 events**, with the same H/candidate gathering. This is a type-level mutant, not a compiler acceptance claim.
+The private type instrument sees **9 events at 9 distinct sites**, including that exact `:48:1` write. Disabling its stop judgment yields **0 events**, with the same H/candidate gathering. The mutant now replaces the head’s own `looseReaches` body with `return false` while keeping the collector active; it is not a compiler acceptance claim.
 
 | Run | Observation | Wall seconds | Peak RSS KiB |
 | --- | --- | ---: | ---: |
@@ -18,7 +18,7 @@ Each control event’s source line is quoted in [CONTROL-SITES.md](CONTROL-SITES
 ## Production next stops
 
 <!--ROOT-PROGRESS-->
-Snapshot at 2026-11-15T02:49:36.765416+00:00: completed pairs **47/79**, **47 unchanged**, **0 changed**. At this snapshot, remaining roots had not yet been measured; they were not assumed unchanged.
+Snapshot at 2026-11-15T02:55:32.329199+00:00: completed pairs **64/79**, **64 unchanged**, **0 changed**. At this snapshot, remaining roots had not yet been measured; they were not assumed unchanged.
 <!--END-ROOT-PROGRESS-->
 
 In progress in checkpointed groups: all 79 roots, CommonJSBundle, at main `fe5a1a54f045e9bce4e5aa32ca74885a317fbebd` and head `7e8cfaafb74a61f82f1610a4b738157b9918343d`. Each observation runs the existing census tool's `inspect` and production `LowerWithOptions`, in its own process. Only the command driver is overlaid. Groups of at most ten root indices are checkpointed at both SHAs.

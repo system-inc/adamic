@@ -8,4 +8,6 @@ for case in ['arrays','k17_captured_unknown','k18_entry_then_declared']:
   file,line,col=e['Where'].rsplit(':',2);line=int(line)
   text += [f'### {Path(file).name}:{line}:{col} — {e["Form"]}','','```typescript',Path(file).read_text().splitlines()[line-1],'```','']
 (out/'CONTROL-SITES.md').write_text('\n'.join(text))
-p=out/'REPORT.md';t=p.read_text().replace('**9 events**, including that exact','**9 events at 9 distinct sites**, including that exact').replace('Raw control observations and per-process resource receipts','Each control event’s source line is quoted in [CONTROL-SITES.md](CONTROL-SITES.md). Raw control observations and per-process resource receipts');p.write_text(t)
+p=out/'REPORT.md';t=p.read_text().replace('**9 events**, including that exact','**9 events at 9 distinct sites**, including that exact')
+if 'CONTROL-SITES.md' not in t:t=t.replace('Raw control observations and per-process resource receipts','Each control event’s source line is quoted in [CONTROL-SITES.md](CONTROL-SITES.md). Raw control observations and per-process resource receipts')
+p.write_text(t)

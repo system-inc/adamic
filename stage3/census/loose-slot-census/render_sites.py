@@ -17,3 +17,6 @@ p=out/'REPORT.md';t=p.read_text().replace('Pending controls and completed input 
 t=t.replace('Adaptation is still running; the provenance manifest in this checkpoint is provisional.','Both adaptations completed successfully. Their 79-root compiler manifests are byte-identical; the completed hashes are in evidence/provenance.json.')
 p.write_text(t)
 print('events',len(r['Events']),'sites',len(sites),dict(forms))
+
+mutant=json.loads((out/'evidence/type-whole-mutant.time.json').read_text())
+p=out/'TYPE-OBSERVATIONS.md';p.write_text(p.read_text()+f"\nThe separate head-reach mutant keeps the collector active, returns false from looseReaches, and records 0 events with identical gathering: {mutant['seconds']:.6f} s wall; {mutant['peak_rss_KiB']} KiB peak RSS.\n")

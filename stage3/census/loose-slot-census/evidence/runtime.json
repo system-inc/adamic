@@ -3,6 +3,6 @@
   "ADAMIC_OWNERSHIP_QUERY": "",
   "CENSUS_MODULE_FORMAT": "CommonJSBundle",
   "go_version": "go version go1.27.1 linux/amd64",
-  "measurement_environment": "Two independent child processes after the scheduling restart; per-child wall and wait4 RSS, not an isolated speed comparison.",
+  "measurement_environment": "At most two ordinary-root children; separate controls/type measurements may overlap. Per-child wall and wait4 RSS are resource receipts, not isolated speed comparisons.",
   "capture_source": "The same env.sh sourced by both root runners; every ordinary observation independently records module_format."
 }
