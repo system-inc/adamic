@@ -1,3 +1,7 @@
+**UNPROVEN ZEROS: the latent census skips `checkBoundArguments` and its whole-program reach/`opaqueCalls` computation. The positive control has 0 new-bind findings at both base and head; it fails to detect this compiler change. Only the per-root production-lowering table can measure its reachable first stops.**
+
+[Control and code-path evidence](CONTROL.md). The full and first-error latent rows below retain their observed counts solely as coverage-limited measurements; zero is not evidence that the new check accepts these sources.
+
 # Bind extra parameters census: 0 full-census findings carrying the new bind reason at 0 sites
 
 Sites: none in completed measurements.
@@ -32,6 +36,8 @@ Raw files remain in scratch. [receipts.json](receipts.json) gives every complete
 
 | Scratch raw file | Bytes | SHA-256 |
 | --- | ---: | --- |
+| `/workspace/bind-extra-parameters-scratch/results/control/base.jsonl` | 29081 | `c6d68e1f7fbe1ded9305a768a8aae3c573b060fe4cf0fdbdf544e7275f6c12c0` |
+| `/workspace/bind-extra-parameters-scratch/results/control/head.jsonl` | 29081 | `c6d68e1f7fbe1ded9305a768a8aae3c573b060fe4cf0fdbdf544e7275f6c12c0` |
 | `/workspace/bind-extra-parameters-scratch/results/full-sys.ts/base-times.jsonl` | 29994 | `eb63ddee13cf23c9b23b7d64b2579381f6dc805e960827af7165082bc281a334` |
 | `/workspace/bind-extra-parameters-scratch/results/full-sys.ts/base.jsonl` | 606190 | `e0adf0696cbd052e98b7742c5398293bf898b9dc1e41cc7eebe4b6f055cfde87` |
 | `/workspace/bind-extra-parameters-scratch/results/full-sys.ts/head-times.jsonl` | 29996 | `1241c321ca58508ccbb996ed4ec903b4f48977dcb87fa5e8ca1d188e2ced453e` |

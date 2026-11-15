@@ -1,0 +1,46 @@
+{
+  "source": "/workspace/bind-extra-parameters-scratch/control/main.ts",
+  "same_head_fixture": "internal/oracle/testdata/bind_extra_parameters/narrow_type.a",
+  "runs": {
+    "base": {
+      "exit_code": 0,
+      "seconds": 0.21671080589294434,
+      "command": [
+        "/workspace/bind-extra-parameters-scratch/base-census",
+        "/workspace/bind-extra-parameters-scratch/control",
+        "/workspace/bind-extra-parameters-scratch/results/control/base.jsonl"
+      ],
+      "new_bind_findings": [],
+      "total_findings": 0,
+      "header": {
+        "checker_rejected": false,
+        "diagnostic_sites": [],
+        "diagnostics": [],
+        "latent_mode": "full",
+        "measurement": "measured on a checker-rejected program",
+        "module_format": "CommonJSBundle",
+        "status": "measurement"
+      }
+    },
+    "head": {
+      "exit_code": 0,
+      "seconds": 0.1656482219696045,
+      "command": [
+        "/workspace/bind-extra-parameters-scratch/head-census",
+        "/workspace/bind-extra-parameters-scratch/control",
+        "/workspace/bind-extra-parameters-scratch/results/control/head.jsonl"
+      ],
+      "new_bind_findings": [],
+      "total_findings": 0,
+      "header": {
+        "checker_rejected": false,
+        "diagnostic_sites": [],
+        "diagnostics": [],
+        "latent_mode": "full",
+        "measurement": "measured on a checker-rejected program",
+        "module_format": "CommonJSBundle",
+        "status": "measurement"
+      }
+    }
+  }
+}
