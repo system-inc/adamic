@@ -10,8 +10,8 @@
 # Under the prefix:
 #
 #   tools/              cloud/setup.sh --wasi-sdk's tool directory (Go, clang, Node 24, tsc, WASI SDK) and its env.sh
-#   gomodcache/         every module the workspace's build and tests read, and the Go toolchain if go.work's had to be
-#                       fetched
+#   gomodcache/         every module adamic's, cohere's and cohere/TypeScript's workspaces read, and the Go toolchain
+#                       if go.work's had to be fetched
 #   npmcache/           every tarball each tracked package-lock.json names
 #   npm/                npm from its pin in cloud/markdown-width/npm-bootstrap.json, when the toolchain has none
 #   typescript-source/  stage3/source.json's repository at its tag, for ADAMIC_TYPESCRIPT_SOURCE
@@ -184,6 +184,21 @@ echo "== go list -deps -test ./... in cohere with GOPROXY=off" >> "$log"
 (cd "$checkout/cohere" && GOFLAGS="${GOFLAGS:+$GOFLAGS }-mod=readonly" GOPROXY=off GOSUMDB=off go list -deps -test ./... > /dev/null) >> "$log" 2>&1 ||
 	{ echo "block-env: cohere's workspace doesn't load from $gomodcache alone" >&2; exit 1; }
 step "cohere's workspace downloaded, and its tests load offline"
+
+# cohere/TypeScript's own workspace (its go.work uses ./tools and ./tsc) is a third graph: the Go oracles of stage1's
+# TypeScript scanner and parser, and lint's jsx parser, build inside cohere/TypeScript/tsc under it, so every module
+# tools/go.mod requires has to load too, though tsc reads none of it. On azure-f109-6 they failed on
+# github.com/anchore/quill@v0.7.1, tools' alone, with the network refused (J-mwkyqjb, #1ndpe51). Its download, then the
+# same load online and with the network refused, so a module this graph names and the cache lacks refuses the image.
+begin typescript-gomodules
+echo "== go mod download in cohere/TypeScript's workspace" >> "$log"
+(cd "$checkout/cohere/TypeScript" && go mod download) >> "$log" 2>&1 || { echo "block-env: go mod download failed in cohere/TypeScript's workspace" >&2; exit 1; }
+echo "== go list -deps -test ./... in cohere/TypeScript" >> "$log"
+(cd "$checkout/cohere/TypeScript" && GOFLAGS="${GOFLAGS:+$GOFLAGS }-mod=readonly" go list -deps -test ./... > /dev/null) >> "$log" 2>&1
+echo "== go list -deps -test ./... in cohere/TypeScript with GOPROXY=off" >> "$log"
+(cd "$checkout/cohere/TypeScript" && GOFLAGS="${GOFLAGS:+$GOFLAGS }-mod=readonly" GOPROXY=off GOSUMDB=off go list -deps -test ./... > /dev/null) >> "$log" 2>&1 ||
+	{ echo "block-env: cohere/TypeScript's workspace doesn't load from $gomodcache alone" >&2; exit 1; }
+step "cohere/TypeScript's workspace (tools and tsc) downloaded, and its packages load offline"
 
 # npm. setup.sh lays node alone, so npm comes from its pin, checked against its integrity before it unpacks, as
 # cloud/meter-daily/run.sh does it. npm's own logs go beside ours, so the cache holds tarballs and nothing else.
