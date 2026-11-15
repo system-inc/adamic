@@ -1,0 +1,448 @@
+--- head/before/internal_lower_lower.go
++++ head/scratch-overlay/internal_lower_lower.go
+@@ -12,14 +12,12 @@
+ 	"fmt"
+ 	"github.com/microsoft/TypeScript/tsc/shim/ast"
+ 	"github.com/microsoft/TypeScript/tsc/shim/checker"
+-	"github.com/system-inc/adamic/internal/buildlog"
+ 	"github.com/system-inc/adamic/internal/flow"
+ 	"github.com/system-inc/adamic/internal/fresh"
+ 	"github.com/system-inc/adamic/internal/ir"
+ 	"github.com/system-inc/adamic/internal/load"
+ 	"os"
+ 	"path/filepath"
+-	"time"
+ )
+ 
+ // Lower lowers a checked program from one entry, in ESM evaluation order.
+@@ -54,31 +52,7 @@
+ }
+ 
+ func LowerWithOptions(ctx context.Context, program *load.Program, options Options) (*ir.Program, error) {
+-	files := program.Files()
+-	if len(files) != 1 {
+-		return nil, fmt.Errorf("lower: stage 0 compiles a program from one entry file, got %d", len(files))
+-	}
+-	entry := files[0]
+-	// The lower phase's line on $ADAMIC_BUILD_LOG, once a program: a program region's discovery pass is in it.
+-	defer buildlog.Phase("lower", time.Now())
+-	// Stage 0 checks single-threaded, so one checker answers for every file.
+-	typeChecker, release := program.Checker(ctx, entry)
+-	defer release()
+-
+-	var plan *programMembership
+-	if options.ProgramRegion {
+-		discovery, err := lowerCheckedWithCycleTypes(program, typeChecker, entry, nil, true, false, options.ModuleFormat, nil)
+-		if err != nil {
+-			return nil, err
+-		}
+-		plan = discovery.programPlan
+-	}
+-	built, err := lowerCheckedWithCycleTypes(program, typeChecker, entry, plan, false, options.Debug, options.ModuleFormat, nil, options.OwnershipQuery)
+-	if err != nil {
+-		return nil, err
+-	}
+-
+-	return built.result, nil
++	return nil, fmt.Errorf("latent census: measurement only; no IR output")
+ }
+ 
+ // lowerChecked lowers a program as an ES module, the format every caller but LowerWithOptions lowers in.
+@@ -305,12 +279,16 @@
+ }
+ 
+ type lowering struct {
+-	inspectorRequireKnown     bool // Lazy, immutable program facts; no IR or unit ownership.
+-	inspectorRequirePresent   bool
+-	inspectorSkippedContracts map[*ast.Node]int // Skipped AST reads -> unique Panic slots, owned by this IR snapshot.
+-	bindGetters               map[string]bool   // source getter names, memoized for bind receiver admission
+-	debug                     bool
+-	cycleTypes                map[int]*checker.Type // Optional differential-test capture; nil in normal builds.
++	latentDeclarations          map[int]*ast.Node
++	latentReady                 map[int]bool
++	latentAncestors             map[*ast.Node]bool
++	latentProgramRecordsPending bool
++	inspectorRequireKnown       bool // Lazy, immutable program facts; no IR or unit ownership.
++	inspectorRequirePresent     bool
++	inspectorSkippedContracts   map[*ast.Node]int // Skipped AST reads -> unique Panic slots, owned by this IR snapshot.
++	bindGetters                 map[string]bool   // source getter names, memoized for bind receiver admission
++	debug                       bool
++	cycleTypes                  map[int]*checker.Type // Optional differential-test capture; nil in normal builds.
+ 	// moduleFormat is the module format the build declares (Options.ModuleFormat). A lowering a test
+ 	// builds by hand leaves it ModuleFormatEcmaScript.
+ 	moduleFormat ModuleFormat
+--- head/before/internal_lower_graph_types.go
++++ head/scratch-overlay/internal_lower_graph_types.go
+@@ -377,6 +377,7 @@
+ 	}
+ 	// Then any record its own values can reach back, however it's held: through an object's field, a
+ 	// view that omits it, a union member or a closure's capture, which the slot seed above doesn't see.
++	recordCensusFinder = f
+ 	if site := f.cyclicRecord(); site != nil {
+ 		return f.l.notYet(site.node, "a record its own values can reach again, on a cycle in a graph program: a record can't join a graph region")
+ 	}
+--- head/before/internal_lower_latent_scoped_tail.go
++++ head/scratch-overlay/internal_lower_latent_scoped_tail.go
+@@ -16,6 +16,7 @@
+ // The unit owns its body IR. Finalization observes a second, disposable snapshot;
+ // neither its rewrites nor its registrations ever return to the unit or base.
+ func (l *lowering) latentFinishUnit(unit *LatentUnit, node *ast.Node) {
++ recordCensusObserve(l, unit.Where)
+ 	if os.Getenv("LATENT_TAIL") != "1" {
+ 		return
+ 	}
+--- head/before/internal_lower_latent_record_census.go
++++ head/scratch-overlay/internal_lower_latent_record_census.go
+@@ -0,0 +1,32 @@
++package lower
++import (
++ "context"
++ "fmt"
++ "github.com/system-inc/adamic/internal/load"
++ "github.com/system-inc/adamic/stage3/census/moduleformat"
++)
++var recordCensusFinder *cycleFinder
++var recordCensusCalls, recordCensusHits int
++// Prepare once with the real whole-program lowering. No partial finder is accepted.
++func RecordCensusPrepare(ctx context.Context,p *load.Program) error {
++ recordCensusFinder=nil; recordCensusCalls=0;recordCensusHits=0
++ if len(p.Files())!=1 { return fmt.Errorf("record census facts require one program entry, got %d",len(p.Files())) }
++ c,release:=p.Checker(ctx,p.Files()[0]);defer release()
++ _,err:=lowerCheckedWithCycleTypes(p,c,p.Files()[0],nil,false,false,moduleformat.Resolve(ModuleFormatCommonJSBundle,ModuleFormatEcmaScript),nil)
++ if recordCensusFinder==nil { return fmt.Errorf("whole-program graph facts unavailable before record check: %v",err) }
++ return nil
++}
++func RecordCensusTotals() (int,int) {return recordCensusCalls,recordCensusHits}
++func recordCensusObserve(l *lowering,unit string) {
++ f:=recordCensusFinder
++ if f==nil {panic("record census: no complete whole-program graph facts")}
++ saved:=f.l.graphRecords;defer func(){f.l.graphRecords=saved}()
++ for _,site:=range l.graphRecords {
++  f.l.graphRecords=[]graphRecordSite{site}
++  recordCensusCalls++
++  if found:=f.cyclicRecord();found!=nil {
++   recordCensusHits++
++   latentFindings=append(latentFindings,LatentFinding{Measurement:LatentMeasurementLabel,Unit:unit,Phase:"record_cycle",Kind:"NotYet",Where:l.program.Where(site.node),Reason:"a record its own values can reach again, on a cycle in a graph program: a record can't join a graph region",Text:l.checker.TypeToString(site.record)})
++  }
++ }
++}
+--- head/before/stage3_census_latent_tool_main.go
++++ head/scratch-overlay/stage3_census_latent_tool_main.go
+@@ -1,91 +1,10 @@
+ package main
+-
+-import (
+- "github.com/system-inc/adamic/stage3/census/moduleformat"
+-	"context"
+-	"encoding/json"
+-	"fmt"
+-	"github.com/system-inc/adamic/internal/load"
+-	"github.com/system-inc/adamic/internal/lower"
+-	"os"
+-	"path/filepath"
+-	"sort"
+-)
+-
+-func main() {
+-	if len(os.Args) != 3 {
+-		panic("usage: latent source-directory output.json")
+-	}
+-	var paths []string
+-	err := filepath.WalkDir(os.Args[1], func(path string, entry os.DirEntry, err error) error {
+-		if err != nil {
+-			return err
+-		}
+-		if !entry.IsDir() && (filepath.Ext(path) == ".ts" || filepath.Ext(path) == ".a") {
+-			paths = append(paths, path)
+-		}
+-		return nil
+-	})
+-	if err != nil {
+-		panic(err)
+-	}
+-	sort.Strings(paths)
+-	output, err := os.Create(os.Args[2])
+-	if err != nil {
+-		panic(err)
+-	}
+-	defer output.Close()
+-	encoder := json.NewEncoder(output)
+-	program, err := load.LatentLoad(paths)
+-	if err != nil {
+-		panic(err)
+-	}
+-	if os.Getenv("LATENT_ASSERT_NO_OUTPUT") != "" {
+-		output, failure := lower.LowerWithOptions(context.Background(), program, lower.Options{ModuleFormat: moduleformat.Resolve(lower.ModuleFormatCommonJSBundle, lower.ModuleFormatEcmaScript), ProgramRegion: os.Getenv("ADAMIC_PROGRAM_REGION") == "1", OwnershipQuery: os.Getenv("ADAMIC_OWNERSHIP_QUERY") == "1"})
+-		if output != nil || failure == nil || failure.Error() != "latent census: measurement only; no IR output" {
+-			panic("measurement returned usable IR")
+-		}
+-		outputProgram, failure := load.Load(paths)
+-		if outputProgram != nil || failure == nil {
+-			panic("measurement loader exposed an output program")
+-		}
+-	}
+-	diagnostics := program.LatentDiagnostics()
+-	if diagnostics == nil {
+-		diagnostics = []string{}
+-	}
+-	header := map[string]any{"module_format": moduleformat.Name(), "measurement": lower.LatentMeasurementLabel, "status": "measurement", "latent_mode": censusMode(), "checker_rejected": len(diagnostics) > 0, "diagnostics": diagnostics, "diagnostic_sites": program.LatentDiagnosticSites()}
+-	writeLatentStream(encoder, header, output.Sync, func(emit func(lower.LatentFile)) lower.LatentRelationReport {
+-		return lower.Latent(context.Background(), program, func(record lower.LatentFile) {
+-			emit(record)
+-			fmt.Fprintln(os.Stderr, record.File, len(record.Units), len(record.Findings), lower.LatentMeasurementLabel)
+-		})
+-	})
+-
++import("context";"encoding/json";"os";"fmt";"github.com/system-inc/adamic/internal/load";"github.com/system-inc/adamic/internal/lower")
++func main(){
++ out,e:=os.Create(os.Args[2]);if e!=nil{panic(e)};defer out.Close();enc:=json.NewEncoder(out)
++ p,e:=load.LatentLoad([]string{os.Args[1]});if e!=nil{panic(e)}
++ e=lower.RecordCensusPrepare(context.Background(),p)
++ if e!=nil{enc.Encode(map[string]any{"status":"blocked","reason":e.Error(),"units_affected":nil,"first_sites":nil});fmt.Fprintln(os.Stderr,e);os.Exit(2)}
++ lower.Latent(context.Background(),p,func(r lower.LatentFile){enc.Encode(r)})
++ calls,hits:=lower.RecordCensusTotals();enc.Encode(map[string]any{"status":"complete","calls":calls,"hits":hits})
+ }
+-
+-// Flush the header before any lowering. A cutoff cannot manufacture an end
+-// answer: the relation trailer is written only after the run returns normally.
+-func writeLatentStream(encoder *json.Encoder, header map[string]any, flush func() error, run func(func(lower.LatentFile)) lower.LatentRelationReport) {
+-	writeRecord := func(record any) {
+-		if err := encoder.Encode(record); err != nil {
+-			panic(err)
+-		}
+-		if err := flush(); err != nil {
+-			panic(err)
+-		}
+-	}
+-	writeRecord(header)
+-	relations := run(func(record lower.LatentFile) { writeRecord(record) })
+-	writeRecord(map[string]any{"module_format": moduleformat.Name(), "measurement": lower.LatentMeasurementLabel, "status": "relation_report", "relation_overflow": relations, "findings": relations.Findings})
+-}
+-
+-func censusMode() string {
+-	if os.Getenv("LATENT_SPECULATIVE") == "1" && os.Getenv("LATENT_MUTANT_NO_STUBS") != "1" {
+-		return "speculative"
+-	}
+-	if os.Getenv("LATENT_FULL") == "1" {
+-		return "full"
+-	}
+-	return "first-error"
+-}
+--- main/before/internal_lower_lower.go
++++ main/scratch-overlay/internal_lower_lower.go
+@@ -12,14 +12,12 @@
+ 	"fmt"
+ 	"github.com/microsoft/TypeScript/tsc/shim/ast"
+ 	"github.com/microsoft/TypeScript/tsc/shim/checker"
+-	"github.com/system-inc/adamic/internal/buildlog"
+ 	"github.com/system-inc/adamic/internal/flow"
+ 	"github.com/system-inc/adamic/internal/fresh"
+ 	"github.com/system-inc/adamic/internal/ir"
+ 	"github.com/system-inc/adamic/internal/load"
+ 	"os"
+ 	"path/filepath"
+-	"time"
+ )
+ 
+ // Lower lowers a checked program from one entry, in ESM evaluation order.
+@@ -54,31 +52,7 @@
+ }
+ 
+ func LowerWithOptions(ctx context.Context, program *load.Program, options Options) (*ir.Program, error) {
+-	files := program.Files()
+-	if len(files) != 1 {
+-		return nil, fmt.Errorf("lower: stage 0 compiles a program from one entry file, got %d", len(files))
+-	}
+-	entry := files[0]
+-	// The lower phase's line on $ADAMIC_BUILD_LOG, once a program: a program region's discovery pass is in it.
+-	defer buildlog.Phase("lower", time.Now())
+-	// Stage 0 checks single-threaded, so one checker answers for every file.
+-	typeChecker, release := program.Checker(ctx, entry)
+-	defer release()
+-
+-	var plan *programMembership
+-	if options.ProgramRegion {
+-		discovery, err := lowerCheckedWithCycleTypes(program, typeChecker, entry, nil, true, false, options.ModuleFormat, nil)
+-		if err != nil {
+-			return nil, err
+-		}
+-		plan = discovery.programPlan
+-	}
+-	built, err := lowerCheckedWithCycleTypes(program, typeChecker, entry, plan, false, options.Debug, options.ModuleFormat, nil, options.OwnershipQuery)
+-	if err != nil {
+-		return nil, err
+-	}
+-
+-	return built.result, nil
++	return nil, fmt.Errorf("latent census: measurement only; no IR output")
+ }
+ 
+ // lowerChecked lowers a program as an ES module, the format every caller but LowerWithOptions lowers in.
+@@ -305,12 +279,16 @@
+ }
+ 
+ type lowering struct {
+-	inspectorRequireKnown     bool // Lazy, immutable program facts; no IR or unit ownership.
+-	inspectorRequirePresent   bool
+-	inspectorSkippedContracts map[*ast.Node]int // Skipped AST reads -> unique Panic slots, owned by this IR snapshot.
+-	bindGetters               map[string]bool   // source getter names, memoized for bind receiver admission
+-	debug                     bool
+-	cycleTypes                map[int]*checker.Type // Optional differential-test capture; nil in normal builds.
++	latentDeclarations          map[int]*ast.Node
++	latentReady                 map[int]bool
++	latentAncestors             map[*ast.Node]bool
++	latentProgramRecordsPending bool
++	inspectorRequireKnown       bool // Lazy, immutable program facts; no IR or unit ownership.
++	inspectorRequirePresent     bool
++	inspectorSkippedContracts   map[*ast.Node]int // Skipped AST reads -> unique Panic slots, owned by this IR snapshot.
++	bindGetters                 map[string]bool   // source getter names, memoized for bind receiver admission
++	debug                       bool
++	cycleTypes                  map[int]*checker.Type // Optional differential-test capture; nil in normal builds.
+ 	// moduleFormat is the module format the build declares (Options.ModuleFormat). A lowering a test
+ 	// builds by hand leaves it ModuleFormatEcmaScript.
+ 	moduleFormat ModuleFormat
+--- main/before/internal_lower_graph_types.go
++++ main/scratch-overlay/internal_lower_graph_types.go
+@@ -375,6 +375,7 @@
+ 	if f.recordStop != nil {
+ 		return f.recordStop
+ 	}
++	recordCensusFinder = f
+ 	return flows
+ }
+ 
+--- main/before/internal_lower_latent_scoped_tail.go
++++ main/scratch-overlay/internal_lower_latent_scoped_tail.go
+@@ -16,6 +16,7 @@
+ // The unit owns its body IR. Finalization observes a second, disposable snapshot;
+ // neither its rewrites nor its registrations ever return to the unit or base.
+ func (l *lowering) latentFinishUnit(unit *LatentUnit, node *ast.Node) {
++ recordCensusObserve(l, unit.Where)
+ 	if os.Getenv("LATENT_TAIL") != "1" {
+ 		return
+ 	}
+--- main/before/internal_lower_latent_record_census.go
++++ main/scratch-overlay/internal_lower_latent_record_census.go
+@@ -0,0 +1,20 @@
++package lower
++import (
++ "context"
++ "fmt"
++ "github.com/system-inc/adamic/internal/load"
++ "github.com/system-inc/adamic/stage3/census/moduleformat"
++)
++var recordCensusFinder *cycleFinder
++var recordCensusCalls, recordCensusHits int
++// Prepare once with the real whole-program lowering. No partial finder is accepted.
++func RecordCensusPrepare(ctx context.Context,p *load.Program) error {
++ recordCensusFinder=nil; recordCensusCalls=0;recordCensusHits=0
++ if len(p.Files())!=1 { return fmt.Errorf("record census facts require one program entry, got %d",len(p.Files())) }
++ c,release:=p.Checker(ctx,p.Files()[0]);defer release()
++ _,err:=lowerCheckedWithCycleTypes(p,c,p.Files()[0],nil,false,false,moduleformat.Resolve(ModuleFormatCommonJSBundle,ModuleFormatEcmaScript),nil)
++ if recordCensusFinder==nil { return fmt.Errorf("whole-program graph facts unavailable before record check: %v",err) }
++ return nil
++}
++func RecordCensusTotals() (int,int) {return recordCensusCalls,recordCensusHits}
++func recordCensusObserve(l *lowering,unit string) { recordCensusCalls++ /* This commit has no cyclicRecord check. */ }
+--- main/before/stage3_census_latent_tool_main.go
++++ main/scratch-overlay/stage3_census_latent_tool_main.go
+@@ -1,91 +1,10 @@
+ package main
+-
+-import (
+- "github.com/system-inc/adamic/stage3/census/moduleformat"
+-	"context"
+-	"encoding/json"
+-	"fmt"
+-	"github.com/system-inc/adamic/internal/load"
+-	"github.com/system-inc/adamic/internal/lower"
+-	"os"
+-	"path/filepath"
+-	"sort"
+-)
+-
+-func main() {
+-	if len(os.Args) != 3 {
+-		panic("usage: latent source-directory output.json")
+-	}
+-	var paths []string
+-	err := filepath.WalkDir(os.Args[1], func(path string, entry os.DirEntry, err error) error {
+-		if err != nil {
+-			return err
+-		}
+-		if !entry.IsDir() && (filepath.Ext(path) == ".ts" || filepath.Ext(path) == ".a") {
+-			paths = append(paths, path)
+-		}
+-		return nil
+-	})
+-	if err != nil {
+-		panic(err)
+-	}
+-	sort.Strings(paths)
+-	output, err := os.Create(os.Args[2])
+-	if err != nil {
+-		panic(err)
+-	}
+-	defer output.Close()
+-	encoder := json.NewEncoder(output)
+-	program, err := load.LatentLoad(paths)
+-	if err != nil {
+-		panic(err)
+-	}
+-	if os.Getenv("LATENT_ASSERT_NO_OUTPUT") != "" {
+-		output, failure := lower.LowerWithOptions(context.Background(), program, lower.Options{ModuleFormat: moduleformat.Resolve(lower.ModuleFormatCommonJSBundle, lower.ModuleFormatEcmaScript), ProgramRegion: os.Getenv("ADAMIC_PROGRAM_REGION") == "1", OwnershipQuery: os.Getenv("ADAMIC_OWNERSHIP_QUERY") == "1"})
+-		if output != nil || failure == nil || failure.Error() != "latent census: measurement only; no IR output" {
+-			panic("measurement returned usable IR")
+-		}
+-		outputProgram, failure := load.Load(paths)
+-		if outputProgram != nil || failure == nil {
+-			panic("measurement loader exposed an output program")
+-		}
+-	}
+-	diagnostics := program.LatentDiagnostics()
+-	if diagnostics == nil {
+-		diagnostics = []string{}
+-	}
+-	header := map[string]any{"module_format": moduleformat.Name(), "measurement": lower.LatentMeasurementLabel, "status": "measurement", "latent_mode": censusMode(), "checker_rejected": len(diagnostics) > 0, "diagnostics": diagnostics, "diagnostic_sites": program.LatentDiagnosticSites()}
+-	writeLatentStream(encoder, header, output.Sync, func(emit func(lower.LatentFile)) lower.LatentRelationReport {
+-		return lower.Latent(context.Background(), program, func(record lower.LatentFile) {
+-			emit(record)
+-			fmt.Fprintln(os.Stderr, record.File, len(record.Units), len(record.Findings), lower.LatentMeasurementLabel)
+-		})
+-	})
+-
++import("context";"encoding/json";"os";"fmt";"github.com/system-inc/adamic/internal/load";"github.com/system-inc/adamic/internal/lower")
++func main(){
++ out,e:=os.Create(os.Args[2]);if e!=nil{panic(e)};defer out.Close();enc:=json.NewEncoder(out)
++ p,e:=load.LatentLoad([]string{os.Args[1]});if e!=nil{panic(e)}
++ e=lower.RecordCensusPrepare(context.Background(),p)
++ if e!=nil{enc.Encode(map[string]any{"status":"blocked","reason":e.Error(),"units_affected":nil,"first_sites":nil});fmt.Fprintln(os.Stderr,e);os.Exit(2)}
++ lower.Latent(context.Background(),p,func(r lower.LatentFile){enc.Encode(r)})
++ calls,hits:=lower.RecordCensusTotals();enc.Encode(map[string]any{"status":"complete","calls":calls,"hits":hits})
+ }
+-
+-// Flush the header before any lowering. A cutoff cannot manufacture an end
+-// answer: the relation trailer is written only after the run returns normally.
+-func writeLatentStream(encoder *json.Encoder, header map[string]any, flush func() error, run func(func(lower.LatentFile)) lower.LatentRelationReport) {
+-	writeRecord := func(record any) {
+-		if err := encoder.Encode(record); err != nil {
+-			panic(err)
+-		}
+-		if err := flush(); err != nil {
+-			panic(err)
+-		}
+-	}
+-	writeRecord(header)
+-	relations := run(func(record lower.LatentFile) { writeRecord(record) })
+-	writeRecord(map[string]any{"module_format": moduleformat.Name(), "measurement": lower.LatentMeasurementLabel, "status": "relation_report", "relation_overflow": relations, "findings": relations.Findings})
+-}
+-
+-func censusMode() string {
+-	if os.Getenv("LATENT_SPECULATIVE") == "1" && os.Getenv("LATENT_MUTANT_NO_STUBS") != "1" {
+-		return "speculative"
+-	}
+-	if os.Getenv("LATENT_FULL") == "1" {
+-		return "full"
+-	}
+-	return "first-error"
+-}

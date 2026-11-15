@@ -1,0 +1,73 @@
+{
+  "build-head.receipt.json": {
+    "command": [
+      "go",
+      "build",
+      "-buildvcs=false",
+      "-overlay=/workspace/scratch/record-cycle/head-overlay/overlay.json",
+      "-o",
+      "/workspace/scratch/record-cycle/head-census",
+      "./stage3/census/latent/tool"
+    ],
+    "exit": 1,
+    "seconds": 148.75269725099997,
+    "peak_rss_kib": 2249624
+  },
+  "build-head-fixed.receipt.json": {
+    "command": [
+      "go",
+      "build",
+      "-buildvcs=false",
+      "-overlay=/workspace/scratch/record-cycle/head-overlay/overlay.json",
+      "-o",
+      "/workspace/scratch/record-cycle/head-census",
+      "./stage3/census/latent/tool"
+    ],
+    "exit": 0,
+    "seconds": 24.645549806999952,
+    "peak_rss_kib": 1476456
+  },
+  "build-ordinary.receipt.json": {
+    "command": [
+      "go",
+      "build",
+      "-buildvcs=false",
+      "-o",
+      "/workspace/scratch/record-cycle/ordinary",
+      "./stage3/census/tool"
+    ],
+    "exit": 0,
+    "seconds": 27.30815393499995,
+    "peak_rss_kib": 1473804
+  },
+  "head-negative.receipt.json": {
+    "command": [
+      "/workspace/scratch/record-cycle/head-census",
+      "/workspace/scratch/record-cycle/fixtures/acyclic.a",
+      "/workspace/scratch/record-cycle/head-negative.jsonl"
+    ],
+    "exit": 0,
+    "seconds": 0.17115303299999596,
+    "peak_rss_kib": 33864
+  },
+  "head-positive.receipt.json": {
+    "command": [
+      "/workspace/scratch/record-cycle/head-census",
+      "/workspace/scratch/record-cycle/fixtures/cycle.a",
+      "/workspace/scratch/record-cycle/head-positive.jsonl"
+    ],
+    "exit": 0,
+    "seconds": 0.11484261999999035,
+    "peak_rss_kib": 33864
+  },
+  "head-tsc.receipt.json": {
+    "command": [
+      "/workspace/scratch/record-cycle/head-census",
+      "/workspace/scratch/record-cycle/adapted/src/tsc/tsc.ts",
+      "/workspace/scratch/record-cycle/head-tsc.jsonl"
+    ],
+    "exit": 2,
+    "seconds": 16.551866862999987,
+    "peak_rss_kib": 890940
+  }
+}

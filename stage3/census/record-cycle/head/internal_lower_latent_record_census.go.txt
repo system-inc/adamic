@@ -1,0 +1,32 @@
+package lower
+import (
+ "context"
+ "fmt"
+ "github.com/system-inc/adamic/internal/load"
+ "github.com/system-inc/adamic/stage3/census/moduleformat"
+)
+var recordCensusFinder *cycleFinder
+var recordCensusCalls, recordCensusHits int
+// Prepare once with the real whole-program lowering. No partial finder is accepted.
+func RecordCensusPrepare(ctx context.Context,p *load.Program) error {
+ recordCensusFinder=nil; recordCensusCalls=0;recordCensusHits=0
+ if len(p.Files())!=1 { return fmt.Errorf("record census facts require one program entry, got %d",len(p.Files())) }
+ c,release:=p.Checker(ctx,p.Files()[0]);defer release()
+ _,err:=lowerCheckedWithCycleTypes(p,c,p.Files()[0],nil,false,false,moduleformat.Resolve(ModuleFormatCommonJSBundle,ModuleFormatEcmaScript),nil)
+ if recordCensusFinder==nil { return fmt.Errorf("whole-program graph facts unavailable before record check: %v",err) }
+ return nil
+}
+func RecordCensusTotals() (int,int) {return recordCensusCalls,recordCensusHits}
+func recordCensusObserve(l *lowering,unit string) {
+ f:=recordCensusFinder
+ if f==nil {panic("record census: no complete whole-program graph facts")}
+ saved:=f.l.graphRecords;defer func(){f.l.graphRecords=saved}()
+ for _,site:=range l.graphRecords {
+  f.l.graphRecords=[]graphRecordSite{site}
+  recordCensusCalls++
+  if found:=f.cyclicRecord();found!=nil {
+   recordCensusHits++
+   latentFindings=append(latentFindings,LatentFinding{Measurement:LatentMeasurementLabel,Unit:unit,Phase:"record_cycle",Kind:"NotYet",Where:l.program.Where(site.node),Reason:"a record its own values can reach again, on a cycle in a graph program: a record can't join a graph region",Text:l.checker.TypeToString(site.record)})
+  }
+ }
+}

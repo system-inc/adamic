@@ -1,0 +1,6 @@
+interface Box { r: Record<string, Node> }
+interface Node { name: string; box: Box }
+function make(name: string): Node { return { name, box: { r: {} } }; }
+const a = make('a');
+a.box = { r: { k: a } };
+console.log(String(Object.keys(a.box.r).length));

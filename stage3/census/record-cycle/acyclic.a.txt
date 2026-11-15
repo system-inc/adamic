@@ -1,0 +1,6 @@
+interface Node { name: string; next: Node[]; tags: Record<string, string> }
+const a: Node = { name: 'a' + '', next: [], tags: {} };
+const b: Node = { name: 'b' + '', next: [a], tags: {} };
+a.next.push(b);
+a.tags = { kind: 'leaf' };
+console.log(String(a.tags['kind']));

@@ -1,0 +1,26 @@
+{
+  "status": "blocked_whole_program_facts",
+  "units_affected": null,
+  "first_sites": null,
+  "controls": {
+    "head-positive": {
+      "calls": 2,
+      "hits": 2,
+      "status": "complete"
+    },
+    "head-negative": {
+      "calls": 3,
+      "hits": 0,
+      "status": "complete"
+    },
+    "head-tsc": {
+      "first_sites": null,
+      "reason": "whole-program graph facts unavailable before record check: /workspace/scratch/record-cycle/adapted/src/compiler/sys.ts:1385:31: Adamic 0.1 refuses a method read as a value (writeFile would lose its object, and this with it); call it in an arrow that keeps the object: (path, data, writeByteOrderMark) => sys.writeFile(path, data, writeByteOrderMark) (unbound-method)",
+      "status": "blocked",
+      "units_affected": null
+    }
+  },
+  "roots_completed": 0,
+  "roots": [],
+  "new_first_stops": []
+}

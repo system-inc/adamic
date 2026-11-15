@@ -1,0 +1,10 @@
+package main
+import("context";"encoding/json";"os";"fmt";"github.com/system-inc/adamic/internal/load";"github.com/system-inc/adamic/internal/lower")
+func main(){
+ out,e:=os.Create(os.Args[2]);if e!=nil{panic(e)};defer out.Close();enc:=json.NewEncoder(out)
+ p,e:=load.LatentLoad([]string{os.Args[1]});if e!=nil{panic(e)}
+ e=lower.RecordCensusPrepare(context.Background(),p)
+ if e!=nil{enc.Encode(map[string]any{"status":"blocked","reason":e.Error(),"units_affected":nil,"first_sites":nil});fmt.Fprintln(os.Stderr,e);os.Exit(2)}
+ lower.Latent(context.Background(),p,func(r lower.LatentFile){enc.Encode(r)})
+ calls,hits:=lower.RecordCensusTotals();enc.Encode(map[string]any{"status":"complete","calls":calls,"hits":hits})
+}

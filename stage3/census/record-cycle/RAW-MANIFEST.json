@@ -1,0 +1,482 @@
+[
+  {
+    "path": "/workspace/scratch/record-cycle/apply.log",
+    "bytes": 843532,
+    "sha256": "f284c5ab92da0f9f2158c3fc89ee3eedbb855369583dfa50576d4570651b1c99"
+  },
+  {
+    "path": "/workspace/scratch/record-cycle/build-head-fixed.log",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "path": "/workspace/scratch/record-cycle/build-head-fixed.receipt.json",
+    "bytes": 311,
+    "sha256": "5f8412515b57eee5243f144f85c8ade8df4dd9ae33d20155790af6433aa2c847"
+  },
+  {
+    "path": "/workspace/scratch/record-cycle/build-head.log",
+    "bytes": 226,
+    "sha256": "ec9399786c00507feb2f2379f23e4a14aafe33927aeac46c1aee840b485e46ae"
+  },
+  {
+    "path": "/workspace/scratch/record-cycle/build-head.receipt.json",
+    "bytes": 311,
+    "sha256": "da26b31674d7b326972e9ca330002a0eecc40ed527564f0b997cc278c861fbc5"
+  },
+  {
+    "path": "/workspace/scratch/record-cycle/build-main.log",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "path": "/workspace/scratch/record-cycle/build-ordinary.log",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "path": "/workspace/scratch/record-cycle/build-ordinary.receipt.json",
+    "bytes": 226,
+    "sha256": "b122cfd346a897dc1e8264891c9fb9f6361a6c0f69319c6823ff73a40a27a30c"
+  },
+  {
+    "path": "/workspace/scratch/record-cycle/env.sh",
+    "bytes": 338,
+    "sha256": "d0ac46fbbbefa42dc7ecb0621a8cdf4f9afdc8f4d25882effe1dd97668f5715f"
+  },
+  {
+    "path": "/workspace/scratch/record-cycle/fixtures/acyclic.a",
+    "bytes": 269,
+    "sha256": "86319ed026f9c72afde6572b14e7c6134029279342868b22e394c00ad980743b"
+  },
+  {
+    "path": "/workspace/scratch/record-cycle/fixtures/cycle.a",
+    "bytes": 251,
+    "sha256": "f2d4dba0397d0c143e08d48887ff2ae584d7f4ee1465b8325dd770fb1e4f4bf3"
+  },
+  {
+    "path": "/workspace/scratch/record-cycle/head-negative.jsonl",
+    "bytes": 14280,
+    "sha256": "2df1ab20a47c0c205a4edfefbe37f70f39ac0f2ebb880b87b0fd145164cee1a1"
+  },
+  {
+    "path": "/workspace/scratch/record-cycle/head-negative.log",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "path": "/workspace/scratch/record-cycle/head-negative.receipt.json",
+    "bytes": 262,
+    "sha256": "a38e693ca1ed68a2db3e237261791c70c814d8f22e49db9b7b2972a5f06a4c3d"
+  },
+  {
+    "path": "/workspace/scratch/record-cycle/head-overlay/internal_load_latent_hook.go",
+    "bytes": 3179,
+    "sha256": "154155d62954f677731f302b7dc57a3aab914ff373618fd9efc0a1bf3d68b5a4"
+  },
+  {
+    "path": "/workspace/scratch/record-cycle/head-overlay/internal_load_load.go",
+    "bytes": 13520,
+    "sha256": "fb7e14fd673f689330564b6486c5db6e0722bf5b3a8fab103322bd7d49f3eb07"
+  },
+  {
+    "path": "/workspace/scratch/record-cycle/head-overlay/internal_lower_entries_records.go",
+    "bytes": 32835,
+    "sha256": "50678750c15518faf7d614399542e2014999207a72da48f3f453dfac38900040"
+  },
+  {
+    "path": "/workspace/scratch/record-cycle/head-overlay/internal_lower_expression.go",
+    "bytes": 96659,
+    "sha256": "7eb1c5c94bef9b6ee6db36983061bcec4bdf92d3e662f2c9a86c02c796498259"
+  },
+  {
+    "path": "/workspace/scratch/record-cycle/head-overlay/internal_lower_functions.go",
+    "bytes": 23616,
+    "sha256": "ddcf50645205fc8686bc21bdd6220087965e6463336a2067ce377a5c8b2fd820"
+  },
+  {
+    "path": "/workspace/scratch/record-cycle/head-overlay/internal_lower_generic.go",
+    "bytes": 18709,
+    "sha256": "65fd3364373ced517d0543a94007a37d2f87e45223f20945577b43e8d81a2ed8"
+  },
+  {
+    "path": "/workspace/scratch/record-cycle/head-overlay/internal_lower_graph_types.go",
+    "bytes": 43516,
+    "sha256": "ed16c77c67ab4a85582cb7753e2d48068c854048272201a3819e00c5806b1964"
+  },
+  {
+    "path": "/workspace/scratch/record-cycle/head-overlay/internal_lower_latent_deferred_probe_test.go",
+    "bytes": 2438,
+    "sha256": "a59311fe81ce15b510fe53648f7fc6a2c3004061e44d718b2105a46cdb96ea6b"
+  },
+  {
+    "path": "/workspace/scratch/record-cycle/head-overlay/internal_lower_latent_full.go",
+    "bytes": 7833,
+    "sha256": "99b8f7fa928e3dd6884068b9c858e4d8c9a65eb1e3b7a5c2ee0f71c19f45342f"
+  },
+  {
+    "path": "/workspace/scratch/record-cycle/head-overlay/internal_lower_latent_hook.go",
+    "bytes": 23881,
+    "sha256": "abd73e4a70cdaf0f8fccb857e434a92d43bef69864e982ea841ebafde74df830"
+  },
+  {
+    "path": "/workspace/scratch/record-cycle/head-overlay/internal_lower_latent_pass_ledger.go",
+    "bytes": 3933,
+    "sha256": "14b593e1b2c84ae6f14e290ae3d6c6fd0cdf3be5abcf4cb2cfde75bb1e49f41e"
+  },
+  {
+    "path": "/workspace/scratch/record-cycle/head-overlay/internal_lower_latent_piece.go",
+    "bytes": 4991,
+    "sha256": "ae04c70b5cd7c746e9f2ffdd61147ab8d92056bea29342b5be9feee4fd84afee"
+  },
+  {
+    "path": "/workspace/scratch/record-cycle/head-overlay/internal_lower_latent_progress.go",
+    "bytes": 3587,
+    "sha256": "bdb2684110c5e6c160909c0d36cf975778a9b8f8f46273df8b3d75729be494c3"
+  },
+  {
+    "path": "/workspace/scratch/record-cycle/head-overlay/internal_lower_latent_record_census.go",
+    "bytes": 1691,
+    "sha256": "1f8a7ea1cf640f2b1171c041af422d86d71b529b589d329c4853a38aa53759c4"
+  },
+  {
+    "path": "/workspace/scratch/record-cycle/head-overlay/internal_lower_latent_relation_overflow.go",
+    "bytes": 8424,
+    "sha256": "1630d2346899454d170faff069c67e6cdeea959cba13477e4a8a3d6026e4cf63"
+  },
+  {
+    "path": "/workspace/scratch/record-cycle/head-overlay/internal_lower_latent_replay.go",
+    "bytes": 4197,
+    "sha256": "4dd0d8bc81da16d543f3d278d53a7e67307d3113df8f3b6611fe22c62e674b1d"
+  },
+  {
+    "path": "/workspace/scratch/record-cycle/head-overlay/internal_lower_latent_scoped_tail.go",
+    "bytes": 4653,
+    "sha256": "26d6dfde0660f23d9698d08b3a1d204d526e6726e8ccf3396425946762d338a0"
+  },
+  {
+    "path": "/workspace/scratch/record-cycle/head-overlay/internal_lower_latent_scoped_tail_test.go",
+    "bytes": 3804,
+    "sha256": "d934c6fe78b5183d756b5b24f6be568ecf28b80f819ab0fd54003c1696f83d0a"
+  },
+  {
+    "path": "/workspace/scratch/record-cycle/head-overlay/internal_lower_latent_speculative.go",
+    "bytes": 21161,
+    "sha256": "6fae169360682ca61b5338feee8fa325d45df9ad4d3fe26e776790ec0378a73e"
+  },
+  {
+    "path": "/workspace/scratch/record-cycle/head-overlay/internal_lower_latent_state.go",
+    "bytes": 84207,
+    "sha256": "54e3cf1d4e3e0d6c22210d3d34a596e109a6f595319eeb22d12e701128f7ef8a"
+  },
+  {
+    "path": "/workspace/scratch/record-cycle/head-overlay/internal_lower_latent_timing.go",
+    "bytes": 1241,
+    "sha256": "080b7937b2ec03c1837ec639a7916056fbf2c439f5491c321fc972899f41ad3f"
+  },
+  {
+    "path": "/workspace/scratch/record-cycle/head-overlay/internal_lower_latent_units.go",
+    "bytes": 11056,
+    "sha256": "fa099b0021a1541d6969d797274f8709b12d03356429adb5a9a692a45d685b11"
+  },
+  {
+    "path": "/workspace/scratch/record-cycle/head-overlay/internal_lower_locals.go",
+    "bytes": 17723,
+    "sha256": "fa21e0661addb989a3b89a418814a1e7ff8af9d6f89040fc7293c6bc83034602"
+  },
+  {
+    "path": "/workspace/scratch/record-cycle/head-overlay/internal_lower_lower.go",
+    "bytes": 34810,
+    "sha256": "ac8f1de00ab72ffc1ac3da8a7006e89fcd1fe525572bb921a6deeb22538aba92"
+  },
+  {
+    "path": "/workspace/scratch/record-cycle/head-overlay/internal_lower_refusals.go",
+    "bytes": 15071,
+    "sha256": "35e3116e30afb2174e1630f2fbbe2649ac41c508ee2edc7676f53da03d387cb5"
+  },
+  {
+    "path": "/workspace/scratch/record-cycle/head-overlay/internal_lower_statements.go",
+    "bytes": 14567,
+    "sha256": "bcfc857a47f0257238d3d3a39096d7aead73f8021c2344c077f2923691be365f"
+  },
+  {
+    "path": "/workspace/scratch/record-cycle/head-overlay/overlay.json",
+    "bytes": 4616,
+    "sha256": "6a55c1d62266f474f4d2b1e231891ab2f90c38606e64b6cf2638f2d97cbc62e8"
+  },
+  {
+    "path": "/workspace/scratch/record-cycle/head-overlay/stage3_census_latent_replay_worker_main.go",
+    "bytes": 3270,
+    "sha256": "70d936e625ff77e3e1243061f73b60544abf9d17e30b0a6118448283d563b2d5"
+  },
+  {
+    "path": "/workspace/scratch/record-cycle/head-overlay/stage3_census_latent_tool_main.go",
+    "bytes": 721,
+    "sha256": "b1ab2fe1154f0dddf487ddc8c4cee3daf2e4de6b3c501ba93cbf6ae9ea251b38"
+  },
+  {
+    "path": "/workspace/scratch/record-cycle/head-overlay/stage3_census_latent_tool_relation_overflow_test.go",
+    "bytes": 7735,
+    "sha256": "e63247a585d0722fcbfe1a9f32b9f4e672d48f6f4520b7459100b94d61907c6c"
+  },
+  {
+    "path": "/workspace/scratch/record-cycle/head-overlay.log",
+    "bytes": 101,
+    "sha256": "4708d28ae1ebd1ee4dba865546b9aadb1925e6c4f872b0958e131d5b2de46b67"
+  },
+  {
+    "path": "/workspace/scratch/record-cycle/head-positive.jsonl",
+    "bytes": 15491,
+    "sha256": "7422722c68fd7abf462ded0057263640104e773c8090563dc25eea9d81ac8dfb"
+  },
+  {
+    "path": "/workspace/scratch/record-cycle/head-positive.log",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "path": "/workspace/scratch/record-cycle/head-positive.receipt.json",
+    "bytes": 260,
+    "sha256": "02634a8936fb1bd61ba31c299449aac83ce5f46002b9559291ce3400ee733fe6"
+  },
+  {
+    "path": "/workspace/scratch/record-cycle/head-submodules.log",
+    "bytes": 751,
+    "sha256": "b95415c60c70812b59b675663037e3f05076d839d7537c896faf7369cbc4ea7a"
+  },
+  {
+    "path": "/workspace/scratch/record-cycle/head-tsc.jsonl",
+    "bytes": 445,
+    "sha256": "8c3f23ed408000037df25cefaefb6cd1ebc2c6ddbbd51b32f15e542807165b54"
+  },
+  {
+    "path": "/workspace/scratch/record-cycle/head-tsc.log",
+    "bytes": 367,
+    "sha256": "4daffbe124389376595717175dc269cf639fb8b02b71b063a9c0b37538545f4e"
+  },
+  {
+    "path": "/workspace/scratch/record-cycle/head-tsc.receipt.json",
+    "bytes": 261,
+    "sha256": "f953adb86ce80b5ab252e1bfffa6b8ffa340d6c934768bcf1bb085b24dca5c07"
+  },
+  {
+    "path": "/workspace/scratch/record-cycle/main-npm-ci.log",
+    "bytes": 27,
+    "sha256": "3605601719fc05b99174b85126bdfaa6796aa443bed687435b4f274736f8ee2d"
+  },
+  {
+    "path": "/workspace/scratch/record-cycle/main-overlay/internal_load_latent_hook.go",
+    "bytes": 3179,
+    "sha256": "154155d62954f677731f302b7dc57a3aab914ff373618fd9efc0a1bf3d68b5a4"
+  },
+  {
+    "path": "/workspace/scratch/record-cycle/main-overlay/internal_load_load.go",
+    "bytes": 13520,
+    "sha256": "fb7e14fd673f689330564b6486c5db6e0722bf5b3a8fab103322bd7d49f3eb07"
+  },
+  {
+    "path": "/workspace/scratch/record-cycle/main-overlay/internal_lower_entries_records.go",
+    "bytes": 32835,
+    "sha256": "50678750c15518faf7d614399542e2014999207a72da48f3f453dfac38900040"
+  },
+  {
+    "path": "/workspace/scratch/record-cycle/main-overlay/internal_lower_expression.go",
+    "bytes": 96659,
+    "sha256": "7eb1c5c94bef9b6ee6db36983061bcec4bdf92d3e662f2c9a86c02c796498259"
+  },
+  {
+    "path": "/workspace/scratch/record-cycle/main-overlay/internal_lower_functions.go",
+    "bytes": 23616,
+    "sha256": "ddcf50645205fc8686bc21bdd6220087965e6463336a2067ce377a5c8b2fd820"
+  },
+  {
+    "path": "/workspace/scratch/record-cycle/main-overlay/internal_lower_generic.go",
+    "bytes": 18709,
+    "sha256": "65fd3364373ced517d0543a94007a37d2f87e45223f20945577b43e8d81a2ed8"
+  },
+  {
+    "path": "/workspace/scratch/record-cycle/main-overlay/internal_lower_graph_types.go",
+    "bytes": 43127,
+    "sha256": "0c10a1d8858e3152b1fa99cc6d477770f43b1371e4455794e41f5db6b9d4877f"
+  },
+  {
+    "path": "/workspace/scratch/record-cycle/main-overlay/internal_lower_latent_deferred_probe_test.go",
+    "bytes": 2438,
+    "sha256": "a59311fe81ce15b510fe53648f7fc6a2c3004061e44d718b2105a46cdb96ea6b"
+  },
+  {
+    "path": "/workspace/scratch/record-cycle/main-overlay/internal_lower_latent_full.go",
+    "bytes": 7833,
+    "sha256": "99b8f7fa928e3dd6884068b9c858e4d8c9a65eb1e3b7a5c2ee0f71c19f45342f"
+  },
+  {
+    "path": "/workspace/scratch/record-cycle/main-overlay/internal_lower_latent_hook.go",
+    "bytes": 23881,
+    "sha256": "abd73e4a70cdaf0f8fccb857e434a92d43bef69864e982ea841ebafde74df830"
+  },
+  {
+    "path": "/workspace/scratch/record-cycle/main-overlay/internal_lower_latent_pass_ledger.go",
+    "bytes": 3933,
+    "sha256": "14b593e1b2c84ae6f14e290ae3d6c6fd0cdf3be5abcf4cb2cfde75bb1e49f41e"
+  },
+  {
+    "path": "/workspace/scratch/record-cycle/main-overlay/internal_lower_latent_piece.go",
+    "bytes": 4991,
+    "sha256": "ae04c70b5cd7c746e9f2ffdd61147ab8d92056bea29342b5be9feee4fd84afee"
+  },
+  {
+    "path": "/workspace/scratch/record-cycle/main-overlay/internal_lower_latent_progress.go",
+    "bytes": 3587,
+    "sha256": "bdb2684110c5e6c160909c0d36cf975778a9b8f8f46273df8b3d75729be494c3"
+  },
+  {
+    "path": "/workspace/scratch/record-cycle/main-overlay/internal_lower_latent_record_census.go",
+    "bytes": 1096,
+    "sha256": "9f23a5f9db92be098fc06feeb6b9f9c2ddf15de3cdea03fe2f637ff4ce8cca89"
+  },
+  {
+    "path": "/workspace/scratch/record-cycle/main-overlay/internal_lower_latent_relation_overflow.go",
+    "bytes": 8424,
+    "sha256": "1630d2346899454d170faff069c67e6cdeea959cba13477e4a8a3d6026e4cf63"
+  },
+  {
+    "path": "/workspace/scratch/record-cycle/main-overlay/internal_lower_latent_replay.go",
+    "bytes": 4197,
+    "sha256": "4dd0d8bc81da16d543f3d278d53a7e67307d3113df8f3b6611fe22c62e674b1d"
+  },
+  {
+    "path": "/workspace/scratch/record-cycle/main-overlay/internal_lower_latent_scoped_tail.go",
+    "bytes": 4653,
+    "sha256": "26d6dfde0660f23d9698d08b3a1d204d526e6726e8ccf3396425946762d338a0"
+  },
+  {
+    "path": "/workspace/scratch/record-cycle/main-overlay/internal_lower_latent_scoped_tail_test.go",
+    "bytes": 3804,
+    "sha256": "d934c6fe78b5183d756b5b24f6be568ecf28b80f819ab0fd54003c1696f83d0a"
+  },
+  {
+    "path": "/workspace/scratch/record-cycle/main-overlay/internal_lower_latent_speculative.go",
+    "bytes": 21161,
+    "sha256": "6fae169360682ca61b5338feee8fa325d45df9ad4d3fe26e776790ec0378a73e"
+  },
+  {
+    "path": "/workspace/scratch/record-cycle/main-overlay/internal_lower_latent_state.go",
+    "bytes": 83465,
+    "sha256": "83e4abdb5ba91f54ce9d19c390687332f82f69f89cbfdab5bf68b6bb1904d9c0"
+  },
+  {
+    "path": "/workspace/scratch/record-cycle/main-overlay/internal_lower_latent_timing.go",
+    "bytes": 1241,
+    "sha256": "080b7937b2ec03c1837ec639a7916056fbf2c439f5491c321fc972899f41ad3f"
+  },
+  {
+    "path": "/workspace/scratch/record-cycle/main-overlay/internal_lower_latent_units.go",
+    "bytes": 11056,
+    "sha256": "fa099b0021a1541d6969d797274f8709b12d03356429adb5a9a692a45d685b11"
+  },
+  {
+    "path": "/workspace/scratch/record-cycle/main-overlay/internal_lower_locals.go",
+    "bytes": 17723,
+    "sha256": "fa21e0661addb989a3b89a418814a1e7ff8af9d6f89040fc7293c6bc83034602"
+  },
+  {
+    "path": "/workspace/scratch/record-cycle/main-overlay/internal_lower_lower.go",
+    "bytes": 34435,
+    "sha256": "5536c88c29995486e7c4f201790a03e449b7aca567728d08f349eabb98b25556"
+  },
+  {
+    "path": "/workspace/scratch/record-cycle/main-overlay/internal_lower_refusals.go",
+    "bytes": 15071,
+    "sha256": "35e3116e30afb2174e1630f2fbbe2649ac41c508ee2edc7676f53da03d387cb5"
+  },
+  {
+    "path": "/workspace/scratch/record-cycle/main-overlay/internal_lower_statements.go",
+    "bytes": 14567,
+    "sha256": "bcfc857a47f0257238d3d3a39096d7aead73f8021c2344c077f2923691be365f"
+  },
+  {
+    "path": "/workspace/scratch/record-cycle/main-overlay/overlay.json",
+    "bytes": 4616,
+    "sha256": "79a33a251a22b47e3efc219ee237f8721614278f678106fc36acda0d6ac658c3"
+  },
+  {
+    "path": "/workspace/scratch/record-cycle/main-overlay/stage3_census_latent_replay_worker_main.go",
+    "bytes": 3270,
+    "sha256": "70d936e625ff77e3e1243061f73b60544abf9d17e30b0a6118448283d563b2d5"
+  },
+  {
+    "path": "/workspace/scratch/record-cycle/main-overlay/stage3_census_latent_tool_main.go",
+    "bytes": 721,
+    "sha256": "b1ab2fe1154f0dddf487ddc8c4cee3daf2e4de6b3c501ba93cbf6ae9ea251b38"
+  },
+  {
+    "path": "/workspace/scratch/record-cycle/main-overlay/stage3_census_latent_tool_relation_overflow_test.go",
+    "bytes": 7735,
+    "sha256": "e63247a585d0722fcbfe1a9f32b9f4e672d48f6f4520b7459100b94d61907c6c"
+  },
+  {
+    "path": "/workspace/scratch/record-cycle/main-overlay.log",
+    "bytes": 58,
+    "sha256": "7408e0c0040051456b59bac0d8afd9b0bc152d2bd0120e954919b2d9c926c555"
+  },
+  {
+    "path": "/workspace/scratch/record-cycle/main-submodules.log",
+    "bytes": 660,
+    "sha256": "280dc3211838d9f3db6b5381caef64d7badc02fb224d7d342746e3bccbe720b2"
+  },
+  {
+    "path": "/workspace/scratch/record-cycle/measure.py",
+    "bytes": 781,
+    "sha256": "89dc825454fedadac10aee4c0e2ffc2466d01344b2ced4f1addeea649afbbb5e"
+  },
+  {
+    "path": "/workspace/scratch/record-cycle/npm-ci.log",
+    "bytes": 232,
+    "sha256": "312abe6df6d367f5fdddce4ca41919fed54c934bb1b0beecc01997274fe7535b"
+  },
+  {
+    "path": "/workspace/scratch/record-cycle/ordinary-build.log",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "path": "/workspace/scratch/record-cycle/prepare-seam.py",
+    "bytes": 4176,
+    "sha256": "082f89d1e2df3869522c66200b2bc63b0b9b3dc016af1c3be46c566895739362"
+  },
+  {
+    "path": "/workspace/scratch/record-cycle/source-manifest.json",
+    "bytes": 125597,
+    "sha256": "43f38ff29857bba4a5dcdd57f4837031a771b4d9464d50586f1c9b4b3242c74f"
+  },
+  {
+    "path": "/workspace/scratch/record-cycle/source-receipt.py",
+    "bytes": 709,
+    "sha256": "d0080b84f5ce722c8653c2a4437620f1cc24a9c6333741de00ad54b1593f38d9"
+  },
+  {
+    "path": "/workspace/scratch/record-cycle/table/group.py",
+    "bytes": 557,
+    "sha256": "1ac1014d1e4428decef68a93353fc7b1f3f26f224d349528753031e4e8aa0f0f"
+  },
+  {
+    "path": "/workspace/scratch/record-cycle/table/run-one.py",
+    "bytes": 931,
+    "sha256": "51392574da60c4d4e640b529ae8d4f472447070da24a2fbe28602afd03866ae7"
+  },
+  {
+    "path": "/workspace/scratch/record-cycle/table/run.py",
+    "bytes": 1568,
+    "sha256": "536483e42507d4ef528febbd83c58987d8ca4f40f50e626879e1712508921d5c"
+  },
+  {
+    "path": "/workspace/scratch/record-cycle/typescript-clone.log",
+    "bytes": 3518,
+    "sha256": "c34b2369c0a2f203b0e6936af0ea6d0970800627887f61087e3f1f06cef78c32"
+  },
+  {
+    "path": "/workspace/scratch/record-cycle/write-report.py",
+    "bytes": 12061,
+    "sha256": "534bae23ac14fefa54ed869c690ea76890d23f6e434e6da0c86a447490a18db6"
+  }
+]
