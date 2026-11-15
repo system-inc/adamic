@@ -1,0 +1,4 @@
+import 'node:process';
+interface Handle { fd?: number; }
+const handle = (process.stdout as unknown as { _handle: Handle })._handle;
+console.log(String(handle.fd));

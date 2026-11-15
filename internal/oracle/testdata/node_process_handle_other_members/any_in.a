@@ -1,0 +1,3 @@
+import 'node:process';
+const handle = (process.stdout as any)._handle as { fd?: number; writeQueueSize?: number };
+console.log(String('fd' in handle));
