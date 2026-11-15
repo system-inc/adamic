@@ -30,3 +30,7 @@ Parser: 46 rewritten calls, 18022708 per-use property reads. Transformers: 18921
 Each source directory's PROOF.md and proofs/ contain the full per-part summaries and command receipts. final-proof-status.json, ledger.json and source-commits.json index the result. Raw files remain in /workspace/scratch/receiver-split; raw-manifest-final.json records their paths, byte sizes and sha256. No Go source was added; one heavy job ran at a time, with scratch Go/npm/temp caches.
 
 During final publication, three result/receipt filename collisions were found. Tiny witness checks were rerun into distinct filenames; published witness JSON contains results, while original command receipts and scratch artifacts remain preserved. All assertions passed.
+
+## Second cuts and merged-stack verification
+
+The first-head results above remain historical measured evidence. See [stack-v2/REPORT.md](stack-v2/REPORT.md) for the new parent chain, exact evidence relocation, current pushed SHAs and new-stack proof. No pins were regenerated; lanes/censuses were not rerun.

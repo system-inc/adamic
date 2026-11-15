@@ -1,0 +1,692 @@
+[
+  {
+    "path": "/workspace/scratch/receiver-split-v2/adamic-bin",
+    "bytes": 44151116,
+    "sha256": "a79692a6093e14ac3381e408aca6064c334afb68ab1d1f909d1e608c3ceff5e2"
+  },
+  {
+    "path": "/workspace/scratch/receiver-split-v2/applied/patch-set.md",
+    "bytes": 5099,
+    "sha256": "d2535a14580133f0b47fd8d5ba892c24056a64d3a38420edd6863dd2a27158e2"
+  },
+  {
+    "path": "/workspace/scratch/receiver-split-v2/applied/src/compiler/_namespaces/ts.moduleSpecifiers.ts",
+    "bytes": 111,
+    "sha256": "d858679e4d64f2879cb625cecf199bb93f44e414e3c34fd55540fcccfef9c07e"
+  },
+  {
+    "path": "/workspace/scratch/receiver-split-v2/applied/src/compiler/_namespaces/ts.performance.ts",
+    "bytes": 101,
+    "sha256": "e3d39c7ea64f27347b698a1951a76a014cd0c1c51565d6ed9182d7d4f064ddda"
+  },
+  {
+    "path": "/workspace/scratch/receiver-split-v2/applied/src/compiler/_namespaces/ts.ts",
+    "bytes": 3323,
+    "sha256": "fd8a88f2067f9d0a44de7d121ed7c38a3b5effd26cf3ceccbb861255aa879a5b"
+  },
+  {
+    "path": "/workspace/scratch/receiver-split-v2/applied/src/compiler/binder.ts",
+    "bytes": 195526,
+    "sha256": "7d2fe86cb48e04e45b5b260d8029116f57660aa1a00efaaa180f0dda6837d370"
+  },
+  {
+    "path": "/workspace/scratch/receiver-split-v2/applied/src/compiler/builder.ts",
+    "bytes": 118708,
+    "sha256": "03cd217e69a1d3f9c0c05271a6f445d2bf302dd2ab0f117d446a02b8f264da7c"
+  },
+  {
+    "path": "/workspace/scratch/receiver-split-v2/applied/src/compiler/builderPublic.ts",
+    "bytes": 11609,
+    "sha256": "1c4590cf725470dec54734bdb4711c330540c6c3871e791f2feebd39d787f629"
+  },
+  {
+    "path": "/workspace/scratch/receiver-split-v2/applied/src/compiler/builderState.ts",
+    "bytes": 26209,
+    "sha256": "718fe1a92440b7bafbe9fb4bddfd35d5c77bf0408fcefab8edf21b38558c8d5a"
+  },
+  {
+    "path": "/workspace/scratch/receiver-split-v2/applied/src/compiler/builderStatePublic.ts",
+    "bytes": 392,
+    "sha256": "271f9512e20d7f04fe1d68394fbd8647ce022c9978bf80e6fab681dd453c52dc"
+  },
+  {
+    "path": "/workspace/scratch/receiver-split-v2/applied/src/compiler/checker.ts",
+    "bytes": 3155948,
+    "sha256": "a3c87ee5a2dd3f55fae2ced5a4c6c22bcde071db2b901af710faea85959bd9fa"
+  },
+  {
+    "path": "/workspace/scratch/receiver-split-v2/applied/src/compiler/commandLineParser.ts",
+    "bytes": 185569,
+    "sha256": "49b442aa6b10782edf3ca9dcecdec5c92ef46a9fbe6c928ccd0bf1c088382636"
+  },
+  {
+    "path": "/workspace/scratch/receiver-split-v2/applied/src/compiler/core.ts",
+    "bytes": 93355,
+    "sha256": "6925a744b191c13ebe1425ec76a994b51cb2ab1c81f19b2c7958a4ed1e89311b"
+  },
+  {
+    "path": "/workspace/scratch/receiver-split-v2/applied/src/compiler/corePublic.ts",
+    "bytes": 1330,
+    "sha256": "579512600ac65a6312f761f46db67357483c010e8e2c271cb03cce67328b32e7"
+  },
+  {
+    "path": "/workspace/scratch/receiver-split-v2/applied/src/compiler/debug.ts",
+    "bytes": 29764,
+    "sha256": "08d94ea6111c6a4ec61b2f56189702ed262bdcaaea037e8aba87ef9c87a6d22a"
+  },
+  {
+    "path": "/workspace/scratch/receiver-split-v2/applied/src/compiler/diagnosticInformationMap.generated.ts",
+    "bytes": 579194,
+    "sha256": "0cfeabc14c72149bf65f0b5cb72f251adc45064edccebe30871b4efd73b97e89"
+  },
+  {
+    "path": "/workspace/scratch/receiver-split-v2/applied/src/compiler/emitter.ts",
+    "bytes": 275789,
+    "sha256": "acefdafa52954deb20fffe8dbc49231ddd188d946df1a8b037727a3d3d542d8e"
+  },
+  {
+    "path": "/workspace/scratch/receiver-split-v2/applied/src/compiler/executeCommandLine.ts",
+    "bytes": 54191,
+    "sha256": "279c6c1fc40e45025b07244c0b3ce84b6e28a1cc901ac9d789fae0911aed67fb"
+  },
+  {
+    "path": "/workspace/scratch/receiver-split-v2/applied/src/compiler/expressionToTypeNode.ts",
+    "bytes": 70491,
+    "sha256": "501917c5a675172b9f0605af0a98a0c6b71f8890cb404ea851f23d28bfba2f61"
+  },
+  {
+    "path": "/workspace/scratch/receiver-split-v2/applied/src/compiler/factory/baseNodeFactory.ts",
+    "bytes": 2682,
+    "sha256": "df7514118add76c4eb81106635f9cd3f3e0fcb5e3b1fb6627fac717f537fc4d8"
+  },
+  {
+    "path": "/workspace/scratch/receiver-split-v2/applied/src/compiler/factory/emitHelpers.ts",
+    "bytes": 69204,
+    "sha256": "91b00027e787379b88b6bf7bbf7a0ec8ae57e0d92233e6ddf7f4aa61d90c82ab"
+  },
+  {
+    "path": "/workspace/scratch/receiver-split-v2/applied/src/compiler/factory/emitNode.ts",
+    "bytes": 12800,
+    "sha256": "528071d2a75956b4cc578b5d3a2344190d9a2ab5c31b56adfd84c10a2ce045cd"
+  },
+  {
+    "path": "/workspace/scratch/receiver-split-v2/applied/src/compiler/factory/nodeChildren.ts",
+    "bytes": 2252,
+    "sha256": "bdca6c9b147ecfbe4ec11fc9c09ab5ceeba04e94626ee470d7256d5698c6cf86"
+  },
+  {
+    "path": "/workspace/scratch/receiver-split-v2/applied/src/compiler/factory/nodeConverters.ts",
+    "bytes": 7275,
+    "sha256": "0a602b0797c341c03a053276f778d7b245fc7cd8160c0a04e8c96fcf67ddcf19"
+  },
+  {
+    "path": "/workspace/scratch/receiver-split-v2/applied/src/compiler/factory/nodeFactory.ts",
+    "bytes": 336651,
+    "sha256": "bfac415cab939ce57ea75c724782afd5ab264d10c7188605aaef7485be0569de"
+  },
+  {
+    "path": "/workspace/scratch/receiver-split-v2/applied/src/compiler/factory/nodeTests.ts",
+    "bytes": 37936,
+    "sha256": "76e4df7ca846537338824b3e797f41bea972414342cc50af974143e6ff00dd9d"
+  },
+  {
+    "path": "/workspace/scratch/receiver-split-v2/applied/src/compiler/factory/parenthesizerRules.ts",
+    "bytes": 34072,
+    "sha256": "5da381eef0cade341e64da61e13adc45f5757234d0ad02c99a4f03047aa16c09"
+  },
+  {
+    "path": "/workspace/scratch/receiver-split-v2/applied/src/compiler/factory/utilities.ts",
+    "bytes": 76635,
+    "sha256": "afb40be9808cda5f7699bc77fa142c3ce8e174f6bd94cda5ba393b314e7f4230"
+  },
+  {
+    "path": "/workspace/scratch/receiver-split-v2/applied/src/compiler/factory/utilitiesPublic.ts",
+    "bytes": 2131,
+    "sha256": "c76d8d62b84fbd66bc900772b450dd80653dfe4e66791d5fb26c01f3ea636352"
+  },
+  {
+    "path": "/workspace/scratch/receiver-split-v2/applied/src/compiler/hostErrors.ts",
+    "bytes": 758,
+    "sha256": "f4cfdc4cacfdaea6a3d2899b30ceb33974acfe02d2542549e993e4dfd8cb856c"
+  },
+  {
+    "path": "/workspace/scratch/receiver-split-v2/applied/src/compiler/moduleNameResolver.ts",
+    "bytes": 181882,
+    "sha256": "e1a374f124a8d33d656059239217d058cbcb8ed501ac4ff76047e750847e2dbd"
+  },
+  {
+    "path": "/workspace/scratch/receiver-split-v2/applied/src/compiler/moduleSpecifiers.ts",
+    "bytes": 80070,
+    "sha256": "c47362305fba2170d24acf89f8e4ab97949639510fe4f4e9849a7a27ddeefccd"
+  },
+  {
+    "path": "/workspace/scratch/receiver-split-v2/applied/src/compiler/parser.ts",
+    "bytes": 539727,
+    "sha256": "f9f9a6d56d297cdd8f49afaaec9a94925f2b4b85234cc30d16909cbd486ae147"
+  },
+  {
+    "path": "/workspace/scratch/receiver-split-v2/applied/src/compiler/path.ts",
+    "bytes": 44302,
+    "sha256": "eda8a859be0cf125e8d7de639d86aeb6d105d86687a3ceba8f03e5926b044d3b"
+  },
+  {
+    "path": "/workspace/scratch/receiver-split-v2/applied/src/compiler/performance.ts",
+    "bytes": 6161,
+    "sha256": "039c61441f42f71a5635372b188cec7c173d6a10adccd9ef44e7d8d2dc72b2e3"
+  },
+  {
+    "path": "/workspace/scratch/receiver-split-v2/applied/src/compiler/performanceCore.ts",
+    "bytes": 3360,
+    "sha256": "8b1993ab380a178b24fed0dcc9e7dc312172a3e3be642ee1b533161f792f0dae"
+  },
+  {
+    "path": "/workspace/scratch/receiver-split-v2/applied/src/compiler/program.ts",
+    "bytes": 271573,
+    "sha256": "7f9511e1f6ebd98f950abfac9408473afee3747f3f2d33d79db94de1ff7e7125"
+  },
+  {
+    "path": "/workspace/scratch/receiver-split-v2/applied/src/compiler/programDiagnostics.ts",
+    "bytes": 21401,
+    "sha256": "f21e11db92536734d00e4404d895424dc50ddc8cfa1b3a69038e5c331d104fda"
+  },
+  {
+    "path": "/workspace/scratch/receiver-split-v2/applied/src/compiler/resolutionCache.ts",
+    "bytes": 82320,
+    "sha256": "78c59ccda17d3a62475b329e59e5ea4bf3d2421968862c84c8135c1eed4bb424"
+  },
+  {
+    "path": "/workspace/scratch/receiver-split-v2/applied/src/compiler/scanner.ts",
+    "bytes": 219806,
+    "sha256": "ce1353745d5c22c89aac2d1fe4b2f3f73e4717d933064cede79b866aa1546df2"
+  },
+  {
+    "path": "/workspace/scratch/receiver-split-v2/applied/src/compiler/semver.ts",
+    "bytes": 17970,
+    "sha256": "d05533ad8eafcb2f6aa2bb916ed3b84e26484ca8907aefa6e931de97af60ab25"
+  },
+  {
+    "path": "/workspace/scratch/receiver-split-v2/applied/src/compiler/sourcemap.ts",
+    "bytes": 32291,
+    "sha256": "75860c5f0528bc731ca49bf01872234981a9932b6a3db78ee4623891b485773f"
+  },
+  {
+    "path": "/workspace/scratch/receiver-split-v2/applied/src/compiler/symbolWalker.ts",
+    "bytes": 8433,
+    "sha256": "c5283ccbff1fd935cc97866a4e3672aa805877a09844530814097497c1bad055"
+  },
+  {
+    "path": "/workspace/scratch/receiver-split-v2/applied/src/compiler/sys.ts",
+    "bytes": 89299,
+    "sha256": "e1e13dcdaf100a3217997a70d96156f0fd283a375c3f0b19d243c55e1bb08457"
+  },
+  {
+    "path": "/workspace/scratch/receiver-split-v2/applied/src/compiler/tracing.ts",
+    "bytes": 15299,
+    "sha256": "b05a3eb580f5bfffb6a91d8acf904fedf974f48ee48da00a1c34ec010c83fa62"
+  },
+  {
+    "path": "/workspace/scratch/receiver-split-v2/applied/src/compiler/transformer.ts",
+    "bytes": 30053,
+    "sha256": "16c361fa82114c5eef3824fbe9a6b06f6ab9a9e2b29bf1ba173bfcf6927337e3"
+  },
+  {
+    "path": "/workspace/scratch/receiver-split-v2/applied/src/compiler/transformers/classFields.ts",
+    "bytes": 157089,
+    "sha256": "1d1aa17843726719468ef30a6d3da3f0b77ef6126e20a4b8190afd1aab711150"
+  },
+  {
+    "path": "/workspace/scratch/receiver-split-v2/applied/src/compiler/transformers/classThis.ts",
+    "bytes": 5565,
+    "sha256": "c5d8468a61bd39eae079782d57ef4d23653205e5c2c62ba7d7d70345c1e678fd"
+  },
+  {
+    "path": "/workspace/scratch/receiver-split-v2/applied/src/compiler/transformers/declarations/diagnostics.ts",
+    "bytes": 47414,
+    "sha256": "b1ba366b350ca654bc9b5c627e846bf86dd120a706e2c5edeb500ac28627e24d"
+  },
+  {
+    "path": "/workspace/scratch/receiver-split-v2/applied/src/compiler/transformers/declarations.ts",
+    "bytes": 99946,
+    "sha256": "fb332d121c3ae8352db17052dd173ea14968951f8cdd3ba9de89e58147ae2bdd"
+  },
+  {
+    "path": "/workspace/scratch/receiver-split-v2/applied/src/compiler/transformers/destructuring.ts",
+    "bytes": 30894,
+    "sha256": "7a922ef2441bd168ff02f167d6b51f97f3b67969ed49e402978cb15614746092"
+  },
+  {
+    "path": "/workspace/scratch/receiver-split-v2/applied/src/compiler/transformers/es2015.ts",
+    "bytes": 232145,
+    "sha256": "5c42dfd6dde00fc6c10dfd805302f2feb2bf3e51a5094bc68ff8a88ea0ecea20"
+  },
+  {
+    "path": "/workspace/scratch/receiver-split-v2/applied/src/compiler/transformers/es2016.ts",
+    "bytes": 4597,
+    "sha256": "18b62cea820276ac86770286a09880d9660bbc3420597ce70ad8d9604b291191"
+  },
+  {
+    "path": "/workspace/scratch/receiver-split-v2/applied/src/compiler/transformers/es2017.ts",
+    "bytes": 50446,
+    "sha256": "bdba53cc60c1cadb0ea131510c4a897b469495eed867bdc7be8c495b66d8743e"
+  },
+  {
+    "path": "/workspace/scratch/receiver-split-v2/applied/src/compiler/transformers/es2018.ts",
+    "bytes": 70231,
+    "sha256": "8d9b109c040db114b2e4343fdfb4b4d4cf2516e13c22ee307a0bb88375c21540"
+  },
+  {
+    "path": "/workspace/scratch/receiver-split-v2/applied/src/compiler/transformers/es2019.ts",
+    "bytes": 1563,
+    "sha256": "ae15589fd2633e2767f722ddf80c74169a035b3e06cceafda6c97cd75e202293"
+  },
+  {
+    "path": "/workspace/scratch/receiver-split-v2/applied/src/compiler/transformers/es2020.ts",
+    "bytes": 13206,
+    "sha256": "dcda781260667498a5a3fafecbe8391fbe82bb930f3878b9dd7d2a2d88ef06bc"
+  },
+  {
+    "path": "/workspace/scratch/receiver-split-v2/applied/src/compiler/transformers/es2021.ts",
+    "bytes": 4222,
+    "sha256": "b427c9922718dd8e865eb6991b073fc2b22e56e32ac62f78392945e0c1adb1c5"
+  },
+  {
+    "path": "/workspace/scratch/receiver-split-v2/applied/src/compiler/transformers/esDecorators.ts",
+    "bytes": 127646,
+    "sha256": "efc085f2d4ad3059a900dbe457d72165070aa5132d2545a66f016d24bb58161b"
+  },
+  {
+    "path": "/workspace/scratch/receiver-split-v2/applied/src/compiler/transformers/esnext.ts",
+    "bytes": 32894,
+    "sha256": "33eec520eae6d2b47c0da8c9c625a5cbb1bf5cf5887ef517de8caafc6237c31e"
+  },
+  {
+    "path": "/workspace/scratch/receiver-split-v2/applied/src/compiler/transformers/generators.ts",
+    "bytes": 124853,
+    "sha256": "c779c00063a61329f6fee251f009b6a388d533ced477bcac5e1695b7eb263065"
+  },
+  {
+    "path": "/workspace/scratch/receiver-split-v2/applied/src/compiler/transformers/jsx.ts",
+    "bytes": 36311,
+    "sha256": "873f0eeae800a95c44d6f653fb981d4579b14e8f8f65032abc341937dabbc458"
+  },
+  {
+    "path": "/workspace/scratch/receiver-split-v2/applied/src/compiler/transformers/legacyDecorators.ts",
+    "bytes": 36863,
+    "sha256": "4187eb7ba1654eb2ae449898d7548d68a3f97ae9a23cff8b746aae21e35cdd29"
+  },
+  {
+    "path": "/workspace/scratch/receiver-split-v2/applied/src/compiler/transformers/module/esnextAnd2015.ts",
+    "bytes": 18743,
+    "sha256": "64714fba0d85bd1697aa4676bf2266d7aa0e32d32abcbea40b66b559782e1ca8"
+  },
+  {
+    "path": "/workspace/scratch/receiver-split-v2/applied/src/compiler/transformers/module/impliedNodeFormatDependent.ts",
+    "bytes": 3750,
+    "sha256": "eb48d82834522a78c7b80cf768e0874e17a9f4dc819f673e5ec63c49fdb43d26"
+  },
+  {
+    "path": "/workspace/scratch/receiver-split-v2/applied/src/compiler/transformers/module/module.ts",
+    "bytes": 112073,
+    "sha256": "4de45d1f438485836a7c5d9d3c1c27214a4f0693a825da4bc8f819a9fe1af6f3"
+  },
+  {
+    "path": "/workspace/scratch/receiver-split-v2/applied/src/compiler/transformers/module/system.ts",
+    "bytes": 85684,
+    "sha256": "4d8f73a8f31dee22c92e7e4e2844815ea8f555e92ae7cd80dd42f26192305eb1"
+  },
+  {
+    "path": "/workspace/scratch/receiver-split-v2/applied/src/compiler/transformers/namedEvaluation.ts",
+    "bytes": 22318,
+    "sha256": "deafcefca9d2923da8a177dc0d47f898f5ba652b8c54bca512df91335c032950"
+  },
+  {
+    "path": "/workspace/scratch/receiver-split-v2/applied/src/compiler/transformers/taggedTemplate.ts",
+    "bytes": 5489,
+    "sha256": "54dce15f9a14c4732701706abac28c4fc77ed2eab6496b931bf0429d1df22bdb"
+  },
+  {
+    "path": "/workspace/scratch/receiver-split-v2/applied/src/compiler/transformers/ts.ts",
+    "bytes": 117052,
+    "sha256": "d53d42df6f3283656ea63245e554ab929345613e6b531a415522ba9ef02240bd"
+  },
+  {
+    "path": "/workspace/scratch/receiver-split-v2/applied/src/compiler/transformers/typeSerializer.ts",
+    "bytes": 29028,
+    "sha256": "033738e67db6ab3707add5675555dc5b4b5ae20c252baa13cfdf2a3edb60b9d2"
+  },
+  {
+    "path": "/workspace/scratch/receiver-split-v2/applied/src/compiler/transformers/utilities.ts",
+    "bytes": 35851,
+    "sha256": "f839fdc1603f18a8b22e8a0bc8f02f373299d78a872938216573af92348c3dc3"
+  },
+  {
+    "path": "/workspace/scratch/receiver-split-v2/applied/src/compiler/tsbuild.ts",
+    "bytes": 5332,
+    "sha256": "0bcbfbb3c4a9ed2dd502417150f730ed84704486982fed8b10b524206dcb716f"
+  },
+  {
+    "path": "/workspace/scratch/receiver-split-v2/applied/src/compiler/tsbuildPublic.ts",
+    "bytes": 115008,
+    "sha256": "c8cc663fe62e206dd53ec96692e2b50a60a7bb37c928d49bb2f817700ac4b654"
+  },
+  {
+    "path": "/workspace/scratch/receiver-split-v2/applied/src/compiler/types.ts",
+    "bytes": 494185,
+    "sha256": "5147a49efbac325b2c59b10cd7b81b4d2cff35298b931fd90dd4539a0d4ac2ab"
+  },
+  {
+    "path": "/workspace/scratch/receiver-split-v2/applied/src/compiler/utilities.ts",
+    "bytes": 515519,
+    "sha256": "8f3677b344b9bdbc25970d96093ef500bfabba79ba45656b31076eb65e159a18"
+  },
+  {
+    "path": "/workspace/scratch/receiver-split-v2/applied/src/compiler/utilitiesPublic.ts",
+    "bytes": 104954,
+    "sha256": "d3306929848b90a39f85db6293ffee3617341bedd3822cef8b4cd83b64c7fec6"
+  },
+  {
+    "path": "/workspace/scratch/receiver-split-v2/applied/src/compiler/visitorPublic.ts",
+    "bytes": 88114,
+    "sha256": "ef2085cb0d14c6dbd475644daf7388cf7ec4f64c0b6a5570ba79dd2ffd72b8d5"
+  },
+  {
+    "path": "/workspace/scratch/receiver-split-v2/applied/src/compiler/watch.ts",
+    "bytes": 45864,
+    "sha256": "f307d503114bddb404dcd96bf9e4f53f0c341d722da09959ebb6f1cd4cd93e99"
+  },
+  {
+    "path": "/workspace/scratch/receiver-split-v2/applied/src/compiler/watchPublic.ts",
+    "bytes": 61966,
+    "sha256": "54741334bd8c649da5f5b6828da0763aea0c5ad6690f1c509d9adba2bfe28af1"
+  },
+  {
+    "path": "/workspace/scratch/receiver-split-v2/applied/src/compiler/watchUtilities.ts",
+    "bytes": 35634,
+    "sha256": "0b21eff41ad63e993f7b676f56ddf79bd4606fa232ce33d9cd68239a1f49bd93"
+  },
+  {
+    "path": "/workspace/scratch/receiver-split-v2/cut.py",
+    "bytes": 2925,
+    "sha256": "12adab8c052a99dc9908d73921ec3624c83ee2e1f27fbc93fc28e3ee4a054789"
+  },
+  {
+    "path": "/workspace/scratch/receiver-split-v2/merge-resolution.json",
+    "bytes": 1848,
+    "sha256": "315694ad925e043916045d05941901dc2a5e6dfa005dac38585f50d6aaa48419"
+  },
+  {
+    "path": "/workspace/scratch/receiver-split-v2/publish.py",
+    "bytes": 5760,
+    "sha256": "23dadf2e426b73326ff18bc3a094c3b6a8b06b9201e14d7b7954e06a4fc2eec8"
+  },
+  {
+    "path": "/workspace/scratch/receiver-split-v2/relocation-byte-manifest.json",
+    "bytes": 21954,
+    "sha256": "0ce5c708ca06f7b323afe76c2461a7e0208a4d6b9a579aeb1ced02a68aefd497"
+  },
+  {
+    "path": "/workspace/scratch/receiver-split-v2/results/adamic-build.json",
+    "bytes": 438,
+    "sha256": "153e944b829de0eec74e0e75631bca5fd1e5f70aa67db5c974abbb41da59b4cd"
+  },
+  {
+    "path": "/workspace/scratch/receiver-split-v2/results/adamic-build.log",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "path": "/workspace/scratch/receiver-split-v2/results/adamic-types.json",
+    "bytes": 7177,
+    "sha256": "21ae243db06002d3fdeb63bc8d424842a4dd73eaa2f1dba558c55beadd7433ad"
+  },
+  {
+    "path": "/workspace/scratch/receiver-split-v2/results/adamic-types.log",
+    "bytes": 7571237,
+    "sha256": "61af69fa92333b3acd86bd2dab7e099ea36afb7c6ba73265f25a71855d679dc2"
+  },
+  {
+    "path": "/workspace/scratch/receiver-split-v2/results/adapted-dependencies.json",
+    "bytes": 362,
+    "sha256": "117fd20769db6e788f5f0fbd0ad5347741131d27d36445548c0027d3d0b83ad0"
+  },
+  {
+    "path": "/workspace/scratch/receiver-split-v2/results/adapted-dependencies.log",
+    "bytes": 822,
+    "sha256": "a7559adff83103c8eb61f1d959aee27962f2048ad1b4fe6aac124cfdf4457266"
+  },
+  {
+    "path": "/workspace/scratch/receiver-split-v2/results/api-install.json",
+    "bytes": 337,
+    "sha256": "cd866f67cc0179b146bbc74eedba0aae9003869996a88484302907302a7ce8d0"
+  },
+  {
+    "path": "/workspace/scratch/receiver-split-v2/results/api-install.log",
+    "bytes": 24,
+    "sha256": "f9ad4f2993c8acab1f54b352b6bd5a4a9ef08f85c585cc105e1bfd94af66e729"
+  },
+  {
+    "path": "/workspace/scratch/receiver-split-v2/results/apply.json",
+    "bytes": 435,
+    "sha256": "dcea9204c6d1401757087852b8073e8987bd91de7bb25f9c33f039bfae7a17a7"
+  },
+  {
+    "path": "/workspace/scratch/receiver-split-v2/results/apply.log",
+    "bytes": 844781,
+    "sha256": "a7f8928ec3897b19df501ba63d5678a459227c05e63ca5f443ff695082399200"
+  },
+  {
+    "path": "/workspace/scratch/receiver-split-v2/results/built-source-manifest.json",
+    "bytes": 11618,
+    "sha256": "4189c38473f33cc0a765644d0af992f8e4aab7691f22a242a6c309f992c3f823"
+  },
+  {
+    "path": "/workspace/scratch/receiver-split-v2/results/parser-mutant-replay.json",
+    "bytes": 483,
+    "sha256": "f0d93324029907a194cb30dd1eb9c67b77e74addaff30812181a393b7bcee699"
+  },
+  {
+    "path": "/workspace/scratch/receiver-split-v2/results/parser-mutant-replay.log",
+    "bytes": 77,
+    "sha256": "5a7524ce65b1d1fc1e9bba7c69b2e0d5668af7580e104812c8b09894af087336"
+  },
+  {
+    "path": "/workspace/scratch/receiver-split-v2/results/parser-mutant-witness.json",
+    "bytes": 229,
+    "sha256": "5eda35fa800758d948d7a44b221663980bee47850732a81d14cc13b57070e667"
+  },
+  {
+    "path": "/workspace/scratch/receiver-split-v2/results/parser-mutant.json",
+    "bytes": 476,
+    "sha256": "79dfe69d5fd1251a832945e0ac0ba0b74227df9c727ff0c8fefa4aa75755120f"
+  },
+  {
+    "path": "/workspace/scratch/receiver-split-v2/results/parser-mutant.log",
+    "bytes": 77,
+    "sha256": "26859bac3c03192b8764ddb49f01a70aba97bbf42881555a118a1ed09a763d92"
+  },
+  {
+    "path": "/workspace/scratch/receiver-split-v2/results/parser-reapply.json",
+    "bytes": 475,
+    "sha256": "51e4d3f341ed20d6f9802f0748cb6a6e2612dcf598b46230e8b4fa3b6c8da73c"
+  },
+  {
+    "path": "/workspace/scratch/receiver-split-v2/results/parser-reapply.log",
+    "bytes": 77,
+    "sha256": "26859bac3c03192b8764ddb49f01a70aba97bbf42881555a118a1ed09a763d92"
+  },
+  {
+    "path": "/workspace/scratch/receiver-split-v2/results/parser-replay.json",
+    "bytes": 475,
+    "sha256": "2bebd4effc25cc104f912c2282a4da17d71517395f9f34bf303a042462788a25"
+  },
+  {
+    "path": "/workspace/scratch/receiver-split-v2/results/parser-replay.log",
+    "bytes": 77,
+    "sha256": "5a7524ce65b1d1fc1e9bba7c69b2e0d5668af7580e104812c8b09894af087336"
+  },
+  {
+    "path": "/workspace/scratch/receiver-split-v2/results/printer-mutant-replay.json",
+    "bytes": 485,
+    "sha256": "e1f362b7725bf8c73871a3ad37dc7f44838c145e644f9b74a3446cea50d4259d"
+  },
+  {
+    "path": "/workspace/scratch/receiver-split-v2/results/printer-mutant-replay.log",
+    "bytes": 77,
+    "sha256": "5a7524ce65b1d1fc1e9bba7c69b2e0d5668af7580e104812c8b09894af087336"
+  },
+  {
+    "path": "/workspace/scratch/receiver-split-v2/results/printer-mutant-witness.json",
+    "bytes": 230,
+    "sha256": "fa49730ae69ecf78ddf173853e09e2505b1d970102ea28b76b9729af0282e3c1"
+  },
+  {
+    "path": "/workspace/scratch/receiver-split-v2/results/printer-mutant.json",
+    "bytes": 478,
+    "sha256": "c204870dc43855f40cdfa46673e44b090e877eb37fd4d01ff8d8363190b9c06a"
+  },
+  {
+    "path": "/workspace/scratch/receiver-split-v2/results/printer-mutant.log",
+    "bytes": 77,
+    "sha256": "26859bac3c03192b8764ddb49f01a70aba97bbf42881555a118a1ed09a763d92"
+  },
+  {
+    "path": "/workspace/scratch/receiver-split-v2/results/printer-reapply.json",
+    "bytes": 478,
+    "sha256": "ed0e9f082b7513b6303fee2a0cfa1794f4de3225e2a73e25ed52b24e73dccd0c"
+  },
+  {
+    "path": "/workspace/scratch/receiver-split-v2/results/printer-reapply.log",
+    "bytes": 77,
+    "sha256": "26859bac3c03192b8764ddb49f01a70aba97bbf42881555a118a1ed09a763d92"
+  },
+  {
+    "path": "/workspace/scratch/receiver-split-v2/results/printer-replay.json",
+    "bytes": 477,
+    "sha256": "851c5aad74de4c0f27c924a32683e180eb52d759b4cd9d1380db27b745a79451"
+  },
+  {
+    "path": "/workspace/scratch/receiver-split-v2/results/printer-replay.log",
+    "bytes": 77,
+    "sha256": "5a7524ce65b1d1fc1e9bba7c69b2e0d5668af7580e104812c8b09894af087336"
+  },
+  {
+    "path": "/workspace/scratch/receiver-split-v2/results/stack-status.json",
+    "bytes": 4708,
+    "sha256": "d1ee85a34e60eb751f6fb5f079b056209801fff7228ad80db64de402d1d43c94"
+  },
+  {
+    "path": "/workspace/scratch/receiver-split-v2/results/stock-api-command-installed.json",
+    "bytes": 539,
+    "sha256": "d1928aa8f5684d97e441c179ee7487045e3cf2b86149fbd4b27f838d86cdd89b"
+  },
+  {
+    "path": "/workspace/scratch/receiver-split-v2/results/stock-api-command-installed.log",
+    "bytes": 117,
+    "sha256": "86310fc2ef9900c3999524888c529e338e03dfc1c431a4cee24bdc8d3b9565d3"
+  },
+  {
+    "path": "/workspace/scratch/receiver-split-v2/results/stock-api-command.json",
+    "bytes": 518,
+    "sha256": "447b40d03485a71ecd5fad38e2bb82be780d18d3e23578c7138e62fae2fa8c49"
+  },
+  {
+    "path": "/workspace/scratch/receiver-split-v2/results/stock-api-command.log",
+    "bytes": 919,
+    "sha256": "50a07062ff211fe8ee0869b5c7837da11490849b0be82587232878d4d629e42c"
+  },
+  {
+    "path": "/workspace/scratch/receiver-split-v2/results/stock-api-installed-witness.json",
+    "bytes": 5443,
+    "sha256": "9a0688806b46e85d12b5cd80d422a7b3d95132f936091a1d0683acf053faadb4"
+  },
+  {
+    "path": "/workspace/scratch/receiver-split-v2/results/stock-api-witness.json",
+    "bytes": 24117,
+    "sha256": "3bce54d4d949e23b4e39ed86a532e4324110f3af91446f8280deff6e325d0f94"
+  },
+  {
+    "path": "/workspace/scratch/receiver-split-v2/results/stock-tsc.json",
+    "bytes": 643,
+    "sha256": "595a903c9d5f4a7fe75d48df1e128f14cd720424b887e870871fcb2e48d739ea"
+  },
+  {
+    "path": "/workspace/scratch/receiver-split-v2/results/stock-tsc.log",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "path": "/workspace/scratch/receiver-split-v2/results/transformers-mutant-replay.json",
+    "bytes": 495,
+    "sha256": "ed314b6e114fc0aa967d5f30cc7c780cbd8c597009fcb8e9c950c822e4aefa19"
+  },
+  {
+    "path": "/workspace/scratch/receiver-split-v2/results/transformers-mutant-replay.log",
+    "bytes": 77,
+    "sha256": "5a7524ce65b1d1fc1e9bba7c69b2e0d5668af7580e104812c8b09894af087336"
+  },
+  {
+    "path": "/workspace/scratch/receiver-split-v2/results/transformers-mutant-witness.json",
+    "bytes": 984,
+    "sha256": "ed6912aa4e02c603bf2ba658ec7cd153e4acdcdf78b300819ce4deb3db795298"
+  },
+  {
+    "path": "/workspace/scratch/receiver-split-v2/results/transformers-mutant.json",
+    "bytes": 488,
+    "sha256": "1e6a1f21e191f865f5c854f1dd4c38663f968a7ae3fd650ffd82bcbd3e74d0e5"
+  },
+  {
+    "path": "/workspace/scratch/receiver-split-v2/results/transformers-mutant.log",
+    "bytes": 80,
+    "sha256": "85701dcac482ef4874833dc113ba9d47a41d175c8f0d53ffd96a7a2ac98d6353"
+  },
+  {
+    "path": "/workspace/scratch/receiver-split-v2/results/transformers-reapply.json",
+    "bytes": 488,
+    "sha256": "272186a982119e5b1f637b0453bc91b3dc8a6c7fc2e3487da9e7d711154f21a4"
+  },
+  {
+    "path": "/workspace/scratch/receiver-split-v2/results/transformers-reapply.log",
+    "bytes": 80,
+    "sha256": "85701dcac482ef4874833dc113ba9d47a41d175c8f0d53ffd96a7a2ac98d6353"
+  },
+  {
+    "path": "/workspace/scratch/receiver-split-v2/results/transformers-replay.json",
+    "bytes": 487,
+    "sha256": "b2907c5a79ba8cc9981132bc497731ccdbfbe291e92b57272aaf27bd6c4a6fae"
+  },
+  {
+    "path": "/workspace/scratch/receiver-split-v2/results/transformers-replay.log",
+    "bytes": 77,
+    "sha256": "5a7524ce65b1d1fc1e9bba7c69b2e0d5668af7580e104812c8b09894af087336"
+  },
+  {
+    "path": "/workspace/scratch/receiver-split-v2/runtime-pin-identity.json",
+    "bytes": 1684,
+    "sha256": "f1591ac4a029e1766e953dfc61a4487999f271724823d1f0e05375988e65f310"
+  },
+  {
+    "path": "/workspace/scratch/receiver-split-v2/source-commits-v2.json",
+    "bytes": 2320,
+    "sha256": "33e8d1d149709e7cf56d7f2bab109994537154e243dbecdfe3f33f7d231087b7"
+  },
+  {
+    "path": "/workspace/scratch/receiver-split-v2/verify-installed.log",
+    "bytes": 18528,
+    "sha256": "a82600370bec20a8f2c9bcdddff1a435e79295045bef7c13e79fe8be88576016"
+  },
+  {
+    "path": "/workspace/scratch/receiver-split-v2/verify-installed.py",
+    "bytes": 3824,
+    "sha256": "1dc90f0f13e31073d83212b96fbdf77aa717fd96ccb3fe4849844f87d0334d37"
+  },
+  {
+    "path": "/workspace/scratch/receiver-split-v2/verify.log",
+    "bytes": 2264,
+    "sha256": "84c75cfcb7c9bcfc966db2614e47f6b06c6f6dccce35b45b182ed154c3d20793"
+  },
+  {
+    "path": "/workspace/scratch/receiver-split-v2/verify.py",
+    "bytes": 3833,
+    "sha256": "57286e4938bf4ebc8236815dafd11e99415712a81e147ab25ac50e44e6860b66"
+  }
+]

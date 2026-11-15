@@ -1,0 +1,15 @@
+{
+  "command": [
+    "node",
+    "/workspace/scratch/receiver-split-v2/stack/stage3/adapt/99-correctness-receiver-transformers/adapt.cjs",
+    "/workspace/scratch/receiver-split-v2/applied"
+  ],
+  "cwd": "/workspace/scratch/receiver-split-v2/stack",
+  "exit": 0,
+  "wall_seconds": 0.873,
+  "log": {
+    "path": "/workspace/scratch/receiver-split-v2/results/transformers-reapply.log",
+    "bytes": 80,
+    "sha256": "85701dcac482ef4874833dc113ba9d47a41d175c8f0d53ffd96a7a2ac98d6353"
+  }
+}

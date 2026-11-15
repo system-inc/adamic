@@ -1,0 +1,53 @@
+{
+  "parser": {
+    "commit": "7bc402ece2dda307e451112c8a735d516f9b6720",
+    "parent": "c2f3c21f72b04e4c3acf7731913f0fc8ab89c2ca",
+    "branch": "typescript/receiver-parser-2",
+    "originalCommit": "3a5dbe2d025478c588c9c5bbc96b4829a81596bf",
+    "evidenceAnchor": "42f0c552bb93c523b6c5eb8b4681719cf0bc3197",
+    "ledgerParentBytesPreserved": true,
+    "ledgerAddedLines": 2,
+    "directoryFiles": [
+      "stage3/adapt/99-correctness-receiver-parser/PROOF.md",
+      "stage3/adapt/99-correctness-receiver-parser/README.md",
+      "stage3/adapt/99-correctness-receiver-parser/adapt.cjs",
+      "stage3/adapt/99-correctness-receiver-parser/mutant.cjs",
+      "stage3/adapt/99-correctness-receiver-parser/owners.json"
+    ],
+    "pinsRegenerated": false
+  },
+  "transformers": {
+    "commit": "87b09e9ce4971ef9afa2dac5938a213f7af977c2",
+    "parent": "7bc402ece2dda307e451112c8a735d516f9b6720",
+    "branch": "typescript/receiver-transformers-2",
+    "originalCommit": "2dbef8ed2a76a32f4be306b9885cc0797e6e43b5",
+    "evidenceAnchor": "42f0c552bb93c523b6c5eb8b4681719cf0bc3197",
+    "ledgerParentBytesPreserved": true,
+    "ledgerAddedLines": 2,
+    "directoryFiles": [
+      "stage3/adapt/99-correctness-receiver-transformers/PROOF.md",
+      "stage3/adapt/99-correctness-receiver-transformers/README.md",
+      "stage3/adapt/99-correctness-receiver-transformers/adapt.cjs",
+      "stage3/adapt/99-correctness-receiver-transformers/mutant.cjs",
+      "stage3/adapt/99-correctness-receiver-transformers/owners.json"
+    ],
+    "pinsRegenerated": false
+  },
+  "printer": {
+    "commit": "a77ca4a82271f18c142d8843ea76604b30d3833d",
+    "parent": "87b09e9ce4971ef9afa2dac5938a213f7af977c2",
+    "branch": "typescript/receiver-printer-2",
+    "originalCommit": "457a0447edd202b88af3d86243b5958a045d5bb6",
+    "evidenceAnchor": "42f0c552bb93c523b6c5eb8b4681719cf0bc3197",
+    "ledgerParentBytesPreserved": true,
+    "ledgerAddedLines": 2,
+    "directoryFiles": [
+      "stage3/adapt/99-correctness-receiver-printer/PROOF.md",
+      "stage3/adapt/99-correctness-receiver-printer/README.md",
+      "stage3/adapt/99-correctness-receiver-printer/adapt.cjs",
+      "stage3/adapt/99-correctness-receiver-printer/mutant.cjs",
+      "stage3/adapt/99-correctness-receiver-printer/owners.json"
+    ],
+    "pinsRegenerated": false
+  }
+}

@@ -1,0 +1,36 @@
+{
+  "main": "fe5a1a54f045e9bce4e5aa32ca74885a317fbebd",
+  "merge": "fb36b3ab3b8b10af36ab8cf9a39bde34b6d986ce",
+  "resolutions": [
+    {
+      "path": "stage3/adapt/99-wasm-crypto-import/README.md",
+      "resolution": "preserve requested chain version; main contains earlier equivalents without environment/watchDirectory/receiver additions",
+      "oursBlob": "deef09c85ba185062a926ecf55348fe7c7c198a3",
+      "mainBlob": "6f5083cd788df2f2411c5f50fd22bc41719410b7"
+    },
+    {
+      "path": "stage3/adapt/99-wasm-crypto-import/adapt.cjs",
+      "resolution": "preserve requested chain version; main contains earlier equivalents without environment/watchDirectory/receiver additions",
+      "oursBlob": "762c733fd9d27ac8da26ef34ca219c7cf4eca216",
+      "mainBlob": "594f7ff9baa3da2450cfb6f67ba64e0f873e3a5c"
+    },
+    {
+      "path": "stage3/adapt/99-wasm-crypto-import/proofs/check.cjs",
+      "resolution": "preserve requested chain version; main contains earlier equivalents without environment/watchDirectory/receiver additions",
+      "oursBlob": "c45df5d89dbe44fb12d385447aca1b6a8722b376",
+      "mainBlob": "2c180ad1084afe345bcd68f6486b151e1c7468da"
+    },
+    {
+      "path": "stage3/adapt/99-wasm-crypto-import/proofs/targets.json",
+      "resolution": "preserve requested chain version; main contains earlier equivalents without environment/watchDirectory/receiver additions",
+      "oursBlob": "41e51e7b0080683a1120b5572889e7fe32b28bf7",
+      "mainBlob": "64c2d372c1912af6bb51c4c7b877adf4e26d1d12"
+    },
+    {
+      "path": "stage3/upstream/LEDGER.md",
+      "resolution": "preserve requested chain version; main contains earlier equivalents without environment/watchDirectory/receiver additions",
+      "oursBlob": "ca81a8451190493ccb4957d2aecc40bc67ba690e",
+      "mainBlob": "247fbcdf7c8c598822ff52601cc36800496a1663"
+    }
+  ]
+}
