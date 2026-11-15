@@ -46,7 +46,9 @@ func TestEnumTagDecomposedIsRefused(t *testing.T) {
 }
 
 // What stays open: one member literal written into its own slot, the open value narrowed by === to one
-// member before it goes in, and a slot typed the whole Kind taking the open value. Each lowers and agrees
+// member before it goes in, a slot typed the whole Kind taking the open value, and a literal another
+// member takes whole beside a member with a literal slot (control_mixed: the literal isn't built as that
+// member, so its slot promises nothing; memberLiteralSlotWidened's takenWhole). Each lowers and agrees
 // with Node on the JavaScript backend and natively under the leak check.
 func TestEnumTagDecomposedControlsAgreeWithNode(t *testing.T) {
 	t.Parallel()
@@ -54,6 +56,7 @@ func TestEnumTagDecomposedControlsAgreeWithNode(t *testing.T) {
 		"control_literal":  "circle 1 square 20 7\n",
 		"control_narrowed": "circle 1 open 7\n",
 		"control_whole":    "tagged 7 2 tagged 7 3 named x\n",
+		"control_mixed":    "7 7 0\n",
 	} {
 		for _, extension := range []string{".a", ".ts"} {
 			t.Run(name+extension, func(t *testing.T) {

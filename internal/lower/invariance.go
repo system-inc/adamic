@@ -736,7 +736,7 @@ func (l *lowering) refuseWidening(node *ast.Node) error {
 		if found == nil && node.Parent != nil && node.Parent.Kind == ast.KindPropertyAssignment && node.Parent.AsPropertyAssignment().Initializer == node {
 			if name := node.Parent.Name(); name != nil && (ast.IsIdentifier(name) || ast.IsStringLiteral(name) || ast.IsNumericLiteral(name)) {
 				if literal := l.slotType(node.Parent.Parent); literal != nil {
-					contextual, found = l.memberLiteralSlotWidened(node, own, literal, name.Text(), contextual)
+					contextual, found = l.memberLiteralSlotWidened(node, node.Parent.Parent, own, literal, name.Text(), contextual)
 				}
 			}
 		}
@@ -1061,7 +1061,7 @@ func (l *lowering) literalMemberWidened(member *ast.Node, value *ast.Node, own *
 		}
 	}
 	if literal := l.slotType(member.Parent); literal != nil && len(slots) > 0 {
-		return l.memberLiteralSlotWidened(value, own, literal, key, contextual)
+		return l.memberLiteralSlotWidened(value, member.Parent, own, literal, key, contextual)
 	}
 	return contextual, nil
 }
@@ -1130,9 +1130,10 @@ func (l *lowering) castSlotRefusal(node *ast.Node) error {
 // { kind: Kind.Count } that property is Kind.Text | Kind.Count, the whole open enum, which takes any
 // number; the member it's built as promises one literal. Each member-literal slot the value can be
 // assigned to is judged as if it were the only one; the union's own property stays the answer when
-// none of them refuses. A value no member's slot takes but the union's property does reached its
-// member by tsc decomposing the union, and an open enum there is refused (openEnumTagDecomposed).
-func (l *lowering) memberLiteralSlotWidened(node *ast.Node, own, literal *checker.Type, name string, contextual *checker.Type) (*checker.Type, *widening) {
+// none of them refuses. A value no member's slot takes reaches one only by tsc decomposing the union,
+// and an open enum there is refused (openEnumTagDecomposed, #egmxf20), unless some member takes object,
+// the literal, whole: it's built as that member, and another member's literal slot promises it nothing.
+func (l *lowering) memberLiteralSlotWidened(node *ast.Node, object *ast.Node, own, literal *checker.Type, name string, contextual *checker.Type) (*checker.Type, *widening) {
 	if literal.Flags()&checker.TypeFlagsUnion == 0 {
 		return contextual, nil
 	}
@@ -1148,7 +1149,7 @@ func (l *lowering) memberLiteralSlotWidened(node *ast.Node, own, literal *checke
 		if slot.Flags()&checker.TypeFlagsNumberLiteral == 0 && !l.numericEnum(l.enumIdentity(slot)) || l.openNumericEnumType(slot) {
 			continue
 		}
-		if l.openEnumTagDecomposed(own, slot) {
+		if l.openEnumTagDecomposed(own, slot) && !l.takenWhole(l.checker.GetTypeAtLocation(object), literal) {
 			return slot, &widening{source: own, target: slot, enum: true}
 		}
 		if !l.checker.IsTypeAssignableTo(own, slot) {
@@ -1159,6 +1160,14 @@ func (l *lowering) memberLiteralSlotWidened(node *ast.Node, own, literal *checke
 		}
 	}
 	return contextual, nil
+}
+
+// takenWhole is whether some member of a union that isn't a primitive takes from as it is, so a value
+// of type from goes in as that member, never by tsc decomposing the union.
+func (l *lowering) takenWhole(from, union *checker.Type) bool {
+	return slices.ContainsFunc(union.Types(), func(member *checker.Type) bool {
+		return member.Flags()&checker.TypeFlagsPrimitive == 0 && l.checker.IsTypeAssignableTo(from, member)
+	})
 }
 
 // openEnumTagDecomposed is whether own, a value's type, reaches slot, one member literal of a numeric enum,
