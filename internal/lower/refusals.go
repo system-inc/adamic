@@ -259,10 +259,15 @@ func init() {
 // methodValueRefusal refuses a method read as a value, which loses its object. A write to a method a
 // program's interface declares (hostMemberWritable) is the left side of an assignment, never a read, and its
 // refusal waits for checkHostMemberWrites, which gives it back, unchanged, where it can't admit the write.
+// A read of such a method as a value (hostMemberReadable) waits for checkHostMemberValues the same way.
 func (l *lowering) methodValueRefusal(node *ast.Node) error {
 	refusal := l.methodValueStop(node)
-	if refusal != nil && l.hostMemberWritable(node) {
+	switch {
+	case refusal != nil && l.hostMemberWritable(node):
 		l.deferHostMemberWrite(node, refusal)
+		return nil
+	case refusal != nil && l.hostMemberReadable(node):
+		l.deferHostMemberValue(node, refusal)
 		return nil
 	}
 	return refusal
