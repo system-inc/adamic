@@ -160,6 +160,14 @@ console.log(` + "`${total}`" + `);
 	// (TestGraphFlowWriters).
 	{"an empty record a graph object holds", graphRecordNode + `console.log(` + "`${a.name} ${Object.keys(a.r).length}`" + `);
 `, ""},
+	// A record type closing its own cycle, a declared field beside its index signature: refused before
+	// records joined graph regions (lower's TestGraphRecordCycleLowers), held here to Node and the counted
+	// build (#1vb0x5s).
+	{"a record type closing its own cycle", `interface Ring { self: Ring | undefined; [key: string]: Ring | undefined }
+const ring: Ring = { self: undefined };
+ring.self = ring;
+console.log(Object.keys(ring).join(','));
+`, ""},
 	// The two shapes above with no record: each cycle is the graph plan's, and frees whole.
 	{"the field shape with no record", `interface Box { n: Node | undefined }
 interface Node { name: string; box: Box }

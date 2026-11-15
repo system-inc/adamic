@@ -124,13 +124,15 @@ func TestGraphDynamicShapeAdoptionIsRefused(t *testing.T) {
 		t.Fatalf("dynamic graph adoption: %v", err)
 	}
 }
-func TestGraphRecordCycleStaysRefused(t *testing.T) {
+
+// A cycle closed by a write into a record lowers since records joined graph regions (#1vb0x5s): the
+// record is selected and made a graph member, which oracle's TestGraphRecordOnACycle holds to Node and
+// the counted build ("a record type closing its own cycle").
+func TestGraphRecordCycleLowers(t *testing.T) {
 	t.Parallel()
-	_, err := lowerSource(t, `interface Ring {self:Ring|undefined;[key:string]:Ring|undefined} const ring:Ring={self:undefined};ring.self=ring;console.log(Object.keys(ring).join(','));`)
-	if err == nil {
-		t.Fatal("record cycle accepted")
+	if _, err := lowerSource(t, `interface Ring {self:Ring|undefined;[key:string]:Ring|undefined} const ring:Ring={self:undefined};ring.self=ring;console.log(Object.keys(ring).join(','));`); err != nil {
+		t.Fatal(err)
 	}
-	t.Log(err)
 }
 func TestGraphCountTypesSurviveClassification(t *testing.T) {
 	t.Parallel()
