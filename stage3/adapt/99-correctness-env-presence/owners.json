@@ -1,0 +1,10 @@
+[
+  {
+    "file": "src/compiler/sys.ts",
+    "owner": "top-level environment initialization if statement",
+    "before": "if (sys && sys.getEnvironmentVariable) {\n    setCustomPollingValues(sys);\n    Debug.setAssertionLevel(\n        /^development$/i.test(sys.getEnvironmentVariable(\"NODE_ENV\"))\n            ? AssertionLevel.Normal\n            : AssertionLevel.None,\n    );\n}",
+    "after": "if (sys) {\n    setCustomPollingValues(sys);\n    Debug.setAssertionLevel(\n        /^development$/i.test(sys.getEnvironmentVariable(\"NODE_ENV\"))\n            ? AssertionLevel.Normal\n            : AssertionLevel.None,\n    );\n}",
+    "ownerBeforeSha256": "33230b1ac6a7b59be23401accca58f0ebdf570285867e4afc32a22094c70edda",
+    "ownerAfterSha256": "b9c78cc7238661fb8d79e0eaa2af08b0afcb062e264b4d9fcfd7b9863ac7826d"
+  }
+]
