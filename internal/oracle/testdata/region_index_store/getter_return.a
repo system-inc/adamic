@@ -1,0 +1,29 @@
+// A getter that keeps its receiver, read as a number (#1jch5ez, Runtime's condition): `return p.x`
+// returns a scalar, but the read runs the getter, which stores this into kept. finishAccessors makes the
+// read a dispatcher's call with p as its argument (class_accessors.go), so escaping judges p by the call,
+// and make(7) stays on the heap. Regioned, kept would point into the region after it ends, and the label
+// read through it would be a use after free.
+class Box {
+	readonly label: string;
+	constructor(n: number) {
+		this.label = `b${n}`;
+	}
+	get x(): number {
+		kept = this;
+		return 1;
+	}
+}
+
+let kept: Box | undefined = undefined;
+
+function make(n: number): Box {
+	return new Box(n);
+}
+
+function look(p: Box): number {
+	return p.x;
+}
+
+let total = 0;
+total += look(make(7));
+console.log(`${total} ${kept === undefined ? "" : kept.label}`);
