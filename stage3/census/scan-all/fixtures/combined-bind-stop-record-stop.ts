@@ -1,0 +1,41 @@
+// @ts-check
+// seen declares an index, held as (shape) => boolean and bound: Node hands it find's index (#04f5s0s).
+interface Circle {
+    readonly kind: "circle";
+    readonly radius: number;
+}
+interface Square {
+    readonly kind: "square";
+    readonly side: number;
+}
+type Shape = Circle | Square;
+// core.ts's find, which calls its predicate with (value, i).
+function find<T, U extends T>(array: readonly T[] | undefined, predicate: (element: T, index: number) => element is U, startIndex?: number): U | undefined;
+function find<T>(array: readonly T[] | undefined, predicate: (element: T, index: number) => boolean, startIndex?: number): T | undefined;
+function find<T>(array: readonly T[] | undefined, predicate: (element: T, index: number) => boolean, startIndex?: number): T | undefined {
+    if (array === undefined) return undefined;
+    for (let i = startIndex ?? 0; i < array.length; i++) {
+        const value = array[i]!;
+        if (predicate(value, i)) {
+            return value;
+        }
+    }
+    return undefined;
+}
+const shapes: Shape[] = [{ kind: "square", side: 2 }, { kind: "circle", radius: 3 }];
+function seen(shape: Shape, index?: number): boolean {
+    console.log(`seen at ${String(index)}`);
+    return shape.kind === "circle";
+}
+const narrow: (shape: Shape) => boolean = seen;
+const bound = narrow.bind(undefined);
+const found = find(shapes, bound);
+console.log(found === undefined ? "none" : found.kind);
+
+interface Node { name: string; next: Node[]; r: Record<string, Node[]>; rs: Record<string, Node[]>[] }
+const a: Node = { name: 'a' + '', next: [], r: {}, rs: [] };
+const b: Node = { name: 'b' + '', next: [a], r: {}, rs: [] };
+a.next.push(b);
+a.r = { k: a.next.slice() };
+const got = a.r['k'];
+console.log(`${a.name} ${got === undefined ? -1 : got.length}`);

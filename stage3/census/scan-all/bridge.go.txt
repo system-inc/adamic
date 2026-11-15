@@ -1,0 +1,67 @@
+package scanall
+
+import (
+	"context"
+	"github.com/system-inc/adamic/internal/load"
+	"github.com/system-inc/adamic/internal/lower"
+	"os"
+	"path/filepath"
+	"strings"
+	"testing"
+)
+
+func scanAllControl(t *testing.T, name string, bind, record, completed bool) {
+	t.Helper()
+	file, err := filepath.Abs(filepath.Join("fixtures", name+".ts"))
+	if err != nil {
+		t.Fatal(err)
+	}
+	p, err := load.Load([]string{file})
+	if err != nil {
+		t.Fatal(err)
+	}
+	if ir, e := lower.Lower(context.Background(), p); ir != nil || e == nil {
+		t.Fatal("Lower returned usable IR or no error")
+	}
+	if ir, e := lower.LowerWithOptions(context.Background(), p, lower.Options{}); ir != nil || e == nil {
+		t.Fatal("LowerWithOptions returned usable IR or no error")
+	}
+	r := lower.ScanAll(context.Background(), p, os.Getenv("SCAN_ALL_MUTANT_FIRST_ERROR") == name)
+	has := func(target string) bool {
+		for _, s := range r.Stops {
+			if strings.Contains(s.Words, target) {
+				return true
+			}
+		}
+		return false
+	}
+	if len(r.Stops) == 0 || !strings.Contains(r.Stops[0].Words, "@ts-check") || !strings.HasPrefix(r.Stops[0].Rule, "refusal_scan/") {
+		t.Fatalf("earlier scan stop missing: %+v", r)
+	}
+	if has("bind of a function that declares") != bind || has("a record written into a graph slot") != record || r.Completed != completed {
+		t.Fatalf("%s: want bind=%t record=%t completed=%t; got %+v; stops=%+v", name, bind, record, completed, r, r.Stops)
+	}
+	if !completed {
+		rule := "lowering.checkBoundArguments"
+		target := "bind of a function that declares"
+		if record {
+			rule = "lowering.findCycles"
+			target = "a record written into a graph slot"
+		}
+		if r.UnderlyingAbort == nil || r.UnderlyingAbort.Rule != rule || !strings.Contains(r.UnderlyingAbort.Words, target) {
+			t.Fatalf("wrong first tail boundary: %+v", r)
+		}
+		if r.Boundary != "production abort at "+rule {
+			t.Fatalf("wrong boundary label: %s", r.Boundary)
+		}
+		found := false
+		for i, stop := range r.Stops {
+			if stop.Rule == rule && strings.Contains(stop.Words, target) {
+				found = i > 0
+			}
+		}
+		if !found {
+			t.Fatalf("target did not follow earlier scan stop: %+v", r.Stops)
+		}
+	}
+}

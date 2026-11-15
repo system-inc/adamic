@@ -1,0 +1,85 @@
+// Measurement driver, generated into the scratch build by make-overlay.
+package main
+
+import (
+	"context"
+	"fmt"
+	"github.com/system-inc/adamic/internal/load"
+	"github.com/system-inc/adamic/internal/lower"
+	"os"
+	"path/filepath"
+	"regexp"
+	"sort"
+	"strings"
+)
+
+const scope = "Records refusal-scan stops only, plus the first declaration, body or tail stop reached; blind past that first stop. Zero body-phase or tail-rule counts are never a pass."
+
+type counts struct {
+	events   int
+	distinct map[lower.ScanAllStop]bool
+}
+
+func add(m map[string]*counts, k string, s lower.ScanAllStop) {
+	if m[k] == nil {
+		m[k] = &counts{distinct: map[lower.ScanAllStop]bool{}}
+	}
+	m[k].events++
+	m[k].distinct[s] = true
+}
+func cell(s string) string { return strings.NewReplacer("|", "\\|", "\n", " ", "\r", " ").Replace(s) }
+func table(title string, m map[string]*counts) {
+	fmt.Printf("\n%s. %s\n\n| %s | Events | Distinct (rule, site, words) triples |\n| --- | ---: | ---: |\n", title, scope, title)
+	keys := make([]string, 0, len(m))
+	for k := range m {
+		keys = append(keys, k)
+	}
+	sort.Strings(keys)
+	for _, k := range keys {
+		fmt.Printf("| %s | %d | %d |\n", cell(k), m[k].events, len(m[k].distinct))
+	}
+}
+func main() {
+	if len(os.Args) != 2 {
+		fmt.Fprintln(os.Stderr, "usage: scan-all ONE_ROOT.ts (one import-closure run)")
+		os.Exit(2)
+	}
+	p, err := load.Load(os.Args[1:])
+	if err != nil {
+		fmt.Fprintln(os.Stderr, err)
+		os.Exit(2)
+	}
+	if ir, e := lower.Lower(context.Background(), p); ir != nil || e == nil {
+		panic("Lower output guard")
+	}
+	if ir, e := lower.LowerWithOptions(context.Background(), p, lower.Options{}); ir != nil || e == nil {
+		panic("LowerWithOptions output guard")
+	}
+	report := lower.ScanAll(context.Background(), p, false)
+	fmt.Printf("# scan-all: one closure run\n\n%s\n\nRoot: `%s`\n\nRule overlays: scout 0d078a8d; bind ba619e28; records b529db90. These are independent rule heads, not a claim they are merged into main.\n\nPipeline completed: %t (measurement only; never compiler acceptance).\n", scope, cell(os.Args[1]), report.Completed)
+	if report.Boundary != "" {
+		fmt.Printf("\nBoundary: %s\n", cell(report.Boundary))
+	}
+	if report.UnderlyingAbort != nil {
+		s := report.UnderlyingAbort
+		fmt.Printf("\nUnderlying first stop: %s at %s: %s\n", cell(s.Rule), cell(s.Site), cell(s.Words))
+	}
+	rules, files := map[string]*counts{}, map[string]*counts{}
+	distinct := map[lower.ScanAllStop]bool{}
+	site := regexp.MustCompile(`^(.*):[0-9]+:[0-9]+$`)
+	for _, s := range report.Stops {
+		distinct[s] = true
+		add(rules, s.Rule, s)
+		file := "(unlocated)"
+		if match := site.FindStringSubmatch(s.Site); match != nil {
+			file = filepath.ToSlash(match[1])
+		}
+		add(files, file, s)
+	}
+	fmt.Printf("\nRecorded events: %d; distinct (rule, site, words) triples: %d. Retries may repeat sites.\n", len(report.Stops), len(distinct))
+	table("Rule / boundary", rules)
+	table("File derived from recorded site", files)
+	if strings.HasPrefix(report.Boundary, "panic:") {
+		os.Exit(1)
+	}
+}

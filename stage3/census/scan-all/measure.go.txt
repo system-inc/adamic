@@ -1,0 +1,76 @@
+// Generated only into scratch; no IR crosses the measurement API.
+package lower
+
+import (
+	"context"
+	"fmt"
+	"github.com/microsoft/TypeScript/tsc/shim/ast"
+	"github.com/system-inc/adamic/internal/load"
+	"sync"
+)
+
+type ScanAllStop struct{ Rule, Site, Words string }
+type ScanAllReport struct {
+	Stops           []ScanAllStop
+	Completed       bool
+	Boundary        string
+	UnderlyingAbort *ScanAllStop
+}
+
+var scanAllMu sync.Mutex
+var scanAllPhase string
+var scanAllStops []ScanAllStop
+var scanAllUnderlying *ScanAllStop
+var scanAllFirstError bool
+
+func scanAllDescribe(err error) ScanAllStop {
+	s := ScanAllStop{Rule: scanAllPhase, Words: err.Error()}
+	switch e := err.(type) {
+	case *NotYet:
+		s.Site = e.Where
+		s.Words = e.What
+	case *Refused:
+		s.Site = e.Where
+		s.Words = e.What
+	}
+	return s
+}
+func latentRecord(err error) {
+	if err != nil {
+		scanAllStops = append(scanAllStops, scanAllDescribe(err))
+	}
+}
+
+// ScanAll records refusal-scan stops only, plus the first declaration, body or
+// tail stop reached. It is blind past that stop. Zero body/tail counts are never
+// a pass. firstError is solely the shipped control mutant: production's scan.
+func ScanAll(ctx context.Context, p *load.Program, firstError bool) (r ScanAllReport) {
+	scanAllMu.Lock()
+	defer scanAllMu.Unlock()
+	scanAllStops = nil
+	scanAllUnderlying = nil
+	scanAllPhase = "entry"
+	scanAllFirstError = firstError
+	defer func() {
+		if e := recover(); e != nil {
+			r.Boundary = "panic: " + fmt.Sprint(e)
+		}
+		r.Stops = scanAllStops
+		r.UnderlyingAbort = scanAllUnderlying
+	}()
+	_, err := scanAllLowerWithOptions(ctx, p, Options{ModuleFormat: ModuleFormatCommonJSBundle})
+	if err != nil {
+		latentRecord(err)
+		r.Boundary = "production abort at " + scanAllPhase
+		return
+	}
+	r.Completed = true
+	return
+}
+func (l *lowering) scanAllRefuse(m *ast.SourceFile) error {
+	scanAllPhase = "refusal_scan/preflight-or-contract"
+	if scanAllFirstError {
+		return l.refuse(m)
+	}
+	return l.latentRefuse(m)
+}
