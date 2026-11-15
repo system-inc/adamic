@@ -1,6 +1,11 @@
 package lower
 
 import (
+	"maps"
+	"sort"
+	"strings"
+	"sync/atomic"
+
 	"github.com/microsoft/TypeScript/tsc/shim/ast"
 	"github.com/microsoft/TypeScript/tsc/shim/checker"
 	"github.com/system-inc/adamic/internal/ir"
@@ -167,9 +172,45 @@ func (l *lowering) placeholderOrigin(node *ast.Node) string {
 	return l.placeholderSymbolOrigin(l.symbol(ast.SkipParentheses(node)))
 }
 
-// The transfer graph is conservative across branches and loops. A copied local
-// never loses its origin when another path writes it. Readiness still proves
-// individual writes using the existing CFG; every remaining use as T is checked.
+// notePlaceholderSlots' answer, PlaceholderSources and PlaceholderViews, reads only the checker and the
+// program, unless a type mapper is in force (placeholderOptional reaches concrete) or a caller kept a slot
+// (slotType reads slots.explicit). The latent census makes a fresh lowering for each of its units, and each
+// walked every module of the program again: 22% of the tsc entry census's CPU (#6xt6p1f). So a census run
+// hands its lowerings one placeholderSlotCache, and a lowering under neither takes a copy of the answer the
+// first such lowering over its checker and program walked.
+
+// placeholderSlotCache is notePlaceholderSlots' answer for each checker and program a run's lowerings
+// walked under no type mapper and no kept slot. Production makes none and walks; the latent census makes
+// one a run (lower.go.txt's latentRun, units.go.txt's latentFullSelected), which statecopy shares. A run
+// lowers one unit at a time, so it takes no lock.
+type placeholderSlotCache struct {
+	answers map[placeholderSlotKey]placeholderSlotAnswer
+}
+
+// placeholderSlotKey is what the answer is a function of. A run asks the program for a checker per file,
+// and the program holds those checkers itself, so the key keeps nothing alive the program doesn't.
+type placeholderSlotKey struct {
+	checker *checker.Checker
+	program *load.Program
+}
+
+// placeholderSlotAnswer is one walk's two maps, which no lowering holds: each takes clones of them.
+type placeholderSlotAnswer struct {
+	sources ir.SortedMap[string, string]
+	views   ir.SortedMap[string, string]
+}
+
+// placeholderSlotWalks, when a test sets it, counts the walks notePlaceholderSlots makes, so a pin holds a
+// run's lowerings to one walk per checker and program. It's nil outside those tests.
+var placeholderSlotWalks atomic.Pointer[atomic.Int64]
+
+// placeholderSlotCompare, set only by tests, walks the program again beside every answer taken from the
+// cache and panics where the two differ (placeholderSlotsCompared). Tests that set it aren't parallel, and
+// no parallel test runs beside a sequential one.
+var placeholderSlotCompare atomic.Bool
+
+// notePlaceholderSlots fills PlaceholderSources and PlaceholderViews once a lowering: a copy of the cached
+// answer where this lowering may take one, else its own walk.
 func (l *lowering) notePlaceholderSlots() {
 	// The refusal pass is also used independently of IR construction.
 	if l.result == nil {
@@ -177,6 +218,70 @@ func (l *lowering) notePlaceholderSlots() {
 	}
 	if l.result.PlaceholderSources != nil {
 		return
+	}
+	// A type mapper or a kept slot can give this lowering an answer of its own, so it walks, and neither
+	// reads the cache nor fills it. Nothing calls this under either today, so the guard is held by a pin alone.
+	if l.placeholderSlots == nil || l.typeMapper != nil || len(l.slots.explicit) != 0 {
+		l.walkPlaceholderSlots()
+		return
+	}
+	key := placeholderSlotKey{checker: l.checker, program: l.program}
+	if answer, found := l.placeholderSlots.answers[key]; found {
+		if placeholderSlotCompare.Load() {
+			l.placeholderSlotsCompared(answer)
+		}
+		// Clones, since a lowering writes its own maps and every later lowering's copy comes from these.
+		l.result.PlaceholderSources, l.result.PlaceholderViews = maps.Clone(answer.sources), maps.Clone(answer.views)
+		return
+	}
+	l.walkPlaceholderSlots()
+	if l.placeholderSlots.answers == nil {
+		l.placeholderSlots.answers = map[placeholderSlotKey]placeholderSlotAnswer{}
+	}
+	l.placeholderSlots.answers[key] = placeholderSlotAnswer{sources: maps.Clone(l.result.PlaceholderSources), views: maps.Clone(l.result.PlaceholderViews)}
+}
+
+// placeholderSlotsCompared walks the program into a scratch result beside an answer taken from the cache,
+// and panics where the fresh maps aren't the cached ones. The lowering goes on from the cached answer, as
+// it would without the comparison.
+func (l *lowering) placeholderSlotsCompared(answer placeholderSlotAnswer) {
+	outer := l.result
+	l.result = &ir.Program{}
+	l.walkPlaceholderSlots()
+	walked := placeholderSlotAnswer{sources: l.result.PlaceholderSources, views: l.result.PlaceholderViews}
+	l.result = outer
+	var differences []string
+	if !maps.Equal(answer.sources, walked.sources) {
+		differences = append(differences, "PlaceholderSources: only cached "+placeholderSlotsOnly(answer.sources, walked.sources)+", only fresh "+placeholderSlotsOnly(walked.sources, answer.sources))
+	}
+	if !maps.Equal(answer.views, walked.views) {
+		differences = append(differences, "PlaceholderViews: only cached "+placeholderSlotsOnly(answer.views, walked.views)+", only fresh "+placeholderSlotsOnly(walked.views, answer.views))
+	}
+	if len(differences) != 0 {
+		panic("placeholder slot comparison (#6xt6p1f): the cached answer for this checker and program isn't a fresh walk's; " + strings.Join(differences, "; "))
+	}
+}
+
+// placeholderSlotsOnly is every entry of one map that the other lacks or holds with another value, as
+// key=value, sorted.
+func placeholderSlotsOnly(one, other ir.SortedMap[string, string]) string {
+	entries := []string{}
+	for key, value := range one {
+		if held, found := other[key]; !found || held != value {
+			entries = append(entries, key+"="+value)
+		}
+	}
+	sort.Strings(entries)
+	return "[" + strings.Join(entries, " ") + "]"
+}
+
+// walkPlaceholderSlots walks every module of the program for its placeholder slots, into l.result.
+// The transfer graph is conservative across branches and loops. A copied local
+// never loses its origin when another path writes it. Readiness still proves
+// individual writes using the existing CFG; every remaining use as T is checked.
+func (l *lowering) walkPlaceholderSlots() {
+	if counter := placeholderSlotWalks.Load(); counter != nil {
+		counter.Add(1)
 	}
 	l.result.PlaceholderSources = map[string]string{}
 	l.result.PlaceholderViews = map[string]string{}
