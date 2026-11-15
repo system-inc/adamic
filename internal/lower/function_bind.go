@@ -1,6 +1,10 @@
 package lower
 
 import (
+	"slices"
+	"strconv"
+	"sync/atomic"
+
 	"github.com/microsoft/TypeScript/tsc/shim/ast"
 	"github.com/microsoft/TypeScript/tsc/shim/checker"
 	"github.com/system-inc/adamic/internal/ir"
@@ -356,9 +360,95 @@ func (l *lowering) boundKeyedLength(node *ast.Node) bool {
 
 func init() { refusalRules.register(2890, "boundObservation", (*lowering).boundObservation) }
 
+// declaresBeyond is whether candidate declares more parameters than a call passing passed arguments
+// fills: a value held as a narrower type, `(shape: Shape, index?: number) => boolean` held as
+// `(shape: Shape) => boolean`, is called with the type's arguments alone, while JavaScript hands it
+// every argument its caller passed (#04f5s0s, #jqf1drp). Parameters holds the declared parameters in
+// order (a destructured or defaulted one arrives as one incoming local), behind a method's leading
+// receiver, which Receiver marks and no argument fills, so it's left out of the count. The environment
+// is Environment, never Parameters. A lone this parameter is counted, which can only stop more.
+func declaresBeyond(candidate ir.Function, passed int) bool {
+	return declaredParameters(candidate) > passed
+}
+
+// declaredParameters is how many parameters candidate declares, its leading receiver left out
+// (declaresBeyond).
+func declaredParameters(candidate ir.Function) int {
+	if candidate.Receiver {
+		return len(candidate.Parameters) - 1
+	}
+	return len(candidate.Parameters)
+}
+
+// boundReachObserved, when a test sets it, hears each bound value's reach as checkBoundArguments asks
+// it: the bind's place, the names of the functions it reached, and whether the reach was known. It's
+// nil outside that test (function_bind_reach_test.go).
+var boundReachObserved atomic.Pointer[func(where string, functions []string, known bool)]
+
+// parameterCount is count parameters, in the singular for one.
+func parameterCount(count int) string {
+	if count == 1 {
+		return "1 parameter"
+	}
+	return strconv.Itoa(count) + " parameters"
+}
+
+// boundValueReach is, for a bound closure's target value, the functions that can be it by the
+// allocation flow, asked once lowering is done as checkHostMemberWrites asks it (ReachingAllocations):
+// a MakeClosure or BoundClosure reaching the value names its function, and undefined or null names
+// none. Anything else reaching it, or a reach the graph calls Unknown (a parameter with unseen
+// callers, an opaque call, a host value), is unknown, and checkBoundArguments falls back to every
+// function of the bound type, so unknown fails closed. The graph is built once, on the first bind
+// that needs it, its entry naming those values as the iterable views' proof names its origins
+// (iterable_views.go); every road the graph follows, and every allocation it names itself, is left
+// to it.
+func (l *lowering) boundValueReach() func(ir.Expression) ([]int, bool) {
+	assignAllocationSites(l.result)
+	graph := l.flowGraph(l.result)
+	const nothing, other = -1, -2
+	named := []int{}
+	site := func(function int) int {
+		named = append(named, function)
+		return len(named)
+	}
+	graph.entry = func(value ir.Expression) int {
+		switch value := value.(type) {
+		case ir.MakeClosure:
+			return site(value.Function)
+		case ir.BoundClosure:
+			return site(value.Function)
+		case ir.Undefined, ir.Null:
+			return site(nothing)
+		case ir.Read, ir.Call, ir.CallClosure, ir.Conditional, ir.Box, ir.Narrow, ir.Unwrap, ir.CheckedCast, ir.Defined, ir.Coalesce, ir.Logical, ir.Property, ir.ArrayIndex, ir.ObjectLiteral, ir.ArrayLiteral:
+			return 0
+		}
+		return site(other)
+	}
+	return func(value ir.Expression) ([]int, bool) {
+		reaches := graph.ReachingAllocations(value)
+		if reaches.Unknown {
+			return nil, false
+		}
+		functions := []int{}
+		for _, reached := range reaches.Sites {
+			if reached <= 0 || reached > len(named) || named[reached-1] == other {
+				// An allocation the graph names itself, an object or an array, or a value made
+				// another way.
+				return nil, false
+			}
+			if named[reached-1] != nothing {
+				functions = append(functions, named[reached-1])
+			}
+		}
+		return functions, true
+	}
+}
+
 // Until bound adapters forward an unbounded argument vector, fail closed when a
-// possible implementation observes its exact count or collects a rest tail.
+// possible implementation observes its exact count, collects a rest tail or
+// declares more parameters than the type it's bound as names (declaresBeyond).
 func (l *lowering) checkBoundArguments() error {
+	var reach func(ir.Expression) ([]int, bool)
 	for _, record := range l.closureRecords {
 		function := l.result.Functions[record.function]
 		if function.Source.Role != "bound_function" {
@@ -367,14 +457,49 @@ func (l *lowering) checkBoundArguments() error {
 		var found error
 		walk(function.Body, func(node any) bool {
 			if call, ok := node.(ir.CallClosure); ok && call.Bound {
-				candidates := append([]int{}, l.result.FunctionTypeTargets[call.FunctionType]...)
+				typed := l.result.FunctionTypeTargets[call.FunctionType]
+				candidates := append([]int{}, typed...)
+				methods := []int{}
 				if call.BoundName != "" {
-					candidates = append(candidates, l.result.MethodsNamed(call.BoundName)...)
+					methods = l.result.MethodsNamed(call.BoundName)
+					candidates = append(candidates, methods...)
 				}
 				for _, target := range candidates {
-					candidate := l.result.Functions[target]
-					if candidate.ReadsArguments || candidate.RestElement != 0 {
+					if candidate := l.result.Functions[target]; candidate.ReadsArguments || candidate.RestElement != 0 {
 						found = l.notYet(record.node, "bind of a function that observes its argument count or collects rest arguments")
+					}
+				}
+				if found != nil {
+					// The count's stop gives way to the arguments and rest one, whose words stay as pinned.
+					return true
+				}
+				// The count asks only what can be the bound value: every function of its type counts
+				// functions the program never binds here, such as one taking an optional parameter held as
+				// () => number elsewhere, which stopped function_bind.a's honest absentProperty.f?.bind.
+				// A method bind keeps every method of the name.
+				counted := append([]int{}, methods...)
+				if slices.ContainsFunc(typed, func(target int) bool { return declaresBeyond(l.result.Functions[target], len(call.Arguments)) }) {
+					if reach == nil {
+						reach = l.boundValueReach()
+					}
+					reached, known := reach(call.Closure)
+					if observe := boundReachObserved.Load(); observe != nil {
+						names := []string{}
+						for _, function := range reached {
+							names = append(names, l.result.Functions[function].Name)
+						}
+						(*observe)(l.program.Where(record.node), names, known)
+					}
+					if known {
+						counted = append(counted, reached...)
+					} else {
+						counted = append(counted, typed...)
+					}
+				}
+				for _, target := range counted {
+					if candidate := l.result.Functions[target]; declaresBeyond(candidate, len(call.Arguments)) {
+						found = l.notYet(record.node, "bind of a function that declares "+parameterCount(declaredParameters(candidate))+" where the type it's bound as names "+strconv.Itoa(len(call.Arguments)))
+						break
 					}
 				}
 			}
