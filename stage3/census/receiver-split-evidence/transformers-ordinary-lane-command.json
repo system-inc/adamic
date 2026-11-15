@@ -1,0 +1,16 @@
+{
+  "command": [
+    "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+    "/workspace/scratch/receiver-split/adamic/stage3/oracle/run.py",
+    "/workspace/scratch/receiver-split/tree-transformers",
+    "/workspace/scratch/receiver-split/transformers-lane"
+  ],
+  "cwd": "/workspace/scratch/receiver-split/adamic",
+  "exit": 1,
+  "wall_seconds": 497.742,
+  "log": {
+    "path": "/workspace/scratch/receiver-split/results/transformers-lane.log",
+    "bytes": 169493,
+    "sha256": "797ddd6116b4feecdc794c2686edd6e2bf4ed165ce9044553567cfde8cff6ff2"
+  }
+}

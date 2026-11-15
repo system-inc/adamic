@@ -1,0 +1,16 @@
+{
+  "command": [
+    "node",
+    "/workspace/scratch/receiver-split/adamic/stage3/census/receiver-calls-price/printer-controls-new.cjs",
+    "/workspace/scratch/receiver-split/tree-printer",
+    "/workspace/scratch/receiver-split/results/printer-runtime-controls.json"
+  ],
+  "cwd": "/workspace/scratch/receiver-split/adamic",
+  "exit": 0,
+  "wall_seconds": 0.312,
+  "log": {
+    "path": "/workspace/scratch/receiver-split/results/printer-runtime-controls.log",
+    "bytes": 115,
+    "sha256": "cb892acd305e7cfb414d78f20fd376796abf7438c71dd6d19bf4710e80dc9ac6"
+  }
+}

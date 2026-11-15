@@ -45,3 +45,7 @@ Fresh single-part apply runs, complete unfiltered ordinary/counting lanes, dynam
 ## All three independent fresh apply runs passed
 
 Each fresh stage3/apply.sh run installed only its own new receiver directory. Parser, transformers and printer all exited 0, and each resulting 79-file compiler inventory is byte-identical to its independently constructed tree. Command/log hash receipts and source-inventory hashes are retained here. The ordinary and counting unfiltered lanes, dynamic receiver observations, final ledger files and adaptation branch pushes remain pending.
+
+## All ordinary whole lanes passed the sanctioned outcome
+
+Each independent tree completed all runners with eight workers, no filter and the unchanged timeout: 106,366 passing, one failing, zero pending. Every sole failure is unittests:: Public APIs for typescript.d.ts should be acknowledged when they change, with only api/typescript.d.ts differing. Timeouts, exceptions and all other causes are 0. Each locked install and normal build exits 0. Summaries/command receipts are published; full raw reports, baseline diffs and logs remain in scratch with hashes and sizes. Printer getter order/receiver, bare callback this, default/sentinel controls and both default implementation AST checks passed. Counting lanes and final adaptation pushes remain pending.

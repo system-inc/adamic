@@ -1,0 +1,16 @@
+{
+  "command": [
+    "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+    "/workspace/scratch/receiver-split/adamic/stage3/oracle/run.py",
+    "/workspace/scratch/receiver-split/tree-parser",
+    "/workspace/scratch/receiver-split/parser-lane"
+  ],
+  "cwd": "/workspace/scratch/receiver-split/adamic",
+  "exit": 1,
+  "wall_seconds": 769.299,
+  "log": {
+    "path": "/workspace/scratch/receiver-split/results/parser-lane.log",
+    "bytes": 169490,
+    "sha256": "2146b62a36a13c823049acae8821e5271c478f8017d482ce924d947b8827c313"
+  }
+}
