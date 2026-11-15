@@ -34,15 +34,34 @@ static adamic_map *table(const adamic_record *record) {
 	return record->slots[0].reference;
 }
 
-adamic_record *adamic_record_new(adamic_field_kind values) {
+adamic_record *adamic_record_new_capacity(adamic_field_kind values, size_t keys) {
 	const adamic_shape *shape = values == adamic_field_number ? &record_number_shape : values == adamic_field_boolean ? &record_boolean_shape : values == adamic_field_reference ? &record_reference_shape : NULL;
 	if (shape == NULL) {
 		static const char message[] = "compiler bug: a record of unknown value kind";
 		adamic_panic(message, sizeof message - 1);
 	}
 	adamic_record *record = adamic_object_new(shape);
-	record->slots[0].reference = adamic_map_new(true, values == adamic_field_reference);
+	adamic_map *map = adamic_map_new(true, values == adamic_field_reference);
+	// Fit the first table to its keys. Later stores use Map's ordinary growth and compaction.
+	size_t capacity = 1;
+	while (capacity < keys) {
+		if (capacity > SIZE_MAX / 2) adamic_panic("out of memory", sizeof "out of memory" - 1);
+		capacity *= 2;
+	}
+	if (capacity > SIZE_MAX / sizeof *map->entries || capacity > SIZE_MAX / 2 / sizeof *map->buckets) {
+		adamic_panic("out of memory", sizeof "out of memory" - 1);
+	}
+	map->entries = malloc(capacity * sizeof *map->entries);
+	map->buckets = calloc(capacity * 2, sizeof *map->buckets);
+	if (map->entries == NULL || map->buckets == NULL) adamic_panic("out of memory", sizeof "out of memory" - 1);
+	map->capacity = capacity;
+	map->bucket_count = capacity * 2;
+	record->slots[0].reference = map;
 	return record;
+}
+
+adamic_record *adamic_record_new(adamic_field_kind values) {
+	return adamic_record_new_capacity(values, 4);
 }
 
 adamic_value *adamic_record_get_own(const adamic_record *record, const adamic_string *key) {

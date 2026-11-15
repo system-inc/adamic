@@ -1133,6 +1133,8 @@ typedef adamic_object adamic_record_iterator;
 // (record.c): counted references, numbers or booleans, a number or a boolean possibly packed with
 // undefined (adamic_maybe_number_pack, adamic_maybe_boolean_pack).
 adamic_record *adamic_record_new(adamic_field_kind values);
+// Known keys fit a power-of-two table; unknown sizes use new's four-entry start.
+adamic_record *adamic_record_new_capacity(adamic_field_kind values, size_t keys);
 bool adamic_record_is(const adamic_object *object);
 adamic_field_kind adamic_record_values(const adamic_record *record);
 adamic_value adamic_record_view(const adamic_record *, const char *, unsigned char, const char *, const char *);
