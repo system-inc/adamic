@@ -146,8 +146,32 @@ func run(arguments []string) (code int) {
 	case len(arguments) >= 4 && arguments[0] == "build" && arguments[2] == "-o":
 		return build(arguments[1], arguments[3], arguments[4:])
 	}
+	if buildOutputMisplaced(arguments) {
+		fmt.Fprintln(os.Stderr, buildOutputOrder)
+		return 2
+	}
 	fmt.Fprintln(os.Stderr, usage)
 	return 2
+}
+
+// buildOutputOrder is what a build whose -o <out> isn't where the grammar puts it prints in place of the usage: the
+// order, and the form to copy. A mind who writes `build f.a --sanitize -o out` has every word right but the place of
+// one, and the usage alone doesn't say which (#emdbhh1).
+const buildOutputOrder = "adamic: build takes its file and -o <out> first, in that order, and its other flags after them: adamic build [--target wasm32-wasi] [--reactor] <file.a|file.ts> -o <out> [flags]"
+
+// buildOutputMisplaced is whether a build run's switch didn't take holds -o with a value after it, so the words are
+// there and only their order is wrong. A build missing -o, or ending on it, has no <out> to put anywhere, and stays a
+// plain usage error.
+func buildOutputMisplaced(arguments []string) bool {
+	if len(arguments) == 0 || arguments[0] != "build" {
+		return false
+	}
+	for index, argument := range arguments[1:] {
+		if argument == "-o" && index+2 < len(arguments) {
+			return true
+		}
+	}
+	return false
 }
 
 // reportCompilerBug turns a panic on the command's goroutine into exit 4 with its stack. Unrecovered, Go
