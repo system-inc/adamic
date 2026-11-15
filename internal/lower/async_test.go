@@ -2,7 +2,6 @@ package lower
 
 import (
 	"errors"
-	"fmt"
 	"github.com/system-inc/adamic/internal/fresh"
 	"github.com/system-inc/adamic/internal/ir"
 	"strings"
@@ -118,8 +117,8 @@ func TestAsyncReaderRefusals(t *testing.T) {
 	}
 }
 
-// asyncRepeatedLoops are the loops TestAsyncRepeatedBindingsLower and TestAsyncRepeatedCatchCaptureStops
-// put a body in, each with an await, so every iteration's bindings are the frame's again.
+// asyncRepeatedLoops are the loops TestAsyncRepeatedBindingsLower puts a body in, each with an await, so
+// every iteration's bindings are the frame's again.
 var asyncRepeatedLoops = []string{
 	"while (i < 3) { BODY await Promise.resolve(); i++; }",
 	"for (; i < 3; i++) { BODY await Promise.resolve(); }",
@@ -131,13 +130,16 @@ func asyncRepeatedSource(loop, body string) string {
 	return "async function run(): Promise<void> { const readers: (() => string)[] = []; let i = 0; " + strings.ReplaceAll(loop, "BODY", body) + " } await run();"
 }
 
-// The second body is the catch's twin of TestAsyncRepeatedCatchCaptureStops (Adamic on #kaz4pk8 at 03:12Z):
-// the closure captures a string read from the caught value, never the caught value.
+// The second body (rows 004 to 006) captures the catch binding itself in a closure kept in readers,
+// Language's u00: it lowers by the catch narrowing (loose_slots.go's looseCaughtRoad), since every throw
+// is a new Error and nothing writes readers into a loose slot, so what's caught can't reach readers. The
+// third is Adamic's twin (#kaz4pk8, 03:12Z), which captures a string read from the caught value instead.
 func TestAsyncRepeatedBindingsLower(t *testing.T) {
 	t.Parallel()
 	for _, body := range []string{
 		"if (true) { const held = `item${i}`; readers.push(() => held); }",
-		"try { throw new Error(`item${i}`); } catch (held) { const message = held instanceof Error ? held.message : String(held); readers.push(() => message); }",
+		"try { throw new Error(`item${i}`); } catch (held) { if (held instanceof Error) { readers.push(() => held.message); } }",
+		"try { throw new Error(`item${i}`); } catch (held) { const message = held instanceof Error ? held.message : \"thrown\"; readers.push(() => message); }",
 	} {
 		for _, loop := range asyncRepeatedLoops {
 			source := asyncRepeatedSource(loop, body)
@@ -149,28 +151,34 @@ func TestAsyncRepeatedBindingsLower(t *testing.T) {
 	}
 }
 
-// A catch binding captured by a closure kept in readers stops at lower's loose-slot stop until #yeep0sx (the
-// link), and goes red here the day it lands, to be turned back into a row of TestAsyncRepeatedBindingsLower
-// (rulings.md:338 and :339, Adamic on #kaz4pk8 at 03:12Z). A caught value is typed unknown and can be any
-// shape, an Error included, since Error's cause is unknown: so the binding's cell can reach the closure
-// that holds it, through readers.
-func TestAsyncRepeatedCatchCaptureStops(t *testing.T) {
+// asyncCatchRoads load the readers array into a caught value, three roads around the catch narrowing
+// (Runtime and Adamic on #kaz4pk8 at 03:13Z). Each must still stop. Today each stops at an older wall
+// before the narrowing judges it, one of the seven its premise stands on (looseCaughtRoad); the day that
+// wall lifts, the value it lets into the thrown value enters H, and the row must stop at the loose-slot
+// stop instead, by the finder's own reach, or go red here.
+var asyncCatchRoads = []struct{ name, wall, source string }{
+	{"a thrown Error subclass holding readers", "a computed class base",
+		"class Carrier extends Error { readers: (() => string)[] = []; }\nasync function run(): Promise<void> { const readers: (() => string)[] = []; try { const carrier = new Carrier(\"carried\"); carrier.readers = readers; throw carrier; } catch (held) { if (held instanceof Error) { readers.push(() => held.message); } } await Promise.resolve(); console.log(String(readers.length)); }\nawait run();\n"},
+	{"an Error whose cause is readers", "writing a possibly absent optional own field",
+		"async function run(): Promise<void> { const readers: (() => string)[] = []; try { const error = new Error(\"carried\"); error.cause = readers; throw error; } catch (held) { if (held instanceof Error) { readers.push(() => held.message); } } await Promise.resolve(); console.log(String(readers.length)); }\nawait run();\n"},
+	{"Promise.reject(readers) into an awaited catch", "Promise rejection with a non-Error",
+		"async function run(): Promise<void> { const readers: (() => string)[] = []; try { await Promise.reject(readers); } catch (held) { if (held instanceof Error) { readers.push(() => held.message); } } console.log(String(readers.length)); }\nawait run();\n"},
+}
+
+// TestAsyncCatchRoadsStop holds each of asyncCatchRoads to a stop: its wall today, or the loose-slot stop
+// once that wall lifts.
+func TestAsyncCatchRoadsStop(t *testing.T) {
 	t.Parallel()
-	const body = "try { throw new Error(`item${i}`); } catch (held) { if (held instanceof Error) { readers.push(() => held.message); } }"
-	const what = "'held', a variable a function value captures, of type unknown, bound to whatever its callers or what it reads hand it, which can reach its own cell back through what a value held as unknown or object can be: " + looseStopWords
-	for _, loop := range asyncRepeatedLoops {
-		source := asyncRepeatedSource(loop, body)
-		_, err := lowerSource(t, source)
-		var notYet *NotYet
-		if !errors.As(err, &notYet) {
-			t.Fatalf("got %v, want the loose-slot stop, a NotYet, until #yeep0sx: %s", err, source)
-		}
-		// The stop is at the catch's binding.
-		at := fmt.Sprintf("main.a:1:%d", strings.Index(source, "catch (held)")+len("catch (")+1)
-		if !strings.HasSuffix(notYet.Where, at) || notYet.What != what {
-			t.Fatalf("got %s: %s, want %s: %s", notYet.Where, notYet.What, at, what)
-		}
-		t.Logf("stop: %v", err)
+	for _, road := range asyncCatchRoads {
+		t.Run(road.name, func(t *testing.T) {
+			t.Parallel()
+			_, err := lowerSourceAs(t, road.source, ".ts")
+			var notYet *NotYet
+			if !errors.As(err, &notYet) || !(strings.Contains(notYet.What, road.wall) || strings.HasSuffix(notYet.What, looseStopWords)) {
+				t.Fatalf("got %v, want a stop at %q or the loose-slot stop", err, road.wall)
+			}
+			t.Logf("stop: %v", err)
+		})
 	}
 }
 

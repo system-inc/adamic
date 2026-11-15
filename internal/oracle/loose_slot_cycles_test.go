@@ -56,9 +56,13 @@ var looseSlotStops = []struct {
 
 // looseSlotControls must lower and let go of everything: the controls of #t5q4prw and #kaz4pk8 (g07,
 // g09c, g09d, g10, k02, k07, k08, k09, k16), a leaf object written into unknown (c01), a Node handed to
-// an unknown parameter that stores it nowhere (c02) and a generator whose TNext is unknown collected by
-// new Map (c03: only its yield type is stored, as generators/new_map_plain.a's). region is whether it
-// forms a graph region, as g09c, g10, k02, k07 and k08 did before the stop.
+// an unknown parameter that stores it nowhere (c02), a generator whose TNext is unknown collected by new
+// Map (c03: only its yield type is stored, as generators/new_map_plain.a's) and Language's u00, which is
+// internal/lower's TestAsyncRepeatedBindingsLower row 004 (c04: a catch binding captured by a closure
+// pushed into readers, in a loop around an await, every throw a new Error). c04 is the catch narrowing's
+// pin (loose_slots.go's looseCaughtRoad): what can be caught can't reach readers, so it lowers and lets go
+// of everything, as on main (11 of 11 at J-n1gttw4), and the narrowing's mutant m4 sends it back to the
+// stop. region is whether it forms a graph region, as g09c, g10, k02, k07 and k08 did before the stop.
 var looseSlotControls = []struct {
 	name, want string
 	region     bool
@@ -75,6 +79,7 @@ var looseSlotControls = []struct {
 	{name: "c01_leaf_object", want: "a\n"},
 	{name: "c02_unknown_parameter", want: "object a\n"},
 	{name: "c03_generator_next_unknown", want: "2\nk0,k1\n"},
+	{name: "c04_catch_capture_errors", want: "item0\nitem1\nitem2\n"},
 }
 
 // looseSlotSource writes a pin's committed text into a file of its own.

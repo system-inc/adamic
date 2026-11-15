@@ -18,6 +18,7 @@ func (l *lowering) baseInstance(declaration *ast.Node, classType *checker.Type) 
 		}
 		types := clause.AsHeritageClause().Types.Nodes
 		if len(types) != 1 || !ast.IsIdentifier(ast.SkipParentheses(types[0].AsExpressionWithTypeArguments().Expression)) {
+			// Lifting this stop reopens a road into a catch, which the catch narrowing stands on (looseCaughtRoad, loose_slots.go).
 			return nil, l.notYet(clause, "a computed class base; name the base class directly")
 		}
 		bases := l.classBases(classType)

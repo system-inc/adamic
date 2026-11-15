@@ -138,6 +138,29 @@ console.log(String(back.get({ name: "n" })));
 	looseSlotRowStops(t, err, "main.ts:15:2", mapObjectKeyStop)
 }
 
+// TestMapObjectKeysAcrossRepresentations' first half alone, which keeps its pointer witness: a Map<object,
+// string> set through each key's own type, an interface's and an array's, and read back through object.
+// Converting an Object or an Array into a Union keeps its pointer, so each lookup finds its entry, and an
+// equal-fielded literal is another key. No key written is typed object, and neither key's type can reach
+// the Map, so it lowers.
+func TestMapObjectKeysSetThroughOwnTypes(t *testing.T) {
+	t.Parallel()
+	mapObjectKeysAgree(t, `interface Named {
+	readonly name: string;
+}
+const named: Named = { name: "n" };
+const list: number[] = [1, 2];
+const keys = new Map<object, string>();
+keys.set(named, "named");
+keys.set(list, "list");
+const held: object[] = [named, list];
+for (const key of held) {
+	console.log(keys.get(key) ?? "missing");
+}
+console.log(keys.get({ name: "n" }) ?? "missing");
+`, "named\nlist\nmissing\n")
+}
+
 // TestMapObjectKeysAcrossRepresentations' twin, keyed by Named, a class with no loose field: each key is
 // set through its own binding and read back through an array of Named, and the reverse, set through the
 // array and read through its own binding. An equal-fielded Named is another key.
