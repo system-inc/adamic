@@ -85,6 +85,11 @@ side head
 for f in stage3/census/latent/lower.go.txt stage3/census/latent/units.go.txt; do sed -i 's/placeholderSlots := &placeholderSlotCache{}/var placeholderSlots *placeholderSlotCache/' $f; done
 [ "$(grep -c 'var placeholderSlots \*placeholderSlotCache' stage3/census/latent/lower.go.txt stage3/census/latent/units.go.txt | awk -F: '{s+=$2} END {print s}')" = 2 ] || { echo "VERDICT FAIL the cache isn't withheld"; exit 3; }
 side base
+# Where the placeholder walk stands in each side's profile, and how the census's units spent their CPU.
+for side in head base; do
+  echo "== $side: total and the placeholder functions, cumulative"
+  go tool pprof -top -cum -nodecount=2000 "$O/$side/entry-census" "$O/$side/cpu.pprof" 2> /dev/null | grep -E "^ *Showing|Duration|[Pp]laceholder" | head -6 | cut -c1-160
+done
 # The census's verdicts, every field but the clocks, head against base.
 python3 - "$O/head/latent.jsonl" "$O/base/latent.jsonl" <<'PYTHON'
 import json, sys
