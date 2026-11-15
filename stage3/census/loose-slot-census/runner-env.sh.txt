@@ -1,0 +1,10 @@
+export PATH=/workspace/adamic-tools/go/bin:/workspace/adamic-tools/bin:$PATH
+export ADAMIC_TYPESCRIPT_SOURCE=/workspace/loose-slot-scratch/typescript
+export TMPDIR=/workspace/loose-slot-scratch/tmp
+export GOTMPDIR=$TMPDIR
+export GOCACHE=/workspace/loose-slot-scratch/gocache
+export ADAMIC_BUILD_CACHE_DIR=/workspace/loose-slot-scratch/cache
+export CENSUS_MODULE_FORMAT=CommonJSBundle
+export GOMEMLIMIT=10GiB
+
+export PYTHONDONTWRITEBYTECODE=1

@@ -18,7 +18,7 @@ Each control event’s source line is quoted in [CONTROL-SITES.md](CONTROL-SITES
 ## Production next stops
 
 <!--ROOT-PROGRESS-->
-Snapshot at 2026-11-15T02:55:32.329199+00:00: completed pairs **64/79**, **64 unchanged**, **0 changed**. At this snapshot, remaining roots had not yet been measured; they were not assumed unchanged.
+Snapshot at 2026-11-15T02:57:29.677609+00:00: completed pairs **71/79**, **71 unchanged**, **0 changed**. At this snapshot, remaining roots had not yet been measured; they were not assumed unchanged.
 <!--END-ROOT-PROGRESS-->
 
 In progress in checkpointed groups: all 79 roots, CommonJSBundle, at main `fe5a1a54f045e9bce4e5aa32ca74885a317fbebd` and head `7e8cfaafb74a61f82f1610a4b738157b9918343d`. Each observation runs the existing census tool's `inspect` and production `LowerWithOptions`, in its own process. Only the command driver is overlaid. Groups of at most ten root indices are checkpointed at both SHAs.
