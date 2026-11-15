@@ -198,7 +198,7 @@ func TestSignature(t *testing.T) {
 		{"optional", "import type { HttpRequest, HttpResponse } from 'adamic/http'; export function handle(request?: HttpRequest): HttpResponse { return { status: 200, headers: [], body: '' }; }", false},
 		{"extra", "import type { HttpRequest, HttpResponse } from 'adamic/http'; export function handle(request: HttpRequest, other: string): HttpResponse { return { status: 200, headers: [], body: other }; }", false},
 		{"generic", "import type { HttpRequest, HttpResponse } from 'adamic/http'; export function handle<T>(request: HttpRequest): HttpResponse { return { status: 200, headers: [], body: '' }; }", false},
-		{"async", "import type { HttpRequest, HttpResponse } from 'adamic/http'; export async function handle(request: HttpRequest): Promise<HttpResponse> { return { status: 200, headers: [], body: '' }; }", false},
+		{"async", "import type { HttpRequest, HttpResponse } from 'adamic/http'; export async function handle(request: HttpRequest): Promise<HttpResponse> { return { status: 200, headers: [], body: '' }; }", true},
 	}
 	for _, fixture := range cases {
 		t.Run(fixture.name, func(t *testing.T) {
