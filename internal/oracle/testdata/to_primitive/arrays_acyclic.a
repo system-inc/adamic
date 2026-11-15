@@ -1,0 +1,65 @@
+// arrays.a without its cycles (#kaz4pk8): its answers, an array through String and a template over an
+// unknown as Array.prototype.join's "," (#09dvwny), with no array that holds itself or another array.
+// Item holds object, so an array written into an Item[] could be the Item[] holding it, and lower's
+// loose-slot stop refuses it until the link (#yeep0sx); arrays.a keeps the cycles as that stop's pin. For
+// the same reason each class holds a field: a class of a toString alone is a type every array is, and an
+// Error holds its cause as unknown, so it's shown on its own, never held. The join stack still shows,
+// through holder's Back, which joins holder again by viewed, and through a throw from an element's
+// toString, which lets the array go, so it joins again after.
+type Item = string | number | boolean | null | undefined | object;
+let failing = true;
+class Named {
+	label = 'named';
+	toString(): string {
+		return this.label;
+	}
+}
+class Back {
+	kind = 'back';
+	toString(): string {
+		return '[' + String(viewed) + ']';
+	}
+}
+class Fails {
+	kind = 'fails';
+	toString(): string {
+		if (failing) {
+			throw new Error('mid-join');
+		}
+		return 'recovered';
+	}
+}
+function show(value: unknown): void {
+	console.log(String(value));
+	console.log(`<${value}>`);
+}
+const mixed: Item[] = ['a', 1, null, undefined, true, new Named()];
+show(mixed);
+show(new Error('e'));
+show(['p', 'q']);
+show([1, 'a']);
+// null is always boxed, so an array of only null and undefined joins rather than stops.
+const absent: Item[] = [];
+absent.push(null);
+absent.push(undefined);
+show(absent);
+const nulls: (number | null)[] = [];
+nulls.push(null);
+show(nulls);
+const empty: Item[] = [];
+show(empty);
+const none: number[] = [];
+show(none);
+const holder: Item[] = [];
+holder.push('h');
+const viewed: unknown = holder;
+holder.push(new Back());
+show(holder);
+const throwing: Item[] = ['t', new Fails()];
+try {
+	show(throwing);
+} catch (error) {
+	show(error);
+}
+failing = false;
+show(throwing);

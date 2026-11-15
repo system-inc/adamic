@@ -1,17 +1,20 @@
 package oracle
 
 import (
+	"errors"
 	"os"
 	"path/filepath"
 	"strings"
 	"testing"
 
 	"github.com/system-inc/adamic/internal/leakcheck"
+	"github.com/system-inc/adamic/internal/lower"
 	"github.com/system-inc/adamic/internal/native"
 )
 
-// looseSlotWords end lower's loose-slot stop (loose_slots.go's looseStopWords).
-const looseSlotWords = "a cycle the cycle finder can't follow through unknown or object"
+// looseSlotWords end lower's loose-slot stop (loose_slots.go's looseStopWords), a NotYet naming the link
+// that lowers it.
+const looseSlotWords = "a cycle the cycle finder can't follow through unknown or object (#yeep0sx links these slots)"
 
 // looseSlotStops are #kaz4pk8's cycles through a slot typed unknown or object: Language's g roads (#t5q4prw)
 // and k roads, Memory's g11 to g13, Language's attack roads (l01 to l08: an upcast at the write and one
@@ -88,8 +91,8 @@ func looseSlotSource(t *testing.T, name string) string {
 	return path
 }
 
-// TestLooseSlotCyclesStop holds each road to its stop. A road that lowers instead is run on the counted
-// build, so the failure says what the cycle leaked (g13's 1 allocation and 0 frees without the stop).
+// TestLooseSlotCyclesStop holds each road to its stop, a NotYet. A road that lowers instead is run on the
+// counted build, so the failure says what the cycle leaked (g13's 1 allocation and 0 frees without the stop).
 func TestLooseSlotCyclesStop(t *testing.T) {
 	t.Parallel()
 	for _, pin := range looseSlotStops {
@@ -113,8 +116,9 @@ func TestLooseSlotCyclesStop(t *testing.T) {
 			if pin.other {
 				return
 			}
-			if !strings.Contains(err.Error(), looseSlotWords) || !strings.Contains(err.Error(), pin.name+".ts"+pin.at) {
-				t.Fatalf("got %v, want the loose-slot stop at %s.ts%s", err, pin.name, pin.at)
+			var notYet *lower.NotYet
+			if !errors.As(err, &notYet) || !strings.HasSuffix(notYet.What, looseSlotWords) || !strings.Contains(notYet.Where, pin.name+".ts"+pin.at) {
+				t.Fatalf("got %v, want the loose-slot stop, a NotYet, at %s.ts%s", err, pin.name, pin.at)
 			}
 		})
 	}

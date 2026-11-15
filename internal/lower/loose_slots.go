@@ -63,8 +63,9 @@ import (
 // runtime frees an array by letting go of each element, with no mark: heap.c's adamic_heap_free_children),
 // and reaching can't credit a later pop, so it stops here until H is handed to reachLinks and graphLinks.
 
-// looseStopWords end every loose-slot stop, so its pins can name it.
-const looseStopWords = "a cycle the cycle finder can't follow through unknown or object"
+// looseStopWords end every loose-slot stop, so its pins can name it. Every stop is a NotYet, never a
+// Refused: these are valid programs with no hatch, and the link, #yeep0sx, lowers them (Adamic on #kaz4pk8).
+const looseStopWords = "a cycle the cycle finder can't follow through unknown or object (#yeep0sx links these slots)"
 
 // looseSlots is H and what the stop keeps while it judges.
 type looseSlots struct {
