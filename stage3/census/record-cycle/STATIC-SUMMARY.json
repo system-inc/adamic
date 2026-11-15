@@ -1,0 +1,58 @@
+{
+  "kind": "STATIC READ, NOT LOWERING MEASUREMENT",
+  "typescript": "6.0.3",
+  "head": "b529db907bca6564edd2244ac8e5d102b85cf7e8",
+  "source_files": 79,
+  "source_units": 9639,
+  "nodes": 812100,
+  "record_literals": 168,
+  "record_types": 96,
+  "source_write_candidates": 5413,
+  "source_visible_slot_candidates": 13535,
+  "slot_classifications": {
+    "stops": 1219,
+    "clean": 0,
+    "unknown": 12316
+  },
+  "classifications": {
+    "stops": 2645,
+    "clean": 1706,
+    "unknown": 1062
+  },
+  "lowering_units_with_seed_coverage": 0,
+  "actual_units_newly_stopped": null,
+  "diagnostics": 1,
+  "types": 46046,
+  "options": {
+    "strict": true,
+    "noUncheckedIndexedAccess": true,
+    "exactOptionalPropertyTypes": true,
+    "erasableSyntaxOnly": false,
+    "verbatimModuleSyntax": true,
+    "allowImportingTsExtensions": true,
+    "noEmit": true,
+    "module": 99,
+    "moduleDetection": 3,
+    "moduleResolution": 100,
+    "target": 11,
+    "lib": [
+      "lib.es2024.d.ts"
+    ],
+    "types": [
+      "node"
+    ],
+    "typeRoots": [
+      "/workspace/scratch/record-cycle/current/stage3/api/node_modules/@types"
+    ]
+  },
+  "limits": [
+    "Syntactic source-write inventory, not an exhaustive list of production slotsOf seeds. Lowered generated/generic/indirect writes and fresh.ProveWrites unknown writes are unavailable.",
+    "Stops means the static record judgment has a witness, conditional on seed eligibility/native type agreement; it is not a production or lowering stop.",
+    "Clean negatives retain explicit capture/shape uncertainty. Missing closure and native storage/utility alias facts are not replaced by empty graphs."
+  ],
+  "conditional_new_arm_source_writes": 2603,
+  "conditional_new_arm_source_units": 1000,
+  "old_holdsRecord_source_writes": 42,
+  "actual_graph_slot_seeds_exhaustively_identified": false,
+  "classification_semantics": "stops/clean/unknown are static record judgments conditional on seed eligibility, native storage/literal presence, and checker agreement; no source row is a verified native seed"
+}

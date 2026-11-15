@@ -13,6 +13,19 @@
     "seconds": 172.808347594,
     "peak_rss_kib": 2315176
   },
+  "build-b529-control.receipt.json": {
+    "command": [
+      "go",
+      "build",
+      "-buildvcs=false",
+      "-o",
+      "/workspace/scratch/record-cycle/b529-control",
+      "./stage3/census/tool"
+    ],
+    "exit": 0,
+    "seconds": 164.0875947049999,
+    "peak_rss_kib": 2301108
+  },
   "build-head.receipt.json": {
     "command": [
       "go",
@@ -41,6 +54,28 @@
     "seconds": 24.645549806999952,
     "peak_rss_kib": 1476456
   },
+  "b529-negative.receipt.json": {
+    "command": [
+      "/workspace/scratch/record-cycle/b529-control",
+      "/workspace/scratch/record-cycle/fixtures/acyclic.a",
+      "/workspace/scratch/record-cycle/b529-negative.jsonl"
+    ],
+    "exit": 0,
+    "seconds": 0.11460027499970238,
+    "peak_rss_kib": 34392
+  },
+  "static-b529db90-fixed.receipt.json": {
+    "command": [
+      "node",
+      "--max-old-space-size=8192",
+      "/workspace/scratch/record-cycle/static-read.cjs",
+      "/workspace/scratch/record-cycle/adapted",
+      "/workspace/scratch/record-cycle/static-b529db90"
+    ],
+    "exit": 0,
+    "seconds": 43.74283890300012,
+    "peak_rss_kib": 1084652
+  },
   "main-tsc.receipt.json": {
     "command": [
       "/workspace/scratch/record-cycle/main-census",
@@ -50,6 +85,16 @@
     "exit": 2,
     "seconds": 15.768772248999994,
     "peak_rss_kib": 893884
+  },
+  "b529-positive.receipt.json": {
+    "command": [
+      "/workspace/scratch/record-cycle/b529-control",
+      "/workspace/scratch/record-cycle/fixtures/cycle.a",
+      "/workspace/scratch/record-cycle/b529-positive.jsonl"
+    ],
+    "exit": 0,
+    "seconds": 0.1652148269999998,
+    "peak_rss_kib": 38936
   },
   "main-positive.receipt.json": {
     "command": [
@@ -84,6 +129,30 @@
     "exit": 0,
     "seconds": 209.71002337100003,
     "peak_rss_kib": 896036
+  },
+  "static-b529db90.receipt.json": {
+    "command": [
+      "node",
+      "--max-old-space-size=8192",
+      "/workspace/scratch/record-cycle/static-read.cjs",
+      "/workspace/scratch/record-cycle/adapted",
+      "/workspace/scratch/record-cycle/static-b529db90"
+    ],
+    "exit": 1,
+    "seconds": 3.2987687380000352,
+    "peak_rss_kib": 442452
+  },
+  "static-slots-b529db90.receipt.json": {
+    "command": [
+      "node",
+      "--max-old-space-size=8192",
+      "/workspace/scratch/record-cycle/static-read.cjs",
+      "/workspace/scratch/record-cycle/adapted",
+      "/workspace/scratch/record-cycle/static-b529db90"
+    ],
+    "exit": 0,
+    "seconds": 114.56118390300026,
+    "peak_rss_kib": 3933708
   },
   "head-negative.receipt.json": {
     "command": [

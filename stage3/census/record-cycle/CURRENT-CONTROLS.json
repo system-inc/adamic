@@ -1,0 +1,42 @@
+{
+  "b529-positive": [
+    {
+      "module_format": "CommonJSBundle",
+      "roots": [
+        "/workspace/scratch/record-cycle/fixtures/cycle.a"
+      ],
+      "kind": "NotYet",
+      "where": "/workspace/scratch/record-cycle/fixtures/cycle.a:5:1",
+      "reason": "a record written into a graph slot, where the write at /workspace/scratch/record-cycle/fixtures/cycle.a:5:1 may close a cycle through it, in a graph program: a record can't join a graph region",
+      "seconds": 0.061828231
+    },
+    {
+      "module_format": "CommonJSBundle",
+      "roots": [
+        "/workspace/scratch/record-cycle/fixtures/cycle.a"
+      ],
+      "kind": "NotYet",
+      "where": "/workspace/scratch/record-cycle/fixtures/cycle.a:5:1",
+      "reason": "a record written into a graph slot, where the write at /workspace/scratch/record-cycle/fixtures/cycle.a:5:1 may close a cycle through it, in a graph program: a record can't join a graph region",
+      "seconds": 0.057062836
+    }
+  ],
+  "b529-negative": [
+    {
+      "module_format": "CommonJSBundle",
+      "roots": [
+        "/workspace/scratch/record-cycle/fixtures/acyclic.a"
+      ],
+      "kind": "accepted",
+      "seconds": 0.053085716
+    },
+    {
+      "module_format": "CommonJSBundle",
+      "roots": [
+        "/workspace/scratch/record-cycle/fixtures/acyclic.a"
+      ],
+      "kind": "accepted",
+      "seconds": 0.038100408
+    }
+  ]
+}
