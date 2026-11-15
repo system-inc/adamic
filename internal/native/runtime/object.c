@@ -184,6 +184,8 @@ adamic_closure *adamic_object_callee(const adamic_object *object, const char *na
 			slot = 0;
 			found = true;
 		}
+		// RegExp's prototype method is not a shape field, and keeps the object's receiver.
+		if (!found && adamic_regex_method(object, name, method)) { return NULL; }
 		// Optional binding observes absence without caching a made-up slot.
 		if (!found) { return NULL; }
 		adamic_slot_cache_store(cache, shape, slot);
@@ -228,6 +230,18 @@ adamic_value *adamic_object_optional_find(const adamic_object *object, const cha
 	}
 	if (slot == object->shape->count || !adamic_object_present(object, slot)) { return NULL; }
 	return &((adamic_object *)object)->slots[slot];
+}
+
+// Optional function views can find RegExp.prototype.test, without inventing a slot index
+// outside the object. Own fields keep their readiness check and their ordinary closure value.
+adamic_closure *adamic_object_optional_closure(const adamic_object *object, const char *name, adamic_slot_cache *cache, const char *expression) {
+    if (object == NULL) return NULL;
+    adamic_closure *prototype = adamic_regex_prototype_function(object, name);
+    if (prototype != NULL) return prototype;
+    adamic_value *slot = adamic_object_optional_field(object, name, cache);
+    if (slot == NULL) return NULL;
+    if (expression != NULL) slot = adamic_object_read(object, name, cache, expression);
+    return slot->reference;
 }
 
 // Both public reads use the worker's readiness check; only their diagnostics differ.

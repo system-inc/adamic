@@ -83,18 +83,18 @@ func JavaScriptWith(program *ir.Program, options Options) string {
 		builder.WriteString("const adamicDirect = (fn, values) => fn(...values);\n")
 	}
 	builder.WriteString(recordRuntime)
-	builder.WriteString("const adamicBindMethod = (object, name, optional, make) => { const own = Object.hasOwn(object, name); const methods = own ? undefined : adamicStaticMethods.get(object); const fn = own ? object[name] : methods && Object.hasOwn(methods, name) ? methods[name] : object[name]; if (optional && fn == null) return undefined; const invoke = fn instanceof AdamicClosure ? function(...values) { return adamicCall(fn, fn.receiver ? [this, ...values] : values); } : function(...values) { return adamicDirect(fn, [this, ...values]); }; const bound = invoke.bind(object); return make({code: (self, values) => bound(...values), length: fn instanceof AdamicClosure ? fn.length : 0}, object); };\n")
+	builder.WriteString("const adamicBindMethod = (object, name, optional, make) => { const own = Object.hasOwn(object, name); const methods = own ? undefined : adamicStaticMethods.get(object); const fn = own ? object[name] : methods && Object.hasOwn(methods, name) ? methods[name] : object[name]; if (optional && fn == null) return undefined; const invoke = fn instanceof AdamicClosure ? function(...values) { return adamicCall(fn, fn.receiver ? [this, ...values] : values); } : function(...values) { return adamicDirect(fn, [this, ...values]); }; const bound = (fn === RegExp.prototype.test ? function(...values) { return Reflect.apply(fn, this, values); } : invoke).bind(object); return make({code: (self, values) => bound(...values), length: fn instanceof AdamicClosure ? fn.length : 0}, object); };\n")
 	builder.WriteString("const adamicBoundCall = (self, values) => { const fn = self.cells[0].value; return adamicCall(fn, fn.receiver ? [self.cells[1].value, ...values] : values); };\n")
-	builder.WriteString("const adamicCall = (closure, values) => closure.code(closure, values);\n")
+	builder.WriteString("const adamicCall = (closure, values) => closure === RegExp.prototype.test ? Reflect.apply(closure, undefined, values) : closure.code(closure, values);\n")
 	// A static constructor's live parent prototype carries inherited fields. Keep its
 	// named method map separately, keyed by the actual constructor function.
 	builder.WriteString("const adamicStaticMethods = new WeakMap();\n")
 	// object.name(...) through an interface: the object's own function value, or else its class's
 	// method (on the prototype its constructor gave it), called with the object as this.
 	if counted {
-		builder.WriteString("const adamicCallee = (object, name) => { if (Object.hasOwn(object, name)) { const fn = object[name]; return fn.receiver ? { code: (closure, values) => adamicCall(fn, [object, ...values]) } : fn; } const methods = adamicStaticMethods.get(object); const fn = methods && Object.hasOwn(methods, name) ? methods[name] : object[name]; return { code: (closure, values) => adamicDirect(fn, [object, ...values]) }; };\n")
+		builder.WriteString("const adamicCallee = (object, name) => { if (Object.hasOwn(object, name)) { const fn = object[name]; return fn.receiver ? { code: (closure, values) => adamicCall(fn, [object, ...values]) } : fn; } const methods = adamicStaticMethods.get(object); const fn = methods && Object.hasOwn(methods, name) ? methods[name] : object[name]; if (fn === RegExp.prototype.test) return { code: (closure, values) => Reflect.apply(fn, object, values) }; return { code: (closure, values) => adamicDirect(fn, [object, ...values]) }; };\n")
 	} else {
-		builder.WriteString("const adamicCallee = (object, name) => { if (Object.hasOwn(object, name)) { const fn = object[name]; return fn.receiver ? { code: (closure, values) => adamicCall(fn, [object, ...values]) } : fn; } const methods = adamicStaticMethods.get(object); const fn = methods && Object.hasOwn(methods, name) ? methods[name] : object[name]; return { code: (closure, values) => fn(object, ...values) }; };\n")
+		builder.WriteString("const adamicCallee = (object, name) => { if (Object.hasOwn(object, name)) { const fn = object[name]; return fn.receiver ? { code: (closure, values) => adamicCall(fn, [object, ...values]) } : fn; } const methods = adamicStaticMethods.get(object); const fn = methods && Object.hasOwn(methods, name) ? methods[name] : object[name]; if (fn === RegExp.prototype.test) return { code: (closure, values) => Reflect.apply(fn, object, values) }; return { code: (closure, values) => fn(object, ...values) }; };\n")
 	}
 	builder.WriteString("const adamicOptionalCall = (object, name, values) => object === undefined ? undefined : adamicCall(adamicCallee(object, name), values());\n")
 	// callback?.(...) on a function value: undefined, with the arguments not evaluated, where the value,
@@ -103,7 +103,7 @@ func JavaScriptWith(program *ir.Program, options Options) string {
 	// object.name?.(...) through an interface: what adamicCallee finds, read once and before the
 	// arguments, called; undefined, with the arguments not evaluated, where it finds undefined or null,
 	// or where object?.name?.(...)'s object is undefined or null.
-	optionalMethodCall := "const adamicOptionalMethodCall = (object, name, values, optionalObject) => { if (optionalObject && object == null) return undefined; const own = Object.hasOwn(object, name); const methods = own ? undefined : adamicStaticMethods.get(object); const fn = own ? object[name] : methods && Object.hasOwn(methods, name) ? methods[name] : object[name]; if (fn == null) return undefined; return own ? adamicCall(fn, fn.receiver ? [object, ...values()] : values()) : "
+	optionalMethodCall := "const adamicOptionalMethodCall = (object, name, values, optionalObject) => { if (optionalObject && object == null) return undefined; const own = Object.hasOwn(object, name); const methods = own ? undefined : adamicStaticMethods.get(object); const fn = own ? object[name] : methods && Object.hasOwn(methods, name) ? methods[name] : object[name]; if (fn == null) return undefined; if (fn === RegExp.prototype.test) return Reflect.apply(fn, object, values()); return own ? adamicCall(fn, fn.receiver ? [object, ...values()] : values()) : "
 	if counted {
 		builder.WriteString(optionalMethodCall + "adamicDirect(fn, [object, ...values()]); };\n")
 	} else {

@@ -599,3 +599,8 @@
 `node_fs_directory.c:coded_error_shape_json:1`
 `node_fs_file.c:shape_json:1`
 `node_fs_watch_impl.h:watch_error_shape_json:1`
+
+# RegExp prototype functions are immutable zero-count closures. The dynamic shape address is
+# published with release order and read with acquire order; no object graph is stored here.
+`regexp.c:regex_test_closure:1`
+`regexp.c:regex_owned_shape_address:1`

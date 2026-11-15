@@ -223,6 +223,18 @@ func (e *emitter) evaluate(expression ir.Expression) string {
 				field = fmt.Sprintf("adamic_object_maybe_boolean(%s, %s, &%s)", object, cString(expression.Name), e.cache())
 			}
 		}
+		if expression.Absent && expression.Of == ir.Closure {
+			readiness := "NULL"
+			if expression.Readiness != "" {
+				readiness = cString(expression.Readiness)
+			}
+			field = fmt.Sprintf("adamic_object_optional_closure(%s, %s, &%s, %s)", object, cString(expression.Name), e.cache(), readiness)
+			if lent {
+				e.self = true
+				return e.snapshot(expression.Of, field)
+			}
+			return e.own(expression.Of, fmt.Sprintf("adamic_retain(%s)", field))
+		}
 		if expression.Absent {
 			slot := e.temporary()
 			lookup := fmt.Sprintf("adamic_object_optional_field(%s, %s, &%s)", object, cString(expression.Name), e.cache())
