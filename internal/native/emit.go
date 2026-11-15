@@ -153,6 +153,10 @@ func cProgram(program *ir.Program, handler, lines int, options ...Options) strin
 	bodies := strings.Builder{}
 	emittedBodies := map[string]string{}
 	for index, function := range program.Functions {
+		// A suspending function has no region version, so it's emitted as the heap one, whatever
+		// version of a fresh function was emitted before it (#kha2ea0: Worker.allocate's region version
+		// left this set, and async_methods' Worker.work was named and signed as a region version).
+		emitter.inRegion = false
 		if function.Async {
 			emitter.resetCounters()
 			bodies.WriteString(emitter.asyncFunction(index))

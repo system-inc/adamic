@@ -324,3 +324,41 @@ setTimeout(() => {
 	}
 	suspensionRun(t, program, "graph checksum 243\nquiet\n")
 }
+
+// A fresh function emitted just before an async one: emitting the fresh one's region version left the
+// emitter in it, and the async function after it was named and signed as a region version, so nothing
+// defined the one its callers call (async_methods.a's split link, where Worker.allocate precedes
+// Worker.work). Every program that holds promises could reach it once the plans run there.
+// Mutant: cProgram's reset before a suspending function dropped, and clang finds later never defined.
+func TestAsyncAfterAFreshFunction(t *testing.T) {
+	t.Parallel()
+	program := suspensionProgram(t, `interface P {
+    readonly x: number;
+}
+function make(n: number): P {
+    return { x: n };
+}
+async function later(n: number): Promise<number> {
+    await Promise.resolve(0);
+    return n + 1;
+}
+function weigh(p: P): number {
+    const weight = 1 + p.x;
+    return weight;
+}
+function measure(): number {
+    let weight = 0;
+    weight += weigh(make(2));
+    return weight;
+}
+console.log(String(measure()));
+console.log(String(await later(1)));
+`)
+	if !planRegions(program).fresh[functionNamed(t, program, "make")] {
+		t.Fatal("make isn't fresh, so this pin no longer puts a region version before an async function")
+	}
+	if make, later := functionNamed(t, program, "make"), functionNamed(t, program, "later"); later != make+1 {
+		t.Fatalf("later (%d) doesn't follow make (%d), so this pin no longer emits it right after a region version", later, make)
+	}
+	suspensionRun(t, program, "3\n2\n")
+}
