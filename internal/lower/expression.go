@@ -2190,7 +2190,13 @@ func (l *lowering) valueSlotKeeps(node *ast.Node, slot *checker.Type) error {
 			signature := l.checker.GetSignaturesOfType(l.present(own), checker.SignatureKindCall)[0]
 			parameters := signature.Parameters()
 			restType := l.checker.GetTypeOfSymbol(parameters[len(parameters)-1])
-			return l.notYet(node, "a "+l.checker.TypeToString(own)+" seen as a "+l.checker.TypeToString(slot)+", whose rest's element "+elementName+" is held otherwise than the "+l.checker.TypeToString(parameter)+" the view hands it at parameter "+strconv.Itoa(position+1)+" (give the view's rest that element, ...values: "+l.checker.TypeToString(restType)+", or declare the function's parameters one by one)")
+			restName := "values"
+			viewSignature := l.checker.GetSignaturesOfType(l.present(slot), checker.SignatureKindCall)[0]
+			if viewSignature.HasRestParameter() {
+				viewParameters := viewSignature.Parameters()
+				restName = viewParameters[len(viewParameters)-1].Name
+			}
+			return l.notYet(node, "a "+l.checker.TypeToString(own)+" seen as a "+l.checker.TypeToString(slot)+", whose rest's element "+elementName+" is held otherwise than the "+l.checker.TypeToString(parameter)+" the view hands it at parameter "+strconv.Itoa(position+1)+" (give the view's rest that element, ..."+restName+": "+l.checker.TypeToString(restType)+", or declare the function's parameters one by one)")
 		}
 		return l.notYet(node, "a "+l.checker.TypeToString(own)+" seen as a "+l.checker.TypeToString(slot)+" (one keeps something weakly that the other keeps strongly)")
 	} else if tuple, array := l.tupleSeenAsArray(own, slot, map[[2]*checker.Type]bool{}); tuple != nil {
