@@ -1,8 +1,8 @@
 [
   {
-    "where": "sys.ts:790:87",
+    "where": "sys.ts:1385:31",
     "kind": "Refused",
-    "reason": "a value of type Map<Path, string[]> seen as InvokeMap, which can write true | string[] where string[] is read",
+    "reason": "a method read as a value (writeFile would lose its object, and this with it)",
     "roots": [
       "_namespaces/ts.moduleSpecifiers.ts",
       "_namespaces/ts.performance.ts",
@@ -79,10 +79,10 @@
       "watchUtilities.ts"
     ],
     "count": 73,
-    "phase": "refusal_scan (mutable invariance)",
-    "owner": "internal/lower/invariance.go: (*lowering).wideningRefusal (onTimerToUpdateChildWatches, nested in createDirectoryWatcherSupportingRecursive)",
-    "emitter": "internal/lower/invariance.go:1178",
-    "owner_basis": "stage3/adapt/99-correctness-timer-closures/owners.json pins src/compiler/sys.ts:createDirectoryWatcherSupportingRecursive (ownerAfterSha256 fc2cddfdae88032897bb5bf01255c880b34685e5e37cb899caf4a7430b9cbdf2); onTimerToUpdateChildWatches is nested inside it. Mutable widening is checked in refusal_scan before declareModule or body lowering (internal/lower/lower.go:141-152), so sys.ts:790:87 preempts both sys.ts:515:39 (#036ve6w) optionalCall and sys.ts:594:5 (#trxxkge) destructuredField. Neither candidate is reached first"
+    "phase": "refusal_scan (unbound method)",
+    "owner": "internal/lower/refusals.go: (*lowering).methodValueRefusal / methodValueStop (patchWriteFileEnsuringDirectory)",
+    "emitter": "internal/lower/refusals.go:305",
+    "owner_basis": "The adapted stop is inside src/compiler/sys.ts:patchWriteFileEnsuringDirectory. A search of stage3/adapt/**/owners.json finds no adaptation pin for this function. The only textual match for its name is a use within the TestServerHost owner in src/testRunner/unittests/helpers/virtualFileSystemWithWatch.ts, pinned by 99-correctness-timer-closures; that does not own this compiler function. The same adaptation pins sys.ts:System and createDirectoryWatcherSupportingRecursive, including the landed timer closure amendment, but neither owns patchWriteFileEnsuringDirectory. methodValueRefusal is registered at priority 2900 (refusals.go:271); lower.go:141-145 runs the refusal scan before declaration and body lowering"
   },
   {
     "where": "-",

@@ -1,36 +1,31 @@
-"""Render observed groups and exact per-root baseline comparisons."""
-import json,os
+"""Render measured CommonJSBundle first stops and exact root comparisons."""
+import json
 from pathlib import Path
-base=Path(__file__).resolve().parent;mode=os.environ['CENSUS_MODULE_FORMAT'];out=base/mode
+base=Path(__file__).resolve().parent;out=base/'CommonJSBundle'
 read=lambda n:json.loads((out/n).read_text())
-groups=read('grouped-first-stops.json');comparisons=read('comparison.json')
-s=['# Next stops: '+mode,'','Measured compiler/apply commit: `ba619e28774130e24331c3026a938cd6f3cd6a34`. Roots and locations are relative to `src/compiler/`. Two ordinary observations per root agree except timing.','','| Roots | Location | Kind | Exact reason | Phase | Owner |','| ---: | --- | --- | --- | --- | --- |']
-lead=['## Stops and movement from 7534c1d7','']
-for g in groups:
- members=[c for c in comparisons if c['root'] in g['roots']]
- moved=sum(not c['unchanged'] for c in members)
- lead+=['- '+str(g['count'])+(' root: ' if g['count']==1 else ' roots: ' )+g['where']+'; '+g['kind']+'; '+g['reason']+'. '+str(moved)+' moved, '+str(len(members)-moved)+' unchanged.']
-lead+=['','## Adapted source at new stops','']
-for e in read('source-evidence.json'):
- if any(not c['unchanged'] and c['after']==[e['where'],e['kind'],e['reason']] for c in comparisons):
-  lead+=['### '+e['where'],'','```typescript',e['adapted_line'],'```','','Phase: '+e['phase']+'. Owner: '+e['owner']+'.','',e.get('owner_basis',''),'']
-s=s[:4]+lead+s[4:]
-for g in groups:s.append('| '+' | '.join([str(g['count']),g['where'],g['kind'],g['reason'].replace('|','\\|').replace('<','&lt;').replace('>','&gt;'),g['phase'],g['owner']])+' |')
-s+=['','## Root membership','']
-for g in groups:s+=['- '+g['where']+' '+g['kind']+': '+', '.join('`'+r+'`' for r in g['roots'])]
-accepted=[r for g in groups if g['kind']=='accepted' for r in g['roots']]
-s+=['','Files lowering whole: '+str(len(accepted))+'/79: '+', '.join(accepted)+'. No native-output success is claimed.','','## Comparison with 7534c1d7','','Baseline: typescript/next-stops-7534c1d7 at `4eb05ced35dd2e90e3c688fdf55b0aab7d79e649`.','',str(sum(c['unchanged'] for c in comparisons))+' unchanged exact tuples; '+str(sum(not c['unchanged'] for c in comparisons))+' changed.','']
-former={c['root'] for c in comparisons if c['before'][0]=='sys.ts:618:33'};assert len(former)==73
-s+=['The former 73 sys.ts:618:33 roots now go to:','']
-for g in groups:
- n=len(former.intersection(g['roots']))
- if n:s+=['- '+str(n)+' to '+g['where']+': '+g['reason']]
-s+=['','| Root | Before (location; kind; exact reason) | After (location; kind; exact reason) |','| --- | --- | --- |']
-for c in comparisons:s+=['| '+c['root']+' | '+'; '.join(c['before']).replace('|','\\|').replace('<','&lt;').replace('>','&gt;')+' | '+'; '.join(c['after']).replace('|','\\|').replace('<','&lt;').replace('>','&gt;')+' |']
-s+=['','## Adapted source at stops','']
-for e in read('source-evidence.json'):
- if 'adapted_excerpt' in e:s+=['### '+e['where'],'','```typescript','\n'.join(line.rstrip() for line in e['adapted_excerpt'].splitlines()),'```','']
-for e in read('source-evidence.json'):
- if e.get('expression_change_reach'):s+=['### 7534c1d7 never-read reach: '+e['where'],'',e['expression_change_reach'],'']
-s+=['## Method','','One apply and one ordinary census build, reused across formats. Groups of at most ten roots run three children at a time. Each group and child is bounded to 1780 seconds with actual exits retained. Every root has two observations equal except timing. Owners come from emitting source and stage3/adapt/**/owners.json searches retained in ownership-search.json.']
-(out/'REPORT.md').write_text('\n'.join(s)+'\n')
+groups=read('grouped-first-stops.json');cs=read('comparison.json');evidence=read('source-evidence.json');p=json.loads((base/'provenance.json').read_text())
+bind=[g for g in groups if g['reason'].startswith('bind of a function that declares ')]
+s=['# CommonJSBundle next stops at ba619e28','','## Roots first stopped by the new bind reason','']
+if not bind:s+=['None of the 79 roots first stops with the new bind reason.','']
+for g in bind:
+ s+=['- Roots: '+', '.join('`'+r+'`' for r in g['roots'])+'. Site: `'+g['where']+'`. Reason: '+g['reason']+'.']
+ e=next(e for e in evidence if (e['where'],e['kind'],e['reason'])==(g['where'],g['kind'],g['reason']))
+ s+=['','Quoted adapted source line:','','```typescript',e['adapted_line'],'```','']
+s+=['## Every root whose first stop differs from the comparison','', 'Comparison: `'+p['comparison_branch']+'` at `'+p['baseline']+'`. '+p['comparison_note'],'']
+changed=[c for c in cs if not c['unchanged']]
+if not changed:s+=['None. All 79 first-stop tuples are unchanged.','']
+else:
+ s+=['| Root | Before: site; kind; exact reason | After: site; kind; exact reason |','| --- | --- | --- |']
+ for c in changed:s+=['| '+c['root']+' | '+'; '.join(c['before']).replace('|','\\|')+' | '+'; '.join(c['after']).replace('|','\\|')+' |']
+ s+=['']
+s+=['## Grouped first-stop table','','| Roots | Site | Kind | Exact reason | Phase | Owner |','| ---: | --- | --- | --- | --- | --- |']
+for g in groups:s+=['| '+' | '.join([str(g['count']),g['where'],g['kind'],g['reason'].replace('|','\\|'),g['phase'],g['owner']])+' |']
+s+=['','## Group membership','']
+for g in groups:s+=['- `'+g['where']+'`, '+g['kind']+': '+', '.join('`'+r+'`' for r in g['roots'])+'.']
+s+=['','## All 79 root comparisons','','| Root | Before: site; kind; exact reason | After: site; kind; exact reason | Changed |','| --- | --- | --- | --- |']
+for c in cs:s+=['| '+c['root']+' | '+'; '.join(c['before']).replace('|','\\|')+' | '+'; '.join(c['after']).replace('|','\\|')+' | '+('no' if c['unchanged'] else 'yes')+' |']
+s+=['','## Source at measured stops','']
+for e in evidence:
+ if 'adapted_line' in e:s+=['### '+e['where'],'','```typescript',e['adapted_line'],'```','']
+s+=['## Method and limits','','Measured compiler and existing adaptation inputs: `'+p['sha']+'` (task #04f5s0s). A fresh detached worktree initialized recursive submodules. TypeScript source was cloned at `'+p['upstream']+'` (v6.0.3); stage3/api `npm ci` passed. Existing `stage3/apply.sh` prepared the ordinary input tree without changing adaptations. One ordinary census binary was built and reused. CommonJSBundle only; no separate sys.ts single-file census.','','All 79 sorted compiler roots ran in separate child processes, with two observations per root equal except timing. Groups contain at most ten roots; three groups run concurrently, each preserving the copied three-root-child concurrency. Each root and group has a 1780-second bound with exit and cleanup recorded. Source hashes and the binary hash were checked. No compiler or adaptation changes were made. This measures first stops and lowering acceptance, not successful native execution.','','Paths and sites are relative to `src/compiler/`. Comparisons use exact (site, kind, reason) tuples. Raw paired observations, statuses, compressed logs, source evidence, and the full root comparison are retained.']
+text='\n'.join(s)+'\n';(out/'REPORT.md').write_text(text);(base/'REPORT.md').write_text(text)

@@ -8,9 +8,9 @@ For (first,last) in (1,10),(11,20),(21,30),(31,40),(41,50),(51,60),(61,70),(71,7
   python3 stage3/census/next-stops-bind-ba619e28/run.py group-FIRST-LAST python3 stage3/census/next-stops-bind-ba619e28/group.py FIRST LAST
   python3 stage3/census/next-stops-bind-ba619e28/checkpoint.py
 Analyze, resolve owner/phase from measured source, write report, validate, and push bundle complete.
-Only then export CENSUS_MODULE_FORMAT=EcmaScript and repeat root groups (no apply or build).
+CommonJSBundle only; do not run EcmaScript.
 Final evidence is based on ba619e28774130e24331c3026a938cd6f3cd6a34; change only this census directory.
-Baseline: typescript/next-stops-7534c1d7, 4eb05ced35dd2e90e3c688fdf55b0aab7d79e649 (both formats).
-Checkpoint branch: typescript/next-stops-bind-ba619e28-checkpoint. Final branch: typescript/next-stops-bind-ba619e28.
+Compare typescript/next-stops-55c375d9 when available, otherwise typescript/next-stops-8e3a784a at d8a5019190cf3c176f1b11385d6437c06f04ba4e.
+Checkpoint branch: typescript/next-stops-bind-ba619e28. Final branch: typescript/next-stops-bind-ba619e28.
 Skip the separate sys.ts single-file census.
 """

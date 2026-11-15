@@ -1,0 +1,14 @@
+{
+  "module_format": "CommonJSBundle",
+  "command": [
+    "go",
+    "build",
+    "-o",
+    "/tmp/next-stops-bind-ba619e28-census",
+    "./stage3/census/tool"
+  ],
+  "exit_code": 0,
+  "seconds": 323.38920251,
+  "stopping_reason": null,
+  "process_group_cleaned": true
+}
