@@ -3,6 +3,13 @@ import hashlib,json,subprocess
 from pathlib import Path
 base=Path(__file__).resolve().parent;scratch=Path('/workspace/scratch/next-stops-37d96306');tree=scratch/'adapted'
 read=lambda p:json.loads(p.read_text())
+provenance=read(base/'provenance.json')
+for revision,sha in [('head',provenance['sha']),('base',provenance['baseline'])]:
+ assert subprocess.check_output(['git','rev-parse','HEAD'],cwd=scratch/revision,text=True).strip()==sha
+ info=subprocess.check_output(['go','version','-m',str(scratch/(revision+'-census'))],text=True)
+ assert 'vcs.revision='+sha in info and 'vcs.modified=false' in info
+ assert info==read(base/'build-info.json')[revision]
+assert subprocess.check_output(['git','rev-parse','HEAD'],cwd=scratch/'typescript',text=True).strip()==provenance['upstream']
 expected=list(map(str,sorted((tree/'src/compiler').rglob('*.ts'))));assert len(expected)==79
 statuses={str(p.relative_to(base)):read(p) for p in base.rglob('*-status.json')}
 for s in statuses.values():assert isinstance(s['exit_code'],int) and s['exit_code']==0 and s['seconds']<1800 and s['process_group_cleaned'] and not s['stopping_reason']
