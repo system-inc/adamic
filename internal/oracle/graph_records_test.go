@@ -23,7 +23,8 @@ import (
 //
 // Mutants: make noteRecordSlot (internal/lower/graph_records.go) return at once, and the field and
 // element cases lower and leak by the counted build; drop the reassigned cell's stop in graphTypes, and
-// the captured-variable case lowers.
+// the captured-variable case lowers. Make reachesRecord return false at once, and the record one field
+// deep and the record a closure captures lower and leak by the counted build (#t5q4prw).
 const graphRecordNode = `interface Node { name: string; next: Node[]; r: Record<string, Node[]>; rs: Record<string, Node[]>[] }
 const a: Node = { name: 'a' + '', next: [], r: {}, rs: [] };
 const b: Node = { name: 'b' + '', next: [a], r: {}, rs: [] };
@@ -42,8 +43,14 @@ console.log(` + "`${a.name} ${a.rs.length}`" + `);
 `, "a record written into a graph slot"},
 		// A captured variable assigned again with a record holding the closure that captures it: the cell
 		// holds the record, the record the closure, the closure the cell. It's a function's local, since a
-		// top-level variable is a global, whose cell never seeds.
-		{"a reassigned captured variable holding a record", graphRecordNode + `function run(): number {
+		// top-level variable is a global, whose cell never seeds. Its graph has no record fields: with
+		// graphRecordNode's, the prefix's own push seed stops first, since a node's record field can hold
+		// nodes back (#t5q4prw), and the cell's stop would go untested.
+		{"a reassigned captured variable holding a record", `interface Node { name: string; next: Node[] }
+const a: Node = { name: 'a' + '', next: [] };
+const b: Node = { name: 'b' + '', next: [a] };
+a.next.push(b);
+function run(): number {
   let table: Record<string, () => number> = {};
   const size = (): number => (table['size'] === undefined ? 0 : 1);
   table = { size: size };
@@ -77,6 +84,86 @@ const b: Node = { name: 'b' + '', next: [a], tags: {} };
 a.next.push(b);
 a.tags = { kind: 'leaf' };
 console.log(` + "`${a.name} ${a.tags['kind']}`" + `);
+`, ""},
+		// A record one field deep on a cycle, which the slot seed doesn't see: the node holds a box, the box
+		// the record, the record the node. 22 of 102 freed on main 8e3a784a (#t5q4prw).
+		{"a record inside an object field on a cycle", `interface Box { r: Record<string, Node> }
+interface Node { name: string; box: Box }
+function make(name: string): Node { return { name, box: { r: {} } }; }
+let total = 0;
+for (let i = 0; i < 10; i++) {
+  const a = make(` + "`a${i}`" + `);
+  a.box = { r: { k: a } };
+  total += Object.keys(a.box.r).length;
+}
+console.log(` + "`${total}`" + `);
+`, "a record written into a graph slot"},
+		// A record a closure on the node captures: the node holds the closure, the closure the record's
+		// cell, the record the node. 22 of 92 freed on main 8e3a784a (#t5q4prw).
+		{"a record a closure on the node captures", `interface Node { name: string; count: () => number }
+function make(name: string): Node { return { name, count: () => 0 }; }
+let total = 0;
+for (let i = 0; i < 10; i++) {
+  const a = make(` + "`a${i}`" + `);
+  const rec: Record<string, Node> = { k: a };
+  a.count = () => Object.keys(rec).length;
+  total += a.count();
+}
+console.log(` + "`${total}`" + `);
+`, "a record written into a graph slot"},
+		// The record reaches the seed through a binding typed by a view that omits it: the written
+		// expression's own type is { tag: number }, and only the shapes seen as it hold r (Runtime's road
+		// on #t5q4prw). reachesRecord follows them, so the write stops.
+		{"a record behind a view at the seed", `interface Box { tag: number }
+interface Node { name: string; box: Box }
+function make(name: string): Node { return { name, box: { tag: 0 } }; }
+let total = 0;
+for (let i = 0; i < 10; i++) {
+  const a = make(` + "`a${i}`" + `);
+  const rec: Record<string, Node> = { k: a };
+  const full = { tag: 1, r: rec };
+  const hidden: Box = full;
+  a.box = hidden;
+  total += a.box.tag;
+}
+console.log(` + "`${total}`" + `);
+`, "a record written into a graph slot"},
+		// The closure that captures the record is written through a const alias, not as a literal, so the
+		// write is read by the slot's type and stops by falling back (Runtime's road on #t5q4prw).
+		{"a record captured by a closure written through an alias", `interface Node { name: string; count: () => number }
+function make(name: string): Node { return { name, count: () => 0 }; }
+let total = 0;
+for (let i = 0; i < 10; i++) {
+  const a = make(` + "`a${i}`" + `);
+  const rec: Record<string, Node> = { k: a };
+  const counter = (): number => Object.keys(rec).length;
+  a.count = counter;
+  total += a.count();
+}
+console.log(` + "`${total}`" + `);
+`, "a record written into a graph slot"},
+		// The two shapes above with no record: each cycle is the graph plan's, and frees whole.
+		{"the field shape with no record", `interface Box { n: Node | undefined }
+interface Node { name: string; box: Box }
+function make(name: string): Node { return { name, box: { n: undefined } }; }
+let total = 0;
+for (let i = 0; i < 10; i++) {
+  const a = make(` + "`a${i}`" + `);
+  a.box = { n: a };
+  total += a.box.n === a ? 1 : 0;
+}
+console.log(` + "`${total}`" + `);
+`, ""},
+		{"the capture shape with no record", `interface Node { name: string; count: () => number }
+function make(name: string): Node { return { name, count: () => 0 }; }
+let total = 0;
+for (let i = 0; i < 10; i++) {
+  const a = make(` + "`a${i}`" + `);
+  const held: Node[] = [a];
+  a.count = () => held.length;
+  total += a.count();
+}
+console.log(` + "`${total}`" + `);
 `, ""},
 	}
 	for _, c := range cases {
