@@ -3,10 +3,6 @@
     "where": "sys.ts:1387:5",
     "kind": "Refused",
     "reason": "a method read as a value (writeFile would lose its object, and this with it)",
-    "phase": "lowering (deferred host-member-write refusal)",
-    "owner": "99-correctness-write-file-view: patchWriteFileEnsuringDirectory; internal/lower/refusals.go: methodValueRefusal / methodValueStop",
-    "emitter": "internal/lower/refusals.go:305; internal/lower/host_member_write.go:112-117,142-178; internal/lower/lower.go:114",
-    "owner_basis": "stage3/adapt/99-correctness-write-file-view/owners.json explicitly pins sys.ts:patchWriteFileEnsuringDirectory, including this assignment. The timer-closures textual match in TestServerHost does not own this compiler function. methodValueRefusal records the method-value error and defers a writable host-member assignment (refusals.go:262-268). lowerWithElementKey defers hostMemberPending (lower.go:114); hostMemberPending returns the first deferred write if lowering stops before judgement, while checkHostMemberWrites returns the recorded stop if it cannot admit the write. The ordinary record does not distinguish these return paths. The exact diagnostic says method read, but the measured source is an assignment target.",
     "roots": [
       "_namespaces/ts.moduleSpecifiers.ts",
       "_namespaces/ts.performance.ts",
@@ -52,9 +48,41 @@
       "transformers/declarations/diagnostics.ts",
       "transformers/declarations.ts",
       "transformers/destructuring.ts",
-      "transformers/es2015.ts"
+      "transformers/es2015.ts",
+      "transformers/es2016.ts",
+      "transformers/es2017.ts",
+      "transformers/es2018.ts",
+      "transformers/es2019.ts",
+      "transformers/es2020.ts",
+      "transformers/es2021.ts",
+      "transformers/esDecorators.ts",
+      "transformers/esnext.ts",
+      "transformers/generators.ts",
+      "transformers/jsx.ts",
+      "transformers/legacyDecorators.ts",
+      "transformers/module/esnextAnd2015.ts",
+      "transformers/module/impliedNodeFormatDependent.ts",
+      "transformers/module/module.ts",
+      "transformers/module/system.ts",
+      "transformers/namedEvaluation.ts",
+      "transformers/taggedTemplate.ts",
+      "transformers/ts.ts",
+      "transformers/typeSerializer.ts",
+      "transformers/utilities.ts",
+      "tsbuild.ts",
+      "tsbuildPublic.ts",
+      "utilities.ts",
+      "utilitiesPublic.ts",
+      "visitorPublic.ts",
+      "watch.ts",
+      "watchPublic.ts",
+      "watchUtilities.ts"
     ],
-    "count": 45
+    "count": 73,
+    "phase": "lowering (deferred host-member-write refusal)",
+    "owner": "99-correctness-write-file-view: patchWriteFileEnsuringDirectory; internal/lower/refusals.go: methodValueRefusal / methodValueStop",
+    "emitter": "internal/lower/refusals.go:305; internal/lower/host_member_write.go:112-117,142-178; internal/lower/lower.go:114",
+    "owner_basis": "stage3/adapt/99-correctness-write-file-view/owners.json explicitly pins sys.ts:patchWriteFileEnsuringDirectory, including this assignment. The timer-closures textual match in TestServerHost does not own this compiler function. methodValueRefusal records the method-value error and defers a writable host-member assignment (refusals.go:262-268). lowerWithElementKey defers hostMemberPending (lower.go:114); hostMemberPending returns the first deferred write if lowering stops before judgement, while checkHostMemberWrites returns the recorded stop if it cannot admit the write. The ordinary record does not distinguish these return paths. The exact diagnostic says method read, but the measured source is an assignment target."
   },
   {
     "where": "-",
@@ -75,6 +103,18 @@
     "reason": "reading an enum before its runtime initialization; move the call after the enum declaration",
     "roots": [
       "diagnosticInformationMap.generated.ts"
+    ],
+    "count": 1,
+    "phase": "lowering (initialization preflight)",
+    "owner": "internal/lower/namespaces.go: (*lowering).namespaceInitialization",
+    "emitter": "internal/lower/namespaces.go: (*lowering).namespaceInitialization"
+  },
+  {
+    "where": "diagnosticInformationMap.generated.ts:13:45",
+    "kind": "NotYet",
+    "reason": "reading an enum before its runtime initialization; move the call after the enum declaration",
+    "roots": [
+      "types.ts"
     ],
     "count": 1,
     "phase": "lowering (initialization preflight)",
