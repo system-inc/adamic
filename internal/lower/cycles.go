@@ -90,6 +90,8 @@ type cycleFinder struct {
 	// recordStop is the first slot slotsOf seeds whose value can be a record (noteRecordSlot), returned
 	// by graphTypes after the boundary's refusals: a record is never a graph member.
 	recordStop error
+	// recordWrites is whether any write site's holder is a record (recordWritten): 0 unread, 1 yes, -1 no.
+	recordWrites int
 	// assigned is every local an ir.Assign writes after its declaration (reassigned), found once.
 	assigned map[int]bool
 	// selected is every type graphTypes made a graph type, which unplannedPair reads (#dps0kp6).
