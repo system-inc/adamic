@@ -61,6 +61,7 @@ section += ['', 'u00’s probe reports two Error-source events at **one** catch 
 if len(paired)==79:
  section += [f'**{len(differences)} changed; {79-len(differences)}/79 unchanged first-stop tuples** between the exact base and head, in CommonJSBundle format. [Full 79-root table](head11/NEXT-STOPS.md). Both sides were freshly built and measured, one root per child, in groups of ten with normal checkpoint pushes.']
  wall=[i for i in paired if rows['base'][i].get('where')=='sys.ts:1387:5'];section += ['',f'The {len(wall)} roots at main’s `sys.ts:1387:5` wall have {sum(rows["base"][i]==rows["head"][i]for i in wall)} unchanged tuples.']
+ section += ['']
  for i in paired:
   if rows['head'][i]['root']in['corePublic.ts','hostErrors.ts']:section += [f'- `{rows["head"][i]["root"]}` at head: **{rows["head"][i]["kind"]}**.']
 else:section += [f'Checkpoint: {len(paired)}/79 pairs completed; {len(paired)-len(differences)} unchanged and {len(differences)} changed among completed pairs. Unmeasured roots are not assumed unchanged. [Completed rows](head11/NEXT-STOPS.md).']

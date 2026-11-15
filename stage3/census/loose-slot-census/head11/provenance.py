@@ -9,5 +9,8 @@ r['inputs_identical']=r['head']['files']==r['base']['files'];old=json.loads((out
 r['type_binary_sha256']=hashlib.sha256((s/'type-count').read_bytes()).hexdigest();r['probe_source_sha256']=hashlib.sha256((out/'type_count.go.txt').read_bytes()).hexdigest();r['typescript_source']=subprocess.check_output(['git','rev-parse','HEAD'],cwd=s.parent/'typescript',text=True).strip()
 (out/'evidence/provenance.json').write_text(json.dumps(r,indent=2)+'\n')
 diff=subprocess.check_output(['git','diff','8843e0ab^','8843e0ab'],cwd=s/'head');(out/'evidence/head-parent.diff.gz').write_bytes(gzip.compress(diff,mtime=0))
-for p in [*(out/'evidence').rglob('*.log')]:p.with_name(p.name+'.gz').write_bytes(gzip.compress(p.read_bytes(),mtime=0))
+for p in (out/'evidence').rglob('*.log'):
+ compressed=p.with_name(p.name+'.gz')
+ if p.stat().st_size:compressed.write_bytes(gzip.compress(p.read_bytes(),mtime=0))
+ elif compressed.exists():compressed.unlink()
 print('provenance verified')
