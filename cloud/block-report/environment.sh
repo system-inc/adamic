@@ -131,7 +131,10 @@ begin toolchain
 tools="$prefix/tools"
 environmentScript="$tools/env.sh"
 mkdir -p "$tools"
-ADAMIC_TOOLS="$tools" GOMODCACHE="$gomodcache" bash "$checkout/cloud/setup.sh" --wasi-sdk > "$log" 2>&1
+# wasmtime is internal/oracle's wasm families' runtime (ADAMIC_ORACLE_WASMTIME=1), and workerd the Worker corpus's
+# (ADAMIC_WORKER_WORKERD=1): each found on PATH by its test, so without them those families fail on a rented machine
+# (Lower's J-r7yj1xy, Azure for 1.0.12 on #1ndpe51).
+ADAMIC_TOOLS="$tools" GOMODCACHE="$gomodcache" bash "$checkout/cloud/setup.sh" --wasi-sdk --wasmtime --workerd > "$log" 2>&1
 # setup.sh falls back to ~/.adamic-tools when ADAMIC_TOOLS can't be made, and the job would never find that one.
 grep -qxF "setup: source $environmentScript" "$log" || { echo "block-env: setup.sh didn't lay its tools in $tools" >&2; exit 1; }
 [ -r "$environmentScript" ] || { echo "block-env: setup.sh left no env.sh at $environmentScript" >&2; exit 1; }
@@ -152,7 +155,22 @@ nodeVersion=$(node --version)
 command -v clang > /dev/null || { echo "block-env: setup.sh's env.sh puts no clang on PATH" >&2; exit 1; }
 clangPath=$(readlink -f "$(command -v clang)")
 clangVersion=$(clang --version | head -n 1)
-step "env.sh $environmentScript; $goVersion at $goRoot; node $nodeVersion; $clangVersion"
+# wasmtime and workerd as the tests find them: on PATH, resolving to setup.sh's own install of its pinned version, its
+# archive-sha256 one of setup.sh's pins, the record Loom's runner keys a unit by. setup.sh is read for the versions and
+# pins, so they live in one place; anything else refuses the image.
+pinnedTools=""
+for tool in wasmtime workerd; do
+	version=$(sed -n "s/^[[:space:]]*${tool}Version=\([0-9.]*\)$/\1/p" "$checkout/cloud/setup.sh")
+	[ -n "$version" ] || { echo "block-env: cloud/setup.sh names no ${tool}Version" >&2; exit 1; }
+	found=$(command -v "$tool") || { echo "block-env: env.sh puts no $tool on PATH" >&2; exit 1; }
+	resolved=$(readlink -f "$found")
+	[ "$resolved" = "$(readlink -f "$tools/$tool-$version")/$tool" ] || { echo "block-env: $tool resolves to $resolved, not setup.sh's $tools/$tool-$version/$tool" >&2; exit 1; }
+	digest=$(cat "$(dirname "$resolved")/archive-sha256" 2> /dev/null)
+	grep -qE "^[[:space:]]*${tool}SHA256=${digest:-none}([[:space:]]|;|$)" "$checkout/cloud/setup.sh" || { echo "block-env: $tool's archive-sha256 (${digest:-none}) isn't one of setup.sh's pins" >&2; exit 1; }
+	"$tool" --version >> "$log" 2>&1 || { echo "block-env: $tool --version failed" >&2; exit 1; }
+	pinnedTools="$pinnedTools; $tool $version (archive sha256 $digest)"
+done
+step "env.sh $environmentScript; $goVersion at $goRoot; node $nodeVersion; $clangVersion$pinnedTools"
 
 # Go modules. Each workspace module's own graph, read whole from its go.mod with the workspace off, then the
 # workspace's build and tests as the job loads them, so a module only a test imports is here too. The proxy is
