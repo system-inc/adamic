@@ -1,1 +1,324 @@
-[]
+[
+  {
+    "module_format": "CommonJSBundle",
+    "roots": [
+      "/tmp/next-stops-bind-ba619e28-adapted/src/compiler/_namespaces/ts.moduleSpecifiers.ts"
+    ],
+    "kind": "Refused",
+    "where": "/tmp/next-stops-bind-ba619e28-adapted/src/compiler/sys.ts:1385:31",
+    "reason": "a method read as a value (writeFile would lose its object, and this with it)",
+    "fix": "call it in an arrow that keeps the object: (path, data, writeByteOrderMark) => sys.writeFile(path, data, writeByteOrderMark) (unbound-method)",
+    "seconds": 114.432688486
+  },
+  {
+    "module_format": "CommonJSBundle",
+    "roots": [
+      "/tmp/next-stops-bind-ba619e28-adapted/src/compiler/_namespaces/ts.performance.ts"
+    ],
+    "kind": "Refused",
+    "where": "/tmp/next-stops-bind-ba619e28-adapted/src/compiler/sys.ts:1385:31",
+    "reason": "a method read as a value (writeFile would lose its object, and this with it)",
+    "fix": "call it in an arrow that keeps the object: (path, data, writeByteOrderMark) => sys.writeFile(path, data, writeByteOrderMark) (unbound-method)",
+    "seconds": 95.854635034
+  },
+  {
+    "module_format": "CommonJSBundle",
+    "roots": [
+      "/tmp/next-stops-bind-ba619e28-adapted/src/compiler/_namespaces/ts.ts"
+    ],
+    "kind": "Refused",
+    "where": "/tmp/next-stops-bind-ba619e28-adapted/src/compiler/sys.ts:1385:31",
+    "reason": "a method read as a value (writeFile would lose its object, and this with it)",
+    "fix": "call it in an arrow that keeps the object: (path, data, writeByteOrderMark) => sys.writeFile(path, data, writeByteOrderMark) (unbound-method)",
+    "seconds": 76.591062192
+  },
+  {
+    "module_format": "CommonJSBundle",
+    "roots": [
+      "/tmp/next-stops-bind-ba619e28-adapted/src/compiler/binder.ts"
+    ],
+    "kind": "Refused",
+    "where": "/tmp/next-stops-bind-ba619e28-adapted/src/compiler/sys.ts:1385:31",
+    "reason": "a method read as a value (writeFile would lose its object, and this with it)",
+    "fix": "call it in an arrow that keeps the object: (path, data, writeByteOrderMark) => sys.writeFile(path, data, writeByteOrderMark) (unbound-method)",
+    "seconds": 105.392355545
+  },
+  {
+    "module_format": "CommonJSBundle",
+    "roots": [
+      "/tmp/next-stops-bind-ba619e28-adapted/src/compiler/builder.ts"
+    ],
+    "kind": "Refused",
+    "where": "/tmp/next-stops-bind-ba619e28-adapted/src/compiler/sys.ts:1385:31",
+    "reason": "a method read as a value (writeFile would lose its object, and this with it)",
+    "fix": "call it in an arrow that keeps the object: (path, data, writeByteOrderMark) => sys.writeFile(path, data, writeByteOrderMark) (unbound-method)",
+    "seconds": 110.12433311
+  },
+  {
+    "module_format": "CommonJSBundle",
+    "roots": [
+      "/tmp/next-stops-bind-ba619e28-adapted/src/compiler/builderPublic.ts"
+    ],
+    "kind": "Refused",
+    "where": "/tmp/next-stops-bind-ba619e28-adapted/src/compiler/sys.ts:1385:31",
+    "reason": "a method read as a value (writeFile would lose its object, and this with it)",
+    "fix": "call it in an arrow that keeps the object: (path, data, writeByteOrderMark) => sys.writeFile(path, data, writeByteOrderMark) (unbound-method)",
+    "seconds": 96.592830274
+  },
+  {
+    "module_format": "CommonJSBundle",
+    "roots": [
+      "/tmp/next-stops-bind-ba619e28-adapted/src/compiler/builderState.ts"
+    ],
+    "kind": "Refused",
+    "where": "/tmp/next-stops-bind-ba619e28-adapted/src/compiler/sys.ts:1385:31",
+    "reason": "a method read as a value (writeFile would lose its object, and this with it)",
+    "fix": "call it in an arrow that keeps the object: (path, data, writeByteOrderMark) => sys.writeFile(path, data, writeByteOrderMark) (unbound-method)",
+    "seconds": 94.020387211
+  },
+  {
+    "module_format": "CommonJSBundle",
+    "roots": [
+      "/tmp/next-stops-bind-ba619e28-adapted/src/compiler/builderStatePublic.ts"
+    ],
+    "kind": "Refused",
+    "where": "/tmp/next-stops-bind-ba619e28-adapted/src/compiler/sys.ts:1385:31",
+    "reason": "a method read as a value (writeFile would lose its object, and this with it)",
+    "fix": "call it in an arrow that keeps the object: (path, data, writeByteOrderMark) => sys.writeFile(path, data, writeByteOrderMark) (unbound-method)",
+    "seconds": 72.867602809
+  },
+  {
+    "module_format": "CommonJSBundle",
+    "roots": [
+      "/tmp/next-stops-bind-ba619e28-adapted/src/compiler/checker.ts"
+    ],
+    "kind": "Refused",
+    "where": "/tmp/next-stops-bind-ba619e28-adapted/src/compiler/sys.ts:1385:31",
+    "reason": "a method read as a value (writeFile would lose its object, and this with it)",
+    "fix": "call it in an arrow that keeps the object: (path, data, writeByteOrderMark) => sys.writeFile(path, data, writeByteOrderMark) (unbound-method)",
+    "seconds": 66.405619152
+  },
+  {
+    "module_format": "CommonJSBundle",
+    "roots": [
+      "/tmp/next-stops-bind-ba619e28-adapted/src/compiler/commandLineParser.ts"
+    ],
+    "kind": "Refused",
+    "where": "/tmp/next-stops-bind-ba619e28-adapted/src/compiler/sys.ts:1385:31",
+    "reason": "a method read as a value (writeFile would lose its object, and this with it)",
+    "fix": "call it in an arrow that keeps the object: (path, data, writeByteOrderMark) => sys.writeFile(path, data, writeByteOrderMark) (unbound-method)",
+    "seconds": 49.931096014
+  },
+  {
+    "module_format": "CommonJSBundle",
+    "roots": [
+      "/tmp/next-stops-bind-ba619e28-adapted/src/compiler/core.ts"
+    ],
+    "kind": "Refused",
+    "where": "/tmp/next-stops-bind-ba619e28-adapted/src/compiler/sys.ts:1385:31",
+    "reason": "a method read as a value (writeFile would lose its object, and this with it)",
+    "fix": "call it in an arrow that keeps the object: (path, data, writeByteOrderMark) => sys.writeFile(path, data, writeByteOrderMark) (unbound-method)",
+    "seconds": 114.762126414
+  },
+  {
+    "module_format": "CommonJSBundle",
+    "roots": [
+      "/tmp/next-stops-bind-ba619e28-adapted/src/compiler/corePublic.ts"
+    ],
+    "kind": "accepted",
+    "seconds": 0.499997334
+  },
+  {
+    "module_format": "CommonJSBundle",
+    "roots": [
+      "/tmp/next-stops-bind-ba619e28-adapted/src/compiler/debug.ts"
+    ],
+    "kind": "NotYet",
+    "where": "/tmp/next-stops-bind-ba619e28-adapted/src/compiler/semver.ts:71:9",
+    "reason": "a namespace read before runtime initialization, directly or through a reachable call; move that read or call after the namespace declaration",
+    "seconds": 26.379521549
+  },
+  {
+    "module_format": "CommonJSBundle",
+    "roots": [
+      "/tmp/next-stops-bind-ba619e28-adapted/src/compiler/diagnosticInformationMap.generated.ts"
+    ],
+    "kind": "NotYet",
+    "where": "/tmp/next-stops-bind-ba619e28-adapted/src/compiler/commandLineParser.ts:293:35",
+    "reason": "reading an enum before its runtime initialization; move the call after the enum declaration",
+    "seconds": 21.582794667
+  },
+  {
+    "module_format": "CommonJSBundle",
+    "roots": [
+      "/tmp/next-stops-bind-ba619e28-adapted/src/compiler/emitter.ts"
+    ],
+    "kind": "Refused",
+    "where": "/tmp/next-stops-bind-ba619e28-adapted/src/compiler/sys.ts:1385:31",
+    "reason": "a method read as a value (writeFile would lose its object, and this with it)",
+    "fix": "call it in an arrow that keeps the object: (path, data, writeByteOrderMark) => sys.writeFile(path, data, writeByteOrderMark) (unbound-method)",
+    "seconds": 89.772156399
+  },
+  {
+    "module_format": "CommonJSBundle",
+    "roots": [
+      "/tmp/next-stops-bind-ba619e28-adapted/src/compiler/executeCommandLine.ts"
+    ],
+    "kind": "Refused",
+    "where": "/tmp/next-stops-bind-ba619e28-adapted/src/compiler/sys.ts:1385:31",
+    "reason": "a method read as a value (writeFile would lose its object, and this with it)",
+    "fix": "call it in an arrow that keeps the object: (path, data, writeByteOrderMark) => sys.writeFile(path, data, writeByteOrderMark) (unbound-method)",
+    "seconds": 106.840272044
+  },
+  {
+    "module_format": "CommonJSBundle",
+    "roots": [
+      "/tmp/next-stops-bind-ba619e28-adapted/src/compiler/expressionToTypeNode.ts"
+    ],
+    "kind": "Refused",
+    "where": "/tmp/next-stops-bind-ba619e28-adapted/src/compiler/sys.ts:1385:31",
+    "reason": "a method read as a value (writeFile would lose its object, and this with it)",
+    "fix": "call it in an arrow that keeps the object: (path, data, writeByteOrderMark) => sys.writeFile(path, data, writeByteOrderMark) (unbound-method)",
+    "seconds": 103.397088526
+  },
+  {
+    "module_format": "CommonJSBundle",
+    "roots": [
+      "/tmp/next-stops-bind-ba619e28-adapted/src/compiler/factory/baseNodeFactory.ts"
+    ],
+    "kind": "Refused",
+    "where": "/tmp/next-stops-bind-ba619e28-adapted/src/compiler/sys.ts:1385:31",
+    "reason": "a method read as a value (writeFile would lose its object, and this with it)",
+    "fix": "call it in an arrow that keeps the object: (path, data, writeByteOrderMark) => sys.writeFile(path, data, writeByteOrderMark) (unbound-method)",
+    "seconds": 74.924995521
+  },
+  {
+    "module_format": "CommonJSBundle",
+    "roots": [
+      "/tmp/next-stops-bind-ba619e28-adapted/src/compiler/factory/emitHelpers.ts"
+    ],
+    "kind": "Refused",
+    "where": "/tmp/next-stops-bind-ba619e28-adapted/src/compiler/sys.ts:1385:31",
+    "reason": "a method read as a value (writeFile would lose its object, and this with it)",
+    "fix": "call it in an arrow that keeps the object: (path, data, writeByteOrderMark) => sys.writeFile(path, data, writeByteOrderMark) (unbound-method)",
+    "seconds": 101.314544118
+  },
+  {
+    "module_format": "CommonJSBundle",
+    "roots": [
+      "/tmp/next-stops-bind-ba619e28-adapted/src/compiler/factory/emitNode.ts"
+    ],
+    "kind": "Refused",
+    "where": "/tmp/next-stops-bind-ba619e28-adapted/src/compiler/sys.ts:1385:31",
+    "reason": "a method read as a value (writeFile would lose its object, and this with it)",
+    "fix": "call it in an arrow that keeps the object: (path, data, writeByteOrderMark) => sys.writeFile(path, data, writeByteOrderMark) (unbound-method)",
+    "seconds": 93.144517236
+  },
+  {
+    "module_format": "CommonJSBundle",
+    "roots": [
+      "/tmp/next-stops-bind-ba619e28-adapted/src/compiler/factory/nodeChildren.ts"
+    ],
+    "kind": "Refused",
+    "where": "/tmp/next-stops-bind-ba619e28-adapted/src/compiler/sys.ts:1385:31",
+    "reason": "a method read as a value (writeFile would lose its object, and this with it)",
+    "fix": "call it in an arrow that keeps the object: (path, data, writeByteOrderMark) => sys.writeFile(path, data, writeByteOrderMark) (unbound-method)",
+    "seconds": 88.229614182
+  },
+  {
+    "module_format": "CommonJSBundle",
+    "roots": [
+      "/tmp/next-stops-bind-ba619e28-adapted/src/compiler/factory/nodeConverters.ts"
+    ],
+    "kind": "Refused",
+    "where": "/tmp/next-stops-bind-ba619e28-adapted/src/compiler/sys.ts:1385:31",
+    "reason": "a method read as a value (writeFile would lose its object, and this with it)",
+    "fix": "call it in an arrow that keeps the object: (path, data, writeByteOrderMark) => sys.writeFile(path, data, writeByteOrderMark) (unbound-method)",
+    "seconds": 104.190118448
+  },
+  {
+    "module_format": "CommonJSBundle",
+    "roots": [
+      "/tmp/next-stops-bind-ba619e28-adapted/src/compiler/factory/nodeFactory.ts"
+    ],
+    "kind": "Refused",
+    "where": "/tmp/next-stops-bind-ba619e28-adapted/src/compiler/sys.ts:1385:31",
+    "reason": "a method read as a value (writeFile would lose its object, and this with it)",
+    "fix": "call it in an arrow that keeps the object: (path, data, writeByteOrderMark) => sys.writeFile(path, data, writeByteOrderMark) (unbound-method)",
+    "seconds": 88.088843126
+  },
+  {
+    "module_format": "CommonJSBundle",
+    "roots": [
+      "/tmp/next-stops-bind-ba619e28-adapted/src/compiler/factory/nodeTests.ts"
+    ],
+    "kind": "Refused",
+    "where": "/tmp/next-stops-bind-ba619e28-adapted/src/compiler/sys.ts:1385:31",
+    "reason": "a method read as a value (writeFile would lose its object, and this with it)",
+    "fix": "call it in an arrow that keeps the object: (path, data, writeByteOrderMark) => sys.writeFile(path, data, writeByteOrderMark) (unbound-method)",
+    "seconds": 104.146027111
+  },
+  {
+    "module_format": "CommonJSBundle",
+    "roots": [
+      "/tmp/next-stops-bind-ba619e28-adapted/src/compiler/factory/parenthesizerRules.ts"
+    ],
+    "kind": "Refused",
+    "where": "/tmp/next-stops-bind-ba619e28-adapted/src/compiler/sys.ts:1385:31",
+    "reason": "a method read as a value (writeFile would lose its object, and this with it)",
+    "fix": "call it in an arrow that keeps the object: (path, data, writeByteOrderMark) => sys.writeFile(path, data, writeByteOrderMark) (unbound-method)",
+    "seconds": 75.890226197
+  },
+  {
+    "module_format": "CommonJSBundle",
+    "roots": [
+      "/tmp/next-stops-bind-ba619e28-adapted/src/compiler/factory/utilities.ts"
+    ],
+    "kind": "Refused",
+    "where": "/tmp/next-stops-bind-ba619e28-adapted/src/compiler/sys.ts:1385:31",
+    "reason": "a method read as a value (writeFile would lose its object, and this with it)",
+    "fix": "call it in an arrow that keeps the object: (path, data, writeByteOrderMark) => sys.writeFile(path, data, writeByteOrderMark) (unbound-method)",
+    "seconds": 104.798652588
+  },
+  {
+    "module_format": "CommonJSBundle",
+    "roots": [
+      "/tmp/next-stops-bind-ba619e28-adapted/src/compiler/factory/utilitiesPublic.ts"
+    ],
+    "kind": "Refused",
+    "where": "/tmp/next-stops-bind-ba619e28-adapted/src/compiler/sys.ts:1385:31",
+    "reason": "a method read as a value (writeFile would lose its object, and this with it)",
+    "fix": "call it in an arrow that keeps the object: (path, data, writeByteOrderMark) => sys.writeFile(path, data, writeByteOrderMark) (unbound-method)",
+    "seconds": 87.179954991
+  },
+  {
+    "module_format": "CommonJSBundle",
+    "roots": [
+      "/tmp/next-stops-bind-ba619e28-adapted/src/compiler/hostErrors.ts"
+    ],
+    "kind": "accepted",
+    "seconds": 0.560935271
+  },
+  {
+    "module_format": "CommonJSBundle",
+    "roots": [
+      "/tmp/next-stops-bind-ba619e28-adapted/src/compiler/moduleNameResolver.ts"
+    ],
+    "kind": "Refused",
+    "where": "/tmp/next-stops-bind-ba619e28-adapted/src/compiler/sys.ts:1385:31",
+    "reason": "a method read as a value (writeFile would lose its object, and this with it)",
+    "fix": "call it in an arrow that keeps the object: (path, data, writeByteOrderMark) => sys.writeFile(path, data, writeByteOrderMark) (unbound-method)",
+    "seconds": 82.145110746
+  },
+  {
+    "module_format": "CommonJSBundle",
+    "roots": [
+      "/tmp/next-stops-bind-ba619e28-adapted/src/compiler/moduleSpecifiers.ts"
+    ],
+    "kind": "Refused",
+    "where": "/tmp/next-stops-bind-ba619e28-adapted/src/compiler/sys.ts:1385:31",
+    "reason": "a method read as a value (writeFile would lose its object, and this with it)",
+    "fix": "call it in an arrow that keeps the object: (path, data, writeByteOrderMark) => sys.writeFile(path, data, writeByteOrderMark) (unbound-method)",
+    "seconds": 92.03243279
+  }
+]
