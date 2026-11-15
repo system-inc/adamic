@@ -1,0 +1,5 @@
+import { statSync } from 'node:fs';
+interface M { test?: (s: string) => boolean; size?: number }
+const trigger: M = /a/;
+const host: M = statSync('.');
+console.log(String(!!host.test));

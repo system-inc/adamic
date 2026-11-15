@@ -1,0 +1,6 @@
+interface Maybe { readonly test?: (text: string) => boolean }
+interface Also { readonly test?: (text: string) => boolean }
+const first: Maybe = /a/;
+const second: Also = first;
+const f = second.test;
+console.log(f === undefined ? 'missing' : 'function');

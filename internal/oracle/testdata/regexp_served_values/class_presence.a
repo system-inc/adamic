@@ -1,0 +1,6 @@
+interface Maybe { readonly test?: (text: string) => boolean }
+class Box { test(_text: string): boolean { return false; } }
+function run(v: Maybe): void { console.log(String(v.test !== undefined)); if (v.test) console.log('truthy'); }
+run(/a/);
+run(new Box());
+run({});

@@ -1,0 +1,5 @@
+import 'node:process';
+interface M { test?: (s: string) => boolean }
+const trigger: M = /a/;
+const host = (process.stdout as any)._handle as M;
+console.log(String(host.test !== undefined));
