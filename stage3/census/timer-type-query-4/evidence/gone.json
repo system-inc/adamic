@@ -1,0 +1,16 @@
+[
+  {
+    "phase": "refusal_scan",
+    "kind": "NotYet",
+    "where": "/tmp/timer-type-query-census-4/adapted/src/compiler/sys.ts:1501:57",
+    "reason": "node:timers.clearTimeout value needs exactly (timeoutId: unknown) => void, not (timeout: unknown) => void with no slot",
+    "message": "stage 0 can't lower node:timers.clearTimeout value needs exactly (timeoutId: unknown) => void, not (timeout: unknown) => void with no slot yet"
+  },
+  {
+    "phase": "refusal_scan",
+    "kind": "NotYet",
+    "where": "/tmp/timer-type-query-census-4/adapted/src/compiler/sys.ts:1614:57",
+    "reason": "node:timers.clearTimeout value needs exactly (timeoutId: unknown) => void, not (timeout: unknown) => void with no slot",
+    "message": "stage 0 can't lower node:timers.clearTimeout value needs exactly (timeoutId: unknown) => void, not (timeout: unknown) => void with no slot yet"
+  }
+]

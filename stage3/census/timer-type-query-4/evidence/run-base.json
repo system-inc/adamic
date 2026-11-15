@@ -1,0 +1,18 @@
+{
+  "name": "base",
+  "command": [
+    "/tmp/timer-type-query-census-4/census-base",
+    "/tmp/timer-type-query-census-4/adapted/src/compiler",
+    "/tmp/timer-type-query-census-4/base.jsonl"
+  ],
+  "env": {
+    "LATENT_FULL": "1",
+    "LATENT_ASSERT_NO_OUTPUT": "1",
+    "LATENT_ONLY_FILE": "/tmp/timer-type-query-census-4/adapted/src/compiler/sys.ts",
+    "CENSUS_MODULE_FORMAT": "CommonJSBundle"
+  },
+  "started_utc": "2026-11-15T03:59:59.601445+00:00",
+  "wall_seconds": 97.19849329800013,
+  "exit": 0,
+  "bound_seconds": 3600
+}

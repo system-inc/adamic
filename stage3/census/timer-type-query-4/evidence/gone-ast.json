@@ -1,0 +1,77 @@
+[
+  {
+    "finding": {
+      "phase": "refusal_scan",
+      "kind": "NotYet",
+      "where": "/tmp/timer-type-query-census-4/adapted/src/compiler/sys.ts:1501:57",
+      "reason": "node:timers.clearTimeout value needs exactly (timeoutId: unknown) => void, not (timeout: unknown) => void with no slot",
+      "message": "stage 0 can't lower node:timers.clearTimeout value needs exactly (timeoutId: unknown) => void, not (timeout: unknown) => void with no slot yet"
+    },
+    "node_kind": "Identifier",
+    "node_text": "clearTimeout",
+    "inside_type_query": true,
+    "type_query": "typeof clearTimeout",
+    "ancestors": [
+      "Identifier",
+      "TypeQuery",
+      "TypeReference",
+      "IndexedAccessType",
+      "Parameter",
+      "ArrowFunction",
+      "PropertyAssignment",
+      "ObjectLiteralExpression",
+      "CallExpression",
+      "VariableDeclaration",
+      "VariableDeclarationList",
+      "FirstStatement",
+      "Block",
+      "FunctionDeclaration",
+      "Block",
+      "ArrowFunction",
+      "ParenthesizedExpression",
+      "CallExpression",
+      "VariableDeclaration",
+      "VariableDeclarationList",
+      "FirstStatement",
+      "SourceFile"
+    ],
+    "line": "            clearTimeout: (timeoutId: Parameters<typeof clearTimeout>[0]): void => { clearTimeout(timeoutId); },"
+  },
+  {
+    "finding": {
+      "phase": "refusal_scan",
+      "kind": "NotYet",
+      "where": "/tmp/timer-type-query-census-4/adapted/src/compiler/sys.ts:1614:57",
+      "reason": "node:timers.clearTimeout value needs exactly (timeoutId: unknown) => void, not (timeout: unknown) => void with no slot",
+      "message": "stage 0 can't lower node:timers.clearTimeout value needs exactly (timeoutId: unknown) => void, not (timeout: unknown) => void with no slot yet"
+    },
+    "node_kind": "Identifier",
+    "node_text": "clearTimeout",
+    "inside_type_query": true,
+    "type_query": "typeof clearTimeout",
+    "ancestors": [
+      "Identifier",
+      "TypeQuery",
+      "TypeReference",
+      "IndexedAccessType",
+      "Parameter",
+      "ArrowFunction",
+      "PropertyAssignment",
+      "ObjectLiteralExpression",
+      "VariableDeclaration",
+      "VariableDeclarationList",
+      "FirstStatement",
+      "Block",
+      "FunctionDeclaration",
+      "Block",
+      "ArrowFunction",
+      "ParenthesizedExpression",
+      "CallExpression",
+      "VariableDeclaration",
+      "VariableDeclarationList",
+      "FirstStatement",
+      "SourceFile"
+    ],
+    "line": "            clearTimeout: (timeoutId: Parameters<typeof clearTimeout>[0]): void => { clearTimeout(timeoutId); },"
+  }
+]

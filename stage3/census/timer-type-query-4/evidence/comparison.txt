@@ -1,0 +1,41 @@
+BASE {('lowering', 'Boundary'): 55, ('lowering', 'NotYet'): 38, ('lowering', 'Refused'): 10, ('refusal_scan', 'NotYet'): 3, ('refusal_scan', 'Refused'): 3}
+HEAD {('lowering', 'Boundary'): 55, ('lowering', 'NotYet'): 38, ('lowering', 'Refused'): 10, ('refusal_scan', 'NotYet'): 1, ('refusal_scan', 'Refused'): 3}
+GONE [
+  {
+    "phase": "refusal_scan",
+    "kind": "NotYet",
+    "where": "/tmp/timer-type-query-census-4/adapted/src/compiler/sys.ts:1501:57",
+    "reason": "node:timers.clearTimeout value needs exactly (timeoutId: unknown) => void, not (timeout: unknown) => void with no slot",
+    "message": "stage 0 can't lower node:timers.clearTimeout value needs exactly (timeoutId: unknown) => void, not (timeout: unknown) => void with no slot yet"
+  },
+  {
+    "phase": "refusal_scan",
+    "kind": "NotYet",
+    "where": "/tmp/timer-type-query-census-4/adapted/src/compiler/sys.ts:1614:57",
+    "reason": "node:timers.clearTimeout value needs exactly (timeoutId: unknown) => void, not (timeout: unknown) => void with no slot",
+    "message": "stage 0 can't lower node:timers.clearTimeout value needs exactly (timeoutId: unknown) => void, not (timeout: unknown) => void with no slot yet"
+  }
+]
+NEW []
+base FIRST SCAN [
+  {
+    "phase": "refusal_scan",
+    "kind": "NotYet",
+    "where": "/tmp/timer-type-query-census-4/adapted/src/compiler/sys.ts:1501:57",
+    "reason": "node:timers.clearTimeout value needs exactly (timeoutId: unknown) => void, not (timeout: unknown) => void with no slot",
+    "message": "stage 0 can't lower node:timers.clearTimeout value needs exactly (timeoutId: unknown) => void, not (timeout: unknown) => void with no slot yet"
+  }
+]
+base PHASES ['lowering', 'refusal_scan']
+head FIRST SCAN [
+  {
+    "phase": "refusal_scan",
+    "kind": "Refused",
+    "where": "/tmp/timer-type-query-census-4/adapted/src/compiler/sys.ts:1548:13",
+    "reason": "a function taking PollingInterval seen as one taking number | undefined (tsc relates a method's parameters both ways), so it can be handed what it can't take",
+    "message": "Adamic 0.1 refuses a function taking PollingInterval seen as one taking number | undefined (tsc relates a method's parameters both ways), so it can be handed what it can't take; write the method as a property holding a function (handle: (animal: Animal) => void), which tsc checks one way, or take the wider type in the method (method-signature-style)"
+  }
+]
+head PHASES ['lowering', 'refusal_scan']
+CHECKER IDENTICAL True
+UNITS IDENTICAL True
