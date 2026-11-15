@@ -488,22 +488,19 @@ func (l *lowering) sameKeepingWalkMode(from, to *checker.Type, visited map[[2]*c
 	if weakOnly {
 		return l.sameKeepingStorage(from, to, visited, nesting)
 	}
-	if fromKind, toKind := l.typedArrayKind(from), l.typedArrayKind(to); !weakOnly && (fromKind != 0 || toKind != 0) {
+	if fromKind, toKind := l.typedArrayKind(from), l.typedArrayKind(to); fromKind != 0 || toKind != 0 {
 		return fromKind != 0 && fromKind == toKind
 	}
-	if !weakOnly && !l.nodeBufferView(from, to) {
+	if !l.nodeBufferView(from, to) {
 		return false
 	}
 	if a, b := l.recordElement(from), l.recordElement(to); a != nil && b != nil {
-		return l.sameKeepingWalkMode(a, b, visited, weakOnly, nesting, true)
+		return l.sameKeepingWalkMode(a, b, visited, false, nesting, true)
 	}
 	same := func(inside, viewed *checker.Type) bool {
-		if weakOnly {
-			return l.keepsWeak(inside) == l.keepsWeak(viewed) && l.sameKeepingWalkMode(inside, viewed, visited, true, nesting, true)
-		}
 		fromKept, _ := l.kept(inside)
 		toKept, _ := l.kept(viewed)
-		return (fromKept == ir.Weak) == (toKept == ir.Weak) && l.sameKeepingWalkMode(inside, viewed, visited, weakOnly, nesting, true)
+		return (fromKept == ir.Weak) == (toKept == ir.Weak) && l.sameKeepingWalkMode(inside, viewed, visited, false, nesting, true)
 	}
 	fromSignatures := l.checker.GetSignaturesOfType(from, checker.SignatureKindCall)
 	toSignatures := l.checker.GetSignaturesOfType(to, checker.SignatureKindCall)
@@ -517,7 +514,7 @@ func (l *lowering) sameKeepingWalkMode(from, to *checker.Type, visited map[[2]*c
 			return !(fromKept == ir.Union && !toKept.IsReference() || toKept == ir.Union && !fromKept.IsReference()) && same(inside, viewed)
 		}
 		// Intrinsic callback adapters call the source signature, not the library's wider view.
-		if declaration := toSignatures[0].Declaration(); weakOnly || declaration != nil && load.IsLibrary(ast.GetSourceFileOfNode(declaration)) {
+		if declaration := toSignatures[0].Declaration(); declaration != nil && load.IsLibrary(ast.GetSourceFileOfNode(declaration)) {
 			sameCallable = same
 		}
 		fromParameters, toParameters := fromSignatures[0].Parameters(), toSignatures[0].Parameters()
@@ -558,15 +555,8 @@ func (l *lowering) sameKeepingWalkMode(from, to *checker.Type, visited map[[2]*c
 	default:
 		for _, viewed := range l.checker.GetPropertiesOfType(to) {
 			if viewed.Flags&ast.SymbolFlagsMethod != 0 {
-				if inside := l.checker.GetPropertyOfType(from, viewed.Name); inside != nil {
-					a, b := l.checker.GetTypeOfSymbol(inside), l.checker.GetTypeOfSymbol(viewed)
-					if weakOnly {
-						if !same(a, b) {
-							return false
-						}
-					} else if !l.sameWeakMethodSlots(a, b) {
-						return false
-					}
+				if inside := l.checker.GetPropertyOfType(from, viewed.Name); inside != nil && !l.sameWeakMethodSlots(l.checker.GetTypeOfSymbol(inside), l.checker.GetTypeOfSymbol(viewed)) {
+					return false
 				}
 				continue
 			}
@@ -597,7 +587,9 @@ func (l *lowering) sameKeepingStorage(from, to *checker.Type, visited map[[2]*ch
 		if l.keepingCallable(inside) || l.keepingCallable(viewed) {
 			return true
 		}
-		return l.keepsWeak(inside) == l.keepsWeak(viewed) && l.sameKeepingWalkMode(inside, viewed, visited, true, nesting, true)
+		fromWeak, fromKnown := l.keepsWeak(inside)
+		toWeak, toKnown := l.keepsWeak(viewed)
+		return fromKnown && toKnown && fromWeak == toWeak && l.sameKeepingWalkMode(inside, viewed, visited, true, nesting, true)
 	}
 	if from.ObjectFlags()&checker.ObjectFlagsReference != 0 && to.ObjectFlags()&checker.ObjectFlagsReference != 0 && (l.isArrayType(from) || checker.IsTupleType(from) || l.isLibraryType(from, "Map", "ReadonlyMap", "Set", "ReadonlySet")) {
 		fromArguments, toArguments := l.typeArguments(from), l.typeArguments(to)
@@ -893,22 +885,29 @@ func (l *lowering) present(proven *checker.Type) *checker.Type {
 }
 
 // keepsWeak reads retention from Weak brands without representation's checker relations.
-func (l *lowering) keepsWeak(proven *checker.Type) bool {
+func (l *lowering) keepsWeak(proven *checker.Type) (weak, known bool) {
+	if proven == nil {
+		return false, false
+	}
 	if l.weakTarget(proven) != nil {
-		return true
+		return true, true
 	}
 	proven = l.concrete(proven)
+	// concrete preserves nil input and can substitute a nil target from an incomplete mapper.
+	if proven == nil {
+		return false, false
+	}
 	if proven.Flags()&checker.TypeFlagsTypeParameter != 0 {
-		return l.substitution[proven] == ir.Weak
+		return l.substitution[proven] == ir.Weak, true
 	}
 	if proven.Flags()&checker.TypeFlagsUnion != 0 {
 		for _, member := range proven.Types() {
 			if l.weakTarget(member) != nil {
-				return true
+				return true, true
 			}
 		}
 	}
-	return false
+	return false, true
 }
 
 // kept is how an element or a map's value of a type is kept: as its representation, except that one
