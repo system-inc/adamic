@@ -23,6 +23,37 @@ func TestUsageExitStatus(t *testing.T) {
 	}
 }
 
+// A build with every word but -o <out> in the wrong place exits 2 with one line naming the order, not the usage
+// (#emdbhh1). A build with no -o, or ending on it, has no <out> to move and still prints the usage. Mutants:
+// buildOutputMisplaced always false, and each misordered row prints the usage; its value check dropped, and the
+// ending-on-it row prints the order line.
+func TestBuildOutputMisplacedNamesTheOrder(t *testing.T) {
+	t.Parallel()
+	if !strings.Contains(buildOutputOrder, "<file.a|file.ts> -o <out> [flags]") {
+		t.Fatalf("the order line doesn't show the form to copy: %q", buildOutputOrder)
+	}
+	for _, arguments := range [][]string{
+		{"build", "missing.a", "--sanitize", "-o", "out"},
+		{"build", "missing.a", "--count", "-o", "out"},
+		{"build", "-o", "out", "missing.a"},
+		{"build", "--target", "wasm32-wasi", "missing.a", "--count", "-o", "out.wasm"},
+		{"build", "--reactor", "missing.a", "-o", "out.wasm"},
+	} {
+		if code, output, diagnostic := runGuardCommand(t, arguments); code != 2 || output != "" || diagnostic != buildOutputOrder+"\n" {
+			t.Errorf("%v: got exit %d, stdout %q, stderr %q; want exit 2 and %q", arguments, code, output, diagnostic, buildOutputOrder)
+		}
+	}
+	for _, arguments := range [][]string{
+		{"build", "missing.a"},
+		{"build", "missing.a", "--sanitize", "-o"},
+		{"build", "-o"},
+	} {
+		if code, output, diagnostic := runGuardCommand(t, arguments); code != 2 || output != "" || diagnostic != usage+"\n" {
+			t.Errorf("%v: got exit %d, stdout %q, stderr %q; want exit 2 and usage text", arguments, code, output, diagnostic)
+		}
+	}
+}
+
 // Usage asked for is no usage error: --help and -h print it to stdout and exit 0. Mutant: print it to stderr and
 // return 2, as before #a733mfq.
 func TestHelpPrintsUsageToStdout(t *testing.T) {
