@@ -38,3 +38,19 @@ whole unfiltered lane, and private lane-counting copy with a control. The privat
 counter records undefined, true and false at the forwarder; its script, modified
 source and raw traces stay in scratch. Summaries include every raw artifact's
 SHA-256 and byte size. Do not submit to Loom.
+
+## Construction pin composition
+
+The subsequent construction amendment inserts the ensuring writer in 93's whole
+getNodeSystem owner. This directory's own `adapt.cjs --pin TREE` regenerates its
+before/after texts and canonical hashes around that predecessor, keeping the 1533
+watchDirectory forwarding and all require/resolve/crypto edits intact.
+Actual-stage source/transpile scope, bindings, built witness, require-result,
+resolve-host and watch-directory contracts, and watch-directory witness exit 0.
+The scope mutant now uses the current System.clearTimeout signature: both JS
+comparisons pass, then the source guard exits 1. Ternary and partial-restoration
+mutants are rejected as recorded. The complete feature mutant restores every
+parent+main source byte, including 1533, rather than rolling this directory back.
+
+See [construction acceptance](../99-correctness-write-file-construct/PROOF.md),
+with evidence [`6b362fe55551e862c3d8775047e0e2dc41317a45`](https://github.com/system-inc/adamic/tree/6b362fe55551e862c3d8775047e0e2dc41317a45/stage3/census/write-file-slot-scout/construct-1).
