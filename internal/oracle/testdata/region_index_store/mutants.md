@@ -53,3 +53,4 @@ escape on its own, which is what made this directory's first index_store.a witne
 | --- | --- | --- | --- |
 | derived's Property arm back to `return derived(expression.Object)`, whatever the field's type | scalar_return.a | TestRegionScalarReturnGetsRegion | its C holds no region |
 | `ir.String` added to the arm's scalars | string_return.a | TestRegionStringReturnKeepsObjectOffRegion | its C holds a region, and the label read after it ends |
+| escaping's `case ir.Call:` returning false at once when the call's result is a number, a boolean or either maybe one | getter_return.a | TestRegionGetterReturnKeepsObjectOffRegion | its C holds a region, and the label read through kept after it ends |

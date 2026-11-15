@@ -107,3 +107,16 @@ func TestRegionStringReturnKeepsObjectOffRegion(t *testing.T) {
 		t.Fatal("string_return.a's C holds a region: the label returned out of the region is read after it ends")
 	}
 }
+
+// A getter that keeps its receiver, read as a number, lets the parameter escape (Runtime's condition on
+// #1jch5ez): the read is a dispatcher's call with p as its argument (finishAccessors), which escaping
+// judges as a call, so make(7) stays on the heap. Mutant: escaping's Call case lets the arguments of a
+// call whose result is a scalar go, and this program's C holds a region whose object the getter kept,
+// its label read after the region ends.
+func TestRegionGetterReturnKeepsObjectOffRegion(t *testing.T) {
+	t.Parallel()
+	code := regionIndexStoreAgrees(t, "getter_return.a", "1 b7\n")
+	if strings.Contains(code, "ADAMIC_REGION") {
+		t.Fatal("getter_return.a's C holds a region: the getter keeps the object past the statement")
+	}
+}
