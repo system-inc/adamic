@@ -49,15 +49,25 @@ type ArgumentLayout struct {
 
 // ClosureArgumentLayout pads optional slots and collects rest tails at the
 // caller. A hidden count is selected only by an actual reader candidate.
+//
+// A call whose function value is known (a closure literal, a constant or a nested declaration, through
+// ClosureTargets) runs only that function, so it's laid out for that function alone, and the type's
+// whole set is read only when the value isn't known (#g4arkr4). A callee reads its slots by its own
+// parameters, the program's RestArgumentSlots and its own PackedCountNeeded, never by a caller's
+// layout, so a narrower layout is the one it reads. The type's set holds every closure assignable to
+// the type: (...items: string[]) => string is assignable to map's (item: string) => string, so a map
+// of an identity literal packed the rest arrow's tail for a callback that takes none. A call with Bound
+// set stays on the type's set: it runs the target the bound closure keeps, whatever its Closure reads,
+// and the bind's own check judges those targets by the type's set and the method's name
+// (lower/function_bind.go's bound candidates).
 func (p *Program) ClosureArgumentLayout(call CallClosure) ArgumentLayout {
-	targets, resolved := p.FunctionTypeTargets[call.FunctionType]
-	if !resolved {
-		bounded := p.ClosureTargets(call)
-		targets = bounded.Functions
-		if bounded.Unknown {
-			for index := range p.Functions {
-				targets = append(targets, index)
-			}
+	bounded := p.ClosureTargets(call)
+	targets := bounded.Functions
+	if typed, resolved := p.FunctionTypeTargets[call.FunctionType]; resolved && (bounded.Unknown || call.Bound) {
+		targets = typed
+	} else if bounded.Unknown {
+		for index := range p.Functions {
+			targets = append(targets, index)
 		}
 	}
 	if call.Direct > 0 {
