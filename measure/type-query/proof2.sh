@@ -5,7 +5,7 @@ set -u
 T=$(mktemp -d)
 echo "box $(hostname) $(nproc) cpus, at $(git rev-parse --short=10 HEAD)"
 go vet ./internal/lower > $T/vet.log 2>&1 && echo "PASS vet lower" || { echo "FAIL vet"; head -20 $T/vet.log; }
-rows() { go test ./internal/lower -run '^TestTypeQueryOfHostMemberIsNoUse$' -count=1 -v > $T/rows.$1.log 2>&1; echo "$1: exit $? | failing rows: $(grep -oE -- '--- FAIL: TestTypeQueryOfHostMemberIsNoUse/[^ ]+' $T/rows.$1.log | sed 's#.*/##' | tr '\n' ' ')"; grep -E 'main\.a:[0-9]+' $T/rows.$1.log | sed 's#^.*main\.a#main.a#' | cut -c1-220 | sort -u | head -12; }
+rows() { L="$T/rows.$(echo "$1" | tr -c 'a-zA-Z0-9' '_').log"; go test ./internal/lower -run '^TestTypeQueryOfHostMemberIsNoUse$' -count=1 -v > "$L" 2>&1; echo "$1: exit $? | failing rows: $(grep -oE -- '--- FAIL: TestTypeQueryOfHostMemberIsNoUse/[^ ]+' "$L" | sed 's#.*/##' | tr '\n' ' ')"; grep -E 'main\.(a|ts):[0-9]+' "$L" | sed -E 's#^.*(main\.(a|ts))#\1#' | cut -c1-220 | sort -u | head -12; }
 if [ "${1:-}" = whole ]; then
   go test ./internal/lower -count=1 -timeout 40m > $T/l.log 2>&1 && echo "PASS lower whole ($(tail -1 $T/l.log))" || { echo "FAIL lower whole"; grep -E -- '--- FAIL|panic: test timed out|^FAIL' $T/l.log | head -20; grep -B2 -A15 -- '--- FAIL' $T/l.log | head -60; }
   echo "== end"; exit 0

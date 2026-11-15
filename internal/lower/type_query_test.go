@@ -7,28 +7,33 @@ import "testing"
 // getNodeSystem forwarder this way (sys.ts:1500, Parameters<typeof clearTimeout>[0]). Each row lowers,
 // one for each rule that judges a host member's use: the timers' value read (nodeTimerValueName),
 // library_node.go's use rules (realpath, stdout, environment, platform, stackTraceLimit) and a host
-// binding's read (hostBindingRefusal). Mutants: each of those three inTypeQuery clauses dropped, and
-// its rows go red.
+// binding's read (hostBindingRefusal). process.stdout's setBlocking isn't on its declared type, so it
+// has no row. Mutants: each of those three inTypeQuery clauses dropped, and its rows go red.
 func TestTypeQueryOfHostMemberIsNoUse(t *testing.T) {
 	t.Parallel()
-	const use = "\nfunction absent(value: Held | undefined): boolean {\n    return value === undefined;\n}\nconsole.log(String(absent(undefined)));\n"
-	for _, row := range []struct{ name, source string }{
-		{"clearTimeout", "import 'node:timers';\ntype Held = typeof clearTimeout;"},
-		{"setTimeout", "import 'node:timers';\ntype Held = typeof setTimeout;"},
-		{"clearTimeout parameter", "import 'node:timers';\ntype Held = Parameters<typeof clearTimeout>[0];"},
-		{"realpathSync", "import * as fs from 'node:fs';\ntype Held = typeof fs.realpathSync;"},
-		{"realpathSync.native", "import * as fs from 'node:fs';\ntype Held = typeof fs.realpathSync.native;"},
-		{"stdout", "import 'node:process';\ntype Held = typeof process.stdout;"},
-		{"setBlocking", "import 'node:process';\ntype Held = typeof process.stdout.setBlocking;"},
-		{"env", "import 'node:process';\ntype Held = typeof process.env;"},
-		{"platform", "import 'node:process';\ntype Held = typeof process.platform;"},
-		{"process", "import 'node:process';\ntype Held = typeof process;"},
-		{"stackTraceLimit", "import 'node:process';\ntype Held = typeof Error.stackTraceLimit;"},
-		{"onProfilerEvent", "declare let onProfilerEvent: ((eventName: string) => void) | undefined;\ntype Held = typeof onProfilerEvent;"},
+	// The alias is exported and nothing holds a value of it, so a row stops only where its name is judged.
+	const use = "\nconsole.log('typed');\n"
+	for _, row := range []struct{ name, source, extension string }{
+		{"clearTimeout", "import 'node:timers';\nexport type Held = typeof clearTimeout;"},
+		{"setTimeout", "import 'node:timers';\nexport type Held = typeof setTimeout;"},
+		{"clearTimeout parameter", "import 'node:timers';\nexport type Held = Parameters<typeof clearTimeout>[0];"},
+		{"realpathSync", "import * as fs from 'node:fs';\nexport type Held = typeof fs.realpathSync;"},
+		{"realpathSync.native", "import * as fs from 'node:fs';\nexport type Held = typeof fs.realpathSync.native;"},
+		{"stdout", "import 'node:process';\nexport type Held = typeof process.stdout;"},
+		{"env", "import 'node:process';\nexport type Held = typeof process.env;"},
+		{"platform", "import 'node:process';\nexport type Held = typeof process.platform;"},
+		{"process", "import 'node:process';\nexport type Held = typeof process;"},
+		{"stackTraceLimit", "import 'node:process';\nexport type Held = typeof Error.stackTraceLimit;"},
+		// A host binding is declared ambiently, which only .ts admits (host_bindings/shadow/performance.ts).
+		{"onProfilerEvent", "declare let onProfilerEvent: ((eventName: string) => void) | undefined;\nexport type Held = typeof onProfilerEvent;", ".ts"},
 	} {
 		t.Run(row.name, func(t *testing.T) {
 			t.Parallel()
-			if _, err := lowerSource(t, row.source+use); err != nil {
+			extension := row.extension
+			if extension == "" {
+				extension = ".a"
+			}
+			if _, err := lowerSourceAs(t, row.source+use, extension); err != nil {
 				t.Fatal(err)
 			}
 		})
