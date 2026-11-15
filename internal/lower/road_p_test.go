@@ -23,22 +23,23 @@ func roadPProgram(declared, body string) string {
 
 // Road P: the right of an && is a presence read where the && is tested for truthiness alone, recursively
 // (truthinessOnly): an if, a while, the test of ?:, the operand of !, and either side of an && that is
-// itself tested so. Each row lowers in both forms. The nested rows are the recursion's: their && holding
+// itself tested so. Each row lowers in both forms. A row guarding a block or an arm of ?: calls m there, as tsc
+// asks of a function it can see is always defined (TS2774). The nested rows are the recursion's: their && holding
 // the test is itself an operand of an && in a condition. The oracle holds what these run to
 // (internal/oracle/road_p_test.go). Mutant (road_p.mutants.md): truthinessOnly's recursion taken back to
 // one level, and the nested rows stop.
 func TestRoadPRightOfAndLowers(t *testing.T) {
 	t.Parallel()
 	for _, row := range []struct{ name, body string }{
-		{"an if", "\tif (flag && h.m) {\n\t\treturn 'has';\n\t}\n\treturn 'none';"},
+		{"an if", "\tif (flag && h.m) {\n\t\treturn String(h.m());\n\t}\n\treturn 'none';"},
 		{"!", "\treturn String(!(flag && h.m));"},
-		{"the test of ?:", "\treturn flag && h.m ? 'has' : 'none';"},
+		{"the test of ?:", "\treturn flag && h.m ? String(h.m()) : 'none';"},
 		{"a while", "\twhile (flag && h.m) {\n\t\treturn 'has';\n\t}\n\treturn 'none';"},
-		{"a chain of &&", "\tif (flag && other && h.m) {\n\t\treturn 'has';\n\t}\n\treturn 'none';"},
-		{"nested on the right", "\tif (flag && (other && h.m)) {\n\t\treturn 'has';\n\t}\n\treturn 'none';"},
-		{"nested on the left", "\tif ((flag && h.m) && other) {\n\t\treturn 'has';\n\t}\n\treturn 'none';"},
+		{"a chain of &&", "\tif (flag && other && h.m) {\n\t\treturn String(h.m());\n\t}\n\treturn 'none';"},
+		{"nested on the right", "\tif (flag && (other && h.m)) {\n\t\treturn String(h.m());\n\t}\n\treturn 'none';"},
+		{"nested on the left", "\tif ((flag && h.m) && other) {\n\t\treturn String(h.m());\n\t}\n\treturn 'none';"},
 		// tsc's if (sys.a && sys.b): a presence test on both sides (Compiler's should on road P).
-		{"a presence test on both sides", "\tif (h.m && h.m) {\n\t\treturn 'has';\n\t}\n\treturn 'none';"},
+		{"a presence test on both sides", "\tif (h.m && h.m) {\n\t\treturn String(h.m());\n\t}\n\treturn 'none';"},
 	} {
 		for _, form := range roadPForms {
 			for _, extension := range []string{".a", ".ts"} {
@@ -56,20 +57,24 @@ func TestRoadPRightOfAndLowers(t *testing.T) {
 // Where the &&'s value is used, its right keeps the method value, and stays refused as a method read as a
 // value, at the read: an initializer, a return, an argument, typeof of the && (which names the value's
 // type), the left of an && whose value is used (its falsy left is that value), and the right of ||. Each
-// row is refused in both forms. Mutant (road_p.mutants.md): truthinessOnly answering true for any &&
+// row is refused in both forms, but the one tsc only lets the optional form write. Mutant (road_p.mutants.md): truthinessOnly answering true for any &&
 // operand, and these rows lower.
 func TestRoadPRightOfAndKeepingTheValueIsRefused(t *testing.T) {
 	t.Parallel()
 	const refusal = "Adamic 0.1 refuses a method read as a value (m would lose its object, and this with it)"
-	for _, row := range []struct{ name, body string }{
-		{"an initializer", "\tconst held = flag && h.m;\n\treturn String(held ? 1 : 0);"},
-		{"an argument", "\treturn String(keep(flag && h.m));\n}\nfunction keep(v: false | (() => number) | undefined): boolean {\n\treturn v !== undefined && v !== false;"},
-		{"a return", "\treturn String(pick(flag) ? 1 : 0);\n}\nfunction pick(flag: boolean): false | (() => number) | undefined {\n\treturn flag && h.m;"},
-		{"typeof the &&", "\treturn typeof (flag && h.m);"},
-		{"the left of an && whose value is used", "\tconst held = (flag && h.m) && other;\n\treturn String(held);"},
-		{"the right of ||", "\tif (flag || h.m) {\n\t\treturn 'has';\n\t}\n\treturn 'none';"},
+	for _, row := range []struct{ name, body, only string }{
+		{"an initializer", "\tconst held = flag && h.m;\n\treturn String(held ? 1 : 0);", ""},
+		{"an argument", "\treturn String(keep(flag && h.m));\n}\nfunction keep(v: false | (() => number) | undefined): boolean {\n\treturn v !== undefined && v !== false;", ""},
+		{"a return", "\treturn String(pick(flag) ? 1 : 0);\n}\nfunction pick(flag: boolean): false | (() => number) | undefined {\n\treturn flag && h.m;", ""},
+		{"typeof the &&", "\treturn typeof (flag && h.m);", ""},
+		// tsc refuses this one for a class's method, always defined (TS2774), so only the optional form can write it.
+		{"the left of an && whose value is used", "\tconst held = (flag && h.m) && other;\n\treturn String(held);", "an optional member"},
+		{"the right of ||", "\tif (flag || h.m) {\n\t\treturn String(h.m?.());\n\t}\n\treturn 'none';", ""},
 	} {
 		for _, form := range roadPForms {
+			if row.only != "" && row.only != form.name {
+				continue
+			}
 			t.Run(row.name+", "+form.name, func(t *testing.T) {
 				t.Parallel()
 				_, err := lowerSourceAs(t, roadPProgram(form.declared, row.body), ".ts")
