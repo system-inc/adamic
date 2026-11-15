@@ -1,0 +1,29 @@
+[
+  {
+    "file": "src/compiler/emitter.ts",
+    "part": "printer",
+    "pairing": "multiset (kind, phase, reason, message with source position stripped); identical-key multiplicities retain outside-target originals first; target removal also checked by AST",
+    "baseFindings": 1430,
+    "changeFindings": 1428,
+    "paired": 1428,
+    "outsideTargetsNew": 0,
+    "outsideTargetsRemoved": 0,
+    "new": 0,
+    "removedTargets": [
+      {
+        "kind": "Refused",
+        "phase": "lowering",
+        "where": "/workspace/scratch/receiver-split/baseline/src/compiler/emitter.ts:1215:5",
+        "reason": "var",
+        "message": "/workspace/scratch/receiver-split/baseline/src/compiler/emitter.ts:1215:5: Adamic 0.1 refuses var; use const or let"
+      },
+      {
+        "kind": "Boundary",
+        "phase": "lowering",
+        "where": "/workspace/scratch/receiver-split/baseline/src/compiler/emitter.ts:1215:5",
+        "reason": "failed statement; state rolled back; continued at next statement or declaration",
+        "message": "/workspace/scratch/receiver-split/baseline/src/compiler/emitter.ts:1215:5: Adamic 0.1 refuses var; use const or let"
+      }
+    ]
+  }
+]

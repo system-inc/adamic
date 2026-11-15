@@ -1,0 +1,32 @@
+{
+  "parser": {
+    "adaptLocalDependency": "./owners.json",
+    "mutantLocalDependency": "./adapt.cjs",
+    "movedFileDependencies": [],
+    "filesKeptForRuntime": [
+      "adapt.cjs",
+      "owners.json",
+      "mutant.cjs"
+    ]
+  },
+  "transformers": {
+    "adaptLocalDependency": "./owners.json",
+    "mutantLocalDependency": "./adapt.cjs",
+    "movedFileDependencies": [],
+    "filesKeptForRuntime": [
+      "adapt.cjs",
+      "owners.json",
+      "mutant.cjs"
+    ]
+  },
+  "printer": {
+    "adaptLocalDependency": "./owners.json",
+    "mutantLocalDependency": "./adapt.cjs",
+    "movedFileDependencies": [],
+    "filesKeptForRuntime": [
+      "adapt.cjs",
+      "owners.json",
+      "mutant.cjs"
+    ]
+  }
+}

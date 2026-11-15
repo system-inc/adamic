@@ -1,0 +1,92 @@
+{
+  "codemod-negative-controls": {
+    "command": [
+      "node",
+      "/workspace/scratch/receiver-split/adamic/stage3/census/receiver-calls-price/codemod-controls-new.cjs"
+    ],
+    "cwd": "/workspace/scratch/receiver-split/adamic",
+    "exit": 0,
+    "wall_seconds": 4.991,
+    "log": {
+      "path": "/workspace/scratch/receiver-split/results/codemod-negative-controls.log",
+      "bytes": 123,
+      "sha256": "447247387e0fa671693dbf4f187932be77c2b24ab949f888a534dfdae3f0f2ff"
+    }
+  },
+  "counter-positive-controls": {
+    "command": [
+      "node",
+      "/workspace/scratch/receiver-split/adamic/stage3/census/receiver-calls-price/count-controls.cjs"
+    ],
+    "cwd": "/workspace/scratch/receiver-split/adamic",
+    "exit": 0,
+    "wall_seconds": 1.354,
+    "log": {
+      "path": "/workspace/scratch/receiver-split/results/counter-positive-controls.log",
+      "bytes": 60,
+      "sha256": "81d1afb26304534e899e982fa3e7a13e973c8e3a807a614a651d14105bcc49ad"
+    }
+  },
+  "this-positive-controls": {
+    "command": [
+      "node",
+      "/workspace/scratch/receiver-split/adamic/stage3/census/receiver-calls-price/split-aggregate.cjs",
+      "/workspace/scratch/receiver-split/control-snapshots",
+      "/workspace/scratch/receiver-split/results/this-control-raw.json"
+    ],
+    "cwd": "/workspace/scratch/receiver-split/adamic",
+    "exit": 0,
+    "wall_seconds": 0.259,
+    "log": {
+      "path": "/workspace/scratch/receiver-split/results/this-positive-controls.log",
+      "bytes": 325,
+      "sha256": "fd3f86df098a158692f5e9fb87c17118f499480c6f263e8837521f68be266722"
+    }
+  },
+  "printer-runtime-controls": {
+    "command": [
+      "node",
+      "/workspace/scratch/receiver-split/adamic/stage3/census/receiver-calls-price/printer-controls-new.cjs",
+      "/workspace/scratch/receiver-split/tree-printer",
+      "/workspace/scratch/receiver-split/results/printer-runtime-controls.json"
+    ],
+    "cwd": "/workspace/scratch/receiver-split/adamic",
+    "exit": 0,
+    "wall_seconds": 0.312,
+    "log": {
+      "path": "/workspace/scratch/receiver-split/results/printer-runtime-controls.log",
+      "bytes": 115,
+      "sha256": "cb892acd305e7cfb414d78f20fd376796abf7438c71dd6d19bf4710e80dc9ac6"
+    }
+  },
+  "printer-default-this": {
+    "command": [
+      "node",
+      "/workspace/scratch/receiver-split/adamic/stage3/census/receiver-calls-price/defaults-this-new.cjs",
+      "/workspace/scratch/receiver-split/tree-printer",
+      "/workspace/scratch/receiver-split/results/printer-default-this.json"
+    ],
+    "cwd": "/workspace/scratch/receiver-split/adamic",
+    "exit": 0,
+    "wall_seconds": 0.328,
+    "log": {
+      "path": "/workspace/scratch/receiver-split/results/printer-default-this.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  },
+  "counter-alias-controls-command": {
+    "command": [
+      "node",
+      "stage3/census/receiver-calls-price/count-alias-controls.cjs"
+    ],
+    "cwd": "/workspace/scratch/receiver-split/adamic",
+    "exit": 0,
+    "wall_seconds": 2.164,
+    "log": {
+      "path": "/workspace/scratch/receiver-split/results/counter-alias-controls-command.log",
+      "bytes": 60,
+      "sha256": "81d1afb26304534e899e982fa3e7a13e973c8e3a807a614a651d14105bcc49ad"
+    }
+  }
+}

@@ -1,0 +1,27 @@
+{
+  "complete": true,
+  "directory": "99-correctness-receiver-transformers",
+  "base": "8ada94542fbdcb5c1d1689e27564e471eae241b8",
+  "upstream": "050880ce59e30b356b686bd3144efe24f875ebc8",
+  "recipe": "24c61e74d26caa79c0f313112902e325d090afcd",
+  "censusFiles": 17,
+  "newOutsideTargets": 0,
+  "changedOutsideTargets": 0,
+  "stockApiDiagnostics": 0,
+  "stockCliExit": 0,
+  "adamicTypesExit": 0,
+  "rootCount": 79,
+  "applyExit": 0,
+  "ordinaryLane": {
+    "passing": 106366,
+    "failing": 1,
+    "pending": 0
+  },
+  "countingLane": {
+    "passing": 106366,
+    "failing": 1,
+    "pending": 0
+  },
+  "declarationsByteIdentical": true,
+  "ledger": "JavaScript-changing, value-identical; #trxxkge: 52 exact-parameter forwarding arrows at 17 original factory scopes, with 189,211 forwarding calls and 1,601,433 arrow creations per complete lane run."
+}

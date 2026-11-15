@@ -1,0 +1,29 @@
+[
+  {
+    "file": "src/compiler/parser.ts",
+    "part": "parser",
+    "pairing": "multiset (kind, phase, reason, message with source position stripped); identical-key multiplicities retain outside-target originals first; target removal also checked by AST",
+    "baseFindings": 3183,
+    "changeFindings": 3181,
+    "paired": 3181,
+    "outsideTargetsNew": 0,
+    "outsideTargetsRemoved": 0,
+    "new": 0,
+    "removedTargets": [
+      {
+        "kind": "Boundary",
+        "phase": "lowering",
+        "where": "/workspace/scratch/receiver-split/baseline/src/compiler/parser.ts:1472:5",
+        "reason": "failed statement; state rolled back; continued at next statement or declaration",
+        "message": "/workspace/scratch/receiver-split/baseline/src/compiler/parser.ts:1473:9: Adamic 0.1 refuses a method in object destructuring; call it on its receiver or wrap that call in an arrow; destructuring would lose this"
+      },
+      {
+        "kind": "Refused",
+        "phase": "lowering",
+        "where": "/workspace/scratch/receiver-split/baseline/src/compiler/parser.ts:1473:9",
+        "reason": "a method in object destructuring",
+        "message": "/workspace/scratch/receiver-split/baseline/src/compiler/parser.ts:1473:9: Adamic 0.1 refuses a method in object destructuring; call it on its receiver or wrap that call in an arrow; destructuring would lose this"
+      }
+    ]
+  }
+]

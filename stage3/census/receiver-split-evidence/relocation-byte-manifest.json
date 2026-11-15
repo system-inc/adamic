@@ -1,0 +1,458 @@
+[
+  {
+    "part": "parser",
+    "sourceCommit": "3a5dbe2d025478c588c9c5bbc96b4829a81596bf",
+    "sourcePath": "stage3/adapt/99-correctness-receiver-parser/proofs/apply-source.json",
+    "evidencePath": "stage3/census/receiver-split-evidence/parser/proofs/apply-source.json",
+    "bytes": 160,
+    "sha256": "6377f35c8d5b1447f2c99e687561c61e73a7e165cd4845bcc18180cb6435529b"
+  },
+  {
+    "part": "parser",
+    "sourceCommit": "3a5dbe2d025478c588c9c5bbc96b4829a81596bf",
+    "sourcePath": "stage3/adapt/99-correctness-receiver-parser/proofs/census.json",
+    "evidencePath": "stage3/census/receiver-split-evidence/parser/proofs/census.json",
+    "bytes": 1395,
+    "sha256": "376ec2869b99437c277826836945258d99cdbebe32442ca81f7ce7189519141f"
+  },
+  {
+    "part": "parser",
+    "sourceCommit": "3a5dbe2d025478c588c9c5bbc96b4829a81596bf",
+    "sourcePath": "stage3/adapt/99-correctness-receiver-parser/proofs/commands.json",
+    "evidencePath": "stage3/census/receiver-split-evidence/parser/proofs/commands.json",
+    "bytes": 12639,
+    "sha256": "7ee058bc047cfb6dbdb196cb58881137f36a1daec8db582821e3907394d845df"
+  },
+  {
+    "part": "parser",
+    "sourceCommit": "3a5dbe2d025478c588c9c5bbc96b4829a81596bf",
+    "sourcePath": "stage3/adapt/99-correctness-receiver-parser/proofs/counter-controls.json",
+    "evidencePath": "stage3/census/receiver-split-evidence/parser/proofs/counter-controls.json",
+    "bytes": 2819,
+    "sha256": "45c473519892ec085615c7a611fb617a6e05bf26a67525c4c881e9c410325442"
+  },
+  {
+    "part": "parser",
+    "sourceCommit": "3a5dbe2d025478c588c9c5bbc96b4829a81596bf",
+    "sourcePath": "stage3/adapt/99-correctness-receiver-parser/proofs/counting-lane.json",
+    "evidencePath": "stage3/census/receiver-split-evidence/parser/proofs/counting-lane.json",
+    "bytes": 1133,
+    "sha256": "91175962be5b3f34b73610be4fe47feb7613f0cb38352f1d7a0289505735759f"
+  },
+  {
+    "part": "parser",
+    "sourceCommit": "3a5dbe2d025478c588c9c5bbc96b4829a81596bf",
+    "sourcePath": "stage3/adapt/99-correctness-receiver-parser/proofs/counts.json",
+    "evidencePath": "stage3/census/receiver-split-evidence/parser/proofs/counts.json",
+    "bytes": 11680,
+    "sha256": "041451a84122e8af25b3505c82be4f396324ad4aa26f5229c18e72fc6387b351"
+  },
+  {
+    "part": "parser",
+    "sourceCommit": "3a5dbe2d025478c588c9c5bbc96b4829a81596bf",
+    "sourcePath": "stage3/adapt/99-correctness-receiver-parser/proofs/declarations.json",
+    "evidencePath": "stage3/census/receiver-split-evidence/parser/proofs/declarations.json",
+    "bytes": 343,
+    "sha256": "70b33d6e70a37080fc740a55b2af6c32820e98cb29b270419e99900e7eeba116"
+  },
+  {
+    "part": "parser",
+    "sourceCommit": "3a5dbe2d025478c588c9c5bbc96b4829a81596bf",
+    "sourcePath": "stage3/adapt/99-correctness-receiver-parser/proofs/guard-controls.json",
+    "evidencePath": "stage3/census/receiver-split-evidence/parser/proofs/guard-controls.json",
+    "bytes": 681,
+    "sha256": "934720328101b0510dccec0f523a4e78ffe1e7e0d0a8f224eae8dbe9102a9fd9"
+  },
+  {
+    "part": "parser",
+    "sourceCommit": "3a5dbe2d025478c588c9c5bbc96b4829a81596bf",
+    "sourcePath": "stage3/adapt/99-correctness-receiver-parser/proofs/javascript-scope.json",
+    "evidencePath": "stage3/census/receiver-split-evidence/parser/proofs/javascript-scope.json",
+    "bytes": 581,
+    "sha256": "1b89d91a460679254126952e2cfe256501932829405c5ae2dcbd7503922be846"
+  },
+  {
+    "part": "parser",
+    "sourceCommit": "3a5dbe2d025478c588c9c5bbc96b4829a81596bf",
+    "sourcePath": "stage3/adapt/99-correctness-receiver-parser/proofs/lane.json",
+    "evidencePath": "stage3/census/receiver-split-evidence/parser/proofs/lane.json",
+    "bytes": 1130,
+    "sha256": "02f4c3cd086b3d67eea4ebb84a4ee9167cc5b8282c5fe79bf88e8a35cf2ae905"
+  },
+  {
+    "part": "parser",
+    "sourceCommit": "3a5dbe2d025478c588c9c5bbc96b4829a81596bf",
+    "sourcePath": "stage3/adapt/99-correctness-receiver-parser/proofs/mutant-restoration.json",
+    "evidencePath": "stage3/census/receiver-split-evidence/parser/proofs/mutant-restoration.json",
+    "bytes": 165,
+    "sha256": "276d4ed7d9ae6594c17d1b780e6096abbff3826230ca7ffefc44b94ea8851014"
+  },
+  {
+    "part": "parser",
+    "sourceCommit": "3a5dbe2d025478c588c9c5bbc96b4829a81596bf",
+    "sourcePath": "stage3/adapt/99-correctness-receiver-parser/proofs/printer-default-this.json",
+    "evidencePath": "stage3/census/receiver-split-evidence/parser/proofs/printer-default-this.json",
+    "bytes": 379,
+    "sha256": "e6ad292258452df3940cfd30b9112a04cb714c5094662d70fc91399da4c69b97"
+  },
+  {
+    "part": "parser",
+    "sourceCommit": "3a5dbe2d025478c588c9c5bbc96b4829a81596bf",
+    "sourcePath": "stage3/adapt/99-correctness-receiver-parser/proofs/printer-runtime-controls.json",
+    "evidencePath": "stage3/census/receiver-split-evidence/parser/proofs/printer-runtime-controls.json",
+    "bytes": 877,
+    "sha256": "13089ab07c119eaa7f3aa01af4a5bab1d77a04f69c2fd5fa8ca3213173a6dfbe"
+  },
+  {
+    "part": "parser",
+    "sourceCommit": "3a5dbe2d025478c588c9c5bbc96b4829a81596bf",
+    "sourcePath": "stage3/adapt/99-correctness-receiver-parser/proofs/shared-control-commands.json",
+    "evidencePath": "stage3/census/receiver-split-evidence/parser/proofs/shared-control-commands.json",
+    "bytes": 3298,
+    "sha256": "b03c5d938abff1c40907570bd8c42e3c3ca61b1cbb5a6c2ced71451b0617fdeb"
+  },
+  {
+    "part": "parser",
+    "sourceCommit": "3a5dbe2d025478c588c9c5bbc96b4829a81596bf",
+    "sourcePath": "stage3/adapt/99-correctness-receiver-parser/proofs/source-manifests.json",
+    "evidencePath": "stage3/census/receiver-split-evidence/parser/proofs/source-manifests.json",
+    "bytes": 24534,
+    "sha256": "ca5d2b5e3a460498a624a485ec6140fa9af25b8ef3632106a3d2af9c3fc50f6e"
+  },
+  {
+    "part": "parser",
+    "sourceCommit": "3a5dbe2d025478c588c9c5bbc96b4829a81596bf",
+    "sourcePath": "stage3/adapt/99-correctness-receiver-parser/proofs/status.json",
+    "evidencePath": "stage3/census/receiver-split-evidence/parser/proofs/status.json",
+    "bytes": 815,
+    "sha256": "e2af43ad35d690f21ad007fd6d2d5b041292a3ce0341a09b5adcb848aa774396"
+  },
+  {
+    "part": "parser",
+    "sourceCommit": "3a5dbe2d025478c588c9c5bbc96b4829a81596bf",
+    "sourcePath": "stage3/adapt/99-correctness-receiver-parser/proofs/stock-ast.json",
+    "evidencePath": "stage3/census/receiver-split-evidence/parser/proofs/stock-ast.json",
+    "bytes": 10066,
+    "sha256": "f42a6810ac05c45992c8f9a5d3b54d024f03f706620d052a4b412fc5e41f2fc1"
+  },
+  {
+    "part": "parser",
+    "sourceCommit": "3a5dbe2d025478c588c9c5bbc96b4829a81596bf",
+    "sourcePath": "stage3/adapt/99-correctness-receiver-parser/proofs/test-inputs.json",
+    "evidencePath": "stage3/census/receiver-split-evidence/parser/proofs/test-inputs.json",
+    "bytes": 331,
+    "sha256": "2d756b1c531e2f2fdbee8079a42193819bf2d7426f9792545bd9ddeaac08bcfd"
+  },
+  {
+    "part": "parser",
+    "sourceCommit": "3a5dbe2d025478c588c9c5bbc96b4829a81596bf",
+    "sourcePath": "stage3/adapt/99-correctness-receiver-parser/scope.json",
+    "evidencePath": "stage3/census/receiver-split-evidence/parser/scope.json",
+    "bytes": 3,
+    "sha256": "37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570"
+  },
+  {
+    "part": "transformers",
+    "sourceCommit": "2dbef8ed2a76a32f4be306b9885cc0797e6e43b5",
+    "sourcePath": "stage3/adapt/99-correctness-receiver-transformers/proofs/apply-source.json",
+    "evidencePath": "stage3/census/receiver-split-evidence/transformers/proofs/apply-source.json",
+    "bytes": 160,
+    "sha256": "fa7dd8dfa95e2270e21981fba347450ad837b6fb8cdc2f136c541600fda6f525"
+  },
+  {
+    "part": "transformers",
+    "sourceCommit": "2dbef8ed2a76a32f4be306b9885cc0797e6e43b5",
+    "sourcePath": "stage3/adapt/99-correctness-receiver-transformers/proofs/census.json",
+    "evidencePath": "stage3/census/receiver-split-evidence/transformers/proofs/census.json",
+    "bytes": 17880,
+    "sha256": "b72004a5c3ece171f45fd0f8552a91978ac71193fd4cb92e38042867164508c6"
+  },
+  {
+    "part": "transformers",
+    "sourceCommit": "2dbef8ed2a76a32f4be306b9885cc0797e6e43b5",
+    "sourcePath": "stage3/adapt/99-correctness-receiver-transformers/proofs/commands.json",
+    "evidencePath": "stage3/census/receiver-split-evidence/transformers/proofs/commands.json",
+    "bytes": 13269,
+    "sha256": "fe0ddd0bdfb32fffedc21ca13c10e7af17228ea81a673ab1052ccb5a72aee27d"
+  },
+  {
+    "part": "transformers",
+    "sourceCommit": "2dbef8ed2a76a32f4be306b9885cc0797e6e43b5",
+    "sourcePath": "stage3/adapt/99-correctness-receiver-transformers/proofs/counter-controls.json",
+    "evidencePath": "stage3/census/receiver-split-evidence/transformers/proofs/counter-controls.json",
+    "bytes": 2819,
+    "sha256": "45c473519892ec085615c7a611fb617a6e05bf26a67525c4c881e9c410325442"
+  },
+  {
+    "part": "transformers",
+    "sourceCommit": "2dbef8ed2a76a32f4be306b9885cc0797e6e43b5",
+    "sourcePath": "stage3/adapt/99-correctness-receiver-transformers/proofs/counting-lane.json",
+    "evidencePath": "stage3/census/receiver-split-evidence/transformers/proofs/counting-lane.json",
+    "bytes": 1139,
+    "sha256": "a1790abe81cbf2399cc9b42e6057aca53367e5a2c6dc271154df3c58dd51591f"
+  },
+  {
+    "part": "transformers",
+    "sourceCommit": "2dbef8ed2a76a32f4be306b9885cc0797e6e43b5",
+    "sourcePath": "stage3/adapt/99-correctness-receiver-transformers/proofs/counts.json",
+    "evidencePath": "stage3/census/receiver-split-evidence/transformers/proofs/counts.json",
+    "bytes": 18958,
+    "sha256": "2ae4a6a640e694892075d5c9d54dc67182e2c9ee9fb93bcb0fb0a9010237293c"
+  },
+  {
+    "part": "transformers",
+    "sourceCommit": "2dbef8ed2a76a32f4be306b9885cc0797e6e43b5",
+    "sourcePath": "stage3/adapt/99-correctness-receiver-transformers/proofs/declarations.json",
+    "evidencePath": "stage3/census/receiver-split-evidence/transformers/proofs/declarations.json",
+    "bytes": 343,
+    "sha256": "70b33d6e70a37080fc740a55b2af6c32820e98cb29b270419e99900e7eeba116"
+  },
+  {
+    "part": "transformers",
+    "sourceCommit": "2dbef8ed2a76a32f4be306b9885cc0797e6e43b5",
+    "sourcePath": "stage3/adapt/99-correctness-receiver-transformers/proofs/guard-controls.json",
+    "evidencePath": "stage3/census/receiver-split-evidence/transformers/proofs/guard-controls.json",
+    "bytes": 760,
+    "sha256": "33364cf7e876eec70a2d1cb84d774c453e97424f537049dbc298f64d85b27610"
+  },
+  {
+    "part": "transformers",
+    "sourceCommit": "2dbef8ed2a76a32f4be306b9885cc0797e6e43b5",
+    "sourcePath": "stage3/adapt/99-correctness-receiver-transformers/proofs/javascript-scope.json",
+    "evidencePath": "stage3/census/receiver-split-evidence/transformers/proofs/javascript-scope.json",
+    "bytes": 10155,
+    "sha256": "e244a6338019549cd136496038ffb6003b9e56067c3c9762fd631a51cf41a87a"
+  },
+  {
+    "part": "transformers",
+    "sourceCommit": "2dbef8ed2a76a32f4be306b9885cc0797e6e43b5",
+    "sourcePath": "stage3/adapt/99-correctness-receiver-transformers/proofs/lane.json",
+    "evidencePath": "stage3/census/receiver-split-evidence/transformers/proofs/lane.json",
+    "bytes": 1133,
+    "sha256": "b00cd90462199914f4cbbc293c59fe005f1e2995d7121a9b2e20f6f1efc5ac0b"
+  },
+  {
+    "part": "transformers",
+    "sourceCommit": "2dbef8ed2a76a32f4be306b9885cc0797e6e43b5",
+    "sourcePath": "stage3/adapt/99-correctness-receiver-transformers/proofs/mutant-restoration.json",
+    "evidencePath": "stage3/census/receiver-split-evidence/transformers/proofs/mutant-restoration.json",
+    "bytes": 165,
+    "sha256": "276d4ed7d9ae6594c17d1b780e6096abbff3826230ca7ffefc44b94ea8851014"
+  },
+  {
+    "part": "transformers",
+    "sourceCommit": "2dbef8ed2a76a32f4be306b9885cc0797e6e43b5",
+    "sourcePath": "stage3/adapt/99-correctness-receiver-transformers/proofs/printer-default-this.json",
+    "evidencePath": "stage3/census/receiver-split-evidence/transformers/proofs/printer-default-this.json",
+    "bytes": 379,
+    "sha256": "e6ad292258452df3940cfd30b9112a04cb714c5094662d70fc91399da4c69b97"
+  },
+  {
+    "part": "transformers",
+    "sourceCommit": "2dbef8ed2a76a32f4be306b9885cc0797e6e43b5",
+    "sourcePath": "stage3/adapt/99-correctness-receiver-transformers/proofs/printer-runtime-controls.json",
+    "evidencePath": "stage3/census/receiver-split-evidence/transformers/proofs/printer-runtime-controls.json",
+    "bytes": 877,
+    "sha256": "13089ab07c119eaa7f3aa01af4a5bab1d77a04f69c2fd5fa8ca3213173a6dfbe"
+  },
+  {
+    "part": "transformers",
+    "sourceCommit": "2dbef8ed2a76a32f4be306b9885cc0797e6e43b5",
+    "sourcePath": "stage3/adapt/99-correctness-receiver-transformers/proofs/shared-control-commands.json",
+    "evidencePath": "stage3/census/receiver-split-evidence/transformers/proofs/shared-control-commands.json",
+    "bytes": 3298,
+    "sha256": "b03c5d938abff1c40907570bd8c42e3c3ca61b1cbb5a6c2ced71451b0617fdeb"
+  },
+  {
+    "part": "transformers",
+    "sourceCommit": "2dbef8ed2a76a32f4be306b9885cc0797e6e43b5",
+    "sourcePath": "stage3/adapt/99-correctness-receiver-transformers/proofs/source-manifests.json",
+    "evidencePath": "stage3/census/receiver-split-evidence/transformers/proofs/source-manifests.json",
+    "bytes": 24534,
+    "sha256": "97f57431279ee07f6e6eacb255e1f435a0448bbaf2b44679683a9e16fe5707bc"
+  },
+  {
+    "part": "transformers",
+    "sourceCommit": "2dbef8ed2a76a32f4be306b9885cc0797e6e43b5",
+    "sourcePath": "stage3/adapt/99-correctness-receiver-transformers/proofs/status.json",
+    "evidencePath": "stage3/census/receiver-split-evidence/transformers/proofs/status.json",
+    "bytes": 850,
+    "sha256": "f5f0b8b410275a44ad4c7660979f7dec53ecfce63758347e97783928f970928a"
+  },
+  {
+    "part": "transformers",
+    "sourceCommit": "2dbef8ed2a76a32f4be306b9885cc0797e6e43b5",
+    "sourcePath": "stage3/adapt/99-correctness-receiver-transformers/proofs/stock-ast.json",
+    "evidencePath": "stage3/census/receiver-split-evidence/transformers/proofs/stock-ast.json",
+    "bytes": 6685,
+    "sha256": "3f21c1590ebe22df9fd2b3260c3e83ae18b76a32a614d9bfc70b935c31f29854"
+  },
+  {
+    "part": "transformers",
+    "sourceCommit": "2dbef8ed2a76a32f4be306b9885cc0797e6e43b5",
+    "sourcePath": "stage3/adapt/99-correctness-receiver-transformers/proofs/test-inputs.json",
+    "evidencePath": "stage3/census/receiver-split-evidence/transformers/proofs/test-inputs.json",
+    "bytes": 331,
+    "sha256": "2d756b1c531e2f2fdbee8079a42193819bf2d7426f9792545bd9ddeaac08bcfd"
+  },
+  {
+    "part": "transformers",
+    "sourceCommit": "2dbef8ed2a76a32f4be306b9885cc0797e6e43b5",
+    "sourcePath": "stage3/adapt/99-correctness-receiver-transformers/scope.json",
+    "evidencePath": "stage3/census/receiver-split-evidence/transformers/scope.json",
+    "bytes": 15991,
+    "sha256": "1e6ca394bd197f9f74969ac49d9707d23975c6a892f7c80d04ea79ffc511e81c"
+  },
+  {
+    "part": "printer",
+    "sourceCommit": "457a0447edd202b88af3d86243b5958a045d5bb6",
+    "sourcePath": "stage3/adapt/99-correctness-receiver-printer/proofs/apply-source.json",
+    "evidencePath": "stage3/census/receiver-split-evidence/printer/proofs/apply-source.json",
+    "bytes": 160,
+    "sha256": "00e09da28defc02ed5586200399d4672174b1aacca56003425de755fb6166b0e"
+  },
+  {
+    "part": "printer",
+    "sourceCommit": "457a0447edd202b88af3d86243b5958a045d5bb6",
+    "sourcePath": "stage3/adapt/99-correctness-receiver-printer/proofs/census.json",
+    "evidencePath": "stage3/census/receiver-split-evidence/printer/proofs/census.json",
+    "bytes": 1178,
+    "sha256": "09de24f227ac5990b7490d5d4568f064839ceae2d1720aaed539541f2a33489c"
+  },
+  {
+    "part": "printer",
+    "sourceCommit": "457a0447edd202b88af3d86243b5958a045d5bb6",
+    "sourcePath": "stage3/adapt/99-correctness-receiver-printer/proofs/commands.json",
+    "evidencePath": "stage3/census/receiver-split-evidence/printer/proofs/commands.json",
+    "bytes": 12744,
+    "sha256": "cc5a30b0fdc70c8786d79f616b4f5c948241bf85d338a4e568997bb1ebff81dc"
+  },
+  {
+    "part": "printer",
+    "sourceCommit": "457a0447edd202b88af3d86243b5958a045d5bb6",
+    "sourcePath": "stage3/adapt/99-correctness-receiver-printer/proofs/counter-controls.json",
+    "evidencePath": "stage3/census/receiver-split-evidence/printer/proofs/counter-controls.json",
+    "bytes": 2819,
+    "sha256": "45c473519892ec085615c7a611fb617a6e05bf26a67525c4c881e9c410325442"
+  },
+  {
+    "part": "printer",
+    "sourceCommit": "457a0447edd202b88af3d86243b5958a045d5bb6",
+    "sourcePath": "stage3/adapt/99-correctness-receiver-printer/proofs/counting-lane.json",
+    "evidencePath": "stage3/census/receiver-split-evidence/printer/proofs/counting-lane.json",
+    "bytes": 1132,
+    "sha256": "9267036aef8c0d18f696a3ff5cfcc5329c2af1463eba986de29013c0f3937c85"
+  },
+  {
+    "part": "printer",
+    "sourceCommit": "457a0447edd202b88af3d86243b5958a045d5bb6",
+    "sourcePath": "stage3/adapt/99-correctness-receiver-printer/proofs/counts.json",
+    "evidencePath": "stage3/census/receiver-split-evidence/printer/proofs/counts.json",
+    "bytes": 10858,
+    "sha256": "cee759a03d106fcb29666ed25012a986bc5315073086e822259e034bf101cf83"
+  },
+  {
+    "part": "printer",
+    "sourceCommit": "457a0447edd202b88af3d86243b5958a045d5bb6",
+    "sourcePath": "stage3/adapt/99-correctness-receiver-printer/proofs/declarations.json",
+    "evidencePath": "stage3/census/receiver-split-evidence/printer/proofs/declarations.json",
+    "bytes": 343,
+    "sha256": "70b33d6e70a37080fc740a55b2af6c32820e98cb29b270419e99900e7eeba116"
+  },
+  {
+    "part": "printer",
+    "sourceCommit": "457a0447edd202b88af3d86243b5958a045d5bb6",
+    "sourcePath": "stage3/adapt/99-correctness-receiver-printer/proofs/guard-controls.json",
+    "evidencePath": "stage3/census/receiver-split-evidence/printer/proofs/guard-controls.json",
+    "bytes": 681,
+    "sha256": "934720328101b0510dccec0f523a4e78ffe1e7e0d0a8f224eae8dbe9102a9fd9"
+  },
+  {
+    "part": "printer",
+    "sourceCommit": "457a0447edd202b88af3d86243b5958a045d5bb6",
+    "sourcePath": "stage3/adapt/99-correctness-receiver-printer/proofs/javascript-scope.json",
+    "evidencePath": "stage3/census/receiver-split-evidence/printer/proofs/javascript-scope.json",
+    "bytes": 583,
+    "sha256": "204f7f8827f0053c342c8ba47b2886c43eb6c5cdfccf3345254831e4c4f07d53"
+  },
+  {
+    "part": "printer",
+    "sourceCommit": "457a0447edd202b88af3d86243b5958a045d5bb6",
+    "sourcePath": "stage3/adapt/99-correctness-receiver-printer/proofs/lane.json",
+    "evidencePath": "stage3/census/receiver-split-evidence/printer/proofs/lane.json",
+    "bytes": 1130,
+    "sha256": "077fa764cfb74803137446c148f58d0a3d2e60040ac9b07c086dd3147ed90895"
+  },
+  {
+    "part": "printer",
+    "sourceCommit": "457a0447edd202b88af3d86243b5958a045d5bb6",
+    "sourcePath": "stage3/adapt/99-correctness-receiver-printer/proofs/mutant-restoration.json",
+    "evidencePath": "stage3/census/receiver-split-evidence/printer/proofs/mutant-restoration.json",
+    "bytes": 165,
+    "sha256": "276d4ed7d9ae6594c17d1b780e6096abbff3826230ca7ffefc44b94ea8851014"
+  },
+  {
+    "part": "printer",
+    "sourceCommit": "457a0447edd202b88af3d86243b5958a045d5bb6",
+    "sourcePath": "stage3/adapt/99-correctness-receiver-printer/proofs/printer-default-this.json",
+    "evidencePath": "stage3/census/receiver-split-evidence/printer/proofs/printer-default-this.json",
+    "bytes": 379,
+    "sha256": "e6ad292258452df3940cfd30b9112a04cb714c5094662d70fc91399da4c69b97"
+  },
+  {
+    "part": "printer",
+    "sourceCommit": "457a0447edd202b88af3d86243b5958a045d5bb6",
+    "sourcePath": "stage3/adapt/99-correctness-receiver-printer/proofs/printer-runtime-controls.json",
+    "evidencePath": "stage3/census/receiver-split-evidence/printer/proofs/printer-runtime-controls.json",
+    "bytes": 877,
+    "sha256": "13089ab07c119eaa7f3aa01af4a5bab1d77a04f69c2fd5fa8ca3213173a6dfbe"
+  },
+  {
+    "part": "printer",
+    "sourceCommit": "457a0447edd202b88af3d86243b5958a045d5bb6",
+    "sourcePath": "stage3/adapt/99-correctness-receiver-printer/proofs/shared-control-commands.json",
+    "evidencePath": "stage3/census/receiver-split-evidence/printer/proofs/shared-control-commands.json",
+    "bytes": 3298,
+    "sha256": "b03c5d938abff1c40907570bd8c42e3c3ca61b1cbb5a6c2ced71451b0617fdeb"
+  },
+  {
+    "part": "printer",
+    "sourceCommit": "457a0447edd202b88af3d86243b5958a045d5bb6",
+    "sourcePath": "stage3/adapt/99-correctness-receiver-printer/proofs/source-manifests.json",
+    "evidencePath": "stage3/census/receiver-split-evidence/printer/proofs/source-manifests.json",
+    "bytes": 24534,
+    "sha256": "0e11987597f1da856f20ebe66ff8893a6c2bb912479e6c9c41bdb487dc8db907"
+  },
+  {
+    "part": "printer",
+    "sourceCommit": "457a0447edd202b88af3d86243b5958a045d5bb6",
+    "sourcePath": "stage3/adapt/99-correctness-receiver-printer/proofs/status.json",
+    "evidencePath": "stage3/census/receiver-split-evidence/printer/proofs/status.json",
+    "bytes": 861,
+    "sha256": "b3402a582158b813db3e9d19857b590c06c00733a5aaa0ba76c384d4556a5409"
+  },
+  {
+    "part": "printer",
+    "sourceCommit": "457a0447edd202b88af3d86243b5958a045d5bb6",
+    "sourcePath": "stage3/adapt/99-correctness-receiver-printer/proofs/stock-ast.json",
+    "evidencePath": "stage3/census/receiver-split-evidence/printer/proofs/stock-ast.json",
+    "bytes": 10826,
+    "sha256": "c44b7f94179f4f272bec584a3e66e64b644d142f1c44335bd7f0a91451966c1e"
+  },
+  {
+    "part": "printer",
+    "sourceCommit": "457a0447edd202b88af3d86243b5958a045d5bb6",
+    "sourcePath": "stage3/adapt/99-correctness-receiver-printer/proofs/test-inputs.json",
+    "evidencePath": "stage3/census/receiver-split-evidence/printer/proofs/test-inputs.json",
+    "bytes": 331,
+    "sha256": "2d756b1c531e2f2fdbee8079a42193819bf2d7426f9792545bd9ddeaac08bcfd"
+  },
+  {
+    "part": "printer",
+    "sourceCommit": "457a0447edd202b88af3d86243b5958a045d5bb6",
+    "sourcePath": "stage3/adapt/99-correctness-receiver-printer/scope.json",
+    "evidencePath": "stage3/census/receiver-split-evidence/printer/scope.json",
+    "bytes": 3,
+    "sha256": "37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570"
+  }
+]
