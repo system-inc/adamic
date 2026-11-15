@@ -163,7 +163,10 @@ initializeCrossing();
 }
 
 func wasmBridge(handlerImport string) string {
-	bridge := Bridge(handlerImport)
+	return initializeWasmBridge(Bridge(handlerImport))
+}
+
+func initializeWasmBridge(bridge string) string {
 	bridge = strings.Replace(bridge, "export default {", "import { initializeCrossing } from './wasm-state.mjs';\ninitializeCrossing();\n\nexport default {", 1)
 	return bridge
 }

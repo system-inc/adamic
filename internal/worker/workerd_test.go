@@ -53,6 +53,16 @@ func startWorkerd(t *testing.T, directory, address string) (*workerdServer, erro
 // released is a per-call test seam: no shared port picker or environment mutation.
 func startWorkerdWithPortHook(t *testing.T, directory, address string, released func(string)) (*workerdServer, error) {
 	t.Helper()
+	return startWorkerdConfigured(t, directory, address, "", released)
+}
+
+func startWorkerdWithBindings(t *testing.T, directory, address, bindings string) (*workerdServer, error) {
+	t.Helper()
+	return startWorkerdConfigured(t, directory, address, bindings, nil)
+}
+
+func startWorkerdConfigured(t *testing.T, directory, address, bindings string, released func(string)) (*workerdServer, error) {
+	t.Helper()
 	if err := workerdLoopback(address); err != nil {
 		return nil, err
 	}
@@ -69,7 +79,7 @@ func startWorkerdWithPortHook(t *testing.T, directory, address string, released 
 			if released != nil {
 				released(address)
 			}
-			server, launchError := startWorkerdAttempt(t, directory, address)
+			server, launchError := startWorkerdAttempt(t, directory, address, bindings)
 			if launchError == nil {
 				return server, nil
 			}
@@ -84,7 +94,7 @@ func startWorkerdWithPortHook(t *testing.T, directory, address string, released 
 	return nil, fmt.Errorf("workerd bind failed after three ports: %w", previous)
 }
 
-func startWorkerdAttempt(t *testing.T, directory, address string) (*workerdServer, error) {
+func startWorkerdAttempt(t *testing.T, directory, address, bindings string) (*workerdServer, error) {
 	t.Helper()
 	binary, err := exec.LookPath("workerd")
 	if err != nil {
@@ -122,8 +132,12 @@ func startWorkerdAttempt(t *testing.T, directory, address string) (*workerdServe
 		}
 		modules = append(modules, fmt.Sprintf("(name = %s, %s = embed %s)", strconv.Quote(name), kind, strconv.Quote(name)))
 	}
+	bindingConfig := ""
+	if bindings != "" {
+		bindingConfig = ", bindings = [" + bindings + "]"
+	}
 	config := `using Workerd = import "/workerd/workerd.capnp";
-const config :Workerd.Config = (services = [(name = "compute", worker = (modules = [` + strings.Join(modules, ",") + `], compatibilityDate = "2026-10-07"))], sockets = [(name = "http", address = ` + strconv.Quote(address) + `, http = (), service = "compute")]);`
+const config :Workerd.Config = (services = [(name = "compute", worker = (modules = [` + strings.Join(modules, ",") + `], compatibilityDate = "2026-10-07"` + bindingConfig + `))], sockets = [(name = "http", address = ` + strconv.Quote(address) + `, http = (), service = "compute")]);`
 	configPath := filepath.Join(scratch, "config.capnp")
 	if err := os.WriteFile(configPath, []byte(config), 0600); err != nil {
 		return nil, err
