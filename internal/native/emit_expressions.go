@@ -99,6 +99,9 @@ func (e *emitter) evaluate(expression ir.Expression) string {
 	case ir.Read:
 		return e.read(expression)
 	case ir.Truthy:
+		if present, ok := e.optionalFunctionPresence(expression.Value); ok {
+			return present
+		}
 		return e.toBoolean(expression.Value.Type(), e.value(expression.Value))
 	case ir.Void:
 		e.line("(void)%s;", e.value(expression.Value))
@@ -272,6 +275,9 @@ func (e *emitter) evaluate(expression ir.Expression) string {
 	case ir.Undefined:
 		return "NULL"
 	case ir.IsUndefined:
+		if present, ok := e.optionalFunctionPresence(expression.Value); ok {
+			return "(!" + present + ")"
+		}
 		if expression.Value.Type().IsMaybe() {
 			return fmt.Sprintf("(!(%s).present)", e.value(expression.Value))
 		}
@@ -853,6 +859,11 @@ func (e *emitter) evaluate(expression ir.Expression) string {
 	case ir.ObjectCall:
 		return e.objectCall(expression)
 	case ir.NumberCall:
+		if expression.Function == "toBoolean" && len(expression.Arguments) == 1 {
+			if present, ok := e.optionalFunctionPresence(expression.Arguments[0]); ok {
+				return present
+			}
+		}
 		if value, known := e.libraryNumberCall(expression); known {
 			return value
 		}

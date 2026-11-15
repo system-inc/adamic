@@ -1692,7 +1692,7 @@ func scanLowerWithElementKey(key *viewElementKey, program *load.Program, typeChe
 	lowering := &lowering{cycleTypes: cycleTypes, program: program, checker: typeChecker, result: &ir.Program{}, this: -1, functionIndex: -1, entry: entry, programPlan: plan, programDiscovery: discovery, elementKey: key}
 	// As lowerWithElementKey does: a stop before checkHostMemberWrites judges a deferred host member
 	// write is main's stop at that write.
-	defer func() { err = lowering.hostMemberPending(err) }()
+	defer func() { err = lowering.hostMemberPending(lowering.regexpServedPending(err)) }()
 	lowering.result.ProgramRegion = discovery || plan != nil
 	if plan != nil {
 		lowering.result.ProgramTypes = plan.types
@@ -1762,6 +1762,10 @@ func scanLowerWithElementKey(key *viewElementKey, program *load.Program, typeChe
 		return nil, err
 	}
 	if err := lowering.checkLibrarySpreads(modules); err != nil {
+		return nil, err
+	}
+	// As lowerWithElementKey does, judge every served value read after all relations.
+	if err := lowering.checkRegExpServedValues(); err != nil {
 		return nil, err
 	}
 	if err := lowering.checkAccessorSpreads(); err != nil {

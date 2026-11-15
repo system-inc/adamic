@@ -1,0 +1,4 @@
+interface M { test?: ((s: string) => boolean) | null }
+const trigger: M = /a/;
+function run(v: M): void { console.log(String(v.test && 1)); }
+run({ test: null });
