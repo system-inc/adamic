@@ -37,7 +37,7 @@ The #3zex15c precedent (`typescript/view-guard-roads-census`, `c13c98f7e920082c5
 
 ## CommonJSBundle ordinary 79-root table
 
-0/79 roots completed twice with matching first-stop tuples. 0 completed roots have the new reason as their first stop. Table incomplete; remaining roots have no result yet.
+10/79 roots completed twice with matching first-stop tuples. 0 completed roots have the new reason as their first stop. Table incomplete; remaining roots have no result yet.
 
 - `corePublic.ts`: pending.
 - `hostErrors.ts`: pending.
@@ -46,6 +46,16 @@ The production driver is built without any overlay from the exact head. The scri
 
 | # | Root | First outcome | Site | Reason |
 | ---: | --- | --- | --- | --- |
+| 1 | ts.moduleSpecifiers.ts | Refused | src/compiler/sys.ts:1385:31 | a method read as a value (writeFile would lose its object, and this with it) |
+| 2 | ts.performance.ts | Refused | src/compiler/sys.ts:1385:31 | a method read as a value (writeFile would lose its object, and this with it) |
+| 3 | ts.ts | Refused | src/compiler/sys.ts:1385:31 | a method read as a value (writeFile would lose its object, and this with it) |
+| 4 | binder.ts | Refused | src/compiler/sys.ts:1385:31 | a method read as a value (writeFile would lose its object, and this with it) |
+| 5 | builder.ts | Refused | src/compiler/sys.ts:1385:31 | a method read as a value (writeFile would lose its object, and this with it) |
+| 6 | builderPublic.ts | Refused | src/compiler/sys.ts:1385:31 | a method read as a value (writeFile would lose its object, and this with it) |
+| 7 | builderState.ts | Refused | src/compiler/sys.ts:1385:31 | a method read as a value (writeFile would lose its object, and this with it) |
+| 8 | builderStatePublic.ts | Refused | src/compiler/sys.ts:1385:31 | a method read as a value (writeFile would lose its object, and this with it) |
+| 9 | checker.ts | Refused | src/compiler/sys.ts:1385:31 | a method read as a value (writeFile would lose its object, and this with it) |
+| 10 | commandLineParser.ts | Refused | src/compiler/sys.ts:1385:31 | a method read as a value (writeFile would lose its object, and this with it) |
 
 ## Reproduction and receipts
 

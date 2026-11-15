@@ -36,7 +36,118 @@
       "units_affected": null
     }
   },
-  "roots_completed": 0,
-  "roots": [],
+  "roots_completed": 10,
+  "roots": [
+    {
+      "index": 1,
+      "root": "ts.moduleSpecifiers.ts",
+      "kind": "Refused",
+      "where": "src/compiler/sys.ts:1385:31",
+      "reason": "a method read as a value (writeFile would lose its object, and this with it)",
+      "seconds": [
+        15.751346764000001,
+        13.625396432
+      ]
+    },
+    {
+      "index": 2,
+      "root": "ts.performance.ts",
+      "kind": "Refused",
+      "where": "src/compiler/sys.ts:1385:31",
+      "reason": "a method read as a value (writeFile would lose its object, and this with it)",
+      "seconds": [
+        14.392741297,
+        13.528746932
+      ]
+    },
+    {
+      "index": 3,
+      "root": "ts.ts",
+      "kind": "Refused",
+      "where": "src/compiler/sys.ts:1385:31",
+      "reason": "a method read as a value (writeFile would lose its object, and this with it)",
+      "seconds": [
+        13.92500591,
+        13.354199306
+      ]
+    },
+    {
+      "index": 4,
+      "root": "binder.ts",
+      "kind": "Refused",
+      "where": "src/compiler/sys.ts:1385:31",
+      "reason": "a method read as a value (writeFile would lose its object, and this with it)",
+      "seconds": [
+        13.802319202,
+        13.205322268
+      ]
+    },
+    {
+      "index": 5,
+      "root": "builder.ts",
+      "kind": "Refused",
+      "where": "src/compiler/sys.ts:1385:31",
+      "reason": "a method read as a value (writeFile would lose its object, and this with it)",
+      "seconds": [
+        14.118965686,
+        13.581170962
+      ]
+    },
+    {
+      "index": 6,
+      "root": "builderPublic.ts",
+      "kind": "Refused",
+      "where": "src/compiler/sys.ts:1385:31",
+      "reason": "a method read as a value (writeFile would lose its object, and this with it)",
+      "seconds": [
+        14.115215112,
+        13.378710067
+      ]
+    },
+    {
+      "index": 7,
+      "root": "builderState.ts",
+      "kind": "Refused",
+      "where": "src/compiler/sys.ts:1385:31",
+      "reason": "a method read as a value (writeFile would lose its object, and this with it)",
+      "seconds": [
+        13.690758117,
+        12.874145763
+      ]
+    },
+    {
+      "index": 8,
+      "root": "builderStatePublic.ts",
+      "kind": "Refused",
+      "where": "src/compiler/sys.ts:1385:31",
+      "reason": "a method read as a value (writeFile would lose its object, and this with it)",
+      "seconds": [
+        13.495876685,
+        14.813129899
+      ]
+    },
+    {
+      "index": 9,
+      "root": "checker.ts",
+      "kind": "Refused",
+      "where": "src/compiler/sys.ts:1385:31",
+      "reason": "a method read as a value (writeFile would lose its object, and this with it)",
+      "seconds": [
+        14.905397978,
+        15.148120928
+      ]
+    },
+    {
+      "index": 10,
+      "root": "commandLineParser.ts",
+      "kind": "Refused",
+      "where": "src/compiler/sys.ts:1385:31",
+      "reason": "a method read as a value (writeFile would lose its object, and this with it)",
+      "seconds": [
+        14.053696139,
+        13.930698712
+      ]
+    }
+  ],
   "new_first_stops": []
 }
