@@ -9,7 +9,8 @@ page disagree, the code is right and this page is a bug.
 
 ## Usage
 
-The binary prints this, and only this, for every usage error, and for `--help`. `TestDocumentedUsageIsTheCommands`
+The binary prints this, and only this, for every usage error but the two this page names with a line of their own (a
+misordered `build`, and `--module-format commonjs`), and for `--help`. `TestDocumentedUsageIsTheCommands`
 (`cmd/adamic/cli_doc_test.go`) fails when this block and `usage` (`cmd/adamic/main.go:usage`) differ,
 and when `build` parses a flag the block doesn't name.
 
@@ -58,8 +59,11 @@ The switch is positional (`cmd/adamic/main.go:run`): the source is the argument 
 comes immediately after the source. The flags after `-o <out>` may come in any order
 (`cmd/adamic/tsgo.go:buildWithNative`), `--reactor` among them. So
 `build --target wasm32-wasi a.a -o a.wasm` and `build a.a -o a.wasm --target wasm32-wasi` both work
-(`cmd/adamic/command_guards_test.go:TestBuildWASISanitizeTargetBeforeSource,TestBuildWASISanitizeTargetAfterSource`), and `build -o out a.a` or `build a.a --count -o out` is a
-usage error.
+(`cmd/adamic/command_guards_test.go:TestBuildWASISanitizeTargetBeforeSource,TestBuildWASISanitizeTargetAfterSource`). A `build` holding
+`-o <out>` anywhere else, `build -o out a.a` or `build a.a --count -o out`, exits 2 with one line saying the file and
+`-o <out>` come first and the form to copy, in place of the usage (`cmd/adamic/main.go:buildOutputMisplaced,buildOutputOrder`,
+`cmd/adamic/command_guards_test.go:TestBuildOutputMisplacedNamesTheOrder`). A `build` with no `-o`, or ending on it,
+prints the usage.
 
 `--explain-checks` is lifted out of the arguments wherever it appears, before the switch
 (`cmd/adamic/main.go:run`). With `c` or `js` it goes to `renderWithChecks`
