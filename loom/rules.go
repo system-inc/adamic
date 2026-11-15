@@ -36,7 +36,8 @@ type Rules struct {
 // WitnessRule is the witness of main: a witness of main's tip every Every landings, or Hours after the last one while a
 // landing a narrow key decided waits for one, on the first of Machines with none running. Every is from 1 to
 // MaximumWitnessEvery, Hours from 1 to MaximumWitnessHours, and Machines 1 to MaximumWitnessMachines box names, each once,
-// all three required. At, optional (Loom 0.8.909, #h9p10te), is a UTC time of day "HH:MM" when the queue makes a due each
+// all three required but Machines, which a rule naming FullBlock and no At may leave out (Loom's #y9xkr81): the full
+// block's rule alone, no witness of main run, its dues proved by the full block. At, optional (Loom 0.8.909, #h9p10te), is a UTC time of day "HH:MM" when the queue makes a due each
 // day. FullBlock, optional (Loom 0.8.1132, #xtymtgv), names the box whose fresh take of a block runs it as a full witness,
 // at most once each Hours. The lander's WitnessRule, and the queue's (QueueRules.ts).
 type WitnessRule struct {
@@ -224,7 +225,8 @@ func ParseRules(data []byte) (Rules, error) {
 }
 
 // checkWitness reads the witness as strictly as the lander's parseWitness and the queue's checkWitness: an object of every,
-// hours and machines, never null, each present and in its range, and the machines box names, each once; at, when present,
+// hours and machines, never null, each present and in its range, and the machines box names, each once, machines absent
+// only beside fullBlock and with no at (#y9xkr81, the full block's rule alone); at, when present,
 // a UTC time of day "HH:MM"; and fullBlock, when present, exactly {box, hours}, box a box name and hours from 1 to
 // MaximumWitnessHours. Any other key is refused by ParseRules' strict decode.
 func checkWitness(raw json.RawMessage) error {
@@ -240,16 +242,21 @@ func checkWitness(raw json.RawMessage) error {
 		}
 	}
 	listed, present := named["machines"]
-	var machines []string
-	if !present || bytes.Equal(bytes.TrimSpace(listed), []byte("null")) || json.Unmarshal(listed, &machines) != nil || len(machines) == 0 || len(machines) > MaximumWitnessMachines {
-		return fmt.Errorf("rules.json: witness's machines is %s, and it's a list of 1 to %d box names", listed, MaximumWitnessMachines)
-	}
-	seen := map[string]bool{}
-	for _, box := range machines {
-		if !builderPattern.MatchString(box) || seen[box] {
-			return fmt.Errorf("rules.json: witness's machines names box names, each once, not %q", box)
+	_, full := named["fullBlock"]
+	_, timed := named["at"]
+	// The full block's rule alone (#y9xkr81): no machines and no at, so no witness of main runs. Any other rule names them.
+	if present || !full || timed {
+		var machines []string
+		if !present || bytes.Equal(bytes.TrimSpace(listed), []byte("null")) || json.Unmarshal(listed, &machines) != nil || len(machines) == 0 || len(machines) > MaximumWitnessMachines {
+			return fmt.Errorf("rules.json: witness's machines is %s, and it's a list of 1 to %d box names, absent only beside fullBlock with no at", listed, MaximumWitnessMachines)
 		}
-		seen[box] = true
+		seen := map[string]bool{}
+		for _, box := range machines {
+			if !builderPattern.MatchString(box) || seen[box] {
+				return fmt.Errorf("rules.json: witness's machines names box names, each once, not %q", box)
+			}
+			seen[box] = true
+		}
 	}
 	if at, present := named["at"]; present {
 		var time string
