@@ -1,5 +1,15 @@
 [
   {
+    "path": "/workspace/bind-extra-parameters-scratch/results/control/base-production.jsonl",
+    "bytes": 144,
+    "sha256": "e99cd3f396d63b2d27001f48c0d3c9ab5d0eb0059c7b51445e279a107f97829a"
+  },
+  {
+    "path": "/workspace/bind-extra-parameters-scratch/results/control/base-production.log",
+    "bytes": 242,
+    "sha256": "da9f03f24010dae7439b4a80ac026c5de64aa2906022e51eccab22ef60e4b684"
+  },
+  {
     "path": "/workspace/bind-extra-parameters-scratch/results/control/base.jsonl",
     "bytes": 29081,
     "sha256": "c6d68e1f7fbe1ded9305a768a8aae3c573b060fe4cf0fdbdf544e7275f6c12c0"
@@ -13,6 +23,16 @@
     "path": "/workspace/bind-extra-parameters-scratch/results/control/control.json",
     "bytes": 1497,
     "sha256": "2113b52797f7e8ec1113005a18385993db780fb44794792dc43fa38129d99ff1"
+  },
+  {
+    "path": "/workspace/bind-extra-parameters-scratch/results/control/head-production.jsonl",
+    "bytes": 309,
+    "sha256": "1d281ec2f9fd65c10ebf590cdc65b19ab25f58d2360f69462334e9590cf96605"
+  },
+  {
+    "path": "/workspace/bind-extra-parameters-scratch/results/control/head-production.log",
+    "bytes": 262,
+    "sha256": "92e15249393b8548767620e334b890ceb9401da44e53fa013f8e925aa2bf951f"
   },
   {
     "path": "/workspace/bind-extra-parameters-scratch/results/control/head.jsonl",
@@ -65,12 +85,52 @@
     "sha256": "933ce710e8619eb9288fbaf46c0a9d025fc933716decf6a56732d2ef9f332f29"
   },
   {
+    "path": "/workspace/bind-extra-parameters-scratch/results/seam-control/base.jsonl",
+    "bytes": 1486,
+    "sha256": "3d637ef6e79e8d53f9084d2b57f493c2f35c23f8108dfa3208850ba0c9fc3651"
+  },
+  {
+    "path": "/workspace/bind-extra-parameters-scratch/results/seam-control/base.log",
+    "bytes": 235,
+    "sha256": "644e4d035e5e2c06f92c10db8bc31f7d00aafa035418ce70337cabd83225d16d"
+  },
+  {
+    "path": "/workspace/bind-extra-parameters-scratch/results/seam-control/head.jsonl",
+    "bytes": 1937,
+    "sha256": "78a2dc744c486db9150892532df436af47d666787865a0540848d9ddaa201154"
+  },
+  {
+    "path": "/workspace/bind-extra-parameters-scratch/results/seam-control/head.log",
+    "bytes": 236,
+    "sha256": "9b12d3b43b18d2ad6995891ab4f7c1bd51610d30d4e26443260d22aaff155aed"
+  },
+  {
     "path": "/workspace/bind-extra-parameters-scratch/base-build.log",
     "bytes": 224,
     "sha256": "949b73841937991021e211f27bb52327c02c11c88042f890edbfb4789dd95be6"
   },
   {
+    "path": "/workspace/bind-extra-parameters-scratch/base-production-build.log",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "path": "/workspace/bind-extra-parameters-scratch/base-seam-build.log",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
     "path": "/workspace/bind-extra-parameters-scratch/head-build.log",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "path": "/workspace/bind-extra-parameters-scratch/head-production-build.log",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "path": "/workspace/bind-extra-parameters-scratch/head-seam-build.log",
     "bytes": 0,
     "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
   },
@@ -115,9 +175,19 @@
     "sha256": "6e743e95e82388375ceb361870271932645d08ecacb0233ca0fc2b4413f218f6"
   },
   {
+    "path": "/workspace/bind-extra-parameters-scratch/base-production-census",
+    "bytes": 37614669,
+    "sha256": "cdceb5430fc929731f7278ff8172c59321ee53a7d5e114f6bc28026eed02df50"
+  },
+  {
     "path": "/workspace/bind-extra-parameters-scratch/head-census",
     "bytes": 37034265,
     "sha256": "483aee8e3d01c9413351f18af66966572e72bf167afeb68ea51cc61c129ab919"
+  },
+  {
+    "path": "/workspace/bind-extra-parameters-scratch/head-production-census",
+    "bytes": 37624454,
+    "sha256": "6a5ea2a5e111232f11efa12d84259b59a221a8c00647029d237e058e91e6d7ba"
   },
   {
     "path": "/workspace/bind-extra-parameters-scratch/source-manifest.json",
@@ -130,6 +200,16 @@
     "sha256": "aa3de84947cdb282043dca029f074abd0744aebb0f8b140af8b46a26062a9815"
   },
   {
+    "path": "/workspace/bind-extra-parameters-scratch/build-production.py",
+    "bytes": 873,
+    "sha256": "14b54dc57587cb66a63eaa516aaa356257e280de0addfec743b80fd5b4695dc3"
+  },
+  {
+    "path": "/workspace/bind-extra-parameters-scratch/build-seam.py",
+    "bytes": 2398,
+    "sha256": "5b09fe3c41e98c3d332c77dedaef4e19afafea3502f1bfebbe449f2c3a443854"
+  },
+  {
     "path": "/workspace/bind-extra-parameters-scratch/first.py",
     "bytes": 3234,
     "sha256": "8cd936178cd25b4aba8734ae74db333b1f0a851aaba2e2bc9a9f9279b4722c3b"
@@ -138,6 +218,11 @@
     "path": "/workspace/bind-extra-parameters-scratch/measure.py",
     "bytes": 10738,
     "sha256": "94ee8fd282541acd4f2b07233902d9bc60114daf8fc028fc630c604b82247363"
+  },
+  {
+    "path": "/workspace/bind-extra-parameters-scratch/seam_report.py",
+    "bytes": 4580,
+    "sha256": "8669e328846986272b8e95947ff5381de572514aff03fced6a70361245f6c2dd"
   },
   {
     "path": "/workspace/bind-extra-parameters-scratch/timed.py",
@@ -153,5 +238,320 @@
     "path": "/workspace/bind-extra-parameters-scratch/env.sh",
     "bytes": 543,
     "sha256": "dd30c296dd483cf9f98200f2317f2d48bff1d49a2c3acc0b6f355ae8d57f846f"
+  },
+  {
+    "path": "/workspace/bind-extra-parameters-scratch/base-bind-seam",
+    "bytes": 38060210,
+    "sha256": "aa46f4ef6d0adeff9aee0930f3429bfa0332613d1d4bd1ae8595093314e6a56a"
+  },
+  {
+    "path": "/workspace/bind-extra-parameters-scratch/head-bind-seam",
+    "bytes": 38071171,
+    "sha256": "527857c04f7090b97b96afe68853803e6d690c2f2b2d749a5924a0219087cc2c"
+  },
+  {
+    "path": "/workspace/bind-extra-parameters-scratch/bind_seam.go.txt",
+    "bytes": 5762,
+    "sha256": "721746df888df744407a871c1c4a8c70642bfe9312e9676667c918e887c1d898"
+  },
+  {
+    "path": "/workspace/bind-extra-parameters-scratch/bind_seam_main.go.txt",
+    "bytes": 829,
+    "sha256": "9ce5d30fa71f01364d0cac8a5721201d6478da089848b3fef1b1669ee008ac93"
+  },
+  {
+    "path": "/workspace/bind-extra-parameters-scratch/base-seam-overlay/internal_lower_lower.go",
+    "bytes": 34515,
+    "sha256": "fc04045bbe377e02b59ab5b0408453873bc766525b93d7c9fb0d803056fc0fba"
+  },
+  {
+    "path": "/workspace/bind-extra-parameters-scratch/base-seam-overlay/internal_load_load.go",
+    "bytes": 13520,
+    "sha256": "fb7e14fd673f689330564b6486c5db6e0722bf5b3a8fab103322bd7d49f3eb07"
+  },
+  {
+    "path": "/workspace/bind-extra-parameters-scratch/base-seam-overlay/internal_lower_latent_piece.go",
+    "bytes": 4991,
+    "sha256": "ae04c70b5cd7c746e9f2ffdd61147ab8d92056bea29342b5be9feee4fd84afee"
+  },
+  {
+    "path": "/workspace/bind-extra-parameters-scratch/base-seam-overlay/stage3_census_latent_replay_worker_main.go",
+    "bytes": 3270,
+    "sha256": "70d936e625ff77e3e1243061f73b60544abf9d17e30b0a6118448283d563b2d5"
+  },
+  {
+    "path": "/workspace/bind-extra-parameters-scratch/base-seam-overlay/internal_lower_latent_units.go",
+    "bytes": 11056,
+    "sha256": "fa099b0021a1541d6969d797274f8709b12d03356429adb5a9a692a45d685b11"
+  },
+  {
+    "path": "/workspace/bind-extra-parameters-scratch/base-seam-overlay/internal_lower_latent_scoped_tail.go",
+    "bytes": 4617,
+    "sha256": "4c84db89648acc9407962025de626bf06615cd7061da57b86628e0ad5c99767d"
+  },
+  {
+    "path": "/workspace/bind-extra-parameters-scratch/base-seam-overlay/internal_lower_generic.go",
+    "bytes": 18709,
+    "sha256": "65fd3364373ced517d0543a94007a37d2f87e45223f20945577b43e8d81a2ed8"
+  },
+  {
+    "path": "/workspace/bind-extra-parameters-scratch/base-seam-overlay/internal_lower_latent_pass_ledger.go",
+    "bytes": 3933,
+    "sha256": "14b593e1b2c84ae6f14e290ae3d6c6fd0cdf3be5abcf4cb2cfde75bb1e49f41e"
+  },
+  {
+    "path": "/workspace/bind-extra-parameters-scratch/base-seam-overlay/internal_lower_statements.go",
+    "bytes": 14567,
+    "sha256": "bcfc857a47f0257238d3d3a39096d7aead73f8021c2344c077f2923691be365f"
+  },
+  {
+    "path": "/workspace/bind-extra-parameters-scratch/base-seam-overlay/internal_lower_locals.go",
+    "bytes": 17723,
+    "sha256": "fa21e0661addb989a3b89a418814a1e7ff8af9d6f89040fc7293c6bc83034602"
+  },
+  {
+    "path": "/workspace/bind-extra-parameters-scratch/base-seam-overlay/internal_lower_latent_speculative.go",
+    "bytes": 21161,
+    "sha256": "6fae169360682ca61b5338feee8fa325d45df9ad4d3fe26e776790ec0378a73e"
+  },
+  {
+    "path": "/workspace/bind-extra-parameters-scratch/base-seam-overlay/bind_seam.go",
+    "bytes": 6482,
+    "sha256": "bb1b1cd4b59548773a72e05589fcf3a041c98f026188c015ff90120dec777530"
+  },
+  {
+    "path": "/workspace/bind-extra-parameters-scratch/base-seam-overlay/internal_lower_latent_full.go",
+    "bytes": 7833,
+    "sha256": "99b8f7fa928e3dd6884068b9c858e4d8c9a65eb1e3b7a5c2ee0f71c19f45342f"
+  },
+  {
+    "path": "/workspace/bind-extra-parameters-scratch/base-seam-overlay/internal_lower_latent_hook.go",
+    "bytes": 23881,
+    "sha256": "abd73e4a70cdaf0f8fccb857e434a92d43bef69864e982ea841ebafde74df830"
+  },
+  {
+    "path": "/workspace/bind-extra-parameters-scratch/base-seam-overlay/internal_lower_latent_state.go",
+    "bytes": 83465,
+    "sha256": "83e4abdb5ba91f54ce9d19c390687332f82f69f89cbfdab5bf68b6bb1904d9c0"
+  },
+  {
+    "path": "/workspace/bind-extra-parameters-scratch/base-seam-overlay/internal_lower_latent_scoped_tail_test.go",
+    "bytes": 3804,
+    "sha256": "d934c6fe78b5183d756b5b24f6be568ecf28b80f819ab0fd54003c1696f83d0a"
+  },
+  {
+    "path": "/workspace/bind-extra-parameters-scratch/base-seam-overlay/internal_lower_latent_progress.go",
+    "bytes": 3587,
+    "sha256": "bdb2684110c5e6c160909c0d36cf975778a9b8f8f46273df8b3d75729be494c3"
+  },
+  {
+    "path": "/workspace/bind-extra-parameters-scratch/base-seam-overlay/internal_lower_entries_records.go",
+    "bytes": 32835,
+    "sha256": "50678750c15518faf7d614399542e2014999207a72da48f3f453dfac38900040"
+  },
+  {
+    "path": "/workspace/bind-extra-parameters-scratch/base-seam-overlay/stage3_census_latent_tool_relation_overflow_test.go",
+    "bytes": 7735,
+    "sha256": "e63247a585d0722fcbfe1a9f32b9f4e672d48f6f4520b7459100b94d61907c6c"
+  },
+  {
+    "path": "/workspace/bind-extra-parameters-scratch/base-seam-overlay/internal_lower_expression.go",
+    "bytes": 96659,
+    "sha256": "7eb1c5c94bef9b6ee6db36983061bcec4bdf92d3e662f2c9a86c02c796498259"
+  },
+  {
+    "path": "/workspace/bind-extra-parameters-scratch/base-seam-overlay/stage3_census_latent_tool_main.go",
+    "bytes": 914,
+    "sha256": "d85e6f25a74edc5d4e802426d312ddab6afaa489f58e3633cf65bd58f9dd3f0c"
+  },
+  {
+    "path": "/workspace/bind-extra-parameters-scratch/base-seam-overlay/internal_lower_refusals.go",
+    "bytes": 15071,
+    "sha256": "35e3116e30afb2174e1630f2fbbe2649ac41c508ee2edc7676f53da03d387cb5"
+  },
+  {
+    "path": "/workspace/bind-extra-parameters-scratch/base-seam-overlay/internal_lower_latent_deferred_probe_test.go",
+    "bytes": 2438,
+    "sha256": "a59311fe81ce15b510fe53648f7fc6a2c3004061e44d718b2105a46cdb96ea6b"
+  },
+  {
+    "path": "/workspace/bind-extra-parameters-scratch/base-seam-overlay/internal_lower_latent_relation_overflow.go",
+    "bytes": 8424,
+    "sha256": "1630d2346899454d170faff069c67e6cdeea959cba13477e4a8a3d6026e4cf63"
+  },
+  {
+    "path": "/workspace/bind-extra-parameters-scratch/base-seam-overlay/internal_load_latent_hook.go",
+    "bytes": 3179,
+    "sha256": "154155d62954f677731f302b7dc57a3aab914ff373618fd9efc0a1bf3d68b5a4"
+  },
+  {
+    "path": "/workspace/bind-extra-parameters-scratch/base-seam-overlay/internal_lower_functions.go",
+    "bytes": 23616,
+    "sha256": "ddcf50645205fc8686bc21bdd6220087965e6463336a2067ce377a5c8b2fd820"
+  },
+  {
+    "path": "/workspace/bind-extra-parameters-scratch/base-seam-overlay/internal_lower_latent_timing.go",
+    "bytes": 1241,
+    "sha256": "080b7937b2ec03c1837ec639a7916056fbf2c439f5491c321fc972899f41ad3f"
+  },
+  {
+    "path": "/workspace/bind-extra-parameters-scratch/base-seam-overlay/internal_lower_latent_replay.go",
+    "bytes": 4197,
+    "sha256": "4dd0d8bc81da16d543f3d278d53a7e67307d3113df8f3b6611fe22c62e674b1d"
+  },
+  {
+    "path": "/workspace/bind-extra-parameters-scratch/head-seam-overlay/internal_lower_lower.go",
+    "bytes": 34515,
+    "sha256": "fc04045bbe377e02b59ab5b0408453873bc766525b93d7c9fb0d803056fc0fba"
+  },
+  {
+    "path": "/workspace/bind-extra-parameters-scratch/head-seam-overlay/internal_load_load.go",
+    "bytes": 13520,
+    "sha256": "fb7e14fd673f689330564b6486c5db6e0722bf5b3a8fab103322bd7d49f3eb07"
+  },
+  {
+    "path": "/workspace/bind-extra-parameters-scratch/head-seam-overlay/internal_lower_latent_piece.go",
+    "bytes": 4991,
+    "sha256": "ae04c70b5cd7c746e9f2ffdd61147ab8d92056bea29342b5be9feee4fd84afee"
+  },
+  {
+    "path": "/workspace/bind-extra-parameters-scratch/head-seam-overlay/stage3_census_latent_replay_worker_main.go",
+    "bytes": 3270,
+    "sha256": "70d936e625ff77e3e1243061f73b60544abf9d17e30b0a6118448283d563b2d5"
+  },
+  {
+    "path": "/workspace/bind-extra-parameters-scratch/head-seam-overlay/internal_lower_latent_units.go",
+    "bytes": 11056,
+    "sha256": "fa099b0021a1541d6969d797274f8709b12d03356429adb5a9a692a45d685b11"
+  },
+  {
+    "path": "/workspace/bind-extra-parameters-scratch/head-seam-overlay/internal_lower_latent_scoped_tail.go",
+    "bytes": 4617,
+    "sha256": "4c84db89648acc9407962025de626bf06615cd7061da57b86628e0ad5c99767d"
+  },
+  {
+    "path": "/workspace/bind-extra-parameters-scratch/head-seam-overlay/internal_lower_generic.go",
+    "bytes": 18709,
+    "sha256": "65fd3364373ced517d0543a94007a37d2f87e45223f20945577b43e8d81a2ed8"
+  },
+  {
+    "path": "/workspace/bind-extra-parameters-scratch/head-seam-overlay/internal_lower_latent_pass_ledger.go",
+    "bytes": 3933,
+    "sha256": "14b593e1b2c84ae6f14e290ae3d6c6fd0cdf3be5abcf4cb2cfde75bb1e49f41e"
+  },
+  {
+    "path": "/workspace/bind-extra-parameters-scratch/head-seam-overlay/internal_lower_statements.go",
+    "bytes": 14567,
+    "sha256": "bcfc857a47f0257238d3d3a39096d7aead73f8021c2344c077f2923691be365f"
+  },
+  {
+    "path": "/workspace/bind-extra-parameters-scratch/head-seam-overlay/internal_lower_locals.go",
+    "bytes": 17723,
+    "sha256": "fa21e0661addb989a3b89a418814a1e7ff8af9d6f89040fc7293c6bc83034602"
+  },
+  {
+    "path": "/workspace/bind-extra-parameters-scratch/head-seam-overlay/internal_lower_latent_speculative.go",
+    "bytes": 21161,
+    "sha256": "6fae169360682ca61b5338feee8fa325d45df9ad4d3fe26e776790ec0378a73e"
+  },
+  {
+    "path": "/workspace/bind-extra-parameters-scratch/head-seam-overlay/bind_seam.go",
+    "bytes": 6482,
+    "sha256": "bb1b1cd4b59548773a72e05589fcf3a041c98f026188c015ff90120dec777530"
+  },
+  {
+    "path": "/workspace/bind-extra-parameters-scratch/head-seam-overlay/internal_lower_latent_full.go",
+    "bytes": 7833,
+    "sha256": "99b8f7fa928e3dd6884068b9c858e4d8c9a65eb1e3b7a5c2ee0f71c19f45342f"
+  },
+  {
+    "path": "/workspace/bind-extra-parameters-scratch/head-seam-overlay/internal_lower_latent_hook.go",
+    "bytes": 23881,
+    "sha256": "abd73e4a70cdaf0f8fccb857e434a92d43bef69864e982ea841ebafde74df830"
+  },
+  {
+    "path": "/workspace/bind-extra-parameters-scratch/head-seam-overlay/internal_lower_latent_state.go",
+    "bytes": 83465,
+    "sha256": "83e4abdb5ba91f54ce9d19c390687332f82f69f89cbfdab5bf68b6bb1904d9c0"
+  },
+  {
+    "path": "/workspace/bind-extra-parameters-scratch/head-seam-overlay/internal_lower_latent_scoped_tail_test.go",
+    "bytes": 3804,
+    "sha256": "d934c6fe78b5183d756b5b24f6be568ecf28b80f819ab0fd54003c1696f83d0a"
+  },
+  {
+    "path": "/workspace/bind-extra-parameters-scratch/head-seam-overlay/internal_lower_latent_progress.go",
+    "bytes": 3587,
+    "sha256": "bdb2684110c5e6c160909c0d36cf975778a9b8f8f46273df8b3d75729be494c3"
+  },
+  {
+    "path": "/workspace/bind-extra-parameters-scratch/head-seam-overlay/internal_lower_entries_records.go",
+    "bytes": 32835,
+    "sha256": "50678750c15518faf7d614399542e2014999207a72da48f3f453dfac38900040"
+  },
+  {
+    "path": "/workspace/bind-extra-parameters-scratch/head-seam-overlay/stage3_census_latent_tool_relation_overflow_test.go",
+    "bytes": 7735,
+    "sha256": "e63247a585d0722fcbfe1a9f32b9f4e672d48f6f4520b7459100b94d61907c6c"
+  },
+  {
+    "path": "/workspace/bind-extra-parameters-scratch/head-seam-overlay/internal_lower_expression.go",
+    "bytes": 96659,
+    "sha256": "7eb1c5c94bef9b6ee6db36983061bcec4bdf92d3e662f2c9a86c02c796498259"
+  },
+  {
+    "path": "/workspace/bind-extra-parameters-scratch/head-seam-overlay/internal_lower_function_bind.go",
+    "bytes": 26947,
+    "sha256": "cf6731aac6de7a3c663f7d61b0ea49562bb07aefe00c74d4ba102ba78e38d4f7"
+  },
+  {
+    "path": "/workspace/bind-extra-parameters-scratch/head-seam-overlay/stage3_census_latent_tool_main.go",
+    "bytes": 914,
+    "sha256": "d85e6f25a74edc5d4e802426d312ddab6afaa489f58e3633cf65bd58f9dd3f0c"
+  },
+  {
+    "path": "/workspace/bind-extra-parameters-scratch/head-seam-overlay/internal_lower_refusals.go",
+    "bytes": 15071,
+    "sha256": "35e3116e30afb2174e1630f2fbbe2649ac41c508ee2edc7676f53da03d387cb5"
+  },
+  {
+    "path": "/workspace/bind-extra-parameters-scratch/head-seam-overlay/internal_lower_latent_deferred_probe_test.go",
+    "bytes": 2438,
+    "sha256": "a59311fe81ce15b510fe53648f7fc6a2c3004061e44d718b2105a46cdb96ea6b"
+  },
+  {
+    "path": "/workspace/bind-extra-parameters-scratch/head-seam-overlay/internal_lower_latent_relation_overflow.go",
+    "bytes": 8424,
+    "sha256": "1630d2346899454d170faff069c67e6cdeea959cba13477e4a8a3d6026e4cf63"
+  },
+  {
+    "path": "/workspace/bind-extra-parameters-scratch/head-seam-overlay/internal_load_latent_hook.go",
+    "bytes": 3179,
+    "sha256": "154155d62954f677731f302b7dc57a3aab914ff373618fd9efc0a1bf3d68b5a4"
+  },
+  {
+    "path": "/workspace/bind-extra-parameters-scratch/head-seam-overlay/internal_lower_functions.go",
+    "bytes": 23616,
+    "sha256": "ddcf50645205fc8686bc21bdd6220087965e6463336a2067ce377a5c8b2fd820"
+  },
+  {
+    "path": "/workspace/bind-extra-parameters-scratch/head-seam-overlay/internal_lower_latent_timing.go",
+    "bytes": 1241,
+    "sha256": "080b7937b2ec03c1837ec639a7916056fbf2c439f5491c321fc972899f41ad3f"
+  },
+  {
+    "path": "/workspace/bind-extra-parameters-scratch/head-seam-overlay/internal_lower_latent_replay.go",
+    "bytes": 4197,
+    "sha256": "4dd0d8bc81da16d543f3d278d53a7e67307d3113df8f3b6611fe22c62e674b1d"
+  },
+  {
+    "path": "/workspace/bind-extra-parameters-scratch/base-seam-overlay/overlay.json",
+    "bytes": 5071,
+    "sha256": "5e469c7fc9649218ee4a10047e32376d6fa43493bc88db0250f6c7cd80f9c5b8"
+  },
+  {
+    "path": "/workspace/bind-extra-parameters-scratch/head-seam-overlay/overlay.json",
+    "bytes": 5250,
+    "sha256": "06307a3a4ca2e9812cce104cdfb1866bcaf5af26deab37aaff518c11a4664447"
   }
 ]

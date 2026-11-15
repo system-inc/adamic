@@ -1,0 +1,200 @@
+{
+  "base": {
+    "exit_code": 0,
+    "rows": [
+      {
+        "array_mutation": false,
+        "bound_type_parameters": 1,
+        "check_error": "",
+        "known_reach_extra_parameters": [
+          {
+            "declared_parameters": 2,
+            "function": 1,
+            "name": "seen_value",
+            "position": {
+              "File": "",
+              "Line": 0,
+              "Column": 0
+            },
+            "reads_arguments": false,
+            "rest_element": 0
+          }
+        ],
+        "method_candidates": [],
+        "new_bind_stop": false,
+        "opaque_calls": true,
+        "reach_known": true,
+        "reach_reasons": [],
+        "reached": [
+          {
+            "declared_parameters": 2,
+            "function": 1,
+            "name": "seen_value",
+            "position": {
+              "File": "",
+              "Line": 0,
+              "Column": 0
+            },
+            "reads_arguments": false,
+            "rest_element": 0
+          }
+        ],
+        "record": "bind",
+        "source_expression": "narrow.bind(undefined)",
+        "typed_candidates": [
+          {
+            "declared_parameters": 2,
+            "function": 0,
+            "name": "seen",
+            "position": {
+              "File": "/workspace/bind-extra-parameters-scratch/control/main.ts",
+              "Line": 25,
+              "Column": 10
+            },
+            "reads_arguments": false,
+            "rest_element": 0
+          },
+          {
+            "declared_parameters": 2,
+            "function": 1,
+            "name": "seen_value",
+            "position": {
+              "File": "",
+              "Line": 0,
+              "Column": 0
+            },
+            "reads_arguments": false,
+            "rest_element": 0
+          },
+          {
+            "declared_parameters": 1,
+            "function": 3,
+            "name": "bound_function",
+            "position": {
+              "File": "",
+              "Line": 0,
+              "Column": 0
+            },
+            "reads_arguments": false,
+            "rest_element": 0
+          }
+        ],
+        "unit": "/workspace/bind-extra-parameters-scratch/control/main.ts:30:1",
+        "where": "/workspace/bind-extra-parameters-scratch/control/main.ts:30:15",
+        "whole_program": true
+      },
+      {
+        "checker_diagnostics": null,
+        "measurement": "no output; exact whole-program production-tail seam",
+        "module_format": "CommonJSBundle",
+        "record": "run",
+        "roots": [
+          "/workspace/bind-extra-parameters-scratch/control/main.ts"
+        ],
+        "seam_reached": 1,
+        "status": "completed"
+      }
+    ]
+  },
+  "head": {
+    "exit_code": 0,
+    "rows": [
+      {
+        "array_mutation": false,
+        "bound_type_parameters": 1,
+        "check_error": "bind of a function that declares 2 parameters where the type it's bound as names 1",
+        "known_reach_extra_parameters": [
+          {
+            "declared_parameters": 2,
+            "function": 1,
+            "name": "seen_value",
+            "position": {
+              "File": "",
+              "Line": 0,
+              "Column": 0
+            },
+            "reads_arguments": false,
+            "rest_element": 0
+          }
+        ],
+        "method_candidates": [],
+        "new_bind_stop": true,
+        "opaque_calls": true,
+        "reach_known": true,
+        "reach_reasons": [],
+        "reached": [
+          {
+            "declared_parameters": 2,
+            "function": 1,
+            "name": "seen_value",
+            "position": {
+              "File": "",
+              "Line": 0,
+              "Column": 0
+            },
+            "reads_arguments": false,
+            "rest_element": 0
+          }
+        ],
+        "record": "bind",
+        "source_expression": "narrow.bind(undefined)",
+        "typed_candidates": [
+          {
+            "declared_parameters": 2,
+            "function": 0,
+            "name": "seen",
+            "position": {
+              "File": "/workspace/bind-extra-parameters-scratch/control/main.ts",
+              "Line": 25,
+              "Column": 10
+            },
+            "reads_arguments": false,
+            "rest_element": 0
+          },
+          {
+            "declared_parameters": 2,
+            "function": 1,
+            "name": "seen_value",
+            "position": {
+              "File": "",
+              "Line": 0,
+              "Column": 0
+            },
+            "reads_arguments": false,
+            "rest_element": 0
+          },
+          {
+            "declared_parameters": 1,
+            "function": 3,
+            "name": "bound_function",
+            "position": {
+              "File": "",
+              "Line": 0,
+              "Column": 0
+            },
+            "reads_arguments": false,
+            "rest_element": 0
+          }
+        ],
+        "unit": "/workspace/bind-extra-parameters-scratch/control/main.ts:30:1",
+        "where": "/workspace/bind-extra-parameters-scratch/control/main.ts:30:15",
+        "whole_program": true
+      },
+      {
+        "checker_diagnostics": null,
+        "error": "/workspace/bind-extra-parameters-scratch/control/main.ts:30:15: stage 0 can't lower bind of a function that declares 2 parameters where the type it's bound as names 1 yet",
+        "kind": "NotYet",
+        "measurement": "no output; exact whole-program production-tail seam",
+        "module_format": "CommonJSBundle",
+        "reason": "bind of a function that declares 2 parameters where the type it's bound as names 1",
+        "record": "run",
+        "roots": [
+          "/workspace/bind-extra-parameters-scratch/control/main.ts"
+        ],
+        "seam_reached": 1,
+        "status": "production_stop",
+        "where": "/workspace/bind-extra-parameters-scratch/control/main.ts:30:15"
+      }
+    ]
+  }
+}

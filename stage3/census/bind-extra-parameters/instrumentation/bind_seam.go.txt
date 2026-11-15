@@ -1,0 +1,66 @@
+// Scratch measurement only; identical helper/driver installed on both commits.
+package lower
+import (
+ "context"
+ "encoding/json"
+ "errors"
+ "fmt"
+ "os"
+ "strings"
+ "github.com/microsoft/TypeScript/tsc/shim/ast"
+ "github.com/system-inc/adamic/internal/ir"
+ "github.com/system-inc/adamic/internal/load"
+)
+var bindSeamReached int
+func bindSeamEmit(row any) { out,err:=os.OpenFile(os.Getenv("BIND_SEAM_STREAM"),os.O_CREATE|os.O_APPEND|os.O_WRONLY,0600);if err!=nil{panic(err)};defer out.Close();if err:=json.NewEncoder(out).Encode(row);err!=nil{panic(err)} }
+func BindSeamRun(ctx context.Context,program *load.Program) {
+ bindSeamReached=0
+ row:=map[string]any{"record":"run","roots":[]string{},"checker_diagnostics":program.LatentDiagnostics(),"module_format":"CommonJSBundle","measurement":"no output; exact whole-program production-tail seam"}
+ roots:=[]string{};for _,r:=range program.LatentRoots(){roots=append(roots,program.FileName(r))};row["roots"]=roots
+ if len(program.LatentDiagnostics())!=0 {row["status"]="checker_rejected";bindSeamEmit(row);return}
+ entry:=program.LatentRoots()[0];checker,release:=program.Checker(ctx,entry);defer release()
+ defer func(){if p:=recover();p!=nil{row["status"]="panic";row["error"]=fmt.Sprint(p)};row["seam_reached"]=bindSeamReached;bindSeamEmit(row)}()
+ _,err:=lowerCheckedWithCycleTypes(program,checker,entry,nil,false,false,ModuleFormatCommonJSBundle,nil)
+ row["status"]="completed";if err!=nil{row["status"]="production_stop";row["error"]=err.Error();var n *NotYet;var r *Refused;if errors.As(err,&n){row["kind"]="NotYet";row["where"]=n.Where;row["reason"]=n.What};if errors.As(err,&r){row["kind"]="Refused";row["where"]=r.Where;row["reason"]=r.What}}
+}
+func bindSeamCount(f ir.Function) int {n:=len(f.Parameters);if f.Receiver{n--};return n}
+func (l *lowering) bindSeamObserve() {
+ if os.Getenv("BIND_SEAM_STREAM")=="" {return}
+ bindSeamReached++
+ // This is the exact body of head's boundValueReach, instrumented to retain
+ // the production AllocationSet reasons and projection index for reporting.
+ assignAllocationSites(l.result)
+ graph:=l.flowGraph(l.result)
+ const nothing,other=-1,-2
+ named:=[]int{}
+ site:=func(function int)int{named=append(named,function);return len(named)}
+ graph.entry=func(value ir.Expression)int{switch value:=value.(type){case ir.MakeClosure:return site(value.Function);case ir.BoundClosure:return site(value.Function);case ir.Undefined,ir.Null:return site(nothing);case ir.Read,ir.Call,ir.CallClosure,ir.Conditional,ir.Box,ir.Narrow,ir.Unwrap,ir.CheckedCast,ir.Defined,ir.Coalesce,ir.Logical,ir.Property,ir.ArrayIndex,ir.ObjectLiteral,ir.ArrayLiteral:return 0};return site(other)}
+ var last ir.AllocationSet
+ var mappedOther bool
+ reach:=func(value ir.Expression)([]int,bool){last=graph.ReachingAllocations(value);mappedOther=false;if last.Unknown{return nil,false};functions:=[]int{};for _,r:=range last.Sites{if r<=0||r>len(named)||named[r-1]==other{mappedOther=true;return nil,false};if named[r-1]!=nothing{functions=append(functions,named[r-1])}};return functions,true}
+ // The projection index scans the actual whole main and every function body.
+ projection:=graph.projectionIndex()
+ describe:=func(ids []int)[]map[string]any{out:=[]map[string]any{};for _,id:=range ids{f:=l.result.Functions[id];out=append(out,map[string]any{"function":id,"name":f.Name,"declared_parameters":bindSeamCount(f),"position":f.Position,"reads_arguments":f.ReadsArguments,"rest_element":f.RestElement})};return out}
+ records:=l.closureRecords
+ l.bindSeamReach=reach
+ defer func(){l.closureRecords=records;l.bindSeamReach=nil}()
+ for _,record:=range records {
+  function:=l.result.Functions[record.function];if function.Source.Role!="bound_function"{continue}
+  var invoke *ir.CallClosure
+  walk(function.Body,func(node any)bool{if call,ok:=node.(ir.CallClosure);ok&&call.Bound{copy:=call;invoke=&copy};return true})
+  if invoke==nil{bindSeamEmit(map[string]any{"record":"seam_error","where":l.program.Where(record.node),"error":"bound wrapper has no bound CallClosure"});continue}
+  call:=*invoke
+  ids,known:=reach(call.Closure)
+  reasons:=append([]string{},last.Reasons...);if mappedOther{reasons=append(reasons,"reaching allocation is not a function closure or null/undefined")}
+  typed:=append([]int{},l.result.FunctionTypeTargets[call.FunctionType]...)
+  methods:=[]int{};if call.BoundName!=""{methods=l.result.MethodsNamed(call.BoundName)}
+  extra:=[]int{};if known{for _,id:=range ids{if bindSeamCount(l.result.Functions[id])>len(call.Arguments){extra=append(extra,id)}}}
+  unit:=record.node;for unit.Parent!=nil{switch unit.Kind{case ast.KindFunctionDeclaration,ast.KindFunctionExpression,ast.KindArrowFunction,ast.KindMethodDeclaration:goto unitFound};if unit.Parent.Kind==ast.KindSourceFile{break};unit=unit.Parent};unitFound:
+  l.closureRecords=[]closureRecord{record}
+  failure:=l.checkBoundArguments() // Actual base/head acceptance decision, one bind at a time.
+  reason:="";if failure!=nil{reason=failure.Error();var n *NotYet;if errors.As(failure,&n){reason=n.What}}
+  source:=ast.GetSourceFileOfNode(record.node).AsSourceFile().Text()
+  row:=map[string]any{"record":"bind","where":l.program.Where(record.node),"unit":l.program.Where(unit),"bound_type_parameters":len(call.Arguments),"reach_known":known,"reach_reasons":reasons,"opaque_calls":projection.opaqueCalls,"array_mutation":projection.arrayMutation,"reached":describe(ids),"typed_candidates":describe(typed),"method_candidates":describe(methods),"known_reach_extra_parameters":describe(extra),"check_error":reason,"new_bind_stop":strings.HasPrefix(reason,"bind of a function that declares "),"source_expression":strings.TrimSpace(source[record.node.Pos():record.node.End()]),"whole_program":true}
+  bindSeamEmit(row)
+ }
+}

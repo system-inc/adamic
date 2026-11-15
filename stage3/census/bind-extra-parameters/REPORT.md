@@ -2,6 +2,27 @@
 
 [Control and code-path evidence](CONTROL.md). The full and first-error latent rows below retain their observed counts solely as coverage-limited measurements; zero is not evidence that the new check accepts these sources.
 
+## Validated exact-check seam
+
+**Control passes: head has 1 new-bind stop; base has 0 bind-check stops.** Both have known reach to `seen_value`: **2 declared parameters / 1 bound-type parameter**. Whole-program `opaqueCalls=true`; no projection is needed for this direct reach, so it remains known. The head stops on it. A known reach with extra parameters is therefore not automatically an unblocked wrong answer.
+
+**tsc coverage so far: 0 production roots attempted; 0 roots reached the whole-program seam; 0 distinct bind sites observed.** These root attempts are a partial reachability fallback, not the requested all-unit seam. An early production stop leaves all later bind sites uncovered; their counts and reach are **unknown**, not zero.
+
+### (a) Sites where the head check fires
+
+No tsc sites established in the covered seam observations. This is **not an all-tsc zero**.
+
+### (b) Known-reach sites with extra declared parameters
+
+No tsc sites established in the covered seam observations. All uncovered sites remain unknown.
+
+### Completed root attempts
+
+| Root | Base outcome | Head outcome | Head seam reached | Observed bind sites |
+| --- | --- | --- | ---: | ---: |
+
+[Seam method, limits and exact instrumentation](SEAM-METHOD.md). [Control records](SEAM-CONTROL.json). [Root-attempt summaries](seam-roots.json). [All source bind sites and explicit coverage](BIND-SITES.md).
+
 # Bind extra parameters census: 0 full-census findings carrying the new bind reason at 0 sites
 
 Sites: none in completed measurements.
@@ -28,7 +49,7 @@ No new, removed, changed or relocated findings.
 
 ## All-unit first-error census
 
-Pending full single-file censuses.
+Cancelled at the user’s request: the unmodified latent census does not execute this check. No further latent pairs are scheduled.
 
 ## Raw receipts
 
@@ -36,12 +57,18 @@ Raw files remain in scratch. [receipts.json](receipts.json) gives every complete
 
 | Scratch raw file | Bytes | SHA-256 |
 | --- | ---: | --- |
+| `/workspace/bind-extra-parameters-scratch/results/control/base-production.jsonl` | 144 | `e99cd3f396d63b2d27001f48c0d3c9ab5d0eb0059c7b51445e279a107f97829a` |
 | `/workspace/bind-extra-parameters-scratch/results/control/base.jsonl` | 29081 | `c6d68e1f7fbe1ded9305a768a8aae3c573b060fe4cf0fdbdf544e7275f6c12c0` |
+| `/workspace/bind-extra-parameters-scratch/results/control/head-production.jsonl` | 309 | `1d281ec2f9fd65c10ebf590cdc65b19ab25f58d2360f69462334e9590cf96605` |
 | `/workspace/bind-extra-parameters-scratch/results/control/head.jsonl` | 29081 | `c6d68e1f7fbe1ded9305a768a8aae3c573b060fe4cf0fdbdf544e7275f6c12c0` |
 | `/workspace/bind-extra-parameters-scratch/results/full-sys.ts/base-times.jsonl` | 29994 | `eb63ddee13cf23c9b23b7d64b2579381f6dc805e960827af7165082bc281a334` |
 | `/workspace/bind-extra-parameters-scratch/results/full-sys.ts/base.jsonl` | 606190 | `e0adf0696cbd052e98b7742c5398293bf898b9dc1e41cc7eebe4b6f055cfde87` |
 | `/workspace/bind-extra-parameters-scratch/results/full-sys.ts/head-times.jsonl` | 29996 | `1241c321ca58508ccbb996ed4ec903b4f48977dcb87fa5e8ca1d188e2ced453e` |
 | `/workspace/bind-extra-parameters-scratch/results/full-sys.ts/head.jsonl` | 606190 | `e0adf0696cbd052e98b7742c5398293bf898b9dc1e41cc7eebe4b6f055cfde87` |
+| `/workspace/bind-extra-parameters-scratch/results/seam-control/base.jsonl` | 1486 | `3d637ef6e79e8d53f9084d2b57f493c2f35c23f8108dfa3208850ba0c9fc3651` |
+| `/workspace/bind-extra-parameters-scratch/results/seam-control/head.jsonl` | 1937 | `78a2dc744c486db9150892532df436af47d666787865a0540848d9ddaa201154` |
 | `/workspace/bind-extra-parameters-scratch/base-census` | 37034753 | `6e743e95e82388375ceb361870271932645d08ecacb0233ca0fc2b4413f218f6` |
+| `/workspace/bind-extra-parameters-scratch/base-production-census` | 37614669 | `cdceb5430fc929731f7278ff8172c59321ee53a7d5e114f6bc28026eed02df50` |
 | `/workspace/bind-extra-parameters-scratch/head-census` | 37034265 | `483aee8e3d01c9413351f18af66966572e72bf167afeb68ea51cc61c129ab919` |
+| `/workspace/bind-extra-parameters-scratch/head-production-census` | 37624454 | `6a5ea2a5e111232f11efa12d84259b59a221a8c00647029d237e058e91e6d7ba` |
 | `/workspace/bind-extra-parameters-scratch/source-manifest.json` | 12566 | `5d33a3a13d9719a6b28aab273bcddb5e8dacb4f642dbb3defc45e8df88545993` |
