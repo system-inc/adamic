@@ -1,0 +1,21 @@
+// The visits that break out of their loop, with a rest packed in each iteration (#9grybqc): wide's
+// type is admitted by each callback's, so each call collects wide's rest from the element, the
+// index's number and the array. A search that finds lets go of the iteration's pack before it
+// breaks, and so does a some or an every that settles early. Node prints:
+//
+//	true false
+//	wasp
+//	bee
+//	2
+//	true
+//	false
+//	ant wasp
+const wide = (...items: (string | number | string[])[]): boolean => items.length > 2;
+console.log(`${wide('x', 1, ['y'])} ${wide('x')}`);
+const words = 'ant bee wasp cat'.split(' ');
+console.log(words.find((word, index) => word.length > 3 && index > 0) ?? 'none');
+console.log(words.findLast((word, index) => word.length === 3 && index < 3) ?? 'none');
+console.log(`${words.findIndex((word, index) => word.length > 3 && index > 0)}`);
+console.log(`${words.some((word, index) => word === 'wasp' && index === 2)}`);
+console.log(`${words.every((word, index) => word.length + index < 6)}`);
+console.log(words.filter((word, index) => index % 2 === 0).join(' '));

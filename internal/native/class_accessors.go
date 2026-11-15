@@ -25,7 +25,7 @@ func (e *emitter) accessorDeclarations(builder *strings.Builder, classID int, cl
 				self = "adamic_retain(object)"
 			}
 			if function.Closure {
-				packed := e.closureSlots(ir.CallClosure{Closure: ir.MakeClosure{Function: accessor.Getter}}, []string{fmt.Sprintf("{.reference = %s}", self)}, "", "1")
+				packed := e.closureSlots(ir.CallClosure{Closure: ir.MakeClosure{Function: accessor.Getter}}, []string{fmt.Sprintf("{.reference = %s}", self)}, nil, "", "1")
 				count := ""
 				if e.program.PackedCountNeeded(accessor.Getter) {
 					count = ", 1"
@@ -69,7 +69,7 @@ func (e *emitter) accessorDeclarations(builder *strings.Builder, classID int, cl
 				}
 			}
 			if function.Closure {
-				packed := e.closureSlots(ir.CallClosure{Closure: ir.MakeClosure{Function: accessor.Setter}}, []string{fmt.Sprintf("{.reference = %s}", self), fmt.Sprintf("{.%s = %s}", member(input), slotted(input, argument))}, "", "2")
+				packed := e.closureSlots(ir.CallClosure{Closure: ir.MakeClosure{Function: accessor.Setter}}, []string{fmt.Sprintf("{.reference = %s}", self), fmt.Sprintf("{.%s = %s}", member(input), slotted(input, argument))}, nil, "", "2")
 				count := ""
 				if e.program.PackedCountNeeded(accessor.Setter) {
 					count = ", 2"
