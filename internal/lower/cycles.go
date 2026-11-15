@@ -87,9 +87,16 @@ type cycleFinder struct {
 	writeCache     map[cycleWriteSlot]*fresh.Write
 	unknownWrite   int
 
-	// recordStop is the first slot slotsOf seeds whose value can be a record (noteRecordSlot), returned
-	// by graphTypes after the boundary's refusals: a record is never a graph member.
+	// recordSlots are the seeds slotsOf found whose written value may be a record (noteRecordSlot), and
+	// recordCells the captured cells graphTypes seeds, each judged once the graph types are selected
+	// (judgeRecordSlots).
+	recordSlots []recordSlotNote
+	recordCells []recordSlotNote
+	// recordStop is the first of them that can hold a record of a type graphTypes didn't select, which
+	// no graph region holds, returned by graphTypes after the boundary's refusals.
 	recordStop error
+	// recordWrites is whether any write site's holder is a record (recordWritten): 0 unread, 1 yes, -1 no.
+	recordWrites int
 	// assigned is every local an ir.Assign writes after its declaration (reassigned), found once.
 	assigned map[int]bool
 	// selected is every type graphTypes made a graph type, which unplannedPair reads (#dps0kp6).
@@ -390,7 +397,7 @@ func (f *cycleFinder) slotsOf(holder *checker.Type) error {
 			if write == nil {
 				continue
 			}
-			f.noteRecordSlot(element, write)
+			f.noteRecordSlot(element, holder, write)
 			target := f.present(element)
 			return &Refused{
 				cycle: true,
@@ -411,7 +418,7 @@ func (f *cycleFinder) slotsOf(holder *checker.Type) error {
 		arguments := l.checker.GetTypeArguments(holder)
 		if len(arguments) == 1 && f.reaches(arguments[0], cycleNode{proven: holder}) {
 			if write := f.cycleUnproven(fresh.WriteSetElement, holder, ""); write != nil {
-				f.noteRecordSlot(arguments[0], write)
+				f.noteRecordSlot(arguments[0], holder, write)
 				return &Refused{
 					cycle: true,
 					Where: l.program.Where(f.where[holder]),
@@ -424,7 +431,7 @@ func (f *cycleFinder) slotsOf(holder *checker.Type) error {
 		arguments := l.checker.GetTypeArguments(holder)
 		if len(arguments) == 2 && f.reaches(arguments[0], cycleNode{proven: holder}) {
 			if write := f.cycleUnproven(fresh.WriteMapEntry, holder, ""); write != nil {
-				f.noteRecordSlot(arguments[0], write)
+				f.noteRecordSlot(arguments[0], holder, write)
 				return &Refused{
 					cycle: true,
 					Where: l.program.Where(f.where[holder]),
@@ -435,7 +442,7 @@ func (f *cycleFinder) slotsOf(holder *checker.Type) error {
 		}
 		if len(arguments) == 2 && !f.weak(arguments[1]) && f.reaches(arguments[1], cycleNode{proven: holder}) {
 			if write := f.cycleUnproven(fresh.WriteMapEntry, holder, ""); write != nil {
-				f.noteRecordSlot(arguments[1], write)
+				f.noteRecordSlot(arguments[1], holder, write)
 				return &Refused{
 					cycle: true,
 					Where: l.program.Where(f.where[holder]),
@@ -459,7 +466,7 @@ func (f *cycleFinder) slotsOf(holder *checker.Type) error {
 			if write == nil {
 				continue
 			}
-			f.noteRecordSlot(proven, write)
+			f.noteRecordSlot(proven, holder, write)
 			where := f.where[holder]
 			if len(field.Declarations) > 0 {
 				where = field.Declarations[0]

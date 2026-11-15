@@ -124,13 +124,33 @@ func TestGraphDynamicShapeAdoptionIsRefused(t *testing.T) {
 		t.Fatalf("dynamic graph adoption: %v", err)
 	}
 }
-func TestGraphRecordCycleStaysRefused(t *testing.T) {
+
+// Object.assign with a record as its target stays NotYet once records joined graph regions (records.go's
+// recordObjectCallArguments), so an empty record it fills to close a cycle stops. Every other road that
+// fills one (set, ??=, a computed key, a write in a callee, defineHidden, a push into a stored container)
+// lowers now, its record a graph member, held to Node and the counted build in oracle's
+// TestGraphRecordOnACycle (#1vb0x5s).
+func TestGraphEmptyRecordAssignedStops(t *testing.T) {
 	t.Parallel()
-	_, err := lowerSource(t, `interface Ring {self:Ring|undefined;[key:string]:Ring|undefined} const ring:Ring={self:undefined};ring.self=ring;console.log(Object.keys(ring).join(','));`)
-	if err == nil {
-		t.Fatal("record cycle accepted")
+	const source = "interface Node { name: string; next: Node[]; r: Record<string, Node[]> }\n" +
+		"const a: Node = { name: 'a' + '', next: [], r: {} };\n" +
+		"const b: Node = { name: 'b' + '', next: [a], r: {} };\n" +
+		"a.next.push(b);\n" +
+		"Object.assign(a.r, { k: a.next });\n" +
+		"console.log(a.name);\n"
+	if _, err := lowerSource(t, source); err == nil || !strings.Contains(err.Error(), "Object.assign on a record") {
+		t.Fatalf("got %v, want Object.assign on a record stopped", err)
 	}
-	t.Log(err)
+}
+
+// A cycle closed by a write into a record lowers since records joined graph regions (#1vb0x5s): the
+// record is selected and made a graph member, which oracle's TestGraphRecordOnACycle holds to Node and
+// the counted build ("a record type closing its own cycle").
+func TestGraphRecordCycleLowers(t *testing.T) {
+	t.Parallel()
+	if _, err := lowerSource(t, `interface Ring {self:Ring|undefined;[key:string]:Ring|undefined} const ring:Ring={self:undefined};ring.self=ring;console.log(Object.keys(ring).join(','));`); err != nil {
+		t.Fatal(err)
+	}
 }
 func TestGraphCountTypesSurviveClassification(t *testing.T) {
 	t.Parallel()
