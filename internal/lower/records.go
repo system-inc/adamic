@@ -243,6 +243,13 @@ func (l *lowering) recordExpression(node *ast.Node) (ir.Expression, bool, error)
 				read = ir.Unwrap{Value: read}
 			}
 			if read.Type().IsReference() && read.Type() != ir.Union {
+				// Under a ?. the read's Defined would throw where Node reads undefined, and a catch
+				// would take that throw: a branch Node never takes (#70kdt66). A call TypeScript's
+				// narrowing doesn't see can delete the key, so the read can be missing here. Until the
+				// ?. parent's own test reads it, it stops.
+				if optionalChainOperand(node) {
+					return nil, true, l.notYet(node, "a record's value narrowed present and read under ?. (a call since the narrowing can delete its key, and the ?. would see it missing only after a TypeError)")
+				}
 				message := "undefined where the checker narrowed it away: a call since the narrowing put it back"
 				if parent := node.Parent; parent != nil && parent.Kind == ast.KindPropertyAccessExpression && parent.AsPropertyAccessExpression().Expression == node {
 					message = "TypeError: Cannot read properties of undefined (reading '" + parent.Name().Text() + "')"
@@ -730,3 +737,27 @@ func (l *lowering) recordLiteralRead(node *ast.Node) error {
 }
 
 func init() { refusalRules.register(1100, "recordLiteralRead", (*lowering).recordLiteralRead) }
+
+// optionalChainOperand reports whether node, through any parentheses, is what a ?. reads: the object of
+// r["k"]?.name or r["k"]?.[i], or the callee of r["k"]?.(...).
+func optionalChainOperand(node *ast.Node) bool {
+	for node.Parent != nil && node.Parent.Kind == ast.KindParenthesizedExpression {
+		node = node.Parent
+	}
+	parent := node.Parent
+	if parent == nil {
+		return false
+	}
+	switch parent.Kind {
+	case ast.KindPropertyAccessExpression:
+		access := parent.AsPropertyAccessExpression()
+		return access.Expression == node && access.QuestionDotToken != nil
+	case ast.KindElementAccessExpression:
+		access := parent.AsElementAccessExpression()
+		return access.Expression == node && access.QuestionDotToken != nil
+	case ast.KindCallExpression:
+		call := parent.AsCallExpression()
+		return call.Expression == node && call.QuestionDotToken != nil
+	}
+	return false
+}
