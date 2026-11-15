@@ -20,7 +20,7 @@
     "where": "commandLineParser.ts:293:35",
     "kind": "NotYet",
     "reason": "reading an enum before its runtime initialization; move the call after the enum declaration",
-    "phase": "lowering (initialization preflight)",
+    "phase": "initialization preflight (before refusal scan and expression lowering)",
     "owner": "internal/lower/namespaces.go: (*lowering).namespaceInitialization",
     "emitter": "internal/lower/namespaces.go: (*lowering).namespaceInitialization"
   },
@@ -28,7 +28,7 @@
     "where": "diagnosticInformationMap.generated.ts:13:45",
     "kind": "NotYet",
     "reason": "reading an enum before its runtime initialization; move the call after the enum declaration",
-    "phase": "lowering (initialization preflight)",
+    "phase": "initialization preflight (before refusal scan and expression lowering)",
     "owner": "internal/lower/namespaces.go: (*lowering).namespaceInitialization",
     "emitter": "internal/lower/namespaces.go: (*lowering).namespaceInitialization"
   },
@@ -36,7 +36,7 @@
     "where": "semver.ts:71:9",
     "kind": "NotYet",
     "reason": "a namespace read before runtime initialization, directly or through a reachable call; move that read or call after the namespace declaration",
-    "phase": "lowering (initialization preflight)",
+    "phase": "initialization preflight (before refusal scan and expression lowering)",
     "owner": "internal/lower/namespaces.go: (*lowering).namespaceInitialization",
     "emitter": "internal/lower/namespaces.go: (*lowering).namespaceInitialization"
   },
