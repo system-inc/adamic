@@ -1,5 +1,5 @@
 'use strict';
-// Restore the original whole owner; this is a proof mutant, not normal apply.
+// Restore the landed readonly-capture owner; preserve the earlier b8ffarm adaptation.
 const assert = require('node:assert/strict');
 const path = require('node:path');
 const {rewrite} = require('./adapt.cjs');
