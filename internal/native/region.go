@@ -119,6 +119,8 @@ func planRegions(program *ir.Program) *regionPlan {
 		}
 		statements(program.Functions[index].Body)
 	}
+	// Main never suspends: a top-level await moves its body into an async module function
+	// (flow.NormalizeAsync, which leaves Main nil), and a yield lives only in a generator function.
 	statements(program.Main)
 	return plan
 }

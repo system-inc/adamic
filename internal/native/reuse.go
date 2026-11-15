@@ -100,7 +100,8 @@ func planReuse(program *ir.Program, lending map[int]bool) *reusePlan {
 	for index := -1; index < len(program.Functions); index++ {
 		// A suspending body plans nothing: its locals live in frame cells, which the reuse entries
 		// (e.variable) don't name, and asyncBorrowedSlots' uncounted aliases would make a shared object
-		// look unique (#kha2ea0). Leaving it out also leaves its parameters unconsumed.
+		// look unique (#kha2ea0). Leaving it out also leaves its parameters unconsumed. Main, index -1,
+		// never suspends: flow.NormalizeAsync moves a top level that awaits into an async module function.
 		if index >= 0 && program.Functions[index].Suspends() {
 			continue
 		}

@@ -362,3 +362,47 @@ console.log(String(await later(1)));
 	}
 	suspensionRun(t, program, "3\n2\n")
 }
+
+// A fresh function's region version can't hand one of its allocations to a suspending callee today
+// (Memory's road on #kha2ea0): the call's promise would have to be awaited where it's made, and a fresh
+// function returns an object literal, so it can neither await nor return it. Lowering stops it there,
+// before any plan. If this road ever lowers, the pin goes red, and the fresh function's escape has to be
+// pinned under ASan with the Suspends() seed dropped as its mutant.
+func TestFreshFunctionCannotHandItsAllocationToASuspendingCallee(t *testing.T) {
+	t.Parallel()
+	path := filepath.Join(t.TempDir(), "main.a")
+	if err := os.WriteFile(path, []byte(`interface P {
+    readonly x: number;
+}
+interface Box {
+    readonly y: number;
+}
+function make(n: number): P {
+    return { x: n };
+}
+async function countLater(p: P): Promise<number> {
+    await Promise.resolve(0);
+    const seen = 1 + p.x;
+    return seen;
+}
+function holder(n: number): Box {
+    const pending = countLater(make(n));
+    return { y: n };
+}
+function weighBox(b: Box): number {
+    const weight = 1 + b.y;
+    return weight;
+}
+console.log(String(weighBox(holder(4))));
+`), 0o644); err != nil {
+		t.Fatal(err)
+	}
+	loaded, err := load.Load([]string{path})
+	if err != nil {
+		t.Fatal(err)
+	}
+	_, err = lower.Lower(context.Background(), loaded)
+	if err == nil || !strings.Contains(err.Error(), "a promise not awaited in the same function") {
+		t.Fatalf("want lowering's stop for a promise holder neither awaits nor returns, got %v", err)
+	}
+}
