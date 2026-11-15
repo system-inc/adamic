@@ -53,19 +53,18 @@ var toPrimitiveAnswers = []struct{ file, stdout string }{
 		"Error\n<Error>\n" +
 		"Custom: renamed\n<Custom: renamed>\n" +
 		"renamed\n<renamed>\n"},
-	// Unmeasured until its first run: written from Node's semantics, not yet read from Node.
+	// Agrees with Node, running the source (J-xhex7eq).
 	{"probes_acyclic.a", "c1|c2 2\n" +
 		"a|a b|b\n" +
 		"a,,,b|a,,,b\n" +
 		"n!|n!\n"},
 	{"records.a", "[object Object]\n<[object Object]>\n" + cannotConvert + "\n<" + cannotConvert + ">\n"},
-	// Unmeasured until its first run: written from Node's semantics, not yet read from Node.
+	// Node's output, measured running the source (J-zn9yhj7).
 	{"arrays_acyclic.a", "a,1,,,true,named\n<a,1,,,true,named>\n" +
 		"Error: e\n<Error: e>\n" +
 		"p,q\n<p,q>\n" +
 		"1,a\n<1,a>\n" +
 		",\n<,>\n" +
-		"\n<>\n" +
 		"\n<>\n" +
 		"\n<>\n" +
 		"\n<>\n" +
