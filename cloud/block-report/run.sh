@@ -391,6 +391,8 @@ print(f"::loom checked {len(packages)} packages at {sha[:12]}: {counts['ok']} ok
 PYTHON
 echo "END block-report"
 echo "block-report: raw streams kept in $out"
-# The job's own answer is the tests': 0 only when vet, build and every package's tests passed. A failure here is a
-# finding to read beside the house, never a verdict on the block.
-[ "$vetExit" = 0 ] && [ "$buildExit" = 0 ] && [ "$testExit" = 0 ]
+# The job's own answer is the tests': 0 only when vet, build and every package's tests passed, read from a whole stream.
+# An out disk that filled may have cut a stream short, so a report with outFull never exits 0, and an image check can't
+# pass on a short read (adamic-loom on #zwzer5f). A failure here is a finding to read beside the house, never a verdict
+# on the block.
+[ "$vetExit" = 0 ] && [ "$buildExit" = 0 ] && [ "$testExit" = 0 ] && [ "${outFree:-0}" -ge 67108864 ]
