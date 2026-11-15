@@ -117,12 +117,34 @@ func (l *lowering) widened(from *checker.Type, to *checker.Type, visited map[[2]
 				}
 			}
 		}
+		taken := false
 		for _, member := range members {
 			if !l.checker.IsTypeAssignableTo(from, member) {
 				continue
 			}
+			taken = true
 			if found := l.widened(from, member, visited); found != nil {
 				return found
+			}
+		}
+		if !taken && l.structured(from) {
+			// A value no one member takes is one tsc let in by decomposing a discriminated union: its
+			// whole open enum tag split into the members' literals, each slot then promising one literal
+			// the value may not hold (#egmxf20, openEnumTagDecomposed).
+			for _, member := range members {
+				if member.Flags()&checker.TypeFlagsPrimitive != 0 {
+					continue
+				}
+				for _, viewed := range l.checker.GetPropertiesOfType(member) {
+					inside := l.checker.GetPropertyOfType(from, viewed.Name)
+					if inside == nil {
+						continue
+					}
+					source, slot := l.checker.GetTypeOfSymbol(inside), l.checker.GetNonNullableType(l.checker.GetTypeOfSymbol(viewed))
+					if l.openEnumTagDecomposed(source, slot) {
+						return &widening{source: source, target: slot, enum: true}
+					}
+				}
 			}
 		}
 		return nil
@@ -1108,7 +1130,8 @@ func (l *lowering) castSlotRefusal(node *ast.Node) error {
 // { kind: Kind.Count } that property is Kind.Text | Kind.Count, the whole open enum, which takes any
 // number; the member it's built as promises one literal. Each member-literal slot the value can be
 // assigned to is judged as if it were the only one; the union's own property stays the answer when
-// none of them refuses.
+// none of them refuses. A value no member's slot takes but the union's property does reached its
+// member by tsc decomposing the union, and an open enum there is refused (openEnumTagDecomposed).
 func (l *lowering) memberLiteralSlotWidened(node *ast.Node, own, literal *checker.Type, name string, contextual *checker.Type) (*checker.Type, *widening) {
 	if literal.Flags()&checker.TypeFlagsUnion == 0 {
 		return contextual, nil
@@ -1125,6 +1148,9 @@ func (l *lowering) memberLiteralSlotWidened(node *ast.Node, own, literal *checke
 		if slot.Flags()&checker.TypeFlagsNumberLiteral == 0 && !l.numericEnum(l.enumIdentity(slot)) || l.openNumericEnumType(slot) {
 			continue
 		}
+		if l.openEnumTagDecomposed(own, slot) {
+			return slot, &widening{source: own, target: slot, enum: true}
+		}
 		if !l.checker.IsTypeAssignableTo(own, slot) {
 			continue
 		}
@@ -1133,6 +1159,33 @@ func (l *lowering) memberLiteralSlotWidened(node *ast.Node, own, literal *checke
 		}
 	}
 	return contextual, nil
+}
+
+// openEnumTagDecomposed is whether own, a value's type, reaches slot, one member literal of a numeric enum,
+// only by tsc decomposing a discriminated union: own is that enum's whole open type, or a union of two or
+// more of its member literals, so the member the value is built as promises one literal it may not hold.
+// A numeric enum holds any number (rulings.md, adamic/enum-literal), and narrowing that excludes members by
+// !== leaves the rest open too, so `kind !== Kind.Triangle` is still 7. One literal is the slot's own
+// promise, and a slot that is the whole enum (an enum of one member) takes any number.
+func (l *lowering) openEnumTagDecomposed(own, slot *checker.Type) bool {
+	slot = l.checker.GetNonNullableType(slot)
+	if slot.Flags()&checker.TypeFlagsNumberLiteral == 0 || !l.numericEnum(l.enumIdentity(slot)) || l.openNumericEnumType(slot) {
+		return false
+	}
+	own = l.withoutUndefined(own)
+	if l.openNumericEnumType(own) {
+		return l.enumIdentity(l.checker.GetNonNullableType(own)) == l.enumIdentity(slot)
+	}
+	members := l.definedMembers(own)
+	if len(members) < 2 {
+		return false
+	}
+	for _, member := range members {
+		if member.Flags()&checker.TypeFlagsNumberLiteral == 0 || l.enumIdentity(member) != l.enumIdentity(slot) {
+			return false
+		}
+	}
+	return true
 }
 
 func (l *lowering) wideningRefusal(node *ast.Node, own, contextual *checker.Type, found *widening) error {
