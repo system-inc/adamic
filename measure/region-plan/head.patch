@@ -1,0 +1,143 @@
+diff --git a/internal/native/element_borrow.go b/internal/native/element_borrow.go
+index 18bb1372e8..d019ddd317 100644
+--- a/internal/native/element_borrow.go
++++ b/internal/native/element_borrow.go
+@@ -27,7 +27,9 @@ func planElementBorrows(program *ir.Program) (map[*ir.Statement]bool, map[int]bo
+ 	lending := map[int]bool{}
+ 	for index := range program.Functions {
+ 		function := &program.Functions[index]
+-		if function.Closure {
++		// A suspending body keeps its locals in frame cells, and a borrow's binding would be a C local
++		// its reads never see (#kha2ea0).
++		if function.Closure || function.Suspends() {
+ 			continue
+ 		}
+ 		assigned := assignedLocals(function.Body)
+diff --git a/internal/native/emit.go b/internal/native/emit.go
+index 5e851ee597..d70394de50 100644
+--- a/internal/native/emit.go
++++ b/internal/native/emit.go
+@@ -38,16 +38,14 @@ func cProgram(program *ir.Program, handler, lines int, options ...Options) strin
+ 		emitter.debug = options[0].Debug
+ 		emitter.ladderEveryStatement = options[0].LadderEveryStatement
+ 	}
+-	if program.HasPromises() || program.HasGenerators() {
+-		// Suspension ownership is conservative until the shared analyses prove it.
+-		emitter.reuse = &reusePlan{}
+-		emitter.regions = &regionPlan{program: program}
+-	} else {
+-		elementBorrows, lending := planElementBorrows(program)
+-		emitter.elementBorrows = elementBorrows
+-		emitter.reuse = planReuse(program, lending)
+-		emitter.regions = planRegions(program)
+-	}
++	// Suspension ownership is decided by function, not by program (#kha2ea0): each plan leaves out the
++	// bodies of functions that suspend (Function.Suspends), whose locals live in frame cells its entries
++	// can't name, and a suspending callee's parameters escape. A program holding a timer or a Promise
++	// keeps its regions, reuse and element borrows everywhere else.
++	elementBorrows, lending := planElementBorrows(program)
++	emitter.elementBorrows = elementBorrows
++	emitter.reuse = planReuse(program, lending)
++	emitter.regions = planRegions(program)
+ 	var builder strings.Builder
+ 	regexCallbacks, nodeHost := false, false
+ 	// A void call whose targets are Unknown or disagree reads the closure's discard, which only a
+@@ -155,6 +153,10 @@ func cProgram(program *ir.Program, handler, lines int, options ...Options) strin
+ 	bodies := strings.Builder{}
+ 	emittedBodies := map[string]string{}
+ 	for index, function := range program.Functions {
++		// A suspending function has no region version, so it's emitted as the heap one, whatever
++		// version of a fresh function was emitted before it (#kha2ea0: Worker.allocate's region version
++		// left this set, and async_methods' Worker.work was named and signed as a region version).
++		emitter.inRegion = false
+ 		if function.Async {
+ 			emitter.resetCounters()
+ 			bodies.WriteString(emitter.asyncFunction(index))
+diff --git a/internal/native/region.go b/internal/native/region.go
+index a8d2868b60..e5c709abfb 100644
+--- a/internal/native/region.go
++++ b/internal/native/region.go
+@@ -50,12 +50,14 @@ type regionPlan struct {
+ func planRegions(program *ir.Program) *regionPlan {
+ 	plan := &regionPlan{fresh: map[int]bool{}, referenceWrites: map[int]bool{}, escapes: map[int]map[int]bool{}, statements: map[*ir.Statement]bool{}, program: program, classObjects: map[int]int{}, environments: map[*ir.Statement]environmentPlacement{}, environmentArguments: map[int]map[int]bool{}, cleanups: map[string]string{}}
+ 	// Escape: start from every object parameter of a named function flowing nowhere, and mark any
+-	// that escapes, until none changes.
++	// that escapes, until none changes. A suspending function's parameters escape from the start: its
++	// body runs on past the call that handed them over (a generator's from its first next, an async
++	// one's past its first await), long after the caller's statement region has ended (#kha2ea0).
+ 	for index, function := range program.Functions {
+ 		plan.escapes[index] = map[int]bool{}
+ 		for position, parameter := range function.Parameters {
+ 			local := program.Locals[parameter]
+-			plan.escapes[index][position] = function.Closure || local.Captured || local.ExpressionAssigned || local.Type != ir.Object
++			plan.escapes[index][position] = function.Closure || function.Suspends() || local.Captured || local.ExpressionAssigned || local.Type != ir.Object
+ 		}
+ 	}
+ 	for changed := true; changed; {
+@@ -110,6 +112,11 @@ func planRegions(program *ir.Program) *regionPlan {
+ 		}
+ 	}
+ 	for index := range program.Functions {
++		// A suspending body's statements get no region: its locals live in frame cells, and whether a
++		// region may span a statement there is left to a later step (#kha2ea0, Memory's rule 2).
++		if program.Functions[index].Suspends() {
++			continue
++		}
+ 		statements(program.Functions[index].Body)
+ 	}
+ 	statements(program.Main)
+diff --git a/internal/native/reuse.go b/internal/native/reuse.go
+index 4b87c98b24..c0d9b88040 100644
+--- a/internal/native/reuse.go
++++ b/internal/native/reuse.go
+@@ -56,11 +56,27 @@ type reusePlan struct {
+ 
+ 	// lending are the arrays a variable borrows an element from (planElementBorrows), never moved.
+ 	lending map[int]bool
++
++	// unconsumable are parameters that are never consumed, whatever their bodies do: every position of
++	// a virtual signature one of whose implementations suspends. A suspending function's entry retains
++	// what it's handed, so it can't take a count over, and implementations share one convention.
++	unconsumable map[int]bool
+ }
+ 
+ // planReuse makes the plan for a program.
+ func planReuse(program *ir.Program, lending map[int]bool) *reusePlan {
+-	plan := &reusePlan{consumed: map[int]bool{}, spreads: map[*ir.Statement]map[int]bool{}, moves: map[*ir.Statement]map[int]bool{}, arrays: map[*ir.Statement]map[int]bool{}, lending: lending}
++	plan := &reusePlan{consumed: map[int]bool{}, spreads: map[*ir.Statement]map[int]bool{}, moves: map[*ir.Statement]map[int]bool{}, arrays: map[*ir.Statement]map[int]bool{}, lending: lending, unconsumable: map[int]bool{}}
++	for signature, targets := range program.MethodTargets {
++		implementations := append([]int{signature}, targets...)
++		if !slices.ContainsFunc(implementations, func(target int) bool { return program.Functions[target].Suspends() }) {
++			continue
++		}
++		for _, target := range implementations {
++			for _, parameter := range program.Functions[target].Parameters {
++				plan.unconsumable[parameter] = true
++			}
++		}
++	}
+ 	comparators := map[int]bool{}
+ 	walkExpressions(program, func(expression ir.Expression) {
+ 		if sort, ok := expression.(ir.ArraySort); ok {
+@@ -82,6 +98,12 @@ func planReuse(program *ir.Program, lending map[int]bool) *reusePlan {
+ 	}
+ 	functions := []function{}
+ 	for index := -1; index < len(program.Functions); index++ {
++		// A suspending body plans nothing: its locals live in frame cells, which the reuse entries
++		// (e.variable) don't name, and asyncBorrowedSlots' uncounted aliases would make a shared object
++		// look unique (#kha2ea0). Leaving it out also leaves its parameters unconsumed.
++		if index >= 0 && program.Functions[index].Suspends() {
++			continue
++		}
+ 		graph := flow.Build(program, index)
+ 		functions = append(functions, function{index, graph, flow.LiveOut(graph)})
+ 	}
+@@ -187,7 +209,7 @@ func (plan *reusePlan) owned(program *ir.Program, function int, comparators map[
+ 	if isParameter(program, source) {
+ 		// Only a parameter nothing assigns, of a named function its callers call directly, can be
+ 		// handed over: a closure is called from runtime loops, and a comparator from the sort.
+-		if !local.Borrowed || program.Functions[function].Closure || comparators[function] {
++		if !local.Borrowed || program.Functions[function].Closure || comparators[function] || plan.unconsumable[source] {
+ 			return false
+ 		}
+ 	} else if local.Borrowed {
