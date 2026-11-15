@@ -24,6 +24,12 @@ function look(p: Box): number {
 	return p.x;
 }
 
+// Read through a function: at the top level the checker narrows kept to its initializer, never seeing
+// the getter assign it.
+function keptLabel(): string {
+	return kept === undefined ? "" : kept.label;
+}
+
 let total = 0;
 total += look(make(7));
-console.log(`${total} ${kept === undefined ? "" : kept.label}`);
+console.log(`${total} ${keptLabel()}`);
