@@ -197,11 +197,18 @@ step "cohere's workspace downloaded, and its tests load offline"
 begin typescript-gomodules
 echo "== go mod download in cohere/TypeScript's workspace" >> "$log"
 (cd "$checkout/cohere/TypeScript" && go mod download) >> "$log" 2>&1 || { echo "block-env: go mod download failed in cohere/TypeScript's workspace" >&2; exit 1; }
-echo "== go list -deps -test ./... in cohere/TypeScript" >> "$log"
-(cd "$checkout/cohere/TypeScript" && GOFLAGS="${GOFLAGS:+$GOFLAGS }-mod=readonly" go list -deps -test ./... > /dev/null) >> "$log" 2>&1
-echo "== go list -deps -test ./... in cohere/TypeScript with GOPROXY=off" >> "$log"
-(cd "$checkout/cohere/TypeScript" && GOFLAGS="${GOFLAGS:+$GOFLAGS }-mod=readonly" GOPROXY=off GOSUMDB=off go list -deps -test ./... > /dev/null) >> "$log" 2>&1 ||
-	{ echo "block-env: cohere/TypeScript's workspace doesn't load from $gomodcache alone" >&2; exit 1; }
+# Its root has a go.work and no go.mod, so `.` there is cohere's module, which the workspace doesn't list, and ./... from
+# the root names no package of tools or tsc (1.0.11's lay on job-builder-1-0-11, Azure's read on #zwzer5f). Each module
+# the go.work uses is listed from its own directory instead, read from go.work as adamic's own step reads its.
+typescriptModules=$(cd "$checkout/cohere/TypeScript" && go work edit -json | python3 -I -c 'import json, sys; print("\n".join(use["DiskPath"] for use in json.load(sys.stdin).get("Use") or []))')
+[ -n "$typescriptModules" ] || { echo "block-env: cohere/TypeScript/go.work uses no modules" >&2; exit 1; }
+while IFS= read -r module; do
+	echo "== go list -deps -test ./... in cohere/TypeScript/$module" >> "$log"
+	(cd "$checkout/cohere/TypeScript/$module" && GOFLAGS="${GOFLAGS:+$GOFLAGS }-mod=readonly" go list -deps -test ./... > /dev/null) >> "$log" 2>&1
+	echo "== go list -deps -test ./... in cohere/TypeScript/$module with GOPROXY=off" >> "$log"
+	(cd "$checkout/cohere/TypeScript/$module" && GOFLAGS="${GOFLAGS:+$GOFLAGS }-mod=readonly" GOPROXY=off GOSUMDB=off go list -deps -test ./... > /dev/null) >> "$log" 2>&1 ||
+		{ echo "block-env: cohere/TypeScript/$module doesn't load from $gomodcache alone" >&2; exit 1; }
+done <<< "$typescriptModules"
 step "cohere/TypeScript's workspace (tools and tsc) downloaded, and its packages load offline"
 
 # npm. setup.sh lays node alone, so npm comes from its pin, checked against its integrity before it unpacks, as
