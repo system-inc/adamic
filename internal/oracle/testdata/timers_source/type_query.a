@@ -1,0 +1,17 @@
+// clearTimeout named inside a type query, Parameters<typeof clearTimeout>[0], as adaptation 93 writes
+// tsc's getNodeSystem forwarder (sys.ts:1500 and 1598, #7yz6rtp). The name there is a type's, which
+// nothing runs, so it isn't a read of the timer as a value; the forwarder's own clearTimeout(id) is a
+// direct call. Through the forwarder a real timer is cleared before it's due, and a number and
+// undefined do nothing, so the kept timer still fires.
+import 'node:timers';
+
+const forward = {
+    clearTimeout: (id: Parameters<typeof clearTimeout>[0]): void => { clearTimeout(id); },
+};
+
+const cleared = setTimeout(() => { console.log('cleared fired'); }, 1);
+setTimeout(() => { console.log('kept fired'); }, 2);
+forward.clearTimeout(cleared);
+forward.clearTimeout(7);
+forward.clearTimeout(undefined);
+console.log('forwarded');
