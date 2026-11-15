@@ -36,7 +36,7 @@ const oneUser = "1000\t1000\t1000\t1000"
 // statusForTest is /proc/self/status as the kernel writes it, cut to the lines the proofs read.
 func statusForTest(effective, permitted, uids, gids string) func() ([]byte, error) {
 	return func() ([]byte, error) {
-		return []byte("Name:\ttraced\nUid:\t" + uids + "\nGid:\t" + gids + "\nCapPrm:\t" + permitted + "\nCapEff:\t" + effective + "\n"), nil
+		return []byte("Name:\ttraced\nUid:\t" + uids + "\nGid:\t" + gids + "\nCapPrm:\t" + permitted + "\nCapEff:\t" + effective + "\nNoNewPrivs:\t1\n"), nil
 	}
 }
 
@@ -273,6 +273,39 @@ func TestTheReadOnlyMountProofRefusesAProcessThatCanRemount(t *testing.T) {
 			reads.readOnlyMount = func(string) bool { return true }
 			reads.mountInfo = func() ([]byte, error) { return []byte("21 0 8:1 / / ro,relatime - ext4 /dev/sda1 ro\n"), nil }
 			reads.status = test.status
+			if err := readOnlyMountProof("/src", reads); err == nil || !strings.Contains(err.Error(), test.want) {
+				t.Fatalf("the mount proof answered %v, want a refusal saying %q", err, test.want)
+			}
+		})
+	}
+}
+
+// Neither proof holds for a process whose children could gain privileges by exec: a status whose NoNewPrivs reads 0,
+// or holds no NoNewPrivs line, refuses in the mount proof and in the no-write proof, each asked alone.
+// Mutant: noNewPrivileges's check dropped, `if value != "1" {` to `if false && value != "1" {`: "NoNewPrivs 0" goes red.
+func TestBothProofsRefuseAProcessThatCanGainPrivileges(t *testing.T) {
+	t.Parallel()
+	statusWith := func(line string) func() ([]byte, error) {
+		return func() ([]byte, error) {
+			return []byte("Uid:\t" + oneUser + "\nGid:\t" + oneUser + "\nCapPrm:\t" + noCapabilities + "\nCapEff:\t" + noCapabilities + "\n" + line), nil
+		}
+	}
+	for name, test := range map[string]struct {
+		status func() ([]byte, error)
+		want   string
+	}{
+		"NoNewPrivs 0":       {statusWith("NoNewPrivs:\t0\n"), "NoNewPrivs is 0"},
+		"no NoNewPrivs line": {statusWith(""), "holds no NoNewPrivs line"},
+	} {
+		t.Run(name, func(t *testing.T) {
+			t.Parallel()
+			reads := closedReadsForTest()
+			reads.status = test.status
+			if _, err := noWriteProof(t.TempDir(), reads); err == nil || !strings.Contains(err.Error(), test.want) {
+				t.Fatalf("the no-write proof answered %v, want a refusal saying %q", err, test.want)
+			}
+			reads.readOnlyMount = func(string) bool { return true }
+			reads.mountInfo = func() ([]byte, error) { return []byte("21 0 8:1 / / ro,relatime - ext4 /dev/sda1 ro\n"), nil }
 			if err := readOnlyMountProof("/src", reads); err == nil || !strings.Contains(err.Error(), test.want) {
 				t.Fatalf("the mount proof answered %v, want a refusal saying %q", err, test.want)
 			}
