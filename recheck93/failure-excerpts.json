@@ -1,0 +1,20 @@
+[
+  {
+    "tree": "main",
+    "adaptExit": 0,
+    "checkExit": 1,
+    "failure": "AssertionError [ERR_ASSERTION]: TestBuiltinSourceScope: edit outside the three imports and removed declarations"
+  },
+  {
+    "tree": "chain-main",
+    "adaptExit": 0,
+    "checkExit": 1,
+    "failure": "AssertionError [ERR_ASSERTION]: TestBuiltinSourceScope: edit outside the three imports and removed declarations"
+  },
+  {
+    "tree": "candidate-main",
+    "adaptExit": 0,
+    "checkExit": 1,
+    "failure": "AssertionError [ERR_ASSERTION]: TestBuiltinSourceScope: edit outside the three imports and removed declarations"
+  }
+]

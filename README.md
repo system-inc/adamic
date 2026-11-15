@@ -1,3 +1,7 @@
+# Latest result: chain-plus-main also fails 93 single-step check
+
+See [recheck93/README.md](recheck93/README.md). Main, chain-plus-main and candidate-plus-main all return adapter exit 0 and check exit 1 on the immediate single-step pair. Stopped as explicitly requested.
+
 # Stopped: watch-file 1532 re-cut
 
 No adaptation branch pushed. Unverified local candidate: 63f46490764862fef5af3ce6793557d4000994bc. Parent exactly c2f3c21f72b04e4c3acf7731913f0fc8ab89c2ca. Scratch proof merge with main fe5a1a54: 512f2a8ef (candidate tree identical; subsequent amendment changed only the message). The proof merge is not pushed.

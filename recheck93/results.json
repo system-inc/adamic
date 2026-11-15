@@ -1,0 +1,80 @@
+[
+  {
+    "tree": "main",
+    "commit": "fe5a1a54f045e9bce4e5aa32ca74885a317fbebd",
+    "adapt": {
+      "command": [
+        "node",
+        "/workspace/scratch/watch-file-1532-main-check/stage3/adapt/93-builtin-imports/adapt.cjs",
+        "/workspace/scratch/watch-file-proof/recheck93/main-after"
+      ],
+      "exit": 0,
+      "log": "/workspace/scratch/watch-file-proof/recheck93/main-adapt.log",
+      "sha256": "31ca4aecf1f44a96717e05873f6b49c62d098f0c3b107219d5d4b828ccb4ebc0"
+    },
+    "check": {
+      "command": [
+        "node",
+        "/workspace/scratch/watch-file-1532-main-check/stage3/adapt/93-builtin-imports/proofs/check.cjs",
+        "/workspace/scratch/watch-file-proof/recheck93/main-before",
+        "/workspace/scratch/watch-file-proof/recheck93/main-after"
+      ],
+      "exit": 1,
+      "log": "/workspace/scratch/watch-file-proof/recheck93/main-check.log",
+      "sha256": "18f723dd35dad50444a01c36c3b76fb7ce62252499e21af1f5b49224cd0f62df"
+    },
+    "sysDiff": null
+  },
+  {
+    "tree": "chain-main",
+    "commit": "0945d4355cad5afad46d35b14a18950db3775ade",
+    "adapt": {
+      "command": [
+        "node",
+        "/workspace/scratch/watch-file-1532-baseline/stage3/adapt/93-builtin-imports/adapt.cjs",
+        "/workspace/scratch/watch-file-proof/recheck93/chain-main-after"
+      ],
+      "exit": 0,
+      "log": "/workspace/scratch/watch-file-proof/recheck93/chain-main-adapt.log",
+      "sha256": "31ca4aecf1f44a96717e05873f6b49c62d098f0c3b107219d5d4b828ccb4ebc0"
+    },
+    "check": {
+      "command": [
+        "node",
+        "/workspace/scratch/watch-file-1532-baseline/stage3/adapt/93-builtin-imports/proofs/check.cjs",
+        "/workspace/scratch/watch-file-proof/recheck93/chain-main-before",
+        "/workspace/scratch/watch-file-proof/recheck93/chain-main-after"
+      ],
+      "exit": 1,
+      "log": "/workspace/scratch/watch-file-proof/recheck93/chain-main-check.log",
+      "sha256": "62b261eef13a40d67454584b5ab753dbdaa0a8a4d22fae784f914530ea1f4c2c"
+    },
+    "sysDiff": null
+  },
+  {
+    "tree": "candidate-main",
+    "commit": "512f2a8ef8f777c39a9eb2e23d0cf6e9f7dec361",
+    "adapt": {
+      "command": [
+        "node",
+        "/workspace/scratch/watch-file-1532-merge/stage3/adapt/93-builtin-imports/adapt.cjs",
+        "/workspace/scratch/watch-file-proof/recheck93/candidate-main-after"
+      ],
+      "exit": 0,
+      "log": "/workspace/scratch/watch-file-proof/recheck93/candidate-main-adapt.log",
+      "sha256": "31ca4aecf1f44a96717e05873f6b49c62d098f0c3b107219d5d4b828ccb4ebc0"
+    },
+    "check": {
+      "command": [
+        "node",
+        "/workspace/scratch/watch-file-1532-merge/stage3/adapt/93-builtin-imports/proofs/check.cjs",
+        "/workspace/scratch/watch-file-proof/recheck93/candidate-main-before",
+        "/workspace/scratch/watch-file-proof/recheck93/candidate-main-after"
+      ],
+      "exit": 1,
+      "log": "/workspace/scratch/watch-file-proof/recheck93/candidate-main-check.log",
+      "sha256": "3b2bddb494ec4a4ae88eb6825a8301c671bf895dd16c308a8ca2466fdfb4f97c"
+    },
+    "sysDiff": null
+  }
+]
