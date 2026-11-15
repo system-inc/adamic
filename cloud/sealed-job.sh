@@ -41,3 +41,56 @@ sealed_git() {
 	[ -z "$(git status --porcelain)" ] || sealedJobFail "the tree doesn't read clean after its commit" || return 1
 	echo "sealed-job: one commit $(git rev-parse --short HEAD) holds the tree as laid"
 }
+
+# sealed_npm [project...]: each npm project installed offline from the image's cache, as Loom's J-47wmdte proved:
+# --offline, since the machine has no network, and --ignore-scripts, since an install script would fetch. With no project
+# named, it takes the image's own list, BLOCK_REPORT_NPM_PROJECTS. Run from the tree's root.
+sealed_npm() {
+	local projects="${*:-${BLOCK_REPORT_NPM_PROJECTS:-}}" project count=0
+	[ -n "$projects" ] || sealedJobFail "sealed_npm names no project and the image's BLOCK_REPORT_NPM_PROJECTS is empty" || return 1
+	for project in $projects; do
+		(cd "$project" && npm ci --offline --ignore-scripts --no-audit --no-fund) ||
+			sealedJobFail "npm ci --offline failed in $project" || return 1
+		count=$((count + 1))
+	done
+	echo "sealed-job: npm installed offline in $count projects"
+}
+
+# sealed_products <package>...: settles an adamic tree's products before a command reads them, as the lay kit's
+# --products does on a house box (loom's contract/proof/lay.sh): a unit test reads only products built ahead and never
+# builds one, and a sealed job's build cache starts empty. Each package (./<path> or github.com/system-inc/adamic/<path>)
+# brings every package cloud/fast-gate/compiler-dependencies.json lists under its path, and one go test -run
+# '^TestProduct_' runs over the union into ADAMIC_BUILD_CACHE_DIR. Nothing of the file is ever run: it's read as JSON.
+sealed_products() {
+	[ $# -gt 0 ] || sealedJobFail "sealed_products names no package" || return 1
+	local packages
+	packages=$(python3 -I - cloud/fast-gate/compiler-dependencies.json "$@" << 'PYTHON'
+import json, os, re, sys
+part = re.compile(r'^[A-Za-z0-9_][A-Za-z0-9_.-]*$')
+def path_of(name):
+    for prefix in ('./', 'github.com/system-inc/adamic/'):
+        if name.startswith(prefix):
+            name = name[len(prefix):]
+    name = name.rstrip('/')
+    if not name or not all(part.match(piece) for piece in name.split('/')):
+        sys.exit('sealed-job: %r is no adamic package path' % name)
+    return name
+listed = {}
+if os.path.exists(sys.argv[1]):
+    listed = json.load(open(sys.argv[1])).get('packages')
+    if not isinstance(listed, dict):
+        sys.exit('sealed-job: %s holds no packages object' % sys.argv[1])
+union = set()
+for name in sys.argv[2:]:
+    path = path_of(name)
+    union.add(path)
+    for dependency in listed.get(path, []):
+        union.add(path_of(dependency))
+print(' '.join('./' + path for path in sorted(union)))
+PYTHON
+	) || sealedJobFail "couldn't read the products to settle" || return 1
+	# The package list is held to plain paths above, so it splits as words here.
+	# shellcheck disable=SC2086
+	go test -count=1 -run '^TestProduct_' $packages < /dev/null >&2 || sealedJobFail "the products didn't settle over $packages" || return 1
+	echo "sealed-job: products settled for $(echo $packages | wc -w | tr -d ' ') packages"
+}
