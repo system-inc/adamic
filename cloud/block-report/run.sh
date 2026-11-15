@@ -38,8 +38,11 @@ preamble=${BLOCK_REPORT_PREAMBLE:-cloud/sealed-job.sh}
 echo "block-report: $(go version 2>&1)"
 # The streams and every scratch file live outside the tree under test: tests that walk or count the tree see anything
 # inside it, leading dot or not (J-bp8ryag, Nov 12: ten packages failed only because the first run kept them in the
-# tree). The unit's /tmp is its own private one (PrivateTmp=yes).
-out="${BLOCK_REPORT_OUT:-/tmp/block-report}"
+# tree). The data-disk directory the runner names beside the tree ($LOOM_JOB_SCRATCH, Machines' #kq1sg4k v2, where
+# sealed-job.sh puts the build cache too) is taken first, since the unit's /tmp is a small private tmpfs that 1.0.9's
+# streams filled (J-4vcc0ar); /tmp only when the runner names none.
+out="${BLOCK_REPORT_OUT:-${LOOM_JOB_SCRATCH:+$LOOM_JOB_SCRATCH/block-report}}"
+out="${out:-/tmp/block-report}"
 mkdir "$out" || { echo "block-report: $out is there already or can't be made, so nothing ran"; exit 64; }
 echo "block-report: $out is on $(df -PTk "$out" | awk 'NR == 2 {printf "%s, %s, %.0f bytes free", $1, $2, $5 * 1024}')"
 # The preamble makes TMPDIR when the unit gives none, and the job's go and its tests write there first, so it moves to
