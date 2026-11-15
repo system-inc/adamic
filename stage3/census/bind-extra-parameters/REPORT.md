@@ -8,7 +8,7 @@ Base: `55c375d9d245b580c010c3e0b5659f2849f24fb6`. Head: `ba619e28774130e24331c30
 
 Both commits use fresh detached worktrees with `git submodule update --init --recursive --depth 1`. Stage3 API dependencies were installed with `npm ci`. Temporary files, Go caches, generated overlays, binaries and raw observations stay in `/workspace/bind-extra-parameters-scratch`. One heavy job runs at a time. Compiler and adaptations are unchanged.
 
-CommonJSBundle; `LATENT_FULL=1 LATENT_ASSERT_NO_OUTPUT=1 LATENT_ONLY_FILE=<exact absolute source>`; source directory `adapted/src/compiler`. These are latent measurements on a checker-rejected program, not successful compilation. Deferred generic and checker-diagnosed bodies retain the existing census policy. Full findings pair by `(kind, phase, reason, message with source position stripped)`; site movement is also shown. Repeated witnesses remain counted and carry their unit.
+CommonJSBundle; `LATENT_FULL=1 LATENT_ASSERT_NO_OUTPUT=1 LATENT_ONLY_FILE=<exact absolute source>`; source directory `adapted/src/compiler`. These are no-output latent measurements, not successful compilation. The tool retains its historical measurement label; the actual checker-rejected flag and diagnostic count are stated per pair below. Deferred generic and checker-diagnosed bodies retain the existing census policy. Full findings pair by `(kind, phase, reason, message with source position stripped)`; site movement is also shown. Repeated witnesses remain counted and carry their unit.
 
 ## Full single-file results
 
@@ -17,6 +17,8 @@ CommonJSBundle; `LATENT_FULL=1 LATENT_ASSERT_NO_OUTPUT=1 LATENT_ONLY_FILE=<exact
 | sys.ts | 136/136 | 183/183 | 0 | 0 |
 
 ### sys.ts
+
+Checker rejected: `False`; diagnostics: 0.
 
 No new, removed, changed or relocated findings.
 
