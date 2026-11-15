@@ -74,7 +74,7 @@ func TestViewSiteIndexIsBuiltOncePerLowering(t *testing.T) {
 // An access found unchecked is asked again once a key of its name is added: either.b, unchecked at Other's
 // view, is checked through its union once One's view registers One:b, and One's walk registers the union's
 // own key for b, as the whole walk does at that call. Mutant: the dirty-name recheck skipped, so only a name never
-// judged is asked, either.b stays unchecked at One's walk, and this and TestViewWalkIndexedAgreesWithWhole go red.
+// judged is asked, either.b stays unchecked at One's walk, and this and TestViewWalkIndexedAgreesWithWholeShard0 go red.
 //
 // Not parallel: it lowers with viewWalkCompare on, so One's walk is held to the whole walk's at that call, which
 // tells the recheck was made at the call that owes it, not only that the key exists by the time lowering ends.
@@ -140,18 +140,33 @@ func TestViewRefusesItsFirstSiteInPreorder(t *testing.T) {
 }
 
 // With viewWalkCompare on, every view under no type mapper runs the whole walk and the indexed walk from
-// one state and panics where their refusal, getters, CheckedFields or PlainReceivers differ. This lowers
-// every .a and .ts program of internal/oracle's corpus, the one internal/split's analysis is exercised
-// over, the widest set of views the repository holds, and the pins' own programs, so a mutant the
-// corpus never meets still meets them.
+// one state and panics where their refusal, getters, CheckedFields or PlainReceivers differ. Together these
+// lower every .a and .ts program of internal/oracle's corpus, the one internal/split's analysis is exercised
+// over, the widest set of views the repository holds, and the pins' own programs, so a mutant the corpus never
+// meets still meets them. The corpus is split four ways by its order, one test a quarter, since one test over
+// all 4,246 programs ran 60.4 s on a loaded line box, past the unit's 60 s (chg_j32tzhw8, #q1hyhzc).
 //
 // Not parallel: viewWalkCompare changes every view in the package while it's set, and no parallel test
-// runs beside a sequential one. Its subtests are parallel with one another, and the switch goes off only
+// runs beside a sequential one. Their subtests are parallel with one another, and the switch goes off only
 // once they're done.
-func TestViewWalkIndexedAgreesWithWhole(t *testing.T) {
+func TestViewWalkIndexedAgreesWithWholeShard0(t *testing.T) { viewWalkAgreement(t, 0) }
+func TestViewWalkIndexedAgreesWithWholeShard1(t *testing.T) { viewWalkAgreement(t, 1) }
+func TestViewWalkIndexedAgreesWithWholeShard2(t *testing.T) { viewWalkAgreement(t, 2) }
+func TestViewWalkIndexedAgreesWithWholeShard3(t *testing.T) { viewWalkAgreement(t, 3) }
+
+// viewWalkShards is how many tests the corpus is split among.
+const viewWalkShards = 4
+
+// viewWalkAgreement lowers shard's quarter of the corpus, its programs at the indexes equal to shard modulo
+// viewWalkShards in the walk's order, with the walks compared. Shard 0 also lowers the pins' two programs.
+func viewWalkAgreement(t *testing.T, shard int) {
 	viewWalkCompare.Store(true)
 	t.Cleanup(func() { viewWalkCompare.Store(false) })
-	paths := []string{writeAgreementSource(t, "casts.ts", viewSitesCasts), writeAgreementSource(t, "writes.a", viewSitesTwoWrites)}
+	var paths []string
+	if shard == 0 {
+		paths = append(paths, writeAgreementSource(t, "casts.ts", viewSitesCasts), writeAgreementSource(t, "writes.a", viewSitesTwoWrites))
+	}
+	index := 0
 	// Reads: internal/oracle/testdata/*
 	err := filepath.WalkDir("../oracle/testdata", func(path string, entry fs.DirEntry, err error) error {
 		if err != nil {
@@ -159,7 +174,10 @@ func TestViewWalkIndexedAgreesWithWhole(t *testing.T) {
 		}
 		// A .d.ts is no program, only declarations another file names.
 		if !entry.IsDir() && (filepath.Ext(path) == ".a" || filepath.Ext(path) == ".ts" && !strings.HasSuffix(path, ".d.ts")) {
-			paths = append(paths, path)
+			if index%viewWalkShards == shard {
+				paths = append(paths, path)
+			}
+			index++
 		}
 		return nil
 	})
@@ -187,7 +205,7 @@ func TestViewWalkIndexedAgreesWithWhole(t *testing.T) {
 		}
 	})
 	if viewed.Load() == 0 {
-		t.Fatal("no program of the corpus lowered with a view, so nothing was compared")
+		t.Fatal("no program of this shard lowered with a view, so nothing was compared")
 	}
 	t.Logf("%d of %d programs lowered with views, each walk compared", viewed.Load(), len(paths))
 }
