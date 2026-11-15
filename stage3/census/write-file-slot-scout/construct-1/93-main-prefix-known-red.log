@@ -1,0 +1,616 @@
+node:assert:152
+  throw new AssertionError(obj);
+  ^
+
+AssertionError [ERR_ASSERTION]: TestBuiltinSourceScope: edit outside the three imports and removed declarations
++ actual - expected
+... Skipped lines
+
+  'import {\r\n' +
+    '    AssertionLevel,\r\n' +
+    '    closeFileWatcher,\r\n' +
+    '    closeFileWatcherOf,\r\n' +
+    '    combinePaths,\r\n' +
+...
+    '        // Set the next polling index and timeout\r\n' +
++   '  '... 76540 more characters
+-   '  '... 76142 more characters
+
+    at TestBuiltinSourceScope (/workspace/scratch/write-file-construct-main/stage3/adapt/93-builtin-imports/proofs/check.cjs:26:9)
+    at Object.<anonymous> (/workspace/scratch/write-file-construct-main/stage3/adapt/93-builtin-imports/proofs/check.cjs:43:22)
+    at Module._compile (node:internal/modules/cjs/loader:1872:14)
+    at Object..js (node:internal/modules/cjs/loader:2003:10)
+    at Module.load (node:internal/modules/cjs/loader:1594:32)
+    at Module._load (node:internal/modules/cjs/loader:1396:12)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:255:19)
+    at Module.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:154:5)
+    at node:internal/main/run_main_module:33:47 {
+  generatedMessage: false,
+  code: 'ERR_ASSERTION',
+  actual: 'import {\r\n' +
+    '    AssertionLevel,\r\n' +
+    '    closeFileWatcher,\r\n' +
+    '    closeFileWatcherOf,\r\n' +
+    '    combinePaths,\r\n' +
+    '    Comparison,\r\n' +
+    '    contains,\r\n' +
+    '    containsPath,\r\n' +
+    '    createGetCanonicalFileName,\r\n' +
+    '    createMultiMap,\r\n' +
+    '    Debug,\r\n' +
+    '    directorySeparator,\r\n' +
+    '    emptyArray,\r\n' +
+    '    emptyFileSystemEntries,\r\n' +
+    '    endsWith,\r\n' +
+    '    enumerateInsertsAndDeletes,\r\n' +
+    '    type FileSystemEntries,\r\n' +
+    '    getDirectoryPath,\r\n' +
+    '    getFallbackOptions,\r\n' +
+    '    getNormalizedAbsolutePath,\r\n' +
+    '    getRelativePathFromDirectory,\r\n' +
+    '    getRelativePathToDirectoryOrUrl,\r\n' +
+    '    getRootLength,\r\n' +
+    '    getStringComparer,\r\n' +
+    '    isArray,\r\n' +
+    '    isNodeLikeSystem,\r\n' +
+    '    isString,\r\n' +
+    '    mapDefined,\r\n' +
+    '    matchesExclude,\r\n' +
+    '    matchFiles,\r\n' +
+    '    memoize,\r\n' +
+    '    type ModuleImportResult,\r\n' +
+    '    noop,\r\n' +
+    '    normalizePath,\r\n' +
+    '    normalizeSlashes,\r\n' +
+    '    orderedRemoveItem,\r\n' +
+    '    type Path,\r\n' +
+    '    PollingWatchKind,\r\n' +
+    '    resolveJSModule,\r\n' +
+    '    some,\r\n' +
+    '    startsWith,\r\n' +
+    '    timestamp,\r\n' +
+    '    unorderedRemoveItem,\r\n' +
+    '    WatchDirectoryKind,\r\n' +
+    '    WatchFileKind,\r\n' +
+    '    type WatchOptions,\r\n' +
+    '    writeFileEnsuringDirectories,\r\n' +
+    '} from "./_namespaces/ts.js";\r\n' +
+    'import { errorCode } from "./hostErrors.js";\r\n' +
+    '\r\n' +
+    '\r\n' +
+    '/**\r\n' +
+    ' * djb2 hashing algorithm\r\n' +
+    ' * http://www.cse.yorku.ca/~oz/hash.html\r\n' +
+    ' *\r\n' +
+    ' * @internal\r\n' +
+    ' */\r\n' +
+    'export function generateDjb2Hash(data: string): string {\r\n' +
+    '    let acc = 5381;\r\n' +
+    '    for (let i = 0; i < data.length; i++) {\r\n' +
+    '        acc = ((acc << 5) + acc) + data.charCodeAt(i);\r\n' +
+    '    }\r\n' +
+    '    return acc.toString();\r\n' +
+    '}\r\n' +
+    '\r\n' +
+    '/**\r\n' +
+    ' * Set a high stack trace limit to provide more information in case of an error.\r\n' +
+    ' * Called for command-line and server use cases.\r\n' +
+    ' * Not called if TypeScript is used as a library.\r\n' +
+    ' *\r\n' +
+    ' * @internal\r\n' +
+    ' */\r\n' +
+    'export function setStackTraceLimit(): void {\r\n' +
+    "    if (Error.stackTraceLimit < 100) { // Also tests that we won't set the property if it doesn't exist.\r\n" +
+    '        Error.stackTraceLimit = 100;\r\n' +
+    '    }\r\n' +
+    '}\r\n' +
+    '\r\n' +
+    'export enum FileWatcherEventKind {\r\n' +
+    '    Created,\r\n' +
+    '    Changed,\r\n' +
+    '    Deleted,\r\n' +
+    '}\r\n' +
+    '\r\n' +
+    'export type FileWatcherCallback = (fileName: string, eventKind: FileWatcherEventKind, modifiedTime?: Date) => void;\r\n' +
+    'export type DirectoryWatcherCallback = (fileName: string) => void;\r\n' +
+    'interface WatchedFile {\r\n' +
+    '    readonly fileName: string;\r\n' +
+    '    readonly callback: FileWatcherCallback;\r\n' +
+    '    mtime: Date;\r\n' +
+    '}\r\n' +
+    '\r\n' +
+    '/** @internal */\r\n' +
+    'export enum PollingInterval {\r\n' +
+    '    High = 2000,\r\n' +
+    '    Medium = 500,\r\n' +
+    '    Low = 250,\r\n' +
+    '}\r\n' +
+    '\r\n' +
+    '/** @internal */\r\n' +
+    'export type HostWatchFile = (fileName: string, callback: FileWatcherCallback, pollingInterval: PollingInterval, options: WatchOptions | undefined) => FileWatcher;\r\n' +
+    '/** @internal */\r\n' +
+    'export type HostWatchDirectory = (fileName: string, callback: DirectoryWatcherCallback, recursive: boolean, options: WatchOptions | undefined) => FileWatcher;\r\n' +
+    '\r\n' +
+    '/** @internal */\r\n' +
+    'export const missingFileModifiedTime: Date = new Date(0); // Any subsequent modification will occur after this time\r\n' +
+    '\r\n' +
+    '/** @internal */\r\n' +
+    'export function getModifiedTime(host: { getModifiedTime: NonNullable<System["getModifiedTime"]>; }, fileName: string): Date {\r\n' +
+    '    return host.getModifiedTime(fileName) || missingFileModifiedTime;\r\n' +
+    '}\r\n' +
+    '\r\n' +
+    'interface Levels {\r\n' +
+    '    Low: number;\r\n' +
+    '    Medium: number;\r\n' +
+    '    High: number;\r\n' +
+    '}\r\n' +
+    '\r\n' +
+    'function createPollingIntervalBasedLevels(levels: Levels) {\r\n' +
+    '    return {\r\n' +
+    '        [PollingInterval.Low]: levels.Low,\r\n' +
+    '        [PollingInterval.Medium]: levels.Medium,\r\n' +
+    '        [PollingInterval.High]: levels.High,\r\n' +
+    '    };\r\n' +
+    '}\r\n' +
+    '\r\n' +
+    'const defaultChunkLevels: Levels = { Low: 32, Medium: 64, High: 256 };\r\n' +
+    'let pollingChunkSize = createPollingIntervalBasedLevels(defaultChunkLevels);\r\n' +
+    '/** @internal */\r\n' +
+    'export let unchangedPollThresholds: { [K in PollingInterval]: number; } = createPollingIntervalBasedLevels(defaultChunkLevels);\r\n' +
+    '\r\n' +
+    'function setCustomPollingValues(system: System) {\r\n' +
+    '    if (!system.getEnvironmentVariable) {\r\n' +
+    '        return;\r\n' +
+    '    }\r\n' +
+    '    const pollingIntervalChanged = setCustomLevels("TSC_WATCH_POLLINGINTERVAL", PollingInterval);\r\n' +
+    '    pollingChunkSize = getCustomPollingBasedLevels("TSC_WATCH_POLLINGCHUNKSIZE", defaultChunkLevels) || pollingChunkSize;\r\n' +
+    '    unchangedPollThresholds = getCustomPollingBasedLevels("TSC_WATCH_UNCHANGEDPOLLTHRESHOLDS", defaultChunkLevels) || unchangedPollThresholds;\r\n' +
+    '\r\n' +
+    '    function getLevel(envVar: string, level: keyof Levels) {\r\n' +
+    '        return system.getEnvironmentVariable(`${envVar}_${level.toUpperCase()}`);\r\n' +
+    '    }\r\n' +
+    '\r\n' +
+    '    function getCustomLevels(baseVariable: string) {\r\n' +
+    '        let customLevels: Partial<Levels> | undefined;\r\n' +
+    '        setCustomLevel("Low");\r\n' +
+    '        setCustomLevel("Medium");\r\n' +
+    '        setCustomLevel("High");\r\n' +
+    '        return customLevels;\r\n' +
+    '\r\n' +
+    '        function setCustomLevel(level: keyof Levels) {\r\n' +
+    '            const customLevel = getLevel(baseVariable, level);\r\n' +
+    '            if (customLevel) {\r\n' +
+    '                (customLevels || (customLevels = {}))[level] = Number(customLevel);\r\n' +
+    '            }\r\n' +
+    '        }\r\n' +
+    '    }\r\n' +
+    '\r\n' +
+    '    function setCustomLevels(baseVariable: string, levels: Levels) {\r\n' +
+    '        const customLevels = getCustomLevels(baseVariable);\r\n' +
+    '        if (customLevels) {\r\n' +
+    '            setLevel("Low");\r\n' +
+    '            setLevel("Medium");\r\n' +
+    '            setLevel("High");\r\n' +
+    '            return true;\r\n' +
+    '        }\r\n' +
+    '        return false;\r\n' +
+    '\r\n' +
+    '        function setLevel(level: keyof Levels) {\r\n' +
+    '            levels[level] = customLevels![level] || levels[level];\r\n' +
+    '        }\r\n' +
+    '    }\r\n' +
+    '\r\n' +
+    '    function getCustomPollingBasedLevels(baseVariable: string, defaultLevels: Levels) {\r\n' +
+    '        const customLevels = getCustomLevels(baseVariable);\r\n' +
+    '        return (pollingIntervalChanged || customLevels) &&\r\n' +
+    '            createPollingIntervalBasedLevels(customLevels ? { ...defaultLevels, ...customLevels } : defaultLevels);\r\n' +
+    '    }\r\n' +
+    '}\r\n' +
+    '\r\n' +
+    'interface WatchedFileWithIsClosed extends WatchedFile {\r\n' +
+    '    isClosed?: boolean;\r\n' +
+    '}\r\n' +
+    'function pollWatchedFileQueue<T extends WatchedFileWithIsClosed>(\r\n' +
+    '    host: { getModifiedTime: NonNullable<System["getModifiedTime"]>; },\r\n' +
+    '    queue: (T | undefined)[],\r\n' +
+    '    pollIndex: number,\r\n' +
+    '    chunkSize: number,\r\n' +
+    '    callbackOnWatchFileStat?: (watchedFile: T, pollIndex: number, fileChanged: boolean) => void,\r\n' +
+    ') {\r\n' +
+    '    let definedValueCopyToIndex = pollIndex;\r\n' +
+    '    // Max visit would be all elements of the queue\r\n' +
+    '    for (let canVisit = queue.length; chunkSize && canVisit; nextPollIndex(), canVisit--) {\r\n' +
+    '        const watchedFile = queue[pollIndex];\r\n' +
+    '        if (!watchedFile) {\r\n' +
+    '            continue;\r\n' +
+    '        }\r\n' +
+    '        else if (watchedFile.isClosed) {\r\n' +
+    '            queue[pollIndex] = undefined;\r\n' +
+    '            continue;\r\n' +
+    '        }\r\n' +
+    '\r\n' +
+    '        // Only files polled count towards chunkSize\r\n' +
+    '        chunkSize--;\r\n' +
+    '        const fileChanged = onWatchedFileStat(watchedFile, getModifiedTime(host, watchedFile.fileName));\r\n' +
+    '        if (watchedFile.isClosed) {\r\n' +
+    '            // Closed watcher as part of callback\r\n' +
+    '            queue[pollIndex] = undefined;\r\n' +
+    '            continue;\r\n' +
+    '        }\r\n' +
+    '\r\n' +
+    '        callbackOnWatchFileStat?.(watchedFile, pollIndex, fileChanged);\r\n' +
+    '        // Defragment the queue while we are at it\r\n' +
+    '        if (queue[pollIndex]) {\r\n' +
+    '            // Copy this file to the non hole location\r\n' +
+    '            if (definedValueCopyToIndex < pollIndex) {\r\n' +
+    '                queue[definedValueCopyToIndex] = watchedFile;\r\n' +
+    '                queue[pollIndex] = undefined;\r\n' +
+    '            }\r\n' +
+    '            definedValueCopyToIndex++;\r\n' +
+    '        }\r\n' +
+    '    }\r\n' +
+    '\r\n' +
+    '    // Return next poll index\r\n' +
+    '    return pollIndex;\r\n' +
+    '\r\n' +
+    '    function nextPollIndex() {\r\n' +
+    '        pollIndex++;\r\n' +
+    '        if (pollIndex === queue.length) {\r\n' +
+    '            if (definedValueCopyToIndex < pollIndex) {\r\n' +
+    '                // There are holes from definedValueCopyToIndex to end of queue, change queue size\r\n' +
+    '                queue.length = definedValueCopyToIndex;\r\n' +
+    '            }\r\n' +
+    '            pollIndex = 0;\r\n' +
+    '            definedValueCopyToIndex = 0;\r\n' +
+    '        }\r\n' +
+    '    }\r\n' +
+    '}\r\n' +
+    '\r\n' +
+    'interface WatchedFileWithUnchangedPolls extends WatchedFileWithIsClosed {\r\n' +
+    '    unchangedPolls: number;\r\n' +
+    '}\r\n' +
+    'function createDynamicPriorityPollingWatchFile(host: {\r\n' +
+    '    getModifiedTime: NonNullable<System["getModifiedTime"]>;\r\n' +
+    '    setTimeout: NonNullable<System["setTimeout"]>;\r\n' +
+    '}): HostWatchFile {\r\n' +
+    '    interface PollingIntervalQueue extends Array<WatchedFileWithUnchangedPolls> {\r\n' +
+    '        pollingInterval: PollingInterval;\r\n' +
+    '        pollIndex: number;\r\n' +
+    '        pollScheduled: boolean;\r\n' +
+    '    }\r\n' +
+    '\r\n' +
+    '    const watchedFiles: WatchedFileWithUnchangedPolls[] = [];\r\n' +
+    '    const changedFilesInLastPoll: WatchedFileWithUnchangedPolls[] = [];\r\n' +
+    '    const lowPollingIntervalQueue = createPollingIntervalQueue(PollingInterval.Low);\r\n' +
+    '    const mediumPollingIntervalQueue = createPollingIntervalQueue(PollingInterval.Medium);\r\n' +
+    '    const highPollingIntervalQueue = createPollingIntervalQueue(PollingInterval.High);\r\n' +
+    '    return watchFile;\r\n' +
+    '\r\n' +
+    '    function watchFile(fileName: string, callback: FileWatcherCallback, defaultPollingInterval: PollingInterval): FileWatcher {\r\n' +
+    '        const file: WatchedFileWithUnchangedPolls = {\r\n' +
+    '            fileName,\r\n' +
+    '            callback,\r\n' +
+    '            unchangedPolls: 0,\r\n' +
+    '            mtime: getModifiedTime(host, fileName),\r\n' +
+    '        };\r\n' +
+    '        watchedFiles.push(file);\r\n' +
+    '\r\n' +
+    '        addToPollingIntervalQueue(file, defaultPollingInterval);\r\n' +
+    '        return {\r\n' +
+    '            close: () => {\r\n' +
+    '                file.isClosed = true;\r\n' +
+    '                // Remove from watchedFiles\r\n' +
+    '                unorderedRemoveItem(watchedFiles, file);\r\n' +
+    '                // Do not update polling interval queue since that will happen as part of polling\r\n' +
+    '            },\r\n' +
+    '        };\r\n' +
+    '    }\r\n' +
+    '\r\n' +
+    '    function createPollingIntervalQueue(pollingInterval: PollingInterval): PollingIntervalQueue {\r\n' +
+    '        const queue = [] as WatchedFileWithUnchangedPolls[] as PollingIntervalQueue;\r\n' +
+    '        queue.pollingInterval = pollingInterval;\r\n' +
+    '        queue.pollIndex = 0;\r\n' +
+    '        queue.pollScheduled = false;\r\n' +
+    '        return queue;\r\n' +
+    '    }\r\n' +
+    '\r\n' +
+    '    function pollPollingIntervalQueue(_timeoutType: string, queue: PollingIntervalQueue) {\r\n' +
+    '        queue.pollIndex = pollQueue(queue, queue.pollingInterval, queue.pollIndex, pollingChunkSize[queue.pollingInterval]);\r\n' +
+    '        // Set the next polling index and timeout\r\n' +
+    '  '... 76540 more characters,
+  expected: 'import {\r\n' +
+    '    AssertionLevel,\r\n' +
+    '    closeFileWatcher,\r\n' +
+    '    closeFileWatcherOf,\r\n' +
+    '    combinePaths,\r\n' +
+    '    Comparison,\r\n' +
+    '    contains,\r\n' +
+    '    containsPath,\r\n' +
+    '    createGetCanonicalFileName,\r\n' +
+    '    createMultiMap,\r\n' +
+    '    Debug,\r\n' +
+    '    directorySeparator,\r\n' +
+    '    emptyArray,\r\n' +
+    '    emptyFileSystemEntries,\r\n' +
+    '    endsWith,\r\n' +
+    '    enumerateInsertsAndDeletes,\r\n' +
+    '    type FileSystemEntries,\r\n' +
+    '    getDirectoryPath,\r\n' +
+    '    getFallbackOptions,\r\n' +
+    '    getNormalizedAbsolutePath,\r\n' +
+    '    getRelativePathFromDirectory,\r\n' +
+    '    getRelativePathToDirectoryOrUrl,\r\n' +
+    '    getRootLength,\r\n' +
+    '    getStringComparer,\r\n' +
+    '    isArray,\r\n' +
+    '    isNodeLikeSystem,\r\n' +
+    '    isString,\r\n' +
+    '    mapDefined,\r\n' +
+    '    matchesExclude,\r\n' +
+    '    matchFiles,\r\n' +
+    '    memoize,\r\n' +
+    '    type ModuleImportResult,\r\n' +
+    '    noop,\r\n' +
+    '    normalizePath,\r\n' +
+    '    normalizeSlashes,\r\n' +
+    '    orderedRemoveItem,\r\n' +
+    '    type Path,\r\n' +
+    '    PollingWatchKind,\r\n' +
+    '    resolveJSModule,\r\n' +
+    '    some,\r\n' +
+    '    startsWith,\r\n' +
+    '    timestamp,\r\n' +
+    '    unorderedRemoveItem,\r\n' +
+    '    WatchDirectoryKind,\r\n' +
+    '    WatchFileKind,\r\n' +
+    '    type WatchOptions,\r\n' +
+    '    writeFileEnsuringDirectories,\r\n' +
+    '} from "./_namespaces/ts.js";\r\n' +
+    'import { errorCode } from "./hostErrors.js";\r\n' +
+    '\r\n' +
+    '\r\n' +
+    '/**\r\n' +
+    ' * djb2 hashing algorithm\r\n' +
+    ' * http://www.cse.yorku.ca/~oz/hash.html\r\n' +
+    ' *\r\n' +
+    ' * @internal\r\n' +
+    ' */\r\n' +
+    'export function generateDjb2Hash(data: string): string {\r\n' +
+    '    let acc = 5381;\r\n' +
+    '    for (let i = 0; i < data.length; i++) {\r\n' +
+    '        acc = ((acc << 5) + acc) + data.charCodeAt(i);\r\n' +
+    '    }\r\n' +
+    '    return acc.toString();\r\n' +
+    '}\r\n' +
+    '\r\n' +
+    '/**\r\n' +
+    ' * Set a high stack trace limit to provide more information in case of an error.\r\n' +
+    ' * Called for command-line and server use cases.\r\n' +
+    ' * Not called if TypeScript is used as a library.\r\n' +
+    ' *\r\n' +
+    ' * @internal\r\n' +
+    ' */\r\n' +
+    'export function setStackTraceLimit(): void {\r\n' +
+    "    if (Error.stackTraceLimit < 100) { // Also tests that we won't set the property if it doesn't exist.\r\n" +
+    '        Error.stackTraceLimit = 100;\r\n' +
+    '    }\r\n' +
+    '}\r\n' +
+    '\r\n' +
+    'export enum FileWatcherEventKind {\r\n' +
+    '    Created,\r\n' +
+    '    Changed,\r\n' +
+    '    Deleted,\r\n' +
+    '}\r\n' +
+    '\r\n' +
+    'export type FileWatcherCallback = (fileName: string, eventKind: FileWatcherEventKind, modifiedTime?: Date) => void;\r\n' +
+    'export type DirectoryWatcherCallback = (fileName: string) => void;\r\n' +
+    'interface WatchedFile {\r\n' +
+    '    readonly fileName: string;\r\n' +
+    '    readonly callback: FileWatcherCallback;\r\n' +
+    '    mtime: Date;\r\n' +
+    '}\r\n' +
+    '\r\n' +
+    '/** @internal */\r\n' +
+    'export enum PollingInterval {\r\n' +
+    '    High = 2000,\r\n' +
+    '    Medium = 500,\r\n' +
+    '    Low = 250,\r\n' +
+    '}\r\n' +
+    '\r\n' +
+    '/** @internal */\r\n' +
+    'export type HostWatchFile = (fileName: string, callback: FileWatcherCallback, pollingInterval: PollingInterval, options: WatchOptions | undefined) => FileWatcher;\r\n' +
+    '/** @internal */\r\n' +
+    'export type HostWatchDirectory = (fileName: string, callback: DirectoryWatcherCallback, recursive: boolean, options: WatchOptions | undefined) => FileWatcher;\r\n' +
+    '\r\n' +
+    '/** @internal */\r\n' +
+    'export const missingFileModifiedTime: Date = new Date(0); // Any subsequent modification will occur after this time\r\n' +
+    '\r\n' +
+    '/** @internal */\r\n' +
+    'export function getModifiedTime(host: { getModifiedTime: NonNullable<System["getModifiedTime"]>; }, fileName: string): Date {\r\n' +
+    '    return host.getModifiedTime(fileName) || missingFileModifiedTime;\r\n' +
+    '}\r\n' +
+    '\r\n' +
+    'interface Levels {\r\n' +
+    '    Low: number;\r\n' +
+    '    Medium: number;\r\n' +
+    '    High: number;\r\n' +
+    '}\r\n' +
+    '\r\n' +
+    'function createPollingIntervalBasedLevels(levels: Levels) {\r\n' +
+    '    return {\r\n' +
+    '        [PollingInterval.Low]: levels.Low,\r\n' +
+    '        [PollingInterval.Medium]: levels.Medium,\r\n' +
+    '        [PollingInterval.High]: levels.High,\r\n' +
+    '    };\r\n' +
+    '}\r\n' +
+    '\r\n' +
+    'const defaultChunkLevels: Levels = { Low: 32, Medium: 64, High: 256 };\r\n' +
+    'let pollingChunkSize = createPollingIntervalBasedLevels(defaultChunkLevels);\r\n' +
+    '/** @internal */\r\n' +
+    'export let unchangedPollThresholds: { [K in PollingInterval]: number; } = createPollingIntervalBasedLevels(defaultChunkLevels);\r\n' +
+    '\r\n' +
+    'function setCustomPollingValues(system: System) {\r\n' +
+    '    if (!system.getEnvironmentVariable) {\r\n' +
+    '        return;\r\n' +
+    '    }\r\n' +
+    '    const pollingIntervalChanged = setCustomLevels("TSC_WATCH_POLLINGINTERVAL", PollingInterval);\r\n' +
+    '    pollingChunkSize = getCustomPollingBasedLevels("TSC_WATCH_POLLINGCHUNKSIZE", defaultChunkLevels) || pollingChunkSize;\r\n' +
+    '    unchangedPollThresholds = getCustomPollingBasedLevels("TSC_WATCH_UNCHANGEDPOLLTHRESHOLDS", defaultChunkLevels) || unchangedPollThresholds;\r\n' +
+    '\r\n' +
+    '    function getLevel(envVar: string, level: keyof Levels) {\r\n' +
+    '        return system.getEnvironmentVariable(`${envVar}_${level.toUpperCase()}`);\r\n' +
+    '    }\r\n' +
+    '\r\n' +
+    '    function getCustomLevels(baseVariable: string) {\r\n' +
+    '        let customLevels: Partial<Levels> | undefined;\r\n' +
+    '        setCustomLevel("Low");\r\n' +
+    '        setCustomLevel("Medium");\r\n' +
+    '        setCustomLevel("High");\r\n' +
+    '        return customLevels;\r\n' +
+    '\r\n' +
+    '        function setCustomLevel(level: keyof Levels) {\r\n' +
+    '            const customLevel = getLevel(baseVariable, level);\r\n' +
+    '            if (customLevel) {\r\n' +
+    '                (customLevels || (customLevels = {}))[level] = Number(customLevel);\r\n' +
+    '            }\r\n' +
+    '        }\r\n' +
+    '    }\r\n' +
+    '\r\n' +
+    '    function setCustomLevels(baseVariable: string, levels: Levels) {\r\n' +
+    '        const customLevels = getCustomLevels(baseVariable);\r\n' +
+    '        if (customLevels) {\r\n' +
+    '            setLevel("Low");\r\n' +
+    '            setLevel("Medium");\r\n' +
+    '            setLevel("High");\r\n' +
+    '            return true;\r\n' +
+    '        }\r\n' +
+    '        return false;\r\n' +
+    '\r\n' +
+    '        function setLevel(level: keyof Levels) {\r\n' +
+    '            levels[level] = customLevels![level] || levels[level];\r\n' +
+    '        }\r\n' +
+    '    }\r\n' +
+    '\r\n' +
+    '    function getCustomPollingBasedLevels(baseVariable: string, defaultLevels: Levels) {\r\n' +
+    '        const customLevels = getCustomLevels(baseVariable);\r\n' +
+    '        return (pollingIntervalChanged || customLevels) &&\r\n' +
+    '            createPollingIntervalBasedLevels(customLevels ? { ...defaultLevels, ...customLevels } : defaultLevels);\r\n' +
+    '    }\r\n' +
+    '}\r\n' +
+    '\r\n' +
+    'interface WatchedFileWithIsClosed extends WatchedFile {\r\n' +
+    '    isClosed?: boolean;\r\n' +
+    '}\r\n' +
+    'function pollWatchedFileQueue<T extends WatchedFileWithIsClosed>(\r\n' +
+    '    host: { getModifiedTime: NonNullable<System["getModifiedTime"]>; },\r\n' +
+    '    queue: (T | undefined)[],\r\n' +
+    '    pollIndex: number,\r\n' +
+    '    chunkSize: number,\r\n' +
+    '    callbackOnWatchFileStat?: (watchedFile: T, pollIndex: number, fileChanged: boolean) => void,\r\n' +
+    ') {\r\n' +
+    '    let definedValueCopyToIndex = pollIndex;\r\n' +
+    '    // Max visit would be all elements of the queue\r\n' +
+    '    for (let canVisit = queue.length; chunkSize && canVisit; nextPollIndex(), canVisit--) {\r\n' +
+    '        const watchedFile = queue[pollIndex];\r\n' +
+    '        if (!watchedFile) {\r\n' +
+    '            continue;\r\n' +
+    '        }\r\n' +
+    '        else if (watchedFile.isClosed) {\r\n' +
+    '            queue[pollIndex] = undefined;\r\n' +
+    '            continue;\r\n' +
+    '        }\r\n' +
+    '\r\n' +
+    '        // Only files polled count towards chunkSize\r\n' +
+    '        chunkSize--;\r\n' +
+    '        const fileChanged = onWatchedFileStat(watchedFile, getModifiedTime(host, watchedFile.fileName));\r\n' +
+    '        if (watchedFile.isClosed) {\r\n' +
+    '            // Closed watcher as part of callback\r\n' +
+    '            queue[pollIndex] = undefined;\r\n' +
+    '            continue;\r\n' +
+    '        }\r\n' +
+    '\r\n' +
+    '        callbackOnWatchFileStat?.(watchedFile, pollIndex, fileChanged);\r\n' +
+    '        // Defragment the queue while we are at it\r\n' +
+    '        if (queue[pollIndex]) {\r\n' +
+    '            // Copy this file to the non hole location\r\n' +
+    '            if (definedValueCopyToIndex < pollIndex) {\r\n' +
+    '                queue[definedValueCopyToIndex] = watchedFile;\r\n' +
+    '                queue[pollIndex] = undefined;\r\n' +
+    '            }\r\n' +
+    '            definedValueCopyToIndex++;\r\n' +
+    '        }\r\n' +
+    '    }\r\n' +
+    '\r\n' +
+    '    // Return next poll index\r\n' +
+    '    return pollIndex;\r\n' +
+    '\r\n' +
+    '    function nextPollIndex() {\r\n' +
+    '        pollIndex++;\r\n' +
+    '        if (pollIndex === queue.length) {\r\n' +
+    '            if (definedValueCopyToIndex < pollIndex) {\r\n' +
+    '                // There are holes from definedValueCopyToIndex to end of queue, change queue size\r\n' +
+    '                queue.length = definedValueCopyToIndex;\r\n' +
+    '            }\r\n' +
+    '            pollIndex = 0;\r\n' +
+    '            definedValueCopyToIndex = 0;\r\n' +
+    '        }\r\n' +
+    '    }\r\n' +
+    '}\r\n' +
+    '\r\n' +
+    'interface WatchedFileWithUnchangedPolls extends WatchedFileWithIsClosed {\r\n' +
+    '    unchangedPolls: number;\r\n' +
+    '}\r\n' +
+    'function createDynamicPriorityPollingWatchFile(host: {\r\n' +
+    '    getModifiedTime: NonNullable<System["getModifiedTime"]>;\r\n' +
+    '    setTimeout: NonNullable<System["setTimeout"]>;\r\n' +
+    '}): HostWatchFile {\r\n' +
+    '    interface PollingIntervalQueue extends Array<WatchedFileWithUnchangedPolls> {\r\n' +
+    '        pollingInterval: PollingInterval;\r\n' +
+    '        pollIndex: number;\r\n' +
+    '        pollScheduled: boolean;\r\n' +
+    '    }\r\n' +
+    '\r\n' +
+    '    const watchedFiles: WatchedFileWithUnchangedPolls[] = [];\r\n' +
+    '    const changedFilesInLastPoll: WatchedFileWithUnchangedPolls[] = [];\r\n' +
+    '    const lowPollingIntervalQueue = createPollingIntervalQueue(PollingInterval.Low);\r\n' +
+    '    const mediumPollingIntervalQueue = createPollingIntervalQueue(PollingInterval.Medium);\r\n' +
+    '    const highPollingIntervalQueue = createPollingIntervalQueue(PollingInterval.High);\r\n' +
+    '    return watchFile;\r\n' +
+    '\r\n' +
+    '    function watchFile(fileName: string, callback: FileWatcherCallback, defaultPollingInterval: PollingInterval): FileWatcher {\r\n' +
+    '        const file: WatchedFileWithUnchangedPolls = {\r\n' +
+    '            fileName,\r\n' +
+    '            callback,\r\n' +
+    '            unchangedPolls: 0,\r\n' +
+    '            mtime: getModifiedTime(host, fileName),\r\n' +
+    '        };\r\n' +
+    '        watchedFiles.push(file);\r\n' +
+    '\r\n' +
+    '        addToPollingIntervalQueue(file, defaultPollingInterval);\r\n' +
+    '        return {\r\n' +
+    '            close: () => {\r\n' +
+    '                file.isClosed = true;\r\n' +
+    '                // Remove from watchedFiles\r\n' +
+    '                unorderedRemoveItem(watchedFiles, file);\r\n' +
+    '                // Do not update polling interval queue since that will happen as part of polling\r\n' +
+    '            },\r\n' +
+    '        };\r\n' +
+    '    }\r\n' +
+    '\r\n' +
+    '    function createPollingIntervalQueue(pollingInterval: PollingInterval): PollingIntervalQueue {\r\n' +
+    '        const queue = [] as WatchedFileWithUnchangedPolls[] as PollingIntervalQueue;\r\n' +
+    '        queue.pollingInterval = pollingInterval;\r\n' +
+    '        queue.pollIndex = 0;\r\n' +
+    '        queue.pollScheduled = false;\r\n' +
+    '        return queue;\r\n' +
+    '    }\r\n' +
+    '\r\n' +
+    '    function pollPollingIntervalQueue(_timeoutType: string, queue: PollingIntervalQueue) {\r\n' +
+    '        queue.pollIndex = pollQueue(queue, queue.pollingInterval, queue.pollIndex, pollingChunkSize[queue.pollingInterval]);\r\n' +
+    '        // Set the next polling index and timeout\r\n' +
+    '  '... 76142 more characters,
+  operator: 'strictEqual',
+  diff: 'simple'
+}
+
+Node.js v24.19.0

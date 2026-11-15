@@ -1,0 +1,53 @@
+
+> typescript@6.0.3 build:compiler
+> hereby local
+
+Using /workspace/scratch/write-file-construct-run/actual99-before/Herebyfile.mjs to run local
+Starting generate-diagnostics
+> /workspace/adamic-tools/bin/node scripts/processDiagnosticMessages.mjs src/compiler/diagnosticMessages.json
+Starting lib
+Starting shim-compile-cache-tsc
+Starting shim-compile-cache-tsserver
+Starting shim-compile-cache-typings-installer
+Starting bundle-watch-guard
+Starting build-watch-guard
+Starting generate-types-map
+Finished shim-compile-cache-typings-installer in 135ms
+Finished shim-compile-cache-tsserver in 167ms
+Finished shim-compile-cache-tsc in 168ms
+Finished generate-types-map in 178ms
+Finished bundle-watch-guard in 201ms
+Reading diagnostics from src/compiler/diagnosticMessages.json
+Finished generate-diagnostics in 841ms
+Starting localize
+> /workspace/adamic-tools/bin/node scripts/generateLocalizedDiagnosticMessages.mjs src/loc/lcl built/local src/compiler/diagnosticMessages.generated.json
+Starting bundle-tsc
+Starting build-tsc
+Starting bundle-services
+Starting build-services
+Starting bundle-tsserver
+Starting build-tsserver
+Starting bundle-typings-installer
+Starting build-typings-installer
+Starting copy-built-local-diagnostic-messages
+Finished copy-built-local-diagnostic-messages in 421ms
+Finished bundle-typings-installer in 689ms
+Finished bundle-tsserver in 711ms
+Finished lib in 1.8s
+Finished build-watch-guard in 6.7s
+Finished bundle-tsc in 9.6s
+Finished bundle-services in 11.2s
+Finished localize in 15.2s
+Finished build-tsc in 1m 2.9s
+Finished build-services in 1m 2.9s
+Finished build-tsserver in 1m 2.9s
+Finished build-typings-installer in 1m 2.9s
+Starting dts-services
+> /workspace/adamic-tools/bin/node ./scripts/dtsBundler.mjs --entrypoint ./built/local/typescript/typescript.d.ts --output ./built/local/typescript.d.ts
+Starting lssl
+Finished lssl in 21ms
+Bundling ./built/local/typescript/typescript.d.ts to ./built/local/typescript.d.ts and ./built/local/typescript.internal.d.ts
+Finished dts-services in 10.1s
+Starting dts-lssl
+Finished dts-lssl in 11ms
+Completed local in 1m 13.9s

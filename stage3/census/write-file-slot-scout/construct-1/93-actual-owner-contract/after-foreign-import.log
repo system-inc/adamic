@@ -1,0 +1,32 @@
+{
+  "files": 0,
+  "javascriptChanging": true,
+  "sites": [
+    {
+      "local": "_fs",
+      "module": "node:fs",
+      "qualifiedUses": 19,
+      "bareUses": 0,
+      "otherDeclarations": 0,
+      "allUsesResolveToBinding": true
+    },
+    {
+      "local": "_path",
+      "module": "node:path",
+      "qualifiedUses": 6,
+      "bareUses": 0,
+      "otherDeclarations": 0,
+      "allUsesResolveToBinding": true
+    },
+    {
+      "local": "_os",
+      "module": "node:os",
+      "qualifiedUses": 2,
+      "bareUses": 0,
+      "otherDeclarations": 0,
+      "allUsesResolveToBinding": true
+    }
+  ],
+  "qualifiedUses": 27,
+  "qualifiedUseLines": 22
+}

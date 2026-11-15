@@ -1,0 +1,33 @@
+{
+  "parent": "a77ca4a82271f18c142d8843ea76604b30d3833d",
+  "main": "89614cc0f9d6aa7b7fe96b56c5c6c1c3eace9825",
+  "frozenImplementation": "51104a74ba9e981fe93404e21e9c66298e47425f",
+  "frozenMerge": "0adcd82e25a88f32c50f625c21a0f127853537c1",
+  "productionRoots": 79,
+  "former1387Roots": 73,
+  "newProductionStop": "NotYet src/compiler/sys.ts:1481:57",
+  "otherProductionOutcomesUnchanged": 6,
+  "fullSysUniqueBefore": 51,
+  "fullSysUniqueAfter": 50,
+  "gone": 1,
+  "new": 0,
+  "changed": 0,
+  "stockRoots": 79,
+  "stockExit": 0,
+  "adamicTypesRoots": 79,
+  "adamicTypesExit": 0,
+  "publicDeclarationDeltaBytes": 0,
+  "publicSha256": "f03adcf915df559d616fcafd75181d3423eaa0f272237482cedbd025525c9516",
+  "finalFreshApplyExit": 0,
+  "finalSourceFilesIdenticalToLane": 747,
+  "proofFiles": [
+    "actual-stage-proofs.json",
+    "actual-small-proofs.json",
+    "built-proofs.json",
+    "checks-exits.json",
+    "mutants.json",
+    "view-cli-mutant.json",
+    "runtime-keys.json"
+  ],
+  "knownRed93MainCheck": 1
+}

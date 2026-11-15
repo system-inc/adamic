@@ -1,0 +1,148 @@
+{
+  "node": "v24.19.0",
+  "values": [
+    "undefined",
+    "true",
+    "false"
+  ],
+  "actualStockEmittedFactory": true,
+  "actualNodeFsWatchWorker": true,
+  "exactForwarder": true,
+  "cases": [
+    {
+      "recursive": "undefined",
+      "nativeRecursiveWatch": true,
+      "trace": [
+        [
+          "watch",
+          "/watched",
+          {
+            "persistent": true,
+            "recursive": false
+          }
+        ],
+        [
+          "callback",
+          "/watched/child.ts"
+        ],
+        [
+          "close",
+          "/watched"
+        ]
+      ],
+      "equal": true
+    },
+    {
+      "recursive": "undefined",
+      "nativeRecursiveWatch": false,
+      "trace": [
+        [
+          "watch",
+          "/watched",
+          {
+            "persistent": true
+          }
+        ],
+        [
+          "callback",
+          "/watched/child.ts"
+        ],
+        [
+          "close",
+          "/watched"
+        ]
+      ],
+      "equal": true
+    },
+    {
+      "recursive": "true",
+      "nativeRecursiveWatch": true,
+      "trace": [
+        [
+          "watch",
+          "/watched",
+          {
+            "persistent": true,
+            "recursive": true
+          }
+        ],
+        [
+          "callback",
+          "/watched/child.ts"
+        ],
+        [
+          "close",
+          "/watched"
+        ]
+      ],
+      "equal": true
+    },
+    {
+      "recursive": "true",
+      "nativeRecursiveWatch": false,
+      "trace": [
+        [
+          "watch",
+          "/watched",
+          {
+            "persistent": true
+          }
+        ],
+        [
+          "callback",
+          "/watched/child.ts"
+        ],
+        [
+          "close",
+          "/watched"
+        ]
+      ],
+      "equal": true
+    },
+    {
+      "recursive": "false",
+      "nativeRecursiveWatch": true,
+      "trace": [
+        [
+          "watch",
+          "/watched",
+          {
+            "persistent": true,
+            "recursive": false
+          }
+        ],
+        [
+          "callback",
+          "/watched/child.ts"
+        ],
+        [
+          "close",
+          "/watched"
+        ]
+      ],
+      "equal": true
+    },
+    {
+      "recursive": "false",
+      "nativeRecursiveWatch": false,
+      "trace": [
+        [
+          "watch",
+          "/watched",
+          {
+            "persistent": true
+          }
+        ],
+        [
+          "callback",
+          "/watched/child.ts"
+        ],
+        [
+          "close",
+          "/watched"
+        ]
+      ],
+      "equal": true
+    }
+  ]
+}
