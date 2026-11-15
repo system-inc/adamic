@@ -1,0 +1,207 @@
+{
+  "typescript": "6.0.3",
+  "Roots": 79,
+  "CatchClauses": 24,
+  "BoundCatchClauses": 7,
+  "CapturedCatchBindings": 0,
+  "UnknownCalls": [
+    {
+      "Where": "/workspace/loose-slot-scratch/eleven/adapted-head/src/compiler/commandLineParser.ts:2302:98",
+      "ArgumentWhere": "/workspace/loose-slot-scratch/eleven/adapted-head/src/compiler/commandLineParser.ts:2302:109",
+      "BindingWhere": "/workspace/loose-slot-scratch/eleven/adapted-head/src/compiler/commandLineParser.ts:2301:12",
+      "Parameter": "value",
+      "ParameterWhere": "/workspace/loose-slot-scratch/eleven/adapted-head/src/compiler/hostErrors.ts:12:28",
+      "ArgumentType": "unknown",
+      "ParameterType": "unknown"
+    },
+    {
+      "Where": "/workspace/loose-slot-scratch/eleven/adapted-head/src/compiler/program.ts:408:32",
+      "ArgumentWhere": "/workspace/loose-slot-scratch/eleven/adapted-head/src/compiler/program.ts:408:43",
+      "BindingWhere": "/workspace/loose-slot-scratch/eleven/adapted-head/src/compiler/program.ts:406:16",
+      "Parameter": "value",
+      "ParameterWhere": "/workspace/loose-slot-scratch/eleven/adapted-head/src/compiler/hostErrors.ts:12:28",
+      "ArgumentType": "unknown",
+      "ParameterType": "unknown"
+    },
+    {
+      "Where": "/workspace/loose-slot-scratch/eleven/adapted-head/src/compiler/program.ts:443:32",
+      "ArgumentWhere": "/workspace/loose-slot-scratch/eleven/adapted-head/src/compiler/program.ts:443:43",
+      "BindingWhere": "/workspace/loose-slot-scratch/eleven/adapted-head/src/compiler/program.ts:441:16",
+      "Parameter": "value",
+      "ParameterWhere": "/workspace/loose-slot-scratch/eleven/adapted-head/src/compiler/hostErrors.ts:12:28",
+      "ArgumentType": "unknown",
+      "ParameterType": "unknown"
+    },
+    {
+      "Where": "/workspace/loose-slot-scratch/eleven/adapted-head/src/compiler/sys.ts:1285:43",
+      "ArgumentWhere": "/workspace/loose-slot-scratch/eleven/adapted-head/src/compiler/sys.ts:1285:54",
+      "BindingWhere": "/workspace/loose-slot-scratch/eleven/adapted-head/src/compiler/sys.ts:1281:20",
+      "Parameter": "value",
+      "ParameterWhere": "/workspace/loose-slot-scratch/eleven/adapted-head/src/compiler/hostErrors.ts:12:28",
+      "ArgumentType": "unknown",
+      "ParameterType": "unknown"
+    },
+    {
+      "Where": "/workspace/loose-slot-scratch/eleven/adapted-head/src/compiler/sys.ts:1563:29",
+      "ArgumentWhere": "/workspace/loose-slot-scratch/eleven/adapted-head/src/compiler/sys.ts:1563:39",
+      "BindingWhere": "/workspace/loose-slot-scratch/eleven/adapted-head/src/compiler/sys.ts:1562:28",
+      "Parameter": "error",
+      "ParameterWhere": "/workspace/loose-slot-scratch/eleven/adapted-head/src/compiler/hostErrors.ts:2:27",
+      "ArgumentType": "unknown",
+      "ParameterType": "unknown"
+    }
+  ],
+  "Catches": [
+    {
+      "ClauseWhere": "/workspace/loose-slot-scratch/eleven/adapted-head/src/compiler/commandLineParser.ts:2301:5",
+      "Bound": true,
+      "Name": "e",
+      "BindingWhere": "/workspace/loose-slot-scratch/eleven/adapted-head/src/compiler/commandLineParser.ts:2301:12",
+      "Captures": []
+    },
+    {
+      "ClauseWhere": "/workspace/loose-slot-scratch/eleven/adapted-head/src/compiler/moduleSpecifiers.ts:156:5",
+      "Bound": false,
+      "BindingWhere": null,
+      "Captures": []
+    },
+    {
+      "ClauseWhere": "/workspace/loose-slot-scratch/eleven/adapted-head/src/compiler/performanceCore.ts:44:9",
+      "Bound": false,
+      "BindingWhere": null,
+      "Captures": []
+    },
+    {
+      "ClauseWhere": "/workspace/loose-slot-scratch/eleven/adapted-head/src/compiler/program.ts:406:9",
+      "Bound": true,
+      "Name": "e",
+      "BindingWhere": "/workspace/loose-slot-scratch/eleven/adapted-head/src/compiler/program.ts:406:16",
+      "Captures": []
+    },
+    {
+      "ClauseWhere": "/workspace/loose-slot-scratch/eleven/adapted-head/src/compiler/program.ts:441:9",
+      "Bound": true,
+      "Name": "e",
+      "BindingWhere": "/workspace/loose-slot-scratch/eleven/adapted-head/src/compiler/program.ts:441:16",
+      "Captures": []
+    },
+    {
+      "ClauseWhere": "/workspace/loose-slot-scratch/eleven/adapted-head/src/compiler/program.ts:2849:9",
+      "Bound": true,
+      "Name": "e",
+      "BindingWhere": "/workspace/loose-slot-scratch/eleven/adapted-head/src/compiler/program.ts:2849:16",
+      "Captures": []
+    },
+    {
+      "ClauseWhere": "/workspace/loose-slot-scratch/eleven/adapted-head/src/compiler/sourcemap.ts:432:5",
+      "Bound": false,
+      "BindingWhere": null,
+      "Captures": []
+    },
+    {
+      "ClauseWhere": "/workspace/loose-slot-scratch/eleven/adapted-head/src/compiler/sys.ts:1281:13",
+      "Bound": true,
+      "Name": "e",
+      "BindingWhere": "/workspace/loose-slot-scratch/eleven/adapted-head/src/compiler/sys.ts:1281:20",
+      "Captures": []
+    },
+    {
+      "ClauseWhere": "/workspace/loose-slot-scratch/eleven/adapted-head/src/compiler/sys.ts:1562:21",
+      "Bound": true,
+      "Name": "e",
+      "BindingWhere": "/workspace/loose-slot-scratch/eleven/adapted-head/src/compiler/sys.ts:1562:28",
+      "Captures": []
+    },
+    {
+      "ClauseWhere": "/workspace/loose-slot-scratch/eleven/adapted-head/src/compiler/sys.ts:1609:17",
+      "Bound": false,
+      "BindingWhere": null,
+      "Captures": []
+    },
+    {
+      "ClauseWhere": "/workspace/loose-slot-scratch/eleven/adapted-head/src/compiler/sys.ts:1642:17",
+      "Bound": true,
+      "Name": "error",
+      "BindingWhere": "/workspace/loose-slot-scratch/eleven/adapted-head/src/compiler/sys.ts:1642:24",
+      "Captures": []
+    },
+    {
+      "ClauseWhere": "/workspace/loose-slot-scratch/eleven/adapted-head/src/compiler/sys.ts:1655:13",
+      "Bound": false,
+      "BindingWhere": null,
+      "Captures": []
+    },
+    {
+      "ClauseWhere": "/workspace/loose-slot-scratch/eleven/adapted-head/src/compiler/sys.ts:1725:25",
+      "Bound": false,
+      "BindingWhere": null,
+      "Captures": []
+    },
+    {
+      "ClauseWhere": "/workspace/loose-slot-scratch/eleven/adapted-head/src/compiler/sys.ts:1813:13",
+      "Bound": false,
+      "BindingWhere": null,
+      "Captures": []
+    },
+    {
+      "ClauseWhere": "/workspace/loose-slot-scratch/eleven/adapted-head/src/compiler/sys.ts:1898:13",
+      "Bound": false,
+      "BindingWhere": null,
+      "Captures": []
+    },
+    {
+      "ClauseWhere": "/workspace/loose-slot-scratch/eleven/adapted-head/src/compiler/sys.ts:1942:13",
+      "Bound": false,
+      "BindingWhere": null,
+      "Captures": []
+    },
+    {
+      "ClauseWhere": "/workspace/loose-slot-scratch/eleven/adapted-head/src/compiler/sys.ts:1955:13",
+      "Bound": false,
+      "BindingWhere": null,
+      "Captures": []
+    },
+    {
+      "ClauseWhere": "/workspace/loose-slot-scratch/eleven/adapted-head/src/compiler/sys.ts:1964:13",
+      "Bound": false,
+      "BindingWhere": null,
+      "Captures": []
+    },
+    {
+      "ClauseWhere": "/workspace/loose-slot-scratch/eleven/adapted-head/src/compiler/tracing.ts:234:17",
+      "Bound": false,
+      "BindingWhere": null,
+      "Captures": []
+    },
+    {
+      "ClauseWhere": "/workspace/loose-slot-scratch/eleven/adapted-head/src/compiler/utilities.ts:6741:5",
+      "Bound": false,
+      "BindingWhere": null,
+      "Captures": []
+    },
+    {
+      "ClauseWhere": "/workspace/loose-slot-scratch/eleven/adapted-head/src/compiler/utilities.ts:7812:5",
+      "Bound": false,
+      "BindingWhere": null,
+      "Captures": []
+    },
+    {
+      "ClauseWhere": "/workspace/loose-slot-scratch/eleven/adapted-head/src/compiler/utilitiesPublic.ts:745:9",
+      "Bound": false,
+      "BindingWhere": null,
+      "Captures": []
+    },
+    {
+      "ClauseWhere": "/workspace/loose-slot-scratch/eleven/adapted-head/src/compiler/utilitiesPublic.ts:755:9",
+      "Bound": false,
+      "BindingWhere": null,
+      "Captures": []
+    },
+    {
+      "ClauseWhere": "/workspace/loose-slot-scratch/eleven/adapted-head/src/compiler/watchUtilities.ts:202:9",
+      "Bound": false,
+      "BindingWhere": null,
+      "Captures": []
+    }
+  ]
+}
