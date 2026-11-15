@@ -3,6 +3,7 @@ package lower
 import (
  "context"
  "fmt"
+ "os"
  "github.com/microsoft/TypeScript/tsc/shim/ast"
  "github.com/microsoft/TypeScript/tsc/shim/checker"
  "github.com/system-inc/adamic/internal/ir"
@@ -22,6 +23,7 @@ func LooseCensus(ctx context.Context,p *load.Program,disabled bool)(LooseCensusR
  var walk ast.Visitor
  walk=func(n *ast.Node)bool{if ast.IsPartOfTypeNode(n){return false};nodes=append(nodes,n);if ast.IsFunctionLike(n)&&n.Body()!=nil{functions[n]=len(l.result.Functions);l.result.Functions=append(l.result.Functions,ir.Function{Closure:true})};return n.ForEachChild(walk)}
  for _,file:=range files{file.AsNode().ForEachChild(walk)}
+ fmt.Fprintf(os.Stderr,"source nodes=%d files=%d\n",len(nodes),len(files))
  for _,n:=range nodes{if !ast.IsIdentifier(n)||!ast.IsDeclarationName(n){continue};s:=c.GetSymbolAtLocation(n);if s==nil||s.ValueDeclaration==nil{continue};d:=s.ValueDeclaration
  if d.Kind!=ast.KindVariableDeclaration&&d.Kind!=ast.KindParameter&&d.Kind!=ast.KindBindingElement{continue}
  own:=owner(d.Parent);if own==nil{continue};index,ok:=functions[own];if !ok{continue};if _,ok:=locals[s];ok{continue}
@@ -32,7 +34,8 @@ func LooseCensus(ctx context.Context,p *load.Program,disabled bool)(LooseCensusR
  for i,d:=range l.result.Locals{if d.Captured&&f.looseCellEvery(i){f.loose.every=true}}
  candidates:=[]looseCensusCandidate{}
  add:=func(form string,n *ast.Node,source,slot,holder *checker.Type,cell int){if source!=nil&&slot!=nil&&f.holdsLoose(slot){candidates=append(candidates,looseCensusCandidate{form,n,source,slot,holder,cell})}}
- for _,n:=range nodes{
+ for ni,n:=range nodes{
+  if ni%10000==0{fmt.Fprintf(os.Stderr,"gather %d/%d\n",ni,len(nodes))}
   f.libraryIteratorMade(n);f.looseEntry(n)
   switch{case n.Kind==ast.KindObjectLiteralExpression:f.shape(c.GetTypeAtLocation(n),n)
   case n.Kind==ast.KindArrayLiteralExpression||n.Kind==ast.KindCallExpression||n.Kind==ast.KindNewExpression:f.made(c.GetTypeAtLocation(n),n)
@@ -49,7 +52,7 @@ func LooseCensus(ctx context.Context,p *load.Program,disabled bool)(LooseCensusR
   case ast.KindVariableDeclaration:
    d:=n.AsVariableDeclaration();if d.Initializer!=nil&&d.Name()!=nil{if i,ok:=locals[c.GetSymbolAtLocation(d.Name())];ok&&l.result.Locals[i].Captured{add("captured",d.Name(),c.GetTypeAtLocation(d.Initializer),l.localTypes[i],nil,i+1)}}
   case ast.KindPropertyDeclaration:
-   d:=n.AsPropertyDeclaration();if d.Initializer!=nil&&n.Parent!=nil&&n.Parent.Name()!=nil{sym:=c.GetSymbolAtLocation(n.Parent.Name());if sym!=nil{add("write",n,c.GetTypeAtLocation(d.Initializer),c.GetTypeAtLocation(n),c.GetDeclaredTypeOfSymbol(sym),0)}}
+   d:=n.AsPropertyDeclaration();if d.Initializer!=nil&&n.Parent!=nil&&n.Parent.Name()!=nil{sym:=c.GetSymbolAtLocation(n.Parent.Name());if sym!=nil{add("write",n,c.GetTypeAtLocation(d.Initializer),c.GetTypeAtLocation(n),checker.Checker_getDeclaredTypeOfSymbol(c,sym),0)}}
   case ast.KindCallExpression:
    call:=n.AsCallExpression();expr:=ast.SkipParentheses(call.Expression);if expr.Kind!=ast.KindPropertyAccessExpression{break};a:=expr.AsPropertyAccessExpression();holder:=c.GetTypeAtLocation(a.Expression);name:=a.Name().Text();args:=call.Arguments.Nodes
    library:=l.isArrayType(holder)||l.isLibraryType(holder,"Map","Set","ReadonlyMap","ReadonlySet");if !library{break}
@@ -64,6 +67,6 @@ func LooseCensus(ctx context.Context,p *load.Program,disabled bool)(LooseCensusR
  for i,d:=range l.result.Locals{if d.Captured&&f.looseCellEvery(i){candidates=append(candidates,looseCensusCandidate{"captured",l.localNodes[i],l.localTypes[i],l.localTypes[i],nil,i+1})}}
  result.Nodes=len(nodes);result.Candidates=len(candidates);result.HEvery=f.loose.every;result.HTypes=len(f.loose.entries);result.Shapes=len(f.shapes)
  if disabled{return result,nil}
- for _,site:=range candidates{if site.source==nil||viewPairScalar(site.source){continue};target:=cycleNode{proven:site.holder,cell:site.cell};if !f.looseReaches(site.source,target){continue};holder:="own cell";if site.holder!=nil{holder=c.TypeToString(site.holder)};slot:="loose field";if site.slot!=nil{slot=c.TypeToString(site.slot)};result.Events=append(result.Events,LooseCensusEvent{site.form,p.Where(site.node),c.TypeToString(site.source),slot,holder})}
+ for si,site:=range candidates{if si%1000==0{fmt.Fprintf(os.Stderr,"judge %d/%d\n",si,len(candidates))};if site.source==nil||viewPairScalar(site.source){continue};target:=cycleNode{proven:site.holder,cell:site.cell};if !f.looseReaches(site.source,target){continue};holder:="own cell";if site.holder!=nil{holder=c.TypeToString(site.holder)};slot:="loose field";if site.slot!=nil{slot=c.TypeToString(site.slot)};result.Events=append(result.Events,LooseCensusEvent{site.form,p.Where(site.node),c.TypeToString(site.source),slot,holder})}
  return result,nil
 }
