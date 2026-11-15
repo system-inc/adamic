@@ -400,6 +400,9 @@ type lowering struct {
 	checkedFieldWrites map[string]int
 	viewSiteSeen       map[string]int
 	viewSiteTrue       map[*ast.Node]bool
+	// placeholderSlots is notePlaceholderSlots' answer by checker and program, shared by every lowering a
+	// latent run makes; production leaves it nil, and each lowering walks (placeholder.go, #6xt6p1f).
+	placeholderSlots *placeholderSlotCache
 	// overloadCheckCalls holds every overload result check function (overloadResultCheck), whose call is
 	// where its value enters a view (checkViewWidenedReads).
 	overloadCheckCalls map[int]bool

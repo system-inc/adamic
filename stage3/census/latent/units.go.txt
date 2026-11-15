@@ -120,6 +120,9 @@ func latentFullSelected(ctx context.Context, program *load.Program, emit func(La
 	// every view, so sharing it changes no answer (view_sites.go, #q1hyhzc). Each unit is a snapshot of its file's base,
 	// which shares the holder, so without it every unit built its own.
 	viewSites := &viewSiteIndex{}
+	// And one cache of notePlaceholderSlots' answer, as latentRun's: a function of the checker and the program alone,
+	// taken only by a lowering under no type mapper and no kept slot (placeholder.go, #6xt6p1f).
+	placeholderSlots := &placeholderSlotCache{}
 
 	for _, file := range program.Files() {
 		if !latentFileSelected(program.FileName(file)) {
@@ -133,7 +136,7 @@ func latentFullSelected(ctx context.Context, program *load.Program, emit func(La
 		record := LatentFile{Measurement: LatentMeasurementLabel, File: program.FileName(file), Declarations: latentDeclarations(program, file), Units: []LatentUnit{}}
 		checker, release := program.Checker(ctx, file)
 		fresh := func() *lowering {
-			return &lowering{moduleFormat: moduleformat.Resolve(ModuleFormatCommonJSBundle, ModuleFormatEcmaScript), program: program, checker: checker, result: &ir.Program{}, this: -1, functionIndex: -1, viewSites: viewSites}
+			return &lowering{moduleFormat: moduleformat.Resolve(ModuleFormatCommonJSBundle, ModuleFormatEcmaScript), program: program, checker: checker, result: &ir.Program{}, this: -1, functionIndex: -1, viewSites: viewSites, placeholderSlots: placeholderSlots}
 		}
 		if selection == nil {
 			func() {
