@@ -99,7 +99,12 @@ func (e *emitter) recordWalk(record string, visit func(string, string)) {
 	e.line("adamic_release(%s);", iterator)
 }
 func (e *emitter) dictionaryLiteral(literal ir.RecordLiteral) string {
-	result := e.own(ir.Record, fmt.Sprintf("adamic_record_new(%s)", recordValueKind(literal.Element)))
+	keys := len(literal.Entries)
+	// A spread's keys are only known at run time; keep its source evaluation after allocation.
+	if literal.Spread != nil && keys < 4 {
+		keys = 4
+	}
+	result := e.own(ir.Record, fmt.Sprintf("adamic_record_new_capacity(%s, %d)", recordValueKind(literal.Element), keys))
 	if literal.Spread != nil {
 		source := e.value(literal.Spread)
 		e.recordWalk(source, func(key, slot string) {
