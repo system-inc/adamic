@@ -6,7 +6,7 @@ import (
 )
 
 func (e *emitter) recordLiteral(literal ir.ObjectLiteral) string {
-	object := e.own(ir.Object, "adamic_record_new(adamic_field_reference)")
+	object := e.own(ir.Object, fmt.Sprintf("adamic_record_new_capacity(adamic_field_reference, %d)", len(literal.Fields)))
 	e.programObject(object, literal.ProgramRegion)
 	for _, field := range literal.Fields {
 		value := e.value(field.Value)

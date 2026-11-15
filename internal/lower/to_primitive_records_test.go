@@ -6,6 +6,7 @@ import (
 	"go/token"
 	"os"
 	"path/filepath"
+	"regexp"
 	"strings"
 	"testing"
 )
@@ -13,9 +14,10 @@ import (
 // plainMethods asks whether any record may hold a function, by the record-making nodes it names:
 // RecordLiteral, RecordCall, RecordCoalesce and a record ObjectLiteral (to_primitive.go). That list is
 // kept by hand beside the IR (Lower's should on #09dvwny), so this holds it to where records are made:
-// every native call of adamic_record_new sits in an emitter of a node the list names. A new emitter that
+// every native call of a record factory sits in an emitter of a node the list names. A new emitter that
 // makes a record goes red here until plainMethods judges its node too. The runtime makes none of its
-// own; record.c only defines it. Mutant: a name dropped from recordMakers, which this names.
+// own; record.c defines the factories and delegates the default size. Mutant: a name dropped from
+// recordMakers, which this names.
 func TestPlainMethodsKnowEveryRecordMaker(t *testing.T) {
 	t.Parallel()
 	// Each emitter that makes a record, and the node plainMethods judges for it.
@@ -23,7 +25,7 @@ func TestPlainMethodsKnowEveryRecordMaker(t *testing.T) {
 		"dictionaryLiteral": "ir.RecordLiteral",
 		"recordLiteral":     "a record ir.ObjectLiteral",
 	}
-	const maker = "adamic_record_new("
+	maker := regexp.MustCompile(`adamic_record_new(?:_capacity)?\(`)
 	found := map[string]bool{}
 	sources, err := filepath.Glob(filepath.Join("..", "native", "*.go"))
 	if err != nil {
@@ -37,7 +39,7 @@ func TestPlainMethodsKnowEveryRecordMaker(t *testing.T) {
 		if err != nil {
 			t.Fatal(err)
 		}
-		total := strings.Count(string(source), maker)
+		total := len(maker.FindAll(source, -1))
 		if total == 0 {
 			continue
 		}
@@ -53,7 +55,7 @@ func TestPlainMethodsKnowEveryRecordMaker(t *testing.T) {
 				continue
 			}
 			body := string(source[files.Position(function.Pos()).Offset:files.Position(function.End()).Offset])
-			count := strings.Count(body, maker)
+			count := len(maker.FindAllString(body, -1))
 			if count == 0 {
 				continue
 			}
@@ -81,9 +83,9 @@ func TestPlainMethodsKnowEveryRecordMaker(t *testing.T) {
 		if err != nil {
 			t.Fatal(err)
 		}
-		calls := strings.Count(string(source), maker)
+		calls := len(maker.FindAll(source, -1))
 		if filepath.Base(path) == "record.c" {
-			calls-- // its definition
+			calls -= 3 // two definitions and the default-size delegation
 		}
 		if calls != 0 {
 			t.Errorf("%s makes records of its own (%d), which plainMethods can't see", path, calls)
