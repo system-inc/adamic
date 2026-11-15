@@ -533,7 +533,7 @@ func (l *lowering) hostBindingRefusal(node *ast.Node) error {
 		return nil
 	}
 	row, symbol := l.hostBindingOf(node)
-	if row == nil || symbol.Declarations[0].Name() == node || ast.IsPartOfTypeNode(node) {
+	if row == nil || symbol.Declarations[0].Name() == node || ast.IsPartOfTypeNode(node) || inTypeQuery(node) {
 		return nil
 	}
 	if ast.IsAssignmentTarget(node) {

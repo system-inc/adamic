@@ -195,9 +195,10 @@ const (
 const nodeSetTimeoutForwards = 3
 
 // nodeTimerValueName is the timer a node reads as a value, by its library declaration: an identifier
-// that isn't a call's callee, a property's name, a typeof's operand, a qualified namespace member's
-// receiver or part of a type, or a shorthand property's name whose value is the global
-// ({ setTimeout }). It's empty for anything else; a direct call is nodeTimer's.
+// that isn't a call's callee, a property's name, a value typeof's operand, a qualified namespace
+// member's receiver or part of a type, or a shorthand property's name whose value is the global
+// ({ setTimeout }). It's empty for anything else; a direct call is nodeTimer's. A type query's name
+// (Parameters<typeof clearTimeout>) never reaches it: nodeLibraryRefusal's gate skips it (#7yz6rtp).
 func (l *lowering) nodeTimerValueName(node *ast.Node) string {
 	var symbol *ast.Symbol
 	if node.Parent != nil && node.Parent.Kind == ast.KindShorthandPropertyAssignment && node.Parent.Name() == node {
