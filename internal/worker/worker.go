@@ -35,6 +35,11 @@ var workerRuntime string
 // CheckSignature requires the prelude's actual types, not structurally compatible lookalikes.
 // The bridge is generated only after this check, before any output directory is touched.
 func CheckSignature(ctx context.Context, program *load.Program) error {
+	_, err := checkedWorkerEnvironment(ctx, program)
+	return err
+}
+
+func checkedWorkerEnvironment(ctx context.Context, program *load.Program) ([]string, error) {
 	entry := program.Files()[0]
 	types, release := program.Checker(ctx, entry)
 	defer release()
@@ -47,10 +52,10 @@ func CheckSignature(ctx context.Context, program *load.Program) error {
 	}
 	found := "no exported handle"
 	refuse := func() error {
-		return fmt.Errorf("%s: refused: worker handle must be function handle(request: HttpRequest): HttpResponse or async function handle(request: HttpRequest): Promise<HttpResponse>, using the exact types from 'adamic/http'; found %s\n  fix: import type { HttpRequest, HttpResponse } from 'adamic/http'; export a synchronous handle returning HttpResponse, or an async handle returning Promise<HttpResponse>", program.FileName(entry), found)
+		return fmt.Errorf("%s: refused: worker handle must be function handle(request: HttpRequest[, environment: Environment]): HttpResponse or async function handle(request: HttpRequest[, environment: Environment]): Promise<HttpResponse>, using the exact types from 'adamic/http'; Environment must be a program-declared interface of required readonly string properties; found %s\n  fix: import type { HttpRequest, HttpResponse } from 'adamic/http'; export a synchronous handle returning HttpResponse, or an async handle returning Promise<HttpResponse>; optionally add environment: Environment with required readonly string fields", program.FileName(entry), found)
 	}
 	if exported == nil {
-		return refuse()
+		return nil, refuse()
 	}
 	target := exported
 	if target.Flags&ast.SymbolFlagsAlias != 0 {
@@ -60,19 +65,21 @@ func CheckSignature(ctx context.Context, program *load.Program) error {
 	found = "handle: " + types.TypeToString(functionType)
 	signatures := types.GetSignaturesOfType(functionType, checker.SignatureKindCall)
 	if len(signatures) != 1 || len(target.Declarations) != 1 {
-		return refuse()
+		return nil, refuse()
 	}
 	declaration := target.Declarations[0]
-	if declaration.Kind != ast.KindFunctionDeclaration || len(declaration.TypeParameters()) != 0 || len(declaration.Parameters()) != 1 {
-		return refuse()
+	if declaration.Kind != ast.KindFunctionDeclaration || len(declaration.TypeParameters()) != 0 || (len(declaration.Parameters()) < 1 || len(declaration.Parameters()) > 2) {
+		return nil, refuse()
 	}
-	parameter := declaration.Parameters()[0].AsParameterDeclaration()
-	if parameter.QuestionToken != nil || parameter.DotDotDotToken != nil || parameter.Initializer != nil {
-		return refuse()
+	for _, node := range declaration.Parameters() {
+		parameter := node.AsParameterDeclaration()
+		if parameter.QuestionToken != nil || parameter.DotDotDotToken != nil || parameter.Initializer != nil {
+			return nil, refuse()
+		}
 	}
 	runtime := types.TryFindAmbientModule("adamic/http")
 	if runtime == nil {
-		return fmt.Errorf("worker: missing adamic/http prelude module")
+		return nil, fmt.Errorf("worker: missing adamic/http prelude module")
 	}
 	var requestType, responseType *checker.Type
 	for _, symbol := range types.GetExportsOfModule(runtime) {
@@ -84,24 +91,31 @@ func CheckSignature(ctx context.Context, program *load.Program) error {
 		}
 	}
 	if requestType == nil || responseType == nil {
-		return fmt.Errorf("worker: missing HttpRequest or HttpResponse in the adamic prelude")
+		return nil, fmt.Errorf("worker: missing HttpRequest or HttpResponse in the adamic prelude")
 	}
 	signature := signatures[0]
 	result := types.GetReturnTypeOfSignature(signature)
 	if ast.HasSyntacticModifier(declaration, ast.ModifierFlagsAsync) {
 		if !workerLibraryPromise(result) {
-			return refuse()
+			return nil, refuse()
 		}
 		arguments := types.GetTypeArguments(result)
 		if len(arguments) != 1 {
-			return refuse()
+			return nil, refuse()
 		}
 		result = arguments[0]
 	}
-	if len(signature.Parameters()) != 1 || types.GetTypeOfSymbolAtLocation(signature.Parameters()[0], declaration) != requestType || result != responseType {
-		return refuse()
+	if len(signature.Parameters()) != len(declaration.Parameters()) || types.GetTypeOfSymbolAtLocation(signature.Parameters()[0], declaration) != requestType || result != responseType {
+		return nil, refuse()
 	}
-	return nil
+	if len(signature.Parameters()) == 2 {
+		annotation := declaration.Parameters()[1].AsParameterDeclaration().Type
+		if annotation != nil && annotation.Kind == ast.KindTypeReference && len(annotation.TypeArguments()) != 0 {
+			return nil, environmentRefusal("environment", "generic interfaces are not supported")
+		}
+		return workerEnvironmentFields(types, types.GetTypeOfSymbolAtLocation(signature.Parameters()[1], declaration))
+	}
+	return nil, nil
 }
 
 // The Promise must come from the bundled library, not a structural thenable or a
@@ -249,7 +263,8 @@ func BuildWith(entry, output string, options Options) error {
 	if err != nil {
 		return err
 	}
-	if err := CheckSignature(context.Background(), program); err != nil {
+	environment, err := checkedWorkerEnvironment(context.Background(), program)
+	if err != nil {
 		return err
 	}
 	types, release := program.Checker(context.Background(), program.Files()[0])
@@ -301,18 +316,23 @@ func BuildWith(entry, output string, options Options) error {
 	var wasm []workerFile
 	var imports string
 	bridge := Bridge("./handler.mjs")
-	if asyncHandle {
+	if environment != nil {
+		bridge, err = environmentBridge("./handler.mjs", environment, asyncHandle)
+	} else if asyncHandle {
 		bridge, err = asyncBridge("./handler.mjs")
-		if err != nil {
-			return err
-		}
+	}
+	if err != nil {
+		return err
 	}
 	if len(options.Wasm) != 0 {
 		backend.ExternalFunctions, imports, wasm, err = wasmFiles(entry, program, lowered, options)
 		if err != nil {
 			return err
 		}
-		bridge = wasmBridge("./handler.mjs")
+		bridge, err = initializeWasmBridge(bridge)
+		if err != nil {
+			return err
+		}
 	}
 	handler := imports + javascript.JavaScriptWith(lowered, backend)
 	name := strings.TrimSuffix(filepath.Base(entry), filepath.Ext(entry))

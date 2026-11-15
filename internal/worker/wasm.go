@@ -162,8 +162,15 @@ initializeCrossing();
 	return external, "import { " + strings.Join(imports, ", ") + " } from './wasm-state.mjs';\n", files, nil
 }
 
-func wasmBridge(handlerImport string) string {
-	bridge := Bridge(handlerImport)
+func wasmBridge(handlerImport string) (string, error) {
+	return initializeWasmBridge(Bridge(handlerImport))
+}
+
+func initializeWasmBridge(bridge string) (string, error) {
+	const needle = "export default {"
+	if count := strings.Count(bridge, needle); count != 1 {
+		return "", fmt.Errorf("worker: refused Wasm bridge: expected exactly one %q, found %d; fix: restore the generated bridge export", needle, count)
+	}
 	bridge = strings.Replace(bridge, "export default {", "import { initializeCrossing } from './wasm-state.mjs';\ninitializeCrossing();\n\nexport default {", 1)
-	return bridge
+	return bridge, nil
 }

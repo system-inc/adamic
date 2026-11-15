@@ -24,6 +24,10 @@ waits[prefix + "TestProduct_WorkerComputeSieveMutant"] = [compiler]
 waits[prefix + "TestProduct_WorkerdJavaScript"] = [compiler]
 waits[prefix + "TestProduct_WorkerdWebAssembly"] = [compiler]
 waits[prefix + "TestProduct_WorkerdAsync"] = [compiler]
+waits[prefix + "TestProduct_WorkerdEnvironment"] = [compiler]
+waits[prefix + "TestProduct_WorkerdEnvironmentWasm"] = [compiler, seed]
+for name in ["Validation", "Projection", "Contract", "Privacy", "WasmNeedle"]:
+    waits[prefix + "TestProduct_WorkerEnvironment" + name + "Mutant"] = [checks]
 for name in ["Await", "Try", "Contract", "Wasm", "Needle"]:
     waits[prefix + "TestProduct_WorkerAsync" + name + "Mutant"] = [checks]
 # The Wasm shards build different variants with the one unmutated compiler and the one wasm32-wasi runtime, so each
