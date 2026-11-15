@@ -1,0 +1,108 @@
+{
+  "positive": {
+    "kind": "STATIC READ, NOT LOWERING MEASUREMENT",
+    "typescript": "6.0.3",
+    "head": "b529db907bca6564edd2244ac8e5d102b85cf7e8",
+    "source_files": 1,
+    "source_units": 5,
+    "nodes": 59,
+    "record_literals": 2,
+    "record_types": 1,
+    "source_write_candidates": 1,
+    "source_visible_slot_candidates": 3,
+    "slot_classifications": {
+      "stops": 2,
+      "clean": 0,
+      "unknown": 1
+    },
+    "classifications": {
+      "stops": 1,
+      "clean": 0,
+      "unknown": 0
+    },
+    "lowering_units_with_seed_coverage": 0,
+    "actual_units_newly_stopped": null,
+    "diagnostics": 0,
+    "types": 30,
+    "options": {
+      "strict": true,
+      "noUncheckedIndexedAccess": true,
+      "exactOptionalPropertyTypes": true,
+      "erasableSyntaxOnly": false,
+      "verbatimModuleSyntax": true,
+      "allowImportingTsExtensions": true,
+      "noEmit": true,
+      "module": 99,
+      "moduleDetection": 3,
+      "moduleResolution": 100,
+      "target": 11,
+      "lib": [
+        "lib.es2024.d.ts"
+      ],
+      "types": [
+        "node"
+      ],
+      "typeRoots": [
+        "/workspace/scratch/record-cycle/current/stage3/api/node_modules/@types"
+      ]
+    },
+    "limits": [
+      "Syntactic source-write inventory, not an exhaustive list of production slotsOf seeds. Lowered generated/generic/indirect writes and fresh.ProveWrites unknown writes are unavailable.",
+      "Stops means the static record judgment has a witness, conditional on seed eligibility/native type agreement; it is not a production or lowering stop.",
+      "Clean negatives retain explicit capture/shape uncertainty. Missing closure and native storage/utility alias facts are not replaced by empty graphs."
+    ]
+  },
+  "negative": {
+    "kind": "STATIC READ, NOT LOWERING MEASUREMENT",
+    "typescript": "6.0.3",
+    "head": "b529db907bca6564edd2244ac8e5d102b85cf7e8",
+    "source_files": 1,
+    "source_units": 6,
+    "nodes": 70,
+    "record_literals": 3,
+    "record_types": 1,
+    "source_write_candidates": 2,
+    "source_visible_slot_candidates": 3,
+    "slot_classifications": {
+      "stops": 0,
+      "clean": 0,
+      "unknown": 3
+    },
+    "classifications": {
+      "stops": 0,
+      "clean": 2,
+      "unknown": 0
+    },
+    "lowering_units_with_seed_coverage": 0,
+    "actual_units_newly_stopped": null,
+    "diagnostics": 0,
+    "types": 31,
+    "options": {
+      "strict": true,
+      "noUncheckedIndexedAccess": true,
+      "exactOptionalPropertyTypes": true,
+      "erasableSyntaxOnly": false,
+      "verbatimModuleSyntax": true,
+      "allowImportingTsExtensions": true,
+      "noEmit": true,
+      "module": 99,
+      "moduleDetection": 3,
+      "moduleResolution": 100,
+      "target": 11,
+      "lib": [
+        "lib.es2024.d.ts"
+      ],
+      "types": [
+        "node"
+      ],
+      "typeRoots": [
+        "/workspace/scratch/record-cycle/current/stage3/api/node_modules/@types"
+      ]
+    },
+    "limits": [
+      "Syntactic source-write inventory, not an exhaustive list of production slotsOf seeds. Lowered generated/generic/indirect writes and fresh.ProveWrites unknown writes are unavailable.",
+      "Stops means the static record judgment has a witness, conditional on seed eligibility/native type agreement; it is not a production or lowering stop.",
+      "Clean negatives retain explicit capture/shape uncertainty. Missing closure and native storage/utility alias facts are not replaced by empty graphs."
+    ]
+  }
+}

@@ -38,5 +38,41 @@
       "kind": "accepted",
       "seconds": 0.038100408
     }
+  ],
+  "base-positive": [
+    {
+      "module_format": "CommonJSBundle",
+      "roots": [
+        "/workspace/scratch/record-cycle/fixtures/cycle.a"
+      ],
+      "kind": "accepted",
+      "seconds": 0.046274208
+    },
+    {
+      "module_format": "CommonJSBundle",
+      "roots": [
+        "/workspace/scratch/record-cycle/fixtures/cycle.a"
+      ],
+      "kind": "accepted",
+      "seconds": 0.038226044
+    }
+  ],
+  "base-negative": [
+    {
+      "module_format": "CommonJSBundle",
+      "roots": [
+        "/workspace/scratch/record-cycle/fixtures/acyclic.a"
+      ],
+      "kind": "accepted",
+      "seconds": 0.046782186
+    },
+    {
+      "module_format": "CommonJSBundle",
+      "roots": [
+        "/workspace/scratch/record-cycle/fixtures/acyclic.a"
+      ],
+      "kind": "accepted",
+      "seconds": 0.03565635
+    }
   ]
 }

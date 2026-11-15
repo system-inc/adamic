@@ -1,0 +1,23 @@
+{
+  "STATIC-WRITES.tsv.gz": {
+    "rows": 5413,
+    "labels": {
+      "stops": 2610,
+      "clean": 1734,
+      "unknown": 1069
+    }
+  },
+  "STATIC-SLOTS.tsv.gz": {
+    "rows": 13535,
+    "labels": {
+      "stops": 1219,
+      "clean": 0,
+      "unknown": 12316
+    }
+  },
+  "production_control_tuples_match": true,
+  "static_positive_and_negative_controls": true,
+  "lowering_coverage_explicitly_zero": true,
+  "production_seed_exhaustiveness_claimed": false,
+  "superseded_artifacts_retained": true
+}

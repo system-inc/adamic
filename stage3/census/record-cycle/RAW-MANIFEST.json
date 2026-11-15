@@ -40,9 +40,49 @@
     "sha256": "c1dab073fb89e10be213096c10d2b218d7724746b32503b39e62f5f6ff12e4ba"
   },
   {
+    "path": "/workspace/scratch/record-cycle/base-control",
+    "bytes": 37605293,
+    "sha256": "8e12c769abaa14a707f50b0d318b443c03b6af21b22d3f1fbf2dfce0d5080265"
+  },
+  {
+    "path": "/workspace/scratch/record-cycle/base-negative.jsonl",
+    "bytes": 275,
+    "sha256": "f76f83db16323274daaac919142990552cfdc4d11da477fb0ec81e89dbd018f2"
+  },
+  {
+    "path": "/workspace/scratch/record-cycle/base-negative.log",
+    "bytes": 110,
+    "sha256": "8aae5ad6699b30b068be0dbfbe2d43b319bc819ab79d814a2ce33498a9eaa7e1"
+  },
+  {
+    "path": "/workspace/scratch/record-cycle/base-negative.receipt.json",
+    "bytes": 264,
+    "sha256": "5ceed27721bc0711c11a1cd63514bead31e78f4b52179bd6430f6b951d3f0396"
+  },
+  {
+    "path": "/workspace/scratch/record-cycle/base-positive.jsonl",
+    "bytes": 272,
+    "sha256": "d7669cf52512b7189076561f68526970d17eb68e322dc5a5f064b4a9bb79fd2d"
+  },
+  {
+    "path": "/workspace/scratch/record-cycle/base-positive.log",
+    "bytes": 108,
+    "sha256": "6499f5f62a9004f12138b689b2e824c5dc89e5414c426239c538177bac601ee6"
+  },
+  {
+    "path": "/workspace/scratch/record-cycle/base-positive.receipt.json",
+    "bytes": 261,
+    "sha256": "403450a1a28bebd05be78d73dc6ebf3799ab068522dba2a23b69aef164e0d421"
+  },
+  {
     "path": "/workspace/scratch/record-cycle/build-b529-control.receipt.json",
     "bytes": 230,
     "sha256": "d851e6cab844eefc4f8bd718ce3a2280c3359ffef32063377dc24f05bc823798"
+  },
+  {
+    "path": "/workspace/scratch/record-cycle/build-base-control.receipt.json",
+    "bytes": 230,
+    "sha256": "04bce0def26eb22fd835d14ff37578655fcaa69d4ba821e958782fb54cb0c836"
   },
   {
     "path": "/workspace/scratch/record-cycle/build-head-fixed.log",
@@ -88,6 +128,11 @@
     "path": "/workspace/scratch/record-cycle/current-npm-ci.log",
     "bytes": 27,
     "sha256": "0f8bfcd9119e7095a4a7c5df94e00c183feb4d0cf20d297eb2f43671ad5d34f3"
+  },
+  {
+    "path": "/workspace/scratch/record-cycle/current-provenance.json",
+    "bytes": 604,
+    "sha256": "eec6b6010569a36a8ed2ad7036045ac16d20803a5811320126001e260a0abb12"
   },
   {
     "path": "/workspace/scratch/record-cycle/current-submodules.log",
@@ -771,8 +816,8 @@
   },
   {
     "path": "/workspace/scratch/record-cycle/publish-static.py",
-    "bytes": 15342,
-    "sha256": "bd434d891db2e9958684e7cfad3b9ff9d3d8ce1366d85ca5a1e713abb556769c"
+    "bytes": 16935,
+    "sha256": "e051729f9786100f5e1a6fd8df81b0618d8849d105b64ee91993c8dc1ce7fb54"
   },
   {
     "path": "/workspace/scratch/record-cycle/source-manifest.json",
@@ -793,6 +838,31 @@
     "path": "/workspace/scratch/record-cycle/static-b529db90-fixed.receipt.json",
     "bytes": 296,
     "sha256": "8dfa0ca56a1370e880df22541fed693b3b7c53f01865a1a5ad37b20aa4ef859f"
+  },
+  {
+    "path": "/workspace/scratch/record-cycle/static-b529db90-initial/diagnostics.json",
+    "bytes": 185,
+    "sha256": "22a1673677a8e5f8841ae976ea09c56ee06c7fcb2485a773f24fc754ae83ee95"
+  },
+  {
+    "path": "/workspace/scratch/record-cycle/static-b529db90-initial/records.json",
+    "bytes": 68044,
+    "sha256": "aa1504bc561ca6172800b24b5d5f617a825911c4f727eda91305a524209dc154"
+  },
+  {
+    "path": "/workspace/scratch/record-cycle/static-b529db90-initial/slots.json",
+    "bytes": 393694889,
+    "sha256": "163f4e685cce008b32b51b2095157ad55c97d881286d694c2d1d7d6d1ba83fb7"
+  },
+  {
+    "path": "/workspace/scratch/record-cycle/static-b529db90-initial/summary.json",
+    "bytes": 1655,
+    "sha256": "546b3a35ec360e1e09853aec39b70b1bba1b0131f50f1e287dce713416a74d24"
+  },
+  {
+    "path": "/workspace/scratch/record-cycle/static-b529db90-initial/writes.json",
+    "bytes": 18605050,
+    "sha256": "5d727d1b276ecb4efe06bad407a7b2b01abc63e113b850ca96f9b994074ee7e5"
   },
   {
     "path": "/workspace/scratch/record-cycle/static-b529db90.log",
@@ -822,17 +892,97 @@
   {
     "path": "/workspace/scratch/record-cycle/static-b529db90/summary.json",
     "bytes": 1655,
-    "sha256": "546b3a35ec360e1e09853aec39b70b1bba1b0131f50f1e287dce713416a74d24"
+    "sha256": "e4c367ef0292d4ba7fd5c4eb1aa51ab5a85bec6b50127b1a47c202c1bc875544"
   },
   {
     "path": "/workspace/scratch/record-cycle/static-b529db90/writes.json",
-    "bytes": 18605050,
-    "sha256": "5d727d1b276ecb4efe06bad407a7b2b01abc63e113b850ca96f9b994074ee7e5"
+    "bytes": 18542684,
+    "sha256": "eae5c31656ea6f7a2f67ed351e7f1b737e5610f066492330142894abed2082b6"
+  },
+  {
+    "path": "/workspace/scratch/record-cycle/static-control-negative.log",
+    "bytes": 1494,
+    "sha256": "0784b07ee28f65c26e081a5bc1bdb002d91c39760cad60b501241825d3b0dec6"
+  },
+  {
+    "path": "/workspace/scratch/record-cycle/static-control-negative.receipt.json",
+    "bytes": 312,
+    "sha256": "2d94760151b3f9c809f74594c50b45d45fba6e55acdbc18966dff70c7d7a9d73"
+  },
+  {
+    "path": "/workspace/scratch/record-cycle/static-control-positive.log",
+    "bytes": 1494,
+    "sha256": "2430be063fb6f2fb549f192fba84a98d6ddcdf0b06c0214463e4ee562d362611"
+  },
+  {
+    "path": "/workspace/scratch/record-cycle/static-control-positive.receipt.json",
+    "bytes": 311,
+    "sha256": "09df36cd7d161ec058a1d835c1955742e0ca923aa3fc4aff87867d8d6d41a3aa"
+  },
+  {
+    "path": "/workspace/scratch/record-cycle/static-final-b529db90.log",
+    "bytes": 1712,
+    "sha256": "8fbad2ace3b10618bb25e3f3cced6510079da460c004eead8a8d530c3fc6b0a5"
+  },
+  {
+    "path": "/workspace/scratch/record-cycle/static-final-b529db90.receipt.json",
+    "bytes": 297,
+    "sha256": "732bd3d0449f1eaf48c16314a40a67db6112e86a4e1ffe00301d3ee36437e599"
+  },
+  {
+    "path": "/workspace/scratch/record-cycle/static-negative/diagnostics.json",
+    "bytes": 3,
+    "sha256": "37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570"
+  },
+  {
+    "path": "/workspace/scratch/record-cycle/static-negative/records.json",
+    "bytes": 662,
+    "sha256": "da151a79ca9c5b03fb5a956dd5896c2ebd26cbcc9ff0571c73e2851f282dc86e"
+  },
+  {
+    "path": "/workspace/scratch/record-cycle/static-negative/slots.json",
+    "bytes": 1987,
+    "sha256": "0ab9fc348a6777e8501f9c23010e1b1e92bcd9b64bdf36b89ac5752b7e59ed06"
+  },
+  {
+    "path": "/workspace/scratch/record-cycle/static-negative/summary.json",
+    "bytes": 1618,
+    "sha256": "fa5ddaabc3f9f2866947e51f944dfdff8570e4f8a728a26da48b061476e7f9f8"
+  },
+  {
+    "path": "/workspace/scratch/record-cycle/static-negative/writes.json",
+    "bytes": 1639,
+    "sha256": "f06b73126f1c7a897ec16d38adb3f511df8f1b8d78365e69f1feaeb5cb6b94e7"
+  },
+  {
+    "path": "/workspace/scratch/record-cycle/static-positive/diagnostics.json",
+    "bytes": 3,
+    "sha256": "37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570"
+  },
+  {
+    "path": "/workspace/scratch/record-cycle/static-positive/records.json",
+    "bytes": 437,
+    "sha256": "e54ec9425ba005b2c461f3f07f8837f5fd4b6188238f4556c0d2ca2707d35a69"
+  },
+  {
+    "path": "/workspace/scratch/record-cycle/static-positive/slots.json",
+    "bytes": 1965,
+    "sha256": "9ce7b0b96e280f4bb6fb0d214bb192df407c97dc6abd32b0effe1b165c422118"
+  },
+  {
+    "path": "/workspace/scratch/record-cycle/static-positive/summary.json",
+    "bytes": 1618,
+    "sha256": "923b2b5c449f1ae15d465ac5bf17e7b9026483f3b79841378cec30461fa52fbe"
+  },
+  {
+    "path": "/workspace/scratch/record-cycle/static-positive/writes.json",
+    "bytes": 1529,
+    "sha256": "6937a2ae26a124d2f831e083da51cd648399eade4ed3ab21e27cca23054af371"
   },
   {
     "path": "/workspace/scratch/record-cycle/static-read.cjs",
-    "bytes": 17595,
-    "sha256": "1f26ff78e2b4a36b29dad6243b961d4995690f780644395456cd9faca48b9b91"
+    "bytes": 17943,
+    "sha256": "d74f9caa2c41354a4abc48548894e5e29cb4586b8c35fa2a2a7066aad939f3da"
   },
   {
     "path": "/workspace/scratch/record-cycle/static-slots-b529db90.log",

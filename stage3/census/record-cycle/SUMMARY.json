@@ -15,9 +15,9 @@
     "unknown": 12316
   },
   "classifications": {
-    "stops": 2645,
-    "clean": 1706,
-    "unknown": 1062
+    "stops": 2610,
+    "clean": 1734,
+    "unknown": 1069
   },
   "lowering_units_with_seed_coverage": 0,
   "actual_units_newly_stopped": null,
@@ -50,9 +50,9 @@
     "Stops means the static record judgment has a witness, conditional on seed eligibility/native type agreement; it is not a production or lowering stop.",
     "Clean negatives retain explicit capture/shape uncertainty. Missing closure and native storage/utility alias facts are not replaced by empty graphs."
   ],
-  "conditional_new_arm_source_writes": 2603,
-  "conditional_new_arm_source_units": 1000,
-  "old_holdsRecord_source_writes": 42,
+  "conditional_new_arm_source_writes": 2589,
+  "conditional_new_arm_source_units": 996,
+  "old_holdsRecord_source_writes": 21,
   "actual_graph_slot_seeds_exhaustively_identified": false,
   "classification_semantics": "stops/clean/unknown are static record judgments conditional on seed eligibility, native storage/literal presence, and checker agreement; no source row is a verified native seed"
 }
