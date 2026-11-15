@@ -31,9 +31,9 @@ for revision in ['base','head']:
  for g in result:print(revision,g['count'],g['where'],g['kind'],g['reason'])
 baseline={root:[g['where'],g['kind'],g['reason']] for g in allgroups['base'] for root in g['roots']}
 comparisons=[]
-for row in allrows['head']:
+for row,oldrow in zip(allrows['head'],allrows['base']):
  root=norm(row['roots'][0]);after=[norm(row.get('where','-')),row['kind'],row.get('reason','-')]
- comparisons.append(dict(root=root,before=baseline[root],after=after,unchanged=baseline[root]==after))
+ comparisons.append(dict(root=root,before=baseline[root],after=after,unchanged=baseline[root]==after,observation_unchanged={k:v for k,v in row.items() if k!='seconds'}=={k:v for k,v in oldrow.items() if k!='seconds'}))
 for name,data in [('comparison.json',comparisons),('baseline.json',baseline)]:
  (base/name).write_text(json.dumps(data,indent=2)+'\n')
 manifest={str(p.relative_to(tree)):hashlib.sha256(p.read_bytes()).hexdigest() for p in sorted((tree/'src/compiler').rglob('*')) if p.is_file()}

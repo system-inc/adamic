@@ -8,7 +8,7 @@ phrase='one keeps something weakly that the other keeps strongly'
 moved=[c for c in changed if c['after'][1]=='NotYet' and phrase in c['after'][2]]
 escape=lambda s:str(s).replace('|','\\|').replace('<','&lt;').replace('>','&gt;')
 fmt=lambda t:escape('; '.join(t))
-s=[f'**{len(moved)} roots move to the sameKeepingWalk stop** ("{phrase}").','',f'{len(changed)}/79 roots change first-stop tuples between main `89614cc0f9d6aa7b7fe96b56c5c6c1c3eace9825` and head `37d96306133ed2782184bee1bd8406d61b83a858`; {79-len(changed)} are unchanged. CommonJSBundle only. The baseline is freshly built and measured at main itself, beside the head.','']
+s=[f'**{len(moved)} roots move to the sameKeepingWalk stop** ("{phrase}").','',f'{len(changed)}/79 roots change first-stop tuples between main `89614cc0f9d6aa7b7fe96b56c5c6c1c3eace9825` and head `37d96306133ed2782184bee1bd8406d61b83a858`; {79-len(changed)} are unchanged. CommonJSBundle only. Complete observations (including diagnostics and fix text) are also compared across revisions, excluding timing. The baseline is freshly built and measured at main itself, beside the head.','']
 if changed:
  s+=['| Root | Main first stop (location; kind; exact reason) | Head first stop (location; kind; exact reason) |','| --- | --- | --- |']
  for c in changed:s+=['| '+c['root']+' | '+fmt(c['before'])+' | '+fmt(c['after'])+' |']

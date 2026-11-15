@@ -22,7 +22,10 @@ for revision in ['head','base']:
 manifest=read(base/'adapted-source-manifest.json');assert manifest==read(base/'adapted-source-before-measurement.json')
 assert all(hashlib.sha256((tree/n).read_bytes()).hexdigest()==h for n,h in manifest.items())
 cs=read(base/'comparison.json');baseline=read(base/'baseline.json');assert len(cs)==79
-for c in cs:assert c['before']==baseline[c['root']] and c['unchanged']==(c['before']==c['after'])
+for c in cs:
+ assert c['before']==baseline[c['root']] and c['unchanged']==(c['before']==c['after'])
+ # No diagnostic or fix-only change may be hidden by an equal stop tuple.
+ assert c['unchanged']==c['observation_unchanged']
 provenance=read(base/'provenance.json')
 assert subprocess.check_output(['git','diff',provenance['baseline'],provenance['sha'],'--','stage3'],text=True)==''
 assert all(n.startswith('stage3/census/next-stops-37d96306/') for n in subprocess.check_output(['git','diff',provenance['baseline'],'--name-only'],text=True).splitlines())
