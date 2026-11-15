@@ -8,7 +8,9 @@
 #
 # Everything the build fetches was laid on the image ahead of time by cloud/block-report/environment.sh, read-only, and
 # its environment.sh is sourced here: Go reads modules only from that cache and npm only from its cache, so a module the
-# image lacks fails closed with its name, never by reaching out.
+# image lacks fails closed with its name, never by reaching out. Then cloud/sealed-job.sh, the tree's own preamble for a
+# sealed job, is sourced, so each gap the sealed road has settled is settled here the same way (#3jge4gw: the reports
+# before it failed on setup gaps, not on the block).
 #
 # The wrapper lays the asked commit as archives: no .git, and gitlinks one level deep, so cohere arrives and
 # cohere/TypeScript is an empty directory (block 2334 on azure-block-1, Nov 12). This script asks git nothing about the
@@ -19,28 +21,42 @@ mirrors=${BLOCK_REPORT_MIRRORS:-/var/lib/loom/mirrors}
 environment=${BLOCK_REPORT_ENVIRONMENT:-/opt/adamic-block/environment.sh}
 
 [ -f go.mod ] && [ -f cohere/go.mod ] || { echo "block-report: $PWD lacks adamic's go.mod or cohere's, so nothing ran"; exit 64; }
+[ -r "$environment" ] || { echo "block-report: no environment at $environment, so nothing ran"; exit 64; }
+# A commit from before the preamble would report its own setup gaps, so it reports nothing at all (#3jge4gw).
+[ -f cloud/sealed-job.sh ] || { echo "block-report: this commit has no cloud/sealed-job.sh, so nothing ran and the report counts nothing"; exit 64; }
+# shellcheck disable=SC1090
+. "$environment" || { echo "block-report: $environment didn't source, so nothing ran"; exit 64; }
+# The preamble's steps return nonzero on a failure, and say which on stderr just above this script's own line.
+# shellcheck disable=SC1091
+. cloud/sealed-job.sh || { echo "block-report: cloud/sealed-job.sh stopped at a step that failed, in its words above, so nothing ran"; exit 64; }
+
+# Line one is the go that runs everything, and line two the disk the streams land on, so a report read beside the
+# house's starts from what ran it and where (#3jge4gw).
+echo "block-report: $(go version 2>&1)"
+# The streams and every scratch file live outside the tree under test: tests that walk or count the tree see anything
+# inside it, leading dot or not (J-bp8ryag, Nov 12: ten packages failed only because the first run kept them in the
+# tree). The unit's /tmp is its own private one (PrivateTmp=yes).
+out="${BLOCK_REPORT_OUT:-/tmp/block-report}"
+mkdir "$out" || { echo "block-report: $out is there already or can't be made, so nothing ran"; exit 64; }
+echo "block-report: $out is on $(df -PTk "$out" | awk 'NR == 2 {printf "%s, %s, %.0f bytes free", $1, $2, $5 * 1024}')"
+# The preamble makes TMPDIR when the unit gives none, and the job's go and its tests write there first, so it moves to
+# the data disk beside the streams. The preamble's build cache (ADAMIC_BUILD_CACHE_DIR) stays under the tree as it set it:
+# Operations' proof holds internal/oracle green with it there (#3jge4gw). The unit hands the script no HOME (the first
+# small job, J-00vkbwf), so the job gives itself one under $out too.
+preambleTemporary=$TMPDIR
+export TMPDIR="$out/tmp" GOCACHE="$out/gocache" HOME="$out/home" GOPATH="$out/home/go"
+mkdir "$TMPDIR" "$GOCACHE" "$HOME" "$GOPATH" || exit 64
+# The mirrors are root's and the job is its own user, so git refuses them as dubious unless told otherwise.
+# Configuration from the environment is protected configuration, and nothing is written to disk.
+export GIT_CONFIG_COUNT=1 GIT_CONFIG_KEY_0=safe.directory GIT_CONFIG_VALUE_0='*'
+echo "block-report: TMPDIR is $TMPDIR, over the preamble's $preambleTemporary, and GOCACHE, HOME and GOPATH are under $out too; the build cache stays at $ADAMIC_BUILD_CACHE_DIR, the preamble's"
+
 # The commit: the wrapper's word for it when it gives one (#sgn0nk9), else git's when the tree is a checkout.
 sha=${LOOM_JOB_COMMIT:-$(git rev-parse --verify 'HEAD^{commit}' 2> /dev/null || echo "unnamed: the wrapper gives no commit and the tree has no .git")}
 # cohere/TypeScript's pin, as the tree's own constant states it; internal/load's pin test holds it to the gitlink.
 typescriptCommit=$(sed -n 's/^const TypeScriptGoCommit = "\([0-9a-f]\{40\}\)"$/\1/p' internal/corpusfiles/files.go)
 [ "${#typescriptCommit}" = 40 ] || { echo "block-report: internal/corpusfiles/files.go names no TypeScriptGoCommit, so nothing ran"; exit 64; }
 echo "block-report: the tree at $sha, as laid: $([ -e .git ] && echo "a checkout" || echo "an archive with no .git")"
-[ -r "$environment" ] || { echo "block-report: no environment at $environment, so nothing ran"; exit 64; }
-# shellcheck disable=SC1090
-. "$environment" || { echo "block-report: $environment didn't source, so nothing ran"; exit 64; }
-
-# The streams and every scratch file live outside the tree under test: tests that walk or count the tree see anything
-# inside it, leading dot or not (J-bp8ryag, Nov 12: ten packages failed only because the first run kept them in the
-# tree). The unit's /tmp is its own private one (PrivateTmp=yes).
-out="${BLOCK_REPORT_OUT:-/tmp/block-report}"
-mkdir "$out" || { echo "block-report: $out is there already or can't be made, so nothing ran"; exit 64; }
-# The unit hands the script no HOME (the first small job, J-00vkbwf), so the job gives itself one there too.
-export TMPDIR="$out/tmp" GOCACHE="$out/gocache" HOME="$out/home" GOPATH="$out/home/go"
-mkdir "$TMPDIR" "$GOCACHE" "$HOME" "$GOPATH" || exit 64
-# The mirrors are root's and the job is its own user, so git refuses them as dubious unless told otherwise.
-# Configuration from the environment is protected configuration, and nothing is written to disk.
-export GIT_CONFIG_COUNT=1 GIT_CONFIG_KEY_0=safe.directory GIT_CONFIG_VALUE_0='*'
-echo "block-report: the job gives itself TMPDIR, GOCACHE, HOME and GOPATH under $out"
 
 # cohere/TypeScript: go.mod replaces github.com/microsoft/TypeScript/tsc with ./cohere/TypeScript/tsc and go.work uses it,
 # so an empty directory fails every go command at module load. Lay it from root's mirror, read only, or stop here.
@@ -68,30 +84,192 @@ else
 	echo "block-report: cohere/TypeScript laid by the job at $typescriptCommit from $mirror"
 fi
 
-# The image's TypeScript source is root's. Pinned git (internal/buildcache.PinnedGit) runs with no system or global
-# configuration and an allowlisted environment, on purpose, so the safe.directory above never reaches it: the job reads
-# its own copy instead (J-r6ctetr, Nov 12: internal/lower's five census tests green on it, red on root's).
-if [ -n "${ADAMIC_TYPESCRIPT_SOURCE:-}" ]; then
-	begun=$SECONDS
-	cp -a "$ADAMIC_TYPESCRIPT_SOURCE" "$out/typescript-source" || { echo "block-report: copying $ADAMIC_TYPESCRIPT_SOURCE failed, so nothing ran"; exit 64; }
-	export ADAMIC_TYPESCRIPT_SOURCE="$out/typescript-source"
-	echo "block-report: the image's TypeScript source copied to $ADAMIC_TYPESCRIPT_SOURCE in $((SECONDS - begun)) s, the job's own"
+# The image's TypeScript source is root's, and internal/buildcache.PinnedGit reads it with no configuration that could
+# name it safe, so the job reads a copy of its own (J-r6ctetr, Nov 12). The preamble's sealed_typescript_source makes
+# it, and the products below read it (#3jge4gw).
+sealed_typescript_source || { echo "block-report: sealed_typescript_source failed, in its words above, so nothing ran"; exit 64; }
+
+# node_modules for each npm project the image cached, installed offline from its cache by the preamble's sealed_npm, but
+# only where the project's own .gitignore keeps node_modules out of the tree. Any other project's dependencies
+# environment.sh lays outside the tree, and an install in cloud/markdown-width left a node_modules that markdowninline's
+# corpus walk read as untracked files (#3jge4gw).
+npmProjects=""
+for project in ${BLOCK_REPORT_NPM_PROJECTS:-}; do
+	if ! grep -qxE 'node_modules/?' "$project/.gitignore" 2> /dev/null; then
+		echo "block-report: npm skips $project, whose own .gitignore doesn't list node_modules/, so an install would leave untracked files in the tree"
+		continue
+	fi
+	[ -f "$project/package-lock.json" ] || { echo "block-report: $project has no package-lock.json, so nothing ran"; exit 64; }
+	npmProjects="$npmProjects $project"
+done
+if [ -n "$npmProjects" ]; then
+	# The projects are the image's own directory names, so they split as words here.
+	# shellcheck disable=SC2086
+	sealed_npm $npmProjects > "$out/npm.log" 2>&1 ||
+		{ echo "block-report: sealed_npm failed, so nothing ran: $(tail -n 5 "$out/npm.log" | tr '\n' ' ')"; exit 64; }
+	echo "block-report: node_modules installed offline in$npmProjects"
 fi
 
-# node_modules for each npm project the image cached, installed offline from its cache, as a house box lays them.
-for project in ${BLOCK_REPORT_NPM_PROJECTS:-}; do
-	[ -f "$project/package-lock.json" ] || { echo "block-report: $project has no package-lock.json, so nothing ran"; exit 64; }
-	(cd "$project" && npm ci --offline --ignore-scripts --no-audit --no-fund > "$out/npm-$(echo "$project" | tr / _).log" 2>&1) ||
-		{ echo "block-report: npm ci --offline failed in $project, so nothing ran"; exit 64; }
-	echo "block-report: $project/node_modules installed offline"
-done
+# The gate's own four (loom's planner.GateEnvironment): products and tests both run under them, as every unit on the
+# house line does, so a test the gate runs isn't skipped here (#3jge4gw).
+export ADAMIC_GATE_UNCACHED=1 ADAMIC_TEST_WASI=1 ADAMIC_ORACLE_WASI=1 ADAMIC_GATE_COHERE=1
+echo "block-report: products and tests run under the gate's ADAMIC_GATE_UNCACHED=1 ADAMIC_TEST_WASI=1 ADAMIC_ORACLE_WASI=1 ADAMIC_GATE_COHERE=1"
 
 # The flags the house builds every product with (internal/buildcache.ReproducibleGoFlags), so a binary's bytes are a
 # function of its sources and not of this checkout's path or commit.
 reproducible="-trimpath -ldflags=-buildid= -buildvcs=false"
 started=$(date -u +%FT%TZ)
-echo "block-report: $(uname -n), $(nproc) cores, $(go version), node $(node --version), go flags $reproducible $GOFLAGS, proxy $GOPROXY"
+echo "block-report: $(uname -n), $(nproc) cores, node $(node --version), go flags $reproducible $GOFLAGS, proxy $GOPROXY"
 echo "block-report: tests that ask git about the tree fail on an archive for the missing .git; each is a laid-tree difference, never the block's"
+
+# Products settle before any test reads them, since a unit test reads only products built ahead and never builds one,
+# and this job's build cache starts empty. They settle in waves by loom's lay.sh rule (#3jge4gw, J-myrxd8k): each
+# package's TestProduct_ tests come from go test -list, cloud/fast-gate/product-order.json says which wait on which, and
+# wave k holds every test whose waits all sit in earlier waves. One python program plans it all, reading the tree's
+# files as JSON and running none of them; a failing wave doesn't stop the job, and the report counts its failures.
+productsBegun=$SECONDS
+# shellcheck disable=SC2086
+python3 -I - "$out" cloud/fast-gate/product-order.json cloud/fast-gate/compiler-dependencies.json ${BLOCK_REPORT_PACKAGES:-} << 'PYTHON'
+import concurrent.futures, json, os, re, subprocess, sys
+out, order_file, dependencies_file = sys.argv[1:4]
+named = sys.argv[4:]
+part = re.compile(r'^[A-Za-z0-9_][A-Za-z0-9_.-]*$')
+product = re.compile(r'^TestProduct_[A-Za-z0-9_]*$')
+problems = []
+
+def say(line):
+    print('block-report: products: ' + line, flush=True)
+
+def path_of(name):
+    # As sealed_products reads a package: ./<path> or the module's import path, held to plain path segments.
+    for prefix in ('./', 'github.com/system-inc/adamic/'):
+        if name.startswith(prefix):
+            name = name[len(prefix):]
+    name = name.rstrip('/')
+    if not name or not all(part.match(piece) for piece in name.split('/')):
+        sys.exit('block-report: products: %r is no adamic package path' % name)
+    return name
+
+def target(path):
+    return '.' if path == '.' else './' + path + '/'
+
+# Every package go list ./... gives, or a rehearsal's own (BLOCK_REPORT_PACKAGES) with each one's
+# compiler-dependencies.json entries, as sealed_products brings them.
+if named:
+    listed = {}
+    if os.path.exists(dependencies_file):
+        listed = json.load(open(dependencies_file)).get('packages')
+        if not isinstance(listed, dict):
+            sys.exit('block-report: products: %s holds no packages object' % dependencies_file)
+    paths = set()
+    for name in named:
+        path = path_of(name)
+        paths.add(path)
+        for dependency in listed.get(path, []):
+            paths.add(path_of(dependency))
+else:
+    listing = subprocess.run(['go', 'list', '-e', '-f', '{{.Dir}}', './...'], stdin=subprocess.DEVNULL,
+                             stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
+    if listing.returncode != 0:
+        sys.exit('block-report: products: go list ./... exited %d: %s' % (listing.returncode, listing.stderr.strip()[-2000:]))
+    paths = {os.path.relpath(directory, os.getcwd()) for directory in listing.stdout.splitlines() if directory}
+paths = sorted(paths)
+
+def list_products(path):
+    run = subprocess.run(['go', 'test', '-list', '^TestProduct_', target(path)], stdin=subprocess.DEVNULL,
+                         stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
+    return path, run
+
+# go test -list builds each package's test binary, so a few run at once; their results are read back in path order.
+names = {}
+with open(os.path.join(out, 'products-list.log'), 'w') as log, \
+        concurrent.futures.ThreadPoolExecutor(max_workers=min(8, os.cpu_count() or 1)) as pool:
+    for path, run in pool.map(list_products, paths):
+        log.write('== go test -list ^TestProduct_ %s, exit %d\n%s%s' % (target(path), run.returncode, run.stdout, run.stderr))
+        if run.returncode != 0:
+            problems.append('go test -list in %s exited %d' % (path, run.returncode))
+            continue
+        found = []
+        for line in run.stdout.splitlines():
+            # go test closes each package's list with its own ok or ? line.
+            if not line.strip() or re.match(r'^(ok|\?)\s', line):
+                continue
+            if product.match(line):
+                found.append(line)
+            else:
+                problems.append('%s lists %r, which is no TestProduct_ name' % (path, line[:200]))
+        if found:
+            names[path] = sorted(found)
+
+# product-order.json's waits: only tests listed above count, and a missing file waits on nothing.
+waits = {}
+if os.path.exists(order_file):
+    try:
+        order = json.load(open(order_file))
+    except ValueError as error:
+        sys.exit('block-report: products: %s is no JSON: %s' % (order_file, error))
+    waits = order.get('waits') if isinstance(order, dict) else None
+    if not isinstance(waits, dict) or not all(isinstance(each, list) and all(isinstance(wait, str) for wait in each) for each in waits.values()):
+        sys.exit('block-report: products: %s holds no waits object of lists of "<path> <test>"' % order_file)
+else:
+    say('%s is missing, so no product waits on another' % order_file)
+tests = ['%s %s' % (path, name) for path in sorted(names) for name in names[path]]
+listed_tests = set(tests)
+needs = {test: {wait for wait in waits.get(test, []) if wait in listed_tests} for test in tests}
+
+# Wave 1 is every test that waits on none, and wave k every test whose waits all sit in earlier waves. A cycle is the
+# products step's failure, never broken: its tests, and every test waiting on one, never run.
+waves, placed, remaining = [], set(), set(tests)
+while remaining:
+    wave = sorted(test for test in remaining if needs[test] <= placed)
+    if not wave:
+        problems.append('%d product tests wait in a cycle or on one, never run: %s' % (len(remaining), ' '.join(sorted(remaining))))
+        break
+    waves.append(wave)
+    placed.update(wave)
+    remaining.difference_update(wave)
+
+# One plan line a wave (wave, tests, packages) for the shell, and one go test a package in each wave's own file.
+with open(os.path.join(out, 'products-plan.tsv'), 'w') as plan:
+    for index, wave in enumerate(waves, 1):
+        by_package = {}
+        for test in wave:
+            path, name = test.split(' ', 1)
+            by_package.setdefault(path, []).append(name)
+        plan.write('%d\t%d\t%d\n' % (index, len(wave), len(by_package)))
+        with open(os.path.join(out, 'products-wave-%d.tsv' % index), 'w') as runs:
+            for path in sorted(by_package):
+                runs.write('%s\t^(%s)$\n' % (target(path), '|'.join(by_package[path])))
+with open(os.path.join(out, 'products-plan.json'), 'w') as summary:
+    json.dump({'orderFile': os.path.exists(order_file), 'packages': len(paths), 'productPackages': len(names),
+               'tests': len(tests), 'waves': [len(wave) for wave in waves], 'unplaced': sorted(remaining),
+               'problems': problems}, summary)
+for problem in problems:
+    say(problem)
+say('%d product tests in %d of %d packages, in %d waves' % (len(tests), len(names), len(paths), len(waves)))
+PYTHON
+productsPlanExit=$?
+if [ "$productsPlanExit" != 0 ]; then
+	echo "block-report: products didn't plan (exit $productsPlanExit), so no wave ran; the tests run on an empty build cache"
+	: > "$out/products-plan.tsv"
+fi
+productsWaves=$(wc -l < "$out/products-plan.tsv" | tr -d ' ')
+: > "$out/products.jsonl"
+: > "$out/products-waves.tsv"
+# Each wave runs one go test a package, packages one after another, every stream appended to products.jsonl. The house
+# runs each test binary with -test.timeout=3h, as the tests below do, so a slow machine's product isn't cut at go
+# test's own 10 minutes (Pupa, Nov 12).
+while IFS=$'\t' read -r wave waveTests wavePackages; do
+	waveExit=0
+	while IFS=$'\t' read -r path pattern; do
+		go test -count=1 -json -timeout 3h -run "$pattern" "$path" >> "$out/products.jsonl" 2>> "$out/products.log" < /dev/null
+		code=$?
+		[ "$waveExit" != 0 ] || waveExit=$code
+	done < "$out/products-wave-$wave.tsv"
+	echo "block-report: products wave $wave of $productsWaves: $waveTests tests in $wavePackages packages, exit $waveExit"
+	printf '%s\t%s\n' "$wave" "$waveExit" >> "$out/products-waves.tsv"
+done < "$out/products-plan.tsv"
+echo "block-report: products took $((SECONDS - productsBegun)) s"
 
 step() {
 	local name=$1 begun=$SECONDS
@@ -118,31 +296,81 @@ step test go test -count=1 -json -timeout 3h $reproducible $packages
 testExit=$?
 cp "$out/test.log" "$out/test.jsonl"
 
+# The report: the tests' summary and one line a package, as before; then the products step's own summary, and each
+# failing package's first failure with the first 14 lines it wrote, from either stream, so a report says why without
+# its raw streams (#3jge4gw, J-mwkyqjb).
 echo "BEGIN block-report"
-python3 -I - "$out/test.jsonl" "$sha" "$started" "$vetExit" "$buildExit" "$testExit" "$reproducible" << 'PYTHON'
-import json, sys, collections
-stream, sha, started, vet, build, test, flags = sys.argv[1:]
-packages = collections.OrderedDict()
-failing = collections.defaultdict(list)
-for line in open(stream, errors='replace'):
-    try:
-        event = json.loads(line)
-    except ValueError:
-        continue
-    package = event.get('Package')
-    if not package:
-        continue
-    action = event.get('Action')
-    if event.get('Test') is None and action in ('pass', 'fail', 'skip'):
-        packages[package] = {'outcome': {'pass': 'ok', 'fail': 'failed', 'skip': 'skipped'}[action], 'seconds': event.get('Elapsed')}
-    elif event.get('Test') and action == 'fail':
-        failing[package].append(event['Test'])
+python3 -I - "$out" "$productsPlanExit" "$sha" "$started" "$vetExit" "$buildExit" "$testExit" "$reproducible" << 'PYTHON'
+import json, os, sys, collections
+out, plan_exit, sha, started, vet, build, test, flags = sys.argv[1:]
+
+def read(path):
+    stream = {'packages': collections.OrderedDict(), 'failing': collections.defaultdict(list), 'failed': [],
+              'output': collections.defaultdict(list), 'packageOutput': collections.defaultdict(list),
+              'buildOutput': collections.defaultdict(list), 'failedBuild': {}}
+    for line in open(path, errors='replace'):
+        try:
+            event = json.loads(line)
+        except ValueError:
+            continue
+        if not isinstance(event, dict):
+            continue
+        action = event.get('Action')
+        # A package that doesn't build says why in build-output events, named by ImportPath, and its fail event names
+        # that ImportPath as FailedBuild.
+        if action == 'build-output':
+            stream['buildOutput'][event.get('ImportPath', '')].append(event.get('Output', ''))
+            continue
+        package = event.get('Package')
+        if not package:
+            continue
+        if action == 'output':
+            if event.get('Test'):
+                stream['output'][(package, event['Test'])].append(event.get('Output', ''))
+            else:
+                stream['packageOutput'][package].append(event.get('Output', ''))
+        if event.get('Test') is None and action in ('pass', 'fail', 'skip'):
+            stream['packages'][package] = {'outcome': {'pass': 'ok', 'fail': 'failed', 'skip': 'skipped'}[action], 'seconds': event.get('Elapsed')}
+            if action == 'fail' and package not in stream['failed']:
+                stream['failed'].append(package)
+                stream['failedBuild'][package] = event.get('FailedBuild', '')
+        elif event.get('Test') and action == 'fail':
+            stream['failing'][package].append(event['Test'])
+    return stream
+
+def first_failures(stream, name):
+    # The first top-level test to fail, or the package's own output (its build's first) when no test failed.
+    for package in stream['failed'] + [package for package in stream['failing'] if package not in stream['failed']]:
+        tests = [test for test in stream['failing'].get(package, []) if '/' not in test]
+        if tests:
+            first, lines = tests[0], stream['output'][(package, tests[0])]
+        else:
+            first = '(package)'
+            lines = stream['buildOutput'].get(stream['failedBuild'].get(package, ''), []) + stream['packageOutput'][package]
+        shown = [line.rstrip()[:240] for line in lines if line.strip() and not line.startswith(('=== RUN', '=== PAUSE', '=== CONT'))]
+        print(json.dumps({'package': package, 'stream': name, 'firstFailure': first, 'lines': shown[:14]}))
+
+tests = read(os.path.join(out, 'test.jsonl'))
+products = read(os.path.join(out, 'products.jsonl'))
+plan_path = os.path.join(out, 'products-plan.json')
+plan = json.load(open(plan_path)) if os.path.exists(plan_path) else {}
+waves = [line.split('\t') for line in open(os.path.join(out, 'products-waves.tsv')).read().splitlines() if line]
+packages = tests['packages']
 counts = collections.Counter(row['outcome'] for row in packages.values())
 print("This is the block's own tests run without loom, not the house's build of the tree. Nothing in it is a key, and nothing compares keys.")
 print(json.dumps({'sha': sha, 'started': started, 'vetExit': int(vet), 'buildExit': int(build), 'testExit': int(test),
                   'goFlags': flags, 'packages': len(packages), 'ok': counts['ok'], 'failed': counts['failed'], 'skipped': counts['skipped']}))
 for package, row in packages.items():
-    print(json.dumps({'package': package, 'outcome': row['outcome'], 'seconds': row['seconds'], 'failingTests': failing.get(package, [])}))
+    print(json.dumps({'package': package, 'outcome': row['outcome'], 'seconds': row['seconds'], 'failingTests': tests['failing'].get(package, [])}))
+failed_waves = [int(wave) for wave, code in waves if code != '0']
+print(json.dumps({'products': {
+    'ok': int(plan_exit) == 0 and not failed_waves and not products['failed'] and not plan.get('problems') and not plan.get('unplaced'),
+    'planExit': int(plan_exit), 'packages': plan.get('packages', 0), 'productPackages': plan.get('productPackages', 0),
+    'tests': plan.get('tests', 0), 'waves': len(waves), 'failedWaves': failed_waves, 'failedPackages': products['failed'],
+    'failedTests': {package: [test for test in failing if '/' not in test] for package, failing in products['failing'].items()},
+    'unplaced': plan.get('unplaced', []), 'problems': plan.get('problems', [])}}))
+first_failures(products, 'products')
+first_failures(tests, 'tests')
 print(f"::loom checked {len(packages)} packages at {sha[:12]}: {counts['ok']} ok, {counts['failed']} failed, {counts['skipped']} skipped")
 PYTHON
 echo "END block-report"
