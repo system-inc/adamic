@@ -14,10 +14,10 @@ import (
 // lower/road_p.mutants.md.
 func TestRoadPAgreesWithNode(t *testing.T) {
 	t.Parallel()
-	const want = "abcd falsef | ---- true- | abcd falsef\n" +
-		"a--- falsef | ---- true- | a--- falsef\n" +
-		"---- true- | ---- true- | ---- true-\n" +
-		"---- true- | ---- true- | ---- true-\n"
+	const want = "abcd falsefg | ---- true-- | abcd falsefg\n" +
+		"a--- falsefg | ---- true-- | a--- falsefg\n" +
+		"---- true-g | ---- true-- | ---- true-g\n" +
+		"---- true-g | ---- true-- | ---- true-g\n"
 	for _, entry := range []string{"main.a", "main.ts"} {
 		t.Run(entry, func(t *testing.T) {
 			t.Parallel()

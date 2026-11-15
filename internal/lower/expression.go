@@ -1010,10 +1010,10 @@ func (l *lowering) enumNeverValue(node *ast.Node) (ir.Expression, error) {
 		if value, handled, err := l.hostBindingAnd(node); handled {
 			return value, err
 		}
-		if value, handled, err := l.methodPresenceAnd(node); handled {
+		if value, handled, err := l.methodPresenceAndRight(node); handled {
 			return value, err
 		}
-		if value, handled, err := l.methodPresenceAndRight(node); handled {
+		if value, handled, err := l.methodPresenceAnd(node); handled {
 			return value, err
 		}
 		// A flow-narrowed never expression still reads its declared boolean slots.
