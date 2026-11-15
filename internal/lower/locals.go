@@ -218,22 +218,18 @@ func (l *lowering) localOf(identifier *ast.Node, symbol *ast.Symbol) (int, bool)
 		if declared := l.result.Locals[local]; declared.Placeholder != "" && declared.Captured && declared.Preallocated && declared.Ready == 0 && l.unlowerable == nil {
 			l.unlowerable = l.notYet(identifier, "an unset-capable capture before its declaration without a separate declaration-readiness cell")
 		}
-		if declared := l.result.Locals[local]; declared.Captured && !boxedSlot(declared.Type) && l.unlowerable == nil {
-			// A Union is one counted heap reference whatever initializes it, a placeholder or a
-			// value (#n7sx9gz), and a cell holds one: each write fits its member into the Union, the
-			// cell releases what it held, and a read is the Union every closure shares. boolean |
-			// undefined has no word of its own in a cell yet, so its capture still stops. Lower
-			// says so once it's done, since the capture is found here, where nothing can return
-			// an error.
-			l.unlowerable = l.notYet(identifier, "a "+typeName(declared.Type)+" variable a function value captures")
-		}
 	}
 	return local, isLocal
 }
 
 // touch notes that the function being lowered reads or writes a local. One declared in another
 // function, and not a global, is captured: it moves into a cell, and every closure being lowered
-// between its function and this one carries that cell in its environment.
+// between its function and this one carries that cell in its environment. A cell holds a local of
+// any type. A Union is one counted heap reference whatever initializes it, a placeholder or a value
+// (#n7sx9gz): each write fits its member into the Union, the cell releases what it held, and a read
+// is the Union every closure shares. boolean | undefined is one byte, adamic_value's maybe_boolean
+// (false 0, true 1, undefined 2), packed on each write and unpacked on each read, as an object's
+// field holds it (#fds729j).
 func (l *lowering) touch(local int) {
 	declared := l.result.Locals[local]
 	if declared.Ready != 0 {
