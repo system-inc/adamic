@@ -220,6 +220,18 @@ const a: Node = { links: {} };
 a.links['self'] = a;
 console.log(Object.keys(a.links).join(','));
 `, ""},
+	// A node pushed into an array its record holds, with no cycle through the record: a.next.push(b) puts
+	// a and b in one graph region, so a counted record and array would make a counted path out of it and
+	// back in, and the region never let go (Emit on #t5q4prw: 11 allocated, 2 freed on main 89614cc0).
+	// The record and its array are graph members now, and it frees whole (#1vb0x5s).
+	{"a node pushed into an array its record holds", `interface Node { name: string; r: Record<string, Node[]>; next: Node[] }
+const a: Node = { name: "a", r: {}, next: [] };
+const b: Node = { name: "b", r: {}, next: [] };
+a.next.push(b);
+a.r["k"] = [];
+a.r["k"].push(b);
+console.log(String(Object.keys(a.r).length));
+`, ""},
 	// A record type closing its own cycle, a declared field beside its index signature: refused before
 	// records joined graph regions (lower's TestGraphRecordCycleLowers), held here to Node and the counted
 	// build (#1vb0x5s).
