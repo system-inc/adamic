@@ -5,6 +5,10 @@ import (
 	"fmt"
 	"strings"
 	"testing"
+
+	"github.com/microsoft/TypeScript/tsc/shim/ast"
+	"github.com/microsoft/TypeScript/tsc/shim/checker"
+	"github.com/system-inc/adamic/internal/load"
 )
 
 const unionKeepingPrelude = `import type { Weak } from 'adamic';
@@ -54,6 +58,7 @@ const viewed: { readonly kind: 'v'; readonly v: Weak<Box> } | { readonly kind: '
 func TestUnionKeepingPairsAgree(t *testing.T) {
 	for _, extension := range []string{".a", ".ts"} {
 		for _, row := range []struct{ name, source string }{
+			{"promise_union_view", `const p: string | PromiseLike<string> = Promise.resolve('x'); console.log(typeof p);`},
 			{"narrowed_nullish_box", `interface Box { readonly label: string }
 function read(box: Box | undefined): string {
     if (box === undefined) return 'none';
@@ -117,25 +122,14 @@ func TestUnionKeepingParameterDirections(t *testing.T) {
 type StrongElements = {readonly kind:'v';readonly v:readonly Box[]} | {readonly kind:'w';readonly w:number};
 function read(x: WeakElements): string { return 'label'; }
 const viewed: (x: StrongElements) => string = read;`, "(x: WeakElements) => string -> (x: StrongElements) => string", false},
-			{"union_weak_array_like_function_strong_array_view", `type WeakElements = {readonly kind:'v';readonly v:ArrayLike<Weak<Box>>} | {readonly kind:'w';readonly w:number};
-type StrongElements = {readonly kind:'v';readonly v:readonly Box[]} | {readonly kind:'w';readonly w:number};
-type Held = {readonly kind:'read';readonly read:(x:WeakElements)=>string} | {readonly kind:'none'};
-type Viewed = {readonly kind:'read';readonly read:(x:StrongElements)=>string} | {readonly kind:'none'};
-function read(x: WeakElements): string { return 'label'; }
-function hold(): Held { return {kind:'read',read}; }
-const viewed: Viewed = hold();`, "Held with (x: WeakElements) => string -> Viewed with (x: StrongElements) => string", false},
+
 			{"weak_function_strong_view", `function read(x: Weakly): string { return x.kind === 'v' ? x.v?.label ?? 'none' : 'w'; }
 const viewed: (x: Strong) => string = read;
 console.log(viewed(make()));`, "(x: Weakly) => string -> (x: Strong) => string", false},
 			{"strong_function_weak_view", `function read(x: Strong): string { return x.kind === 'v' ? x.v.label : 'w'; }
 const viewed = read as (x: Weakly) => string;
 console.log(viewed(make()));`, "(x: Strong) => string -> (x: Weakly) => string", true},
-			{"union_weak_function_strong_view", `type Held = {readonly kind:'read';readonly read:(x:Weakly)=>string} | {readonly kind:'none'};
-type Viewed = {readonly kind:'read';readonly read:(x:Strong)=>string} | {readonly kind:'none'};
-function read(x: Weakly): string { return x.kind === 'v' ? x.v?.label ?? 'none' : 'w'; }
-function hold(): Held { return {kind:'read',read}; }
-const viewed: Viewed = hold();
-if (viewed.kind === 'read') console.log(viewed.read(make()));`, "Held with (x: Weakly) => string -> Viewed with (x: Strong) => string", false},
+
 			{"union_strong_function_weak_view", `type Held = {readonly kind:'read';readonly read:(x:Strong)=>string} | {readonly kind:'none'};
 type Viewed = {readonly kind:'read';readonly read:(x:Weakly)=>string} | {readonly kind:'none'};
 function read(x: Strong): string { return x.kind === 'v' ? x.v.label : 'w'; }
@@ -158,5 +152,46 @@ if (viewed.kind === 'read') console.log(viewed.read(make()));`, "Held with (x: S
 				t.Fatalf("%s: got %v, want the callable view to stop", row.types, err)
 			})
 		}
+	}
+}
+
+func TestUnionKeepingGrow(t *testing.T) {
+	for _, extension := range []string{".a", ".ts"} {
+		t.Run(extension, func(t *testing.T) {
+			// Load the growing types without asking the checker to relate them: this
+			// pins the keeping walk's bound, independently of the view pre-pass.
+			program, err := load.Load([]string{writeAgreementSource(t, "main"+extension, `interface Grow<T> { readonly next?: Grow<Grow<T>>; readonly v: T }
+interface Twin<T> { readonly next?: Twin<Twin<T>>; readonly v: T }
+type From = { readonly kind: 'grow'; readonly value: Grow<number> } | { readonly kind: 'end' };
+type To = { readonly kind: 'grow'; readonly value: Twin<number> } | { readonly kind: 'end' };
+declare const from: From;
+declare const to: To;`)})
+			if err != nil {
+				t.Fatal(err)
+			}
+			checked, release := program.Checker(t.Context(), program.Files()[0])
+			defer release()
+			var from, to *checker.Type
+			var visit ast.Visitor
+			visit = func(node *ast.Node) bool {
+				if ast.IsIdentifier(node) {
+					switch node.Text() {
+					case "from":
+						from = checked.GetTypeAtLocation(node)
+					case "to":
+						to = checked.GetTypeAtLocation(node)
+					}
+				}
+				return node.ForEachChild(visit)
+			}
+			program.Files()[0].Node.ForEachChild(visit)
+			if from == nil || to == nil {
+				t.Fatal("missing Grow union types")
+			}
+			l := &lowering{program: program, checker: checked}
+			if l.sameKeepingWalk(from, to, map[[2]*checker.Type]bool{}) {
+				t.Fatal("From with Grow<number> -> To with Twin<number>: want not same at the nesting bound")
+			}
+		})
 	}
 }

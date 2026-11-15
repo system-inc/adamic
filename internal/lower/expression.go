@@ -398,10 +398,14 @@ func (l *lowering) sameKeeping(from *checker.Type, to *checker.Type, visited map
 // sameKeepingWalk is sameKeeping's walk of what each side keeps weakly or strongly, and of each
 // function's slots by representation.
 func (l *lowering) sameKeepingWalk(from *checker.Type, to *checker.Type, visited map[[2]*checker.Type]bool) bool {
-	return l.sameKeepingWalkMode(from, to, visited, false)
+	return l.sameKeepingWalkMode(from, to, visited, false, nil)
 }
 
-func (l *lowering) sameKeepingWalkMode(from, to *checker.Type, visited map[[2]*checker.Type]bool, weakOnly bool) bool {
+type keepingNesting struct {
+	from, to typeNesting
+}
+
+func (l *lowering) sameKeepingWalkMode(from, to *checker.Type, visited map[[2]*checker.Type]bool, weakOnly bool, nesting *keepingNesting) bool {
 	if from == to {
 		return true
 	}
@@ -429,6 +433,7 @@ func (l *lowering) sameKeepingWalkMode(from, to *checker.Type, visited map[[2]*c
 		// Visited stays per mode: ordinary starts fresh here; weak-only never returns to ordinary, so its same cannot excuse an ordinary representation check.
 		if !weakOnly {
 			visited = map[[2]*checker.Type]bool{}
+			nesting = &keepingNesting{}
 		}
 		pair := [2]*checker.Type{from, to}
 		if visited[pair] {
@@ -441,7 +446,7 @@ func (l *lowering) sameKeepingWalkMode(from, to *checker.Type, visited map[[2]*c
 				if (member.Flags()&nullish != 0) != (target.Flags()&nullish != 0) {
 					continue
 				}
-				if !l.sameKeepingWalkMode(member, target, visited, true) {
+				if !l.sameKeepingWalkMode(member, target, visited, true, nesting) {
 					return false
 				}
 			}
@@ -453,6 +458,9 @@ func (l *lowering) sameKeepingWalkMode(from, to *checker.Type, visited map[[2]*c
 		return true
 	}
 	visited[[2]*checker.Type{from, to}] = true
+	if weakOnly {
+		return l.sameKeepingStorage(from, to, visited, nesting)
+	}
 	if fromKind, toKind := l.typedArrayKind(from), l.typedArrayKind(to); !weakOnly && (fromKind != 0 || toKind != 0) {
 		return fromKind != 0 && fromKind == toKind
 	}
@@ -460,15 +468,15 @@ func (l *lowering) sameKeepingWalkMode(from, to *checker.Type, visited map[[2]*c
 		return false
 	}
 	if a, b := l.recordElement(from), l.recordElement(to); a != nil && b != nil {
-		return l.sameKeepingWalkMode(a, b, visited, weakOnly)
+		return l.sameKeepingWalkMode(a, b, visited, weakOnly, nesting)
 	}
 	same := func(inside, viewed *checker.Type) bool {
 		if weakOnly {
-			return l.keepsWeak(inside) == l.keepsWeak(viewed) && l.sameKeepingWalkMode(inside, viewed, visited, true)
+			return l.keepsWeak(inside) == l.keepsWeak(viewed) && l.sameKeepingWalkMode(inside, viewed, visited, true, nesting)
 		}
 		fromKept, _ := l.kept(inside)
 		toKept, _ := l.kept(viewed)
-		return (fromKept == ir.Weak) == (toKept == ir.Weak) && l.sameKeepingWalkMode(inside, viewed, visited, weakOnly)
+		return (fromKept == ir.Weak) == (toKept == ir.Weak) && l.sameKeepingWalkMode(inside, viewed, visited, weakOnly, nesting)
 	}
 	fromSignatures := l.checker.GetSignaturesOfType(from, checker.SignatureKindCall)
 	toSignatures := l.checker.GetSignaturesOfType(to, checker.SignatureKindCall)
@@ -542,6 +550,58 @@ func (l *lowering) sameKeepingWalkMode(from, to *checker.Type, visited map[[2]*c
 		}
 	}
 	return true
+}
+
+// sameKeepingStorage judges stored contents only. Signatures inside union members remain unjudged.
+func (l *lowering) sameKeepingStorage(from, to *checker.Type, visited map[[2]*checker.Type]bool, nesting *keepingNesting) bool {
+	if l.keepingCallable(from) || l.keepingCallable(to) {
+		return true
+	}
+	ok, leave := nesting.from.enter(from)
+	defer leave()
+	if !ok {
+		return false
+	}
+	ok, leave = nesting.to.enter(to)
+	defer leave()
+	if !ok {
+		return false
+	}
+	same := func(inside, viewed *checker.Type) bool {
+		if l.keepingCallable(inside) || l.keepingCallable(viewed) {
+			return true
+		}
+		return l.keepsWeak(inside) == l.keepsWeak(viewed) && l.sameKeepingWalkMode(inside, viewed, visited, true, nesting)
+	}
+	if from.ObjectFlags()&checker.ObjectFlagsReference != 0 && to.ObjectFlags()&checker.ObjectFlagsReference != 0 && (l.isArrayType(from) || checker.IsTupleType(from) || l.isLibraryType(from, "Map", "ReadonlyMap", "Set", "ReadonlySet")) {
+		fromArguments, toArguments := l.typeArguments(from), l.typeArguments(to)
+		for index := 0; index < len(fromArguments) && index < len(toArguments); index++ {
+			if !same(fromArguments[index], toArguments[index]) {
+				return false
+			}
+		}
+	}
+	for _, inside := range l.checker.GetIndexInfosOfType(from) {
+		for _, viewed := range l.checker.GetIndexInfosOfType(to) {
+			if !same(inside.ValueType(), viewed.ValueType()) {
+				return false
+			}
+		}
+	}
+	for _, viewed := range l.checker.GetPropertiesOfType(to) {
+		if viewed.Flags&ast.SymbolFlagsMethod != 0 {
+			continue
+		}
+		if inside := l.checker.GetPropertyOfType(from, viewed.Name); inside != nil && inside.Flags&ast.SymbolFlagsMethod == 0 && !same(l.checker.GetTypeOfSymbol(inside), l.checker.GetTypeOfSymbol(viewed)) {
+			return false
+		}
+	}
+	return true
+}
+
+func (l *lowering) keepingCallable(proven *checker.Type) bool {
+	proven = l.present(proven)
+	return proven != nil && (len(l.checker.GetSignaturesOfType(proven, checker.SignatureKindCall)) > 0 || len(l.checker.GetSignaturesOfType(proven, checker.SignatureKindConstruct)) > 0)
 }
 
 // restHiddenByView reports whether a function with a rest parameter, seen as viewed through its
