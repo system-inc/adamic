@@ -1,0 +1,5 @@
+// A comparator that answers NaN whenever its left is 2, which sort reads as equal. The order is then
+// whatever V8's algorithm makes of it, and native runs that algorithm step for step (sort.c), so the
+// three agree on five numbers, each comparison through the shared argument array (#367nnz2).
+const order = [3, 2, 5, 1, 4].slice().sort((left: number, right: number) => left === 2 ? NaN : left - right);
+console.log(order.join(','));
