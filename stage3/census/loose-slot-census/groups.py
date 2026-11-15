@@ -1,8 +1,8 @@
-import json,subprocess,sys
+import json,subprocess,sys,time
 from pathlib import Path
 from measure import run
 s=Path('/workspace/loose-slot-scratch');repo=s/'head';out=Path(__file__).resolve().parent
-assert (s/"apply-main.done").exists() and (s/"apply-head.done").exists(), "adaptation not complete"
+while not ((s/"apply-main.done").exists() and (s/"apply-head.done").exists()): time.sleep(5)
 for first in range(1,80,10):
  last=min(first+9,79)
  for which in ['main','head']:
