@@ -39,6 +39,8 @@ for (file,line,col),es in sorted(sites.items()):
  listing += [f'## {file}:{line}:{col}', '',f'{len(es)} event(s); forms: '+', '.join(sorted({x['Form']for x in es}))+'.','','```typescript',text,'```','']
 (out/'SITES.md').write_text('\n'.join(listing))
 report=(out/'REPORT.md').read_text();controls=report[report.index('## Control first'):report.index('## Production next stops')]
+for name,label,obs in [('arrays-production','production head','NotYet at arrays.a:48:1'),('arrays-latent','latent, LATENT_FULL=1','0 findings'),('arrays-type','type-level instrument','9 events; includes arrays.a:48:1'),('arrays-mutant','stop-disabled mutant','0 events')]:
+ v=json.loads((out/'evidence/controls'/(name+'.time.json')).read_text());controls=re.sub(r'^\| '+re.escape(label)+r' \|.*$',f'| {label} | {obs} | {v["seconds"]:.6f} | {v["peak_rss_KiB"]} |',controls,flags=re.M)
 lines=['# Loose-slot census','',controls,'## Production next stops','',f'**{len(differences)} roots differ; {79-len(differences)}/79 have the same exact first-stop tuple.** CommonJSBundle; production `LowerWithOptions` through the existing census inspector, one root per process. Both specified SHAs were freshly built and measured. The full table is [NEXT-STOPS.md](NEXT-STOPS.md); raw observations, times and peak RSS are under [evidence/main](evidence/main) and [evidence/head](evidence/head).','']
 for n,a,b in differences:lines += [f'- `{n}`: {label(a)} → {label(b)}.']
 if not differences:lines+=['There are no changed roots to list.']

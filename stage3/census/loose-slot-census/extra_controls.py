@@ -5,4 +5,7 @@ for name in ['k17_captured_unknown','k18_entry_then_declared']:
  src=r/'internal/oracle/testdata/loose_slot_cycles'/(name+'.ts');out=d/'evidence/controls'/name
  run([s/'head-census',src,str(out)+'-production.json'],str(out)+'-production',cwd=r)
  run([s/'type-count',src,str(out)+'-type.json'],str(out)+'-type',cwd=r)
+ production=json.loads(Path(str(out)+'-production.json').read_text());typed=json.loads(Path(str(out)+'-type.json').read_text())
+ assert production['kind']=='NotYet' and '#yeep0sx' in production['reason']
+ assert any(e['Where']==production['where'] for e in typed['Events'])
  print(name,json.loads(Path(str(out)+'-production.json').read_text()),json.loads(Path(str(out)+'-type.json').read_text()),flush=True)

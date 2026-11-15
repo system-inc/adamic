@@ -8,10 +8,10 @@ The private type instrument sees **9 events**, including that exact `:48:1` writ
 
 | Run | Observation | Wall seconds | Peak RSS KiB |
 | --- | --- | ---: | ---: |
-| production head | NotYet at arrays.a:48:1 | 0.649914 | 33944 |
-| latent, LATENT_FULL=1 | 0 findings | 0.925864 | 38016 |
-| type-level instrument | 9 events; includes arrays.a:48:1 | 1.810074 | 30940 |
-| stop-disabled mutant | 0 events | 0.284158 | 29916 |
+| production head | NotYet at arrays.a:48:1 | 0.167543 | 33352 |
+| latent, LATENT_FULL=1 | 0 findings | 0.431101 | 37500 |
+| type-level instrument | 9 events; includes arrays.a:48:1 | 0.079163 | 30300 |
+| stop-disabled mutant | 0 events | 0.068879 | 30556 |
 
 Raw control observations and per-process resource receipts are in [evidence/controls](evidence/controls). `latent/make_overlay.py` replaces the production orchestration through `lowerChecked` with a no-output return, and its units never invoke `findCycles`. This explains the observed blindness.
 
@@ -23,7 +23,7 @@ The full commit message and `internal/lower/loose_slots.go` were read. The head 
 
 ## Type-level count past the walls
 
-Pending controls and completed input preparation. This is a **type-level source census, not a lowering**. `whole-program-scout/REPORT.md` at `0d078a8d` documents a declaration/overload failure before bodies and lost facts from placeholder bodies. This measurement therefore takes the explicitly permitted fallback; it does not claim a coherent continued IR.
+**Completed partial type-level observation: 22 events at 22 sites (6 writes, 9 literal initializations, 7 captured bindings).** The exhaustive production site count remains UNKNOWN because the source reconstruction cannot recover all lowered stores and metadata. See [TYPE-OBSERVATIONS.md](TYPE-OBSERVATIONS.md) and [all quoted sites](SITES.md). This is a **type-level source census, not a lowering**. `whole-program-scout/REPORT.md` at `0d078a8d` documents a declaration/overload failure before bodies and lost facts from placeholder bodies. This measurement therefore takes the explicitly permitted fallback; it does not claim a coherent continued IR.
 
 The private Go overlay adds a no-emission API. The instrument walks all supplied roots, calls the head's own `looseEntry` to gather H, the existing shape/use/made logic to build type reachability, and `noteLooseInit` to gather literal entries. It uses the head's `holdsLoose`, scalar test and `looseReaches` for judgments after H is complete. Assignment/member and collection-write candidates are read from source. Source binding identity and function nesting supply synthetic cell/closure metadata. Events and distinct source locations will be reported separately.
 
@@ -31,6 +31,6 @@ Blind spots and differences from production: no actual lowered write-site/IR inv
 
 ## Setup and resources
 
-Separate fresh detached worktrees were created for each measurement SHA under `/workspace/loose-slot-scratch`; only head's scratch worktree carries the result branch. Both received `git submodule update --init --recursive --depth 1`. TypeScript v6.0.3 was freshly cloned and its full SHA confirmed as `050880ce59e30b356b686bd3144efe24f875ebc8`. Each worktree runs locked `npm ci` in `stage3/api` and its own `stage3/apply.sh`. GOTMPDIR, TMPDIR, GOCACHE and Adamic build-cache paths are in scratch. Adaptation is still running; the provenance manifest in this checkpoint is provisional.
+Separate fresh detached worktrees were created for each measurement SHA under `/workspace/loose-slot-scratch`; only head's scratch worktree carries the result branch. Both received `git submodule update --init --recursive --depth 1`. TypeScript v6.0.3 was freshly cloned and its full SHA confirmed as `050880ce59e30b356b686bd3144efe24f875ebc8`. Each worktree runs locked `npm ci` in `stage3/api` and its own `stage3/apply.sh`. GOTMPDIR, TMPDIR, GOCACHE and Adamic build-cache paths are in scratch. Both adaptations completed successfully. Their 79-root compiler manifests are byte-identical; the completed hashes are in evidence/provenance.json.
 
 Each measurement's `.time.json` records wall seconds and Linux `wait4` peak RSS in KiB for the child, including load/check/lower or the type scan. Setup/build time is excluded. No merge, PR, native executable, production edit or submission is made.
