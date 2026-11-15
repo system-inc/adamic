@@ -439,15 +439,18 @@ func (l *lowering) mentionsWeak(t *checker.Type, visited map[*checker.Type]bool)
 			return true
 		}
 	}
-	// Library and prelude declarations cannot name Adamic Weak except for
-	// Weak itself, checked above. It can enter those objects only through
-	// alias/reference arguments, already walked. Require every declaration:
-	// a program may merge its own Weak-holding members into a library type.
-	if symbol := t.Symbol(); symbol != nil && len(symbol.Declarations) != 0 {
+	if t.ObjectFlags()&checker.ObjectFlagsObjectTypeKindMask == 0 || t.ObjectFlags()&(checker.ObjectFlagsMapped|checker.ObjectFlagsReverseMapped|checker.ObjectFlagsEvolvingArray) != 0 {
+		return true
+	}
+	// Only named library declarations carry program types entirely through
+	// alias/reference arguments, already walked. Anonymous and mapped objects
+	// can instead carry them in an instantiation mapper, so never skip those.
+	// Weak itself is checked above; every declaration must still be trusted.
+	if symbol := t.Symbol(); t.ObjectFlags()&(checker.ObjectFlagsReference|checker.ObjectFlagsInterface|checker.ObjectFlagsClass) != 0 && symbol != nil && len(symbol.Declarations) != 0 {
 		library := true
 		for _, declaration := range symbol.Declarations {
 			file := ast.GetSourceFileOfNode(declaration)
-			if !load.IsLibrary(file) && !load.IsPrelude(file) {
+			if !load.IsLibrary(file) && !load.IsNodeLibrary(file) && !load.IsPrelude(file) {
 				library = false
 				break
 			}
@@ -455,9 +458,6 @@ func (l *lowering) mentionsWeak(t *checker.Type, visited map[*checker.Type]bool)
 		if library {
 			return false
 		}
-	}
-	if t.ObjectFlags()&checker.ObjectFlagsObjectTypeKindMask == 0 || t.ObjectFlags()&(checker.ObjectFlagsMapped|checker.ObjectFlagsReverseMapped|checker.ObjectFlagsEvolvingArray) != 0 {
-		return true
 	}
 	for _, property := range l.checker.GetPropertiesOfType(t) {
 		if l.mentionsWeak(l.checker.GetTypeOfSymbol(property), visited) {

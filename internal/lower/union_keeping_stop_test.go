@@ -375,3 +375,64 @@ console.log(String(values.length));
 		})
 	}
 }
+
+// Library mapped/anonymous objects can retain a program's Weak through their
+// instantiation mapper even when they expose no alias or reference arguments.
+func TestUnionKeepingInstantiatedLibraryObjects(t *testing.T) {
+	const source = `import type { Weak } from 'adamic';
+interface Box { readonly label: string }
+const x: { readonly v: Weak<Box> } = { v: undefined };
+const descriptors = Object.getOwnPropertyDescriptors(x);
+const values: Weak<Box>[] = [];
+const push = values.push;
+`
+	for _, extension := range []string{".a", ".ts"} {
+		t.Run(extension, func(t *testing.T) {
+			program, err := load.Load([]string{writeAgreementSource(t, "main"+extension, source)})
+			if err != nil {
+				t.Fatal(err)
+			}
+			checked, release := program.Checker(context.Background(), program.Files()[0])
+			defer release()
+			types := map[string]*checker.Type{}
+			var visit ast.Visitor
+			visit = func(node *ast.Node) bool {
+				if node.Kind == ast.KindVariableDeclaration && node.Name() != nil && ast.IsIdentifier(node.Name()) {
+					types[node.Name().Text()] = checked.GetTypeAtLocation(node.Name())
+				}
+				return node.ForEachChild(visit)
+			}
+			program.Files()[0].AsNode().ForEachChild(visit)
+			analysis := &lowering{program: program, checker: checked}
+			descriptors, push := types["descriptors"], types["push"]
+			if descriptors == nil || push == nil {
+				t.Fatal("missing instantiated library types")
+			}
+			mapped := false
+			for _, member := range descriptors.Types() {
+				mapped = mapped || member.Flags()&checker.TypeFlagsObject != 0 && member.ObjectFlags()&checker.ObjectFlagsMapped != 0
+			}
+			if !mapped {
+				t.Fatalf("descriptors must contain an instantiated mapped type: %s", checked.TypeToString(descriptors))
+			}
+			if !analysis.mentionsWeak(descriptors, map[*checker.Type]bool{}) {
+				t.Fatal("instantiated library mapped type hid Weak")
+			}
+			if push.Flags()&checker.TypeFlagsObject == 0 || push.ObjectFlags()&checker.ObjectFlagsAnonymous == 0 || len(push.Alias().TypeArguments()) != 0 || len(analysis.typeArguments(push)) != 0 {
+				t.Fatalf("push must be anonymous with no exposed type arguments: %s", checked.TypeToString(push))
+			}
+			symbol := push.Symbol()
+			if symbol == nil || len(symbol.Declarations) == 0 {
+				t.Fatal("anonymous push type must retain its library symbol")
+			}
+			for _, declaration := range symbol.Declarations {
+				if !load.IsLibrary(ast.GetSourceFileOfNode(declaration)) {
+					t.Fatal("push declaration is not from the library")
+				}
+			}
+			if !analysis.mentionsWeak(push, map[*checker.Type]bool{}) {
+				t.Fatal("instantiated library anonymous type hid Weak")
+			}
+		})
+	}
+}

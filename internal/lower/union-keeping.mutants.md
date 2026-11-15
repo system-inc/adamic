@@ -44,8 +44,8 @@ are walked before skipping library properties, index values and signatures.
 as its strong twin. The twin retains undefined, so TypeScript accepts the view;
 the assignment stops at line 7, column 24 in both extensions.
 
-The shortcut requires every symbol declaration to satisfy `load.IsLibrary` or
-`load.IsPrelude`, and requires at least one declaration. The prelude's own Weak
+The shortcut requires every symbol declaration to satisfy `load.IsLibrary`,
+`load.IsNodeLibrary` or `load.IsPrelude`, and requires at least one declaration. The prelude's own Weak
 alias is the sole permitted type reference to Weak/WeakBrand there;
 `TestUnionKeepingPreludeDoesNotHideWeak` walks its declarations to guard this
 assumption. A directly written Weak is still found before the shortcut.
@@ -64,3 +64,37 @@ reach its cross-view assignment instead of stopping at a typed arrow initializer
 Known leaves, checked downcasts, optional reads and no-Weak union controls retain
 their behavior. An identical mapped Weak union now lowers and agrees with Node.
 The depth-limit pin uses distinct twins and stops at line 76, column 20.
+
+## Instantiated library objects must not use the named-type shortcut
+
+Only ObjectFlagsReference, ObjectFlagsInterface or ObjectFlagsClass can take
+the library shortcut. Mapped, reverse-mapped and evolving-array objects fail
+closed above it; anonymous objects continue through their members and signatures.
+Their instantiation mapper can carry program types not exposed as arguments.
+
+`TestUnionKeepingInstantiatedLibraryObjects` checks both extensions against the
+real checker. Its input has v: Weak<Box>. Object.getOwnPropertyDescriptors(x)
+produces a mapped half, which must answer true. It also takes a Weak<Box>[]'s
+push method: that type is anonymous, has a library symbol and no alias/reference
+arguments, yet its instantiated parameter carries Weak. It too must answer true.
+No executable descriptor row is claimed: production already refuses
+Object.getOwnPropertyDescriptors through its property-descriptor rule.
+
+Mutant: remove only the Reference/Interface/Class restriction, allowing any
+all-library symbol to skip. Run:
+
+```
+go test ./internal/lower -run '^TestUnionKeepingInstantiatedLibraryObjects$' -v
+```
+
+Observed exit 1: the anonymous query returns false, redding both extension rows
+with `instantiated library anonymous type hid Weak`. The mapped query remains
+fail-closed above the shortcut. The mutant is built with an overlay, leaving
+production unchanged. RegExp is still an interface and retains its shortcut.
+
+Node declaration files use load.IsNodeLibrary, separately from TypeScript's
+load.IsLibrary. Both are accepted for named declaration types, alongside the
+prelude; the every-declaration requirement still excludes program declarations.
+This avoids descending through Buffer/URL's library graphs into unrelated
+mapped members such as Array[Symbol.unscopables], while anonymous or mapped
+library instantiations still cannot take the shortcut.
