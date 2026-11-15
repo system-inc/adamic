@@ -1,10 +1,10 @@
-# Observed type-level sites
+# Every observed type-level site
 
-This is a partial source/type measurement, not a completed lowering or an exhaustive production-stop count.
+Locations refer to the adapted head source. Each entry quotes its full source line. Multiple events at one exact position are grouped.
 
 ## checker.ts:15346:21
 
-Forms: write; events: 1.
+1 event(s); forms: write.
 
 ```typescript
                     stack.push(identity);
@@ -12,7 +12,7 @@ Forms: write; events: 1.
 
 ## checker.ts:25287:55
 
-Forms: captured; events: 1.
+1 event(s); forms: captured.
 
 ```typescript
     function hasMatchingRecursionIdentity(type: Type, identity: object): boolean {
@@ -20,7 +20,7 @@ Forms: captured; events: 1.
 
 ## commandLineParser.ts:2691:9
 
-Forms: literal init; events: 1.
+1 event(s); forms: literal init.
 
 ```typescript
         watchOptions: watchOptionMap && optionMapToObject(watchOptionMap),
@@ -28,7 +28,7 @@ Forms: literal init; events: 1.
 
 ## commandLineParser.ts:2694:9
 
-Forms: literal init; events: 1.
+1 event(s); forms: literal init.
 
 ```typescript
         ...(configParseResult.options.configFile?.configFileSpecs ? {
@@ -36,7 +36,7 @@ Forms: literal init; events: 1.
 
 ## commandLineParser.ts:3093:11
 
-Forms: captured; events: 1.
+1 event(s); forms: captured.
 
 ```typescript
     const raw = checkedAdamicJsonObject(parsedConfig.raw);
@@ -44,7 +44,7 @@ Forms: captured; events: 1.
 
 ## commandLineParser.ts:3117:9
 
-Forms: literal init; events: 1.
+1 event(s); forms: literal init.
 
 ```typescript
         raw,
@@ -52,7 +52,7 @@ Forms: literal init; events: 1.
 
 ## commandLineParser.ts:3438:18
 
-Forms: literal init; events: 1.
+1 event(s); forms: literal init.
 
 ```typescript
         return { raw: json || convertToObject(sourceFile!, errors) };
@@ -60,7 +60,7 @@ Forms: literal init; events: 1.
 
 ## commandLineParser.ts:3445:11
 
-Forms: captured; events: 1.
+1 event(s); forms: captured.
 
 ```typescript
     const ownRaw = checkedAdamicJsonObject(ownConfig.raw);
@@ -68,7 +68,7 @@ Forms: captured; events: 1.
 
 ## commandLineParser.ts:3468:73
 
-Forms: write; events: 1.
+1 event(s); forms: write.
 
 ```typescript
         if (ownRaw.compileOnSave === undefined && result.compileOnSave) ownRaw.compileOnSave = result.compileOnSave;
@@ -76,7 +76,7 @@ Forms: write; events: 1.
 
 ## commandLineParser.ts:3481:19
 
-Forms: captured; events: 1.
+1 event(s); forms: captured.
 
 ```typescript
             const extendsRaw = checkedAdamicJsonObject(extendedConfig.raw);
@@ -84,7 +84,7 @@ Forms: captured; events: 1.
 
 ## commandLineParser.ts:3501:17
 
-Forms: write; events: 1.
+1 event(s); forms: write.
 
 ```typescript
                 result.compileOnSave = extendsRaw.compileOnSave;
@@ -92,7 +92,7 @@ Forms: write; events: 1.
 
 ## commandLineParser.ts:3536:14
 
-Forms: literal init; events: 1.
+1 event(s); forms: literal init.
 
 ```typescript
     return { raw: json, options, watchOptions, typeAcquisition, extendedConfigPath };
@@ -100,7 +100,7 @@ Forms: literal init; events: 1.
 
 ## executeCommandLine.ts:730:19
 
-Forms: literal init; events: 1.
+1 event(s); forms: literal init.
 
 ```typescript
                 { ...commandLine, options: commandLineOptions },
@@ -108,7 +108,7 @@ Forms: literal init; events: 1.
 
 ## executeCommandLine.ts:738:19
 
-Forms: literal init; events: 1.
+1 event(s); forms: literal init.
 
 ```typescript
                 { ...commandLine, options: commandLineOptions },
@@ -116,7 +116,7 @@ Forms: literal init; events: 1.
 
 ## moduleNameResolver.ts:2303:47
 
-Forms: captured; events: 1.
+1 event(s); forms: captured.
 
 ```typescript
     function loadEntrypointsFromTargetExports(target: unknown): boolean | undefined {
@@ -124,7 +124,7 @@ Forms: captured; events: 1.
 
 ## moduleSpecifiers.ts:1122:172
 
-Forms: captured; events: 1.
+1 event(s); forms: captured.
 
 ```typescript
 function tryGetModuleNameFromExports(options: CompilerOptions, host: ModuleSpecifierResolutionHost, targetFilePath: string, packageDirectory: string, packageName: string, exports: unknown, conditions: string[]): { moduleFileToTry: string; } | undefined {
@@ -132,7 +132,7 @@ function tryGetModuleNameFromExports(options: CompilerOptions, host: ModuleSpeci
 
 ## sys.ts:364:9
 
-Forms: write; events: 1.
+1 event(s); forms: write.
 
 ```typescript
         pollingIntervalQueue(pollingInterval).pollScheduled = (() => {
@@ -140,7 +140,7 @@ Forms: write; events: 1.
 
 ## sys.ts:484:9
 
-Forms: captured; events: 1.
+1 event(s); forms: captured.
 
 ```typescript
         pollScheduled = (() => {
@@ -148,7 +148,7 @@ Forms: captured; events: 1.
 
 ## sys.ts:1643:72
 
-Forms: literal init; events: 1.
+1 event(s); forms: literal init.
 
 ```typescript
                     return { module: undefined, modulePath: undefined, error };
@@ -156,7 +156,7 @@ Forms: literal init; events: 1.
 
 ## tracing.ts:305:21
 
-Forms: write; events: 1.
+1 event(s); forms: write.
 
 ```typescript
                     recursionIdentityMap.set(recursionIdentity, recursionToken);
@@ -164,7 +164,7 @@ Forms: write; events: 1.
 
 ## tsbuildPublic.ts:2067:5
 
-Forms: write; events: 1.
+1 event(s); forms: write.
 
 ```typescript
     state.timerToBuildInvalidatedProject = (() => {
@@ -172,7 +172,7 @@ Forms: write; events: 1.
 
 ## watchPublic.ts:1009:46
 
-Forms: literal init; events: 1.
+1 event(s); forms: literal init.
 
 ```typescript
                 config.parsedCommandLine = { ...config.parsedCommandLine, fileNames };

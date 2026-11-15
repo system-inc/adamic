@@ -1,0 +1,20 @@
+{
+  "status": "passed",
+  "production_observations": 158,
+  "roots_per_sha": 79,
+  "unchanged_pairs": 79,
+  "changed_indices": [],
+  "positive_control": "arrays production stop / latent zero / type positive / mutant zero",
+  "captured_and_literal_controls": "k17 and k18 exact-site match",
+  "type_observed_events": 22,
+  "type_distinct_sites": 22,
+  "type_forms": {
+    "write": 6,
+    "captured": 7,
+    "literal init": 9
+  },
+  "exhaustive_production_site_count": "UNKNOWN",
+  "whole_mutant_events": 0,
+  "site_quotes_verified": 22,
+  "ordinary_lower_source_edits": 0
+}
