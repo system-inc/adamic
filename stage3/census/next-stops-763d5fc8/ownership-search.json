@@ -1,0 +1,83 @@
+[
+  {
+    "file": "stage3/adapt/99-correctness-polling-no-enum-write/owners.json",
+    "metadata": {
+      "file": "src/compiler/sys.ts",
+      "owner": "setCustomPollingValues",
+      "ownerBeforeSha256": "1aea65e197ce33e638e94a04522630386f4c39896c752040c52ee4f9d24654d3",
+      "ownerAfterSha256": "052af06aefb5806c514f90960c344c630a11b0f76341cca91f05ff8f9213b266"
+    }
+  },
+  {
+    "file": "stage3/adapt/99-correctness-timer-closures/owners.json",
+    "metadata": {
+      "file": "src/compiler/sys.ts",
+      "owner": "createDynamicPriorityPollingWatchFile",
+      "ownerBeforeSha256": "1c3f5c520588ec9d2bee51db225ee3fe3d23c74bd6ff3f1155b6fc0cef85a69f",
+      "ownerAfterSha256": "25297fd35aea631bdcc99da77465ddbb9c90f33267433667838d218a75e6eb94"
+    }
+  },
+  {
+    "file": "stage3/adapt/99-correctness-timer-closures/owners.json",
+    "metadata": {
+      "file": "src/compiler/sys.ts",
+      "owner": "createFixedChunkSizePollingWatchFile",
+      "ownerBeforeSha256": "f548d0579f9ddb433cca0ce69a1d679806962e3660248a1120f8a387e3f4eeb7",
+      "ownerAfterSha256": "aa22c582f1b9980409f9571bfc0db9320297a05ee72b1843750949165ba3635d"
+    }
+  },
+  {
+    "file": "stage3/adapt/99-correctness-timer-closures/owners.json",
+    "metadata": {
+      "file": "src/compiler/sys.ts",
+      "owner": "createDirectoryWatcherSupportingRecursive",
+      "ownerBeforeSha256": "4d0ec18e0c033af43e186b99cb77c80c1eccbf540df9f9ff106e7fdc170235ba",
+      "ownerAfterSha256": "294d46167f656b6e919f2a7c6b78388d8262f50ed537fb3aa6bf4dd50231122f"
+    }
+  },
+  {
+    "file": "stage3/adapt/99-correctness-timer-closures/owners.json",
+    "metadata": {
+      "file": "src/compiler/sys.ts",
+      "owner": "System",
+      "ownerBeforeSha256": "9bc1f568f26f7cbe4eee7102f6b06b0487a2d0ef1a2cd81f928ab1a6f428a100",
+      "ownerAfterSha256": "d81501788e981b02ec97aab31f072333e4c47a39f403417dacbf89d30e68a49c"
+    }
+  },
+  {
+    "file": "stage3/adapt/99-correctness-core-multimap/owners.json",
+    "metadata": {
+      "file": "src/compiler/sys.ts",
+      "kind": "owner",
+      "path": [
+        "createUseFsEventsOnParentDirectoryWatchFile",
+        "nonPollingWatchFile"
+      ],
+      "beforeSha256": "a860c71c8147705517b000b8b407bc6c9f088e3a74942f46a5cbbc0e35725e79",
+      "afterSha256": "f331e6ba7e3de294c3668c4ca6fa52fa9f647228c69be557387ae97e4d41ecbb"
+    }
+  },
+  {
+    "file": "stage3/adapt/99-correctness-core-multimap/owners.json",
+    "metadata": {
+      "file": "src/compiler/sys.ts",
+      "kind": "owner",
+      "path": [
+        "createDirectoryWatcherSupportingRecursive",
+        "createDirectoryWatcher"
+      ],
+      "beforeSha256": "3b34923193d651d512b63e8852495b8343d103b693515d943085db433eaa8261",
+      "afterSha256": "239af573480e7607fcfdd54f3771546ee64e99b9564649d103a017bc1b0af4d6"
+    }
+  },
+  {
+    "file": "stage3/adapt/99-correctness-core-multimap/owners.json",
+    "metadata": {
+      "file": "src/compiler/sys.ts",
+      "kind": "import",
+      "module": "./_namespaces/ts.js",
+      "beforeSha256": "501d703a56cf4b1b56e967e112002d9031791ecd32a0d8cb5cc474d3381c04c2",
+      "afterSha256": "215657cca51604ac58245dd00098b0569c17a0a325e856210128c62fcd7d9cf4"
+    }
+  }
+]
