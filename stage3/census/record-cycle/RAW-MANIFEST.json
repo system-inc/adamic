@@ -45,6 +45,21 @@
     "sha256": "b122cfd346a897dc1e8264891c9fb9f6361a6c0f69319c6823ff73a40a27a30c"
   },
   {
+    "path": "/workspace/scratch/record-cycle/current-npm-ci.log",
+    "bytes": 27,
+    "sha256": "0f8bfcd9119e7095a4a7c5df94e00c183feb4d0cf20d297eb2f43671ad5d34f3"
+  },
+  {
+    "path": "/workspace/scratch/record-cycle/current-submodules.log",
+    "bytes": 666,
+    "sha256": "d98f7cd5dedc3177e3b318ebe5ded65c8f1c2a166805ee3e1bf5955ca6401124"
+  },
+  {
+    "path": "/workspace/scratch/record-cycle/current-worktree.log",
+    "bytes": 3369,
+    "sha256": "59995c3ad0c205c587bbb6d5bf611c3e6844e53c66f147f5e2549edc6d834033"
+  },
+  {
     "path": "/workspace/scratch/record-cycle/env.sh",
     "bytes": 338,
     "sha256": "d0ac46fbbbefa42dc7ecb0621a8cdf4f9afdc8f4d25882effe1dd97668f5715f"
@@ -58,6 +73,36 @@
     "path": "/workspace/scratch/record-cycle/fixtures/cycle.a",
     "bytes": 251,
     "sha256": "f2d4dba0397d0c143e08d48887ff2ae584d7f4ee1465b8325dd770fb1e4f4bf3"
+  },
+  {
+    "path": "/workspace/scratch/record-cycle/head/internal/lower/cycles.go",
+    "bytes": 34404,
+    "sha256": "b133d7d1f97c570efcce7d67263411ee1306ef319e93d80cb22ad607d7065180"
+  },
+  {
+    "path": "/workspace/scratch/record-cycle/head/internal/lower/graph_records.go",
+    "bytes": 5845,
+    "sha256": "fe3d6e628074682e016758c8f18f94a93848a349a5b101473c646502e093319e"
+  },
+  {
+    "path": "/workspace/scratch/record-cycle/head/internal/lower/graph_types.go",
+    "bytes": 43492,
+    "sha256": "6adf54fa8465a34e3c8befae08450dcefdd51644f8efcc7c541629e791cff303"
+  },
+  {
+    "path": "/workspace/scratch/record-cycle/head/internal/lower/lower.go",
+    "bytes": 35550,
+    "sha256": "24f7df3ed7623c07eb6d716a95eca843538e660173d44488439e67b5bd12ebc2"
+  },
+  {
+    "path": "/workspace/scratch/record-cycle/head/internal/lower/records.go",
+    "bytes": 31096,
+    "sha256": "5775184966da70f49efc5752f5eddf58f1065ebcc1e11527348798e2eafd1d55"
+  },
+  {
+    "path": "/workspace/scratch/record-cycle/head-census",
+    "bytes": 38210284,
+    "sha256": "6357eaeaf91d8de8e550399e75db32318c7ef1880f7f34615365ec8a25b0b9f2"
   },
   {
     "path": "/workspace/scratch/record-cycle/head-negative.jsonl",
@@ -263,6 +308,36 @@
     "path": "/workspace/scratch/record-cycle/head-tsc.receipt.json",
     "bytes": 261,
     "sha256": "f953adb86ce80b5ab252e1bfffa6b8ffa340d6c934768bcf1bb085b24dca5c07"
+  },
+  {
+    "path": "/workspace/scratch/record-cycle/main/internal/lower/cycles.go",
+    "bytes": 34404,
+    "sha256": "b133d7d1f97c570efcce7d67263411ee1306ef319e93d80cb22ad607d7065180"
+  },
+  {
+    "path": "/workspace/scratch/record-cycle/main/internal/lower/graph_records.go",
+    "bytes": 3597,
+    "sha256": "8ca27443477ac37f8b093151b01a70c8bc378511b8c5bbc555a13a75aff933f1"
+  },
+  {
+    "path": "/workspace/scratch/record-cycle/main/internal/lower/graph_types.go",
+    "bytes": 43103,
+    "sha256": "da5a15581db36c659fbc1136dd557b402c4bd075f5038550379518d6da9e7bf8"
+  },
+  {
+    "path": "/workspace/scratch/record-cycle/main/internal/lower/lower.go",
+    "bytes": 35175,
+    "sha256": "9eb309df48b07d2e828eab1a8fc6689bb016902a1a0bd98224b62fb6c093e39e"
+  },
+  {
+    "path": "/workspace/scratch/record-cycle/main/internal/lower/records.go",
+    "bytes": 30709,
+    "sha256": "52d3c14644e5128b18d60a27b30663ada477c8edf431d8f7e3d76d75b51c5cac"
+  },
+  {
+    "path": "/workspace/scratch/record-cycle/main-census",
+    "bytes": 38199620,
+    "sha256": "3be44c44b9cfcf3d07b414ee8b9a8bb8f5e4f3b40cffa645bec3430a0241a081"
   },
   {
     "path": "/workspace/scratch/record-cycle/main-negative.jsonl",
@@ -580,9 +655,34 @@
     "sha256": "6f19c0e228e2b7bc140eabdd94b59a35da69fc7f2f6445e47043db371163695a"
   },
   {
+    "path": "/workspace/scratch/record-cycle/next-stops-8e3a784a-root-21.jsonl",
+    "bytes": 970,
+    "sha256": "7289dfb00b1215fc95bb7fe8d6ae9e33279ab8e828b9d54c503672bf2d5d171e"
+  },
+  {
+    "path": "/workspace/scratch/record-cycle/next-stops-8e3a784a-root-22.jsonl",
+    "bytes": 974,
+    "sha256": "449cdc58b4318e786079a25ded2694fc0896e4199b2bc4ac093f944d8c94d465"
+  },
+  {
+    "path": "/workspace/scratch/record-cycle/next-stops-8e3a784a-root-23.jsonl",
+    "bytes": 974,
+    "sha256": "efa84386c3054a5e53c925c106b0a4be1bd4a1aede3daaa00fdf489eb91a6296"
+  },
+  {
+    "path": "/workspace/scratch/record-cycle/next-stops-8e3a784a-root-24.jsonl",
+    "bytes": 482,
+    "sha256": "3927dab11ec29b50242de002a191956e1a537c946865afcefa02960cce0fbc97"
+  },
+  {
     "path": "/workspace/scratch/record-cycle/npm-ci.log",
     "bytes": 232,
     "sha256": "312abe6df6d367f5fdddce4ca41919fed54c934bb1b0beecc01997274fe7535b"
+  },
+  {
+    "path": "/workspace/scratch/record-cycle/ordinary",
+    "bytes": 37609759,
+    "sha256": "dc6ebd7e2fc9695c2c7e72cf12b516cf576a87f7facac784d45931df32b8e283"
   },
   {
     "path": "/workspace/scratch/record-cycle/ordinary-build.log",
@@ -905,6 +1005,56 @@
     "sha256": "ec7a42e20db4ee7432a6826f5972d378f07e56fae6c97490504a03b323486fc7"
   },
   {
+    "path": "/workspace/scratch/record-cycle/table/CommonJSBundle/root-21-status.json",
+    "bytes": 375,
+    "sha256": "d8efa4c8dabf5a22a4ebb7b18adcea851f7aabc280d7476baa22abfa6b68c0d0"
+  },
+  {
+    "path": "/workspace/scratch/record-cycle/table/CommonJSBundle/root-21.jsonl",
+    "bytes": 970,
+    "sha256": "7289dfb00b1215fc95bb7fe8d6ae9e33279ab8e828b9d54c503672bf2d5d171e"
+  },
+  {
+    "path": "/workspace/scratch/record-cycle/table/CommonJSBundle/root-21.log",
+    "bytes": 136,
+    "sha256": "8ba48ac389eec061e6fffde8dbb73508d24f0e1236ece59506a08319a0ecbf8e"
+  },
+  {
+    "path": "/workspace/scratch/record-cycle/table/CommonJSBundle/root-22-status.json",
+    "bytes": 377,
+    "sha256": "70413a92b97e179138f91ca04ffa97f3cd85e381c0d83d45ac41a12fc4ba8533"
+  },
+  {
+    "path": "/workspace/scratch/record-cycle/table/CommonJSBundle/root-22.jsonl",
+    "bytes": 974,
+    "sha256": "449cdc58b4318e786079a25ded2694fc0896e4199b2bc4ac093f944d8c94d465"
+  },
+  {
+    "path": "/workspace/scratch/record-cycle/table/CommonJSBundle/root-22.log",
+    "bytes": 138,
+    "sha256": "be5998f6bb7ffb8b1b7021c8a9a6578194e868ea2e1a0a2cff020494cafd61f7"
+  },
+  {
+    "path": "/workspace/scratch/record-cycle/table/CommonJSBundle/root-23-status.json",
+    "bytes": 374,
+    "sha256": "c95ec9a51855f5aefaca0ad8f921f56a619297a708f272daebdbb16ba44d646b"
+  },
+  {
+    "path": "/workspace/scratch/record-cycle/table/CommonJSBundle/root-23.jsonl",
+    "bytes": 974,
+    "sha256": "efa84386c3054a5e53c925c106b0a4be1bd4a1aede3daaa00fdf489eb91a6296"
+  },
+  {
+    "path": "/workspace/scratch/record-cycle/table/CommonJSBundle/root-23.log",
+    "bytes": 135,
+    "sha256": "343ccb9187de16717643361a85ea0e9342d92fc6c5530f6800711f46e2f8f7a1"
+  },
+  {
+    "path": "/workspace/scratch/record-cycle/table/CommonJSBundle/root-24.log",
+    "bytes": 94,
+    "sha256": "33198acf5352125442cb71ffd746cc0360db94010938ae4cc7b5786a19f8ce0d"
+  },
+  {
     "path": "/workspace/scratch/record-cycle/table/CommonJSBundle/roots.json",
     "bytes": 6248,
     "sha256": "898e5cdc545c25347244daddcb4bf3d165ee0fb54f39ebcd619991171ae0cc34"
@@ -945,9 +1095,19 @@
     "sha256": "c7e9bb2357303c75bd2ff92f104b5388e9e7970ebfd8acb6bec13be723e3fbd0"
   },
   {
+    "path": "/workspace/scratch/record-cycle/table-21-30.log",
+    "bytes": 673,
+    "sha256": "1d94145fc63acec7385e5c39421e4f799156da6a6b0525e6739d96d230f93cac"
+  },
+  {
     "path": "/workspace/scratch/record-cycle/table-all.sh",
     "bytes": 781,
     "sha256": "55d2bf22d8f955f78670cfaf7eb75990b76920d80ab976df51adf61aaf510c7c"
+  },
+  {
+    "path": "/workspace/scratch/record-cycle/tail-audit.json",
+    "bytes": 419,
+    "sha256": "2798f9fc563dadd5c3b80f9bc9d1ac9ebd30cf94540162f2f950eef58b741f15"
   },
   {
     "path": "/workspace/scratch/record-cycle/typescript-clone.log",
@@ -956,7 +1116,7 @@
   },
   {
     "path": "/workspace/scratch/record-cycle/write-report.py",
-    "bytes": 12061,
-    "sha256": "534bae23ac14fefa54ed869c690ea76890d23f6e434e6da0c86a447490a18db6"
+    "bytes": 12309,
+    "sha256": "348840e61907e39812ec27738e8e68ce1c4cce0943de99f63939fda9cd60bf86"
   }
 ]

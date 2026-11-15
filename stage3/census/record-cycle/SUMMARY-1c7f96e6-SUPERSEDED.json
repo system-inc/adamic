@@ -1,0 +1,296 @@
+{
+  "status": "blocked_whole_program_facts",
+  "units_affected": null,
+  "first_sites": null,
+  "controls": {
+    "head-positive": {
+      "calls": 2,
+      "hits": 2,
+      "status": "complete"
+    },
+    "head-negative": {
+      "calls": 3,
+      "hits": 0,
+      "status": "complete"
+    },
+    "main-positive": {
+      "calls": 6,
+      "hits": 0,
+      "status": "complete"
+    },
+    "main-negative": {
+      "calls": 6,
+      "hits": 0,
+      "status": "complete"
+    },
+    "head-tsc": {
+      "first_sites": null,
+      "reason": "whole-program graph facts unavailable before record check: /workspace/scratch/record-cycle/adapted/src/compiler/sys.ts:1385:31: Adamic 0.1 refuses a method read as a value (writeFile would lose its object, and this with it); call it in an arrow that keeps the object: (path, data, writeByteOrderMark) => sys.writeFile(path, data, writeByteOrderMark) (unbound-method)",
+      "status": "blocked",
+      "units_affected": null
+    },
+    "main-tsc": {
+      "first_sites": null,
+      "reason": "whole-program graph facts unavailable before record check: /workspace/scratch/record-cycle/adapted/src/compiler/sys.ts:1385:31: Adamic 0.1 refuses a method read as a value (writeFile would lose its object, and this with it); call it in an arrow that keeps the object: (path, data, writeByteOrderMark) => sys.writeFile(path, data, writeByteOrderMark) (unbound-method)",
+      "status": "blocked",
+      "units_affected": null
+    }
+  },
+  "roots_completed": 23,
+  "roots": [
+    {
+      "index": 1,
+      "root": "ts.moduleSpecifiers.ts",
+      "kind": "Refused",
+      "where": "src/compiler/sys.ts:1385:31",
+      "reason": "a method read as a value (writeFile would lose its object, and this with it)",
+      "seconds": [
+        15.751346764000001,
+        13.625396432
+      ]
+    },
+    {
+      "index": 2,
+      "root": "ts.performance.ts",
+      "kind": "Refused",
+      "where": "src/compiler/sys.ts:1385:31",
+      "reason": "a method read as a value (writeFile would lose its object, and this with it)",
+      "seconds": [
+        14.392741297,
+        13.528746932
+      ]
+    },
+    {
+      "index": 3,
+      "root": "ts.ts",
+      "kind": "Refused",
+      "where": "src/compiler/sys.ts:1385:31",
+      "reason": "a method read as a value (writeFile would lose its object, and this with it)",
+      "seconds": [
+        13.92500591,
+        13.354199306
+      ]
+    },
+    {
+      "index": 4,
+      "root": "binder.ts",
+      "kind": "Refused",
+      "where": "src/compiler/sys.ts:1385:31",
+      "reason": "a method read as a value (writeFile would lose its object, and this with it)",
+      "seconds": [
+        13.802319202,
+        13.205322268
+      ]
+    },
+    {
+      "index": 5,
+      "root": "builder.ts",
+      "kind": "Refused",
+      "where": "src/compiler/sys.ts:1385:31",
+      "reason": "a method read as a value (writeFile would lose its object, and this with it)",
+      "seconds": [
+        14.118965686,
+        13.581170962
+      ]
+    },
+    {
+      "index": 6,
+      "root": "builderPublic.ts",
+      "kind": "Refused",
+      "where": "src/compiler/sys.ts:1385:31",
+      "reason": "a method read as a value (writeFile would lose its object, and this with it)",
+      "seconds": [
+        14.115215112,
+        13.378710067
+      ]
+    },
+    {
+      "index": 7,
+      "root": "builderState.ts",
+      "kind": "Refused",
+      "where": "src/compiler/sys.ts:1385:31",
+      "reason": "a method read as a value (writeFile would lose its object, and this with it)",
+      "seconds": [
+        13.690758117,
+        12.874145763
+      ]
+    },
+    {
+      "index": 8,
+      "root": "builderStatePublic.ts",
+      "kind": "Refused",
+      "where": "src/compiler/sys.ts:1385:31",
+      "reason": "a method read as a value (writeFile would lose its object, and this with it)",
+      "seconds": [
+        13.495876685,
+        14.813129899
+      ]
+    },
+    {
+      "index": 9,
+      "root": "checker.ts",
+      "kind": "Refused",
+      "where": "src/compiler/sys.ts:1385:31",
+      "reason": "a method read as a value (writeFile would lose its object, and this with it)",
+      "seconds": [
+        14.905397978,
+        15.148120928
+      ]
+    },
+    {
+      "index": 10,
+      "root": "commandLineParser.ts",
+      "kind": "Refused",
+      "where": "src/compiler/sys.ts:1385:31",
+      "reason": "a method read as a value (writeFile would lose its object, and this with it)",
+      "seconds": [
+        14.053696139,
+        13.930698712
+      ]
+    },
+    {
+      "index": 11,
+      "root": "core.ts",
+      "kind": "Refused",
+      "where": "src/compiler/sys.ts:1385:31",
+      "reason": "a method read as a value (writeFile would lose its object, and this with it)",
+      "seconds": [
+        14.209338188,
+        14.182489069
+      ]
+    },
+    {
+      "index": 12,
+      "root": "corePublic.ts",
+      "kind": "accepted",
+      "where": "",
+      "reason": "",
+      "seconds": [
+        0.075861692,
+        0.047589921
+      ]
+    },
+    {
+      "index": 13,
+      "root": "debug.ts",
+      "kind": "NotYet",
+      "where": "src/compiler/semver.ts:71:9",
+      "reason": "a namespace read before runtime initialization, directly or through a reachable call; move that read or call after the namespace declaration",
+      "seconds": [
+        3.445811459,
+        3.261186015
+      ]
+    },
+    {
+      "index": 14,
+      "root": "diagnosticInformationMap.generated.ts",
+      "kind": "NotYet",
+      "where": "src/compiler/commandLineParser.ts:293:35",
+      "reason": "reading an enum before its runtime initialization; move the call after the enum declaration",
+      "seconds": [
+        3.474031762,
+        3.436281812
+      ]
+    },
+    {
+      "index": 15,
+      "root": "emitter.ts",
+      "kind": "Refused",
+      "where": "src/compiler/sys.ts:1385:31",
+      "reason": "a method read as a value (writeFile would lose its object, and this with it)",
+      "seconds": [
+        14.117158981,
+        13.17529435
+      ]
+    },
+    {
+      "index": 16,
+      "root": "executeCommandLine.ts",
+      "kind": "Refused",
+      "where": "src/compiler/sys.ts:1385:31",
+      "reason": "a method read as a value (writeFile would lose its object, and this with it)",
+      "seconds": [
+        15.367122746,
+        13.335821851
+      ]
+    },
+    {
+      "index": 17,
+      "root": "expressionToTypeNode.ts",
+      "kind": "Refused",
+      "where": "src/compiler/sys.ts:1385:31",
+      "reason": "a method read as a value (writeFile would lose its object, and this with it)",
+      "seconds": [
+        13.720172505,
+        13.257965948
+      ]
+    },
+    {
+      "index": 18,
+      "root": "baseNodeFactory.ts",
+      "kind": "Refused",
+      "where": "src/compiler/sys.ts:1385:31",
+      "reason": "a method read as a value (writeFile would lose its object, and this with it)",
+      "seconds": [
+        13.749319078,
+        13.844280194
+      ]
+    },
+    {
+      "index": 19,
+      "root": "emitHelpers.ts",
+      "kind": "Refused",
+      "where": "src/compiler/sys.ts:1385:31",
+      "reason": "a method read as a value (writeFile would lose its object, and this with it)",
+      "seconds": [
+        14.638879204,
+        13.818602223
+      ]
+    },
+    {
+      "index": 20,
+      "root": "emitNode.ts",
+      "kind": "Refused",
+      "where": "src/compiler/sys.ts:1385:31",
+      "reason": "a method read as a value (writeFile would lose its object, and this with it)",
+      "seconds": [
+        13.762920292,
+        13.495423581
+      ]
+    },
+    {
+      "index": 21,
+      "root": "nodeChildren.ts",
+      "kind": "Refused",
+      "where": "src/compiler/sys.ts:1385:31",
+      "reason": "a method read as a value (writeFile would lose its object, and this with it)",
+      "seconds": [
+        14.277258108,
+        14.010862735
+      ]
+    },
+    {
+      "index": 22,
+      "root": "nodeConverters.ts",
+      "kind": "Refused",
+      "where": "src/compiler/sys.ts:1385:31",
+      "reason": "a method read as a value (writeFile would lose its object, and this with it)",
+      "seconds": [
+        14.000246827,
+        13.475332503
+      ]
+    },
+    {
+      "index": 23,
+      "root": "nodeFactory.ts",
+      "kind": "Refused",
+      "where": "src/compiler/sys.ts:1385:31",
+      "reason": "a method read as a value (writeFile would lose its object, and this with it)",
+      "seconds": [
+        12.524674376,
+        11.625486199000001
+      ]
+    }
+  ],
+  "new_first_stops": []
+}

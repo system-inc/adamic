@@ -36,7 +36,7 @@
       "units_affected": null
     }
   },
-  "roots_completed": 20,
+  "roots_completed": 23,
   "roots": [
     {
       "index": 1,
@@ -256,6 +256,39 @@
       "seconds": [
         13.762920292,
         13.495423581
+      ]
+    },
+    {
+      "index": 21,
+      "root": "nodeChildren.ts",
+      "kind": "Refused",
+      "where": "src/compiler/sys.ts:1385:31",
+      "reason": "a method read as a value (writeFile would lose its object, and this with it)",
+      "seconds": [
+        14.277258108,
+        14.010862735
+      ]
+    },
+    {
+      "index": 22,
+      "root": "nodeConverters.ts",
+      "kind": "Refused",
+      "where": "src/compiler/sys.ts:1385:31",
+      "reason": "a method read as a value (writeFile would lose its object, and this with it)",
+      "seconds": [
+        14.000246827,
+        13.475332503
+      ]
+    },
+    {
+      "index": 23,
+      "root": "nodeFactory.ts",
+      "kind": "Refused",
+      "where": "src/compiler/sys.ts:1385:31",
+      "reason": "a method read as a value (writeFile would lose its object, and this with it)",
+      "seconds": [
+        12.524674376,
+        11.625486199000001
       ]
     }
   ],
