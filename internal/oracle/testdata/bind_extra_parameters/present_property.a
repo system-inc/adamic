@@ -1,0 +1,11 @@
+// function_bind.a's presentProperty bind, honest on main, moved here as a known over-refusal (#04f5s0s): its
+// field read's reach is unknown, so every function of the bound type counts, and defaulted or its bound
+// wrapper declares more parameters than that type names. Lifted by #x909e6q.
+function defaulted(a: number, b: number = 9): number { return a + b; }
+const withDefault = defaulted.bind(undefined, 1);
+console.log(String(withDefault()));
+const otherReceiver = {};
+const presentProperty: { f?: () => number } = { f: () => 42 };
+const presentPropertyBound = presentProperty.f?.bind(otherReceiver);
+console.log(typeof presentPropertyBound);
+if (presentPropertyBound !== undefined) console.log(String(presentPropertyBound()));
