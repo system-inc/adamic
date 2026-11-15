@@ -32,6 +32,13 @@ mkdir -p "$npm_config_logs_dir" || sealedJobFail "couldn't make npm's log direct
 # empty and git refuses a commit with no name. A house box's own identity is never overridden.
 export GIT_AUTHOR_NAME="${GIT_AUTHOR_NAME:-sealed-job}" GIT_AUTHOR_EMAIL="${GIT_AUTHOR_EMAIL:-sealed-job@loom.invalid}"
 export GIT_COMMITTER_NAME="${GIT_COMMITTER_NAME:-sealed-job}" GIT_COMMITTER_EMAIL="${GIT_COMMITTER_EMAIL:-sealed-job@loom.invalid}"
+# The image's TypeScript source is root's and the job runs as its own user, so git calls it dubious and the corpus can't
+# read its pin (J-hstk35n: internal/lower's census products). It's named safe alone, appended to any git config the
+# environment already carries.
+sealedGitConfigs=${GIT_CONFIG_COUNT:-0}
+export GIT_CONFIG_COUNT=$((sealedGitConfigs + 1))
+export "GIT_CONFIG_KEY_$sealedGitConfigs=safe.directory" "GIT_CONFIG_VALUE_$sealedGitConfigs=/opt/adamic-block/typescript-source"
+unset sealedGitConfigs
 
 # sealed_git: the tree as laid becomes one commit, HEAD, in a .git of the job's own, read back clean. Run from the tree's
 # root. It refuses a tree that already has a .git, so a house box's real history is never covered over.
