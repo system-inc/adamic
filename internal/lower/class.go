@@ -517,6 +517,8 @@ func (l *lowering) setProperty(target *ast.Node, valueNode *ast.Node) ([]ir.Stat
 // no slot, which declaration keying missed (#g2aj1pb's g3 and g6, panicking on main 72f23939). Name
 // keying stops a write to a name some unrelated type left out too; that's the fail-closed price until
 // optional presence lifts this (#r3chqza).
+//
+// A write to an Error's cause stops here. Lifting this stop reopens a road into a catch, which the catch narrowing stands on (looseCaughtRoad, loose_slots.go).
 func (l *lowering) absentOptionalWrite(target *ast.Node) error {
 	member := l.checker.GetSymbolAtLocation(target)
 	if member == nil || member.Flags&ast.SymbolFlagsOptional == 0 || isClassInstance(l.checker.GetTypeAtLocation(target.AsPropertyAccessExpression().Expression)) {

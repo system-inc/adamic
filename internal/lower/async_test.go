@@ -117,23 +117,70 @@ func TestAsyncReaderRefusals(t *testing.T) {
 	}
 }
 
+// asyncRepeatedLoops are the loops TestAsyncRepeatedBindingsLower puts a body in, each with an await, so
+// every iteration's bindings are the frame's again.
+var asyncRepeatedLoops = []string{
+	"while (i < 3) { BODY await Promise.resolve(); i++; }",
+	"for (; i < 3; i++) { BODY await Promise.resolve(); }",
+	"do { BODY await Promise.resolve(); i++; } while (i < 3);",
+}
+
+// asyncRepeatedSource is a loop of asyncRepeatedLoops holding body, in an async function that keeps readers.
+func asyncRepeatedSource(loop, body string) string {
+	return "async function run(): Promise<void> { const readers: (() => string)[] = []; let i = 0; " + strings.ReplaceAll(loop, "BODY", body) + " } await run();"
+}
+
+// The second body (rows 004 to 006) captures the catch binding itself in a closure kept in readers,
+// Language's u00: it lowers by the catch narrowing (loose_slots.go's looseCaughtRoad), since every throw
+// is a new Error and nothing writes readers into a loose slot, so what's caught can't reach readers. The
+// third is Adamic's twin (#kaz4pk8, 03:12Z), which captures a string read from the caught value instead.
 func TestAsyncRepeatedBindingsLower(t *testing.T) {
 	t.Parallel()
 	for _, body := range []string{
 		"if (true) { const held = `item${i}`; readers.push(() => held); }",
 		"try { throw new Error(`item${i}`); } catch (held) { if (held instanceof Error) { readers.push(() => held.message); } }",
+		"try { throw new Error(`item${i}`); } catch (held) { const message = held instanceof Error ? held.message : \"thrown\"; readers.push(() => message); }",
 	} {
-		for _, loop := range []string{
-			"while (i < 3) { BODY await Promise.resolve(); i++; }",
-			"for (; i < 3; i++) { BODY await Promise.resolve(); }",
-			"do { BODY await Promise.resolve(); i++; } while (i < 3);",
-		} {
-			source := "async function run(): Promise<void> { const readers: (() => string)[] = []; let i = 0; " + strings.ReplaceAll(loop, "BODY", body) + " } await run();"
+		for _, loop := range asyncRepeatedLoops {
+			source := asyncRepeatedSource(loop, body)
 			_, err := lowerSource(t, source)
 			if err != nil {
 				t.Fatalf("repeated binding must lower: %s: %v", source, err)
 			}
 		}
+	}
+}
+
+// asyncCatchRoads load the readers array into a caught value, roads around the catch narrowing (Runtime
+// and Adamic on #kaz4pk8 at 03:13Z, and Lower's thenable, whose then calls reject by a parameter's name). Each must still stop. Today each stops at an older wall
+// before the narrowing judges it, one of the seven its premise stands on (looseCaughtRoad); the day that
+// wall lifts, the value it lets into the thrown value enters H, and the row must stop at the loose-slot
+// stop instead, by the finder's own reach, or go red here.
+var asyncCatchRoads = []struct{ name, wall, source string }{
+	{"a thrown Error subclass holding readers", "a base that isn't a declared class",
+		"class Carrier extends Error { readers: (() => string)[] = []; }\nasync function run(): Promise<void> { const readers: (() => string)[] = []; try { const carrier = new Carrier(\"carried\"); carrier.readers = readers; throw carrier; } catch (held) { if (held instanceof Error) { readers.push(() => held.message); } } await Promise.resolve(); console.log(String(readers.length)); }\nawait run();\n"},
+	{"an Error whose cause is readers", "writing a possibly absent optional own field",
+		"async function run(): Promise<void> { const readers: (() => string)[] = []; try { const error = new Error(\"carried\"); error.cause = readers; throw error; } catch (held) { if (held instanceof Error) { readers.push(() => held.message); } } await Promise.resolve(); console.log(String(readers.length)); }\nawait run();\n"},
+	{"Promise.reject(readers) into an awaited catch", "Promise rejection with a non-Error",
+		"async function run(): Promise<void> { const readers: (() => string)[] = []; try { await Promise.reject(readers); } catch (held) { if (held instanceof Error) { readers.push(() => held.message); } } console.log(String(readers.length)); }\nawait run();\n"},
+	{"an awaited thenable whose then rejects with readers", "thenables",
+		"async function run(): Promise<void> { const readers: (() => string)[] = []; try { await { then(resolve: (value: number) => void, reject: (reason: unknown) => void): void { reject(readers); } }; } catch (held) { if (held instanceof Error) { readers.push(() => held.message); } } console.log(String(readers.length)); }\nawait run();\n"},
+}
+
+// TestAsyncCatchRoadsStop holds each of asyncCatchRoads to a stop: its wall today, or the loose-slot stop
+// once that wall lifts.
+func TestAsyncCatchRoadsStop(t *testing.T) {
+	t.Parallel()
+	for _, road := range asyncCatchRoads {
+		t.Run(road.name, func(t *testing.T) {
+			t.Parallel()
+			_, err := lowerSourceAs(t, road.source, ".ts")
+			var notYet *NotYet
+			if !errors.As(err, &notYet) || !(strings.Contains(notYet.What, road.wall) || strings.HasSuffix(notYet.What, looseStopWords)) {
+				t.Fatalf("got %v, want a stop at %q or the loose-slot stop", err, road.wall)
+			}
+			t.Logf("stop: %v", err)
+		})
 	}
 }
 

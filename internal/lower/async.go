@@ -64,6 +64,7 @@ func (l *lowering) promiseValue(node *ast.Node) (ir.Expression, bool, error) {
 			l.asyncPayloadFailures = append(l.asyncPayloadFailures, l.notYet(node, "Promise.resolve of a non-primitive structurally typed value (hidden thenable)"))
 		}
 		if name == "reject" && !l.isLibraryType(l.checker.GetTypeAtLocation(call.Arguments.Nodes[0]), "Error") {
+			// Lifting this stop reopens a road into a catch, which the catch narrowing stands on (looseCaughtRoad, loose_slots.go).
 			return nil, true, l.notYet(node, "Promise rejection with a non-Error")
 		}
 	}

@@ -79,7 +79,8 @@ func (l *lowering) throwStatement(node *ast.Node) ([]ir.Statement, error) {
 			return nil, l.notYet(thrown, "throwing an Error that isn't made where it's thrown or caught by the catch around it")
 		}
 		// Any value may be thrown (docs/0.1.md, ruled October 19): until the runtime carries one that
-		// isn't an Error, it isn't built yet, never refused.
+		// isn't an Error, it isn't built yet, never refused. AggregateError stops here too.
+		// Lifting this stop reopens a road into a catch, which the catch narrowing stands on (looseCaughtRoad, loose_slots.go).
 		return nil, l.notYet(thrown, "throwing "+l.thrownCategory(l.checker.GetTypeAtLocation(thrown)))
 	}
 	value, err := l.expression(thrown)
@@ -144,6 +145,7 @@ func (l *lowering) newError(node *ast.Node) (ir.Expression, error) {
 	message := ir.Expression(ir.Undefined{Of: ir.String})
 	if created.Arguments != nil && len(created.Arguments.Nodes) > 0 {
 		if len(created.Arguments.Nodes) > 1 {
+			// Lifting this stop reopens a road into a catch, which the catch narrowing stands on (looseCaughtRoad, loose_slots.go).
 			return nil, l.notYet(node, "new "+class+" with options")
 		}
 		var err error

@@ -727,6 +727,7 @@ func (l *lowering) staticClassDeclaration(declaration *ast.Node) error {
 	}
 	for _, clause := range nodesOf(declaration.ClassLikeData().HeritageClauses) {
 		if clause.AsHeritageClause().Token == ast.KindExtendsKeyword && l.staticBase(declaration) == nil {
+			// Lifting this stop reopens a road into a catch, which the catch narrowing stands on (looseCaughtRoad, loose_slots.go).
 			return l.notYet(clause, "a computed class base; name the base class directly")
 		}
 	}
