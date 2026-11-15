@@ -1,0 +1,76 @@
+{
+  "positive": {
+    "pass": true,
+    "counts": {
+      "createdReceivers.NodeFactory": 1,
+      "reads.NodeFactory.createIdentifier": 4,
+      "parserCalls.createIdentifier": 1,
+      "receiverIdentity": 1,
+      "memberIdentityComparisons": 3,
+      "memberIdentityOperands": 6,
+      "memberIdentitySite.src/compiler/parser.ts:6:1": 1,
+      "receiverLength": 2,
+      "functionLength": 3,
+      "lengthAttribution.member.createIdentifier.f8b9bc168d3a07fd4986363ce8c1b27732f6767c4105a9b9c3d6ab166bce3e12": 1,
+      "astWrites.NodeFactory.createIdentifier": 1,
+      "writes.NodeFactory.createIdentifier": 1,
+      "defineWrites.createIdentifier": 1,
+      "createdReceivers.PrintHandlers": 1,
+      "printerEntries": 1,
+      "printerAliases.onEmitNode": 1,
+      "reads.PrintHandlers.onEmitNode": 1,
+      "printerAliasSentinelIdentity": 1,
+      "memberIdentitySite.src/compiler/emitter.ts:6:2": 1,
+      "createdReceivers.TransformationContext": 1,
+      "transformerArrowCreations.src/compiler/transformers/es2020.ts:hoistVariableDeclaration": 1,
+      "transformerArrowsCreated": 1,
+      "transformerCalls.es2020.ts.hoistVariableDeclaration": 1,
+      "reads.TransformationContext.hoistVariableDeclaration": 2,
+      "lengthAttribution.arrow.hoistVariableDeclaration.": 1,
+      "lengthAttribution.member.hoistVariableDeclaration.46bbdecf015bffbabaa1ae9950283ad6d4e9cdf64762f94f8c307d70a49a5fe0": 1,
+      "memberIdentitySite.src/compiler/transformers/es2020.ts:7:1": 1
+    },
+    "failures": []
+  },
+  "thisPositive": {
+    "method": "AST of Function.prototype.toString for every observed receiver function, including nested arrows, excluding nested ordinary functions",
+    "reads": 1,
+    "parseFailures": 0
+  },
+  "negativeCodemod": {
+    "pass": true,
+    "exit": 2,
+    "sourceWrites": 0,
+    "reportedAllFiveCases": true,
+    "failures": [
+      {
+        "where": "src/compiler/parser.ts:1500:36",
+        "local": "factoryCreateIdentifier",
+        "reason": "local used other than as a direct callee",
+        "syntax": "ShorthandPropertyAssignment"
+      },
+      {
+        "where": "src/compiler/parser.ts:1501:1",
+        "local": "factoryCreateIdentifier",
+        "reason": "local used other than as a direct callee",
+        "syntax": "BinaryExpression"
+      },
+      {
+        "where": "src/compiler/parser.ts:1501:27",
+        "local": "factoryCreateIdentifier",
+        "reason": "local used other than as a direct callee",
+        "syntax": "BinaryExpression"
+      },
+      {
+        "where": "src/compiler/parser.ts:1503:62",
+        "local": "factoryCreateIdentifier",
+        "reason": "receiver is shadowed"
+      },
+      {
+        "where": "src/compiler/parser.ts:1502:24",
+        "local": "factoryCreateToken",
+        "reason": "shadowed local declaration"
+      }
+    ]
+  }
+}

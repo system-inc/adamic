@@ -1,0 +1,356 @@
+[
+  {
+    "file": "src/compiler/transformers/es2021.ts",
+    "part": "transformers",
+    "pairing": "multiset (kind, phase, reason, message with source position stripped); identical-key multiplicities retain outside-target originals first; target removal also checked by AST",
+    "baseFindings": 27,
+    "changeFindings": 25,
+    "paired": 25,
+    "outsideTargetsNew": 0,
+    "outsideTargetsRemoved": 0,
+    "new": 0,
+    "removedTargets": [
+      {
+        "kind": "Refused",
+        "phase": "lowering",
+        "where": "/workspace/scratch/receiver-split/baseline/src/compiler/transformers/es2021.ts:27:9",
+        "reason": "a method in object destructuring",
+        "message": "/workspace/scratch/receiver-split/baseline/src/compiler/transformers/es2021.ts:27:9: Adamic 0.1 refuses a method in object destructuring; call it on its receiver or wrap that call in an arrow; destructuring would lose this"
+      },
+      {
+        "kind": "Boundary",
+        "phase": "lowering",
+        "where": "/workspace/scratch/receiver-split/baseline/src/compiler/transformers/es2021.ts:26:5",
+        "reason": "failed statement; state rolled back; continued at next statement or declaration",
+        "message": "/workspace/scratch/receiver-split/baseline/src/compiler/transformers/es2021.ts:27:9: Adamic 0.1 refuses a method in object destructuring; call it on its receiver or wrap that call in an arrow; destructuring would lose this"
+      }
+    ]
+  },
+  {
+    "file": "src/compiler/transformers/classFields.ts",
+    "part": "transformers",
+    "pairing": "multiset (kind, phase, reason, message with source position stripped); identical-key multiplicities retain outside-target originals first; target removal also checked by AST",
+    "baseFindings": 639,
+    "changeFindings": 639,
+    "paired": 639,
+    "outsideTargetsNew": 0,
+    "outsideTargetsRemoved": 0,
+    "new": 0,
+    "removedTargets": []
+  },
+  {
+    "file": "src/compiler/transformers/es2015.ts",
+    "part": "transformers",
+    "pairing": "multiset (kind, phase, reason, message with source position stripped); identical-key multiplicities retain outside-target originals first; target removal also checked by AST",
+    "baseFindings": 1118,
+    "changeFindings": 1118,
+    "paired": 1118,
+    "outsideTargetsNew": 0,
+    "outsideTargetsRemoved": 0,
+    "new": 0,
+    "removedTargets": []
+  },
+  {
+    "file": "src/compiler/transformers/es2016.ts",
+    "part": "transformers",
+    "pairing": "multiset (kind, phase, reason, message with source position stripped); identical-key multiplicities retain outside-target originals first; target removal also checked by AST",
+    "baseFindings": 57,
+    "changeFindings": 55,
+    "paired": 55,
+    "outsideTargetsNew": 0,
+    "outsideTargetsRemoved": 0,
+    "new": 0,
+    "removedTargets": [
+      {
+        "kind": "Refused",
+        "phase": "lowering",
+        "where": "/workspace/scratch/receiver-split/baseline/src/compiler/transformers/es2016.ts:24:9",
+        "reason": "a method in object destructuring",
+        "message": "/workspace/scratch/receiver-split/baseline/src/compiler/transformers/es2016.ts:24:9: Adamic 0.1 refuses a method in object destructuring; call it on its receiver or wrap that call in an arrow; destructuring would lose this"
+      },
+      {
+        "kind": "Boundary",
+        "phase": "lowering",
+        "where": "/workspace/scratch/receiver-split/baseline/src/compiler/transformers/es2016.ts:22:5",
+        "reason": "failed statement; state rolled back; continued at next statement or declaration",
+        "message": "/workspace/scratch/receiver-split/baseline/src/compiler/transformers/es2016.ts:24:9: Adamic 0.1 refuses a method in object destructuring; call it on its receiver or wrap that call in an arrow; destructuring would lose this"
+      }
+    ]
+  },
+  {
+    "file": "src/compiler/transformers/es2017.ts",
+    "part": "transformers",
+    "pairing": "multiset (kind, phase, reason, message with source position stripped); identical-key multiplicities retain outside-target originals first; target removal also checked by AST",
+    "baseFindings": 392,
+    "changeFindings": 390,
+    "paired": 390,
+    "outsideTargetsNew": 0,
+    "outsideTargetsRemoved": 0,
+    "new": 0,
+    "removedTargets": [
+      {
+        "kind": "Boundary",
+        "phase": "lowering",
+        "where": "/workspace/scratch/receiver-split/baseline/src/compiler/transformers/es2017.ts:120:5",
+        "reason": "failed statement; state rolled back; continued at next statement or declaration",
+        "message": "/workspace/scratch/receiver-split/baseline/src/compiler/transformers/es2017.ts:122:9: Adamic 0.1 refuses a method in object destructuring; call it on its receiver or wrap that call in an arrow; destructuring would lose this"
+      },
+      {
+        "kind": "Refused",
+        "phase": "lowering",
+        "where": "/workspace/scratch/receiver-split/baseline/src/compiler/transformers/es2017.ts:122:9",
+        "reason": "a method in object destructuring",
+        "message": "/workspace/scratch/receiver-split/baseline/src/compiler/transformers/es2017.ts:122:9: Adamic 0.1 refuses a method in object destructuring; call it on its receiver or wrap that call in an arrow; destructuring would lose this"
+      }
+    ]
+  },
+  {
+    "file": "src/compiler/transformers/es2018.ts",
+    "part": "transformers",
+    "pairing": "multiset (kind, phase, reason, message with source position stripped); identical-key multiplicities retain outside-target originals first; target removal also checked by AST",
+    "baseFindings": 497,
+    "changeFindings": 497,
+    "paired": 497,
+    "outsideTargetsNew": 0,
+    "outsideTargetsRemoved": 0,
+    "new": 0,
+    "removedTargets": []
+  },
+  {
+    "file": "src/compiler/transformers/es2020.ts",
+    "part": "transformers",
+    "pairing": "multiset (kind, phase, reason, message with source position stripped); identical-key multiplicities retain outside-target originals first; target removal also checked by AST",
+    "baseFindings": 152,
+    "changeFindings": 150,
+    "paired": 150,
+    "outsideTargetsNew": 0,
+    "outsideTargetsRemoved": 0,
+    "new": 0,
+    "removedTargets": [
+      {
+        "kind": "Refused",
+        "phase": "lowering",
+        "where": "/workspace/scratch/receiver-split/baseline/src/compiler/transformers/es2020.ts:45:9",
+        "reason": "a method in object destructuring",
+        "message": "/workspace/scratch/receiver-split/baseline/src/compiler/transformers/es2020.ts:45:9: Adamic 0.1 refuses a method in object destructuring; call it on its receiver or wrap that call in an arrow; destructuring would lose this"
+      },
+      {
+        "kind": "Boundary",
+        "phase": "lowering",
+        "where": "/workspace/scratch/receiver-split/baseline/src/compiler/transformers/es2020.ts:43:5",
+        "reason": "failed statement; state rolled back; continued at next statement or declaration",
+        "message": "/workspace/scratch/receiver-split/baseline/src/compiler/transformers/es2020.ts:45:9: Adamic 0.1 refuses a method in object destructuring; call it on its receiver or wrap that call in an arrow; destructuring would lose this"
+      }
+    ]
+  },
+  {
+    "file": "src/compiler/transformers/esDecorators.ts",
+    "part": "transformers",
+    "pairing": "multiset (kind, phase, reason, message with source position stripped); identical-key multiplicities retain outside-target originals first; target removal also checked by AST",
+    "baseFindings": 572,
+    "changeFindings": 572,
+    "paired": 572,
+    "outsideTargetsNew": 0,
+    "outsideTargetsRemoved": 0,
+    "new": 0,
+    "removedTargets": []
+  },
+  {
+    "file": "src/compiler/transformers/esnext.ts",
+    "part": "transformers",
+    "pairing": "multiset (kind, phase, reason, message with source position stripped); identical-key multiplicities retain outside-target originals first; target removal also checked by AST",
+    "baseFindings": 256,
+    "changeFindings": 254,
+    "paired": 254,
+    "outsideTargetsNew": 0,
+    "outsideTargetsRemoved": 0,
+    "new": 0,
+    "removedTargets": [
+      {
+        "kind": "Refused",
+        "phase": "lowering",
+        "where": "/workspace/scratch/receiver-split/baseline/src/compiler/transformers/esnext.ts:79:9",
+        "reason": "a method in object destructuring",
+        "message": "/workspace/scratch/receiver-split/baseline/src/compiler/transformers/esnext.ts:79:9: Adamic 0.1 refuses a method in object destructuring; call it on its receiver or wrap that call in an arrow; destructuring would lose this"
+      },
+      {
+        "kind": "Boundary",
+        "phase": "lowering",
+        "where": "/workspace/scratch/receiver-split/baseline/src/compiler/transformers/esnext.ts:77:5",
+        "reason": "failed statement; state rolled back; continued at next statement or declaration",
+        "message": "/workspace/scratch/receiver-split/baseline/src/compiler/transformers/esnext.ts:79:9: Adamic 0.1 refuses a method in object destructuring; call it on its receiver or wrap that call in an arrow; destructuring would lose this"
+      }
+    ]
+  },
+  {
+    "file": "src/compiler/transformers/generators.ts",
+    "part": "transformers",
+    "pairing": "multiset (kind, phase, reason, message with source position stripped); identical-key multiplicities retain outside-target originals first; target removal also checked by AST",
+    "baseFindings": 528,
+    "changeFindings": 528,
+    "paired": 528,
+    "outsideTargetsNew": 0,
+    "outsideTargetsRemoved": 0,
+    "new": 0,
+    "removedTargets": []
+  },
+  {
+    "file": "src/compiler/transformers/jsx.ts",
+    "part": "transformers",
+    "pairing": "multiset (kind, phase, reason, message with source position stripped); identical-key multiplicities retain outside-target originals first; target removal also checked by AST",
+    "baseFindings": 211,
+    "changeFindings": 209,
+    "paired": 209,
+    "outsideTargetsNew": 0,
+    "outsideTargetsRemoved": 0,
+    "new": 0,
+    "removedTargets": [
+      {
+        "kind": "Boundary",
+        "phase": "lowering",
+        "where": "/workspace/scratch/receiver-split/baseline/src/compiler/transformers/jsx.ts:99:5",
+        "reason": "failed statement; state rolled back; continued at next statement or declaration",
+        "message": "/workspace/scratch/receiver-split/baseline/src/compiler/transformers/jsx.ts:101:9: Adamic 0.1 refuses a method in object destructuring; call it on its receiver or wrap that call in an arrow; destructuring would lose this"
+      },
+      {
+        "kind": "Refused",
+        "phase": "lowering",
+        "where": "/workspace/scratch/receiver-split/baseline/src/compiler/transformers/jsx.ts:101:9",
+        "reason": "a method in object destructuring",
+        "message": "/workspace/scratch/receiver-split/baseline/src/compiler/transformers/jsx.ts:101:9: Adamic 0.1 refuses a method in object destructuring; call it on its receiver or wrap that call in an arrow; destructuring would lose this"
+      }
+    ]
+  },
+  {
+    "file": "src/compiler/transformers/legacyDecorators.ts",
+    "part": "transformers",
+    "pairing": "multiset (kind, phase, reason, message with source position stripped); identical-key multiplicities retain outside-target originals first; target removal also checked by AST",
+    "baseFindings": 300,
+    "changeFindings": 298,
+    "paired": 298,
+    "outsideTargetsNew": 0,
+    "outsideTargetsRemoved": 0,
+    "new": 0,
+    "removedTargets": [
+      {
+        "kind": "Boundary",
+        "phase": "lowering",
+        "where": "/workspace/scratch/receiver-split/baseline/src/compiler/transformers/legacyDecorators.ts:89:5",
+        "reason": "failed statement; state rolled back; continued at next statement or declaration",
+        "message": "/workspace/scratch/receiver-split/baseline/src/compiler/transformers/legacyDecorators.ts:91:9: Adamic 0.1 refuses a method in object destructuring; call it on its receiver or wrap that call in an arrow; destructuring would lose this"
+      },
+      {
+        "kind": "Refused",
+        "phase": "lowering",
+        "where": "/workspace/scratch/receiver-split/baseline/src/compiler/transformers/legacyDecorators.ts:91:9",
+        "reason": "a method in object destructuring",
+        "message": "/workspace/scratch/receiver-split/baseline/src/compiler/transformers/legacyDecorators.ts:91:9: Adamic 0.1 refuses a method in object destructuring; call it on its receiver or wrap that call in an arrow; destructuring would lose this"
+      }
+    ]
+  },
+  {
+    "file": "src/compiler/transformers/module/esnextAnd2015.ts",
+    "part": "transformers",
+    "pairing": "multiset (kind, phase, reason, message with source position stripped); identical-key multiplicities retain outside-target originals first; target removal also checked by AST",
+    "baseFindings": 122,
+    "changeFindings": 120,
+    "paired": 120,
+    "outsideTargetsNew": 0,
+    "outsideTargetsRemoved": 0,
+    "new": 0,
+    "removedTargets": [
+      {
+        "kind": "Boundary",
+        "phase": "lowering",
+        "where": "/workspace/scratch/receiver-split/baseline/src/compiler/transformers/module/esnextAnd2015.ts:68:5",
+        "reason": "failed statement; state rolled back; continued at next statement or declaration",
+        "message": "/workspace/scratch/receiver-split/baseline/src/compiler/transformers/module/esnextAnd2015.ts:70:9: Adamic 0.1 refuses a method in object destructuring; call it on its receiver or wrap that call in an arrow; destructuring would lose this"
+      },
+      {
+        "kind": "Refused",
+        "phase": "lowering",
+        "where": "/workspace/scratch/receiver-split/baseline/src/compiler/transformers/module/esnextAnd2015.ts:70:9",
+        "reason": "a method in object destructuring",
+        "message": "/workspace/scratch/receiver-split/baseline/src/compiler/transformers/module/esnextAnd2015.ts:70:9: Adamic 0.1 refuses a method in object destructuring; call it on its receiver or wrap that call in an arrow; destructuring would lose this"
+      }
+    ]
+  },
+  {
+    "file": "src/compiler/transformers/module/module.ts",
+    "part": "transformers",
+    "pairing": "multiset (kind, phase, reason, message with source position stripped); identical-key multiplicities retain outside-target originals first; target removal also checked by AST",
+    "baseFindings": 405,
+    "changeFindings": 405,
+    "paired": 405,
+    "outsideTargetsNew": 0,
+    "outsideTargetsRemoved": 0,
+    "new": 0,
+    "removedTargets": []
+  },
+  {
+    "file": "src/compiler/transformers/module/system.ts",
+    "part": "transformers",
+    "pairing": "multiset (kind, phase, reason, message with source position stripped); identical-key multiplicities retain outside-target originals first; target removal also checked by AST",
+    "baseFindings": 419,
+    "changeFindings": 417,
+    "paired": 417,
+    "outsideTargetsNew": 0,
+    "outsideTargetsRemoved": 0,
+    "new": 0,
+    "removedTargets": [
+      {
+        "kind": "Boundary",
+        "phase": "lowering",
+        "where": "/workspace/scratch/receiver-split/baseline/src/compiler/transformers/module/system.ts:143:5",
+        "reason": "failed statement; state rolled back; continued at next statement or declaration",
+        "message": "/workspace/scratch/receiver-split/baseline/src/compiler/transformers/module/system.ts:145:9: Adamic 0.1 refuses a method in object destructuring; call it on its receiver or wrap that call in an arrow; destructuring would lose this"
+      },
+      {
+        "kind": "Refused",
+        "phase": "lowering",
+        "where": "/workspace/scratch/receiver-split/baseline/src/compiler/transformers/module/system.ts:145:9",
+        "reason": "a method in object destructuring",
+        "message": "/workspace/scratch/receiver-split/baseline/src/compiler/transformers/module/system.ts:145:9: Adamic 0.1 refuses a method in object destructuring; call it on its receiver or wrap that call in an arrow; destructuring would lose this"
+      }
+    ]
+  },
+  {
+    "file": "src/compiler/transformers/ts.ts",
+    "part": "transformers",
+    "pairing": "multiset (kind, phase, reason, message with source position stripped); identical-key multiplicities retain outside-target originals first; target removal also checked by AST",
+    "baseFindings": 674,
+    "changeFindings": 674,
+    "paired": 674,
+    "outsideTargetsNew": 0,
+    "outsideTargetsRemoved": 0,
+    "new": 0,
+    "removedTargets": []
+  },
+  {
+    "file": "src/compiler/transformers/typeSerializer.ts",
+    "part": "transformers",
+    "pairing": "multiset (kind, phase, reason, message with source position stripped); identical-key multiplicities retain outside-target originals first; target removal also checked by AST",
+    "baseFindings": 97,
+    "changeFindings": 95,
+    "paired": 95,
+    "outsideTargetsNew": 0,
+    "outsideTargetsRemoved": 0,
+    "new": 0,
+    "removedTargets": [
+      {
+        "kind": "Refused",
+        "phase": "lowering",
+        "where": "/workspace/scratch/receiver-split/baseline/src/compiler/transformers/typeSerializer.ts:135:9",
+        "reason": "a method in object destructuring",
+        "message": "/workspace/scratch/receiver-split/baseline/src/compiler/transformers/typeSerializer.ts:135:9: Adamic 0.1 refuses a method in object destructuring; call it on its receiver or wrap that call in an arrow; destructuring would lose this"
+      },
+      {
+        "kind": "Boundary",
+        "phase": "lowering",
+        "where": "/workspace/scratch/receiver-split/baseline/src/compiler/transformers/typeSerializer.ts:133:5",
+        "reason": "failed statement; state rolled back; continued at next statement or declaration",
+        "message": "/workspace/scratch/receiver-split/baseline/src/compiler/transformers/typeSerializer.ts:135:9: Adamic 0.1 refuses a method in object destructuring; call it on its receiver or wrap that call in an arrow; destructuring would lose this"
+      }
+    ]
+  }
+]
