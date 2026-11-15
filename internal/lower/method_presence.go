@@ -8,9 +8,10 @@ import (
 )
 
 // A method read whose only consumer tests for it is an observation, not a detach (#4q1b2er): the
-// operand of typeof or of !, a condition (the test of if, while, do...while, for, and of ?:), and the
+// operand of typeof or of !, a condition (the test of if, while, do...while, for, and of ?:), the
 // left of &&, whose falsy left would be the whole value, while a method value is never falsy, so
-// nothing detached escapes it. tsc probes its host this way (`typeof Object.setPrototypeOf ===
+// nothing detached escapes it, and the right of an && that is itself tested for truthiness alone
+// (truthinessOnly, road P), which lowers to a boolean (methodPresenceAndRight). tsc probes its host this way (`typeof Object.setPrototypeOf ===
 // "function"`, `if (array.fill)`, `if (ch.repeat)`). Every other consumer keeps the method value and
 // stays refused as a method read as a value (methodValueRefusal): ||, ??, an arm of ?:, an assignment
 // or an initializer, an argument, a return, an alias and a comma operand.
@@ -62,7 +63,7 @@ func (l *lowering) alwaysPresentMethod(node *ast.Node) bool {
 }
 
 // presenceConsumer reports whether what consumes node, through any parentheses around it, only tests
-// it: typeof, !, a condition, or the left of &&.
+// it: typeof, the left of &&, or any position truthinessOnly names, the right of an && among them.
 func presenceConsumer(node *ast.Node) bool {
 	for node.Parent != nil && node.Parent.Kind == ast.KindParenthesizedExpression {
 		node = node.Parent
@@ -74,6 +75,31 @@ func presenceConsumer(node *ast.Node) bool {
 	switch parent.Kind {
 	case ast.KindTypeOfExpression:
 		return true
+	case ast.KindBinaryExpression:
+		if parent.AsBinaryExpression().OperatorToken.Kind == ast.KindAmpersandAmpersandToken && parent.AsBinaryExpression().Left == node {
+			return true
+		}
+	}
+	return truthinessOnly(node)
+}
+
+// truthinessOnly reports whether node's value, through any parentheses around it, is used only for its
+// truthiness: the test of if, while, do...while, for or ?:, the operand of !, or either operand of an &&
+// whose own value is used only so (road P, #p2n17c4: rulings.md:117 applied to one more position, Compiler
+// on Nov 13). An && tested that way tests its right for truthiness too, so its right is a presence read,
+// and the rule is recursive: if (a && b && h.m) and if (a && (b && h.m)) both qualify. typeof isn't such
+// a position, since it names the && value's type, and neither is the left of an && whose value is used:
+// its falsy left is that value. So const v = flag && h.m, a return, an argument, typeof (flag && h.m) and
+// the right of || all keep the value, and stay refused.
+func truthinessOnly(node *ast.Node) bool {
+	for node.Parent != nil && node.Parent.Kind == ast.KindParenthesizedExpression {
+		node = node.Parent
+	}
+	parent := node.Parent
+	if parent == nil {
+		return false
+	}
+	switch parent.Kind {
 	case ast.KindPrefixUnaryExpression:
 		return parent.AsPrefixUnaryExpression().Operator == ast.KindExclamationToken
 	case ast.KindIfStatement:
@@ -87,7 +113,7 @@ func presenceConsumer(node *ast.Node) bool {
 	case ast.KindConditionalExpression:
 		return parent.AsConditionalExpression().Condition == node
 	case ast.KindBinaryExpression:
-		return parent.AsBinaryExpression().OperatorToken.Kind == ast.KindAmpersandAmpersandToken && parent.AsBinaryExpression().Left == node
+		return parent.AsBinaryExpression().OperatorToken.Kind == ast.KindAmpersandAmpersandToken && truthinessOnly(parent)
 	}
 	return false
 }
@@ -651,6 +677,33 @@ func (l *lowering) methodPresenceNot(operand *ast.Node) (ir.Expression, bool, er
 		return read.then(ir.BooleanConstant{Value: false}), true, nil
 	}
 	return ir.Unary{Operator: ir.Not, Operand: read.present}, true, nil
+}
+
+// methodPresenceAndRight lowers left && right whose right is a method read only to test for it, which
+// presenceConsumer admits only where the && is tested for truthiness alone (truthinessOnly, road P): no
+// consumer reads the &&'s value, only whether it's truthy, so it lowers to a boolean, the left's
+// truthiness and then, where that holds, the method's presence, with the receiver's effects.
+func (l *lowering) methodPresenceAndRight(node *ast.Node) (ir.Expression, bool, error) {
+	binary := node.AsBinaryExpression()
+	if binary.OperatorToken.Kind != ast.KindAmpersandAmpersandToken || !l.methodPresenceTest(ast.SkipParentheses(binary.Right)) {
+		return nil, false, nil
+	}
+	left, err := l.condition(binary.Left)
+	if err != nil {
+		return nil, true, err
+	}
+	read, handled, err := l.methodPresence(binary.Right)
+	if err != nil {
+		return nil, true, err
+	}
+	if !handled {
+		return nil, true, l.notYet(binary.Right, "a method read only to test for it, where that test doesn't lower through methodPresence")
+	}
+	present := read.present
+	if present == nil {
+		present = read.then(ir.BooleanConstant{Value: true})
+	}
+	return ir.Conditional{Condition: left, WhenTrue: present, WhenNot: ir.BooleanConstant{Value: false}, Of: ir.Boolean}, true, nil
 }
 
 // methodPresenceAnd lowers left && right whose left is a method read only to test for it: right's
