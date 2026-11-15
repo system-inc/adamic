@@ -41,3 +41,17 @@ the restoring-mutant observation, empty declaration diffs, type logs, the
 carried counter traces, whole-apply/lane receipts and the final commit identity
 belong on [the evidence branch](https://github.com/system-inc/adamic/tree/typescript/write-file-view-1385-evidence/stage3/census/write-file-view-1385).
 The adaptation directory contains no measured output products or public rows.
+
+## Construction amendment
+
+The original readonly capture above is retained byte for byte in the private
+harness helper. This owner now removes the sys.ts declaration and its internal
+doc; its restoring mutant restores the already landed readonly capture only.
+Original before/captured texts and hashes are preserved in the regenerated pins.
+The actual-stage contract, moved-body witness and CLI restoring/replay/remove
+checks all exit 0. The complete adaptation's restoring mutant exactly restores
+all 747 parent+main source files. Fresh sys.ts census is 51 → 50, 1 gone / 0 new /
+0 changed; the whole lane is PASS with 106,366 passing and only the sanctioned row.
+
+See [construction acceptance](../99-correctness-write-file-construct/PROOF.md),
+with evidence [`6b362fe55551e862c3d8775047e0e2dc41317a45`](https://github.com/system-inc/adamic/tree/6b362fe55551e862c3d8775047e0e2dc41317a45/stage3/census/write-file-slot-scout/construct-1).
