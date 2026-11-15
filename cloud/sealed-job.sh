@@ -28,6 +28,10 @@ export ADAMIC_BUILD_CACHE_DIR="$TMPDIR/buildcache"
 mkdir -p "$ADAMIC_BUILD_CACHE_DIR" || sealedJobFail "couldn't make the build cache $ADAMIC_BUILD_CACHE_DIR" || return 1
 export npm_config_logs_dir="$TMPDIR/npm-logs"
 mkdir -p "$npm_config_logs_dir" || sealedJobFail "couldn't make npm's log directory $npm_config_logs_dir" || return 1
+# A git identity for any commit the job makes itself (the meter commits its run; adamic-loom on #zwzer5f), since HOME is
+# empty and git refuses a commit with no name. A house box's own identity is never overridden.
+export GIT_AUTHOR_NAME="${GIT_AUTHOR_NAME:-sealed-job}" GIT_AUTHOR_EMAIL="${GIT_AUTHOR_EMAIL:-sealed-job@loom.invalid}"
+export GIT_COMMITTER_NAME="${GIT_COMMITTER_NAME:-sealed-job}" GIT_COMMITTER_EMAIL="${GIT_COMMITTER_EMAIL:-sealed-job@loom.invalid}"
 
 # sealed_git: the tree as laid becomes one commit, HEAD, in a .git of the job's own, read back clean. Run from the tree's
 # root. It refuses a tree that already has a .git, so a house box's real history is never covered over.
