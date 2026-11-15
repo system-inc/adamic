@@ -63,8 +63,9 @@ echo "built; $(nproc) cores, load $(cut -d' ' -f1-3 /proc/loadavg)"
 target=$O/adapted/src/compiler/utilitiesPublic.ts
 [ -f "$target" ] || fail "no utilitiesPublic.ts in the adapted tree" apply.log
 start=$(date +%s)
-LATENT_ONLY_FILE=$target LATENT_FULL=1 LATENT_ASSERT_NO_OUTPUT=1 LATENT_TIMES=$O/$side/times.jsonl LATENT_CPUPROFILE=$O/$side/cpu.pprof \
-    timeout --kill-after=10s 1800 "$O/$side/entry-census" "$O/adapted/src/tsc/tsc.ts" "$O/$side/latent.jsonl" > "$O/$side/run.log" 2>&1
+if [ "${MODE:-file}" = entry ]; then only=; full=0; bound=3300; else only=$target; full=1; bound=1800; fi
+LATENT_ONLY_FILE=$only LATENT_FULL=$full LATENT_ASSERT_NO_OUTPUT=1 LATENT_TIMES=$O/$side/times.jsonl LATENT_CPUPROFILE=$O/$side/cpu.pprof \
+    timeout --kill-after=10s $bound "$O/$side/entry-census" "$O/adapted/src/tsc/tsc.ts" "$O/$side/latent.jsonl" > "$O/$side/run.log" 2>&1
 code=$?
 echo "$side census exit $code after $(( $(date +%s) - start )) s; load $(cut -d' ' -f1-3 /proc/loadavg)"
 [ -s "$O/$side/cpu.pprof" ] || fail "no profile written at $side (census exit $code)" $side/run.log
