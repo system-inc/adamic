@@ -38,16 +38,14 @@ func cProgram(program *ir.Program, handler, lines int, options ...Options) strin
 		emitter.debug = options[0].Debug
 		emitter.ladderEveryStatement = options[0].LadderEveryStatement
 	}
-	if program.HasPromises() || program.HasGenerators() {
-		// Suspension ownership is conservative until the shared analyses prove it.
-		emitter.reuse = &reusePlan{}
-		emitter.regions = &regionPlan{program: program}
-	} else {
-		elementBorrows, lending := planElementBorrows(program)
-		emitter.elementBorrows = elementBorrows
-		emitter.reuse = planReuse(program, lending)
-		emitter.regions = planRegions(program)
-	}
+	// Suspension ownership is decided by function, not by program (#kha2ea0): each plan leaves out the
+	// bodies of functions that suspend (Function.Suspends), whose locals live in frame cells its entries
+	// can't name, and a suspending callee's parameters escape. A program holding a timer or a Promise
+	// keeps its regions, reuse and element borrows everywhere else.
+	elementBorrows, lending := planElementBorrows(program)
+	emitter.elementBorrows = elementBorrows
+	emitter.reuse = planReuse(program, lending)
+	emitter.regions = planRegions(program)
 	var builder strings.Builder
 	regexCallbacks, nodeHost := false, false
 	// A void call whose targets are Unknown or disagree reads the closure's discard, which only a
@@ -155,6 +153,10 @@ func cProgram(program *ir.Program, handler, lines int, options ...Options) strin
 	bodies := strings.Builder{}
 	emittedBodies := map[string]string{}
 	for index, function := range program.Functions {
+		// A suspending function has no region version, so it's emitted as the heap one, whatever
+		// version of a fresh function was emitted before it (#kha2ea0: Worker.allocate's region version
+		// left this set, and async_methods' Worker.work was named and signed as a region version).
+		emitter.inRegion = false
 		if function.Async {
 			emitter.resetCounters()
 			bodies.WriteString(emitter.asyncFunction(index))
