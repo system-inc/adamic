@@ -2,7 +2,7 @@
 
 Stock TypeScript 6.0.3 parsed 81 source files (79 compiler files plus the two tsc entry files), with 10694 syntactic latent candidates before eligibility/deferral. There are 56 real property-call bind sites and 2 local binder maybeBind calls. This is a syntax inventory, not a reach analysis.
 
-Each site without an exact whole-program seam observation is **uncovered**: actual declared target counts, production reach, fallback cause and check outcome are unknown. The two maybeBind calls resolve to binder’s local binding-analysis helper, not core’s generic function-binding helper. Adaptation 99-correctness-binding-views has inlined core maybeBind’s compiler callers into direct bind expressions; the residual generic core helper is upstream core.ts:1523, adapted core.ts:1520.
+Each site without an exact whole-program seam observation is **uncovered**: actual declared target counts, production reach, fallback cause and check outcome are unknown. The two maybeBind calls resolve to binder’s local binding-analysis helper, not core’s generic function-binding helper. Adaptation 99-correctness-axolotl-x has inlined core maybeBind’s compiler callers into direct bind expressions; the residual generic core helper is upstream core.ts:1523, adapted core.ts:1520.
 
 - `src/compiler/binder.ts:1968:36` — maybeBind_call; unit `src/compiler/binder.ts:1966:9`; UNCOVERED; counts/reach/outcome unknown.
   >                 const maybeBound = maybeBind(left);

@@ -1,8 +1,10 @@
 **UNPROVEN ZEROS: the latent census skips `checkBoundArguments` and its whole-program reach/`opaqueCalls` computation. The positive control has 0 new-bind findings at both base and head; it fails to detect this compiler change. Only the per-root production-lowering table can measure its reachable first stops.**
 
+**STOPPED: the requested latent-unit aggregate seam could not be fed a faithful whole-program graph. Lists (a) and (b) are UNKNOWN; 0 of the requested 43 source sites have verified coverage.** [Blocker, fixture input evidence and coverage](BLOCKED-LATENT-SEAM.md). The passing production-tail control below is a different path and does not validate the requested latent aggregate seam.
+
 [Control and code-path evidence](CONTROL.md). The full and first-error latent rows below retain their observed counts solely as coverage-limited measurements; zero is not evidence that the new check accepts these sources.
 
-## Validated exact-check seam
+## Archived production-tail seam control and reachability fallback
 
 **Control passes: head has 1 new-bind stop; base has 0 bind-check stops.** Both have known reach to `seen_value`: **2 declared parameters / 1 bound-type parameter**. Whole-program `opaqueCalls=true`; no projection is needed for this direct reach, so it remains known. The head stops on it. A known reach with extra parameters is therefore not automatically an unblocked wrong answer.
 
@@ -88,8 +90,11 @@ Raw files remain in scratch. [receipts.json](receipts.json) gives every complete
 | `/workspace/bind-extra-parameters-scratch/results/seam-root-watch.ts/head.jsonl` | 796 | `b535e0d0406851f1aa5ac394711a8cc7d650f01701c7cee21a104a3c321ef7ca` |
 | `/workspace/bind-extra-parameters-scratch/results/seam-root-watchPublic.ts/base.jsonl` | 802 | `407eb431c147dc126ac7e36b54394ac3ca184237afee323a617321d3ddb7f721` |
 | `/workspace/bind-extra-parameters-scratch/results/seam-root-watchPublic.ts/head.jsonl` | 802 | `407eb431c147dc126ac7e36b54394ac3ca184237afee323a617321d3ddb7f721` |
+| `/workspace/bind-extra-parameters-scratch/results/unit-input-control/latent.jsonl` | 29081 | `c6d68e1f7fbe1ded9305a768a8aae3c573b060fe4cf0fdbdf544e7275f6c12c0` |
+| `/workspace/bind-extra-parameters-scratch/results/unit-input-control/unit-inputs.jsonl` | 5817 | `ebf961fbc725349875382ff15ede71e606f2803316c3eee1a1fa91d8ac5eecd9` |
 | `/workspace/bind-extra-parameters-scratch/base-census` | 37034753 | `6e743e95e82388375ceb361870271932645d08ecacb0233ca0fc2b4413f218f6` |
 | `/workspace/bind-extra-parameters-scratch/base-production-census` | 37614669 | `cdceb5430fc929731f7278ff8172c59321ee53a7d5e114f6bc28026eed02df50` |
 | `/workspace/bind-extra-parameters-scratch/head-census` | 37034265 | `483aee8e3d01c9413351f18af66966572e72bf167afeb68ea51cc61c129ab919` |
 | `/workspace/bind-extra-parameters-scratch/head-production-census` | 37624454 | `6a5ea2a5e111232f11efa12d84259b59a221a8c00647029d237e058e91e6d7ba` |
+| `/workspace/bind-extra-parameters-scratch/head-unit-inputs-census` | 37038092 | `a689170ca6038dd4b9696bd2b0a4b01ba6567f985c65cd8e59afbf99a2e9e655` |
 | `/workspace/bind-extra-parameters-scratch/source-manifest.json` | 12566 | `5d33a3a13d9719a6b28aab273bcddb5e8dacb4f642dbb3defc45e8df88545993` |

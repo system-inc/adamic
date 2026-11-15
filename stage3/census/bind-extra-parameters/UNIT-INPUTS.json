@@ -1,0 +1,120 @@
+{
+  "observed_unit_ends": 9,
+  "units": {
+    "attempted": 9,
+    "deferred_generic_instantiation": 3
+  },
+  "recorded_bind_sites": 1,
+  "all_units_have_empty_function_type_targets": true,
+  "new_bind_reason_count": 0,
+  "collisions": {
+    "locals": {
+      "4": [
+        {
+          "unit": "/workspace/bind-extra-parameters-scratch/control/main.ts:25:1",
+          "name": "shape",
+          "function": 0
+        },
+        {
+          "unit": "/workspace/bind-extra-parameters-scratch/control/main.ts:29:1",
+          "name": "shape",
+          "function": 0
+        },
+        {
+          "unit": "/workspace/bind-extra-parameters-scratch/control/main.ts:30:1",
+          "name": "bound_value",
+          "function": 1
+        },
+        {
+          "unit": "/workspace/bind-extra-parameters-scratch/control/main.ts:31:1",
+          "name": "array",
+          "function": 1
+        }
+      ],
+      "5": [
+        {
+          "unit": "/workspace/bind-extra-parameters-scratch/control/main.ts:25:1",
+          "name": "index",
+          "function": 0
+        },
+        {
+          "unit": "/workspace/bind-extra-parameters-scratch/control/main.ts:29:1",
+          "name": "index",
+          "function": 0
+        },
+        {
+          "unit": "/workspace/bind-extra-parameters-scratch/control/main.ts:30:1",
+          "name": "bound_value",
+          "function": 1
+        },
+        {
+          "unit": "/workspace/bind-extra-parameters-scratch/control/main.ts:31:1",
+          "name": "predicate",
+          "function": 1
+        }
+      ],
+      "6": [
+        {
+          "unit": "/workspace/bind-extra-parameters-scratch/control/main.ts:29:1",
+          "name": "shape",
+          "function": 1
+        },
+        {
+          "unit": "/workspace/bind-extra-parameters-scratch/control/main.ts:30:1",
+          "name": "argument",
+          "function": 2
+        },
+        {
+          "unit": "/workspace/bind-extra-parameters-scratch/control/main.ts:31:1",
+          "name": "startIndex",
+          "function": 1
+        }
+      ],
+      "7": [
+        {
+          "unit": "/workspace/bind-extra-parameters-scratch/control/main.ts:29:1",
+          "name": "index",
+          "function": 1
+        },
+        {
+          "unit": "/workspace/bind-extra-parameters-scratch/control/main.ts:31:1",
+          "name": "i",
+          "function": 1
+        }
+      ]
+    },
+    "functions": {
+      "1": [
+        {
+          "unit": "/workspace/bind-extra-parameters-scratch/control/main.ts:29:1",
+          "name": "seen_value",
+          "parameters": [
+            6,
+            7
+          ]
+        },
+        {
+          "unit": "/workspace/bind-extra-parameters-scratch/control/main.ts:30:1",
+          "name": "bind_factory",
+          "parameters": [
+            4,
+            5
+          ]
+        },
+        {
+          "unit": "/workspace/bind-extra-parameters-scratch/control/main.ts:31:1",
+          "name": "find_1",
+          "parameters": [
+            4,
+            5,
+            6
+          ]
+        }
+      ]
+    }
+  },
+  "stopped_at_utc": "2026-11-15T00:30:48.704538+00:00",
+  "requested_latent_seam_status": "blocked: no validated whole-program aggregation",
+  "tsc_verified_source_sites": 0,
+  "requested_source_sites": 43
+}

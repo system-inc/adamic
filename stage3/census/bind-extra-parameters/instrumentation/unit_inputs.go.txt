@@ -1,0 +1,12 @@
+// Scratch diagnostics only. Does not run or approximate the bind check.
+package lower
+import("encoding/json";"os";"github.com/microsoft/TypeScript/tsc/shim/ast")
+func (l *lowering) bindCollectUnit(unit *LatentUnit,node *ast.Node){
+ path:=os.Getenv("BIND_UNIT_INPUTS");if path==""{return}
+ out,err:=os.OpenFile(path,os.O_CREATE|os.O_WRONLY|os.O_APPEND,0600);if err!=nil{panic(err)};defer out.Close()
+ locals:=[]map[string]any{};for i,x:=range l.result.Locals{locals=append(locals,map[string]any{"id":i,"name":x.Name,"function":x.Function,"global":x.Global})}
+ functions:=[]map[string]any{};for i,x:=range l.result.Functions{functions=append(functions,map[string]any{"id":i,"name":x.Name,"parameters":x.Parameters,"body_statements":len(x.Body),"role":x.Source.Role})}
+ binds:=[]map[string]any{};for _,x:=range l.closureRecords{if l.result.Functions[x.function].Source.Role=="bound_function"{binds=append(binds,map[string]any{"where":l.program.Where(x.node),"function":x.function})}}
+ row:=map[string]any{"unit":unit.Where,"locals":locals,"functions":functions,"binds":binds,"main_statements":len(l.result.Main),"function_type_target_keys":len(l.result.FunctionTypeTargets),"measurement":"isolated unit inputs only; no merge or bind judgment"}
+ if err:=json.NewEncoder(out).Encode(row);err!=nil{panic(err)}
+}
