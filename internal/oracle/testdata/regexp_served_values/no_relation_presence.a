@@ -1,0 +1,9 @@
+interface M { test?: (s: string) => boolean }
+function run(v: M): void {
+	console.log(String(v.test === undefined));
+	console.log(String(!!v.test));
+	if (v.test) console.log('has test');
+	console.log(String(v.test && 1));
+}
+run({ test: (s: string): boolean => s === 'a' });
+run({});
