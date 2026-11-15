@@ -1,0 +1,30 @@
+// A Map's and a Set's forEach with a rest packed in each iteration (#9grybqc): note's type is
+// admitted by each callback's, so each call collects note's rest from the value, the key and the
+// collection. A Map's value here is a number, boxed into note's union; a Set's are strings, all
+// references, copied by copyRest's loop. Node prints:
+//
+//	string:x;number:1;object:y,z
+//	ann=7
+//	bob=7
+//	cy=5
+//	#red
+//	#green
+//	#blue
+const note = (...items: (string | number | string[])[]): void => {
+	console.log(items.map((item) => typeof item + ':' + (Array.isArray(item) ? item.join(',') : String(item))).join(';'));
+};
+note('x', 1, ['y', 'z']);
+const scores = new Map<string, number>();
+for (const name of 'ann bob cy'.split(' ')) {
+	scores.set(name, name.length * 2 + 1);
+}
+scores.forEach((score, name) => {
+	console.log(`${name}=${score}`);
+});
+const tags = new Set<string>();
+for (const tag of 'red green blue'.split(' ')) {
+	tags.add(tag);
+}
+tags.forEach((tag) => {
+	console.log(`#${tag}`);
+});

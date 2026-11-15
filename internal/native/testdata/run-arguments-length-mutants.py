@@ -8,7 +8,7 @@ root = Path(__file__).resolve().parents[3]
 os.chdir(root)
 mutants = [
  ('native-declared-count', 'internal/native/emit_functions.go', 'count := fmt.Sprint(len(call.Arguments))', 'count := fmt.Sprint(len(function.Parameters))', 'TestNativeAgreesWithNode/internal/oracle/testdata/arguments_length.a'),
- ('native-function-value-count', 'internal/native/arguments_length.go', 'return e.closureSlots(call, slots, "", fmt.Sprint(len(call.Arguments)))', 'return e.closureSlots(call, slots, "", "0")', 'TestNativeAgreesWithNode/internal/oracle/testdata/arguments_length_value_count.a'),
+ ('native-function-value-count', 'internal/native/arguments_length.go', 'return e.closureSlots(call, slots, of, "", fmt.Sprint(len(call.Arguments)))', 'return e.closureSlots(call, slots, of, "", "0")', 'TestNativeAgreesWithNode/internal/oracle/testdata/arguments_length_value_count.a'),
  ('javascript-declared-count', 'internal/javascript/javascript.go', 'count = values.length - (fn.adamicReceiver ? 1 : 0)', 'count = fn.length - (fn.adamicCount ? 1 : 0) - (fn.adamicReceiver ? 1 : 0)', 'TestNativeAgreesWithNode/internal/oracle/testdata/arguments_length.a'),
  ('javascript-function-value-count', 'internal/javascript/javascript.go', 'count := "values.length"', 'count := "0"', 'TestNativeAgreesWithNode/internal/oracle/testdata/arguments_length_value_count.a'),
 ]
@@ -35,7 +35,7 @@ checks = [
  ('write-refusal', 'internal/lower/arguments_length.go', 'if !ast.IsAssignmentTarget(length) {', 'if true {', './internal/lower', 'TestArgumentsLengthRefusals/writing_length', 'want pinned refusal'),
  ('unknown-count-target', 'internal/ir/argument_slots.go', 'if bounded.Unknown {', 'if false {', './internal/ir', 'TestArgumentLayouts', "unknown type must include"),
  ('ignore-count-reader-type', 'internal/ir/argument_slots.go', 'layout.Count = layout.Count || function.ReadsArguments', 'layout.Count = false', './internal/ir', 'TestArgumentLayouts', 'reader layout'),
- ('nonreader-count', 'internal/native/arguments_length.go', 'func (e *emitter) closureSlots(call ir.CallClosure, slots []string, source, count string) string {\n\tlayout := e.program.ClosureArgumentLayout(call)', 'func (e *emitter) closureSlots(call ir.CallClosure, slots []string, source, count string) string {\n\tlayout := e.program.ClosureArgumentLayout(call)\n\tlayout.Count = true', './internal/native', 'TestNoReaderCallingConvention', 'hidden count slots: got'),
+ ('nonreader-count', 'internal/native/arguments_length.go', 'func (e *emitter) closureSlots(call ir.CallClosure, slots []string, of []ir.Type, source, count string) string {\n\tlayout := e.program.ClosureArgumentLayout(call)', 'func (e *emitter) closureSlots(call ir.CallClosure, slots []string, of []ir.Type, source, count string) string {\n\tlayout := e.program.ClosureArgumentLayout(call)\n\tlayout.Count = true', './internal/native', 'TestNoReaderCallingConvention', 'hidden count slots: got'),
 ]
 for name, file, before, after, package, test, evidence in checks:
  path = root / file

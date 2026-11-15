@@ -1,0 +1,9 @@
+// Lower's q1 from #9grybqc, found probing #g4arkr4: (item) => item's type admits collect, a rest
+// function, so the layout of map's call packs collect's rest from map's three slots, the element, the
+// index's number and the array, inside the loop map writes. Before the iteration's scope, the pack's
+// release was written past the loop's closing brace, which clang refused; and copyRest retained the
+// index's number as a reference. Node prints:
+//
+//	a;b
+const collect = (...items: string[]): string => items.map((item) => item).join(';');
+console.log(collect('a', 'b'));
