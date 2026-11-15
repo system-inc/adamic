@@ -37,6 +37,8 @@ func TestRoadPRightOfAndLowers(t *testing.T) {
 		{"a chain of &&", "\tif (flag && other && h.m) {\n\t\treturn 'has';\n\t}\n\treturn 'none';"},
 		{"nested on the right", "\tif (flag && (other && h.m)) {\n\t\treturn 'has';\n\t}\n\treturn 'none';"},
 		{"nested on the left", "\tif ((flag && h.m) && other) {\n\t\treturn 'has';\n\t}\n\treturn 'none';"},
+		// tsc's if (sys.a && sys.b): a presence test on both sides (Compiler's should on road P).
+		{"a presence test on both sides", "\tif (h.m && h.m) {\n\t\treturn 'has';\n\t}\n\treturn 'none';"},
 	} {
 		for _, form := range roadPForms {
 			for _, extension := range []string{".a", ".ts"} {
