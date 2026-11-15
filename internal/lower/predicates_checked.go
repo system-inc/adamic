@@ -852,6 +852,23 @@ func (l *lowering) checkedPredicateForwarder(node *ast.Node, symbol *ast.Symbol,
 		l.result.Locals = append(l.result.Locals, ir.Local{Name: name, Type: of, Function: forwarder})
 		return index
 	}
+	body, err := l.checkedPredicateValueBody(node, declaration, call, call.Arguments[index], source, claim.Type(), assertion, local, func(branch string) string {
+		return fmt.Sprintf("predicate %s used as a value, declared at %s, %s branch: source %s, target %s", name, where, branch, sourceName, targetName)
+	})
+	if err != nil {
+		return nil, false, err
+	}
+	return body, true, nil
+}
+
+// checkedPredicateValueBody is the body of a checked closure, a value that stands for a predicate and
+// checks its claim: it makes call, the call of the predicate it stands for, and checks the claim's true
+// side, or an asserts on return, against argument, the value the claim names, before it hands the answer
+// on. A lie stops there, loudly. Every checked closure is built by it: the forwarder a checked
+// predicate's value is (checkedPredicateForwarder) and the closure a predicate parameter becomes where
+// it's passed (checkedPredicateParameterValue), so the two check alike. The false side is the walk's
+// (predicate_false_flow.go).
+func (l *lowering) checkedPredicateValueBody(node, declaration *ast.Node, call, argument ir.Expression, source, target *checker.Type, assertion bool, local func(string, ir.Type) int, message func(branch string) string) ([]ir.Statement, error) {
 	body := []ir.Statement{}
 	var result ir.Expression
 	if assertion {
@@ -861,14 +878,12 @@ func (l *lowering) checkedPredicateForwarder(node *ast.Node, symbol *ast.Symbol,
 		body = append(body, ir.Declare{Local: held, Value: call})
 		result = ir.Read{Local: held, Of: ir.Boolean}
 	}
-	check, err := l.checkedPredicateCheck(node, declaration, call.Arguments[index], source, claim.Type(), result, false, local, func(branch string) string {
-		return fmt.Sprintf("predicate %s used as a value, declared at %s, %s branch: source %s, target %s", name, where, branch, sourceName, targetName)
-	})
+	check, err := l.checkedPredicateCheck(node, declaration, argument, source, target, result, false, local, message)
 	if err != nil {
-		return nil, false, err
+		return nil, err
 	}
 	body = append(body, check...)
-	return append(body, ir.Return{Value: result}), true, nil
+	return append(body, ir.Return{Value: result}), nil
 }
 
 // checkedPredicateClosure is whether declaration is an arrow or a function expression in .ts claiming
