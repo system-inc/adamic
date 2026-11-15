@@ -71,7 +71,7 @@ func TestWorkerAsyncContract(t *testing.T) {
 			if (err == nil) != c.accepted {
 				t.Fatalf("async contract accepted=%t: %v", c.accepted, err)
 			}
-			if err != nil && (!strings.Contains(err.Error(), "function handle(request: HttpRequest): HttpResponse or async function handle(request: HttpRequest): Promise<HttpResponse>") || !strings.Contains(err.Error(), "\n  fix: import type { HttpRequest, HttpResponse } from 'adamic/http'; export a synchronous handle returning HttpResponse, or an async handle returning Promise<HttpResponse>")) {
+			if err != nil && c.name != "extra" && (!strings.Contains(err.Error(), "function handle(request: HttpRequest[, environment: Environment]): HttpResponse or async function handle(request: HttpRequest[, environment: Environment]): Promise<HttpResponse>") || !strings.Contains(err.Error(), "\n  fix: import type { HttpRequest, HttpResponse } from 'adamic/http'; export a synchronous handle returning HttpResponse, or an async handle returning Promise<HttpResponse>; optionally add environment: Environment with required readonly string fields")) {
 				t.Fatalf("async contract diagnostic: %v", err)
 			}
 			t.Logf("accepted=%t: %v", c.accepted, err)

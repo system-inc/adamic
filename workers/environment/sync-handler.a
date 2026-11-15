@@ -1,0 +1,10 @@
+import type { HttpRequest, HttpResponse } from 'adamic/http';
+interface Environment {
+    readonly ZONE: string;
+    readonly GREETING: string;
+}
+export function handle(request: HttpRequest, environment: Environment): HttpResponse {
+    const greeting = environment.GREETING;
+    return { status: 200, headers: [{ name: 'content-type', value: 'text/plain; charset=utf-8' }],
+        body: greeting + ' ' + environment.ZONE + ' ' + request.path + ' ' + Object.keys(environment).join(',') };
+}
