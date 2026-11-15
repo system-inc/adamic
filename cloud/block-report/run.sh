@@ -22,13 +22,16 @@ environment=${BLOCK_REPORT_ENVIRONMENT:-/opt/adamic-block/environment.sh}
 
 [ -f go.mod ] && [ -f cohere/go.mod ] || { echo "block-report: $PWD lacks adamic's go.mod or cohere's, so nothing ran"; exit 64; }
 [ -r "$environment" ] || { echo "block-report: no environment at $environment, so nothing ran"; exit 64; }
-# A commit from before the preamble would report its own setup gaps, so it reports nothing at all (#3jge4gw).
-[ -f cloud/sealed-job.sh ] || { echo "block-report: this commit has no cloud/sealed-job.sh, so nothing ran and the report counts nothing"; exit 64; }
+# A commit from before the preamble would report its own setup gaps, so it reports nothing at all (#3jge4gw). Until the
+# preamble is on main, an ask may carry its copy in and name it (BLOCK_REPORT_PREAMBLE, a path inside the tree, as a probe
+# lays it), which Node allowed on #zwzer5f for image 1.0.10's first night: the steps are the preamble's either way.
+preamble=${BLOCK_REPORT_PREAMBLE:-cloud/sealed-job.sh}
+[ -f "$preamble" ] || { echo "block-report: this commit has no $preamble, so nothing ran and the report counts nothing"; exit 64; }
 # shellcheck disable=SC1090
 . "$environment" || { echo "block-report: $environment didn't source, so nothing ran"; exit 64; }
 # The preamble's steps return nonzero on a failure, and say which on stderr just above this script's own line.
 # shellcheck disable=SC1091
-. cloud/sealed-job.sh || { echo "block-report: cloud/sealed-job.sh stopped at a step that failed, in its words above, so nothing ran"; exit 64; }
+. "$preamble" || { echo "block-report: $preamble stopped at a step that failed, in its words above, so nothing ran"; exit 64; }
 
 # Line one is the go that runs everything, and line two the disk the streams land on, so a report read beside the
 # house's starts from what ran it and where (#3jge4gw).
