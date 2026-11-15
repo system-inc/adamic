@@ -1,0 +1,99 @@
+diff --git a/internal/lower/expression.go b/internal/lower/expression.go
+index ddc220794..f03612d4d 100644
+--- a/internal/lower/expression.go
++++ b/internal/lower/expression.go
+@@ -395,9 +395,94 @@ func (l *lowering) sameKeeping(from *checker.Type, to *checker.Type, visited map
+ 	return l.sameKeepingWalk(from, to, visited) && !l.restHiddenWithin(from, to, false, map[restHiddenPair]bool{})
+ }
+ 
++// mentionsWeak scans each generic instance through its mapper. Any, unknown,
++// never, primitives, literals (including true and false), and unmapped type
++// parameters are known leaves: no Weak sits structurally inside those types.
++// Unhandled kinds and references cut short by the depth or visited limit fail closed.
++func (l *lowering) mentionsWeak(t *checker.Type, visited map[*checker.Type]bool) bool {
++	t = l.concrete(t)
++	if t == nil {
++		return true
++	}
++	if l.weakTarget(t) != nil {
++		return true
++	}
++	if t.Flags()&(checker.TypeFlagsAnyOrUnknown|checker.TypeFlagsNever|checker.TypeFlagsPrimitive|checker.TypeFlagsTypeParameter) != 0 {
++		return false
++	}
++	if visited[t] || len(visited) >= 64 {
++		return true
++	}
++	visited[t] = true
++	defer delete(visited, t)
++	for _, argument := range t.Alias().TypeArguments() {
++		if l.mentionsWeak(argument, visited) {
++			return true
++		}
++	}
++	if t.Flags()&(checker.TypeFlagsUnion|checker.TypeFlagsIntersection) != 0 {
++		for _, member := range t.Types() {
++			if l.mentionsWeak(member, visited) {
++				return true
++			}
++		}
++		return len(t.Types()) == 0
++	}
++	if t.Flags()&checker.TypeFlagsObject == 0 || t.ObjectFlags()&checker.ObjectFlagsObjectTypeKindMask == 0 || t.ObjectFlags()&(checker.ObjectFlagsMapped|checker.ObjectFlagsReverseMapped|checker.ObjectFlagsEvolvingArray) != 0 {
++		return true
++	}
++	for _, argument := range l.typeArguments(t) {
++		if l.mentionsWeak(argument, visited) {
++			return true
++		}
++	}
++	for _, property := range l.checker.GetPropertiesOfType(t) {
++		if l.mentionsWeak(l.checker.GetTypeOfSymbol(property), visited) {
++			return true
++		}
++	}
++	for _, index := range l.checker.GetIndexInfosOfType(t) {
++		if l.mentionsWeak(index.ValueType(), visited) {
++			return true
++		}
++	}
++	for _, kind := range []checker.SignatureKind{checker.SignatureKindCall, checker.SignatureKindConstruct} {
++		for _, signature := range l.checker.GetSignaturesOfType(t, kind) {
++			for _, parameter := range signature.Parameters() {
++				if l.mentionsWeak(l.checker.GetTypeOfSymbol(parameter), visited) {
++					return true
++				}
++			}
++			if l.mentionsWeak(l.checker.GetReturnTypeOfSignature(signature), visited) {
++				return true
++			}
++		}
++	}
++	return false
++}
++
+ // sameKeepingWalk is sameKeeping's walk of what each side keeps weakly or strongly, and of each
+ // function's slots by representation.
+ func (l *lowering) sameKeepingWalk(from *checker.Type, to *checker.Type, visited map[[2]*checker.Type]bool) bool {
++	// present cannot name one member of a multi-value union, so the walk
++	// would answer same unjudged. A strong slot read as weak crashes natively
++	// (#pmfdg6q, p5 to p8). Splitting members is the follow-up.
++	for _, side := range []*checker.Type{from, to} {
++		// Count the union this generic instance actually carries.
++		side = l.concrete(side)
++		if side == nil || side.Flags()&checker.TypeFlagsUnion == 0 {
++			continue
++		}
++		members := 0
++		for _, member := range side.Types() {
++			if member.Flags()&(checker.TypeFlagsUndefined|checker.TypeFlagsNull) == 0 {
++				members++
++			}
++		}
++		if members >= 2 && (l.mentionsWeak(from, map[*checker.Type]bool{}) || l.mentionsWeak(to, map[*checker.Type]bool{})) {
++			return false
++		}
++	}
+ 	from, to = l.present(from), l.present(to)
+ 	if from == nil || to == nil || from == to || visited[[2]*checker.Type{from, to}] {
+ 		return true

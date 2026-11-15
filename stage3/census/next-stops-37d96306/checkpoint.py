@@ -5,6 +5,7 @@ base=Path(__file__).resolve().parent
 revision=os.environ.get('CENSUS_REVISION','head');mode='CommonJSBundle';out=base/revision/mode
 hashes=json.loads((base/'compression.json').read_text()) if (base/'compression.json').exists() else {}
 for p in base.rglob('*.log'):
+ if not p.with_name(p.stem+'-status.json').exists(): continue
  data=p.read_bytes();compressed=gzip.compress(data,mtime=0)
  hashes[str(p.relative_to(base))]={'sha256':hashlib.sha256(data).hexdigest(),'bytes':len(data),'compressed_sha256':hashlib.sha256(compressed).hexdigest()}
  if len(compressed)<=20_000_000:p.with_suffix(p.suffix+'.gz').write_bytes(compressed)
