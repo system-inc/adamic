@@ -87,8 +87,13 @@ type cycleFinder struct {
 	writeCache     map[cycleWriteSlot]*fresh.Write
 	unknownWrite   int
 
-	// recordStop is the first slot slotsOf seeds whose value can be a record (noteRecordSlot), returned
-	// by graphTypes after the boundary's refusals: a record is never a graph member.
+	// recordSlots are the seeds slotsOf found whose written value may be a record (noteRecordSlot), and
+	// recordCells the captured cells graphTypes seeds, each judged once the graph types are selected
+	// (judgeRecordSlots).
+	recordSlots []recordSlotNote
+	recordCells []int
+	// recordStop is the first of them that can hold a record of a type graphTypes didn't select, which
+	// no graph region holds, returned by graphTypes after the boundary's refusals.
 	recordStop error
 	// assigned is every local an ir.Assign writes after its declaration (reassigned), found once.
 	assigned map[int]bool

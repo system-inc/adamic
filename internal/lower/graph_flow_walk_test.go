@@ -21,7 +21,7 @@ func TestGraphAllocationSiteContainers(t *testing.T) {
 		ir.ArrayMap{}, ir.ArrayFrom{}, ir.ArrayFill{}, ir.ArraySplice{},
 		ir.ArrayConcat{}, ir.MapEntries{}, ir.ArraySlice{}, ir.MapKeys{},
 		ir.MapValues{}, ir.SetValues{}, ir.ArrayVisit{}, ir.BoundClosure{},
-		ir.RecordCall{},
+		ir.RecordCall{}, ir.RecordLiteral{},
 	}
 	covered := map[string]bool{}
 	for _, allocation := range allocations {
@@ -131,7 +131,7 @@ func TestGraphMetadataKeepsViewAllocationsUnknown(t *testing.T) {
 		ir.MapNew{}, ir.SetNew{}, ir.ArrayMap{}, ir.ArrayFrom{}, ir.ArrayFill{},
 		ir.ArraySplice{}, ir.ArrayConcat{}, ir.MapEntries{}, ir.ArraySlice{},
 		ir.MapKeys{}, ir.MapValues{}, ir.SetValues{}, ir.ArrayVisit{},
-		ir.RecordCall{},
+		ir.RecordCall{}, ir.RecordLiteral{},
 	} {
 		next := 0
 		value := graphAllocationSites(reflect.ValueOf(expression), &next).Interface().(ir.Expression)

@@ -28,6 +28,11 @@ type RecordLiteral struct {
 	Spread  Expression
 	Entries []RecordEntry
 	Site    int
+	// GraphTypes plans the record as a graph member, as an ObjectLiteral's plans its object: the record
+	// type it's built as, and the site graphFlows marks where a graph value is demanded through it
+	// (lower/graph_flow.go). It has no ProgramRegion stamp, so a planned record always joins a graph
+	// region (#1vb0x5s).
+	GraphTypes []int
 }
 
 func (RecordLiteral) Type() Type { return Record }
