@@ -1,0 +1,39 @@
+--- main/src/compiler/sys.ts
++++ a/src/compiler/sys.ts
+@@ -1530,6 +1530,16 @@
+             useCaseSensitiveFileNames?: boolean | (() => boolean) | undefined;
+             getGlobalTypingsCacheLocation?: () => string | undefined;
+         }
++        const originalWriteFile = writeFile;
++        const wrappedWriteFile: System["writeFile"] = (path, data, writeBom) =>
++            writeFileEnsuringDirectories(
++                path,
++                data,
++                !!writeBom,
++                (path, data, writeByteOrderMark) => originalWriteFile.call(nodeSystem, path, data, writeByteOrderMark),
++                path => nodeSystem.createDirectory(path),
++                path => nodeSystem.directoryExists(path),
++            );
+         const nodeSystem: NodeResolutionSystem = {
+             args: process.argv.slice(2),
+             newLine: _os.EOL,
+@@ -1544,7 +1554,7 @@
+                 return !!process.stdout.isTTY;
+             },
+             readFile,
+-            writeFile,
++            writeFile: wrappedWriteFile,
+             watchFile,
+             watchDirectory,
+             preferNonRecursiveWatch: !fsSupportsRecursiveFsWatch,
+@@ -1977,10 +1987,6 @@
+     if (isNodeLikeSystem()) {
+         sys = getNodeSystem();
+     }
+-    if (sys) {
+-        // patch writefile to create folder before writing the file
+-        patchWriteFileEnsuringDirectory(sys);
+-    }
+     return sys!;
+ })();
+ 
