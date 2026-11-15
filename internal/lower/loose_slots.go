@@ -49,8 +49,9 @@ import (
 // access or destructured), a Promise made by new, whose executor's reject can be handed anything, a
 // then the program declares, since awaiting a thenable hands its then a reject that can be called with
 // anything under any name, an emit whose event can be 'error' (an EventEmitter throws its argument when no
-// listener is set), and any call into node:assert, which throws a handed Error message as it is. A direct
-// call of a plain name in looseCaughtNames, reject(x) through a parameter, is read as the member form is.
+// listener is set), and any call into node:assert, which throws a handed Error message as it is. A plain
+// name in looseCaughtNames, reject through a parameter, is read as the member form is: called directly, its
+// arguments are what's caught, and read any other way (taken as a value, passed on) it's every shape.
 // It's built through H, never as
 // "a caught value is a plain Error": the binding links to what's caught, and every loose slot inside
 // those types (Error's cause first) links to H by the finder's own rule, so whatever a later head lets
@@ -264,11 +265,33 @@ func (f *cycleFinder) looseCaughtRoad(node *ast.Node) {
 				}
 			}
 		}
+	case ast.KindIdentifier:
+		// A plain name in looseCaughtNames read other than as a direct call's callee (taken as a value or
+		// passed on) can be called later with anything. A declaration's own name, a member's name after a
+		// dot (the property form, read above) and a direct call (read at the call) aren't such reads.
+		if _, named := looseCaughtNames[node.Text()]; !named || ast.IsDeclarationName(node) {
+			return
+		}
+		site, parent := looseSite(node)
+		if parent != nil && parent.Kind == ast.KindPropertyAccessExpression && parent.AsPropertyAccessExpression().Name() == site {
+			return
+		}
+		if parent != nil && parent.Kind == ast.KindCallExpression && parent.AsCallExpression().Expression == site {
+			return
+		}
+		f.loose.caughtEvery = true
 	case ast.KindMethodDeclaration, ast.KindPropertyAssignment, ast.KindPropertyDeclaration, ast.KindShorthandPropertyAssignment:
 		// A then the program declares makes a thenable: awaiting it hands then a reject that can be called
 		// with anything, under any name, so it's a road the walk can't follow.
 		if name := node.Name(); name != nil && (ast.IsIdentifier(name) || ast.IsStringLiteralLike(name)) && name.Text() == "then" {
 			f.loose.caughtEvery = true
+		}
+		// A shorthand field { reject } passes the name on as a value, which its declaration-name reading
+		// above can't see.
+		if node.Kind == ast.KindShorthandPropertyAssignment && node.Name() != nil {
+			if _, named := looseCaughtNames[node.Name().Text()]; named {
+				f.loose.caughtEvery = true
+			}
 		}
 	case ast.KindPropertyAccessExpression:
 		name := node.AsPropertyAccessExpression().Name()
