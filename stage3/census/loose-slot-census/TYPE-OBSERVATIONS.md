@@ -23,3 +23,5 @@
 Whole-program run: 29.502959 s wall; 1125988 KiB peak RSS. Input: 79 roots; 799,863 non-type AST nodes; 33 candidates; H.every=true; 190 explicit H types; 4,457 shapes.
 
 The private instrument cannot reconstruct all lowering-generated stores, carried slots, concrete generic instantiations or retained capture metadata. Its results are source/type judgments under the archived reconstruction, with neither an upper nor a lower bound on an exhaustive production count.
+
+Whole-program stop-disabled mutant: 0 events, identical gathering statistics; 7.205029 s wall and 585700 KiB peak RSS.
