@@ -1,0 +1,28 @@
+package main
+
+import (
+	"context"
+	"encoding/json"
+	"github.com/system-inc/adamic/internal/load"
+	"github.com/system-inc/adamic/internal/lower"
+	"os"
+)
+
+func main() {
+	if len(os.Args) != 2 {
+		panic("scan-all requires exactly one root import-closure run")
+	}
+	p, err := load.Load(os.Args[1:])
+	if err != nil {
+		json.NewEncoder(os.Stdout).Encode(map[string]any{"Scope": lower.ScanAllScope, "load_error": err.Error()})
+		os.Exit(2)
+	}
+	// Verify both output APIs stay disabled even for clean controls.
+	if ir, e := lower.Lower(context.Background(), p); ir != nil || e == nil {
+		panic("output guard")
+	}
+	if ir, e := lower.LowerWithOptions(context.Background(), p, lower.Options{}); ir != nil || e == nil {
+		panic("options output guard")
+	}
+	json.NewEncoder(os.Stdout).Encode(lower.Scout(context.Background(), p))
+}
