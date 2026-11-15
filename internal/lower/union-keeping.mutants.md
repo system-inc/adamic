@@ -98,3 +98,31 @@ prelude; the every-declaration requirement still excludes program declarations.
 This avoids descending through Buffer/URL's library graphs into unrelated
 mapped members such as Array[Symbol.unscopables], while anonymous or mapped
 library instantiations still cannot take the shortcut.
+
+## Library aliases and tuple references
+
+Library aliases are checked through every alias argument before their mapped
+body can take the fail-closed arm. Union/intersection traversal remains ahead of
+this shortcut so the prelude's Weak union still reaches weakTarget. Tuple
+references are checked through their element arguments before returning false;
+they do not descend into Array's anonymous mapped Symbol.unscopables member.
+Alias-less mapped and anonymous library instantiations retain the previous rules.
+
+`TestUnionKeepingLibraryAliasAndTupleControls` pins the Record object-tag NotYet
+at 4:5 and the tuple-destructuring NotYet at 4:7, in .a and .ts.
+`TestUnionKeepingLibraryAliasAndTupleWeakArguments` uses a function parameter to
+reach the view assignment without first constructing a Weak union. Both Record
+and tuple Weak arguments still stop with the weak sentence at 6:25, in both
+extensions. The strong twin retains undefined so TypeScript accepts the view.
+
+Removal mutants, run through Go overlays without changing production:
+
+```
+go test -overlay /workspace/shared/union-keeping-alias-mutant.json ./internal/lower -run '^TestUnionKeepingLibraryAliasAndTupleControls/record' -v
+go test -overlay /workspace/shared/union-keeping-tuple-mutant.json ./internal/lower -run '^TestUnionKeepingLibraryAliasAndTupleControls/tuple' -v
+```
+
+Both exit 1. Removing the alias rule reds record.a and record.ts: the weak
+sentence at 3:79 replaces the object-tag NotYet. Removing the tuple rule reds
+tuple.a and tuple.ts: the weak sentence at 2:9 replaces the destructuring NotYet.
+The fixed production source is unchanged by either mutant.

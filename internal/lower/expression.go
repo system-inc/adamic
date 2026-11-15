@@ -431,6 +431,21 @@ func (l *lowering) mentionsWeak(t *checker.Type, visited map[*checker.Type]bool)
 		}
 		return len(t.Types()) == 0
 	}
+	// A library alias carries program types only through its arguments, already
+	// walked above, even when its body is mapped (Record or Partial).
+	if symbol := t.Alias().Symbol(); symbol != nil && len(symbol.Declarations) != 0 {
+		library := true
+		for _, declaration := range symbol.Declarations {
+			file := ast.GetSourceFileOfNode(declaration)
+			if !load.IsLibrary(file) && !load.IsNodeLibrary(file) && !load.IsPrelude(file) {
+				library = false
+				break
+			}
+		}
+		if library {
+			return false
+		}
+	}
 	if t.Flags()&checker.TypeFlagsObject == 0 {
 		return true
 	}
@@ -438,6 +453,12 @@ func (l *lowering) mentionsWeak(t *checker.Type, visited map[*checker.Type]bool)
 		if l.mentionsWeak(argument, visited) {
 			return true
 		}
+	}
+	// Tuple references carry program types only in their element arguments,
+	// already walked. Their Array members come from lib with those arguments;
+	// a tuple cannot declare members of its own.
+	if checker.IsTupleType(t) {
+		return false
 	}
 	if t.ObjectFlags()&checker.ObjectFlagsObjectTypeKindMask == 0 || t.ObjectFlags()&(checker.ObjectFlagsMapped|checker.ObjectFlagsReverseMapped|checker.ObjectFlagsEvolvingArray) != 0 {
 		return true

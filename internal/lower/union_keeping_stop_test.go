@@ -436,3 +436,57 @@ const push = values.push;
 		})
 	}
 }
+
+func TestUnionKeepingLibraryAliasAndTupleControls(t *testing.T) {
+	for _, probe := range []struct{ name, source, where, what string }{
+		{"record", `class Box { v = 1; }
+let x: Box | Record<string, number> = new Box();
+function swap(): void { const d: Record<string, number> = {}; d["v"] = 5; x = d; }
+if (x instanceof Box) { swap(); console.log(String(x.v)); }
+`, ":4:5", "object tag cannot be checked with typeof"},
+		{"tuple", `function pick(flag: boolean): [string, number] | [number, string] {
+ return flag ? ["a", 1] : [1, "a"];
+}
+const [a, b]: [string, number] | [number, string] = pick(true);
+console.log(String(a) + String(b));
+`, ":4:7", "destructuring anything but a tuple into [names]"},
+	} {
+		for _, extension := range []string{".a", ".ts"} {
+			t.Run(probe.name+extension, func(t *testing.T) {
+				program, err := lowerSourceAs(t, probe.source, extension)
+				var stop *NotYet
+				if !errors.As(err, &stop) || program != nil || !strings.HasSuffix(stop.Where, probe.where) || !strings.Contains(stop.What, probe.what) {
+					t.Fatalf("want NotYet %s at %s, got %v", probe.what, probe.where, err)
+				}
+				t.Log(err)
+			})
+		}
+	}
+}
+
+func TestUnionKeepingLibraryAliasAndTupleWeakArguments(t *testing.T) {
+	for _, probe := range []struct{ name, weak, strong string }{
+		{"record", "Record<string, Weak<Box>> | { readonly w: number }", "Record<string, Box | undefined> | { readonly w: number }"},
+		{"tuple", "[Weak<Box>, number] | [number, string]", "[Box | undefined, number] | [number, string]"},
+	} {
+		for _, extension := range []string{".a", ".ts"} {
+			t.Run(probe.name+extension, func(t *testing.T) {
+				source := `import type { Weak } from 'adamic';
+interface Box { readonly label: string }
+type Weakly = ` + probe.weak + `;
+type Strong = ` + probe.strong + `;
+function view(first: Weakly): void {
+ const second: Strong = first;
+ console.log("done");
+}
+`
+				program, err := lowerSourceAs(t, source, extension)
+				var stop *NotYet
+				if !errors.As(err, &stop) || program != nil || filepath.Base(stop.Where) != "main"+extension+":6:25" || !strings.Contains(stop.What, "one keeps something weakly that the other keeps strongly") {
+					t.Fatalf("want Weak argument assignment NotYet at 6:25, got %v", err)
+				}
+				t.Log(err)
+			})
+		}
+	}
+}
