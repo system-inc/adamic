@@ -1,0 +1,35 @@
+// probes.a without its cycle of two arrays (#kaz4pk8), Language's probes on #09dvwny beside Node: a
+// toString with a side effect, read through String and then a template (c1, then c2); two arrays of
+// Item, each holding only strings; null and undefined in an array; and a toString reading this. An Item[]
+// written into an Item[] could be the one holding it, which lower's loose-slot stop refuses until the
+// link (#yeep0sx); probes.a keeps the cycle as that stop's pin.
+type Item = string | null | undefined | object;
+function show(value: unknown): string {
+	return String(value) + '|' + `${value}`;
+}
+let calls = 0;
+class Count {
+	toString(): string {
+		calls++;
+		return 'c' + String(calls);
+	}
+}
+console.log(show(new Count()) + ' ' + String(calls));
+const a: Item[] = [];
+a.push('a');
+const b: Item[] = [];
+b.push('b');
+console.log(show(a) + ' ' + show(b));
+const arr: Item[] = [];
+arr.push('a');
+arr.push(null);
+arr.push(undefined);
+arr.push('b');
+console.log(show(arr));
+class Named {
+	name = 'n';
+	toString(): string {
+		return this.name + '!';
+	}
+}
+console.log(show(new Named()));

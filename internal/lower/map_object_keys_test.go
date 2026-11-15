@@ -17,20 +17,74 @@ func mapObjectKeysAgree(t *testing.T, source, want string) {
 	}
 }
 
+// looseSlotRowStops holds a row main lowered to lower's loose-slot stop: a NotYet at the line and column
+// given (at, as ":15:3"), in the stop's own words, which name #yeep0sx. Such a row lifts with #yeep0sx (the
+// link) and goes red here the day it lands, to be turned back into an agreeing row (rulings.md:338 and :339,
+// Adamic on #kaz4pk8 at 03:12Z).
+func looseSlotRowStops(t *testing.T, err error, at, what string) {
+	t.Helper()
+	var notYet *NotYet
+	if !errors.As(err, &notYet) {
+		t.Fatalf("got %v, want the loose-slot stop, a NotYet, until #yeep0sx", err)
+	}
+	if !strings.HasSuffix(notYet.Where, at) || notYet.What != what+": "+looseStopWords {
+		t.Fatalf("got %s: %s, want %s: %s: %s", notYet.Where, notYet.What, at, what, looseStopWords)
+	}
+	t.Logf("stop: %v", err)
+}
+
+// mapObjectKeyStop is what the loose-slot stop says of a key typed object written into a Map<object, number>.
+const mapObjectKeyStop = "the keys of Map<object, number>, written a value of type object that can reach back to the Map<object, number> holding it through what a value held as unknown or object can be"
+
 // tsc's tracing.ts keys a Map<object, number> by getRecursionIdentity's answer (recursionIdentityMap,
 // tracing.ts:224, 309 and 312 adapted). object is held as a Union, and a key no primitive fits is keyed by
-// identity (keyableType, #ff5eddz). Two objects with equal fields are two keys, as SameValueZero says;
-// get, has, set over an existing key, delete, size and iteration in insertion order all agree with Node.
-// Mutant: map.c's same_key answering equal for any two references, and the equal-fields row reds.
+// identity (keyableType, #ff5eddz). It stops at the loose-slot stop until #yeep0sx: a Map holds its keys,
+// and a key typed object can be the Map itself (m.set(m, 1)), so tokens.set(key, token) can close a cycle
+// the finder can't follow. TestMapClassKeysByIdentity is its twin that still lowers.
 func TestMapObjectKeysByIdentity(t *testing.T) {
 	t.Parallel()
-	mapObjectKeysAgree(t, `class Point {
+	_, err := lowerSourceAs(t, `class Point {
 	constructor(readonly x: number, readonly y: number) {}
 }
 function identity(point: Point): object {
 	return point;
 }
 const tokens = new Map<object, number>();
+const a = new Point(1, 2);
+const b = new Point(1, 2);
+for (const point of [a, b, a]) {
+	const key = identity(point);
+	let token = tokens.get(key);
+	if (token === undefined) {
+		token = tokens.size;
+		tokens.set(key, token);
+	}
+	console.log(String(token));
+}
+console.log(String(tokens.size));
+console.log(String(tokens.has(a)) + " " + String(tokens.has(new Point(1, 2))));
+tokens.set(b, 7);
+for (const [key, value] of tokens) {
+	console.log(String(key === a) + " " + String(value));
+}
+console.log(String(tokens.delete(a)) + " " + String(tokens.delete(a)) + " " + String(tokens.size));
+`, ".ts")
+	looseSlotRowStops(t, err, "main.ts:15:3", mapObjectKeyStop)
+}
+
+// TestMapObjectKeysByIdentity's twin, keyed by Point, a class with no loose field, so no key can reach the
+// Map back. Two Points with equal fields are two keys, as SameValueZero says; get, has, set over an existing
+// key, delete, size and iteration in insertion order all agree with Node. Mutant: map.c's same_key
+// answering equal for any two references, and the equal-fields row reds.
+func TestMapClassKeysByIdentity(t *testing.T) {
+	t.Parallel()
+	mapObjectKeysAgree(t, `class Point {
+	constructor(readonly x: number, readonly y: number) {}
+}
+function identity(point: Point): Point {
+	return point;
+}
+const tokens = new Map<Point, number>();
 const a = new Point(1, 2);
 const b = new Point(1, 2);
 for (const point of [a, b, a]) {
@@ -57,10 +111,12 @@ console.log(String(tokens.delete(a)) + " " + String(tokens.delete(a)) + " " + St
 // its pointer. Each is set through its own type, read back through object, and the reverse: set through
 // object and read through its own type. A Map and a function can't be seen as object yet ("an opaque host
 // or collection value viewed as unknown or object", "a function viewed as unknown or object"), so neither
-// reaches an object key, and each would need this probe when it does.
+// reaches an object key, and each would need this probe when it does. It stops at the loose-slot stop
+// until #yeep0sx, at the reverse's back.set(held[index]!, index): a key typed object can be the Map holding
+// it. TestMapClassKeysAcrossHolders is its twin that still lowers.
 func TestMapObjectKeysAcrossRepresentations(t *testing.T) {
 	t.Parallel()
-	mapObjectKeysAgree(t, `interface Named {
+	_, err := lowerSourceAs(t, `interface Named {
 	readonly name: string;
 }
 const named: Named = { name: "n" };
@@ -78,7 +134,57 @@ for (let index = 0; index < held.length; index++) {
 }
 console.log(String(back.get(named)) + " " + String(back.get(list)));
 console.log(String(back.get({ name: "n" })));
-`, "named\nlist\n0 1\nundefined\n")
+`, ".ts")
+	looseSlotRowStops(t, err, "main.ts:15:2", mapObjectKeyStop)
+}
+
+// TestMapObjectKeysAcrossRepresentations' first half alone, which keeps its pointer witness: a Map<object,
+// string> set through each key's own type, an interface's and an array's, and read back through object.
+// Converting an Object or an Array into a Union keeps its pointer, so each lookup finds its entry, and an
+// equal-fielded literal is another key. No key written is typed object, and neither key's type can reach
+// the Map, so it lowers.
+func TestMapObjectKeysSetThroughOwnTypes(t *testing.T) {
+	t.Parallel()
+	mapObjectKeysAgree(t, `interface Named {
+	readonly name: string;
+}
+const named: Named = { name: "n" };
+const list: number[] = [1, 2];
+const keys = new Map<object, string>();
+keys.set(named, "named");
+keys.set(list, "list");
+const held: object[] = [named, list];
+for (const key of held) {
+	console.log(keys.get(key) ?? "missing");
+}
+console.log(keys.get({ name: "n" }) ?? "missing");
+`, "named\nlist\nmissing\n")
+}
+
+// TestMapObjectKeysAcrossRepresentations' twin, keyed by Named, a class with no loose field: each key is
+// set through its own binding and read back through an array of Named, and the reverse, set through the
+// array and read through its own binding. An equal-fielded Named is another key.
+func TestMapClassKeysAcrossHolders(t *testing.T) {
+	t.Parallel()
+	mapObjectKeysAgree(t, `class Named {
+	constructor(readonly name: string) {}
+}
+const first = new Named("n");
+const second = new Named("m");
+const keys = new Map<Named, string>();
+keys.set(first, "first");
+keys.set(second, "second");
+const held: Named[] = [first, second];
+for (const key of held) {
+	console.log(keys.get(key) ?? "missing");
+}
+const back = new Map<Named, number>();
+for (let index = 0; index < held.length; index++) {
+	back.set(held[index]!, index);
+}
+console.log(String(back.get(first)) + " " + String(back.get(second)));
+console.log(String(back.get(new Named("n"))));
+`, "first\nsecond\n0 1\nundefined\n")
 }
 
 // A Set of object holds by identity the same way, since a Set's elements are its map's keys.

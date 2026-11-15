@@ -537,6 +537,8 @@ func (l *lowering) fieldStore(target, receiver, valueNode *ast.Node, field *ast.
 // no slot, which declaration keying missed (#g2aj1pb's g3 and g6, panicking on main 72f23939). Name
 // keying stops a write to a name some unrelated type left out too; that's the fail-closed price until
 // optional presence lifts this (#r3chqza).
+//
+// A write to an Error's cause stops here. Lifting this stop reopens a road into a catch, which the catch narrowing stands on (looseCaughtRoad, loose_slots.go).
 func (l *lowering) absentOptionalWrite(target *ast.Node) error {
 	access := target.AsPropertyAccessExpression()
 	return l.absentOptionalFieldWrite(target, access.Expression, l.checker.GetSymbolAtLocation(target), access.Name().Text(), presentBeforeWrite(target))
