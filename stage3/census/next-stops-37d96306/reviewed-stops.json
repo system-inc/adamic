@@ -41,12 +41,12 @@
     "emitter": "internal/lower/namespaces.go: (*lowering).namespaceInitialization"
   },
   {
-    "where": "utilitiesPublic.ts:1280:52",
+    "where": "utilitiesPublic.ts:1284:52",
     "kind": "Refused",
     "reason": "an unproven predicate argument for parameter predicate (argument \"predicate\")",
     "phase": "refusal_scan (predicate contracts)",
     "owner": "internal/lower/predicates.go: (*lowering).predicateArgumentProof (getFirstJSDocTag)",
-    "emitter": "internal/lower/refusals.go: (*lowering).refuse contract walk -> predicateArguments -> predicateArgumentProof; also registered rule 1700",
-    "owner_basis": "grep stage3/adapt/**/owners.json for getFirstJSDocTag returns no match; no adaptation pins this function"
+    "emitter": "internal/lower/lower.go:142 -> internal/lower/refusals.go:83 -> internal/lower/predicates.go:711,760-784 (predicateArguments / predicateArgumentProof)",
+    "owner_basis": "The measured adapted line 1284 is the predicate argument in getFirstJSDocTag. The pinned refusal scan checks predicate arguments before expression lowering. No owners.json object explicitly owns getFirstJSDocTag (ownership-search.json)."
   }
 ]
