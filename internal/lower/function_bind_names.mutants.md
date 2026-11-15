@@ -69,3 +69,47 @@ outside this table, so indexed-storage bind targets now keep the type-wide
 fallback. `TestBoundNameRecordTargetKeepsTypeWideFallback` pins that boundary.
 The original probe is preserved at `/tmp/bind-record-probe.ts`; it printed
 `Lower: <nil>` before this guard. The final pin requires the two-versus-one stop.
+
+## Accessor probes on eb086fcd
+
+`TestBoundNameAccessorsStayStopped` runs each source with Node, requiring exit 0,
+empty stderr, and stdout `1\n9\n`. Each source calls a closure before the bind
+and passes the bound unary view to a callback consumer that supplies two arguments.
+
+- `bind_name_accessors/literal_getter.ts:8:15` stops with
+  `stage 0 can't lower bind of a getter-backed method value yet`.
+- `bind_name_accessors/class_getter.ts:8:28` stops because its view's
+  `readonly field f becomes writable` (`adamic/invariant-mutable`).
+- `bind_name_accessors/class_getter_readonly.ts:9:15` preserves readonly to reach
+  the bind, which stops with `stage 0 can't lower bind of a getter-backed method value yet`.
+- `bind_name_accessors/setter.ts:9:15` stops with
+  `stage 0 can't lower bind of a function that declares 2 parameters where the type it's bound as names 1 yet`.
+  This source isolates a setter named f, storing its argument into the data field f
+  later bound. `TestBoundValueReach` additionally pins its allocation reach as unknown.
+
+The getter guard in `bindReceiverRule` scans source getters before the name reach
+can admit these binds. The setter write is unreadable and retains the type-wide
+count. None of these probes lowers, so none reaches either backend with a wrong
+answer. No lowering change or accessor-check mutant was made: the requested new
+check and its mutant were conditional on a probe lowering. The unreadable-write
+mutant above remains the regression for dropping that fallback.
+
+Accessor follow-up validation (after sourcing `/workspace/adamic-tools/env.sh`):
+
+```sh
+go test -json ./internal/lower -run '^TestBound(NameAccessorsStayStopped|ValueReach)$' -count=1 -timeout 10m
+GOMEMLIMIT=6GiB go test -json ./internal/lower -run 'Bind|Bound' -count=1 -parallel 8 -timeout 30m
+gofmt -l -e internal/lower internal/oracle
+go vet ./internal/lower
+go test -json ./cmd/adamic-gate/parallelcensus -count=1
+ADAMIC_GATE_UNCACHED=1 go test -json ./internal/oracle -run '^Test(Function|Method)Bind' -count=1 -timeout 30m
+```
+
+The focused accessor/reach run passes 6 tests and subtests; the lower bind
+selection passes 313; parallelcensus passes 6. Formatting emits no paths and vet
+passes. Lowering code is unchanged, so the conditional whole-lower rerun is not
+needed for this follow-up.
+The function/method bind oracle selection passes 58 tests and subtests with 2
+WASI skips. Raw follow-up logs are `/tmp/bind-accessor-pins.log`,
+`/tmp/bind-accessors-bind-tests.log`, `/tmp/bind-accessors-parallelcensus.log`,
+and `/tmp/bind-accessors-oracle.log`.

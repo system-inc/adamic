@@ -20,7 +20,8 @@ import (
 // so two, a two-parameter function also held as Unary, never counts and the bind lowers.
 // absent_property still has unknown allocation reach. The independent name scan now proves that
 // no function is stored under f and admits the bind; it must not turn this unknown into a known
-// allocation-flow answer.
+// allocation-flow answer. The setter probe also stays unknown: its write must keep the
+// two-parameter function in the conservative bind count.
 func TestBoundValueReach(t *testing.T) {
 	t.Parallel()
 	var mutex sync.Mutex
@@ -39,6 +40,7 @@ func TestBoundValueReach(t *testing.T) {
 		{"../oracle/testdata/bind_extra_parameters/narrow_type.a", "narrow.bind(undefined)", "seen", true},
 		{"../oracle/testdata/bind_extra_parameters/known_reach.a", "unary.bind(undefined)", "one", true},
 		{"../oracle/testdata/bind_extra_parameters/absent_property.a", "absentProperty.f?.bind(otherReceiver)", "", false},
+		{"testdata/bind_name_accessors/setter.ts", "host.f.bind(host)", "", false},
 	} {
 		source, err := os.ReadFile(probe.fixture)
 		if err != nil {
