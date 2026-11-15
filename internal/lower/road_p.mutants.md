@@ -62,3 +62,25 @@ New:
 
 Expected: TestRoadPAgreesWithNode goes red on every backend: the class's column reads ---- true- where Node prints
 abcd falsef and a--- falsef.
+
+## 4. presenceConsumer widened to every right of &&
+
+File: internal/lower/method_presence.go, presenceConsumer. methodPresenceAndRight asks truthinessOnly of the && itself
+(Lower's should), so a position added to presenceConsumer can't make an && whose value is read lower to a boolean.
+
+Old:
+
+```go
+		if parent.AsBinaryExpression().OperatorToken.Kind == ast.KindAmpersandAmpersandToken && parent.AsBinaryExpression().Left == node {
+```
+
+New:
+
+```go
+		if parent.AsBinaryExpression().OperatorToken.Kind == ast.KindAmpersandAmpersandToken {
+```
+
+Expected: TestRoadPRightOfAndKeepingTheValueIsRefused's initializer, argument and return rows, in the class form, stop
+as not yet, "a method's presence test on the right of an && whose value is read", where without the guard they would
+lower the && to a boolean its reader holds. The rows go red either way, since they want a refusal; the stop's words say
+the guard is what held.

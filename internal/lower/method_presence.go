@@ -688,6 +688,14 @@ func (l *lowering) methodPresenceAndRight(node *ast.Node) (ir.Expression, bool, 
 	if binary.OperatorToken.Kind != ast.KindAmpersandAmpersandToken || !l.methodPresenceTest(ast.SkipParentheses(binary.Right)) {
 		return nil, false, nil
 	}
+	if !truthinessOnly(node) {
+		// presenceConsumer admits the right only through truthinessOnly, so this is a position a later
+		// consumer let in through an && whose value is read: the boolean below would be that value, so it
+		// stops instead (Lower's should on road P; mutant 4).
+		return nil, true, l.notYet(node, "a method's presence test on the right of an && whose value is read")
+	}
+	// A method on the left too (if (h.m && h.n)) lowers through condition's methodPresenceCondition, which
+	// is why this runs before methodPresenceAnd (Compiler's should on road P).
 	left, err := l.condition(binary.Left)
 	if err != nil {
 		return nil, true, err
