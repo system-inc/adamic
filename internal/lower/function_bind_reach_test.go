@@ -18,12 +18,11 @@ import (
 // narrow holds only seen, which declares an index its bound type doesn't name, reaches seen's
 // functions alone, known. known_reach's unary, holding only one, reaches one's functions alone, known,
 // so two, a two-parameter function also held as Unary, never counts and the bind lowers.
-// absent_property, function_bind.a's honest `absentProperty.f?.bind(otherReceiver)` moved out, is
-// heard as it is today: unknown, since its field read projects through the literal, where the absent
-// field or any closure call in the program (shape_flow.go's opaqueCalls) leaves the projection unknown,
-// so it falls back to every () => number function and stops, a known over-refusal. #x909e6q's lift
-// turns that row red, as its witness.
+// absent_property still has unknown allocation reach. The independent name scan now proves that
+// no function is stored under f and admits the bind; it must not turn this unknown into a known
+// allocation-flow answer.
 func TestBoundValueReach(t *testing.T) {
+	t.Parallel()
 	var mutex sync.Mutex
 	heard := []string{}
 	observe := func(where string, functions []string, known bool) {
