@@ -3,6 +3,7 @@ package lower
 import (
 	"errors"
 	"reflect"
+	"strconv"
 	"strings"
 
 	"github.com/microsoft/TypeScript/tsc/shim/ast"
@@ -421,16 +422,8 @@ func (l *lowering) sameKeepingWalk(from *checker.Type, to *checker.Type, visited
 	toSignatures := l.checker.GetSignaturesOfType(to, checker.SignatureKindCall)
 	switch {
 	case len(fromSignatures) > 0 && len(toSignatures) > 0:
-		// A closure's slots have no dynamic type descriptor. A view changing a boxed union
-		// to an unboxed scalar (or back) needs an adapter. References share the union pointer ABI.
 		sameCallable := func(inside, viewed *checker.Type) bool {
-			fromKept, _ := l.kept(inside)
-			toKept, _ := l.kept(viewed)
-			return !(fromKept == ir.Union && !toKept.IsReference() || toKept == ir.Union && !fromKept.IsReference()) && same(inside, viewed)
-		}
-		// Intrinsic callback adapters call the source signature, not the library's wider view.
-		if declaration := toSignatures[0].Declaration(); declaration != nil && load.IsLibrary(ast.GetSourceFileOfNode(declaration)) {
-			sameCallable = same
+			return l.callableKeeping(inside, viewed, toSignatures[0], visited)
 		}
 		fromParameters, toParameters := fromSignatures[0].Parameters(), toSignatures[0].Parameters()
 		if l.censusNeverRestSignature(toSignatures[0]) {
@@ -447,17 +440,8 @@ func (l *lowering) sameKeepingWalk(from *checker.Type, to *checker.Type, visited
 		// a view rest's element, as a fixed parameter is: (...items: (string | number)[]) seen as
 		// (a: string, b: number) packed b's raw double where a boxed union goes, and clang refused the C
 		// (#2t3h708). Converting each element at the call is #8q1pjsp.
-		if rest := len(fromParameters) - 1; len(toParameters) > 0 && fromSignatures[0].HasRestParameter() && l.isArrayType(l.checker.GetTypeOfSymbol(fromParameters[rest])) {
-			collected := len(toParameters)
-			if toSignatures[0].HasRestParameter() {
-				// A view rest before the function's own hands it that rest's element at every position.
-				collected = max(collected, len(fromParameters))
-			}
-			for position := rest; position < collected; position++ {
-				if !sameCallable(l.elementTypeOfArray(l.checker.GetTypeOfSymbol(fromParameters[rest])), l.checker.GetTypeAtPosition(toSignatures[0], position)) {
-					return false
-				}
-			}
+		if _, _, _, differs := l.restCollectedOtherwise(fromSignatures[0], toSignatures[0], sameCallable); differs {
+			return false
 		}
 		return sameCallable(l.checker.GetReturnTypeOfSignature(fromSignatures[0]), l.checker.GetReturnTypeOfSignature(toSignatures[0]))
 	case from.ObjectFlags()&checker.ObjectFlagsReference != 0 && to.ObjectFlags()&checker.ObjectFlagsReference != 0 && (l.isArrayType(from) || checker.IsTupleType(from) || l.isLibraryType(from, "Map", "ReadonlyMap", "Set", "ReadonlySet")):
@@ -481,6 +465,64 @@ func (l *lowering) sameKeepingWalk(from *checker.Type, to *checker.Type, visited
 		}
 	}
 	return true
+}
+
+// callableKeeping is the slot comparison shared by the callable walk and its rest diagnostic.
+func (l *lowering) callableKeeping(inside, viewed *checker.Type, signature *checker.Signature, visited map[[2]*checker.Type]bool) bool {
+	fromKept, _ := l.kept(inside)
+	toKept, _ := l.kept(viewed)
+	// A closure's slots have no dynamic type descriptor. Boxed unions and unboxed scalars
+	// need an adapter; references share the union pointer ABI. Intrinsic callback adapters
+	// instead call the source signature, not the library's wider view.
+	if declaration := signature.Declaration(); declaration == nil || !load.IsLibrary(ast.GetSourceFileOfNode(declaration)) {
+		if fromKept == ir.Union && !toKept.IsReference() || toKept == ir.Union && !fromKept.IsReference() {
+			return false
+		}
+	}
+	return (fromKept == ir.Weak) == (toKept == ir.Weak) && l.sameKeepingWalk(inside, viewed, visited)
+}
+
+// restCollectedOtherwise keeps the rest loop's bounds and comparisons in one place.
+func (l *lowering) restCollectedOtherwise(from, to *checker.Signature, sameCallable func(*checker.Type, *checker.Type) bool) (element, parameter *checker.Type, position int, ok bool) {
+	fromParameters, toParameters := from.Parameters(), to.Parameters()
+	if len(toParameters) == 0 || !from.HasRestParameter() || l.censusNeverRestSignature(to) {
+		return nil, nil, 0, false
+	}
+	rest := len(fromParameters) - 1
+	restType := l.checker.GetTypeOfSymbol(fromParameters[rest])
+	if !l.isArrayType(restType) {
+		return nil, nil, 0, false
+	}
+	collected := len(toParameters)
+	if to.HasRestParameter() {
+		// A view rest before the function's own hands it that rest's element at every position.
+		collected = max(collected, len(fromParameters))
+	}
+	for position := rest; position < collected; position++ {
+		element, parameter := l.elementTypeOfArray(restType), l.checker.GetTypeAtPosition(to, position)
+		if !sameCallable(element, parameter) {
+			return element, parameter, position, true
+		}
+	}
+	return nil, nil, 0, false
+}
+
+// restElementHeldOtherwise names only a top-level rest mismatch. A nested rest keeps
+// the existing wording, and overloaded callable views are not described by one signature.
+func (l *lowering) restElementHeldOtherwise(from, to *checker.Type) (element, parameter *checker.Type, position int, ok bool) {
+	from, to = l.present(from), l.present(to)
+	if from == nil || to == nil {
+		return nil, nil, 0, false
+	}
+	fromSignatures := l.checker.GetSignaturesOfType(from, checker.SignatureKindCall)
+	toSignatures := l.checker.GetSignaturesOfType(to, checker.SignatureKindCall)
+	if len(fromSignatures) != 1 || len(toSignatures) != 1 {
+		return nil, nil, 0, false
+	}
+	visited := map[[2]*checker.Type]bool{{from, to}: true}
+	return l.restCollectedOtherwise(fromSignatures[0], toSignatures[0], func(inside, viewed *checker.Type) bool {
+		return l.callableKeeping(inside, viewed, toSignatures[0], visited)
+	})
 }
 
 // restHiddenByView reports whether a function with a rest parameter, seen as viewed through its
@@ -2142,6 +2184,13 @@ func (l *lowering) valueSlotKeeps(node *ast.Node, slot *checker.Type) error {
 		}
 		if !l.restAdapterCallback(node) && l.restHiddenWithin(own, slot, false, map[restHiddenPair]bool{}) {
 			return l.notYet(node, "a rest function seen through a view that hides its rest isn't built yet: a "+l.checker.TypeToString(own)+" seen as a "+l.checker.TypeToString(slot))
+		}
+		if element, parameter, position, differs := l.restElementHeldOtherwise(own, slot); differs {
+			elementName := l.checker.TypeToString(element)
+			signature := l.checker.GetSignaturesOfType(l.present(own), checker.SignatureKindCall)[0]
+			parameters := signature.Parameters()
+			restType := l.checker.GetTypeOfSymbol(parameters[len(parameters)-1])
+			return l.notYet(node, "a "+l.checker.TypeToString(own)+" seen as a "+l.checker.TypeToString(slot)+", whose rest's element "+elementName+" is held otherwise than the "+l.checker.TypeToString(parameter)+" the view hands it at parameter "+strconv.Itoa(position+1)+" (give the view's rest that element, ...values: "+l.checker.TypeToString(restType)+", or declare the function's parameters one by one)")
 		}
 		return l.notYet(node, "a "+l.checker.TypeToString(own)+" seen as a "+l.checker.TypeToString(slot)+" (one keeps something weakly that the other keeps strongly)")
 	} else if tuple, array := l.tupleSeenAsArray(own, slot, map[[2]*checker.Type]bool{}); tuple != nil {
