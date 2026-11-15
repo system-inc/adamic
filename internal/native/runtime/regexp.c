@@ -445,41 +445,6 @@ bool adamic_regex_method(const adamic_object *object, const char *name, adamic_m
 #endif
     return true;
 }
-static adamic_value regex_test_detached(adamic_closure *self, adamic_value *arguments) {
-    (void)self;
-    (void)arguments;
-    static const char message[] = "Method RegExp.prototype.test called on incompatible receiver undefined";
-    adamic_throw_kind("TypeError", sizeof "TypeError" - 1, message, sizeof message - 1);
-    return (adamic_value){0};
-}
-// The prototype owns one immutable function, with a zero count, as Object.prototype does.
-static adamic_closure regex_test_closure = {.heap = {0, adamic_kind_closure, 0}, .code = regex_test_detached, .source_length = 1};
-// A copied prototype function still receives the object it is called off. Node's test
-// accepts that object, then its built-in exec rejects it. Receivers with their own exec
-// function or a different prototype stop by name until that dispatch is served.
-static adamic_value regex_test_object(adamic_object *self, adamic_value *arguments) {
-    (void)arguments;
-    if (self->class != NULL || self->tuple || self->shape->methods != NULL || adamic_object_own_function(&self->heap, "exec")) {
-        static const char message[] = "RegExp.prototype.test on this receiver isn't built yet";
-        adamic_panic(message, sizeof message - 1);
-    }
-    static const char message[] = "Method RegExp.prototype.exec called on incompatible receiver #<Object>";
-    adamic_throw_kind("TypeError", sizeof "TypeError" - 1, message, sizeof message - 1);
-    return (adamic_value){0};
-}
-bool adamic_regex_function_method(const adamic_closure *function, const adamic_object *object, adamic_method_entry *method) {
-    if (function != &regex_test_closure) return false;
-    adamic_method code = regex_object(object) ? regex_test_method : regex_test_object;
-#ifdef ADAMIC_CLOSURE_CONVENTION
-    *method = (adamic_method_entry){.code = code};
-#else
-    *method = code;
-#endif
-    return true;
-}
-adamic_closure *adamic_regex_prototype_function(const adamic_object *object, const char *name) {
-    return regex_object(object) && strcmp(name, "test") == 0 ? &regex_test_closure : NULL;
-}
 adamic_object *adamic_regex_new(const adamic_regex_program *program, adamic_string *source,
 								adamic_string *flags) {
 	adamic_object *result = adamic_object_new(&regex_shape);

@@ -1,0 +1,4 @@
+interface Maybe { readonly test?: (text: string) => boolean }
+const trigger: Maybe = /a/;
+const v: RegExp = /b/;
+console.log(String(v.test('b')));

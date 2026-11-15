@@ -65,6 +65,13 @@ func (l *lowering) objectCallArguments(node *ast.Node, name string, written []*a
 		}
 		call.Arguments = []ir.Expression{fit(value, ir.Union)}
 	case "keys", "values", "entries", "freeze", "hasOwn", "assign":
+		// Class the reader before a shape refusal can leave it without an expression.
+		reader := call
+		reader.Checked = true
+		class := viewReadOf(l.result, reader)
+		for _, argument := range written {
+			l.recordRegExpServedWhole(node, l.checker.GetTypeAtLocation(argument), reader, class == viewReadsNoField)
+		}
 		if name == "keys" && !l.includesUndefined(l.checker.GetTypeAtLocation(written[0])) {
 			if _, _, known := l.nodeArrayLayoutOf(l.checker.GetTypeAtLocation(written[0])); known {
 				value, err := l.expression(written[0])

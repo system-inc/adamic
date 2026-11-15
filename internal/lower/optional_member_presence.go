@@ -163,6 +163,10 @@ func (l *lowering) checkOptionalMemberPresence() error {
 		}
 		switch {
 		case len(found[key]) == 1 && len(dispatched) == 0:
+			// A served view observes callable presence without taking a prototype function value.
+			if read.name == "test" && l.regexpServedView && l.regexpServedPresence(read.node) {
+				continue
+			}
 			if err := l.judgePresenceReceiver(read, tested, presenceReachOf(graph, graph.ReachingAllocations(found[key][0].Object), nil, read.name)); err != nil {
 				return err
 			}

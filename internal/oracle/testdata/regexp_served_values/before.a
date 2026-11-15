@@ -1,0 +1,5 @@
+interface Maybe { test?: (text: string) => boolean }
+function read(v: Maybe): void { const f = v.test; console.log(f === undefined ? 'missing' : 'function'); }
+read({ test: (_text: string): boolean => true });
+const related: Maybe = /a/;
+console.log(String(related.test?.('a')));

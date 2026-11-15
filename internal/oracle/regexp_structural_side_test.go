@@ -13,22 +13,22 @@ import (
 
 var regexpStructuralSideRows = []struct{ name, stdout, diagnostic string }{
 	{"copy", "TypeError: Method RegExp.prototype.exec called on incompatible receiver #<Object>\n", ":3:7: error TS2375: Type '{ test: ((text: string) => boolean) | undefined; }' is not assignable to type 'Maybe' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.\n  Types of property 'test' are incompatible.\n    Type '((text: string) => boolean) | undefined' is not assignable to type '(text: string) => boolean'.\n      Type 'undefined' is not assignable to type '(text: string) => boolean'."},
-	{"call", "true\n", ":3:20: stage 0 can't lower a call through ?. (an optional call) yet"},
+	{"call", "true\n", ":3:20: stage 0 can't lower test read as a value, in a program where a RegExp reaches a view naming test, which Adamic can't give a receiver to yet"},
 	{"bind", "true\n", ":3:20: stage 0 can't lower a call through ?. (an optional call) yet"},
-	{"apply", "true\n", ":3:20: stage 0 can't lower a call through ?. (an optional call) yet"},
+	{"apply", "true\n", ":3:20: stage 0 can't lower test read as a value, in a program where a RegExp reaches a view naming test, which Adamic can't give a receiver to yet"},
 	{"typeof", "function\n", ":3:20: stage 0 can't lower a presence test of optional member test whose receiver may hold a value the program didn't build as a plain object literal (no reaching allocation established; untracked source ir.RegExpNew) yet"},
-	{"identity", "true\n", ""},
+	{"identity", "true\n", ":3:20: stage 0 can't lower test read as a value, in a program where a RegExp reaches a view naming test, which Adamic can't give a receiver to yet"},
 	{"optional_last_index", "true\nfalse\ntrue\n", ""},
 	{"required_last_index", "true\nfalse\ntrue\n", ""},
 	{"array", "true\n", ":3:13: stage 0 can't lower an array of boolean | undefined yet"},
 	{"generic", "true\n", ""},
 	{"narrowed", "true\n", ""},
 	{"impostor", "undefined\nno test\n", ":2:20: error TS2353: Object literal may only specify known properties, and 'source' does not exist in type 'Maybe'."},
-	{"copy_narrowed", "TypeError: Method RegExp.prototype.exec called on incompatible receiver #<Object>\n", ""},
+	{"copy_narrowed", "TypeError: Method RegExp.prototype.exec called on incompatible receiver #<Object>\n", ":3:11: stage 0 can't lower test read as a value, in a program where a RegExp reaches a view naming test, which Adamic can't give a receiver to yet"},
 	{"impostor_undefined", "undefined\nno test\n", ":3:18: Adamic 0.1 refuses a value of type { source: string; flags: string; lastIndex: number; test: undefined; } seen as Maybe, which can write ((text: string) => boolean) | undefined where undefined is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)"},
 	{"array_string", "true\n", ""},
 	{"impostor_readonly", "undefined\nno test\n", ""},
-	{"required_bound", "true\n", ""},
+	{"required_bound", "true\n", ":3:11: stage 0 can't lower test read as a value, in a program where a RegExp reaches a view naming test, which Adamic can't give a receiver to yet"},
 	{"subclass_required", "true\n", ":2:9: stage 0 can't lower a computed class base; name the base class directly yet"},
 	{"subclass_optional", "has test\ntrue\n", ":2:9: stage 0 can't lower a computed class base; name the base class directly yet"},
 	{"override_required", "false\n", ":2:9: stage 0 can't lower a computed class base; name the base class directly yet"},
@@ -70,8 +70,8 @@ func regexpStructuralSidePath(name string) string {
 // also observes checker-rejected programs: the ordinary cached Node runner checks their imports.
 // Subclass allocation and stateful task calls keep their existing named stops. Identity-only
 // tasks carry the opaque value without reading lastIndex; main calls test after map completion.
-// Removing the copied-function receiver arm reds copy_narrowed; a fresh wrapper on every read
-// reds identity, and omitting the optional-read wrapper reds the existing detached witness.
+// Copied, bound and identity reads now keep the served-view value stop; calls and task
+// identity comparisons keep their measured behavior without handing out a prototype function.
 func TestRegExpStructuralSideRoads(t *testing.T) {
 	t.Parallel()
 	for _, row := range regexpStructuralSideRows {

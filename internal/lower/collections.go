@@ -444,6 +444,9 @@ func (l *lowering) destructure(pattern *ast.Node, initializer *ast.Node) ([]ir.S
 // destructured (held as heldAs): a tuple's elements by position, an object's fields by name. An
 // object's name may have a default, { a = 1 } (destructuredDefault); a tuple's may not yet.
 func (l *lowering) destructureFrom(pattern *ast.Node, destructured *checker.Type, heldAs ir.Type, held int) ([]ir.Statement, error) {
+	if pattern.Kind == ast.KindObjectBindingPattern {
+		l.recordRegExpServedWhole(pattern, destructured, ir.Property{}, false)
+	}
 	tuple := pattern.Kind == ast.KindArrayBindingPattern
 	if tuple && heldAs == ir.Array && l.matchArray(destructured) {
 		return l.destructureMatch(pattern, held)
@@ -585,6 +588,7 @@ func (l *lowering) destructuredDefault(binding *ast.Node, fieldType *checker.Typ
 // an assignment: one the type names and holds as its own, never a method, an inherited library
 // member or an erased method.
 func (l *lowering) destructuredField(where *ast.Node, destructured *checker.Type, field string) (*ast.Symbol, error) {
+	l.recordRegExpServedWhole(where, destructured, ir.Property{Name: field}, false)
 	property := l.checker.GetPropertyOfType(destructured, field)
 	if property == nil {
 		return nil, l.notYet(where, "destructuring a field the type doesn't name")

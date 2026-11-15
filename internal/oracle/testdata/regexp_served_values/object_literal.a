@@ -1,0 +1,4 @@
+interface Maybe { test?: (text: string) => boolean }
+const t: Maybe = /a/;
+const box = { test: t.test };
+console.log(box.test === undefined ? 'missing' : 'function');

@@ -34,7 +34,7 @@ var libraryStoredMembers = map[string]map[string]bool{
 
 // libraryServedMethods names, for each library interface, the methods a program view reads correctly on
 // the runtime's value though they live on its prototype: each one measured, never assumed. A RegExp's
-// test, called or read as an optional member through a program view, agrees with Node in the review
+// test, called or tested for presence through a program view, agrees with Node in the review
 // lane (internal/oracle/testdata/review/agree/fxspptb_8e67677_structural_method.a and
 // _structural_optional.a). Any other lib method a program view names is NotYet.
 var libraryServedMethods = map[string]map[string]bool{
@@ -214,6 +214,9 @@ func (l *lowering) optionalWidened(source, target *checker.Type, skip map[string
 				return &optionalWidening{property: property.Name, source: source, target: target}
 			}
 			continue
+		}
+		if programDeclared(property) && libraryServedRegExpTest(declared) {
+			l.regexpServedView = true
 		}
 		// A view the program declares, naming a member the source has only as a lib-declared member the
 		// runtime shape lacks, would read it absent natively. A view that names it as the same library

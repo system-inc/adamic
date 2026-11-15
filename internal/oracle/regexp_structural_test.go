@@ -9,7 +9,6 @@ import (
 var regexpStructuralFixtures = []struct{ name, path, stdout string }{
 	{"method", "internal/oracle/testdata/review/agree/fxspptb_8e67677_structural_method.a", "true\n"},
 	{"optional", "internal/oracle/testdata/review/agree/fxspptb_8e67677_structural_optional.a", "has test\nno test\n"},
-	{"detached", "internal/oracle/testdata/regexp_structural/detached.a", "TypeError: Method RegExp.prototype.test called on incompatible receiver undefined\n"},
 	{"optional_calls", "internal/oracle/testdata/regexp_structural/optional_calls.a", "true\ntrue\nundefined\ntrue\ntrue\n"},
 }
 
@@ -22,9 +21,8 @@ func init() {
 	}
 }
 
-// Emptying the served table reds method and optional at their view relation. Removing native's
-// prototype lookup reds optional; undoing JavaScript's receiver arm reds method. Detached pins
-// the runtime function's throw effect, which has no program function body to supply it.
+// Emptying the served table reds method and optional at their view relation. Calls retain
+// the allocation as their receiver; value reads are held separately by TestRegExpServedValueRoads.
 func TestRegExpStructuralMethods(t *testing.T) {
 	t.Parallel()
 	for _, fixture := range regexpStructuralFixtures {

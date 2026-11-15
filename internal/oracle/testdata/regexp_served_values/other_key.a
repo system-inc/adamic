@@ -1,0 +1,5 @@
+interface Maybe { readonly test?: (text: string) => boolean }
+const trigger: Maybe = /a/;
+const object = { test: (_text: string): boolean => true, a: 'a', b: 'b' };
+function read(key: 'a' | 'b'): string { return object[key]; }
+console.log(read('a'));

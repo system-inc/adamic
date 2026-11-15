@@ -192,8 +192,6 @@ adamic_closure *adamic_object_callee(const adamic_object *object, const char *na
 	}
 	if (slot < shape->count) {
 		adamic_closure *function = object->slots[slot].reference;
-		// A copied RegExp prototype function needs this receiver, just as an inherited one does.
-		if (adamic_regex_function_method(function, object, method)) { return NULL; }
 		return function;
 	}
 	*method = shape->methods->code[slot - shape->count];
@@ -235,16 +233,21 @@ adamic_value *adamic_object_optional_find(const adamic_object *object, const cha
 	return &((adamic_object *)object)->slots[slot];
 }
 
-// Optional function views can find RegExp.prototype.test, without inventing a slot index
-// outside the object. Own fields keep their readiness check and their ordinary closure value.
+// Optional own functions keep their readiness check and their ordinary closure value.
 adamic_closure *adamic_object_optional_closure(const adamic_object *object, const char *name, adamic_slot_cache *cache, const char *expression) {
     if (object == NULL) return NULL;
-    adamic_closure *prototype = adamic_regex_prototype_function(object, name);
-    if (prototype != NULL) return prototype;
     adamic_value *slot = adamic_object_optional_field(object, name, cache);
     if (slot == NULL) return NULL;
     if (expression != NULL) slot = adamic_object_read(object, name, cache, expression);
     return slot->reference;
+}
+
+// Presence can observe a served prototype method without handing out its function value.
+bool adamic_object_optional_function_present(const adamic_object *object, const char *name, adamic_slot_cache *cache, const char *expression) {
+	if (object == NULL) return false;
+	adamic_method_entry method = {0};
+	if (adamic_regex_method(object, name, &method)) return true;
+	return adamic_object_optional_closure(object, name, cache, expression) != NULL;
 }
 
 // Both public reads use the worker's readiness check; only their diagnostics differ.

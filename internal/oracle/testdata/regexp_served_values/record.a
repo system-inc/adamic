@@ -1,0 +1,5 @@
+interface Maybe { test?: (text: string) => boolean }
+const t: Maybe = /a/;
+const r: Record<string, (text: string) => boolean> = {};
+if (t.test !== undefined) r['test'] = t.test;
+console.log(String('test' in r));

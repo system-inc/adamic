@@ -779,11 +779,6 @@ func (l *lowering) readObjectField(node *ast.Node, property ir.Property) ir.Expr
 		return property
 	}
 	property.Absent = true
-	if property.Of == ir.Closure && libraryServedMethods["RegExp"][property.Name] {
-		// A runtime prototype function can reach this optional view. Its detached call throws,
-		// although it has no entry among the program's function bodies (ClosureMayThrow).
-		l.result.ClosuresMayThrow = true
-	}
 	if declared, _ := l.representation(l.checker.GetTypeOfSymbol(field)); declared.IsMaybe() && property.Of == declared.Present() {
 		property.Of = declared
 		return fit(property, declared.Present())
@@ -811,6 +806,7 @@ func (l *lowering) viewedField(node *ast.Node, property ir.Property) ir.Property
 		property.ViewType = l.checker.TypeToString(declared)
 		property.ViewAllowed = l.viewLiterals(declared)
 	}
+	l.recordRegExpServedRead(node, property)
 	return property
 }
 
