@@ -25,12 +25,15 @@ for m in modes:
   s += ['- '+str(g['count'])+(' root: ' if g['count']==1 else ' roots: ')+g['where']+'; '+g['kind']+'; '+g['reason']+'. '+str(moved)+' moved, '+str(len(members)-moved)+' unchanged from 55c375d9.']
  s += ['']
 s += ['Both formats independently measured all 79 compiler roots twice. '+str(matching)+'/79 first-stop tuples agree across formats. CommonJSBundle was validated and pushed before EcmaScript began. No new apply or build occurred between formats.','']
-candidates={'sys.ts:'+x for x in ['1385:31','1500:57','1532:13','1533:13','1588:192','1598:57','1610:22','1612:77','1965:12']}
+forecast_sites=['sys.ts:1500:57','sys.ts:1598:57','sys.ts:1532:13','sys.ts:1533:13','sys.ts:1588:192']
+s += ['The forecast was clearTimeout (task #7yz6rtp), watchFile/watchDirectory (task #cyjqp5f), or process.recordreplay (task #b7phwab), whichever was first in source order and still on main. Forecast locations in the 55c375d9 tree: '+', '.join(forecast_sites)+'.','']
 for m in modes:
  cs=json.loads((base/m/'comparison.json').read_text())
  from collections import Counter
  stops=Counter(c['after'][0] for c in cs if c['before'][0]=='sys.ts:1385:31')
- for stop,n in stops.items():s += [m+': '+str(n)+' of the former 73 roots meet '+stop+' first. This '+('is' if stop in candidates else 'is not')+' one of the nine supplied refusal-scan candidates.','']
+ assert sum(stops.values())==73
+ for stop,n in stops.items():
+  s += [m+': '+str(n)+' of the former 73 roots meet '+stop+' first. '+('The forecast did not hold: the writeFile assignment in patchWriteFileEnsuringDirectory stops them before any of the forecast sites.' if stop=='sys.ts:1387:5' else 'See the measured source below for the forecast assessment.'),'']
 s += ['## Adapted source at new stops','']
 seen=set()
 for m in modes:
@@ -46,7 +49,7 @@ if not seen:s+=['No new stop tuples relative to the 55c375d9 baseline.','']
 for m in modes:
  report=(base/m/'REPORT.md').read_text().splitlines()[1:]
  s += ['## '+m,'','\n'.join('#'+line if line.startswith('#') else line for line in report)]
-s += ['','## Setup and limits','','A fresh detached scratch worktree used the measured SHA, with recursive submodules initialized. The upstream clone confirmed v6.0.3 at '+p['upstream']+'. stage3/api npm ci exited 0. Go/adamic caches and temporary measurement products used writable scratch. Both apply and build completed before measurement. All npm cache writes used scratch. The shared checkout’s tracked files were unchanged. No compiler or adaptation changes were made. One completed apply and one successful ordinary build served both formats. The separate sys.ts single-file census was skipped.','','Each ordinary child and group has a 1780-second bound with actual exits recorded, at most ten roots per group, three children at a time. Duplicate observations agree except timing. This measures first stops, not successful native execution. Owners use the measured owners.json or emitting code method.']
+s += ['','## Setup and limits','','A fresh detached scratch worktree used the measured SHA, with recursive submodules initialized. An initial build attempted before nested submodule checkout completed exited 1 because cohere/TypeScript/tsc/go.mod was absent; its exact log and exit are retained as build-before-submodules. The retry after submodule initialization exited 0. The upstream clone confirmed v6.0.3 at '+p['upstream']+'. stage3/api npm ci exited 0. Go/adamic caches and temporary measurement products used writable scratch. Both apply and build completed before measurement. All npm cache writes used scratch. The shared checkout’s tracked files were unchanged. No compiler or adaptation changes were made. One completed apply and one successful ordinary build served both formats. The separate sys.ts single-file census was skipped.','','Each ordinary child and group has a 1780-second bound with actual exits recorded, at most ten roots per group, three children at a time. Duplicate observations agree except timing. This measures first stops, not successful native execution. Owners use the measured owners.json or emitting code method.']
 checkpoints=[dict(sha=line.split(' ',1)[0],subject=line.split(' ',1)[1]) for line in subprocess.check_output(['git','log','--reverse','--format=%H %s',p['sha']+'..HEAD'],text=True).splitlines() if 'checkpoint' in line]
 assert len(checkpoints)==16
 (base/'checkpoints.json').write_text(json.dumps(checkpoints,indent=2)+'\n')

@@ -24,7 +24,7 @@ former={c['root'] for c in comparisons if c['before'][0]=='sys.ts:1385:31'};asse
 s+=['The former 73 sys.ts:1385:31 roots now go to:','']
 for g in groups:
  n=len(former.intersection(g['roots']))
- if n:s+=['- '+str(n)+' to '+g['where']+': '+g['reason']+'. '+('Forecast held: clearTimeout is the first forecast site.' if g['where'] in ['sys.ts:1500:57','sys.ts:1598:57'] else 'See forecast assessment in the combined report.')]
+ if n:s+=['- '+str(n)+' to '+g['where']+': '+g['reason']+'. '+('Forecast did not hold: the writeFile assignment is before all forecast sites.' if g['where']=='sys.ts:1387:5' else 'See forecast assessment in the combined report.')]
 s+=['','| Root | Before (location; kind; exact reason) | After (location; kind; exact reason) |','| --- | --- | --- |']
 for c in comparisons:s+=['| '+c['root']+' | '+'; '.join(c['before']).replace('|','\\|').replace('<','&lt;').replace('>','&gt;')+' | '+'; '.join(c['after']).replace('|','\\|').replace('<','&lt;').replace('>','&gt;')+' |']
 s+=['','## Adapted source at stops','']
