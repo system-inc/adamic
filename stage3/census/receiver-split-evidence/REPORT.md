@@ -19,3 +19,13 @@ Raw sources and logs remain in scratch; raw-manifest.json records sizes and sha2
 The guarded new-base census tool built, and its continuation, attribution, mutant and no-output audit passed. The first full CommonJSBundle pair, es2021.ts, has 27 base / 25 changed findings: all 25 surviving records pair by (kind, phase, reason, message with source positions stripped), with 0 new and 0 changed outside the target. The two removals are the target method-destructuring finding and its boundary. The printer baseline completed with 1,430 findings and zero checker diagnostics; its changed run is pending.
 
 The parser audit was expanded to the 34 nearest function owners containing the 46 rewritten calls, in addition to the namespace. No existing whole-owner amendment was found there either. Stronger nested owner pins have been prepared; their final adapter control rerun is pending. Checkpoint recipe files retain their original hashes; stronger recipe versions use new v2 names.
+
+## Parser and printer full pairs complete
+
+Parser: 3,183 base / 3,181 changed findings, all 3,181 survivors paired and exactly the two target destructuring records removed. Printer: 1,430 base / 1,428 changed findings, all 1,428 survivors paired and exactly the two target var records removed. Both have 0 new and 0 changed findings outside targets. The complete printer record has 0 findings at the readonly view and all ten aliases.
+
+The first pairing wrapper conservatively stopped on printer var multiplicity attribution, not on a new or changed finding. The position-stripped key correctly paired all survivors but left indistinguishable later var records as removals. An independent unchanged-source line map proves all other createPrinter var records retain their source sites, and that the two removals are precisely line 1215. The corrected attribution keeps the required pairing key unchanged. Both wrapper versions and all completed raw files remain in scratch.
+
+AST scope audit: all 17 transformer destructures are directly in top-level factory bodies, with context introduced by that factory parameter. All 52 new arrows are directly in the same body, and all 17 factory property bindings remain. No nested per-node or visitor-call placement is eligible to lift. Dynamic counts remain pending.
+
+The remaining 16 transformer file pairs and all runtime/checker/integration/declaration proofs are still pending; none of the three adaptations is yet certified or pushed.

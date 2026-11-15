@@ -1,0 +1,15 @@
+{
+  "command": [
+    "/workspace/scratch/receiver-split/latent",
+    "/workspace/scratch/receiver-split/tree-parser/src/compiler",
+    "/workspace/scratch/receiver-split/census/change__parser.jsonl"
+  ],
+  "exit": 0,
+  "wall_seconds": 871.086,
+  "environment": {
+    "LATENT_FULL": "1",
+    "LATENT_ASSERT_NO_OUTPUT": "1",
+    "CENSUS_MODULE_FORMAT": "CommonJSBundle",
+    "LATENT_ONLY_FILE": "/workspace/scratch/receiver-split/tree-parser/src/compiler/parser.ts"
+  }
+}

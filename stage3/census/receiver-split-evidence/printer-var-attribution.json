@@ -1,0 +1,21 @@
+{
+  "method": "unchanged source lines mapped through difflib; resolve multiplicities only within the same position-stripped pairing key",
+  "newVarFindings": 0,
+  "removedVarFindings": [
+    {
+      "kind": "Refused",
+      "phase": "lowering",
+      "baseLine": 1215,
+      "column": 5,
+      "multiplicity": 1
+    },
+    {
+      "kind": "Boundary",
+      "phase": "lowering",
+      "baseLine": 1215,
+      "column": 5,
+      "multiplicity": 1
+    }
+  ],
+  "allOtherCreatePrinterVarFindingsHaveUnchangedSourceLocations": true
+}

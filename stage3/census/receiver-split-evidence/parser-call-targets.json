@@ -1,0 +1,1903 @@
+[
+  {
+    "member": "createArrayLiteralExpression",
+    "ownerPath": [
+      "Parser",
+      "parseJsonText"
+    ],
+    "before": {
+      "ownerPath": [
+        "Parser",
+        "parseJsonText"
+      ],
+      "member": "createArrayLiteralExpression",
+      "alias": true,
+      "callee": "factoryCreateArrayLiteralExpression",
+      "start": {
+        "line": 1708,
+        "column": 66
+      },
+      "end": {
+        "line": 1708,
+        "column": 114
+      }
+    },
+    "after": {
+      "ownerPath": [
+        "Parser",
+        "parseJsonText"
+      ],
+      "member": "createArrayLiteralExpression",
+      "alias": false,
+      "callee": "factory.createArrayLiteralExpression",
+      "start": {
+        "line": 1681,
+        "column": 66
+      },
+      "end": {
+        "line": 1681,
+        "column": 115
+      }
+    }
+  },
+  {
+    "member": "createExpressionStatement",
+    "ownerPath": [
+      "Parser",
+      "parseJsonText"
+    ],
+    "before": {
+      "ownerPath": [
+        "Parser",
+        "parseJsonText"
+      ],
+      "member": "createExpressionStatement",
+      "alias": true,
+      "callee": "factoryCreateExpressionStatement",
+      "start": {
+        "line": 1709,
+        "column": 31
+      },
+      "end": {
+        "line": 1709,
+        "column": 75
+      }
+    },
+    "after": {
+      "ownerPath": [
+        "Parser",
+        "parseJsonText"
+      ],
+      "member": "createExpressionStatement",
+      "alias": false,
+      "callee": "factory.createExpressionStatement",
+      "start": {
+        "line": 1682,
+        "column": 31
+      },
+      "end": {
+        "line": 1682,
+        "column": 76
+      }
+    }
+  },
+  {
+    "member": "createNodeArray",
+    "ownerPath": [
+      "Parser",
+      "reparseTopLevelAwait"
+    ],
+    "before": {
+      "ownerPath": [
+        "Parser",
+        "reparseTopLevelAwait"
+      ],
+      "member": "createNodeArray",
+      "alias": true,
+      "callee": "factoryCreateNodeArray",
+      "start": {
+        "line": 1936,
+        "column": 66
+      },
+      "end": {
+        "line": 1936,
+        "column": 100
+      }
+    },
+    "after": {
+      "ownerPath": [
+        "Parser",
+        "reparseTopLevelAwait"
+      ],
+      "member": "createNodeArray",
+      "alias": false,
+      "callee": "factory.createNodeArray",
+      "start": {
+        "line": 1909,
+        "column": 66
+      },
+      "end": {
+        "line": 1909,
+        "column": 101
+      }
+    }
+  },
+  {
+    "member": "createToken",
+    "ownerPath": [
+      "Parser",
+      "parseTokenNode"
+    ],
+    "before": {
+      "ownerPath": [
+        "Parser",
+        "parseTokenNode"
+      ],
+      "member": "createToken",
+      "alias": true,
+      "callee": "factoryCreateToken",
+      "start": {
+        "line": 2557,
+        "column": 27
+      },
+      "end": {
+        "line": 2557,
+        "column": 51
+      }
+    },
+    "after": {
+      "ownerPath": [
+        "Parser",
+        "parseTokenNode"
+      ],
+      "member": "createToken",
+      "alias": false,
+      "callee": "factory.createToken",
+      "start": {
+        "line": 2530,
+        "column": 27
+      },
+      "end": {
+        "line": 2530,
+        "column": 52
+      }
+    }
+  },
+  {
+    "member": "createToken",
+    "ownerPath": [
+      "Parser",
+      "parseTokenNodeJSDoc"
+    ],
+    "before": {
+      "ownerPath": [
+        "Parser",
+        "parseTokenNodeJSDoc"
+      ],
+      "member": "createToken",
+      "alias": true,
+      "callee": "factoryCreateToken",
+      "start": {
+        "line": 2564,
+        "column": 27
+      },
+      "end": {
+        "line": 2564,
+        "column": 51
+      }
+    },
+    "after": {
+      "ownerPath": [
+        "Parser",
+        "parseTokenNodeJSDoc"
+      ],
+      "member": "createToken",
+      "alias": false,
+      "callee": "factory.createToken",
+      "start": {
+        "line": 2537,
+        "column": 27
+      },
+      "end": {
+        "line": 2537,
+        "column": 52
+      }
+    }
+  },
+  {
+    "member": "createNodeArray",
+    "ownerPath": [
+      "Parser",
+      "createNodeArray"
+    ],
+    "before": {
+      "ownerPath": [
+        "Parser",
+        "createNodeArray"
+      ],
+      "member": "createNodeArray",
+      "alias": true,
+      "callee": "factoryCreateNodeArray",
+      "start": {
+        "line": 2595,
+        "column": 23
+      },
+      "end": {
+        "line": 2595,
+        "column": 73
+      }
+    },
+    "after": {
+      "ownerPath": [
+        "Parser",
+        "createNodeArray"
+      ],
+      "member": "createNodeArray",
+      "alias": false,
+      "callee": "factory.createNodeArray",
+      "start": {
+        "line": 2568,
+        "column": 23
+      },
+      "end": {
+        "line": 2568,
+        "column": 74
+      }
+    }
+  },
+  {
+    "member": "createIdentifier",
+    "ownerPath": [
+      "Parser",
+      "createMissingNode"
+    ],
+    "before": {
+      "ownerPath": [
+        "Parser",
+        "createMissingNode"
+      ],
+      "member": "createIdentifier",
+      "alias": true,
+      "callee": "factoryCreateIdentifier",
+      "start": {
+        "line": 2628,
+        "column": 57
+      },
+      "end": {
+        "line": 2628,
+        "column": 119
+      }
+    },
+    "after": {
+      "ownerPath": [
+        "Parser",
+        "createMissingNode"
+      ],
+      "member": "createIdentifier",
+      "alias": false,
+      "callee": "factory.createIdentifier",
+      "start": {
+        "line": 2601,
+        "column": 57
+      },
+      "end": {
+        "line": 2601,
+        "column": 120
+      }
+    }
+  },
+  {
+    "member": "createNumericLiteral",
+    "ownerPath": [
+      "Parser",
+      "createMissingNode"
+    ],
+    "before": {
+      "ownerPath": [
+        "Parser",
+        "createMissingNode"
+      ],
+      "member": "createNumericLiteral",
+      "alias": true,
+      "callee": "factoryCreateNumericLiteral",
+      "start": {
+        "line": 2630,
+        "column": 50
+      },
+      "end": {
+        "line": 2630,
+        "column": 116
+      }
+    },
+    "after": {
+      "ownerPath": [
+        "Parser",
+        "createMissingNode"
+      ],
+      "member": "createNumericLiteral",
+      "alias": false,
+      "callee": "factory.createNumericLiteral",
+      "start": {
+        "line": 2603,
+        "column": 50
+      },
+      "end": {
+        "line": 2603,
+        "column": 117
+      }
+    }
+  },
+  {
+    "member": "createStringLiteral",
+    "ownerPath": [
+      "Parser",
+      "createMissingNode"
+    ],
+    "before": {
+      "ownerPath": [
+        "Parser",
+        "createMissingNode"
+      ],
+      "member": "createStringLiteral",
+      "alias": true,
+      "callee": "factoryCreateStringLiteral",
+      "start": {
+        "line": 2631,
+        "column": 49
+      },
+      "end": {
+        "line": 2631,
+        "column": 108
+      }
+    },
+    "after": {
+      "ownerPath": [
+        "Parser",
+        "createMissingNode"
+      ],
+      "member": "createStringLiteral",
+      "alias": false,
+      "callee": "factory.createStringLiteral",
+      "start": {
+        "line": 2604,
+        "column": 49
+      },
+      "end": {
+        "line": 2604,
+        "column": 109
+      }
+    }
+  },
+  {
+    "member": "createToken",
+    "ownerPath": [
+      "Parser",
+      "createMissingNode"
+    ],
+    "before": {
+      "ownerPath": [
+        "Parser",
+        "createMissingNode"
+      ],
+      "member": "createToken",
+      "alias": true,
+      "callee": "factoryCreateToken",
+      "start": {
+        "line": 2633,
+        "column": 13
+      },
+      "end": {
+        "line": 2633,
+        "column": 37
+      }
+    },
+    "after": {
+      "ownerPath": [
+        "Parser",
+        "createMissingNode"
+      ],
+      "member": "createToken",
+      "alias": false,
+      "callee": "factory.createToken",
+      "start": {
+        "line": 2606,
+        "column": 13
+      },
+      "end": {
+        "line": 2606,
+        "column": 38
+      }
+    }
+  },
+  {
+    "member": "createIdentifier",
+    "ownerPath": [
+      "Parser",
+      "createIdentifier"
+    ],
+    "before": {
+      "ownerPath": [
+        "Parser",
+        "createIdentifier"
+      ],
+      "member": "createIdentifier",
+      "alias": true,
+      "callee": "factoryCreateIdentifier",
+      "start": {
+        "line": 2657,
+        "column": 31
+      },
+      "end": {
+        "line": 2657,
+        "column": 107
+      }
+    },
+    "after": {
+      "ownerPath": [
+        "Parser",
+        "createIdentifier"
+      ],
+      "member": "createIdentifier",
+      "alias": false,
+      "callee": "factory.createIdentifier",
+      "start": {
+        "line": 2630,
+        "column": 31
+      },
+      "end": {
+        "line": 2630,
+        "column": 108
+      }
+    }
+  },
+  {
+    "member": "createPrivateIdentifier",
+    "ownerPath": [
+      "Parser",
+      "parsePrivateIdentifier"
+    ],
+    "before": {
+      "ownerPath": [
+        "Parser",
+        "parsePrivateIdentifier"
+      ],
+      "member": "createPrivateIdentifier",
+      "alias": true,
+      "callee": "factoryCreatePrivateIdentifier",
+      "start": {
+        "line": 2749,
+        "column": 22
+      },
+      "end": {
+        "line": 2749,
+        "column": 95
+      }
+    },
+    "after": {
+      "ownerPath": [
+        "Parser",
+        "parsePrivateIdentifier"
+      ],
+      "member": "createPrivateIdentifier",
+      "alias": false,
+      "callee": "factory.createPrivateIdentifier",
+      "start": {
+        "line": 2722,
+        "column": 22
+      },
+      "end": {
+        "line": 2722,
+        "column": 96
+      }
+    }
+  },
+  {
+    "member": "createNumericLiteral",
+    "ownerPath": [
+      "Parser",
+      "parseLiteralLikeNode"
+    ],
+    "before": {
+      "ownerPath": [
+        "Parser",
+        "parseLiteralLikeNode"
+      ],
+      "member": "createNumericLiteral",
+      "alias": true,
+      "callee": "factoryCreateNumericLiteral",
+      "start": {
+        "line": 3768,
+        "column": 50
+      },
+      "end": {
+        "line": 3768,
+        "column": 136
+      }
+    },
+    "after": {
+      "ownerPath": [
+        "Parser",
+        "parseLiteralLikeNode"
+      ],
+      "member": "createNumericLiteral",
+      "alias": false,
+      "callee": "factory.createNumericLiteral",
+      "start": {
+        "line": 3741,
+        "column": 50
+      },
+      "end": {
+        "line": 3741,
+        "column": 137
+      }
+    }
+  },
+  {
+    "member": "createStringLiteral",
+    "ownerPath": [
+      "Parser",
+      "parseLiteralLikeNode"
+    ],
+    "before": {
+      "ownerPath": [
+        "Parser",
+        "parseLiteralLikeNode"
+      ],
+      "member": "createStringLiteral",
+      "alias": true,
+      "callee": "factoryCreateStringLiteral",
+      "start": {
+        "line": 3769,
+        "column": 49
+      },
+      "end": {
+        "line": 3769,
+        "column": 165
+      }
+    },
+    "after": {
+      "ownerPath": [
+        "Parser",
+        "parseLiteralLikeNode"
+      ],
+      "member": "createStringLiteral",
+      "alias": false,
+      "callee": "factory.createStringLiteral",
+      "start": {
+        "line": 3742,
+        "column": 49
+      },
+      "end": {
+        "line": 3742,
+        "column": 166
+      }
+    }
+  },
+  {
+    "member": "createLiteralLikeNode",
+    "ownerPath": [
+      "Parser",
+      "parseLiteralLikeNode"
+    ],
+    "before": {
+      "ownerPath": [
+        "Parser",
+        "parseLiteralLikeNode"
+      ],
+      "member": "createLiteralLikeNode",
+      "alias": true,
+      "callee": "factoryCreateLiteralLikeNode",
+      "start": {
+        "line": 3770,
+        "column": 35
+      },
+      "end": {
+        "line": 3770,
+        "column": 94
+      }
+    },
+    "after": {
+      "ownerPath": [
+        "Parser",
+        "parseLiteralLikeNode"
+      ],
+      "member": "createLiteralLikeNode",
+      "alias": false,
+      "callee": "factory.createLiteralLikeNode",
+      "start": {
+        "line": 3743,
+        "column": 35
+      },
+      "end": {
+        "line": 3743,
+        "column": 95
+      }
+    }
+  },
+  {
+    "member": "createToken",
+    "ownerPath": [
+      "Parser",
+      "parseModifiersForConstructorType"
+    ],
+    "before": {
+      "ownerPath": [
+        "Parser",
+        "parseModifiersForConstructorType"
+      ],
+      "member": "createToken",
+      "alias": true,
+      "callee": "factoryCreateToken",
+      "start": {
+        "line": 4502,
+        "column": 41
+      },
+      "end": {
+        "line": 4502,
+        "column": 87
+      }
+    },
+    "after": {
+      "ownerPath": [
+        "Parser",
+        "parseModifiersForConstructorType"
+      ],
+      "member": "createToken",
+      "alias": false,
+      "callee": "factory.createToken",
+      "start": {
+        "line": 4475,
+        "column": 41
+      },
+      "end": {
+        "line": 4475,
+        "column": 88
+      }
+    }
+  },
+  {
+    "member": "createPropertyAccessExpression",
+    "ownerPath": [
+      "Parser",
+      "parseSuperExpression"
+    ],
+    "before": {
+      "ownerPath": [
+        "Parser",
+        "parseSuperExpression"
+      ],
+      "member": "createPropertyAccessExpression",
+      "alias": true,
+      "callee": "factoryCreatePropertyAccessExpression",
+      "start": {
+        "line": 6045,
+        "column": 27
+      },
+      "end": {
+        "line": 6045,
+        "column": 215
+      }
+    },
+    "after": {
+      "ownerPath": [
+        "Parser",
+        "parseSuperExpression"
+      ],
+      "member": "createPropertyAccessExpression",
+      "alias": false,
+      "callee": "factory.createPropertyAccessExpression",
+      "start": {
+        "line": 6018,
+        "column": 27
+      },
+      "end": {
+        "line": 6018,
+        "column": 216
+      }
+    }
+  },
+  {
+    "member": "createIdentifier",
+    "ownerPath": [
+      "Parser",
+      "parseJsxElementOrSelfClosingElementOrFragment"
+    ],
+    "before": {
+      "ownerPath": [
+        "Parser",
+        "parseJsxElementOrSelfClosingElementOrFragment"
+      ],
+      "member": "createIdentifier",
+      "alias": true,
+      "callee": "factoryCreateIdentifier",
+      "start": {
+        "line": 6070,
+        "column": 79
+      },
+      "end": {
+        "line": 6070,
+        "column": 106
+      }
+    },
+    "after": {
+      "ownerPath": [
+        "Parser",
+        "parseJsxElementOrSelfClosingElementOrFragment"
+      ],
+      "member": "createIdentifier",
+      "alias": false,
+      "callee": "factory.createIdentifier",
+      "start": {
+        "line": 6043,
+        "column": 79
+      },
+      "end": {
+        "line": 6043,
+        "column": 107
+      }
+    }
+  },
+  {
+    "member": "createPropertyAccessExpression",
+    "ownerPath": [
+      "Parser",
+      "parseJsxElementName"
+    ],
+    "before": {
+      "ownerPath": [
+        "Parser",
+        "parseJsxElementName"
+      ],
+      "member": "createPropertyAccessExpression",
+      "alias": true,
+      "callee": "factoryCreatePropertyAccessExpression",
+      "start": {
+        "line": 6247,
+        "column": 37
+      },
+      "end": {
+        "line": 6247,
+        "column": 227
+      }
+    },
+    "after": {
+      "ownerPath": [
+        "Parser",
+        "parseJsxElementName"
+      ],
+      "member": "createPropertyAccessExpression",
+      "alias": false,
+      "callee": "factory.createPropertyAccessExpression",
+      "start": {
+        "line": 6220,
+        "column": 37
+      },
+      "end": {
+        "line": 6220,
+        "column": 228
+      }
+    }
+  },
+  {
+    "member": "createPropertyAccessChain",
+    "ownerPath": [
+      "Parser",
+      "parsePropertyAccessExpressionRest"
+    ],
+    "before": {
+      "ownerPath": [
+        "Parser",
+        "parsePropertyAccessExpressionRest"
+      ],
+      "member": "createPropertyAccessChain",
+      "alias": true,
+      "callee": "factoryCreatePropertyAccessChain",
+      "start": {
+        "line": 6419,
+        "column": 13
+      },
+      "end": {
+        "line": 6419,
+        "column": 81
+      }
+    },
+    "after": {
+      "ownerPath": [
+        "Parser",
+        "parsePropertyAccessExpressionRest"
+      ],
+      "member": "createPropertyAccessChain",
+      "alias": false,
+      "callee": "factory.createPropertyAccessChain",
+      "start": {
+        "line": 6392,
+        "column": 13
+      },
+      "end": {
+        "line": 6392,
+        "column": 82
+      }
+    }
+  },
+  {
+    "member": "createPropertyAccessExpression",
+    "ownerPath": [
+      "Parser",
+      "parsePropertyAccessExpressionRest"
+    ],
+    "before": {
+      "ownerPath": [
+        "Parser",
+        "parsePropertyAccessExpressionRest"
+      ],
+      "member": "createPropertyAccessExpression",
+      "alias": true,
+      "callee": "factoryCreatePropertyAccessExpression",
+      "start": {
+        "line": 6420,
+        "column": 13
+      },
+      "end": {
+        "line": 6420,
+        "column": 68
+      }
+    },
+    "after": {
+      "ownerPath": [
+        "Parser",
+        "parsePropertyAccessExpressionRest"
+      ],
+      "member": "createPropertyAccessExpression",
+      "alias": false,
+      "callee": "factory.createPropertyAccessExpression",
+      "start": {
+        "line": 6393,
+        "column": 13
+      },
+      "end": {
+        "line": 6393,
+        "column": 69
+      }
+    }
+  },
+  {
+    "member": "createElementAccessChain",
+    "ownerPath": [
+      "Parser",
+      "parseElementAccessExpressionRest"
+    ],
+    "before": {
+      "ownerPath": [
+        "Parser",
+        "parseElementAccessExpressionRest"
+      ],
+      "member": "createElementAccessChain",
+      "alias": true,
+      "callee": "factoryCreateElementAccessChain",
+      "start": {
+        "line": 6448,
+        "column": 13
+      },
+      "end": {
+        "line": 6448,
+        "column": 94
+      }
+    },
+    "after": {
+      "ownerPath": [
+        "Parser",
+        "parseElementAccessExpressionRest"
+      ],
+      "member": "createElementAccessChain",
+      "alias": false,
+      "callee": "factory.createElementAccessChain",
+      "start": {
+        "line": 6421,
+        "column": 13
+      },
+      "end": {
+        "line": 6421,
+        "column": 95
+      }
+    }
+  },
+  {
+    "member": "createElementAccessExpression",
+    "ownerPath": [
+      "Parser",
+      "parseElementAccessExpressionRest"
+    ],
+    "before": {
+      "ownerPath": [
+        "Parser",
+        "parseElementAccessExpressionRest"
+      ],
+      "member": "createElementAccessExpression",
+      "alias": true,
+      "callee": "factoryCreateElementAccessExpression",
+      "start": {
+        "line": 6449,
+        "column": 13
+      },
+      "end": {
+        "line": 6449,
+        "column": 81
+      }
+    },
+    "after": {
+      "ownerPath": [
+        "Parser",
+        "parseElementAccessExpressionRest"
+      ],
+      "member": "createElementAccessExpression",
+      "alias": false,
+      "callee": "factory.createElementAccessExpression",
+      "start": {
+        "line": 6422,
+        "column": 13
+      },
+      "end": {
+        "line": 6422,
+        "column": 82
+      }
+    }
+  },
+  {
+    "member": "createCallChain",
+    "ownerPath": [
+      "Parser",
+      "parseCallExpressionRest"
+    ],
+    "before": {
+      "ownerPath": [
+        "Parser",
+        "parseCallExpressionRest"
+      ],
+      "member": "createCallChain",
+      "alias": true,
+      "callee": "factoryCreateCallChain",
+      "start": {
+        "line": 6540,
+        "column": 21
+      },
+      "end": {
+        "line": 6540,
+        "column": 102
+      }
+    },
+    "after": {
+      "ownerPath": [
+        "Parser",
+        "parseCallExpressionRest"
+      ],
+      "member": "createCallChain",
+      "alias": false,
+      "callee": "factory.createCallChain",
+      "start": {
+        "line": 6513,
+        "column": 21
+      },
+      "end": {
+        "line": 6513,
+        "column": 103
+      }
+    }
+  },
+  {
+    "member": "createCallExpression",
+    "ownerPath": [
+      "Parser",
+      "parseCallExpressionRest"
+    ],
+    "before": {
+      "ownerPath": [
+        "Parser",
+        "parseCallExpressionRest"
+      ],
+      "member": "createCallExpression",
+      "alias": true,
+      "callee": "factoryCreateCallExpression",
+      "start": {
+        "line": 6541,
+        "column": 21
+      },
+      "end": {
+        "line": 6541,
+        "column": 89
+      }
+    },
+    "after": {
+      "ownerPath": [
+        "Parser",
+        "parseCallExpressionRest"
+      ],
+      "member": "createCallExpression",
+      "alias": false,
+      "callee": "factory.createCallExpression",
+      "start": {
+        "line": 6514,
+        "column": 21
+      },
+      "end": {
+        "line": 6514,
+        "column": 90
+      }
+    }
+  },
+  {
+    "member": "createPropertyAccessChain",
+    "ownerPath": [
+      "Parser",
+      "parseCallExpressionRest"
+    ],
+    "before": {
+      "ownerPath": [
+        "Parser",
+        "parseCallExpressionRest"
+      ],
+      "member": "createPropertyAccessChain",
+      "alias": true,
+      "callee": "factoryCreatePropertyAccessChain",
+      "start": {
+        "line": 6548,
+        "column": 41
+      },
+      "end": {
+        "line": 6548,
+        "column": 109
+      }
+    },
+    "after": {
+      "ownerPath": [
+        "Parser",
+        "parseCallExpressionRest"
+      ],
+      "member": "createPropertyAccessChain",
+      "alias": false,
+      "callee": "factory.createPropertyAccessChain",
+      "start": {
+        "line": 6521,
+        "column": 41
+      },
+      "end": {
+        "line": 6521,
+        "column": 110
+      }
+    }
+  },
+  {
+    "member": "createParenthesizedExpression",
+    "ownerPath": [
+      "Parser",
+      "parseParenthesizedExpression"
+    ],
+    "before": {
+      "ownerPath": [
+        "Parser",
+        "parseParenthesizedExpression"
+      ],
+      "member": "createParenthesizedExpression",
+      "alias": true,
+      "callee": "factoryCreateParenthesizedExpression",
+      "start": {
+        "line": 6669,
+        "column": 37
+      },
+      "end": {
+        "line": 6669,
+        "column": 85
+      }
+    },
+    "after": {
+      "ownerPath": [
+        "Parser",
+        "parseParenthesizedExpression"
+      ],
+      "member": "createParenthesizedExpression",
+      "alias": false,
+      "callee": "factory.createParenthesizedExpression",
+      "start": {
+        "line": 6642,
+        "column": 37
+      },
+      "end": {
+        "line": 6642,
+        "column": 86
+      }
+    }
+  },
+  {
+    "member": "createArrayLiteralExpression",
+    "ownerPath": [
+      "Parser",
+      "parseArrayLiteralExpression"
+    ],
+    "before": {
+      "ownerPath": [
+        "Parser",
+        "parseArrayLiteralExpression"
+      ],
+      "member": "createArrayLiteralExpression",
+      "alias": true,
+      "callee": "factoryCreateArrayLiteralExpression",
+      "start": {
+        "line": 6696,
+        "column": 27
+      },
+      "end": {
+        "line": 6696,
+        "column": 83
+      }
+    },
+    "after": {
+      "ownerPath": [
+        "Parser",
+        "parseArrayLiteralExpression"
+      ],
+      "member": "createArrayLiteralExpression",
+      "alias": false,
+      "callee": "factory.createArrayLiteralExpression",
+      "start": {
+        "line": 6669,
+        "column": 27
+      },
+      "end": {
+        "line": 6669,
+        "column": 84
+      }
+    }
+  },
+  {
+    "member": "createObjectLiteralExpression",
+    "ownerPath": [
+      "Parser",
+      "parseObjectLiteralExpression"
+    ],
+    "before": {
+      "ownerPath": [
+        "Parser",
+        "parseObjectLiteralExpression"
+      ],
+      "member": "createObjectLiteralExpression",
+      "alias": true,
+      "callee": "factoryCreateObjectLiteralExpression",
+      "start": {
+        "line": 6762,
+        "column": 27
+      },
+      "end": {
+        "line": 6762,
+        "column": 86
+      }
+    },
+    "after": {
+      "ownerPath": [
+        "Parser",
+        "parseObjectLiteralExpression"
+      ],
+      "member": "createObjectLiteralExpression",
+      "alias": false,
+      "callee": "factory.createObjectLiteralExpression",
+      "start": {
+        "line": 6735,
+        "column": 27
+      },
+      "end": {
+        "line": 6735,
+        "column": 87
+      }
+    }
+  },
+  {
+    "member": "createNewExpression",
+    "ownerPath": [
+      "Parser",
+      "parseNewExpressionOrNewDotTarget"
+    ],
+    "before": {
+      "ownerPath": [
+        "Parser",
+        "parseNewExpressionOrNewDotTarget"
+      ],
+      "member": "createNewExpression",
+      "alias": true,
+      "callee": "factoryCreateNewExpression",
+      "start": {
+        "line": 6820,
+        "column": 27
+      },
+      "end": {
+        "line": 6820,
+        "column": 94
+      }
+    },
+    "after": {
+      "ownerPath": [
+        "Parser",
+        "parseNewExpressionOrNewDotTarget"
+      ],
+      "member": "createNewExpression",
+      "alias": false,
+      "callee": "factory.createNewExpression",
+      "start": {
+        "line": 6793,
+        "column": 27
+      },
+      "end": {
+        "line": 6793,
+        "column": 95
+      }
+    }
+  },
+  {
+    "member": "createBlock",
+    "ownerPath": [
+      "Parser",
+      "parseBlock"
+    ],
+    "before": {
+      "ownerPath": [
+        "Parser",
+        "parseBlock"
+      ],
+      "member": "createBlock",
+      "alias": true,
+      "callee": "factoryCreateBlock",
+      "start": {
+        "line": 6833,
+        "column": 49
+      },
+      "end": {
+        "line": 6833,
+        "column": 90
+      }
+    },
+    "after": {
+      "ownerPath": [
+        "Parser",
+        "parseBlock"
+      ],
+      "member": "createBlock",
+      "alias": false,
+      "callee": "factory.createBlock",
+      "start": {
+        "line": 6806,
+        "column": 49
+      },
+      "end": {
+        "line": 6806,
+        "column": 91
+      }
+    }
+  },
+  {
+    "member": "createBlock",
+    "ownerPath": [
+      "Parser",
+      "parseBlock"
+    ],
+    "before": {
+      "ownerPath": [
+        "Parser",
+        "parseBlock"
+      ],
+      "member": "createBlock",
+      "alias": true,
+      "callee": "factoryCreateBlock",
+      "start": {
+        "line": 6843,
+        "column": 41
+      },
+      "end": {
+        "line": 6843,
+        "column": 96
+      }
+    },
+    "after": {
+      "ownerPath": [
+        "Parser",
+        "parseBlock"
+      ],
+      "member": "createBlock",
+      "alias": false,
+      "callee": "factory.createBlock",
+      "start": {
+        "line": 6816,
+        "column": 41
+      },
+      "end": {
+        "line": 6816,
+        "column": 97
+      }
+    }
+  },
+  {
+    "member": "createIfStatement",
+    "ownerPath": [
+      "Parser",
+      "parseIfStatement"
+    ],
+    "before": {
+      "ownerPath": [
+        "Parser",
+        "parseIfStatement"
+      ],
+      "member": "createIfStatement",
+      "alias": true,
+      "callee": "factoryCreateIfStatement",
+      "start": {
+        "line": 6894,
+        "column": 37
+      },
+      "end": {
+        "line": 6894,
+        "column": 103
+      }
+    },
+    "after": {
+      "ownerPath": [
+        "Parser",
+        "parseIfStatement"
+      ],
+      "member": "createIfStatement",
+      "alias": false,
+      "callee": "factory.createIfStatement",
+      "start": {
+        "line": 6867,
+        "column": 37
+      },
+      "end": {
+        "line": 6867,
+        "column": 104
+      }
+    }
+  },
+  {
+    "member": "createWhileStatement",
+    "ownerPath": [
+      "Parser",
+      "parseWhileStatement"
+    ],
+    "before": {
+      "ownerPath": [
+        "Parser",
+        "parseWhileStatement"
+      ],
+      "member": "createWhileStatement",
+      "alias": true,
+      "callee": "factoryCreateWhileStatement",
+      "start": {
+        "line": 6925,
+        "column": 37
+      },
+      "end": {
+        "line": 6925,
+        "column": 87
+      }
+    },
+    "after": {
+      "ownerPath": [
+        "Parser",
+        "parseWhileStatement"
+      ],
+      "member": "createWhileStatement",
+      "alias": false,
+      "callee": "factory.createWhileStatement",
+      "start": {
+        "line": 6898,
+        "column": 37
+      },
+      "end": {
+        "line": 6898,
+        "column": 88
+      }
+    }
+  },
+  {
+    "member": "createForOfStatement",
+    "ownerPath": [
+      "Parser",
+      "parseForOrForInOrForOfStatement"
+    ],
+    "before": {
+      "ownerPath": [
+        "Parser",
+        "parseForOrForInOrForOfStatement"
+      ],
+      "member": "createForOfStatement",
+      "alias": true,
+      "callee": "factoryCreateForOfStatement",
+      "start": {
+        "line": 6954,
+        "column": 20
+      },
+      "end": {
+        "line": 6954,
+        "column": 102
+      }
+    },
+    "after": {
+      "ownerPath": [
+        "Parser",
+        "parseForOrForInOrForOfStatement"
+      ],
+      "member": "createForOfStatement",
+      "alias": false,
+      "callee": "factory.createForOfStatement",
+      "start": {
+        "line": 6927,
+        "column": 20
+      },
+      "end": {
+        "line": 6927,
+        "column": 103
+      }
+    }
+  },
+  {
+    "member": "createForStatement",
+    "ownerPath": [
+      "Parser",
+      "parseForOrForInOrForOfStatement"
+    ],
+    "before": {
+      "ownerPath": [
+        "Parser",
+        "parseForOrForInOrForOfStatement"
+      ],
+      "member": "createForStatement",
+      "alias": true,
+      "callee": "factoryCreateForStatement",
+      "start": {
+        "line": 6971,
+        "column": 20
+      },
+      "end": {
+        "line": 6971,
+        "column": 100
+      }
+    },
+    "after": {
+      "ownerPath": [
+        "Parser",
+        "parseForOrForInOrForOfStatement"
+      ],
+      "member": "createForStatement",
+      "alias": false,
+      "callee": "factory.createForStatement",
+      "start": {
+        "line": 6944,
+        "column": 20
+      },
+      "end": {
+        "line": 6944,
+        "column": 101
+      }
+    }
+  },
+  {
+    "member": "createIdentifier",
+    "ownerPath": [
+      "Parser",
+      "parseThrowStatement"
+    ],
+    "before": {
+      "ownerPath": [
+        "Parser",
+        "parseThrowStatement"
+      ],
+      "member": "createIdentifier",
+      "alias": true,
+      "callee": "factoryCreateIdentifier",
+      "start": {
+        "line": 7069,
+        "column": 37
+      },
+      "end": {
+        "line": 7069,
+        "column": 64
+      }
+    },
+    "after": {
+      "ownerPath": [
+        "Parser",
+        "parseThrowStatement"
+      ],
+      "member": "createIdentifier",
+      "alias": false,
+      "callee": "factory.createIdentifier",
+      "start": {
+        "line": 7042,
+        "column": 37
+      },
+      "end": {
+        "line": 7042,
+        "column": 65
+      }
+    }
+  },
+  {
+    "member": "createExpressionStatement",
+    "ownerPath": [
+      "Parser",
+      "parseExpressionOrLabeledStatement"
+    ],
+    "before": {
+      "ownerPath": [
+        "Parser",
+        "parseExpressionOrLabeledStatement"
+      ],
+      "member": "createExpressionStatement",
+      "alias": true,
+      "callee": "factoryCreateExpressionStatement",
+      "start": {
+        "line": 7139,
+        "column": 20
+      },
+      "end": {
+        "line": 7139,
+        "column": 64
+      }
+    },
+    "after": {
+      "ownerPath": [
+        "Parser",
+        "parseExpressionOrLabeledStatement"
+      ],
+      "member": "createExpressionStatement",
+      "alias": false,
+      "callee": "factory.createExpressionStatement",
+      "start": {
+        "line": 7112,
+        "column": 20
+      },
+      "end": {
+        "line": 7112,
+        "column": 65
+      }
+    }
+  },
+  {
+    "member": "createVariableDeclaration",
+    "ownerPath": [
+      "Parser",
+      "parseVariableDeclaration"
+    ],
+    "before": {
+      "ownerPath": [
+        "Parser",
+        "parseVariableDeclaration"
+      ],
+      "member": "createVariableDeclaration",
+      "alias": true,
+      "callee": "factoryCreateVariableDeclaration",
+      "start": {
+        "line": 7662,
+        "column": 22
+      },
+      "end": {
+        "line": 7662,
+        "column": 97
+      }
+    },
+    "after": {
+      "ownerPath": [
+        "Parser",
+        "parseVariableDeclaration"
+      ],
+      "member": "createVariableDeclaration",
+      "alias": false,
+      "callee": "factory.createVariableDeclaration",
+      "start": {
+        "line": 7635,
+        "column": 22
+      },
+      "end": {
+        "line": 7635,
+        "column": 98
+      }
+    }
+  },
+  {
+    "member": "createVariableDeclarationList",
+    "ownerPath": [
+      "Parser",
+      "parseVariableDeclarationList"
+    ],
+    "before": {
+      "ownerPath": [
+        "Parser",
+        "parseVariableDeclarationList"
+      ],
+      "member": "createVariableDeclarationList",
+      "alias": true,
+      "callee": "factoryCreateVariableDeclarationList",
+      "start": {
+        "line": 7720,
+        "column": 27
+      },
+      "end": {
+        "line": 7720,
+        "column": 84
+      }
+    },
+    "after": {
+      "ownerPath": [
+        "Parser",
+        "parseVariableDeclarationList"
+      ],
+      "member": "createVariableDeclarationList",
+      "alias": false,
+      "callee": "factory.createVariableDeclarationList",
+      "start": {
+        "line": 7693,
+        "column": 27
+      },
+      "end": {
+        "line": 7693,
+        "column": 85
+      }
+    }
+  },
+  {
+    "member": "createVariableStatement",
+    "ownerPath": [
+      "Parser",
+      "parseVariableStatement"
+    ],
+    "before": {
+      "ownerPath": [
+        "Parser",
+        "parseVariableStatement"
+      ],
+      "member": "createVariableStatement",
+      "alias": true,
+      "callee": "factoryCreateVariableStatement",
+      "start": {
+        "line": 7730,
+        "column": 22
+      },
+      "end": {
+        "line": 7730,
+        "column": 80
+      }
+    },
+    "after": {
+      "ownerPath": [
+        "Parser",
+        "parseVariableStatement"
+      ],
+      "member": "createVariableStatement",
+      "alias": false,
+      "callee": "factory.createVariableStatement",
+      "start": {
+        "line": 7703,
+        "column": 22
+      },
+      "end": {
+        "line": 7703,
+        "column": 81
+      }
+    }
+  },
+  {
+    "member": "createToken",
+    "ownerPath": [
+      "Parser",
+      "tryParseModifier"
+    ],
+    "before": {
+      "ownerPath": [
+        "Parser",
+        "tryParseModifier"
+      ],
+      "member": "createToken",
+      "alias": true,
+      "callee": "factoryCreateToken",
+      "start": {
+        "line": 8003,
+        "column": 27
+      },
+      "end": {
+        "line": 8003,
+        "column": 71
+      }
+    },
+    "after": {
+      "ownerPath": [
+        "Parser",
+        "tryParseModifier"
+      ],
+      "member": "createToken",
+      "alias": false,
+      "callee": "factory.createToken",
+      "start": {
+        "line": 7976,
+        "column": 27
+      },
+      "end": {
+        "line": 7976,
+        "column": 72
+      }
+    }
+  },
+  {
+    "member": "createToken",
+    "ownerPath": [
+      "Parser",
+      "parseModifiersForArrowFunction"
+    ],
+    "before": {
+      "ownerPath": [
+        "Parser",
+        "parseModifiersForArrowFunction"
+      ],
+      "member": "createToken",
+      "alias": true,
+      "callee": "factoryCreateToken",
+      "start": {
+        "line": 8062,
+        "column": 41
+      },
+      "end": {
+        "line": 8062,
+        "column": 84
+      }
+    },
+    "after": {
+      "ownerPath": [
+        "Parser",
+        "parseModifiersForArrowFunction"
+      ],
+      "member": "createToken",
+      "alias": false,
+      "callee": "factory.createToken",
+      "start": {
+        "line": 8035,
+        "column": 41
+      },
+      "end": {
+        "line": 8035,
+        "column": 85
+      }
+    }
+  },
+  {
+    "member": "createToken",
+    "ownerPath": [
+      "Parser",
+      "JSDocParser",
+      "parseJSDocTypeExpressionForTests"
+    ],
+    "before": {
+      "ownerPath": [
+        "Parser",
+        "JSDocParser",
+        "parseJSDocTypeExpressionForTests"
+      ],
+      "member": "createToken",
+      "alias": true,
+      "callee": "factoryCreateToken",
+      "start": {
+        "line": 8797,
+        "column": 129
+      },
+      "end": {
+        "line": 8797,
+        "column": 174
+      }
+    },
+    "after": {
+      "ownerPath": [
+        "Parser",
+        "JSDocParser",
+        "parseJSDocTypeExpressionForTests"
+      ],
+      "member": "createToken",
+      "alias": false,
+      "callee": "factory.createToken",
+      "start": {
+        "line": 8770,
+        "column": 129
+      },
+      "end": {
+        "line": 8770,
+        "column": 175
+      }
+    }
+  },
+  {
+    "member": "createPropertyAccessExpression",
+    "ownerPath": [
+      "Parser",
+      "JSDocParser",
+      "parseJSDocCommentWorker",
+      "parsePropertyAccessEntityNameExpression"
+    ],
+    "before": {
+      "ownerPath": [
+        "Parser",
+        "JSDocParser",
+        "parseJSDocCommentWorker",
+        "parsePropertyAccessEntityNameExpression"
+      ],
+      "member": "createPropertyAccessExpression",
+      "alias": true,
+      "callee": "factoryCreatePropertyAccessExpression",
+      "start": {
+        "line": 9589,
+        "column": 39
+      },
+      "end": {
+        "line": 9589,
+        "column": 88
+      }
+    },
+    "after": {
+      "ownerPath": [
+        "Parser",
+        "JSDocParser",
+        "parseJSDocCommentWorker",
+        "parsePropertyAccessEntityNameExpression"
+      ],
+      "member": "createPropertyAccessExpression",
+      "alias": false,
+      "callee": "factory.createPropertyAccessExpression",
+      "start": {
+        "line": 9562,
+        "column": 39
+      },
+      "end": {
+        "line": 9562,
+        "column": 89
+      }
+    }
+  },
+  {
+    "member": "createIdentifier",
+    "ownerPath": [
+      "Parser",
+      "JSDocParser",
+      "parseJSDocCommentWorker",
+      "parseJSDocIdentifierName"
+    ],
+    "before": {
+      "ownerPath": [
+        "Parser",
+        "JSDocParser",
+        "parseJSDocCommentWorker",
+        "parseJSDocIdentifierName"
+      ],
+      "member": "createIdentifier",
+      "alias": true,
+      "callee": "factoryCreateIdentifier",
+      "start": {
+        "line": 9919,
+        "column": 43
+      },
+      "end": {
+        "line": 9919,
+        "column": 93
+      }
+    },
+    "after": {
+      "ownerPath": [
+        "Parser",
+        "JSDocParser",
+        "parseJSDocCommentWorker",
+        "parseJSDocIdentifierName"
+      ],
+      "member": "createIdentifier",
+      "alias": false,
+      "callee": "factory.createIdentifier",
+      "start": {
+        "line": 9892,
+        "column": 43
+      },
+      "end": {
+        "line": 9892,
+        "column": 94
+      }
+    }
+  }
+]

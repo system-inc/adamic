@@ -2,10 +2,60 @@
   {
     "file": "src/compiler/transformers/es2021.ts",
     "part": "transformers",
-    "pairing": "multiset (kind, phase, reason, message with source position stripped); no position-based prepairing",
+    "pairing": "multiset (kind, phase, reason, message with source position stripped); identical-key multiplicities retain outside-target originals first; target removal also checked by AST",
     "baseFindings": 27,
     "changeFindings": 25,
     "paired": 25,
+    "outsideTargetsNew": 0,
+    "outsideTargetsRemoved": 0,
+    "newFindings": 0,
+    "removedFindings": 2,
+    "changedOutsideTargets": 0,
+    "removedTargetReasons": [
+      {
+        "kind": "Refused",
+        "phase": "lowering",
+        "reason": "a method in object destructuring"
+      },
+      {
+        "kind": "Boundary",
+        "phase": "lowering",
+        "reason": "failed statement; state rolled back; continued at next statement or declaration"
+      }
+    ]
+  },
+  {
+    "file": "src/compiler/emitter.ts",
+    "part": "printer",
+    "pairing": "multiset (kind, phase, reason, message with source position stripped); identical-key multiplicities retain outside-target originals first; target removal also checked by AST",
+    "baseFindings": 1430,
+    "changeFindings": 1428,
+    "paired": 1428,
+    "outsideTargetsNew": 0,
+    "outsideTargetsRemoved": 0,
+    "newFindings": 0,
+    "removedFindings": 2,
+    "changedOutsideTargets": 0,
+    "removedTargetReasons": [
+      {
+        "kind": "Refused",
+        "phase": "lowering",
+        "reason": "var"
+      },
+      {
+        "kind": "Boundary",
+        "phase": "lowering",
+        "reason": "failed statement; state rolled back; continued at next statement or declaration"
+      }
+    ]
+  },
+  {
+    "file": "src/compiler/parser.ts",
+    "part": "parser",
+    "pairing": "multiset (kind, phase, reason, message with source position stripped); identical-key multiplicities retain outside-target originals first; target removal also checked by AST",
+    "baseFindings": 3183,
+    "changeFindings": 3181,
+    "paired": 3181,
     "outsideTargetsNew": 0,
     "outsideTargetsRemoved": 0,
     "newFindings": 0,

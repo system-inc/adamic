@@ -1,0 +1,15 @@
+{
+  "command": [
+    "/workspace/scratch/receiver-split/latent",
+    "/workspace/scratch/receiver-split/tree-printer/src/compiler",
+    "/workspace/scratch/receiver-split/census/change__emitter.jsonl"
+  ],
+  "exit": 0,
+  "wall_seconds": 899.07,
+  "environment": {
+    "LATENT_FULL": "1",
+    "LATENT_ASSERT_NO_OUTPUT": "1",
+    "CENSUS_MODULE_FORMAT": "CommonJSBundle",
+    "LATENT_ONLY_FILE": "/workspace/scratch/receiver-split/tree-printer/src/compiler/emitter.ts"
+  }
+}
