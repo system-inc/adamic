@@ -342,6 +342,12 @@
       "ruling_task": "#z4a9p9e",
       "lifting_task": "#ejcaz75",
       "stderr": "adamic: panic: JSON.stringify of an Error whose name, or a message it was made without, was written isn't built yet\n"
+    },
+    "63eccac3025be2faaaf9b244d8c1e09ef24fec18373026e1b79a984d4abc1d15": {
+      "path": "internal/oracle/testdata/node_process_handle_other_members/empty_in.a",
+      "ruling_task": "#0sps03r",
+      "lifting_task": "#zhrjf2t",
+      "stderr": "adamic: panic: this runtime value's properties aren't read by a run-time key yet (reading 'fd')\n"
     }
   }
 }
