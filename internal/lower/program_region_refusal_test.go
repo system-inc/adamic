@@ -34,13 +34,28 @@ func programCycleRefusalParity(t *testing.T, source string) {
 	}
 }
 
-func TestProgramRecordCycleRefusalMatchesDefault(t *testing.T) {
+// A record cycle lowers in both modes since records joined graph regions (#1vb0x5s): a graph record is
+// never a Program member (ir.RecordLiteral has no ProgramRegion stamp), so the Program region changes
+// nothing about it. Oracle's TestGraphRecordOnACycle holds both programs to Node and the counted build.
+func TestProgramRecordCycleLowersInBothModes(t *testing.T) {
 	t.Parallel()
 	for _, source := range []string{
 		`interface R {[key:string]:R} const r:R={}; r['self']=r;`,
 		`interface Node {links:Record<string,Node>} const a:Node={links:{}}; a.links['self']=a;`,
 	} {
-		programCycleRefusalParity(t, source)
+		path := filepath.Join(t.TempDir(), "main.a")
+		if err := os.WriteFile(path, []byte(source), 0644); err != nil {
+			t.Fatal(err)
+		}
+		for _, enabled := range []bool{false, true} {
+			loaded, err := load.Load([]string{path})
+			if err != nil {
+				t.Fatal(err)
+			}
+			if _, err := LowerWithOptions(context.Background(), loaded, Options{ProgramRegion: enabled}); err != nil {
+				t.Fatalf("ProgramRegion=%t: %v", enabled, err)
+			}
+		}
 	}
 }
 

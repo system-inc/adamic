@@ -209,6 +209,17 @@ a.r['k'] = list;
 list.push(a);
 console.log(` + "`${a.name} ${Object.keys(a.r).length}`" + `);
 `, ""},
+	// The two record self-cycles lower's TestProgramRecordCycleLowersInBothModes lowers, held here (#1vb0x5s).
+	{"a record holding itself", `interface R { [key: string]: R }
+const r: R = {};
+r['self'] = r;
+console.log(Object.keys(r).join(','));
+`, ""},
+	{"a node's record of links holding it", `interface Node { links: Record<string, Node> }
+const a: Node = { links: {} };
+a.links['self'] = a;
+console.log(Object.keys(a.links).join(','));
+`, ""},
 	// A record type closing its own cycle, a declared field beside its index signature: refused before
 	// records joined graph regions (lower's TestGraphRecordCycleLowers), held here to Node and the counted
 	// build (#1vb0x5s).

@@ -154,19 +154,23 @@ func cycleExhaustiveFlowSites(scanning, indexed *ir.Program) []int {
 // (#1vb0x5s).
 const cycleFrozenRecordRefusal = ", a record whose values can reach back to its holder: "
 
-// cycleSelectedRecords is the record types a program selects as graph types, resolved. The real pipeline
-// selects a record type on a cycle or holding graph values and never one of loose values (#1vb0x5s),
-// where the frozen scanning reference selects one only as a view related to a member, so where the two
-// select different record types they differ by that selection, and what follows from it, alone.
-func cycleSelectedRecords(program *ir.Program, types map[int]string, records map[int]bool) []string {
-	var selected []string
-	for id := range program.GraphTypes {
-		if records[id] {
-			selected = append(selected, types[id])
+// cycleMaskRecords takes out of a program's GraphTypes every record type and every value type a record
+// holds, an arm of a union value type among them, and names what it took. The real pipeline selects a
+// record type on a cycle or holding graph values, and links a record to its values as an array's to its
+// elements, so a record's value type can join a component it didn't before (method_bind.a's
+// (() => number) | undefined); the frozen scanning reference selects a record only as a view related to a
+// member (#1vb0x5s). Each side is masked by its own types, and the rest is compared as before, so any
+// difference outside the records and what they hold still fails.
+func cycleMaskRecords(program *ir.Program, types map[int]string, records map[int]bool) []string {
+	var masked []string
+	for id := range records {
+		if program.GraphTypes[id] {
+			delete(program.GraphTypes, id)
+			masked = append(masked, types[id])
 		}
 	}
-	slices.Sort(selected)
-	return selected
+	slices.Sort(masked)
+	return masked
 }
 
 func cycleCompareProgramModes(t *testing.T, path string, regions ...bool) {
@@ -228,10 +232,9 @@ func cycleCompareProgramModes(t *testing.T, path string, regions ...bool) {
 			continue
 		}
 		if scanErr == nil && indexErr == nil {
-			scanning, indexing := cycleSelectedRecords(before, scanTypes, scanRecords), cycleSelectedRecords(after, indexTypes, indexRecords)
+			scanning, indexing := cycleMaskRecords(before, scanTypes, scanRecords), cycleMaskRecords(after, indexTypes, indexRecords)
 			if !slices.Equal(scanning, indexing) {
-				t.Logf("%s: ProgramRegion=%t not compared: the real pipeline selects record types %v where the frozen scanning reference selects %v (#1vb0x5s)", path, region, indexing, scanning)
-				continue
+				t.Logf("%s: ProgramRegion=%t: compared without record types and the values they hold, which the real pipeline selects as %v and the frozen scanning reference as %v (#1vb0x5s)", path, region, indexing, scanning)
 			}
 		}
 		if scanErr == nil && cycleRegionlessAllocationGuard(indexErr) {
@@ -292,12 +295,30 @@ func cycleLowerForComparison(program *load.Program, options Options, indexed boo
 		return nil, nil, nil, err
 	}
 	resolved := map[int]string{}
-	// records is which of the types are record types, for cycleSelectedRecords.
+	// records is every record type and every value type a record holds, an arm of a union one among them,
+	// which cycleMaskRecords takes out of the comparison.
 	records := map[int]bool{}
+	ids := map[*checker.Type]int{}
 	for id, proven := range types {
-		if built.recordElement(proven) != nil {
-			records[id] = true
+		ids[proven] = id
+	}
+	for id, proven := range types {
+		element := built.recordElement(proven)
+		if element == nil {
+			continue
 		}
+		records[id] = true
+		arms := []*checker.Type{element}
+		if element.Flags()&checker.TypeFlagsUnion != 0 {
+			arms = append(arms, element.Types()...)
+		}
+		for _, arm := range arms {
+			if value, known := ids[arm]; known {
+				records[value] = true
+			}
+		}
+	}
+	for id, proven := range types {
 		identity := checked.TypeToStringEx(proven, nil, checker.TypeFormatFlagsNoTruncation, nil)
 		if symbol := proven.Symbol(); symbol != nil {
 			name := ast.SymbolName(symbol)
