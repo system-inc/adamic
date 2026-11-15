@@ -1,0 +1,18 @@
+// Comparators that capture: one reads a parameter of the function around it, one closes over a
+// string-keyed Map, and one writes a counter it closes over on every comparison. Each still gets the
+// sort's one shared argument array (#367nnz2). The count itself isn't printed, since engines differ in
+// how many comparisons a sort makes.
+function sortedBy(values: number[], descending: boolean): number[] {
+	return values.slice().sort((left: number, right: number) => descending ? right - left : left - right);
+}
+console.log(sortedBy([4, 8, 1, 6, 3], true).join(','));
+console.log(sortedBy([4, 8, 1, 6, 3], false).join(','));
+const weight = new Map<string, number>([['pear', 3], ['fig', 1], ['apple', 2]]);
+const words = ['pear', 'fig', 'apple'].slice().sort((left: string, right: string) => (weight.get(left) ?? 0) - (weight.get(right) ?? 0));
+console.log(words.join(','));
+let comparisons = 0;
+const counted = [7, 2, 9, 4, 5].slice().sort((left: number, right: number) => {
+	comparisons++;
+	return left - right;
+});
+console.log(`${counted.join(',')} ${comparisons > 0}`);
