@@ -17,6 +17,10 @@ Each control event’s source line is quoted in [CONTROL-SITES.md](CONTROL-SITES
 
 ## Production next stops
 
+<!--ROOT-PROGRESS-->
+Completed pairs so far: **21/79**, **21 unchanged**, **0 changed**. Remaining roots are unmeasured, not assumed unchanged.
+<!--END-ROOT-PROGRESS-->
+
 In progress in checkpointed groups: all 79 roots, CommonJSBundle, at main `fe5a1a54f045e9bce4e5aa32ca74885a317fbebd` and head `7e8cfaafb74a61f82f1610a4b738157b9918343d`. Each observation runs the existing census tool's `inspect` and production `LowerWithOptions`, in its own process. Only the command driver is overlaid. Groups of at most ten root indices are checkpointed at both SHAs.
 
 The full commit message and `internal/lower/loose_slots.go` were read. The head is exactly one commit on the specified main. `lower.go:215` calls `findCycles` after every module's refusal scan, declaration registration/signatures, body lowering and the preceding tail passes. It is late, not literally last: `checkBoundArguments`, view checks and finalization follow. An earlier first stop prevents the loose-slot check from running. `graph_types.go:132` calls it before the no-seeds return.
