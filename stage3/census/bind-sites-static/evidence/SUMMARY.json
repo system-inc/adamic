@@ -1,0 +1,20 @@
+{
+  "status": "partial source-level projection; not completed IR census",
+  "counts": {
+    "H": 1,
+    "a*": 15,
+    "P": 21,
+    "c*": 19
+  },
+  "roots": 79,
+  "source_files": 79,
+  "sites": 56,
+  "maybeBind_calls": 0,
+  "diagnostics": 0,
+  "source_flow_steps": 228219,
+  "not_covered": [
+    "exhaustive exact receiver-sensitive function-flow sets",
+    "complete generated/specialized IR closureRecords",
+    "actual whole-program lowering outcome or native tsc execution"
+  ]
+}
