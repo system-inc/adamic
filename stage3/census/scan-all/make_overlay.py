@@ -7,7 +7,7 @@ import subprocess
 
 repo = pathlib.Path(__file__).resolve().parents[3]
 LOWER_REWRITES = [
-    ('defer func() { err = lowering.hostMemberPending(err) }()', 'defer func() { if err != nil { stop := scoutDescribe(err); scoutUnderlying = &stop }; err = lowering.hostMemberPending(err) }()'),
+    ('defer func() { err = lowering.hostMemberPending(lowering.regexpServedPending(err)) }()', 'defer func() { if err != nil { stop := scoutDescribe(err); scoutUnderlying = &stop }; err = lowering.hostMemberPending(lowering.regexpServedPending(err)) }()'),
     ('func LowerWithOptions(', 'func scoutLowerWithOptions('),
     ('return LowerWithOptions(ctx, program, Options{', 'return scoutLowerWithOptions(ctx, program, Options{'),
     ('func Lower(', 'func scoutLower('),

@@ -111,7 +111,7 @@ func lowerCheckedWithCycleTypes(program *load.Program, typeChecker *checker.Chec
 func lowerWithElementKey(key *viewElementKey, program *load.Program, typeChecker *checker.Checker, entry *ast.SourceFile, plan *programMembership, discovery, debug bool, moduleFormat ModuleFormat, cycleTypes map[int]*checker.Type, ownershipQuery ...bool) (built *lowering, err error) {
 	lowering := &lowering{cycleTypes: cycleTypes, program: program, checker: typeChecker, result: &ir.Program{}, this: -1, functionIndex: -1, entry: entry, programPlan: plan, programDiscovery: discovery, elementKey: key}
 	// A stop before checkHostMemberWrites judges a deferred host member write is main's stop at that write.
-	defer func() { err = lowering.hostMemberPending(err) }()
+	defer func() { err = lowering.hostMemberPending(lowering.regexpServedPending(err)) }()
 	lowering.debug = debug
 	lowering.moduleFormat = moduleFormat
 	lowering.result.ProgramRegion = discovery || plan != nil
@@ -183,6 +183,10 @@ func lowerWithElementKey(key *viewElementKey, program *load.Program, typeChecker
 		return nil, err
 	}
 	if err := lowering.checkLibrarySpreads(modules); err != nil {
+		return nil, err
+	}
+	// All relations are recorded before judging whether a served method escapes as a value.
+	if err := lowering.checkRegExpServedValues(); err != nil {
 		return nil, err
 	}
 	if err := lowering.checkAccessorSpreads(); err != nil {
@@ -394,6 +398,10 @@ type lowering struct {
 	hasMovedParallelMap bool
 	moveSites           []*ast.Node
 
+	// regexpServedView records whether any relation serves RegExp test through a program view;
+	// regexpServedReads holds candidates for the program-wide checkRegExpServedValues judgment.
+	regexpServedView  bool
+	regexpServedReads []regexpServedRead
 	// viewSources is each view's source and target, and viewTypes the checker types a read's view
 	// ids name, its receiver's and its field's, so the passes after lowering can judge and name them
 	// (view_widened.go).

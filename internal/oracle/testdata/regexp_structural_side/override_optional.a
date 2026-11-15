@@ -1,0 +1,5 @@
+interface Maybe { test?: (text: string) => boolean }
+class R extends RegExp { override test(_text: string): boolean { return false; } }
+const r = new R('a');
+function run(v: Maybe): void { console.log(v.test === undefined ? 'no test' : 'has test'); console.log(String(v.test?.('xa'))); }
+run(r);
