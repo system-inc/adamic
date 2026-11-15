@@ -1,8 +1,11 @@
 package lower
 
 import (
+	"sync/atomic"
+
 	"github.com/microsoft/TypeScript/tsc/shim/ast"
 	"github.com/microsoft/TypeScript/tsc/shim/checker"
+	"github.com/system-inc/adamic/internal/fresh"
 	"github.com/system-inc/adamic/internal/ir"
 )
 
@@ -52,7 +55,9 @@ import (
 // value that entered it, and that entry was judged. The entered value's type reaches, through declared
 // fields, shape candidates and every other loose slot's H, everything the value can come to hold
 // afterwards, including the declared slot that closes the cycle, since that slot's type is on the path. So
-// the entry already stopped, however late the declared write that closes the cycle runs (k18).
+// the entry already stopped, however late the declared write that closes the cycle runs (k18). The declared
+// arm (looseDeclaredStop) judges such slots anyway for the first measured run, so the census can split what
+// each arm walls; when the entry arm holds alone, the declared arm and its search per slot go.
 
 // looseStopWords end every loose-slot stop, so its pins can name it.
 const looseStopWords = "a cycle the cycle finder can't follow through unknown or object"
@@ -74,6 +79,8 @@ type looseSlots struct {
 	// everything is every type a value can be, valid while shapes holds everythingShapes types.
 	everything       []cycleNode
 	everythingShapes int
+	// touching is looseTouches' answer for every node the program's types reach.
+	touching map[cycleNode]bool
 }
 
 // looseInit is a literal's field, element or entry lowering made: the literal's type (holder), the
@@ -669,13 +676,11 @@ type looseWrite struct {
 	what    string
 }
 
-// looseSlotStop judges every value entering a loose slot (the comment at the top of this file): H is
-// gathered first, from looseEntry's sites and every literal's loose initialization, then each write, each
-// captured variable and each initialization is judged against it, and the first that can reach back stops.
+// looseSlotStop judges the program's loose slots (the comment at the top of this file): H is gathered first,
+// from looseEntry's sites and every literal's loose initialization, then each arm judges against it.
 func (f *cycleFinder) looseSlotStop() error {
-	l := f.l
 	inits := []looseInit{}
-	for _, made := range l.looseInits {
+	for _, made := range f.l.looseInits {
 		if made.slot != nil && !f.holdsLoose(made.slot) {
 			continue
 		}
@@ -685,6 +690,38 @@ func (f *cycleFinder) looseSlotStop() error {
 		f.looseHold(made.value)
 		inits = append(inits, made)
 	}
+	// H is whole now. The entry arm judges each value entering a loose slot; the declared arm, kept for the
+	// first measured run beside it, judges each declared slot whose reach back crosses a loose slot. When a
+	// test observes the arms, both run in full, so a census can tell which one walls a program.
+	observe := looseArmsObserved.Load()
+	var first error
+	for _, arm := range []struct {
+		name  string
+		judge func() error
+	}{{"entry", func() error { return f.looseEntryStop(inits) }}, {"declared", f.looseDeclaredStop}} {
+		err := arm.judge()
+		if observe != nil {
+			(*observe)(f.l.result.Source, arm.name, err)
+		}
+		if err != nil && first == nil {
+			first = err
+			if observe == nil {
+				return err
+			}
+		}
+	}
+	return first
+}
+
+// looseArmsObserved, when a test sets it, hears each arm's first stop, or nil, for each program judged: the
+// program's source, the arm ("entry" or "declared") and its stop. It's nil outside those tests
+// (loose_slots_test.go).
+var looseArmsObserved atomic.Pointer[func(source, arm string, err error)]
+
+// looseEntryStop judges every value entering a loose slot against H: each write, each captured variable
+// and each literal's initialization, and the first that can reach back stops.
+func (f *cycleFinder) looseEntryStop(inits []looseInit) error {
+	l := f.l
 	writes := f.looseWrites()
 	for _, write := range writes {
 		if write.value != nil && looseScalar(write.value) {
@@ -867,4 +904,189 @@ func (f *cycleFinder) looseCellWrite(writes *[]looseWrite, local int, value ir.E
 		}
 		return &NotYet{Where: l.result.Source, What: what}
 	}})
+}
+
+// looseDeclaredStop is the declared arm: a declared slot, one that holds no loose slot itself, refused when
+// a write fresh.go doesn't prove may close a cycle whose reach back to the holder crosses a loose slot.
+// The entry arm should already stop every such cycle where its value entered the loose slot (the comment
+// at the top of this file); this arm stays for the first measured run, so the census can say what each
+// walls and whether the entry arm alone holds k17 and k18.
+func (f *cycleFinder) looseDeclaredStop() error {
+	for _, holder := range f.seen {
+		if err := f.looseDeclaredSlots(holder); err != nil {
+			return err
+		}
+	}
+	return nil
+}
+
+// looseDeclaredSlots judges a holder's declared slots as slotsOf finds them: an array's or a tuple's
+// elements unless it's readonly, a record's values, a Set's elements, a Map's keys and values, and an
+// object's fields.
+func (f *cycleFinder) looseDeclaredSlots(holder *checker.Type) error {
+	l := f.l
+	if holder.Flags()&checker.TypeFlagsObject == 0 || f.isFunction(holder) {
+		return nil
+	}
+	name := l.checker.TypeToString(holder)
+	switch {
+	case l.isArrayType(holder) || checker.IsTupleType(holder):
+		if l.isLibraryType(holder, "ReadonlyArray") || (checker.IsTupleType(holder) && holder.TargetTupleType().IsReadonly()) {
+			return nil
+		}
+		for _, element := range l.checker.GetTypeArguments(holder) {
+			if err := f.looseDeclaredSlot(holder, element, fresh.WriteElement, "", "the elements of "+name); err != nil {
+				return err
+			}
+		}
+	case l.recordElement(holder) != nil:
+		return f.looseDeclaredSlot(holder, l.recordElement(holder), fresh.WriteMapEntry, "", "the values of "+name)
+	case l.isLibraryType(holder, "ReadonlyMap"), l.isLibraryType(holder, "ReadonlySet"):
+	case l.isLibraryType(holder, "Set"):
+		if arguments := l.checker.GetTypeArguments(holder); len(arguments) == 1 {
+			return f.looseDeclaredSlot(holder, arguments[0], fresh.WriteSetElement, "", "the elements of "+name)
+		}
+	case l.isLibraryType(holder, "Map"):
+		arguments := l.checker.GetTypeArguments(holder)
+		if len(arguments) != 2 {
+			return nil
+		}
+		if err := f.looseDeclaredSlot(holder, arguments[0], fresh.WriteMapEntry, "", "the keys of "+name); err != nil {
+			return err
+		}
+		return f.looseDeclaredSlot(holder, arguments[1], fresh.WriteMapEntry, "", "the values of "+name)
+	default:
+		for _, field := range f.fields(holder) {
+			if err := f.looseDeclaredSlot(holder, l.checker.GetTypeOfSymbol(field), fresh.WriteField, field.Name, name+"."+l.cycleFieldName(field)+", a field"); err != nil {
+				return err
+			}
+		}
+	}
+	return nil
+}
+
+func (f *cycleFinder) looseDeclaredSlot(holder, slot *checker.Type, kind fresh.WriteKind, field, what string) error {
+	if slot == nil || f.weak(slot) || f.holdsLoose(slot) || !f.looseTouches(cycleNode{proven: slot}) {
+		return nil
+	}
+	write := f.cycleUnproven(kind, holder, field)
+	if write == nil || !f.looseCrosses(slot, holder) {
+		return nil
+	}
+	what += " of type " + f.l.checker.TypeToString(slot) + ", which can reach back to the " + f.l.checker.TypeToString(holder) + " holding it only through what a value held as unknown or object can be, and " + f.writtenAt(write) + " may close the cycle: " + looseStopWords
+	if write.Site <= 0 || write.Site > len(f.l.writeSites) {
+		return &NotYet{Where: f.l.result.Source, What: what}
+	}
+	return f.l.notYet(f.l.writeSites[write.Site-1].node, what)
+}
+
+// looseCrossing is whether reaching leaves a loose type at node: unknown or object, or a cell holding every
+// shape.
+func (f *cycleFinder) looseCrossing(node cycleNode) bool {
+	if node.proven != nil {
+		return !f.weak(node.proven) && looseNode(node.proven)
+	}
+	return node.cell != 0 && f.looseCellEvery(node.cell-1)
+}
+
+// looseStep is a node reached, and whether the path to it left a loose type.
+type looseStep struct {
+	node    cycleNode
+	crossed bool
+}
+
+// looseCrosses reports whether a slot's type reaches the holder back along a path that leaves a loose type.
+func (f *cycleFinder) looseCrosses(slot, holder *checker.Type) bool {
+	target := cycleNode{proven: holder}
+	visited := map[looseStep]bool{}
+	queue := []looseStep{{node: cycleNode{proven: slot}}}
+	for len(queue) != 0 {
+		step := queue[len(queue)-1]
+		queue = queue[:len(queue)-1]
+		if step.node.proven != nil {
+			step.node.proven = f.literalType(step.node.proven)
+		}
+		// A path that left a loose type reaches everything one that didn't does.
+		if visited[step] || (!step.crossed && visited[looseStep{node: step.node, crossed: true}]) {
+			continue
+		}
+		visited[step] = true
+		if step.crossed && f.looseArrived(step.node, target) {
+			return true
+		}
+		crossed := step.crossed || f.looseCrossing(step.node)
+		for _, link := range f.looseLinksOf(step.node) {
+			queue = append(queue, looseStep{node: link, crossed: crossed})
+		}
+	}
+	return false
+}
+
+// looseTouches is whether reaching from a node can come to a loose type at all, so a declared slot that
+// can't skips the search. It's worked out once for every node the program's types reach; a node outside
+// them reads as touching, failing closed.
+func (f *cycleFinder) looseTouches(node cycleNode) bool {
+	if node.proven != nil {
+		node.proven = f.literalType(node.proven)
+	}
+	if f.loose.touching == nil {
+		f.loose.touching = f.deriveLooseTouching()
+	}
+	touches, known := f.loose.touching[node]
+	return touches || !known
+}
+
+func (f *cycleFinder) deriveLooseTouching() map[cycleNode]bool {
+	touching := map[cycleNode]bool{}
+	reverse := map[cycleNode][]cycleNode{}
+	queue := []cycleNode{}
+	push := func(node cycleNode) {
+		if node.proven != nil {
+			node.proven = f.literalType(node.proven)
+		}
+		if _, known := touching[node]; !known {
+			touching[node] = false
+			queue = append(queue, node)
+		}
+	}
+	for _, proven := range f.seen {
+		push(cycleNode{proven: proven})
+	}
+	for _, shape := range f.shapes {
+		push(cycleNode{proven: shape})
+	}
+	for _, closure := range f.l.closureRecords {
+		push(cycleNode{proven: closure.proven})
+	}
+	for local, declared := range f.l.result.Locals {
+		if declared.Captured && !declared.Global {
+			push(cycleNode{cell: local + 1})
+		}
+	}
+	loose := []cycleNode{}
+	for len(queue) != 0 {
+		node := queue[len(queue)-1]
+		queue = queue[:len(queue)-1]
+		if f.looseCrossing(node) {
+			loose = append(loose, node)
+			continue
+		}
+		for _, link := range f.looseLinksOf(node) {
+			if link.proven != nil {
+				link.proven = f.literalType(link.proven)
+			}
+			reverse[link] = append(reverse[link], node)
+			push(link)
+		}
+	}
+	for len(loose) != 0 {
+		node := loose[len(loose)-1]
+		loose = loose[:len(loose)-1]
+		if touching[node] {
+			continue
+		}
+		touching[node] = true
+		loose = append(loose, reverse[node]...)
+	}
+	return touching
 }

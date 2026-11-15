@@ -1,17 +1,12 @@
 package oracle
 
 import (
-	"context"
 	"os"
 	"path/filepath"
-	"regexp"
 	"strings"
-	"sync/atomic"
 	"testing"
 
 	"github.com/system-inc/adamic/internal/leakcheck"
-	"github.com/system-inc/adamic/internal/load"
-	"github.com/system-inc/adamic/internal/lower"
 	"github.com/system-inc/adamic/internal/native"
 )
 
@@ -138,62 +133,4 @@ func TestLooseSlotControlsBalance(t *testing.T) {
 			capturedUnionRuns(t, path, program, pin.want)
 		})
 	}
-}
-
-// looseSlotCensusText is a fixture that names a loose type, the only ones the stop can wall.
-var looseSlotCensusText = regexp.MustCompile(`\b(unknown|object)\b`)
-
-// TestLooseSlotStopCensus measures, when ADAMIC_LOOSE_CENSUS=1, which of the oracle's fixtures naming
-// unknown or object now stop at the loose-slot stop: a program reaches the stop only once everything
-// before the cycle finder lowered it, so each one listed is newly walled. It's a measurement, not a pin.
-func TestLooseSlotStopCensus(t *testing.T) {
-	if os.Getenv("ADAMIC_LOOSE_CENSUS") != "1" {
-		t.Skip("set ADAMIC_LOOSE_CENSUS=1 to measure")
-	}
-	root, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata"))
-	if err != nil {
-		t.Fatal(err)
-	}
-	paths := []string{}
-	err = filepath.WalkDir(root, func(path string, entry os.DirEntry, err error) error {
-		if err != nil || entry.IsDir() || strings.Contains(path, "loose_slot_cycles") {
-			return err
-		}
-		if extension := filepath.Ext(path); extension != ".a" && extension != ".ts" {
-			return nil
-		}
-		text, err := os.ReadFile(path)
-		if err == nil && looseSlotCensusText.Match(text) {
-			paths = append(paths, path)
-		}
-		return err
-	})
-	if err != nil {
-		t.Fatal(err)
-	}
-	var walled, passed, other atomic.Int64
-	t.Run("each", func(t *testing.T) {
-		for _, path := range paths {
-			relative, _ := filepath.Rel(root, path)
-			t.Run(relative, func(t *testing.T) {
-				t.Parallel()
-				program, err := load.Load([]string{path})
-				if err != nil {
-					other.Add(1)
-					return
-				}
-				_, err = lower.Lower(context.Background(), program)
-				switch {
-				case err == nil:
-					passed.Add(1)
-				case strings.Contains(err.Error(), looseSlotWords):
-					walled.Add(1)
-					t.Logf("WALLED %s: %v", relative, err)
-				default:
-					other.Add(1)
-				}
-			})
-		}
-	})
-	t.Logf("CENSUS fixtures %d lowered %d walled %d stopped otherwise %d", len(paths), passed.Load(), walled.Load(), other.Load())
 }
