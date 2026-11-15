@@ -1,0 +1,13 @@
+{
+  "command": [
+    "/workspace/scratch/write-file-slot-measure/adamic",
+    "js",
+    "/workspace/scratch/write-file-slot-aprime/candidate/src/tsc/tsc.ts",
+    "--module-format",
+    "commonjs-bundle"
+  ],
+  "exit": 1,
+  "stdoutBytes": 0,
+  "stderr": "adamic: /workspace/scratch/write-file-slot-aprime/candidate/src/compiler/sys.ts:1481:57: stage 0 can't lower node:timers.clearTimeout value needs exactly (timeoutId: unknown) => void, not (timeout: unknown) => void with no slot yet\n",
+  "seconds": 95.78965967899967
+}

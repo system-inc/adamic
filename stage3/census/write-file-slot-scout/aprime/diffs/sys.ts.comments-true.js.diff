@@ -1,0 +1,48 @@
+--- /workspace/scratch/write-file-slot-aprime/emits/main-sys.ts.comments-true.js
++++ /workspace/scratch/write-file-slot-aprime/emits/candidate-sys.ts.comments-true.js
+@@ -978,17 +978,6 @@
+             callback(eventName, relativeFileName, modifiedTime);
+         });
+     }
+-}
+-/**
+- * patch writefile to create folder before writing the file
+- *
+- * @internal
+- */
+-export function patchWriteFileEnsuringDirectory(sys) {
+-    // patch writefile to create folder before writing the file
+-    const writeFileView = sys;
+-    const originalWriteFile = writeFileView.writeFile;
+-    sys.writeFile = (path, data, writeBom) => writeFileEnsuringDirectories(path, data, !!writeBom, (path, data, writeByteOrderMark) => originalWriteFile.call(sys, path, data, writeByteOrderMark), path => sys.createDirectory(path), path => sys.directoryExists(path));
+ }
+ // TODO: GH#18217 this is used as if it's certainly defined in many places.
+ export let sys = (() => {
+@@ -1035,6 +1024,7 @@
+             fsWatchWithTimestamp: isMacOs,
+             sysLog,
+         });
++        const patchedWriteFile = (path, data, writeBom) => writeFileEnsuringDirectories(path, data, !!writeBom, (path, data, writeByteOrderMark) => writeFile(path, data, writeByteOrderMark), path => nodeSystem.createDirectory(path), path => nodeSystem.directoryExists(path));
+         const nodeSystem = {
+             args: process.argv.slice(2),
+             newLine: _os.EOL,
+@@ -1049,7 +1039,7 @@
+                 return !!process.stdout.isTTY;
+             },
+             readFile,
+-            writeFile,
++            writeFile: patchedWriteFile,
+             watchFile,
+             watchDirectory,
+             preferNonRecursiveWatch: !fsSupportsRecursiveFsWatch,
+@@ -1450,10 +1440,6 @@
+     if (isNodeLikeSystem()) {
+         sys = getNodeSystem();
+     }
+-    if (sys) {
+-        // patch writefile to create folder before writing the file
+-        patchWriteFileEnsuringDirectory(sys);
+-    }
+     return sys;
+ })();
+ /** @internal @knipignore */

@@ -1,0 +1,15 @@
+{
+  "commit": "fe5a1a54f045e9bce4e5aa32ca74885a317fbebd",
+  "apply_exit": 0,
+  "oracle_exit": 1,
+  "platform": {
+    "os": "linux",
+    "arch": "x64",
+    "node": "v24.19.0"
+  },
+  "apply_provenance": "retained successful unmodified main apply, followed by the exact private source experiment recorded in prepare.json; no adaptation submitted",
+  "experiment_exit": 0,
+  "namespace_instrumentation": false,
+  "sourceUnchangedDuringLane": true,
+  "wall_seconds": 636.0735294199994
+}

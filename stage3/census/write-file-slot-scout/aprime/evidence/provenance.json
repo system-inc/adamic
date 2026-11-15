@@ -1,0 +1,20 @@
+{
+  "base": "fe5a1a54f045e9bce4e5aa32ca74885a317fbebd",
+  "reportParent": "36bc3e9632b906dafe8ebdee74bcc9b29614fd87",
+  "typescriptSource": "050880ce59e30b356b686bd3144efe24f875ebc8",
+  "submodules": " 5360753e19e4417675a90e92a1823bea66b13918 cohere (5360753e)\n d92d9bfee114c80be2c375d72edae966176e3a4f cohere/TypeScript (d92d9bfe)\n",
+  "node": "v24.19.0",
+  "binaries": {
+    "/workspace/scratch/write-file-slot-measure/adamic": "1aad94d3357852c00a5534d24bb77f2e8bbea2c46b562a43209822643d17259a",
+    "/workspace/scratch/write-file-slot-measure/census": "fcb7332ba24673ab2c4ad1015d203c082be4208392f2a160ba9a1428cfbaedf3",
+    "/workspace/scratch/write-file-slot-aprime/root-census": "a2c2a29d88871d4ec2236dd2c05c472463224b5a40a1815d9d115172b8a2570d"
+  },
+  "mainSysSha256": "04de8aeb5f32caadd83d2ae6695d40097d7008a50a3a566d983cefd72a381a31",
+  "candidateSysSha256": "d42c7d54d2086b34617602ea9864b5fa4a9b9b10235ec21a7543f52e2ea21e65",
+  "tmpdir": "/workspace/scratch/write-file-slot-aprime/tmp",
+  "gotmpdir": "/workspace/scratch/write-file-slot-aprime/tmp",
+  "gocache": "/workspace/scratch/write-file-slot-measure/gocache",
+  "allRootsProductionWorkers": 4,
+  "wholeLaneWorkers": 8,
+  "noAdaptationSubmitted": true
+}

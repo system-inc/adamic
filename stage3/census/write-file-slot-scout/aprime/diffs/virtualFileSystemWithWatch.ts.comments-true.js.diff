@@ -1,0 +1,22 @@
+--- /workspace/scratch/write-file-slot-aprime/emits/main-virtualFileSystemWithWatch.ts.comments-true.js
++++ /workspace/scratch/write-file-slot-aprime/emits/candidate-virtualFileSystemWithWatch.ts.comments-true.js
+@@ -1,7 +1,8 @@
++import { writeFileEnsuringDirectories } from "../../_namespaces/ts.js";
+ import { harnessSessionCurrentDirectory, harnessTypingInstallerCacheLocation, } from "../../../harness/harnessLanguageService.js";
+ import { replaceAll } from "../../../harness/tsserverLogger.js";
+ import { createWatchUtils, ensureWatchablePath, } from "../../../harness/watchUtils.js";
+-import { append, arrayFrom, clear, clone, combinePaths, compareStringsCaseSensitive, createGetCanonicalFileName, createSystemWatchFunctions, Debug, directorySeparator, emptyArray, FileSystemEntryKind, FileWatcherEventKind, filterMutate, generateDjb2Hash, getBaseFileName, getDirectoryPath, getNormalizedAbsolutePath, getRelativePathToDirectoryOrUrl, hasProperty, insertSorted, isArray, isString, libMap, mapDefined, matchFiles, noop, patchWriteFileEnsuringDirectory, sys, targetToLibMap, toPath, } from "../../_namespaces/ts.js";
++import { append, arrayFrom, clear, clone, combinePaths, compareStringsCaseSensitive, createGetCanonicalFileName, createSystemWatchFunctions, Debug, directorySeparator, emptyArray, FileSystemEntryKind, FileWatcherEventKind, filterMutate, generateDjb2Hash, getBaseFileName, getDirectoryPath, getNormalizedAbsolutePath, getRelativePathToDirectoryOrUrl, hasProperty, insertSorted, isArray, isString, libMap, mapDefined, matchFiles, noop, sys, targetToLibMap, toPath, } from "../../_namespaces/ts.js";
+ import { timeIncrements } from "../../_namespaces/vfs.js";
+ import { jsonToReadableText } from "../helpers.js";
+ import { getPathForTypeScriptTestLocation, tscTypeScriptTestLocation, } from "./contents.js";
+@@ -1056,3 +1057,9 @@
+             Debug.assertNever(osFlavor);
+     }
+ }
++function patchWriteFileEnsuringDirectory(sys) {
++    // patch writefile to create folder before writing the file
++    const writeFileView = sys;
++    const originalWriteFile = writeFileView.writeFile;
++    sys.writeFile = (path, data, writeBom) => writeFileEnsuringDirectories(path, data, !!writeBom, (path, data, writeByteOrderMark) => originalWriteFile.call(sys, path, data, writeByteOrderMark), path => sys.createDirectory(path), path => sys.directoryExists(path));
++}

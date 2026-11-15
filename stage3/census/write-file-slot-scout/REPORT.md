@@ -1,3 +1,130 @@
+# Follow-up: road (a′), direct construction writer and harness-only helper
+
+| Road | Production target | Full sys.ts census vs main | JavaScript | Public bundled declaration | Whole move lane |
+| --- | --- | --- | --- | --- | --- |
+| **(a′)** Construct the ensuring writer with a direct local `writeFile` call; move the old patch helper to its sole remaining harness caller | **1387 gone**; tsc entry reaches **NotYet, `sys.ts:1481:57`** | **54 → 53 unique sites; 1 gone, 0 new, 0 changed**. Old `1392:49` disappears; (a)'s added `.call` refusal never appears. | Changes in exactly two source files; runtime `ts` loses one internal key | **Byte-identical to main** | **PASS: 106,366 passing, one sanctioned API row, zero pending** |
+
+Base remains **fe5a1a54f045e9bce4e5aa32ca74885a317fbebd**, including 763d5fc8. This is a private source experiment and measurement report. **No adaptation, compiler rule, public sanction or expected count is changed or submitted.** Earlier roads and their receipts remain below.
+
+## Gates checked before the move
+
+The AST audit finds **zero `ThisKeyword` nodes** in getNodeSystem's hoisted local `writeFile`. Its complete repository call graph has no other repository declarations: the only call edges are `_fs.openSync`, `_fs.writeSync`, and `_fs.closeSync`. Their actual Node **v24.19.0** JavaScript export bodies were also parsed and each has zero `this` reads. Every host call retains its explicit `_fs` receiver. This is not a claim that all native/Node-internal implementation code lacks its own receiver; those host/internal receivers do not change when the outer writer is called directly. The new local `writeFile` binding has **zero assignment/update sites**, and the construction wrapper's AST calls it directly with **no `.call`**. See [audit.json](aprime/evidence/audit.json) and [binding-audit.json](aprime/evidence/binding-audit.json).
+
+`patchWriteFileEnsuringDirectory` is an **exported `@internal` declaration** and is **absent** from pinned upstream `tests/baselines/reference/api/typescript.d.ts`. The public-stop gate therefore did not fire. Its whole-owner pin in `99-correctness-write-file-view` was verified against the retained adapted main before changing the private copy. Any eventual adaptation still belongs at that owner; none is built here.
+
+Before moving it, a complete eight-worker main lane counted namespace-property reads. A Node preload observes getter definitions for this property, including VM-created contexts, preserves their descriptors/receiver and records reads across the runner processes. Each actual namespace getter is deliberately read through `Reflect.get` as a positive control, verifying that it returns the same function as the original getter; control reads are separately classified.
+
+- **Adapted compiler namespace: 0 natural reads, 27 positive control reads.** All eight workers and the parent runner are present, with three controlled adapted export getters each.
+- The broad raw counter records **one additional natural read in the installed TypeScript package used by `scripts/dtsBundler.mjs`**, not the adapted compiler. Both getter installations in that process come from `node_modules/typescript/lib/typescript.js`; there is no adapted getter in that process. The source-scoped receipt keeps this toolchain read separate. Total controls, including toolchain installations, are 31.
+- The observed baseline lane passes **106,366 / 1 sanctioned API failure / 0 pending**. Its 747 source files remain byte-identical to retained main.
+
+The initial broad counter gate stopped on that toolchain read; source attribution resolves it explicitly rather than discarding an unexplained count. [namespace-summary-scoped.json](aprime/evidence/namespace-summary-scoped.json), [all process records](aprime/evidence/namespace-processes.json.gz), the frozen preload, initial supervisor and scoped analysis preserve the complete distinction. These are lane-bounded observations, not a claim about arbitrary external users of internal exports.
+
+## The exact source experiment
+
+Only these files change:
+
+1. `src/compiler/sys.ts`: delete the old helper and its internal JSDoc; construct `patchedWriteFile` before the `nodeSystem` literal; select it in the literal; remove the initializer's subsequent patch call.
+2. `src/testRunner/unittests/helpers/virtualFileSystemWithWatch.ts`: remove the imported patch function; add named imports of `System` and `writeFileEnsuringDirectories`; append a **module-local** `patchWriteFileEnsuringDirectory` declaration. Its **body is byte-for-byte identical**, including CRLF, to the old helper. The existing `createServerHost` call is unchanged. This follows the getAllKeys move shape.
+
+The Node wrapper is:
+
+```ts
+const patchedWriteFile: System["writeFile"] = (path, data, writeBom) =>
+    writeFileEnsuringDirectories(
+        path,
+        data,
+        !!writeBom,
+        (path, data, writeByteOrderMark) => writeFile(path, data, writeByteOrderMark),
+        path => nodeSystem.createDirectory(path),
+        path => nodeSystem.directoryExists(path),
+    );
+```
+
+The moved helper retains the original readonly capture, `sys.writeFile = ...`, and **`originalWriteFile.call(sys, ...)`**. The harness writer is a receiver-dependent class method, so that preservation matters. It is now outside the compiler roots, in its sole remaining caller's module, and is not exported there. Its actual CRLF body SHA-256 agrees on both sides:
+
+`20bd9198a1ce748e0dcc47bc12ac3f2fe2efc566bece591ef8c3f10e64ed9f23`.
+
+[prepare.json](aprime/evidence/prepare.json), [checks.json](aprime/evidence/checks.json), the exact [source patches](aprime/diffs/), and [source identities](aprime/evidence/source-identity.json.gz) retain the proof. The other 745 source files are unchanged; candidate sources also remain unchanged through the whole lane.
+
+## Production: where the 73 roots go
+
+All **79 roots were freshly inspected on both main and (a′)**. Every one of the **same 73 roots** that main reports at the write-slot refusal moves to the clearTimeout NotYet; the remaining six root results are unchanged.
+
+| Root group | Main | (a′) |
+| --- | --- | --- |
+| **73 roots** | **Refused**, `sys.ts:1387:5`, method read as a value (`writeFile`) | **NotYet**, `sys.ts:1481:57`, clearTimeout slot-signature stop |
+| 2 roots | accepted by lowering | unchanged |
+| 1 root | `commandLineParser.ts:293:35`, enum before initialization | unchanged |
+| 1 root | `diagnosticInformationMap.generated.ts:13:45`, enum before initialization | unchanged |
+| 1 root | `semver.ts:71:9`, namespace before initialization | unchanged |
+| 1 root | `utilitiesPublic.ts:1284:52`, unproven predicate argument | unchanged |
+
+[The complete root profile](aprime/evidence/root-profile.json.gz), [main's 79 results](aprime/evidence/roots-main.json.gz), [candidate's 79 results](aprime/evidence/roots-candidate.json.gz), and [one-to-one verification](aprime/evidence/root-route-verification.json) retain every root, exact reason and next stop. No claim about the 73 is inferred from a single entry.
+
+The separate requested **production tsc entry**, `adamic js candidate/src/tsc/tsc.ts --module-format commonjs-bundle`, exits 1 with **zero stdout** at **`sys.ts:1481:57`**:
+
+> node:timers.clearTimeout value needs exactly (timeoutId: unknown) => void, not (timeout: unknown) => void with no slot
+
+This is progress past the write-slot target, not successful compilation of the compiler. [production.json](aprime/evidence/production.json) preserves the exact command/output. The root ledger uses the ordinary production census `inspect` implementation byte for byte, with only a measurement-driver manifest selecting disjoint root batches and omitting duplicate whole-program checks. Production Load, Lower, language rules and CommonJSBundle remain unchanged; four independent census processes run only after the whole lane and full sys.ts run finish.
+
+## Full single-file sys.ts census and hidden stops
+
+The retained main stream and new candidate stream both use **`LATENT_FULL=1 LATENT_ASSERT_NO_OUTPUT=1`**, the whole exact `sys.ts` in `LATENT_ONLY_FILE`, and **CommonJSBundle**. Both headers have zero diagnostics and `checker_rejected:false`; both final relation-report trailers are present. The measurement-only no-output guards remain enabled.
+
+| Metric | Main | (a′) |
+| --- | ---: | ---: |
+| Units | 136 | 135 |
+| Unique Refused/NotYet sites | 54 | 53 |
+| All raw records, including Boundaries | 180 | 178 |
+| Distinct normalized all-kind tuples | 60 | 58 |
+| New / changed unique findings | — | **0 / 0** |
+
+The sole gone compiler finding is **Refused / lowering**, old `sys.ts:1392:49`, “inherited library member call read as an own field”. One associated Boundary record also disappears. There are **zero added records of any kind** and no changed survivors. Pairing is the requested multiset of **(kind, phase, reason, message with the diagnostic position stripped)**; site counts are additionally reported so repeated attempts do not conceal a new site. [pairs.json](aprime/evidence/pairs.json.gz) and the [complete stream](aprime/evidence/full-sys.jsonl.gz) preserve the evidence.
+
+The production 1387 refusal was **already absent from main's resumed full-mode stream**, as explained in the earlier scout below. Its disappearance is a production result, not an invented second full-census removal. The helper's 1392 finding is genuinely removed from the compiler stream by the move. The construction wrapper adds no inherited `.call` finding: (a)'s extra 1539:53 site has no counterpart in (a′).
+
+There is no patch-helper unit or hidden patch-helper scan stop left in sys.ts. The next `getNodeSystem` scan stop is the clearTimeout NotYet at **1481:57**. Its remaining scan stops pair unchanged with main: `watchFile` parameter variance at **1537:13**, `watchDirectory` parameter variance at **1538:13**, the namespace-object value at **1593:192**, and clearTimeout again at **1603:57**. Existing lowering stops such as the byte-order-mark capture and comparator-less sorts remain; the raw stream retains them.
+
+## Witness and observable changes
+
+The focused witness executes the **real** getNodeSystem bodies, old and new wrappers, local raw writer, `writeFileEnsuringDirectories` and recursive `ensureDirectoriesExist` bodies. Filesystem/watch dependencies use a small model; path helpers use Node POSIX operations for the absolute POSIX fixture paths. Both sides produce the same **29 events**, covering existing-parent writes, missing-parent failure/retry, recursive directory checks and creation, BOM insertion, filesystem receiver identity, a later replacement of directory methods, and invocation of a saved wrapper after replacing the public slot.
+
+The harness witness executes the real `TestServerHost.createServerHost` static body, its real receiver-dependent class `writeFile` method and the real old/moved helper bodies against a small filesystem model. Both sides produce the same **10 events**, including creation of missing directories and writes through a saved wrapper after slot replacement. The whole ordinary move lane supplies integration coverage of the complete harness class. See [witness.json](aprime/evidence/witness.json).
+
+The observable changes are explicit:
+
+- **Wrapper name:** `""` → **`"patchedWriteFile"`**, both in the witness and actual built library. This measured spelling **does not preserve the empty name**. Length remains 3; a fresh final wrapper remains distinct from the raw local function.
+- **Timing and slot contents:** the wrapper is allocated before the literal; the raw writer **never occupies** `nodeSystem.writeFile`. There is no later Node slot assignment, original-slot capture/getter read or initializer patch-helper call. The new arrow does not evaluate its `nodeSystem` captures until invocation. The earlier reader audit found no source-visible observation in the old return-to-patch interval.
+- **Receiver and `.call`:** the Node raw writer changes from explicit `sys` receiver to `undefined` in a direct strict-mode call; its body does not read or pass that receiver. Its filesystem receivers remain identical. The Node path no longer reads or invokes the raw function's own/inherited `.call`. A deliberately exposed private-function control records **5 own-call interceptions on main versus 0 on (a′)**; that is an intentional difference, not claimed preserved behavior. The local writer binding is never reassigned. Directory methods remain live reads on the same fixed nodeSystem object; later exported-`sys` or slot replacement does not redirect a saved wrapper.
+- **Runtime namespace:** actual built `ts` keys go **2,256 → 2,255**, with exactly **`patchWriteFileEnsuringDirectory` removed and zero keys added**. All remaining key order and writer descriptor flags are unchanged; both writers remain non-constructible arrows. Its own property is absent and `typeof ts.patchWriteFileEnsuringDirectory` changes from `"function"` to `"undefined"`. Module-level internal named access to that export is removed as well. The lane count is zero for reads of this adapted property; it does not make key enumeration or outside internal consumers unobservable.
+- **Internal declaration/home:** `typescript.internal.d.ts` loses the function signature and its five-line JSDoc; the public bundle does not change. The harness-local helper keeps its body and name but has a new module/source location and no export. Stack/source-map locations and reflected source text change with the deletion, construction wrapper and relocation. No claim of global JavaScript metadata or byte identity is made.
+
+[runtime-keys.json](aprime/evidence/runtime-keys.json) records the actual bundled keys and function metadata. The complete per-source JavaScript diffs, comments retained and removed, and actual `typescript.js`, `_tsc.js`, `run.js` and shim diffs are under [diffs](aprime/diffs/). The deterministic per-source comparison has four changed-file/comment-mode pairs (eight emits); source identity proves no other source changed.
+
+## Types, declarations, and complete lane
+
+Stock **TypeScript 6.0.3 CLI**, with the same inherited upstream compiler configuration and explicit pinned Node types as the earlier scout, exits **0 over all 79 sorted compiler roots**. System's public declaration is byte-identical. Separate **6.0.3 `stripInternal` emit plus the upstream unmodified declaration bundler** succeeds with zero emit diagnostics. The public `typescript.d.ts` SHA-256 remains exactly:
+
+`f03adcf915df559d616fcafd75181d3423eaa0f272237482cedbd025525c9516`.
+
+The candidate-to-main public declaration diff is empty. The comparison against upstream `tests/baselines/reference/api/typescript.d.ts` retains main's existing sanctioned differences and adds none. Public method-to-property conversions: **0**; changed existing public declaration relations: **0**. [declarations.json](aprime/evidence/declarations.json) and the public/internal declaration [diffs](aprime/diffs/) retain the receipts.
+
+Both the observed baseline lane and the **one uninstrumented move lane** pass the unchanged guard:
+
+| Run | Passing | Failing | Pending | API differences | Guard |
+| --- | ---: | ---: | ---: | --- | --- |
+| Main, namespace observer/control | 106,366 | 1 sanctioned row | 0 | only `api/typescript.d.ts` | PASS |
+| (a′), ordinary emitted JavaScript | 106,366 | 1 sanctioned row | 0 | only `api/typescript.d.ts` | PASS |
+
+There are **zero timeouts, extra exceptions, missing baselines or other failures**. Both use all runners, eight workers and no test filter. The sole failure is exactly `unittests:: Public APIs for typescript.d.ts should be acknowledged when they change`. Candidate sources match their pre-lane hashes afterward.
+
+Because no adaptation is being authored, this is an **experimental whole-lane composition**: copy the retained successful unmodified main `apply.sh` output, apply the private two-file experiment, run unmodified `stage3/oracle/run.sh`, then run unmodified `stage3/lane/check.py` over those results. It is not a claim that unmodified `lane/run.sh` or apply already generates the move. Execution receipts distinguish the successful original apply from the successful private construction/move step. No guard, source pin, worker count, runner list, oracle or sanction was weakened.
+
+The [lane receipts](aprime/evidence/), [scripts](aprime/scripts/), body/source hashes, namespace process records, complete census and full root ledgers retain this chain. The new experiment and run outputs live under `/workspace/scratch/write-file-slot-aprime`; retained inputs, binaries and Go cache use the earlier scratch roots. Temporary directories remain scratch paths. The only new Go text is a measurement-driver `.go.txt`, not a compiler rule. **Still a scout: no adapter or submission is made.**
+
+---
+
 | Road | Target gone? | New / changed findings against main | JavaScript change | Public declaration change |
 | --- | --- | --- | --- | --- |
 | (a) Wrap during Node construction; retain the harness helper | **No.** The helper still writes `sys.writeFile`. | **+1 / 0**, no removals; 54 → 55 unique sites | Two locals and the wrapper move into construction; literal selects it; initializer patch call removed. Wrapper `.name` changes. | **0 bytes** against main |

@@ -1,0 +1,41 @@
+--- /workspace/scratch/write-file-slot-aprime/emits/main-sys.ts.comments-false.js
++++ /workspace/scratch/write-file-slot-aprime/emits/candidate-sys.ts.comments-false.js
+@@ -852,11 +852,6 @@
+             callback(eventName, relativeFileName, modifiedTime);
+         });
+     }
+-}
+-export function patchWriteFileEnsuringDirectory(sys) {
+-    const writeFileView = sys;
+-    const originalWriteFile = writeFileView.writeFile;
+-    sys.writeFile = (path, data, writeBom) => writeFileEnsuringDirectories(path, data, !!writeBom, (path, data, writeByteOrderMark) => originalWriteFile.call(sys, path, data, writeByteOrderMark), path => sys.createDirectory(path), path => sys.directoryExists(path));
+ }
+ export let sys = (() => {
+     const byteOrderMarkIndicator = "\uFEFF";
+@@ -892,6 +887,7 @@
+             fsWatchWithTimestamp: isMacOs,
+             sysLog,
+         });
++        const patchedWriteFile = (path, data, writeBom) => writeFileEnsuringDirectories(path, data, !!writeBom, (path, data, writeByteOrderMark) => writeFile(path, data, writeByteOrderMark), path => nodeSystem.createDirectory(path), path => nodeSystem.directoryExists(path));
+         const nodeSystem = {
+             args: process.argv.slice(2),
+             newLine: _os.EOL,
+@@ -906,7 +902,7 @@
+                 return !!process.stdout.isTTY;
+             },
+             readFile,
+-            writeFile,
++            writeFile: patchedWriteFile,
+             watchFile,
+             watchDirectory,
+             preferNonRecursiveWatch: !fsSupportsRecursiveFsWatch,
+@@ -1270,9 +1266,6 @@
+     if (isNodeLikeSystem()) {
+         sys = getNodeSystem();
+     }
+-    if (sys) {
+-        patchWriteFileEnsuringDirectory(sys);
+-    }
+     return sys;
+ })();
+ export function setSys(s) {

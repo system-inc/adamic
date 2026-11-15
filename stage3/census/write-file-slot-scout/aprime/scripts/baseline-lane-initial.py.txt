@@ -1,0 +1,18 @@
+from pathlib import Path
+import shutil,subprocess,os,json,time,sys
+r=Path('/workspace/scratch/write-file-slot-aprime');base=Path('/workspace/scratch/write-file-slot-measure/main');repo=Path('/workspace/scratch/write-file-slot-scout');results=r/'baseline-lane';results.mkdir();tree=results/'adapted-tree'
+shutil.copytree(base,tree,ignore=lambda directory,names: [n for n in ['node_modules','built'] if n in names] if Path(directory)==base else [])
+shutil.copy2(base/'patch-set.md',results/'patch-set.md')
+env=dict(os.environ,TMPDIR=str(r/'tmp'),GOTMPDIR=str(r/'tmp'),GOCACHE='/workspace/scratch/write-file-slot-measure/gocache',npm_config_cache='/workspace/scratch/write-file-slot-measure/npm-cache',SCOUT_NAMESPACE_COUNTS=str(r/'namespace-counts'))
+env['NODE_OPTIONS']=env.get('NODE_OPTIONS','')+' --require='+str(r/'namespace-preload.cjs')
+(r/'tmp').mkdir(exist_ok=True)
+start=time.monotonic()
+with (results/'oracle.log').open('w') as log:p=subprocess.run(['bash',str(repo/'stage3/oracle/run.sh'),str(tree),str(results/'oracle')],env=env,stdout=log,stderr=subprocess.STDOUT)
+execution={'commit':'fe5a1a54f045e9bce4e5aa32ca74885a317fbebd','apply_exit':0,'oracle_exit':p.returncode,'platform':json.loads(subprocess.check_output(['node','-p','JSON.stringify({os:process.platform,arch:process.arch,node:process.version})'],text=True)),'apply_provenance':'exact retained output of the previous successful unmodified main apply; source copied byte for byte before any experiment','wall_seconds':time.monotonic()-start}
+(results/'execution.json').write_text(json.dumps(execution,indent=2)+'\n');shutil.copy2('/workspace/scratch/write-file-slot-measure/apply.log',results/'apply.log')
+p=subprocess.run(['python3',str(repo/'stage3/lane/check.py'),str(results)],env=env);print('guard_exit',p.returncode,flush=True)
+counts=[json.loads(f.read_text()) for f in (r/'namespace-counts').glob('*.json')];summary={'processes':len(counts),'installs':sum(x['installs'] for x in counts),'reads':sum(x['reads'] for x in counts),'controls':sum(x['controls'] for x in counts),'functionControls':sum(x['values'] for x in counts)}
+(r/'namespace-summary.json').write_text(json.dumps(summary,indent=2)+'\n');print(summary,flush=True)
+assert p.returncode==0,'baseline whole-lane guard failed'
+assert summary['installs']>0 and summary['controls']>0 and summary['functionControls']>0,'namespace positive control did not fire'
+assert summary['reads']==0,'STOP: real namespace reads found; report before moving'

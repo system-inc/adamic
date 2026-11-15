@@ -1,0 +1,33 @@
+{
+  "pid": 12906,
+  "thread": 0,
+  "argv": [
+    "/opt/codex/runtimes/codex-primary-runtime/dependencies/node/bin/node",
+    "/workspace/scratch/write-file-slot-aprime/baseline-lane/adapted-tree/built/local/run.js",
+    "--config=\"/workspace/scratch/write-file-slot-aprime/tmp/ts-tests1/task-config5.json\""
+  ],
+  "installs": 3,
+  "reads": 0,
+  "controls": 3,
+  "values": 3,
+  "sites": [
+    [
+      "    at __export (/workspace/scratch/write-file-slot-aprime/baseline-lane/adapted-tree/built/local/run.js:29:5)",
+      "    at Object.<anonymous> (/workspace/scratch/write-file-slot-aprime/baseline-lane/adapted-tree/built/local/run.js:196613:1)",
+      "    at Module._compile (node:internal/modules/cjs/loader:1872:14)",
+      "    at Object..js (node:internal/modules/cjs/loader:2003:10)"
+    ],
+    [
+      "    at __export (/workspace/scratch/write-file-slot-aprime/baseline-lane/adapted-tree/built/local/run.js:29:5)",
+      "    at Object.<anonymous> (/workspace/scratch/write-file-slot-aprime/baseline-lane/adapted-tree/built/local/run.js:199928:1)",
+      "    at Module._compile (node:internal/modules/cjs/loader:1872:14)",
+      "    at Object..js (node:internal/modules/cjs/loader:2003:10)"
+    ],
+    [
+      "    at __export (/workspace/scratch/write-file-slot-aprime/baseline-lane/adapted-tree/built/local/run.js:29:5)",
+      "    at Object.<anonymous> (/workspace/scratch/write-file-slot-aprime/baseline-lane/adapted-tree/built/local/run.js:209095:1)",
+      "    at Module._compile (node:internal/modules/cjs/loader:1872:14)",
+      "    at Object..js (node:internal/modules/cjs/loader:2003:10)"
+    ]
+  ]
+}

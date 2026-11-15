@@ -1,0 +1,15 @@
+--- /workspace/scratch/write-file-slot-aprime/baseline-lane/adapted-tree/built/local/typescript.internal.d.ts
++++ /workspace/scratch/write-file-slot-aprime/candidate/built/local/typescript.internal.d.ts
+@@ -16548,12 +16548,6 @@
+         watchFile: HostWatchFile;
+         watchDirectory: HostWatchDirectory;
+     };
+-    /**
+-     * patch writefile to create folder before writing the file
+-     *
+-     * @internal
+-     */
+-    function patchWriteFileEnsuringDirectory(sys: System): void;
+     /** @internal @knipignore */
+     function setSys(s: System): void;
+     enum FileWatcherEventKind {

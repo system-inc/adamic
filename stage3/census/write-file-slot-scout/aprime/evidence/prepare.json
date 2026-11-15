@@ -1,0 +1,16 @@
+{
+  "base": "fe5a1a54f045e9bce4e5aa32ca74885a317fbebd",
+  "changedFiles": [
+    "src/compiler/sys.ts",
+    "src/testRunner/unittests/helpers/virtualFileSystemWithWatch.ts"
+  ],
+  "helperBodyByteIdentical": true,
+  "oldBodySha256": "7c9acb37c6f2024e21a50acbbdfc44936bc073b91efe514ef82617282ef382af",
+  "movedBodySha256": "7c9acb37c6f2024e21a50acbbdfc44936bc073b91efe514ef82617282ef382af",
+  "localDeclaration": "function patchWriteFileEnsuringDirectory(sys: System): void {\n    // patch writefile to create folder before writing the file\n    const writeFileView: { readonly writeFile: System[\"writeFile\"]; } = sys;\n    const originalWriteFile = writeFileView.writeFile;\n    sys.writeFile = (path, data, writeBom) =>\n        writeFileEnsuringDirectories(\n            path,\n            data,\n            !!writeBom,\n            (path, data, writeByteOrderMark) => originalWriteFile.call(sys, path, data, writeByteOrderMark),\n            path => sys.createDirectory(path),\n            path => sys.directoryExists(path),\n        );\n}",
+  "wrapper": "        const patchedWriteFile: System[\"writeFile\"] = (path, data, writeBom) =>\n            writeFileEnsuringDirectories(\n                path,\n                data,\n                !!writeBom,\n                (path, data, writeByteOrderMark) => writeFile(path, data, writeByteOrderMark),\n                path => nodeSystem.createDirectory(path),\n                path => nodeSystem.directoryExists(path),\n            );\n",
+  "sourceHashes": {
+    "src/compiler/sys.ts": "d42c7d54d2086b34617602ea9864b5fa4a9b9b10235ec21a7543f52e2ea21e65",
+    "src/testRunner/unittests/helpers/virtualFileSystemWithWatch.ts": "8763cd753f278b142181f6145948c8727fcaf964b94037d12751226f7b96ed6c"
+  }
+}

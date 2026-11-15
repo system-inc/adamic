@@ -1,0 +1,41 @@
+{
+  "base": "fe5a1a54f045e9bce4e5aa32ca74885a317fbebd",
+  "typescript": "6.0.3",
+  "node": "v24.19.0",
+  "writer": {
+    "text": "function writeFile(fileName: string, data: string, writeByteOrderMark?: boolean): void {\r\n            // If a BOM is required, emit one\r\n            if (writeByteOrderMark) {\r\n                data = byteOrderMarkIndicator + data;\r\n            }\r\n\r\n            let fd: number | undefined;\r\n\r\n            try {\r\n                fd = _fs.openSync(fileName, \"w\");\r\n                _fs.writeSync(fd, data, /*position*/ undefined, \"utf8\");\r\n            }\r\n            finally {\r\n                if (fd !== undefined) {\r\n                    _fs.closeSync(fd);\r\n                }\r\n            }\r\n        }",
+    "thisCount": 0,
+    "calls": [
+      "_fs.openSync",
+      "_fs.writeSync",
+      "_fs.closeSync"
+    ],
+    "repositoryCallees": [],
+    "hostBoundary": "All three calls preserve the _fs receiver. No repository function is called by this writer. Node export bodies are additionally parsed below; native/internal Node dependencies retain their own receivers and are not declarations in the TypeScript-source AST graph."
+  },
+  "nodeBodies": {
+    "openSync": {
+      "body": "function openSync(path, flags, mode) {\n  return binding.open(\n    getValidatedPath(path),\n    stringToFlags(flags),\n    parseFileMode(mode, 'mode', 0o666),\n  );\n}",
+      "thisCount": 0,
+      "sha256": "a35b028dacd2e8ce962a989a447fbabac08834572fb6ce431740c008d8b548cf"
+    },
+    "writeSync": {
+      "body": "function writeSync(fd, buffer, offsetOrOptions, length, position) {\n  const ctx = {};\n  let result;\n\n  let offset = offsetOrOptions;\n  if (isArrayBufferView(buffer)) {\n    if (typeof offset === 'object') {\n      ({\n        offset = 0,\n        length = buffer.byteLength - offset,\n        position = null,\n      } = offsetOrOptions ?? kEmptyObject);\n    }\n    if (position === undefined)\n      position = null;\n    if (offset == null) {\n      offset = 0;\n    } else {\n      validateInteger(offset, 'offset', 0);\n    }\n    if (typeof length !== 'number')\n      length = buffer.byteLength - offset;\n    validateOffsetLengthWrite(offset, length, buffer.byteLength);\n    result = binding.writeBuffer(fd, buffer, offset, length, position,\n                                 undefined, ctx);\n  } else {\n    validateStringAfterArrayBufferView(buffer, 'buffer');\n    validateEncoding(buffer, length);\n\n    if (offset === undefined)\n      offset = null;\n    result = binding.writeString(fd, buffer, offset, length,\n                                 undefined, ctx);\n  }\n  handleErrorFromBinding(ctx);\n  return result;\n}",
+      "thisCount": 0,
+      "sha256": "3a43682d8ed661e2c6abae76eab30766adc6e6575eda5bc95ad2027298d3b4fd"
+    },
+    "closeSync": {
+      "body": "function closeSync(fd) {\n  binding.close(fd);\n}",
+      "thisCount": 0,
+      "sha256": "68a44ddf9eeb45fc107dd81abe84aa853e48719a63f7a269dd61920bc213cae2"
+    }
+  },
+  "helper": {
+    "exported": true,
+    "internal": true,
+    "publicBaseline": false,
+    "jsdoc": "\r\n\r\n/**\r\n * patch writefile to create folder before writing the file\r\n *\r\n * @internal\r\n */\r\n",
+    "text": "export function patchWriteFileEnsuringDirectory(sys: System): void {\r\n    // patch writefile to create folder before writing the file\r\n    const writeFileView: { readonly writeFile: System[\"writeFile\"]; } = sys;\r\n    const originalWriteFile = writeFileView.writeFile;\r\n    sys.writeFile = (path, data, writeBom) =>\r\n        writeFileEnsuringDirectories(\r\n            path,\r\n            data,\r\n            !!writeBom,\r\n            (path, data, writeByteOrderMark) => originalWriteFile.call(sys, path, data, writeByteOrderMark),\r\n            path => sys.createDirectory(path),\r\n            path => sys.directoryExists(path),\r\n        );\r\n}"
+  },
+  "gatePassed": true
+}

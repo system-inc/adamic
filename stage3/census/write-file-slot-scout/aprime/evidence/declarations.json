@@ -1,0 +1,17 @@
+{
+  "candidate": {
+    "stripInternal": true,
+    "emitSkipped": false,
+    "emitDiagnostics": [],
+    "command": [
+      "node",
+      "/workspace/scratch/write-file-slot-typescript/scripts/dtsBundler.mjs",
+      "--entrypoint",
+      "/workspace/scratch/write-file-slot-aprime/declarations/candidate/typescript/typescript.d.ts",
+      "--output",
+      "/workspace/scratch/write-file-slot-aprime/declarations/candidate/typescript.d.ts"
+    ],
+    "bundlerExit": 0,
+    "sha256": "f03adcf915df559d616fcafd75181d3423eaa0f272237482cedbd025525c9516"
+  }
+}

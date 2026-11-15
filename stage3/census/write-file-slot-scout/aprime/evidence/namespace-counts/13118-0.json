@@ -1,0 +1,29 @@
+{
+  "pid": 13118,
+  "thread": 0,
+  "argv": [
+    "/opt/codex/runtimes/codex-primary-runtime/dependencies/node/bin/node",
+    "/workspace/scratch/write-file-slot-scout/stage3/lane/normalize-api.cjs",
+    "/workspace/scratch/write-file-slot-aprime/tmp/stage3-lane-api-gl5_spfw/original.d.ts",
+    "/workspace/scratch/write-file-slot-aprime/baseline-lane/adapted-tree/tests/baselines/reference/api/typescript.d.ts",
+    "/workspace/scratch/write-file-slot-aprime/baseline-lane/adapted-tree/tests/baselines/local/api/typescript.d.ts"
+  ],
+  "installs": 2,
+  "reads": 0,
+  "controls": 2,
+  "values": 2,
+  "sites": [
+    [
+      "    at __export (/workspace/scratch/write-file-slot-scout/stage3/api/node_modules/typescript/lib/typescript.js:24:5)",
+      "    at /workspace/scratch/write-file-slot-scout/stage3/api/node_modules/typescript/lib/typescript.js:38:1",
+      "    at Object.<anonymous> (/workspace/scratch/write-file-slot-scout/stage3/api/node_modules/typescript/lib/typescript.js:201038:3)",
+      "    at Module._compile (node:internal/modules/cjs/loader:1872:14)"
+    ],
+    [
+      "    at __export (/workspace/scratch/write-file-slot-scout/stage3/api/node_modules/typescript/lib/typescript.js:24:5)",
+      "    at /workspace/scratch/write-file-slot-scout/stage3/api/node_modules/typescript/lib/typescript.js:183990:1",
+      "    at Object.<anonymous> (/workspace/scratch/write-file-slot-scout/stage3/api/node_modules/typescript/lib/typescript.js:201038:3)",
+      "    at Module._compile (node:internal/modules/cjs/loader:1872:14)"
+    ]
+  ]
+}

@@ -1,0 +1,10 @@
+from pathlib import Path
+import subprocess,os,json,time,shutil,hashlib
+r=Path('/workspace/scratch/write-file-slot-aprime');repo=Path('/workspace/scratch/write-file-slot-scout');tree=r/'candidate';results=r/'candidate-lane';results.mkdir();(results/'adapted-tree').symlink_to(tree,target_is_directory=True);shutil.copy2(tree/'patch-set.md',results/'patch-set.md')
+before={str(p.relative_to(tree)):hashlib.sha256(p.read_bytes()).hexdigest() for p in (tree/'src').rglob('*') if p.is_file()};(r/'candidate-source-hashes.json').write_text(json.dumps(before,indent=2)+'\n')
+env=dict(os.environ,TMPDIR=str(r/'tmp'),GOTMPDIR=str(r/'tmp'),GOCACHE='/workspace/scratch/write-file-slot-measure/gocache',npm_config_cache='/workspace/scratch/write-file-slot-measure/npm-cache');env.pop('SCOUT_NAMESPACE_COUNTS',None);env.pop('NODE_OPTIONS',None)
+start=time.monotonic()
+with (results/'oracle.log').open('w') as log:p=subprocess.run(['bash',str(repo/'stage3/oracle/run.sh'),str(tree),str(results/'oracle')],env=env,stdout=log,stderr=subprocess.STDOUT)
+after={str(p.relative_to(tree)):hashlib.sha256(p.read_bytes()).hexdigest() for p in (tree/'src').rglob('*') if p.is_file()};assert before==after,'source changed in lane'
+execution={'commit':'fe5a1a54f045e9bce4e5aa32ca74885a317fbebd','apply_exit':0,'oracle_exit':p.returncode,'platform':json.loads(subprocess.check_output(['node','-p','JSON.stringify({os:process.platform,arch:process.arch,node:process.version})'],text=True)),'apply_provenance':'retained successful unmodified main apply, followed by the exact private source experiment recorded in prepare.json; no adaptation submitted','experiment_exit':0,'namespace_instrumentation':False,'sourceUnchangedDuringLane':True,'wall_seconds':time.monotonic()-start};(results/'execution.json').write_text(json.dumps(execution,indent=2)+'\n');shutil.copy2('/workspace/scratch/write-file-slot-measure/apply.log',results/'apply.log')
+p=subprocess.run(['python3',str(repo/'stage3/lane/check.py'),str(results)],env=env);print('guard_exit',p.returncode,flush=True);raise SystemExit(p.returncode)

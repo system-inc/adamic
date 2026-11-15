@@ -1,0 +1,24 @@
+{
+  "localWriterBindingWrites": [],
+  "writerReferenceContexts": [
+    {
+      "kind": "CallExpression",
+      "text": "writeFile(path, data, writeByteOrderMark)"
+    },
+    {
+      "kind": "PropertyAssignment",
+      "text": "writeFile: patchedWriteFile"
+    },
+    {
+      "kind": "FunctionDeclaration",
+      "text": "function writeFile(fileName: string, data: string, writeByteOrderMark?: boolean): void {\r\n            // If a BOM is required, emit one\r\n            if (writeByteOrderMark) {\r\n                data = byteOrderMarkIndicato"
+    }
+  ],
+  "constructionWrapperCalls": [
+    "writeFileEnsuringDirectories",
+    "writeFile",
+    "nodeSystem.createDirectory",
+    "nodeSystem.directoryExists"
+  ],
+  "constructionWrapper": "patchedWriteFile: System[\"writeFile\"] = (path, data, writeBom) =>\r\n            writeFileEnsuringDirectories(\r\n                path,\r\n                data,\r\n                !!writeBom,\r\n                (path, data, writeByteOrderMark) => writeFile(path, data, writeByteOrderMark),\r\n                path => nodeSystem.createDirectory(path),\r\n                path => nodeSystem.directoryExists(path),\r\n            )"
+}

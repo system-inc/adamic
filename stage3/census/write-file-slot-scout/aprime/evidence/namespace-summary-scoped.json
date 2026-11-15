@@ -1,0 +1,50 @@
+{
+  "processes": 39,
+  "allInstalls": 31,
+  "allNaturalReads": 1,
+  "allControlReads": 31,
+  "adaptedReads": 0,
+  "toolchainReads": 1,
+  "otherReads": 0,
+  "adaptedControls": 27,
+  "adaptedInstallSites": 27,
+  "lanePass": true,
+  "processesWithReads": [
+    {
+      "file": "12775-0.json",
+      "pid": 12775,
+      "thread": 0,
+      "argv": [
+        "/opt/codex/runtimes/codex-primary-runtime/dependencies/node/bin/node",
+        "/workspace/scratch/write-file-slot-aprime/baseline-lane/adapted-tree/scripts/dtsBundler.mjs",
+        "--entrypoint",
+        "./built/local/typescript/typescript.d.ts",
+        "--output",
+        "./built/local/typescript.d.ts"
+      ],
+      "installs": 2,
+      "reads": 1,
+      "controls": 2,
+      "values": 2,
+      "sites": [
+        [
+          "    at __export (/workspace/scratch/write-file-slot-aprime/baseline-lane/adapted-tree/node_modules/typescript/lib/typescript.js:24:5)",
+          "    at /workspace/scratch/write-file-slot-aprime/baseline-lane/adapted-tree/node_modules/typescript/lib/typescript.js:38:1",
+          "    at Object.<anonymous> (/workspace/scratch/write-file-slot-aprime/baseline-lane/adapted-tree/node_modules/typescript/lib/typescript.js:200275:3)",
+          "    at Module._compile (node:internal/modules/cjs/loader:1872:14)"
+        ],
+        [
+          "    at __export (/workspace/scratch/write-file-slot-aprime/baseline-lane/adapted-tree/node_modules/typescript/lib/typescript.js:24:5)",
+          "    at /workspace/scratch/write-file-slot-aprime/baseline-lane/adapted-tree/node_modules/typescript/lib/typescript.js:183268:1",
+          "    at Object.<anonymous> (/workspace/scratch/write-file-slot-aprime/baseline-lane/adapted-tree/node_modules/typescript/lib/typescript.js:200275:3)",
+          "    at Module._compile (node:internal/modules/cjs/loader:1872:14)"
+        ]
+      ],
+      "siteClasses": [
+        "toolchain",
+        "toolchain"
+      ],
+      "classification": "toolchain"
+    }
+  ]
+}
