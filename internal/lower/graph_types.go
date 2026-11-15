@@ -375,11 +375,6 @@ func (f *cycleFinder) graphTypes(modules []*ast.SourceFile) error {
 	if f.recordStop != nil {
 		return f.recordStop
 	}
-	// Then any record its own values can reach back, however it's held: through an object's field, a
-	// view that omits it, a union member or a closure's capture, which the slot seed above doesn't see.
-	if site := f.cyclicRecord(); site != nil {
-		return f.l.notYet(site.node, "a record its own values can reach again, on a cycle in a graph program: a record can't join a graph region")
-	}
 	return flows
 }
 

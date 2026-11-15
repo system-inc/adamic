@@ -23,7 +23,7 @@ import (
 //
 // Mutants: make noteRecordSlot (internal/lower/graph_records.go) return at once, and the field and
 // element cases lower and leak by the counted build; drop the reassigned cell's stop in graphTypes, and
-// the captured-variable case lowers. Make cyclicRecord return nil at once, and the record one field
+// the captured-variable case lowers. Make reachesRecord return false at once, and the record one field
 // deep and the record a closure captures lower and leak by the counted build (#t5q4prw).
 const graphRecordNode = `interface Node { name: string; next: Node[]; r: Record<string, Node[]>; rs: Record<string, Node[]>[] }
 const a: Node = { name: 'a' + '', next: [], r: {}, rs: [] };
@@ -91,7 +91,7 @@ for (let i = 0; i < 10; i++) {
   total += Object.keys(a.box.r).length;
 }
 console.log(` + "`${total}`" + `);
-`, "a record its own values can reach again"},
+`, "a record written into a graph slot"},
 		// A record a closure on the node captures: the node holds the closure, the closure the record's
 		// cell, the record the node. 22 of 92 freed on main 8e3a784a (#t5q4prw).
 		{"a record a closure on the node captures", `interface Node { name: string; count: () => number }
@@ -104,7 +104,24 @@ for (let i = 0; i < 10; i++) {
   total += a.count();
 }
 console.log(` + "`${total}`" + `);
-`, "a record its own values can reach again"},
+`, "a record written into a graph slot"},
+		// The record reaches the seed through a binding typed by a view that omits it: the written
+		// expression's own type is { tag: number }, and only the shapes seen as it hold r (Runtime's road
+		// on #t5q4prw). reachesRecord follows them, so the write stops.
+		{"a record behind a view at the seed", `interface Box { tag: number }
+interface Node { name: string; box: Box }
+function make(name: string): Node { return { name, box: { tag: 0 } }; }
+let total = 0;
+for (let i = 0; i < 10; i++) {
+  const a = make(` + "`a${i}`" + `);
+  const rec: Record<string, Node> = { k: a };
+  const full = { tag: 1, r: rec };
+  const hidden: Box = full;
+  a.box = hidden;
+  total += a.box.tag;
+}
+console.log(` + "`${total}`" + `);
+`, "a record written into a graph slot"},
 		// The two shapes above with no record: each cycle is the graph plan's, and frees whole.
 		{"the field shape with no record", `interface Box { n: Node | undefined }
 interface Node { name: string; box: Box }

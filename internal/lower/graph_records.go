@@ -15,7 +15,7 @@ import (
 // (method_bind.a's dictionary, reached through function values), isn't on any cycle at run time, so
 // it lowers. A cycle closed by a write into a record is refused before this, at graph_types.go:87.
 func (f *cycleFinder) noteRecordSlot(value *checker.Type, write *fresh.Write) {
-	if f.recordStop != nil || !f.holdsRecord(value) {
+	if f.recordStop != nil || !(f.holdsRecord(value) || f.reachesRecord(value)) {
 		return
 	}
 	what := "a record written into a graph slot, where " + f.writtenAt(write) + " may close a cycle through it, in a graph program: a record can't join a graph region"
@@ -86,12 +86,10 @@ func (f *cycleFinder) reassigned(local int) bool {
 	return f.assigned[local]
 }
 
-// graphRecordSite is one record literal: where, the element type recordLiteral builds it with, and the
-// record type it's built as, which its values must not reach again.
+// graphRecordSite is one record literal: where, and the record type it's built as.
 type graphRecordSite struct {
-	node    *ast.Node
-	element *checker.Type
-	record  *checker.Type
+	node   *ast.Node
+	record *checker.Type
 }
 
 // recordLiteralType is the record type a record literal is built as: its slot's, as recordLiteralElement
@@ -105,35 +103,29 @@ func (l *lowering) recordLiteralType(node *ast.Node) *checker.Type {
 	return l.checker.GetTypeAtLocation(node)
 }
 
-// cyclicRecord is the first record literal whose own values can reach a record of its type again, or
-// nil. A record is never a graph member (nothing adopts an ir.RecordLiteral), so a cycle through one
-// keeps a counted node inside the cycle and leaks the cycle whole: a record held one field deep, as
-// a.box = { r: { k: a } }, freed 22 of 102 by the counted build, and one a closure on the node
-// captured 22 of 92 (#t5q4prw). The test is the finder's own reaches, from the record's element type
-// back to its type, so it follows what the cycle rule follows: every field, every shape that can be
-// seen as a type (the field a view omits), union members, collections' arguments and the cells
-// function values capture. It's judged at the allocation, by the record's own type, never by how a
-// slot declares what it holds. A record whose element the checker can't name fails closed.
-func (f *cycleFinder) cyclicRecord() *graphRecordSite {
-	// With no graph type selected there's no graph region for a record to be missing from.
-	if len(f.selected) == 0 {
-		return nil
-	}
-	type judgedPair struct{ element, record *checker.Type }
-	judged := map[judgedPair]bool{}
+// reachesRecord reports whether a value written into a seed's slot can reach a record the program makes,
+// by any road the finder follows: an object's field, every shape seen as the slot's type (a field a view
+// omits), union members, collections' arguments, record elements and the cells function values capture.
+// holdsRecord asks only the slot's own type, so a.box = { r: { k: a } } and a.count = () => rec, rec a
+// record holding a, lowered and leaked: 22 of 102 and 22 of 92 freed by the counted build on main
+// 8e3a784a (#t5q4prw). It's asked at the seeds, the writes slotsOf finds may close a cycle, never at
+// every record made: a record whose types only pass near a cycle, written into no seed, isn't on one,
+// and lowers (method_bind.a's dictionary, #a9e21hc's control). A record type the checker didn't name
+// fails closed.
+func (f *cycleFinder) reachesRecord(value *checker.Type) bool {
+	judged := map[*checker.Type]bool{}
 	for index := range f.l.graphRecords {
-		site := &f.l.graphRecords[index]
-		if site.element == nil || site.record == nil {
-			return site
+		record := f.l.graphRecords[index].record
+		if record == nil {
+			return true
 		}
-		pair := judgedPair{site.element, site.record}
-		if judged[pair] {
+		if judged[record] {
 			continue
 		}
-		judged[pair] = true
-		if f.reaches(site.element, cycleNode{proven: site.record}) {
-			return site
+		judged[record] = true
+		if f.reaches(value, cycleNode{proven: record}) {
+			return true
 		}
 	}
-	return nil
+	return false
 }
