@@ -125,47 +125,32 @@ func TestGraphDynamicShapeAdoptionIsRefused(t *testing.T) {
 	}
 }
 
-// An empty record, {} on a graph object, holds nothing when made, so reachesRecord skips it in a program
-// that writes into no record (#t5q4prw). Once one is written, every road that fills it must still stop. Each one
-// is held here, filling r to close the cycle: the set, ??= and defineHidden writes (fresh's
-// WriteMapEntry, which graphTypes' slotsOf over the record type refuses), a computed key (lowered as the
-// set), a write in a callee, and Object.assign with the record as its target (NotYet in records.go's
-// recordObjectCallArguments).
-func TestGraphEmptyRecordFilledLaterStops(t *testing.T) {
+// Object.assign with a record as its target stays NotYet once records joined graph regions (records.go's
+// recordObjectCallArguments), so an empty record it fills to close a cycle stops. Every other road that
+// fills one (set, ??=, a computed key, a write in a callee, defineHidden, a push into a stored container)
+// lowers now, its record a graph member, held to Node and the counted build in oracle's
+// TestGraphRecordOnACycle (#1vb0x5s).
+func TestGraphEmptyRecordAssignedStops(t *testing.T) {
 	t.Parallel()
-	const node = "interface Node { name: string; next: Node[]; r: Record<string, Node[]> }\n" +
+	const source = "interface Node { name: string; next: Node[]; r: Record<string, Node[]> }\n" +
 		"const a: Node = { name: 'a' + '', next: [], r: {} };\n" +
 		"const b: Node = { name: 'b' + '', next: [a], r: {} };\n" +
-		"a.next.push(b);\n"
-	for _, road := range []struct{ name, source string }{
-		{"set", "a.r['k'] = a.next;\n"},
-		{"coalesce", "a.r['k'] ??= a.next;\n"},
-		{"computed key", "const key = 'k' + '';\na.r[key] = a.next;\n"},
-		{"callee", "function put(n: Node): void { n.r['k'] = n.next; }\nput(a);\n"},
-		{"defineHidden", "Object.defineProperty(a.r, 'k', { enumerable: false, writable: false, value: a.next });\n"},
-		{"assign", "Object.assign(a.r, { k: a.next });\n"},
-		// The record is written a container, an unproven local, and a later push into that container
-		// closes the cycle: a seed into Node[] only reachesRecord sees (Language's e05).
-		{"push into a stored value", "const list: Node[] = [];\na.r['k'] = list;\nlist.push(a);\n"},
-	} {
-		t.Run(road.name, func(t *testing.T) {
-			t.Parallel()
-			if _, err := lowerSource(t, node+road.source+"console.log(a.name);\n"); err == nil {
-				t.Fatal("a cycle closed by a write into an empty record lowered")
-			} else {
-				t.Log(err)
-			}
-		})
+		"a.next.push(b);\n" +
+		"Object.assign(a.r, { k: a.next });\n" +
+		"console.log(a.name);\n"
+	if _, err := lowerSource(t, source); err == nil || !strings.Contains(err.Error(), "Object.assign on a record") {
+		t.Fatalf("got %v, want Object.assign on a record stopped", err)
 	}
 }
 
-func TestGraphRecordCycleStaysRefused(t *testing.T) {
+// A cycle closed by a write into a record lowers since records joined graph regions (#1vb0x5s): the
+// record is selected and made a graph member, which oracle's TestGraphRecordOnACycle holds to Node and
+// the counted build ("a record type closing its own cycle").
+func TestGraphRecordCycleLowers(t *testing.T) {
 	t.Parallel()
-	_, err := lowerSource(t, `interface Ring {self:Ring|undefined;[key:string]:Ring|undefined} const ring:Ring={self:undefined};ring.self=ring;console.log(Object.keys(ring).join(','));`)
-	if err == nil {
-		t.Fatal("record cycle accepted")
+	if _, err := lowerSource(t, `interface Ring {self:Ring|undefined;[key:string]:Ring|undefined} const ring:Ring={self:undefined};ring.self=ring;console.log(Object.keys(ring).join(','));`); err != nil {
+		t.Fatal(err)
 	}
-	t.Log(err)
 }
 func TestGraphCountTypesSurviveClassification(t *testing.T) {
 	t.Parallel()

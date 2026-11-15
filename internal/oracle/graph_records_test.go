@@ -160,6 +160,63 @@ console.log(` + "`${total}`" + `);
 	// (TestGraphFlowWriters).
 	{"an empty record a graph object holds", graphRecordNode + `console.log(` + "`${a.name} ${Object.keys(a.r).length}`" + `);
 `, ""},
+	// An empty record a graph object holds, filled to close the cycle by each road that writes a record
+	// (#t5q4prw's TestGraphEmptyRecordFilledLaterStops before records joined graph regions): each lowers
+	// now, its record a graph member, and frees whole (#1vb0x5s).
+	{"an empty record filled by set", `interface Node { name: string; next: Node[]; r: Record<string, Node[]> }
+const a: Node = { name: 'a' + '', next: [], r: {} };
+const b: Node = { name: 'b' + '', next: [a], r: {} };
+a.next.push(b);
+a.r['k'] = a.next;
+console.log(` + "`${a.name} ${Object.keys(a.r).length}`" + `);
+`, ""},
+	{"an empty record filled by coalesce", `interface Node { name: string; next: Node[]; r: Record<string, Node[]> }
+const a: Node = { name: 'a' + '', next: [], r: {} };
+const b: Node = { name: 'b' + '', next: [a], r: {} };
+a.next.push(b);
+a.r['k'] ??= a.next;
+console.log(` + "`${a.name} ${Object.keys(a.r).length}`" + `);
+`, ""},
+	{"an empty record filled by computed key", `interface Node { name: string; next: Node[]; r: Record<string, Node[]> }
+const a: Node = { name: 'a' + '', next: [], r: {} };
+const b: Node = { name: 'b' + '', next: [a], r: {} };
+a.next.push(b);
+const key = 'k' + '';
+a.r[key] = a.next;
+console.log(` + "`${a.name} ${Object.keys(a.r).length}`" + `);
+`, ""},
+	{"an empty record filled by callee", `interface Node { name: string; next: Node[]; r: Record<string, Node[]> }
+const a: Node = { name: 'a' + '', next: [], r: {} };
+const b: Node = { name: 'b' + '', next: [a], r: {} };
+a.next.push(b);
+function put(n: Node): void { n.r['k'] = n.next; }
+put(a);
+console.log(` + "`${a.name} ${Object.keys(a.r).length}`" + `);
+`, ""},
+	{"an empty record filled by defineHidden", `interface Node { name: string; next: Node[]; r: Record<string, Node[]> }
+const a: Node = { name: 'a' + '', next: [], r: {} };
+const b: Node = { name: 'b' + '', next: [a], r: {} };
+a.next.push(b);
+Object.defineProperty(a.r, 'k', { enumerable: false, writable: false, value: a.next });
+console.log(` + "`${a.name} ${Object.keys(a.r).length}`" + `);
+`, ""},
+	{"an empty record filled by push into a stored container", `interface Node { name: string; next: Node[]; r: Record<string, Node[]> }
+const a: Node = { name: 'a' + '', next: [], r: {} };
+const b: Node = { name: 'b' + '', next: [a], r: {} };
+a.next.push(b);
+const list: Node[] = [];
+a.r['k'] = list;
+list.push(a);
+console.log(` + "`${a.name} ${Object.keys(a.r).length}`" + `);
+`, ""},
+	// A record type closing its own cycle, a declared field beside its index signature: refused before
+	// records joined graph regions (lower's TestGraphRecordCycleLowers), held here to Node and the counted
+	// build (#1vb0x5s).
+	{"a record type closing its own cycle", `interface Ring { self: Ring | undefined; [key: string]: Ring | undefined }
+const ring: Ring = { self: undefined };
+ring.self = ring;
+console.log(Object.keys(ring).join(','));
+`, ""},
 	// The two shapes above with no record: each cycle is the graph plan's, and frees whole.
 	{"the field shape with no record", `interface Box { n: Node | undefined }
 interface Node { name: string; box: Box }
