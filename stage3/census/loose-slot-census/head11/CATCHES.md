@@ -2,7 +2,7 @@
 
 24 AST catch clauses; 7 have bindings; 0 have bindings captured by closures; 0 captured catch bindings stop. There are 5 distinct calls (5 argument entries) passing a catch binding directly to an unknown-typed parameter. Parentheses are unwrapped; derived values such as String(error) are not counted as the caught binding.
 
-Emitter helper templates and comments are source text, not catch AST nodes. An independent TypeScript 6.0.3 AST/checker walk agrees with the Go/checker inventory.
+Capture means a nested function reads the catch binding’s checker symbol; a catch declared within an existing callback remains local to that callback. Emitter helper templates and comments are source text, not catch AST nodes. An independent TypeScript 6.0.3 AST/checker walk agrees with the Go/checker inventory.
 
 ## Stopped captured catch bindings
 
