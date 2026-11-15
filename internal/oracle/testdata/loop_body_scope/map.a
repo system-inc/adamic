@@ -1,0 +1,15 @@
+// map's loop with a rest packed in each iteration (#9grybqc). spread is a rest function whose type
+// every callback below admits, so each map's call collects spread's rest from its slots, the
+// element, the index's number boxed into spread's union and the array, though the callback that runs
+// never reads it: the pack is the iteration's, let go of at the end of each one. spread's own map
+// packs the same way. Strings are split at run time, so a count gone wrong shows. Node prints:
+//
+//	string:x;number:1;object:y,z
+//	ant0 bee1 cat2 dog3
+//	ANT BEE CAT DOG
+const spread = (...items: (string | number | string[])[]): string =>
+	items.map((item) => typeof item + ':' + (Array.isArray(item) ? item.join(',') : String(item))).join(';');
+console.log(spread('x', 1, ['y', 'z']));
+const words = 'ant bee cat dog'.split(' ');
+console.log(words.map((word, index) => `${word}${index}`).join(' '));
+console.log(words.map((word) => word.toUpperCase()).join(' '));

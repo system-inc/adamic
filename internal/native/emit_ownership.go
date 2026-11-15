@@ -118,6 +118,40 @@ func (e *emitter) own(valueType ir.Type, value string) string {
 	return name
 }
 
+// iteration emits the body of a loop the emitter writes itself around a callback call (map's, the
+// visits', reduce's, a Map's or a Set's forEach, Array.from's), one level in, with what the body owns
+// kept to itself, as asideWith keeps an aside's. A temporary owned in the body, a rest packed for the
+// callback above all, is declared in the loop's block, so it's let go of there, at the end of each
+// iteration. Let go of with the statement's, it would be past the loop's closing brace, where C
+// can't name it, and every iteration but the last would leak (#9grybqc). A throw from inside lets go
+// of the iteration's temporaries and scope first and then of the statement's, as from inside an
+// aside (thrownSite reads the iteration's list and scope as an aside's), and leave writes the
+// iteration's releases where the body leaves early, before a break. What the body hands on, a
+// callback's result pushed or kept, is never the iteration's: it comes back owned as an
+// adamic_value, never through own.
+func (e *emitter) iteration(body func(leave func())) {
+	savedOwned := e.owned
+	e.owned = nil
+	e.outerOwned = append(e.outerOwned, savedOwned)
+	depth := len(e.scopes)
+	e.scopes = append(e.scopes, nil)
+	e.asides = append(e.asides, asideScope{scope: depth, level: len(e.outerOwned)})
+	e.indent++
+	leave := func() {
+		for index := len(e.owned) - 1; index >= 0; index-- {
+			e.line("adamic_release(%s);", e.owned[index])
+		}
+		e.releaseScopes(depth)
+	}
+	body(leave)
+	leave()
+	e.indent--
+	e.asides = e.asides[:len(e.asides)-1]
+	e.scopes = e.scopes[:depth]
+	e.outerOwned = e.outerOwned[:len(e.outerOwned)-1]
+	e.owned = savedOwned
+}
+
 // held is a value as an adamic_value whose reference, if it has one, the receiver keeps.
 func held(valueType ir.Type, value string) string {
 	if valueType.IsReference() {

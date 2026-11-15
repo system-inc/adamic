@@ -33,5 +33,5 @@ func (e *emitter) checkedCallableArguments(call ir.CallClosure, closure string) 
 		}
 		slots = append(slots, ordinary)
 	}
-	return e.closureSlots(call, slots, "", fmt.Sprint(len(slots))), fmt.Sprint(len(slots))
+	return e.closureSlots(call, slots, nil, "", fmt.Sprint(len(slots))), fmt.Sprint(len(slots))
 }
