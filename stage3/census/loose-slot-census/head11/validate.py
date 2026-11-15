@@ -15,6 +15,16 @@ for which in ['base','head']:
 assert hashlib.sha256((s/'type-count').read_bytes()).hexdigest()==provenance['type_binary_sha256'];assert hashlib.sha256((out/'type_count.go.txt').read_bytes()).hexdigest()==provenance['probe_source_sha256']
 typed=read(out/'evidence/type-whole.json');audit=read(out/'evidence/independent-audit.json');comparison=read(out/'evidence/comparison.json')
 assert comparison['pairs_complete']==79
+actual_differences=[]
+for i in range(1,80):
+ normalized=[]
+ for which in ['base','head']:
+  row=read(out/'evidence'/which/f'root-{i:02}.json');row.pop('seconds');root=row.pop('roots');assert len(root)==1 and row['kind']in ['accepted','Refused','NotYet']
+  for key in ['where','reason','fix']:
+   if key in row:row[key]=row[key].replace(str(s/('adapted-'+which)/'src/compiler')+'/','')
+  normalized.append(row)
+ if normalized[0]!=normalized[1]:actual_differences.append(i)
+assert actual_differences==comparison['different_indices'];assert comparison['unchanged']==79-len(actual_differences)
 assert len(typed['Catches'])==audit['CatchClauses'];assert sum(c['Bound']for c in typed['Catches'])==audit['BoundCatchClauses'];assert sum(c['Captured']for c in typed['Catches'])==audit['CapturedCatchBindings']
 assert {rel(c['ClauseWhere'])for c in typed['Catches']}=={rel(c['ClauseWhere'])for c in audit['Catches']}
 assert {rel(c['Where'])for c in typed['UnknownCatchCalls']}=={rel(c['Where'])for c in audit['UnknownCalls']}
