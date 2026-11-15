@@ -1,0 +1,7 @@
+import { parallelMap } from 'adamic';
+interface Tester { test(text: string): boolean }
+const v: Tester = /a/;
+const values: readonly Tester[] = [v, v];
+console.log(parallelMap(values, item => String(item === v)).join(','));
+console.log(String(v.test('xa')));
+console.log(String(v.test('xa')));
