@@ -1,0 +1,50 @@
+[
+  {
+    "name": "scope-mutant",
+    "exit": 1,
+    "expected": 1,
+    "caught": true
+  },
+  {
+    "name": "ternary-mutant",
+    "exit": 1,
+    "expected": 1,
+    "caught": true
+  },
+  {
+    "name": "binding-collision-mutant",
+    "exit": 1,
+    "expected": 1,
+    "caught": true
+  },
+  {
+    "name": "binding-shadow-mutant",
+    "exit": 1,
+    "expected": 1,
+    "caught": true
+  },
+  {
+    "name": "binding-bare-mutant",
+    "exit": 1,
+    "expected": 1,
+    "caught": true
+  },
+  {
+    "name": "scoped-probes",
+    "exit": 0,
+    "expected": 0,
+    "caught": false
+  },
+  {
+    "name": "recordreplay-mutants",
+    "exit": 0,
+    "expected": 0,
+    "caught": false
+  },
+  {
+    "name": "restoring-mutants",
+    "exit": 0,
+    "expected": 0,
+    "caught": false
+  }
+]

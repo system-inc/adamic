@@ -1,0 +1,17 @@
+[
+  {
+    "name": "recordreplay-declaration-mutant",
+    "exit": 1,
+    "caughtBeforeWrite": true
+  },
+  {
+    "name": "recordreplay-out-of-scope-mutant",
+    "exit": 1,
+    "caughtBeforeWrite": true
+  },
+  {
+    "name": "recordreplay-owner-mutant",
+    "exit": 1,
+    "caughtBeforeWrite": true
+  }
+]

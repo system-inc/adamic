@@ -1,0 +1,96 @@
+{
+  "main": "89614cc0f9d6aa7b7fe96b56c5c6c1c3eace9825",
+  "binding": "The value identifier process, resolved to the ambient variable process: NodeJS.Process from pinned @types/node; not the recordreplay property symbol.",
+  "sourceChanges": {
+    "pre99": "nodeSystem.debugMode ends with !!(process as any).recordreplay; getNodeSystem has no local process declaration.",
+    "main99": "The same read remains on main after require-result annotation and resolution-host projection. Those two changes run inside 99 itself; the earlier write-file-view edit does not replace this receiver.",
+    "composed99": "Only the receiver cast and parentheses are erased: !!process.recordreplay. The declaration augmentation supplies recordreplay?: unknown."
+  },
+  "cause": "The dependency-free official clone has types:[node] but no upstream node_modules. The old virtual host injects the augmentation without resolving Node declarations, so the receiver symbol is undefined (TS2688). The fixed virtual host resolves the API-locked Node type reference. Output bytes do not change.",
+  "cases": [
+    {
+      "label": "predecessor-without-upstream-dependencies",
+      "read": "(process as any).recordreplay",
+      "readLine": 1596,
+      "receiver": "process",
+      "symbol": null,
+      "declarations": [],
+      "nodeDeclarationFiles": 0,
+      "recordreplayDeclarationLoaded": false,
+      "readType": "any",
+      "missingTypeDefinitions": [
+        {
+          "code": 2688,
+          "message": "Cannot find type definition file for 'node'.   The file is in the program because:     Entry point of type library 'node' specified in compilerOptions"
+        }
+      ]
+    },
+    {
+      "label": "old-planned-program-without-dependencies",
+      "read": "process.recordreplay",
+      "readLine": 1604,
+      "receiver": "process",
+      "symbol": null,
+      "declarations": [],
+      "nodeDeclarationFiles": 0,
+      "recordreplayDeclarationLoaded": true,
+      "readType": "any",
+      "missingTypeDefinitions": [
+        {
+          "code": 2688,
+          "message": "Cannot find type definition file for 'node'.   The file is in the program because:     Entry point of type library 'node' specified in compilerOptions"
+        }
+      ]
+    },
+    {
+      "label": "fixed-planned-program-without-dependencies",
+      "read": "process.recordreplay",
+      "readLine": 1604,
+      "receiver": "process",
+      "symbol": "process",
+      "declarations": [
+        {
+          "file": "/workspace/scratch/recordreplay-amend-2-cont/tree/stage3/api/node_modules/@types/node/globals.d.ts",
+          "text": "process: NodeJS.Process"
+        },
+        {
+          "file": "/workspace/scratch/recordreplay-amend-2-cont/tree/stage3/api/node_modules/@types/node/process.d.ts",
+          "text": "process: NodeJS.Process"
+        },
+        {
+          "file": "/workspace/scratch/recordreplay-amend-2-cont/tree/stage3/api/node_modules/@types/node/process.d.ts",
+          "text": "namespace process {\n            export { ProcessEventMap };\n        }"
+        }
+      ],
+      "nodeDeclarationFiles": 80,
+      "recordreplayDeclarationLoaded": true,
+      "readType": "unknown",
+      "missingTypeDefinitions": []
+    },
+    {
+      "label": "installed-predecessor",
+      "read": "(process as any).recordreplay",
+      "readLine": 1596,
+      "receiver": "process",
+      "symbol": "process",
+      "declarations": [
+        {
+          "file": "/workspace/scratch/recordreplay-amend-2/control/node_modules/@types/node/globals.d.ts",
+          "text": "process: NodeJS.Process"
+        },
+        {
+          "file": "/workspace/scratch/recordreplay-amend-2/control/node_modules/@types/node/process.d.ts",
+          "text": "process: NodeJS.Process"
+        },
+        {
+          "file": "/workspace/scratch/recordreplay-amend-2/control/node_modules/@types/node/process.d.ts",
+          "text": "namespace process {\n            export { ProcessEventMap };\n        }"
+        }
+      ],
+      "nodeDeclarationFiles": 80,
+      "recordreplayDeclarationLoaded": false,
+      "readType": "any",
+      "missingTypeDefinitions": []
+    }
+  ]
+}

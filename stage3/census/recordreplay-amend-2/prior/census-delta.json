@@ -1,0 +1,160 @@
+{
+  "mainFindings": 180,
+  "finalFindings": 219,
+  "mainUnits": 136,
+  "finalUnits": 137,
+  "pairing": [
+    "kind",
+    "phase",
+    "reason",
+    "message with position stripped"
+  ],
+  "paired": 175,
+  "new": 44,
+  "changed": null,
+  "removed": 5,
+  "removedFindings": [
+    {
+      "root_kind": "",
+      "depth": 0,
+      "measurement": "measured on a checker-rejected program",
+      "unit": "/workspace/scratch/recordreplay-amend-2/control/src/compiler/sys.ts:1474:5",
+      "phase": "refusal_scan",
+      "kind": "NotYet",
+      "where": "/workspace/scratch/recordreplay-amend-2/control/src/compiler/sys.ts:1604:192",
+      "reason": "a namespace object used as a value; no runtime container is emitted, so identity, receiver behavior, live export aliases and staged properties are not represented; use qualified members or named module imports",
+      "text": "/workspace/scratch/recordreplay-amend-2/control/src/compiler/sys.ts:1604:192: stage 0 can't lower a namespace object used as a value; no runtime container is emitted, so identity, receiver behavior, live export aliases and staged properties are not represented; use qualified members or named module imports yet"
+    },
+    {
+      "root_kind": "",
+      "depth": 0,
+      "measurement": "measured on a checker-rejected program",
+      "unit": "/workspace/scratch/recordreplay-amend-2/control/src/compiler/sys.ts:1468:1",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/workspace/scratch/recordreplay-amend-2/control/src/compiler/sys.ts:1604:191",
+      "reason": "process.recordreplay with an unrepresented type",
+      "text": "/workspace/scratch/recordreplay-amend-2/control/src/compiler/sys.ts:1604:191: stage 0 can't lower process.recordreplay with an unrepresented type yet"
+    },
+    {
+      "root_kind": "",
+      "depth": 0,
+      "measurement": "measured on a checker-rejected program",
+      "unit": "/workspace/scratch/recordreplay-amend-2/control/src/compiler/sys.ts:1468:1",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/workspace/scratch/recordreplay-amend-2/control/src/compiler/sys.ts:1533:9",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/workspace/scratch/recordreplay-amend-2/control/src/compiler/sys.ts:1604:191: stage 0 can't lower process.recordreplay with an unrepresented type yet",
+      "start": 69048,
+      "end": 74807
+    },
+    {
+      "root_kind": "",
+      "depth": 0,
+      "measurement": "measured on a checker-rejected program",
+      "unit": "/workspace/scratch/recordreplay-amend-2/control/src/compiler/sys.ts:1474:5",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/workspace/scratch/recordreplay-amend-2/control/src/compiler/sys.ts:1604:191",
+      "reason": "process.recordreplay with an unrepresented type",
+      "text": "/workspace/scratch/recordreplay-amend-2/control/src/compiler/sys.ts:1604:191: stage 0 can't lower process.recordreplay with an unrepresented type yet"
+    },
+    {
+      "root_kind": "",
+      "depth": 0,
+      "measurement": "measured on a checker-rejected program",
+      "unit": "/workspace/scratch/recordreplay-amend-2/control/src/compiler/sys.ts:1474:5",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/workspace/scratch/recordreplay-amend-2/control/src/compiler/sys.ts:1533:9",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/workspace/scratch/recordreplay-amend-2/control/src/compiler/sys.ts:1604:191: stage 0 can't lower process.recordreplay with an unrepresented type yet",
+      "start": 69048,
+      "end": 74807
+    }
+  ],
+  "newFindings": [
+    [
+      "NotYet",
+      "lowering",
+      "a presence test of a method whose presence the receiver's construction doesn't prove; a view or host value has to read it",
+      "stage 0 can't lower a presence test of a method whose presence the receiver's construction doesn't prove; a view or host value has to read it yet",
+      6
+    ],
+    [
+      "Boundary",
+      "lowering",
+      "failed statement; state rolled back; continued at next statement or declaration",
+      "stage 0 can't lower a presence test of a method whose presence the receiver's construction doesn't prove; a view or host value has to read it yet",
+      6
+    ],
+    [
+      "NotYet",
+      "lowering",
+      "writing a possibly absent optional own field",
+      "stage 0 can't lower writing a possibly absent optional own field yet",
+      6
+    ],
+    [
+      "Boundary",
+      "lowering",
+      "failed statement; state rolled back; continued at next statement or declaration",
+      "stage 0 can't lower writing a possibly absent optional own field yet",
+      6
+    ],
+    [
+      "Boundary",
+      "lowering",
+      "failed statement; state rolled back; continued at next statement or declaration",
+      "stage 0 can't lower a function value that captures the variable its own initializer declares yet",
+      8
+    ],
+    [
+      "NotYet",
+      "lowering",
+      "in when a possibly absent spread has no property presence descriptors",
+      "stage 0 can't lower in when a possibly absent spread has no property presence descriptors yet",
+      2
+    ],
+    [
+      "Boundary",
+      "lowering",
+      "failed statement; state rolled back; continued at next statement or declaration",
+      "stage 0 can't lower in when a possibly absent spread has no property presence descriptors yet",
+      2
+    ],
+    [
+      "NotYet",
+      "lowering",
+      "reading moduleResolutionHost",
+      "stage 0 can't lower reading moduleResolutionHost yet",
+      2
+    ],
+    [
+      "Boundary",
+      "lowering",
+      "failed statement; state rolled back; continued at next statement or declaration",
+      "stage 0 can't lower reading moduleResolutionHost yet",
+      2
+    ],
+    [
+      "NotYet",
+      "lowering",
+      "reading modulePath",
+      "stage 0 can't lower reading modulePath yet",
+      2
+    ],
+    [
+      "Boundary",
+      "lowering",
+      "failed statement; state rolled back; continued at next statement or declaration",
+      "stage 0 can't lower reading modulePath yet",
+      2
+    ]
+  ],
+  "newDiagnosticFindings": 18,
+  "newBoundaryRecords": 26,
+  "baselineCastReads": 1,
+  "finalCastReads": 0
+}

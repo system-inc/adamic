@@ -1,0 +1,45 @@
+{
+  "before": {
+    "binding": "local let",
+    "references": 5,
+    "roles": [
+      "assignment",
+      "assignment",
+      "checked qualified receiver",
+      "condition",
+      "condition"
+    ],
+    "allUsesResolveToBinding": true,
+    "otherDeclarations": 0,
+    "qualifiedUses": 0,
+    "bareNamespaceUses": 0
+  },
+  "after": {
+    "binding": "namespace import",
+    "references": 1,
+    "roles": [
+      "qualified receiver"
+    ],
+    "allUsesResolveToBinding": true,
+    "otherDeclarations": 0,
+    "qualifiedUses": 1,
+    "bareNamespaceUses": 0
+  },
+  "mutants": [
+    {
+      "name": "module collision",
+      "message": "collision or bare namespace use: _crypto",
+      "caught": true
+    },
+    {
+      "name": "enclosing parameter shadow",
+      "message": "collision or bare namespace use: _crypto",
+      "caught": true
+    },
+    {
+      "name": "bare namespace value",
+      "message": "collision or bare namespace use: _crypto",
+      "caught": true
+    }
+  ]
+}

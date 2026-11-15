@@ -1,0 +1,334 @@
+{
+  "main": "89614cc0f9d6aa7b7fe96b56c5c6c1c3eace9825",
+  "originalAmendment": "e98df2e5de4a9755a0cd2bd8d763fd8d1a1ca52e",
+  "final": "0a01c2e306f7a1a14a6e73ce53870b5e6c79d35c",
+  "allPaths": [
+    {
+      "path": "cloud/sealed-job.sh",
+      "reason": "Inherited landed main change: 89614cc0f9d6aa7b7fe96b56c5c6c1c3eace9825 cloud/sealed-job.sh: the image's TypeScript source is copied into the job's own directory before products settle, since no config reaches PinnedGit's git (#t2fbrq3)",
+      "unchangedFromRecutCLIHead": true
+    },
+    {
+      "path": "internal/buildcache/listing_sources_test.go",
+      "reason": "Inherited landed main change: f225924701f6efb8faf17b9bf18c93ee9e16a417 buildcache: a dependency's package listing names only Go's source files and go.mod, so a new .md or subdirectory in a linked package moves no product's key (#qc5jp57, #a87r8sj fix 1b)",
+      "unchangedFromRecutCLIHead": true
+    },
+    {
+      "path": "internal/buildcache/precise_test.go",
+      "reason": "Inherited landed main change: f225924701f6efb8faf17b9bf18c93ee9e16a417 buildcache: a dependency's package listing names only Go's source files and go.mod, so a new .md or subdirectory in a linked package moves no product's key (#qc5jp57, #a87r8sj fix 1b)",
+      "unchangedFromRecutCLIHead": true
+    },
+    {
+      "path": "internal/buildcache/reads.go",
+      "reason": "Inherited landed main change: f225924701f6efb8faf17b9bf18c93ee9e16a417 buildcache: a dependency's package listing names only Go's source files and go.mod, so a new .md or subdirectory in a linked package moves no product's key (#qc5jp57, #a87r8sj fix 1b)",
+      "unchangedFromRecutCLIHead": true
+    },
+    {
+      "path": "internal/buildcache/settle.go",
+      "reason": "Inherited landed main change: f225924701f6efb8faf17b9bf18c93ee9e16a417 buildcache: a dependency's package listing names only Go's source files and go.mod, so a new .md or subdirectory in a linked package moves no product's key (#qc5jp57, #a87r8sj fix 1b)",
+      "unchangedFromRecutCLIHead": true
+    },
+    {
+      "path": "internal/conformance/testdata/classes/method_destructuring.a",
+      "reason": "Inherited landed main change: a004ee744f4d097ec897ddcd4399a4b1b65b826b lower: explain function properties in the method destructuring fix",
+      "unchangedFromRecutCLIHead": true
+    },
+    {
+      "path": "internal/conformance/testdata/classes/method_destructuring_property_fix.a",
+      "reason": "Inherited landed main change: a004ee744f4d097ec897ddcd4399a4b1b65b826b lower: explain function properties in the method destructuring fix",
+      "unchangedFromRecutCLIHead": true
+    },
+    {
+      "path": "internal/conformance/testdata/classes/method_destructuring_receiver_fix.a",
+      "reason": "Inherited landed main change: a004ee744f4d097ec897ddcd4399a4b1b65b826b lower: explain function properties in the method destructuring fix",
+      "unchangedFromRecutCLIHead": true
+    },
+    {
+      "path": "internal/ir/node_fs_file.go",
+      "reason": "Inherited landed main change: ee8ed8445b94324da9bb6d038f51f0b79f3283b5 native: throw a coded error for undefined watchFile intervals (#8581h73)",
+      "unchangedFromRecutCLIHead": true
+    },
+    {
+      "path": "internal/lower/collections.go",
+      "reason": "Inherited landed main change: a004ee744f4d097ec897ddcd4399a4b1b65b826b lower: explain function properties in the method destructuring fix",
+      "unchangedFromRecutCLIHead": true
+    },
+    {
+      "path": "internal/lower/library_node_host.go",
+      "reason": "Inherited landed main change: 35ef35961d44cf09a00f8bfdcbb7f6c583ae4405 oracle: pin watchFile argument order and owned path cleanup (#8581h73)",
+      "unchangedFromRecutCLIHead": true
+    },
+    {
+      "path": "internal/lower/library_node_watch_file_test.go",
+      "reason": "Inherited landed main change: ee8ed8445b94324da9bb6d038f51f0b79f3283b5 native: throw a coded error for undefined watchFile intervals (#8581h73)",
+      "unchangedFromRecutCLIHead": true
+    },
+    {
+      "path": "internal/lower/method-destructuring.mutants.md",
+      "reason": "Inherited landed main change: ccf3cd88eb04da8334ab3919fd46dd46464682f9 lower: pin detached literal methods behind function properties",
+      "unchangedFromRecutCLIHead": true
+    },
+    {
+      "path": "internal/lower/method_destructuring_test.go",
+      "reason": "Inherited landed main change: ccf3cd88eb04da8334ab3919fd46dd46464682f9 lower: pin detached literal methods behind function properties",
+      "unchangedFromRecutCLIHead": true
+    },
+    {
+      "path": "internal/native/library_node_fs_file.go",
+      "reason": "Inherited landed main change: ee8ed8445b94324da9bb6d038f51f0b79f3283b5 native: throw a coded error for undefined watchFile intervals (#8581h73)",
+      "unchangedFromRecutCLIHead": true
+    },
+    {
+      "path": "internal/native/runtime/node_fs_file.c",
+      "reason": "Inherited landed main change: ee8ed8445b94324da9bb6d038f51f0b79f3283b5 native: throw a coded error for undefined watchFile intervals (#8581h73)",
+      "unchangedFromRecutCLIHead": true
+    },
+    {
+      "path": "internal/native/runtime/node_fs_file.h",
+      "reason": "Inherited landed main change: ee8ed8445b94324da9bb6d038f51f0b79f3283b5 native: throw a coded error for undefined watchFile intervals (#8581h73)",
+      "unchangedFromRecutCLIHead": true
+    },
+    {
+      "path": "internal/oracle/library_node_watch_file_test.go",
+      "reason": "Inherited landed main change: 35ef35961d44cf09a00f8bfdcbb7f6c583ae4405 oracle: pin watchFile argument order and owned path cleanup (#8581h73)",
+      "unchangedFromRecutCLIHead": true
+    },
+    {
+      "path": "internal/oracle/testdata/counts/runtime/internal/oracle/testdata/host_watch_file/interval_undefined.a.counts",
+      "reason": "Inherited landed main change: 35ef35961d44cf09a00f8bfdcbb7f6c583ae4405 oracle: pin watchFile argument order and owned path cleanup (#8581h73)",
+      "unchangedFromRecutCLIHead": true
+    },
+    {
+      "path": "internal/oracle/testdata/counts/runtime/internal/oracle/testdata/host_watch_file/interval_undefined_uncaught.a.counts",
+      "reason": "Inherited landed main change: ee8ed8445b94324da9bb6d038f51f0b79f3283b5 native: throw a coded error for undefined watchFile intervals (#8581h73)",
+      "unchangedFromRecutCLIHead": true
+    },
+    {
+      "path": "internal/oracle/testdata/host_watch_file/interval_undefined.a",
+      "reason": "Inherited landed main change: 35ef35961d44cf09a00f8bfdcbb7f6c583ae4405 oracle: pin watchFile argument order and owned path cleanup (#8581h73)",
+      "unchangedFromRecutCLIHead": true
+    },
+    {
+      "path": "internal/oracle/testdata/host_watch_file/interval_undefined_uncaught.a",
+      "reason": "Inherited landed main change: ee8ed8445b94324da9bb6d038f51f0b79f3283b5 native: throw a coded error for undefined watchFile intervals (#8581h73)",
+      "unchangedFromRecutCLIHead": true
+    },
+    {
+      "path": "internal/oracle/wasi_refusals_test.go",
+      "reason": "Inherited landed main change: ee8ed8445b94324da9bb6d038f51f0b79f3283b5 native: throw a coded error for undefined watchFile intervals (#8581h73)",
+      "unchangedFromRecutCLIHead": true
+    },
+    {
+      "path": "stage3/adapt/95-checker-axolotl-h/README.md",
+      "reason": "Inherited landed main change: fe5a1a54f045e9bce4e5aa32ca74885a317fbebd stage3: complete readonly diagnostic reader bindings",
+      "unchangedFromRecutCLIHead": true
+    },
+    {
+      "path": "stage3/adapt/95-checker-axolotl-h/adapt.cjs",
+      "reason": "Inherited landed main change: fe5a1a54f045e9bce4e5aa32ca74885a317fbebd stage3: complete readonly diagnostic reader bindings",
+      "unchangedFromRecutCLIHead": true
+    },
+    {
+      "path": "stage3/adapt/95-checker-axolotl-h/diagnostic-owner.cjs",
+      "reason": "Inherited landed main change: fe5a1a54f045e9bce4e5aa32ca74885a317fbebd stage3: complete readonly diagnostic reader bindings",
+      "unchangedFromRecutCLIHead": true
+    },
+    {
+      "path": "stage3/adapt/95-checker-axolotl-h/diagnostic-owners.json",
+      "reason": "Inherited landed main change: fe5a1a54f045e9bce4e5aa32ca74885a317fbebd stage3: complete readonly diagnostic reader bindings",
+      "unchangedFromRecutCLIHead": true
+    },
+    {
+      "path": "stage3/adapt/99-correctness-binding-views/PROOF.md",
+      "reason": "Inherited landed main change: fe5a1a54f045e9bce4e5aa32ca74885a317fbebd stage3: complete readonly diagnostic reader bindings",
+      "unchangedFromRecutCLIHead": true
+    },
+    {
+      "path": "stage3/adapt/99-correctness-binding-views/README.md",
+      "reason": "Inherited landed main change: fe5a1a54f045e9bce4e5aa32ca74885a317fbebd stage3: complete readonly diagnostic reader bindings",
+      "unchangedFromRecutCLIHead": true
+    },
+    {
+      "path": "stage3/adapt/99-correctness-binding-views/adapt.cjs",
+      "reason": "Inherited landed main change: fe5a1a54f045e9bce4e5aa32ca74885a317fbebd stage3: complete readonly diagnostic reader bindings",
+      "unchangedFromRecutCLIHead": true
+    },
+    {
+      "path": "stage3/adapt/99-correctness-binding-views/diagnostic-engine.cjs",
+      "reason": "Inherited landed main change: fe5a1a54f045e9bce4e5aa32ca74885a317fbebd stage3: complete readonly diagnostic reader bindings",
+      "unchangedFromRecutCLIHead": true
+    },
+    {
+      "path": "stage3/adapt/99-correctness-binding-views/owners.json",
+      "reason": "Inherited landed main change: fe5a1a54f045e9bce4e5aa32ca74885a317fbebd stage3: complete readonly diagnostic reader bindings",
+      "unchangedFromRecutCLIHead": true
+    },
+    {
+      "path": "stage3/adapt/99-correctness-core-multimap/README.md",
+      "reason": "Inherited landed main change: fe5a1a54f045e9bce4e5aa32ca74885a317fbebd stage3: complete readonly diagnostic reader bindings",
+      "unchangedFromRecutCLIHead": true
+    },
+    {
+      "path": "stage3/adapt/99-correctness-core-multimap/diagnostic-owners.json",
+      "reason": "Inherited landed main change: fe5a1a54f045e9bce4e5aa32ca74885a317fbebd stage3: complete readonly diagnostic reader bindings",
+      "unchangedFromRecutCLIHead": true
+    },
+    {
+      "path": "stage3/adapt/99-correctness-core-multimap/owners.json",
+      "reason": "Inherited landed main change: fe5a1a54f045e9bce4e5aa32ca74885a317fbebd stage3: complete readonly diagnostic reader bindings",
+      "unchangedFromRecutCLIHead": true
+    },
+    {
+      "path": "stage3/adapt/99-correctness-timer-closures/README.md",
+      "reason": "Inherited landed main change: 55c375d9d245b580c010c3e0b5659f2849f24fb6 stage3: type recursive watcher map and fresh child array (#4pc8wd8, #frhzgrc)",
+      "unchangedFromRecutCLIHead": true
+    },
+    {
+      "path": "stage3/adapt/99-correctness-timer-closures/owners.json",
+      "reason": "Inherited landed main change: 55c375d9d245b580c010c3e0b5659f2849f24fb6 stage3: type recursive watcher map and fresh child array (#4pc8wd8, #frhzgrc)",
+      "unchangedFromRecutCLIHead": true
+    },
+    {
+      "path": "stage3/adapt/99-correctness-write-file-view/PROOF.md",
+      "reason": "Inherited landed main change: 763d5fc83558ae8ceb0202189b18430dff499ab8 stage3: capture writeFile through a local readonly view (#b8ffarm)",
+      "unchangedFromRecutCLIHead": true
+    },
+    {
+      "path": "stage3/adapt/99-correctness-write-file-view/README.md",
+      "reason": "Inherited landed main change: 763d5fc83558ae8ceb0202189b18430dff499ab8 stage3: capture writeFile through a local readonly view (#b8ffarm)",
+      "unchangedFromRecutCLIHead": true
+    },
+    {
+      "path": "stage3/adapt/99-correctness-write-file-view/adapt.cjs",
+      "reason": "Inherited landed main change: 763d5fc83558ae8ceb0202189b18430dff499ab8 stage3: capture writeFile through a local readonly view (#b8ffarm)",
+      "unchangedFromRecutCLIHead": true
+    },
+    {
+      "path": "stage3/adapt/99-correctness-write-file-view/contract.cjs",
+      "reason": "Inherited landed main change: 763d5fc83558ae8ceb0202189b18430dff499ab8 stage3: capture writeFile through a local readonly view (#b8ffarm)",
+      "unchangedFromRecutCLIHead": true
+    },
+    {
+      "path": "stage3/adapt/99-correctness-write-file-view/mutant.cjs",
+      "reason": "Inherited landed main change: 763d5fc83558ae8ceb0202189b18430dff499ab8 stage3: capture writeFile through a local readonly view (#b8ffarm)",
+      "unchangedFromRecutCLIHead": true
+    },
+    {
+      "path": "stage3/adapt/99-correctness-write-file-view/owners.json",
+      "reason": "Inherited landed main change: 763d5fc83558ae8ceb0202189b18430dff499ab8 stage3: capture writeFile through a local readonly view (#b8ffarm)",
+      "unchangedFromRecutCLIHead": true
+    },
+    {
+      "path": "stage3/adapt/99-correctness-write-file-view/witness.cjs",
+      "reason": "Inherited landed main change: 763d5fc83558ae8ceb0202189b18430dff499ab8 stage3: capture writeFile through a local readonly view (#b8ffarm)",
+      "unchangedFromRecutCLIHead": true
+    },
+    {
+      "path": "stage3/adapt/99-wasm-crypto-import/PROOF-require-result.md",
+      "reason": "Retains landed main amendment: ad76ba26d9cf9d2e492f88da254a1d0d0f0bba3d stage3: annotate nodeSystem require result (#baobab item 9)",
+      "unchangedFromRecutCLIHead": null
+    },
+    {
+      "path": "stage3/adapt/99-wasm-crypto-import/PROOF-resolve-host.md",
+      "reason": "Retains landed main amendment: 936dfd7be5c8096d35d4320444f86a64d26fb058 stage3: forward a presence-preserving fresh resolution host (#b8ffarm)",
+      "unchangedFromRecutCLIHead": null
+    },
+    {
+      "path": "stage3/adapt/99-wasm-crypto-import/README.md",
+      "reason": "Preserves main sections first and both recordreplay sections; documents composition and dependency-free AST binding fix.",
+      "unchangedFromRecutCLIHead": null
+    },
+    {
+      "path": "stage3/adapt/99-wasm-crypto-import/adapt.cjs",
+      "reason": "Retains landed require-result annotation and resolution-host projection alongside erased recordreplay edits.",
+      "unchangedFromRecutCLIHead": null
+    },
+    {
+      "path": "stage3/adapt/99-wasm-crypto-import/proofs/check.cjs",
+      "reason": "Combines source undo for all composed edits, declaration inventory and both JavaScript scope checks; preserves main input inventory assertion.",
+      "unchangedFromRecutCLIHead": null
+    },
+    {
+      "path": "stage3/adapt/99-wasm-crypto-import/proofs/recordreplay-contract.cjs",
+      "reason": "New dependency-free replay, unchanged bytes, AST relocation, wrong store/property, duplicate read, process shadow, and disabled-resolution mutant checks.",
+      "unchangedFromRecutCLIHead": null
+    },
+    {
+      "path": "stage3/adapt/99-wasm-crypto-import/proofs/recordreplay/check.py",
+      "reason": "Reports each mutant subprocess exit and supports scratch evidence output.",
+      "unchangedFromRecutCLIHead": null
+    },
+    {
+      "path": "stage3/adapt/99-wasm-crypto-import/proofs/require-result-contract.cjs",
+      "reason": "Keeps all landed cases and verifies two-file output with no upstream node_modules.",
+      "unchangedFromRecutCLIHead": null
+    },
+    {
+      "path": "stage3/adapt/99-wasm-crypto-import/proofs/resolve-host-contract.cjs",
+      "reason": "Retains landed main amendment: 936dfd7be5c8096d35d4320444f86a64d26fb058 stage3: forward a presence-preserving fresh resolution host (#b8ffarm)",
+      "unchangedFromRecutCLIHead": null
+    },
+    {
+      "path": "stage3/adapt/99-wasm-crypto-import/proofs/resolve-host-fixture.cjs",
+      "reason": "Retains landed main amendment: 936dfd7be5c8096d35d4320444f86a64d26fb058 stage3: forward a presence-preserving fresh resolution host (#b8ffarm)",
+      "unchangedFromRecutCLIHead": null
+    },
+    {
+      "path": "stage3/adapt/99-wasm-crypto-import/proofs/resolve-host.json",
+      "reason": "Retains landed main amendment: 936dfd7be5c8096d35d4320444f86a64d26fb058 stage3: forward a presence-preserving fresh resolution host (#b8ffarm)",
+      "unchangedFromRecutCLIHead": null
+    },
+    {
+      "path": "stage3/adapt/99-wasm-crypto-import/proofs/scope-mutant.cjs",
+      "reason": "Supports main current erased timer signature and retains historical ambient target.",
+      "unchangedFromRecutCLIHead": null
+    },
+    {
+      "path": "stage3/adapt/99-wasm-crypto-import/proofs/scoped-hashes.cjs",
+      "reason": "Keeps exact owner text pins and owner line-ending normalization in directory generator.",
+      "unchangedFromRecutCLIHead": null
+    },
+    {
+      "path": "stage3/adapt/99-wasm-crypto-import/proofs/targets.json",
+      "reason": "Generated with directory scoped-hashes tooling from official pre-99 snapshot and composed apply output; no manual hash edits.",
+      "unchangedFromRecutCLIHead": null
+    },
+    {
+      "path": "stage3/adapt/99-wasm-crypto-import/recordreplay.cjs",
+      "reason": "Selects the unique read inside the getNodeSystem nodeSystem.debugMode AST and validates the pinned ambient NodeJS.Process through virtual Node type resolution; emitted bytes unchanged.",
+      "unchangedFromRecutCLIHead": null
+    },
+    {
+      "path": "stage3/adapt/99-wasm-crypto-import/require-result-mutant.cjs",
+      "reason": "Retains landed main amendment: ad76ba26d9cf9d2e492f88da254a1d0d0f0bba3d stage3: annotate nodeSystem require result (#baobab item 9)",
+      "unchangedFromRecutCLIHead": null
+    },
+    {
+      "path": "stage3/adapt/99-wasm-crypto-import/resolve-host-mutant.cjs",
+      "reason": "Retains landed main amendment: 936dfd7be5c8096d35d4320444f86a64d26fb058 stage3: forward a presence-preserving fresh resolution host (#b8ffarm)",
+      "unchangedFromRecutCLIHead": null
+    },
+    {
+      "path": "stage3/fixtures/host_configuration_test.go",
+      "reason": "Inherited landed main change: fe4809ed7659b35c04180695f5996c757aa45542 fixtures: a child test binary's -test.timeout follows the parent's deadline, not a fixed 30s (#q89xaef)",
+      "unchangedFromRecutCLIHead": true
+    },
+    {
+      "path": "stage3/fixtures/host_status_mutant_test.go",
+      "reason": "Inherited landed main change: fe4809ed7659b35c04180695f5996c757aa45542 fixtures: a child test binary's -test.timeout follows the parent's deadline, not a fixed 30s (#q89xaef)",
+      "unchangedFromRecutCLIHead": true
+    },
+    {
+      "path": "stage3/upstream/LEDGER.md",
+      "reason": "Inherited landed main change: fe5a1a54f045e9bce4e5aa32ca74885a317fbebd stage3: complete readonly diagnostic reader bindings",
+      "unchangedFromRecutCLIHead": true
+    }
+  ],
+  "outsideAmendmentDeltaEmpty": true,
+  "CLICommitMessagesPreserved": true,
+  "amendmentMessagePreservedWithOneParagraph": true,
+  "earlierAttemptsPreserved": [
+    "typescript/recordreplay-amend-2",
+    "typescript/recordreplay-amend-2-review"
+  ]
+}

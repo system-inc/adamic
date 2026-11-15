@@ -1,0 +1,267 @@
+{
+  "status": "stopped; not pushed or submitted",
+  "main": "89614cc0f9d6aa7b7fe96b56c5c6c1c3eace9825",
+  "commits": [
+    "68f78e3fde8dfdd989e917bb7b87fa0d738b64ff",
+    "9c7e27e4fd13163fc8f3168b86a1448688cf0949",
+    "cce22423f68d59f051ec4f5fde105920f5439c4f"
+  ],
+  "review": {
+    "testedCommit": "49385fe590b474a1d6b82d1f5ccbbcbb1643f911",
+    "reviewCommit": "cce22423f68d59f051ec4f5fde105920f5439c4f",
+    "identicalTree": "72a1be228d0450e33a081868ce1fb26e50f98147",
+    "originalAttemptPreserved": true
+  },
+  "reviewBranch": "typescript/recordreplay-amend-2-review",
+  "blockedBy": [
+    "Fresh full apply exits 1: process read has no binding, recordreplay.cjs:63; dependency-free cloned source has no upstream node_modules.",
+    "Census requirement fails: 18 new NotYet diagnostics and 26 new Boundary records, paired by kind, phase, reason and position-stripped text."
+  ],
+  "proofs": [
+    {
+      "name": "main-apply",
+      "exit": 0,
+      "log": "main-apply.log"
+    },
+    {
+      "name": "regenerate-pins",
+      "exit": 0,
+      "seconds": 1.101,
+      "log": "regenerate-pins.log"
+    },
+    {
+      "name": "composed-adapter",
+      "exit": 0,
+      "seconds": 9.256,
+      "log": "composed-adapter.log"
+    },
+    {
+      "name": "crypto-check",
+      "exit": 0,
+      "seconds": 2.642,
+      "log": "crypto-check.log"
+    },
+    {
+      "name": "recordreplay-check",
+      "exit": 1,
+      "seconds": 0.545,
+      "log": "recordreplay-check.log"
+    },
+    {
+      "name": "bindings",
+      "exit": 0,
+      "seconds": 34.173,
+      "log": "bindings.log"
+    },
+    {
+      "name": "require-result-contract-fixed",
+      "exit": 0,
+      "seconds": 45.706,
+      "log": "require-result-contract-fixed.log"
+    },
+    {
+      "name": "resolve-host-contract",
+      "exit": 0,
+      "seconds": 0.514,
+      "log": "resolve-host-contract.log"
+    },
+    {
+      "name": "built-witness",
+      "exit": 0,
+      "seconds": 7.912,
+      "log": "built-witness.log"
+    },
+    {
+      "name": "resolve-host-fixture",
+      "exit": 0,
+      "seconds": 15.755,
+      "log": "resolve-host-fixture.log"
+    },
+    {
+      "name": "control-stock",
+      "exit": 0,
+      "seconds": 30.547,
+      "log": "control-stock.log"
+    },
+    {
+      "name": "final-stock",
+      "exit": 0,
+      "seconds": 48.665,
+      "log": "final-stock.log"
+    },
+    {
+      "name": "final-adamic-types",
+      "exit": 0,
+      "seconds": 11.707,
+      "log": "final-adamic-types.log"
+    },
+    {
+      "name": "main-census",
+      "exit": 0,
+      "seconds": 168.292,
+      "log": "main-census.log"
+    },
+    {
+      "name": "final-census",
+      "exit": 0,
+      "seconds": 188.274,
+      "log": "final-census.log"
+    },
+    {
+      "name": "census-comparison",
+      "exit": 1,
+      "seconds": 0.05,
+      "log": "census-comparison.log"
+    },
+    {
+      "name": "candidate-apply",
+      "exit": 1,
+      "seconds": 601.092,
+      "log": "candidate-apply.log"
+    },
+    {
+      "name": "final-apply",
+      "exit": 1,
+      "seconds": 530.999,
+      "log": "final-apply.log"
+    },
+    {
+      "name": "main-93-check",
+      "exit": 1,
+      "seconds": 0.457,
+      "log": "main-93-check.log"
+    },
+    {
+      "name": "control-build",
+      "exit": 0,
+      "seconds": 72.543,
+      "log": "control-build.log"
+    },
+    {
+      "name": "pre99-build",
+      "exit": 0,
+      "seconds": 74.616,
+      "log": "pre99-build.log"
+    },
+    {
+      "name": "composed-build",
+      "exit": 0,
+      "seconds": 69.829,
+      "log": "composed-build.log"
+    }
+  ],
+  "mutants": [
+    {
+      "name": "scope-mutant-current",
+      "exit": 1
+    },
+    {
+      "name": "ternary-mutant",
+      "exit": 1
+    },
+    {
+      "name": "binding-collision-mutant",
+      "exit": 1
+    },
+    {
+      "name": "binding-shadow-mutant",
+      "exit": 1
+    },
+    {
+      "name": "binding-bare-mutant",
+      "exit": 1
+    },
+    {
+      "name": "detached-receiver-mutant",
+      "exit": 1
+    },
+    {
+      "name": "moved-owner",
+      "exit": 1,
+      "expected": 1
+    },
+    {
+      "name": "moved-imports",
+      "exit": 1,
+      "expected": 1
+    },
+    {
+      "name": "foreign-edit",
+      "exit": 0,
+      "expected": 0
+    },
+    {
+      "name": "span-escape",
+      "exit": 1,
+      "expected": 1
+    },
+    {
+      "name": "span-disabled-control",
+      "exit": 0,
+      "expected": 0
+    },
+    {
+      "name": "recordreplay-declaration-mutant",
+      "exit": 1,
+      "caughtBeforeWrite": true
+    },
+    {
+      "name": "recordreplay-out-of-scope-mutant",
+      "exit": 1,
+      "caughtBeforeWrite": true
+    },
+    {
+      "name": "recordreplay-owner-mutant",
+      "exit": 1,
+      "caughtBeforeWrite": true
+    },
+    {
+      "name": "require-result-restore",
+      "exit": 0
+    },
+    {
+      "name": "require-result-restored-guard",
+      "exit": 1
+    },
+    {
+      "name": "resolve-host-restore",
+      "exit": 0
+    },
+    {
+      "name": "resolve-host-restored-guard",
+      "exit": 1
+    }
+  ],
+  "identities": {
+    "sourceChanges": [
+      "src/compiler/sys.ts",
+      "src/recordreplay.d.ts"
+    ],
+    "mainSourceFiles": 747,
+    "composedSourceFiles": 748,
+    "baselineMatchesOfficialMainAfterSnapshot": true,
+    "failedFreshApplyPreservesOfficialPre99Snapshot": true,
+    "stockRoots": 79,
+    "stockDiagnostics": 0,
+    "javascriptProductsIdentical": 79,
+    "publicDeclarations": {
+      "typescript.d.ts": {
+        "bytes": 593536,
+        "sha256": "f03adcf915df559d616fcafd75181d3423eaa0f272237482cedbd025525c9516"
+      },
+      "tsserverlibrary.d.ts": {
+        "bytes": 866,
+        "sha256": "cee9e9bf9a8f67388ee878afd5e172189421bae6625076b774d68563d036fbfd"
+      }
+    }
+  },
+  "allPathDifferences": "path-differences.json",
+  "censusDetails": "census-delta.json",
+  "notRun": [
+    "Full historical prepare.py/scoped.py pipelines and full upstream oracles; fresh official apply is blocked."
+  ],
+  "limitations": [
+    "Passing composed-output checks use the official pre-99 snapshot with pinned upstream dependencies installed.",
+    "The final review commit adds only the requested message paragraph to the preserved tested commit; their Git tree hashes are identical."
+  ]
+}

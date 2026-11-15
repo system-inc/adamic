@@ -1,0 +1,27 @@
+[
+  {
+    "name": "moved-owner",
+    "exit": 1,
+    "expected": 1
+  },
+  {
+    "name": "moved-imports",
+    "exit": 1,
+    "expected": 1
+  },
+  {
+    "name": "foreign-edit",
+    "exit": 0,
+    "expected": 0
+  },
+  {
+    "name": "span-escape",
+    "exit": 1,
+    "expected": 1
+  },
+  {
+    "name": "span-disabled-control",
+    "exit": 0,
+    "expected": 0
+  }
+]
