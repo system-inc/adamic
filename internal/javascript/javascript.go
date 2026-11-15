@@ -123,7 +123,16 @@ func JavaScriptWith(program *ir.Program, options Options) string {
 	builder.WriteString("const adamicFrom = (length, callback) => Array.from({ length }, (element, index) => adamicCall(callback, [element, index]));\n")
 	builder.WriteString("const adamicDefinedNull = (value, message) => value === null ? panic(message) : value;\n")
 	builder.WriteString("const adamicDefined = (value, message) => value === undefined ? panic(message) : value;\n")
-	builder.WriteString("const adamicSort = (array, callback) => array.sort((left, right) => adamicCall(callback, [left, right]));\n")
+	// A sort hands every comparison the same two-element array, written in place, instead of a fresh
+	// one per call (#367nnz2). That rests on no closure's code keeping a reference to values past its
+	// entry: the entry copies each parameter into a local, arguments.length is a number read from
+	// values.length, a rest is values.slice at once, the host callees spread values at once, and the
+	// arguments object itself is refused (rule 2600). So rewriting the pair for the next comparison
+	// changes nothing the program can see, and a sort run inside a comparison has its own. A generator
+	// closure would run its entry copies late, at its first step, and only a comparator's type (it
+	// returns a number) keeps generator and async closures out here; a future comparator of either
+	// kind must not inherit the shared array.
+	builder.WriteString("const adamicSort = (array, callback) => { const code = callback.code, values = [undefined, undefined]; return array.sort((left, right) => { values[0] = left; values[1] = right; return code(callback, values); }); };\n")
 	builder.WriteString("const adamicReduce =(array, callback, initial) => array.reduce((carried, element, index, all) => adamicCall(callback, [carried, element, index, all]), initial);\n")
 	builder.WriteString("const adamicSetIndex = (array, index, value) => {\n\tif (!(Number.isInteger(index) && index >= 0 && index < array.length)) panic(`index ${index} is outside an array of length ${array.length}`);\n\tarray[index] = value;\n};\n")
 	builder.WriteString("const adamicCast = (object, field, allowed, message) => allowed.includes(object[field]) ? object : panic(message);\n")
