@@ -306,12 +306,9 @@ static adamic_value set_blocking(adamic_closure *self, adamic_value *values) {
 
 // Node has one stdout handle for the process, so every read of _handle is the same object (#qa1g5f3).
 // It's built in this storage on the first read, an object of one slot as adamic_object_size lays it
-// out, with a zero count, so it's immortal as set_blocking_closure is, and never allocated or freed. Whole
-// max_align_t words give it an object's alignment, and the size is a macro so the declaration holds
-// no parenthesis, which runtime_statics_test.go's scanner would take for a function's. The build
-// checks adamic_object_size itself against the storage, since this sum only restates it.
-#define STDOUT_HANDLE_WORDS ((sizeof(adamic_object) + sizeof(adamic_value) + sizeof(size_t) + 2 + sizeof(max_align_t) - 1) / sizeof(max_align_t))
-static max_align_t handle_storage[STDOUT_HANDLE_WORDS];
+// out, with a zero count, so it's immortal as set_blocking_closure is, and never allocated or freed.
+// The build checks adamic_object_size itself against the storage, since this sum only restates it.
+static _Alignas(adamic_object) unsigned char handle_storage[sizeof(adamic_object) + sizeof(adamic_value) + sizeof(size_t) + 2];
 // Tasks run on a work-stealing pool, so the build happens once under handle_lock and is published by
 // handle_built's release store. A read that sees handle_built with an acquire load sees the whole
 // build, as union.c's shape list publishes its entries.
