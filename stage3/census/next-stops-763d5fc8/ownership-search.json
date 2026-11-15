@@ -45,6 +45,28 @@
     }
   },
   {
+    "file": "stage3/adapt/99-correctness-single-watcher-forwarder/owners.json",
+    "metadata": {
+      "file": "sys.ts",
+      "owner": "createSingleWatcherPerName",
+      "beforeDeclarations": 1,
+      "afterDeclarations": 1,
+      "ownerBeforeSha256": "5e6f795427e7ceb98206440f40561a813c8f0b84dee6a232e59c05a03c258ee5",
+      "ownerAfterSha256": "ea1cdeac035ad07ae7053e2f9299cb55b39e83ba7be9b335a3fc3a292ec2a6e0"
+    }
+  },
+  {
+    "file": "stage3/adapt/99-correctness-single-watcher-forwarder/owners.json",
+    "metadata": {
+      "file": "sys.ts",
+      "owner": "createSystemWatchFunctions",
+      "beforeDeclarations": 1,
+      "afterDeclarations": 1,
+      "ownerBeforeSha256": "aaa0f1c9d45091481e3f7f4805841de64e96dede569b0b951cfdb88f41d74b07",
+      "ownerAfterSha256": "17e7dd4c53c7bdc2976010d7017bcc647b19adc6e2b99b5b28dffaac42c5e58c"
+    }
+  },
+  {
     "file": "stage3/adapt/99-correctness-core-multimap/owners.json",
     "metadata": {
       "file": "src/compiler/sys.ts",
@@ -78,6 +100,17 @@
       "module": "./_namespaces/ts.js",
       "beforeSha256": "501d703a56cf4b1b56e967e112002d9031791ecd32a0d8cb5cc474d3381c04c2",
       "afterSha256": "215657cca51604ac58245dd00098b0569c17a0a325e856210128c62fcd7d9cf4"
+    }
+  },
+  {
+    "file": "stage3/adapt/99-correctness-write-file-view/owners.json",
+    "metadata": {
+      "file": "sys.ts",
+      "owner": "patchWriteFileEnsuringDirectory",
+      "beforeDeclarations": 1,
+      "afterDeclarations": 1,
+      "ownerBeforeSha256": "adbb2e3289ea7f35f76dc8f6baf618c27bf9c334a770dd5c83382816e93e76e4",
+      "ownerAfterSha256": "9859c28c313f8688c39620ca3aecef4bf51d5aa077f895a50aefe2c2d75ddf25"
     }
   }
 ]
