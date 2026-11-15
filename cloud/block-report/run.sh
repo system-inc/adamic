@@ -297,15 +297,19 @@ buildExit=$?
 # shellcheck disable=SC2086
 step test go test -count=1 -json -timeout 3h $reproducible $packages
 testExit=$?
-cp "$out/test.log" "$out/test.jsonl"
+# The streams are read where the steps wrote them, never copied: a copy doubles their bytes, and on 1.0.9's tmpfs /tmp the
+# copy ran out of room and the report read 139 of 162 packages from a cut stream (J-4vcc0ar). A disk that filled anyway
+# is said here and in the report, so a short stream is never read as a whole one.
+outFree=$(df -Pk "$out" | awk 'NR == 2 {printf "%.0f", $4 * 1024}')
+[ "${outFree:-0}" -ge 67108864 ] || echo "block-report: $out has ${outFree:-no} bytes free after the tests, so a stream may be cut short and the report below may be partial"
 
 # The report: the tests' summary and one line a package, as before; then the products step's own summary, and each
 # failing package's first failure with the first 14 lines it wrote, from either stream, so a report says why without
 # its raw streams (#3jge4gw, J-mwkyqjb).
 echo "BEGIN block-report"
-python3 -I - "$out" "$productsPlanExit" "$sha" "$started" "$vetExit" "$buildExit" "$testExit" "$reproducible" << 'PYTHON'
+python3 -I - "$out" "$productsPlanExit" "$sha" "$started" "$vetExit" "$buildExit" "$testExit" "$reproducible" "${outFree:-0}" << 'PYTHON'
 import json, os, sys, collections
-out, plan_exit, sha, started, vet, build, test, flags = sys.argv[1:]
+out, plan_exit, sha, started, vet, build, test, flags, out_free = sys.argv[1:]
 
 def read(path):
     stream = {'packages': collections.OrderedDict(), 'failing': collections.defaultdict(list), 'failed': [],
@@ -356,7 +360,7 @@ def first_failures(stream, name):
         kept = shown if len(shown) <= 14 else shown[:4] + ['... %d lines ...' % (len(shown) - 14)] + shown[-10:]
         print(json.dumps({'package': package, 'stream': name, 'firstFailure': first, 'lines': kept}))
 
-tests = read(os.path.join(out, 'test.jsonl'))
+tests = read(os.path.join(out, 'test.log'))
 products = read(os.path.join(out, 'products.jsonl'))
 plan_path = os.path.join(out, 'products-plan.json')
 plan = json.load(open(plan_path)) if os.path.exists(plan_path) else {}
@@ -365,7 +369,8 @@ packages = tests['packages']
 counts = collections.Counter(row['outcome'] for row in packages.values())
 print("This is the block's own tests run without loom, not the house's build of the tree. Nothing in it is a key, and nothing compares keys.")
 print(json.dumps({'sha': sha, 'started': started, 'vetExit': int(vet), 'buildExit': int(build), 'testExit': int(test),
-                  'goFlags': flags, 'packages': len(packages), 'ok': counts['ok'], 'failed': counts['failed'], 'skipped': counts['skipped']}))
+                  'goFlags': flags, 'packages': len(packages), 'ok': counts['ok'], 'failed': counts['failed'], 'skipped': counts['skipped'],
+                  'outFreeBytes': int(out_free), 'outFull': int(out_free) < 64 * 1024 * 1024}))
 # A vet or build that failed says why: its log's last twenty lines (J-es4wbkq: build exited 1 and the report said no more).
 for step, code in (('vet', vet), ('build', build)):
     if int(code) != 0:
