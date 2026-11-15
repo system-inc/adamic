@@ -601,7 +601,9 @@ func (l *lowering) nodeLibraryRefusal(node *ast.Node) error {
 	if err := l.nodeFSDirectorySignature(node); err != nil {
 		return err
 	}
-	if !ast.IsExpressionNode(node) || ast.IsPartOfTypeNode(node) {
+	// A type query's name (typeof fs.realpathSync written as a type) is an expression to the checker,
+	// but nothing runs it, so no use rule below judges it (#7yz6rtp).
+	if !ast.IsExpressionNode(node) || ast.IsPartOfTypeNode(node) || inTypeQuery(node) {
 		return nil
 	}
 	if err := l.nodeHostCallbackArgument(node); err != nil {
