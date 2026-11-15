@@ -178,14 +178,26 @@ function compileWorkerDecode(descriptor) {
 		switch (node.kind) {
 			case 'number': case 'string': case 'boolean': case 'literal': {
 				const accepts = matches[index];
-				read = (value, path) => { if (!accepts(value)) workerJsonMismatch(expected, path, value); return value; };
+				read = (value, parentPath, index) => {
+					if (!accepts(value)) {
+						const path = index === undefined ? parentPath : `${parentPath}[${index}]`;
+						workerJsonMismatch(expected, path, value);
+					}
+					return value;
+				};
 				break;
 			}
 			case 'array': {
 				const element = compile(node.children[0]);
+				const scalar = ['number', 'string', 'boolean', 'literal'].includes(descriptor.nodes[node.children[0]].kind);
 				read = (value, path) => {
 					if (!Array.isArray(value)) workerJsonMismatch(expected, path, value);
-					return value.map((value, index) => element(value, `${path}[${index}]`));
+					const length = value.length;
+					const result = new Array(length);
+					for (let index = 0; index < length; index++) {
+						result[index] = scalar ? element(value[index], path, index) : element(value[index], `${path}[${index}]`);
+					}
+					return result;
 				};
 				break;
 			}
