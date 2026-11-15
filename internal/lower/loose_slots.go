@@ -46,9 +46,12 @@ import (
 // later), and lib's Error for what the runtime and the library throw. A road the walk can't read makes
 // what's caught every shape, as before: an operand that is itself loose (a rethrow of a caught value
 // among them), any other read of reject, throw, abort or withResolvers (taken as a value, by element
-// access or destructured), a Promise made by new, whose executor's reject can be handed anything, an
-// emit whose event can be 'error' (an EventEmitter throws its argument when no listener is set), and any
-// call into node:assert, which throws a handed Error message as it is. It's built through H, never as
+// access or destructured), a Promise made by new, whose executor's reject can be handed anything, a
+// then the program declares, since awaiting a thenable hands its then a reject that can be called with
+// anything under any name, an emit whose event can be 'error' (an EventEmitter throws its argument when no
+// listener is set), and any call into node:assert, which throws a handed Error message as it is. A direct
+// call of a plain name in looseCaughtNames, reject(x) through a parameter, is read as the member form is.
+// It's built through H, never as
 // "a caught value is a plain Error": the binding links to what's caught, and every loose slot inside
 // those types (Error's cause first) links to H by the finder's own rule, so whatever a later head lets
 // into a thrown value enters H at that write and the catch sees it here unchanged (Runtime, 03:22Z).
@@ -246,6 +249,25 @@ func (f *cycleFinder) looseCaughtRoad(node *ast.Node) {
 		// and by the name assert where nothing resolves.
 		callee := ast.SkipParentheses(node.AsCallExpression().Expression)
 		if strings.HasPrefix(l.nodeLibraryMember(node), "node:assert") || (l.symbol(callee) == nil && looseAssertCallee(callee)) {
+			f.loose.caughtEvery = true
+		}
+		// A plain name in looseCaughtNames called directly, reject(x) through an executor's or a then's
+		// parameter, is read as the member form is.
+		if ast.IsIdentifier(callee) {
+			if forwards, named := looseCaughtNames[callee.Text()]; named {
+				if !forwards {
+					f.loose.caughtEvery = true
+					return
+				}
+				for _, argument := range node.AsCallExpression().Arguments.Nodes {
+					f.looseCatch(l.checker.GetTypeAtLocation(argument))
+				}
+			}
+		}
+	case ast.KindMethodDeclaration, ast.KindPropertyAssignment, ast.KindPropertyDeclaration, ast.KindShorthandPropertyAssignment:
+		// A then the program declares makes a thenable: awaiting it hands then a reject that can be called
+		// with anything, under any name, so it's a road the walk can't follow.
+		if name := node.Name(); name != nil && (ast.IsIdentifier(name) || ast.IsStringLiteralLike(name)) && name.Text() == "then" {
 			f.loose.caughtEvery = true
 		}
 	case ast.KindPropertyAccessExpression:

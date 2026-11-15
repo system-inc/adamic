@@ -151,8 +151,8 @@ func TestAsyncRepeatedBindingsLower(t *testing.T) {
 	}
 }
 
-// asyncCatchRoads load the readers array into a caught value, three roads around the catch narrowing
-// (Runtime and Adamic on #kaz4pk8 at 03:13Z). Each must still stop. Today each stops at an older wall
+// asyncCatchRoads load the readers array into a caught value, roads around the catch narrowing (Runtime
+// and Adamic on #kaz4pk8 at 03:13Z, and Lower's thenable, whose then calls reject by a parameter's name). Each must still stop. Today each stops at an older wall
 // before the narrowing judges it, one of the seven its premise stands on (looseCaughtRoad); the day that
 // wall lifts, the value it lets into the thrown value enters H, and the row must stop at the loose-slot
 // stop instead, by the finder's own reach, or go red here.
@@ -163,6 +163,8 @@ var asyncCatchRoads = []struct{ name, wall, source string }{
 		"async function run(): Promise<void> { const readers: (() => string)[] = []; try { const error = new Error(\"carried\"); error.cause = readers; throw error; } catch (held) { if (held instanceof Error) { readers.push(() => held.message); } } await Promise.resolve(); console.log(String(readers.length)); }\nawait run();\n"},
 	{"Promise.reject(readers) into an awaited catch", "Promise rejection with a non-Error",
 		"async function run(): Promise<void> { const readers: (() => string)[] = []; try { await Promise.reject(readers); } catch (held) { if (held instanceof Error) { readers.push(() => held.message); } } console.log(String(readers.length)); }\nawait run();\n"},
+	{"an awaited thenable whose then rejects with readers", "thenables",
+		"async function run(): Promise<void> { const readers: (() => string)[] = []; try { await { then(resolve: (value: number) => void, reject: (reason: unknown) => void): void { reject(readers); } }; } catch (held) { if (held instanceof Error) { readers.push(() => held.message); } } console.log(String(readers.length)); }\nawait run();\n"},
 }
 
 // TestAsyncCatchRoadsStop holds each of asyncCatchRoads to a stop: its wall today, or the loose-slot stop
