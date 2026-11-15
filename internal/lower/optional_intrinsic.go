@@ -72,6 +72,11 @@ func (l *lowering) optionalIntrinsic(node *ast.Node) (ir.Expression, bool, error
 	if err != nil {
 		return nil, true, err
 	}
+	// The receiver is tested whatever its type says, since a record's value read can be missing
+	// where the type holds none (a.r["k"]?.push(a)). So a number or a boolean result is held as a
+	// maybe even where TypeScript types the call without undefined, and reads undefined there as
+	// Node's does; held as the scalar, the absent arm would be undefined in a double (#qgthc6g).
+	of = ir.Maybe(of)
 	return ir.Effects{Body: body, Result: ir.Conditional{
 		Condition: present,
 		WhenTrue:  fit(lowered, of), WhenNot: fit(ir.Undefined{}, of), Of: of,

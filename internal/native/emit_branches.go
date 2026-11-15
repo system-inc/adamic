@@ -103,6 +103,14 @@ func (e *emitter) logical(binary ir.Binary) string {
 
 // conditional emits ?:, evaluating only the branch JavaScript takes.
 func (e *emitter) conditional(conditional ir.Conditional) string {
+	// undefined is NULL, which only a reference holds: in a number it's C clang refuses, and in a
+	// boolean it reads false where Node's undefined is no boolean at all (#qgthc6g). A scalar
+	// conditional holds undefined as its maybe, made by lowering's fit.
+	for _, arm := range []ir.Expression{conditional.WhenTrue, conditional.WhenNot} {
+		if _, undefined := arm.(ir.Undefined); undefined && !conditional.Type().IsReference() {
+			panic(fmt.Sprintf("native: compiler bug: a conditional held as %s has an undefined arm it can't hold", cType(conditional.Type())))
+		}
+	}
 	condition := e.value(conditional.Condition)
 	trueText, whenTrue, trueOwned := e.aside(conditional.WhenTrue)
 	notText, whenNot, notOwned := e.aside(conditional.WhenNot)
