@@ -692,6 +692,11 @@ func (l *lowering) sameRecordStorage(from, to *checker.Type, visited map[[2]*che
 
 // Catch literal reads before method/builtin dispatch can bypass ordinary value lowering.
 func (l *lowering) recordLiteralRead(node *ast.Node) error {
+	// recordReadTarget skips parentheses, so a parenthesized read answers too. The rule walk
+	// visits the access inside the parentheses on its own, and judges it there (#grc95d6).
+	if node.Kind != ast.KindPropertyAccessExpression && node.Kind != ast.KindElementAccessExpression {
+		return nil
+	}
 	if !l.recordReadTarget(node) || l.recordReadDiscarded(node) || l.recordReadOwnGuarded(node) {
 		return nil
 	}
