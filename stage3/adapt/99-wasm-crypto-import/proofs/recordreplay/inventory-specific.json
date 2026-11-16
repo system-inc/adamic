@@ -1,0 +1,197 @@
+{
+  "99-old-on-control": {
+    "exit": 1,
+    "command": [
+      "node",
+      "/workspace/scratch/recordreplay/inventory-audit/old-99-check.cjs",
+      "/workspace/scratch/recordreplay/inventory-audit/before99",
+      "/workspace/scratch/recordreplay/control",
+      "/workspace/scratch/recordreplay/inventory-audit/unused.json"
+    ],
+    "resource": {
+      "argv": [
+        "node",
+        "/workspace/scratch/recordreplay/inventory-audit/old-99-check.cjs",
+        "/workspace/scratch/recordreplay/inventory-audit/before99",
+        "/workspace/scratch/recordreplay/control",
+        "/workspace/scratch/recordreplay/inventory-audit/unused.json"
+      ],
+      "cwd": "/workspace/scratch/recordreplay/head",
+      "latent_times": null,
+      "exit": 1,
+      "seconds": 0.8671183930000552,
+      "peak_rss_kib": 81052
+    },
+    "diagnostic": "node:assert:152\n  throw new AssertionError(obj);\n  ^\n\nAssertionError [ERR_ASSERTION]: source inventory size moved\n\n747 !== 746\n\n    at TestCryptoSourceScope (/workspace/scratch/recordreplay/inventory-audit/old-99-check.cjs:28:12)\n    at Object.<anonymous> (/workspace/scratch/recordreplay/inventory-audit/old-99-check.cjs:48:27)\n    at Module._compile (node:internal/modules/cjs/loader:1872:14)\n    at Object..js (node:internal/modules/cjs/loader:2003:10)\n    at Module.load (node:internal/modules/cjs/loader:1594:32)\n    at Module._load (node:internal/modules/cjs/loader:1396:12)\n    at wrapModuleLoad (node:internal/modules/cjs/loader:255:19)\n    at Module.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:154:5)\n    at node:internal/main/run_main_module:33:47 {\n  generatedMessage: false,\n  code: 'ERR_ASSERTION',\n  actual: 747,\n  expected: 746,\n  operator: 'strictEqual',\n  diff: 'simple'\n}\n\nNode.js v24.19.0\n"
+  },
+  "93-source-scope": {
+    "exit": 1,
+    "command": [
+      "node",
+      "-e",
+      "require(process.argv[1]).TestBuiltinSourceScope(process.argv[2],process.argv[3])",
+      "/workspace/scratch/recordreplay/head/stage3/adapt/93-builtin-imports/proofs/check.cjs",
+      "/workspace/scratch/recordreplay/control",
+      "/workspace/scratch/recordreplay/candidate2"
+    ],
+    "resource": {
+      "argv": [
+        "node",
+        "-e",
+        "require(process.argv[1]).TestBuiltinSourceScope(process.argv[2],process.argv[3])",
+        "/workspace/scratch/recordreplay/head/stage3/adapt/93-builtin-imports/proofs/check.cjs",
+        "/workspace/scratch/recordreplay/control",
+        "/workspace/scratch/recordreplay/candidate2"
+      ],
+      "cwd": "/workspace/scratch/recordreplay/head",
+      "latent_times": null,
+      "exit": 1,
+      "seconds": 0.3656379639996885,
+      "peak_rss_kib": 81816
+    },
+    "diagnostic": "node:assert:152\n  throw new AssertionError(obj);\n  ^\n\nAssertionError [ERR_ASSERTION]: source inventory changed\n+ actual - expected\n... Skipped lines\n\n  [\n    'src/compiler/_namespaces/ts.moduleSpecifiers.ts',\n    'src/compiler/_namespaces/ts.performance.ts',\n    'src/compiler/_namespaces/ts.ts',\n    'src/compiler/binder.ts',\n...\n    'src/loc/lcl/trk/diagnosticMessages/diagnosticMessages.generated.json.lcl',\n+   'src/recordreplay.d.ts',\n    'src/server/_namespaces/ts.server.protocol.ts',\n    'src/server/_namespaces/ts.server.ts',\n    'src/server/_namespaces/ts.ts',\n    'src/server/editorServices.ts',\n    'src/server/moduleSpecifierCache.ts',\n\n    at Object.TestBuiltinSourceScope (/workspace/scratch/recordreplay/head/stage3/adapt/93-builtin-imports/proofs/check.cjs:21:39)\n    at [eval]:1:26\n    at runScriptInThisContext (node:internal/vm:219:10)\n    at node:internal/process/execution:451:12\n    at [eval]-wrapper:6:24\n    at runScriptInContext (node:internal/process/execution:449:60)\n    at evalFunction (node:internal/process/execution:283:30)\n    at evalTypeScript (node:internal/process/execution:295:3)\n    at node:internal/main/eval_string:71:3 {\n  generatedMessage: false,\n  code: 'ERR_ASSERTION',\n  actual: [\n    'src/compiler/_namespaces/ts.moduleSpecifiers.ts',\n    'src/compiler/_namespaces/ts.performance.ts',\n    'src/compiler/_namespaces/ts.ts',\n    'src/compiler/binder.ts',\n    'src/compiler/builder.ts',\n    'src/compiler/builderPublic.ts',\n    'src/compiler/builderState.ts',\n    'src/compiler/builderStatePublic.ts',\n    'src/compiler/checker.ts',\n    'src/compiler/commandLineParser.ts',\n    'src/compiler/core.ts',\n    'src/compiler/corePublic.ts',\n    'src/compiler/debug.ts',\n    'src/compiler/diagnosticInformationMap.generated.ts',\n    'src/compiler/diagnosticMessages.generated.json',\n    'src/compiler/diagnosticMessages.json',\n    'src/compiler/emitter.ts',\n    'src/compiler/executeCommandLine.ts',\n    'src/compiler/expressionToTypeNode.ts',\n    'src/compiler/factory/baseNodeFactory.ts',\n    'src/compiler/factory/emitHelpers.ts',\n    'src/compiler/factory/emitNode.ts',\n    'src/compiler/factory/nodeChildren.ts',\n    'src/compiler/factory/nodeConverters.ts',\n    'src/compiler/factory/nodeFactory.ts',\n    'src/compiler/factory/nodeTests.ts',\n    'src/compiler/factory/parenthesizerRules.ts',\n    'src/compiler/factory/utilities.ts',\n    'src/compiler/factory/utilitiesPublic.ts',\n    'src/compiler/hostErrors.ts',\n    'src/compiler/moduleNameResolver.ts',\n    'src/compiler/moduleSpecifiers.ts',\n    'src/compiler/parser.ts',\n    'src/compiler/path.ts',\n    'src/compiler/performance.ts',\n    'src/compiler/performanceCore.ts',\n    'src/compiler/program.ts',\n    'src/compiler/programDiagnostics.ts',\n    'src/compiler/resolutionCache.ts',\n    'src/compiler/scanner.ts',\n    'src/compiler/semver.ts',\n    'src/compiler/sourcemap.ts',\n    'src/compiler/symbolWalker.ts',\n    'src/compiler/sys.ts',\n    'src/compiler/tracing.ts',\n    'src/compiler/transform"
+  },
+  "92-source-scope": {
+    "exit": 1,
+    "command": [
+      "node",
+      "-e",
+      "require(process.argv[1]).TestTTYSourceScope(process.argv[2],process.argv[3])",
+      "/workspace/scratch/recordreplay/head/stage3/adapt/92-tty-host-results/proofs/check.cjs",
+      "/workspace/scratch/recordreplay/control",
+      "/workspace/scratch/recordreplay/candidate2"
+    ],
+    "resource": {
+      "argv": [
+        "node",
+        "-e",
+        "require(process.argv[1]).TestTTYSourceScope(process.argv[2],process.argv[3])",
+        "/workspace/scratch/recordreplay/head/stage3/adapt/92-tty-host-results/proofs/check.cjs",
+        "/workspace/scratch/recordreplay/control",
+        "/workspace/scratch/recordreplay/candidate2"
+      ],
+      "cwd": "/workspace/scratch/recordreplay/head",
+      "latent_times": null,
+      "exit": 1,
+      "seconds": 0.3152800299994851,
+      "peak_rss_kib": 82364
+    },
+    "diagnostic": "node:assert:152\n  throw new AssertionError(obj);\n  ^\n\nAssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:\n+ actual - expected\n... Skipped lines\n\n  [\n    'src/compiler/_namespaces/ts.moduleSpecifiers.ts',\n    'src/compiler/_namespaces/ts.performance.ts',\n    'src/compiler/_namespaces/ts.ts',\n    'src/compiler/binder.ts',\n...\n    'src/loc/lcl/trk/diagnosticMessages/diagnosticMessages.generated.json.lcl',\n+   'src/recordreplay.d.ts',\n    'src/server/_namespaces/ts.server.protocol.ts',\n    'src/server/_namespaces/ts.server.ts',\n    'src/server/_namespaces/ts.ts',\n    'src/server/editorServices.ts',\n    'src/server/moduleSpecifierCache.ts',\n\n    at Object.TestTTYSourceScope (/workspace/scratch/recordreplay/head/stage3/adapt/92-tty-host-results/proofs/check.cjs:51:35)\n    at [eval]:1:26\n    at runScriptInThisContext (node:internal/vm:219:10)\n    at node:internal/process/execution:451:12\n    at [eval]-wrapper:6:24\n    at runScriptInContext (node:internal/process/execution:449:60)\n    at evalFunction (node:internal/process/execution:283:30)\n    at evalTypeScript (node:internal/process/execution:295:3)\n    at node:internal/main/eval_string:71:3 {\n  generatedMessage: true,\n  code: 'ERR_ASSERTION',\n  actual: [\n    'src/compiler/_namespaces/ts.moduleSpecifiers.ts',\n    'src/compiler/_namespaces/ts.performance.ts',\n    'src/compiler/_namespaces/ts.ts',\n    'src/compiler/binder.ts',\n    'src/compiler/builder.ts',\n    'src/compiler/builderPublic.ts',\n    'src/compiler/builderState.ts',\n    'src/compiler/builderStatePublic.ts',\n    'src/compiler/checker.ts',\n    'src/compiler/commandLineParser.ts',\n    'src/compiler/core.ts',\n    'src/compiler/corePublic.ts',\n    'src/compiler/debug.ts',\n    'src/compiler/diagnosticInformationMap.generated.ts',\n    'src/compiler/diagnosticMessages.generated.json',\n    'src/compiler/diagnosticMessages.json',\n    'src/compiler/emitter.ts',\n    'src/compiler/executeCommandLine.ts',\n    'src/compiler/expressionToTypeNode.ts',\n    'src/compiler/factory/baseNodeFactory.ts',\n    'src/compiler/factory/emitHelpers.ts',\n    'src/compiler/factory/emitNode.ts',\n    'src/compiler/factory/nodeChildren.ts',\n    'src/compiler/factory/nodeConverters.ts',\n    'src/compiler/factory/nodeFactory.ts',\n    'src/compiler/factory/nodeTests.ts',\n    'src/compiler/factory/parenthesizerRules.ts',\n    'src/compiler/factory/utilities.ts',\n    'src/compiler/factory/utilitiesPublic.ts',\n    'src/compiler/hostErrors.ts',\n    'src/compiler/moduleNameResolver.ts',\n    'src/compiler/moduleSpecifiers.ts',\n    'src/compiler/parser.ts',\n    'src/compiler/path.ts',\n    'src/compiler/performance.ts',\n    'src/compiler/performanceCore.ts',\n    'src/compiler/program.ts',\n    'src/compiler/programDiagnostics.ts',\n    'src/compiler/resolutionCache.ts',\n    'src/compiler/scanner.ts',\n    'src/compiler/semver.ts',\n    'src/compiler/sourcemap.ts',\n    'src/compiler/symbolWalker.ts',\n    'src/compiler/sys.ts',\n    'src/compiler/tracing.ts',\n    'src/comp"
+  },
+  "91-source-scope": {
+    "exit": 1,
+    "command": [
+      "node",
+      "/workspace/scratch/recordreplay/head/stage3/adapt/91-patcher-discard/proofs/scope.cjs",
+      "/workspace/scratch/recordreplay/control",
+      "/workspace/scratch/recordreplay/candidate2",
+      "/workspace/scratch/recordreplay/inventory-audit/91.json"
+    ],
+    "resource": {
+      "argv": [
+        "node",
+        "/workspace/scratch/recordreplay/head/stage3/adapt/91-patcher-discard/proofs/scope.cjs",
+        "/workspace/scratch/recordreplay/control",
+        "/workspace/scratch/recordreplay/candidate2",
+        "/workspace/scratch/recordreplay/inventory-audit/91.json"
+      ],
+      "cwd": "/workspace/scratch/recordreplay/head",
+      "latent_times": null,
+      "exit": 1,
+      "seconds": 0.3670726899999863,
+      "peak_rss_kib": 79268
+    },
+    "diagnostic": "node:assert:152\n  throw new AssertionError(obj);\n  ^\n\nAssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:\n+ actual - expected\n... Skipped lines\n\n  [\n    'src/compiler/_namespaces/ts.moduleSpecifiers.ts',\n    'src/compiler/_namespaces/ts.performance.ts',\n    'src/compiler/_namespaces/ts.ts',\n    'src/compiler/binder.ts',\n...\n    'src/loc/lcl/trk/diagnosticMessages/diagnosticMessages.generated.json.lcl',\n+   'src/recordreplay.d.ts',\n    'src/server/_namespaces/ts.server.protocol.ts',\n    'src/server/_namespaces/ts.server.ts',\n    'src/server/_namespaces/ts.ts',\n    'src/server/editorServices.ts',\n    'src/server/moduleSpecifierCache.ts',\n\n    at Object.<anonymous> (/workspace/scratch/recordreplay/head/stage3/adapt/91-patcher-discard/proofs/scope.cjs:8:33)\n    at Module._compile (node:internal/modules/cjs/loader:1872:14)\n    at Object..js (node:internal/modules/cjs/loader:2003:10)\n    at Module.load (node:internal/modules/cjs/loader:1594:32)\n    at Module._load (node:internal/modules/cjs/loader:1396:12)\n    at wrapModuleLoad (node:internal/modules/cjs/loader:255:19)\n    at Module.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:154:5)\n    at node:internal/main/run_main_module:33:47 {\n  generatedMessage: true,\n  code: 'ERR_ASSERTION',\n  actual: [\n    'src/compiler/_namespaces/ts.moduleSpecifiers.ts',\n    'src/compiler/_namespaces/ts.performance.ts',\n    'src/compiler/_namespaces/ts.ts',\n    'src/compiler/binder.ts',\n    'src/compiler/builder.ts',\n    'src/compiler/builderPublic.ts',\n    'src/compiler/builderState.ts',\n    'src/compiler/builderStatePublic.ts',\n    'src/compiler/checker.ts',\n    'src/compiler/commandLineParser.ts',\n    'src/compiler/core.ts',\n    'src/compiler/corePublic.ts',\n    'src/compiler/debug.ts',\n    'src/compiler/diagnosticInformationMap.generated.ts',\n    'src/compiler/diagnosticMessages.generated.json',\n    'src/compiler/diagnosticMessages.json',\n    'src/compiler/emitter.ts',\n    'src/compiler/executeCommandLine.ts',\n    'src/compiler/expressionToTypeNode.ts',\n    'src/compiler/factory/baseNodeFactory.ts',\n    'src/compiler/factory/emitHelpers.ts',\n    'src/compiler/factory/emitNode.ts',\n    'src/compiler/factory/nodeChildren.ts',\n    'src/compiler/factory/nodeConverters.ts',\n    'src/compiler/factory/nodeFactory.ts',\n    'src/compiler/factory/nodeTests.ts',\n    'src/compiler/factory/parenthesizerRules.ts',\n    'src/compiler/factory/utilities.ts',\n    'src/compiler/factory/utilitiesPublic.ts',\n    'src/compiler/hostErrors.ts',\n    'src/compiler/moduleNameResolver.ts',\n    'src/compiler/moduleSpecifiers.ts',\n    'src/compiler/parser.ts',\n    'src/compiler/path.ts',\n    'src/compiler/performance.ts',\n    'src/compiler/performanceCore.ts',\n    'src/compiler/program.ts',\n    'src/compiler/programDiagnostics.ts',\n    'src/compiler/resolutionCache.ts',\n    'src/compiler/scanner.ts',\n    'src/compiler/semver.ts',\n    'src/compiler/sourcemap.ts',\n    'src/compiler/symbolWalker.ts',\n    'src/"
+  },
+  "99-current": {
+    "exit": 0,
+    "command": [
+      "node",
+      "/workspace/scratch/recordreplay/head/stage3/adapt/99-wasm-crypto-import/proofs/check.cjs",
+      "/workspace/scratch/recordreplay/inventory-audit/before99",
+      "/workspace/scratch/recordreplay/candidate2",
+      "/workspace/scratch/recordreplay/inventory-audit/99-current.json"
+    ],
+    "resource": {
+      "argv": [
+        "node",
+        "/workspace/scratch/recordreplay/head/stage3/adapt/99-wasm-crypto-import/proofs/check.cjs",
+        "/workspace/scratch/recordreplay/inventory-audit/before99",
+        "/workspace/scratch/recordreplay/candidate2",
+        "/workspace/scratch/recordreplay/inventory-audit/99-current.json"
+      ],
+      "cwd": "/workspace/scratch/recordreplay/head",
+      "latent_times": null,
+      "exit": 0,
+      "seconds": 1.370998624001004,
+      "peak_rss_kib": 168476
+    },
+    "diagnostic": "pass"
+  },
+  "99-declaration-mutant": {
+    "exit": 1,
+    "command": [
+      "node",
+      "/workspace/scratch/recordreplay/head/stage3/adapt/99-wasm-crypto-import/proofs/check.cjs",
+      "/workspace/scratch/recordreplay/inventory-audit/before99",
+      "/workspace/scratch/recordreplay/inventory-audit/mutant",
+      "/workspace/scratch/recordreplay/inventory-audit/mutant.json"
+    ],
+    "resource": {
+      "argv": [
+        "node",
+        "/workspace/scratch/recordreplay/head/stage3/adapt/99-wasm-crypto-import/proofs/check.cjs",
+        "/workspace/scratch/recordreplay/inventory-audit/before99",
+        "/workspace/scratch/recordreplay/inventory-audit/mutant",
+        "/workspace/scratch/recordreplay/inventory-audit/mutant.json"
+      ],
+      "cwd": "/workspace/scratch/recordreplay/head",
+      "latent_times": null,
+      "exit": 1,
+      "seconds": 0.31550156499906734,
+      "peak_rss_kib": 81572
+    },
+    "diagnostic": "node:assert:152\n  throw new AssertionError(obj);\n  ^\n\nAssertionError [ERR_ASSERTION]: recordreplay declaration differs from the reviewed bytes\n+ actual - expected\n\n  'export {};\\n' +\n    '\\n' +\n    'declare global {\\n' +\n    '    namespace NodeJS {\\n' +\n    '        interface Process {\\n' +\n+   '            recordreplay?: number;\\n' +\n-   '            recordreplay?: unknown;\\n' +\n    '        }\\n' +\n    '    }\\n' +\n    '}\\n'\n\n    at TestCryptoSourceScope (/workspace/scratch/recordreplay/head/stage3/adapt/99-wasm-crypto-import/proofs/check.cjs:36:12)\n    at Object.<anonymous> (/workspace/scratch/recordreplay/head/stage3/adapt/99-wasm-crypto-import/proofs/check.cjs:58:27)\n    at Module._compile (node:internal/modules/cjs/loader:1872:14)\n    at Object..js (node:internal/modules/cjs/loader:2003:10)\n    at Module.load (node:internal/modules/cjs/loader:1594:32)\n    at Module._load (node:internal/modules/cjs/loader:1396:12)\n    at wrapModuleLoad (node:internal/modules/cjs/loader:255:19)\n    at Module.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:154:5)\n    at node:internal/main/run_main_module:33:47 {\n  generatedMessage: false,\n  code: 'ERR_ASSERTION',\n  actual: 'export {};\\n' +\n    '\\n' +\n    'declare global {\\n' +\n    '    namespace NodeJS {\\n' +\n    '        interface Process {\\n' +\n    '            recordreplay?: number;\\n' +\n    '        }\\n' +\n    '    }\\n' +\n    '}\\n',\n  expected: 'export {};\\n' +\n    '\\n' +\n    'declare global {\\n' +\n    '    namespace NodeJS {\\n' +\n    '        interface Process {\\n' +\n    '            recordreplay?: unknown;\\n' +\n    '        }\\n' +\n    '    }\\n' +\n    '}\\n',\n  operator: 'strictEqual',\n  diff: 'simple'\n}\n\nNode.js v24.19.0\n"
+  },
+  "99-extra-file-mutant": {
+    "exit": 1,
+    "command": [
+      "node",
+      "/workspace/scratch/recordreplay/head/stage3/adapt/99-wasm-crypto-import/proofs/check.cjs",
+      "/workspace/scratch/recordreplay/inventory-audit/before99",
+      "/workspace/scratch/recordreplay/inventory-audit/mutant",
+      "/workspace/scratch/recordreplay/inventory-audit/mutant.json"
+    ],
+    "resource": {
+      "argv": [
+        "node",
+        "/workspace/scratch/recordreplay/head/stage3/adapt/99-wasm-crypto-import/proofs/check.cjs",
+        "/workspace/scratch/recordreplay/inventory-audit/before99",
+        "/workspace/scratch/recordreplay/inventory-audit/mutant",
+        "/workspace/scratch/recordreplay/inventory-audit/mutant.json"
+      ],
+      "cwd": "/workspace/scratch/recordreplay/head",
+      "latent_times": null,
+      "exit": 1,
+      "seconds": 0.31868691999989096,
+      "peak_rss_kib": 81684
+    },
+    "diagnostic": "node:assert:152\n  throw new AssertionError(obj);\n  ^\n\nAssertionError [ERR_ASSERTION]: source inventory changed outside the reviewed declaration\n+ actual - expected\n... Skipped lines\n\n  [\n    'src/compiler/_namespaces/ts.moduleSpecifiers.ts',\n    'src/compiler/_namespaces/ts.performance.ts',\n    'src/compiler/_namespaces/ts.ts',\n    'src/compiler/binder.ts',\n...\n    'src/typingsInstallerCore/typingsInstaller.ts',\n+   'src/unreviewed.d.ts',\n    'src/watchGuard/tsconfig.json',\n    'src/watchGuard/watchGuard.ts'\n  ]\n\n    at TestCryptoSourceScope (/workspace/scratch/recordreplay/head/stage3/adapt/99-wasm-crypto-import/proofs/check.cjs:35:12)\n    at Object.<anonymous> (/workspace/scratch/recordreplay/head/stage3/adapt/99-wasm-crypto-import/proofs/check.cjs:58:27)\n    at Module._compile (node:internal/modules/cjs/loader:1872:14)\n    at Object..js (node:internal/modules/cjs/loader:2003:10)\n    at Module.load (node:internal/modules/cjs/loader:1594:32)\n    at Module._load (node:internal/modules/cjs/loader:1396:12)\n    at wrapModuleLoad (node:internal/modules/cjs/loader:255:19)\n    at Module.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:154:5)\n    at node:internal/main/run_main_module:33:47 {\n  generatedMessage: false,\n  code: 'ERR_ASSERTION',\n  actual: [\n    'src/compiler/_namespaces/ts.moduleSpecifiers.ts',\n    'src/compiler/_namespaces/ts.performance.ts',\n    'src/compiler/_namespaces/ts.ts',\n    'src/compiler/binder.ts',\n    'src/compiler/builder.ts',\n    'src/compiler/builderPublic.ts',\n    'src/compiler/builderState.ts',\n    'src/compiler/builderStatePublic.ts',\n    'src/compiler/checker.ts',\n    'src/compiler/commandLineParser.ts',\n    'src/compiler/core.ts',\n    'src/compiler/corePublic.ts',\n    'src/compiler/debug.ts',\n    'src/compiler/diagnosticInformationMap.generated.ts',\n    'src/compiler/diagnosticMessages.generated.json',\n    'src/compiler/diagnosticMessages.json',\n    'src/compiler/emitter.ts',\n    'src/compiler/executeCommandLine.ts',\n    'src/compiler/expressionToTypeNode.ts',\n    'src/compiler/factory/baseNodeFactory.ts',\n    'src/compiler/factory/emitHelpers.ts',\n    'src/compiler/factory/emitNode.ts',\n    'src/compiler/factory/nodeChildren.ts',\n    'src/compiler/factory/nodeConverters.ts',\n    'src/compiler/factory/nodeFactory.ts',\n    'src/compiler/factory/nodeTests.ts',\n    'src/compiler/factory/parenthesizerRules.ts',\n    'src/compiler/factory/utilities.ts',\n    'src/compiler/factory/utilitiesPublic.ts',\n    'src/compiler/hostErrors.ts',\n    'src/compiler/moduleNameResolver.ts',\n    'src/compiler/moduleSpecifiers.ts',\n    'src/compiler/parser.ts',\n    'src/compiler/path.ts',\n    'src/compiler/performance.ts',\n    'src/compiler/performanceCore.ts',\n    'src/compiler/program.ts',\n    'src/compiler/programDiagnostics.ts',\n    'src/compiler/resolutionCache.ts',\n    'src/compiler/scanner.ts',\n    'src/compiler/semver.ts',\n    'src/compiler/sourcemap.ts',\n    'src/compiler/symbolWalker.ts',\n    'src/compiler/sys.ts',\n"
+  },
+  "99-scoped-inventory-segment": {
+    "status": "pass",
+    "source_files": 748,
+    "exact_source_plan_matches": true,
+    "method": "actual planning and inventory statements; historical apply/build/lane calls omitted"
+  },
+  "speculative-source-checks-fresh": {
+    "status": "pass",
+    "files": 21300,
+    "includes_added": true
+  },
+  "speculative-source-checks-stale": {
+    "status": "reject",
+    "reason": "source inventory changed",
+    "only_omitted_file": "src/recordreplay.d.ts"
+  }
+}

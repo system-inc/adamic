@@ -1,0 +1,19 @@
+{
+  "status": "pass",
+  "mutant_exit_codes": {
+    "declaration": 1,
+    "out_of_scope": 1,
+    "owner": 1
+  },
+  "source_changes": [
+    "src/compiler/sys.ts",
+    "src/recordreplay.d.ts"
+  ],
+  "exact_adapter_matches_gate": true,
+  "idempotent_no_write": true,
+  "stock_tsc_with_file_diagnostics": 0,
+  "stock_tsc_without_file_TS2339": true,
+  "stock_injected_augmentation": false,
+  "adamic_loader_exit": 0,
+  "compiler_roots": 79
+}
