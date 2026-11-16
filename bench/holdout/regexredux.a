@@ -29,22 +29,21 @@
 //
 // Source: regexredux/regexredux.node-3.node from public/download/benchmarksgame-sourcecode.zip
 // (blob 05648fc9a0d6) at benchmarksgame commit 40296663ed350d5fe4a6ab5e367bab61cb77c219 (March 7, 2025).
-// The game has no regexredux.node or .node-1; .node-3 is its lowest-numbered Node.js entry.
+// The archive's Node.js entries are .node-3 and .node-4, with no regexredux.node, .node-1 or .node-2;
+// .node-3 is its lowest-numbered Node.js entry.
 //
 // Ported to Adamic for the speed holdout (#re2xhwa). The patterns, the replacements and the output are
 // the original's. Each change is one the language makes, and a comment marked "Adamic:" says which.
 //
-// Input: the game pipes in fasta's output for n = 5,000,000, the game's size. This port reads no
-// stdin: fastaLines (fasta_input.a, fasta.node's own generator) makes the same lines, and each is
-// joined with the newline fasta wrote after it, which is the text the original reads.
+// Input: the game pipes in fasta's output for n = 5,000,000, the game's size, on stdin. Adamic has no
+// stdin yet, so this port reads the same bytes from a file named by its first argument.
 //
 // Adamic: the worker thread goes. The original runs workerThread's replacements on a second thread
 // while the main thread counts the matches, then waits for its length. Here the main thread counts
 // first and then calls workerThread itself, which is the order the output was printed in. With the
 // worker go `require('worker_threads')`, the `isMainThread` split, the Promise and `async`/`await`.
-// `require('fs')` goes with stdin.
-import { panic } from 'adamic';
-import { fastaLines } from './fasta_input.a';
+// `require('fs')` goes with stdin, and readTextFile from 'adamic' reads the file.
+import { panic, programArguments, readTextFile } from 'adamic';
 
 mainThread();
 
@@ -61,13 +60,13 @@ function mainThread(): void {
 		/agggtaa[cgt]|[acg]ttaccct/ig,
 	];
 
-	// Adamic: `fs.readFileSync('/dev/stdin', 'ascii')` becomes fasta's lines, generated here. fasta
-	// writes only ASCII, so reading it as ASCII changes nothing.
-	const input: string[] = [];
-	fastaLines(5000000, (line) => {
-		input.push(line + '\n');
-	});
-	let data = input.join('');
+	// Adamic: `fs.readFileSync('/dev/stdin', 'ascii')` becomes readTextFile of the file named by the
+	// first argument, because Adamic has no stdin yet. The file is fasta's output, the bytes the game
+	// pipes in, and fasta writes only ASCII, so decoding it as UTF-8 gives the same text. A missing
+	// argument or a file that can't be read panics with why, to stderr, exit 70.
+	const input = readTextFile(programArguments()[0] ?? panic('regex-redux: the input file must be the first argument'));
+	if (input.kind === 'Error') panic(input.message);
+	let data = input.text;
 	const initialLen = data.length;
 
 	data = data.replace(/^>.*\n|\n/mg, '');

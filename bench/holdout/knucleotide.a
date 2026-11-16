@@ -31,16 +31,16 @@
 // third sequence in 2,048-character pieces and the output are the original's. Each change is one the
 // language makes, and a comment marked "Adamic:" says which.
 //
-// Input: the game pipes in fasta's output for n = 25,000,000, the game's size. This port reads no
-// stdin: fastaLines (fasta_input.a, fasta.node's own generator) makes the same lines, in order, and
-// hands each to the line handler where readline did.
+// Input: the game pipes in fasta's output for n = 25,000,000, the game's size, on stdin. Adamic has no
+// stdin yet, so this port reads the same bytes from a file named by its first argument, and hands
+// each line to the line handler where readline did (see master).
 'use strict';
 
-// Adamic: `require('readline')` and `require('cluster')` go. Readline's place is taken by fastaLines,
-// and the cluster's by one worker in this process (see master). `process` comes from node:process.
+// Adamic: `require('readline')` and `require('cluster')` go. Readline's place is taken by the input
+// file, read whole and cut into lines, and the cluster's by one worker in this process (see master).
+// `process` comes from node:process.
 import process from 'node:process';
-import { panic } from 'adamic';
-import { fastaLines } from './fasta_input.a';
+import { panic, programArguments, readTextFile } from 'adamic';
 
 const missing = 'k-nucleotide: a key the map was built from is missing';
 
@@ -129,10 +129,22 @@ function master(): void {
 		};
 	};
 
-	// Adamic: stdin goes. fastaLines makes the lines readline read, and the close handler runs after the
-	// last one, as on stdin's end. Readline reads only once master has returned, after the handlers
-	// above are set; reading in order, the reading comes last here for the same reason.
-	fastaLines(25000000, lineHandler);
+	// Adamic: stdin becomes a file named by the first argument, because Adamic has no stdin yet. The
+	// file is fasta's output, the bytes the game pipes in, and it's cut into lines as readline cut stdin:
+	// at each newline, the newline dropped, and a last line without one handed over only if it isn't
+	// empty. fasta writes only `\n`, so readline's `\r` and `\r\n` never arise. The close handler runs
+	// after the last line, as on stdin's end. Readline reads only once master has returned, after the
+	// handlers above are set; reading in order, the reading comes last here for the same reason. A
+	// missing argument or a file that can't be read panics with why, to stderr, exit 70.
+	const input = readTextFile(programArguments()[0] ?? panic('k-nucleotide: the input file must be the first argument'));
+	if (input.kind === 'Error') panic(input.message);
+	let lineStart = 0;
+	while (lineStart < input.text.length) {
+		let lineEnd = input.text.indexOf('\n', lineStart);
+		if (lineEnd < 0) lineEnd = input.text.length;
+		lineHandler(input.text.slice(lineStart, lineEnd));
+		lineStart = lineEnd + 1;
+	}
 	flush(true);
 }
 
