@@ -1,0 +1,22 @@
+{
+  "strict": true,
+  "noUncheckedIndexedAccess": true,
+  "exactOptionalPropertyTypes": true,
+  "erasableSyntaxOnly": false,
+  "verbatimModuleSyntax": true,
+  "allowImportingTsExtensions": true,
+  "noEmit": false,
+  "module": "ESNext",
+  "moduleDetection": "force",
+  "moduleResolution": "bundler",
+  "target": "ES2024",
+  "lib": [
+    "es2024"
+  ],
+  "types": [],
+  "noCheck": true,
+  "rewriteRelativeImportExtensions": true,
+  "sourceMap": true,
+  "rootDir": "/home/ahra/scratch/system_adamic/01M7J9X9GR4KBJE9QS86XJ4C21.meter/tmp/stage3-meter.ZRZvEt/main-adapted",
+  "outDir": "/home/ahra/scratch/system_adamic/01M7J9X9GR4KBJE9QS86XJ4C21.meter/tmp/meter-node-zni9duyl"
+}
