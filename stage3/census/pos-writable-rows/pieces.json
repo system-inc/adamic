@@ -738,6 +738,17 @@
   },
   {
     "complete": true,
+    "ended_utc": "2026-11-16T18:32:18.213965+00:00",
+    "error": "",
+    "exit_code": 0,
+    "file": "src/compiler/transformers/ts.ts",
+    "log": "/workspace/scratch/aryr7ea/raw/src__compiler__transformers__ts.ts.log",
+    "raw_sha256": "784886b9bec793fec90d3314fb05ec7ad8ce35b17e503b14615c98813f70c5a9",
+    "started_utc": "2026-11-16T18:27:02.161380+00:00",
+    "wall_seconds": 316.05246380799963
+  },
+  {
+    "complete": true,
     "ended_utc": "2026-11-16T18:29:21.315361+00:00",
     "error": "",
     "exit_code": 0,
@@ -749,6 +760,17 @@
   },
   {
     "complete": true,
+    "ended_utc": "2026-11-16T18:32:20.088610+00:00",
+    "error": "",
+    "exit_code": 0,
+    "file": "src/compiler/transformers/utilities.ts",
+    "log": "/workspace/scratch/aryr7ea/raw/src__compiler__transformers__utilities.ts.log",
+    "raw_sha256": "8f457921634a1d9a2a9b7025547162f7e387e83c92b90eca4f77eb1b220ead52",
+    "started_utc": "2026-11-16T18:29:21.330831+00:00",
+    "wall_seconds": 178.75769025800037
+  },
+  {
+    "complete": true,
     "ended_utc": "2026-11-16T18:30:09.971131+00:00",
     "error": "",
     "exit_code": 0,
@@ -757,5 +779,16 @@
     "raw_sha256": "c65e6d9270d4d336467b38b0c20b84b43d8b4485e0c6db12392938a9499ee3f1",
     "started_utc": "2026-11-16T18:29:23.961590+00:00",
     "wall_seconds": 46.00947090200043
+  },
+  {
+    "complete": true,
+    "ended_utc": "2026-11-16T18:32:30.616540+00:00",
+    "error": "",
+    "exit_code": 0,
+    "file": "src/compiler/tsbuildPublic.ts",
+    "log": "/workspace/scratch/aryr7ea/raw/src__compiler__tsbuildPublic.ts.log",
+    "raw_sha256": "d75e893b0a521222460d854d7d39770faec3edb6f55bfc5660d33c78d1f366c0",
+    "started_utc": "2026-11-16T18:30:09.981385+00:00",
+    "wall_seconds": 140.63512935699964
   }
 ]

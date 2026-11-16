@@ -1,6 +1,6 @@
 # Pos-writable rows — #aryr7ea
 
-Status: incomplete checkpoint at 2026-11-16T18:30:10.179610+00:00.
+Status: incomplete checkpoint at 2026-11-16T18:32:30.735708+00:00.
 
 Measured main tip `c41391ea3346727231dfa3472d061826e26f6aad` in a fresh detached worktree; TypeScript v6.0.3
 `050880ce59e30b356b686bd3144efe24f875ebc8`. Recursive shallow submodules initialized;
@@ -35,10 +35,10 @@ or successful compilation; no backend or usable IR is produced.
 
 ## Counts
 
-Completed 69/79 compiler .ts files; failed pieces: 0.
-Distinct requested keys (file, line, col, reason, unit): **2013**.
-Matching raw records (sum of multiplicity): **2031**.
-Meter-style distinct (kind, where, reason, text), omitting unit: **506**.
+Completed 72/79 compiler .ts files; failed pieces: 0.
+Distinct requested keys (file, line, col, reason, unit): **2086**.
+Matching raw records (sum of multiplicity): **2104**.
+Meter-style distinct (kind, where, reason, text), omitting unit: **541**.
 
 The saved daily meter 20261115T131735Z.PG4H0R, main `7816a8d85d60db6ffb618132eaf8b17c91ef8866`,
 counts **550** pos-writable sites across **173** exact reasons.
@@ -54,17 +54,17 @@ No claim that those effects individually explain a particular delta is made with
 
 | Target | Sites |
 | --- | ---: |
-| TextRange | 1411 |
+| TextRange | 1479 |
 | others | 534 |
-| SourceMapRange \| undefined | 28 |
-| TextRange \| undefined | 23 |
+| SourceMapRange \| undefined | 31 |
+| TextRange \| undefined | 25 |
 | Mutable<Node> | 17 |
 
 ## Attempting unit kind
 
 | Kind | Sites |
 | --- | ---: |
-| KindFunctionDeclaration | 2013 |
+| KindFunctionDeclaration | 2086 |
 
 ## Callee / receiving slot
 
@@ -76,22 +76,23 @@ these are callers/owners, not identified callees. All rows retain unit location 
 | Attempting name (or location when unnamed) | Sites |
 | --- | ---: |
 | parseParameterWorker | 15 |
+| visitVariableStatement | 15 |
+| visitClassDeclaration | 13 |
 | convertForOfStatementHead | 13 |
 | substituteExpressionIdentifier | 13 |
 | parseNamedImportsOrExports | 12 |
 | visitPreOrPostfixUnaryExpression | 12 |
-| visitVariableStatement | 12 |
+| substituteShorthandPropertyAssignment | 12 |
 | visitBinaryExpression | 11 |
 | visitExponentiationAssignmentExpression | 11 |
 | visitYieldExpression | 11 |
-| visitClassDeclaration | 10 |
+| transformConstructorBody | 10 |
 | addRestParameterIfNeeded | 10 |
 | createProgram | 9 |
 | convertForOfStatementForArray | 9 |
 | visitObjectLiteralExpression | 8 |
 | createSuperElementAccessInAsyncMethod | 8 |
 | transformForOfStatementWithObjectRest | 8 |
-| substituteShorthandPropertyAssignment | 8 |
 | expandPreOrPostfixIncrementOrDecrementExpression | 7 |
 | parseObjectLiteralElement | 7 |
 | tryParseConstructorDeclaration | 7 |
@@ -99,13 +100,13 @@ these are callers/owners, not identified callees. All rows retain unit location 
 | visitCallExpression | 7 |
 | transformAsyncFunctionBody | 7 |
 | transformSourceFile | 7 |
+| rewriteModuleSpecifier | 7 |
 | parsePropertyOrMethodSignature | 6 |
 | parseMethodDeclaration | 6 |
 | parseClassStaticBlockDeclaration | 6 |
 | parseClassElement | 6 |
 | parseNamespaceExportDeclaration | 6 |
 | parseTupleElementType | 6 |
-| transformConstructorBody | 6 |
 | flattenArrayBindingOrAssignmentPattern | 6 |
 | insertDefaultValueAssignmentForInitializer | 6 |
 | transformAccessorsToExpression | 6 |
@@ -116,7 +117,9 @@ these are callers/owners, not identified callees. All rows retain unit location 
 | transformForAwaitOfStatement | 6 |
 | visitFunctionDeclaration | 6 |
 | transformClassDeclarationWithClassDecorators | 6 |
+| visitImportEqualsDeclaration | 6 |
 | visitTopLevelExportDeclaration | 6 |
+| transformModuleBody | 6 |
 | moveElementEntirelyPastChangeRange | 6 |
 | parseParametersWorker | 6 |
 | createCallBinding | 5 |
@@ -163,6 +166,7 @@ these are callers/owners, not identified callees. All rows retain unit location 
 | visitPropertyAccessExpression | 5 |
 | transformRoot | 5 |
 | transformFunctionBody | 5 |
+| transformInitializedVariable | 5 |
 | visitTopLevelImportDeclaration | 5 |
 | visitTopLevelImportEqualsDeclaration | 5 |
 | createSyntheticExpression | 4 |
@@ -296,14 +300,15 @@ these are callers/owners, not identified callees. All rows retain unit location 
 | parseJSDocIdentifierName | 4 |
 | visitElementAccessExpression | 4 |
 | visitTaggedTemplateExpression | 4 |
+| transformClassMembers | 4 |
 | trySubstituteClassAlias | 4 |
 | transformVariableStatement | 4 |
 | visitSourceFile | 4 |
 | createDefaultConstructorBody | 4 |
 | simplifyConstructorInlineSuperInThisCaptureVariable | 4 |
+| visitParameter | 4 |
 | visitVariableDeclarationList | 4 |
 | visitCatchClause | 4 |
-| transformInitializedVariable | 4 |
 | appendObjectRestAssignmentsIfNeeded | 4 |
 | createClassInfo | 4 |
 | visitParameterDeclaration | 4 |
@@ -313,6 +318,8 @@ these are callers/owners, not identified callees. All rows retain unit location 
 | transformUMDModule | 4 |
 | createExportExpression | 4 |
 | createVariableAssignment | 4 |
+| transformParameterWithPropertyAssignment | 4 |
+| transformEnumMember | 4 |
 | serializeEntityNameAsExpression | 4 |
 | createParamHelper | 3 |
 | convertToFunctionExpression | 3 |
@@ -380,6 +387,7 @@ these are callers/owners, not identified callees. All rows retain unit location 
 | reparseTopLevelAwait | 3 |
 | createSyntheticImport | 3 |
 | transformConstructor | 3 |
+| transformConstructorBodyWorker | 3 |
 | substituteThisExpression | 3 |
 | updateModuleDeclarationAndKeyword | 3 |
 | flattenDestructuringAssignment | 3 |
@@ -432,13 +440,21 @@ these are callers/owners, not identified callees. All rows retain unit location 
 | transformDecoratorsOfClassElements | 3 |
 | transformDecoratorsOfParameter | 3 |
 | updateExternalModule | 3 |
-| visitImportEqualsDeclaration | 3 |
 | transformCommonJSModule | 3 |
 | transformAMDModule | 3 |
 | createImportCallExpressionUMD | 3 |
 | createExportStatement | 3 |
 | visitPrefixOrPostfixUnaryExpression | 3 |
 | getRawLiteral | 3 |
+| injectClassTypeMetadata | 3 |
+| injectClassElementTypeMetadata | 3 |
+| visitEnumDeclaration | 3 |
+| transformEnumBody | 3 |
+| addVarForEnumOrModuleDeclaration | 3 |
+| visitModuleDeclaration | 3 |
+| createNamespaceExport | 3 |
+| createNamespaceExportExpression | 3 |
+| trySubstituteNamespaceExportedName | 3 |
 | createRuntimeTypeSerializer | 3 |
 | bindChildren | 2 |
 | getSyntheticElementAccess | 2 |
@@ -455,11 +471,9 @@ these are callers/owners, not identified callees. All rows retain unit location 
 | parseDecoratedExpression | 2 |
 | collectModuleReferences | 2 |
 | transformAutoAccessor | 2 |
-| transformConstructorBodyWorker | 2 |
 | transformPropertyOrClassStaticBlock | 2 |
 | injectClassThisAssignmentIfMissing | 2 |
 | simplifyConstructorInlineSuperReturn | 2 |
-| visitParameter | 2 |
 | visitLabeledStatement | 2 |
 | visitSuperKeyword | 2 |
 | finishClassElement | 2 |
@@ -670,7 +684,6 @@ these are callers/owners, not identified callees. All rows retain unit location 
 | parseDeclaration | 1 |
 | transformPublicFieldInitializer | 1 |
 | transformClassStaticBlockDeclaration | 1 |
-| transformClassMembers | 1 |
 | generateInitializedPropertyExpressionsOrClassStaticBlock | 1 |
 | transformPropertyWorker | 1 |
 | emitBindingOrAssignment | 1 |
@@ -688,6 +701,7 @@ these are callers/owners, not identified callees. All rows retain unit location 
 | transformAndEmitThrowStatement | 1 |
 | cacheExpression | 1 |
 | writeBreakWhenFalse | 1 |
+| getNamespaceParameterName | 1 |
 | transformClassLikeDeclarationToExpression | 1 |
 | getTypeOfExpression | 1 |
 | createBindBinaryExpressionFlow | 1 |
@@ -712,7 +726,7 @@ these are callers/owners, not identified callees. All rows retain unit location 
 
 ## Run times and failures
 
-Started 2026-11-16T16:36:24.047702+00:00; this checkpoint 2026-11-16T18:30:10.180390+00:00.
+Started 2026-11-16T16:36:24.047702+00:00; this checkpoint 2026-11-16T18:32:30.736295+00:00.
 Each piece's UTC start/end, wall time, exit status, complete flag, raw SHA256, and log path
 are in pieces.json. Source file inventory and adapted source SHA256s are in manifest.json.
 Rows from partial pieces, if any, are retained and explicitly marked piece_complete=false.
