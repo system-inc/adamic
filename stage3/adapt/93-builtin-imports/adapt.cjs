@@ -116,6 +116,7 @@ function adapt(tree, options = {}) {
     const owner = owners[0], digest = hash(owner.getText(file));
     assert([manifest[0].ownerBeforeSha256, manifest[0].ownerAfterSha256].includes(digest), 'target owner moved: getNodeSystem');
     const done = digest === manifest[0].ownerAfterSha256;
+    assert.equal(owner.getText(file), done ? manifest[0].ownerAfterText : manifest[0].ownerBeforeText, 'whole getNodeSystem text drift');
     assert(!options.pinOnly || !done, "pin generation requires predecessor state");
     const importAnchor = source => {
         const anchors = source.statements.filter(n => ts.isImportDeclaration(n) && n.moduleSpecifier.text === './hostErrors.js');
@@ -149,6 +150,14 @@ function adapt(tree, options = {}) {
             : 'clearTimeout: (timeoutId: Parameters<typeof clearTimeout>[0]): void => { clearTimeout(timeoutId); }';
         edits.push({start:property.getStart(file),end:property.end,text:replacement});
     }
+    // #cyjqp5f: Node admits an own interval key whose value is undefined.
+    if (!done) {
+        const workers = nodes(ts, owner, n => ts.isFunctionDeclaration(n) && n.name?.text === 'fsWatchFileWorker');
+        assert.equal(workers.length, 1, 'fsWatchFileWorker moved');
+        const intervalType = workers[0].parameters[2].type;
+        assert.equal(intervalType.getText(file), 'number', 'worker interval type drift');
+        edits.push({start:intervalType.getStart(file),end:intervalType.end,text:'number | undefined'});
+    }
     const insertion = importAnchor(file).end;
     const newline = file.text.includes('\r\n') ? '\r\n' : '\n';
     let insertions = 0;
@@ -173,7 +182,7 @@ function adapt(tree, options = {}) {
     // Validate all bindings and the full planned bytes before the sole write.
     assert.equal(fs.readFileSync(file.fileName,'utf8'),file.text,'source changed while planning');
     if (options.pinOnly) {
-        const pins = [{...manifest[0], ownerBeforeSha256:digest, ownerAfterSha256:hash(changedOwners[0].getText(changed))}];
+        const pins = [{...manifest[0], ownerBeforeSha256:digest, ownerAfterSha256:hash(changedOwners[0].getText(changed)), ownerAfterText:changedOwners[0].getText(changed)}];
         fs.writeFileSync(path.join(__dirname,'proofs/targets.json'),JSON.stringify(pins,null,2)+'\n');
         return {pinsRegenerated:true,sourceWrites:0};
     }
