@@ -98,5 +98,103 @@
     "where": "/workspace/scratch/next-stops-03c140ec/adapted/src/compiler/sys.ts:1476:35",
     "reason": "node:module.__filename and __dirname: CommonJS module values with no ES-module or reproducible native answer yet (fix: pass the module's path in from where the program is started)",
     "seconds": 21.341093027
+  },
+  {
+    "module_format": "EcmaScript",
+    "roots": [
+      "/workspace/scratch/next-stops-03c140ec/adapted/src/compiler/core.ts"
+    ],
+    "kind": "NotYet",
+    "where": "/workspace/scratch/next-stops-03c140ec/adapted/src/compiler/sys.ts:1476:35",
+    "reason": "node:module.__filename and __dirname: CommonJS module values with no ES-module or reproducible native answer yet (fix: pass the module's path in from where the program is started)",
+    "seconds": 25.915142281
+  },
+  {
+    "module_format": "EcmaScript",
+    "roots": [
+      "/workspace/scratch/next-stops-03c140ec/adapted/src/compiler/corePublic.ts"
+    ],
+    "kind": "accepted",
+    "seconds": 0.091311768
+  },
+  {
+    "module_format": "EcmaScript",
+    "roots": [
+      "/workspace/scratch/next-stops-03c140ec/adapted/src/compiler/debug.ts"
+    ],
+    "kind": "NotYet",
+    "where": "/workspace/scratch/next-stops-03c140ec/adapted/src/compiler/semver.ts:71:9",
+    "reason": "a namespace read before runtime initialization, directly or through a reachable call; move that read or call after the namespace declaration",
+    "seconds": 6.902700069
+  },
+  {
+    "module_format": "EcmaScript",
+    "roots": [
+      "/workspace/scratch/next-stops-03c140ec/adapted/src/compiler/diagnosticInformationMap.generated.ts"
+    ],
+    "kind": "NotYet",
+    "where": "/workspace/scratch/next-stops-03c140ec/adapted/src/compiler/commandLineParser.ts:293:35",
+    "reason": "reading an enum before its runtime initialization; move the call after the enum declaration",
+    "seconds": 6.690515614
+  },
+  {
+    "module_format": "EcmaScript",
+    "roots": [
+      "/workspace/scratch/next-stops-03c140ec/adapted/src/compiler/emitter.ts"
+    ],
+    "kind": "NotYet",
+    "where": "/workspace/scratch/next-stops-03c140ec/adapted/src/compiler/sys.ts:1476:35",
+    "reason": "node:module.__filename and __dirname: CommonJS module values with no ES-module or reproducible native answer yet (fix: pass the module's path in from where the program is started)",
+    "seconds": 25.189028832
+  },
+  {
+    "module_format": "EcmaScript",
+    "roots": [
+      "/workspace/scratch/next-stops-03c140ec/adapted/src/compiler/executeCommandLine.ts"
+    ],
+    "kind": "NotYet",
+    "where": "/workspace/scratch/next-stops-03c140ec/adapted/src/compiler/sys.ts:1476:35",
+    "reason": "node:module.__filename and __dirname: CommonJS module values with no ES-module or reproducible native answer yet (fix: pass the module's path in from where the program is started)",
+    "seconds": 24.445312904
+  },
+  {
+    "module_format": "EcmaScript",
+    "roots": [
+      "/workspace/scratch/next-stops-03c140ec/adapted/src/compiler/expressionToTypeNode.ts"
+    ],
+    "kind": "NotYet",
+    "where": "/workspace/scratch/next-stops-03c140ec/adapted/src/compiler/sys.ts:1476:35",
+    "reason": "node:module.__filename and __dirname: CommonJS module values with no ES-module or reproducible native answer yet (fix: pass the module's path in from where the program is started)",
+    "seconds": 22.470316837
+  },
+  {
+    "module_format": "EcmaScript",
+    "roots": [
+      "/workspace/scratch/next-stops-03c140ec/adapted/src/compiler/factory/baseNodeFactory.ts"
+    ],
+    "kind": "NotYet",
+    "where": "/workspace/scratch/next-stops-03c140ec/adapted/src/compiler/sys.ts:1476:35",
+    "reason": "node:module.__filename and __dirname: CommonJS module values with no ES-module or reproducible native answer yet (fix: pass the module's path in from where the program is started)",
+    "seconds": 23.707153754
+  },
+  {
+    "module_format": "EcmaScript",
+    "roots": [
+      "/workspace/scratch/next-stops-03c140ec/adapted/src/compiler/factory/emitHelpers.ts"
+    ],
+    "kind": "NotYet",
+    "where": "/workspace/scratch/next-stops-03c140ec/adapted/src/compiler/sys.ts:1476:35",
+    "reason": "node:module.__filename and __dirname: CommonJS module values with no ES-module or reproducible native answer yet (fix: pass the module's path in from where the program is started)",
+    "seconds": 24.609870356
+  },
+  {
+    "module_format": "EcmaScript",
+    "roots": [
+      "/workspace/scratch/next-stops-03c140ec/adapted/src/compiler/factory/emitNode.ts"
+    ],
+    "kind": "NotYet",
+    "where": "/workspace/scratch/next-stops-03c140ec/adapted/src/compiler/sys.ts:1476:35",
+    "reason": "node:module.__filename and __dirname: CommonJS module values with no ES-module or reproducible native answer yet (fix: pass the module's path in from where the program is started)",
+    "seconds": 21.0990148
   }
 ]
