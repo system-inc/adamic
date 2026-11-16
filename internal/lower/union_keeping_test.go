@@ -543,3 +543,77 @@ declare const to: Twin;`,
 		}
 	}
 }
+
+func TestUnionKeepingMethodPropertyStop(t *testing.T) {
+	t.Parallel()
+	for _, extension := range []string{".a", ".ts"} {
+		t.Run(extension, func(t *testing.T) {
+			_, err := lowerSourceAs(t, `import type { Weak } from 'adamic';
+class Box {
+  readonly label: string;
+  constructor(label: string) { this.label = label; }
+}
+const owner = new Box('c');
+function run(value: { readonly kind: 'v'; f(x: number | string): string } | { readonly kind: 'w'; readonly w: number }): void {
+  const x: { readonly kind: 'v'; readonly f: (x: number) => string } | { readonly kind: 'w'; readonly w: number } = value;
+  if (x.kind === 'v') console.log(x.f(1));
+}
+run({ kind: 'v', f(x: number | string): string { return typeof x === 'number' ? `+"`n${x}`"+` : x; } });
+`, extension)
+			var ny *NotYet
+			want := "main" + extension + ":8:117"
+			wantWhat := `a { readonly kind: "v"; f(x: string | number): string; } | { readonly kind: "w"; readonly w: number; } seen as a { readonly kind: "v"; readonly f: (x: number) => string; } | { readonly kind: "w"; readonly w: number; }`
+			if !errors.As(err, &ny) || !strings.HasSuffix(ny.Where, want) || !strings.HasPrefix(ny.What, wantWhat) {
+				t.Fatalf("got %v, want %s: stage 0 can't lower %s yet", err, want, wantWhat)
+			}
+		})
+	}
+}
+
+func TestUnionKeepingClassMethodPropertyStop(t *testing.T) {
+	t.Parallel()
+	for _, extension := range []string{".a", ".ts"} {
+		t.Run(extension, func(t *testing.T) {
+			_, err := lowerSourceAs(t, `import type { Weak } from 'adamic';
+class Box {
+  readonly label: string;
+  constructor(label: string) { this.label = label; }
+}
+const owner = new Box('c');
+class M { readonly kind = 'v'; f(x: number | string): string { return typeof x === 'number' ? `+"`n${x}`"+` : x; } }
+function run(value: { readonly kind: 'v'; f(x: number | string): string } | { readonly kind: 'w'; readonly w: number }): void {
+  const x: { readonly kind: 'v'; readonly f: (x: number) => string } | { readonly kind: 'w'; readonly w: number } = value;
+  if (x.kind === 'v') console.log(x.f(1));
+}
+run(new M());
+`, extension)
+			var ny *NotYet
+			// The view stops first now because the method parameter is held otherwise; the prototype-origin stop at 10:35 caught it later before.
+			want := "main" + extension + ":9:117"
+			wantWhat := `a { readonly kind: "v"; f(x: string | number): string; } | { readonly kind: "w"; readonly w: number; } seen as a { readonly kind: "v"; readonly f: (x: number) => string; } | { readonly kind: "w"; readonly w: number; }`
+			if !errors.As(err, &ny) || !strings.HasSuffix(ny.Where, want) || !strings.HasPrefix(ny.What, wantWhat) {
+				t.Fatalf("got %v, want %s: stage 0 can't lower %s yet", err, want, wantWhat)
+			}
+		})
+	}
+}
+
+func TestUnionKeepingMethodPropertyAgree(t *testing.T) {
+	t.Parallel()
+	for _, extension := range []string{".a", ".ts"} {
+		t.Run(extension, func(t *testing.T) {
+			lowersAndAgreesWithNodeAs(t, `import type { Weak } from 'adamic';
+class Box {
+  readonly label: string;
+  constructor(label: string) { this.label = label; }
+}
+const owner = new Box('c');
+function run(value: { readonly kind: 'v'; f(x: number): string } | { readonly kind: 'w'; readonly w: number }): void {
+  const x: { readonly kind: 'v'; readonly f: (x: number) => string } | { readonly kind: 'w'; readonly w: number } = value;
+  if (x.kind === 'v') console.log(x.f(1));
+}
+run({ kind: 'v', f(x: number): string { return `+"`n${x}`"+`; } });
+`, extension)
+		})
+	}
+}
