@@ -1,9 +1,7 @@
 package oracle
 
 import (
-	"fmt"
 	"path/filepath"
-	"runtime"
 	"strconv"
 	"strings"
 	"testing"
@@ -160,17 +158,19 @@ int main(void) {
 	}
 }
 
-// A join refuses the next piece before growing its buffer. The release build's peak includes the
-// original piece and the first copied piece; copying all three exceeds this bound even though the
-// eventual range error still agrees with Node. Dropping array.c's running check reds peak.
+// A join refuses the next piece before growing its buffer, and this holds it by the buffer's own
+// largest capacity, which a counted build records (count.h's join_capacity_peak). join_memory.a joins
+// three pieces of 2^28 units. The first fits, so the buffer doubles from 64 to 2^28 bytes. The second
+// brings the running length to 2^29, past ADAMIC_STRING_MAX_UNITS (2^29 - 24), so the join throws
+// before growing again, and the largest capacity is 2^28 exactly. Dropping array.c's running check
+// grows it to 2^29 and then 2^30 before the range error, which still agrees with Node, so only this
+// number tells them apart. It's the runtime's own, so a loaded box can't move it, where the resident
+// memory this pin once read did: realloc copying or growing in place and huge pages decided that.
 func TestStringLengthJoinMemory(t *testing.T) {
-	// The peak is the child program's own getrusage, so other tests running beside it don't move it.
+	// The capacity is the child program's own counter, so other tests running beside it don't move it.
 	t.Parallel()
 	holdStringLengthFixtures(t, []string{"join_memory"})
-	t.Run("peak", func(t *testing.T) {
-		if runtime.GOOS != "linux" {
-			t.Skip("peak memory measurement needs Linux")
-		}
+	t.Run("capacity", func(t *testing.T) {
 		path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/library_string_length_throws/join_memory.a"))
 		if err != nil {
 			t.Fatal(err)
@@ -184,23 +184,28 @@ func TestStringLengthJoinMemory(t *testing.T) {
 		if at < 0 {
 			t.Fatal("main return missing")
 		}
-		code = "#include <sys/resource.h>\n#include <stdio.h>\n" + code[:at] + "\tstruct rusage usage; getrusage(RUSAGE_SELF, &usage); fprintf(stderr, \"join_peak_kib %ld\\n\", usage.ru_maxrss);\n" + code[at:]
+		code = "#include <stdio.h>\n" + code[:at] + "\tfprintf(stderr, \"join_capacity_bytes %zu\\n\", atomic_load_explicit(&adamic_counted.join_capacity_peak, memory_order_relaxed));\n" + code[at:]
 		binary := filepath.Join(t.TempDir(), "join")
-		if err := native.Build(code, binary, native.Options{}); err != nil {
+		if err := native.Build(code, binary, native.Options{Count: true}); err != nil {
 			t.Fatal(err)
 		}
 		got := execute(t, binary)
-		var peak int64
-		if _, err := fmt.Sscanf(string(got.stderr), "join_peak_kib %d", &peak); err != nil {
-			t.Fatalf("peak memory: %v; stderr %q", err, got.stderr)
-		}
 		if got.exitCode != 0 || string(got.stdout) != "RangeError: Invalid string length\n" {
 			t.Fatalf("exit %d, stdout %q, stderr %q", got.exitCode, got.stdout, got.stderr)
 		}
-		t.Logf("join peak: %d KiB", peak)
-		// Two pieces need about 512 MiB; three copied pieces plus the original need about 1 GiB.
-		if peak > 750*1024 {
-			t.Errorf("join peak %d KiB exceeds 750 MiB", peak)
+		capacity := -1
+		for _, line := range strings.Split(string(got.stderr), "\n") {
+			if value, found := strings.CutPrefix(line, "join_capacity_bytes "); found {
+				if capacity, err = strconv.Atoi(value); err != nil {
+					t.Fatalf("join capacity %q: %v", value, err)
+				}
+			}
+		}
+		if capacity < 0 {
+			t.Fatalf("no join capacity line; stderr %q", got.stderr)
+		}
+		if capacity != 1<<28 {
+			t.Errorf("join buffer reached %d bytes, want %d: the running length check let it grow past the piece that fit", capacity, 1<<28)
 		}
 	})
 }

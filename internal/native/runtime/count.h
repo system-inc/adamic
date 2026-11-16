@@ -35,6 +35,10 @@ typedef struct adamic_counts {
 	// heap_chunks_released is the spare chunks heap.c gave back to the kernel at a quiet point
 	// (#vea9pph), written on a line of its own when there are any, never a column of the counts line.
 	_Atomic size_t heap_chunks_released;
+	// join_capacity_peak is the one buffer measure, the exception to this header's rule: the largest
+	// capacity in bytes adamic_array_join's buffer ever reached (array.c). #sbvs9d4's pin reads it to
+	// hold the join's running length check, since resident memory moves with the box. Never printed.
+	_Atomic size_t join_capacity_peak;
 } adamic_counts;
 
 extern adamic_counts adamic_counted;
@@ -52,6 +56,13 @@ void adamic_count_report(void);
 #define ADAMIC_COUNT_RELEASE() atomic_fetch_add_explicit(&adamic_counted.releases, 1, memory_order_relaxed)
 #define ADAMIC_COUNT_REPORT() adamic_count_report()
 #define ADAMIC_COUNT_REGION(count) (atomic_fetch_add_explicit(&adamic_counted.regions, (count), memory_order_relaxed), atomic_fetch_sub_explicit(&adamic_counted.live, (count), memory_order_relaxed))
+// ADAMIC_COUNT_JOIN_CAPACITY raises join_capacity_peak to a join buffer's capacity, as
+// adamic_count_allocation raises peak.
+#define ADAMIC_COUNT_JOIN_CAPACITY(capacity) do { \
+	size_t adamic_count_join_capacity = (capacity); \
+	size_t adamic_count_join_peak = atomic_load_explicit(&adamic_counted.join_capacity_peak, memory_order_relaxed); \
+	while (adamic_count_join_peak < adamic_count_join_capacity && !atomic_compare_exchange_weak_explicit(&adamic_counted.join_capacity_peak, &adamic_count_join_peak, adamic_count_join_capacity, memory_order_relaxed, memory_order_relaxed)) {} \
+} while (0)
 #else
 #define ADAMIC_COUNT_ALLOCATION() ((void)0)
 #define ADAMIC_COUNT_FREE() ((void)0)
@@ -59,6 +70,7 @@ void adamic_count_report(void);
 #define ADAMIC_COUNT_RELEASE() ((void)0)
 #define ADAMIC_COUNT_REPORT() ((void)0)
 #define ADAMIC_COUNT_REGION(count) ((void)(count))
+#define ADAMIC_COUNT_JOIN_CAPACITY(capacity) ((void)(capacity))
 #endif
 
 #endif
