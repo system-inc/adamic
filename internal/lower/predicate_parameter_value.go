@@ -53,12 +53,40 @@ func (l *lowering) predicateParameterArgument(argument *ast.Node) *ast.Node {
 
 // checkedPredicateParameterSite is whether parameter, a predicate parameter (predicateParameterArgument)
 // passed for contract, is passed as its checked closure: its own claim is a checked claim in .ts
-// (checkedFunctionTypeClaim), and contract is the program's. A library's contract is called inside the
-// library, and a forward to lib's filter or find keeps its refusal (Lower's must, predicates_function_type.go),
-// which this step doesn't widen.
+// (checkedFunctionTypeClaim), and contract is the program's, or lib's Array or ReadonlyArray filter's
+// (libraryFilterContract). Any other library contract is called inside the library, and a forward to it
+// keeps its refusal (Lower's must, predicates_function_type.go).
 func (l *lowering) checkedPredicateParameterSite(contract, parameter *ast.Node) bool {
 	file := ast.GetSourceFileOfNode(contract)
-	return !load.IsLibrary(file) && !load.IsPrelude(file) && l.checkedFunctionTypeClaim(parameter.Type().Type())
+	return (!load.IsLibrary(file) && !load.IsPrelude(file) || libraryFilterContract(contract)) && l.checkedFunctionTypeClaim(parameter.Type().Type())
+}
+
+// libraryFilterContract is whether contract is the claim on the predicate parameter of lib's Array or
+// ReadonlyArray filter (#ea4d18v, tsc's getAllJSDocTags at utilitiesPublic.ts:1289). Lower's must keeps a
+// library contract's argument proven because the library calls it where nothing checks the answer, and a
+// checked closure is the one argument that checks its own: every true answer it hands filter has passed the
+// parameter's claim at run time. And filter returns an array it makes, never the one it was handed, so its
+// narrower result is no wider array seen narrower (rulings.md:126 governs that, and core.ts's own filter
+// stays refused under it). Library find, every and the rest keep their refusal; each is its own ruling.
+func libraryFilterContract(contract *ast.Node) bool {
+	function := contract.Parent
+	if function == nil || function.Kind != ast.KindFunctionType {
+		return false
+	}
+	parameter := function.Parent
+	if parameter == nil || parameter.Kind != ast.KindParameter {
+		return false
+	}
+	method := parameter.Parent
+	if method == nil || method.Kind != ast.KindMethodSignature || method.Name() == nil || method.Name().Text() != "filter" {
+		return false
+	}
+	declaration := method.Parent
+	if declaration == nil || declaration.Kind != ast.KindInterfaceDeclaration || !load.IsLibrary(ast.GetSourceFileOfNode(declaration)) {
+		return false
+	}
+	name := declaration.Name().Text()
+	return name == "Array" || name == "ReadonlyArray"
 }
 
 // checkedPredicateParameterPassed is whether node, a name read as a value, is a predicate parameter passed
