@@ -11,7 +11,8 @@ function refused(label,text){fs.writeFileSync(file,text);const snap=snapshot();n
 try {
  fs.cpSync(path.join(tree,'src'),path.join(root,'src'),{recursive:true});
  for(const eol of ['\n','\r\n']){
-  const original=before.replace(/\r\n/g,'\n').replace(/\n/g,eol);fs.writeFileSync(file,original);assert.equal(adapter.adapt(root).files,1);
+  fs.rmSync(path.join(root,'src/recordreplay.d.ts'),{force:true});
+  const original=before.replace(/\r\n/g,'\n').replace(/\n/g,eol);fs.writeFileSync(file,original);assert.equal(adapter.adapt(root).files,2);
   assert.equal(fs.readFileSync(file,'utf8'),expected.replace(/\r\n/g,'\n').replace(/\n/g,eol));const snap=snapshot();noWrites(()=>assert.equal(adapter.adapt(root).files,0));assert.deepEqual(snapshot(),snap);
  }
  refused('restoring-shorthand',expected.replace(spec.after,spec.before));

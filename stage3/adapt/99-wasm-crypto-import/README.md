@@ -311,3 +311,34 @@ evidence [`6b362fe55551e862c3d8775047e0e2dc41317a45`](https://github.com/system-
 ## Dynamic watch interval amendment (#cyjqp5f)
 
 On ceadba1d (#8581h73), the internal watch-file path admits number | undefined. The public factory result takes pollingInterval?: number; only the dynamic priority poller validates membership in PollingInterval and otherwise calls Debug.fail naming the interval. Other modes retain arbitrary numeric intervals such as symlinkWatching's 10. System and watchDirectory are unchanged. This directory's owned portion is amended in its exact after pin and digest; downstream getNodeSystem pins carry the widened Node worker. The guard is JavaScript-changing; the remaining interval edits erase. Full census, count, fixture/mutant, contracts, stock/Adamic checks, per-file JavaScript, declarations and unfiltered lane receipts are on typescript/watch-functions-1532-evidence under watch-functions-1532-evidence/cead-check-1532/.
+## Recordreplay amendment, task #b7phwab
+
+The adapter removes `as any` and its parentheses from getNodeSystem's
+nodeSystem.debugMode read of `process.recordreplay`. It restores exactly
+ff0e5859's `src/recordreplay.d.ts` bytes and the erased
+`import type {} from "../recordreplay.js";` in the reserved import line.
+The AST lookup and all composed adapter-99 edits from 163bdeaf remain intact.
+The declaration and import are outside getNodeSystem and the pinned node:
+import block, so restoring them does not change an owner pin.
+
+The file is required for **stock tsc's build of the adapted tree**:
+stage3/lane/adaptedtree's TestProduct_Stage3AdaptedTree runs hereby local with
+@types/node. Adamic's Node-prelude augmentation is visible only to Adamic's
+loader; that stock build never sees it. The file was dropped because the two
+environments were confused, and is restored because hereby local reports
+TS2339 without it. The declaration adds no runtime value; its import erases.
+
+`proofs/recordreplay/check.py SCRATCH` checks exact source scope, canonical
+file bytes and no-write replay, then runs the actual Adamic loader and a
+separate unmodified stock TypeScript program with @types/node. The stock
+program loads the real file through the real import: it injects no Node
+augmentation or virtual declaration, and masking only that file must give
+TS2339 for recordreplay. `ADAMIC_BIN` names the production CLI for the loader
+check. `proofs/recordreplay-contract.cjs` retains AST relocation, wrong-store,
+wrong-property, duplicate-read and shadow rejection controls.
+
+The acceptance build is TestProduct_Stage3AdaptedTree itself, including hereby
+local and hereby tests. Its negative control removes the declaration after
+apply and before hereby local, so the same product test must fail with TS2339.
+Historical amendment-5 evidence used an injected stock prelude and did not
+prove this build; it is not the acceptance proof for this restoration.
