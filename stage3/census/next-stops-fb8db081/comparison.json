@@ -1183,5 +1183,1190 @@
       "a function taking PollingInterval seen as one taking number | undefined (tsc relates a method's parameters both ways), so it can be handed what it can't take"
     ],
     "unchanged": false
+  },
+  {
+    "module_format": "EcmaScript",
+    "root": "_namespaces/ts.moduleSpecifiers.ts",
+    "before": [
+      "sys.ts:1387:5",
+      "Refused",
+      "a method read as a value (writeFile would lose its object, and this with it)"
+    ],
+    "after": [
+      "sys.ts:1473:35",
+      "NotYet",
+      "node:module.__filename and __dirname: CommonJS module values with no ES-module or reproducible native answer yet (fix: pass the module's path in from where the program is started)"
+    ],
+    "unchanged": false
+  },
+  {
+    "module_format": "EcmaScript",
+    "root": "_namespaces/ts.performance.ts",
+    "before": [
+      "sys.ts:1387:5",
+      "Refused",
+      "a method read as a value (writeFile would lose its object, and this with it)"
+    ],
+    "after": [
+      "sys.ts:1473:35",
+      "NotYet",
+      "node:module.__filename and __dirname: CommonJS module values with no ES-module or reproducible native answer yet (fix: pass the module's path in from where the program is started)"
+    ],
+    "unchanged": false
+  },
+  {
+    "module_format": "EcmaScript",
+    "root": "_namespaces/ts.ts",
+    "before": [
+      "sys.ts:1387:5",
+      "Refused",
+      "a method read as a value (writeFile would lose its object, and this with it)"
+    ],
+    "after": [
+      "sys.ts:1473:35",
+      "NotYet",
+      "node:module.__filename and __dirname: CommonJS module values with no ES-module or reproducible native answer yet (fix: pass the module's path in from where the program is started)"
+    ],
+    "unchanged": false
+  },
+  {
+    "module_format": "EcmaScript",
+    "root": "binder.ts",
+    "before": [
+      "sys.ts:1387:5",
+      "Refused",
+      "a method read as a value (writeFile would lose its object, and this with it)"
+    ],
+    "after": [
+      "sys.ts:1473:35",
+      "NotYet",
+      "node:module.__filename and __dirname: CommonJS module values with no ES-module or reproducible native answer yet (fix: pass the module's path in from where the program is started)"
+    ],
+    "unchanged": false
+  },
+  {
+    "module_format": "EcmaScript",
+    "root": "builder.ts",
+    "before": [
+      "sys.ts:1387:5",
+      "Refused",
+      "a method read as a value (writeFile would lose its object, and this with it)"
+    ],
+    "after": [
+      "sys.ts:1473:35",
+      "NotYet",
+      "node:module.__filename and __dirname: CommonJS module values with no ES-module or reproducible native answer yet (fix: pass the module's path in from where the program is started)"
+    ],
+    "unchanged": false
+  },
+  {
+    "module_format": "EcmaScript",
+    "root": "builderPublic.ts",
+    "before": [
+      "sys.ts:1387:5",
+      "Refused",
+      "a method read as a value (writeFile would lose its object, and this with it)"
+    ],
+    "after": [
+      "sys.ts:1473:35",
+      "NotYet",
+      "node:module.__filename and __dirname: CommonJS module values with no ES-module or reproducible native answer yet (fix: pass the module's path in from where the program is started)"
+    ],
+    "unchanged": false
+  },
+  {
+    "module_format": "EcmaScript",
+    "root": "builderState.ts",
+    "before": [
+      "sys.ts:1387:5",
+      "Refused",
+      "a method read as a value (writeFile would lose its object, and this with it)"
+    ],
+    "after": [
+      "sys.ts:1473:35",
+      "NotYet",
+      "node:module.__filename and __dirname: CommonJS module values with no ES-module or reproducible native answer yet (fix: pass the module's path in from where the program is started)"
+    ],
+    "unchanged": false
+  },
+  {
+    "module_format": "EcmaScript",
+    "root": "builderStatePublic.ts",
+    "before": [
+      "sys.ts:1387:5",
+      "Refused",
+      "a method read as a value (writeFile would lose its object, and this with it)"
+    ],
+    "after": [
+      "sys.ts:1473:35",
+      "NotYet",
+      "node:module.__filename and __dirname: CommonJS module values with no ES-module or reproducible native answer yet (fix: pass the module's path in from where the program is started)"
+    ],
+    "unchanged": false
+  },
+  {
+    "module_format": "EcmaScript",
+    "root": "checker.ts",
+    "before": [
+      "sys.ts:1387:5",
+      "Refused",
+      "a method read as a value (writeFile would lose its object, and this with it)"
+    ],
+    "after": [
+      "sys.ts:1473:35",
+      "NotYet",
+      "node:module.__filename and __dirname: CommonJS module values with no ES-module or reproducible native answer yet (fix: pass the module's path in from where the program is started)"
+    ],
+    "unchanged": false
+  },
+  {
+    "module_format": "EcmaScript",
+    "root": "commandLineParser.ts",
+    "before": [
+      "sys.ts:1387:5",
+      "Refused",
+      "a method read as a value (writeFile would lose its object, and this with it)"
+    ],
+    "after": [
+      "sys.ts:1473:35",
+      "NotYet",
+      "node:module.__filename and __dirname: CommonJS module values with no ES-module or reproducible native answer yet (fix: pass the module's path in from where the program is started)"
+    ],
+    "unchanged": false
+  },
+  {
+    "module_format": "EcmaScript",
+    "root": "core.ts",
+    "before": [
+      "sys.ts:1387:5",
+      "Refused",
+      "a method read as a value (writeFile would lose its object, and this with it)"
+    ],
+    "after": [
+      "sys.ts:1473:35",
+      "NotYet",
+      "node:module.__filename and __dirname: CommonJS module values with no ES-module or reproducible native answer yet (fix: pass the module's path in from where the program is started)"
+    ],
+    "unchanged": false
+  },
+  {
+    "module_format": "EcmaScript",
+    "root": "corePublic.ts",
+    "before": [
+      "-",
+      "accepted",
+      "-"
+    ],
+    "after": [
+      "-",
+      "accepted",
+      "-"
+    ],
+    "unchanged": true
+  },
+  {
+    "module_format": "EcmaScript",
+    "root": "debug.ts",
+    "before": [
+      "semver.ts:71:9",
+      "NotYet",
+      "a namespace read before runtime initialization, directly or through a reachable call; move that read or call after the namespace declaration"
+    ],
+    "after": [
+      "semver.ts:71:9",
+      "NotYet",
+      "a namespace read before runtime initialization, directly or through a reachable call; move that read or call after the namespace declaration"
+    ],
+    "unchanged": true
+  },
+  {
+    "module_format": "EcmaScript",
+    "root": "diagnosticInformationMap.generated.ts",
+    "before": [
+      "commandLineParser.ts:293:35",
+      "NotYet",
+      "reading an enum before its runtime initialization; move the call after the enum declaration"
+    ],
+    "after": [
+      "commandLineParser.ts:293:35",
+      "NotYet",
+      "reading an enum before its runtime initialization; move the call after the enum declaration"
+    ],
+    "unchanged": true
+  },
+  {
+    "module_format": "EcmaScript",
+    "root": "emitter.ts",
+    "before": [
+      "sys.ts:1387:5",
+      "Refused",
+      "a method read as a value (writeFile would lose its object, and this with it)"
+    ],
+    "after": [
+      "sys.ts:1473:35",
+      "NotYet",
+      "node:module.__filename and __dirname: CommonJS module values with no ES-module or reproducible native answer yet (fix: pass the module's path in from where the program is started)"
+    ],
+    "unchanged": false
+  },
+  {
+    "module_format": "EcmaScript",
+    "root": "executeCommandLine.ts",
+    "before": [
+      "sys.ts:1387:5",
+      "Refused",
+      "a method read as a value (writeFile would lose its object, and this with it)"
+    ],
+    "after": [
+      "sys.ts:1473:35",
+      "NotYet",
+      "node:module.__filename and __dirname: CommonJS module values with no ES-module or reproducible native answer yet (fix: pass the module's path in from where the program is started)"
+    ],
+    "unchanged": false
+  },
+  {
+    "module_format": "EcmaScript",
+    "root": "expressionToTypeNode.ts",
+    "before": [
+      "sys.ts:1387:5",
+      "Refused",
+      "a method read as a value (writeFile would lose its object, and this with it)"
+    ],
+    "after": [
+      "sys.ts:1473:35",
+      "NotYet",
+      "node:module.__filename and __dirname: CommonJS module values with no ES-module or reproducible native answer yet (fix: pass the module's path in from where the program is started)"
+    ],
+    "unchanged": false
+  },
+  {
+    "module_format": "EcmaScript",
+    "root": "factory/baseNodeFactory.ts",
+    "before": [
+      "sys.ts:1387:5",
+      "Refused",
+      "a method read as a value (writeFile would lose its object, and this with it)"
+    ],
+    "after": [
+      "sys.ts:1473:35",
+      "NotYet",
+      "node:module.__filename and __dirname: CommonJS module values with no ES-module or reproducible native answer yet (fix: pass the module's path in from where the program is started)"
+    ],
+    "unchanged": false
+  },
+  {
+    "module_format": "EcmaScript",
+    "root": "factory/emitHelpers.ts",
+    "before": [
+      "sys.ts:1387:5",
+      "Refused",
+      "a method read as a value (writeFile would lose its object, and this with it)"
+    ],
+    "after": [
+      "sys.ts:1473:35",
+      "NotYet",
+      "node:module.__filename and __dirname: CommonJS module values with no ES-module or reproducible native answer yet (fix: pass the module's path in from where the program is started)"
+    ],
+    "unchanged": false
+  },
+  {
+    "module_format": "EcmaScript",
+    "root": "factory/emitNode.ts",
+    "before": [
+      "sys.ts:1387:5",
+      "Refused",
+      "a method read as a value (writeFile would lose its object, and this with it)"
+    ],
+    "after": [
+      "sys.ts:1473:35",
+      "NotYet",
+      "node:module.__filename and __dirname: CommonJS module values with no ES-module or reproducible native answer yet (fix: pass the module's path in from where the program is started)"
+    ],
+    "unchanged": false
+  },
+  {
+    "module_format": "EcmaScript",
+    "root": "factory/nodeChildren.ts",
+    "before": [
+      "sys.ts:1387:5",
+      "Refused",
+      "a method read as a value (writeFile would lose its object, and this with it)"
+    ],
+    "after": [
+      "sys.ts:1473:35",
+      "NotYet",
+      "node:module.__filename and __dirname: CommonJS module values with no ES-module or reproducible native answer yet (fix: pass the module's path in from where the program is started)"
+    ],
+    "unchanged": false
+  },
+  {
+    "module_format": "EcmaScript",
+    "root": "factory/nodeConverters.ts",
+    "before": [
+      "sys.ts:1387:5",
+      "Refused",
+      "a method read as a value (writeFile would lose its object, and this with it)"
+    ],
+    "after": [
+      "sys.ts:1473:35",
+      "NotYet",
+      "node:module.__filename and __dirname: CommonJS module values with no ES-module or reproducible native answer yet (fix: pass the module's path in from where the program is started)"
+    ],
+    "unchanged": false
+  },
+  {
+    "module_format": "EcmaScript",
+    "root": "factory/nodeFactory.ts",
+    "before": [
+      "sys.ts:1387:5",
+      "Refused",
+      "a method read as a value (writeFile would lose its object, and this with it)"
+    ],
+    "after": [
+      "sys.ts:1473:35",
+      "NotYet",
+      "node:module.__filename and __dirname: CommonJS module values with no ES-module or reproducible native answer yet (fix: pass the module's path in from where the program is started)"
+    ],
+    "unchanged": false
+  },
+  {
+    "module_format": "EcmaScript",
+    "root": "factory/nodeTests.ts",
+    "before": [
+      "sys.ts:1387:5",
+      "Refused",
+      "a method read as a value (writeFile would lose its object, and this with it)"
+    ],
+    "after": [
+      "sys.ts:1473:35",
+      "NotYet",
+      "node:module.__filename and __dirname: CommonJS module values with no ES-module or reproducible native answer yet (fix: pass the module's path in from where the program is started)"
+    ],
+    "unchanged": false
+  },
+  {
+    "module_format": "EcmaScript",
+    "root": "factory/parenthesizerRules.ts",
+    "before": [
+      "sys.ts:1387:5",
+      "Refused",
+      "a method read as a value (writeFile would lose its object, and this with it)"
+    ],
+    "after": [
+      "sys.ts:1473:35",
+      "NotYet",
+      "node:module.__filename and __dirname: CommonJS module values with no ES-module or reproducible native answer yet (fix: pass the module's path in from where the program is started)"
+    ],
+    "unchanged": false
+  },
+  {
+    "module_format": "EcmaScript",
+    "root": "factory/utilities.ts",
+    "before": [
+      "sys.ts:1387:5",
+      "Refused",
+      "a method read as a value (writeFile would lose its object, and this with it)"
+    ],
+    "after": [
+      "sys.ts:1473:35",
+      "NotYet",
+      "node:module.__filename and __dirname: CommonJS module values with no ES-module or reproducible native answer yet (fix: pass the module's path in from where the program is started)"
+    ],
+    "unchanged": false
+  },
+  {
+    "module_format": "EcmaScript",
+    "root": "factory/utilitiesPublic.ts",
+    "before": [
+      "sys.ts:1387:5",
+      "Refused",
+      "a method read as a value (writeFile would lose its object, and this with it)"
+    ],
+    "after": [
+      "sys.ts:1473:35",
+      "NotYet",
+      "node:module.__filename and __dirname: CommonJS module values with no ES-module or reproducible native answer yet (fix: pass the module's path in from where the program is started)"
+    ],
+    "unchanged": false
+  },
+  {
+    "module_format": "EcmaScript",
+    "root": "hostErrors.ts",
+    "before": [
+      "-",
+      "accepted",
+      "-"
+    ],
+    "after": [
+      "-",
+      "accepted",
+      "-"
+    ],
+    "unchanged": true
+  },
+  {
+    "module_format": "EcmaScript",
+    "root": "moduleNameResolver.ts",
+    "before": [
+      "sys.ts:1387:5",
+      "Refused",
+      "a method read as a value (writeFile would lose its object, and this with it)"
+    ],
+    "after": [
+      "sys.ts:1473:35",
+      "NotYet",
+      "node:module.__filename and __dirname: CommonJS module values with no ES-module or reproducible native answer yet (fix: pass the module's path in from where the program is started)"
+    ],
+    "unchanged": false
+  },
+  {
+    "module_format": "EcmaScript",
+    "root": "moduleSpecifiers.ts",
+    "before": [
+      "sys.ts:1387:5",
+      "Refused",
+      "a method read as a value (writeFile would lose its object, and this with it)"
+    ],
+    "after": [
+      "sys.ts:1473:35",
+      "NotYet",
+      "node:module.__filename and __dirname: CommonJS module values with no ES-module or reproducible native answer yet (fix: pass the module's path in from where the program is started)"
+    ],
+    "unchanged": false
+  },
+  {
+    "module_format": "EcmaScript",
+    "root": "parser.ts",
+    "before": [
+      "sys.ts:1387:5",
+      "Refused",
+      "a method read as a value (writeFile would lose its object, and this with it)"
+    ],
+    "after": [
+      "sys.ts:1473:35",
+      "NotYet",
+      "node:module.__filename and __dirname: CommonJS module values with no ES-module or reproducible native answer yet (fix: pass the module's path in from where the program is started)"
+    ],
+    "unchanged": false
+  },
+  {
+    "module_format": "EcmaScript",
+    "root": "path.ts",
+    "before": [
+      "sys.ts:1387:5",
+      "Refused",
+      "a method read as a value (writeFile would lose its object, and this with it)"
+    ],
+    "after": [
+      "sys.ts:1473:35",
+      "NotYet",
+      "node:module.__filename and __dirname: CommonJS module values with no ES-module or reproducible native answer yet (fix: pass the module's path in from where the program is started)"
+    ],
+    "unchanged": false
+  },
+  {
+    "module_format": "EcmaScript",
+    "root": "performance.ts",
+    "before": [
+      "sys.ts:1387:5",
+      "Refused",
+      "a method read as a value (writeFile would lose its object, and this with it)"
+    ],
+    "after": [
+      "sys.ts:1473:35",
+      "NotYet",
+      "node:module.__filename and __dirname: CommonJS module values with no ES-module or reproducible native answer yet (fix: pass the module's path in from where the program is started)"
+    ],
+    "unchanged": false
+  },
+  {
+    "module_format": "EcmaScript",
+    "root": "performanceCore.ts",
+    "before": [
+      "sys.ts:1387:5",
+      "Refused",
+      "a method read as a value (writeFile would lose its object, and this with it)"
+    ],
+    "after": [
+      "sys.ts:1473:35",
+      "NotYet",
+      "node:module.__filename and __dirname: CommonJS module values with no ES-module or reproducible native answer yet (fix: pass the module's path in from where the program is started)"
+    ],
+    "unchanged": false
+  },
+  {
+    "module_format": "EcmaScript",
+    "root": "program.ts",
+    "before": [
+      "sys.ts:1387:5",
+      "Refused",
+      "a method read as a value (writeFile would lose its object, and this with it)"
+    ],
+    "after": [
+      "sys.ts:1473:35",
+      "NotYet",
+      "node:module.__filename and __dirname: CommonJS module values with no ES-module or reproducible native answer yet (fix: pass the module's path in from where the program is started)"
+    ],
+    "unchanged": false
+  },
+  {
+    "module_format": "EcmaScript",
+    "root": "programDiagnostics.ts",
+    "before": [
+      "sys.ts:1387:5",
+      "Refused",
+      "a method read as a value (writeFile would lose its object, and this with it)"
+    ],
+    "after": [
+      "sys.ts:1473:35",
+      "NotYet",
+      "node:module.__filename and __dirname: CommonJS module values with no ES-module or reproducible native answer yet (fix: pass the module's path in from where the program is started)"
+    ],
+    "unchanged": false
+  },
+  {
+    "module_format": "EcmaScript",
+    "root": "resolutionCache.ts",
+    "before": [
+      "sys.ts:1387:5",
+      "Refused",
+      "a method read as a value (writeFile would lose its object, and this with it)"
+    ],
+    "after": [
+      "sys.ts:1473:35",
+      "NotYet",
+      "node:module.__filename and __dirname: CommonJS module values with no ES-module or reproducible native answer yet (fix: pass the module's path in from where the program is started)"
+    ],
+    "unchanged": false
+  },
+  {
+    "module_format": "EcmaScript",
+    "root": "scanner.ts",
+    "before": [
+      "sys.ts:1387:5",
+      "Refused",
+      "a method read as a value (writeFile would lose its object, and this with it)"
+    ],
+    "after": [
+      "sys.ts:1473:35",
+      "NotYet",
+      "node:module.__filename and __dirname: CommonJS module values with no ES-module or reproducible native answer yet (fix: pass the module's path in from where the program is started)"
+    ],
+    "unchanged": false
+  },
+  {
+    "module_format": "EcmaScript",
+    "root": "semver.ts",
+    "before": [
+      "sys.ts:1387:5",
+      "Refused",
+      "a method read as a value (writeFile would lose its object, and this with it)"
+    ],
+    "after": [
+      "sys.ts:1473:35",
+      "NotYet",
+      "node:module.__filename and __dirname: CommonJS module values with no ES-module or reproducible native answer yet (fix: pass the module's path in from where the program is started)"
+    ],
+    "unchanged": false
+  },
+  {
+    "module_format": "EcmaScript",
+    "root": "sourcemap.ts",
+    "before": [
+      "sys.ts:1387:5",
+      "Refused",
+      "a method read as a value (writeFile would lose its object, and this with it)"
+    ],
+    "after": [
+      "sys.ts:1473:35",
+      "NotYet",
+      "node:module.__filename and __dirname: CommonJS module values with no ES-module or reproducible native answer yet (fix: pass the module's path in from where the program is started)"
+    ],
+    "unchanged": false
+  },
+  {
+    "module_format": "EcmaScript",
+    "root": "symbolWalker.ts",
+    "before": [
+      "sys.ts:1387:5",
+      "Refused",
+      "a method read as a value (writeFile would lose its object, and this with it)"
+    ],
+    "after": [
+      "sys.ts:1473:35",
+      "NotYet",
+      "node:module.__filename and __dirname: CommonJS module values with no ES-module or reproducible native answer yet (fix: pass the module's path in from where the program is started)"
+    ],
+    "unchanged": false
+  },
+  {
+    "module_format": "EcmaScript",
+    "root": "sys.ts",
+    "before": [
+      "utilitiesPublic.ts:1284:52",
+      "Refused",
+      "an unproven predicate argument for parameter predicate (argument \"predicate\")"
+    ],
+    "after": [
+      "utilitiesPublic.ts:1289:38",
+      "Refused",
+      "an unproven predicate argument for parameter predicate (argument \"predicate\")"
+    ],
+    "unchanged": false
+  },
+  {
+    "module_format": "EcmaScript",
+    "root": "tracing.ts",
+    "before": [
+      "sys.ts:1387:5",
+      "Refused",
+      "a method read as a value (writeFile would lose its object, and this with it)"
+    ],
+    "after": [
+      "sys.ts:1473:35",
+      "NotYet",
+      "node:module.__filename and __dirname: CommonJS module values with no ES-module or reproducible native answer yet (fix: pass the module's path in from where the program is started)"
+    ],
+    "unchanged": false
+  },
+  {
+    "module_format": "EcmaScript",
+    "root": "transformer.ts",
+    "before": [
+      "sys.ts:1387:5",
+      "Refused",
+      "a method read as a value (writeFile would lose its object, and this with it)"
+    ],
+    "after": [
+      "sys.ts:1473:35",
+      "NotYet",
+      "node:module.__filename and __dirname: CommonJS module values with no ES-module or reproducible native answer yet (fix: pass the module's path in from where the program is started)"
+    ],
+    "unchanged": false
+  },
+  {
+    "module_format": "EcmaScript",
+    "root": "transformers/classFields.ts",
+    "before": [
+      "sys.ts:1387:5",
+      "Refused",
+      "a method read as a value (writeFile would lose its object, and this with it)"
+    ],
+    "after": [
+      "sys.ts:1473:35",
+      "NotYet",
+      "node:module.__filename and __dirname: CommonJS module values with no ES-module or reproducible native answer yet (fix: pass the module's path in from where the program is started)"
+    ],
+    "unchanged": false
+  },
+  {
+    "module_format": "EcmaScript",
+    "root": "transformers/classThis.ts",
+    "before": [
+      "sys.ts:1387:5",
+      "Refused",
+      "a method read as a value (writeFile would lose its object, and this with it)"
+    ],
+    "after": [
+      "sys.ts:1473:35",
+      "NotYet",
+      "node:module.__filename and __dirname: CommonJS module values with no ES-module or reproducible native answer yet (fix: pass the module's path in from where the program is started)"
+    ],
+    "unchanged": false
+  },
+  {
+    "module_format": "EcmaScript",
+    "root": "transformers/declarations/diagnostics.ts",
+    "before": [
+      "sys.ts:1387:5",
+      "Refused",
+      "a method read as a value (writeFile would lose its object, and this with it)"
+    ],
+    "after": [
+      "sys.ts:1473:35",
+      "NotYet",
+      "node:module.__filename and __dirname: CommonJS module values with no ES-module or reproducible native answer yet (fix: pass the module's path in from where the program is started)"
+    ],
+    "unchanged": false
+  },
+  {
+    "module_format": "EcmaScript",
+    "root": "transformers/declarations.ts",
+    "before": [
+      "sys.ts:1387:5",
+      "Refused",
+      "a method read as a value (writeFile would lose its object, and this with it)"
+    ],
+    "after": [
+      "sys.ts:1473:35",
+      "NotYet",
+      "node:module.__filename and __dirname: CommonJS module values with no ES-module or reproducible native answer yet (fix: pass the module's path in from where the program is started)"
+    ],
+    "unchanged": false
+  },
+  {
+    "module_format": "EcmaScript",
+    "root": "transformers/destructuring.ts",
+    "before": [
+      "sys.ts:1387:5",
+      "Refused",
+      "a method read as a value (writeFile would lose its object, and this with it)"
+    ],
+    "after": [
+      "sys.ts:1473:35",
+      "NotYet",
+      "node:module.__filename and __dirname: CommonJS module values with no ES-module or reproducible native answer yet (fix: pass the module's path in from where the program is started)"
+    ],
+    "unchanged": false
+  },
+  {
+    "module_format": "EcmaScript",
+    "root": "transformers/es2015.ts",
+    "before": [
+      "sys.ts:1387:5",
+      "Refused",
+      "a method read as a value (writeFile would lose its object, and this with it)"
+    ],
+    "after": [
+      "sys.ts:1473:35",
+      "NotYet",
+      "node:module.__filename and __dirname: CommonJS module values with no ES-module or reproducible native answer yet (fix: pass the module's path in from where the program is started)"
+    ],
+    "unchanged": false
+  },
+  {
+    "module_format": "EcmaScript",
+    "root": "transformers/es2016.ts",
+    "before": [
+      "sys.ts:1387:5",
+      "Refused",
+      "a method read as a value (writeFile would lose its object, and this with it)"
+    ],
+    "after": [
+      "sys.ts:1473:35",
+      "NotYet",
+      "node:module.__filename and __dirname: CommonJS module values with no ES-module or reproducible native answer yet (fix: pass the module's path in from where the program is started)"
+    ],
+    "unchanged": false
+  },
+  {
+    "module_format": "EcmaScript",
+    "root": "transformers/es2017.ts",
+    "before": [
+      "sys.ts:1387:5",
+      "Refused",
+      "a method read as a value (writeFile would lose its object, and this with it)"
+    ],
+    "after": [
+      "sys.ts:1473:35",
+      "NotYet",
+      "node:module.__filename and __dirname: CommonJS module values with no ES-module or reproducible native answer yet (fix: pass the module's path in from where the program is started)"
+    ],
+    "unchanged": false
+  },
+  {
+    "module_format": "EcmaScript",
+    "root": "transformers/es2018.ts",
+    "before": [
+      "sys.ts:1387:5",
+      "Refused",
+      "a method read as a value (writeFile would lose its object, and this with it)"
+    ],
+    "after": [
+      "sys.ts:1473:35",
+      "NotYet",
+      "node:module.__filename and __dirname: CommonJS module values with no ES-module or reproducible native answer yet (fix: pass the module's path in from where the program is started)"
+    ],
+    "unchanged": false
+  },
+  {
+    "module_format": "EcmaScript",
+    "root": "transformers/es2019.ts",
+    "before": [
+      "sys.ts:1387:5",
+      "Refused",
+      "a method read as a value (writeFile would lose its object, and this with it)"
+    ],
+    "after": [
+      "sys.ts:1473:35",
+      "NotYet",
+      "node:module.__filename and __dirname: CommonJS module values with no ES-module or reproducible native answer yet (fix: pass the module's path in from where the program is started)"
+    ],
+    "unchanged": false
+  },
+  {
+    "module_format": "EcmaScript",
+    "root": "transformers/es2020.ts",
+    "before": [
+      "sys.ts:1387:5",
+      "Refused",
+      "a method read as a value (writeFile would lose its object, and this with it)"
+    ],
+    "after": [
+      "sys.ts:1473:35",
+      "NotYet",
+      "node:module.__filename and __dirname: CommonJS module values with no ES-module or reproducible native answer yet (fix: pass the module's path in from where the program is started)"
+    ],
+    "unchanged": false
+  },
+  {
+    "module_format": "EcmaScript",
+    "root": "transformers/es2021.ts",
+    "before": [
+      "sys.ts:1387:5",
+      "Refused",
+      "a method read as a value (writeFile would lose its object, and this with it)"
+    ],
+    "after": [
+      "sys.ts:1473:35",
+      "NotYet",
+      "node:module.__filename and __dirname: CommonJS module values with no ES-module or reproducible native answer yet (fix: pass the module's path in from where the program is started)"
+    ],
+    "unchanged": false
+  },
+  {
+    "module_format": "EcmaScript",
+    "root": "transformers/esDecorators.ts",
+    "before": [
+      "sys.ts:1387:5",
+      "Refused",
+      "a method read as a value (writeFile would lose its object, and this with it)"
+    ],
+    "after": [
+      "sys.ts:1473:35",
+      "NotYet",
+      "node:module.__filename and __dirname: CommonJS module values with no ES-module or reproducible native answer yet (fix: pass the module's path in from where the program is started)"
+    ],
+    "unchanged": false
+  },
+  {
+    "module_format": "EcmaScript",
+    "root": "transformers/esnext.ts",
+    "before": [
+      "sys.ts:1387:5",
+      "Refused",
+      "a method read as a value (writeFile would lose its object, and this with it)"
+    ],
+    "after": [
+      "sys.ts:1473:35",
+      "NotYet",
+      "node:module.__filename and __dirname: CommonJS module values with no ES-module or reproducible native answer yet (fix: pass the module's path in from where the program is started)"
+    ],
+    "unchanged": false
+  },
+  {
+    "module_format": "EcmaScript",
+    "root": "transformers/generators.ts",
+    "before": [
+      "sys.ts:1387:5",
+      "Refused",
+      "a method read as a value (writeFile would lose its object, and this with it)"
+    ],
+    "after": [
+      "sys.ts:1473:35",
+      "NotYet",
+      "node:module.__filename and __dirname: CommonJS module values with no ES-module or reproducible native answer yet (fix: pass the module's path in from where the program is started)"
+    ],
+    "unchanged": false
+  },
+  {
+    "module_format": "EcmaScript",
+    "root": "transformers/jsx.ts",
+    "before": [
+      "sys.ts:1387:5",
+      "Refused",
+      "a method read as a value (writeFile would lose its object, and this with it)"
+    ],
+    "after": [
+      "sys.ts:1473:35",
+      "NotYet",
+      "node:module.__filename and __dirname: CommonJS module values with no ES-module or reproducible native answer yet (fix: pass the module's path in from where the program is started)"
+    ],
+    "unchanged": false
+  },
+  {
+    "module_format": "EcmaScript",
+    "root": "transformers/legacyDecorators.ts",
+    "before": [
+      "sys.ts:1387:5",
+      "Refused",
+      "a method read as a value (writeFile would lose its object, and this with it)"
+    ],
+    "after": [
+      "sys.ts:1473:35",
+      "NotYet",
+      "node:module.__filename and __dirname: CommonJS module values with no ES-module or reproducible native answer yet (fix: pass the module's path in from where the program is started)"
+    ],
+    "unchanged": false
+  },
+  {
+    "module_format": "EcmaScript",
+    "root": "transformers/module/esnextAnd2015.ts",
+    "before": [
+      "sys.ts:1387:5",
+      "Refused",
+      "a method read as a value (writeFile would lose its object, and this with it)"
+    ],
+    "after": [
+      "sys.ts:1473:35",
+      "NotYet",
+      "node:module.__filename and __dirname: CommonJS module values with no ES-module or reproducible native answer yet (fix: pass the module's path in from where the program is started)"
+    ],
+    "unchanged": false
+  },
+  {
+    "module_format": "EcmaScript",
+    "root": "transformers/module/impliedNodeFormatDependent.ts",
+    "before": [
+      "sys.ts:1387:5",
+      "Refused",
+      "a method read as a value (writeFile would lose its object, and this with it)"
+    ],
+    "after": [
+      "sys.ts:1473:35",
+      "NotYet",
+      "node:module.__filename and __dirname: CommonJS module values with no ES-module or reproducible native answer yet (fix: pass the module's path in from where the program is started)"
+    ],
+    "unchanged": false
+  },
+  {
+    "module_format": "EcmaScript",
+    "root": "transformers/module/module.ts",
+    "before": [
+      "sys.ts:1387:5",
+      "Refused",
+      "a method read as a value (writeFile would lose its object, and this with it)"
+    ],
+    "after": [
+      "sys.ts:1473:35",
+      "NotYet",
+      "node:module.__filename and __dirname: CommonJS module values with no ES-module or reproducible native answer yet (fix: pass the module's path in from where the program is started)"
+    ],
+    "unchanged": false
+  },
+  {
+    "module_format": "EcmaScript",
+    "root": "transformers/module/system.ts",
+    "before": [
+      "sys.ts:1387:5",
+      "Refused",
+      "a method read as a value (writeFile would lose its object, and this with it)"
+    ],
+    "after": [
+      "sys.ts:1473:35",
+      "NotYet",
+      "node:module.__filename and __dirname: CommonJS module values with no ES-module or reproducible native answer yet (fix: pass the module's path in from where the program is started)"
+    ],
+    "unchanged": false
+  },
+  {
+    "module_format": "EcmaScript",
+    "root": "transformers/namedEvaluation.ts",
+    "before": [
+      "sys.ts:1387:5",
+      "Refused",
+      "a method read as a value (writeFile would lose its object, and this with it)"
+    ],
+    "after": [
+      "sys.ts:1473:35",
+      "NotYet",
+      "node:module.__filename and __dirname: CommonJS module values with no ES-module or reproducible native answer yet (fix: pass the module's path in from where the program is started)"
+    ],
+    "unchanged": false
+  },
+  {
+    "module_format": "EcmaScript",
+    "root": "transformers/taggedTemplate.ts",
+    "before": [
+      "sys.ts:1387:5",
+      "Refused",
+      "a method read as a value (writeFile would lose its object, and this with it)"
+    ],
+    "after": [
+      "sys.ts:1473:35",
+      "NotYet",
+      "node:module.__filename and __dirname: CommonJS module values with no ES-module or reproducible native answer yet (fix: pass the module's path in from where the program is started)"
+    ],
+    "unchanged": false
+  },
+  {
+    "module_format": "EcmaScript",
+    "root": "transformers/ts.ts",
+    "before": [
+      "sys.ts:1387:5",
+      "Refused",
+      "a method read as a value (writeFile would lose its object, and this with it)"
+    ],
+    "after": [
+      "sys.ts:1473:35",
+      "NotYet",
+      "node:module.__filename and __dirname: CommonJS module values with no ES-module or reproducible native answer yet (fix: pass the module's path in from where the program is started)"
+    ],
+    "unchanged": false
+  },
+  {
+    "module_format": "EcmaScript",
+    "root": "transformers/typeSerializer.ts",
+    "before": [
+      "sys.ts:1387:5",
+      "Refused",
+      "a method read as a value (writeFile would lose its object, and this with it)"
+    ],
+    "after": [
+      "sys.ts:1473:35",
+      "NotYet",
+      "node:module.__filename and __dirname: CommonJS module values with no ES-module or reproducible native answer yet (fix: pass the module's path in from where the program is started)"
+    ],
+    "unchanged": false
+  },
+  {
+    "module_format": "EcmaScript",
+    "root": "transformers/utilities.ts",
+    "before": [
+      "sys.ts:1387:5",
+      "Refused",
+      "a method read as a value (writeFile would lose its object, and this with it)"
+    ],
+    "after": [
+      "sys.ts:1473:35",
+      "NotYet",
+      "node:module.__filename and __dirname: CommonJS module values with no ES-module or reproducible native answer yet (fix: pass the module's path in from where the program is started)"
+    ],
+    "unchanged": false
+  },
+  {
+    "module_format": "EcmaScript",
+    "root": "tsbuild.ts",
+    "before": [
+      "sys.ts:1387:5",
+      "Refused",
+      "a method read as a value (writeFile would lose its object, and this with it)"
+    ],
+    "after": [
+      "sys.ts:1473:35",
+      "NotYet",
+      "node:module.__filename and __dirname: CommonJS module values with no ES-module or reproducible native answer yet (fix: pass the module's path in from where the program is started)"
+    ],
+    "unchanged": false
+  },
+  {
+    "module_format": "EcmaScript",
+    "root": "tsbuildPublic.ts",
+    "before": [
+      "sys.ts:1387:5",
+      "Refused",
+      "a method read as a value (writeFile would lose its object, and this with it)"
+    ],
+    "after": [
+      "sys.ts:1473:35",
+      "NotYet",
+      "node:module.__filename and __dirname: CommonJS module values with no ES-module or reproducible native answer yet (fix: pass the module's path in from where the program is started)"
+    ],
+    "unchanged": false
+  },
+  {
+    "module_format": "EcmaScript",
+    "root": "types.ts",
+    "before": [
+      "diagnosticInformationMap.generated.ts:13:45",
+      "NotYet",
+      "reading an enum before its runtime initialization; move the call after the enum declaration"
+    ],
+    "after": [
+      "diagnosticInformationMap.generated.ts:13:45",
+      "NotYet",
+      "reading an enum before its runtime initialization; move the call after the enum declaration"
+    ],
+    "unchanged": true
+  },
+  {
+    "module_format": "EcmaScript",
+    "root": "utilities.ts",
+    "before": [
+      "sys.ts:1387:5",
+      "Refused",
+      "a method read as a value (writeFile would lose its object, and this with it)"
+    ],
+    "after": [
+      "sys.ts:1473:35",
+      "NotYet",
+      "node:module.__filename and __dirname: CommonJS module values with no ES-module or reproducible native answer yet (fix: pass the module's path in from where the program is started)"
+    ],
+    "unchanged": false
+  },
+  {
+    "module_format": "EcmaScript",
+    "root": "utilitiesPublic.ts",
+    "before": [
+      "sys.ts:1387:5",
+      "Refused",
+      "a method read as a value (writeFile would lose its object, and this with it)"
+    ],
+    "after": [
+      "sys.ts:1473:35",
+      "NotYet",
+      "node:module.__filename and __dirname: CommonJS module values with no ES-module or reproducible native answer yet (fix: pass the module's path in from where the program is started)"
+    ],
+    "unchanged": false
+  },
+  {
+    "module_format": "EcmaScript",
+    "root": "visitorPublic.ts",
+    "before": [
+      "sys.ts:1387:5",
+      "Refused",
+      "a method read as a value (writeFile would lose its object, and this with it)"
+    ],
+    "after": [
+      "sys.ts:1473:35",
+      "NotYet",
+      "node:module.__filename and __dirname: CommonJS module values with no ES-module or reproducible native answer yet (fix: pass the module's path in from where the program is started)"
+    ],
+    "unchanged": false
+  },
+  {
+    "module_format": "EcmaScript",
+    "root": "watch.ts",
+    "before": [
+      "sys.ts:1387:5",
+      "Refused",
+      "a method read as a value (writeFile would lose its object, and this with it)"
+    ],
+    "after": [
+      "sys.ts:1473:35",
+      "NotYet",
+      "node:module.__filename and __dirname: CommonJS module values with no ES-module or reproducible native answer yet (fix: pass the module's path in from where the program is started)"
+    ],
+    "unchanged": false
+  },
+  {
+    "module_format": "EcmaScript",
+    "root": "watchPublic.ts",
+    "before": [
+      "sys.ts:1387:5",
+      "Refused",
+      "a method read as a value (writeFile would lose its object, and this with it)"
+    ],
+    "after": [
+      "sys.ts:1473:35",
+      "NotYet",
+      "node:module.__filename and __dirname: CommonJS module values with no ES-module or reproducible native answer yet (fix: pass the module's path in from where the program is started)"
+    ],
+    "unchanged": false
+  },
+  {
+    "module_format": "EcmaScript",
+    "root": "watchUtilities.ts",
+    "before": [
+      "sys.ts:1387:5",
+      "Refused",
+      "a method read as a value (writeFile would lose its object, and this with it)"
+    ],
+    "after": [
+      "sys.ts:1473:35",
+      "NotYet",
+      "node:module.__filename and __dirname: CommonJS module values with no ES-module or reproducible native answer yet (fix: pass the module's path in from where the program is started)"
+    ],
+    "unchanged": false
   }
 ]
