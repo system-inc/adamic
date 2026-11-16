@@ -1,0 +1,13 @@
+{
+  "module_format": "CommonJSBundle",
+  "command": [
+    "npm",
+    "ci",
+    "--prefix",
+    "stage3/api"
+  ],
+  "exit_code": 0,
+  "seconds": 6.726612343999989,
+  "stopping_reason": null,
+  "process_group_cleaned": true
+}

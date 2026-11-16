@@ -1,0 +1,13 @@
+{
+  "module_format": "CommonJSBundle",
+  "command": [
+    "bash",
+    "stage3/apply.sh",
+    "--build-product",
+    "/workspace/scratch/next-stops-03c140ec/adapted"
+  ],
+  "exit_code": 0,
+  "seconds": 789.476831012,
+  "stopping_reason": null,
+  "process_group_cleaned": true
+}
