@@ -78,3 +78,5 @@ Exit 1 on negative mutants is expected. Restoring/rewriting mutant constructors 
 Historical recordreplay inventory JSON in the amendment source is retained from ff0e5859 and labeled historical in the adapter README. Fresh observations are the files on this evidence branch. The historical foreign-site mutant is already landed on this main; its old needle is absent. Current owner/import/runtime-scope, span, binding, ternary, Node-resolution, recordreplay and watch-directory mutations are covered here.
 
 The initial scratch comparison tried to inspect the still-running fresh apply and hit its cast-presence assertion. Its path was corrected to the completed census input, and the successful comparison was then corroborated against all fresh source bytes. No compiler or amendment code changed after the final commit.
+
+Exact source and diff snapshots are gzip-compressed (`planned-after.ts.gz`, `stock-cli-prelude.d.ts.gz`, `source.diff.gz`) to preserve original bytes and CRLF without treating evidence as new compiler source. Decompress them before replaying the scratch drivers.
