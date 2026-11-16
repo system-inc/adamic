@@ -63,6 +63,7 @@ adamic_string *adamic_array_join(const adamic_array *array, const adamic_string 
 		static const char message[] = "out of memory";
 		adamic_panic(message, sizeof message - 1);
 	}
+	ADAMIC_COUNT_JOIN_CAPACITY(capacity);
 	for (size_t index = 0; index < array->length; index++) {
 		char number[ADAMIC_NUMBER_FORMAT_MAX];
 		const char *bytes = NULL;
@@ -115,6 +116,7 @@ adamic_string *adamic_array_join(const adamic_array *array, const adamic_string 
 				adamic_panic(message, sizeof message - 1);
 			}
 			buffer = grown;
+			ADAMIC_COUNT_JOIN_CAPACITY(capacity);
 		}
 		if (index > 0 && separator->length > 0) {
 			memcpy(buffer + length, separator->bytes, separator->length);
