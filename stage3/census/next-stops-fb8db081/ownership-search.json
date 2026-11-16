@@ -1,5 +1,65 @@
 [
   {
+    "file": "stage3/adapt/99-correctness-core-multimap/owners.json",
+    "json_path": "/5/before",
+    "match_terms": [
+      "getAllJSDocTags"
+    ],
+    "first_line": "import {",
+    "metadata": {
+      "file": "src/compiler/utilities.ts",
+      "kind": "import",
+      "module": "./_namespaces/ts.js",
+      "beforeSha256": "86dae56b0e91a4571ac47c0817a37d459b143675672eafaca7d22ce47c18fc66",
+      "afterSha256": "dcc7943c02fc3ea286eaa954b8c0cc729e2aec33fbc055bd7af1d64d1dab583c"
+    }
+  },
+  {
+    "file": "stage3/adapt/99-correctness-core-multimap/owners.json",
+    "json_path": "/5/after",
+    "match_terms": [
+      "getAllJSDocTags"
+    ],
+    "first_line": "import {",
+    "metadata": {
+      "file": "src/compiler/utilities.ts",
+      "kind": "import",
+      "module": "./_namespaces/ts.js",
+      "beforeSha256": "86dae56b0e91a4571ac47c0817a37d459b143675672eafaca7d22ce47c18fc66",
+      "afterSha256": "dcc7943c02fc3ea286eaa954b8c0cc729e2aec33fbc055bd7af1d64d1dab583c"
+    }
+  },
+  {
+    "file": "stage3/adapt/99-correctness-core-multimap/owners.json",
+    "json_path": "/7/before",
+    "match_terms": [
+      "getAllJSDocTags"
+    ],
+    "first_line": "import {",
+    "metadata": {
+      "file": "src/compiler/checker.ts",
+      "kind": "import",
+      "module": "./_namespaces/ts.js",
+      "beforeSha256": "80e948812b0d1fba4daafa211a8576f14a0cc67dc87bff66720ca64888a6f030",
+      "afterSha256": "4846202e4dad2f6c9ef8640a5d89b69ddc2038533cd811d65841f0612415d3c4"
+    }
+  },
+  {
+    "file": "stage3/adapt/99-correctness-core-multimap/owners.json",
+    "json_path": "/7/after",
+    "match_terms": [
+      "getAllJSDocTags"
+    ],
+    "first_line": "import {",
+    "metadata": {
+      "file": "src/compiler/checker.ts",
+      "kind": "import",
+      "module": "./_namespaces/ts.js",
+      "beforeSha256": "80e948812b0d1fba4daafa211a8576f14a0cc67dc87bff66720ca64888a6f030",
+      "afterSha256": "4846202e4dad2f6c9ef8640a5d89b69ddc2038533cd811d65841f0612415d3c4"
+    }
+  },
+  {
     "file": "stage3/adapt/92-tty-host-results/proofs/targets.json",
     "json_path": "/0/owners/0/scope",
     "match_terms": [
