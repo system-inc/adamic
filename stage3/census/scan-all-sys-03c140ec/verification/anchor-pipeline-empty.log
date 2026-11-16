@@ -1,0 +1,8 @@
+=== RUN   TestScanAllMainAnchorsMatchExactly
+=== PAUSE TestScanAllMainAnchorsMatchExactly
+=== CONT  TestScanAllMainAnchorsMatchExactly
+    scan_all_test.go:13: exit status 1: scan-all anchor internal/lower/lower.go pipeline-site: regex found no sites: (\t*)(if err := ([^;\n]+); err != nil \{)
+--- FAIL: TestScanAllMainAnchorsMatchExactly (0.07s)
+FAIL
+FAIL	scanall-anchor-proof/stage3/census/scan-all	0.074s
+FAIL

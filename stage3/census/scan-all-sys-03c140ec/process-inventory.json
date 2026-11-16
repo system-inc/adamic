@@ -1,0 +1,242 @@
+[
+  {
+    "line": 1462,
+    "col": 25,
+    "source": "        const isMacOs = process.platform === \"darwin\";",
+    "functions": [
+      "<arrow/IIFE>",
+      "getNodeSystem"
+    ]
+  },
+  {
+    "line": 1463,
+    "col": 32,
+    "source": "        const isLinuxOrMacOs = process.platform === \"linux\" || isMacOs;",
+    "functions": [
+      "<arrow/IIFE>",
+      "getNodeSystem"
+    ]
+  },
+  {
+    "line": 1469,
+    "col": 56,
+    "source": "        const fsRealpath = !!_fs.realpathSync.native ? process.platform === \"win32\" ? fsRealPathHandlingLongPath : _fs.realpathSync.native : _fs.realpathSync;",
+    "functions": [
+      "<arrow/IIFE>",
+      "getNodeSystem"
+    ]
+  },
+  {
+    "line": 1478,
+    "col": 44,
+    "source": "        const fsSupportsRecursiveFsWatch = process.platform === \"win32\" || isMacOs;",
+    "functions": [
+      "<arrow/IIFE>",
+      "getNodeSystem"
+    ]
+  },
+  {
+    "line": 1479,
+    "col": 51,
+    "source": "        const getCurrentDirectory = memoize(() => process.cwd());",
+    "functions": [
+      "<arrow/IIFE>",
+      "getNodeSystem",
+      "<arrow/IIFE>"
+    ]
+  },
+  {
+    "line": 1494,
+    "col": 27,
+    "source": "            tscWatchFile: process.env.TSC_WATCHFILE,",
+    "functions": [
+      "<arrow/IIFE>",
+      "getNodeSystem"
+    ]
+  },
+  {
+    "line": 1495,
+    "col": 38,
+    "source": "            useNonPollingWatchers: !!process.env.TSC_NONPOLLING_WATCHER,",
+    "functions": [
+      "<arrow/IIFE>",
+      "getNodeSystem"
+    ]
+  },
+  {
+    "line": 1496,
+    "col": 32,
+    "source": "            tscWatchDirectory: process.env.TSC_WATCHDIRECTORY,",
+    "functions": [
+      "<arrow/IIFE>",
+      "getNodeSystem"
+    ]
+  },
+  {
+    "line": 1526,
+    "col": 19,
+    "source": "            args: process.argv.slice(2),",
+    "functions": [
+      "<arrow/IIFE>",
+      "getNodeSystem"
+    ]
+  },
+  {
+    "line": 1530,
+    "col": 17,
+    "source": "                process.stdout.write(s);",
+    "functions": [
+      "<arrow/IIFE>",
+      "getNodeSystem",
+      "write"
+    ]
+  },
+  {
+    "line": 1533,
+    "col": 24,
+    "source": "                return process.stdout.columns ?? 0;",
+    "functions": [
+      "<arrow/IIFE>",
+      "getNodeSystem",
+      "getWidthOfTerminal"
+    ]
+  },
+  {
+    "line": 1536,
+    "col": 26,
+    "source": "                return !!process.stdout.isTTY;",
+    "functions": [
+      "<arrow/IIFE>",
+      "getNodeSystem",
+      "writeOutputIsTTY"
+    ]
+  },
+  {
+    "line": 1568,
+    "col": 24,
+    "source": "                return process.env[name] || \"\";",
+    "functions": [
+      "<arrow/IIFE>",
+      "getNodeSystem",
+      "getEnvironmentVariable"
+    ]
+  },
+  {
+    "line": 1580,
+    "col": 24,
+    "source": "                return process.memoryUsage().heapUsed;",
+    "functions": [
+      "<arrow/IIFE>",
+      "getNodeSystem",
+      "getMemoryUsage"
+    ]
+  },
+  {
+    "line": 1590,
+    "col": 42,
+    "source": "                disableCPUProfiler(() => process.exit(exitCode));",
+    "functions": [
+      "<arrow/IIFE>",
+      "getNodeSystem",
+      "exit",
+      "<arrow/IIFE>"
+    ]
+  },
+  {
+    "line": 1594,
+    "col": 68,
+    "source": "            cpuProfilingEnabled: () => !!activeSession || contains(process.execArgv, \"--cpu-prof\") || contains(process.execArgv, \"--prof\"),",
+    "functions": [
+      "<arrow/IIFE>",
+      "getNodeSystem",
+      "cpuProfilingEnabled"
+    ]
+  },
+  {
+    "line": 1594,
+    "col": 112,
+    "source": "            cpuProfilingEnabled: () => !!activeSession || contains(process.execArgv, \"--cpu-prof\") || contains(process.execArgv, \"--prof\"),",
+    "functions": [
+      "<arrow/IIFE>",
+      "getNodeSystem",
+      "cpuProfilingEnabled"
+    ]
+  },
+  {
+    "line": 1596,
+    "col": 26,
+    "source": "            debugMode: !!process.env.NODE_INSPECTOR_IPC || !!process.env.VSCODE_INSPECTOR_OPTIONS || some(process.execArgv, arg => /^--(?:inspect|debug)(?:-brk)?(?:=\\d+)?$/i.test(arg)) || !!process.recordreplay,",
+    "functions": [
+      "<arrow/IIFE>",
+      "getNodeSystem"
+    ]
+  },
+  {
+    "line": 1596,
+    "col": 62,
+    "source": "            debugMode: !!process.env.NODE_INSPECTOR_IPC || !!process.env.VSCODE_INSPECTOR_OPTIONS || some(process.execArgv, arg => /^--(?:inspect|debug)(?:-brk)?(?:=\\d+)?$/i.test(arg)) || !!process.recordreplay,",
+    "functions": [
+      "<arrow/IIFE>",
+      "getNodeSystem"
+    ]
+  },
+  {
+    "line": 1596,
+    "col": 107,
+    "source": "            debugMode: !!process.env.NODE_INSPECTOR_IPC || !!process.env.VSCODE_INSPECTOR_OPTIONS || some(process.execArgv, arg => /^--(?:inspect|debug)(?:-brk)?(?:=\\d+)?$/i.test(arg)) || !!process.recordreplay,",
+    "functions": [
+      "<arrow/IIFE>",
+      "getNodeSystem"
+    ]
+  },
+  {
+    "line": 1596,
+    "col": 191,
+    "source": "            debugMode: !!process.env.NODE_INSPECTOR_IPC || !!process.env.VSCODE_INSPECTOR_OPTIONS || some(process.execArgv, arg => /^--(?:inspect|debug)(?:-brk)?(?:=\\d+)?$/i.test(arg)) || !!process.recordreplay,",
+    "functions": [
+      "<arrow/IIFE>",
+      "getNodeSystem"
+    ]
+  },
+  {
+    "line": 1608,
+    "col": 17,
+    "source": "                process.stdout.write(\"\\x1B[2J\\x1B[3J\\x1B[H\");",
+    "functions": [
+      "<arrow/IIFE>",
+      "getNodeSystem",
+      "clearScreen"
+    ]
+  },
+  {
+    "line": 1611,
+    "col": 33,
+    "source": "                const handle = (process.stdout as any)?._handle as { setBlocking?: (value: boolean) => void; };",
+    "functions": [
+      "<arrow/IIFE>",
+      "getNodeSystem",
+      "setBlocking"
+    ]
+  },
+  {
+    "line": 1712,
+    "col": 120,
+    "source": "                            profilePath = _path.join(profilePath, `${(new Date()).toISOString().replace(/:/g, \"-\")}+P${process.pid}.cpuprofile`);",
+    "functions": [
+      "<arrow/IIFE>",
+      "getNodeSystem",
+      "disableCPUProfiler",
+      "<arrow/IIFE>"
+    ]
+  },
+  {
+    "line": 1896,
+    "col": 96,
+    "source": "            return matchFiles(path, extensions, excludes, includes, useCaseSensitiveFileNames, process.cwd(), depth, getAccessibleFileSystemEntries, realpath);",
+    "functions": [
+      "<arrow/IIFE>",
+      "getNodeSystem",
+      "readDirectory"
+    ]
+  }
+]

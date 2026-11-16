@@ -1,0 +1,137 @@
+=== RUN   TestProduct_ScanAllInstrumentedProbe
+=== PAUSE TestProduct_ScanAllInstrumentedProbe
+=== RUN   TestProduct_ScanAllProductionProbe
+=== PAUSE TestProduct_ScanAllProductionProbe
+=== CONT  TestProduct_ScanAllInstrumentedProbe
+=== CONT  TestProduct_ScanAllProductionProbe
+=== NAME  TestProduct_ScanAllInstrumentedProbe
+    products_test.go:80: build scan-all-instrumented bf3b054ed0ad miss 420.36
+    products_test.go:80: scan-all-instrumented probe: /workspace/scratch/scan-all-sys-03c140ec/buildcache/local/bf3b054ed0ada2d09261170b714c310f80bccb247ef12fe12513c3898b07accb/probe
+--- PASS: TestProduct_ScanAllInstrumentedProbe (421.24s)
+=== NAME  TestProduct_ScanAllProductionProbe
+    products_test.go:81: build scan-all-production 3589f1f4f194 miss 422.30
+    products_test.go:81: scan-all-production probe: /workspace/scratch/scan-all-sys-03c140ec/buildcache/local/3589f1f4f1946dcdf133077ff750103cc83159d2e74a52109d29fbb2955c4c72/probe
+--- PASS: TestProduct_ScanAllProductionProbe (423.17s)
+PASS
+ok  	github.com/system-inc/adamic/stage3/census/scan-all	423.187s
+=== RUN   TestScanAllCountStopAfterEarlierScanStop
+=== PAUSE TestScanAllCountStopAfterEarlierScanStop
+=== RUN   TestScanAllCountCleanAfterEarlierScanStop
+=== PAUSE TestScanAllCountCleanAfterEarlierScanStop
+=== RUN   TestScanAllRestStopAfterEarlierScanStop
+=== PAUSE TestScanAllRestStopAfterEarlierScanStop
+=== RUN   TestScanAllRestCleanAfterEarlierScanStop
+=== PAUSE TestScanAllRestCleanAfterEarlierScanStop
+=== RUN   TestScanAllRecordStopAfterEarlierScanStop
+=== PAUSE TestScanAllRecordStopAfterEarlierScanStop
+=== RUN   TestScanAllRecordCleanAfterEarlierScanStop
+=== PAUSE TestScanAllRecordCleanAfterEarlierScanStop
+=== RUN   TestScanAllCycleStopAfterEarlierScanStop
+=== PAUSE TestScanAllCycleStopAfterEarlierScanStop
+=== RUN   TestScanAllCycleCleanAfterEarlierScanStop
+=== PAUSE TestScanAllCycleCleanAfterEarlierScanStop
+=== RUN   TestScanAllMainAnchorsMatchExactly
+=== PAUSE TestScanAllMainAnchorsMatchExactly
+=== CONT  TestScanAllCountStopAfterEarlierScanStop
+=== CONT  TestScanAllRecordCleanAfterEarlierScanStop
+=== CONT  TestScanAllCycleCleanAfterEarlierScanStop
+=== CONT  TestScanAllCycleStopAfterEarlierScanStop
+=== CONT  TestScanAllRestCleanAfterEarlierScanStop
+=== NAME  TestScanAllCountStopAfterEarlierScanStop
+    controls_test.go:26: build scan-all-instrumented bf3b054ed0ad hit 1.60
+    controls_test.go:26: scan-all-instrumented probe: /workspace/scratch/scan-all-sys-03c140ec/buildcache/local/bf3b054ed0ada2d09261170b714c310f80bccb247ef12fe12513c3898b07accb/probe
+    controls_test.go:26: build scan-all-production 3589f1f4f194 hit 0.04
+    controls_test.go:26: scan-all-production probe: /workspace/scratch/scan-all-sys-03c140ec/buildcache/local/3589f1f4f1946dcdf133077ff750103cc83159d2e74a52109d29fbb2955c4c72/probe
+=== NAME  TestScanAllRestCleanAfterEarlierScanStop
+    controls_test.go:38: build scan-all-instrumented bf3b054ed0ad hit 1.97
+    controls_test.go:38: scan-all-instrumented probe: /workspace/scratch/scan-all-sys-03c140ec/buildcache/local/bf3b054ed0ada2d09261170b714c310f80bccb247ef12fe12513c3898b07accb/probe
+=== NAME  TestScanAllRecordCleanAfterEarlierScanStop
+    controls_test.go:46: build scan-all-instrumented bf3b054ed0ad hit 1.98
+    controls_test.go:46: scan-all-instrumented probe: /workspace/scratch/scan-all-sys-03c140ec/buildcache/local/bf3b054ed0ada2d09261170b714c310f80bccb247ef12fe12513c3898b07accb/probe
+=== NAME  TestScanAllRestCleanAfterEarlierScanStop
+    controls_test.go:38: build scan-all-production 3589f1f4f194 hit 0.02
+    controls_test.go:38: scan-all-production probe: /workspace/scratch/scan-all-sys-03c140ec/buildcache/local/3589f1f4f1946dcdf133077ff750103cc83159d2e74a52109d29fbb2955c4c72/probe
+=== NAME  TestScanAllRecordCleanAfterEarlierScanStop
+    controls_test.go:46: build scan-all-production 3589f1f4f194 hit 0.01
+    controls_test.go:46: scan-all-production probe: /workspace/scratch/scan-all-sys-03c140ec/buildcache/local/3589f1f4f1946dcdf133077ff750103cc83159d2e74a52109d29fbb2955c4c72/probe
+=== NAME  TestScanAllCycleStopAfterEarlierScanStop
+    controls_test.go:50: build scan-all-instrumented bf3b054ed0ad hit 2.05
+    controls_test.go:50: scan-all-instrumented probe: /workspace/scratch/scan-all-sys-03c140ec/buildcache/local/bf3b054ed0ada2d09261170b714c310f80bccb247ef12fe12513c3898b07accb/probe
+=== NAME  TestScanAllCycleCleanAfterEarlierScanStop
+    controls_test.go:54: build scan-all-instrumented bf3b054ed0ad hit 2.05
+    controls_test.go:54: scan-all-instrumented probe: /workspace/scratch/scan-all-sys-03c140ec/buildcache/local/bf3b054ed0ada2d09261170b714c310f80bccb247ef12fe12513c3898b07accb/probe
+=== NAME  TestScanAllCycleStopAfterEarlierScanStop
+    controls_test.go:50: build scan-all-production 3589f1f4f194 hit 0.01
+    controls_test.go:50: scan-all-production probe: /workspace/scratch/scan-all-sys-03c140ec/buildcache/local/3589f1f4f1946dcdf133077ff750103cc83159d2e74a52109d29fbb2955c4c72/probe
+=== NAME  TestScanAllCycleCleanAfterEarlierScanStop
+    controls_test.go:54: build scan-all-production 3589f1f4f194 hit 0.02
+    controls_test.go:54: scan-all-production probe: /workspace/scratch/scan-all-sys-03c140ec/buildcache/local/3589f1f4f1946dcdf133077ff750103cc83159d2e74a52109d29fbb2955c4c72/probe
+=== NAME  TestScanAllCountStopAfterEarlierScanStop
+    controls_test.go:26: plain production count-stop: {"Completed": false, "Error": "/workspace/scratch/scan-all-sys-03c140ec/tmp/tmpxt0221_2/control.ts:3:15: stage 0 can't lower bind of a function that observes its argument count or collects rest arguments yet"}
+        count-stop production and scan-continuation control passed
+--- PASS: TestScanAllCountStopAfterEarlierScanStop (3.04s)
+=== CONT  TestScanAllRecordStopAfterEarlierScanStop
+    controls_test.go:42: build scan-all-instrumented bf3b054ed0ad hit 0.02
+    controls_test.go:42: scan-all-instrumented probe: /workspace/scratch/scan-all-sys-03c140ec/buildcache/local/bf3b054ed0ada2d09261170b714c310f80bccb247ef12fe12513c3898b07accb/probe
+    controls_test.go:42: build scan-all-production 3589f1f4f194 hit 0.01
+    controls_test.go:42: scan-all-production probe: /workspace/scratch/scan-all-sys-03c140ec/buildcache/local/3589f1f4f1946dcdf133077ff750103cc83159d2e74a52109d29fbb2955c4c72/probe
+=== NAME  TestScanAllCycleStopAfterEarlierScanStop
+    controls_test.go:50: plain production cycle-stop: {"Completed": false, "Error": "/workspace/scratch/scan-all-sys-03c140ec/tmp/tmpjit6aej2/control.ts:6:1: stage 0 can't lower a record written into a graph slot, where the write at /workspace/scratch/scan-all-sys-03c140ec/tmp/tmpjit6aej2/control.ts:6:1 may close a cycle through it, in a graph program: a record can't join a graph region yet"}
+        cycle-stop production and scan-continuation control passed
+--- PASS: TestScanAllCycleStopAfterEarlierScanStop (3.40s)
+=== CONT  TestScanAllRestStopAfterEarlierScanStop
+=== NAME  TestScanAllRecordCleanAfterEarlierScanStop
+    controls_test.go:46: plain production record-clean: {"Completed": true, "Error": ""}
+        record-clean production and scan-continuation control passed
+--- PASS: TestScanAllRecordCleanAfterEarlierScanStop (3.41s)
+=== CONT  TestScanAllCountCleanAfterEarlierScanStop
+    controls_test.go:30: build scan-all-instrumented bf3b054ed0ad hit 0.02
+    controls_test.go:30: scan-all-instrumented probe: /workspace/scratch/scan-all-sys-03c140ec/buildcache/local/bf3b054ed0ada2d09261170b714c310f80bccb247ef12fe12513c3898b07accb/probe
+=== NAME  TestScanAllRestStopAfterEarlierScanStop
+    controls_test.go:34: build scan-all-instrumented bf3b054ed0ad hit 0.03
+    controls_test.go:34: scan-all-instrumented probe: /workspace/scratch/scan-all-sys-03c140ec/buildcache/local/bf3b054ed0ada2d09261170b714c310f80bccb247ef12fe12513c3898b07accb/probe
+=== NAME  TestScanAllRestCleanAfterEarlierScanStop
+    controls_test.go:38: plain production rest-clean: {"Completed": true, "Error": ""}
+        rest-clean production and scan-continuation control passed
+=== CONT  TestScanAllMainAnchorsMatchExactly
+--- PASS: TestScanAllRestCleanAfterEarlierScanStop (3.43s)
+=== NAME  TestScanAllCountCleanAfterEarlierScanStop
+    controls_test.go:30: build scan-all-production 3589f1f4f194 hit 0.01
+    controls_test.go:30: scan-all-production probe: /workspace/scratch/scan-all-sys-03c140ec/buildcache/local/3589f1f4f1946dcdf133077ff750103cc83159d2e74a52109d29fbb2955c4c72/probe
+=== NAME  TestScanAllRestStopAfterEarlierScanStop
+    controls_test.go:34: build scan-all-production 3589f1f4f194 hit 0.03
+    controls_test.go:34: scan-all-production probe: /workspace/scratch/scan-all-sys-03c140ec/buildcache/local/3589f1f4f1946dcdf133077ff750103cc83159d2e74a52109d29fbb2955c4c72/probe
+--- PASS: TestScanAllMainAnchorsMatchExactly (0.12s)
+=== NAME  TestScanAllRecordStopAfterEarlierScanStop
+    controls_test.go:42: plain production record-stop: {"Completed": false, "Error": "/workspace/scratch/scan-all-sys-03c140ec/tmp/tmp5c66iy3m/control.ts:5:1: stage 0 can't lower a record written into a graph slot, where the write at /workspace/scratch/scan-all-sys-03c140ec/tmp/tmp5c66iy3m/control.ts:5:1 may close a cycle through it, in a graph program: a record can't join a graph region yet"}
+        record-stop production and scan-continuation control passed
+--- PASS: TestScanAllRecordStopAfterEarlierScanStop (0.52s)
+=== NAME  TestScanAllCycleCleanAfterEarlierScanStop
+    controls_test.go:54: plain production cycle-clean: {"Completed": true, "Error": ""}
+        cycle-clean production and scan-continuation control passed
+--- PASS: TestScanAllCycleCleanAfterEarlierScanStop (3.59s)
+=== NAME  TestScanAllCountCleanAfterEarlierScanStop
+    controls_test.go:30: plain production count-clean: {"Completed": true, "Error": ""}
+        count-clean production and scan-continuation control passed
+--- PASS: TestScanAllCountCleanAfterEarlierScanStop (0.41s)
+=== NAME  TestScanAllRestStopAfterEarlierScanStop
+    controls_test.go:34: plain production rest-stop: {"Completed": false, "Error": "/workspace/scratch/scan-all-sys-03c140ec/tmp/tmpzcs4cxhz/control.ts:3:15: stage 0 can't lower bind of a rest-parameter function yet"}
+        rest-stop production and scan-continuation control passed
+--- PASS: TestScanAllRestStopAfterEarlierScanStop (0.42s)
+PASS
+ok  	github.com/system-inc/adamic/stage3/census/scan-all	3.845s
+first-error mutant red: TestScanAllCountStopAfterEarlierScanStop
+first-error mutant red: TestScanAllCountCleanAfterEarlierScanStop
+first-error mutant red: TestScanAllRestStopAfterEarlierScanStop
+first-error mutant red: TestScanAllRestCleanAfterEarlierScanStop
+first-error mutant red: TestScanAllRecordStopAfterEarlierScanStop
+first-error mutant red: TestScanAllRecordCleanAfterEarlierScanStop
+first-error mutant red: TestScanAllCycleStopAfterEarlierScanStop
+first-error mutant red: TestScanAllCycleCleanAfterEarlierScanStop
+lower-removed: TestScanAllMainAnchorsMatchExactly RED; names lowering.refuse(module)
+lower-duplicated: TestScanAllMainAnchorsMatchExactly RED; names lowering.refuse(module)
+refusal-removed: TestScanAllMainAnchorsMatchExactly RED; names contracts = func(node *ast.Node) bool {
+refusal-duplicated: TestScanAllMainAnchorsMatchExactly RED; names contracts = func(node *ast.Node) bool {
+pipeline-empty: TestScanAllMainAnchorsMatchExactly RED; names pipeline-site
+unrelated-comment: TestScanAllMainAnchorsMatchExactly GREEN
+anchor checks launched no Go subprocess; all source mutations stayed in scratch

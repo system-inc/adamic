@@ -1,0 +1,18 @@
+=== RUN   TestScanAllRestCleanAfterEarlierScanStop
+=== PAUSE TestScanAllRestCleanAfterEarlierScanStop
+=== CONT  TestScanAllRestCleanAfterEarlierScanStop
+    controls_test.go:38: build scan-all-instrumented bf3b054ed0ad hit 0.91
+    controls_test.go:38: scan-all-instrumented probe: /workspace/scratch/scan-all-sys-03c140ec/buildcache/local/bf3b054ed0ada2d09261170b714c310f80bccb247ef12fe12513c3898b07accb/probe
+    controls_test.go:38: build scan-all-production 3589f1f4f194 hit 0.01
+    controls_test.go:38: scan-all-production probe: /workspace/scratch/scan-all-sys-03c140ec/buildcache/local/3589f1f4f1946dcdf133077ff750103cc83159d2e74a52109d29fbb2955c4c72/probe
+    controls_test.go:38: rest-clean: exit status 1
+        plain production rest-clean: {"Completed": true, "Error": ""}
+        Traceback (most recent call last):
+          File "/workspace/scratch/scan-all-sys-03c140ec/repo/stage3/census/scan-all/controls.py", line 26, in <module>
+            assert r['Completed'] == (not positive), ('continuation-completion',name,r)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        AssertionError: ('continuation-completion', 'rest-clean', {'Scope': 'One root import-closure run. Records refusal-scan stops only, plus the first declaration, body or tail stop reached; blind past that first stop. A zero for a body or tail rule is never a pass. Preparation failures can prevent scanning entirely.', 'Stops': [{'Kind': 'scan stop', 'Rule': 'lowering.scoutRefuse', 'Site': '/workspace/scratch/scan-all-sys-03c140ec/tmp/tmpij26j582/control.ts:1:1', 'Words': '@ts-check checking pragma'}], 'Completed': False, 'Functions': 0, 'Locals': 0, 'Boundary': 'production abort at lowering.scoutRefuse', 'UnderlyingAbort': {'Kind': 'scan stop', 'Rule': 'lowering.scoutRefuse', 'Site': '/workspace/scratch/scan-all-sys-03c140ec/tmp/tmpij26j582/control.ts:1:1', 'Words': '@ts-check checking pragma'}})
+--- FAIL: TestScanAllRestCleanAfterEarlierScanStop (1.79s)
+FAIL
+FAIL	github.com/system-inc/adamic/stage3/census/scan-all	1.798s
+FAIL

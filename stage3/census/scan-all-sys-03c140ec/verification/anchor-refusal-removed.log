@@ -1,0 +1,8 @@
+=== RUN   TestScanAllMainAnchorsMatchExactly
+=== PAUSE TestScanAllMainAnchorsMatchExactly
+=== CONT  TestScanAllMainAnchorsMatchExactly
+    scan_all_test.go:13: exit status 1: scan-all anchor internal/lower/refusals.go refuse: expected exactly once (found 0): contracts = func(node *ast.Node) bool {
+--- FAIL: TestScanAllMainAnchorsMatchExactly (0.07s)
+FAIL
+FAIL	scanall-anchor-proof/stage3/census/scan-all	0.078s
+FAIL

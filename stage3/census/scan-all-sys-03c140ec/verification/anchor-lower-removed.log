@@ -1,0 +1,8 @@
+=== RUN   TestScanAllMainAnchorsMatchExactly
+=== PAUSE TestScanAllMainAnchorsMatchExactly
+=== CONT  TestScanAllMainAnchorsMatchExactly
+    scan_all_test.go:13: exit status 1: scan-all anchor internal/lower/lower.go: expected exactly once (found 0): lowering.refuse(module)
+--- FAIL: TestScanAllMainAnchorsMatchExactly (0.06s)
+FAIL
+FAIL	scanall-anchor-proof/stage3/census/scan-all	0.062s
+FAIL
