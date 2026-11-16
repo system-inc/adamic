@@ -85,6 +85,9 @@ sealed_npm() {
 # builds one, and a sealed job's build cache starts empty. Each package (./<path> or github.com/system-inc/adamic/<path>)
 # brings every package cloud/fast-gate/compiler-dependencies.json lists under its path, and one go test -run
 # '^TestProduct_' runs over the union into ADAMIC_BUILD_CACHE_DIR. Nothing of the file is ever run: it's read as JSON.
+# It runs with -timeout 0, so the job's own ceiling is the only clock: go's default 10 minutes killed internal/oracle's
+# products before they settled on Lunatic's 8 cores (Library's J-1xphvcc, routed by Runtime on #jobs), where a 64-core
+# rented machine settles them inside it.
 sealed_products() {
 	[ $# -gt 0 ] || sealedJobFail "sealed_products names no package" || return 1
 	local packages
@@ -116,6 +119,6 @@ PYTHON
 	sealed_typescript_source || return 1
 	# The package list is held to plain paths above, so it splits as words here.
 	# shellcheck disable=SC2086
-	go test -count=1 -run '^TestProduct_' $packages < /dev/null >&2 || sealedJobFail "the products didn't settle over $packages" || return 1
+	go test -count=1 -timeout 0 -run '^TestProduct_' $packages < /dev/null >&2 || sealedJobFail "the products didn't settle over $packages" || return 1
 	echo "sealed-job: products settled for $(echo $packages | wc -w | tr -d ' ') packages"
 }
