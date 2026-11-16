@@ -122,6 +122,14 @@ func IsNodeLibrary(file *ast.SourceFile) bool {
 	return file != nil && strings.HasPrefix(file.FileName().AsString(), nodeTypesDirectory+"/") && strings.HasSuffix(file.FileName().AsString(), ".d.ts")
 }
 
+// nodeProcessAugmentation is what the Node prelude adds to @types/node's NodeJS.Process: recordreplay, which tsc's
+// sys.ts reads and Node's process doesn't have (#b7phwab). Adamic on #b5w3ycg, Nov 7 2026: it reads as undefined on
+// every target, as the absent member lowering folds (hostBindingAbsentMembers), and every write or install of it stays
+// refused. Optional and unknown, so it promises nothing. It lives here, never in the standalone prelude, because a
+// NodeJS namespace there would let a program with no Node types name NodeJS.Process (TS2503 is its promise,
+// stage3/drivers/parser/native-nodejs-process-type.a).
+const nodeProcessAugmentation = "\ndeclare namespace NodeJS {\n\tinterface Process {\n\t\trecordreplay?: unknown;\n\t}\n}\n"
+
 // Match top-level declarations, not console method signatures. The standalone
 // prelude has only console; the project overlay adds Console and process together.
 func nodePrelude(source string, requiredOverlay ...string) (string, error) {
@@ -177,5 +185,5 @@ func nodePrelude(source string, requiredOverlay ...string) (string, error) {
 			}
 		}
 	}
-	return source, nil
+	return source + nodeProcessAugmentation, nil
 }
