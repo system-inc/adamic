@@ -15,4 +15,9 @@ def run(file):
  tag='mutant-'+Path(file).stem;env=dict(os.environ,LATENT_FULL='1',LATENT_ASSERT_NO_OUTPUT='1',LATENT_ONLY_FILE=str(m/'src/compiler'/file),LATENT_PROGRESS_FILE=str(e/(tag+'-progress.json')))
  with (e/(tag+'.log')).open('w') as log:p=subprocess.run([str(r/'latent'),str(m/'src/compiler'),str(e/(tag+'.jsonl'))],env=env,stdout=log,stderr=subprocess.STDOUT)
  result={'case':tag,'exit':p.returncode};(e/(tag+'-status.json')).write_text(json.dumps(result)+'\n');print(result,flush=True)
-with concurrent.futures.ThreadPoolExecutor(max_workers=2) as pool:list(pool.map(run,['checker.ts','transformers/generators.ts']))
+with concurrent.futures.ThreadPoolExecutor(max_workers=2) as pool:list(pool.map(run,['transformers/generators.ts']))
+
+with (e/'mutant-isolated-casts.json').open('w') as out,(e/'mutant-isolated-casts.log').open('w') as log:
+ p=subprocess.run([str(r/'cast-probe'),str(m/'src/compiler')],env=dict(os.environ,CAST_TAG_TRACE='1'),stdout=out,stderr=log)
+(e/'mutant-isolated-casts-status.json').write_text(json.dumps({'exit':p.returncode})+'\n')
+assert p.returncode==0

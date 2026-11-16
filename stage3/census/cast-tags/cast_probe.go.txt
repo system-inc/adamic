@@ -1,0 +1,40 @@
+package lower
+
+import (
+ "context"
+ "fmt"
+ "strings"
+ "github.com/microsoft/TypeScript/tsc/shim/ast"
+ "github.com/system-inc/adamic/internal/ir"
+ "github.com/system-inc/adamic/internal/load"
+)
+
+// An isolated call of production castProof on each actual checker AST node.
+// This bypasses a containing statement's census boundary, not the cast proof.
+func LatentTypePredicateCastProofs(program *load.Program) []map[string]string {
+ rows := []map[string]string{}
+ for _, file := range program.Files() {
+  if !strings.HasSuffix(program.FileName(file), "/compiler/checker.ts") { continue }
+  checker, release := program.Checker(context.Background(), file)
+  var walk ast.Visitor
+  walk = func(node *ast.Node) bool {
+   if node.Kind == ast.KindAsExpression {
+    as := node.AsAsExpression()
+    if as.Type.Kind == ast.KindTypeReference && as.Type.AsTypeReferenceNode().TypeName.Text() == "IdentifierTypePredicate" {
+     l := &lowering{moduleFormat: ModuleFormatCommonJSBundle, program:program, checker:checker, result:&ir.Program{}, this:-1, functionIndex:-1}
+     source := checker.GetTypeAtLocation(as.Expression)
+     target := checker.GetTypeAtLocation(node)
+     _, failure := l.castProof(node)
+     result := "accepted"
+     if failure != nil { result = failure.Error() }
+     rows = append(rows, map[string]string{"phase":"isolated_cast_proof", "where":program.Where(node), "source":checker.TypeToString(source), "target":checker.TypeToString(target), "result":result})
+    }
+   }
+   node.ForEachChild(walk)
+   return false
+  }
+  walk(file.AsNode()); release()
+ }
+ if len(rows)!=2 { panic(fmt.Sprintf("want exactly two IdentifierTypePredicate casts, got %d",len(rows))) }
+ return rows
+}

@@ -1,0 +1,10 @@
+{
+  "reason": "Both isolated calls of unchanged production castProof remain Refused after readonly kind. First unsafe union-write field is parameterName, string | undefined against member string. Stop TypePredicate work; full checker censuses remain incomplete and are not claimed as proof.",
+  "stopped_pids": [
+    11356,
+    12542,
+    11718,
+    12440
+  ],
+  "utc": "2026-11-16T21:09:27Z"
+}

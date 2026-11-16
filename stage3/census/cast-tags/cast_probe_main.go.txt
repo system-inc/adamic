@@ -1,0 +1,22 @@
+package main
+import (
+ "context"
+ "encoding/json"
+ "os"
+ "path/filepath"
+ "sort"
+ "github.com/system-inc/adamic/internal/load"
+ "github.com/system-inc/adamic/internal/lower"
+)
+func main() {
+ paths:=[]string{}
+ if len(os.Args)!=2 { panic("usage: cast-probe compiler-directory") }
+ err:=filepath.WalkDir(os.Args[1],func(path string,d os.DirEntry,err error)error{if err!=nil{return err};if !d.IsDir()&&filepath.Ext(path)==".ts"{paths=append(paths,path)};return nil})
+ if err!=nil{panic(err)};sort.Strings(paths)
+ program,err:=load.LatentLoad(paths);if err!=nil{panic(err)}
+ if len(paths)!=79||len(program.LatentDiagnostics())!=0{panic("want 79 checker-clean roots")}
+ output,failure:=lower.LowerWithOptions(context.Background(),program,lower.Options{ModuleFormat:lower.ModuleFormatCommonJSBundle})
+ if output!=nil||failure==nil||failure.Error()!="latent census: measurement only; no IR output"{panic("output guard")}
+ exposed,failure:=load.Load(paths);if exposed!=nil||failure==nil{panic("loader output guard")}
+ if err:=json.NewEncoder(os.Stdout).Encode(lower.LatentTypePredicateCastProofs(program));err!=nil{panic(err)}
+}

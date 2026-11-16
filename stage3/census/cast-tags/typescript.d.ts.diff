@@ -1,0 +1,32 @@
+--- main/typescript.d.ts
++++ readonly-kind/typescript.d.ts
+@@ -6445,25 +6445,25 @@
+         type: Type | undefined;
+     }
+     interface ThisTypePredicate extends TypePredicateBase {
+-        kind: TypePredicateKind.This;
++        readonly kind: TypePredicateKind.This;
+         parameterName: undefined;
+         parameterIndex: undefined;
+         type: Type;
+     }
+     interface IdentifierTypePredicate extends TypePredicateBase {
+-        kind: TypePredicateKind.Identifier;
++        readonly kind: TypePredicateKind.Identifier;
+         parameterName: string;
+         parameterIndex: number;
+         type: Type;
+     }
+     interface AssertsThisTypePredicate extends TypePredicateBase {
+-        kind: TypePredicateKind.AssertsThis;
++        readonly kind: TypePredicateKind.AssertsThis;
+         parameterName: undefined;
+         parameterIndex: undefined;
+         type: Type | undefined;
+     }
+     interface AssertsIdentifierTypePredicate extends TypePredicateBase {
+-        kind: TypePredicateKind.AssertsIdentifier;
++        readonly kind: TypePredicateKind.AssertsIdentifier;
+         parameterName: string;
+         parameterIndex: number;
+         type: Type | undefined;
