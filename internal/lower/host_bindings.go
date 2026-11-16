@@ -227,8 +227,10 @@ func (l *lowering) hostBindingExportEqualsModel(module *ast.Symbol, name string)
 // hostBindingAbsentMembers names members Node's own model value lacks, including its prototypes.
 // Each entry is held to Node in ES modules and CommonJS by TestHostBindingAbsentMembersHeldToNode.
 var hostBindingAbsentMembers = map[string]map[string]bool{
-	// Adamic and Lower on #zqz01vh, Nov 8 2026; TestHostBindingAbsentMembersHeldToNode is the witness.
-	"node:process.process": {"browser": true},
+	// browser: Adamic and Lower on #zqz01vh, Nov 8 2026. recordreplay, which tsc's sys.ts reads and the
+	// prelude declares: Adamic on #b5w3ycg, Nov 7 2026, built as #b7phwab. Each reads as undefined on every
+	// target; TestHostBindingAbsentMembersHeldToNode is the witness.
+	"node:process.process": {"browser": true, "recordreplay": true},
 }
 
 // hostBindingModelRefusal judges a Provided row's declaration against its model export, since every
