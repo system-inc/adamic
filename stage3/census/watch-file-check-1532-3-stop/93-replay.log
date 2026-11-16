@@ -1,0 +1,492 @@
+node:assert:152
+  throw new AssertionError(obj);
+  ^
+
+AssertionError [ERR_ASSERTION]: whole getNodeSystem text drift
++ actual - expected
+... Skipped lines
+
+  'function getNodeSystem(): System {\r\n' +
+    '        const nativePattern = /^native |^\\([^)]+\\)$|^(?:internal[\\\\/]|[\\w\\s]+(?:\\.js)?$)/;\r\n' +
+    '        // crypto can be absent on reduced node installations\r\n' +
+    '        let _crypto: typeof import("crypto") | undefined;\r\n' +
+    '        try {\r\n' +
+...
+    '        });\r\n' +
++   '        const patchedWriteFile: System["writeFile"] = (path, data, writeBom) =>\r\n' +
++   '            writeFileEnsuringDirectories(\r\n' +
++   '                path,\r\n' +
++   '                data,\r\n' +
++   '                !!writeBom,\r\n' +
++   '                (path, data, writeByteOrderMark) => writeFile(path, data, writeByteOrderMark),\r\n' +
++   '                path => nodeSystem.createDirectory(path),\r\n' +
++   '                path => nodeSystem.directoryExists(path),\r\n' +
++   '            );\r\n' +
+    '        const nodeSystem: System = {\r\n' +
+    '            args: process.argv.slice(2),\r\n' +
+    '            newLine: _os.EOL,\r\n' +
+    '            useCaseSensitiveFileNames,\r\n' +
+    '            write(s: string): void {\r\n' +
+...
+    '            readFile,\r\n' +
++   '            writeFile: patchedWriteFile,\r\n' +
+-   '            writeFile,\r\n' +
+    '            watchFile,\r\n' +
+    '            watchDirectory,\r\n' +
+    '            preferNonRecursiveWatch: !fsSupportsRecursiveFsWatch,\r\n' +
+    '            resolvePath: path => _path.resolve(path),\r\n' +
+    '            fileExists,\r\n' +
+...
+    '            const normalizedDir = normalizeSlashes(_path.dirname(executingFilePath));\r\n' +
++   '            // Windows rooted dir names'... 11582 more characters
+-   '            // Windows rooted dir names need an extra `/` prepended to be valid file:/// urls\r\n' +
+-   '            const fileUrlRoot = `file://${getRootLength(normalizedDir) === 1 ? "" : "/"}${normalizedDir}`;\r\n' +
+-   '            for (const node of profile.nodes) {\r\n' +
+-   '                if (node.callFrame.url) {\r\n' +
+-   '                    const url = normalizeSlashes(node.callFrame.url);\r\n' +
+-   '                    if (containsPath(fileUrlRoot, url, useCaseSensitiveFileNames)) {\r\n' +
+-   '                        node.callF'... 11135 more characters
+
+    at adapt (/workspace/scratch/watch1532-recut/work/stage3/adapt/93-builtin-imports/adapt.cjs:119:12)
+    at Object.<anonymous> (/workspace/scratch/watch1532-recut/work/stage3/adapt/93-builtin-imports/adapt.cjs:196:32)
+    at Module._compile (node:internal/modules/cjs/loader:1872:14)
+    at Object..js (node:internal/modules/cjs/loader:2003:10)
+    at Module.load (node:internal/modules/cjs/loader:1594:32)
+    at Module._load (node:internal/modules/cjs/loader:1396:12)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:255:19)
+    at Module.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:154:5)
+    at node:internal/main/run_main_module:33:47 {
+  generatedMessage: false,
+  code: 'ERR_ASSERTION',
+  actual: 'function getNodeSystem(): System {\r\n' +
+    '        const nativePattern = /^native |^\\([^)]+\\)$|^(?:internal[\\\\/]|[\\w\\s]+(?:\\.js)?$)/;\r\n' +
+    '        // crypto can be absent on reduced node installations\r\n' +
+    '        let _crypto: typeof import("crypto") | undefined;\r\n' +
+    '        try {\r\n' +
+    '            _crypto = require("crypto");\r\n' +
+    '        }\r\n' +
+    '        catch {\r\n' +
+    '            _crypto = undefined;\r\n' +
+    '        }\r\n' +
+    '        let activeSession: import("inspector").Session | "stopping" | undefined;\r\n' +
+    '        let profilePath = "./profile.cpuprofile";\r\n' +
+    '\r\n' +
+    '        const isMacOs = process.platform === "darwin";\r\n' +
+    '        const isLinuxOrMacOs = process.platform === "linux" || isMacOs;\r\n' +
+    '\r\n' +
+    '        const statSyncOptions = { throwIfNoEntry: false } as const;\r\n' +
+    '\r\n' +
+    '        const platform: string = _os.platform();\r\n' +
+    '        const useCaseSensitiveFileNames = isFileSystemCaseSensitive();\r\n' +
+    '        const fsRealpath = !!_fs.realpathSync.native ? process.platform === "win32" ? fsRealPathHandlingLongPath : _fs.realpathSync.native : _fs.realpathSync;\r\n' +
+    '\r\n' +
+    '        // If our filename is "sys.js", then we are executing unbundled on the raw tsc output.\r\n' +
+    '        // In that case, simulate a faked path in the directory where a bundle would normally\r\n' +
+    '        // appear (e.g. the directory containing lib.*.d.ts files).\r\n' +
+    '        //\r\n' +
+    '        // Note that if we ever emit as files like cjs/mjs, this check will be wrong.\r\n' +
+    '        const executingFilePath = __filename.endsWith("sys.js") ? _path.join(_path.dirname(__dirname), "__fake__.js") : __filename;\r\n' +
+    '\r\n' +
+    '        const fsSupportsRecursiveFsWatch = process.platform === "win32" || isMacOs;\r\n' +
+    '        const getCurrentDirectory = memoize(() => process.cwd());\r\n' +
+    '        const { watchFile, watchDirectory } = createSystemWatchFunctions({\r\n' +
+    '            pollingWatchFileWorker: fsWatchFileWorker,\r\n' +
+    '            getModifiedTime,\r\n' +
+    '            setTimeout: (callback: (label?: unknown) => void, ms: number, label?: unknown): unknown => setTimeout(callback, ms, label),\r\n' +
+    '            clearTimeout: (timeoutId: Parameters<typeof clearTimeout>[0]): void => { clearTimeout(timeoutId); },\r\n' +
+    '            fsWatchWorker,\r\n' +
+    '            useCaseSensitiveFileNames,\r\n' +
+    '            getCurrentDirectory,\r\n' +
+    '            fileSystemEntryExists,\r\n' +
+    '            // Node 4.0 `fs.watch` function supports the "recursive" option on both OSX and Windows\r\n' +
+    '            // (ref: https://github.com/nodejs/node/pull/2649 and https://github.com/Microsoft/TypeScript/issues/4643)\r\n' +
+    '            fsSupportsRecursiveFsWatch,\r\n' +
+    '            getAccessibleSortedChildDirectories: path => getAccessibleFileSystemEntries(path).directories,\r\n' +
+    '            realpath,\r\n' +
+    '            tscWatchFile: process.env.TSC_WATCHFILE,\r\n' +
+    '            useNonPollingWatchers: !!process.env.TSC_NONPOLLING_WATCHER,\r\n' +
+    '            tscWatchDirectory: process.env.TSC_WATCHDIRECTORY,\r\n' +
+    '            inodeWatching: isLinuxOrMacOs,\r\n' +
+    '            fsWatchWithTimestamp: isMacOs,\r\n' +
+    '            sysLog,\r\n' +
+    '        });\r\n' +
+    '        const patchedWriteFile: System["writeFile"] = (path, data, writeBom) =>\r\n' +
+    '            writeFileEnsuringDirectories(\r\n' +
+    '                path,\r\n' +
+    '                data,\r\n' +
+    '                !!writeBom,\r\n' +
+    '                (path, data, writeByteOrderMark) => writeFile(path, data, writeByteOrderMark),\r\n' +
+    '                path => nodeSystem.createDirectory(path),\r\n' +
+    '                path => nodeSystem.directoryExists(path),\r\n' +
+    '            );\r\n' +
+    '        const nodeSystem: System = {\r\n' +
+    '            args: process.argv.slice(2),\r\n' +
+    '            newLine: _os.EOL,\r\n' +
+    '            useCaseSensitiveFileNames,\r\n' +
+    '            write(s: string): void {\r\n' +
+    '                process.stdout.write(s);\r\n' +
+    '            },\r\n' +
+    '            getWidthOfTerminal() {\r\n' +
+    '                return process.stdout.columns ?? 0;\r\n' +
+    '            },\r\n' +
+    '            writeOutputIsTTY() {\r\n' +
+    '                return !!process.stdout.isTTY;\r\n' +
+    '            },\r\n' +
+    '            readFile,\r\n' +
+    '            writeFile: patchedWriteFile,\r\n' +
+    '            watchFile,\r\n' +
+    '            watchDirectory,\r\n' +
+    '            preferNonRecursiveWatch: !fsSupportsRecursiveFsWatch,\r\n' +
+    '            resolvePath: path => _path.resolve(path),\r\n' +
+    '            fileExists,\r\n' +
+    '            directoryExists,\r\n' +
+    '            getAccessibleFileSystemEntries,\r\n' +
+    '            createDirectory(directoryName: string) {\r\n' +
+    '                if (!nodeSystem.directoryExists(directoryName)) {\r\n' +
+    '                    // Wrapped in a try-catch to prevent crashing if we are in a race\r\n' +
+    '                    // with another copy of ourselves to create the same directory\r\n' +
+    '                    try {\r\n' +
+    '                        _fs.mkdirSync(directoryName);\r\n' +
+    '                    }\r\n' +
+    '                    catch (e) {\r\n' +
+    '                        if (errorCode(e) !== "EEXIST") {\r\n' +
+    '                            // Failed for some other reason (access denied?); still throw\r\n' +
+    '                            throw e;\r\n' +
+    '                        }\r\n' +
+    '                    }\r\n' +
+    '                }\r\n' +
+    '            },\r\n' +
+    '            getExecutingFilePath() {\r\n' +
+    '                return executingFilePath;\r\n' +
+    '            },\r\n' +
+    '            getCurrentDirectory,\r\n' +
+    '            getDirectories,\r\n' +
+    '            getEnvironmentVariable(name: string) {\r\n' +
+    '                return process.env[name] || "";\r\n' +
+    '            },\r\n' +
+    '            readDirectory,\r\n' +
+    '            getModifiedTime,\r\n' +
+    '            setModifiedTime,\r\n' +
+    '            deleteFile,\r\n' +
+    '            createHash: _crypto ? createSHA256Hash : generateDjb2Hash,\r\n' +
+    '            createSHA256Hash: _crypto ? createSHA256Hash : undefined,\r\n' +
+    '            getMemoryUsage() {\r\n' +
+    '                if (global.gc) {\r\n' +
+    '                    global.gc();\r\n' +
+    '                }\r\n' +
+    '                return process.memoryUsage().heapUsed;\r\n' +
+    '            },\r\n' +
+    '            getFileSize(path) {\r\n' +
+    '                const stat = statSync(path);\r\n' +
+    '                if (stat?.isFile()) {\r\n' +
+    '                    return stat.size;\r\n' +
+    '                }\r\n' +
+    '                return 0;\r\n' +
+    '            },\r\n' +
+    '            exit(exitCode?: number): undefined {\r\n' +
+    '                disableCPUProfiler(() => process.exit(exitCode));\r\n' +
+    '            },\r\n' +
+    '            enableCPUProfiler,\r\n' +
+    '            disableCPUProfiler,\r\n' +
+    '            cpuProfilingEnabled: () => !!activeSession || contains(process.execArgv, "--cpu-prof") || contains(process.execArgv, "--prof"),\r\n' +
+    '            realpath,\r\n' +
+    '            debugMode: !!process.env.NODE_INSPECTOR_IPC || !!process.env.VSCODE_INSPECTOR_OPTIONS || some(process.execArgv, arg => /^--(?:inspect|debug)(?:-brk)?(?:=\\d+)?$/i.test(arg)) || !!(process as any).recordreplay,\r\n' +
+    '            tryEnableSourceMapsForHost() {\r\n' +
+    '                try {\r\n' +
+    '                    (require("source-map-support") as typeof import("source-map-support")).install();\r\n' +
+    '                }\r\n' +
+    '                catch {\r\n' +
+    '                    // Could not enable source maps.\r\n' +
+    '                }\r\n' +
+    '            },\r\n' +
+    '            setTimeout: (callback: (label?: unknown) => void, ms: number, label?: unknown): unknown => setTimeout(callback, ms, label),\r\n' +
+    '            clearTimeout: (timeoutId: Parameters<typeof clearTimeout>[0]): void => { clearTimeout(timeoutId); },\r\n' +
+    '            clearScreen: () => {\r\n' +
+    '                process.stdout.write("\\x1B[2J\\x1B[3J\\x1B[H");\r\n' +
+    '            },\r\n' +
+    '            setBlocking: () => {\r\n' +
+    '                const handle = (process.stdout as any)?._handle as { setBlocking?: (value: boolean) => void; };\r\n' +
+    '                if (handle && handle.setBlocking) {\r\n' +
+    '                    handle.setBlocking(true);\r\n' +
+    '                }\r\n' +
+    '            },\r\n' +
+    '            base64decode: input => Buffer.from(input, "base64").toString("utf8"),\r\n' +
+    '            base64encode: input => Buffer.from(input).toString("base64"),\r\n' +
+    '            require: (baseDir, moduleName) => {\r\n' +
+    '                try {\r\n' +
+    '                    const modulePath = resolveJSModule(moduleName, baseDir, nodeSystem);\r\n' +
+    '                    return { module: require(modulePath), modulePath, error: undefined };\r\n' +
+    '                }\r\n' +
+    '                catch (error) {\r\n' +
+    '                    return { module: undefined, modulePath: undefined, error };\r\n' +
+    '                }\r\n' +
+    '            },\r\n' +
+    '        };\r\n' +
+    '        return nodeSystem;\r\n' +
+    '\r\n' +
+    '        /** Calls fs.statSync, returning undefined if any errors are thrown */\r\n' +
+    '        function statSync(path: string): import("fs").Stats | undefined {\r\n' +
+    '            // throwIfNoEntry is available in Node 14.17 and above, which matches our supported range.\r\n' +
+    '            try {\r\n' +
+    '                return _fs.statSync(path, statSyncOptions);\r\n' +
+    '            }\r\n' +
+    '            catch {\r\n' +
+    '                // This should never happen as we are passing throwIfNoEntry: false,\r\n' +
+    "                // but guard against this just in case (e.g. a polyfill doesn't check this flag).\r\n" +
+    '                return undefined;\r\n' +
+    '            }\r\n' +
+    '        }\r\n' +
+    '\r\n' +
+    '        /**\r\n' +
+    '         * Uses the builtin inspector APIs to capture a CPU profile\r\n' +
+    '         * See https://nodejs.org/api/inspector.html#inspector_example_usage for details\r\n' +
+    '         */\r\n' +
+    '        function enableCPUProfiler(path: string, cb: () => void) {\r\n' +
+    '            if (activeSession) {\r\n' +
+    '                cb();\r\n' +
+    '                return false;\r\n' +
+    '            }\r\n' +
+    '            const inspector: typeof import("inspector") = require("inspector");\r\n' +
+    '            if (!inspector || !inspector.Session) {\r\n' +
+    '                cb();\r\n' +
+    '                return false;\r\n' +
+    '            }\r\n' +
+    '            const session = new inspector.Session();\r\n' +
+    '            session.connect();\r\n' +
+    '\r\n' +
+    '            session.post("Profiler.enable", () => {\r\n' +
+    '                session.post("Profiler.start", () => {\r\n' +
+    '                    activeSession = session;\r\n' +
+    '                    profilePath = path;\r\n' +
+    '                    cb();\r\n' +
+    '                });\r\n' +
+    '            });\r\n' +
+    '            return true;\r\n' +
+    '        }\r\n' +
+    '\r\n' +
+    '        /**\r\n' +
+    "         * Strips non-TS paths from the profile, so users with private projects shouldn't\r\n" +
+    '         * need to worry about leaking paths by submitting a cpu profile to us\r\n' +
+    '         */\r\n' +
+    '        function cleanupPaths(profile: import("inspector").Profiler.Profile) {\r\n' +
+    '            let externalFileCounter = 0;\r\n' +
+    '            const remappedPaths = new Map<string, string>();\r\n' +
+    '            const normalizedDir = normalizeSlashes(_path.dirname(executingFilePath));\r\n' +
+    '            // Windows rooted dir names'... 11582 more characters,
+  expected: 'function getNodeSystem(): System {\r\n' +
+    '        const nativePattern = /^native |^\\([^)]+\\)$|^(?:internal[\\\\/]|[\\w\\s]+(?:\\.js)?$)/;\r\n' +
+    '        // crypto can be absent on reduced node installations\r\n' +
+    '        let _crypto: typeof import("crypto") | undefined;\r\n' +
+    '        try {\r\n' +
+    '            _crypto = require("crypto");\r\n' +
+    '        }\r\n' +
+    '        catch {\r\n' +
+    '            _crypto = undefined;\r\n' +
+    '        }\r\n' +
+    '        let activeSession: import("inspector").Session | "stopping" | undefined;\r\n' +
+    '        let profilePath = "./profile.cpuprofile";\r\n' +
+    '\r\n' +
+    '        const isMacOs = process.platform === "darwin";\r\n' +
+    '        const isLinuxOrMacOs = process.platform === "linux" || isMacOs;\r\n' +
+    '\r\n' +
+    '        const statSyncOptions = { throwIfNoEntry: false } as const;\r\n' +
+    '\r\n' +
+    '        const platform: string = _os.platform();\r\n' +
+    '        const useCaseSensitiveFileNames = isFileSystemCaseSensitive();\r\n' +
+    '        const fsRealpath = !!_fs.realpathSync.native ? process.platform === "win32" ? fsRealPathHandlingLongPath : _fs.realpathSync.native : _fs.realpathSync;\r\n' +
+    '\r\n' +
+    '        // If our filename is "sys.js", then we are executing unbundled on the raw tsc output.\r\n' +
+    '        // In that case, simulate a faked path in the directory where a bundle would normally\r\n' +
+    '        // appear (e.g. the directory containing lib.*.d.ts files).\r\n' +
+    '        //\r\n' +
+    '        // Note that if we ever emit as files like cjs/mjs, this check will be wrong.\r\n' +
+    '        const executingFilePath = __filename.endsWith("sys.js") ? _path.join(_path.dirname(__dirname), "__fake__.js") : __filename;\r\n' +
+    '\r\n' +
+    '        const fsSupportsRecursiveFsWatch = process.platform === "win32" || isMacOs;\r\n' +
+    '        const getCurrentDirectory = memoize(() => process.cwd());\r\n' +
+    '        const { watchFile, watchDirectory } = createSystemWatchFunctions({\r\n' +
+    '            pollingWatchFileWorker: fsWatchFileWorker,\r\n' +
+    '            getModifiedTime,\r\n' +
+    '            setTimeout: (callback: (label?: unknown) => void, ms: number, label?: unknown): unknown => setTimeout(callback, ms, label),\r\n' +
+    '            clearTimeout: (timeoutId: Parameters<typeof clearTimeout>[0]): void => { clearTimeout(timeoutId); },\r\n' +
+    '            fsWatchWorker,\r\n' +
+    '            useCaseSensitiveFileNames,\r\n' +
+    '            getCurrentDirectory,\r\n' +
+    '            fileSystemEntryExists,\r\n' +
+    '            // Node 4.0 `fs.watch` function supports the "recursive" option on both OSX and Windows\r\n' +
+    '            // (ref: https://github.com/nodejs/node/pull/2649 and https://github.com/Microsoft/TypeScript/issues/4643)\r\n' +
+    '            fsSupportsRecursiveFsWatch,\r\n' +
+    '            getAccessibleSortedChildDirectories: path => getAccessibleFileSystemEntries(path).directories,\r\n' +
+    '            realpath,\r\n' +
+    '            tscWatchFile: process.env.TSC_WATCHFILE,\r\n' +
+    '            useNonPollingWatchers: !!process.env.TSC_NONPOLLING_WATCHER,\r\n' +
+    '            tscWatchDirectory: process.env.TSC_WATCHDIRECTORY,\r\n' +
+    '            inodeWatching: isLinuxOrMacOs,\r\n' +
+    '            fsWatchWithTimestamp: isMacOs,\r\n' +
+    '            sysLog,\r\n' +
+    '        });\r\n' +
+    '        const nodeSystem: System = {\r\n' +
+    '            args: process.argv.slice(2),\r\n' +
+    '            newLine: _os.EOL,\r\n' +
+    '            useCaseSensitiveFileNames,\r\n' +
+    '            write(s: string): void {\r\n' +
+    '                process.stdout.write(s);\r\n' +
+    '            },\r\n' +
+    '            getWidthOfTerminal() {\r\n' +
+    '                return process.stdout.columns ?? 0;\r\n' +
+    '            },\r\n' +
+    '            writeOutputIsTTY() {\r\n' +
+    '                return !!process.stdout.isTTY;\r\n' +
+    '            },\r\n' +
+    '            readFile,\r\n' +
+    '            writeFile,\r\n' +
+    '            watchFile,\r\n' +
+    '            watchDirectory,\r\n' +
+    '            preferNonRecursiveWatch: !fsSupportsRecursiveFsWatch,\r\n' +
+    '            resolvePath: path => _path.resolve(path),\r\n' +
+    '            fileExists,\r\n' +
+    '            directoryExists,\r\n' +
+    '            getAccessibleFileSystemEntries,\r\n' +
+    '            createDirectory(directoryName: string) {\r\n' +
+    '                if (!nodeSystem.directoryExists(directoryName)) {\r\n' +
+    '                    // Wrapped in a try-catch to prevent crashing if we are in a race\r\n' +
+    '                    // with another copy of ourselves to create the same directory\r\n' +
+    '                    try {\r\n' +
+    '                        _fs.mkdirSync(directoryName);\r\n' +
+    '                    }\r\n' +
+    '                    catch (e) {\r\n' +
+    '                        if (errorCode(e) !== "EEXIST") {\r\n' +
+    '                            // Failed for some other reason (access denied?); still throw\r\n' +
+    '                            throw e;\r\n' +
+    '                        }\r\n' +
+    '                    }\r\n' +
+    '                }\r\n' +
+    '            },\r\n' +
+    '            getExecutingFilePath() {\r\n' +
+    '                return executingFilePath;\r\n' +
+    '            },\r\n' +
+    '            getCurrentDirectory,\r\n' +
+    '            getDirectories,\r\n' +
+    '            getEnvironmentVariable(name: string) {\r\n' +
+    '                return process.env[name] || "";\r\n' +
+    '            },\r\n' +
+    '            readDirectory,\r\n' +
+    '            getModifiedTime,\r\n' +
+    '            setModifiedTime,\r\n' +
+    '            deleteFile,\r\n' +
+    '            createHash: _crypto ? createSHA256Hash : generateDjb2Hash,\r\n' +
+    '            createSHA256Hash: _crypto ? createSHA256Hash : undefined,\r\n' +
+    '            getMemoryUsage() {\r\n' +
+    '                if (global.gc) {\r\n' +
+    '                    global.gc();\r\n' +
+    '                }\r\n' +
+    '                return process.memoryUsage().heapUsed;\r\n' +
+    '            },\r\n' +
+    '            getFileSize(path) {\r\n' +
+    '                const stat = statSync(path);\r\n' +
+    '                if (stat?.isFile()) {\r\n' +
+    '                    return stat.size;\r\n' +
+    '                }\r\n' +
+    '                return 0;\r\n' +
+    '            },\r\n' +
+    '            exit(exitCode?: number): undefined {\r\n' +
+    '                disableCPUProfiler(() => process.exit(exitCode));\r\n' +
+    '            },\r\n' +
+    '            enableCPUProfiler,\r\n' +
+    '            disableCPUProfiler,\r\n' +
+    '            cpuProfilingEnabled: () => !!activeSession || contains(process.execArgv, "--cpu-prof") || contains(process.execArgv, "--prof"),\r\n' +
+    '            realpath,\r\n' +
+    '            debugMode: !!process.env.NODE_INSPECTOR_IPC || !!process.env.VSCODE_INSPECTOR_OPTIONS || some(process.execArgv, arg => /^--(?:inspect|debug)(?:-brk)?(?:=\\d+)?$/i.test(arg)) || !!(process as any).recordreplay,\r\n' +
+    '            tryEnableSourceMapsForHost() {\r\n' +
+    '                try {\r\n' +
+    '                    (require("source-map-support") as typeof import("source-map-support")).install();\r\n' +
+    '                }\r\n' +
+    '                catch {\r\n' +
+    '                    // Could not enable source maps.\r\n' +
+    '                }\r\n' +
+    '            },\r\n' +
+    '            setTimeout: (callback: (label?: unknown) => void, ms: number, label?: unknown): unknown => setTimeout(callback, ms, label),\r\n' +
+    '            clearTimeout: (timeoutId: Parameters<typeof clearTimeout>[0]): void => { clearTimeout(timeoutId); },\r\n' +
+    '            clearScreen: () => {\r\n' +
+    '                process.stdout.write("\\x1B[2J\\x1B[3J\\x1B[H");\r\n' +
+    '            },\r\n' +
+    '            setBlocking: () => {\r\n' +
+    '                const handle = (process.stdout as any)?._handle as { setBlocking?: (value: boolean) => void; };\r\n' +
+    '                if (handle && handle.setBlocking) {\r\n' +
+    '                    handle.setBlocking(true);\r\n' +
+    '                }\r\n' +
+    '            },\r\n' +
+    '            base64decode: input => Buffer.from(input, "base64").toString("utf8"),\r\n' +
+    '            base64encode: input => Buffer.from(input).toString("base64"),\r\n' +
+    '            require: (baseDir, moduleName) => {\r\n' +
+    '                try {\r\n' +
+    '                    const modulePath = resolveJSModule(moduleName, baseDir, nodeSystem);\r\n' +
+    '                    return { module: require(modulePath), modulePath, error: undefined };\r\n' +
+    '                }\r\n' +
+    '                catch (error) {\r\n' +
+    '                    return { module: undefined, modulePath: undefined, error };\r\n' +
+    '                }\r\n' +
+    '            },\r\n' +
+    '        };\r\n' +
+    '        return nodeSystem;\r\n' +
+    '\r\n' +
+    '        /** Calls fs.statSync, returning undefined if any errors are thrown */\r\n' +
+    '        function statSync(path: string): import("fs").Stats | undefined {\r\n' +
+    '            // throwIfNoEntry is available in Node 14.17 and above, which matches our supported range.\r\n' +
+    '            try {\r\n' +
+    '                return _fs.statSync(path, statSyncOptions);\r\n' +
+    '            }\r\n' +
+    '            catch {\r\n' +
+    '                // This should never happen as we are passing throwIfNoEntry: false,\r\n' +
+    "                // but guard against this just in case (e.g. a polyfill doesn't check this flag).\r\n" +
+    '                return undefined;\r\n' +
+    '            }\r\n' +
+    '        }\r\n' +
+    '\r\n' +
+    '        /**\r\n' +
+    '         * Uses the builtin inspector APIs to capture a CPU profile\r\n' +
+    '         * See https://nodejs.org/api/inspector.html#inspector_example_usage for details\r\n' +
+    '         */\r\n' +
+    '        function enableCPUProfiler(path: string, cb: () => void) {\r\n' +
+    '            if (activeSession) {\r\n' +
+    '                cb();\r\n' +
+    '                return false;\r\n' +
+    '            }\r\n' +
+    '            const inspector: typeof import("inspector") = require("inspector");\r\n' +
+    '            if (!inspector || !inspector.Session) {\r\n' +
+    '                cb();\r\n' +
+    '                return false;\r\n' +
+    '            }\r\n' +
+    '            const session = new inspector.Session();\r\n' +
+    '            session.connect();\r\n' +
+    '\r\n' +
+    '            session.post("Profiler.enable", () => {\r\n' +
+    '                session.post("Profiler.start", () => {\r\n' +
+    '                    activeSession = session;\r\n' +
+    '                    profilePath = path;\r\n' +
+    '                    cb();\r\n' +
+    '                });\r\n' +
+    '            });\r\n' +
+    '            return true;\r\n' +
+    '        }\r\n' +
+    '\r\n' +
+    '        /**\r\n' +
+    "         * Strips non-TS paths from the profile, so users with private projects shouldn't\r\n" +
+    '         * need to worry about leaking paths by submitting a cpu profile to us\r\n' +
+    '         */\r\n' +
+    '        function cleanupPaths(profile: import("inspector").Profiler.Profile) {\r\n' +
+    '            let externalFileCounter = 0;\r\n' +
+    '            const remappedPaths = new Map<string, string>();\r\n' +
+    '            const normalizedDir = normalizeSlashes(_path.dirname(executingFilePath));\r\n' +
+    '            // Windows rooted dir names need an extra `/` prepended to be valid file:/// urls\r\n' +
+    '            const fileUrlRoot = `file://${getRootLength(normalizedDir) === 1 ? "" : "/"}${normalizedDir}`;\r\n' +
+    '            for (const node of profile.nodes) {\r\n' +
+    '                if (node.callFrame.url) {\r\n' +
+    '                    const url = normalizeSlashes(node.callFrame.url);\r\n' +
+    '                    if (containsPath(fileUrlRoot, url, useCaseSensitiveFileNames)) {\r\n' +
+    '                        node.callF'... 11135 more characters,
+  operator: 'strictEqual',
+  diff: 'simple'
+}
+
+Node.js v24.19.0
