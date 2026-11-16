@@ -8,8 +8,11 @@
 # step that fails, so the `&&` stops the job before its command. A rented machine runs the job in a laid tree with no
 # .git, an empty HOME at /tmp/home and a read-only /opt/adamic-block, so:
 #   - TMPDIR is made, since the job's tools write there first;
-#   - the build cache lives under the tree (ADAMIC_BUILD_CACHE_DIR), on the data disk: internal/native's debug products refuse the home
-#     cache (Apple's J-7me59b7 and J-8xkd55x);
+#   - the build cache (ADAMIC_BUILD_CACHE_DIR) and the TypeScript copy live outside the tree, in LOOM_JOB_SCRATCH where
+#     the runner names one (the job's own directory on the tree's data disk) and in TMPDIR where it doesn't: a walker
+#     that reads every file under $PWD never meets the kit's own files (internal/acheck read the cache's runtime.a as
+#     programs, CLI's J-0pmqbfg; Adamic's rule on #qee4r6g), and internal/native's debug products refuse the home cache
+#     (Apple's J-7me59b7 and J-8xkd55x);
 #   - npm's logs go under it, since /opt/adamic-block/npmcache/_logs is read-only (WebAssembly);
 #   - sealed_git gives the job a one-commit git of the tree as laid, for a mutant script that restores a file with
 #     `git show HEAD:<file>` or reads `git status`. It costs about 27 s over adamic's tree (Loom's J-a5zgp8d), so only a
@@ -24,8 +27,15 @@ sealedJobFail() {
 
 [ -n "${TMPDIR:-}" ] || export TMPDIR=/tmp/sealed-job
 mkdir -p "$TMPDIR" || sealedJobFail "couldn't make TMPDIR $TMPDIR" || return 1
-# Under the tree, on the machine's data disk, not the small private /tmp (adamic-loom on #1ndpe51)
-export ADAMIC_BUILD_CACHE_DIR="$PWD/.sealed-build-cache"
+# Outside the tree, on the tree's disk where the runner names a place (adamic-loom on #1ndpe51: not the small private /tmp),
+# else the job's TMPDIR, one rule with lay.sh's (Adamic on #qee4r6g). A scratch the runner put inside the tree is refused,
+# never used: the cache would be back where a walker reads it.
+sealedJobScratch="${LOOM_JOB_SCRATCH:-$TMPDIR}"
+mkdir -p "$sealedJobScratch" || sealedJobFail "couldn't make the job's scratch $sealedJobScratch" || return 1
+case "$(cd "$sealedJobScratch" && pwd -P)/" in
+	"$(pwd -P)"/*) sealedJobFail "the job's scratch $sealedJobScratch is inside the tree $PWD" || return 1 ;;
+esac
+export ADAMIC_BUILD_CACHE_DIR="$sealedJobScratch/adamic-build"
 mkdir -p "$ADAMIC_BUILD_CACHE_DIR" || sealedJobFail "couldn't make the build cache $ADAMIC_BUILD_CACHE_DIR" || return 1
 export npm_config_logs_dir="$TMPDIR/npm-logs"
 mkdir -p "$npm_config_logs_dir" || sealedJobFail "couldn't make npm's log directory $npm_config_logs_dir" || return 1
@@ -34,14 +44,14 @@ mkdir -p "$npm_config_logs_dir" || sealedJobFail "couldn't make npm's log direct
 export GIT_AUTHOR_NAME="${GIT_AUTHOR_NAME:-sealed-job}" GIT_AUTHOR_EMAIL="${GIT_AUTHOR_EMAIL:-sealed-job@loom.invalid}"
 export GIT_COMMITTER_NAME="${GIT_COMMITTER_NAME:-sealed-job}" GIT_COMMITTER_EMAIL="${GIT_COMMITTER_EMAIL:-sealed-job@loom.invalid}"
 
-# sealed_typescript_source: the image's TypeScript source becomes the job's own copy, under the tree, and
+# sealed_typescript_source: the image's TypeScript source becomes the job's own copy, in the job's scratch, and
 # ADAMIC_TYPESCRIPT_SOURCE names it. The image's copy is root's and the job runs as its own user, so git calls it dubious
 # and the corpus can't read its pin (J-hstk35n, J-6nnj4ys: internal/lower's census products). No config can name it
 # safe for that reader: internal/buildcache's PinnedGit runs git with GIT_CONFIG_GLOBAL=/dev/null and no system config,
 # and git ignores safe.directory given by -c or the environment. A copy the job owns is block-report's road
 # (cloud/block-report/run.sh). sealed_products calls it; a command that reads the source some other way can too.
 sealed_typescript_source() {
-	local source="${ADAMIC_TYPESCRIPT_SOURCE:-}" copy="$PWD/.sealed-typescript-source" begun=$SECONDS
+	local source="${ADAMIC_TYPESCRIPT_SOURCE:-}" copy="$sealedJobScratch/typescript-source" begun=$SECONDS
 	[ -n "$source" ] || sealedJobFail "ADAMIC_TYPESCRIPT_SOURCE is unset: source the image's environment.sh first" || return 1
 	[ "$source" != "$copy" ] || return 0
 	[ ! -e "$copy" ] || sealedJobFail "$copy is already there, and isn't ADAMIC_TYPESCRIPT_SOURCE" || return 1
@@ -56,9 +66,6 @@ sealed_git() {
 	[ -f go.work ] || [ -f go.mod ] || sealedJobFail "sealed_git runs from the tree's root" || return 1
 	[ ! -e .git ] || sealedJobFail "this tree already has a .git; sealed_git is for a laid tree with none" || return 1
 	git init -q || sealedJobFail "git init failed" || return 1
-	# The build cache this preamble puts under the tree is never part of the tree as laid
-	printf '%s\n' /.sealed-build-cache/ /.sealed-typescript-source/ >> .git/info/exclude ||
-		sealedJobFail "couldn't keep the build cache and the TypeScript copy out of the commit" || return 1
 	git add -A || sealedJobFail "git add failed" || return 1
 	git -c user.name=sealed-job -c user.email=sealed-job@loom.invalid -c commit.gpgsign=false commit -q --no-verify \
 		-m "the tree as laid" || sealedJobFail "git commit failed" || return 1
