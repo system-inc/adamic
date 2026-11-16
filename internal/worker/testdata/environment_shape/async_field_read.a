@@ -1,0 +1,7 @@
+import type {HttpRequest,HttpResponse} from 'adamic/http';
+interface Environment {readonly ZONE:string; readonly GREETING:string}
+async function text(value:string):Promise<string> {return value;}
+export async function handle(request:HttpRequest,environment:Environment):Promise<HttpResponse> {
+ const body=await text(environment.ZONE+environment.GREETING+request.path);
+ return {status:200,headers:[],body};
+}
