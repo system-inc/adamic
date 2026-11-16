@@ -1,0 +1,17 @@
+// A comparator that throws on any pair holding 1: every sort of three distinct numbers compares each
+// of them, so it always throws, and the throw leaves the sort and its shared argument array (#367nnz2)
+// for the catch. A sort after it, with a comparator of the same shape, gets a pair array of its own.
+function compare(left: number, right: number): number {
+	if (left === 1 || right === 1) {
+		throw new Error('one is not comparable');
+	}
+	return left - right;
+}
+try {
+	const order = [3, 1, 2].slice().sort((left: number, right: number) => compare(left, right));
+	console.log(`not reached ${order.join(',')}`);
+} catch (error) {
+	console.log(`caught ${error instanceof Error ? error.message : 'something'}`);
+}
+console.log('after');
+console.log([3, 4, 2].slice().sort((left: number, right: number) => compare(left, right)).join(','));

@@ -1,0 +1,13 @@
+// A closure comparator, so the JavaScript backend sorts through adamicSort, which hands every
+// comparison the same two-element array written in place (#367nnz2). A small array, then a hundred
+// numbers from a linear congruential loop, sorted ascending.
+const small = [5, 3, 9, 1].slice().sort((left: number, right: number) => left - right);
+console.log(small.join(','));
+const values: number[] = [];
+let seed = 12345;
+for (let index = 0; index < 100; index++) {
+	seed = (seed * 75 + 74) % 65537;
+	values.push(seed % 1000);
+}
+const sorted = values.slice().sort((left: number, right: number) => left - right);
+console.log(`${sorted.length} ${sorted[0]} ${sorted[50]} ${sorted[99]}`);
