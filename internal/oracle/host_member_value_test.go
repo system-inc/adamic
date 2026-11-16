@@ -20,6 +20,8 @@ import (
 //   - v2 is Adamic's ruled pin 2 with a method-syntax member: .call with another literal of the same
 //     layout. v2b is the same with a function expression, as the ruling words it.
 //   - h3 is Compiler's reordered twin: the thisArg's literal puts prefix at another offset.
+//   - v3 makes one literal twice through a factory and calls a's method through .call with b: one
+//     allocation site, so it lowers. v4's thisArg may be either of two literals, the read's and another.
 //   - h2 is Language's: a saved method that reads this, called with no receiver, where Node throws.
 //   - h4 is Compiler's: a method that reads this.x, restored to an object of another literal whose x sits
 //     at the same index but holds a string. h4b saves, patches and restores a method on one literal.
@@ -36,6 +38,11 @@ import (
 // .call and stop during lowering at main's refusal of a method read as a value, until head 2 lowers .call.
 // s3 stops at the same refusal by the reach rule. h4 stops at its restore, a method moved between objects
 // of different literals, and h4b lowers and agrees.
+//
+// Head 2 lowers .call(t, ...args) as bind's road does and admits it under the restore's one-site rule:
+// t's reach is known and it and the read are one allocation site. v1 and v3 lower and agree. v2, v2b, h3
+// and v4 hand .call an object of another literal; their .stop is a placeholder until they're measured. s1
+// and s2 now lower their .call and stop at the reach rule, in main's words as before.
 //
 // Mutants (internal/lower/host-member-value.mutants.md).
 func TestHostMemberValueAgreesOrStops(t *testing.T) {
@@ -100,7 +107,7 @@ func TestHostMemberValueAgreesOrStops(t *testing.T) {
 		})
 	}
 	// A program lost from the directory must fail here, not shrink the walk.
-	if programs != 28 {
-		t.Fatalf("found %d programs, want 28", programs)
+	if programs != 32 {
+		t.Fatalf("found %d programs, want 32", programs)
 	}
 }

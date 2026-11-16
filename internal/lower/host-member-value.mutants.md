@@ -36,23 +36,55 @@ New:
 ```
 
 Red: s3_unknown_reach_plain_call, .a and .ts: a read whose reach is unknown goes on to its uses, so its
-plain call is judged in place of main's refusal. It's the mutant's only witness: every other unknown-reach
-row calls through .call and stops during lowering, before the reach rule is asked.
+plain call is judged in place of main's refusal. Head 1 measured it as the mutant's only witness, when
+every other unknown-reach row called through .call and stopped during lowering, before the reach rule was
+asked. Predicted for head 2, which lowers .call, not measured: s2_unknown_reach, .a and .ts, goes red too,
+its .call judged in place of main's refusal and stopped there, since its thisArg's reach is unknown as well.
+s1_class_instance stays green: its class instance holds no read field of its own, which stops in main's
+words.
 
 ## (d) A restore let through to an object of another literal
 
 In hostMemberValueRestore, old:
 
 ```go
-			if site != sites[0] {
+		if !one {
+			return l.notYet(assignment, writing+", a method moved between objects of different literals")
 ```
 
 New:
 
 ```go
-			if false && site != sites[0] {
+		if false && !one {
+			return l.notYet(assignment, writing+", a method moved between objects of different literals")
 ```
 
 Red: h4_layout_representation, .a and .ts, each `lowered, want ...`: x sits at index 0 in both literals,
 so the layout rule alone admits the restore though one holds a number there and the other a string.
-h4b_single_literal_restore stays green.
+h4b_single_literal_restore stays green. Head 1 measured it on the check before hostMemberOneSite was
+factored out of the restore; the edit above is that check's place now, and the red is predicted the same.
+
+## (e) A .call let through with an object of another literal
+
+In hostMemberValueThrough, old:
+
+```go
+	if !one {
+		return l.notYet(member, held+" with an object of another literal")
+```
+
+New:
+
+```go
+	if false && !one {
+		return l.notYet(member, held+" with an object of another literal")
+```
+
+The layout rule still runs, over the read's site alone. Predicted, not measured: v2_same_layout_this and
+h3_reordered_layout, .a and .ts, each `lowered, want ...`. Run with their .stop set to `lowers`, v2 agrees
+with Node, its two literals one layout and one representation, and h3 reads wrong on the release build:
+its method reads this.prefix where the read's literal holds it, and the thisArg's literal holds read there.
+Should h3 agree too, its method reading prefix by name, the mutant has no witness that reads wrong, and the
+rule needs h4's twin through .call: a thisArg of another literal holding a string where the method reads
+a number. v2b_function_expression_this is predicted unmoved by the mutant, stopping during lowering at the
+function expression's this (library_function_expressions.go), which main's refusal of the read masks.
