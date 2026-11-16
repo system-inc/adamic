@@ -1,0 +1,712 @@
+{
+  "status": "verified",
+  "source": {
+    "baseline": "62f6686cd9d22161a7940bee22ccc51f99ecad66",
+    "amendment": "45683ea92fff236245349385455f9d0f7b8ce1f5",
+    "parent": "62f6686cd9d22161a7940bee22ccc51f99ecad66",
+    "main": "2e7a94168cd6b1046799f00d6843f4b0796d4e5d",
+    "noRecutPerformed": true,
+    "sourceWorktreesClean": true,
+    "compilerSourcesIdenticalBetweenHeads": true,
+    "amendmentPaths": [
+      "stage3/adapt/99-wasm-crypto-import/README.md",
+      "stage3/adapt/99-wasm-crypto-import/adapt.cjs",
+      "stage3/adapt/99-wasm-crypto-import/proofs/check.cjs",
+      "stage3/adapt/99-wasm-crypto-import/proofs/recordreplay-contract.cjs",
+      "stage3/adapt/99-wasm-crypto-import/proofs/recordreplay/check.py",
+      "stage3/adapt/99-wasm-crypto-import/proofs/recordreplay/inventory-99-current.json",
+      "stage3/adapt/99-wasm-crypto-import/proofs/recordreplay/inventory-final-readers.json",
+      "stage3/adapt/99-wasm-crypto-import/proofs/recordreplay/inventory-specific.json",
+      "stage3/adapt/99-wasm-crypto-import/proofs/recordreplay/results.json",
+      "stage3/adapt/99-wasm-crypto-import/proofs/require-result-contract.cjs",
+      "stage3/adapt/99-wasm-crypto-import/proofs/scope-mutant.cjs",
+      "stage3/adapt/99-wasm-crypto-import/proofs/scoped-hashes.cjs",
+      "stage3/adapt/99-wasm-crypto-import/proofs/scoped.py",
+      "stage3/adapt/99-wasm-crypto-import/proofs/targets.json",
+      "stage3/adapt/99-wasm-crypto-import/recordreplay.cjs"
+    ],
+    "adaptedSourceChanges": [
+      "src/compiler/sys.ts",
+      "src/recordreplay.d.ts"
+    ],
+    "baselineSourceFiles": 747,
+    "finalSourceFiles": 748,
+    "official93Snapshots": {
+      "before": "19c16edb2132cbe647f72aae6dee57fa6302176d",
+      "after": "7552d9b8c19b0d6f78097a9f9f8bf15d45ce394d"
+    }
+  },
+  "setup": {
+    "typescriptSourceCommit": "050880ce59e30b356b686bd3144efe24f875ebc8",
+    "typescriptVersion": "6.0.3",
+    "nodeTypesVersion": "25.3.3",
+    "scratchEnvironment": [
+      "export PATH=/workspace/adamic-tools/bin:/workspace/adamic-tools/go/bin:$PATH",
+      "export TMPDIR=/workspace/scratch/recordreplay-amend-3-proof/tmp",
+      "export GOTMPDIR=/workspace/scratch/recordreplay-amend-3-proof/tmp",
+      "export GOCACHE=/workspace/scratch/recordreplay-amend-2-cont/gocache",
+      "export npm_config_cache=/workspace/scratch/recordreplay-amend-3-proof/npm-cache",
+      "export ADAMIC_TYPESCRIPT_SOURCE=/workspace/scratch/recordreplay-amend-2/typescript",
+      "export NODE_PATH=/workspace/scratch/recordreplay-amend-3-proof/final-repo/stage3/api/node_modules",
+      "export PYTHONDONTWRITEBYTECODE=1",
+      "export STAGE3_CACHE=/workspace/scratch/recordreplay-amend-3-proof/stage3-cache",
+      "export ADAMIC_BUILD_CACHE_DIR=/workspace/scratch/recordreplay-amend-3-proof/build-cache"
+    ],
+    "censusEnvironment": {
+      "LATENT_FULL": "1",
+      "LATENT_ASSERT_NO_OUTPUT": "1",
+      "CENSUS_MODULE_FORMAT": "CommonJSBundle",
+      "LATENT_ONLY_FILE": "each fresh tree src/compiler/sys.ts"
+    },
+    "submodules": [
+      "5360753e19e4417675a90e92a1823bea66b13918 cohere (5360753e)",
+      " d92d9bfee114c80be2c375d72edae966176e3a4f cohere/TypeScript (d92d9bfe)"
+    ]
+  },
+  "proofs": [
+    {
+      "name": "base-fresh-apply",
+      "exit": 0,
+      "seconds": 830.674,
+      "command": [
+        "bash",
+        "stage3/apply.sh",
+        "/workspace/scratch/recordreplay-amend-3-proof/control"
+      ],
+      "cwd": "/workspace/scratch/recordreplay-amend-3-proof/base-repo",
+      "log": "logs/base-fresh-apply.log.gz"
+    },
+    {
+      "name": "final-fresh-apply",
+      "exit": 0,
+      "seconds": 814.831,
+      "command": [
+        "bash",
+        "stage3/apply.sh",
+        "/workspace/scratch/recordreplay-amend-3-proof/candidate2"
+      ],
+      "cwd": "/workspace/scratch/recordreplay-amend-3-proof/final-repo",
+      "log": "logs/final-fresh-apply.log.gz"
+    },
+    {
+      "name": "recordreplay-check",
+      "exit": 0,
+      "seconds": 16.496,
+      "command": [
+        "python3",
+        "stage3/adapt/99-wasm-crypto-import/proofs/recordreplay/check.py",
+        "/workspace/scratch/recordreplay-amend-3-proof"
+      ],
+      "cwd": "/workspace/scratch/recordreplay-amend-3-proof/final-repo",
+      "log": "logs/recordreplay-check.log.gz"
+    },
+    {
+      "name": "recordreplay-contract",
+      "exit": 0,
+      "seconds": 14.601,
+      "command": [
+        "node",
+        "stage3/adapt/99-wasm-crypto-import/proofs/recordreplay-contract.cjs",
+        "/workspace/scratch/recordreplay-amend-3-proof/pre99",
+        "/workspace/scratch/recordreplay-amend-3-proof/planned-after.ts"
+      ],
+      "cwd": "/workspace/scratch/recordreplay-amend-3-proof/final-repo",
+      "log": "logs/recordreplay-contract.log.gz"
+    },
+    {
+      "name": "require-result-contract",
+      "exit": 0,
+      "seconds": 63.773,
+      "command": [
+        "node",
+        "stage3/adapt/99-wasm-crypto-import/proofs/require-result-contract.cjs",
+        "/workspace/scratch/recordreplay-amend-3-proof/candidate2",
+        "/workspace/scratch/recordreplay-amend-3-proof/control"
+      ],
+      "cwd": "/workspace/scratch/recordreplay-amend-3-proof/final-repo",
+      "log": "logs/require-result-contract.log.gz"
+    },
+    {
+      "name": "resolve-host-contract",
+      "exit": 0,
+      "seconds": 1.352,
+      "command": [
+        "node",
+        "stage3/adapt/99-wasm-crypto-import/proofs/resolve-host-contract.cjs"
+      ],
+      "cwd": "/workspace/scratch/recordreplay-amend-3-proof/final-repo",
+      "log": "logs/resolve-host-contract.log.gz"
+    },
+    {
+      "name": "crypto-check",
+      "exit": 0,
+      "seconds": 4.478,
+      "command": [
+        "node",
+        "stage3/adapt/99-wasm-crypto-import/proofs/check.cjs",
+        "/workspace/scratch/recordreplay-amend-3-proof/pre99",
+        "/workspace/scratch/recordreplay-amend-3-proof/candidate2",
+        "/workspace/scratch/recordreplay-amend-3-proof/crypto-check.json"
+      ],
+      "cwd": "/workspace/scratch/recordreplay-amend-3-proof/final-repo",
+      "log": "logs/crypto-check.log.gz"
+    },
+    {
+      "name": "bindings",
+      "exit": 0,
+      "seconds": 28.664,
+      "command": [
+        "node",
+        "stage3/adapt/99-wasm-crypto-import/proofs/bindings.cjs",
+        "/workspace/scratch/recordreplay-amend-3-proof/pre99",
+        "/workspace/scratch/recordreplay-amend-3-proof/amend-proof",
+        "/workspace/scratch/recordreplay-amend-3-proof/bindings.json"
+      ],
+      "cwd": "/workspace/scratch/recordreplay-amend-3-proof/final-repo",
+      "log": "logs/bindings.log.gz"
+    },
+    {
+      "name": "builtin-93-check",
+      "exit": 0,
+      "seconds": 2.999,
+      "command": [
+        "node",
+        "stage3/adapt/93-builtin-imports/proofs/check.cjs",
+        "/workspace/scratch/recordreplay-amend-3-proof/pre93",
+        "/workspace/scratch/recordreplay-amend-3-proof/post93",
+        "/workspace/scratch/recordreplay-amend-3-proof/builtin-93-check.json"
+      ],
+      "cwd": "/workspace/scratch/recordreplay-amend-3-proof/final-repo",
+      "log": "logs/builtin-93-check.log.gz"
+    },
+    {
+      "name": "baseline-stock",
+      "exit": 0,
+      "seconds": 52.688,
+      "command": [
+        "node",
+        "/workspace/scratch/recordreplay-amend-3-proof/stock.cjs",
+        "/workspace/scratch/recordreplay-amend-3-proof/control",
+        "/workspace/scratch/recordreplay-amend-3-proof/control-stock-data.json"
+      ],
+      "cwd": "/workspace/scratch/recordreplay-amend-3-proof/final-repo",
+      "log": "logs/baseline-stock.log.gz"
+    },
+    {
+      "name": "final-stock",
+      "exit": 0,
+      "seconds": 57.349,
+      "command": [
+        "node",
+        "/workspace/scratch/recordreplay-amend-3-proof/stock.cjs",
+        "/workspace/scratch/recordreplay-amend-3-proof/candidate2",
+        "/workspace/scratch/recordreplay-amend-3-proof/candidate2-stock-data.json"
+      ],
+      "cwd": "/workspace/scratch/recordreplay-amend-3-proof/final-repo",
+      "log": "logs/final-stock.log.gz"
+    },
+    {
+      "name": "baseline-adamic-types",
+      "exit": 0,
+      "seconds": 12.892,
+      "command": [
+        "/workspace/scratch/recordreplay-amend-3-proof/adamic",
+        "types",
+        "/workspace/scratch/recordreplay-amend-3-proof/control/src/compiler/_namespaces/ts.moduleSpecifiers.ts",
+        "/workspace/scratch/recordreplay-amend-3-proof/control/src/compiler/_namespaces/ts.performance.ts",
+        "/workspace/scratch/recordreplay-amend-3-proof/control/src/compiler/_namespaces/ts.ts",
+        "/workspace/scratch/recordreplay-amend-3-proof/control/src/compiler/binder.ts",
+        "/workspace/scratch/recordreplay-amend-3-proof/control/src/compiler/builder.ts",
+        "/workspace/scratch/recordreplay-amend-3-proof/control/src/compiler/builderPublic.ts",
+        "/workspace/scratch/recordreplay-amend-3-proof/control/src/compiler/builderState.ts",
+        "/workspace/scratch/recordreplay-amend-3-proof/control/src/compiler/builderStatePublic.ts",
+        "/workspace/scratch/recordreplay-amend-3-proof/control/src/compiler/checker.ts",
+        "/workspace/scratch/recordreplay-amend-3-proof/control/src/compiler/commandLineParser.ts",
+        "/workspace/scratch/recordreplay-amend-3-proof/control/src/compiler/core.ts",
+        "/workspace/scratch/recordreplay-amend-3-proof/control/src/compiler/corePublic.ts",
+        "/workspace/scratch/recordreplay-amend-3-proof/control/src/compiler/debug.ts",
+        "/workspace/scratch/recordreplay-amend-3-proof/control/src/compiler/diagnosticInformationMap.generated.ts",
+        "/workspace/scratch/recordreplay-amend-3-proof/control/src/compiler/emitter.ts",
+        "/workspace/scratch/recordreplay-amend-3-proof/control/src/compiler/executeCommandLine.ts",
+        "/workspace/scratch/recordreplay-amend-3-proof/control/src/compiler/expressionToTypeNode.ts",
+        "/workspace/scratch/recordreplay-amend-3-proof/control/src/compiler/factory/baseNodeFactory.ts",
+        "/workspace/scratch/recordreplay-amend-3-proof/control/src/compiler/factory/emitHelpers.ts",
+        "/workspace/scratch/recordreplay-amend-3-proof/control/src/compiler/factory/emitNode.ts",
+        "/workspace/scratch/recordreplay-amend-3-proof/control/src/compiler/factory/nodeChildren.ts",
+        "/workspace/scratch/recordreplay-amend-3-proof/control/src/compiler/factory/nodeConverters.ts",
+        "/workspace/scratch/recordreplay-amend-3-proof/control/src/compiler/factory/nodeFactory.ts",
+        "/workspace/scratch/recordreplay-amend-3-proof/control/src/compiler/factory/nodeTests.ts",
+        "/workspace/scratch/recordreplay-amend-3-proof/control/src/compiler/factory/parenthesizerRules.ts",
+        "/workspace/scratch/recordreplay-amend-3-proof/control/src/compiler/factory/utilities.ts",
+        "/workspace/scratch/recordreplay-amend-3-proof/control/src/compiler/factory/utilitiesPublic.ts",
+        "/workspace/scratch/recordreplay-amend-3-proof/control/src/compiler/hostErrors.ts",
+        "/workspace/scratch/recordreplay-amend-3-proof/control/src/compiler/moduleNameResolver.ts",
+        "/workspace/scratch/recordreplay-amend-3-proof/control/src/compiler/moduleSpecifiers.ts",
+        "/workspace/scratch/recordreplay-amend-3-proof/control/src/compiler/parser.ts",
+        "/workspace/scratch/recordreplay-amend-3-proof/control/src/compiler/path.ts",
+        "/workspace/scratch/recordreplay-amend-3-proof/control/src/compiler/performance.ts",
+        "/workspace/scratch/recordreplay-amend-3-proof/control/src/compiler/performanceCore.ts",
+        "/workspace/scratch/recordreplay-amend-3-proof/control/src/compiler/program.ts",
+        "/workspace/scratch/recordreplay-amend-3-proof/control/src/compiler/programDiagnostics.ts",
+        "/workspace/scratch/recordreplay-amend-3-proof/control/src/compiler/resolutionCache.ts",
+        "/workspace/scratch/recordreplay-amend-3-proof/control/src/compiler/scanner.ts",
+        "/workspace/scratch/recordreplay-amend-3-proof/control/src/compiler/semver.ts",
+        "/workspace/scratch/recordreplay-amend-3-proof/control/src/compiler/sourcemap.ts",
+        "/workspace/scratch/recordreplay-amend-3-proof/control/src/compiler/symbolWalker.ts",
+        "/workspace/scratch/recordreplay-amend-3-proof/control/src/compiler/sys.ts",
+        "/workspace/scratch/recordreplay-amend-3-proof/control/src/compiler/tracing.ts",
+        "/workspace/scratch/recordreplay-amend-3-proof/control/src/compiler/transformer.ts",
+        "/workspace/scratch/recordreplay-amend-3-proof/control/src/compiler/transformers/classFields.ts",
+        "/workspace/scratch/recordreplay-amend-3-proof/control/src/compiler/transformers/classThis.ts",
+        "/workspace/scratch/recordreplay-amend-3-proof/control/src/compiler/transformers/declarations.ts",
+        "/workspace/scratch/recordreplay-amend-3-proof/control/src/compiler/transformers/declarations/diagnostics.ts",
+        "/workspace/scratch/recordreplay-amend-3-proof/control/src/compiler/transformers/destructuring.ts",
+        "/workspace/scratch/recordreplay-amend-3-proof/control/src/compiler/transformers/es2015.ts",
+        "/workspace/scratch/recordreplay-amend-3-proof/control/src/compiler/transformers/es2016.ts",
+        "/workspace/scratch/recordreplay-amend-3-proof/control/src/compiler/transformers/es2017.ts",
+        "/workspace/scratch/recordreplay-amend-3-proof/control/src/compiler/transformers/es2018.ts",
+        "/workspace/scratch/recordreplay-amend-3-proof/control/src/compiler/transformers/es2019.ts",
+        "/workspace/scratch/recordreplay-amend-3-proof/control/src/compiler/transformers/es2020.ts",
+        "/workspace/scratch/recordreplay-amend-3-proof/control/src/compiler/transformers/es2021.ts",
+        "/workspace/scratch/recordreplay-amend-3-proof/control/src/compiler/transformers/esDecorators.ts",
+        "/workspace/scratch/recordreplay-amend-3-proof/control/src/compiler/transformers/esnext.ts",
+        "/workspace/scratch/recordreplay-amend-3-proof/control/src/compiler/transformers/generators.ts",
+        "/workspace/scratch/recordreplay-amend-3-proof/control/src/compiler/transformers/jsx.ts",
+        "/workspace/scratch/recordreplay-amend-3-proof/control/src/compiler/transformers/legacyDecorators.ts",
+        "/workspace/scratch/recordreplay-amend-3-proof/control/src/compiler/transformers/module/esnextAnd2015.ts",
+        "/workspace/scratch/recordreplay-amend-3-proof/control/src/compiler/transformers/module/impliedNodeFormatDependent.ts",
+        "/workspace/scratch/recordreplay-amend-3-proof/control/src/compiler/transformers/module/module.ts",
+        "/workspace/scratch/recordreplay-amend-3-proof/control/src/compiler/transformers/module/system.ts",
+        "/workspace/scratch/recordreplay-amend-3-proof/control/src/compiler/transformers/namedEvaluation.ts",
+        "/workspace/scratch/recordreplay-amend-3-proof/control/src/compiler/transformers/taggedTemplate.ts",
+        "/workspace/scratch/recordreplay-amend-3-proof/control/src/compiler/transformers/ts.ts",
+        "/workspace/scratch/recordreplay-amend-3-proof/control/src/compiler/transformers/typeSerializer.ts",
+        "/workspace/scratch/recordreplay-amend-3-proof/control/src/compiler/transformers/utilities.ts",
+        "/workspace/scratch/recordreplay-amend-3-proof/control/src/compiler/tsbuild.ts",
+        "/workspace/scratch/recordreplay-amend-3-proof/control/src/compiler/tsbuildPublic.ts",
+        "/workspace/scratch/recordreplay-amend-3-proof/control/src/compiler/types.ts",
+        "/workspace/scratch/recordreplay-amend-3-proof/control/src/compiler/utilities.ts",
+        "/workspace/scratch/recordreplay-amend-3-proof/control/src/compiler/utilitiesPublic.ts",
+        "/workspace/scratch/recordreplay-amend-3-proof/control/src/compiler/visitorPublic.ts",
+        "/workspace/scratch/recordreplay-amend-3-proof/control/src/compiler/watch.ts",
+        "/workspace/scratch/recordreplay-amend-3-proof/control/src/compiler/watchPublic.ts",
+        "/workspace/scratch/recordreplay-amend-3-proof/control/src/compiler/watchUtilities.ts"
+      ],
+      "cwd": "/workspace/scratch/recordreplay-amend-3-proof/final-repo",
+      "log": "logs/baseline-adamic-types.log.gz"
+    },
+    {
+      "name": "final-adamic-types",
+      "exit": 0,
+      "seconds": 10.424,
+      "command": [
+        "/workspace/scratch/recordreplay-amend-3-proof/adamic",
+        "types",
+        "/workspace/scratch/recordreplay-amend-3-proof/candidate2/src/compiler/_namespaces/ts.moduleSpecifiers.ts",
+        "/workspace/scratch/recordreplay-amend-3-proof/candidate2/src/compiler/_namespaces/ts.performance.ts",
+        "/workspace/scratch/recordreplay-amend-3-proof/candidate2/src/compiler/_namespaces/ts.ts",
+        "/workspace/scratch/recordreplay-amend-3-proof/candidate2/src/compiler/binder.ts",
+        "/workspace/scratch/recordreplay-amend-3-proof/candidate2/src/compiler/builder.ts",
+        "/workspace/scratch/recordreplay-amend-3-proof/candidate2/src/compiler/builderPublic.ts",
+        "/workspace/scratch/recordreplay-amend-3-proof/candidate2/src/compiler/builderState.ts",
+        "/workspace/scratch/recordreplay-amend-3-proof/candidate2/src/compiler/builderStatePublic.ts",
+        "/workspace/scratch/recordreplay-amend-3-proof/candidate2/src/compiler/checker.ts",
+        "/workspace/scratch/recordreplay-amend-3-proof/candidate2/src/compiler/commandLineParser.ts",
+        "/workspace/scratch/recordreplay-amend-3-proof/candidate2/src/compiler/core.ts",
+        "/workspace/scratch/recordreplay-amend-3-proof/candidate2/src/compiler/corePublic.ts",
+        "/workspace/scratch/recordreplay-amend-3-proof/candidate2/src/compiler/debug.ts",
+        "/workspace/scratch/recordreplay-amend-3-proof/candidate2/src/compiler/diagnosticInformationMap.generated.ts",
+        "/workspace/scratch/recordreplay-amend-3-proof/candidate2/src/compiler/emitter.ts",
+        "/workspace/scratch/recordreplay-amend-3-proof/candidate2/src/compiler/executeCommandLine.ts",
+        "/workspace/scratch/recordreplay-amend-3-proof/candidate2/src/compiler/expressionToTypeNode.ts",
+        "/workspace/scratch/recordreplay-amend-3-proof/candidate2/src/compiler/factory/baseNodeFactory.ts",
+        "/workspace/scratch/recordreplay-amend-3-proof/candidate2/src/compiler/factory/emitHelpers.ts",
+        "/workspace/scratch/recordreplay-amend-3-proof/candidate2/src/compiler/factory/emitNode.ts",
+        "/workspace/scratch/recordreplay-amend-3-proof/candidate2/src/compiler/factory/nodeChildren.ts",
+        "/workspace/scratch/recordreplay-amend-3-proof/candidate2/src/compiler/factory/nodeConverters.ts",
+        "/workspace/scratch/recordreplay-amend-3-proof/candidate2/src/compiler/factory/nodeFactory.ts",
+        "/workspace/scratch/recordreplay-amend-3-proof/candidate2/src/compiler/factory/nodeTests.ts",
+        "/workspace/scratch/recordreplay-amend-3-proof/candidate2/src/compiler/factory/parenthesizerRules.ts",
+        "/workspace/scratch/recordreplay-amend-3-proof/candidate2/src/compiler/factory/utilities.ts",
+        "/workspace/scratch/recordreplay-amend-3-proof/candidate2/src/compiler/factory/utilitiesPublic.ts",
+        "/workspace/scratch/recordreplay-amend-3-proof/candidate2/src/compiler/hostErrors.ts",
+        "/workspace/scratch/recordreplay-amend-3-proof/candidate2/src/compiler/moduleNameResolver.ts",
+        "/workspace/scratch/recordreplay-amend-3-proof/candidate2/src/compiler/moduleSpecifiers.ts",
+        "/workspace/scratch/recordreplay-amend-3-proof/candidate2/src/compiler/parser.ts",
+        "/workspace/scratch/recordreplay-amend-3-proof/candidate2/src/compiler/path.ts",
+        "/workspace/scratch/recordreplay-amend-3-proof/candidate2/src/compiler/performance.ts",
+        "/workspace/scratch/recordreplay-amend-3-proof/candidate2/src/compiler/performanceCore.ts",
+        "/workspace/scratch/recordreplay-amend-3-proof/candidate2/src/compiler/program.ts",
+        "/workspace/scratch/recordreplay-amend-3-proof/candidate2/src/compiler/programDiagnostics.ts",
+        "/workspace/scratch/recordreplay-amend-3-proof/candidate2/src/compiler/resolutionCache.ts",
+        "/workspace/scratch/recordreplay-amend-3-proof/candidate2/src/compiler/scanner.ts",
+        "/workspace/scratch/recordreplay-amend-3-proof/candidate2/src/compiler/semver.ts",
+        "/workspace/scratch/recordreplay-amend-3-proof/candidate2/src/compiler/sourcemap.ts",
+        "/workspace/scratch/recordreplay-amend-3-proof/candidate2/src/compiler/symbolWalker.ts",
+        "/workspace/scratch/recordreplay-amend-3-proof/candidate2/src/compiler/sys.ts",
+        "/workspace/scratch/recordreplay-amend-3-proof/candidate2/src/compiler/tracing.ts",
+        "/workspace/scratch/recordreplay-amend-3-proof/candidate2/src/compiler/transformer.ts",
+        "/workspace/scratch/recordreplay-amend-3-proof/candidate2/src/compiler/transformers/classFields.ts",
+        "/workspace/scratch/recordreplay-amend-3-proof/candidate2/src/compiler/transformers/classThis.ts",
+        "/workspace/scratch/recordreplay-amend-3-proof/candidate2/src/compiler/transformers/declarations.ts",
+        "/workspace/scratch/recordreplay-amend-3-proof/candidate2/src/compiler/transformers/declarations/diagnostics.ts",
+        "/workspace/scratch/recordreplay-amend-3-proof/candidate2/src/compiler/transformers/destructuring.ts",
+        "/workspace/scratch/recordreplay-amend-3-proof/candidate2/src/compiler/transformers/es2015.ts",
+        "/workspace/scratch/recordreplay-amend-3-proof/candidate2/src/compiler/transformers/es2016.ts",
+        "/workspace/scratch/recordreplay-amend-3-proof/candidate2/src/compiler/transformers/es2017.ts",
+        "/workspace/scratch/recordreplay-amend-3-proof/candidate2/src/compiler/transformers/es2018.ts",
+        "/workspace/scratch/recordreplay-amend-3-proof/candidate2/src/compiler/transformers/es2019.ts",
+        "/workspace/scratch/recordreplay-amend-3-proof/candidate2/src/compiler/transformers/es2020.ts",
+        "/workspace/scratch/recordreplay-amend-3-proof/candidate2/src/compiler/transformers/es2021.ts",
+        "/workspace/scratch/recordreplay-amend-3-proof/candidate2/src/compiler/transformers/esDecorators.ts",
+        "/workspace/scratch/recordreplay-amend-3-proof/candidate2/src/compiler/transformers/esnext.ts",
+        "/workspace/scratch/recordreplay-amend-3-proof/candidate2/src/compiler/transformers/generators.ts",
+        "/workspace/scratch/recordreplay-amend-3-proof/candidate2/src/compiler/transformers/jsx.ts",
+        "/workspace/scratch/recordreplay-amend-3-proof/candidate2/src/compiler/transformers/legacyDecorators.ts",
+        "/workspace/scratch/recordreplay-amend-3-proof/candidate2/src/compiler/transformers/module/esnextAnd2015.ts",
+        "/workspace/scratch/recordreplay-amend-3-proof/candidate2/src/compiler/transformers/module/impliedNodeFormatDependent.ts",
+        "/workspace/scratch/recordreplay-amend-3-proof/candidate2/src/compiler/transformers/module/module.ts",
+        "/workspace/scratch/recordreplay-amend-3-proof/candidate2/src/compiler/transformers/module/system.ts",
+        "/workspace/scratch/recordreplay-amend-3-proof/candidate2/src/compiler/transformers/namedEvaluation.ts",
+        "/workspace/scratch/recordreplay-amend-3-proof/candidate2/src/compiler/transformers/taggedTemplate.ts",
+        "/workspace/scratch/recordreplay-amend-3-proof/candidate2/src/compiler/transformers/ts.ts",
+        "/workspace/scratch/recordreplay-amend-3-proof/candidate2/src/compiler/transformers/typeSerializer.ts",
+        "/workspace/scratch/recordreplay-amend-3-proof/candidate2/src/compiler/transformers/utilities.ts",
+        "/workspace/scratch/recordreplay-amend-3-proof/candidate2/src/compiler/tsbuild.ts",
+        "/workspace/scratch/recordreplay-amend-3-proof/candidate2/src/compiler/tsbuildPublic.ts",
+        "/workspace/scratch/recordreplay-amend-3-proof/candidate2/src/compiler/types.ts",
+        "/workspace/scratch/recordreplay-amend-3-proof/candidate2/src/compiler/utilities.ts",
+        "/workspace/scratch/recordreplay-amend-3-proof/candidate2/src/compiler/utilitiesPublic.ts",
+        "/workspace/scratch/recordreplay-amend-3-proof/candidate2/src/compiler/visitorPublic.ts",
+        "/workspace/scratch/recordreplay-amend-3-proof/candidate2/src/compiler/watch.ts",
+        "/workspace/scratch/recordreplay-amend-3-proof/candidate2/src/compiler/watchPublic.ts",
+        "/workspace/scratch/recordreplay-amend-3-proof/candidate2/src/compiler/watchUtilities.ts"
+      ],
+      "cwd": "/workspace/scratch/recordreplay-amend-3-proof/final-repo",
+      "log": "logs/final-adamic-types.log.gz"
+    },
+    {
+      "name": "baseline-census",
+      "exit": 0,
+      "seconds": 220.631,
+      "command": [
+        "/workspace/scratch/recordreplay-amend-3-proof/latent",
+        "/workspace/scratch/recordreplay-amend-3-proof/control/src/compiler",
+        "/workspace/scratch/recordreplay-amend-3-proof/baseline-census.jsonl"
+      ],
+      "cwd": "/workspace/scratch/recordreplay-amend-3-proof/final-repo",
+      "log": "logs/baseline-census.log.gz"
+    },
+    {
+      "name": "final-census",
+      "exit": 0,
+      "seconds": 228.985,
+      "command": [
+        "/workspace/scratch/recordreplay-amend-3-proof/latent",
+        "/workspace/scratch/recordreplay-amend-3-proof/candidate2/src/compiler",
+        "/workspace/scratch/recordreplay-amend-3-proof/final-census.jsonl"
+      ],
+      "cwd": "/workspace/scratch/recordreplay-amend-3-proof/final-repo",
+      "log": "logs/final-census.log.gz"
+    },
+    {
+      "name": "census-unit-comparison-exact",
+      "exit": 0,
+      "seconds": 0.115,
+      "command": [
+        "python3",
+        "/workspace/scratch/recordreplay-amend-3-proof/classify-census.py",
+        "/workspace/scratch/recordreplay-amend-3-proof/baseline-census.jsonl",
+        "/workspace/scratch/recordreplay-amend-3-proof/final-census.jsonl",
+        "/workspace/scratch/recordreplay-amend-3-proof/control",
+        "/workspace/scratch/recordreplay-amend-3-proof/candidate2",
+        "/workspace/scratch/recordreplay-amend-3-proof/census-delta.json"
+      ],
+      "cwd": "/workspace/scratch/recordreplay-amend-3-proof/final-repo",
+      "log": "logs/census-unit-comparison-exact.log.gz"
+    },
+    {
+      "name": "node-prelude-loading-proof",
+      "exit": 0,
+      "seconds": 10.525,
+      "command": [
+        "/workspace/scratch/recordreplay-amend-3-proof/node-prelude-probe",
+        "/workspace/scratch/recordreplay-amend-3-proof/candidate2",
+        "/workspace/scratch/recordreplay-amend-3-proof/node-prelude-proof.json"
+      ],
+      "cwd": "/workspace/scratch/recordreplay-amend-3-proof/final-repo",
+      "log": "logs/node-prelude-loading-proof.log.gz"
+    },
+    {
+      "name": "node-prelude-regression",
+      "exit": 0,
+      "seconds": 34.317,
+      "command": [
+        "go",
+        "test",
+        "./internal/load",
+        "-run",
+        "^TestNodeProcessAugmentationRidesOnlyTheNodePrelude$",
+        "-count=1"
+      ],
+      "cwd": "/workspace/scratch/recordreplay-amend-3-proof/final-repo",
+      "log": "logs/node-prelude-regression.log.gz"
+    },
+    {
+      "name": "directory-mutants",
+      "exit": 0,
+      "seconds": 79.662,
+      "command": [
+        "python3",
+        "/workspace/scratch/recordreplay-amend-3-proof/run-mutants.py"
+      ],
+      "cwd": "/workspace/scratch/recordreplay-amend-3-proof/final-repo",
+      "log": "logs/directory-mutants.log.gz"
+    },
+    {
+      "name": "built-witness",
+      "exit": 0,
+      "seconds": 5.4,
+      "command": [
+        "node",
+        "stage3/adapt/99-wasm-crypto-import/proofs/built-witness.cjs",
+        "/workspace/scratch/recordreplay-amend-3-proof/pre99",
+        "/workspace/scratch/recordreplay-amend-3-proof/candidate2",
+        "/workspace/scratch/recordreplay-amend-3-proof/built-project",
+        "/workspace/scratch/recordreplay-amend-3-proof/built-witness.json"
+      ],
+      "cwd": "/workspace/scratch/recordreplay-amend-3-proof/final-repo",
+      "log": "logs/built-witness.log.gz"
+    },
+    {
+      "name": "resolve-host-fixture",
+      "exit": 0,
+      "seconds": 9.629,
+      "command": [
+        "node",
+        "stage3/adapt/99-wasm-crypto-import/proofs/resolve-host-fixture.cjs",
+        "/workspace/scratch/recordreplay-amend-3-proof/pre99/built/local/typescript.js",
+        "/workspace/scratch/recordreplay-amend-3-proof/candidate2/built/local/typescript.js",
+        "/workspace/scratch/recordreplay-amend-3-proof/host-fixture"
+      ],
+      "cwd": "/workspace/scratch/recordreplay-amend-3-proof/final-repo",
+      "log": "logs/resolve-host-fixture.log.gz"
+    },
+    {
+      "name": "pre99-build",
+      "exit": 0,
+      "seconds": 88.716,
+      "command": [
+        "npm",
+        "run",
+        "build"
+      ],
+      "cwd": "/workspace/scratch/recordreplay-amend-3-proof/pre99",
+      "log": "logs/pre99-build.log.gz"
+    },
+    {
+      "name": "baseline-build",
+      "exit": 0,
+      "seconds": 70.272,
+      "command": [
+        "npm",
+        "run",
+        "build"
+      ],
+      "cwd": "/workspace/scratch/recordreplay-amend-3-proof/control",
+      "log": "logs/baseline-build.log.gz"
+    },
+    {
+      "name": "final-build",
+      "exit": 0,
+      "seconds": 68.515,
+      "command": [
+        "npm",
+        "run",
+        "build"
+      ],
+      "cwd": "/workspace/scratch/recordreplay-amend-3-proof/candidate2",
+      "log": "logs/final-build.log.gz"
+    }
+  ],
+  "mutants": [
+    {
+      "name": "no-node-resolution-mutant",
+      "exit": 1,
+      "expected": 1,
+      "caught": true,
+      "log": "logs/no-node-resolution-mutant.log.gz"
+    },
+    {
+      "name": "node-prelude-augmentation-mutant-confirmed",
+      "exit": 1,
+      "expected": 1,
+      "caught": true,
+      "log": "logs/node-prelude-augmentation-mutant-confirmed.log.gz"
+    },
+    {
+      "name": "scope-mutant",
+      "exit": 1,
+      "expected": 1,
+      "caught": true,
+      "log": "logs/scope-mutant.log.gz"
+    },
+    {
+      "name": "ternary-mutant",
+      "exit": 1,
+      "expected": 1,
+      "caught": true,
+      "log": "logs/ternary-mutant.log.gz"
+    },
+    {
+      "name": "binding-collision-mutant",
+      "exit": 1,
+      "expected": 1,
+      "caught": true,
+      "log": "logs/binding-collision-mutant.log.gz"
+    },
+    {
+      "name": "binding-shadow-mutant",
+      "exit": 1,
+      "expected": 1,
+      "caught": true,
+      "log": "logs/binding-shadow-mutant.log.gz"
+    },
+    {
+      "name": "binding-bare-mutant",
+      "exit": 1,
+      "expected": 1,
+      "caught": true,
+      "log": "logs/binding-bare-mutant.log.gz"
+    },
+    {
+      "name": "detached-receiver-mutant",
+      "exit": 1,
+      "expected": 1,
+      "caught": true,
+      "log": "logs/detached-receiver-mutant.log.gz"
+    },
+    {
+      "name": "moved-owner",
+      "exit": 1,
+      "expected": 1
+    },
+    {
+      "name": "moved-imports",
+      "exit": 1,
+      "expected": 1
+    },
+    {
+      "name": "foreign-edit",
+      "exit": 0,
+      "expected": 0
+    },
+    {
+      "name": "span-escape",
+      "exit": 1,
+      "expected": 1
+    },
+    {
+      "name": "span-disabled-control",
+      "exit": 0,
+      "expected": 0
+    },
+    {
+      "name": "recordreplay-declaration-mutant",
+      "exit": 1,
+      "caughtBeforeWrite": true
+    },
+    {
+      "name": "recordreplay-out-of-scope-mutant",
+      "exit": 1,
+      "caughtBeforeWrite": true
+    },
+    {
+      "name": "recordreplay-owner-mutant",
+      "exit": 1,
+      "caughtBeforeWrite": true
+    },
+    {
+      "name": "require-result-restore",
+      "exit": 0
+    },
+    {
+      "name": "require-result-restored-guard",
+      "exit": 1
+    },
+    {
+      "name": "resolve-host-restore",
+      "exit": 0
+    },
+    {
+      "name": "resolve-host-restored-guard",
+      "exit": 1
+    },
+    {
+      "name": "recordreplay-check/declaration",
+      "exit": 1,
+      "expected": 1,
+      "caught": true
+    },
+    {
+      "name": "recordreplay-check/out_of_scope",
+      "exit": 1,
+      "expected": 1,
+      "caught": true
+    },
+    {
+      "name": "recordreplay-check/owner",
+      "exit": 1,
+      "expected": 1,
+      "caught": true
+    }
+  ],
+  "census": {
+    "baselineFindings": 161,
+    "finalFindings": 200,
+    "newNotYet": 18,
+    "newBoundary": 26,
+    "newlyStoppedUnits": [],
+    "classes": {
+      "revealed_later_stop": 44
+    },
+    "details": "census-delta.json",
+    "everyAddedFinding": "census-records.csv",
+    "duplicateDisambiguation": "Match all exact unit/site pairs globally before same-unit and remaining equal diagnostic tuples."
+  },
+  "nodePrelude": {
+    "details": "node-prelude-proof.json",
+    "nodePreludePath": "/adamic-prelude/adamic.d.ts",
+    "readType": "unknown",
+    "isAny": false,
+    "amendmentDeclarationMaskedStillPasses": true,
+    "bothAugmentationsRemovedDiagnostic": "/workspace/scratch/recordreplay-amend-3-proof/candidate2/src/compiler/sys.ts:1604:199: error TS2339: Property 'recordreplay' does not exist on type 'Process'.",
+    "standaloneNodeJSRejected": "TS2503"
+  },
+  "javascriptProductsIdentical": 79,
+  "publicDeclarations": {
+    "typescript.d.ts": {
+      "bytes": 593536,
+      "sha256": "f03adcf915df559d616fcafd75181d3423eaa0f272237482cedbd025525c9516"
+    },
+    "tsserverlibrary.d.ts": {
+      "bytes": 866,
+      "sha256": "cee9e9bf9a8f67388ee878afd5e172189421bae6625076b774d68563d036fbfd"
+    }
+  },
+  "publication": {
+    "branch": "typescript/recordreplay-amend-3-evidence",
+    "sourceBranchesUntouched": true,
+    "submission": false
+  },
+  "harnessNotes": [
+    {
+      "attempt": "node-prelude-probe",
+      "exit": 2,
+      "reason": "Initial scratch probe incorrectly expected the process variable in the prelude. It is declared by bundled @types/node; the Node prelude adds the interface augmentation. The corrected probe verifies both locations.",
+      "finalProof": "node-prelude-loading-proof",
+      "finalExit": 0
+    }
+  ],
+  "historicalFullOraclePipelinesRun": false
+}

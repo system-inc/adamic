@@ -1,0 +1,926 @@
+{
+  "files": [
+    {
+      "path": "stage3/adapt/32-indexed-reads-program/proof/maybebind/continuation/replay.tar.gz",
+      "bytes": 14135599,
+      "blob": "00ce07fd36580c52be8a786889eee6455fb86942"
+    },
+    {
+      "path": "stage3/adapt/32-indexed-reads-program/proof/maybebind/continuation/shards.tar.gz",
+      "bytes": 3837040,
+      "blob": "f52ab65da71203b67299c81d5b3b0c8400709e87"
+    },
+    {
+      "path": "stage3/adapt/32-indexed-reads-program/proof/maybebind/continuation/whole.tar.gz",
+      "bytes": 1523937,
+      "blob": "00efd672f9bd6a6f3efdf27c094cef6e0532b60e"
+    },
+    {
+      "path": "stage3/adapt/32-indexed-reads-program/proof/maybebind/replay.tar.gz",
+      "bytes": 14135263,
+      "blob": "27b0c93af13aff31dae45a7ff775dc2c148f297d"
+    },
+    {
+      "path": "stage3/adapt/32-indexed-reads-program/record-tables-composition.tar.gz",
+      "bytes": 1433807,
+      "blob": "2af7e460a3b591ea018d6b1f4f8800df8027e4ef"
+    },
+    {
+      "path": "stage3/adapt/32-indexed-reads-program/record-tables-final-measure.tar.gz",
+      "bytes": 1658520,
+      "blob": "4c924f9e45dca9ffe53b028b537f4d720aa7d7d1"
+    },
+    {
+      "path": "stage3/adapt/32-indexed-reads-program/record-tables-stepb-final.tar.gz",
+      "bytes": 1630810,
+      "blob": "3e8ee2fd1b12fc76bb2bafa8163c03a8cd88dcba"
+    },
+    {
+      "path": "stage3/adapt/40-explicit-any/evidence/brands-undefined-3/control-latent.jsonl.gz",
+      "bytes": 1349997,
+      "blob": "df8dd61b0baf2f3eac8c98959e904871df12d8a1"
+    },
+    {
+      "path": "stage3/adapt/40-explicit-any/evidence/brands-undefined-3/control/shards-observations.json.gz",
+      "bytes": 1347838,
+      "blob": "6c83640d7e074f5d4fb367ab0a256202f3738d95"
+    },
+    {
+      "path": "stage3/adapt/40-explicit-any/evidence/brands-undefined-3/retyped-latent.jsonl.gz",
+      "bytes": 1198501,
+      "blob": "d92d80a1956c1c5ddf71504d47328cd886933631"
+    },
+    {
+      "path": "stage3/adapt/40-explicit-any/evidence/brands-undefined-3/retyped/shards-observations.json.gz",
+      "bytes": 1347861,
+      "blob": "196643e857728d7815cd39852bf01898dcbb580a"
+    },
+    {
+      "path": "stage3/adapt/40-explicit-any/evidence/brands-undefined/after-latent.jsonl.gz",
+      "bytes": 1200587,
+      "blob": "50cf6f2235dbbbfb689768b3acf83dc4b8fdb568"
+    },
+    {
+      "path": "stage3/adapt/40-explicit-any/evidence/brands-undefined/before-latent.jsonl.gz",
+      "bytes": 1347808,
+      "blob": "9822628c1904a600d6106ecc61adc08b514436ec"
+    },
+    {
+      "path": "stage3/adapt/40-explicit-any/evidence/timer-slot/control-raw-oracle.tar.gz",
+      "bytes": 4202128,
+      "blob": "924da23c30d4f38114651467640bf8de63713dec"
+    },
+    {
+      "path": "stage3/adapt/40-explicit-any/evidence/timer-slot/retyped-raw-oracle.tar.gz",
+      "bytes": 4201791,
+      "blob": "b10dbe4b7c410985f51adfc9fa8c3d90ac5d3c5d"
+    },
+    {
+      "path": "stage3/adapt/41-explicit-any-remaining/evidence/any-after.jsonl.gz",
+      "bytes": 1225800,
+      "blob": "0f1f849763d332bc5daa0229353eeacaaefff88e"
+    },
+    {
+      "path": "stage3/adapt/41-explicit-any-remaining/evidence/any-mutant.jsonl.gz",
+      "bytes": 1228354,
+      "blob": "da6f4c40cc2b08de17c72eda5cc168c24bf45e31"
+    },
+    {
+      "path": "stage3/adapt/41-explicit-any-remaining/evidence/before.jsonl.gz",
+      "bytes": 1223586,
+      "blob": "63d3a74eabad1e998e195d86d957ff179f2ba280"
+    },
+    {
+      "path": "stage3/adapt/41-explicit-any-remaining/evidence/constructors/after.jsonl.gz",
+      "bytes": 1231240,
+      "blob": "881e3d7a72243861592aeb2dc62838b084c878ad"
+    },
+    {
+      "path": "stage3/adapt/41-explicit-any-remaining/evidence/constructors/mutant.jsonl.gz",
+      "bytes": 1235403,
+      "blob": "60b111f13ea5d6ba79cf315fa64f82e561ca25a3"
+    },
+    {
+      "path": "stage3/adapt/41-explicit-any-remaining/evidence/final.jsonl.gz",
+      "bytes": 1228323,
+      "blob": "088a9ad66423df0b50b72b98650342eb208d7401"
+    },
+    {
+      "path": "stage3/adapt/41-explicit-any-remaining/evidence/timers/after.jsonl.gz",
+      "bytes": 1228373,
+      "blob": "03f5af9ada85c662ee3bc934332b765257ebd17d"
+    },
+    {
+      "path": "stage3/adapt/41-explicit-any-remaining/evidence/timers/mutant.jsonl.gz",
+      "bytes": 1230355,
+      "blob": "727e3c8a19425566cdcaad6dbc1bcc635650cfc3"
+    },
+    {
+      "path": "stage3/adapt/41-explicit-any-remaining/evidence/void-mutant.jsonl.gz",
+      "bytes": 1229464,
+      "blob": "cca1fe22c60b782156c2645f54f24983daf17fed"
+    },
+    {
+      "path": "stage3/adapt/45-regex-captures/semver-split-evidence/lane-shard-observations.jsonl.gz",
+      "bytes": 1353947,
+      "blob": "9f7787abdb8f9a47c76d0f7c0f154bc06b363fc9"
+    },
+    {
+      "path": "stage3/adapt/70-readonly-views/evidence/wave4/preparatory-fields.json.gz",
+      "bytes": 1701225,
+      "blob": "4e8702b6752a3c76b36f79aeb1d68c165aac25c0"
+    },
+    {
+      "path": "stage3/adapt/70-readonly-views/evidence/wave6/fields.json.gz",
+      "bytes": 1702547,
+      "blob": "97f1fbb8f4a970bf91169dc201e9c977043d2c4d"
+    },
+    {
+      "path": "stage3/adapt/71-writable-views/evidence/diagnostics/after.jsonl.gz",
+      "bytes": 1314160,
+      "blob": "a42b7ee37ee1a4ea1588b2889c70a74f9e57b41a"
+    },
+    {
+      "path": "stage3/adapt/71-writable-views/evidence/diagnostics/before.jsonl.gz",
+      "bytes": 1315837,
+      "blob": "944138465b3ba4723f8857a3c7bceee497cafd46"
+    },
+    {
+      "path": "stage3/adapt/71-writable-views/evidence/diagnostics/undo.jsonl.gz",
+      "bytes": 1315507,
+      "blob": "e3957a09b89c3eab0a6988eb6e768f7aeb6300d1"
+    },
+    {
+      "path": "stage3/adapt/71-writable-views/evidence/final/after.jsonl.gz",
+      "bytes": 1315818,
+      "blob": "90e2377140e66e0b75507e7afc695018e4f34586"
+    },
+    {
+      "path": "stage3/adapt/71-writable-views/evidence/final/before.jsonl.gz",
+      "bytes": 1315566,
+      "blob": "8fe14673d0c010f1f03b6c383813a68db1a379b5"
+    },
+    {
+      "path": "stage3/adapt/71-writable-views/evidence/followup/cumulative/after.jsonl.gz",
+      "bytes": 1313857,
+      "blob": "8bea40f10e367c62b64bf498288da0accdd46574"
+    },
+    {
+      "path": "stage3/adapt/71-writable-views/evidence/followup/cumulative/before.jsonl.gz",
+      "bytes": 1315585,
+      "blob": "e6ea818b6f8704ba884b8ae9db397cdbd6d19d33"
+    },
+    {
+      "path": "stage3/adapt/71-writable-views/evidence/followup/diagnostic-undo/after.jsonl.gz",
+      "bytes": 1313954,
+      "blob": "a6174945c51275317e748f6b03631006b8bd703b"
+    },
+    {
+      "path": "stage3/adapt/71-writable-views/evidence/followup/diagnostics/after.jsonl.gz",
+      "bytes": 1315644,
+      "blob": "004ad92c711418b506d13c6447a34cd4f0ebad27"
+    },
+    {
+      "path": "stage3/adapt/71-writable-views/evidence/followup/diagnostics/before.jsonl.gz",
+      "bytes": 1315837,
+      "blob": "576e09e8b90eda4d69c5109efd3d75463f0bd566"
+    },
+    {
+      "path": "stage3/adapt/71-writable-views/evidence/followup/empty-array-undo/after.jsonl.gz",
+      "bytes": 1313906,
+      "blob": "6d513116fb7ba70c6b6837eac38d4b4a29f39442"
+    },
+    {
+      "path": "stage3/adapt/71-writable-views/evidence/followup/empty-arrays/before.jsonl.gz",
+      "bytes": 1314538,
+      "blob": "dafa71929b0322dceafe49fe5974263cd7baae91"
+    },
+    {
+      "path": "stage3/adapt/71-writable-views/evidence/followup/evaluator-probe-control/after.jsonl.gz",
+      "bytes": 1313495,
+      "blob": "ace1e0b9314f5197033c757c0bed96b0916beaa6"
+    },
+    {
+      "path": "stage3/adapt/71-writable-views/evidence/followup/evaluator-probe-control/before.jsonl.gz",
+      "bytes": 1312567,
+      "blob": "8dff3178b09e0162e37247a047c650915cfb3536"
+    },
+    {
+      "path": "stage3/adapt/71-writable-views/evidence/followup/tuple-undo/after.jsonl.gz",
+      "bytes": 1314581,
+      "blob": "7708bdbfc8bcf4320dd2f68d6666bd8f66fc4786"
+    },
+    {
+      "path": "stage3/adapt/71-writable-views/evidence/mutant.jsonl.gz",
+      "bytes": 1315852,
+      "blob": "97db2430afe9c71e03d8db7bc9a26f1184e7857b"
+    },
+    {
+      "path": "stage3/adapt/71-writable-views/evidence/rejected-cache-contract/after.jsonl.gz",
+      "bytes": 1316361,
+      "blob": "3410c088bb99006e8219bca495dac0d67551ceaf"
+    },
+    {
+      "path": "stage3/adapt/71-writable-views/evidence/rejected-cache-contract/before.jsonl.gz",
+      "bytes": 1315566,
+      "blob": "8fe14673d0c010f1f03b6c383813a68db1a379b5"
+    },
+    {
+      "path": "stage3/adapt/75-optional-widening/evidence/full-apply/after-latent.jsonl.gz",
+      "bytes": 1191743,
+      "blob": "2026b49b78bde4ece1f1516363e3af423a899b5a"
+    },
+    {
+      "path": "stage3/adapt/75-optional-widening/evidence/full-apply/before-latent.jsonl.gz",
+      "bytes": 1197735,
+      "blob": "448892c7b10e2f0d72c3537e249d2a9254f1ca4c"
+    },
+    {
+      "path": "stage3/adapt/75-optional-widening/evidence/wave1/after-latent.jsonl.gz",
+      "bytes": 1188609,
+      "blob": "7e86c479f645ee6534fd800d542868ca8ef780d7"
+    },
+    {
+      "path": "stage3/adapt/75-optional-widening/evidence/wave1/before-latent.jsonl.gz",
+      "bytes": 1191031,
+      "blob": "1ea8166ba6626577866f39c0268a47cc54b5072d"
+    },
+    {
+      "path": "stage3/adapt/75-optional-widening/evidence/wave1/sanctioned-after-latent.jsonl.gz",
+      "bytes": 1233844,
+      "blob": "4b99443e1774fac823ab0332c3d5929d8f7ae1e4"
+    },
+    {
+      "path": "stage3/adapt/75-optional-widening/evidence/wave1/sanctioned-before-latent.jsonl.gz",
+      "bytes": 1231872,
+      "blob": "3bf22f60ca912a65be38f20b4eb617833c437a0e"
+    },
+    {
+      "path": "stage3/adapt/75-optional-widening/evidence/wave2/after-latent.jsonl.gz",
+      "bytes": 1223766,
+      "blob": "7c14435ba8595beb549f3fe2f009687e25ddd8a4"
+    },
+    {
+      "path": "stage3/adapt/75-optional-widening/evidence/wave2/before-latent.jsonl.gz",
+      "bytes": 1231841,
+      "blob": "368a124b0c6a66e4b9454da04657549c4e0a8609"
+    },
+    {
+      "path": "stage3/adapt/95-checker-axolotl-h/fold-evidence/oracle/whole-whole-tasks.jsonl.gz",
+      "bytes": 1327065,
+      "blob": "8fbfeb1c2fa40ddccd6d09c9b95ebca16cb00aa0"
+    },
+    {
+      "path": "stage3/adapt/95-checker-axolotl-h/fold-evidence/six-sites/mutants.tar.gz",
+      "bytes": 3852172,
+      "blob": "4e6a3514af261d30d81251edc9eb4e3283c1157c"
+    },
+    {
+      "path": "stage3/adapt/95-checker-axolotl-h/fold-evidence/six-sites/oracle/shards.tar.gz",
+      "bytes": 3715330,
+      "blob": "8809b96c3d303715c4779780734b4fe903e9b1e1"
+    },
+    {
+      "path": "stage3/adapt/95-checker-axolotl-h/fold-evidence/six-sites/oracle/whole.tar.gz",
+      "bytes": 1683680,
+      "blob": "aabc977fd9e02b5aee3020a655344d80a757396d"
+    },
+    {
+      "path": "stage3/adapt/99-correctness-axolotl-r/after-identities.jsonl.gz",
+      "bytes": 1997064,
+      "blob": "568cb10853030d07b8076e460d0745cac81291bb"
+    },
+    {
+      "path": "stage3/adapt/99-correctness-axolotl-r/counted-identities.jsonl.gz",
+      "bytes": 2002934,
+      "blob": "296b2e9fc4823995d9cf391a2b3865240a09d2c8"
+    },
+    {
+      "path": "stage3/adapt/99-correctness-axolotl-r/reference-identities.jsonl.gz",
+      "bytes": 2004045,
+      "blob": "7103c92c3eb5c842e7662068944cd3764f031cd7"
+    },
+    {
+      "path": "stage3/adapt/99-correctness-axolotl-r/tosorted-measure.tar.gz",
+      "bytes": 1263892,
+      "blob": "ddc0d881e3fa4692befbf237aed6392e87342586"
+    },
+    {
+      "path": "stage3/adapt/99-correctness-axolotl-s/accepted-tasks.jsonl.gz",
+      "bytes": 1332696,
+      "blob": "c5b18aa3110bf4e24d6498ec701589c8a249c574"
+    },
+    {
+      "path": "stage3/adapt/99-correctness-axolotl-s/clear-evidence.tar.gz",
+      "bytes": 1967011,
+      "blob": "b760b4ad0b7ee2425a7ea2d3b70a0443b7312aaa"
+    },
+    {
+      "path": "stage3/adapt/99-correctness-axolotl-s/main-tasks.jsonl.gz",
+      "bytes": 1333663,
+      "blob": "c92f59955b70469c85ea9fbaf97e59bffd82a8a0"
+    },
+    {
+      "path": "stage3/adapt/99-correctness-axolotl-s/queue-box-evidence.tar.gz",
+      "bytes": 11255856,
+      "blob": "a5d0d0ff81834c91311f78c56a5fa1a698119da3"
+    },
+    {
+      "path": "stage3/adapt/99-correctness-axolotl-u/adapted-identities.jsonl.gz",
+      "bytes": 2049035,
+      "blob": "081ebe2926f149e773edd06058e5a3dd24c18fa3"
+    },
+    {
+      "path": "stage3/adapt/99-correctness-axolotl-u/amended-recount-identities.jsonl.gz",
+      "bytes": 2051798,
+      "blob": "de7c281d30574d85918417a3915979f942045481"
+    },
+    {
+      "path": "stage3/adapt/99-correctness-axolotl-u/amended-uncounted-identities.jsonl.gz",
+      "bytes": 2051446,
+      "blob": "be6656626387269774a3e3da79897793c8c5d4bf"
+    },
+    {
+      "path": "stage3/adapt/99-correctness-axolotl-u/combined-adapted-identities.jsonl.gz",
+      "bytes": 2052900,
+      "blob": "c2d17e1bab70698080cebc4cc0e9638420fda8d2"
+    },
+    {
+      "path": "stage3/adapt/99-correctness-axolotl-u/combined-main-identities.jsonl.gz",
+      "bytes": 2050465,
+      "blob": "d84653522ecc95e3ca11dfe4db2a8e5cc166ad93"
+    },
+    {
+      "path": "stage3/adapt/99-correctness-axolotl-u/counted-identities.jsonl.gz",
+      "bytes": 2057657,
+      "blob": "392a44aabf1ea06599a56eefdd12975aeb2d024c"
+    },
+    {
+      "path": "stage3/adapt/99-correctness-axolotl-u/reference-identities.jsonl.gz",
+      "bytes": 2049819,
+      "blob": "bd1e4ae9c650ddc85a2013a2a7c244aecdd79ed5"
+    },
+    {
+      "path": "stage3/adapt/99-correctness-axolotl-x/composition/initial-matrix.tar.gz",
+      "bytes": 3584278,
+      "blob": "80d76a8076bca799c6c6acff1e1ec853ca78718d"
+    },
+    {
+      "path": "stage3/adapt/99-correctness-axolotl-x/composition/oracle.tar.gz",
+      "bytes": 10655487,
+      "blob": "a21f22faf4dd751cef7d0295f9036cd0d0765875"
+    },
+    {
+      "path": "stage3/adapt/99-correctness-axolotl-x/oracle/whole/whole-tasks.jsonl.gz",
+      "bytes": 1333245,
+      "blob": "2617acc617652109fc1d3316e18ebb5b2a7f7de2"
+    },
+    {
+      "path": "stage3/adapt/99-correctness-axolotl-x/owned/oracle.tar.gz",
+      "bytes": 6142646,
+      "blob": "adf545e5d939a8613fc1404e1f38568c78b9cf32"
+    },
+    {
+      "path": "stage3/adapt/99-correctness-axolotl-x/owned/paired-replay.tar.gz",
+      "bytes": 14363453,
+      "blob": "0d7f660dec686b117ffadd965249a9cd639ca6d7"
+    },
+    {
+      "path": "stage3/adapt/99-correctness-axolotl-x/recut/replay.tar.gz",
+      "bytes": 14466052,
+      "blob": "d564f75238e9c188dee7c6de889d521d5a571737"
+    },
+    {
+      "path": "stage3/adapt/99-correctness-axolotl-z/elementat-count-closeout.tar.gz",
+      "bytes": 4574542,
+      "blob": "aeb870a67780dc740e9592775b2ba9ad82abc8cb"
+    },
+    {
+      "path": "stage3/adapt/99-correctness-axolotl-z/elementat-declaration-proof.tar.gz",
+      "bytes": 6337796,
+      "blob": "1d1b1bfa36b6b7a1702e13452d2aedf112aaccea"
+    },
+    {
+      "path": "stage3/adapt/99-correctness-axolotl-z/elementat-measure.tar.gz",
+      "bytes": 5394085,
+      "blob": "7c547f7b1e084eb20c3ff196614061cba2383317"
+    },
+    {
+      "path": "stage3/adapt/99-correctness-axolotl-z/elementat-step-b.tar.gz",
+      "bytes": 1615906,
+      "blob": "95ab0b55d2493947f1a5607cf3758ae7df9b82c4"
+    },
+    {
+      "path": "stage3/adapt/99-correctness-core-arrayof/measurement.tar.gz",
+      "bytes": 10326212,
+      "blob": "735acadf9c4a7e58598feeb73804b99ac8d45d74"
+    },
+    {
+      "path": "stage3/adapt/99-correctness-core-arrayof/proof.tar.gz",
+      "bytes": 1154610,
+      "blob": "99e186e13c164f2eca34c88abe2b4194b4c0fa17"
+    },
+    {
+      "path": "stage3/adapt/99-correctness-core-assign/closeout.tar.gz",
+      "bytes": 4679984,
+      "blob": "6edef17bffacea5a6609d4bc70cfaee2d0116566"
+    },
+    {
+      "path": "stage3/adapt/99-correctness-core-assign/measurement-complete.tar.gz",
+      "bytes": 2631281,
+      "blob": "4656889c994e39c3568fcbc0f216ebf0ecb1af00"
+    },
+    {
+      "path": "stage3/adapt/99-correctness-core-cast-message/after-javascript.tar.gz",
+      "bytes": 5019049,
+      "blob": "cb385020df2c815240aa0ccc5dcf66907cda9d39"
+    },
+    {
+      "path": "stage3/adapt/99-correctness-core-cast-message/before-javascript.tar.gz",
+      "bytes": 5019078,
+      "blob": "46945a637610132f7a2bda2f3b6e21f8f762154e"
+    },
+    {
+      "path": "stage3/adapt/99-correctness-core-cast-message/raw-proof.tar.gz",
+      "bytes": 1586560,
+      "blob": "d56d8e212edb7f426768665e3ccea1830f3ebce3"
+    },
+    {
+      "path": "stage3/adapt/99-correctness-core-clone/apply-checkpoint.tar.gz",
+      "bytes": 1409021,
+      "blob": "15a6405dabc23640753e6fa29264f518d7ee3365"
+    },
+    {
+      "path": "stage3/adapt/99-correctness-core-clone/evidence.tar.gz",
+      "bytes": 7588323,
+      "blob": "fbe35b6447deaa36eaa4d65b52557cee1e08c185"
+    },
+    {
+      "path": "stage3/adapt/99-correctness-core-compare/amendment-evidence.tar.gz",
+      "bytes": 1833332,
+      "blob": "27eedc84cc6e45a750205617b4e449a73ed9a7d7"
+    },
+    {
+      "path": "stage3/adapt/99-correctness-core-compare/packed-piece-02-failed.tar.gz",
+      "bytes": 3497329,
+      "blob": "bf2202f18490e7c542cace4d26f4e3ffd1348a89"
+    },
+    {
+      "path": "stage3/adapt/99-correctness-core-compare/piece-01.tar.gz",
+      "bytes": 1227662,
+      "blob": "44e4b092d1da92b6418501765a3db6e79b35b38c"
+    },
+    {
+      "path": "stage3/adapt/99-correctness-core-compare/piece-02.tar.gz",
+      "bytes": 3495093,
+      "blob": "95f72b22c7b81f99f59462b6662f7cac350a101b"
+    },
+    {
+      "path": "stage3/adapt/99-correctness-core-compare/piece-03.tar.gz",
+      "bytes": 1249317,
+      "blob": "0291a92e66a148086706f0fd7aef08ca529c54e6"
+    },
+    {
+      "path": "stage3/adapt/99-correctness-core-compare/piece-12.tar.gz",
+      "bytes": 1105914,
+      "blob": "5898a1bd40d076eb2aa7ce1ea9e5faf1781c4e36"
+    },
+    {
+      "path": "stage3/adapt/99-correctness-core-compare/piece-14.tar.gz",
+      "bytes": 1068708,
+      "blob": "1676ff10429ae5e597895abf13d6799c2283f7b6"
+    },
+    {
+      "path": "stage3/adapt/99-correctness-core-compare/piece-16.tar.gz",
+      "bytes": 1075702,
+      "blob": "254d78f59644b2a6235b8375b3c7e019dd6eab9b"
+    },
+    {
+      "path": "stage3/adapt/99-correctness-core-compare/piece-17.tar.gz",
+      "bytes": 1082960,
+      "blob": "f0343e3489f85a493d5e46ad61f4a40b70bf8df4"
+    },
+    {
+      "path": "stage3/adapt/99-correctness-core-compare/proof-evidence.tar.gz",
+      "bytes": 4667135,
+      "blob": "a20f9030bd3424f75b66c1e4d874714b89efdb04"
+    },
+    {
+      "path": "stage3/adapt/99-correctness-core-debug-messages/after-javascript.tar.gz",
+      "bytes": 5019096,
+      "blob": "3d79d2d5f38d450c0af2e71d65c8c2a74b505998"
+    },
+    {
+      "path": "stage3/adapt/99-correctness-core-debug-messages/before-javascript.tar.gz",
+      "bytes": 5019072,
+      "blob": "dd97470d4d6e9358d3e08c1db638d3b9ff6dd133"
+    },
+    {
+      "path": "stage3/adapt/99-correctness-core-debug-messages/raw-proof.tar.gz",
+      "bytes": 1853065,
+      "blob": "f67743ec844103fc167840c615216e11d17724b6"
+    },
+    {
+      "path": "stage3/adapt/99-correctness-core-extend/core-proof.tar.gz",
+      "bytes": 3900060,
+      "blob": "daed99c3f2b1c9f664419eda378659bdbdfbe874"
+    },
+    {
+      "path": "stage3/adapt/99-correctness-core-extend/historical-f027.tar.gz",
+      "bytes": 16116472,
+      "blob": "668f78003567827ed60ff76e8392b11f4554c162"
+    },
+    {
+      "path": "stage3/adapt/99-correctness-core-extend/lane-count.tar.gz",
+      "bytes": 1667207,
+      "blob": "07d4e7436815405a28b70abcff4deef90a3a0495"
+    },
+    {
+      "path": "stage3/adapt/99-correctness-core-getallkeys/proof-evidence.tar.gz",
+      "bytes": 10271351,
+      "blob": "c28f07d35de611fd04ae87403375034d0567ee3a"
+    },
+    {
+      "path": "stage3/adapt/99-correctness-core-getfunctionname-move/after-javascript.tar.gz",
+      "bytes": 5018920,
+      "blob": "43c7754512c09040f8651c47a2ebe966a70f8306"
+    },
+    {
+      "path": "stage3/adapt/99-correctness-core-getfunctionname-move/before-javascript.tar.gz",
+      "bytes": 5019052,
+      "blob": "e696117bad29d08df8cd3c23c82349150f02fd3a"
+    },
+    {
+      "path": "stage3/adapt/99-correctness-core-getfunctionname-move/raw-proof.tar.gz",
+      "bytes": 2443353,
+      "blob": "18b09a373c0d26e00cd3a6629cad08b05a282717"
+    },
+    {
+      "path": "stage3/adapt/99-correctness-core-groupby/apply-checkpoint.tar.gz",
+      "bytes": 1410358,
+      "blob": "49e4cacab7a0c05cca857aa9c70070c0385df4a7"
+    },
+    {
+      "path": "stage3/adapt/99-correctness-core-groupby/evidence.tar.gz",
+      "bytes": 7590147,
+      "blob": "7bb9f4044d4776c02704f742be7574629a177b9a"
+    },
+    {
+      "path": "stage3/adapt/99-correctness-core-levenshtein/evidence.tar.gz",
+      "bytes": 3386320,
+      "blob": "a863974a7866c4f59fd8e0ce6790e91e96d2b043"
+    },
+    {
+      "path": "stage3/adapt/99-correctness-core-multimap/count-evidence.tar.gz",
+      "bytes": 12490013,
+      "blob": "33ff0feb776007a4f87fd2bc5cf56387b0579e5d"
+    },
+    {
+      "path": "stage3/adapt/99-correctness-core-multimap/preparation.tar.gz",
+      "bytes": 3609251,
+      "blob": "d2e4d2351063dde39cb5a341b7c15a1c29e4ddf2"
+    },
+    {
+      "path": "stage3/adapt/99-correctness-core-multimap/proof-evidence.tar.gz",
+      "bytes": 1912612,
+      "blob": "4e472da060204f7706f96bf4bf2548b4ab4c2254"
+    },
+    {
+      "path": "stage3/adapt/99-correctness-core-or-predicate/PROOF-EVIDENCE.tar.gz",
+      "bytes": 1726390,
+      "blob": "846d2b459746b8b3630b53b2d0f24bc81b50ca99"
+    },
+    {
+      "path": "stage3/adapt/99-correctness-core-takewhile/adapted-lane.tar.gz",
+      "bytes": 3981876,
+      "blob": "1d71d0355438f10a13f8f9e200012efdadba4f57"
+    },
+    {
+      "path": "stage3/adapt/99-correctness-core-takewhile/proof.tar.gz",
+      "bytes": 5623931,
+      "blob": "9d60d42baa558d5a7ef3d1603e6ed0900c125020"
+    },
+    {
+      "path": "stage3/area-stack/evidence/parser-ec71/non-null-comparison.json.gz",
+      "bytes": 3917406,
+      "blob": "0bf4b89dd8c382c2bd4d3fd638b0f4e1b451e7d4"
+    },
+    {
+      "path": "stage3/census/data/stock.jsonl.gz",
+      "bytes": 5831788,
+      "blob": "d6a1a8624630024d9dd4b5298a4644af735e0694"
+    },
+    {
+      "path": "stage3/census/deferred-reach/evidence/base-entry.jsonl.gz",
+      "bytes": 1237511,
+      "blob": "29d4a7d46a9e43f2ee1c11e8cbcb86b23831ba51"
+    },
+    {
+      "path": "stage3/census/deferred-reach/evidence/base.jsonl.gz",
+      "bytes": 1233976,
+      "blob": "9f3001d578629822517ebf3daa674c9f914c4b88"
+    },
+    {
+      "path": "stage3/census/deferred-reach/evidence/steps2-3/classification-references.json.gz",
+      "bytes": 1053964,
+      "blob": "df4a2140a87d3c95b07d98dd75f475722bd87192"
+    },
+    {
+      "path": "stage3/census/deferred-reach/evidence/steps2-3/head-entry.jsonl.gz",
+      "bytes": 1243932,
+      "blob": "91b098696b7cfab058bb301c9c5dd54bd9fe16b3"
+    },
+    {
+      "path": "stage3/census/deferred-reach/evidence/steps2-3/head.jsonl.gz",
+      "bytes": 1240172,
+      "blob": "81a5eb78d0193c9bad45fc8241d9febbfeee593e"
+    },
+    {
+      "path": "stage3/census/latent/data/meter3/corpus-mutant.jsonl.gz",
+      "bytes": 1184661,
+      "blob": "10d3ca5ac38d2450abbda9b48e7094c2a8e85183"
+    },
+    {
+      "path": "stage3/census/latent/data/meter3/meter-3.jsonl.gz",
+      "bytes": 1184320,
+      "blob": "d427ff86aaa07ac75938b63bf6fb02b96b4b1795"
+    },
+    {
+      "path": "stage3/census/latent/data/rerun2/corpus-mutant.jsonl.gz",
+      "bytes": 1202587,
+      "blob": "2f79ef48765f27d1b5da24e778d12bd6d88dbe21"
+    },
+    {
+      "path": "stage3/census/latent/data/rerun2/cumulative-2-nested.jsonl.gz",
+      "bytes": 1202525,
+      "blob": "24e4ceef1162646c29168053201b540bbb32dac5"
+    },
+    {
+      "path": "stage3/census/latent/data/rerun2/cumulative-2.jsonl.gz",
+      "bytes": 1202552,
+      "blob": "5f5ff43bab4591151d3adb11779206e66d611b15"
+    },
+    {
+      "path": "stage3/census/latent/data/unmerged4/area-unmerged-corpus-mutant.jsonl.gz",
+      "bytes": 1180113,
+      "blob": "36ad675b5056f88cfdcdd1d39858f8809cf6faf1"
+    },
+    {
+      "path": "stage3/census/latent/data/unmerged4/area-unmerged.jsonl.gz",
+      "bytes": 1179543,
+      "blob": "beeeb84ee65d72fdaf673aaaa307e6fe8c3ace9e"
+    },
+    {
+      "path": "stage3/census/latent/data/unmerged4/main-unmerged-corpus-mutant.jsonl.gz",
+      "bytes": 1188057,
+      "blob": "099e423e726aae94a5a5f391fa6b2832ddb478a4"
+    },
+    {
+      "path": "stage3/census/latent/data/unmerged4/main-unmerged.jsonl.gz",
+      "bytes": 1186457,
+      "blob": "b0aef26d680730a56c708caada3fb09257ae49ba"
+    },
+    {
+      "path": "stage3/census/latent/evidence/deferred/base.jsonl.gz",
+      "bytes": 1314538,
+      "blob": "9ce31ce1c3071f21fb6c8cf1dd2ea1c4d04fd3db"
+    },
+    {
+      "path": "stage3/census/latent/evidence/deferred/head.jsonl.gz",
+      "bytes": 1313626,
+      "blob": "ccd77e166df4ebf3248769861c8aeec8f490afbd"
+    },
+    {
+      "path": "stage3/census/latent/evidence/prepasses/first-error-base.jsonl.gz",
+      "bytes": 1248795,
+      "blob": "06b5e4459128257ff71dee5c87eafd365e0fe29b"
+    },
+    {
+      "path": "stage3/census/latent/evidence/prepasses/first-error-head.jsonl.gz",
+      "bytes": 1248884,
+      "blob": "fed3f99359dc2911eba4db50ab70cc0b7de70697"
+    },
+    {
+      "path": "stage3/census/speculative/evidence/continuation/final-result/shifted-depth-mutant.jsonl.gz",
+      "bytes": 1740961,
+      "blob": "ed9d99ea3d083740eed6d860f9552d98ad24ebae"
+    },
+    {
+      "path": "stage3/census/speculative/evidence/continuation/final-result/speculative.jsonl.gz",
+      "bytes": 1740947,
+      "blob": "d3391221ab334537ce68b000597c91677a29e061"
+    },
+    {
+      "path": "stage3/census/speculative/evidence/continuation/final-result/stock.json.gz",
+      "bytes": 11732526,
+      "blob": "772fe30b15ea15d260a972499c8939c01a16845c"
+    },
+    {
+      "path": "stage3/census/speculative/evidence/corrected-whole-no-stubs.jsonl.gz",
+      "bytes": 2296562,
+      "blob": "bd7df72f8a9d121f0c6446043f6bb72e9fd70018"
+    },
+    {
+      "path": "stage3/census/speculative/evidence/full.jsonl.gz",
+      "bytes": 2296562,
+      "blob": "bd7df72f8a9d121f0c6446043f6bb72e9fd70018"
+    },
+    {
+      "path": "stage3/census/speculative/evidence/main-stream/whole-result/stock.json.gz",
+      "bytes": 11732526,
+      "blob": "772fe30b15ea15d260a972499c8939c01a16845c"
+    },
+    {
+      "path": "stage3/census/speculative/evidence/no-stubs.jsonl.gz",
+      "bytes": 2296562,
+      "blob": "bd7df72f8a9d121f0c6446043f6bb72e9fd70018"
+    },
+    {
+      "path": "stage3/census/speculative/evidence/speculative.jsonl.gz",
+      "bytes": 4030934,
+      "blob": "dd752fc751e8d1d8d4e559d9e583596041da34b4"
+    },
+    {
+      "path": "stage3/census/speculative/evidence/stock.json.gz",
+      "bytes": 10078508,
+      "blob": "66394c44ee30111ac1f3a798ca4c4b182d21073d"
+    },
+    {
+      "path": "stage3/census/tsc-closure/evidence/full.jsonl.gz",
+      "bytes": 2315841,
+      "blob": "aeb75339b3b4b471d689018716d81b573660c075"
+    },
+    {
+      "path": "stage3/census/tsc-closure/evidence/latent.jsonl.gz",
+      "bytes": 1224952,
+      "blob": "15a111cca6306a52a054c9f650c00bfe238fce56"
+    },
+    {
+      "path": "stage3/census/tsc-closure/rerun-2026-10-09/evidence/full.jsonl.gz",
+      "bytes": 2009621,
+      "blob": "3d6865e3ff77e691206f521a29976fdf8542fd35"
+    },
+    {
+      "path": "stage3/census/tsc-closure/rerun-2026-10-09/evidence/latent.jsonl.gz",
+      "bytes": 1203559,
+      "blob": "9d92f9078531da370a9cf2bcb6e9324bacea51e7"
+    },
+    {
+      "path": "stage3/drivers/parser/evidence/front3/scratch-integration.patch.gz",
+      "bytes": 1290101,
+      "blob": "b60b8bbbb9e23c28db75d5417e07fc58ac2b1caa"
+    },
+    {
+      "path": "stage3/drivers/parser/evidence/front5/scratch-integration.patch.gz",
+      "bytes": 1273242,
+      "blob": "959b21d0b54dc8a76b27638a1c1564b992f0a7ac"
+    },
+    {
+      "path": "stage3/drivers/scanner/evidence/land-area-next/discovery.c.gz",
+      "bytes": 5788765,
+      "blob": "03f4dba62ed1d8279cbd06993642add7abcf5dff"
+    },
+    {
+      "path": "stage3/lane/evidence/budget-10s/cold-units.tar.gz",
+      "bytes": 3798876,
+      "blob": "b754fffb71d22682e70ef1c7c4bea3c3cb370cd5"
+    },
+    {
+      "path": "stage3/lane/evidence/budget-10s/exploratory-runs.tar.gz",
+      "bytes": 7962210,
+      "blob": "f17c279644090ccb30ff09b9d52dcf3355380bea"
+    },
+    {
+      "path": "stage3/lane/evidence/budget-10s/proof-runs.tar.gz",
+      "bytes": 4693888,
+      "blob": "94da5e1b51f2b200a57dad6c37f1f6537124dd94"
+    },
+    {
+      "path": "stage3/lane/evidence/budget-10s/whole-reference.tar.gz",
+      "bytes": 1504759,
+      "blob": "fbc9db45d0f3f09aabaa2b011fb9684881888a4a"
+    },
+    {
+      "path": "stage3/lane/evidence/case-shards/cold-units.tar.gz",
+      "bytes": 3426123,
+      "blob": "59747d848fbb05a1c78cfdfb3f173548298a8f9f"
+    },
+    {
+      "path": "stage3/lane/evidence/case-shards/tests-and-units.jsonl.gz",
+      "bytes": 5672462,
+      "blob": "b6a0c85046c3409851847e24754b5030aa4dc55b"
+    },
+    {
+      "path": "stage3/lane/evidence/case-shards/whole/whole-tasks.jsonl.gz",
+      "bytes": 1324654,
+      "blob": "ae10ee8ef31c424761b0f29acfdf39163bff23b3"
+    },
+    {
+      "path": "stage3/lane/evidence/shards/task-profile.jsonl.gz",
+      "bytes": 1323210,
+      "blob": "25683be46fae37e7e871c2ca658bd35ea93da9e2"
+    },
+    {
+      "path": "stage3/lane/evidence/shards/tests-and-shards.jsonl.gz",
+      "bytes": 5563715,
+      "blob": "ccd73e97628bb4d6ca311243084e48181bf34cbe"
+    },
+    {
+      "path": "stage3/meter/runs/20261008T035244Z.latent-full/compiler/baseline.jsonl.gz",
+      "bytes": 1230420,
+      "blob": "3ada68be3a1db3c3a87ef34c5673ecd723aec1a7"
+    },
+    {
+      "path": "stage3/meter/runs/20261008T035244Z.latent-full/compiler/full.jsonl.gz",
+      "bytes": 2344989,
+      "blob": "8c07734bec73b98244c3b4f7da365d27311cf256"
+    },
+    {
+      "path": "stage3/meter/runs/20261008T035244Z.latent-full/tsc/full.jsonl.gz",
+      "bytes": 2246673,
+      "blob": "c9b72a52ddd52e02ca4e4576f7604aee93bef040"
+    },
+    {
+      "path": "stage3/meter/runs/20261019T233755Z.9xwivl15/area/latent.jsonl.gz",
+      "bytes": 1299386,
+      "blob": "391b44baf6d8ddab8037956b638b10755401f7b0"
+    },
+    {
+      "path": "stage3/meter/runs/20261019T233755Z.9xwivl15/main/latent.jsonl.gz",
+      "bytes": 1299270,
+      "blob": "3365764201ffcc035383a133a6b971dd4a7f9ab1"
+    },
+    {
+      "path": "stage3/meter/runs/20261020T014828Z.POASDN/area/latent.jsonl.gz",
+      "bytes": 1300639,
+      "blob": "fc33e0dd21f87dbbbb8df0337c4caa91fd307000"
+    },
+    {
+      "path": "stage3/meter/runs/20261020T014828Z.POASDN/main/latent.jsonl.gz",
+      "bytes": 1300348,
+      "blob": "a56a1789a4434cab53447319f5a910bb96d6f97b"
+    },
+    {
+      "path": "stage3/namespace-init-sys/latent-indexed/evidence/raw.jsonl.gz",
+      "bytes": 1473688,
+      "blob": "ad7d744375d9b222c4f72debcb2909afc1623546"
+    },
+    {
+      "path": "stage3/namespaces/call-graph-evidence/debug-latent.jsonl.gz",
+      "bytes": 1209216,
+      "blob": "fe6819c69c5ce6ac0c687ecf5987b02d46cc376f"
+    },
+    {
+      "path": "stage3/performance/allocation/evidence/compiler/observe/collected.heapprofile.gz",
+      "bytes": 9930657,
+      "blob": "bdd5e09932e734942057aecaa4e0b60abce05451"
+    },
+    {
+      "path": "stage3/performance/allocation/evidence/compiler/peak/peak.heapsnapshot.gz",
+      "bytes": 71689654,
+      "blob": "22efdb3f7ad89d173209c38364377704e97e5efe"
+    },
+    {
+      "path": "stage3/performance/allocation/evidence/compiler/stock/stock.heapprofile.gz",
+      "bytes": 1584753,
+      "blob": "c45e6ea317f95e579b84469a42cd3b574a4358d5"
+    },
+    {
+      "path": "stage3/performance/allocation/evidence/fixture/bind.heapsnapshot.gz",
+      "bytes": 1147633,
+      "blob": "08abe5b8b0c0a126f5b12ea265122da8ce0f9027"
+    },
+    {
+      "path": "stage3/performance/allocation/evidence/fixture/check.heapsnapshot.gz",
+      "bytes": 1148182,
+      "blob": "c8cbdc52e53245e6d5ebb26cb95df1a31ef07afd"
+    },
+    {
+      "path": "stage3/performance/allocation/evidence/fixture/parse.heapsnapshot.gz",
+      "bytes": 1147114,
+      "blob": "4b106bd368b3941e055aec24490840b7e49325d1"
+    },
+    {
+      "path": "stage3/performance/allocation/evidence/fixture/released.heapsnapshot.gz",
+      "bytes": 1148514,
+      "blob": "2b96898f064fe285173f5ae074441c6fe4efa643"
+    },
+    {
+      "path": "stage3/performance/allocation/evidence/mitt/peak/peak.heapsnapshot.gz",
+      "bytes": 7977937,
+      "blob": "0a94f1aa9714636cc073f339e2b74f2a46ee0fc6"
+    },
+    {
+      "path": "stage3/performance/evidence/results/tsc.cpuprofile.gz",
+      "bytes": 1543720,
+      "blob": "e7017501add0ed249828dcd4b801e7e8997d9710"
+    },
+    {
+      "path": "stage3/triage/evidence/census.jsonl.gz",
+      "bytes": 2027325,
+      "blob": "24464522b6f299c8d244f29aca31cfdba22d21c6"
+    }
+  ],
+  "bytesRecovered": 621038601,
+  "contentsChanged": false
+}

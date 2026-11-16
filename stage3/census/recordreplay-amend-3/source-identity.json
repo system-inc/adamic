@@ -1,0 +1,36 @@
+{
+  "baseline": "62f6686cd9d22161a7940bee22ccc51f99ecad66",
+  "amendment": "45683ea92fff236245349385455f9d0f7b8ce1f5",
+  "parent": "62f6686cd9d22161a7940bee22ccc51f99ecad66",
+  "main": "2e7a94168cd6b1046799f00d6843f4b0796d4e5d",
+  "noRecutPerformed": true,
+  "sourceWorktreesClean": true,
+  "compilerSourcesIdenticalBetweenHeads": true,
+  "amendmentPaths": [
+    "stage3/adapt/99-wasm-crypto-import/README.md",
+    "stage3/adapt/99-wasm-crypto-import/adapt.cjs",
+    "stage3/adapt/99-wasm-crypto-import/proofs/check.cjs",
+    "stage3/adapt/99-wasm-crypto-import/proofs/recordreplay-contract.cjs",
+    "stage3/adapt/99-wasm-crypto-import/proofs/recordreplay/check.py",
+    "stage3/adapt/99-wasm-crypto-import/proofs/recordreplay/inventory-99-current.json",
+    "stage3/adapt/99-wasm-crypto-import/proofs/recordreplay/inventory-final-readers.json",
+    "stage3/adapt/99-wasm-crypto-import/proofs/recordreplay/inventory-specific.json",
+    "stage3/adapt/99-wasm-crypto-import/proofs/recordreplay/results.json",
+    "stage3/adapt/99-wasm-crypto-import/proofs/require-result-contract.cjs",
+    "stage3/adapt/99-wasm-crypto-import/proofs/scope-mutant.cjs",
+    "stage3/adapt/99-wasm-crypto-import/proofs/scoped-hashes.cjs",
+    "stage3/adapt/99-wasm-crypto-import/proofs/scoped.py",
+    "stage3/adapt/99-wasm-crypto-import/proofs/targets.json",
+    "stage3/adapt/99-wasm-crypto-import/recordreplay.cjs"
+  ],
+  "adaptedSourceChanges": [
+    "src/compiler/sys.ts",
+    "src/recordreplay.d.ts"
+  ],
+  "baselineSourceFiles": 747,
+  "finalSourceFiles": 748,
+  "official93Snapshots": {
+    "before": "19c16edb2132cbe647f72aae6dee57fa6302176d",
+    "after": "7552d9b8c19b0d6f78097a9f9f8bf15d45ce394d"
+  }
+}

@@ -1,0 +1,1846 @@
+{
+  "links": [
+    {
+      "worktree": "final-repo",
+      "path": "stage3/adapt/32-indexed-reads-program/proof/maybebind/continuation/replay.tar.gz",
+      "blob": "00ce07fd36580c52be8a786889eee6455fb86942"
+    },
+    {
+      "worktree": "final-repo",
+      "path": "stage3/adapt/32-indexed-reads-program/proof/maybebind/continuation/shards.tar.gz",
+      "blob": "f52ab65da71203b67299c81d5b3b0c8400709e87"
+    },
+    {
+      "worktree": "final-repo",
+      "path": "stage3/adapt/32-indexed-reads-program/proof/maybebind/continuation/whole.tar.gz",
+      "blob": "00efd672f9bd6a6f3efdf27c094cef6e0532b60e"
+    },
+    {
+      "worktree": "final-repo",
+      "path": "stage3/adapt/32-indexed-reads-program/proof/maybebind/replay.tar.gz",
+      "blob": "27b0c93af13aff31dae45a7ff775dc2c148f297d"
+    },
+    {
+      "worktree": "final-repo",
+      "path": "stage3/adapt/32-indexed-reads-program/record-tables-composition.tar.gz",
+      "blob": "2af7e460a3b591ea018d6b1f4f8800df8027e4ef"
+    },
+    {
+      "worktree": "final-repo",
+      "path": "stage3/adapt/32-indexed-reads-program/record-tables-final-measure.tar.gz",
+      "blob": "4c924f9e45dca9ffe53b028b537f4d720aa7d7d1"
+    },
+    {
+      "worktree": "final-repo",
+      "path": "stage3/adapt/32-indexed-reads-program/record-tables-stepb-final.tar.gz",
+      "blob": "3e8ee2fd1b12fc76bb2bafa8163c03a8cd88dcba"
+    },
+    {
+      "worktree": "final-repo",
+      "path": "stage3/adapt/40-explicit-any/evidence/brands-undefined-3/control-latent.jsonl.gz",
+      "blob": "df8dd61b0baf2f3eac8c98959e904871df12d8a1"
+    },
+    {
+      "worktree": "final-repo",
+      "path": "stage3/adapt/40-explicit-any/evidence/brands-undefined-3/control/shards-observations.json.gz",
+      "blob": "6c83640d7e074f5d4fb367ab0a256202f3738d95"
+    },
+    {
+      "worktree": "final-repo",
+      "path": "stage3/adapt/40-explicit-any/evidence/brands-undefined-3/retyped-latent.jsonl.gz",
+      "blob": "d92d80a1956c1c5ddf71504d47328cd886933631"
+    },
+    {
+      "worktree": "final-repo",
+      "path": "stage3/adapt/40-explicit-any/evidence/brands-undefined-3/retyped/shards-observations.json.gz",
+      "blob": "196643e857728d7815cd39852bf01898dcbb580a"
+    },
+    {
+      "worktree": "final-repo",
+      "path": "stage3/adapt/40-explicit-any/evidence/brands-undefined/after-latent.jsonl.gz",
+      "blob": "50cf6f2235dbbbfb689768b3acf83dc4b8fdb568"
+    },
+    {
+      "worktree": "final-repo",
+      "path": "stage3/adapt/40-explicit-any/evidence/brands-undefined/before-latent.jsonl.gz",
+      "blob": "9822628c1904a600d6106ecc61adc08b514436ec"
+    },
+    {
+      "worktree": "final-repo",
+      "path": "stage3/adapt/40-explicit-any/evidence/timer-slot/control-raw-oracle.tar.gz",
+      "blob": "924da23c30d4f38114651467640bf8de63713dec"
+    },
+    {
+      "worktree": "final-repo",
+      "path": "stage3/adapt/40-explicit-any/evidence/timer-slot/retyped-raw-oracle.tar.gz",
+      "blob": "b10dbe4b7c410985f51adfc9fa8c3d90ac5d3c5d"
+    },
+    {
+      "worktree": "final-repo",
+      "path": "stage3/adapt/41-explicit-any-remaining/evidence/any-after.jsonl.gz",
+      "blob": "0f1f849763d332bc5daa0229353eeacaaefff88e"
+    },
+    {
+      "worktree": "final-repo",
+      "path": "stage3/adapt/41-explicit-any-remaining/evidence/any-mutant.jsonl.gz",
+      "blob": "da6f4c40cc2b08de17c72eda5cc168c24bf45e31"
+    },
+    {
+      "worktree": "final-repo",
+      "path": "stage3/adapt/41-explicit-any-remaining/evidence/before.jsonl.gz",
+      "blob": "63d3a74eabad1e998e195d86d957ff179f2ba280"
+    },
+    {
+      "worktree": "final-repo",
+      "path": "stage3/adapt/41-explicit-any-remaining/evidence/constructors/after.jsonl.gz",
+      "blob": "881e3d7a72243861592aeb2dc62838b084c878ad"
+    },
+    {
+      "worktree": "final-repo",
+      "path": "stage3/adapt/41-explicit-any-remaining/evidence/constructors/mutant.jsonl.gz",
+      "blob": "60b111f13ea5d6ba79cf315fa64f82e561ca25a3"
+    },
+    {
+      "worktree": "final-repo",
+      "path": "stage3/adapt/41-explicit-any-remaining/evidence/final.jsonl.gz",
+      "blob": "088a9ad66423df0b50b72b98650342eb208d7401"
+    },
+    {
+      "worktree": "final-repo",
+      "path": "stage3/adapt/41-explicit-any-remaining/evidence/timers/after.jsonl.gz",
+      "blob": "03f5af9ada85c662ee3bc934332b765257ebd17d"
+    },
+    {
+      "worktree": "final-repo",
+      "path": "stage3/adapt/41-explicit-any-remaining/evidence/timers/mutant.jsonl.gz",
+      "blob": "727e3c8a19425566cdcaad6dbc1bcc635650cfc3"
+    },
+    {
+      "worktree": "final-repo",
+      "path": "stage3/adapt/41-explicit-any-remaining/evidence/void-mutant.jsonl.gz",
+      "blob": "cca1fe22c60b782156c2645f54f24983daf17fed"
+    },
+    {
+      "worktree": "final-repo",
+      "path": "stage3/adapt/45-regex-captures/semver-split-evidence/lane-shard-observations.jsonl.gz",
+      "blob": "9f7787abdb8f9a47c76d0f7c0f154bc06b363fc9"
+    },
+    {
+      "worktree": "final-repo",
+      "path": "stage3/adapt/70-readonly-views/evidence/wave4/preparatory-fields.json.gz",
+      "blob": "4e8702b6752a3c76b36f79aeb1d68c165aac25c0"
+    },
+    {
+      "worktree": "final-repo",
+      "path": "stage3/adapt/70-readonly-views/evidence/wave6/fields.json.gz",
+      "blob": "97f1fbb8f4a970bf91169dc201e9c977043d2c4d"
+    },
+    {
+      "worktree": "final-repo",
+      "path": "stage3/adapt/71-writable-views/evidence/diagnostics/after.jsonl.gz",
+      "blob": "a42b7ee37ee1a4ea1588b2889c70a74f9e57b41a"
+    },
+    {
+      "worktree": "final-repo",
+      "path": "stage3/adapt/71-writable-views/evidence/diagnostics/before.jsonl.gz",
+      "blob": "944138465b3ba4723f8857a3c7bceee497cafd46"
+    },
+    {
+      "worktree": "final-repo",
+      "path": "stage3/adapt/71-writable-views/evidence/diagnostics/undo.jsonl.gz",
+      "blob": "e3957a09b89c3eab0a6988eb6e768f7aeb6300d1"
+    },
+    {
+      "worktree": "final-repo",
+      "path": "stage3/adapt/71-writable-views/evidence/final/after.jsonl.gz",
+      "blob": "90e2377140e66e0b75507e7afc695018e4f34586"
+    },
+    {
+      "worktree": "final-repo",
+      "path": "stage3/adapt/71-writable-views/evidence/final/before.jsonl.gz",
+      "blob": "8fe14673d0c010f1f03b6c383813a68db1a379b5"
+    },
+    {
+      "worktree": "final-repo",
+      "path": "stage3/adapt/71-writable-views/evidence/followup/cumulative/after.jsonl.gz",
+      "blob": "8bea40f10e367c62b64bf498288da0accdd46574"
+    },
+    {
+      "worktree": "final-repo",
+      "path": "stage3/adapt/71-writable-views/evidence/followup/cumulative/before.jsonl.gz",
+      "blob": "e6ea818b6f8704ba884b8ae9db397cdbd6d19d33"
+    },
+    {
+      "worktree": "final-repo",
+      "path": "stage3/adapt/71-writable-views/evidence/followup/diagnostic-undo/after.jsonl.gz",
+      "blob": "a6174945c51275317e748f6b03631006b8bd703b"
+    },
+    {
+      "worktree": "final-repo",
+      "path": "stage3/adapt/71-writable-views/evidence/followup/diagnostics/after.jsonl.gz",
+      "blob": "004ad92c711418b506d13c6447a34cd4f0ebad27"
+    },
+    {
+      "worktree": "final-repo",
+      "path": "stage3/adapt/71-writable-views/evidence/followup/diagnostics/before.jsonl.gz",
+      "blob": "576e09e8b90eda4d69c5109efd3d75463f0bd566"
+    },
+    {
+      "worktree": "final-repo",
+      "path": "stage3/adapt/71-writable-views/evidence/followup/empty-array-undo/after.jsonl.gz",
+      "blob": "6d513116fb7ba70c6b6837eac38d4b4a29f39442"
+    },
+    {
+      "worktree": "final-repo",
+      "path": "stage3/adapt/71-writable-views/evidence/followup/empty-arrays/before.jsonl.gz",
+      "blob": "dafa71929b0322dceafe49fe5974263cd7baae91"
+    },
+    {
+      "worktree": "final-repo",
+      "path": "stage3/adapt/71-writable-views/evidence/followup/evaluator-probe-control/after.jsonl.gz",
+      "blob": "ace1e0b9314f5197033c757c0bed96b0916beaa6"
+    },
+    {
+      "worktree": "final-repo",
+      "path": "stage3/adapt/71-writable-views/evidence/followup/evaluator-probe-control/before.jsonl.gz",
+      "blob": "8dff3178b09e0162e37247a047c650915cfb3536"
+    },
+    {
+      "worktree": "final-repo",
+      "path": "stage3/adapt/71-writable-views/evidence/followup/tuple-undo/after.jsonl.gz",
+      "blob": "7708bdbfc8bcf4320dd2f68d6666bd8f66fc4786"
+    },
+    {
+      "worktree": "final-repo",
+      "path": "stage3/adapt/71-writable-views/evidence/mutant.jsonl.gz",
+      "blob": "97db2430afe9c71e03d8db7bc9a26f1184e7857b"
+    },
+    {
+      "worktree": "final-repo",
+      "path": "stage3/adapt/71-writable-views/evidence/rejected-cache-contract/after.jsonl.gz",
+      "blob": "3410c088bb99006e8219bca495dac0d67551ceaf"
+    },
+    {
+      "worktree": "final-repo",
+      "path": "stage3/adapt/71-writable-views/evidence/rejected-cache-contract/before.jsonl.gz",
+      "blob": "8fe14673d0c010f1f03b6c383813a68db1a379b5"
+    },
+    {
+      "worktree": "final-repo",
+      "path": "stage3/adapt/75-optional-widening/evidence/full-apply/after-latent.jsonl.gz",
+      "blob": "2026b49b78bde4ece1f1516363e3af423a899b5a"
+    },
+    {
+      "worktree": "final-repo",
+      "path": "stage3/adapt/75-optional-widening/evidence/full-apply/before-latent.jsonl.gz",
+      "blob": "448892c7b10e2f0d72c3537e249d2a9254f1ca4c"
+    },
+    {
+      "worktree": "final-repo",
+      "path": "stage3/adapt/75-optional-widening/evidence/wave1/after-latent.jsonl.gz",
+      "blob": "7e86c479f645ee6534fd800d542868ca8ef780d7"
+    },
+    {
+      "worktree": "final-repo",
+      "path": "stage3/adapt/75-optional-widening/evidence/wave1/before-latent.jsonl.gz",
+      "blob": "1ea8166ba6626577866f39c0268a47cc54b5072d"
+    },
+    {
+      "worktree": "final-repo",
+      "path": "stage3/adapt/75-optional-widening/evidence/wave1/sanctioned-after-latent.jsonl.gz",
+      "blob": "4b99443e1774fac823ab0332c3d5929d8f7ae1e4"
+    },
+    {
+      "worktree": "final-repo",
+      "path": "stage3/adapt/75-optional-widening/evidence/wave1/sanctioned-before-latent.jsonl.gz",
+      "blob": "3bf22f60ca912a65be38f20b4eb617833c437a0e"
+    },
+    {
+      "worktree": "final-repo",
+      "path": "stage3/adapt/75-optional-widening/evidence/wave2/after-latent.jsonl.gz",
+      "blob": "7c14435ba8595beb549f3fe2f009687e25ddd8a4"
+    },
+    {
+      "worktree": "final-repo",
+      "path": "stage3/adapt/75-optional-widening/evidence/wave2/before-latent.jsonl.gz",
+      "blob": "368a124b0c6a66e4b9454da04657549c4e0a8609"
+    },
+    {
+      "worktree": "final-repo",
+      "path": "stage3/adapt/95-checker-axolotl-h/fold-evidence/oracle/whole-whole-tasks.jsonl.gz",
+      "blob": "8fbfeb1c2fa40ddccd6d09c9b95ebca16cb00aa0"
+    },
+    {
+      "worktree": "final-repo",
+      "path": "stage3/adapt/95-checker-axolotl-h/fold-evidence/six-sites/mutants.tar.gz",
+      "blob": "4e6a3514af261d30d81251edc9eb4e3283c1157c"
+    },
+    {
+      "worktree": "final-repo",
+      "path": "stage3/adapt/95-checker-axolotl-h/fold-evidence/six-sites/oracle/shards.tar.gz",
+      "blob": "8809b96c3d303715c4779780734b4fe903e9b1e1"
+    },
+    {
+      "worktree": "final-repo",
+      "path": "stage3/adapt/95-checker-axolotl-h/fold-evidence/six-sites/oracle/whole.tar.gz",
+      "blob": "aabc977fd9e02b5aee3020a655344d80a757396d"
+    },
+    {
+      "worktree": "final-repo",
+      "path": "stage3/adapt/99-correctness-axolotl-r/after-identities.jsonl.gz",
+      "blob": "568cb10853030d07b8076e460d0745cac81291bb"
+    },
+    {
+      "worktree": "final-repo",
+      "path": "stage3/adapt/99-correctness-axolotl-r/counted-identities.jsonl.gz",
+      "blob": "296b2e9fc4823995d9cf391a2b3865240a09d2c8"
+    },
+    {
+      "worktree": "final-repo",
+      "path": "stage3/adapt/99-correctness-axolotl-r/reference-identities.jsonl.gz",
+      "blob": "7103c92c3eb5c842e7662068944cd3764f031cd7"
+    },
+    {
+      "worktree": "final-repo",
+      "path": "stage3/adapt/99-correctness-axolotl-r/tosorted-measure.tar.gz",
+      "blob": "ddc0d881e3fa4692befbf237aed6392e87342586"
+    },
+    {
+      "worktree": "final-repo",
+      "path": "stage3/adapt/99-correctness-axolotl-s/accepted-tasks.jsonl.gz",
+      "blob": "c5b18aa3110bf4e24d6498ec701589c8a249c574"
+    },
+    {
+      "worktree": "final-repo",
+      "path": "stage3/adapt/99-correctness-axolotl-s/clear-evidence.tar.gz",
+      "blob": "b760b4ad0b7ee2425a7ea2d3b70a0443b7312aaa"
+    },
+    {
+      "worktree": "final-repo",
+      "path": "stage3/adapt/99-correctness-axolotl-s/main-tasks.jsonl.gz",
+      "blob": "c92f59955b70469c85ea9fbaf97e59bffd82a8a0"
+    },
+    {
+      "worktree": "final-repo",
+      "path": "stage3/adapt/99-correctness-axolotl-s/queue-box-evidence.tar.gz",
+      "blob": "a5d0d0ff81834c91311f78c56a5fa1a698119da3"
+    },
+    {
+      "worktree": "final-repo",
+      "path": "stage3/adapt/99-correctness-axolotl-u/adapted-identities.jsonl.gz",
+      "blob": "081ebe2926f149e773edd06058e5a3dd24c18fa3"
+    },
+    {
+      "worktree": "final-repo",
+      "path": "stage3/adapt/99-correctness-axolotl-u/amended-recount-identities.jsonl.gz",
+      "blob": "de7c281d30574d85918417a3915979f942045481"
+    },
+    {
+      "worktree": "final-repo",
+      "path": "stage3/adapt/99-correctness-axolotl-u/amended-uncounted-identities.jsonl.gz",
+      "blob": "be6656626387269774a3e3da79897793c8c5d4bf"
+    },
+    {
+      "worktree": "final-repo",
+      "path": "stage3/adapt/99-correctness-axolotl-u/combined-adapted-identities.jsonl.gz",
+      "blob": "c2d17e1bab70698080cebc4cc0e9638420fda8d2"
+    },
+    {
+      "worktree": "final-repo",
+      "path": "stage3/adapt/99-correctness-axolotl-u/combined-main-identities.jsonl.gz",
+      "blob": "d84653522ecc95e3ca11dfe4db2a8e5cc166ad93"
+    },
+    {
+      "worktree": "final-repo",
+      "path": "stage3/adapt/99-correctness-axolotl-u/counted-identities.jsonl.gz",
+      "blob": "392a44aabf1ea06599a56eefdd12975aeb2d024c"
+    },
+    {
+      "worktree": "final-repo",
+      "path": "stage3/adapt/99-correctness-axolotl-u/reference-identities.jsonl.gz",
+      "blob": "bd1e4ae9c650ddc85a2013a2a7c244aecdd79ed5"
+    },
+    {
+      "worktree": "final-repo",
+      "path": "stage3/adapt/99-correctness-axolotl-x/composition/initial-matrix.tar.gz",
+      "blob": "80d76a8076bca799c6c6acff1e1ec853ca78718d"
+    },
+    {
+      "worktree": "final-repo",
+      "path": "stage3/adapt/99-correctness-axolotl-x/composition/oracle.tar.gz",
+      "blob": "a21f22faf4dd751cef7d0295f9036cd0d0765875"
+    },
+    {
+      "worktree": "final-repo",
+      "path": "stage3/adapt/99-correctness-axolotl-x/oracle/whole/whole-tasks.jsonl.gz",
+      "blob": "2617acc617652109fc1d3316e18ebb5b2a7f7de2"
+    },
+    {
+      "worktree": "final-repo",
+      "path": "stage3/adapt/99-correctness-axolotl-x/owned/oracle.tar.gz",
+      "blob": "adf545e5d939a8613fc1404e1f38568c78b9cf32"
+    },
+    {
+      "worktree": "final-repo",
+      "path": "stage3/adapt/99-correctness-axolotl-x/owned/paired-replay.tar.gz",
+      "blob": "0d7f660dec686b117ffadd965249a9cd639ca6d7"
+    },
+    {
+      "worktree": "final-repo",
+      "path": "stage3/adapt/99-correctness-axolotl-x/recut/replay.tar.gz",
+      "blob": "d564f75238e9c188dee7c6de889d521d5a571737"
+    },
+    {
+      "worktree": "final-repo",
+      "path": "stage3/adapt/99-correctness-axolotl-z/elementat-count-closeout.tar.gz",
+      "blob": "aeb870a67780dc740e9592775b2ba9ad82abc8cb"
+    },
+    {
+      "worktree": "final-repo",
+      "path": "stage3/adapt/99-correctness-axolotl-z/elementat-declaration-proof.tar.gz",
+      "blob": "1d1b1bfa36b6b7a1702e13452d2aedf112aaccea"
+    },
+    {
+      "worktree": "final-repo",
+      "path": "stage3/adapt/99-correctness-axolotl-z/elementat-measure.tar.gz",
+      "blob": "7c547f7b1e084eb20c3ff196614061cba2383317"
+    },
+    {
+      "worktree": "final-repo",
+      "path": "stage3/adapt/99-correctness-axolotl-z/elementat-step-b.tar.gz",
+      "blob": "95ab0b55d2493947f1a5607cf3758ae7df9b82c4"
+    },
+    {
+      "worktree": "final-repo",
+      "path": "stage3/adapt/99-correctness-core-arrayof/measurement.tar.gz",
+      "blob": "735acadf9c4a7e58598feeb73804b99ac8d45d74"
+    },
+    {
+      "worktree": "final-repo",
+      "path": "stage3/adapt/99-correctness-core-arrayof/proof.tar.gz",
+      "blob": "99e186e13c164f2eca34c88abe2b4194b4c0fa17"
+    },
+    {
+      "worktree": "final-repo",
+      "path": "stage3/adapt/99-correctness-core-assign/closeout.tar.gz",
+      "blob": "6edef17bffacea5a6609d4bc70cfaee2d0116566"
+    },
+    {
+      "worktree": "final-repo",
+      "path": "stage3/adapt/99-correctness-core-assign/measurement-complete.tar.gz",
+      "blob": "4656889c994e39c3568fcbc0f216ebf0ecb1af00"
+    },
+    {
+      "worktree": "final-repo",
+      "path": "stage3/adapt/99-correctness-core-cast-message/after-javascript.tar.gz",
+      "blob": "cb385020df2c815240aa0ccc5dcf66907cda9d39"
+    },
+    {
+      "worktree": "final-repo",
+      "path": "stage3/adapt/99-correctness-core-cast-message/before-javascript.tar.gz",
+      "blob": "46945a637610132f7a2bda2f3b6e21f8f762154e"
+    },
+    {
+      "worktree": "final-repo",
+      "path": "stage3/adapt/99-correctness-core-cast-message/raw-proof.tar.gz",
+      "blob": "d56d8e212edb7f426768665e3ccea1830f3ebce3"
+    },
+    {
+      "worktree": "final-repo",
+      "path": "stage3/adapt/99-correctness-core-clone/apply-checkpoint.tar.gz",
+      "blob": "15a6405dabc23640753e6fa29264f518d7ee3365"
+    },
+    {
+      "worktree": "final-repo",
+      "path": "stage3/adapt/99-correctness-core-clone/evidence.tar.gz",
+      "blob": "fbe35b6447deaa36eaa4d65b52557cee1e08c185"
+    },
+    {
+      "worktree": "final-repo",
+      "path": "stage3/adapt/99-correctness-core-compare/amendment-evidence.tar.gz",
+      "blob": "27eedc84cc6e45a750205617b4e449a73ed9a7d7"
+    },
+    {
+      "worktree": "final-repo",
+      "path": "stage3/adapt/99-correctness-core-compare/packed-piece-02-failed.tar.gz",
+      "blob": "bf2202f18490e7c542cace4d26f4e3ffd1348a89"
+    },
+    {
+      "worktree": "final-repo",
+      "path": "stage3/adapt/99-correctness-core-compare/piece-01.tar.gz",
+      "blob": "44e4b092d1da92b6418501765a3db6e79b35b38c"
+    },
+    {
+      "worktree": "final-repo",
+      "path": "stage3/adapt/99-correctness-core-compare/piece-02.tar.gz",
+      "blob": "95f72b22c7b81f99f59462b6662f7cac350a101b"
+    },
+    {
+      "worktree": "final-repo",
+      "path": "stage3/adapt/99-correctness-core-compare/piece-03.tar.gz",
+      "blob": "0291a92e66a148086706f0fd7aef08ca529c54e6"
+    },
+    {
+      "worktree": "final-repo",
+      "path": "stage3/adapt/99-correctness-core-compare/piece-12.tar.gz",
+      "blob": "5898a1bd40d076eb2aa7ce1ea9e5faf1781c4e36"
+    },
+    {
+      "worktree": "final-repo",
+      "path": "stage3/adapt/99-correctness-core-compare/piece-14.tar.gz",
+      "blob": "1676ff10429ae5e597895abf13d6799c2283f7b6"
+    },
+    {
+      "worktree": "final-repo",
+      "path": "stage3/adapt/99-correctness-core-compare/piece-16.tar.gz",
+      "blob": "254d78f59644b2a6235b8375b3c7e019dd6eab9b"
+    },
+    {
+      "worktree": "final-repo",
+      "path": "stage3/adapt/99-correctness-core-compare/piece-17.tar.gz",
+      "blob": "f0343e3489f85a493d5e46ad61f4a40b70bf8df4"
+    },
+    {
+      "worktree": "final-repo",
+      "path": "stage3/adapt/99-correctness-core-compare/proof-evidence.tar.gz",
+      "blob": "a20f9030bd3424f75b66c1e4d874714b89efdb04"
+    },
+    {
+      "worktree": "final-repo",
+      "path": "stage3/adapt/99-correctness-core-debug-messages/after-javascript.tar.gz",
+      "blob": "3d79d2d5f38d450c0af2e71d65c8c2a74b505998"
+    },
+    {
+      "worktree": "final-repo",
+      "path": "stage3/adapt/99-correctness-core-debug-messages/before-javascript.tar.gz",
+      "blob": "dd97470d4d6e9358d3e08c1db638d3b9ff6dd133"
+    },
+    {
+      "worktree": "final-repo",
+      "path": "stage3/adapt/99-correctness-core-debug-messages/raw-proof.tar.gz",
+      "blob": "f67743ec844103fc167840c615216e11d17724b6"
+    },
+    {
+      "worktree": "final-repo",
+      "path": "stage3/adapt/99-correctness-core-extend/core-proof.tar.gz",
+      "blob": "daed99c3f2b1c9f664419eda378659bdbdfbe874"
+    },
+    {
+      "worktree": "final-repo",
+      "path": "stage3/adapt/99-correctness-core-extend/historical-f027.tar.gz",
+      "blob": "668f78003567827ed60ff76e8392b11f4554c162"
+    },
+    {
+      "worktree": "final-repo",
+      "path": "stage3/adapt/99-correctness-core-extend/lane-count.tar.gz",
+      "blob": "07d4e7436815405a28b70abcff4deef90a3a0495"
+    },
+    {
+      "worktree": "final-repo",
+      "path": "stage3/adapt/99-correctness-core-getallkeys/proof-evidence.tar.gz",
+      "blob": "c28f07d35de611fd04ae87403375034d0567ee3a"
+    },
+    {
+      "worktree": "final-repo",
+      "path": "stage3/adapt/99-correctness-core-getfunctionname-move/after-javascript.tar.gz",
+      "blob": "43c7754512c09040f8651c47a2ebe966a70f8306"
+    },
+    {
+      "worktree": "final-repo",
+      "path": "stage3/adapt/99-correctness-core-getfunctionname-move/before-javascript.tar.gz",
+      "blob": "e696117bad29d08df8cd3c23c82349150f02fd3a"
+    },
+    {
+      "worktree": "final-repo",
+      "path": "stage3/adapt/99-correctness-core-getfunctionname-move/raw-proof.tar.gz",
+      "blob": "18b09a373c0d26e00cd3a6629cad08b05a282717"
+    },
+    {
+      "worktree": "final-repo",
+      "path": "stage3/adapt/99-correctness-core-groupby/apply-checkpoint.tar.gz",
+      "blob": "49e4cacab7a0c05cca857aa9c70070c0385df4a7"
+    },
+    {
+      "worktree": "final-repo",
+      "path": "stage3/adapt/99-correctness-core-groupby/evidence.tar.gz",
+      "blob": "7bb9f4044d4776c02704f742be7574629a177b9a"
+    },
+    {
+      "worktree": "final-repo",
+      "path": "stage3/adapt/99-correctness-core-levenshtein/evidence.tar.gz",
+      "blob": "a863974a7866c4f59fd8e0ce6790e91e96d2b043"
+    },
+    {
+      "worktree": "final-repo",
+      "path": "stage3/adapt/99-correctness-core-multimap/count-evidence.tar.gz",
+      "blob": "33ff0feb776007a4f87fd2bc5cf56387b0579e5d"
+    },
+    {
+      "worktree": "final-repo",
+      "path": "stage3/adapt/99-correctness-core-multimap/preparation.tar.gz",
+      "blob": "d2e4d2351063dde39cb5a341b7c15a1c29e4ddf2"
+    },
+    {
+      "worktree": "final-repo",
+      "path": "stage3/adapt/99-correctness-core-multimap/proof-evidence.tar.gz",
+      "blob": "4e472da060204f7706f96bf4bf2548b4ab4c2254"
+    },
+    {
+      "worktree": "final-repo",
+      "path": "stage3/adapt/99-correctness-core-or-predicate/PROOF-EVIDENCE.tar.gz",
+      "blob": "846d2b459746b8b3630b53b2d0f24bc81b50ca99"
+    },
+    {
+      "worktree": "final-repo",
+      "path": "stage3/adapt/99-correctness-core-takewhile/adapted-lane.tar.gz",
+      "blob": "1d71d0355438f10a13f8f9e200012efdadba4f57"
+    },
+    {
+      "worktree": "final-repo",
+      "path": "stage3/adapt/99-correctness-core-takewhile/proof.tar.gz",
+      "blob": "9d60d42baa558d5a7ef3d1603e6ed0900c125020"
+    },
+    {
+      "worktree": "final-repo",
+      "path": "stage3/area-stack/evidence/parser-ec71/non-null-comparison.json.gz",
+      "blob": "0bf4b89dd8c382c2bd4d3fd638b0f4e1b451e7d4"
+    },
+    {
+      "worktree": "final-repo",
+      "path": "stage3/census/data/stock.jsonl.gz",
+      "blob": "d6a1a8624630024d9dd4b5298a4644af735e0694"
+    },
+    {
+      "worktree": "final-repo",
+      "path": "stage3/census/deferred-reach/evidence/base-entry.jsonl.gz",
+      "blob": "29d4a7d46a9e43f2ee1c11e8cbcb86b23831ba51"
+    },
+    {
+      "worktree": "final-repo",
+      "path": "stage3/census/deferred-reach/evidence/base.jsonl.gz",
+      "blob": "9f3001d578629822517ebf3daa674c9f914c4b88"
+    },
+    {
+      "worktree": "final-repo",
+      "path": "stage3/census/deferred-reach/evidence/steps2-3/classification-references.json.gz",
+      "blob": "df4a2140a87d3c95b07d98dd75f475722bd87192"
+    },
+    {
+      "worktree": "final-repo",
+      "path": "stage3/census/deferred-reach/evidence/steps2-3/head-entry.jsonl.gz",
+      "blob": "91b098696b7cfab058bb301c9c5dd54bd9fe16b3"
+    },
+    {
+      "worktree": "final-repo",
+      "path": "stage3/census/deferred-reach/evidence/steps2-3/head.jsonl.gz",
+      "blob": "81a5eb78d0193c9bad45fc8241d9febbfeee593e"
+    },
+    {
+      "worktree": "final-repo",
+      "path": "stage3/census/latent/data/meter3/corpus-mutant.jsonl.gz",
+      "blob": "10d3ca5ac38d2450abbda9b48e7094c2a8e85183"
+    },
+    {
+      "worktree": "final-repo",
+      "path": "stage3/census/latent/data/meter3/meter-3.jsonl.gz",
+      "blob": "d427ff86aaa07ac75938b63bf6fb02b96b4b1795"
+    },
+    {
+      "worktree": "final-repo",
+      "path": "stage3/census/latent/data/rerun2/corpus-mutant.jsonl.gz",
+      "blob": "2f79ef48765f27d1b5da24e778d12bd6d88dbe21"
+    },
+    {
+      "worktree": "final-repo",
+      "path": "stage3/census/latent/data/rerun2/cumulative-2-nested.jsonl.gz",
+      "blob": "24e4ceef1162646c29168053201b540bbb32dac5"
+    },
+    {
+      "worktree": "final-repo",
+      "path": "stage3/census/latent/data/rerun2/cumulative-2.jsonl.gz",
+      "blob": "5f5ff43bab4591151d3adb11779206e66d611b15"
+    },
+    {
+      "worktree": "final-repo",
+      "path": "stage3/census/latent/data/unmerged4/area-unmerged-corpus-mutant.jsonl.gz",
+      "blob": "36ad675b5056f88cfdcdd1d39858f8809cf6faf1"
+    },
+    {
+      "worktree": "final-repo",
+      "path": "stage3/census/latent/data/unmerged4/area-unmerged.jsonl.gz",
+      "blob": "beeeb84ee65d72fdaf673aaaa307e6fe8c3ace9e"
+    },
+    {
+      "worktree": "final-repo",
+      "path": "stage3/census/latent/data/unmerged4/main-unmerged-corpus-mutant.jsonl.gz",
+      "blob": "099e423e726aae94a5a5f391fa6b2832ddb478a4"
+    },
+    {
+      "worktree": "final-repo",
+      "path": "stage3/census/latent/data/unmerged4/main-unmerged.jsonl.gz",
+      "blob": "b0aef26d680730a56c708caada3fb09257ae49ba"
+    },
+    {
+      "worktree": "final-repo",
+      "path": "stage3/census/latent/evidence/deferred/base.jsonl.gz",
+      "blob": "9ce31ce1c3071f21fb6c8cf1dd2ea1c4d04fd3db"
+    },
+    {
+      "worktree": "final-repo",
+      "path": "stage3/census/latent/evidence/deferred/head.jsonl.gz",
+      "blob": "ccd77e166df4ebf3248769861c8aeec8f490afbd"
+    },
+    {
+      "worktree": "final-repo",
+      "path": "stage3/census/latent/evidence/prepasses/first-error-base.jsonl.gz",
+      "blob": "06b5e4459128257ff71dee5c87eafd365e0fe29b"
+    },
+    {
+      "worktree": "final-repo",
+      "path": "stage3/census/latent/evidence/prepasses/first-error-head.jsonl.gz",
+      "blob": "fed3f99359dc2911eba4db50ab70cc0b7de70697"
+    },
+    {
+      "worktree": "final-repo",
+      "path": "stage3/census/speculative/evidence/continuation/final-result/shifted-depth-mutant.jsonl.gz",
+      "blob": "ed9d99ea3d083740eed6d860f9552d98ad24ebae"
+    },
+    {
+      "worktree": "final-repo",
+      "path": "stage3/census/speculative/evidence/continuation/final-result/speculative.jsonl.gz",
+      "blob": "d3391221ab334537ce68b000597c91677a29e061"
+    },
+    {
+      "worktree": "final-repo",
+      "path": "stage3/census/speculative/evidence/continuation/final-result/stock.json.gz",
+      "blob": "772fe30b15ea15d260a972499c8939c01a16845c"
+    },
+    {
+      "worktree": "final-repo",
+      "path": "stage3/census/speculative/evidence/corrected-whole-no-stubs.jsonl.gz",
+      "blob": "bd7df72f8a9d121f0c6446043f6bb72e9fd70018"
+    },
+    {
+      "worktree": "final-repo",
+      "path": "stage3/census/speculative/evidence/full.jsonl.gz",
+      "blob": "bd7df72f8a9d121f0c6446043f6bb72e9fd70018"
+    },
+    {
+      "worktree": "final-repo",
+      "path": "stage3/census/speculative/evidence/main-stream/whole-result/stock.json.gz",
+      "blob": "772fe30b15ea15d260a972499c8939c01a16845c"
+    },
+    {
+      "worktree": "final-repo",
+      "path": "stage3/census/speculative/evidence/no-stubs.jsonl.gz",
+      "blob": "bd7df72f8a9d121f0c6446043f6bb72e9fd70018"
+    },
+    {
+      "worktree": "final-repo",
+      "path": "stage3/census/speculative/evidence/speculative.jsonl.gz",
+      "blob": "dd752fc751e8d1d8d4e559d9e583596041da34b4"
+    },
+    {
+      "worktree": "final-repo",
+      "path": "stage3/census/speculative/evidence/stock.json.gz",
+      "blob": "66394c44ee30111ac1f3a798ca4c4b182d21073d"
+    },
+    {
+      "worktree": "final-repo",
+      "path": "stage3/census/tsc-closure/evidence/full.jsonl.gz",
+      "blob": "aeb75339b3b4b471d689018716d81b573660c075"
+    },
+    {
+      "worktree": "final-repo",
+      "path": "stage3/census/tsc-closure/evidence/latent.jsonl.gz",
+      "blob": "15a111cca6306a52a054c9f650c00bfe238fce56"
+    },
+    {
+      "worktree": "final-repo",
+      "path": "stage3/census/tsc-closure/rerun-2026-10-09/evidence/full.jsonl.gz",
+      "blob": "3d6865e3ff77e691206f521a29976fdf8542fd35"
+    },
+    {
+      "worktree": "final-repo",
+      "path": "stage3/census/tsc-closure/rerun-2026-10-09/evidence/latent.jsonl.gz",
+      "blob": "9d92f9078531da370a9cf2bcb6e9324bacea51e7"
+    },
+    {
+      "worktree": "final-repo",
+      "path": "stage3/drivers/parser/evidence/front3/scratch-integration.patch.gz",
+      "blob": "b60b8bbbb9e23c28db75d5417e07fc58ac2b1caa"
+    },
+    {
+      "worktree": "final-repo",
+      "path": "stage3/drivers/parser/evidence/front5/scratch-integration.patch.gz",
+      "blob": "959b21d0b54dc8a76b27638a1c1564b992f0a7ac"
+    },
+    {
+      "worktree": "final-repo",
+      "path": "stage3/drivers/scanner/evidence/land-area-next/discovery.c.gz",
+      "blob": "03f4dba62ed1d8279cbd06993642add7abcf5dff"
+    },
+    {
+      "worktree": "final-repo",
+      "path": "stage3/lane/evidence/budget-10s/cold-units.tar.gz",
+      "blob": "b754fffb71d22682e70ef1c7c4bea3c3cb370cd5"
+    },
+    {
+      "worktree": "final-repo",
+      "path": "stage3/lane/evidence/budget-10s/exploratory-runs.tar.gz",
+      "blob": "f17c279644090ccb30ff09b9d52dcf3355380bea"
+    },
+    {
+      "worktree": "final-repo",
+      "path": "stage3/lane/evidence/budget-10s/proof-runs.tar.gz",
+      "blob": "94da5e1b51f2b200a57dad6c37f1f6537124dd94"
+    },
+    {
+      "worktree": "final-repo",
+      "path": "stage3/lane/evidence/budget-10s/whole-reference.tar.gz",
+      "blob": "fbc9db45d0f3f09aabaa2b011fb9684881888a4a"
+    },
+    {
+      "worktree": "final-repo",
+      "path": "stage3/lane/evidence/case-shards/cold-units.tar.gz",
+      "blob": "59747d848fbb05a1c78cfdfb3f173548298a8f9f"
+    },
+    {
+      "worktree": "final-repo",
+      "path": "stage3/lane/evidence/case-shards/tests-and-units.jsonl.gz",
+      "blob": "b6a0c85046c3409851847e24754b5030aa4dc55b"
+    },
+    {
+      "worktree": "final-repo",
+      "path": "stage3/lane/evidence/case-shards/whole/whole-tasks.jsonl.gz",
+      "blob": "ae10ee8ef31c424761b0f29acfdf39163bff23b3"
+    },
+    {
+      "worktree": "final-repo",
+      "path": "stage3/lane/evidence/shards/task-profile.jsonl.gz",
+      "blob": "25683be46fae37e7e871c2ca658bd35ea93da9e2"
+    },
+    {
+      "worktree": "final-repo",
+      "path": "stage3/lane/evidence/shards/tests-and-shards.jsonl.gz",
+      "blob": "ccd73e97628bb4d6ca311243084e48181bf34cbe"
+    },
+    {
+      "worktree": "final-repo",
+      "path": "stage3/meter/runs/20261008T035244Z.latent-full/compiler/baseline.jsonl.gz",
+      "blob": "3ada68be3a1db3c3a87ef34c5673ecd723aec1a7"
+    },
+    {
+      "worktree": "final-repo",
+      "path": "stage3/meter/runs/20261008T035244Z.latent-full/compiler/full.jsonl.gz",
+      "blob": "8c07734bec73b98244c3b4f7da365d27311cf256"
+    },
+    {
+      "worktree": "final-repo",
+      "path": "stage3/meter/runs/20261008T035244Z.latent-full/tsc/full.jsonl.gz",
+      "blob": "c9b72a52ddd52e02ca4e4576f7604aee93bef040"
+    },
+    {
+      "worktree": "final-repo",
+      "path": "stage3/meter/runs/20261019T233755Z.9xwivl15/area/latent.jsonl.gz",
+      "blob": "391b44baf6d8ddab8037956b638b10755401f7b0"
+    },
+    {
+      "worktree": "final-repo",
+      "path": "stage3/meter/runs/20261019T233755Z.9xwivl15/main/latent.jsonl.gz",
+      "blob": "3365764201ffcc035383a133a6b971dd4a7f9ab1"
+    },
+    {
+      "worktree": "final-repo",
+      "path": "stage3/meter/runs/20261020T014828Z.POASDN/area/latent.jsonl.gz",
+      "blob": "fc33e0dd21f87dbbbb8df0337c4caa91fd307000"
+    },
+    {
+      "worktree": "final-repo",
+      "path": "stage3/meter/runs/20261020T014828Z.POASDN/main/latent.jsonl.gz",
+      "blob": "a56a1789a4434cab53447319f5a910bb96d6f97b"
+    },
+    {
+      "worktree": "final-repo",
+      "path": "stage3/namespace-init-sys/latent-indexed/evidence/raw.jsonl.gz",
+      "blob": "ad7d744375d9b222c4f72debcb2909afc1623546"
+    },
+    {
+      "worktree": "final-repo",
+      "path": "stage3/namespaces/call-graph-evidence/debug-latent.jsonl.gz",
+      "blob": "fe6819c69c5ce6ac0c687ecf5987b02d46cc376f"
+    },
+    {
+      "worktree": "final-repo",
+      "path": "stage3/performance/allocation/evidence/compiler/observe/collected.heapprofile.gz",
+      "blob": "bdd5e09932e734942057aecaa4e0b60abce05451"
+    },
+    {
+      "worktree": "final-repo",
+      "path": "stage3/performance/allocation/evidence/compiler/peak/peak.heapsnapshot.gz",
+      "blob": "22efdb3f7ad89d173209c38364377704e97e5efe"
+    },
+    {
+      "worktree": "final-repo",
+      "path": "stage3/performance/allocation/evidence/compiler/stock/stock.heapprofile.gz",
+      "blob": "c45e6ea317f95e579b84469a42cd3b574a4358d5"
+    },
+    {
+      "worktree": "final-repo",
+      "path": "stage3/performance/allocation/evidence/fixture/bind.heapsnapshot.gz",
+      "blob": "08abe5b8b0c0a126f5b12ea265122da8ce0f9027"
+    },
+    {
+      "worktree": "final-repo",
+      "path": "stage3/performance/allocation/evidence/fixture/check.heapsnapshot.gz",
+      "blob": "c8cbdc52e53245e6d5ebb26cb95df1a31ef07afd"
+    },
+    {
+      "worktree": "final-repo",
+      "path": "stage3/performance/allocation/evidence/fixture/parse.heapsnapshot.gz",
+      "blob": "4b106bd368b3941e055aec24490840b7e49325d1"
+    },
+    {
+      "worktree": "final-repo",
+      "path": "stage3/performance/allocation/evidence/fixture/released.heapsnapshot.gz",
+      "blob": "2b96898f064fe285173f5ae074441c6fe4efa643"
+    },
+    {
+      "worktree": "final-repo",
+      "path": "stage3/performance/allocation/evidence/mitt/peak/peak.heapsnapshot.gz",
+      "blob": "0a94f1aa9714636cc073f339e2b74f2a46ee0fc6"
+    },
+    {
+      "worktree": "final-repo",
+      "path": "stage3/performance/evidence/results/tsc.cpuprofile.gz",
+      "blob": "e7017501add0ed249828dcd4b801e7e8997d9710"
+    },
+    {
+      "worktree": "final-repo",
+      "path": "stage3/triage/evidence/census.jsonl.gz",
+      "blob": "24464522b6f299c8d244f29aca31cfdba22d21c6"
+    },
+    {
+      "worktree": "base-repo",
+      "path": "stage3/adapt/32-indexed-reads-program/proof/maybebind/continuation/replay.tar.gz",
+      "blob": "00ce07fd36580c52be8a786889eee6455fb86942"
+    },
+    {
+      "worktree": "base-repo",
+      "path": "stage3/adapt/32-indexed-reads-program/proof/maybebind/continuation/shards.tar.gz",
+      "blob": "f52ab65da71203b67299c81d5b3b0c8400709e87"
+    },
+    {
+      "worktree": "base-repo",
+      "path": "stage3/adapt/32-indexed-reads-program/proof/maybebind/continuation/whole.tar.gz",
+      "blob": "00efd672f9bd6a6f3efdf27c094cef6e0532b60e"
+    },
+    {
+      "worktree": "base-repo",
+      "path": "stage3/adapt/32-indexed-reads-program/proof/maybebind/replay.tar.gz",
+      "blob": "27b0c93af13aff31dae45a7ff775dc2c148f297d"
+    },
+    {
+      "worktree": "base-repo",
+      "path": "stage3/adapt/32-indexed-reads-program/record-tables-composition.tar.gz",
+      "blob": "2af7e460a3b591ea018d6b1f4f8800df8027e4ef"
+    },
+    {
+      "worktree": "base-repo",
+      "path": "stage3/adapt/32-indexed-reads-program/record-tables-final-measure.tar.gz",
+      "blob": "4c924f9e45dca9ffe53b028b537f4d720aa7d7d1"
+    },
+    {
+      "worktree": "base-repo",
+      "path": "stage3/adapt/32-indexed-reads-program/record-tables-stepb-final.tar.gz",
+      "blob": "3e8ee2fd1b12fc76bb2bafa8163c03a8cd88dcba"
+    },
+    {
+      "worktree": "base-repo",
+      "path": "stage3/adapt/40-explicit-any/evidence/brands-undefined-3/control-latent.jsonl.gz",
+      "blob": "df8dd61b0baf2f3eac8c98959e904871df12d8a1"
+    },
+    {
+      "worktree": "base-repo",
+      "path": "stage3/adapt/40-explicit-any/evidence/brands-undefined-3/control/shards-observations.json.gz",
+      "blob": "6c83640d7e074f5d4fb367ab0a256202f3738d95"
+    },
+    {
+      "worktree": "base-repo",
+      "path": "stage3/adapt/40-explicit-any/evidence/brands-undefined-3/retyped-latent.jsonl.gz",
+      "blob": "d92d80a1956c1c5ddf71504d47328cd886933631"
+    },
+    {
+      "worktree": "base-repo",
+      "path": "stage3/adapt/40-explicit-any/evidence/brands-undefined-3/retyped/shards-observations.json.gz",
+      "blob": "196643e857728d7815cd39852bf01898dcbb580a"
+    },
+    {
+      "worktree": "base-repo",
+      "path": "stage3/adapt/40-explicit-any/evidence/brands-undefined/after-latent.jsonl.gz",
+      "blob": "50cf6f2235dbbbfb689768b3acf83dc4b8fdb568"
+    },
+    {
+      "worktree": "base-repo",
+      "path": "stage3/adapt/40-explicit-any/evidence/brands-undefined/before-latent.jsonl.gz",
+      "blob": "9822628c1904a600d6106ecc61adc08b514436ec"
+    },
+    {
+      "worktree": "base-repo",
+      "path": "stage3/adapt/40-explicit-any/evidence/timer-slot/control-raw-oracle.tar.gz",
+      "blob": "924da23c30d4f38114651467640bf8de63713dec"
+    },
+    {
+      "worktree": "base-repo",
+      "path": "stage3/adapt/40-explicit-any/evidence/timer-slot/retyped-raw-oracle.tar.gz",
+      "blob": "b10dbe4b7c410985f51adfc9fa8c3d90ac5d3c5d"
+    },
+    {
+      "worktree": "base-repo",
+      "path": "stage3/adapt/41-explicit-any-remaining/evidence/any-after.jsonl.gz",
+      "blob": "0f1f849763d332bc5daa0229353eeacaaefff88e"
+    },
+    {
+      "worktree": "base-repo",
+      "path": "stage3/adapt/41-explicit-any-remaining/evidence/any-mutant.jsonl.gz",
+      "blob": "da6f4c40cc2b08de17c72eda5cc168c24bf45e31"
+    },
+    {
+      "worktree": "base-repo",
+      "path": "stage3/adapt/41-explicit-any-remaining/evidence/before.jsonl.gz",
+      "blob": "63d3a74eabad1e998e195d86d957ff179f2ba280"
+    },
+    {
+      "worktree": "base-repo",
+      "path": "stage3/adapt/41-explicit-any-remaining/evidence/constructors/after.jsonl.gz",
+      "blob": "881e3d7a72243861592aeb2dc62838b084c878ad"
+    },
+    {
+      "worktree": "base-repo",
+      "path": "stage3/adapt/41-explicit-any-remaining/evidence/constructors/mutant.jsonl.gz",
+      "blob": "60b111f13ea5d6ba79cf315fa64f82e561ca25a3"
+    },
+    {
+      "worktree": "base-repo",
+      "path": "stage3/adapt/41-explicit-any-remaining/evidence/final.jsonl.gz",
+      "blob": "088a9ad66423df0b50b72b98650342eb208d7401"
+    },
+    {
+      "worktree": "base-repo",
+      "path": "stage3/adapt/41-explicit-any-remaining/evidence/timers/after.jsonl.gz",
+      "blob": "03f5af9ada85c662ee3bc934332b765257ebd17d"
+    },
+    {
+      "worktree": "base-repo",
+      "path": "stage3/adapt/41-explicit-any-remaining/evidence/timers/mutant.jsonl.gz",
+      "blob": "727e3c8a19425566cdcaad6dbc1bcc635650cfc3"
+    },
+    {
+      "worktree": "base-repo",
+      "path": "stage3/adapt/41-explicit-any-remaining/evidence/void-mutant.jsonl.gz",
+      "blob": "cca1fe22c60b782156c2645f54f24983daf17fed"
+    },
+    {
+      "worktree": "base-repo",
+      "path": "stage3/adapt/45-regex-captures/semver-split-evidence/lane-shard-observations.jsonl.gz",
+      "blob": "9f7787abdb8f9a47c76d0f7c0f154bc06b363fc9"
+    },
+    {
+      "worktree": "base-repo",
+      "path": "stage3/adapt/70-readonly-views/evidence/wave4/preparatory-fields.json.gz",
+      "blob": "4e8702b6752a3c76b36f79aeb1d68c165aac25c0"
+    },
+    {
+      "worktree": "base-repo",
+      "path": "stage3/adapt/70-readonly-views/evidence/wave6/fields.json.gz",
+      "blob": "97f1fbb8f4a970bf91169dc201e9c977043d2c4d"
+    },
+    {
+      "worktree": "base-repo",
+      "path": "stage3/adapt/71-writable-views/evidence/diagnostics/after.jsonl.gz",
+      "blob": "a42b7ee37ee1a4ea1588b2889c70a74f9e57b41a"
+    },
+    {
+      "worktree": "base-repo",
+      "path": "stage3/adapt/71-writable-views/evidence/diagnostics/before.jsonl.gz",
+      "blob": "944138465b3ba4723f8857a3c7bceee497cafd46"
+    },
+    {
+      "worktree": "base-repo",
+      "path": "stage3/adapt/71-writable-views/evidence/diagnostics/undo.jsonl.gz",
+      "blob": "e3957a09b89c3eab0a6988eb6e768f7aeb6300d1"
+    },
+    {
+      "worktree": "base-repo",
+      "path": "stage3/adapt/71-writable-views/evidence/final/after.jsonl.gz",
+      "blob": "90e2377140e66e0b75507e7afc695018e4f34586"
+    },
+    {
+      "worktree": "base-repo",
+      "path": "stage3/adapt/71-writable-views/evidence/final/before.jsonl.gz",
+      "blob": "8fe14673d0c010f1f03b6c383813a68db1a379b5"
+    },
+    {
+      "worktree": "base-repo",
+      "path": "stage3/adapt/71-writable-views/evidence/followup/cumulative/after.jsonl.gz",
+      "blob": "8bea40f10e367c62b64bf498288da0accdd46574"
+    },
+    {
+      "worktree": "base-repo",
+      "path": "stage3/adapt/71-writable-views/evidence/followup/cumulative/before.jsonl.gz",
+      "blob": "e6ea818b6f8704ba884b8ae9db397cdbd6d19d33"
+    },
+    {
+      "worktree": "base-repo",
+      "path": "stage3/adapt/71-writable-views/evidence/followup/diagnostic-undo/after.jsonl.gz",
+      "blob": "a6174945c51275317e748f6b03631006b8bd703b"
+    },
+    {
+      "worktree": "base-repo",
+      "path": "stage3/adapt/71-writable-views/evidence/followup/diagnostics/after.jsonl.gz",
+      "blob": "004ad92c711418b506d13c6447a34cd4f0ebad27"
+    },
+    {
+      "worktree": "base-repo",
+      "path": "stage3/adapt/71-writable-views/evidence/followup/diagnostics/before.jsonl.gz",
+      "blob": "576e09e8b90eda4d69c5109efd3d75463f0bd566"
+    },
+    {
+      "worktree": "base-repo",
+      "path": "stage3/adapt/71-writable-views/evidence/followup/empty-array-undo/after.jsonl.gz",
+      "blob": "6d513116fb7ba70c6b6837eac38d4b4a29f39442"
+    },
+    {
+      "worktree": "base-repo",
+      "path": "stage3/adapt/71-writable-views/evidence/followup/empty-arrays/before.jsonl.gz",
+      "blob": "dafa71929b0322dceafe49fe5974263cd7baae91"
+    },
+    {
+      "worktree": "base-repo",
+      "path": "stage3/adapt/71-writable-views/evidence/followup/evaluator-probe-control/after.jsonl.gz",
+      "blob": "ace1e0b9314f5197033c757c0bed96b0916beaa6"
+    },
+    {
+      "worktree": "base-repo",
+      "path": "stage3/adapt/71-writable-views/evidence/followup/evaluator-probe-control/before.jsonl.gz",
+      "blob": "8dff3178b09e0162e37247a047c650915cfb3536"
+    },
+    {
+      "worktree": "base-repo",
+      "path": "stage3/adapt/71-writable-views/evidence/followup/tuple-undo/after.jsonl.gz",
+      "blob": "7708bdbfc8bcf4320dd2f68d6666bd8f66fc4786"
+    },
+    {
+      "worktree": "base-repo",
+      "path": "stage3/adapt/71-writable-views/evidence/mutant.jsonl.gz",
+      "blob": "97db2430afe9c71e03d8db7bc9a26f1184e7857b"
+    },
+    {
+      "worktree": "base-repo",
+      "path": "stage3/adapt/71-writable-views/evidence/rejected-cache-contract/after.jsonl.gz",
+      "blob": "3410c088bb99006e8219bca495dac0d67551ceaf"
+    },
+    {
+      "worktree": "base-repo",
+      "path": "stage3/adapt/71-writable-views/evidence/rejected-cache-contract/before.jsonl.gz",
+      "blob": "8fe14673d0c010f1f03b6c383813a68db1a379b5"
+    },
+    {
+      "worktree": "base-repo",
+      "path": "stage3/adapt/75-optional-widening/evidence/full-apply/after-latent.jsonl.gz",
+      "blob": "2026b49b78bde4ece1f1516363e3af423a899b5a"
+    },
+    {
+      "worktree": "base-repo",
+      "path": "stage3/adapt/75-optional-widening/evidence/full-apply/before-latent.jsonl.gz",
+      "blob": "448892c7b10e2f0d72c3537e249d2a9254f1ca4c"
+    },
+    {
+      "worktree": "base-repo",
+      "path": "stage3/adapt/75-optional-widening/evidence/wave1/after-latent.jsonl.gz",
+      "blob": "7e86c479f645ee6534fd800d542868ca8ef780d7"
+    },
+    {
+      "worktree": "base-repo",
+      "path": "stage3/adapt/75-optional-widening/evidence/wave1/before-latent.jsonl.gz",
+      "blob": "1ea8166ba6626577866f39c0268a47cc54b5072d"
+    },
+    {
+      "worktree": "base-repo",
+      "path": "stage3/adapt/75-optional-widening/evidence/wave1/sanctioned-after-latent.jsonl.gz",
+      "blob": "4b99443e1774fac823ab0332c3d5929d8f7ae1e4"
+    },
+    {
+      "worktree": "base-repo",
+      "path": "stage3/adapt/75-optional-widening/evidence/wave1/sanctioned-before-latent.jsonl.gz",
+      "blob": "3bf22f60ca912a65be38f20b4eb617833c437a0e"
+    },
+    {
+      "worktree": "base-repo",
+      "path": "stage3/adapt/75-optional-widening/evidence/wave2/after-latent.jsonl.gz",
+      "blob": "7c14435ba8595beb549f3fe2f009687e25ddd8a4"
+    },
+    {
+      "worktree": "base-repo",
+      "path": "stage3/adapt/75-optional-widening/evidence/wave2/before-latent.jsonl.gz",
+      "blob": "368a124b0c6a66e4b9454da04657549c4e0a8609"
+    },
+    {
+      "worktree": "base-repo",
+      "path": "stage3/adapt/95-checker-axolotl-h/fold-evidence/oracle/whole-whole-tasks.jsonl.gz",
+      "blob": "8fbfeb1c2fa40ddccd6d09c9b95ebca16cb00aa0"
+    },
+    {
+      "worktree": "base-repo",
+      "path": "stage3/adapt/95-checker-axolotl-h/fold-evidence/six-sites/mutants.tar.gz",
+      "blob": "4e6a3514af261d30d81251edc9eb4e3283c1157c"
+    },
+    {
+      "worktree": "base-repo",
+      "path": "stage3/adapt/95-checker-axolotl-h/fold-evidence/six-sites/oracle/shards.tar.gz",
+      "blob": "8809b96c3d303715c4779780734b4fe903e9b1e1"
+    },
+    {
+      "worktree": "base-repo",
+      "path": "stage3/adapt/95-checker-axolotl-h/fold-evidence/six-sites/oracle/whole.tar.gz",
+      "blob": "aabc977fd9e02b5aee3020a655344d80a757396d"
+    },
+    {
+      "worktree": "base-repo",
+      "path": "stage3/adapt/99-correctness-axolotl-r/after-identities.jsonl.gz",
+      "blob": "568cb10853030d07b8076e460d0745cac81291bb"
+    },
+    {
+      "worktree": "base-repo",
+      "path": "stage3/adapt/99-correctness-axolotl-r/counted-identities.jsonl.gz",
+      "blob": "296b2e9fc4823995d9cf391a2b3865240a09d2c8"
+    },
+    {
+      "worktree": "base-repo",
+      "path": "stage3/adapt/99-correctness-axolotl-r/reference-identities.jsonl.gz",
+      "blob": "7103c92c3eb5c842e7662068944cd3764f031cd7"
+    },
+    {
+      "worktree": "base-repo",
+      "path": "stage3/adapt/99-correctness-axolotl-r/tosorted-measure.tar.gz",
+      "blob": "ddc0d881e3fa4692befbf237aed6392e87342586"
+    },
+    {
+      "worktree": "base-repo",
+      "path": "stage3/adapt/99-correctness-axolotl-s/accepted-tasks.jsonl.gz",
+      "blob": "c5b18aa3110bf4e24d6498ec701589c8a249c574"
+    },
+    {
+      "worktree": "base-repo",
+      "path": "stage3/adapt/99-correctness-axolotl-s/clear-evidence.tar.gz",
+      "blob": "b760b4ad0b7ee2425a7ea2d3b70a0443b7312aaa"
+    },
+    {
+      "worktree": "base-repo",
+      "path": "stage3/adapt/99-correctness-axolotl-s/main-tasks.jsonl.gz",
+      "blob": "c92f59955b70469c85ea9fbaf97e59bffd82a8a0"
+    },
+    {
+      "worktree": "base-repo",
+      "path": "stage3/adapt/99-correctness-axolotl-s/queue-box-evidence.tar.gz",
+      "blob": "a5d0d0ff81834c91311f78c56a5fa1a698119da3"
+    },
+    {
+      "worktree": "base-repo",
+      "path": "stage3/adapt/99-correctness-axolotl-u/adapted-identities.jsonl.gz",
+      "blob": "081ebe2926f149e773edd06058e5a3dd24c18fa3"
+    },
+    {
+      "worktree": "base-repo",
+      "path": "stage3/adapt/99-correctness-axolotl-u/amended-recount-identities.jsonl.gz",
+      "blob": "de7c281d30574d85918417a3915979f942045481"
+    },
+    {
+      "worktree": "base-repo",
+      "path": "stage3/adapt/99-correctness-axolotl-u/amended-uncounted-identities.jsonl.gz",
+      "blob": "be6656626387269774a3e3da79897793c8c5d4bf"
+    },
+    {
+      "worktree": "base-repo",
+      "path": "stage3/adapt/99-correctness-axolotl-u/combined-adapted-identities.jsonl.gz",
+      "blob": "c2d17e1bab70698080cebc4cc0e9638420fda8d2"
+    },
+    {
+      "worktree": "base-repo",
+      "path": "stage3/adapt/99-correctness-axolotl-u/combined-main-identities.jsonl.gz",
+      "blob": "d84653522ecc95e3ca11dfe4db2a8e5cc166ad93"
+    },
+    {
+      "worktree": "base-repo",
+      "path": "stage3/adapt/99-correctness-axolotl-u/counted-identities.jsonl.gz",
+      "blob": "392a44aabf1ea06599a56eefdd12975aeb2d024c"
+    },
+    {
+      "worktree": "base-repo",
+      "path": "stage3/adapt/99-correctness-axolotl-u/reference-identities.jsonl.gz",
+      "blob": "bd1e4ae9c650ddc85a2013a2a7c244aecdd79ed5"
+    },
+    {
+      "worktree": "base-repo",
+      "path": "stage3/adapt/99-correctness-axolotl-x/composition/initial-matrix.tar.gz",
+      "blob": "80d76a8076bca799c6c6acff1e1ec853ca78718d"
+    },
+    {
+      "worktree": "base-repo",
+      "path": "stage3/adapt/99-correctness-axolotl-x/composition/oracle.tar.gz",
+      "blob": "a21f22faf4dd751cef7d0295f9036cd0d0765875"
+    },
+    {
+      "worktree": "base-repo",
+      "path": "stage3/adapt/99-correctness-axolotl-x/oracle/whole/whole-tasks.jsonl.gz",
+      "blob": "2617acc617652109fc1d3316e18ebb5b2a7f7de2"
+    },
+    {
+      "worktree": "base-repo",
+      "path": "stage3/adapt/99-correctness-axolotl-x/owned/oracle.tar.gz",
+      "blob": "adf545e5d939a8613fc1404e1f38568c78b9cf32"
+    },
+    {
+      "worktree": "base-repo",
+      "path": "stage3/adapt/99-correctness-axolotl-x/owned/paired-replay.tar.gz",
+      "blob": "0d7f660dec686b117ffadd965249a9cd639ca6d7"
+    },
+    {
+      "worktree": "base-repo",
+      "path": "stage3/adapt/99-correctness-axolotl-x/recut/replay.tar.gz",
+      "blob": "d564f75238e9c188dee7c6de889d521d5a571737"
+    },
+    {
+      "worktree": "base-repo",
+      "path": "stage3/adapt/99-correctness-axolotl-z/elementat-count-closeout.tar.gz",
+      "blob": "aeb870a67780dc740e9592775b2ba9ad82abc8cb"
+    },
+    {
+      "worktree": "base-repo",
+      "path": "stage3/adapt/99-correctness-axolotl-z/elementat-declaration-proof.tar.gz",
+      "blob": "1d1b1bfa36b6b7a1702e13452d2aedf112aaccea"
+    },
+    {
+      "worktree": "base-repo",
+      "path": "stage3/adapt/99-correctness-axolotl-z/elementat-measure.tar.gz",
+      "blob": "7c547f7b1e084eb20c3ff196614061cba2383317"
+    },
+    {
+      "worktree": "base-repo",
+      "path": "stage3/adapt/99-correctness-axolotl-z/elementat-step-b.tar.gz",
+      "blob": "95ab0b55d2493947f1a5607cf3758ae7df9b82c4"
+    },
+    {
+      "worktree": "base-repo",
+      "path": "stage3/adapt/99-correctness-core-arrayof/measurement.tar.gz",
+      "blob": "735acadf9c4a7e58598feeb73804b99ac8d45d74"
+    },
+    {
+      "worktree": "base-repo",
+      "path": "stage3/adapt/99-correctness-core-arrayof/proof.tar.gz",
+      "blob": "99e186e13c164f2eca34c88abe2b4194b4c0fa17"
+    },
+    {
+      "worktree": "base-repo",
+      "path": "stage3/adapt/99-correctness-core-assign/closeout.tar.gz",
+      "blob": "6edef17bffacea5a6609d4bc70cfaee2d0116566"
+    },
+    {
+      "worktree": "base-repo",
+      "path": "stage3/adapt/99-correctness-core-assign/measurement-complete.tar.gz",
+      "blob": "4656889c994e39c3568fcbc0f216ebf0ecb1af00"
+    },
+    {
+      "worktree": "base-repo",
+      "path": "stage3/adapt/99-correctness-core-cast-message/after-javascript.tar.gz",
+      "blob": "cb385020df2c815240aa0ccc5dcf66907cda9d39"
+    },
+    {
+      "worktree": "base-repo",
+      "path": "stage3/adapt/99-correctness-core-cast-message/before-javascript.tar.gz",
+      "blob": "46945a637610132f7a2bda2f3b6e21f8f762154e"
+    },
+    {
+      "worktree": "base-repo",
+      "path": "stage3/adapt/99-correctness-core-cast-message/raw-proof.tar.gz",
+      "blob": "d56d8e212edb7f426768665e3ccea1830f3ebce3"
+    },
+    {
+      "worktree": "base-repo",
+      "path": "stage3/adapt/99-correctness-core-clone/apply-checkpoint.tar.gz",
+      "blob": "15a6405dabc23640753e6fa29264f518d7ee3365"
+    },
+    {
+      "worktree": "base-repo",
+      "path": "stage3/adapt/99-correctness-core-clone/evidence.tar.gz",
+      "blob": "fbe35b6447deaa36eaa4d65b52557cee1e08c185"
+    },
+    {
+      "worktree": "base-repo",
+      "path": "stage3/adapt/99-correctness-core-compare/amendment-evidence.tar.gz",
+      "blob": "27eedc84cc6e45a750205617b4e449a73ed9a7d7"
+    },
+    {
+      "worktree": "base-repo",
+      "path": "stage3/adapt/99-correctness-core-compare/packed-piece-02-failed.tar.gz",
+      "blob": "bf2202f18490e7c542cace4d26f4e3ffd1348a89"
+    },
+    {
+      "worktree": "base-repo",
+      "path": "stage3/adapt/99-correctness-core-compare/piece-01.tar.gz",
+      "blob": "44e4b092d1da92b6418501765a3db6e79b35b38c"
+    },
+    {
+      "worktree": "base-repo",
+      "path": "stage3/adapt/99-correctness-core-compare/piece-02.tar.gz",
+      "blob": "95f72b22c7b81f99f59462b6662f7cac350a101b"
+    },
+    {
+      "worktree": "base-repo",
+      "path": "stage3/adapt/99-correctness-core-compare/piece-03.tar.gz",
+      "blob": "0291a92e66a148086706f0fd7aef08ca529c54e6"
+    },
+    {
+      "worktree": "base-repo",
+      "path": "stage3/adapt/99-correctness-core-compare/piece-12.tar.gz",
+      "blob": "5898a1bd40d076eb2aa7ce1ea9e5faf1781c4e36"
+    },
+    {
+      "worktree": "base-repo",
+      "path": "stage3/adapt/99-correctness-core-compare/piece-14.tar.gz",
+      "blob": "1676ff10429ae5e597895abf13d6799c2283f7b6"
+    },
+    {
+      "worktree": "base-repo",
+      "path": "stage3/adapt/99-correctness-core-compare/piece-16.tar.gz",
+      "blob": "254d78f59644b2a6235b8375b3c7e019dd6eab9b"
+    },
+    {
+      "worktree": "base-repo",
+      "path": "stage3/adapt/99-correctness-core-compare/piece-17.tar.gz",
+      "blob": "f0343e3489f85a493d5e46ad61f4a40b70bf8df4"
+    },
+    {
+      "worktree": "base-repo",
+      "path": "stage3/adapt/99-correctness-core-compare/proof-evidence.tar.gz",
+      "blob": "a20f9030bd3424f75b66c1e4d874714b89efdb04"
+    },
+    {
+      "worktree": "base-repo",
+      "path": "stage3/adapt/99-correctness-core-debug-messages/after-javascript.tar.gz",
+      "blob": "3d79d2d5f38d450c0af2e71d65c8c2a74b505998"
+    },
+    {
+      "worktree": "base-repo",
+      "path": "stage3/adapt/99-correctness-core-debug-messages/before-javascript.tar.gz",
+      "blob": "dd97470d4d6e9358d3e08c1db638d3b9ff6dd133"
+    },
+    {
+      "worktree": "base-repo",
+      "path": "stage3/adapt/99-correctness-core-debug-messages/raw-proof.tar.gz",
+      "blob": "f67743ec844103fc167840c615216e11d17724b6"
+    },
+    {
+      "worktree": "base-repo",
+      "path": "stage3/adapt/99-correctness-core-extend/core-proof.tar.gz",
+      "blob": "daed99c3f2b1c9f664419eda378659bdbdfbe874"
+    },
+    {
+      "worktree": "base-repo",
+      "path": "stage3/adapt/99-correctness-core-extend/historical-f027.tar.gz",
+      "blob": "668f78003567827ed60ff76e8392b11f4554c162"
+    },
+    {
+      "worktree": "base-repo",
+      "path": "stage3/adapt/99-correctness-core-extend/lane-count.tar.gz",
+      "blob": "07d4e7436815405a28b70abcff4deef90a3a0495"
+    },
+    {
+      "worktree": "base-repo",
+      "path": "stage3/adapt/99-correctness-core-getallkeys/proof-evidence.tar.gz",
+      "blob": "c28f07d35de611fd04ae87403375034d0567ee3a"
+    },
+    {
+      "worktree": "base-repo",
+      "path": "stage3/adapt/99-correctness-core-getfunctionname-move/after-javascript.tar.gz",
+      "blob": "43c7754512c09040f8651c47a2ebe966a70f8306"
+    },
+    {
+      "worktree": "base-repo",
+      "path": "stage3/adapt/99-correctness-core-getfunctionname-move/before-javascript.tar.gz",
+      "blob": "e696117bad29d08df8cd3c23c82349150f02fd3a"
+    },
+    {
+      "worktree": "base-repo",
+      "path": "stage3/adapt/99-correctness-core-getfunctionname-move/raw-proof.tar.gz",
+      "blob": "18b09a373c0d26e00cd3a6629cad08b05a282717"
+    },
+    {
+      "worktree": "base-repo",
+      "path": "stage3/adapt/99-correctness-core-groupby/apply-checkpoint.tar.gz",
+      "blob": "49e4cacab7a0c05cca857aa9c70070c0385df4a7"
+    },
+    {
+      "worktree": "base-repo",
+      "path": "stage3/adapt/99-correctness-core-groupby/evidence.tar.gz",
+      "blob": "7bb9f4044d4776c02704f742be7574629a177b9a"
+    },
+    {
+      "worktree": "base-repo",
+      "path": "stage3/adapt/99-correctness-core-levenshtein/evidence.tar.gz",
+      "blob": "a863974a7866c4f59fd8e0ce6790e91e96d2b043"
+    },
+    {
+      "worktree": "base-repo",
+      "path": "stage3/adapt/99-correctness-core-multimap/count-evidence.tar.gz",
+      "blob": "33ff0feb776007a4f87fd2bc5cf56387b0579e5d"
+    },
+    {
+      "worktree": "base-repo",
+      "path": "stage3/adapt/99-correctness-core-multimap/preparation.tar.gz",
+      "blob": "d2e4d2351063dde39cb5a341b7c15a1c29e4ddf2"
+    },
+    {
+      "worktree": "base-repo",
+      "path": "stage3/adapt/99-correctness-core-multimap/proof-evidence.tar.gz",
+      "blob": "4e472da060204f7706f96bf4bf2548b4ab4c2254"
+    },
+    {
+      "worktree": "base-repo",
+      "path": "stage3/adapt/99-correctness-core-or-predicate/PROOF-EVIDENCE.tar.gz",
+      "blob": "846d2b459746b8b3630b53b2d0f24bc81b50ca99"
+    },
+    {
+      "worktree": "base-repo",
+      "path": "stage3/adapt/99-correctness-core-takewhile/adapted-lane.tar.gz",
+      "blob": "1d71d0355438f10a13f8f9e200012efdadba4f57"
+    },
+    {
+      "worktree": "base-repo",
+      "path": "stage3/adapt/99-correctness-core-takewhile/proof.tar.gz",
+      "blob": "9d60d42baa558d5a7ef3d1603e6ed0900c125020"
+    },
+    {
+      "worktree": "base-repo",
+      "path": "stage3/area-stack/evidence/parser-ec71/non-null-comparison.json.gz",
+      "blob": "0bf4b89dd8c382c2bd4d3fd638b0f4e1b451e7d4"
+    },
+    {
+      "worktree": "base-repo",
+      "path": "stage3/census/data/stock.jsonl.gz",
+      "blob": "d6a1a8624630024d9dd4b5298a4644af735e0694"
+    },
+    {
+      "worktree": "base-repo",
+      "path": "stage3/census/deferred-reach/evidence/base-entry.jsonl.gz",
+      "blob": "29d4a7d46a9e43f2ee1c11e8cbcb86b23831ba51"
+    },
+    {
+      "worktree": "base-repo",
+      "path": "stage3/census/deferred-reach/evidence/base.jsonl.gz",
+      "blob": "9f3001d578629822517ebf3daa674c9f914c4b88"
+    },
+    {
+      "worktree": "base-repo",
+      "path": "stage3/census/deferred-reach/evidence/steps2-3/classification-references.json.gz",
+      "blob": "df4a2140a87d3c95b07d98dd75f475722bd87192"
+    },
+    {
+      "worktree": "base-repo",
+      "path": "stage3/census/deferred-reach/evidence/steps2-3/head-entry.jsonl.gz",
+      "blob": "91b098696b7cfab058bb301c9c5dd54bd9fe16b3"
+    },
+    {
+      "worktree": "base-repo",
+      "path": "stage3/census/deferred-reach/evidence/steps2-3/head.jsonl.gz",
+      "blob": "81a5eb78d0193c9bad45fc8241d9febbfeee593e"
+    },
+    {
+      "worktree": "base-repo",
+      "path": "stage3/census/latent/data/meter3/corpus-mutant.jsonl.gz",
+      "blob": "10d3ca5ac38d2450abbda9b48e7094c2a8e85183"
+    },
+    {
+      "worktree": "base-repo",
+      "path": "stage3/census/latent/data/meter3/meter-3.jsonl.gz",
+      "blob": "d427ff86aaa07ac75938b63bf6fb02b96b4b1795"
+    },
+    {
+      "worktree": "base-repo",
+      "path": "stage3/census/latent/data/rerun2/corpus-mutant.jsonl.gz",
+      "blob": "2f79ef48765f27d1b5da24e778d12bd6d88dbe21"
+    },
+    {
+      "worktree": "base-repo",
+      "path": "stage3/census/latent/data/rerun2/cumulative-2-nested.jsonl.gz",
+      "blob": "24e4ceef1162646c29168053201b540bbb32dac5"
+    },
+    {
+      "worktree": "base-repo",
+      "path": "stage3/census/latent/data/rerun2/cumulative-2.jsonl.gz",
+      "blob": "5f5ff43bab4591151d3adb11779206e66d611b15"
+    },
+    {
+      "worktree": "base-repo",
+      "path": "stage3/census/latent/data/unmerged4/area-unmerged-corpus-mutant.jsonl.gz",
+      "blob": "36ad675b5056f88cfdcdd1d39858f8809cf6faf1"
+    },
+    {
+      "worktree": "base-repo",
+      "path": "stage3/census/latent/data/unmerged4/area-unmerged.jsonl.gz",
+      "blob": "beeeb84ee65d72fdaf673aaaa307e6fe8c3ace9e"
+    },
+    {
+      "worktree": "base-repo",
+      "path": "stage3/census/latent/data/unmerged4/main-unmerged-corpus-mutant.jsonl.gz",
+      "blob": "099e423e726aae94a5a5f391fa6b2832ddb478a4"
+    },
+    {
+      "worktree": "base-repo",
+      "path": "stage3/census/latent/data/unmerged4/main-unmerged.jsonl.gz",
+      "blob": "b0aef26d680730a56c708caada3fb09257ae49ba"
+    },
+    {
+      "worktree": "base-repo",
+      "path": "stage3/census/latent/evidence/deferred/base.jsonl.gz",
+      "blob": "9ce31ce1c3071f21fb6c8cf1dd2ea1c4d04fd3db"
+    },
+    {
+      "worktree": "base-repo",
+      "path": "stage3/census/latent/evidence/deferred/head.jsonl.gz",
+      "blob": "ccd77e166df4ebf3248769861c8aeec8f490afbd"
+    },
+    {
+      "worktree": "base-repo",
+      "path": "stage3/census/latent/evidence/prepasses/first-error-base.jsonl.gz",
+      "blob": "06b5e4459128257ff71dee5c87eafd365e0fe29b"
+    },
+    {
+      "worktree": "base-repo",
+      "path": "stage3/census/latent/evidence/prepasses/first-error-head.jsonl.gz",
+      "blob": "fed3f99359dc2911eba4db50ab70cc0b7de70697"
+    },
+    {
+      "worktree": "base-repo",
+      "path": "stage3/census/speculative/evidence/continuation/final-result/shifted-depth-mutant.jsonl.gz",
+      "blob": "ed9d99ea3d083740eed6d860f9552d98ad24ebae"
+    },
+    {
+      "worktree": "base-repo",
+      "path": "stage3/census/speculative/evidence/continuation/final-result/speculative.jsonl.gz",
+      "blob": "d3391221ab334537ce68b000597c91677a29e061"
+    },
+    {
+      "worktree": "base-repo",
+      "path": "stage3/census/speculative/evidence/continuation/final-result/stock.json.gz",
+      "blob": "772fe30b15ea15d260a972499c8939c01a16845c"
+    },
+    {
+      "worktree": "base-repo",
+      "path": "stage3/census/speculative/evidence/corrected-whole-no-stubs.jsonl.gz",
+      "blob": "bd7df72f8a9d121f0c6446043f6bb72e9fd70018"
+    },
+    {
+      "worktree": "base-repo",
+      "path": "stage3/census/speculative/evidence/full.jsonl.gz",
+      "blob": "bd7df72f8a9d121f0c6446043f6bb72e9fd70018"
+    },
+    {
+      "worktree": "base-repo",
+      "path": "stage3/census/speculative/evidence/main-stream/whole-result/stock.json.gz",
+      "blob": "772fe30b15ea15d260a972499c8939c01a16845c"
+    },
+    {
+      "worktree": "base-repo",
+      "path": "stage3/census/speculative/evidence/no-stubs.jsonl.gz",
+      "blob": "bd7df72f8a9d121f0c6446043f6bb72e9fd70018"
+    },
+    {
+      "worktree": "base-repo",
+      "path": "stage3/census/speculative/evidence/speculative.jsonl.gz",
+      "blob": "dd752fc751e8d1d8d4e559d9e583596041da34b4"
+    },
+    {
+      "worktree": "base-repo",
+      "path": "stage3/census/speculative/evidence/stock.json.gz",
+      "blob": "66394c44ee30111ac1f3a798ca4c4b182d21073d"
+    },
+    {
+      "worktree": "base-repo",
+      "path": "stage3/census/tsc-closure/evidence/full.jsonl.gz",
+      "blob": "aeb75339b3b4b471d689018716d81b573660c075"
+    },
+    {
+      "worktree": "base-repo",
+      "path": "stage3/census/tsc-closure/evidence/latent.jsonl.gz",
+      "blob": "15a111cca6306a52a054c9f650c00bfe238fce56"
+    },
+    {
+      "worktree": "base-repo",
+      "path": "stage3/census/tsc-closure/rerun-2026-10-09/evidence/full.jsonl.gz",
+      "blob": "3d6865e3ff77e691206f521a29976fdf8542fd35"
+    },
+    {
+      "worktree": "base-repo",
+      "path": "stage3/census/tsc-closure/rerun-2026-10-09/evidence/latent.jsonl.gz",
+      "blob": "9d92f9078531da370a9cf2bcb6e9324bacea51e7"
+    },
+    {
+      "worktree": "base-repo",
+      "path": "stage3/drivers/parser/evidence/front3/scratch-integration.patch.gz",
+      "blob": "b60b8bbbb9e23c28db75d5417e07fc58ac2b1caa"
+    },
+    {
+      "worktree": "base-repo",
+      "path": "stage3/drivers/parser/evidence/front5/scratch-integration.patch.gz",
+      "blob": "959b21d0b54dc8a76b27638a1c1564b992f0a7ac"
+    },
+    {
+      "worktree": "base-repo",
+      "path": "stage3/drivers/scanner/evidence/land-area-next/discovery.c.gz",
+      "blob": "03f4dba62ed1d8279cbd06993642add7abcf5dff"
+    },
+    {
+      "worktree": "base-repo",
+      "path": "stage3/lane/evidence/budget-10s/cold-units.tar.gz",
+      "blob": "b754fffb71d22682e70ef1c7c4bea3c3cb370cd5"
+    },
+    {
+      "worktree": "base-repo",
+      "path": "stage3/lane/evidence/budget-10s/exploratory-runs.tar.gz",
+      "blob": "f17c279644090ccb30ff09b9d52dcf3355380bea"
+    },
+    {
+      "worktree": "base-repo",
+      "path": "stage3/lane/evidence/budget-10s/proof-runs.tar.gz",
+      "blob": "94da5e1b51f2b200a57dad6c37f1f6537124dd94"
+    },
+    {
+      "worktree": "base-repo",
+      "path": "stage3/lane/evidence/budget-10s/whole-reference.tar.gz",
+      "blob": "fbc9db45d0f3f09aabaa2b011fb9684881888a4a"
+    },
+    {
+      "worktree": "base-repo",
+      "path": "stage3/lane/evidence/case-shards/cold-units.tar.gz",
+      "blob": "59747d848fbb05a1c78cfdfb3f173548298a8f9f"
+    },
+    {
+      "worktree": "base-repo",
+      "path": "stage3/lane/evidence/case-shards/tests-and-units.jsonl.gz",
+      "blob": "b6a0c85046c3409851847e24754b5030aa4dc55b"
+    },
+    {
+      "worktree": "base-repo",
+      "path": "stage3/lane/evidence/case-shards/whole/whole-tasks.jsonl.gz",
+      "blob": "ae10ee8ef31c424761b0f29acfdf39163bff23b3"
+    },
+    {
+      "worktree": "base-repo",
+      "path": "stage3/lane/evidence/shards/task-profile.jsonl.gz",
+      "blob": "25683be46fae37e7e871c2ca658bd35ea93da9e2"
+    },
+    {
+      "worktree": "base-repo",
+      "path": "stage3/lane/evidence/shards/tests-and-shards.jsonl.gz",
+      "blob": "ccd73e97628bb4d6ca311243084e48181bf34cbe"
+    },
+    {
+      "worktree": "base-repo",
+      "path": "stage3/meter/runs/20261008T035244Z.latent-full/compiler/baseline.jsonl.gz",
+      "blob": "3ada68be3a1db3c3a87ef34c5673ecd723aec1a7"
+    },
+    {
+      "worktree": "base-repo",
+      "path": "stage3/meter/runs/20261008T035244Z.latent-full/compiler/full.jsonl.gz",
+      "blob": "8c07734bec73b98244c3b4f7da365d27311cf256"
+    },
+    {
+      "worktree": "base-repo",
+      "path": "stage3/meter/runs/20261008T035244Z.latent-full/tsc/full.jsonl.gz",
+      "blob": "c9b72a52ddd52e02ca4e4576f7604aee93bef040"
+    },
+    {
+      "worktree": "base-repo",
+      "path": "stage3/meter/runs/20261019T233755Z.9xwivl15/area/latent.jsonl.gz",
+      "blob": "391b44baf6d8ddab8037956b638b10755401f7b0"
+    },
+    {
+      "worktree": "base-repo",
+      "path": "stage3/meter/runs/20261019T233755Z.9xwivl15/main/latent.jsonl.gz",
+      "blob": "3365764201ffcc035383a133a6b971dd4a7f9ab1"
+    },
+    {
+      "worktree": "base-repo",
+      "path": "stage3/meter/runs/20261020T014828Z.POASDN/area/latent.jsonl.gz",
+      "blob": "fc33e0dd21f87dbbbb8df0337c4caa91fd307000"
+    },
+    {
+      "worktree": "base-repo",
+      "path": "stage3/meter/runs/20261020T014828Z.POASDN/main/latent.jsonl.gz",
+      "blob": "a56a1789a4434cab53447319f5a910bb96d6f97b"
+    },
+    {
+      "worktree": "base-repo",
+      "path": "stage3/namespace-init-sys/latent-indexed/evidence/raw.jsonl.gz",
+      "blob": "ad7d744375d9b222c4f72debcb2909afc1623546"
+    },
+    {
+      "worktree": "base-repo",
+      "path": "stage3/namespaces/call-graph-evidence/debug-latent.jsonl.gz",
+      "blob": "fe6819c69c5ce6ac0c687ecf5987b02d46cc376f"
+    },
+    {
+      "worktree": "base-repo",
+      "path": "stage3/performance/allocation/evidence/compiler/observe/collected.heapprofile.gz",
+      "blob": "bdd5e09932e734942057aecaa4e0b60abce05451"
+    },
+    {
+      "worktree": "base-repo",
+      "path": "stage3/performance/allocation/evidence/compiler/peak/peak.heapsnapshot.gz",
+      "blob": "22efdb3f7ad89d173209c38364377704e97e5efe"
+    },
+    {
+      "worktree": "base-repo",
+      "path": "stage3/performance/allocation/evidence/compiler/stock/stock.heapprofile.gz",
+      "blob": "c45e6ea317f95e579b84469a42cd3b574a4358d5"
+    },
+    {
+      "worktree": "base-repo",
+      "path": "stage3/performance/allocation/evidence/fixture/bind.heapsnapshot.gz",
+      "blob": "08abe5b8b0c0a126f5b12ea265122da8ce0f9027"
+    },
+    {
+      "worktree": "base-repo",
+      "path": "stage3/performance/allocation/evidence/fixture/check.heapsnapshot.gz",
+      "blob": "c8cbdc52e53245e6d5ebb26cb95df1a31ef07afd"
+    },
+    {
+      "worktree": "base-repo",
+      "path": "stage3/performance/allocation/evidence/fixture/parse.heapsnapshot.gz",
+      "blob": "4b106bd368b3941e055aec24490840b7e49325d1"
+    },
+    {
+      "worktree": "base-repo",
+      "path": "stage3/performance/allocation/evidence/fixture/released.heapsnapshot.gz",
+      "blob": "2b96898f064fe285173f5ae074441c6fe4efa643"
+    },
+    {
+      "worktree": "base-repo",
+      "path": "stage3/performance/allocation/evidence/mitt/peak/peak.heapsnapshot.gz",
+      "blob": "0a94f1aa9714636cc073f339e2b74f2a46ee0fc6"
+    },
+    {
+      "worktree": "base-repo",
+      "path": "stage3/performance/evidence/results/tsc.cpuprofile.gz",
+      "blob": "e7017501add0ed249828dcd4b801e7e8997d9710"
+    },
+    {
+      "worktree": "base-repo",
+      "path": "stage3/triage/evidence/census.jsonl.gz",
+      "blob": "24464522b6f299c8d244f29aca31cfdba22d21c6"
+    }
+  ],
+  "bytesRecovered": 621038601,
+  "contentsChanged": false
+}

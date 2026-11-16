@@ -1,0 +1,79 @@
+{
+  "actualAdaptedTree": {
+    "diagnostics": 0,
+    "isAny": false,
+    "nodeLibraryFiles": 80,
+    "nodePreludeLoaded": true,
+    "nodeTypesVersion": "25.3.3",
+    "processDeclarations": [
+      {
+        "file": "bundled:///node/node_modules/@types/node/globals.d.ts",
+        "text": "process: NodeJS.Process",
+        "nodePrelude": false
+      },
+      {
+        "file": "bundled:///node/node_modules/@types/node/process.d.ts",
+        "text": "process: NodeJS.Process",
+        "nodePrelude": false
+      },
+      {
+        "file": "bundled:///node/node_modules/@types/node/process.d.ts",
+        "text": "namespace process {\n            export { ProcessEventMap };\n        }",
+        "nodePrelude": false
+      }
+    ],
+    "propertyDeclarations": [
+      {
+        "file": "/adamic-prelude/adamic.d.ts",
+        "text": "recordreplay?: unknown;",
+        "nodePrelude": true
+      },
+      {
+        "file": "/workspace/scratch/recordreplay-amend-3-proof/candidate2/src/recordreplay.d.ts",
+        "text": "recordreplay?: unknown;",
+        "nodePrelude": false
+      }
+    ],
+    "read": "process.recordreplay",
+    "roots": 79,
+    "site": "/workspace/scratch/recordreplay-amend-3-proof/candidate2/src/compiler/sys.ts:1604:191",
+    "type": "unknown"
+  },
+  "amendmentDeclarationMasked": {
+    "diagnostics": 0,
+    "isAny": false,
+    "nodeLibraryFiles": 80,
+    "nodePreludeLoaded": true,
+    "nodeTypesVersion": "25.3.3",
+    "processDeclarations": [
+      {
+        "file": "bundled:///node/node_modules/@types/node/globals.d.ts",
+        "text": "process: NodeJS.Process",
+        "nodePrelude": false
+      },
+      {
+        "file": "bundled:///node/node_modules/@types/node/process.d.ts",
+        "text": "process: NodeJS.Process",
+        "nodePrelude": false
+      },
+      {
+        "file": "bundled:///node/node_modules/@types/node/process.d.ts",
+        "text": "namespace process {\n            export { ProcessEventMap };\n        }",
+        "nodePrelude": false
+      }
+    ],
+    "propertyDeclarations": [
+      {
+        "file": "/adamic-prelude/adamic.d.ts",
+        "text": "recordreplay?: unknown;",
+        "nodePrelude": true
+      }
+    ],
+    "read": "process.recordreplay",
+    "roots": 79,
+    "site": "/workspace/scratch/recordreplay-amend-3-proof/candidate2/src/compiler/sys.ts:1604:191",
+    "type": "unknown"
+  },
+  "compilerOnlyNodeAugmentationProved": true,
+  "standaloneNodeJSRefused": "/workspace/scratch/recordreplay-amend-3-proof/no-node-process.ts:1:24: error TS2503: Cannot find namespace 'NodeJS'."
+}

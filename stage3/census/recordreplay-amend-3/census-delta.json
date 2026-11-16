@@ -1,0 +1,2713 @@
+{
+  "baselineFindings": 161,
+  "finalFindings": 200,
+  "baselineUnits": 136,
+  "finalUnits": 137,
+  "paired": 156,
+  "addedRecords": 44,
+  "removedRecords": 5,
+  "newNotYet": 18,
+  "newBoundary": 26,
+  "classes": {
+    "revealed_later_stop": 44
+  },
+  "newlyStoppedUnits": [],
+  "newlyStoppedUnitDetails": [],
+  "newFindingFreeUnits": [
+    "src/compiler/sys.ts:56:1"
+  ],
+  "pairing": [
+    "kind",
+    "phase",
+    "reason",
+    "message with position stripped"
+  ],
+  "records": [
+    {
+      "id": 1,
+      "unit": "src/compiler/sys.ts:1468:1",
+      "unitName": "export let sys: System = (() => {",
+      "unitKind": "KindVariableStatement",
+      "site": "src/compiler/sys.ts:1628:21",
+      "stopSite": "src/compiler/sys.ts:1533:15",
+      "kind": "Boundary",
+      "phase": "lowering",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "message": "stage 0 can't lower a function value that captures the variable its own initializer declares yet",
+      "classification": "revealed_later_stop",
+      "unitExistedOnBaseline": true,
+      "baselineUnitPrimaryFindingCount": 4,
+      "baselineUnitStops": [
+        {
+          "kind": "Refused",
+          "phase": "lowering",
+          "site": "src/compiler/sys.ts:1894:17",
+          "reason": "sort without a comparator",
+          "message": "Adamic 0.1 refuses sort without a comparator; pass one: the default compares numbers as strings, so [10, 9, 1].sort() is [1, 10, 9]"
+        },
+        {
+          "kind": "Refused",
+          "phase": "lowering",
+          "site": "src/compiler/sys.ts:1895:17",
+          "reason": "sort without a comparator",
+          "message": "Adamic 0.1 refuses sort without a comparator; pass one: the default compares numbers as strings, so [10, 9, 1].sort() is [1, 10, 9]"
+        },
+        {
+          "kind": "NotYet",
+          "phase": "lowering",
+          "site": "src/compiler/sys.ts:1533:15",
+          "reason": "a function value that captures the variable its own initializer declares",
+          "message": "stage 0 can't lower a function value that captures the variable its own initializer declares yet"
+        },
+        {
+          "kind": "NotYet",
+          "phase": "lowering",
+          "site": "src/compiler/sys.ts:1604:191",
+          "reason": "process.recordreplay with an unrepresented type",
+          "message": "stage 0 can't lower process.recordreplay with an unrepresented type yet"
+        }
+      ],
+      "sourceLine": "const nodeSystem: NodeResolutionSystem = {"
+    },
+    {
+      "id": 2,
+      "unit": "src/compiler/sys.ts:1468:1",
+      "unitName": "export let sys: System = (() => {",
+      "unitKind": "KindVariableStatement",
+      "site": "src/compiler/sys.ts:1632:25",
+      "stopSite": "src/compiler/sys.ts:1632:25",
+      "kind": "NotYet",
+      "phase": "lowering",
+      "reason": "a presence test of a method whose presence the receiver's construction doesn't prove; a view or host value has to read it",
+      "message": "stage 0 can't lower a presence test of a method whose presence the receiver's construction doesn't prove; a view or host value has to read it yet",
+      "classification": "revealed_later_stop",
+      "unitExistedOnBaseline": true,
+      "baselineUnitPrimaryFindingCount": 4,
+      "baselineUnitStops": [
+        {
+          "kind": "Refused",
+          "phase": "lowering",
+          "site": "src/compiler/sys.ts:1894:17",
+          "reason": "sort without a comparator",
+          "message": "Adamic 0.1 refuses sort without a comparator; pass one: the default compares numbers as strings, so [10, 9, 1].sort() is [1, 10, 9]"
+        },
+        {
+          "kind": "Refused",
+          "phase": "lowering",
+          "site": "src/compiler/sys.ts:1895:17",
+          "reason": "sort without a comparator",
+          "message": "Adamic 0.1 refuses sort without a comparator; pass one: the default compares numbers as strings, so [10, 9, 1].sort() is [1, 10, 9]"
+        },
+        {
+          "kind": "NotYet",
+          "phase": "lowering",
+          "site": "src/compiler/sys.ts:1533:15",
+          "reason": "a function value that captures the variable its own initializer declares",
+          "message": "stage 0 can't lower a function value that captures the variable its own initializer declares yet"
+        },
+        {
+          "kind": "NotYet",
+          "phase": "lowering",
+          "site": "src/compiler/sys.ts:1604:191",
+          "reason": "process.recordreplay with an unrepresented type",
+          "message": "stage 0 can't lower process.recordreplay with an unrepresented type yet"
+        }
+      ],
+      "sourceLine": "if (nodeSystem.directoryExists) moduleResolutionHost.directoryExists = (directoryName: string) => nodeSystem.directoryExists(directoryName);"
+    },
+    {
+      "id": 3,
+      "unit": "src/compiler/sys.ts:1468:1",
+      "unitName": "export let sys: System = (() => {",
+      "unitKind": "KindVariableStatement",
+      "site": "src/compiler/sys.ts:1632:21",
+      "stopSite": "src/compiler/sys.ts:1632:25",
+      "kind": "Boundary",
+      "phase": "lowering",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "message": "stage 0 can't lower a presence test of a method whose presence the receiver's construction doesn't prove; a view or host value has to read it yet",
+      "classification": "revealed_later_stop",
+      "unitExistedOnBaseline": true,
+      "baselineUnitPrimaryFindingCount": 4,
+      "baselineUnitStops": [
+        {
+          "kind": "Refused",
+          "phase": "lowering",
+          "site": "src/compiler/sys.ts:1894:17",
+          "reason": "sort without a comparator",
+          "message": "Adamic 0.1 refuses sort without a comparator; pass one: the default compares numbers as strings, so [10, 9, 1].sort() is [1, 10, 9]"
+        },
+        {
+          "kind": "Refused",
+          "phase": "lowering",
+          "site": "src/compiler/sys.ts:1895:17",
+          "reason": "sort without a comparator",
+          "message": "Adamic 0.1 refuses sort without a comparator; pass one: the default compares numbers as strings, so [10, 9, 1].sort() is [1, 10, 9]"
+        },
+        {
+          "kind": "NotYet",
+          "phase": "lowering",
+          "site": "src/compiler/sys.ts:1533:15",
+          "reason": "a function value that captures the variable its own initializer declares",
+          "message": "stage 0 can't lower a function value that captures the variable its own initializer declares yet"
+        },
+        {
+          "kind": "NotYet",
+          "phase": "lowering",
+          "site": "src/compiler/sys.ts:1604:191",
+          "reason": "process.recordreplay with an unrepresented type",
+          "message": "stage 0 can't lower process.recordreplay with an unrepresented type yet"
+        }
+      ],
+      "sourceLine": "if (nodeSystem.directoryExists) moduleResolutionHost.directoryExists = (directoryName: string) => nodeSystem.directoryExists(directoryName);"
+    },
+    {
+      "id": 4,
+      "unit": "src/compiler/sys.ts:1468:1",
+      "unitName": "export let sys: System = (() => {",
+      "unitKind": "KindVariableStatement",
+      "site": "src/compiler/sys.ts:1633:46",
+      "stopSite": "src/compiler/sys.ts:1633:46",
+      "kind": "NotYet",
+      "phase": "lowering",
+      "reason": "writing a possibly absent optional own field",
+      "message": "stage 0 can't lower writing a possibly absent optional own field yet",
+      "classification": "revealed_later_stop",
+      "unitExistedOnBaseline": true,
+      "baselineUnitPrimaryFindingCount": 4,
+      "baselineUnitStops": [
+        {
+          "kind": "Refused",
+          "phase": "lowering",
+          "site": "src/compiler/sys.ts:1894:17",
+          "reason": "sort without a comparator",
+          "message": "Adamic 0.1 refuses sort without a comparator; pass one: the default compares numbers as strings, so [10, 9, 1].sort() is [1, 10, 9]"
+        },
+        {
+          "kind": "Refused",
+          "phase": "lowering",
+          "site": "src/compiler/sys.ts:1895:17",
+          "reason": "sort without a comparator",
+          "message": "Adamic 0.1 refuses sort without a comparator; pass one: the default compares numbers as strings, so [10, 9, 1].sort() is [1, 10, 9]"
+        },
+        {
+          "kind": "NotYet",
+          "phase": "lowering",
+          "site": "src/compiler/sys.ts:1533:15",
+          "reason": "a function value that captures the variable its own initializer declares",
+          "message": "stage 0 can't lower a function value that captures the variable its own initializer declares yet"
+        },
+        {
+          "kind": "NotYet",
+          "phase": "lowering",
+          "site": "src/compiler/sys.ts:1604:191",
+          "reason": "process.recordreplay with an unrepresented type",
+          "message": "stage 0 can't lower process.recordreplay with an unrepresented type yet"
+        }
+      ],
+      "sourceLine": "if (nodeSystem.realpath) moduleResolutionHost.realpath = (path: string) => nodeSystem.realpath!(path);"
+    },
+    {
+      "id": 5,
+      "unit": "src/compiler/sys.ts:1468:1",
+      "unitName": "export let sys: System = (() => {",
+      "unitKind": "KindVariableStatement",
+      "site": "src/compiler/sys.ts:1633:46",
+      "stopSite": "src/compiler/sys.ts:1633:46",
+      "kind": "Boundary",
+      "phase": "lowering",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "message": "stage 0 can't lower writing a possibly absent optional own field yet",
+      "classification": "revealed_later_stop",
+      "unitExistedOnBaseline": true,
+      "baselineUnitPrimaryFindingCount": 4,
+      "baselineUnitStops": [
+        {
+          "kind": "Refused",
+          "phase": "lowering",
+          "site": "src/compiler/sys.ts:1894:17",
+          "reason": "sort without a comparator",
+          "message": "Adamic 0.1 refuses sort without a comparator; pass one: the default compares numbers as strings, so [10, 9, 1].sort() is [1, 10, 9]"
+        },
+        {
+          "kind": "Refused",
+          "phase": "lowering",
+          "site": "src/compiler/sys.ts:1895:17",
+          "reason": "sort without a comparator",
+          "message": "Adamic 0.1 refuses sort without a comparator; pass one: the default compares numbers as strings, so [10, 9, 1].sort() is [1, 10, 9]"
+        },
+        {
+          "kind": "NotYet",
+          "phase": "lowering",
+          "site": "src/compiler/sys.ts:1533:15",
+          "reason": "a function value that captures the variable its own initializer declares",
+          "message": "stage 0 can't lower a function value that captures the variable its own initializer declares yet"
+        },
+        {
+          "kind": "NotYet",
+          "phase": "lowering",
+          "site": "src/compiler/sys.ts:1604:191",
+          "reason": "process.recordreplay with an unrepresented type",
+          "message": "stage 0 can't lower process.recordreplay with an unrepresented type yet"
+        }
+      ],
+      "sourceLine": "if (nodeSystem.realpath) moduleResolutionHost.realpath = (path: string) => nodeSystem.realpath!(path);"
+    },
+    {
+      "id": 6,
+      "unit": "src/compiler/sys.ts:1468:1",
+      "unitName": "export let sys: System = (() => {",
+      "unitKind": "KindVariableStatement",
+      "site": "src/compiler/sys.ts:1633:21",
+      "stopSite": "src/compiler/sys.ts:1533:15",
+      "kind": "Boundary",
+      "phase": "lowering",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "message": "stage 0 can't lower a function value that captures the variable its own initializer declares yet",
+      "classification": "revealed_later_stop",
+      "unitExistedOnBaseline": true,
+      "baselineUnitPrimaryFindingCount": 4,
+      "baselineUnitStops": [
+        {
+          "kind": "Refused",
+          "phase": "lowering",
+          "site": "src/compiler/sys.ts:1894:17",
+          "reason": "sort without a comparator",
+          "message": "Adamic 0.1 refuses sort without a comparator; pass one: the default compares numbers as strings, so [10, 9, 1].sort() is [1, 10, 9]"
+        },
+        {
+          "kind": "Refused",
+          "phase": "lowering",
+          "site": "src/compiler/sys.ts:1895:17",
+          "reason": "sort without a comparator",
+          "message": "Adamic 0.1 refuses sort without a comparator; pass one: the default compares numbers as strings, so [10, 9, 1].sort() is [1, 10, 9]"
+        },
+        {
+          "kind": "NotYet",
+          "phase": "lowering",
+          "site": "src/compiler/sys.ts:1533:15",
+          "reason": "a function value that captures the variable its own initializer declares",
+          "message": "stage 0 can't lower a function value that captures the variable its own initializer declares yet"
+        },
+        {
+          "kind": "NotYet",
+          "phase": "lowering",
+          "site": "src/compiler/sys.ts:1604:191",
+          "reason": "process.recordreplay with an unrepresented type",
+          "message": "stage 0 can't lower process.recordreplay with an unrepresented type yet"
+        }
+      ],
+      "sourceLine": "const nodeSystem: NodeResolutionSystem = {"
+    },
+    {
+      "id": 7,
+      "unit": "src/compiler/sys.ts:1468:1",
+      "unitName": "export let sys: System = (() => {",
+      "unitKind": "KindVariableStatement",
+      "site": "src/compiler/sys.ts:1634:25",
+      "stopSite": "src/compiler/sys.ts:1634:25",
+      "kind": "NotYet",
+      "phase": "lowering",
+      "reason": "a presence test of a method whose presence the receiver's construction doesn't prove; a view or host value has to read it",
+      "message": "stage 0 can't lower a presence test of a method whose presence the receiver's construction doesn't prove; a view or host value has to read it yet",
+      "classification": "revealed_later_stop",
+      "unitExistedOnBaseline": true,
+      "baselineUnitPrimaryFindingCount": 4,
+      "baselineUnitStops": [
+        {
+          "kind": "Refused",
+          "phase": "lowering",
+          "site": "src/compiler/sys.ts:1894:17",
+          "reason": "sort without a comparator",
+          "message": "Adamic 0.1 refuses sort without a comparator; pass one: the default compares numbers as strings, so [10, 9, 1].sort() is [1, 10, 9]"
+        },
+        {
+          "kind": "Refused",
+          "phase": "lowering",
+          "site": "src/compiler/sys.ts:1895:17",
+          "reason": "sort without a comparator",
+          "message": "Adamic 0.1 refuses sort without a comparator; pass one: the default compares numbers as strings, so [10, 9, 1].sort() is [1, 10, 9]"
+        },
+        {
+          "kind": "NotYet",
+          "phase": "lowering",
+          "site": "src/compiler/sys.ts:1533:15",
+          "reason": "a function value that captures the variable its own initializer declares",
+          "message": "stage 0 can't lower a function value that captures the variable its own initializer declares yet"
+        },
+        {
+          "kind": "NotYet",
+          "phase": "lowering",
+          "site": "src/compiler/sys.ts:1604:191",
+          "reason": "process.recordreplay with an unrepresented type",
+          "message": "stage 0 can't lower process.recordreplay with an unrepresented type yet"
+        }
+      ],
+      "sourceLine": "if (nodeSystem.getCurrentDirectory) moduleResolutionHost.getCurrentDirectory = () => nodeSystem.getCurrentDirectory();"
+    },
+    {
+      "id": 8,
+      "unit": "src/compiler/sys.ts:1468:1",
+      "unitName": "export let sys: System = (() => {",
+      "unitKind": "KindVariableStatement",
+      "site": "src/compiler/sys.ts:1634:21",
+      "stopSite": "src/compiler/sys.ts:1634:25",
+      "kind": "Boundary",
+      "phase": "lowering",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "message": "stage 0 can't lower a presence test of a method whose presence the receiver's construction doesn't prove; a view or host value has to read it yet",
+      "classification": "revealed_later_stop",
+      "unitExistedOnBaseline": true,
+      "baselineUnitPrimaryFindingCount": 4,
+      "baselineUnitStops": [
+        {
+          "kind": "Refused",
+          "phase": "lowering",
+          "site": "src/compiler/sys.ts:1894:17",
+          "reason": "sort without a comparator",
+          "message": "Adamic 0.1 refuses sort without a comparator; pass one: the default compares numbers as strings, so [10, 9, 1].sort() is [1, 10, 9]"
+        },
+        {
+          "kind": "Refused",
+          "phase": "lowering",
+          "site": "src/compiler/sys.ts:1895:17",
+          "reason": "sort without a comparator",
+          "message": "Adamic 0.1 refuses sort without a comparator; pass one: the default compares numbers as strings, so [10, 9, 1].sort() is [1, 10, 9]"
+        },
+        {
+          "kind": "NotYet",
+          "phase": "lowering",
+          "site": "src/compiler/sys.ts:1533:15",
+          "reason": "a function value that captures the variable its own initializer declares",
+          "message": "stage 0 can't lower a function value that captures the variable its own initializer declares yet"
+        },
+        {
+          "kind": "NotYet",
+          "phase": "lowering",
+          "site": "src/compiler/sys.ts:1604:191",
+          "reason": "process.recordreplay with an unrepresented type",
+          "message": "stage 0 can't lower process.recordreplay with an unrepresented type yet"
+        }
+      ],
+      "sourceLine": "if (nodeSystem.getCurrentDirectory) moduleResolutionHost.getCurrentDirectory = () => nodeSystem.getCurrentDirectory();"
+    },
+    {
+      "id": 9,
+      "unit": "src/compiler/sys.ts:1468:1",
+      "unitName": "export let sys: System = (() => {",
+      "unitKind": "KindVariableStatement",
+      "site": "src/compiler/sys.ts:1635:25",
+      "stopSite": "src/compiler/sys.ts:1635:25",
+      "kind": "NotYet",
+      "phase": "lowering",
+      "reason": "a presence test of a method whose presence the receiver's construction doesn't prove; a view or host value has to read it",
+      "message": "stage 0 can't lower a presence test of a method whose presence the receiver's construction doesn't prove; a view or host value has to read it yet",
+      "classification": "revealed_later_stop",
+      "unitExistedOnBaseline": true,
+      "baselineUnitPrimaryFindingCount": 4,
+      "baselineUnitStops": [
+        {
+          "kind": "Refused",
+          "phase": "lowering",
+          "site": "src/compiler/sys.ts:1894:17",
+          "reason": "sort without a comparator",
+          "message": "Adamic 0.1 refuses sort without a comparator; pass one: the default compares numbers as strings, so [10, 9, 1].sort() is [1, 10, 9]"
+        },
+        {
+          "kind": "Refused",
+          "phase": "lowering",
+          "site": "src/compiler/sys.ts:1895:17",
+          "reason": "sort without a comparator",
+          "message": "Adamic 0.1 refuses sort without a comparator; pass one: the default compares numbers as strings, so [10, 9, 1].sort() is [1, 10, 9]"
+        },
+        {
+          "kind": "NotYet",
+          "phase": "lowering",
+          "site": "src/compiler/sys.ts:1533:15",
+          "reason": "a function value that captures the variable its own initializer declares",
+          "message": "stage 0 can't lower a function value that captures the variable its own initializer declares yet"
+        },
+        {
+          "kind": "NotYet",
+          "phase": "lowering",
+          "site": "src/compiler/sys.ts:1604:191",
+          "reason": "process.recordreplay with an unrepresented type",
+          "message": "stage 0 can't lower process.recordreplay with an unrepresented type yet"
+        }
+      ],
+      "sourceLine": "if (nodeSystem.getDirectories) moduleResolutionHost.getDirectories = (path: string) => nodeSystem.getDirectories(path);"
+    },
+    {
+      "id": 10,
+      "unit": "src/compiler/sys.ts:1468:1",
+      "unitName": "export let sys: System = (() => {",
+      "unitKind": "KindVariableStatement",
+      "site": "src/compiler/sys.ts:1635:21",
+      "stopSite": "src/compiler/sys.ts:1635:25",
+      "kind": "Boundary",
+      "phase": "lowering",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "message": "stage 0 can't lower a presence test of a method whose presence the receiver's construction doesn't prove; a view or host value has to read it yet",
+      "classification": "revealed_later_stop",
+      "unitExistedOnBaseline": true,
+      "baselineUnitPrimaryFindingCount": 4,
+      "baselineUnitStops": [
+        {
+          "kind": "Refused",
+          "phase": "lowering",
+          "site": "src/compiler/sys.ts:1894:17",
+          "reason": "sort without a comparator",
+          "message": "Adamic 0.1 refuses sort without a comparator; pass one: the default compares numbers as strings, so [10, 9, 1].sort() is [1, 10, 9]"
+        },
+        {
+          "kind": "Refused",
+          "phase": "lowering",
+          "site": "src/compiler/sys.ts:1895:17",
+          "reason": "sort without a comparator",
+          "message": "Adamic 0.1 refuses sort without a comparator; pass one: the default compares numbers as strings, so [10, 9, 1].sort() is [1, 10, 9]"
+        },
+        {
+          "kind": "NotYet",
+          "phase": "lowering",
+          "site": "src/compiler/sys.ts:1533:15",
+          "reason": "a function value that captures the variable its own initializer declares",
+          "message": "stage 0 can't lower a function value that captures the variable its own initializer declares yet"
+        },
+        {
+          "kind": "NotYet",
+          "phase": "lowering",
+          "site": "src/compiler/sys.ts:1604:191",
+          "reason": "process.recordreplay with an unrepresented type",
+          "message": "stage 0 can't lower process.recordreplay with an unrepresented type yet"
+        }
+      ],
+      "sourceLine": "if (nodeSystem.getDirectories) moduleResolutionHost.getDirectories = (path: string) => nodeSystem.getDirectories(path);"
+    },
+    {
+      "id": 11,
+      "unit": "src/compiler/sys.ts:1468:1",
+      "unitName": "export let sys: System = (() => {",
+      "unitKind": "KindVariableStatement",
+      "site": "src/compiler/sys.ts:1636:43",
+      "stopSite": "src/compiler/sys.ts:1636:43",
+      "kind": "NotYet",
+      "phase": "lowering",
+      "reason": "writing a possibly absent optional own field",
+      "message": "stage 0 can't lower writing a possibly absent optional own field yet",
+      "classification": "revealed_later_stop",
+      "unitExistedOnBaseline": true,
+      "baselineUnitPrimaryFindingCount": 4,
+      "baselineUnitStops": [
+        {
+          "kind": "Refused",
+          "phase": "lowering",
+          "site": "src/compiler/sys.ts:1894:17",
+          "reason": "sort without a comparator",
+          "message": "Adamic 0.1 refuses sort without a comparator; pass one: the default compares numbers as strings, so [10, 9, 1].sort() is [1, 10, 9]"
+        },
+        {
+          "kind": "Refused",
+          "phase": "lowering",
+          "site": "src/compiler/sys.ts:1895:17",
+          "reason": "sort without a comparator",
+          "message": "Adamic 0.1 refuses sort without a comparator; pass one: the default compares numbers as strings, so [10, 9, 1].sort() is [1, 10, 9]"
+        },
+        {
+          "kind": "NotYet",
+          "phase": "lowering",
+          "site": "src/compiler/sys.ts:1533:15",
+          "reason": "a function value that captures the variable its own initializer declares",
+          "message": "stage 0 can't lower a function value that captures the variable its own initializer declares yet"
+        },
+        {
+          "kind": "NotYet",
+          "phase": "lowering",
+          "site": "src/compiler/sys.ts:1604:191",
+          "reason": "process.recordreplay with an unrepresented type",
+          "message": "stage 0 can't lower process.recordreplay with an unrepresented type yet"
+        }
+      ],
+      "sourceLine": "if (nodeSystem.trace) moduleResolutionHost.trace = (s: string) => nodeSystem.trace!(s);"
+    },
+    {
+      "id": 12,
+      "unit": "src/compiler/sys.ts:1468:1",
+      "unitName": "export let sys: System = (() => {",
+      "unitKind": "KindVariableStatement",
+      "site": "src/compiler/sys.ts:1636:43",
+      "stopSite": "src/compiler/sys.ts:1636:43",
+      "kind": "Boundary",
+      "phase": "lowering",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "message": "stage 0 can't lower writing a possibly absent optional own field yet",
+      "classification": "revealed_later_stop",
+      "unitExistedOnBaseline": true,
+      "baselineUnitPrimaryFindingCount": 4,
+      "baselineUnitStops": [
+        {
+          "kind": "Refused",
+          "phase": "lowering",
+          "site": "src/compiler/sys.ts:1894:17",
+          "reason": "sort without a comparator",
+          "message": "Adamic 0.1 refuses sort without a comparator; pass one: the default compares numbers as strings, so [10, 9, 1].sort() is [1, 10, 9]"
+        },
+        {
+          "kind": "Refused",
+          "phase": "lowering",
+          "site": "src/compiler/sys.ts:1895:17",
+          "reason": "sort without a comparator",
+          "message": "Adamic 0.1 refuses sort without a comparator; pass one: the default compares numbers as strings, so [10, 9, 1].sort() is [1, 10, 9]"
+        },
+        {
+          "kind": "NotYet",
+          "phase": "lowering",
+          "site": "src/compiler/sys.ts:1533:15",
+          "reason": "a function value that captures the variable its own initializer declares",
+          "message": "stage 0 can't lower a function value that captures the variable its own initializer declares yet"
+        },
+        {
+          "kind": "NotYet",
+          "phase": "lowering",
+          "site": "src/compiler/sys.ts:1604:191",
+          "reason": "process.recordreplay with an unrepresented type",
+          "message": "stage 0 can't lower process.recordreplay with an unrepresented type yet"
+        }
+      ],
+      "sourceLine": "if (nodeSystem.trace) moduleResolutionHost.trace = (s: string) => nodeSystem.trace!(s);"
+    },
+    {
+      "id": 13,
+      "unit": "src/compiler/sys.ts:1468:1",
+      "unitName": "export let sys: System = (() => {",
+      "unitKind": "KindVariableStatement",
+      "site": "src/compiler/sys.ts:1636:21",
+      "stopSite": "src/compiler/sys.ts:1533:15",
+      "kind": "Boundary",
+      "phase": "lowering",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "message": "stage 0 can't lower a function value that captures the variable its own initializer declares yet",
+      "classification": "revealed_later_stop",
+      "unitExistedOnBaseline": true,
+      "baselineUnitPrimaryFindingCount": 4,
+      "baselineUnitStops": [
+        {
+          "kind": "Refused",
+          "phase": "lowering",
+          "site": "src/compiler/sys.ts:1894:17",
+          "reason": "sort without a comparator",
+          "message": "Adamic 0.1 refuses sort without a comparator; pass one: the default compares numbers as strings, so [10, 9, 1].sort() is [1, 10, 9]"
+        },
+        {
+          "kind": "Refused",
+          "phase": "lowering",
+          "site": "src/compiler/sys.ts:1895:17",
+          "reason": "sort without a comparator",
+          "message": "Adamic 0.1 refuses sort without a comparator; pass one: the default compares numbers as strings, so [10, 9, 1].sort() is [1, 10, 9]"
+        },
+        {
+          "kind": "NotYet",
+          "phase": "lowering",
+          "site": "src/compiler/sys.ts:1533:15",
+          "reason": "a function value that captures the variable its own initializer declares",
+          "message": "stage 0 can't lower a function value that captures the variable its own initializer declares yet"
+        },
+        {
+          "kind": "NotYet",
+          "phase": "lowering",
+          "site": "src/compiler/sys.ts:1604:191",
+          "reason": "process.recordreplay with an unrepresented type",
+          "message": "stage 0 can't lower process.recordreplay with an unrepresented type yet"
+        }
+      ],
+      "sourceLine": "const nodeSystem: NodeResolutionSystem = {"
+    },
+    {
+      "id": 14,
+      "unit": "src/compiler/sys.ts:1468:1",
+      "unitName": "export let sys: System = (() => {",
+      "unitKind": "KindVariableStatement",
+      "site": "src/compiler/sys.ts:1637:67",
+      "stopSite": "src/compiler/sys.ts:1637:67",
+      "kind": "NotYet",
+      "phase": "lowering",
+      "reason": "writing a possibly absent optional own field",
+      "message": "stage 0 can't lower writing a possibly absent optional own field yet",
+      "classification": "revealed_later_stop",
+      "unitExistedOnBaseline": true,
+      "baselineUnitPrimaryFindingCount": 4,
+      "baselineUnitStops": [
+        {
+          "kind": "Refused",
+          "phase": "lowering",
+          "site": "src/compiler/sys.ts:1894:17",
+          "reason": "sort without a comparator",
+          "message": "Adamic 0.1 refuses sort without a comparator; pass one: the default compares numbers as strings, so [10, 9, 1].sort() is [1, 10, 9]"
+        },
+        {
+          "kind": "Refused",
+          "phase": "lowering",
+          "site": "src/compiler/sys.ts:1895:17",
+          "reason": "sort without a comparator",
+          "message": "Adamic 0.1 refuses sort without a comparator; pass one: the default compares numbers as strings, so [10, 9, 1].sort() is [1, 10, 9]"
+        },
+        {
+          "kind": "NotYet",
+          "phase": "lowering",
+          "site": "src/compiler/sys.ts:1533:15",
+          "reason": "a function value that captures the variable its own initializer declares",
+          "message": "stage 0 can't lower a function value that captures the variable its own initializer declares yet"
+        },
+        {
+          "kind": "NotYet",
+          "phase": "lowering",
+          "site": "src/compiler/sys.ts:1604:191",
+          "reason": "process.recordreplay with an unrepresented type",
+          "message": "stage 0 can't lower process.recordreplay with an unrepresented type yet"
+        }
+      ],
+      "sourceLine": "if (nodeSystem.getGlobalTypingsCacheLocation) moduleResolutionHost.getGlobalTypingsCacheLocation = () => nodeSystem.getGlobalTypingsCacheLocation!();"
+    },
+    {
+      "id": 15,
+      "unit": "src/compiler/sys.ts:1468:1",
+      "unitName": "export let sys: System = (() => {",
+      "unitKind": "KindVariableStatement",
+      "site": "src/compiler/sys.ts:1637:67",
+      "stopSite": "src/compiler/sys.ts:1637:67",
+      "kind": "Boundary",
+      "phase": "lowering",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "message": "stage 0 can't lower writing a possibly absent optional own field yet",
+      "classification": "revealed_later_stop",
+      "unitExistedOnBaseline": true,
+      "baselineUnitPrimaryFindingCount": 4,
+      "baselineUnitStops": [
+        {
+          "kind": "Refused",
+          "phase": "lowering",
+          "site": "src/compiler/sys.ts:1894:17",
+          "reason": "sort without a comparator",
+          "message": "Adamic 0.1 refuses sort without a comparator; pass one: the default compares numbers as strings, so [10, 9, 1].sort() is [1, 10, 9]"
+        },
+        {
+          "kind": "Refused",
+          "phase": "lowering",
+          "site": "src/compiler/sys.ts:1895:17",
+          "reason": "sort without a comparator",
+          "message": "Adamic 0.1 refuses sort without a comparator; pass one: the default compares numbers as strings, so [10, 9, 1].sort() is [1, 10, 9]"
+        },
+        {
+          "kind": "NotYet",
+          "phase": "lowering",
+          "site": "src/compiler/sys.ts:1533:15",
+          "reason": "a function value that captures the variable its own initializer declares",
+          "message": "stage 0 can't lower a function value that captures the variable its own initializer declares yet"
+        },
+        {
+          "kind": "NotYet",
+          "phase": "lowering",
+          "site": "src/compiler/sys.ts:1604:191",
+          "reason": "process.recordreplay with an unrepresented type",
+          "message": "stage 0 can't lower process.recordreplay with an unrepresented type yet"
+        }
+      ],
+      "sourceLine": "if (nodeSystem.getGlobalTypingsCacheLocation) moduleResolutionHost.getGlobalTypingsCacheLocation = () => nodeSystem.getGlobalTypingsCacheLocation!();"
+    },
+    {
+      "id": 16,
+      "unit": "src/compiler/sys.ts:1468:1",
+      "unitName": "export let sys: System = (() => {",
+      "unitKind": "KindVariableStatement",
+      "site": "src/compiler/sys.ts:1637:21",
+      "stopSite": "src/compiler/sys.ts:1533:15",
+      "kind": "Boundary",
+      "phase": "lowering",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "message": "stage 0 can't lower a function value that captures the variable its own initializer declares yet",
+      "classification": "revealed_later_stop",
+      "unitExistedOnBaseline": true,
+      "baselineUnitPrimaryFindingCount": 4,
+      "baselineUnitStops": [
+        {
+          "kind": "Refused",
+          "phase": "lowering",
+          "site": "src/compiler/sys.ts:1894:17",
+          "reason": "sort without a comparator",
+          "message": "Adamic 0.1 refuses sort without a comparator; pass one: the default compares numbers as strings, so [10, 9, 1].sort() is [1, 10, 9]"
+        },
+        {
+          "kind": "Refused",
+          "phase": "lowering",
+          "site": "src/compiler/sys.ts:1895:17",
+          "reason": "sort without a comparator",
+          "message": "Adamic 0.1 refuses sort without a comparator; pass one: the default compares numbers as strings, so [10, 9, 1].sort() is [1, 10, 9]"
+        },
+        {
+          "kind": "NotYet",
+          "phase": "lowering",
+          "site": "src/compiler/sys.ts:1533:15",
+          "reason": "a function value that captures the variable its own initializer declares",
+          "message": "stage 0 can't lower a function value that captures the variable its own initializer declares yet"
+        },
+        {
+          "kind": "NotYet",
+          "phase": "lowering",
+          "site": "src/compiler/sys.ts:1604:191",
+          "reason": "process.recordreplay with an unrepresented type",
+          "message": "stage 0 can't lower process.recordreplay with an unrepresented type yet"
+        }
+      ],
+      "sourceLine": "const nodeSystem: NodeResolutionSystem = {"
+    },
+    {
+      "id": 17,
+      "unit": "src/compiler/sys.ts:1468:1",
+      "unitName": "export let sys: System = (() => {",
+      "unitKind": "KindVariableStatement",
+      "site": "src/compiler/sys.ts:1638:25",
+      "stopSite": "src/compiler/sys.ts:1638:25",
+      "kind": "NotYet",
+      "phase": "lowering",
+      "reason": "in when a possibly absent spread has no property presence descriptors",
+      "message": "stage 0 can't lower in when a possibly absent spread has no property presence descriptors yet",
+      "classification": "revealed_later_stop",
+      "unitExistedOnBaseline": true,
+      "baselineUnitPrimaryFindingCount": 4,
+      "baselineUnitStops": [
+        {
+          "kind": "Refused",
+          "phase": "lowering",
+          "site": "src/compiler/sys.ts:1894:17",
+          "reason": "sort without a comparator",
+          "message": "Adamic 0.1 refuses sort without a comparator; pass one: the default compares numbers as strings, so [10, 9, 1].sort() is [1, 10, 9]"
+        },
+        {
+          "kind": "Refused",
+          "phase": "lowering",
+          "site": "src/compiler/sys.ts:1895:17",
+          "reason": "sort without a comparator",
+          "message": "Adamic 0.1 refuses sort without a comparator; pass one: the default compares numbers as strings, so [10, 9, 1].sort() is [1, 10, 9]"
+        },
+        {
+          "kind": "NotYet",
+          "phase": "lowering",
+          "site": "src/compiler/sys.ts:1533:15",
+          "reason": "a function value that captures the variable its own initializer declares",
+          "message": "stage 0 can't lower a function value that captures the variable its own initializer declares yet"
+        },
+        {
+          "kind": "NotYet",
+          "phase": "lowering",
+          "site": "src/compiler/sys.ts:1604:191",
+          "reason": "process.recordreplay with an unrepresented type",
+          "message": "stage 0 can't lower process.recordreplay with an unrepresented type yet"
+        }
+      ],
+      "sourceLine": "if (\"useCaseSensitiveFileNames\" in nodeSystem) moduleResolutionHost.useCaseSensitiveFileNames = nodeSystem.useCaseSensitiveFileNames;"
+    },
+    {
+      "id": 18,
+      "unit": "src/compiler/sys.ts:1468:1",
+      "unitName": "export let sys: System = (() => {",
+      "unitKind": "KindVariableStatement",
+      "site": "src/compiler/sys.ts:1638:21",
+      "stopSite": "src/compiler/sys.ts:1638:25",
+      "kind": "Boundary",
+      "phase": "lowering",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "message": "stage 0 can't lower in when a possibly absent spread has no property presence descriptors yet",
+      "classification": "revealed_later_stop",
+      "unitExistedOnBaseline": true,
+      "baselineUnitPrimaryFindingCount": 4,
+      "baselineUnitStops": [
+        {
+          "kind": "Refused",
+          "phase": "lowering",
+          "site": "src/compiler/sys.ts:1894:17",
+          "reason": "sort without a comparator",
+          "message": "Adamic 0.1 refuses sort without a comparator; pass one: the default compares numbers as strings, so [10, 9, 1].sort() is [1, 10, 9]"
+        },
+        {
+          "kind": "Refused",
+          "phase": "lowering",
+          "site": "src/compiler/sys.ts:1895:17",
+          "reason": "sort without a comparator",
+          "message": "Adamic 0.1 refuses sort without a comparator; pass one: the default compares numbers as strings, so [10, 9, 1].sort() is [1, 10, 9]"
+        },
+        {
+          "kind": "NotYet",
+          "phase": "lowering",
+          "site": "src/compiler/sys.ts:1533:15",
+          "reason": "a function value that captures the variable its own initializer declares",
+          "message": "stage 0 can't lower a function value that captures the variable its own initializer declares yet"
+        },
+        {
+          "kind": "NotYet",
+          "phase": "lowering",
+          "site": "src/compiler/sys.ts:1604:191",
+          "reason": "process.recordreplay with an unrepresented type",
+          "message": "stage 0 can't lower process.recordreplay with an unrepresented type yet"
+        }
+      ],
+      "sourceLine": "if (\"useCaseSensitiveFileNames\" in nodeSystem) moduleResolutionHost.useCaseSensitiveFileNames = nodeSystem.useCaseSensitiveFileNames;"
+    },
+    {
+      "id": 19,
+      "unit": "src/compiler/sys.ts:1468:1",
+      "unitName": "export let sys: System = (() => {",
+      "unitKind": "KindVariableStatement",
+      "site": "src/compiler/sys.ts:1639:77",
+      "stopSite": "src/compiler/sys.ts:1639:77",
+      "kind": "NotYet",
+      "phase": "lowering",
+      "reason": "reading moduleResolutionHost",
+      "message": "stage 0 can't lower reading moduleResolutionHost yet",
+      "classification": "revealed_later_stop",
+      "unitExistedOnBaseline": true,
+      "baselineUnitPrimaryFindingCount": 4,
+      "baselineUnitStops": [
+        {
+          "kind": "Refused",
+          "phase": "lowering",
+          "site": "src/compiler/sys.ts:1894:17",
+          "reason": "sort without a comparator",
+          "message": "Adamic 0.1 refuses sort without a comparator; pass one: the default compares numbers as strings, so [10, 9, 1].sort() is [1, 10, 9]"
+        },
+        {
+          "kind": "Refused",
+          "phase": "lowering",
+          "site": "src/compiler/sys.ts:1895:17",
+          "reason": "sort without a comparator",
+          "message": "Adamic 0.1 refuses sort without a comparator; pass one: the default compares numbers as strings, so [10, 9, 1].sort() is [1, 10, 9]"
+        },
+        {
+          "kind": "NotYet",
+          "phase": "lowering",
+          "site": "src/compiler/sys.ts:1533:15",
+          "reason": "a function value that captures the variable its own initializer declares",
+          "message": "stage 0 can't lower a function value that captures the variable its own initializer declares yet"
+        },
+        {
+          "kind": "NotYet",
+          "phase": "lowering",
+          "site": "src/compiler/sys.ts:1604:191",
+          "reason": "process.recordreplay with an unrepresented type",
+          "message": "stage 0 can't lower process.recordreplay with an unrepresented type yet"
+        }
+      ],
+      "sourceLine": "const modulePath = resolveJSModule(moduleName, baseDir, moduleResolutionHost);"
+    },
+    {
+      "id": 20,
+      "unit": "src/compiler/sys.ts:1468:1",
+      "unitName": "export let sys: System = (() => {",
+      "unitKind": "KindVariableStatement",
+      "site": "src/compiler/sys.ts:1639:21",
+      "stopSite": "src/compiler/sys.ts:1639:77",
+      "kind": "Boundary",
+      "phase": "lowering",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "message": "stage 0 can't lower reading moduleResolutionHost yet",
+      "classification": "revealed_later_stop",
+      "unitExistedOnBaseline": true,
+      "baselineUnitPrimaryFindingCount": 4,
+      "baselineUnitStops": [
+        {
+          "kind": "Refused",
+          "phase": "lowering",
+          "site": "src/compiler/sys.ts:1894:17",
+          "reason": "sort without a comparator",
+          "message": "Adamic 0.1 refuses sort without a comparator; pass one: the default compares numbers as strings, so [10, 9, 1].sort() is [1, 10, 9]"
+        },
+        {
+          "kind": "Refused",
+          "phase": "lowering",
+          "site": "src/compiler/sys.ts:1895:17",
+          "reason": "sort without a comparator",
+          "message": "Adamic 0.1 refuses sort without a comparator; pass one: the default compares numbers as strings, so [10, 9, 1].sort() is [1, 10, 9]"
+        },
+        {
+          "kind": "NotYet",
+          "phase": "lowering",
+          "site": "src/compiler/sys.ts:1533:15",
+          "reason": "a function value that captures the variable its own initializer declares",
+          "message": "stage 0 can't lower a function value that captures the variable its own initializer declares yet"
+        },
+        {
+          "kind": "NotYet",
+          "phase": "lowering",
+          "site": "src/compiler/sys.ts:1604:191",
+          "reason": "process.recordreplay with an unrepresented type",
+          "message": "stage 0 can't lower process.recordreplay with an unrepresented type yet"
+        }
+      ],
+      "sourceLine": "const modulePath = resolveJSModule(moduleName, baseDir, moduleResolutionHost);"
+    },
+    {
+      "id": 21,
+      "unit": "src/compiler/sys.ts:1468:1",
+      "unitName": "export let sys: System = (() => {",
+      "unitKind": "KindVariableStatement",
+      "site": "src/compiler/sys.ts:1640:46",
+      "stopSite": "src/compiler/sys.ts:1640:46",
+      "kind": "NotYet",
+      "phase": "lowering",
+      "reason": "reading modulePath",
+      "message": "stage 0 can't lower reading modulePath yet",
+      "classification": "revealed_later_stop",
+      "unitExistedOnBaseline": true,
+      "baselineUnitPrimaryFindingCount": 4,
+      "baselineUnitStops": [
+        {
+          "kind": "Refused",
+          "phase": "lowering",
+          "site": "src/compiler/sys.ts:1894:17",
+          "reason": "sort without a comparator",
+          "message": "Adamic 0.1 refuses sort without a comparator; pass one: the default compares numbers as strings, so [10, 9, 1].sort() is [1, 10, 9]"
+        },
+        {
+          "kind": "Refused",
+          "phase": "lowering",
+          "site": "src/compiler/sys.ts:1895:17",
+          "reason": "sort without a comparator",
+          "message": "Adamic 0.1 refuses sort without a comparator; pass one: the default compares numbers as strings, so [10, 9, 1].sort() is [1, 10, 9]"
+        },
+        {
+          "kind": "NotYet",
+          "phase": "lowering",
+          "site": "src/compiler/sys.ts:1533:15",
+          "reason": "a function value that captures the variable its own initializer declares",
+          "message": "stage 0 can't lower a function value that captures the variable its own initializer declares yet"
+        },
+        {
+          "kind": "NotYet",
+          "phase": "lowering",
+          "site": "src/compiler/sys.ts:1604:191",
+          "reason": "process.recordreplay with an unrepresented type",
+          "message": "stage 0 can't lower process.recordreplay with an unrepresented type yet"
+        }
+      ],
+      "sourceLine": "return { module: require(modulePath), modulePath, error: undefined };"
+    },
+    {
+      "id": 22,
+      "unit": "src/compiler/sys.ts:1468:1",
+      "unitName": "export let sys: System = (() => {",
+      "unitKind": "KindVariableStatement",
+      "site": "src/compiler/sys.ts:1640:21",
+      "stopSite": "src/compiler/sys.ts:1640:46",
+      "kind": "Boundary",
+      "phase": "lowering",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "message": "stage 0 can't lower reading modulePath yet",
+      "classification": "revealed_later_stop",
+      "unitExistedOnBaseline": true,
+      "baselineUnitPrimaryFindingCount": 4,
+      "baselineUnitStops": [
+        {
+          "kind": "Refused",
+          "phase": "lowering",
+          "site": "src/compiler/sys.ts:1894:17",
+          "reason": "sort without a comparator",
+          "message": "Adamic 0.1 refuses sort without a comparator; pass one: the default compares numbers as strings, so [10, 9, 1].sort() is [1, 10, 9]"
+        },
+        {
+          "kind": "Refused",
+          "phase": "lowering",
+          "site": "src/compiler/sys.ts:1895:17",
+          "reason": "sort without a comparator",
+          "message": "Adamic 0.1 refuses sort without a comparator; pass one: the default compares numbers as strings, so [10, 9, 1].sort() is [1, 10, 9]"
+        },
+        {
+          "kind": "NotYet",
+          "phase": "lowering",
+          "site": "src/compiler/sys.ts:1533:15",
+          "reason": "a function value that captures the variable its own initializer declares",
+          "message": "stage 0 can't lower a function value that captures the variable its own initializer declares yet"
+        },
+        {
+          "kind": "NotYet",
+          "phase": "lowering",
+          "site": "src/compiler/sys.ts:1604:191",
+          "reason": "process.recordreplay with an unrepresented type",
+          "message": "stage 0 can't lower process.recordreplay with an unrepresented type yet"
+        }
+      ],
+      "sourceLine": "return { module: require(modulePath), modulePath, error: undefined };"
+    },
+    {
+      "id": 23,
+      "unit": "src/compiler/sys.ts:1474:5",
+      "unitName": "function getNodeSystem(): System {",
+      "unitKind": "KindFunctionDeclaration",
+      "site": "src/compiler/sys.ts:1628:21",
+      "stopSite": "src/compiler/sys.ts:1533:15",
+      "kind": "Boundary",
+      "phase": "lowering",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "message": "stage 0 can't lower a function value that captures the variable its own initializer declares yet",
+      "classification": "revealed_later_stop",
+      "unitExistedOnBaseline": true,
+      "baselineUnitPrimaryFindingCount": 8,
+      "baselineUnitStops": [
+        {
+          "kind": "Refused",
+          "phase": "refusal_scan",
+          "site": "src/compiler/sys.ts:1548:13",
+          "reason": "a function taking PollingInterval seen as one taking number | undefined (tsc relates a method's parameters both ways), so it can be handed what it can't take",
+          "message": "Adamic 0.1 refuses a function taking PollingInterval seen as one taking number | undefined (tsc relates a method's parameters both ways), so it can be handed what it can't take; write the method as a property holding a function (handle: (animal: Animal) => void), which tsc checks one way, or take the wider type in the method (method-signature-style)"
+        },
+        {
+          "kind": "Refused",
+          "phase": "refusal_scan",
+          "site": "src/compiler/sys.ts:1549:13",
+          "reason": "a function taking boolean seen as one taking boolean | undefined (tsc relates a method's parameters both ways), so it can be handed what it can't take",
+          "message": "Adamic 0.1 refuses a function taking boolean seen as one taking boolean | undefined (tsc relates a method's parameters both ways), so it can be handed what it can't take; write the method as a property holding a function (handle: (animal: Animal) => void), which tsc checks one way, or take the wider type in the method (method-signature-style)"
+        },
+        {
+          "kind": "NotYet",
+          "phase": "refusal_scan",
+          "site": "src/compiler/sys.ts:1604:192",
+          "reason": "a namespace object used as a value; no runtime container is emitted, so identity, receiver behavior, live export aliases and staged properties are not represented; use qualified members or named module imports",
+          "message": "stage 0 can't lower a namespace object used as a value; no runtime container is emitted, so identity, receiver behavior, live export aliases and staged properties are not represented; use qualified members or named module imports yet"
+        },
+        {
+          "kind": "NotYet",
+          "phase": "lowering",
+          "site": "src/compiler/sys.ts:1843:24",
+          "reason": "reading byteOrderMarkIndicator",
+          "message": "stage 0 can't lower reading byteOrderMarkIndicator yet"
+        },
+        {
+          "kind": "Refused",
+          "phase": "lowering",
+          "site": "src/compiler/sys.ts:1894:17",
+          "reason": "sort without a comparator",
+          "message": "Adamic 0.1 refuses sort without a comparator; pass one: the default compares numbers as strings, so [10, 9, 1].sort() is [1, 10, 9]"
+        },
+        {
+          "kind": "Refused",
+          "phase": "lowering",
+          "site": "src/compiler/sys.ts:1895:17",
+          "reason": "sort without a comparator",
+          "message": "Adamic 0.1 refuses sort without a comparator; pass one: the default compares numbers as strings, so [10, 9, 1].sort() is [1, 10, 9]"
+        },
+        {
+          "kind": "NotYet",
+          "phase": "lowering",
+          "site": "src/compiler/sys.ts:1533:15",
+          "reason": "a function value that captures the variable its own initializer declares",
+          "message": "stage 0 can't lower a function value that captures the variable its own initializer declares yet"
+        },
+        {
+          "kind": "NotYet",
+          "phase": "lowering",
+          "site": "src/compiler/sys.ts:1604:191",
+          "reason": "process.recordreplay with an unrepresented type",
+          "message": "stage 0 can't lower process.recordreplay with an unrepresented type yet"
+        }
+      ],
+      "sourceLine": "const nodeSystem: NodeResolutionSystem = {"
+    },
+    {
+      "id": 24,
+      "unit": "src/compiler/sys.ts:1474:5",
+      "unitName": "function getNodeSystem(): System {",
+      "unitKind": "KindFunctionDeclaration",
+      "site": "src/compiler/sys.ts:1632:25",
+      "stopSite": "src/compiler/sys.ts:1632:25",
+      "kind": "NotYet",
+      "phase": "lowering",
+      "reason": "a presence test of a method whose presence the receiver's construction doesn't prove; a view or host value has to read it",
+      "message": "stage 0 can't lower a presence test of a method whose presence the receiver's construction doesn't prove; a view or host value has to read it yet",
+      "classification": "revealed_later_stop",
+      "unitExistedOnBaseline": true,
+      "baselineUnitPrimaryFindingCount": 8,
+      "baselineUnitStops": [
+        {
+          "kind": "Refused",
+          "phase": "refusal_scan",
+          "site": "src/compiler/sys.ts:1548:13",
+          "reason": "a function taking PollingInterval seen as one taking number | undefined (tsc relates a method's parameters both ways), so it can be handed what it can't take",
+          "message": "Adamic 0.1 refuses a function taking PollingInterval seen as one taking number | undefined (tsc relates a method's parameters both ways), so it can be handed what it can't take; write the method as a property holding a function (handle: (animal: Animal) => void), which tsc checks one way, or take the wider type in the method (method-signature-style)"
+        },
+        {
+          "kind": "Refused",
+          "phase": "refusal_scan",
+          "site": "src/compiler/sys.ts:1549:13",
+          "reason": "a function taking boolean seen as one taking boolean | undefined (tsc relates a method's parameters both ways), so it can be handed what it can't take",
+          "message": "Adamic 0.1 refuses a function taking boolean seen as one taking boolean | undefined (tsc relates a method's parameters both ways), so it can be handed what it can't take; write the method as a property holding a function (handle: (animal: Animal) => void), which tsc checks one way, or take the wider type in the method (method-signature-style)"
+        },
+        {
+          "kind": "NotYet",
+          "phase": "refusal_scan",
+          "site": "src/compiler/sys.ts:1604:192",
+          "reason": "a namespace object used as a value; no runtime container is emitted, so identity, receiver behavior, live export aliases and staged properties are not represented; use qualified members or named module imports",
+          "message": "stage 0 can't lower a namespace object used as a value; no runtime container is emitted, so identity, receiver behavior, live export aliases and staged properties are not represented; use qualified members or named module imports yet"
+        },
+        {
+          "kind": "NotYet",
+          "phase": "lowering",
+          "site": "src/compiler/sys.ts:1843:24",
+          "reason": "reading byteOrderMarkIndicator",
+          "message": "stage 0 can't lower reading byteOrderMarkIndicator yet"
+        },
+        {
+          "kind": "Refused",
+          "phase": "lowering",
+          "site": "src/compiler/sys.ts:1894:17",
+          "reason": "sort without a comparator",
+          "message": "Adamic 0.1 refuses sort without a comparator; pass one: the default compares numbers as strings, so [10, 9, 1].sort() is [1, 10, 9]"
+        },
+        {
+          "kind": "Refused",
+          "phase": "lowering",
+          "site": "src/compiler/sys.ts:1895:17",
+          "reason": "sort without a comparator",
+          "message": "Adamic 0.1 refuses sort without a comparator; pass one: the default compares numbers as strings, so [10, 9, 1].sort() is [1, 10, 9]"
+        },
+        {
+          "kind": "NotYet",
+          "phase": "lowering",
+          "site": "src/compiler/sys.ts:1533:15",
+          "reason": "a function value that captures the variable its own initializer declares",
+          "message": "stage 0 can't lower a function value that captures the variable its own initializer declares yet"
+        },
+        {
+          "kind": "NotYet",
+          "phase": "lowering",
+          "site": "src/compiler/sys.ts:1604:191",
+          "reason": "process.recordreplay with an unrepresented type",
+          "message": "stage 0 can't lower process.recordreplay with an unrepresented type yet"
+        }
+      ],
+      "sourceLine": "if (nodeSystem.directoryExists) moduleResolutionHost.directoryExists = (directoryName: string) => nodeSystem.directoryExists(directoryName);"
+    },
+    {
+      "id": 25,
+      "unit": "src/compiler/sys.ts:1474:5",
+      "unitName": "function getNodeSystem(): System {",
+      "unitKind": "KindFunctionDeclaration",
+      "site": "src/compiler/sys.ts:1632:21",
+      "stopSite": "src/compiler/sys.ts:1632:25",
+      "kind": "Boundary",
+      "phase": "lowering",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "message": "stage 0 can't lower a presence test of a method whose presence the receiver's construction doesn't prove; a view or host value has to read it yet",
+      "classification": "revealed_later_stop",
+      "unitExistedOnBaseline": true,
+      "baselineUnitPrimaryFindingCount": 8,
+      "baselineUnitStops": [
+        {
+          "kind": "Refused",
+          "phase": "refusal_scan",
+          "site": "src/compiler/sys.ts:1548:13",
+          "reason": "a function taking PollingInterval seen as one taking number | undefined (tsc relates a method's parameters both ways), so it can be handed what it can't take",
+          "message": "Adamic 0.1 refuses a function taking PollingInterval seen as one taking number | undefined (tsc relates a method's parameters both ways), so it can be handed what it can't take; write the method as a property holding a function (handle: (animal: Animal) => void), which tsc checks one way, or take the wider type in the method (method-signature-style)"
+        },
+        {
+          "kind": "Refused",
+          "phase": "refusal_scan",
+          "site": "src/compiler/sys.ts:1549:13",
+          "reason": "a function taking boolean seen as one taking boolean | undefined (tsc relates a method's parameters both ways), so it can be handed what it can't take",
+          "message": "Adamic 0.1 refuses a function taking boolean seen as one taking boolean | undefined (tsc relates a method's parameters both ways), so it can be handed what it can't take; write the method as a property holding a function (handle: (animal: Animal) => void), which tsc checks one way, or take the wider type in the method (method-signature-style)"
+        },
+        {
+          "kind": "NotYet",
+          "phase": "refusal_scan",
+          "site": "src/compiler/sys.ts:1604:192",
+          "reason": "a namespace object used as a value; no runtime container is emitted, so identity, receiver behavior, live export aliases and staged properties are not represented; use qualified members or named module imports",
+          "message": "stage 0 can't lower a namespace object used as a value; no runtime container is emitted, so identity, receiver behavior, live export aliases and staged properties are not represented; use qualified members or named module imports yet"
+        },
+        {
+          "kind": "NotYet",
+          "phase": "lowering",
+          "site": "src/compiler/sys.ts:1843:24",
+          "reason": "reading byteOrderMarkIndicator",
+          "message": "stage 0 can't lower reading byteOrderMarkIndicator yet"
+        },
+        {
+          "kind": "Refused",
+          "phase": "lowering",
+          "site": "src/compiler/sys.ts:1894:17",
+          "reason": "sort without a comparator",
+          "message": "Adamic 0.1 refuses sort without a comparator; pass one: the default compares numbers as strings, so [10, 9, 1].sort() is [1, 10, 9]"
+        },
+        {
+          "kind": "Refused",
+          "phase": "lowering",
+          "site": "src/compiler/sys.ts:1895:17",
+          "reason": "sort without a comparator",
+          "message": "Adamic 0.1 refuses sort without a comparator; pass one: the default compares numbers as strings, so [10, 9, 1].sort() is [1, 10, 9]"
+        },
+        {
+          "kind": "NotYet",
+          "phase": "lowering",
+          "site": "src/compiler/sys.ts:1533:15",
+          "reason": "a function value that captures the variable its own initializer declares",
+          "message": "stage 0 can't lower a function value that captures the variable its own initializer declares yet"
+        },
+        {
+          "kind": "NotYet",
+          "phase": "lowering",
+          "site": "src/compiler/sys.ts:1604:191",
+          "reason": "process.recordreplay with an unrepresented type",
+          "message": "stage 0 can't lower process.recordreplay with an unrepresented type yet"
+        }
+      ],
+      "sourceLine": "if (nodeSystem.directoryExists) moduleResolutionHost.directoryExists = (directoryName: string) => nodeSystem.directoryExists(directoryName);"
+    },
+    {
+      "id": 26,
+      "unit": "src/compiler/sys.ts:1474:5",
+      "unitName": "function getNodeSystem(): System {",
+      "unitKind": "KindFunctionDeclaration",
+      "site": "src/compiler/sys.ts:1633:46",
+      "stopSite": "src/compiler/sys.ts:1633:46",
+      "kind": "NotYet",
+      "phase": "lowering",
+      "reason": "writing a possibly absent optional own field",
+      "message": "stage 0 can't lower writing a possibly absent optional own field yet",
+      "classification": "revealed_later_stop",
+      "unitExistedOnBaseline": true,
+      "baselineUnitPrimaryFindingCount": 8,
+      "baselineUnitStops": [
+        {
+          "kind": "Refused",
+          "phase": "refusal_scan",
+          "site": "src/compiler/sys.ts:1548:13",
+          "reason": "a function taking PollingInterval seen as one taking number | undefined (tsc relates a method's parameters both ways), so it can be handed what it can't take",
+          "message": "Adamic 0.1 refuses a function taking PollingInterval seen as one taking number | undefined (tsc relates a method's parameters both ways), so it can be handed what it can't take; write the method as a property holding a function (handle: (animal: Animal) => void), which tsc checks one way, or take the wider type in the method (method-signature-style)"
+        },
+        {
+          "kind": "Refused",
+          "phase": "refusal_scan",
+          "site": "src/compiler/sys.ts:1549:13",
+          "reason": "a function taking boolean seen as one taking boolean | undefined (tsc relates a method's parameters both ways), so it can be handed what it can't take",
+          "message": "Adamic 0.1 refuses a function taking boolean seen as one taking boolean | undefined (tsc relates a method's parameters both ways), so it can be handed what it can't take; write the method as a property holding a function (handle: (animal: Animal) => void), which tsc checks one way, or take the wider type in the method (method-signature-style)"
+        },
+        {
+          "kind": "NotYet",
+          "phase": "refusal_scan",
+          "site": "src/compiler/sys.ts:1604:192",
+          "reason": "a namespace object used as a value; no runtime container is emitted, so identity, receiver behavior, live export aliases and staged properties are not represented; use qualified members or named module imports",
+          "message": "stage 0 can't lower a namespace object used as a value; no runtime container is emitted, so identity, receiver behavior, live export aliases and staged properties are not represented; use qualified members or named module imports yet"
+        },
+        {
+          "kind": "NotYet",
+          "phase": "lowering",
+          "site": "src/compiler/sys.ts:1843:24",
+          "reason": "reading byteOrderMarkIndicator",
+          "message": "stage 0 can't lower reading byteOrderMarkIndicator yet"
+        },
+        {
+          "kind": "Refused",
+          "phase": "lowering",
+          "site": "src/compiler/sys.ts:1894:17",
+          "reason": "sort without a comparator",
+          "message": "Adamic 0.1 refuses sort without a comparator; pass one: the default compares numbers as strings, so [10, 9, 1].sort() is [1, 10, 9]"
+        },
+        {
+          "kind": "Refused",
+          "phase": "lowering",
+          "site": "src/compiler/sys.ts:1895:17",
+          "reason": "sort without a comparator",
+          "message": "Adamic 0.1 refuses sort without a comparator; pass one: the default compares numbers as strings, so [10, 9, 1].sort() is [1, 10, 9]"
+        },
+        {
+          "kind": "NotYet",
+          "phase": "lowering",
+          "site": "src/compiler/sys.ts:1533:15",
+          "reason": "a function value that captures the variable its own initializer declares",
+          "message": "stage 0 can't lower a function value that captures the variable its own initializer declares yet"
+        },
+        {
+          "kind": "NotYet",
+          "phase": "lowering",
+          "site": "src/compiler/sys.ts:1604:191",
+          "reason": "process.recordreplay with an unrepresented type",
+          "message": "stage 0 can't lower process.recordreplay with an unrepresented type yet"
+        }
+      ],
+      "sourceLine": "if (nodeSystem.realpath) moduleResolutionHost.realpath = (path: string) => nodeSystem.realpath!(path);"
+    },
+    {
+      "id": 27,
+      "unit": "src/compiler/sys.ts:1474:5",
+      "unitName": "function getNodeSystem(): System {",
+      "unitKind": "KindFunctionDeclaration",
+      "site": "src/compiler/sys.ts:1633:46",
+      "stopSite": "src/compiler/sys.ts:1633:46",
+      "kind": "Boundary",
+      "phase": "lowering",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "message": "stage 0 can't lower writing a possibly absent optional own field yet",
+      "classification": "revealed_later_stop",
+      "unitExistedOnBaseline": true,
+      "baselineUnitPrimaryFindingCount": 8,
+      "baselineUnitStops": [
+        {
+          "kind": "Refused",
+          "phase": "refusal_scan",
+          "site": "src/compiler/sys.ts:1548:13",
+          "reason": "a function taking PollingInterval seen as one taking number | undefined (tsc relates a method's parameters both ways), so it can be handed what it can't take",
+          "message": "Adamic 0.1 refuses a function taking PollingInterval seen as one taking number | undefined (tsc relates a method's parameters both ways), so it can be handed what it can't take; write the method as a property holding a function (handle: (animal: Animal) => void), which tsc checks one way, or take the wider type in the method (method-signature-style)"
+        },
+        {
+          "kind": "Refused",
+          "phase": "refusal_scan",
+          "site": "src/compiler/sys.ts:1549:13",
+          "reason": "a function taking boolean seen as one taking boolean | undefined (tsc relates a method's parameters both ways), so it can be handed what it can't take",
+          "message": "Adamic 0.1 refuses a function taking boolean seen as one taking boolean | undefined (tsc relates a method's parameters both ways), so it can be handed what it can't take; write the method as a property holding a function (handle: (animal: Animal) => void), which tsc checks one way, or take the wider type in the method (method-signature-style)"
+        },
+        {
+          "kind": "NotYet",
+          "phase": "refusal_scan",
+          "site": "src/compiler/sys.ts:1604:192",
+          "reason": "a namespace object used as a value; no runtime container is emitted, so identity, receiver behavior, live export aliases and staged properties are not represented; use qualified members or named module imports",
+          "message": "stage 0 can't lower a namespace object used as a value; no runtime container is emitted, so identity, receiver behavior, live export aliases and staged properties are not represented; use qualified members or named module imports yet"
+        },
+        {
+          "kind": "NotYet",
+          "phase": "lowering",
+          "site": "src/compiler/sys.ts:1843:24",
+          "reason": "reading byteOrderMarkIndicator",
+          "message": "stage 0 can't lower reading byteOrderMarkIndicator yet"
+        },
+        {
+          "kind": "Refused",
+          "phase": "lowering",
+          "site": "src/compiler/sys.ts:1894:17",
+          "reason": "sort without a comparator",
+          "message": "Adamic 0.1 refuses sort without a comparator; pass one: the default compares numbers as strings, so [10, 9, 1].sort() is [1, 10, 9]"
+        },
+        {
+          "kind": "Refused",
+          "phase": "lowering",
+          "site": "src/compiler/sys.ts:1895:17",
+          "reason": "sort without a comparator",
+          "message": "Adamic 0.1 refuses sort without a comparator; pass one: the default compares numbers as strings, so [10, 9, 1].sort() is [1, 10, 9]"
+        },
+        {
+          "kind": "NotYet",
+          "phase": "lowering",
+          "site": "src/compiler/sys.ts:1533:15",
+          "reason": "a function value that captures the variable its own initializer declares",
+          "message": "stage 0 can't lower a function value that captures the variable its own initializer declares yet"
+        },
+        {
+          "kind": "NotYet",
+          "phase": "lowering",
+          "site": "src/compiler/sys.ts:1604:191",
+          "reason": "process.recordreplay with an unrepresented type",
+          "message": "stage 0 can't lower process.recordreplay with an unrepresented type yet"
+        }
+      ],
+      "sourceLine": "if (nodeSystem.realpath) moduleResolutionHost.realpath = (path: string) => nodeSystem.realpath!(path);"
+    },
+    {
+      "id": 28,
+      "unit": "src/compiler/sys.ts:1474:5",
+      "unitName": "function getNodeSystem(): System {",
+      "unitKind": "KindFunctionDeclaration",
+      "site": "src/compiler/sys.ts:1633:21",
+      "stopSite": "src/compiler/sys.ts:1533:15",
+      "kind": "Boundary",
+      "phase": "lowering",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "message": "stage 0 can't lower a function value that captures the variable its own initializer declares yet",
+      "classification": "revealed_later_stop",
+      "unitExistedOnBaseline": true,
+      "baselineUnitPrimaryFindingCount": 8,
+      "baselineUnitStops": [
+        {
+          "kind": "Refused",
+          "phase": "refusal_scan",
+          "site": "src/compiler/sys.ts:1548:13",
+          "reason": "a function taking PollingInterval seen as one taking number | undefined (tsc relates a method's parameters both ways), so it can be handed what it can't take",
+          "message": "Adamic 0.1 refuses a function taking PollingInterval seen as one taking number | undefined (tsc relates a method's parameters both ways), so it can be handed what it can't take; write the method as a property holding a function (handle: (animal: Animal) => void), which tsc checks one way, or take the wider type in the method (method-signature-style)"
+        },
+        {
+          "kind": "Refused",
+          "phase": "refusal_scan",
+          "site": "src/compiler/sys.ts:1549:13",
+          "reason": "a function taking boolean seen as one taking boolean | undefined (tsc relates a method's parameters both ways), so it can be handed what it can't take",
+          "message": "Adamic 0.1 refuses a function taking boolean seen as one taking boolean | undefined (tsc relates a method's parameters both ways), so it can be handed what it can't take; write the method as a property holding a function (handle: (animal: Animal) => void), which tsc checks one way, or take the wider type in the method (method-signature-style)"
+        },
+        {
+          "kind": "NotYet",
+          "phase": "refusal_scan",
+          "site": "src/compiler/sys.ts:1604:192",
+          "reason": "a namespace object used as a value; no runtime container is emitted, so identity, receiver behavior, live export aliases and staged properties are not represented; use qualified members or named module imports",
+          "message": "stage 0 can't lower a namespace object used as a value; no runtime container is emitted, so identity, receiver behavior, live export aliases and staged properties are not represented; use qualified members or named module imports yet"
+        },
+        {
+          "kind": "NotYet",
+          "phase": "lowering",
+          "site": "src/compiler/sys.ts:1843:24",
+          "reason": "reading byteOrderMarkIndicator",
+          "message": "stage 0 can't lower reading byteOrderMarkIndicator yet"
+        },
+        {
+          "kind": "Refused",
+          "phase": "lowering",
+          "site": "src/compiler/sys.ts:1894:17",
+          "reason": "sort without a comparator",
+          "message": "Adamic 0.1 refuses sort without a comparator; pass one: the default compares numbers as strings, so [10, 9, 1].sort() is [1, 10, 9]"
+        },
+        {
+          "kind": "Refused",
+          "phase": "lowering",
+          "site": "src/compiler/sys.ts:1895:17",
+          "reason": "sort without a comparator",
+          "message": "Adamic 0.1 refuses sort without a comparator; pass one: the default compares numbers as strings, so [10, 9, 1].sort() is [1, 10, 9]"
+        },
+        {
+          "kind": "NotYet",
+          "phase": "lowering",
+          "site": "src/compiler/sys.ts:1533:15",
+          "reason": "a function value that captures the variable its own initializer declares",
+          "message": "stage 0 can't lower a function value that captures the variable its own initializer declares yet"
+        },
+        {
+          "kind": "NotYet",
+          "phase": "lowering",
+          "site": "src/compiler/sys.ts:1604:191",
+          "reason": "process.recordreplay with an unrepresented type",
+          "message": "stage 0 can't lower process.recordreplay with an unrepresented type yet"
+        }
+      ],
+      "sourceLine": "const nodeSystem: NodeResolutionSystem = {"
+    },
+    {
+      "id": 29,
+      "unit": "src/compiler/sys.ts:1474:5",
+      "unitName": "function getNodeSystem(): System {",
+      "unitKind": "KindFunctionDeclaration",
+      "site": "src/compiler/sys.ts:1634:25",
+      "stopSite": "src/compiler/sys.ts:1634:25",
+      "kind": "NotYet",
+      "phase": "lowering",
+      "reason": "a presence test of a method whose presence the receiver's construction doesn't prove; a view or host value has to read it",
+      "message": "stage 0 can't lower a presence test of a method whose presence the receiver's construction doesn't prove; a view or host value has to read it yet",
+      "classification": "revealed_later_stop",
+      "unitExistedOnBaseline": true,
+      "baselineUnitPrimaryFindingCount": 8,
+      "baselineUnitStops": [
+        {
+          "kind": "Refused",
+          "phase": "refusal_scan",
+          "site": "src/compiler/sys.ts:1548:13",
+          "reason": "a function taking PollingInterval seen as one taking number | undefined (tsc relates a method's parameters both ways), so it can be handed what it can't take",
+          "message": "Adamic 0.1 refuses a function taking PollingInterval seen as one taking number | undefined (tsc relates a method's parameters both ways), so it can be handed what it can't take; write the method as a property holding a function (handle: (animal: Animal) => void), which tsc checks one way, or take the wider type in the method (method-signature-style)"
+        },
+        {
+          "kind": "Refused",
+          "phase": "refusal_scan",
+          "site": "src/compiler/sys.ts:1549:13",
+          "reason": "a function taking boolean seen as one taking boolean | undefined (tsc relates a method's parameters both ways), so it can be handed what it can't take",
+          "message": "Adamic 0.1 refuses a function taking boolean seen as one taking boolean | undefined (tsc relates a method's parameters both ways), so it can be handed what it can't take; write the method as a property holding a function (handle: (animal: Animal) => void), which tsc checks one way, or take the wider type in the method (method-signature-style)"
+        },
+        {
+          "kind": "NotYet",
+          "phase": "refusal_scan",
+          "site": "src/compiler/sys.ts:1604:192",
+          "reason": "a namespace object used as a value; no runtime container is emitted, so identity, receiver behavior, live export aliases and staged properties are not represented; use qualified members or named module imports",
+          "message": "stage 0 can't lower a namespace object used as a value; no runtime container is emitted, so identity, receiver behavior, live export aliases and staged properties are not represented; use qualified members or named module imports yet"
+        },
+        {
+          "kind": "NotYet",
+          "phase": "lowering",
+          "site": "src/compiler/sys.ts:1843:24",
+          "reason": "reading byteOrderMarkIndicator",
+          "message": "stage 0 can't lower reading byteOrderMarkIndicator yet"
+        },
+        {
+          "kind": "Refused",
+          "phase": "lowering",
+          "site": "src/compiler/sys.ts:1894:17",
+          "reason": "sort without a comparator",
+          "message": "Adamic 0.1 refuses sort without a comparator; pass one: the default compares numbers as strings, so [10, 9, 1].sort() is [1, 10, 9]"
+        },
+        {
+          "kind": "Refused",
+          "phase": "lowering",
+          "site": "src/compiler/sys.ts:1895:17",
+          "reason": "sort without a comparator",
+          "message": "Adamic 0.1 refuses sort without a comparator; pass one: the default compares numbers as strings, so [10, 9, 1].sort() is [1, 10, 9]"
+        },
+        {
+          "kind": "NotYet",
+          "phase": "lowering",
+          "site": "src/compiler/sys.ts:1533:15",
+          "reason": "a function value that captures the variable its own initializer declares",
+          "message": "stage 0 can't lower a function value that captures the variable its own initializer declares yet"
+        },
+        {
+          "kind": "NotYet",
+          "phase": "lowering",
+          "site": "src/compiler/sys.ts:1604:191",
+          "reason": "process.recordreplay with an unrepresented type",
+          "message": "stage 0 can't lower process.recordreplay with an unrepresented type yet"
+        }
+      ],
+      "sourceLine": "if (nodeSystem.getCurrentDirectory) moduleResolutionHost.getCurrentDirectory = () => nodeSystem.getCurrentDirectory();"
+    },
+    {
+      "id": 30,
+      "unit": "src/compiler/sys.ts:1474:5",
+      "unitName": "function getNodeSystem(): System {",
+      "unitKind": "KindFunctionDeclaration",
+      "site": "src/compiler/sys.ts:1634:21",
+      "stopSite": "src/compiler/sys.ts:1634:25",
+      "kind": "Boundary",
+      "phase": "lowering",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "message": "stage 0 can't lower a presence test of a method whose presence the receiver's construction doesn't prove; a view or host value has to read it yet",
+      "classification": "revealed_later_stop",
+      "unitExistedOnBaseline": true,
+      "baselineUnitPrimaryFindingCount": 8,
+      "baselineUnitStops": [
+        {
+          "kind": "Refused",
+          "phase": "refusal_scan",
+          "site": "src/compiler/sys.ts:1548:13",
+          "reason": "a function taking PollingInterval seen as one taking number | undefined (tsc relates a method's parameters both ways), so it can be handed what it can't take",
+          "message": "Adamic 0.1 refuses a function taking PollingInterval seen as one taking number | undefined (tsc relates a method's parameters both ways), so it can be handed what it can't take; write the method as a property holding a function (handle: (animal: Animal) => void), which tsc checks one way, or take the wider type in the method (method-signature-style)"
+        },
+        {
+          "kind": "Refused",
+          "phase": "refusal_scan",
+          "site": "src/compiler/sys.ts:1549:13",
+          "reason": "a function taking boolean seen as one taking boolean | undefined (tsc relates a method's parameters both ways), so it can be handed what it can't take",
+          "message": "Adamic 0.1 refuses a function taking boolean seen as one taking boolean | undefined (tsc relates a method's parameters both ways), so it can be handed what it can't take; write the method as a property holding a function (handle: (animal: Animal) => void), which tsc checks one way, or take the wider type in the method (method-signature-style)"
+        },
+        {
+          "kind": "NotYet",
+          "phase": "refusal_scan",
+          "site": "src/compiler/sys.ts:1604:192",
+          "reason": "a namespace object used as a value; no runtime container is emitted, so identity, receiver behavior, live export aliases and staged properties are not represented; use qualified members or named module imports",
+          "message": "stage 0 can't lower a namespace object used as a value; no runtime container is emitted, so identity, receiver behavior, live export aliases and staged properties are not represented; use qualified members or named module imports yet"
+        },
+        {
+          "kind": "NotYet",
+          "phase": "lowering",
+          "site": "src/compiler/sys.ts:1843:24",
+          "reason": "reading byteOrderMarkIndicator",
+          "message": "stage 0 can't lower reading byteOrderMarkIndicator yet"
+        },
+        {
+          "kind": "Refused",
+          "phase": "lowering",
+          "site": "src/compiler/sys.ts:1894:17",
+          "reason": "sort without a comparator",
+          "message": "Adamic 0.1 refuses sort without a comparator; pass one: the default compares numbers as strings, so [10, 9, 1].sort() is [1, 10, 9]"
+        },
+        {
+          "kind": "Refused",
+          "phase": "lowering",
+          "site": "src/compiler/sys.ts:1895:17",
+          "reason": "sort without a comparator",
+          "message": "Adamic 0.1 refuses sort without a comparator; pass one: the default compares numbers as strings, so [10, 9, 1].sort() is [1, 10, 9]"
+        },
+        {
+          "kind": "NotYet",
+          "phase": "lowering",
+          "site": "src/compiler/sys.ts:1533:15",
+          "reason": "a function value that captures the variable its own initializer declares",
+          "message": "stage 0 can't lower a function value that captures the variable its own initializer declares yet"
+        },
+        {
+          "kind": "NotYet",
+          "phase": "lowering",
+          "site": "src/compiler/sys.ts:1604:191",
+          "reason": "process.recordreplay with an unrepresented type",
+          "message": "stage 0 can't lower process.recordreplay with an unrepresented type yet"
+        }
+      ],
+      "sourceLine": "if (nodeSystem.getCurrentDirectory) moduleResolutionHost.getCurrentDirectory = () => nodeSystem.getCurrentDirectory();"
+    },
+    {
+      "id": 31,
+      "unit": "src/compiler/sys.ts:1474:5",
+      "unitName": "function getNodeSystem(): System {",
+      "unitKind": "KindFunctionDeclaration",
+      "site": "src/compiler/sys.ts:1635:25",
+      "stopSite": "src/compiler/sys.ts:1635:25",
+      "kind": "NotYet",
+      "phase": "lowering",
+      "reason": "a presence test of a method whose presence the receiver's construction doesn't prove; a view or host value has to read it",
+      "message": "stage 0 can't lower a presence test of a method whose presence the receiver's construction doesn't prove; a view or host value has to read it yet",
+      "classification": "revealed_later_stop",
+      "unitExistedOnBaseline": true,
+      "baselineUnitPrimaryFindingCount": 8,
+      "baselineUnitStops": [
+        {
+          "kind": "Refused",
+          "phase": "refusal_scan",
+          "site": "src/compiler/sys.ts:1548:13",
+          "reason": "a function taking PollingInterval seen as one taking number | undefined (tsc relates a method's parameters both ways), so it can be handed what it can't take",
+          "message": "Adamic 0.1 refuses a function taking PollingInterval seen as one taking number | undefined (tsc relates a method's parameters both ways), so it can be handed what it can't take; write the method as a property holding a function (handle: (animal: Animal) => void), which tsc checks one way, or take the wider type in the method (method-signature-style)"
+        },
+        {
+          "kind": "Refused",
+          "phase": "refusal_scan",
+          "site": "src/compiler/sys.ts:1549:13",
+          "reason": "a function taking boolean seen as one taking boolean | undefined (tsc relates a method's parameters both ways), so it can be handed what it can't take",
+          "message": "Adamic 0.1 refuses a function taking boolean seen as one taking boolean | undefined (tsc relates a method's parameters both ways), so it can be handed what it can't take; write the method as a property holding a function (handle: (animal: Animal) => void), which tsc checks one way, or take the wider type in the method (method-signature-style)"
+        },
+        {
+          "kind": "NotYet",
+          "phase": "refusal_scan",
+          "site": "src/compiler/sys.ts:1604:192",
+          "reason": "a namespace object used as a value; no runtime container is emitted, so identity, receiver behavior, live export aliases and staged properties are not represented; use qualified members or named module imports",
+          "message": "stage 0 can't lower a namespace object used as a value; no runtime container is emitted, so identity, receiver behavior, live export aliases and staged properties are not represented; use qualified members or named module imports yet"
+        },
+        {
+          "kind": "NotYet",
+          "phase": "lowering",
+          "site": "src/compiler/sys.ts:1843:24",
+          "reason": "reading byteOrderMarkIndicator",
+          "message": "stage 0 can't lower reading byteOrderMarkIndicator yet"
+        },
+        {
+          "kind": "Refused",
+          "phase": "lowering",
+          "site": "src/compiler/sys.ts:1894:17",
+          "reason": "sort without a comparator",
+          "message": "Adamic 0.1 refuses sort without a comparator; pass one: the default compares numbers as strings, so [10, 9, 1].sort() is [1, 10, 9]"
+        },
+        {
+          "kind": "Refused",
+          "phase": "lowering",
+          "site": "src/compiler/sys.ts:1895:17",
+          "reason": "sort without a comparator",
+          "message": "Adamic 0.1 refuses sort without a comparator; pass one: the default compares numbers as strings, so [10, 9, 1].sort() is [1, 10, 9]"
+        },
+        {
+          "kind": "NotYet",
+          "phase": "lowering",
+          "site": "src/compiler/sys.ts:1533:15",
+          "reason": "a function value that captures the variable its own initializer declares",
+          "message": "stage 0 can't lower a function value that captures the variable its own initializer declares yet"
+        },
+        {
+          "kind": "NotYet",
+          "phase": "lowering",
+          "site": "src/compiler/sys.ts:1604:191",
+          "reason": "process.recordreplay with an unrepresented type",
+          "message": "stage 0 can't lower process.recordreplay with an unrepresented type yet"
+        }
+      ],
+      "sourceLine": "if (nodeSystem.getDirectories) moduleResolutionHost.getDirectories = (path: string) => nodeSystem.getDirectories(path);"
+    },
+    {
+      "id": 32,
+      "unit": "src/compiler/sys.ts:1474:5",
+      "unitName": "function getNodeSystem(): System {",
+      "unitKind": "KindFunctionDeclaration",
+      "site": "src/compiler/sys.ts:1635:21",
+      "stopSite": "src/compiler/sys.ts:1635:25",
+      "kind": "Boundary",
+      "phase": "lowering",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "message": "stage 0 can't lower a presence test of a method whose presence the receiver's construction doesn't prove; a view or host value has to read it yet",
+      "classification": "revealed_later_stop",
+      "unitExistedOnBaseline": true,
+      "baselineUnitPrimaryFindingCount": 8,
+      "baselineUnitStops": [
+        {
+          "kind": "Refused",
+          "phase": "refusal_scan",
+          "site": "src/compiler/sys.ts:1548:13",
+          "reason": "a function taking PollingInterval seen as one taking number | undefined (tsc relates a method's parameters both ways), so it can be handed what it can't take",
+          "message": "Adamic 0.1 refuses a function taking PollingInterval seen as one taking number | undefined (tsc relates a method's parameters both ways), so it can be handed what it can't take; write the method as a property holding a function (handle: (animal: Animal) => void), which tsc checks one way, or take the wider type in the method (method-signature-style)"
+        },
+        {
+          "kind": "Refused",
+          "phase": "refusal_scan",
+          "site": "src/compiler/sys.ts:1549:13",
+          "reason": "a function taking boolean seen as one taking boolean | undefined (tsc relates a method's parameters both ways), so it can be handed what it can't take",
+          "message": "Adamic 0.1 refuses a function taking boolean seen as one taking boolean | undefined (tsc relates a method's parameters both ways), so it can be handed what it can't take; write the method as a property holding a function (handle: (animal: Animal) => void), which tsc checks one way, or take the wider type in the method (method-signature-style)"
+        },
+        {
+          "kind": "NotYet",
+          "phase": "refusal_scan",
+          "site": "src/compiler/sys.ts:1604:192",
+          "reason": "a namespace object used as a value; no runtime container is emitted, so identity, receiver behavior, live export aliases and staged properties are not represented; use qualified members or named module imports",
+          "message": "stage 0 can't lower a namespace object used as a value; no runtime container is emitted, so identity, receiver behavior, live export aliases and staged properties are not represented; use qualified members or named module imports yet"
+        },
+        {
+          "kind": "NotYet",
+          "phase": "lowering",
+          "site": "src/compiler/sys.ts:1843:24",
+          "reason": "reading byteOrderMarkIndicator",
+          "message": "stage 0 can't lower reading byteOrderMarkIndicator yet"
+        },
+        {
+          "kind": "Refused",
+          "phase": "lowering",
+          "site": "src/compiler/sys.ts:1894:17",
+          "reason": "sort without a comparator",
+          "message": "Adamic 0.1 refuses sort without a comparator; pass one: the default compares numbers as strings, so [10, 9, 1].sort() is [1, 10, 9]"
+        },
+        {
+          "kind": "Refused",
+          "phase": "lowering",
+          "site": "src/compiler/sys.ts:1895:17",
+          "reason": "sort without a comparator",
+          "message": "Adamic 0.1 refuses sort without a comparator; pass one: the default compares numbers as strings, so [10, 9, 1].sort() is [1, 10, 9]"
+        },
+        {
+          "kind": "NotYet",
+          "phase": "lowering",
+          "site": "src/compiler/sys.ts:1533:15",
+          "reason": "a function value that captures the variable its own initializer declares",
+          "message": "stage 0 can't lower a function value that captures the variable its own initializer declares yet"
+        },
+        {
+          "kind": "NotYet",
+          "phase": "lowering",
+          "site": "src/compiler/sys.ts:1604:191",
+          "reason": "process.recordreplay with an unrepresented type",
+          "message": "stage 0 can't lower process.recordreplay with an unrepresented type yet"
+        }
+      ],
+      "sourceLine": "if (nodeSystem.getDirectories) moduleResolutionHost.getDirectories = (path: string) => nodeSystem.getDirectories(path);"
+    },
+    {
+      "id": 33,
+      "unit": "src/compiler/sys.ts:1474:5",
+      "unitName": "function getNodeSystem(): System {",
+      "unitKind": "KindFunctionDeclaration",
+      "site": "src/compiler/sys.ts:1636:43",
+      "stopSite": "src/compiler/sys.ts:1636:43",
+      "kind": "NotYet",
+      "phase": "lowering",
+      "reason": "writing a possibly absent optional own field",
+      "message": "stage 0 can't lower writing a possibly absent optional own field yet",
+      "classification": "revealed_later_stop",
+      "unitExistedOnBaseline": true,
+      "baselineUnitPrimaryFindingCount": 8,
+      "baselineUnitStops": [
+        {
+          "kind": "Refused",
+          "phase": "refusal_scan",
+          "site": "src/compiler/sys.ts:1548:13",
+          "reason": "a function taking PollingInterval seen as one taking number | undefined (tsc relates a method's parameters both ways), so it can be handed what it can't take",
+          "message": "Adamic 0.1 refuses a function taking PollingInterval seen as one taking number | undefined (tsc relates a method's parameters both ways), so it can be handed what it can't take; write the method as a property holding a function (handle: (animal: Animal) => void), which tsc checks one way, or take the wider type in the method (method-signature-style)"
+        },
+        {
+          "kind": "Refused",
+          "phase": "refusal_scan",
+          "site": "src/compiler/sys.ts:1549:13",
+          "reason": "a function taking boolean seen as one taking boolean | undefined (tsc relates a method's parameters both ways), so it can be handed what it can't take",
+          "message": "Adamic 0.1 refuses a function taking boolean seen as one taking boolean | undefined (tsc relates a method's parameters both ways), so it can be handed what it can't take; write the method as a property holding a function (handle: (animal: Animal) => void), which tsc checks one way, or take the wider type in the method (method-signature-style)"
+        },
+        {
+          "kind": "NotYet",
+          "phase": "refusal_scan",
+          "site": "src/compiler/sys.ts:1604:192",
+          "reason": "a namespace object used as a value; no runtime container is emitted, so identity, receiver behavior, live export aliases and staged properties are not represented; use qualified members or named module imports",
+          "message": "stage 0 can't lower a namespace object used as a value; no runtime container is emitted, so identity, receiver behavior, live export aliases and staged properties are not represented; use qualified members or named module imports yet"
+        },
+        {
+          "kind": "NotYet",
+          "phase": "lowering",
+          "site": "src/compiler/sys.ts:1843:24",
+          "reason": "reading byteOrderMarkIndicator",
+          "message": "stage 0 can't lower reading byteOrderMarkIndicator yet"
+        },
+        {
+          "kind": "Refused",
+          "phase": "lowering",
+          "site": "src/compiler/sys.ts:1894:17",
+          "reason": "sort without a comparator",
+          "message": "Adamic 0.1 refuses sort without a comparator; pass one: the default compares numbers as strings, so [10, 9, 1].sort() is [1, 10, 9]"
+        },
+        {
+          "kind": "Refused",
+          "phase": "lowering",
+          "site": "src/compiler/sys.ts:1895:17",
+          "reason": "sort without a comparator",
+          "message": "Adamic 0.1 refuses sort without a comparator; pass one: the default compares numbers as strings, so [10, 9, 1].sort() is [1, 10, 9]"
+        },
+        {
+          "kind": "NotYet",
+          "phase": "lowering",
+          "site": "src/compiler/sys.ts:1533:15",
+          "reason": "a function value that captures the variable its own initializer declares",
+          "message": "stage 0 can't lower a function value that captures the variable its own initializer declares yet"
+        },
+        {
+          "kind": "NotYet",
+          "phase": "lowering",
+          "site": "src/compiler/sys.ts:1604:191",
+          "reason": "process.recordreplay with an unrepresented type",
+          "message": "stage 0 can't lower process.recordreplay with an unrepresented type yet"
+        }
+      ],
+      "sourceLine": "if (nodeSystem.trace) moduleResolutionHost.trace = (s: string) => nodeSystem.trace!(s);"
+    },
+    {
+      "id": 34,
+      "unit": "src/compiler/sys.ts:1474:5",
+      "unitName": "function getNodeSystem(): System {",
+      "unitKind": "KindFunctionDeclaration",
+      "site": "src/compiler/sys.ts:1636:43",
+      "stopSite": "src/compiler/sys.ts:1636:43",
+      "kind": "Boundary",
+      "phase": "lowering",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "message": "stage 0 can't lower writing a possibly absent optional own field yet",
+      "classification": "revealed_later_stop",
+      "unitExistedOnBaseline": true,
+      "baselineUnitPrimaryFindingCount": 8,
+      "baselineUnitStops": [
+        {
+          "kind": "Refused",
+          "phase": "refusal_scan",
+          "site": "src/compiler/sys.ts:1548:13",
+          "reason": "a function taking PollingInterval seen as one taking number | undefined (tsc relates a method's parameters both ways), so it can be handed what it can't take",
+          "message": "Adamic 0.1 refuses a function taking PollingInterval seen as one taking number | undefined (tsc relates a method's parameters both ways), so it can be handed what it can't take; write the method as a property holding a function (handle: (animal: Animal) => void), which tsc checks one way, or take the wider type in the method (method-signature-style)"
+        },
+        {
+          "kind": "Refused",
+          "phase": "refusal_scan",
+          "site": "src/compiler/sys.ts:1549:13",
+          "reason": "a function taking boolean seen as one taking boolean | undefined (tsc relates a method's parameters both ways), so it can be handed what it can't take",
+          "message": "Adamic 0.1 refuses a function taking boolean seen as one taking boolean | undefined (tsc relates a method's parameters both ways), so it can be handed what it can't take; write the method as a property holding a function (handle: (animal: Animal) => void), which tsc checks one way, or take the wider type in the method (method-signature-style)"
+        },
+        {
+          "kind": "NotYet",
+          "phase": "refusal_scan",
+          "site": "src/compiler/sys.ts:1604:192",
+          "reason": "a namespace object used as a value; no runtime container is emitted, so identity, receiver behavior, live export aliases and staged properties are not represented; use qualified members or named module imports",
+          "message": "stage 0 can't lower a namespace object used as a value; no runtime container is emitted, so identity, receiver behavior, live export aliases and staged properties are not represented; use qualified members or named module imports yet"
+        },
+        {
+          "kind": "NotYet",
+          "phase": "lowering",
+          "site": "src/compiler/sys.ts:1843:24",
+          "reason": "reading byteOrderMarkIndicator",
+          "message": "stage 0 can't lower reading byteOrderMarkIndicator yet"
+        },
+        {
+          "kind": "Refused",
+          "phase": "lowering",
+          "site": "src/compiler/sys.ts:1894:17",
+          "reason": "sort without a comparator",
+          "message": "Adamic 0.1 refuses sort without a comparator; pass one: the default compares numbers as strings, so [10, 9, 1].sort() is [1, 10, 9]"
+        },
+        {
+          "kind": "Refused",
+          "phase": "lowering",
+          "site": "src/compiler/sys.ts:1895:17",
+          "reason": "sort without a comparator",
+          "message": "Adamic 0.1 refuses sort without a comparator; pass one: the default compares numbers as strings, so [10, 9, 1].sort() is [1, 10, 9]"
+        },
+        {
+          "kind": "NotYet",
+          "phase": "lowering",
+          "site": "src/compiler/sys.ts:1533:15",
+          "reason": "a function value that captures the variable its own initializer declares",
+          "message": "stage 0 can't lower a function value that captures the variable its own initializer declares yet"
+        },
+        {
+          "kind": "NotYet",
+          "phase": "lowering",
+          "site": "src/compiler/sys.ts:1604:191",
+          "reason": "process.recordreplay with an unrepresented type",
+          "message": "stage 0 can't lower process.recordreplay with an unrepresented type yet"
+        }
+      ],
+      "sourceLine": "if (nodeSystem.trace) moduleResolutionHost.trace = (s: string) => nodeSystem.trace!(s);"
+    },
+    {
+      "id": 35,
+      "unit": "src/compiler/sys.ts:1474:5",
+      "unitName": "function getNodeSystem(): System {",
+      "unitKind": "KindFunctionDeclaration",
+      "site": "src/compiler/sys.ts:1636:21",
+      "stopSite": "src/compiler/sys.ts:1533:15",
+      "kind": "Boundary",
+      "phase": "lowering",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "message": "stage 0 can't lower a function value that captures the variable its own initializer declares yet",
+      "classification": "revealed_later_stop",
+      "unitExistedOnBaseline": true,
+      "baselineUnitPrimaryFindingCount": 8,
+      "baselineUnitStops": [
+        {
+          "kind": "Refused",
+          "phase": "refusal_scan",
+          "site": "src/compiler/sys.ts:1548:13",
+          "reason": "a function taking PollingInterval seen as one taking number | undefined (tsc relates a method's parameters both ways), so it can be handed what it can't take",
+          "message": "Adamic 0.1 refuses a function taking PollingInterval seen as one taking number | undefined (tsc relates a method's parameters both ways), so it can be handed what it can't take; write the method as a property holding a function (handle: (animal: Animal) => void), which tsc checks one way, or take the wider type in the method (method-signature-style)"
+        },
+        {
+          "kind": "Refused",
+          "phase": "refusal_scan",
+          "site": "src/compiler/sys.ts:1549:13",
+          "reason": "a function taking boolean seen as one taking boolean | undefined (tsc relates a method's parameters both ways), so it can be handed what it can't take",
+          "message": "Adamic 0.1 refuses a function taking boolean seen as one taking boolean | undefined (tsc relates a method's parameters both ways), so it can be handed what it can't take; write the method as a property holding a function (handle: (animal: Animal) => void), which tsc checks one way, or take the wider type in the method (method-signature-style)"
+        },
+        {
+          "kind": "NotYet",
+          "phase": "refusal_scan",
+          "site": "src/compiler/sys.ts:1604:192",
+          "reason": "a namespace object used as a value; no runtime container is emitted, so identity, receiver behavior, live export aliases and staged properties are not represented; use qualified members or named module imports",
+          "message": "stage 0 can't lower a namespace object used as a value; no runtime container is emitted, so identity, receiver behavior, live export aliases and staged properties are not represented; use qualified members or named module imports yet"
+        },
+        {
+          "kind": "NotYet",
+          "phase": "lowering",
+          "site": "src/compiler/sys.ts:1843:24",
+          "reason": "reading byteOrderMarkIndicator",
+          "message": "stage 0 can't lower reading byteOrderMarkIndicator yet"
+        },
+        {
+          "kind": "Refused",
+          "phase": "lowering",
+          "site": "src/compiler/sys.ts:1894:17",
+          "reason": "sort without a comparator",
+          "message": "Adamic 0.1 refuses sort without a comparator; pass one: the default compares numbers as strings, so [10, 9, 1].sort() is [1, 10, 9]"
+        },
+        {
+          "kind": "Refused",
+          "phase": "lowering",
+          "site": "src/compiler/sys.ts:1895:17",
+          "reason": "sort without a comparator",
+          "message": "Adamic 0.1 refuses sort without a comparator; pass one: the default compares numbers as strings, so [10, 9, 1].sort() is [1, 10, 9]"
+        },
+        {
+          "kind": "NotYet",
+          "phase": "lowering",
+          "site": "src/compiler/sys.ts:1533:15",
+          "reason": "a function value that captures the variable its own initializer declares",
+          "message": "stage 0 can't lower a function value that captures the variable its own initializer declares yet"
+        },
+        {
+          "kind": "NotYet",
+          "phase": "lowering",
+          "site": "src/compiler/sys.ts:1604:191",
+          "reason": "process.recordreplay with an unrepresented type",
+          "message": "stage 0 can't lower process.recordreplay with an unrepresented type yet"
+        }
+      ],
+      "sourceLine": "const nodeSystem: NodeResolutionSystem = {"
+    },
+    {
+      "id": 36,
+      "unit": "src/compiler/sys.ts:1474:5",
+      "unitName": "function getNodeSystem(): System {",
+      "unitKind": "KindFunctionDeclaration",
+      "site": "src/compiler/sys.ts:1637:67",
+      "stopSite": "src/compiler/sys.ts:1637:67",
+      "kind": "NotYet",
+      "phase": "lowering",
+      "reason": "writing a possibly absent optional own field",
+      "message": "stage 0 can't lower writing a possibly absent optional own field yet",
+      "classification": "revealed_later_stop",
+      "unitExistedOnBaseline": true,
+      "baselineUnitPrimaryFindingCount": 8,
+      "baselineUnitStops": [
+        {
+          "kind": "Refused",
+          "phase": "refusal_scan",
+          "site": "src/compiler/sys.ts:1548:13",
+          "reason": "a function taking PollingInterval seen as one taking number | undefined (tsc relates a method's parameters both ways), so it can be handed what it can't take",
+          "message": "Adamic 0.1 refuses a function taking PollingInterval seen as one taking number | undefined (tsc relates a method's parameters both ways), so it can be handed what it can't take; write the method as a property holding a function (handle: (animal: Animal) => void), which tsc checks one way, or take the wider type in the method (method-signature-style)"
+        },
+        {
+          "kind": "Refused",
+          "phase": "refusal_scan",
+          "site": "src/compiler/sys.ts:1549:13",
+          "reason": "a function taking boolean seen as one taking boolean | undefined (tsc relates a method's parameters both ways), so it can be handed what it can't take",
+          "message": "Adamic 0.1 refuses a function taking boolean seen as one taking boolean | undefined (tsc relates a method's parameters both ways), so it can be handed what it can't take; write the method as a property holding a function (handle: (animal: Animal) => void), which tsc checks one way, or take the wider type in the method (method-signature-style)"
+        },
+        {
+          "kind": "NotYet",
+          "phase": "refusal_scan",
+          "site": "src/compiler/sys.ts:1604:192",
+          "reason": "a namespace object used as a value; no runtime container is emitted, so identity, receiver behavior, live export aliases and staged properties are not represented; use qualified members or named module imports",
+          "message": "stage 0 can't lower a namespace object used as a value; no runtime container is emitted, so identity, receiver behavior, live export aliases and staged properties are not represented; use qualified members or named module imports yet"
+        },
+        {
+          "kind": "NotYet",
+          "phase": "lowering",
+          "site": "src/compiler/sys.ts:1843:24",
+          "reason": "reading byteOrderMarkIndicator",
+          "message": "stage 0 can't lower reading byteOrderMarkIndicator yet"
+        },
+        {
+          "kind": "Refused",
+          "phase": "lowering",
+          "site": "src/compiler/sys.ts:1894:17",
+          "reason": "sort without a comparator",
+          "message": "Adamic 0.1 refuses sort without a comparator; pass one: the default compares numbers as strings, so [10, 9, 1].sort() is [1, 10, 9]"
+        },
+        {
+          "kind": "Refused",
+          "phase": "lowering",
+          "site": "src/compiler/sys.ts:1895:17",
+          "reason": "sort without a comparator",
+          "message": "Adamic 0.1 refuses sort without a comparator; pass one: the default compares numbers as strings, so [10, 9, 1].sort() is [1, 10, 9]"
+        },
+        {
+          "kind": "NotYet",
+          "phase": "lowering",
+          "site": "src/compiler/sys.ts:1533:15",
+          "reason": "a function value that captures the variable its own initializer declares",
+          "message": "stage 0 can't lower a function value that captures the variable its own initializer declares yet"
+        },
+        {
+          "kind": "NotYet",
+          "phase": "lowering",
+          "site": "src/compiler/sys.ts:1604:191",
+          "reason": "process.recordreplay with an unrepresented type",
+          "message": "stage 0 can't lower process.recordreplay with an unrepresented type yet"
+        }
+      ],
+      "sourceLine": "if (nodeSystem.getGlobalTypingsCacheLocation) moduleResolutionHost.getGlobalTypingsCacheLocation = () => nodeSystem.getGlobalTypingsCacheLocation!();"
+    },
+    {
+      "id": 37,
+      "unit": "src/compiler/sys.ts:1474:5",
+      "unitName": "function getNodeSystem(): System {",
+      "unitKind": "KindFunctionDeclaration",
+      "site": "src/compiler/sys.ts:1637:67",
+      "stopSite": "src/compiler/sys.ts:1637:67",
+      "kind": "Boundary",
+      "phase": "lowering",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "message": "stage 0 can't lower writing a possibly absent optional own field yet",
+      "classification": "revealed_later_stop",
+      "unitExistedOnBaseline": true,
+      "baselineUnitPrimaryFindingCount": 8,
+      "baselineUnitStops": [
+        {
+          "kind": "Refused",
+          "phase": "refusal_scan",
+          "site": "src/compiler/sys.ts:1548:13",
+          "reason": "a function taking PollingInterval seen as one taking number | undefined (tsc relates a method's parameters both ways), so it can be handed what it can't take",
+          "message": "Adamic 0.1 refuses a function taking PollingInterval seen as one taking number | undefined (tsc relates a method's parameters both ways), so it can be handed what it can't take; write the method as a property holding a function (handle: (animal: Animal) => void), which tsc checks one way, or take the wider type in the method (method-signature-style)"
+        },
+        {
+          "kind": "Refused",
+          "phase": "refusal_scan",
+          "site": "src/compiler/sys.ts:1549:13",
+          "reason": "a function taking boolean seen as one taking boolean | undefined (tsc relates a method's parameters both ways), so it can be handed what it can't take",
+          "message": "Adamic 0.1 refuses a function taking boolean seen as one taking boolean | undefined (tsc relates a method's parameters both ways), so it can be handed what it can't take; write the method as a property holding a function (handle: (animal: Animal) => void), which tsc checks one way, or take the wider type in the method (method-signature-style)"
+        },
+        {
+          "kind": "NotYet",
+          "phase": "refusal_scan",
+          "site": "src/compiler/sys.ts:1604:192",
+          "reason": "a namespace object used as a value; no runtime container is emitted, so identity, receiver behavior, live export aliases and staged properties are not represented; use qualified members or named module imports",
+          "message": "stage 0 can't lower a namespace object used as a value; no runtime container is emitted, so identity, receiver behavior, live export aliases and staged properties are not represented; use qualified members or named module imports yet"
+        },
+        {
+          "kind": "NotYet",
+          "phase": "lowering",
+          "site": "src/compiler/sys.ts:1843:24",
+          "reason": "reading byteOrderMarkIndicator",
+          "message": "stage 0 can't lower reading byteOrderMarkIndicator yet"
+        },
+        {
+          "kind": "Refused",
+          "phase": "lowering",
+          "site": "src/compiler/sys.ts:1894:17",
+          "reason": "sort without a comparator",
+          "message": "Adamic 0.1 refuses sort without a comparator; pass one: the default compares numbers as strings, so [10, 9, 1].sort() is [1, 10, 9]"
+        },
+        {
+          "kind": "Refused",
+          "phase": "lowering",
+          "site": "src/compiler/sys.ts:1895:17",
+          "reason": "sort without a comparator",
+          "message": "Adamic 0.1 refuses sort without a comparator; pass one: the default compares numbers as strings, so [10, 9, 1].sort() is [1, 10, 9]"
+        },
+        {
+          "kind": "NotYet",
+          "phase": "lowering",
+          "site": "src/compiler/sys.ts:1533:15",
+          "reason": "a function value that captures the variable its own initializer declares",
+          "message": "stage 0 can't lower a function value that captures the variable its own initializer declares yet"
+        },
+        {
+          "kind": "NotYet",
+          "phase": "lowering",
+          "site": "src/compiler/sys.ts:1604:191",
+          "reason": "process.recordreplay with an unrepresented type",
+          "message": "stage 0 can't lower process.recordreplay with an unrepresented type yet"
+        }
+      ],
+      "sourceLine": "if (nodeSystem.getGlobalTypingsCacheLocation) moduleResolutionHost.getGlobalTypingsCacheLocation = () => nodeSystem.getGlobalTypingsCacheLocation!();"
+    },
+    {
+      "id": 38,
+      "unit": "src/compiler/sys.ts:1474:5",
+      "unitName": "function getNodeSystem(): System {",
+      "unitKind": "KindFunctionDeclaration",
+      "site": "src/compiler/sys.ts:1637:21",
+      "stopSite": "src/compiler/sys.ts:1533:15",
+      "kind": "Boundary",
+      "phase": "lowering",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "message": "stage 0 can't lower a function value that captures the variable its own initializer declares yet",
+      "classification": "revealed_later_stop",
+      "unitExistedOnBaseline": true,
+      "baselineUnitPrimaryFindingCount": 8,
+      "baselineUnitStops": [
+        {
+          "kind": "Refused",
+          "phase": "refusal_scan",
+          "site": "src/compiler/sys.ts:1548:13",
+          "reason": "a function taking PollingInterval seen as one taking number | undefined (tsc relates a method's parameters both ways), so it can be handed what it can't take",
+          "message": "Adamic 0.1 refuses a function taking PollingInterval seen as one taking number | undefined (tsc relates a method's parameters both ways), so it can be handed what it can't take; write the method as a property holding a function (handle: (animal: Animal) => void), which tsc checks one way, or take the wider type in the method (method-signature-style)"
+        },
+        {
+          "kind": "Refused",
+          "phase": "refusal_scan",
+          "site": "src/compiler/sys.ts:1549:13",
+          "reason": "a function taking boolean seen as one taking boolean | undefined (tsc relates a method's parameters both ways), so it can be handed what it can't take",
+          "message": "Adamic 0.1 refuses a function taking boolean seen as one taking boolean | undefined (tsc relates a method's parameters both ways), so it can be handed what it can't take; write the method as a property holding a function (handle: (animal: Animal) => void), which tsc checks one way, or take the wider type in the method (method-signature-style)"
+        },
+        {
+          "kind": "NotYet",
+          "phase": "refusal_scan",
+          "site": "src/compiler/sys.ts:1604:192",
+          "reason": "a namespace object used as a value; no runtime container is emitted, so identity, receiver behavior, live export aliases and staged properties are not represented; use qualified members or named module imports",
+          "message": "stage 0 can't lower a namespace object used as a value; no runtime container is emitted, so identity, receiver behavior, live export aliases and staged properties are not represented; use qualified members or named module imports yet"
+        },
+        {
+          "kind": "NotYet",
+          "phase": "lowering",
+          "site": "src/compiler/sys.ts:1843:24",
+          "reason": "reading byteOrderMarkIndicator",
+          "message": "stage 0 can't lower reading byteOrderMarkIndicator yet"
+        },
+        {
+          "kind": "Refused",
+          "phase": "lowering",
+          "site": "src/compiler/sys.ts:1894:17",
+          "reason": "sort without a comparator",
+          "message": "Adamic 0.1 refuses sort without a comparator; pass one: the default compares numbers as strings, so [10, 9, 1].sort() is [1, 10, 9]"
+        },
+        {
+          "kind": "Refused",
+          "phase": "lowering",
+          "site": "src/compiler/sys.ts:1895:17",
+          "reason": "sort without a comparator",
+          "message": "Adamic 0.1 refuses sort without a comparator; pass one: the default compares numbers as strings, so [10, 9, 1].sort() is [1, 10, 9]"
+        },
+        {
+          "kind": "NotYet",
+          "phase": "lowering",
+          "site": "src/compiler/sys.ts:1533:15",
+          "reason": "a function value that captures the variable its own initializer declares",
+          "message": "stage 0 can't lower a function value that captures the variable its own initializer declares yet"
+        },
+        {
+          "kind": "NotYet",
+          "phase": "lowering",
+          "site": "src/compiler/sys.ts:1604:191",
+          "reason": "process.recordreplay with an unrepresented type",
+          "message": "stage 0 can't lower process.recordreplay with an unrepresented type yet"
+        }
+      ],
+      "sourceLine": "const nodeSystem: NodeResolutionSystem = {"
+    },
+    {
+      "id": 39,
+      "unit": "src/compiler/sys.ts:1474:5",
+      "unitName": "function getNodeSystem(): System {",
+      "unitKind": "KindFunctionDeclaration",
+      "site": "src/compiler/sys.ts:1638:25",
+      "stopSite": "src/compiler/sys.ts:1638:25",
+      "kind": "NotYet",
+      "phase": "lowering",
+      "reason": "in when a possibly absent spread has no property presence descriptors",
+      "message": "stage 0 can't lower in when a possibly absent spread has no property presence descriptors yet",
+      "classification": "revealed_later_stop",
+      "unitExistedOnBaseline": true,
+      "baselineUnitPrimaryFindingCount": 8,
+      "baselineUnitStops": [
+        {
+          "kind": "Refused",
+          "phase": "refusal_scan",
+          "site": "src/compiler/sys.ts:1548:13",
+          "reason": "a function taking PollingInterval seen as one taking number | undefined (tsc relates a method's parameters both ways), so it can be handed what it can't take",
+          "message": "Adamic 0.1 refuses a function taking PollingInterval seen as one taking number | undefined (tsc relates a method's parameters both ways), so it can be handed what it can't take; write the method as a property holding a function (handle: (animal: Animal) => void), which tsc checks one way, or take the wider type in the method (method-signature-style)"
+        },
+        {
+          "kind": "Refused",
+          "phase": "refusal_scan",
+          "site": "src/compiler/sys.ts:1549:13",
+          "reason": "a function taking boolean seen as one taking boolean | undefined (tsc relates a method's parameters both ways), so it can be handed what it can't take",
+          "message": "Adamic 0.1 refuses a function taking boolean seen as one taking boolean | undefined (tsc relates a method's parameters both ways), so it can be handed what it can't take; write the method as a property holding a function (handle: (animal: Animal) => void), which tsc checks one way, or take the wider type in the method (method-signature-style)"
+        },
+        {
+          "kind": "NotYet",
+          "phase": "refusal_scan",
+          "site": "src/compiler/sys.ts:1604:192",
+          "reason": "a namespace object used as a value; no runtime container is emitted, so identity, receiver behavior, live export aliases and staged properties are not represented; use qualified members or named module imports",
+          "message": "stage 0 can't lower a namespace object used as a value; no runtime container is emitted, so identity, receiver behavior, live export aliases and staged properties are not represented; use qualified members or named module imports yet"
+        },
+        {
+          "kind": "NotYet",
+          "phase": "lowering",
+          "site": "src/compiler/sys.ts:1843:24",
+          "reason": "reading byteOrderMarkIndicator",
+          "message": "stage 0 can't lower reading byteOrderMarkIndicator yet"
+        },
+        {
+          "kind": "Refused",
+          "phase": "lowering",
+          "site": "src/compiler/sys.ts:1894:17",
+          "reason": "sort without a comparator",
+          "message": "Adamic 0.1 refuses sort without a comparator; pass one: the default compares numbers as strings, so [10, 9, 1].sort() is [1, 10, 9]"
+        },
+        {
+          "kind": "Refused",
+          "phase": "lowering",
+          "site": "src/compiler/sys.ts:1895:17",
+          "reason": "sort without a comparator",
+          "message": "Adamic 0.1 refuses sort without a comparator; pass one: the default compares numbers as strings, so [10, 9, 1].sort() is [1, 10, 9]"
+        },
+        {
+          "kind": "NotYet",
+          "phase": "lowering",
+          "site": "src/compiler/sys.ts:1533:15",
+          "reason": "a function value that captures the variable its own initializer declares",
+          "message": "stage 0 can't lower a function value that captures the variable its own initializer declares yet"
+        },
+        {
+          "kind": "NotYet",
+          "phase": "lowering",
+          "site": "src/compiler/sys.ts:1604:191",
+          "reason": "process.recordreplay with an unrepresented type",
+          "message": "stage 0 can't lower process.recordreplay with an unrepresented type yet"
+        }
+      ],
+      "sourceLine": "if (\"useCaseSensitiveFileNames\" in nodeSystem) moduleResolutionHost.useCaseSensitiveFileNames = nodeSystem.useCaseSensitiveFileNames;"
+    },
+    {
+      "id": 40,
+      "unit": "src/compiler/sys.ts:1474:5",
+      "unitName": "function getNodeSystem(): System {",
+      "unitKind": "KindFunctionDeclaration",
+      "site": "src/compiler/sys.ts:1638:21",
+      "stopSite": "src/compiler/sys.ts:1638:25",
+      "kind": "Boundary",
+      "phase": "lowering",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "message": "stage 0 can't lower in when a possibly absent spread has no property presence descriptors yet",
+      "classification": "revealed_later_stop",
+      "unitExistedOnBaseline": true,
+      "baselineUnitPrimaryFindingCount": 8,
+      "baselineUnitStops": [
+        {
+          "kind": "Refused",
+          "phase": "refusal_scan",
+          "site": "src/compiler/sys.ts:1548:13",
+          "reason": "a function taking PollingInterval seen as one taking number | undefined (tsc relates a method's parameters both ways), so it can be handed what it can't take",
+          "message": "Adamic 0.1 refuses a function taking PollingInterval seen as one taking number | undefined (tsc relates a method's parameters both ways), so it can be handed what it can't take; write the method as a property holding a function (handle: (animal: Animal) => void), which tsc checks one way, or take the wider type in the method (method-signature-style)"
+        },
+        {
+          "kind": "Refused",
+          "phase": "refusal_scan",
+          "site": "src/compiler/sys.ts:1549:13",
+          "reason": "a function taking boolean seen as one taking boolean | undefined (tsc relates a method's parameters both ways), so it can be handed what it can't take",
+          "message": "Adamic 0.1 refuses a function taking boolean seen as one taking boolean | undefined (tsc relates a method's parameters both ways), so it can be handed what it can't take; write the method as a property holding a function (handle: (animal: Animal) => void), which tsc checks one way, or take the wider type in the method (method-signature-style)"
+        },
+        {
+          "kind": "NotYet",
+          "phase": "refusal_scan",
+          "site": "src/compiler/sys.ts:1604:192",
+          "reason": "a namespace object used as a value; no runtime container is emitted, so identity, receiver behavior, live export aliases and staged properties are not represented; use qualified members or named module imports",
+          "message": "stage 0 can't lower a namespace object used as a value; no runtime container is emitted, so identity, receiver behavior, live export aliases and staged properties are not represented; use qualified members or named module imports yet"
+        },
+        {
+          "kind": "NotYet",
+          "phase": "lowering",
+          "site": "src/compiler/sys.ts:1843:24",
+          "reason": "reading byteOrderMarkIndicator",
+          "message": "stage 0 can't lower reading byteOrderMarkIndicator yet"
+        },
+        {
+          "kind": "Refused",
+          "phase": "lowering",
+          "site": "src/compiler/sys.ts:1894:17",
+          "reason": "sort without a comparator",
+          "message": "Adamic 0.1 refuses sort without a comparator; pass one: the default compares numbers as strings, so [10, 9, 1].sort() is [1, 10, 9]"
+        },
+        {
+          "kind": "Refused",
+          "phase": "lowering",
+          "site": "src/compiler/sys.ts:1895:17",
+          "reason": "sort without a comparator",
+          "message": "Adamic 0.1 refuses sort without a comparator; pass one: the default compares numbers as strings, so [10, 9, 1].sort() is [1, 10, 9]"
+        },
+        {
+          "kind": "NotYet",
+          "phase": "lowering",
+          "site": "src/compiler/sys.ts:1533:15",
+          "reason": "a function value that captures the variable its own initializer declares",
+          "message": "stage 0 can't lower a function value that captures the variable its own initializer declares yet"
+        },
+        {
+          "kind": "NotYet",
+          "phase": "lowering",
+          "site": "src/compiler/sys.ts:1604:191",
+          "reason": "process.recordreplay with an unrepresented type",
+          "message": "stage 0 can't lower process.recordreplay with an unrepresented type yet"
+        }
+      ],
+      "sourceLine": "if (\"useCaseSensitiveFileNames\" in nodeSystem) moduleResolutionHost.useCaseSensitiveFileNames = nodeSystem.useCaseSensitiveFileNames;"
+    },
+    {
+      "id": 41,
+      "unit": "src/compiler/sys.ts:1474:5",
+      "unitName": "function getNodeSystem(): System {",
+      "unitKind": "KindFunctionDeclaration",
+      "site": "src/compiler/sys.ts:1639:77",
+      "stopSite": "src/compiler/sys.ts:1639:77",
+      "kind": "NotYet",
+      "phase": "lowering",
+      "reason": "reading moduleResolutionHost",
+      "message": "stage 0 can't lower reading moduleResolutionHost yet",
+      "classification": "revealed_later_stop",
+      "unitExistedOnBaseline": true,
+      "baselineUnitPrimaryFindingCount": 8,
+      "baselineUnitStops": [
+        {
+          "kind": "Refused",
+          "phase": "refusal_scan",
+          "site": "src/compiler/sys.ts:1548:13",
+          "reason": "a function taking PollingInterval seen as one taking number | undefined (tsc relates a method's parameters both ways), so it can be handed what it can't take",
+          "message": "Adamic 0.1 refuses a function taking PollingInterval seen as one taking number | undefined (tsc relates a method's parameters both ways), so it can be handed what it can't take; write the method as a property holding a function (handle: (animal: Animal) => void), which tsc checks one way, or take the wider type in the method (method-signature-style)"
+        },
+        {
+          "kind": "Refused",
+          "phase": "refusal_scan",
+          "site": "src/compiler/sys.ts:1549:13",
+          "reason": "a function taking boolean seen as one taking boolean | undefined (tsc relates a method's parameters both ways), so it can be handed what it can't take",
+          "message": "Adamic 0.1 refuses a function taking boolean seen as one taking boolean | undefined (tsc relates a method's parameters both ways), so it can be handed what it can't take; write the method as a property holding a function (handle: (animal: Animal) => void), which tsc checks one way, or take the wider type in the method (method-signature-style)"
+        },
+        {
+          "kind": "NotYet",
+          "phase": "refusal_scan",
+          "site": "src/compiler/sys.ts:1604:192",
+          "reason": "a namespace object used as a value; no runtime container is emitted, so identity, receiver behavior, live export aliases and staged properties are not represented; use qualified members or named module imports",
+          "message": "stage 0 can't lower a namespace object used as a value; no runtime container is emitted, so identity, receiver behavior, live export aliases and staged properties are not represented; use qualified members or named module imports yet"
+        },
+        {
+          "kind": "NotYet",
+          "phase": "lowering",
+          "site": "src/compiler/sys.ts:1843:24",
+          "reason": "reading byteOrderMarkIndicator",
+          "message": "stage 0 can't lower reading byteOrderMarkIndicator yet"
+        },
+        {
+          "kind": "Refused",
+          "phase": "lowering",
+          "site": "src/compiler/sys.ts:1894:17",
+          "reason": "sort without a comparator",
+          "message": "Adamic 0.1 refuses sort without a comparator; pass one: the default compares numbers as strings, so [10, 9, 1].sort() is [1, 10, 9]"
+        },
+        {
+          "kind": "Refused",
+          "phase": "lowering",
+          "site": "src/compiler/sys.ts:1895:17",
+          "reason": "sort without a comparator",
+          "message": "Adamic 0.1 refuses sort without a comparator; pass one: the default compares numbers as strings, so [10, 9, 1].sort() is [1, 10, 9]"
+        },
+        {
+          "kind": "NotYet",
+          "phase": "lowering",
+          "site": "src/compiler/sys.ts:1533:15",
+          "reason": "a function value that captures the variable its own initializer declares",
+          "message": "stage 0 can't lower a function value that captures the variable its own initializer declares yet"
+        },
+        {
+          "kind": "NotYet",
+          "phase": "lowering",
+          "site": "src/compiler/sys.ts:1604:191",
+          "reason": "process.recordreplay with an unrepresented type",
+          "message": "stage 0 can't lower process.recordreplay with an unrepresented type yet"
+        }
+      ],
+      "sourceLine": "const modulePath = resolveJSModule(moduleName, baseDir, moduleResolutionHost);"
+    },
+    {
+      "id": 42,
+      "unit": "src/compiler/sys.ts:1474:5",
+      "unitName": "function getNodeSystem(): System {",
+      "unitKind": "KindFunctionDeclaration",
+      "site": "src/compiler/sys.ts:1639:21",
+      "stopSite": "src/compiler/sys.ts:1639:77",
+      "kind": "Boundary",
+      "phase": "lowering",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "message": "stage 0 can't lower reading moduleResolutionHost yet",
+      "classification": "revealed_later_stop",
+      "unitExistedOnBaseline": true,
+      "baselineUnitPrimaryFindingCount": 8,
+      "baselineUnitStops": [
+        {
+          "kind": "Refused",
+          "phase": "refusal_scan",
+          "site": "src/compiler/sys.ts:1548:13",
+          "reason": "a function taking PollingInterval seen as one taking number | undefined (tsc relates a method's parameters both ways), so it can be handed what it can't take",
+          "message": "Adamic 0.1 refuses a function taking PollingInterval seen as one taking number | undefined (tsc relates a method's parameters both ways), so it can be handed what it can't take; write the method as a property holding a function (handle: (animal: Animal) => void), which tsc checks one way, or take the wider type in the method (method-signature-style)"
+        },
+        {
+          "kind": "Refused",
+          "phase": "refusal_scan",
+          "site": "src/compiler/sys.ts:1549:13",
+          "reason": "a function taking boolean seen as one taking boolean | undefined (tsc relates a method's parameters both ways), so it can be handed what it can't take",
+          "message": "Adamic 0.1 refuses a function taking boolean seen as one taking boolean | undefined (tsc relates a method's parameters both ways), so it can be handed what it can't take; write the method as a property holding a function (handle: (animal: Animal) => void), which tsc checks one way, or take the wider type in the method (method-signature-style)"
+        },
+        {
+          "kind": "NotYet",
+          "phase": "refusal_scan",
+          "site": "src/compiler/sys.ts:1604:192",
+          "reason": "a namespace object used as a value; no runtime container is emitted, so identity, receiver behavior, live export aliases and staged properties are not represented; use qualified members or named module imports",
+          "message": "stage 0 can't lower a namespace object used as a value; no runtime container is emitted, so identity, receiver behavior, live export aliases and staged properties are not represented; use qualified members or named module imports yet"
+        },
+        {
+          "kind": "NotYet",
+          "phase": "lowering",
+          "site": "src/compiler/sys.ts:1843:24",
+          "reason": "reading byteOrderMarkIndicator",
+          "message": "stage 0 can't lower reading byteOrderMarkIndicator yet"
+        },
+        {
+          "kind": "Refused",
+          "phase": "lowering",
+          "site": "src/compiler/sys.ts:1894:17",
+          "reason": "sort without a comparator",
+          "message": "Adamic 0.1 refuses sort without a comparator; pass one: the default compares numbers as strings, so [10, 9, 1].sort() is [1, 10, 9]"
+        },
+        {
+          "kind": "Refused",
+          "phase": "lowering",
+          "site": "src/compiler/sys.ts:1895:17",
+          "reason": "sort without a comparator",
+          "message": "Adamic 0.1 refuses sort without a comparator; pass one: the default compares numbers as strings, so [10, 9, 1].sort() is [1, 10, 9]"
+        },
+        {
+          "kind": "NotYet",
+          "phase": "lowering",
+          "site": "src/compiler/sys.ts:1533:15",
+          "reason": "a function value that captures the variable its own initializer declares",
+          "message": "stage 0 can't lower a function value that captures the variable its own initializer declares yet"
+        },
+        {
+          "kind": "NotYet",
+          "phase": "lowering",
+          "site": "src/compiler/sys.ts:1604:191",
+          "reason": "process.recordreplay with an unrepresented type",
+          "message": "stage 0 can't lower process.recordreplay with an unrepresented type yet"
+        }
+      ],
+      "sourceLine": "const modulePath = resolveJSModule(moduleName, baseDir, moduleResolutionHost);"
+    },
+    {
+      "id": 43,
+      "unit": "src/compiler/sys.ts:1474:5",
+      "unitName": "function getNodeSystem(): System {",
+      "unitKind": "KindFunctionDeclaration",
+      "site": "src/compiler/sys.ts:1640:46",
+      "stopSite": "src/compiler/sys.ts:1640:46",
+      "kind": "NotYet",
+      "phase": "lowering",
+      "reason": "reading modulePath",
+      "message": "stage 0 can't lower reading modulePath yet",
+      "classification": "revealed_later_stop",
+      "unitExistedOnBaseline": true,
+      "baselineUnitPrimaryFindingCount": 8,
+      "baselineUnitStops": [
+        {
+          "kind": "Refused",
+          "phase": "refusal_scan",
+          "site": "src/compiler/sys.ts:1548:13",
+          "reason": "a function taking PollingInterval seen as one taking number | undefined (tsc relates a method's parameters both ways), so it can be handed what it can't take",
+          "message": "Adamic 0.1 refuses a function taking PollingInterval seen as one taking number | undefined (tsc relates a method's parameters both ways), so it can be handed what it can't take; write the method as a property holding a function (handle: (animal: Animal) => void), which tsc checks one way, or take the wider type in the method (method-signature-style)"
+        },
+        {
+          "kind": "Refused",
+          "phase": "refusal_scan",
+          "site": "src/compiler/sys.ts:1549:13",
+          "reason": "a function taking boolean seen as one taking boolean | undefined (tsc relates a method's parameters both ways), so it can be handed what it can't take",
+          "message": "Adamic 0.1 refuses a function taking boolean seen as one taking boolean | undefined (tsc relates a method's parameters both ways), so it can be handed what it can't take; write the method as a property holding a function (handle: (animal: Animal) => void), which tsc checks one way, or take the wider type in the method (method-signature-style)"
+        },
+        {
+          "kind": "NotYet",
+          "phase": "refusal_scan",
+          "site": "src/compiler/sys.ts:1604:192",
+          "reason": "a namespace object used as a value; no runtime container is emitted, so identity, receiver behavior, live export aliases and staged properties are not represented; use qualified members or named module imports",
+          "message": "stage 0 can't lower a namespace object used as a value; no runtime container is emitted, so identity, receiver behavior, live export aliases and staged properties are not represented; use qualified members or named module imports yet"
+        },
+        {
+          "kind": "NotYet",
+          "phase": "lowering",
+          "site": "src/compiler/sys.ts:1843:24",
+          "reason": "reading byteOrderMarkIndicator",
+          "message": "stage 0 can't lower reading byteOrderMarkIndicator yet"
+        },
+        {
+          "kind": "Refused",
+          "phase": "lowering",
+          "site": "src/compiler/sys.ts:1894:17",
+          "reason": "sort without a comparator",
+          "message": "Adamic 0.1 refuses sort without a comparator; pass one: the default compares numbers as strings, so [10, 9, 1].sort() is [1, 10, 9]"
+        },
+        {
+          "kind": "Refused",
+          "phase": "lowering",
+          "site": "src/compiler/sys.ts:1895:17",
+          "reason": "sort without a comparator",
+          "message": "Adamic 0.1 refuses sort without a comparator; pass one: the default compares numbers as strings, so [10, 9, 1].sort() is [1, 10, 9]"
+        },
+        {
+          "kind": "NotYet",
+          "phase": "lowering",
+          "site": "src/compiler/sys.ts:1533:15",
+          "reason": "a function value that captures the variable its own initializer declares",
+          "message": "stage 0 can't lower a function value that captures the variable its own initializer declares yet"
+        },
+        {
+          "kind": "NotYet",
+          "phase": "lowering",
+          "site": "src/compiler/sys.ts:1604:191",
+          "reason": "process.recordreplay with an unrepresented type",
+          "message": "stage 0 can't lower process.recordreplay with an unrepresented type yet"
+        }
+      ],
+      "sourceLine": "return { module: require(modulePath), modulePath, error: undefined };"
+    },
+    {
+      "id": 44,
+      "unit": "src/compiler/sys.ts:1474:5",
+      "unitName": "function getNodeSystem(): System {",
+      "unitKind": "KindFunctionDeclaration",
+      "site": "src/compiler/sys.ts:1640:21",
+      "stopSite": "src/compiler/sys.ts:1640:46",
+      "kind": "Boundary",
+      "phase": "lowering",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "message": "stage 0 can't lower reading modulePath yet",
+      "classification": "revealed_later_stop",
+      "unitExistedOnBaseline": true,
+      "baselineUnitPrimaryFindingCount": 8,
+      "baselineUnitStops": [
+        {
+          "kind": "Refused",
+          "phase": "refusal_scan",
+          "site": "src/compiler/sys.ts:1548:13",
+          "reason": "a function taking PollingInterval seen as one taking number | undefined (tsc relates a method's parameters both ways), so it can be handed what it can't take",
+          "message": "Adamic 0.1 refuses a function taking PollingInterval seen as one taking number | undefined (tsc relates a method's parameters both ways), so it can be handed what it can't take; write the method as a property holding a function (handle: (animal: Animal) => void), which tsc checks one way, or take the wider type in the method (method-signature-style)"
+        },
+        {
+          "kind": "Refused",
+          "phase": "refusal_scan",
+          "site": "src/compiler/sys.ts:1549:13",
+          "reason": "a function taking boolean seen as one taking boolean | undefined (tsc relates a method's parameters both ways), so it can be handed what it can't take",
+          "message": "Adamic 0.1 refuses a function taking boolean seen as one taking boolean | undefined (tsc relates a method's parameters both ways), so it can be handed what it can't take; write the method as a property holding a function (handle: (animal: Animal) => void), which tsc checks one way, or take the wider type in the method (method-signature-style)"
+        },
+        {
+          "kind": "NotYet",
+          "phase": "refusal_scan",
+          "site": "src/compiler/sys.ts:1604:192",
+          "reason": "a namespace object used as a value; no runtime container is emitted, so identity, receiver behavior, live export aliases and staged properties are not represented; use qualified members or named module imports",
+          "message": "stage 0 can't lower a namespace object used as a value; no runtime container is emitted, so identity, receiver behavior, live export aliases and staged properties are not represented; use qualified members or named module imports yet"
+        },
+        {
+          "kind": "NotYet",
+          "phase": "lowering",
+          "site": "src/compiler/sys.ts:1843:24",
+          "reason": "reading byteOrderMarkIndicator",
+          "message": "stage 0 can't lower reading byteOrderMarkIndicator yet"
+        },
+        {
+          "kind": "Refused",
+          "phase": "lowering",
+          "site": "src/compiler/sys.ts:1894:17",
+          "reason": "sort without a comparator",
+          "message": "Adamic 0.1 refuses sort without a comparator; pass one: the default compares numbers as strings, so [10, 9, 1].sort() is [1, 10, 9]"
+        },
+        {
+          "kind": "Refused",
+          "phase": "lowering",
+          "site": "src/compiler/sys.ts:1895:17",
+          "reason": "sort without a comparator",
+          "message": "Adamic 0.1 refuses sort without a comparator; pass one: the default compares numbers as strings, so [10, 9, 1].sort() is [1, 10, 9]"
+        },
+        {
+          "kind": "NotYet",
+          "phase": "lowering",
+          "site": "src/compiler/sys.ts:1533:15",
+          "reason": "a function value that captures the variable its own initializer declares",
+          "message": "stage 0 can't lower a function value that captures the variable its own initializer declares yet"
+        },
+        {
+          "kind": "NotYet",
+          "phase": "lowering",
+          "site": "src/compiler/sys.ts:1604:191",
+          "reason": "process.recordreplay with an unrepresented type",
+          "message": "stage 0 can't lower process.recordreplay with an unrepresented type yet"
+        }
+      ],
+      "sourceLine": "return { module: require(modulePath), modulePath, error: undefined };"
+    }
+  ],
+  "removed": [
+    {
+      "unit": "src/compiler/sys.ts:1474:5",
+      "site": "src/compiler/sys.ts:1604:192",
+      "kind": "NotYet",
+      "phase": "refusal_scan",
+      "reason": "a namespace object used as a value; no runtime container is emitted, so identity, receiver behavior, live export aliases and staged properties are not represented; use qualified members or named module imports",
+      "message": "stage 0 can't lower a namespace object used as a value; no runtime container is emitted, so identity, receiver behavior, live export aliases and staged properties are not represented; use qualified members or named module imports yet"
+    },
+    {
+      "unit": "src/compiler/sys.ts:1468:1",
+      "site": "src/compiler/sys.ts:1604:191",
+      "kind": "NotYet",
+      "phase": "lowering",
+      "reason": "process.recordreplay with an unrepresented type",
+      "message": "stage 0 can't lower process.recordreplay with an unrepresented type yet"
+    },
+    {
+      "unit": "src/compiler/sys.ts:1474:5",
+      "site": "src/compiler/sys.ts:1604:191",
+      "kind": "NotYet",
+      "phase": "lowering",
+      "reason": "process.recordreplay with an unrepresented type",
+      "message": "stage 0 can't lower process.recordreplay with an unrepresented type yet"
+    },
+    {
+      "unit": "src/compiler/sys.ts:1468:1",
+      "site": "src/compiler/sys.ts:1533:9",
+      "kind": "Boundary",
+      "phase": "lowering",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "message": "stage 0 can't lower process.recordreplay with an unrepresented type yet"
+    },
+    {
+      "unit": "src/compiler/sys.ts:1474:5",
+      "site": "src/compiler/sys.ts:1533:9",
+      "kind": "Boundary",
+      "phase": "lowering",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "message": "stage 0 can't lower process.recordreplay with an unrepresented type yet"
+    }
+  ],
+  "baselineCommit": "62f6686cd9d22161a7940bee22ccc51f99ecad66",
+  "finalCommit": "45683ea92fff236245349385455f9d0f7b8ce1f5",
+  "baselineCastReads": 1,
+  "finalCastReads": 0
+}

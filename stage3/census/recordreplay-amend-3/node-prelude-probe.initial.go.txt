@@ -1,0 +1,66 @@
+package main
+
+import (
+ "context"
+ "encoding/json"
+ "fmt"
+ "os"
+ "path/filepath"
+ "sort"
+ "strings"
+
+ "github.com/microsoft/TypeScript/tsc/shim/ast"
+ "github.com/microsoft/TypeScript/tsc/shim/checker"
+ "github.com/microsoft/TypeScript/tsc/shim/scanner"
+ "github.com/system-inc/adamic/internal/load"
+)
+
+type declaration struct { File string `json:"file"`; Text string `json:"text"`; NodePrelude bool `json:"nodePrelude"` }
+func must(ok bool, message string) { if !ok { panic(message) } }
+func inspect(p *load.Program) map[string]any {
+ var sys, prelude *ast.SourceFile
+ nodeFiles:=0
+ for _,f:=range p.CompilerProgram().GetSourceFiles() {
+  if load.IsPrelude(f) { prelude=f }
+  if load.IsNodeLibrary(f) { nodeFiles++ }
+  if strings.HasSuffix(f.FileName().AsString(),"/src/compiler/sys.ts") { sys=f }
+ }
+ must(sys!=nil && prelude!=nil,"sys or prelude not loaded")
+ must(strings.Contains(prelude.Text(),"declare var process: NodeJS.Process;"),"not the Node prelude")
+ must(strings.Contains(prelude.Text(),"recordreplay?: unknown;"),"Node prelude augmentation missing")
+ var owner *ast.Node
+ var findOwner ast.Visitor
+ findOwner=func(n *ast.Node) bool { if n.Kind==ast.KindFunctionDeclaration && n.Name()!=nil && n.Name().Text()=="getNodeSystem" { must(owner==nil,"duplicate owner");owner=n };return n.ForEachChild(findOwner) }
+ sys.AsNode().ForEachChild(findOwner);must(owner!=nil,"getNodeSystem missing")
+ var reads []*ast.Node
+ var visit ast.Visitor
+ visit=func(n *ast.Node) bool { if n.Kind==ast.KindPropertyAccessExpression && n.Name().Text()=="recordreplay" { reads=append(reads,n) };return n.ForEachChild(visit) }
+ owner.ForEachChild(visit);must(len(reads)==1,"one recordreplay read required");read:=reads[0]
+ receiver:=read.AsPropertyAccessExpression().Expression;must(receiver.Kind==ast.KindIdentifier && receiver.Text()=="process","recordreplay receiver is not bare process")
+ c,done:=p.Checker(context.Background(),sys);defer done()
+ typ:=c.GetTypeAtLocation(read);must(typ.Flags()&checker.TypeFlagsUnknown!=0 && typ.Flags()&checker.TypeFlagsAny==0,"read is not unknown")
+ symbol:=c.GetSymbolAtLocation(read.Name());must(symbol!=nil,"recordreplay property is unresolved")
+ var declarations []declaration;fromPrelude:=false
+ for _,d:=range symbol.Declarations { f:=ast.GetSourceFileOfNode(d);isPrelude:=load.IsPrelude(f);fromPrelude=fromPrelude||isPrelude;declarations=append(declarations,declaration{f.FileName().AsString(),f.Text()[scanner.GetTokenPosOfNode(d,f,false):d.End()],isPrelude}) }
+ must(fromPrelude,"recordreplay does not resolve through Node prelude augmentation")
+ process:=c.GetSymbolAtLocation(receiver);must(process!=nil,"process is unresolved")
+ var processDeclarations []declaration
+ for _,d:=range process.Declarations { f:=ast.GetSourceFileOfNode(d);processDeclarations=append(processDeclarations,declaration{f.FileName().AsString(),f.Text()[scanner.GetTokenPosOfNode(d,f,false):d.End()],load.IsPrelude(f)}) }
+ return map[string]any{"roots":len(p.Files()),"diagnostics":0,"nodeLibraryFiles":nodeFiles,"nodeTypesVersion":load.NodeTypesVersion,"nodePreludeLoaded":true,"read":sys.Text()[scanner.GetTokenPosOfNode(read,sys,false):read.End()],"site":p.Where(read),"type":c.TypeToString(typ),"isAny":false,"propertyDeclarations":declarations,"processDeclarations":processDeclarations}
+}
+func main() {
+ root,output:=os.Args[1],os.Args[2];var roots []string
+ err:=filepath.WalkDir(filepath.Join(root,"src/compiler"),func(p string,d os.DirEntry,e error)error { if e!=nil{return e};if !d.IsDir() && strings.HasSuffix(p,".ts") && !strings.HasSuffix(p,".d.ts") { roots=append(roots,p) };return nil });if err!=nil {panic(err)};sort.Strings(roots);must(len(roots)==79,"79 roots required")
+ mask:=map[string]string{filepath.Join(root,"src/recordreplay.d.ts"):"export {};\n"}
+ if len(os.Args)>3 && os.Args[3]=="masked-only" {
+  p,err:=load.LoadOverlay(roots,mask)
+  if err!=nil { json.NewEncoder(os.Stdout).Encode(map[string]any{"diagnostic":err.Error(),"expected":"TS2339 recordreplay when both augmentations are removed"});os.Exit(1) }
+  _=p;fmt.Println("mutant survived");return
+ }
+ p,err:=load.Load(roots);if err!=nil {panic(err)};actual:=inspect(p)
+ p,err=load.LoadOverlay(roots,mask);if err!=nil {panic(err)};masked:=inspect(p)
+ fixture:=filepath.Join(filepath.Dir(output),"no-node-process.ts");err=os.WriteFile(fixture,[]byte("declare const process: NodeJS.Process | undefined;\nconsole.log(\"checked\");\n"),0600);if err!=nil {panic(err)}
+ _,err=load.Load([]string{fixture});must(err!=nil && strings.Contains(err.Error(),"TS2503"),"standalone program unexpectedly named NodeJS.Process")
+ result:=map[string]any{"actualAdaptedTree":actual,"amendmentDeclarationMasked":masked,"standaloneNodeJSRefused":err.Error(),"compilerOnlyNodeAugmentationProved":true}
+ data,_:=json.MarshalIndent(result,"","  ");if err=os.WriteFile(output,append(data,'\n'),0600);err!=nil {panic(err)};fmt.Println(string(data))
+}
