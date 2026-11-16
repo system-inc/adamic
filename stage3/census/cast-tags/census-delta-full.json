@@ -1,0 +1,352 @@
+{
+  "generators": {
+    "before_count": 523,
+    "after_count": 498,
+    "before_by_phase_kind": {
+      "lowering/Boundary": 236,
+      "lowering/NotYet": 90,
+      "lowering/Refused": 107,
+      "refusal_scan/NotYet": 11,
+      "refusal_scan/Refused": 79
+    },
+    "after_by_phase_kind": {
+      "lowering/Boundary": 226,
+      "lowering/NotYet": 85,
+      "lowering/Refused": 102,
+      "refusal_scan/NotYet": 11,
+      "refusal_scan/Refused": 74
+    },
+    "new": [
+      {
+        "depth": 0,
+        "kind": "NotYet",
+        "measurement": "measured on a checker-rejected program",
+        "phase": "lowering",
+        "reason": "writing a checked object field that may hold undefined or null, whose checked write can't change the representation its slot holds",
+        "root_kind": "",
+        "text": "<tree>/src/compiler/transformers/generators.ts:2257:9: stage 0 can't lower writing a checked object field that may hold undefined or null, whose checked write can't change the representation its slot holds yet",
+        "unit": "<tree>/src/compiler/transformers/generators.ts:2285:5",
+        "where": "<tree>/src/compiler/transformers/generators.ts:2257:9"
+      }
+    ],
+    "gone": [
+      {
+        "depth": 0,
+        "kind": "Refused",
+        "measurement": "measured on a checker-rejected program",
+        "phase": "refusal_scan",
+        "reason": "a cast the runtime can't check",
+        "root_kind": "",
+        "text": "<tree>/src/compiler/transformers/generators.ts:2200:23: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+        "unit": "<tree>/src/compiler/transformers/generators.ts:2198:5",
+        "where": "<tree>/src/compiler/transformers/generators.ts:2200:23"
+      },
+      {
+        "depth": 0,
+        "kind": "Refused",
+        "measurement": "measured on a checker-rejected program",
+        "phase": "refusal_scan",
+        "reason": "a cast the runtime can't check",
+        "root_kind": "",
+        "text": "<tree>/src/compiler/transformers/generators.ts:2287:27: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+        "unit": "<tree>/src/compiler/transformers/generators.ts:2285:5",
+        "where": "<tree>/src/compiler/transformers/generators.ts:2287:27"
+      },
+      {
+        "depth": 0,
+        "kind": "Refused",
+        "measurement": "measured on a checker-rejected program",
+        "phase": "refusal_scan",
+        "reason": "a cast the runtime can't check",
+        "root_kind": "",
+        "text": "<tree>/src/compiler/transformers/generators.ts:2341:23: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+        "unit": "<tree>/src/compiler/transformers/generators.ts:2339:5",
+        "where": "<tree>/src/compiler/transformers/generators.ts:2341:23"
+      },
+      {
+        "depth": 0,
+        "kind": "Refused",
+        "measurement": "measured on a checker-rejected program",
+        "phase": "refusal_scan",
+        "reason": "a cast the runtime can't check",
+        "root_kind": "",
+        "text": "<tree>/src/compiler/transformers/generators.ts:2380:23: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+        "unit": "<tree>/src/compiler/transformers/generators.ts:2378:5",
+        "where": "<tree>/src/compiler/transformers/generators.ts:2380:23"
+      },
+      {
+        "depth": 0,
+        "kind": "Refused",
+        "measurement": "measured on a checker-rejected program",
+        "phase": "refusal_scan",
+        "reason": "a cast the runtime can't check",
+        "root_kind": "",
+        "text": "<tree>/src/compiler/transformers/generators.ts:2408:23: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+        "unit": "<tree>/src/compiler/transformers/generators.ts:2406:5",
+        "where": "<tree>/src/compiler/transformers/generators.ts:2408:23"
+      },
+      {
+        "depth": 0,
+        "kind": "Refused",
+        "measurement": "measured on a checker-rejected program",
+        "phase": "lowering",
+        "reason": "a cast the runtime can't check",
+        "root_kind": "",
+        "text": "<tree>/src/compiler/transformers/generators.ts:2200:23: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+        "unit": "<tree>/src/compiler/transformers/generators.ts:2198:5",
+        "where": "<tree>/src/compiler/transformers/generators.ts:2200:23"
+      },
+      {
+        "depth": 0,
+        "kind": "Boundary",
+        "measurement": "measured on a checker-rejected program",
+        "phase": "lowering",
+        "reason": "failed statement; state rolled back; continued at next statement or declaration",
+        "root_kind": "",
+        "text": "<tree>/src/compiler/transformers/generators.ts:2200:23: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+        "unit": "<tree>/src/compiler/transformers/generators.ts:2198:5",
+        "where": "<tree>/src/compiler/transformers/generators.ts:2200:9"
+      },
+      {
+        "depth": 0,
+        "kind": "NotYet",
+        "measurement": "measured on a checker-rejected program",
+        "phase": "lowering",
+        "reason": "reading block",
+        "root_kind": "",
+        "text": "<tree>/src/compiler/transformers/generators.ts:2201:19: stage 0 can't lower reading block yet",
+        "unit": "<tree>/src/compiler/transformers/generators.ts:2198:5",
+        "where": "<tree>/src/compiler/transformers/generators.ts:2201:19"
+      },
+      {
+        "depth": 0,
+        "kind": "Boundary",
+        "measurement": "measured on a checker-rejected program",
+        "phase": "lowering",
+        "reason": "failed statement; state rolled back; continued at next statement or declaration",
+        "root_kind": "",
+        "text": "<tree>/src/compiler/transformers/generators.ts:2201:19: stage 0 can't lower reading block yet",
+        "unit": "<tree>/src/compiler/transformers/generators.ts:2198:5",
+        "where": "<tree>/src/compiler/transformers/generators.ts:2201:9"
+      },
+      {
+        "depth": 0,
+        "kind": "Refused",
+        "measurement": "measured on a checker-rejected program",
+        "phase": "lowering",
+        "reason": "a cast the runtime can't check",
+        "root_kind": "",
+        "text": "<tree>/src/compiler/transformers/generators.ts:2287:27: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+        "unit": "<tree>/src/compiler/transformers/generators.ts:2285:5",
+        "where": "<tree>/src/compiler/transformers/generators.ts:2287:27"
+      },
+      {
+        "depth": 0,
+        "kind": "Refused",
+        "measurement": "measured on a checker-rejected program",
+        "phase": "lowering",
+        "reason": "a cast the runtime can't check",
+        "root_kind": "",
+        "text": "<tree>/src/compiler/transformers/generators.ts:2341:23: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+        "unit": "<tree>/src/compiler/transformers/generators.ts:2339:5",
+        "where": "<tree>/src/compiler/transformers/generators.ts:2341:23"
+      },
+      {
+        "depth": 0,
+        "kind": "Boundary",
+        "measurement": "measured on a checker-rejected program",
+        "phase": "lowering",
+        "reason": "failed statement; state rolled back; continued at next statement or declaration",
+        "root_kind": "",
+        "text": "<tree>/src/compiler/transformers/generators.ts:2341:23: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+        "unit": "<tree>/src/compiler/transformers/generators.ts:2339:5",
+        "where": "<tree>/src/compiler/transformers/generators.ts:2341:9"
+      },
+      {
+        "depth": 0,
+        "kind": "NotYet",
+        "measurement": "measured on a checker-rejected program",
+        "phase": "lowering",
+        "reason": "reading block",
+        "root_kind": "",
+        "text": "<tree>/src/compiler/transformers/generators.ts:2342:28: stage 0 can't lower reading block yet",
+        "unit": "<tree>/src/compiler/transformers/generators.ts:2339:5",
+        "where": "<tree>/src/compiler/transformers/generators.ts:2342:28"
+      },
+      {
+        "depth": 0,
+        "kind": "Boundary",
+        "measurement": "measured on a checker-rejected program",
+        "phase": "lowering",
+        "reason": "failed statement; state rolled back; continued at next statement or declaration",
+        "root_kind": "",
+        "text": "<tree>/src/compiler/transformers/generators.ts:2342:28: stage 0 can't lower reading block yet",
+        "unit": "<tree>/src/compiler/transformers/generators.ts:2339:5",
+        "where": "<tree>/src/compiler/transformers/generators.ts:2342:9"
+      },
+      {
+        "depth": 0,
+        "kind": "NotYet",
+        "measurement": "measured on a checker-rejected program",
+        "phase": "lowering",
+        "reason": "reading block",
+        "root_kind": "",
+        "text": "<tree>/src/compiler/transformers/generators.ts:2343:14: stage 0 can't lower reading block yet",
+        "unit": "<tree>/src/compiler/transformers/generators.ts:2339:5",
+        "where": "<tree>/src/compiler/transformers/generators.ts:2343:14"
+      },
+      {
+        "depth": 0,
+        "kind": "Boundary",
+        "measurement": "measured on a checker-rejected program",
+        "phase": "lowering",
+        "reason": "failed statement; state rolled back; continued at next statement or declaration",
+        "root_kind": "",
+        "text": "<tree>/src/compiler/transformers/generators.ts:2343:14: stage 0 can't lower reading block yet",
+        "unit": "<tree>/src/compiler/transformers/generators.ts:2339:5",
+        "where": "<tree>/src/compiler/transformers/generators.ts:2343:9"
+      },
+      {
+        "depth": 0,
+        "kind": "Refused",
+        "measurement": "measured on a checker-rejected program",
+        "phase": "lowering",
+        "reason": "a cast the runtime can't check",
+        "root_kind": "",
+        "text": "<tree>/src/compiler/transformers/generators.ts:2380:23: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+        "unit": "<tree>/src/compiler/transformers/generators.ts:2378:5",
+        "where": "<tree>/src/compiler/transformers/generators.ts:2380:23"
+      },
+      {
+        "depth": 0,
+        "kind": "Boundary",
+        "measurement": "measured on a checker-rejected program",
+        "phase": "lowering",
+        "reason": "failed statement; state rolled back; continued at next statement or declaration",
+        "root_kind": "",
+        "text": "<tree>/src/compiler/transformers/generators.ts:2380:23: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+        "unit": "<tree>/src/compiler/transformers/generators.ts:2378:5",
+        "where": "<tree>/src/compiler/transformers/generators.ts:2380:9"
+      },
+      {
+        "depth": 0,
+        "kind": "NotYet",
+        "measurement": "measured on a checker-rejected program",
+        "phase": "lowering",
+        "reason": "reading block",
+        "root_kind": "",
+        "text": "<tree>/src/compiler/transformers/generators.ts:2381:28: stage 0 can't lower reading block yet",
+        "unit": "<tree>/src/compiler/transformers/generators.ts:2378:5",
+        "where": "<tree>/src/compiler/transformers/generators.ts:2381:28"
+      },
+      {
+        "depth": 0,
+        "kind": "Boundary",
+        "measurement": "measured on a checker-rejected program",
+        "phase": "lowering",
+        "reason": "failed statement; state rolled back; continued at next statement or declaration",
+        "root_kind": "",
+        "text": "<tree>/src/compiler/transformers/generators.ts:2381:28: stage 0 can't lower reading block yet",
+        "unit": "<tree>/src/compiler/transformers/generators.ts:2378:5",
+        "where": "<tree>/src/compiler/transformers/generators.ts:2381:9"
+      },
+      {
+        "depth": 0,
+        "kind": "NotYet",
+        "measurement": "measured on a checker-rejected program",
+        "phase": "lowering",
+        "reason": "reading block",
+        "root_kind": "",
+        "text": "<tree>/src/compiler/transformers/generators.ts:2382:14: stage 0 can't lower reading block yet",
+        "unit": "<tree>/src/compiler/transformers/generators.ts:2378:5",
+        "where": "<tree>/src/compiler/transformers/generators.ts:2382:14"
+      },
+      {
+        "depth": 0,
+        "kind": "Boundary",
+        "measurement": "measured on a checker-rejected program",
+        "phase": "lowering",
+        "reason": "failed statement; state rolled back; continued at next statement or declaration",
+        "root_kind": "",
+        "text": "<tree>/src/compiler/transformers/generators.ts:2382:14: stage 0 can't lower reading block yet",
+        "unit": "<tree>/src/compiler/transformers/generators.ts:2378:5",
+        "where": "<tree>/src/compiler/transformers/generators.ts:2382:9"
+      },
+      {
+        "depth": 0,
+        "kind": "Refused",
+        "measurement": "measured on a checker-rejected program",
+        "phase": "lowering",
+        "reason": "a cast the runtime can't check",
+        "root_kind": "",
+        "text": "<tree>/src/compiler/transformers/generators.ts:2408:23: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+        "unit": "<tree>/src/compiler/transformers/generators.ts:2406:5",
+        "where": "<tree>/src/compiler/transformers/generators.ts:2408:23"
+      },
+      {
+        "depth": 0,
+        "kind": "Boundary",
+        "measurement": "measured on a checker-rejected program",
+        "phase": "lowering",
+        "reason": "failed statement; state rolled back; continued at next statement or declaration",
+        "root_kind": "",
+        "text": "<tree>/src/compiler/transformers/generators.ts:2408:23: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+        "unit": "<tree>/src/compiler/transformers/generators.ts:2406:5",
+        "where": "<tree>/src/compiler/transformers/generators.ts:2408:9"
+      },
+      {
+        "depth": 0,
+        "kind": "NotYet",
+        "measurement": "measured on a checker-rejected program",
+        "phase": "lowering",
+        "reason": "reading block",
+        "root_kind": "",
+        "text": "<tree>/src/compiler/transformers/generators.ts:2409:14: stage 0 can't lower reading block yet",
+        "unit": "<tree>/src/compiler/transformers/generators.ts:2406:5",
+        "where": "<tree>/src/compiler/transformers/generators.ts:2409:14"
+      },
+      {
+        "depth": 0,
+        "kind": "Boundary",
+        "measurement": "measured on a checker-rejected program",
+        "phase": "lowering",
+        "reason": "failed statement; state rolled back; continued at next statement or declaration",
+        "root_kind": "",
+        "text": "<tree>/src/compiler/transformers/generators.ts:2409:14: stage 0 can't lower reading block yet",
+        "unit": "<tree>/src/compiler/transformers/generators.ts:2406:5",
+        "where": "<tree>/src/compiler/transformers/generators.ts:2409:9"
+      }
+    ],
+    "changed": [
+      {
+        "before": {
+          "depth": 0,
+          "kind": "Boundary",
+          "measurement": "measured on a checker-rejected program",
+          "phase": "lowering",
+          "reason": "failed statement; state rolled back; continued at next statement or declaration",
+          "root_kind": "",
+          "text": "<tree>/src/compiler/transformers/generators.ts:2287:27: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+          "unit": "<tree>/src/compiler/transformers/generators.ts:2285:5",
+          "where": "<tree>/src/compiler/transformers/generators.ts:2287:9"
+        },
+        "after": {
+          "depth": 0,
+          "kind": "Boundary",
+          "measurement": "measured on a checker-rejected program",
+          "phase": "lowering",
+          "reason": "failed statement; state rolled back; continued at next statement or declaration",
+          "root_kind": "",
+          "text": "<tree>/src/compiler/transformers/generators.ts:2257:9: stage 0 can't lower writing a checked object field that may hold undefined or null, whose checked write can't change the representation its slot holds yet",
+          "unit": "<tree>/src/compiler/transformers/generators.ts:2285:5",
+          "where": "<tree>/src/compiler/transformers/generators.ts:2287:9"
+        }
+      }
+    ]
+  },
+  "checker": {
+    "status": "stopped after TypePredicate target gate failure",
+    "full_census_completed": false,
+    "reason_file": "checker-stop-reason.json"
+  }
+}

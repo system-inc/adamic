@@ -1,0 +1,109 @@
+{
+  "source": {
+    "restored_interfaces": 9,
+    "byte_identical_source_files": 747
+  },
+  "finding_occurrences": 523,
+  "exact_finding_multiset_restored_including_byte_offsets": true,
+  "complete_normalized_records_identical": true,
+  "target_sites": {
+    "2200": [
+      {
+        "where": "<tree>/src/compiler/transformers/generators.ts:2200:23",
+        "phase": "refusal_scan",
+        "kind": "Refused",
+        "reason": "a cast the runtime can't check"
+      },
+      {
+        "where": "<tree>/src/compiler/transformers/generators.ts:2200:23",
+        "phase": "lowering",
+        "kind": "Refused",
+        "reason": "a cast the runtime can't check"
+      }
+    ],
+    "2248": [
+      {
+        "where": "<tree>/src/compiler/transformers/generators.ts:2248:27",
+        "phase": "refusal_scan",
+        "kind": "Refused",
+        "reason": "a cast the runtime can't check"
+      },
+      {
+        "where": "<tree>/src/compiler/transformers/generators.ts:2248:27",
+        "phase": "lowering",
+        "kind": "Refused",
+        "reason": "a cast the runtime can't check"
+      }
+    ],
+    "2270": [
+      {
+        "where": "<tree>/src/compiler/transformers/generators.ts:2270:27",
+        "phase": "refusal_scan",
+        "kind": "Refused",
+        "reason": "a cast the runtime can't check"
+      },
+      {
+        "where": "<tree>/src/compiler/transformers/generators.ts:2270:27",
+        "phase": "lowering",
+        "kind": "Refused",
+        "reason": "a cast the runtime can't check"
+      }
+    ],
+    "2287": [
+      {
+        "where": "<tree>/src/compiler/transformers/generators.ts:2287:27",
+        "phase": "refusal_scan",
+        "kind": "Refused",
+        "reason": "a cast the runtime can't check"
+      },
+      {
+        "where": "<tree>/src/compiler/transformers/generators.ts:2287:27",
+        "phase": "lowering",
+        "kind": "Refused",
+        "reason": "a cast the runtime can't check"
+      }
+    ],
+    "2341": [
+      {
+        "where": "<tree>/src/compiler/transformers/generators.ts:2341:23",
+        "phase": "refusal_scan",
+        "kind": "Refused",
+        "reason": "a cast the runtime can't check"
+      },
+      {
+        "where": "<tree>/src/compiler/transformers/generators.ts:2341:23",
+        "phase": "lowering",
+        "kind": "Refused",
+        "reason": "a cast the runtime can't check"
+      }
+    ],
+    "2380": [
+      {
+        "where": "<tree>/src/compiler/transformers/generators.ts:2380:23",
+        "phase": "refusal_scan",
+        "kind": "Refused",
+        "reason": "a cast the runtime can't check"
+      },
+      {
+        "where": "<tree>/src/compiler/transformers/generators.ts:2380:23",
+        "phase": "lowering",
+        "kind": "Refused",
+        "reason": "a cast the runtime can't check"
+      }
+    ],
+    "2408": [
+      {
+        "where": "<tree>/src/compiler/transformers/generators.ts:2408:23",
+        "phase": "refusal_scan",
+        "kind": "Refused",
+        "reason": "a cast the runtime can't check"
+      },
+      {
+        "where": "<tree>/src/compiler/transformers/generators.ts:2408:23",
+        "phase": "lowering",
+        "kind": "Refused",
+        "reason": "a cast the runtime can't check"
+      }
+    ]
+  }
+}

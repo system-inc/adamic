@@ -1,0 +1,28 @@
+{
+  "generators": {
+    "before_count": 523,
+    "after_count": 498,
+    "before_by_phase_kind": {
+      "lowering/Boundary": 236,
+      "lowering/NotYet": 90,
+      "lowering/Refused": 107,
+      "refusal_scan/NotYet": 11,
+      "refusal_scan/Refused": 79
+    },
+    "after_by_phase_kind": {
+      "lowering/Boundary": 226,
+      "lowering/NotYet": 85,
+      "lowering/Refused": 102,
+      "refusal_scan/NotYet": 11,
+      "refusal_scan/Refused": 74
+    },
+    "new": 1,
+    "gone": 26,
+    "changed": 1
+  },
+  "checker": {
+    "status": "stopped after TypePredicate target gate failure",
+    "full_census_completed": false,
+    "reason_file": "checker-stop-reason.json"
+  }
+}
