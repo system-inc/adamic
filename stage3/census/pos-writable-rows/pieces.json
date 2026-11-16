@@ -529,6 +529,17 @@
   },
   {
     "complete": true,
+    "ended_utc": "2026-11-16T18:16:34.786353+00:00",
+    "error": "",
+    "exit_code": 0,
+    "file": "src/compiler/transformers/es2015.ts",
+    "log": "/workspace/scratch/aryr7ea/raw/src__compiler__transformers__es2015.ts.log",
+    "raw_sha256": "383bbad09f26da56c5fe6b144f88bba5f3e0168d792dfa1c6c3d8d5ec428b482",
+    "started_utc": "2026-11-16T18:09:03.308485+00:00",
+    "wall_seconds": 451.4776484030008
+  },
+  {
+    "complete": true,
     "ended_utc": "2026-11-16T18:10:06.820105+00:00",
     "error": "",
     "exit_code": 0,
@@ -548,5 +559,16 @@
     "raw_sha256": "bedd7cd022f4752f577e5d219c7df61e014f5b28e3a5c0da1a89478f6399a591",
     "started_utc": "2026-11-16T18:10:06.832482+00:00",
     "wall_seconds": 211.61481393300073
+  },
+  {
+    "complete": true,
+    "ended_utc": "2026-11-16T18:17:35.669246+00:00",
+    "error": "",
+    "exit_code": 0,
+    "file": "src/compiler/transformers/es2019.ts",
+    "log": "/workspace/scratch/aryr7ea/raw/src__compiler__transformers__es2019.ts.log",
+    "raw_sha256": "bb9af1f0ab9030b4d3850beadae8fa38a5c86df1411683adce5077b13e5ebd9b",
+    "started_utc": "2026-11-16T18:16:34.848193+00:00",
+    "wall_seconds": 60.82098367300023
   }
 ]
