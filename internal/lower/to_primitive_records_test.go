@@ -86,7 +86,7 @@ func TestPlainMethodsKnowEveryRecordMaker(t *testing.T) {
 		}
 		calls := len(maker.FindAll(source, -1))
 		if filepath.Base(path) == "record.c" {
-			calls -= 3 // two definitions and the default-size delegation
+			calls -= 4 // three definitions (new, new_capacity, new_graph) and the default-size delegation
 		}
 		if calls != 0 {
 			t.Errorf("%s makes records of its own (%d), which plainMethods can't see", path, calls)
