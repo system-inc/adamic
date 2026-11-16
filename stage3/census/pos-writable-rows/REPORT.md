@@ -1,6 +1,6 @@
 # Pos-writable rows — #aryr7ea
 
-Status: incomplete checkpoint at 2026-11-16T18:32:30.735708+00:00.
+Status: incomplete checkpoint at 2026-11-16T18:41:38.097213+00:00.
 
 Measured main tip `c41391ea3346727231dfa3472d061826e26f6aad` in a fresh detached worktree; TypeScript v6.0.3
 `050880ce59e30b356b686bd3144efe24f875ebc8`. Recursive shallow submodules initialized;
@@ -35,10 +35,10 @@ or successful compilation; no backend or usable IR is produced.
 
 ## Counts
 
-Completed 72/79 compiler .ts files; failed pieces: 0.
-Distinct requested keys (file, line, col, reason, unit): **2086**.
-Matching raw records (sum of multiplicity): **2104**.
-Meter-style distinct (kind, where, reason, text), omitting unit: **541**.
+Completed 74/79 compiler .ts files; failed pieces: 0.
+Distinct requested keys (file, line, col, reason, unit): **2093**.
+Matching raw records (sum of multiplicity): **2111**.
+Meter-style distinct (kind, where, reason, text), omitting unit: **544**.
 
 The saved daily meter 20261115T131735Z.PG4H0R, main `7816a8d85d60db6ffb618132eaf8b17c91ef8866`,
 counts **550** pos-writable sites across **173** exact reasons.
@@ -54,7 +54,7 @@ No claim that those effects individually explain a particular delta is made with
 
 | Target | Sites |
 | --- | ---: |
-| TextRange | 1479 |
+| TextRange | 1486 |
 | others | 534 |
 | SourceMapRange \| undefined | 31 |
 | TextRange \| undefined | 25 |
@@ -64,7 +64,7 @@ No claim that those effects individually explain a particular delta is made with
 
 | Kind | Sites |
 | --- | ---: |
-| KindFunctionDeclaration | 2086 |
+| KindFunctionDeclaration | 2093 |
 
 ## Callee / receiving slot
 
@@ -321,6 +321,7 @@ these are callers/owners, not identified callees. All rows retain unit location 
 | transformParameterWithPropertyAssignment | 4 |
 | transformEnumMember | 4 |
 | serializeEntityNameAsExpression | 4 |
+| addDefaultValueAssignmentForInitializer | 4 |
 | createParamHelper | 3 |
 | convertToFunctionExpression | 3 |
 | convertToClassExpression | 3 |
@@ -456,6 +457,7 @@ these are callers/owners, not identified callees. All rows retain unit location 
 | createNamespaceExportExpression | 3 |
 | trySubstituteNamespaceExportedName | 3 |
 | createRuntimeTypeSerializer | 3 |
+| addDefaultValueAssignmentsIfNeeded | 3 |
 | bindChildren | 2 |
 | getSyntheticElementAccess | 2 |
 | visitExistingNodeTreeSymbolsWorker | 2 |
@@ -726,7 +728,7 @@ these are callers/owners, not identified callees. All rows retain unit location 
 
 ## Run times and failures
 
-Started 2026-11-16T16:36:24.047702+00:00; this checkpoint 2026-11-16T18:32:30.736295+00:00.
+Started 2026-11-16T16:36:24.047702+00:00; this checkpoint 2026-11-16T18:41:38.097935+00:00.
 Each piece's UTC start/end, wall time, exit status, complete flag, raw SHA256, and log path
 are in pieces.json. Source file inventory and adapted source SHA256s are in manifest.json.
 Rows from partial pieces, if any, are retained and explicitly marked piece_complete=false.

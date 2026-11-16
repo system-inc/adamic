@@ -67,7 +67,7 @@ claimed to pass. The initial stop is retained in preflight.json.
 **A full-mode per-file census is a floor where whole-program facts differ.** Isolated
 state, cross-file fact discovery and census-wide generic instantiation witnesses can differ.
 Failures can block child traversal. This ledger is not proof of exhaustive lowering coverage
-or successful compilation; no backend or usable IR is produced.
+or successful compilation. Census runs invoke no backend and produce no usable IR.
 
 ## Counts
 
@@ -103,7 +103,8 @@ No claim that those effects individually explain a particular delta is made with
 The findings schema records the attempting unit, location, reason and text, but does not
 name the callee or receiving slot for this refusal. No callee counts are inferred from
 reason types. The following first cut groups the attempting function/declaration name;
-these are callers/owners, not identified callees. All rows retain unit location and kind.
+these are callers/owners, not identified callees. All rows retain unit location and kind. Locations are adapted-root relative, with one-based
+lines and UTF-16 columns as emitted by the census; exact reason strings are unchanged.
 
 | Attempting name (or location when unnamed) | Sites |
 | --- | ---: |
@@ -134,6 +135,23 @@ Rows from partial pieces, if any, are retained and explicitly marked piece_compl
         report+='| Slowest piece | Wall seconds | Complete |\n| --- | ---: | --- |\n'
         for state in sorted(states,key=lambda state:state['wall_seconds'],reverse=True)[:5]:
             report+=f"| {state['file']} | {state['wall_seconds']:.3f} | {state['complete']} |\n"
+    old_reasons={reason.removeprefix('Refused: '):count for reason,count in reasons.items()}
+    actual_reasons=Counter(key[2] for key in meterkeys)
+    row_reasons=Counter(row['reason'] for row in rows)
+    record_reasons=Counter()
+    for key,count in counts.items(): record_reasons[key[3]]+=count
+    reason_comparison=[dict(reason=reason,meter_sites=old_reasons.get(reason,0),observed_sites=actual_reasons.get(reason,0),distinct_rows=row_reasons.get(reason,0),records=record_reasons.get(reason,0),delta=actual_reasons.get(reason,0)-old_reasons.get(reason,0)) for reason in sorted(set(old_reasons)|set(actual_reasons))]
+    dump(HERE/'meter-comparison.json',dict(baseline_sha=meter['adamic_commit'],measured_sha=manifest['sha'],baseline_sites=sum(old_reasons.values()),observed_sites=len(meterkeys),distinct_rows=len(rows),records=sum(counts.values()),reasons=reason_comparison))
+    changes=sorted((row for row in reason_comparison if row['delta']),key=lambda row:(-abs(row['delta']),row['reason']))
+    report+='\n## Exact-reason comparison with the saved meter\n\n'
+    if not changes:
+        report+='All exact-reason site counts agree with the saved meter. Attempting-unit contexts and repeated records still use the separate counts above.\n'
+    else:
+        report+=f"{len(changes)} exact reasons have different site counts. meter-comparison.json contains every reason, count and delta; the largest differences are below. This identifies the observations that differ, not a unique causal attribution across the different pins and file scopes.\n\n"
+        report+='| Exact reason | Meter sites | Observed sites | Delta |\n| --- | ---: | ---: | ---: |\n'
+        for row in changes[:10]:
+            label=row['reason'].replace('&','&amp;').replace('<','&lt;').replace('>','&gt;').replace('|','\\|')
+            report+=f"| {label} | {row['meter_sites']} | {row['observed_sites']} | {row['delta']:+d} |\n"
     verification=HERE/'verification.json'
     if verification.exists():
         checked=json.loads(verification.read_text())

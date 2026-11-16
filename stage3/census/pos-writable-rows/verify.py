@@ -8,7 +8,7 @@ manifest=json.loads((out/'manifest.json').read_text())
 states=json.loads((out/'pieces.json').read_text())
 assert len({s['file'] for s in states})==len(states)
 assert set(s['file'] for s in states)<=set(manifest['files'])
-expected=collections.Counter(); owners={}; meter=set(); matched=0
+expected=collections.Counter(); owners={}; meter=set(); texts=collections.defaultdict(set); matched=0
 for state in states:
     file=state['file']; raw=scratch/'raw'/(file.replace('/','__')+'.jsonl')
     assert hashlib.sha256(raw.read_bytes()).hexdigest()==state['raw_sha256'],file
@@ -30,7 +30,7 @@ for state in states:
             fn,line,col=where.rsplit(':',2)
             unit=f['unit'].replace(str(adapted)+'/', '')
             key=(fn,int(line),int(col),f['reason'],unit)
-            expected[key]+=1; matched+=1
+            expected[key]+=1; matched+=1; texts[key].add(f['text'].replace(str(adapted)+'/', ''))
             u=units[f['unit']]
             owner=(u['kind'],u.get('name',''))
             assert key not in owners or owners[key]==owner,key
@@ -45,6 +45,8 @@ for key,r in zip(keys,rows):
     assert (r['unit_kind'],r['unit_name'])==owners[key],key
     assert r['where']==f"{r['file']}:{r['line']}:{r['col']}",key
 assert sum(r['multiplicity'] for r in rows)==matched
+assert all(len(values)==1 for values in texts.values()), 'text variation within a requested key'
+assert all(r['text'] in texts[key] for key,r in zip(keys,rows))
 for file,sha in manifest['source_sha256'].items():
     assert hashlib.sha256((adapted/file).read_bytes()).hexdigest()==sha,file
 root=out.parents[2]
