@@ -27,6 +27,10 @@ assert 'vcs.revision='+sha in info
 manifest=read(base/'adapted-source-manifest.json');assert manifest==read(base/'adapted-source-before-measurement.json')
 assert all(hashlib.sha256((tree/n).read_bytes()).hexdigest()==h for n,h in manifest.items())
 cs=read(base/'comparison.json');baseline=read(base/'baseline.json');assert len(cs)==79*len(modes)
+archived=(base/'base/CommonJSBundle/census.jsonl').read_bytes()
+assert hashlib.sha256(archived).hexdigest()==provenance['baseline_rows_sha256']
+oldrows=[json.loads(line) for line in archived.splitlines()];assert len(oldrows)==79
+assert {r['roots'][0].split('/src/compiler/')[-1]:[r.get('where','-').split('/src/compiler/')[-1],r['kind'],r.get('reason','-')] for r in oldrows}==baseline
 for c in cs:assert c['before']==baseline[c['root']] and c['unchanged']==(c['before']==c['after'])
 changed=subprocess.check_output(['git','diff',sha,'--name-only'],cwd=repo,text=True).splitlines()
 untracked=subprocess.check_output(['git','ls-files','--others','--exclude-standard'],cwd=repo,text=True).splitlines()

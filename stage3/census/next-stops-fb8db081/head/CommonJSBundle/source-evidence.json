@@ -1,0 +1,70 @@
+[
+  {
+    "where": "sys.ts:1537:13",
+    "kind": "Refused",
+    "reason": "a function taking PollingInterval seen as one taking number | undefined (tsc relates a method's parameters both ways), so it can be handed what it can't take",
+    "phase": "refusal_scan (function-parameter variance; rule 3100)",
+    "owner": "internal/lower/invariance.go: refuseWidening / widenedParameters / wideningRefusal; adapted getNodeSystem pinned by 93-builtin-imports and 99-wasm-crypto-import",
+    "emitter": "internal/lower/refusals.go:105-106 -> internal/lower/library_string.go:401-417 (rule 3100) -> internal/lower/invariance.go:574,611-620,725,1138-1178; parameter comparison at 228-238",
+    "source_review": "The adapted line is the watchFile shorthand in the nodeSystem object inside getNodeSystem. The source function takes a required PollingInterval; System.watchFile declares an optional number parameter. 93-builtin-imports/proofs/targets.json names and hashes getNodeSystem; 99-wasm-crypto-import/proofs/targets.json pins its ownerBeforeText and ownerAfterText. 92-tty-host-results pins two other nested methods in that scope, not this shorthand. No getFirstJSDocTag owner was found by the owners.json/targets.json search.",
+    "host_runtime": "This is a source-level parameter-variance refusal, not a node:*, process, host-member, or runtime-execution stop. watchFile here is a TypeScript function being stored in the source-defined System contract, even though the surrounding object implements the Node system.",
+    "adapted_line": "            watchFile,",
+    "adapted_excerpt": "1534:             },\n1535:             readFile,\n1536:             writeFile: patchedWriteFile,\n1537:             watchFile,\n1538:             watchDirectory: (path: string, callback: DirectoryWatcherCallback, recursive?: boolean, options?: WatchOptions) => watchDirectory(path, callback, !!recursive, options),\n1539:             preferNonRecursiveWatch: !fsSupportsRecursiveFsWatch,\n1540:             resolvePath: path => _path.resolve(path),"
+  },
+  {
+    "where": "-",
+    "kind": "accepted",
+    "reason": "-",
+    "phase": "accepted",
+    "owner": "lower.LowerWithOptions (accepted; no stop)",
+    "emitter": "lower.LowerWithOptions (accepted; no stop)"
+  },
+  {
+    "where": "commandLineParser.ts:293:35",
+    "kind": "NotYet",
+    "reason": "reading an enum before its runtime initialization; move the call after the enum declaration",
+    "phase": "initialization preflight (before refusal scan and expression lowering)",
+    "owner": "internal/lower/namespaces.go: (*lowering).namespaceInitialization",
+    "emitter": "internal/lower/lower.go:138 -> internal/lower/namespaces.go:279-290 (namespaceInitialization)",
+    "source_review": "This source enum/namespace initialization read retains its baseline first-stop tuple.",
+    "host_runtime": "This is a static source initialization-order stop. It is not a node:*, process, or host-member refusal; no runtime execution was measured.",
+    "adapted_line": "            fixedpollinginterval: WatchFileKind.FixedPollingInterval,",
+    "adapted_excerpt": "290:     {\n291:         name: \"watchFile\",\n292:         type: new Map(Object.entries({\n293:             fixedpollinginterval: WatchFileKind.FixedPollingInterval,\n294:             prioritypollinginterval: WatchFileKind.PriorityPollingInterval,\n295:             dynamicprioritypolling: WatchFileKind.DynamicPriorityPolling,\n296:             fixedchunksizepolling: WatchFileKind.FixedChunkSizePolling,"
+  },
+  {
+    "where": "diagnosticInformationMap.generated.ts:13:45",
+    "kind": "NotYet",
+    "reason": "reading an enum before its runtime initialization; move the call after the enum declaration",
+    "phase": "initialization preflight (before refusal scan and expression lowering)",
+    "owner": "internal/lower/namespaces.go: (*lowering).namespaceInitialization",
+    "emitter": "internal/lower/lower.go:138 -> internal/lower/namespaces.go:279-290 (namespaceInitialization)",
+    "source_review": "This source enum/namespace initialization read retains its baseline first-stop tuple.",
+    "host_runtime": "This is a static source initialization-order stop. It is not a node:*, process, or host-member refusal; no runtime execution was measured.",
+    "adapted_line": "    Unterminated_string_literal: diag(1002, DiagnosticCategory.Error, \"Unterminated_string_literal_1002\", \"Unterminated string literal.\") as DiagnosticMessage,",
+    "adapted_excerpt": "10: /* eslint-disable @typescript-eslint/no-unnecessary-type-assertion*/\n11: /** @internal */\n12: export const Diagnostics = {\n13:     Unterminated_string_literal: diag(1002, DiagnosticCategory.Error, \"Unterminated_string_literal_1002\", \"Unterminated string literal.\") as DiagnosticMessage,\n14:     Identifier_expected: diag(1003, DiagnosticCategory.Error, \"Identifier_expected_1003\", \"Identifier expected.\") as DiagnosticMessage,\n15:     _0_expected: diag(1005, DiagnosticCategory.Error, \"_0_expected_1005\", \"'{0}' expected.\") as DiagnosticMessage,\n16:     A_file_cannot_have_a_reference_to_itself: diag(1006, DiagnosticCategory.Error, \"A_file_cannot_have_a_reference_to_itself_1006\", \"A file cannot have a reference to itself.\") as DiagnosticMessage,"
+  },
+  {
+    "where": "semver.ts:71:9",
+    "kind": "NotYet",
+    "reason": "a namespace read before runtime initialization, directly or through a reachable call; move that read or call after the namespace declaration",
+    "phase": "initialization preflight (before refusal scan and expression lowering)",
+    "owner": "internal/lower/namespaces.go: (*lowering).namespaceInitialization",
+    "emitter": "internal/lower/lower.go:138 -> internal/lower/namespaces.go:279-290 (namespaceInitialization)",
+    "source_review": "This source enum/namespace initialization read retains its baseline first-stop tuple.",
+    "host_runtime": "This is a static source initialization-order stop. It is not a node:*, process, or host-member refusal; no runtime execution was measured.",
+    "adapted_line": "        Debug.assert(every(buildArray, s => buildPartRegExp.test(s)), \"Invalid argument: build\");",
+    "adapted_excerpt": "68:         const buildArray = build ? isArray(build) ? build : build.split(\".\") : emptyArray;\n69: \n70:         Debug.assert(every(prereleaseArray, s => prereleasePartRegExp.test(s)), \"Invalid argument: prerelease\");\n71:         Debug.assert(every(buildArray, s => buildPartRegExp.test(s)), \"Invalid argument: build\");\n72: \n73:         this.major = major;\n74:         this.minor = minor;"
+  },
+  {
+    "where": "utilitiesPublic.ts:1289:38",
+    "kind": "Refused",
+    "reason": "an unproven predicate argument for parameter predicate (argument \"predicate\")",
+    "phase": "refusal_scan (predicate contracts, before per-node rules)",
+    "owner": "internal/lower/predicates.go: predicateArguments / predicateArgumentProof; source getAllJSDocTags (no explicit adaptation owner pin found)",
+    "emitter": "internal/lower/lower.go:142 -> internal/lower/refusals.go:83 -> internal/lower/predicates.go:711,752,777-798",
+    "source_review": "This is the predicate argument to Array.filter in getAllJSDocTags. The old getFirstJSDocTag/find site at 1284:52 is passed; the measured first stop is now 1289:38. The owners.json/targets.json search finds getAllJSDocTags only in import-list text in 99-correctness-core-multimap, not as a pinned function owner. No explicit adaptation pin for this function was found.",
+    "host_runtime": "This is a source predicate-contract refusal at Array.filter. It is not a node:*, process, host-member, or runtime-execution stop.",
+    "adapted_line": "    return getJSDocTags(node).filter(predicate);",
+    "adapted_excerpt": "1286: \n1287: /** Gets all JSDoc tags that match a specified predicate */\n1288: export function getAllJSDocTags<T extends JSDocTag>(node: Node, predicate: (tag: JSDocTag) => tag is T): readonly T[] {\n1289:     return getJSDocTags(node).filter(predicate);\n1290: }\n1291: \n1292: /** Gets all JSDoc tags of a specified kind */"
+  }
+]
