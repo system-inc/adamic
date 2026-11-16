@@ -79,6 +79,41 @@ func (l *lowering) shapeFit(value *checker.Type, target *checker.Type, libraryAr
 	return "", true
 }
 
+// shapeFitPromiseStop is promiseWhereObjectGoes' stop, with the fix in its words.
+const shapeFitPromiseStop = "a Promise going where a plain object type is held (keep it typed Promise<T>, or await it)"
+
+// promiseWhereObjectGoes is the stop for a value held as an async promise (ir.Promise) going where a slot
+// held as an object is, or "" when it isn't one. tsc lets a Promise<T> go anywhere its members fit, a
+// structural PromiseLike<T> above all, but the runtime holds a promise as an adamic_async_promise with no
+// object layout, so on main 1c1d6568 `const viewed: PromiseLike<number> = Promise.resolve(7)` and a
+// PromiseLike<number> parameter handed one lowered, and clang refused the C that put an
+// adamic_async_promise* where an adamic_object* goes (#v5b6pzp, J-q0gnv3p). A slot held as a union boxes the
+// promise and reads typeof right on every backend, so it isn't judged here, and neither is unknown, which
+// promise_into_void.go stops as a type that names no promise. It's asked at the value's own site, never in
+// containerWhereOtherGoes' walk, which keeps every promise out on purpose (a Promise's then instantiates anew
+// at each step). A promise nested in a field the view reads is the writable-field view rule's to stop, as
+// J-q0gnv3p's nested probe did. It pairs with async.go's "await of thenables" check: that one stops a
+// value not held as a promise that has a then, so once this stops the view, a PromiseLike-typed value can
+// only be a program's own object, and awaiting one stops there. They meet without overlap, and neither
+// subsumes the other (Lower's read on #v5b6pzp). An await's operand is exempt: tsc gives it a contextual
+// PromiseLike<T> slot (async_plain.a's `return await empty()`), but the await reads it as a promise
+// (awaitExpression) and stores it nowhere, so no object is made of it.
+func (l *lowering) promiseWhereObjectGoes(node *ast.Node, target *checker.Type) string {
+	parent := node.Parent
+	for parent != nil && parent.Kind == ast.KindParenthesizedExpression {
+		parent = parent.Parent
+	}
+	if parent != nil && parent.Kind == ast.KindAwaitExpression {
+		return ""
+	}
+	held, valueKnown := l.representation(l.checker.GetTypeAtLocation(node))
+	slot, slotKnown := l.representation(target)
+	if !valueKnown || !slotKnown || held != ir.Promise || slot != ir.Object {
+		return ""
+	}
+	return shapeFitPromiseStop
+}
+
 // shapeFitReached is the converse's stop past containerFitDepth, where the walk no longer knows which
 // position meets which: a map or an array a value of type value can hold anywhere (eachReached), assignable
 // to a structural slot a value of type target can hold anywhere that it can't go to (shapeFit), or ""
