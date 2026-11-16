@@ -1,6 +1,6 @@
 # Pos-writable rows — #aryr7ea
 
-Status: incomplete checkpoint at 2026-11-16T17:13:06.213443+00:00.
+Status: incomplete checkpoint at 2026-11-16T17:21:04.713539+00:00.
 
 Measured main tip `c41391ea3346727231dfa3472d061826e26f6aad` in a fresh detached worktree; TypeScript v6.0.3
 `050880ce59e30b356b686bd3144efe24f875ebc8`. Recursive shallow submodules initialized;
@@ -35,10 +35,10 @@ or successful compilation; no backend or usable IR is produced.
 
 ## Counts
 
-Completed 20/79 compiler .ts files; failed pieces: 0.
-Distinct requested keys (file, line, col, reason, unit): **50**.
-Matching raw records (sum of multiplicity): **54**.
-Meter-style distinct (kind, where, reason, text), omitting unit: **28**.
+Completed 21/79 compiler .ts files; failed pieces: 0.
+Distinct requested keys (file, line, col, reason, unit): **453**.
+Matching raw records (sum of multiplicity): **459**.
+Meter-style distinct (kind, where, reason, text), omitting unit: **93**.
 
 The saved daily meter 20261115T131735Z.PG4H0R, main `7816a8d85d60db6ffb618132eaf8b17c91ef8866`,
 counts **550** pos-writable sites across **173** exact reasons.
@@ -54,9 +54,9 @@ No claim that those effects individually explain a particular delta is made with
 
 | Target | Sites |
 | --- | ---: |
-| TextRange | 31 |
-| others | 16 |
-| Mutable<Node> | 3 |
+| TextRange | 377 |
+| others | 72 |
+| Mutable<Node> | 4 |
 | SourceMapRange \| undefined | 0 |
 | TextRange \| undefined | 0 |
 
@@ -64,7 +64,7 @@ No claim that those effects individually explain a particular delta is made with
 
 | Kind | Sites |
 | --- | ---: |
-| KindFunctionDeclaration | 50 |
+| KindFunctionDeclaration | 453 |
 
 ## Callee / receiving slot
 
@@ -75,6 +75,7 @@ these are callers/owners, not identified callees. All rows retain unit location 
 
 | Attempting name (or location when unnamed) | Sites |
 | --- | ---: |
+| createCallBinding | 5 |
 | convertToFunctionBlock | 4 |
 | createParamHelper | 3 |
 | convertToFunctionExpression | 3 |
@@ -82,19 +83,202 @@ these are callers/owners, not identified callees. All rows retain unit location 
 | convertToObjectAssignmentElement | 3 |
 | convertToObjectAssignmentPattern | 3 |
 | convertToArrayAssignmentPattern | 3 |
+| updateTypeParameterDeclaration | 3 |
+| updateCallSignature | 3 |
+| updateConstructSignature | 3 |
+| updateIndexSignature | 3 |
+| updateConstructorTypeNode1 | 3 |
+| updateImportTypeNode | 3 |
+| updateTypeOperatorNode | 3 |
+| updateMappedTypeNode | 3 |
+| updateYieldExpression | 3 |
+| updateBlock | 3 |
+| updateExpressionStatement | 3 |
+| updateContinueStatement | 3 |
+| updateBreakStatement | 3 |
+| updateReturnStatement | 3 |
+| updateSwitchStatement | 3 |
+| updateCaseBlock | 3 |
+| updateImportDeclaration | 3 |
+| updateImportClause | 3 |
+| updateAssertClause | 3 |
+| updateAssertEntry | 3 |
+| updateImportTypeAssertionContainer | 3 |
+| updateImportAttributes | 3 |
+| updateImportAttribute | 3 |
+| updateNamespaceImport | 3 |
+| updateNamespaceExport | 3 |
+| updateNamedImports | 3 |
+| updateJSDocFunctionType | 3 |
+| updateJSDocTypeLiteral | 3 |
+| updateJSDocTypeExpression | 3 |
+| updateJSDocSignature | 3 |
+| updateJSDocTemplateTag | 3 |
+| updateJSDocTypedefTag | 3 |
+| updateJSDocParameterTag | 3 |
+| updateJSDocPropertyTag | 3 |
+| updateJSDocCallbackTag | 3 |
+| updateJSDocOverloadTag | 3 |
+| updateJSDocSeeTag | 3 |
+| updateJSDocNameReference | 3 |
+| updateJSDocLink | 3 |
+| updateJSDocLinkCode | 3 |
+| updateJSDocLinkPlain | 3 |
+| updateJSDocUnknownTag | 3 |
+| updateJSDocImportTag | 3 |
+| updateJSDocText | 3 |
+| ensureUseStrict | 3 |
 | bindChildren | 2 |
 | visitExistingNodeTreeSymbolsWorker | 2 |
 | getSourceMapRange | 2 |
 | getCommentRange | 2 |
 | convertToArrayAssignmentElement | 2 |
+| cloneNode | 2 |
 | createEmitHelperFactory | 2 |
 | createNodeConverters | 2 |
+| updateQualifiedName | 2 |
+| updateComputedPropertyName | 2 |
+| updateParameterDeclaration | 2 |
+| updateDecorator | 2 |
+| finishUpdatePropertySignature | 2 |
+| updatePropertyDeclaration | 2 |
+| updateMethodSignature | 2 |
+| finishUpdateMethodDeclaration | 2 |
+| finishUpdateClassStaticBlockDeclaration | 2 |
+| finishUpdateConstructorDeclaration | 2 |
+| finishUpdateGetAccessorDeclaration | 2 |
+| finishUpdateSetAccessorDeclaration | 2 |
+| updateTemplateLiteralTypeSpan | 2 |
+| updateTypePredicateNode | 2 |
+| updateTypeReferenceNode | 2 |
+| finishUpdateFunctionTypeNode | 2 |
+| updateTypeQueryNode | 2 |
+| updateTypeLiteralNode | 2 |
+| updateArrayTypeNode | 2 |
+| updateTupleTypeNode | 2 |
+| updateNamedTupleMember | 2 |
+| updateOptionalTypeNode | 2 |
+| updateRestTypeNode | 2 |
+| updateUnionTypeNode | 2 |
+| updateIntersectionTypeNode | 2 |
+| updateConditionalTypeNode | 2 |
+| updateInferTypeNode | 2 |
+| updateTemplateLiteralType | 2 |
+| updateParenthesizedType | 2 |
+| updateIndexedAccessTypeNode | 2 |
+| updateLiteralTypeNode | 2 |
+| updateObjectBindingPattern | 2 |
+| updateArrayBindingPattern | 2 |
+| updateBindingElement | 2 |
+| updateArrayLiteralExpression | 2 |
+| updateObjectLiteralExpression | 2 |
+| updatePropertyAccessExpression | 2 |
+| updatePropertyAccessChain | 2 |
+| updateElementAccessExpression | 2 |
+| updateElementAccessChain | 2 |
+| updateCallExpression | 2 |
+| updateCallChain | 2 |
+| updateNewExpression | 2 |
+| updateTaggedTemplateExpression | 2 |
+| updateTypeAssertion | 2 |
+| updateParenthesizedExpression | 2 |
+| updateFunctionExpression | 2 |
+| updateArrowFunction | 2 |
+| updateDeleteExpression | 2 |
+| updateTypeOfExpression | 2 |
+| updateVoidExpression | 2 |
+| updateAwaitExpression | 2 |
+| updatePrefixUnaryExpression | 2 |
+| updatePostfixUnaryExpression | 2 |
+| updateBinaryExpression | 2 |
+| updateConditionalExpression | 2 |
+| updateTemplateExpression | 2 |
+| updateSpreadElement | 2 |
+| updateClassExpression | 2 |
+| updateExpressionWithTypeArguments | 2 |
+| updateAsExpression | 2 |
+| updateNonNullExpression | 2 |
+| updateSatisfiesExpression | 2 |
+| updateNonNullChain | 2 |
+| updateMetaProperty | 2 |
+| updateTemplateSpan | 2 |
+| updateVariableStatement | 2 |
+| updateIfStatement | 2 |
+| updateDoStatement | 2 |
+| updateWhileStatement | 2 |
+| updateForStatement | 2 |
+| updateForInStatement | 2 |
+| updateForOfStatement | 2 |
+| updateWithStatement | 2 |
+| updateLabeledStatement | 2 |
+| updateThrowStatement | 2 |
+| updateTryStatement | 2 |
+| updateVariableDeclaration | 2 |
+| updateVariableDeclarationList | 2 |
+| finishUpdateFunctionDeclaration | 2 |
+| updateClassDeclaration | 2 |
+| updateInterfaceDeclaration | 2 |
+| updateTypeAliasDeclaration | 2 |
+| updateEnumDeclaration | 2 |
+| updateModuleDeclaration | 2 |
+| updateModuleBlock | 2 |
+| finishUpdateNamespaceExportDeclaration | 2 |
+| updateImportEqualsDeclaration | 2 |
+| updateImportSpecifier | 2 |
+| updateExportAssignment | 2 |
+| finishUpdateExportDeclaration | 2 |
+| updateNamedExports | 2 |
+| updateExportSpecifier | 2 |
+| updateExternalModuleReference | 2 |
+| updateJSDocMemberName | 2 |
+| updateJSDocEnumTag | 2 |
+| updateJSDocComment | 2 |
+| updateJsxElement | 2 |
+| updateJsxSelfClosingElement | 2 |
+| updateJsxOpeningElement | 2 |
+| updateJsxClosingElement | 2 |
+| updateJsxFragment | 2 |
+| updateJsxText | 2 |
+| updateJsxAttribute | 2 |
+| updateJsxAttributes | 2 |
+| updateJsxSpreadAttribute | 2 |
+| updateJsxExpression | 2 |
+| updateJsxNamespacedName | 2 |
+| updateCaseClause | 2 |
+| updateDefaultClause | 2 |
+| updateHeritageClause | 2 |
+| updateCatchClause | 2 |
+| finishUpdatePropertyAssignment | 2 |
+| finishUpdateShorthandPropertyAssignment | 2 |
+| updateSpreadAssignment | 2 |
+| updateEnumMember | 2 |
+| updateSourceFile | 2 |
+| updateBundle | 2 |
+| createNotEmittedStatement | 2 |
+| createPartiallyEmittedExpression | 2 |
+| updatePartiallyEmittedExpression | 2 |
+| updateCommaListExpression | 2 |
+| updateSyntheticReferenceExpression | 2 |
+| getNamespaceMemberName | 2 |
 | bindLabeledStatement | 1 |
 | bindModuleDeclaration | 1 |
 | bindSourceFileIfExternalModule | 1 |
 | tryReuseExistingTypeNode | 1 |
 | typeFromObjectLiteral | 1 |
 | createRestHelper | 1 |
+| updatePropertySignature | 1 |
+| updateClassStaticBlockDeclaration | 1 |
+| updateFunctionTypeNode | 1 |
+| createImportTypeNode | 1 |
+| createJSDocPrePostfixUnaryTypeWorker | 1 |
+| updateJSDocPrePostfixUnaryTypeWorker | 1 |
+| updateJSDocUnaryTypeWorker | 1 |
+| updateJSDocAugmentsTag | 1 |
+| updateJSDocImplementsTag | 1 |
+| cloneRedirectedSourceFile | 1 |
+| getName | 1 |
+| mergeLexicalEnvironment | 1 |
+| makeSynthetic | 1 |
 | createBindBinaryExpressionFlow | 1 |
 | onEnter | 1 |
 | bindJSDocTypeAlias | 1 |
@@ -106,7 +290,7 @@ these are callers/owners, not identified callees. All rows retain unit location 
 
 ## Run times and failures
 
-Started 2026-11-16T16:36:24.047702+00:00; this checkpoint 2026-11-16T17:13:06.213616+00:00.
+Started 2026-11-16T16:36:24.047702+00:00; this checkpoint 2026-11-16T17:21:04.713818+00:00.
 Each piece's UTC start/end, wall time, exit status, complete flag, raw SHA256, and log path
 are in pieces.json. Source file inventory and adapted source SHA256s are in manifest.json.
 Rows from partial pieces, if any, are retained and explicitly marked piece_complete=false.
