@@ -33,6 +33,9 @@ untracked=subprocess.check_output(['git','ls-files','--others','--exclude-standa
 assert all(n.startswith('stage3/census/next-stops-fb8db081/') for n in changed+untracked)
 assert not list(base.rglob('*.go'))
 assert not [p for p in base.rglob('*') if p.is_file() and p.stat().st_size>20_000_000]
-result=dict(formats=modes,roots_per_format=79,raw_observations=158*len(modes),duplicates_agree=True,all_child_exits={n:s['exit_code'] for n,s in statuses.items()},maximum_child_seconds=max(s['seconds'] for s in statuses.values()),adapted_source_hashes_verified=True,binary_verified=True,only_census_directory_changed=True)
+processes=subprocess.check_output(['ps','-eo','stat=,args='],text=True).splitlines()
+assert not [line for line in processes if len(line.split(None,1))==2 and line.split(None,1)[1].startswith(binary['path']+' ') and not line.split()[0].startswith('Z')]
+assert len(list(base.glob('head/*/apply-status.json')))==1 and len(list(base.glob('head/*/build-status.json')))==1
+result=dict(no_live_census_children=True,single_apply_and_build=True,formats=modes,roots_per_format=79,raw_observations=158*len(modes),duplicates_agree=True,all_child_exits={n:s['exit_code'] for n,s in statuses.items()},maximum_child_seconds=max(s['seconds'] for s in statuses.values()),adapted_source_hashes_verified=True,binary_verified=True,only_census_directory_changed=True)
 (base/('validation-'+modes[-1]+'.json')).write_text(json.dumps(result,indent=2)+'\n')
 (base/'validation.json').write_text(json.dumps(result,indent=2)+'\n');print('validation passed',modes)
