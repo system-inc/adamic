@@ -324,11 +324,18 @@ func (l *lowering) recordLiteral(node *ast.Node, t *checker.Type) (ir.Expression
 	if !known {
 		return nil, l.notYet(node, "record values with an unsupported slot representation")
 	}
+	record := l.recordLiteralType(node)
 	result := ir.RecordLiteral{Element: of, Site: l.writeSite(node)}
-	// The record types noteRecordSlot asks a seed's slot to reach (reachesRecord). The empty fallback a
+	// The record type it's built as is its graph identity, as an object literal's slot type is
+	// (graphAllocation): a record of a type graphTypes selects is a graph member wherever it flows, and
+	// graphFlows adds the literal's own site where a graph value is demanded through it (#1vb0x5s).
+	if record != nil {
+		result.GraphTypes = []int{l.cycleTypeID(l.concrete(record))}
+	}
+	// The record types noteRecordSlot asks a seed's slot to reach (reachedRecords). The empty fallback a
 	// spread of R | undefined takes below is a second allocation, but it holds nothing and is only spread
 	// into this literal, so it can't close a cycle by itself (Lower's read on #t5q4prw).
-	l.graphRecords = append(l.graphRecords, graphRecordSite{node: node, record: l.recordLiteralType(node), empty: len(node.AsObjectLiteralExpression().Properties.Nodes) == 0})
+	l.graphRecords = append(l.graphRecords, graphRecordSite{node: node, record: record, empty: len(node.AsObjectLiteralExpression().Properties.Nodes) == 0})
 	for i, p := range node.AsObjectLiteralExpression().Properties.Nodes {
 		if p.Kind == ast.KindSpreadAssignment {
 			if i != 0 {

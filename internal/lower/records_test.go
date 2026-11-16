@@ -20,6 +20,11 @@ func TestRecordForms(t *testing.T) {
 		`const r:Record<string,string>={}; console.log(r && 'value');`,
 		`let t:{[index:string]:string}|undefined; function m(k:string,f:string):string {return t && t[k] || f;} console.log(m('a','b'));`,
 		`interface Recovery { b: number; [key: string]: number | string } const r: Recovery = { b: 1, 2: "two", 0x1F: 3 }; console.log(Object.keys(r).join(','));`,
+		// A write into a record that closes a cycle seeds the record's graph region, as a map's does, where
+		// it was refused before records joined graph regions (#1vb0x5s); internal/oracle's
+		// graph_records_test.go holds such roads to Node and the counted build.
+		`interface R {[key:string]:R} const r:R={}; r['self']=r;`,
+		`interface Node {links:Record<string,Node>} const a:Node={links:{}}; a.links['self']=a;`,
 	} {
 		t.Run(source, func(t *testing.T) {
 			_, err := lowerSource(t, source)
@@ -49,8 +54,6 @@ func TestRecordRefusals(t *testing.T) {
 		{`const inner:Record<string,number>={}; const holder={inner}; const view:{inner:{x?:number}}=holder;`, "seen as", true},
 		{`type R=Readonly<Record<string,number>>; const r:R={}; console.log(String(r['x']));`, "value of type", true},
 		{`const fixed={x:1}; const r:Record<string,number>=fixed;`, "seen as", true},
-		{`interface R {[key:string]:R} const r:R={}; r['self']=r;`, "cycle", false},
-		{`interface Node {links:Record<string,Node>} const a:Node={links:{}}; a.links['self']=a;`, "cycle", false},
 	} {
 		t.Run(probe.source, func(t *testing.T) {
 			_, err := lowerSource(t, probe.source)
