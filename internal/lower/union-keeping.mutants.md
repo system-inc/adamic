@@ -169,3 +169,21 @@ Expected: `TestUnionKeepingRepeatingLapFinishes/member.a`, `member.ts`, `field.a
 on Go's stack limit first. Either one is red. The types repeat with the same ids every
 lap, so the nesting bound never says no, and the ordinary union block's fresh visited
 never sees the pair again.
+
+## Source method facing a view property (#ttq1599)
+
+Restore `inside.Flags&ast.SymbolFlagsMethod == 0` in
+`sameKeepingStorage`'s property loop, leaving the view-method `continue` alone.
+
+```
+go test -count=1 -v -run '^TestUnionKeepingMethodPropertyStop$' ./internal/lower/
+```
+
+The command exits 1. `TestUnionKeepingMethodPropertyStop/.a` and
+`TestUnionKeepingMethodPropertyStop/.ts` fail with
+`got <nil>, want main.a:8:117: stage 0 can't lower ... yet` and
+`got <nil>, want main.ts:8:117: stage 0 can't lower ... yet`, respectively.
+The object-literal method's `(x: number | string) => string` is seen through
+`(x: number) => string`; the assignment lowers again when source methods are
+skipped. The mutant was planted once and the file restored after the run.
+Output: `/workspace/scratch/ttq1599/source-method-mutant.log`.

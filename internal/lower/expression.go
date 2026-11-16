@@ -576,7 +576,7 @@ func (l *lowering) sameKeepingWalkMode(from, to *checker.Type, visited map[[2]*c
 	return true
 }
 
-// sameKeepingStorage judges stored contents and callable field slots; methods stay skipped.
+// sameKeepingStorage compares stored slots, including source methods facing view properties; only view methods stay skipped.
 func (l *lowering) sameKeepingStorage(from, to *checker.Type, visited map[[2]*checker.Type]bool, nesting *keepingNesting, singleCallable bool) bool {
 	// A pair already open on this path answers same for now: the walk is a conjunction, so any
 	// difference on the cycle fails the whole walk, and this provisional same is never the answer
@@ -668,7 +668,7 @@ func (l *lowering) sameKeepingStorage(from, to *checker.Type, visited map[[2]*ch
 		if viewed.Flags&ast.SymbolFlagsMethod != 0 {
 			continue
 		}
-		if inside := l.checker.GetPropertyOfType(from, viewed.Name); inside != nil && inside.Flags&ast.SymbolFlagsMethod == 0 && !same(l.checker.GetTypeOfSymbol(inside), l.checker.GetTypeOfSymbol(viewed)) {
+		if inside := l.checker.GetPropertyOfType(from, viewed.Name); inside != nil && !same(l.checker.GetTypeOfSymbol(inside), l.checker.GetTypeOfSymbol(viewed)) {
 			return false
 		}
 	}
