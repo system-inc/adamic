@@ -394,5 +394,27 @@
     "raw_sha256": "02cc0e32b0ca56e0d82fb7e1d2b02dcc4c8815728770e19bb6410750c22cfac7",
     "started_utc": "2026-11-16T17:49:32.513078+00:00",
     "wall_seconds": 167.97588670200003
+  },
+  {
+    "complete": true,
+    "ended_utc": "2026-11-16T17:55:30.970701+00:00",
+    "error": "",
+    "exit_code": 0,
+    "file": "src/compiler/semver.ts",
+    "log": "/workspace/scratch/aryr7ea/raw/src__compiler__semver.ts.log",
+    "raw_sha256": "1ab4cd82e099f85c99e606657b33df193530f4b150944b223ee54a1b07abc332",
+    "started_utc": "2026-11-16T17:53:47.675256+00:00",
+    "wall_seconds": 103.29534207500001
+  },
+  {
+    "complete": true,
+    "ended_utc": "2026-11-16T17:58:04.535534+00:00",
+    "error": "",
+    "exit_code": 0,
+    "file": "src/compiler/sourcemap.ts",
+    "log": "/workspace/scratch/aryr7ea/raw/src__compiler__sourcemap.ts.log",
+    "raw_sha256": "4ea0c65859f76446305af4abdbbd43e746e31f7994f5216ef05be6526ecf351e",
+    "started_utc": "2026-11-16T17:55:30.973662+00:00",
+    "wall_seconds": 153.56154580900056
   }
 ]
