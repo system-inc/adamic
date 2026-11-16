@@ -403,8 +403,19 @@ func (l *lowering) sameKeepingWalk(from *checker.Type, to *checker.Type, visited
 	return l.sameKeepingWalkMode(from, to, visited, false, nil, false, false)
 }
 
+// keepingNesting is what a keeping walk carries across its modes. from and to bound growth: a generic
+// that instantiates itself deeper is a new type at every level. open bounds repetition: an ordinary
+// union block starts a fresh visited, so a lap that comes back to the same storage pair through a
+// callable slot (a field or member whose parameter holds its own union) is seen only here (#ttq1599).
 type keepingNesting struct {
 	from, to typeNesting
+	open     map[keepingPair]bool
+}
+
+// keepingPair is one storage comparison open on the walk's path.
+type keepingPair struct {
+	from, to       *checker.Type
+	singleCallable bool
 }
 
 func (l *lowering) sameKeepingWalkMode(from, to *checker.Type, visited map[[2]*checker.Type]bool, weakOnly bool, nesting *keepingNesting, insideSlot, singleCallable bool) bool {
@@ -567,6 +578,18 @@ func (l *lowering) sameKeepingWalkMode(from, to *checker.Type, visited map[[2]*c
 
 // sameKeepingStorage judges stored contents and callable field slots; methods stay skipped.
 func (l *lowering) sameKeepingStorage(from, to *checker.Type, visited map[[2]*checker.Type]bool, nesting *keepingNesting, singleCallable bool) bool {
+	// A pair already open on this path answers same for now: the walk is a conjunction, so any
+	// difference on the cycle fails the whole walk, and this provisional same is never the answer
+	// reported. Without it, a repeating lap's types never grow, so the nesting bound never stops it.
+	pair := keepingPair{from: from, to: to, singleCallable: singleCallable}
+	if nesting.open[pair] {
+		return true
+	}
+	if nesting.open == nil {
+		nesting.open = map[keepingPair]bool{}
+	}
+	nesting.open[pair] = true
+	defer delete(nesting.open, pair)
 	// Closure slots have no type descriptor, so callable twins must agree on parameter and result representation (#svbn0aj, a1).
 	sameCallablePair := func(inside, viewed *checker.Type) bool {
 		if !l.keepingCallable(inside) || !l.keepingCallable(viewed) {
@@ -598,13 +621,9 @@ func (l *lowering) sameKeepingStorage(from, to *checker.Type, visited map[[2]*ch
 		}
 		return sameCallable(l.checker.GetReturnTypeOfSignature(fromSignatures[0]), l.checker.GetReturnTypeOfSignature(toSignatures[0]))
 	}
-	// typeof narrows to the one callable member's own signature (#xmnp0x8); multiple callable members use the union's combined signature (#q6wf1bp).
-	if l.keepingCallable(from) || l.keepingCallable(to) {
-		if singleCallable && l.keepingCallable(from) && l.keepingCallable(to) {
-			return sameCallablePair(from, to)
-		}
-		return true
-	}
+	// Every storage frame enters the bound first, callable ones included: a function member whose
+	// parameter holds its own union comes back here through callableKeeping's ordinary walk, whose
+	// union block starts a fresh visited, so the bound is all that stops that lap (#ttq1599).
 	ok, leave := nesting.from.enter(from)
 	defer leave()
 	if !ok {
@@ -614,6 +633,13 @@ func (l *lowering) sameKeepingStorage(from, to *checker.Type, visited map[[2]*ch
 	defer leave()
 	if !ok {
 		return false
+	}
+	// typeof narrows to the one callable member's own signature (#xmnp0x8); multiple callable members use the union's combined signature (#q6wf1bp).
+	if l.keepingCallable(from) || l.keepingCallable(to) {
+		if singleCallable && l.keepingCallable(from) && l.keepingCallable(to) {
+			return sameCallablePair(from, to)
+		}
+		return true
 	}
 	same := func(inside, viewed *checker.Type) bool {
 		if l.keepingCallable(inside) || l.keepingCallable(viewed) {
