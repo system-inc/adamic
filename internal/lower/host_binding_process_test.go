@@ -96,7 +96,7 @@ func TestHostBindingProcessBrowserRoadsStop(t *testing.T) {
 			if !strings.Contains(what, "browser") {
 				t.Fatalf("want a stop naming browser, got %v", err)
 			}
-			if strings.HasPrefix(body, "const k") && what != "a run-time key on process, which could name process.browser" {
+			if strings.HasPrefix(body, "const k") && what != "a run-time key on process, which could name process.browser or process.recordreplay" {
 				t.Fatalf("want the run-time key diagnostic, got %v", err)
 			}
 			if strings.HasPrefix(body, "const p:") && !strings.Contains(what, "a member no host registration names") {
