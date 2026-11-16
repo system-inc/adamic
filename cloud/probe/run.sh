@@ -44,10 +44,13 @@ mkdir -p "$logs"
 mkdir -p "${GOTMPDIR:-/tmp/adamic-gate}" 2>/dev/null || export GOTMPDIR=$work/gotmp
 mkdir -p "${GOTMPDIR:-/tmp/adamic-gate}"
 
-# build checks out the submodules if they're missing and builds the compiler at a checkout.
+# build checks out the submodules if they're missing and builds the compiler at a checkout. Missing means
+# the module go.mod's replace reads from cohere's TypeScript submodule (./cohere/TypeScript/tsc) isn't
+# there. A sealed job's tree is laid with its submodules and has no git to update them by, so asking git
+# when they're already present would fail there for nothing.
 build() {
 	local checkout=$1 binary=$2
-	if [ ! -e "$checkout/cohere/TypeScript/go.mod" ]; then
+	if [ ! -e "$checkout/cohere/TypeScript/tsc/go.mod" ]; then
 		git -C "$checkout" -c protocol.file.allow=always submodule update --init --recursive --depth 1 >"$logs/submodules.log" 2>&1 || return 1
 	fi
 	(cd "$checkout" && go build -o "$binary" ./cmd/adamic) >"$logs/build-$(basename "$binary").log" 2>&1
