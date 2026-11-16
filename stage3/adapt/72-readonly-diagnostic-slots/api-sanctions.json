@@ -1,0 +1,35 @@
+[
+  {
+    "path": [
+      "DiagnosticRelatedInformation",
+      "file"
+    ],
+    "kind": "PropertySignature",
+    "replace": "member",
+    "before": "file: SourceFile | undefined;",
+    "after": "readonly file: SourceFile | undefined;",
+    "why": "Adamic, task m2wxyaz: the three slots are readonly, certified by the compiled program's gate, not by adaptation 70's audit. Code that assigns file, start or length on a Diagnostic or a DiagnosticRelatedInformation stops type-checking (TS2540); code that reads them is unaffected; a DiagnosticWithLocation stays writable until its own slice."
+  },
+  {
+    "path": [
+      "DiagnosticRelatedInformation",
+      "start"
+    ],
+    "kind": "PropertySignature",
+    "replace": "member",
+    "before": "start: number | undefined;",
+    "after": "readonly start: number | undefined;",
+    "why": "Adamic, task m2wxyaz: the three slots are readonly, certified by the compiled program's gate, not by adaptation 70's audit. Code that assigns file, start or length on a Diagnostic or a DiagnosticRelatedInformation stops type-checking (TS2540); code that reads them is unaffected; a DiagnosticWithLocation stays writable until its own slice."
+  },
+  {
+    "path": [
+      "DiagnosticRelatedInformation",
+      "length"
+    ],
+    "kind": "PropertySignature",
+    "replace": "member",
+    "before": "length: number | undefined;",
+    "after": "readonly length: number | undefined;",
+    "why": "Adamic, task m2wxyaz: the three slots are readonly, certified by the compiled program's gate, not by adaptation 70's audit. Code that assigns file, start or length on a Diagnostic or a DiagnosticRelatedInformation stops type-checking (TS2540); code that reads them is unaffected; a DiagnosticWithLocation stays writable until its own slice."
+  }
+]
