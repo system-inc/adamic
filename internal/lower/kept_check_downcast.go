@@ -33,9 +33,9 @@ func (l *lowering) keptCheckDowncastRefusal(node *ast.Node) error {
 	literal := l.fieldLiteral(l.concrete(l.checker.GetTypeAtLocation(node)), proof.field)
 	switch {
 	case len(proof.allowed) > 0:
-		refused.Fix = "narrow it, as .a writes !: " + l.tagNarrowing(node, proof.field, proof.allowed) + ", " + ts
+		refused.Fix = "narrow it, as .a writes !: " + l.tagNarrowing(node, proof.field, proof.allowed, proof.absent) + ", " + ts
 	case proof.interfaceView && literal != nil:
-		refused.Fix = "declare " + source + " as a union with " + target + " as a member and narrow it, as .a writes !: " + l.tagNarrowing(node, proof.field, []*checker.Type{literal}) + ", " + ts
+		refused.Fix = "declare " + source + " as a union with " + target + " as a member and narrow it, as .a writes !: " + l.tagNarrowing(node, proof.field, []*checker.Type{literal}, false) + ", " + ts
 	default:
 		refused.Fix = "give " + target + " a tag of its own in a discriminated union and narrow on it, as .a writes !, or build the value as a " + target + " so the compiler can prove it, " + ts
 	}
@@ -47,17 +47,22 @@ func init() {
 }
 
 // tagNarrowing is the statement that narrows a cast's operand to the members whose field holds one of
-// allowed, written with the operand's own name when it's a reference a narrowing can name.
-func (l *lowering) tagNarrowing(node *ast.Node, field string, allowed []*checker.Type) string {
+// allowed, written with the operand's own name when it's a reference a narrowing can name. absent is an
+// operand that may be undefined (absentArm), read through ?. so that undefined fails the test too.
+func (l *lowering) tagNarrowing(node *ast.Node, field string, allowed []*checker.Type, absent bool) string {
 	operand := ast.SkipParentheses(node.AsAsExpression().Expression)
 	reference := ast.IsIdentifier(operand) || operand.Kind == ast.KindPropertyAccessExpression || operand.Kind == ast.KindThisKeyword
 	held := "value"
 	if reference {
 		held = sourceExpression(operand)
 	}
+	access := "."
+	if absent {
+		access = "?."
+	}
 	tests := []string{}
 	for _, literal := range allowed {
-		tests = append(tests, held+"."+field+" !== "+l.checker.TypeToString(literal))
+		tests = append(tests, held+access+field+" !== "+l.checker.TypeToString(literal))
 	}
 	narrowing := "if (" + strings.Join(tests, " && ") + ") panic('why')"
 	if !reference {
