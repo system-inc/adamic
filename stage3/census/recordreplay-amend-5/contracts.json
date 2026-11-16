@@ -1,0 +1,169 @@
+[
+  {
+    "name": "scope",
+    "command": [
+      "node",
+      "/workspace/scratch/b7phwab-amend5/work/stage3/adapt/99-wasm-crypto-import/proofs/check.cjs",
+      "/workspace/scratch/b7phwab-amend5/before99",
+      "/workspace/scratch/b7phwab-amend5/final-composed",
+      "/workspace/scratch/b7phwab-amend5/scope.json"
+    ],
+    "exit": 0,
+    "expected": 0
+  },
+  {
+    "name": "bindings",
+    "command": [
+      "node",
+      "/workspace/scratch/b7phwab-amend5/work/stage3/adapt/99-wasm-crypto-import/proofs/bindings.cjs",
+      "/workspace/scratch/b7phwab-amend5/before99",
+      "/workspace/scratch/b7phwab-amend5/final-composed",
+      "/workspace/scratch/b7phwab-amend5/bindings.json"
+    ],
+    "exit": 0,
+    "expected": 0
+  },
+  {
+    "name": "recordreplay-contract",
+    "command": [
+      "node",
+      "/workspace/scratch/b7phwab-amend5/work/stage3/adapt/99-wasm-crypto-import/proofs/recordreplay-contract.cjs",
+      "/workspace/scratch/b7phwab-amend5/before99",
+      "/workspace/scratch/b7phwab-amend5/final-composed/src/compiler/sys.ts"
+    ],
+    "exit": 0,
+    "expected": 0
+  },
+  {
+    "name": "recordreplay-node-resolution-mutant",
+    "command": [
+      "node",
+      "/workspace/scratch/b7phwab-amend5/work/stage3/adapt/99-wasm-crypto-import/proofs/recordreplay-contract.cjs",
+      "/workspace/scratch/b7phwab-amend5/before99",
+      "/workspace/scratch/b7phwab-amend5/final-composed/src/compiler/sys.ts",
+      "no-node-resolution-mutant"
+    ],
+    "exit": 1,
+    "expected": 1
+  },
+  {
+    "name": "require-result-contract",
+    "command": [
+      "node",
+      "/workspace/scratch/b7phwab-amend5/work/stage3/adapt/99-wasm-crypto-import/proofs/require-result-contract.cjs",
+      "/workspace/scratch/b7phwab-amend5/final-composed"
+    ],
+    "exit": 0,
+    "expected": 0
+  },
+  {
+    "name": "resolve-host-contract",
+    "command": [
+      "node",
+      "/workspace/scratch/b7phwab-amend5/work/stage3/adapt/99-wasm-crypto-import/proofs/resolve-host-contract.cjs"
+    ],
+    "exit": 0,
+    "expected": 0
+  },
+  {
+    "name": "watch-directory-contract",
+    "command": [
+      "node",
+      "/workspace/scratch/b7phwab-amend5/work/stage3/adapt/99-wasm-crypto-import/proofs/watch-directory-contract.cjs",
+      "/workspace/scratch/b7phwab-amend5/final-composed"
+    ],
+    "exit": 0,
+    "expected": 0
+  },
+  {
+    "name": "watch-directory-witness",
+    "command": [
+      "node",
+      "/workspace/scratch/b7phwab-amend5/work/stage3/adapt/99-wasm-crypto-import/proofs/watch-directory-witness.cjs",
+      "/workspace/scratch/b7phwab-amend5/final-composed"
+    ],
+    "exit": 0,
+    "expected": 0
+  },
+  {
+    "name": "scope-mutant",
+    "command": [
+      "node",
+      "/workspace/scratch/b7phwab-amend5/work/stage3/adapt/99-wasm-crypto-import/proofs/scope-mutant.cjs",
+      "/workspace/scratch/b7phwab-amend5/before99",
+      "/workspace/scratch/b7phwab-amend5/final-composed"
+    ],
+    "exit": 1,
+    "expected": 1
+  },
+  {
+    "name": "ternary-mutant",
+    "command": [
+      "node",
+      "/workspace/scratch/b7phwab-amend5/work/stage3/adapt/99-wasm-crypto-import/proofs/ternary-mutant.cjs",
+      "/workspace/scratch/b7phwab-amend5/final-composed"
+    ],
+    "exit": 1,
+    "expected": 1
+  },
+  {
+    "name": "require-result-restore-mutant",
+    "command": [
+      "node",
+      "/workspace/scratch/b7phwab-amend5/work/stage3/adapt/99-wasm-crypto-import/require-result-mutant.cjs",
+      "/workspace/scratch/b7phwab-amend5/final-composed"
+    ],
+    "exit": 0,
+    "expected": 0
+  },
+  {
+    "name": "require-result-restore-refused",
+    "command": [
+      "node",
+      "/workspace/scratch/b7phwab-amend5/work/stage3/adapt/99-wasm-crypto-import/adapt.cjs",
+      "/workspace/scratch/b7phwab-amend5/final-composed"
+    ],
+    "exit": 1,
+    "expected": 1
+  },
+  {
+    "name": "resolve-host-restore-mutant",
+    "command": [
+      "node",
+      "/workspace/scratch/b7phwab-amend5/work/stage3/adapt/99-wasm-crypto-import/resolve-host-mutant.cjs",
+      "/workspace/scratch/b7phwab-amend5/final-composed"
+    ],
+    "exit": 0,
+    "expected": 0
+  },
+  {
+    "name": "resolve-host-restore-refused",
+    "command": [
+      "node",
+      "/workspace/scratch/b7phwab-amend5/work/stage3/adapt/99-wasm-crypto-import/adapt.cjs",
+      "/workspace/scratch/b7phwab-amend5/final-composed"
+    ],
+    "exit": 1,
+    "expected": 1
+  },
+  {
+    "name": "watch-directory-restore-mutant",
+    "command": [
+      "node",
+      "/workspace/scratch/b7phwab-amend5/work/stage3/adapt/99-wasm-crypto-import/watch-directory-mutant.cjs",
+      "/workspace/scratch/b7phwab-amend5/final-composed"
+    ],
+    "exit": 0,
+    "expected": 0
+  },
+  {
+    "name": "watch-directory-restore-refused",
+    "command": [
+      "node",
+      "/workspace/scratch/b7phwab-amend5/work/stage3/adapt/99-wasm-crypto-import/adapt.cjs",
+      "/workspace/scratch/b7phwab-amend5/final-composed"
+    ],
+    "exit": 1,
+    "expected": 1
+  }
+]

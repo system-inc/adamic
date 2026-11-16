@@ -1,0 +1,14 @@
+const fs=require('node:fs'),path=require('node:path'),assert=require('node:assert/strict'),ts=require('typescript');
+const repo='/workspace/scratch/b7phwab-amend5/work';
+const {compiler}=require(repo+'/stage3/adapt/47-host-errors/adapt.cjs');
+const rr=require(repo+'/stage3/adapt/99-wasm-crypto-import/recordreplay.cjs');
+const tree=path.resolve(process.argv[2]);const base=compiler(tree,ts),roots=base.getRootFileNames();
+assert.equal(roots.length,79);
+const host=ts.createCompilerHost(base.getCompilerOptions(),true);rr.virtualHost(host,path.join(tree,'src/compiler/sys.ts'));
+const p=ts.createProgram(roots,base.getCompilerOptions(),host);
+const diagnostics=ts.getPreEmitDiagnostics(p).map(d=>({code:d.code,file:d.file?.fileName,start:d.start,message:ts.flattenDiagnosticMessageText(d.messageText,' ')}));
+const result={version:ts.version,roots:roots.length,diagnostics};
+fs.writeFileSync(process.argv[3],JSON.stringify(result,null,2)+'\n');
+console.log(JSON.stringify({version:ts.version,roots:roots.length,diagnostics:diagnostics.length}));
+assert.equal(diagnostics.length,0);
+fs.writeFileSync(process.argv[3]+'.roots',roots.join('\n')+'\n');

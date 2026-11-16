@@ -1,0 +1,9 @@
+export PATH="/workspace/adamic-tools/bin:/workspace/adamic-tools/go/bin:$PATH"
+export GOTMPDIR=/workspace/scratch/b7phwab-amend5/go-tmp
+export TMPDIR=/workspace/scratch/b7phwab-amend5/tmp
+export GOCACHE=/workspace/scratch/b7phwab-amend5/go-cache
+export GOMODCACHE=/workspace/scratch/b7phwab-amend5/go-mod
+export ADAMIC_BUILD_CACHE_DIR=/workspace/scratch/b7phwab-amend5/build-cache
+export STAGE3_CACHE=/workspace/scratch/b7phwab-amend5/stage3-cache
+export ADAMIC_TYPESCRIPT_SOURCE=/workspace/scratch/b7phwab-amend5/typescript
+export NODE_PATH=/workspace/scratch/b7phwab-amend5/work/stage3/api/node_modules

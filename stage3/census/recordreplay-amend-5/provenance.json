@@ -1,0 +1,36 @@
+{
+  "task": "#b7phwab",
+  "main": "34c05e3a4f79fa64ef91e9200df03af4b0c02208",
+  "commits": [
+    "1af44419e3d79710c9e88d48cdd19eefe81b6677",
+    "3bae37ff56e8b26c5342908e1c9ab860f25d11f8",
+    "bf860ed57b4d633fe03ebab79eb261c27edc33e8",
+    "9d1dc4bd430a96f64b4a61e038c9edc444668f24"
+  ],
+  "typescript": "050880ce59e30b356b686bd3144efe24f875ebc8",
+  "cohere": "5360753e19e4417675a90e92a1823bea66b13918",
+  "cohere_typescript": "d92d9bfee114c80be2c375d72edae966176e3a4f",
+  "node": "v24.19.0",
+  "go": "go version go1.27.1 linux/amd64",
+  "scratch": "/workspace/scratch/b7phwab-amend5",
+  "pin_commands": [
+    "node proofs/scoped-hashes.cjs before99/src/compiler/sys.ts planned-after.ts proofs/targets.json",
+    "node adapt.cjs --pin before99"
+  ],
+  "pin_result": {
+    "pinsRegenerated": true,
+    "sourceWrites": 0,
+    "watchDirectory1533Preserved": true
+  },
+  "scope": "99 is last: earlier owner pins authenticate their own unchanged apply snapshots; 93 check passed on its recorded snapshots.",
+  "binaries": {
+    "adamic": {
+      "bytes": 44345815,
+      "sha256": "aefd86d0fae11d6aa4f5f1e80c6856fcc8a710b264c54a18453f6f56674f588b"
+    },
+    "latent": {
+      "bytes": 37113391,
+      "sha256": "916f40b077d9ca82fde8fa1fa93dd69db1b1b74945444a45fb9e61ab4f939129"
+    }
+  }
+}

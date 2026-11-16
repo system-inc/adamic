@@ -1,0 +1,217 @@
+[
+  {
+    "name": "control fresh apply",
+    "command": "bash cli-control/stage3/apply.sh control-tree",
+    "exit": 0
+  },
+  {
+    "name": "final fresh apply",
+    "command": "bash work/stage3/apply.sh candidate-tree",
+    "exit": 0
+  },
+  {
+    "name": "scoped pin generator",
+    "command": "node proofs/scoped-hashes.cjs ...",
+    "exit": 0
+  },
+  {
+    "name": "adapter --pin",
+    "command": "node adapt.cjs --pin before99",
+    "exit": 0
+  },
+  {
+    "name": "exact composed adapter",
+    "command": "node adapt.cjs before99",
+    "exit": 0
+  },
+  {
+    "name": "93 repaired check",
+    "command": "node 93-builtin-imports/proofs/check.cjs 93-before 93-after 93-check.json",
+    "exit": 0
+  },
+  {
+    "name": "recordreplay check",
+    "command": "RECORDREPLAY_RESULTS=recordreplay-results.json python3 proofs/recordreplay/check.py recordreplay-proof",
+    "exit": 0
+  },
+  {
+    "name": "control full census",
+    "command": "LATENT_FULL=1 LATENT_ASSERT_NO_OUTPUT=1 LATENT_ONLY_FILE=control-tree/src/compiler/sys.ts latent control-tree/src/compiler control-census.jsonl",
+    "exit": 0
+  },
+  {
+    "name": "amendment full census",
+    "command": "LATENT_FULL=1 LATENT_ASSERT_NO_OUTPUT=1 LATENT_ONLY_FILE=final-composed/src/compiler/sys.ts latent final-composed/src/compiler candidate-census.jsonl",
+    "exit": 0
+  },
+  {
+    "name": "census comparison",
+    "command": "python3 compare-census.py",
+    "exit": 0
+  },
+  {
+    "name": "control stock API check",
+    "command": "node stock.cjs control-tree control-stock.json",
+    "exit": 0
+  },
+  {
+    "name": "final stock API check",
+    "command": "node stock.cjs final-composed candidate-stock.json",
+    "exit": 0
+  },
+  {
+    "name": "stock tsc CLI",
+    "command": "node work/stage3/api/node_modules/typescript/lib/tsc.js --project stock-cli.json",
+    "exit": 0
+  },
+  {
+    "name": "adamic types",
+    "command": "adamic types <the 79 paths in candidate-stock.json.roots>",
+    "exit": 0
+  },
+  {
+    "name": "fresh source identity",
+    "command": "all 747 files compared; fresh-identity.json",
+    "exit": 0
+  },
+  {
+    "name": "scope",
+    "command": "node /workspace/scratch/b7phwab-amend5/work/stage3/adapt/99-wasm-crypto-import/proofs/check.cjs /workspace/scratch/b7phwab-amend5/before99 /workspace/scratch/b7phwab-amend5/final-composed /workspace/scratch/b7phwab-amend5/scope.json",
+    "exit": 0
+  },
+  {
+    "name": "bindings",
+    "command": "node /workspace/scratch/b7phwab-amend5/work/stage3/adapt/99-wasm-crypto-import/proofs/bindings.cjs /workspace/scratch/b7phwab-amend5/before99 /workspace/scratch/b7phwab-amend5/final-composed /workspace/scratch/b7phwab-amend5/bindings.json",
+    "exit": 0
+  },
+  {
+    "name": "recordreplay-contract",
+    "command": "node /workspace/scratch/b7phwab-amend5/work/stage3/adapt/99-wasm-crypto-import/proofs/recordreplay-contract.cjs /workspace/scratch/b7phwab-amend5/before99 /workspace/scratch/b7phwab-amend5/final-composed/src/compiler/sys.ts",
+    "exit": 0
+  },
+  {
+    "name": "recordreplay-node-resolution-mutant",
+    "command": "node /workspace/scratch/b7phwab-amend5/work/stage3/adapt/99-wasm-crypto-import/proofs/recordreplay-contract.cjs /workspace/scratch/b7phwab-amend5/before99 /workspace/scratch/b7phwab-amend5/final-composed/src/compiler/sys.ts no-node-resolution-mutant",
+    "exit": 1
+  },
+  {
+    "name": "require-result-contract",
+    "command": "node /workspace/scratch/b7phwab-amend5/work/stage3/adapt/99-wasm-crypto-import/proofs/require-result-contract.cjs /workspace/scratch/b7phwab-amend5/final-composed",
+    "exit": 0
+  },
+  {
+    "name": "resolve-host-contract",
+    "command": "node /workspace/scratch/b7phwab-amend5/work/stage3/adapt/99-wasm-crypto-import/proofs/resolve-host-contract.cjs",
+    "exit": 0
+  },
+  {
+    "name": "watch-directory-contract",
+    "command": "node /workspace/scratch/b7phwab-amend5/work/stage3/adapt/99-wasm-crypto-import/proofs/watch-directory-contract.cjs /workspace/scratch/b7phwab-amend5/final-composed",
+    "exit": 0
+  },
+  {
+    "name": "watch-directory-witness",
+    "command": "node /workspace/scratch/b7phwab-amend5/work/stage3/adapt/99-wasm-crypto-import/proofs/watch-directory-witness.cjs /workspace/scratch/b7phwab-amend5/final-composed",
+    "exit": 0
+  },
+  {
+    "name": "scope-mutant",
+    "command": "node /workspace/scratch/b7phwab-amend5/work/stage3/adapt/99-wasm-crypto-import/proofs/scope-mutant.cjs /workspace/scratch/b7phwab-amend5/before99 /workspace/scratch/b7phwab-amend5/final-composed",
+    "exit": 1
+  },
+  {
+    "name": "ternary-mutant",
+    "command": "node /workspace/scratch/b7phwab-amend5/work/stage3/adapt/99-wasm-crypto-import/proofs/ternary-mutant.cjs /workspace/scratch/b7phwab-amend5/final-composed",
+    "exit": 1
+  },
+  {
+    "name": "require-result-restore-mutant",
+    "command": "node /workspace/scratch/b7phwab-amend5/work/stage3/adapt/99-wasm-crypto-import/require-result-mutant.cjs /workspace/scratch/b7phwab-amend5/final-composed",
+    "exit": 0
+  },
+  {
+    "name": "require-result-restore-refused",
+    "command": "node /workspace/scratch/b7phwab-amend5/work/stage3/adapt/99-wasm-crypto-import/adapt.cjs /workspace/scratch/b7phwab-amend5/final-composed",
+    "exit": 1
+  },
+  {
+    "name": "resolve-host-restore-mutant",
+    "command": "node /workspace/scratch/b7phwab-amend5/work/stage3/adapt/99-wasm-crypto-import/resolve-host-mutant.cjs /workspace/scratch/b7phwab-amend5/final-composed",
+    "exit": 0
+  },
+  {
+    "name": "resolve-host-restore-refused",
+    "command": "node /workspace/scratch/b7phwab-amend5/work/stage3/adapt/99-wasm-crypto-import/adapt.cjs /workspace/scratch/b7phwab-amend5/final-composed",
+    "exit": 1
+  },
+  {
+    "name": "watch-directory-restore-mutant",
+    "command": "node /workspace/scratch/b7phwab-amend5/work/stage3/adapt/99-wasm-crypto-import/watch-directory-mutant.cjs /workspace/scratch/b7phwab-amend5/final-composed",
+    "exit": 0
+  },
+  {
+    "name": "watch-directory-restore-refused",
+    "command": "node /workspace/scratch/b7phwab-amend5/work/stage3/adapt/99-wasm-crypto-import/adapt.cjs /workspace/scratch/b7phwab-amend5/final-composed",
+    "exit": 1
+  },
+  {
+    "name": "moved-owner",
+    "command": "node /workspace/scratch/b7phwab-amend5/work/stage3/adapt/99-wasm-crypto-import/adapt.cjs /workspace/scratch/b7phwab-amend5/final-composed",
+    "exit": 1
+  },
+  {
+    "name": "moved-imports",
+    "command": "node /workspace/scratch/b7phwab-amend5/work/stage3/adapt/99-wasm-crypto-import/adapt.cjs /workspace/scratch/b7phwab-amend5/final-composed",
+    "exit": 1
+  },
+  {
+    "name": "runtime-scope-mutant",
+    "command": "node /workspace/scratch/b7phwab-amend5/work/stage3/adapt/99-wasm-crypto-import/proofs/check.cjs /workspace/scratch/b7phwab-amend5/before99 /workspace/scratch/b7phwab-amend5/final-composed",
+    "exit": 1
+  },
+  {
+    "name": "watch-directory-unnormalized",
+    "command": "node /workspace/scratch/b7phwab-amend5/work/stage3/adapt/99-wasm-crypto-import/watch-directory-mutant.cjs /workspace/scratch/b7phwab-amend5/final-composed unnormalized",
+    "exit": 0
+  },
+  {
+    "name": "watch-directory-unnormalized-refused",
+    "command": "node /workspace/scratch/b7phwab-amend5/work/stage3/adapt/99-wasm-crypto-import/adapt.cjs /workspace/scratch/b7phwab-amend5/final-composed",
+    "exit": 1
+  },
+  {
+    "name": "watch-directory-optional-contract",
+    "command": "node /workspace/scratch/b7phwab-amend5/work/stage3/adapt/99-wasm-crypto-import/watch-directory-mutant.cjs /workspace/scratch/b7phwab-amend5/final-composed optional-contract",
+    "exit": 0
+  },
+  {
+    "name": "watch-directory-optional-contract-refused",
+    "command": "node /workspace/scratch/b7phwab-amend5/work/stage3/adapt/99-wasm-crypto-import/adapt.cjs /workspace/scratch/b7phwab-amend5/final-composed",
+    "exit": 1
+  },
+  {
+    "name": "span-disabled-control",
+    "command": "node -e const fs=require('node:fs'),path=require('node:path'),Module=require('node:module');const filename=process.argv[1],tree=process.argv[2],rr=require(path.join(path.dirname(filename),'recordreplay.cjs'));const line=\"        assert(inOwner || importInsertion, 'edit outside getNodeSystem and pinned import edits');\";const source=fs.readFileSync(filename,'utf8');if(source.split(line).length!==2)throw Error('span guard moved');const old=rr.edits;rr.edits=(...args)=>[...old(...args),{start:args[0].text.length,end:args[0].text.length,text:'\\nexport const extra = true;\\n'}];const m=new Module(filename,module);m.filename=filename;m.paths=Module._nodeModulePaths(path.dirname(filename));m._compile(source.replace(line,'        // Deliberate mutation: no span guard.'),filename);console.log(JSON.stringify(m.exports.adapt(tree))); /workspace/scratch/b7phwab-amend5/work/stage3/adapt/99-wasm-crypto-import/adapt.cjs /workspace/scratch/b7phwab-amend5/span-disabled",
+    "exit": 0
+  },
+  {
+    "name": "span-disabled-scope-refused",
+    "command": "node /workspace/scratch/b7phwab-amend5/work/stage3/adapt/99-wasm-crypto-import/proofs/check.cjs /workspace/scratch/b7phwab-amend5/before99 /workspace/scratch/b7phwab-amend5/span-disabled",
+    "exit": 1
+  },
+  {
+    "name": "recordreplay declaration mutant",
+    "command": "inside proofs/recordreplay/check.py",
+    "exit": 1
+  },
+  {
+    "name": "recordreplay out_of_scope mutant",
+    "command": "inside proofs/recordreplay/check.py",
+    "exit": 1
+  },
+  {
+    "name": "recordreplay owner mutant",
+    "command": "inside proofs/recordreplay/check.py",
+    "exit": 1
+  }
+]

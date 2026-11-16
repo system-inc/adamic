@@ -1,0 +1,14 @@
+{
+  "status": "pass",
+  "mutant_exit_codes": {
+    "declaration": 1,
+    "out_of_scope": 1,
+    "owner": 1
+  },
+  "source_changes": [
+    "src/compiler/sys.ts"
+  ],
+  "exact_adapter_matches_gate": true,
+  "idempotent_no_write": true,
+  "adaptationDeclarationAbsent": true
+}
