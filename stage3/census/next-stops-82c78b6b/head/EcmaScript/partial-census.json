@@ -495,5 +495,105 @@
     "where": "/workspace/scratch/next-stops-82c78b6b/adapted/src/compiler/sys.ts:1476:35",
     "reason": "node:module.__filename and __dirname: CommonJS module values with no ES-module or reproducible native answer yet (fix: pass the module's path in from where the program is started)",
     "seconds": 18.26931645
+  },
+  {
+    "module_format": "EcmaScript",
+    "roots": [
+      "/workspace/scratch/next-stops-82c78b6b/adapted/src/compiler/transformers/es2016.ts"
+    ],
+    "kind": "NotYet",
+    "where": "/workspace/scratch/next-stops-82c78b6b/adapted/src/compiler/sys.ts:1476:35",
+    "reason": "node:module.__filename and __dirname: CommonJS module values with no ES-module or reproducible native answer yet (fix: pass the module's path in from where the program is started)",
+    "seconds": 24.371794132
+  },
+  {
+    "module_format": "EcmaScript",
+    "roots": [
+      "/workspace/scratch/next-stops-82c78b6b/adapted/src/compiler/transformers/es2017.ts"
+    ],
+    "kind": "NotYet",
+    "where": "/workspace/scratch/next-stops-82c78b6b/adapted/src/compiler/sys.ts:1476:35",
+    "reason": "node:module.__filename and __dirname: CommonJS module values with no ES-module or reproducible native answer yet (fix: pass the module's path in from where the program is started)",
+    "seconds": 23.401229166
+  },
+  {
+    "module_format": "EcmaScript",
+    "roots": [
+      "/workspace/scratch/next-stops-82c78b6b/adapted/src/compiler/transformers/es2018.ts"
+    ],
+    "kind": "NotYet",
+    "where": "/workspace/scratch/next-stops-82c78b6b/adapted/src/compiler/sys.ts:1476:35",
+    "reason": "node:module.__filename and __dirname: CommonJS module values with no ES-module or reproducible native answer yet (fix: pass the module's path in from where the program is started)",
+    "seconds": 23.034621226
+  },
+  {
+    "module_format": "EcmaScript",
+    "roots": [
+      "/workspace/scratch/next-stops-82c78b6b/adapted/src/compiler/transformers/es2019.ts"
+    ],
+    "kind": "NotYet",
+    "where": "/workspace/scratch/next-stops-82c78b6b/adapted/src/compiler/sys.ts:1476:35",
+    "reason": "node:module.__filename and __dirname: CommonJS module values with no ES-module or reproducible native answer yet (fix: pass the module's path in from where the program is started)",
+    "seconds": 22.185359983
+  },
+  {
+    "module_format": "EcmaScript",
+    "roots": [
+      "/workspace/scratch/next-stops-82c78b6b/adapted/src/compiler/transformers/es2020.ts"
+    ],
+    "kind": "NotYet",
+    "where": "/workspace/scratch/next-stops-82c78b6b/adapted/src/compiler/sys.ts:1476:35",
+    "reason": "node:module.__filename and __dirname: CommonJS module values with no ES-module or reproducible native answer yet (fix: pass the module's path in from where the program is started)",
+    "seconds": 22.697207312
+  },
+  {
+    "module_format": "EcmaScript",
+    "roots": [
+      "/workspace/scratch/next-stops-82c78b6b/adapted/src/compiler/transformers/es2021.ts"
+    ],
+    "kind": "NotYet",
+    "where": "/workspace/scratch/next-stops-82c78b6b/adapted/src/compiler/sys.ts:1476:35",
+    "reason": "node:module.__filename and __dirname: CommonJS module values with no ES-module or reproducible native answer yet (fix: pass the module's path in from where the program is started)",
+    "seconds": 23.581249234
+  },
+  {
+    "module_format": "EcmaScript",
+    "roots": [
+      "/workspace/scratch/next-stops-82c78b6b/adapted/src/compiler/transformers/esDecorators.ts"
+    ],
+    "kind": "NotYet",
+    "where": "/workspace/scratch/next-stops-82c78b6b/adapted/src/compiler/sys.ts:1476:35",
+    "reason": "node:module.__filename and __dirname: CommonJS module values with no ES-module or reproducible native answer yet (fix: pass the module's path in from where the program is started)",
+    "seconds": 26.001634744
+  },
+  {
+    "module_format": "EcmaScript",
+    "roots": [
+      "/workspace/scratch/next-stops-82c78b6b/adapted/src/compiler/transformers/esnext.ts"
+    ],
+    "kind": "NotYet",
+    "where": "/workspace/scratch/next-stops-82c78b6b/adapted/src/compiler/sys.ts:1476:35",
+    "reason": "node:module.__filename and __dirname: CommonJS module values with no ES-module or reproducible native answer yet (fix: pass the module's path in from where the program is started)",
+    "seconds": 25.928015094
+  },
+  {
+    "module_format": "EcmaScript",
+    "roots": [
+      "/workspace/scratch/next-stops-82c78b6b/adapted/src/compiler/transformers/generators.ts"
+    ],
+    "kind": "NotYet",
+    "where": "/workspace/scratch/next-stops-82c78b6b/adapted/src/compiler/sys.ts:1476:35",
+    "reason": "node:module.__filename and __dirname: CommonJS module values with no ES-module or reproducible native answer yet (fix: pass the module's path in from where the program is started)",
+    "seconds": 25.543865019
+  },
+  {
+    "module_format": "EcmaScript",
+    "roots": [
+      "/workspace/scratch/next-stops-82c78b6b/adapted/src/compiler/transformers/jsx.ts"
+    ],
+    "kind": "NotYet",
+    "where": "/workspace/scratch/next-stops-82c78b6b/adapted/src/compiler/sys.ts:1476:35",
+    "reason": "node:module.__filename and __dirname: CommonJS module values with no ES-module or reproducible native answer yet (fix: pass the module's path in from where the program is started)",
+    "seconds": 20.085914372
   }
 ]
