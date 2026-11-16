@@ -1,0 +1,12 @@
+[
+  {
+    "where": "sys.ts:1537:13",
+    "kind": "Refused",
+    "reason": "a function taking PollingInterval seen as one taking number | undefined (tsc relates a method's parameters both ways), so it can be handed what it can't take",
+    "phase": "refusal_scan (function-parameter variance; rule 3100)",
+    "owner": "internal/lower/invariance.go: refuseWidening / widenedParameters / wideningRefusal; adapted getNodeSystem pinned by 93-builtin-imports and 99-wasm-crypto-import",
+    "emitter": "internal/lower/refusals.go:105-106 -> internal/lower/library_string.go:401-417 (rule 3100) -> internal/lower/invariance.go:574,611-620,725,1138-1178; parameter comparison at 228-238",
+    "source_review": "The adapted line is the watchFile shorthand in the nodeSystem object inside getNodeSystem. The source function takes a required PollingInterval; System.watchFile declares an optional number parameter. 93-builtin-imports/proofs/targets.json names and hashes getNodeSystem; 99-wasm-crypto-import/proofs/targets.json pins its ownerBeforeText and ownerAfterText. 92-tty-host-results pins two other nested methods in that scope, not this shorthand. No getFirstJSDocTag owner was found by the owners.json/targets.json search.",
+    "host_runtime": "This is a source-level parameter-variance refusal, not a node:*, process, host-member, or runtime-execution stop. watchFile here is a TypeScript function being stored in the source-defined System contract, even though the surrounding object implements the Node system."
+  }
+]

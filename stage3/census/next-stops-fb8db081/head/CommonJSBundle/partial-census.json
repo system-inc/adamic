@@ -108,5 +108,110 @@
     "reason": "a function taking PollingInterval seen as one taking number | undefined (tsc relates a method's parameters both ways), so it can be handed what it can't take",
     "fix": "write the method as a property holding a function (handle: (animal: Animal) => void), which tsc checks one way, or take the wider type in the method (method-signature-style)",
     "seconds": 18.449520117
+  },
+  {
+    "module_format": "CommonJSBundle",
+    "roots": [
+      "/workspace/scratch/next-stops-fb8db081/adapted/src/compiler/core.ts"
+    ],
+    "kind": "Refused",
+    "where": "/workspace/scratch/next-stops-fb8db081/adapted/src/compiler/sys.ts:1537:13",
+    "reason": "a function taking PollingInterval seen as one taking number | undefined (tsc relates a method's parameters both ways), so it can be handed what it can't take",
+    "fix": "write the method as a property holding a function (handle: (animal: Animal) => void), which tsc checks one way, or take the wider type in the method (method-signature-style)",
+    "seconds": 20.420567789
+  },
+  {
+    "module_format": "CommonJSBundle",
+    "roots": [
+      "/workspace/scratch/next-stops-fb8db081/adapted/src/compiler/corePublic.ts"
+    ],
+    "kind": "accepted",
+    "seconds": 0.097488728
+  },
+  {
+    "module_format": "CommonJSBundle",
+    "roots": [
+      "/workspace/scratch/next-stops-fb8db081/adapted/src/compiler/debug.ts"
+    ],
+    "kind": "NotYet",
+    "where": "/workspace/scratch/next-stops-fb8db081/adapted/src/compiler/semver.ts:71:9",
+    "reason": "a namespace read before runtime initialization, directly or through a reachable call; move that read or call after the namespace declaration",
+    "seconds": 6.486175641
+  },
+  {
+    "module_format": "CommonJSBundle",
+    "roots": [
+      "/workspace/scratch/next-stops-fb8db081/adapted/src/compiler/diagnosticInformationMap.generated.ts"
+    ],
+    "kind": "NotYet",
+    "where": "/workspace/scratch/next-stops-fb8db081/adapted/src/compiler/commandLineParser.ts:293:35",
+    "reason": "reading an enum before its runtime initialization; move the call after the enum declaration",
+    "seconds": 6.770358908
+  },
+  {
+    "module_format": "CommonJSBundle",
+    "roots": [
+      "/workspace/scratch/next-stops-fb8db081/adapted/src/compiler/emitter.ts"
+    ],
+    "kind": "Refused",
+    "where": "/workspace/scratch/next-stops-fb8db081/adapted/src/compiler/sys.ts:1537:13",
+    "reason": "a function taking PollingInterval seen as one taking number | undefined (tsc relates a method's parameters both ways), so it can be handed what it can't take",
+    "fix": "write the method as a property holding a function (handle: (animal: Animal) => void), which tsc checks one way, or take the wider type in the method (method-signature-style)",
+    "seconds": 22.111799158
+  },
+  {
+    "module_format": "CommonJSBundle",
+    "roots": [
+      "/workspace/scratch/next-stops-fb8db081/adapted/src/compiler/executeCommandLine.ts"
+    ],
+    "kind": "Refused",
+    "where": "/workspace/scratch/next-stops-fb8db081/adapted/src/compiler/sys.ts:1537:13",
+    "reason": "a function taking PollingInterval seen as one taking number | undefined (tsc relates a method's parameters both ways), so it can be handed what it can't take",
+    "fix": "write the method as a property holding a function (handle: (animal: Animal) => void), which tsc checks one way, or take the wider type in the method (method-signature-style)",
+    "seconds": 24.084783282
+  },
+  {
+    "module_format": "CommonJSBundle",
+    "roots": [
+      "/workspace/scratch/next-stops-fb8db081/adapted/src/compiler/expressionToTypeNode.ts"
+    ],
+    "kind": "Refused",
+    "where": "/workspace/scratch/next-stops-fb8db081/adapted/src/compiler/sys.ts:1537:13",
+    "reason": "a function taking PollingInterval seen as one taking number | undefined (tsc relates a method's parameters both ways), so it can be handed what it can't take",
+    "fix": "write the method as a property holding a function (handle: (animal: Animal) => void), which tsc checks one way, or take the wider type in the method (method-signature-style)",
+    "seconds": 24.082269047
+  },
+  {
+    "module_format": "CommonJSBundle",
+    "roots": [
+      "/workspace/scratch/next-stops-fb8db081/adapted/src/compiler/factory/baseNodeFactory.ts"
+    ],
+    "kind": "Refused",
+    "where": "/workspace/scratch/next-stops-fb8db081/adapted/src/compiler/sys.ts:1537:13",
+    "reason": "a function taking PollingInterval seen as one taking number | undefined (tsc relates a method's parameters both ways), so it can be handed what it can't take",
+    "fix": "write the method as a property holding a function (handle: (animal: Animal) => void), which tsc checks one way, or take the wider type in the method (method-signature-style)",
+    "seconds": 21.206804438
+  },
+  {
+    "module_format": "CommonJSBundle",
+    "roots": [
+      "/workspace/scratch/next-stops-fb8db081/adapted/src/compiler/factory/emitHelpers.ts"
+    ],
+    "kind": "Refused",
+    "where": "/workspace/scratch/next-stops-fb8db081/adapted/src/compiler/sys.ts:1537:13",
+    "reason": "a function taking PollingInterval seen as one taking number | undefined (tsc relates a method's parameters both ways), so it can be handed what it can't take",
+    "fix": "write the method as a property holding a function (handle: (animal: Animal) => void), which tsc checks one way, or take the wider type in the method (method-signature-style)",
+    "seconds": 21.334799498
+  },
+  {
+    "module_format": "CommonJSBundle",
+    "roots": [
+      "/workspace/scratch/next-stops-fb8db081/adapted/src/compiler/factory/emitNode.ts"
+    ],
+    "kind": "Refused",
+    "where": "/workspace/scratch/next-stops-fb8db081/adapted/src/compiler/sys.ts:1537:13",
+    "reason": "a function taking PollingInterval seen as one taking number | undefined (tsc relates a method's parameters both ways), so it can be handed what it can't take",
+    "fix": "write the method as a property holding a function (handle: (animal: Animal) => void), which tsc checks one way, or take the wider type in the method (method-signature-style)",
+    "seconds": 19.416846883
   }
 ]
