@@ -1,0 +1,170 @@
+// The Computer Language Benchmarks Game
+// https://salsa.debian.org/benchmarksgame-team/benchmarksgame/
+//
+// Contributed by Jesse Millikan
+// Modified by Matt Baker
+// Ported, modified, and parallelized by Roman Pletnev
+//
+// Revised BSD license
+//
+// This is a specific instance of the Open Source Initiative (OSI) BSD license template
+// http://www.opensource.org/licenses/bsd-license.php
+//
+// Copyright © 2004-2008 Brent Fulgham, 2005-2024 Isaac Gouy
+// All rights reserved.
+//
+// Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following conditions are met:
+//
+//    Redistributions of source code must retain the above copyright notice, this list of conditions and the following disclaimer.
+//
+//    Redistributions in binary form must reproduce the above copyright notice, this list of conditions and the following disclaimer in the documentation and/or other materials provided with the distribution.
+//
+//    Neither the name of "The Computer Language Benchmarks Game" nor the name of "The Computer Language Shootout Benchmarks" nor the names of its contributors may be used to endorse or promote products derived from this software without specific prior written permission.
+//
+// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+//
+// Source: knucleotide/knucleotide.node, the game's first Node.js k-nucleotide entry, from
+// public/download/benchmarksgame-sourcecode.zip (blob 05648fc9a0d6) at benchmarksgame commit
+// 40296663ed350d5fe4a6ab5e367bab61cb77c219 (March 7, 2025).
+//
+// Ported to Adamic for the speed holdout (#re2xhwa). The counting, the sorting, the reading of the
+// third sequence in 2,048-character pieces and the output are the original's. Each change is one the
+// language makes, and a comment marked "Adamic:" says which.
+//
+// Input: the game pipes in fasta's output for n = 25,000,000, the game's size. This port reads no
+// stdin: fastaLines (fasta_input.a, fasta.node's own generator) makes the same lines, in order, and
+// hands each to the line handler where readline did.
+'use strict';
+
+// Adamic: `require('readline')` and `require('cluster')` go. Readline's place is taken by fastaLines,
+// and the cluster's by one worker in this process (see master). `process` comes from node:process.
+import process from 'node:process';
+import { panic } from 'adamic';
+import { fastaLines } from './fasta_input.a';
+
+const missing = 'k-nucleotide: a key the map was built from is missing';
+
+// Adamic: the constructor function and its prototype method become a class with the same field and
+// the same toString.
+class RefNum {
+	num: number;
+	constructor(num: number) {
+		this.num = num;
+	}
+	toString(): string {
+		return this.num.toString();
+	}
+}
+
+function frequency(seq: string, length: number): Map<string, RefNum> {
+	// Adamic: `var` becomes `const` or `let`, and the untyped declarations get their type.
+	const freq = new Map<string, RefNum>(),
+		n = seq.length - length + 1;
+	let key: string,
+		cur: RefNum | undefined,
+		i = 0;
+	for (; i < n; ++i) {
+		key = seq.substr(i, length);
+		cur = freq.get(key);
+		cur === undefined ? freq.set(key, new RefNum(1)) : ++cur.num;
+	}
+	return freq;
+}
+
+function sort(seq: string, length: number): string {
+	const f = frequency(seq, length),
+		keys = Array.from(f.keys()),
+		n = seq.length - length + 1;
+	let res = '';
+	// Adamic: the original subtracts and multiplies RefNums, which JavaScript turns into numbers by way
+	// of their toString. Arithmetic on an object is refused, so each reads its num, the same integer.
+	// Every key read is one the map was built from, so the check never fires.
+	keys.sort((a, b) => (f.get(b) ?? panic(missing)).num - (f.get(a) ?? panic(missing)).num);
+	for (const key of keys) res += key + ' ' + (((f.get(key) ?? panic(missing)).num * 100) / n).toFixed(3) + '\n';
+	res += '\n';
+	return res;
+}
+
+function find(seq: string, s: string): string {
+	const f = frequency(seq, s.length);
+	// Adamic: `+` turns the RefNum or the 0 into a string by way of its toString in JavaScript. A `+`
+	// with an object or a number beside a string is refused, so toString is called by name.
+	return (f.get(s) || 0).toString() + '\t' + s + '\n';
+}
+
+// Adamic: the original forks four cluster workers with workerId 0 to 3, sends each the whole third
+// sequence in pieces, and gives each a share of the counting, chosen by its workerId. Workers go, so
+// one worker in this process takes the pieces once and computes the four shares in workerId order,
+// handing each worker's result to the master's handler for it, as each worker's process.send did.
+const workerIds = ['0', '1', '2', '3'];
+
+function master(): void {
+	let reading = false,
+		seq = '';
+	const maxBuf = 2048;
+
+	const send = worker((i, message) => messageHandler(i)(message));
+
+	const flush = function (close?: boolean): void {
+		send(seq);
+		if (close) send('eof');
+		seq = '';
+	};
+	const lineHandler = function (line: string): void {
+		if (reading) {
+			if (line[0] !== '>' && (seq += line.toUpperCase()).length >= maxBuf) flush();
+		} else reading = line.substr(0, 6) === '>THREE';
+	};
+	// Adamic: `results` starts as one '' per worker, since writing past an array's end is refused and the
+	// original's `[]` grows as results arrive. Every slot is written before the join.
+	let jobs = workerIds.length;
+	const results = new Array<string>(workerIds.length).fill('');
+	const messageHandler = function (i: number): (message: string) => void {
+		return function (message: string): void {
+			results[i] = message;
+			if (!--jobs) {
+				process.stdout.write(results.join(''));
+				process.exit(0);
+			}
+		};
+	};
+
+	// Adamic: stdin goes. fastaLines makes the lines readline read, and the close handler runs after the
+	// last one, as on stdin's end. Readline reads only once master has returned, after the handlers
+	// above are set; reading in order, the reading comes last here for the same reason.
+	fastaLines(25000000, lineHandler);
+	flush(true);
+}
+
+function worker(processSend: (i: number, message: string) => void): (message: string) => void {
+	let seq = '';
+	return function (message: string): void {
+		if (message === 'eof') {
+			for (let i = 0; i < workerIds.length; ++i) {
+				let res = '';
+				switch (workerIds[i]) {
+					case '0':
+						res += sort(seq, 1);
+						res += sort(seq, 2);
+						res += find(seq, 'GGT');
+						break;
+					case '1':
+						res += find(seq, 'GGTA');
+						res += find(seq, 'GGTATT');
+						break;
+					case '2':
+						res += find(seq, 'GGTATTTTAATT');
+						break;
+					case '3':
+						res += find(seq, 'GGTATTTTAATTTATAGT');
+						break;
+				}
+				processSend(i, res);
+			}
+			// Adamic: each worker's process.exit() goes with the workers; the master's ends the program.
+		} else seq += message;
+	};
+}
+
+// Adamic: `cluster.isMaster ? master() : worker()`: with no cluster, this is the master.
+master();

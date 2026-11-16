@@ -1,0 +1,219 @@
+// The Computer Language Benchmarks Game
+// https://salsa.debian.org/benchmarksgame-team/benchmarksgame/
+//
+// contributed by Andrey Filatkin
+// based on Go source code by Oleg Mazurov
+//
+// Revised BSD license
+//
+// This is a specific instance of the Open Source Initiative (OSI) BSD license template
+// http://www.opensource.org/licenses/bsd-license.php
+//
+// Copyright © 2004-2008 Brent Fulgham, 2005-2024 Isaac Gouy
+// All rights reserved.
+//
+// Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following conditions are met:
+//
+//    Redistributions of source code must retain the above copyright notice, this list of conditions and the following disclaimer.
+//
+//    Redistributions in binary form must reproduce the above copyright notice, this list of conditions and the following disclaimer in the documentation and/or other materials provided with the distribution.
+//
+//    Neither the name of "The Computer Language Benchmarks Game" nor the name of "The Computer Language Shootout Benchmarks" nor the names of its contributors may be used to endorse or promote products derived from this software without specific prior written permission.
+//
+// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+//
+// Source: fannkuchredux/fannkuchredux.node-5.node from public/download/benchmarksgame-sourcecode.zip
+// (blob 05648fc9a0d6) at benchmarksgame commit 40296663ed350d5fe4a6ab5e367bab61cb77c219 (March 7, 2025).
+// The game has no fannkuchredux.node or .node-1; .node-5 is its lowest-numbered Node.js entry.
+//
+// Ported to Adamic for the speed holdout (#re2xhwa). The algorithm, the chunking into 720 tasks and
+// the output are the original's. Each change is one the language makes, and a comment marked
+// "Adamic:" says which. Input size: n = 12, the game's.
+//
+// Adamic: the worker threads go. The original hands each task to a pool of workers and folds each
+// result into the answer with `reducer` as it arrives; here the main thread runs every task, in task
+// order, and folds each result with the same reducer. The fold is a maximum and a sum of integers, so
+// the order the results arrive in never changed the answer. With the workers go `require`, `os`, the
+// `isMainThread` split, the message protocol and the Promise around them, and so does `async`.
+//
+// Adamic: an element read is `T | undefined` under noUncheckedIndexedAccess, so a read whose value is
+// used as a number carries `?? panic(outOfRange)`. Every such index is in range, so none fires. A
+// read that is only compared, as in `p[first] !== 0`, needs nothing and is left as written.
+import { panic } from 'adamic';
+
+const outOfRange = 'fannkuch: index out of range';
+
+const fact: number[] = [];
+
+function fillFact(n: number): void {
+	// Adamic: a write past an array's end is refused (0.1 panics where Node grows the array), so fact,
+	// empty until here, grows by push. fillFact runs once, so each push is the write at that index.
+	fact.push(1);
+	for (let i = 1; i <= n; i++) {
+		fact.push((fact[i - 1] ?? panic(outOfRange)) * i);
+	}
+}
+
+interface Task {
+	readonly idxMin: number;
+	readonly idxMax: number;
+}
+
+interface Result {
+	readonly maxFlips: number;
+	readonly checkSum: number;
+}
+
+function fannkuch(n: number): (task: Task) => Result {
+	return function ({ idxMin, idxMax }: Task): Result {
+		// Adamic: p and pp start at their full length n, and count at n zeros where `Array(n)` made n
+		// holes, since a write past the end is refused and 0.1 has no holes. The original's first loops
+		// write every slot of p and pp before any is read, and count[0] and count[1] are never read.
+		const p = new Array<number>(n).fill(0);
+		const pp = new Array<number>(n).fill(0);
+		const count = new Array<number>(n).fill(0);
+
+		// first permutation
+		for (let i = 0; i < n; i++) {
+			p[i] = i;
+		}
+		let idx = idxMin;
+		for (let i = n - 1; i > 0; i--) {
+			const d = div(idx, fact[i] ?? panic(outOfRange));
+			count[i] = d;
+			idx = idx % (fact[i] ?? panic(outOfRange));
+
+			for (let j = 0; j < n; j++) {
+				pp[j] = p[j] ?? panic(outOfRange);
+			}
+
+			for (let j = 0; j <= i; j++) {
+				if (j + d <= i) {
+					p[j] = pp[j + d] ?? panic(outOfRange);
+				} else {
+					p[j] = pp[j + d - i - 1] ?? panic(outOfRange);
+				}
+			}
+		}
+
+		let maxFlips = 1;
+		let checkSum = 0;
+
+		idx = idxMin;
+		for (let sign = true; ; sign = !sign) {
+			let first = p[0] ?? panic(outOfRange);
+			if (first !== 0) {
+				let flips = 1;
+				if (p[first] !== 0) {
+					for (let j = 1; j < n; j++) {
+						pp[j] = p[j] ?? panic(outOfRange);
+					}
+					let p0 = first;
+					while (true) {
+						flips++;
+						let i = 1;
+						let j = p0 - 1;
+						while (i < j) {
+							const t = pp[i] ?? panic(outOfRange);
+							pp[i] = pp[j] ?? panic(outOfRange);
+							pp[j] = t;
+							i++;
+							j--;
+						}
+						const t = pp[p0] ?? panic(outOfRange);
+						pp[p0] = p0;
+						p0 = t;
+						if (pp[p0] === 0) {
+							break;
+						}
+					}
+				}
+				if (maxFlips < flips) {
+					maxFlips = flips;
+				}
+				if (sign) {
+					checkSum += flips;
+				} else {
+					checkSum -= flips;
+				}
+			}
+
+			idx++;
+			if (idx === idxMax) {
+				break;
+			}
+
+			// next permutation
+			if (sign) {
+				p[0] = p[1] ?? panic(outOfRange);
+				p[1] = first;
+			} else {
+				const t = p[1] ?? panic(outOfRange);
+				p[1] = p[2] ?? panic(outOfRange);
+				p[2] = t;
+				for (let k = 2; ; k++) {
+					// Adamic: `count[k]++` on a `number | undefined` read is refused, so the increment is
+					// written out, and the comparison reads the element once it's checked.
+					count[k] = (count[k] ?? panic(outOfRange)) + 1;
+					if ((count[k] ?? panic(outOfRange)) <= k) {
+						break;
+					}
+					count[k] = 0;
+					for (let j = 0; j <= k; j++) {
+						p[j] = p[j + 1] ?? panic(outOfRange);
+					}
+					p[k + 1] = first;
+					first = p[0] ?? panic(outOfRange);
+				}
+			}
+		}
+
+		return { maxFlips, checkSum };
+	};
+}
+
+function div(val: number, by: number): number {
+	return (val - (val % by)) / by;
+}
+
+// Adamic: the size is the game's, fixed here rather than read from `process.argv[2]`, so the holdout
+// runs with no input at all. The `isMainThread` split goes with the workers: this is the main thread.
+mainThread(12);
+
+function mainThread(n: number): void {
+	fillFact(n);
+
+	const nchunks = 720;
+	let chunkSize = div((fact[n] ?? panic(outOfRange)) + nchunks - 1, nchunks);
+	chunkSize += chunkSize % 2;
+
+	const tasks: Task[] = [];
+	const len = div((fact[n] ?? panic(outOfRange)) + chunkSize - 1, chunkSize);
+	for (let i = 0; i < len; i++) {
+		const idxMin = chunkSize * i;
+		const idxMax = Math.min(fact[n] ?? panic(outOfRange), idxMin + chunkSize);
+		tasks.push({ idxMin, idxMax });
+	}
+
+	let flips = 0;
+	let chk = 0;
+
+	threadReduce(tasks, n, ({ maxFlips, checkSum }) => {
+		if (flips < maxFlips) {
+			flips = maxFlips;
+		}
+		chk += checkSum;
+	});
+
+	console.log(`${chk}\nPfannkuchen(${n}) = ${flips}`);
+}
+
+// Adamic: the original starts one worker per CPU, each running fannkuch(n) on the tasks it is handed,
+// and resolves once every worker has exited. Without workers, the main thread hands itself the tasks in
+// the same order and reduces each result as it comes.
+function threadReduce(tasks: readonly Task[], workerData: number, reducer: (result: Result) => void): void {
+	const onWork = fannkuch(workerData);
+	for (const task of tasks) {
+		reducer(onWork(task));
+	}
+}
