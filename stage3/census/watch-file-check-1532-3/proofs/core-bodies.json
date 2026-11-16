@@ -1,0 +1,7 @@
+{
+  "dependencies": "function unorderedRemoveItemAt(array, index) {\n    array[index] = array[array.length - 1];\n    array.pop();\n}\n\nfunction unorderedRemoveFirstItemWhere(array, predicate) {\n    for (let i = 0; i < array.length; i++) {\n        if (predicate(array[i])) {\n            unorderedRemoveItemAt(array, i);\n            return true;\n        }\n    }\n    return false;\n}\n\nfunction unorderedRemoveItem(array, item) {\n    return unorderedRemoveFirstItemWhere(array, element => element === item);\n}\n",
+  "add": "function multiMapAdd(key, value) {\n    let values = this.get(key);\n    if (values !== undefined) {\n        values.push(value);\n    }\n    else {\n        this.set(key, values = [value]);\n    }\n    return values;\n}\n",
+  "remove": "function multiMapRemove(key, value) {\n    const values = this.get(key);\n    if (values !== undefined) {\n        unorderedRemoveItem(values, value);\n        if (!values.length) {\n            this.delete(key);\n        }\n    }\n}\n",
+  "freeAdd": "function multiMapAddValue(map, key, value) {\n    let values = map.get(key);\n    if (values !== undefined) {\n        values.push(value);\n    }\n    else {\n        map.set(key, values = [value]);\n    }\n    return values;\n}\n",
+  "freeRemove": "function multiMapRemoveValue(map, key, value) {\n    const values = map.get(key);\n    if (values !== undefined) {\n        unorderedRemoveItem(values, value);\n        if (!values.length) {\n            map.delete(key);\n        }\n    }\n}\n"
+}

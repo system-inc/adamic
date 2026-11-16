@@ -1,0 +1,44 @@
+{
+  "pairing": [
+    "kind",
+    "phase",
+    "reason",
+    "message with position stripped"
+  ],
+  "baseline": {
+    "raw": 174,
+    "unique": 54,
+    "units": 135
+  },
+  "candidate": {
+    "raw": 173,
+    "unique": 53,
+    "units": 135
+  },
+  "gone": [
+    {
+      "kind": "Refused",
+      "phase": "refusal_scan",
+      "reason": "a function taking PollingInterval seen as one taking number | undefined (tsc relates a method's parameters both ways), so it can be handed what it can't take",
+      "messageWithoutPosition": "src/compiler/sys.ts: Adamic 0.1 refuses a function taking PollingInterval seen as one taking number | undefined (tsc relates a method's parameters both ways), so it can be handed what it can't take; write the method as a property holding a function (handle: (animal: Animal) => void), which tsc checks one way, or take the wider type in the method (method-signature-style)",
+      "count": 1
+    }
+  ],
+  "new": [],
+  "changed": 0,
+  "baselineTargetRecords": [
+    {
+      "root_kind": "",
+      "depth": 0,
+      "measurement": "measured on a checker-rejected program",
+      "unit": "/workspace/scratch/watch1532-recut/baseline/src/compiler/sys.ts:1454:5",
+      "phase": "refusal_scan",
+      "kind": "Refused",
+      "where": "/workspace/scratch/watch1532-recut/baseline/src/compiler/sys.ts:1537:13",
+      "reason": "a function taking PollingInterval seen as one taking number | undefined (tsc relates a method's parameters both ways), so it can be handed what it can't take",
+      "text": "/workspace/scratch/watch1532-recut/baseline/src/compiler/sys.ts:1537:13: Adamic 0.1 refuses a function taking PollingInterval seen as one taking number | undefined (tsc relates a method's parameters both ways), so it can be handed what it can't take; write the method as a property holding a function (handle: (animal: Animal) => void), which tsc checks one way, or take the wider type in the method (method-signature-style)"
+    }
+  ],
+  "headerChecks": true,
+  "relationTrailers": true
+}

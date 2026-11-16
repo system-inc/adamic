@@ -1,0 +1,406 @@
+[
+  {
+    "name": "93-builtin-imports-first-apply",
+    "command": [
+      "node",
+      "/workspace/scratch/watch1532-recut/work/stage3/adapt/93-builtin-imports/adapt.cjs",
+      "/workspace/scratch/watch1532-recut/proofs/93-builtin-imports-before"
+    ],
+    "exit": 0,
+    "expected": 0,
+    "seconds": 9.256
+  },
+  {
+    "name": "93-builtin-imports-replay",
+    "command": [
+      "node",
+      "-e",
+      "const fs=require('fs'),path=require('path'),assert=require('assert/strict'),a=require(process.argv[1]),tree=process.argv[2];const files=fs.readdirSync(path.join(tree,'src'),{recursive:true,withFileTypes:true}).filter(e=>e.isFile()).map(e=>path.join(e.parentPath,e.name));const snap=()=>files.map(f=>[fs.readFileSync(f),String(fs.statSync(f,{bigint:true}).mtimeNs)]);const before=snap(),write=fs.writeFileSync;let writes=0;fs.writeFileSync=(...args)=>{writes++;return write(...args)};const result=a.adapt(tree);assert.equal(writes,0);assert.deepEqual(snap(),before);console.log(JSON.stringify({result,writes,bytesAndMtimeEqual:true}));",
+      "/workspace/scratch/watch1532-recut/work/stage3/adapt/93-builtin-imports/adapt.cjs",
+      "/workspace/scratch/watch1532-recut/proofs/93-builtin-imports-before"
+    ],
+    "exit": 0,
+    "expected": 0,
+    "seconds": 8.443
+  },
+  {
+    "name": "99-correctness-core-multimap-first-apply",
+    "command": [
+      "node",
+      "/workspace/scratch/watch1532-recut/work/stage3/adapt/99-correctness-core-multimap/adapt.cjs",
+      "/workspace/scratch/watch1532-recut/proofs/99-correctness-core-multimap-before"
+    ],
+    "exit": 0,
+    "expected": 0,
+    "seconds": 4.134
+  },
+  {
+    "name": "99-correctness-core-multimap-replay",
+    "command": [
+      "node",
+      "-e",
+      "const fs=require('fs'),path=require('path'),assert=require('assert/strict'),a=require(process.argv[1]),tree=process.argv[2];const files=fs.readdirSync(path.join(tree,'src'),{recursive:true,withFileTypes:true}).filter(e=>e.isFile()).map(e=>path.join(e.parentPath,e.name));const snap=()=>files.map(f=>[fs.readFileSync(f),String(fs.statSync(f,{bigint:true}).mtimeNs)]);const before=snap(),write=fs.writeFileSync;let writes=0;fs.writeFileSync=(...args)=>{writes++;return write(...args)};const result=a.adapt(tree);assert.equal(writes,0);assert.deepEqual(snap(),before);console.log(JSON.stringify({result,writes,bytesAndMtimeEqual:true}));",
+      "/workspace/scratch/watch1532-recut/work/stage3/adapt/99-correctness-core-multimap/adapt.cjs",
+      "/workspace/scratch/watch1532-recut/proofs/99-correctness-core-multimap-before"
+    ],
+    "exit": 0,
+    "expected": 0,
+    "seconds": 3.307
+  },
+  {
+    "name": "99-correctness-single-watcher-forwarder-first-apply",
+    "command": [
+      "node",
+      "/workspace/scratch/watch1532-recut/work/stage3/adapt/99-correctness-single-watcher-forwarder/adapt.cjs",
+      "/workspace/scratch/watch1532-recut/proofs/99-correctness-single-watcher-forwarder-before"
+    ],
+    "exit": 0,
+    "expected": 0,
+    "seconds": 0.465
+  },
+  {
+    "name": "99-correctness-single-watcher-forwarder-replay",
+    "command": [
+      "node",
+      "-e",
+      "const fs=require('fs'),path=require('path'),assert=require('assert/strict'),a=require(process.argv[1]),tree=process.argv[2];const files=fs.readdirSync(path.join(tree,'src'),{recursive:true,withFileTypes:true}).filter(e=>e.isFile()).map(e=>path.join(e.parentPath,e.name));const snap=()=>files.map(f=>[fs.readFileSync(f),String(fs.statSync(f,{bigint:true}).mtimeNs)]);const before=snap(),write=fs.writeFileSync;let writes=0;fs.writeFileSync=(...args)=>{writes++;return write(...args)};const result=a.adapt(tree);assert.equal(writes,0);assert.deepEqual(snap(),before);console.log(JSON.stringify({result,writes,bytesAndMtimeEqual:true}));",
+      "/workspace/scratch/watch1532-recut/work/stage3/adapt/99-correctness-single-watcher-forwarder/adapt.cjs",
+      "/workspace/scratch/watch1532-recut/proofs/99-correctness-single-watcher-forwarder-before"
+    ],
+    "exit": 0,
+    "expected": 0,
+    "seconds": 1.066
+  },
+  {
+    "name": "99-correctness-timer-closures-first-apply",
+    "command": [
+      "node",
+      "/workspace/scratch/watch1532-recut/work/stage3/adapt/99-correctness-timer-closures/adapt.cjs",
+      "/workspace/scratch/watch1532-recut/proofs/99-correctness-timer-closures-before"
+    ],
+    "exit": 0,
+    "expected": 0,
+    "seconds": 1.259
+  },
+  {
+    "name": "99-correctness-timer-closures-replay",
+    "command": [
+      "node",
+      "-e",
+      "const fs=require('fs'),path=require('path'),assert=require('assert/strict'),a=require(process.argv[1]),tree=process.argv[2];const files=fs.readdirSync(path.join(tree,'src'),{recursive:true,withFileTypes:true}).filter(e=>e.isFile()).map(e=>path.join(e.parentPath,e.name));const snap=()=>files.map(f=>[fs.readFileSync(f),String(fs.statSync(f,{bigint:true}).mtimeNs)]);const before=snap(),write=fs.writeFileSync;let writes=0;fs.writeFileSync=(...args)=>{writes++;return write(...args)};const result=a.adapt(tree);assert.equal(writes,0);assert.deepEqual(snap(),before);console.log(JSON.stringify({result,writes,bytesAndMtimeEqual:true}));",
+      "/workspace/scratch/watch1532-recut/work/stage3/adapt/99-correctness-timer-closures/adapt.cjs",
+      "/workspace/scratch/watch1532-recut/proofs/99-correctness-timer-closures-before"
+    ],
+    "exit": 0,
+    "expected": 0,
+    "seconds": 1.669
+  },
+  {
+    "name": "99-wasm-crypto-import-first-apply",
+    "command": [
+      "node",
+      "/workspace/scratch/watch1532-recut/work/stage3/adapt/99-wasm-crypto-import/adapt.cjs",
+      "/workspace/scratch/watch1532-recut/proofs/99-wasm-crypto-import-before"
+    ],
+    "exit": 0,
+    "expected": 0,
+    "seconds": 8.23
+  },
+  {
+    "name": "99-wasm-crypto-import-replay",
+    "command": [
+      "node",
+      "-e",
+      "const fs=require('fs'),path=require('path'),assert=require('assert/strict'),a=require(process.argv[1]),tree=process.argv[2];const files=fs.readdirSync(path.join(tree,'src'),{recursive:true,withFileTypes:true}).filter(e=>e.isFile()).map(e=>path.join(e.parentPath,e.name));const snap=()=>files.map(f=>[fs.readFileSync(f),String(fs.statSync(f,{bigint:true}).mtimeNs)]);const before=snap(),write=fs.writeFileSync;let writes=0;fs.writeFileSync=(...args)=>{writes++;return write(...args)};const result=a.adapt(tree);assert.equal(writes,0);assert.deepEqual(snap(),before);console.log(JSON.stringify({result,writes,bytesAndMtimeEqual:true}));",
+      "/workspace/scratch/watch1532-recut/work/stage3/adapt/99-wasm-crypto-import/adapt.cjs",
+      "/workspace/scratch/watch1532-recut/proofs/99-wasm-crypto-import-before"
+    ],
+    "exit": 0,
+    "expected": 0,
+    "seconds": 8.711
+  },
+  {
+    "name": "93-legacy-check",
+    "command": [
+      "node",
+      "/workspace/scratch/watch1532-recut/work/stage3/adapt/93-builtin-imports/proofs/check.cjs",
+      "/workspace/scratch/watch1532-recut/proofs/93-builtin-imports-before",
+      "/workspace/scratch/watch1532-recut/proofs/93-builtin-imports-after",
+      "/workspace/scratch/watch1532-recut/proofs/93-checks.json"
+    ],
+    "exit": 1,
+    "expected": 1,
+    "seconds": 2.384
+  },
+  {
+    "name": "93-bindings-and-mutants",
+    "command": [
+      "node",
+      "/workspace/scratch/watch1532-recut/work/stage3/adapt/93-builtin-imports/proofs/bindings.cjs",
+      "/workspace/scratch/watch1532-recut/proofs/93-builtin-imports-before",
+      "/workspace/scratch/watch1532-recut/proofs/93-builtin-imports-after",
+      "/workspace/scratch/watch1532-recut/proofs/93-bindings.json"
+    ],
+    "exit": 0,
+    "expected": 0,
+    "seconds": 22.702
+  },
+  {
+    "name": "93-owner-contract-and-mutants",
+    "command": [
+      "node",
+      "/workspace/scratch/watch1532-recut/work/stage3/adapt/93-builtin-imports/proofs/owner-contract.cjs",
+      "/workspace/scratch/watch1532-recut/proofs/93-builtin-imports-before",
+      "/workspace/scratch/watch1532-recut/proofs/93-builtin-imports-after",
+      "/workspace/scratch/watch1532-recut/proofs/93-contract"
+    ],
+    "exit": 0,
+    "expected": 0,
+    "seconds": 61.513
+  },
+  {
+    "name": "93-scope-mutant",
+    "command": [
+      "node",
+      "/workspace/scratch/watch1532-recut/work/stage3/adapt/93-builtin-imports/proofs/scope-mutant.cjs",
+      "/workspace/scratch/watch1532-recut/proofs/93-builtin-imports-before",
+      "/workspace/scratch/watch1532-recut/proofs/93-builtin-imports-after"
+    ],
+    "exit": 1,
+    "expected": 1,
+    "seconds": 0.298
+  },
+  {
+    "name": "core-contract-and-mutants",
+    "command": [
+      "node",
+      "/workspace/scratch/watch1532-recut/work/stage3/adapt/99-correctness-core-multimap/contract.cjs",
+      "/workspace/scratch/watch1532-recut/proofs/99-correctness-core-multimap-before",
+      "/workspace/scratch/watch1532-recut/proofs/core-contract",
+      "/workspace/scratch/watch1532-recut/proofs/core-contract.json"
+    ],
+    "exit": 0,
+    "expected": 0,
+    "seconds": 51.127
+  },
+  {
+    "name": "core-body-proof",
+    "command": [
+      "node",
+      "/workspace/scratch/watch1532-recut/work/stage3/adapt/99-correctness-core-multimap/body-proof.cjs",
+      "/workspace/scratch/watch1532-recut/proofs/99-correctness-core-multimap-after",
+      "/workspace/scratch/watch1532-recut/proofs/core-bodies.json",
+      "/workspace/scratch/watch1532-recut/proofs/core-body-proof.json"
+    ],
+    "exit": 0,
+    "expected": 0,
+    "seconds": 0.596
+  },
+  {
+    "name": "core-runtime-witness",
+    "command": [
+      "node",
+      "/workspace/scratch/watch1532-recut/work/stage3/adapt/99-correctness-core-multimap/witness.cjs",
+      "/workspace/scratch/watch1532-recut/proofs/core-bodies.json",
+      "/workspace/scratch/watch1532-recut/proofs/core-witness.json"
+    ],
+    "exit": 0,
+    "expected": 0,
+    "seconds": 0.072
+  },
+  {
+    "name": "core-restoring-mutant",
+    "command": [
+      "node",
+      "/workspace/scratch/watch1532-recut/work/stage3/adapt/99-correctness-core-multimap/mutant.cjs",
+      "/workspace/scratch/watch1532-recut/proofs/99-correctness-core-multimap-after"
+    ],
+    "exit": 0,
+    "expected": 0,
+    "seconds": 0.715
+  },
+  {
+    "name": "core-restoring-mutant-rejected",
+    "command": [
+      "node",
+      "/workspace/scratch/watch1532-recut/work/stage3/adapt/99-correctness-core-multimap/adapt.cjs",
+      "/workspace/scratch/watch1532-recut/proofs/99-correctness-core-multimap-after"
+    ],
+    "exit": 1,
+    "expected": 1,
+    "seconds": 0.457
+  },
+  {
+    "name": "single-watcher-contract-and-mutants",
+    "command": [
+      "node",
+      "/workspace/scratch/watch1532-recut/work/stage3/adapt/99-correctness-single-watcher-forwarder/contract.cjs",
+      "/workspace/scratch/watch1532-recut/proofs/99-correctness-single-watcher-forwarder-before"
+    ],
+    "exit": 0,
+    "expected": 0,
+    "seconds": 0.984
+  },
+  {
+    "name": "timer-contract-and-mutants",
+    "command": [
+      "node",
+      "/workspace/scratch/watch1532-recut/work/stage3/adapt/99-correctness-timer-closures/contract.cjs",
+      "/workspace/scratch/watch1532-recut/proofs/99-correctness-timer-closures-before"
+    ],
+    "exit": 0,
+    "expected": 0,
+    "seconds": 7.425
+  },
+  {
+    "name": "timer-restored-slot-mutant",
+    "command": [
+      "node",
+      "/workspace/scratch/watch1532-recut/work/stage3/adapt/99-correctness-timer-closures/contract.cjs",
+      "/workspace/scratch/watch1532-recut/proofs/99-correctness-timer-closures-before",
+      "--restore-slot"
+    ],
+    "exit": 1,
+    "expected": 1,
+    "seconds": 0.901
+  },
+  {
+    "name": "timer-witness-before",
+    "command": [
+      "node",
+      "/workspace/scratch/watch1532-recut/work/stage3/adapt/99-correctness-timer-closures/witness.cjs",
+      "/workspace/scratch/watch1532-recut/proofs/99-correctness-timer-closures-before"
+    ],
+    "exit": 0,
+    "expected": 0,
+    "seconds": 0.898
+  },
+  {
+    "name": "timer-witness-after",
+    "command": [
+      "node",
+      "/workspace/scratch/watch1532-recut/work/stage3/adapt/99-correctness-timer-closures/witness.cjs",
+      "/workspace/scratch/watch1532-recut/proofs/99-correctness-timer-closures-after"
+    ],
+    "exit": 0,
+    "expected": 0,
+    "seconds": 0.822
+  },
+  {
+    "name": "timer-request-mutant",
+    "command": [
+      "node",
+      "/workspace/scratch/watch1532-recut/work/stage3/adapt/99-correctness-timer-closures/witness.cjs",
+      "/workspace/scratch/watch1532-recut/proofs/99-correctness-timer-closures-after",
+      "request"
+    ],
+    "exit": 1,
+    "expected": 1,
+    "seconds": 0.784
+  },
+  {
+    "name": "timer-label-mutant",
+    "command": [
+      "node",
+      "/workspace/scratch/watch1532-recut/work/stage3/adapt/99-correctness-timer-closures/witness.cjs",
+      "/workspace/scratch/watch1532-recut/proofs/99-correctness-timer-closures-after",
+      "label"
+    ],
+    "exit": 1,
+    "expected": 1,
+    "seconds": 0.721
+  },
+  {
+    "name": "wasm-source-transpile",
+    "command": [
+      "node",
+      "/workspace/scratch/watch1532-recut/work/stage3/adapt/99-wasm-crypto-import/proofs/check.cjs",
+      "/workspace/scratch/watch1532-recut/proofs/99-wasm-crypto-import-before",
+      "/workspace/scratch/watch1532-recut/proofs/99-wasm-crypto-import-after",
+      "/workspace/scratch/watch1532-recut/proofs/wasm-checks.json"
+    ],
+    "exit": 0,
+    "expected": 0,
+    "seconds": 1.931
+  },
+  {
+    "name": "wasm-bindings-and-mutants",
+    "command": [
+      "node",
+      "/workspace/scratch/watch1532-recut/work/stage3/adapt/99-wasm-crypto-import/proofs/bindings.cjs",
+      "/workspace/scratch/watch1532-recut/proofs/99-wasm-crypto-import-before",
+      "/workspace/scratch/watch1532-recut/proofs/99-wasm-crypto-import-after",
+      "/workspace/scratch/watch1532-recut/proofs/wasm-bindings.json"
+    ],
+    "exit": 0,
+    "expected": 0,
+    "seconds": 13.576
+  },
+  {
+    "name": "wasm-scope-mutant",
+    "command": [
+      "node",
+      "/workspace/scratch/watch1532-recut/work/stage3/adapt/99-wasm-crypto-import/proofs/scope-mutant.cjs",
+      "/workspace/scratch/watch1532-recut/proofs/99-wasm-crypto-import-before",
+      "/workspace/scratch/watch1532-recut/proofs/99-wasm-crypto-import-after"
+    ],
+    "exit": 1,
+    "expected": 1,
+    "seconds": 1.102
+  },
+  {
+    "name": "wasm-ternary-mutant",
+    "command": [
+      "node",
+      "/workspace/scratch/watch1532-recut/work/stage3/adapt/99-wasm-crypto-import/proofs/ternary-mutant.cjs",
+      "/workspace/scratch/watch1532-recut/proofs/99-wasm-crypto-import-after"
+    ],
+    "exit": 1,
+    "expected": 1,
+    "seconds": 2.448
+  },
+  {
+    "name": "wasm-require-result-contract",
+    "command": [
+      "node",
+      "/workspace/scratch/watch1532-recut/work/stage3/adapt/99-wasm-crypto-import/proofs/require-result-contract.cjs",
+      "/workspace/scratch/watch1532-recut/proofs/99-wasm-crypto-import-after",
+      "/workspace/scratch/watch1532-recut/composed"
+    ],
+    "exit": 0,
+    "expected": 0,
+    "seconds": 23.974
+  },
+  {
+    "name": "wasm-resolve-host-contract",
+    "command": [
+      "node",
+      "/workspace/scratch/watch1532-recut/work/stage3/adapt/99-wasm-crypto-import/proofs/resolve-host-contract.cjs"
+    ],
+    "exit": 0,
+    "expected": 0,
+    "seconds": 1.548
+  },
+  {
+    "name": "wasm-watch-directory-contract",
+    "command": [
+      "node",
+      "/workspace/scratch/watch1532-recut/work/stage3/adapt/99-wasm-crypto-import/proofs/watch-directory-contract.cjs",
+      "/workspace/scratch/watch1532-recut/proofs/99-wasm-crypto-import-after"
+    ],
+    "exit": 0,
+    "expected": 0,
+    "seconds": 26.604
+  },
+  {
+    "name": "wasm-watch-directory-witness",
+    "command": [
+      "node",
+      "/workspace/scratch/watch1532-recut/work/stage3/adapt/99-wasm-crypto-import/proofs/watch-directory-witness.cjs",
+      "/workspace/scratch/watch1532-recut/proofs/99-wasm-crypto-import-after"
+    ],
+    "exit": 0,
+    "expected": 0,
+    "seconds": 1.093
+  }
+]
