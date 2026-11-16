@@ -59,7 +59,7 @@ class EntryReportTests(unittest.TestCase):
         self.assertEqual(result['whole_program_diagnostics'], 0)
         self.assertEqual(result['lowering_census']['source_files'], 2)
         self.assertEqual(result['lowering_census']['totals']['NotYet'], 1)
-        self.assertEqual(result['lowering_census']['top_reasons'][0]['owner'], '01a113e3-a058')
+        self.assertEqual(result['lowering_census']['top_reasons'][0]['owner'], 'OWNER BLANK')
 
     def test_wrong_root_is_rejected(self):
         write_entry(self.tree, self.run)

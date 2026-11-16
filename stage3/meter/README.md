@@ -3,8 +3,29 @@
 The daily command, after the toolchain is installed, is:
 
 ```sh
-source /workspace/adamic-tools/env.sh && STAGE3_METER_COMPILER=per-ref STAGE3_METER_LATENT=first-error timeout --kill-after=60s 7200 bash /workspace/adamic/stage3/meter/twice-daily.sh > /tmp/stage3-meter-daily.log 2>&1
+source /workspace/adamic-tools/env.sh && STAGE3_METER_OPEN_TASKS=/tmp/meter-open-tasks.txt STAGE3_METER_COMPILER=per-ref STAGE3_METER_LATENT=first-error timeout --kill-after=60s 7200 bash /workspace/adamic/stage3/meter/twice-daily.sh > /tmp/stage3-meter-daily.log 2>&1
 ```
+
+Before handing the daily job to the sealed worker, the daily ask exports the
+open task IDs from the task store into `/tmp/meter-open-tasks.txt` and hands
+that file to the job at that path. Run the task listing where the ask is made,
+not in the sealed job. `ahra` is not installed in this workspace, so an exact
+export command could not be verified with `ahra tasks --help`. On the ask host,
+consult that help, list only open tasks, and extract their IDs into the file.
+Write one ID per line, using the store's 6 or 7
+Crockford base32 characters or letter-first pretty IDs (2 to 9 lowercase letters
+and digits, for example `baobab`, `inbox`, `jobs`, `axochk`, `onediag`), with an
+optional leading `#`. Malformed lines fail reporting; valid syntax alone never
+establishes ownership.
+Do not include headings, status columns, closed tasks, or owner names.
+
+`STAGE3_METER_OPEN_TASKS` names this input file for both `twice-daily.sh` and
+direct `report.py` invocations. An empty file means no tasks are open; a missing
+or unreadable supplied file fails reporting. The reporter performs no task-store
+network reads. With a file, a mapped label is retained only if its task ID is
+listed; closed or nonexistent tasks become OWNER BLANK and enter Unowned.
+Without a file, mapped labels carry `(unchecked)` so they cannot imply store
+verification. Refresh the file for each daily ask.
 
 Every invocation fetches only `origin/main`, then resolves one immutable commit.
 `STAGE3_METER_MAIN_REF` can select an explicit commit; its default is the fetched
@@ -155,7 +176,7 @@ For morning and evening execution, a host can use this cron entry with its own
 repository/toolchain paths:
 
 ```cron
-0 8 * * * . /workspace/adamic-tools/env.sh && STAGE3_METER_COMPILER=per-ref STAGE3_METER_LATENT=first-error timeout --kill-after=60s 7200 bash /workspace/adamic/stage3/meter/twice-daily.sh >> /tmp/stage3-meter-cron.log 2>&1
+0 8 * * * . /workspace/adamic-tools/env.sh && STAGE3_METER_OPEN_TASKS=/tmp/meter-open-tasks.txt STAGE3_METER_COMPILER=per-ref STAGE3_METER_LATENT=first-error timeout --kill-after=60s 7200 bash /workspace/adamic/stage3/meter/twice-daily.sh >> /tmp/stage3-meter-cron.log 2>&1
 ```
 
 This unit does not install cron or send messages to @system_adamic.
@@ -182,7 +203,7 @@ go build -o /tmp/stage3-census ./stage3/census/tool > /tmp/stage3-meter-build.lo
 CENSUS_BINARY=/tmp/stage3-census python3 -m unittest discover -s stage3/meter -p '*_test.py' > /tmp/stage3-meter-tests.log 2>&1
 ```
 
-`compiler_test.py` also runs the meter against local Git refs with real Go
+The compiler-selection suite also runs the meter against local Git refs with real Go
 compiler witnesses. The default must build the worker checkout for both trees;
 per-ref mode must produce main's compiler witness for both labels and record
 the same pinned SHA. A missing local dependency transport retries the recorded
@@ -202,8 +223,12 @@ extra NotYet on a checker-rejected program with existing NotYet and Refused find
 count may increase; every existing reason and the Refused total must stay fixed.
 
 Reason tables group identical reason text across NotYet and Refused and show an
-owner column. owners.json is a flat reason-to-owner map. The explicit "seen as" entry wins whenever that phrase occurs inside a reason.
-Other reasons use exact matches, then the longest matching prefix. Enum-read
+owner column. owners.json is a flat reason-to-owner map. Exact reason assignments
+win first, including the five families listed in
+[OPEN-OWNERS.md](OPEN-OWNERS.md). Otherwise the explicit "seen as" entry wins
+whenever that phrase occurs inside a reason, then the longest matching prefix
+applies. Branch/adaptation labels and obsolete hex IDs are blank, since they
+are not task IDs. Enum-read
 entries cover the enum declarations in the pinned compiler sources; ordinary
 function reads and the Error constructor are not assigned as enums.
 Unknown reasons get OWNER BLANK. The Unowned section appears immediately after
@@ -310,8 +335,8 @@ uses the normal single-tree report command. The two direction mutants run with
 `python3 -E -S -B stage3/meter/check-root-order-mutants.py`; each names its red
 `RootOrderTests` regression. A third mutant disables verbatim imports and must
 fail `NodeReadinessTests.test_value_import_used_only_as_type_keeps_its_evaluation_edge`.
-The Node runner has its own real-tool tests in
-`node_readiness_test.py`. Go wrappers in `meter_test.go` run all meter Python
+The Node readiness suite runs real-tool tests. Go wrappers in the meter Go gate
+run all meter Python
 suites; new tests keep the existing `*_test.py` naming and the stage3 Python
 suite census stays unchanged.
 
