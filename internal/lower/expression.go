@@ -2210,14 +2210,15 @@ func (l *lowering) functionValue(node *ast.Node, target int) (ir.Expression, err
 	return ir.Read{Local: held, Of: ir.Closure}, nil
 }
 
-// optionalCall refuses a call in an optional chain, text?.toUpperCase() or run?.(): the receiver has
-// to be evaluated once and tested before the call, which stage 0 doesn't lower yet for the library's
-// methods or a function value called directly. Lowered as a plain call, it ran the method on
-// undefined. One form lowered is object?.method(...) on a method the program declares (a class's, an
-// interface's, or a function value in a field): the call goes through the object's methods, which
-// stops at undefined as JavaScript's chain does (ir.Property's Method). The other, an optional
-// method's object?.method?.(...) and object.method?.(...), its callers lower before asking here
-// (optionalMethodCall).
+// optionalCall refuses a call in an optional chain that no earlier lowering took: the receiver has to
+// be evaluated once and tested before the call, and lowered as a plain call it ran the method on
+// undefined. Before it's asked, optionalIntrinsic lowers a library method on an optional receiver,
+// text?.trim(), keeping the receiver once and evaluating the call only when it's present, unless the
+// chain continues past the call or an argument spreads; and optionalMethodCall lowers an optional
+// method's object?.method?.(...) and object.method?.(...). Here, object?.method(...) on a method the
+// program declares (a class's, an interface's, or a function value in a field) goes through the
+// object's methods, which stop at undefined as JavaScript's chain does (optionalHostCall, ir.Property's
+// Method). Anything else, a function value called directly as run?.() among them, is NotYet.
 func (l *lowering) optionalCall(call *ast.Node) error {
 	if call.Flags&ast.NodeFlagsOptionalChain == 0 || l.isOptionalJoin(call) {
 		return nil
