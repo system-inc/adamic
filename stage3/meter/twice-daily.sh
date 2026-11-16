@@ -2,6 +2,13 @@
 # Intended for morning/evening cron. Every invocation measures a fresh adapted tree.
 set -euo pipefail
 SECONDS=0
+# STAGE3_METER_OPEN_TASKS is handed in by the daily ask and inherited by report.py.
+# Check it before an expensive measurement; no task-store access happens here.
+if [[ ${STAGE3_METER_OPEN_TASKS+x} ]]; then
+    [[ -r $STAGE3_METER_OPEN_TASKS && -f $STAGE3_METER_OPEN_TASKS ]] || { echo "unreadable STAGE3_METER_OPEN_TASKS: $STAGE3_METER_OPEN_TASKS" >&2; exit 2; }
+    STAGE3_METER_OPEN_TASKS="$(cd "$(dirname "$STAGE3_METER_OPEN_TASKS")" && pwd)/$(basename "$STAGE3_METER_OPEN_TASKS")"
+    export STAGE3_METER_OPEN_TASKS
+fi
 repository=$(cd "$(dirname "$0")/../.." && pwd)
 cd "$repository"
 for prerequisite in stage3/apply.sh stage3/census/tool/main.go stage3/census/latent/make_overlay.py; do

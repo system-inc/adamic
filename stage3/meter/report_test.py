@@ -1,5 +1,6 @@
 import json
 import os
+import re
 import subprocess
 from pathlib import Path
 import tempfile
@@ -7,7 +8,7 @@ import unittest
 from unittest.mock import patch
 
 from report import (report, report_pair, latent_summary, MEASUREMENT, reason_owner, unowned_table, write_readme,
-                    entry_table, latent_table)
+                    entry_table, latent_table, mapped_owner)
 
 
 class ReportTests(unittest.TestCase):
@@ -270,23 +271,23 @@ class LatentReportTests(unittest.TestCase):
 
     def test_exact_prefix_and_variance_owners(self):
         owners = json.loads((Path(__file__).parent / 'owners.json').read_text())
-        self.assertEqual(reason_owner('a type predicate', owners), '#1w5bve2 (Optimizer)')
-        self.assertEqual(reason_owner('reading SyntaxKind.SomeFlag', owners), 'compiler/stage3-front')
-        self.assertEqual(reason_owner('a method call through a structural signature on X', owners), '01a1143c')
-        self.assertEqual(reason_owner('a value of type X seen as Y', owners), 'adaptation 70, stage 3')
+        self.assertEqual(mapped_owner('a type predicate', owners), '#1w5bve2 (Optimizer)')
+        self.assertEqual(mapped_owner('reading SyntaxKind.SomeFlag', owners), '')
+        self.assertEqual(mapped_owner('a method call through a structural signature on X', owners), '')
+        self.assertEqual(mapped_owner('a value of type X seen as Y', owners), '')
         for name in ('ModifierFlags', 'Extension', 'NodeFlags', 'Comparison', 'ModuleKind', 'EmitFlags'):
-            self.assertEqual(reason_owner('reading ' + name, owners), 'compiler/stage3-front')
-        self.assertEqual(reason_owner('reading Error', owners), 'OWNER BLANK')
-        self.assertEqual(reason_owner('reading addOutput', owners), 'OWNER BLANK')
-        self.assertEqual(reason_owner('a function returning T seen as U', owners), 'adaptation 70, stage 3')
-        self.assertEqual(reason_owner('a value of type any seen as X', owners), 'adaptation 70, stage 3')
-        for reason, owner in {'||=': '01a113e3-a058', 'a string as a condition': '01a113e3-a058',
-                              'a boolean | undefined as a condition': '01a113e3-a058',
-                              'a namespace object used as a value': 'codex/namespaces-tsc',
-                              'an index signature': '01a113e7', 'a value of type any': 'adaptation 40, stage 3',
-                              "a cast the runtime can't check": '01a11410', 'a value of type unknown': '01a114ab',
-                              'an object refinement using an open numeric enum as a literal tag': '#drwm5pj (Lower)'}.items():
-            self.assertEqual(reason_owner(reason, owners), owner)
+            self.assertEqual(mapped_owner('reading ' + name, owners), '')
+        self.assertEqual(mapped_owner('reading Error', owners), 'OWNER BLANK')
+        self.assertEqual(mapped_owner('reading addOutput', owners), 'OWNER BLANK')
+        self.assertEqual(mapped_owner('a function returning T seen as U', owners), '')
+        self.assertEqual(mapped_owner('a value of type any seen as X', owners), '')
+        for reason, owner in {'||=': '', 'a string as a condition': '',
+                              'a boolean | undefined as a condition': '',
+                              'a namespace object used as a value': '',
+                              'an index signature': '', 'a value of type any': '',
+                              "a cast the runtime can't check": '#b5w3ycg', 'a value of type unknown': '',
+                              'an object refinement using an open numeric enum as a literal tag': '#x2cjvy9'}.items():
+            self.assertEqual(mapped_owner(reason, owners), owner)
         # Group 1's classes as the daily meter on Oct 27 words them (#bbssdcy), each with its task and owner.
         for reason, owner in {
             'a type predicate whose return is not proven (return expression is not a trusted check on node)': '#1w5bve2 (Optimizer)',
@@ -306,9 +307,119 @@ class LatentReportTests(unittest.TestCase):
             # The bare reason, the inspector require's (#cn4yapb), stays unowned: no CommonJS prefix matches it.
             'node:module.require': 'OWNER BLANK',
         }.items():
-            self.assertEqual(reason_owner(reason, owners), owner)
-        self.assertEqual(reason_owner('unmatched', owners), 'OWNER BLANK')
-        self.assertEqual(reason_owner('reading SyntaxKind', {'reading': 'general', 'reading SyntaxKind': 'specific'}), 'specific')
+            self.assertEqual(mapped_owner(reason, owners), owner)
+        self.assertEqual(mapped_owner('unmatched', owners), 'OWNER BLANK')
+        self.assertEqual(mapped_owner('reading SyntaxKind', {'reading': 'general', 'reading SyntaxKind': 'specific'}), 'specific')
+
+    def test_open_exact_prefix_and_variance_owners(self):
+        owners = {'a function returning T': '#x2cjvy9', 'seen as': '#b5w3ycg',
+                  'reading': '#aryr7ea', 'reading SyntaxKind': '#m2wxyaz'}
+        opened = {'x2cjvy9', 'b5w3ycg', 'aryr7ea', 'm2wxyaz'}
+        for reason, owner in {
+            'a function returning T': '#x2cjvy9',
+            'a function returning T | undefined': '#x2cjvy9',
+            'a function returning T seen as U': '#b5w3ycg',
+            'reading SyntaxKind.SomeFlag': '#m2wxyaz',
+            'reading NodeFlags': '#aryr7ea',
+            'unmatched': 'OWNER BLANK',
+        }.items():
+            with self.subTest(reason=reason):
+                self.assertEqual(reason_owner(reason, owners, opened), owner)
+
+    def owner_summary(self, owner, ids):
+        (self.run / 'owners.json').write_text(json.dumps({'existing': owner}))
+        environment = dict(os.environ)
+        environment.pop('STAGE3_METER_OPEN_TASKS', None)
+        if ids is not None:
+            path = self.run / 'open-tasks.txt'
+            path.write_text(ids)
+            environment['STAGE3_METER_OPEN_TASKS'] = str(path)
+        with patch('report.__file__', str(self.run / 'report.py')), patch.dict(os.environ, environment, clear=True):
+            return self.render()
+
+    def test_closed_task_is_blank_and_in_unowned(self):
+        self.records[1]['findings'] += [self.finding('NotYet', 'existing', line) for line in range(3, 12)]
+        result = self.owner_summary('#drwm5pj (Lower)', '#x2cjvy9\n')
+        row = next(row for row in result['reason_rows'] if row['reason'] == 'existing')
+        self.assertEqual(row['owner'], 'OWNER BLANK')
+        self.assertIn(row, result['unowned_reasons'])
+        self.assertEqual(next(row for row in result['top_reasons'] if row['reason'] == 'existing')['owner'], 'OWNER BLANK')
+        _, lines = unowned_table({'main': {'latent_lowering': result}, 'area': {'latent_lowering': result}})
+        self.assertIn('| existing | OWNER BLANK | 10 | 0 | 10 | 0 |', '\n'.join(lines))
+
+    def test_non_task_id_is_blank(self):
+        result = self.owner_summary('01a11410', 'x2cjvy9\n')
+        row = next(row for row in result['reason_rows'] if row['reason'] == 'existing')
+        self.assertEqual(row['owner'], 'OWNER BLANK')
+        self.assertIn(row, result['unowned_reasons'])
+
+    def test_open_task_keeps_owner(self):
+        for task in ('x2cjvy9', '123456', '1234567', 'baobab', 'inbox', 'jobs', 'axochk', 'onediag'):
+            for listed in (task, '#' + task):
+                with self.subTest(listed=listed):
+                    label = ('#' if listed.startswith('#') else '') + task + ' (Lower)'
+                    result = self.owner_summary(label, listed + '\n')
+                    row = next(row for row in result['reason_rows'] if row['reason'] == 'existing')
+                    self.assertEqual(row['owner'], label)
+                    self.assertNotIn(row, result['unowned_reasons'])
+                    self.assertIn(row['owner'], '\n'.join(latent_table('main', result)))
+                    self.assertIn(row['owner'], '\n'.join(entry_table('main', {'lowering_census': result})))
+
+    def test_no_open_list_marks_owner_unchecked(self):
+        result = self.owner_summary('#drwm5pj (Lower)', None)
+        row = next(row for row in result['reason_rows'] if row['reason'] == 'existing')
+        self.assertEqual(row['owner'], '#drwm5pj (Lower) (unchecked)')
+        self.assertIn('(unchecked)', '\n'.join(latent_table('main', result)))
+
+    def test_empty_open_list_is_authoritative(self):
+        result = self.owner_summary('#x2cjvy9', '')
+        self.assertEqual(result['reason_rows'][0]['owner'], 'OWNER BLANK')
+
+    def test_unreadable_open_list_fails(self):
+        with patch.dict(os.environ, {'STAGE3_METER_OPEN_TASKS': str(self.run / 'missing')}):
+            with self.assertRaises(FileNotFoundError):
+                self.render()
+
+    def test_invalid_open_task_ids_are_rejected(self):
+        for invalid in ('01a11410', '01a113e3-a058', 'compiler/stage3-front', 'open tasks', 'a', '12345678', 'Jobs'):
+            with self.subTest(invalid=invalid):
+                with self.assertRaisesRegex(ValueError, 'invalid open task ID'):
+                    self.owner_summary('#jobs', invalid + '\n')
+                # Even a direct caller's set cannot turn a malformed label into a task.
+                self.assertEqual(reason_owner('reason', {'reason': invalid}, {invalid}), 'OWNER BLANK')
+
+    def test_pretty_id_still_requires_open_membership(self):
+        result = self.owner_summary('#onediag', 'jobs\n')
+        row = next(row for row in result['reason_rows'] if row['reason'] == 'existing')
+        self.assertEqual(row['owner'], 'OWNER BLANK')
+        unchecked = self.owner_summary('#onediag', None)
+        row = next(row for row in unchecked['reason_rows'] if row['reason'] == 'existing')
+        self.assertEqual(row['owner'], '#onediag (unchecked)')
+
+    def test_recorded_five_families_have_exact_task_assignments(self):
+        meter = Path(__file__).parent
+        record = json.loads((meter / 'runs/20261115T131735Z.PG4H0R/report.json').read_text())['trees']['main']
+        owners = json.loads((meter / 'owners.json').read_text())
+        patterns = {
+            'x2cjvy9': r'an object refinement using an open numeric enum as a literal tag',
+            'b5w3ycg': r'a (?:cast\b|checked cast\b).*',
+            'aryr7ea': r'a value of type .+ seen as (?:TextRange(?: \| undefined)?|SourceMapRange \| undefined|Mutable<Node>), whose readonly field pos becomes writable: .+',
+            'm2wxyaz': r'a value of type .*DiagnosticWithLocation.* seen as .+, which can write SourceFile \| undefined where SourceFile is read',
+            '3wv0ykh': r'optional property .+ in .+ absent from structural source never, which can hide fields',
+        }
+        for summary in (record['latent_lowering'], record['tsc_entry']['lowering_census']):
+            sizes = []
+            for task, pattern in patterns.items():
+                rows = [row for row in summary['reason_rows'] if re.fullmatch(pattern, row['reason'])]
+                sizes.append((len(rows), sum(row['count'] for row in rows)))
+                for row in rows:
+                    with self.subTest(task=task, reason=row['reason']):
+                        self.assertEqual(owners[row['reason']], '#' + task)
+                        self.assertEqual(reason_owner(row['reason'], owners, set(patterns)), '#' + task)
+            self.assertEqual(sizes, [(1, 965), (3, 921), (103, 459), (11, 189), (24, 137)])
+        self.assertEqual(owners['seen as'], '')
+        # The broad variance catch-all must not override assigned exact keys.
+        self.assertEqual(reason_owner('a value of type X seen as Y', owners, set(patterns)), 'OWNER BLANK')
 
     def test_table_groups_same_reason_across_kinds(self):
         self.records[1]['findings'].append(self.finding('Refused', 'existing', 3))

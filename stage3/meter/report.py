@@ -28,13 +28,48 @@ ASSIGNABLE_THRESHOLD = 1_000_000
 RELATION_CACHES = ('subtype', 'strictSubtype', 'assignable', 'comparable', 'identity', 'enum', 'flaggedPairs', 'ts2859')
 
 
-def reason_owner(reason, owners):
-    # The variance family owns every such message, including ones that also
-    # begin with a mapped type or generic-return prefix.
-    if ' seen as ' in reason and 'seen as' in owners:
-        return owners['seen as']
+def task_id(value):
+    value = value.removeprefix('#')
+    # Generated Crockford IDs, or the store's letter-first pretty names.
+    return value if re.fullmatch(r'(?:[0-9a-hjkmnp-tv-z]{6,7}|[a-z][a-z0-9]{1,8})', value) else None
+
+
+def open_task_ids():
+    """The caller exports store state; sealed reports never contact the store."""
+    path = os.environ.get('STAGE3_METER_OPEN_TASKS')
+    if path is None:
+        return None
+    tasks = set()
+    for number, line in enumerate(Path(path).read_text().splitlines(), 1):
+        if not line.strip():
+            continue
+        task = task_id(line.strip())
+        if task is None:
+            raise ValueError(f'invalid open task ID at {path}:{number}')
+        tasks.add(task)
+    # An empty file is an authoritative empty set; unreadable files fail loudly.
+    return tasks
+
+
+def reason_owner(reason, owners, open_tasks=None):
+    owner = mapped_owner(reason, owners)
+    task = task_id(owner.split(' (', 1)[0])
+    if task is None:
+        return 'OWNER BLANK'
+    if open_tasks is None:
+        return owner + ' (unchecked)'
+    if task not in open_tasks:
+        return 'OWNER BLANK'
+    return owner
+
+
+def mapped_owner(reason, owners):
+    # Exact assignments override broad families, including variance. Otherwise
+    # variance wins over generic prefixes when it occurs inside the reason.
     if reason in owners:
         return owners[reason]
+    if ' seen as ' in reason and 'seen as' in owners:
+        return owners['seen as']
     for prefix in sorted(owners, key=lambda key: (-len(key), key)):
         if prefix != 'seen as' and reason.startswith(prefix):
             return owners[prefix]
@@ -150,9 +185,10 @@ def lowering_summary(records, expected, measurement):
     reasons = Counter((site[0], site[2]) for site in sites if site[0] in ('NotYet', 'Refused'))
     ranked = sorted(reasons, key=lambda key: (-reasons[key], key))
     owners = json.loads(Path(__file__).with_name('owners.json').read_text())
+    open_tasks = open_task_ids()
     groups = {}
     for (kind, reason), count in reasons.items():
-        row = groups.setdefault(reason, {'reason': reason, 'owner': reason_owner(reason, owners),
+        row = groups.setdefault(reason, {'reason': reason, 'owner': reason_owner(reason, owners, open_tasks),
                                          'NotYet': 0, 'Refused': 0, 'count': 0})
         row[kind] += count
         row['count'] += count
@@ -172,7 +208,7 @@ def lowering_summary(records, expected, measurement):
         'error_sites': kind_sites(sites, 'error'),
         'reason_rows': reason_rows,
         'unowned_reasons': [row for row in reason_rows if row['owner'] == 'OWNER BLANK'],
-        'top_reasons': [{'kind': kind, 'reason': reason, 'count': reasons[kind, reason], 'owner': reason_owner(reason, owners)}
+        'top_reasons': [{'kind': kind, 'reason': reason, 'count': reasons[kind, reason], 'owner': reason_owner(reason, owners, open_tasks)}
                         for kind, reason in ranked[:10]],
         'source_files': len(seen),
         'recorded_events': events,
