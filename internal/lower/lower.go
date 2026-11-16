@@ -446,6 +446,9 @@ type lowering struct {
 	// hostMemberValues are the reads of such a method as a value, each with main's stop for it, which
 	// lowering reads as fields and checkHostMemberValues judges with the writes (host_member_value.go).
 	hostMemberValues []hostMemberValue
+	// hostMemberThroughs is the thisArg of each .call of such a value lowering made, as it lowered it, by
+	// the call, which checkHostMemberValues holds to the literal the value was read off (host_member_value.go).
+	hostMemberThroughs map[*ast.Node]ir.Expression
 	// hostMemberFirst is the first stop deferred, a write's or a value read's: main's stop, which a
 	// lowering that stops before they're judged gives back (hostMemberPending).
 	hostMemberFirst error

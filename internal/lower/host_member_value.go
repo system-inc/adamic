@@ -4,6 +4,7 @@ import (
 	"fmt"
 
 	"github.com/microsoft/TypeScript/tsc/shim/ast"
+	"github.com/microsoft/TypeScript/tsc/shim/checker"
 	"github.com/system-inc/adamic/internal/ir"
 )
 
@@ -72,6 +73,111 @@ func (l *lowering) hostMemberValueRead(node *ast.Node, object ir.Expression) {
 	}
 }
 
+// hostMemberValueHeld says whether node, through any parentheses, is a read deferHostMemberValue holds or a
+// const binding of one, followed through every alias as hostMemberValueBinding follows it.
+func (l *lowering) hostMemberValueHeld(node *ast.Node, seen map[*ast.Symbol]bool) bool {
+	node = ast.SkipParentheses(node)
+	if l.hostMemberValueDeferred(node) {
+		return true
+	}
+	if !ast.IsIdentifier(node) {
+		return false
+	}
+	symbol := l.symbol(node)
+	if symbol == nil || seen[symbol] || len(symbol.Declarations) != 1 {
+		return false
+	}
+	seen[symbol] = true
+	declaration := symbol.Declarations[0]
+	if declaration.Kind != ast.KindVariableDeclaration || declaration.Parent == nil || declaration.Parent.Flags&ast.NodeFlagsConst == 0 || declaration.AsVariableDeclaration().Initializer == nil {
+		return false
+	}
+	return l.hostMemberValueHeld(declaration.AsVariableDeclaration().Initializer, seen)
+}
+
+// hostMemberValueCallThrough lowers f.call(t, ...args), f a host member value or a const binding of one
+// (hostMemberValueHeld), as bind's road lowers f.bind(t) called at once with args: the factory's bound
+// closure keeps f and t, and its wrapper's kept call hands t to a function that takes a this, as Node's
+// .call does (adamicBoundCall, adamic_bound_closure_call). tsc calls what it saved so (program.ts:552,
+// `originalReadFile.call(host, fileName)`). Lowering only builds the call and keeps t as it lowered it
+// (hostMemberThroughs), and checkHostMemberValues judges it with every other use of the value
+// (hostMemberValueThrough). A .call through ?., with a spread or with no thisArg isn't lowered here, so it
+// stops where main stops it.
+func (l *lowering) hostMemberValueCallThrough(node *ast.Node) (ir.Expression, bool, error) {
+	call := node.AsCallExpression()
+	callee := ast.SkipParentheses(call.Expression)
+	if callee.Kind != ast.KindPropertyAccessExpression || callee.Name().Text() != "call" || !l.libraryMember(callee) {
+		return nil, false, nil
+	}
+	access := callee.AsPropertyAccessExpression()
+	if node.Flags&ast.NodeFlagsOptionalChain != 0 || call.QuestionDotToken != nil || access.QuestionDotToken != nil || len(call.Arguments.Nodes) == 0 || hasSpread(node) {
+		return nil, false, nil
+	}
+	target := ast.SkipParentheses(access.Expression)
+	if !l.hostMemberValueHeld(target, map[*ast.Symbol]bool{}) {
+		return nil, false, nil
+	}
+	proven := l.concrete(l.checker.GetNonNullableType(l.checker.GetTypeAtLocation(target)))
+	signatures := l.checker.GetSignaturesOfType(proven, checker.SignatureKindCall)
+	if len(signatures) != 1 || predicateOfSignature(l.checker, signatures[0]) != nil {
+		return nil, true, l.notYet(node, "a call through .call of a method value without one plain declared signature")
+	}
+	parameters := signatures[0].Parameters()
+	for _, parameter := range parameters {
+		for _, declaration := range parameter.Declarations {
+			if declaration.Kind == ast.KindParameter && declaration.AsParameterDeclaration().DotDotDotToken != nil {
+				return nil, true, l.notYet(node, "a call through .call of a method value that collects rest arguments")
+			}
+		}
+	}
+	// Each of the function's parameters is passed, so the wrapper's are all set when it runs.
+	passed := call.Arguments.Nodes[1:]
+	if len(passed) != len(parameters) {
+		return nil, true, l.notYet(node, "a call through .call of a method value that doesn't pass each of its parameters")
+	}
+	function, err := l.expression(target)
+	if err != nil {
+		return nil, true, err
+	}
+	this, err := l.expression(call.Arguments.Nodes[0])
+	if err != nil {
+		return nil, true, err
+	}
+	if this.Type() == 0 {
+		this = fit(this, ir.Object)
+	}
+	values := []ir.Expression{function, this}
+	types := []*checker.Type{proven, l.checker.GetTypeAtLocation(call.Arguments.Nodes[0])}
+	// Bound to no fixed argument, the bound function's type is the target's own, as bind's is.
+	maker, returns, err := l.boundFactory(node, target, values, types, []*ast.Node{target, call.Arguments.Nodes[0]}, parameters, proven, proven, "")
+	if err != nil {
+		return nil, true, err
+	}
+	if censusCallableSlotless(returns) {
+		return nil, true, l.notYet(node, "a function value returning "+typeName(returns))
+	}
+	arguments := []ir.Expression{}
+	for index, written := range passed {
+		argument, err := l.expression(written)
+		if err != nil {
+			return nil, true, err
+		}
+		if of, known := l.bindParameterType(parameters[index]); known {
+			argument = fit(argument, of)
+		}
+		if censusCallableSlotless(argument.Type()) {
+			return nil, true, l.notYet(node, "passing "+typeName(argument.Type())+" to a function value")
+		}
+		arguments = append(arguments, argument)
+	}
+	if l.hostMemberThroughs == nil {
+		l.hostMemberThroughs = map[*ast.Node]ir.Expression{}
+	}
+	// A call lowered again, as a retried lowering does, keeps its latest thisArg, the one the program holds.
+	l.hostMemberThroughs[node] = this
+	return ir.CallClosure{Closure: ir.Call{Function: maker, Arguments: values, Returns: ir.Closure}, Arguments: arguments, FunctionType: int(proven.Id()), Returns: returns}, true, nil
+}
+
 // hostMemberValueJudge is what checkHostMemberValues judges one value's uses with: the value, the graph
 // and stores checkHostMemberWrites built, the functions the member may hold as closures (known false where
 // that can't be bounded), and the const bindings of the value already followed.
@@ -97,7 +203,8 @@ type hostMemberValueJudge struct {
 //     so the value may only go where that this is handed to it as Node hands it. Every use of the read,
 //     and of every const binding that holds it, through every alias, is judged (hostMemberValueUse), so
 //     no use escapes the list: a plain call, only where no function the member may hold takes a this; a
-//     write back to a method of an object of the literal it was read off, under the layout rule
+//     call through .call with an object of the literal it was read off, and a write back to a method of
+//     such an object, each under the one-site rule (hostMemberOneSite) and the layout rule
 //     (hostMemberLayout). Anything else, an argument, a return, a field of another object, an array
 //     element, a comparison, a binding that isn't const, is a NotYet at that use in its own words.
 func (l *lowering) checkHostMemberValues(graph *allocationFlowGraph, stores map[int]ir.SetProperty) error {
@@ -151,7 +258,7 @@ func (l *lowering) hostMemberValueUse(judge *hostMemberValueJudge, use *ast.Node
 	case parent.Kind == ast.KindCallExpression && parent.AsCallExpression().Expression == held && parent.AsCallExpression().QuestionDotToken == nil:
 		return l.hostMemberValueCall(judge, use, parent)
 	case parent.Kind == ast.KindPropertyAccessExpression && parent.AsPropertyAccessExpression().Expression == held && parent.Name().Text() == "call" && called(parent) && l.libraryMember(parent):
-		return l.notYet(parent, hostMemberValueNamed(judge)+" called through .call")
+		return l.hostMemberValueThrough(judge, use, parent)
 	case parent.Kind == ast.KindBinaryExpression && parent.AsBinaryExpression().OperatorToken.Kind == ast.KindEqualsToken && parent.AsBinaryExpression().Right == held:
 		return l.hostMemberValueRestore(judge, parent)
 	}
@@ -251,6 +358,72 @@ func (l *lowering) hostMemberValueCall(judge *hostMemberValueJudge, use, call *a
 	return nil
 }
 
+// hostMemberValueThrough judges a call of a binding of judge's value through .call, use the binding and
+// member the .call: lowering made it a bound closure of the value and the call's thisArg, called at once
+// (hostMemberValueCallThrough), which hands the thisArg to a function that takes a this as its this.
+// tsc calls what it saved so (program.ts:552). It's admitted under the restore's rules: the thisArg's
+// reach is known, the value's read and the thisArg are one and the same allocation site
+// (hostMemberOneSite), and the layout rule holds the functions the value may hold there
+// (hostMemberLayout). A .call through ?., with a spread or with no thisArg, which lowering never makes, and
+// one lowering didn't make from a local's thisArg, stop.
+func (l *lowering) hostMemberValueThrough(judge *hostMemberValueJudge, use, member *ast.Node) error {
+	call := member
+	for call.Parent != nil && call.Parent.Kind == ast.KindParenthesizedExpression {
+		call = call.Parent
+	}
+	call = call.Parent
+	held := "a call of " + sourceExpression(use) + " through .call"
+	switch {
+	case member.AsPropertyAccessExpression().QuestionDotToken != nil || call.AsCallExpression().QuestionDotToken != nil:
+		return l.notYet(member, held+" through ?.")
+	case len(call.AsCallExpression().Arguments.Nodes) == 0:
+		return l.notYet(member, held+" with no object")
+	case hasSpread(call):
+		return l.notYet(member, held+" with a spread argument")
+	}
+	through, lowered := l.hostMemberThroughs[call]
+	if !lowered {
+		// A call lowering never made, whose thisArg can't be asked about, fails closed.
+		return judge.value.stop
+	}
+	if _, isRead := through.(ir.Read); !isRead {
+		return l.notYet(member, held+" with an object that isn't held in a local")
+	}
+	this := judge.graph.ReachingAllocations(through)
+	source := judge.graph.ReachingAllocations(judge.value.object)
+	if this.Unknown || source.Unknown || !judge.known {
+		return l.notYet(member, held+", where its object or what it holds can't all be known")
+	}
+	site, one := hostMemberOneSite(source, this)
+	if !one {
+		return l.notYet(member, held+" with an object of another literal")
+	}
+	if field, agrees := l.hostMemberLayout(judge.functions, []int{site}, judge.graph.projectionIndex()); !agrees {
+		return l.notYet(member, held+", "+hostMemberLayoutMisfit(field))
+	}
+	return nil
+}
+
+// hostMemberOneSite is Compiler's one-site rule, which a restore and a .call of a host member value both
+// answer to: a function reads its this's fields as its own literal's types, which another literal of one
+// layout and one representation needn't share (a Circle at a.r, a Square at b.r), so the value goes only
+// where every site, source's, the value read's reach, and target's, the object it's handed to as this, is
+// one and the same. It gives that site, read's first, and whether every site is it. A side whose known
+// reach holds no site at all has no literal to compare, so it fails closed: no program is known to reach
+// that, and none is pinned.
+func hostMemberOneSite(source, target ir.AllocationSet) (int, bool) {
+	if len(source.Sites) == 0 || len(target.Sites) == 0 {
+		return 0, false
+	}
+	site := source.Sites[0]
+	for _, other := range append(append([]int{}, source.Sites...), target.Sites...) {
+		if other != site {
+			return site, false
+		}
+	}
+	return site, true
+}
+
 // hostMemberValueRestore judges a write of judge's value back to a method of a plain literal, assignment
 // the write: tsc restores what it saved so (program.ts:4956, `host.readFile = originalReadFile`). The write
 // is one checkHostMemberWrites has judged, by reach, shape and holders. A call through the written object
@@ -271,21 +444,12 @@ func (l *lowering) hostMemberValueRestore(judge *hostMemberValueJudge, assignmen
 		if target.Unknown || source.Unknown || !judge.known {
 			return l.notYet(assignment, writing+", where what it's written to or what it holds can't all be known")
 		}
-		// Compiler's rule: a function reads its this's fields as its own literal's types, which another
-		// literal of one layout and one representation needn't share (a Circle at a.r, a Square at b.r), so
-		// the value goes back only to an object of the literal it was read off: every site, the read's and
-		// the written object's, is one and the same. A side whose known reach holds no site at all has no
-		// literal to compare, so it fails closed too: no program is known to reach that, and none is pinned.
-		if len(source.Sites) == 0 || len(target.Sites) == 0 {
+		// The value goes back only to an object of the literal it was read off (hostMemberOneSite).
+		site, one := hostMemberOneSite(source, target)
+		if !one {
 			return l.notYet(assignment, writing+", a method moved between objects of different literals")
 		}
-		sites := append(append([]int{}, source.Sites...), target.Sites...)
-		for _, site := range sites {
-			if site != sites[0] {
-				return l.notYet(assignment, writing+", a method moved between objects of different literals")
-			}
-		}
-		if field, agrees := l.hostMemberLayout(judge.functions, sites, judge.graph.projectionIndex()); !agrees {
+		if field, agrees := l.hostMemberLayout(judge.functions, []int{site}, judge.graph.projectionIndex()); !agrees {
 			return l.notYet(assignment, writing+", "+hostMemberLayoutMisfit(field))
 		}
 		return nil
