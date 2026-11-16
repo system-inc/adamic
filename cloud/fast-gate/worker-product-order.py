@@ -26,7 +26,7 @@ waits[prefix + "TestProduct_WorkerdWebAssembly"] = [compiler]
 waits[prefix + "TestProduct_WorkerdAsync"] = [compiler]
 waits[prefix + "TestProduct_WorkerdEnvironment"] = [compiler]
 waits[prefix + "TestProduct_WorkerdEnvironmentWasm"] = [compiler, seed]
-for name in ["Validation", "Projection", "Contract", "Privacy", "WasmNeedle"]:
+for name in ["Validation", "Projection", "Contract", "Privacy", "WasmNeedle", "Shape", "Holder", "Write", "LocalDestructure", "ParameterDestructure", "OptionalRead", "AsyncContainer"]:
     waits[prefix + "TestProduct_WorkerEnvironment" + name + "Mutant"] = [checks]
 for name in ["Await", "Try", "Contract", "Wasm", "Needle"]:
     waits[prefix + "TestProduct_WorkerAsync" + name + "Mutant"] = [checks]
