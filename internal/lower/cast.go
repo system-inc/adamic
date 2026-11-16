@@ -45,12 +45,27 @@ func (l *lowering) castValue(node *ast.Node) (ir.Expression, error) {
 	}
 	source := l.concrete(l.checker.GetTypeAtLocation(as.Expression))
 	target := l.concrete(l.checker.GetTypeAtLocation(node))
+	// The message names the source as written, undefined included; everything after the absent check
+	// reads the present members (absentArm).
+	message := "cast failed: this " + l.checker.TypeToString(source) + " is not a " + l.checker.TypeToString(target)
+	if proof.absent {
+		source = l.absentArm(source, target)
+	}
 	if !l.sameKeeping(source, target, map[[2]*checker.Type]bool{}) {
 		return nil, l.notYet(node, "a cast that changes the runtime representation or ownership of a reference")
 	}
 	value, err := l.expression(as.Expression)
 	if err != nil {
 		return nil, err
+	}
+	if proof.absent {
+		// The absent check comes first, with the cast's own message: an undefined value is a member the
+		// target doesn't hold, so it fails the cast as a wrong tag would, and the tag is never read.
+		// An object that may be undefined is held as an Object whose undefined is a null reference.
+		if value.Type() != ir.Object {
+			return nil, l.notYet(node, "a member cast whose source holds undefined, held as other than an object")
+		}
+		value = ir.Coalesce{Value: value, Panic: ir.StringConstant{Index: l.constant(message)}, Of: ir.Object}
 	}
 	if proof.structuralView {
 		return l.structuralViewCast(node, value, source, target)
@@ -71,7 +86,6 @@ func (l *lowering) castValue(node *ast.Node) (ir.Expression, error) {
 	if value.Type() != ir.Object {
 		return nil, refused
 	}
-	message := "cast failed: this " + l.checker.TypeToString(source) + " is not a " + l.checker.TypeToString(target)
 	if len(proof.classes) > 0 {
 		return l.checkedClassCast(node, value, proof.classes, message)
 	}
