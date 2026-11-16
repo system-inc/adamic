@@ -1,0 +1,17 @@
+signature/body range mutant caught
+{
+  "continuation": "pass",
+  "all_refusal_sites": "pass",
+  "no_IR_output": "pass",
+  "production_loader_disabled": "pass",
+  "body_skip": "pass",
+  "signature_eligible": "pass",
+  "same_line_ranges": "pass",
+  "measurement": "measured on a checker-rejected program",
+  "mutant": {
+    "one.a_delta": 1,
+    "two.a_delta": 0,
+    "location": "one.a:3:1"
+  },
+  "misattribution_mutant": "caught"
+}

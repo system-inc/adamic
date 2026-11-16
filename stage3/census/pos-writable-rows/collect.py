@@ -145,6 +145,9 @@ def main():
     if not manifest.exists():
         files=sorted(str(p.relative_to(s/'adapted')) for p in (s/'adapted/src/compiler').rglob('*.ts'))
         dump(manifest,dict(sha='c41391ea3346727231dfa3472d061826e26f6aad',started_utc=utc(),files=files,source_sha256={f:hashlib.sha256((s/'adapted'/f).read_bytes()).hexdigest() for f in files}))
+    preflight=HERE/'preflight.json'
+    if preflight.exists() and json.loads(preflight.read_text())['full']['exit_code'] != 0:
+        raise SystemExit('stopped: saved full-mode audit failed; see REPORT.md')
     if args.render: render(s); return
     files=[f for f in json.loads(manifest.read_text())['files'] if not (s/'pieces'/(f.replace('/','__')+'.json')).exists()]
     if args.limit: files=files[:args.limit]

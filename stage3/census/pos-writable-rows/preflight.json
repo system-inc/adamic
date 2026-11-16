@@ -1,0 +1,39 @@
+{
+  "legacy": {
+    "command": [
+      "python3",
+      "stage3/census/latent/audit.py",
+      "/workspace/scratch/aryr7ea/latent-census"
+    ],
+    "started_utc": "2026-11-16T16:42:04.147511+00:00",
+    "ended_utc": "2026-11-16T16:42:04.502874+00:00",
+    "wall_seconds": 0.35538538099990546,
+    "exit_code": 0
+  },
+  "full": {
+    "command": [
+      "python3",
+      "stage3/census/latent/full_audit.py",
+      "/workspace/scratch/aryr7ea/latent-census",
+      "/workspace/scratch/aryr7ea/full-audit-confirm"
+    ],
+    "started_utc": "2026-11-16T16:42:04.502897+00:00",
+    "ended_utc": "2026-11-16T16:42:04.801584+00:00",
+    "wall_seconds": 0.29900068400002056,
+    "exit_code": 1,
+    "three_refusals": [
+      "var"
+    ],
+    "expected_three_refusals": [
+      "a string as a condition",
+      "a number as a condition",
+      "var"
+    ]
+  },
+  "binary_sha256": "0201180eb5c36ec6863c61c7e3a104ab6ee66a42dd3a89c87689e17027ea924a",
+  "overlay_manifest_sha256": "fb3b56a28e1c70b24230a60cef10bce181a211f56f8b7f55178ca089bf0e0de2",
+  "toolchain": "go version go1.27.1 linux/amd64",
+  "node": "v24.19.0",
+  "compiler_files_started": 0,
+  "stopped_reason": "Unmodified full_audit.py fails its baseline all-three-refusals assertion; no compiler-file census started."
+}
