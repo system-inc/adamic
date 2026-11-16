@@ -1,0 +1,17 @@
+{
+  "module_format": "EcmaScript",
+  "command": [
+    "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+    "/workspace/scratch/next-stops-03c140ec/repo/stage3/census/next-stops-03c140ec/group.py",
+    "21",
+    "30"
+  ],
+  "exit_code": 0,
+  "seconds": 193.9300000000003,
+  "stopping_reason": null,
+  "process_group_cleaned": true,
+  "recovered_after_driver_interruption": true,
+  "timing_definition": "upper bound from kernel group start through recovery, including zombie time",
+  "kernel_stat": "11884 (python3) Z 1 11884 11884 0 -1 4227340 3199 3291256 0 0 10 2 44598 4199 20 0 1 0 306787 0 0 18446744073709551615 0 0 0 0 0 0 0 16781312 0 1 0 0 17 4 0 0 0 0 0 0 0 0 0 0 0 0 0\n",
+  "kernel_wait_status": 0
+}
