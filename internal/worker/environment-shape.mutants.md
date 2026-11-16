@@ -22,6 +22,7 @@ pass first. Top-level product tests only build their respective mutated binaries
 | environment-parenthesized-argument: treat a parenthesis wrapper as a separate value use | TestWorkerEnvironmentFieldReadRoads/exact_argument | environment_shape_test.go:76, `environment field read build` |
 | environment-discovery-missing: return nil instead of the environment type proved by the checked signature | TestWorkerEnvironmentShapeStops/class_field | environment_shape_test.go:59, `environment boundary class_field`; gets the compiler-bug stop instead of Refused |
 | environment-intersection-observation: use exact symbol identity alone for observations | TestWorkerEnvironmentShapeStops/e01 | environment_shape_test.go:59, `environment boundary e01`; predicate-narrowed Object.keys bypasses the boundary |
+| environment-empty-gate: gate the environment boundary on len(field names) != 0 | TestWorkerEnvironmentEmptyShapeStops | environment_shape_test.go:126, `empty environment observation`; empty interfaces must still reach the observation boundary |
 
 The class-field child additionally logs ordinary Lower's result after the slot
 mutant admits the program: this distinguishes removing the boundary from merely
@@ -31,3 +32,5 @@ under TestWorkerdEnvironmentHandler. The JavaScript-only declared-names pin is
 TestEnvironmentBridgeProjectsDeclaredNames; .a observes no environment keys.
 
 The e01 predicate and e02 assertion pins must stop in CheckWorkerEnvironment, naming Object.keys; e10 must stop there naming the widening to Marker. No later unproven-predicate refusal can satisfy these direct boundary pins.
+
+The empty-interface pin calls Build, so bypassing CheckWorkerEnvironment cannot be hidden by a direct boundary call. It requires the observation NotYet, its Object.keys name and lifting condition, and no output directory.

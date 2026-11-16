@@ -300,7 +300,7 @@ func BuildWith(entry, output string, options Options) error {
 	if genericExport != "" {
 		return fmt.Errorf("worker: exported generic function %s is not yet supported; fix: export a concrete function", genericExport)
 	}
-	if environment != nil {
+	if environmentType != nil {
 		if err := lower.CheckWorkerEnvironment(program, types, environmentType); err != nil {
 			return err
 		}

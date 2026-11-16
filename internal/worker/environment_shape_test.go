@@ -116,3 +116,17 @@ func TestWorkerEnvironmentMissingTypeIsCompilerBug(t *testing.T) {
 		t.Fatalf("missing checked environment: got %v, want %s", err, want)
 	}
 }
+
+func TestWorkerEnvironmentEmptyShapeStops(t *testing.T) {
+	t.Parallel()
+	out := filepath.Join(t.TempDir(), "worker")
+	err := Build(filepath.Join("testdata/environment_shape", "empty_keys.a"), out)
+	var stop *lower.NotYet
+	if !errors.As(err, &stop) || !strings.HasPrefix(stop.What, "worker environment ") || !strings.Contains(stop.What, "Object.keys") || !strings.Contains(stop.What, "waits on a bridge that passes Workers' own env") {
+		t.Fatalf("empty environment observation: want boundary NotYet naming Object.keys and its lifting condition, got %v", err)
+	}
+	if _, err := os.Stat(out); !os.IsNotExist(err) {
+		t.Fatalf("empty environment observation wrote output: %v", err)
+	}
+	t.Log(stop)
+}
