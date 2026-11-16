@@ -665,10 +665,15 @@ func (l *lowering) sameKeepingStorage(from, to *checker.Type, visited map[[2]*ch
 		}
 	}
 	for _, viewed := range l.checker.GetPropertiesOfType(to) {
-		if viewed.Flags&ast.SymbolFlagsMethod != 0 {
+		inside := l.checker.GetPropertyOfType(from, viewed.Name)
+		// A view method over a source method stays skipped (row 7, #3h04df3): then on Promise and
+		// PromiseLike, and an array's methods, are generic on both sides and would fail closed. A view
+		// method over a source property is a stored closure called through its own slots, so it's
+		// compared like any callable field (Held's read: (x: Weakly) => string seen as read(x: Strong)).
+		if viewed.Flags&ast.SymbolFlagsMethod != 0 && (inside == nil || inside.Flags&ast.SymbolFlagsMethod != 0) {
 			continue
 		}
-		if inside := l.checker.GetPropertyOfType(from, viewed.Name); inside != nil && !same(l.checker.GetTypeOfSymbol(inside), l.checker.GetTypeOfSymbol(viewed)) {
+		if inside != nil && !same(l.checker.GetTypeOfSymbol(inside), l.checker.GetTypeOfSymbol(viewed)) {
 			return false
 		}
 	}

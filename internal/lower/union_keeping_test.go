@@ -617,3 +617,51 @@ run({ kind: 'v', f(x: number): string { return `+"`n${x}`"+`; } });
 		})
 	}
 }
+
+// TestUnionKeepingMethodViewPropertySourceStop pins #3h04df3's narrow stop: a function stored in a
+// union member's field, seen through a member that declares it as a method, is a stored closure
+// called through its own slots. Its Weakly parameter seen as Strong lowered and, natively, the read
+// adapter retained a handle as a target (adamic_retain, measured Nov 16). The reverse keeps the
+// method-bivariance refusal it already had.
+func TestUnionKeepingMethodViewPropertySourceStop(t *testing.T) {
+	t.Parallel()
+	for _, extension := range []string{".a", ".ts"} {
+		t.Run(extension, func(t *testing.T) {
+			_, err := lowerSourceAs(t, `import type { Weak } from 'adamic';
+interface Box { readonly label: string }
+type Strong = { readonly kind: 'v'; readonly v: Box } | { readonly kind: 'w'; readonly w: number };
+type Weakly = { readonly kind: 'v'; readonly v: Weak<Box> } | { readonly kind: 'w'; readonly w: number };
+function make(): Strong { return { kind: 'v', v: { label: 'label' } }; }
+type Held = { readonly kind: 'read'; readonly read: (x: Weakly) => string } | { readonly kind: 'none' };
+type Viewed = { readonly kind: 'read'; read(x: Strong): string } | { readonly kind: 'none' };
+function read(x: Weakly): string { return x.kind === 'v' ? x.v?.label ?? 'none' : 'w'; }
+function hold(): Held { return { kind: 'read', read }; }
+const viewed: Viewed = hold();
+if (viewed.kind === 'read') console.log(viewed.read(make()));
+`, extension)
+			var ny *NotYet
+			want := "main" + extension + ":10:24"
+			if !errors.As(err, &ny) || !strings.HasSuffix(ny.Where, want) {
+				t.Fatalf("Held's read: (x: Weakly) => string seen as read(x: Strong): got %v, want NotYet at %s", err, want)
+			}
+		})
+		t.Run("reverse"+extension, func(t *testing.T) {
+			_, err := lowerSourceAs(t, `import type { Weak } from 'adamic';
+interface Box { readonly label: string }
+type Strong = { readonly kind: 'v'; readonly v: Box } | { readonly kind: 'w'; readonly w: number };
+type Weakly = { readonly kind: 'v'; readonly v: Weak<Box> } | { readonly kind: 'w'; readonly w: number };
+const owner: Box = { label: 'label' };
+function make(): Weakly { return { kind: 'v', v: owner }; }
+type Held = { readonly kind: 'read'; readonly read: (x: Strong) => string } | { readonly kind: 'none' };
+type Viewed = { readonly kind: 'read'; read(x: Weakly): string } | { readonly kind: 'none' };
+function read(x: Strong): string { return x.kind === 'v' ? x.v.label : 'w'; }
+function hold(): Held { return { kind: 'read', read }; }
+const viewed: Viewed = hold();
+if (viewed.kind === 'read') console.log(viewed.read(make()));
+`, extension)
+			if err == nil || !strings.Contains(err.Error(), "refuses a function taking Strong seen as one taking Weakly") {
+				t.Fatalf("reverse: got %v, want the method-bivariance refusal", err)
+			}
+		})
+	}
+}

@@ -187,3 +187,18 @@ The object-literal method's `(x: number | string) => string` is seen through
 `(x: number) => string`; the assignment lowers again when source methods are
 skipped. The mutant was planted once and the file restored after the run.
 Output: `/workspace/scratch/ttq1599/source-method-mutant.log`.
+
+## View method over a stored closure (#3h04df3)
+
+Put back the view-method `continue` in `sameKeepingStorage`'s property loop for every
+view method, so a source property holding a function is skipped again.
+
+```
+go test -count=1 -v -run '^TestUnionKeepingMethodViewPropertySourceStop$' ./internal/lower/
+```
+
+Expected: `TestUnionKeepingMethodViewPropertySourceStop/.a` and `/.ts` fail with
+`got <nil>, want NotYet at main.a:10:24` (and `.ts`): the Weakly parameter seen as Strong
+lowers again, which natively retained a handle as a target in the read adapter on main
+1c1d6568. The reverse subtests keep passing, since their refusal comes from the method
+bivariance rule, not from this walk.
