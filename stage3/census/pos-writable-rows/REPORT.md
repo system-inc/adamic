@@ -1,6 +1,6 @@
 # Pos-writable rows — #aryr7ea
 
-Status: incomplete checkpoint at 2026-11-16T18:25:37.538577+00:00.
+Status: incomplete checkpoint at 2026-11-16T18:27:02.238957+00:00.
 
 Measured main tip `c41391ea3346727231dfa3472d061826e26f6aad` in a fresh detached worktree; TypeScript v6.0.3
 `050880ce59e30b356b686bd3144efe24f875ebc8`. Recursive shallow submodules initialized;
@@ -35,10 +35,10 @@ or successful compilation; no backend or usable IR is produced.
 
 ## Counts
 
-Completed 63/79 compiler .ts files; failed pieces: 0.
-Distinct requested keys (file, line, col, reason, unit): **1913**.
-Matching raw records (sum of multiplicity): **1931**.
-Meter-style distinct (kind, where, reason, text), omitting unit: **454**.
+Completed 65/79 compiler .ts files; failed pieces: 0.
+Distinct requested keys (file, line, col, reason, unit): **1918**.
+Matching raw records (sum of multiplicity): **1936**.
+Meter-style distinct (kind, where, reason, text), omitting unit: **457**.
 
 The saved daily meter 20261115T131735Z.PG4H0R, main `7816a8d85d60db6ffb618132eaf8b17c91ef8866`,
 counts **550** pos-writable sites across **173** exact reasons.
@@ -54,9 +54,9 @@ No claim that those effects individually explain a particular delta is made with
 
 | Target | Sites |
 | --- | ---: |
-| TextRange | 1314 |
+| TextRange | 1318 |
 | others | 532 |
-| SourceMapRange \| undefined | 27 |
+| SourceMapRange \| undefined | 28 |
 | TextRange \| undefined | 23 |
 | Mutable<Node> | 17 |
 
@@ -64,7 +64,7 @@ No claim that those effects individually explain a particular delta is made with
 
 | Kind | Sites |
 | --- | ---: |
-| KindFunctionDeclaration | 1913 |
+| KindFunctionDeclaration | 1918 |
 
 ## Callee / receiving slot
 
@@ -425,6 +425,7 @@ these are callers/owners, not identified callees. All rows retain unit location 
 | transformDecoratorsOfParameter | 3 |
 | updateExternalModule | 3 |
 | visitImportEqualsDeclaration | 3 |
+| getRawLiteral | 3 |
 | bindChildren | 2 |
 | getSyntheticElementAccess | 2 |
 | visitExistingNodeTreeSymbolsWorker | 2 |
@@ -451,6 +452,7 @@ these are callers/owners, not identified callees. All rows retain unit location 
 | hoistVariableStatement | 2 |
 | hoistInitializedVariable | 2 |
 | createLabel | 2 |
+| injectClassNamedEvaluationHelperBlockIfMissing | 2 |
 | serializeAsFunctionNamespaceMerge | 2 |
 | serializeAsClass | 2 |
 | serializeSignatures | 2 |
@@ -694,7 +696,7 @@ these are callers/owners, not identified callees. All rows retain unit location 
 
 ## Run times and failures
 
-Started 2026-11-16T16:36:24.047702+00:00; this checkpoint 2026-11-16T18:25:37.539111+00:00.
+Started 2026-11-16T16:36:24.047702+00:00; this checkpoint 2026-11-16T18:27:02.239445+00:00.
 Each piece's UTC start/end, wall time, exit status, complete flag, raw SHA256, and log path
 are in pieces.json. Source file inventory and adapted source SHA256s are in manifest.json.
 Rows from partial pieces, if any, are retained and explicitly marked piece_complete=false.
