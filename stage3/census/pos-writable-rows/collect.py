@@ -50,6 +50,19 @@ Speculative mode is unset. Three files at most run concurrently. A piece is comp
 on exit 0 with a full-mode header, matching module format, exactly the selected file record,
 and a relation_report trailer. The per-process cutoff is 6600 seconds, below two hours.
 
+## Validation basis — #3dgsny7
+
+The full audit's baseline was stale: full_audit.py expected string and number conditions
+plus var; this main lowers the two conditions, so only var remains. full_audit.py is unchanged.
+Production was built at c41391ea without an overlay. The exact full fixture stops at its
+intentional checker errors. Its exact extracted three function reaches lowering and refuses
+only var; replacing var with let succeeds. Separate observable string and number branches
+also succeed and emit if (Boolean(...)). production-check.json records commands, timings,
+outputs and binary hash; the small fixture inputs and emitted branch excerpt are retained.
+The full-mode continuation proof rests on the passing legacy audit plus that production
+check, as authorized for #3dgsny7; the stale full audit and its unverified mutants are not
+claimed to pass. The initial stop is retained in preflight.json.
+
 **A full-mode per-file census is a floor where whole-program facts differ.** Isolated
 state, cross-file fact discovery and census-wide generic instantiation witnesses can differ.
 Failures can block child traversal. This ledger is not proof of exhaustive lowering coverage
@@ -115,7 +128,7 @@ def one(file,scratch):
     dest=scratch/'pieces'/f'{slug}.json'
     if dest.exists(): return
     env=os.environ.copy(); env.pop('LATENT_SPECULATIVE',None)
-    env.update(LATENT_FULL='1',LATENT_ASSERT_NO_OUTPUT='1',CENSUS_MODULE_FORMAT='CommonJSBundle',LATENT_ONLY_FILE=str(path),GOMEMLIMIT='3GiB',LATENT_TIMES=str(scratch/'raw'/f'{slug}.times.jsonl'))
+    env.update(LATENT_FULL='1',LATENT_ASSERT_NO_OUTPUT='1',CENSUS_MODULE_FORMAT='CommonJSBundle',LATENT_ONLY_FILE=str(path),GOMEMLIMIT='3GiB',GOMAXPROCS='2',LATENT_TIMES=str(scratch/'raw'/f'{slug}.times.jsonl'))
     state=dict(file=file,started_utc=utc(),log=str(log)); start=time.monotonic()
     try:
         with log.open('w') as out: code=subprocess.run([str(scratch/'latent-census'),str(adapted/'src/compiler'),str(raw)],env=env,stdout=out,stderr=subprocess.STDOUT,timeout=6600).returncode
@@ -146,17 +159,17 @@ def main():
         files=sorted(str(p.relative_to(s/'adapted')) for p in (s/'adapted/src/compiler').rglob('*.ts'))
         dump(manifest,dict(sha='c41391ea3346727231dfa3472d061826e26f6aad',started_utc=utc(),files=files,source_sha256={f:hashlib.sha256((s/'adapted'/f).read_bytes()).hexdigest() for f in files}))
     preflight=HERE/'preflight.json'
-    if preflight.exists() and json.loads(preflight.read_text())['full']['exit_code'] != 0:
+    if preflight.exists() and json.loads(preflight.read_text())['full']['exit_code'] != 0 and not json.loads(preflight.read_text()).get('stale_baseline_confirmed'):
         raise SystemExit('stopped: saved full-mode audit failed; see REPORT.md')
     if args.render: render(s); return
     files=[f for f in json.loads(manifest.read_text())['files'] if not (s/'pieces'/(f.replace('/','__')+'.json')).exists()]
     if args.limit: files=files[:args.limit]
-    for i in range(0,len(files),3):
-        with concurrent.futures.ThreadPoolExecutor(max_workers=3) as pool:
-            pending=[pool.submit(one,f,s) for f in files[i:i+3]]
-            for future in concurrent.futures.as_completed(pending):
-                future.result(); render(s)
-                subprocess.run(['git','add','stage3/census/pos-writable-rows'],cwd=ROOT,check=True)
-                subprocess.run(['git','commit','-m',f'census: checkpoint pos-writable rows in batch {i//3+1}'],cwd=ROOT,check=True)
+    with concurrent.futures.ThreadPoolExecutor(max_workers=3) as pool:
+        pending=[pool.submit(one,f,s) for f in files]
+        for future in concurrent.futures.as_completed(pending):
+            future.result(); render(s)
+            subprocess.run(['git','add','stage3/census/pos-writable-rows'],cwd=ROOT,check=True)
+            subprocess.run(['git','commit','-m','census: checkpoint pos-writable rows'],cwd=ROOT,check=True)
+            if os.environ.get('POS_ROWS_API_PUBLISH') != '1':
                 subprocess.run(['git','push','origin','HEAD:refs/heads/typescript/pos-writable-rows'],cwd=ROOT,check=False,timeout=90)
 if __name__=='__main__': main()

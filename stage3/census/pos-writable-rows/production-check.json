@@ -1,0 +1,67 @@
+{
+  "compiler_sha": "c41391ea3346727231dfa3472d061826e26f6aad",
+  "binary_sha256": "e8259c716f6a5a53ceaacbee90c2a9780cd12cca6eb396ae6e9c11e9b8e148e1",
+  "build_command": "GOFLAGS= go build -buildvcs=false -o /workspace/scratch/aryr7ea/adamic-production ./cmd/adamic (no overlay)",
+  "results": [
+    {
+      "case": "audit-probe",
+      "command": [
+        "/workspace/scratch/aryr7ea/adamic-production",
+        "js",
+        "/workspace/scratch/aryr7ea/production-check/audit-probe.a",
+        "--module-format",
+        "commonjs-bundle"
+      ],
+      "started_utc": "2026-11-16T16:53:46.115917+00:00",
+      "wall_seconds": 0.29408033100003195,
+      "exit_code": 1,
+      "stderr": "/workspace/scratch/aryr7ea/production-check/audit-probe.a:11:36: error TS2322: Type 'string' is not assignable to type 'number'.\n/workspace/scratch/aryr7ea/production-check/audit-probe.a:19:39: error TS2322: Type 'string' is not assignable to type 'number'.\n/workspace/scratch/aryr7ea/production-check/audit-probe.a:9:11: error TS2322: Type 'string' is not assignable to type 'number'.\n",
+      "output_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "case": "three-var",
+      "command": [
+        "/workspace/scratch/aryr7ea/adamic-production",
+        "js",
+        "/workspace/scratch/aryr7ea/production-check/three-var.a",
+        "--module-format",
+        "commonjs-bundle"
+      ],
+      "started_utc": "2026-11-16T16:53:46.411200+00:00",
+      "wall_seconds": 0.18245007399991664,
+      "exit_code": 1,
+      "stderr": "adamic: /workspace/scratch/aryr7ea/production-check/three-var.a:4:5: Adamic 0.1 refuses var; use const or let\n",
+      "output_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "case": "three-let",
+      "command": [
+        "/workspace/scratch/aryr7ea/adamic-production",
+        "js",
+        "/workspace/scratch/aryr7ea/production-check/three-let.a",
+        "--module-format",
+        "commonjs-bundle"
+      ],
+      "started_utc": "2026-11-16T16:53:46.593937+00:00",
+      "wall_seconds": 0.1172182159998556,
+      "exit_code": 0,
+      "stderr": "",
+      "output_sha256": "5f3ea2e62adf5b8e6293d7670bcc472f1527714e15ebe770424431f0f5c3055e"
+    },
+    {
+      "case": "conditions",
+      "command": [
+        "/workspace/scratch/aryr7ea/adamic-production",
+        "js",
+        "/workspace/scratch/aryr7ea/production-check/conditions.a",
+        "--module-format",
+        "commonjs-bundle"
+      ],
+      "started_utc": "2026-11-16T16:53:46.711283+00:00",
+      "wall_seconds": 0.12981807399978607,
+      "exit_code": 0,
+      "stderr": "",
+      "output_sha256": "1bf41d0c8dc7664a8ba98e6c68d11f098de4f25f0301dc18e9bf253e95cc2e05"
+    }
+  ]
+}
