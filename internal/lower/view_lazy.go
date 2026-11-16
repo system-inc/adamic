@@ -11,6 +11,12 @@ import (
 // Unsupported contracts are descriptors, never certificates. Their users must
 // refuse at a demanded read. Cast admission does not inspect their payloads.
 func (l *lowering) viewContract(node *ast.Node, target *checker.Type) (ir.ViewContractID, error) {
+	// Every ViewContractTypes key is the id of a type asked here, so a view's walk can name each
+	// contract's types (viewSchema, #5d9y3rs).
+	if l.viewContractTargets == nil {
+		l.viewContractTargets = map[int]*checker.Type{}
+	}
+	l.viewContractTargets[int(target.Id())] = target
 	if l.result.ViewContractTypes == nil {
 		l.result.ViewContractTypes = map[int]ir.ViewContractID{}
 	}

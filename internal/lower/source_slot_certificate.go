@@ -206,7 +206,7 @@ func (l *lowering) certifySourceSlots() error {
 		}
 		// Through markCheckedField, as every key lowering adds is, so a view made after this asks the
 		// accesses of its name again (viewWalkIndexed).
-		l.markCheckedField(ir.CheckedFieldKey(read.ViewReceiverTypeID, read.Name), read.Name)
+		l.markCheckedField(ir.CheckedFieldKey(read.ViewReceiverTypeID, read.Name), read.Name, false)
 		if _, seen := failing[declared]; !seen {
 			failing[declared] = slot.writes[0]
 			declaredTypes = append(declaredTypes, declared)
@@ -232,7 +232,7 @@ func (l *lowering) certifySourceSlots() error {
 	// The read's own check is its field's presence and representation. What's inside it is read again
 	// through the declared type, so that type's fields are checked under it too (viewSchema).
 	for _, declared := range declaredTypes {
-		if _, err := l.viewSchema(failing[declared].target, declared); err != nil {
+		if _, err := l.viewSchema(failing[declared].target, nil, declared); err != nil {
 			return failing[declared].stop
 		}
 	}

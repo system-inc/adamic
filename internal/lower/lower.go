@@ -409,6 +409,13 @@ type lowering struct {
 	checkedFieldWrites map[string]int
 	viewSiteSeen       map[string]int
 	viewSiteTrue       map[*ast.Node]bool
+	// checkedFieldRecordFree says, per CheckedFields key markCheckedField added, whether every view that
+	// registered it was one no record can be read through (viewRecordFree): true while each was, false
+	// once one wasn't, absent for a key added another way. checkRecordGuardedReads stops a read only on a
+	// key that isn't (#5d9y3rs). viewContractTargets is each type viewContract was asked to describe, by
+	// id, so a view's walk can name the types its contracts stand for.
+	checkedFieldRecordFree map[string]bool
+	viewContractTargets    map[int]*checker.Type
 	// placeholderSlots is notePlaceholderSlots' answer by checker and program, shared by every lowering a
 	// latent run makes; production leaves it nil, and each lowering walks (placeholder.go, #6xt6p1f).
 	placeholderSlots *placeholderSlotCache
