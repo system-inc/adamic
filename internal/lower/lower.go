@@ -443,6 +443,12 @@ type lowering struct {
 	// hostMemberJudged says checkHostMemberWrites has run, so a stop after it is the program's own
 	// (hostMemberPending).
 	hostMemberJudged bool
+	// hostMemberValues are the reads of such a method as a value, each with main's stop for it, which
+	// lowering reads as fields and checkHostMemberValues judges with the writes (host_member_value.go).
+	hostMemberValues []hostMemberValue
+	// hostMemberFirst is the first stop deferred, a write's or a value read's: main's stop, which a
+	// lowering that stops before they're judged gives back (hostMemberPending).
+	hostMemberFirst error
 	// sourceSlotWrites are the writes of an object field through a checked view, each with the type
 	// it writes, which certifySourceSlots holds every read of the field's name to once lowering is
 	// done, and sourceSlotsJudged says it has, so a write found after that keeps its stop
