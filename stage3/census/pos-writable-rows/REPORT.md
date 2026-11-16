@@ -1,6 +1,6 @@
 # Pos-writable rows — #aryr7ea
 
-Status: incomplete checkpoint at 2026-11-16T17:25:41.267523+00:00.
+Status: incomplete checkpoint at 2026-11-16T17:31:14.809395+00:00.
 
 Measured main tip `c41391ea3346727231dfa3472d061826e26f6aad` in a fresh detached worktree; TypeScript v6.0.3
 `050880ce59e30b356b686bd3144efe24f875ebc8`. Recursive shallow submodules initialized;
@@ -35,7 +35,7 @@ or successful compilation; no backend or usable IR is produced.
 
 ## Counts
 
-Completed 27/79 compiler .ts files; failed pieces: 0.
+Completed 30/79 compiler .ts files; failed pieces: 0.
 Distinct requested keys (file, line, col, reason, unit): **519**.
 Matching raw records (sum of multiplicity): **525**.
 Meter-style distinct (kind, where, reason, text), omitting unit: **132**.
@@ -319,7 +319,7 @@ these are callers/owners, not identified callees. All rows retain unit location 
 
 ## Run times and failures
 
-Started 2026-11-16T16:36:24.047702+00:00; this checkpoint 2026-11-16T17:25:41.267802+00:00.
+Started 2026-11-16T16:36:24.047702+00:00; this checkpoint 2026-11-16T17:31:14.809648+00:00.
 Each piece's UTC start/end, wall time, exit status, complete flag, raw SHA256, and log path
 are in pieces.json. Source file inventory and adapted source SHA256s are in manifest.json.
 Rows from partial pieces, if any, are retained and explicitly marked piece_complete=false.
