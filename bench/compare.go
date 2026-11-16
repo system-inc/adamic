@@ -186,11 +186,22 @@ func compareCommits(request compareRequest) {
 	fmt.Printf("load before: %s\n", loadAverage())
 	fmt.Printf("processes over 5%% CPU at start: %s\n\n", busyProcesses())
 
-	baselineAdamic := filepath.Join(work, "adamic-baseline")
+	// Every binary the two sides run sits at a path of the same length, side 1 for the baseline and side 2
+	// for the candidate, with the same file name: a path's length moves the argument and environment
+	// strings, and with them the stack's alignment, enough to slow a floating-point loop by a few percent
+	// on its own (M1's third run, J-eewt3vf: an A/A read nbody 3% slower with nothing changed, when
+	// the two sides' binaries were nbody.baseline and nbody.candidate).
+	sides := [2]string{filepath.Join(work, "1"), filepath.Join(work, "2")}
+	for _, side := range sides {
+		if err := os.MkdirAll(side, 0755); err != nil {
+			fail(err)
+		}
+	}
+	baselineAdamic := filepath.Join(sides[0], "adamic")
 	if err := buildAdamicAt(root, baselineCommit, baselineAdamic); err != nil {
 		fail(err)
 	}
-	candidateAdamic := filepath.Join(work, "adamic-candidate")
+	candidateAdamic := filepath.Join(sides[1], "adamic")
 	if err := buildAdamicAt(root, candidateCommit, candidateAdamic); err != nil {
 		fail(err)
 	}
@@ -200,7 +211,7 @@ func compareCommits(request compareRequest) {
 		fail(err)
 	}
 	floor := program{name: "floor", source: floorSource}
-	floorBinaries := [2]string{filepath.Join(work, "floor-baseline"), filepath.Join(work, "floor-candidate")}
+	floorBinaries := [2]string{filepath.Join(sides[0], "floor"), filepath.Join(sides[1], "floor")}
 	for index, adamic := range []string{baselineAdamic, candidateAdamic} {
 		if output, err := exec.Command(adamic, "build", floor.source, "-o", floorBinaries[index]).CombinedOutput(); err != nil {
 			fail(fmt.Errorf("%s's adamic build %s: %v\n%s", runnerNames[index], floor.source, err, output))
@@ -220,8 +231,8 @@ func compareCommits(request compareRequest) {
 			continue
 		}
 		base := strings.ReplaceAll(entry.program.name, "/", "_")
-		entry.baseline = filepath.Join(work, base+".baseline")
-		entry.candidate = filepath.Join(work, base+".candidate")
+		entry.baseline = filepath.Join(sides[0], base)
+		entry.candidate = filepath.Join(sides[1], base)
 		candidateSource := entry.program.source
 		if request.plant == "candidate" {
 			candidateSource = filepath.Join(plantedDirectory, base+filepath.Ext(entry.program.source))
@@ -237,6 +248,22 @@ func compareCommits(request compareRequest) {
 		}
 		built[entry.program.source] = *entry
 	}
+	// Whether each row's two binaries are byte for byte the same: in an A/A run they should be, so a
+	// verdict there is the machine or the harness, never the compiler.
+	identical, differing := []string{}, []string{}
+	for _, entry := range entries {
+		if entry.failure != "" {
+			continue
+		}
+		baselineBytes, baselineError := os.ReadFile(entry.baseline)
+		candidateBytes, candidateError := os.ReadFile(entry.candidate)
+		if baselineError == nil && candidateError == nil && string(baselineBytes) == string(candidateBytes) {
+			identical = append(identical, entry.program.name)
+		} else {
+			differing = append(differing, entry.program.name)
+		}
+	}
+	fmt.Printf("binaries byte for byte the same on both sides: %d (%s); differing: %d (%s)\n\n", len(identical), strings.Join(identical, ", "), len(differing), strings.Join(differing, ", "))
 
 	// samples[entry] holds each sample's three measurements, by runner.
 	samples := make([][][3]measurement, len(entries))
