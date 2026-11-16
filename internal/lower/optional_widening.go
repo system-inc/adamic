@@ -117,6 +117,14 @@ func (l *lowering) optionalWidened(source, target *checker.Type, skip map[string
 		return nil
 	}
 	visited[[2]*checker.Type{source, target}] = true
+	// An intersection tsc reduces to never, whose discriminants conflict, holds no value, so it has no
+	// field to hide, as never itself doesn't (the exemption below): transformers/ts.ts:1054's
+	// ParameterPropertyDeclaration field. Only a reduction tsc has already computed is read. The
+	// assignability check above computes it for every source it relates, and a source it didn't is judged
+	// as an inhabited one, which fails closed.
+	if source.Flags()&checker.TypeFlagsIntersection != 0 && source.ObjectFlags()&checker.ObjectFlagsIsNeverIntersectionComputed != 0 && source.ObjectFlags()&checker.ObjectFlagsIsNeverIntersection != 0 {
+		return nil
+	}
 	if source.Flags()&checker.TypeFlagsUnion != 0 {
 		for _, member := range source.Types() {
 			if found := l.optionalWidened(member, target, skip, visited); found != nil {
