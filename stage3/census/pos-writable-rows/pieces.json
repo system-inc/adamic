@@ -804,6 +804,17 @@
   },
   {
     "complete": true,
+    "ended_utc": "2026-11-16T18:51:29.770850+00:00",
+    "error": "",
+    "exit_code": 0,
+    "file": "src/compiler/utilities.ts",
+    "log": "/workspace/scratch/aryr7ea/raw/src__compiler__utilities.ts.log",
+    "raw_sha256": "dc8e4d6dbe36ff1be8a1410fc1bc66644acff94ffce2e799d273f55befdb48e5",
+    "started_utc": "2026-11-16T18:32:20.100981+00:00",
+    "wall_seconds": 1149.6692973280005
+  },
+  {
+    "complete": true,
     "ended_utc": "2026-11-16T18:43:22.105047+00:00",
     "error": "",
     "exit_code": 0,
@@ -845,5 +856,16 @@
     "raw_sha256": "39687499cdb0de4f309123d8fe84385846135ca325bba92bc2d6196b87334532",
     "started_utc": "2026-11-16T18:42:32.186701+00:00",
     "wall_seconds": 28.259354838000945
+  },
+  {
+    "complete": true,
+    "ended_utc": "2026-11-16T18:44:25.480285+00:00",
+    "error": "",
+    "exit_code": 0,
+    "file": "src/compiler/watchUtilities.ts",
+    "log": "/workspace/scratch/aryr7ea/raw/src__compiler__watchUtilities.ts.log",
+    "raw_sha256": "8ae0c262b4b998331bfdaea351e656722fb75ae67ab54c21db56fee8c1ce1dc8",
+    "started_utc": "2026-11-16T18:43:00.453254+00:00",
+    "wall_seconds": 85.02698344099917
   }
 ]

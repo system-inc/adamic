@@ -1,0 +1,1394 @@
+{
+  "baseline_sha": "7816a8d85d60db6ffb618132eaf8b17c91ef8866",
+  "baseline_sites": 550,
+  "distinct_rows": 2103,
+  "measured_sha": "c41391ea3346727231dfa3472d061826e26f6aad",
+  "observed_sites": 550,
+  "reasons": [
+    {
+      "delta": 0,
+      "distinct_rows": 3,
+      "meter_sites": 3,
+      "observed_sites": 3,
+      "reason": "a value of type ArrayLiteralExpression seen as TextRange, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace",
+      "records": 3
+    },
+    {
+      "delta": 0,
+      "distinct_rows": 2,
+      "meter_sites": 2,
+      "observed_sites": 2,
+      "reason": "a value of type ArrayLiteralExpression | AssignmentExpression<EqualsToken> | BindingElement | ElementAccessExpression | ... 8 more ... | VariableDeclaration seen as TextRange, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace",
+      "records": 2
+    },
+    {
+      "delta": 0,
+      "distinct_rows": 1,
+      "meter_sites": 1,
+      "observed_sites": 1,
+      "reason": "a value of type AssertClause seen as Mutable<AssertClause>, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace",
+      "records": 1
+    },
+    {
+      "delta": 0,
+      "distinct_rows": 1,
+      "meter_sites": 1,
+      "observed_sites": 1,
+      "reason": "a value of type AssertEntry seen as Mutable<AssertEntry>, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace",
+      "records": 1
+    },
+    {
+      "delta": 0,
+      "distinct_rows": 25,
+      "meter_sites": 25,
+      "observed_sites": 25,
+      "reason": "a value of type AssignmentExpression<EqualsToken> seen as TextRange, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace",
+      "records": 25
+    },
+    {
+      "delta": 0,
+      "distinct_rows": 1,
+      "meter_sites": 1,
+      "observed_sites": 1,
+      "reason": "a value of type BigIntLiteral | NoSubstitutionTemplateLiteral | NumericLiteral | StringLiteral seen as TextRange, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace",
+      "records": 1
+    },
+    {
+      "delta": 0,
+      "distinct_rows": 3,
+      "meter_sites": 3,
+      "observed_sites": 3,
+      "reason": "a value of type BinaryExpression seen as TextRange, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace",
+      "records": 3
+    },
+    {
+      "delta": 0,
+      "distinct_rows": 1,
+      "meter_sites": 1,
+      "observed_sites": 1,
+      "reason": "a value of type BindingName seen as SourceMapRange | undefined, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace",
+      "records": 1
+    },
+    {
+      "delta": 0,
+      "distinct_rows": 1,
+      "meter_sites": 1,
+      "observed_sites": 1,
+      "reason": "a value of type BindingName seen as TextRange, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace",
+      "records": 1
+    },
+    {
+      "delta": 0,
+      "distinct_rows": 3,
+      "meter_sites": 3,
+      "observed_sites": 3,
+      "reason": "a value of type BindingOrAssignmentElement seen as TextRange, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace",
+      "records": 3
+    },
+    {
+      "delta": 0,
+      "distinct_rows": 1,
+      "meter_sites": 1,
+      "observed_sites": 1,
+      "reason": "a value of type Block seen as Mutable<Block>, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace",
+      "records": 1
+    },
+    {
+      "delta": 0,
+      "distinct_rows": 2,
+      "meter_sites": 2,
+      "observed_sites": 2,
+      "reason": "a value of type Block seen as TextRange | undefined, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace",
+      "records": 2
+    },
+    {
+      "delta": 0,
+      "distinct_rows": 16,
+      "meter_sites": 16,
+      "observed_sites": 16,
+      "reason": "a value of type Block seen as TextRange, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace",
+      "records": 16
+    },
+    {
+      "delta": 0,
+      "distinct_rows": 1,
+      "meter_sites": 1,
+      "observed_sites": 1,
+      "reason": "a value of type BreakStatement seen as Mutable<BreakStatement>, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace",
+      "records": 1
+    },
+    {
+      "delta": 0,
+      "distinct_rows": 1,
+      "meter_sites": 1,
+      "observed_sites": 1,
+      "reason": "a value of type BreakStatement seen as TextRange | undefined, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace",
+      "records": 1
+    },
+    {
+      "delta": 0,
+      "distinct_rows": 24,
+      "meter_sites": 24,
+      "observed_sites": 24,
+      "reason": "a value of type CallExpression seen as TextRange, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace",
+      "records": 24
+    },
+    {
+      "delta": 0,
+      "distinct_rows": 1,
+      "meter_sites": 1,
+      "observed_sites": 1,
+      "reason": "a value of type CallSignatureDeclaration seen as Mutable<CallSignatureDeclaration>, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace",
+      "records": 1
+    },
+    {
+      "delta": 0,
+      "distinct_rows": 1,
+      "meter_sites": 1,
+      "observed_sites": 1,
+      "reason": "a value of type CaseBlock seen as Mutable<CaseBlock>, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace",
+      "records": 1
+    },
+    {
+      "delta": 0,
+      "distinct_rows": 1,
+      "meter_sites": 1,
+      "observed_sites": 1,
+      "reason": "a value of type Children seen as TextRange | undefined, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace",
+      "records": 1
+    },
+    {
+      "delta": 0,
+      "distinct_rows": 1,
+      "meter_sites": 1,
+      "observed_sites": 1,
+      "reason": "a value of type ClassDeclaration seen as SourceMapRange | undefined, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace",
+      "records": 1
+    },
+    {
+      "delta": 0,
+      "distinct_rows": 4,
+      "meter_sites": 4,
+      "observed_sites": 4,
+      "reason": "a value of type ClassDeclaration seen as TextRange, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace",
+      "records": 4
+    },
+    {
+      "delta": 0,
+      "distinct_rows": 2,
+      "meter_sites": 2,
+      "observed_sites": 2,
+      "reason": "a value of type ClassElement seen as TextRange, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace",
+      "records": 2
+    },
+    {
+      "delta": 0,
+      "distinct_rows": 3,
+      "meter_sites": 3,
+      "observed_sites": 3,
+      "reason": "a value of type ClassExpression seen as TextRange, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace",
+      "records": 3
+    },
+    {
+      "delta": 0,
+      "distinct_rows": 2,
+      "meter_sites": 2,
+      "observed_sites": 2,
+      "reason": "a value of type ClassStaticBlockDeclaration seen as Mutable<ClassStaticBlockDeclaration>, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace",
+      "records": 2
+    },
+    {
+      "delta": 0,
+      "distinct_rows": 2,
+      "meter_sites": 2,
+      "observed_sites": 2,
+      "reason": "a value of type ClassStaticBlockDeclaration | PropertyDeclaration seen as TextRange, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace",
+      "records": 2
+    },
+    {
+      "delta": 0,
+      "distinct_rows": 1,
+      "meter_sites": 1,
+      "observed_sites": 1,
+      "reason": "a value of type ComputedPropertyName seen as TextRange, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace",
+      "records": 1
+    },
+    {
+      "delta": 0,
+      "distinct_rows": 2,
+      "meter_sites": 2,
+      "observed_sites": 2,
+      "reason": "a value of type ConditionalExpression seen as TextRange, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace",
+      "records": 2
+    },
+    {
+      "delta": 0,
+      "distinct_rows": 1,
+      "meter_sites": 1,
+      "observed_sites": 1,
+      "reason": "a value of type ConstructSignatureDeclaration seen as Mutable<ConstructSignatureDeclaration>, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace",
+      "records": 1
+    },
+    {
+      "delta": 0,
+      "distinct_rows": 2,
+      "meter_sites": 2,
+      "observed_sites": 2,
+      "reason": "a value of type ConstructorDeclaration seen as Mutable<ConstructorDeclaration>, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace",
+      "records": 4
+    },
+    {
+      "delta": 0,
+      "distinct_rows": 1,
+      "meter_sites": 1,
+      "observed_sites": 1,
+      "reason": "a value of type ConstructorDeclaration seen as TextRange, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace",
+      "records": 1
+    },
+    {
+      "delta": 0,
+      "distinct_rows": 1,
+      "meter_sites": 1,
+      "observed_sites": 1,
+      "reason": "a value of type ConstructorTypeNode seen as Mutable<ConstructorTypeNode>, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace",
+      "records": 1
+    },
+    {
+      "delta": 0,
+      "distinct_rows": 1,
+      "meter_sites": 1,
+      "observed_sites": 1,
+      "reason": "a value of type ContinueStatement seen as Mutable<ContinueStatement>, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace",
+      "records": 1
+    },
+    {
+      "delta": 0,
+      "distinct_rows": 1,
+      "meter_sites": 1,
+      "observed_sites": 1,
+      "reason": "a value of type ContinueStatement seen as TextRange | undefined, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace",
+      "records": 1
+    },
+    {
+      "delta": 0,
+      "distinct_rows": 1,
+      "meter_sites": 1,
+      "observed_sites": 1,
+      "reason": "a value of type DestructuringAssignment seen as TextRange, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace",
+      "records": 1
+    },
+    {
+      "delta": 0,
+      "distinct_rows": 6,
+      "meter_sites": 6,
+      "observed_sites": 6,
+      "reason": "a value of type ElementAccessExpression seen as TextRange, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace",
+      "records": 6
+    },
+    {
+      "delta": 0,
+      "distinct_rows": 3,
+      "meter_sites": 3,
+      "observed_sites": 3,
+      "reason": "a value of type EmptyStatement seen as TextRange, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace",
+      "records": 3
+    },
+    {
+      "delta": 0,
+      "distinct_rows": 1,
+      "meter_sites": 1,
+      "observed_sites": 1,
+      "reason": "a value of type EnumDeclaration seen as SourceMapRange | undefined, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace",
+      "records": 1
+    },
+    {
+      "delta": 0,
+      "distinct_rows": 1,
+      "meter_sites": 1,
+      "observed_sites": 1,
+      "reason": "a value of type EnumDeclaration | ModuleDeclaration seen as TextRange, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace",
+      "records": 1
+    },
+    {
+      "delta": 0,
+      "distinct_rows": 6,
+      "meter_sites": 6,
+      "observed_sites": 6,
+      "reason": "a value of type Expression seen as SourceMapRange | undefined, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace",
+      "records": 6
+    },
+    {
+      "delta": 0,
+      "distinct_rows": 9,
+      "meter_sites": 9,
+      "observed_sites": 9,
+      "reason": "a value of type Expression seen as TextRange | undefined, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace",
+      "records": 9
+    },
+    {
+      "delta": 0,
+      "distinct_rows": 42,
+      "meter_sites": 42,
+      "observed_sites": 42,
+      "reason": "a value of type Expression seen as TextRange, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace",
+      "records": 42
+    },
+    {
+      "delta": 0,
+      "distinct_rows": 1,
+      "meter_sites": 1,
+      "observed_sites": 1,
+      "reason": "a value of type Expression | Identifier seen as TextRange, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace",
+      "records": 1
+    },
+    {
+      "delta": 0,
+      "distinct_rows": 1,
+      "meter_sites": 1,
+      "observed_sites": 1,
+      "reason": "a value of type ExpressionStatement seen as Mutable<ExpressionStatement>, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace",
+      "records": 1
+    },
+    {
+      "delta": 0,
+      "distinct_rows": 26,
+      "meter_sites": 26,
+      "observed_sites": 26,
+      "reason": "a value of type ExpressionStatement seen as TextRange, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace",
+      "records": 26
+    },
+    {
+      "delta": 0,
+      "distinct_rows": 4,
+      "meter_sites": 4,
+      "observed_sites": 4,
+      "reason": "a value of type ForStatement seen as TextRange, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace",
+      "records": 4
+    },
+    {
+      "delta": 0,
+      "distinct_rows": 3,
+      "meter_sites": 3,
+      "observed_sites": 3,
+      "reason": "a value of type FunctionDeclaration seen as TextRange, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace",
+      "records": 3
+    },
+    {
+      "delta": 0,
+      "distinct_rows": 7,
+      "meter_sites": 7,
+      "observed_sites": 7,
+      "reason": "a value of type FunctionExpression seen as TextRange, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace",
+      "records": 7
+    },
+    {
+      "delta": 0,
+      "distinct_rows": 1,
+      "meter_sites": 1,
+      "observed_sites": 1,
+      "reason": "a value of type FunctionTypeNode seen as Mutable<FunctionTypeNode>, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace",
+      "records": 1
+    },
+    {
+      "delta": 0,
+      "distinct_rows": 1,
+      "meter_sites": 1,
+      "observed_sites": 1,
+      "reason": "a value of type GetAccessorDeclaration | SetAccessorDeclaration seen as Mutable<AccessorDeclaration>, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace",
+      "records": 2
+    },
+    {
+      "delta": 0,
+      "distinct_rows": 2,
+      "meter_sites": 2,
+      "observed_sites": 2,
+      "reason": "a value of type Identifier seen as Mutable<Identifier>, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace",
+      "records": 3
+    },
+    {
+      "delta": 0,
+      "distinct_rows": 1,
+      "meter_sites": 1,
+      "observed_sites": 1,
+      "reason": "a value of type Identifier seen as Mutable<Node>, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace",
+      "records": 2
+    },
+    {
+      "delta": 0,
+      "distinct_rows": 6,
+      "meter_sites": 6,
+      "observed_sites": 6,
+      "reason": "a value of type Identifier seen as SourceMapRange | undefined, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace",
+      "records": 6
+    },
+    {
+      "delta": 0,
+      "distinct_rows": 21,
+      "meter_sites": 21,
+      "observed_sites": 21,
+      "reason": "a value of type Identifier seen as TextRange, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace",
+      "records": 21
+    },
+    {
+      "delta": 0,
+      "distinct_rows": 3,
+      "meter_sites": 3,
+      "observed_sites": 3,
+      "reason": "a value of type Identifier | TextRange seen as SourceMapRange | undefined, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace",
+      "records": 3
+    },
+    {
+      "delta": 0,
+      "distinct_rows": 3,
+      "meter_sites": 3,
+      "observed_sites": 3,
+      "reason": "a value of type Identifier | undefined seen as Identifier | TextRange, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace",
+      "records": 3
+    },
+    {
+      "delta": 0,
+      "distinct_rows": 2,
+      "meter_sites": 2,
+      "observed_sites": 2,
+      "reason": "a value of type IfStatement seen as TextRange, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace",
+      "records": 2
+    },
+    {
+      "delta": 0,
+      "distinct_rows": 1,
+      "meter_sites": 1,
+      "observed_sites": 1,
+      "reason": "a value of type ImmediatelyInvokedArrowFunction seen as TextRange, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace",
+      "records": 1
+    },
+    {
+      "delta": 0,
+      "distinct_rows": 1,
+      "meter_sites": 1,
+      "observed_sites": 1,
+      "reason": "a value of type ImportAttribute seen as Mutable<ImportAttribute>, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace",
+      "records": 1
+    },
+    {
+      "delta": 0,
+      "distinct_rows": 1,
+      "meter_sites": 1,
+      "observed_sites": 1,
+      "reason": "a value of type ImportAttributes seen as Mutable<ImportAttributes>, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace",
+      "records": 1
+    },
+    {
+      "delta": 0,
+      "distinct_rows": 1,
+      "meter_sites": 1,
+      "observed_sites": 1,
+      "reason": "a value of type ImportClause seen as Mutable<ImportClause>, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace",
+      "records": 1
+    },
+    {
+      "delta": 0,
+      "distinct_rows": 1,
+      "meter_sites": 1,
+      "observed_sites": 1,
+      "reason": "a value of type ImportDeclaration seen as Mutable<ImportDeclaration>, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace",
+      "records": 1
+    },
+    {
+      "delta": 0,
+      "distinct_rows": 4,
+      "meter_sites": 1,
+      "observed_sites": 1,
+      "reason": "a value of type ImportDeclaration seen as Mutable<Node>, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace",
+      "records": 5
+    },
+    {
+      "delta": 0,
+      "distinct_rows": 2,
+      "meter_sites": 2,
+      "observed_sites": 2,
+      "reason": "a value of type ImportTypeAssertionContainer seen as Mutable<ImportTypeAssertionContainer>, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace",
+      "records": 2
+    },
+    {
+      "delta": 0,
+      "distinct_rows": 1,
+      "meter_sites": 1,
+      "observed_sites": 1,
+      "reason": "a value of type ImportTypeNode seen as Mutable<ImportTypeNode>, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace",
+      "records": 1
+    },
+    {
+      "delta": 0,
+      "distinct_rows": 2,
+      "meter_sites": 2,
+      "observed_sites": 2,
+      "reason": "a value of type IndexSignatureDeclaration seen as Mutable<IndexSignatureDeclaration>, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace",
+      "records": 2
+    },
+    {
+      "delta": 0,
+      "distinct_rows": 1,
+      "meter_sites": 1,
+      "observed_sites": 1,
+      "reason": "a value of type InitializedVariableDeclaration seen as SourceMapRange | undefined, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace",
+      "records": 1
+    },
+    {
+      "delta": 0,
+      "distinct_rows": 1,
+      "meter_sites": 1,
+      "observed_sites": 1,
+      "reason": "a value of type JSDocAugmentsTag seen as Mutable<JSDocAugmentsTag>, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace",
+      "records": 1
+    },
+    {
+      "delta": 0,
+      "distinct_rows": 1,
+      "meter_sites": 1,
+      "observed_sites": 1,
+      "reason": "a value of type JSDocCallbackTag seen as Mutable<JSDocCallbackTag>, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace",
+      "records": 1
+    },
+    {
+      "delta": 0,
+      "distinct_rows": 1,
+      "meter_sites": 1,
+      "observed_sites": 1,
+      "reason": "a value of type JSDocFunctionType seen as Mutable<JSDocFunctionType>, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace",
+      "records": 1
+    },
+    {
+      "delta": 0,
+      "distinct_rows": 1,
+      "meter_sites": 1,
+      "observed_sites": 1,
+      "reason": "a value of type JSDocImplementsTag seen as Mutable<JSDocImplementsTag>, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace",
+      "records": 1
+    },
+    {
+      "delta": 0,
+      "distinct_rows": 1,
+      "meter_sites": 1,
+      "observed_sites": 1,
+      "reason": "a value of type JSDocImportTag seen as Mutable<JSDocImportTag>, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace",
+      "records": 1
+    },
+    {
+      "delta": 0,
+      "distinct_rows": 1,
+      "meter_sites": 1,
+      "observed_sites": 1,
+      "reason": "a value of type JSDocLink seen as Mutable<JSDocLink>, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace",
+      "records": 1
+    },
+    {
+      "delta": 0,
+      "distinct_rows": 1,
+      "meter_sites": 1,
+      "observed_sites": 1,
+      "reason": "a value of type JSDocLinkCode seen as Mutable<JSDocLinkCode>, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace",
+      "records": 1
+    },
+    {
+      "delta": 0,
+      "distinct_rows": 1,
+      "meter_sites": 1,
+      "observed_sites": 1,
+      "reason": "a value of type JSDocLinkPlain seen as Mutable<JSDocLinkPlain>, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace",
+      "records": 1
+    },
+    {
+      "delta": 0,
+      "distinct_rows": 1,
+      "meter_sites": 1,
+      "observed_sites": 1,
+      "reason": "a value of type JSDocNameReference seen as Mutable<JSDocNameReference>, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace",
+      "records": 1
+    },
+    {
+      "delta": 0,
+      "distinct_rows": 1,
+      "meter_sites": 1,
+      "observed_sites": 1,
+      "reason": "a value of type JSDocOverloadTag seen as Mutable<JSDocOverloadTag>, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace",
+      "records": 1
+    },
+    {
+      "delta": 0,
+      "distinct_rows": 1,
+      "meter_sites": 1,
+      "observed_sites": 1,
+      "reason": "a value of type JSDocParameterTag seen as Mutable<JSDocParameterTag>, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace",
+      "records": 1
+    },
+    {
+      "delta": 0,
+      "distinct_rows": 1,
+      "meter_sites": 1,
+      "observed_sites": 1,
+      "reason": "a value of type JSDocPropertyTag seen as Mutable<JSDocPropertyTag>, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace",
+      "records": 1
+    },
+    {
+      "delta": 0,
+      "distinct_rows": 1,
+      "meter_sites": 1,
+      "observed_sites": 1,
+      "reason": "a value of type JSDocSeeTag seen as Mutable<JSDocSeeTag>, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace",
+      "records": 1
+    },
+    {
+      "delta": 0,
+      "distinct_rows": 1,
+      "meter_sites": 1,
+      "observed_sites": 1,
+      "reason": "a value of type JSDocSignature seen as Mutable<JSDocSignature>, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace",
+      "records": 1
+    },
+    {
+      "delta": 0,
+      "distinct_rows": 1,
+      "meter_sites": 1,
+      "observed_sites": 1,
+      "reason": "a value of type JSDocTemplateTag seen as Mutable<JSDocTemplateTag>, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace",
+      "records": 1
+    },
+    {
+      "delta": 0,
+      "distinct_rows": 1,
+      "meter_sites": 1,
+      "observed_sites": 1,
+      "reason": "a value of type JSDocText seen as Mutable<JSDocText>, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace",
+      "records": 1
+    },
+    {
+      "delta": 0,
+      "distinct_rows": 1,
+      "meter_sites": 1,
+      "observed_sites": 1,
+      "reason": "a value of type JSDocTypeExpression seen as Mutable<JSDocTypeExpression>, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace",
+      "records": 1
+    },
+    {
+      "delta": 0,
+      "distinct_rows": 1,
+      "meter_sites": 1,
+      "observed_sites": 1,
+      "reason": "a value of type JSDocTypeLiteral seen as Mutable<JSDocTypeLiteral>, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace",
+      "records": 1
+    },
+    {
+      "delta": 0,
+      "distinct_rows": 1,
+      "meter_sites": 1,
+      "observed_sites": 1,
+      "reason": "a value of type JSDocTypedefTag seen as Mutable<JSDocTypedefTag>, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace",
+      "records": 1
+    },
+    {
+      "delta": 0,
+      "distinct_rows": 1,
+      "meter_sites": 1,
+      "observed_sites": 1,
+      "reason": "a value of type JSDocUnknownTag seen as Mutable<JSDocUnknownTag>, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace",
+      "records": 1
+    },
+    {
+      "delta": 0,
+      "distinct_rows": 3,
+      "meter_sites": 3,
+      "observed_sites": 3,
+      "reason": "a value of type LeftHandSideExpression seen as TextRange, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace",
+      "records": 3
+    },
+    {
+      "delta": 0,
+      "distinct_rows": 1,
+      "meter_sites": 1,
+      "observed_sites": 1,
+      "reason": "a value of type MappedTypeNode seen as Mutable<MappedTypeNode>, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace",
+      "records": 1
+    },
+    {
+      "delta": 0,
+      "distinct_rows": 1,
+      "meter_sites": 1,
+      "observed_sites": 1,
+      "reason": "a value of type MethodDeclaration seen as Mutable<MethodDeclaration>, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace",
+      "records": 2
+    },
+    {
+      "delta": 0,
+      "distinct_rows": 1,
+      "meter_sites": 1,
+      "observed_sites": 1,
+      "reason": "a value of type MethodDeclaration | PropertyAssignment | AccessorDeclaration seen as TextRange, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace",
+      "records": 1
+    },
+    {
+      "delta": 0,
+      "distinct_rows": 2,
+      "meter_sites": 2,
+      "observed_sites": 2,
+      "reason": "a value of type MissingDeclaration seen as Mutable<MissingDeclaration>, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace",
+      "records": 2
+    },
+    {
+      "delta": 0,
+      "distinct_rows": 2,
+      "meter_sites": 2,
+      "observed_sites": 2,
+      "reason": "a value of type ModifierLike seen as Mutable<Node>, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace",
+      "records": 2
+    },
+    {
+      "delta": 0,
+      "distinct_rows": 1,
+      "meter_sites": 1,
+      "observed_sites": 1,
+      "reason": "a value of type ModuleBlock seen as TextRange | undefined, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace",
+      "records": 1
+    },
+    {
+      "delta": 0,
+      "distinct_rows": 1,
+      "meter_sites": 1,
+      "observed_sites": 1,
+      "reason": "a value of type ModuleDeclaration seen as Mutable<ModuleDeclaration | SourceFile>, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace",
+      "records": 1
+    },
+    {
+      "delta": 0,
+      "distinct_rows": 1,
+      "meter_sites": 1,
+      "observed_sites": 1,
+      "reason": "a value of type ModuleDeclaration seen as SourceMapRange | undefined, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace",
+      "records": 1
+    },
+    {
+      "delta": 0,
+      "distinct_rows": 1,
+      "meter_sites": 1,
+      "observed_sites": 1,
+      "reason": "a value of type ModuleDeclaration seen as TextRange, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace",
+      "records": 1
+    },
+    {
+      "delta": 0,
+      "distinct_rows": 1,
+      "meter_sites": 1,
+      "observed_sites": 1,
+      "reason": "a value of type ModuleName seen as Mutable<Node>, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace",
+      "records": 1
+    },
+    {
+      "delta": 0,
+      "distinct_rows": 1,
+      "meter_sites": 1,
+      "observed_sites": 1,
+      "reason": "a value of type ModuleName seen as SourceMapRange | undefined, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace",
+      "records": 1
+    },
+    {
+      "delta": 0,
+      "distinct_rows": 1,
+      "meter_sites": 1,
+      "observed_sites": 1,
+      "reason": "a value of type NamedImports seen as Mutable<NamedImports>, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace",
+      "records": 1
+    },
+    {
+      "delta": 0,
+      "distinct_rows": 1,
+      "meter_sites": 1,
+      "observed_sites": 1,
+      "reason": "a value of type NamespaceExport seen as Mutable<NamespaceExport>, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace",
+      "records": 1
+    },
+    {
+      "delta": 0,
+      "distinct_rows": 1,
+      "meter_sites": 1,
+      "observed_sites": 1,
+      "reason": "a value of type NamespaceExportDeclaration seen as Mutable<NamespaceExportDeclaration>, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace",
+      "records": 1
+    },
+    {
+      "delta": 0,
+      "distinct_rows": 1,
+      "meter_sites": 1,
+      "observed_sites": 1,
+      "reason": "a value of type NamespaceImport seen as Mutable<NamespaceImport>, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace",
+      "records": 1
+    },
+    {
+      "delta": 0,
+      "distinct_rows": 1,
+      "meter_sites": 1,
+      "observed_sites": 1,
+      "reason": "a value of type NewExpression seen as TextRange, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace",
+      "records": 1
+    },
+    {
+      "delta": 0,
+      "distinct_rows": 5,
+      "meter_sites": 5,
+      "observed_sites": 5,
+      "reason": "a value of type Node seen as Mutable<Node>, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace",
+      "records": 10
+    },
+    {
+      "delta": 0,
+      "distinct_rows": 1,
+      "meter_sites": 1,
+      "observed_sites": 1,
+      "reason": "a value of type Node seen as Node | SourceMapRange, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace",
+      "records": 1
+    },
+    {
+      "delta": 0,
+      "distinct_rows": 1,
+      "meter_sites": 1,
+      "observed_sites": 1,
+      "reason": "a value of type Node seen as Node | TextRange, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace",
+      "records": 1
+    },
+    {
+      "delta": 0,
+      "distinct_rows": 1,
+      "meter_sites": 1,
+      "observed_sites": 1,
+      "reason": "a value of type Node seen as SourceMapRange | undefined, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace",
+      "records": 1
+    },
+    {
+      "delta": 0,
+      "distinct_rows": 1,
+      "meter_sites": 1,
+      "observed_sites": 1,
+      "reason": "a value of type Node seen as TextRange, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace",
+      "records": 1
+    },
+    {
+      "delta": 0,
+      "distinct_rows": 1,
+      "meter_sites": 1,
+      "observed_sites": 1,
+      "reason": "a value of type Node | SourceMapRange seen as SourceMapRange, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace",
+      "records": 1
+    },
+    {
+      "delta": 0,
+      "distinct_rows": 2,
+      "meter_sites": 2,
+      "observed_sites": 2,
+      "reason": "a value of type Node | TextRange seen as TextRange, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace",
+      "records": 2
+    },
+    {
+      "delta": 0,
+      "distinct_rows": 7,
+      "meter_sites": 7,
+      "observed_sites": 7,
+      "reason": "a value of type NodeArray<ClassElement> seen as TextRange, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace",
+      "records": 7
+    },
+    {
+      "delta": 0,
+      "distinct_rows": 3,
+      "meter_sites": 3,
+      "observed_sites": 3,
+      "reason": "a value of type NodeArray<Expression> seen as TextRange, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace",
+      "records": 3
+    },
+    {
+      "delta": 0,
+      "distinct_rows": 3,
+      "meter_sites": 3,
+      "observed_sites": 3,
+      "reason": "a value of type NodeArray<ExpressionStatement> seen as TextRange, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace",
+      "records": 3
+    },
+    {
+      "delta": 0,
+      "distinct_rows": 2,
+      "meter_sites": 2,
+      "observed_sites": 2,
+      "reason": "a value of type NodeArray<ModifierLike> seen as TextRange, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace",
+      "records": 2
+    },
+    {
+      "delta": 0,
+      "distinct_rows": 1,
+      "meter_sites": 1,
+      "observed_sites": 1,
+      "reason": "a value of type NodeArray<Node> seen as TextRange, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace",
+      "records": 1
+    },
+    {
+      "delta": 0,
+      "distinct_rows": 3,
+      "meter_sites": 3,
+      "observed_sites": 3,
+      "reason": "a value of type NodeArray<ParameterDeclaration> seen as TextRange, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace",
+      "records": 3
+    },
+    {
+      "delta": 0,
+      "distinct_rows": 4,
+      "meter_sites": 4,
+      "observed_sites": 4,
+      "reason": "a value of type NodeArray<Statement> seen as TextRange | undefined, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace",
+      "records": 4
+    },
+    {
+      "delta": 0,
+      "distinct_rows": 32,
+      "meter_sites": 32,
+      "observed_sites": 32,
+      "reason": "a value of type NodeArray<Statement> seen as TextRange, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace",
+      "records": 32
+    },
+    {
+      "delta": 0,
+      "distinct_rows": 1,
+      "meter_sites": 1,
+      "observed_sites": 1,
+      "reason": "a value of type NodeArray<T> seen as TextRange, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace",
+      "records": 1
+    },
+    {
+      "delta": 0,
+      "distinct_rows": 1,
+      "meter_sites": 1,
+      "observed_sites": 1,
+      "reason": "a value of type NodeArray<never> seen as TextRange, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace",
+      "records": 1
+    },
+    {
+      "delta": 0,
+      "distinct_rows": 1,
+      "meter_sites": 1,
+      "observed_sites": 1,
+      "reason": "a value of type NonNullExpression seen as Mutable<NonNullExpression>, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace",
+      "records": 2
+    },
+    {
+      "delta": 0,
+      "distinct_rows": 2,
+      "meter_sites": 2,
+      "observed_sites": 2,
+      "reason": "a value of type NumericLiteral seen as Mutable<LiteralExpression>, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace",
+      "records": 2
+    },
+    {
+      "delta": 0,
+      "distinct_rows": 1,
+      "meter_sites": 1,
+      "observed_sites": 1,
+      "reason": "a value of type NumericLiteral seen as TextRange, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace",
+      "records": 1
+    },
+    {
+      "delta": 0,
+      "distinct_rows": 1,
+      "meter_sites": 1,
+      "observed_sites": 1,
+      "reason": "a value of type ObjectBindingOrAssignmentPattern seen as TextRange, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace",
+      "records": 1
+    },
+    {
+      "delta": 0,
+      "distinct_rows": 1,
+      "meter_sites": 1,
+      "observed_sites": 1,
+      "reason": "a value of type ObjectLiteralExpression seen as TextRange, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace",
+      "records": 1
+    },
+    {
+      "delta": 0,
+      "distinct_rows": 1,
+      "meter_sites": 1,
+      "observed_sites": 1,
+      "reason": "a value of type OptionalTypeNode seen as Mutable<Node>, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace",
+      "records": 2
+    },
+    {
+      "delta": 0,
+      "distinct_rows": 1,
+      "meter_sites": 1,
+      "observed_sites": 1,
+      "reason": "a value of type OptionalTypeNode seen as TextRange, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace",
+      "records": 1
+    },
+    {
+      "delta": 0,
+      "distinct_rows": 1,
+      "meter_sites": 1,
+      "observed_sites": 1,
+      "reason": "a value of type ParameterDeclaration seen as SourceMapRange | undefined, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace",
+      "records": 1
+    },
+    {
+      "delta": 0,
+      "distinct_rows": 8,
+      "meter_sites": 8,
+      "observed_sites": 8,
+      "reason": "a value of type ParameterDeclaration seen as TextRange, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace",
+      "records": 8
+    },
+    {
+      "delta": 0,
+      "distinct_rows": 1,
+      "meter_sites": 1,
+      "observed_sites": 1,
+      "reason": "a value of type ParameterDeclaration | PropertyDeclaration | PropertySignature | SignatureDeclaration seen as Mutable<ParameterDeclaration | PropertyDeclaration | PropertySignature | SignatureDeclaration>, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace",
+      "records": 1
+    },
+    {
+      "delta": 0,
+      "distinct_rows": 1,
+      "meter_sites": 1,
+      "observed_sites": 1,
+      "reason": "a value of type ParameterDeclaration | VariableDeclaration seen as TextRange, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace",
+      "records": 1
+    },
+    {
+      "delta": 0,
+      "distinct_rows": 8,
+      "meter_sites": 8,
+      "observed_sites": 8,
+      "reason": "a value of type ParenthesizedExpression seen as TextRange, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace",
+      "records": 8
+    },
+    {
+      "delta": 0,
+      "distinct_rows": 2,
+      "meter_sites": 2,
+      "observed_sites": 2,
+      "reason": "a value of type PostfixUnaryExpression seen as TextRange, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace",
+      "records": 2
+    },
+    {
+      "delta": 0,
+      "distinct_rows": 16,
+      "meter_sites": 16,
+      "observed_sites": 16,
+      "reason": "a value of type PropertyAccessExpression seen as TextRange, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace",
+      "records": 16
+    },
+    {
+      "delta": 0,
+      "distinct_rows": 1,
+      "meter_sites": 1,
+      "observed_sites": 1,
+      "reason": "a value of type PropertyAssignment seen as Mutable<PropertyAssignment | ShorthandPropertyAssignment>, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace",
+      "records": 1
+    },
+    {
+      "delta": 0,
+      "distinct_rows": 9,
+      "meter_sites": 9,
+      "observed_sites": 9,
+      "reason": "a value of type PropertyAssignment seen as TextRange, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace",
+      "records": 9
+    },
+    {
+      "delta": 0,
+      "distinct_rows": 1,
+      "meter_sites": 1,
+      "observed_sites": 1,
+      "reason": "a value of type PropertyDeclaration seen as TextRange, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace",
+      "records": 1
+    },
+    {
+      "delta": 0,
+      "distinct_rows": 3,
+      "meter_sites": 3,
+      "observed_sites": 3,
+      "reason": "a value of type PropertyName seen as SourceMapRange | undefined, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace",
+      "records": 3
+    },
+    {
+      "delta": 0,
+      "distinct_rows": 2,
+      "meter_sites": 2,
+      "observed_sites": 2,
+      "reason": "a value of type PropertySignature seen as Mutable<PropertySignature>, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace",
+      "records": 3
+    },
+    {
+      "delta": 0,
+      "distinct_rows": 1,
+      "meter_sites": 1,
+      "observed_sites": 1,
+      "reason": "a value of type ReturnStatement seen as Mutable<ReturnStatement>, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace",
+      "records": 1
+    },
+    {
+      "delta": 0,
+      "distinct_rows": 1,
+      "meter_sites": 1,
+      "observed_sites": 1,
+      "reason": "a value of type ReturnStatement seen as TextRange | undefined, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace",
+      "records": 1
+    },
+    {
+      "delta": 0,
+      "distinct_rows": 12,
+      "meter_sites": 12,
+      "observed_sites": 12,
+      "reason": "a value of type ReturnStatement seen as TextRange, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace",
+      "records": 12
+    },
+    {
+      "delta": 0,
+      "distinct_rows": 1,
+      "meter_sites": 1,
+      "observed_sites": 1,
+      "reason": "a value of type SetAccessorDeclaration seen as Mutable<SetAccessorDeclaration>, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace",
+      "records": 1
+    },
+    {
+      "delta": 0,
+      "distinct_rows": 1,
+      "meter_sites": 1,
+      "observed_sites": 1,
+      "reason": "a value of type ShorthandPropertyAssignment seen as Mutable<PropertyAssignment | ShorthandPropertyAssignment>, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace",
+      "records": 1
+    },
+    {
+      "delta": 0,
+      "distinct_rows": 1,
+      "meter_sites": 1,
+      "observed_sites": 1,
+      "reason": "a value of type ShorthandPropertyAssignment seen as TextRange, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace",
+      "records": 1
+    },
+    {
+      "delta": 0,
+      "distinct_rows": 1,
+      "meter_sites": 1,
+      "observed_sites": 1,
+      "reason": "a value of type SourceFile seen as Mutable<ModuleDeclaration | SourceFile>, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace",
+      "records": 1
+    },
+    {
+      "delta": 0,
+      "distinct_rows": 2,
+      "meter_sites": 2,
+      "observed_sites": 2,
+      "reason": "a value of type SourceFile seen as Mutable<SourceFile>, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace",
+      "records": 4
+    },
+    {
+      "delta": 0,
+      "distinct_rows": 1,
+      "meter_sites": 1,
+      "observed_sites": 1,
+      "reason": "a value of type SpreadAssignment seen as TextRange, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace",
+      "records": 1
+    },
+    {
+      "delta": 0,
+      "distinct_rows": 1,
+      "meter_sites": 1,
+      "observed_sites": 1,
+      "reason": "a value of type SpreadElement seen as TextRange, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace",
+      "records": 1
+    },
+    {
+      "delta": 0,
+      "distinct_rows": 2,
+      "meter_sites": 2,
+      "observed_sites": 2,
+      "reason": "a value of type Statement seen as TextRange | undefined, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace",
+      "records": 2
+    },
+    {
+      "delta": 0,
+      "distinct_rows": 4,
+      "meter_sites": 1,
+      "observed_sites": 1,
+      "reason": "a value of type StringLiteral seen as Mutable<Node>, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace",
+      "records": 5
+    },
+    {
+      "delta": 0,
+      "distinct_rows": 2,
+      "meter_sites": 1,
+      "observed_sites": 1,
+      "reason": "a value of type StringLiteral seen as Mutable<StringLiteral>, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace",
+      "records": 3
+    },
+    {
+      "delta": 0,
+      "distinct_rows": 6,
+      "meter_sites": 6,
+      "observed_sites": 6,
+      "reason": "a value of type StringLiteral seen as TextRange, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace",
+      "records": 6
+    },
+    {
+      "delta": 0,
+      "distinct_rows": 1,
+      "meter_sites": 1,
+      "observed_sites": 1,
+      "reason": "a value of type SuperExpression seen as SourceMapRange | undefined, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace",
+      "records": 1
+    },
+    {
+      "delta": 0,
+      "distinct_rows": 1,
+      "meter_sites": 1,
+      "observed_sites": 1,
+      "reason": "a value of type SuperExpression seen as TextRange, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace",
+      "records": 1
+    },
+    {
+      "delta": 0,
+      "distinct_rows": 1,
+      "meter_sites": 1,
+      "observed_sites": 1,
+      "reason": "a value of type SwitchStatement seen as Mutable<SwitchStatement>, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace",
+      "records": 1
+    },
+    {
+      "delta": 0,
+      "distinct_rows": 1,
+      "meter_sites": 1,
+      "observed_sites": 1,
+      "reason": "a value of type SyntheticExpression seen as TextRange, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace",
+      "records": 1
+    },
+    {
+      "delta": 0,
+      "distinct_rows": 456,
+      "meter_sites": 11,
+      "observed_sites": 11,
+      "reason": "a value of type T seen as Mutable<T>, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of T[\"pos\"] would replace",
+      "records": 456
+    },
+    {
+      "delta": 0,
+      "distinct_rows": 1105,
+      "meter_sites": 4,
+      "observed_sites": 4,
+      "reason": "a value of type T seen as TextRange, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace",
+      "records": 1105
+    },
+    {
+      "delta": 0,
+      "distinct_rows": 1,
+      "meter_sites": 1,
+      "observed_sites": 1,
+      "reason": "a value of type TaggedTemplateExpression seen as Mutable<Node>, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace",
+      "records": 2
+    },
+    {
+      "delta": 0,
+      "distinct_rows": 1,
+      "meter_sites": 1,
+      "observed_sites": 1,
+      "reason": "a value of type ThrowStatement seen as TextRange | undefined, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace",
+      "records": 1
+    },
+    {
+      "delta": 0,
+      "distinct_rows": 1,
+      "meter_sites": 1,
+      "observed_sites": 1,
+      "reason": "a value of type ThrowStatement seen as TextRange, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace",
+      "records": 1
+    },
+    {
+      "delta": 0,
+      "distinct_rows": 1,
+      "meter_sites": 1,
+      "observed_sites": 1,
+      "reason": "a value of type TypeOperatorNode seen as Mutable<TypeOperatorNode>, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace",
+      "records": 1
+    },
+    {
+      "delta": 0,
+      "distinct_rows": 1,
+      "meter_sites": 1,
+      "observed_sites": 1,
+      "reason": "a value of type TypeParameterDeclaration seen as Mutable<TypeParameterDeclaration>, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace",
+      "records": 1
+    },
+    {
+      "delta": 0,
+      "distinct_rows": 2,
+      "meter_sites": 2,
+      "observed_sites": 2,
+      "reason": "a value of type VariableDeclaration seen as SourceMapRange | undefined, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace",
+      "records": 2
+    },
+    {
+      "delta": 0,
+      "distinct_rows": 9,
+      "meter_sites": 9,
+      "observed_sites": 9,
+      "reason": "a value of type VariableDeclaration seen as TextRange, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace",
+      "records": 9
+    },
+    {
+      "delta": 0,
+      "distinct_rows": 1,
+      "meter_sites": 1,
+      "observed_sites": 1,
+      "reason": "a value of type VariableDeclaration | DestructuringAssignment seen as TextRange, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace",
+      "records": 1
+    },
+    {
+      "delta": 0,
+      "distinct_rows": 13,
+      "meter_sites": 13,
+      "observed_sites": 13,
+      "reason": "a value of type VariableDeclarationList seen as TextRange, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace",
+      "records": 13
+    },
+    {
+      "delta": 0,
+      "distinct_rows": 2,
+      "meter_sites": 2,
+      "observed_sites": 2,
+      "reason": "a value of type VariableStatement seen as SourceMapRange | undefined, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace",
+      "records": 2
+    },
+    {
+      "delta": 0,
+      "distinct_rows": 13,
+      "meter_sites": 13,
+      "observed_sites": 13,
+      "reason": "a value of type VariableStatement seen as TextRange, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace",
+      "records": 13
+    },
+    {
+      "delta": 0,
+      "distinct_rows": 1,
+      "meter_sites": 1,
+      "observed_sites": 1,
+      "reason": "a value of type YieldExpression seen as Mutable<YieldExpression>, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace",
+      "records": 1
+    },
+    {
+      "delta": 0,
+      "distinct_rows": 2,
+      "meter_sites": 2,
+      "observed_sites": 2,
+      "reason": "a value of type YieldExpression seen as TextRange | undefined, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace",
+      "records": 2
+    },
+    {
+      "delta": 0,
+      "distinct_rows": 4,
+      "meter_sites": 4,
+      "observed_sites": 4,
+      "reason": "a value of type YieldExpression seen as TextRange, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace",
+      "records": 4
+    }
+  ],
+  "records": 2123
+}
