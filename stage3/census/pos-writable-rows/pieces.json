@@ -804,6 +804,17 @@
   },
   {
     "complete": true,
+    "ended_utc": "2026-11-16T18:43:22.105047+00:00",
+    "error": "",
+    "exit_code": 0,
+    "file": "src/compiler/utilitiesPublic.ts",
+    "log": "/workspace/scratch/aryr7ea/raw/src__compiler__utilitiesPublic.ts.log",
+    "raw_sha256": "43e7a53a1b31a8d8df2de8bb13d4a7c6cc815d3e9356c7c230152be5d10924ca",
+    "started_utc": "2026-11-16T18:32:30.626474+00:00",
+    "wall_seconds": 651.4784022419999
+  },
+  {
+    "complete": true,
     "ended_utc": "2026-11-16T18:41:37.993460+00:00",
     "error": "",
     "exit_code": 0,
@@ -812,5 +823,27 @@
     "raw_sha256": "6ddac6c8d8fa94b43ae53709c0175d170b22bc197f52840857da3df528d1db8e",
     "started_utc": "2026-11-16T18:40:54.331957+00:00",
     "wall_seconds": 43.66143919199931
+  },
+  {
+    "complete": true,
+    "ended_utc": "2026-11-16T18:42:32.173266+00:00",
+    "error": "",
+    "exit_code": 0,
+    "file": "src/compiler/watch.ts",
+    "log": "/workspace/scratch/aryr7ea/raw/src__compiler__watch.ts.log",
+    "raw_sha256": "1428063ecd76e441e56897a7ba74ea4da545282eba08919dd4340b09023d990f",
+    "started_utc": "2026-11-16T18:41:38.001675+00:00",
+    "wall_seconds": 54.17153963199962
+  },
+  {
+    "complete": true,
+    "ended_utc": "2026-11-16T18:43:00.446079+00:00",
+    "error": "",
+    "exit_code": 0,
+    "file": "src/compiler/watchPublic.ts",
+    "log": "/workspace/scratch/aryr7ea/raw/src__compiler__watchPublic.ts.log",
+    "raw_sha256": "39687499cdb0de4f309123d8fe84385846135ca325bba92bc2d6196b87334532",
+    "started_utc": "2026-11-16T18:42:32.186701+00:00",
+    "wall_seconds": 28.259354838000945
   }
 ]
