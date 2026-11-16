@@ -1,0 +1,6 @@
+import type {HttpRequest,HttpResponse} from 'adamic/http';
+interface Environment {readonly ZONE:string; readonly GREETING:string}
+export function handle(request:HttpRequest, environment:Environment):HttpResponse {
+console.log(Object.keys(environment).join(','));
+return {status:200,headers:[],body:request.path};
+}
