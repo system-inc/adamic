@@ -695,5 +695,95 @@
     "where": "/workspace/scratch/next-stops-82c78b6b/adapted/src/compiler/sys.ts:1596:192",
     "reason": "a namespace object used as a value; no runtime container is emitted, so identity, receiver behavior, live export aliases and staged properties are not represented; use qualified members or named module imports",
     "seconds": 17.671883035
+  },
+  {
+    "module_format": "CommonJSBundle",
+    "roots": [
+      "/workspace/scratch/next-stops-82c78b6b/adapted/src/compiler/tsbuild.ts"
+    ],
+    "kind": "NotYet",
+    "where": "/workspace/scratch/next-stops-82c78b6b/adapted/src/compiler/sys.ts:1596:192",
+    "reason": "a namespace object used as a value; no runtime container is emitted, so identity, receiver behavior, live export aliases and staged properties are not represented; use qualified members or named module imports",
+    "seconds": 28.308037744
+  },
+  {
+    "module_format": "CommonJSBundle",
+    "roots": [
+      "/workspace/scratch/next-stops-82c78b6b/adapted/src/compiler/tsbuildPublic.ts"
+    ],
+    "kind": "NotYet",
+    "where": "/workspace/scratch/next-stops-82c78b6b/adapted/src/compiler/sys.ts:1596:192",
+    "reason": "a namespace object used as a value; no runtime container is emitted, so identity, receiver behavior, live export aliases and staged properties are not represented; use qualified members or named module imports",
+    "seconds": 29.750461487
+  },
+  {
+    "module_format": "CommonJSBundle",
+    "roots": [
+      "/workspace/scratch/next-stops-82c78b6b/adapted/src/compiler/types.ts"
+    ],
+    "kind": "NotYet",
+    "where": "/workspace/scratch/next-stops-82c78b6b/adapted/src/compiler/diagnosticInformationMap.generated.ts:13:45",
+    "reason": "reading an enum before its runtime initialization; move the call after the enum declaration",
+    "seconds": 7.689078812
+  },
+  {
+    "module_format": "CommonJSBundle",
+    "roots": [
+      "/workspace/scratch/next-stops-82c78b6b/adapted/src/compiler/utilities.ts"
+    ],
+    "kind": "NotYet",
+    "where": "/workspace/scratch/next-stops-82c78b6b/adapted/src/compiler/sys.ts:1596:192",
+    "reason": "a namespace object used as a value; no runtime container is emitted, so identity, receiver behavior, live export aliases and staged properties are not represented; use qualified members or named module imports",
+    "seconds": 29.582613492
+  },
+  {
+    "module_format": "CommonJSBundle",
+    "roots": [
+      "/workspace/scratch/next-stops-82c78b6b/adapted/src/compiler/utilitiesPublic.ts"
+    ],
+    "kind": "NotYet",
+    "where": "/workspace/scratch/next-stops-82c78b6b/adapted/src/compiler/sys.ts:1596:192",
+    "reason": "a namespace object used as a value; no runtime container is emitted, so identity, receiver behavior, live export aliases and staged properties are not represented; use qualified members or named module imports",
+    "seconds": 23.667537599
+  },
+  {
+    "module_format": "CommonJSBundle",
+    "roots": [
+      "/workspace/scratch/next-stops-82c78b6b/adapted/src/compiler/visitorPublic.ts"
+    ],
+    "kind": "NotYet",
+    "where": "/workspace/scratch/next-stops-82c78b6b/adapted/src/compiler/sys.ts:1596:192",
+    "reason": "a namespace object used as a value; no runtime container is emitted, so identity, receiver behavior, live export aliases and staged properties are not represented; use qualified members or named module imports",
+    "seconds": 22.053524705
+  },
+  {
+    "module_format": "CommonJSBundle",
+    "roots": [
+      "/workspace/scratch/next-stops-82c78b6b/adapted/src/compiler/watch.ts"
+    ],
+    "kind": "NotYet",
+    "where": "/workspace/scratch/next-stops-82c78b6b/adapted/src/compiler/sys.ts:1596:192",
+    "reason": "a namespace object used as a value; no runtime container is emitted, so identity, receiver behavior, live export aliases and staged properties are not represented; use qualified members or named module imports",
+    "seconds": 22.983645833
+  },
+  {
+    "module_format": "CommonJSBundle",
+    "roots": [
+      "/workspace/scratch/next-stops-82c78b6b/adapted/src/compiler/watchPublic.ts"
+    ],
+    "kind": "NotYet",
+    "where": "/workspace/scratch/next-stops-82c78b6b/adapted/src/compiler/sys.ts:1596:192",
+    "reason": "a namespace object used as a value; no runtime container is emitted, so identity, receiver behavior, live export aliases and staged properties are not represented; use qualified members or named module imports",
+    "seconds": 21.731201801
+  },
+  {
+    "module_format": "CommonJSBundle",
+    "roots": [
+      "/workspace/scratch/next-stops-82c78b6b/adapted/src/compiler/watchUtilities.ts"
+    ],
+    "kind": "NotYet",
+    "where": "/workspace/scratch/next-stops-82c78b6b/adapted/src/compiler/sys.ts:1596:192",
+    "reason": "a namespace object used as a value; no runtime container is emitted, so identity, receiver behavior, live export aliases and staged properties are not represented; use qualified members or named module imports",
+    "seconds": 23.495884462
   }
 ]
