@@ -118,6 +118,8 @@ type report struct {
 	TimedOutRuns      int `json:"timed_out_runs"`
 	RetriedRuns       int `json:"retried_runs"`
 	StillTimedOutRuns int `json:"still_timed_out_runs"`
+	// AdmittedPaths names every program Admitted counts, the diff's and every other corpus's alike, sorted.
+	AdmittedPaths []string `json:"admitted_paths"`
 }
 
 func execute(dir string, limit time.Duration, name string, args ...string) observation {
@@ -730,6 +732,7 @@ func run(args []string) error {
 		sort.Strings(result.PendingRuntimeStops)
 	}
 	result.Admitted = 0
+	result.AdmittedPaths = []string{}
 	result.DarwinPaths = []string{}
 	for _, record := range result.Programs {
 		if record.Class == "compiler-timeout" {
@@ -739,6 +742,7 @@ func run(args []string) error {
 		}
 		if record.Class == "newly-accepted" {
 			result.Admitted++
+			result.AdmittedPaths = append(result.AdmittedPaths, record.Path)
 		}
 		if record.Class == "darwin" {
 			result.DarwinPaths = append(result.DarwinPaths, record.Path)
@@ -753,6 +757,15 @@ func run(args []string) error {
 	// diff_count is how many programs base..head added or changed, never how many differ from Node, so
 	// the line says so (#zhgxzjg, a 24 read as differences).
 	fmt.Fprintf(os.Stderr, "changed programs: %d\n", result.DiffCount)
+	// admitted counts every corpus, not the diff alone, so each admitted program is named with how it was judged:
+	// a caller that prints only the diff's rows can't then show fewer than the count (#1zscjp1, J-1x881sm).
+	sort.Strings(result.AdmittedPaths)
+	fmt.Fprintf(os.Stderr, "admitted: %d\n", result.Admitted)
+	for _, record := range result.Programs {
+		if record.Class == "newly-accepted" {
+			fmt.Fprintf(os.Stderr, "admitted %s (%s): %s\n", record.Path, record.Corpus, admittedJudgment(record))
+		}
+	}
 	result.SamplingSize = len(selected)
 	result.BudgetUsedSeconds = time.Since(started).Seconds()
 	result.Phases["runtime"] = result.BudgetUsedSeconds
@@ -781,6 +794,28 @@ func run(args []string) error {
 		return fmt.Errorf("%w: %s", errVoid, result.VoidReason)
 	}
 	return nil
+}
+
+// admittedJudgment says in words how an admitted program was judged: agreeing with Node, passing as a ruled
+// exception, void, not run because the budget omitted it, or disagreeing.
+func admittedJudgment(record entry) string {
+	switch {
+	case !record.Sampled:
+		return "not run on Node, omitted by the budget"
+	case record.VoidReason != "":
+		return "void, " + record.VoidReason
+	case record.Agree == nil:
+		return "not judged"
+	case *record.Agree:
+		return "agrees with Node"
+	case record.NegativeWitness:
+		return "a ruled negative witness"
+	case record.RuledRuntimeStop:
+		return "a ruled run-time stop"
+	case record.RuledBackendDivergence:
+		return "a ruled backend divergence"
+	}
+	return "disagrees with Node"
 }
 
 // timedOut names every one of a run's commands that hit its timeout, in the order they run, or is empty.

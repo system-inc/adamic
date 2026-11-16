@@ -131,6 +131,10 @@ charging the change. A red beside a void is still a red: it exits 1, records the
 void's reason, and keeps `"void": false`.
 Unrun observations and `agree` are null; `sampled` is false
 on an unrun program. `admitted: 0` is explicit for equal admission sets.
+`admitted` counts every corpus, not the diff alone, so the run names each program it counts: JSON lists them in
+`admitted_paths`, and stderr prints `admitted: N`, then a line each, `admitted <path> (<corpus>): <judgment>`,
+where the judgment is `agrees with Node`, `disagrees with Node`, a ruled negative witness, run-time stop or
+backend divergence, `void, <why>`, or `not run on Node, omitted by the budget` (#1zscjp1).
 
 `inputs.txt` names the repository paths whose change can move a candidate's
 admission set, one per line, sorted: the lowering companion's Go import closure.
