@@ -25,6 +25,12 @@ func TestEgmProbe(t *testing.T) {
 	}
 	sort.Strings(names)
 	for _, name := range names {
+		t.Run(name, func(t *testing.T) { egmProbeOne(t, directory, name) })
+	}
+}
+
+func egmProbeOne(t *testing.T, directory, name string) {
+	{
 		path := filepath.Join(directory, name)
 		short := func(b []byte) string {
 			s := strings.ReplaceAll(string(b), "\n", "|")
@@ -43,8 +49,9 @@ func TestEgmProbe(t *testing.T) {
 				message = message[:150]
 			}
 			fmt.Printf("PROBE %s STOP %s\n", name, message)
-			continue
+			return
 		}
+		fmt.Printf("PROBE %s LOWERED, running\n", name)
 		node := onNode(t, path)
 		js := onJavaScriptBackend(t, program)
 		native, _ := natively(t, program)
