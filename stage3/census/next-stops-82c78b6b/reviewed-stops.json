@@ -76,5 +76,15 @@
     "emitter": "internal/lower/refusals.go:105-106 -> internal/lower/library_node.go:636,656 (nodeLibraryRefusal, rule 800) -> internal/lower/library_node_commonjs.go:54-58,92-94",
     "source_review": "The adapted line reads __filename and __dirname while computing executingFilePath in getNodeSystem. 93-builtin-imports/proofs/targets.json names and hashes getNodeSystem; 99-wasm-crypto-import/proofs/targets.json pins the function in ownerBeforeText/ownerAfterText. 92-tty-host-results pins two nested terminal methods in that scope, not this line. The module-format input makes these module values unbound for EcmaScript; the same source is bound under CommonJSBundle.",
     "host_runtime": "This IS a host stop: node:module.__filename and __dirname, the CommonJS host module values, have no ES-module/reproducible-native answer here. It is a static NotYet from the refusal scan, not an observed runtime-execution failure."
+  },
+  {
+    "where": "sys.ts:1476:35",
+    "kind": "NotYet",
+    "reason": "node:module.__filename and __dirname: CommonJS module values with no ES-module or reproducible native answer yet (fix: pass the module's path in from where the program is started)",
+    "phase": "refusal_scan (Node/CommonJS module values; rule 800)",
+    "owner": "internal/lower/library_node_commonjs.go: nodeCommonJSUseRefusal / nodeCommonJSModuleValuesBound; adapted getNodeSystem pinned by 93-builtin-imports and 99-wasm-crypto-import",
+    "emitter": "internal/lower/refusals.go:105-106 -> internal/lower/library_node.go:636,656 (nodeLibraryRefusal, rule 800) -> internal/lower/library_node_commonjs.go:54-58,92-94",
+    "source_review": "The adapted line reads __filename and __dirname while computing executingFilePath in getNodeSystem. This is the same host-module-values probe and exact reason as the fb8db081 EcmaScript stop, now at line 1476 rather than 1473. The location/kind/reason tuple therefore moves. 93-builtin-imports/proofs/targets.json names and hashes getNodeSystem and pins ownerBeforeText/ownerAfterText; 99-wasm-crypto-import/proofs/targets.json pins the same function in ownerBeforeText/ownerAfterText. 92-tty-host-results pins two nested terminal methods in that scope, not this expression. Module values are unbound for EcmaScript; CommonJSBundle passes this site.",
+    "host_runtime": "This IS a host stop: node:module.__filename and __dirname, the CommonJS host module values, have no ES-module/reproducible-native answer here. It is a static NotYet from the refusal scan, not an observed runtime-execution failure."
   }
 ]

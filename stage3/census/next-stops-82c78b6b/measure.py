@@ -1,5 +1,5 @@
 """Run from the detached scratch worktree after setup.
-source /workspace/scratch/next-stops-82c78b6b/env.sh
+source stage3/census/next-stops-82c78b6b/env.sh.txt
 npm ci --prefix stage3/api (recorded via run.py npm-ci)
 run.py apply bash stage3/apply.sh --build-product SCRATCH/adapted
 run.py build go build -o SCRATCH/head-census ./stage3/census/tool
