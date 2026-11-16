@@ -1,0 +1,5 @@
+stage3/adapt/92-tty-host-results/proofs/targets.json:7:        "scope": "getNodeSystem",
+stage3/adapt/92-tty-host-results/proofs/targets.json:13:        "scope": "getNodeSystem",
+stage3/adapt/99-wasm-crypto-import/proofs/targets.json:8:    "ownerBeforeText": "function getNodeSystem(): System {\r\n        const nativePattern = /^native |^\\([^)]+\\)$|^(?:internal[\\\\/]|[\\w\\s]+(?:\\.js)?$)/;\r\n        // crypto can be absent on reduced node installations\r\n        let _crypto: typeof import(\"crypto\") | undefined;\r\n  
+stage3/adapt/99-wasm-crypto-import/proofs/targets.json:9:    "ownerAfterText": "function getNodeSystem(): System {\r\n        const nativePattern = /^native |^\\([^)]+\\)$|^(?:internal[\\\\/]|[\\w\\s]+(?:\\.js)?$)/;\r\n        let activeSession: import(\"inspector\").Session | \"stopping\" | undefined;\r\n        let profilePath = \"./profile.cpupr
+stage3/adapt/93-builtin-imports/proofs/targets.json:4:    "owner": "getNodeSystem",

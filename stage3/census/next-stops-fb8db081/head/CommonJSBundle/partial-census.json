@@ -1,1 +1,112 @@
-[]
+[
+  {
+    "module_format": "CommonJSBundle",
+    "roots": [
+      "/workspace/scratch/next-stops-fb8db081/adapted/src/compiler/_namespaces/ts.moduleSpecifiers.ts"
+    ],
+    "kind": "Refused",
+    "where": "/workspace/scratch/next-stops-fb8db081/adapted/src/compiler/sys.ts:1537:13",
+    "reason": "a function taking PollingInterval seen as one taking number | undefined (tsc relates a method's parameters both ways), so it can be handed what it can't take",
+    "fix": "write the method as a property holding a function (handle: (animal: Animal) => void), which tsc checks one way, or take the wider type in the method (method-signature-style)",
+    "seconds": 23.714975644
+  },
+  {
+    "module_format": "CommonJSBundle",
+    "roots": [
+      "/workspace/scratch/next-stops-fb8db081/adapted/src/compiler/_namespaces/ts.performance.ts"
+    ],
+    "kind": "Refused",
+    "where": "/workspace/scratch/next-stops-fb8db081/adapted/src/compiler/sys.ts:1537:13",
+    "reason": "a function taking PollingInterval seen as one taking number | undefined (tsc relates a method's parameters both ways), so it can be handed what it can't take",
+    "fix": "write the method as a property holding a function (handle: (animal: Animal) => void), which tsc checks one way, or take the wider type in the method (method-signature-style)",
+    "seconds": 24.274343189
+  },
+  {
+    "module_format": "CommonJSBundle",
+    "roots": [
+      "/workspace/scratch/next-stops-fb8db081/adapted/src/compiler/_namespaces/ts.ts"
+    ],
+    "kind": "Refused",
+    "where": "/workspace/scratch/next-stops-fb8db081/adapted/src/compiler/sys.ts:1537:13",
+    "reason": "a function taking PollingInterval seen as one taking number | undefined (tsc relates a method's parameters both ways), so it can be handed what it can't take",
+    "fix": "write the method as a property holding a function (handle: (animal: Animal) => void), which tsc checks one way, or take the wider type in the method (method-signature-style)",
+    "seconds": 25.241371179
+  },
+  {
+    "module_format": "CommonJSBundle",
+    "roots": [
+      "/workspace/scratch/next-stops-fb8db081/adapted/src/compiler/binder.ts"
+    ],
+    "kind": "Refused",
+    "where": "/workspace/scratch/next-stops-fb8db081/adapted/src/compiler/sys.ts:1537:13",
+    "reason": "a function taking PollingInterval seen as one taking number | undefined (tsc relates a method's parameters both ways), so it can be handed what it can't take",
+    "fix": "write the method as a property holding a function (handle: (animal: Animal) => void), which tsc checks one way, or take the wider type in the method (method-signature-style)",
+    "seconds": 22.17459619
+  },
+  {
+    "module_format": "CommonJSBundle",
+    "roots": [
+      "/workspace/scratch/next-stops-fb8db081/adapted/src/compiler/builder.ts"
+    ],
+    "kind": "Refused",
+    "where": "/workspace/scratch/next-stops-fb8db081/adapted/src/compiler/sys.ts:1537:13",
+    "reason": "a function taking PollingInterval seen as one taking number | undefined (tsc relates a method's parameters both ways), so it can be handed what it can't take",
+    "fix": "write the method as a property holding a function (handle: (animal: Animal) => void), which tsc checks one way, or take the wider type in the method (method-signature-style)",
+    "seconds": 21.97155291
+  },
+  {
+    "module_format": "CommonJSBundle",
+    "roots": [
+      "/workspace/scratch/next-stops-fb8db081/adapted/src/compiler/builderPublic.ts"
+    ],
+    "kind": "Refused",
+    "where": "/workspace/scratch/next-stops-fb8db081/adapted/src/compiler/sys.ts:1537:13",
+    "reason": "a function taking PollingInterval seen as one taking number | undefined (tsc relates a method's parameters both ways), so it can be handed what it can't take",
+    "fix": "write the method as a property holding a function (handle: (animal: Animal) => void), which tsc checks one way, or take the wider type in the method (method-signature-style)",
+    "seconds": 20.25486678
+  },
+  {
+    "module_format": "CommonJSBundle",
+    "roots": [
+      "/workspace/scratch/next-stops-fb8db081/adapted/src/compiler/builderState.ts"
+    ],
+    "kind": "Refused",
+    "where": "/workspace/scratch/next-stops-fb8db081/adapted/src/compiler/sys.ts:1537:13",
+    "reason": "a function taking PollingInterval seen as one taking number | undefined (tsc relates a method's parameters both ways), so it can be handed what it can't take",
+    "fix": "write the method as a property holding a function (handle: (animal: Animal) => void), which tsc checks one way, or take the wider type in the method (method-signature-style)",
+    "seconds": 24.748655512
+  },
+  {
+    "module_format": "CommonJSBundle",
+    "roots": [
+      "/workspace/scratch/next-stops-fb8db081/adapted/src/compiler/builderStatePublic.ts"
+    ],
+    "kind": "Refused",
+    "where": "/workspace/scratch/next-stops-fb8db081/adapted/src/compiler/sys.ts:1537:13",
+    "reason": "a function taking PollingInterval seen as one taking number | undefined (tsc relates a method's parameters both ways), so it can be handed what it can't take",
+    "fix": "write the method as a property holding a function (handle: (animal: Animal) => void), which tsc checks one way, or take the wider type in the method (method-signature-style)",
+    "seconds": 25.536798429
+  },
+  {
+    "module_format": "CommonJSBundle",
+    "roots": [
+      "/workspace/scratch/next-stops-fb8db081/adapted/src/compiler/checker.ts"
+    ],
+    "kind": "Refused",
+    "where": "/workspace/scratch/next-stops-fb8db081/adapted/src/compiler/sys.ts:1537:13",
+    "reason": "a function taking PollingInterval seen as one taking number | undefined (tsc relates a method's parameters both ways), so it can be handed what it can't take",
+    "fix": "write the method as a property holding a function (handle: (animal: Animal) => void), which tsc checks one way, or take the wider type in the method (method-signature-style)",
+    "seconds": 23.66275356
+  },
+  {
+    "module_format": "CommonJSBundle",
+    "roots": [
+      "/workspace/scratch/next-stops-fb8db081/adapted/src/compiler/commandLineParser.ts"
+    ],
+    "kind": "Refused",
+    "where": "/workspace/scratch/next-stops-fb8db081/adapted/src/compiler/sys.ts:1537:13",
+    "reason": "a function taking PollingInterval seen as one taking number | undefined (tsc relates a method's parameters both ways), so it can be handed what it can't take",
+    "fix": "write the method as a property holding a function (handle: (animal: Animal) => void), which tsc checks one way, or take the wider type in the method (method-signature-style)",
+    "seconds": 18.449520117
+  }
+]
