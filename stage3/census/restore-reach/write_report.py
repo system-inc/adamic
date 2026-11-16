@@ -114,4 +114,4 @@ retain both receiver expressions and literal-to-source locations, and query ever
 Until then, allocation locations, literal quotations, counts and tsc yes/no decisions remain absent.
 ''']
 lines.append(f"\nInventory: {len(data['roots'])} compiler roots; {len(data['rows'])} restore candidates, of which {sum(r['declaredMethod'] for r in data['rows'])} have an interface/type-literal method declaration in the stock API.\n")
-(here / 'REPORT.md').write_text('\n'.join(lines))
+(here / 'STOPPED.md').write_text('\n'.join(lines))

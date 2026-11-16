@@ -1,0 +1,3824 @@
+{
+  "label": "a source-level trace, not 949a2198's reach analysis; it can over- or under-count where lowering's graph differs, and it names each place it can't follow.",
+  "allocations": {
+    "L1": {
+      "file": "src/compiler/program.ts",
+      "line": 474,
+      "quote": "const compilerHost: CompilerHost = {",
+      "why": "createCompilerHostWorker allocates and returns compilerHost; System-backed methods do not change the receiver allocation."
+    },
+    "L2": {
+      "file": "src/compiler/watch.ts",
+      "line": 755,
+      "quote": "const compilerHost: CompilerHost = {",
+      "why": "createCompilerHostFromProgramHost allocates a new compilerHost; copied or bound methods do not make the input host its receiver."
+    },
+    "L3": {
+      "file": "src/compiler/watch.ts",
+      "line": 844,
+      "quote": "return {",
+      "why": "createProgramHost returns this literal. Watch and solution-host factories extend this same object."
+    },
+    "L4": {
+      "file": "src/compiler/tsbuildPublic.ts",
+      "line": 495,
+      "quote": "const state: SolutionBuilderState<T> = {",
+      "why": "createSolutionBuilderState allocates state and returns it at line 551."
+    }
+  },
+  "outside_boundaries": {
+    "P1": {
+      "file": "src/compiler/program.ts",
+      "line": 1517,
+      "quote": "export function createProgram(_rootNamesOrOptions: readonly string[] | CreateProgramOptions, _options?: CompilerOptions, _host?: CompilerHost, _oldProgram?: Program, _configFileParsingDiagnostics?: readonly Diagnostic[]): Program {",
+      "why": "Public positional createProgram: external _host; createCreateProgramOptions forwards it to options.host."
+    },
+    "P2": {
+      "file": "src/compiler/program.ts",
+      "line": 1501,
+      "quote": "export function createProgram(createProgramOptions: CreateProgramOptions): Program;",
+      "why": "Public options-object createProgram: external createProgramOptions.host (types.ts:7769)."
+    },
+    "P3": {
+      "file": "src/compiler/builder.ts",
+      "line": 1607,
+      "quote": "export function getBuilderCreationParameters(newProgramOrRootNames: Program | readonly string[] | undefined, hostOrOptions: BuilderProgramHost | CompilerOptions | undefined, oldProgramOrHost?: BuilderProgram | CompilerHost, configFileParsingDiagnosticsOrOldProgram?: readonly Diagnostic[] | BuilderProgram, configFileParsingDiagnostics?: readonly Diagnostic[], projectReferences?: readonly ProjectReference[]): BuilderCreationParameters {",
+      "why": "Exported @internal getBuilderCreationParameters: external oldProgramOrHost in the root-name-array branch can supply the host."
+    },
+    "P4": {
+      "file": "src/compiler/builderPublic.ts",
+      "line": 179,
+      "quote": "oldProgramOrHost?: CompilerHost | SemanticDiagnosticsBuilderProgram,",
+      "why": "Public createSemanticDiagnosticsBuilderProgram implementation third argument; root-name-array overload host at line 171."
+    },
+    "P5": {
+      "file": "src/compiler/builderPublic.ts",
+      "line": 218,
+      "quote": "oldProgramOrHost?: CompilerHost | EmitAndSemanticDiagnosticsBuilderProgram,",
+      "why": "Public createEmitAndSemanticDiagnosticsBuilderProgram implementation third argument; root-name-array overload host at line 210."
+    },
+    "P6": {
+      "file": "src/compiler/builderPublic.ts",
+      "line": 256,
+      "quote": "oldProgramOrHost?: CompilerHost | BuilderProgram,",
+      "why": "Public createAbstractBuilder implementation third argument; root-name-array overload host at line 248."
+    },
+    "P7": {
+      "file": "src/compiler/watchPublic.ts",
+      "line": 136,
+      "quote": "host?: CompilerHost;",
+      "why": "Public createIncrementalProgram input.host, destructured at 140-147; if absent, default is L1."
+    },
+    "P8": {
+      "file": "src/compiler/watch.ts",
+      "line": 986,
+      "quote": "export function performIncrementalCompilation(input: IncrementalCompilationOptions): ExitStatus {",
+      "why": "Exported @internal performIncrementalCompilation input.host; declaration watch.ts:978, then forwarded through createIncrementalProgram(input)."
+    },
+    "S1": {
+      "file": "src/compiler/tsbuildPublic.ts",
+      "line": 339,
+      "quote": "export function createSolutionBuilder<T extends BuilderProgram>(host: SolutionBuilderHost<T>, rootNames: readonly string[], defaultOptions: BuildOptions): SolutionBuilder<T> {",
+      "why": "Public createSolutionBuilder host parameter; no allocation is imposed on caller-supplied object."
+    },
+    "S2": {
+      "file": "src/compiler/tsbuildPublic.ts",
+      "line": 343,
+      "quote": "export function createSolutionBuilderWithWatch<T extends BuilderProgram>(host: SolutionBuilderWithWatchHost<T>, rootNames: readonly string[], defaultOptions: BuildOptions, baseWatchOptions?: WatchOptions): SolutionBuilder<T> {",
+      "why": "Public createSolutionBuilderWithWatch host parameter; no allocation is imposed on caller-supplied object."
+    }
+  },
+  "unknown_callback_targets": {
+    "U1": {
+      "file": "src/compiler/watchPublic.ts",
+      "line": 151,
+      "quote": "return createProgram(rootNames, options, host, oldProgram, configFileParsingDiagnostics, projectReferences);",
+      "why": "Unknown external CreateProgram callback target when supplied in IncrementalProgramOptions; known default is builderPublic.ts:215."
+    },
+    "U2": {
+      "file": "src/compiler/watchPublic.ts",
+      "line": 696,
+      "quote": "builderProgram = createProgram(rootFileNames, compilerOptions, compilerHost, builderProgram, configFileParsingDiagnostics, projectReferences);",
+      "why": "Unknown external host.createProgram callback target, captured at line 455; another call at line 642. Known default and CLI wrapper are followed in report."
+    },
+    "U3": {
+      "file": "src/compiler/tsbuildPublic.ts",
+      "line": 1048,
+      "quote": "program = host.createProgram(",
+      "why": "Unknown external host.createProgram callback target; known default and CLI wrapper are followed in report."
+    }
+  },
+  "paths": {
+    "P": [
+      {
+        "file": "src/compiler/program.ts",
+        "line": 4895,
+        "quote": "const originalFileExists = host.compilerHost.fileExists;",
+        "why": "Saved fileExists from helper parameter host.compilerHost; other reads at 4896-4897."
+      },
+      {
+        "file": "src/compiler/program.ts",
+        "line": 1727,
+        "quote": "const { onProgramCreateComplete, fileExists, directoryExists } = updateHostForUseSourceOfProjectReferenceRedirect({",
+        "why": "Only internal caller of redirect helper; argument literal field compilerHost: host at 1728, so follow field rather than count wrapper literal."
+      },
+      {
+        "file": "src/compiler/program.ts",
+        "line": 1579,
+        "quote": "const host = createProgramOptionsHost || createCompilerHost(options);",
+        "why": "Receiver host joins createProgramOptionsHost and default createCompilerHost."
+      },
+      {
+        "file": "src/compiler/program.ts",
+        "line": 1519,
+        "quote": "const { rootNames, options, configFileParsingDiagnostics, projectReferences, typeScriptVersion, host: createProgramOptionsHost } = _createProgramOptions;",
+        "why": "Destructure host: createProgramOptionsHost from options object."
+      },
+      {
+        "file": "src/compiler/program.ts",
+        "line": 1518,
+        "quote": "let _createProgramOptions = isArray(_rootNamesOrOptions) ? createCreateProgramOptions(_rootNamesOrOptions, _options!, _host, _oldProgram, _configFileParsingDiagnostics) : _rootNamesOrOptions; // TODO: GH#18217",
+        "why": "Positional arguments are put into options by createCreateProgramOptions; options-object form retains input."
+      },
+      {
+        "file": "src/compiler/program.ts",
+        "line": 1484,
+        "quote": "host,",
+        "why": "createCreateProgramOptions returns host field unchanged."
+      },
+      {
+        "file": "src/compiler/program.ts",
+        "line": 390,
+        "quote": "return createCompilerHostWorker(options, setParentNodes);",
+        "why": "createCompilerHost returns createCompilerHostWorker: L1."
+      },
+      {
+        "file": "src/compiler/builder.ts",
+        "line": 1620,
+        "quote": "newProgram = createProgram({",
+        "why": "Only builder-to-program call: options.host is oldProgramOrHost as CompilerHost at 1623; cast does not allocate."
+      },
+      {
+        "file": "src/compiler/builderPublic.ts",
+        "line": 186,
+        "quote": "getBuilderCreationParameters(",
+        "why": "Semantic builder forwards all overload arguments to getBuilderCreationParameters."
+      },
+      {
+        "file": "src/compiler/builderPublic.ts",
+        "line": 225,
+        "quote": "getBuilderCreationParameters(",
+        "why": "Emit builder forwards all overload arguments to getBuilderCreationParameters."
+      },
+      {
+        "file": "src/compiler/builderPublic.ts",
+        "line": 261,
+        "quote": "const { newProgram, configFileParsingDiagnostics: newConfigFileParsingDiagnostics } = getBuilderCreationParameters(",
+        "why": "Abstract builder forwards all overload arguments to getBuilderCreationParameters."
+      },
+      {
+        "file": "src/compiler/executeCommandLine.ts",
+        "line": 929,
+        "quote": "const program = createProgram(programOptions);",
+        "why": "Only other internal direct call to program.ts createProgram; programOptions.host is local host at 926."
+      },
+      {
+        "file": "src/compiler/executeCommandLine.ts",
+        "line": 915,
+        "quote": "const host = createCompilerHostWorker(options, /*setParentNodes*/ undefined, sys);",
+        "why": "CLI local host comes from worker: L1."
+      },
+      {
+        "file": "src/compiler/watchPublic.ts",
+        "line": 123,
+        "quote": "const host = createCompilerHostWorker(options, /*setParentNodes*/ undefined, system);",
+        "why": "Incremental-host factory calls worker: L1; return host at 128."
+      },
+      {
+        "file": "src/compiler/watchPublic.ts",
+        "line": 148,
+        "quote": "host = host || createIncrementalCompilerHost(options);",
+        "why": "Incremental program chooses supplied host or incremental-host factory L1."
+      },
+      {
+        "file": "src/compiler/watchPublic.ts",
+        "line": 149,
+        "quote": "createProgram = createProgram || createEmitAndSemanticDiagnosticsBuilderProgram as any as CreateProgram<T>;",
+        "why": "Incremental createProgram chooses supplied callback or default emit builder, through casts that retain function identity."
+      },
+      {
+        "file": "src/compiler/watch.ts",
+        "line": 988,
+        "quote": "const host = input.host || (input.host = createIncrementalCompilerHost(input.options, system));",
+        "why": "performIncrementalCompilation uses input.host or stores incremental factory L1 in input.host."
+      },
+      {
+        "file": "src/compiler/watch.ts",
+        "line": 989,
+        "quote": "const builderProgram = createIncrementalProgram(input);",
+        "why": "Forwards same input to createIncrementalProgram."
+      },
+      {
+        "file": "src/compiler/executeCommandLine.ts",
+        "line": 949,
+        "quote": "const host = createIncrementalCompilerHost(options, sys);",
+        "why": "CLI incremental path creates L1, puts it in host field at 952, and calls public incremental worker at 951."
+      },
+      {
+        "file": "src/compiler/watchPublic.ts",
+        "line": 455,
+        "quote": "const { configFileName, optionsToExtend: optionsToExtendForConfigFile = {}, watchOptionsToExtend, extraFileExtensions, createProgram } = host;",
+        "why": "Watch callback createProgram is destructured from input host; callback entry does not allocate receiver."
+      },
+      {
+        "file": "src/compiler/watchPublic.ts",
+        "line": 492,
+        "quote": "const compilerHost = createCompilerHostFromProgramHost(host, () => compilerOptions!, directoryStructureHost) as CompilerHost & ResolutionCacheHost;",
+        "why": "Watch callback third argument compilerHost is L2."
+      },
+      {
+        "file": "src/compiler/watchPublic.ts",
+        "line": 642,
+        "quote": "builderProgram = createProgram(/*rootNames*/ undefined, /*options*/ undefined, compilerHost, builderProgram, configFileParsingDiagnostics, projectReferences);",
+        "why": "Watch update passes compilerHost as third argument; no new program for undefined rootNames branch of builder."
+      },
+      {
+        "file": "src/compiler/watchPublic.ts",
+        "line": 696,
+        "quote": "builderProgram = createProgram(rootFileNames, compilerOptions, compilerHost, builderProgram, configFileParsingDiagnostics, projectReferences);",
+        "why": "Watch root-name call passes same L2 compilerHost as third argument to builder callback."
+      },
+      {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 434,
+        "quote": "const compilerHost = createCompilerHostFromProgramHost(host, () => state.projectCompilerOptions) as CompilerHost & ReadBuildProgramHost;",
+        "why": "Solution compilerHost is factory L2."
+      },
+      {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 1048,
+        "quote": "program = host.createProgram(",
+        "why": "Solution host.createProgram gets compilerHost as third argument at 1051."
+      },
+      {
+        "file": "src/compiler/watch.ts",
+        "line": 861,
+        "quote": "createProgram: createProgram || createEmitAndSemanticDiagnosticsBuilderProgram as any as CreateProgram<T>,",
+        "why": "Program-host createProgram field defaults to emit builder; custom callback is open."
+      },
+      {
+        "file": "src/compiler/executeCommandLine.ts",
+        "line": 982,
+        "quote": "const compileUsingBuilder = host.createProgram;",
+        "why": "CLI wrapper saves compileUsingBuilder from createProgram field."
+      },
+      {
+        "file": "src/compiler/executeCommandLine.ts",
+        "line": 988,
+        "quote": "return compileUsingBuilder(rootNames, options, host, oldProgram, configFileParsingDiagnostics, projectReferences);",
+        "why": "CLI wrapper forwards host argument unchanged to saved builder callback."
+      }
+    ],
+    "S": [
+      {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 782,
+        "quote": "host.readFile = cache.originalReadFile;",
+        "why": "Restored receiver host is state.host from destructure at 780; same for next four host restores."
+      },
+      {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 745,
+        "quote": "const { compilerHost, host } = state;",
+        "why": "enableCache takes compilerHost and host from same state."
+      },
+      {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 758,
+        "quote": "} = changeCompilerHostLikeToUseCache(",
+        "why": "Cache helper receives host as argument at 759, not state.compilerHost."
+      },
+      {
+        "file": "src/compiler/program.ts",
+        "line": 527,
+        "quote": "const originalReadFile = host.readFile;",
+        "why": "Helper saves host.readFile; other original-method reads at 528-531."
+      },
+      {
+        "file": "src/compiler/program.ts",
+        "line": 625,
+        "quote": "return {",
+        "why": "Helper returns original fields in literal; this cache carrier is not original host."
+      },
+      {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 766,
+        "quote": "state.cache = {",
+        "why": "state.cache stores returned originals, originalGetSourceFile, originalReadFileWithCache."
+      },
+      {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 496,
+        "quote": "host,",
+        "why": "state.host field initialized with host."
+      },
+      {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 429,
+        "quote": "const host = hostOrHostWithWatch as SolutionBuilderHost<T>;",
+        "why": "host is cast alias of hostOrHostWithWatch, without allocating."
+      },
+      {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 2269,
+        "quote": "const state = createSolutionBuilderState(watch, hostOrHostWithWatch, rootNames, options, baseWatchOptions);",
+        "why": "Worker only internal caller of createSolutionBuilderState."
+      },
+      {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 340,
+        "quote": "return createSolutionBuilderWorker(/*watch*/ false, host, rootNames, defaultOptions);",
+        "why": "Public nonwatch builder forwards host unchanged to worker."
+      },
+      {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 344,
+        "quote": "return createSolutionBuilderWorker(/*watch*/ true, host, rootNames, defaultOptions, baseWatchOptions);",
+        "why": "Public watch builder forwards host unchanged to worker."
+      },
+      {
+        "file": "src/compiler/executeCommandLine.ts",
+        "line": 895,
+        "quote": "const builder = createSolutionBuilder(buildHost, projects, buildOptions);",
+        "why": "Only internal nonwatch builder caller passes buildHost."
+      },
+      {
+        "file": "src/compiler/executeCommandLine.ts",
+        "line": 885,
+        "quote": "const buildHost = createSolutionBuilderHost(",
+        "why": "Its buildHost comes from createSolutionBuilderHost."
+      },
+      {
+        "file": "src/compiler/executeCommandLine.ts",
+        "line": 878,
+        "quote": "const builder = createSolutionBuilderWithWatch(buildHost, projects, buildOptions, watchOptions);",
+        "why": "Only internal watch builder caller passes buildHost."
+      },
+      {
+        "file": "src/compiler/executeCommandLine.ts",
+        "line": 855,
+        "quote": "const buildHost = createSolutionBuilderWithWatchHost(",
+        "why": "Its buildHost comes from createSolutionBuilderWithWatchHost."
+      },
+      {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 312,
+        "quote": "const host = createSolutionBuilderHostBase(system, createProgram, reportDiagnostic, reportSolutionBuilderStatus) as SolutionBuilderHost<T>;",
+        "why": "Nonwatch host factory casts/extends base host; return host at 314."
+      },
+      {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 324,
+        "quote": "const host = createSolutionBuilderHostBase(system, createProgram, reportDiagnostic, reportSolutionBuilderStatus) as SolutionBuilderWithWatchHost<T>;",
+        "why": "Watch host factory casts/extends base host; copyProperties at 326, return host at 327."
+      },
+      {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 295,
+        "quote": "const host = createProgramHost(system, createProgram) as SolutionBuilderHostBase<T>;",
+        "why": "Host base uses createProgramHost: L3; return host at 302."
+      }
+    ],
+    "C": [
+      {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 787,
+        "quote": "compilerHost.getSourceFile = cache.originalGetSourceFile;",
+        "why": "Written compilerHost is state.compilerHost, initialized at 519 with factory result from 434."
+      },
+      {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 748,
+        "quote": "const originalGetSourceFile = compilerHost.getSourceFile;",
+        "why": "Saved originalGetSourceFile is compilerHost.getSourceFile on same state field."
+      },
+      {
+        "file": "src/compiler/watchPublic.ts",
+        "line": 658,
+        "quote": "compilerHost.readFile = originalReadFile;",
+        "why": "Watch restores write compilerHost, held const from 492; five sibling writes through 662."
+      },
+      {
+        "file": "src/compiler/watchPublic.ts",
+        "line": 636,
+        "quote": "} = changeCompilerHostLikeToUseCache(compilerHost, toPath);",
+        "why": "Watch helper cache receives compilerHost from same lexical const."
+      },
+      {
+        "file": "src/compiler/watch.ts",
+        "line": 783,
+        "quote": "return compilerHost;",
+        "why": "Compiler-host factory returns its compilerHost literal L2."
+      }
+    ],
+    "D": [
+      {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 788,
+        "quote": "state.readFileWithCache = cache.originalReadFileWithCache;",
+        "why": "Written auxiliary receiver is state itself."
+      },
+      {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 747,
+        "quote": "const originalReadFileWithCache = state.readFileWithCache;",
+        "why": "originalReadFileWithCache saved by reading state.readFileWithCache."
+      },
+      {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 763,
+        "quote": "state.readFileWithCache = readFileWithCache;",
+        "why": "Temporary replacement only changes state.readFileWithCache, not state identity."
+      },
+      {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 551,
+        "quote": "return state;",
+        "why": "State factory returns literal L4."
+      },
+      {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 2269,
+        "quote": "const state = createSolutionBuilderState(watch, hostOrHostWithWatch, rootNames, options, baseWatchOptions);",
+        "why": "Worker captures returned state for public builder operations; return object starts at 2270."
+      },
+      {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 816,
+        "quote": "enableCache(state);",
+        "why": "enableCache caller setupInitialBuild receives same state from builder operations."
+      },
+      {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 2050,
+        "quote": "enableCache(state);",
+        "why": "Other enableCache caller invalidateProject receives same state."
+      },
+      {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 742,
+        "quote": "disableCache(state);",
+        "why": "disableCache may run during enableCache on same state."
+      },
+      {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 1973,
+        "quote": "disableCache(state);",
+        "why": "disableCache caller buildWorker passes same state."
+      },
+      {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 2115,
+        "quote": "disableCache(state);",
+        "why": "disableCache caller buildNextInvalidatedProjectWorker passes same state."
+      },
+      {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 2069,
+        "quote": "const callback = buildNextInvalidatedProject;",
+        "why": "Timer callback alias is buildNextInvalidatedProject."
+      },
+      {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 2072,
+        "quote": "const t2 = state;",
+        "why": "Timer captures state as t2; external timer is not given t2 as a supplied callback argument."
+      },
+      {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 2074,
+        "quote": "return timerHost.setTimeout!(() => callback(t1, t2, t3), timeoutDelay, t1);",
+        "why": "Arrow invokes callback(t1,t2,t3); second argument is captured state."
+      }
+    ],
+    "W-input": [
+      {
+        "file": "src/compiler/watchPublic.ts",
+        "line": 419,
+        "quote": "export function createWatchProgram<T extends BuilderProgram>(host: WatchCompilerHostOfFilesAndCompilerOptionsOrConfigFile<T>): WatchOfFilesAndCompilerOptions<T> | WatchOfConfigFile<T> {",
+        "why": "Public watch entry can receive any compatible host; it is an input to the L2 factory, not its output identity."
+      },
+      {
+        "file": "src/compiler/executeCommandLine.ts",
+        "line": 1031,
+        "quote": "return createWatchProgram(watchCompilerHost);",
+        "why": "Only internal config watch entry caller; watchCompilerHost from 1020."
+      },
+      {
+        "file": "src/compiler/executeCommandLine.ts",
+        "line": 1051,
+        "quote": "return createWatchProgram(watchCompilerHost);",
+        "why": "Only internal file-list watch entry caller; watchCompilerHost from 1042."
+      },
+      {
+        "file": "src/compiler/watchPublic.ts",
+        "line": 370,
+        "quote": "return createWatchCompilerHostOfFilesAndCompilerOptions({",
+        "why": "Public watch-host file-list wrapper delegates to internal factory."
+      },
+      {
+        "file": "src/compiler/watchPublic.ts",
+        "line": 382,
+        "quote": "return createWatchCompilerHostOfConfigFile({",
+        "why": "Public config watch-host wrapper delegates to internal factory."
+      },
+      {
+        "file": "src/compiler/watch.ts",
+        "line": 933,
+        "quote": "const host = createWatchCompilerHost(system, createProgram, diagnosticReporter, reportWatchStatus) as WatchCompilerHostOfConfigFile<T>;",
+        "why": "Config watch-host factory uses private watch createWatchCompilerHost."
+      },
+      {
+        "file": "src/compiler/watch.ts",
+        "line": 964,
+        "quote": "const host = createWatchCompilerHost(system, createProgram, reportDiagnostic || createDiagnosticReporter(system), reportWatchStatus) as WatchCompilerHostOfFilesAndCompilerOptions<T>;",
+        "why": "File-list watch-host factory uses private watch createWatchCompilerHost."
+      },
+      {
+        "file": "src/compiler/watch.ts",
+        "line": 872,
+        "quote": "const result = createProgramHost(system, createProgram) as WatchCompilerHost<T>;",
+        "why": "Private watch-host creator casts/extends createProgramHost L3."
+      },
+      {
+        "file": "src/compiler/watch.ts",
+        "line": 873,
+        "quote": "copyProperties(result, createWatchHost(system, reportWatchStatus));",
+        "why": "Copies watch operations into same L3, not a fresh result."
+      },
+      {
+        "file": "src/compiler/watch.ts",
+        "line": 891,
+        "quote": "return result;",
+        "why": "Returns same L3 result."
+      }
+    ]
+  },
+  "rows": [
+    {
+      "site": {
+        "file": "src/compiler/program.ts",
+        "line": 4957,
+        "text": "host.compilerHost.fileExists = originalFileExists;"
+      },
+      "group": "P",
+      "written_literals": [
+        "L1",
+        "L2"
+      ],
+      "saved_source_literals": [
+        "L1",
+        "L2"
+      ],
+      "outside_boundaries": [
+        "P1",
+        "P2",
+        "P3",
+        "P4",
+        "P5",
+        "P6",
+        "P7",
+        "P8"
+      ],
+      "one_and_same": false
+    },
+    {
+      "site": {
+        "file": "src/compiler/program.ts",
+        "line": 4958,
+        "text": "host.compilerHost.directoryExists = originalDirectoryExists;"
+      },
+      "group": "P",
+      "written_literals": [
+        "L1",
+        "L2"
+      ],
+      "saved_source_literals": [
+        "L1",
+        "L2"
+      ],
+      "outside_boundaries": [
+        "P1",
+        "P2",
+        "P3",
+        "P4",
+        "P5",
+        "P6",
+        "P7",
+        "P8"
+      ],
+      "one_and_same": false
+    },
+    {
+      "site": {
+        "file": "src/compiler/program.ts",
+        "line": 4959,
+        "text": "host.compilerHost.getDirectories = originalGetDirectories;"
+      },
+      "group": "P",
+      "written_literals": [
+        "L1",
+        "L2"
+      ],
+      "saved_source_literals": [
+        "L1",
+        "L2"
+      ],
+      "outside_boundaries": [
+        "P1",
+        "P2",
+        "P3",
+        "P4",
+        "P5",
+        "P6",
+        "P7",
+        "P8"
+      ],
+      "one_and_same": false
+    },
+    {
+      "site": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 782,
+        "text": "host.readFile = cache.originalReadFile;"
+      },
+      "group": "S",
+      "written_literals": [
+        "L3"
+      ],
+      "saved_source_literals": [
+        "L3"
+      ],
+      "outside_boundaries": [
+        "S1",
+        "S2"
+      ],
+      "one_and_same": false
+    },
+    {
+      "site": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 783,
+        "text": "host.fileExists = cache.originalFileExists;"
+      },
+      "group": "S",
+      "written_literals": [
+        "L3"
+      ],
+      "saved_source_literals": [
+        "L3"
+      ],
+      "outside_boundaries": [
+        "S1",
+        "S2"
+      ],
+      "one_and_same": false
+    },
+    {
+      "site": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 784,
+        "text": "host.directoryExists = cache.originalDirectoryExists;"
+      },
+      "group": "S",
+      "written_literals": [
+        "L3"
+      ],
+      "saved_source_literals": [
+        "L3"
+      ],
+      "outside_boundaries": [
+        "S1",
+        "S2"
+      ],
+      "one_and_same": false
+    },
+    {
+      "site": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 785,
+        "text": "host.createDirectory = cache.originalCreateDirectory;"
+      },
+      "group": "S",
+      "written_literals": [
+        "L3"
+      ],
+      "saved_source_literals": [
+        "L3"
+      ],
+      "outside_boundaries": [
+        "S1",
+        "S2"
+      ],
+      "one_and_same": false
+    },
+    {
+      "site": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 786,
+        "text": "host.writeFile = cache.originalWriteFile;"
+      },
+      "group": "S",
+      "written_literals": [
+        "L3"
+      ],
+      "saved_source_literals": [
+        "L3"
+      ],
+      "outside_boundaries": [
+        "S1",
+        "S2"
+      ],
+      "one_and_same": false
+    },
+    {
+      "site": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 787,
+        "text": "compilerHost.getSourceFile = cache.originalGetSourceFile;"
+      },
+      "group": "C",
+      "written_literals": [
+        "L2"
+      ],
+      "saved_source_literals": [
+        "L2"
+      ],
+      "outside_boundaries": [],
+      "one_and_same": true
+    },
+    {
+      "site": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 788,
+        "text": "state.readFileWithCache = cache.originalReadFileWithCache;"
+      },
+      "group": "D",
+      "written_literals": [
+        "L4"
+      ],
+      "saved_source_literals": [
+        "L4"
+      ],
+      "outside_boundaries": [],
+      "one_and_same": true
+    },
+    {
+      "site": {
+        "file": "src/compiler/watchPublic.ts",
+        "line": 658,
+        "text": "compilerHost.readFile = originalReadFile;"
+      },
+      "group": "C",
+      "written_literals": [
+        "L2"
+      ],
+      "saved_source_literals": [
+        "L2"
+      ],
+      "outside_boundaries": [],
+      "one_and_same": true
+    },
+    {
+      "site": {
+        "file": "src/compiler/watchPublic.ts",
+        "line": 659,
+        "text": "compilerHost.fileExists = originalFileExists;"
+      },
+      "group": "C",
+      "written_literals": [
+        "L2"
+      ],
+      "saved_source_literals": [
+        "L2"
+      ],
+      "outside_boundaries": [],
+      "one_and_same": true
+    },
+    {
+      "site": {
+        "file": "src/compiler/watchPublic.ts",
+        "line": 660,
+        "text": "compilerHost.directoryExists = originalDirectoryExists;"
+      },
+      "group": "C",
+      "written_literals": [
+        "L2"
+      ],
+      "saved_source_literals": [
+        "L2"
+      ],
+      "outside_boundaries": [],
+      "one_and_same": true
+    },
+    {
+      "site": {
+        "file": "src/compiler/watchPublic.ts",
+        "line": 661,
+        "text": "compilerHost.createDirectory = originalCreateDirectory;"
+      },
+      "group": "C",
+      "written_literals": [
+        "L2"
+      ],
+      "saved_source_literals": [
+        "L2"
+      ],
+      "outside_boundaries": [],
+      "one_and_same": true
+    },
+    {
+      "site": {
+        "file": "src/compiler/watchPublic.ts",
+        "line": 662,
+        "text": "compilerHost.writeFile = originalWriteFile!;"
+      },
+      "group": "C",
+      "written_literals": [
+        "L2"
+      ],
+      "saved_source_literals": [
+        "L2"
+      ],
+      "outside_boundaries": [],
+      "one_and_same": true
+    }
+  ],
+  "state_functions": 61,
+  "state_calls": [
+    {
+      "caller": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 436,
+        "text": "compilerHost.getParsedCommandLine = fileName => parseConfigFile(state, fileName as ResolvedConfigFileName, toResolvedConfigFilePath(state, fileName as ResolvedConfigFileName));"
+      },
+      "target": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 577,
+        "text": "function parseConfigFile<T extends BuilderProgram>(state: SolutionBuilderState<T>, configFileName: ResolvedConfigFileName, configFilePath: ResolvedConfigFilePath): ParsedCommandLine | undefined {"
+      },
+      "state_argument": "state"
+    },
+    {
+      "caller": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 436,
+        "text": "compilerHost.getParsedCommandLine = fileName => parseConfigFile(state, fileName as ResolvedConfigFileName, toResolvedConfigFilePath(state, fileName as ResolvedConfigFileName));"
+      },
+      "target": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 558,
+        "text": "function toResolvedConfigFilePath<T extends BuilderProgram>(state: SolutionBuilderState<T>, fileName: ResolvedConfigFileName): ResolvedConfigFilePath {"
+      },
+      "state_argument": "state"
+    },
+    {
+      "caller": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 491,
+        "text": "compilerHost.getBuildInfo = (fileName, configFilePath) => getBuildInfo(state, fileName, toResolvedConfigFilePath(state, configFilePath as ResolvedConfigFileName), /*modifiedTime*/ undefined);"
+      },
+      "target": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 1444,
+        "text": "function getBuildInfo<T extends BuilderProgram>(state: SolutionBuilderState<T>, buildInfoPath: string, resolvedConfigPath: ResolvedConfigFilePath, modifiedTime: Date | undefined): BuildInfo | undefined {"
+      },
+      "state_argument": "state"
+    },
+    {
+      "caller": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 491,
+        "text": "compilerHost.getBuildInfo = (fileName, configFilePath) => getBuildInfo(state, fileName, toResolvedConfigFilePath(state, configFilePath as ResolvedConfigFileName), /*modifiedTime*/ undefined);"
+      },
+      "target": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 558,
+        "text": "function toResolvedConfigFilePath<T extends BuilderProgram>(state: SolutionBuilderState<T>, fileName: ResolvedConfigFileName): ResolvedConfigFilePath {"
+      },
+      "state_argument": "state"
+    },
+    {
+      "caller": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 563,
+        "text": "const resolvedPath = toPath(state, fileName) as ResolvedConfigFilePath;"
+      },
+      "target": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 554,
+        "text": "function toPath<T extends BuilderProgram>(state: SolutionBuilderState<T>, fileName: string) {"
+      },
+      "state_argument": "state"
+    },
+    {
+      "caller": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 622,
+        "text": "const projPath = toResolvedConfigFilePath(state, configFileName);"
+      },
+      "target": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 558,
+        "text": "function toResolvedConfigFilePath<T extends BuilderProgram>(state: SolutionBuilderState<T>, fileName: ResolvedConfigFileName): ResolvedConfigFilePath {"
+      },
+      "state_argument": "state"
+    },
+    {
+      "caller": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 640,
+        "text": "const parsed = parseConfigFile(state, configFileName, projPath);"
+      },
+      "target": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 577,
+        "text": "function parseConfigFile<T extends BuilderProgram>(state: SolutionBuilderState<T>, configFileName: ResolvedConfigFileName, configFilePath: ResolvedConfigFilePath): ParsedCommandLine | undefined {"
+      },
+      "state_argument": "state"
+    },
+    {
+      "caller": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 643,
+        "text": "const resolvedRefPath = resolveProjectName(state, ref.path);"
+      },
+      "target": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 603,
+        "text": "function resolveProjectName<T extends BuilderProgram>(state: SolutionBuilderState<T>, name: string): ResolvedConfigFileName {"
+      },
+      "state_argument": "state"
+    },
+    {
+      "caller": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 655,
+        "text": "return state.buildOrder || createStateBuildOrder(state);"
+      },
+      "target": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 658,
+        "text": "function createStateBuildOrder<T extends BuilderProgram>(state: SolutionBuilderState<T>) {"
+      },
+      "state_argument": "state"
+    },
+    {
+      "caller": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 659,
+        "text": "const buildOrder = createBuildOrder(state, state.rootNames.map(f => resolveProjectName(state, f)));"
+      },
+      "target": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 607,
+        "text": "function createBuildOrder<T extends BuilderProgram>(state: SolutionBuilderState<T>, roots: readonly ResolvedConfigFileName[]): AnyBuildOrder {"
+      },
+      "state_argument": "state"
+    },
+    {
+      "caller": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 659,
+        "text": "const buildOrder = createBuildOrder(state, state.rootNames.map(f => resolveProjectName(state, f)));"
+      },
+      "target": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 603,
+        "text": "function resolveProjectName<T extends BuilderProgram>(state: SolutionBuilderState<T>, name: string): ResolvedConfigFileName {"
+      },
+      "state_argument": "state"
+    },
+    {
+      "caller": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 667,
+        "text": "resolved => toResolvedConfigFilePath(state, resolved),"
+      },
+      "target": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 558,
+        "text": "function toResolvedConfigFilePath<T extends BuilderProgram>(state: SolutionBuilderState<T>, fileName: ResolvedConfigFileName): ResolvedConfigFilePath {"
+      },
+      "state_argument": "state"
+    },
+    {
+      "caller": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 722,
+        "text": "const resolvedProject = project && resolveProjectName(state, project);"
+      },
+      "target": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 603,
+        "text": "function resolveProjectName<T extends BuilderProgram>(state: SolutionBuilderState<T>, name: string): ResolvedConfigFileName {"
+      },
+      "state_argument": "state"
+    },
+    {
+      "caller": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 723,
+        "text": "const buildOrderFromState = getBuildOrder(state);"
+      },
+      "target": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 654,
+        "text": "function getBuildOrder<T extends BuilderProgram>(state: SolutionBuilderState<T>) {"
+      },
+      "state_argument": "state"
+    },
+    {
+      "caller": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 726,
+        "text": "const projectPath = toResolvedConfigFilePath(state, resolvedProject);"
+      },
+      "target": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 558,
+        "text": "function toResolvedConfigFilePath<T extends BuilderProgram>(state: SolutionBuilderState<T>, fileName: ResolvedConfigFileName): ResolvedConfigFilePath {"
+      },
+      "state_argument": "state"
+    },
+    {
+      "caller": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 729,
+        "text": "configFileName => toResolvedConfigFilePath(state, configFileName) === projectPath,"
+      },
+      "target": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 558,
+        "text": "function toResolvedConfigFilePath<T extends BuilderProgram>(state: SolutionBuilderState<T>, fileName: ResolvedConfigFileName): ResolvedConfigFilePath {"
+      },
+      "state_argument": "state"
+    },
+    {
+      "caller": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 733,
+        "text": "const buildOrder = resolvedProject ? createBuildOrder(state, [resolvedProject]) as BuildOrder : buildOrderFromState;"
+      },
+      "target": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 607,
+        "text": "function createBuildOrder<T extends BuilderProgram>(state: SolutionBuilderState<T>, roots: readonly ResolvedConfigFileName[]): AnyBuildOrder {"
+      },
+      "state_argument": "state"
+    },
+    {
+      "caller": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 742,
+        "text": "disableCache(state);"
+      },
+      "target": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 777,
+        "text": "function disableCache<T extends BuilderProgram>(state: SolutionBuilderState<T>) {"
+      },
+      "state_argument": "state"
+    },
+    {
+      "caller": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 760,
+        "text": "fileName => toPath(state, fileName),"
+      },
+      "target": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 554,
+        "text": "function toPath<T extends BuilderProgram>(state: SolutionBuilderState<T>, fileName: string) {"
+      },
+      "state_argument": "state"
+    },
+    {
+      "caller": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 815,
+        "text": "if (state.options.watch) reportWatchStatus(state, Diagnostics.Starting_compilation_in_watch_mode);"
+      },
+      "target": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 2298,
+        "text": "function reportWatchStatus<T extends BuilderProgram>(state: SolutionBuilderState<T>, message: DiagnosticMessage, ...args: DiagnosticArguments) {"
+      },
+      "state_argument": "state"
+    },
+    {
+      "caller": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 816,
+        "text": "enableCache(state);"
+      },
+      "target": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 740,
+        "text": "function enableCache<T extends BuilderProgram>(state: SolutionBuilderState<T>) {"
+      },
+      "state_argument": "state"
+    },
+    {
+      "caller": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 817,
+        "text": "const buildOrder = getBuildOrderFromAnyBuildOrder(getBuildOrder(state));"
+      },
+      "target": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 654,
+        "text": "function getBuildOrder<T extends BuilderProgram>(state: SolutionBuilderState<T>) {"
+      },
+      "state_argument": "state"
+    },
+    {
+      "caller": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 820,
+        "text": "toResolvedConfigFilePath(state, configFileName),"
+      },
+      "target": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 558,
+        "text": "function toResolvedConfigFilePath<T extends BuilderProgram>(state: SolutionBuilderState<T>, fileName: ResolvedConfigFileName): ResolvedConfigFilePath {"
+      },
+      "state_argument": "state"
+    },
+    {
+      "caller": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 911,
+        "text": "updateOutputTimestamps(state, config, projectPath);"
+      },
+      "target": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 1878,
+        "text": "function updateOutputTimestamps<T extends BuilderProgram>(state: SolutionBuilderState<T>, proj: ParsedCommandLine, resolvedPath: ResolvedConfigFilePath) {"
+      },
+      "state_argument": "state"
+    },
+    {
+      "caller": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 916,
+        "text": "updateOutputTimestamps(state, config, projectPath);"
+      },
+      "target": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 1878,
+        "text": "function updateOutputTimestamps<T extends BuilderProgram>(state: SolutionBuilderState<T>, proj: ParsedCommandLine, resolvedPath: ResolvedConfigFilePath) {"
+      },
+      "state_argument": "state"
+    },
+    {
+      "caller": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 919,
+        "text": "return doneInvalidatedProject(state, projectPath);"
+      },
+      "target": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 885,
+        "text": "function doneInvalidatedProject<T extends BuilderProgram>("
+      },
+      "state_argument": "state"
+    },
+    {
+      "caller": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 1009,
+        "text": "return doneInvalidatedProject(state, projectPath);"
+      },
+      "target": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 885,
+        "text": "function doneInvalidatedProject<T extends BuilderProgram>("
+      },
+      "state_argument": "state"
+    },
+    {
+      "caller": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 1025,
+        "text": "reportStatus(state, Diagnostics.A_non_dry_build_would_build_project_0, project);"
+      },
+      "target": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 2294,
+        "text": "function reportStatus<T extends BuilderProgram>(state: SolutionBuilderState<T>, message: DiagnosticMessage, ...args: DiagnosticArguments) {"
+      },
+      "state_argument": "state"
+    },
+    {
+      "caller": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 1031,
+        "text": "if (state.options.verbose) reportStatus(state, Diagnostics.Building_project_0, project);"
+      },
+      "target": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 2294,
+        "text": "function reportStatus<T extends BuilderProgram>(state: SolutionBuilderState<T>, message: DiagnosticMessage, ...args: DiagnosticArguments) {"
+      },
+      "state_argument": "state"
+    },
+    {
+      "caller": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 1034,
+        "text": "reportAndStoreErrors(state, projectPath, getConfigFileParsingDiagnostics(config));"
+      },
+      "target": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 2306,
+        "text": "function reportAndStoreErrors<T extends BuilderProgram>(state: SolutionBuilderState<T>, proj: ResolvedConfigFilePath, errors: readonly Diagnostic[]) {"
+      },
+      "state_argument": "state"
+    },
+    {
+      "caller": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 1052,
+        "text": "getOldProgram(state, projectPath, config),"
+      },
+      "target": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 1350,
+        "text": "function getOldProgram<T extends BuilderProgram>({ options, builderPrograms, compilerHost }: SolutionBuilderState<T>, proj: ResolvedConfigFilePath, parsed: ParsedCommandLine) {"
+      },
+      "state_argument": "state"
+    },
+    {
+      "caller": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 1094,
+        "text": "const path = toPath(state, name);"
+      },
+      "target": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 554,
+        "text": "function toPath<T extends BuilderProgram>(state: SolutionBuilderState<T>, fileName: string) {"
+      },
+      "state_argument": "state"
+    },
+    {
+      "caller": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 1095,
+        "text": "emittedOutputs.set(toPath(state, name), name);"
+      },
+      "target": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 554,
+        "text": "function toPath<T extends BuilderProgram>(state: SolutionBuilderState<T>, fileName: string) {"
+      },
+      "state_argument": "state"
+    },
+    {
+      "caller": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 1100,
+        "text": "const existing = getBuildInfoCacheEntry(state, name, projectPath);"
+      },
+      "target": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 1438,
+        "text": "function getBuildInfoCacheEntry<T extends BuilderProgram>(state: SolutionBuilderState<T>, buildInfoPath: string, resolvedConfigPath: ResolvedConfigFilePath) {"
+      },
+      "state_argument": "state"
+    },
+    {
+      "caller": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 1108,
+        "text": "path: toPath(state, name),"
+      },
+      "target": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 554,
+        "text": "function toPath<T extends BuilderProgram>(state: SolutionBuilderState<T>, fileName: string) {"
+      },
+      "state_argument": "state"
+    },
+    {
+      "caller": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 1127,
+        "text": "(outputTimeStampMap ||= getOutputTimeStampMap(state, projectPath)!).set(path, now ||= getCurrentTime(state.host));"
+      },
+      "target": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 1430,
+        "text": "function getOutputTimeStampMap<T extends BuilderProgram>(state: SolutionBuilderState<T>, resolvedConfigFilePath: ResolvedConfigFilePath) {"
+      },
+      "state_argument": "state"
+    },
+    {
+      "caller": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 1140,
+        "text": "updateOutputTimestampsWorker(state, config, projectPath, Diagnostics.Updating_unchanged_output_timestamps_of_project_0, emittedOutputs);"
+      },
+      "target": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 1815,
+        "text": "function updateOutputTimestampsWorker<T extends BuilderProgram>("
+      },
+      "state_argument": "state"
+    },
+    {
+      "caller": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 1156,
+        "text": "afterProgramDone(state, program);"
+      },
+      "target": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 1357,
+        "text": "function afterProgramDone<T extends BuilderProgram>("
+      },
+      "state_argument": "state"
+    },
+    {
+      "caller": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 1179,
+        "text": "queueReferencingProjects(state, project, projectPath, projectIndex, config, buildOrder, Debug.checkDefined(buildResult));"
+      },
+      "target": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 1889,
+        "text": "function queueReferencingProjects<T extends BuilderProgram>("
+      },
+      "state_argument": "state"
+    },
+    {
+      "caller": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 1213,
+        "text": "const projectPath = toResolvedConfigFilePath(state, project);"
+      },
+      "target": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 558,
+        "text": "function toResolvedConfigFilePath<T extends BuilderProgram>(state: SolutionBuilderState<T>, fileName: ResolvedConfigFileName): ResolvedConfigFilePath {"
+      },
+      "state_argument": "state"
+    },
+    {
+      "caller": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 1219,
+        "text": "reportBuildQueue(state, buildOrder);"
+      },
+      "target": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 2354,
+        "text": "function reportBuildQueue<T extends BuilderProgram>(state: SolutionBuilderState<T>, buildQueue: readonly ResolvedConfigFileName[]) {"
+      },
+      "state_argument": "state"
+    },
+    {
+      "caller": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 1222,
+        "text": "const config = parseConfigFile(state, project, projectPath);"
+      },
+      "target": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 577,
+        "text": "function parseConfigFile<T extends BuilderProgram>(state: SolutionBuilderState<T>, configFileName: ResolvedConfigFileName, configFilePath: ResolvedConfigFilePath): ParsedCommandLine | undefined {"
+      },
+      "state_argument": "state"
+    },
+    {
+      "caller": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 1224,
+        "text": "reportParseConfigFileDiagnostic(state, projectPath);"
+      },
+      "target": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 2314,
+        "text": "function reportParseConfigFileDiagnostic<T extends BuilderProgram>(state: SolutionBuilderState<T>, proj: ResolvedConfigFilePath) {"
+      },
+      "state_argument": "state"
+    },
+    {
+      "caller": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 1230,
+        "text": "watchConfigFile(state, project, projectPath, config);"
+      },
+      "target": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 2119,
+        "text": "function watchConfigFile<T extends BuilderProgram>(state: SolutionBuilderState<T>, resolved: ResolvedConfigFileName, resolvedPath: ResolvedConfigFilePath, parsed: ParsedCommandLine | undefined) {"
+      },
+      "state_argument": "state"
+    },
+    {
+      "caller": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 1231,
+        "text": "watchExtendedConfigFiles(state, projectPath, config);"
+      },
+      "target": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 2135,
+        "text": "function watchExtendedConfigFiles<T extends BuilderProgram>(state: SolutionBuilderState<T>, resolvedPath: ResolvedConfigFilePath, parsed: ParsedCommandLine | undefined) {"
+      },
+      "state_argument": "state"
+    },
+    {
+      "caller": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 1232,
+        "text": "watchWildCardDirectories(state, project, projectPath, config);"
+      },
+      "target": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 2153,
+        "text": "function watchWildCardDirectories<T extends BuilderProgram>(state: SolutionBuilderState<T>, resolved: ResolvedConfigFileName, resolvedPath: ResolvedConfigFilePath, parsed: ParsedCommandLine) {"
+      },
+      "state_argument": "state"
+    },
+    {
+      "caller": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 1233,
+        "text": "watchInputFiles(state, project, projectPath, config);"
+      },
+      "target": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 2187,
+        "text": "function watchInputFiles<T extends BuilderProgram>(state: SolutionBuilderState<T>, resolved: ResolvedConfigFileName, resolvedPath: ResolvedConfigFilePath, parsed: ParsedCommandLine) {"
+      },
+      "state_argument": "state"
+    },
+    {
+      "caller": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 1234,
+        "text": "watchPackageJsonFiles(state, project, projectPath, config);"
+      },
+      "target": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 2208,
+        "text": "function watchPackageJsonFiles<T extends BuilderProgram>(state: SolutionBuilderState<T>, resolved: ResolvedConfigFileName, resolvedPath: ResolvedConfigFilePath, parsed: ParsedCommandLine) {"
+      },
+      "state_argument": "state"
+    },
+    {
+      "caller": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 1246,
+        "text": "watchInputFiles(state, project, projectPath, config);"
+      },
+      "target": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 2187,
+        "text": "function watchInputFiles<T extends BuilderProgram>(state: SolutionBuilderState<T>, resolved: ResolvedConfigFileName, resolvedPath: ResolvedConfigFilePath, parsed: ParsedCommandLine) {"
+      },
+      "state_argument": "state"
+    },
+    {
+      "caller": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 1247,
+        "text": "watchPackageJsonFiles(state, project, projectPath, config);"
+      },
+      "target": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 2208,
+        "text": "function watchPackageJsonFiles<T extends BuilderProgram>(state: SolutionBuilderState<T>, resolved: ResolvedConfigFileName, resolvedPath: ResolvedConfigFilePath, parsed: ParsedCommandLine) {"
+      },
+      "state_argument": "state"
+    },
+    {
+      "caller": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 1250,
+        "text": "const status = getUpToDateStatus(state, config, projectPath);"
+      },
+      "target": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 1797,
+        "text": "function getUpToDateStatus<T extends BuilderProgram>(state: SolutionBuilderState<T>, project: ParsedCommandLine | undefined, resolvedPath: ResolvedConfigFilePath): UpToDateStatus {"
+      },
+      "state_argument": "state"
+    },
+    {
+      "caller": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 1253,
+        "text": "verboseReportProjectStatus(state, project, status);"
+      },
+      "target": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 2496,
+        "text": "function verboseReportProjectStatus<T extends BuilderProgram>(state: SolutionBuilderState<T>, configFileName: string, status: UpToDateStatus) {"
+      },
+      "state_argument": "state"
+    },
+    {
+      "caller": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 1254,
+        "text": "reportAndStoreErrors(state, projectPath, getConfigFileParsingDiagnostics(config));"
+      },
+      "target": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 2306,
+        "text": "function reportAndStoreErrors<T extends BuilderProgram>(state: SolutionBuilderState<T>, proj: ResolvedConfigFilePath, errors: readonly Diagnostic[]) {"
+      },
+      "state_argument": "state"
+    },
+    {
+      "caller": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 1259,
+        "text": "reportStatus(state, Diagnostics.Project_0_is_up_to_date, project);"
+      },
+      "target": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 2294,
+        "text": "function reportStatus<T extends BuilderProgram>(state: SolutionBuilderState<T>, message: DiagnosticMessage, ...args: DiagnosticArguments) {"
+      },
+      "state_argument": "state"
+    },
+    {
+      "caller": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 1265,
+        "text": "reportAndStoreErrors(state, projectPath, getConfigFileParsingDiagnostics(config));"
+      },
+      "target": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 2306,
+        "text": "function reportAndStoreErrors<T extends BuilderProgram>(state: SolutionBuilderState<T>, proj: ResolvedConfigFilePath, errors: readonly Diagnostic[]) {"
+      },
+      "state_argument": "state"
+    },
+    {
+      "caller": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 1278,
+        "text": "verboseReportProjectStatus(state, project, status);"
+      },
+      "target": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 2496,
+        "text": "function verboseReportProjectStatus<T extends BuilderProgram>(state: SolutionBuilderState<T>, configFileName: string, status: UpToDateStatus) {"
+      },
+      "state_argument": "state"
+    },
+    {
+      "caller": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 1279,
+        "text": "reportAndStoreErrors(state, projectPath, getConfigFileParsingDiagnostics(config));"
+      },
+      "target": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 2306,
+        "text": "function reportAndStoreErrors<T extends BuilderProgram>(state: SolutionBuilderState<T>, proj: ResolvedConfigFilePath, errors: readonly Diagnostic[]) {"
+      },
+      "state_argument": "state"
+    },
+    {
+      "caller": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 1282,
+        "text": "reportStatus("
+      },
+      "target": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 2294,
+        "text": "function reportStatus<T extends BuilderProgram>(state: SolutionBuilderState<T>, message: DiagnosticMessage, ...args: DiagnosticArguments) {"
+      },
+      "state_argument": "state"
+    },
+    {
+      "caller": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 1295,
+        "text": "verboseReportProjectStatus(state, project, status);"
+      },
+      "target": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 2496,
+        "text": "function verboseReportProjectStatus<T extends BuilderProgram>(state: SolutionBuilderState<T>, configFileName: string, status: UpToDateStatus) {"
+      },
+      "state_argument": "state"
+    },
+    {
+      "caller": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 1296,
+        "text": "reportAndStoreErrors(state, projectPath, getConfigFileParsingDiagnostics(config));"
+      },
+      "target": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 2306,
+        "text": "function reportAndStoreErrors<T extends BuilderProgram>(state: SolutionBuilderState<T>, proj: ResolvedConfigFilePath, errors: readonly Diagnostic[]) {"
+      },
+      "state_argument": "state"
+    },
+    {
+      "caller": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 1320,
+        "text": "verboseReportProjectStatus(state, info.project, info.status);"
+      },
+      "target": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 2496,
+        "text": "function verboseReportProjectStatus<T extends BuilderProgram>(state: SolutionBuilderState<T>, configFileName: string, status: UpToDateStatus) {"
+      },
+      "state_argument": "state"
+    },
+    {
+      "caller": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 1322,
+        "text": "createBuildOrUpdateInvalidedProject("
+      },
+      "target": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 931,
+        "text": "function createBuildOrUpdateInvalidedProject<T extends BuilderProgram>("
+      },
+      "state_argument": "state"
+    },
+    {
+      "caller": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 1331,
+        "text": "createUpdateOutputFileStampsProject("
+      },
+      "target": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 895,
+        "text": "function createUpdateOutputFileStampsProject<T extends BuilderProgram>("
+      },
+      "state_argument": "state"
+    },
+    {
+      "caller": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 1345,
+        "text": "const info = getNextInvalidatedProjectCreateInfo(state, buildOrder, reportQueue);"
+      },
+      "target": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 1202,
+        "text": "function getNextInvalidatedProjectCreateInfo<T extends BuilderProgram>("
+      },
+      "state_argument": "state"
+    },
+    {
+      "caller": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 1347,
+        "text": "return createInvalidatedProjectWithInfo(state, info, buildOrder);"
+      },
+      "target": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 1315,
+        "text": "function createInvalidatedProjectWithInfo<T extends BuilderProgram>("
+      },
+      "state_argument": "state"
+    },
+    {
+      "caller": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 1375,
+        "text": "const path = toPath(state, fileName);"
+      },
+      "target": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 554,
+        "text": "function toPath<T extends BuilderProgram>(state: SolutionBuilderState<T>, fileName: string) {"
+      },
+      "state_argument": "state"
+    },
+    {
+      "caller": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 1393,
+        "text": "const path = toPath(state, file);"
+      },
+      "target": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 554,
+        "text": "function toPath<T extends BuilderProgram>(state: SolutionBuilderState<T>, fileName: string) {"
+      },
+      "state_argument": "state"
+    },
+    {
+      "caller": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 1439,
+        "text": "const path = toPath(state, buildInfoPath);"
+      },
+      "target": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 554,
+        "text": "function toPath<T extends BuilderProgram>(state: SolutionBuilderState<T>, fileName: string) {"
+      },
+      "state_argument": "state"
+    },
+    {
+      "caller": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 1445,
+        "text": "const path = toPath(state, buildInfoPath);"
+      },
+      "target": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 554,
+        "text": "function toPath<T extends BuilderProgram>(state: SolutionBuilderState<T>, fileName: string) {"
+      },
+      "state_argument": "state"
+    },
+    {
+      "caller": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 1458,
+        "text": "const tsconfigTime = getModifiedTime(state, configFile);"
+      },
+      "target": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 1374,
+        "text": "function getModifiedTime<T extends BuilderProgram>(state: SolutionBuilderState<T>, fileName: string): Date {"
+      },
+      "state_argument": "state"
+    },
+    {
+      "caller": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 1479,
+        "text": "const resolvedRefPath = toResolvedConfigFilePath(state, resolvedRef);"
+      },
+      "target": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 558,
+        "text": "function toResolvedConfigFilePath<T extends BuilderProgram>(state: SolutionBuilderState<T>, fileName: ResolvedConfigFileName): ResolvedConfigFilePath {"
+      },
+      "state_argument": "state"
+    },
+    {
+      "caller": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 1480,
+        "text": "const resolvedConfig = parseConfigFile(state, resolvedRef, resolvedRefPath)!;"
+      },
+      "target": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 577,
+        "text": "function parseConfigFile<T extends BuilderProgram>(state: SolutionBuilderState<T>, configFileName: ResolvedConfigFileName, configFilePath: ResolvedConfigFilePath): ParsedCommandLine | undefined {"
+      },
+      "state_argument": "state"
+    },
+    {
+      "caller": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 1481,
+        "text": "const refStatus = getUpToDateStatus(state, resolvedConfig, resolvedRefPath);"
+      },
+      "target": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 1797,
+        "text": "function getUpToDateStatus<T extends BuilderProgram>(state: SolutionBuilderState<T>, project: ParsedCommandLine | undefined, resolvedPath: ResolvedConfigFilePath): UpToDateStatus {"
+      },
+      "state_argument": "state"
+    },
+    {
+      "caller": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 1514,
+        "text": "let buildInfoCacheEntry = getBuildInfoCacheEntry(state, buildInfoPath, resolvedPath);"
+      },
+      "target": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 1438,
+        "text": "function getBuildInfoCacheEntry<T extends BuilderProgram>(state: SolutionBuilderState<T>, buildInfoPath: string, resolvedConfigPath: ResolvedConfigFilePath) {"
+      },
+      "state_argument": "state"
+    },
+    {
+      "caller": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 1519,
+        "text": "path: toPath(state, buildInfoPath),"
+      },
+      "target": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 554,
+        "text": "function toPath<T extends BuilderProgram>(state: SolutionBuilderState<T>, fileName: string) {"
+      },
+      "state_argument": "state"
+    },
+    {
+      "caller": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 1530,
+        "text": "const buildInfo = getBuildInfo(state, buildInfoPath, resolvedPath, buildInfoTime);"
+      },
+      "target": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 1444,
+        "text": "function getBuildInfo<T extends BuilderProgram>(state: SolutionBuilderState<T>, buildInfoPath: string, resolvedConfigPath: ResolvedConfigFilePath, modifiedTime: Date | undefined): BuildInfo | undefined {"
+      },
+      "state_argument": "state"
+    },
+    {
+      "caller": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 1622,
+        "text": "const inputTime = getModifiedTime(state, inputFile);"
+      },
+      "target": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 1374,
+        "text": "function getModifiedTime<T extends BuilderProgram>(state: SolutionBuilderState<T>, fileName: string): Date {"
+      },
+      "state_argument": "state"
+    },
+    {
+      "caller": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 1630,
+        "text": "const inputPath = toPath(state, inputFile);"
+      },
+      "target": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 554,
+        "text": "function toPath<T extends BuilderProgram>(state: SolutionBuilderState<T>, fileName: string) {"
+      },
+      "state_argument": "state"
+    },
+    {
+      "caller": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 1690,
+        "text": "const outputTimeStampMap = getOutputTimeStampMap(state, resolvedPath);"
+      },
+      "target": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 1430,
+        "text": "function getOutputTimeStampMap<T extends BuilderProgram>(state: SolutionBuilderState<T>, resolvedConfigFilePath: ResolvedConfigFilePath) {"
+      },
+      "state_argument": "state"
+    },
+    {
+      "caller": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 1693,
+        "text": "const path = toPath(state, output);"
+      },
+      "target": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 554,
+        "text": "function toPath<T extends BuilderProgram>(state: SolutionBuilderState<T>, fileName: string) {"
+      },
+      "state_argument": "state"
+    },
+    {
+      "caller": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 1737,
+        "text": "if (hasSameBuildInfo(state, buildInfoCacheEntry ??= state.buildInfoCache.get(resolvedPath)!, resolvedRefPath)) {"
+      },
+      "target": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 1792,
+        "text": "function hasSameBuildInfo<T extends BuilderProgram>(state: SolutionBuilderState<T>, buildInfoCacheEntry: BuildInfoCacheEntry, resolvedRefPath: ResolvedConfigFilePath) {"
+      },
+      "state_argument": "state"
+    },
+    {
+      "caller": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 1747,
+        "text": "const newestDeclarationFileContentChangedTime = getLatestChangedDtsTime(state, resolvedConfig.options, resolvedRefPath);"
+      },
+      "target": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 1867,
+        "text": "function getLatestChangedDtsTime<T extends BuilderProgram>(state: SolutionBuilderState<T>, options: CompilerOptions, resolvedConfigPath: ResolvedConfigFilePath) {"
+      },
+      "state_argument": "state"
+    },
+    {
+      "caller": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 1764,
+        "text": "const configStatus = checkConfigFileUpToDateStatus(state, project.options.configFilePath!, oldestOutputFileTime, oldestOutputFileName);"
+      },
+      "target": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 1456,
+        "text": "function checkConfigFileUpToDateStatus<T extends BuilderProgram>(state: SolutionBuilderState<T>, configFile: string, oldestOutputFileTime: Date, oldestOutputFileName: string): Status.OutOfDateWithSelf | undefined {"
+      },
+      "state_argument": "state"
+    },
+    {
+      "caller": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 1768,
+        "text": "const extendedConfigStatus = forEach(project.options.configFile!.extendedSourceFiles || emptyArray, configFile => checkConfigFileUpToDateStatus(state, configFile, oldestOutputFileTime, oldestOutputFileName));"
+      },
+      "target": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 1456,
+        "text": "function checkConfigFileUpToDateStatus<T extends BuilderProgram>(state: SolutionBuilderState<T>, configFile: string, oldestOutputFileTime: Date, oldestOutputFileName: string): Status.OutOfDateWithSelf | undefined {"
+      },
+      "state_argument": "state"
+    },
+    {
+      "caller": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 1775,
+        "text": "path => checkConfigFileUpToDateStatus(state, path, oldestOutputFileTime, oldestOutputFileName),"
+      },
+      "target": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 1456,
+        "text": "function checkConfigFileUpToDateStatus<T extends BuilderProgram>(state: SolutionBuilderState<T>, configFile: string, oldestOutputFileTime: Date, oldestOutputFileName: string): Status.OutOfDateWithSelf | undefined {"
+      },
+      "state_argument": "state"
+    },
+    {
+      "caller": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 1808,
+        "text": "const actual = getUpToDateStatusWorker(state, project, resolvedPath);"
+      },
+      "target": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 1468,
+        "text": "function getUpToDateStatusWorker<T extends BuilderProgram>(state: SolutionBuilderState<T>, project: ParsedCommandLine, resolvedPath: ResolvedConfigFilePath): UpToDateStatus {"
+      },
+      "state_argument": "state"
+    },
+    {
+      "caller": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 1829,
+        "text": "if (!skipOutputs?.has(toPath(state, buildInfoPath))) {"
+      },
+      "target": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 554,
+        "text": "function toPath<T extends BuilderProgram>(state: SolutionBuilderState<T>, fileName: string) {"
+      },
+      "state_argument": "state"
+    },
+    {
+      "caller": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 1830,
+        "text": "if (!!state.options.verbose) reportStatus(state, verboseMessage, proj.options.configFilePath!);"
+      },
+      "target": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 2294,
+        "text": "function reportStatus<T extends BuilderProgram>(state: SolutionBuilderState<T>, message: DiagnosticMessage, ...args: DiagnosticArguments) {"
+      },
+      "state_argument": "state"
+    },
+    {
+      "caller": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 1832,
+        "text": "getBuildInfoCacheEntry(state, buildInfoPath, projectPath)!.modifiedTime = now;"
+      },
+      "target": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 1438,
+        "text": "function getBuildInfoCacheEntry<T extends BuilderProgram>(state: SolutionBuilderState<T>, buildInfoPath: string, resolvedConfigPath: ResolvedConfigFilePath) {"
+      },
+      "state_argument": "state"
+    },
+    {
+      "caller": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 1840,
+        "text": "const outputTimeStampMap = getOutputTimeStampMap(state, projectPath);"
+      },
+      "target": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 1430,
+        "text": "function getOutputTimeStampMap<T extends BuilderProgram>(state: SolutionBuilderState<T>, resolvedConfigFilePath: ResolvedConfigFilePath) {"
+      },
+      "state_argument": "state"
+    },
+    {
+      "caller": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 1845,
+        "text": "const path = toPath(state, file);"
+      },
+      "target": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 554,
+        "text": "function toPath<T extends BuilderProgram>(state: SolutionBuilderState<T>, fileName: string) {"
+      },
+      "state_argument": "state"
+    },
+    {
+      "caller": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 1849,
+        "text": "reportStatus(state, verboseMessage, proj.options.configFilePath!);"
+      },
+      "target": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 2294,
+        "text": "function reportStatus<T extends BuilderProgram>(state: SolutionBuilderState<T>, message: DiagnosticMessage, ...args: DiagnosticArguments) {"
+      },
+      "state_argument": "state"
+    },
+    {
+      "caller": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 1852,
+        "text": "if (file === buildInfoPath) getBuildInfoCacheEntry(state, buildInfoPath, projectPath)!.modifiedTime = now;"
+      },
+      "target": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 1438,
+        "text": "function getBuildInfoCacheEntry<T extends BuilderProgram>(state: SolutionBuilderState<T>, buildInfoPath: string, resolvedConfigPath: ResolvedConfigFilePath) {"
+      },
+      "state_argument": "state"
+    },
+    {
+      "caller": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 1880,
+        "text": "return reportStatus(state, Diagnostics.A_non_dry_build_would_update_timestamps_for_output_of_project_0, proj.options.configFilePath!);"
+      },
+      "target": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 2294,
+        "text": "function reportStatus<T extends BuilderProgram>(state: SolutionBuilderState<T>, message: DiagnosticMessage, ...args: DiagnosticArguments) {"
+      },
+      "state_argument": "state"
+    },
+    {
+      "caller": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 1882,
+        "text": "updateOutputTimestampsWorker(state, proj, resolvedPath, Diagnostics.Updating_output_timestamps_of_project_0);"
+      },
+      "target": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 1815,
+        "text": "function updateOutputTimestampsWorker<T extends BuilderProgram>("
+      },
+      "state_argument": "state"
+    },
+    {
+      "caller": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 1905,
+        "text": "const nextProjectPath = toResolvedConfigFilePath(state, nextProject);"
+      },
+      "target": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 558,
+        "text": "function toResolvedConfigFilePath<T extends BuilderProgram>(state: SolutionBuilderState<T>, fileName: ResolvedConfigFileName): ResolvedConfigFilePath {"
+      },
+      "state_argument": "state"
+    },
+    {
+      "caller": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 1908,
+        "text": "const nextProjectConfig = parseConfigFile(state, nextProject, nextProjectPath);"
+      },
+      "target": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 577,
+        "text": "function parseConfigFile<T extends BuilderProgram>(state: SolutionBuilderState<T>, configFileName: ResolvedConfigFileName, configFilePath: ResolvedConfigFilePath): ParsedCommandLine | undefined {"
+      },
+      "state_argument": "state"
+    },
+    {
+      "caller": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 1911,
+        "text": "const resolvedRefPath = resolveProjectName(state, ref.path);"
+      },
+      "target": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 603,
+        "text": "function resolveProjectName<T extends BuilderProgram>(state: SolutionBuilderState<T>, name: string): ResolvedConfigFileName {"
+      },
+      "state_argument": "state"
+    },
+    {
+      "caller": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 1912,
+        "text": "if (toResolvedConfigFilePath(state, resolvedRefPath) !== projectPath) continue;"
+      },
+      "target": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 558,
+        "text": "function toResolvedConfigFilePath<T extends BuilderProgram>(state: SolutionBuilderState<T>, fileName: ResolvedConfigFileName): ResolvedConfigFilePath {"
+      },
+      "state_argument": "state"
+    },
+    {
+      "caller": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 1937,
+        "text": "if (toResolvedConfigFilePath(state, resolveProjectName(state, status.upstreamProjectName)) === projectPath) {"
+      },
+      "target": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 558,
+        "text": "function toResolvedConfigFilePath<T extends BuilderProgram>(state: SolutionBuilderState<T>, fileName: ResolvedConfigFileName): ResolvedConfigFilePath {"
+      },
+      "state_argument": "state"
+    },
+    {
+      "caller": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 1937,
+        "text": "if (toResolvedConfigFilePath(state, resolveProjectName(state, status.upstreamProjectName)) === projectPath) {"
+      },
+      "target": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 603,
+        "text": "function resolveProjectName<T extends BuilderProgram>(state: SolutionBuilderState<T>, name: string): ResolvedConfigFileName {"
+      },
+      "state_argument": "state"
+    },
+    {
+      "caller": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 1938,
+        "text": "clearProjectStatus(state, nextProjectPath);"
+      },
+      "target": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 796,
+        "text": "function clearProjectStatus<T extends BuilderProgram>(state: SolutionBuilderState<T>, resolved: ResolvedConfigFilePath) {"
+      },
+      "state_argument": "state"
+    },
+    {
+      "caller": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 1943,
+        "text": "addProjToQueue(state, nextProjectPath, ProgramUpdateLevel.Update);"
+      },
+      "target": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 801,
+        "text": "function addProjToQueue<T extends BuilderProgram>({ projectPendingBuild }: SolutionBuilderState<T>, proj: ResolvedConfigFilePath, updateLevel: ProgramUpdateLevel) {"
+      },
+      "state_argument": "state"
+    },
+    {
+      "caller": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 1951,
+        "text": "const result = buildWorker(state, project, cancellationToken, writeFile, getCustomTransformers, onlyReferences);"
+      },
+      "target": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 1957,
+        "text": "function buildWorker<T extends BuilderProgram>(state: SolutionBuilderState<T>, project: string | undefined, cancellationToken: CancellationToken | undefined, writeFile: WriteFileCallback | undefined, getCustomTransformers: ((project: string) => CustomTransformers) | undefined, onlyReferences: boolean | undefined): ExitStatus {"
+      },
+      "state_argument": "state"
+    },
+    {
+      "caller": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 1958,
+        "text": "const buildOrder = getBuildOrderFor(state, project, onlyReferences);"
+      },
+      "target": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 721,
+        "text": "function getBuildOrderFor<T extends BuilderProgram>(state: SolutionBuilderState<T>, project: string | undefined, onlyReferences: boolean | undefined): AnyBuildOrder | undefined {"
+      },
+      "state_argument": "state"
+    },
+    {
+      "caller": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 1961,
+        "text": "setupInitialBuild(state, cancellationToken);"
+      },
+      "target": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 811,
+        "text": "function setupInitialBuild<T extends BuilderProgram>(state: SolutionBuilderState<T>, cancellationToken: CancellationToken | undefined) {"
+      },
+      "state_argument": "state"
+    },
+    {
+      "caller": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 1966,
+        "text": "const invalidatedProject = getNextInvalidatedProject(state, buildOrder, reportQueue);"
+      },
+      "target": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 1340,
+        "text": "function getNextInvalidatedProject<T extends BuilderProgram>("
+      },
+      "state_argument": "state"
+    },
+    {
+      "caller": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 1973,
+        "text": "disableCache(state);"
+      },
+      "target": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 777,
+        "text": "function disableCache<T extends BuilderProgram>(state: SolutionBuilderState<T>) {"
+      },
+      "state_argument": "state"
+    },
+    {
+      "caller": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 1974,
+        "text": "reportErrorSummary(state, buildOrder);"
+      },
+      "target": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 2318,
+        "text": "function reportErrorSummary<T extends BuilderProgram>(state: SolutionBuilderState<T>, buildOrder: AnyBuildOrder) {"
+      },
+      "state_argument": "state"
+    },
+    {
+      "caller": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 1975,
+        "text": "startWatching(state, buildOrder);"
+      },
+      "target": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 2229,
+        "text": "function startWatching<T extends BuilderProgram>(state: SolutionBuilderState<T>, buildOrder: AnyBuildOrder) {"
+      },
+      "state_argument": "state"
+    },
+    {
+      "caller": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 1979,
+        "text": ": !buildOrder.some(p => state.diagnostics.has(toResolvedConfigFilePath(state, p)))"
+      },
+      "target": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 558,
+        "text": "function toResolvedConfigFilePath<T extends BuilderProgram>(state: SolutionBuilderState<T>, fileName: ResolvedConfigFileName): ResolvedConfigFilePath {"
+      },
+      "state_argument": "state"
+    },
+    {
+      "caller": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 1988,
+        "text": "const result = cleanWorker(state, project, onlyReferences);"
+      },
+      "target": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 1994,
+        "text": "function cleanWorker<T extends BuilderProgram>(state: SolutionBuilderState<T>, project: string | undefined, onlyReferences: boolean | undefined) {"
+      },
+      "state_argument": "state"
+    },
+    {
+      "caller": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 1995,
+        "text": "const buildOrder = getBuildOrderFor(state, project, onlyReferences);"
+      },
+      "target": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 721,
+        "text": "function getBuildOrderFor<T extends BuilderProgram>(state: SolutionBuilderState<T>, project: string | undefined, onlyReferences: boolean | undefined): AnyBuildOrder | undefined {"
+      },
+      "state_argument": "state"
+    },
+    {
+      "caller": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 1999,
+        "text": "reportErrors(state, buildOrder.circularDiagnostics);"
+      },
+      "target": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 2302,
+        "text": "function reportErrors<T extends BuilderProgram>({ host }: SolutionBuilderState<T>, errors: readonly Diagnostic[]) {"
+      },
+      "state_argument": "state"
+    },
+    {
+      "caller": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 2006,
+        "text": "const resolvedPath = toResolvedConfigFilePath(state, proj);"
+      },
+      "target": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 558,
+        "text": "function toResolvedConfigFilePath<T extends BuilderProgram>(state: SolutionBuilderState<T>, fileName: ResolvedConfigFileName): ResolvedConfigFilePath {"
+      },
+      "state_argument": "state"
+    },
+    {
+      "caller": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 2007,
+        "text": "const parsed = parseConfigFile(state, proj, resolvedPath);"
+      },
+      "target": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 577,
+        "text": "function parseConfigFile<T extends BuilderProgram>(state: SolutionBuilderState<T>, configFileName: ResolvedConfigFileName, configFilePath: ResolvedConfigFilePath): ParsedCommandLine | undefined {"
+      },
+      "state_argument": "state"
+    },
+    {
+      "caller": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 2010,
+        "text": "reportParseConfigFileDiagnostic(state, resolvedPath);"
+      },
+      "target": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 2314,
+        "text": "function reportParseConfigFileDiagnostic<T extends BuilderProgram>(state: SolutionBuilderState<T>, proj: ResolvedConfigFilePath) {"
+      },
+      "state_argument": "state"
+    },
+    {
+      "caller": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 2015,
+        "text": "const inputFileNames = new Set(parsed.fileNames.map(f => toPath(state, f)));"
+      },
+      "target": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 554,
+        "text": "function toPath<T extends BuilderProgram>(state: SolutionBuilderState<T>, fileName: string) {"
+      },
+      "state_argument": "state"
+    },
+    {
+      "caller": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 2018,
+        "text": "if (inputFileNames.has(toPath(state, output))) continue;"
+      },
+      "target": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 554,
+        "text": "function toPath<T extends BuilderProgram>(state: SolutionBuilderState<T>, fileName: string) {"
+      },
+      "state_argument": "state"
+    },
+    {
+      "caller": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 2025,
+        "text": "invalidateProject(state, resolvedPath, ProgramUpdateLevel.Update);"
+      },
+      "target": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 2038,
+        "text": "function invalidateProject<T extends BuilderProgram>(state: SolutionBuilderState<T>, resolved: ResolvedConfigFilePath, updateLevel: ProgramUpdateLevel) {"
+      },
+      "state_argument": "state"
+    },
+    {
+      "caller": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 2032,
+        "text": "reportStatus(state, Diagnostics.A_non_dry_build_would_delete_the_following_files_Colon_0, filesToDelete.map(f => `\\r\\n * ${f}`).join(\"\"));"
+      },
+      "target": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 2294,
+        "text": "function reportStatus<T extends BuilderProgram>(state: SolutionBuilderState<T>, message: DiagnosticMessage, ...args: DiagnosticArguments) {"
+      },
+      "state_argument": "state"
+    },
+    {
+      "caller": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 2048,
+        "text": "clearProjectStatus(state, resolved);"
+      },
+      "target": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 796,
+        "text": "function clearProjectStatus<T extends BuilderProgram>(state: SolutionBuilderState<T>, resolved: ResolvedConfigFilePath) {"
+      },
+      "state_argument": "state"
+    },
+    {
+      "caller": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 2049,
+        "text": "addProjToQueue(state, resolved, updateLevel);"
+      },
+      "target": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 801,
+        "text": "function addProjToQueue<T extends BuilderProgram>({ projectPendingBuild }: SolutionBuilderState<T>, proj: ResolvedConfigFilePath, updateLevel: ProgramUpdateLevel) {"
+      },
+      "state_argument": "state"
+    },
+    {
+      "caller": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 2050,
+        "text": "enableCache(state);"
+      },
+      "target": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 740,
+        "text": "function enableCache<T extends BuilderProgram>(state: SolutionBuilderState<T>) {"
+      },
+      "state_argument": "state"
+    },
+    {
+      "caller": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 2055,
+        "text": "invalidateProject(state, resolvedPath, updateLevel);"
+      },
+      "target": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 2038,
+        "text": "function invalidateProject<T extends BuilderProgram>(state: SolutionBuilderState<T>, resolved: ResolvedConfigFilePath, updateLevel: ProgramUpdateLevel) {"
+      },
+      "state_argument": "state"
+    },
+    {
+      "caller": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 2056,
+        "text": "scheduleBuildInvalidatedProject(state, 250, /*changeDetected*/ true);"
+      },
+      "target": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 2059,
+        "text": "function scheduleBuildInvalidatedProject<T extends BuilderProgram>(state: SolutionBuilderState<T>, time: number, changeDetected: boolean) {"
+      },
+      "state_argument": "state"
+    },
+    {
+      "caller": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 2074,
+        "text": "return timerHost.setTimeout!(() => callback(t1, t2, t3), timeoutDelay, t1);"
+      },
+      "target": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 2078,
+        "text": "function buildNextInvalidatedProject<T extends BuilderProgram>(_timeoutType: string, state: SolutionBuilderState<T>, changeDetected: boolean) {"
+      },
+      "state_argument": "t2"
+    },
+    {
+      "caller": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 2080,
+        "text": "const buildOrder = buildNextInvalidatedProjectWorker(state, changeDetected);"
+      },
+      "target": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 2086,
+        "text": "function buildNextInvalidatedProjectWorker<T extends BuilderProgram>(state: SolutionBuilderState<T>, changeDetected: boolean) {"
+      },
+      "state_argument": "state"
+    },
+    {
+      "caller": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 2083,
+        "text": "if (buildOrder) reportErrorSummary(state, buildOrder);"
+      },
+      "target": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 2318,
+        "text": "function reportErrorSummary<T extends BuilderProgram>(state: SolutionBuilderState<T>, buildOrder: AnyBuildOrder) {"
+      },
+      "state_argument": "state"
+    },
+    {
+      "caller": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 2091,
+        "text": "reportWatchStatus(state, Diagnostics.File_change_detected_Starting_incremental_compilation);"
+      },
+      "target": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 2298,
+        "text": "function reportWatchStatus<T extends BuilderProgram>(state: SolutionBuilderState<T>, message: DiagnosticMessage, ...args: DiagnosticArguments) {"
+      },
+      "state_argument": "state"
+    },
+    {
+      "caller": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 2094,
+        "text": "const buildOrder = getBuildOrder(state);"
+      },
+      "target": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 654,
+        "text": "function getBuildOrder<T extends BuilderProgram>(state: SolutionBuilderState<T>) {"
+      },
+      "state_argument": "state"
+    },
+    {
+      "caller": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 2095,
+        "text": "const invalidatedProject = getNextInvalidatedProject(state, buildOrder, /*reportQueue*/ false);"
+      },
+      "target": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 1340,
+        "text": "function getNextInvalidatedProject<T extends BuilderProgram>("
+      },
+      "state_argument": "state"
+    },
+    {
+      "caller": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 2103,
+        "text": "const info = getNextInvalidatedProjectCreateInfo(state, buildOrder, /*reportQueue*/ false);"
+      },
+      "target": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 1202,
+        "text": "function getNextInvalidatedProjectCreateInfo<T extends BuilderProgram>("
+      },
+      "state_argument": "state"
+    },
+    {
+      "caller": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 2107,
+        "text": "scheduleBuildInvalidatedProject(state, 100, /*changeDetected*/ false);"
+      },
+      "target": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 2059,
+        "text": "function scheduleBuildInvalidatedProject<T extends BuilderProgram>(state: SolutionBuilderState<T>, time: number, changeDetected: boolean) {"
+      },
+      "state_argument": "state"
+    },
+    {
+      "caller": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 2110,
+        "text": "const project = createInvalidatedProjectWithInfo(state, info, buildOrder);"
+      },
+      "target": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 1315,
+        "text": "function createInvalidatedProjectWithInfo<T extends BuilderProgram>("
+      },
+      "state_argument": "state"
+    },
+    {
+      "caller": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 2115,
+        "text": "disableCache(state);"
+      },
+      "target": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 777,
+        "text": "function disableCache<T extends BuilderProgram>(state: SolutionBuilderState<T>) {"
+      },
+      "state_argument": "state"
+    },
+    {
+      "caller": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 2123,
+        "text": "watchFile("
+      },
+      "target": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 1392,
+        "text": "function watchFile<T extends BuilderProgram>(state: SolutionBuilderState<T>, file: string, callback: FileWatcherCallback, pollingInterval: PollingInterval, options: WatchOptions | undefined, watchType: WatchType, project?: ResolvedConfigFileName): FileWatcher {"
+      },
+      "state_argument": "state"
+    },
+    {
+      "caller": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 2126,
+        "text": "() => invalidateProjectAndScheduleBuilds(state, resolvedPath, ProgramUpdateLevel.Full),"
+      },
+      "target": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 2053,
+        "text": "function invalidateProjectAndScheduleBuilds<T extends BuilderProgram>(state: SolutionBuilderState<T>, resolvedPath: ResolvedConfigFilePath, updateLevel: ProgramUpdateLevel) {"
+      },
+      "state_argument": "state"
+    },
+    {
+      "caller": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 2141,
+        "text": "watchFile("
+      },
+      "target": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 1392,
+        "text": "function watchFile<T extends BuilderProgram>(state: SolutionBuilderState<T>, file: string, callback: FileWatcherCallback, pollingInterval: PollingInterval, options: WatchOptions | undefined, watchType: WatchType, project?: ResolvedConfigFileName): FileWatcher {"
+      },
+      "state_argument": "state"
+    },
+    {
+      "caller": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 2144,
+        "text": "() => state.allWatchedExtendedConfigFiles.get(extendedConfigFilePath)?.projects.forEach(projectConfigFilePath => invalidateProjectAndScheduleBuilds(state, projectConfigFilePath, ProgramUpdateLevel.Full)),"
+      },
+      "target": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 2053,
+        "text": "function invalidateProjectAndScheduleBuilds<T extends BuilderProgram>(state: SolutionBuilderState<T>, resolvedPath: ResolvedConfigFilePath, updateLevel: ProgramUpdateLevel) {"
+      },
+      "state_argument": "state"
+    },
+    {
+      "caller": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 2149,
+        "text": "fileName => toPath(state, fileName),"
+      },
+      "target": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 554,
+        "text": "function toPath<T extends BuilderProgram>(state: SolutionBuilderState<T>, fileName: string) {"
+      },
+      "state_argument": "state"
+    },
+    {
+      "caller": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 2164,
+        "text": "watchedDirPath: toPath(state, dir),"
+      },
+      "target": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 554,
+        "text": "function toPath<T extends BuilderProgram>(state: SolutionBuilderState<T>, fileName: string) {"
+      },
+      "state_argument": "state"
+    },
+    {
+      "caller": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 2166,
+        "text": "fileOrDirectoryPath: toPath(state, fileOrDirectory),"
+      },
+      "target": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 554,
+        "text": "function toPath<T extends BuilderProgram>(state: SolutionBuilderState<T>, fileName: string) {"
+      },
+      "state_argument": "state"
+    },
+    {
+      "caller": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 2170,
+        "text": "program: state.builderPrograms.get(resolvedPath) || getCachedParsedConfigFile(state, resolvedPath)?.fileNames,"
+      },
+      "target": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 572,
+        "text": "function getCachedParsedConfigFile<T extends BuilderProgram>(state: SolutionBuilderState<T>, configFilePath: ResolvedConfigFilePath): ParsedCommandLine | undefined {"
+      },
+      "state_argument": "state"
+    },
+    {
+      "caller": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 2173,
+        "text": "toPath: fileName => toPath(state, fileName),"
+      },
+      "target": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 554,
+        "text": "function toPath<T extends BuilderProgram>(state: SolutionBuilderState<T>, fileName: string) {"
+      },
+      "state_argument": "state"
+    },
+    {
+      "caller": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 2177,
+        "text": "invalidateProjectAndScheduleBuilds(state, resolvedPath, ProgramUpdateLevel.RootNamesAndUpdate);"
+      },
+      "target": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 2053,
+        "text": "function invalidateProjectAndScheduleBuilds<T extends BuilderProgram>(state: SolutionBuilderState<T>, resolvedPath: ResolvedConfigFilePath, updateLevel: ProgramUpdateLevel) {"
+      },
+      "state_argument": "state"
+    },
+    {
+      "caller": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 2194,
+        "text": "watchFile("
+      },
+      "target": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 1392,
+        "text": "function watchFile<T extends BuilderProgram>(state: SolutionBuilderState<T>, file: string, callback: FileWatcherCallback, pollingInterval: PollingInterval, options: WatchOptions | undefined, watchType: WatchType, project?: ResolvedConfigFileName): FileWatcher {"
+      },
+      "state_argument": "state"
+    },
+    {
+      "caller": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 2197,
+        "text": "() => invalidateProjectAndScheduleBuilds(state, resolvedPath, ProgramUpdateLevel.Update),"
+      },
+      "target": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 2053,
+        "text": "function invalidateProjectAndScheduleBuilds<T extends BuilderProgram>(state: SolutionBuilderState<T>, resolvedPath: ResolvedConfigFilePath, updateLevel: ProgramUpdateLevel) {"
+      },
+      "state_argument": "state"
+    },
+    {
+      "caller": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 2215,
+        "text": "watchFile("
+      },
+      "target": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 1392,
+        "text": "function watchFile<T extends BuilderProgram>(state: SolutionBuilderState<T>, file: string, callback: FileWatcherCallback, pollingInterval: PollingInterval, options: WatchOptions | undefined, watchType: WatchType, project?: ResolvedConfigFileName): FileWatcher {"
+      },
+      "state_argument": "state"
+    },
+    {
+      "caller": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 2218,
+        "text": "() => invalidateProjectAndScheduleBuilds(state, resolvedPath, ProgramUpdateLevel.Update),"
+      },
+      "target": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 2053,
+        "text": "function invalidateProjectAndScheduleBuilds<T extends BuilderProgram>(state: SolutionBuilderState<T>, resolvedPath: ResolvedConfigFilePath, updateLevel: ProgramUpdateLevel) {"
+      },
+      "state_argument": "state"
+    },
+    {
+      "caller": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 2234,
+        "text": "const resolvedPath = toResolvedConfigFilePath(state, resolved);"
+      },
+      "target": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 558,
+        "text": "function toResolvedConfigFilePath<T extends BuilderProgram>(state: SolutionBuilderState<T>, fileName: ResolvedConfigFileName): ResolvedConfigFilePath {"
+      },
+      "state_argument": "state"
+    },
+    {
+      "caller": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 2235,
+        "text": "const cfg = parseConfigFile(state, resolved, resolvedPath);"
+      },
+      "target": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 577,
+        "text": "function parseConfigFile<T extends BuilderProgram>(state: SolutionBuilderState<T>, configFileName: ResolvedConfigFileName, configFilePath: ResolvedConfigFilePath): ParsedCommandLine | undefined {"
+      },
+      "state_argument": "state"
+    },
+    {
+      "caller": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 2237,
+        "text": "watchConfigFile(state, resolved, resolvedPath, cfg);"
+      },
+      "target": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 2119,
+        "text": "function watchConfigFile<T extends BuilderProgram>(state: SolutionBuilderState<T>, resolved: ResolvedConfigFileName, resolvedPath: ResolvedConfigFilePath, parsed: ParsedCommandLine | undefined) {"
+      },
+      "state_argument": "state"
+    },
+    {
+      "caller": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 2238,
+        "text": "watchExtendedConfigFiles(state, resolvedPath, cfg);"
+      },
+      "target": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 2135,
+        "text": "function watchExtendedConfigFiles<T extends BuilderProgram>(state: SolutionBuilderState<T>, resolvedPath: ResolvedConfigFilePath, parsed: ParsedCommandLine | undefined) {"
+      },
+      "state_argument": "state"
+    },
+    {
+      "caller": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 2241,
+        "text": "watchWildCardDirectories(state, resolved, resolvedPath, cfg);"
+      },
+      "target": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 2153,
+        "text": "function watchWildCardDirectories<T extends BuilderProgram>(state: SolutionBuilderState<T>, resolved: ResolvedConfigFileName, resolvedPath: ResolvedConfigFilePath, parsed: ParsedCommandLine) {"
+      },
+      "state_argument": "state"
+    },
+    {
+      "caller": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 2244,
+        "text": "watchInputFiles(state, resolved, resolvedPath, cfg);"
+      },
+      "target": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 2187,
+        "text": "function watchInputFiles<T extends BuilderProgram>(state: SolutionBuilderState<T>, resolved: ResolvedConfigFileName, resolvedPath: ResolvedConfigFilePath, parsed: ParsedCommandLine) {"
+      },
+      "state_argument": "state"
+    },
+    {
+      "caller": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 2247,
+        "text": "watchPackageJsonFiles(state, resolved, resolvedPath, cfg);"
+      },
+      "target": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 2208,
+        "text": "function watchPackageJsonFiles<T extends BuilderProgram>(state: SolutionBuilderState<T>, resolved: ResolvedConfigFileName, resolvedPath: ResolvedConfigFilePath, parsed: ParsedCommandLine) {"
+      },
+      "state_argument": "state"
+    },
+    {
+      "caller": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 2271,
+        "text": "build: (project, cancellationToken, writeFile, getCustomTransformers) => build(state, project, cancellationToken, writeFile, getCustomTransformers),"
+      },
+      "target": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 1949,
+        "text": "function build<T extends BuilderProgram>(state: SolutionBuilderState<T>, project?: string, cancellationToken?: CancellationToken, writeFile?: WriteFileCallback, getCustomTransformers?: (project: string) => CustomTransformers, onlyReferences?: boolean): ExitStatus {"
+      },
+      "state_argument": "state"
+    },
+    {
+      "caller": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 2272,
+        "text": "clean: project => clean(state, project),"
+      },
+      "target": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 1986,
+        "text": "function clean<T extends BuilderProgram>(state: SolutionBuilderState<T>, project?: string, onlyReferences?: boolean): ExitStatus {"
+      },
+      "state_argument": "state"
+    },
+    {
+      "caller": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 2273,
+        "text": "buildReferences: (project, cancellationToken, writeFile, getCustomTransformers) => build(state, project, cancellationToken, writeFile, getCustomTransformers, /*onlyReferences*/ true),"
+      },
+      "target": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 1949,
+        "text": "function build<T extends BuilderProgram>(state: SolutionBuilderState<T>, project?: string, cancellationToken?: CancellationToken, writeFile?: WriteFileCallback, getCustomTransformers?: (project: string) => CustomTransformers, onlyReferences?: boolean): ExitStatus {"
+      },
+      "state_argument": "state"
+    },
+    {
+      "caller": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 2274,
+        "text": "cleanReferences: project => clean(state, project, /*onlyReferences*/ true),"
+      },
+      "target": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 1986,
+        "text": "function clean<T extends BuilderProgram>(state: SolutionBuilderState<T>, project?: string, onlyReferences?: boolean): ExitStatus {"
+      },
+      "state_argument": "state"
+    },
+    {
+      "caller": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 2276,
+        "text": "setupInitialBuild(state, cancellationToken);"
+      },
+      "target": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 811,
+        "text": "function setupInitialBuild<T extends BuilderProgram>(state: SolutionBuilderState<T>, cancellationToken: CancellationToken | undefined) {"
+      },
+      "state_argument": "state"
+    },
+    {
+      "caller": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 2277,
+        "text": "return getNextInvalidatedProject(state, getBuildOrder(state), /*reportQueue*/ false);"
+      },
+      "target": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 1340,
+        "text": "function getNextInvalidatedProject<T extends BuilderProgram>("
+      },
+      "state_argument": "state"
+    },
+    {
+      "caller": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 2277,
+        "text": "return getNextInvalidatedProject(state, getBuildOrder(state), /*reportQueue*/ false);"
+      },
+      "target": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 654,
+        "text": "function getBuildOrder<T extends BuilderProgram>(state: SolutionBuilderState<T>) {"
+      },
+      "state_argument": "state"
+    },
+    {
+      "caller": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 2279,
+        "text": "getBuildOrder: () => getBuildOrder(state),"
+      },
+      "target": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 654,
+        "text": "function getBuildOrder<T extends BuilderProgram>(state: SolutionBuilderState<T>) {"
+      },
+      "state_argument": "state"
+    },
+    {
+      "caller": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 2281,
+        "text": "const configFileName = resolveProjectName(state, project);"
+      },
+      "target": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 603,
+        "text": "function resolveProjectName<T extends BuilderProgram>(state: SolutionBuilderState<T>, name: string): ResolvedConfigFileName {"
+      },
+      "state_argument": "state"
+    },
+    {
+      "caller": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 2282,
+        "text": "const configFilePath = toResolvedConfigFilePath(state, configFileName);"
+      },
+      "target": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 558,
+        "text": "function toResolvedConfigFilePath<T extends BuilderProgram>(state: SolutionBuilderState<T>, fileName: ResolvedConfigFileName): ResolvedConfigFilePath {"
+      },
+      "state_argument": "state"
+    },
+    {
+      "caller": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 2283,
+        "text": "return getUpToDateStatus(state, parseConfigFile(state, configFileName, configFilePath), configFilePath);"
+      },
+      "target": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 1797,
+        "text": "function getUpToDateStatus<T extends BuilderProgram>(state: SolutionBuilderState<T>, project: ParsedCommandLine | undefined, resolvedPath: ResolvedConfigFilePath): UpToDateStatus {"
+      },
+      "state_argument": "state"
+    },
+    {
+      "caller": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 2283,
+        "text": "return getUpToDateStatus(state, parseConfigFile(state, configFileName, configFilePath), configFilePath);"
+      },
+      "target": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 577,
+        "text": "function parseConfigFile<T extends BuilderProgram>(state: SolutionBuilderState<T>, configFileName: ResolvedConfigFileName, configFilePath: ResolvedConfigFilePath): ParsedCommandLine | undefined {"
+      },
+      "state_argument": "state"
+    },
+    {
+      "caller": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 2285,
+        "text": "invalidateProject: (configFilePath, updateLevel) => invalidateProject(state, configFilePath, updateLevel || ProgramUpdateLevel.Update),"
+      },
+      "target": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 2038,
+        "text": "function invalidateProject<T extends BuilderProgram>(state: SolutionBuilderState<T>, resolved: ResolvedConfigFilePath, updateLevel: ProgramUpdateLevel) {"
+      },
+      "state_argument": "state"
+    },
+    {
+      "caller": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 2286,
+        "text": "close: () => stopWatching(state),"
+      },
+      "target": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 2254,
+        "text": "function stopWatching<T extends BuilderProgram>(state: SolutionBuilderState<T>) {"
+      },
+      "state_argument": "state"
+    },
+    {
+      "caller": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 2307,
+        "text": "reportErrors(state, errors);"
+      },
+      "target": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 2302,
+        "text": "function reportErrors<T extends BuilderProgram>({ host }: SolutionBuilderState<T>, errors: readonly Diagnostic[]) {"
+      },
+      "state_argument": "state"
+    },
+    {
+      "caller": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 2315,
+        "text": "reportAndStoreErrors(state, proj, [state.configFileCache.get(proj) as Diagnostic]);"
+      },
+      "target": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 2306,
+        "text": "function reportAndStoreErrors<T extends BuilderProgram>(state: SolutionBuilderState<T>, proj: ResolvedConfigFilePath, errors: readonly Diagnostic[]) {"
+      },
+      "state_argument": "state"
+    },
+    {
+      "caller": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 2326,
+        "text": "reportBuildQueue(state, buildOrder.buildOrder);"
+      },
+      "target": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 2354,
+        "text": "function reportBuildQueue<T extends BuilderProgram>(state: SolutionBuilderState<T>, buildQueue: readonly ResolvedConfigFileName[]) {"
+      },
+      "state_argument": "state"
+    },
+    {
+      "caller": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 2327,
+        "text": "reportErrors(state, buildOrder.circularDiagnostics);"
+      },
+      "target": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 2302,
+        "text": "function reportErrors<T extends BuilderProgram>({ host }: SolutionBuilderState<T>, errors: readonly Diagnostic[]) {"
+      },
+      "state_argument": "state"
+    },
+    {
+      "caller": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 2334,
+        "text": "const projectPath = toResolvedConfigFilePath(state, project);"
+      },
+      "target": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 558,
+        "text": "function toResolvedConfigFilePath<T extends BuilderProgram>(state: SolutionBuilderState<T>, fileName: ResolvedConfigFileName): ResolvedConfigFilePath {"
+      },
+      "state_argument": "state"
+    },
+    {
+      "caller": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 2336,
+        "text": "reportErrors(state, diagnostics.get(projectPath) || emptyArray);"
+      },
+      "target": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 2302,
+        "text": "function reportErrors<T extends BuilderProgram>({ host }: SolutionBuilderState<T>, errors: readonly Diagnostic[]) {"
+      },
+      "state_argument": "state"
+    },
+    {
+      "caller": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 2344,
+        "text": "reportWatchStatus(state, getWatchErrorSummaryDiagnosticMessage(totalErrors), totalErrors);"
+      },
+      "target": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 2298,
+        "text": "function reportWatchStatus<T extends BuilderProgram>(state: SolutionBuilderState<T>, message: DiagnosticMessage, ...args: DiagnosticArguments) {"
+      },
+      "state_argument": "state"
+    },
+    {
+      "caller": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 2356,
+        "text": "reportStatus(state, Diagnostics.Projects_in_this_build_Colon_0, buildQueue.map(s => \"\\r\\n    * \" + relName(state, s)).join(\"\"));"
+      },
+      "target": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 2294,
+        "text": "function reportStatus<T extends BuilderProgram>(state: SolutionBuilderState<T>, message: DiagnosticMessage, ...args: DiagnosticArguments) {"
+      },
+      "state_argument": "state"
+    },
+    {
+      "caller": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 2356,
+        "text": "reportStatus(state, Diagnostics.Projects_in_this_build_Colon_0, buildQueue.map(s => \"\\r\\n    * \" + relName(state, s)).join(\"\"));"
+      },
+      "target": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 2290,
+        "text": "function relName<T extends BuilderProgram>(state: SolutionBuilderState<T>, path: string): string {"
+      },
+      "state_argument": "state"
+    },
+    {
+      "caller": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 2363,
+        "text": "return reportStatus("
+      },
+      "target": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 2294,
+        "text": "function reportStatus<T extends BuilderProgram>(state: SolutionBuilderState<T>, message: DiagnosticMessage, ...args: DiagnosticArguments) {"
+      },
+      "state_argument": "state"
+    },
+    {
+      "caller": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 2366,
+        "text": "relName(state, configFileName),"
+      },
+      "target": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 2290,
+        "text": "function relName<T extends BuilderProgram>(state: SolutionBuilderState<T>, path: string): string {"
+      },
+      "state_argument": "state"
+    },
+    {
+      "caller": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 2367,
+        "text": "relName(state, status.outOfDateOutputFileName),"
+      },
+      "target": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 2290,
+        "text": "function relName<T extends BuilderProgram>(state: SolutionBuilderState<T>, path: string): string {"
+      },
+      "state_argument": "state"
+    },
+    {
+      "caller": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 2368,
+        "text": "relName(state, status.newerInputFileName),"
+      },
+      "target": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 2290,
+        "text": "function relName<T extends BuilderProgram>(state: SolutionBuilderState<T>, path: string): string {"
+      },
+      "state_argument": "state"
+    },
+    {
+      "caller": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 2371,
+        "text": "return reportStatus("
+      },
+      "target": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 2294,
+        "text": "function reportStatus<T extends BuilderProgram>(state: SolutionBuilderState<T>, message: DiagnosticMessage, ...args: DiagnosticArguments) {"
+      },
+      "state_argument": "state"
+    },
+    {
+      "caller": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 2374,
+        "text": "relName(state, configFileName),"
+      },
+      "target": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 2290,
+        "text": "function relName<T extends BuilderProgram>(state: SolutionBuilderState<T>, path: string): string {"
+      },
+      "state_argument": "state"
+    },
+    {
+      "caller": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 2375,
+        "text": "relName(state, status.outOfDateOutputFileName),"
+      },
+      "target": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 2290,
+        "text": "function relName<T extends BuilderProgram>(state: SolutionBuilderState<T>, path: string): string {"
+      },
+      "state_argument": "state"
+    },
+    {
+      "caller": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 2376,
+        "text": "relName(state, status.newerProjectName),"
+      },
+      "target": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 2290,
+        "text": "function relName<T extends BuilderProgram>(state: SolutionBuilderState<T>, path: string): string {"
+      },
+      "state_argument": "state"
+    },
+    {
+      "caller": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 2379,
+        "text": "return reportStatus("
+      },
+      "target": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 2294,
+        "text": "function reportStatus<T extends BuilderProgram>(state: SolutionBuilderState<T>, message: DiagnosticMessage, ...args: DiagnosticArguments) {"
+      },
+      "state_argument": "state"
+    },
+    {
+      "caller": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 2382,
+        "text": "relName(state, configFileName),"
+      },
+      "target": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 2290,
+        "text": "function relName<T extends BuilderProgram>(state: SolutionBuilderState<T>, path: string): string {"
+      },
+      "state_argument": "state"
+    },
+    {
+      "caller": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 2383,
+        "text": "relName(state, status.missingOutputFileName),"
+      },
+      "target": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 2290,
+        "text": "function relName<T extends BuilderProgram>(state: SolutionBuilderState<T>, path: string): string {"
+      },
+      "state_argument": "state"
+    },
+    {
+      "caller": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 2386,
+        "text": "return reportStatus("
+      },
+      "target": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 2294,
+        "text": "function reportStatus<T extends BuilderProgram>(state: SolutionBuilderState<T>, message: DiagnosticMessage, ...args: DiagnosticArguments) {"
+      },
+      "state_argument": "state"
+    },
+    {
+      "caller": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 2389,
+        "text": "relName(state, configFileName),"
+      },
+      "target": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 2290,
+        "text": "function relName<T extends BuilderProgram>(state: SolutionBuilderState<T>, path: string): string {"
+      },
+      "state_argument": "state"
+    },
+    {
+      "caller": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 2390,
+        "text": "relName(state, status.fileName),"
+      },
+      "target": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 2290,
+        "text": "function relName<T extends BuilderProgram>(state: SolutionBuilderState<T>, path: string): string {"
+      },
+      "state_argument": "state"
+    },
+    {
+      "caller": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 2393,
+        "text": "return reportStatus("
+      },
+      "target": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 2294,
+        "text": "function reportStatus<T extends BuilderProgram>(state: SolutionBuilderState<T>, message: DiagnosticMessage, ...args: DiagnosticArguments) {"
+      },
+      "state_argument": "state"
+    },
+    {
+      "caller": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 2396,
+        "text": "relName(state, configFileName),"
+      },
+      "target": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 2290,
+        "text": "function relName<T extends BuilderProgram>(state: SolutionBuilderState<T>, path: string): string {"
+      },
+      "state_argument": "state"
+    },
+    {
+      "caller": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 2397,
+        "text": "relName(state, status.buildInfoFile),"
+      },
+      "target": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 2290,
+        "text": "function relName<T extends BuilderProgram>(state: SolutionBuilderState<T>, path: string): string {"
+      },
+      "state_argument": "state"
+    },
+    {
+      "caller": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 2400,
+        "text": "return reportStatus("
+      },
+      "target": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 2294,
+        "text": "function reportStatus<T extends BuilderProgram>(state: SolutionBuilderState<T>, message: DiagnosticMessage, ...args: DiagnosticArguments) {"
+      },
+      "state_argument": "state"
+    },
+    {
+      "caller": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 2403,
+        "text": "relName(state, configFileName),"
+      },
+      "target": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 2290,
+        "text": "function relName<T extends BuilderProgram>(state: SolutionBuilderState<T>, path: string): string {"
+      },
+      "state_argument": "state"
+    },
+    {
+      "caller": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 2404,
+        "text": "relName(state, status.buildInfoFile),"
+      },
+      "target": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 2290,
+        "text": "function relName<T extends BuilderProgram>(state: SolutionBuilderState<T>, path: string): string {"
+      },
+      "state_argument": "state"
+    },
+    {
+      "caller": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 2407,
+        "text": "return reportStatus("
+      },
+      "target": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 2294,
+        "text": "function reportStatus<T extends BuilderProgram>(state: SolutionBuilderState<T>, message: DiagnosticMessage, ...args: DiagnosticArguments) {"
+      },
+      "state_argument": "state"
+    },
+    {
+      "caller": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 2410,
+        "text": "relName(state, configFileName),"
+      },
+      "target": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 2290,
+        "text": "function relName<T extends BuilderProgram>(state: SolutionBuilderState<T>, path: string): string {"
+      },
+      "state_argument": "state"
+    },
+    {
+      "caller": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 2411,
+        "text": "relName(state, status.buildInfoFile),"
+      },
+      "target": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 2290,
+        "text": "function relName<T extends BuilderProgram>(state: SolutionBuilderState<T>, path: string): string {"
+      },
+      "state_argument": "state"
+    },
+    {
+      "caller": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 2414,
+        "text": "return reportStatus("
+      },
+      "target": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 2294,
+        "text": "function reportStatus<T extends BuilderProgram>(state: SolutionBuilderState<T>, message: DiagnosticMessage, ...args: DiagnosticArguments) {"
+      },
+      "state_argument": "state"
+    },
+    {
+      "caller": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 2417,
+        "text": "relName(state, configFileName),"
+      },
+      "target": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 2290,
+        "text": "function relName<T extends BuilderProgram>(state: SolutionBuilderState<T>, path: string): string {"
+      },
+      "state_argument": "state"
+    },
+    {
+      "caller": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 2418,
+        "text": "relName(state, status.buildInfoFile),"
+      },
+      "target": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 2290,
+        "text": "function relName<T extends BuilderProgram>(state: SolutionBuilderState<T>, path: string): string {"
+      },
+      "state_argument": "state"
+    },
+    {
+      "caller": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 2419,
+        "text": "relName(state, status.inputFile),"
+      },
+      "target": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 2290,
+        "text": "function relName<T extends BuilderProgram>(state: SolutionBuilderState<T>, path: string): string {"
+      },
+      "state_argument": "state"
+    },
+    {
+      "caller": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 2423,
+        "text": "return reportStatus("
+      },
+      "target": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 2294,
+        "text": "function reportStatus<T extends BuilderProgram>(state: SolutionBuilderState<T>, message: DiagnosticMessage, ...args: DiagnosticArguments) {"
+      },
+      "state_argument": "state"
+    },
+    {
+      "caller": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 2426,
+        "text": "relName(state, configFileName),"
+      },
+      "target": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 2290,
+        "text": "function relName<T extends BuilderProgram>(state: SolutionBuilderState<T>, path: string): string {"
+      },
+      "state_argument": "state"
+    },
+    {
+      "caller": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 2427,
+        "text": "relName(state, status.newestInputFileName || \"\"),"
+      },
+      "target": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 2290,
+        "text": "function relName<T extends BuilderProgram>(state: SolutionBuilderState<T>, path: string): string {"
+      },
+      "state_argument": "state"
+    },
+    {
+      "caller": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 2428,
+        "text": "relName(state, status.oldestOutputFileName || \"\"),"
+      },
+      "target": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 2290,
+        "text": "function relName<T extends BuilderProgram>(state: SolutionBuilderState<T>, path: string): string {"
+      },
+      "state_argument": "state"
+    },
+    {
+      "caller": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 2434,
+        "text": "return reportStatus("
+      },
+      "target": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 2294,
+        "text": "function reportStatus<T extends BuilderProgram>(state: SolutionBuilderState<T>, message: DiagnosticMessage, ...args: DiagnosticArguments) {"
+      },
+      "state_argument": "state"
+    },
+    {
+      "caller": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 2437,
+        "text": "relName(state, configFileName),"
+      },
+      "target": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 2290,
+        "text": "function relName<T extends BuilderProgram>(state: SolutionBuilderState<T>, path: string): string {"
+      },
+      "state_argument": "state"
+    },
+    {
+      "caller": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 2440,
+        "text": "return reportStatus("
+      },
+      "target": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 2294,
+        "text": "function reportStatus<T extends BuilderProgram>(state: SolutionBuilderState<T>, message: DiagnosticMessage, ...args: DiagnosticArguments) {"
+      },
+      "state_argument": "state"
+    },
+    {
+      "caller": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 2443,
+        "text": "relName(state, configFileName),"
+      },
+      "target": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 2290,
+        "text": "function relName<T extends BuilderProgram>(state: SolutionBuilderState<T>, path: string): string {"
+      },
+      "state_argument": "state"
+    },
+    {
+      "caller": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 2446,
+        "text": "return reportStatus("
+      },
+      "target": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 2294,
+        "text": "function reportStatus<T extends BuilderProgram>(state: SolutionBuilderState<T>, message: DiagnosticMessage, ...args: DiagnosticArguments) {"
+      },
+      "state_argument": "state"
+    },
+    {
+      "caller": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 2449,
+        "text": "relName(state, configFileName),"
+      },
+      "target": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 2290,
+        "text": "function relName<T extends BuilderProgram>(state: SolutionBuilderState<T>, path: string): string {"
+      },
+      "state_argument": "state"
+    },
+    {
+      "caller": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 2450,
+        "text": "relName(state, status.upstreamProjectName),"
+      },
+      "target": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 2290,
+        "text": "function relName<T extends BuilderProgram>(state: SolutionBuilderState<T>, path: string): string {"
+      },
+      "state_argument": "state"
+    },
+    {
+      "caller": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 2453,
+        "text": "return reportStatus("
+      },
+      "target": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 2294,
+        "text": "function reportStatus<T extends BuilderProgram>(state: SolutionBuilderState<T>, message: DiagnosticMessage, ...args: DiagnosticArguments) {"
+      },
+      "state_argument": "state"
+    },
+    {
+      "caller": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 2458,
+        "text": "relName(state, configFileName),"
+      },
+      "target": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 2290,
+        "text": "function relName<T extends BuilderProgram>(state: SolutionBuilderState<T>, path: string): string {"
+      },
+      "state_argument": "state"
+    },
+    {
+      "caller": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 2459,
+        "text": "relName(state, status.upstreamProjectName),"
+      },
+      "target": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 2290,
+        "text": "function relName<T extends BuilderProgram>(state: SolutionBuilderState<T>, path: string): string {"
+      },
+      "state_argument": "state"
+    },
+    {
+      "caller": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 2462,
+        "text": "return reportStatus("
+      },
+      "target": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 2294,
+        "text": "function reportStatus<T extends BuilderProgram>(state: SolutionBuilderState<T>, message: DiagnosticMessage, ...args: DiagnosticArguments) {"
+      },
+      "state_argument": "state"
+    },
+    {
+      "caller": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 2465,
+        "text": "relName(state, configFileName),"
+      },
+      "target": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 2290,
+        "text": "function relName<T extends BuilderProgram>(state: SolutionBuilderState<T>, path: string): string {"
+      },
+      "state_argument": "state"
+    },
+    {
+      "caller": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 2469,
+        "text": "return reportStatus("
+      },
+      "target": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 2294,
+        "text": "function reportStatus<T extends BuilderProgram>(state: SolutionBuilderState<T>, message: DiagnosticMessage, ...args: DiagnosticArguments) {"
+      },
+      "state_argument": "state"
+    },
+    {
+      "caller": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 2472,
+        "text": "relName(state, configFileName),"
+      },
+      "target": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 2290,
+        "text": "function relName<T extends BuilderProgram>(state: SolutionBuilderState<T>, path: string): string {"
+      },
+      "state_argument": "state"
+    },
+    {
+      "caller": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 2477,
+        "text": "return reportStatus("
+      },
+      "target": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 2294,
+        "text": "function reportStatus<T extends BuilderProgram>(state: SolutionBuilderState<T>, message: DiagnosticMessage, ...args: DiagnosticArguments) {"
+      },
+      "state_argument": "state"
+    },
+    {
+      "caller": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 2480,
+        "text": "relName(state, configFileName),"
+      },
+      "target": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 2290,
+        "text": "function relName<T extends BuilderProgram>(state: SolutionBuilderState<T>, path: string): string {"
+      },
+      "state_argument": "state"
+    },
+    {
+      "caller": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 2498,
+        "text": "reportUpToDateStatus(state, configFileName, status);"
+      },
+      "target": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 2360,
+        "text": "function reportUpToDateStatus<T extends BuilderProgram>(state: SolutionBuilderState<T>, configFileName: string, status: UpToDateStatus) {"
+      },
+      "state_argument": "state"
+    }
+  ]
+}
