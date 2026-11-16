@@ -77,8 +77,18 @@ type suiteMember struct {
 	Threads  []int    `json:"threads"`
 	Findings []string `json:"findings"`
 	Path     string   `json:"path"`
-	Branch   string   `json:"branch"`
-	Note     string   `json:"note"`
+	// Input, when set, is a file the program reads, named by its first argument: made once, before any
+	// timing, by running the generator (a bench/ program, built natively by the baseline's compiler)
+	// with the size as its argument, so making it is never inside a timed run (Language on #re2xhwa).
+	Input  *programInput `json:"input"`
+	Branch string        `json:"branch"`
+	Note   string        `json:"note"`
+}
+
+// A programInput is how a program's input file is made.
+type programInput struct {
+	Generator string `json:"generator"`
+	Size      int    `json:"size"`
 }
 
 // A retiredMember left a suite by a ruling, which names why.
@@ -94,6 +104,8 @@ type compareEntry struct {
 	program     program
 	judge       string
 	environment []string
+	input       *programInput
+	arguments   []string // the input file's path, once made
 	baseline    string
 	candidate   string
 	failure     string // why it can't be compared, from a build
@@ -248,6 +260,27 @@ func compareCommits(request compareRequest) {
 		}
 		built[entry.program.source] = *entry
 	}
+	// Each input is made once, by the generator built with the baseline's compiler, before any sample.
+	inputs := map[string]string{}
+	for index := range entries {
+		entry := &entries[index]
+		if entry.input == nil || entry.failure != "" {
+			continue
+		}
+		key := fmt.Sprintf("%s-%d", strings.ReplaceAll(entry.input.Generator, "/", "_"), entry.input.Size)
+		if path, made := inputs[key]; made {
+			entry.arguments = []string{path}
+			continue
+		}
+		path, err := makeInput(directory, work, baselineAdamic, *entry.input, key)
+		if err != nil {
+			entry.failure = err.Error()
+			continue
+		}
+		inputs[key] = path
+		entry.arguments = []string{path}
+		fmt.Printf("input %s: %s at size %d\n", path, entry.input.Generator, entry.input.Size)
+	}
 	// Whether each row's two binaries are byte for byte the same: in an A/A run they should be, so a
 	// verdict there is the machine or the harness, never the compiler.
 	identical, differing := []string{}, []string{}
@@ -284,7 +317,7 @@ func compareCommits(request compareRequest) {
 			if entry.failure != "" || stopped[index] {
 				continue
 			}
-			commands := [3][]string{{entry.baseline}, {entry.candidate}, nodeCommand(entry.program, root)}
+			commands := [3][]string{append([]string{entry.baseline}, entry.arguments...), append([]string{entry.candidate}, entry.arguments...), append(nodeCommand(entry.program, root), entry.arguments...)}
 			settings := [3][]string{entry.environment, entry.environment, nil}
 			taken := [3]measurement{}
 			for _, runner := range order {
@@ -464,7 +497,7 @@ func compareEntries(directory string, members []suiteMember) ([]compareEntry, er
 		if judgeOn == "" {
 			judgeOn = "user"
 		}
-		rows := []compareEntry{{program: program{name: member.Name, source: sources[0], adamic: importsAdamic(string(contents))}, judge: judgeOn}}
+		rows := []compareEntry{{program: program{name: member.Name, source: sources[0], adamic: importsAdamic(string(contents))}, judge: judgeOn, input: member.Input}}
 		if len(member.Threads) > 0 {
 			rows = []compareEntry{}
 			for _, threads := range member.Threads {
@@ -711,6 +744,44 @@ func layCohere(root, tree, commit string) error {
 		return fmt.Errorf("clearing the worktree's empty cohere: %w", err)
 	}
 	return os.Symlink(filepath.Join(root, "cohere"), target)
+}
+
+// makeInput builds an input's generator natively and runs it once with the size as its argument, its
+// standard output becoming the input file.
+func makeInput(directory, work, adamic string, input programInput, key string) (string, error) {
+	sources := []string{}
+	for _, extension := range []string{".ts", ".a"} {
+		source := filepath.Join(directory, filepath.FromSlash(input.Generator)+extension)
+		if _, err := os.Stat(source); err == nil {
+			sources = append(sources, source)
+		}
+	}
+	if len(sources) != 1 {
+		return "", fmt.Errorf("input generator %s must be exactly one of bench/%s.ts and bench/%s.a; found %d", input.Generator, input.Generator, input.Generator, len(sources))
+	}
+	if input.Size < 1 {
+		return "", fmt.Errorf("input of %s: size must be positive, not %d", input.Generator, input.Size)
+	}
+	if err := os.MkdirAll(filepath.Join(work, "inputs"), 0755); err != nil {
+		return "", err
+	}
+	generator := filepath.Join(work, "inputs", key+".generator")
+	if output, err := exec.Command(adamic, "build", sources[0], "-o", generator).CombinedOutput(); err != nil {
+		return "", fmt.Errorf("building the input generator %s failed: %v %s", input.Generator, err, firstLine(string(output)))
+	}
+	path := filepath.Join(work, "inputs", key+".txt")
+	file, err := os.Create(path)
+	if err != nil {
+		return "", err
+	}
+	defer file.Close()
+	var stderr strings.Builder
+	command := exec.Command(generator, strconv.Itoa(input.Size))
+	command.Stdout, command.Stderr = file, &stderr
+	if err := command.Run(); err != nil {
+		return "", fmt.Errorf("making the input with %s at size %d failed: %v %s", input.Generator, input.Size, err, firstLine(stderr.String()))
+	}
+	return path, nil
 }
 
 // plantedCopy writes a copy of a source with a plant of milliseconds appended.

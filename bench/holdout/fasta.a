@@ -27,7 +27,7 @@
 // Ported to Adamic for the speed holdout (#re2xhwa). The algorithm, the data and the output are the
 // original's. Each change is one the language makes, and a comment marked "Adamic:" says which.
 // Input size: n = 25,000,000, the game's, unless a first argument names another. fasta is also the
-// generator of the input k-nucleotide, regex-redux and reverse-complement read (inputs.json).
+// generator of the input k-nucleotide, regex-redux and reverse-complement read (the holdout suite in bench/suites.json).
 import { panic, programArguments } from 'adamic';
 
 // Adamic: `var` becomes `let` or `const` throughout, since 0.1 has no `var`.
@@ -127,7 +127,7 @@ function fastaRandom(n: number, table: Record<string, number>): void {
 
 // Adamic: with no argument the size is the game's, fixed here, so fasta's own timed run has no input
 // at all. With one, it's read as a decimal integer, where the original reads `+process.argv[2]`: the comparison tool runs fasta
-// that way to make the input of the programs that read fasta's output, at the sizes inputs.json names.
+// that way to make the input of the programs that read fasta's output, at the sizes the holdout suite in bench/suites.json names.
 const sizeArgument = programArguments()[0];
 const n = sizeArgument === undefined ? 25000000 : Number.parseInt(sizeArgument, 10);
 

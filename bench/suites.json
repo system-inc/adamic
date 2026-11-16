@@ -35,9 +35,16 @@
 		},
 		"holdout": {
 			"rule": "every Benchmarks Game program with a JavaScript entry that everyday doesn't already cover",
-			"revision": "",
-			"programs": [],
-			"note": "filled by the holdout port (Brief B)"
+			"revision": "benchmarksgame-sourcecode.zip at salsa.debian.org/benchmarksgame-team/benchmarksgame 40296663ed350d5fe4a6ab5e367bab61cb77c219",
+			"programs": [
+				{ "name": "holdout/fannkuchredux" },
+				{ "name": "holdout/fasta" },
+				{ "name": "holdout/knucleotide", "input": { "generator": "holdout/fasta", "size": 25000000 } },
+				{ "name": "holdout/mandelbrot", "note": "32,000,000 one-byte writes to stdout: a syscall each on Node, buffered natively, so read any number beside that" },
+				{ "name": "holdout/regexredux", "input": { "generator": "holdout/fasta", "size": 5000000 } },
+				{ "name": "holdout/revcomp", "input": { "generator": "holdout/fasta", "size": 25000000 } }
+			],
+			"note": "ported in bench/holdout/ (its README); pidigits is refused until bigint. Runs only at a release or before a claim, and no change is tuned on its numbers"
 		},
 		"claim": {
 			"rule": "the 1.0.0 claim's workload: native tsc's full check of src/compiler (#vmztnxh)",
