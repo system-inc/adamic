@@ -296,6 +296,7 @@ func (l *lowering) expression(node *ast.Node) (ir.Expression, error) {
 	value, err := l.value(node)
 	if err == nil {
 		value = l.graphAllocation(value, node)
+		l.noteLooseInit(node)
 		if err := l.noteViewArrayStorage(node, value); err != nil {
 			return nil, err
 		}

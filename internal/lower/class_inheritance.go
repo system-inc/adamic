@@ -18,6 +18,7 @@ func (l *lowering) baseInstance(declaration *ast.Node, classType *checker.Type) 
 		}
 		types := clause.AsHeritageClause().Types.Nodes
 		if len(types) != 1 || !ast.IsIdentifier(ast.SkipParentheses(types[0].AsExpressionWithTypeArguments().Expression)) {
+			// Lifting this stop reopens a road into a catch, which the catch narrowing stands on (looseCaughtRoad, loose_slots.go).
 			return nil, l.notYet(clause, "a computed class base; name the base class directly")
 		}
 		bases := l.classBases(classType)
@@ -27,6 +28,8 @@ func (l *lowering) baseInstance(declaration *ast.Node, classType *checker.Type) 
 		baseType := bases[0]
 		symbol := baseType.Symbol()
 		if symbol == nil || len(symbol.Declarations) != 1 || symbol.Declarations[0].Kind != ast.KindClassDeclaration {
+			// class ... extends Error stops here. Lifting this stop reopens a road into a catch, which the catch
+			// narrowing stands on (looseCaughtRoad, loose_slots.go).
 			return nil, l.notYet(clause, "a base that isn't a declared class")
 		}
 		base := symbol.Declarations[0]

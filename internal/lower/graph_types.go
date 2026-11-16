@@ -127,6 +127,11 @@ func (f *cycleFinder) graphTypes(modules []*ast.SourceFile) error {
 			seeds[cycleNode{cell: local + 1}] = true
 		}
 	}
+	// A cycle through a slot typed unknown or object is one no seed above can see, in every program, graph
+	// or not (loose_slots.go).
+	if err := f.looseSlotStop(); err != nil {
+		return err
+	}
 	if len(seeds) == 0 {
 		return nil
 	}
