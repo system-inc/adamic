@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"strings"
 	"testing"
+	"time"
 
 	"github.com/microsoft/TypeScript/tsc/shim/ast"
 	"github.com/microsoft/TypeScript/tsc/shim/checker"
@@ -478,5 +479,67 @@ if (typeof v === 'function') console.log(typeof v());
 				t.Fatalf("(() => number) | Box -> (() => number | string) | Box: got %v, want NotYet at %s", err, want)
 			}
 		})
+	}
+}
+
+// TestUnionKeepingRepeatingLapFinishes pins the open-pair path set (#ttq1599): a union whose member
+// is, or holds, a function taking that same union comes back to one storage pair at every lap
+// through callableKeeping's ordinary walk, whose union block starts a fresh visited, and its types
+// never grow, so the nesting bound never says no. Lower's F and G (on #xmnp0x8) are the member road,
+// and K and Twin the field road. Each walk runs under a deadline, so a regression fails this test
+// rather than the package.
+func TestUnionKeepingRepeatingLapFinishes(t *testing.T) {
+	t.Parallel()
+	shapes := map[string]string{
+		"member": `interface Box { readonly v: number }
+type F = ((x: F | number) => string) | Box;
+type G = ((x: G | number) => string) | Box;
+declare const from: F;
+declare const to: G;`,
+		"field": `type K = { readonly kind: 'v'; readonly f: (x: K | number) => string } | { readonly kind: 'w' };
+type Twin = { readonly kind: 'v'; readonly f: (x: Twin | number) => string } | { readonly kind: 'w' };
+declare const from: K;
+declare const to: Twin;`,
+	}
+	for name, source := range shapes {
+		for _, extension := range []string{".a", ".ts"} {
+			t.Run(name+extension, func(t *testing.T) {
+				program, err := load.Load([]string{writeAgreementSource(t, "main"+extension, source)})
+				if err != nil {
+					t.Fatal(err)
+				}
+				checked, release := program.Checker(t.Context(), program.Files()[0])
+				defer release()
+				var from, to *checker.Type
+				var visit ast.Visitor
+				visit = func(node *ast.Node) bool {
+					if ast.IsIdentifier(node) {
+						switch node.Text() {
+						case "from":
+							from = checked.GetTypeAtLocation(node)
+						case "to":
+							to = checked.GetTypeAtLocation(node)
+						}
+					}
+					return node.ForEachChild(visit)
+				}
+				program.Files()[0].Node.ForEachChild(visit)
+				if from == nil || to == nil {
+					t.Fatalf("missing the %s lap's union types", name)
+				}
+				l := &lowering{program: program, checker: checked}
+				done := make(chan bool, 1)
+				go func() { done <- l.sameKeepingWalk(from, to, map[[2]*checker.Type]bool{}) }()
+				select {
+				case same := <-done:
+					// The twins keep every slot alike, so the coinductive answer is same.
+					if !same {
+						t.Fatalf("%s lap: got not same, want same for twins that keep every slot alike", name)
+					}
+				case <-time.After(60 * time.Second):
+					t.Fatalf("%s lap: the keeping walk didn't finish in 60 s", name)
+				}
+			})
+		}
 	}
 }

@@ -153,3 +153,19 @@ The result twin `(() => number) | Box` to `(() => number | string) | Box`
 also stops at the view. Its top-level scalar-result view stops the same way
 at `1:61`; the union member follows the ordinary callable rule. Two or more
 callable members retain the combined-signature behavior left to #q6wf1bp.
+
+## Repeating lap through a callable slot (#ttq1599)
+
+Remove the open-pair check at the top of `sameKeepingStorage` (the `nesting.open[pair]`
+early return and the set's bookkeeping), so a storage pair already open on the walk's
+path is compared again.
+
+```
+go test -count=1 -v -timeout 5m -run '^TestUnionKeepingRepeatingLapFinishes$' ./internal/lower/
+```
+
+Expected: `TestUnionKeepingRepeatingLapFinishes/member.a`, `member.ts`, `field.a` and
+`field.ts` each fail with "the keeping walk didn't finish in 60 s", or the process stops
+on Go's stack limit first. Either one is red. The types repeat with the same ids every
+lap, so the nesting bound never says no, and the ordinary union block's fresh visited
+never sees the pair again.
