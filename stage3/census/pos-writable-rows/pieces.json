@@ -504,5 +504,27 @@
     "raw_sha256": "c6a549e28d260d59032eb566fc8f4aee8106324f1dc2277a37c582ee5aa5d04f",
     "started_utc": "2026-11-16T18:03:33.202113+00:00",
     "wall_seconds": 230.74449342699972
+  },
+  {
+    "complete": true,
+    "ended_utc": "2026-11-16T18:09:03.303308+00:00",
+    "error": "",
+    "exit_code": 0,
+    "file": "src/compiler/transformers/declarations/diagnostics.ts",
+    "log": "/workspace/scratch/aryr7ea/raw/src__compiler__transformers__declarations__diagnostics.ts.log",
+    "raw_sha256": "a537ae5eeee0f7d55e2029fdf287efa47dd80e1458fd2dfc6fd59a766fbb2d62",
+    "started_utc": "2026-11-16T18:07:23.995759+00:00",
+    "wall_seconds": 99.3074728620004
+  },
+  {
+    "complete": true,
+    "ended_utc": "2026-11-16T18:09:11.055183+00:00",
+    "error": "",
+    "exit_code": 0,
+    "file": "src/compiler/transformers/destructuring.ts",
+    "log": "/workspace/scratch/aryr7ea/raw/src__compiler__transformers__destructuring.ts.log",
+    "raw_sha256": "8a96aaf334383f588d0c67a3bafe99d73958802fcd575a23cb723b9ae32b9250",
+    "started_utc": "2026-11-16T18:07:42.896452+00:00",
+    "wall_seconds": 88.1586384229995
   }
 ]
