@@ -181,6 +181,14 @@ func (f *cycleFinder) graphFlows() error {
 	slot := func(site int, name string, argument int) bool {
 		return graphType(slotType(site, name, argument))
 	}
+	// recordSlot is the value type of the record a write site writes into, or nil when its holder isn't
+	// a record (#1vb0x5s).
+	recordSlot := func(site int) *checker.Type {
+		if site <= 0 || site > len(f.l.writeSites) {
+			return nil
+		}
+		return f.l.recordElement(f.l.writeSites[site-1].holder)
+	}
 	// A counted aggregate can have graph-typed fields/elements. Seed those
 	// initializer slots individually, rather than promoting its whole payload.
 	returns := map[int]*checker.Type{}
@@ -227,6 +235,15 @@ func (f *cycleFinder) graphFlows() error {
 				for _, entry := range value.Entries {
 					members(entry[0], arguments[0], at)
 					members(entry[1], arguments[1], at)
+				}
+			}
+		case ir.RecordLiteral:
+			// A new record's entries are written into it as it's made, each by the value type of the record
+			// it's held as, every record arm's of a union; its spread's values were planned where they were
+			// stored (#1vb0x5s).
+			for _, element := range f.recordElements(proven) {
+				for _, entry := range value.Entries {
+					members(entry.Value, element, at)
 				}
 			}
 		case ir.Conditional:
@@ -288,10 +305,33 @@ func (f *cycleFinder) graphFlows() error {
 				}
 			// A slot write is seeded through members, as a declaration's value is, so a literal written
 			// there seeds its own graph-typed parts too: new Map's entries among them (#dnb0yhj, s1).
+			// A SetProperty or a SetIndex whose holder is a record writes its value into the record's table,
+			// by the record's value type. Neither does today: a record's writes are RecordCall's and
+			// RecordCoalesce's below, and the entries form's SetProperty{Record} is refused in a graph
+			// program with its ObjectLiteral{Record} (graphAdoptionBoundary).
 			case ir.SetProperty:
-				members(value.Value, slotType(value.Site, value.Name, 0), graphDemand{site: value.Site})
+				proven := slotType(value.Site, value.Name, 0)
+				if proven == nil {
+					proven = recordSlot(value.Site)
+				}
+				members(value.Value, proven, graphDemand{site: value.Site})
 			case ir.SetIndex:
-				members(value.Value, slotType(value.Site, "", 0), graphDemand{site: value.Site})
+				proven := slotType(value.Site, "", 0)
+				if proven == nil {
+					proven = recordSlot(value.Site)
+				}
+				members(value.Value, proven, graphDemand{site: value.Site})
+			// A record's writes store into its table, the runtime taking what they store into a graph
+			// record's region (runtime record.c's take_in): set's and defineHidden's value, Arguments[2],
+			// and ??='s Value, each demanded at its write site by the record's value type, as a Map's value
+			// is (#1vb0x5s). A record's delete stores nothing. Object.assign never takes a record target (it
+			// stops, records.go's recordObjectCallArguments), and no other library call writes one.
+			case ir.RecordCall:
+				if (value.Method == "set" || value.Method == "defineHidden") && len(value.Arguments) == 3 {
+					members(value.Arguments[2], recordSlot(value.Site), graphDemand{site: value.Site})
+				}
+			case ir.RecordCoalesce:
+				members(value.Value, recordSlot(value.Site), graphDemand{site: value.Site})
 			case ir.ArrayPush:
 				members(value.Value, slotType(value.Site, "", 0), graphDemand{site: value.Site})
 			// fill in place and splice's inserted items write into the array as a push does (#dnb0yhj,

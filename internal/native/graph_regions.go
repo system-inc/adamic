@@ -14,14 +14,20 @@ func (e *emitter) adoptGraph(value, bytes string, graph bool) {
 }
 
 func (e *emitter) adoptGraphObject(value string, literal ir.ObjectLiteral) {
+	e.adoptGraph(value, fmt.Sprintf("adamic_object_allocation_size(%s)", value), e.graphObject(literal))
+}
+
+// graphObject reports whether adoptGraphObject adopts literal's object: a graph type or a graph class's,
+// never a Program region's.
+func (e *emitter) graphObject(literal ir.ObjectLiteral) bool {
 	if literal.ProgramRegion {
-		return
+		return false
 	}
 	graph := e.graphTypes(literal.GraphTypes)
 	if literal.Class != 0 {
 		graph = graph || e.program.Classes[literal.Class-1].Graph
 	}
-	e.adoptGraph(value, fmt.Sprintf("adamic_object_allocation_size(%s)", value), graph)
+	return graph
 }
 
 // The runtime decides boundary ownership from both actual allocations. This
