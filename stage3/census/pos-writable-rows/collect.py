@@ -6,7 +6,8 @@ HERE=pathlib.Path(__file__).resolve().parent
 ROOT=HERE.parents[2]
 FAMILY=', whose readonly field pos becomes writable:'
 def utc(): return datetime.datetime.now(datetime.timezone.utc).isoformat()
-def dump(path,data): path.write_text(json.dumps(data,indent=2,sort_keys=True)+'\n')
+def dump(path,data):
+    temp=path.with_suffix(path.suffix+'.tmp'); temp.write_text(json.dumps(data,indent=2,sort_keys=True)+'\n'); temp.replace(path)
 def render(scratch):
     states=[json.loads(p.read_text()) for p in sorted((scratch/'pieces').glob('*.json'))]
     counts=Counter(); values={}; meterkeys=set()
@@ -25,7 +26,7 @@ def render(scratch):
     manifest=json.loads((scratch/'manifest.json').read_text())
     meterpath=ROOT/'stage3/meter/runs/20261115T131735Z.PG4H0R/main/report.json'
     meter=json.loads(meterpath.read_text()); reasons={k:v for k,v in meter['latent_lowering']['per_reason'].items() if k.startswith('Refused: ') and FAMILY in k}
-    targets=Counter(); callers=Counter(); kinds=Counter()
+    targets=Counter({k:0 for k in ('TextRange','SourceMapRange | undefined','TextRange | undefined','Mutable<Node>','others')}); callers=Counter(); kinds=Counter()
     for r in rows:
         target=r['reason'].split(' seen as ',1)[1].split(FAMILY,1)[0]
         targets[target if target in ('TextRange','SourceMapRange | undefined','TextRange | undefined','Mutable<Node>') else 'others']+=1
@@ -143,14 +144,16 @@ def main():
     manifest=s/'manifest.json'
     if not manifest.exists():
         files=sorted(str(p.relative_to(s/'adapted')) for p in (s/'adapted/src/compiler').rglob('*.ts'))
-        dump(manifest,dict(sha=subprocess.check_output(['git','rev-parse','HEAD'],cwd=ROOT,text=True).strip(),started_utc=utc(),files=files,source_sha256={f:hashlib.sha256((s/'adapted'/f).read_bytes()).hexdigest() for f in files}))
+        dump(manifest,dict(sha='c41391ea3346727231dfa3472d061826e26f6aad',started_utc=utc(),files=files,source_sha256={f:hashlib.sha256((s/'adapted'/f).read_bytes()).hexdigest() for f in files}))
     if args.render: render(s); return
     files=[f for f in json.loads(manifest.read_text())['files'] if not (s/'pieces'/(f.replace('/','__')+'.json')).exists()]
     if args.limit: files=files[:args.limit]
     for i in range(0,len(files),3):
-        with concurrent.futures.ThreadPoolExecutor(max_workers=3) as pool: list(pool.map(lambda f:one(f,s),files[i:i+3]))
-        render(s)
-        subprocess.run(['git','add','stage3/census/pos-writable-rows'],cwd=ROOT,check=True)
-        subprocess.run(['git','commit','-m',f'census: checkpoint pos-writable rows through batch {i//3+1}'],cwd=ROOT,check=True)
-        subprocess.run(['git','push','origin','HEAD:refs/heads/typescript/pos-writable-rows'],cwd=ROOT,check=True,timeout=90)
+        with concurrent.futures.ThreadPoolExecutor(max_workers=3) as pool:
+            pending=[pool.submit(one,f,s) for f in files[i:i+3]]
+            for future in concurrent.futures.as_completed(pending):
+                future.result(); render(s)
+                subprocess.run(['git','add','stage3/census/pos-writable-rows'],cwd=ROOT,check=True)
+                subprocess.run(['git','commit','-m',f'census: checkpoint pos-writable rows in batch {i//3+1}'],cwd=ROOT,check=True)
+                subprocess.run(['git','push','origin','HEAD:refs/heads/typescript/pos-writable-rows'],cwd=ROOT,check=False,timeout=90)
 if __name__=='__main__': main()
