@@ -8,5 +8,54 @@
     "emitter": "internal/lower/refusals.go:105-106 -> internal/lower/library_string.go:401-417 (rule 3100) -> internal/lower/invariance.go:574,611-620,725,1138-1178; parameter comparison at 228-238",
     "source_review": "The adapted line is the watchFile shorthand in the nodeSystem object inside getNodeSystem. The source function takes a required PollingInterval; System.watchFile declares an optional number parameter. 93-builtin-imports/proofs/targets.json names and hashes getNodeSystem; 99-wasm-crypto-import/proofs/targets.json pins its ownerBeforeText and ownerAfterText. 92-tty-host-results pins two other nested methods in that scope, not this shorthand. No getFirstJSDocTag owner was found by the owners.json/targets.json search.",
     "host_runtime": "This is a source-level parameter-variance refusal, not a node:*, process, host-member, or runtime-execution stop. watchFile here is a TypeScript function being stored in the source-defined System contract, even though the surrounding object implements the Node system."
+  },
+  {
+    "where": "-",
+    "kind": "accepted",
+    "reason": "-",
+    "phase": "accepted",
+    "owner": "lower.LowerWithOptions (accepted; no stop)",
+    "emitter": "lower.LowerWithOptions (accepted; no stop)"
+  },
+  {
+    "where": "commandLineParser.ts:293:35",
+    "kind": "NotYet",
+    "reason": "reading an enum before its runtime initialization; move the call after the enum declaration",
+    "phase": "initialization preflight (before refusal scan and expression lowering)",
+    "owner": "internal/lower/namespaces.go: (*lowering).namespaceInitialization",
+    "emitter": "internal/lower/lower.go:138 -> internal/lower/namespaces.go:279-290 (namespaceInitialization)",
+    "source_review": "This source enum/namespace initialization read retains its baseline first-stop tuple.",
+    "host_runtime": "This is a static source initialization-order stop. It is not a node:*, process, or host-member refusal; no runtime execution was measured."
+  },
+  {
+    "where": "diagnosticInformationMap.generated.ts:13:45",
+    "kind": "NotYet",
+    "reason": "reading an enum before its runtime initialization; move the call after the enum declaration",
+    "phase": "initialization preflight (before refusal scan and expression lowering)",
+    "owner": "internal/lower/namespaces.go: (*lowering).namespaceInitialization",
+    "emitter": "internal/lower/lower.go:138 -> internal/lower/namespaces.go:279-290 (namespaceInitialization)",
+    "source_review": "This source enum/namespace initialization read retains its baseline first-stop tuple.",
+    "host_runtime": "This is a static source initialization-order stop. It is not a node:*, process, or host-member refusal; no runtime execution was measured."
+  },
+  {
+    "where": "semver.ts:71:9",
+    "kind": "NotYet",
+    "reason": "a namespace read before runtime initialization, directly or through a reachable call; move that read or call after the namespace declaration",
+    "phase": "initialization preflight (before refusal scan and expression lowering)",
+    "owner": "internal/lower/namespaces.go: (*lowering).namespaceInitialization",
+    "emitter": "internal/lower/lower.go:138 -> internal/lower/namespaces.go:279-290 (namespaceInitialization)",
+    "source_review": "This source enum/namespace initialization read retains its baseline first-stop tuple.",
+    "host_runtime": "This is a static source initialization-order stop. It is not a node:*, process, or host-member refusal; no runtime execution was measured."
+  },
+  {
+    "where": "utilitiesPublic.ts:1284:52",
+    "kind": "Refused",
+    "reason": "an unproven predicate argument for parameter predicate (argument \"predicate\")",
+    "phase": "refusal_scan (predicate contracts)",
+    "owner": "internal/lower/predicates.go: (*lowering).predicateArgumentProof (getFirstJSDocTag)",
+    "emitter": "internal/lower/lower.go:142 -> internal/lower/refusals.go:83 -> internal/lower/predicates.go:711,777-798 (predicateArguments / predicateArgumentProof)",
+    "owner_basis": "The measured adapted line 1284 is the predicate argument in getFirstJSDocTag. The pinned refusal scan checks predicate arguments before expression lowering. No owners.json object explicitly owns getFirstJSDocTag (ownership-search.json).",
+    "source_review": "The predicate argument in getFirstJSDocTag retains the baseline tuple. Searching every stage3/adapt owners.json and targets.json found no getFirstJSDocTag owner pin; see ownership-search.json and ownership-grep.txt.",
+    "host_runtime": "This is a source predicate-contract refusal, not a node:*, process, host-member, or runtime-execution stop."
   }
 ]

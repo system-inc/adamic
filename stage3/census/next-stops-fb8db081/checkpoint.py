@@ -22,5 +22,5 @@ def run(args):
  rc=subprocess.call(args);print('checkpoint child_exit='+str(rc),flush=True)
  if rc:sys.exit(rc)
 run(['git','add',str(base)])
-run(['git','commit','-m',f'census: {revision} {mode} checkpoint {len(rows)}/79 roots'])
+run(['git','commit','--quiet','-m',f'census: {revision} {mode} checkpoint {len(rows)}/79 roots'])
 run(['git','push','origin','HEAD:refs/heads/typescript/next-stops-fb8db081-checkpoint'])
