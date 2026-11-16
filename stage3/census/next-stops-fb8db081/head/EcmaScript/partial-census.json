@@ -595,5 +595,105 @@
     "where": "/workspace/scratch/next-stops-fb8db081/adapted/src/compiler/sys.ts:1473:35",
     "reason": "node:module.__filename and __dirname: CommonJS module values with no ES-module or reproducible native answer yet (fix: pass the module's path in from where the program is started)",
     "seconds": 17.80862707
+  },
+  {
+    "module_format": "EcmaScript",
+    "roots": [
+      "/workspace/scratch/next-stops-fb8db081/adapted/src/compiler/transformers/legacyDecorators.ts"
+    ],
+    "kind": "NotYet",
+    "where": "/workspace/scratch/next-stops-fb8db081/adapted/src/compiler/sys.ts:1473:35",
+    "reason": "node:module.__filename and __dirname: CommonJS module values with no ES-module or reproducible native answer yet (fix: pass the module's path in from where the program is started)",
+    "seconds": 21.354676512
+  },
+  {
+    "module_format": "EcmaScript",
+    "roots": [
+      "/workspace/scratch/next-stops-fb8db081/adapted/src/compiler/transformers/module/esnextAnd2015.ts"
+    ],
+    "kind": "NotYet",
+    "where": "/workspace/scratch/next-stops-fb8db081/adapted/src/compiler/sys.ts:1473:35",
+    "reason": "node:module.__filename and __dirname: CommonJS module values with no ES-module or reproducible native answer yet (fix: pass the module's path in from where the program is started)",
+    "seconds": 21.275865989
+  },
+  {
+    "module_format": "EcmaScript",
+    "roots": [
+      "/workspace/scratch/next-stops-fb8db081/adapted/src/compiler/transformers/module/impliedNodeFormatDependent.ts"
+    ],
+    "kind": "NotYet",
+    "where": "/workspace/scratch/next-stops-fb8db081/adapted/src/compiler/sys.ts:1473:35",
+    "reason": "node:module.__filename and __dirname: CommonJS module values with no ES-module or reproducible native answer yet (fix: pass the module's path in from where the program is started)",
+    "seconds": 19.882936631
+  },
+  {
+    "module_format": "EcmaScript",
+    "roots": [
+      "/workspace/scratch/next-stops-fb8db081/adapted/src/compiler/transformers/module/module.ts"
+    ],
+    "kind": "NotYet",
+    "where": "/workspace/scratch/next-stops-fb8db081/adapted/src/compiler/sys.ts:1473:35",
+    "reason": "node:module.__filename and __dirname: CommonJS module values with no ES-module or reproducible native answer yet (fix: pass the module's path in from where the program is started)",
+    "seconds": 19.634288434
+  },
+  {
+    "module_format": "EcmaScript",
+    "roots": [
+      "/workspace/scratch/next-stops-fb8db081/adapted/src/compiler/transformers/module/system.ts"
+    ],
+    "kind": "NotYet",
+    "where": "/workspace/scratch/next-stops-fb8db081/adapted/src/compiler/sys.ts:1473:35",
+    "reason": "node:module.__filename and __dirname: CommonJS module values with no ES-module or reproducible native answer yet (fix: pass the module's path in from where the program is started)",
+    "seconds": 18.460144441
+  },
+  {
+    "module_format": "EcmaScript",
+    "roots": [
+      "/workspace/scratch/next-stops-fb8db081/adapted/src/compiler/transformers/namedEvaluation.ts"
+    ],
+    "kind": "NotYet",
+    "where": "/workspace/scratch/next-stops-fb8db081/adapted/src/compiler/sys.ts:1473:35",
+    "reason": "node:module.__filename and __dirname: CommonJS module values with no ES-module or reproducible native answer yet (fix: pass the module's path in from where the program is started)",
+    "seconds": 19.338695748
+  },
+  {
+    "module_format": "EcmaScript",
+    "roots": [
+      "/workspace/scratch/next-stops-fb8db081/adapted/src/compiler/transformers/taggedTemplate.ts"
+    ],
+    "kind": "NotYet",
+    "where": "/workspace/scratch/next-stops-fb8db081/adapted/src/compiler/sys.ts:1473:35",
+    "reason": "node:module.__filename and __dirname: CommonJS module values with no ES-module or reproducible native answer yet (fix: pass the module's path in from where the program is started)",
+    "seconds": 19.552140641
+  },
+  {
+    "module_format": "EcmaScript",
+    "roots": [
+      "/workspace/scratch/next-stops-fb8db081/adapted/src/compiler/transformers/ts.ts"
+    ],
+    "kind": "NotYet",
+    "where": "/workspace/scratch/next-stops-fb8db081/adapted/src/compiler/sys.ts:1473:35",
+    "reason": "node:module.__filename and __dirname: CommonJS module values with no ES-module or reproducible native answer yet (fix: pass the module's path in from where the program is started)",
+    "seconds": 19.024040746
+  },
+  {
+    "module_format": "EcmaScript",
+    "roots": [
+      "/workspace/scratch/next-stops-fb8db081/adapted/src/compiler/transformers/typeSerializer.ts"
+    ],
+    "kind": "NotYet",
+    "where": "/workspace/scratch/next-stops-fb8db081/adapted/src/compiler/sys.ts:1473:35",
+    "reason": "node:module.__filename and __dirname: CommonJS module values with no ES-module or reproducible native answer yet (fix: pass the module's path in from where the program is started)",
+    "seconds": 20.547480356
+  },
+  {
+    "module_format": "EcmaScript",
+    "roots": [
+      "/workspace/scratch/next-stops-fb8db081/adapted/src/compiler/transformers/utilities.ts"
+    ],
+    "kind": "NotYet",
+    "where": "/workspace/scratch/next-stops-fb8db081/adapted/src/compiler/sys.ts:1473:35",
+    "reason": "node:module.__filename and __dirname: CommonJS module values with no ES-module or reproducible native answer yet (fix: pass the module's path in from where the program is started)",
+    "seconds": 16.455015595
   }
 ]
