@@ -397,6 +397,17 @@
   },
   {
     "complete": true,
+    "ended_utc": "2026-11-16T18:00:30.953272+00:00",
+    "error": "",
+    "exit_code": 0,
+    "file": "src/compiler/scanner.ts",
+    "log": "/workspace/scratch/aryr7ea/raw/src__compiler__scanner.ts.log",
+    "raw_sha256": "584ab1f0a9c76d0dce00be3e7d806ba777c0ae014ca054ee336ca3077f60d39f",
+    "started_utc": "2026-11-16T17:52:20.545882+00:00",
+    "wall_seconds": 490.40724458800014
+  },
+  {
+    "complete": true,
     "ended_utc": "2026-11-16T17:55:30.970701+00:00",
     "error": "",
     "exit_code": 0,
@@ -416,5 +427,16 @@
     "raw_sha256": "4ea0c65859f76446305af4abdbbd43e746e31f7994f5216ef05be6526ecf351e",
     "started_utc": "2026-11-16T17:55:30.973662+00:00",
     "wall_seconds": 153.56154580900056
+  },
+  {
+    "complete": true,
+    "ended_utc": "2026-11-16T17:59:20.332814+00:00",
+    "error": "",
+    "exit_code": 0,
+    "file": "src/compiler/symbolWalker.ts",
+    "log": "/workspace/scratch/aryr7ea/raw/src__compiler__symbolWalker.ts.log",
+    "raw_sha256": "1ea068627cf8470552b145a8d38e5ece9ea8cf857e3b33e4ee54cfab22219363",
+    "started_utc": "2026-11-16T17:58:04.566160+00:00",
+    "wall_seconds": 75.76622051899994
   }
 ]
