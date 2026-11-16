@@ -58,8 +58,17 @@ build() {
 
 builds=(head)
 heads=("$(git rev-parse HEAD)")
+# A build's own log dies with a job's temporary directory, so a failure prints the step that failed and its
+# last 40 lines, the submodules' log when that step is where it stopped.
+explain() {
+	local log
+	for log in "$logs/submodules.log" "$logs/build-$1.log"; do
+		[ -s "$log" ] && { echo "run.sh: $(basename "$log"), its last 40 lines:" >&2; tail -40 "$log" >&2; }
+	done
+}
 if ! build "$root" "$work/head"; then
 	echo "run.sh: the head didn't build; see $logs/build-head.log" >&2
+	explain head
 	exit 2
 fi
 if [ -n "$against" ]; then
