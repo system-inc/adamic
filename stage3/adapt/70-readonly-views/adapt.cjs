@@ -29,6 +29,7 @@ const selected = [
     { file: 'src/compiler/moduleSpecifiers.ts', declaration: 'ModuleSpecifierResult', member: 'kind' },
     { file: 'src/compiler/moduleSpecifiers.ts', declaration: 'ModuleSpecifierResult', member: 'moduleSpecifiers' },
     { file: 'src/compiler/moduleSpecifiers.ts', declaration: 'ModuleSpecifierResult', member: 'computedWithoutCache' },
+    { file: 'src/compiler/types.ts', declaration: 'DiagnosticRelatedInformation', member: 'file', public: true },
 ];
 const parameters = require('./parameter-audit.cjs')(program, checker, tree, [
     { file: 'src/compiler/utilities.ts', function: 'createDiagnosticForRange', parameter: 'range' },
@@ -69,10 +70,11 @@ const owners = selected.map(spec => {
     find(file);
     if (declarations.length !== 1) throw new Error(`expected one declaration: ${spec.declaration}`);
     const declaration = declarations[0];
-    // An exported declaration must be explicitly internal. An unexported alias
-    // stays local; this does not infer public API permission from optionality.
+    // An exported declaration must be explicitly internal, or a sanctioned public
+    // owner its target names as public, as setTextRange's input is. An unexported
+    // alias stays local; this does not infer public API permission from optionality.
     if (ts.getCombinedModifierFlags(declaration) & ts.ModifierFlags.Export &&
-        !ts.getJSDocTags(declaration).some(tag => tag.tagName.text === 'internal')) {
+        !ts.getJSDocTags(declaration).some(tag => tag.tagName.text === 'internal') && !spec.public) {
         throw new Error(`public declaration excluded: ${spec.declaration}`);
     }
     const literals = spec.returnMember ?
