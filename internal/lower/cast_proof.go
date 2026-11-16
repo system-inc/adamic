@@ -343,6 +343,28 @@ func (l *lowering) absentArm(source, target *checker.Type) *checker.Type {
 	return present
 }
 
+// memberUpcastTarget is a cast from a represented union to one object type no member is, which some members
+// upcast to (`node as NamedDeclaration` of a union whose members are each a declaration or not): a member
+// downcast to the sub-union of those members, by the tag test, then a proven upcast (#b5w3ycg 2d, Compiler's
+// application of rulings.md's member downcast and upcast entries). The members kept are the ones Adamic's
+// relation upcasts to the target, member by member, and the cast's allowed tags are theirs (unionMemberProof's
+// property loop). A member TypeScript relates to the target that Adamic's relation doesn't is refused here:
+// its tag would fail the test on a value a valid program passes, a stop where Node runs on.
+func (l *lowering) memberUpcastTarget(members, targets []*checker.Type, wanted *checker.Type) bool {
+	if len(targets) != 1 || wanted.Flags()&checker.TypeFlagsObject == 0 || isClassInstance(wanted) {
+		return false
+	}
+	kept := 0
+	for _, member := range members {
+		if l.castAssignable(member, wanted) {
+			kept++
+		} else if l.checker.IsTypeAssignableTo(member, wanted) {
+			return false
+		}
+	}
+	return kept > 0
+}
+
 // unionMemberProof proves a cast from a represented union to some of its members by a tag every
 // member holds as a distinct literal.
 func (l *lowering) unionMemberProof(source, target *checker.Type, refused error) (castProof, error) {
@@ -358,7 +380,7 @@ func (l *lowering) unionMemberProof(source, target *checker.Type, refused error)
 				found = true
 			}
 		}
-		if !found {
+		if !found && !l.memberUpcastTarget(members, targets, wanted) {
 			return castProof{}, refused
 		}
 	}

@@ -695,6 +695,19 @@
       "type_correct_sha256": "56b179f80f0d6390d0e93dfdce145cf90b3d3de2b4807d7fa9a52aa5c875150e",
       "exit": 70,
       "stderr": "adamic: panic: cast failed: this A | B | C | undefined is not a A | C\n"
+    },
+    "4c5ef80fc96c5c20d4815a1dafc5aa3159e9e478bdeb5918f82bfa061f4773b8": {
+      "form": "cast_failed",
+      "ruling_task": "#b5w3ycg",
+      "ruling": "Compiler, Nov 16, 2d as an application of rulings.md:9 and the upcast entry; the form Adamic, Nov 16, applying :385",
+      "declaration": "internal/oracle/testdata/cast_union_interface_fails.ts:7",
+      "column": 93,
+      "declared_type": "NamedDeclaration",
+      "repair_from": "cast({ kind: Kind.Export, expression: 'e' })",
+      "repair_to": "cast({ kind: Kind.Variable, name: 'v' })",
+      "type_correct_sha256": "c1078f7e80eb7016a1433b7e40aede85df0ff2b63ca16c0791c9f084ff31f11e",
+      "exit": 70,
+      "stderr": "adamic: panic: cast failed: this ExportAssignment | VariableDeclaration is not a NamedDeclaration\n"
     }
   }
 }
