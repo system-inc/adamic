@@ -37,10 +37,14 @@ func TestWorkerEnvironmentShapeStops(t *testing.T) {
 			if err != nil {
 				t.Fatal(err)
 			}
-			if err = CheckSignature(context.Background(), program); err != nil {
+			types, release := program.Checker(context.Background(), program.Files()[0])
+			_, environment, err := checkedWorkerEnvironment(types, program)
+			if err != nil {
+				release()
 				t.Fatal(err)
 			}
-			err = lower.CheckWorkerEnvironment(context.Background(), program)
+			err = lower.CheckWorkerEnvironment(program, types, environment)
+			release()
 			var notyet *lower.NotYet
 			var refused *lower.Refused
 			valid := (pin.kind == "notyet" && errors.As(err, &notyet)) || (pin.kind == "refused" && errors.As(err, &refused))
@@ -94,5 +98,20 @@ func TestWorkerEnvironmentShapeRefusalWritesNothing(t *testing.T) {
 		if _, err := os.Stat(out); !os.IsNotExist(err) {
 			t.Fatalf("environment refusal wrote output: %v", err)
 		}
+	}
+}
+
+func TestWorkerEnvironmentMissingTypeIsCompilerBug(t *testing.T) {
+	t.Parallel()
+	program, err := load.Load([]string{filepath.Join("testdata/environment_shape", "class_field.a")})
+	if err != nil {
+		t.Fatal(err)
+	}
+	types, release := program.Checker(context.Background(), program.Files()[0])
+	defer release()
+	err = lower.CheckWorkerEnvironment(program, types, nil)
+	const want = "worker: compiler bug: two-parameter handle has no checked environment type"
+	if err == nil || err.Error() != want {
+		t.Fatalf("missing checked environment: got %v, want %s", err, want)
 	}
 }

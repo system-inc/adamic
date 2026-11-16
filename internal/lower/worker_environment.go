@@ -1,7 +1,7 @@
 package lower
 
 import (
-	"context"
+	"fmt"
 
 	"github.com/microsoft/TypeScript/tsc/shim/ast"
 	"github.com/microsoft/TypeScript/tsc/shim/checker"
@@ -11,27 +11,13 @@ import (
 // CheckWorkerEnvironment checks the bridge's projected environment, after the Worker
 // signature is checked and before lowering or writing output. All imported modules
 // share the entry interface's symbol. No checker fact escapes into IR or a cache.
-func CheckWorkerEnvironment(ctx context.Context, program *load.Program) error {
-	entry := program.Files()[0]
-	types, release := program.Checker(ctx, entry)
-	defer release()
-	var environment *checker.Type
-	for _, exported := range types.GetExportsOfModule(entry.AsNode().Symbol()) {
-		if exported.Name != "handle" {
-			continue
-		}
-		if exported.Flags&ast.SymbolFlagsAlias != 0 {
-			exported = types.GetAliasedSymbol(exported)
-		}
-		for _, declaration := range exported.Declarations {
-			if declaration.Kind == ast.KindFunctionDeclaration && len(declaration.Parameters()) == 2 {
-				environment = types.GetTypeAtLocation(declaration.Parameters()[1])
-			}
-		}
-	}
+func CheckWorkerEnvironment(program *load.Program, types *checker.Checker, environment *checker.Type) error {
+	// The checked Worker contract owns discovery. Never rediscover it here: a
+	// missed export must not silently disable the environment boundary.
 	if environment == nil {
-		return nil
+		return fmt.Errorf("worker: compiler bug: two-parameter handle has no checked environment type")
 	}
+	entry := program.Files()[0]
 	l := &lowering{program: program, checker: types}
 	rules := workerEnvironmentRules{l: l, environment: environment}
 	modules, _ := ESMModuleOrder(types, entry)

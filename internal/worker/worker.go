@@ -10,6 +10,7 @@ import (
 	"sort"
 	"strconv"
 	"strings"
+	"sync"
 
 	"github.com/microsoft/TypeScript/tsc/shim/ast"
 	"github.com/microsoft/TypeScript/tsc/shim/checker"
@@ -35,14 +36,14 @@ var workerRuntime string
 // CheckSignature requires the prelude's actual types, not structurally compatible lookalikes.
 // The bridge is generated only after this check, before any output directory is touched.
 func CheckSignature(ctx context.Context, program *load.Program) error {
-	_, err := checkedWorkerEnvironment(ctx, program)
+	types, release := program.Checker(ctx, program.Files()[0])
+	defer release()
+	_, _, err := checkedWorkerEnvironment(types, program)
 	return err
 }
 
-func checkedWorkerEnvironment(ctx context.Context, program *load.Program) ([]string, error) {
+func checkedWorkerEnvironment(types *checker.Checker, program *load.Program) ([]string, *checker.Type, error) {
 	entry := program.Files()[0]
-	types, release := program.Checker(ctx, entry)
-	defer release()
 	var exported *ast.Symbol
 	for _, symbol := range types.GetExportsOfModule(entry.AsNode().Symbol()) {
 		if symbol.Name == "handle" && types.GetTypeOnlyAliasDeclaration(symbol) == nil {
@@ -55,7 +56,7 @@ func checkedWorkerEnvironment(ctx context.Context, program *load.Program) ([]str
 		return fmt.Errorf("%s: refused: worker handle must be function handle(request: HttpRequest[, environment: Environment]): HttpResponse or async function handle(request: HttpRequest[, environment: Environment]): Promise<HttpResponse>, using the exact types from 'adamic/http'; Environment must be a program-declared interface of required readonly string properties; found %s\n  fix: import type { HttpRequest, HttpResponse } from 'adamic/http'; export a synchronous handle returning HttpResponse, or an async handle returning Promise<HttpResponse>; optionally add environment: Environment with required readonly string fields", program.FileName(entry), found)
 	}
 	if exported == nil {
-		return nil, refuse()
+		return nil, nil, refuse()
 	}
 	target := exported
 	if target.Flags&ast.SymbolFlagsAlias != 0 {
@@ -65,21 +66,21 @@ func checkedWorkerEnvironment(ctx context.Context, program *load.Program) ([]str
 	found = "handle: " + types.TypeToString(functionType)
 	signatures := types.GetSignaturesOfType(functionType, checker.SignatureKindCall)
 	if len(signatures) != 1 || len(target.Declarations) != 1 {
-		return nil, refuse()
+		return nil, nil, refuse()
 	}
 	declaration := target.Declarations[0]
 	if declaration.Kind != ast.KindFunctionDeclaration || len(declaration.TypeParameters()) != 0 || (len(declaration.Parameters()) < 1 || len(declaration.Parameters()) > 2) {
-		return nil, refuse()
+		return nil, nil, refuse()
 	}
 	for _, node := range declaration.Parameters() {
 		parameter := node.AsParameterDeclaration()
 		if parameter.QuestionToken != nil || parameter.DotDotDotToken != nil || parameter.Initializer != nil {
-			return nil, refuse()
+			return nil, nil, refuse()
 		}
 	}
 	runtime := types.TryFindAmbientModule("adamic/http")
 	if runtime == nil {
-		return nil, fmt.Errorf("worker: missing adamic/http prelude module")
+		return nil, nil, fmt.Errorf("worker: missing adamic/http prelude module")
 	}
 	var requestType, responseType *checker.Type
 	for _, symbol := range types.GetExportsOfModule(runtime) {
@@ -91,31 +92,33 @@ func checkedWorkerEnvironment(ctx context.Context, program *load.Program) ([]str
 		}
 	}
 	if requestType == nil || responseType == nil {
-		return nil, fmt.Errorf("worker: missing HttpRequest or HttpResponse in the adamic prelude")
+		return nil, nil, fmt.Errorf("worker: missing HttpRequest or HttpResponse in the adamic prelude")
 	}
 	signature := signatures[0]
 	result := types.GetReturnTypeOfSignature(signature)
 	if ast.HasSyntacticModifier(declaration, ast.ModifierFlagsAsync) {
 		if !workerLibraryPromise(result) {
-			return nil, refuse()
+			return nil, nil, refuse()
 		}
 		arguments := types.GetTypeArguments(result)
 		if len(arguments) != 1 {
-			return nil, refuse()
+			return nil, nil, refuse()
 		}
 		result = arguments[0]
 	}
 	if len(signature.Parameters()) != len(declaration.Parameters()) || types.GetTypeOfSymbolAtLocation(signature.Parameters()[0], declaration) != requestType || result != responseType {
-		return nil, refuse()
+		return nil, nil, refuse()
 	}
 	if len(signature.Parameters()) == 2 {
 		annotation := declaration.Parameters()[1].AsParameterDeclaration().Type
 		if annotation != nil && annotation.Kind == ast.KindTypeReference && len(annotation.TypeArguments()) != 0 {
-			return nil, environmentRefusal("environment", "generic interfaces are not supported")
+			return nil, nil, environmentRefusal("environment", "generic interfaces are not supported")
 		}
-		return workerEnvironmentFields(types, types.GetTypeOfSymbolAtLocation(signature.Parameters()[1], declaration))
+		environmentType := types.GetTypeOfSymbolAtLocation(signature.Parameters()[1], declaration)
+		fields, err := workerEnvironmentFields(types, environmentType)
+		return fields, environmentType, err
 	}
-	return nil, nil
+	return nil, nil, nil
 }
 
 // The Promise must come from the bundled library, not a structural thenable or a
@@ -263,11 +266,13 @@ func BuildWith(entry, output string, options Options) error {
 	if err != nil {
 		return err
 	}
-	environment, err := checkedWorkerEnvironment(context.Background(), program)
+	types, release := program.Checker(context.Background(), program.Files()[0])
+	release = sync.OnceFunc(release)
+	defer release()
+	environment, environmentType, err := checkedWorkerEnvironment(types, program)
 	if err != nil {
 		return err
 	}
-	types, release := program.Checker(context.Background(), program.Files()[0])
 	asyncHandle := false
 	genericExport := ""
 	for _, exported := range types.GetExportsOfModule(program.Files()[0].AsNode().Symbol()) {
@@ -289,16 +294,18 @@ func BuildWith(entry, output string, options Options) error {
 			}
 		}
 	}
-	release()
 	if err := refuseAsyncWasm(program, asyncHandle, options.Wasm); err != nil {
 		return err
 	}
 	if genericExport != "" {
 		return fmt.Errorf("worker: exported generic function %s is not yet supported; fix: export a concrete function", genericExport)
 	}
-	if err := lower.CheckWorkerEnvironment(context.Background(), program); err != nil {
-		return err
+	if environment != nil {
+		if err := lower.CheckWorkerEnvironment(program, types, environmentType); err != nil {
+			return err
+		}
 	}
+	release()
 	lowered, err := lower.Lower(context.Background(), program)
 	if err != nil {
 		return err

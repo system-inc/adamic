@@ -55,7 +55,9 @@ func TestWorkerEnvironmentContract(t *testing.T) {
 				if err != nil {
 					t.Fatal(err)
 				}
-				_, err = checkedWorkerEnvironment(context.Background(), program)
+				types, release := program.Checker(context.Background(), program.Files()[0])
+				_, _, err = checkedWorkerEnvironment(types, program)
+				release()
 				if (err == nil) != (c.reason == "") {
 					t.Fatalf("environment contract accepted=%t: %v", c.reason == "", err)
 				}
@@ -102,7 +104,9 @@ func TestWorkerEnvironmentFieldOrder(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	fields, err := checkedWorkerEnvironment(context.Background(), p)
+	types, release := p.Checker(context.Background(), p.Files()[0])
+	defer release()
+	fields, _, err := checkedWorkerEnvironment(types, p)
 	if err != nil {
 		t.Fatal(err)
 	}

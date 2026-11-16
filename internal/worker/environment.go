@@ -14,8 +14,9 @@ func environmentRefusal(field, reason string) error {
 	return fmt.Errorf("worker: refused environment field %q: %s; found an unsupported environment contract\n  fix: use a program-declared interface with required readonly string properties", field, reason)
 }
 
-// No checker objects escape this validation. The ordered string names are bridge
-// metadata, not a new IR representation or an environment host object.
+// Ordered string names are bridge metadata. The proven type stays within the
+// borrowed checker lifetime, through the environment boundary check; neither
+// checker facts nor an environment host object escape into the IR.
 func workerEnvironmentFields(types *checker.Checker, proven *checker.Type) ([]string, error) {
 	if proven.Flags()&checker.TypeFlagsObject == 0 || proven.Symbol() == nil {
 		return nil, environmentRefusal("environment", "type must be a program-declared interface")

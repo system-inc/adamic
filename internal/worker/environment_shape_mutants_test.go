@@ -14,6 +14,7 @@ var environmentShapeMutants = []workerMutation{
 	{"environment-container-methods", "internal/lower/worker_environment.go", `if !r.l.nodeLibraryContainer(t) {`, `if true {`, "TestWorkerEnvironmentFieldReadRoads/async_field_read", "environment field read build:"},
 	{"environment-temporary-slots", "internal/lower/worker_environment.go", `if r.exact(source) && (name == "array element" || name == "object field") {`, `if false && r.exact(source) && (name == "array element" || name == "object field") {`, "TestWorkerEnvironmentShapeStops/array_temp", "environment boundary array_temp"},
 	{"environment-parenthesized-argument", "internal/lower/worker_environment.go", `node.Kind == ast.KindParenthesizedExpression || !r.l.isExpression(node)`, `!r.l.isExpression(node)`, "TestWorkerEnvironmentFieldReadRoads/exact_argument", "environment field read build:"},
+	{"environment-discovery-missing", "internal/worker/worker.go", `return fields, environmentType, err`, `return fields, nil, err`, "TestWorkerEnvironmentShapeStops/class_field", "environment boundary class_field"},
 }
 
 func TestProduct_WorkerEnvironmentShapeMutant(t *testing.T) {
@@ -88,4 +89,9 @@ func TestProduct_WorkerEnvironmentTemporarySlotsMutant(t *testing.T) {
 func TestProduct_WorkerEnvironmentParenthesizedMutant(t *testing.T) {
 	t.Parallel()
 	buildWorkerMutant(t, environmentShapeMutants[8], false)
+}
+
+func TestProduct_WorkerEnvironmentDiscoveryMutant(t *testing.T) {
+	t.Parallel()
+	buildWorkerMutant(t, environmentShapeMutants[9], false)
 }

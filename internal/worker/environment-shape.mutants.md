@@ -11,15 +11,17 @@ pass first. Top-level product tests only build their respective mutated binaries
 
 | Mutation | Named child pin | Catch site |
 | --- | --- | --- |
-| environment-shape-observed: replace the common observation NotYet with nil | TestWorkerEnvironmentShapeStops/{in,keys,values,entries,for_in,spread,json,has_own,reflect,object,unknown,record,structural,union,alias_keys,rest_destructure,generic_argument,generic_new,generic_rest,array_unknown}; each runs separately | environment_shape_test.go:54, `environment boundary` |
-| environment-class-holder: drop the environment interface's slot restriction | TestWorkerEnvironmentShapeStops/{class_field,let,array,module_binding,return,optional_parameter,this_parameter,promise_return}; each runs separately | environment_shape_test.go:54, `environment boundary` |
-| environment-parameter-write: drop the destructured-parameter write check | TestWorkerEnvironmentShapeStops/parameter_write | environment_shape_test.go:54, `environment boundary` |
-| environment-local-destructure: refuse a const destructuring | TestWorkerEnvironmentFieldReadRoads/const_destructure | environment_shape_test.go:71, `environment field read build` |
-| environment-parameter-destructure: refuse a parameter pattern | TestWorkerEnvironmentFieldReadRoads/parameter_destructure | environment_shape_test.go:71, `environment field read build` |
-| environment-optional-read: refuse an optional declared-field read | TestWorkerEnvironmentFieldReadRoads/optional_read | environment_shape_test.go:71, `environment field read build` |
-| environment-container-methods: walk Promise library methods instead of only its payload | TestWorkerEnvironmentFieldReadRoads/async_field_read | environment_shape_test.go:71, `environment field read build` |
-| environment-temporary-slots: drop the implicit element and field slot rule | TestWorkerEnvironmentShapeStops/{array_temp,object_temp} | environment_shape_test.go:54, `environment boundary` |
-| environment-parenthesized-argument: treat a parenthesis wrapper as a separate value use | TestWorkerEnvironmentFieldReadRoads/exact_argument | environment_shape_test.go:71, `environment field read build` |
+| environment-shape-observed: replace the common observation NotYet with nil | TestWorkerEnvironmentShapeStops/{in,keys,values,entries,for_in,spread,json,has_own,reflect,object,unknown,record,structural,union,alias_keys,rest_destructure,generic_argument,generic_new,generic_rest,array_unknown}; each runs separately | environment_shape_test.go:58, `environment boundary` |
+| environment-class-holder: drop the environment interface's slot restriction | TestWorkerEnvironmentShapeStops/{class_field,let,array,module_binding,return,optional_parameter,this_parameter,promise_return}; each runs separately | environment_shape_test.go:58, `environment boundary` |
+| environment-parameter-write: drop the destructured-parameter write check | TestWorkerEnvironmentShapeStops/parameter_write | environment_shape_test.go:58, `environment boundary` |
+| environment-local-destructure: refuse a const destructuring | TestWorkerEnvironmentFieldReadRoads/const_destructure | environment_shape_test.go:75, `environment field read build` |
+| environment-parameter-destructure: refuse a parameter pattern | TestWorkerEnvironmentFieldReadRoads/parameter_destructure | environment_shape_test.go:75, `environment field read build` |
+| environment-optional-read: refuse an optional declared-field read | TestWorkerEnvironmentFieldReadRoads/optional_read | environment_shape_test.go:75, `environment field read build` |
+| environment-container-methods: walk Promise library methods instead of only its payload | TestWorkerEnvironmentFieldReadRoads/async_field_read | environment_shape_test.go:75, `environment field read build` |
+| environment-temporary-slots: drop the implicit element and field slot rule | TestWorkerEnvironmentShapeStops/{array_temp,object_temp} | environment_shape_test.go:58, `environment boundary` |
+| environment-parenthesized-argument: treat a parenthesis wrapper as a separate value use | TestWorkerEnvironmentFieldReadRoads/exact_argument | environment_shape_test.go:75, `environment field read build` |
+
+| environment-discovery-missing: return nil instead of the environment type proved by the checked signature | TestWorkerEnvironmentShapeStops/class_field | environment_shape_test.go:58, `environment boundary class_field`; gets the compiler-bug stop instead of Refused |
 
 The class-field child additionally logs ordinary Lower's result after the slot
 mutant admits the program: this distinguishes removing the boundary from merely
