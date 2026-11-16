@@ -2,10 +2,9 @@
 # #re2xhwa's M1: proves bench -compare can say no change when nothing changed and slower when
 # something did. Run from the repository root on a Linux box with Go, clang and node. In order:
 # 1. go test ./bench/.
-# 2. A/A: main against main on everyday, 15 samples. Every program must read no change. The sign
-#    test's interval misses with probability 2 x 576/32768, about 3.5%, per program, so about one A/A
-#    run in four shows one false verdict among eight programs; a FAIL here is worth one rerun before
-#    it's read as the tool's fault, and a second FAIL on the same program is.
+# 2. A/A: main against main on everyday, 15 samples. The sign test's interval misses with
+#    probability 2 x 576/32768, about 3.5%, per program, so about one A/A run in four shows one false
+#    verdict among eight; the run passes with at most one (see below).
 # 3. The plant: main against main with -plant candidate, on devirtualize (the shortest everyday
 #    program) and trees (about a second). Each must read slower.
 # Each full log is kept under the printed directory. Never lands.
@@ -33,14 +32,27 @@ go run ./bench -compare "$MAIN" "$MAIN" -suite everyday -samples 15 > "$T/aa.log
 echo "exit $?"
 cat "$T/aa.log"
 EVERYDAY=$(node -e 'console.log(require("./bench/suites.json").suites.everyday.programs.map((program) => program.name).join(" "))')
+# A 95% test is wrong 5% of the time by design, so the A/A is judged on its whole run: each
+# program's verdict is printed, and the run passes when at most one of the eight reads a verdict.
+# Two or more false verdicts among eight at about 3.5% each happens about 3% of the time.
+false_verdicts=0
 for name in $EVERYDAY; do
 	verdict=$(verdicts "$T/aa.log" | awk -F'\t' -v name="$name" '$1 == name { print $2 }')
 	if [ "$verdict" = "no change at this confidence" ]; then
-		echo "PASS A/A $name: $verdict"
+		echo "A/A $name: $verdict"
+	elif [ -z "$verdict" ]; then
+		echo "FAIL A/A $name: no row"
+		false_verdicts=$((false_verdicts + 2))
 	else
-		echo "FAIL A/A $name: ${verdict:-no row}"
+		echo "A/A $name: $verdict (a false verdict)"
+		false_verdicts=$((false_verdicts + 1))
 	fi
 done
+if [ "$false_verdicts" -le 1 ]; then
+	echo "PASS A/A: $false_verdicts false verdicts among the eight, at most 1 allowed"
+else
+	echo "FAIL A/A: $false_verdicts false verdicts among the eight (a missing row counts 2), at most 1 allowed"
+fi
 
 echo "== plant: $MAIN against itself with -plant candidate, devirtualize and trees, 15 samples; each must read slower"
 go run ./bench -compare "$MAIN" "$MAIN" -suite everyday -only devirtualize,trees -samples 15 -plant candidate > "$T/plant.log" 2> "$T/plant.err"
