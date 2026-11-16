@@ -1,0 +1,74 @@
+[
+  {
+    "file": "transformers/generators.ts",
+    "owner": "ExceptionBlock",
+    "before": "interface ExceptionBlock {\n    kind: CodeBlockKind.Exception;\n    state: ExceptionBlockState;\n    startLabel: Label;\n    catchVariable?: Identifier;\n    catchLabel?: Label;\n    finallyLabel?: Label;\n    endLabel: Label;\n}",
+    "after": "interface ExceptionBlock {\n    readonly kind: CodeBlockKind.Exception;\n    state: ExceptionBlockState;\n    startLabel: Label;\n    catchVariable?: Identifier;\n    catchLabel?: Label;\n    finallyLabel?: Label;\n    endLabel: Label;\n}",
+    "ownerBeforeSha256": "ce9ffc718c8d96dcddca24e1fb5b6db66b326d90627b49a9a8b6472f3ab351dc",
+    "ownerAfterSha256": "c99f8e83ed1b4772dcb3ee76781a2eefcab61bf3877c36b711428956b191121f"
+  },
+  {
+    "file": "transformers/generators.ts",
+    "owner": "LabeledBlock",
+    "before": "interface LabeledBlock {\n    kind: CodeBlockKind.Labeled;\n    labelText: string;\n    isScript: boolean;\n    breakLabel: Label;\n}",
+    "after": "interface LabeledBlock {\n    readonly kind: CodeBlockKind.Labeled;\n    labelText: string;\n    isScript: boolean;\n    breakLabel: Label;\n}",
+    "ownerBeforeSha256": "8571ab517a2d28b4d037fb20447d43ad06a655890090efc64edcf21187ca6cf9",
+    "ownerAfterSha256": "49e0879d1475b8181871b5a3bcaa54a617242d9a9c6740231e3c2591ba5cb3e2"
+  },
+  {
+    "file": "transformers/generators.ts",
+    "owner": "SwitchBlock",
+    "before": "interface SwitchBlock {\n    kind: CodeBlockKind.Switch;\n    isScript: boolean;\n    breakLabel: Label;\n}",
+    "after": "interface SwitchBlock {\n    readonly kind: CodeBlockKind.Switch;\n    isScript: boolean;\n    breakLabel: Label;\n}",
+    "ownerBeforeSha256": "c77373cafca8ddd06cfe929ed1cda46065d6e42d311718afee183c522b9e8d94",
+    "ownerAfterSha256": "60866651744f481061725fe8462fc366fd0fa9ab0b6f813a0c6c1eba467f150a"
+  },
+  {
+    "file": "transformers/generators.ts",
+    "owner": "LoopBlock",
+    "before": "interface LoopBlock {\n    kind: CodeBlockKind.Loop;\n    continueLabel: Label;\n    isScript: boolean;\n    breakLabel: Label;\n}",
+    "after": "interface LoopBlock {\n    readonly kind: CodeBlockKind.Loop;\n    continueLabel: Label;\n    isScript: boolean;\n    breakLabel: Label;\n}",
+    "ownerBeforeSha256": "9ea55b5d49686be6ae5773bfae4c52ad216108e26a3860c98fc9c7d83ed113d1",
+    "ownerAfterSha256": "9bb7b5361d1728f9cf506519f4e52e19db3acb993a1d8f92468449d128ab2351"
+  },
+  {
+    "file": "transformers/generators.ts",
+    "owner": "WithBlock",
+    "before": "interface WithBlock {\n    kind: CodeBlockKind.With;\n    expression: Identifier;\n    startLabel: Label;\n    endLabel: Label;\n}",
+    "after": "interface WithBlock {\n    readonly kind: CodeBlockKind.With;\n    expression: Identifier;\n    startLabel: Label;\n    endLabel: Label;\n}",
+    "ownerBeforeSha256": "038706512b2a421759df863c36384e03e87784cc312fea28d41dc63ac1be56ad",
+    "ownerAfterSha256": "3090803305a047a8aad58e5c7832f47ed16e982515166be52912a1fa41dec098"
+  },
+  {
+    "file": "types.ts",
+    "owner": "ThisTypePredicate",
+    "before": "export interface ThisTypePredicate extends TypePredicateBase {\n    kind: TypePredicateKind.This;\n    parameterName: undefined;\n    parameterIndex: undefined;\n    type: Type;\n}",
+    "after": "export interface ThisTypePredicate extends TypePredicateBase {\n    readonly kind: TypePredicateKind.This;\n    parameterName: undefined;\n    parameterIndex: undefined;\n    type: Type;\n}",
+    "ownerBeforeSha256": "b2ba2643925e171992cb2599270c3f9325ba409a619963aed668d219030db1c3",
+    "ownerAfterSha256": "1685d33c348944709f506d4c74fbf8158fd14c4339e29fa75fc84363f7d997d6"
+  },
+  {
+    "file": "types.ts",
+    "owner": "IdentifierTypePredicate",
+    "before": "export interface IdentifierTypePredicate extends TypePredicateBase {\n    kind: TypePredicateKind.Identifier;\n    parameterName: string;\n    parameterIndex: number;\n    type: Type;\n}",
+    "after": "export interface IdentifierTypePredicate extends TypePredicateBase {\n    readonly kind: TypePredicateKind.Identifier;\n    parameterName: string;\n    parameterIndex: number;\n    type: Type;\n}",
+    "ownerBeforeSha256": "bec60de9da7889da482632131bcb70fa3e7f10643781a2d7b7058fbe98e94a9a",
+    "ownerAfterSha256": "f6581a2c72bb565414ae2af446d3306229897c26d5d74abf88af29b5db26452d"
+  },
+  {
+    "file": "types.ts",
+    "owner": "AssertsThisTypePredicate",
+    "before": "export interface AssertsThisTypePredicate extends TypePredicateBase {\n    kind: TypePredicateKind.AssertsThis;\n    parameterName: undefined;\n    parameterIndex: undefined;\n    type: Type | undefined;\n}",
+    "after": "export interface AssertsThisTypePredicate extends TypePredicateBase {\n    readonly kind: TypePredicateKind.AssertsThis;\n    parameterName: undefined;\n    parameterIndex: undefined;\n    type: Type | undefined;\n}",
+    "ownerBeforeSha256": "a3895104853800a317ccc3cfa249a1aa56b76db3bdaa184b6ffd12423050d26e",
+    "ownerAfterSha256": "9f0e7906c21fca985185b32b1c5d2be91f9da998dcf117712d3f5fc02a93aded"
+  },
+  {
+    "file": "types.ts",
+    "owner": "AssertsIdentifierTypePredicate",
+    "before": "export interface AssertsIdentifierTypePredicate extends TypePredicateBase {\n    kind: TypePredicateKind.AssertsIdentifier;\n    parameterName: string;\n    parameterIndex: number;\n    type: Type | undefined;\n}",
+    "after": "export interface AssertsIdentifierTypePredicate extends TypePredicateBase {\n    readonly kind: TypePredicateKind.AssertsIdentifier;\n    parameterName: string;\n    parameterIndex: number;\n    type: Type | undefined;\n}",
+    "ownerBeforeSha256": "b689237f7ae00ea44cf7182973cd747607862c88dc6018cc3bb7974bc4388297",
+    "ownerAfterSha256": "cce7a04e12426cd77bbd19dbe07999c98281308de18ec3043d0102e0c29d10af"
+  }
+]

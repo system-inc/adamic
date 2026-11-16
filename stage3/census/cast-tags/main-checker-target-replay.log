@@ -1,0 +1,4 @@
+CAST_UNION_WRITE source=TypePredicate property=kind written=TypePredicateKind member=AssertsIdentifierTypePredicate memberProperty=TypePredicateKind.AssertsIdentifier
+CAST_UNION_WRITE source=TypePredicate property=kind written=TypePredicateKind member=AssertsIdentifierTypePredicate memberProperty=TypePredicateKind.AssertsIdentifier
+replay load/register/lower: 26.818214431s
+reproduced Refused: a cast the runtime can't check at /workspace/scratch/cast-tags/main-tree/src/compiler/checker.ts:22080:44

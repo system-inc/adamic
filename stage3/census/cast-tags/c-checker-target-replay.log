@@ -1,0 +1,4 @@
+CAST_UNION_WRITE source=TypePredicate property=parameterName written=string | undefined member=AssertsIdentifierTypePredicate memberProperty=string
+CAST_UNION_WRITE source=TypePredicate property=parameterName written=string | undefined member=AssertsIdentifierTypePredicate memberProperty=string
+replay load/register/lower: 28.077406245s
+reproduced Refused: a cast the runtime can't check at /workspace/scratch/cast-tags/c-tree/src/compiler/checker.ts:22080:44
