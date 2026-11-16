@@ -50,10 +50,12 @@ export TMPDIR="$work/tmp"
 
 . "$HOME/adamic-tools/env.sh" || { echo "w6: $HOME/adamic-tools/env.sh didn't source, so nothing ran"; exit 65; }
 missing=""
-for tool in go gofmt node npm python3 git; do
+for tool in go gofmt node python3 git; do
 	command -v "$tool" > /dev/null 2>&1 || missing="$missing $tool"
 done
 [ -z "$missing" ] || { echo "w6: missing from the toolchain:$missing"; exit 65; }
+hasNpm=0; command -v npm > /dev/null 2>&1 && hasNpm=1
+[ "$hasNpm" = 1 ] || echo "w6: no npm on this box, so the pristine and b builds are skipped and stage3/api uses the laid node_modules"
 node --version | grep -q '^v24\.' || { echo "w6: node is $(node --version), adaptations need Node 24"; exit 65; }
 [ -n "$(ls -A "$root/cohere" 2> /dev/null)" ] || { echo "w6: cohere isn't laid in $root"; exit 66; }
 echo "w6: $(uname -n), $(nproc) threads, $(git -C "$root" rev-parse HEAD), node $(node --version), $(go version)"
@@ -81,7 +83,7 @@ fi
 [ "$(git -C "$ADAMIC_TYPESCRIPT_SOURCE" rev-parse HEAD)" = "$pinCommit" ] || { echo "w6: upstream isn't at $pinCommit"; exit 66; }
 
 # stage3/api's lockfile-pinned typescript@6.0.3, which apply puts on NODE_PATH for every adaptation.
-(cd "$root/stage3/api" && step api-install npm ci --ignore-scripts --no-audit --no-fund) || exit 66
+if [ "$hasNpm" = 1 ]; then (cd "$root/stage3/api" && step api-install npm ci --ignore-scripts --no-audit --no-fund) || exit 66; fi
 modules="$root/stage3/api/node_modules"
 [ "$(node -p 'require(process.argv[1] + "/typescript/package.json").version' "$modules")" = 6.0.3 ] || { echo "w6: stage3/api's typescript isn't 6.0.3"; exit 66; }
 
@@ -115,10 +117,10 @@ mkdir -p "$STAGE3_PRODUCT_STORE"
 applyBefore=$!
 (cd "$root" && STAGE3_CACHE="$work/cache" step apply-after bash stage3/apply.sh "$after") &
 applyAfter=$!
-(step pristine-clone git clone "$ADAMIC_TYPESCRIPT_SOURCE" "$pristine" &&
+if [ "$hasNpm" = 1 ]; then (step pristine-clone git clone "$ADAMIC_TYPESCRIPT_SOURCE" "$pristine" &&
 	step pristine-checkout git -C "$pristine" checkout --detach "$pinCommit" &&
 	cd "$pristine" && step pristine-install npm ci --no-audit --no-fund && step pristine-build npm run build) &
-pristineBuild=$!
+pristineBuild=$!; else (exit 0) & pristineBuild=$!; fi
 (cd "$root" && step census-overlay python3 stage3/census/latent/make_overlay.py "$root" "$work/latent-overlay" &&
 	step census-gofmt bash -c 'gofmt -w "$1"/*.go' _ "$work/latent-overlay" &&
 	step census-build go build -buildvcs=false -overlay="$work/latent-overlay/overlay.json" -o "$work/latent-census" ./stage3/census/latent/tool) &
@@ -309,7 +311,9 @@ PYTHON
 # check-api.cjs reconstructing each from the pristine snapshot, adaptation 20's ledger and 70's owner report.
 wait "$pristineBuild"
 pristineExit=$?
-if [ "$auditPass" != 1 ]; then
+if [ "$hasNpm" != 1 ]; then
+	say "w6: b SKIP: no npm on this box"
+elif [ "$auditPass" != 1 ]; then
 	say "w6: b SKIP: the audit refused, so apply made no after tree and no published API to compare"
 else
 	(cd "$before" && step b-before-install npm ci --no-audit --no-fund && step b-before-build npm run build) &
