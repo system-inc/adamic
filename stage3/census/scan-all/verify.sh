@@ -4,31 +4,22 @@ repo=$(cd "$(dirname "${BASH_SOURCE[0]}")/../../.." && pwd)  # no git: a sealed 
 cd "$repo"
 : "${SCAN_ALL_SCRATCH:?set a scratch directory outside the checkout}"
 mkdir -p "$SCAN_ALL_SCRATCH"
-python3 stage3/census/scan-all/make_overlay.py "$SCAN_ALL_SCRATCH/overlay"
-go build -overlay "$SCAN_ALL_SCRATCH/overlay/overlay.json" -o "$SCAN_ALL_SCRATCH/scan-all" ./stage3/census/scan-all/tool/main.go
-python3 - "$repo" "$SCAN_ALL_SCRATCH" <<'PYTHON'
-import json,pathlib,sys
-repo,scratch=map(pathlib.Path,sys.argv[1:])
-(scratch/'production-overlay.json').write_text(json.dumps({'Replace':{str(repo/'stage3/census/scan-all/production/main.go'):str(repo/'stage3/census/scan-all/production.go.txt')}}))
-PYTHON
-go build -overlay "$SCAN_ALL_SCRATCH/production-overlay.json" -o "$SCAN_ALL_SCRATCH/production" ./stage3/census/scan-all/production/main.go
-export SCAN_ALL_BINARY="$SCAN_ALL_SCRATCH/scan-all" SCAN_ALL_PRODUCTION="$SCAN_ALL_SCRATCH/production"
-go test -v -count=1 -timeout=60s ./stage3/census/scan-all
-controls=(count-stop count-clean rest-stop rest-clean record-stop record-clean cycle-stop cycle-clean)
-for name in "${controls[@]}"; do
-  (cd stage3/census/scan-all && timeout 55 python3 controls.py "$name") > "$SCAN_ALL_SCRATCH/control-$name.log" 2>&1 \
-    || { cat "$SCAN_ALL_SCRATCH/control-$name.log" >&2; echo "control failed: $name" >&2; exit 1; }
-  echo "control passed: $name"
-done
-# Each first-error mutant restores production's refusal scan; its control must fail
-# because the later target disappears or the clean traversal no longer completes.
-for name in "${controls[@]}"; do
-  if (cd stage3/census/scan-all && SCAN_ALL_MUTANT_FIRST_ERROR=1 timeout 55 python3 controls.py "$name") > "$SCAN_ALL_SCRATCH/mutant-$name.log" 2>&1; then
-    echo "first-error mutant survived: $name" >&2; exit 1
-  fi
-  grep -Eq "continuation-target|continuation-completion" "$SCAN_ALL_SCRATCH/mutant-$name.log" \
-    || { cat "$SCAN_ALL_SCRATCH/mutant-$name.log" >&2; echo "mutant failed for another reason: $name" >&2; exit 1; }
-  echo "first-error mutant red: $name"
+# Declare/build first, then prove the units only fetch the products.
+go test -v -count=1 -timeout=10m -run '^TestProduct_ScanAll' ./stage3/census/scan-all
+ADAMIC_BUILD_CACHE=read go test -v -count=1 -timeout=60s -run '^TestScanAll' ./stage3/census/scan-all
+for rule in Count Rest Record Cycle; do
+  for kind in Stop Clean; do
+    name="TestScanAll${rule}${kind}AfterEarlierScanStop"
+    if SCAN_ALL_MUTANT_FIRST_ERROR=1 ADAMIC_BUILD_CACHE=read go test -v -count=1 -timeout=60s \
+      -run "^${name}$" ./stage3/census/scan-all > "$SCAN_ALL_SCRATCH/mutant-$name.log" 2>&1; then
+      echo "first-error mutant survived: $name" >&2; exit 1
+    fi
+    grep -Fq -- "--- FAIL: $name" "$SCAN_ALL_SCRATCH/mutant-$name.log" \
+      || { cat "$SCAN_ALL_SCRATCH/mutant-$name.log" >&2; echo "named mutant test did not fail: $name" >&2; exit 1; }
+    grep -Eq 'continuation-target|continuation-completion' "$SCAN_ALL_SCRATCH/mutant-$name.log" \
+      || { cat "$SCAN_ALL_SCRATCH/mutant-$name.log" >&2; echo "mutant failed for another reason: $name" >&2; exit 1; }
+    echo "first-error mutant red: $name"
+  done
 done
 
 # These operator proofs run the unchanged named Go test on isolated source copies.
