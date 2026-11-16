@@ -213,16 +213,7 @@ func (l *lowering) checkCheckedPredicateParameters(modules []*ast.SourceFile) er
 			if call, ok := node.(ir.CallClosure); ok {
 				for _, target := range l.result.FunctionTypeTargets[call.FunctionType] {
 					candidate := l.result.Functions[target]
-					// Parameters holds the declared parameters in order (a destructured or defaulted one
-					// arrives as one incoming local), behind a method's leading receiver, which Receiver
-					// marks and no argument fills, so it's left out of the count. The environment is
-					// Environment, never Parameters. A lone this parameter is counted, which can only stop
-					// more.
-					declared := len(candidate.Parameters)
-					if candidate.Receiver {
-						declared--
-					}
-					if candidate.ReadsArguments || candidate.RestElement != 0 || declared > len(call.Arguments) {
+					if candidate.ReadsArguments || candidate.RestElement != 0 || declaresBeyond(candidate, len(call.Arguments)) {
 						found = l.notYet(record.node, "a predicate parameter passed as a checked closure, which may call a function that observes its argument count, collects rest arguments or declares more parameters than its type names")
 					}
 				}
