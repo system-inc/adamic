@@ -879,7 +879,12 @@ func refusedRandom(l *lowering, node *ast.Node) error {
 	return l.notYet(node, "Math.random")
 }
 
-// builtin lowers a call to Math or a number's toFixed. isBuiltin is false for any other call.
+// builtin lowers a call that a lowering of its own takes ahead of an ordinary call: a host value's
+// (process, node:fs, Buffer), a library global's or member's (Math, Object, JSON, Number, Reflect.get,
+// Array.isArray and Array.from, Date.now, Intl.Collator's compare, parseInt and parseFloat), a library
+// method on an array, map, set, string or number, a RegExp's, a method the program declares
+// (userMethodCall, detachedOwnCall), and input. isBuiltin is false for any call none of them take,
+// which its callers lower as an ordinary call.
 func (l *lowering) builtin(node *ast.Node) (ir.Expression, bool, error) {
 	l.inspectorRecordBuiltUse(node)
 	if value, known, err := l.processValue(node); known {

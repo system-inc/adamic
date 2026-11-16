@@ -36,6 +36,9 @@ func (l *lowering) nestedDeclarations(nodes []*ast.Node) ([]ir.Statement, error)
 		if node.Parent == nil || node.Parent.Kind != ast.KindBlock || !ast.IsFunctionLike(node.Parent.Parent) {
 			return nil, l.notYet(node, "a block-scoped nested function declaration")
 		}
+		// Unreachable today: load refuses an unnamed nested function declaration (TS1003), and a generic one
+		// is named. Kept so a declaration that ever arrives without a name stops here instead of lowering a
+		// nameless function (the test audit's note on #7qg4f5e).
 		if node.Name() == nil {
 			return nil, l.notYet(node, "a generic or unnamed nested function declaration")
 		}

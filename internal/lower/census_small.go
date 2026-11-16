@@ -7,30 +7,6 @@ import (
 	"github.com/system-inc/adamic/internal/ir"
 )
 
-// censusRestParameter admits rest only where every call passes a freshly packed array.
-// Function values and methods have a different calling convention and remain NotYet.
-func (l *lowering) censusRestParameter(declaration, parameter *ast.Node) error {
-	if declaration.Kind != ast.KindFunctionDeclaration || len(declaration.TypeParameters()) != 0 {
-		return l.notYet(parameter, "a rest parameter outside a nongeneric named function")
-	}
-	if l.result.Functions[l.functionIndex].Closure {
-		return l.notYet(parameter, "a rest parameter in a named closure")
-	}
-	parameters := declaration.Parameters()
-	if parameters[len(parameters)-1] != parameter {
-		return l.notYet(parameter, "a rest parameter before another parameter")
-	}
-	proven := l.checker.GetTypeAtLocation(parameter.Name())
-	if !l.isArrayType(proven) {
-		return l.notYet(parameter, "a rest parameter other than an array")
-	}
-	element, known := l.kept(l.elementTypeOfArray(proven))
-	if !known || slotless(element) {
-		return l.notYet(parameter, "a rest array of "+l.checker.TypeToString(proven))
-	}
-	return nil
-}
-
 // censusRestDeclaration recovers the declaration without adding state to lower.go.
 func (l *lowering) censusRestDeclaration(function int) *ast.Node {
 	for symbol, index := range l.functions {
@@ -106,7 +82,9 @@ func (l *lowering) censusRestCall(call *ast.CallExpression, function int, declar
 	return l.censusOverloadResult(call, ir.Call{Function: function, Arguments: arguments, Returns: l.result.Functions[function].Returns})
 }
 
-// Boolean fields have a tagged byte; other slotless representations remain refused.
+// A MaybeBoolean field has a tagged byte, and a fitted Union occupies one counted reference
+// (boxedSlot). Those are the only slotless representations today, so this refuses none; it refuses
+// any slotless representation added later until a field form is arranged for it.
 func censusFieldSlotless(of ir.Type) bool {
 	return slotless(of) && of != ir.MaybeBoolean && of != ir.Union
 }

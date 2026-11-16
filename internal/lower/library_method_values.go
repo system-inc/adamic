@@ -150,7 +150,7 @@ func (l *lowering) libraryMethodValue(node *ast.Node) (ir.Expression, bool, erro
 	return ir.MakeClosure{Function: index}, true, nil
 }
 
-// sequence returns the last operand while keeping all preceding evaluations and their checks.
+// methodSequence returns the last operand while keeping all preceding evaluations and their checks.
 func (l *lowering) methodSequence(values []ir.Expression) ir.Expression {
 	index := len(l.result.Functions)
 	function := ir.Function{Name: "library_method_sequence", Returns: values[len(values)-1].Type()}
