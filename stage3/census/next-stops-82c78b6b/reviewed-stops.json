@@ -1,0 +1,12 @@
+[
+  {
+    "where": "sys.ts:1596:192",
+    "kind": "NotYet",
+    "reason": "a namespace object used as a value; no runtime container is emitted, so identity, receiver behavior, live export aliases and staged properties are not represented; use qualified members or named module imports",
+    "phase": "refusal_scan (namespace value admission; rule 2100)",
+    "owner": "internal/lower/namespaces.go: namespaceRefusal -> internal/lower/namespace_value.go: namespaceValueAdmission; adapted getNodeSystem pinned by 93-builtin-imports and 99-wasm-crypto-import",
+    "emitter": "internal/lower/lower.go:142 -> internal/lower/refusals.go:105-106 -> internal/lower/namespaces.go:244,275 -> internal/lower/namespace_value.go:119-121",
+    "source_review": "Column 192 is process in (process as any).recordreplay on the debugMode property inside getNodeSystem. The cast makes the ambient process namespace a value instead of a direct qualified receiver. namespaceValueAdmission stops ambient host namespaces because no runtime namespace container is emitted. 93-builtin-imports/proofs/targets.json names and hashes getNodeSystem and pins ownerBeforeText/ownerAfterText; 99-wasm-crypto-import/proofs/targets.json pins the same function in ownerBeforeText/ownerAfterText. 92-tty-host-results pins two nested terminal methods in that scope, not this debugMode expression. See ownership-search.json and ownership-grep.txt.",
+    "host_runtime": "This IS a host stop involving process: the ambient host process namespace is read as a value for its recordreplay probe. It is a static NotYet during the refusal scan, not an observed runtime-execution failure. The emitted reason is namespace-value admission, not a node:process member-specific refusal."
+  }
+]
