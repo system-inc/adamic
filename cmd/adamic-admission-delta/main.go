@@ -759,12 +759,17 @@ func run(args []string) error {
 	fmt.Fprintf(os.Stderr, "changed programs: %d\n", result.DiffCount)
 	// admitted counts every corpus, not the diff alone, so each admitted program is named with how it was judged:
 	// a caller that prints only the diff's rows can't then show fewer than the count (#1zscjp1, J-1x881sm).
+	// The lines follow the sorted list, not the corpora's order, so two runs of one delta print them alike.
 	sort.Strings(result.AdmittedPaths)
-	fmt.Fprintf(os.Stderr, "admitted: %d\n", result.Admitted)
+	admitted := map[string]entry{}
 	for _, record := range result.Programs {
 		if record.Class == "newly-accepted" {
-			fmt.Fprintf(os.Stderr, "admitted %s (%s): %s\n", record.Path, record.Corpus, admittedJudgment(record))
+			admitted[record.Path] = record
 		}
+	}
+	fmt.Fprintf(os.Stderr, "admitted: %d\n", result.Admitted)
+	for _, path := range result.AdmittedPaths {
+		fmt.Fprintf(os.Stderr, "admitted %s (%s): %s\n", path, admitted[path].Corpus, admittedJudgment(admitted[path]))
 	}
 	result.SamplingSize = len(selected)
 	result.BudgetUsedSeconds = time.Since(started).Seconds()
