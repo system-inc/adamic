@@ -394,5 +394,106 @@
     "where": "/workspace/scratch/next-stops-82c78b6b/adapted/src/compiler/sys.ts:1596:192",
     "reason": "a namespace object used as a value; no runtime container is emitted, so identity, receiver behavior, live export aliases and staged properties are not represented; use qualified members or named module imports",
     "seconds": 18.897955689
+  },
+  {
+    "module_format": "CommonJSBundle",
+    "roots": [
+      "/workspace/scratch/next-stops-82c78b6b/adapted/src/compiler/symbolWalker.ts"
+    ],
+    "kind": "NotYet",
+    "where": "/workspace/scratch/next-stops-82c78b6b/adapted/src/compiler/sys.ts:1596:192",
+    "reason": "a namespace object used as a value; no runtime container is emitted, so identity, receiver behavior, live export aliases and staged properties are not represented; use qualified members or named module imports",
+    "seconds": 25.530542345
+  },
+  {
+    "module_format": "CommonJSBundle",
+    "roots": [
+      "/workspace/scratch/next-stops-82c78b6b/adapted/src/compiler/sys.ts"
+    ],
+    "kind": "Refused",
+    "where": "/workspace/scratch/next-stops-82c78b6b/adapted/src/compiler/utilitiesPublic.ts:1289:38",
+    "reason": "an unproven predicate argument for parameter predicate (argument \"predicate\")",
+    "fix": "pass a named function or arrow whose body proves both predicate branches; return a boolean and narrow at the caller (adamic/no-type-predicate)",
+    "seconds": 28.036476567
+  },
+  {
+    "module_format": "CommonJSBundle",
+    "roots": [
+      "/workspace/scratch/next-stops-82c78b6b/adapted/src/compiler/tracing.ts"
+    ],
+    "kind": "NotYet",
+    "where": "/workspace/scratch/next-stops-82c78b6b/adapted/src/compiler/sys.ts:1596:192",
+    "reason": "a namespace object used as a value; no runtime container is emitted, so identity, receiver behavior, live export aliases and staged properties are not represented; use qualified members or named module imports",
+    "seconds": 27.174983284
+  },
+  {
+    "module_format": "CommonJSBundle",
+    "roots": [
+      "/workspace/scratch/next-stops-82c78b6b/adapted/src/compiler/transformer.ts"
+    ],
+    "kind": "NotYet",
+    "where": "/workspace/scratch/next-stops-82c78b6b/adapted/src/compiler/sys.ts:1596:192",
+    "reason": "a namespace object used as a value; no runtime container is emitted, so identity, receiver behavior, live export aliases and staged properties are not represented; use qualified members or named module imports",
+    "seconds": 27.513278241
+  },
+  {
+    "module_format": "CommonJSBundle",
+    "roots": [
+      "/workspace/scratch/next-stops-82c78b6b/adapted/src/compiler/transformers/classFields.ts"
+    ],
+    "kind": "NotYet",
+    "where": "/workspace/scratch/next-stops-82c78b6b/adapted/src/compiler/sys.ts:1596:192",
+    "reason": "a namespace object used as a value; no runtime container is emitted, so identity, receiver behavior, live export aliases and staged properties are not represented; use qualified members or named module imports",
+    "seconds": 28.767537606
+  },
+  {
+    "module_format": "CommonJSBundle",
+    "roots": [
+      "/workspace/scratch/next-stops-82c78b6b/adapted/src/compiler/transformers/classThis.ts"
+    ],
+    "kind": "NotYet",
+    "where": "/workspace/scratch/next-stops-82c78b6b/adapted/src/compiler/sys.ts:1596:192",
+    "reason": "a namespace object used as a value; no runtime container is emitted, so identity, receiver behavior, live export aliases and staged properties are not represented; use qualified members or named module imports",
+    "seconds": 27.759806579
+  },
+  {
+    "module_format": "CommonJSBundle",
+    "roots": [
+      "/workspace/scratch/next-stops-82c78b6b/adapted/src/compiler/transformers/declarations/diagnostics.ts"
+    ],
+    "kind": "NotYet",
+    "where": "/workspace/scratch/next-stops-82c78b6b/adapted/src/compiler/sys.ts:1596:192",
+    "reason": "a namespace object used as a value; no runtime container is emitted, so identity, receiver behavior, live export aliases and staged properties are not represented; use qualified members or named module imports",
+    "seconds": 24.433743107
+  },
+  {
+    "module_format": "CommonJSBundle",
+    "roots": [
+      "/workspace/scratch/next-stops-82c78b6b/adapted/src/compiler/transformers/declarations.ts"
+    ],
+    "kind": "NotYet",
+    "where": "/workspace/scratch/next-stops-82c78b6b/adapted/src/compiler/sys.ts:1596:192",
+    "reason": "a namespace object used as a value; no runtime container is emitted, so identity, receiver behavior, live export aliases and staged properties are not represented; use qualified members or named module imports",
+    "seconds": 22.777190369
+  },
+  {
+    "module_format": "CommonJSBundle",
+    "roots": [
+      "/workspace/scratch/next-stops-82c78b6b/adapted/src/compiler/transformers/destructuring.ts"
+    ],
+    "kind": "NotYet",
+    "where": "/workspace/scratch/next-stops-82c78b6b/adapted/src/compiler/sys.ts:1596:192",
+    "reason": "a namespace object used as a value; no runtime container is emitted, so identity, receiver behavior, live export aliases and staged properties are not represented; use qualified members or named module imports",
+    "seconds": 24.258892149
+  },
+  {
+    "module_format": "CommonJSBundle",
+    "roots": [
+      "/workspace/scratch/next-stops-82c78b6b/adapted/src/compiler/transformers/es2015.ts"
+    ],
+    "kind": "NotYet",
+    "where": "/workspace/scratch/next-stops-82c78b6b/adapted/src/compiler/sys.ts:1596:192",
+    "reason": "a namespace object used as a value; no runtime container is emitted, so identity, receiver behavior, live export aliases and staged properties are not represented; use qualified members or named module imports",
+    "seconds": 23.432419058
   }
 ]
