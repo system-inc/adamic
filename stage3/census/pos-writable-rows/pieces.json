@@ -89,6 +89,17 @@
   },
   {
     "complete": true,
+    "ended_utc": "2026-11-16T18:19:58.993429+00:00",
+    "error": "",
+    "exit_code": 0,
+    "file": "src/compiler/checker.ts",
+    "log": "/workspace/scratch/aryr7ea/raw/src__compiler__checker.ts.log",
+    "raw_sha256": "175e174de2152cec33a0389e986f469e4bdef27f8e405f1f6f9f03ec347b4dfb",
+    "started_utc": "2026-11-16T16:57:52.738591+00:00",
+    "wall_seconds": 4926.254753587
+  },
+  {
+    "complete": true,
     "ended_utc": "2026-11-16T17:01:37.897011+00:00",
     "error": "",
     "exit_code": 0,
@@ -562,6 +573,17 @@
   },
   {
     "complete": true,
+    "ended_utc": "2026-11-16T18:17:45.226554+00:00",
+    "error": "",
+    "exit_code": 0,
+    "file": "src/compiler/transformers/es2018.ts",
+    "log": "/workspace/scratch/aryr7ea/raw/src__compiler__transformers__es2018.ts.log",
+    "raw_sha256": "f948edcc412a37467f1fda5546afefbb7d5449bf9d9ba0da44c7d885884ab051",
+    "started_utc": "2026-11-16T18:13:38.523305+00:00",
+    "wall_seconds": 246.70319731699965
+  },
+  {
+    "complete": true,
     "ended_utc": "2026-11-16T18:17:35.669246+00:00",
     "error": "",
     "exit_code": 0,
@@ -570,5 +592,27 @@
     "raw_sha256": "bb9af1f0ab9030b4d3850beadae8fa38a5c86df1411683adce5077b13e5ebd9b",
     "started_utc": "2026-11-16T18:16:34.848193+00:00",
     "wall_seconds": 60.82098367300023
+  },
+  {
+    "complete": true,
+    "ended_utc": "2026-11-16T18:19:01.158073+00:00",
+    "error": "",
+    "exit_code": 0,
+    "file": "src/compiler/transformers/es2020.ts",
+    "log": "/workspace/scratch/aryr7ea/raw/src__compiler__transformers__es2020.ts.log",
+    "raw_sha256": "4cc7478d5f634fe291120252027172b678a5821e54749c37f44a4c459b726746",
+    "started_utc": "2026-11-16T18:17:35.675876+00:00",
+    "wall_seconds": 85.48214637199999
+  },
+  {
+    "complete": true,
+    "ended_utc": "2026-11-16T18:18:31.334193+00:00",
+    "error": "",
+    "exit_code": 0,
+    "file": "src/compiler/transformers/es2021.ts",
+    "log": "/workspace/scratch/aryr7ea/raw/src__compiler__transformers__es2021.ts.log",
+    "raw_sha256": "9e9a1788be6e384956651f4c8ebcb4f95c14e41a5402b53d0876d96f174f15f4",
+    "started_utc": "2026-11-16T18:17:45.247463+00:00",
+    "wall_seconds": 46.08664803699958
   }
 ]
