@@ -183,6 +183,19 @@ that element, as `readonly T[]`, `T[]` or `ReadonlyArray<T>`, or a union as
 literal, so a run that sees the stop also runs the repaired copy, written with the
 witness's own extension so a `.ts` witness's repair compiles as `.ts`, and the entry
 is a witness only when that copy agrees with Node (`repair_agree` in JSON).
+A third, `"form": "cast_failed"` (#b5w3ycg, Adamic, Nov 16, applying rulings.md:9
+and :385), is a `.ts` program that lies about a declared type and stops at the tag
+test a cast inserts: stderr is one line of `adamic: panic: cast failed: this <S> is
+not a <T>`, and `declared_type` is `<T>`, the type the cast claimed. That message
+names no position, so the entry names the cast's line in `declaration`, a `.ts`
+path, and in `column` where the cast's `as` keyword starts, 1-based. The tool holds
+the source to it: the word `as` at that column, after whitespace or a closing
+bracket, before whitespace, and outside any string. The repair replaces exactly one
+place and keeps the cast at the same line and column, so the copy that agrees with
+Node shows the check doesn't fire on a true claim. Node erases the cast and goes
+on, so both backends' stdout must equal each other and be what Node printed up to
+the stop. A `.a` program holding a listed entry's bytes is refused, since in `.a`
+these casts are refused, and only this form names a `column`.
 Other forms require an independent evidence validator before a ruling can use
 them. The repair's content hash cannot be listed. Every edit, including a type-correct repair, demands ordinary Node
 agreement unless independently re-ruled. Valid programs must never be listed.
