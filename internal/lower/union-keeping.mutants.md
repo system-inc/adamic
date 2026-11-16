@@ -188,6 +188,97 @@ The object-literal method's `(x: number | string) => string` is seen through
 skipped. The mutant was planted once and the file restored after the run.
 Output: `/workspace/scratch/ttq1599/source-method-mutant.log`.
 
+## Retained storage arms (#q6wf1bp)
+
+Each mutant below was planted once using an isolated Go overlay, then excluded
+from subsequent runs; the working compiler source remained unmutated.
+Rows 11 and 12 retain their original unreadable-side skips. Row 6 retains its
+combined-signature skip, and unequal tuple lengths retain the shorter-list comparison.
+
+### Callable own properties (row 5)
+
+Restore the top-level either-callable skip, and make the one-callable arm in `sameCallablePair` return true instead of comparing properties.
+
+```
+go test -count=1 -v -timeout 3m ./internal/lower/ -run '^TestUnionKeepingPositiveProofArms$/^(constructor_static|nested_constructor_static)'
+```
+
+With the mutant, the command exits 1. The pins `constructor_static.a/.ts and nested_constructor_static.a/.ts` under
+`TestUnionKeepingPositiveProofArms` go red: `got same without a storage proof`.
+Output: `/workspace/scratch/q6wf1bp/final-mutants/mutants/c-callable-properties/run.log`.
+
+### Property source against an index view (row 9)
+
+Remove the property-to-index comparisons when the source has no index infos and the view does.
+
+```
+go test -count=1 -v -timeout 3m ./internal/lower/ -run '^TestUnionKeepingPositiveProofArms$/^property_to_index'
+```
+
+With the mutant, the command exits 1. The pins `property_to_index.a/.ts` under
+`TestUnionKeepingPositiveProofArms` go red: `got same without a storage proof`.
+Output: `/workspace/scratch/q6wf1bp/final-mutants/mutants/e-property-index/run.log`.
+
+### Every tuple element against an array view (row 10)
+
+Restore comparison only up to the shorter type-argument list. This skips the tuple’s later elements against the array’s one argument.
+
+```
+go test -count=1 -v -timeout 3m ./internal/lower/ -run '^TestUnionKeepingPositiveProofArms$/^tuple_later_element'
+```
+
+With the mutant, the command exits 1. The pins `tuple_later_element.a/.ts` under
+`TestUnionKeepingPositiveProofArms` go red: `got same without a storage proof`.
+Output: `/workspace/scratch/q6wf1bp/final-mutants/mutants/f-tuple-elements/run.log`.
+
+### Typed-array storage kind (row 14)
+
+Remove the typed-array kind check from `sameKeepingStorage`.
+
+```
+go test -count=1 -v -timeout 3m ./internal/lower/ -run '^TestUnionKeepingPositiveProofArms$/^typed_array_kind'
+```
+
+With the mutant, the command exits 1. The pins `typed_array_kind.a/.ts` under
+`TestUnionKeepingPositiveProofArms` go red: `got same without a storage proof`.
+Output: `/workspace/scratch/q6wf1bp/final-mutants/mutants/g-typed-array/run.log`.
+
+### Buffer storage view (row 14)
+
+Remove the `nodeBufferView` check from `sameKeepingStorage`.
+
+```
+go test -count=1 -v -timeout 3m ./internal/lower/ -run '^TestUnionKeepingPositiveProofArms$/^node_buffer_kind'
+```
+
+With the mutant, the command exits 1. The pins `node_buffer_kind.a/.ts` under
+`TestUnionKeepingPositiveProofArms` go red: `got same without a storage proof`.
+Output: `/workspace/scratch/q6wf1bp/final-mutants/mutants/g-buffer/run.log`.
+
+### Explicit receiver slots (row 15)
+
+Remove both the explicit-this presence check and the explicit-this slot comparison from `sameCallablePair`.
+
+```
+go test -count=1 -v -timeout 3m ./internal/lower/ -run '^TestUnionKeepingPositiveProofArms$/^(this_slot|this_missing)'
+```
+
+With the mutant, the command exits 1. The pins `this_slot.a/.ts and this_missing.a/.ts` under
+`TestUnionKeepingPositiveProofArms` go red: `got same without a storage proof`.
+Output: `/workspace/scratch/q6wf1bp/final-mutants/mutants/h-this-slots/run.log`.
+
+### Accessor against a field view (row 16)
+
+Skip source get/set accessor symbols in the property loop.
+
+```
+go test -count=1 -v -timeout 3m ./internal/lower/ -run '^TestUnionKeepingPositiveProofViewsStop$/^r16'
+```
+
+With the mutant, the command exits 1. The pins `r16.a/.ts` under
+`TestUnionKeepingPositiveProofViewsStop` go red: the view lowers instead of producing NotYet.
+Output: `/workspace/scratch/q6wf1bp/final-mutants/mutants/r16-accessor/run.log`.
+
 ## View method over a stored closure (#3h04df3)
 
 Put back the view-method `continue` in `sameKeepingStorage`'s property loop for every
