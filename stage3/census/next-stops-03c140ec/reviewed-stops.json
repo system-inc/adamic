@@ -1,0 +1,12 @@
+[
+  {
+    "where": "utilitiesPublic.ts:1289:38",
+    "kind": "Refused",
+    "reason": "an unproven predicate argument for parameter predicate (argument \"predicate\")",
+    "phase": "refusal_scan (predicate contracts, before per-node rules)",
+    "owner": "internal/lower/predicates.go: predicateArguments / predicateArgumentProof; source getAllJSDocTags (no explicit adaptation owner pin found)",
+    "emitter": "internal/lower/lower.go:142 -> internal/lower/refusals.go:83 -> internal/lower/predicates.go:711,752,777-798",
+    "source_review": "This is the predicate argument to Array.filter in getAllJSDocTags. The owners.json/targets.json search finds getAllJSDocTags only in import-list text in 99-correctness-core-multimap, not as a pinned function owner. No explicit adaptation pin for this function was found. The function and quoted source line match the baseline sys.ts-root stop.",
+    "host_runtime": "This is a source predicate-contract refusal at Array.filter. It is not a node:*, process, host-member, or runtime-execution stop."
+  }
+]

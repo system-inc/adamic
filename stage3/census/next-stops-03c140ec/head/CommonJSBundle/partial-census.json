@@ -108,5 +108,110 @@
     "reason": "an unproven predicate argument for parameter predicate (argument \"predicate\")",
     "fix": "pass a named function or arrow whose body proves both predicate branches; return a boolean and narrow at the caller (adamic/no-type-predicate)",
     "seconds": 25.113803506
+  },
+  {
+    "module_format": "CommonJSBundle",
+    "roots": [
+      "/workspace/scratch/next-stops-03c140ec/adapted/src/compiler/core.ts"
+    ],
+    "kind": "Refused",
+    "where": "/workspace/scratch/next-stops-03c140ec/adapted/src/compiler/utilitiesPublic.ts:1289:38",
+    "reason": "an unproven predicate argument for parameter predicate (argument \"predicate\")",
+    "fix": "pass a named function or arrow whose body proves both predicate branches; return a boolean and narrow at the caller (adamic/no-type-predicate)",
+    "seconds": 32.945241177
+  },
+  {
+    "module_format": "CommonJSBundle",
+    "roots": [
+      "/workspace/scratch/next-stops-03c140ec/adapted/src/compiler/corePublic.ts"
+    ],
+    "kind": "accepted",
+    "seconds": 0.119276933
+  },
+  {
+    "module_format": "CommonJSBundle",
+    "roots": [
+      "/workspace/scratch/next-stops-03c140ec/adapted/src/compiler/debug.ts"
+    ],
+    "kind": "NotYet",
+    "where": "/workspace/scratch/next-stops-03c140ec/adapted/src/compiler/semver.ts:71:9",
+    "reason": "a namespace read before runtime initialization, directly or through a reachable call; move that read or call after the namespace declaration",
+    "seconds": 8.129716431
+  },
+  {
+    "module_format": "CommonJSBundle",
+    "roots": [
+      "/workspace/scratch/next-stops-03c140ec/adapted/src/compiler/diagnosticInformationMap.generated.ts"
+    ],
+    "kind": "NotYet",
+    "where": "/workspace/scratch/next-stops-03c140ec/adapted/src/compiler/commandLineParser.ts:293:35",
+    "reason": "reading an enum before its runtime initialization; move the call after the enum declaration",
+    "seconds": 8.357381457
+  },
+  {
+    "module_format": "CommonJSBundle",
+    "roots": [
+      "/workspace/scratch/next-stops-03c140ec/adapted/src/compiler/emitter.ts"
+    ],
+    "kind": "Refused",
+    "where": "/workspace/scratch/next-stops-03c140ec/adapted/src/compiler/utilitiesPublic.ts:1289:38",
+    "reason": "an unproven predicate argument for parameter predicate (argument \"predicate\")",
+    "fix": "pass a named function or arrow whose body proves both predicate branches; return a boolean and narrow at the caller (adamic/no-type-predicate)",
+    "seconds": 30.84436111
+  },
+  {
+    "module_format": "CommonJSBundle",
+    "roots": [
+      "/workspace/scratch/next-stops-03c140ec/adapted/src/compiler/executeCommandLine.ts"
+    ],
+    "kind": "Refused",
+    "where": "/workspace/scratch/next-stops-03c140ec/adapted/src/compiler/utilitiesPublic.ts:1289:38",
+    "reason": "an unproven predicate argument for parameter predicate (argument \"predicate\")",
+    "fix": "pass a named function or arrow whose body proves both predicate branches; return a boolean and narrow at the caller (adamic/no-type-predicate)",
+    "seconds": 33.697682478
+  },
+  {
+    "module_format": "CommonJSBundle",
+    "roots": [
+      "/workspace/scratch/next-stops-03c140ec/adapted/src/compiler/expressionToTypeNode.ts"
+    ],
+    "kind": "Refused",
+    "where": "/workspace/scratch/next-stops-03c140ec/adapted/src/compiler/utilitiesPublic.ts:1289:38",
+    "reason": "an unproven predicate argument for parameter predicate (argument \"predicate\")",
+    "fix": "pass a named function or arrow whose body proves both predicate branches; return a boolean and narrow at the caller (adamic/no-type-predicate)",
+    "seconds": 29.912053267
+  },
+  {
+    "module_format": "CommonJSBundle",
+    "roots": [
+      "/workspace/scratch/next-stops-03c140ec/adapted/src/compiler/factory/baseNodeFactory.ts"
+    ],
+    "kind": "Refused",
+    "where": "/workspace/scratch/next-stops-03c140ec/adapted/src/compiler/utilitiesPublic.ts:1289:38",
+    "reason": "an unproven predicate argument for parameter predicate (argument \"predicate\")",
+    "fix": "pass a named function or arrow whose body proves both predicate branches; return a boolean and narrow at the caller (adamic/no-type-predicate)",
+    "seconds": 30.33621317
+  },
+  {
+    "module_format": "CommonJSBundle",
+    "roots": [
+      "/workspace/scratch/next-stops-03c140ec/adapted/src/compiler/factory/emitHelpers.ts"
+    ],
+    "kind": "Refused",
+    "where": "/workspace/scratch/next-stops-03c140ec/adapted/src/compiler/utilitiesPublic.ts:1289:38",
+    "reason": "an unproven predicate argument for parameter predicate (argument \"predicate\")",
+    "fix": "pass a named function or arrow whose body proves both predicate branches; return a boolean and narrow at the caller (adamic/no-type-predicate)",
+    "seconds": 28.757521512
+  },
+  {
+    "module_format": "CommonJSBundle",
+    "roots": [
+      "/workspace/scratch/next-stops-03c140ec/adapted/src/compiler/factory/emitNode.ts"
+    ],
+    "kind": "Refused",
+    "where": "/workspace/scratch/next-stops-03c140ec/adapted/src/compiler/utilitiesPublic.ts:1289:38",
+    "reason": "an unproven predicate argument for parameter predicate (argument \"predicate\")",
+    "fix": "pass a named function or arrow whose body proves both predicate branches; return a boolean and narrow at the caller (adamic/no-type-predicate)",
+    "seconds": 27.91772576
   }
 ]
