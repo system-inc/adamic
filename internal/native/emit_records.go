@@ -98,13 +98,26 @@ func (e *emitter) recordWalk(record string, visit func(string, string)) {
 	e.line("}")
 	e.line("adamic_release(%s);", iterator)
 }
+
+// dictionaryLiteral makes a record and defines its spread's entries, then its own. A planned record, its
+// record type or its site a graph type, is made a graph member, its table and wrapper one region
+// (runtime record.c's adamic_record_new_graph), and every write takes what it stores into that region
+// itself (take_in), so the entries are handed over owned as any record's are. Only a record of
+// references can be one: a planned record of numbers or booleans holds nothing a cycle runs through and
+// stays counted. ir.RecordLiteral has no ProgramRegion stamp, so the && !ProgramRegion an adoption
+// beside a Program region tests is absent on purpose: a commit adding one adds it here too.
 func (e *emitter) dictionaryLiteral(literal ir.RecordLiteral) string {
 	keys := len(literal.Entries)
 	// A spread's keys are only known at run time; keep its source evaluation after allocation.
 	if literal.Spread != nil && keys < 4 {
 		keys = 4
 	}
-	result := e.own(ir.Record, fmt.Sprintf("adamic_record_new_capacity(%s, %d)", recordValueKind(literal.Element), keys))
+	made := fmt.Sprintf("adamic_record_new_capacity(%s, %d)", recordValueKind(literal.Element), keys)
+	if e.graphTypes(literal.GraphTypes) && literal.Element.IsReference() {
+		// A graph record's table starts lazy: sizing it is #gq8w38q's follow-up for graph records.
+		made = "adamic_record_new_graph(adamic_field_reference)"
+	}
+	result := e.own(ir.Record, made)
 	if literal.Spread != nil {
 		source := e.value(literal.Spread)
 		e.recordWalk(source, func(key, slot string) {

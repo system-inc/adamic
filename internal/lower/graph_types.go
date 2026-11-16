@@ -87,14 +87,8 @@ func graphSeed(err error) (bool, error) {
 // The old refusal sites still determine the seeds. The ownership SCC includes
 // all strong connecting paths, including readonly and proven-fresh slots.
 func (f *cycleFinder) graphTypes(modules []*ast.SourceFile) error {
-	// Graph regions don't follow record values, so a cycle through a record stays refused rather than seeded.
-	for _, proven := range f.seen {
-		if f.l.recordElement(proven) != nil {
-			if err := f.slotsOf(proven); err != nil {
-				return err
-			}
-		}
-	}
+	// A record's slots seed as a map's do: a record type on a cycle is selected, its literals are made in
+	// its graph region and its writes take what they store into it (#1vb0x5s).
 	seeds := map[cycleNode]bool{}
 	for _, proven := range f.seen {
 		seed, err := graphSeed(f.slotsOf(proven))
@@ -119,11 +113,9 @@ func (f *cycleFinder) graphTypes(modules []*ast.SourceFile) error {
 					Fix:   "remove the captured strong back-reference, use a module function declaration that captures nothing, or declare the variable Weak<...> and keep the function somewhere strong (adamic/cycle-capable)",
 				}
 			}
-			// A captured cell reassigned with a value that can be a record seeds a cycle through a record
-			// no graph region holds: stopped, as a record written into a graph slot is (noteRecordSlot).
-			if f.recordStop == nil && f.holdsRecord(proven) && f.reassigned(local) {
-				f.recordStop = f.l.notYet(f.l.localNodes[local], "a record held by '"+declared.Name+"', a variable a function value captures and the program assigns again, on a cycle, in a graph program: a record can't join a graph region")
-			}
+			// A captured cell reassigned with a value that can be a record seeds a cycle through it, judged
+			// as a record written into a graph slot is (noteRecordSlot).
+			f.noteRecordCell(local, proven)
 			seeds[cycleNode{cell: local + 1}] = true
 		}
 	}
@@ -261,7 +253,31 @@ func (f *cycleFinder) graphTypes(modules []*ast.SourceFile) error {
 			Fix:   "don't keep a Promise in a value its result can reach, or declare the field Weak<...> (adamic/cycle-capable)",
 		}
 	}
-	// An otherwise acyclic cache of graph elements belongs inside their graph too.
+	// A record type is a graph type only when its values can be graph members: its value type, or an arm
+	// of it, is one, by that type's own selection (graphRecordValue). A record on a cycle component holds
+	// its values' members; one there only by a view related to it, Record<string, unknown> beside a
+	// literal type, holds nothing a region needs, and a loose value type never selects it (#1vb0x5s, Lower's
+	// C3). A seed stays: its own values reach it back.
+	records := map[cycleNode]*checker.Type{}
+	for node := range edges {
+		if node.proven != nil && !f.weak(node.proven) {
+			if element := f.l.recordElement(node.proven); element != nil {
+				records[node] = element
+			}
+		}
+	}
+	// Until nothing changes, since a record of records loses its own values with its element's type.
+	for changed := true; changed; {
+		changed = false
+		for node, element := range records {
+			if graph[node] && !seeds[node] && !f.graphRecordValue(element, graph) {
+				delete(graph, node)
+				changed = true
+			}
+		}
+	}
+	// An otherwise acyclic cache of graph elements belongs inside their graph too, a record of them among
+	// it.
 	for changed := true; changed; {
 		changed = false
 		for node := range edges {
@@ -269,6 +285,13 @@ func (f *cycleFinder) graphTypes(modules []*ast.SourceFile) error {
 				continue
 			}
 			proven := node.proven
+			if element := records[node]; element != nil {
+				if f.graphRecordValue(element, graph) {
+					graph[node] = true
+					changed = true
+				}
+				continue
+			}
 			if f.l.isArrayType(proven) || checker.IsTupleType(proven) || f.l.isLibraryType(proven, "Map", "ReadonlyMap", "Set", "ReadonlySet") {
 				for _, argument := range f.graphArguments(proven) {
 					if graph[cycleNode{proven: argument}] {
@@ -300,6 +323,8 @@ func (f *cycleFinder) graphTypes(modules []*ast.SourceFile) error {
 		}
 	}
 	f.restGraphTypes()
+	// Which seeds' records no graph region holds is read off the selection just made.
+	f.judgeRecordSlots()
 	for _, closure := range f.l.closureRecords {
 		if f.l.result.GraphTypes[int(closure.proven.Id())] {
 			f.l.result.Functions[closure.function].GraphClosure = true
@@ -372,8 +397,8 @@ func (f *cycleFinder) graphTypes(modules []*ast.SourceFile) error {
 		return err
 	}
 	// The boundary's refusals come first, so the older record form, ObjectLiteral{Record}, keeps its own
-	// words; then a record written into a graph slot on a cycle (#a9e21hc); then a graph value through an
-	// expression the plan doesn't follow (#y7wexf5).
+	// words; then a record of a type the graph doesn't select written into a graph slot on a cycle
+	// (#a9e21hc, #1vb0x5s); then a graph value through an expression the plan doesn't follow (#y7wexf5).
 	if err := f.graphAdoptionBoundary(); err != nil {
 		return err
 	}
@@ -444,6 +469,9 @@ func (f *cycleFinder) graphLinks(node cycleNode) []cycleNode {
 				}
 			}
 		}
+	case f.l.recordElement(proven) != nil:
+		// A record holds its values, as reachLinks follows them (#1vb0x5s).
+		links = append(links, cycleNode{proven: f.l.recordElement(proven)})
 	case f.l.isArrayType(proven) || checker.IsTupleType(proven) || f.l.isLibraryType(proven, "Map", "ReadonlyMap", "Set", "ReadonlySet", "Promise"):
 		for _, argument := range f.graphArguments(proven) {
 			links = append(links, cycleNode{proven: argument})
@@ -471,6 +499,23 @@ func (f *cycleFinder) graphLinks(node cycleNode) []cycleNode {
 		}
 	}
 	return links
+}
+
+// graphRecordValue reports whether a record of element values holds graph members: element itself, or
+// an arm of it, is selected in graph. Only the value type's own selection counts, so a loose one,
+// unknown or object, which is never a graph node, never selects a record (#1vb0x5s).
+func (f *cycleFinder) graphRecordValue(element *checker.Type, graph map[cycleNode]bool) bool {
+	if graph[cycleNode{proven: element}] {
+		return true
+	}
+	if element.Flags()&checker.TypeFlagsUnion != 0 {
+		for _, member := range element.Types() {
+			if graph[cycleNode{proven: member}] {
+				return true
+			}
+		}
+	}
+	return false
 }
 
 // graphArguments only queries the checker on reference objects. A contextual
