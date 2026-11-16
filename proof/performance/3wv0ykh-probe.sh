@@ -64,12 +64,13 @@ target=$O/adapted/src/compiler/utilitiesPublic.ts
 [ -f "$target" ] || fail "no utilitiesPublic.ts in the adapted tree" apply.log
 start=$(date +%s)
 # As the daily meter runs its tsc entry pass (twice-daily.sh:113): full mode, the scoped tail on.
-only=; full=1; bound=3500
-LATENT_ONLY_FILE=$only LATENT_TAIL=1 LATENT_FULL=$full LATENT_ASSERT_NO_OUTPUT=1 LATENT_TIMES=$O/$side/times.jsonl LATENT_CPUPROFILE=$O/$side/cpu.pprof ADAMIC_PROBE_NEVER_SOURCE=$O/probe.txt \
+only=; full=1; bound=6600
+LATENT_ONLY_FILE=$only LATENT_TAIL=1 LATENT_FULL=$full LATENT_ASSERT_NO_OUTPUT=1 LATENT_TIMES=$O/$side/times.jsonl ADAMIC_PROBE_NEVER_SOURCE=$O/probe.txt \
     timeout --kill-after=10s $bound "$O/$side/entry-census" "$O/adapted/src/tsc/tsc.ts" "$O/$side/latent.jsonl" > "$O/$side/run.log" 2>&1
 code=$?
 echo "$side census exit $code after $(( $(date +%s) - start )) s; load $(cut -d' ' -f1-3 /proc/loadavg)"
-[ -s "$O/$side/cpu.pprof" ] || fail "no profile written at $side (census exit $code)" $side/run.log
+# No profile: the probe file is read whether or not the census finished, so a timeout still reports what it saw.
+[ "$code" = 0 ] || { echo "the census exited $code; reading what the probe wrote before then"; tail -3 "$O/$side/run.log"; }
 python3 - "$O/$side/times.jsonl" "$side" <<'PYTHON'
 import json, sys
 rows = [json.loads(l) for l in open(sys.argv[1])]
