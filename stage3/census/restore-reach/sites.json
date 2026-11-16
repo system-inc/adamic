@@ -1,0 +1,320 @@
+{
+  "roots": [
+    "src/compiler/_namespaces/ts.moduleSpecifiers.ts",
+    "src/compiler/_namespaces/ts.performance.ts",
+    "src/compiler/_namespaces/ts.ts",
+    "src/compiler/binder.ts",
+    "src/compiler/builder.ts",
+    "src/compiler/builderPublic.ts",
+    "src/compiler/builderState.ts",
+    "src/compiler/builderStatePublic.ts",
+    "src/compiler/checker.ts",
+    "src/compiler/commandLineParser.ts",
+    "src/compiler/core.ts",
+    "src/compiler/corePublic.ts",
+    "src/compiler/debug.ts",
+    "src/compiler/diagnosticInformationMap.generated.ts",
+    "src/compiler/emitter.ts",
+    "src/compiler/executeCommandLine.ts",
+    "src/compiler/expressionToTypeNode.ts",
+    "src/compiler/factory/baseNodeFactory.ts",
+    "src/compiler/factory/emitHelpers.ts",
+    "src/compiler/factory/emitNode.ts",
+    "src/compiler/factory/nodeChildren.ts",
+    "src/compiler/factory/nodeConverters.ts",
+    "src/compiler/factory/nodeFactory.ts",
+    "src/compiler/factory/nodeTests.ts",
+    "src/compiler/factory/parenthesizerRules.ts",
+    "src/compiler/factory/utilities.ts",
+    "src/compiler/factory/utilitiesPublic.ts",
+    "src/compiler/hostErrors.ts",
+    "src/compiler/moduleNameResolver.ts",
+    "src/compiler/moduleSpecifiers.ts",
+    "src/compiler/parser.ts",
+    "src/compiler/path.ts",
+    "src/compiler/performance.ts",
+    "src/compiler/performanceCore.ts",
+    "src/compiler/program.ts",
+    "src/compiler/programDiagnostics.ts",
+    "src/compiler/resolutionCache.ts",
+    "src/compiler/scanner.ts",
+    "src/compiler/semver.ts",
+    "src/compiler/sourcemap.ts",
+    "src/compiler/symbolWalker.ts",
+    "src/compiler/sys.ts",
+    "src/compiler/tracing.ts",
+    "src/compiler/transformer.ts",
+    "src/compiler/transformers/classFields.ts",
+    "src/compiler/transformers/classThis.ts",
+    "src/compiler/transformers/declarations.ts",
+    "src/compiler/transformers/declarations/diagnostics.ts",
+    "src/compiler/transformers/destructuring.ts",
+    "src/compiler/transformers/es2015.ts",
+    "src/compiler/transformers/es2016.ts",
+    "src/compiler/transformers/es2017.ts",
+    "src/compiler/transformers/es2018.ts",
+    "src/compiler/transformers/es2019.ts",
+    "src/compiler/transformers/es2020.ts",
+    "src/compiler/transformers/es2021.ts",
+    "src/compiler/transformers/esDecorators.ts",
+    "src/compiler/transformers/esnext.ts",
+    "src/compiler/transformers/generators.ts",
+    "src/compiler/transformers/jsx.ts",
+    "src/compiler/transformers/legacyDecorators.ts",
+    "src/compiler/transformers/module/esnextAnd2015.ts",
+    "src/compiler/transformers/module/impliedNodeFormatDependent.ts",
+    "src/compiler/transformers/module/module.ts",
+    "src/compiler/transformers/module/system.ts",
+    "src/compiler/transformers/namedEvaluation.ts",
+    "src/compiler/transformers/taggedTemplate.ts",
+    "src/compiler/transformers/ts.ts",
+    "src/compiler/transformers/typeSerializer.ts",
+    "src/compiler/transformers/utilities.ts",
+    "src/compiler/tsbuild.ts",
+    "src/compiler/tsbuildPublic.ts",
+    "src/compiler/types.ts",
+    "src/compiler/utilities.ts",
+    "src/compiler/utilitiesPublic.ts",
+    "src/compiler/visitorPublic.ts",
+    "src/compiler/watch.ts",
+    "src/compiler/watchPublic.ts",
+    "src/compiler/watchUtilities.ts"
+  ],
+  "rows": [
+    {
+      "declaredMethod": true,
+      "site": {
+        "file": "src/compiler/program.ts",
+        "line": 4957,
+        "text": "host.compilerHost.fileExists = originalFileExists;"
+      },
+      "saved": {
+        "file": "src/compiler/program.ts",
+        "line": 4895,
+        "text": "const originalFileExists = host.compilerHost.fileExists;"
+      },
+      "written": "host.compilerHost",
+      "read": "host.compilerHost",
+      "member": "fileExists",
+      "savedMember": "fileExists"
+    },
+    {
+      "declaredMethod": false,
+      "site": {
+        "file": "src/compiler/program.ts",
+        "line": 4958,
+        "text": "host.compilerHost.directoryExists = originalDirectoryExists;"
+      },
+      "saved": {
+        "file": "src/compiler/program.ts",
+        "line": 4896,
+        "text": "const originalDirectoryExists = host.compilerHost.directoryExists;"
+      },
+      "written": "host.compilerHost",
+      "read": "host.compilerHost",
+      "member": "directoryExists",
+      "savedMember": "directoryExists"
+    },
+    {
+      "declaredMethod": false,
+      "site": {
+        "file": "src/compiler/program.ts",
+        "line": 4959,
+        "text": "host.compilerHost.getDirectories = originalGetDirectories;"
+      },
+      "saved": {
+        "file": "src/compiler/program.ts",
+        "line": 4897,
+        "text": "const originalGetDirectories = host.compilerHost.getDirectories;"
+      },
+      "written": "host.compilerHost",
+      "read": "host.compilerHost",
+      "member": "getDirectories",
+      "savedMember": "getDirectories"
+    },
+    {
+      "declaredMethod": true,
+      "site": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 782,
+        "text": "host.readFile = cache.originalReadFile;"
+      },
+      "saved": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 782,
+        "text": "host.readFile = cache.originalReadFile;"
+      },
+      "written": "host",
+      "read": "cache",
+      "member": "readFile",
+      "savedMember": "originalReadFile"
+    },
+    {
+      "declaredMethod": true,
+      "site": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 783,
+        "text": "host.fileExists = cache.originalFileExists;"
+      },
+      "saved": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 783,
+        "text": "host.fileExists = cache.originalFileExists;"
+      },
+      "written": "host",
+      "read": "cache",
+      "member": "fileExists",
+      "savedMember": "originalFileExists"
+    },
+    {
+      "declaredMethod": false,
+      "site": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 784,
+        "text": "host.directoryExists = cache.originalDirectoryExists;"
+      },
+      "saved": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 784,
+        "text": "host.directoryExists = cache.originalDirectoryExists;"
+      },
+      "written": "host",
+      "read": "cache",
+      "member": "directoryExists",
+      "savedMember": "originalDirectoryExists"
+    },
+    {
+      "declaredMethod": false,
+      "site": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 785,
+        "text": "host.createDirectory = cache.originalCreateDirectory;"
+      },
+      "saved": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 785,
+        "text": "host.createDirectory = cache.originalCreateDirectory;"
+      },
+      "written": "host",
+      "read": "cache",
+      "member": "createDirectory",
+      "savedMember": "originalCreateDirectory"
+    },
+    {
+      "declaredMethod": false,
+      "site": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 786,
+        "text": "host.writeFile = cache.originalWriteFile;"
+      },
+      "saved": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 786,
+        "text": "host.writeFile = cache.originalWriteFile;"
+      },
+      "written": "host",
+      "read": "cache",
+      "member": "writeFile",
+      "savedMember": "originalWriteFile"
+    },
+    {
+      "declaredMethod": true,
+      "site": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 787,
+        "text": "compilerHost.getSourceFile = cache.originalGetSourceFile;"
+      },
+      "saved": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 787,
+        "text": "compilerHost.getSourceFile = cache.originalGetSourceFile;"
+      },
+      "written": "compilerHost",
+      "read": "cache",
+      "member": "getSourceFile",
+      "savedMember": "originalGetSourceFile"
+    },
+    {
+      "declaredMethod": false,
+      "site": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 788,
+        "text": "state.readFileWithCache = cache.originalReadFileWithCache;"
+      },
+      "saved": {
+        "file": "src/compiler/tsbuildPublic.ts",
+        "line": 788,
+        "text": "state.readFileWithCache = cache.originalReadFileWithCache;"
+      },
+      "written": "state",
+      "read": "cache",
+      "member": "readFileWithCache",
+      "savedMember": "originalReadFileWithCache"
+    },
+    {
+      "declaredMethod": true,
+      "site": {
+        "file": "src/compiler/watchPublic.ts",
+        "line": 658,
+        "text": "compilerHost.readFile = originalReadFile;"
+      },
+      "saved": null,
+      "written": "compilerHost",
+      "read": null,
+      "member": "readFile",
+      "savedMember": null
+    },
+    {
+      "declaredMethod": true,
+      "site": {
+        "file": "src/compiler/watchPublic.ts",
+        "line": 659,
+        "text": "compilerHost.fileExists = originalFileExists;"
+      },
+      "saved": null,
+      "written": "compilerHost",
+      "read": null,
+      "member": "fileExists",
+      "savedMember": null
+    },
+    {
+      "declaredMethod": false,
+      "site": {
+        "file": "src/compiler/watchPublic.ts",
+        "line": 660,
+        "text": "compilerHost.directoryExists = originalDirectoryExists;"
+      },
+      "saved": null,
+      "written": "compilerHost",
+      "read": null,
+      "member": "directoryExists",
+      "savedMember": null
+    },
+    {
+      "declaredMethod": false,
+      "site": {
+        "file": "src/compiler/watchPublic.ts",
+        "line": 661,
+        "text": "compilerHost.createDirectory = originalCreateDirectory;"
+      },
+      "saved": null,
+      "written": "compilerHost",
+      "read": null,
+      "member": "createDirectory",
+      "savedMember": null
+    },
+    {
+      "declaredMethod": false,
+      "site": {
+        "file": "src/compiler/watchPublic.ts",
+        "line": 662,
+        "text": "compilerHost.writeFile = originalWriteFile!;"
+      },
+      "saved": null,
+      "written": "compilerHost",
+      "read": null,
+      "member": "writeFile",
+      "savedMember": null
+    }
+  ]
+}

@@ -1,0 +1,10 @@
+=== RUN   TestRestoreReachProbe
+=== RUN   TestRestoreReachProbe/one
+    restore_reach_probe_test.go:30: host read/write same local: {Sites:[-1] Unknown:false Reasons:[]}; one-and-same=true
+=== RUN   TestRestoreReachProbe/two
+    restore_reach_probe_test.go:30: host read/write same local: {Sites:[-2 -1] Unknown:false Reasons:[]}; one-and-same=false
+--- PASS: TestRestoreReachProbe (0.09s)
+    --- PASS: TestRestoreReachProbe/one (0.06s)
+    --- PASS: TestRestoreReachProbe/two (0.03s)
+PASS
+ok  	github.com/system-inc/adamic/internal/lower	0.096s

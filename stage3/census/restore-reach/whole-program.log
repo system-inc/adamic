@@ -1,0 +1,13 @@
+=== RUN   TestRestoreReachProbe
+=== RUN   TestRestoreReachProbe/one
+    restore_reach_probe_test.go:41: host read/write same local: {Sites:[-1] Unknown:false Reasons:[]}; one-and-same=true
+=== RUN   TestRestoreReachProbe/two
+    restore_reach_probe_test.go:41: host read/write same local: {Sites:[-2 -1] Unknown:false Reasons:[]}; one-and-same=false
+=== NAME  TestRestoreReachProbe
+    restore_reach_probe_test.go:66: whole program roots=79
+    restore_reach_probe_test.go:74: lower stop: lower: stage 0 compiles a program from one entry file, got 79; complete IR available=false
+--- PASS: TestRestoreReachProbe (2.66s)
+    --- PASS: TestRestoreReachProbe/one (0.04s)
+    --- PASS: TestRestoreReachProbe/two (0.04s)
+PASS
+ok  	github.com/system-inc/adamic/internal/lower	2.689s

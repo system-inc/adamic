@@ -1,0 +1,79 @@
+package lower
+
+import (
+	"context"
+	"github.com/system-inc/adamic/internal/ir"
+	"github.com/system-inc/adamic/internal/load"
+	"os"
+	"path/filepath"
+	"testing"
+)
+
+// Scratch-only: install as internal/lower/restore_reach_probe_test.go.
+// Calls the unchanged head graph on fully lowered controls; refuses to fabricate IR.
+func TestRestoreReachProbe(t *testing.T) {
+	for _, c := range []struct {
+		name, choose string
+		count        int
+	}{
+		{"one", "a", 1}, {"two", "flag ? a : b", 2},
+	} {
+		t.Run(c.name, func(t *testing.T) {
+			source := `interface Host { read(): string; }
+ const a: Host = {read: (): string => 'a'};
+ const b: Host = {read: (): string => 'b'};
+ const flag = Date.now() > 0;
+ const host: Host = ` + c.choose + `;
+ const original = host.read;
+ host.read = original;
+ console.log(host.read());`
+			p, err := lowerSourceAs(t, source, ".ts")
+			if err != nil {
+				t.Fatal(err)
+			}
+			assignAllocationSites(p)
+			g := newAllocationFlowGraph(p)
+			found := false
+			for i, l := range p.Locals {
+				if l.Name == "host" && l.Global {
+					found = true
+					r := g.ReachingAllocations(ir.Read{Local: i, Of: l.Type})
+					t.Logf("host read/write same local: %+v; one-and-same=%v", r, !r.Unknown && len(r.Sites) == 1)
+					if r.Unknown || len(r.Sites) != c.count {
+						t.Fatalf("want %d", c.count)
+					}
+				}
+			}
+			if !found {
+				t.Fatal("host missing")
+			}
+		})
+	}
+	if root := os.Getenv("RESTORE_REACH_TREE"); root != "" {
+		var roots []string
+		err := filepath.WalkDir(filepath.Join(root, "src/compiler"), func(p string, d os.DirEntry, e error) error {
+			if e != nil {
+				return e
+			}
+			if !d.IsDir() && filepath.Ext(p) == ".ts" {
+				roots = append(roots, p)
+			}
+			return nil
+		})
+		if err != nil {
+			t.Fatal(err)
+		}
+		t.Logf("whole program roots=%d", len(roots))
+		p, err := load.Load(roots)
+		if err != nil {
+			t.Logf("load stop: %v", err)
+			return
+		}
+		lowered, err := Lower(context.Background(), p)
+		if err != nil {
+			t.Logf("lower stop: %v; complete IR available=%v", err, lowered != nil)
+			return
+		}
+		t.Fatal("unexpected whole-program success: add site queries before reporting")
+	}
+}
