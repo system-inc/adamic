@@ -232,6 +232,9 @@ void *adamic_graph_adopt(void *value, size_t bytes) {
 		FAIL("compiler bug: graph adoption truncates object storage");
 	}
 	heap = adamic_heap_graph_storage(value, bytes);
+#ifdef ADAMIC_COUNT
+	adamic_counted.graph_moves++;
+#endif
 	if (heap->kind == adamic_kind_object) {
 		adamic_object *object = (adamic_object *)heap;
 		for (size_t i = 0; i < object->shape->count; i++) {
@@ -763,10 +766,13 @@ static void count_owned(void *value) {
 // and it can't close a cycle of regions: its edges run only to members older than it, which no
 // counted path leads back from. The only unions are hold's and take's, both through
 // adamic_graph_merge; Program adoption, relocation (adamic_heap_graph_storage) and share.c, which
-// refuses graph values, join no regions.
-void *adamic_graph_adopt_owned(void *value, size_t bytes) {
-	if (adamic_graph_is(value)) { return value; }
-	joining = adamic_graph_adopt(value, bytes);
+// refuses graph values, join no regions. Birth takes a value already in graph storage, moved there by
+// adoption or made there (adamic_heap_graph_allocate), still unshared and no region's.
+void adamic_graph_born(void *value) {
+	if (!adamic_graph_is(value) || ((adamic_heap *)value)->references != 1 || adamic_graph_header_of(value)->region != NULL) {
+		FAIL("compiler bug: a graph birth needs a new graph allocation");
+	}
+	joining = value;
 	joined = 0;
 	earliest = NULL;
 	children(joining, count_owned);
@@ -783,9 +789,16 @@ void *adamic_graph_adopt_owned(void *value, size_t bytes) {
 #endif
 	}
 	earliest = NULL;
-	void *result = joining;
 	joining = NULL;
-	return result;
+}
+
+// Adoption by move: a new allocation goes into graph storage, a copy and the original freed, and is
+// born there.
+void *adamic_graph_adopt_owned(void *value, size_t bytes) {
+	if (adamic_graph_is(value)) { return value; }
+	void *adopted = adamic_graph_adopt(value, bytes);
+	adamic_graph_born(adopted);
+	return adopted;
 }
 
 // What a slot gives up becomes the statement's: an edge inside the region carries no count, so the
