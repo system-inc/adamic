@@ -658,5 +658,38 @@
     "raw_sha256": "54eea8cf940458178b795287bb94ccb369d3e1e13efe894cd230d5bffa703d7c",
     "started_utc": "2026-11-16T18:22:02.516893+00:00",
     "wall_seconds": 159.5890132070008
+  },
+  {
+    "complete": true,
+    "ended_utc": "2026-11-16T18:25:11.272450+00:00",
+    "error": "",
+    "exit_code": 0,
+    "file": "src/compiler/transformers/legacyDecorators.ts",
+    "log": "/workspace/scratch/aryr7ea/raw/src__compiler__transformers__legacyDecorators.ts.log",
+    "raw_sha256": "fac38f752ee44a9a33434f359d9dd37abcc2eaa5f748ac6704bf6cf63ebcbd93",
+    "started_utc": "2026-11-16T18:22:32.128049+00:00",
+    "wall_seconds": 159.14434897199953
+  },
+  {
+    "complete": true,
+    "ended_utc": "2026-11-16T18:25:37.433251+00:00",
+    "error": "",
+    "exit_code": 0,
+    "file": "src/compiler/transformers/module/esnextAnd2015.ts",
+    "log": "/workspace/scratch/aryr7ea/raw/src__compiler__transformers__module__esnextAnd2015.ts.log",
+    "raw_sha256": "894bfec1823607376177065dedf33c22dc2c17c1816f6bc1a22460460691d7a9",
+    "started_utc": "2026-11-16T18:23:49.176062+00:00",
+    "wall_seconds": 108.25715909100018
+  },
+  {
+    "complete": true,
+    "ended_utc": "2026-11-16T18:25:27.942598+00:00",
+    "error": "",
+    "exit_code": 0,
+    "file": "src/compiler/transformers/module/impliedNodeFormatDependent.ts",
+    "log": "/workspace/scratch/aryr7ea/raw/src__compiler__transformers__module__impliedNodeFormatDependent.ts.log",
+    "raw_sha256": "1c890f184cce6ee1f7342d491b57aa99d571f14cd86f937e1394ce154c566483",
+    "started_utc": "2026-11-16T18:24:42.115717+00:00",
+    "wall_seconds": 45.82665659600025
   }
 ]
