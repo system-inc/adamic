@@ -5,8 +5,16 @@ import (
 	"github.com/system-inc/adamic/internal/ir"
 )
 
+// recordLiteral makes the older record form, an ObjectLiteral with Record. One adoptGraphObject would
+// adopt is made a graph member, as dictionaryLiteral's planned record is (#1vb0x5s); a Program-region
+// record keeps its own road and joins no graph region. graphAdoptionBoundary refuses this form in a
+// graph program today, so only a change lifting that refusal makes one.
 func (e *emitter) recordLiteral(literal ir.ObjectLiteral) string {
-	object := e.own(ir.Object, fmt.Sprintf("adamic_record_new_capacity(adamic_field_reference, %d)", len(literal.Fields)))
+	made := fmt.Sprintf("adamic_record_new_capacity(adamic_field_reference, %d)", len(literal.Fields))
+	if e.graphObject(literal) {
+		made = "adamic_record_new_graph(adamic_field_reference)"
+	}
+	object := e.own(ir.Object, made)
 	e.programObject(object, literal.ProgramRegion)
 	for _, field := range literal.Fields {
 		value := e.value(field.Value)

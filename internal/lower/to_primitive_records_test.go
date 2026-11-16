@@ -25,7 +25,8 @@ func TestPlainMethodsKnowEveryRecordMaker(t *testing.T) {
 		"dictionaryLiteral": "ir.RecordLiteral",
 		"recordLiteral":     "a record ir.ObjectLiteral",
 	}
-	maker := regexp.MustCompile(`adamic_record_new(?:_capacity)?\(`)
+	// A graph record is made by its own factory (#1vb0x5s), in the same emitters.
+	maker := regexp.MustCompile(`adamic_record_new(?:_capacity|_graph)?\(`)
 	found := map[string]bool{}
 	sources, err := filepath.Glob(filepath.Join("..", "native", "*.go"))
 	if err != nil {

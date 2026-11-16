@@ -97,6 +97,8 @@ func TestGraphFlowSteps(t *testing.T) {
 		{"a record's set is its value", ir.RecordCall{Method: "set", Arguments: []ir.Expression{read, ir.StringConstant{}, value}, Returns: ir.Object, GraphTypes: []int{-3}}, graphFlowStep{planned: true, site: -3, sources: graphFlowSources{operands: []ir.Expression{value}}}},
 		{"a record call of another method stops", ir.RecordCall{Method: "fromEntries", GraphTypes: []int{-3}}, graphFlowStep{stop: true}},
 		{"an allocation without a site stops", ir.RecordCall{Method: "values", Returns: ir.Array}, graphFlowStep{stop: true}},
+		{"a record literal is planned", ir.RecordLiteral{Element: ir.Object, GraphTypes: []int{21, -6}}, graphFlowStep{planned: true, site: -6}},
+		{"a record literal without a site stops", ir.RecordLiteral{Element: ir.Object}, graphFlowStep{stop: true}},
 		{"an in-place fill enters its array", ir.ArrayFill{GraphTypes: []int{-4}, Array: read}, graphFlowStep{planned: true, site: -4, sources: graphFlowSources{operands: []ir.Expression{read}}}},
 		{"a new fill is planned", ir.ArrayFill{GraphTypes: []int{-4}}, graphFlowStep{planned: true, site: -4}},
 		{"filter is planned", ir.ArrayVisit{Method: "filter", GraphTypes: []int{-5}}, graphFlowStep{planned: true, site: -5}},
