@@ -31,6 +31,9 @@ type castProof struct {
 	// field contract" (Language's v03 on #ha4hbqt), so the absent test and the tag test can't disagree through
 	// one.
 	absent bool
+	// overlap is a cast from a represented union to one object type that only overlaps it (overlapTarget): a
+	// checked view of the target with no test at the cast (overlapViewCast).
+	overlap bool
 }
 
 // castRepair is the fix a refused cast names, by file kind. In .a a cast to a union member is refused too
@@ -343,12 +346,38 @@ func (l *lowering) absentArm(source, target *checker.Type) *checker.Type {
 	return present
 }
 
+// overlapTarget is a cast from a represented union to one object type that no member is and some member upcasts
+// to by Adamic's relation (`node as NamedDeclaration` of a union whose members are each a declaration or not,
+// #b5w3ycg 2d). Its claim is a shape, not a tag: by width a value of any member type can hold the target's fields,
+// so a tag test would stop a true claim (Language's must on 49e90c66). Adamic ruled it under rulings.md:18, the
+// tag check where the tag decides the claim and the checked view everywhere else, so it's a checked view of the
+// target with no test at the cast (overlapViewCast).
+func (l *lowering) overlapTarget(members, targets []*checker.Type) bool {
+	if len(targets) != 1 || targets[0].Flags()&checker.TypeFlagsObject == 0 || isClassInstance(targets[0]) {
+		return false
+	}
+	for _, member := range members {
+		if l.castAssignable(member, targets[0]) && l.castAssignable(targets[0], member) {
+			return false
+		}
+	}
+	for _, member := range members {
+		if l.castAssignable(member, targets[0]) {
+			return true
+		}
+	}
+	return false
+}
+
 // unionMemberProof proves a cast from a represented union to some of its members by a tag every
 // member holds as a distinct literal.
 func (l *lowering) unionMemberProof(source, target *checker.Type, refused error) (castProof, error) {
 	members, targets := castMembers(source), castMembers(target)
 	if !l.castUnionWrites(source) {
 		return castProof{}, refused
+	}
+	if l.overlapTarget(members, targets) {
+		return castProof{overlap: true}, nil
 	}
 	// Checking kind cannot prove a refinement of a member's payload or callback signature.
 	for _, wanted := range targets {

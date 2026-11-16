@@ -695,6 +695,42 @@
       "type_correct_sha256": "56b179f80f0d6390d0e93dfdce145cf90b3d3de2b4807d7fa9a52aa5c875150e",
       "exit": 70,
       "stderr": "adamic: panic: cast failed: this A | B | C | undefined is not a A | C\n"
+    },
+    "60f33a7fe3341fbe13eaa2266f9fa67262577091c26196d51e79c148b3e0838d": {
+      "form": "checked_boundary",
+      "ruling_task": "#b5w3ycg",
+      "ruling": "Adamic, Nov 16, 2d under rulings.md:18: a tagless interface target is a checked view, its lie stopped at the read",
+      "declaration": "internal/oracle/testdata/cast_union_interface_lie.ts:5",
+      "declared_type": "string",
+      "repair_from": "{ kind: Kind.Export, expression: 'e' }",
+      "repair_to": "{ kind: Kind.Variable, name: 'v' }",
+      "type_correct_sha256": "57eb1958e12edb403c7ec6f269681d4dafd1ca4fa79391c5d9c02536ce809675",
+      "exit": 70,
+      "stderr": "adamic: panic: field read failed: cast({ kind: Kind.Export, expression: 'e' }).name is not initialized; expected string, found missing\n"
+    },
+    "54ce12b10ec0147fb0ba62c8e240bbd0007ccf15e32a34e3a468ec6f06f28b28": {
+      "form": "checked_boundary",
+      "ruling_task": "#b5w3ycg",
+      "ruling": "Adamic, Nov 16, 2d under rulings.md:18: a write through the overlap view into a slot a member hides by width stops at the view's own check",
+      "declaration": "internal/oracle/testdata/cast_union_interface_hidden_write.ts:8",
+      "declared_type": "number",
+      "repair_from": "rename(hidden);",
+      "repair_to": "rename({ kind: Kind.A, name: 'a' });",
+      "type_correct_sha256": "1fd5c141d9fcc391ee36979812f2a4d094801b26ae0bada94b689f726f507991",
+      "exit": 70,
+      "stderr": "adamic: panic: field read failed: <write>.name is not a string; expected string, found number\n"
+    },
+    "6dacdb2f3f7d3ad877b954c98644437c81e694bd96bacc310830890a8296e6e5": {
+      "form": "checked_boundary",
+      "ruling_task": "#b5w3ycg",
+      "ruling": "Adamic, Nov 16, 2d under rulings.md:18: a write through the overlap view into a slot a member hides by width stops at the view's own check",
+      "declaration": "internal/oracle/testdata/cast_union_interface_hidden_object.ts:6",
+      "declared_type": "number",
+      "repair_from": "replace(hidden);",
+      "repair_to": "replace({ kind: Kind.A, inner: { label: 'a' } });",
+      "type_correct_sha256": "b877186ec1a1aac02e65c1d0ef1586415568720f8b6422761505222b2a510e83",
+      "exit": 70,
+      "stderr": "adamic: panic: field read failed: hidden.inner.depth is not initialized; expected number, found missing\n"
     }
   }
 }
