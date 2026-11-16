@@ -79,6 +79,70 @@ func (l *lowering) shapeFit(value *checker.Type, target *checker.Type, libraryAr
 	return "", true
 }
 
+// shapeFitPromiseStop is promiseWhereObjectGoes' stop, with the fix in its words.
+const shapeFitPromiseStop = "a Promise going where a plain object type is held (keep it typed Promise<T>, or await it)"
+
+// promiseWhereObjectGoes is the stop for a value held as an async promise (ir.Promise) going where a slot
+// held as an object is, or "" when it isn't one. tsc lets a Promise<T> go anywhere its members fit, a
+// structural PromiseLike<T> above all, but the runtime holds a promise as an adamic_async_promise with no
+// object layout, so on main 1c1d6568 `const viewed: PromiseLike<number> = Promise.resolve(7)` and a
+// PromiseLike<number> parameter handed one lowered, and clang refused the C that put an
+// adamic_async_promise* where an adamic_object* goes (#v5b6pzp, J-q0gnv3p). A slot held as a union is judged
+// too, and so is an object literal's property value: each compiles and reads typeof right, but every read after
+// it types the value by the slot, an object, and `'then' in` such a value panicked natively ("in on an
+// unsupported runtime value") where Node prints true (J-63e7k28, Lower's probes on #v5b6pzp). A union with a
+// member held as a promise takes it as that member, so `number | Promise<number>` isn't stopped. unknown is
+// promise_into_void.go's, a type that names no promise. It's asked at the value's own site, never in
+// containerWhereOtherGoes' walk, which keeps every promise out on purpose (a Promise's then instantiates anew
+// at each step). A promise nested in a field the view reads is the writable-field view rule's to stop, as
+// J-q0gnv3p's nested probe did. It pairs with async.go's "await of thenables" check: that one stops a
+// value not held as a promise that has a then, so once this stops the view, a PromiseLike-typed value can
+// only be a program's own object, and awaiting one stops there. They meet without overlap, and neither
+// subsumes the other (Lower's read on #v5b6pzp). An await's operand is exempt: tsc gives it a contextual
+// PromiseLike<T> slot (async_plain.a's `return await empty()`), but the await reads it as a promise
+// (awaitExpression) and stores it nowhere, so no object is made of it. So is an async function's return
+// expression, a statement return's or an arrow's body: tsc gives it T | PromiseLike<T>, and a promise there is
+// adoption, which checkAsyncReturn (async.go) stops in its own words after the value is lowered. One stop per
+// road, in the words of the rule that owns it (Lower's ruling on #v5b6pzp).
+func (l *lowering) promiseWhereObjectGoes(node *ast.Node, target *checker.Type) string {
+	parent := node.Parent
+	for parent != nil && parent.Kind == ast.KindParenthesizedExpression {
+		parent = parent.Parent
+	}
+	if parent != nil && parent.Kind == ast.KindAwaitExpression {
+		return ""
+	}
+	if l.function != nil && l.function.Async && parent != nil && (parent.Kind == ast.KindReturnStatement || parent.Kind == ast.KindArrowFunction && ast.SkipParentheses(parent.Body()) == ast.SkipParentheses(node)) {
+		return ""
+	}
+	value := l.checker.GetTypeAtLocation(node)
+	held, valueKnown := l.representation(value)
+	slot, slotKnown := l.representation(target)
+	if !valueKnown || !slotKnown || held != ir.Promise {
+		return ""
+	}
+	switch {
+	case slot == ir.Object:
+		return shapeFitPromiseStop
+	case slot == ir.Union && target.Flags()&checker.TypeFlagsUnion != 0:
+		for _, member := range target.Types() {
+			if kept, known := l.representation(member); known && kept == ir.Promise && l.checker.IsTypeAssignableTo(value, member) {
+				return ""
+			}
+		}
+		for _, member := range target.Types() {
+			// The object keyword is NonPrimitive, not Object, and boxes a promise all the same (Lower's read).
+			if member.Flags()&(checker.TypeFlagsObject|checker.TypeFlagsIntersection|checker.TypeFlagsNonPrimitive) != 0 && l.checker.IsTypeAssignableTo(value, member) {
+				return shapeFitPromiseStop
+			}
+		}
+	case slot == ir.Union && target.Flags()&(checker.TypeFlagsObject|checker.TypeFlagsIntersection|checker.TypeFlagsNonPrimitive) != 0:
+		// A structural type held as a union because a primitive fits it too boxes the promise the same way.
+		return shapeFitPromiseStop
+	}
+	return ""
+}
+
 // shapeFitReached is the converse's stop past containerFitDepth, where the walk no longer knows which
 // position meets which: a map or an array a value of type value can hold anywhere (eachReached), assignable
 // to a structural slot a value of type target can hold anywhere that it can't go to (shapeFit), or ""

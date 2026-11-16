@@ -358,6 +358,11 @@ func (l *lowering) expression(node *ast.Node) (ir.Expression, error) {
 			if stop := l.elementsHeldOtherwise(skipped, contextual); stop != "" {
 				return nil, l.notYet(skipped, stop)
 			}
+			// And so is an async promise where an object is held, which has no object layout to be read
+			// through (shape_fit.go's promiseWhereObjectGoes).
+			if stop := l.promiseWhereObjectGoes(skipped, contextual); stop != "" {
+				return nil, l.notYet(skipped, stop)
+			}
 		}
 	}
 	if err != nil || value.Type() != ir.Weak {

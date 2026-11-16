@@ -87,7 +87,10 @@ interface Held { readonly item: Weak<A> | C }
 interface Twin { readonly item: Weak<A> | { readonly kind: 'c'; readonly label: string } }
 function view(held: Held): Twin { const same: Held = held; const twin: Twin = same; return twin; }
 console.log('control');`},
-			{"promise_union_view", `const p: string | PromiseLike<string> = Promise.resolve('x'); console.log(typeof p);`},
+			// A union with a Promise member, which takes the promise as that member. A union holding only a
+			// structural PromiseLike<string> boxes it as an object, which shape_fit.go's promiseWhereObjectGoes
+			// stops (#v5b6pzp: `'then' in` such a value panicked natively where Node prints true).
+			{"promise_union_view", `const p: string | Promise<string> = Promise.resolve('x'); console.log(typeof p);`},
 			{"narrowed_nullish_box", `interface Box { readonly label: string }
 function read(box: Box | undefined): string {
     if (box === undefined) return 'none';
