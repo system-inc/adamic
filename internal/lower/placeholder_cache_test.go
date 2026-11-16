@@ -3,7 +3,9 @@ package lower
 import (
 	"context"
 	"io/fs"
+	"maps"
 	"path/filepath"
+	"slices"
 	"strings"
 	"sync/atomic"
 	"testing"
@@ -165,22 +167,20 @@ func TestPlaceholderSlotsUnderAMapperOrAKeptSlotLeaveTheCacheAlone(t *testing.T)
 	}
 }
 
-// With placeholderSlotCompare on, a lowering that takes the cache's answer walks the program again into a
-// scratch result and panics where the two differ. For every .a and .ts program of internal/oracle's corpus,
-// the one TestViewWalkIndexedAgreesWithWhole lowers, this fills a cache from a lowering over a checker nothing
-// has asked yet, lowers the program whole through that checker, as the census's units ask it between one
-// unit's refusal pass and the next, and then takes the cached answer in a third lowering, whose fresh walk
-// runs over the checker the whole lowering left. A program lowered once never takes from its cache, so this
-// is how each one hits. Mutant: the answer stored empty, `sources: maps.Clone(l.result.PlaceholderSources)`
-// to `sources: ir.SortedMap[string, string]{}`, and every program with a placeholder panics.
-//
-// Not parallel: placeholderSlotCompare changes every lowering with a cache in the package while it's set, and
-// no parallel test runs beside a sequential one. Its subtests are parallel with one another, and the switch
-// goes off only once they're done.
-func TestPlaceholderSlotsCachedAgreeWithAWalk(t *testing.T) {
-	placeholderSlotCompare.Store(true)
-	t.Cleanup(func() { placeholderSlotCompare.Store(false) })
-	paths := []string{writeAgreementSource(t, "main.a", placeholderSlotsSource)}
+// placeholderSlotsShardCount is how many shards the cached-answer comparison divides its programs into. The one
+// test ran 12.97 s on a quiet box and 61.6 s on a loaded line box against the 60 s unit budget (#58r9613), so
+// four put each shard near 15 s loaded, the count the view walk's comparison took for the same shape (#sq4myx1).
+const placeholderSlotsShardCount = 4
+
+// placeholderSlotsPins are the pins' own programs, by the name their shard is chosen by. Their shard writes each
+// to a temporary directory under its base name, and pins/ keeps them apart from the corpus's own main.a files.
+var placeholderSlotsPins = map[string]string{"pins/main.a": placeholderSlotsSource}
+
+// placeholderSlotsPrograms names every program the cached-answer comparison lowers: the pins', then every .a and
+// .ts program of internal/oracle's corpus, the one the view walk's comparison lowers, by its slash-separated path
+// under internal/oracle/testdata.
+func placeholderSlotsPrograms() ([]string, error) {
+	names := slices.Sorted(maps.Keys(placeholderSlotsPins))
 	// Reads: internal/oracle/testdata/*
 	err := filepath.WalkDir("../oracle/testdata", func(path string, entry fs.DirEntry, err error) error {
 		if err != nil {
@@ -188,18 +188,57 @@ func TestPlaceholderSlotsCachedAgreeWithAWalk(t *testing.T) {
 		}
 		// A .d.ts is no program, only declarations another file names.
 		if !entry.IsDir() && (filepath.Ext(path) == ".a" || filepath.Ext(path) == ".ts" && !strings.HasSuffix(path, ".d.ts")) {
-			paths = append(paths, path)
+			names = append(names, strings.TrimPrefix(filepath.ToSlash(path), "../oracle/testdata/"))
 		}
 		return nil
 	})
+	return names, err
+}
+
+// placeholderSlotsShardPrograms is the programs of names in shard, those nameShard puts in it, as it divides the
+// cycle finder's inputs and the view walk's.
+func placeholderSlotsShardPrograms(names []string, shard uint64) []string {
+	var selected []string
+	for _, name := range names {
+		if nameShard(name, placeholderSlotsShardCount) == shard {
+			selected = append(selected, name)
+		}
+	}
+	return selected
+}
+
+// With placeholderSlotCompare on, a lowering that takes the cache's answer walks the program again into a
+// scratch result and panics where the two differ. For every program of one shard, this fills a cache from a
+// lowering over a checker nothing has asked yet, lowers the program whole through that checker, as the census's
+// units ask it between one unit's refusal pass and the next, and then takes the cached answer in a third
+// lowering, whose fresh walk runs over the checker the whole lowering left. A program lowered once never takes
+// from its cache, so this is how each one hits. TestPlaceholderSlotsCachedAgreeWithAWalk_0 to _3 in
+// placeholder_slot_shards_test.go each call it with one shard; each logs its own "N of M programs took a cached
+// answer", and TestPlaceholderSlotsShardsCoverEveryProgram holds the shards to every program exactly once.
+// Mutant: the answer stored empty, `sources: maps.Clone(l.result.PlaceholderSources)` to
+// `sources: ir.SortedMap[string, string]{}`, and every program with a placeholder panics, in every shard.
+//
+// Not parallel: placeholderSlotCompare changes every lowering with a cache in the package while it's set, and
+// no parallel test runs beside a sequential one. Its subtests are parallel with one another, and the switch
+// goes off only once they're done.
+func runPlaceholderSlotsShard(t *testing.T, shard uint64) {
+	t.Helper()
+	placeholderSlotCompare.Store(true)
+	t.Cleanup(func() { placeholderSlotCompare.Store(false) })
+	names, err := placeholderSlotsPrograms()
 	if err != nil {
 		t.Fatal(err)
 	}
+	programs := placeholderSlotsShardPrograms(names, shard)
 	var compared atomic.Int64
 	t.Run("programs", func(t *testing.T) {
-		for _, path := range paths {
-			t.Run(strings.TrimPrefix(filepath.ToSlash(path), "../oracle/testdata/"), func(t *testing.T) {
+		for _, name := range programs {
+			t.Run(name, func(t *testing.T) {
 				t.Parallel()
+				path := filepath.Join("../oracle/testdata", filepath.FromSlash(name))
+				if source, pinned := placeholderSlotsPins[name]; pinned {
+					path = writeAgreementSource(t, filepath.Base(name), source)
+				}
 				loaded, err := load.Load([]string{path})
 				if err != nil {
 					return // A program that doesn't load is never lowered.
@@ -225,7 +264,7 @@ func TestPlaceholderSlotsCachedAgreeWithAWalk(t *testing.T) {
 		}
 	})
 	if compared.Load() == 0 {
-		t.Fatal("no program of the corpus took a cached answer with a placeholder in it, so nothing was compared")
+		t.Fatalf("no program of shard %d took a cached answer with a placeholder in it, so nothing was compared", shard)
 	}
-	t.Logf("%d of %d programs took a cached answer with placeholders, each compared with a fresh walk", compared.Load(), len(paths))
+	t.Logf("%d of %d programs took a cached answer with placeholders in shard %d of %d, each compared with a fresh walk", compared.Load(), len(programs), shard, placeholderSlotsShardCount)
 }
