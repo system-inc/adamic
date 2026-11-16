@@ -1,6 +1,8 @@
 package lower
 
 import (
+	"fmt"
+	"os"
 	"strings"
 
 	"github.com/microsoft/TypeScript/tsc/shim/ast"
@@ -383,6 +385,28 @@ func (l *lowering) optionalWideningRefusal(node *ast.Node, found *optionalWideni
 	if found.unstored != "" {
 		// Diagnostics' words on #sn788gx, one template for every runtime shape the census adds.
 		return l.notYet(node, "a view naming "+found.property+", which lib declares on "+found.unstored+" but the runtime's "+found.unstored+" doesn't hold (leave "+found.property+" out of the view's type)")
+	}
+	if path := os.Getenv("ADAMIC_PROBE_NEVER_SOURCE"); path != "" {
+		// Probe for #3wv0ykh, never for landing: the source's flags before and after TypeToString prints it.
+		neverIntersection := func(t *checker.Type) string {
+			return fmt.Sprintf("intersection=%t computed=%t never=%t", t.Flags()&checker.TypeFlagsIntersection != 0, t.ObjectFlags()&checker.ObjectFlagsIsNeverIntersectionComputed != 0, t.ObjectFlags()&checker.ObjectFlagsIsNeverIntersection != 0)
+		}
+		before := neverIntersection(found.source)
+		printed := l.checker.TypeToString(found.source)
+		if printed == "never" {
+			var parts []string
+			if found.source.Flags()&checker.TypeFlagsIntersection != 0 {
+				for _, member := range found.source.Types() {
+					parts = append(parts, l.checker.TypeToString(member))
+				}
+			}
+			site := l.checker.GetTypeAtLocation(node)
+			line := fmt.Sprintf("PROBE %s | kind %v | property %s | target %s | flags %#x | before %s | after %s | parts %q | site type %s, %s\n", l.program.Where(node), node.Kind, found.property, l.checker.TypeToString(found.target), uint64(found.source.Flags()), before, neverIntersection(found.source), parts, l.checker.TypeToString(site), neverIntersection(site))
+			if file, err := os.OpenFile(path, os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0o644); err == nil {
+				_, _ = file.WriteString(line)
+				_ = file.Close()
+			}
+		}
 	}
 	return &Refused{Where: l.program.Where(node),
 		What: "optional property " + found.property + " in " + l.checker.TypeToString(found.target) + " absent from structural source " + l.checker.TypeToString(found.source) + ", which can hide fields",
