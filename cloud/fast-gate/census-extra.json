@@ -2192,7 +2192,7 @@
   {
     "file": "internal/worker/workerd_test.go",
     "test": "requireWorkerd",
-    "id": "TestProduct_WorkerdJavaScript,TestProduct_WorkerdWebAssembly,TestWorkerdCleanupLeavesNoServer,TestWorkerdJavaScriptCorpus_000,TestWorkerdJavaScriptCorpus_001,TestWorkerdJavaScriptCorpus_002,TestWorkerdJavaScriptCorpus_003,TestWorkerdJavaScriptCorpus_004,TestWorkerdJavaScriptCorpus_005,TestWorkerdJavaScriptCorpus_006,TestWorkerdJavaScriptCorpus_007,TestWorkerdRetriesAnOccupiedPort,TestWorkerdWebAssemblyCorpus_000,TestWorkerdWebAssemblyCorpus_001,TestWorkerdWebAssemblyCorpus_002,TestWorkerdWebAssemblyCorpus_003,TestWorkerdWebAssemblyCorpus_004,TestWorkerdWebAssemblyCorpus_005,TestWorkerdWebAssemblyCorpus_006,TestWorkerdWebAssemblyCorpus_007:98913330a10fef3cf264bac0dcedf94a5f5c3344d3eb037fecd39a3fc141c076",
+    "id": "TestProduct_WorkerdAsync,TestProduct_WorkerdEnvironment,TestProduct_WorkerdEnvironmentWasm,TestProduct_WorkerdJavaScript,TestProduct_WorkerdWebAssembly,TestWorkerdAsyncHandler,TestWorkerdCleanupLeavesNoServer,TestWorkerdEnvironmentHandler,TestWorkerdEnvironmentPrivacy,TestWorkerdEnvironmentWasmMissingBinding,TestWorkerdEnvironmentWasmPairing,TestWorkerdJavaScriptCorpus_000,TestWorkerdJavaScriptCorpus_001,TestWorkerdJavaScriptCorpus_002,TestWorkerdJavaScriptCorpus_003,TestWorkerdJavaScriptCorpus_004,TestWorkerdJavaScriptCorpus_005,TestWorkerdJavaScriptCorpus_006,TestWorkerdJavaScriptCorpus_007,TestWorkerdRetriesAnOccupiedPort,TestWorkerdWebAssemblyCorpus_000,TestWorkerdWebAssemblyCorpus_001,TestWorkerdWebAssemblyCorpus_002,TestWorkerdWebAssemblyCorpus_003,TestWorkerdWebAssemblyCorpus_004,TestWorkerdWebAssemblyCorpus_005,TestWorkerdWebAssemblyCorpus_006,TestWorkerdWebAssemblyCorpus_007:98913330a10fef3cf264bac0dcedf94a5f5c3344d3eb037fecd39a3fc141c076",
     "line": 22,
     "condition": "os.Getenv(\"ADAMIC_WORKER_WORKERD\") != \"1\"",
     "reads": [
@@ -2200,9 +2200,17 @@
       "os.Getenv(\"ADAMIC_WORKER_WORKERD\")"
     ],
     "callers": [
+      "TestProduct_WorkerdAsync",
+      "TestProduct_WorkerdEnvironment",
+      "TestProduct_WorkerdEnvironmentWasm",
       "TestProduct_WorkerdJavaScript",
       "TestProduct_WorkerdWebAssembly",
+      "TestWorkerdAsyncHandler",
       "TestWorkerdCleanupLeavesNoServer",
+      "TestWorkerdEnvironmentHandler",
+      "TestWorkerdEnvironmentPrivacy",
+      "TestWorkerdEnvironmentWasmMissingBinding",
+      "TestWorkerdEnvironmentWasmPairing",
       "TestWorkerdJavaScriptCorpus_000",
       "TestWorkerdJavaScriptCorpus_001",
       "TestWorkerdJavaScriptCorpus_002",
