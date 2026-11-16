@@ -11,7 +11,10 @@ import (
 
 // Throwaway probe for #egmxf20: which roads still put a lying tag into a union's tag slot.
 func TestEgmProbe(t *testing.T) {
-	directory := filepath.Join(repository, "internal/oracle/testdata/egm_probe")
+	directory, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/egm_probe"))
+	if err != nil {
+		t.Fatal(err)
+	}
 	entries, err := os.ReadDir(directory)
 	if err != nil {
 		t.Fatal(err)
