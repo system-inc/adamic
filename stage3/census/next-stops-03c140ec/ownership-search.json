@@ -60,6 +60,96 @@
     }
   },
   {
+    "file": "stage3/adapt/99-correctness-core-multimap/owners.json",
+    "json_path": "/18/before",
+    "match_terms": [
+      "isVariableDeclarationInitializedToRequire"
+    ],
+    "first_line": "function createExistingImportMap(importingFile: SourceFile, program: Program) {",
+    "metadata": {
+      "file": "src/services/codefixes/importFixes.ts",
+      "kind": "owner",
+      "beforeSha256": "52fca8998371a1a18d30a728bc4a7a513bbb813c6ac5efab048953bf75ea3334",
+      "afterSha256": "e4dc66487426a9bb6e001e9c495e64396fab7aa1c199ea47440fd803bce38430"
+    }
+  },
+  {
+    "file": "stage3/adapt/99-correctness-core-multimap/owners.json",
+    "json_path": "/18/after",
+    "match_terms": [
+      "isVariableDeclarationInitializedToRequire"
+    ],
+    "first_line": "function createExistingImportMap(importingFile: SourceFile, program: Program) {",
+    "metadata": {
+      "file": "src/services/codefixes/importFixes.ts",
+      "kind": "owner",
+      "beforeSha256": "52fca8998371a1a18d30a728bc4a7a513bbb813c6ac5efab048953bf75ea3334",
+      "afterSha256": "e4dc66487426a9bb6e001e9c495e64396fab7aa1c199ea47440fd803bce38430"
+    }
+  },
+  {
+    "file": "stage3/adapt/99-correctness-core-multimap/owners.json",
+    "json_path": "/20/before",
+    "match_terms": [
+      "isRequireVariableStatement",
+      "isVariableDeclarationInitializedToRequire"
+    ],
+    "first_line": "import {",
+    "metadata": {
+      "file": "src/services/codefixes/importFixes.ts",
+      "kind": "import",
+      "module": "../_namespaces/ts.js",
+      "beforeSha256": "7ef70fba0170984f84a0c8692010cef197090b510398e41fe727be60c8f7c313",
+      "afterSha256": "4c7300e6760ab6c149980500a28078a966a38bc9d7d52cae4de4a42650eb5b40"
+    }
+  },
+  {
+    "file": "stage3/adapt/99-correctness-core-multimap/owners.json",
+    "json_path": "/20/after",
+    "match_terms": [
+      "isRequireVariableStatement",
+      "isVariableDeclarationInitializedToRequire"
+    ],
+    "first_line": "import {",
+    "metadata": {
+      "file": "src/services/codefixes/importFixes.ts",
+      "kind": "import",
+      "module": "../_namespaces/ts.js",
+      "beforeSha256": "7ef70fba0170984f84a0c8692010cef197090b510398e41fe727be60c8f7c313",
+      "afterSha256": "4c7300e6760ab6c149980500a28078a966a38bc9d7d52cae4de4a42650eb5b40"
+    }
+  },
+  {
+    "file": "stage3/adapt/99-correctness-core-or-predicate/owners.json",
+    "json_path": "/6/before",
+    "match_terms": [
+      "isRequireVariableStatement"
+    ],
+    "first_line": "import {",
+    "metadata": {
+      "file": "src/services/utilities.ts",
+      "kind": "import",
+      "module": "./_namespaces/ts.js",
+      "beforeSha256": "a2a4951d666b97597207c2f61afd251a1236f3c0b4731ae5f1f0d9d83d9adb8c",
+      "afterSha256": "f4eba66028aeb7d54deab212f0605474cf7abd65236ce45b511f5f627c6028f5"
+    }
+  },
+  {
+    "file": "stage3/adapt/99-correctness-core-or-predicate/owners.json",
+    "json_path": "/6/after",
+    "match_terms": [
+      "isRequireVariableStatement"
+    ],
+    "first_line": "import {",
+    "metadata": {
+      "file": "src/services/utilities.ts",
+      "kind": "import",
+      "module": "./_namespaces/ts.js",
+      "beforeSha256": "a2a4951d666b97597207c2f61afd251a1236f3c0b4731ae5f1f0d9d83d9adb8c",
+      "afterSha256": "f4eba66028aeb7d54deab212f0605474cf7abd65236ce45b511f5f627c6028f5"
+    }
+  },
+  {
     "file": "stage3/adapt/92-tty-host-results/proofs/targets.json",
     "json_path": "/0/owners/0/scope",
     "match_terms": [

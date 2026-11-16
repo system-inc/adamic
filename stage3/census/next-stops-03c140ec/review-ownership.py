@@ -1,7 +1,7 @@
 """Record owner/target pin searches without duplicating whole pinned functions."""
 from pathlib import Path
 import json,subprocess
-b=Path(__file__).resolve().parent;results=[];terms=['getNodeSystem','getFirstJSDocTag','getAllJSDocTags']
+b=Path(__file__).resolve().parent;results=[];terms=['getNodeSystem','getFirstJSDocTag','getAllJSDocTags','isRequireVariableStatement','isVariableDeclarationInitializedToRequire']
 for p in sorted(Path('stage3/adapt').rglob('owners.json'))+sorted(Path('stage3/adapt').rglob('targets.json')):
  v=json.loads(p.read_text())
  def walk(x,path=''):

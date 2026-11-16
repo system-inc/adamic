@@ -8,5 +8,15 @@
     "emitter": "internal/lower/lower.go:142 -> internal/lower/refusals.go:83 -> internal/lower/predicates.go:711,752,777-798",
     "source_review": "This is the predicate argument to Array.filter in getAllJSDocTags. The owners.json/targets.json search finds getAllJSDocTags only in import-list text in 99-correctness-core-multimap, not as a pinned function owner. No explicit adaptation pin for this function was found. The function and quoted source line match the baseline sys.ts-root stop.",
     "host_runtime": "This is a source predicate-contract refusal at Array.filter. It is not a node:*, process, host-member, or runtime-execution stop."
+  },
+  {
+    "where": "utilities.ts:3907:53",
+    "kind": "Refused",
+    "reason": "an unproven predicate argument for parameter callback (argument \"decl => isVariableDeclarationInitializedToRequire(decl)\")",
+    "phase": "refusal_scan (predicate contracts, before per-node rules)",
+    "owner": "internal/lower/predicates.go: predicateArguments / predicateArgumentProof; source isRequireVariableStatement (no explicit adaptation owner pin found)",
+    "emitter": "internal/lower/lower.go:142 -> internal/lower/refusals.go:83 -> internal/lower/predicates.go:711,752,777-798",
+    "source_review": "The arrow passed as callback to every in isRequireVariableStatement is unproven. owners.json/targets.json searches find references in import-list text and in createExistingImportMap (99-correctness-core-multimap), plus import-list text in 99-correctness-core-or-predicate. No explicit pin for isRequireVariableStatement or isVariableDeclarationInitializedToRequire was found.",
+    "host_runtime": "This is a source predicate-contract refusal. The word Require here classifies TypeScript AST syntax; it is not a node:*, process, host-member, or runtime-execution stop."
   }
 ]
