@@ -1,0 +1,25 @@
+{
+  "sha": "fb8db081b444a4e510df41ef2b7206e944cc7c26",
+  "baseline": "89614cc0f9d6aa7b7fe96b56c5c6c1c3eace9825",
+  "upstream": "050880ce59e30b356b686bd3144efe24f875ebc8",
+  "script_source": "b03c073f3110c9412495fc5d4f6f80ac26941e74",
+  "baseline_source": "b03c073f3110c9412495fc5d4f6f80ac26941e74",
+  "worktree": "/workspace/scratch/next-stops-fb8db081/repo",
+  "submodules_exit_code": 0,
+  "typescript_clone_exit_code": 0,
+  "baseline_format": "CommonJSBundle",
+  "baseline_note": "Archived base rows from the source branch, measured at 89614cc0; EcmaScript is compared to that CommonJSBundle table as requested. No baseline rebuild.",
+  "compiler_tree": "af5caa7c21e2445eaded13b1ef36611c611d8cf3",
+  "submodules": [
+    " 5360753e19e4417675a90e92a1823bea66b13918 cohere (5360753e)",
+    " d92d9bfee114c80be2c375d72edae966176e3a4f cohere/TypeScript (d92d9bfe)"
+  ],
+  "environment_flags": {
+    "ADAMIC_PROGRAM_REGION": null,
+    "ADAMIC_OWNERSHIP_QUERY": null,
+    "CENSUS_TYPESCRIPT": null,
+    "TSC_ADAPT_TYPESCRIPT": null
+  },
+  "typescript_actual_sha": "050880ce59e30b356b686bd3144efe24f875ebc8",
+  "baseline_rows_sha256": "f42a2ea1fc41f29a5b2d10127b8e4283b0227e5572c85b4851a4d74bb8d9895e"
+}
