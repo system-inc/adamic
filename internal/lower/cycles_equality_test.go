@@ -135,6 +135,15 @@ func cycleExhaustiveFlowStop(err error) bool {
 	return errors.As(err, &notYet) && strings.HasPrefix(notYet.What, "a graph value through ir.") && strings.HasSuffix(notYet.What, " the plan doesn't follow")
 }
 
+// cycleLooseSlotStop reports whether err is lower's loose-slot stop (loose_slots.go, #kaz4pk8), which the
+// frozen scanning reference predates: its finder has no H and no stop, so it goes on past findCycles and
+// lowers the cycle through unknown or object that leaks. Every wall before findCycles is the same code in
+// both, so where the indexed side stops here, the two differ by the stop alone.
+func cycleLooseSlotStop(err error) bool {
+	var notYet *NotYet
+	return errors.As(err, &notYet) && strings.HasSuffix(notYet.What, looseStopWords)
+}
+
 // cycleExhaustiveFlowSites takes out of the indexed program's GraphTypes the allocation sites (the
 // negative keys, which only graphFlows sets) the scanning reference's plan lacks, and returns them.
 // graphFlows' follow enters wrappers and record calls the reference's never reached (#y7wexf5), and
@@ -210,6 +219,10 @@ func cycleCompareProgramModes(t *testing.T, path string, regions ...bool) {
 		}
 		if scanErr == nil && cycleRegionlessAllocationGuard(indexErr) {
 			t.Logf("%s: ProgramRegion=%t not compared: the indexed pipeline stops on a regionless allocation guard the frozen scanning reference predates: %v", path, region, indexErr)
+			continue
+		}
+		if cycleLooseSlotStop(indexErr) && !cycleLooseSlotStop(scanErr) {
+			t.Logf("%s: ProgramRegion=%t not compared: the indexed pipeline stops at the loose-slot stop the frozen scanning reference predates (#kaz4pk8): %v; scanning: %v", path, region, indexErr, scanErr)
 			continue
 		}
 		if scanErr == nil && cycleExhaustiveFlowStop(indexErr) {

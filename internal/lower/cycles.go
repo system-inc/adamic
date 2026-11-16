@@ -96,6 +96,8 @@ type cycleFinder struct {
 	assigned map[int]bool
 	// selected is every type graphTypes made a graph type, which unplannedPair reads (#dps0kp6).
 	selected []*checker.Type
+	// loose is the loose set H and what the loose-slot stop keeps (loose_slots.go).
+	loose looseSlots
 }
 
 // findCycles refuses the first cycle-capable slot that isn't declared Weak and has a write that isn't
@@ -119,6 +121,7 @@ func (l *lowering) findCycles(modules []*ast.SourceFile) error {
 				return false
 			}
 			finder.libraryIteratorMade(node)
+			finder.looseEntry(node)
 			switch {
 			case node.Kind == ast.KindObjectLiteralExpression:
 				// A literal is what a value may really be, and nothing is written through its own

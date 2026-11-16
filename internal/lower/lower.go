@@ -681,6 +681,10 @@ type lowering struct {
 	// as a record may drop a named contract the reads hold (droppedContractRead, records_named.go).
 	droppedContractsRead bool
 
+	// looseInits is every literal field, element or entry lowering made into a slot typed unknown or
+	// object, judged by the loose-slot stop (loose_slots.go).
+	looseInits []looseInit
+
 	// writeSites is every write into a slot lowering made, by its IR node's Site less one (fresh.go).
 	writeSites       []writeSite
 	accessorCaptures []accessorCapture
