@@ -110,6 +110,7 @@ class CompilerSelectionTests(unittest.TestCase):
                         GIT_AUTHOR_NAME='Meter test', GIT_AUTHOR_EMAIL='meter@example.invalid',
                         GIT_COMMITTER_NAME='Meter test', GIT_COMMITTER_EMAIL='meter@example.invalid',
                         GIT_TERMINAL_PROMPT='0', TMPDIR=str(self.root), GOWORK='off')
+        self.env.pop('STAGE3_METER_OPEN_TASKS', None)
         self.env.pop('STAGE3_METER_COMPILER', None)
         self.env.pop('STAGE3_METER_RUNS', None)
         self.env.pop('STAGE3_METER_LATENT', None)
@@ -207,6 +208,21 @@ class CompilerSelectionTests(unittest.TestCase):
                 self.assertTrue((run / label / (relative + '.gz')).exists(), f'{label}/{relative} not gzipped')
                 self.assertFalse((run / label / relative).exists(), f'{label}/{relative} left raw')
         return run, json.loads((run / 'report.json').read_text()), path.read_text()
+
+    def test_daily_forwards_open_task_file_from_callers_directory(self):
+        self.write('stage3/meter/owners.json', json.dumps({'compiled with checkout': '#jobs'}))
+        (self.root / 'open tasks.txt').write_text('#jobs\n')
+        self.env['STAGE3_METER_OPEN_TASKS'] = 'open tasks.txt'
+        with (self.root / 'open-owners.log').open('w') as log:
+            result = subprocess.run(['bash', str(self.repository / 'stage3/meter/twice-daily.sh')],
+                                    cwd=self.root, env=self.env, stdout=log, stderr=log, timeout=120)
+        self.assertEqual(result.returncode, 0, (self.root / 'open-owners.log').read_text())
+        run, = (self.repository / 'stage3/meter/runs').iterdir()
+        result = json.loads((run / 'report.json').read_text())
+        for tree in result['trees'].values():
+            for summary in (tree['latent_lowering'], tree['tsc_entry']['lowering_census']):
+                self.assertEqual(summary['reason_rows'][0]['owner'], '#jobs')
+                self.assertEqual(summary['unowned_reasons'], [])
 
     def test_relation_budget_ok_day_exits_zero(self):
         run, result = self.measure()
