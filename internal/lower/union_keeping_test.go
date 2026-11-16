@@ -329,3 +329,109 @@ console.log(got.kind === "v" ? got.v?.label ?? "none" : "w");
 		}
 	}
 }
+
+func TestUnionKeepingCallableFieldsStop(t *testing.T) {
+	t.Parallel()
+	for _, extension := range []string{".a", ".ts"} {
+		for _, row := range []struct{ name, source, types string }{
+			{"a1_parameter", `type A = { readonly kind: 'v'; readonly f: (x: number | string) => string } | { readonly kind: 'w'; readonly w: number };
+type Viewed = { readonly kind: 'v'; readonly f: (x: number) => string } | { readonly kind: 'w'; readonly w: number };
+function read(x: number | string): string { const kind = typeof x; console.log(kind); return kind; }
+function make(): A { return { kind: 'v', f: read }; }
+const original: A = make();
+const viewed: Viewed = original;
+if (viewed.kind === 'v') viewed.f(1);
+`, "(x: number | string) => string -> (x: number) => string"},
+			// The top-level result-width view stops the same way, so this is consistent, not a new price.
+			{"a2_result", `type A = { readonly kind: 'v'; readonly f: () => number } | { readonly kind: 'w'; readonly w: number };
+type Viewed = { readonly kind: 'v'; readonly f: () => number | string } | { readonly kind: 'w'; readonly w: number };
+function read(): number { return 1; }
+function make(): A { return { kind: 'v', f: read }; }
+const original: A = make();
+const viewed: Viewed = original;
+if (viewed.kind === 'v') console.log(typeof viewed.f());
+`, "() => number -> () => number | string"},
+		} {
+			t.Run(row.name+extension, func(t *testing.T) {
+				_, err := lowerSourceAs(t, row.source, extension)
+				var ny *NotYet
+				want := "main" + extension + ":6:24"
+				if !errors.As(err, &ny) || !strings.HasSuffix(ny.Where, want) {
+					t.Fatalf("%s: got %v, want NotYet at %s", row.types, err, want)
+				}
+			})
+		}
+	}
+}
+
+func TestUnionKeepingCallableFieldsAgree(t *testing.T) {
+	t.Parallel()
+	for _, extension := range []string{".a", ".ts"} {
+		for _, row := range []struct{ name, source string }{
+
+			{"identical_function_type", `type Callback = (x: number) => string;
+type A = { readonly kind: 'v'; readonly f: Callback } | { readonly kind: 'w'; readonly w: number };
+type Viewed = { readonly kind: 'v'; readonly f: Callback } | { readonly kind: 'w'; readonly w: number };
+function read(x: number): string { return typeof x; }
+function make(): A { return { kind: 'v', f: read }; }
+const original: A = make();
+const viewed: Viewed = original;
+if (viewed.kind === 'v') console.log(viewed.f(1));
+`},
+			{"unchanged_function_field", `type Callback = () => number;
+type A = { readonly kind: 'v'; readonly f: Callback; readonly extra: string } | { readonly kind: 'w'; readonly w: number };
+type Viewed = { readonly kind: 'v'; readonly f: Callback } | { readonly kind: 'w'; readonly w: number };
+function read(): number { return 1; }
+function make(): A { return { kind: 'v', f: read, extra: 'extra' }; }
+const original: A = make();
+const viewed: Viewed = original;
+if (viewed.kind === 'v') console.log(typeof viewed.f());
+`},
+		} {
+			t.Run(row.name+extension, func(t *testing.T) {
+				lowersAndAgreesWithNodeAs(t, row.source, extension)
+			})
+		}
+	}
+}
+
+func TestUnionKeepingCallableGrow(t *testing.T) {
+	t.Parallel()
+	for _, extension := range []string{".a", ".ts"} {
+		t.Run(extension, func(t *testing.T) {
+			// Load the growing types without asking the checker to relate them: this
+			// pins the keeping walk's bound, independently of the view pre-pass.
+			program, err := load.Load([]string{writeAgreementSource(t, "main"+extension, `interface G<T> { readonly kind: 'g'; readonly f: (x: G<G<T>> | { readonly kind: 'n' }) => void }
+interface Twin<T> { readonly kind: 'g'; readonly f: (x: Twin<Twin<T>> | { readonly kind: 'n' }) => void }
+type From = G<number> | { readonly kind: 'n' };
+type To = Twin<number> | { readonly kind: 'n' };
+declare const from: From;
+declare const to: To;`)})
+			if err != nil {
+				t.Fatal(err)
+			}
+			checked, release := program.Checker(t.Context(), program.Files()[0])
+			defer release()
+			var from, to *checker.Type
+			var visit ast.Visitor
+			visit = func(node *ast.Node) bool {
+				if ast.IsIdentifier(node) {
+					switch node.Text() {
+					case "from":
+						from = checked.GetTypeAtLocation(node)
+					case "to":
+						to = checked.GetTypeAtLocation(node)
+					}
+				}
+				return node.ForEachChild(visit)
+			}
+			program.Files()[0].Node.ForEachChild(visit)
+			if from == nil || to == nil {
+				t.Fatal("missing callable Grow union types")
+			}
+			l := &lowering{program: program, checker: checked}
+			// Either keeping verdict is allowed; this descent must finish under the shared nesting bound.
+			t.Logf("G<number> union -> Twin<number> union: same=%v", l.sameKeepingWalk(from, to, map[[2]*checker.Type]bool{}))
+		})
+	}
+}

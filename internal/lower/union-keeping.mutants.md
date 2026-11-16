@@ -84,3 +84,49 @@ The file was restored. Output:
 `/workspace/scratch/pmfdg6q/member-scope/member-rule-mutant.log`.
 The runtime probe report is
 `/workspace/scratch/pmfdg6q/weak-member-probes/report.md`.
+
+## Callable field twins (#svbn0aj)
+
+Make `sameCallablePair` answer true when both sides are callable, restoring the
+old skip in the inner stored-value comparison. Function members of the union
+remain skipped at the top of `sameKeepingStorage` (#q6wf1bp).
+
+```
+go test -count=1 -v -run '^TestUnionKeepingCallableFieldsStop$/^a1_parameter' ./internal/lower/
+```
+
+The command exits 1. `TestUnionKeepingCallableFieldsStop/a1_parameter.a` and
+`TestUnionKeepingCallableFieldsStop/a1_parameter.ts` fail with
+`got <nil>, want NotYet at main.a:6:24` and
+`got <nil>, want NotYet at main.ts:6:24`, respectively. The field types are
+`(x: number | string) => string` and `(x: number) => string`. The assignment
+lowers again when callable twins are not compared. The file was restored.
+Output: `/workspace/scratch/svbn0aj/callable-twins-mutant.log`.
+
+The a2 result-width pin also stops: `() => number` seen as
+`() => number | string`. The same top-level view stops at `1:61` in both `.a`
+and `.ts`, so this agrees with the ordinary callable walk, not a new price.
+Top-level probe outputs: `/workspace/scratch/svbn0aj/top-result-a.log` and
+`/workspace/scratch/svbn0aj/top-result-ts.log`. Identical function types and
+unchanged function fields keep lowering and agreeing with Node.
+
+## Callable growth nesting reset
+
+Restore the unconditional `nesting = &keepingNesting{}` at each ordinary union
+block, leaving the fresh visited map unchanged.
+
+```
+go test -count=1 -v -timeout 5s -run '^TestUnionKeepingCallableGrow$/^\.a$' ./internal/lower/
+go test -count=1 -v -timeout 5s -run '^TestUnionKeepingCallableGrow$/^\.ts$' ./internal/lower/
+```
+
+Both commands exit 1 with `panic: test timed out after 5s`. The mutant times out;
+no stack overflow was observed before the timeout. The pin loads
+`G<number> | { readonly kind: 'n' }` and its structural `Twin<number>` union
+without a checker relation, then runs the keeping walk. Its callable field
+parameter grows through `G<G<T>> | { readonly kind: 'n' }`. With shared nesting,
+both file modes finish and answer not same at the nesting bound.
+
+The file was restored. Full outputs:
+`/workspace/scratch/svbn0aj/nesting/reset-mutant-a.log` and
+`/workspace/scratch/svbn0aj/nesting/reset-mutant-ts.log`.

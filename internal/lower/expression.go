@@ -459,10 +459,12 @@ func (l *lowering) sameKeepingWalkMode(from, to *checker.Type, visited map[[2]*c
 				}
 			}
 		}
-		// Visited stays per mode: ordinary starts fresh here; weak-only never returns to ordinary, so its same cannot excuse an ordinary representation check.
+		// Visited is fresh per ordinary union block; nesting is shared across modes so the bound holds through callable fields.
 		if !weakOnly {
 			visited = map[[2]*checker.Type]bool{}
-			nesting = &keepingNesting{}
+			if nesting == nil {
+				nesting = &keepingNesting{}
+			}
 		}
 		pair := [2]*checker.Type{from, to}
 		if visited[pair] {
@@ -553,10 +555,42 @@ func (l *lowering) sameKeepingWalkMode(from, to *checker.Type, visited map[[2]*c
 	return true
 }
 
-// sameKeepingStorage judges stored contents only. Signatures inside union members remain unjudged.
+// sameKeepingStorage judges stored contents and callable field slots; methods stay skipped.
 func (l *lowering) sameKeepingStorage(from, to *checker.Type, visited map[[2]*checker.Type]bool, nesting *keepingNesting) bool {
+	// The field arm judges callable slots; a function member of the union stays skipped (#q6wf1bp).
 	if l.keepingCallable(from) || l.keepingCallable(to) {
 		return true
+	}
+	// Closure slots have no type descriptor, so callable twins must agree on parameter and result representation (#svbn0aj, a1).
+	sameCallablePair := func(inside, viewed *checker.Type) bool {
+		if !l.keepingCallable(inside) || !l.keepingCallable(viewed) {
+			return true
+		}
+		inside, viewed = l.present(inside), l.present(viewed)
+		fromSignatures := l.checker.GetSignaturesOfType(inside, checker.SignatureKindCall)
+		toSignatures := l.checker.GetSignaturesOfType(viewed, checker.SignatureKindCall)
+		if len(fromSignatures) != 1 || len(toSignatures) != 1 ||
+			len(l.checker.GetSignaturesOfType(inside, checker.SignatureKindConstruct)) != 0 ||
+			len(l.checker.GetSignaturesOfType(viewed, checker.SignatureKindConstruct)) != 0 ||
+			len(fromSignatures[0].TypeParameters()) != 0 || len(toSignatures[0].TypeParameters()) != 0 {
+			return false
+		}
+		sameCallable := func(inside, viewed *checker.Type) bool {
+			return l.callableKeeping(inside, viewed, toSignatures[0], visited, nesting)
+		}
+		fromParameters, toParameters := fromSignatures[0].Parameters(), toSignatures[0].Parameters()
+		if l.censusNeverRestSignature(toSignatures[0]) {
+			toParameters = nil
+		}
+		for index := 0; index < len(fromParameters) && index < len(toParameters); index++ {
+			if !sameCallable(l.checker.GetTypeOfSymbol(fromParameters[index]), l.checker.GetTypeOfSymbol(toParameters[index])) {
+				return false
+			}
+		}
+		if _, _, _, differs := l.restCollectedOtherwise(fromSignatures[0], toSignatures[0], sameCallable); differs {
+			return false
+		}
+		return sameCallable(l.checker.GetReturnTypeOfSignature(fromSignatures[0]), l.checker.GetReturnTypeOfSignature(toSignatures[0]))
 	}
 	ok, leave := nesting.from.enter(from)
 	defer leave()
@@ -570,7 +604,7 @@ func (l *lowering) sameKeepingStorage(from, to *checker.Type, visited map[[2]*ch
 	}
 	same := func(inside, viewed *checker.Type) bool {
 		if l.keepingCallable(inside) || l.keepingCallable(viewed) {
-			return true
+			return sameCallablePair(inside, viewed)
 		}
 		fromWeak, fromKnown := l.keepsWeak(inside)
 		toWeak, toKnown := l.keepsWeak(viewed)
