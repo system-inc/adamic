@@ -89,6 +89,17 @@
   },
   {
     "complete": true,
+    "ended_utc": "2026-11-16T17:01:37.897011+00:00",
+    "error": "",
+    "exit_code": 0,
+    "file": "src/compiler/commandLineParser.ts",
+    "log": "/workspace/scratch/aryr7ea/raw/src__compiler__commandLineParser.ts.log",
+    "raw_sha256": "5badf0024a4467d52d46be66ecb879f6da3a1ca63e3bcdd7d0a4a573c035baca",
+    "started_utc": "2026-11-16T16:58:14.539032+00:00",
+    "wall_seconds": 203.35791623399973
+  },
+  {
+    "complete": true,
     "ended_utc": "2026-11-16T17:01:25.291125+00:00",
     "error": "",
     "exit_code": 0,
@@ -97,5 +108,38 @@
     "raw_sha256": "640179177dd9280d3d54af839bddd237e9a73acd27b6d00bca9feee45a59fc41",
     "started_utc": "2026-11-16T17:00:36.985187+00:00",
     "wall_seconds": 48.305850783000096
+  },
+  {
+    "complete": true,
+    "ended_utc": "2026-11-16T17:01:52.295179+00:00",
+    "error": "",
+    "exit_code": 0,
+    "file": "src/compiler/corePublic.ts",
+    "log": "/workspace/scratch/aryr7ea/raw/src__compiler__corePublic.ts.log",
+    "raw_sha256": "baaea8242e814b89f5aadde3b6d8e8bc13e13ebdb77a4140a2f769552fa49619",
+    "started_utc": "2026-11-16T17:01:25.301180+00:00",
+    "wall_seconds": 26.99390241600031
+  },
+  {
+    "complete": true,
+    "ended_utc": "2026-11-16T17:02:42.327741+00:00",
+    "error": "",
+    "exit_code": 0,
+    "file": "src/compiler/debug.ts",
+    "log": "/workspace/scratch/aryr7ea/raw/src__compiler__debug.ts.log",
+    "raw_sha256": "3e1f52dcadabc741a7268f0892d7bf0724527f2f6740bb4fe7c5d76d03570619",
+    "started_utc": "2026-11-16T17:01:37.920739+00:00",
+    "wall_seconds": 64.40689393299999
+  },
+  {
+    "complete": true,
+    "ended_utc": "2026-11-16T17:02:24.925588+00:00",
+    "error": "",
+    "exit_code": 0,
+    "file": "src/compiler/diagnosticInformationMap.generated.ts",
+    "log": "/workspace/scratch/aryr7ea/raw/src__compiler__diagnosticInformationMap.generated.ts.log",
+    "raw_sha256": "99e37adba577afd95c3f3fa71035993e8444b732d848a04d999b2a0be040b608",
+    "started_utc": "2026-11-16T17:01:52.300331+00:00",
+    "wall_seconds": 32.62515713799985
   }
 ]
