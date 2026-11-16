@@ -1,6 +1,6 @@
 # Pos-writable rows — #aryr7ea
 
-Status: incomplete checkpoint at 2026-11-16T18:07:24.145802+00:00.
+Status: incomplete checkpoint at 2026-11-16T18:07:43.025469+00:00.
 
 Measured main tip `c41391ea3346727231dfa3472d061826e26f6aad` in a fresh detached worktree; TypeScript v6.0.3
 `050880ce59e30b356b686bd3144efe24f875ebc8`. Recursive shallow submodules initialized;
@@ -35,10 +35,10 @@ or successful compilation; no backend or usable IR is produced.
 
 ## Counts
 
-Completed 45/79 compiler .ts files; failed pieces: 0.
-Distinct requested keys (file, line, col, reason, unit): **1398**.
-Matching raw records (sum of multiplicity): **1416**.
-Meter-style distinct (kind, where, reason, text), omitting unit: **167**.
+Completed 46/79 compiler .ts files; failed pieces: 0.
+Distinct requested keys (file, line, col, reason, unit): **1438**.
+Matching raw records (sum of multiplicity): **1456**.
+Meter-style distinct (kind, where, reason, text), omitting unit: **199**.
 
 The saved daily meter 20261115T131735Z.PG4H0R, main `7816a8d85d60db6ffb618132eaf8b17c91ef8866`,
 counts **550** pos-writable sites across **173** exact reasons.
@@ -54,17 +54,17 @@ No claim that those effects individually explain a particular delta is made with
 
 | Target | Sites |
 | --- | ---: |
-| TextRange | 866 |
+| TextRange | 901 |
 | others | 512 |
 | Mutable<Node> | 17 |
+| SourceMapRange \| undefined | 6 |
 | TextRange \| undefined | 2 |
-| SourceMapRange \| undefined | 1 |
 
 ## Attempting unit kind
 
 | Kind | Sites |
 | --- | ---: |
-| KindFunctionDeclaration | 1398 |
+| KindFunctionDeclaration | 1438 |
 
 ## Callee / receiving slot
 
@@ -88,6 +88,7 @@ these are callers/owners, not identified callees. All rows retain unit location 
 | parseClassElement | 6 |
 | parseNamespaceExportDeclaration | 6 |
 | parseTupleElementType | 6 |
+| visitBinaryExpression | 6 |
 | moveElementEntirelyPastChangeRange | 6 |
 | parseParametersWorker | 6 |
 | createCallBinding | 5 |
@@ -131,6 +132,7 @@ these are callers/owners, not identified callees. All rows retain unit location 
 | parseExportAssignment | 5 |
 | parseTaggedTemplateRest | 5 |
 | parseJSDocTypeNameWithNamespace | 5 |
+| visitPreOrPostfixUnaryExpression | 5 |
 | transformRoot | 5 |
 | convertToFunctionBlock | 4 |
 | createExpressionForMethodDeclaration | 4 |
@@ -260,6 +262,8 @@ these are callers/owners, not identified callees. All rows retain unit location 
 | parseTemplateTagTypeParameter | 4 |
 | parseTemplateTag | 4 |
 | parseJSDocIdentifierName | 4 |
+| visitPropertyAccessExpression | 4 |
+| transformConstructorBody | 4 |
 | transformVariableStatement | 4 |
 | createParamHelper | 3 |
 | convertToFunctionExpression | 3 |
@@ -326,6 +330,8 @@ these are callers/owners, not identified callees. All rows retain unit location 
 | updateSourceFile | 3 |
 | reparseTopLevelAwait | 3 |
 | createSyntheticImport | 3 |
+| transformConstructor | 3 |
+| substituteThisExpression | 3 |
 | updateModuleDeclarationAndKeyword | 3 |
 | bindChildren | 2 |
 | visitExistingNodeTreeSymbolsWorker | 2 |
@@ -340,6 +346,9 @@ these are callers/owners, not identified callees. All rows retain unit location 
 | parseDeclarationWorker | 2 |
 | parseDecoratedExpression | 2 |
 | collectModuleReferences | 2 |
+| transformAutoAccessor | 2 |
+| transformPropertyOrClassStaticBlock | 2 |
+| trySubstituteClassAlias | 2 |
 | injectClassThisAssignmentIfMissing | 2 |
 | createPrinter | 2 |
 | emitPropertyAccessExpression | 2 |
@@ -519,6 +528,15 @@ these are callers/owners, not identified callees. All rows retain unit location 
 | parseExportSpecifier | 1 |
 | tryReparseOptionalChain | 1 |
 | parseDeclaration | 1 |
+| transformPublicFieldInitializer | 1 |
+| visitElementAccessExpression | 1 |
+| visitCallExpression | 1 |
+| visitTaggedTemplateExpression | 1 |
+| transformClassStaticBlockDeclaration | 1 |
+| transformClassMembers | 1 |
+| transformConstructorBodyWorker | 1 |
+| generateInitializedPropertyExpressionsOrClassStaticBlock | 1 |
+| transformPropertyWorker | 1 |
 | createBindBinaryExpressionFlow | 1 |
 | onEnter | 1 |
 | bindJSDocTypeAlias | 1 |
@@ -533,7 +551,7 @@ these are callers/owners, not identified callees. All rows retain unit location 
 
 ## Run times and failures
 
-Started 2026-11-16T16:36:24.047702+00:00; this checkpoint 2026-11-16T18:07:24.146695+00:00.
+Started 2026-11-16T16:36:24.047702+00:00; this checkpoint 2026-11-16T18:07:43.025984+00:00.
 Each piece's UTC start/end, wall time, exit status, complete flag, raw SHA256, and log path
 are in pieces.json. Source file inventory and adapted source SHA256s are in manifest.json.
 Rows from partial pieces, if any, are retained and explicitly marked piece_complete=false.
