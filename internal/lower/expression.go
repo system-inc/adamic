@@ -605,7 +605,7 @@ func (l *lowering) sameKeepingStorage(from, to *checker.Type, visited map[[2]*ch
 	sameCallablePair := func(inside, viewed *checker.Type) bool {
 		if !l.keepingCallable(inside) || !l.keepingCallable(viewed) {
 			// One callable side skips only signatures: storage falls through to its index/property comparison below.
-			return l.sameKeepingStorage(inside, viewed, visited, nesting, false)
+			return l.sameKeepingWalkMode(inside, viewed, visited, true, nesting, true, false)
 		}
 		inside, viewed = l.present(inside), l.present(viewed)
 		fromSignatures := l.checker.GetSignaturesOfType(inside, checker.SignatureKindCall)
