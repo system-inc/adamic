@@ -715,10 +715,13 @@ func (l *lowering) sameKeepingStorage(from, to *checker.Type, visited map[[2]*ch
 	}
 	for _, viewed := range l.checker.GetPropertiesOfType(to) {
 		inside := l.checker.GetPropertyOfType(from, viewed.Name)
-		// A view method over a source method stays skipped (row 7, #3h04df3): then on Promise and
-		// PromiseLike, and an array's methods, are generic on both sides and would fail closed. A view
-		// method over a source property is a stored closure called through its own slots, so it's
-		// compared like any callable field (Held's read: (x: Weakly) => string seen as read(x: Strong)).
+		// The one open skip in storage mode: a view method over a source method isn't compared.
+		// Comparing it through sameCallablePair stopped every async program (Promise<T> seen as
+		// T | PromiseLike<T>, through then's generic signature) and arrays seen through unions, measured
+		// Nov 16, so it waits on a proof that compares a generic target's type arguments instead of its
+		// members (#3h04df3). A view method over a source property is a stored closure called through its
+		// own slots, so it's compared like any callable field (Held's read: (x: Weakly) => string seen as
+		// read(x: Strong)).
 		if viewed.Flags&ast.SymbolFlagsMethod != 0 && (inside == nil || inside.Flags&ast.SymbolFlagsMethod != 0) {
 			continue
 		}
