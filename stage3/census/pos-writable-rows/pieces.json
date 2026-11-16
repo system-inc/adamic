@@ -31,5 +31,49 @@
     "raw_sha256": "a155ce3e23e0e36cfbd675225dc0ba66004a184abfe646d538e50aee8064faee",
     "started_utc": "2026-11-16T16:54:34.501916+00:00",
     "wall_seconds": 49.919690286000105
+  },
+  {
+    "complete": true,
+    "ended_utc": "2026-11-16T16:57:45.732869+00:00",
+    "error": "",
+    "exit_code": 0,
+    "file": "src/compiler/builder.ts",
+    "log": "/workspace/scratch/aryr7ea/raw/src__compiler__builder.ts.log",
+    "raw_sha256": "60591113700be55c041d3c44e3f41ffb2b08d1b154b15a079ec916fd2868e59c",
+    "started_utc": "2026-11-16T16:55:17.034828+00:00",
+    "wall_seconds": 148.69792253800028
+  },
+  {
+    "complete": true,
+    "ended_utc": "2026-11-16T16:55:56.647848+00:00",
+    "error": "",
+    "exit_code": 0,
+    "file": "src/compiler/builderPublic.ts",
+    "log": "/workspace/scratch/aryr7ea/raw/src__compiler__builderPublic.ts.log",
+    "raw_sha256": "d4815d0902273f77d3ab0e88328906f3703712d60a05ccd42f17c33fe2fbf319",
+    "started_utc": "2026-11-16T16:55:24.436649+00:00",
+    "wall_seconds": 32.21109794299991
+  },
+  {
+    "complete": true,
+    "ended_utc": "2026-11-16T16:57:52.734884+00:00",
+    "error": "",
+    "exit_code": 0,
+    "file": "src/compiler/builderState.ts",
+    "log": "/workspace/scratch/aryr7ea/raw/src__compiler__builderState.ts.log",
+    "raw_sha256": "f50a35d7507d95bb40e0b4c23c340ca50923608e88c4058995626498abec889f",
+    "started_utc": "2026-11-16T16:55:56.651655+00:00",
+    "wall_seconds": 116.08303393699975
+  },
+  {
+    "complete": true,
+    "ended_utc": "2026-11-16T16:58:14.534089+00:00",
+    "error": "",
+    "exit_code": 0,
+    "file": "src/compiler/builderStatePublic.ts",
+    "log": "/workspace/scratch/aryr7ea/raw/src__compiler__builderStatePublic.ts.log",
+    "raw_sha256": "981f1ff0fb59f7c204e4ecea9883725246c291244b895ff5aec71c41142d9d08",
+    "started_utc": "2026-11-16T16:57:45.764430+00:00",
+    "wall_seconds": 28.769557719000204
   }
 ]
