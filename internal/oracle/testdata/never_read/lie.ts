@@ -1,7 +1,7 @@
 // trusted.ts's corners handed a shape whose kind lies (#p6vawef): a numeric enum
-// holds any number, so other's 7 is a Kind to the checker, and { kind } is a Shape. Node reaches fail
-// and throws, and Adamic stops at the never read itself, loudly, exit 70, naming the read and the
-// switch that made it never (rulings.md:74).
+// holds any number, so other's 7 is a Kind to the checker, and { kind } is a Shape only by tsc
+// decomposing the union. Node reaches fail and throws. Adamic refuses the program at 20:30, where the
+// whole Kind goes into Circle's or Square's tag slot (#egmxf20), so the never read never sees the lie.
 enum Kind { Circle, Square }
 interface Circle { readonly kind: Kind.Circle }
 interface Square { readonly kind: Kind.Square }
