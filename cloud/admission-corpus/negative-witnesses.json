@@ -695,6 +695,18 @@
       "type_correct_sha256": "56b179f80f0d6390d0e93dfdce145cf90b3d3de2b4807d7fa9a52aa5c875150e",
       "exit": 70,
       "stderr": "adamic: panic: cast failed: this A | B | C | undefined is not a A | C\n"
+    },
+    "60f33a7fe3341fbe13eaa2266f9fa67262577091c26196d51e79c148b3e0838d": {
+      "form": "checked_boundary",
+      "ruling_task": "#b5w3ycg",
+      "ruling": "Adamic, Nov 16, 2d under rulings.md:18: a tagless interface target is a checked view, its lie stopped at the read",
+      "declaration": "internal/oracle/testdata/cast_union_interface_lie.ts:5",
+      "declared_type": "string",
+      "repair_from": "{ kind: Kind.Export, expression: 'e' }",
+      "repair_to": "{ kind: Kind.Variable, name: 'v' }",
+      "type_correct_sha256": "57eb1958e12edb403c7ec6f269681d4dafd1ca4fa79391c5d9c02536ce809675",
+      "exit": 70,
+      "stderr": "adamic: panic: field read failed: cast({ kind: Kind.Export, expression: 'e' }).name is not initialized; expected string, found missing\n"
     }
   }
 }
