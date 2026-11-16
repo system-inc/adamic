@@ -1,0 +1,7 @@
+import type {HttpRequest,HttpResponse} from 'adamic/http';
+interface Environment {readonly ZONE:string; readonly GREETING:string}
+class Holder {constructor(readonly held:Environment) {}}
+export function handle(request:HttpRequest, environment:Environment):HttpResponse {
+const holder = new Holder(environment); console.log(holder.held.ZONE);
+return {status:200,headers:[],body:request.path};
+}

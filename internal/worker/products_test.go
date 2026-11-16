@@ -30,7 +30,7 @@ func activeMutation(t *testing.T) *workerMutation {
 	if name == "" {
 		return nil
 	}
-	for _, group := range [][]workerMutation{workerMutants, wasmWorkerMutants, asyncWorkerMutants, environmentMutants} {
+	for _, group := range [][]workerMutation{workerMutants, wasmWorkerMutants, asyncWorkerMutants, environmentMutants, environmentShapeMutants} {
 		for _, mutant := range group {
 			if mutant.name == name {
 				return &mutant
