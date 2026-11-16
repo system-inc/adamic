@@ -435,3 +435,48 @@ declare const to: To;`)})
 		})
 	}
 }
+
+func TestUnionKeepingFunctionMemberStop(t *testing.T) {
+	t.Parallel()
+	for _, extension := range []string{".a", ".ts"} {
+		t.Run(extension, func(t *testing.T) {
+			_, err := lowerSourceAs(t, `type Box = { readonly kind: 'box'; readonly label: string };
+type A = ((x: number | string) => string) | Box;
+type Viewed = ((x: number) => string) | Box;
+function read(x: number | string): string { const kind = typeof x; console.log(kind); return kind; }
+function make(): A { return read; }
+const original: A = make();
+const v: Viewed = original;
+if (typeof v === 'function') v(1);
+`, extension)
+			var ny *NotYet
+			want := "main" + extension + ":7:19"
+			if !errors.As(err, &ny) || !strings.HasSuffix(ny.Where, want) {
+				t.Fatalf("((x: number | string) => string) | Box -> ((x: number) => string) | Box: got %v, want NotYet at %s", err, want)
+			}
+		})
+	}
+}
+
+func TestUnionKeepingFunctionMemberResultStop(t *testing.T) {
+	t.Parallel()
+	for _, extension := range []string{".a", ".ts"} {
+		t.Run(extension, func(t *testing.T) {
+			// The top-level scalar-result view also stops at 1:61, so this follows the same rule.
+			_, err := lowerSourceAs(t, `type Box = { readonly kind: 'box'; readonly label: string };
+type A = (() => number) | Box;
+type Viewed = (() => number | string) | Box;
+function read(): number { return 1; }
+function make(): A { return read; }
+const original: A = make();
+const v: Viewed = original;
+if (typeof v === 'function') console.log(typeof v());
+`, extension)
+			var ny *NotYet
+			want := "main" + extension + ":7:19"
+			if !errors.As(err, &ny) || !strings.HasSuffix(ny.Where, want) {
+				t.Fatalf("(() => number) | Box -> (() => number | string) | Box: got %v, want NotYet at %s", err, want)
+			}
+		})
+	}
+}

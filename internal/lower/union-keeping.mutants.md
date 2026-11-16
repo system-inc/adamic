@@ -130,3 +130,26 @@ both file modes finish and answer not same at the nesting bound.
 The file was restored. Full outputs:
 `/workspace/scratch/svbn0aj/nesting/reset-mutant-a.log` and
 `/workspace/scratch/svbn0aj/nesting/reset-mutant-ts.log`.
+
+## Single callable union member (#xmnp0x8)
+
+Restore the unconditional `return true` for callable union members at the top
+of `sameKeepingStorage`, removing its `singleCallable` comparison.
+
+```
+go test -count=1 -v -run '^TestUnionKeepingFunctionMemberStop$' ./internal/lower/
+```
+
+The command exits 1. `TestUnionKeepingFunctionMemberStop/.a` and
+`TestUnionKeepingFunctionMemberStop/.ts` fail with
+`got <nil>, want NotYet at main.a:7:19` and
+`got <nil>, want NotYet at main.ts:7:19`, respectively. The types are
+`((x: number | string) => string) | Box` and
+`((x: number) => string) | Box`. The parameter view lowers again when the only
+callable member is skipped. The file was restored.
+Output: `/workspace/scratch/xmnp0x8/member-skip-mutant.log`.
+
+The result twin `(() => number) | Box` to `(() => number | string) | Box`
+also stops at the view. Its top-level scalar-result view stops the same way
+at `1:61`; the union member follows the ordinary callable rule. Two or more
+callable members retain the combined-signature behavior left to #q6wf1bp.
