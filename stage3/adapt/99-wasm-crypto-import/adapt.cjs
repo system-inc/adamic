@@ -6,6 +6,7 @@ const crypto = require('node:crypto');
 const ts = require('typescript');
 const {compiler, nodes} = require('../47-host-errors/adapt.cjs');
 const manifest = require('./proofs/targets.json');
+const recordreplay = require('./recordreplay.cjs');
 const local = '_crypto';
 const watchDirectorySpec = require('./proofs/watch-directory.json');
 function watchDirectoryProperty(file) {
@@ -134,6 +135,7 @@ function validateBindings(program, file, done) {
 }
 function plannedProgram(program, file, text) {
     const host = ts.createCompilerHost(program.getCompilerOptions(), true);
+    recordreplay.virtualHost(host, file.fileName);
     const original = host.getSourceFile.bind(host);
     host.getSourceFile = (name, language, onError, shouldCreateNewSourceFile) => path.resolve(name) === path.resolve(file.fileName)
         ? ts.createSourceFile(name, text, language, true)
@@ -180,14 +182,19 @@ function adapt(tree, options = {}) {
     }
     const osImport = one(file.statements.filter(ts.isImportDeclaration).filter(n => n.getText(file) === 'import * as _os from "node:os";'), '93 os import');
     const newline = file.text.includes('\r\n') ? '\r\n' : '\n';
+    edits.push(...recordreplay.edits(file, owner, osImport, newline, done));
     let importInsertions = 0;
+    let recordreplayImports = 0;
     for (const edit of edits) {
         const inOwner = edit.start >= owner.getStart(file) && edit.start < owner.end && edit.end >= edit.start && edit.end <= owner.end;
         const importInsertion = edit.start === osImport.end && edit.end === osImport.end && edit.text === newline + importText;
-        assert(inOwner || importInsertion, 'edit outside getNodeSystem and node: import insertion');
+        const recordreplayImport = recordreplay.importEdit(osImport, newline, edit);
+        assert(inOwner || importInsertion || recordreplayImport, 'edit outside getNodeSystem and pinned import edits');
+        if (recordreplayImport) recordreplayImports++;
         if (importInsertion) importInsertions++;
     }
     assert.equal(importInsertions, done ? 0 : 1, 'crypto import insertion count moved');
+    assert.equal(recordreplayImports, done ? 0 : 1, 'recordreplay import edit count moved');
     let text = file.text, boundary = text.length;
     for (const edit of edits.sort((a, b) => b.start - a.start)) {
         assert(edit.end <= boundary, 'overlapping crypto edits');
@@ -207,6 +214,7 @@ function adapt(tree, options = {}) {
     assert.equal(ts.createSourceFile(file.fileName, text, ts.ScriptTarget.Latest, true).parseDiagnostics.length, 0);
     const planned = plannedProgram(program, file, text);
     const post = validateBindings(planned, planned.getSourceFile(file.fileName), true);
+    const recordreplayEvidence = recordreplay.validate(planned, planned.getSourceFile(file.fileName), post.nodeSystem);
     assert.equal(fs.readFileSync(file.fileName, 'utf8'), file.text, 'source changed while planning');
     // Validate all original bindings, planned bindings and scoped hashes before the sole write.
     if (options.pinOnly) {
@@ -214,8 +222,9 @@ function adapt(tree, options = {}) {
         fs.writeFileSync(path.join(__dirname,'proofs/targets.json'),JSON.stringify([pin],null,2)+'\n');
         return {pinsRegenerated:true,sourceWrites:0,watchDirectory1533Preserved:true};
     }
+    recordreplay.write(file, done);
     if (edits.length) fs.writeFileSync(file.fileName, text);
-    return {files: edits.length ? 1 : 0, javascriptChanging: true, before: checked.evidence, after: post.evidence};
+    return {files: edits.length ? 2 : 0, javascriptChanging: true, recordreplay: recordreplayEvidence, before: checked.evidence, after: post.evidence};
 }
 module.exports = {adapt, validateBindings, plannedProgram, blockLines, importText, annotateRequire, requireBefore, requireAfter, forwardResolveHost, forwardWatchDirectory, validateWatchDirectory, watchDirectoryProperty};
 if (require.main === module) {
