@@ -1,0 +1,34 @@
+// timer_burst: 20,000 timers due at once, each adding its value to a sum, forty bursts in a row
+// (#ezae5s0). Native once retired each timer by walking every live one, so a single burst took 760 ms
+// against Node's 5. Every timer of a burst is set at 1 ms, so all of them land in Node's one 1 ms
+// list, and the burst's last timer, set after them at the same duration, runs after them in that
+// list's insertion order. It arms the next burst, or prints the sum once the last burst has run; a
+// runtime that ran it early would print before the burst's own timers had added theirs.
+import 'node:timers';
+
+const timersPerBurst = 20000;
+const bursts = 40;
+let sum = 0;
+let burstsRun = 0;
+
+function add(value: number): void {
+	sum += value;
+}
+
+function arm(): void {
+	for (let index = 0; index < timersPerBurst; index += 1) {
+		setTimeout(add, 1, (index * 7 + burstsRun) % 1000);
+	}
+	setTimeout(finishBurst, 1);
+}
+
+function finishBurst(): void {
+	burstsRun += 1;
+	if (burstsRun < bursts) {
+		arm();
+	} else {
+		console.log(`timer burst sum ${sum} after ${burstsRun} bursts`);
+	}
+}
+
+arm();

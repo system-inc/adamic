@@ -1,0 +1,48 @@
+{
+	"suites": {
+		"everyday": {
+			"rule": "whole-program workloads any mind can run in about a minute, native against Node and Bun",
+			"programs": [
+				{ "name": "devirtualize" },
+				{ "name": "nbody" },
+				{ "name": "parallel_files", "judge": "wall", "note": "the pool's default threads; more threads raise user time by design, so it's judged on wall" },
+				{ "name": "sort" },
+				{ "name": "spectral_norm" },
+				{ "name": "tokenizer" },
+				{ "name": "trees" },
+				{ "name": "word_count" }
+			]
+		},
+		"regression": {
+			"rule": "a program enters when a measured speed finding names it, and leaves only by Runtime's ruling on #re2xhwa naming why, logged beside it",
+			"includes": ["everyday"],
+			"programs": [
+				{ "name": "graph", "findings": ["#ahnc64w", "#kha2ea0"], "note": "its trailing 400 ms timer is the point: one timer used to cost the whole program its regions" },
+				{ "name": "copy", "findings": ["#ahnc64w", "#kha2ea0"], "note": "its trailing 400 ms timer is the point: one timer used to cost the whole program its regions" },
+				{ "name": "timer_burst", "findings": ["#ezae5s0"], "note": "native retired timers in linear time, 760 ms for a burst against Node's 5" },
+				{ "name": "timer_dispatch", "findings": ["#a6yb7d1"], "note": "Node's per-duration list order" },
+				{ "name": "parallel_files", "judge": "wall", "threads": [1, 4, 16], "findings": ["#re2xhwa"], "note": "each thread count is its own row; #re2xhwa's brief names no earlier finding for it" },
+				{
+					"name": "record_cost",
+					"kind": "harness",
+					"path": "measure/record-cost/run.sh",
+					"branch": "runtime-performance/record-cost-baseline",
+					"findings": ["#chncwr5"],
+					"note": "the record cost modes drive the runtime directly, not from source, so this runs outside run.go and -compare lists it without timing it"
+				}
+			],
+			"retired": []
+		},
+		"holdout": {
+			"rule": "every Benchmarks Game program with a JavaScript entry that everyday doesn't already cover",
+			"revision": "",
+			"programs": [],
+			"note": "filled by the holdout port (Brief B)"
+		},
+		"claim": {
+			"rule": "the 1.0.0 claim's workload: native tsc's full check of src/compiler (#vmztnxh)",
+			"programs": [],
+			"note": "joins when tsc builds natively"
+		}
+	}
+}
