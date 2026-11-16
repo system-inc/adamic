@@ -89,9 +89,9 @@ func (l *lowering) withinLiterals(declared *checker.Type, allowed []*checker.Typ
 func (l *lowering) view(node *ast.Node, value ir.Expression, source, target *checker.Type) (ir.Expression, error) {
 	l.viewSources = append(l.viewSources, viewSource{source: source, target: target, entry: value, node: node})
 	if target.Flags()&checker.TypeFlagsUnion != 0 {
-		return l.legacyView(node, value, target)
+		return l.legacyView(node, value, source, target)
 	}
-	fields, err := l.viewSchema(node, target)
+	fields, err := l.viewSchema(node, source, target)
 	if err != nil {
 		return nil, err
 	}
@@ -284,7 +284,10 @@ func (l *lowering) callableViewContract(proven *checker.Type) bool {
 	return len(l.checker.GetSignaturesOfType(proven, checker.SignatureKindCall)) != 0 || len(l.checker.GetSignaturesOfType(proven, checker.SignatureKindConstruct)) != 0
 }
 
-func (l *lowering) viewSchema(node *ast.Node, target *checker.Type) (map[string]bool, error) {
+// viewSchema registers target's contract's checks, nested contracts included. Source is the type the
+// viewed value had before the view, or nil where there's none to name, and decides with the types the
+// walk reaches whether a record can be read through it (viewRecordFree).
+func (l *lowering) viewSchema(node *ast.Node, source, target *checker.Type) (map[string]bool, error) {
 	id, err := l.viewContract(node, target)
 	if err != nil {
 		return nil, err
@@ -292,7 +295,8 @@ func (l *lowering) viewSchema(node *ast.Node, target *checker.Type) (map[string]
 	fields := map[string]bool{}
 	// A failed whole-object adapter can leave an unsupported descriptor without
 	// its fields. Keep those names registered so demanded reads reach the lazy
-	// refusal instead of silently reading unchecked storage.
+	// refusal instead of silently reading unchecked storage. Its keys keep the
+	// record guard's stop: what an unsupported contract stands for isn't known.
 	if contract := l.result.ViewContracts[id-1]; contract.Unsupported != "" {
 		if l.result.CheckedFields == nil {
 			l.result.CheckedFields = map[string]bool{}
@@ -300,9 +304,13 @@ func (l *lowering) viewSchema(node *ast.Node, target *checker.Type) (map[string]
 		for _, property := range l.checker.GetPropertiesOfType(target) {
 			fields[property.Name] = true
 			// Preserve the boundary under receiver-specific registration too.
-			l.markCheckedField(ir.CheckedFieldKey(int(target.Id()), property.Name), property.Name)
+			l.markCheckedField(ir.CheckedFieldKey(int(target.Id()), property.Name), property.Name, false)
 		}
 	}
+	// The walk names its keys first, so whether a record can be read through the view is judged on
+	// every type it reaches before any key is registered.
+	type registration struct{ key, name string }
+	var registrations []registration
 	seen := map[ir.ViewContractID]bool{}
 	var visit func(ir.ViewContractID)
 	visit = func(id ir.ViewContractID) {
@@ -315,7 +323,7 @@ func (l *lowering) viewSchema(node *ast.Node, target *checker.Type) (map[string]
 			fields[field.Name] = true
 			for typeID, contractID := range l.result.ViewContractTypes {
 				if contractID == id {
-					l.markCheckedField(ir.CheckedFieldKey(typeID, field.Name), field.Name)
+					registrations = append(registrations, registration{ir.CheckedFieldKey(typeID, field.Name), field.Name})
 				}
 			}
 			visit(field.Contract)
@@ -326,10 +334,61 @@ func (l *lowering) viewSchema(node *ast.Node, target *checker.Type) (map[string]
 		visit(contract.Element)
 	}
 	visit(id)
+	walked := []*checker.Type{target}
+	free := true
+	for typeID, contractID := range l.result.ViewContractTypes {
+		if !seen[contractID] {
+			continue
+		}
+		known := l.viewContractTargets[typeID]
+		if known == nil {
+			free = false
+			break
+		}
+		walked = append(walked, known)
+	}
+	free = free && l.viewRecordFree(source, walked)
+	for _, each := range registrations {
+		l.markCheckedField(each.key, each.name, free)
+	}
 	return fields, nil
 }
 
-func (l *lowering) legacyView(node *ast.Node, value ir.Expression, target *checker.Type) (ir.Expression, error) {
+// viewRecordFree is whether no record can be the value a view registers checks for (#5d9y3rs, Lower's
+// narrow cut on its task): the view's source, and every type its contract walks through, is a type
+// record storage can't reach (recordMayReach), with no member any, unknown or a type parameter. Every
+// relation from record storage to a fixed type stops at storage ("fixed objects and records have
+// different storage"), so a value read through such a view is held in fixed slots at every depth. A
+// view with no source to name isn't free, so its keys keep checkRecordGuardedReads' stop.
+func (l *lowering) viewRecordFree(source *checker.Type, walked []*checker.Type) bool {
+	if !l.recordFreeType(source) {
+		return false
+	}
+	for _, each := range walked {
+		if !l.recordFreeType(each) {
+			return false
+		}
+	}
+	return true
+}
+
+// recordFreeType is whether a value of declared can't be a record: it's none of any, unknown or a type
+// parameter, nor has a union or intersection member that is, and recordMayReach rejects it.
+func (l *lowering) recordFreeType(declared *checker.Type) bool {
+	if declared == nil || declared.Flags()&(checker.TypeFlagsAny|checker.TypeFlagsUnknown|checker.TypeFlagsInstantiable) != 0 {
+		return false
+	}
+	if declared.Flags()&(checker.TypeFlagsUnion|checker.TypeFlagsIntersection) != 0 {
+		for _, member := range declared.Types() {
+			if !l.recordFreeType(member) {
+				return false
+			}
+		}
+	}
+	return !l.recordMayReach(declared)
+}
+
+func (l *lowering) legacyView(node *ast.Node, value ir.Expression, source, target *checker.Type) (ir.Expression, error) {
 	if l.callableViewContract(target) {
 		return nil, &Refused{Where: l.program.Where(node), What: "a checked view with a callable contract", Fix: "prove the callable body rather than asserting its signature"}
 	}
@@ -417,8 +476,10 @@ func (l *lowering) legacyView(node *ast.Node, value ir.Expression, target *check
 	if l.result.CheckedFields == nil {
 		l.result.CheckedFields = map[string]bool{}
 	}
+	// Its fields are scalars, so the target is the one type its contract walks through.
+	free := l.viewRecordFree(source, []*checker.Type{target})
 	for field := range fields {
-		l.markCheckedField(ir.CheckedFieldKey(int(target.Id()), field), field)
+		l.markCheckedField(ir.CheckedFieldKey(int(target.Id()), field), field, free)
 	}
 	return value, nil
 }
@@ -495,7 +556,9 @@ func (l *lowering) checkedViewReceiverField(node *ast.Node, receiver *checker.Ty
 	if receiver.Flags()&checker.TypeFlagsUnion != 0 {
 		for _, member := range receiver.Types() {
 			if l.checkedViewReceiverField(node, member, name) {
-				l.markCheckedField(ir.CheckedFieldKey(id, name), name)
+				// No view registered this union's key, so no source is known: it keeps the record
+				// guard's stop.
+				l.markCheckedField(ir.CheckedFieldKey(id, name), name, false)
 				return true
 			}
 		}

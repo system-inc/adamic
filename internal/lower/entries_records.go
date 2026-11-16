@@ -260,8 +260,13 @@ func init() {
 // types records are held as (rule b), not a type one of them is assignable to (rule c, which covers
 // a record passed through a parameter, a generic or a union member, and the reverse, which covers a
 // record narrowed to a subtype or an intersection), and not a field a checked view registered, since
-// a record reaches a fixed type through a view (rule a, checkRecordGuardedReads). Today (a) and (b)
-// are implied by (c) and have no witness of their own; they are kept so a new entrance fails closed.
+// a record reaches a fixed type through a view (rule a, checkRecordGuardedReads). Rule (a) stops only a
+// field some view a record may reach registered: one whose source, or a type its contract walks through,
+// recordMayReach doesn't reject, or one with no source to name (viewRecordFree, #5d9y3rs). A view rooted
+// at a type no record reaches reads fixed slots at every depth, since storage refuses every relation from
+// a record to a fixed type, so tsc's parent.parent.phaseModifier through a Node downcast lowers. Today
+// (a) and (b) are implied by (c) and have no witness of their own; they are kept so a new entrance fails
+// closed.
 type recordGuardedRead struct {
 	node           *ast.Node
 	receiverTypeID int
@@ -574,15 +579,25 @@ func (l *lowering) mergedClassInstanceTypes() []*checker.Type {
 }
 
 // checkRecordGuardedReads runs once lowering has registered every checked view: a read admitted
-// beside records stays NotYet when a view registered its field, since that's how a record reaches
-// a fixed type the checker can't otherwise see.
+// beside records stays NotYet when a view a record may reach registered its field, since that's how a
+// record reaches a fixed type the checker can't otherwise see.
 func (l *lowering) checkRecordGuardedReads() error {
 	for _, read := range l.recordGuardedReads {
-		if l.result.CheckedField(read.receiverTypeID, read.name) {
+		if l.recordReachedField(read.receiverTypeID, read.name) {
 			return l.notYet(read.node, "a union or optional field read in a program with record storage")
 		}
 	}
 	return nil
+}
+
+// recordReachedField is ir.Program.CheckedField's question, less the keys only record-free views
+// registered (markCheckedField's checkedFieldRecordFree): a key added any other way, or by any one view
+// a record may reach, still answers yes.
+func (l *lowering) recordReachedField(receiverTypeID int, name string) bool {
+	if key := ir.CheckedFieldKey(receiverTypeID, name); l.result.CheckedFields[key] && !l.checkedFieldRecordFree[key] {
+		return true
+	}
+	return l.result.CheckedFields[name] && !l.result.PlainReceivers[receiverTypeID] && !l.checkedFieldRecordFree[name]
 }
 
 // weakFieldRead is a union or optional field read, in a .ts file, whose receiver a record may be. tsc

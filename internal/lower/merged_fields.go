@@ -140,7 +140,8 @@ func (l *lowering) mergedFieldRead(node *ast.Node) error {
 	if _, err := l.strictViewContract(node, l.checker.GetTypeOfSymbol(field)); err != nil {
 		return err
 	}
-	l.markCheckedField(field.Name, field.Name)
+	// A bare name has no view and no source, so it keeps the record guard's stop.
+	l.markCheckedField(field.Name, field.Name, false)
 	return nil
 }
 
