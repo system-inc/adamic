@@ -347,6 +347,21 @@
       "after": "[\"PropertySignature\",[\"Identifier\",\"next\"],[\"QuestionToken\"],[\"UnionType\",[\"ArrayType\",[\"TypeReference\",[\"Identifier\",\"DiagnosticMessageChain\"]]],[\"UndefinedKeyword\"]]]"
     },
     {
+      "declaration": "member:[\"ts\",\"DiagnosticRelatedInformation\",\"file\"]#0",
+      "before": "[\"PropertySignature\",[\"Identifier\",\"file\"],[\"UnionType\",[\"TypeReference\",[\"Identifier\",\"SourceFile\"]],[\"UndefinedKeyword\"]]]",
+      "after": "[\"PropertySignature\",[\"ReadonlyKeyword\"],[\"Identifier\",\"file\"],[\"UnionType\",[\"TypeReference\",[\"Identifier\",\"SourceFile\"]],[\"UndefinedKeyword\"]]]"
+    },
+    {
+      "declaration": "member:[\"ts\",\"DiagnosticRelatedInformation\",\"length\"]#0",
+      "before": "[\"PropertySignature\",[\"Identifier\",\"length\"],[\"UnionType\",[\"NumberKeyword\"],[\"UndefinedKeyword\"]]]",
+      "after": "[\"PropertySignature\",[\"ReadonlyKeyword\"],[\"Identifier\",\"length\"],[\"UnionType\",[\"NumberKeyword\"],[\"UndefinedKeyword\"]]]"
+    },
+    {
+      "declaration": "member:[\"ts\",\"DiagnosticRelatedInformation\",\"start\"]#0",
+      "before": "[\"PropertySignature\",[\"Identifier\",\"start\"],[\"UnionType\",[\"NumberKeyword\"],[\"UndefinedKeyword\"]]]",
+      "after": "[\"PropertySignature\",[\"ReadonlyKeyword\"],[\"Identifier\",\"start\"],[\"UnionType\",[\"NumberKeyword\"],[\"UndefinedKeyword\"]]]"
+    },
+    {
       "declaration": "member:[\"ts\",\"ElementAccessChain\",\"_optionalChainBrand\"]#0",
       "before": "[\"PropertySignature\",[\"Identifier\",\"_optionalChainBrand\"],[\"AnyKeyword\"]]",
       "after": "[\"PropertySignature\",[\"Identifier\",\"_optionalChainBrand\"],[\"UndefinedKeyword\"]]"
@@ -3303,6 +3318,30 @@
       "line": 9304
     },
     {
+      "adaptation": "adapt/72-readonly-diagnostic-slots/api-sanctions.json row 1 {\"path\":[\"DiagnosticRelatedInformation\",\"file\"],\"kind\":\"PropertySignature\",\"replace\":\"member\",\"before\":\"file: SourceFile | undefined;\",\"after\":\"readonly file: SourceFile | undefined;\",\"why\":\"Adamic, task m2wxyaz: the three slots are readonly, certified by the compiled program's gate, not by adaptation 70's audit. Code that assigns file, start or length on a Diagnostic or a DiagnosticRelatedInformation stops type-checking (TS2540); code that reads them is unaffected; a DiagnosticWithLocation stays writable until its own slice.\"}",
+      "path": [
+        "DiagnosticRelatedInformation",
+        "file"
+      ],
+      "line": 6933
+    },
+    {
+      "adaptation": "adapt/72-readonly-diagnostic-slots/api-sanctions.json row 2 {\"path\":[\"DiagnosticRelatedInformation\",\"start\"],\"kind\":\"PropertySignature\",\"replace\":\"member\",\"before\":\"start: number | undefined;\",\"after\":\"readonly start: number | undefined;\",\"why\":\"Adamic, task m2wxyaz: the three slots are readonly, certified by the compiled program's gate, not by adaptation 70's audit. Code that assigns file, start or length on a Diagnostic or a DiagnosticRelatedInformation stops type-checking (TS2540); code that reads them is unaffected; a DiagnosticWithLocation stays writable until its own slice.\"}",
+      "path": [
+        "DiagnosticRelatedInformation",
+        "start"
+      ],
+      "line": 6934
+    },
+    {
+      "adaptation": "adapt/72-readonly-diagnostic-slots/api-sanctions.json row 3 {\"path\":[\"DiagnosticRelatedInformation\",\"length\"],\"kind\":\"PropertySignature\",\"replace\":\"member\",\"before\":\"length: number | undefined;\",\"after\":\"readonly length: number | undefined;\",\"why\":\"Adamic, task m2wxyaz: the three slots are readonly, certified by the compiled program's gate, not by adaptation 70's audit. Code that assigns file, start or length on a Diagnostic or a DiagnosticRelatedInformation stops type-checking (TS2540); code that reads them is unaffected; a DiagnosticWithLocation stays writable until its own slice.\"}",
+      "path": [
+        "DiagnosticRelatedInformation",
+        "length"
+      ],
+      "line": 6935
+    },
+    {
       "adaptation": "adapt/95-checker-axolotl-e/api-sanctions.json row 1 {\"path\":[\"TypeChecker\",\"signatureToSignatureDeclaration\"],\"kind\":\"MethodSignature\",\"before\":\"| SignatureDeclaration & {\\n                typeArguments?: NodeArray<TypeNode>;\\n            }\\n            | undefined\",\"after\":\"| SignatureDeclaration & {\\n                typeArguments?: NodeArray<TypeNode> | undefined;\\n            }\\n            | undefined\",\"why\":\"tsc can return an ArrowFunction whose typeArguments property is present and undefined.\"}",
       "path": [
         "TypeChecker",
@@ -3662,6 +3701,10 @@
     {
       "file": "stage3/adapt/52-json-values/api-sanctions.json",
       "sha256": "e474a597ac84b64d61122ad99aa3d3a1bcc59f1f53326e6e6a01beb2a5f41e3c"
+    },
+    {
+      "file": "stage3/adapt/72-readonly-diagnostic-slots/api-sanctions.json",
+      "sha256": "ae605897491f088cbc5b4b56bb148f10d726b1b634a81f339d9ee3b1b79a5fcf"
     },
     {
       "file": "stage3/adapt/95-checker-axolotl-e/api-sanctions.json",
@@ -4805,7 +4848,7 @@
     "     }\n",
     "     /**\n",
     "      * A linked list of formatted diagnostic messages to be used as part of a multiline message.\n",
-    "@@ -6918,14 +6916,14 @@\n",
+    "@@ -6918,21 +6916,21 @@\n",
     "         messageText: string;\n",
     "         category: DiagnosticCategory;\n",
     "         code: number;\n",
@@ -4825,6 +4868,16 @@
     "     }\n",
     "     interface DiagnosticRelatedInformation {\n",
     "         category: DiagnosticCategory;\n",
+    "         code: number;\n",
+    "-        file: SourceFile | undefined;\n",
+    "-        start: number | undefined;\n",
+    "-        length: number | undefined;\n",
+    "+        readonly file: SourceFile | undefined;\n",
+    "+        readonly start: number | undefined;\n",
+    "+        readonly length: number | undefined;\n",
+    "         messageText: string | DiagnosticMessageChain;\n",
+    "     }\n",
+    "     interface DiagnosticWithLocation extends Diagnostic {\n",
     "@@ -6984,11 +6982,11 @@\n",
     "         /** A normalized path on disk */\n",
     "         path: string;\n",
