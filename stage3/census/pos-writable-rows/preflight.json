@@ -34,9 +34,9 @@
   "overlay_manifest_sha256": "fb3b56a28e1c70b24230a60cef10bce181a211f56f8b7f55178ca089bf0e0de2",
   "toolchain": "go version go1.27.1 linux/amd64",
   "node": "v24.19.0",
-  "compiler_files_started": 0,
   "initial_stop_reason": "Unmodified full_audit.py fails its baseline all-three-refusals assertion; no compiler-file census started.",
   "stale_baseline_confirmed": true,
   "stale_baseline_task": "#3dgsny7",
-  "validation_basis": "legacy audit plus production comparison at c41391ea; full_audit.py unchanged"
+  "validation_basis": "legacy audit plus production comparison at c41391ea; full_audit.py unchanged",
+  "initial_compiler_files_started": 0
 }

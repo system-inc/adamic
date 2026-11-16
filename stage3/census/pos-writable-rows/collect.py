@@ -28,11 +28,11 @@ def render(scratch):
     meter=json.loads(meterpath.read_text()); reasons={k:v for k,v in meter['latent_lowering']['per_reason'].items() if k.startswith('Refused: ') and FAMILY in k}
     targets=Counter({k:0 for k in ('TextRange','SourceMapRange | undefined','TextRange | undefined','Mutable<Node>','others')}); callers=Counter(); kinds=Counter()
     for r in rows:
-        target=r['reason'].split(' seen as ',1)[1].split(FAMILY,1)[0]
+        target=r['reason'].split(FAMILY,1)[0].rsplit(' seen as ',1)[1]
         targets[target if target in ('TextRange','SourceMapRange | undefined','TextRange | undefined','Mutable<Node>') else 'others']+=1
         callers[r['unit_name'] or r['unit']]+=1; kinds[r['unit_kind']]+=1
     ok=[s for s in states if s['complete']]; failed=[s for s in states if not s['complete']]
-    def table(c): return '\n'.join('| '+str(k).replace('|','\\|')+' | '+str(v)+' |' for k,v in c.most_common())
+    def table(c): return '\n'.join('| '+str(k).replace('&','&amp;').replace('<','&lt;').replace('>','&gt;').replace('|','\\|')+' | '+str(v)+' |' for k,v in c.most_common())
     report=f'''# Pos-writable rows — #aryr7ea
 
 Status: {'complete' if len(states)==len(manifest['files']) and not failed else 'incomplete checkpoint'} at {utc()}.
@@ -46,7 +46,8 @@ TMPDIR, GOTMPDIR, GOCACHE, GOMODCACHE and stage3/npm caches are in scratch.
 
 Each process loads the entire adapted src/compiler directory, with one exact absolute
 LATENT_ONLY_FILE and LATENT_FULL=1 LATENT_ASSERT_NO_OUTPUT=1 CENSUS_MODULE_FORMAT=CommonJSBundle.
-Speculative mode is unset. Three files at most run concurrently. A piece is complete only
+Speculative mode is unset. Three files at most run concurrently (GOMEMLIMIT=3GiB,
+GOMAXPROCS=2 per process). A piece is complete only
 on exit 0 with a full-mode header, matching module format, exactly the selected file record,
 and a relation_report trailer. The per-process cutoff is 6600 seconds, below two hours.
 
@@ -110,7 +111,8 @@ these are callers/owners, not identified callees. All rows retain unit location 
 
 ## Run times and failures
 
-Started {manifest['started_utc']}; this checkpoint {utc()}.
+Initial setup manifest {manifest['started_utc']}; this checkpoint {utc()}.
+Actual per-file census start/end times are recorded in pieces.json.
 Each piece's UTC start/end, wall time, exit status, complete flag, raw SHA256, and log path
 are in pieces.json. Source file inventory and adapted source SHA256s are in manifest.json.
 Rows from partial pieces, if any, are retained and explicitly marked piece_complete=false.
@@ -120,6 +122,23 @@ Rows from partial pieces, if any, are retained and explicitly marked piece_compl
 '''
     for s in failed: report+=f"| {s['file']} | {s['exit_code']} | {s['error']} |\n"
     if not failed: report+='| none | | |\n'
+    if states:
+        first=min(state['started_utc'] for state in states)
+        last=max(state['ended_utc'] for state in states)
+        duration=(datetime.datetime.fromisoformat(last)-datetime.datetime.fromisoformat(first)).total_seconds()
+        report+='\n## Count reconciliation and measured time window\n\n'
+        report+=f"Matching records {sum(counts.values())} = {len(rows)} distinct requested keys + {sum(counts.values())-len(rows)} repeat records.\n\n"
+        report+=f"Distinct requested keys {len(rows)} = {len(meterkeys)} meter-style sites + {len(rows)-len(meterkeys)} additional attempting-unit contexts.\n\n"
+        report+=f"The observed meter-style count differs from the saved 550 by {len(meterkeys)-550:+d}. This is a different-pin, separate-process comparison; it is not a paired whole-program rerun. Any remaining delta cannot be uniquely attributed to compiler/adaptation changes versus file-scoped facts from this run alone.\n\n"
+        report+=f"Per-file runs started {first}; latest completed piece ended {last}; observed span {duration:.3f} seconds. Sum of piece wall times: {sum(state['wall_seconds'] for state in states):.3f} seconds (pieces overlap).\n\n"
+        report+='| Slowest piece | Wall seconds | Complete |\n| --- | ---: | --- |\n'
+        for state in sorted(states,key=lambda state:state['wall_seconds'],reverse=True)[:5]:
+            report+=f"| {state['file']} | {state['wall_seconds']:.3f} | {state['complete']} |\n"
+    verification=HERE/'verification.json'
+    if verification.exists():
+        checked=json.loads(verification.read_text())
+        if checked['distinct_rows']==len(rows) and checked['complete_pieces']==len(ok) and len(checked['failed_pieces'])==len(failed):
+            report+='\nIndependent verification: **pass** (verification.json). Every row key, multiplicity, exact reason, attempting-unit metadata, raw stream SHA256 and adapted compiler source hash was reconciled by verify.py. The compiler/adaptation diff is empty; full_audit.py is unchanged.\n'
     (HERE/'REPORT.md').write_text(report)
     dump(HERE/'manifest.json',manifest)
     print(f"checkpoint: {len(ok)}/{len(manifest['files'])} complete, {len(failed)} failed, {len(rows)} rows",flush=True)

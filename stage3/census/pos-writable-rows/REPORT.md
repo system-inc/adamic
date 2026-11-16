@@ -1,6 +1,6 @@
 # Pos-writable rows — #aryr7ea
 
-Status: incomplete checkpoint at 2026-11-16T17:32:20.001338+00:00.
+Status: incomplete checkpoint at 2026-11-16T17:49:32.625513+00:00.
 
 Measured main tip `c41391ea3346727231dfa3472d061826e26f6aad` in a fresh detached worktree; TypeScript v6.0.3
 `050880ce59e30b356b686bd3144efe24f875ebc8`. Recursive shallow submodules initialized;
@@ -35,10 +35,10 @@ or successful compilation; no backend or usable IR is produced.
 
 ## Counts
 
-Completed 32/79 compiler .ts files; failed pieces: 0.
-Distinct requested keys (file, line, col, reason, unit): **519**.
-Matching raw records (sum of multiplicity): **525**.
-Meter-style distinct (kind, where, reason, text), omitting unit: **132**.
+Completed 34/79 compiler .ts files; failed pieces: 0.
+Distinct requested keys (file, line, col, reason, unit): **1367**.
+Matching raw records (sum of multiplicity): **1383**.
+Meter-style distinct (kind, where, reason, text), omitting unit: **156**.
 
 The saved daily meter 20261115T131735Z.PG4H0R, main `7816a8d85d60db6ffb618132eaf8b17c91ef8866`,
 counts **550** pos-writable sites across **173** exact reasons.
@@ -54,9 +54,9 @@ No claim that those effects individually explain a particular delta is made with
 
 | Target | Sites |
 | --- | ---: |
-| TextRange | 439 |
-| others | 74 |
-| Mutable<Node> | 4 |
+| TextRange | 851 |
+| others | 506 |
+| Mutable<Node> | 8 |
 | TextRange \| undefined | 2 |
 | SourceMapRange \| undefined | 0 |
 
@@ -64,7 +64,7 @@ No claim that those effects individually explain a particular delta is made with
 
 | Kind | Sites |
 | --- | ---: |
-| KindFunctionDeclaration | 519 |
+| KindFunctionDeclaration | 1367 |
 
 ## Callee / receiving slot
 
@@ -75,10 +75,189 @@ these are callers/owners, not identified callees. All rows retain unit location 
 
 | Attempting name (or location when unnamed) | Sites |
 | --- | ---: |
+| parseParameterWorker | 15 |
+| parseNamedImportsOrExports | 12 |
 | expandPreOrPostfixIncrementOrDecrementExpression | 7 |
+| parseObjectLiteralElement | 7 |
+| tryParseConstructorDeclaration | 7 |
+| parseAccessorDeclaration | 7 |
+| parsePropertyOrMethodSignature | 6 |
+| parseMethodDeclaration | 6 |
+| parseClassStaticBlockDeclaration | 6 |
+| parseClassElement | 6 |
+| parseNamespaceExportDeclaration | 6 |
+| parseTupleElementType | 6 |
+| moveElementEntirelyPastChangeRange | 6 |
+| parseParametersWorker | 6 |
 | createCallBinding | 5 |
+| parseJSDocFunctionType | 5 |
+| parseSignatureMember | 5 |
+| parseIndexSignatureDeclaration | 5 |
+| parseTupleElementNameOrTupleElementType | 5 |
+| parseFunctionOrConstructorType | 5 |
+| parseSimpleArrowFunctionExpression | 5 |
+| parseParenthesizedArrowFunctionExpression | 5 |
+| parseParenthesizedExpression | 5 |
+| parseFunctionExpression | 5 |
+| parseBlock | 5 |
+| parseEmptyStatement | 5 |
+| parseIfStatement | 5 |
+| parseDoStatement | 5 |
+| parseWhileStatement | 5 |
+| parseBreakOrContinueStatement | 5 |
+| parseReturnStatement | 5 |
+| parseWithStatement | 5 |
+| parseCaseClause | 5 |
+| parseSwitchStatement | 5 |
+| parseThrowStatement | 5 |
+| parseTryStatement | 5 |
+| parseDebuggerStatement | 5 |
+| parseExpressionOrLabeledStatement | 5 |
+| parseVariableDeclaration | 5 |
+| parseVariableStatement | 5 |
+| parseFunctionDeclaration | 5 |
+| parsePropertyDeclaration | 5 |
+| parseClassDeclarationOrExpression | 5 |
+| parseInterfaceDeclaration | 5 |
+| parseTypeAliasDeclaration | 5 |
+| parseEnumMember | 5 |
+| parseEnumDeclaration | 5 |
+| parseModuleOrNamespaceDeclaration | 5 |
+| parseAmbientExternalModuleDeclaration | 5 |
+| parseImportDeclarationOrImportEqualsDeclaration | 5 |
+| parseImportEqualsDeclaration | 5 |
+| parseExportDeclaration | 5 |
+| parseExportAssignment | 5 |
+| parseTaggedTemplateRest | 5 |
+| parseJSDocTypeNameWithNamespace | 5 |
 | convertToFunctionBlock | 4 |
 | createExpressionForMethodDeclaration | 4 |
+| parseJsonText | 4 |
+| createIdentifier | 4 |
+| parseComputedPropertyName | 4 |
+| parsePrivateIdentifier | 4 |
+| parseEntityName | 4 |
+| createQualifiedName | 4 |
+| parseTemplateExpression | 4 |
+| parseTemplateType | 4 |
+| parseTemplateTypeSpan | 4 |
+| parseTemplateSpan | 4 |
+| parseLiteralLikeNode | 4 |
+| parseTypeReference | 4 |
+| parseThisTypePredicate | 4 |
+| parseThisTypeNode | 4 |
+| parseJSDocAllType | 4 |
+| parseJSDocNonNullableType | 4 |
+| parseJSDocUnknownOrNullableType | 4 |
+| parseJSDocParameter | 4 |
+| parseJSDocType | 4 |
+| parseTypeQuery | 4 |
+| parseTypeParameter | 4 |
+| parseTypeLiteral | 4 |
+| parseMappedTypeParameter | 4 |
+| parseMappedType | 4 |
+| parseTupleType | 4 |
+| parseParenthesizedType | 4 |
+| parseModifiersForConstructorType | 4 |
+| parseKeywordAndNoDot | 4 |
+| parseLiteralTypeNode | 4 |
+| parseImportType | 4 |
+| parseNonArrayType | 4 |
+| parsePostfixTypeOrHigher | 4 |
+| parseTypeOperator | 4 |
+| parseTypeParameterOfInferType | 4 |
+| parseInferType | 4 |
+| parseUnionOrIntersectionType | 4 |
+| parseTypeOrTypePredicate | 4 |
+| parseAssertsTypePredicate | 4 |
+| parseType | 4 |
+| parseAssignmentExpressionOrHigher | 4 |
+| parseYieldExpression | 4 |
+| parseConditionalExpressionRest | 4 |
+| parseBinaryExpressionRest | 4 |
+| makeSatisfiesExpression | 4 |
+| makeBinaryExpression | 4 |
+| makeAsExpression | 4 |
+| parsePrefixUnaryExpression | 4 |
+| parseDeleteExpression | 4 |
+| parseTypeOfExpression | 4 |
+| parseVoidExpression | 4 |
+| parseAwaitExpression | 4 |
+| parseUpdateExpression | 4 |
+| parseLeftHandSideExpressionOrHigher | 4 |
+| parseSuperExpression | 4 |
+| parseJsxElementOrSelfClosingElementOrFragment | 4 |
+| parseJsxText | 4 |
+| parseJsxAttributes | 4 |
+| parseJsxOpeningOrSelfClosingElementOrOpeningFragment | 4 |
+| parseJsxElementName | 4 |
+| parseJsxTagName | 4 |
+| parseJsxExpression | 4 |
+| parseJsxAttribute | 4 |
+| parseJsxAttributeName | 4 |
+| parseJsxSpreadAttribute | 4 |
+| parseJsxClosingElement | 4 |
+| parseJsxClosingFragment | 4 |
+| parseTypeAssertion | 4 |
+| parsePropertyAccessExpressionRest | 4 |
+| parseElementAccessExpressionRest | 4 |
+| parseMemberExpressionRest | 4 |
+| parseCallExpressionRest | 4 |
+| parsePrimaryExpression | 4 |
+| parseSpreadElement | 4 |
+| parseArgumentOrArrayLiteralElement | 4 |
+| parseArrayLiteralExpression | 4 |
+| parseObjectLiteralExpression | 4 |
+| parseNewExpressionOrNewDotTarget | 4 |
+| parseDefaultClause | 4 |
+| parseCaseBlock | 4 |
+| parseCatchClause | 4 |
+| parseArrayBindingElement | 4 |
+| parseObjectBindingElement | 4 |
+| parseObjectBindingPattern | 4 |
+| parseArrayBindingPattern | 4 |
+| parseVariableDeclarationList | 4 |
+| tryParseDecorator | 4 |
+| tryParseModifier | 4 |
+| parseModifiersForArrowFunction | 4 |
+| parseHeritageClause | 4 |
+| parseExpressionWithTypeArguments | 4 |
+| parseModuleBlock | 4 |
+| parseImportAttribute | 4 |
+| parseImportAttributes | 4 |
+| parseImportClause | 4 |
+| parseExternalModuleReference | 4 |
+| parseNamespaceImport | 4 |
+| parseImportOrExportSpecifier | 4 |
+| parseNamespaceExport | 4 |
+| parseJSDocTypeExpression | 4 |
+| parseJSDocNameReference | 4 |
+| doJSDocScan | 4 |
+| parseJSDocLink | 4 |
+| parseJSDocLinkName | 4 |
+| parseUnknownTag | 4 |
+| parseParameterOrPropertyTag | 4 |
+| parseNestedTypeLiteral | 4 |
+| parseReturnTag | 4 |
+| parseTypeTag | 4 |
+| parseSeeTag | 4 |
+| parseThrowsTag | 4 |
+| parseAuthorTag | 4 |
+| parseImplementsTag | 4 |
+| parseAugmentsTag | 4 |
+| parseSatisfiesTag | 4 |
+| parseImportTag | 4 |
+| parsePropertyAccessEntityNameExpression | 4 |
+| parseSimpleTag | 4 |
+| parseThisTag | 4 |
+| parseEnumTag | 4 |
+| parseTypedefTag | 4 |
+| parseJSDocSignature | 4 |
+| parseCallbackTag | 4 |
+| parseOverloadTag | 4 |
+| parseTemplateTagTypeParameter | 4 |
+| parseTemplateTag | 4 |
+| parseJSDocIdentifierName | 4 |
 | createParamHelper | 3 |
 | convertToFunctionExpression | 3 |
 | convertToClassExpression | 3 |
@@ -141,6 +320,8 @@ these are callers/owners, not identified callees. All rows retain unit location 
 | createExpressionForAccessorDeclaration | 3 |
 | createExpressionForPropertyAssignment | 3 |
 | createExpressionForShorthandPropertyAssignment | 3 |
+| updateSourceFile | 3 |
+| reparseTopLevelAwait | 3 |
 | bindChildren | 2 |
 | visitExistingNodeTreeSymbolsWorker | 2 |
 | getSourceMapRange | 2 |
@@ -150,6 +331,9 @@ these are callers/owners, not identified callees. All rows retain unit location 
 | parenthesizeExpressionOfExpressionStatement | 2 |
 | createMemberAccessForPropertyName | 2 |
 | createExpressionForPropertyName | 2 |
+| finishNode | 2 |
+| parseDeclarationWorker | 2 |
+| parseDecoratedExpression | 2 |
 | createPrinter | 2 |
 | emitPropertyAccessExpression | 2 |
 | createEmitHelperFactory | 2 |
@@ -270,7 +454,6 @@ these are callers/owners, not identified callees. All rows retain unit location 
 | finishUpdateShorthandPropertyAssignment | 2 |
 | updateSpreadAssignment | 2 |
 | updateEnumMember | 2 |
-| updateSourceFile | 2 |
 | updateBundle | 2 |
 | createNotEmittedStatement | 2 |
 | createPartiallyEmittedExpression | 2 |
@@ -279,6 +462,22 @@ these are callers/owners, not identified callees. All rows retain unit location 
 | updateSyntheticReferenceExpression | 2 |
 | getNamespaceMemberName | 2 |
 | createParenthesizerRules | 2 |
+| visitNode | 2 |
+| visitArray | 2 |
+| adjustIntersectingElement | 2 |
+| parseTemplateSpans | 2 |
+| parseTemplateTypeSpans | 2 |
+| parseTypeArgumentsOfTypeReference | 2 |
+| parseTypeParameters | 2 |
+| parseObjectTypeMembers | 2 |
+| parseJsxChildren | 2 |
+| parseArgumentList | 2 |
+| parseTypeArgumentsInExpression | 2 |
+| parseHeritageClauses | 2 |
+| tryParseTypeArguments | 2 |
+| parseClassMembers | 2 |
+| parseCallbackTagParameters | 2 |
+| parseTemplateTagTypeParameters | 2 |
 | bindLabeledStatement | 1 |
 | bindModuleDeclaration | 1 |
 | bindSourceFileIfExternalModule | 1 |
@@ -307,6 +506,11 @@ these are callers/owners, not identified callees. All rows retain unit location 
 | parenthesizeConciseBodyOfArrowFunction | 1 |
 | createJsxFactoryExpressionFromEntityName | 1 |
 | elideNodes | 1 |
+| withJSDoc | 1 |
+| parseForOrForInOrForOfStatement | 1 |
+| parseExportSpecifier | 1 |
+| tryReparseOptionalChain | 1 |
+| parseDeclaration | 1 |
 | createBindBinaryExpressionFlow | 1 |
 | onEnter | 1 |
 | bindJSDocTypeAlias | 1 |
@@ -316,10 +520,11 @@ these are callers/owners, not identified callees. All rows retain unit location 
 | bindPrototypeAssignment | 1 |
 | bindClassLikeDeclaration | 1 |
 | createReactNamespace | 1 |
+| fixupParentReferences | 1 |
 
 ## Run times and failures
 
-Started 2026-11-16T16:36:24.047702+00:00; this checkpoint 2026-11-16T17:32:20.001454+00:00.
+Started 2026-11-16T16:36:24.047702+00:00; this checkpoint 2026-11-16T17:49:32.626322+00:00.
 Each piece's UTC start/end, wall time, exit status, complete flag, raw SHA256, and log path
 are in pieces.json. Source file inventory and adapted source SHA256s are in manifest.json.
 Rows from partial pieces, if any, are retained and explicitly marked piece_complete=false.
