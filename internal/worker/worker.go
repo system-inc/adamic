@@ -296,6 +296,9 @@ func BuildWith(entry, output string, options Options) error {
 	if genericExport != "" {
 		return fmt.Errorf("worker: exported generic function %s is not yet supported; fix: export a concrete function", genericExport)
 	}
+	if err := lower.CheckWorkerEnvironment(context.Background(), program); err != nil {
+		return err
+	}
 	lowered, err := lower.Lower(context.Background(), program)
 	if err != nil {
 		return err
