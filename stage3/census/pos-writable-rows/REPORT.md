@@ -1,6 +1,6 @@
 # Pos-writable rows — #aryr7ea
 
-Status: incomplete checkpoint at 2026-11-16T18:22:32.240062+00:00.
+Status: incomplete checkpoint at 2026-11-16T18:24:42.181695+00:00.
 
 Measured main tip `c41391ea3346727231dfa3472d061826e26f6aad` in a fresh detached worktree; TypeScript v6.0.3
 `050880ce59e30b356b686bd3144efe24f875ebc8`. Recursive shallow submodules initialized;
@@ -35,10 +35,10 @@ or successful compilation; no backend or usable IR is produced.
 
 ## Counts
 
-Completed 58/79 compiler .ts files; failed pieces: 0.
-Distinct requested keys (file, line, col, reason, unit): **1786**.
-Matching raw records (sum of multiplicity): **1804**.
-Meter-style distinct (kind, where, reason, text), omitting unit: **390**.
+Completed 60/79 compiler .ts files; failed pieces: 0.
+Distinct requested keys (file, line, col, reason, unit): **1882**.
+Matching raw records (sum of multiplicity): **1900**.
+Meter-style distinct (kind, where, reason, text), omitting unit: **439**.
 
 The saved daily meter 20261115T131735Z.PG4H0R, main `7816a8d85d60db6ffb618132eaf8b17c91ef8866`,
 counts **550** pos-writable sites across **173** exact reasons.
@@ -54,17 +54,17 @@ No claim that those effects individually explain a particular delta is made with
 
 | Target | Sites |
 | --- | ---: |
-| TextRange | 1210 |
-| others | 529 |
-| SourceMapRange \| undefined | 22 |
+| TextRange | 1284 |
+| others | 532 |
+| SourceMapRange \| undefined | 26 |
+| TextRange \| undefined | 23 |
 | Mutable<Node> | 17 |
-| TextRange \| undefined | 8 |
 
 ## Attempting unit kind
 
 | Kind | Sites |
 | --- | ---: |
-| KindFunctionDeclaration | 1786 |
+| KindFunctionDeclaration | 1882 |
 
 ## Callee / receiving slot
 
@@ -80,16 +80,19 @@ these are callers/owners, not identified callees. All rows retain unit location 
 | parseNamedImportsOrExports | 12 |
 | visitBinaryExpression | 11 |
 | visitExponentiationAssignmentExpression | 11 |
+| visitYieldExpression | 11 |
 | addRestParameterIfNeeded | 10 |
 | createProgram | 9 |
 | convertForOfStatementForArray | 9 |
 | visitPreOrPostfixUnaryExpression | 8 |
+| visitObjectLiteralExpression | 8 |
 | createSuperElementAccessInAsyncMethod | 8 |
 | transformForOfStatementWithObjectRest | 8 |
 | expandPreOrPostfixIncrementOrDecrementExpression | 7 |
 | parseObjectLiteralElement | 7 |
 | tryParseConstructorDeclaration | 7 |
 | parseAccessorDeclaration | 7 |
+| visitCallExpression | 7 |
 | transformAsyncFunctionBody | 7 |
 | parsePropertyOrMethodSignature | 6 |
 | parseMethodDeclaration | 6 |
@@ -103,9 +106,9 @@ these are callers/owners, not identified callees. All rows retain unit location 
 | transformAccessorsToExpression | 6 |
 | visitCommaListExpression | 6 |
 | convertForOfStatementForIterable | 6 |
+| substituteExpressionIdentifier | 6 |
 | visitAwaitExpression | 6 |
 | substitutePropertyAccessExpression | 6 |
-| visitYieldExpression | 6 |
 | transformForAwaitOfStatement | 6 |
 | moveElementEntirelyPastChangeRange | 6 |
 | parseParametersWorker | 6 |
@@ -153,6 +156,7 @@ these are callers/owners, not identified callees. All rows retain unit location 
 | visitPropertyAccessExpression | 5 |
 | transformRoot | 5 |
 | transformFunctionBody | 5 |
+| visitVariableStatement | 5 |
 | createSyntheticExpression | 4 |
 | convertToFunctionBlock | 4 |
 | createExpressionForMethodDeclaration | 4 |
@@ -283,18 +287,18 @@ these are callers/owners, not identified callees. All rows retain unit location 
 | parseTemplateTag | 4 |
 | parseJSDocIdentifierName | 4 |
 | visitElementAccessExpression | 4 |
-| visitCallExpression | 4 |
 | visitTaggedTemplateExpression | 4 |
 | transformVariableStatement | 4 |
 | visitSourceFile | 4 |
 | createDefaultConstructorBody | 4 |
 | simplifyConstructorInlineSuperInThisCaptureVariable | 4 |
-| visitVariableStatement | 4 |
 | visitVariableDeclarationList | 4 |
-| visitObjectLiteralExpression | 4 |
 | visitCatchClause | 4 |
 | appendObjectRestAssignmentsIfNeeded | 4 |
 | createClassInfo | 4 |
+| visitRightAssociativeBinaryExpression | 4 |
+| visitLogicalBinaryExpression | 4 |
+| transformAndEmitForStatement | 4 |
 | createParamHelper | 3 |
 | convertToFunctionExpression | 3 |
 | convertToClassExpression | 3 |
@@ -385,8 +389,8 @@ these are callers/owners, not identified callees. All rows retain unit location 
 | visitStringLiteral | 3 |
 | visitNumericLiteral | 3 |
 | visitTemplateExpression | 3 |
-| substituteExpressionIdentifier | 3 |
 | visitExponentiationExpression | 3 |
+| transformInitializedVariable | 3 |
 | transformAsyncFunctionParameterList | 3 |
 | transformAsyncGeneratorFunctionParameterList | 3 |
 | visitOptionalExpression | 3 |
@@ -395,6 +399,24 @@ these are callers/owners, not identified callees. All rows retain unit location 
 | visitConstructorDeclaration | 3 |
 | visitPropertyDeclaration | 3 |
 | transformUsingDeclarations | 3 |
+| visitFunctionDeclaration | 3 |
+| visitFunctionExpression | 3 |
+| transformGeneratorFunctionBody | 3 |
+| visitConditionalExpression | 3 |
+| visitElements | 3 |
+| visitNewExpression | 3 |
+| createInlineBreak | 3 |
+| createInlineReturn | 3 |
+| createGeneratorResume | 3 |
+| writeAssign | 3 |
+| writeThrow | 3 |
+| writeReturn | 3 |
+| writeBreak | 3 |
+| writeBreakWhenTrue | 3 |
+| writeYield | 3 |
+| writeYieldStar | 3 |
+| visitJsxOpeningLikeElementOrFragmentJSX | 3 |
+| transformJsxAttributeInitializer | 3 |
 | bindChildren | 2 |
 | getSyntheticElementAccess | 2 |
 | visitExistingNodeTreeSymbolsWorker | 2 |
@@ -421,6 +443,7 @@ these are callers/owners, not identified callees. All rows retain unit location 
 | hoistClassDeclaration | 2 |
 | hoistVariableStatement | 2 |
 | hoistInitializedVariable | 2 |
+| createLabel | 2 |
 | serializeAsFunctionNamespaceMerge | 2 |
 | serializeAsClass | 2 |
 | serializeSignatures | 2 |
@@ -579,6 +602,7 @@ these are callers/owners, not identified callees. All rows retain unit location 
 | transformES2018 | 2 |
 | transformES2020 | 2 |
 | transformESNext | 2 |
+| transformJsx | 2 |
 | bindLabeledStatement | 1 |
 | bindModuleDeclaration | 1 |
 | bindSourceFileIfExternalModule | 1 |
@@ -627,10 +651,17 @@ these are callers/owners, not identified callees. All rows retain unit location 
 | insertCaptureThisForNode | 1 |
 | visitLabeledStatement | 1 |
 | substituteIdentifier | 1 |
-| transformInitializedVariable | 1 |
 | visitNonOptionalCallExpression | 1 |
 | finishClassElement | 1 |
 | visitDestructuringAssignmentTarget | 1 |
+| transformAndEmitVariableDeclarationList | 1 |
+| transformAndEmitIfStatement | 1 |
+| transformAndEmitContinueStatement | 1 |
+| transformAndEmitBreakStatement | 1 |
+| transformAndEmitReturnStatement | 1 |
+| transformAndEmitThrowStatement | 1 |
+| cacheExpression | 1 |
+| writeBreakWhenFalse | 1 |
 | transformClassLikeDeclarationToExpression | 1 |
 | getTypeOfExpression | 1 |
 | createBindBinaryExpressionFlow | 1 |
@@ -655,7 +686,7 @@ these are callers/owners, not identified callees. All rows retain unit location 
 
 ## Run times and failures
 
-Started 2026-11-16T16:36:24.047702+00:00; this checkpoint 2026-11-16T18:22:32.240586+00:00.
+Started 2026-11-16T16:36:24.047702+00:00; this checkpoint 2026-11-16T18:24:42.182350+00:00.
 Each piece's UTC start/end, wall time, exit status, complete flag, raw SHA256, and log path
 are in pieces.json. Source file inventory and adapted source SHA256s are in manifest.json.
 Rows from partial pieces, if any, are retained and explicitly marked piece_complete=false.
