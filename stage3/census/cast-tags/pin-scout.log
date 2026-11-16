@@ -1,0 +1,42 @@
+90-void-widening/targets.json createBinder,bindContainer
+  {'file': 'src/compiler/binder.ts', 'owner': 'createBinder/bindEach'}
+  {'file': 'src/compiler/binder.ts', 'owner': 'createBinder/bind'}
+  {'file': 'src/compiler/binder.ts', 'owner': 'createBinder/bindEach'}
+  {'file': 'src/compiler/binder.ts', 'owner': 'createBinder/checkContextualIdentifier'}
+  {'file': 'src/compiler/binder.ts', 'owner': 'createBinder/checkPrivateIdentifier'}
+  {'file': 'src/compiler/binder.ts', 'owner': 'createBinder/checkStrictModeBinaryExpression'}
+  {'file': 'src/compiler/binder.ts', 'owner': 'createBinder/checkStrictModeCatchClause'}
+  {'file': 'src/compiler/binder.ts', 'owner': 'createBinder/checkStrictModeDeleteExpression'}
+  {'file': 'src/compiler/binder.ts', 'owner': 'createBinder/checkStrictModePostfixUnaryExpression'}
+  {'file': 'src/compiler/binder.ts', 'owner': 'createBinder/checkStrictModePrefixUnaryExpression'}
+  {'file': 'src/compiler/binder.ts', 'owner': 'createBinder/checkStrictModeWithStatement'}
+  {'file': 'src/compiler/binder.ts', 'owner': 'createBinder/checkStrictModeLabeledStatement'}
+  {'file': 'src/compiler/binder.ts', 'owner': 'createBinder/bindTypeParameter'}
+  {'file': 'src/compiler/binder.ts', 'owner': 'createBinder/bindParameter'}
+  {'file': 'src/compiler/binder.ts', 'owner': 'createBinder/bindVariableDeclarationOrBindingElement'}
+  {'file': 'src/compiler/binder.ts', 'owner': 'createBinder/bindFunctionDeclaration'}
+  {'file': 'src/compiler/binder.ts', 'owner': 'createBinder/bindFunctionOrConstructorType'}
+  {'file': 'src/compiler/binder.ts', 'owner': 'createBinder/bindJSDocClassTag'}
+  {'file': 'src/compiler/binder.ts', 'owner': 'createBinder/bindObjectDefinePropertyAssignment'}
+  {'file': 'src/compiler/binder.ts', 'owner': 'createBinder/bindObjectDefinePropertyExport'}
+  {'file': 'src/compiler/binder.ts', 'owner': 'createBinder/bindObjectDefinePrototypeProperty'}
+  {'file': 'src/compiler/binder.ts', 'owner': 'createBinder/bindClassLikeDeclaration'}
+  {'file': 'src/compiler/binder.ts', 'owner': 'createBinder/bindBlockScopedDeclaration'}
+  {'file': 'src/compiler/binder.ts', 'owner': 'createBinder/bindEnumDeclaration'}
+  {'file': 'src/compiler/binder.ts', 'owner': 'createBinder/bindModuleDeclaration'}
+  {'file': 'src/compiler/binder.ts', 'owner': 'createBinder/bindNamespaceExportDeclaration'}
+  {'file': 'src/compiler/binder.ts', 'owner': 'createBinder/bindImportClause'}
+  {'file': 'src/compiler/binder.ts', 'owner': 'createBinder/bindExportDeclaration'}
+  {'file': 'src/compiler/binder.ts', 'owner': 'createBinder/bindExportAssignment'}
+  {'file': 'src/compiler/binder.ts', 'owner': 'createBinder/bindSourceFileIfExternalModule'}
+  {'file': 'src/compiler/binder.ts', 'owner': 'createBinder/updateStrictModeStatementList'}
+  {'file': 'src/compiler/binder.ts', 'owner': 'createBinder/bindExportAssignedObjectMemberAlias'}
+91-patcher-discard/adapt.cjs createNodeFactory
+91-patcher-discard/proofs/targets.json createNodeFactory
+  {'file': 'src/compiler/factory/nodeFactory.ts', 'owner': 'createNodeFactory', 'ownerBeforeSha256': '553d211c0d455a6badb5bf74a6555a8bd45189d259ba1b7276d7ac30e24c10a0', 'ownerAfterSha256': '5d4de2d08b291cb02f8abb4cbc7a2a6aca135e07ba14a5a85e30aad7b0734104'}
+99-correctness-axolotl-x/owners.json Mutable
+99-correctness-core-multimap/owners.json TypePredicate,ThisTypePredicate,IdentifierTypePredicate,Mutable,createNodeFactory,createSyntacticTypeNodeBuilder
+99-correctness-core-or-predicate/owners.json TypePredicate,Mutable
+99-correctness-receiver-parser/owners.json Mutable,createNodeFactory,createUnionTypeNode,createIntersectionTypeNode
+99-correctness-receiver-printer/owners.json TypePredicate
+99-correctness-receiver-transformers/owners.json CodeBlock,ExceptionBlock,LabeledBlock,SwitchBlock,LoopBlock,WithBlock,TypePredicate,Mutable
