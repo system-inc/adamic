@@ -15,6 +15,7 @@ var environmentShapeMutants = []workerMutation{
 	{"environment-temporary-slots", "internal/lower/worker_environment.go", `if r.exact(source) && (name == "array element" || name == "object field") {`, `if false && r.exact(source) && (name == "array element" || name == "object field") {`, "TestWorkerEnvironmentShapeStops/array_temp", "environment boundary array_temp"},
 	{"environment-parenthesized-argument", "internal/lower/worker_environment.go", `node.Kind == ast.KindParenthesizedExpression || !r.l.isExpression(node)`, `!r.l.isExpression(node)`, "TestWorkerEnvironmentFieldReadRoads/exact_argument", "environment field read build:"},
 	{"environment-discovery-missing", "internal/worker/worker.go", `return fields, environmentType, err`, `return fields, nil, err`, "TestWorkerEnvironmentShapeStops/class_field", "environment boundary class_field"},
+	{"environment-intersection-observation", "internal/lower/worker_environment.go", `if t != nil && t.Flags()&checker.TypeFlagsIntersection != 0 {`, `if false && t != nil && t.Flags()&checker.TypeFlagsIntersection != 0 {`, "TestWorkerEnvironmentShapeStops/e01", "environment boundary e01"},
 }
 
 func TestProduct_WorkerEnvironmentShapeMutant(t *testing.T) {
@@ -94,4 +95,9 @@ func TestProduct_WorkerEnvironmentParenthesizedMutant(t *testing.T) {
 func TestProduct_WorkerEnvironmentDiscoveryMutant(t *testing.T) {
 	t.Parallel()
 	buildWorkerMutant(t, environmentShapeMutants[9], false)
+}
+
+func TestProduct_WorkerEnvironmentIntersectionMutant(t *testing.T) {
+	t.Parallel()
+	buildWorkerMutant(t, environmentShapeMutants[10], false)
 }

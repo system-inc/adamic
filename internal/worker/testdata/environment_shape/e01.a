@@ -1,0 +1,8 @@
+import type {HttpRequest,HttpResponse} from 'adamic/http';
+interface Environment {readonly ZONE:string; readonly GREETING:string}
+interface Wide {readonly EXTRA:string}
+function wide(x:Environment): x is Environment & Wide {return true;}
+export function handle(request:HttpRequest, environment:Environment):HttpResponse {
+if (wide(environment)) console.log(Object.keys(environment).join(','));
+return {status:200,headers:[],body:request.path};
+}

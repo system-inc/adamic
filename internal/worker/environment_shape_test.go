@@ -16,6 +16,7 @@ import (
 func TestWorkerEnvironmentShapeStops(t *testing.T) {
 	t.Parallel()
 	for _, pin := range []struct{ name, kind, form string }{
+		{"e01", "notyet", "Object.keys"}, {"e02", "notyet", "Object.keys"}, {"e10", "notyet", "Marker"},
 		{"in", "notyet", "in"}, {"keys", "notyet", "Object.keys"},
 		{"values", "notyet", "Object.values"}, {"entries", "notyet", "Object.entries"},
 		{"for_in", "notyet", "for...in"}, {"spread", "notyet", "spread"},

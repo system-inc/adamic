@@ -49,6 +49,23 @@ func (r *workerEnvironmentRules) exact(t *checker.Type) bool {
 	return t != nil && t.Symbol() != nil && t.Symbol() == r.environment.Symbol() && t.Flags()&checker.TypeFlagsObject != 0
 }
 
+// A predicate or assertion can narrow the environment to an intersection without
+// its own symbol. Such a value still observes the projected environment. Unions
+// are deliberately excluded here: the declaration slot rule refuses them.
+func (r *workerEnvironmentRules) environmentValue(t *checker.Type) bool {
+	if r.exact(t) {
+		return true
+	}
+	if t != nil && t.Flags()&checker.TypeFlagsIntersection != 0 {
+		for _, part := range t.Types() {
+			if r.environmentValue(part) {
+				return true
+			}
+		}
+	}
+	return false
+}
+
 // Lower's #bxaz0p1 slot rule: the environment interface is admitted only as the
 // handler's parameter, a const local or a parameter of that exact interface.
 // A class field or a this holding it refuses. Walk every type position, not names
@@ -194,6 +211,9 @@ func (r *workerEnvironmentRules) parameterField(node *ast.Node) bool {
 	return false
 }
 
+// CheckSignature admits only required readonly data properties of type exactly
+// string. A declared name can therefore never be a method such as hasOwnProperty
+// or a constructor: Function field (Language's e03/e04).
 func (r *workerEnvironmentRules) declared(access *ast.Node) bool {
 	var name string
 	switch access.Kind {
@@ -255,14 +275,14 @@ func (r *workerEnvironmentRules) workerEnvironmentCheck(node *ast.Node) error {
 		return nil
 	}
 	name, source, target := r.l.relationSite(node)
-	if r.exact(source) && target != nil && !r.exact(target) {
+	if r.environmentValue(source) && target != nil && !r.exact(target) {
 		return r.observation(node, "widening at "+name+" to "+r.l.checker.TypeToString(target)+" ("+workerEnvironmentUse(node.Parent)+")")
 	}
 	// Literal elements and fields are slots too, even with no binding declaration.
 	if r.exact(source) && (name == "array element" || name == "object field") {
 		return r.refused(node, name+" slot")
 	}
-	if !r.exact(r.l.checker.GetTypeAtLocation(node)) {
+	if !r.environmentValue(r.l.checker.GetTypeAtLocation(node)) {
 		return nil
 	}
 	site := node
