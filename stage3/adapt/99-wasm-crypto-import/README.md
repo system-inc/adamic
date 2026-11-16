@@ -311,3 +311,25 @@ evidence [`6b362fe55551e862c3d8775047e0e2dc41317a45`](https://github.com/system-
 ## Dynamic watch interval amendment (#cyjqp5f)
 
 On ceadba1d (#8581h73), the internal watch-file path admits number | undefined. The public factory result takes pollingInterval?: number; only the dynamic priority poller validates membership in PollingInterval and otherwise calls Debug.fail naming the interval. Other modes retain arbitrary numeric intervals such as symlinkWatching's 10. System and watchDirectory are unchanged. This directory's owned portion is amended in its exact after pin and digest; downstream getNodeSystem pins carry the widened Node worker. The guard is JavaScript-changing; the remaining interval edits erase. Full census, count, fixture/mutant, contracts, stock/Adamic checks, per-file JavaScript, declarations and unfiltered lane receipts are on typescript/watch-functions-1532-evidence under watch-functions-1532-evidence/cead-check-1532/.
+## Recordreplay amendment, task #b7phwab
+
+Re-cut on main `34c05e3a4f79fa64ef91e9200df03af4b0c02208` with CLI's
+three commits on the same parent. All landed amendments above remain composed.
+The adapter removes only `as any` and its parentheses from the
+getNodeSystem nodeSystem.debugMode read of `process.recordreplay`.
+It adds no source file or import: the previous `src/recordreplay.d.ts` and
+`import type {} from "../recordreplay.js"` are dropped because CLI's
+`internal/load/node_library.go` Node-prelude augmentation declares the member.
+
+The validation host reads that exact augmentation from CLI and appends it to
+the pinned Node declarations in memory, resolving the API's locked @types/node
+without requiring upstream node_modules. The direct read binds to ambient
+NodeJS.Process and has type unknown. The contract checks that removing only
+the augmentation gives TS2339 for recordreplay. No adapter declaration is
+written, and replay performs no source write. Source inventory stays unchanged.
+
+Owner pins are regenerated through scoped-hashes.cjs and adapt.cjs --pin
+against composed apply output. Fresh proof results are recorded separately on
+typescript/recordreplay-amend-5-evidence. Historical recordreplay inventory and
+result JSON files describe earlier declaration-bearing runs, not this re-cut.
+No Loom submission is made.
