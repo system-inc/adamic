@@ -1,8 +1,12 @@
 package oracle
 
 import (
+	"errors"
 	"path/filepath"
+	"strings"
 	"testing"
+
+	"github.com/system-inc/adamic/internal/lower"
 )
 
 // String(v) and a template's ${v} over an unknown, ToPrimitive with the string hint, lowered as
@@ -24,7 +28,8 @@ func toPrimitiveFixture(t *testing.T, name string) string {
 // exceptions.c word it.
 const cannotConvert = "TypeError: Cannot convert object to primitive value"
 
-// toPrimitiveAnswers is what each answering fixture prints on Node.
+// toPrimitiveAnswers is what each answering fixture prints on Node. arrays_acyclic.a and probes_acyclic.a
+// are arrays.a's and probes.a's answers without their cycles (toPrimitiveLooseStops).
 var toPrimitiveAnswers = []struct{ file, stdout string }{
 	{"primitives.a", "undefined\n<undefined>\nnull\n<null>\n42\n<42>\n-0.5\n<-0.5>\ntrue\n<true>\ntext\n<text>\n"},
 	{"classes.a", "[object Object]\n<[object Object]>\n" +
@@ -48,22 +53,21 @@ var toPrimitiveAnswers = []struct{ file, stdout string }{
 		"Error\n<Error>\n" +
 		"Custom: renamed\n<Custom: renamed>\n" +
 		"renamed\n<renamed>\n"},
-	{"probes.a", "c1|c2 2\n" +
-		"a,b,|a,b, b,a,|b,a,\n" +
+	// Agrees with Node, running the source (J-xhex7eq).
+	{"probes_acyclic.a", "c1|c2 2\n" +
+		"a|a b|b\n" +
 		"a,,,b|a,,,b\n" +
 		"n!|n!\n"},
 	{"records.a", "[object Object]\n<[object Object]>\n" + cannotConvert + "\n<" + cannotConvert + ">\n"},
-	{"arrays.a", "a,1,,,true,named,b,c,Error: e\n<a,1,,,true,named,b,c,Error: e>\n" +
+	// Node's output, measured running the source (J-zn9yhj7).
+	{"arrays_acyclic.a", "a,1,,,true,named\n<a,1,,,true,named>\n" +
+		"Error: e\n<Error: e>\n" +
 		"p,q\n<p,q>\n" +
 		"1,a\n<1,a>\n" +
 		",\n<,>\n" +
 		"\n<>\n" +
 		"\n<>\n" +
 		"\n<>\n" +
-		"\n<>\n" +
-		"x,\n<x,>\n" +
-		"o,i,\n<o,i,>\n" +
-		"i,o,\n<i,o,>\n" +
 		"h,[]\n<h,[]>\n" +
 		"Error: mid-join\n<Error: mid-join>\n" +
 		"t,recovered\n<t,recovered>\n"},
@@ -74,10 +78,11 @@ var toPrimitiveAnswers = []struct{ file, stdout string }{
 // swapped, so classes.a's Ordered prints valueOf's line first; a literal's own toString that holds no
 // function taken as one (OwnFunction answering HasOwn), so literals.a stops at { toString: 3 }; and
 // the Error arm put after the plain object arm, so errors.a's Errors print "[object Object]"; the join
-// stack dropped (no JoinEnter and no JoinLeave), so arrays.a's array that holds itself joins itself
-// until the stack runs out, each run bounded by its minute; and JoinLeave moved out of the finally to
-// after the loop, so a throw leaves the array on the stack and arrays.a's join after it is ""; and the
-// scalar test dropped, which TestToPrimitiveStopsAlikeOnBothBackends holds: the stop fixtures join.
+// stack dropped (no JoinEnter and no JoinLeave), so arrays_acyclic.a's holder, whose Back joins it
+// again through viewed, joins itself until the stack runs out, each run bounded by its minute; and
+// JoinLeave moved out of the finally to after the loop, so a throw leaves the array on the stack and
+// arrays_acyclic.a's join after it is ""; and the scalar test dropped, which
+// TestToPrimitiveStopsAlikeOnBothBackends holds: the stop fixtures join.
 func TestToPrimitiveAnswersAgreeWithNode(t *testing.T) {
 	t.Parallel()
 	for _, probe := range toPrimitiveAnswers {
@@ -101,6 +106,37 @@ func TestToPrimitiveAnswersAgreeWithNode(t *testing.T) {
 			if report := leaks(t, program, binary); report != "" {
 				t.Errorf("leaked: %s", report)
 			}
+		})
+	}
+}
+
+// toPrimitiveLooseStops are the two fixtures whose arrays hold themselves (arrays.a's itself, after and
+// outer with inner, probes.a's a and b), held to lower's loose-slot stop at their first such push: Item
+// holds object, and an Item[] written into an Item[] can reach its holder back. Each program pops its
+// back-edges before the end, so it balanced natively, but the cycle is real (the runtime breaks none) and
+// reaching can't credit a later pop (Adamic on #kaz4pk8). The stop lifts with the link, #yeep0sx, and
+// each goes red here the day it lands, to be turned back into an answer beside its acyclic twin.
+var toPrimitiveLooseStops = []struct{ file, at, what string }{
+	{"arrays.a", ":48:1", "the elements of Item[], written a value of type Item[] that can reach back to the Item[] holding it through what a value held as unknown or object can be: " + looseSlotWords},
+	{"probes.a", ":21:1", "the elements of Item[], written a value of type Item[] that can reach back to the Item[] holding it through what a value held as unknown or object can be: " + looseSlotWords},
+}
+
+// TestToPrimitiveCyclesStopUntilTheLink holds each of toPrimitiveLooseStops to its stop: a NotYet at its
+// position, in the stop's own words.
+func TestToPrimitiveCyclesStopUntilTheLink(t *testing.T) {
+	t.Parallel()
+	for _, pin := range toPrimitiveLooseStops {
+		t.Run(pin.file, func(t *testing.T) {
+			t.Parallel()
+			_, err := lowered(t, toPrimitiveFixture(t, pin.file))
+			var notYet *lower.NotYet
+			if !errors.As(err, &notYet) {
+				t.Fatalf("got %v, want the loose-slot stop, a NotYet, until #yeep0sx", err)
+			}
+			if !strings.HasSuffix(notYet.Where, pin.file+pin.at) || notYet.What != pin.what {
+				t.Fatalf("got %s: %s, want %s%s: %s", notYet.Where, notYet.What, pin.file, pin.at, pin.what)
+			}
+			t.Logf("stop: %v", err)
 		})
 	}
 }
