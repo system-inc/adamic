@@ -1,0 +1,85 @@
+// The Computer Language Benchmarks Game
+// https://salsa.debian.org/benchmarksgame-team/benchmarksgame/
+//
+// Greg Buchholz's simple C #2 program transliterated by Isaac Gouy.
+//
+// stdout NOT BUFFERED
+//
+// Revised BSD license
+//
+// This is a specific instance of the Open Source Initiative (OSI) BSD license template
+// http://www.opensource.org/licenses/bsd-license.php
+//
+// Copyright © 2004-2008 Brent Fulgham, 2005-2024 Isaac Gouy
+// All rights reserved.
+//
+// Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following conditions are met:
+//
+//    Redistributions of source code must retain the above copyright notice, this list of conditions and the following disclaimer.
+//
+//    Redistributions in binary form must reproduce the above copyright notice, this list of conditions and the following disclaimer in the documentation and/or other materials provided with the distribution.
+//
+//    Neither the name of "The Computer Language Benchmarks Game" nor the name of "The Computer Language Shootout Benchmarks" nor the names of its contributors may be used to endorse or promote products derived from this software without specific prior written permission.
+//
+// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+//
+// Source: mandelbrot/mandelbrot.node, the game's first Node.js mandelbrot entry, from
+// public/download/benchmarksgame-sourcecode.zip (blob 05648fc9a0d6) at benchmarksgame commit
+// 40296663ed350d5fe4a6ab5e367bab61cb77c219 (March 7, 2025).
+//
+// Ported to Adamic for the speed holdout (#re2xhwa). The algorithm, the one-byte buffer and the output,
+// a binary PBM image written a byte at a time, are the original's. Each change is one the language
+// makes, and a comment marked "Adamic:" says which. Input size: 16,000 by 16,000, the game's.
+//
+// The original writes each byte by handing its Uint8Array to process.stdout.write, and so does this
+// port: a string can't carry a byte above 127 to stdout unchanged, since a string is written as UTF-8.
+// Stage 0 lowers process.stdout.write for a string only today, so it stops this call as NotYet until
+// it writes bytes.
+// Adamic: `process` is imported from node:process, as every Adamic program reaches it.
+import process from 'node:process';
+import { panic } from 'adamic';
+
+// Adamic: `var` becomes `let`, and the untyped declarations get their type.
+let bit = 0;
+const byte = new Uint8Array(1);
+const iter = 50,
+	limit = 2.0;
+let zr: number, zi: number, cr: number, ci: number, tr: number, ti: number;
+
+// Adamic: the size is the game's, fixed here rather than read from `process.argv[2]` (with 200 when
+// it's missing), so the holdout runs with no input at all.
+const h = 16000,
+	w = h;
+
+process.stdout.write(`P4\n${w} ${h}\n`);
+
+for (let y = 0; y < h; ++y) {
+	for (let x = 0; x < w; ++x) {
+		zr = zi = tr = ti = 0;
+		cr = (2 * x) / w - 1.5;
+		ci = (2 * y) / h - 1;
+		for (let i = 0; i < iter && tr + ti <= limit * limit; ++i) {
+			zi = 2 * zr * zi + ci;
+			zr = tr - ti + cr;
+			tr = zr * zr;
+			ti = zi * zi;
+		}
+
+		// Adamic: a compound write to an element read as `number | undefined` is refused, so each one is
+		// written out with the read checked. byte has one element, so the check on byte[0] never fires.
+		byte[0] = (byte[0] ?? panic('mandelbrot: byte[0] is missing')) << 1;
+		if (tr + ti <= limit * limit) byte[0] = (byte[0] ?? panic('mandelbrot: byte[0] is missing')) | 0x01;
+		++bit;
+
+		if (bit === 8) {
+			process.stdout.write(byte);
+			byte[0] = 0;
+			bit = 0;
+		} else if (x === w - 1) {
+			byte[0] = (byte[0] ?? panic('mandelbrot: byte[0] is missing')) << (8 - (w % 8));
+			process.stdout.write(byte);
+			byte[0] = 0;
+			bit = 0;
+		}
+	}
+}

@@ -1,0 +1,100 @@
+// The Computer Language Benchmarks Game
+// https://salsa.debian.org/benchmarksgame-team/benchmarksgame/
+//
+// regex-dna program contributed by Jesse Millikan
+// Base on the Ruby version by jose fco. gonzalez
+// fixed by Matthew Wilson
+// ported to Node.js and sped up by Roman Pletnev
+// converted from regex-dna program
+// fixed by Josh Goldfoot
+// multi thread by Andrey Filatkin
+//
+// Revised BSD license
+//
+// This is a specific instance of the Open Source Initiative (OSI) BSD license template
+// http://www.opensource.org/licenses/bsd-license.php
+//
+// Copyright © 2004-2008 Brent Fulgham, 2005-2024 Isaac Gouy
+// All rights reserved.
+//
+// Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following conditions are met:
+//
+//    Redistributions of source code must retain the above copyright notice, this list of conditions and the following disclaimer.
+//
+//    Redistributions in binary form must reproduce the above copyright notice, this list of conditions and the following disclaimer in the documentation and/or other materials provided with the distribution.
+//
+//    Neither the name of "The Computer Language Benchmarks Game" nor the name of "The Computer Language Shootout Benchmarks" nor the names of its contributors may be used to endorse or promote products derived from this software without specific prior written permission.
+//
+// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+//
+// Source: regexredux/regexredux.node-3.node from public/download/benchmarksgame-sourcecode.zip
+// (blob 05648fc9a0d6) at benchmarksgame commit 40296663ed350d5fe4a6ab5e367bab61cb77c219 (March 7, 2025).
+// The game has no regexredux.node or .node-1; .node-3 is its lowest-numbered Node.js entry.
+//
+// Ported to Adamic for the speed holdout (#re2xhwa). The patterns, the replacements and the output are
+// the original's. Each change is one the language makes, and a comment marked "Adamic:" says which.
+//
+// Input: the game pipes in fasta's output for n = 5,000,000, the game's size. This port reads no
+// stdin: fastaLines (fasta_input.a, fasta.node's own generator) makes the same lines, and each is
+// joined with the newline fasta wrote after it, which is the text the original reads.
+//
+// Adamic: the worker thread goes. The original runs workerThread's replacements on a second thread
+// while the main thread counts the matches, then waits for its length. Here the main thread counts
+// first and then calls workerThread itself, which is the order the output was printed in. With the
+// worker go `require('worker_threads')`, the `isMainThread` split, the Promise and `async`/`await`.
+// `require('fs')` goes with stdin.
+import { panic } from 'adamic';
+import { fastaLines } from './fasta_input.a';
+
+mainThread();
+
+function mainThread(): void {
+	const regExps = [
+		/agggtaaa|tttaccct/ig,
+		/[cgt]gggtaaa|tttaccc[acg]/ig,
+		/a[act]ggtaaa|tttacc[agt]t/ig,
+		/ag[act]gtaaa|tttac[agt]ct/ig,
+		/agg[act]taaa|ttta[agt]cct/ig,
+		/aggg[acg]aaa|ttt[cgt]ccct/ig,
+		/agggt[cgt]aa|tt[acg]accct/ig,
+		/agggta[cgt]a|t[acg]taccct/ig,
+		/agggtaa[cgt]|[acg]ttaccct/ig,
+	];
+
+	// Adamic: `fs.readFileSync('/dev/stdin', 'ascii')` becomes fasta's lines, generated here. fasta
+	// writes only ASCII, so reading it as ASCII changes nothing.
+	const input: string[] = [];
+	fastaLines(5000000, (line) => {
+		input.push(line + '\n');
+	});
+	let data = input.join('');
+	const initialLen = data.length;
+
+	data = data.replace(/^>.*\n|\n/mg, '');
+	const cleanedLen = data.length;
+
+	for (let j = 0; j < regExps.length; j++) {
+		// Adamic: an element read is `RegExp | undefined` under noUncheckedIndexedAccess; j is below
+		// the length, so the check never fires.
+		const re = regExps[j] ?? panic('regex-redux: no pattern at j');
+		const m = data.match(re);
+		// Adamic: console.log takes exactly one string, so the two values Node's console.log joined
+		// with a space are joined here. No source holds a %, so util.format printed exactly this.
+		console.log(`${re.source} ${m ? m.length : 0}`);
+	}
+
+	const endLen = workerThread(data);
+
+	console.log(`\n${initialLen}\n${cleanedLen}\n${endLen}`);
+}
+
+// Adamic: the worker posted the length back in a message; here it's returned.
+function workerThread(str: string): number {
+	const len = str
+		.replace(/tHa[Nt]/g, '<4>')
+		.replace(/aND|caN|Ha[DS]|WaS/g, '<3>')
+		.replace(/a[NSt]|BY/g, '<2>')
+		.replace(/<[^>]*>/g, '|')
+		.replace(/\|[^|][^|]*\|/g, '-').length;
+	return len;
+}
