@@ -714,6 +714,10 @@ func (l *lowering) sameKeepingStorage(from, to *checker.Type, visited map[[2]*ch
 		}
 	}
 	for _, viewed := range l.checker.GetPropertiesOfType(to) {
+		// The one open skip in storage mode: a view method isn't compared. Comparing it through
+		// sameCallablePair stopped every async program (Promise<T> seen as T | PromiseLike<T>, through
+		// then's generic signature) and arrays seen through unions, measured Nov 16, so it waits on a
+		// proof that compares a generic target's type arguments instead of its members (#q6wf1bp, row 7).
 		if viewed.Flags&ast.SymbolFlagsMethod != 0 {
 			continue
 		}
