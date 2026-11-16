@@ -1,0 +1,7 @@
+{
+  "baseline_location": "sys.ts:1473:35",
+  "measured_location": "sys.ts:1476:35",
+  "baseline_adapted_line": "        const executingFilePath = __filename.endsWith(\"sys.js\") ? _path.join(_path.dirname(__dirname), \"__fake__.js\") : __filename;",
+  "measured_adapted_line": "        const executingFilePath = __filename.endsWith(\"sys.js\") ? _path.join(_path.dirname(__dirname), \"__fake__.js\") : __filename;",
+  "same_adapted_line": true
+}
