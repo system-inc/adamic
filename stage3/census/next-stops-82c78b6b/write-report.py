@@ -18,6 +18,7 @@ for mode in ['CommonJSBundle','EcmaScript']:
  for g in groups:
   n=len(former.intersection(g['roots']))
   if n:s += [f'Of the former 73 roots, **{n} first meet `{g["where"]}` ({g["kind"]})**: {g["reason"]}.','']
+s += ['EcmaScript’s host-module-values stop moves from `sys.ts:1473:35` to `sys.ts:1476:35`. The exact reason and adapted source line are unchanged; `ecmascript-site-comparison.json` records the line equality. Both shared-group stops involve the host: `process` in CommonJSBundle, and `node:module.__filename`/`__dirname` in EcmaScript. These are static stops; no runtime execution was measured.','']
 for mode in ['CommonJSBundle','EcmaScript']:
  groups=read('head/'+mode+'/grouped-first-stops.json')
  s += ['## '+mode+': grouped table','','| Roots | Location | Kind | Exact reason | Phase | Owner |','|---:|---|---|---|---|---|']
