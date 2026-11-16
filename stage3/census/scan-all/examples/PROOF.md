@@ -1,5 +1,7 @@
 # Proof at main 89614cc0f
 
+Historical receipt. The current product-backed Go controls and verifier are described in [the README](../README.md); the gate-only-anchor statements below describe the earlier workflow.
+
 Base: `89614cc0f9d6aa7b7fe96b56c5c6c1c3eace9825`, fresh detached worktree. TypeScript v6.0.3: `050880ce59e30b356b686bd3144efe24f875ebc8`. Recursive submodules initialized; locked `npm ci` in stage3/api succeeded. Go 1.27.1; temporary files, compiler cache and build cache were in scratch. No archived scout rule heads or production edits were used.
 
 This records refusal-scan stops only, plus the first declaration, body or tail stop reached, and is blind past that first stop. A zero for a body or tail rule is never a pass. Each example is one root import-closure run.
