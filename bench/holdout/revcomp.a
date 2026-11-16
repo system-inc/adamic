@@ -31,16 +31,15 @@
 // Buffers, the reversal into one write buffer and the output are the original's. Each change is one
 // the language makes, and a comment marked "Adamic:" says which.
 //
-// Input: the game pipes in fasta's output for n = 25,000,000, the game's size. This port reads no
-// stdin: fastaLines (fasta_input.a, fasta.node's own generator) makes the same lines, joined with the
-// newline fasta wrote after each, and stdinRead hands that text out as stdin.read did.
+// Input: the game pipes in fasta's output for n = 25,000,000, the game's size, on stdin. Adamic has no
+// stdin yet, so this port reads the same bytes from a file named by its first argument, and stdinRead
+// hands them out as stdin.read did (see the end of the file).
 //
 // Adamic: `process` comes from node:process and `Buffer` from node:buffer, as every Adamic program
 // reaches them.
 import process from 'node:process';
 import { Buffer } from 'node:buffer';
-import { panic } from 'adamic';
-import { fastaLines } from './fasta_input.a';
+import { panic, programArguments, readTextFile } from 'adamic';
 
 const stdout = process.stdout;
 // Adamic: `const stdin = process.stdin` goes with stdin; stdinRead below takes its place.
@@ -288,24 +287,39 @@ function read(): void {
 	}
 }
 
-// Adamic: stdin goes. stdinRead hands out fasta's text as stdin.read(size) handed out what was piped
-// in: the next size bytes, fewer at the end, then null. The game redirects a file to stdin, whose
-// first 'readable' already holds more than READ_SIZE bytes, and read keeps all its state between
-// calls, so one call of read draining the text prints what Node's 'readable' calls printed.
-const input: string[] = [];
-fastaLines(25000000, (line) => {
-	input.push(line + '\n');
-});
-const inputText = input.join('');
+// Adamic: stdin becomes a file named by the first argument, because Adamic has no stdin yet. The file
+// is fasta's output, the bytes the game redirects to stdin, and fasta writes only ASCII, so its text
+// is those bytes one for one. A missing argument or a file that can't be read panics with why, to
+// stderr, exit 70.
+const input = readTextFile(programArguments()[0] ?? panic('reverse-complement: the input file must be the first argument'));
+if (input.kind === 'Error') panic(input.message);
+// The narrowed text, since a function declaration doesn't see the narrowing above.
+const inputText = input.text;
 let inputPosition = 0;
+let inputEnded = false;
 
+// Adamic: stdinRead hands out the file as stdin.read(size) hands out a stream: the next size bytes
+// while that many are there, and null when fewer are, until the stream has ended, when it hands out
+// what's left and then null.
 function stdinRead(size: number): Buffer | null {
-	if (inputPosition >= inputText.length) {
+	const remaining = inputText.length - inputPosition;
+	if (remaining === 0 || (remaining < size && !inputEnded)) {
 		return null;
 	}
 	const chunk = Buffer.from(inputText.slice(inputPosition, inputPosition + size));
-	inputPosition += size;
+	inputPosition += chunk.length;
 	return chunk;
 }
 
+// Adamic: `stdin.on('readable', read)` becomes the 'readable' calls Node makes for a file on stdin,
+// read until null as the stream drains (Language's should on #re2xhwa: one call of read stopped at
+// the first null, and dropped the last section). Node calls read while the file flows, and each call
+// takes every whole READ_SIZE bytes there are; read keeps all its state between calls, so one call
+// here takes them all. Node calls it once more when the stream ends, and that call takes what's left,
+// fewer than READ_SIZE bytes, so isFinal reverses the last section. Where the input is an exact
+// multiple of READ_SIZE, nothing is left, and that call's first read is null: the original's isFirst
+// branch then returns without reversing the last section, and so does this port, since it does what
+// the original does on Node (seen with a 32,000-byte input; the game's inputs aren't multiples).
+read();
+inputEnded = true;
 read();
