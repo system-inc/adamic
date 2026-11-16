@@ -438,5 +438,27 @@
     "raw_sha256": "1ea068627cf8470552b145a8d38e5ece9ea8cf857e3b33e4ee54cfab22219363",
     "started_utc": "2026-11-16T17:58:04.566160+00:00",
     "wall_seconds": 75.76622051899994
+  },
+  {
+    "complete": true,
+    "ended_utc": "2026-11-16T18:01:16.007394+00:00",
+    "error": "",
+    "exit_code": 0,
+    "file": "src/compiler/tracing.ts",
+    "log": "/workspace/scratch/aryr7ea/raw/src__compiler__tracing.ts.log",
+    "raw_sha256": "fb80fe233535c51a3c05432a7cc075fa4b761606bbb640e5ee137e7f6946297a",
+    "started_utc": "2026-11-16T18:00:30.985243+00:00",
+    "wall_seconds": 45.022013625
+  },
+  {
+    "complete": true,
+    "ended_utc": "2026-11-16T18:02:34.583381+00:00",
+    "error": "",
+    "exit_code": 0,
+    "file": "src/compiler/transformer.ts",
+    "log": "/workspace/scratch/aryr7ea/raw/src__compiler__transformer.ts.log",
+    "raw_sha256": "de42ee8d8f4c0e58878e4f62a979b86f0823f6c3c3a3259e929c88bf9d2075d4",
+    "started_utc": "2026-11-16T18:01:16.013249+00:00",
+    "wall_seconds": 78.56928003899975
   }
 ]
