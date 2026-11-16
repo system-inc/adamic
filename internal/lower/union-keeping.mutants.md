@@ -278,3 +278,21 @@ go test -count=1 -v -timeout 3m ./internal/lower/ -run '^TestUnionKeepingPositiv
 With the mutant, the command exits 1. The pins `r16.a/.ts` under
 `TestUnionKeepingPositiveProofViewsStop` go red: the view lowers instead of producing NotYet.
 Output: `/workspace/scratch/q6wf1bp/final-mutants/mutants/r16-accessor/run.log`.
+
+## View method signatures (row 7, #q6wf1bp)
+
+Restore the `viewed.Flags&ast.SymbolFlagsMethod != 0` `continue` in
+`sameKeepingStorage`'s property loop. Plant it once using a Go overlay, then
+exclude the overlay from all subsequent runs.
+
+```
+go test -count=1 -v -timeout 5m ./internal/lower/ -run '^TestUnionKeepingViewMethodsStop$/^union_weak_function_strong_view'
+```
+
+With the mutant, the command exits 1. Both calling pins
+`TestUnionKeepingViewMethodsStop/union_weak_function_strong_view.a` and `.ts`
+fail with `got <nil>, want NotYet at main.a:10:24 for a Held seen as a Viewed`
+and the corresponding `main.ts:10:24` text. The view lowers again.
+The no-call ArrayLike pair is pinned at its earlier unsupported parameter stop,
+`main.a:8:15` and `main.ts:8:15`, rather than at the view.
+Output: `/workspace/scratch/q6wf1bp/row7/mutant.log`.

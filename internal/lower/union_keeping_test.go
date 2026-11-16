@@ -825,3 +825,48 @@ see({ kind: 'v', x: owner });
 		})
 	}
 }
+
+func TestUnionKeepingViewMethodsStop(t *testing.T) {
+	t.Parallel()
+	for _, extension := range []string{".a", ".ts"} {
+		for _, row := range []struct{ name, source string }{
+			{"union_weak_function_strong_view", `import type { Weak } from 'adamic';
+interface Box { readonly label: string }
+type Strong = { readonly kind: 'v'; readonly v: Box } | { readonly kind: 'w'; readonly w: number };
+type Weakly = { readonly kind: 'v'; readonly v: Weak<Box> } | { readonly kind: 'w'; readonly w: number };
+function make(): Strong { return { kind: 'v', v: { label: 'label' } }; }
+type Held = { readonly kind: 'read'; readonly read: (x: Weakly) => string } | { readonly kind: 'none' };
+type Viewed = { readonly kind: 'read'; read(x: Strong): string } | { readonly kind: 'none' };
+function read(x: Weakly): string { return x.kind === 'v' ? x.v?.label ?? 'none' : 'w'; }
+function hold(): Held { return { kind: 'read', read }; }
+const viewed: Viewed = hold();
+if (viewed.kind === 'read') console.log(viewed.read(make()));
+`},
+			{"arraylike_weak_function_array_strong_view", `import type { Weak } from 'adamic';
+interface Box { readonly label: string }
+type Strong = { readonly kind: 'v'; readonly v: Box } | { readonly kind: 'w'; readonly w: number };
+type Weakly = { readonly kind: 'v'; readonly v: Weak<Box> } | { readonly kind: 'w'; readonly w: number };
+function make(): Strong { return { kind: 'v', v: { label: 'label' } }; }
+type Held = { readonly kind: 'read'; readonly read: (x: ArrayLike<Weak<Box>>) => string } | { readonly kind: 'none' };
+type Viewed = { readonly kind: 'read'; read(x: readonly Box[]): string } | { readonly kind: 'none' };
+function read(x: ArrayLike<Weak<Box>>): string { return x[0]?.label ?? 'none'; }
+function hold(): Held { return { kind: 'read', read }; }
+const viewed: Viewed = hold();
+console.log('control');
+`},
+		} {
+			t.Run(row.name+extension, func(t *testing.T) {
+				_, err := lowerSourceAs(t, row.source, extension)
+				var ny *NotYet
+				where, what := ":10:24", "a Held seen as a Viewed"
+				if row.name == "arraylike_weak_function_array_strong_view" {
+					// The no-call pair stops before the view: the source's ArrayLike parameter is unsupported.
+					where, what = ":8:15", "a value of type ArrayLike<Weak<Box>>"
+				}
+				if !errors.As(err, &ny) || !strings.HasSuffix(ny.Where, "main"+extension+where) || !strings.HasPrefix(ny.What, what) {
+					t.Fatalf("got %v, want NotYet at main%s%s for %s", err, extension, where, what)
+				}
+			})
+		}
+	}
+}

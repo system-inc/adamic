@@ -581,7 +581,7 @@ func (l *lowering) sameKeepingWalkMode(from, to *checker.Type, visited map[[2]*c
 	return true
 }
 
-// sameKeepingStorage compares stored slots, including source methods facing view properties; only view methods stay skipped.
+// sameKeepingStorage compares stored slots, including method and function-property signatures.
 func (l *lowering) sameKeepingStorage(from, to *checker.Type, visited map[[2]*checker.Type]bool, nesting *keepingNesting, singleCallable bool) bool {
 	// A pair already open on this path answers same for now: the walk is a conjunction, so any
 	// difference on the cycle fails the whole walk, and this provisional same is never the answer
@@ -714,9 +714,6 @@ func (l *lowering) sameKeepingStorage(from, to *checker.Type, visited map[[2]*ch
 		}
 	}
 	for _, viewed := range l.checker.GetPropertiesOfType(to) {
-		if viewed.Flags&ast.SymbolFlagsMethod != 0 {
-			continue
-		}
 		// A missing source property is never read through this view: optional_widening.go refuses
 		// such a structural widening first (Language's w01, #q6wf1bp); keep that rule and this skip together.
 		if inside := l.checker.GetPropertyOfType(from, viewed.Name); inside != nil && !same(l.checker.GetTypeOfSymbol(inside), l.checker.GetTypeOfSymbol(viewed)) {
