@@ -78,7 +78,8 @@ func main() {
 	baseline := flag.String("compare", "", "compare two commits: -compare <baseline sha> <candidate sha> (see compare.go)")
 	suiteName := flag.String("suite", "everyday", "with -compare, the suite in bench/suites.json to compare on")
 	samples := flag.Int("samples", 15, "with -compare, how many interleaved samples; at least 6")
-	plant := flag.String("plant", "", "with -compare, \"candidate\" appends a fixed 25 ms busy loop to every candidate program, to prove the comparison can fail")
+	plant := flag.String("plant", "", "with -compare, \"candidate\" appends a fixed busy loop of -plant-ms to every candidate program, to prove the comparison can fail")
+	plantMs := flag.Int("plant-ms", 25, "with -plant candidate, the plant's milliseconds of busy CPU")
 	flag.Parse()
 
 	if *baseline != "" {
@@ -94,7 +95,7 @@ func main() {
 		if flag.NArg() > 0 {
 			fail(fmt.Errorf("-compare takes two commits, and these are left over: %s", strings.Join(flag.Args(), " ")))
 		}
-		compareCommits(compareRequest{baseline: *baseline, candidate: candidate, suite: *suiteName, samples: *samples, plant: *plant, only: *only, timeout: *timeout})
+		compareCommits(compareRequest{baseline: *baseline, candidate: candidate, suite: *suiteName, samples: *samples, plant: *plant, plantMs: *plantMs, only: *only, timeout: *timeout})
 		return
 	}
 

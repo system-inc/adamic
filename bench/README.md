@@ -34,14 +34,14 @@ The runs are interleaved round by round to spread changes in machine load across
 
 ```
 go run ./bench -compare <baseline sha> <candidate sha> -suite everyday -samples 15
-go run ./bench -compare <sha> <sha> -suite everyday -only devirtualize,trees -plant candidate
+go run ./bench -compare <sha> <sha> -suite everyday -only trees -plant candidate -plant-ms 95
 ```
 
 `-compare` builds `cmd/adamic` at each commit in a detached worktree, builds every program with both from this checkout's source, and runs baseline, candidate and Node once each per sample, in an order that rotates every sample. A program is judged on user time unless the suite says `wall` (parallel_files, whose user time rises with threads by design).
 
-Each row gives the median of the per-sample ratios, candidate over baseline, and the sign test's 95% interval: the k-th smallest and k-th largest ratio (the 4th and 12th of 15), which assumes nothing about how times are distributed. `faster` means the whole interval is below 1.00, `slower` that it's all above, and anything else reads `no change at this confidence`, not proof of none. Fewer than six samples are refused. A program whose answer differs from Node's at either commit, or with a reading run.go would refuse, gets no verdict. Losses, every program where the candidate is slower than Node, print above the wins.
+Each row gives the median of the per-sample ratios, candidate over baseline, and the sign test's 95% interval: the k-th smallest and k-th largest ratio (the 4th and 12th of 15), which assumes nothing about how times are distributed. `faster` means the whole interval is below 1.00, `slower` that it's all above, and anything else reads `no change at this confidence, none larger than` the interval's farther bound from 1.00: the change that run couldn't see, not proof of none. Fewer than six samples are refused. A program whose answer differs from Node's at either commit, or with a reading run.go would refuse, gets no verdict. Native against Node is a paired ratio with its own interval, and a program is listed as a loss or a win only when that interval excludes 1.00; the rest are listed as within the noise.
 
-`-plant candidate` appends a fixed 25 ms busy loop to a copy of each candidate program, so an A/A comparison must read `slower`: the proof the tool can fail. An A/A run of eight programs without it should read `no change` throughout, though by the interval's own 3.5% miss rate about one run in four shows one false verdict somewhere.
+`-plant candidate` appends a fixed busy loop, `-plant-ms` long (25 by default), to a copy of each candidate program, so an A/A comparison must read `slower` once the plant is larger than the program's sensitivity: the proof the tool can fail. An A/A run of eight programs without it should read `no change` throughout, though by the interval's own 3.5% miss rate about one run in four shows one false verdict somewhere.
 
 ## Parallel files, October 6, 2026
 

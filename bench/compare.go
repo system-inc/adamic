@@ -2,7 +2,7 @@
 // candidate is faster, slower, or no different at 95% confidence, with the variation that verdict
 // rests on.
 //
-//	go run ./bench -compare <baseline sha> <candidate sha> -suite everyday [-samples 15] [-only trees] [-plant candidate]
+//	go run ./bench -compare <baseline sha> <candidate sha> -suite everyday [-samples 15] [-only trees] [-plant candidate [-plant-ms 25]]
 //
 // cmd/adamic is built at each commit in a detached worktree, and every program in the suite is built
 // with each of the two compilers from the same source, the one in this checkout, so the compiler is
@@ -17,9 +17,15 @@
 // either commit gets none, and so does a run refused the way run.go refuses one (at or below the
 // clock's resolution, or within its runtime's floor).
 //
+// Every verdict is printed with the change the run could see: a "no change" is "no change larger
+// than" its interval's farther bound, so it never reads as proof of none. Native against Node is a
+// paired ratio too, with its own interval, and a program is listed as a loss or a win only when that
+// interval excludes 1.00; otherwise it's within the run's noise and listed as such.
+//
 // -plant candidate proves the comparison can fail: it builds each candidate program from a copy of
-// its source with a fixed 25 ms busy loop appended, so an A/A comparison with the plant must read
-// slower. The plant lives here, in the harness, and never in the compiler or the runtime.
+// its source with a fixed busy loop appended, -plant-ms long (25 by default), so an A/A comparison
+// with the plant must read slower once the plant is larger than the program's sensitivity. The plant
+// lives here, in the harness, and never in the compiler or the runtime.
 package main
 
 import (
@@ -42,6 +48,7 @@ type compareRequest struct {
 	suite     string
 	samples   int
 	plant     string
+	plantMs   int
 	only      string
 	timeout   time.Duration
 }
@@ -111,21 +118,26 @@ type programComparison struct {
 	failure         string
 	candidateMedian time.Duration
 	nodeMedian      time.Duration
+	baselineMedian  time.Duration
+	// nodeRatio and its interval are the candidate over Node, sample by sample, on the same judge.
+	nodeRatio, nodeLow, nodeHigh float64
 }
 
 const noChange = "no change at this confidence"
 
-// plantLoop is the plant: a fixed 25 ms of busy CPU, the same whatever the program's size, appended to
-// a copy of a candidate program's source, so it runs inside the timed process at the end of the
-// program's synchronous code (before any timer the program set fires). It prints nothing, so the
-// planted program still gives Node's answer, and only its time can tell it apart.
-const plantLoop = `
-// Planted by go run ./bench -compare -plant candidate (bench/compare.go): a fixed 25 ms of busy CPU.
+// plantLoop is the plant: a fixed number of milliseconds of busy CPU, the same whatever the program's
+// size, appended to a copy of a candidate program's source, so it runs inside the timed process at the
+// end of the program's synchronous code (before any timer the program set fires). It prints nothing,
+// so the planted program still gives Node's answer, and only its time can tell it apart.
+func plantLoop(milliseconds int) string {
+	return fmt.Sprintf(`
+// Planted by go run ./bench -compare -plant candidate (bench/compare.go): a fixed %d ms of busy CPU.
 const adamicBenchPlantStart = Date.now();
-while (Date.now() - adamicBenchPlantStart < 25) {
+while (Date.now() - adamicBenchPlantStart < %d) {
 	// Spins, printing nothing.
 }
-`
+`, milliseconds, milliseconds)
+}
 
 func compareCommits(request compareRequest) {
 	if _, err := signTestRank(request.samples); err != nil {
@@ -133,6 +145,9 @@ func compareCommits(request compareRequest) {
 	}
 	if request.plant != "" && request.plant != "candidate" {
 		fail(fmt.Errorf("-plant takes only candidate, not %q", request.plant))
+	}
+	if request.plant != "" && (request.plantMs < 1 || request.plantMs > 60000) {
+		fail(fmt.Errorf("-plant-ms must be from 1 to 60000, not %d", request.plantMs))
 	}
 	directory, err := benchDirectory()
 	if err != nil {
@@ -165,7 +180,7 @@ func compareCommits(request compareRequest) {
 	fmt.Printf("baseline: %s\ncandidate: %s\n", baselineCommit, candidateCommit)
 	plantDescription := "none"
 	if request.plant == "candidate" {
-		plantDescription = "candidate, a fixed 25 ms busy loop appended to every candidate program"
+		plantDescription = fmt.Sprintf("candidate, a fixed %d ms busy loop appended to every candidate program", request.plantMs)
 	}
 	fmt.Printf("suite: %s, %d rows; samples: %d; plant: %s\n", request.suite, len(entries), request.samples, plantDescription)
 	fmt.Printf("load before: %s\n", loadAverage())
@@ -210,7 +225,7 @@ func compareCommits(request compareRequest) {
 		candidateSource := entry.program.source
 		if request.plant == "candidate" {
 			candidateSource = filepath.Join(plantedDirectory, base+filepath.Ext(entry.program.source))
-			err = plantedCopy(entry.program.source, candidateSource)
+			err = plantedCopy(entry.program.source, candidateSource, request.plantMs)
 			if err != nil {
 				fail(err)
 			}
@@ -271,8 +286,8 @@ func compareCommits(request compareRequest) {
 	rank, _ := signTestRank(request.samples)
 	fmt.Printf("wall clock resolution: %s; floor, a program that only prints, fastest to slowest of %d: %s\n", resolution, request.samples, strings.Join(floorCells, ", "))
 	fmt.Printf("%d interleaved samples, the runners' order rotating each sample. The ratio is the candidate's time over the baseline's in the same sample, on the program's judge: user, CPU time in user mode across every thread, or wall. The interval is the sign test's 95%% interval for the median ratio, the %s and %s smallest of %d ratios, which assumes nothing about how times are distributed. faster needs the interval's top below 1.00, slower its bottom above 1.00.\n\n", request.samples, ordinal(rank), ordinal(request.samples+1-rank), request.samples)
-	fmt.Println("| program | judge | candidate / baseline, median | 95% interval | verdict | candidate vs node, median |")
-	fmt.Println("|---|---|---|---|---|---|")
+	fmt.Println("| program | judge | baseline, median | candidate / baseline, median | 95% interval | verdict | candidate / node, median and 95% interval |")
+	fmt.Println("|---|---|---|---|---|---|---|")
 	results := make([]programComparison, len(entries))
 	for index, entry := range entries {
 		if entry.failure != "" {
@@ -282,32 +297,37 @@ func compareCommits(request compareRequest) {
 		}
 		result := results[index]
 		if result.failure != "" {
-			fmt.Printf("| %s | %s | | | %s | |\n", entry.program.name, entry.judge, result.failure)
+			fmt.Printf("| %s | %s | | | | %s | |\n", entry.program.name, entry.judge, result.failure)
 			continue
 		}
-		fmt.Printf("| %s | %s | %.3f | %.3f to %.3f | %s | %.2fx |\n", entry.program.name, entry.judge, result.median, result.low, result.high, result.verdict, result.candidateMedian.Seconds()/result.nodeMedian.Seconds())
+		fmt.Printf("| %s | %s | %s | %.3f | %.3f to %.3f | %s | %.2fx, %.2f to %.2f |\n", entry.program.name, entry.judge, seconds(result.baselineMedian), result.median, result.low, result.high, verdictSentence(result.verdict, result.low, result.high), result.nodeRatio, result.nodeLow, result.nodeHigh)
 	}
 
 	// Losses are listed first and beside the wins, so a comparison that improves one row can't hide
 	// that native still trails Node on another.
-	losses, wins := []string{}, []string{}
+	losses, wins, ties := []string{}, []string{}, []string{}
 	for index, entry := range entries {
 		result := results[index]
 		if result.failure != "" {
 			continue
 		}
-		line := fmt.Sprintf("- %s: %s against Node's %s on %s, %.2fx", entry.program.name, seconds(result.candidateMedian), seconds(result.nodeMedian), entry.judge, result.candidateMedian.Seconds()/result.nodeMedian.Seconds())
-		if result.candidateMedian > result.nodeMedian {
+		line := fmt.Sprintf("- %s: %s against Node's %s on %s, %.2fx (95%% interval %.2f to %.2f)", entry.program.name, seconds(result.candidateMedian), seconds(result.nodeMedian), entry.judge, result.nodeRatio, result.nodeLow, result.nodeHigh)
+		switch verdictOf(result.nodeLow, result.nodeHigh) {
+		case "slower":
 			losses = append(losses, line)
-		} else {
+		case "faster":
 			wins = append(wins, line)
+		default:
+			ties = append(ties, line)
 		}
 	}
 	fmt.Println()
-	fmt.Println("losses, where native at the candidate is slower than Node (medians, on each program's judge):")
+	fmt.Println("losses, where native at the candidate is slower than Node with the whole interval above 1.00 (on each program's judge):")
 	printList(losses)
-	fmt.Println("wins, where it is no slower:")
+	fmt.Println("wins, where it is faster with the whole interval below 1.00:")
 	printList(wins)
+	fmt.Println("within the noise, where the interval holds 1.00, so neither is claimed:")
+	printList(ties)
 	if len(harnesses) > 0 {
 		fmt.Println("outside run.go, listed and not timed here:")
 		for _, harness := range harnesses {
@@ -461,8 +481,8 @@ func compareSamples(samples [][3]measurement, judgeOn string, floors [3]measurem
 	if _, err := signTestRank(len(samples)); err != nil {
 		return programComparison{failure: err.Error()}
 	}
-	ratios := []float64{}
-	candidates, nodes := []time.Duration{}, []time.Duration{}
+	ratios, nodeRatios := []float64{}, []float64{}
+	baselines, candidates, nodes := []time.Duration{}, []time.Duration{}, []time.Duration{}
 	for _, sample := range samples {
 		for runner, result := range sample {
 			if judged := judge(result, floors[runner], resolution); judged.failure != "" {
@@ -473,15 +493,25 @@ func compareSamples(samples [][3]measurement, judgeOn string, floors [3]measurem
 		if baselineTime <= 0 {
 			return programComparison{failure: fmt.Sprintf("the baseline's %s time read as zero, so it has no ratio", judgeOn)}
 		}
+		nodeTime := judgedTime(sample[nodeRunner], judgeOn)
+		if nodeTime <= 0 {
+			return programComparison{failure: fmt.Sprintf("Node's %s time read as zero, so it has no ratio", judgeOn)}
+		}
 		ratios = append(ratios, float64(judgedTime(sample[candidateRunner], judgeOn))/float64(baselineTime))
+		nodeRatios = append(nodeRatios, float64(judgedTime(sample[candidateRunner], judgeOn))/float64(nodeTime))
+		baselines = append(baselines, baselineTime)
 		candidates = append(candidates, judgedTime(sample[candidateRunner], judgeOn))
-		nodes = append(nodes, judgedTime(sample[nodeRunner], judgeOn))
+		nodes = append(nodes, nodeTime)
 	}
 	median, low, high, err := signTestInterval(ratios)
 	if err != nil {
 		return programComparison{failure: err.Error()}
 	}
-	return programComparison{median: median, low: low, high: high, verdict: verdictOf(low, high), candidateMedian: medianDuration(candidates), nodeMedian: medianDuration(nodes)}
+	nodeMedianRatio, nodeLow, nodeHigh, err := signTestInterval(nodeRatios)
+	if err != nil {
+		return programComparison{failure: err.Error()}
+	}
+	return programComparison{median: median, low: low, high: high, verdict: verdictOf(low, high), baselineMedian: medianDuration(baselines), candidateMedian: medianDuration(candidates), nodeMedian: medianDuration(nodes), nodeRatio: nodeMedianRatio, nodeLow: nodeLow, nodeHigh: nodeHigh}
 }
 
 // judgedTime is a run's time on its program's judge.
@@ -539,6 +569,16 @@ func verdictOf(low, high float64) string {
 		return "slower"
 	}
 	return noChange
+}
+
+// verdictSentence is a verdict with the change the run could see: "no change" names the interval's
+// farther bound from 1.00, the smallest change in either direction this run couldn't rule out, so it
+// never reads as proof that nothing changed.
+func verdictSentence(verdict string, low, high float64) string {
+	if verdict != noChange {
+		return verdict
+	}
+	return fmt.Sprintf("%s, none larger than %.1f%%", noChange, 100*max(1-low, high-1))
 }
 
 // medianOf is the middle of sorted values, or the mean of the middle two.
@@ -646,13 +686,13 @@ func layCohere(root, tree, commit string) error {
 	return os.Symlink(filepath.Join(root, "cohere"), target)
 }
 
-// plantedCopy writes a copy of a source with the plant appended.
-func plantedCopy(source, planted string) error {
+// plantedCopy writes a copy of a source with a plant of milliseconds appended.
+func plantedCopy(source, planted string, milliseconds int) error {
 	contents, err := os.ReadFile(source)
 	if err != nil {
 		return err
 	}
-	return os.WriteFile(planted, append(contents, plantLoop...), 0644)
+	return os.WriteFile(planted, append(contents, plantLoop(milliseconds)...), 0644)
 }
 
 // busyProcesses names every process over 5% CPU, from ps. On Linux the figure is the process's

@@ -140,3 +140,58 @@ func TestAWallJudgedProgramReadsWallTime(t *testing.T) {
 		t.Fatalf("on user, a candidate at 4 times the baseline's user read %q, failure %q; want slower", result.verdict, result.failure)
 	}
 }
+
+// A "no change" is printed with the change the run couldn't rule out, its interval's farther bound
+// from 1.00, so a no change on a noisy row never reads as proof that nothing moved.
+func TestNoChangeNamesTheChangeTheRunCouldNotSee(t *testing.T) {
+	t.Parallel()
+	for _, test := range []struct {
+		low, high float64
+		want      string
+	}{
+		{0.95, 1.05, "none larger than 5.0%"},
+		{0.986, 1.023, "none larger than 2.3%"},
+		{0.97, 1.01, "none larger than 3.0%"},
+	} {
+		if got := verdictSentence(noChange, test.low, test.high); !strings.HasSuffix(got, test.want) || !strings.HasPrefix(got, noChange) {
+			t.Fatalf("no change over %v to %v read %q; want it to end %q", test.low, test.high, got, test.want)
+		}
+	}
+	if got := verdictSentence("slower", 1.02, 1.05); got != "slower" {
+		t.Fatalf("a verdict read %q; want it as it is", got)
+	}
+}
+
+// Native against Node is a paired ratio with its own interval: a program is a loss only when the whole
+// interval sits above 1.00, a win only when it sits below, and within the noise otherwise.
+func TestAGapToNodeIsClaimedOnlyOutsideItsInterval(t *testing.T) {
+	t.Parallel()
+	ratios := []float64{1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1}
+	withNode := func(factors []float64) programComparison {
+		samples := fakeSamples(ratios)
+		for index := range samples {
+			nodeTime := time.Duration(float64(samples[index][candidateRunner].user) * factors[index])
+			samples[index][nodeRunner].user, samples[index][nodeRunner].elapsed = nodeTime, nodeTime
+		}
+		return compareSamples(samples, "user", fakeFloors, time.Microsecond)
+	}
+	// Node at half the candidate's time every sample: the candidate is twice Node's, a loss.
+	slower := withNode([]float64{0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5})
+	if verdictOf(slower.nodeLow, slower.nodeHigh) != "slower" || slower.nodeRatio != 2 {
+		t.Fatalf("a candidate at twice Node's time read ratio %v, interval %v to %v; want 2 and slower", slower.nodeRatio, slower.nodeLow, slower.nodeHigh)
+	}
+	// Node on either side of the candidate: the interval holds 1.00, so neither is claimed.
+	mixed := withNode([]float64{0.9, 1.1, 0.95, 1.05, 0.9, 1.1, 0.97, 1.03, 0.9, 1.1, 0.95, 1.05, 1.0, 0.92, 1.08})
+	if verdictOf(mixed.nodeLow, mixed.nodeHigh) != noChange {
+		t.Fatalf("a candidate on either side of Node read interval %v to %v; want it within the noise", mixed.nodeLow, mixed.nodeHigh)
+	}
+}
+
+// The plant is the milliseconds it's asked for, whatever the program, and prints nothing.
+func TestThePlantIsItsMilliseconds(t *testing.T) {
+	t.Parallel()
+	loop := plantLoop(95)
+	if !strings.Contains(loop, "< 95)") || strings.Contains(loop, "console") {
+		t.Fatalf("the plant for 95 ms was %q; want a 95 ms spin that prints nothing", loop)
+	}
+}
