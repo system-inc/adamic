@@ -1,0 +1,1 @@
+internal/oracle/testdata/host_member_value/h4_layout_representation.ts:10:1: stage 0 can't lower a write of h.m, a method read as a value, to method m of h2, whose function reads this.x, which the objects it's called on don't all hold at one place in one representation yet
