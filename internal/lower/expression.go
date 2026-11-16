@@ -400,14 +400,14 @@ func (l *lowering) sameKeeping(from *checker.Type, to *checker.Type, visited map
 // sameKeepingWalk is sameKeeping's walk of what each side keeps weakly or strongly, and of each
 // function's slots by representation.
 func (l *lowering) sameKeepingWalk(from *checker.Type, to *checker.Type, visited map[[2]*checker.Type]bool) bool {
-	return l.sameKeepingWalkMode(from, to, visited, false, nil, false)
+	return l.sameKeepingWalkMode(from, to, visited, false, nil, false, false)
 }
 
 type keepingNesting struct {
 	from, to typeNesting
 }
 
-func (l *lowering) sameKeepingWalkMode(from, to *checker.Type, visited map[[2]*checker.Type]bool, weakOnly bool, nesting *keepingNesting, insideSlot bool) bool {
+func (l *lowering) sameKeepingWalkMode(from, to *checker.Type, visited map[[2]*checker.Type]bool, weakOnly bool, nesting *keepingNesting, insideSlot, singleCallable bool) bool {
 	if from == to {
 		return true
 	}
@@ -427,7 +427,7 @@ func (l *lowering) sameKeepingWalkMode(from, to *checker.Type, visited map[[2]*c
 	fromMembers, fromCount := members(from)
 	toMembers, toCount := members(to)
 	// Compare unions before present erases them, including unions reached through slots.
-	// Only retention is new here: these unions previously skipped callable slot checks.
+	// Callable slot checks apply only to the one-callable-member case below.
 	if fromCount > 1 || toCount > 1 {
 		if toCount <= 1 && l.present(to) == nil {
 			return true
@@ -471,13 +471,23 @@ func (l *lowering) sameKeepingWalkMode(from, to *checker.Type, visited map[[2]*c
 			return true
 		}
 		visited[pair] = true
+		callableCount := func(members []*checker.Type) int {
+			count := 0
+			for _, member := range members {
+				if member.Flags()&(checker.TypeFlagsUndefined|checker.TypeFlagsNull) == 0 && l.keepingCallable(member) {
+					count++
+				}
+			}
+			return count
+		}
+		singleCallable := callableCount(fromMembers) == 1 && callableCount(toMembers) == 1
 		for _, member := range fromMembers {
 			for _, target := range toMembers {
 				const nullish = checker.TypeFlagsUndefined | checker.TypeFlagsNull
 				if (member.Flags()&nullish != 0) != (target.Flags()&nullish != 0) {
 					continue
 				}
-				if !l.sameKeepingWalkMode(member, target, visited, true, nesting, insideSlot) {
+				if !l.sameKeepingWalkMode(member, target, visited, true, nesting, insideSlot, singleCallable) {
 					return false
 				}
 			}
@@ -490,7 +500,7 @@ func (l *lowering) sameKeepingWalkMode(from, to *checker.Type, visited map[[2]*c
 	}
 	visited[[2]*checker.Type{from, to}] = true
 	if weakOnly {
-		return l.sameKeepingStorage(from, to, visited, nesting)
+		return l.sameKeepingStorage(from, to, visited, nesting, singleCallable)
 	}
 	if fromKind, toKind := l.typedArrayKind(from), l.typedArrayKind(to); fromKind != 0 || toKind != 0 {
 		return fromKind != 0 && fromKind == toKind
@@ -499,12 +509,12 @@ func (l *lowering) sameKeepingWalkMode(from, to *checker.Type, visited map[[2]*c
 		return false
 	}
 	if a, b := l.recordElement(from), l.recordElement(to); a != nil && b != nil {
-		return l.sameKeepingWalkMode(a, b, visited, false, nesting, true)
+		return l.sameKeepingWalkMode(a, b, visited, false, nesting, true, false)
 	}
 	same := func(inside, viewed *checker.Type) bool {
 		fromKept, _ := l.kept(inside)
 		toKept, _ := l.kept(viewed)
-		return (fromKept == ir.Weak) == (toKept == ir.Weak) && l.sameKeepingWalkMode(inside, viewed, visited, false, nesting, true)
+		return (fromKept == ir.Weak) == (toKept == ir.Weak) && l.sameKeepingWalkMode(inside, viewed, visited, false, nesting, true, false)
 	}
 	fromSignatures := l.checker.GetSignaturesOfType(from, checker.SignatureKindCall)
 	toSignatures := l.checker.GetSignaturesOfType(to, checker.SignatureKindCall)
@@ -556,11 +566,7 @@ func (l *lowering) sameKeepingWalkMode(from, to *checker.Type, visited map[[2]*c
 }
 
 // sameKeepingStorage judges stored contents and callable field slots; methods stay skipped.
-func (l *lowering) sameKeepingStorage(from, to *checker.Type, visited map[[2]*checker.Type]bool, nesting *keepingNesting) bool {
-	// The field arm judges callable slots; a function member of the union stays skipped (#q6wf1bp).
-	if l.keepingCallable(from) || l.keepingCallable(to) {
-		return true
-	}
+func (l *lowering) sameKeepingStorage(from, to *checker.Type, visited map[[2]*checker.Type]bool, nesting *keepingNesting, singleCallable bool) bool {
 	// Closure slots have no type descriptor, so callable twins must agree on parameter and result representation (#svbn0aj, a1).
 	sameCallablePair := func(inside, viewed *checker.Type) bool {
 		if !l.keepingCallable(inside) || !l.keepingCallable(viewed) {
@@ -592,6 +598,13 @@ func (l *lowering) sameKeepingStorage(from, to *checker.Type, visited map[[2]*ch
 		}
 		return sameCallable(l.checker.GetReturnTypeOfSignature(fromSignatures[0]), l.checker.GetReturnTypeOfSignature(toSignatures[0]))
 	}
+	// typeof narrows to the one callable member's own signature (#xmnp0x8); multiple callable members use the union's combined signature (#q6wf1bp).
+	if l.keepingCallable(from) || l.keepingCallable(to) {
+		if singleCallable && l.keepingCallable(from) && l.keepingCallable(to) {
+			return sameCallablePair(from, to)
+		}
+		return true
+	}
 	ok, leave := nesting.from.enter(from)
 	defer leave()
 	if !ok {
@@ -608,7 +621,7 @@ func (l *lowering) sameKeepingStorage(from, to *checker.Type, visited map[[2]*ch
 		}
 		fromWeak, fromKnown := l.keepsWeak(inside)
 		toWeak, toKnown := l.keepsWeak(viewed)
-		return fromKnown && toKnown && fromWeak == toWeak && l.sameKeepingWalkMode(inside, viewed, visited, true, nesting, true)
+		return fromKnown && toKnown && fromWeak == toWeak && l.sameKeepingWalkMode(inside, viewed, visited, true, nesting, true, false)
 	}
 	if from.ObjectFlags()&checker.ObjectFlagsReference != 0 && to.ObjectFlags()&checker.ObjectFlagsReference != 0 && (l.isArrayType(from) || checker.IsTupleType(from) || l.isLibraryType(from, "Map", "ReadonlyMap", "Set", "ReadonlySet")) {
 		fromArguments, toArguments := l.typeArguments(from), l.typeArguments(to)
@@ -653,7 +666,7 @@ func (l *lowering) callableKeeping(inside, viewed *checker.Type, signature *chec
 			return false
 		}
 	}
-	return (fromKept == ir.Weak) == (toKept == ir.Weak) && l.sameKeepingWalkMode(inside, viewed, visited, false, nesting, true)
+	return (fromKept == ir.Weak) == (toKept == ir.Weak) && l.sameKeepingWalkMode(inside, viewed, visited, false, nesting, true, false)
 }
 
 // restCollectedOtherwise keeps the rest loop's bounds and comparisons in one place.
