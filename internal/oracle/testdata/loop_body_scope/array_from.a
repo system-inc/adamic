@@ -1,6 +1,8 @@
 // Array.from({ length }, callback) with a rest packed in each iteration (#9grybqc). The callback that
 // takes no parameter admits spread and loose, and the one that takes undefined and the index admits
-// loose, so each call collects a rest from undefined and the index's number, boxed. Node prints:
+// loose, so each call collects a rest from undefined and the index's number, boxed. Each callback comes
+// in through a parameter, so its function isn't known and the call takes the type's layout (a known
+// arrow takes its own since #g4arkr4, and packs nothing). Node prints:
 //
 //	string:x;number:1;object:y,z
 //	x/2/undefined
@@ -12,10 +14,12 @@ const loose = (...items: (string | number | undefined)[]): string => items.map((
 console.log(spread('x', 1, ['y', 'z']));
 console.log(loose('x', 2, undefined));
 let made = 0;
-const labels = Array.from({ length: 4 }, (): string => {
+const labelsOf = (make: () => string): string[] => Array.from({ length: 4 }, make);
+const labels = labelsOf((): string => {
 	made += 1;
 	return `#${made}`;
 });
 console.log(labels.join(' '));
-const squares = Array.from({ length: 3 }, (_: undefined, index: number): string => `${index * index}`);
+const squaresOf = (square: (_: undefined, index: number) => string): string[] => Array.from({ length: 3 }, square);
+const squares = squaresOf((_: undefined, index: number): string => `${index * index}`);
 console.log(squares.join(' '));
