@@ -10,6 +10,13 @@ expected=list(map(str,sorted((tree/'src/compiler').rglob('*.ts'))));assert len(e
 modes=os.environ.get('CENSUS_ANALYZE_FORMATS','CommonJSBundle EcmaScript').split()
 statuses={str(p.relative_to(base)):read(p) for p in base.rglob('*-status.json')}
 for s in statuses.values():assert s['exit_code']==0 and s['seconds']<1800 and s['process_group_cleaned'] and not s['stopping_reason']
+if 'EcmaScript' in modes:
+ transition=read(base/'format-transition.json')
+ assert transition['binary']==read(base/'binaries.json') and transition['new_apply_or_build'] is False
+ checkpoint=transition['commonjs_validated_checkpoint']
+ saved=json.loads(subprocess.check_output(['git','show',checkpoint+':stage3/census/next-stops-fb8db081/validation-CommonJSBundle.json'],cwd=repo,text=True))
+ assert saved['raw_observations']==158 and saved['duplicates_agree'] and saved['formats']==['CommonJSBundle']
+ assert subprocess.call(['git','merge-base','--is-ancestor',checkpoint,'HEAD'],cwd=repo)==0
 for mode in modes:
  out=base/'head'/mode;rows=[]
  for i in range(1,80):
