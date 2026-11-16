@@ -1,0 +1,22 @@
+package main
+
+import (
+	"context"
+	"encoding/json"
+	"github.com/system-inc/adamic/internal/load"
+	"github.com/system-inc/adamic/internal/lower"
+	"os"
+)
+
+func main() {
+	p, e := load.Load(os.Args[1:])
+	if e != nil {
+		panic(e)
+	}
+	_, e = lower.Lower(context.Background(), p)
+	words := ""
+	if e != nil {
+		words = e.Error()
+	}
+	json.NewEncoder(os.Stdout).Encode(map[string]any{"Completed": e == nil, "Error": words})
+}
