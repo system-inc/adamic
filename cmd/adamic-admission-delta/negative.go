@@ -14,7 +14,7 @@ import (
 )
 
 type negativeWitness struct {
-	// Form is empty for the literal type lies, or checkedBoundaryForm.
+	// Form is empty for the literal type lies, checkedBoundaryForm or castFailedForm.
 	Form              string `json:"form,omitempty"`
 	RulingTask        string `json:"ruling_task"`
 	Ruling            string `json:"ruling,omitempty"`
@@ -25,6 +25,9 @@ type negativeWitness struct {
 	TypeCorrectSHA256 string `json:"type_correct_sha256"`
 	Exit              int    `json:"exit"`
 	Stderr            string `json:"stderr"`
+	// Column is castFailedForm's alone: where, on Declaration's line, the cast's as keyword starts, 1-based. The
+	// cast's message carries no position, so the entry states it and the tool holds the source to it.
+	Column int `json:"column,omitempty"`
 }
 type negativeWitnessList struct {
 	Comment   string                     `json:"_comment"`
@@ -73,6 +76,9 @@ func readNegativeWitnesses(path string) (negativeWitnessList, error) {
 		if !supportedLie(witness) {
 			return list, fmt.Errorf("unsupported type lie or repair: %s", hash)
 		}
+		if witness.Form != castFailedForm && witness.Column != 0 {
+			return list, fmt.Errorf("only a cast_failed witness names a column: %s", hash)
+		}
 	}
 	return list, nil
 }
@@ -92,14 +98,64 @@ var checkedBoundaryStop = regexp.MustCompile(`^adamic: panic: (?:field|element) 
 // elementReadStop opens an element read's stop, whose expected type is the declared array's element.
 const elementReadStop = "adamic: panic: element read failed: "
 
+// castFailedForm is a .ts program that lies about a declared type and stops at the tag test a cast inserts
+// (rulings.md:9, Oct 6), applied by Adamic on #b5w3ycg (Nov 16) as one of rulings.md:385's inserted checks.
+// The stop names no position, so the entry names the cast's line and column, and its one-place repair keeps
+// that cast and agrees with Node, which shows the check doesn't fire on a true claim. In .a these casts are
+// refused, so an entry is .ts alone.
+const castFailedForm = "cast_failed"
+
+// castFailedStop is the tag test's message and only it, its claimed type second: a compiler-bug panic or
+// any other guard never qualifies.
+var castFailedStop = regexp.MustCompile(`^adamic: panic: cast failed: this ([^\n]+) is not a ([^\n]+)\n$`)
+
 func supportedLie(witness negativeWitness) bool {
 	switch witness.Form {
 	case "":
 		return supportedLiteralLie(witness)
 	case checkedBoundaryForm:
 		return supportedCheckedBoundary(witness)
+	case castFailedForm:
+		return supportedCastFailed(witness)
 	}
 	return false
+}
+
+// A cast_failed entry names its ruling, a .ts declaration, a column, and as its declared type the type the
+// stop says the cast claimed.
+func supportedCastFailed(witness negativeWitness) bool {
+	stop := castFailedStop.FindStringSubmatch(witness.Stderr)
+	if witness.Ruling == "" || stop == nil || strings.Contains(witness.Stderr, "compiler bug") || witness.DeclaredType != stop[2] || witness.Column < 1 {
+		return false
+	}
+	at := strings.LastIndex(witness.Declaration, ":")
+	if at <= 0 || !strings.HasSuffix(witness.Declaration[:at], ".ts") {
+		return false
+	}
+	return witness.RepairFrom != "" && witness.RepairTo != "" && witness.RepairFrom != witness.RepairTo
+}
+
+// castAt says an as cast's keyword starts at column, 1-based, on line: the word as, after whitespace or a
+// closing bracket and before whitespace, so a name holding "as" (alias, cast) never reads as one, and outside
+// any string, so an odd count of one quote before it refuses it. It reads the line's text, not a parse: the
+// stop's exact message and the repair agreeing with Node carry the rest of the proof.
+func castAt(line string, column int) bool {
+	start := column - 1
+	if start < 1 || start+3 > len(line) || line[start:start+2] != "as" || (line[start+2] != ' ' && line[start+2] != '\t') {
+		return false
+	}
+	for _, quote := range []string{"'", `"`, "`"} {
+		if strings.Count(line[:start], quote)%2 != 0 {
+			return false
+		}
+	}
+	previous := line[start-1]
+	return previous == ' ' || previous == '\t' || previous == ')' || previous == ']'
+}
+
+// repairRuns says a form's repair is arbitrary text, so the run holds the repaired copy to Node as well.
+func repairRuns(form string) bool {
+	return form == checkedBoundaryForm || form == castFailedForm
 }
 
 // A checked boundary's entry names its ruling, and the declared type it states is the one the stop
@@ -187,6 +243,17 @@ func validateWitnessSource(source []byte, witness negativeWitness) error {
 		if bytes.Count(source, []byte(witness.RepairFrom)) != 1 {
 			return fmt.Errorf("a checked boundary's repair must replace exactly one place")
 		}
+	} else if witness.Form == castFailedForm {
+		if !castAt(declaration, witness.Column) {
+			return fmt.Errorf("no as cast starts at %s:%d", witness.Declaration, witness.Column)
+		}
+		if bytes.Count(source, []byte(witness.RepairFrom)) != 1 {
+			return fmt.Errorf("a cast_failed repair must replace exactly one place")
+		}
+		repairedLines := strings.Split(string(repairedSource(source, witness)), "\n")
+		if line > len(repairedLines) || !castAt(repairedLines[line-1], witness.Column) {
+			return fmt.Errorf("a cast_failed repair must keep the cast at %s:%d", witness.Declaration, witness.Column)
+		}
 	} else if witness.DeclaredType == "string" {
 		pattern := `^(let [A-Za-z_$][A-Za-z0-9_$]*: string = ` + regexp.QuoteMeta(witness.RepairFrom) + `;|class [A-Za-z_$][A-Za-z0-9_$]* \{ [A-Za-z_$][A-Za-z0-9_$]*: string = ` + regexp.QuoteMeta(witness.RepairFrom) + `; \})$`
 		if !regexp.MustCompile(pattern).MatchString(declaration) {
@@ -212,7 +279,11 @@ func acceptsNegativeWitness(witness negativeWitness, root string, node, javascri
 			return false
 		}
 	}
-	// A listed stop is still required to agree between the backends on stdout.
+	// A listed stop is still required to agree between the backends on stdout. A cast's stop comes where Node,
+	// which erases the cast, goes on, so the backends printed what Node printed up to it.
+	if witness.Form == castFailedForm && !strings.HasPrefix(node.Stdout, javascript.Stdout) {
+		return false
+	}
 	return javascript.Stdout == native.Stdout
 }
 

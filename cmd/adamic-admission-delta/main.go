@@ -645,8 +645,11 @@ func run(args []string) error {
 			if e := validateWitnessSource(data, witness); e != nil {
 				return fmt.Errorf("%s: %w", record.Path, e)
 			}
+			if witness.Form == castFailedForm && filepath.Ext(record.Path) != ".ts" {
+				return fmt.Errorf("%s: a cast_failed witness is .ts alone; in .a its cast is refused", record.Path)
+			}
 			record.NegativeWitness = !agree && acceptsNegativeWitness(witness, headTree, node, javascript, native)
-			if record.NegativeWitness && witness.Form == checkedBoundaryForm {
+			if record.NegativeWitness && repairRuns(witness.Form) {
 				// The repair is the stop's mutant: storing a value of the declared type, it agrees with Node. It keeps
 				// the witness's extension, so it compiles in the witness's own mode: a .ts witness's repair as .ts.
 				repairPath := filepath.Join(scratch, fmt.Sprintf("repair-%d%s", index, filepath.Ext(source)))
