@@ -223,6 +223,31 @@ func TestNodePreludeConsoleSignatures(t *testing.T) {
 	}
 }
 
+// recordreplay's declaration (#b7phwab) rides only the Node prelude: a program with no Node types still can't name
+// NodeJS (TS2503, the promise of stage3/drivers/parser/native-nodejs-process-type.a), and a Node program reads
+// process.recordreplay typed unknown. Mutants: nodeProcessAugmentation moved back into prelude.d.ts, and the plain row
+// loads; nodePrelude returning without it, and the Node row fails with TS2339.
+func TestNodeProcessAugmentationRidesOnlyTheNodePrelude(t *testing.T) {
+	t.Parallel()
+	if strings.Contains(prelude, "namespace NodeJS") {
+		t.Fatal("the standalone prelude declares NodeJS, so a program without Node types can name NodeJS.Process")
+	}
+	adapted, err := nodePrelude(prelude)
+	if err != nil {
+		t.Fatal(err)
+	}
+	if !strings.HasSuffix(adapted, nodeProcessAugmentation) {
+		t.Fatalf("the Node prelude doesn't carry recordreplay's declaration: %q", adapted)
+	}
+	_, err = nodeSource(t, "declare const process: NodeJS.Process | undefined;\nconsole.log(\"loaded\");\n")
+	if err == nil || !strings.Contains(err.Error(), "TS2503") {
+		t.Fatalf("a program without Node types named NodeJS.Process: want TS2503, got %v", err)
+	}
+	if _, err := nodeSource(t, "import 'node:process';\nconst value: unknown = process.recordreplay;\nconsole.log(typeof value);\n"); err != nil {
+		t.Fatalf("a Node program can't read process.recordreplay: %v", err)
+	}
+}
+
 func TestNodePreludeMissingDeclarations(t *testing.T) {
 	t.Parallel()
 	declarations := []string{"declare const console: {log(value: unknown): void;};", "interface Console {error(value: unknown): void;}", "declare const process: {code: number;};"}
