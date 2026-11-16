@@ -583,18 +583,67 @@ func buildAdamicAt(root, commit, binary string) error {
 		return fmt.Errorf("git worktree add at %s: %v\n%s", commit, err, output)
 	}
 	defer func() {
+		// layCohere's link goes first, back to the empty directory git left, so the worktree reads
+		// clean and git removes it without --force.
+		cohere := filepath.Join(tree, "cohere")
+		if information, err := os.Lstat(cohere); err == nil && information.Mode()&os.ModeSymlink != 0 {
+			if err := os.Remove(cohere); err == nil {
+				_ = os.Mkdir(cohere, 0755)
+			}
+		}
 		remove := exec.Command("git", "worktree", "remove", tree)
 		remove.Dir = root
 		if output, err := remove.CombinedOutput(); err != nil {
 			fmt.Fprintf(os.Stderr, "bench: git worktree remove %s: %v %s; remove it by hand\n", tree, err, firstLine(string(output)))
 		}
 	}()
+	if err := layCohere(root, tree, commit); err != nil {
+		return err
+	}
 	build := exec.Command("go", "build", "-buildvcs=false", "-o", binary, "./cmd/adamic")
 	build.Dir = tree
 	if output, err := build.CombinedOutput(); err != nil {
 		return fmt.Errorf("building adamic at %s: %v\n%s", commit, err, output)
 	}
 	return nil
+}
+
+// layCohere fills a fresh worktree's cohere, which go.mod's replace directives build from: a worktree
+// leaves a submodule's directory empty (M1's first run, J-fywr4hc, failed to build there). When the
+// commit pins the cohere this checkout has laid, the worktree's cohere becomes a link to it; when the
+// pins differ the comparison is refused, naming both, since building one commit against another's
+// checker would compare the wrong compiler. A cohere already holding files (a tree whose cohere was
+// committed as files, as a sealed job's is) is left as it is.
+func layCohere(root, tree, commit string) error {
+	target := filepath.Join(tree, "cohere")
+	entries, err := os.ReadDir(target)
+	if err == nil && len(entries) > 0 {
+		return nil
+	}
+	pin := func(revision string) (string, error) {
+		command := exec.Command("git", "rev-parse", revision+":cohere")
+		command.Dir = root
+		output, err := command.Output()
+		return strings.TrimSpace(string(output)), err
+	}
+	wanted, err := pin(commit)
+	if err != nil {
+		return fmt.Errorf("reading %s's cohere pin: %w", commit, err)
+	}
+	laid, err := pin("HEAD")
+	if err != nil {
+		return fmt.Errorf("reading this checkout's cohere pin: %w", err)
+	}
+	if wanted != laid {
+		return fmt.Errorf("%s pins cohere %s, and this checkout has %s laid: lay the commit's cohere to compare it", commit, wanted, laid)
+	}
+	if _, err := os.Stat(filepath.Join(root, "cohere", "go.mod")); err != nil {
+		return fmt.Errorf("this checkout's cohere isn't laid (no cohere/go.mod): %w", err)
+	}
+	if err := os.Remove(target); err != nil && !os.IsNotExist(err) {
+		return fmt.Errorf("clearing the worktree's empty cohere: %w", err)
+	}
+	return os.Symlink(filepath.Join(root, "cohere"), target)
 }
 
 // plantedCopy writes a copy of a source with the plant appended.

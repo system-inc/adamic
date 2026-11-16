@@ -9,6 +9,7 @@
 #    program) and trees (about a second). Each must read slower.
 # Each full log is kept under the printed directory. Never lands.
 set -u
+failed=0
 MAIN=$(git rev-parse HEAD)
 T=$(mktemp -d)
 echo "box $(hostname) $(nproc) cpus, $(uname -r), main $MAIN, logs in $T"
@@ -24,6 +25,7 @@ if go test -count=1 ./bench/ > "$T/test.log" 2>&1; then
 	echo "PASS go test ./bench/"
 else
 	echo "FAIL go test ./bench/"
+	failed=1
 	tail -40 "$T/test.log"
 fi
 
@@ -31,6 +33,8 @@ echo "== A/A: $MAIN against itself, everyday, 15 samples; every program must rea
 go run ./bench -compare "$MAIN" "$MAIN" -suite everyday -samples 15 > "$T/aa.log" 2> "$T/aa.err"
 echo "exit $?"
 cat "$T/aa.log"
+echo "-- its stderr, without the per-sample lines:"
+grep -v '^sample ' "$T/aa.err" | tail -30
 EVERYDAY=$(node -e 'console.log(require("./bench/suites.json").suites.everyday.programs.map((program) => program.name).join(" "))')
 # A 95% test is wrong 5% of the time by design, so the A/A is judged on its whole run: each
 # program's verdict is printed, and the run passes when at most one of the eight reads a verdict.
@@ -51,6 +55,7 @@ done
 if [ "$false_verdicts" -le 1 ]; then
 	echo "PASS A/A: $false_verdicts false verdicts among the eight, at most 1 allowed"
 else
+	failed=1
 	echo "FAIL A/A: $false_verdicts false verdicts among the eight (a missing row counts 2), at most 1 allowed"
 fi
 
@@ -58,12 +63,17 @@ echo "== plant: $MAIN against itself with -plant candidate, devirtualize and tre
 go run ./bench -compare "$MAIN" "$MAIN" -suite everyday -only devirtualize,trees -samples 15 -plant candidate > "$T/plant.log" 2> "$T/plant.err"
 echo "exit $?"
 cat "$T/plant.log"
+echo "-- its stderr, without the per-sample lines:"
+grep -v '^sample ' "$T/plant.err" | tail -30
 for name in devirtualize trees; do
 	verdict=$(verdicts "$T/plant.log" | awk -F'\t' -v name="$name" '$1 == name { print $2 }')
 	if [ "$verdict" = "slower" ]; then
 		echo "PASS plant $name: $verdict"
 	else
 		echo "FAIL plant $name: ${verdict:-no row}"
+		failed=1
 	fi
 done
 echo "load after $(cut -d' ' -f1-3 /proc/loadavg)"
+# A measure that fails its own proof ends red.
+exit $failed
