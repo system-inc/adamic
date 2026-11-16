@@ -182,7 +182,12 @@ func TestDestructuredMethodsCannotLoadOwnSlots(t *testing.T) {
 	}
 }
 
-func TestGenericIteratorViewsPreserveNativeArguments(t *testing.T) {
+// A generic class instance seen through its iterator protocol at a wider union argument, Sequence<number>
+// held as Sequence<number | undefined>, is refused for its nominal ancestry before iteration is lowered:
+// generic arguments are kept as declared, never loosened to a union. It's the only test that fails when
+// class.go's generic-argument identity loosens for union targets (the test audit's D04, #p7jmj7a), so it
+// stays under the name of what it guards.
+func TestGenericIteratorViewAtAWiderUnionArgumentIsRefusedForNominalAncestry(t *testing.T) {
 	t.Parallel()
 	source := `class Sequence<T>{readonly data:readonly T[];constructor(data:readonly T[]){this.data=data;}[Symbol.iterator]():Sequence<T>{return this;}next():{value:number;done:boolean}{const ignored=this.data[0];return{value:1,done:false};}}
  const source:Sequence<number|undefined>=new Sequence([1]);for(const value of source){break;}`
