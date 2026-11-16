@@ -155,6 +155,30 @@ func cycleExhaustiveFlowSites(scanning, indexed *ir.Program) []int {
 	return extra
 }
 
+// cycleFrozenRecordRefusal is the frozen scanning reference's refusal of a cycle closed by a write into
+// a record, which the real pipeline seeds instead, as a map's, since records joined graph regions
+// (#1vb0x5s).
+const cycleFrozenRecordRefusal = ", a record whose values can reach back to its holder: "
+
+// cycleMaskRecords takes out of a program's GraphTypes every record type and every value type a record
+// holds, an arm of a union value type among them, and names what it took. The real pipeline selects a
+// record type on a cycle or holding graph values, and links a record to its values as an array's to its
+// elements, so a record's value type can join a component it didn't before (method_bind.a's
+// (() => number) | undefined); the frozen scanning reference selects a record only as a view related to a
+// member (#1vb0x5s). Each side is masked by its own types, and the rest is compared as before, so any
+// difference outside the records and what they hold still fails.
+func cycleMaskRecords(program *ir.Program, types map[int]string, records map[int]bool) []string {
+	var masked []string
+	for id := range records {
+		if program.GraphTypes[id] {
+			delete(program.GraphTypes, id)
+			masked = append(masked, types[id])
+		}
+	}
+	slices.Sort(masked)
+	return masked
+}
+
 func cycleCompareProgramModes(t *testing.T, path string, regions ...bool) {
 	t.Helper()
 	absolute, err := filepath.Abs(filepath.Join("../..", path))
@@ -176,7 +200,7 @@ func cycleCompareProgramModes(t *testing.T, path string, regions ...bool) {
 			}
 		}
 		options := Options{ProgramRegion: region, OwnershipQuery: true}
-		before, scanTypes, scanErr := cycleLowerForComparison(loaded, options, false)
+		before, scanTypes, scanRecords, scanErr := cycleLowerForComparison(loaded, options, false)
 		// Only the IR and resolved strings are compared below. Do not retain the
 		// scanning checker's quadratic relation cache while building the indexed copy.
 		loaded = nil
@@ -193,7 +217,7 @@ func cycleCompareProgramModes(t *testing.T, path string, regions ...bool) {
 		if err != nil {
 			t.Fatal(err)
 		}
-		after, indexTypes, indexErr := cycleLowerForComparison(indexedInput, options, true)
+		after, indexTypes, indexRecords, indexErr := cycleLowerForComparison(indexedInput, options, true)
 		if cycleProgramStressInputs[path] {
 			t.Logf("%s: indexed snapshot ready, ProgramRegion=%t", path, region)
 		}
@@ -207,6 +231,17 @@ func cycleCompareProgramModes(t *testing.T, path string, regions ...bool) {
 		if errors.As(scanErr, &frozenView) && frozenView.What == cycleFrozenViewGuard {
 			t.Logf("%s: ProgramRegion=%t not compared: the frozen scanning reference refuses a checked view in a graph program, which the real pipeline admits since slice 3 (#ef727kr); indexed: %v", path, region, indexErr)
 			continue
+		}
+		var frozenRecord *Refused
+		if errors.As(scanErr, &frozenRecord) && strings.Contains(frozenRecord.What, cycleFrozenRecordRefusal) {
+			t.Logf("%s: ProgramRegion=%t not compared: the frozen scanning reference refuses a cycle closed by a write into a record, which the real pipeline seeds since records joined graph regions (#1vb0x5s); indexed: %v", path, region, indexErr)
+			continue
+		}
+		if scanErr == nil && indexErr == nil {
+			scanning, indexing := cycleMaskRecords(before, scanTypes, scanRecords), cycleMaskRecords(after, indexTypes, indexRecords)
+			if !slices.Equal(scanning, indexing) {
+				t.Logf("%s: ProgramRegion=%t: compared without record types and the values they hold, which the real pipeline selects as %v and the frozen scanning reference as %v (#1vb0x5s)", path, region, indexing, scanning)
+			}
 		}
 		if scanErr == nil && cycleRegionlessAllocationGuard(indexErr) {
 			t.Logf("%s: ProgramRegion=%t not compared: the indexed pipeline stops on a regionless allocation guard the frozen scanning reference predates: %v", path, region, indexErr)
@@ -241,7 +276,7 @@ func cycleCompareProgramModes(t *testing.T, path string, regions ...bool) {
 // Checker IDs are assigned lazily, and indexing changes query order. Compare
 // GraphTypes, ProgramTypes and the checker-keyed function target table by
 // resolved type and declaration identity, never ID.
-func cycleLowerForComparison(program *load.Program, options Options, indexed bool) (*ir.Program, map[int]string, error) {
+func cycleLowerForComparison(program *load.Program, options Options, indexed bool) (*ir.Program, map[int]string, map[int]bool, error) {
 	entry := program.Files()[0]
 	checked, release := program.Checker(context.Background(), entry)
 	defer release()
@@ -257,15 +292,38 @@ func cycleLowerForComparison(program *load.Program, options Options, indexed boo
 	if options.ProgramRegion {
 		discovery, err := lower(program, checked, entry, nil, true, types)
 		if err != nil {
-			return nil, nil, err
+			return nil, nil, nil, err
 		}
 		plan = discovery.programPlan
 	}
 	built, err := lower(program, checked, entry, plan, false, types, options.OwnershipQuery)
 	if err != nil {
-		return nil, nil, err
+		return nil, nil, nil, err
 	}
 	resolved := map[int]string{}
+	// records is every record type and every value type a record holds, an arm of a union one among them,
+	// which cycleMaskRecords takes out of the comparison.
+	records := map[int]bool{}
+	ids := map[*checker.Type]int{}
+	for id, proven := range types {
+		ids[proven] = id
+	}
+	for id, proven := range types {
+		element := built.recordElement(proven)
+		if element == nil {
+			continue
+		}
+		records[id] = true
+		arms := []*checker.Type{element}
+		if element.Flags()&checker.TypeFlagsUnion != 0 {
+			arms = append(arms, element.Types()...)
+		}
+		for _, arm := range arms {
+			if value, known := ids[arm]; known {
+				records[value] = true
+			}
+		}
+	}
 	for id, proven := range types {
 		identity := checked.TypeToStringEx(proven, nil, checker.TypeFormatFlagsNoTruncation, nil)
 		if symbol := proven.Symbol(); symbol != nil {
@@ -286,7 +344,7 @@ func cycleLowerForComparison(program *load.Program, options Options, indexed boo
 		}
 		resolved[id] = identity
 	}
-	return built.result, resolved, nil
+	return built.result, resolved, records, nil
 }
 
 func cycleFirstDifferenceResolved(a, b reflect.Value, path string, scanTypes, indexTypes map[int]string) string {
