@@ -23,6 +23,26 @@ The runs are interleaved round by round to spread changes in machine load across
 | `trees.ts` | binary trees: 68 million small objects allocated, walked and freed |
 | `devirtualize.a` | repeated rule visits over syntax-shaped records, with method calls in the hot loop |
 
+## Suites and comparing two commits
+
+[suites.json](suites.json) names four sets, each with the rule that decides what belongs in it:
+
+- `everyday`: the eight programs above, whole-program workloads any mind can run in about a minute.
+- `regression`: everyday plus every program a measured speed finding named, each with its finding's task id: `graph.ts` and `copy.ts` (#ahnc64w, #kha2ea0; their trailing timer is the point), `timer_burst.a` (#ezae5s0), `timer_dispatch.a` (#a6yb7d1), parallel_files at 1, 4 and 16 threads, and the record cost harness, which runs outside run.go. A program leaves only by Runtime's ruling on #re2xhwa, logged in `retired` with why.
+- `holdout`: the Benchmarks Game programs everyday doesn't cover, ported in `holdout/`, run only at a release or before a claim, never tuned on.
+- `claim`: the 1.0.0 claim's workload, native tsc's full check of src/compiler, once tsc builds natively.
+
+```
+go run ./bench -compare <baseline sha> <candidate sha> -suite everyday -samples 15
+go run ./bench -compare <sha> <sha> -suite everyday -only devirtualize,trees -plant candidate
+```
+
+`-compare` builds `cmd/adamic` at each commit in a detached worktree, builds every program with both from this checkout's source, and runs baseline, candidate and Node once each per sample, in an order that rotates every sample. A program is judged on user time unless the suite says `wall` (parallel_files, whose user time rises with threads by design).
+
+Each row gives the median of the per-sample ratios, candidate over baseline, and the sign test's 95% interval: the k-th smallest and k-th largest ratio (the 4th and 12th of 15), which assumes nothing about how times are distributed. `faster` means the whole interval is below 1.00, `slower` that it's all above, and anything else reads `no change at this confidence`, not proof of none. Fewer than six samples are refused. A program whose answer differs from Node's at either commit, or with a reading run.go would refuse, gets no verdict. Losses, every program where the candidate is slower than Node, print above the wins.
+
+`-plant candidate` appends a fixed 25 ms busy loop to a copy of each candidate program, so an A/A comparison must read `slower`: the proof the tool can fail. An A/A run of eight programs without it should read `no change` throughout, though by the interval's own 3.5% miss rate about one run in four shows one false verdict somewhere.
+
 ## Parallel files, October 6, 2026
 
 `parallel_files.a` generates 4,096 files, tokenizes and summarizes them through pure functions, then merges in input order. Linux amd64, AMD EPYC 9V74, four quota-limited CPUs (`nproc` 5), clang 20.1.8, Node 24.19.0, Bun 1.3.14. Best of five interleaved rounds: native 1/2/4 threads **0.744/0.454/0.312 s**, Node **0.637 s**, Bun **0.866 s**. All answers match. Load before **0.11/3.16/6.23**, after **0.69/3.10/6.14**; tests had finished, but the longer load averages still include them.
