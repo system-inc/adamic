@@ -60,6 +60,26 @@ func TestUnionKeepingPairsAgree(t *testing.T) {
 	t.Parallel()
 	for _, extension := range []string{".a", ".ts"} {
 		for _, row := range []struct{ name, source string }{
+			{"r09_control_swapped_weak", `import type { Weak } from "adamic";
+interface Box { readonly label: string }
+function box(): Box { return { label: "label" }; }
+interface Other { readonly size: number }
+type First = { readonly kind: "v"; readonly v: Weak<Box> } | { readonly kind: "w"; readonly w: Weak<Other> };
+type Second = { readonly kind: "w"; readonly w: Weak<Other> } | { readonly kind: "v"; readonly v: Weak<Box> };
+const held = box();
+const first: First = { kind: "v", v: held };
+const second: Second = first;
+console.log(second.kind === "v" ? second.v?.label ?? "none" : "w");
+`},
+			{"r10_control_strong_same", `import type { Weak } from "adamic";
+interface Box { readonly label: string }
+function box(): Box { return { label: "label" }; }
+type Strong = { readonly kind: "v"; readonly v: Box } | { readonly kind: "w"; readonly w: number };
+type Twin = { readonly kind: "w"; readonly w: number } | { readonly kind: "v"; readonly v: Box };
+const strong: Strong = { kind: "v", v: box() };
+const twin: Twin = strong;
+console.log(twin.kind === "v" ? twin.v.label : "w");
+`},
 			{"weak_member_control", `import type { Weak } from 'adamic';
 interface A { readonly kind: 'a'; readonly label: string }
 interface C { readonly kind: 'c'; readonly label: string }
@@ -239,6 +259,71 @@ declare const to: To;`)})
 				wantSame := row.name == "top"
 				if got := l.sameKeepingWalk(from, to, map[[2]*checker.Type]bool{}); got != wantSame {
 					t.Fatalf("%s -> %s: keeping walk answered same=%v, want %v", row.from, row.to, got, wantSame)
+				}
+			})
+		}
+	}
+}
+
+// Language's programs are kept whole; each location names the view initializer.
+func TestUnionKeepingLanguageStops(t *testing.T) {
+	t.Parallel()
+	for _, extension := range []string{".a", ".ts"} {
+		for _, row := range []struct{ name, source, where string }{
+			{"r01_generic_alias", `import type { Weak } from "adamic";
+interface Box { readonly label: string }
+function box(): Box { return { label: "label" }; }
+type W<T extends object> = Weak<T>;
+type Strong = { readonly kind: "v"; readonly v: Box } | { readonly kind: "w"; readonly w: number };
+type Viewed = { readonly kind: "v"; readonly v: W<Box> } | { readonly kind: "w"; readonly w: number };
+const strong: Strong = { kind: "v", v: box() };
+const viewed: Viewed = strong;
+console.log(viewed.kind === "v" ? viewed.v?.label ?? "none" : "w");
+`, ":8:24"},
+			{"r05_two_deep_union", `import type { Weak } from "adamic";
+interface Box { readonly label: string }
+function box(): Box { return { label: "label" }; }
+type Inner = { readonly kind: "a"; readonly b: Box } | { readonly kind: "c"; readonly c: number };
+type InnerWeak = { readonly kind: "a"; readonly b: Weak<Box> } | { readonly kind: "c"; readonly c: number };
+type Strong = { readonly kind: "v"; readonly v: Inner } | { readonly kind: "w"; readonly w: number };
+type Viewed = { readonly kind: "v"; readonly v: InnerWeak } | { readonly kind: "w"; readonly w: number };
+const strong: Strong = { kind: "v", v: { kind: "a", b: box() } };
+const viewed: Viewed = strong;
+console.log(viewed.kind === "v" && viewed.v.kind === "a" ? viewed.v.b?.label ?? "none" : "w");
+`, ":9:24"},
+			{"r07_class_member", `import type { Weak } from "adamic";
+interface Box { readonly label: string }
+function box(): Box { return { label: "label" }; }
+class Holder {
+    readonly v: Box;
+    constructor(v: Box) {
+        this.v = v;
+    }
+}
+interface HolderWeak { readonly v: Weak<Box> }
+type Strong = { readonly kind: "v"; readonly h: Holder } | { readonly kind: "w"; readonly w: number };
+type Viewed = { readonly kind: "v"; readonly h: HolderWeak } | { readonly kind: "w"; readonly w: number };
+const strong: Strong = { kind: "v", h: new Holder(box()) };
+const viewed: Viewed = strong;
+console.log(viewed.kind === "v" ? viewed.h.v?.label ?? "none" : "w");
+`, ":14:24"},
+			{"r08_function_result", `import type { Weak } from "adamic";
+interface Box { readonly label: string }
+function box(): Box { return { label: "label" }; }
+type Strong = { readonly kind: "v"; readonly v: Box } | { readonly kind: "w"; readonly w: number };
+type Viewed = { readonly kind: "v"; readonly v: Weak<Box> } | { readonly kind: "w"; readonly w: number };
+const make = (): Strong => ({ kind: "v", v: box() });
+const viewed: () => Viewed = make;
+const got = viewed();
+console.log(got.kind === "v" ? got.v?.label ?? "none" : "w");
+`, ":7:30"},
+		} {
+			t.Run(row.name+extension, func(t *testing.T) {
+				_, err := lowerSourceAs(t, row.source, extension)
+				var ny *NotYet
+				want := "main" + extension + row.where
+				if !errors.As(err, &ny) || !strings.HasSuffix(ny.Where, want) || !strings.Contains(ny.What, "one keeps something weakly that the other keeps strongly") {
+					t.Fatalf("got %v, want retention NotYet at %s", err, want)
 				}
 			})
 		}
