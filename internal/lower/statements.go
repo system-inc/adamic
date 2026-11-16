@@ -183,6 +183,12 @@ func (l *lowering) expressionStatement(expression *ast.Node) ([]ir.Statement, er
 			}
 			return []ir.Statement{ir.Evaluate{Value: value}}, nil
 		}
+		if value, handled, err := l.hostMemberValueCallThrough(expression); handled {
+			if err != nil {
+				return nil, err
+			}
+			return []ir.Statement{ir.Evaluate{Value: value}}, nil
+		}
 		if ast.SkipParentheses(expression.AsCallExpression().Expression).Kind == ast.KindSuperKeyword {
 			return l.superStatement(expression)
 		}
