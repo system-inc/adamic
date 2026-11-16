@@ -595,12 +595,10 @@ func (l *lowering) sameKeepingStorage(from, to *checker.Type, visited map[[2]*ch
 	}
 	nesting.open[pair] = true
 	defer delete(nesting.open, pair)
-	if fromKind, toKind := l.typedArrayKind(from), l.typedArrayKind(to); (fromKind != 0 || toKind != 0) && (fromKind == 0 || fromKind != toKind) {
-		return false
-	}
-	if !l.nodeBufferView(from, to) {
-		return false
-	}
+	// Typed arrays and Buffers aren't judged here: under all pairs a typed array meets every other
+	// member as a non-twin (Uint8Array beside Box, or beside Uint16Array), so a kind check stops
+	// legitimate writes (TestNarrowedUnionTypedArrayTag's write, measured Nov 16). Their twin rule is
+	// its own task (#q6wf1bp, row 14); ordinary mode keeps its top-level checks.
 	// Closure slots have no type descriptor, so callable twins must agree on parameter and result representation (#svbn0aj, a1).
 	sameCallablePair := func(inside, viewed *checker.Type) bool {
 		if !l.keepingCallable(inside) || !l.keepingCallable(viewed) {

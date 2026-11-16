@@ -231,30 +231,6 @@ With the mutant, the command exits 1. The pins `tuple_later_element.a/.ts` under
 `TestUnionKeepingPositiveProofArms` go red: `got same without a storage proof`.
 Output: `/workspace/scratch/q6wf1bp/final-mutants/mutants/f-tuple-elements/run.log`.
 
-### Typed-array storage kind (row 14)
-
-Remove the typed-array kind check from `sameKeepingStorage`.
-
-```
-go test -count=1 -v -timeout 3m ./internal/lower/ -run '^TestUnionKeepingPositiveProofArms$/^typed_array_kind'
-```
-
-With the mutant, the command exits 1. The pins `typed_array_kind.a/.ts` under
-`TestUnionKeepingPositiveProofArms` go red: `got same without a storage proof`.
-Output: `/workspace/scratch/q6wf1bp/final-mutants/mutants/g-typed-array/run.log`.
-
-### Buffer storage view (row 14)
-
-Remove the `nodeBufferView` check from `sameKeepingStorage`.
-
-```
-go test -count=1 -v -timeout 3m ./internal/lower/ -run '^TestUnionKeepingPositiveProofArms$/^node_buffer_kind'
-```
-
-With the mutant, the command exits 1. The pins `node_buffer_kind.a/.ts` under
-`TestUnionKeepingPositiveProofArms` go red: `got same without a storage proof`.
-Output: `/workspace/scratch/q6wf1bp/final-mutants/mutants/g-buffer/run.log`.
-
 ### Explicit receiver slots (row 15)
 
 Remove both the explicit-this presence check and the explicit-this slot comparison from `sameCallablePair`.

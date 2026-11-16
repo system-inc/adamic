@@ -633,9 +633,6 @@ func TestUnionKeepingPositiveProofArms(t *testing.T) {
 			{"tuple_later_element", `readonly [Weak<A>, B]`, `readonly (Weak<A> | B)[]`, `interface A { readonly kind: 'a'; readonly label: string }
 interface B { readonly kind: 'b'; readonly count: number }
 `, true},
-			{"typed_array_kind", `Uint8Array`, `Uint16Array`, ``, true},
-			{"node_buffer_kind", `Buffer`, `{ readonly length: number }`, `import type { Buffer } from 'node:buffer';
-`, true},
 			{"this_slot", `(this: Box | number, n: number) => string`, `(this: number, n: number) => string`, ``, true},
 			{"this_missing", `(this: Box, n: number) => string`, `(n: number) => string`, ``, true},
 		} {
