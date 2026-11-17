@@ -101,7 +101,15 @@ func (l *lowering) onlyCalled(symbol *ast.Symbol) bool {
 			return true
 		}
 		if node.Kind == ast.KindIdentifier {
-			if referenced := l.checker.GetSymbolAtLocation(node); referenced != nil && l.checker.SkipAlias(referenced) == symbol && !l.calledOrBound(node) {
+			referenced := l.checker.GetSymbolAtLocation(node)
+			if referenced != nil {
+				referenced = l.checker.SkipAlias(referenced)
+			}
+			// { f } moves the function as a value, and its name's own symbol is the property (#3sdynvn).
+			if node.Parent != nil && node.Parent.Kind == ast.KindShorthandPropertyAssignment {
+				referenced = l.valueSymbol(node)
+			}
+			if referenced != nil && referenced == symbol && !l.calledOrBound(node) {
 				only = false
 			}
 			return false

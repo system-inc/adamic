@@ -918,7 +918,7 @@ func (l *lowering) checkedPredicateClosure(declaration *ast.Node) bool {
 	assigned := false
 	var writes ast.Visitor
 	writes = func(n *ast.Node) bool {
-		if n.Kind == ast.KindIdentifier && ast.IsAssignmentTarget(n) && l.symbol(n) == symbol {
+		if n.Kind == ast.KindIdentifier && ast.IsAssignmentTarget(n) && l.valueSymbol(n) == symbol {
 			assigned = true
 		}
 		return assigned || n.ForEachChild(writes)

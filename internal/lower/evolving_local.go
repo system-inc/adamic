@@ -44,7 +44,9 @@ func (l *lowering) evolvingObject(name *ast.Node) *checker.Type {
 				}
 			}
 		}
-		if node.Kind == ast.KindIdentifier && node != name && l.symbol(node) == symbol && l.checker.GetTypeAtLocation(node).Flags()&checker.TypeFlagsAny != 0 {
+		// A shorthand destructuring write, ({ v } = other), gives the local a value no assignment above typed.
+		shorthandWrite := node.Kind == ast.KindIdentifier && node.Parent != nil && node.Parent.Kind == ast.KindShorthandPropertyAssignment && ast.IsAssignmentTarget(node)
+		if node.Kind == ast.KindIdentifier && node != name && l.valueSymbol(node) == symbol && (shorthandWrite || l.checker.GetTypeAtLocation(node).Flags()&checker.TypeFlagsAny != 0) {
 			// A write target can still have auto/any before its first assignment.
 			if node.Parent == nil || node.Parent.Kind != ast.KindBinaryExpression || node.Parent.AsBinaryExpression().Left != node || node.Parent.AsBinaryExpression().OperatorToken.Kind != ast.KindEqualsToken {
 				valid = false

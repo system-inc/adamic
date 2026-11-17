@@ -156,7 +156,7 @@ func (l *lowering) plainEnumerableObject(node *ast.Node, visiting map[*ast.Symbo
 			if binary.OperatorToken.Kind == ast.KindEqualsToken && !ast.IsIdentifier(ast.SkipParentheses(binary.Left)) {
 				var target ast.Visitor
 				target = func(part *ast.Node) bool {
-					if ast.IsIdentifier(part) && l.symbol(part) == symbol {
+					if ast.IsIdentifier(part) && l.valueSymbol(part) == symbol {
 						safe = false
 					}
 					return part.ForEachChild(target)

@@ -228,7 +228,7 @@ func (p *parallelProof) reassigned(declaration *ast.Node) bool {
 		if target := parallelWrite(node); target != nil {
 			var names ast.Visitor
 			names = func(name *ast.Node) bool {
-				if ast.IsIdentifier(name) && p.l.symbol(name) == symbol {
+				if ast.IsIdentifier(name) && p.l.valueSymbol(name) == symbol {
 					found = true
 				}
 				// A field/element write doesn't rebind its receiver.

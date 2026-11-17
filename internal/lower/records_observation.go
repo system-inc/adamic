@@ -52,7 +52,7 @@ func (l *lowering) recordReadDiscarded(node *ast.Node) bool {
 	safe := true
 	var visit ast.Visitor
 	visit = func(use *ast.Node) bool {
-		if ast.IsIdentifier(use) && use != declaration.Name() && l.checker.GetSymbolAtLocation(use) == symbol {
+		if ast.IsIdentifier(use) && use != declaration.Name() && l.valueSymbol(use) == symbol {
 			inside := false
 			for parent := use.Parent; parent != nil; parent = parent.Parent {
 				if parent == guarded {
