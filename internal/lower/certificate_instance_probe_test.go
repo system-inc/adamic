@@ -7,7 +7,8 @@ import "testing"
 func TestCertificateInstanceProbe(t *testing.T) {
 	show := "function show(entries: Map<string, string>): void {\n    for (const [key, value] of entries) {\n        console.log(`${key}=${value.toUpperCase()}`);\n    }\n}\nconst numbers: number[] = [1, 2, 3];\n"
 	for _, row := range []struct{ name, source string }{
-		{"a_number_to_string", overloadCertificateArrayFrom + "const counts = new Map<string, number>([[\"a\", 3], [\"b\", 1]]);\nconst named = arrayFrom(counts.values(), x => `v${x}`);\nconsole.log(named.map(s => s.toUpperCase()).join(\",\"));\nconsole.log(`${named[0].length}`);\n"},
+		{"a_number_to_string", overloadCertificateArrayFrom + "const counts = new Map<string, number>([[\"a\", 3], [\"b\", 1]]);\nconst named = arrayFrom(counts.values(), x => `v${x}`);\nconsole.log(named.map(s => s.toUpperCase()).join(\",\"));\nconst first = named[0];\nconsole.log(`${first === undefined ? -1 : first.length}`);\n"},
+		{"a_string_to_number", overloadCertificateArrayFrom + "const names = new Map<string, string>([[\"a\", \"xyz\"], [\"b\", \"q\"]]);\nconst sizes = arrayFrom(names.values(), s => s.length);\nconsole.log(sizes.map(n => (n + 1).toFixed(1)).join(\",\"));\n"},
 		{"b2_number_to_string", overloadCertificateArrayToMap + show + "show(arrayToMap(numbers, n => `k${n}`, n => `v${n * 2}`));\n"},
 		{"b2_string_to_number", overloadCertificateArrayToMap + "const items: string[] = [\"a\", \"bb\"];\nconst lengths = arrayToMap(items, s => s, s => s.length);\nfor (const [key, value] of lengths) console.log(`${key}=${(value + 1).toFixed(1)}`);\n"},
 		{"b4_number_to_string", overloadCertificateArrayToMap + show + "show(arrayToMap<number, string>(numbers, n => `k${n}`, n => `v${n * 2}`));\n"},
