@@ -74,19 +74,21 @@ for (const value of flag ? list : set) {
 `,
 	}
 	for name, source := range probes {
-		path := filepath.Join(t.TempDir(), name+".ts")
-		if err := os.WriteFile(path, []byte(source), 0o644); err != nil {
-			t.Fatal(err)
-		}
-		truth := onNode(t, path)
-		program, err := lowered(t, path)
-		if err != nil {
-			fmt.Printf("PROBE %s: stops: %v\n", name, err)
-			continue
-		}
-		sanitized, _ := nativelyUncached(t, program)
-		javascript := onJavaScriptBackend(t, program)
-		fmt.Printf("PROBE %s: LOWERS; Node %q exit %d stderr %q; sanitized %q exit %d stderr %.300q; javascript %q exit %d\n", name,
-			truth.stdout, truth.exitCode, truth.stderr, sanitized.stdout, sanitized.exitCode, sanitized.stderr, javascript.stdout, javascript.exitCode)
+		t.Run(name, func(t *testing.T) {
+			path := filepath.Join(t.TempDir(), name+".ts")
+			if err := os.WriteFile(path, []byte(source), 0o644); err != nil {
+				t.Fatal(err)
+			}
+			truth := onNode(t, path)
+			program, err := lowered(t, path)
+			if err != nil {
+				fmt.Printf("PROBE %s: stops: %v\n", name, err)
+				return
+			}
+			sanitized, _ := nativelyUncached(t, program)
+			javascript := onJavaScriptBackend(t, program)
+			fmt.Printf("PROBE %s: LOWERS; Node %q exit %d stderr %.200q; sanitized %q exit %d stderr %.300q; javascript %q exit %d\n", name,
+				truth.stdout, truth.exitCode, truth.stderr, sanitized.stdout, sanitized.exitCode, sanitized.stderr, javascript.stdout, javascript.exitCode)
+		})
 	}
 }
