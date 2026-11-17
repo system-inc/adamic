@@ -201,7 +201,7 @@ checker.ts. Upstream line numbers:
 | getBaseTypes' reset, in resolveBaseTypesOfClass | :13369 | InterfaceType | ObjectTypeUnderConstruction, by assertion |
 | resolveAnonymousTypeMembers | :14662, :14683 | AnonymousType | ObjectTypeUnderConstruction, by assertion |
 | getOrCreateTypeFromSignature | :16664 to :16668 | createObjectType's return | ObjectTypeUnderConstruction, its declaration's cast |
-| getTypeWithoutSignatures | :21255 to :21259 | createObjectType's return | ObjectTypeUnderConstruction, its declaration's cast |
+| getTypeWithoutSignatures | :21255 to :21259 | createObjectType's return | ObjectTypeUnderConstruction, its declaration's cast; a regression, see below, closed by #2gf0k9w |
 
 There were no writes with a key that isn't a literal, none through `any`, and
 no `Object.assign` or other property road onto an ObjectType. After the edit,
@@ -223,6 +223,16 @@ them, not by this adaptation:
 
 If either stop is lifted without that judgment, this certificate no longer
 holds for the five slots.
+
+A third premise is a refusal this adaptation makes on purpose: getBaseTypes'
+reset, `(type as ObjectTypeUnderConstruction).members = undefined` in
+resolveBaseTypesOfClass. It really does make an InterfaceType's `members`
+undefined until resolution runs again, while other readers may hold the same
+object as a ResolvedType, whose `members` promises a SymbolTable. tsc guards it
+with `!members` in resolveStructuredTypeMembers, and no declared type says so.
+Whoever lifts that refusal has to prove that no ResolvedType view of the type is
+read between the reset and the re-resolution, or change the reset itself; a
+type-level argument alone doesn't reach it.
 
 ## What stays named and refused
 
@@ -291,6 +301,19 @@ each a view that makes a readonly slot writable, which is what it is:
   getTypeWithoutSignatures, each a fresh object from createObjectType.
 
 Net, 21 refusals go and 5 come, all five where a slot is written.
+
+**Four are moves and one is a regression** (J-c9fy9cp, each new site placed in
+its enclosing function and that function's refusals counted in the before
+census). resolveBaseTypesOfClass held 11 before, resolveAnonymousTypeMembers 1
+and getOrCreateTypeFromSignature 1, so those never lowered whole.
+**getTypeWithoutSignatures held none and lowered whole before**; it now stops
+at `createObjectType(ObjectFlags.Anonymous, type.symbol) as
+ObjectTypeUnderConstruction`, a cast from the finished type back to a writable
+one, which Adamic refuses, so the stop fails closed. Adamic ruled to land 77
+with it named (#5pstmvw). Its follow-up is **#2gf0k9w** (Must, Memory's): a
+creator whose own creation cast gives birth to the view, used only by the
+writers, which leaves as the finished type, so getTypeWithoutSignatures lowers
+whole again. When it lands, this paragraph says closed.
 
 ## Re-running
 
