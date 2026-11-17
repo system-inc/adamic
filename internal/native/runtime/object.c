@@ -358,7 +358,8 @@ adamic_value adamic_object_view(const adamic_object *object, const char *name, a
 		const adamic_heap *boxed = slot->reference;
 		found = boxed == NULL ? "nullish" : boxed->kind == adamic_kind_number ? "number" : boxed->kind == adamic_kind_boolean ? "boolean" : boxed->kind == adamic_kind_string ? "string" : boxed->kind == adamic_kind_object ? "object" : boxed->kind == adamic_kind_array ? "array" : boxed->kind == adamic_kind_map ? "Map" : "function";
 	}
-	if ((actual == adamic_rep_object || actual == adamic_rep_union || actual == adamic_rep_weak) && slot->reference != NULL && ((const adamic_heap *)slot->reference)->kind == adamic_kind_object) {
+	// A union slot's null, adamic_null, is a bare header with no tuple flag or class to read (#hy1sanv).
+	if ((actual == adamic_rep_object || actual == adamic_rep_union || actual == adamic_rep_weak) && slot->reference != NULL && slot->reference != &adamic_null && ((const adamic_heap *)slot->reference)->kind == adamic_kind_object) {
 		const adamic_object *value = slot->reference;
 		if (value->tuple) { found = "array"; }
 		else if (value->class != NULL && value->class->is_static) { found = "function"; }
