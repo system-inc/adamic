@@ -60,18 +60,34 @@ func (l *lowering) tagHoldsAnyNumber(proven *checker.Type) bool {
 	return len(whole) != 0
 }
 
-// openEnumSlot is whether a slot of this type takes any number: it's a numeric enum's whole type, as
-// openNumericEnumType says, and that enum has more than one member. A one-member enum's member is its enum's
-// whole type to the checker, and tsc lets a number into it, but the slot promises the member's one value, and
-// a tag test over it trusts that promise: `{ kind: n }` typed First, whose kind is One.A, held Two.B's value
-// past isSecond's proof (Language's q02 and q05 on #x2cjvy9, Adamic's ruling). So that slot is a literal
-// slot, and an unproven number into it is refused as any member literal's is (adamic/enum-literal).
-func (l *lowering) openEnumSlot(proven *checker.Type) bool {
-	if !l.openNumericEnumType(proven) {
-		return false
+// openEnumSlot is whether a slot of this type takes any number. Its enum part is its numeric members, counted at
+// the slot's own level: an object, a string or a boolean beside them is no part of it, so tsc's
+// `CompilerOptions | BuilderFileEmit` (builder.ts:788) takes any number as the enum alone does (rulings.md:243,
+// Adamic's ruling on #snypn8c, c2). It's open only when that part is every member of one numeric enum, with no
+// other numeric literal beside it, and that enum has more than one member. A one-member enum's member is its
+// enum's whole type to the checker, and tsc lets a number into it, but the slot promises the member's one value,
+// and a tag test over it trusts that promise: `{ kind: n }` typed First, whose kind is One.A, held Two.B's value
+// past isSecond's proof (Language's q02 and q05 on #x2cjvy9, Adamic's ruling). So that slot, a member, a strict
+// subset, and a whole enum beside another enum's lone member are literal slots, and an unproven number into one
+// is refused as any member literal's is (adamic/enum-literal).
+func (l *lowering) openEnumSlot(slot *checker.Type) bool {
+	part := enumPart(flattenedMembers(l.checker.GetNonNullableType(slot)))
+	whole, impure := l.wholeNumericEnums(part)
+	return !impure && len(whole) == 1 && whole[0].size > 1 && whole[0].size == len(part)
+}
+
+// enumPart is a slot's members less those that are known not to be numbers: objects, strings, booleans, null
+// and undefined. Its callers take the slot's non-nullable type first, so null and undefined are in the mask
+// only so a caller that doesn't can't count them. Any other member, an intersection or a type parameter among
+// them, stays in, where it isn't one enum's member, so the slot reads as a literal one.
+func enumPart(members []*checker.Type) []*checker.Type {
+	var part []*checker.Type
+	for _, member := range members {
+		if member.Flags()&(checker.TypeFlagsObject|checker.TypeFlagsStringLike|checker.TypeFlagsBooleanLike|checker.TypeFlagsNull|checker.TypeFlagsUndefined) == 0 {
+			part = append(part, member)
+		}
 	}
-	whole, _ := l.wholeNumericEnums(flattenedMembers(l.checker.GetNonNullableType(proven)))
-	return len(whole) == 1 && whole[0].size > 1
+	return part
 }
 
 // wholeNumericEnum is a numeric enum all of whose members a union's flattened members hold, with its
