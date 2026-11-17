@@ -85,6 +85,20 @@ func (l *lowering) widened(from *checker.Type, to *checker.Type, visited map[[2]
 		return nil
 	}
 	visited[[2]*checker.Type{from, to}] = true
+	if from.Flags()&checker.TypeFlagsTypeParameter != 0 && !slices.ContainsFunc(l.definedMembers(to), func(member *checker.Type) bool { return member.Flags()&checker.TypeFlagsTypeParameter != 0 }) {
+		// In a body a type parameter is known only by its constraint, and every value of it is a value of
+		// that constraint (docs/rulings.md:123), so it's read at its base constraint, through chains (U extends
+		// T, T extends number reads number), and judged by every arm below as a value of that type is. The
+		// open enum arms never saw the constraint, so tsc's createBaseToken<Token<TKind>> relating TKind,
+		// TKind extends SyntaxKind, to Node's kind was refused as an unproven value (#snypn8c c5, Adamic's
+		// ruling). It's never a pass of its own: T extends number into an enum member slot is number there,
+		// and refused as number is (docs/rulings.md:247). A slot that is a type parameter, or a union naming
+		// one (T | null), is left to the arms that judge it, which relate the source by its own name: Narrow
+		// seen as T is a view of T's slot, which reading Narrow at its constraint would no longer name.
+		if constraint := l.checker.GetBaseConstraintOfType(from); constraint != nil {
+			return l.widened(constraint, to, visited)
+		}
+	}
 	if l.openNumericEnumType(to) {
 		for _, member := range l.definedMembers(from) {
 			if !l.enumAssignable(member, to) {
@@ -159,7 +173,9 @@ func (l *lowering) widened(from *checker.Type, to *checker.Type, visited map[[2]
 		return nil
 	}
 	if from.Flags()&checker.TypeFlagsTypeParameter != 0 {
-		// What it can be is what its constraint allows: seen as anything wider, it's that seen so.
+		// What it can be is what its constraint allows: seen as anything wider, it's that seen so. A
+		// constrained one reaches here only through a slot that is or names a type parameter, which the
+		// read above leaves to the arms between.
 		constraint := l.checker.GetBaseConstraintOfType(from)
 		if constraint == nil {
 			return nil
