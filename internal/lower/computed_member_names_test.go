@@ -36,7 +36,7 @@ console.log(String(new SortedMap().size));
 		{"a string literal getter in a class", "class A { get [\"x\"]() { return 1; } }\nconsole.log(String(new A().x));\n", "a method with a computed name"},
 		{"a numeric literal getter in a class", "class A { get [1]() { return 2; } }\nconsole.log(String(new A()[1]));\n", "a method with a computed name"},
 		{"a non-constant getter in a class", "const k = \"x\" as string;\nclass A { get [k]() { return 1; } }\nconsole.log(String(new A() !== undefined));\n", "a method with a computed name"},
-		{"a non-constant getter in a literal", "const k = \"x\" as string;\nconst o = { get [k]() { return 1; } };\nconsole.log(String(o !== undefined));\n", "a computed accessor literal name"},
+		{"a non-constant getter in a literal", "const k = \"x\" as string;\nconst o = { get [k]() { return 1; } };\nconsole.log(String(o !== undefined));\n", "a record literal member other than a data entry"}, // A non-constant key types the literal as a record.
 		{"a symbol getter in a literal", "const o = { n: 1, get [Symbol.toStringTag]() { return \"o\"; } };\nconsole.log(String(o.n));\n", "a computed accessor literal name"},
 		{"a bind beside a symbol getter", `const o = { m() { return 1; } };
 const f = o.m.bind(o);
