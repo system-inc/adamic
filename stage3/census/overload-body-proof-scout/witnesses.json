@@ -1,0 +1,186 @@
+{
+  "typescript": "6.0.3",
+  "node": "v24.19.0",
+  "rows": [
+    {
+      "file": "arity-arguments-write.ts",
+      "diagnostics": [],
+      "output": [
+        {
+          "expectedType": "number",
+          "actualType": "string",
+          "actual": "bad"
+        }
+      ],
+      "badPromiseObserved": true
+    },
+    {
+      "file": "arity-default.ts",
+      "diagnostics": [],
+      "output": [
+        {
+          "expectedType": "string",
+          "actualType": "number",
+          "actual": 0
+        }
+      ],
+      "badPromiseObserved": true
+    },
+    {
+      "file": "arity-extra-alias.ts",
+      "diagnostics": [],
+      "output": [
+        {
+          "expectedType": "number",
+          "actualType": "string",
+          "actual": "bad"
+        }
+      ],
+      "badPromiseObserved": true
+    },
+    {
+      "file": "arity-wrong-recurrence.ts",
+      "diagnostics": [],
+      "output": [
+        {
+          "expectedType": "string",
+          "actualType": "number",
+          "actual": 0
+        }
+      ],
+      "badPromiseObserved": true
+    },
+    {
+      "file": "array-alias.ts",
+      "diagnostics": [],
+      "output": [
+        {
+          "expectedType": "string",
+          "actualType": "number",
+          "actual": 0
+        }
+      ],
+      "badPromiseObserved": true
+    },
+    {
+      "file": "array-capture.ts",
+      "diagnostics": [],
+      "output": [
+        {
+          "expectedType": "string",
+          "actualType": "number",
+          "actual": 0
+        }
+      ],
+      "badPromiseObserved": true
+    },
+    {
+      "file": "array-default.ts",
+      "diagnostics": [],
+      "output": [
+        {
+          "expectedType": "string",
+          "actualType": "number",
+          "actual": 0
+        }
+      ],
+      "badPromiseObserved": true
+    },
+    {
+      "file": "array-getter.ts",
+      "diagnostics": [],
+      "output": [
+        {
+          "expectedType": "string",
+          "actualType": "number",
+          "actual": 0
+        }
+      ],
+      "badPromiseObserved": true
+    },
+    {
+      "file": "array-index-write.ts",
+      "diagnostics": [],
+      "output": [
+        {
+          "expectedType": "string",
+          "actualType": "number",
+          "actual": 0
+        }
+      ],
+      "badPromiseObserved": true
+    },
+    {
+      "file": "array-prototype.ts",
+      "diagnostics": [],
+      "output": [
+        {
+          "expectedType": "string",
+          "actualType": "number",
+          "actual": 0
+        }
+      ],
+      "badPromiseObserved": true
+    },
+    {
+      "file": "map-alias.ts",
+      "diagnostics": [],
+      "output": [
+        {
+          "expectedType": "string",
+          "actualType": "number",
+          "actual": 0
+        }
+      ],
+      "badPromiseObserved": true
+    },
+    {
+      "file": "map-capture.ts",
+      "diagnostics": [],
+      "output": [
+        {
+          "expectedType": "string",
+          "actualType": "number",
+          "actual": 0
+        }
+      ],
+      "badPromiseObserved": true
+    },
+    {
+      "file": "map-default-undefined.ts",
+      "diagnostics": [],
+      "output": [
+        {
+          "expectedType": "string",
+          "actualType": "number",
+          "actual": 0
+        }
+      ],
+      "badPromiseObserved": true
+    },
+    {
+      "file": "map-getter.ts",
+      "diagnostics": [],
+      "output": [
+        {
+          "expectedType": "string",
+          "actualType": "number",
+          "actual": 0
+        }
+      ],
+      "badPromiseObserved": true
+    },
+    {
+      "file": "map-wrong-set.ts",
+      "diagnostics": [],
+      "output": [
+        {
+          "expectedType": "string",
+          "actualType": "number",
+          "actual": 0
+        }
+      ],
+      "badPromiseObserved": true
+    }
+  ]
+}

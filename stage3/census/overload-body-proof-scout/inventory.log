@@ -1,0 +1,103 @@
+{
+  "files": 247,
+  "owners": 15180,
+  "overloadSets": 195,
+  "array": {
+    "locals": 87,
+    "owners": 86,
+    "overloaded": {
+      "locals": 5,
+      "owners": 5
+    },
+    "profile": {
+      "locals": 1,
+      "owners": 1
+    },
+    "hazards": {
+      "otherWrite": {
+        "locals": 9,
+        "owners": 9
+      },
+      "alias": {
+        "locals": 14,
+        "owners": 13
+      },
+      "closure": {
+        "locals": 8,
+        "owners": 8
+      },
+      "getter": {
+        "locals": 0,
+        "owners": 0
+      },
+      "propertyRead": {
+        "locals": 33,
+        "owners": 33
+      },
+      "defaultMayReplaceMissing": {
+        "locals": 1,
+        "owners": 1
+      },
+      "argumentsElsewhere": {
+        "locals": 0,
+        "owners": 0
+      }
+    },
+    "clean": {
+      "locals": 35,
+      "owners": 35
+    }
+  },
+  "map": {
+    "locals": 4,
+    "owners": 4,
+    "overloaded": {
+      "locals": 1,
+      "owners": 1
+    },
+    "profile": {
+      "locals": 1,
+      "owners": 1
+    },
+    "hazards": {
+      "otherWrite": {
+        "locals": 0,
+        "owners": 0
+      },
+      "alias": {
+        "locals": 0,
+        "owners": 0
+      },
+      "closure": {
+        "locals": 1,
+        "owners": 1
+      },
+      "getter": {
+        "locals": 0,
+        "owners": 0
+      },
+      "propertyRead": {
+        "locals": 2,
+        "owners": 2
+      },
+      "defaultMayReplaceMissing": {
+        "locals": 1,
+        "owners": 1
+      },
+      "argumentsElsewhere": {
+        "locals": 0,
+        "owners": 0
+      }
+    },
+    "clean": {
+      "locals": 0,
+      "owners": 0
+    }
+  },
+  "arguments": {
+    "owners": 1,
+    "overloaded": 1,
+    "elsewhere": 0,
+    "onlyLiteralLengthTests": 1
+  }
+}
