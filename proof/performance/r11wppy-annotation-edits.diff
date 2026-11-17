@@ -1,0 +1,48 @@
+src/compiler/utilities.ts:0
+-        const specifiers = sourceFile?.imports.length ? sourceFile.imports :
++        const specifiers: readonly StringLiteralLike[] = sourceFile?.imports.length ? sourceFile.imports :
+src/compiler/checker.ts:0
+-                const realMembers = locationMap.get("real") || emptyArray;
++                const realMembers: readonly Symbol[] = locationMap.get("real") || emptyArray;
+src/compiler/checker.ts:0
+-                const mergedMembers = locationMap.get("merged") || emptyArray;
++                const mergedMembers: readonly Symbol[] = locationMap.get("merged") || emptyArray;
+src/compiler/checker.ts:0
+-                    const localProps = localVsRemoteMap.get("local") || emptyArray;
++                    const localProps: readonly Symbol[] = localVsRemoteMap.get("local") || emptyArray;
+src/compiler/checker.ts:0
+-                const privateProperties = hasPrivateIdentifier ?
++                const privateProperties: readonly ClassElement[] = hasPrivateIdentifier ?
+src/compiler/checker.ts:0
+-    function resolveBaseTypesOfClass(type: InterfaceType) {
++    function resolveBaseTypesOfClass(type: InterfaceType): readonly BaseType[] {
+src/compiler/checker.ts:0
+-            let constructSignatures = symbol.members ? getSignaturesOfSymbol(symbol.members.get(InternalSymbolName.Constructor)) : emptyArray;
++            let constructSignatures: readonly Signature[] = symbol.members ? getSignaturesOfSymbol(symbol.members.get(InternalSymbolName.Constructor)) : emptyArray;
+src/compiler/checker.ts:0
+-        const indexInfos = indexInfo ? [createIndexInfo(stringType, inferReverseMappedType(indexInfo.type, type.mappedType, type.constraintType) || unknownType, readonlyMask && indexInfo.isReadonly)] : emptyArray;
++        const indexInfos: readonly IndexInfo[] = indexInfo ? [createIndexInfo(stringType, inferReverseMappedType(indexInfo.type, type.mappedType, type.constraintType) || unknownType, readonlyMask && indexInfo.isReadonly)] : emptyArray;
+src/compiler/checker.ts:0
+-            const typeArguments = !node ? emptyArray :
++            const typeArguments: readonly Type[] | undefined = !node ? emptyArray :
+src/compiler/checker.ts:0
+-                            const indexInfo = indexed === stringType || indexed === numberType ? [createIndexInfo(indexed, target, /*isReadonly*/ false)] : emptyArray;
++                            const indexInfo: readonly IndexInfo[] = indexed === stringType || indexed === numberType ? [createIndexInfo(indexed, target, /*isReadonly*/ false)] : emptyArray;
+src/compiler/checker.ts:0
+-    function getExactOptionalUnassignableProperties(source: Type, target: Type) {
++    function getExactOptionalUnassignableProperties(source: Type, target: Type): readonly Symbol[] {
+src/compiler/checker.ts:0
+-        const indexInfos = type.flags & TypeFlags.String ? [createIndexInfo(stringType, emptyObjectType, /*isReadonly*/ false)] : emptyArray;
++        const indexInfos: readonly IndexInfo[] = type.flags & TypeFlags.String ? [createIndexInfo(stringType, emptyObjectType, /*isReadonly*/ false)] : emptyArray;
+src/compiler/checker.ts:0
+-            const failedSignatureDeclarations = failed.declaration?.symbol?.declarations || emptyArray;
++            const failedSignatureDeclarations: readonly Declaration[] = failed.declaration?.symbol?.declarations || emptyArray;
+src/compiler/transformer.ts:0
+-function getScriptTransformers(compilerOptions: CompilerOptions, customTransformers?: CustomTransformers, emitOnly?: boolean | EmitOnly) {
++function getScriptTransformers(compilerOptions: CompilerOptions, customTransformers?: CustomTransformers, emitOnly?: boolean | EmitOnly): readonly TransformerFactory<SourceFile | Bundle>[] {
+src/compiler/program.ts:0
+-    function getOptionsDiagnosticsOfConfigFile() {
++    function getOptionsDiagnosticsOfConfigFile(): readonly DiagnosticWithLocation[] {
+src/compiler/builder.ts:0
+-            let result;
++            let result: readonly Diagnostic[] | undefined;
