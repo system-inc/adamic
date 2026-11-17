@@ -49,10 +49,11 @@ func TestEnumTagWalkDropsMembersThatHoldNoValue(t *testing.T) {
 }
 
 // The reduction drops only members that hold no value. A member that holds one keeps its hazard: Q's
-// kind is the whole of K, so it may hold K.P with Q's layout, and the refinement stays refused.
+// kind is the whole of K, and wide, a Q whose kind is chosen at run time, keeps it open (closedKinds,
+// enum_tag_closed_kind.go), so it may hold K.P with Q's layout, and the refinement stays refused.
 func TestEnumTagWalkKeepsMembersThatHoldAValue(t *testing.T) {
 	t.Parallel()
-	source := neverMemberTypes + "interface Q { readonly kind: K; readonly q: string }\nfunction isPQ(n: P | Q): n is P { return n.kind === K.P; }\nfunction show(n: (P | Q) & (P | Q | C)): string { return isPQ(n) ? `p ${n.p}` : 'other'; }\nconsole.log(show(p));\n"
+	source := neverMemberTypes + "interface Q { readonly kind: K; readonly q: string }\nfunction numeric(): number { return 1; }\nconst wide: Q = { kind: numeric(), q: 'wide' };\nfunction isPQ(n: P | Q): n is P { return n.kind === K.P; }\nfunction show(n: (P | Q) & (P | Q | C)): string { return isPQ(n) ? `p ${n.p}` : 'other'; }\nconsole.log(show(p));\n"
 	if _, err := lowerSourceAs(t, source, ".ts"); err == nil || !strings.Contains(err.Error(), kindPredicateRefusal) {
 		t.Fatalf("want %q, got %v", kindPredicateRefusal, err)
 	}

@@ -552,6 +552,12 @@ type lowering struct {
 	// writtenAccessorNames is every name a getter or setter in the program has, "" for a computed one
 	// (enum_tag_flow.go's accessorName). accessorNames below holds getters alone.
 	writtenAccessorNames map[string]bool
+	// closedKindAnswers is closedKinds' answer by type and field, and closedKindDeclared and closedKindBuilt
+	// the program's declared types and build sites it judges each type against, found once
+	// (enum_tag_closed_kind.go).
+	closedKindAnswers  map[closedKindKey]closedKindAnswer
+	closedKindDeclared []closedKindSite
+	closedKindBuilt    []closedKindSite
 	// crossFunctionWrites is every binding a function other than its own writes (narrowed_nullish.go).
 	crossFunctionWrites map[*ast.Symbol]bool
 	// propertyWrites is every property write in the program, by what it can reach (narrowed_nullish.go).
