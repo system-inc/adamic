@@ -855,3 +855,33 @@ Count audit correction: overload-2 calls checker.ts:27086:34 and :27087:34
 occupy writable tuple-result elements (`[Type[], Type[]]`). The final table includes
 them as stores. This correction changes overload 2 from 18 reads / 39 stores to
 16 reads / 41 stores; all call totals and narrowing-overload counts stay unchanged.
+
+## Final road decision: stop before an adapter
+
+Road (a), changing narrowing overloads 1 and 5 to readonly results, adds six
+stock-checker diagnostics in the virtual 713-root comparison. More decisively,
+scan-all on the **exact complete filter owner**, isolated with its original line
+numbers, still stops in `lowering.declareModule` at core.ts:261:1:
+
+```
+overload 1 of filter result readonly U[] cannot be served by implementation result readonly T[] | undefined
+```
+
+This is an isolated-owner observation, not a successful readonly sys.ts run:
+the full readonly sys.ts closure fails loading on four compiler caller diagnostics.
+The full single-file latent baseline and readonly runs each have 14 findings;
+both defer filter's generic declarations, so absence of 261:1 there proves nothing.
+No claim of removing that stop is made.
+
+Road (b) fails its no-caller-needs-it condition. Removing overloads 1 and 5 in
+memory adds 17 stock diagnostics: callers use narrowed identifiers, defined JSON
+values and strings, unscoped helpers, type-parameter declarations, class/interface
+declarations, call sites, and convertible signatures. Keeping those element types
+by falling through a remaining narrowing overload retains the declaration problem.
+
+Thus neither declaration-only road meets this task's goal at this main. Providing
+the narrowed result needs a proof/check shape beyond this adaptation; a checked
+result view is road (c), and the user explicitly requires stopping there.
+**No stage3 adapter, ledger line, landing commit or filter-readonly-1 branch is created.**
+The count branch remains report-only. Full evidence and the explicit list of
+unrun landing checks live on `typescript/filter-readonly-evidence`. No Loom submission.
