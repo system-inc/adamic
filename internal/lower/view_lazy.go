@@ -248,9 +248,23 @@ func (l *lowering) viewedAllocations(program *ir.Program, throughSpreads bool) (
 // numbers its allocation sites: what one view reaches, where viewedAllocations is what every view
 // does (class_accessors.go judges a getter against one view's origin by it).
 func (graph *allocationFlowGraph) viewedFrom(origins []ir.Expression, throughSpreads bool) (map[int]bool, bool) {
+	return graph.viewedFromNoting(origins, throughSpreads, nil)
+}
+
+// viewedFromNoting is viewedFrom, handing note, when it's given, each value whose reach is Unknown and
+// so makes the answer Unknown, with its reasons, in the order the walk meets them. A test asks it so a
+// program-wide Unknown names its cause (record_slot_views_test.go); viewedFrom gives nil.
+func (graph *allocationFlowGraph) viewedFromNoting(origins []ir.Expression, throughSpreads bool, note func(ir.Expression, []string)) (map[int]bool, bool) {
 	viewed := map[int]bool{}
 	unknown := false
 	queue := []int{}
+	reach := func(value ir.Expression) ir.AllocationSet {
+		set := graph.ReachingAllocations(value)
+		if set.Unknown && note != nil {
+			note(value, set.Reasons)
+		}
+		return set
+	}
 	add := func(set ir.AllocationSet) {
 		unknown = unknown || set.Unknown
 		for _, site := range set.Sites {
@@ -261,7 +275,7 @@ func (graph *allocationFlowGraph) viewedFrom(origins []ir.Expression, throughSpr
 		}
 	}
 	for _, origin := range origins {
-		add(graph.ReachingAllocations(origin))
+		add(reach(origin))
 	}
 	index := graph.projectionIndex()
 	for len(queue) != 0 {
@@ -270,24 +284,24 @@ func (graph *allocationFlowGraph) viewedFrom(origins []ir.Expression, throughSpr
 		if literal, ok := index.records[site]; ok {
 			for _, field := range literal.Fields {
 				if viewAggregate(field.Value) {
-					add(graph.ReachingAllocations(field.Value))
+					add(reach(field.Value))
 				}
 			}
 			if throughSpreads && literal.Spread != nil {
-				add(graph.ReachingAllocations(literal.Spread))
+				add(reach(literal.Spread))
 			}
 		}
 		if literal, ok := index.arrays[site]; ok {
 			for _, element := range literal.Elements {
 				if viewAggregate(element) {
-					add(graph.ReachingAllocations(element))
+					add(reach(element))
 				}
 			}
 		}
 		for _, values := range index.stores[site] {
 			for _, value := range values {
 				if viewAggregate(value) {
-					add(graph.ReachingAllocations(value))
+					add(reach(value))
 				}
 			}
 		}
