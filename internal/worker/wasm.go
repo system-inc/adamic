@@ -54,7 +54,7 @@ func generateCrossing(abiPath, outputPath string) error {
 	return nil
 }
 
-func selectedFunctions(checked *load.Program, lowered *ir.Program, names []string) (map[int]string, error) {
+func selectedFunctions(checked *load.Program, lowered *ir.Program, names []string, capabilities ...map[ir.SourcePosition]bool) (map[int]string, error) {
 	entry := checked.Files()[0]
 	declarations := map[string]bool{}
 	for _, statement := range entry.Statements.Nodes {
@@ -79,7 +79,7 @@ func selectedFunctions(checked *load.Program, lowered *ir.Program, names []strin
 		if index < 0 {
 			return nil, fmt.Errorf("worker: Wasm function %q was not lowered; fix: use a concrete function declaration", name)
 		}
-		if err := CheckPure(lowered, index); err != nil {
+		if err := CheckPure(lowered, index, capabilities...); err != nil {
 			return nil, err
 		}
 		selected[index] = name
@@ -87,8 +87,8 @@ func selectedFunctions(checked *load.Program, lowered *ir.Program, names []strin
 	return selected, nil
 }
 
-func wasmFiles(entry string, checked *load.Program, lowered *ir.Program, options Options) (map[int]string, string, []workerFile, error) {
-	selected, err := selectedFunctions(checked, lowered, options.Wasm)
+func wasmFiles(entry string, checked *load.Program, lowered *ir.Program, options Options, capabilities map[ir.SourcePosition]bool) (map[int]string, string, []workerFile, error) {
+	selected, err := selectedFunctions(checked, lowered, options.Wasm, capabilities)
 	if err != nil {
 		return nil, "", nil, err
 	}

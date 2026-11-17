@@ -1,0 +1,8 @@
+import type {HttpRequest,HttpResponse} from 'adamic/http';
+import type {KvNamespace} from 'adamic/workers';
+interface Environment {readonly GREETING:string; readonly KV:KvNamespace}
+type Writable={-readonly [K in keyof Environment]:Environment[K]}; function writable(x:Environment):x is Environment & Writable{return true;} function modify(environment:Environment,fake:KvNamespace):void {if(writable(environment)) environment.KV=fake;}
+export function handle(request:HttpRequest,environment:Environment):HttpResponse {
+
+return {status:200,headers:[],body:environment.GREETING+request.path};
+}
