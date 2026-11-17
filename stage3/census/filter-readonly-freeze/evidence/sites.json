@@ -1,0 +1,140 @@
+[
+  {
+    "site": "src/compiler/utilitiesPublic.ts:1030:16",
+    "call": "filter(node.modifiers, isDecorator)",
+    "argument": "node.modifiers",
+    "overload": 7
+  },
+  {
+    "site": "src/compiler/utilitiesPublic.ts:1036:16",
+    "call": "filter(node.modifiers, isModifier)",
+    "argument": "node.modifiers",
+    "overload": 7
+  },
+  {
+    "site": "src/compiler/utilities.ts:4691:20",
+    "call": "filter(jsDoc.tags, isJSDocOverloadTag)",
+    "argument": "jsDoc.tags",
+    "overload": 7
+  },
+  {
+    "site": "src/compiler/utilities.ts:8019:12",
+    "call": "filter(node.declarations, isInitializedVariable)",
+    "argument": "node.declarations",
+    "overload": 3
+  },
+  {
+    "site": "src/compiler/commandLineParser.ts:3188:54",
+    "call": "filter(filesSpecs, isString)",
+    "argument": "filesSpecs",
+    "overload": 7
+  },
+  {
+    "site": "src/compiler/checker.ts:3138:58",
+    "call": "filter(declaration.parent.members, isClassStaticBlockDeclaration)",
+    "argument": "declaration.parent.members",
+    "overload": 3
+  },
+  {
+    "site": "src/compiler/checker.ts:11961:38",
+    "call": "filter(declaration.parent.members, isClassStaticBlockDeclaration)",
+    "argument": "declaration.parent.members",
+    "overload": 3
+  },
+  {
+    "site": "src/compiler/checker.ts:32639:25",
+    "call": "filter(node.properties, (p): p is PropertyAssignment | ShorthandPropertyAssignment => {\r\n                            if (!p.symbol) {\r\n                                return false;\r\n                            }\r\n                            if (p.kind === SyntaxKind.PropertyAssignment) {\r\n                                return isPossiblyDiscriminantValue(p.initializer) && isDiscriminantProperty(contextualType, p.symbol.escapedName);\r\n                            }\r\n                            if (p.kind === SyntaxKind.ShorthandPropertyAssignment) {\r\n                                return isDiscriminantProperty(contextualType, p.symbol.escapedName);\r\n                            }\r\n                            return false;\r\n                        })",
+    "argument": "node.properties",
+    "overload": 3
+  },
+  {
+    "site": "src/compiler/checker.ts:46866:33",
+    "call": "filter(getJSDocTags(node), isJSDocParameterTag)",
+    "argument": "getJSDocTags(node)",
+    "overload": 3
+  },
+  {
+    "site": "src/compiler/transformers/utilities.ts:603:12",
+    "call": "filter(node.members, isStaticPropertyDeclarationOrClassStaticBlockDeclaration)",
+    "argument": "node.members",
+    "overload": 3
+  },
+  {
+    "site": "src/compiler/transformers/ts.ts:1053:13",
+    "call": "filter(constructor.parameters, (p): p is ParameterPropertyDeclaration => isParameterPropertyDeclaration(p, constructor))",
+    "argument": "constructor.parameters",
+    "overload": 3
+  },
+  {
+    "site": "src/compiler/transformers/ts.ts:1086:38",
+    "call": "filter(modifiers, isDecorator)",
+    "argument": "modifiers",
+    "overload": 7
+  },
+  {
+    "site": "src/compiler/transformers/ts.ts:1100:42",
+    "call": "filter(modifiers, isDecorator)",
+    "argument": "modifiers",
+    "overload": 7
+  },
+  {
+    "site": "src/compiler/transformers/ts.ts:1102:42",
+    "call": "filter(modifiers, isModifier)",
+    "argument": "modifiers",
+    "overload": 7
+  },
+  {
+    "site": "src/compiler/transformers/ts.ts:1383:13",
+    "call": "filter(constructor.parameters, p => isParameterPropertyDeclaration(p, constructor))",
+    "argument": "constructor.parameters",
+    "overload": 3
+  },
+  {
+    "site": "src/compiler/transformers/classFields.ts:852:25",
+    "call": "filter(node.modifiers, (m): m is Modifier => isModifier(m) && !isStaticModifier(m) && !isAccessorModifier(m))",
+    "argument": "node.modifiers",
+    "overload": 7
+  },
+  {
+    "site": "src/compiler/transformers/classFields.ts:1707:16",
+    "call": "filter(node.members, isNonStaticMethodOrAccessorWithPrivateName)",
+    "argument": "node.members",
+    "overload": 3
+  },
+  {
+    "site": "src/services/utilities.ts:2616:38",
+    "call": "filter(sourceFile.statements, importKindPredicate)",
+    "argument": "sourceFile.statements",
+    "overload": 3
+  },
+  {
+    "site": "src/services/codefixes/convertFunctionToEs6Class.ts:314:39",
+    "call": "filter(source.modifiers, (modifier): modifier is Modifier => modifier.kind === kind)",
+    "argument": "source.modifiers",
+    "overload": 7
+  },
+  {
+    "site": "src/services/codefixes/convertToEsModule.ts:137:29",
+    "call": "filter(sourceFile.statements, isVariableStatement)",
+    "argument": "sourceFile.statements",
+    "overload": 3
+  },
+  {
+    "site": "src/services/goToDefinition.ts:180:30",
+    "call": "filter(classDecl.members, isClassStaticBlockDeclaration)",
+    "argument": "classDecl.members",
+    "overload": 3
+  },
+  {
+    "site": "src/testRunner/unittests/services/organizeImports.ts:1133:25",
+    "call": "ts.filter(sourceFile.statements, ts.isImportDeclaration)",
+    "argument": "sourceFile.statements",
+    "overload": 3
+  },
+  {
+    "site": "src/testRunner/unittests/services/organizeImports.ts:1140:25",
+    "call": "ts.filter(sourceFile.statements, ts.isExportDeclaration)",
+    "argument": "sourceFile.statements",
+    "overload": 3
+  }
+]

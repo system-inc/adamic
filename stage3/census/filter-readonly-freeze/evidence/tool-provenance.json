@@ -1,0 +1,58 @@
+[
+  {
+    "file": "resolve.cjs",
+    "source": "df886e406b521bacf030d7e8ca76d6e828fed249:stage3/census/filter-freeze/resolve.cjs",
+    "original_sha256": "d056c7a64a495207cfc76f03692ad45253ca8179246f145692083635881deeaf",
+    "current_sha256": "d056c7a64a495207cfc76f03692ad45253ca8179246f145692083635881deeaf",
+    "byte_identical": true
+  },
+  {
+    "file": "instrument.cjs",
+    "source": "df886e406b521bacf030d7e8ca76d6e828fed249:stage3/census/filter-freeze/instrument.cjs",
+    "original_sha256": "0626681cc013a4e2a6ebb423b10009ec541a4e8c8dcd06f130800df2a24761b1",
+    "current_sha256": "7f45fced9d08c8b131be46ce9776f12970d1dba73aafd114464c0f5e50f7baaa",
+    "byte_identical": false
+  },
+  {
+    "file": "observe.cjs",
+    "source": "df886e406b521bacf030d7e8ca76d6e828fed249:stage3/census/filter-freeze/observe.cjs",
+    "original_sha256": "3790ff0060c13a3f17190909a02c2393564a68d9255e68ecbf1efe21067b9d91",
+    "current_sha256": "3790ff0060c13a3f17190909a02c2393564a68d9255e68ecbf1efe21067b9d91",
+    "byte_identical": true
+  },
+  {
+    "file": "control.cjs",
+    "source": "df886e406b521bacf030d7e8ca76d6e828fed249:stage3/census/filter-freeze/control.cjs",
+    "original_sha256": "aad087d383fcf738663794ff37fb2e19eb7068cd1e7c8b8eabfc5f07622d7f1f",
+    "current_sha256": "aad087d383fcf738663794ff37fb2e19eb7068cd1e7c8b8eabfc5f07622d7f1f",
+    "byte_identical": true
+  },
+  {
+    "file": "aggregate.py",
+    "source": "df886e406b521bacf030d7e8ca76d6e828fed249:stage3/census/filter-freeze/aggregate.py",
+    "original_sha256": "5308c65ed081e55da12a517a4633c381bf2212e8d2d554f59b18074e43a55f8e",
+    "current_sha256": "5308c65ed081e55da12a517a4633c381bf2212e8d2d554f59b18074e43a55f8e",
+    "byte_identical": true
+  },
+  {
+    "file": "contexts.cjs",
+    "source": "df886e406b521bacf030d7e8ca76d6e828fed249:stage3/census/filter-freeze/contexts.cjs",
+    "original_sha256": "9c84202a0ed0cb9de1d2fa3917ec5d8db4b88dec73f165bffa54c941c0ab34a7",
+    "current_sha256": "8ecfdf79dc30f37723abb0678d4e3a21079a453335ede0ba3c61d3bf249ed5af",
+    "byte_identical": false
+  },
+  {
+    "file": "validate-types.cjs",
+    "source": "df886e406b521bacf030d7e8ca76d6e828fed249:stage3/census/filter-freeze/validate-types.cjs",
+    "original_sha256": "f64f9ab2341ab14b4938c0957b6d7992f38c1cf22dd0c6e4597b94668947db81",
+    "current_sha256": "7e7568ecdee3ded2ab64de70c2e2c51a087e512d8afea361fe1a87fb9a5d7367",
+    "byte_identical": false
+  },
+  {
+    "file": "run-lane.py",
+    "source": "df886e406b521bacf030d7e8ca76d6e828fed249:stage3/census/filter-freeze/run-lane.py",
+    "original_sha256": "f181daceb507d37afd72375db9c4005adf2790e72e6ed9b43d0a52008834f0ea",
+    "current_sha256": "0d6d1282b116fab07196ef80fa9b8fdd4076400cb6c7faa37d0a2491e8f7eea9",
+    "byte_identical": false
+  }
+]

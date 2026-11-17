@@ -1,0 +1,62 @@
+[
+  {
+    "file": "src/compiler/utilitiesPublic.ts",
+    "before": "d3306929848b90a39f85db6293ffee3617341bedd3822cef8b4cd83b64c7fec6",
+    "after": "1990db8ce245b72f299765642e855617bc56e3c459a9980eb229d5fa18102704"
+  },
+  {
+    "file": "src/compiler/utilities.ts",
+    "before": "8f3677b344b9bdbc25970d96093ef500bfabba79ba45656b31076eb65e159a18",
+    "after": "ad08ca6ee8e20994e35716fa844802c940daeb2ff8aed33f15ee3c70e823d33b"
+  },
+  {
+    "file": "src/compiler/commandLineParser.ts",
+    "before": "49b442aa6b10782edf3ca9dcecdec5c92ef46a9fbe6c928ccd0bf1c088382636",
+    "after": "ef381c1cf50fc3a1fc5cea54b5bac18e3a41c40817112d8cde59345a301b7a21"
+  },
+  {
+    "file": "src/compiler/checker.ts",
+    "before": "a3c87ee5a2dd3f55fae2ced5a4c6c22bcde071db2b901af710faea85959bd9fa",
+    "after": "600f093169de72a68bd46c596d627562798bb7553c9bf6d9a8b16b35d473d7f0"
+  },
+  {
+    "file": "src/compiler/transformers/utilities.ts",
+    "before": "f839fdc1603f18a8b22e8a0bc8f02f373299d78a872938216573af92348c3dc3",
+    "after": "3c8bfec49a3eee3eb2602b9a0e73f9a099bd58044b7e334888e1e287b6f9ce69"
+  },
+  {
+    "file": "src/compiler/transformers/ts.ts",
+    "before": "d53d42df6f3283656ea63245e554ab929345613e6b531a415522ba9ef02240bd",
+    "after": "eb002baddc50b8765f59658e8cd06d9f110f1935bb39cf9a60ad0a6dac734d10"
+  },
+  {
+    "file": "src/compiler/transformers/classFields.ts",
+    "before": "1d1aa17843726719468ef30a6d3da3f0b77ef6126e20a4b8190afd1aab711150",
+    "after": "951a30293c138a232de0e2e0cc7e06844b5f492000331f38d24e4bd3b1961744"
+  },
+  {
+    "file": "src/services/utilities.ts",
+    "before": "10190a8bde4578abd1441a012449c1e2be77d47a552fda8a14e8d50be2f3c30f",
+    "after": "614444e89107565539252f08aba127c40a2dd26f344bb28477de580a7d92d7b6"
+  },
+  {
+    "file": "src/services/codefixes/convertFunctionToEs6Class.ts",
+    "before": "3a1706c57c427ff99b9e9ed581359881b339b7e768098481b9b43324a19ad83b",
+    "after": "9e3f9971bd2a528e966a19f409d42261423d07d20abc78ab1e5142fbcadde4bb"
+  },
+  {
+    "file": "src/services/codefixes/convertToEsModule.ts",
+    "before": "5cf218d0b539d5cfd7d18bf1e1ef2c7634aa345e9d61b3a356f38b9e396874dc",
+    "after": "164774a8504b09bb8ff0bc94274884136f80d9d3ad9a81b205b8e1010dc4f490"
+  },
+  {
+    "file": "src/services/goToDefinition.ts",
+    "before": "67cce0867b4e25b98ea827a6e270715268aadfecd24924a8454c9f8ec75c3316",
+    "after": "9f0879c9c90413601bfe1623a8c551dd2dcaa407df8bcc027c490c2639ee901f"
+  },
+  {
+    "file": "src/testRunner/unittests/services/organizeImports.ts",
+    "before": "fede6d938ff503f51599a1791964d04965fe42499fe94a2b5aecc0fab2964f93",
+    "after": "3f49e8345f2fee678b6ef4e913086eb91ef81b9c58c95ad8bb84c5bfcc9f29b2"
+  }
+]

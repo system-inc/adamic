@@ -1,0 +1,3484 @@
+{
+  "self": {
+    "entry_count_available": true,
+    "call_count_kind": "entries",
+    "counts": {
+      "src/compiler/utilitiesPublic.ts:1030:16": {
+        "calls": 0,
+        "completed": 0,
+        "identity": 0,
+        "frozen_arrays": 0,
+        "undefined_identity": 0
+      },
+      "src/compiler/utilitiesPublic.ts:1036:16": {
+        "calls": 0,
+        "completed": 0,
+        "identity": 0,
+        "frozen_arrays": 0,
+        "undefined_identity": 0
+      },
+      "src/compiler/utilities.ts:4691:20": {
+        "calls": 0,
+        "completed": 0,
+        "identity": 0,
+        "frozen_arrays": 0,
+        "undefined_identity": 0
+      },
+      "src/compiler/utilities.ts:8019:12": {
+        "calls": 0,
+        "completed": 0,
+        "identity": 0,
+        "frozen_arrays": 0,
+        "undefined_identity": 0
+      },
+      "src/compiler/commandLineParser.ts:3188:54": {
+        "calls": 2,
+        "completed": 2,
+        "identity": 2,
+        "frozen_arrays": 0,
+        "undefined_identity": 2
+      },
+      "src/compiler/checker.ts:3138:58": {
+        "calls": 0,
+        "completed": 0,
+        "identity": 0,
+        "frozen_arrays": 0,
+        "undefined_identity": 0
+      },
+      "src/compiler/checker.ts:11961:38": {
+        "calls": 0,
+        "completed": 0,
+        "identity": 0,
+        "frozen_arrays": 0,
+        "undefined_identity": 0
+      },
+      "src/compiler/checker.ts:32639:25": {
+        "calls": 596,
+        "completed": 596,
+        "identity": 24,
+        "frozen_arrays": 24,
+        "undefined_identity": 0
+      },
+      "src/compiler/checker.ts:46866:33": {
+        "calls": 14330,
+        "completed": 14330,
+        "identity": 14312,
+        "frozen_arrays": 14312,
+        "undefined_identity": 0
+      },
+      "src/compiler/transformers/utilities.ts:603:12": {
+        "calls": 0,
+        "completed": 0,
+        "identity": 0,
+        "frozen_arrays": 0,
+        "undefined_identity": 0
+      },
+      "src/compiler/transformers/ts.ts:1053:13": {
+        "calls": 0,
+        "completed": 0,
+        "identity": 0,
+        "frozen_arrays": 0,
+        "undefined_identity": 0
+      },
+      "src/compiler/transformers/ts.ts:1086:38": {
+        "calls": 0,
+        "completed": 0,
+        "identity": 0,
+        "frozen_arrays": 0,
+        "undefined_identity": 0
+      },
+      "src/compiler/transformers/ts.ts:1100:42": {
+        "calls": 0,
+        "completed": 0,
+        "identity": 0,
+        "frozen_arrays": 0,
+        "undefined_identity": 0
+      },
+      "src/compiler/transformers/ts.ts:1102:42": {
+        "calls": 0,
+        "completed": 0,
+        "identity": 0,
+        "frozen_arrays": 0,
+        "undefined_identity": 0
+      },
+      "src/compiler/transformers/ts.ts:1383:13": {
+        "calls": 0,
+        "completed": 0,
+        "identity": 0,
+        "frozen_arrays": 0,
+        "undefined_identity": 0
+      },
+      "src/compiler/transformers/classFields.ts:852:25": {
+        "calls": 0,
+        "completed": 0,
+        "identity": 0,
+        "frozen_arrays": 0,
+        "undefined_identity": 0
+      },
+      "src/compiler/transformers/classFields.ts:1707:16": {
+        "calls": 0,
+        "completed": 0,
+        "identity": 0,
+        "frozen_arrays": 0,
+        "undefined_identity": 0
+      },
+      "src/services/utilities.ts:2616:38": {
+        "calls": 0,
+        "completed": 0,
+        "identity": 0,
+        "frozen_arrays": 0,
+        "undefined_identity": 0
+      },
+      "src/services/codefixes/convertFunctionToEs6Class.ts:314:39": {
+        "calls": 0,
+        "completed": 0,
+        "identity": 0,
+        "frozen_arrays": 0,
+        "undefined_identity": 0
+      },
+      "src/services/codefixes/convertToEsModule.ts:137:29": {
+        "calls": 0,
+        "completed": 0,
+        "identity": 0,
+        "frozen_arrays": 0,
+        "undefined_identity": 0
+      },
+      "src/services/goToDefinition.ts:180:30": {
+        "calls": 0,
+        "completed": 0,
+        "identity": 0,
+        "frozen_arrays": 0,
+        "undefined_identity": 0
+      },
+      "src/testRunner/unittests/services/organizeImports.ts:1133:25": {
+        "calls": 0,
+        "completed": 0,
+        "identity": 0,
+        "frozen_arrays": 0,
+        "undefined_identity": 0
+      },
+      "src/testRunner/unittests/services/organizeImports.ts:1140:25": {
+        "calls": 0,
+        "completed": 0,
+        "identity": 0,
+        "frozen_arrays": 0,
+        "undefined_identity": 0
+      }
+    },
+    "totals": {
+      "calls": 14928,
+      "completed": 14928,
+      "identity": 14338,
+      "frozen_arrays": 14336,
+      "undefined_identity": 2
+    },
+    "processes": [
+      {
+        "pid": 12084,
+        "argv": [
+          "/opt/codex/runtimes/codex-primary-runtime/dependencies/node/bin/node",
+          "/workspace/scratch/ev14ch9-readonly-freeze/self-tree/built/local/tsc.js",
+          "-b",
+          "src/compiler",
+          "src/tsc",
+          "--force",
+          "--pretty",
+          "false"
+        ],
+        "cwd": "/workspace/scratch/ev14ch9-readonly-freeze/self-tree",
+        "case": null,
+        "exit": 0,
+        "signal": null,
+        "counter_mode": "entry-and-completion",
+        "freezeEvents": 14336,
+        "exceptionEvents": 0,
+        "freezeThrows": 0
+      }
+    ],
+    "throws": [],
+    "freeze_write_throws": [],
+    "unrelated_throws": [],
+    "unclassified_throws": [],
+    "observer_errors": []
+  },
+  "control": {
+    "entry_count_available": true,
+    "call_count_kind": "entries",
+    "counts": {
+      "src/compiler/utilitiesPublic.ts:1030:16": {
+        "calls": 0,
+        "completed": 0,
+        "identity": 0,
+        "frozen_arrays": 0,
+        "undefined_identity": 0
+      },
+      "src/compiler/utilitiesPublic.ts:1036:16": {
+        "calls": 0,
+        "completed": 0,
+        "identity": 0,
+        "frozen_arrays": 0,
+        "undefined_identity": 0
+      },
+      "src/compiler/utilities.ts:4691:20": {
+        "calls": 0,
+        "completed": 0,
+        "identity": 0,
+        "frozen_arrays": 0,
+        "undefined_identity": 0
+      },
+      "src/compiler/utilities.ts:8019:12": {
+        "calls": 0,
+        "completed": 0,
+        "identity": 0,
+        "frozen_arrays": 0,
+        "undefined_identity": 0
+      },
+      "src/compiler/commandLineParser.ts:3188:54": {
+        "calls": 0,
+        "completed": 0,
+        "identity": 0,
+        "frozen_arrays": 0,
+        "undefined_identity": 0
+      },
+      "src/compiler/checker.ts:3138:58": {
+        "calls": 0,
+        "completed": 0,
+        "identity": 0,
+        "frozen_arrays": 0,
+        "undefined_identity": 0
+      },
+      "src/compiler/checker.ts:11961:38": {
+        "calls": 0,
+        "completed": 0,
+        "identity": 0,
+        "frozen_arrays": 0,
+        "undefined_identity": 0
+      },
+      "src/compiler/checker.ts:32639:25": {
+        "calls": 0,
+        "completed": 0,
+        "identity": 0,
+        "frozen_arrays": 0,
+        "undefined_identity": 0
+      },
+      "src/compiler/checker.ts:46866:33": {
+        "calls": 0,
+        "completed": 0,
+        "identity": 0,
+        "frozen_arrays": 0,
+        "undefined_identity": 0
+      },
+      "src/compiler/transformers/utilities.ts:603:12": {
+        "calls": 0,
+        "completed": 0,
+        "identity": 0,
+        "frozen_arrays": 0,
+        "undefined_identity": 0
+      },
+      "src/compiler/transformers/ts.ts:1053:13": {
+        "calls": 0,
+        "completed": 0,
+        "identity": 0,
+        "frozen_arrays": 0,
+        "undefined_identity": 0
+      },
+      "src/compiler/transformers/ts.ts:1086:38": {
+        "calls": 0,
+        "completed": 0,
+        "identity": 0,
+        "frozen_arrays": 0,
+        "undefined_identity": 0
+      },
+      "src/compiler/transformers/ts.ts:1100:42": {
+        "calls": 0,
+        "completed": 0,
+        "identity": 0,
+        "frozen_arrays": 0,
+        "undefined_identity": 0
+      },
+      "src/compiler/transformers/ts.ts:1102:42": {
+        "calls": 0,
+        "completed": 0,
+        "identity": 0,
+        "frozen_arrays": 0,
+        "undefined_identity": 0
+      },
+      "src/compiler/transformers/ts.ts:1383:13": {
+        "calls": 0,
+        "completed": 0,
+        "identity": 0,
+        "frozen_arrays": 0,
+        "undefined_identity": 0
+      },
+      "src/compiler/transformers/classFields.ts:852:25": {
+        "calls": 0,
+        "completed": 0,
+        "identity": 0,
+        "frozen_arrays": 0,
+        "undefined_identity": 0
+      },
+      "src/compiler/transformers/classFields.ts:1707:16": {
+        "calls": 0,
+        "completed": 0,
+        "identity": 0,
+        "frozen_arrays": 0,
+        "undefined_identity": 0
+      },
+      "src/services/utilities.ts:2616:38": {
+        "calls": 0,
+        "completed": 0,
+        "identity": 0,
+        "frozen_arrays": 0,
+        "undefined_identity": 0
+      },
+      "src/services/codefixes/convertFunctionToEs6Class.ts:314:39": {
+        "calls": 0,
+        "completed": 0,
+        "identity": 0,
+        "frozen_arrays": 0,
+        "undefined_identity": 0
+      },
+      "src/services/codefixes/convertToEsModule.ts:137:29": {
+        "calls": 0,
+        "completed": 0,
+        "identity": 0,
+        "frozen_arrays": 0,
+        "undefined_identity": 0
+      },
+      "src/services/goToDefinition.ts:180:30": {
+        "calls": 0,
+        "completed": 0,
+        "identity": 0,
+        "frozen_arrays": 0,
+        "undefined_identity": 0
+      },
+      "src/testRunner/unittests/services/organizeImports.ts:1133:25": {
+        "calls": 0,
+        "completed": 0,
+        "identity": 0,
+        "frozen_arrays": 0,
+        "undefined_identity": 0
+      },
+      "src/testRunner/unittests/services/organizeImports.ts:1140:25": {
+        "calls": 0,
+        "completed": 0,
+        "identity": 0,
+        "frozen_arrays": 0,
+        "undefined_identity": 0
+      },
+      "CONTROL (scratch only)": {
+        "calls": 7,
+        "completed": 7,
+        "identity": 6,
+        "frozen_arrays": 5,
+        "undefined_identity": 1
+      },
+      "CONTROL throwing predicate": {
+        "calls": 1,
+        "completed": 0,
+        "identity": 0,
+        "frozen_arrays": 0,
+        "undefined_identity": 0
+      }
+    },
+    "totals": {
+      "calls": 8,
+      "completed": 7,
+      "identity": 6,
+      "frozen_arrays": 5,
+      "undefined_identity": 1
+    },
+    "processes": [
+      {
+        "pid": 12006,
+        "argv": [
+          "/opt/codex/runtimes/codex-primary-runtime/dependencies/node/bin/node",
+          "/workspace/scratch/ev14ch9/stage3/census/filter-readonly-freeze/control.cjs",
+          "/workspace/scratch/ev14ch9-readonly-freeze/self-tree/built/local/typescript.js"
+        ],
+        "cwd": "/workspace/scratch/ev14ch9",
+        "case": null,
+        "exit": 0,
+        "signal": null,
+        "counter_mode": "entry-and-completion",
+        "freezeEvents": 5,
+        "exceptionEvents": 12,
+        "freezeThrows": 10
+      }
+    ],
+    "throws": [
+      {
+        "pid": 12006,
+        "argv": [
+          "/opt/codex/runtimes/codex-primary-runtime/dependencies/node/bin/node",
+          "/workspace/scratch/ev14ch9/stage3/census/filter-readonly-freeze/control.cjs",
+          "/workspace/scratch/ev14ch9-readonly-freeze/self-tree/built/local/typescript.js"
+        ],
+        "cwd": "/workspace/scratch/ev14ch9",
+        "case": null,
+        "description": "TypeError: Cannot add property 2, object is not extensible\n    at Array.push (<anonymous>)\n    at /workspace/scratch/ev14ch9/stage3/census/filter-readonly-freeze/control.cjs:8:27\n    at Object.<anonymous> (/workspace/scratch/ev14ch9/stage3/census/filter-readonly-freeze/control.cjs:10:87)\n    at Module._compile (node:internal/modules/cjs/loader:1872:14)\n    at Object..js (node:internal/modules/cjs/loader:2003:10)\n    at Module.load (node:internal/modules/cjs/loader:1594:32)\n    at Module._load (node:internal/modules/cjs/loader:1396:12)\n    at wrapModuleLoad (node:internal/modules/cjs/loader:255:19)\n    at Module.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:154:5)\n    at node:internal/main/run_main_module:33:47",
+        "frames": [
+          {
+            "function": "",
+            "url": "file:///workspace/scratch/ev14ch9/stage3/census/filter-readonly-freeze/control.cjs",
+            "scriptId": "119",
+            "line": 8,
+            "column": 27
+          },
+          {
+            "function": "",
+            "url": "file:///workspace/scratch/ev14ch9/stage3/census/filter-readonly-freeze/control.cjs",
+            "scriptId": "119",
+            "line": 10,
+            "column": 87
+          },
+          {
+            "function": "",
+            "url": "",
+            "scriptId": "68",
+            "line": 1872,
+            "column": 14
+          },
+          {
+            "function": "",
+            "url": "",
+            "scriptId": "68",
+            "line": 2003,
+            "column": 10
+          },
+          {
+            "function": "",
+            "url": "",
+            "scriptId": "68",
+            "line": 1594,
+            "column": 32
+          },
+          {
+            "function": "",
+            "url": "",
+            "scriptId": "68",
+            "line": 1396,
+            "column": 12
+          },
+          {
+            "function": "wrapModuleLoad",
+            "url": "",
+            "scriptId": "68",
+            "line": 255,
+            "column": 19
+          },
+          {
+            "function": "executeUserEntryPoint",
+            "url": "",
+            "scriptId": "81",
+            "line": 154,
+            "column": 5
+          },
+          {
+            "function": "",
+            "url": "",
+            "scriptId": "86",
+            "line": 33,
+            "column": 47
+          }
+        ],
+        "frozen_aliases": [
+          {
+            "variable": "a",
+            "sites": [
+              "CONTROL (scratch only)"
+            ],
+            "frame": {
+              "function": "",
+              "url": "",
+              "scriptId": "119",
+              "line": 8,
+              "column": 27
+            }
+          },
+          {
+            "variable": "array",
+            "sites": [
+              "CONTROL (scratch only)"
+            ],
+            "frame": {
+              "function": "",
+              "url": "",
+              "scriptId": "119",
+              "line": 10,
+              "column": 87
+            }
+          },
+          {
+            "variable": "argument",
+            "sites": [
+              "CONTROL (scratch only)"
+            ],
+            "frame": {
+              "function": "",
+              "url": "",
+              "scriptId": "119",
+              "line": 10,
+              "column": 87
+            }
+          },
+          {
+            "variable": "result",
+            "sites": [
+              "CONTROL (scratch only)"
+            ],
+            "frame": {
+              "function": "",
+              "url": "",
+              "scriptId": "119",
+              "line": 10,
+              "column": 87
+            }
+          }
+        ],
+        "observed_sites": [
+          "CONTROL (scratch only)"
+        ],
+        "classification": "freeze-write"
+      },
+      {
+        "pid": 12006,
+        "argv": [
+          "/opt/codex/runtimes/codex-primary-runtime/dependencies/node/bin/node",
+          "/workspace/scratch/ev14ch9/stage3/census/filter-readonly-freeze/control.cjs",
+          "/workspace/scratch/ev14ch9-readonly-freeze/self-tree/built/local/typescript.js"
+        ],
+        "cwd": "/workspace/scratch/ev14ch9",
+        "case": null,
+        "description": "TypeError: Cannot add property 2, object is not extensible\n    at Array.push (<anonymous>)\n    at /workspace/scratch/ev14ch9/stage3/census/filter-readonly-freeze/control.cjs:8:27\n    at Object.<anonymous> (/workspace/scratch/ev14ch9/stage3/census/filter-readonly-freeze/control.cjs:10:87)\n    at Module._compile (node:internal/modules/cjs/loader:1872:14)\n    at Object..js (node:internal/modules/cjs/loader:2003:10)\n    at Module.load (node:internal/modules/cjs/loader:1594:32)\n    at Module._load (node:internal/modules/cjs/loader:1396:12)\n    at wrapModuleLoad (node:internal/modules/cjs/loader:255:19)\n    at Module.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:154:5)\n    at node:internal/main/run_main_module:33:47",
+        "frames": [
+          {
+            "function": "",
+            "url": "file:///workspace/scratch/ev14ch9/stage3/census/filter-readonly-freeze/control.cjs",
+            "scriptId": "119",
+            "line": 8,
+            "column": 27
+          },
+          {
+            "function": "",
+            "url": "file:///workspace/scratch/ev14ch9/stage3/census/filter-readonly-freeze/control.cjs",
+            "scriptId": "119",
+            "line": 10,
+            "column": 87
+          },
+          {
+            "function": "",
+            "url": "",
+            "scriptId": "68",
+            "line": 1872,
+            "column": 14
+          },
+          {
+            "function": "",
+            "url": "",
+            "scriptId": "68",
+            "line": 2003,
+            "column": 10
+          },
+          {
+            "function": "",
+            "url": "",
+            "scriptId": "68",
+            "line": 1594,
+            "column": 32
+          },
+          {
+            "function": "",
+            "url": "",
+            "scriptId": "68",
+            "line": 1396,
+            "column": 12
+          },
+          {
+            "function": "wrapModuleLoad",
+            "url": "",
+            "scriptId": "68",
+            "line": 255,
+            "column": 19
+          },
+          {
+            "function": "executeUserEntryPoint",
+            "url": "",
+            "scriptId": "81",
+            "line": 154,
+            "column": 5
+          },
+          {
+            "function": "",
+            "url": "",
+            "scriptId": "86",
+            "line": 33,
+            "column": 47
+          }
+        ],
+        "frozen_aliases": [
+          {
+            "variable": "a",
+            "sites": [
+              "CONTROL (scratch only)"
+            ],
+            "frame": {
+              "function": "",
+              "url": "",
+              "scriptId": "119",
+              "line": 8,
+              "column": 27
+            }
+          },
+          {
+            "variable": "array",
+            "sites": [
+              "CONTROL (scratch only)"
+            ],
+            "frame": {
+              "function": "",
+              "url": "",
+              "scriptId": "119",
+              "line": 10,
+              "column": 87
+            }
+          },
+          {
+            "variable": "argument",
+            "sites": [
+              "CONTROL (scratch only)"
+            ],
+            "frame": {
+              "function": "",
+              "url": "",
+              "scriptId": "119",
+              "line": 10,
+              "column": 87
+            }
+          },
+          {
+            "variable": "result",
+            "sites": [
+              "CONTROL (scratch only)"
+            ],
+            "frame": {
+              "function": "",
+              "url": "",
+              "scriptId": "119",
+              "line": 10,
+              "column": 87
+            }
+          }
+        ],
+        "observed_sites": [
+          "CONTROL (scratch only)"
+        ],
+        "classification": "freeze-write"
+      },
+      {
+        "pid": 12006,
+        "argv": [
+          "/opt/codex/runtimes/codex-primary-runtime/dependencies/node/bin/node",
+          "/workspace/scratch/ev14ch9/stage3/census/filter-readonly-freeze/control.cjs",
+          "/workspace/scratch/ev14ch9-readonly-freeze/self-tree/built/local/typescript.js"
+        ],
+        "cwd": "/workspace/scratch/ev14ch9",
+        "case": null,
+        "description": "TypeError: Cannot assign to read only property '0' of object '[object Array]'\n    at Array.splice (<anonymous>)\n    at /workspace/scratch/ev14ch9/stage3/census/filter-readonly-freeze/control.cjs:8:51\n    at Object.<anonymous> (/workspace/scratch/ev14ch9/stage3/census/filter-readonly-freeze/control.cjs:10:87)\n    at Module._compile (node:internal/modules/cjs/loader:1872:14)\n    at Object..js (node:internal/modules/cjs/loader:2003:10)\n    at Module.load (node:internal/modules/cjs/loader:1594:32)\n    at Module._load (node:internal/modules/cjs/loader:1396:12)\n    at wrapModuleLoad (node:internal/modules/cjs/loader:255:19)\n    at Module.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:154:5)\n    at node:internal/main/run_main_module:33:47",
+        "frames": [
+          {
+            "function": "",
+            "url": "file:///workspace/scratch/ev14ch9/stage3/census/filter-readonly-freeze/control.cjs",
+            "scriptId": "119",
+            "line": 8,
+            "column": 51
+          },
+          {
+            "function": "",
+            "url": "file:///workspace/scratch/ev14ch9/stage3/census/filter-readonly-freeze/control.cjs",
+            "scriptId": "119",
+            "line": 10,
+            "column": 87
+          },
+          {
+            "function": "",
+            "url": "",
+            "scriptId": "68",
+            "line": 1872,
+            "column": 14
+          },
+          {
+            "function": "",
+            "url": "",
+            "scriptId": "68",
+            "line": 2003,
+            "column": 10
+          },
+          {
+            "function": "",
+            "url": "",
+            "scriptId": "68",
+            "line": 1594,
+            "column": 32
+          },
+          {
+            "function": "",
+            "url": "",
+            "scriptId": "68",
+            "line": 1396,
+            "column": 12
+          },
+          {
+            "function": "wrapModuleLoad",
+            "url": "",
+            "scriptId": "68",
+            "line": 255,
+            "column": 19
+          },
+          {
+            "function": "executeUserEntryPoint",
+            "url": "",
+            "scriptId": "81",
+            "line": 154,
+            "column": 5
+          },
+          {
+            "function": "",
+            "url": "",
+            "scriptId": "86",
+            "line": 33,
+            "column": 47
+          }
+        ],
+        "frozen_aliases": [
+          {
+            "variable": "a",
+            "sites": [
+              "CONTROL (scratch only)"
+            ],
+            "frame": {
+              "function": "",
+              "url": "",
+              "scriptId": "119",
+              "line": 8,
+              "column": 51
+            }
+          },
+          {
+            "variable": "array",
+            "sites": [
+              "CONTROL (scratch only)"
+            ],
+            "frame": {
+              "function": "",
+              "url": "",
+              "scriptId": "119",
+              "line": 10,
+              "column": 87
+            }
+          },
+          {
+            "variable": "argument",
+            "sites": [
+              "CONTROL (scratch only)"
+            ],
+            "frame": {
+              "function": "",
+              "url": "",
+              "scriptId": "119",
+              "line": 10,
+              "column": 87
+            }
+          },
+          {
+            "variable": "result",
+            "sites": [
+              "CONTROL (scratch only)"
+            ],
+            "frame": {
+              "function": "",
+              "url": "",
+              "scriptId": "119",
+              "line": 10,
+              "column": 87
+            }
+          }
+        ],
+        "observed_sites": [
+          "CONTROL (scratch only)"
+        ],
+        "classification": "freeze-write"
+      },
+      {
+        "pid": 12006,
+        "argv": [
+          "/opt/codex/runtimes/codex-primary-runtime/dependencies/node/bin/node",
+          "/workspace/scratch/ev14ch9/stage3/census/filter-readonly-freeze/control.cjs",
+          "/workspace/scratch/ev14ch9-readonly-freeze/self-tree/built/local/typescript.js"
+        ],
+        "cwd": "/workspace/scratch/ev14ch9",
+        "case": null,
+        "description": "TypeError: Cannot assign to read only property '0' of object '[object Array]'\n    at Array.splice (<anonymous>)\n    at /workspace/scratch/ev14ch9/stage3/census/filter-readonly-freeze/control.cjs:8:51\n    at Object.<anonymous> (/workspace/scratch/ev14ch9/stage3/census/filter-readonly-freeze/control.cjs:10:87)\n    at Module._compile (node:internal/modules/cjs/loader:1872:14)\n    at Object..js (node:internal/modules/cjs/loader:2003:10)\n    at Module.load (node:internal/modules/cjs/loader:1594:32)\n    at Module._load (node:internal/modules/cjs/loader:1396:12)\n    at wrapModuleLoad (node:internal/modules/cjs/loader:255:19)\n    at Module.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:154:5)\n    at node:internal/main/run_main_module:33:47",
+        "frames": [
+          {
+            "function": "",
+            "url": "file:///workspace/scratch/ev14ch9/stage3/census/filter-readonly-freeze/control.cjs",
+            "scriptId": "119",
+            "line": 8,
+            "column": 51
+          },
+          {
+            "function": "",
+            "url": "file:///workspace/scratch/ev14ch9/stage3/census/filter-readonly-freeze/control.cjs",
+            "scriptId": "119",
+            "line": 10,
+            "column": 87
+          },
+          {
+            "function": "",
+            "url": "",
+            "scriptId": "68",
+            "line": 1872,
+            "column": 14
+          },
+          {
+            "function": "",
+            "url": "",
+            "scriptId": "68",
+            "line": 2003,
+            "column": 10
+          },
+          {
+            "function": "",
+            "url": "",
+            "scriptId": "68",
+            "line": 1594,
+            "column": 32
+          },
+          {
+            "function": "",
+            "url": "",
+            "scriptId": "68",
+            "line": 1396,
+            "column": 12
+          },
+          {
+            "function": "wrapModuleLoad",
+            "url": "",
+            "scriptId": "68",
+            "line": 255,
+            "column": 19
+          },
+          {
+            "function": "executeUserEntryPoint",
+            "url": "",
+            "scriptId": "81",
+            "line": 154,
+            "column": 5
+          },
+          {
+            "function": "",
+            "url": "",
+            "scriptId": "86",
+            "line": 33,
+            "column": 47
+          }
+        ],
+        "frozen_aliases": [
+          {
+            "variable": "a",
+            "sites": [
+              "CONTROL (scratch only)"
+            ],
+            "frame": {
+              "function": "",
+              "url": "",
+              "scriptId": "119",
+              "line": 8,
+              "column": 51
+            }
+          },
+          {
+            "variable": "array",
+            "sites": [
+              "CONTROL (scratch only)"
+            ],
+            "frame": {
+              "function": "",
+              "url": "",
+              "scriptId": "119",
+              "line": 10,
+              "column": 87
+            }
+          },
+          {
+            "variable": "argument",
+            "sites": [
+              "CONTROL (scratch only)"
+            ],
+            "frame": {
+              "function": "",
+              "url": "",
+              "scriptId": "119",
+              "line": 10,
+              "column": 87
+            }
+          },
+          {
+            "variable": "result",
+            "sites": [
+              "CONTROL (scratch only)"
+            ],
+            "frame": {
+              "function": "",
+              "url": "",
+              "scriptId": "119",
+              "line": 10,
+              "column": 87
+            }
+          }
+        ],
+        "observed_sites": [
+          "CONTROL (scratch only)"
+        ],
+        "classification": "freeze-write"
+      },
+      {
+        "pid": 12006,
+        "argv": [
+          "/opt/codex/runtimes/codex-primary-runtime/dependencies/node/bin/node",
+          "/workspace/scratch/ev14ch9/stage3/census/filter-readonly-freeze/control.cjs",
+          "/workspace/scratch/ev14ch9-readonly-freeze/self-tree/built/local/typescript.js"
+        ],
+        "cwd": "/workspace/scratch/ev14ch9",
+        "case": null,
+        "description": "TypeError: Cannot assign to read only property '0' of object '[object Array]'\n    at Array.sort (<anonymous>)\n    at a.<computed> (/workspace/scratch/ev14ch9/stage3/census/filter-readonly-freeze/control.cjs:8:77)\n    at Object.<anonymous> (/workspace/scratch/ev14ch9/stage3/census/filter-readonly-freeze/control.cjs:10:87)\n    at Module._compile (node:internal/modules/cjs/loader:1872:14)\n    at Object..js (node:internal/modules/cjs/loader:2003:10)\n    at Module.load (node:internal/modules/cjs/loader:1594:32)\n    at Module._load (node:internal/modules/cjs/loader:1396:12)\n    at wrapModuleLoad (node:internal/modules/cjs/loader:255:19)\n    at Module.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:154:5)\n    at node:internal/main/run_main_module:33:47",
+        "frames": [
+          {
+            "function": "a.<computed>",
+            "url": "file:///workspace/scratch/ev14ch9/stage3/census/filter-readonly-freeze/control.cjs",
+            "scriptId": "119",
+            "line": 8,
+            "column": 77
+          },
+          {
+            "function": "",
+            "url": "file:///workspace/scratch/ev14ch9/stage3/census/filter-readonly-freeze/control.cjs",
+            "scriptId": "119",
+            "line": 10,
+            "column": 87
+          },
+          {
+            "function": "",
+            "url": "",
+            "scriptId": "68",
+            "line": 1872,
+            "column": 14
+          },
+          {
+            "function": "",
+            "url": "",
+            "scriptId": "68",
+            "line": 2003,
+            "column": 10
+          },
+          {
+            "function": "",
+            "url": "",
+            "scriptId": "68",
+            "line": 1594,
+            "column": 32
+          },
+          {
+            "function": "",
+            "url": "",
+            "scriptId": "68",
+            "line": 1396,
+            "column": 12
+          },
+          {
+            "function": "wrapModuleLoad",
+            "url": "",
+            "scriptId": "68",
+            "line": 255,
+            "column": 19
+          },
+          {
+            "function": "executeUserEntryPoint",
+            "url": "",
+            "scriptId": "81",
+            "line": 154,
+            "column": 5
+          },
+          {
+            "function": "",
+            "url": "",
+            "scriptId": "86",
+            "line": 33,
+            "column": 47
+          }
+        ],
+        "frozen_aliases": [
+          {
+            "variable": "a",
+            "sites": [
+              "CONTROL (scratch only)"
+            ],
+            "frame": {
+              "function": "a.<computed>",
+              "url": "",
+              "scriptId": "119",
+              "line": 8,
+              "column": 77
+            }
+          },
+          {
+            "variable": "array",
+            "sites": [
+              "CONTROL (scratch only)"
+            ],
+            "frame": {
+              "function": "",
+              "url": "",
+              "scriptId": "119",
+              "line": 10,
+              "column": 87
+            }
+          },
+          {
+            "variable": "argument",
+            "sites": [
+              "CONTROL (scratch only)"
+            ],
+            "frame": {
+              "function": "",
+              "url": "",
+              "scriptId": "119",
+              "line": 10,
+              "column": 87
+            }
+          },
+          {
+            "variable": "result",
+            "sites": [
+              "CONTROL (scratch only)"
+            ],
+            "frame": {
+              "function": "",
+              "url": "",
+              "scriptId": "119",
+              "line": 10,
+              "column": 87
+            }
+          }
+        ],
+        "observed_sites": [
+          "CONTROL (scratch only)"
+        ],
+        "classification": "freeze-write"
+      },
+      {
+        "pid": 12006,
+        "argv": [
+          "/opt/codex/runtimes/codex-primary-runtime/dependencies/node/bin/node",
+          "/workspace/scratch/ev14ch9/stage3/census/filter-readonly-freeze/control.cjs",
+          "/workspace/scratch/ev14ch9-readonly-freeze/self-tree/built/local/typescript.js"
+        ],
+        "cwd": "/workspace/scratch/ev14ch9",
+        "case": null,
+        "description": "TypeError: Cannot assign to read only property '0' of object '[object Array]'\n    at Array.sort (<anonymous>)\n    at a.<computed> (/workspace/scratch/ev14ch9/stage3/census/filter-readonly-freeze/control.cjs:8:77)\n    at Object.<anonymous> (/workspace/scratch/ev14ch9/stage3/census/filter-readonly-freeze/control.cjs:10:87)\n    at Module._compile (node:internal/modules/cjs/loader:1872:14)\n    at Object..js (node:internal/modules/cjs/loader:2003:10)\n    at Module.load (node:internal/modules/cjs/loader:1594:32)\n    at Module._load (node:internal/modules/cjs/loader:1396:12)\n    at wrapModuleLoad (node:internal/modules/cjs/loader:255:19)\n    at Module.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:154:5)\n    at node:internal/main/run_main_module:33:47",
+        "frames": [
+          {
+            "function": "a.<computed>",
+            "url": "file:///workspace/scratch/ev14ch9/stage3/census/filter-readonly-freeze/control.cjs",
+            "scriptId": "119",
+            "line": 8,
+            "column": 77
+          },
+          {
+            "function": "",
+            "url": "file:///workspace/scratch/ev14ch9/stage3/census/filter-readonly-freeze/control.cjs",
+            "scriptId": "119",
+            "line": 10,
+            "column": 87
+          },
+          {
+            "function": "",
+            "url": "",
+            "scriptId": "68",
+            "line": 1872,
+            "column": 14
+          },
+          {
+            "function": "",
+            "url": "",
+            "scriptId": "68",
+            "line": 2003,
+            "column": 10
+          },
+          {
+            "function": "",
+            "url": "",
+            "scriptId": "68",
+            "line": 1594,
+            "column": 32
+          },
+          {
+            "function": "",
+            "url": "",
+            "scriptId": "68",
+            "line": 1396,
+            "column": 12
+          },
+          {
+            "function": "wrapModuleLoad",
+            "url": "",
+            "scriptId": "68",
+            "line": 255,
+            "column": 19
+          },
+          {
+            "function": "executeUserEntryPoint",
+            "url": "",
+            "scriptId": "81",
+            "line": 154,
+            "column": 5
+          },
+          {
+            "function": "",
+            "url": "",
+            "scriptId": "86",
+            "line": 33,
+            "column": 47
+          }
+        ],
+        "frozen_aliases": [
+          {
+            "variable": "a",
+            "sites": [
+              "CONTROL (scratch only)"
+            ],
+            "frame": {
+              "function": "a.<computed>",
+              "url": "",
+              "scriptId": "119",
+              "line": 8,
+              "column": 77
+            }
+          },
+          {
+            "variable": "array",
+            "sites": [
+              "CONTROL (scratch only)"
+            ],
+            "frame": {
+              "function": "",
+              "url": "",
+              "scriptId": "119",
+              "line": 10,
+              "column": 87
+            }
+          },
+          {
+            "variable": "argument",
+            "sites": [
+              "CONTROL (scratch only)"
+            ],
+            "frame": {
+              "function": "",
+              "url": "",
+              "scriptId": "119",
+              "line": 10,
+              "column": 87
+            }
+          },
+          {
+            "variable": "result",
+            "sites": [
+              "CONTROL (scratch only)"
+            ],
+            "frame": {
+              "function": "",
+              "url": "",
+              "scriptId": "119",
+              "line": 10,
+              "column": 87
+            }
+          }
+        ],
+        "observed_sites": [
+          "CONTROL (scratch only)"
+        ],
+        "classification": "freeze-write"
+      },
+      {
+        "pid": 12006,
+        "argv": [
+          "/opt/codex/runtimes/codex-primary-runtime/dependencies/node/bin/node",
+          "/workspace/scratch/ev14ch9/stage3/census/filter-readonly-freeze/control.cjs",
+          "/workspace/scratch/ev14ch9-readonly-freeze/self-tree/built/local/typescript.js"
+        ],
+        "cwd": "/workspace/scratch/ev14ch9",
+        "case": null,
+        "description": "TypeError: Cannot assign to read only property '0' of object '[object Array]'\n    at a.length (/workspace/scratch/ev14ch9/stage3/census/filter-readonly-freeze/control.cjs:8:102)\n    at Object.<anonymous> (/workspace/scratch/ev14ch9/stage3/census/filter-readonly-freeze/control.cjs:10:87)\n    at Module._compile (node:internal/modules/cjs/loader:1872:14)\n    at Object..js (node:internal/modules/cjs/loader:2003:10)\n    at Module.load (node:internal/modules/cjs/loader:1594:32)\n    at Module._load (node:internal/modules/cjs/loader:1396:12)\n    at wrapModuleLoad (node:internal/modules/cjs/loader:255:19)\n    at Module.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:154:5)\n    at node:internal/main/run_main_module:33:47",
+        "frames": [
+          {
+            "function": "a.length",
+            "url": "file:///workspace/scratch/ev14ch9/stage3/census/filter-readonly-freeze/control.cjs",
+            "scriptId": "119",
+            "line": 8,
+            "column": 102
+          },
+          {
+            "function": "",
+            "url": "file:///workspace/scratch/ev14ch9/stage3/census/filter-readonly-freeze/control.cjs",
+            "scriptId": "119",
+            "line": 10,
+            "column": 87
+          },
+          {
+            "function": "",
+            "url": "",
+            "scriptId": "68",
+            "line": 1872,
+            "column": 14
+          },
+          {
+            "function": "",
+            "url": "",
+            "scriptId": "68",
+            "line": 2003,
+            "column": 10
+          },
+          {
+            "function": "",
+            "url": "",
+            "scriptId": "68",
+            "line": 1594,
+            "column": 32
+          },
+          {
+            "function": "",
+            "url": "",
+            "scriptId": "68",
+            "line": 1396,
+            "column": 12
+          },
+          {
+            "function": "wrapModuleLoad",
+            "url": "",
+            "scriptId": "68",
+            "line": 255,
+            "column": 19
+          },
+          {
+            "function": "executeUserEntryPoint",
+            "url": "",
+            "scriptId": "81",
+            "line": 154,
+            "column": 5
+          },
+          {
+            "function": "",
+            "url": "",
+            "scriptId": "86",
+            "line": 33,
+            "column": 47
+          }
+        ],
+        "frozen_aliases": [
+          {
+            "variable": "a",
+            "sites": [
+              "CONTROL (scratch only)"
+            ],
+            "frame": {
+              "function": "a.length",
+              "url": "",
+              "scriptId": "119",
+              "line": 8,
+              "column": 102
+            }
+          },
+          {
+            "variable": "array",
+            "sites": [
+              "CONTROL (scratch only)"
+            ],
+            "frame": {
+              "function": "",
+              "url": "",
+              "scriptId": "119",
+              "line": 10,
+              "column": 87
+            }
+          },
+          {
+            "variable": "argument",
+            "sites": [
+              "CONTROL (scratch only)"
+            ],
+            "frame": {
+              "function": "",
+              "url": "",
+              "scriptId": "119",
+              "line": 10,
+              "column": 87
+            }
+          },
+          {
+            "variable": "result",
+            "sites": [
+              "CONTROL (scratch only)"
+            ],
+            "frame": {
+              "function": "",
+              "url": "",
+              "scriptId": "119",
+              "line": 10,
+              "column": 87
+            }
+          }
+        ],
+        "observed_sites": [
+          "CONTROL (scratch only)"
+        ],
+        "classification": "freeze-write"
+      },
+      {
+        "pid": 12006,
+        "argv": [
+          "/opt/codex/runtimes/codex-primary-runtime/dependencies/node/bin/node",
+          "/workspace/scratch/ev14ch9/stage3/census/filter-readonly-freeze/control.cjs",
+          "/workspace/scratch/ev14ch9-readonly-freeze/self-tree/built/local/typescript.js"
+        ],
+        "cwd": "/workspace/scratch/ev14ch9",
+        "case": null,
+        "description": "TypeError: Cannot assign to read only property '0' of object '[object Array]'\n    at a.length (/workspace/scratch/ev14ch9/stage3/census/filter-readonly-freeze/control.cjs:8:102)\n    at Object.<anonymous> (/workspace/scratch/ev14ch9/stage3/census/filter-readonly-freeze/control.cjs:10:87)\n    at Module._compile (node:internal/modules/cjs/loader:1872:14)\n    at Object..js (node:internal/modules/cjs/loader:2003:10)\n    at Module.load (node:internal/modules/cjs/loader:1594:32)\n    at Module._load (node:internal/modules/cjs/loader:1396:12)\n    at wrapModuleLoad (node:internal/modules/cjs/loader:255:19)\n    at Module.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:154:5)\n    at node:internal/main/run_main_module:33:47",
+        "frames": [
+          {
+            "function": "a.length",
+            "url": "file:///workspace/scratch/ev14ch9/stage3/census/filter-readonly-freeze/control.cjs",
+            "scriptId": "119",
+            "line": 8,
+            "column": 102
+          },
+          {
+            "function": "",
+            "url": "file:///workspace/scratch/ev14ch9/stage3/census/filter-readonly-freeze/control.cjs",
+            "scriptId": "119",
+            "line": 10,
+            "column": 87
+          },
+          {
+            "function": "",
+            "url": "",
+            "scriptId": "68",
+            "line": 1872,
+            "column": 14
+          },
+          {
+            "function": "",
+            "url": "",
+            "scriptId": "68",
+            "line": 2003,
+            "column": 10
+          },
+          {
+            "function": "",
+            "url": "",
+            "scriptId": "68",
+            "line": 1594,
+            "column": 32
+          },
+          {
+            "function": "",
+            "url": "",
+            "scriptId": "68",
+            "line": 1396,
+            "column": 12
+          },
+          {
+            "function": "wrapModuleLoad",
+            "url": "",
+            "scriptId": "68",
+            "line": 255,
+            "column": 19
+          },
+          {
+            "function": "executeUserEntryPoint",
+            "url": "",
+            "scriptId": "81",
+            "line": 154,
+            "column": 5
+          },
+          {
+            "function": "",
+            "url": "",
+            "scriptId": "86",
+            "line": 33,
+            "column": 47
+          }
+        ],
+        "frozen_aliases": [
+          {
+            "variable": "a",
+            "sites": [
+              "CONTROL (scratch only)"
+            ],
+            "frame": {
+              "function": "a.length",
+              "url": "",
+              "scriptId": "119",
+              "line": 8,
+              "column": 102
+            }
+          },
+          {
+            "variable": "array",
+            "sites": [
+              "CONTROL (scratch only)"
+            ],
+            "frame": {
+              "function": "",
+              "url": "",
+              "scriptId": "119",
+              "line": 10,
+              "column": 87
+            }
+          },
+          {
+            "variable": "argument",
+            "sites": [
+              "CONTROL (scratch only)"
+            ],
+            "frame": {
+              "function": "",
+              "url": "",
+              "scriptId": "119",
+              "line": 10,
+              "column": 87
+            }
+          },
+          {
+            "variable": "result",
+            "sites": [
+              "CONTROL (scratch only)"
+            ],
+            "frame": {
+              "function": "",
+              "url": "",
+              "scriptId": "119",
+              "line": 10,
+              "column": 87
+            }
+          }
+        ],
+        "observed_sites": [
+          "CONTROL (scratch only)"
+        ],
+        "classification": "freeze-write"
+      },
+      {
+        "pid": 12006,
+        "argv": [
+          "/opt/codex/runtimes/codex-primary-runtime/dependencies/node/bin/node",
+          "/workspace/scratch/ev14ch9/stage3/census/filter-readonly-freeze/control.cjs",
+          "/workspace/scratch/ev14ch9-readonly-freeze/self-tree/built/local/typescript.js"
+        ],
+        "cwd": "/workspace/scratch/ev14ch9",
+        "case": null,
+        "description": "TypeError: Cannot assign to read only property 'length' of object '[object Array]'\n    at cases (/workspace/scratch/ev14ch9/stage3/census/filter-readonly-freeze/control.cjs:8:129)\n    at Object.<anonymous> (/workspace/scratch/ev14ch9/stage3/census/filter-readonly-freeze/control.cjs:10:87)\n    at Module._compile (node:internal/modules/cjs/loader:1872:14)\n    at Object..js (node:internal/modules/cjs/loader:2003:10)\n    at Module.load (node:internal/modules/cjs/loader:1594:32)\n    at Module._load (node:internal/modules/cjs/loader:1396:12)\n    at wrapModuleLoad (node:internal/modules/cjs/loader:255:19)\n    at Module.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:154:5)\n    at node:internal/main/run_main_module:33:47",
+        "frames": [
+          {
+            "function": "cases",
+            "url": "file:///workspace/scratch/ev14ch9/stage3/census/filter-readonly-freeze/control.cjs",
+            "scriptId": "119",
+            "line": 8,
+            "column": 129
+          },
+          {
+            "function": "",
+            "url": "file:///workspace/scratch/ev14ch9/stage3/census/filter-readonly-freeze/control.cjs",
+            "scriptId": "119",
+            "line": 10,
+            "column": 87
+          },
+          {
+            "function": "",
+            "url": "",
+            "scriptId": "68",
+            "line": 1872,
+            "column": 14
+          },
+          {
+            "function": "",
+            "url": "",
+            "scriptId": "68",
+            "line": 2003,
+            "column": 10
+          },
+          {
+            "function": "",
+            "url": "",
+            "scriptId": "68",
+            "line": 1594,
+            "column": 32
+          },
+          {
+            "function": "",
+            "url": "",
+            "scriptId": "68",
+            "line": 1396,
+            "column": 12
+          },
+          {
+            "function": "wrapModuleLoad",
+            "url": "",
+            "scriptId": "68",
+            "line": 255,
+            "column": 19
+          },
+          {
+            "function": "executeUserEntryPoint",
+            "url": "",
+            "scriptId": "81",
+            "line": 154,
+            "column": 5
+          },
+          {
+            "function": "",
+            "url": "",
+            "scriptId": "86",
+            "line": 33,
+            "column": 47
+          }
+        ],
+        "frozen_aliases": [
+          {
+            "variable": "a",
+            "sites": [
+              "CONTROL (scratch only)"
+            ],
+            "frame": {
+              "function": "cases",
+              "url": "",
+              "scriptId": "119",
+              "line": 8,
+              "column": 129
+            }
+          },
+          {
+            "variable": "array",
+            "sites": [
+              "CONTROL (scratch only)"
+            ],
+            "frame": {
+              "function": "",
+              "url": "",
+              "scriptId": "119",
+              "line": 10,
+              "column": 87
+            }
+          },
+          {
+            "variable": "argument",
+            "sites": [
+              "CONTROL (scratch only)"
+            ],
+            "frame": {
+              "function": "",
+              "url": "",
+              "scriptId": "119",
+              "line": 10,
+              "column": 87
+            }
+          },
+          {
+            "variable": "result",
+            "sites": [
+              "CONTROL (scratch only)"
+            ],
+            "frame": {
+              "function": "",
+              "url": "",
+              "scriptId": "119",
+              "line": 10,
+              "column": 87
+            }
+          }
+        ],
+        "observed_sites": [
+          "CONTROL (scratch only)"
+        ],
+        "classification": "freeze-write"
+      },
+      {
+        "pid": 12006,
+        "argv": [
+          "/opt/codex/runtimes/codex-primary-runtime/dependencies/node/bin/node",
+          "/workspace/scratch/ev14ch9/stage3/census/filter-readonly-freeze/control.cjs",
+          "/workspace/scratch/ev14ch9-readonly-freeze/self-tree/built/local/typescript.js"
+        ],
+        "cwd": "/workspace/scratch/ev14ch9",
+        "case": null,
+        "description": "TypeError: Cannot assign to read only property 'length' of object '[object Array]'\n    at cases (/workspace/scratch/ev14ch9/stage3/census/filter-readonly-freeze/control.cjs:8:129)\n    at Object.<anonymous> (/workspace/scratch/ev14ch9/stage3/census/filter-readonly-freeze/control.cjs:10:87)\n    at Module._compile (node:internal/modules/cjs/loader:1872:14)\n    at Object..js (node:internal/modules/cjs/loader:2003:10)\n    at Module.load (node:internal/modules/cjs/loader:1594:32)\n    at Module._load (node:internal/modules/cjs/loader:1396:12)\n    at wrapModuleLoad (node:internal/modules/cjs/loader:255:19)\n    at Module.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:154:5)\n    at node:internal/main/run_main_module:33:47",
+        "frames": [
+          {
+            "function": "cases",
+            "url": "file:///workspace/scratch/ev14ch9/stage3/census/filter-readonly-freeze/control.cjs",
+            "scriptId": "119",
+            "line": 8,
+            "column": 129
+          },
+          {
+            "function": "",
+            "url": "file:///workspace/scratch/ev14ch9/stage3/census/filter-readonly-freeze/control.cjs",
+            "scriptId": "119",
+            "line": 10,
+            "column": 87
+          },
+          {
+            "function": "",
+            "url": "",
+            "scriptId": "68",
+            "line": 1872,
+            "column": 14
+          },
+          {
+            "function": "",
+            "url": "",
+            "scriptId": "68",
+            "line": 2003,
+            "column": 10
+          },
+          {
+            "function": "",
+            "url": "",
+            "scriptId": "68",
+            "line": 1594,
+            "column": 32
+          },
+          {
+            "function": "",
+            "url": "",
+            "scriptId": "68",
+            "line": 1396,
+            "column": 12
+          },
+          {
+            "function": "wrapModuleLoad",
+            "url": "",
+            "scriptId": "68",
+            "line": 255,
+            "column": 19
+          },
+          {
+            "function": "executeUserEntryPoint",
+            "url": "",
+            "scriptId": "81",
+            "line": 154,
+            "column": 5
+          },
+          {
+            "function": "",
+            "url": "",
+            "scriptId": "86",
+            "line": 33,
+            "column": 47
+          }
+        ],
+        "frozen_aliases": [
+          {
+            "variable": "a",
+            "sites": [
+              "CONTROL (scratch only)"
+            ],
+            "frame": {
+              "function": "cases",
+              "url": "",
+              "scriptId": "119",
+              "line": 8,
+              "column": 129
+            }
+          },
+          {
+            "variable": "array",
+            "sites": [
+              "CONTROL (scratch only)"
+            ],
+            "frame": {
+              "function": "",
+              "url": "",
+              "scriptId": "119",
+              "line": 10,
+              "column": 87
+            }
+          },
+          {
+            "variable": "argument",
+            "sites": [
+              "CONTROL (scratch only)"
+            ],
+            "frame": {
+              "function": "",
+              "url": "",
+              "scriptId": "119",
+              "line": 10,
+              "column": 87
+            }
+          },
+          {
+            "variable": "result",
+            "sites": [
+              "CONTROL (scratch only)"
+            ],
+            "frame": {
+              "function": "",
+              "url": "",
+              "scriptId": "119",
+              "line": 10,
+              "column": 87
+            }
+          }
+        ],
+        "observed_sites": [
+          "CONTROL (scratch only)"
+        ],
+        "classification": "freeze-write"
+      }
+    ],
+    "freeze_write_throws": [
+      {
+        "pid": 12006,
+        "argv": [
+          "/opt/codex/runtimes/codex-primary-runtime/dependencies/node/bin/node",
+          "/workspace/scratch/ev14ch9/stage3/census/filter-readonly-freeze/control.cjs",
+          "/workspace/scratch/ev14ch9-readonly-freeze/self-tree/built/local/typescript.js"
+        ],
+        "cwd": "/workspace/scratch/ev14ch9",
+        "case": null,
+        "description": "TypeError: Cannot add property 2, object is not extensible\n    at Array.push (<anonymous>)\n    at /workspace/scratch/ev14ch9/stage3/census/filter-readonly-freeze/control.cjs:8:27\n    at Object.<anonymous> (/workspace/scratch/ev14ch9/stage3/census/filter-readonly-freeze/control.cjs:10:87)\n    at Module._compile (node:internal/modules/cjs/loader:1872:14)\n    at Object..js (node:internal/modules/cjs/loader:2003:10)\n    at Module.load (node:internal/modules/cjs/loader:1594:32)\n    at Module._load (node:internal/modules/cjs/loader:1396:12)\n    at wrapModuleLoad (node:internal/modules/cjs/loader:255:19)\n    at Module.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:154:5)\n    at node:internal/main/run_main_module:33:47",
+        "frames": [
+          {
+            "function": "",
+            "url": "file:///workspace/scratch/ev14ch9/stage3/census/filter-readonly-freeze/control.cjs",
+            "scriptId": "119",
+            "line": 8,
+            "column": 27
+          },
+          {
+            "function": "",
+            "url": "file:///workspace/scratch/ev14ch9/stage3/census/filter-readonly-freeze/control.cjs",
+            "scriptId": "119",
+            "line": 10,
+            "column": 87
+          },
+          {
+            "function": "",
+            "url": "",
+            "scriptId": "68",
+            "line": 1872,
+            "column": 14
+          },
+          {
+            "function": "",
+            "url": "",
+            "scriptId": "68",
+            "line": 2003,
+            "column": 10
+          },
+          {
+            "function": "",
+            "url": "",
+            "scriptId": "68",
+            "line": 1594,
+            "column": 32
+          },
+          {
+            "function": "",
+            "url": "",
+            "scriptId": "68",
+            "line": 1396,
+            "column": 12
+          },
+          {
+            "function": "wrapModuleLoad",
+            "url": "",
+            "scriptId": "68",
+            "line": 255,
+            "column": 19
+          },
+          {
+            "function": "executeUserEntryPoint",
+            "url": "",
+            "scriptId": "81",
+            "line": 154,
+            "column": 5
+          },
+          {
+            "function": "",
+            "url": "",
+            "scriptId": "86",
+            "line": 33,
+            "column": 47
+          }
+        ],
+        "frozen_aliases": [
+          {
+            "variable": "a",
+            "sites": [
+              "CONTROL (scratch only)"
+            ],
+            "frame": {
+              "function": "",
+              "url": "",
+              "scriptId": "119",
+              "line": 8,
+              "column": 27
+            }
+          },
+          {
+            "variable": "array",
+            "sites": [
+              "CONTROL (scratch only)"
+            ],
+            "frame": {
+              "function": "",
+              "url": "",
+              "scriptId": "119",
+              "line": 10,
+              "column": 87
+            }
+          },
+          {
+            "variable": "argument",
+            "sites": [
+              "CONTROL (scratch only)"
+            ],
+            "frame": {
+              "function": "",
+              "url": "",
+              "scriptId": "119",
+              "line": 10,
+              "column": 87
+            }
+          },
+          {
+            "variable": "result",
+            "sites": [
+              "CONTROL (scratch only)"
+            ],
+            "frame": {
+              "function": "",
+              "url": "",
+              "scriptId": "119",
+              "line": 10,
+              "column": 87
+            }
+          }
+        ],
+        "observed_sites": [
+          "CONTROL (scratch only)"
+        ],
+        "classification": "freeze-write"
+      },
+      {
+        "pid": 12006,
+        "argv": [
+          "/opt/codex/runtimes/codex-primary-runtime/dependencies/node/bin/node",
+          "/workspace/scratch/ev14ch9/stage3/census/filter-readonly-freeze/control.cjs",
+          "/workspace/scratch/ev14ch9-readonly-freeze/self-tree/built/local/typescript.js"
+        ],
+        "cwd": "/workspace/scratch/ev14ch9",
+        "case": null,
+        "description": "TypeError: Cannot add property 2, object is not extensible\n    at Array.push (<anonymous>)\n    at /workspace/scratch/ev14ch9/stage3/census/filter-readonly-freeze/control.cjs:8:27\n    at Object.<anonymous> (/workspace/scratch/ev14ch9/stage3/census/filter-readonly-freeze/control.cjs:10:87)\n    at Module._compile (node:internal/modules/cjs/loader:1872:14)\n    at Object..js (node:internal/modules/cjs/loader:2003:10)\n    at Module.load (node:internal/modules/cjs/loader:1594:32)\n    at Module._load (node:internal/modules/cjs/loader:1396:12)\n    at wrapModuleLoad (node:internal/modules/cjs/loader:255:19)\n    at Module.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:154:5)\n    at node:internal/main/run_main_module:33:47",
+        "frames": [
+          {
+            "function": "",
+            "url": "file:///workspace/scratch/ev14ch9/stage3/census/filter-readonly-freeze/control.cjs",
+            "scriptId": "119",
+            "line": 8,
+            "column": 27
+          },
+          {
+            "function": "",
+            "url": "file:///workspace/scratch/ev14ch9/stage3/census/filter-readonly-freeze/control.cjs",
+            "scriptId": "119",
+            "line": 10,
+            "column": 87
+          },
+          {
+            "function": "",
+            "url": "",
+            "scriptId": "68",
+            "line": 1872,
+            "column": 14
+          },
+          {
+            "function": "",
+            "url": "",
+            "scriptId": "68",
+            "line": 2003,
+            "column": 10
+          },
+          {
+            "function": "",
+            "url": "",
+            "scriptId": "68",
+            "line": 1594,
+            "column": 32
+          },
+          {
+            "function": "",
+            "url": "",
+            "scriptId": "68",
+            "line": 1396,
+            "column": 12
+          },
+          {
+            "function": "wrapModuleLoad",
+            "url": "",
+            "scriptId": "68",
+            "line": 255,
+            "column": 19
+          },
+          {
+            "function": "executeUserEntryPoint",
+            "url": "",
+            "scriptId": "81",
+            "line": 154,
+            "column": 5
+          },
+          {
+            "function": "",
+            "url": "",
+            "scriptId": "86",
+            "line": 33,
+            "column": 47
+          }
+        ],
+        "frozen_aliases": [
+          {
+            "variable": "a",
+            "sites": [
+              "CONTROL (scratch only)"
+            ],
+            "frame": {
+              "function": "",
+              "url": "",
+              "scriptId": "119",
+              "line": 8,
+              "column": 27
+            }
+          },
+          {
+            "variable": "array",
+            "sites": [
+              "CONTROL (scratch only)"
+            ],
+            "frame": {
+              "function": "",
+              "url": "",
+              "scriptId": "119",
+              "line": 10,
+              "column": 87
+            }
+          },
+          {
+            "variable": "argument",
+            "sites": [
+              "CONTROL (scratch only)"
+            ],
+            "frame": {
+              "function": "",
+              "url": "",
+              "scriptId": "119",
+              "line": 10,
+              "column": 87
+            }
+          },
+          {
+            "variable": "result",
+            "sites": [
+              "CONTROL (scratch only)"
+            ],
+            "frame": {
+              "function": "",
+              "url": "",
+              "scriptId": "119",
+              "line": 10,
+              "column": 87
+            }
+          }
+        ],
+        "observed_sites": [
+          "CONTROL (scratch only)"
+        ],
+        "classification": "freeze-write"
+      },
+      {
+        "pid": 12006,
+        "argv": [
+          "/opt/codex/runtimes/codex-primary-runtime/dependencies/node/bin/node",
+          "/workspace/scratch/ev14ch9/stage3/census/filter-readonly-freeze/control.cjs",
+          "/workspace/scratch/ev14ch9-readonly-freeze/self-tree/built/local/typescript.js"
+        ],
+        "cwd": "/workspace/scratch/ev14ch9",
+        "case": null,
+        "description": "TypeError: Cannot assign to read only property '0' of object '[object Array]'\n    at Array.splice (<anonymous>)\n    at /workspace/scratch/ev14ch9/stage3/census/filter-readonly-freeze/control.cjs:8:51\n    at Object.<anonymous> (/workspace/scratch/ev14ch9/stage3/census/filter-readonly-freeze/control.cjs:10:87)\n    at Module._compile (node:internal/modules/cjs/loader:1872:14)\n    at Object..js (node:internal/modules/cjs/loader:2003:10)\n    at Module.load (node:internal/modules/cjs/loader:1594:32)\n    at Module._load (node:internal/modules/cjs/loader:1396:12)\n    at wrapModuleLoad (node:internal/modules/cjs/loader:255:19)\n    at Module.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:154:5)\n    at node:internal/main/run_main_module:33:47",
+        "frames": [
+          {
+            "function": "",
+            "url": "file:///workspace/scratch/ev14ch9/stage3/census/filter-readonly-freeze/control.cjs",
+            "scriptId": "119",
+            "line": 8,
+            "column": 51
+          },
+          {
+            "function": "",
+            "url": "file:///workspace/scratch/ev14ch9/stage3/census/filter-readonly-freeze/control.cjs",
+            "scriptId": "119",
+            "line": 10,
+            "column": 87
+          },
+          {
+            "function": "",
+            "url": "",
+            "scriptId": "68",
+            "line": 1872,
+            "column": 14
+          },
+          {
+            "function": "",
+            "url": "",
+            "scriptId": "68",
+            "line": 2003,
+            "column": 10
+          },
+          {
+            "function": "",
+            "url": "",
+            "scriptId": "68",
+            "line": 1594,
+            "column": 32
+          },
+          {
+            "function": "",
+            "url": "",
+            "scriptId": "68",
+            "line": 1396,
+            "column": 12
+          },
+          {
+            "function": "wrapModuleLoad",
+            "url": "",
+            "scriptId": "68",
+            "line": 255,
+            "column": 19
+          },
+          {
+            "function": "executeUserEntryPoint",
+            "url": "",
+            "scriptId": "81",
+            "line": 154,
+            "column": 5
+          },
+          {
+            "function": "",
+            "url": "",
+            "scriptId": "86",
+            "line": 33,
+            "column": 47
+          }
+        ],
+        "frozen_aliases": [
+          {
+            "variable": "a",
+            "sites": [
+              "CONTROL (scratch only)"
+            ],
+            "frame": {
+              "function": "",
+              "url": "",
+              "scriptId": "119",
+              "line": 8,
+              "column": 51
+            }
+          },
+          {
+            "variable": "array",
+            "sites": [
+              "CONTROL (scratch only)"
+            ],
+            "frame": {
+              "function": "",
+              "url": "",
+              "scriptId": "119",
+              "line": 10,
+              "column": 87
+            }
+          },
+          {
+            "variable": "argument",
+            "sites": [
+              "CONTROL (scratch only)"
+            ],
+            "frame": {
+              "function": "",
+              "url": "",
+              "scriptId": "119",
+              "line": 10,
+              "column": 87
+            }
+          },
+          {
+            "variable": "result",
+            "sites": [
+              "CONTROL (scratch only)"
+            ],
+            "frame": {
+              "function": "",
+              "url": "",
+              "scriptId": "119",
+              "line": 10,
+              "column": 87
+            }
+          }
+        ],
+        "observed_sites": [
+          "CONTROL (scratch only)"
+        ],
+        "classification": "freeze-write"
+      },
+      {
+        "pid": 12006,
+        "argv": [
+          "/opt/codex/runtimes/codex-primary-runtime/dependencies/node/bin/node",
+          "/workspace/scratch/ev14ch9/stage3/census/filter-readonly-freeze/control.cjs",
+          "/workspace/scratch/ev14ch9-readonly-freeze/self-tree/built/local/typescript.js"
+        ],
+        "cwd": "/workspace/scratch/ev14ch9",
+        "case": null,
+        "description": "TypeError: Cannot assign to read only property '0' of object '[object Array]'\n    at Array.splice (<anonymous>)\n    at /workspace/scratch/ev14ch9/stage3/census/filter-readonly-freeze/control.cjs:8:51\n    at Object.<anonymous> (/workspace/scratch/ev14ch9/stage3/census/filter-readonly-freeze/control.cjs:10:87)\n    at Module._compile (node:internal/modules/cjs/loader:1872:14)\n    at Object..js (node:internal/modules/cjs/loader:2003:10)\n    at Module.load (node:internal/modules/cjs/loader:1594:32)\n    at Module._load (node:internal/modules/cjs/loader:1396:12)\n    at wrapModuleLoad (node:internal/modules/cjs/loader:255:19)\n    at Module.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:154:5)\n    at node:internal/main/run_main_module:33:47",
+        "frames": [
+          {
+            "function": "",
+            "url": "file:///workspace/scratch/ev14ch9/stage3/census/filter-readonly-freeze/control.cjs",
+            "scriptId": "119",
+            "line": 8,
+            "column": 51
+          },
+          {
+            "function": "",
+            "url": "file:///workspace/scratch/ev14ch9/stage3/census/filter-readonly-freeze/control.cjs",
+            "scriptId": "119",
+            "line": 10,
+            "column": 87
+          },
+          {
+            "function": "",
+            "url": "",
+            "scriptId": "68",
+            "line": 1872,
+            "column": 14
+          },
+          {
+            "function": "",
+            "url": "",
+            "scriptId": "68",
+            "line": 2003,
+            "column": 10
+          },
+          {
+            "function": "",
+            "url": "",
+            "scriptId": "68",
+            "line": 1594,
+            "column": 32
+          },
+          {
+            "function": "",
+            "url": "",
+            "scriptId": "68",
+            "line": 1396,
+            "column": 12
+          },
+          {
+            "function": "wrapModuleLoad",
+            "url": "",
+            "scriptId": "68",
+            "line": 255,
+            "column": 19
+          },
+          {
+            "function": "executeUserEntryPoint",
+            "url": "",
+            "scriptId": "81",
+            "line": 154,
+            "column": 5
+          },
+          {
+            "function": "",
+            "url": "",
+            "scriptId": "86",
+            "line": 33,
+            "column": 47
+          }
+        ],
+        "frozen_aliases": [
+          {
+            "variable": "a",
+            "sites": [
+              "CONTROL (scratch only)"
+            ],
+            "frame": {
+              "function": "",
+              "url": "",
+              "scriptId": "119",
+              "line": 8,
+              "column": 51
+            }
+          },
+          {
+            "variable": "array",
+            "sites": [
+              "CONTROL (scratch only)"
+            ],
+            "frame": {
+              "function": "",
+              "url": "",
+              "scriptId": "119",
+              "line": 10,
+              "column": 87
+            }
+          },
+          {
+            "variable": "argument",
+            "sites": [
+              "CONTROL (scratch only)"
+            ],
+            "frame": {
+              "function": "",
+              "url": "",
+              "scriptId": "119",
+              "line": 10,
+              "column": 87
+            }
+          },
+          {
+            "variable": "result",
+            "sites": [
+              "CONTROL (scratch only)"
+            ],
+            "frame": {
+              "function": "",
+              "url": "",
+              "scriptId": "119",
+              "line": 10,
+              "column": 87
+            }
+          }
+        ],
+        "observed_sites": [
+          "CONTROL (scratch only)"
+        ],
+        "classification": "freeze-write"
+      },
+      {
+        "pid": 12006,
+        "argv": [
+          "/opt/codex/runtimes/codex-primary-runtime/dependencies/node/bin/node",
+          "/workspace/scratch/ev14ch9/stage3/census/filter-readonly-freeze/control.cjs",
+          "/workspace/scratch/ev14ch9-readonly-freeze/self-tree/built/local/typescript.js"
+        ],
+        "cwd": "/workspace/scratch/ev14ch9",
+        "case": null,
+        "description": "TypeError: Cannot assign to read only property '0' of object '[object Array]'\n    at Array.sort (<anonymous>)\n    at a.<computed> (/workspace/scratch/ev14ch9/stage3/census/filter-readonly-freeze/control.cjs:8:77)\n    at Object.<anonymous> (/workspace/scratch/ev14ch9/stage3/census/filter-readonly-freeze/control.cjs:10:87)\n    at Module._compile (node:internal/modules/cjs/loader:1872:14)\n    at Object..js (node:internal/modules/cjs/loader:2003:10)\n    at Module.load (node:internal/modules/cjs/loader:1594:32)\n    at Module._load (node:internal/modules/cjs/loader:1396:12)\n    at wrapModuleLoad (node:internal/modules/cjs/loader:255:19)\n    at Module.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:154:5)\n    at node:internal/main/run_main_module:33:47",
+        "frames": [
+          {
+            "function": "a.<computed>",
+            "url": "file:///workspace/scratch/ev14ch9/stage3/census/filter-readonly-freeze/control.cjs",
+            "scriptId": "119",
+            "line": 8,
+            "column": 77
+          },
+          {
+            "function": "",
+            "url": "file:///workspace/scratch/ev14ch9/stage3/census/filter-readonly-freeze/control.cjs",
+            "scriptId": "119",
+            "line": 10,
+            "column": 87
+          },
+          {
+            "function": "",
+            "url": "",
+            "scriptId": "68",
+            "line": 1872,
+            "column": 14
+          },
+          {
+            "function": "",
+            "url": "",
+            "scriptId": "68",
+            "line": 2003,
+            "column": 10
+          },
+          {
+            "function": "",
+            "url": "",
+            "scriptId": "68",
+            "line": 1594,
+            "column": 32
+          },
+          {
+            "function": "",
+            "url": "",
+            "scriptId": "68",
+            "line": 1396,
+            "column": 12
+          },
+          {
+            "function": "wrapModuleLoad",
+            "url": "",
+            "scriptId": "68",
+            "line": 255,
+            "column": 19
+          },
+          {
+            "function": "executeUserEntryPoint",
+            "url": "",
+            "scriptId": "81",
+            "line": 154,
+            "column": 5
+          },
+          {
+            "function": "",
+            "url": "",
+            "scriptId": "86",
+            "line": 33,
+            "column": 47
+          }
+        ],
+        "frozen_aliases": [
+          {
+            "variable": "a",
+            "sites": [
+              "CONTROL (scratch only)"
+            ],
+            "frame": {
+              "function": "a.<computed>",
+              "url": "",
+              "scriptId": "119",
+              "line": 8,
+              "column": 77
+            }
+          },
+          {
+            "variable": "array",
+            "sites": [
+              "CONTROL (scratch only)"
+            ],
+            "frame": {
+              "function": "",
+              "url": "",
+              "scriptId": "119",
+              "line": 10,
+              "column": 87
+            }
+          },
+          {
+            "variable": "argument",
+            "sites": [
+              "CONTROL (scratch only)"
+            ],
+            "frame": {
+              "function": "",
+              "url": "",
+              "scriptId": "119",
+              "line": 10,
+              "column": 87
+            }
+          },
+          {
+            "variable": "result",
+            "sites": [
+              "CONTROL (scratch only)"
+            ],
+            "frame": {
+              "function": "",
+              "url": "",
+              "scriptId": "119",
+              "line": 10,
+              "column": 87
+            }
+          }
+        ],
+        "observed_sites": [
+          "CONTROL (scratch only)"
+        ],
+        "classification": "freeze-write"
+      },
+      {
+        "pid": 12006,
+        "argv": [
+          "/opt/codex/runtimes/codex-primary-runtime/dependencies/node/bin/node",
+          "/workspace/scratch/ev14ch9/stage3/census/filter-readonly-freeze/control.cjs",
+          "/workspace/scratch/ev14ch9-readonly-freeze/self-tree/built/local/typescript.js"
+        ],
+        "cwd": "/workspace/scratch/ev14ch9",
+        "case": null,
+        "description": "TypeError: Cannot assign to read only property '0' of object '[object Array]'\n    at Array.sort (<anonymous>)\n    at a.<computed> (/workspace/scratch/ev14ch9/stage3/census/filter-readonly-freeze/control.cjs:8:77)\n    at Object.<anonymous> (/workspace/scratch/ev14ch9/stage3/census/filter-readonly-freeze/control.cjs:10:87)\n    at Module._compile (node:internal/modules/cjs/loader:1872:14)\n    at Object..js (node:internal/modules/cjs/loader:2003:10)\n    at Module.load (node:internal/modules/cjs/loader:1594:32)\n    at Module._load (node:internal/modules/cjs/loader:1396:12)\n    at wrapModuleLoad (node:internal/modules/cjs/loader:255:19)\n    at Module.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:154:5)\n    at node:internal/main/run_main_module:33:47",
+        "frames": [
+          {
+            "function": "a.<computed>",
+            "url": "file:///workspace/scratch/ev14ch9/stage3/census/filter-readonly-freeze/control.cjs",
+            "scriptId": "119",
+            "line": 8,
+            "column": 77
+          },
+          {
+            "function": "",
+            "url": "file:///workspace/scratch/ev14ch9/stage3/census/filter-readonly-freeze/control.cjs",
+            "scriptId": "119",
+            "line": 10,
+            "column": 87
+          },
+          {
+            "function": "",
+            "url": "",
+            "scriptId": "68",
+            "line": 1872,
+            "column": 14
+          },
+          {
+            "function": "",
+            "url": "",
+            "scriptId": "68",
+            "line": 2003,
+            "column": 10
+          },
+          {
+            "function": "",
+            "url": "",
+            "scriptId": "68",
+            "line": 1594,
+            "column": 32
+          },
+          {
+            "function": "",
+            "url": "",
+            "scriptId": "68",
+            "line": 1396,
+            "column": 12
+          },
+          {
+            "function": "wrapModuleLoad",
+            "url": "",
+            "scriptId": "68",
+            "line": 255,
+            "column": 19
+          },
+          {
+            "function": "executeUserEntryPoint",
+            "url": "",
+            "scriptId": "81",
+            "line": 154,
+            "column": 5
+          },
+          {
+            "function": "",
+            "url": "",
+            "scriptId": "86",
+            "line": 33,
+            "column": 47
+          }
+        ],
+        "frozen_aliases": [
+          {
+            "variable": "a",
+            "sites": [
+              "CONTROL (scratch only)"
+            ],
+            "frame": {
+              "function": "a.<computed>",
+              "url": "",
+              "scriptId": "119",
+              "line": 8,
+              "column": 77
+            }
+          },
+          {
+            "variable": "array",
+            "sites": [
+              "CONTROL (scratch only)"
+            ],
+            "frame": {
+              "function": "",
+              "url": "",
+              "scriptId": "119",
+              "line": 10,
+              "column": 87
+            }
+          },
+          {
+            "variable": "argument",
+            "sites": [
+              "CONTROL (scratch only)"
+            ],
+            "frame": {
+              "function": "",
+              "url": "",
+              "scriptId": "119",
+              "line": 10,
+              "column": 87
+            }
+          },
+          {
+            "variable": "result",
+            "sites": [
+              "CONTROL (scratch only)"
+            ],
+            "frame": {
+              "function": "",
+              "url": "",
+              "scriptId": "119",
+              "line": 10,
+              "column": 87
+            }
+          }
+        ],
+        "observed_sites": [
+          "CONTROL (scratch only)"
+        ],
+        "classification": "freeze-write"
+      },
+      {
+        "pid": 12006,
+        "argv": [
+          "/opt/codex/runtimes/codex-primary-runtime/dependencies/node/bin/node",
+          "/workspace/scratch/ev14ch9/stage3/census/filter-readonly-freeze/control.cjs",
+          "/workspace/scratch/ev14ch9-readonly-freeze/self-tree/built/local/typescript.js"
+        ],
+        "cwd": "/workspace/scratch/ev14ch9",
+        "case": null,
+        "description": "TypeError: Cannot assign to read only property '0' of object '[object Array]'\n    at a.length (/workspace/scratch/ev14ch9/stage3/census/filter-readonly-freeze/control.cjs:8:102)\n    at Object.<anonymous> (/workspace/scratch/ev14ch9/stage3/census/filter-readonly-freeze/control.cjs:10:87)\n    at Module._compile (node:internal/modules/cjs/loader:1872:14)\n    at Object..js (node:internal/modules/cjs/loader:2003:10)\n    at Module.load (node:internal/modules/cjs/loader:1594:32)\n    at Module._load (node:internal/modules/cjs/loader:1396:12)\n    at wrapModuleLoad (node:internal/modules/cjs/loader:255:19)\n    at Module.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:154:5)\n    at node:internal/main/run_main_module:33:47",
+        "frames": [
+          {
+            "function": "a.length",
+            "url": "file:///workspace/scratch/ev14ch9/stage3/census/filter-readonly-freeze/control.cjs",
+            "scriptId": "119",
+            "line": 8,
+            "column": 102
+          },
+          {
+            "function": "",
+            "url": "file:///workspace/scratch/ev14ch9/stage3/census/filter-readonly-freeze/control.cjs",
+            "scriptId": "119",
+            "line": 10,
+            "column": 87
+          },
+          {
+            "function": "",
+            "url": "",
+            "scriptId": "68",
+            "line": 1872,
+            "column": 14
+          },
+          {
+            "function": "",
+            "url": "",
+            "scriptId": "68",
+            "line": 2003,
+            "column": 10
+          },
+          {
+            "function": "",
+            "url": "",
+            "scriptId": "68",
+            "line": 1594,
+            "column": 32
+          },
+          {
+            "function": "",
+            "url": "",
+            "scriptId": "68",
+            "line": 1396,
+            "column": 12
+          },
+          {
+            "function": "wrapModuleLoad",
+            "url": "",
+            "scriptId": "68",
+            "line": 255,
+            "column": 19
+          },
+          {
+            "function": "executeUserEntryPoint",
+            "url": "",
+            "scriptId": "81",
+            "line": 154,
+            "column": 5
+          },
+          {
+            "function": "",
+            "url": "",
+            "scriptId": "86",
+            "line": 33,
+            "column": 47
+          }
+        ],
+        "frozen_aliases": [
+          {
+            "variable": "a",
+            "sites": [
+              "CONTROL (scratch only)"
+            ],
+            "frame": {
+              "function": "a.length",
+              "url": "",
+              "scriptId": "119",
+              "line": 8,
+              "column": 102
+            }
+          },
+          {
+            "variable": "array",
+            "sites": [
+              "CONTROL (scratch only)"
+            ],
+            "frame": {
+              "function": "",
+              "url": "",
+              "scriptId": "119",
+              "line": 10,
+              "column": 87
+            }
+          },
+          {
+            "variable": "argument",
+            "sites": [
+              "CONTROL (scratch only)"
+            ],
+            "frame": {
+              "function": "",
+              "url": "",
+              "scriptId": "119",
+              "line": 10,
+              "column": 87
+            }
+          },
+          {
+            "variable": "result",
+            "sites": [
+              "CONTROL (scratch only)"
+            ],
+            "frame": {
+              "function": "",
+              "url": "",
+              "scriptId": "119",
+              "line": 10,
+              "column": 87
+            }
+          }
+        ],
+        "observed_sites": [
+          "CONTROL (scratch only)"
+        ],
+        "classification": "freeze-write"
+      },
+      {
+        "pid": 12006,
+        "argv": [
+          "/opt/codex/runtimes/codex-primary-runtime/dependencies/node/bin/node",
+          "/workspace/scratch/ev14ch9/stage3/census/filter-readonly-freeze/control.cjs",
+          "/workspace/scratch/ev14ch9-readonly-freeze/self-tree/built/local/typescript.js"
+        ],
+        "cwd": "/workspace/scratch/ev14ch9",
+        "case": null,
+        "description": "TypeError: Cannot assign to read only property '0' of object '[object Array]'\n    at a.length (/workspace/scratch/ev14ch9/stage3/census/filter-readonly-freeze/control.cjs:8:102)\n    at Object.<anonymous> (/workspace/scratch/ev14ch9/stage3/census/filter-readonly-freeze/control.cjs:10:87)\n    at Module._compile (node:internal/modules/cjs/loader:1872:14)\n    at Object..js (node:internal/modules/cjs/loader:2003:10)\n    at Module.load (node:internal/modules/cjs/loader:1594:32)\n    at Module._load (node:internal/modules/cjs/loader:1396:12)\n    at wrapModuleLoad (node:internal/modules/cjs/loader:255:19)\n    at Module.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:154:5)\n    at node:internal/main/run_main_module:33:47",
+        "frames": [
+          {
+            "function": "a.length",
+            "url": "file:///workspace/scratch/ev14ch9/stage3/census/filter-readonly-freeze/control.cjs",
+            "scriptId": "119",
+            "line": 8,
+            "column": 102
+          },
+          {
+            "function": "",
+            "url": "file:///workspace/scratch/ev14ch9/stage3/census/filter-readonly-freeze/control.cjs",
+            "scriptId": "119",
+            "line": 10,
+            "column": 87
+          },
+          {
+            "function": "",
+            "url": "",
+            "scriptId": "68",
+            "line": 1872,
+            "column": 14
+          },
+          {
+            "function": "",
+            "url": "",
+            "scriptId": "68",
+            "line": 2003,
+            "column": 10
+          },
+          {
+            "function": "",
+            "url": "",
+            "scriptId": "68",
+            "line": 1594,
+            "column": 32
+          },
+          {
+            "function": "",
+            "url": "",
+            "scriptId": "68",
+            "line": 1396,
+            "column": 12
+          },
+          {
+            "function": "wrapModuleLoad",
+            "url": "",
+            "scriptId": "68",
+            "line": 255,
+            "column": 19
+          },
+          {
+            "function": "executeUserEntryPoint",
+            "url": "",
+            "scriptId": "81",
+            "line": 154,
+            "column": 5
+          },
+          {
+            "function": "",
+            "url": "",
+            "scriptId": "86",
+            "line": 33,
+            "column": 47
+          }
+        ],
+        "frozen_aliases": [
+          {
+            "variable": "a",
+            "sites": [
+              "CONTROL (scratch only)"
+            ],
+            "frame": {
+              "function": "a.length",
+              "url": "",
+              "scriptId": "119",
+              "line": 8,
+              "column": 102
+            }
+          },
+          {
+            "variable": "array",
+            "sites": [
+              "CONTROL (scratch only)"
+            ],
+            "frame": {
+              "function": "",
+              "url": "",
+              "scriptId": "119",
+              "line": 10,
+              "column": 87
+            }
+          },
+          {
+            "variable": "argument",
+            "sites": [
+              "CONTROL (scratch only)"
+            ],
+            "frame": {
+              "function": "",
+              "url": "",
+              "scriptId": "119",
+              "line": 10,
+              "column": 87
+            }
+          },
+          {
+            "variable": "result",
+            "sites": [
+              "CONTROL (scratch only)"
+            ],
+            "frame": {
+              "function": "",
+              "url": "",
+              "scriptId": "119",
+              "line": 10,
+              "column": 87
+            }
+          }
+        ],
+        "observed_sites": [
+          "CONTROL (scratch only)"
+        ],
+        "classification": "freeze-write"
+      },
+      {
+        "pid": 12006,
+        "argv": [
+          "/opt/codex/runtimes/codex-primary-runtime/dependencies/node/bin/node",
+          "/workspace/scratch/ev14ch9/stage3/census/filter-readonly-freeze/control.cjs",
+          "/workspace/scratch/ev14ch9-readonly-freeze/self-tree/built/local/typescript.js"
+        ],
+        "cwd": "/workspace/scratch/ev14ch9",
+        "case": null,
+        "description": "TypeError: Cannot assign to read only property 'length' of object '[object Array]'\n    at cases (/workspace/scratch/ev14ch9/stage3/census/filter-readonly-freeze/control.cjs:8:129)\n    at Object.<anonymous> (/workspace/scratch/ev14ch9/stage3/census/filter-readonly-freeze/control.cjs:10:87)\n    at Module._compile (node:internal/modules/cjs/loader:1872:14)\n    at Object..js (node:internal/modules/cjs/loader:2003:10)\n    at Module.load (node:internal/modules/cjs/loader:1594:32)\n    at Module._load (node:internal/modules/cjs/loader:1396:12)\n    at wrapModuleLoad (node:internal/modules/cjs/loader:255:19)\n    at Module.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:154:5)\n    at node:internal/main/run_main_module:33:47",
+        "frames": [
+          {
+            "function": "cases",
+            "url": "file:///workspace/scratch/ev14ch9/stage3/census/filter-readonly-freeze/control.cjs",
+            "scriptId": "119",
+            "line": 8,
+            "column": 129
+          },
+          {
+            "function": "",
+            "url": "file:///workspace/scratch/ev14ch9/stage3/census/filter-readonly-freeze/control.cjs",
+            "scriptId": "119",
+            "line": 10,
+            "column": 87
+          },
+          {
+            "function": "",
+            "url": "",
+            "scriptId": "68",
+            "line": 1872,
+            "column": 14
+          },
+          {
+            "function": "",
+            "url": "",
+            "scriptId": "68",
+            "line": 2003,
+            "column": 10
+          },
+          {
+            "function": "",
+            "url": "",
+            "scriptId": "68",
+            "line": 1594,
+            "column": 32
+          },
+          {
+            "function": "",
+            "url": "",
+            "scriptId": "68",
+            "line": 1396,
+            "column": 12
+          },
+          {
+            "function": "wrapModuleLoad",
+            "url": "",
+            "scriptId": "68",
+            "line": 255,
+            "column": 19
+          },
+          {
+            "function": "executeUserEntryPoint",
+            "url": "",
+            "scriptId": "81",
+            "line": 154,
+            "column": 5
+          },
+          {
+            "function": "",
+            "url": "",
+            "scriptId": "86",
+            "line": 33,
+            "column": 47
+          }
+        ],
+        "frozen_aliases": [
+          {
+            "variable": "a",
+            "sites": [
+              "CONTROL (scratch only)"
+            ],
+            "frame": {
+              "function": "cases",
+              "url": "",
+              "scriptId": "119",
+              "line": 8,
+              "column": 129
+            }
+          },
+          {
+            "variable": "array",
+            "sites": [
+              "CONTROL (scratch only)"
+            ],
+            "frame": {
+              "function": "",
+              "url": "",
+              "scriptId": "119",
+              "line": 10,
+              "column": 87
+            }
+          },
+          {
+            "variable": "argument",
+            "sites": [
+              "CONTROL (scratch only)"
+            ],
+            "frame": {
+              "function": "",
+              "url": "",
+              "scriptId": "119",
+              "line": 10,
+              "column": 87
+            }
+          },
+          {
+            "variable": "result",
+            "sites": [
+              "CONTROL (scratch only)"
+            ],
+            "frame": {
+              "function": "",
+              "url": "",
+              "scriptId": "119",
+              "line": 10,
+              "column": 87
+            }
+          }
+        ],
+        "observed_sites": [
+          "CONTROL (scratch only)"
+        ],
+        "classification": "freeze-write"
+      },
+      {
+        "pid": 12006,
+        "argv": [
+          "/opt/codex/runtimes/codex-primary-runtime/dependencies/node/bin/node",
+          "/workspace/scratch/ev14ch9/stage3/census/filter-readonly-freeze/control.cjs",
+          "/workspace/scratch/ev14ch9-readonly-freeze/self-tree/built/local/typescript.js"
+        ],
+        "cwd": "/workspace/scratch/ev14ch9",
+        "case": null,
+        "description": "TypeError: Cannot assign to read only property 'length' of object '[object Array]'\n    at cases (/workspace/scratch/ev14ch9/stage3/census/filter-readonly-freeze/control.cjs:8:129)\n    at Object.<anonymous> (/workspace/scratch/ev14ch9/stage3/census/filter-readonly-freeze/control.cjs:10:87)\n    at Module._compile (node:internal/modules/cjs/loader:1872:14)\n    at Object..js (node:internal/modules/cjs/loader:2003:10)\n    at Module.load (node:internal/modules/cjs/loader:1594:32)\n    at Module._load (node:internal/modules/cjs/loader:1396:12)\n    at wrapModuleLoad (node:internal/modules/cjs/loader:255:19)\n    at Module.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:154:5)\n    at node:internal/main/run_main_module:33:47",
+        "frames": [
+          {
+            "function": "cases",
+            "url": "file:///workspace/scratch/ev14ch9/stage3/census/filter-readonly-freeze/control.cjs",
+            "scriptId": "119",
+            "line": 8,
+            "column": 129
+          },
+          {
+            "function": "",
+            "url": "file:///workspace/scratch/ev14ch9/stage3/census/filter-readonly-freeze/control.cjs",
+            "scriptId": "119",
+            "line": 10,
+            "column": 87
+          },
+          {
+            "function": "",
+            "url": "",
+            "scriptId": "68",
+            "line": 1872,
+            "column": 14
+          },
+          {
+            "function": "",
+            "url": "",
+            "scriptId": "68",
+            "line": 2003,
+            "column": 10
+          },
+          {
+            "function": "",
+            "url": "",
+            "scriptId": "68",
+            "line": 1594,
+            "column": 32
+          },
+          {
+            "function": "",
+            "url": "",
+            "scriptId": "68",
+            "line": 1396,
+            "column": 12
+          },
+          {
+            "function": "wrapModuleLoad",
+            "url": "",
+            "scriptId": "68",
+            "line": 255,
+            "column": 19
+          },
+          {
+            "function": "executeUserEntryPoint",
+            "url": "",
+            "scriptId": "81",
+            "line": 154,
+            "column": 5
+          },
+          {
+            "function": "",
+            "url": "",
+            "scriptId": "86",
+            "line": 33,
+            "column": 47
+          }
+        ],
+        "frozen_aliases": [
+          {
+            "variable": "a",
+            "sites": [
+              "CONTROL (scratch only)"
+            ],
+            "frame": {
+              "function": "cases",
+              "url": "",
+              "scriptId": "119",
+              "line": 8,
+              "column": 129
+            }
+          },
+          {
+            "variable": "array",
+            "sites": [
+              "CONTROL (scratch only)"
+            ],
+            "frame": {
+              "function": "",
+              "url": "",
+              "scriptId": "119",
+              "line": 10,
+              "column": 87
+            }
+          },
+          {
+            "variable": "argument",
+            "sites": [
+              "CONTROL (scratch only)"
+            ],
+            "frame": {
+              "function": "",
+              "url": "",
+              "scriptId": "119",
+              "line": 10,
+              "column": 87
+            }
+          },
+          {
+            "variable": "result",
+            "sites": [
+              "CONTROL (scratch only)"
+            ],
+            "frame": {
+              "function": "",
+              "url": "",
+              "scriptId": "119",
+              "line": 10,
+              "column": 87
+            }
+          }
+        ],
+        "observed_sites": [
+          "CONTROL (scratch only)"
+        ],
+        "classification": "freeze-write"
+      }
+    ],
+    "unrelated_throws": [],
+    "unclassified_throws": [],
+    "observer_errors": []
+  },
+  "bootstrap": {
+    "entry_count_available": true,
+    "call_count_kind": "entries",
+    "counts": {
+      "src/compiler/utilitiesPublic.ts:1030:16": {
+        "calls": 0,
+        "completed": 0,
+        "identity": 0,
+        "frozen_arrays": 0,
+        "undefined_identity": 0
+      },
+      "src/compiler/utilitiesPublic.ts:1036:16": {
+        "calls": 0,
+        "completed": 0,
+        "identity": 0,
+        "frozen_arrays": 0,
+        "undefined_identity": 0
+      },
+      "src/compiler/utilities.ts:4691:20": {
+        "calls": 0,
+        "completed": 0,
+        "identity": 0,
+        "frozen_arrays": 0,
+        "undefined_identity": 0
+      },
+      "src/compiler/utilities.ts:8019:12": {
+        "calls": 0,
+        "completed": 0,
+        "identity": 0,
+        "frozen_arrays": 0,
+        "undefined_identity": 0
+      },
+      "src/compiler/commandLineParser.ts:3188:54": {
+        "calls": 0,
+        "completed": 0,
+        "identity": 0,
+        "frozen_arrays": 0,
+        "undefined_identity": 0
+      },
+      "src/compiler/checker.ts:3138:58": {
+        "calls": 0,
+        "completed": 0,
+        "identity": 0,
+        "frozen_arrays": 0,
+        "undefined_identity": 0
+      },
+      "src/compiler/checker.ts:11961:38": {
+        "calls": 0,
+        "completed": 0,
+        "identity": 0,
+        "frozen_arrays": 0,
+        "undefined_identity": 0
+      },
+      "src/compiler/checker.ts:32639:25": {
+        "calls": 0,
+        "completed": 0,
+        "identity": 0,
+        "frozen_arrays": 0,
+        "undefined_identity": 0
+      },
+      "src/compiler/checker.ts:46866:33": {
+        "calls": 0,
+        "completed": 0,
+        "identity": 0,
+        "frozen_arrays": 0,
+        "undefined_identity": 0
+      },
+      "src/compiler/transformers/utilities.ts:603:12": {
+        "calls": 0,
+        "completed": 0,
+        "identity": 0,
+        "frozen_arrays": 0,
+        "undefined_identity": 0
+      },
+      "src/compiler/transformers/ts.ts:1053:13": {
+        "calls": 0,
+        "completed": 0,
+        "identity": 0,
+        "frozen_arrays": 0,
+        "undefined_identity": 0
+      },
+      "src/compiler/transformers/ts.ts:1086:38": {
+        "calls": 0,
+        "completed": 0,
+        "identity": 0,
+        "frozen_arrays": 0,
+        "undefined_identity": 0
+      },
+      "src/compiler/transformers/ts.ts:1100:42": {
+        "calls": 0,
+        "completed": 0,
+        "identity": 0,
+        "frozen_arrays": 0,
+        "undefined_identity": 0
+      },
+      "src/compiler/transformers/ts.ts:1102:42": {
+        "calls": 0,
+        "completed": 0,
+        "identity": 0,
+        "frozen_arrays": 0,
+        "undefined_identity": 0
+      },
+      "src/compiler/transformers/ts.ts:1383:13": {
+        "calls": 0,
+        "completed": 0,
+        "identity": 0,
+        "frozen_arrays": 0,
+        "undefined_identity": 0
+      },
+      "src/compiler/transformers/classFields.ts:852:25": {
+        "calls": 0,
+        "completed": 0,
+        "identity": 0,
+        "frozen_arrays": 0,
+        "undefined_identity": 0
+      },
+      "src/compiler/transformers/classFields.ts:1707:16": {
+        "calls": 0,
+        "completed": 0,
+        "identity": 0,
+        "frozen_arrays": 0,
+        "undefined_identity": 0
+      },
+      "src/services/utilities.ts:2616:38": {
+        "calls": 0,
+        "completed": 0,
+        "identity": 0,
+        "frozen_arrays": 0,
+        "undefined_identity": 0
+      },
+      "src/services/codefixes/convertFunctionToEs6Class.ts:314:39": {
+        "calls": 0,
+        "completed": 0,
+        "identity": 0,
+        "frozen_arrays": 0,
+        "undefined_identity": 0
+      },
+      "src/services/codefixes/convertToEsModule.ts:137:29": {
+        "calls": 0,
+        "completed": 0,
+        "identity": 0,
+        "frozen_arrays": 0,
+        "undefined_identity": 0
+      },
+      "src/services/goToDefinition.ts:180:30": {
+        "calls": 0,
+        "completed": 0,
+        "identity": 0,
+        "frozen_arrays": 0,
+        "undefined_identity": 0
+      },
+      "src/testRunner/unittests/services/organizeImports.ts:1133:25": {
+        "calls": 0,
+        "completed": 0,
+        "identity": 0,
+        "frozen_arrays": 0,
+        "undefined_identity": 0
+      },
+      "src/testRunner/unittests/services/organizeImports.ts:1140:25": {
+        "calls": 0,
+        "completed": 0,
+        "identity": 0,
+        "frozen_arrays": 0,
+        "undefined_identity": 0
+      }
+    },
+    "totals": {
+      "calls": 0,
+      "completed": 0,
+      "identity": 0,
+      "frozen_arrays": 0,
+      "undefined_identity": 0
+    },
+    "processes": [
+      {
+        "pid": 11833,
+        "argv": [
+          "/opt/codex/runtimes/codex-primary-runtime/dependencies/node/bin/node",
+          "/opt/codex/runtimes/codex-primary-runtime/dependencies/node/bin/npm",
+          "run",
+          "build"
+        ],
+        "cwd": "/workspace/scratch/ev14ch9-readonly-freeze/self-tree",
+        "case": null,
+        "exit": 0,
+        "signal": null,
+        "counter_mode": "entry-and-completion",
+        "freezeEvents": 0,
+        "exceptionEvents": 35,
+        "freezeThrows": 0
+      },
+      {
+        "pid": 11845,
+        "argv": [
+          "/opt/codex/runtimes/codex-primary-runtime/dependencies/node/bin/node",
+          "/opt/codex/runtimes/codex-primary-runtime/dependencies/node/bin/npm",
+          "run",
+          "build:compiler"
+        ],
+        "cwd": "/workspace/scratch/ev14ch9-readonly-freeze/self-tree",
+        "case": null,
+        "exit": 0,
+        "signal": null,
+        "counter_mode": "entry-and-completion",
+        "freezeEvents": 0,
+        "exceptionEvents": 28,
+        "freezeThrows": 0
+      },
+      {
+        "pid": 11857,
+        "argv": [
+          "/opt/codex/runtimes/codex-primary-runtime/dependencies/node/bin/node",
+          "/workspace/scratch/ev14ch9-readonly-freeze/self-tree/node_modules/.bin/hereby",
+          "local"
+        ],
+        "cwd": "/workspace/scratch/ev14ch9-readonly-freeze/self-tree",
+        "case": null,
+        "exit": 0,
+        "signal": null,
+        "counter_mode": "entry-and-completion",
+        "freezeEvents": 0,
+        "exceptionEvents": 0,
+        "freezeThrows": 0
+      },
+      {
+        "pid": 11864,
+        "argv": [
+          "/opt/codex/runtimes/codex-primary-runtime/dependencies/node/bin/node",
+          "/workspace/scratch/ev14ch9-readonly-freeze/self-tree/scripts/processDiagnosticMessages.mjs",
+          "src/compiler/diagnosticMessages.json"
+        ],
+        "cwd": "/workspace/scratch/ev14ch9-readonly-freeze/self-tree",
+        "case": null,
+        "exit": 0,
+        "signal": null,
+        "counter_mode": "entry-and-completion",
+        "freezeEvents": 0,
+        "exceptionEvents": 0,
+        "freezeThrows": 0
+      },
+      {
+        "pid": 11881,
+        "argv": [
+          "/opt/codex/runtimes/codex-primary-runtime/dependencies/node/bin/node",
+          "/workspace/scratch/ev14ch9-readonly-freeze/self-tree/node_modules/typescript/lib/tsc.js",
+          "-b",
+          "src/watchGuard"
+        ],
+        "cwd": "/workspace/scratch/ev14ch9-readonly-freeze/self-tree",
+        "case": null,
+        "exit": 0,
+        "signal": null,
+        "counter_mode": "entry-and-completion",
+        "freezeEvents": 0,
+        "exceptionEvents": 1,
+        "freezeThrows": 0
+      },
+      {
+        "pid": 11892,
+        "argv": [
+          "/opt/codex/runtimes/codex-primary-runtime/dependencies/node/bin/node",
+          "/workspace/scratch/ev14ch9-readonly-freeze/self-tree/scripts/generateLocalizedDiagnosticMessages.mjs",
+          "src/loc/lcl",
+          "built/local",
+          "src/compiler/diagnosticMessages.generated.json"
+        ],
+        "cwd": "/workspace/scratch/ev14ch9-readonly-freeze/self-tree",
+        "case": null,
+        "exit": 0,
+        "signal": null,
+        "counter_mode": "entry-and-completion",
+        "freezeEvents": 0,
+        "exceptionEvents": 0,
+        "freezeThrows": 0
+      },
+      {
+        "pid": 11903,
+        "argv": [
+          "/opt/codex/runtimes/codex-primary-runtime/dependencies/node/bin/node",
+          "/workspace/scratch/ev14ch9-readonly-freeze/self-tree/node_modules/typescript/lib/tsc.js",
+          "-b",
+          "src/tsc",
+          "src/typescript",
+          "src/tsserver",
+          "src/typingsInstaller"
+        ],
+        "cwd": "/workspace/scratch/ev14ch9-readonly-freeze/self-tree",
+        "case": null,
+        "exit": 0,
+        "signal": null,
+        "counter_mode": "entry-and-completion",
+        "freezeEvents": 0,
+        "exceptionEvents": 21,
+        "freezeThrows": 0
+      },
+      {
+        "pid": 11996,
+        "argv": [
+          "/opt/codex/runtimes/codex-primary-runtime/dependencies/node/bin/node",
+          "/workspace/scratch/ev14ch9-readonly-freeze/self-tree/scripts/dtsBundler.mjs",
+          "--entrypoint",
+          "./built/local/typescript/typescript.d.ts",
+          "--output",
+          "./built/local/typescript.d.ts"
+        ],
+        "cwd": "/workspace/scratch/ev14ch9-readonly-freeze/self-tree",
+        "case": null,
+        "exit": 0,
+        "signal": null,
+        "counter_mode": "entry-and-completion",
+        "freezeEvents": 0,
+        "exceptionEvents": 0,
+        "freezeThrows": 0
+      },
+      {
+        "pid": 12014,
+        "argv": [
+          "/opt/codex/runtimes/codex-primary-runtime/dependencies/node/bin/node",
+          "/opt/codex/runtimes/codex-primary-runtime/dependencies/node/bin/npm",
+          "run",
+          "build:tests"
+        ],
+        "cwd": "/workspace/scratch/ev14ch9-readonly-freeze/self-tree",
+        "case": null,
+        "exit": 0,
+        "signal": null,
+        "counter_mode": "entry-and-completion",
+        "freezeEvents": 0,
+        "exceptionEvents": 28,
+        "freezeThrows": 0
+      },
+      {
+        "pid": 12026,
+        "argv": [
+          "/opt/codex/runtimes/codex-primary-runtime/dependencies/node/bin/node",
+          "/workspace/scratch/ev14ch9-readonly-freeze/self-tree/node_modules/.bin/hereby",
+          "tests"
+        ],
+        "cwd": "/workspace/scratch/ev14ch9-readonly-freeze/self-tree",
+        "case": null,
+        "exit": 0,
+        "signal": null,
+        "counter_mode": "entry-and-completion",
+        "freezeEvents": 0,
+        "exceptionEvents": 0,
+        "freezeThrows": 0
+      },
+      {
+        "pid": 12037,
+        "argv": [
+          "/opt/codex/runtimes/codex-primary-runtime/dependencies/node/bin/node",
+          "/workspace/scratch/ev14ch9-readonly-freeze/self-tree/scripts/processDiagnosticMessages.mjs",
+          "src/compiler/diagnosticMessages.json"
+        ],
+        "cwd": "/workspace/scratch/ev14ch9-readonly-freeze/self-tree",
+        "case": null,
+        "exit": 0,
+        "signal": null,
+        "counter_mode": "entry-and-completion",
+        "freezeEvents": 0,
+        "exceptionEvents": 0,
+        "freezeThrows": 0
+      },
+      {
+        "pid": 12057,
+        "argv": [
+          "/opt/codex/runtimes/codex-primary-runtime/dependencies/node/bin/node",
+          "/workspace/scratch/ev14ch9-readonly-freeze/self-tree/node_modules/typescript/lib/tsc.js",
+          "-b",
+          "src/testRunner"
+        ],
+        "cwd": "/workspace/scratch/ev14ch9-readonly-freeze/self-tree",
+        "case": null,
+        "exit": 0,
+        "signal": null,
+        "counter_mode": "entry-and-completion",
+        "freezeEvents": 0,
+        "exceptionEvents": 17,
+        "freezeThrows": 0
+      }
+    ],
+    "throws": [],
+    "freeze_write_throws": [],
+    "unrelated_throws": [],
+    "unclassified_throws": [],
+    "observer_errors": []
+  }
+}

@@ -1,0 +1,13 @@
+const fs=require('node:fs'),path=require('node:path');
+const dir=path.join(__dirname,'evidence');
+const before=JSON.parse(fs.readFileSync(path.join(dir,'resolved-calls.json')));
+const after=JSON.parse(fs.readFileSync(path.join(dir,'instrumented-resolved-calls.json')));
+const key=r=>[r.where.split(':')[0],r.declaration_where,r.argument_type,r.result_type];
+const differences=[];
+if(before.length!==after.length)differences.push({before:before.length,after:after.length});
+for(let i=0;i<before.length;i++)if(JSON.stringify(key(before[i]))!==JSON.stringify(key(after[i])))differences.push({before:key(before[i]),after:key(after[i])});
+const untouched=before.filter((r,i)=>!/:(265|273):1$/.test(r.declaration_where)&&r.call===after[i].call).length;
+if(untouched!==134)differences.push({untouched_other_calls:untouched,expected:134});
+fs.writeFileSync(path.join(dir,'type-preservation.json'),JSON.stringify({calls:before.length,untouched_other_calls:untouched,differences},null,2)+'\n');
+if(differences.length)throw Error('Instrumentation changed filter overload/result or argument types');
+console.log('All 157 original filter calls retain overload, argument type and result type.');

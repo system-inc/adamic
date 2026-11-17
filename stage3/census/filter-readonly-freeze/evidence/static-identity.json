@@ -1,0 +1,156 @@
+{
+  "all_calls": 157,
+  "selected_calls": 23,
+  "overloads": {
+    "1": 5,
+    "2": 60,
+    "3": 14,
+    "4": 41,
+    "5": 11,
+    "6": 13,
+    "7": 9,
+    "8": 4
+  },
+  "direct_comparisons_with_argument": 0,
+  "sites": [
+    {
+      "site": "src/compiler/utilitiesPublic.ts:1030:16",
+      "overload": 7,
+      "direct_identity": false,
+      "identity_uses": []
+    },
+    {
+      "site": "src/compiler/utilitiesPublic.ts:1036:16",
+      "overload": 7,
+      "direct_identity": false,
+      "identity_uses": []
+    },
+    {
+      "site": "src/compiler/utilities.ts:4691:20",
+      "overload": 7,
+      "direct_identity": false,
+      "identity_uses": []
+    },
+    {
+      "site": "src/compiler/utilities.ts:8019:12",
+      "overload": 3,
+      "direct_identity": false,
+      "identity_uses": []
+    },
+    {
+      "site": "src/compiler/commandLineParser.ts:3188:54",
+      "overload": 7,
+      "direct_identity": false,
+      "identity_uses": []
+    },
+    {
+      "site": "src/compiler/checker.ts:3138:58",
+      "overload": 3,
+      "direct_identity": false,
+      "identity_uses": []
+    },
+    {
+      "site": "src/compiler/checker.ts:11961:38",
+      "overload": 3,
+      "direct_identity": false,
+      "identity_uses": []
+    },
+    {
+      "site": "src/compiler/checker.ts:32639:25",
+      "overload": 3,
+      "direct_identity": false,
+      "identity_uses": []
+    },
+    {
+      "site": "src/compiler/checker.ts:46866:33",
+      "overload": 3,
+      "direct_identity": false,
+      "identity_uses": []
+    },
+    {
+      "site": "src/compiler/transformers/utilities.ts:603:12",
+      "overload": 3,
+      "direct_identity": false,
+      "identity_uses": []
+    },
+    {
+      "site": "src/compiler/transformers/ts.ts:1053:13",
+      "overload": 3,
+      "direct_identity": false,
+      "identity_uses": []
+    },
+    {
+      "site": "src/compiler/transformers/ts.ts:1086:38",
+      "overload": 7,
+      "direct_identity": false,
+      "identity_uses": []
+    },
+    {
+      "site": "src/compiler/transformers/ts.ts:1100:42",
+      "overload": 7,
+      "direct_identity": false,
+      "identity_uses": []
+    },
+    {
+      "site": "src/compiler/transformers/ts.ts:1102:42",
+      "overload": 7,
+      "direct_identity": false,
+      "identity_uses": []
+    },
+    {
+      "site": "src/compiler/transformers/ts.ts:1383:13",
+      "overload": 3,
+      "direct_identity": false,
+      "identity_uses": []
+    },
+    {
+      "site": "src/compiler/transformers/classFields.ts:852:25",
+      "overload": 7,
+      "direct_identity": false,
+      "identity_uses": []
+    },
+    {
+      "site": "src/compiler/transformers/classFields.ts:1707:16",
+      "overload": 3,
+      "direct_identity": false,
+      "identity_uses": []
+    },
+    {
+      "site": "src/services/utilities.ts:2616:38",
+      "overload": 3,
+      "direct_identity": false,
+      "identity_uses": []
+    },
+    {
+      "site": "src/services/codefixes/convertFunctionToEs6Class.ts:314:39",
+      "overload": 7,
+      "direct_identity": false,
+      "identity_uses": []
+    },
+    {
+      "site": "src/services/codefixes/convertToEsModule.ts:137:29",
+      "overload": 3,
+      "direct_identity": false,
+      "identity_uses": []
+    },
+    {
+      "site": "src/services/goToDefinition.ts:180:30",
+      "overload": 3,
+      "direct_identity": false,
+      "identity_uses": []
+    },
+    {
+      "site": "src/testRunner/unittests/services/organizeImports.ts:1133:25",
+      "overload": 3,
+      "direct_identity": false,
+      "identity_uses": []
+    },
+    {
+      "site": "src/testRunner/unittests/services/organizeImports.ts:1140:25",
+      "overload": 3,
+      "direct_identity": false,
+      "identity_uses": []
+    }
+  ],
+  "limitation": "This lexical/local-reference count does not establish arbitrary later comparisons through a stored slot. Identity remains a premise."
+}

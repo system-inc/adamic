@@ -177,3 +177,57 @@ The full latent census records **0 findings for each of the ten controls**, with
 Reproduce with `python3 overload-measurement/run.py BASELINE_TREE SCRATCH SCAN_BINARY LATENT_BINARY` from this report's directory, using the unchanged main scan-all and latent overlays built earlier. [Raw controls and observations](overload-measurement/evidence/) include exact sources, stdout, stderr, exit codes, full latent streams, and combined results. The resolved counts are the existing completed 713-root census in `evidence/before-count.json.gz`.
 
 No landing adaptation, ledger line or internal source change. This measurement is pushed before measurement 2 begins.
+
+## Measurement 2: scoped readonly narrowing freeze count (2026-11-17)
+
+Reports only on base `49f1d643064a9231f7f343d8bbd02ba718866e6a`. Measurement 1 was pushed at `2f473173f` before this measurement began. The 713-root stock checker selects exactly 23 original core filter calls: overload 3 has 14 and overload 7 has 9. The other 134 call expressions and filter itself remain unchanged. All 157 calls retain their resolved overload, argument type and result type after wrapping.
+
+The entry/completion wrapper, V8 pause-on-all-exceptions observer, WeakMap array provenance, caught/escaping exception handling, VM bridge and control are from `df886e40:stage3/census/filter-freeze`. The observer, control, resolver and aggregator are byte-identical. Scope changes affect the selected declaration coordinates (265 and 273), expected set size (23), remaining-call count (134), and report-tool paths only; tool-provenance.json records both hashes. Each argument is evaluated once; a result equal to it is frozen only if it is an array. No copy, proxy or substitute result is used.
+
+The same control imports the actual built adapted compiler filter. It records push, splice, sort, index assignment and length assignment through **both argument and result handles**: ten TypeErrors, all caught and recorded by the observer, no observer error or unclassified candidate. The control also proves the dropped-element result and input stay mutable, undefined counts without freezing, and a throwing predicate increments entry without completion. See [control validation](../filter-readonly-freeze/evidence/control-validation.json).
+
+Self compilation uses the instrumented `built/local/tsc.js -b src/compiler src/tsc --force --pretty false`, after `npm ci` and the complete `npm run build` exited 0. Canonical self output is self-final-counts, collected after bootstrap completed. An earlier self run overlapping the final build tasks is retained separately and excluded. Bootstrap entries are separately counted and excluded.
+
+The whole unfiltered lane uses the original run.py executed in memory with the original after-apply instrumentation hook and `FILTER_FREEZE_WORKERS=4`, matching df886e40's canonical run on this four-CPU environment. All runners, test selection and 40,000 ms timeout remain unchanged. The lane's eight-worker guard is untouched; its actual verdict is retained, never relabeled as a pass.
+
+Table cells: **calls / returns identical to argument / array identities**. Calls count entries, not only successful returns. Writes count post-call writes identified by observer provenance; every site's zero is retained.
+
+| Original site | Overload | Self | Whole lane | Writes self / lane |
+| --- | ---: | ---: | ---: | ---: |
+| `src/compiler/utilitiesPublic.ts:1030:16` | 7 | 0 / 0 / 0 | pending | 0 / pending |
+| `src/compiler/utilitiesPublic.ts:1036:16` | 7 | 0 / 0 / 0 | pending | 0 / pending |
+| `src/compiler/utilities.ts:4691:20` | 7 | 0 / 0 / 0 | pending | 0 / pending |
+| `src/compiler/utilities.ts:8019:12` | 3 | 0 / 0 / 0 | pending | 0 / pending |
+| `src/compiler/commandLineParser.ts:3188:54` | 7 | 2 / 2 / 0 | pending | 0 / pending |
+| `src/compiler/checker.ts:3138:58` | 3 | 0 / 0 / 0 | pending | 0 / pending |
+| `src/compiler/checker.ts:11961:38` | 3 | 0 / 0 / 0 | pending | 0 / pending |
+| `src/compiler/checker.ts:32639:25` | 3 | 596 / 24 / 24 | pending | 0 / pending |
+| `src/compiler/checker.ts:46866:33` | 3 | 14,330 / 14,312 / 14,312 | pending | 0 / pending |
+| `src/compiler/transformers/utilities.ts:603:12` | 3 | 0 / 0 / 0 | pending | 0 / pending |
+| `src/compiler/transformers/ts.ts:1053:13` | 3 | 0 / 0 / 0 | pending | 0 / pending |
+| `src/compiler/transformers/ts.ts:1086:38` | 7 | 0 / 0 / 0 | pending | 0 / pending |
+| `src/compiler/transformers/ts.ts:1100:42` | 7 | 0 / 0 / 0 | pending | 0 / pending |
+| `src/compiler/transformers/ts.ts:1102:42` | 7 | 0 / 0 / 0 | pending | 0 / pending |
+| `src/compiler/transformers/ts.ts:1383:13` | 3 | 0 / 0 / 0 | pending | 0 / pending |
+| `src/compiler/transformers/classFields.ts:852:25` | 7 | 0 / 0 / 0 | pending | 0 / pending |
+| `src/compiler/transformers/classFields.ts:1707:16` | 3 | 0 / 0 / 0 | pending | 0 / pending |
+| `src/services/utilities.ts:2616:38` | 3 | 0 / 0 / 0 | pending | 0 / pending |
+| `src/services/codefixes/convertFunctionToEs6Class.ts:314:39` | 7 | 0 / 0 / 0 | pending | 0 / pending |
+| `src/services/codefixes/convertToEsModule.ts:137:29` | 3 | 0 / 0 / 0 | pending | 0 / pending |
+| `src/services/goToDefinition.ts:180:30` | 3 | 0 / 0 / 0 | pending | 0 / pending |
+| `src/testRunner/unittests/services/organizeImports.ts:1133:25` | 3 | 0 / 0 / 0 | pending | 0 / pending |
+| `src/testRunner/unittests/services/organizeImports.ts:1140:25` | 3 | 0 / 0 / 0 | pending | 0 / pending |
+
+**self:** totals `{"calls": 14928, "completed": 14928, "frozen_arrays": 14336, "identity": 14338, "undefined_identity": 2}`; freeze writes 0, unrelated candidates 0, unclassified candidates 0, observer errors 0.
+
+Sites with **no calls** in self: `src/compiler/utilitiesPublic.ts:1030:16`, `src/compiler/utilitiesPublic.ts:1036:16`, `src/compiler/utilities.ts:4691:20`, `src/compiler/utilities.ts:8019:12`, `src/compiler/checker.ts:3138:58`, `src/compiler/checker.ts:11961:38`, `src/compiler/transformers/utilities.ts:603:12`, `src/compiler/transformers/ts.ts:1053:13`, `src/compiler/transformers/ts.ts:1086:38`, `src/compiler/transformers/ts.ts:1100:42`, `src/compiler/transformers/ts.ts:1102:42`, `src/compiler/transformers/ts.ts:1383:13`, `src/compiler/transformers/classFields.ts:852:25`, `src/compiler/transformers/classFields.ts:1707:16`, `src/services/utilities.ts:2616:38`, `src/services/codefixes/convertFunctionToEs6Class.ts:314:39`, `src/services/codefixes/convertToEsModule.ts:137:29`, `src/services/goToDefinition.ts:180:30`, `src/testRunner/unittests/services/organizeImports.ts:1133:25`, `src/testRunner/unittests/services/organizeImports.ts:1140:25`.
+
+Called sites with **no exercised array identity** in self: `src/compiler/commandLineParser.ts:3188:54`.
+
+**bootstrap:** totals `{"calls": 0, "completed": 0, "frozen_arrays": 0, "identity": 0, "undefined_identity": 0}`; freeze writes 0, unrelated candidates 0, unclassified candidates 0, observer errors 0.
+
+Whole lane is running; this checkpoint makes no complete-lane claim.
+
+**Identity remains a premise.** Direct comparisons with the argument: 0. The reused static lexical/local-reference inventory does not see arbitrary later comparisons through a stored slot and is not a whole-program identity proof. Freezing preserves identity, so no observation here proves that changing identity by copying is safe. Likewise zero observed writes is limited to the workloads and paths exercised.
+
+[Measurement tools and raw evidence](../filter-readonly-freeze/) contain the site inventory, type-preservation check, static comparison count, per-process counters, exception stacks, source hashes, logs and exact exit codes. Raw bootstrap, preliminary self, canonical self, control and lane observations are kept separate. No landing adaptation, ledger line or internal/ change.

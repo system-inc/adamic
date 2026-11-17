@@ -1,0 +1,82 @@
+{
+  "ten_write_cases": [
+    {
+      "site": "CONTROL (scratch only)",
+      "writer": "push",
+      "alias": "argument",
+      "error": "TypeError: Cannot add property 2, object is not extensible\n    at Array.push (<anonymous>)\n    at /workspace/scratch/ev14ch9/stage3/census/filter-readonly-freeze/control.cjs:8:27\n    at Object.<anonymous> (/workspace/scratch/ev14ch9/stage3/census/filter-readonly-freeze/control.cjs:10:87)\n    at Module._compile (node:internal/modules/cjs/loader:1872:14)\n    at Object..js (node:internal/modules/cjs/loader:2003:10)\n    at Module.load (node:internal/modules/cjs/loader:1594:32)\n    at Module._load (node:internal/modules/cjs/loader:1396:12)\n    at wrapModuleLoad (node:internal/modules/cjs/loader:255:19)\n    at Module.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:154:5)\n    at node:internal/main/run_main_module:33:47"
+    },
+    {
+      "site": "CONTROL (scratch only)",
+      "writer": "push",
+      "alias": "result",
+      "error": "TypeError: Cannot add property 2, object is not extensible\n    at Array.push (<anonymous>)\n    at /workspace/scratch/ev14ch9/stage3/census/filter-readonly-freeze/control.cjs:8:27\n    at Object.<anonymous> (/workspace/scratch/ev14ch9/stage3/census/filter-readonly-freeze/control.cjs:10:87)\n    at Module._compile (node:internal/modules/cjs/loader:1872:14)\n    at Object..js (node:internal/modules/cjs/loader:2003:10)\n    at Module.load (node:internal/modules/cjs/loader:1594:32)\n    at Module._load (node:internal/modules/cjs/loader:1396:12)\n    at wrapModuleLoad (node:internal/modules/cjs/loader:255:19)\n    at Module.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:154:5)\n    at node:internal/main/run_main_module:33:47"
+    },
+    {
+      "site": "CONTROL (scratch only)",
+      "writer": "splice",
+      "alias": "argument",
+      "error": "TypeError: Cannot assign to read only property '0' of object '[object Array]'\n    at Array.splice (<anonymous>)\n    at /workspace/scratch/ev14ch9/stage3/census/filter-readonly-freeze/control.cjs:8:51\n    at Object.<anonymous> (/workspace/scratch/ev14ch9/stage3/census/filter-readonly-freeze/control.cjs:10:87)\n    at Module._compile (node:internal/modules/cjs/loader:1872:14)\n    at Object..js (node:internal/modules/cjs/loader:2003:10)\n    at Module.load (node:internal/modules/cjs/loader:1594:32)\n    at Module._load (node:internal/modules/cjs/loader:1396:12)\n    at wrapModuleLoad (node:internal/modules/cjs/loader:255:19)\n    at Module.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:154:5)\n    at node:internal/main/run_main_module:33:47"
+    },
+    {
+      "site": "CONTROL (scratch only)",
+      "writer": "splice",
+      "alias": "result",
+      "error": "TypeError: Cannot assign to read only property '0' of object '[object Array]'\n    at Array.splice (<anonymous>)\n    at /workspace/scratch/ev14ch9/stage3/census/filter-readonly-freeze/control.cjs:8:51\n    at Object.<anonymous> (/workspace/scratch/ev14ch9/stage3/census/filter-readonly-freeze/control.cjs:10:87)\n    at Module._compile (node:internal/modules/cjs/loader:1872:14)\n    at Object..js (node:internal/modules/cjs/loader:2003:10)\n    at Module.load (node:internal/modules/cjs/loader:1594:32)\n    at Module._load (node:internal/modules/cjs/loader:1396:12)\n    at wrapModuleLoad (node:internal/modules/cjs/loader:255:19)\n    at Module.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:154:5)\n    at node:internal/main/run_main_module:33:47"
+    },
+    {
+      "site": "CONTROL (scratch only)",
+      "writer": "sort",
+      "alias": "argument",
+      "error": "TypeError: Cannot assign to read only property '0' of object '[object Array]'\n    at Array.sort (<anonymous>)\n    at a.<computed> (/workspace/scratch/ev14ch9/stage3/census/filter-readonly-freeze/control.cjs:8:77)\n    at Object.<anonymous> (/workspace/scratch/ev14ch9/stage3/census/filter-readonly-freeze/control.cjs:10:87)\n    at Module._compile (node:internal/modules/cjs/loader:1872:14)\n    at Object..js (node:internal/modules/cjs/loader:2003:10)\n    at Module.load (node:internal/modules/cjs/loader:1594:32)\n    at Module._load (node:internal/modules/cjs/loader:1396:12)\n    at wrapModuleLoad (node:internal/modules/cjs/loader:255:19)\n    at Module.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:154:5)\n    at node:internal/main/run_main_module:33:47"
+    },
+    {
+      "site": "CONTROL (scratch only)",
+      "writer": "sort",
+      "alias": "result",
+      "error": "TypeError: Cannot assign to read only property '0' of object '[object Array]'\n    at Array.sort (<anonymous>)\n    at a.<computed> (/workspace/scratch/ev14ch9/stage3/census/filter-readonly-freeze/control.cjs:8:77)\n    at Object.<anonymous> (/workspace/scratch/ev14ch9/stage3/census/filter-readonly-freeze/control.cjs:10:87)\n    at Module._compile (node:internal/modules/cjs/loader:1872:14)\n    at Object..js (node:internal/modules/cjs/loader:2003:10)\n    at Module.load (node:internal/modules/cjs/loader:1594:32)\n    at Module._load (node:internal/modules/cjs/loader:1396:12)\n    at wrapModuleLoad (node:internal/modules/cjs/loader:255:19)\n    at Module.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:154:5)\n    at node:internal/main/run_main_module:33:47"
+    },
+    {
+      "site": "CONTROL (scratch only)",
+      "writer": "index",
+      "alias": "argument",
+      "error": "TypeError: Cannot assign to read only property '0' of object '[object Array]'\n    at a.length (/workspace/scratch/ev14ch9/stage3/census/filter-readonly-freeze/control.cjs:8:102)\n    at Object.<anonymous> (/workspace/scratch/ev14ch9/stage3/census/filter-readonly-freeze/control.cjs:10:87)\n    at Module._compile (node:internal/modules/cjs/loader:1872:14)\n    at Object..js (node:internal/modules/cjs/loader:2003:10)\n    at Module.load (node:internal/modules/cjs/loader:1594:32)\n    at Module._load (node:internal/modules/cjs/loader:1396:12)\n    at wrapModuleLoad (node:internal/modules/cjs/loader:255:19)\n    at Module.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:154:5)\n    at node:internal/main/run_main_module:33:47"
+    },
+    {
+      "site": "CONTROL (scratch only)",
+      "writer": "index",
+      "alias": "result",
+      "error": "TypeError: Cannot assign to read only property '0' of object '[object Array]'\n    at a.length (/workspace/scratch/ev14ch9/stage3/census/filter-readonly-freeze/control.cjs:8:102)\n    at Object.<anonymous> (/workspace/scratch/ev14ch9/stage3/census/filter-readonly-freeze/control.cjs:10:87)\n    at Module._compile (node:internal/modules/cjs/loader:1872:14)\n    at Object..js (node:internal/modules/cjs/loader:2003:10)\n    at Module.load (node:internal/modules/cjs/loader:1594:32)\n    at Module._load (node:internal/modules/cjs/loader:1396:12)\n    at wrapModuleLoad (node:internal/modules/cjs/loader:255:19)\n    at Module.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:154:5)\n    at node:internal/main/run_main_module:33:47"
+    },
+    {
+      "site": "CONTROL (scratch only)",
+      "writer": "length",
+      "alias": "argument",
+      "error": "TypeError: Cannot assign to read only property 'length' of object '[object Array]'\n    at cases (/workspace/scratch/ev14ch9/stage3/census/filter-readonly-freeze/control.cjs:8:129)\n    at Object.<anonymous> (/workspace/scratch/ev14ch9/stage3/census/filter-readonly-freeze/control.cjs:10:87)\n    at Module._compile (node:internal/modules/cjs/loader:1872:14)\n    at Object..js (node:internal/modules/cjs/loader:2003:10)\n    at Module.load (node:internal/modules/cjs/loader:1594:32)\n    at Module._load (node:internal/modules/cjs/loader:1396:12)\n    at wrapModuleLoad (node:internal/modules/cjs/loader:255:19)\n    at Module.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:154:5)\n    at node:internal/main/run_main_module:33:47"
+    },
+    {
+      "site": "CONTROL (scratch only)",
+      "writer": "length",
+      "alias": "result",
+      "error": "TypeError: Cannot assign to read only property 'length' of object '[object Array]'\n    at cases (/workspace/scratch/ev14ch9/stage3/census/filter-readonly-freeze/control.cjs:8:129)\n    at Object.<anonymous> (/workspace/scratch/ev14ch9/stage3/census/filter-readonly-freeze/control.cjs:10:87)\n    at Module._compile (node:internal/modules/cjs/loader:1872:14)\n    at Object..js (node:internal/modules/cjs/loader:2003:10)\n    at Module.load (node:internal/modules/cjs/loader:1594:32)\n    at Module._load (node:internal/modules/cjs/loader:1396:12)\n    at wrapModuleLoad (node:internal/modules/cjs/loader:255:19)\n    at Module.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:154:5)\n    at node:internal/main/run_main_module:33:47"
+    }
+  ],
+  "observer_freeze_write_throws": 10,
+  "observer_errors": [],
+  "unclassified_throws": [],
+  "control_counts": {
+    "calls": 7,
+    "completed": 7,
+    "identity": 6,
+    "frozen_arrays": 5,
+    "undefined_identity": 1
+  },
+  "throwing_predicate_counts": {
+    "calls": 1,
+    "completed": 0,
+    "identity": 0,
+    "frozen_arrays": 0,
+    "undefined_identity": 0
+  },
+  "passed": true
+}
