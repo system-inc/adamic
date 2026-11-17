@@ -1,0 +1,43 @@
+# #r11wppy item 2's proof, round 3, sealed: the parent of this commit is the head, re-cut on main 932a6344 with
+# the chain row writing in bounds. Run after environment.sh, sealed-job.sh, sealed_git and
+# sealed_products ./internal/lower ./internal/oracle ./stage3/fixtures/... Never merged.
+set -u
+bad=0
+step() { local name=$1; shift; local start=$(date +%s); "$@" > "$TMPDIR/f-$name.log" 2>&1; local code=$?; echo "$([ $code = 0 ] && echo PASS || echo FAIL) $name exit $code, $(( $(date +%s) - start )) s"; [ $code = 0 ] || { grep -E '^(--- FAIL|FAIL|panic|.*_test.go:[0-9]+:)' "$TMPDIR/f-$name.log" | head -14 | cut -c1-300; bad=1; }; return $code; }
+echo "on $(hostname), $(nproc) cores, load $(cut -d' ' -f1-3 /proc/loadavg)"
+step gofmt bash -c '[ -z "$(gofmt -l internal/lower/)" ]'
+step vet go vet ./internal/lower/
+step pins go test -count=1 -timeout 30m -v -run '^TestFreshAssignment' ./internal/lower/
+grep -E '^ *--- (PASS|FAIL): TestFreshAssignmentValueLowers' "$TMPDIR/f-pins.log" | sed 's/^ *//' | cut -c1-120
+# Mutant: only the outermost handle is judged.
+F=internal/lower/assignment_values.go
+cp "$F" "$TMPDIR/f-original"
+python3 - "$F" <<'PYTHON'
+import sys
+p = sys.argv[1]; s = open(p).read()
+old = "\t\t\treturn false\n\t\t}\n\t}\n\treturn true\n}\n\n// assignmentPrimitiveMembers"
+new = "\t\t\treturn false\n\t\t}\n\t\tbreak\n\t}\n\treturn true\n}\n\n// assignmentPrimitiveMembers"
+assert s.count(old) == 1, 'mutant anchor'
+open(p, 'w').write(s.replace(old, new))
+PYTHON
+if cmp -s "$F" "$TMPDIR/f-original"; then echo "FAIL mutant didn't apply"; bad=1; else
+	go test -count=1 -timeout 30m -v -run '^TestFreshAssignment' ./internal/lower/ > "$TMPDIR/f-mutant.log" 2>&1
+	if grep -qE 'build failed|declared and not used|\[setup failed\]' "$TMPDIR/f-mutant.log"; then echo "FAIL mutant doesn't compile"; bad=1; else
+		red=$(grep -cE '^ *--- FAIL: TestFreshAssignmentHandlesJudgeEveryHandle ' "$TMPDIR/f-mutant.log")
+		others=$(grep -E '^ *--- FAIL: TestFreshAssignment' "$TMPDIR/f-mutant.log" | grep -v 'TestFreshAssignmentHandlesJudgeEveryHandle' | grep -vc 'TestFreshAssignmentValueLowers')
+		echo "$([ "$red" = 1 ] && [ "$others" = 0 ] && echo PASS || echo FAIL) mutant: the direct pin $([ "$red" = 1 ] && echo red || echo green), $others others red"; { [ "$red" = 1 ] && [ "$others" = 0 ]; } || bad=1
+	fi
+fi
+cp "$TMPDIR/f-original" "$F"
+step lower go test -count=1 -timeout 40m ./internal/lower/
+step fixtures go test -count=1 -timeout 20m ./stage3/fixtures/...
+start=$(date +%s)
+go test -count=1 -timeout 40m ./internal/oracle/ > "$TMPDIR/o.log" 2>&1
+echo "oracle exit $?, $(( $(date +%s) - start )) s"
+fails=$(grep -oE '^--- FAIL: [A-Za-z0-9_]+ ' "$TMPDIR/o.log" | cut -d' ' -f3 | sort -u | tr '\n' ' ')
+echo "oracle top-level fails: $fails"
+# Main's own sealed reds are the assignment-proof family (stock TypeScript's loader); anything else is this head's.
+other=$(echo "$fails" | tr ' ' '\n' | grep -v '^$' | grep -vE '^TestAssignmentProof' | tr '\n' ' ')
+[ -z "$other" ] && echo "PASS oracle: only main's sealed set" || { echo "FAIL oracle beyond main's sealed set: $other"; grep -E '^ +[a-z_]+_test.go:[0-9]+:' "$TMPDIR/o.log" | grep -v 'stock TypeScript' | head -12 | cut -c1-260; bad=1; }
+echo "VERDICT $([ $bad = 0 ] && echo OK || echo FAIL)"
+exit $bad
