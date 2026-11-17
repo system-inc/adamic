@@ -1,0 +1,41 @@
+panic: Unhandled case in Node.Text: *ast.ComputedPropertyName
+
+goroutine 1 [running]:
+github.com/microsoft/TypeScript/tsc/internal/ast.(*Node).Text(0x1d1f4f8?)
+	/workspace/scratch/overload-certificates-census/base/cohere/TypeScript/tsc/internal/ast/ast.go:308 +0x42c
+github.com/system-inc/adamic/internal/lower.(*lowering).noteAccessorNames.func1(0x319b60668f20)
+	/workspace/scratch/overload-certificates-census/base/internal/lower/class_accessors.go:609 +0x56
+github.com/microsoft/TypeScript/tsc/internal/ast.visitNodes(...)
+	/workspace/scratch/overload-certificates-census/base/cohere/TypeScript/tsc/internal/ast/ast.go:40
+github.com/microsoft/TypeScript/tsc/internal/ast.visitNodeList(...)
+	/workspace/scratch/overload-certificates-census/base/cohere/TypeScript/tsc/internal/ast/ast.go:49
+github.com/microsoft/TypeScript/tsc/internal/ast.(*ClassDeclaration).ForEachChild(0x319b605d2ab0, 0x319b883acac8)
+	/workspace/scratch/overload-certificates-census/base/cohere/TypeScript/tsc/internal/ast/ast_generated.go:2079 +0x136
+github.com/microsoft/TypeScript/tsc/internal/ast.(*Node).ForEachChild(0x319b61141588?, 0x319b883acac8)
+	/workspace/scratch/overload-certificates-census/base/cohere/TypeScript/tsc/internal/ast/ast_generated.go:8754 +0x14d8
+github.com/system-inc/adamic/internal/lower.(*lowering).noteAccessorNames.func1(0x319b605d3560?)
+	/workspace/scratch/overload-certificates-census/base/internal/lower/class_accessors.go:611 +0x8c
+github.com/microsoft/TypeScript/tsc/internal/ast.visitNodes(...)
+	/workspace/scratch/overload-certificates-census/base/cohere/TypeScript/tsc/internal/ast/ast.go:40
+github.com/microsoft/TypeScript/tsc/internal/ast.visitNodeList(...)
+	/workspace/scratch/overload-certificates-census/base/cohere/TypeScript/tsc/internal/ast/ast.go:49
+github.com/microsoft/TypeScript/tsc/internal/ast.(*SourceFile).ForEachChild(0x319b60691508, 0x319b883acac8)
+	/workspace/scratch/overload-certificates-census/base/cohere/TypeScript/tsc/internal/ast/ast.go:2783 +0x9b
+github.com/microsoft/TypeScript/tsc/internal/ast.(*Node).ForEachChild(0x319b88f8e908?, 0x319b883acac8)
+	/workspace/scratch/overload-certificates-census/base/cohere/TypeScript/tsc/internal/ast/ast_generated.go:9002 +0x1ec5
+github.com/system-inc/adamic/internal/lower.(*lowering).noteAccessorNames(0x319b6e2b7808, {0x319b6a1a6008, 0x133, 0x1?})
+	/workspace/scratch/overload-certificates-census/base/internal/lower/class_accessors.go:613 +0x91
+github.com/system-inc/adamic/internal/lower.latentFullSelected.func5(0x319b6e2b7808, 0x319b883acdb8)
+	/workspace/scratch/overload-certificates-census/base/internal/lower/latent_units.go:176 +0x5c
+github.com/system-inc/adamic/internal/lower.latentFullSelected({0x1e2e2b0, 0x1ee16e0}, 0x319b60348a80, 0x319b883ad958, 0x0)
+	/workspace/scratch/overload-certificates-census/base/internal/lower/latent_units.go:176 +0x7cb
+github.com/system-inc/adamic/internal/lower.latentFull(...)
+	/workspace/scratch/overload-certificates-census/base/internal/lower/latent_units.go:112
+github.com/system-inc/adamic/internal/lower.latentRun({0x1e2e2b0, 0x1ee16e0}, 0x319b60348a80, 0x319b77c9f958)
+	/workspace/scratch/overload-certificates-census/base/internal/lower/latent_hook.go:379 +0x12d
+github.com/system-inc/adamic/internal/lower.LatentWithRelationChecks({0x1e2e2b0, 0x1ee16e0}, 0x319b60348a80, 0xd9?, 0x319b883add70)
+	/workspace/scratch/overload-certificates-census/base/internal/lower/latent_hook.go:354 +0x357
+github.com/system-inc/adamic/internal/lower.Latent({0x1e2e2b0, 0x1ee16e0}, 0x319b60348a80, 0x319b77c9fd70)
+	/workspace/scratch/overload-certificates-census/base/internal/lower/latent_hook.go:325 +0xab
+main.main()
+	/workspace/scratch/overload-certificates-census/base/stage3/census/latent/tool/main.go:99 +0xe4b

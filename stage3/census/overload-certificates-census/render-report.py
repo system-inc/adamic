@@ -14,7 +14,7 @@ lines=['# Complete finding grades','','Fingerprints are `(kind, phase, reason, f
 for p in data['pairs']:
  lines += ['## '+p['mode']+' — '+p['file'],'']
  if 'scan' in p:
-  lines += ['Scan-all base boundary: '+p['scan']['baseBoundary'], '','Head boundary: '+p['scan']['headBoundary'],'']
+  lines += ['Scan-all base boundary: '+str(p['scan']['baseBoundary']), '','Head boundary: '+str(p['scan']['headBoundary']),'']
   for grade in ['gone','new']:
    for r in p['scan'][grade]:lines += [f'- {grade}, {r["count"]} event(s): '+escape(r['tuple'])]
   continue

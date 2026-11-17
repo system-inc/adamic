@@ -1,0 +1,3850 @@
+[
+  {
+    "label": "base",
+    "mode": "full",
+    "file": "src/compiler/core.ts",
+    "root": "src/tsc/tsc.ts",
+    "args": [
+      "/workspace/scratch/overload-certificates-census/base-tools/entry-census",
+      "/workspace/scratch/overload-certificates-census/adapted/src/tsc/tsc.ts",
+      "/workspace/scratch/overload-certificates-census/results/base/full/src__compiler__core.jsonl"
+    ],
+    "start": "2026-11-17T16:03:46.956804+00:00",
+    "state": "complete",
+    "output": "results/base/full/src__compiler__core.jsonl",
+    "log": "results/base/full/src__compiler__core.log",
+    "env": {
+      "CENSUS_MODULE_FORMAT": "CommonJSBundle",
+      "LATENT_FULL": "1",
+      "LATENT_ONLY_FILE": "/workspace/scratch/overload-certificates-census/adapted/src/compiler/core.ts",
+      "LATENT_ASSERT_NO_OUTPUT": "1",
+      "LATENT_TAIL": "1"
+    },
+    "pid": 11673,
+    "exit": 0,
+    "end": "2026-11-17T16:04:28.241816+00:00",
+    "seconds": 41.28360583499989,
+    "maxRssKiB": 985480,
+    "streamComplete": true,
+    "header": {
+      "status": "measurement",
+      "latent_mode": "full",
+      "module_format": "CommonJSBundle",
+      "checker_rejected": false
+    },
+    "files": [
+      "/workspace/scratch/overload-certificates-census/adapted/src/compiler/core.ts"
+    ],
+    "findings": 14,
+    "selectionExact": true,
+    "sha256": "ef4f7d47d29e831d0c55c558c99fa171ee06237823ae678fa98813511221f7d4"
+  },
+  {
+    "label": "head",
+    "mode": "full",
+    "file": "src/compiler/core.ts",
+    "root": "src/tsc/tsc.ts",
+    "args": [
+      "/workspace/scratch/overload-certificates-census/head-tools/entry-census",
+      "/workspace/scratch/overload-certificates-census/adapted/src/tsc/tsc.ts",
+      "/workspace/scratch/overload-certificates-census/results/head/full/src__compiler__core.jsonl"
+    ],
+    "start": "2026-11-17T16:03:46.957517+00:00",
+    "state": "complete",
+    "output": "results/head/full/src__compiler__core.jsonl",
+    "log": "results/head/full/src__compiler__core.log",
+    "env": {
+      "CENSUS_MODULE_FORMAT": "CommonJSBundle",
+      "LATENT_FULL": "1",
+      "LATENT_ONLY_FILE": "/workspace/scratch/overload-certificates-census/adapted/src/compiler/core.ts",
+      "LATENT_ASSERT_NO_OUTPUT": "1",
+      "LATENT_TAIL": "1"
+    },
+    "pid": 11674,
+    "exit": 0,
+    "end": "2026-11-17T16:04:28.209270+00:00",
+    "seconds": 41.25069290600004,
+    "maxRssKiB": 1026016,
+    "streamComplete": true,
+    "header": {
+      "status": "measurement",
+      "latent_mode": "full",
+      "module_format": "CommonJSBundle",
+      "checker_rejected": false
+    },
+    "files": [
+      "/workspace/scratch/overload-certificates-census/adapted/src/compiler/core.ts"
+    ],
+    "findings": 14,
+    "selectionExact": true,
+    "sha256": "703753b73c1217323b54da3bcef865faf03d9b3ddcd82e672dffe95855637cf4"
+  },
+  {
+    "label": "base",
+    "mode": "full",
+    "file": "src/compiler/builder.ts",
+    "root": "src/tsc/tsc.ts",
+    "args": [
+      "/workspace/scratch/overload-certificates-census/base-tools/entry-census",
+      "/workspace/scratch/overload-certificates-census/adapted/src/tsc/tsc.ts",
+      "/workspace/scratch/overload-certificates-census/results/base/full/src__compiler__builder.jsonl"
+    ],
+    "start": "2026-11-17T16:04:28.215241+00:00",
+    "state": "complete",
+    "output": "results/base/full/src__compiler__builder.jsonl",
+    "log": "results/base/full/src__compiler__builder.log",
+    "env": {
+      "CENSUS_MODULE_FORMAT": "CommonJSBundle",
+      "LATENT_FULL": "1",
+      "LATENT_ONLY_FILE": "/workspace/scratch/overload-certificates-census/adapted/src/compiler/builder.ts",
+      "LATENT_ASSERT_NO_OUTPUT": "1",
+      "LATENT_TAIL": "1"
+    },
+    "pid": 11683,
+    "exit": 0,
+    "end": "2026-11-17T16:06:08.809701+00:00",
+    "seconds": 100.59405581299984,
+    "maxRssKiB": 1480456,
+    "streamComplete": true,
+    "header": {
+      "status": "measurement",
+      "latent_mode": "full",
+      "module_format": "CommonJSBundle",
+      "checker_rejected": false
+    },
+    "files": [
+      "/workspace/scratch/overload-certificates-census/adapted/src/compiler/builder.ts"
+    ],
+    "findings": 452,
+    "selectionExact": true,
+    "sha256": "c8505c891c41094b2eff6667a0ae52eae54486c71a4a0c98c11733531932e242"
+  },
+  {
+    "label": "head",
+    "mode": "full",
+    "file": "src/compiler/builder.ts",
+    "root": "src/tsc/tsc.ts",
+    "args": [
+      "/workspace/scratch/overload-certificates-census/head-tools/entry-census",
+      "/workspace/scratch/overload-certificates-census/adapted/src/tsc/tsc.ts",
+      "/workspace/scratch/overload-certificates-census/results/head/full/src__compiler__builder.jsonl"
+    ],
+    "start": "2026-11-17T16:04:28.250151+00:00",
+    "state": "complete",
+    "output": "results/head/full/src__compiler__builder.jsonl",
+    "log": "results/head/full/src__compiler__builder.log",
+    "env": {
+      "CENSUS_MODULE_FORMAT": "CommonJSBundle",
+      "LATENT_FULL": "1",
+      "LATENT_ONLY_FILE": "/workspace/scratch/overload-certificates-census/adapted/src/compiler/builder.ts",
+      "LATENT_ASSERT_NO_OUTPUT": "1",
+      "LATENT_TAIL": "1"
+    },
+    "pid": 11688,
+    "exit": 0,
+    "end": "2026-11-17T16:06:08.788940+00:00",
+    "seconds": 100.538308766,
+    "maxRssKiB": 1542160,
+    "streamComplete": true,
+    "header": {
+      "status": "measurement",
+      "latent_mode": "full",
+      "module_format": "CommonJSBundle",
+      "checker_rejected": false
+    },
+    "files": [
+      "/workspace/scratch/overload-certificates-census/adapted/src/compiler/builder.ts"
+    ],
+    "findings": 451,
+    "selectionExact": true,
+    "sha256": "2eab092cb26271ef71fe7fa654694b4b89f5bb5aab5be0996fa5a6511b464091"
+  },
+  {
+    "label": "base",
+    "mode": "full",
+    "file": "src/compiler/builderState.ts",
+    "root": "src/tsc/tsc.ts",
+    "args": [
+      "/workspace/scratch/overload-certificates-census/base-tools/entry-census",
+      "/workspace/scratch/overload-certificates-census/adapted/src/tsc/tsc.ts",
+      "/workspace/scratch/overload-certificates-census/results/base/full/src__compiler__builderState.jsonl"
+    ],
+    "start": "2026-11-17T16:06:08.808812+00:00",
+    "state": "complete",
+    "output": "results/base/full/src__compiler__builderState.jsonl",
+    "log": "results/base/full/src__compiler__builderState.log",
+    "env": {
+      "CENSUS_MODULE_FORMAT": "CommonJSBundle",
+      "LATENT_FULL": "1",
+      "LATENT_ONLY_FILE": "/workspace/scratch/overload-certificates-census/adapted/src/compiler/builderState.ts",
+      "LATENT_ASSERT_NO_OUTPUT": "1",
+      "LATENT_TAIL": "1"
+    },
+    "pid": 11832,
+    "exit": 0,
+    "end": "2026-11-17T16:07:16.967154+00:00",
+    "seconds": 68.15803811,
+    "maxRssKiB": 1385296,
+    "streamComplete": true,
+    "header": {
+      "status": "measurement",
+      "latent_mode": "full",
+      "module_format": "CommonJSBundle",
+      "checker_rejected": false
+    },
+    "files": [
+      "/workspace/scratch/overload-certificates-census/adapted/src/compiler/builderState.ts"
+    ],
+    "findings": 40,
+    "selectionExact": true,
+    "sha256": "4d9c1ef648d6fc8be0a023b0326992627dd6bb8f347bd5b641a122be2162c5b7"
+  },
+  {
+    "label": "head",
+    "mode": "full",
+    "file": "src/compiler/builderState.ts",
+    "root": "src/tsc/tsc.ts",
+    "args": [
+      "/workspace/scratch/overload-certificates-census/head-tools/entry-census",
+      "/workspace/scratch/overload-certificates-census/adapted/src/tsc/tsc.ts",
+      "/workspace/scratch/overload-certificates-census/results/head/full/src__compiler__builderState.jsonl"
+    ],
+    "start": "2026-11-17T16:06:08.816523+00:00",
+    "state": "complete",
+    "output": "results/head/full/src__compiler__builderState.jsonl",
+    "log": "results/head/full/src__compiler__builderState.log",
+    "env": {
+      "CENSUS_MODULE_FORMAT": "CommonJSBundle",
+      "LATENT_FULL": "1",
+      "LATENT_ONLY_FILE": "/workspace/scratch/overload-certificates-census/adapted/src/compiler/builderState.ts",
+      "LATENT_ASSERT_NO_OUTPUT": "1",
+      "LATENT_TAIL": "1"
+    },
+    "pid": 11837,
+    "exit": 0,
+    "end": "2026-11-17T16:07:21.962072+00:00",
+    "seconds": 73.14170247099992,
+    "maxRssKiB": 1491856,
+    "streamComplete": true,
+    "header": {
+      "status": "measurement",
+      "latent_mode": "full",
+      "module_format": "CommonJSBundle",
+      "checker_rejected": false
+    },
+    "files": [
+      "/workspace/scratch/overload-certificates-census/adapted/src/compiler/builderState.ts"
+    ],
+    "findings": 36,
+    "selectionExact": true,
+    "sha256": "a82958cb54f45023f217543740aeb05ec119f53ae87f8583a0b4fa74f62d7302"
+  },
+  {
+    "label": "base",
+    "mode": "full",
+    "file": "src/compiler/checker.ts",
+    "root": "src/tsc/tsc.ts",
+    "args": [
+      "/workspace/scratch/overload-certificates-census/base-tools/entry-census",
+      "/workspace/scratch/overload-certificates-census/adapted/src/tsc/tsc.ts",
+      "/workspace/scratch/overload-certificates-census/results/base/full/src__compiler__checker.jsonl"
+    ],
+    "start": "2026-11-17T16:07:16.969917+00:00",
+    "state": "complete",
+    "output": "results/base/full/src__compiler__checker.jsonl",
+    "log": "results/base/full/src__compiler__checker.log",
+    "env": {
+      "CENSUS_MODULE_FORMAT": "CommonJSBundle",
+      "LATENT_FULL": "1",
+      "LATENT_ONLY_FILE": "/workspace/scratch/overload-certificates-census/adapted/src/compiler/checker.ts",
+      "LATENT_ASSERT_NO_OUTPUT": "1",
+      "LATENT_TAIL": "1"
+    },
+    "pid": 11887,
+    "exit": 0,
+    "end": "2026-11-17T16:48:45.718660+00:00",
+    "seconds": 2488.7484044719995,
+    "maxRssKiB": 6186084,
+    "streamComplete": true,
+    "header": {
+      "status": "measurement",
+      "latent_mode": "full",
+      "module_format": "CommonJSBundle",
+      "checker_rejected": false
+    },
+    "files": [
+      "/workspace/scratch/overload-certificates-census/adapted/src/compiler/checker.ts"
+    ],
+    "findings": 8450,
+    "selectionExact": true,
+    "sha256": "63038e0d19843f7567f8dba124c8d84758cf1a48c1862d8e8270130e1dba8230"
+  },
+  {
+    "label": "head",
+    "mode": "full",
+    "file": "src/compiler/checker.ts",
+    "root": "src/tsc/tsc.ts",
+    "args": [
+      "/workspace/scratch/overload-certificates-census/head-tools/entry-census",
+      "/workspace/scratch/overload-certificates-census/adapted/src/tsc/tsc.ts",
+      "/workspace/scratch/overload-certificates-census/results/head/full/src__compiler__checker.jsonl"
+    ],
+    "start": "2026-11-17T16:07:21.969633+00:00",
+    "state": "complete",
+    "output": "results/head/full/src__compiler__checker.jsonl",
+    "log": "results/head/full/src__compiler__checker.log",
+    "env": {
+      "CENSUS_MODULE_FORMAT": "CommonJSBundle",
+      "LATENT_FULL": "1",
+      "LATENT_ONLY_FILE": "/workspace/scratch/overload-certificates-census/adapted/src/compiler/checker.ts",
+      "LATENT_ASSERT_NO_OUTPUT": "1",
+      "LATENT_TAIL": "1"
+    },
+    "pid": 11892,
+    "exit": 0,
+    "end": "2026-11-17T16:48:31.820445+00:00",
+    "seconds": 2469.8499942529997,
+    "maxRssKiB": 5990368,
+    "streamComplete": true,
+    "header": {
+      "status": "measurement",
+      "latent_mode": "full",
+      "module_format": "CommonJSBundle",
+      "checker_rejected": false
+    },
+    "files": [
+      "/workspace/scratch/overload-certificates-census/adapted/src/compiler/checker.ts"
+    ],
+    "findings": 8440,
+    "selectionExact": true,
+    "sha256": "2e7b8c50573f808bcde8514cee9137b531d474c8beb5bb182f189714e6176acb"
+  },
+  {
+    "label": "base",
+    "mode": "full",
+    "file": "src/compiler/commandLineParser.ts",
+    "root": "src/tsc/tsc.ts",
+    "args": [
+      "/workspace/scratch/overload-certificates-census/base-tools/entry-census",
+      "/workspace/scratch/overload-certificates-census/adapted/src/tsc/tsc.ts",
+      "/workspace/scratch/overload-certificates-census/results/base/full/src__compiler__commandLineParser.jsonl"
+    ],
+    "start": "2026-11-17T16:48:31.965912+00:00",
+    "state": "complete",
+    "output": "results/base/full/src__compiler__commandLineParser.jsonl",
+    "log": "results/base/full/src__compiler__commandLineParser.log",
+    "env": {
+      "CENSUS_MODULE_FORMAT": "CommonJSBundle",
+      "LATENT_FULL": "1",
+      "LATENT_ONLY_FILE": "/workspace/scratch/overload-certificates-census/adapted/src/compiler/commandLineParser.ts",
+      "LATENT_ASSERT_NO_OUTPUT": "1",
+      "LATENT_TAIL": "1"
+    },
+    "pid": 12317,
+    "exit": 0,
+    "end": "2026-11-17T16:50:45.041144+00:00",
+    "seconds": 133.07473304699943,
+    "maxRssKiB": 1142352,
+    "streamComplete": true,
+    "header": {
+      "status": "measurement",
+      "latent_mode": "full",
+      "module_format": "CommonJSBundle",
+      "checker_rejected": false
+    },
+    "files": [
+      "/workspace/scratch/overload-certificates-census/adapted/src/compiler/commandLineParser.ts"
+    ],
+    "findings": 509,
+    "selectionExact": true,
+    "sha256": "d86f8e99b03794b53aead809dddd805a96ae0f1312ee7215e9d8648e56f68fef"
+  },
+  {
+    "label": "head",
+    "mode": "full",
+    "file": "src/compiler/commandLineParser.ts",
+    "root": "src/tsc/tsc.ts",
+    "args": [
+      "/workspace/scratch/overload-certificates-census/head-tools/entry-census",
+      "/workspace/scratch/overload-certificates-census/adapted/src/tsc/tsc.ts",
+      "/workspace/scratch/overload-certificates-census/results/head/full/src__compiler__commandLineParser.jsonl"
+    ],
+    "start": "2026-11-17T16:48:45.855597+00:00",
+    "state": "complete",
+    "output": "results/head/full/src__compiler__commandLineParser.jsonl",
+    "log": "results/head/full/src__compiler__commandLineParser.log",
+    "env": {
+      "CENSUS_MODULE_FORMAT": "CommonJSBundle",
+      "LATENT_FULL": "1",
+      "LATENT_ONLY_FILE": "/workspace/scratch/overload-certificates-census/adapted/src/compiler/commandLineParser.ts",
+      "LATENT_ASSERT_NO_OUTPUT": "1",
+      "LATENT_TAIL": "1"
+    },
+    "pid": 12330,
+    "exit": 0,
+    "end": "2026-11-17T16:50:56.782283+00:00",
+    "seconds": 130.92611213300006,
+    "maxRssKiB": 1150560,
+    "streamComplete": true,
+    "header": {
+      "status": "measurement",
+      "latent_mode": "full",
+      "module_format": "CommonJSBundle",
+      "checker_rejected": false
+    },
+    "files": [
+      "/workspace/scratch/overload-certificates-census/adapted/src/compiler/commandLineParser.ts"
+    ],
+    "findings": 496,
+    "selectionExact": true,
+    "sha256": "08236c78fdc8a36cb3f81072d9896a685eeb96ffe680286e25a510dfbad540ac"
+  },
+  {
+    "label": "base",
+    "mode": "full",
+    "file": "src/compiler/executeCommandLine.ts",
+    "root": "src/tsc/tsc.ts",
+    "args": [
+      "/workspace/scratch/overload-certificates-census/base-tools/entry-census",
+      "/workspace/scratch/overload-certificates-census/adapted/src/tsc/tsc.ts",
+      "/workspace/scratch/overload-certificates-census/results/base/full/src__compiler__executeCommandLine.jsonl"
+    ],
+    "start": "2026-11-17T16:50:45.051241+00:00",
+    "state": "complete",
+    "output": "results/base/full/src__compiler__executeCommandLine.jsonl",
+    "log": "results/base/full/src__compiler__executeCommandLine.log",
+    "env": {
+      "CENSUS_MODULE_FORMAT": "CommonJSBundle",
+      "LATENT_FULL": "1",
+      "LATENT_ONLY_FILE": "/workspace/scratch/overload-certificates-census/adapted/src/compiler/executeCommandLine.ts",
+      "LATENT_ASSERT_NO_OUTPUT": "1",
+      "LATENT_TAIL": "1"
+    },
+    "pid": 12360,
+    "exit": 0,
+    "end": "2026-11-17T16:52:20.329470+00:00",
+    "seconds": 95.2775340420003,
+    "maxRssKiB": 1297072,
+    "streamComplete": true,
+    "header": {
+      "status": "measurement",
+      "latent_mode": "full",
+      "module_format": "CommonJSBundle",
+      "checker_rejected": false
+    },
+    "files": [
+      "/workspace/scratch/overload-certificates-census/adapted/src/compiler/executeCommandLine.ts"
+    ],
+    "findings": 390,
+    "selectionExact": true,
+    "sha256": "02c47f9b56a6c6998bc5d12990791229c67b25980dbc6f13a6043a4fd38d88bf"
+  },
+  {
+    "label": "head",
+    "mode": "full",
+    "file": "src/compiler/executeCommandLine.ts",
+    "root": "src/tsc/tsc.ts",
+    "args": [
+      "/workspace/scratch/overload-certificates-census/head-tools/entry-census",
+      "/workspace/scratch/overload-certificates-census/adapted/src/tsc/tsc.ts",
+      "/workspace/scratch/overload-certificates-census/results/head/full/src__compiler__executeCommandLine.jsonl"
+    ],
+    "start": "2026-11-17T16:50:56.789792+00:00",
+    "state": "complete",
+    "output": "results/head/full/src__compiler__executeCommandLine.jsonl",
+    "log": "results/head/full/src__compiler__executeCommandLine.log",
+    "env": {
+      "CENSUS_MODULE_FORMAT": "CommonJSBundle",
+      "LATENT_FULL": "1",
+      "LATENT_ONLY_FILE": "/workspace/scratch/overload-certificates-census/adapted/src/compiler/executeCommandLine.ts",
+      "LATENT_ASSERT_NO_OUTPUT": "1",
+      "LATENT_TAIL": "1"
+    },
+    "pid": 12372,
+    "exit": 0,
+    "end": "2026-11-17T16:52:33.221549+00:00",
+    "seconds": 96.43141260599987,
+    "maxRssKiB": 1363684,
+    "streamComplete": true,
+    "header": {
+      "status": "measurement",
+      "latent_mode": "full",
+      "module_format": "CommonJSBundle",
+      "checker_rejected": false
+    },
+    "files": [
+      "/workspace/scratch/overload-certificates-census/adapted/src/compiler/executeCommandLine.ts"
+    ],
+    "findings": 390,
+    "selectionExact": true,
+    "sha256": "f0251a071b0abdba9ef6179f746a6bf24936804247919c23f1b7a64e957b51fa"
+  },
+  {
+    "label": "base",
+    "mode": "full",
+    "file": "src/compiler/moduleSpecifiers.ts",
+    "root": "src/tsc/tsc.ts",
+    "args": [
+      "/workspace/scratch/overload-certificates-census/base-tools/entry-census",
+      "/workspace/scratch/overload-certificates-census/adapted/src/tsc/tsc.ts",
+      "/workspace/scratch/overload-certificates-census/results/base/full/src__compiler__moduleSpecifiers.jsonl"
+    ],
+    "start": "2026-11-17T16:52:20.336622+00:00",
+    "state": "complete",
+    "output": "results/base/full/src__compiler__moduleSpecifiers.jsonl",
+    "log": "results/base/full/src__compiler__moduleSpecifiers.log",
+    "env": {
+      "CENSUS_MODULE_FORMAT": "CommonJSBundle",
+      "LATENT_FULL": "1",
+      "LATENT_ONLY_FILE": "/workspace/scratch/overload-certificates-census/adapted/src/compiler/moduleSpecifiers.ts",
+      "LATENT_ASSERT_NO_OUTPUT": "1",
+      "LATENT_TAIL": "1"
+    },
+    "pid": 12377,
+    "exit": 0,
+    "end": "2026-11-17T16:53:11.080903+00:00",
+    "seconds": 50.7436960619998,
+    "maxRssKiB": 1098708,
+    "streamComplete": true,
+    "header": {
+      "status": "measurement",
+      "latent_mode": "full",
+      "module_format": "CommonJSBundle",
+      "checker_rejected": false
+    },
+    "files": [
+      "/workspace/scratch/overload-certificates-census/adapted/src/compiler/moduleSpecifiers.ts"
+    ],
+    "findings": 183,
+    "selectionExact": true,
+    "sha256": "97e6f739ab370923f2044140d648717ff5d05e1b7adbc02bee9e66f02d196a76"
+  },
+  {
+    "label": "head",
+    "mode": "full",
+    "file": "src/compiler/moduleSpecifiers.ts",
+    "root": "src/tsc/tsc.ts",
+    "args": [
+      "/workspace/scratch/overload-certificates-census/head-tools/entry-census",
+      "/workspace/scratch/overload-certificates-census/adapted/src/tsc/tsc.ts",
+      "/workspace/scratch/overload-certificates-census/results/head/full/src__compiler__moduleSpecifiers.jsonl"
+    ],
+    "start": "2026-11-17T16:52:33.225999+00:00",
+    "state": "complete",
+    "output": "results/head/full/src__compiler__moduleSpecifiers.jsonl",
+    "log": "results/head/full/src__compiler__moduleSpecifiers.log",
+    "env": {
+      "CENSUS_MODULE_FORMAT": "CommonJSBundle",
+      "LATENT_FULL": "1",
+      "LATENT_ONLY_FILE": "/workspace/scratch/overload-certificates-census/adapted/src/compiler/moduleSpecifiers.ts",
+      "LATENT_ASSERT_NO_OUTPUT": "1",
+      "LATENT_TAIL": "1"
+    },
+    "pid": 12382,
+    "exit": 0,
+    "end": "2026-11-17T16:53:23.068153+00:00",
+    "seconds": 49.84180093899977,
+    "maxRssKiB": 1070488,
+    "streamComplete": true,
+    "header": {
+      "status": "measurement",
+      "latent_mode": "full",
+      "module_format": "CommonJSBundle",
+      "checker_rejected": false
+    },
+    "files": [
+      "/workspace/scratch/overload-certificates-census/adapted/src/compiler/moduleSpecifiers.ts"
+    ],
+    "findings": 183,
+    "selectionExact": true,
+    "sha256": "aa53008e5f83c1b6f4967810d411693111e6dd9e976acd7e3b6562707e060219"
+  },
+  {
+    "label": "base",
+    "mode": "full",
+    "file": "src/compiler/sourcemap.ts",
+    "root": "src/tsc/tsc.ts",
+    "args": [
+      "/workspace/scratch/overload-certificates-census/base-tools/entry-census",
+      "/workspace/scratch/overload-certificates-census/adapted/src/tsc/tsc.ts",
+      "/workspace/scratch/overload-certificates-census/results/base/full/src__compiler__sourcemap.jsonl"
+    ],
+    "start": "2026-11-17T16:53:11.086800+00:00",
+    "state": "complete",
+    "output": "results/base/full/src__compiler__sourcemap.jsonl",
+    "log": "results/base/full/src__compiler__sourcemap.log",
+    "env": {
+      "CENSUS_MODULE_FORMAT": "CommonJSBundle",
+      "LATENT_FULL": "1",
+      "LATENT_ONLY_FILE": "/workspace/scratch/overload-certificates-census/adapted/src/compiler/sourcemap.ts",
+      "LATENT_ASSERT_NO_OUTPUT": "1",
+      "LATENT_TAIL": "1"
+    },
+    "pid": 12395,
+    "exit": 0,
+    "end": "2026-11-17T16:54:03.423545+00:00",
+    "seconds": 52.335912632000145,
+    "maxRssKiB": 1009536,
+    "streamComplete": true,
+    "header": {
+      "status": "measurement",
+      "latent_mode": "full",
+      "module_format": "CommonJSBundle",
+      "checker_rejected": false
+    },
+    "files": [
+      "/workspace/scratch/overload-certificates-census/adapted/src/compiler/sourcemap.ts"
+    ],
+    "findings": 131,
+    "selectionExact": true,
+    "sha256": "efcdbd89c3afb2608da4177e6ed758744b968712e17577d52da116dc294b36da"
+  },
+  {
+    "label": "head",
+    "mode": "full",
+    "file": "src/compiler/sourcemap.ts",
+    "root": "src/tsc/tsc.ts",
+    "args": [
+      "/workspace/scratch/overload-certificates-census/head-tools/entry-census",
+      "/workspace/scratch/overload-certificates-census/adapted/src/tsc/tsc.ts",
+      "/workspace/scratch/overload-certificates-census/results/head/full/src__compiler__sourcemap.jsonl"
+    ],
+    "start": "2026-11-17T16:53:23.074693+00:00",
+    "state": "complete",
+    "output": "results/head/full/src__compiler__sourcemap.jsonl",
+    "log": "results/head/full/src__compiler__sourcemap.log",
+    "env": {
+      "CENSUS_MODULE_FORMAT": "CommonJSBundle",
+      "LATENT_FULL": "1",
+      "LATENT_ONLY_FILE": "/workspace/scratch/overload-certificates-census/adapted/src/compiler/sourcemap.ts",
+      "LATENT_ASSERT_NO_OUTPUT": "1",
+      "LATENT_TAIL": "1"
+    },
+    "pid": 12400,
+    "exit": 0,
+    "end": "2026-11-17T16:54:18.403917+00:00",
+    "seconds": 55.3287966150001,
+    "maxRssKiB": 993856,
+    "streamComplete": true,
+    "header": {
+      "status": "measurement",
+      "latent_mode": "full",
+      "module_format": "CommonJSBundle",
+      "checker_rejected": false
+    },
+    "files": [
+      "/workspace/scratch/overload-certificates-census/adapted/src/compiler/sourcemap.ts"
+    ],
+    "findings": 123,
+    "selectionExact": true,
+    "sha256": "b026eb3f60dabd9ab1cd29325e9e0798c04c8d6a3fb2c1359ae0d002db28f93d"
+  },
+  {
+    "label": "base",
+    "mode": "full",
+    "file": "src/compiler/transformers/esnext.ts",
+    "root": "src/tsc/tsc.ts",
+    "args": [
+      "/workspace/scratch/overload-certificates-census/base-tools/entry-census",
+      "/workspace/scratch/overload-certificates-census/adapted/src/tsc/tsc.ts",
+      "/workspace/scratch/overload-certificates-census/results/base/full/src__compiler__transformers__esnext.jsonl"
+    ],
+    "start": "2026-11-17T16:54:03.429192+00:00",
+    "state": "complete",
+    "output": "results/base/full/src__compiler__transformers__esnext.jsonl",
+    "log": "results/base/full/src__compiler__transformers__esnext.log",
+    "env": {
+      "CENSUS_MODULE_FORMAT": "CommonJSBundle",
+      "LATENT_FULL": "1",
+      "LATENT_ONLY_FILE": "/workspace/scratch/overload-certificates-census/adapted/src/compiler/transformers/esnext.ts",
+      "LATENT_ASSERT_NO_OUTPUT": "1",
+      "LATENT_TAIL": "1"
+    },
+    "pid": 12405,
+    "exit": 0,
+    "end": "2026-11-17T16:55:21.810238+00:00",
+    "seconds": 78.38038948400026,
+    "maxRssKiB": 1169368,
+    "streamComplete": true,
+    "header": {
+      "status": "measurement",
+      "latent_mode": "full",
+      "module_format": "CommonJSBundle",
+      "checker_rejected": false
+    },
+    "files": [
+      "/workspace/scratch/overload-certificates-census/adapted/src/compiler/transformers/esnext.ts"
+    ],
+    "findings": 253,
+    "selectionExact": true,
+    "sha256": "e5feb802227af1b357f316b3dc90d4ed6fa6b90c873243831f8085d0c138f2ec"
+  },
+  {
+    "label": "head",
+    "mode": "full",
+    "file": "src/compiler/transformers/esnext.ts",
+    "root": "src/tsc/tsc.ts",
+    "args": [
+      "/workspace/scratch/overload-certificates-census/head-tools/entry-census",
+      "/workspace/scratch/overload-certificates-census/adapted/src/tsc/tsc.ts",
+      "/workspace/scratch/overload-certificates-census/results/head/full/src__compiler__transformers__esnext.jsonl"
+    ],
+    "start": "2026-11-17T16:54:18.412279+00:00",
+    "state": "complete",
+    "output": "results/head/full/src__compiler__transformers__esnext.jsonl",
+    "log": "results/head/full/src__compiler__transformers__esnext.log",
+    "env": {
+      "CENSUS_MODULE_FORMAT": "CommonJSBundle",
+      "LATENT_FULL": "1",
+      "LATENT_ONLY_FILE": "/workspace/scratch/overload-certificates-census/adapted/src/compiler/transformers/esnext.ts",
+      "LATENT_ASSERT_NO_OUTPUT": "1",
+      "LATENT_TAIL": "1"
+    },
+    "pid": 12410,
+    "exit": 0,
+    "end": "2026-11-17T16:55:36.607704+00:00",
+    "seconds": 78.19473738700071,
+    "maxRssKiB": 1201452,
+    "streamComplete": true,
+    "header": {
+      "status": "measurement",
+      "latent_mode": "full",
+      "module_format": "CommonJSBundle",
+      "checker_rejected": false
+    },
+    "files": [
+      "/workspace/scratch/overload-certificates-census/adapted/src/compiler/transformers/esnext.ts"
+    ],
+    "findings": 251,
+    "selectionExact": true,
+    "sha256": "46b16a7acc179014b2effe3d2d8dc851b034da4af311f3e4fb55b7b840f1b4c2"
+  },
+  {
+    "label": "base",
+    "mode": "full",
+    "file": "src/compiler/transformers/jsx.ts",
+    "root": "src/tsc/tsc.ts",
+    "args": [
+      "/workspace/scratch/overload-certificates-census/base-tools/entry-census",
+      "/workspace/scratch/overload-certificates-census/adapted/src/tsc/tsc.ts",
+      "/workspace/scratch/overload-certificates-census/results/base/full/src__compiler__transformers__jsx.jsonl"
+    ],
+    "start": "2026-11-17T16:55:21.814269+00:00",
+    "state": "complete",
+    "output": "results/base/full/src__compiler__transformers__jsx.jsonl",
+    "log": "results/base/full/src__compiler__transformers__jsx.log",
+    "env": {
+      "CENSUS_MODULE_FORMAT": "CommonJSBundle",
+      "LATENT_FULL": "1",
+      "LATENT_ONLY_FILE": "/workspace/scratch/overload-certificates-census/adapted/src/compiler/transformers/jsx.ts",
+      "LATENT_ASSERT_NO_OUTPUT": "1",
+      "LATENT_TAIL": "1"
+    },
+    "pid": 12419,
+    "exit": 0,
+    "end": "2026-11-17T16:56:38.585262+00:00",
+    "seconds": 76.77037327299968,
+    "maxRssKiB": 1094920,
+    "streamComplete": true,
+    "header": {
+      "status": "measurement",
+      "latent_mode": "full",
+      "module_format": "CommonJSBundle",
+      "checker_rejected": false
+    },
+    "files": [
+      "/workspace/scratch/overload-certificates-census/adapted/src/compiler/transformers/jsx.ts"
+    ],
+    "findings": 182,
+    "selectionExact": true,
+    "sha256": "e5e1e53255077369023495ea7741bb7e50235d945c09eb6b84af60621267deed"
+  },
+  {
+    "label": "head",
+    "mode": "full",
+    "file": "src/compiler/transformers/jsx.ts",
+    "root": "src/tsc/tsc.ts",
+    "args": [
+      "/workspace/scratch/overload-certificates-census/head-tools/entry-census",
+      "/workspace/scratch/overload-certificates-census/adapted/src/tsc/tsc.ts",
+      "/workspace/scratch/overload-certificates-census/results/head/full/src__compiler__transformers__jsx.jsonl"
+    ],
+    "start": "2026-11-17T16:55:36.614120+00:00",
+    "state": "complete",
+    "output": "results/head/full/src__compiler__transformers__jsx.jsonl",
+    "log": "results/head/full/src__compiler__transformers__jsx.log",
+    "env": {
+      "CENSUS_MODULE_FORMAT": "CommonJSBundle",
+      "LATENT_FULL": "1",
+      "LATENT_ONLY_FILE": "/workspace/scratch/overload-certificates-census/adapted/src/compiler/transformers/jsx.ts",
+      "LATENT_ASSERT_NO_OUTPUT": "1",
+      "LATENT_TAIL": "1"
+    },
+    "pid": 12432,
+    "exit": 0,
+    "end": "2026-11-17T16:56:52.332718+00:00",
+    "seconds": 75.71779370199965,
+    "maxRssKiB": 1127476,
+    "streamComplete": true,
+    "header": {
+      "status": "measurement",
+      "latent_mode": "full",
+      "module_format": "CommonJSBundle",
+      "checker_rejected": false
+    },
+    "files": [
+      "/workspace/scratch/overload-certificates-census/adapted/src/compiler/transformers/jsx.ts"
+    ],
+    "findings": 182,
+    "selectionExact": true,
+    "sha256": "ad300040f623bebceb6e92666df1e3505d8604cbb5f710bde6adba3d975d08cf"
+  },
+  {
+    "label": "base",
+    "mode": "full",
+    "file": "src/compiler/transformers/module/module.ts",
+    "root": "src/tsc/tsc.ts",
+    "args": [
+      "/workspace/scratch/overload-certificates-census/base-tools/entry-census",
+      "/workspace/scratch/overload-certificates-census/adapted/src/tsc/tsc.ts",
+      "/workspace/scratch/overload-certificates-census/results/base/full/src__compiler__transformers__module__module.jsonl"
+    ],
+    "start": "2026-11-17T16:56:38.590932+00:00",
+    "state": "complete",
+    "output": "results/base/full/src__compiler__transformers__module__module.jsonl",
+    "log": "results/base/full/src__compiler__transformers__module__module.log",
+    "env": {
+      "CENSUS_MODULE_FORMAT": "CommonJSBundle",
+      "LATENT_FULL": "1",
+      "LATENT_ONLY_FILE": "/workspace/scratch/overload-certificates-census/adapted/src/compiler/transformers/module/module.ts",
+      "LATENT_ASSERT_NO_OUTPUT": "1",
+      "LATENT_TAIL": "1"
+    },
+    "pid": 12451,
+    "exit": 0,
+    "end": "2026-11-17T16:58:04.293348+00:00",
+    "seconds": 85.70148636300019,
+    "maxRssKiB": 1243028,
+    "streamComplete": true,
+    "header": {
+      "status": "measurement",
+      "latent_mode": "full",
+      "module_format": "CommonJSBundle",
+      "checker_rejected": false
+    },
+    "files": [
+      "/workspace/scratch/overload-certificates-census/adapted/src/compiler/transformers/module/module.ts"
+    ],
+    "findings": 398,
+    "selectionExact": true,
+    "sha256": "419b511ec384693e29be44c194db1e7e57fcf6fb158cef57ec9d67a77db1e0fa"
+  },
+  {
+    "label": "head",
+    "mode": "full",
+    "file": "src/compiler/transformers/module/module.ts",
+    "root": "src/tsc/tsc.ts",
+    "args": [
+      "/workspace/scratch/overload-certificates-census/head-tools/entry-census",
+      "/workspace/scratch/overload-certificates-census/adapted/src/tsc/tsc.ts",
+      "/workspace/scratch/overload-certificates-census/results/head/full/src__compiler__transformers__module__module.jsonl"
+    ],
+    "start": "2026-11-17T16:56:52.337188+00:00",
+    "state": "complete",
+    "output": "results/head/full/src__compiler__transformers__module__module.jsonl",
+    "log": "results/head/full/src__compiler__transformers__module__module.log",
+    "env": {
+      "CENSUS_MODULE_FORMAT": "CommonJSBundle",
+      "LATENT_FULL": "1",
+      "LATENT_ONLY_FILE": "/workspace/scratch/overload-certificates-census/adapted/src/compiler/transformers/module/module.ts",
+      "LATENT_ASSERT_NO_OUTPUT": "1",
+      "LATENT_TAIL": "1"
+    },
+    "pid": 12456,
+    "exit": 0,
+    "end": "2026-11-17T16:58:18.401889+00:00",
+    "seconds": 86.06396501000017,
+    "maxRssKiB": 1233132,
+    "streamComplete": true,
+    "header": {
+      "status": "measurement",
+      "latent_mode": "full",
+      "module_format": "CommonJSBundle",
+      "checker_rejected": false
+    },
+    "files": [
+      "/workspace/scratch/overload-certificates-census/adapted/src/compiler/transformers/module/module.ts"
+    ],
+    "findings": 398,
+    "selectionExact": true,
+    "sha256": "537248920aea2bfd44190ac9de932745e1367482b206c6a0449dbcbe52df4534"
+  },
+  {
+    "label": "base",
+    "mode": "full",
+    "file": "src/compiler/tsbuildPublic.ts",
+    "root": "src/tsc/tsc.ts",
+    "args": [
+      "/workspace/scratch/overload-certificates-census/base-tools/entry-census",
+      "/workspace/scratch/overload-certificates-census/adapted/src/tsc/tsc.ts",
+      "/workspace/scratch/overload-certificates-census/results/base/full/src__compiler__tsbuildPublic.jsonl"
+    ],
+    "start": "2026-11-17T16:58:04.299879+00:00",
+    "state": "complete",
+    "output": "results/base/full/src__compiler__tsbuildPublic.jsonl",
+    "log": "results/base/full/src__compiler__tsbuildPublic.log",
+    "env": {
+      "CENSUS_MODULE_FORMAT": "CommonJSBundle",
+      "LATENT_FULL": "1",
+      "LATENT_ONLY_FILE": "/workspace/scratch/overload-certificates-census/adapted/src/compiler/tsbuildPublic.ts",
+      "LATENT_ASSERT_NO_OUTPUT": "1",
+      "LATENT_TAIL": "1"
+    },
+    "pid": 12461,
+    "exit": 0,
+    "end": "2026-11-17T16:58:55.889365+00:00",
+    "seconds": 51.588834314999986,
+    "maxRssKiB": 1744516,
+    "streamComplete": true,
+    "header": {
+      "status": "measurement",
+      "latent_mode": "full",
+      "module_format": "CommonJSBundle",
+      "checker_rejected": false
+    },
+    "files": [
+      "/workspace/scratch/overload-certificates-census/adapted/src/compiler/tsbuildPublic.ts"
+    ],
+    "findings": 55,
+    "selectionExact": true,
+    "sha256": "b739d567c8e1de80cab87f197065ed37a09c7981d6435d30e3f581eea82d3dcd"
+  },
+  {
+    "label": "head",
+    "mode": "full",
+    "file": "src/compiler/tsbuildPublic.ts",
+    "root": "src/tsc/tsc.ts",
+    "args": [
+      "/workspace/scratch/overload-certificates-census/head-tools/entry-census",
+      "/workspace/scratch/overload-certificates-census/adapted/src/tsc/tsc.ts",
+      "/workspace/scratch/overload-certificates-census/results/head/full/src__compiler__tsbuildPublic.jsonl"
+    ],
+    "start": "2026-11-17T16:58:18.429500+00:00",
+    "state": "complete",
+    "output": "results/head/full/src__compiler__tsbuildPublic.jsonl",
+    "log": "results/head/full/src__compiler__tsbuildPublic.log",
+    "env": {
+      "CENSUS_MODULE_FORMAT": "CommonJSBundle",
+      "LATENT_FULL": "1",
+      "LATENT_ONLY_FILE": "/workspace/scratch/overload-certificates-census/adapted/src/compiler/tsbuildPublic.ts",
+      "LATENT_ASSERT_NO_OUTPUT": "1",
+      "LATENT_TAIL": "1"
+    },
+    "pid": 12466,
+    "exit": 0,
+    "end": "2026-11-17T16:59:09.607512+00:00",
+    "seconds": 51.17709119899973,
+    "maxRssKiB": 1749008,
+    "streamComplete": true,
+    "header": {
+      "status": "measurement",
+      "latent_mode": "full",
+      "module_format": "CommonJSBundle",
+      "checker_rejected": false
+    },
+    "files": [
+      "/workspace/scratch/overload-certificates-census/adapted/src/compiler/tsbuildPublic.ts"
+    ],
+    "findings": 55,
+    "selectionExact": true,
+    "sha256": "9a07e1fd6644bef814b096edf139ed12ed70ef8713bdd3dd0572c6d953971d55"
+  },
+  {
+    "label": "base",
+    "mode": "full",
+    "file": "src/compiler/utilities.ts",
+    "root": "src/tsc/tsc.ts",
+    "args": [
+      "/workspace/scratch/overload-certificates-census/base-tools/entry-census",
+      "/workspace/scratch/overload-certificates-census/adapted/src/tsc/tsc.ts",
+      "/workspace/scratch/overload-certificates-census/results/base/full/src__compiler__utilities.jsonl"
+    ],
+    "start": "2026-11-17T16:58:55.894164+00:00",
+    "state": "complete",
+    "output": "results/base/full/src__compiler__utilities.jsonl",
+    "log": "results/base/full/src__compiler__utilities.log",
+    "env": {
+      "CENSUS_MODULE_FORMAT": "CommonJSBundle",
+      "LATENT_FULL": "1",
+      "LATENT_ONLY_FILE": "/workspace/scratch/overload-certificates-census/adapted/src/compiler/utilities.ts",
+      "LATENT_ASSERT_NO_OUTPUT": "1",
+      "LATENT_TAIL": "1"
+    },
+    "pid": 12473,
+    "exit": 0,
+    "end": "2026-11-17T17:07:13.026606+00:00",
+    "seconds": 497.13173316699977,
+    "maxRssKiB": 2170472,
+    "streamComplete": true,
+    "header": {
+      "status": "measurement",
+      "latent_mode": "full",
+      "module_format": "CommonJSBundle",
+      "checker_rejected": false
+    },
+    "files": [
+      "/workspace/scratch/overload-certificates-census/adapted/src/compiler/utilities.ts"
+    ],
+    "findings": 1344,
+    "selectionExact": true,
+    "sha256": "f94f22b79473c180691bdfa0d5506617609aeee2c909afd62992a4f082d9612b"
+  },
+  {
+    "label": "head",
+    "mode": "full",
+    "file": "src/compiler/utilities.ts",
+    "root": "src/tsc/tsc.ts",
+    "args": [
+      "/workspace/scratch/overload-certificates-census/head-tools/entry-census",
+      "/workspace/scratch/overload-certificates-census/adapted/src/tsc/tsc.ts",
+      "/workspace/scratch/overload-certificates-census/results/head/full/src__compiler__utilities.jsonl"
+    ],
+    "start": "2026-11-17T16:59:09.613312+00:00",
+    "state": "complete",
+    "output": "results/head/full/src__compiler__utilities.jsonl",
+    "log": "results/head/full/src__compiler__utilities.log",
+    "env": {
+      "CENSUS_MODULE_FORMAT": "CommonJSBundle",
+      "LATENT_FULL": "1",
+      "LATENT_ONLY_FILE": "/workspace/scratch/overload-certificates-census/adapted/src/compiler/utilities.ts",
+      "LATENT_ASSERT_NO_OUTPUT": "1",
+      "LATENT_TAIL": "1"
+    },
+    "pid": 12478,
+    "exit": 0,
+    "end": "2026-11-17T17:07:28.590349+00:00",
+    "seconds": 498.9762759140003,
+    "maxRssKiB": 2043868,
+    "streamComplete": true,
+    "header": {
+      "status": "measurement",
+      "latent_mode": "full",
+      "module_format": "CommonJSBundle",
+      "checker_rejected": false
+    },
+    "files": [
+      "/workspace/scratch/overload-certificates-census/adapted/src/compiler/utilities.ts"
+    ],
+    "findings": 1340,
+    "selectionExact": true,
+    "sha256": "29a0eebdddb312c6b43d3ee48d0a7a558ec50a08d5f956ee7b62ade5c1ef2c6b"
+  },
+  {
+    "label": "base",
+    "mode": "full",
+    "file": "src/compiler/watchUtilities.ts",
+    "root": "src/tsc/tsc.ts",
+    "args": [
+      "/workspace/scratch/overload-certificates-census/base-tools/entry-census",
+      "/workspace/scratch/overload-certificates-census/adapted/src/tsc/tsc.ts",
+      "/workspace/scratch/overload-certificates-census/results/base/full/src__compiler__watchUtilities.jsonl"
+    ],
+    "start": "2026-11-17T17:07:13.071980+00:00",
+    "state": "complete",
+    "output": "results/base/full/src__compiler__watchUtilities.jsonl",
+    "log": "results/base/full/src__compiler__watchUtilities.log",
+    "env": {
+      "CENSUS_MODULE_FORMAT": "CommonJSBundle",
+      "LATENT_FULL": "1",
+      "LATENT_ONLY_FILE": "/workspace/scratch/overload-certificates-census/adapted/src/compiler/watchUtilities.ts",
+      "LATENT_ASSERT_NO_OUTPUT": "1",
+      "LATENT_TAIL": "1"
+    },
+    "pid": 12500,
+    "exit": 0,
+    "end": "2026-11-17T17:08:01.119733+00:00",
+    "seconds": 48.0466958650004,
+    "maxRssKiB": 1039012,
+    "streamComplete": true,
+    "header": {
+      "status": "measurement",
+      "latent_mode": "full",
+      "module_format": "CommonJSBundle",
+      "checker_rejected": false
+    },
+    "files": [
+      "/workspace/scratch/overload-certificates-census/adapted/src/compiler/watchUtilities.ts"
+    ],
+    "findings": 52,
+    "selectionExact": true,
+    "sha256": "2a324a4a6d10dc4c63d139e675b33707d39b09dcebc45d8ebeff8dc6792e300d"
+  },
+  {
+    "label": "head",
+    "mode": "full",
+    "file": "src/compiler/watchUtilities.ts",
+    "root": "src/tsc/tsc.ts",
+    "args": [
+      "/workspace/scratch/overload-certificates-census/head-tools/entry-census",
+      "/workspace/scratch/overload-certificates-census/adapted/src/tsc/tsc.ts",
+      "/workspace/scratch/overload-certificates-census/results/head/full/src__compiler__watchUtilities.jsonl"
+    ],
+    "start": "2026-11-17T17:07:28.627461+00:00",
+    "state": "complete",
+    "output": "results/head/full/src__compiler__watchUtilities.jsonl",
+    "log": "results/head/full/src__compiler__watchUtilities.log",
+    "env": {
+      "CENSUS_MODULE_FORMAT": "CommonJSBundle",
+      "LATENT_FULL": "1",
+      "LATENT_ONLY_FILE": "/workspace/scratch/overload-certificates-census/adapted/src/compiler/watchUtilities.ts",
+      "LATENT_ASSERT_NO_OUTPUT": "1",
+      "LATENT_TAIL": "1"
+    },
+    "pid": 12505,
+    "exit": 0,
+    "end": "2026-11-17T17:08:14.540425+00:00",
+    "seconds": 45.91188630599936,
+    "maxRssKiB": 1002284,
+    "streamComplete": true,
+    "header": {
+      "status": "measurement",
+      "latent_mode": "full",
+      "module_format": "CommonJSBundle",
+      "checker_rejected": false
+    },
+    "files": [
+      "/workspace/scratch/overload-certificates-census/adapted/src/compiler/watchUtilities.ts"
+    ],
+    "findings": 52,
+    "selectionExact": true,
+    "sha256": "33b8f7a42286f95289f557732d80e5c6e737f636e9ceef5f53db06cbdd3306cb"
+  },
+  {
+    "label": "base",
+    "mode": "full",
+    "file": "src/harness/compilerImpl.ts",
+    "root": "src/harness/compilerImpl.ts",
+    "args": [
+      "/workspace/scratch/overload-certificates-census/base-tools/entry-census",
+      "/workspace/scratch/overload-certificates-census/adapted/src/harness/compilerImpl.ts",
+      "/workspace/scratch/overload-certificates-census/results/base/full/src__harness__compilerImpl.jsonl"
+    ],
+    "start": "2026-11-17T17:08:01.126386+00:00",
+    "state": "failed",
+    "output": "results/base/full/src__harness__compilerImpl.jsonl",
+    "log": "results/base/full/src__harness__compilerImpl.log",
+    "env": {
+      "CENSUS_MODULE_FORMAT": "CommonJSBundle",
+      "LATENT_FULL": "1",
+      "LATENT_ONLY_FILE": "/workspace/scratch/overload-certificates-census/adapted/src/harness/compilerImpl.ts",
+      "LATENT_ASSERT_NO_OUTPUT": "1",
+      "LATENT_TAIL": "1"
+    },
+    "pid": 12570,
+    "exit": 2,
+    "end": "2026-11-17T17:08:24.385776+00:00",
+    "seconds": 23.258495179999954,
+    "maxRssKiB": 1602416,
+    "streamComplete": false,
+    "header": {
+      "status": "measurement",
+      "latent_mode": "full",
+      "module_format": "CommonJSBundle",
+      "checker_rejected": true
+    },
+    "files": [],
+    "findings": 0,
+    "selectionExact": false,
+    "sha256": "e7ad66c9afb30f447a2659a6a2e42cea389df2cf8cdcf75b6343872ee5f64aba"
+  },
+  {
+    "label": "head",
+    "mode": "full",
+    "file": "src/harness/compilerImpl.ts",
+    "root": "src/harness/compilerImpl.ts",
+    "args": [
+      "/workspace/scratch/overload-certificates-census/head-tools/entry-census",
+      "/workspace/scratch/overload-certificates-census/adapted/src/harness/compilerImpl.ts",
+      "/workspace/scratch/overload-certificates-census/results/head/full/src__harness__compilerImpl.jsonl"
+    ],
+    "start": "2026-11-17T17:08:14.544232+00:00",
+    "state": "failed",
+    "output": "results/head/full/src__harness__compilerImpl.jsonl",
+    "log": "results/head/full/src__harness__compilerImpl.log",
+    "env": {
+      "CENSUS_MODULE_FORMAT": "CommonJSBundle",
+      "LATENT_FULL": "1",
+      "LATENT_ONLY_FILE": "/workspace/scratch/overload-certificates-census/adapted/src/harness/compilerImpl.ts",
+      "LATENT_ASSERT_NO_OUTPUT": "1",
+      "LATENT_TAIL": "1"
+    },
+    "pid": 12575,
+    "exit": 2,
+    "end": "2026-11-17T17:08:38.924438+00:00",
+    "seconds": 24.379391595000016,
+    "maxRssKiB": 1618084,
+    "streamComplete": false,
+    "header": {
+      "status": "measurement",
+      "latent_mode": "full",
+      "module_format": "CommonJSBundle",
+      "checker_rejected": true
+    },
+    "files": [],
+    "findings": 0,
+    "selectionExact": false,
+    "sha256": "e7ad66c9afb30f447a2659a6a2e42cea389df2cf8cdcf75b6343872ee5f64aba"
+  },
+  {
+    "label": "base",
+    "mode": "full",
+    "file": "src/harness/documentsUtil.ts",
+    "root": "src/harness/documentsUtil.ts",
+    "args": [
+      "/workspace/scratch/overload-certificates-census/base-tools/entry-census",
+      "/workspace/scratch/overload-certificates-census/adapted/src/harness/documentsUtil.ts",
+      "/workspace/scratch/overload-certificates-census/results/base/full/src__harness__documentsUtil.jsonl"
+    ],
+    "start": "2026-11-17T17:08:24.397258+00:00",
+    "state": "failed",
+    "output": "results/base/full/src__harness__documentsUtil.jsonl",
+    "log": "results/base/full/src__harness__documentsUtil.log",
+    "env": {
+      "CENSUS_MODULE_FORMAT": "CommonJSBundle",
+      "LATENT_FULL": "1",
+      "LATENT_ONLY_FILE": "/workspace/scratch/overload-certificates-census/adapted/src/harness/documentsUtil.ts",
+      "LATENT_ASSERT_NO_OUTPUT": "1",
+      "LATENT_TAIL": "1"
+    },
+    "pid": 12580,
+    "exit": 2,
+    "end": "2026-11-17T17:08:51.241567+00:00",
+    "seconds": 26.843438083000365,
+    "maxRssKiB": 1637252,
+    "streamComplete": false,
+    "header": {
+      "status": "measurement",
+      "latent_mode": "full",
+      "module_format": "CommonJSBundle",
+      "checker_rejected": true
+    },
+    "files": [],
+    "findings": 0,
+    "selectionExact": false,
+    "sha256": "8a6b0172e4e803efc187490b403255a70fbc23fc1e561b2cd9b41fdfcdccfd85"
+  },
+  {
+    "label": "head",
+    "mode": "full",
+    "file": "src/harness/documentsUtil.ts",
+    "root": "src/harness/documentsUtil.ts",
+    "args": [
+      "/workspace/scratch/overload-certificates-census/head-tools/entry-census",
+      "/workspace/scratch/overload-certificates-census/adapted/src/harness/documentsUtil.ts",
+      "/workspace/scratch/overload-certificates-census/results/head/full/src__harness__documentsUtil.jsonl"
+    ],
+    "start": "2026-11-17T17:08:38.937743+00:00",
+    "state": "failed",
+    "output": "results/head/full/src__harness__documentsUtil.jsonl",
+    "log": "results/head/full/src__harness__documentsUtil.log",
+    "env": {
+      "CENSUS_MODULE_FORMAT": "CommonJSBundle",
+      "LATENT_FULL": "1",
+      "LATENT_ONLY_FILE": "/workspace/scratch/overload-certificates-census/adapted/src/harness/documentsUtil.ts",
+      "LATENT_ASSERT_NO_OUTPUT": "1",
+      "LATENT_TAIL": "1"
+    },
+    "pid": 12600,
+    "exit": 2,
+    "end": "2026-11-17T17:09:04.767674+00:00",
+    "seconds": 25.829140382999867,
+    "maxRssKiB": 1610604,
+    "streamComplete": false,
+    "header": {
+      "status": "measurement",
+      "latent_mode": "full",
+      "module_format": "CommonJSBundle",
+      "checker_rejected": true
+    },
+    "files": [],
+    "findings": 0,
+    "selectionExact": false,
+    "sha256": "8a6b0172e4e803efc187490b403255a70fbc23fc1e561b2cd9b41fdfcdccfd85"
+  },
+  {
+    "label": "base",
+    "mode": "full",
+    "file": "src/harness/fourslashImpl.ts",
+    "root": "src/harness/fourslashImpl.ts",
+    "args": [
+      "/workspace/scratch/overload-certificates-census/base-tools/entry-census",
+      "/workspace/scratch/overload-certificates-census/adapted/src/harness/fourslashImpl.ts",
+      "/workspace/scratch/overload-certificates-census/results/base/full/src__harness__fourslashImpl.jsonl"
+    ],
+    "start": "2026-11-17T17:08:51.253427+00:00",
+    "state": "failed",
+    "output": "results/base/full/src__harness__fourslashImpl.jsonl",
+    "log": "results/base/full/src__harness__fourslashImpl.log",
+    "env": {
+      "CENSUS_MODULE_FORMAT": "CommonJSBundle",
+      "LATENT_FULL": "1",
+      "LATENT_ONLY_FILE": "/workspace/scratch/overload-certificates-census/adapted/src/harness/fourslashImpl.ts",
+      "LATENT_ASSERT_NO_OUTPUT": "1",
+      "LATENT_TAIL": "1"
+    },
+    "pid": 12639,
+    "exit": 2,
+    "end": "2026-11-17T17:09:19.112205+00:00",
+    "seconds": 27.858116729999892,
+    "maxRssKiB": 1669684,
+    "streamComplete": false,
+    "header": {
+      "status": "measurement",
+      "latent_mode": "full",
+      "module_format": "CommonJSBundle",
+      "checker_rejected": true
+    },
+    "files": [],
+    "findings": 0,
+    "selectionExact": false,
+    "sha256": "fbbdea0c44aa12381156280970b473c215990ecd7aedc37fed1b4d8ba4d32954"
+  },
+  {
+    "label": "head",
+    "mode": "full",
+    "file": "src/harness/fourslashImpl.ts",
+    "root": "src/harness/fourslashImpl.ts",
+    "args": [
+      "/workspace/scratch/overload-certificates-census/head-tools/entry-census",
+      "/workspace/scratch/overload-certificates-census/adapted/src/harness/fourslashImpl.ts",
+      "/workspace/scratch/overload-certificates-census/results/head/full/src__harness__fourslashImpl.jsonl"
+    ],
+    "start": "2026-11-17T17:09:04.782721+00:00",
+    "state": "failed",
+    "output": "results/head/full/src__harness__fourslashImpl.jsonl",
+    "log": "results/head/full/src__harness__fourslashImpl.log",
+    "env": {
+      "CENSUS_MODULE_FORMAT": "CommonJSBundle",
+      "LATENT_FULL": "1",
+      "LATENT_ONLY_FILE": "/workspace/scratch/overload-certificates-census/adapted/src/harness/fourslashImpl.ts",
+      "LATENT_ASSERT_NO_OUTPUT": "1",
+      "LATENT_TAIL": "1"
+    },
+    "pid": 12644,
+    "exit": 2,
+    "end": "2026-11-17T17:09:33.954971+00:00",
+    "seconds": 29.1708440780003,
+    "maxRssKiB": 1649820,
+    "streamComplete": false,
+    "header": {
+      "status": "measurement",
+      "latent_mode": "full",
+      "module_format": "CommonJSBundle",
+      "checker_rejected": true
+    },
+    "files": [],
+    "findings": 0,
+    "selectionExact": false,
+    "sha256": "fbbdea0c44aa12381156280970b473c215990ecd7aedc37fed1b4d8ba4d32954"
+  },
+  {
+    "label": "base",
+    "mode": "full",
+    "file": "src/harness/harnessIO.ts",
+    "root": "src/harness/harnessIO.ts",
+    "args": [
+      "/workspace/scratch/overload-certificates-census/base-tools/entry-census",
+      "/workspace/scratch/overload-certificates-census/adapted/src/harness/harnessIO.ts",
+      "/workspace/scratch/overload-certificates-census/results/base/full/src__harness__harnessIO.jsonl"
+    ],
+    "start": "2026-11-17T17:09:19.127761+00:00",
+    "state": "failed",
+    "output": "results/base/full/src__harness__harnessIO.jsonl",
+    "log": "results/base/full/src__harness__harnessIO.log",
+    "env": {
+      "CENSUS_MODULE_FORMAT": "CommonJSBundle",
+      "LATENT_FULL": "1",
+      "LATENT_ONLY_FILE": "/workspace/scratch/overload-certificates-census/adapted/src/harness/harnessIO.ts",
+      "LATENT_ASSERT_NO_OUTPUT": "1",
+      "LATENT_TAIL": "1"
+    },
+    "pid": 12653,
+    "exit": 2,
+    "end": "2026-11-17T17:09:47.503755+00:00",
+    "seconds": 28.374104974000147,
+    "maxRssKiB": 1676136,
+    "streamComplete": false,
+    "header": {
+      "status": "measurement",
+      "latent_mode": "full",
+      "module_format": "CommonJSBundle",
+      "checker_rejected": true
+    },
+    "files": [],
+    "findings": 0,
+    "selectionExact": false,
+    "sha256": "247bcae69a491119e3fba3623c8999e48b23c75d399a46e42ae94a2d0bf81b40"
+  },
+  {
+    "label": "head",
+    "mode": "full",
+    "file": "src/harness/harnessIO.ts",
+    "root": "src/harness/harnessIO.ts",
+    "args": [
+      "/workspace/scratch/overload-certificates-census/head-tools/entry-census",
+      "/workspace/scratch/overload-certificates-census/adapted/src/harness/harnessIO.ts",
+      "/workspace/scratch/overload-certificates-census/results/head/full/src__harness__harnessIO.jsonl"
+    ],
+    "start": "2026-11-17T17:09:33.973553+00:00",
+    "state": "failed",
+    "output": "results/head/full/src__harness__harnessIO.jsonl",
+    "log": "results/head/full/src__harness__harnessIO.log",
+    "env": {
+      "CENSUS_MODULE_FORMAT": "CommonJSBundle",
+      "LATENT_FULL": "1",
+      "LATENT_ONLY_FILE": "/workspace/scratch/overload-certificates-census/adapted/src/harness/harnessIO.ts",
+      "LATENT_ASSERT_NO_OUTPUT": "1",
+      "LATENT_TAIL": "1"
+    },
+    "pid": 12658,
+    "exit": 2,
+    "end": "2026-11-17T17:10:02.284288+00:00",
+    "seconds": 28.30954517400005,
+    "maxRssKiB": 1610128,
+    "streamComplete": false,
+    "header": {
+      "status": "measurement",
+      "latent_mode": "full",
+      "module_format": "CommonJSBundle",
+      "checker_rejected": true
+    },
+    "files": [],
+    "findings": 0,
+    "selectionExact": false,
+    "sha256": "247bcae69a491119e3fba3623c8999e48b23c75d399a46e42ae94a2d0bf81b40"
+  },
+  {
+    "label": "base",
+    "mode": "full",
+    "file": "src/harness/projectServiceStateLogger.ts",
+    "root": "src/harness/projectServiceStateLogger.ts",
+    "args": [
+      "/workspace/scratch/overload-certificates-census/base-tools/entry-census",
+      "/workspace/scratch/overload-certificates-census/adapted/src/harness/projectServiceStateLogger.ts",
+      "/workspace/scratch/overload-certificates-census/results/base/full/src__harness__projectServiceStateLogger.jsonl"
+    ],
+    "start": "2026-11-17T17:09:47.518139+00:00",
+    "state": "failed",
+    "output": "results/base/full/src__harness__projectServiceStateLogger.jsonl",
+    "log": "results/base/full/src__harness__projectServiceStateLogger.log",
+    "env": {
+      "CENSUS_MODULE_FORMAT": "CommonJSBundle",
+      "LATENT_FULL": "1",
+      "LATENT_ONLY_FILE": "/workspace/scratch/overload-certificates-census/adapted/src/harness/projectServiceStateLogger.ts",
+      "LATENT_ASSERT_NO_OUTPUT": "1",
+      "LATENT_TAIL": "1"
+    },
+    "pid": 12664,
+    "exit": 2,
+    "end": "2026-11-17T17:10:13.590981+00:00",
+    "seconds": 26.071949807000237,
+    "maxRssKiB": 1625080,
+    "streamComplete": false,
+    "header": {
+      "status": "measurement",
+      "latent_mode": "full",
+      "module_format": "CommonJSBundle",
+      "checker_rejected": true
+    },
+    "files": [],
+    "findings": 0,
+    "selectionExact": false,
+    "sha256": "6e7c110bb7986f7c1c0ae0c302d8232654270891f1dd527d85bf78bb1618250d"
+  },
+  {
+    "label": "head",
+    "mode": "full",
+    "file": "src/harness/projectServiceStateLogger.ts",
+    "root": "src/harness/projectServiceStateLogger.ts",
+    "args": [
+      "/workspace/scratch/overload-certificates-census/head-tools/entry-census",
+      "/workspace/scratch/overload-certificates-census/adapted/src/harness/projectServiceStateLogger.ts",
+      "/workspace/scratch/overload-certificates-census/results/head/full/src__harness__projectServiceStateLogger.jsonl"
+    ],
+    "start": "2026-11-17T17:10:02.296561+00:00",
+    "state": "failed",
+    "output": "results/head/full/src__harness__projectServiceStateLogger.jsonl",
+    "log": "results/head/full/src__harness__projectServiceStateLogger.log",
+    "env": {
+      "CENSUS_MODULE_FORMAT": "CommonJSBundle",
+      "LATENT_FULL": "1",
+      "LATENT_ONLY_FILE": "/workspace/scratch/overload-certificates-census/adapted/src/harness/projectServiceStateLogger.ts",
+      "LATENT_ASSERT_NO_OUTPUT": "1",
+      "LATENT_TAIL": "1"
+    },
+    "pid": 12669,
+    "exit": 2,
+    "end": "2026-11-17T17:10:25.963462+00:00",
+    "seconds": 23.665994027000124,
+    "maxRssKiB": 1641048,
+    "streamComplete": false,
+    "header": {
+      "status": "measurement",
+      "latent_mode": "full",
+      "module_format": "CommonJSBundle",
+      "checker_rejected": true
+    },
+    "files": [],
+    "findings": 0,
+    "selectionExact": false,
+    "sha256": "6e7c110bb7986f7c1c0ae0c302d8232654270891f1dd527d85bf78bb1618250d"
+  },
+  {
+    "label": "base",
+    "mode": "full",
+    "file": "src/harness/vfsUtil.ts",
+    "root": "src/harness/vfsUtil.ts",
+    "args": [
+      "/workspace/scratch/overload-certificates-census/base-tools/entry-census",
+      "/workspace/scratch/overload-certificates-census/adapted/src/harness/vfsUtil.ts",
+      "/workspace/scratch/overload-certificates-census/results/base/full/src__harness__vfsUtil.jsonl"
+    ],
+    "start": "2026-11-17T17:10:13.602639+00:00",
+    "state": "failed",
+    "output": "results/base/full/src__harness__vfsUtil.jsonl",
+    "log": "results/base/full/src__harness__vfsUtil.log",
+    "env": {
+      "CENSUS_MODULE_FORMAT": "CommonJSBundle",
+      "LATENT_FULL": "1",
+      "LATENT_ONLY_FILE": "/workspace/scratch/overload-certificates-census/adapted/src/harness/vfsUtil.ts",
+      "LATENT_ASSERT_NO_OUTPUT": "1",
+      "LATENT_TAIL": "1"
+    },
+    "pid": 12708,
+    "exit": 2,
+    "end": "2026-11-17T17:10:38.721220+00:00",
+    "seconds": 25.11780482100039,
+    "maxRssKiB": 1576236,
+    "streamComplete": false,
+    "header": {
+      "status": "measurement",
+      "latent_mode": "full",
+      "module_format": "CommonJSBundle",
+      "checker_rejected": true
+    },
+    "files": [],
+    "findings": 0,
+    "selectionExact": false,
+    "sha256": "e46c3d0d88697aaa139c00671019d29f60466639cf14f00b63ec63847fe92209"
+  },
+  {
+    "label": "head",
+    "mode": "full",
+    "file": "src/harness/vfsUtil.ts",
+    "root": "src/harness/vfsUtil.ts",
+    "args": [
+      "/workspace/scratch/overload-certificates-census/head-tools/entry-census",
+      "/workspace/scratch/overload-certificates-census/adapted/src/harness/vfsUtil.ts",
+      "/workspace/scratch/overload-certificates-census/results/head/full/src__harness__vfsUtil.jsonl"
+    ],
+    "start": "2026-11-17T17:10:25.974484+00:00",
+    "state": "failed",
+    "output": "results/head/full/src__harness__vfsUtil.jsonl",
+    "log": "results/head/full/src__harness__vfsUtil.log",
+    "env": {
+      "CENSUS_MODULE_FORMAT": "CommonJSBundle",
+      "LATENT_FULL": "1",
+      "LATENT_ONLY_FILE": "/workspace/scratch/overload-certificates-census/adapted/src/harness/vfsUtil.ts",
+      "LATENT_ASSERT_NO_OUTPUT": "1",
+      "LATENT_TAIL": "1"
+    },
+    "pid": 12717,
+    "exit": 2,
+    "end": "2026-11-17T17:10:49.757821+00:00",
+    "seconds": 23.782214664000094,
+    "maxRssKiB": 1650372,
+    "streamComplete": false,
+    "header": {
+      "status": "measurement",
+      "latent_mode": "full",
+      "module_format": "CommonJSBundle",
+      "checker_rejected": true
+    },
+    "files": [],
+    "findings": 0,
+    "selectionExact": false,
+    "sha256": "e46c3d0d88697aaa139c00671019d29f60466639cf14f00b63ec63847fe92209"
+  },
+  {
+    "label": "base",
+    "mode": "full",
+    "file": "src/harness/watchUtils.ts",
+    "root": "src/harness/watchUtils.ts",
+    "args": [
+      "/workspace/scratch/overload-certificates-census/base-tools/entry-census",
+      "/workspace/scratch/overload-certificates-census/adapted/src/harness/watchUtils.ts",
+      "/workspace/scratch/overload-certificates-census/results/base/full/src__harness__watchUtils.jsonl"
+    ],
+    "start": "2026-11-17T17:10:38.735972+00:00",
+    "state": "complete",
+    "output": "results/base/full/src__harness__watchUtils.jsonl",
+    "log": "results/base/full/src__harness__watchUtils.log",
+    "env": {
+      "CENSUS_MODULE_FORMAT": "CommonJSBundle",
+      "LATENT_FULL": "1",
+      "LATENT_ONLY_FILE": "/workspace/scratch/overload-certificates-census/adapted/src/harness/watchUtils.ts",
+      "LATENT_ASSERT_NO_OUTPUT": "1",
+      "LATENT_TAIL": "1"
+    },
+    "pid": 12722,
+    "exit": 0,
+    "end": "2026-11-17T17:11:15.237150+00:00",
+    "seconds": 36.50022461499975,
+    "maxRssKiB": 1608676,
+    "streamComplete": true,
+    "header": {
+      "status": "measurement",
+      "latent_mode": "full",
+      "module_format": "CommonJSBundle",
+      "checker_rejected": true
+    },
+    "files": [
+      "/workspace/scratch/overload-certificates-census/adapted/src/harness/watchUtils.ts"
+    ],
+    "findings": 0,
+    "selectionExact": true,
+    "sha256": "171c00a9f673f2d7493caa39a3619e7abd397863a92413acbe3674f2ec1b246f"
+  },
+  {
+    "label": "head",
+    "mode": "full",
+    "file": "src/harness/watchUtils.ts",
+    "root": "src/harness/watchUtils.ts",
+    "args": [
+      "/workspace/scratch/overload-certificates-census/head-tools/entry-census",
+      "/workspace/scratch/overload-certificates-census/adapted/src/harness/watchUtils.ts",
+      "/workspace/scratch/overload-certificates-census/results/head/full/src__harness__watchUtils.jsonl"
+    ],
+    "start": "2026-11-17T17:10:49.771890+00:00",
+    "state": "complete",
+    "output": "results/head/full/src__harness__watchUtils.jsonl",
+    "log": "results/head/full/src__harness__watchUtils.log",
+    "env": {
+      "CENSUS_MODULE_FORMAT": "CommonJSBundle",
+      "LATENT_FULL": "1",
+      "LATENT_ONLY_FILE": "/workspace/scratch/overload-certificates-census/adapted/src/harness/watchUtils.ts",
+      "LATENT_ASSERT_NO_OUTPUT": "1",
+      "LATENT_TAIL": "1"
+    },
+    "pid": 12727,
+    "exit": 0,
+    "end": "2026-11-17T17:11:28.990871+00:00",
+    "seconds": 39.218046488000255,
+    "maxRssKiB": 1585248,
+    "streamComplete": true,
+    "header": {
+      "status": "measurement",
+      "latent_mode": "full",
+      "module_format": "CommonJSBundle",
+      "checker_rejected": true
+    },
+    "files": [
+      "/workspace/scratch/overload-certificates-census/adapted/src/harness/watchUtils.ts"
+    ],
+    "findings": 0,
+    "selectionExact": true,
+    "sha256": "966514061afd3b74c269a75634744cb9ef2444e4fe3086926122f86a07decef8"
+  },
+  {
+    "label": "base",
+    "mode": "full",
+    "file": "src/server/editorServices.ts",
+    "root": "src/server/editorServices.ts",
+    "args": [
+      "/workspace/scratch/overload-certificates-census/base-tools/entry-census",
+      "/workspace/scratch/overload-certificates-census/adapted/src/server/editorServices.ts",
+      "/workspace/scratch/overload-certificates-census/results/base/full/src__server__editorServices.jsonl"
+    ],
+    "start": "2026-11-17T17:11:15.257404+00:00",
+    "state": "complete",
+    "output": "results/base/full/src__server__editorServices.jsonl",
+    "log": "results/base/full/src__server__editorServices.log",
+    "env": {
+      "CENSUS_MODULE_FORMAT": "CommonJSBundle",
+      "LATENT_FULL": "1",
+      "LATENT_ONLY_FILE": "/workspace/scratch/overload-certificates-census/adapted/src/server/editorServices.ts",
+      "LATENT_ASSERT_NO_OUTPUT": "1",
+      "LATENT_TAIL": "1"
+    },
+    "pid": 12732,
+    "exit": 0,
+    "end": "2026-11-17T17:12:43.105249+00:00",
+    "seconds": 87.8462132120003,
+    "maxRssKiB": 4727820,
+    "streamComplete": true,
+    "header": {
+      "status": "measurement",
+      "latent_mode": "full",
+      "module_format": "CommonJSBundle",
+      "checker_rejected": true
+    },
+    "files": [
+      "/workspace/scratch/overload-certificates-census/adapted/src/server/editorServices.ts"
+    ],
+    "findings": 1073,
+    "selectionExact": true,
+    "sha256": "9d8a3c136e6142870bc3959780a2f6b1419bb522101ce4d8e49b29b65c6495c4"
+  },
+  {
+    "label": "head",
+    "mode": "full",
+    "file": "src/server/editorServices.ts",
+    "root": "src/server/editorServices.ts",
+    "args": [
+      "/workspace/scratch/overload-certificates-census/head-tools/entry-census",
+      "/workspace/scratch/overload-certificates-census/adapted/src/server/editorServices.ts",
+      "/workspace/scratch/overload-certificates-census/results/head/full/src__server__editorServices.jsonl"
+    ],
+    "start": "2026-11-17T17:11:29.022747+00:00",
+    "state": "complete",
+    "output": "results/head/full/src__server__editorServices.jsonl",
+    "log": "results/head/full/src__server__editorServices.log",
+    "env": {
+      "CENSUS_MODULE_FORMAT": "CommonJSBundle",
+      "LATENT_FULL": "1",
+      "LATENT_ONLY_FILE": "/workspace/scratch/overload-certificates-census/adapted/src/server/editorServices.ts",
+      "LATENT_ASSERT_NO_OUTPUT": "1",
+      "LATENT_TAIL": "1"
+    },
+    "pid": 12753,
+    "exit": 0,
+    "end": "2026-11-17T17:12:59.168787+00:00",
+    "seconds": 90.1429950339998,
+    "maxRssKiB": 4887428,
+    "streamComplete": true,
+    "header": {
+      "status": "measurement",
+      "latent_mode": "full",
+      "module_format": "CommonJSBundle",
+      "checker_rejected": true
+    },
+    "files": [
+      "/workspace/scratch/overload-certificates-census/adapted/src/server/editorServices.ts"
+    ],
+    "findings": 1073,
+    "selectionExact": true,
+    "sha256": "6fd133e6005e99e3ae278d6c7ce426b93796c4c5feb8f195df80e7b08bd68524"
+  },
+  {
+    "label": "base",
+    "mode": "full",
+    "file": "src/server/project.ts",
+    "root": "src/server/project.ts",
+    "args": [
+      "/workspace/scratch/overload-certificates-census/base-tools/entry-census",
+      "/workspace/scratch/overload-certificates-census/adapted/src/server/project.ts",
+      "/workspace/scratch/overload-certificates-census/results/base/full/src__server__project.jsonl"
+    ],
+    "start": "2026-11-17T17:12:43.131092+00:00",
+    "state": "complete",
+    "output": "results/base/full/src__server__project.jsonl",
+    "log": "results/base/full/src__server__project.log",
+    "env": {
+      "CENSUS_MODULE_FORMAT": "CommonJSBundle",
+      "LATENT_FULL": "1",
+      "LATENT_ONLY_FILE": "/workspace/scratch/overload-certificates-census/adapted/src/server/project.ts",
+      "LATENT_ASSERT_NO_OUTPUT": "1",
+      "LATENT_TAIL": "1"
+    },
+    "pid": 12790,
+    "exit": 0,
+    "end": "2026-11-17T17:14:03.478992+00:00",
+    "seconds": 80.34638919999998,
+    "maxRssKiB": 1671976,
+    "streamComplete": true,
+    "header": {
+      "status": "measurement",
+      "latent_mode": "full",
+      "module_format": "CommonJSBundle",
+      "checker_rejected": true
+    },
+    "files": [
+      "/workspace/scratch/overload-certificates-census/adapted/src/server/project.ts"
+    ],
+    "findings": 690,
+    "selectionExact": true,
+    "sha256": "4880152e7b2eb5699d376a86205f9c94cc80cfdb107207e2f7138519d4caf54f"
+  },
+  {
+    "label": "head",
+    "mode": "full",
+    "file": "src/server/project.ts",
+    "root": "src/server/project.ts",
+    "args": [
+      "/workspace/scratch/overload-certificates-census/head-tools/entry-census",
+      "/workspace/scratch/overload-certificates-census/adapted/src/server/project.ts",
+      "/workspace/scratch/overload-certificates-census/results/head/full/src__server__project.jsonl"
+    ],
+    "start": "2026-11-17T17:12:59.205886+00:00",
+    "state": "complete",
+    "output": "results/head/full/src__server__project.jsonl",
+    "log": "results/head/full/src__server__project.log",
+    "env": {
+      "CENSUS_MODULE_FORMAT": "CommonJSBundle",
+      "LATENT_FULL": "1",
+      "LATENT_ONLY_FILE": "/workspace/scratch/overload-certificates-census/adapted/src/server/project.ts",
+      "LATENT_ASSERT_NO_OUTPUT": "1",
+      "LATENT_TAIL": "1"
+    },
+    "pid": 12798,
+    "exit": 0,
+    "end": "2026-11-17T17:14:18.495026+00:00",
+    "seconds": 79.28803713300022,
+    "maxRssKiB": 1615688,
+    "streamComplete": true,
+    "header": {
+      "status": "measurement",
+      "latent_mode": "full",
+      "module_format": "CommonJSBundle",
+      "checker_rejected": true
+    },
+    "files": [
+      "/workspace/scratch/overload-certificates-census/adapted/src/server/project.ts"
+    ],
+    "findings": 699,
+    "selectionExact": true,
+    "sha256": "89be64068788ca47e2f544d9e0bac782a315b71cb35dc4b5bff56369912e3dbe"
+  },
+  {
+    "label": "base",
+    "mode": "full",
+    "file": "src/server/session.ts",
+    "root": "src/server/session.ts",
+    "args": [
+      "/workspace/scratch/overload-certificates-census/base-tools/entry-census",
+      "/workspace/scratch/overload-certificates-census/adapted/src/server/session.ts",
+      "/workspace/scratch/overload-certificates-census/results/base/full/src__server__session.jsonl"
+    ],
+    "start": "2026-11-17T17:14:03.505516+00:00",
+    "state": "complete",
+    "output": "results/base/full/src__server__session.jsonl",
+    "log": "results/base/full/src__server__session.log",
+    "env": {
+      "CENSUS_MODULE_FORMAT": "CommonJSBundle",
+      "LATENT_FULL": "1",
+      "LATENT_ONLY_FILE": "/workspace/scratch/overload-certificates-census/adapted/src/server/session.ts",
+      "LATENT_ASSERT_NO_OUTPUT": "1",
+      "LATENT_TAIL": "1"
+    },
+    "pid": 12898,
+    "exit": 0,
+    "end": "2026-11-17T17:15:00.318847+00:00",
+    "seconds": 56.8118603540006,
+    "maxRssKiB": 1691572,
+    "streamComplete": true,
+    "header": {
+      "status": "measurement",
+      "latent_mode": "full",
+      "module_format": "CommonJSBundle",
+      "checker_rejected": true
+    },
+    "files": [
+      "/workspace/scratch/overload-certificates-census/adapted/src/server/session.ts"
+    ],
+    "findings": 1118,
+    "selectionExact": true,
+    "sha256": "da4f8aaff3e5f54b524431552350371cbac917feebb3e7f8bdd64a2152272fd9"
+  },
+  {
+    "label": "head",
+    "mode": "full",
+    "file": "src/server/session.ts",
+    "root": "src/server/session.ts",
+    "args": [
+      "/workspace/scratch/overload-certificates-census/head-tools/entry-census",
+      "/workspace/scratch/overload-certificates-census/adapted/src/server/session.ts",
+      "/workspace/scratch/overload-certificates-census/results/head/full/src__server__session.jsonl"
+    ],
+    "start": "2026-11-17T17:14:18.512617+00:00",
+    "state": "complete",
+    "output": "results/head/full/src__server__session.jsonl",
+    "log": "results/head/full/src__server__session.log",
+    "env": {
+      "CENSUS_MODULE_FORMAT": "CommonJSBundle",
+      "LATENT_FULL": "1",
+      "LATENT_ONLY_FILE": "/workspace/scratch/overload-certificates-census/adapted/src/server/session.ts",
+      "LATENT_ASSERT_NO_OUTPUT": "1",
+      "LATENT_TAIL": "1"
+    },
+    "pid": 12903,
+    "exit": 0,
+    "end": "2026-11-17T17:15:17.841067+00:00",
+    "seconds": 59.327354305999506,
+    "maxRssKiB": 1598036,
+    "streamComplete": true,
+    "header": {
+      "status": "measurement",
+      "latent_mode": "full",
+      "module_format": "CommonJSBundle",
+      "checker_rejected": true
+    },
+    "files": [
+      "/workspace/scratch/overload-certificates-census/adapted/src/server/session.ts"
+    ],
+    "findings": 1118,
+    "selectionExact": true,
+    "sha256": "c550e8402e601e32e7d2b0f7fd5ccb0a2815280cfeb89ee46d8f13d144a4a6f8"
+  },
+  {
+    "label": "base",
+    "mode": "full",
+    "file": "src/services/codeFixProvider.ts",
+    "root": "src/services/codeFixProvider.ts",
+    "args": [
+      "/workspace/scratch/overload-certificates-census/base-tools/entry-census",
+      "/workspace/scratch/overload-certificates-census/adapted/src/services/codeFixProvider.ts",
+      "/workspace/scratch/overload-certificates-census/results/base/full/src__services__codeFixProvider.jsonl"
+    ],
+    "start": "2026-11-17T17:15:00.337205+00:00",
+    "state": "complete",
+    "output": "results/base/full/src__services__codeFixProvider.jsonl",
+    "log": "results/base/full/src__services__codeFixProvider.log",
+    "env": {
+      "CENSUS_MODULE_FORMAT": "CommonJSBundle",
+      "LATENT_FULL": "1",
+      "LATENT_ONLY_FILE": "/workspace/scratch/overload-certificates-census/adapted/src/services/codeFixProvider.ts",
+      "LATENT_ASSERT_NO_OUTPUT": "1",
+      "LATENT_TAIL": "1"
+    },
+    "pid": 12922,
+    "exit": 0,
+    "end": "2026-11-17T17:15:43.617019+00:00",
+    "seconds": 43.278682856999694,
+    "maxRssKiB": 1494504,
+    "streamComplete": true,
+    "header": {
+      "status": "measurement",
+      "latent_mode": "full",
+      "module_format": "CommonJSBundle",
+      "checker_rejected": true
+    },
+    "files": [
+      "/workspace/scratch/overload-certificates-census/adapted/src/services/codeFixProvider.ts"
+    ],
+    "findings": 14,
+    "selectionExact": true,
+    "sha256": "5da8f4f0b13987cbc9c6197f17fbd27d9b364440b998b7aa426beb07bec12019"
+  },
+  {
+    "label": "head",
+    "mode": "full",
+    "file": "src/services/codeFixProvider.ts",
+    "root": "src/services/codeFixProvider.ts",
+    "args": [
+      "/workspace/scratch/overload-certificates-census/head-tools/entry-census",
+      "/workspace/scratch/overload-certificates-census/adapted/src/services/codeFixProvider.ts",
+      "/workspace/scratch/overload-certificates-census/results/head/full/src__services__codeFixProvider.jsonl"
+    ],
+    "start": "2026-11-17T17:15:17.859732+00:00",
+    "state": "complete",
+    "output": "results/head/full/src__services__codeFixProvider.jsonl",
+    "log": "results/head/full/src__services__codeFixProvider.log",
+    "env": {
+      "CENSUS_MODULE_FORMAT": "CommonJSBundle",
+      "LATENT_FULL": "1",
+      "LATENT_ONLY_FILE": "/workspace/scratch/overload-certificates-census/adapted/src/services/codeFixProvider.ts",
+      "LATENT_ASSERT_NO_OUTPUT": "1",
+      "LATENT_TAIL": "1"
+    },
+    "pid": 12928,
+    "exit": 0,
+    "end": "2026-11-17T17:16:01.004851+00:00",
+    "seconds": 43.14416436400006,
+    "maxRssKiB": 1429044,
+    "streamComplete": true,
+    "header": {
+      "status": "measurement",
+      "latent_mode": "full",
+      "module_format": "CommonJSBundle",
+      "checker_rejected": true
+    },
+    "files": [
+      "/workspace/scratch/overload-certificates-census/adapted/src/services/codeFixProvider.ts"
+    ],
+    "findings": 12,
+    "selectionExact": true,
+    "sha256": "c196546d9b96c3ea37c2892000cae6bbcbb53a455bbd2c6f94a70389d2e19734"
+  },
+  {
+    "label": "base",
+    "mode": "full",
+    "file": "src/services/codefixes/convertToEsModule.ts",
+    "root": "src/services/codefixes/convertToEsModule.ts",
+    "args": [
+      "/workspace/scratch/overload-certificates-census/base-tools/entry-census",
+      "/workspace/scratch/overload-certificates-census/adapted/src/services/codefixes/convertToEsModule.ts",
+      "/workspace/scratch/overload-certificates-census/results/base/full/src__services__codefixes__convertToEsModule.jsonl"
+    ],
+    "start": "2026-11-17T17:15:43.628056+00:00",
+    "state": "complete",
+    "output": "results/base/full/src__services__codefixes__convertToEsModule.jsonl",
+    "log": "results/base/full/src__services__codefixes__convertToEsModule.log",
+    "env": {
+      "CENSUS_MODULE_FORMAT": "CommonJSBundle",
+      "LATENT_FULL": "1",
+      "LATENT_ONLY_FILE": "/workspace/scratch/overload-certificates-census/adapted/src/services/codefixes/convertToEsModule.ts",
+      "LATENT_ASSERT_NO_OUTPUT": "1",
+      "LATENT_TAIL": "1"
+    },
+    "pid": 12933,
+    "exit": 0,
+    "end": "2026-11-17T17:17:11.490280+00:00",
+    "seconds": 87.85621532200003,
+    "maxRssKiB": 1515916,
+    "streamComplete": true,
+    "header": {
+      "status": "measurement",
+      "latent_mode": "full",
+      "module_format": "CommonJSBundle",
+      "checker_rejected": true
+    },
+    "files": [
+      "/workspace/scratch/overload-certificates-census/adapted/src/services/codefixes/convertToEsModule.ts"
+    ],
+    "findings": 233,
+    "selectionExact": true,
+    "sha256": "fb6bb545ea67e8688865be9d68971f07559270dbd8c6fdb79ff208c136ae9969"
+  },
+  {
+    "label": "head",
+    "mode": "full",
+    "file": "src/services/codefixes/convertToEsModule.ts",
+    "root": "src/services/codefixes/convertToEsModule.ts",
+    "args": [
+      "/workspace/scratch/overload-certificates-census/head-tools/entry-census",
+      "/workspace/scratch/overload-certificates-census/adapted/src/services/codefixes/convertToEsModule.ts",
+      "/workspace/scratch/overload-certificates-census/results/head/full/src__services__codefixes__convertToEsModule.jsonl"
+    ],
+    "start": "2026-11-17T17:16:01.016911+00:00",
+    "state": "complete",
+    "output": "results/head/full/src__services__codefixes__convertToEsModule.jsonl",
+    "log": "results/head/full/src__services__codefixes__convertToEsModule.log",
+    "env": {
+      "CENSUS_MODULE_FORMAT": "CommonJSBundle",
+      "LATENT_FULL": "1",
+      "LATENT_ONLY_FILE": "/workspace/scratch/overload-certificates-census/adapted/src/services/codefixes/convertToEsModule.ts",
+      "LATENT_ASSERT_NO_OUTPUT": "1",
+      "LATENT_TAIL": "1"
+    },
+    "pid": 12954,
+    "exit": 0,
+    "end": "2026-11-17T17:17:30.193500+00:00",
+    "seconds": 89.17525366500013,
+    "maxRssKiB": 1583560,
+    "streamComplete": true,
+    "header": {
+      "status": "measurement",
+      "latent_mode": "full",
+      "module_format": "CommonJSBundle",
+      "checker_rejected": true
+    },
+    "files": [
+      "/workspace/scratch/overload-certificates-census/adapted/src/services/codefixes/convertToEsModule.ts"
+    ],
+    "findings": 227,
+    "selectionExact": true,
+    "sha256": "55ac8986305ead92901a9d3c9efdd919d11822fdf0d0c6ac8335c43c99655775"
+  },
+  {
+    "label": "base",
+    "mode": "full",
+    "file": "src/services/codefixes/fixAddMissingMember.ts",
+    "root": "src/services/codefixes/fixAddMissingMember.ts",
+    "args": [
+      "/workspace/scratch/overload-certificates-census/base-tools/entry-census",
+      "/workspace/scratch/overload-certificates-census/adapted/src/services/codefixes/fixAddMissingMember.ts",
+      "/workspace/scratch/overload-certificates-census/results/base/full/src__services__codefixes__fixAddMissingMember.jsonl"
+    ],
+    "start": "2026-11-17T17:17:11.508558+00:00",
+    "state": "complete",
+    "output": "results/base/full/src__services__codefixes__fixAddMissingMember.jsonl",
+    "log": "results/base/full/src__services__codefixes__fixAddMissingMember.log",
+    "env": {
+      "CENSUS_MODULE_FORMAT": "CommonJSBundle",
+      "LATENT_FULL": "1",
+      "LATENT_ONLY_FILE": "/workspace/scratch/overload-certificates-census/adapted/src/services/codefixes/fixAddMissingMember.ts",
+      "LATENT_ASSERT_NO_OUTPUT": "1",
+      "LATENT_TAIL": "1"
+    },
+    "pid": 12979,
+    "exit": 0,
+    "end": "2026-11-17T17:18:43.930434+00:00",
+    "seconds": 92.42060653499993,
+    "maxRssKiB": 1473684,
+    "streamComplete": true,
+    "header": {
+      "status": "measurement",
+      "latent_mode": "full",
+      "module_format": "CommonJSBundle",
+      "checker_rejected": true
+    },
+    "files": [
+      "/workspace/scratch/overload-certificates-census/adapted/src/services/codefixes/fixAddMissingMember.ts"
+    ],
+    "findings": 75,
+    "selectionExact": true,
+    "sha256": "2be4fa384a9bdd45c560184b00915aaa9b3fd552bdac6bc7409bff66068ce97f"
+  },
+  {
+    "label": "head",
+    "mode": "full",
+    "file": "src/services/codefixes/fixAddMissingMember.ts",
+    "root": "src/services/codefixes/fixAddMissingMember.ts",
+    "args": [
+      "/workspace/scratch/overload-certificates-census/head-tools/entry-census",
+      "/workspace/scratch/overload-certificates-census/adapted/src/services/codefixes/fixAddMissingMember.ts",
+      "/workspace/scratch/overload-certificates-census/results/head/full/src__services__codefixes__fixAddMissingMember.jsonl"
+    ],
+    "start": "2026-11-17T17:17:30.205966+00:00",
+    "state": "complete",
+    "output": "results/head/full/src__services__codefixes__fixAddMissingMember.jsonl",
+    "log": "results/head/full/src__services__codefixes__fixAddMissingMember.log",
+    "env": {
+      "CENSUS_MODULE_FORMAT": "CommonJSBundle",
+      "LATENT_FULL": "1",
+      "LATENT_ONLY_FILE": "/workspace/scratch/overload-certificates-census/adapted/src/services/codefixes/fixAddMissingMember.ts",
+      "LATENT_ASSERT_NO_OUTPUT": "1",
+      "LATENT_TAIL": "1"
+    },
+    "pid": 12984,
+    "exit": 0,
+    "end": "2026-11-17T17:19:04.852974+00:00",
+    "seconds": 94.6452870130006,
+    "maxRssKiB": 1497764,
+    "streamComplete": true,
+    "header": {
+      "status": "measurement",
+      "latent_mode": "full",
+      "module_format": "CommonJSBundle",
+      "checker_rejected": true
+    },
+    "files": [
+      "/workspace/scratch/overload-certificates-census/adapted/src/services/codefixes/fixAddMissingMember.ts"
+    ],
+    "findings": 75,
+    "selectionExact": true,
+    "sha256": "0f8e1d68a43c787f516b90ed2f1dc9e0ca7df4b1eae02d75895bc315371e5510"
+  },
+  {
+    "label": "base",
+    "mode": "full",
+    "file": "src/services/codefixes/helpers.ts",
+    "root": "src/services/codefixes/helpers.ts",
+    "args": [
+      "/workspace/scratch/overload-certificates-census/base-tools/entry-census",
+      "/workspace/scratch/overload-certificates-census/adapted/src/services/codefixes/helpers.ts",
+      "/workspace/scratch/overload-certificates-census/results/base/full/src__services__codefixes__helpers.jsonl"
+    ],
+    "start": "2026-11-17T17:18:43.946511+00:00",
+    "state": "complete",
+    "output": "results/base/full/src__services__codefixes__helpers.jsonl",
+    "log": "results/base/full/src__services__codefixes__helpers.log",
+    "env": {
+      "CENSUS_MODULE_FORMAT": "CommonJSBundle",
+      "LATENT_FULL": "1",
+      "LATENT_ONLY_FILE": "/workspace/scratch/overload-certificates-census/adapted/src/services/codefixes/helpers.ts",
+      "LATENT_ASSERT_NO_OUTPUT": "1",
+      "LATENT_TAIL": "1"
+    },
+    "pid": 13008,
+    "exit": 0,
+    "end": "2026-11-17T17:20:07.445881+00:00",
+    "seconds": 83.49821111999972,
+    "maxRssKiB": 1547328,
+    "streamComplete": true,
+    "header": {
+      "status": "measurement",
+      "latent_mode": "full",
+      "module_format": "CommonJSBundle",
+      "checker_rejected": true
+    },
+    "files": [
+      "/workspace/scratch/overload-certificates-census/adapted/src/services/codefixes/helpers.ts"
+    ],
+    "findings": 287,
+    "selectionExact": true,
+    "sha256": "5a62c888c962911e652704ffe9793067ff146e9d71dac7acedba500d132a241f"
+  },
+  {
+    "label": "head",
+    "mode": "full",
+    "file": "src/services/codefixes/helpers.ts",
+    "root": "src/services/codefixes/helpers.ts",
+    "args": [
+      "/workspace/scratch/overload-certificates-census/head-tools/entry-census",
+      "/workspace/scratch/overload-certificates-census/adapted/src/services/codefixes/helpers.ts",
+      "/workspace/scratch/overload-certificates-census/results/head/full/src__services__codefixes__helpers.jsonl"
+    ],
+    "start": "2026-11-17T17:19:04.864523+00:00",
+    "state": "complete",
+    "output": "results/head/full/src__services__codefixes__helpers.jsonl",
+    "log": "results/head/full/src__services__codefixes__helpers.log",
+    "env": {
+      "CENSUS_MODULE_FORMAT": "CommonJSBundle",
+      "LATENT_FULL": "1",
+      "LATENT_ONLY_FILE": "/workspace/scratch/overload-certificates-census/adapted/src/services/codefixes/helpers.ts",
+      "LATENT_ASSERT_NO_OUTPUT": "1",
+      "LATENT_TAIL": "1"
+    },
+    "pid": 13057,
+    "exit": 0,
+    "end": "2026-11-17T17:20:26.670202+00:00",
+    "seconds": 81.80460002499967,
+    "maxRssKiB": 1500768,
+    "streamComplete": true,
+    "header": {
+      "status": "measurement",
+      "latent_mode": "full",
+      "module_format": "CommonJSBundle",
+      "checker_rejected": true
+    },
+    "files": [
+      "/workspace/scratch/overload-certificates-census/adapted/src/services/codefixes/helpers.ts"
+    ],
+    "findings": 287,
+    "selectionExact": true,
+    "sha256": "3a87a36b2266f991bfee699baf9cc9036531414186678b62d0abbce2f3cf36a0"
+  },
+  {
+    "label": "base",
+    "mode": "full",
+    "file": "src/services/codefixes/importFixes.ts",
+    "root": "src/services/codefixes/importFixes.ts",
+    "args": [
+      "/workspace/scratch/overload-certificates-census/base-tools/entry-census",
+      "/workspace/scratch/overload-certificates-census/adapted/src/services/codefixes/importFixes.ts",
+      "/workspace/scratch/overload-certificates-census/results/base/full/src__services__codefixes__importFixes.jsonl"
+    ],
+    "start": "2026-11-17T17:20:07.461355+00:00",
+    "state": "complete",
+    "output": "results/base/full/src__services__codefixes__importFixes.jsonl",
+    "log": "results/base/full/src__services__codefixes__importFixes.log",
+    "env": {
+      "CENSUS_MODULE_FORMAT": "CommonJSBundle",
+      "LATENT_FULL": "1",
+      "LATENT_ONLY_FILE": "/workspace/scratch/overload-certificates-census/adapted/src/services/codefixes/importFixes.ts",
+      "LATENT_ASSERT_NO_OUTPUT": "1",
+      "LATENT_TAIL": "1"
+    },
+    "pid": 13071,
+    "exit": 0,
+    "end": "2026-11-17T17:22:24.708225+00:00",
+    "seconds": 137.2456078770001,
+    "maxRssKiB": 1579872,
+    "streamComplete": true,
+    "header": {
+      "status": "measurement",
+      "latent_mode": "full",
+      "module_format": "CommonJSBundle",
+      "checker_rejected": true
+    },
+    "files": [
+      "/workspace/scratch/overload-certificates-census/adapted/src/services/codefixes/importFixes.ts"
+    ],
+    "findings": 280,
+    "selectionExact": true,
+    "sha256": "489efa6fb9ec435524f87cb2445bd46c185d7339e2a4f1d8344cb52f1dd29837"
+  },
+  {
+    "label": "head",
+    "mode": "full",
+    "file": "src/services/codefixes/importFixes.ts",
+    "root": "src/services/codefixes/importFixes.ts",
+    "args": [
+      "/workspace/scratch/overload-certificates-census/head-tools/entry-census",
+      "/workspace/scratch/overload-certificates-census/adapted/src/services/codefixes/importFixes.ts",
+      "/workspace/scratch/overload-certificates-census/results/head/full/src__services__codefixes__importFixes.jsonl"
+    ],
+    "start": "2026-11-17T17:20:26.685308+00:00",
+    "state": "complete",
+    "output": "results/head/full/src__services__codefixes__importFixes.jsonl",
+    "log": "results/head/full/src__services__codefixes__importFixes.log",
+    "env": {
+      "CENSUS_MODULE_FORMAT": "CommonJSBundle",
+      "LATENT_FULL": "1",
+      "LATENT_ONLY_FILE": "/workspace/scratch/overload-certificates-census/adapted/src/services/codefixes/importFixes.ts",
+      "LATENT_ASSERT_NO_OUTPUT": "1",
+      "LATENT_TAIL": "1"
+    },
+    "pid": 13076,
+    "exit": 0,
+    "end": "2026-11-17T17:22:43.933749+00:00",
+    "seconds": 137.24730894799995,
+    "maxRssKiB": 1635320,
+    "streamComplete": true,
+    "header": {
+      "status": "measurement",
+      "latent_mode": "full",
+      "module_format": "CommonJSBundle",
+      "checker_rejected": true
+    },
+    "files": [
+      "/workspace/scratch/overload-certificates-census/adapted/src/services/codefixes/importFixes.ts"
+    ],
+    "findings": 282,
+    "selectionExact": true,
+    "sha256": "abeb77d9db617e12157cdb0bb11bc6551ec729418cf91a154d8fe0431a8ada0b"
+  },
+  {
+    "label": "base",
+    "mode": "full",
+    "file": "src/services/documentHighlights.ts",
+    "root": "src/services/documentHighlights.ts",
+    "args": [
+      "/workspace/scratch/overload-certificates-census/base-tools/entry-census",
+      "/workspace/scratch/overload-certificates-census/adapted/src/services/documentHighlights.ts",
+      "/workspace/scratch/overload-certificates-census/results/base/full/src__services__documentHighlights.jsonl"
+    ],
+    "start": "2026-11-17T17:22:24.732942+00:00",
+    "state": "complete",
+    "output": "results/base/full/src__services__documentHighlights.jsonl",
+    "log": "results/base/full/src__services__documentHighlights.log",
+    "env": {
+      "CENSUS_MODULE_FORMAT": "CommonJSBundle",
+      "LATENT_FULL": "1",
+      "LATENT_ONLY_FILE": "/workspace/scratch/overload-certificates-census/adapted/src/services/documentHighlights.ts",
+      "LATENT_ASSERT_NO_OUTPUT": "1",
+      "LATENT_TAIL": "1"
+    },
+    "pid": 13110,
+    "exit": 0,
+    "end": "2026-11-17T17:23:51.815905+00:00",
+    "seconds": 87.08170072299981,
+    "maxRssKiB": 1581936,
+    "streamComplete": true,
+    "header": {
+      "status": "measurement",
+      "latent_mode": "full",
+      "module_format": "CommonJSBundle",
+      "checker_rejected": true
+    },
+    "files": [
+      "/workspace/scratch/overload-certificates-census/adapted/src/services/documentHighlights.ts"
+    ],
+    "findings": 89,
+    "selectionExact": true,
+    "sha256": "c602429814eaa58e78c5e34f4231b105720014c11c96d5073bdfede4c6d1f644"
+  },
+  {
+    "label": "head",
+    "mode": "full",
+    "file": "src/services/documentHighlights.ts",
+    "root": "src/services/documentHighlights.ts",
+    "args": [
+      "/workspace/scratch/overload-certificates-census/head-tools/entry-census",
+      "/workspace/scratch/overload-certificates-census/adapted/src/services/documentHighlights.ts",
+      "/workspace/scratch/overload-certificates-census/results/head/full/src__services__documentHighlights.jsonl"
+    ],
+    "start": "2026-11-17T17:22:43.949661+00:00",
+    "state": "complete",
+    "output": "results/head/full/src__services__documentHighlights.jsonl",
+    "log": "results/head/full/src__services__documentHighlights.log",
+    "env": {
+      "CENSUS_MODULE_FORMAT": "CommonJSBundle",
+      "LATENT_FULL": "1",
+      "LATENT_ONLY_FILE": "/workspace/scratch/overload-certificates-census/adapted/src/services/documentHighlights.ts",
+      "LATENT_ASSERT_NO_OUTPUT": "1",
+      "LATENT_TAIL": "1"
+    },
+    "pid": 13115,
+    "exit": 0,
+    "end": "2026-11-17T17:24:17.480135+00:00",
+    "seconds": 93.52919435799959,
+    "maxRssKiB": 1646592,
+    "streamComplete": true,
+    "header": {
+      "status": "measurement",
+      "latent_mode": "full",
+      "module_format": "CommonJSBundle",
+      "checker_rejected": true
+    },
+    "files": [
+      "/workspace/scratch/overload-certificates-census/adapted/src/services/documentHighlights.ts"
+    ],
+    "findings": 89,
+    "selectionExact": true,
+    "sha256": "c9561aa536953504bf7b56673da1fa3c807093444ab593ed3ba9e247ddb56ab5"
+  },
+  {
+    "label": "base",
+    "mode": "full",
+    "file": "src/services/documentRegistry.ts",
+    "root": "src/services/documentRegistry.ts",
+    "args": [
+      "/workspace/scratch/overload-certificates-census/base-tools/entry-census",
+      "/workspace/scratch/overload-certificates-census/adapted/src/services/documentRegistry.ts",
+      "/workspace/scratch/overload-certificates-census/results/base/full/src__services__documentRegistry.jsonl"
+    ],
+    "start": "2026-11-17T17:23:51.828317+00:00",
+    "state": "complete",
+    "output": "results/base/full/src__services__documentRegistry.jsonl",
+    "log": "results/base/full/src__services__documentRegistry.log",
+    "env": {
+      "CENSUS_MODULE_FORMAT": "CommonJSBundle",
+      "LATENT_FULL": "1",
+      "LATENT_ONLY_FILE": "/workspace/scratch/overload-certificates-census/adapted/src/services/documentRegistry.ts",
+      "LATENT_ASSERT_NO_OUTPUT": "1",
+      "LATENT_TAIL": "1"
+    },
+    "pid": 13137,
+    "exit": 0,
+    "end": "2026-11-17T17:24:33.406384+00:00",
+    "seconds": 41.57657357299922,
+    "maxRssKiB": 1445644,
+    "streamComplete": true,
+    "header": {
+      "status": "measurement",
+      "latent_mode": "full",
+      "module_format": "CommonJSBundle",
+      "checker_rejected": true
+    },
+    "files": [
+      "/workspace/scratch/overload-certificates-census/adapted/src/services/documentRegistry.ts"
+    ],
+    "findings": 47,
+    "selectionExact": true,
+    "sha256": "c2264e86cff7af324b5551432f5cfa78b8ca901994a0beff62a7c583bb4b4e93"
+  },
+  {
+    "label": "head",
+    "mode": "full",
+    "file": "src/services/documentRegistry.ts",
+    "root": "src/services/documentRegistry.ts",
+    "args": [
+      "/workspace/scratch/overload-certificates-census/head-tools/entry-census",
+      "/workspace/scratch/overload-certificates-census/adapted/src/services/documentRegistry.ts",
+      "/workspace/scratch/overload-certificates-census/results/head/full/src__services__documentRegistry.jsonl"
+    ],
+    "start": "2026-11-17T17:24:17.506369+00:00",
+    "state": "complete",
+    "output": "results/head/full/src__services__documentRegistry.jsonl",
+    "log": "results/head/full/src__services__documentRegistry.log",
+    "env": {
+      "CENSUS_MODULE_FORMAT": "CommonJSBundle",
+      "LATENT_FULL": "1",
+      "LATENT_ONLY_FILE": "/workspace/scratch/overload-certificates-census/adapted/src/services/documentRegistry.ts",
+      "LATENT_ASSERT_NO_OUTPUT": "1",
+      "LATENT_TAIL": "1"
+    },
+    "pid": 13157,
+    "exit": 0,
+    "end": "2026-11-17T17:24:56.567360+00:00",
+    "seconds": 39.05777404499986,
+    "maxRssKiB": 1479020,
+    "streamComplete": true,
+    "header": {
+      "status": "measurement",
+      "latent_mode": "full",
+      "module_format": "CommonJSBundle",
+      "checker_rejected": true
+    },
+    "files": [
+      "/workspace/scratch/overload-certificates-census/adapted/src/services/documentRegistry.ts"
+    ],
+    "findings": 47,
+    "selectionExact": true,
+    "sha256": "6edb6488c23382c9ddc0dbabf2cdd8a463c70f7a0536e57e4ba05bbc33015fab"
+  },
+  {
+    "label": "base",
+    "mode": "full",
+    "file": "src/services/refactorProvider.ts",
+    "root": "src/services/refactorProvider.ts",
+    "args": [
+      "/workspace/scratch/overload-certificates-census/base-tools/entry-census",
+      "/workspace/scratch/overload-certificates-census/adapted/src/services/refactorProvider.ts",
+      "/workspace/scratch/overload-certificates-census/results/base/full/src__services__refactorProvider.jsonl"
+    ],
+    "start": "2026-11-17T17:24:33.424048+00:00",
+    "state": "complete",
+    "output": "results/base/full/src__services__refactorProvider.jsonl",
+    "log": "results/base/full/src__services__refactorProvider.log",
+    "env": {
+      "CENSUS_MODULE_FORMAT": "CommonJSBundle",
+      "LATENT_FULL": "1",
+      "LATENT_ONLY_FILE": "/workspace/scratch/overload-certificates-census/adapted/src/services/refactorProvider.ts",
+      "LATENT_ASSERT_NO_OUTPUT": "1",
+      "LATENT_TAIL": "1"
+    },
+    "pid": 13162,
+    "exit": 0,
+    "end": "2026-11-17T17:25:08.374558+00:00",
+    "seconds": 34.94863809199978,
+    "maxRssKiB": 1446408,
+    "streamComplete": true,
+    "header": {
+      "status": "measurement",
+      "latent_mode": "full",
+      "module_format": "CommonJSBundle",
+      "checker_rejected": true
+    },
+    "files": [
+      "/workspace/scratch/overload-certificates-census/adapted/src/services/refactorProvider.ts"
+    ],
+    "findings": 2,
+    "selectionExact": true,
+    "sha256": "68dea2065d608bafa7502e8f35c72a86dc6b736a3cdeb3c17e832ab316d39ad5"
+  },
+  {
+    "label": "head",
+    "mode": "full",
+    "file": "src/services/refactorProvider.ts",
+    "root": "src/services/refactorProvider.ts",
+    "args": [
+      "/workspace/scratch/overload-certificates-census/head-tools/entry-census",
+      "/workspace/scratch/overload-certificates-census/adapted/src/services/refactorProvider.ts",
+      "/workspace/scratch/overload-certificates-census/results/head/full/src__services__refactorProvider.jsonl"
+    ],
+    "start": "2026-11-17T17:24:56.579227+00:00",
+    "state": "complete",
+    "output": "results/head/full/src__services__refactorProvider.jsonl",
+    "log": "results/head/full/src__services__refactorProvider.log",
+    "env": {
+      "CENSUS_MODULE_FORMAT": "CommonJSBundle",
+      "LATENT_FULL": "1",
+      "LATENT_ONLY_FILE": "/workspace/scratch/overload-certificates-census/adapted/src/services/refactorProvider.ts",
+      "LATENT_ASSERT_NO_OUTPUT": "1",
+      "LATENT_TAIL": "1"
+    },
+    "pid": 13167,
+    "exit": 0,
+    "end": "2026-11-17T17:25:34.532591+00:00",
+    "seconds": 37.95172054700015,
+    "maxRssKiB": 1463432,
+    "streamComplete": true,
+    "header": {
+      "status": "measurement",
+      "latent_mode": "full",
+      "module_format": "CommonJSBundle",
+      "checker_rejected": true
+    },
+    "files": [
+      "/workspace/scratch/overload-certificates-census/adapted/src/services/refactorProvider.ts"
+    ],
+    "findings": 4,
+    "selectionExact": true,
+    "sha256": "eb75bf3f725e06043ff94eb4c2f77d8af8d29212fdcc41e0dc275a9bfdc28f30"
+  },
+  {
+    "label": "base",
+    "mode": "full",
+    "file": "src/services/refactors/convertImport.ts",
+    "root": "src/services/refactors/convertImport.ts",
+    "args": [
+      "/workspace/scratch/overload-certificates-census/base-tools/entry-census",
+      "/workspace/scratch/overload-certificates-census/adapted/src/services/refactors/convertImport.ts",
+      "/workspace/scratch/overload-certificates-census/results/base/full/src__services__refactors__convertImport.jsonl"
+    ],
+    "start": "2026-11-17T17:25:08.387073+00:00",
+    "state": "complete",
+    "output": "results/base/full/src__services__refactors__convertImport.jsonl",
+    "log": "results/base/full/src__services__refactors__convertImport.log",
+    "env": {
+      "CENSUS_MODULE_FORMAT": "CommonJSBundle",
+      "LATENT_FULL": "1",
+      "LATENT_ONLY_FILE": "/workspace/scratch/overload-certificates-census/adapted/src/services/refactors/convertImport.ts",
+      "LATENT_ASSERT_NO_OUTPUT": "1",
+      "LATENT_TAIL": "1"
+    },
+    "pid": 13180,
+    "exit": 0,
+    "end": "2026-11-17T17:26:15.687533+00:00",
+    "seconds": 67.2987123010007,
+    "maxRssKiB": 1513524,
+    "streamComplete": true,
+    "header": {
+      "status": "measurement",
+      "latent_mode": "full",
+      "module_format": "CommonJSBundle",
+      "checker_rejected": true
+    },
+    "files": [
+      "/workspace/scratch/overload-certificates-census/adapted/src/services/refactors/convertImport.ts"
+    ],
+    "findings": 43,
+    "selectionExact": true,
+    "sha256": "89e9a3eaf572082f549716f1a7c4cfe1edcc7f1f248de68ea83c350f1b97f819"
+  },
+  {
+    "label": "head",
+    "mode": "full",
+    "file": "src/services/refactors/convertImport.ts",
+    "root": "src/services/refactors/convertImport.ts",
+    "args": [
+      "/workspace/scratch/overload-certificates-census/head-tools/entry-census",
+      "/workspace/scratch/overload-certificates-census/adapted/src/services/refactors/convertImport.ts",
+      "/workspace/scratch/overload-certificates-census/results/head/full/src__services__refactors__convertImport.jsonl"
+    ],
+    "start": "2026-11-17T17:25:34.548084+00:00",
+    "state": "complete",
+    "output": "results/head/full/src__services__refactors__convertImport.jsonl",
+    "log": "results/head/full/src__services__refactors__convertImport.log",
+    "env": {
+      "CENSUS_MODULE_FORMAT": "CommonJSBundle",
+      "LATENT_FULL": "1",
+      "LATENT_ONLY_FILE": "/workspace/scratch/overload-certificates-census/adapted/src/services/refactors/convertImport.ts",
+      "LATENT_ASSERT_NO_OUTPUT": "1",
+      "LATENT_TAIL": "1"
+    },
+    "pid": 13186,
+    "exit": 0,
+    "end": "2026-11-17T17:26:38.200411+00:00",
+    "seconds": 63.650446964000366,
+    "maxRssKiB": 1587848,
+    "streamComplete": true,
+    "header": {
+      "status": "measurement",
+      "latent_mode": "full",
+      "module_format": "CommonJSBundle",
+      "checker_rejected": true
+    },
+    "files": [
+      "/workspace/scratch/overload-certificates-census/adapted/src/services/refactors/convertImport.ts"
+    ],
+    "findings": 43,
+    "selectionExact": true,
+    "sha256": "47d0653c8c764529ffefd9389cb6a97a01d6bbc17b5b353960c6312845d77f9e"
+  },
+  {
+    "label": "base",
+    "mode": "full",
+    "file": "src/services/refactors/extractSymbol.ts",
+    "root": "src/services/refactors/extractSymbol.ts",
+    "args": [
+      "/workspace/scratch/overload-certificates-census/base-tools/entry-census",
+      "/workspace/scratch/overload-certificates-census/adapted/src/services/refactors/extractSymbol.ts",
+      "/workspace/scratch/overload-certificates-census/results/base/full/src__services__refactors__extractSymbol.jsonl"
+    ],
+    "start": "2026-11-17T17:26:15.700291+00:00",
+    "state": "complete",
+    "output": "results/base/full/src__services__refactors__extractSymbol.jsonl",
+    "log": "results/base/full/src__services__refactors__extractSymbol.log",
+    "env": {
+      "CENSUS_MODULE_FORMAT": "CommonJSBundle",
+      "LATENT_FULL": "1",
+      "LATENT_ONLY_FILE": "/workspace/scratch/overload-certificates-census/adapted/src/services/refactors/extractSymbol.ts",
+      "LATENT_ASSERT_NO_OUTPUT": "1",
+      "LATENT_TAIL": "1"
+    },
+    "pid": 13206,
+    "exit": 0,
+    "end": "2026-11-17T17:28:23.437923+00:00",
+    "seconds": 127.73619870799939,
+    "maxRssKiB": 1527068,
+    "streamComplete": true,
+    "header": {
+      "status": "measurement",
+      "latent_mode": "full",
+      "module_format": "CommonJSBundle",
+      "checker_rejected": true
+    },
+    "files": [
+      "/workspace/scratch/overload-certificates-census/adapted/src/services/refactors/extractSymbol.ts"
+    ],
+    "findings": 269,
+    "selectionExact": true,
+    "sha256": "82f87688af2a387f2cc70770a295b90161e1c258381c6086e86bbb0e0264093f"
+  },
+  {
+    "label": "head",
+    "mode": "full",
+    "file": "src/services/refactors/extractSymbol.ts",
+    "root": "src/services/refactors/extractSymbol.ts",
+    "args": [
+      "/workspace/scratch/overload-certificates-census/head-tools/entry-census",
+      "/workspace/scratch/overload-certificates-census/adapted/src/services/refactors/extractSymbol.ts",
+      "/workspace/scratch/overload-certificates-census/results/head/full/src__services__refactors__extractSymbol.jsonl"
+    ],
+    "start": "2026-11-17T17:26:38.214089+00:00",
+    "state": "complete",
+    "output": "results/head/full/src__services__refactors__extractSymbol.jsonl",
+    "log": "results/head/full/src__services__refactors__extractSymbol.log",
+    "env": {
+      "CENSUS_MODULE_FORMAT": "CommonJSBundle",
+      "LATENT_FULL": "1",
+      "LATENT_ONLY_FILE": "/workspace/scratch/overload-certificates-census/adapted/src/services/refactors/extractSymbol.ts",
+      "LATENT_ASSERT_NO_OUTPUT": "1",
+      "LATENT_TAIL": "1"
+    },
+    "pid": 13211,
+    "exit": 0,
+    "end": "2026-11-17T17:28:46.017915+00:00",
+    "seconds": 127.80168694700023,
+    "maxRssKiB": 1490480,
+    "streamComplete": true,
+    "header": {
+      "status": "measurement",
+      "latent_mode": "full",
+      "module_format": "CommonJSBundle",
+      "checker_rejected": true
+    },
+    "files": [
+      "/workspace/scratch/overload-certificates-census/adapted/src/services/refactors/extractSymbol.ts"
+    ],
+    "findings": 269,
+    "selectionExact": true,
+    "sha256": "f8e26820b889b2a416935971e13ca71da6a1bf40250cc8a7f555ad4c513e1f41"
+  },
+  {
+    "label": "base",
+    "mode": "full",
+    "file": "src/services/refactors/moveToFile.ts",
+    "root": "src/services/refactors/moveToFile.ts",
+    "args": [
+      "/workspace/scratch/overload-certificates-census/base-tools/entry-census",
+      "/workspace/scratch/overload-certificates-census/adapted/src/services/refactors/moveToFile.ts",
+      "/workspace/scratch/overload-certificates-census/results/base/full/src__services__refactors__moveToFile.jsonl"
+    ],
+    "start": "2026-11-17T17:28:23.453056+00:00",
+    "state": "complete",
+    "output": "results/base/full/src__services__refactors__moveToFile.jsonl",
+    "log": "results/base/full/src__services__refactors__moveToFile.log",
+    "env": {
+      "CENSUS_MODULE_FORMAT": "CommonJSBundle",
+      "LATENT_FULL": "1",
+      "LATENT_ONLY_FILE": "/workspace/scratch/overload-certificates-census/adapted/src/services/refactors/moveToFile.ts",
+      "LATENT_ASSERT_NO_OUTPUT": "1",
+      "LATENT_TAIL": "1"
+    },
+    "pid": 13233,
+    "exit": 0,
+    "end": "2026-11-17T17:29:53.444523+00:00",
+    "seconds": 89.98990618900007,
+    "maxRssKiB": 1728720,
+    "streamComplete": true,
+    "header": {
+      "status": "measurement",
+      "latent_mode": "full",
+      "module_format": "CommonJSBundle",
+      "checker_rejected": true
+    },
+    "files": [
+      "/workspace/scratch/overload-certificates-census/adapted/src/services/refactors/moveToFile.ts"
+    ],
+    "findings": 174,
+    "selectionExact": true,
+    "sha256": "bf942bfbc8d4f622d9f18330ef3145471de2895368690acb2756bca2ab53d85e"
+  },
+  {
+    "label": "head",
+    "mode": "full",
+    "file": "src/services/refactors/moveToFile.ts",
+    "root": "src/services/refactors/moveToFile.ts",
+    "args": [
+      "/workspace/scratch/overload-certificates-census/head-tools/entry-census",
+      "/workspace/scratch/overload-certificates-census/adapted/src/services/refactors/moveToFile.ts",
+      "/workspace/scratch/overload-certificates-census/results/head/full/src__services__refactors__moveToFile.jsonl"
+    ],
+    "start": "2026-11-17T17:28:46.033471+00:00",
+    "state": "complete",
+    "output": "results/head/full/src__services__refactors__moveToFile.jsonl",
+    "log": "results/head/full/src__services__refactors__moveToFile.log",
+    "env": {
+      "CENSUS_MODULE_FORMAT": "CommonJSBundle",
+      "LATENT_FULL": "1",
+      "LATENT_ONLY_FILE": "/workspace/scratch/overload-certificates-census/adapted/src/services/refactors/moveToFile.ts",
+      "LATENT_ASSERT_NO_OUTPUT": "1",
+      "LATENT_TAIL": "1"
+    },
+    "pid": 13248,
+    "exit": 0,
+    "end": "2026-11-17T17:30:15.721629+00:00",
+    "seconds": 89.68660662000002,
+    "maxRssKiB": 1656908,
+    "streamComplete": true,
+    "header": {
+      "status": "measurement",
+      "latent_mode": "full",
+      "module_format": "CommonJSBundle",
+      "checker_rejected": true
+    },
+    "files": [
+      "/workspace/scratch/overload-certificates-census/adapted/src/services/refactors/moveToFile.ts"
+    ],
+    "findings": 174,
+    "selectionExact": true,
+    "sha256": "0ca0b4b55ee8e9d9e06c01973d3269b311d1762a9f35943047530054b555533f"
+  },
+  {
+    "label": "base",
+    "mode": "full",
+    "file": "src/services/stringCompletions.ts",
+    "root": "src/services/stringCompletions.ts",
+    "args": [
+      "/workspace/scratch/overload-certificates-census/base-tools/entry-census",
+      "/workspace/scratch/overload-certificates-census/adapted/src/services/stringCompletions.ts",
+      "/workspace/scratch/overload-certificates-census/results/base/full/src__services__stringCompletions.jsonl"
+    ],
+    "start": "2026-11-17T17:29:53.466153+00:00",
+    "state": "complete",
+    "output": "results/base/full/src__services__stringCompletions.jsonl",
+    "log": "results/base/full/src__services__stringCompletions.log",
+    "env": {
+      "CENSUS_MODULE_FORMAT": "CommonJSBundle",
+      "LATENT_FULL": "1",
+      "LATENT_ONLY_FILE": "/workspace/scratch/overload-certificates-census/adapted/src/services/stringCompletions.ts",
+      "LATENT_ASSERT_NO_OUTPUT": "1",
+      "LATENT_TAIL": "1"
+    },
+    "pid": 13269,
+    "exit": 0,
+    "end": "2026-11-17T17:31:50.132242+00:00",
+    "seconds": 116.66471762899982,
+    "maxRssKiB": 1617328,
+    "streamComplete": true,
+    "header": {
+      "status": "measurement",
+      "latent_mode": "full",
+      "module_format": "CommonJSBundle",
+      "checker_rejected": true
+    },
+    "files": [
+      "/workspace/scratch/overload-certificates-census/adapted/src/services/stringCompletions.ts"
+    ],
+    "findings": 149,
+    "selectionExact": true,
+    "sha256": "2680813ddbbb2e4acc63ce466c23d075b7001c5e35ff1a37e8c14ae185139787"
+  },
+  {
+    "label": "head",
+    "mode": "full",
+    "file": "src/services/stringCompletions.ts",
+    "root": "src/services/stringCompletions.ts",
+    "args": [
+      "/workspace/scratch/overload-certificates-census/head-tools/entry-census",
+      "/workspace/scratch/overload-certificates-census/adapted/src/services/stringCompletions.ts",
+      "/workspace/scratch/overload-certificates-census/results/head/full/src__services__stringCompletions.jsonl"
+    ],
+    "start": "2026-11-17T17:30:15.735670+00:00",
+    "state": "complete",
+    "output": "results/head/full/src__services__stringCompletions.jsonl",
+    "log": "results/head/full/src__services__stringCompletions.log",
+    "env": {
+      "CENSUS_MODULE_FORMAT": "CommonJSBundle",
+      "LATENT_FULL": "1",
+      "LATENT_ONLY_FILE": "/workspace/scratch/overload-certificates-census/adapted/src/services/stringCompletions.ts",
+      "LATENT_ASSERT_NO_OUTPUT": "1",
+      "LATENT_TAIL": "1"
+    },
+    "pid": 13274,
+    "exit": 0,
+    "end": "2026-11-17T17:32:14.311586+00:00",
+    "seconds": 118.57419073900019,
+    "maxRssKiB": 1672164,
+    "streamComplete": true,
+    "header": {
+      "status": "measurement",
+      "latent_mode": "full",
+      "module_format": "CommonJSBundle",
+      "checker_rejected": true
+    },
+    "files": [
+      "/workspace/scratch/overload-certificates-census/adapted/src/services/stringCompletions.ts"
+    ],
+    "findings": 145,
+    "selectionExact": true,
+    "sha256": "a7926b0c6095107282a88f489d795c30f26ee8aadc8a8b0369f263f586d3f7f4"
+  },
+  {
+    "label": "base",
+    "mode": "full",
+    "file": "src/services/symbolDisplay.ts",
+    "root": "src/services/symbolDisplay.ts",
+    "args": [
+      "/workspace/scratch/overload-certificates-census/base-tools/entry-census",
+      "/workspace/scratch/overload-certificates-census/adapted/src/services/symbolDisplay.ts",
+      "/workspace/scratch/overload-certificates-census/results/base/full/src__services__symbolDisplay.jsonl"
+    ],
+    "start": "2026-11-17T17:31:50.148313+00:00",
+    "state": "complete",
+    "output": "results/base/full/src__services__symbolDisplay.jsonl",
+    "log": "results/base/full/src__services__symbolDisplay.log",
+    "env": {
+      "CENSUS_MODULE_FORMAT": "CommonJSBundle",
+      "LATENT_FULL": "1",
+      "LATENT_ONLY_FILE": "/workspace/scratch/overload-certificates-census/adapted/src/services/symbolDisplay.ts",
+      "LATENT_ASSERT_NO_OUTPUT": "1",
+      "LATENT_TAIL": "1"
+    },
+    "pid": 13299,
+    "exit": 0,
+    "end": "2026-11-17T17:32:53.955031+00:00",
+    "seconds": 63.80459398000039,
+    "maxRssKiB": 1468492,
+    "streamComplete": true,
+    "header": {
+      "status": "measurement",
+      "latent_mode": "full",
+      "module_format": "CommonJSBundle",
+      "checker_rejected": true
+    },
+    "files": [
+      "/workspace/scratch/overload-certificates-census/adapted/src/services/symbolDisplay.ts"
+    ],
+    "findings": 23,
+    "selectionExact": true,
+    "sha256": "6a464037ae1f56ce4cb9e22793c2cbff739f043cc8af6873964e349d34fa71df"
+  },
+  {
+    "label": "head",
+    "mode": "full",
+    "file": "src/services/symbolDisplay.ts",
+    "root": "src/services/symbolDisplay.ts",
+    "args": [
+      "/workspace/scratch/overload-certificates-census/head-tools/entry-census",
+      "/workspace/scratch/overload-certificates-census/adapted/src/services/symbolDisplay.ts",
+      "/workspace/scratch/overload-certificates-census/results/head/full/src__services__symbolDisplay.jsonl"
+    ],
+    "start": "2026-11-17T17:32:14.325956+00:00",
+    "state": "complete",
+    "output": "results/head/full/src__services__symbolDisplay.jsonl",
+    "log": "results/head/full/src__services__symbolDisplay.log",
+    "env": {
+      "CENSUS_MODULE_FORMAT": "CommonJSBundle",
+      "LATENT_FULL": "1",
+      "LATENT_ONLY_FILE": "/workspace/scratch/overload-certificates-census/adapted/src/services/symbolDisplay.ts",
+      "LATENT_ASSERT_NO_OUTPUT": "1",
+      "LATENT_TAIL": "1"
+    },
+    "pid": 13304,
+    "exit": 0,
+    "end": "2026-11-17T17:33:17.787839+00:00",
+    "seconds": 63.46053190400016,
+    "maxRssKiB": 1497096,
+    "streamComplete": true,
+    "header": {
+      "status": "measurement",
+      "latent_mode": "full",
+      "module_format": "CommonJSBundle",
+      "checker_rejected": true
+    },
+    "files": [
+      "/workspace/scratch/overload-certificates-census/adapted/src/services/symbolDisplay.ts"
+    ],
+    "findings": 21,
+    "selectionExact": true,
+    "sha256": "ec6edc33d83c6175e548a64c7d573de6cf7f4f0644b79be27afb181156a03cd8"
+  },
+  {
+    "label": "base",
+    "mode": "full",
+    "file": "src/testRunner/projectsRunner.ts",
+    "root": "src/testRunner/projectsRunner.ts",
+    "args": [
+      "/workspace/scratch/overload-certificates-census/base-tools/entry-census",
+      "/workspace/scratch/overload-certificates-census/adapted/src/testRunner/projectsRunner.ts",
+      "/workspace/scratch/overload-certificates-census/results/base/full/src__testRunner__projectsRunner.jsonl"
+    ],
+    "start": "2026-11-17T17:32:53.974398+00:00",
+    "state": "complete",
+    "output": "results/base/full/src__testRunner__projectsRunner.jsonl",
+    "log": "results/base/full/src__testRunner__projectsRunner.log",
+    "env": {
+      "CENSUS_MODULE_FORMAT": "CommonJSBundle",
+      "LATENT_FULL": "1",
+      "LATENT_ONLY_FILE": "/workspace/scratch/overload-certificates-census/adapted/src/testRunner/projectsRunner.ts",
+      "LATENT_ASSERT_NO_OUTPUT": "1",
+      "LATENT_TAIL": "1"
+    },
+    "pid": 13323,
+    "exit": 0,
+    "end": "2026-11-17T17:33:25.672495+00:00",
+    "seconds": 31.695581611000307,
+    "maxRssKiB": 2161512,
+    "streamComplete": true,
+    "header": {
+      "status": "measurement",
+      "latent_mode": "full",
+      "module_format": "CommonJSBundle",
+      "checker_rejected": true
+    },
+    "files": [
+      "/workspace/scratch/overload-certificates-census/adapted/src/testRunner/projectsRunner.ts"
+    ],
+    "findings": 54,
+    "selectionExact": true,
+    "sha256": "4f0a5462b0712ffe66c4178b8719a2ebd5d54b65920f9e51935edb0a02c56fbd"
+  },
+  {
+    "label": "head",
+    "mode": "full",
+    "file": "src/testRunner/projectsRunner.ts",
+    "root": "src/testRunner/projectsRunner.ts",
+    "args": [
+      "/workspace/scratch/overload-certificates-census/head-tools/entry-census",
+      "/workspace/scratch/overload-certificates-census/adapted/src/testRunner/projectsRunner.ts",
+      "/workspace/scratch/overload-certificates-census/results/head/full/src__testRunner__projectsRunner.jsonl"
+    ],
+    "start": "2026-11-17T17:33:17.800169+00:00",
+    "state": "complete",
+    "output": "results/head/full/src__testRunner__projectsRunner.jsonl",
+    "log": "results/head/full/src__testRunner__projectsRunner.log",
+    "env": {
+      "CENSUS_MODULE_FORMAT": "CommonJSBundle",
+      "LATENT_FULL": "1",
+      "LATENT_ONLY_FILE": "/workspace/scratch/overload-certificates-census/adapted/src/testRunner/projectsRunner.ts",
+      "LATENT_ASSERT_NO_OUTPUT": "1",
+      "LATENT_TAIL": "1"
+    },
+    "pid": 13331,
+    "exit": 0,
+    "end": "2026-11-17T17:33:47.765492+00:00",
+    "seconds": 29.96384122499967,
+    "maxRssKiB": 2106412,
+    "streamComplete": true,
+    "header": {
+      "status": "measurement",
+      "latent_mode": "full",
+      "module_format": "CommonJSBundle",
+      "checker_rejected": true
+    },
+    "files": [
+      "/workspace/scratch/overload-certificates-census/adapted/src/testRunner/projectsRunner.ts"
+    ],
+    "findings": 54,
+    "selectionExact": true,
+    "sha256": "4f0a5462b0712ffe66c4178b8719a2ebd5d54b65920f9e51935edb0a02c56fbd"
+  },
+  {
+    "label": "base",
+    "mode": "full",
+    "file": "src/testRunner/unittests/compilerCore.ts",
+    "root": "src/testRunner/unittests/compilerCore.ts",
+    "args": [
+      "/workspace/scratch/overload-certificates-census/base-tools/entry-census",
+      "/workspace/scratch/overload-certificates-census/adapted/src/testRunner/unittests/compilerCore.ts",
+      "/workspace/scratch/overload-certificates-census/results/base/full/src__testRunner__unittests__compilerCore.jsonl"
+    ],
+    "start": "2026-11-17T17:33:25.700916+00:00",
+    "state": "complete",
+    "output": "results/base/full/src__testRunner__unittests__compilerCore.jsonl",
+    "log": "results/base/full/src__testRunner__unittests__compilerCore.log",
+    "env": {
+      "CENSUS_MODULE_FORMAT": "CommonJSBundle",
+      "LATENT_FULL": "1",
+      "LATENT_ONLY_FILE": "/workspace/scratch/overload-certificates-census/adapted/src/testRunner/unittests/compilerCore.ts",
+      "LATENT_ASSERT_NO_OUTPUT": "1",
+      "LATENT_TAIL": "1"
+    },
+    "pid": 13336,
+    "exit": 0,
+    "end": "2026-11-17T17:34:05.806783+00:00",
+    "seconds": 40.104385955,
+    "maxRssKiB": 1641432,
+    "streamComplete": true,
+    "header": {
+      "status": "measurement",
+      "latent_mode": "full",
+      "module_format": "CommonJSBundle",
+      "checker_rejected": true
+    },
+    "files": [
+      "/workspace/scratch/overload-certificates-census/adapted/src/testRunner/unittests/compilerCore.ts"
+    ],
+    "findings": 3,
+    "selectionExact": true,
+    "sha256": "13d82f2c5c6c4e05276659fe510c8a4ccf60481b5cfd4dc5aad38d7812703676"
+  },
+  {
+    "label": "head",
+    "mode": "full",
+    "file": "src/testRunner/unittests/compilerCore.ts",
+    "root": "src/testRunner/unittests/compilerCore.ts",
+    "args": [
+      "/workspace/scratch/overload-certificates-census/head-tools/entry-census",
+      "/workspace/scratch/overload-certificates-census/adapted/src/testRunner/unittests/compilerCore.ts",
+      "/workspace/scratch/overload-certificates-census/results/head/full/src__testRunner__unittests__compilerCore.jsonl"
+    ],
+    "start": "2026-11-17T17:33:47.803767+00:00",
+    "state": "complete",
+    "output": "results/head/full/src__testRunner__unittests__compilerCore.jsonl",
+    "log": "results/head/full/src__testRunner__unittests__compilerCore.log",
+    "env": {
+      "CENSUS_MODULE_FORMAT": "CommonJSBundle",
+      "LATENT_FULL": "1",
+      "LATENT_ONLY_FILE": "/workspace/scratch/overload-certificates-census/adapted/src/testRunner/unittests/compilerCore.ts",
+      "LATENT_ASSERT_NO_OUTPUT": "1",
+      "LATENT_TAIL": "1"
+    },
+    "pid": 13349,
+    "exit": 0,
+    "end": "2026-11-17T17:34:25.932080+00:00",
+    "seconds": 38.125959610999416,
+    "maxRssKiB": 1681316,
+    "streamComplete": true,
+    "header": {
+      "status": "measurement",
+      "latent_mode": "full",
+      "module_format": "CommonJSBundle",
+      "checker_rejected": true
+    },
+    "files": [
+      "/workspace/scratch/overload-certificates-census/adapted/src/testRunner/unittests/compilerCore.ts"
+    ],
+    "findings": 3,
+    "selectionExact": true,
+    "sha256": "624aa11c9f390df3a06a4a9e4362f8514a6235c58bf9a76a56441541a5c0e412"
+  },
+  {
+    "label": "base",
+    "mode": "full",
+    "file": "src/testRunner/unittests/customTransforms.ts",
+    "root": "src/testRunner/unittests/customTransforms.ts",
+    "args": [
+      "/workspace/scratch/overload-certificates-census/base-tools/entry-census",
+      "/workspace/scratch/overload-certificates-census/adapted/src/testRunner/unittests/customTransforms.ts",
+      "/workspace/scratch/overload-certificates-census/results/base/full/src__testRunner__unittests__customTransforms.jsonl"
+    ],
+    "start": "2026-11-17T17:34:05.820507+00:00",
+    "state": "complete",
+    "output": "results/base/full/src__testRunner__unittests__customTransforms.jsonl",
+    "log": "results/base/full/src__testRunner__unittests__customTransforms.log",
+    "env": {
+      "CENSUS_MODULE_FORMAT": "CommonJSBundle",
+      "LATENT_FULL": "1",
+      "LATENT_ONLY_FILE": "/workspace/scratch/overload-certificates-census/adapted/src/testRunner/unittests/customTransforms.ts",
+      "LATENT_ASSERT_NO_OUTPUT": "1",
+      "LATENT_TAIL": "1"
+    },
+    "pid": 13354,
+    "exit": 0,
+    "end": "2026-11-17T17:34:36.544620+00:00",
+    "seconds": 30.72261678599989,
+    "maxRssKiB": 2100292,
+    "streamComplete": true,
+    "header": {
+      "status": "measurement",
+      "latent_mode": "full",
+      "module_format": "CommonJSBundle",
+      "checker_rejected": true
+    },
+    "files": [
+      "/workspace/scratch/overload-certificates-census/adapted/src/testRunner/unittests/customTransforms.ts"
+    ],
+    "findings": 21,
+    "selectionExact": true,
+    "sha256": "bf9da8c295cfef18ce5edb5fbc07285773516a977f1f4723f583fc58489f0822"
+  },
+  {
+    "label": "head",
+    "mode": "full",
+    "file": "src/testRunner/unittests/customTransforms.ts",
+    "root": "src/testRunner/unittests/customTransforms.ts",
+    "args": [
+      "/workspace/scratch/overload-certificates-census/head-tools/entry-census",
+      "/workspace/scratch/overload-certificates-census/adapted/src/testRunner/unittests/customTransforms.ts",
+      "/workspace/scratch/overload-certificates-census/results/head/full/src__testRunner__unittests__customTransforms.jsonl"
+    ],
+    "start": "2026-11-17T17:34:25.945887+00:00",
+    "state": "complete",
+    "output": "results/head/full/src__testRunner__unittests__customTransforms.jsonl",
+    "log": "results/head/full/src__testRunner__unittests__customTransforms.log",
+    "env": {
+      "CENSUS_MODULE_FORMAT": "CommonJSBundle",
+      "LATENT_FULL": "1",
+      "LATENT_ONLY_FILE": "/workspace/scratch/overload-certificates-census/adapted/src/testRunner/unittests/customTransforms.ts",
+      "LATENT_ASSERT_NO_OUTPUT": "1",
+      "LATENT_TAIL": "1"
+    },
+    "pid": 13359,
+    "exit": 0,
+    "end": "2026-11-17T17:34:55.074774+00:00",
+    "seconds": 29.12727438500042,
+    "maxRssKiB": 2040604,
+    "streamComplete": true,
+    "header": {
+      "status": "measurement",
+      "latent_mode": "full",
+      "module_format": "CommonJSBundle",
+      "checker_rejected": true
+    },
+    "files": [
+      "/workspace/scratch/overload-certificates-census/adapted/src/testRunner/unittests/customTransforms.ts"
+    ],
+    "findings": 21,
+    "selectionExact": true,
+    "sha256": "bf9da8c295cfef18ce5edb5fbc07285773516a977f1f4723f583fc58489f0822"
+  },
+  {
+    "label": "base",
+    "mode": "full",
+    "file": "src/testRunner/unittests/helpers.ts",
+    "root": "src/testRunner/unittests/helpers.ts",
+    "args": [
+      "/workspace/scratch/overload-certificates-census/base-tools/entry-census",
+      "/workspace/scratch/overload-certificates-census/adapted/src/testRunner/unittests/helpers.ts",
+      "/workspace/scratch/overload-certificates-census/results/base/full/src__testRunner__unittests__helpers.jsonl"
+    ],
+    "start": "2026-11-17T17:34:36.570665+00:00",
+    "state": "complete",
+    "output": "results/base/full/src__testRunner__unittests__helpers.jsonl",
+    "log": "results/base/full/src__testRunner__unittests__helpers.log",
+    "env": {
+      "CENSUS_MODULE_FORMAT": "CommonJSBundle",
+      "LATENT_FULL": "1",
+      "LATENT_ONLY_FILE": "/workspace/scratch/overload-certificates-census/adapted/src/testRunner/unittests/helpers.ts",
+      "LATENT_ASSERT_NO_OUTPUT": "1",
+      "LATENT_TAIL": "1"
+    },
+    "pid": 13372,
+    "exit": 0,
+    "end": "2026-11-17T17:35:21.351422+00:00",
+    "seconds": 44.77910120599972,
+    "maxRssKiB": 1700380,
+    "streamComplete": true,
+    "header": {
+      "status": "measurement",
+      "latent_mode": "full",
+      "module_format": "CommonJSBundle",
+      "checker_rejected": true
+    },
+    "files": [
+      "/workspace/scratch/overload-certificates-census/adapted/src/testRunner/unittests/helpers.ts"
+    ],
+    "findings": 38,
+    "selectionExact": true,
+    "sha256": "2eac238e006b93c7e81ba2010b6a54243d969edd526739e793f629c71e6089c5"
+  },
+  {
+    "label": "head",
+    "mode": "full",
+    "file": "src/testRunner/unittests/helpers.ts",
+    "root": "src/testRunner/unittests/helpers.ts",
+    "args": [
+      "/workspace/scratch/overload-certificates-census/head-tools/entry-census",
+      "/workspace/scratch/overload-certificates-census/adapted/src/testRunner/unittests/helpers.ts",
+      "/workspace/scratch/overload-certificates-census/results/head/full/src__testRunner__unittests__helpers.jsonl"
+    ],
+    "start": "2026-11-17T17:34:55.105949+00:00",
+    "state": "complete",
+    "output": "results/head/full/src__testRunner__unittests__helpers.jsonl",
+    "log": "results/head/full/src__testRunner__unittests__helpers.log",
+    "env": {
+      "CENSUS_MODULE_FORMAT": "CommonJSBundle",
+      "LATENT_FULL": "1",
+      "LATENT_ONLY_FILE": "/workspace/scratch/overload-certificates-census/adapted/src/testRunner/unittests/helpers.ts",
+      "LATENT_ASSERT_NO_OUTPUT": "1",
+      "LATENT_TAIL": "1"
+    },
+    "pid": 13382,
+    "exit": 0,
+    "end": "2026-11-17T17:35:38.883151+00:00",
+    "seconds": 43.77540983699964,
+    "maxRssKiB": 1590344,
+    "streamComplete": true,
+    "header": {
+      "status": "measurement",
+      "latent_mode": "full",
+      "module_format": "CommonJSBundle",
+      "checker_rejected": true
+    },
+    "files": [
+      "/workspace/scratch/overload-certificates-census/adapted/src/testRunner/unittests/helpers.ts"
+    ],
+    "findings": 38,
+    "selectionExact": true,
+    "sha256": "85fc090edcde41fec02803eda3a423fea1947baf622871100b4eb77bb1454568"
+  },
+  {
+    "label": "base",
+    "mode": "full",
+    "file": "src/testRunner/unittests/helpers/tsserver.ts",
+    "root": "src/testRunner/unittests/helpers/tsserver.ts",
+    "args": [
+      "/workspace/scratch/overload-certificates-census/base-tools/entry-census",
+      "/workspace/scratch/overload-certificates-census/adapted/src/testRunner/unittests/helpers/tsserver.ts",
+      "/workspace/scratch/overload-certificates-census/results/base/full/src__testRunner__unittests__helpers__tsserver.jsonl"
+    ],
+    "start": "2026-11-17T17:35:21.369178+00:00",
+    "state": "complete",
+    "output": "results/base/full/src__testRunner__unittests__helpers__tsserver.jsonl",
+    "log": "results/base/full/src__testRunner__unittests__helpers__tsserver.log",
+    "env": {
+      "CENSUS_MODULE_FORMAT": "CommonJSBundle",
+      "LATENT_FULL": "1",
+      "LATENT_ONLY_FILE": "/workspace/scratch/overload-certificates-census/adapted/src/testRunner/unittests/helpers/tsserver.ts",
+      "LATENT_ASSERT_NO_OUTPUT": "1",
+      "LATENT_TAIL": "1"
+    },
+    "pid": 13387,
+    "exit": 0,
+    "end": "2026-11-17T17:35:52.632603+00:00",
+    "seconds": 31.261883758000295,
+    "maxRssKiB": 2050060,
+    "streamComplete": true,
+    "header": {
+      "status": "measurement",
+      "latent_mode": "full",
+      "module_format": "CommonJSBundle",
+      "checker_rejected": true
+    },
+    "files": [
+      "/workspace/scratch/overload-certificates-census/adapted/src/testRunner/unittests/helpers/tsserver.ts"
+    ],
+    "findings": 181,
+    "selectionExact": true,
+    "sha256": "b9a4d860f83713adb44b1358e610c2406c50317f694e940745b72d97f3eba655"
+  },
+  {
+    "label": "head",
+    "mode": "full",
+    "file": "src/testRunner/unittests/helpers/tsserver.ts",
+    "root": "src/testRunner/unittests/helpers/tsserver.ts",
+    "args": [
+      "/workspace/scratch/overload-certificates-census/head-tools/entry-census",
+      "/workspace/scratch/overload-certificates-census/adapted/src/testRunner/unittests/helpers/tsserver.ts",
+      "/workspace/scratch/overload-certificates-census/results/head/full/src__testRunner__unittests__helpers__tsserver.jsonl"
+    ],
+    "start": "2026-11-17T17:35:38.898305+00:00",
+    "state": "complete",
+    "output": "results/head/full/src__testRunner__unittests__helpers__tsserver.jsonl",
+    "log": "results/head/full/src__testRunner__unittests__helpers__tsserver.log",
+    "env": {
+      "CENSUS_MODULE_FORMAT": "CommonJSBundle",
+      "LATENT_FULL": "1",
+      "LATENT_ONLY_FILE": "/workspace/scratch/overload-certificates-census/adapted/src/testRunner/unittests/helpers/tsserver.ts",
+      "LATENT_ASSERT_NO_OUTPUT": "1",
+      "LATENT_TAIL": "1"
+    },
+    "pid": 13400,
+    "exit": 0,
+    "end": "2026-11-17T17:36:08.514309+00:00",
+    "seconds": 29.61416982300034,
+    "maxRssKiB": 2128372,
+    "streamComplete": true,
+    "header": {
+      "status": "measurement",
+      "latent_mode": "full",
+      "module_format": "CommonJSBundle",
+      "checker_rejected": true
+    },
+    "files": [
+      "/workspace/scratch/overload-certificates-census/adapted/src/testRunner/unittests/helpers/tsserver.ts"
+    ],
+    "findings": 181,
+    "selectionExact": true,
+    "sha256": "b9a4d860f83713adb44b1358e610c2406c50317f694e940745b72d97f3eba655"
+  },
+  {
+    "label": "base",
+    "mode": "full",
+    "file": "src/testRunner/unittests/helpers/virtualFileSystemWithWatch.ts",
+    "root": "src/testRunner/unittests/helpers/virtualFileSystemWithWatch.ts",
+    "args": [
+      "/workspace/scratch/overload-certificates-census/base-tools/entry-census",
+      "/workspace/scratch/overload-certificates-census/adapted/src/testRunner/unittests/helpers/virtualFileSystemWithWatch.ts",
+      "/workspace/scratch/overload-certificates-census/results/base/full/src__testRunner__unittests__helpers__virtualFileSystemWithWatch.jsonl"
+    ],
+    "start": "2026-11-17T17:35:52.670300+00:00",
+    "state": "complete",
+    "output": "results/base/full/src__testRunner__unittests__helpers__virtualFileSystemWithWatch.jsonl",
+    "log": "results/base/full/src__testRunner__unittests__helpers__virtualFileSystemWithWatch.log",
+    "env": {
+      "CENSUS_MODULE_FORMAT": "CommonJSBundle",
+      "LATENT_FULL": "1",
+      "LATENT_ONLY_FILE": "/workspace/scratch/overload-certificates-census/adapted/src/testRunner/unittests/helpers/virtualFileSystemWithWatch.ts",
+      "LATENT_ASSERT_NO_OUTPUT": "1",
+      "LATENT_TAIL": "1"
+    },
+    "pid": 13406,
+    "exit": 0,
+    "end": "2026-11-17T17:36:22.878967+00:00",
+    "seconds": 30.205874392000624,
+    "maxRssKiB": 2159472,
+    "streamComplete": true,
+    "header": {
+      "status": "measurement",
+      "latent_mode": "full",
+      "module_format": "CommonJSBundle",
+      "checker_rejected": true
+    },
+    "files": [
+      "/workspace/scratch/overload-certificates-census/adapted/src/testRunner/unittests/helpers/virtualFileSystemWithWatch.ts"
+    ],
+    "findings": 372,
+    "selectionExact": true,
+    "sha256": "e129ecdcfcc15de6a48be2d5ddccd1df219ac7d1e47b4c5d2e6438cd4544441c"
+  },
+  {
+    "label": "head",
+    "mode": "full",
+    "file": "src/testRunner/unittests/helpers/virtualFileSystemWithWatch.ts",
+    "root": "src/testRunner/unittests/helpers/virtualFileSystemWithWatch.ts",
+    "args": [
+      "/workspace/scratch/overload-certificates-census/head-tools/entry-census",
+      "/workspace/scratch/overload-certificates-census/adapted/src/testRunner/unittests/helpers/virtualFileSystemWithWatch.ts",
+      "/workspace/scratch/overload-certificates-census/results/head/full/src__testRunner__unittests__helpers__virtualFileSystemWithWatch.jsonl"
+    ],
+    "start": "2026-11-17T17:36:08.546826+00:00",
+    "state": "complete",
+    "output": "results/head/full/src__testRunner__unittests__helpers__virtualFileSystemWithWatch.jsonl",
+    "log": "results/head/full/src__testRunner__unittests__helpers__virtualFileSystemWithWatch.log",
+    "env": {
+      "CENSUS_MODULE_FORMAT": "CommonJSBundle",
+      "LATENT_FULL": "1",
+      "LATENT_ONLY_FILE": "/workspace/scratch/overload-certificates-census/adapted/src/testRunner/unittests/helpers/virtualFileSystemWithWatch.ts",
+      "LATENT_ASSERT_NO_OUTPUT": "1",
+      "LATENT_TAIL": "1"
+    },
+    "pid": 13411,
+    "exit": 0,
+    "end": "2026-11-17T17:36:38.293344+00:00",
+    "seconds": 29.744691966000573,
+    "maxRssKiB": 2081236,
+    "streamComplete": true,
+    "header": {
+      "status": "measurement",
+      "latent_mode": "full",
+      "module_format": "CommonJSBundle",
+      "checker_rejected": true
+    },
+    "files": [
+      "/workspace/scratch/overload-certificates-census/adapted/src/testRunner/unittests/helpers/virtualFileSystemWithWatch.ts"
+    ],
+    "findings": 372,
+    "selectionExact": true,
+    "sha256": "e129ecdcfcc15de6a48be2d5ddccd1df219ac7d1e47b4c5d2e6438cd4544441c"
+  },
+  {
+    "label": "base",
+    "mode": "full",
+    "file": "src/testRunner/unittests/moduleResolution.ts",
+    "root": "src/testRunner/unittests/moduleResolution.ts",
+    "args": [
+      "/workspace/scratch/overload-certificates-census/base-tools/entry-census",
+      "/workspace/scratch/overload-certificates-census/adapted/src/testRunner/unittests/moduleResolution.ts",
+      "/workspace/scratch/overload-certificates-census/results/base/full/src__testRunner__unittests__moduleResolution.jsonl"
+    ],
+    "start": "2026-11-17T17:36:22.914943+00:00",
+    "state": "complete",
+    "output": "results/base/full/src__testRunner__unittests__moduleResolution.jsonl",
+    "log": "results/base/full/src__testRunner__unittests__moduleResolution.log",
+    "env": {
+      "CENSUS_MODULE_FORMAT": "CommonJSBundle",
+      "LATENT_FULL": "1",
+      "LATENT_ONLY_FILE": "/workspace/scratch/overload-certificates-census/adapted/src/testRunner/unittests/moduleResolution.ts",
+      "LATENT_ASSERT_NO_OUTPUT": "1",
+      "LATENT_TAIL": "1"
+    },
+    "pid": 13416,
+    "exit": 0,
+    "end": "2026-11-17T17:36:52.797302+00:00",
+    "seconds": 29.880077595999865,
+    "maxRssKiB": 2133604,
+    "streamComplete": true,
+    "header": {
+      "status": "measurement",
+      "latent_mode": "full",
+      "module_format": "CommonJSBundle",
+      "checker_rejected": true
+    },
+    "files": [
+      "/workspace/scratch/overload-certificates-census/adapted/src/testRunner/unittests/moduleResolution.ts"
+    ],
+    "findings": 141,
+    "selectionExact": true,
+    "sha256": "f1efbf698bbf94b3811a7e30b10f9fc50107bd8858a0a52d62a8e2c84645dd87"
+  },
+  {
+    "label": "head",
+    "mode": "full",
+    "file": "src/testRunner/unittests/moduleResolution.ts",
+    "root": "src/testRunner/unittests/moduleResolution.ts",
+    "args": [
+      "/workspace/scratch/overload-certificates-census/head-tools/entry-census",
+      "/workspace/scratch/overload-certificates-census/adapted/src/testRunner/unittests/moduleResolution.ts",
+      "/workspace/scratch/overload-certificates-census/results/head/full/src__testRunner__unittests__moduleResolution.jsonl"
+    ],
+    "start": "2026-11-17T17:36:38.322735+00:00",
+    "state": "complete",
+    "output": "results/head/full/src__testRunner__unittests__moduleResolution.jsonl",
+    "log": "results/head/full/src__testRunner__unittests__moduleResolution.log",
+    "env": {
+      "CENSUS_MODULE_FORMAT": "CommonJSBundle",
+      "LATENT_FULL": "1",
+      "LATENT_ONLY_FILE": "/workspace/scratch/overload-certificates-census/adapted/src/testRunner/unittests/moduleResolution.ts",
+      "LATENT_ASSERT_NO_OUTPUT": "1",
+      "LATENT_TAIL": "1"
+    },
+    "pid": 13429,
+    "exit": 0,
+    "end": "2026-11-17T17:37:09.392022+00:00",
+    "seconds": 31.067499371999475,
+    "maxRssKiB": 2166720,
+    "streamComplete": true,
+    "header": {
+      "status": "measurement",
+      "latent_mode": "full",
+      "module_format": "CommonJSBundle",
+      "checker_rejected": true
+    },
+    "files": [
+      "/workspace/scratch/overload-certificates-census/adapted/src/testRunner/unittests/moduleResolution.ts"
+    ],
+    "findings": 141,
+    "selectionExact": true,
+    "sha256": "f1efbf698bbf94b3811a7e30b10f9fc50107bd8858a0a52d62a8e2c84645dd87"
+  },
+  {
+    "label": "base",
+    "mode": "full",
+    "file": "src/testRunner/unittests/programApi.ts",
+    "root": "src/testRunner/unittests/programApi.ts",
+    "args": [
+      "/workspace/scratch/overload-certificates-census/base-tools/entry-census",
+      "/workspace/scratch/overload-certificates-census/adapted/src/testRunner/unittests/programApi.ts",
+      "/workspace/scratch/overload-certificates-census/results/base/full/src__testRunner__unittests__programApi.jsonl"
+    ],
+    "start": "2026-11-17T17:36:52.827572+00:00",
+    "state": "complete",
+    "output": "results/base/full/src__testRunner__unittests__programApi.jsonl",
+    "log": "results/base/full/src__testRunner__unittests__programApi.log",
+    "env": {
+      "CENSUS_MODULE_FORMAT": "CommonJSBundle",
+      "LATENT_FULL": "1",
+      "LATENT_ONLY_FILE": "/workspace/scratch/overload-certificates-census/adapted/src/testRunner/unittests/programApi.ts",
+      "LATENT_ASSERT_NO_OUTPUT": "1",
+      "LATENT_TAIL": "1"
+    },
+    "pid": 13440,
+    "exit": 0,
+    "end": "2026-11-17T17:37:27.835773+00:00",
+    "seconds": 35.005806734000544,
+    "maxRssKiB": 2125560,
+    "streamComplete": true,
+    "header": {
+      "status": "measurement",
+      "latent_mode": "full",
+      "module_format": "CommonJSBundle",
+      "checker_rejected": true
+    },
+    "files": [
+      "/workspace/scratch/overload-certificates-census/adapted/src/testRunner/unittests/programApi.ts"
+    ],
+    "findings": 48,
+    "selectionExact": true,
+    "sha256": "acc2d4dcacdf37266fe4a4e4d841d9c99971a5a0908a3091bce0f1ee121ab37d"
+  },
+  {
+    "label": "head",
+    "mode": "full",
+    "file": "src/testRunner/unittests/programApi.ts",
+    "root": "src/testRunner/unittests/programApi.ts",
+    "args": [
+      "/workspace/scratch/overload-certificates-census/head-tools/entry-census",
+      "/workspace/scratch/overload-certificates-census/adapted/src/testRunner/unittests/programApi.ts",
+      "/workspace/scratch/overload-certificates-census/results/head/full/src__testRunner__unittests__programApi.jsonl"
+    ],
+    "start": "2026-11-17T17:37:09.418823+00:00",
+    "state": "complete",
+    "output": "results/head/full/src__testRunner__unittests__programApi.jsonl",
+    "log": "results/head/full/src__testRunner__unittests__programApi.log",
+    "env": {
+      "CENSUS_MODULE_FORMAT": "CommonJSBundle",
+      "LATENT_FULL": "1",
+      "LATENT_ONLY_FILE": "/workspace/scratch/overload-certificates-census/adapted/src/testRunner/unittests/programApi.ts",
+      "LATENT_ASSERT_NO_OUTPUT": "1",
+      "LATENT_TAIL": "1"
+    },
+    "pid": 13445,
+    "exit": 0,
+    "end": "2026-11-17T17:37:43.724052+00:00",
+    "seconds": 34.30352152099931,
+    "maxRssKiB": 2131208,
+    "streamComplete": true,
+    "header": {
+      "status": "measurement",
+      "latent_mode": "full",
+      "module_format": "CommonJSBundle",
+      "checker_rejected": true
+    },
+    "files": [
+      "/workspace/scratch/overload-certificates-census/adapted/src/testRunner/unittests/programApi.ts"
+    ],
+    "findings": 48,
+    "selectionExact": true,
+    "sha256": "acc2d4dcacdf37266fe4a4e4d841d9c99971a5a0908a3091bce0f1ee121ab37d"
+  },
+  {
+    "label": "base",
+    "mode": "full",
+    "file": "src/testRunner/unittests/reuseProgramStructure.ts",
+    "root": "src/testRunner/unittests/reuseProgramStructure.ts",
+    "args": [
+      "/workspace/scratch/overload-certificates-census/base-tools/entry-census",
+      "/workspace/scratch/overload-certificates-census/adapted/src/testRunner/unittests/reuseProgramStructure.ts",
+      "/workspace/scratch/overload-certificates-census/results/base/full/src__testRunner__unittests__reuseProgramStructure.jsonl"
+    ],
+    "start": "2026-11-17T17:37:27.874069+00:00",
+    "state": "complete",
+    "output": "results/base/full/src__testRunner__unittests__reuseProgramStructure.jsonl",
+    "log": "results/base/full/src__testRunner__unittests__reuseProgramStructure.log",
+    "env": {
+      "CENSUS_MODULE_FORMAT": "CommonJSBundle",
+      "LATENT_FULL": "1",
+      "LATENT_ONLY_FILE": "/workspace/scratch/overload-certificates-census/adapted/src/testRunner/unittests/reuseProgramStructure.ts",
+      "LATENT_ASSERT_NO_OUTPUT": "1",
+      "LATENT_TAIL": "1"
+    },
+    "pid": 13450,
+    "exit": 0,
+    "end": "2026-11-17T17:38:00.901403+00:00",
+    "seconds": 33.02434641599939,
+    "maxRssKiB": 2135972,
+    "streamComplete": true,
+    "header": {
+      "status": "measurement",
+      "latent_mode": "full",
+      "module_format": "CommonJSBundle",
+      "checker_rejected": true
+    },
+    "files": [
+      "/workspace/scratch/overload-certificates-census/adapted/src/testRunner/unittests/reuseProgramStructure.ts"
+    ],
+    "findings": 76,
+    "selectionExact": true,
+    "sha256": "acbfed84b1451d209d9cb531b3eba682db6d5b253372f47e874270d404dcf4f1"
+  },
+  {
+    "label": "head",
+    "mode": "full",
+    "file": "src/testRunner/unittests/reuseProgramStructure.ts",
+    "root": "src/testRunner/unittests/reuseProgramStructure.ts",
+    "args": [
+      "/workspace/scratch/overload-certificates-census/head-tools/entry-census",
+      "/workspace/scratch/overload-certificates-census/adapted/src/testRunner/unittests/reuseProgramStructure.ts",
+      "/workspace/scratch/overload-certificates-census/results/head/full/src__testRunner__unittests__reuseProgramStructure.jsonl"
+    ],
+    "start": "2026-11-17T17:37:43.755510+00:00",
+    "state": "complete",
+    "output": "results/head/full/src__testRunner__unittests__reuseProgramStructure.jsonl",
+    "log": "results/head/full/src__testRunner__unittests__reuseProgramStructure.log",
+    "env": {
+      "CENSUS_MODULE_FORMAT": "CommonJSBundle",
+      "LATENT_FULL": "1",
+      "LATENT_ONLY_FILE": "/workspace/scratch/overload-certificates-census/adapted/src/testRunner/unittests/reuseProgramStructure.ts",
+      "LATENT_ASSERT_NO_OUTPUT": "1",
+      "LATENT_TAIL": "1"
+    },
+    "pid": 13463,
+    "exit": 0,
+    "end": "2026-11-17T17:38:18.512288+00:00",
+    "seconds": 34.7549396710001,
+    "maxRssKiB": 2092656,
+    "streamComplete": true,
+    "header": {
+      "status": "measurement",
+      "latent_mode": "full",
+      "module_format": "CommonJSBundle",
+      "checker_rejected": true
+    },
+    "files": [
+      "/workspace/scratch/overload-certificates-census/adapted/src/testRunner/unittests/reuseProgramStructure.ts"
+    ],
+    "findings": 76,
+    "selectionExact": true,
+    "sha256": "acbfed84b1451d209d9cb531b3eba682db6d5b253372f47e874270d404dcf4f1"
+  },
+  {
+    "label": "base",
+    "mode": "full",
+    "file": "src/testRunner/unittests/tscWatch/incremental.ts",
+    "root": "src/testRunner/unittests/tscWatch/incremental.ts",
+    "args": [
+      "/workspace/scratch/overload-certificates-census/base-tools/entry-census",
+      "/workspace/scratch/overload-certificates-census/adapted/src/testRunner/unittests/tscWatch/incremental.ts",
+      "/workspace/scratch/overload-certificates-census/results/base/full/src__testRunner__unittests__tscWatch__incremental.jsonl"
+    ],
+    "start": "2026-11-17T17:38:00.929886+00:00",
+    "state": "complete",
+    "output": "results/base/full/src__testRunner__unittests__tscWatch__incremental.jsonl",
+    "log": "results/base/full/src__testRunner__unittests__tscWatch__incremental.log",
+    "env": {
+      "CENSUS_MODULE_FORMAT": "CommonJSBundle",
+      "LATENT_FULL": "1",
+      "LATENT_ONLY_FILE": "/workspace/scratch/overload-certificates-census/adapted/src/testRunner/unittests/tscWatch/incremental.ts",
+      "LATENT_ASSERT_NO_OUTPUT": "1",
+      "LATENT_TAIL": "1"
+    },
+    "pid": 13471,
+    "exit": 0,
+    "end": "2026-11-17T17:38:38.262762+00:00",
+    "seconds": 37.33077146300002,
+    "maxRssKiB": 2089088,
+    "streamComplete": true,
+    "header": {
+      "status": "measurement",
+      "latent_mode": "full",
+      "module_format": "CommonJSBundle",
+      "checker_rejected": true
+    },
+    "files": [
+      "/workspace/scratch/overload-certificates-census/adapted/src/testRunner/unittests/tscWatch/incremental.ts"
+    ],
+    "findings": 51,
+    "selectionExact": true,
+    "sha256": "c34216d9e7c0a7ebf296d0e0432ee7d29c6a8586b1a86e07e27cd3622d4c144e"
+  },
+  {
+    "label": "head",
+    "mode": "full",
+    "file": "src/testRunner/unittests/tscWatch/incremental.ts",
+    "root": "src/testRunner/unittests/tscWatch/incremental.ts",
+    "args": [
+      "/workspace/scratch/overload-certificates-census/head-tools/entry-census",
+      "/workspace/scratch/overload-certificates-census/adapted/src/testRunner/unittests/tscWatch/incremental.ts",
+      "/workspace/scratch/overload-certificates-census/results/head/full/src__testRunner__unittests__tscWatch__incremental.jsonl"
+    ],
+    "start": "2026-11-17T17:38:18.577808+00:00",
+    "state": "complete",
+    "output": "results/head/full/src__testRunner__unittests__tscWatch__incremental.jsonl",
+    "log": "results/head/full/src__testRunner__unittests__tscWatch__incremental.log",
+    "env": {
+      "CENSUS_MODULE_FORMAT": "CommonJSBundle",
+      "LATENT_FULL": "1",
+      "LATENT_ONLY_FILE": "/workspace/scratch/overload-certificates-census/adapted/src/testRunner/unittests/tscWatch/incremental.ts",
+      "LATENT_ASSERT_NO_OUTPUT": "1",
+      "LATENT_TAIL": "1"
+    },
+    "pid": 13476,
+    "exit": 0,
+    "end": "2026-11-17T17:38:53.276163+00:00",
+    "seconds": 34.694355689000076,
+    "maxRssKiB": 2088164,
+    "streamComplete": true,
+    "header": {
+      "status": "measurement",
+      "latent_mode": "full",
+      "module_format": "CommonJSBundle",
+      "checker_rejected": true
+    },
+    "files": [
+      "/workspace/scratch/overload-certificates-census/adapted/src/testRunner/unittests/tscWatch/incremental.ts"
+    ],
+    "findings": 51,
+    "selectionExact": true,
+    "sha256": "c34216d9e7c0a7ebf296d0e0432ee7d29c6a8586b1a86e07e27cd3622d4c144e"
+  },
+  {
+    "label": "base",
+    "mode": "scan",
+    "file": "src/compiler/core.ts",
+    "root": "src/compiler/core.ts",
+    "args": [
+      "/workspace/scratch/overload-certificates-census/base-tools/scan-all",
+      "/workspace/scratch/overload-certificates-census/adapted/src/compiler/core.ts"
+    ],
+    "start": "2026-11-17T17:38:38.293569+00:00",
+    "state": "complete",
+    "output": "results/base/scan/src__compiler__core.json",
+    "log": "results/base/scan/src__compiler__core.log",
+    "env": {
+      "CENSUS_MODULE_FORMAT": "CommonJSBundle",
+      "LATENT_ASSERT_NO_OUTPUT": "1",
+      "LATENT_TAIL": "1"
+    },
+    "pid": 13489,
+    "exit": 0,
+    "end": "2026-11-17T17:43:12.951264+00:00",
+    "seconds": 274.65550265599995,
+    "maxRssKiB": 2119056,
+    "scanCompleted": false,
+    "boundary": "production abort at lowering.declareModule",
+    "findings": 4836,
+    "sha256": "ddbac40cbea607b362e995c8e9e0f6c53f603bfccf5609ffc8e7703c19272c33"
+  },
+  {
+    "label": "head",
+    "mode": "scan",
+    "file": "src/compiler/core.ts",
+    "root": "src/compiler/core.ts",
+    "args": [
+      "/workspace/scratch/overload-certificates-census/head-tools/scan-all",
+      "/workspace/scratch/overload-certificates-census/adapted/src/compiler/core.ts"
+    ],
+    "start": "2026-11-17T17:38:53.480885+00:00",
+    "state": "complete",
+    "output": "results/head/scan/src__compiler__core.json",
+    "log": "results/head/scan/src__compiler__core.log",
+    "env": {
+      "CENSUS_MODULE_FORMAT": "CommonJSBundle",
+      "LATENT_ASSERT_NO_OUTPUT": "1",
+      "LATENT_TAIL": "1"
+    },
+    "pid": 13494,
+    "exit": 0,
+    "end": "2026-11-17T17:43:26.908052+00:00",
+    "seconds": 273.423593773,
+    "maxRssKiB": 2291776,
+    "scanCompleted": false,
+    "boundary": "production abort at lowering.declareModule",
+    "findings": 4836,
+    "sha256": "ddbac40cbea607b362e995c8e9e0f6c53f603bfccf5609ffc8e7703c19272c33"
+  },
+  {
+    "label": "base",
+    "mode": "scan",
+    "file": "src/tsc/tsc.ts",
+    "root": "src/tsc/tsc.ts",
+    "args": [
+      "/workspace/scratch/overload-certificates-census/base-tools/scan-all",
+      "/workspace/scratch/overload-certificates-census/adapted/src/tsc/tsc.ts"
+    ],
+    "start": "2026-11-17T17:43:12.961431+00:00",
+    "state": "complete",
+    "output": "results/base/scan/src__tsc__tsc.json",
+    "log": "results/base/scan/src__tsc__tsc.log",
+    "env": {
+      "CENSUS_MODULE_FORMAT": "CommonJSBundle",
+      "LATENT_ASSERT_NO_OUTPUT": "1",
+      "LATENT_TAIL": "1"
+    },
+    "pid": 13573,
+    "exit": 0,
+    "end": "2026-11-17T17:47:49.857121+00:00",
+    "seconds": 276.8938395230007,
+    "maxRssKiB": 2222896,
+    "scanCompleted": false,
+    "boundary": "production abort at lowering.declareModule",
+    "findings": 4836,
+    "sha256": "f5db245ee8b4d1e5e0c3f786c8d7e8459307dc868054dae297267beba40ab104"
+  },
+  {
+    "label": "head",
+    "mode": "scan",
+    "file": "src/tsc/tsc.ts",
+    "root": "src/tsc/tsc.ts",
+    "args": [
+      "/workspace/scratch/overload-certificates-census/head-tools/scan-all",
+      "/workspace/scratch/overload-certificates-census/adapted/src/tsc/tsc.ts"
+    ],
+    "start": "2026-11-17T17:43:26.916943+00:00",
+    "state": "complete",
+    "output": "results/head/scan/src__tsc__tsc.json",
+    "log": "results/head/scan/src__tsc__tsc.log",
+    "env": {
+      "CENSUS_MODULE_FORMAT": "CommonJSBundle",
+      "LATENT_ASSERT_NO_OUTPUT": "1",
+      "LATENT_TAIL": "1"
+    },
+    "pid": 13578,
+    "exit": 0,
+    "end": "2026-11-17T17:48:06.194545+00:00",
+    "seconds": 279.27598897900043,
+    "maxRssKiB": 2171716,
+    "scanCompleted": false,
+    "boundary": "production abort at lowering.declareModule",
+    "findings": 4836,
+    "sha256": "f5db245ee8b4d1e5e0c3f786c8d7e8459307dc868054dae297267beba40ab104"
+  }
+]

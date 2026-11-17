@@ -1,0 +1,18 @@
+{
+  "label": "head",
+  "mode": "full-directory",
+  "file": "src/compiler/core.ts",
+  "root": "src/compiler",
+  "args": [
+    "/workspace/scratch/overload-certificates-census/head-tools/latent-census",
+    "/workspace/scratch/overload-certificates-census/adapted/src/compiler",
+    "/workspace/scratch/overload-certificates-census/results/head/full-directory/core.jsonl"
+  ],
+  "state": "complete",
+  "exit": 0,
+  "seconds": 40.782995506999896,
+  "maxRssKiB": 1311076,
+  "output": "results/head/full-directory/core.jsonl",
+  "streamComplete": true,
+  "findings": 14
+}

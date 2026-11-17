@@ -1,0 +1,272 @@
+[
+  {
+    "mode": "full",
+    "file": "src/harness/watchUtils.ts",
+    "side": "base"
+  },
+  {
+    "mode": "full",
+    "file": "src/harness/watchUtils.ts",
+    "side": "head"
+  },
+  {
+    "mode": "full",
+    "file": "src/server/editorServices.ts",
+    "side": "base"
+  },
+  {
+    "mode": "full",
+    "file": "src/server/editorServices.ts",
+    "side": "head"
+  },
+  {
+    "mode": "full",
+    "file": "src/server/project.ts",
+    "side": "base"
+  },
+  {
+    "mode": "full",
+    "file": "src/server/project.ts",
+    "side": "head"
+  },
+  {
+    "mode": "full",
+    "file": "src/server/session.ts",
+    "side": "base"
+  },
+  {
+    "mode": "full",
+    "file": "src/server/session.ts",
+    "side": "head"
+  },
+  {
+    "mode": "full",
+    "file": "src/services/codeFixProvider.ts",
+    "side": "base"
+  },
+  {
+    "mode": "full",
+    "file": "src/services/codeFixProvider.ts",
+    "side": "head"
+  },
+  {
+    "mode": "full",
+    "file": "src/services/codefixes/convertToEsModule.ts",
+    "side": "base"
+  },
+  {
+    "mode": "full",
+    "file": "src/services/codefixes/convertToEsModule.ts",
+    "side": "head"
+  },
+  {
+    "mode": "full",
+    "file": "src/services/codefixes/fixAddMissingMember.ts",
+    "side": "base"
+  },
+  {
+    "mode": "full",
+    "file": "src/services/codefixes/fixAddMissingMember.ts",
+    "side": "head"
+  },
+  {
+    "mode": "full",
+    "file": "src/services/codefixes/helpers.ts",
+    "side": "base"
+  },
+  {
+    "mode": "full",
+    "file": "src/services/codefixes/helpers.ts",
+    "side": "head"
+  },
+  {
+    "mode": "full",
+    "file": "src/services/codefixes/importFixes.ts",
+    "side": "base"
+  },
+  {
+    "mode": "full",
+    "file": "src/services/codefixes/importFixes.ts",
+    "side": "head"
+  },
+  {
+    "mode": "full",
+    "file": "src/services/documentHighlights.ts",
+    "side": "base"
+  },
+  {
+    "mode": "full",
+    "file": "src/services/documentHighlights.ts",
+    "side": "head"
+  },
+  {
+    "mode": "full",
+    "file": "src/services/documentRegistry.ts",
+    "side": "base"
+  },
+  {
+    "mode": "full",
+    "file": "src/services/documentRegistry.ts",
+    "side": "head"
+  },
+  {
+    "mode": "full",
+    "file": "src/services/refactorProvider.ts",
+    "side": "base"
+  },
+  {
+    "mode": "full",
+    "file": "src/services/refactorProvider.ts",
+    "side": "head"
+  },
+  {
+    "mode": "full",
+    "file": "src/services/refactors/convertImport.ts",
+    "side": "base"
+  },
+  {
+    "mode": "full",
+    "file": "src/services/refactors/convertImport.ts",
+    "side": "head"
+  },
+  {
+    "mode": "full",
+    "file": "src/services/refactors/extractSymbol.ts",
+    "side": "base"
+  },
+  {
+    "mode": "full",
+    "file": "src/services/refactors/extractSymbol.ts",
+    "side": "head"
+  },
+  {
+    "mode": "full",
+    "file": "src/services/refactors/moveToFile.ts",
+    "side": "base"
+  },
+  {
+    "mode": "full",
+    "file": "src/services/refactors/moveToFile.ts",
+    "side": "head"
+  },
+  {
+    "mode": "full",
+    "file": "src/services/stringCompletions.ts",
+    "side": "base"
+  },
+  {
+    "mode": "full",
+    "file": "src/services/stringCompletions.ts",
+    "side": "head"
+  },
+  {
+    "mode": "full",
+    "file": "src/services/symbolDisplay.ts",
+    "side": "base"
+  },
+  {
+    "mode": "full",
+    "file": "src/services/symbolDisplay.ts",
+    "side": "head"
+  },
+  {
+    "mode": "full",
+    "file": "src/testRunner/projectsRunner.ts",
+    "side": "base"
+  },
+  {
+    "mode": "full",
+    "file": "src/testRunner/projectsRunner.ts",
+    "side": "head"
+  },
+  {
+    "mode": "full",
+    "file": "src/testRunner/unittests/compilerCore.ts",
+    "side": "base"
+  },
+  {
+    "mode": "full",
+    "file": "src/testRunner/unittests/compilerCore.ts",
+    "side": "head"
+  },
+  {
+    "mode": "full",
+    "file": "src/testRunner/unittests/customTransforms.ts",
+    "side": "base"
+  },
+  {
+    "mode": "full",
+    "file": "src/testRunner/unittests/customTransforms.ts",
+    "side": "head"
+  },
+  {
+    "mode": "full",
+    "file": "src/testRunner/unittests/helpers.ts",
+    "side": "base"
+  },
+  {
+    "mode": "full",
+    "file": "src/testRunner/unittests/helpers.ts",
+    "side": "head"
+  },
+  {
+    "mode": "full",
+    "file": "src/testRunner/unittests/helpers/tsserver.ts",
+    "side": "base"
+  },
+  {
+    "mode": "full",
+    "file": "src/testRunner/unittests/helpers/tsserver.ts",
+    "side": "head"
+  },
+  {
+    "mode": "full",
+    "file": "src/testRunner/unittests/helpers/virtualFileSystemWithWatch.ts",
+    "side": "base"
+  },
+  {
+    "mode": "full",
+    "file": "src/testRunner/unittests/helpers/virtualFileSystemWithWatch.ts",
+    "side": "head"
+  },
+  {
+    "mode": "full",
+    "file": "src/testRunner/unittests/moduleResolution.ts",
+    "side": "base"
+  },
+  {
+    "mode": "full",
+    "file": "src/testRunner/unittests/moduleResolution.ts",
+    "side": "head"
+  },
+  {
+    "mode": "full",
+    "file": "src/testRunner/unittests/programApi.ts",
+    "side": "base"
+  },
+  {
+    "mode": "full",
+    "file": "src/testRunner/unittests/programApi.ts",
+    "side": "head"
+  },
+  {
+    "mode": "full",
+    "file": "src/testRunner/unittests/reuseProgramStructure.ts",
+    "side": "base"
+  },
+  {
+    "mode": "full",
+    "file": "src/testRunner/unittests/reuseProgramStructure.ts",
+    "side": "head"
+  },
+  {
+    "mode": "full",
+    "file": "src/testRunner/unittests/tscWatch/incremental.ts",
+    "side": "base"
+  },
+  {
+    "mode": "full",
+    "file": "src/testRunner/unittests/tscWatch/incremental.ts",
+    "side": "head"
+  }
+]

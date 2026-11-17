@@ -1,0 +1,10 @@
+export PATH=/workspace/adamic-tools/bin:/workspace/adamic-tools/go/bin:$PATH
+export GOTOOLCHAIN=auto
+export TMPDIR=/workspace/scratch/overload-certificates-census/tmp
+export GOTMPDIR=/workspace/scratch/overload-certificates-census/gotmp
+export GOCACHE=/workspace/scratch/overload-certificates-census/gocache
+export ADAMIC_BUILD_CACHE_DIR=/workspace/scratch/overload-certificates-census/cache
+export STAGE3_CACHE=/workspace/scratch/overload-certificates-census/cache/stage3
+export ADAMIC_TYPESCRIPT_SOURCE=/workspace/scratch/ev14ch9/TypeScript
+export GOMAXPROCS=2
+export GOFLAGS=-p=2

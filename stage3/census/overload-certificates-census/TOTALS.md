@@ -1,0 +1,47 @@
+# Paired run totals
+
+| Scope | File | Before | After | New | Gone | Changed | Reached |
+|---|---|---:|---:|---:|---:|---:|---:|
+| entry | src/tsc/tsc.ts | 4488 | 4485 | 0 | 6 | 0 | 3 |
+| full | src/compiler/builder.ts | 452 | 451 | 0 | 11 | 10 | 10 |
+| full | src/compiler/builderState.ts | 40 | 36 | 0 | 5 | 1 | 1 |
+| full | src/compiler/checker.ts | 8450 | 8440 | 0 | 24 | 14 | 14 |
+| full | src/compiler/commandLineParser.ts | 509 | 496 | 0 | 13 | 0 | 0 |
+| full | src/compiler/core.ts | 14 | 14 | 0 | 0 | 0 | 0 |
+| full | src/compiler/executeCommandLine.ts | 390 | 390 | 0 | 3 | 3 | 3 |
+| full | src/compiler/moduleSpecifiers.ts | 183 | 183 | 0 | 1 | 1 | 1 |
+| full | src/compiler/sourcemap.ts | 131 | 123 | 0 | 8 | 0 | 0 |
+| full | src/compiler/transformers/esnext.ts | 253 | 251 | 0 | 2 | 2 | 0 |
+| full | src/compiler/transformers/jsx.ts | 182 | 182 | 0 | 2 | 2 | 2 |
+| full | src/compiler/transformers/module/module.ts | 398 | 398 | 0 | 1 | 1 | 1 |
+| full | src/compiler/tsbuildPublic.ts | 55 | 55 | 0 | 0 | 0 | 0 |
+| full | src/compiler/utilities.ts | 1344 | 1340 | 0 | 4 | 0 | 0 |
+| full | src/compiler/watchUtilities.ts | 52 | 52 | 0 | 0 | 0 | 0 |
+| full | src/harness/watchUtils.ts | 0 | 0 | 0 | 0 | 0 | 0 |
+| full | src/server/editorServices.ts | 1073 | 1073 | 0 | 0 | 0 | 0 |
+| full | src/server/project.ts | 690 | 699 | 0 | 1 | 2 | 10 |
+| full | src/server/session.ts | 1118 | 1118 | 0 | 0 | 0 | 0 |
+| full | src/services/codeFixProvider.ts | 14 | 12 | 0 | 2 | 0 | 0 |
+| full | src/services/codefixes/convertToEsModule.ts | 233 | 227 | 0 | 6 | 0 | 0 |
+| full | src/services/codefixes/fixAddMissingMember.ts | 75 | 75 | 0 | 0 | 0 | 0 |
+| full | src/services/codefixes/helpers.ts | 287 | 287 | 0 | 1 | 1 | 1 |
+| full | src/services/codefixes/importFixes.ts | 280 | 282 | 0 | 1 | 1 | 3 |
+| full | src/services/documentHighlights.ts | 89 | 89 | 0 | 1 | 1 | 1 |
+| full | src/services/documentRegistry.ts | 47 | 47 | 0 | 0 | 0 | 0 |
+| full | src/services/refactorProvider.ts | 2 | 4 | 0 | 1 | 1 | 3 |
+| full | src/services/refactors/convertImport.ts | 43 | 43 | 0 | 1 | 1 | 1 |
+| full | src/services/refactors/extractSymbol.ts | 269 | 269 | 0 | 0 | 0 | 0 |
+| full | src/services/refactors/moveToFile.ts | 174 | 174 | 0 | 1 | 1 | 1 |
+| full | src/services/stringCompletions.ts | 149 | 145 | 0 | 4 | 0 | 0 |
+| full | src/services/symbolDisplay.ts | 23 | 21 | 0 | 2 | 0 | 0 |
+| full | src/testRunner/projectsRunner.ts | 54 | 54 | 0 | 0 | 0 | 0 |
+| full | src/testRunner/unittests/compilerCore.ts | 3 | 3 | 0 | 0 | 0 | 0 |
+| full | src/testRunner/unittests/customTransforms.ts | 21 | 21 | 0 | 0 | 0 | 0 |
+| full | src/testRunner/unittests/helpers.ts | 38 | 38 | 0 | 1 | 1 | 1 |
+| full | src/testRunner/unittests/helpers/tsserver.ts | 181 | 181 | 0 | 0 | 0 | 0 |
+| full | src/testRunner/unittests/helpers/virtualFileSystemWithWatch.ts | 372 | 372 | 0 | 0 | 0 | 0 |
+| full | src/testRunner/unittests/moduleResolution.ts | 141 | 141 | 0 | 0 | 0 | 0 |
+| full | src/testRunner/unittests/programApi.ts | 48 | 48 | 0 | 0 | 0 | 0 |
+| full | src/testRunner/unittests/reuseProgramStructure.ts | 76 | 76 | 0 | 0 | 0 | 0 |
+| full | src/testRunner/unittests/tscWatch/incremental.ts | 51 | 51 | 0 | 0 | 0 | 0 |
+| full-directory | src/compiler/core.ts | 14 | 14 | 0 | 0 | 0 | 0 |
