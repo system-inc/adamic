@@ -1,0 +1,142 @@
+#!/usr/bin/env node
+'use strict';
+// #rv75m9k road B: each method read as a value whose member is public (or written after its object is built) is read
+// through a view instead, or, where a view can't serve, through an exact-parameter arrow. Generated, never hand-edited.
+//
+// View (the default): before the statement holding the read, `const <name>View: { readonly m: (typeof R)["m"] } = R;`,
+// and the read becomes `<name>View.m`. The value read is the same function object tsc reads today, unbound as tsc reads
+// it, so it's value-identical and adds no call. One view serves every read of one receiver in one statement. The
+// save-then-override sites take a view and never an arrow: the member is overwritten on the next line, so an arrow that
+// reads it through its receiver at call time would call the override and recurse.
+//
+// Arrow: where the object behind the receiver holds the member as a literal method (sys.ts's System object), a view
+// stops at the read (erasedMethodField), so the read becomes `(p: T) => R.m(p)` with the member's own parameters. A
+// private static method (IdentifierNameMap.toKey) becomes a private static readonly arrow field beside it, made once.
+//
+// It refuses, before writing anything, a receiver that isn't an identifier or a chain of property reads on one, a read
+// whose statement can't take a statement before it, a statement that writes the receiver's root, a view name already in
+// scope, and a site it can't find. Usage: NODE_PATH=... node codemod-b.cjs <tree> <roadB-sites.json> [--dry-run]
+const ts = require('typescript'), fs = require('node:fs'), path = require('node:path');
+const [tree, sitesPath, mode] = process.argv.slice(2);
+const sites = JSON.parse(fs.readFileSync(sitesPath, 'utf8'));
+const arrowMembers = new Set(['System.directoryExists', 'System.createDirectory']);
+const staticFieldMembers = new Set(['IdentifierNameMap.toKey']);
+
+const config = ts.getParsedCommandLineOfConfigFile(path.join(tree, 'src/compiler/tsconfig.json'), {}, { ...ts.sys, onUnRecoverableConfigFileDiagnostic: () => {} });
+config.options.typeRoots = [path.join(process.env.NODE_PATH.split(':')[0], '@types')];
+const program = ts.createProgram(config.fileNames, { ...config.options, noEmit: true });
+const checker = program.getTypeChecker();
+const refusals = [], edits = new Map(); // file -> [{ start, end, text }]
+const addEdit = (file, edit) => { if (!edits.has(file)) edits.set(file, []); edits.get(file).push(edit); };
+
+function nodeAt(sourceFile, line, column) {
+    const position = sourceFile.getPositionOfLineAndCharacter(line - 1, column - 1);
+    let found;
+    (function visit(node) {
+        if (node.getStart(sourceFile) === position && ts.isPropertyAccessExpression(node)) found = found || node;
+        if (node.pos <= position && position < node.end) ts.forEachChild(node, visit);
+    })(sourceFile);
+    return found;
+}
+function isStableReceiver(node) {
+    return ts.isIdentifier(node) || (ts.isPropertyAccessExpression(node) && ts.isIdentifier(node.name) && isStableReceiver(node.expression));
+}
+function rootOf(node) { return ts.isIdentifier(node) ? node : rootOf(node.expression); }
+function statementOf(node) {
+    for (let current = node; current.parent; current = current.parent)
+        if (ts.isStatement(current) && (ts.isBlock(current.parent) || ts.isSourceFile(current.parent) || ts.isModuleBlock(current.parent) || ts.isCaseClause(current.parent) || ts.isDefaultClause(current.parent))) return current;
+    return undefined;
+}
+function writesRoot(statement, root) {
+    let writes = false;
+    (function visit(node) {
+        if (ts.isBinaryExpression(node) && node.operatorToken.kind >= ts.SyntaxKind.FirstAssignment && node.operatorToken.kind <= ts.SyntaxKind.LastAssignment && ts.isIdentifier(node.left) && node.left.text === root.text) writes = true;
+        ts.forEachChild(node, visit);
+    })(statement);
+    return writes;
+}
+function memberSignature(symbol) {
+    const declaration = (symbol.declarations || []).find(ts.isMethodSignature) || (symbol.declarations || []).find(ts.isMethodDeclaration);
+    return declaration;
+}
+function parametersText(declaration) {
+    const source = declaration.getSourceFile();
+    return { list: declaration.parameters.map(parameter => parameter.getText(source)).join(', '), names: declaration.parameters.map(parameter => (parameter.dotDotDotToken ? '...' : '') + parameter.name.getText(source)).join(', ') };
+}
+function nameInScope(location, name) {
+    return checker.getSymbolsInScope(location, ts.SymbolFlags.Value).some(symbol => symbol.name === name);
+}
+
+const views = new Map(); // statement -> { file, receiverText, viewName, members: Set, statement }
+for (const site of sites) {
+    const [file, line, column] = site.site.split(':');
+    const sourceFile = program.getSourceFile(path.join(tree, file));
+    const node = sourceFile && nodeAt(sourceFile, Number(line), Number(column));
+    if (!node) { refusals.push(`${site.site}: no property read found there`); continue; }
+    const member = site.member, name = node.name.text;
+    if (staticFieldMembers.has(member)) {
+        const declaration = memberSignature(checker.getSymbolAtLocation(node.name));
+        const classDeclaration = declaration.parent;
+        const fieldName = name + 'Function';
+        const parameters = parametersText(declaration);
+        addEdit(file, { start: node.name.getStart(sourceFile), end: node.name.end, text: fieldName });
+        const key = `${file}|field|${classDeclaration.name.text}.${fieldName}`;
+        if (!views.has(key)) {
+            views.set(key, true);
+            const returnType = declaration.type ? ': ' + declaration.type.getText(sourceFile) : '';
+            // Above the method's JSDoc, so the comment stays the method's.
+            const at = declaration.getStart(sourceFile, true);
+            const indentation = ' '.repeat(sourceFile.getLineAndCharacterOfPosition(at).character);
+            addEdit(file, { start: at, end: at, text: `private static readonly ${fieldName} = (${parameters.list})${returnType} => ${classDeclaration.name.text}.${name}(${parameters.names});\n\n${indentation}` });
+        }
+        continue;
+    }
+    if (!isStableReceiver(node.expression)) { refusals.push(`${site.site}: receiver ${node.expression.getText(sourceFile)} isn't an identifier or a chain of reads on one`); continue; }
+    const receiverText = node.expression.getText(sourceFile);
+    if (arrowMembers.has(member)) {
+        const declaration = memberSignature(checker.getSymbolAtLocation(node.name));
+        const parameters = parametersText(declaration);
+        addEdit(file, { start: node.getStart(sourceFile), end: node.end, text: `((${parameters.list}) => ${receiverText}.${name}(${parameters.names}))` });
+        continue;
+    }
+    const statement = statementOf(node);
+    if (!statement) { refusals.push(`${site.site}: no statement it can be placed before`); continue; }
+    if (writesRoot(statement, rootOf(node.expression))) { refusals.push(`${site.site}: its statement writes ${rootOf(node.expression).text}`); continue; }
+    const key = `${file}|${statement.getStart(sourceFile)}|${receiverText}`;
+    if (!views.has(key)) {
+        const base = receiverText.split('.').pop() + 'View';
+        if (nameInScope(statement, base)) { refusals.push(`${site.site}: ${base} is already in scope`); continue; }
+        views.set(key, { file, sourceFile, statement, receiverText, viewName: base, members: new Map() });
+    }
+    const view = views.get(key);
+    const optional = checker.getSymbolAtLocation(node.name).flags & ts.SymbolFlags.Optional ? '?' : '';
+    view.members.set(name, `readonly ${name}${optional}: (typeof ${receiverText})["${name}"]`);
+    addEdit(file, { start: node.expression.getStart(sourceFile), end: node.expression.end, text: view.viewName });
+}
+// Two views of different receivers before one statement need different names.
+const namesByStatement = new Map();
+for (const view of views.values()) {
+    if (view === true) continue;
+    const statementKey = `${view.file}|${view.statement.getStart(view.sourceFile)}`;
+    const taken = namesByStatement.get(statementKey) || new Set();
+    if (taken.has(view.viewName)) refusals.push(`${view.file}: two views named ${view.viewName} before one statement`);
+    taken.add(view.viewName);
+    namesByStatement.set(statementKey, taken);
+    const start = view.statement.getStart(view.sourceFile);
+    const indentation = ' '.repeat(view.sourceFile.getLineAndCharacterOfPosition(start).character);
+    addEdit(view.file, { start, end: start, text: `const ${view.viewName}: { ${[...view.members.values()].join('; ')} } = ${view.receiverText};\n${indentation}` });
+}
+if (refusals.length) { for (const refusal of refusals) console.log('refused ' + refusal); console.log(`refused ${refusals.length}, nothing written`); process.exit(1); }
+let total = 0;
+for (const [file, fileEdits] of edits) {
+    const name = path.join(tree, file), text = fs.readFileSync(name, 'utf8');
+    if (text.includes('\r')) throw new Error(`${file}: carriage returns`);
+    let result = text;
+    for (const edit of fileEdits.sort((a, b) => b.start - a.start || b.end - a.end)) result = result.slice(0, edit.start) + edit.text + result.slice(edit.end);
+    const parsed = ts.createSourceFile(file, result, ts.ScriptTarget.Latest, true);
+    if (parsed.parseDiagnostics.length) throw new Error(`${file}: the rewrite doesn't parse: ${parsed.parseDiagnostics[0].messageText}`);
+    total += fileEdits.length;
+    if (mode !== '--dry-run') fs.writeFileSync(name, result);
+    console.log(`codemod ${file}: ${fileEdits.length} edits`);
+}
+console.log(`codemod: ${sites.length} sites, ${[...views.values()].filter(view => view !== true).length} views, ${total} edits in ${edits.size} files${mode === '--dry-run' ? ' (dry run)' : ''}`);
