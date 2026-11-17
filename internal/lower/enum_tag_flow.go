@@ -42,7 +42,7 @@ func (l *lowering) enumTagHazardOf(union *checker.Type, field string) enumTagHaz
 				continue
 			}
 			tag := l.checker.GetTypeOfSymbol(property)
-			if l.openNumericEnumType(tag) && !sharedByEveryMember(l.checker, union, property.Name, tag) {
+			if l.tagHoldsAnyNumber(tag) && !sharedByEveryMember(l.checker, union, property.Name, tag) {
 				return enumTagOpenHazard
 			}
 		}
