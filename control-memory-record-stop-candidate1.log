@@ -1,0 +1,6 @@
+plain production record-stop: {"Completed": false, "Error": "/workspace/et209ny/tmp/tmp7pw6qime/control.ts:5:1: stage 0 can't lower Node.r, a field of type Record<string, unknown>, written a value of type { k: Node[]; } that can reach back to the Node holding it through what a value held as unknown or object can be: a cycle the cycle finder can't follow through unknown or object (#yeep0sx links these slots) yet"}
+Traceback (most recent call last):
+  File "/workspace/et209ny/memory/stage3/census/scan-all/controls.py", line 20, in <module>
+    if positive: assert target in plain['Error'], ('production target',name,plain)
+                        ^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: ('production target', 'record-stop', {'Completed': False, 'Error': "/workspace/et209ny/tmp/tmp7pw6qime/control.ts:5:1: stage 0 can't lower Node.r, a field of type Record<string, unknown>, written a value of type { k: Node[]; } that can reach back to the Node holding it through what a value held as unknown or object can be: a cycle the cycle finder can't follow through unknown or object (#yeep0sx links these slots) yet"})

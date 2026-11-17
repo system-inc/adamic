@@ -1,0 +1,123 @@
+=== RUN   TestScanAllCountStopAfterEarlierScanStop
+=== PAUSE TestScanAllCountStopAfterEarlierScanStop
+=== RUN   TestScanAllCountCleanAfterEarlierScanStop
+=== PAUSE TestScanAllCountCleanAfterEarlierScanStop
+=== RUN   TestScanAllRestStopAfterEarlierScanStop
+=== PAUSE TestScanAllRestStopAfterEarlierScanStop
+=== RUN   TestScanAllRestCleanAfterEarlierScanStop
+=== PAUSE TestScanAllRestCleanAfterEarlierScanStop
+=== RUN   TestScanAllRecordStopAfterEarlierScanStop
+=== PAUSE TestScanAllRecordStopAfterEarlierScanStop
+=== RUN   TestScanAllRecordCleanAfterEarlierScanStop
+=== PAUSE TestScanAllRecordCleanAfterEarlierScanStop
+=== RUN   TestScanAllCycleStopAfterEarlierScanStop
+=== PAUSE TestScanAllCycleStopAfterEarlierScanStop
+=== RUN   TestScanAllCycleCleanAfterEarlierScanStop
+=== PAUSE TestScanAllCycleCleanAfterEarlierScanStop
+=== RUN   TestProduct_ScanAllInstrumentedProbe
+=== PAUSE TestProduct_ScanAllInstrumentedProbe
+=== RUN   TestProduct_ScanAllProductionProbe
+=== PAUSE TestProduct_ScanAllProductionProbe
+=== RUN   TestScanAllMainAnchorsMatchExactly
+=== PAUSE TestScanAllMainAnchorsMatchExactly
+=== CONT  TestScanAllCountStopAfterEarlierScanStop
+=== CONT  TestScanAllCycleStopAfterEarlierScanStop
+=== CONT  TestScanAllRestCleanAfterEarlierScanStop
+=== CONT  TestScanAllRecordCleanAfterEarlierScanStop
+=== CONT  TestScanAllRecordStopAfterEarlierScanStop
+=== NAME  TestScanAllCycleStopAfterEarlierScanStop
+    controls_test.go:50: build scan-all-instrumented f41b91c97d42 hit 8.35
+    controls_test.go:50: scan-all-instrumented probe: /workspace/et209ny/products/local/f41b91c97d420fc9eb22166e8bd071817a2199431b4480a919fd6657089e0f5e/probe
+    controls_test.go:50: build scan-all-production fc4cd7210fc6 hit 0.04
+    controls_test.go:50: scan-all-production probe: /workspace/et209ny/products/local/fc4cd7210fc6457c5f06879df6180b575aff9160c0a68cac51b0924c8e12d68f/probe
+=== NAME  TestScanAllRestCleanAfterEarlierScanStop
+    controls_test.go:38: build scan-all-instrumented f41b91c97d42 hit 8.40
+    controls_test.go:38: scan-all-instrumented probe: /workspace/et209ny/products/local/f41b91c97d420fc9eb22166e8bd071817a2199431b4480a919fd6657089e0f5e/probe
+    controls_test.go:38: build scan-all-production fc4cd7210fc6 hit 0.01
+    controls_test.go:38: scan-all-production probe: /workspace/et209ny/products/local/fc4cd7210fc6457c5f06879df6180b575aff9160c0a68cac51b0924c8e12d68f/probe
+=== NAME  TestScanAllRecordStopAfterEarlierScanStop
+    controls_test.go:42: build scan-all-instrumented f41b91c97d42 hit 8.51
+    controls_test.go:42: scan-all-instrumented probe: /workspace/et209ny/products/local/f41b91c97d420fc9eb22166e8bd071817a2199431b4480a919fd6657089e0f5e/probe
+=== NAME  TestScanAllRecordCleanAfterEarlierScanStop
+    controls_test.go:46: build scan-all-instrumented f41b91c97d42 hit 8.91
+=== NAME  TestScanAllRecordStopAfterEarlierScanStop
+    controls_test.go:42: build scan-all-production fc4cd7210fc6 hit 0.41
+=== NAME  TestScanAllRecordCleanAfterEarlierScanStop
+    controls_test.go:46: scan-all-instrumented probe: /workspace/et209ny/products/local/f41b91c97d420fc9eb22166e8bd071817a2199431b4480a919fd6657089e0f5e/probe
+=== NAME  TestScanAllRecordStopAfterEarlierScanStop
+    controls_test.go:42: scan-all-production probe: /workspace/et209ny/products/local/fc4cd7210fc6457c5f06879df6180b575aff9160c0a68cac51b0924c8e12d68f/probe
+=== NAME  TestScanAllRecordCleanAfterEarlierScanStop
+    controls_test.go:46: build scan-all-production fc4cd7210fc6 hit 0.02
+    controls_test.go:46: scan-all-production probe: /workspace/et209ny/products/local/fc4cd7210fc6457c5f06879df6180b575aff9160c0a68cac51b0924c8e12d68f/probe
+=== NAME  TestScanAllCountStopAfterEarlierScanStop
+    controls_test.go:26: build scan-all-instrumented f41b91c97d42 hit 9.90
+    controls_test.go:26: scan-all-instrumented probe: /workspace/et209ny/products/local/f41b91c97d420fc9eb22166e8bd071817a2199431b4480a919fd6657089e0f5e/probe
+    controls_test.go:26: build scan-all-production fc4cd7210fc6 hit 0.19
+    controls_test.go:26: scan-all-production probe: /workspace/et209ny/products/local/fc4cd7210fc6457c5f06879df6180b575aff9160c0a68cac51b0924c8e12d68f/probe
+=== NAME  TestScanAllRestCleanAfterEarlierScanStop
+    controls_test.go:38: plain production rest-clean: {"Completed": true, "Error": ""}
+        rest-clean production and scan-continuation control passed
+--- PASS: TestScanAllRestCleanAfterEarlierScanStop (10.56s)
+=== CONT  TestScanAllRestStopAfterEarlierScanStop
+=== NAME  TestScanAllCycleStopAfterEarlierScanStop
+    controls_test.go:50: plain production cycle-stop: {"Completed": false, "Error": "/workspace/et209ny/tmp/tmphdsv1ian/control.ts:6:1: stage 0 can't lower a record written into a graph slot, where the write at /workspace/et209ny/tmp/tmphdsv1ian/control.ts:6:1 may close a cycle through it, in a graph program: a record can't join a graph region yet"}
+        cycle-stop production and scan-continuation control passed
+--- PASS: TestScanAllCycleStopAfterEarlierScanStop (19.02s)
+=== CONT  TestProduct_ScanAllProductionProbe
+=== NAME  TestScanAllRestStopAfterEarlierScanStop
+    controls_test.go:34: build scan-all-instrumented f41b91c97d42 hit 9.08
+    controls_test.go:34: scan-all-instrumented probe: /workspace/et209ny/products/local/f41b91c97d420fc9eb22166e8bd071817a2199431b4480a919fd6657089e0f5e/probe
+=== NAME  TestProduct_ScanAllProductionProbe
+    products_test.go:81: build scan-all-production fc4cd7210fc6 hit 1.45
+    products_test.go:81: scan-all-production probe: /workspace/et209ny/products/local/fc4cd7210fc6457c5f06879df6180b575aff9160c0a68cac51b0924c8e12d68f/probe
+--- PASS: TestProduct_ScanAllProductionProbe (1.45s)
+=== CONT  TestScanAllMainAnchorsMatchExactly
+=== NAME  TestScanAllRestStopAfterEarlierScanStop
+    controls_test.go:34: build scan-all-production fc4cd7210fc6 hit 0.66
+    controls_test.go:34: scan-all-production probe: /workspace/et209ny/products/local/fc4cd7210fc6457c5f06879df6180b575aff9160c0a68cac51b0924c8e12d68f/probe
+=== NAME  TestScanAllRecordCleanAfterEarlierScanStop
+    controls_test.go:46: plain production record-clean: {"Completed": true, "Error": ""}
+        record-clean production and scan-continuation control passed
+--- PASS: TestScanAllRecordCleanAfterEarlierScanStop (21.55s)
+=== CONT  TestScanAllCountCleanAfterEarlierScanStop
+=== CONT  TestProduct_ScanAllInstrumentedProbe
+=== NAME  TestScanAllCountCleanAfterEarlierScanStop
+    controls_test.go:30: build scan-all-instrumented f41b91c97d42 hit 0.07
+    controls_test.go:30: scan-all-instrumented probe: /workspace/et209ny/products/local/f41b91c97d420fc9eb22166e8bd071817a2199431b4480a919fd6657089e0f5e/probe
+--- PASS: TestScanAllMainAnchorsMatchExactly (1.15s)
+=== NAME  TestProduct_ScanAllInstrumentedProbe
+    products_test.go:80: build scan-all-instrumented f41b91c97d42 hit 0.01
+    products_test.go:80: scan-all-instrumented probe: /workspace/et209ny/products/local/f41b91c97d420fc9eb22166e8bd071817a2199431b4480a919fd6657089e0f5e/probe
+--- PASS: TestProduct_ScanAllInstrumentedProbe (0.01s)
+=== CONT  TestScanAllCycleCleanAfterEarlierScanStop
+=== NAME  TestScanAllCountCleanAfterEarlierScanStop
+    controls_test.go:30: build scan-all-production fc4cd7210fc6 hit 0.02
+    controls_test.go:30: scan-all-production probe: /workspace/et209ny/products/local/fc4cd7210fc6457c5f06879df6180b575aff9160c0a68cac51b0924c8e12d68f/probe
+=== NAME  TestScanAllCycleCleanAfterEarlierScanStop
+    controls_test.go:54: build scan-all-instrumented f41b91c97d42 hit 0.03
+    controls_test.go:54: scan-all-instrumented probe: /workspace/et209ny/products/local/f41b91c97d420fc9eb22166e8bd071817a2199431b4480a919fd6657089e0f5e/probe
+=== NAME  TestScanAllRecordStopAfterEarlierScanStop
+    controls_test.go:42: plain production record-stop: {"Completed": false, "Error": "/workspace/et209ny/tmp/tmpom4470oj/control.ts:5:1: stage 0 can't lower a record written into a graph slot, where the write at /workspace/et209ny/tmp/tmpom4470oj/control.ts:5:1 may close a cycle through it, in a graph program: a record can't join a graph region yet"}
+        record-stop production and scan-continuation control passed
+--- PASS: TestScanAllRecordStopAfterEarlierScanStop (21.67s)
+=== NAME  TestScanAllCycleCleanAfterEarlierScanStop
+    controls_test.go:54: build scan-all-production fc4cd7210fc6 hit 0.02
+    controls_test.go:54: scan-all-production probe: /workspace/et209ny/products/local/fc4cd7210fc6457c5f06879df6180b575aff9160c0a68cac51b0924c8e12d68f/probe
+=== NAME  TestScanAllCountStopAfterEarlierScanStop
+    controls_test.go:26: plain production count-stop: {"Completed": false, "Error": "/workspace/et209ny/tmp/tmp9424tn3s/control.ts:3:15: stage 0 can't lower bind of a function that observes its argument count or collects rest arguments yet"}
+        count-stop production and scan-continuation control passed
+--- PASS: TestScanAllCountStopAfterEarlierScanStop (21.95s)
+=== NAME  TestScanAllRestStopAfterEarlierScanStop
+    controls_test.go:34: plain production rest-stop: {"Completed": false, "Error": "/workspace/et209ny/tmp/tmpzvxvivxy/control.ts:3:15: stage 0 can't lower bind of a rest-parameter function yet"}
+        rest-stop production and scan-continuation control passed
+--- PASS: TestScanAllRestStopAfterEarlierScanStop (11.44s)
+=== NAME  TestScanAllCountCleanAfterEarlierScanStop
+    controls_test.go:30: plain production count-clean: {"Completed": true, "Error": ""}
+        count-clean production and scan-continuation control passed
+--- PASS: TestScanAllCountCleanAfterEarlierScanStop (0.58s)
+=== NAME  TestScanAllCycleCleanAfterEarlierScanStop
+    controls_test.go:54: plain production cycle-clean: {"Completed": true, "Error": ""}
+        cycle-clean production and scan-continuation control passed
+--- PASS: TestScanAllCycleCleanAfterEarlierScanStop (0.54s)
+PASS
+ok  	github.com/system-inc/adamic/stage3/census/scan-all	22.207s

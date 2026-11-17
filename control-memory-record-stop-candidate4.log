@@ -1,0 +1,6 @@
+plain production record-stop: {"Completed": true, "Error": ""}
+Traceback (most recent call last):
+  File "/workspace/et209ny/memory/stage3/census/scan-all/controls.py", line 19, in <module>
+    assert plain['Completed'] == (not positive), ('production completion',name,plain)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: ('production completion', 'record-stop', {'Completed': True, 'Error': ''})
