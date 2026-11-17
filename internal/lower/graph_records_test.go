@@ -245,7 +245,7 @@ func recordWriterFindings(writers map[string]recordWriter) ([]string, error) {
 			findings = append(findings, fmt.Sprintf("%s no longer writes into a record's table; drop it from recordWriters", name))
 		}
 	}
-	runtime, err := filepath.Glob(filepath.Join("..", "native", "runtime", "*.c"))
+	runtime, err := filepath.Glob(filepath.Join("..", "native_runtime", "c", "*.c"))
 	if err != nil {
 		return nil, err
 	}
