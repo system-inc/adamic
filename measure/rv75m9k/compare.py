@@ -12,6 +12,8 @@ import re
 import sys
 
 position = re.compile(r'(\.ts)?:\d+:\d+')
+# A census names its tree's absolute path in every message; two trees' runs pair only once that's cut to src/.
+tree_path = re.compile(r'/\S*?/(?=src/)')
 
 
 def findings(value, out):
@@ -45,7 +47,7 @@ def key(record):
     for name in ('kind', 'phase', 'reason', 'text', 'what', 'message'):
         value = record.get(name)
         if isinstance(value, str):
-            fields.append(position.sub('', value))
+            fields.append(position.sub('', tree_path.sub('', value)))
     return tuple(fields)
 
 
