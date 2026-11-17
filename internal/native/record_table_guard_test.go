@@ -5,6 +5,8 @@ import (
 	"slices"
 	"strings"
 	"testing"
+
+	"github.com/system-inc/adamic/internal/native_runtime"
 )
 
 // A graph record's wrapper and table are merged into one region at birth (adamic_record_new_graph,
@@ -244,7 +246,7 @@ func recordTableProblems(sources map[string]string) []string {
 
 func recordTableSources(t *testing.T) map[string]string {
 	t.Helper()
-	files, err := readRuntime(runtime, "runtime")
+	files, err := readRuntime(native_runtime.Sources, "c")
 	if err != nil {
 		t.Fatal(err)
 	}
