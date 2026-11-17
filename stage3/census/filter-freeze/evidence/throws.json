@@ -1,0 +1,3188 @@
+{
+  "self": {
+    "freeze_writes": [],
+    "unrelated_explicit_errors": [],
+    "unclassified": []
+  },
+  "lane4": {
+    "freeze_writes": [],
+    "unrelated_explicit_errors": [
+      {
+        "pid": 10656,
+        "argv": [
+          "/workspace/adamic-tools/bin/node",
+          "/workspace/scratch/filter-freeze/lane-entry4/adapted-tree/built/local/run.js",
+          "--config=\"/workspace/scratch/filter-freeze/tmp/ts-tests3/task-config2.json\""
+        ],
+        "cwd": "/workspace/scratch/filter-freeze/lane-entry4/adapted-tree",
+        "case": {
+          "title": " unittests:: evaluation:: esDecorators context .addInitializer for: class cannot call after decoration",
+          "type": "test"
+        },
+        "description": "TypeError: Cannot add initializers after decoration has completed\n    at Object.context.addInitializer (eval at evaluate (/workspace/scratch/filter-freeze/lane-entry4/adapted-tree/src/harness/evaluatorImpl.ts:196:40), <anonymous>:12:65)\n    at /workspace/scratch/filter-freeze/lane-entry4/adapted-tree/src/testRunner/unittests/evaluation/esDecorators.ts:1141:49\n    at Proxy.assertThrows (/workspace/scratch/filter-freeze/lane-entry4/adapted-tree/node_modules/chai/lib/chai/core/assertions.js:2644:7)\n    at Proxy.methodWrapper (/workspace/scratch/filter-freeze/lane-entry4/adapted-tree/node_modules/chai/lib/chai/utils/addMethod.js:57:25)\n    at chai.assert.assert.throws (/workspace/scratch/filter-freeze/lane-entry4/adapted-tree/node_modules/chai/lib/chai/interface/assert.js:1988:16)\n    at Context.<anonymous> (/workspace/scratch/filter-freeze/lane-entry4/adapted-tree/src/testRunner/unittests/evaluation/esDecorators.ts:1141:28)\n    at callFn (/workspace/scratch/filter-freeze/lane-entry4/adapted-tree/node_modules/mocha/lib/runnable.js:364:21)\n    at Test2.Runnable.run (/workspace/scratch/filter-freeze/lane-entry4/adapted-tree/node_modules/mocha/lib/runnable.js:352:5)\n    at Test2.Mocha.Runnable.run (/workspace/scratch/filter-freeze/repo/stage3/census/filter-freeze/observe.cjs:64:131)\n    at Test2.Mocha.Runnable.run (/workspace/scratch/filter-freeze/repo/stage3/oracle/observe-errors.cjs:11:24)\n    at Runner.runTest (/workspace/scratch/filter-freeze/lane-entry4/adapted-tree/node_modules/mocha/lib/runner.js:677:10)\n    at /workspace/scratch/filter-freeze/lane-entry4/adapted-tree/node_modules/mocha/lib/runner.js:800:12\n    at next (/workspace/scratch/filter-freeze/lane-entry4/adapted-tree/node_modules/mocha/lib/runner.js:592:14)\n    at /workspace/scratch/filter-freeze/lane-entry4/adapted-tree/node_modules/mocha/lib/runner.js:602:7\n    at next (/workspace/scratch/filter-freeze/lane-entry4/adapted-tree/node_modules/mocha/lib/runner.js:485:14)\n    at Immediate._onImmediate (/workspace/scratch/filter-freeze/lane-entry4/adapted-tree/node_modules/mocha/lib/runner.js:570:5)\n    at processImmediate (node:internal/timers:534:21)",
+        "frames": [
+          {
+            "function": "context.addInitializer",
+            "url": "",
+            "scriptId": "2113",
+            "line": 12,
+            "column": 59
+          },
+          {
+            "function": "",
+            "url": "file:///workspace/scratch/filter-freeze/lane-entry4/adapted-tree/built/local/run.js",
+            "scriptId": "200",
+            "line": 226961,
+            "column": 43
+          },
+          {
+            "function": "assertThrows",
+            "url": "file:///workspace/scratch/filter-freeze/lane-entry4/adapted-tree/node_modules/chai/lib/chai/core/assertions.js",
+            "scriptId": "264",
+            "line": 2644,
+            "column": 7
+          },
+          {
+            "function": "methodWrapper",
+            "url": "file:///workspace/scratch/filter-freeze/lane-entry4/adapted-tree/node_modules/chai/lib/chai/utils/addMethod.js",
+            "scriptId": "249",
+            "line": 57,
+            "column": 25
+          },
+          {
+            "function": "assert.throws",
+            "url": "file:///workspace/scratch/filter-freeze/lane-entry4/adapted-tree/node_modules/chai/lib/chai/interface/assert.js",
+            "scriptId": "267",
+            "line": 1988,
+            "column": 16
+          },
+          {
+            "function": "",
+            "url": "file:///workspace/scratch/filter-freeze/lane-entry4/adapted-tree/built/local/run.js",
+            "scriptId": "200",
+            "line": 226961,
+            "column": 22
+          },
+          {
+            "function": "callFn",
+            "url": "file:///workspace/scratch/filter-freeze/lane-entry4/adapted-tree/node_modules/mocha/lib/runnable.js",
+            "scriptId": "171",
+            "line": 364,
+            "column": 21
+          },
+          {
+            "function": "Runnable.run",
+            "url": "file:///workspace/scratch/filter-freeze/lane-entry4/adapted-tree/node_modules/mocha/lib/runnable.js",
+            "scriptId": "171",
+            "line": 352,
+            "column": 5
+          },
+          {
+            "function": "Mocha.Runnable.run",
+            "url": "",
+            "scriptId": "116",
+            "line": 64,
+            "column": 131
+          },
+          {
+            "function": "Mocha.Runnable.run",
+            "url": "file:///workspace/scratch/filter-freeze/repo/stage3/oracle/observe-errors.cjs",
+            "scriptId": "199",
+            "line": 11,
+            "column": 24
+          },
+          {
+            "function": "Runner.runTest",
+            "url": "file:///workspace/scratch/filter-freeze/lane-entry4/adapted-tree/node_modules/mocha/lib/runner.js",
+            "scriptId": "166",
+            "line": 677,
+            "column": 10
+          },
+          {
+            "function": "",
+            "url": "file:///workspace/scratch/filter-freeze/lane-entry4/adapted-tree/node_modules/mocha/lib/runner.js",
+            "scriptId": "166",
+            "line": 800,
+            "column": 12
+          },
+          {
+            "function": "next",
+            "url": "file:///workspace/scratch/filter-freeze/lane-entry4/adapted-tree/node_modules/mocha/lib/runner.js",
+            "scriptId": "166",
+            "line": 592,
+            "column": 14
+          },
+          {
+            "function": "",
+            "url": "file:///workspace/scratch/filter-freeze/lane-entry4/adapted-tree/node_modules/mocha/lib/runner.js",
+            "scriptId": "166",
+            "line": 602,
+            "column": 7
+          },
+          {
+            "function": "next",
+            "url": "file:///workspace/scratch/filter-freeze/lane-entry4/adapted-tree/node_modules/mocha/lib/runner.js",
+            "scriptId": "166",
+            "line": 485,
+            "column": 14
+          },
+          {
+            "function": "",
+            "url": "file:///workspace/scratch/filter-freeze/lane-entry4/adapted-tree/node_modules/mocha/lib/runner.js",
+            "scriptId": "166",
+            "line": 570,
+            "column": 5
+          },
+          {
+            "function": "processImmediate",
+            "url": "",
+            "scriptId": "10",
+            "line": 534,
+            "column": 21
+          }
+        ],
+        "frozen_aliases": [],
+        "observed_sites": [
+          "src/compiler/factory/utilities.ts:761:12",
+          "src/compiler/commandLineParser.ts:2550:16",
+          "src/compiler/commandLineParser.ts:3157:32",
+          "src/compiler/checker.ts:10370:48",
+          "src/compiler/checker.ts:16764:27",
+          "src/compiler/checker.ts:47509:16",
+          "src/services/services.ts:745:94",
+          "src/services/services.ts:755:94",
+          "src/services/services.ts:780:81",
+          "src/services/services.ts:790:81",
+          "src/services/codefixes/fixAddMissingParam.ts:143:46"
+        ],
+        "classification": "unrelated-explicit-decorator-error",
+        "classification_evidence": "src/compiler/factory/emitHelpers.ts:783 explicitly throws this TypeError when done, before extraInitializers.push; six esDecorators cannot-call-after-decoration tests assert it."
+      },
+      {
+        "pid": 10656,
+        "argv": [
+          "/workspace/adamic-tools/bin/node",
+          "/workspace/scratch/filter-freeze/lane-entry4/adapted-tree/built/local/run.js",
+          "--config=\"/workspace/scratch/filter-freeze/tmp/ts-tests3/task-config2.json\""
+        ],
+        "cwd": "/workspace/scratch/filter-freeze/lane-entry4/adapted-tree",
+        "case": {
+          "title": " unittests:: evaluation:: esDecorators context .addInitializer for: method cannot call after decoration",
+          "type": "test"
+        },
+        "description": "TypeError: Cannot add initializers after decoration has completed\n    at Object.context.addInitializer (eval at evaluate (/workspace/scratch/filter-freeze/lane-entry4/adapted-tree/src/harness/evaluatorImpl.ts:196:40), <anonymous>:19:65)\n    at /workspace/scratch/filter-freeze/lane-entry4/adapted-tree/src/testRunner/unittests/evaluation/esDecorators.ts:1191:49\n    at Proxy.assertThrows (/workspace/scratch/filter-freeze/lane-entry4/adapted-tree/node_modules/chai/lib/chai/core/assertions.js:2644:7)\n    at Proxy.methodWrapper (/workspace/scratch/filter-freeze/lane-entry4/adapted-tree/node_modules/chai/lib/chai/utils/addMethod.js:57:25)\n    at chai.assert.assert.throws (/workspace/scratch/filter-freeze/lane-entry4/adapted-tree/node_modules/chai/lib/chai/interface/assert.js:1988:16)\n    at Context.<anonymous> (/workspace/scratch/filter-freeze/lane-entry4/adapted-tree/src/testRunner/unittests/evaluation/esDecorators.ts:1191:28)\n    at callFn (/workspace/scratch/filter-freeze/lane-entry4/adapted-tree/node_modules/mocha/lib/runnable.js:364:21)\n    at Test2.Runnable.run (/workspace/scratch/filter-freeze/lane-entry4/adapted-tree/node_modules/mocha/lib/runnable.js:352:5)\n    at Test2.Mocha.Runnable.run (/workspace/scratch/filter-freeze/repo/stage3/census/filter-freeze/observe.cjs:64:131)\n    at Test2.Mocha.Runnable.run (/workspace/scratch/filter-freeze/repo/stage3/oracle/observe-errors.cjs:11:24)\n    at Runner.runTest (/workspace/scratch/filter-freeze/lane-entry4/adapted-tree/node_modules/mocha/lib/runner.js:677:10)\n    at /workspace/scratch/filter-freeze/lane-entry4/adapted-tree/node_modules/mocha/lib/runner.js:800:12\n    at next (/workspace/scratch/filter-freeze/lane-entry4/adapted-tree/node_modules/mocha/lib/runner.js:592:14)\n    at /workspace/scratch/filter-freeze/lane-entry4/adapted-tree/node_modules/mocha/lib/runner.js:602:7\n    at next (/workspace/scratch/filter-freeze/lane-entry4/adapted-tree/node_modules/mocha/lib/runner.js:485:14)\n    at Immediate._onImmediate (/workspace/scratch/filter-freeze/lane-entry4/adapted-tree/node_modules/mocha/lib/runner.js:570:5)\n    at processImmediate (node:internal/timers:534:21)",
+        "frames": [
+          {
+            "function": "context.addInitializer",
+            "url": "",
+            "scriptId": "2117",
+            "line": 19,
+            "column": 59
+          },
+          {
+            "function": "",
+            "url": "file:///workspace/scratch/filter-freeze/lane-entry4/adapted-tree/built/local/run.js",
+            "scriptId": "200",
+            "line": 227017,
+            "column": 43
+          },
+          {
+            "function": "assertThrows",
+            "url": "file:///workspace/scratch/filter-freeze/lane-entry4/adapted-tree/node_modules/chai/lib/chai/core/assertions.js",
+            "scriptId": "264",
+            "line": 2644,
+            "column": 7
+          },
+          {
+            "function": "methodWrapper",
+            "url": "file:///workspace/scratch/filter-freeze/lane-entry4/adapted-tree/node_modules/chai/lib/chai/utils/addMethod.js",
+            "scriptId": "249",
+            "line": 57,
+            "column": 25
+          },
+          {
+            "function": "assert.throws",
+            "url": "file:///workspace/scratch/filter-freeze/lane-entry4/adapted-tree/node_modules/chai/lib/chai/interface/assert.js",
+            "scriptId": "267",
+            "line": 1988,
+            "column": 16
+          },
+          {
+            "function": "",
+            "url": "file:///workspace/scratch/filter-freeze/lane-entry4/adapted-tree/built/local/run.js",
+            "scriptId": "200",
+            "line": 227017,
+            "column": 22
+          },
+          {
+            "function": "callFn",
+            "url": "file:///workspace/scratch/filter-freeze/lane-entry4/adapted-tree/node_modules/mocha/lib/runnable.js",
+            "scriptId": "171",
+            "line": 364,
+            "column": 21
+          },
+          {
+            "function": "Runnable.run",
+            "url": "file:///workspace/scratch/filter-freeze/lane-entry4/adapted-tree/node_modules/mocha/lib/runnable.js",
+            "scriptId": "171",
+            "line": 352,
+            "column": 5
+          },
+          {
+            "function": "Mocha.Runnable.run",
+            "url": "",
+            "scriptId": "116",
+            "line": 64,
+            "column": 131
+          },
+          {
+            "function": "Mocha.Runnable.run",
+            "url": "file:///workspace/scratch/filter-freeze/repo/stage3/oracle/observe-errors.cjs",
+            "scriptId": "199",
+            "line": 11,
+            "column": 24
+          },
+          {
+            "function": "Runner.runTest",
+            "url": "file:///workspace/scratch/filter-freeze/lane-entry4/adapted-tree/node_modules/mocha/lib/runner.js",
+            "scriptId": "166",
+            "line": 677,
+            "column": 10
+          },
+          {
+            "function": "",
+            "url": "file:///workspace/scratch/filter-freeze/lane-entry4/adapted-tree/node_modules/mocha/lib/runner.js",
+            "scriptId": "166",
+            "line": 800,
+            "column": 12
+          },
+          {
+            "function": "next",
+            "url": "file:///workspace/scratch/filter-freeze/lane-entry4/adapted-tree/node_modules/mocha/lib/runner.js",
+            "scriptId": "166",
+            "line": 592,
+            "column": 14
+          },
+          {
+            "function": "",
+            "url": "file:///workspace/scratch/filter-freeze/lane-entry4/adapted-tree/node_modules/mocha/lib/runner.js",
+            "scriptId": "166",
+            "line": 602,
+            "column": 7
+          },
+          {
+            "function": "next",
+            "url": "file:///workspace/scratch/filter-freeze/lane-entry4/adapted-tree/node_modules/mocha/lib/runner.js",
+            "scriptId": "166",
+            "line": 485,
+            "column": 14
+          },
+          {
+            "function": "",
+            "url": "file:///workspace/scratch/filter-freeze/lane-entry4/adapted-tree/node_modules/mocha/lib/runner.js",
+            "scriptId": "166",
+            "line": 570,
+            "column": 5
+          },
+          {
+            "function": "processImmediate",
+            "url": "",
+            "scriptId": "10",
+            "line": 534,
+            "column": 21
+          }
+        ],
+        "frozen_aliases": [],
+        "observed_sites": [
+          "src/compiler/factory/utilities.ts:761:12",
+          "src/compiler/commandLineParser.ts:2550:16",
+          "src/compiler/commandLineParser.ts:3157:32",
+          "src/compiler/checker.ts:10370:48",
+          "src/compiler/checker.ts:16764:27",
+          "src/compiler/checker.ts:47509:16",
+          "src/services/services.ts:745:94",
+          "src/services/services.ts:755:94",
+          "src/services/services.ts:780:81",
+          "src/services/services.ts:790:81",
+          "src/services/codefixes/fixAddMissingParam.ts:143:46"
+        ],
+        "classification": "unrelated-explicit-decorator-error",
+        "classification_evidence": "src/compiler/factory/emitHelpers.ts:783 explicitly throws this TypeError when done, before extraInitializers.push; six esDecorators cannot-call-after-decoration tests assert it."
+      },
+      {
+        "pid": 10656,
+        "argv": [
+          "/workspace/adamic-tools/bin/node",
+          "/workspace/scratch/filter-freeze/lane-entry4/adapted-tree/built/local/run.js",
+          "--config=\"/workspace/scratch/filter-freeze/tmp/ts-tests3/task-config2.json\""
+        ],
+        "cwd": "/workspace/scratch/filter-freeze/lane-entry4/adapted-tree",
+        "case": {
+          "title": " unittests:: evaluation:: esDecorators context .addInitializer for: getter cannot call after decoration",
+          "type": "test"
+        },
+        "description": "TypeError: Cannot add initializers after decoration has completed\n    at Object.context.addInitializer (eval at evaluate (/workspace/scratch/filter-freeze/lane-entry4/adapted-tree/src/harness/evaluatorImpl.ts:196:40), <anonymous>:19:65)\n    at /workspace/scratch/filter-freeze/lane-entry4/adapted-tree/src/testRunner/unittests/evaluation/esDecorators.ts:1272:49\n    at Proxy.assertThrows (/workspace/scratch/filter-freeze/lane-entry4/adapted-tree/node_modules/chai/lib/chai/core/assertions.js:2644:7)\n    at Proxy.methodWrapper (/workspace/scratch/filter-freeze/lane-entry4/adapted-tree/node_modules/chai/lib/chai/utils/addMethod.js:57:25)\n    at chai.assert.assert.throws (/workspace/scratch/filter-freeze/lane-entry4/adapted-tree/node_modules/chai/lib/chai/interface/assert.js:1988:16)\n    at Context.<anonymous> (/workspace/scratch/filter-freeze/lane-entry4/adapted-tree/src/testRunner/unittests/evaluation/esDecorators.ts:1272:28)\n    at callFn (/workspace/scratch/filter-freeze/lane-entry4/adapted-tree/node_modules/mocha/lib/runnable.js:364:21)\n    at Test2.Runnable.run (/workspace/scratch/filter-freeze/lane-entry4/adapted-tree/node_modules/mocha/lib/runnable.js:352:5)\n    at Test2.Mocha.Runnable.run (/workspace/scratch/filter-freeze/repo/stage3/census/filter-freeze/observe.cjs:64:131)\n    at Test2.Mocha.Runnable.run (/workspace/scratch/filter-freeze/repo/stage3/oracle/observe-errors.cjs:11:24)\n    at Runner.runTest (/workspace/scratch/filter-freeze/lane-entry4/adapted-tree/node_modules/mocha/lib/runner.js:677:10)\n    at /workspace/scratch/filter-freeze/lane-entry4/adapted-tree/node_modules/mocha/lib/runner.js:800:12\n    at next (/workspace/scratch/filter-freeze/lane-entry4/adapted-tree/node_modules/mocha/lib/runner.js:592:14)\n    at /workspace/scratch/filter-freeze/lane-entry4/adapted-tree/node_modules/mocha/lib/runner.js:602:7\n    at next (/workspace/scratch/filter-freeze/lane-entry4/adapted-tree/node_modules/mocha/lib/runner.js:485:14)\n    at Immediate._onImmediate (/workspace/scratch/filter-freeze/lane-entry4/adapted-tree/node_modules/mocha/lib/runner.js:570:5)\n    at processImmediate (node:internal/timers:534:21)",
+        "frames": [
+          {
+            "function": "context.addInitializer",
+            "url": "",
+            "scriptId": "2123",
+            "line": 19,
+            "column": 59
+          },
+          {
+            "function": "",
+            "url": "file:///workspace/scratch/filter-freeze/lane-entry4/adapted-tree/built/local/run.js",
+            "scriptId": "200",
+            "line": 227104,
+            "column": 43
+          },
+          {
+            "function": "assertThrows",
+            "url": "file:///workspace/scratch/filter-freeze/lane-entry4/adapted-tree/node_modules/chai/lib/chai/core/assertions.js",
+            "scriptId": "264",
+            "line": 2644,
+            "column": 7
+          },
+          {
+            "function": "methodWrapper",
+            "url": "file:///workspace/scratch/filter-freeze/lane-entry4/adapted-tree/node_modules/chai/lib/chai/utils/addMethod.js",
+            "scriptId": "249",
+            "line": 57,
+            "column": 25
+          },
+          {
+            "function": "assert.throws",
+            "url": "file:///workspace/scratch/filter-freeze/lane-entry4/adapted-tree/node_modules/chai/lib/chai/interface/assert.js",
+            "scriptId": "267",
+            "line": 1988,
+            "column": 16
+          },
+          {
+            "function": "",
+            "url": "file:///workspace/scratch/filter-freeze/lane-entry4/adapted-tree/built/local/run.js",
+            "scriptId": "200",
+            "line": 227104,
+            "column": 22
+          },
+          {
+            "function": "callFn",
+            "url": "file:///workspace/scratch/filter-freeze/lane-entry4/adapted-tree/node_modules/mocha/lib/runnable.js",
+            "scriptId": "171",
+            "line": 364,
+            "column": 21
+          },
+          {
+            "function": "Runnable.run",
+            "url": "file:///workspace/scratch/filter-freeze/lane-entry4/adapted-tree/node_modules/mocha/lib/runnable.js",
+            "scriptId": "171",
+            "line": 352,
+            "column": 5
+          },
+          {
+            "function": "Mocha.Runnable.run",
+            "url": "",
+            "scriptId": "116",
+            "line": 64,
+            "column": 131
+          },
+          {
+            "function": "Mocha.Runnable.run",
+            "url": "file:///workspace/scratch/filter-freeze/repo/stage3/oracle/observe-errors.cjs",
+            "scriptId": "199",
+            "line": 11,
+            "column": 24
+          },
+          {
+            "function": "Runner.runTest",
+            "url": "file:///workspace/scratch/filter-freeze/lane-entry4/adapted-tree/node_modules/mocha/lib/runner.js",
+            "scriptId": "166",
+            "line": 677,
+            "column": 10
+          },
+          {
+            "function": "",
+            "url": "file:///workspace/scratch/filter-freeze/lane-entry4/adapted-tree/node_modules/mocha/lib/runner.js",
+            "scriptId": "166",
+            "line": 800,
+            "column": 12
+          },
+          {
+            "function": "next",
+            "url": "file:///workspace/scratch/filter-freeze/lane-entry4/adapted-tree/node_modules/mocha/lib/runner.js",
+            "scriptId": "166",
+            "line": 592,
+            "column": 14
+          },
+          {
+            "function": "",
+            "url": "file:///workspace/scratch/filter-freeze/lane-entry4/adapted-tree/node_modules/mocha/lib/runner.js",
+            "scriptId": "166",
+            "line": 602,
+            "column": 7
+          },
+          {
+            "function": "next",
+            "url": "file:///workspace/scratch/filter-freeze/lane-entry4/adapted-tree/node_modules/mocha/lib/runner.js",
+            "scriptId": "166",
+            "line": 485,
+            "column": 14
+          },
+          {
+            "function": "",
+            "url": "file:///workspace/scratch/filter-freeze/lane-entry4/adapted-tree/node_modules/mocha/lib/runner.js",
+            "scriptId": "166",
+            "line": 570,
+            "column": 5
+          },
+          {
+            "function": "processImmediate",
+            "url": "",
+            "scriptId": "10",
+            "line": 534,
+            "column": 21
+          }
+        ],
+        "frozen_aliases": [],
+        "observed_sites": [
+          "src/compiler/factory/utilities.ts:761:12",
+          "src/compiler/commandLineParser.ts:2550:16",
+          "src/compiler/commandLineParser.ts:3157:32",
+          "src/compiler/checker.ts:10370:48",
+          "src/compiler/checker.ts:16764:27",
+          "src/compiler/checker.ts:47509:16",
+          "src/services/services.ts:745:94",
+          "src/services/services.ts:755:94",
+          "src/services/services.ts:780:81",
+          "src/services/services.ts:790:81",
+          "src/services/codefixes/fixAddMissingParam.ts:143:46"
+        ],
+        "classification": "unrelated-explicit-decorator-error",
+        "classification_evidence": "src/compiler/factory/emitHelpers.ts:783 explicitly throws this TypeError when done, before extraInitializers.push; six esDecorators cannot-call-after-decoration tests assert it."
+      },
+      {
+        "pid": 10656,
+        "argv": [
+          "/workspace/adamic-tools/bin/node",
+          "/workspace/scratch/filter-freeze/lane-entry4/adapted-tree/built/local/run.js",
+          "--config=\"/workspace/scratch/filter-freeze/tmp/ts-tests3/task-config2.json\""
+        ],
+        "cwd": "/workspace/scratch/filter-freeze/lane-entry4/adapted-tree",
+        "case": {
+          "title": " unittests:: evaluation:: esDecorators context .addInitializer for: setter cannot call after decoration",
+          "type": "test"
+        },
+        "description": "TypeError: Cannot add initializers after decoration has completed\n    at Object.context.addInitializer (eval at evaluate (/workspace/scratch/filter-freeze/lane-entry4/adapted-tree/src/harness/evaluatorImpl.ts:196:40), <anonymous>:19:65)\n    at /workspace/scratch/filter-freeze/lane-entry4/adapted-tree/src/testRunner/unittests/evaluation/esDecorators.ts:1353:49\n    at Proxy.assertThrows (/workspace/scratch/filter-freeze/lane-entry4/adapted-tree/node_modules/chai/lib/chai/core/assertions.js:2644:7)\n    at Proxy.methodWrapper (/workspace/scratch/filter-freeze/lane-entry4/adapted-tree/node_modules/chai/lib/chai/utils/addMethod.js:57:25)\n    at chai.assert.assert.throws (/workspace/scratch/filter-freeze/lane-entry4/adapted-tree/node_modules/chai/lib/chai/interface/assert.js:1988:16)\n    at Context.<anonymous> (/workspace/scratch/filter-freeze/lane-entry4/adapted-tree/src/testRunner/unittests/evaluation/esDecorators.ts:1353:28)\n    at callFn (/workspace/scratch/filter-freeze/lane-entry4/adapted-tree/node_modules/mocha/lib/runnable.js:364:21)\n    at Test2.Runnable.run (/workspace/scratch/filter-freeze/lane-entry4/adapted-tree/node_modules/mocha/lib/runnable.js:352:5)\n    at Test2.Mocha.Runnable.run (/workspace/scratch/filter-freeze/repo/stage3/census/filter-freeze/observe.cjs:64:131)\n    at Test2.Mocha.Runnable.run (/workspace/scratch/filter-freeze/repo/stage3/oracle/observe-errors.cjs:11:24)\n    at Runner.runTest (/workspace/scratch/filter-freeze/lane-entry4/adapted-tree/node_modules/mocha/lib/runner.js:677:10)\n    at /workspace/scratch/filter-freeze/lane-entry4/adapted-tree/node_modules/mocha/lib/runner.js:800:12\n    at next (/workspace/scratch/filter-freeze/lane-entry4/adapted-tree/node_modules/mocha/lib/runner.js:592:14)\n    at /workspace/scratch/filter-freeze/lane-entry4/adapted-tree/node_modules/mocha/lib/runner.js:602:7\n    at next (/workspace/scratch/filter-freeze/lane-entry4/adapted-tree/node_modules/mocha/lib/runner.js:485:14)\n    at Immediate._onImmediate (/workspace/scratch/filter-freeze/lane-entry4/adapted-tree/node_modules/mocha/lib/runner.js:570:5)\n    at processImmediate (node:internal/timers:534:21)",
+        "frames": [
+          {
+            "function": "context.addInitializer",
+            "url": "",
+            "scriptId": "2129",
+            "line": 19,
+            "column": 59
+          },
+          {
+            "function": "",
+            "url": "file:///workspace/scratch/filter-freeze/lane-entry4/adapted-tree/built/local/run.js",
+            "scriptId": "200",
+            "line": 227191,
+            "column": 43
+          },
+          {
+            "function": "assertThrows",
+            "url": "file:///workspace/scratch/filter-freeze/lane-entry4/adapted-tree/node_modules/chai/lib/chai/core/assertions.js",
+            "scriptId": "264",
+            "line": 2644,
+            "column": 7
+          },
+          {
+            "function": "methodWrapper",
+            "url": "file:///workspace/scratch/filter-freeze/lane-entry4/adapted-tree/node_modules/chai/lib/chai/utils/addMethod.js",
+            "scriptId": "249",
+            "line": 57,
+            "column": 25
+          },
+          {
+            "function": "assert.throws",
+            "url": "file:///workspace/scratch/filter-freeze/lane-entry4/adapted-tree/node_modules/chai/lib/chai/interface/assert.js",
+            "scriptId": "267",
+            "line": 1988,
+            "column": 16
+          },
+          {
+            "function": "",
+            "url": "file:///workspace/scratch/filter-freeze/lane-entry4/adapted-tree/built/local/run.js",
+            "scriptId": "200",
+            "line": 227191,
+            "column": 22
+          },
+          {
+            "function": "callFn",
+            "url": "file:///workspace/scratch/filter-freeze/lane-entry4/adapted-tree/node_modules/mocha/lib/runnable.js",
+            "scriptId": "171",
+            "line": 364,
+            "column": 21
+          },
+          {
+            "function": "Runnable.run",
+            "url": "file:///workspace/scratch/filter-freeze/lane-entry4/adapted-tree/node_modules/mocha/lib/runnable.js",
+            "scriptId": "171",
+            "line": 352,
+            "column": 5
+          },
+          {
+            "function": "Mocha.Runnable.run",
+            "url": "",
+            "scriptId": "116",
+            "line": 64,
+            "column": 131
+          },
+          {
+            "function": "Mocha.Runnable.run",
+            "url": "file:///workspace/scratch/filter-freeze/repo/stage3/oracle/observe-errors.cjs",
+            "scriptId": "199",
+            "line": 11,
+            "column": 24
+          },
+          {
+            "function": "Runner.runTest",
+            "url": "file:///workspace/scratch/filter-freeze/lane-entry4/adapted-tree/node_modules/mocha/lib/runner.js",
+            "scriptId": "166",
+            "line": 677,
+            "column": 10
+          },
+          {
+            "function": "",
+            "url": "file:///workspace/scratch/filter-freeze/lane-entry4/adapted-tree/node_modules/mocha/lib/runner.js",
+            "scriptId": "166",
+            "line": 800,
+            "column": 12
+          },
+          {
+            "function": "next",
+            "url": "file:///workspace/scratch/filter-freeze/lane-entry4/adapted-tree/node_modules/mocha/lib/runner.js",
+            "scriptId": "166",
+            "line": 592,
+            "column": 14
+          },
+          {
+            "function": "",
+            "url": "file:///workspace/scratch/filter-freeze/lane-entry4/adapted-tree/node_modules/mocha/lib/runner.js",
+            "scriptId": "166",
+            "line": 602,
+            "column": 7
+          },
+          {
+            "function": "next",
+            "url": "file:///workspace/scratch/filter-freeze/lane-entry4/adapted-tree/node_modules/mocha/lib/runner.js",
+            "scriptId": "166",
+            "line": 485,
+            "column": 14
+          },
+          {
+            "function": "",
+            "url": "file:///workspace/scratch/filter-freeze/lane-entry4/adapted-tree/node_modules/mocha/lib/runner.js",
+            "scriptId": "166",
+            "line": 570,
+            "column": 5
+          },
+          {
+            "function": "processImmediate",
+            "url": "",
+            "scriptId": "10",
+            "line": 534,
+            "column": 21
+          }
+        ],
+        "frozen_aliases": [],
+        "observed_sites": [
+          "src/compiler/factory/utilities.ts:761:12",
+          "src/compiler/commandLineParser.ts:2550:16",
+          "src/compiler/commandLineParser.ts:3157:32",
+          "src/compiler/checker.ts:10370:48",
+          "src/compiler/checker.ts:16764:27",
+          "src/compiler/checker.ts:47509:16",
+          "src/services/services.ts:745:94",
+          "src/services/services.ts:755:94",
+          "src/services/services.ts:780:81",
+          "src/services/services.ts:790:81",
+          "src/services/codefixes/fixAddMissingParam.ts:143:46"
+        ],
+        "classification": "unrelated-explicit-decorator-error",
+        "classification_evidence": "src/compiler/factory/emitHelpers.ts:783 explicitly throws this TypeError when done, before extraInitializers.push; six esDecorators cannot-call-after-decoration tests assert it."
+      },
+      {
+        "pid": 10656,
+        "argv": [
+          "/workspace/adamic-tools/bin/node",
+          "/workspace/scratch/filter-freeze/lane-entry4/adapted-tree/built/local/run.js",
+          "--config=\"/workspace/scratch/filter-freeze/tmp/ts-tests3/task-config2.json\""
+        ],
+        "cwd": "/workspace/scratch/filter-freeze/lane-entry4/adapted-tree",
+        "case": {
+          "title": " unittests:: evaluation:: esDecorators context .addInitializer for: field cannot call after decoration",
+          "type": "test"
+        },
+        "description": "TypeError: Cannot add initializers after decoration has completed\n    at Object.context.addInitializer (eval at evaluate (/workspace/scratch/filter-freeze/lane-entry4/adapted-tree/src/harness/evaluatorImpl.ts:196:40), <anonymous>:12:65)\n    at /workspace/scratch/filter-freeze/lane-entry4/adapted-tree/src/testRunner/unittests/evaluation/esDecorators.ts:1434:49\n    at Proxy.assertThrows (/workspace/scratch/filter-freeze/lane-entry4/adapted-tree/node_modules/chai/lib/chai/core/assertions.js:2644:7)\n    at Proxy.methodWrapper (/workspace/scratch/filter-freeze/lane-entry4/adapted-tree/node_modules/chai/lib/chai/utils/addMethod.js:57:25)\n    at chai.assert.assert.throws (/workspace/scratch/filter-freeze/lane-entry4/adapted-tree/node_modules/chai/lib/chai/interface/assert.js:1988:16)\n    at Context.<anonymous> (/workspace/scratch/filter-freeze/lane-entry4/adapted-tree/src/testRunner/unittests/evaluation/esDecorators.ts:1434:28)\n    at callFn (/workspace/scratch/filter-freeze/lane-entry4/adapted-tree/node_modules/mocha/lib/runnable.js:364:21)\n    at Test2.Runnable.run (/workspace/scratch/filter-freeze/lane-entry4/adapted-tree/node_modules/mocha/lib/runnable.js:352:5)\n    at Test2.Mocha.Runnable.run (/workspace/scratch/filter-freeze/repo/stage3/census/filter-freeze/observe.cjs:64:131)\n    at Test2.Mocha.Runnable.run (/workspace/scratch/filter-freeze/repo/stage3/oracle/observe-errors.cjs:11:24)\n    at Runner.runTest (/workspace/scratch/filter-freeze/lane-entry4/adapted-tree/node_modules/mocha/lib/runner.js:677:10)\n    at /workspace/scratch/filter-freeze/lane-entry4/adapted-tree/node_modules/mocha/lib/runner.js:800:12\n    at next (/workspace/scratch/filter-freeze/lane-entry4/adapted-tree/node_modules/mocha/lib/runner.js:592:14)\n    at /workspace/scratch/filter-freeze/lane-entry4/adapted-tree/node_modules/mocha/lib/runner.js:602:7\n    at next (/workspace/scratch/filter-freeze/lane-entry4/adapted-tree/node_modules/mocha/lib/runner.js:485:14)\n    at Immediate._onImmediate (/workspace/scratch/filter-freeze/lane-entry4/adapted-tree/node_modules/mocha/lib/runner.js:570:5)\n    at processImmediate (node:internal/timers:534:21)",
+        "frames": [
+          {
+            "function": "context.addInitializer",
+            "url": "",
+            "scriptId": "2135",
+            "line": 12,
+            "column": 59
+          },
+          {
+            "function": "",
+            "url": "file:///workspace/scratch/filter-freeze/lane-entry4/adapted-tree/built/local/run.js",
+            "scriptId": "200",
+            "line": 227278,
+            "column": 43
+          },
+          {
+            "function": "assertThrows",
+            "url": "file:///workspace/scratch/filter-freeze/lane-entry4/adapted-tree/node_modules/chai/lib/chai/core/assertions.js",
+            "scriptId": "264",
+            "line": 2644,
+            "column": 7
+          },
+          {
+            "function": "methodWrapper",
+            "url": "file:///workspace/scratch/filter-freeze/lane-entry4/adapted-tree/node_modules/chai/lib/chai/utils/addMethod.js",
+            "scriptId": "249",
+            "line": 57,
+            "column": 25
+          },
+          {
+            "function": "assert.throws",
+            "url": "file:///workspace/scratch/filter-freeze/lane-entry4/adapted-tree/node_modules/chai/lib/chai/interface/assert.js",
+            "scriptId": "267",
+            "line": 1988,
+            "column": 16
+          },
+          {
+            "function": "",
+            "url": "file:///workspace/scratch/filter-freeze/lane-entry4/adapted-tree/built/local/run.js",
+            "scriptId": "200",
+            "line": 227278,
+            "column": 22
+          },
+          {
+            "function": "callFn",
+            "url": "file:///workspace/scratch/filter-freeze/lane-entry4/adapted-tree/node_modules/mocha/lib/runnable.js",
+            "scriptId": "171",
+            "line": 364,
+            "column": 21
+          },
+          {
+            "function": "Runnable.run",
+            "url": "file:///workspace/scratch/filter-freeze/lane-entry4/adapted-tree/node_modules/mocha/lib/runnable.js",
+            "scriptId": "171",
+            "line": 352,
+            "column": 5
+          },
+          {
+            "function": "Mocha.Runnable.run",
+            "url": "",
+            "scriptId": "116",
+            "line": 64,
+            "column": 131
+          },
+          {
+            "function": "Mocha.Runnable.run",
+            "url": "file:///workspace/scratch/filter-freeze/repo/stage3/oracle/observe-errors.cjs",
+            "scriptId": "199",
+            "line": 11,
+            "column": 24
+          },
+          {
+            "function": "Runner.runTest",
+            "url": "file:///workspace/scratch/filter-freeze/lane-entry4/adapted-tree/node_modules/mocha/lib/runner.js",
+            "scriptId": "166",
+            "line": 677,
+            "column": 10
+          },
+          {
+            "function": "",
+            "url": "file:///workspace/scratch/filter-freeze/lane-entry4/adapted-tree/node_modules/mocha/lib/runner.js",
+            "scriptId": "166",
+            "line": 800,
+            "column": 12
+          },
+          {
+            "function": "next",
+            "url": "file:///workspace/scratch/filter-freeze/lane-entry4/adapted-tree/node_modules/mocha/lib/runner.js",
+            "scriptId": "166",
+            "line": 592,
+            "column": 14
+          },
+          {
+            "function": "",
+            "url": "file:///workspace/scratch/filter-freeze/lane-entry4/adapted-tree/node_modules/mocha/lib/runner.js",
+            "scriptId": "166",
+            "line": 602,
+            "column": 7
+          },
+          {
+            "function": "next",
+            "url": "file:///workspace/scratch/filter-freeze/lane-entry4/adapted-tree/node_modules/mocha/lib/runner.js",
+            "scriptId": "166",
+            "line": 485,
+            "column": 14
+          },
+          {
+            "function": "",
+            "url": "file:///workspace/scratch/filter-freeze/lane-entry4/adapted-tree/node_modules/mocha/lib/runner.js",
+            "scriptId": "166",
+            "line": 570,
+            "column": 5
+          },
+          {
+            "function": "processImmediate",
+            "url": "",
+            "scriptId": "10",
+            "line": 534,
+            "column": 21
+          }
+        ],
+        "frozen_aliases": [],
+        "observed_sites": [
+          "src/compiler/factory/utilities.ts:761:12",
+          "src/compiler/commandLineParser.ts:2550:16",
+          "src/compiler/commandLineParser.ts:3157:32",
+          "src/compiler/checker.ts:10370:48",
+          "src/compiler/checker.ts:16764:27",
+          "src/compiler/checker.ts:47509:16",
+          "src/services/services.ts:745:94",
+          "src/services/services.ts:755:94",
+          "src/services/services.ts:780:81",
+          "src/services/services.ts:790:81",
+          "src/services/codefixes/fixAddMissingParam.ts:143:46"
+        ],
+        "classification": "unrelated-explicit-decorator-error",
+        "classification_evidence": "src/compiler/factory/emitHelpers.ts:783 explicitly throws this TypeError when done, before extraInitializers.push; six esDecorators cannot-call-after-decoration tests assert it."
+      },
+      {
+        "pid": 10656,
+        "argv": [
+          "/workspace/adamic-tools/bin/node",
+          "/workspace/scratch/filter-freeze/lane-entry4/adapted-tree/built/local/run.js",
+          "--config=\"/workspace/scratch/filter-freeze/tmp/ts-tests3/task-config2.json\""
+        ],
+        "cwd": "/workspace/scratch/filter-freeze/lane-entry4/adapted-tree",
+        "case": {
+          "title": " unittests:: evaluation:: esDecorators context .addInitializer for: auto-accessor cannot call after decoration",
+          "type": "test"
+        },
+        "description": "TypeError: Cannot add initializers after decoration has completed\n    at Object.context.addInitializer (eval at evaluate (/workspace/scratch/filter-freeze/lane-entry4/adapted-tree/src/harness/evaluatorImpl.ts:196:40), <anonymous>:12:65)\n    at /workspace/scratch/filter-freeze/lane-entry4/adapted-tree/src/testRunner/unittests/evaluation/esDecorators.ts:1515:49\n    at Proxy.assertThrows (/workspace/scratch/filter-freeze/lane-entry4/adapted-tree/node_modules/chai/lib/chai/core/assertions.js:2644:7)\n    at Proxy.methodWrapper (/workspace/scratch/filter-freeze/lane-entry4/adapted-tree/node_modules/chai/lib/chai/utils/addMethod.js:57:25)\n    at chai.assert.assert.throws (/workspace/scratch/filter-freeze/lane-entry4/adapted-tree/node_modules/chai/lib/chai/interface/assert.js:1988:16)\n    at Context.<anonymous> (/workspace/scratch/filter-freeze/lane-entry4/adapted-tree/src/testRunner/unittests/evaluation/esDecorators.ts:1515:28)\n    at callFn (/workspace/scratch/filter-freeze/lane-entry4/adapted-tree/node_modules/mocha/lib/runnable.js:364:21)\n    at Test2.Runnable.run (/workspace/scratch/filter-freeze/lane-entry4/adapted-tree/node_modules/mocha/lib/runnable.js:352:5)\n    at Test2.Mocha.Runnable.run (/workspace/scratch/filter-freeze/repo/stage3/census/filter-freeze/observe.cjs:64:131)\n    at Test2.Mocha.Runnable.run (/workspace/scratch/filter-freeze/repo/stage3/oracle/observe-errors.cjs:11:24)\n    at Runner.runTest (/workspace/scratch/filter-freeze/lane-entry4/adapted-tree/node_modules/mocha/lib/runner.js:677:10)\n    at /workspace/scratch/filter-freeze/lane-entry4/adapted-tree/node_modules/mocha/lib/runner.js:800:12\n    at next (/workspace/scratch/filter-freeze/lane-entry4/adapted-tree/node_modules/mocha/lib/runner.js:592:14)\n    at /workspace/scratch/filter-freeze/lane-entry4/adapted-tree/node_modules/mocha/lib/runner.js:602:7\n    at next (/workspace/scratch/filter-freeze/lane-entry4/adapted-tree/node_modules/mocha/lib/runner.js:485:14)\n    at Immediate._onImmediate (/workspace/scratch/filter-freeze/lane-entry4/adapted-tree/node_modules/mocha/lib/runner.js:570:5)\n    at processImmediate (node:internal/timers:534:21)",
+        "frames": [
+          {
+            "function": "context.addInitializer",
+            "url": "",
+            "scriptId": "2141",
+            "line": 12,
+            "column": 59
+          },
+          {
+            "function": "",
+            "url": "file:///workspace/scratch/filter-freeze/lane-entry4/adapted-tree/built/local/run.js",
+            "scriptId": "200",
+            "line": 227365,
+            "column": 43
+          },
+          {
+            "function": "assertThrows",
+            "url": "file:///workspace/scratch/filter-freeze/lane-entry4/adapted-tree/node_modules/chai/lib/chai/core/assertions.js",
+            "scriptId": "264",
+            "line": 2644,
+            "column": 7
+          },
+          {
+            "function": "methodWrapper",
+            "url": "file:///workspace/scratch/filter-freeze/lane-entry4/adapted-tree/node_modules/chai/lib/chai/utils/addMethod.js",
+            "scriptId": "249",
+            "line": 57,
+            "column": 25
+          },
+          {
+            "function": "assert.throws",
+            "url": "file:///workspace/scratch/filter-freeze/lane-entry4/adapted-tree/node_modules/chai/lib/chai/interface/assert.js",
+            "scriptId": "267",
+            "line": 1988,
+            "column": 16
+          },
+          {
+            "function": "",
+            "url": "file:///workspace/scratch/filter-freeze/lane-entry4/adapted-tree/built/local/run.js",
+            "scriptId": "200",
+            "line": 227365,
+            "column": 22
+          },
+          {
+            "function": "callFn",
+            "url": "file:///workspace/scratch/filter-freeze/lane-entry4/adapted-tree/node_modules/mocha/lib/runnable.js",
+            "scriptId": "171",
+            "line": 364,
+            "column": 21
+          },
+          {
+            "function": "Runnable.run",
+            "url": "file:///workspace/scratch/filter-freeze/lane-entry4/adapted-tree/node_modules/mocha/lib/runnable.js",
+            "scriptId": "171",
+            "line": 352,
+            "column": 5
+          },
+          {
+            "function": "Mocha.Runnable.run",
+            "url": "",
+            "scriptId": "116",
+            "line": 64,
+            "column": 131
+          },
+          {
+            "function": "Mocha.Runnable.run",
+            "url": "file:///workspace/scratch/filter-freeze/repo/stage3/oracle/observe-errors.cjs",
+            "scriptId": "199",
+            "line": 11,
+            "column": 24
+          },
+          {
+            "function": "Runner.runTest",
+            "url": "file:///workspace/scratch/filter-freeze/lane-entry4/adapted-tree/node_modules/mocha/lib/runner.js",
+            "scriptId": "166",
+            "line": 677,
+            "column": 10
+          },
+          {
+            "function": "",
+            "url": "file:///workspace/scratch/filter-freeze/lane-entry4/adapted-tree/node_modules/mocha/lib/runner.js",
+            "scriptId": "166",
+            "line": 800,
+            "column": 12
+          },
+          {
+            "function": "next",
+            "url": "file:///workspace/scratch/filter-freeze/lane-entry4/adapted-tree/node_modules/mocha/lib/runner.js",
+            "scriptId": "166",
+            "line": 592,
+            "column": 14
+          },
+          {
+            "function": "",
+            "url": "file:///workspace/scratch/filter-freeze/lane-entry4/adapted-tree/node_modules/mocha/lib/runner.js",
+            "scriptId": "166",
+            "line": 602,
+            "column": 7
+          },
+          {
+            "function": "next",
+            "url": "file:///workspace/scratch/filter-freeze/lane-entry4/adapted-tree/node_modules/mocha/lib/runner.js",
+            "scriptId": "166",
+            "line": 485,
+            "column": 14
+          },
+          {
+            "function": "",
+            "url": "file:///workspace/scratch/filter-freeze/lane-entry4/adapted-tree/node_modules/mocha/lib/runner.js",
+            "scriptId": "166",
+            "line": 570,
+            "column": 5
+          },
+          {
+            "function": "processImmediate",
+            "url": "",
+            "scriptId": "10",
+            "line": 534,
+            "column": 21
+          }
+        ],
+        "frozen_aliases": [],
+        "observed_sites": [
+          "src/compiler/factory/utilities.ts:761:12",
+          "src/compiler/commandLineParser.ts:2550:16",
+          "src/compiler/commandLineParser.ts:3157:32",
+          "src/compiler/checker.ts:10370:48",
+          "src/compiler/checker.ts:16764:27",
+          "src/compiler/checker.ts:47509:16",
+          "src/services/services.ts:745:94",
+          "src/services/services.ts:755:94",
+          "src/services/services.ts:780:81",
+          "src/services/services.ts:790:81",
+          "src/services/codefixes/fixAddMissingParam.ts:143:46"
+        ],
+        "classification": "unrelated-explicit-decorator-error",
+        "classification_evidence": "src/compiler/factory/emitHelpers.ts:783 explicitly throws this TypeError when done, before extraInitializers.push; six esDecorators cannot-call-after-decoration tests assert it."
+      }
+    ],
+    "unclassified": []
+  },
+  "lane8": {
+    "freeze_writes": [],
+    "unrelated_explicit_errors": [
+      {
+        "pid": 9212,
+        "argv": [
+          "/workspace/adamic-tools/bin/node",
+          "/workspace/scratch/filter-freeze/lane/adapted-tree/built/local/run.js",
+          "--config=\"/workspace/scratch/filter-freeze/tmp/ts-tests1/task-config2.json\""
+        ],
+        "cwd": "/workspace/scratch/filter-freeze/lane/adapted-tree",
+        "case": {
+          "title": " unittests:: evaluation:: esDecorators context .addInitializer for: class cannot call after decoration",
+          "type": "test"
+        },
+        "description": "TypeError: Cannot add initializers after decoration has completed\n    at Object.context.addInitializer (eval at evaluate (/workspace/scratch/filter-freeze/lane/adapted-tree/src/harness/evaluatorImpl.ts:196:40), <anonymous>:12:65)\n    at /workspace/scratch/filter-freeze/lane/adapted-tree/src/testRunner/unittests/evaluation/esDecorators.ts:1141:49\n    at Proxy.assertThrows (/workspace/scratch/filter-freeze/lane/adapted-tree/node_modules/chai/lib/chai/core/assertions.js:2644:7)\n    at Proxy.methodWrapper (/workspace/scratch/filter-freeze/lane/adapted-tree/node_modules/chai/lib/chai/utils/addMethod.js:57:25)\n    at chai.assert.assert.throws (/workspace/scratch/filter-freeze/lane/adapted-tree/node_modules/chai/lib/chai/interface/assert.js:1988:16)\n    at Context.<anonymous> (/workspace/scratch/filter-freeze/lane/adapted-tree/src/testRunner/unittests/evaluation/esDecorators.ts:1141:28)\n    at callFn (/workspace/scratch/filter-freeze/lane/adapted-tree/node_modules/mocha/lib/runnable.js:364:21)\n    at Test2.Runnable.run (/workspace/scratch/filter-freeze/lane/adapted-tree/node_modules/mocha/lib/runnable.js:352:5)\n    at Test2.Mocha.Runnable.run (/workspace/scratch/filter-freeze/repo/stage3/census/filter-freeze/observe.cjs:63:131)\n    at Test2.Mocha.Runnable.run (/workspace/scratch/filter-freeze/repo/stage3/oracle/observe-errors.cjs:11:24)\n    at Runner.runTest (/workspace/scratch/filter-freeze/lane/adapted-tree/node_modules/mocha/lib/runner.js:677:10)\n    at /workspace/scratch/filter-freeze/lane/adapted-tree/node_modules/mocha/lib/runner.js:800:12\n    at next (/workspace/scratch/filter-freeze/lane/adapted-tree/node_modules/mocha/lib/runner.js:592:14)\n    at /workspace/scratch/filter-freeze/lane/adapted-tree/node_modules/mocha/lib/runner.js:602:7\n    at next (/workspace/scratch/filter-freeze/lane/adapted-tree/node_modules/mocha/lib/runner.js:485:14)\n    at Immediate._onImmediate (/workspace/scratch/filter-freeze/lane/adapted-tree/node_modules/mocha/lib/runner.js:570:5)\n    at processImmediate (node:internal/timers:534:21)",
+        "frames": [
+          {
+            "function": "context.addInitializer",
+            "url": "",
+            "scriptId": "1954",
+            "line": 12,
+            "column": 59
+          },
+          {
+            "function": "",
+            "url": "file:///workspace/scratch/filter-freeze/lane/adapted-tree/built/local/run.js",
+            "scriptId": "200",
+            "line": 226945,
+            "column": 43
+          },
+          {
+            "function": "assertThrows",
+            "url": "file:///workspace/scratch/filter-freeze/lane/adapted-tree/node_modules/chai/lib/chai/core/assertions.js",
+            "scriptId": "264",
+            "line": 2644,
+            "column": 7
+          },
+          {
+            "function": "methodWrapper",
+            "url": "file:///workspace/scratch/filter-freeze/lane/adapted-tree/node_modules/chai/lib/chai/utils/addMethod.js",
+            "scriptId": "249",
+            "line": 57,
+            "column": 25
+          },
+          {
+            "function": "assert.throws",
+            "url": "file:///workspace/scratch/filter-freeze/lane/adapted-tree/node_modules/chai/lib/chai/interface/assert.js",
+            "scriptId": "267",
+            "line": 1988,
+            "column": 16
+          },
+          {
+            "function": "",
+            "url": "file:///workspace/scratch/filter-freeze/lane/adapted-tree/built/local/run.js",
+            "scriptId": "200",
+            "line": 226945,
+            "column": 22
+          },
+          {
+            "function": "callFn",
+            "url": "file:///workspace/scratch/filter-freeze/lane/adapted-tree/node_modules/mocha/lib/runnable.js",
+            "scriptId": "171",
+            "line": 364,
+            "column": 21
+          },
+          {
+            "function": "Runnable.run",
+            "url": "file:///workspace/scratch/filter-freeze/lane/adapted-tree/node_modules/mocha/lib/runnable.js",
+            "scriptId": "171",
+            "line": 352,
+            "column": 5
+          },
+          {
+            "function": "Mocha.Runnable.run",
+            "url": "",
+            "scriptId": "116",
+            "line": 63,
+            "column": 131
+          },
+          {
+            "function": "Mocha.Runnable.run",
+            "url": "file:///workspace/scratch/filter-freeze/repo/stage3/oracle/observe-errors.cjs",
+            "scriptId": "199",
+            "line": 11,
+            "column": 24
+          },
+          {
+            "function": "Runner.runTest",
+            "url": "file:///workspace/scratch/filter-freeze/lane/adapted-tree/node_modules/mocha/lib/runner.js",
+            "scriptId": "166",
+            "line": 677,
+            "column": 10
+          },
+          {
+            "function": "",
+            "url": "file:///workspace/scratch/filter-freeze/lane/adapted-tree/node_modules/mocha/lib/runner.js",
+            "scriptId": "166",
+            "line": 800,
+            "column": 12
+          },
+          {
+            "function": "next",
+            "url": "file:///workspace/scratch/filter-freeze/lane/adapted-tree/node_modules/mocha/lib/runner.js",
+            "scriptId": "166",
+            "line": 592,
+            "column": 14
+          },
+          {
+            "function": "",
+            "url": "file:///workspace/scratch/filter-freeze/lane/adapted-tree/node_modules/mocha/lib/runner.js",
+            "scriptId": "166",
+            "line": 602,
+            "column": 7
+          },
+          {
+            "function": "next",
+            "url": "file:///workspace/scratch/filter-freeze/lane/adapted-tree/node_modules/mocha/lib/runner.js",
+            "scriptId": "166",
+            "line": 485,
+            "column": 14
+          },
+          {
+            "function": "",
+            "url": "file:///workspace/scratch/filter-freeze/lane/adapted-tree/node_modules/mocha/lib/runner.js",
+            "scriptId": "166",
+            "line": 570,
+            "column": 5
+          },
+          {
+            "function": "processImmediate",
+            "url": "",
+            "scriptId": "10",
+            "line": 534,
+            "column": 21
+          }
+        ],
+        "frozen_aliases": [],
+        "observed_sites": [
+          "src/compiler/factory/utilities.ts:761:12",
+          "src/compiler/commandLineParser.ts:2550:16",
+          "src/compiler/commandLineParser.ts:3157:32",
+          "src/compiler/checker.ts:6586:39",
+          "src/compiler/checker.ts:10370:48",
+          "src/compiler/checker.ts:16764:27",
+          "src/compiler/checker.ts:47509:16",
+          "src/services/services.ts:745:94",
+          "src/services/services.ts:755:94",
+          "src/services/services.ts:780:81",
+          "src/services/services.ts:790:81",
+          "src/services/codefixes/fixAddMissingParam.ts:143:46"
+        ],
+        "classification": "unrelated-explicit-decorator-error",
+        "classification_evidence": "src/compiler/factory/emitHelpers.ts:783 explicitly throws this TypeError when done, before extraInitializers.push; six esDecorators cannot-call-after-decoration tests assert it."
+      },
+      {
+        "pid": 9212,
+        "argv": [
+          "/workspace/adamic-tools/bin/node",
+          "/workspace/scratch/filter-freeze/lane/adapted-tree/built/local/run.js",
+          "--config=\"/workspace/scratch/filter-freeze/tmp/ts-tests1/task-config2.json\""
+        ],
+        "cwd": "/workspace/scratch/filter-freeze/lane/adapted-tree",
+        "case": {
+          "title": " unittests:: evaluation:: esDecorators context .addInitializer for: method cannot call after decoration",
+          "type": "test"
+        },
+        "description": "TypeError: Cannot add initializers after decoration has completed\n    at Object.context.addInitializer (eval at evaluate (/workspace/scratch/filter-freeze/lane/adapted-tree/src/harness/evaluatorImpl.ts:196:40), <anonymous>:19:65)\n    at /workspace/scratch/filter-freeze/lane/adapted-tree/src/testRunner/unittests/evaluation/esDecorators.ts:1191:49\n    at Proxy.assertThrows (/workspace/scratch/filter-freeze/lane/adapted-tree/node_modules/chai/lib/chai/core/assertions.js:2644:7)\n    at Proxy.methodWrapper (/workspace/scratch/filter-freeze/lane/adapted-tree/node_modules/chai/lib/chai/utils/addMethod.js:57:25)\n    at chai.assert.assert.throws (/workspace/scratch/filter-freeze/lane/adapted-tree/node_modules/chai/lib/chai/interface/assert.js:1988:16)\n    at Context.<anonymous> (/workspace/scratch/filter-freeze/lane/adapted-tree/src/testRunner/unittests/evaluation/esDecorators.ts:1191:28)\n    at callFn (/workspace/scratch/filter-freeze/lane/adapted-tree/node_modules/mocha/lib/runnable.js:364:21)\n    at Test2.Runnable.run (/workspace/scratch/filter-freeze/lane/adapted-tree/node_modules/mocha/lib/runnable.js:352:5)\n    at Test2.Mocha.Runnable.run (/workspace/scratch/filter-freeze/repo/stage3/census/filter-freeze/observe.cjs:63:131)\n    at Test2.Mocha.Runnable.run (/workspace/scratch/filter-freeze/repo/stage3/oracle/observe-errors.cjs:11:24)\n    at Runner.runTest (/workspace/scratch/filter-freeze/lane/adapted-tree/node_modules/mocha/lib/runner.js:677:10)\n    at /workspace/scratch/filter-freeze/lane/adapted-tree/node_modules/mocha/lib/runner.js:800:12\n    at next (/workspace/scratch/filter-freeze/lane/adapted-tree/node_modules/mocha/lib/runner.js:592:14)\n    at /workspace/scratch/filter-freeze/lane/adapted-tree/node_modules/mocha/lib/runner.js:602:7\n    at next (/workspace/scratch/filter-freeze/lane/adapted-tree/node_modules/mocha/lib/runner.js:485:14)\n    at Immediate._onImmediate (/workspace/scratch/filter-freeze/lane/adapted-tree/node_modules/mocha/lib/runner.js:570:5)\n    at processImmediate (node:internal/timers:534:21)",
+        "frames": [
+          {
+            "function": "context.addInitializer",
+            "url": "",
+            "scriptId": "1959",
+            "line": 19,
+            "column": 59
+          },
+          {
+            "function": "",
+            "url": "file:///workspace/scratch/filter-freeze/lane/adapted-tree/built/local/run.js",
+            "scriptId": "200",
+            "line": 227001,
+            "column": 43
+          },
+          {
+            "function": "assertThrows",
+            "url": "file:///workspace/scratch/filter-freeze/lane/adapted-tree/node_modules/chai/lib/chai/core/assertions.js",
+            "scriptId": "264",
+            "line": 2644,
+            "column": 7
+          },
+          {
+            "function": "methodWrapper",
+            "url": "file:///workspace/scratch/filter-freeze/lane/adapted-tree/node_modules/chai/lib/chai/utils/addMethod.js",
+            "scriptId": "249",
+            "line": 57,
+            "column": 25
+          },
+          {
+            "function": "assert.throws",
+            "url": "file:///workspace/scratch/filter-freeze/lane/adapted-tree/node_modules/chai/lib/chai/interface/assert.js",
+            "scriptId": "267",
+            "line": 1988,
+            "column": 16
+          },
+          {
+            "function": "",
+            "url": "file:///workspace/scratch/filter-freeze/lane/adapted-tree/built/local/run.js",
+            "scriptId": "200",
+            "line": 227001,
+            "column": 22
+          },
+          {
+            "function": "callFn",
+            "url": "file:///workspace/scratch/filter-freeze/lane/adapted-tree/node_modules/mocha/lib/runnable.js",
+            "scriptId": "171",
+            "line": 364,
+            "column": 21
+          },
+          {
+            "function": "Runnable.run",
+            "url": "file:///workspace/scratch/filter-freeze/lane/adapted-tree/node_modules/mocha/lib/runnable.js",
+            "scriptId": "171",
+            "line": 352,
+            "column": 5
+          },
+          {
+            "function": "Mocha.Runnable.run",
+            "url": "",
+            "scriptId": "116",
+            "line": 63,
+            "column": 131
+          },
+          {
+            "function": "Mocha.Runnable.run",
+            "url": "file:///workspace/scratch/filter-freeze/repo/stage3/oracle/observe-errors.cjs",
+            "scriptId": "199",
+            "line": 11,
+            "column": 24
+          },
+          {
+            "function": "Runner.runTest",
+            "url": "file:///workspace/scratch/filter-freeze/lane/adapted-tree/node_modules/mocha/lib/runner.js",
+            "scriptId": "166",
+            "line": 677,
+            "column": 10
+          },
+          {
+            "function": "",
+            "url": "file:///workspace/scratch/filter-freeze/lane/adapted-tree/node_modules/mocha/lib/runner.js",
+            "scriptId": "166",
+            "line": 800,
+            "column": 12
+          },
+          {
+            "function": "next",
+            "url": "file:///workspace/scratch/filter-freeze/lane/adapted-tree/node_modules/mocha/lib/runner.js",
+            "scriptId": "166",
+            "line": 592,
+            "column": 14
+          },
+          {
+            "function": "",
+            "url": "file:///workspace/scratch/filter-freeze/lane/adapted-tree/node_modules/mocha/lib/runner.js",
+            "scriptId": "166",
+            "line": 602,
+            "column": 7
+          },
+          {
+            "function": "next",
+            "url": "file:///workspace/scratch/filter-freeze/lane/adapted-tree/node_modules/mocha/lib/runner.js",
+            "scriptId": "166",
+            "line": 485,
+            "column": 14
+          },
+          {
+            "function": "",
+            "url": "file:///workspace/scratch/filter-freeze/lane/adapted-tree/node_modules/mocha/lib/runner.js",
+            "scriptId": "166",
+            "line": 570,
+            "column": 5
+          },
+          {
+            "function": "processImmediate",
+            "url": "",
+            "scriptId": "10",
+            "line": 534,
+            "column": 21
+          }
+        ],
+        "frozen_aliases": [],
+        "observed_sites": [
+          "src/compiler/factory/utilities.ts:761:12",
+          "src/compiler/commandLineParser.ts:2550:16",
+          "src/compiler/commandLineParser.ts:3157:32",
+          "src/compiler/checker.ts:6586:39",
+          "src/compiler/checker.ts:10370:48",
+          "src/compiler/checker.ts:16764:27",
+          "src/compiler/checker.ts:47509:16",
+          "src/services/services.ts:745:94",
+          "src/services/services.ts:755:94",
+          "src/services/services.ts:780:81",
+          "src/services/services.ts:790:81",
+          "src/services/codefixes/fixAddMissingParam.ts:143:46"
+        ],
+        "classification": "unrelated-explicit-decorator-error",
+        "classification_evidence": "src/compiler/factory/emitHelpers.ts:783 explicitly throws this TypeError when done, before extraInitializers.push; six esDecorators cannot-call-after-decoration tests assert it."
+      },
+      {
+        "pid": 9212,
+        "argv": [
+          "/workspace/adamic-tools/bin/node",
+          "/workspace/scratch/filter-freeze/lane/adapted-tree/built/local/run.js",
+          "--config=\"/workspace/scratch/filter-freeze/tmp/ts-tests1/task-config2.json\""
+        ],
+        "cwd": "/workspace/scratch/filter-freeze/lane/adapted-tree",
+        "case": {
+          "title": " unittests:: evaluation:: esDecorators context .addInitializer for: getter cannot call after decoration",
+          "type": "test"
+        },
+        "description": "TypeError: Cannot add initializers after decoration has completed\n    at Object.context.addInitializer (eval at evaluate (/workspace/scratch/filter-freeze/lane/adapted-tree/src/harness/evaluatorImpl.ts:196:40), <anonymous>:19:65)\n    at /workspace/scratch/filter-freeze/lane/adapted-tree/src/testRunner/unittests/evaluation/esDecorators.ts:1272:49\n    at Proxy.assertThrows (/workspace/scratch/filter-freeze/lane/adapted-tree/node_modules/chai/lib/chai/core/assertions.js:2644:7)\n    at Proxy.methodWrapper (/workspace/scratch/filter-freeze/lane/adapted-tree/node_modules/chai/lib/chai/utils/addMethod.js:57:25)\n    at chai.assert.assert.throws (/workspace/scratch/filter-freeze/lane/adapted-tree/node_modules/chai/lib/chai/interface/assert.js:1988:16)\n    at Context.<anonymous> (/workspace/scratch/filter-freeze/lane/adapted-tree/src/testRunner/unittests/evaluation/esDecorators.ts:1272:28)\n    at callFn (/workspace/scratch/filter-freeze/lane/adapted-tree/node_modules/mocha/lib/runnable.js:364:21)\n    at Test2.Runnable.run (/workspace/scratch/filter-freeze/lane/adapted-tree/node_modules/mocha/lib/runnable.js:352:5)\n    at Test2.Mocha.Runnable.run (/workspace/scratch/filter-freeze/repo/stage3/census/filter-freeze/observe.cjs:63:131)\n    at Test2.Mocha.Runnable.run (/workspace/scratch/filter-freeze/repo/stage3/oracle/observe-errors.cjs:11:24)\n    at Runner.runTest (/workspace/scratch/filter-freeze/lane/adapted-tree/node_modules/mocha/lib/runner.js:677:10)\n    at /workspace/scratch/filter-freeze/lane/adapted-tree/node_modules/mocha/lib/runner.js:800:12\n    at next (/workspace/scratch/filter-freeze/lane/adapted-tree/node_modules/mocha/lib/runner.js:592:14)\n    at /workspace/scratch/filter-freeze/lane/adapted-tree/node_modules/mocha/lib/runner.js:602:7\n    at next (/workspace/scratch/filter-freeze/lane/adapted-tree/node_modules/mocha/lib/runner.js:485:14)\n    at Immediate._onImmediate (/workspace/scratch/filter-freeze/lane/adapted-tree/node_modules/mocha/lib/runner.js:570:5)\n    at processImmediate (node:internal/timers:534:21)",
+        "frames": [
+          {
+            "function": "context.addInitializer",
+            "url": "",
+            "scriptId": "1966",
+            "line": 19,
+            "column": 59
+          },
+          {
+            "function": "",
+            "url": "file:///workspace/scratch/filter-freeze/lane/adapted-tree/built/local/run.js",
+            "scriptId": "200",
+            "line": 227088,
+            "column": 43
+          },
+          {
+            "function": "assertThrows",
+            "url": "file:///workspace/scratch/filter-freeze/lane/adapted-tree/node_modules/chai/lib/chai/core/assertions.js",
+            "scriptId": "264",
+            "line": 2644,
+            "column": 7
+          },
+          {
+            "function": "methodWrapper",
+            "url": "file:///workspace/scratch/filter-freeze/lane/adapted-tree/node_modules/chai/lib/chai/utils/addMethod.js",
+            "scriptId": "249",
+            "line": 57,
+            "column": 25
+          },
+          {
+            "function": "assert.throws",
+            "url": "file:///workspace/scratch/filter-freeze/lane/adapted-tree/node_modules/chai/lib/chai/interface/assert.js",
+            "scriptId": "267",
+            "line": 1988,
+            "column": 16
+          },
+          {
+            "function": "",
+            "url": "file:///workspace/scratch/filter-freeze/lane/adapted-tree/built/local/run.js",
+            "scriptId": "200",
+            "line": 227088,
+            "column": 22
+          },
+          {
+            "function": "callFn",
+            "url": "file:///workspace/scratch/filter-freeze/lane/adapted-tree/node_modules/mocha/lib/runnable.js",
+            "scriptId": "171",
+            "line": 364,
+            "column": 21
+          },
+          {
+            "function": "Runnable.run",
+            "url": "file:///workspace/scratch/filter-freeze/lane/adapted-tree/node_modules/mocha/lib/runnable.js",
+            "scriptId": "171",
+            "line": 352,
+            "column": 5
+          },
+          {
+            "function": "Mocha.Runnable.run",
+            "url": "",
+            "scriptId": "116",
+            "line": 63,
+            "column": 131
+          },
+          {
+            "function": "Mocha.Runnable.run",
+            "url": "file:///workspace/scratch/filter-freeze/repo/stage3/oracle/observe-errors.cjs",
+            "scriptId": "199",
+            "line": 11,
+            "column": 24
+          },
+          {
+            "function": "Runner.runTest",
+            "url": "file:///workspace/scratch/filter-freeze/lane/adapted-tree/node_modules/mocha/lib/runner.js",
+            "scriptId": "166",
+            "line": 677,
+            "column": 10
+          },
+          {
+            "function": "",
+            "url": "file:///workspace/scratch/filter-freeze/lane/adapted-tree/node_modules/mocha/lib/runner.js",
+            "scriptId": "166",
+            "line": 800,
+            "column": 12
+          },
+          {
+            "function": "next",
+            "url": "file:///workspace/scratch/filter-freeze/lane/adapted-tree/node_modules/mocha/lib/runner.js",
+            "scriptId": "166",
+            "line": 592,
+            "column": 14
+          },
+          {
+            "function": "",
+            "url": "file:///workspace/scratch/filter-freeze/lane/adapted-tree/node_modules/mocha/lib/runner.js",
+            "scriptId": "166",
+            "line": 602,
+            "column": 7
+          },
+          {
+            "function": "next",
+            "url": "file:///workspace/scratch/filter-freeze/lane/adapted-tree/node_modules/mocha/lib/runner.js",
+            "scriptId": "166",
+            "line": 485,
+            "column": 14
+          },
+          {
+            "function": "",
+            "url": "file:///workspace/scratch/filter-freeze/lane/adapted-tree/node_modules/mocha/lib/runner.js",
+            "scriptId": "166",
+            "line": 570,
+            "column": 5
+          },
+          {
+            "function": "processImmediate",
+            "url": "",
+            "scriptId": "10",
+            "line": 534,
+            "column": 21
+          }
+        ],
+        "frozen_aliases": [],
+        "observed_sites": [
+          "src/compiler/factory/utilities.ts:761:12",
+          "src/compiler/commandLineParser.ts:2550:16",
+          "src/compiler/commandLineParser.ts:3157:32",
+          "src/compiler/checker.ts:6586:39",
+          "src/compiler/checker.ts:10370:48",
+          "src/compiler/checker.ts:16764:27",
+          "src/compiler/checker.ts:47509:16",
+          "src/services/services.ts:745:94",
+          "src/services/services.ts:755:94",
+          "src/services/services.ts:780:81",
+          "src/services/services.ts:790:81",
+          "src/services/codefixes/fixAddMissingParam.ts:143:46"
+        ],
+        "classification": "unrelated-explicit-decorator-error",
+        "classification_evidence": "src/compiler/factory/emitHelpers.ts:783 explicitly throws this TypeError when done, before extraInitializers.push; six esDecorators cannot-call-after-decoration tests assert it."
+      },
+      {
+        "pid": 9212,
+        "argv": [
+          "/workspace/adamic-tools/bin/node",
+          "/workspace/scratch/filter-freeze/lane/adapted-tree/built/local/run.js",
+          "--config=\"/workspace/scratch/filter-freeze/tmp/ts-tests1/task-config2.json\""
+        ],
+        "cwd": "/workspace/scratch/filter-freeze/lane/adapted-tree",
+        "case": {
+          "title": " unittests:: evaluation:: esDecorators context .addInitializer for: setter cannot call after decoration",
+          "type": "test"
+        },
+        "description": "TypeError: Cannot add initializers after decoration has completed\n    at Object.context.addInitializer (eval at evaluate (/workspace/scratch/filter-freeze/lane/adapted-tree/src/harness/evaluatorImpl.ts:196:40), <anonymous>:19:65)\n    at /workspace/scratch/filter-freeze/lane/adapted-tree/src/testRunner/unittests/evaluation/esDecorators.ts:1353:49\n    at Proxy.assertThrows (/workspace/scratch/filter-freeze/lane/adapted-tree/node_modules/chai/lib/chai/core/assertions.js:2644:7)\n    at Proxy.methodWrapper (/workspace/scratch/filter-freeze/lane/adapted-tree/node_modules/chai/lib/chai/utils/addMethod.js:57:25)\n    at chai.assert.assert.throws (/workspace/scratch/filter-freeze/lane/adapted-tree/node_modules/chai/lib/chai/interface/assert.js:1988:16)\n    at Context.<anonymous> (/workspace/scratch/filter-freeze/lane/adapted-tree/src/testRunner/unittests/evaluation/esDecorators.ts:1353:28)\n    at callFn (/workspace/scratch/filter-freeze/lane/adapted-tree/node_modules/mocha/lib/runnable.js:364:21)\n    at Test2.Runnable.run (/workspace/scratch/filter-freeze/lane/adapted-tree/node_modules/mocha/lib/runnable.js:352:5)\n    at Test2.Mocha.Runnable.run (/workspace/scratch/filter-freeze/repo/stage3/census/filter-freeze/observe.cjs:63:131)\n    at Test2.Mocha.Runnable.run (/workspace/scratch/filter-freeze/repo/stage3/oracle/observe-errors.cjs:11:24)\n    at Runner.runTest (/workspace/scratch/filter-freeze/lane/adapted-tree/node_modules/mocha/lib/runner.js:677:10)\n    at /workspace/scratch/filter-freeze/lane/adapted-tree/node_modules/mocha/lib/runner.js:800:12\n    at next (/workspace/scratch/filter-freeze/lane/adapted-tree/node_modules/mocha/lib/runner.js:592:14)\n    at /workspace/scratch/filter-freeze/lane/adapted-tree/node_modules/mocha/lib/runner.js:602:7\n    at next (/workspace/scratch/filter-freeze/lane/adapted-tree/node_modules/mocha/lib/runner.js:485:14)\n    at Immediate._onImmediate (/workspace/scratch/filter-freeze/lane/adapted-tree/node_modules/mocha/lib/runner.js:570:5)\n    at processImmediate (node:internal/timers:534:21)",
+        "frames": [
+          {
+            "function": "context.addInitializer",
+            "url": "",
+            "scriptId": "1973",
+            "line": 19,
+            "column": 59
+          },
+          {
+            "function": "",
+            "url": "file:///workspace/scratch/filter-freeze/lane/adapted-tree/built/local/run.js",
+            "scriptId": "200",
+            "line": 227175,
+            "column": 43
+          },
+          {
+            "function": "assertThrows",
+            "url": "file:///workspace/scratch/filter-freeze/lane/adapted-tree/node_modules/chai/lib/chai/core/assertions.js",
+            "scriptId": "264",
+            "line": 2644,
+            "column": 7
+          },
+          {
+            "function": "methodWrapper",
+            "url": "file:///workspace/scratch/filter-freeze/lane/adapted-tree/node_modules/chai/lib/chai/utils/addMethod.js",
+            "scriptId": "249",
+            "line": 57,
+            "column": 25
+          },
+          {
+            "function": "assert.throws",
+            "url": "file:///workspace/scratch/filter-freeze/lane/adapted-tree/node_modules/chai/lib/chai/interface/assert.js",
+            "scriptId": "267",
+            "line": 1988,
+            "column": 16
+          },
+          {
+            "function": "",
+            "url": "file:///workspace/scratch/filter-freeze/lane/adapted-tree/built/local/run.js",
+            "scriptId": "200",
+            "line": 227175,
+            "column": 22
+          },
+          {
+            "function": "callFn",
+            "url": "file:///workspace/scratch/filter-freeze/lane/adapted-tree/node_modules/mocha/lib/runnable.js",
+            "scriptId": "171",
+            "line": 364,
+            "column": 21
+          },
+          {
+            "function": "Runnable.run",
+            "url": "file:///workspace/scratch/filter-freeze/lane/adapted-tree/node_modules/mocha/lib/runnable.js",
+            "scriptId": "171",
+            "line": 352,
+            "column": 5
+          },
+          {
+            "function": "Mocha.Runnable.run",
+            "url": "",
+            "scriptId": "116",
+            "line": 63,
+            "column": 131
+          },
+          {
+            "function": "Mocha.Runnable.run",
+            "url": "file:///workspace/scratch/filter-freeze/repo/stage3/oracle/observe-errors.cjs",
+            "scriptId": "199",
+            "line": 11,
+            "column": 24
+          },
+          {
+            "function": "Runner.runTest",
+            "url": "file:///workspace/scratch/filter-freeze/lane/adapted-tree/node_modules/mocha/lib/runner.js",
+            "scriptId": "166",
+            "line": 677,
+            "column": 10
+          },
+          {
+            "function": "",
+            "url": "file:///workspace/scratch/filter-freeze/lane/adapted-tree/node_modules/mocha/lib/runner.js",
+            "scriptId": "166",
+            "line": 800,
+            "column": 12
+          },
+          {
+            "function": "next",
+            "url": "file:///workspace/scratch/filter-freeze/lane/adapted-tree/node_modules/mocha/lib/runner.js",
+            "scriptId": "166",
+            "line": 592,
+            "column": 14
+          },
+          {
+            "function": "",
+            "url": "file:///workspace/scratch/filter-freeze/lane/adapted-tree/node_modules/mocha/lib/runner.js",
+            "scriptId": "166",
+            "line": 602,
+            "column": 7
+          },
+          {
+            "function": "next",
+            "url": "file:///workspace/scratch/filter-freeze/lane/adapted-tree/node_modules/mocha/lib/runner.js",
+            "scriptId": "166",
+            "line": 485,
+            "column": 14
+          },
+          {
+            "function": "",
+            "url": "file:///workspace/scratch/filter-freeze/lane/adapted-tree/node_modules/mocha/lib/runner.js",
+            "scriptId": "166",
+            "line": 570,
+            "column": 5
+          },
+          {
+            "function": "processImmediate",
+            "url": "",
+            "scriptId": "10",
+            "line": 534,
+            "column": 21
+          }
+        ],
+        "frozen_aliases": [],
+        "observed_sites": [
+          "src/compiler/factory/utilities.ts:761:12",
+          "src/compiler/commandLineParser.ts:2550:16",
+          "src/compiler/commandLineParser.ts:3157:32",
+          "src/compiler/checker.ts:6586:39",
+          "src/compiler/checker.ts:10370:48",
+          "src/compiler/checker.ts:16764:27",
+          "src/compiler/checker.ts:47509:16",
+          "src/services/services.ts:745:94",
+          "src/services/services.ts:755:94",
+          "src/services/services.ts:780:81",
+          "src/services/services.ts:790:81",
+          "src/services/codefixes/fixAddMissingParam.ts:143:46"
+        ],
+        "classification": "unrelated-explicit-decorator-error",
+        "classification_evidence": "src/compiler/factory/emitHelpers.ts:783 explicitly throws this TypeError when done, before extraInitializers.push; six esDecorators cannot-call-after-decoration tests assert it."
+      },
+      {
+        "pid": 9212,
+        "argv": [
+          "/workspace/adamic-tools/bin/node",
+          "/workspace/scratch/filter-freeze/lane/adapted-tree/built/local/run.js",
+          "--config=\"/workspace/scratch/filter-freeze/tmp/ts-tests1/task-config2.json\""
+        ],
+        "cwd": "/workspace/scratch/filter-freeze/lane/adapted-tree",
+        "case": {
+          "title": " unittests:: evaluation:: esDecorators context .addInitializer for: field cannot call after decoration",
+          "type": "test"
+        },
+        "description": "TypeError: Cannot add initializers after decoration has completed\n    at Object.context.addInitializer (eval at evaluate (/workspace/scratch/filter-freeze/lane/adapted-tree/src/harness/evaluatorImpl.ts:196:40), <anonymous>:12:65)\n    at /workspace/scratch/filter-freeze/lane/adapted-tree/src/testRunner/unittests/evaluation/esDecorators.ts:1434:49\n    at Proxy.assertThrows (/workspace/scratch/filter-freeze/lane/adapted-tree/node_modules/chai/lib/chai/core/assertions.js:2644:7)\n    at Proxy.methodWrapper (/workspace/scratch/filter-freeze/lane/adapted-tree/node_modules/chai/lib/chai/utils/addMethod.js:57:25)\n    at chai.assert.assert.throws (/workspace/scratch/filter-freeze/lane/adapted-tree/node_modules/chai/lib/chai/interface/assert.js:1988:16)\n    at Context.<anonymous> (/workspace/scratch/filter-freeze/lane/adapted-tree/src/testRunner/unittests/evaluation/esDecorators.ts:1434:28)\n    at callFn (/workspace/scratch/filter-freeze/lane/adapted-tree/node_modules/mocha/lib/runnable.js:364:21)\n    at Test2.Runnable.run (/workspace/scratch/filter-freeze/lane/adapted-tree/node_modules/mocha/lib/runnable.js:352:5)\n    at Test2.Mocha.Runnable.run (/workspace/scratch/filter-freeze/repo/stage3/census/filter-freeze/observe.cjs:63:131)\n    at Test2.Mocha.Runnable.run (/workspace/scratch/filter-freeze/repo/stage3/oracle/observe-errors.cjs:11:24)\n    at Runner.runTest (/workspace/scratch/filter-freeze/lane/adapted-tree/node_modules/mocha/lib/runner.js:677:10)\n    at /workspace/scratch/filter-freeze/lane/adapted-tree/node_modules/mocha/lib/runner.js:800:12\n    at next (/workspace/scratch/filter-freeze/lane/adapted-tree/node_modules/mocha/lib/runner.js:592:14)\n    at /workspace/scratch/filter-freeze/lane/adapted-tree/node_modules/mocha/lib/runner.js:602:7\n    at next (/workspace/scratch/filter-freeze/lane/adapted-tree/node_modules/mocha/lib/runner.js:485:14)\n    at Immediate._onImmediate (/workspace/scratch/filter-freeze/lane/adapted-tree/node_modules/mocha/lib/runner.js:570:5)\n    at processImmediate (node:internal/timers:534:21)",
+        "frames": [
+          {
+            "function": "context.addInitializer",
+            "url": "",
+            "scriptId": "1980",
+            "line": 12,
+            "column": 59
+          },
+          {
+            "function": "",
+            "url": "file:///workspace/scratch/filter-freeze/lane/adapted-tree/built/local/run.js",
+            "scriptId": "200",
+            "line": 227262,
+            "column": 43
+          },
+          {
+            "function": "assertThrows",
+            "url": "file:///workspace/scratch/filter-freeze/lane/adapted-tree/node_modules/chai/lib/chai/core/assertions.js",
+            "scriptId": "264",
+            "line": 2644,
+            "column": 7
+          },
+          {
+            "function": "methodWrapper",
+            "url": "file:///workspace/scratch/filter-freeze/lane/adapted-tree/node_modules/chai/lib/chai/utils/addMethod.js",
+            "scriptId": "249",
+            "line": 57,
+            "column": 25
+          },
+          {
+            "function": "assert.throws",
+            "url": "file:///workspace/scratch/filter-freeze/lane/adapted-tree/node_modules/chai/lib/chai/interface/assert.js",
+            "scriptId": "267",
+            "line": 1988,
+            "column": 16
+          },
+          {
+            "function": "",
+            "url": "file:///workspace/scratch/filter-freeze/lane/adapted-tree/built/local/run.js",
+            "scriptId": "200",
+            "line": 227262,
+            "column": 22
+          },
+          {
+            "function": "callFn",
+            "url": "file:///workspace/scratch/filter-freeze/lane/adapted-tree/node_modules/mocha/lib/runnable.js",
+            "scriptId": "171",
+            "line": 364,
+            "column": 21
+          },
+          {
+            "function": "Runnable.run",
+            "url": "file:///workspace/scratch/filter-freeze/lane/adapted-tree/node_modules/mocha/lib/runnable.js",
+            "scriptId": "171",
+            "line": 352,
+            "column": 5
+          },
+          {
+            "function": "Mocha.Runnable.run",
+            "url": "",
+            "scriptId": "116",
+            "line": 63,
+            "column": 131
+          },
+          {
+            "function": "Mocha.Runnable.run",
+            "url": "file:///workspace/scratch/filter-freeze/repo/stage3/oracle/observe-errors.cjs",
+            "scriptId": "199",
+            "line": 11,
+            "column": 24
+          },
+          {
+            "function": "Runner.runTest",
+            "url": "file:///workspace/scratch/filter-freeze/lane/adapted-tree/node_modules/mocha/lib/runner.js",
+            "scriptId": "166",
+            "line": 677,
+            "column": 10
+          },
+          {
+            "function": "",
+            "url": "file:///workspace/scratch/filter-freeze/lane/adapted-tree/node_modules/mocha/lib/runner.js",
+            "scriptId": "166",
+            "line": 800,
+            "column": 12
+          },
+          {
+            "function": "next",
+            "url": "file:///workspace/scratch/filter-freeze/lane/adapted-tree/node_modules/mocha/lib/runner.js",
+            "scriptId": "166",
+            "line": 592,
+            "column": 14
+          },
+          {
+            "function": "",
+            "url": "file:///workspace/scratch/filter-freeze/lane/adapted-tree/node_modules/mocha/lib/runner.js",
+            "scriptId": "166",
+            "line": 602,
+            "column": 7
+          },
+          {
+            "function": "next",
+            "url": "file:///workspace/scratch/filter-freeze/lane/adapted-tree/node_modules/mocha/lib/runner.js",
+            "scriptId": "166",
+            "line": 485,
+            "column": 14
+          },
+          {
+            "function": "",
+            "url": "file:///workspace/scratch/filter-freeze/lane/adapted-tree/node_modules/mocha/lib/runner.js",
+            "scriptId": "166",
+            "line": 570,
+            "column": 5
+          },
+          {
+            "function": "processImmediate",
+            "url": "",
+            "scriptId": "10",
+            "line": 534,
+            "column": 21
+          }
+        ],
+        "frozen_aliases": [],
+        "observed_sites": [
+          "src/compiler/factory/utilities.ts:761:12",
+          "src/compiler/commandLineParser.ts:2550:16",
+          "src/compiler/commandLineParser.ts:3157:32",
+          "src/compiler/checker.ts:6586:39",
+          "src/compiler/checker.ts:10370:48",
+          "src/compiler/checker.ts:16764:27",
+          "src/compiler/checker.ts:47509:16",
+          "src/services/services.ts:745:94",
+          "src/services/services.ts:755:94",
+          "src/services/services.ts:780:81",
+          "src/services/services.ts:790:81",
+          "src/services/codefixes/fixAddMissingParam.ts:143:46"
+        ],
+        "classification": "unrelated-explicit-decorator-error",
+        "classification_evidence": "src/compiler/factory/emitHelpers.ts:783 explicitly throws this TypeError when done, before extraInitializers.push; six esDecorators cannot-call-after-decoration tests assert it."
+      },
+      {
+        "pid": 9212,
+        "argv": [
+          "/workspace/adamic-tools/bin/node",
+          "/workspace/scratch/filter-freeze/lane/adapted-tree/built/local/run.js",
+          "--config=\"/workspace/scratch/filter-freeze/tmp/ts-tests1/task-config2.json\""
+        ],
+        "cwd": "/workspace/scratch/filter-freeze/lane/adapted-tree",
+        "case": {
+          "title": " unittests:: evaluation:: esDecorators context .addInitializer for: auto-accessor cannot call after decoration",
+          "type": "test"
+        },
+        "description": "TypeError: Cannot add initializers after decoration has completed\n    at Object.context.addInitializer (eval at evaluate (/workspace/scratch/filter-freeze/lane/adapted-tree/src/harness/evaluatorImpl.ts:196:40), <anonymous>:12:65)\n    at /workspace/scratch/filter-freeze/lane/adapted-tree/src/testRunner/unittests/evaluation/esDecorators.ts:1515:49\n    at Proxy.assertThrows (/workspace/scratch/filter-freeze/lane/adapted-tree/node_modules/chai/lib/chai/core/assertions.js:2644:7)\n    at Proxy.methodWrapper (/workspace/scratch/filter-freeze/lane/adapted-tree/node_modules/chai/lib/chai/utils/addMethod.js:57:25)\n    at chai.assert.assert.throws (/workspace/scratch/filter-freeze/lane/adapted-tree/node_modules/chai/lib/chai/interface/assert.js:1988:16)\n    at Context.<anonymous> (/workspace/scratch/filter-freeze/lane/adapted-tree/src/testRunner/unittests/evaluation/esDecorators.ts:1515:28)\n    at callFn (/workspace/scratch/filter-freeze/lane/adapted-tree/node_modules/mocha/lib/runnable.js:364:21)\n    at Test2.Runnable.run (/workspace/scratch/filter-freeze/lane/adapted-tree/node_modules/mocha/lib/runnable.js:352:5)\n    at Test2.Mocha.Runnable.run (/workspace/scratch/filter-freeze/repo/stage3/census/filter-freeze/observe.cjs:63:131)\n    at Test2.Mocha.Runnable.run (/workspace/scratch/filter-freeze/repo/stage3/oracle/observe-errors.cjs:11:24)\n    at Runner.runTest (/workspace/scratch/filter-freeze/lane/adapted-tree/node_modules/mocha/lib/runner.js:677:10)\n    at /workspace/scratch/filter-freeze/lane/adapted-tree/node_modules/mocha/lib/runner.js:800:12\n    at next (/workspace/scratch/filter-freeze/lane/adapted-tree/node_modules/mocha/lib/runner.js:592:14)\n    at /workspace/scratch/filter-freeze/lane/adapted-tree/node_modules/mocha/lib/runner.js:602:7\n    at next (/workspace/scratch/filter-freeze/lane/adapted-tree/node_modules/mocha/lib/runner.js:485:14)\n    at Immediate._onImmediate (/workspace/scratch/filter-freeze/lane/adapted-tree/node_modules/mocha/lib/runner.js:570:5)\n    at processImmediate (node:internal/timers:534:21)",
+        "frames": [
+          {
+            "function": "context.addInitializer",
+            "url": "",
+            "scriptId": "1987",
+            "line": 12,
+            "column": 59
+          },
+          {
+            "function": "",
+            "url": "file:///workspace/scratch/filter-freeze/lane/adapted-tree/built/local/run.js",
+            "scriptId": "200",
+            "line": 227349,
+            "column": 43
+          },
+          {
+            "function": "assertThrows",
+            "url": "file:///workspace/scratch/filter-freeze/lane/adapted-tree/node_modules/chai/lib/chai/core/assertions.js",
+            "scriptId": "264",
+            "line": 2644,
+            "column": 7
+          },
+          {
+            "function": "methodWrapper",
+            "url": "file:///workspace/scratch/filter-freeze/lane/adapted-tree/node_modules/chai/lib/chai/utils/addMethod.js",
+            "scriptId": "249",
+            "line": 57,
+            "column": 25
+          },
+          {
+            "function": "assert.throws",
+            "url": "file:///workspace/scratch/filter-freeze/lane/adapted-tree/node_modules/chai/lib/chai/interface/assert.js",
+            "scriptId": "267",
+            "line": 1988,
+            "column": 16
+          },
+          {
+            "function": "",
+            "url": "file:///workspace/scratch/filter-freeze/lane/adapted-tree/built/local/run.js",
+            "scriptId": "200",
+            "line": 227349,
+            "column": 22
+          },
+          {
+            "function": "callFn",
+            "url": "file:///workspace/scratch/filter-freeze/lane/adapted-tree/node_modules/mocha/lib/runnable.js",
+            "scriptId": "171",
+            "line": 364,
+            "column": 21
+          },
+          {
+            "function": "Runnable.run",
+            "url": "file:///workspace/scratch/filter-freeze/lane/adapted-tree/node_modules/mocha/lib/runnable.js",
+            "scriptId": "171",
+            "line": 352,
+            "column": 5
+          },
+          {
+            "function": "Mocha.Runnable.run",
+            "url": "",
+            "scriptId": "116",
+            "line": 63,
+            "column": 131
+          },
+          {
+            "function": "Mocha.Runnable.run",
+            "url": "file:///workspace/scratch/filter-freeze/repo/stage3/oracle/observe-errors.cjs",
+            "scriptId": "199",
+            "line": 11,
+            "column": 24
+          },
+          {
+            "function": "Runner.runTest",
+            "url": "file:///workspace/scratch/filter-freeze/lane/adapted-tree/node_modules/mocha/lib/runner.js",
+            "scriptId": "166",
+            "line": 677,
+            "column": 10
+          },
+          {
+            "function": "",
+            "url": "file:///workspace/scratch/filter-freeze/lane/adapted-tree/node_modules/mocha/lib/runner.js",
+            "scriptId": "166",
+            "line": 800,
+            "column": 12
+          },
+          {
+            "function": "next",
+            "url": "file:///workspace/scratch/filter-freeze/lane/adapted-tree/node_modules/mocha/lib/runner.js",
+            "scriptId": "166",
+            "line": 592,
+            "column": 14
+          },
+          {
+            "function": "",
+            "url": "file:///workspace/scratch/filter-freeze/lane/adapted-tree/node_modules/mocha/lib/runner.js",
+            "scriptId": "166",
+            "line": 602,
+            "column": 7
+          },
+          {
+            "function": "next",
+            "url": "file:///workspace/scratch/filter-freeze/lane/adapted-tree/node_modules/mocha/lib/runner.js",
+            "scriptId": "166",
+            "line": 485,
+            "column": 14
+          },
+          {
+            "function": "",
+            "url": "file:///workspace/scratch/filter-freeze/lane/adapted-tree/node_modules/mocha/lib/runner.js",
+            "scriptId": "166",
+            "line": 570,
+            "column": 5
+          },
+          {
+            "function": "processImmediate",
+            "url": "",
+            "scriptId": "10",
+            "line": 534,
+            "column": 21
+          }
+        ],
+        "frozen_aliases": [],
+        "observed_sites": [
+          "src/compiler/factory/utilities.ts:761:12",
+          "src/compiler/commandLineParser.ts:2550:16",
+          "src/compiler/commandLineParser.ts:3157:32",
+          "src/compiler/checker.ts:6586:39",
+          "src/compiler/checker.ts:10370:48",
+          "src/compiler/checker.ts:16764:27",
+          "src/compiler/checker.ts:47509:16",
+          "src/services/services.ts:745:94",
+          "src/services/services.ts:755:94",
+          "src/services/services.ts:780:81",
+          "src/services/services.ts:790:81",
+          "src/services/codefixes/fixAddMissingParam.ts:143:46"
+        ],
+        "classification": "unrelated-explicit-decorator-error",
+        "classification_evidence": "src/compiler/factory/emitHelpers.ts:783 explicitly throws this TypeError when done, before extraInitializers.push; six esDecorators cannot-call-after-decoration tests assert it."
+      }
+    ],
+    "unclassified": []
+  },
+  "control": {
+    "freeze_writes": [
+      {
+        "pid": 10190,
+        "argv": [
+          "/workspace/adamic-tools/bin/node",
+          "/workspace/scratch/filter-freeze/control.cjs",
+          "/workspace/scratch/filter-freeze/adapted/built/local/typescript.js"
+        ],
+        "cwd": "/workspace/scratch/filter-freeze/repo",
+        "case": null,
+        "description": "TypeError: Cannot add property 2, object is not extensible\n    at Array.push (<anonymous>)\n    at /workspace/scratch/filter-freeze/control.cjs:8:27\n    at Object.<anonymous> (/workspace/scratch/filter-freeze/control.cjs:10:87)\n    at Module._compile (node:internal/modules/cjs/loader:1872:14)\n    at Object..js (node:internal/modules/cjs/loader:2003:10)\n    at Module.load (node:internal/modules/cjs/loader:1594:32)\n    at Module._load (node:internal/modules/cjs/loader:1396:12)\n    at wrapModuleLoad (node:internal/modules/cjs/loader:255:19)\n    at Module.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:154:5)\n    at node:internal/main/run_main_module:33:47",
+        "frames": [
+          {
+            "function": "",
+            "url": "file:///workspace/scratch/filter-freeze/control.cjs",
+            "scriptId": "119",
+            "line": 8,
+            "column": 27
+          },
+          {
+            "function": "",
+            "url": "file:///workspace/scratch/filter-freeze/control.cjs",
+            "scriptId": "119",
+            "line": 10,
+            "column": 87
+          },
+          {
+            "function": "",
+            "url": "",
+            "scriptId": "68",
+            "line": 1872,
+            "column": 14
+          },
+          {
+            "function": "",
+            "url": "",
+            "scriptId": "68",
+            "line": 2003,
+            "column": 10
+          },
+          {
+            "function": "",
+            "url": "",
+            "scriptId": "68",
+            "line": 1594,
+            "column": 32
+          },
+          {
+            "function": "",
+            "url": "",
+            "scriptId": "68",
+            "line": 1396,
+            "column": 12
+          },
+          {
+            "function": "wrapModuleLoad",
+            "url": "",
+            "scriptId": "68",
+            "line": 255,
+            "column": 19
+          },
+          {
+            "function": "executeUserEntryPoint",
+            "url": "",
+            "scriptId": "81",
+            "line": 154,
+            "column": 5
+          },
+          {
+            "function": "",
+            "url": "",
+            "scriptId": "86",
+            "line": 33,
+            "column": 47
+          }
+        ],
+        "frozen_aliases": [
+          {
+            "variable": "a",
+            "sites": [
+              "CONTROL (scratch only)"
+            ],
+            "frame": {
+              "function": "",
+              "url": "",
+              "scriptId": "119",
+              "line": 8,
+              "column": 27
+            }
+          },
+          {
+            "variable": "array",
+            "sites": [
+              "CONTROL (scratch only)"
+            ],
+            "frame": {
+              "function": "",
+              "url": "",
+              "scriptId": "119",
+              "line": 10,
+              "column": 87
+            }
+          },
+          {
+            "variable": "argument",
+            "sites": [
+              "CONTROL (scratch only)"
+            ],
+            "frame": {
+              "function": "",
+              "url": "",
+              "scriptId": "119",
+              "line": 10,
+              "column": 87
+            }
+          },
+          {
+            "variable": "result",
+            "sites": [
+              "CONTROL (scratch only)"
+            ],
+            "frame": {
+              "function": "",
+              "url": "",
+              "scriptId": "119",
+              "line": 10,
+              "column": 87
+            }
+          }
+        ],
+        "observed_sites": [
+          "CONTROL (scratch only)"
+        ],
+        "classification": "freeze-write"
+      },
+      {
+        "pid": 10190,
+        "argv": [
+          "/workspace/adamic-tools/bin/node",
+          "/workspace/scratch/filter-freeze/control.cjs",
+          "/workspace/scratch/filter-freeze/adapted/built/local/typescript.js"
+        ],
+        "cwd": "/workspace/scratch/filter-freeze/repo",
+        "case": null,
+        "description": "TypeError: Cannot add property 2, object is not extensible\n    at Array.push (<anonymous>)\n    at /workspace/scratch/filter-freeze/control.cjs:8:27\n    at Object.<anonymous> (/workspace/scratch/filter-freeze/control.cjs:10:87)\n    at Module._compile (node:internal/modules/cjs/loader:1872:14)\n    at Object..js (node:internal/modules/cjs/loader:2003:10)\n    at Module.load (node:internal/modules/cjs/loader:1594:32)\n    at Module._load (node:internal/modules/cjs/loader:1396:12)\n    at wrapModuleLoad (node:internal/modules/cjs/loader:255:19)\n    at Module.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:154:5)\n    at node:internal/main/run_main_module:33:47",
+        "frames": [
+          {
+            "function": "",
+            "url": "file:///workspace/scratch/filter-freeze/control.cjs",
+            "scriptId": "119",
+            "line": 8,
+            "column": 27
+          },
+          {
+            "function": "",
+            "url": "file:///workspace/scratch/filter-freeze/control.cjs",
+            "scriptId": "119",
+            "line": 10,
+            "column": 87
+          },
+          {
+            "function": "",
+            "url": "",
+            "scriptId": "68",
+            "line": 1872,
+            "column": 14
+          },
+          {
+            "function": "",
+            "url": "",
+            "scriptId": "68",
+            "line": 2003,
+            "column": 10
+          },
+          {
+            "function": "",
+            "url": "",
+            "scriptId": "68",
+            "line": 1594,
+            "column": 32
+          },
+          {
+            "function": "",
+            "url": "",
+            "scriptId": "68",
+            "line": 1396,
+            "column": 12
+          },
+          {
+            "function": "wrapModuleLoad",
+            "url": "",
+            "scriptId": "68",
+            "line": 255,
+            "column": 19
+          },
+          {
+            "function": "executeUserEntryPoint",
+            "url": "",
+            "scriptId": "81",
+            "line": 154,
+            "column": 5
+          },
+          {
+            "function": "",
+            "url": "",
+            "scriptId": "86",
+            "line": 33,
+            "column": 47
+          }
+        ],
+        "frozen_aliases": [
+          {
+            "variable": "a",
+            "sites": [
+              "CONTROL (scratch only)"
+            ],
+            "frame": {
+              "function": "",
+              "url": "",
+              "scriptId": "119",
+              "line": 8,
+              "column": 27
+            }
+          },
+          {
+            "variable": "array",
+            "sites": [
+              "CONTROL (scratch only)"
+            ],
+            "frame": {
+              "function": "",
+              "url": "",
+              "scriptId": "119",
+              "line": 10,
+              "column": 87
+            }
+          },
+          {
+            "variable": "argument",
+            "sites": [
+              "CONTROL (scratch only)"
+            ],
+            "frame": {
+              "function": "",
+              "url": "",
+              "scriptId": "119",
+              "line": 10,
+              "column": 87
+            }
+          },
+          {
+            "variable": "result",
+            "sites": [
+              "CONTROL (scratch only)"
+            ],
+            "frame": {
+              "function": "",
+              "url": "",
+              "scriptId": "119",
+              "line": 10,
+              "column": 87
+            }
+          }
+        ],
+        "observed_sites": [
+          "CONTROL (scratch only)"
+        ],
+        "classification": "freeze-write"
+      },
+      {
+        "pid": 10190,
+        "argv": [
+          "/workspace/adamic-tools/bin/node",
+          "/workspace/scratch/filter-freeze/control.cjs",
+          "/workspace/scratch/filter-freeze/adapted/built/local/typescript.js"
+        ],
+        "cwd": "/workspace/scratch/filter-freeze/repo",
+        "case": null,
+        "description": "TypeError: Cannot assign to read only property '0' of object '[object Array]'\n    at Array.splice (<anonymous>)\n    at /workspace/scratch/filter-freeze/control.cjs:8:51\n    at Object.<anonymous> (/workspace/scratch/filter-freeze/control.cjs:10:87)\n    at Module._compile (node:internal/modules/cjs/loader:1872:14)\n    at Object..js (node:internal/modules/cjs/loader:2003:10)\n    at Module.load (node:internal/modules/cjs/loader:1594:32)\n    at Module._load (node:internal/modules/cjs/loader:1396:12)\n    at wrapModuleLoad (node:internal/modules/cjs/loader:255:19)\n    at Module.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:154:5)\n    at node:internal/main/run_main_module:33:47",
+        "frames": [
+          {
+            "function": "",
+            "url": "file:///workspace/scratch/filter-freeze/control.cjs",
+            "scriptId": "119",
+            "line": 8,
+            "column": 51
+          },
+          {
+            "function": "",
+            "url": "file:///workspace/scratch/filter-freeze/control.cjs",
+            "scriptId": "119",
+            "line": 10,
+            "column": 87
+          },
+          {
+            "function": "",
+            "url": "",
+            "scriptId": "68",
+            "line": 1872,
+            "column": 14
+          },
+          {
+            "function": "",
+            "url": "",
+            "scriptId": "68",
+            "line": 2003,
+            "column": 10
+          },
+          {
+            "function": "",
+            "url": "",
+            "scriptId": "68",
+            "line": 1594,
+            "column": 32
+          },
+          {
+            "function": "",
+            "url": "",
+            "scriptId": "68",
+            "line": 1396,
+            "column": 12
+          },
+          {
+            "function": "wrapModuleLoad",
+            "url": "",
+            "scriptId": "68",
+            "line": 255,
+            "column": 19
+          },
+          {
+            "function": "executeUserEntryPoint",
+            "url": "",
+            "scriptId": "81",
+            "line": 154,
+            "column": 5
+          },
+          {
+            "function": "",
+            "url": "",
+            "scriptId": "86",
+            "line": 33,
+            "column": 47
+          }
+        ],
+        "frozen_aliases": [
+          {
+            "variable": "a",
+            "sites": [
+              "CONTROL (scratch only)"
+            ],
+            "frame": {
+              "function": "",
+              "url": "",
+              "scriptId": "119",
+              "line": 8,
+              "column": 51
+            }
+          },
+          {
+            "variable": "array",
+            "sites": [
+              "CONTROL (scratch only)"
+            ],
+            "frame": {
+              "function": "",
+              "url": "",
+              "scriptId": "119",
+              "line": 10,
+              "column": 87
+            }
+          },
+          {
+            "variable": "argument",
+            "sites": [
+              "CONTROL (scratch only)"
+            ],
+            "frame": {
+              "function": "",
+              "url": "",
+              "scriptId": "119",
+              "line": 10,
+              "column": 87
+            }
+          },
+          {
+            "variable": "result",
+            "sites": [
+              "CONTROL (scratch only)"
+            ],
+            "frame": {
+              "function": "",
+              "url": "",
+              "scriptId": "119",
+              "line": 10,
+              "column": 87
+            }
+          }
+        ],
+        "observed_sites": [
+          "CONTROL (scratch only)"
+        ],
+        "classification": "freeze-write"
+      },
+      {
+        "pid": 10190,
+        "argv": [
+          "/workspace/adamic-tools/bin/node",
+          "/workspace/scratch/filter-freeze/control.cjs",
+          "/workspace/scratch/filter-freeze/adapted/built/local/typescript.js"
+        ],
+        "cwd": "/workspace/scratch/filter-freeze/repo",
+        "case": null,
+        "description": "TypeError: Cannot assign to read only property '0' of object '[object Array]'\n    at Array.splice (<anonymous>)\n    at /workspace/scratch/filter-freeze/control.cjs:8:51\n    at Object.<anonymous> (/workspace/scratch/filter-freeze/control.cjs:10:87)\n    at Module._compile (node:internal/modules/cjs/loader:1872:14)\n    at Object..js (node:internal/modules/cjs/loader:2003:10)\n    at Module.load (node:internal/modules/cjs/loader:1594:32)\n    at Module._load (node:internal/modules/cjs/loader:1396:12)\n    at wrapModuleLoad (node:internal/modules/cjs/loader:255:19)\n    at Module.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:154:5)\n    at node:internal/main/run_main_module:33:47",
+        "frames": [
+          {
+            "function": "",
+            "url": "file:///workspace/scratch/filter-freeze/control.cjs",
+            "scriptId": "119",
+            "line": 8,
+            "column": 51
+          },
+          {
+            "function": "",
+            "url": "file:///workspace/scratch/filter-freeze/control.cjs",
+            "scriptId": "119",
+            "line": 10,
+            "column": 87
+          },
+          {
+            "function": "",
+            "url": "",
+            "scriptId": "68",
+            "line": 1872,
+            "column": 14
+          },
+          {
+            "function": "",
+            "url": "",
+            "scriptId": "68",
+            "line": 2003,
+            "column": 10
+          },
+          {
+            "function": "",
+            "url": "",
+            "scriptId": "68",
+            "line": 1594,
+            "column": 32
+          },
+          {
+            "function": "",
+            "url": "",
+            "scriptId": "68",
+            "line": 1396,
+            "column": 12
+          },
+          {
+            "function": "wrapModuleLoad",
+            "url": "",
+            "scriptId": "68",
+            "line": 255,
+            "column": 19
+          },
+          {
+            "function": "executeUserEntryPoint",
+            "url": "",
+            "scriptId": "81",
+            "line": 154,
+            "column": 5
+          },
+          {
+            "function": "",
+            "url": "",
+            "scriptId": "86",
+            "line": 33,
+            "column": 47
+          }
+        ],
+        "frozen_aliases": [
+          {
+            "variable": "a",
+            "sites": [
+              "CONTROL (scratch only)"
+            ],
+            "frame": {
+              "function": "",
+              "url": "",
+              "scriptId": "119",
+              "line": 8,
+              "column": 51
+            }
+          },
+          {
+            "variable": "array",
+            "sites": [
+              "CONTROL (scratch only)"
+            ],
+            "frame": {
+              "function": "",
+              "url": "",
+              "scriptId": "119",
+              "line": 10,
+              "column": 87
+            }
+          },
+          {
+            "variable": "argument",
+            "sites": [
+              "CONTROL (scratch only)"
+            ],
+            "frame": {
+              "function": "",
+              "url": "",
+              "scriptId": "119",
+              "line": 10,
+              "column": 87
+            }
+          },
+          {
+            "variable": "result",
+            "sites": [
+              "CONTROL (scratch only)"
+            ],
+            "frame": {
+              "function": "",
+              "url": "",
+              "scriptId": "119",
+              "line": 10,
+              "column": 87
+            }
+          }
+        ],
+        "observed_sites": [
+          "CONTROL (scratch only)"
+        ],
+        "classification": "freeze-write"
+      },
+      {
+        "pid": 10190,
+        "argv": [
+          "/workspace/adamic-tools/bin/node",
+          "/workspace/scratch/filter-freeze/control.cjs",
+          "/workspace/scratch/filter-freeze/adapted/built/local/typescript.js"
+        ],
+        "cwd": "/workspace/scratch/filter-freeze/repo",
+        "case": null,
+        "description": "TypeError: Cannot assign to read only property '0' of object '[object Array]'\n    at Array.sort (<anonymous>)\n    at a.<computed> (/workspace/scratch/filter-freeze/control.cjs:8:77)\n    at Object.<anonymous> (/workspace/scratch/filter-freeze/control.cjs:10:87)\n    at Module._compile (node:internal/modules/cjs/loader:1872:14)\n    at Object..js (node:internal/modules/cjs/loader:2003:10)\n    at Module.load (node:internal/modules/cjs/loader:1594:32)\n    at Module._load (node:internal/modules/cjs/loader:1396:12)\n    at wrapModuleLoad (node:internal/modules/cjs/loader:255:19)\n    at Module.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:154:5)\n    at node:internal/main/run_main_module:33:47",
+        "frames": [
+          {
+            "function": "a.<computed>",
+            "url": "file:///workspace/scratch/filter-freeze/control.cjs",
+            "scriptId": "119",
+            "line": 8,
+            "column": 77
+          },
+          {
+            "function": "",
+            "url": "file:///workspace/scratch/filter-freeze/control.cjs",
+            "scriptId": "119",
+            "line": 10,
+            "column": 87
+          },
+          {
+            "function": "",
+            "url": "",
+            "scriptId": "68",
+            "line": 1872,
+            "column": 14
+          },
+          {
+            "function": "",
+            "url": "",
+            "scriptId": "68",
+            "line": 2003,
+            "column": 10
+          },
+          {
+            "function": "",
+            "url": "",
+            "scriptId": "68",
+            "line": 1594,
+            "column": 32
+          },
+          {
+            "function": "",
+            "url": "",
+            "scriptId": "68",
+            "line": 1396,
+            "column": 12
+          },
+          {
+            "function": "wrapModuleLoad",
+            "url": "",
+            "scriptId": "68",
+            "line": 255,
+            "column": 19
+          },
+          {
+            "function": "executeUserEntryPoint",
+            "url": "",
+            "scriptId": "81",
+            "line": 154,
+            "column": 5
+          },
+          {
+            "function": "",
+            "url": "",
+            "scriptId": "86",
+            "line": 33,
+            "column": 47
+          }
+        ],
+        "frozen_aliases": [
+          {
+            "variable": "a",
+            "sites": [
+              "CONTROL (scratch only)"
+            ],
+            "frame": {
+              "function": "a.<computed>",
+              "url": "",
+              "scriptId": "119",
+              "line": 8,
+              "column": 77
+            }
+          },
+          {
+            "variable": "array",
+            "sites": [
+              "CONTROL (scratch only)"
+            ],
+            "frame": {
+              "function": "",
+              "url": "",
+              "scriptId": "119",
+              "line": 10,
+              "column": 87
+            }
+          },
+          {
+            "variable": "argument",
+            "sites": [
+              "CONTROL (scratch only)"
+            ],
+            "frame": {
+              "function": "",
+              "url": "",
+              "scriptId": "119",
+              "line": 10,
+              "column": 87
+            }
+          },
+          {
+            "variable": "result",
+            "sites": [
+              "CONTROL (scratch only)"
+            ],
+            "frame": {
+              "function": "",
+              "url": "",
+              "scriptId": "119",
+              "line": 10,
+              "column": 87
+            }
+          }
+        ],
+        "observed_sites": [
+          "CONTROL (scratch only)"
+        ],
+        "classification": "freeze-write"
+      },
+      {
+        "pid": 10190,
+        "argv": [
+          "/workspace/adamic-tools/bin/node",
+          "/workspace/scratch/filter-freeze/control.cjs",
+          "/workspace/scratch/filter-freeze/adapted/built/local/typescript.js"
+        ],
+        "cwd": "/workspace/scratch/filter-freeze/repo",
+        "case": null,
+        "description": "TypeError: Cannot assign to read only property '0' of object '[object Array]'\n    at Array.sort (<anonymous>)\n    at a.<computed> (/workspace/scratch/filter-freeze/control.cjs:8:77)\n    at Object.<anonymous> (/workspace/scratch/filter-freeze/control.cjs:10:87)\n    at Module._compile (node:internal/modules/cjs/loader:1872:14)\n    at Object..js (node:internal/modules/cjs/loader:2003:10)\n    at Module.load (node:internal/modules/cjs/loader:1594:32)\n    at Module._load (node:internal/modules/cjs/loader:1396:12)\n    at wrapModuleLoad (node:internal/modules/cjs/loader:255:19)\n    at Module.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:154:5)\n    at node:internal/main/run_main_module:33:47",
+        "frames": [
+          {
+            "function": "a.<computed>",
+            "url": "file:///workspace/scratch/filter-freeze/control.cjs",
+            "scriptId": "119",
+            "line": 8,
+            "column": 77
+          },
+          {
+            "function": "",
+            "url": "file:///workspace/scratch/filter-freeze/control.cjs",
+            "scriptId": "119",
+            "line": 10,
+            "column": 87
+          },
+          {
+            "function": "",
+            "url": "",
+            "scriptId": "68",
+            "line": 1872,
+            "column": 14
+          },
+          {
+            "function": "",
+            "url": "",
+            "scriptId": "68",
+            "line": 2003,
+            "column": 10
+          },
+          {
+            "function": "",
+            "url": "",
+            "scriptId": "68",
+            "line": 1594,
+            "column": 32
+          },
+          {
+            "function": "",
+            "url": "",
+            "scriptId": "68",
+            "line": 1396,
+            "column": 12
+          },
+          {
+            "function": "wrapModuleLoad",
+            "url": "",
+            "scriptId": "68",
+            "line": 255,
+            "column": 19
+          },
+          {
+            "function": "executeUserEntryPoint",
+            "url": "",
+            "scriptId": "81",
+            "line": 154,
+            "column": 5
+          },
+          {
+            "function": "",
+            "url": "",
+            "scriptId": "86",
+            "line": 33,
+            "column": 47
+          }
+        ],
+        "frozen_aliases": [
+          {
+            "variable": "a",
+            "sites": [
+              "CONTROL (scratch only)"
+            ],
+            "frame": {
+              "function": "a.<computed>",
+              "url": "",
+              "scriptId": "119",
+              "line": 8,
+              "column": 77
+            }
+          },
+          {
+            "variable": "array",
+            "sites": [
+              "CONTROL (scratch only)"
+            ],
+            "frame": {
+              "function": "",
+              "url": "",
+              "scriptId": "119",
+              "line": 10,
+              "column": 87
+            }
+          },
+          {
+            "variable": "argument",
+            "sites": [
+              "CONTROL (scratch only)"
+            ],
+            "frame": {
+              "function": "",
+              "url": "",
+              "scriptId": "119",
+              "line": 10,
+              "column": 87
+            }
+          },
+          {
+            "variable": "result",
+            "sites": [
+              "CONTROL (scratch only)"
+            ],
+            "frame": {
+              "function": "",
+              "url": "",
+              "scriptId": "119",
+              "line": 10,
+              "column": 87
+            }
+          }
+        ],
+        "observed_sites": [
+          "CONTROL (scratch only)"
+        ],
+        "classification": "freeze-write"
+      },
+      {
+        "pid": 10190,
+        "argv": [
+          "/workspace/adamic-tools/bin/node",
+          "/workspace/scratch/filter-freeze/control.cjs",
+          "/workspace/scratch/filter-freeze/adapted/built/local/typescript.js"
+        ],
+        "cwd": "/workspace/scratch/filter-freeze/repo",
+        "case": null,
+        "description": "TypeError: Cannot assign to read only property '0' of object '[object Array]'\n    at a.length (/workspace/scratch/filter-freeze/control.cjs:8:102)\n    at Object.<anonymous> (/workspace/scratch/filter-freeze/control.cjs:10:87)\n    at Module._compile (node:internal/modules/cjs/loader:1872:14)\n    at Object..js (node:internal/modules/cjs/loader:2003:10)\n    at Module.load (node:internal/modules/cjs/loader:1594:32)\n    at Module._load (node:internal/modules/cjs/loader:1396:12)\n    at wrapModuleLoad (node:internal/modules/cjs/loader:255:19)\n    at Module.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:154:5)\n    at node:internal/main/run_main_module:33:47",
+        "frames": [
+          {
+            "function": "a.length",
+            "url": "file:///workspace/scratch/filter-freeze/control.cjs",
+            "scriptId": "119",
+            "line": 8,
+            "column": 102
+          },
+          {
+            "function": "",
+            "url": "file:///workspace/scratch/filter-freeze/control.cjs",
+            "scriptId": "119",
+            "line": 10,
+            "column": 87
+          },
+          {
+            "function": "",
+            "url": "",
+            "scriptId": "68",
+            "line": 1872,
+            "column": 14
+          },
+          {
+            "function": "",
+            "url": "",
+            "scriptId": "68",
+            "line": 2003,
+            "column": 10
+          },
+          {
+            "function": "",
+            "url": "",
+            "scriptId": "68",
+            "line": 1594,
+            "column": 32
+          },
+          {
+            "function": "",
+            "url": "",
+            "scriptId": "68",
+            "line": 1396,
+            "column": 12
+          },
+          {
+            "function": "wrapModuleLoad",
+            "url": "",
+            "scriptId": "68",
+            "line": 255,
+            "column": 19
+          },
+          {
+            "function": "executeUserEntryPoint",
+            "url": "",
+            "scriptId": "81",
+            "line": 154,
+            "column": 5
+          },
+          {
+            "function": "",
+            "url": "",
+            "scriptId": "86",
+            "line": 33,
+            "column": 47
+          }
+        ],
+        "frozen_aliases": [
+          {
+            "variable": "a",
+            "sites": [
+              "CONTROL (scratch only)"
+            ],
+            "frame": {
+              "function": "a.length",
+              "url": "",
+              "scriptId": "119",
+              "line": 8,
+              "column": 102
+            }
+          },
+          {
+            "variable": "array",
+            "sites": [
+              "CONTROL (scratch only)"
+            ],
+            "frame": {
+              "function": "",
+              "url": "",
+              "scriptId": "119",
+              "line": 10,
+              "column": 87
+            }
+          },
+          {
+            "variable": "argument",
+            "sites": [
+              "CONTROL (scratch only)"
+            ],
+            "frame": {
+              "function": "",
+              "url": "",
+              "scriptId": "119",
+              "line": 10,
+              "column": 87
+            }
+          },
+          {
+            "variable": "result",
+            "sites": [
+              "CONTROL (scratch only)"
+            ],
+            "frame": {
+              "function": "",
+              "url": "",
+              "scriptId": "119",
+              "line": 10,
+              "column": 87
+            }
+          }
+        ],
+        "observed_sites": [
+          "CONTROL (scratch only)"
+        ],
+        "classification": "freeze-write"
+      },
+      {
+        "pid": 10190,
+        "argv": [
+          "/workspace/adamic-tools/bin/node",
+          "/workspace/scratch/filter-freeze/control.cjs",
+          "/workspace/scratch/filter-freeze/adapted/built/local/typescript.js"
+        ],
+        "cwd": "/workspace/scratch/filter-freeze/repo",
+        "case": null,
+        "description": "TypeError: Cannot assign to read only property '0' of object '[object Array]'\n    at a.length (/workspace/scratch/filter-freeze/control.cjs:8:102)\n    at Object.<anonymous> (/workspace/scratch/filter-freeze/control.cjs:10:87)\n    at Module._compile (node:internal/modules/cjs/loader:1872:14)\n    at Object..js (node:internal/modules/cjs/loader:2003:10)\n    at Module.load (node:internal/modules/cjs/loader:1594:32)\n    at Module._load (node:internal/modules/cjs/loader:1396:12)\n    at wrapModuleLoad (node:internal/modules/cjs/loader:255:19)\n    at Module.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:154:5)\n    at node:internal/main/run_main_module:33:47",
+        "frames": [
+          {
+            "function": "a.length",
+            "url": "file:///workspace/scratch/filter-freeze/control.cjs",
+            "scriptId": "119",
+            "line": 8,
+            "column": 102
+          },
+          {
+            "function": "",
+            "url": "file:///workspace/scratch/filter-freeze/control.cjs",
+            "scriptId": "119",
+            "line": 10,
+            "column": 87
+          },
+          {
+            "function": "",
+            "url": "",
+            "scriptId": "68",
+            "line": 1872,
+            "column": 14
+          },
+          {
+            "function": "",
+            "url": "",
+            "scriptId": "68",
+            "line": 2003,
+            "column": 10
+          },
+          {
+            "function": "",
+            "url": "",
+            "scriptId": "68",
+            "line": 1594,
+            "column": 32
+          },
+          {
+            "function": "",
+            "url": "",
+            "scriptId": "68",
+            "line": 1396,
+            "column": 12
+          },
+          {
+            "function": "wrapModuleLoad",
+            "url": "",
+            "scriptId": "68",
+            "line": 255,
+            "column": 19
+          },
+          {
+            "function": "executeUserEntryPoint",
+            "url": "",
+            "scriptId": "81",
+            "line": 154,
+            "column": 5
+          },
+          {
+            "function": "",
+            "url": "",
+            "scriptId": "86",
+            "line": 33,
+            "column": 47
+          }
+        ],
+        "frozen_aliases": [
+          {
+            "variable": "a",
+            "sites": [
+              "CONTROL (scratch only)"
+            ],
+            "frame": {
+              "function": "a.length",
+              "url": "",
+              "scriptId": "119",
+              "line": 8,
+              "column": 102
+            }
+          },
+          {
+            "variable": "array",
+            "sites": [
+              "CONTROL (scratch only)"
+            ],
+            "frame": {
+              "function": "",
+              "url": "",
+              "scriptId": "119",
+              "line": 10,
+              "column": 87
+            }
+          },
+          {
+            "variable": "argument",
+            "sites": [
+              "CONTROL (scratch only)"
+            ],
+            "frame": {
+              "function": "",
+              "url": "",
+              "scriptId": "119",
+              "line": 10,
+              "column": 87
+            }
+          },
+          {
+            "variable": "result",
+            "sites": [
+              "CONTROL (scratch only)"
+            ],
+            "frame": {
+              "function": "",
+              "url": "",
+              "scriptId": "119",
+              "line": 10,
+              "column": 87
+            }
+          }
+        ],
+        "observed_sites": [
+          "CONTROL (scratch only)"
+        ],
+        "classification": "freeze-write"
+      },
+      {
+        "pid": 10190,
+        "argv": [
+          "/workspace/adamic-tools/bin/node",
+          "/workspace/scratch/filter-freeze/control.cjs",
+          "/workspace/scratch/filter-freeze/adapted/built/local/typescript.js"
+        ],
+        "cwd": "/workspace/scratch/filter-freeze/repo",
+        "case": null,
+        "description": "TypeError: Cannot assign to read only property 'length' of object '[object Array]'\n    at cases (/workspace/scratch/filter-freeze/control.cjs:8:129)\n    at Object.<anonymous> (/workspace/scratch/filter-freeze/control.cjs:10:87)\n    at Module._compile (node:internal/modules/cjs/loader:1872:14)\n    at Object..js (node:internal/modules/cjs/loader:2003:10)\n    at Module.load (node:internal/modules/cjs/loader:1594:32)\n    at Module._load (node:internal/modules/cjs/loader:1396:12)\n    at wrapModuleLoad (node:internal/modules/cjs/loader:255:19)\n    at Module.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:154:5)\n    at node:internal/main/run_main_module:33:47",
+        "frames": [
+          {
+            "function": "cases",
+            "url": "file:///workspace/scratch/filter-freeze/control.cjs",
+            "scriptId": "119",
+            "line": 8,
+            "column": 129
+          },
+          {
+            "function": "",
+            "url": "file:///workspace/scratch/filter-freeze/control.cjs",
+            "scriptId": "119",
+            "line": 10,
+            "column": 87
+          },
+          {
+            "function": "",
+            "url": "",
+            "scriptId": "68",
+            "line": 1872,
+            "column": 14
+          },
+          {
+            "function": "",
+            "url": "",
+            "scriptId": "68",
+            "line": 2003,
+            "column": 10
+          },
+          {
+            "function": "",
+            "url": "",
+            "scriptId": "68",
+            "line": 1594,
+            "column": 32
+          },
+          {
+            "function": "",
+            "url": "",
+            "scriptId": "68",
+            "line": 1396,
+            "column": 12
+          },
+          {
+            "function": "wrapModuleLoad",
+            "url": "",
+            "scriptId": "68",
+            "line": 255,
+            "column": 19
+          },
+          {
+            "function": "executeUserEntryPoint",
+            "url": "",
+            "scriptId": "81",
+            "line": 154,
+            "column": 5
+          },
+          {
+            "function": "",
+            "url": "",
+            "scriptId": "86",
+            "line": 33,
+            "column": 47
+          }
+        ],
+        "frozen_aliases": [
+          {
+            "variable": "a",
+            "sites": [
+              "CONTROL (scratch only)"
+            ],
+            "frame": {
+              "function": "cases",
+              "url": "",
+              "scriptId": "119",
+              "line": 8,
+              "column": 129
+            }
+          },
+          {
+            "variable": "array",
+            "sites": [
+              "CONTROL (scratch only)"
+            ],
+            "frame": {
+              "function": "",
+              "url": "",
+              "scriptId": "119",
+              "line": 10,
+              "column": 87
+            }
+          },
+          {
+            "variable": "argument",
+            "sites": [
+              "CONTROL (scratch only)"
+            ],
+            "frame": {
+              "function": "",
+              "url": "",
+              "scriptId": "119",
+              "line": 10,
+              "column": 87
+            }
+          },
+          {
+            "variable": "result",
+            "sites": [
+              "CONTROL (scratch only)"
+            ],
+            "frame": {
+              "function": "",
+              "url": "",
+              "scriptId": "119",
+              "line": 10,
+              "column": 87
+            }
+          }
+        ],
+        "observed_sites": [
+          "CONTROL (scratch only)"
+        ],
+        "classification": "freeze-write"
+      },
+      {
+        "pid": 10190,
+        "argv": [
+          "/workspace/adamic-tools/bin/node",
+          "/workspace/scratch/filter-freeze/control.cjs",
+          "/workspace/scratch/filter-freeze/adapted/built/local/typescript.js"
+        ],
+        "cwd": "/workspace/scratch/filter-freeze/repo",
+        "case": null,
+        "description": "TypeError: Cannot assign to read only property 'length' of object '[object Array]'\n    at cases (/workspace/scratch/filter-freeze/control.cjs:8:129)\n    at Object.<anonymous> (/workspace/scratch/filter-freeze/control.cjs:10:87)\n    at Module._compile (node:internal/modules/cjs/loader:1872:14)\n    at Object..js (node:internal/modules/cjs/loader:2003:10)\n    at Module.load (node:internal/modules/cjs/loader:1594:32)\n    at Module._load (node:internal/modules/cjs/loader:1396:12)\n    at wrapModuleLoad (node:internal/modules/cjs/loader:255:19)\n    at Module.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:154:5)\n    at node:internal/main/run_main_module:33:47",
+        "frames": [
+          {
+            "function": "cases",
+            "url": "file:///workspace/scratch/filter-freeze/control.cjs",
+            "scriptId": "119",
+            "line": 8,
+            "column": 129
+          },
+          {
+            "function": "",
+            "url": "file:///workspace/scratch/filter-freeze/control.cjs",
+            "scriptId": "119",
+            "line": 10,
+            "column": 87
+          },
+          {
+            "function": "",
+            "url": "",
+            "scriptId": "68",
+            "line": 1872,
+            "column": 14
+          },
+          {
+            "function": "",
+            "url": "",
+            "scriptId": "68",
+            "line": 2003,
+            "column": 10
+          },
+          {
+            "function": "",
+            "url": "",
+            "scriptId": "68",
+            "line": 1594,
+            "column": 32
+          },
+          {
+            "function": "",
+            "url": "",
+            "scriptId": "68",
+            "line": 1396,
+            "column": 12
+          },
+          {
+            "function": "wrapModuleLoad",
+            "url": "",
+            "scriptId": "68",
+            "line": 255,
+            "column": 19
+          },
+          {
+            "function": "executeUserEntryPoint",
+            "url": "",
+            "scriptId": "81",
+            "line": 154,
+            "column": 5
+          },
+          {
+            "function": "",
+            "url": "",
+            "scriptId": "86",
+            "line": 33,
+            "column": 47
+          }
+        ],
+        "frozen_aliases": [
+          {
+            "variable": "a",
+            "sites": [
+              "CONTROL (scratch only)"
+            ],
+            "frame": {
+              "function": "cases",
+              "url": "",
+              "scriptId": "119",
+              "line": 8,
+              "column": 129
+            }
+          },
+          {
+            "variable": "array",
+            "sites": [
+              "CONTROL (scratch only)"
+            ],
+            "frame": {
+              "function": "",
+              "url": "",
+              "scriptId": "119",
+              "line": 10,
+              "column": 87
+            }
+          },
+          {
+            "variable": "argument",
+            "sites": [
+              "CONTROL (scratch only)"
+            ],
+            "frame": {
+              "function": "",
+              "url": "",
+              "scriptId": "119",
+              "line": 10,
+              "column": 87
+            }
+          },
+          {
+            "variable": "result",
+            "sites": [
+              "CONTROL (scratch only)"
+            ],
+            "frame": {
+              "function": "",
+              "url": "",
+              "scriptId": "119",
+              "line": 10,
+              "column": 87
+            }
+          }
+        ],
+        "observed_sites": [
+          "CONTROL (scratch only)"
+        ],
+        "classification": "freeze-write"
+      }
+    ],
+    "unrelated_explicit_errors": [],
+    "unclassified": []
+  },
+  "bootstrap": {
+    "freeze_writes": [],
+    "unrelated_explicit_errors": [],
+    "unclassified": []
+  }
+}

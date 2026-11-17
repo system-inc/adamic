@@ -1,0 +1,5 @@
+{
+  "source": "src/compiler/factory/emitHelpers.ts:783",
+  "text": "                context.addInitializer = function (f) { if (done) throw new TypeError(\"Cannot add initializers after decoration has completed\"); extraInitializers.push(accept(f || null)); };",
+  "reason": "When done is true, this explicit throw happens before extraInitializers.push. These errors are not from Object.freeze."
+}

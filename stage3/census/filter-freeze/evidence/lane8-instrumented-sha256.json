@@ -1,0 +1,37 @@
+[
+  {
+    "file": "src/compiler/factory/utilities.ts",
+    "before": "afb40be9808cda5f7699bc77fa142c3ce8e174f6bd94cda5ba393b314e7f4230",
+    "after": "2a58c96495b1e2d7f7df2c1aebc60046dc9799640d2e8786163606148a0ceaf8"
+  },
+  {
+    "file": "src/compiler/commandLineParser.ts",
+    "before": "49b442aa6b10782edf3ca9dcecdec5c92ef46a9fbe6c928ccd0bf1c088382636",
+    "after": "30544f767f91214dffa704856599f88cd846e8338e7c9af90fef9e59331da57b"
+  },
+  {
+    "file": "src/compiler/checker.ts",
+    "before": "a3c87ee5a2dd3f55fae2ced5a4c6c22bcde071db2b901af710faea85959bd9fa",
+    "after": "51db283016ce0249a789a37b2bb3e4085b3daaeb9ff3ea6e522ae070fee2f35d"
+  },
+  {
+    "file": "src/compiler/transformers/ts.ts",
+    "before": "d53d42df6f3283656ea63245e554ab929345613e6b531a415522ba9ef02240bd",
+    "after": "5cd2e3521cec6c31e66413a9beab83122092a295be145e71ae331bbf61de68f9"
+  },
+  {
+    "file": "src/services/services.ts",
+    "before": "8dc644a8ba2f215fbc8710fa61d8b30e170bbf0510ebd62eb42de8f4b577916c",
+    "after": "1658b12302346b039146c87d10bbb0cc3102fba1ac82dda5bcb6901f02c5f517"
+  },
+  {
+    "file": "src/services/callHierarchy.ts",
+    "before": "21e328b3a21696e94febfd2f0da6fc0ef98a0bc14481876a93938907d557af8c",
+    "after": "a46fa2bbbb65d0f006d3a19c73f07e2b469240876fbf326e44065d6f385c48c9"
+  },
+  {
+    "file": "src/services/codefixes/fixAddMissingParam.ts",
+    "before": "fcf7bfcf8939a4891d2fd5831a21d75e90e94dbfedc19e0dc16359795dce8e54",
+    "after": "8ac23823e41dca06e0de8c5b13a64880e03df2889db5915ccbebd2aa7143ee01"
+  }
+]

@@ -1,0 +1,114 @@
+{
+  "all_calls": 157,
+  "selected_calls": 16,
+  "overloads": {
+    "1": 5,
+    "2": 60,
+    "3": 14,
+    "4": 41,
+    "5": 11,
+    "6": 13,
+    "7": 9,
+    "8": 4
+  },
+  "direct_comparisons_with_argument": 0,
+  "sites": [
+    {
+      "site": "src/compiler/factory/utilities.ts:761:12",
+      "overload": 5,
+      "direct_identity": false,
+      "identity_uses": []
+    },
+    {
+      "site": "src/compiler/commandLineParser.ts:2550:16",
+      "overload": 1,
+      "direct_identity": false,
+      "identity_uses": []
+    },
+    {
+      "site": "src/compiler/commandLineParser.ts:3157:32",
+      "overload": 1,
+      "direct_identity": false,
+      "identity_uses": []
+    },
+    {
+      "site": "src/compiler/checker.ts:6586:39",
+      "overload": 5,
+      "direct_identity": false,
+      "identity_uses": []
+    },
+    {
+      "site": "src/compiler/checker.ts:9417:28",
+      "overload": 1,
+      "direct_identity": false,
+      "identity_uses": []
+    },
+    {
+      "site": "src/compiler/checker.ts:9419:24",
+      "overload": 1,
+      "direct_identity": false,
+      "identity_uses": []
+    },
+    {
+      "site": "src/compiler/checker.ts:10370:48",
+      "overload": 1,
+      "direct_identity": false,
+      "identity_uses": []
+    },
+    {
+      "site": "src/compiler/checker.ts:16764:27",
+      "overload": 5,
+      "direct_identity": false,
+      "identity_uses": []
+    },
+    {
+      "site": "src/compiler/checker.ts:47509:16",
+      "overload": 5,
+      "direct_identity": false,
+      "identity_uses": []
+    },
+    {
+      "site": "src/compiler/transformers/ts.ts:1088:38",
+      "overload": 5,
+      "direct_identity": false,
+      "identity_uses": []
+    },
+    {
+      "site": "src/services/services.ts:745:94",
+      "overload": 5,
+      "direct_identity": false,
+      "identity_uses": []
+    },
+    {
+      "site": "src/services/services.ts:755:94",
+      "overload": 5,
+      "direct_identity": false,
+      "identity_uses": []
+    },
+    {
+      "site": "src/services/services.ts:780:81",
+      "overload": 5,
+      "direct_identity": false,
+      "identity_uses": []
+    },
+    {
+      "site": "src/services/services.ts:790:81",
+      "overload": 5,
+      "direct_identity": false,
+      "identity_uses": []
+    },
+    {
+      "site": "src/services/callHierarchy.ts:482:19",
+      "overload": 5,
+      "direct_identity": false,
+      "identity_uses": []
+    },
+    {
+      "site": "src/services/codefixes/fixAddMissingParam.ts:143:46",
+      "overload": 5,
+      "direct_identity": false,
+      "identity_uses": []
+    }
+  ],
+  "limitation": "A result stored in a slot and compared later isn't something a static count sees. This local count is not a whole-program identity proof."
+}

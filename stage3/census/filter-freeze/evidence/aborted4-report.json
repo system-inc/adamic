@@ -1,0 +1,29 @@
+{
+  "status": "fail",
+  "errors": [
+    "missing or invalid lane evidence: [Errno 2] No such file or directory: '/workspace/scratch/filter-freeze/lane4/adapted-tree/tests/baselines/local/api/typescript.d.ts'"
+  ],
+  "failures": [],
+  "cause_counts": {
+    "timeout": 0,
+    "baseline-content": 0,
+    "baseline-missing": 0,
+    "exception": 0,
+    "other": 0
+  },
+  "baseline_previews": [],
+  "execution": {
+    "commit": "cf468df0747075e50d326a97ff03e8530d7a1a88",
+    "apply_exit": 0,
+    "oracle_exit": 1,
+    "platform": {
+      "os": "linux",
+      "arch": "x64",
+      "node": "v24.19.0"
+    },
+    "instrument_exit": 0,
+    "wall_seconds": 340.871
+  },
+  "results": "/workspace/scratch/filter-freeze/lane4",
+  "verdict": "FAIL stage3 landing lane: missing or invalid lane evidence: [Errno 2] No such file or directory: '/workspace/scratch/filter-freeze/lane4/adapted-tree/tests/baselines/local/api/typescript.d.ts' [causes: timeout=0, baseline-content=0, baseline-missing=0, exception=0, other=0]"
+}

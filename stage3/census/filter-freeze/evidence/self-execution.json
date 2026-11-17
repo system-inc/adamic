@@ -1,0 +1,13 @@
+{
+  "command": [
+    "node",
+    "built/local/tsc.js",
+    "-b",
+    "src/compiler",
+    "src/tsc",
+    "--force",
+    "--pretty",
+    "false"
+  ],
+  "exit": 0
+}
