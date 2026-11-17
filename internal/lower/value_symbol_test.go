@@ -16,14 +16,15 @@ import (
 // { x } and ({ x } = other) (#3sdynvn). Five walks met it one at a time; l.valueSymbol answers the
 // variable the name reads or writes. This holds the rule for the next walk: every function of this
 // package that compares a symbol it took with symbol or GetSymbolAtLocation against another symbol, by
-// == or !=, as a switch's tag or as a lookup's key, is in symbolComparers with why it may. It reads
+// == or !=, as a switch's tag, or as a map's key, looked up or recorded (a set recorded under the
+// property's symbol, as assignedSymbol's was, misses the write as surely), is in symbolComparers with why
+// it may. A listed function is trusted whole, so a comparison added to it later goes unflagged. It reads
 // syntax only, as TestRefusalRulesReadTheirSlotThroughSlotType does. A symbol is taken by such a call, or
 // by a local any assignment binds to one, matched by its name. A comparison with nil asks nothing, and
 // one whose other side is valueSymbol's or GetShorthandAssignmentValueSymbol's answer has resolved the
-// shorthand. A key on an assignment's left side records, it doesn't compare. The lowering's own tables
-// (l.locals, l.classes, l.functions and the like) are keyed by declarations and looked up while lowering
-// a name, which handles a shorthand itself (objectDestructuringAssignment, functionValue), so a lookup
-// there isn't a walk asking whether a name reads x.
+// shorthand. The lowering's own tables, loweringTables, are keyed by declarations and used while
+// lowering a name, which handles a shorthand itself (objectDestructuringAssignment, functionValue), so a
+// key there isn't a walk asking whether a name reads x.
 func TestReferenceWalksResolveShorthandNames(t *testing.T) {
 	t.Parallel()
 	entries, err := os.ReadDir(".")
@@ -120,7 +121,6 @@ func symbolComparisons(body *ast.BlockStmt) []token.Pos {
 	// taken and resolved are the locals body binds to a symbolCall's answer, by name. One bound to both is
 	// taken: it holds the property's symbol on some road.
 	taken, resolved := map[string]bool{}, map[string]bool{}
-	recorded := map[*ast.IndexExpr]bool{}
 	bind := func(name, value ast.Expr) {
 		local, isLocal := name.(*ast.Ident)
 		if !isLocal {
@@ -136,11 +136,6 @@ func symbolComparisons(body *ast.BlockStmt) []token.Pos {
 	ast.Inspect(body, func(node ast.Node) bool {
 		switch node := node.(type) {
 		case *ast.AssignStmt:
-			for _, target := range node.Lhs {
-				if index, isIndex := ast.Unparen(target).(*ast.IndexExpr); isIndex {
-					recorded[index] = true
-				}
-			}
 			if len(node.Lhs) == len(node.Rhs) {
 				for position := range node.Lhs {
 					bind(node.Lhs[position], node.Rhs[position])
@@ -151,10 +146,6 @@ func symbolComparisons(body *ast.BlockStmt) []token.Pos {
 				for position := range node.Names {
 					bind(node.Names[position], node.Values[position])
 				}
-			}
-		case *ast.IncDecStmt:
-			if index, isIndex := ast.Unparen(node.X).(*ast.IndexExpr); isIndex {
-				recorded[index] = true
 			}
 		}
 		return true
@@ -172,10 +163,10 @@ func symbolComparisons(body *ast.BlockStmt) []token.Pos {
 		}
 		return symbolCall(operand) == "Resolved"
 	}
-	// loweringTable is a field of the lowering, l.locals or p.l.locals.
+	// loweringTable is one of loweringTables on the lowering, l.locals or p.l.locals.
 	loweringTable := func(table ast.Expr) bool {
 		field, isField := ast.Unparen(table).(*ast.SelectorExpr)
-		if !isField {
+		if !isField || !loweringTables[field.Sel.Name] {
 			return false
 		}
 		switch owner := ast.Unparen(field.X).(type) {
@@ -194,7 +185,7 @@ func symbolComparisons(body *ast.BlockStmt) []token.Pos {
 				found = append(found, node.Pos())
 			}
 		case *ast.IndexExpr:
-			if !recorded[node] && !loweringTable(node.X) && isTaken(node.Index) {
+			if !loweringTable(node.X) && isTaken(node.Index) {
 				found = append(found, node.Pos())
 			}
 		case *ast.SwitchStmt:
@@ -205,6 +196,25 @@ func symbolComparisons(body *ast.BlockStmt) []token.Pos {
 		return true
 	})
 	return found
+}
+
+// loweringTables are the lowering's own tables a symbol taken with l.symbol keys: each holds a local, a
+// class, a function or a fact about one by its declaration's symbol, filled when the declaration is
+// lowered and read when a name is, so TestReferenceWalksResolveShorthandNames doesn't count their keys.
+// A table a walk fills for itself, as assignedSymbols, isn't one of them.
+var loweringTables = map[string]bool{
+	"alwaysUndefined":     true,
+	"caught":              true,
+	"classes":             true,
+	"constEnumReach":      true,
+	"derivedAncestors":    true,
+	"functions":           true,
+	"generics":            true,
+	"locals":              true,
+	"namespaceContainers": true,
+	"namespaceValues":     true,
+	"staticGlobals":       true,
+	"statics":             true,
 }
 
 // symbolComparers are the functions that compare a symbol they took with l.symbol or GetSymbolAtLocation
@@ -234,7 +244,7 @@ var symbolComparers = map[string]string{
 	"enumTagWalk.exactKindCall":         "a property access's receiver, parameter.kind",
 	"evolvingObject":                    "a binary expression's left operand at :32; a shorthand write is :49's, through valueSymbol",
 	"factoryAnalysis.alias":             "a property access's receiver, an assignment's right side, an initializer or a returned value; { obj } and { obj: obj } take the same road (the audit's note)",
-	"factoryAnalysis.statement":         "merges two branches' alias sets by key at :307; the key is a range variable that shares the name of :179's binding, and no identifier is compared",
+	"factoryAnalysis.statement":         "records an alias at :252 and :266 under a variable declaration's own name; false flag at :307, which intersects two branches' alias sets by a range variable that shares :246's name",
 	"functionBind":                      "a bind call's receiver and its first argument, both expressions",
 	"hostMemberValueBinding":            "counts a shorthand reading the binding at :323; judge.seen is a cycle guard",
 	"hostMemberValueHeld":               "a cycle guard keyed by the symbol it follows through a const's initializer, never a reference match; the identifier it starts from is an expression, never a shorthand name",
@@ -265,6 +275,8 @@ var symbolComparers = map[string]string{
 	"predicateOverloadCallTests":        "a call's callee and its claimed argument",
 	"predicateVerifier.expression":      "an identifier read as a return path's test, against the path's known locals",
 	"predicateVerifier.sameParameter":   "a test's operand: a bare truthiness test, a typeof's operand, a property access's receiver, a call's argument",
+	"predicateVerifier.statements":      "records a path's local under a variable declaration's own name",
+	"reachedConstEnums":                 "tsc refuses a const enum used as a value (TS2475), and a shorthand { E } is one, so no shorthand name reaches the set it records",
 	"recordInterveningMutation":         "an element access's receiver, in a delete or an assignment's left side",
 	"recordOwnCheck":                    "Object.hasOwn's arguments, against an element access's receiver and key",
 	"reflectGet":                        "Reflect.get's receiver argument, against Object's argument",
