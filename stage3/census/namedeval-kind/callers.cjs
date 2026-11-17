@@ -1,0 +1,9 @@
+'use strict';
+const fs=require('fs'),path=require('path'),ts=require('/workspace/scratch/namedeval-kind-B/stage3/api/node_modules/typescript');
+const root='/workspace/scratch/namedeval-kind-runtime/adapted-B';const roots=[];
+function walk(d){for(const e of fs.readdirSync(d,{withFileTypes:true})){const p=path.join(d,e.name);if(e.isDirectory())walk(p);else if(p.endsWith('.ts'))roots.push(p);}}walk(root+'/src/compiler');
+const program=ts.createProgram(roots,{strict:true,target:ts.ScriptTarget.ES2024,module:ts.ModuleKind.ESNext,moduleResolution:ts.ModuleResolutionKind.Bundler,types:[]}),checker=program.getTypeChecker();const rows=[];
+function loc(n){const f=n.getSourceFile(),p=f.getLineAndCharacterOfPosition(n.getStart(f));return {file:path.relative(root,f.fileName),line:p.line+1,column:p.character+1};}
+for(const name of ['namedEvaluation','esDecorators']){const f=program.getSourceFile(root+'/src/compiler/transformers/'+name+'.ts');function visit(n){if(ts.isCallExpression(n)&&ts.isIdentifier(n.expression)&&n.expression.text==='injectClassNamedEvaluationHelperBlockIfMissing'){const sig=checker.getResolvedSignature(n),decl=sig?.declaration;if(decl?.name?.text==='injectClassNamedEvaluationHelperBlockIfMissing'&&decl.getSourceFile().fileName.endsWith('/transformers/namedEvaluation.ts')){let fn=n.parent;while(fn&&!ts.isFunctionLike(fn))fn=fn.parent;rows.push({call:loc(n),declaration:loc(decl),unit:loc(fn),unitName:fn.name?.text,callText:n.getText(f),arguments:n.arguments.map(a=>({text:a.getText(f),type:checker.typeToString(checker.getTypeAtLocation(a))})),result:checker.typeToString(checker.getReturnTypeOfSignature(sig))});}}ts.forEachChild(n,visit);}visit(f);}
+if(rows.length!==3)throw Error('expected three checker-resolved callers, got '+rows.length);
+console.log(JSON.stringify({typescript:ts.version,roots:roots.length,callers:rows},null,2));

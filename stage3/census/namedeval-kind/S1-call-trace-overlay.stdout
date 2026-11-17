@@ -1,0 +1,6 @@
+{
+  "sourceRevision": "dfff19bb0ab5722136f7c19ea01505a1ab0946df",
+  "originalSource": "/workspace/scratch/namedeval-kind-S1/internal/lower/overload_result_check.go",
+  "instrumentedSha256": "cb8030d95cd1ddf2d0122f364ebc653808bce72dac077bee8f750d504d483b36",
+  "changes": "Read counters around one original method invocation; emit trace to stderr; preserve original IR expression/error and all output guards."
+}

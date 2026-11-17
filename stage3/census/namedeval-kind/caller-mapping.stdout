@@ -1,0 +1,108 @@
+{
+  "typescript": "6.0.3",
+  "roots": 79,
+  "callers": [
+    {
+      "call": {
+        "file": "src/compiler/transformers/namedEvaluation.ts",
+        "line": 250,
+        "column": 14
+      },
+      "declaration": {
+        "file": "src/compiler/transformers/namedEvaluation.ts",
+        "line": 173,
+        "column": 1
+      },
+      "unit": {
+        "file": "src/compiler/transformers/namedEvaluation.ts",
+        "line": 236,
+        "column": 1
+      },
+      "unitName": "finishTransformNamedEvaluation",
+      "callText": "injectClassNamedEvaluationHelperBlockIfMissing(context, innerExpression, assignedName)",
+      "arguments": [
+        {
+          "text": "context",
+          "type": "TransformationContext"
+        },
+        {
+          "text": "innerExpression",
+          "type": "ClassExpression & { readonly name?: undefined; }"
+        },
+        {
+          "text": "assignedName",
+          "type": "Expression"
+        }
+      ],
+      "result": "ClassExpression"
+    },
+    {
+      "call": {
+        "file": "src/compiler/transformers/esDecorators.ts",
+        "line": 675,
+        "column": 20
+      },
+      "declaration": {
+        "file": "src/compiler/transformers/namedEvaluation.ts",
+        "line": 173,
+        "column": 1
+      },
+      "unit": {
+        "file": "src/compiler/transformers/esDecorators.ts",
+        "line": 669,
+        "column": 5
+      },
+      "unitName": "transformClassLike",
+      "callText": "injectClassNamedEvaluationHelperBlockIfMissing(context, node, factory.createStringLiteral(\"\"))",
+      "arguments": [
+        {
+          "text": "context",
+          "type": "TransformationContext"
+        },
+        {
+          "text": "node",
+          "type": "ClassLikeDeclaration"
+        },
+        {
+          "text": "factory.createStringLiteral(\"\")",
+          "type": "StringLiteral"
+        }
+      ],
+      "result": "ClassDeclaration | ClassExpression"
+    },
+    {
+      "call": {
+        "file": "src/compiler/transformers/esDecorators.ts",
+        "line": 1061,
+        "column": 24
+      },
+      "declaration": {
+        "file": "src/compiler/transformers/namedEvaluation.ts",
+        "line": 173,
+        "column": 1
+      },
+      "unit": {
+        "file": "src/compiler/transformers/esDecorators.ts",
+        "line": 1053,
+        "column": 5
+      },
+      "unitName": "visitClassDeclaration",
+      "callText": "injectClassNamedEvaluationHelperBlockIfMissing(context, node, className)",
+      "arguments": [
+        {
+          "text": "context",
+          "type": "TransformationContext"
+        },
+        {
+          "text": "node",
+          "type": "ClassDeclaration"
+        },
+        {
+          "text": "className",
+          "type": "StringLiteral"
+        }
+      ],
+      "result": "ClassDeclaration"
+    }
+  ]
+}

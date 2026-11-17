@@ -1,0 +1,17 @@
+{
+  "command": [
+    "env",
+    "-u",
+    "LATENT_SPECULATIVE",
+    "LATENT_FULL=1",
+    "LATENT_ASSERT_NO_OUTPUT=1",
+    "CENSUS_MODULE_FORMAT=CommonJSBundle",
+    "LATENT_ONLY_FILE=/workspace/scratch/namedeval-kind-runtime/adapted-B/src/compiler/transformers/esDecorators.ts",
+    "/workspace/scratch/namedeval-kind-runtime/S2/latent",
+    "/workspace/scratch/namedeval-kind-runtime/adapted-B/src/compiler",
+    "/workspace/scratch/namedeval-kind-report/stage3/census/namedeval-kind/S2-latent-esDecorators.jsonl"
+  ],
+  "cwd": "/workspace/scratch/namedeval-kind-S2",
+  "exit": 0,
+  "seconds": 285.5924587249756
+}

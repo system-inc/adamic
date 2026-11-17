@@ -1,0 +1,53 @@
+{
+  "B": {
+    "completed": false,
+    "boundary": "production abort at lowering.declareModule",
+    "firstPipelineStop": {
+      "Kind": "first declaration/body/tail stop",
+      "Rule": "lowering.declareModule",
+      "Site": "/workspace/scratch/namedeval-kind-runtime/adapted-B/src/compiler/core.ts:261:1",
+      "Words": "overload 1 of filter result U[] cannot be served by implementation result readonly T[] | undefined"
+    },
+    "firstRecordedStop": {
+      "Kind": "scan stop",
+      "Rule": "refusal_scan/castRefusal",
+      "Site": "/workspace/scratch/namedeval-kind-runtime/adapted-B/src/compiler/utilitiesPublic.ts:778:16",
+      "Words": "a cast the runtime can't check"
+    },
+    "recordedEvents": 5054
+  },
+  "S1": {
+    "completed": false,
+    "boundary": "production abort at lowering.declareModule",
+    "firstPipelineStop": {
+      "Kind": "first declaration/body/tail stop",
+      "Rule": "lowering.declareModule",
+      "Site": "/workspace/scratch/namedeval-kind-runtime/adapted-B/src/compiler/core.ts:261:1",
+      "Words": "overload 1 of filter result U[] cannot be served by implementation result readonly T[] | undefined"
+    },
+    "firstRecordedStop": {
+      "Kind": "scan stop",
+      "Rule": "refusal_scan/castRefusal",
+      "Site": "/workspace/scratch/namedeval-kind-runtime/adapted-B/src/compiler/utilitiesPublic.ts:778:16",
+      "Words": "a cast the runtime can't check"
+    },
+    "recordedEvents": 5054
+  },
+  "S2": {
+    "completed": false,
+    "boundary": "production abort at lowering.declareModule",
+    "firstPipelineStop": {
+      "Kind": "first declaration/body/tail stop",
+      "Rule": "lowering.declareModule",
+      "Site": "/workspace/scratch/namedeval-kind-runtime/adapted-B/src/compiler/core.ts:261:1",
+      "Words": "overload 1 of filter result U[] cannot be served by implementation result readonly T[] | undefined"
+    },
+    "firstRecordedStop": {
+      "Kind": "scan stop",
+      "Rule": "refusal_scan/castRefusal",
+      "Site": "/workspace/scratch/namedeval-kind-runtime/adapted-B/src/compiler/utilitiesPublic.ts:778:16",
+      "Words": "a cast the runtime can't check"
+    },
+    "recordedEvents": 5054
+  }
+}

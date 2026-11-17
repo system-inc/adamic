@@ -1,0 +1,17 @@
+{
+  "command": [
+    "go",
+    "build",
+    "-trimpath",
+    "-ldflags=-buildid=",
+    "-buildvcs=false",
+    "-overlay",
+    "/workspace/scratch/namedeval-kind-runtime/S1/latent-overlay/overlay.json",
+    "-o",
+    "/workspace/scratch/namedeval-kind-runtime/S1/latent",
+    "./stage3/census/latent/tool/main.go"
+  ],
+  "cwd": "/workspace/scratch/namedeval-kind-S1",
+  "exit": 0,
+  "seconds": 64.73948431015015
+}

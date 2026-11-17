@@ -1,0 +1,1926 @@
+{
+  "identityFields": [
+    "kind",
+    "phase",
+    "reason with positions stripped",
+    "text/message with positions stripped"
+  ],
+  "beforeCount": 54,
+  "afterCount": 74,
+  "pairedUnchanged": [
+    {
+      "before": {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "/workspace/scratch/namedeval-kind-runtime/adapted-B/src/compiler/transformers/namedEvaluation.ts:67:1",
+        "phase": "lowering",
+        "kind": "Boundary",
+        "where": "/workspace/scratch/namedeval-kind-runtime/adapted-B/src/compiler/transformers/namedEvaluation.ts:74:5",
+        "reason": "failed statement; state rolled back; continued at next statement or declaration",
+        "text": "/workspace/scratch/namedeval-kind-runtime/adapted-B/src/compiler/binder.ts:1109:17: stage 0 can't lower writing a checked object field that may hold undefined or null, whose checked write can't change the representation its slot holds yet",
+        "start": 2264,
+        "end": 2455
+      },
+      "after": {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "/workspace/scratch/namedeval-kind-runtime/adapted-B/src/compiler/transformers/namedEvaluation.ts:67:1",
+        "phase": "lowering",
+        "kind": "Boundary",
+        "where": "/workspace/scratch/namedeval-kind-runtime/adapted-B/src/compiler/transformers/namedEvaluation.ts:74:5",
+        "reason": "failed statement; state rolled back; continued at next statement or declaration",
+        "text": "/workspace/scratch/namedeval-kind-runtime/adapted-B/src/compiler/binder.ts:1109:17: stage 0 can't lower writing a checked object field that may hold undefined or null, whose checked write can't change the representation its slot holds yet",
+        "start": 2264,
+        "end": 2455
+      }
+    },
+    {
+      "before": {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "/workspace/scratch/namedeval-kind-runtime/adapted-B/src/compiler/transformers/namedEvaluation.ts:67:1",
+        "phase": "lowering",
+        "kind": "Boundary",
+        "where": "/workspace/scratch/namedeval-kind-runtime/adapted-B/src/compiler/transformers/namedEvaluation.ts:79:5",
+        "reason": "failed statement; state rolled back; continued at next statement or declaration",
+        "text": "/workspace/scratch/namedeval-kind-runtime/adapted-B/src/compiler/binder.ts:1109:17: stage 0 can't lower writing a checked object field that may hold undefined or null, whose checked write can't change the representation its slot holds yet",
+        "start": 2455,
+        "end": 2673
+      },
+      "after": {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "/workspace/scratch/namedeval-kind-runtime/adapted-B/src/compiler/transformers/namedEvaluation.ts:67:1",
+        "phase": "lowering",
+        "kind": "Boundary",
+        "where": "/workspace/scratch/namedeval-kind-runtime/adapted-B/src/compiler/transformers/namedEvaluation.ts:79:5",
+        "reason": "failed statement; state rolled back; continued at next statement or declaration",
+        "text": "/workspace/scratch/namedeval-kind-runtime/adapted-B/src/compiler/binder.ts:1109:17: stage 0 can't lower writing a checked object field that may hold undefined or null, whose checked write can't change the representation its slot holds yet",
+        "start": 2455,
+        "end": 2673
+      }
+    },
+    {
+      "before": {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "/workspace/scratch/namedeval-kind-runtime/adapted-B/src/compiler/transformers/namedEvaluation.ts:139:1",
+        "phase": "lowering",
+        "kind": "Boundary",
+        "where": "/workspace/scratch/namedeval-kind-runtime/adapted-B/src/compiler/transformers/namedEvaluation.ts:140:5",
+        "reason": "failed statement; state rolled back; continued at next statement or declaration",
+        "text": "/workspace/scratch/namedeval-kind-runtime/adapted-B/src/compiler/binder.ts:1034:17: stage 0 can't lower writing a checked object field that may hold undefined or null, whose checked write can't change the representation its slot holds yet",
+        "start": 5284,
+        "end": 5400
+      },
+      "after": {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "/workspace/scratch/namedeval-kind-runtime/adapted-B/src/compiler/transformers/namedEvaluation.ts:139:1",
+        "phase": "lowering",
+        "kind": "Boundary",
+        "where": "/workspace/scratch/namedeval-kind-runtime/adapted-B/src/compiler/transformers/namedEvaluation.ts:140:5",
+        "reason": "failed statement; state rolled back; continued at next statement or declaration",
+        "text": "/workspace/scratch/namedeval-kind-runtime/adapted-B/src/compiler/binder.ts:1034:17: stage 0 can't lower writing a checked object field that may hold undefined or null, whose checked write can't change the representation its slot holds yet",
+        "start": 5284,
+        "end": 5400
+      }
+    },
+    {
+      "before": {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "/workspace/scratch/namedeval-kind-runtime/adapted-B/src/compiler/transformers/namedEvaluation.ts:139:1",
+        "phase": "lowering",
+        "kind": "Boundary",
+        "where": "/workspace/scratch/namedeval-kind-runtime/adapted-B/src/compiler/transformers/namedEvaluation.ts:145:5",
+        "reason": "failed statement; state rolled back; continued at next statement or declaration",
+        "text": "/workspace/scratch/namedeval-kind-runtime/adapted-B/src/compiler/binder.ts:1109:17: stage 0 can't lower writing a checked object field that may hold undefined or null, whose checked write can't change the representation its slot holds yet",
+        "start": 5451,
+        "end": 5754
+      },
+      "after": {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "/workspace/scratch/namedeval-kind-runtime/adapted-B/src/compiler/transformers/namedEvaluation.ts:139:1",
+        "phase": "lowering",
+        "kind": "Boundary",
+        "where": "/workspace/scratch/namedeval-kind-runtime/adapted-B/src/compiler/transformers/namedEvaluation.ts:145:5",
+        "reason": "failed statement; state rolled back; continued at next statement or declaration",
+        "text": "/workspace/scratch/namedeval-kind-runtime/adapted-B/src/compiler/binder.ts:1109:17: stage 0 can't lower writing a checked object field that may hold undefined or null, whose checked write can't change the representation its slot holds yet",
+        "start": 5451,
+        "end": 5754
+      }
+    },
+    {
+      "before": {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "/workspace/scratch/namedeval-kind-runtime/adapted-B/src/compiler/transformers/namedEvaluation.ts:67:1",
+        "phase": "lowering",
+        "kind": "Boundary",
+        "where": "/workspace/scratch/namedeval-kind-runtime/adapted-B/src/compiler/transformers/namedEvaluation.ts:88:5",
+        "reason": "failed statement; state rolled back; continued at next statement or declaration",
+        "text": "/workspace/scratch/namedeval-kind-runtime/adapted-B/src/compiler/transformers/namedEvaluation.ts:88:24: stage 0 can't lower a method sharing its name with a getter; rename the getter or use a callable arrow field in the interface and implementation yet",
+        "start": 2881,
+        "end": 2950
+      },
+      "after": {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "/workspace/scratch/namedeval-kind-runtime/adapted-B/src/compiler/transformers/namedEvaluation.ts:67:1",
+        "phase": "lowering",
+        "kind": "Boundary",
+        "where": "/workspace/scratch/namedeval-kind-runtime/adapted-B/src/compiler/transformers/namedEvaluation.ts:88:5",
+        "reason": "failed statement; state rolled back; continued at next statement or declaration",
+        "text": "/workspace/scratch/namedeval-kind-runtime/adapted-B/src/compiler/transformers/namedEvaluation.ts:88:24: stage 0 can't lower a method sharing its name with a getter; rename the getter or use a callable arrow field in the interface and implementation yet",
+        "start": 2881,
+        "end": 2950
+      }
+    },
+    {
+      "before": {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "/workspace/scratch/namedeval-kind-runtime/adapted-B/src/compiler/transformers/namedEvaluation.ts:156:1",
+        "phase": "lowering",
+        "kind": "Boundary",
+        "where": "/workspace/scratch/namedeval-kind-runtime/adapted-B/src/compiler/transformers/namedEvaluation.ts:157:5",
+        "reason": "failed statement; state rolled back; continued at next statement or declaration",
+        "text": "/workspace/scratch/namedeval-kind-runtime/adapted-B/src/compiler/transformers/namedEvaluation.ts:139:1: stage 0 can't lower checked predicate overload target ClassNamedEvaluationHelperBlock yet",
+        "start": 6005,
+        "end": 6105
+      },
+      "after": {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "/workspace/scratch/namedeval-kind-runtime/adapted-B/src/compiler/transformers/namedEvaluation.ts:156:1",
+        "phase": "lowering",
+        "kind": "Boundary",
+        "where": "/workspace/scratch/namedeval-kind-runtime/adapted-B/src/compiler/transformers/namedEvaluation.ts:157:5",
+        "reason": "failed statement; state rolled back; continued at next statement or declaration",
+        "text": "/workspace/scratch/namedeval-kind-runtime/adapted-B/src/compiler/transformers/namedEvaluation.ts:139:1: stage 0 can't lower checked predicate overload target ClassNamedEvaluationHelperBlock yet",
+        "start": 6005,
+        "end": 6105
+      }
+    },
+    {
+      "before": {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "/workspace/scratch/namedeval-kind-runtime/adapted-B/src/compiler/transformers/namedEvaluation.ts:67:1",
+        "phase": "lowering",
+        "kind": "Boundary",
+        "where": "/workspace/scratch/namedeval-kind-runtime/adapted-B/src/compiler/transformers/namedEvaluation.ts:89:5",
+        "reason": "failed statement; state rolled back; continued at next statement or declaration",
+        "text": "/workspace/scratch/namedeval-kind-runtime/adapted-B/src/compiler/transformers/namedEvaluation.ts:89:66: stage 0 can't lower reading assignment yet",
+        "start": 2950,
+        "end": 3029
+      },
+      "after": {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "/workspace/scratch/namedeval-kind-runtime/adapted-B/src/compiler/transformers/namedEvaluation.ts:67:1",
+        "phase": "lowering",
+        "kind": "Boundary",
+        "where": "/workspace/scratch/namedeval-kind-runtime/adapted-B/src/compiler/transformers/namedEvaluation.ts:89:5",
+        "reason": "failed statement; state rolled back; continued at next statement or declaration",
+        "text": "/workspace/scratch/namedeval-kind-runtime/adapted-B/src/compiler/transformers/namedEvaluation.ts:89:66: stage 0 can't lower reading assignment yet",
+        "start": 2950,
+        "end": 3029
+      }
+    },
+    {
+      "before": {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "/workspace/scratch/namedeval-kind-runtime/adapted-B/src/compiler/transformers/namedEvaluation.ts:67:1",
+        "phase": "lowering",
+        "kind": "Boundary",
+        "where": "/workspace/scratch/namedeval-kind-runtime/adapted-B/src/compiler/transformers/namedEvaluation.ts:90:5",
+        "reason": "failed statement; state rolled back; continued at next statement or declaration",
+        "text": "/workspace/scratch/namedeval-kind-runtime/adapted-B/src/compiler/transformers/namedEvaluation.ts:90:34: stage 0 can't lower reading updatedName yet",
+        "start": 3029,
+        "end": 3078
+      },
+      "after": {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "/workspace/scratch/namedeval-kind-runtime/adapted-B/src/compiler/transformers/namedEvaluation.ts:67:1",
+        "phase": "lowering",
+        "kind": "Boundary",
+        "where": "/workspace/scratch/namedeval-kind-runtime/adapted-B/src/compiler/transformers/namedEvaluation.ts:90:5",
+        "reason": "failed statement; state rolled back; continued at next statement or declaration",
+        "text": "/workspace/scratch/namedeval-kind-runtime/adapted-B/src/compiler/transformers/namedEvaluation.ts:90:34: stage 0 can't lower reading updatedName yet",
+        "start": 3029,
+        "end": 3078
+      }
+    },
+    {
+      "before": {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "/workspace/scratch/namedeval-kind-runtime/adapted-B/src/compiler/transformers/namedEvaluation.ts:470:1",
+        "phase": "lowering",
+        "kind": "Boundary",
+        "where": "/workspace/scratch/namedeval-kind-runtime/adapted-B/src/compiler/transformers/namedEvaluation.ts:470:1",
+        "reason": "function signature or prologue failed; continued at next declaration",
+        "text": "/workspace/scratch/namedeval-kind-runtime/adapted-B/src/compiler/transformers/namedEvaluation.ts:469:1: Adamic 0.1 refuses overload 1 of transformNamedEvaluation result Extract<AssignmentExpression<EqualsToken> & { readonly left: Identifier; readonly right: WrappedExpression<AnonymousFunctionDefinition>; }, Pick<...>> | ... 7 more ... | Extract<...> cannot be served by implementation result BinaryExpression | BindingElement | ExportAssignment | ParameterDeclaration | PropertyAssignment | PropertyDeclaration | ShorthandPropertyAssignment | VariableDeclaration; make the implementation result covariant with every overload result",
+        "start": 20947,
+        "end": 22316
+      },
+      "after": {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "/workspace/scratch/namedeval-kind-runtime/adapted-B/src/compiler/transformers/namedEvaluation.ts:470:1",
+        "phase": "lowering",
+        "kind": "Boundary",
+        "where": "/workspace/scratch/namedeval-kind-runtime/adapted-B/src/compiler/transformers/namedEvaluation.ts:470:1",
+        "reason": "function signature or prologue failed; continued at next declaration",
+        "text": "/workspace/scratch/namedeval-kind-runtime/adapted-B/src/compiler/transformers/namedEvaluation.ts:469:1: Adamic 0.1 refuses overload 1 of transformNamedEvaluation result Extract<AssignmentExpression<EqualsToken> & { readonly left: Identifier; readonly right: WrappedExpression<AnonymousFunctionDefinition>; }, Pick<...>> | ... 7 more ... | Extract<...> cannot be served by implementation result BinaryExpression | BindingElement | ExportAssignment | ParameterDeclaration | PropertyAssignment | PropertyDeclaration | ShorthandPropertyAssignment | VariableDeclaration; make the implementation result covariant with every overload result",
+        "start": 20947,
+        "end": 22316
+      }
+    },
+    {
+      "before": {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "/workspace/scratch/namedeval-kind-runtime/adapted-B/src/compiler/transformers/namedEvaluation.ts:101:1",
+        "phase": "lowering",
+        "kind": "Boundary",
+        "where": "/workspace/scratch/namedeval-kind-runtime/adapted-B/src/compiler/transformers/namedEvaluation.ts:101:1",
+        "reason": "function signature or prologue failed; continued at next declaration",
+        "text": "/workspace/scratch/namedeval-kind-runtime/adapted-B/src/compiler/transformers/namedEvaluation.ts:101:10: stage 0 can't lower a function returning ClassNamedEvaluationHelperBlock yet",
+        "start": 3744,
+        "end": 4472
+      },
+      "after": {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "/workspace/scratch/namedeval-kind-runtime/adapted-B/src/compiler/transformers/namedEvaluation.ts:101:1",
+        "phase": "lowering",
+        "kind": "Boundary",
+        "where": "/workspace/scratch/namedeval-kind-runtime/adapted-B/src/compiler/transformers/namedEvaluation.ts:101:1",
+        "reason": "function signature or prologue failed; continued at next declaration",
+        "text": "/workspace/scratch/namedeval-kind-runtime/adapted-B/src/compiler/transformers/namedEvaluation.ts:101:10: stage 0 can't lower a function returning ClassNamedEvaluationHelperBlock yet",
+        "start": 3744,
+        "end": 4472
+      }
+    },
+    {
+      "before": {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "/workspace/scratch/namedeval-kind-runtime/adapted-B/src/compiler/transformers/namedEvaluation.ts:405:1",
+        "phase": "lowering",
+        "kind": "Boundary",
+        "where": "/workspace/scratch/namedeval-kind-runtime/adapted-B/src/compiler/transformers/namedEvaluation.ts:405:1",
+        "reason": "function signature or prologue failed; continued at next declaration",
+        "text": "/workspace/scratch/namedeval-kind-runtime/adapted-B/src/compiler/transformers/namedEvaluation.ts:405:89: stage 0 can't lower a value of type (AssignmentExpression<EqualsToken> & { readonly left: Identifier; readonly right: WrappedExpression<AnonymousFunctionDefinition>; } & BinaryExpression) | (... & ... 1 more ... & BinaryExpression) yet",
+        "start": 17104,
+        "end": 19292
+      },
+      "after": {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "/workspace/scratch/namedeval-kind-runtime/adapted-B/src/compiler/transformers/namedEvaluation.ts:405:1",
+        "phase": "lowering",
+        "kind": "Boundary",
+        "where": "/workspace/scratch/namedeval-kind-runtime/adapted-B/src/compiler/transformers/namedEvaluation.ts:405:1",
+        "reason": "function signature or prologue failed; continued at next declaration",
+        "text": "/workspace/scratch/namedeval-kind-runtime/adapted-B/src/compiler/transformers/namedEvaluation.ts:405:89: stage 0 can't lower a value of type (AssignmentExpression<EqualsToken> & { readonly left: Identifier; readonly right: WrappedExpression<AnonymousFunctionDefinition>; } & BinaryExpression) | (... & ... 1 more ... & BinaryExpression) yet",
+        "start": 17104,
+        "end": 19292
+      }
+    },
+    {
+      "before": {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "/workspace/scratch/namedeval-kind-runtime/adapted-B/src/compiler/transformers/namedEvaluation.ts:354:1",
+        "phase": "lowering",
+        "kind": "Boundary",
+        "where": "/workspace/scratch/namedeval-kind-runtime/adapted-B/src/compiler/transformers/namedEvaluation.ts:354:1",
+        "reason": "function signature or prologue failed; continued at next declaration",
+        "text": "/workspace/scratch/namedeval-kind-runtime/adapted-B/src/compiler/transformers/namedEvaluation.ts:354:83: stage 0 can't lower a value of type BindingElement & { readonly name: Identifier; readonly dotDotDotToken: undefined; readonly initializer: WrappedExpression<AnonymousFunctionDefinition>; } yet",
+        "start": 14602,
+        "end": 15901
+      },
+      "after": {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "/workspace/scratch/namedeval-kind-runtime/adapted-B/src/compiler/transformers/namedEvaluation.ts:354:1",
+        "phase": "lowering",
+        "kind": "Boundary",
+        "where": "/workspace/scratch/namedeval-kind-runtime/adapted-B/src/compiler/transformers/namedEvaluation.ts:354:1",
+        "reason": "function signature or prologue failed; continued at next declaration",
+        "text": "/workspace/scratch/namedeval-kind-runtime/adapted-B/src/compiler/transformers/namedEvaluation.ts:354:83: stage 0 can't lower a value of type BindingElement & { readonly name: Identifier; readonly dotDotDotToken: undefined; readonly initializer: WrappedExpression<AnonymousFunctionDefinition>; } yet",
+        "start": 14602,
+        "end": 15901
+      }
+    },
+    {
+      "before": {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "/workspace/scratch/namedeval-kind-runtime/adapted-B/src/compiler/transformers/namedEvaluation.ts:444:1",
+        "phase": "lowering",
+        "kind": "Boundary",
+        "where": "/workspace/scratch/namedeval-kind-runtime/adapted-B/src/compiler/transformers/namedEvaluation.ts:444:1",
+        "reason": "function signature or prologue failed; continued at next declaration",
+        "text": "/workspace/scratch/namedeval-kind-runtime/adapted-B/src/compiler/transformers/namedEvaluation.ts:444:85: stage 0 can't lower a value of type ExportAssignment & { readonly expression: WrappedExpression<AnonymousFunctionDefinition>; } yet",
+        "start": 19484,
+        "end": 20397
+      },
+      "after": {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "/workspace/scratch/namedeval-kind-runtime/adapted-B/src/compiler/transformers/namedEvaluation.ts:444:1",
+        "phase": "lowering",
+        "kind": "Boundary",
+        "where": "/workspace/scratch/namedeval-kind-runtime/adapted-B/src/compiler/transformers/namedEvaluation.ts:444:1",
+        "reason": "function signature or prologue failed; continued at next declaration",
+        "text": "/workspace/scratch/namedeval-kind-runtime/adapted-B/src/compiler/transformers/namedEvaluation.ts:444:85: stage 0 can't lower a value of type ExportAssignment & { readonly expression: WrappedExpression<AnonymousFunctionDefinition>; } yet",
+        "start": 19484,
+        "end": 20397
+      }
+    },
+    {
+      "before": {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "/workspace/scratch/namedeval-kind-runtime/adapted-B/src/compiler/transformers/namedEvaluation.ts:322:1",
+        "phase": "lowering",
+        "kind": "Boundary",
+        "where": "/workspace/scratch/namedeval-kind-runtime/adapted-B/src/compiler/transformers/namedEvaluation.ts:322:1",
+        "reason": "function signature or prologue failed; continued at next declaration",
+        "text": "/workspace/scratch/namedeval-kind-runtime/adapted-B/src/compiler/transformers/namedEvaluation.ts:322:89: stage 0 can't lower a value of type ParameterDeclaration & { readonly name: Identifier; readonly dotDotDotToken: undefined; readonly initializer: WrappedExpression<AnonymousFunctionDefinition>; } yet",
+        "start": 13063,
+        "end": 14414
+      },
+      "after": {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "/workspace/scratch/namedeval-kind-runtime/adapted-B/src/compiler/transformers/namedEvaluation.ts:322:1",
+        "phase": "lowering",
+        "kind": "Boundary",
+        "where": "/workspace/scratch/namedeval-kind-runtime/adapted-B/src/compiler/transformers/namedEvaluation.ts:322:1",
+        "reason": "function signature or prologue failed; continued at next declaration",
+        "text": "/workspace/scratch/namedeval-kind-runtime/adapted-B/src/compiler/transformers/namedEvaluation.ts:322:89: stage 0 can't lower a value of type ParameterDeclaration & { readonly name: Identifier; readonly dotDotDotToken: undefined; readonly initializer: WrappedExpression<AnonymousFunctionDefinition>; } yet",
+        "start": 13063,
+        "end": 14414
+      }
+    },
+    {
+      "before": {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "/workspace/scratch/namedeval-kind-runtime/adapted-B/src/compiler/transformers/namedEvaluation.ts:256:1",
+        "phase": "lowering",
+        "kind": "Boundary",
+        "where": "/workspace/scratch/namedeval-kind-runtime/adapted-B/src/compiler/transformers/namedEvaluation.ts:256:1",
+        "reason": "function signature or prologue failed; continued at next declaration",
+        "text": "/workspace/scratch/namedeval-kind-runtime/adapted-B/src/compiler/transformers/namedEvaluation.ts:256:87: stage 0 can't lower a value of type PropertyAssignment & { readonly name: Identifier; readonly initializer: WrappedExpression<AnonymousFunctionDefinition>; } yet",
+        "start": 9652,
+        "end": 10403
+      },
+      "after": {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "/workspace/scratch/namedeval-kind-runtime/adapted-B/src/compiler/transformers/namedEvaluation.ts:256:1",
+        "phase": "lowering",
+        "kind": "Boundary",
+        "where": "/workspace/scratch/namedeval-kind-runtime/adapted-B/src/compiler/transformers/namedEvaluation.ts:256:1",
+        "reason": "function signature or prologue failed; continued at next declaration",
+        "text": "/workspace/scratch/namedeval-kind-runtime/adapted-B/src/compiler/transformers/namedEvaluation.ts:256:87: stage 0 can't lower a value of type PropertyAssignment & { readonly name: Identifier; readonly initializer: WrappedExpression<AnonymousFunctionDefinition>; } yet",
+        "start": 9652,
+        "end": 10403
+      }
+    },
+    {
+      "before": {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "/workspace/scratch/namedeval-kind-runtime/adapted-B/src/compiler/transformers/namedEvaluation.ts:384:1",
+        "phase": "lowering",
+        "kind": "Boundary",
+        "where": "/workspace/scratch/namedeval-kind-runtime/adapted-B/src/compiler/transformers/namedEvaluation.ts:384:1",
+        "reason": "function signature or prologue failed; continued at next declaration",
+        "text": "/workspace/scratch/namedeval-kind-runtime/adapted-B/src/compiler/transformers/namedEvaluation.ts:384:88: stage 0 can't lower a value of type PropertyDeclaration & { readonly initializer: WrappedExpression<AnonymousFunctionDefinition>; } yet",
+        "start": 16099,
+        "end": 16908
+      },
+      "after": {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "/workspace/scratch/namedeval-kind-runtime/adapted-B/src/compiler/transformers/namedEvaluation.ts:384:1",
+        "phase": "lowering",
+        "kind": "Boundary",
+        "where": "/workspace/scratch/namedeval-kind-runtime/adapted-B/src/compiler/transformers/namedEvaluation.ts:384:1",
+        "reason": "function signature or prologue failed; continued at next declaration",
+        "text": "/workspace/scratch/namedeval-kind-runtime/adapted-B/src/compiler/transformers/namedEvaluation.ts:384:88: stage 0 can't lower a value of type PropertyDeclaration & { readonly initializer: WrappedExpression<AnonymousFunctionDefinition>; } yet",
+        "start": 16099,
+        "end": 16908
+      }
+    },
+    {
+      "before": {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "/workspace/scratch/namedeval-kind-runtime/adapted-B/src/compiler/transformers/namedEvaluation.ts:274:1",
+        "phase": "lowering",
+        "kind": "Boundary",
+        "where": "/workspace/scratch/namedeval-kind-runtime/adapted-B/src/compiler/transformers/namedEvaluation.ts:274:1",
+        "reason": "function signature or prologue failed; continued at next declaration",
+        "text": "/workspace/scratch/namedeval-kind-runtime/adapted-B/src/compiler/transformers/namedEvaluation.ts:274:96: stage 0 can't lower a value of type ShorthandPropertyAssignment & { readonly objectAssignmentInitializer: WrappedExpression<AnonymousFunctionDefinition>; } yet",
+        "start": 10617,
+        "end": 11550
+      },
+      "after": {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "/workspace/scratch/namedeval-kind-runtime/adapted-B/src/compiler/transformers/namedEvaluation.ts:274:1",
+        "phase": "lowering",
+        "kind": "Boundary",
+        "where": "/workspace/scratch/namedeval-kind-runtime/adapted-B/src/compiler/transformers/namedEvaluation.ts:274:1",
+        "reason": "function signature or prologue failed; continued at next declaration",
+        "text": "/workspace/scratch/namedeval-kind-runtime/adapted-B/src/compiler/transformers/namedEvaluation.ts:274:96: stage 0 can't lower a value of type ShorthandPropertyAssignment & { readonly objectAssignmentInitializer: WrappedExpression<AnonymousFunctionDefinition>; } yet",
+        "start": 10617,
+        "end": 11550
+      }
+    },
+    {
+      "before": {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "/workspace/scratch/namedeval-kind-runtime/adapted-B/src/compiler/transformers/namedEvaluation.ts:294:1",
+        "phase": "lowering",
+        "kind": "Boundary",
+        "where": "/workspace/scratch/namedeval-kind-runtime/adapted-B/src/compiler/transformers/namedEvaluation.ts:294:1",
+        "reason": "function signature or prologue failed; continued at next declaration",
+        "text": "/workspace/scratch/namedeval-kind-runtime/adapted-B/src/compiler/transformers/namedEvaluation.ts:294:88: stage 0 can't lower a value of type VariableDeclaration & { readonly name: Identifier; readonly initializer: WrappedExpression<AnonymousFunctionDefinition>; } yet",
+        "start": 11748,
+        "end": 12863
+      },
+      "after": {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "/workspace/scratch/namedeval-kind-runtime/adapted-B/src/compiler/transformers/namedEvaluation.ts:294:1",
+        "phase": "lowering",
+        "kind": "Boundary",
+        "where": "/workspace/scratch/namedeval-kind-runtime/adapted-B/src/compiler/transformers/namedEvaluation.ts:294:1",
+        "reason": "function signature or prologue failed; continued at next declaration",
+        "text": "/workspace/scratch/namedeval-kind-runtime/adapted-B/src/compiler/transformers/namedEvaluation.ts:294:88: stage 0 can't lower a value of type VariableDeclaration & { readonly name: Identifier; readonly initializer: WrappedExpression<AnonymousFunctionDefinition>; } yet",
+        "start": 11748,
+        "end": 12863
+      }
+    },
+    {
+      "before": {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "/workspace/scratch/namedeval-kind-runtime/adapted-B/src/compiler/transformers/namedEvaluation.ts:56:1",
+        "phase": "lowering",
+        "kind": "Boundary",
+        "where": "/workspace/scratch/namedeval-kind-runtime/adapted-B/src/compiler/transformers/namedEvaluation.ts:56:1",
+        "reason": "function signature or prologue failed; continued at next declaration",
+        "text": "/workspace/scratch/namedeval-kind-runtime/adapted-B/src/compiler/transformers/namedEvaluation.ts:56:78: stage 0 can't lower a value of type WrappedExpression<AnonymousFunctionDefinition> yet",
+        "start": 1555,
+        "end": 1929
+      },
+      "after": {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "/workspace/scratch/namedeval-kind-runtime/adapted-B/src/compiler/transformers/namedEvaluation.ts:56:1",
+        "phase": "lowering",
+        "kind": "Boundary",
+        "where": "/workspace/scratch/namedeval-kind-runtime/adapted-B/src/compiler/transformers/namedEvaluation.ts:56:1",
+        "reason": "function signature or prologue failed; continued at next declaration",
+        "text": "/workspace/scratch/namedeval-kind-runtime/adapted-B/src/compiler/transformers/namedEvaluation.ts:56:78: stage 0 can't lower a value of type WrappedExpression<AnonymousFunctionDefinition> yet",
+        "start": 1555,
+        "end": 1929
+      }
+    },
+    {
+      "before": {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "/workspace/scratch/namedeval-kind-runtime/adapted-B/src/compiler/transformers/namedEvaluation.ts:236:1",
+        "phase": "lowering",
+        "kind": "Boundary",
+        "where": "/workspace/scratch/namedeval-kind-runtime/adapted-B/src/compiler/transformers/namedEvaluation.ts:236:1",
+        "reason": "function signature or prologue failed; continued at next declaration",
+        "text": "/workspace/scratch/namedeval-kind-runtime/adapted-B/src/compiler/transformers/namedEvaluation.ts:238:5: stage 0 can't lower a value of type WrappedExpression<AnonymousFunctionDefinition> yet",
+        "start": 8838,
+        "end": 9456
+      },
+      "after": {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "/workspace/scratch/namedeval-kind-runtime/adapted-B/src/compiler/transformers/namedEvaluation.ts:236:1",
+        "phase": "lowering",
+        "kind": "Boundary",
+        "where": "/workspace/scratch/namedeval-kind-runtime/adapted-B/src/compiler/transformers/namedEvaluation.ts:236:1",
+        "reason": "function signature or prologue failed; continued at next declaration",
+        "text": "/workspace/scratch/namedeval-kind-runtime/adapted-B/src/compiler/transformers/namedEvaluation.ts:238:5: stage 0 can't lower a value of type WrappedExpression<AnonymousFunctionDefinition> yet",
+        "start": 8838,
+        "end": 9456
+      }
+    },
+    {
+      "before": {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "/workspace/scratch/namedeval-kind-runtime/adapted-B/src/compiler/transformers/namedEvaluation.ts:101:1",
+        "phase": "lowering",
+        "kind": "NotYet",
+        "where": "/workspace/scratch/namedeval-kind-runtime/adapted-B/src/compiler/transformers/namedEvaluation.ts:101:10",
+        "reason": "a function returning ClassNamedEvaluationHelperBlock",
+        "text": "/workspace/scratch/namedeval-kind-runtime/adapted-B/src/compiler/transformers/namedEvaluation.ts:101:10: stage 0 can't lower a function returning ClassNamedEvaluationHelperBlock yet"
+      },
+      "after": {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "/workspace/scratch/namedeval-kind-runtime/adapted-B/src/compiler/transformers/namedEvaluation.ts:101:1",
+        "phase": "lowering",
+        "kind": "NotYet",
+        "where": "/workspace/scratch/namedeval-kind-runtime/adapted-B/src/compiler/transformers/namedEvaluation.ts:101:10",
+        "reason": "a function returning ClassNamedEvaluationHelperBlock",
+        "text": "/workspace/scratch/namedeval-kind-runtime/adapted-B/src/compiler/transformers/namedEvaluation.ts:101:10: stage 0 can't lower a function returning ClassNamedEvaluationHelperBlock yet"
+      }
+    },
+    {
+      "before": {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "/workspace/scratch/namedeval-kind-runtime/adapted-B/src/compiler/transformers/namedEvaluation.ts:67:1",
+        "phase": "lowering",
+        "kind": "NotYet",
+        "where": "/workspace/scratch/namedeval-kind-runtime/adapted-B/src/compiler/transformers/namedEvaluation.ts:88:24",
+        "reason": "a method sharing its name with a getter; rename the getter or use a callable arrow field in the interface and implementation",
+        "text": "/workspace/scratch/namedeval-kind-runtime/adapted-B/src/compiler/transformers/namedEvaluation.ts:88:24: stage 0 can't lower a method sharing its name with a getter; rename the getter or use a callable arrow field in the interface and implementation yet"
+      },
+      "after": {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "/workspace/scratch/namedeval-kind-runtime/adapted-B/src/compiler/transformers/namedEvaluation.ts:67:1",
+        "phase": "lowering",
+        "kind": "NotYet",
+        "where": "/workspace/scratch/namedeval-kind-runtime/adapted-B/src/compiler/transformers/namedEvaluation.ts:88:24",
+        "reason": "a method sharing its name with a getter; rename the getter or use a callable arrow field in the interface and implementation",
+        "text": "/workspace/scratch/namedeval-kind-runtime/adapted-B/src/compiler/transformers/namedEvaluation.ts:88:24: stage 0 can't lower a method sharing its name with a getter; rename the getter or use a callable arrow field in the interface and implementation yet"
+      }
+    },
+    {
+      "before": {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "/workspace/scratch/namedeval-kind-runtime/adapted-B/src/compiler/transformers/namedEvaluation.ts:405:1",
+        "phase": "lowering",
+        "kind": "NotYet",
+        "where": "/workspace/scratch/namedeval-kind-runtime/adapted-B/src/compiler/transformers/namedEvaluation.ts:405:89",
+        "reason": "a value of type (AssignmentExpression<EqualsToken> & { readonly left: Identifier; readonly right: WrappedExpression<AnonymousFunctionDefinition>; } & BinaryExpression) | (... & ... 1 more ... & BinaryExpression)",
+        "text": "/workspace/scratch/namedeval-kind-runtime/adapted-B/src/compiler/transformers/namedEvaluation.ts:405:89: stage 0 can't lower a value of type (AssignmentExpression<EqualsToken> & { readonly left: Identifier; readonly right: WrappedExpression<AnonymousFunctionDefinition>; } & BinaryExpression) | (... & ... 1 more ... & BinaryExpression) yet"
+      },
+      "after": {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "/workspace/scratch/namedeval-kind-runtime/adapted-B/src/compiler/transformers/namedEvaluation.ts:405:1",
+        "phase": "lowering",
+        "kind": "NotYet",
+        "where": "/workspace/scratch/namedeval-kind-runtime/adapted-B/src/compiler/transformers/namedEvaluation.ts:405:89",
+        "reason": "a value of type (AssignmentExpression<EqualsToken> & { readonly left: Identifier; readonly right: WrappedExpression<AnonymousFunctionDefinition>; } & BinaryExpression) | (... & ... 1 more ... & BinaryExpression)",
+        "text": "/workspace/scratch/namedeval-kind-runtime/adapted-B/src/compiler/transformers/namedEvaluation.ts:405:89: stage 0 can't lower a value of type (AssignmentExpression<EqualsToken> & { readonly left: Identifier; readonly right: WrappedExpression<AnonymousFunctionDefinition>; } & BinaryExpression) | (... & ... 1 more ... & BinaryExpression) yet"
+      }
+    },
+    {
+      "before": {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "/workspace/scratch/namedeval-kind-runtime/adapted-B/src/compiler/transformers/namedEvaluation.ts:354:1",
+        "phase": "lowering",
+        "kind": "NotYet",
+        "where": "/workspace/scratch/namedeval-kind-runtime/adapted-B/src/compiler/transformers/namedEvaluation.ts:354:83",
+        "reason": "a value of type BindingElement & { readonly name: Identifier; readonly dotDotDotToken: undefined; readonly initializer: WrappedExpression<AnonymousFunctionDefinition>; }",
+        "text": "/workspace/scratch/namedeval-kind-runtime/adapted-B/src/compiler/transformers/namedEvaluation.ts:354:83: stage 0 can't lower a value of type BindingElement & { readonly name: Identifier; readonly dotDotDotToken: undefined; readonly initializer: WrappedExpression<AnonymousFunctionDefinition>; } yet"
+      },
+      "after": {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "/workspace/scratch/namedeval-kind-runtime/adapted-B/src/compiler/transformers/namedEvaluation.ts:354:1",
+        "phase": "lowering",
+        "kind": "NotYet",
+        "where": "/workspace/scratch/namedeval-kind-runtime/adapted-B/src/compiler/transformers/namedEvaluation.ts:354:83",
+        "reason": "a value of type BindingElement & { readonly name: Identifier; readonly dotDotDotToken: undefined; readonly initializer: WrappedExpression<AnonymousFunctionDefinition>; }",
+        "text": "/workspace/scratch/namedeval-kind-runtime/adapted-B/src/compiler/transformers/namedEvaluation.ts:354:83: stage 0 can't lower a value of type BindingElement & { readonly name: Identifier; readonly dotDotDotToken: undefined; readonly initializer: WrappedExpression<AnonymousFunctionDefinition>; } yet"
+      }
+    },
+    {
+      "before": {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "/workspace/scratch/namedeval-kind-runtime/adapted-B/src/compiler/transformers/namedEvaluation.ts:444:1",
+        "phase": "lowering",
+        "kind": "NotYet",
+        "where": "/workspace/scratch/namedeval-kind-runtime/adapted-B/src/compiler/transformers/namedEvaluation.ts:444:85",
+        "reason": "a value of type ExportAssignment & { readonly expression: WrappedExpression<AnonymousFunctionDefinition>; }",
+        "text": "/workspace/scratch/namedeval-kind-runtime/adapted-B/src/compiler/transformers/namedEvaluation.ts:444:85: stage 0 can't lower a value of type ExportAssignment & { readonly expression: WrappedExpression<AnonymousFunctionDefinition>; } yet"
+      },
+      "after": {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "/workspace/scratch/namedeval-kind-runtime/adapted-B/src/compiler/transformers/namedEvaluation.ts:444:1",
+        "phase": "lowering",
+        "kind": "NotYet",
+        "where": "/workspace/scratch/namedeval-kind-runtime/adapted-B/src/compiler/transformers/namedEvaluation.ts:444:85",
+        "reason": "a value of type ExportAssignment & { readonly expression: WrappedExpression<AnonymousFunctionDefinition>; }",
+        "text": "/workspace/scratch/namedeval-kind-runtime/adapted-B/src/compiler/transformers/namedEvaluation.ts:444:85: stage 0 can't lower a value of type ExportAssignment & { readonly expression: WrappedExpression<AnonymousFunctionDefinition>; } yet"
+      }
+    },
+    {
+      "before": {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "/workspace/scratch/namedeval-kind-runtime/adapted-B/src/compiler/transformers/namedEvaluation.ts:322:1",
+        "phase": "lowering",
+        "kind": "NotYet",
+        "where": "/workspace/scratch/namedeval-kind-runtime/adapted-B/src/compiler/transformers/namedEvaluation.ts:322:89",
+        "reason": "a value of type ParameterDeclaration & { readonly name: Identifier; readonly dotDotDotToken: undefined; readonly initializer: WrappedExpression<AnonymousFunctionDefinition>; }",
+        "text": "/workspace/scratch/namedeval-kind-runtime/adapted-B/src/compiler/transformers/namedEvaluation.ts:322:89: stage 0 can't lower a value of type ParameterDeclaration & { readonly name: Identifier; readonly dotDotDotToken: undefined; readonly initializer: WrappedExpression<AnonymousFunctionDefinition>; } yet"
+      },
+      "after": {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "/workspace/scratch/namedeval-kind-runtime/adapted-B/src/compiler/transformers/namedEvaluation.ts:322:1",
+        "phase": "lowering",
+        "kind": "NotYet",
+        "where": "/workspace/scratch/namedeval-kind-runtime/adapted-B/src/compiler/transformers/namedEvaluation.ts:322:89",
+        "reason": "a value of type ParameterDeclaration & { readonly name: Identifier; readonly dotDotDotToken: undefined; readonly initializer: WrappedExpression<AnonymousFunctionDefinition>; }",
+        "text": "/workspace/scratch/namedeval-kind-runtime/adapted-B/src/compiler/transformers/namedEvaluation.ts:322:89: stage 0 can't lower a value of type ParameterDeclaration & { readonly name: Identifier; readonly dotDotDotToken: undefined; readonly initializer: WrappedExpression<AnonymousFunctionDefinition>; } yet"
+      }
+    },
+    {
+      "before": {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "/workspace/scratch/namedeval-kind-runtime/adapted-B/src/compiler/transformers/namedEvaluation.ts:256:1",
+        "phase": "lowering",
+        "kind": "NotYet",
+        "where": "/workspace/scratch/namedeval-kind-runtime/adapted-B/src/compiler/transformers/namedEvaluation.ts:256:87",
+        "reason": "a value of type PropertyAssignment & { readonly name: Identifier; readonly initializer: WrappedExpression<AnonymousFunctionDefinition>; }",
+        "text": "/workspace/scratch/namedeval-kind-runtime/adapted-B/src/compiler/transformers/namedEvaluation.ts:256:87: stage 0 can't lower a value of type PropertyAssignment & { readonly name: Identifier; readonly initializer: WrappedExpression<AnonymousFunctionDefinition>; } yet"
+      },
+      "after": {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "/workspace/scratch/namedeval-kind-runtime/adapted-B/src/compiler/transformers/namedEvaluation.ts:256:1",
+        "phase": "lowering",
+        "kind": "NotYet",
+        "where": "/workspace/scratch/namedeval-kind-runtime/adapted-B/src/compiler/transformers/namedEvaluation.ts:256:87",
+        "reason": "a value of type PropertyAssignment & { readonly name: Identifier; readonly initializer: WrappedExpression<AnonymousFunctionDefinition>; }",
+        "text": "/workspace/scratch/namedeval-kind-runtime/adapted-B/src/compiler/transformers/namedEvaluation.ts:256:87: stage 0 can't lower a value of type PropertyAssignment & { readonly name: Identifier; readonly initializer: WrappedExpression<AnonymousFunctionDefinition>; } yet"
+      }
+    },
+    {
+      "before": {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "/workspace/scratch/namedeval-kind-runtime/adapted-B/src/compiler/transformers/namedEvaluation.ts:384:1",
+        "phase": "lowering",
+        "kind": "NotYet",
+        "where": "/workspace/scratch/namedeval-kind-runtime/adapted-B/src/compiler/transformers/namedEvaluation.ts:384:88",
+        "reason": "a value of type PropertyDeclaration & { readonly initializer: WrappedExpression<AnonymousFunctionDefinition>; }",
+        "text": "/workspace/scratch/namedeval-kind-runtime/adapted-B/src/compiler/transformers/namedEvaluation.ts:384:88: stage 0 can't lower a value of type PropertyDeclaration & { readonly initializer: WrappedExpression<AnonymousFunctionDefinition>; } yet"
+      },
+      "after": {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "/workspace/scratch/namedeval-kind-runtime/adapted-B/src/compiler/transformers/namedEvaluation.ts:384:1",
+        "phase": "lowering",
+        "kind": "NotYet",
+        "where": "/workspace/scratch/namedeval-kind-runtime/adapted-B/src/compiler/transformers/namedEvaluation.ts:384:88",
+        "reason": "a value of type PropertyDeclaration & { readonly initializer: WrappedExpression<AnonymousFunctionDefinition>; }",
+        "text": "/workspace/scratch/namedeval-kind-runtime/adapted-B/src/compiler/transformers/namedEvaluation.ts:384:88: stage 0 can't lower a value of type PropertyDeclaration & { readonly initializer: WrappedExpression<AnonymousFunctionDefinition>; } yet"
+      }
+    },
+    {
+      "before": {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "/workspace/scratch/namedeval-kind-runtime/adapted-B/src/compiler/transformers/namedEvaluation.ts:274:1",
+        "phase": "lowering",
+        "kind": "NotYet",
+        "where": "/workspace/scratch/namedeval-kind-runtime/adapted-B/src/compiler/transformers/namedEvaluation.ts:274:96",
+        "reason": "a value of type ShorthandPropertyAssignment & { readonly objectAssignmentInitializer: WrappedExpression<AnonymousFunctionDefinition>; }",
+        "text": "/workspace/scratch/namedeval-kind-runtime/adapted-B/src/compiler/transformers/namedEvaluation.ts:274:96: stage 0 can't lower a value of type ShorthandPropertyAssignment & { readonly objectAssignmentInitializer: WrappedExpression<AnonymousFunctionDefinition>; } yet"
+      },
+      "after": {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "/workspace/scratch/namedeval-kind-runtime/adapted-B/src/compiler/transformers/namedEvaluation.ts:274:1",
+        "phase": "lowering",
+        "kind": "NotYet",
+        "where": "/workspace/scratch/namedeval-kind-runtime/adapted-B/src/compiler/transformers/namedEvaluation.ts:274:96",
+        "reason": "a value of type ShorthandPropertyAssignment & { readonly objectAssignmentInitializer: WrappedExpression<AnonymousFunctionDefinition>; }",
+        "text": "/workspace/scratch/namedeval-kind-runtime/adapted-B/src/compiler/transformers/namedEvaluation.ts:274:96: stage 0 can't lower a value of type ShorthandPropertyAssignment & { readonly objectAssignmentInitializer: WrappedExpression<AnonymousFunctionDefinition>; } yet"
+      }
+    },
+    {
+      "before": {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "/workspace/scratch/namedeval-kind-runtime/adapted-B/src/compiler/transformers/namedEvaluation.ts:294:1",
+        "phase": "lowering",
+        "kind": "NotYet",
+        "where": "/workspace/scratch/namedeval-kind-runtime/adapted-B/src/compiler/transformers/namedEvaluation.ts:294:88",
+        "reason": "a value of type VariableDeclaration & { readonly name: Identifier; readonly initializer: WrappedExpression<AnonymousFunctionDefinition>; }",
+        "text": "/workspace/scratch/namedeval-kind-runtime/adapted-B/src/compiler/transformers/namedEvaluation.ts:294:88: stage 0 can't lower a value of type VariableDeclaration & { readonly name: Identifier; readonly initializer: WrappedExpression<AnonymousFunctionDefinition>; } yet"
+      },
+      "after": {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "/workspace/scratch/namedeval-kind-runtime/adapted-B/src/compiler/transformers/namedEvaluation.ts:294:1",
+        "phase": "lowering",
+        "kind": "NotYet",
+        "where": "/workspace/scratch/namedeval-kind-runtime/adapted-B/src/compiler/transformers/namedEvaluation.ts:294:88",
+        "reason": "a value of type VariableDeclaration & { readonly name: Identifier; readonly initializer: WrappedExpression<AnonymousFunctionDefinition>; }",
+        "text": "/workspace/scratch/namedeval-kind-runtime/adapted-B/src/compiler/transformers/namedEvaluation.ts:294:88: stage 0 can't lower a value of type VariableDeclaration & { readonly name: Identifier; readonly initializer: WrappedExpression<AnonymousFunctionDefinition>; } yet"
+      }
+    },
+    {
+      "before": {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "/workspace/scratch/namedeval-kind-runtime/adapted-B/src/compiler/transformers/namedEvaluation.ts:56:1",
+        "phase": "lowering",
+        "kind": "NotYet",
+        "where": "/workspace/scratch/namedeval-kind-runtime/adapted-B/src/compiler/transformers/namedEvaluation.ts:56:78",
+        "reason": "a value of type WrappedExpression<AnonymousFunctionDefinition>",
+        "text": "/workspace/scratch/namedeval-kind-runtime/adapted-B/src/compiler/transformers/namedEvaluation.ts:56:78: stage 0 can't lower a value of type WrappedExpression<AnonymousFunctionDefinition> yet"
+      },
+      "after": {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "/workspace/scratch/namedeval-kind-runtime/adapted-B/src/compiler/transformers/namedEvaluation.ts:56:1",
+        "phase": "lowering",
+        "kind": "NotYet",
+        "where": "/workspace/scratch/namedeval-kind-runtime/adapted-B/src/compiler/transformers/namedEvaluation.ts:56:78",
+        "reason": "a value of type WrappedExpression<AnonymousFunctionDefinition>",
+        "text": "/workspace/scratch/namedeval-kind-runtime/adapted-B/src/compiler/transformers/namedEvaluation.ts:56:78: stage 0 can't lower a value of type WrappedExpression<AnonymousFunctionDefinition> yet"
+      }
+    },
+    {
+      "before": {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "/workspace/scratch/namedeval-kind-runtime/adapted-B/src/compiler/transformers/namedEvaluation.ts:236:1",
+        "phase": "lowering",
+        "kind": "NotYet",
+        "where": "/workspace/scratch/namedeval-kind-runtime/adapted-B/src/compiler/transformers/namedEvaluation.ts:238:5",
+        "reason": "a value of type WrappedExpression<AnonymousFunctionDefinition>",
+        "text": "/workspace/scratch/namedeval-kind-runtime/adapted-B/src/compiler/transformers/namedEvaluation.ts:238:5: stage 0 can't lower a value of type WrappedExpression<AnonymousFunctionDefinition> yet"
+      },
+      "after": {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "/workspace/scratch/namedeval-kind-runtime/adapted-B/src/compiler/transformers/namedEvaluation.ts:236:1",
+        "phase": "lowering",
+        "kind": "NotYet",
+        "where": "/workspace/scratch/namedeval-kind-runtime/adapted-B/src/compiler/transformers/namedEvaluation.ts:238:5",
+        "reason": "a value of type WrappedExpression<AnonymousFunctionDefinition>",
+        "text": "/workspace/scratch/namedeval-kind-runtime/adapted-B/src/compiler/transformers/namedEvaluation.ts:238:5: stage 0 can't lower a value of type WrappedExpression<AnonymousFunctionDefinition> yet"
+      }
+    },
+    {
+      "before": {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "/workspace/scratch/namedeval-kind-runtime/adapted-B/src/compiler/transformers/namedEvaluation.ts:156:1",
+        "phase": "lowering",
+        "kind": "NotYet",
+        "where": "/workspace/scratch/namedeval-kind-runtime/adapted-B/src/compiler/transformers/namedEvaluation.ts:139:1",
+        "reason": "checked predicate overload target ClassNamedEvaluationHelperBlock",
+        "text": "/workspace/scratch/namedeval-kind-runtime/adapted-B/src/compiler/transformers/namedEvaluation.ts:139:1: stage 0 can't lower checked predicate overload target ClassNamedEvaluationHelperBlock yet"
+      },
+      "after": {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "/workspace/scratch/namedeval-kind-runtime/adapted-B/src/compiler/transformers/namedEvaluation.ts:156:1",
+        "phase": "lowering",
+        "kind": "NotYet",
+        "where": "/workspace/scratch/namedeval-kind-runtime/adapted-B/src/compiler/transformers/namedEvaluation.ts:139:1",
+        "reason": "checked predicate overload target ClassNamedEvaluationHelperBlock",
+        "text": "/workspace/scratch/namedeval-kind-runtime/adapted-B/src/compiler/transformers/namedEvaluation.ts:139:1: stage 0 can't lower checked predicate overload target ClassNamedEvaluationHelperBlock yet"
+      }
+    },
+    {
+      "before": {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "/workspace/scratch/namedeval-kind-runtime/adapted-B/src/compiler/transformers/namedEvaluation.ts:67:1",
+        "phase": "lowering",
+        "kind": "NotYet",
+        "where": "/workspace/scratch/namedeval-kind-runtime/adapted-B/src/compiler/transformers/namedEvaluation.ts:89:66",
+        "reason": "reading assignment",
+        "text": "/workspace/scratch/namedeval-kind-runtime/adapted-B/src/compiler/transformers/namedEvaluation.ts:89:66: stage 0 can't lower reading assignment yet"
+      },
+      "after": {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "/workspace/scratch/namedeval-kind-runtime/adapted-B/src/compiler/transformers/namedEvaluation.ts:67:1",
+        "phase": "lowering",
+        "kind": "NotYet",
+        "where": "/workspace/scratch/namedeval-kind-runtime/adapted-B/src/compiler/transformers/namedEvaluation.ts:89:66",
+        "reason": "reading assignment",
+        "text": "/workspace/scratch/namedeval-kind-runtime/adapted-B/src/compiler/transformers/namedEvaluation.ts:89:66: stage 0 can't lower reading assignment yet"
+      }
+    },
+    {
+      "before": {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "/workspace/scratch/namedeval-kind-runtime/adapted-B/src/compiler/transformers/namedEvaluation.ts:67:1",
+        "phase": "lowering",
+        "kind": "NotYet",
+        "where": "/workspace/scratch/namedeval-kind-runtime/adapted-B/src/compiler/transformers/namedEvaluation.ts:90:34",
+        "reason": "reading updatedName",
+        "text": "/workspace/scratch/namedeval-kind-runtime/adapted-B/src/compiler/transformers/namedEvaluation.ts:90:34: stage 0 can't lower reading updatedName yet"
+      },
+      "after": {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "/workspace/scratch/namedeval-kind-runtime/adapted-B/src/compiler/transformers/namedEvaluation.ts:67:1",
+        "phase": "lowering",
+        "kind": "NotYet",
+        "where": "/workspace/scratch/namedeval-kind-runtime/adapted-B/src/compiler/transformers/namedEvaluation.ts:90:34",
+        "reason": "reading updatedName",
+        "text": "/workspace/scratch/namedeval-kind-runtime/adapted-B/src/compiler/transformers/namedEvaluation.ts:90:34: stage 0 can't lower reading updatedName yet"
+      }
+    },
+    {
+      "before": {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "/workspace/scratch/namedeval-kind-runtime/adapted-B/src/compiler/transformers/namedEvaluation.ts:67:1",
+        "phase": "lowering",
+        "kind": "NotYet",
+        "where": "/workspace/scratch/namedeval-kind-runtime/adapted-B/src/compiler/binder.ts:1109:17",
+        "reason": "writing a checked object field that may hold undefined or null, whose checked write can't change the representation its slot holds",
+        "text": "/workspace/scratch/namedeval-kind-runtime/adapted-B/src/compiler/binder.ts:1109:17: stage 0 can't lower writing a checked object field that may hold undefined or null, whose checked write can't change the representation its slot holds yet"
+      },
+      "after": {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "/workspace/scratch/namedeval-kind-runtime/adapted-B/src/compiler/transformers/namedEvaluation.ts:67:1",
+        "phase": "lowering",
+        "kind": "NotYet",
+        "where": "/workspace/scratch/namedeval-kind-runtime/adapted-B/src/compiler/binder.ts:1109:17",
+        "reason": "writing a checked object field that may hold undefined or null, whose checked write can't change the representation its slot holds",
+        "text": "/workspace/scratch/namedeval-kind-runtime/adapted-B/src/compiler/binder.ts:1109:17: stage 0 can't lower writing a checked object field that may hold undefined or null, whose checked write can't change the representation its slot holds yet"
+      }
+    },
+    {
+      "before": {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "/workspace/scratch/namedeval-kind-runtime/adapted-B/src/compiler/transformers/namedEvaluation.ts:139:1",
+        "phase": "lowering",
+        "kind": "NotYet",
+        "where": "/workspace/scratch/namedeval-kind-runtime/adapted-B/src/compiler/binder.ts:1034:17",
+        "reason": "writing a checked object field that may hold undefined or null, whose checked write can't change the representation its slot holds",
+        "text": "/workspace/scratch/namedeval-kind-runtime/adapted-B/src/compiler/binder.ts:1034:17: stage 0 can't lower writing a checked object field that may hold undefined or null, whose checked write can't change the representation its slot holds yet"
+      },
+      "after": {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "/workspace/scratch/namedeval-kind-runtime/adapted-B/src/compiler/transformers/namedEvaluation.ts:139:1",
+        "phase": "lowering",
+        "kind": "NotYet",
+        "where": "/workspace/scratch/namedeval-kind-runtime/adapted-B/src/compiler/binder.ts:1034:17",
+        "reason": "writing a checked object field that may hold undefined or null, whose checked write can't change the representation its slot holds",
+        "text": "/workspace/scratch/namedeval-kind-runtime/adapted-B/src/compiler/binder.ts:1034:17: stage 0 can't lower writing a checked object field that may hold undefined or null, whose checked write can't change the representation its slot holds yet"
+      }
+    },
+    {
+      "before": {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "/workspace/scratch/namedeval-kind-runtime/adapted-B/src/compiler/transformers/namedEvaluation.ts:139:1",
+        "phase": "lowering",
+        "kind": "NotYet",
+        "where": "/workspace/scratch/namedeval-kind-runtime/adapted-B/src/compiler/binder.ts:1109:17",
+        "reason": "writing a checked object field that may hold undefined or null, whose checked write can't change the representation its slot holds",
+        "text": "/workspace/scratch/namedeval-kind-runtime/adapted-B/src/compiler/binder.ts:1109:17: stage 0 can't lower writing a checked object field that may hold undefined or null, whose checked write can't change the representation its slot holds yet"
+      },
+      "after": {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "/workspace/scratch/namedeval-kind-runtime/adapted-B/src/compiler/transformers/namedEvaluation.ts:139:1",
+        "phase": "lowering",
+        "kind": "NotYet",
+        "where": "/workspace/scratch/namedeval-kind-runtime/adapted-B/src/compiler/binder.ts:1109:17",
+        "reason": "writing a checked object field that may hold undefined or null, whose checked write can't change the representation its slot holds",
+        "text": "/workspace/scratch/namedeval-kind-runtime/adapted-B/src/compiler/binder.ts:1109:17: stage 0 can't lower writing a checked object field that may hold undefined or null, whose checked write can't change the representation its slot holds yet"
+      }
+    },
+    {
+      "before": {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "/workspace/scratch/namedeval-kind-runtime/adapted-B/src/compiler/transformers/namedEvaluation.ts:470:1",
+        "phase": "lowering",
+        "kind": "Refused",
+        "where": "/workspace/scratch/namedeval-kind-runtime/adapted-B/src/compiler/transformers/namedEvaluation.ts:469:1",
+        "reason": "overload 1 of transformNamedEvaluation result Extract<AssignmentExpression<EqualsToken> & { readonly left: Identifier; readonly right: WrappedExpression<AnonymousFunctionDefinition>; }, Pick<...>> | ... 7 more ... | Extract<...> cannot be served by implementation result BinaryExpression | BindingElement | ExportAssignment | ParameterDeclaration | PropertyAssignment | PropertyDeclaration | ShorthandPropertyAssignment | VariableDeclaration",
+        "text": "/workspace/scratch/namedeval-kind-runtime/adapted-B/src/compiler/transformers/namedEvaluation.ts:469:1: Adamic 0.1 refuses overload 1 of transformNamedEvaluation result Extract<AssignmentExpression<EqualsToken> & { readonly left: Identifier; readonly right: WrappedExpression<AnonymousFunctionDefinition>; }, Pick<...>> | ... 7 more ... | Extract<...> cannot be served by implementation result BinaryExpression | BindingElement | ExportAssignment | ParameterDeclaration | PropertyAssignment | PropertyDeclaration | ShorthandPropertyAssignment | VariableDeclaration; make the implementation result covariant with every overload result"
+      },
+      "after": {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "/workspace/scratch/namedeval-kind-runtime/adapted-B/src/compiler/transformers/namedEvaluation.ts:470:1",
+        "phase": "lowering",
+        "kind": "Refused",
+        "where": "/workspace/scratch/namedeval-kind-runtime/adapted-B/src/compiler/transformers/namedEvaluation.ts:469:1",
+        "reason": "overload 1 of transformNamedEvaluation result Extract<AssignmentExpression<EqualsToken> & { readonly left: Identifier; readonly right: WrappedExpression<AnonymousFunctionDefinition>; }, Pick<...>> | ... 7 more ... | Extract<...> cannot be served by implementation result BinaryExpression | BindingElement | ExportAssignment | ParameterDeclaration | PropertyAssignment | PropertyDeclaration | ShorthandPropertyAssignment | VariableDeclaration",
+        "text": "/workspace/scratch/namedeval-kind-runtime/adapted-B/src/compiler/transformers/namedEvaluation.ts:469:1: Adamic 0.1 refuses overload 1 of transformNamedEvaluation result Extract<AssignmentExpression<EqualsToken> & { readonly left: Identifier; readonly right: WrappedExpression<AnonymousFunctionDefinition>; }, Pick<...>> | ... 7 more ... | Extract<...> cannot be served by implementation result BinaryExpression | BindingElement | ExportAssignment | ParameterDeclaration | PropertyAssignment | PropertyDeclaration | ShorthandPropertyAssignment | VariableDeclaration; make the implementation result covariant with every overload result"
+      }
+    },
+    {
+      "before": {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "/workspace/scratch/namedeval-kind-runtime/adapted-B/src/compiler/transformers/namedEvaluation.ts:101:1",
+        "phase": "refusal_scan",
+        "kind": "Refused",
+        "where": "/workspace/scratch/namedeval-kind-runtime/adapted-B/src/compiler/transformers/namedEvaluation.ts:116:12",
+        "reason": "a cast the runtime can't check",
+        "text": "/workspace/scratch/namedeval-kind-runtime/adapted-B/src/compiler/transformers/namedEvaluation.ts:116:12: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
+      },
+      "after": {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "/workspace/scratch/namedeval-kind-runtime/adapted-B/src/compiler/transformers/namedEvaluation.ts:101:1",
+        "phase": "refusal_scan",
+        "kind": "Refused",
+        "where": "/workspace/scratch/namedeval-kind-runtime/adapted-B/src/compiler/transformers/namedEvaluation.ts:116:12",
+        "reason": "a cast the runtime can't check",
+        "text": "/workspace/scratch/namedeval-kind-runtime/adapted-B/src/compiler/transformers/namedEvaluation.ts:116:12: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
+      }
+    },
+    {
+      "before": {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "/workspace/scratch/namedeval-kind-runtime/adapted-B/src/compiler/transformers/namedEvaluation.ts:179:1",
+        "phase": "refusal_scan",
+        "kind": "Refused",
+        "where": "/workspace/scratch/namedeval-kind-runtime/adapted-B/src/compiler/transformers/namedEvaluation.ts:205:68",
+        "reason": "a value of type Identifier seen as SourceMapRange | undefined, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace",
+        "text": "/workspace/scratch/namedeval-kind-runtime/adapted-B/src/compiler/transformers/namedEvaluation.ts:205:68: Adamic 0.1 refuses a value of type Identifier seen as SourceMapRange | undefined, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace; keep pos readonly in the type it's seen as, or copy the value ({ ...value }) (adamic/invariant-mutable)"
+      },
+      "after": {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "/workspace/scratch/namedeval-kind-runtime/adapted-B/src/compiler/transformers/namedEvaluation.ts:179:1",
+        "phase": "refusal_scan",
+        "kind": "Refused",
+        "where": "/workspace/scratch/namedeval-kind-runtime/adapted-B/src/compiler/transformers/namedEvaluation.ts:205:68",
+        "reason": "a value of type Identifier seen as SourceMapRange | undefined, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace",
+        "text": "/workspace/scratch/namedeval-kind-runtime/adapted-B/src/compiler/transformers/namedEvaluation.ts:205:68: Adamic 0.1 refuses a value of type Identifier seen as SourceMapRange | undefined, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace; keep pos readonly in the type it's seen as, or copy the value ({ ...value }) (adamic/invariant-mutable)"
+      }
+    },
+    {
+      "before": {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "/workspace/scratch/namedeval-kind-runtime/adapted-B/src/compiler/transformers/namedEvaluation.ts:179:1",
+        "phase": "refusal_scan",
+        "kind": "Refused",
+        "where": "/workspace/scratch/namedeval-kind-runtime/adapted-B/src/compiler/transformers/namedEvaluation.ts:212:18",
+        "reason": "a value of type NodeArray<ClassElement> seen as TextRange, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace",
+        "text": "/workspace/scratch/namedeval-kind-runtime/adapted-B/src/compiler/transformers/namedEvaluation.ts:212:18: Adamic 0.1 refuses a value of type NodeArray<ClassElement> seen as TextRange, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace; keep pos readonly in the type it's seen as, or copy the value ({ ...value }) (adamic/invariant-mutable)"
+      },
+      "after": {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "/workspace/scratch/namedeval-kind-runtime/adapted-B/src/compiler/transformers/namedEvaluation.ts:179:1",
+        "phase": "refusal_scan",
+        "kind": "Refused",
+        "where": "/workspace/scratch/namedeval-kind-runtime/adapted-B/src/compiler/transformers/namedEvaluation.ts:212:18",
+        "reason": "a value of type NodeArray<ClassElement> seen as TextRange, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace",
+        "text": "/workspace/scratch/namedeval-kind-runtime/adapted-B/src/compiler/transformers/namedEvaluation.ts:212:18: Adamic 0.1 refuses a value of type NodeArray<ClassElement> seen as TextRange, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace; keep pos readonly in the type it's seen as, or copy the value ({ ...value }) (adamic/invariant-mutable)"
+      }
+    },
+    {
+      "before": {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "/workspace/scratch/namedeval-kind-runtime/adapted-B/src/compiler/transformers/namedEvaluation.ts:67:1",
+        "phase": "refusal_scan",
+        "kind": "Refused",
+        "where": "/workspace/scratch/namedeval-kind-runtime/adapted-B/src/compiler/transformers/namedEvaluation.ts:74:60",
+        "reason": "an object refinement using an open numeric enum as a literal tag",
+        "text": "/workspace/scratch/namedeval-kind-runtime/adapted-B/src/compiler/transformers/namedEvaluation.ts:74:60: Adamic 0.1 refuses an object refinement using an open numeric enum as a literal tag; use a member-specific tag from a multi-member enum, a string enum, or a plain literal tag (adamic/enum-tag)"
+      },
+      "after": {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "/workspace/scratch/namedeval-kind-runtime/adapted-B/src/compiler/transformers/namedEvaluation.ts:67:1",
+        "phase": "refusal_scan",
+        "kind": "Refused",
+        "where": "/workspace/scratch/namedeval-kind-runtime/adapted-B/src/compiler/transformers/namedEvaluation.ts:74:60",
+        "reason": "an object refinement using an open numeric enum as a literal tag",
+        "text": "/workspace/scratch/namedeval-kind-runtime/adapted-B/src/compiler/transformers/namedEvaluation.ts:74:60: Adamic 0.1 refuses an object refinement using an open numeric enum as a literal tag; use a member-specific tag from a multi-member enum, a string enum, or a plain literal tag (adamic/enum-tag)"
+      }
+    },
+    {
+      "before": {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "/workspace/scratch/namedeval-kind-runtime/adapted-B/src/compiler/transformers/namedEvaluation.ts:67:1",
+        "phase": "refusal_scan",
+        "kind": "Refused",
+        "where": "/workspace/scratch/namedeval-kind-runtime/adapted-B/src/compiler/transformers/namedEvaluation.ts:75:66",
+        "reason": "an object refinement using an open numeric enum as a literal tag",
+        "text": "/workspace/scratch/namedeval-kind-runtime/adapted-B/src/compiler/transformers/namedEvaluation.ts:75:66: Adamic 0.1 refuses an object refinement using an open numeric enum as a literal tag; use a member-specific tag from a multi-member enum, a string enum, or a plain literal tag (adamic/enum-tag)"
+      },
+      "after": {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "/workspace/scratch/namedeval-kind-runtime/adapted-B/src/compiler/transformers/namedEvaluation.ts:67:1",
+        "phase": "refusal_scan",
+        "kind": "Refused",
+        "where": "/workspace/scratch/namedeval-kind-runtime/adapted-B/src/compiler/transformers/namedEvaluation.ts:75:66",
+        "reason": "an object refinement using an open numeric enum as a literal tag",
+        "text": "/workspace/scratch/namedeval-kind-runtime/adapted-B/src/compiler/transformers/namedEvaluation.ts:75:66: Adamic 0.1 refuses an object refinement using an open numeric enum as a literal tag; use a member-specific tag from a multi-member enum, a string enum, or a plain literal tag (adamic/enum-tag)"
+      }
+    },
+    {
+      "before": {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "/workspace/scratch/namedeval-kind-runtime/adapted-B/src/compiler/transformers/namedEvaluation.ts:67:1",
+        "phase": "refusal_scan",
+        "kind": "Refused",
+        "where": "/workspace/scratch/namedeval-kind-runtime/adapted-B/src/compiler/transformers/namedEvaluation.ts:76:32",
+        "reason": "an object refinement using an open numeric enum as a literal tag",
+        "text": "/workspace/scratch/namedeval-kind-runtime/adapted-B/src/compiler/transformers/namedEvaluation.ts:76:32: Adamic 0.1 refuses an object refinement using an open numeric enum as a literal tag; use a member-specific tag from a multi-member enum, a string enum, or a plain literal tag (adamic/enum-tag)"
+      },
+      "after": {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "/workspace/scratch/namedeval-kind-runtime/adapted-B/src/compiler/transformers/namedEvaluation.ts:67:1",
+        "phase": "refusal_scan",
+        "kind": "Refused",
+        "where": "/workspace/scratch/namedeval-kind-runtime/adapted-B/src/compiler/transformers/namedEvaluation.ts:76:32",
+        "reason": "an object refinement using an open numeric enum as a literal tag",
+        "text": "/workspace/scratch/namedeval-kind-runtime/adapted-B/src/compiler/transformers/namedEvaluation.ts:76:32: Adamic 0.1 refuses an object refinement using an open numeric enum as a literal tag; use a member-specific tag from a multi-member enum, a string enum, or a plain literal tag (adamic/enum-tag)"
+      }
+    },
+    {
+      "before": {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "/workspace/scratch/namedeval-kind-runtime/adapted-B/src/compiler/transformers/namedEvaluation.ts:67:1",
+        "phase": "refusal_scan",
+        "kind": "Refused",
+        "where": "/workspace/scratch/namedeval-kind-runtime/adapted-B/src/compiler/transformers/namedEvaluation.ts:79:31",
+        "reason": "an object refinement using an open numeric enum as a literal tag",
+        "text": "/workspace/scratch/namedeval-kind-runtime/adapted-B/src/compiler/transformers/namedEvaluation.ts:79:31: Adamic 0.1 refuses an object refinement using an open numeric enum as a literal tag; use a member-specific tag from a multi-member enum, a string enum, or a plain literal tag (adamic/enum-tag)"
+      },
+      "after": {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "/workspace/scratch/namedeval-kind-runtime/adapted-B/src/compiler/transformers/namedEvaluation.ts:67:1",
+        "phase": "refusal_scan",
+        "kind": "Refused",
+        "where": "/workspace/scratch/namedeval-kind-runtime/adapted-B/src/compiler/transformers/namedEvaluation.ts:79:31",
+        "reason": "an object refinement using an open numeric enum as a literal tag",
+        "text": "/workspace/scratch/namedeval-kind-runtime/adapted-B/src/compiler/transformers/namedEvaluation.ts:79:31: Adamic 0.1 refuses an object refinement using an open numeric enum as a literal tag; use a member-specific tag from a multi-member enum, a string enum, or a plain literal tag (adamic/enum-tag)"
+      }
+    },
+    {
+      "before": {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "/workspace/scratch/namedeval-kind-runtime/adapted-B/src/compiler/transformers/namedEvaluation.ts:67:1",
+        "phase": "refusal_scan",
+        "kind": "Refused",
+        "where": "/workspace/scratch/namedeval-kind-runtime/adapted-B/src/compiler/transformers/namedEvaluation.ts:79:65",
+        "reason": "an object refinement using an open numeric enum as a literal tag",
+        "text": "/workspace/scratch/namedeval-kind-runtime/adapted-B/src/compiler/transformers/namedEvaluation.ts:79:65: Adamic 0.1 refuses an object refinement using an open numeric enum as a literal tag; use a member-specific tag from a multi-member enum, a string enum, or a plain literal tag (adamic/enum-tag)"
+      },
+      "after": {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "/workspace/scratch/namedeval-kind-runtime/adapted-B/src/compiler/transformers/namedEvaluation.ts:67:1",
+        "phase": "refusal_scan",
+        "kind": "Refused",
+        "where": "/workspace/scratch/namedeval-kind-runtime/adapted-B/src/compiler/transformers/namedEvaluation.ts:79:65",
+        "reason": "an object refinement using an open numeric enum as a literal tag",
+        "text": "/workspace/scratch/namedeval-kind-runtime/adapted-B/src/compiler/transformers/namedEvaluation.ts:79:65: Adamic 0.1 refuses an object refinement using an open numeric enum as a literal tag; use a member-specific tag from a multi-member enum, a string enum, or a plain literal tag (adamic/enum-tag)"
+      }
+    },
+    {
+      "before": {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "/workspace/scratch/namedeval-kind-runtime/adapted-B/src/compiler/transformers/namedEvaluation.ts:67:1",
+        "phase": "refusal_scan",
+        "kind": "Refused",
+        "where": "/workspace/scratch/namedeval-kind-runtime/adapted-B/src/compiler/transformers/namedEvaluation.ts:80:66",
+        "reason": "an object refinement using an open numeric enum as a literal tag",
+        "text": "/workspace/scratch/namedeval-kind-runtime/adapted-B/src/compiler/transformers/namedEvaluation.ts:80:66: Adamic 0.1 refuses an object refinement using an open numeric enum as a literal tag; use a member-specific tag from a multi-member enum, a string enum, or a plain literal tag (adamic/enum-tag)"
+      },
+      "after": {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "/workspace/scratch/namedeval-kind-runtime/adapted-B/src/compiler/transformers/namedEvaluation.ts:67:1",
+        "phase": "refusal_scan",
+        "kind": "Refused",
+        "where": "/workspace/scratch/namedeval-kind-runtime/adapted-B/src/compiler/transformers/namedEvaluation.ts:80:66",
+        "reason": "an object refinement using an open numeric enum as a literal tag",
+        "text": "/workspace/scratch/namedeval-kind-runtime/adapted-B/src/compiler/transformers/namedEvaluation.ts:80:66: Adamic 0.1 refuses an object refinement using an open numeric enum as a literal tag; use a member-specific tag from a multi-member enum, a string enum, or a plain literal tag (adamic/enum-tag)"
+      }
+    },
+    {
+      "before": {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "/workspace/scratch/namedeval-kind-runtime/adapted-B/src/compiler/transformers/namedEvaluation.ts:67:1",
+        "phase": "refusal_scan",
+        "kind": "Refused",
+        "where": "/workspace/scratch/namedeval-kind-runtime/adapted-B/src/compiler/transformers/namedEvaluation.ts:81:32",
+        "reason": "an object refinement using an open numeric enum as a literal tag",
+        "text": "/workspace/scratch/namedeval-kind-runtime/adapted-B/src/compiler/transformers/namedEvaluation.ts:81:32: Adamic 0.1 refuses an object refinement using an open numeric enum as a literal tag; use a member-specific tag from a multi-member enum, a string enum, or a plain literal tag (adamic/enum-tag)"
+      },
+      "after": {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "/workspace/scratch/namedeval-kind-runtime/adapted-B/src/compiler/transformers/namedEvaluation.ts:67:1",
+        "phase": "refusal_scan",
+        "kind": "Refused",
+        "where": "/workspace/scratch/namedeval-kind-runtime/adapted-B/src/compiler/transformers/namedEvaluation.ts:81:32",
+        "reason": "an object refinement using an open numeric enum as a literal tag",
+        "text": "/workspace/scratch/namedeval-kind-runtime/adapted-B/src/compiler/transformers/namedEvaluation.ts:81:32: Adamic 0.1 refuses an object refinement using an open numeric enum as a literal tag; use a member-specific tag from a multi-member enum, a string enum, or a plain literal tag (adamic/enum-tag)"
+      }
+    },
+    {
+      "before": {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "/workspace/scratch/namedeval-kind-runtime/adapted-B/src/compiler/transformers/namedEvaluation.ts:67:1",
+        "phase": "refusal_scan",
+        "kind": "Refused",
+        "where": "/workspace/scratch/namedeval-kind-runtime/adapted-B/src/compiler/transformers/namedEvaluation.ts:84:58",
+        "reason": "an object refinement using an open numeric enum as a literal tag",
+        "text": "/workspace/scratch/namedeval-kind-runtime/adapted-B/src/compiler/transformers/namedEvaluation.ts:84:58: Adamic 0.1 refuses an object refinement using an open numeric enum as a literal tag; use a member-specific tag from a multi-member enum, a string enum, or a plain literal tag (adamic/enum-tag)"
+      },
+      "after": {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "/workspace/scratch/namedeval-kind-runtime/adapted-B/src/compiler/transformers/namedEvaluation.ts:67:1",
+        "phase": "refusal_scan",
+        "kind": "Refused",
+        "where": "/workspace/scratch/namedeval-kind-runtime/adapted-B/src/compiler/transformers/namedEvaluation.ts:84:58",
+        "reason": "an object refinement using an open numeric enum as a literal tag",
+        "text": "/workspace/scratch/namedeval-kind-runtime/adapted-B/src/compiler/transformers/namedEvaluation.ts:84:58: Adamic 0.1 refuses an object refinement using an open numeric enum as a literal tag; use a member-specific tag from a multi-member enum, a string enum, or a plain literal tag (adamic/enum-tag)"
+      }
+    },
+    {
+      "before": {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "/workspace/scratch/namedeval-kind-runtime/adapted-B/src/compiler/transformers/namedEvaluation.ts:67:1",
+        "phase": "refusal_scan",
+        "kind": "Refused",
+        "where": "/workspace/scratch/namedeval-kind-runtime/adapted-B/src/compiler/transformers/namedEvaluation.ts:87:68",
+        "reason": "an object refinement using an open numeric enum as a literal tag",
+        "text": "/workspace/scratch/namedeval-kind-runtime/adapted-B/src/compiler/transformers/namedEvaluation.ts:87:68: Adamic 0.1 refuses an object refinement using an open numeric enum as a literal tag; use a member-specific tag from a multi-member enum, a string enum, or a plain literal tag (adamic/enum-tag)"
+      },
+      "after": {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "/workspace/scratch/namedeval-kind-runtime/adapted-B/src/compiler/transformers/namedEvaluation.ts:67:1",
+        "phase": "refusal_scan",
+        "kind": "Refused",
+        "where": "/workspace/scratch/namedeval-kind-runtime/adapted-B/src/compiler/transformers/namedEvaluation.ts:87:68",
+        "reason": "an object refinement using an open numeric enum as a literal tag",
+        "text": "/workspace/scratch/namedeval-kind-runtime/adapted-B/src/compiler/transformers/namedEvaluation.ts:87:68: Adamic 0.1 refuses an object refinement using an open numeric enum as a literal tag; use a member-specific tag from a multi-member enum, a string enum, or a plain literal tag (adamic/enum-tag)"
+      }
+    },
+    {
+      "before": {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "/workspace/scratch/namedeval-kind-runtime/adapted-B/src/compiler/transformers/namedEvaluation.ts:67:1",
+        "phase": "refusal_scan",
+        "kind": "Refused",
+        "where": "/workspace/scratch/namedeval-kind-runtime/adapted-B/src/compiler/transformers/namedEvaluation.ts:89:60",
+        "reason": "an object refinement using an open numeric enum as a literal tag",
+        "text": "/workspace/scratch/namedeval-kind-runtime/adapted-B/src/compiler/transformers/namedEvaluation.ts:89:60: Adamic 0.1 refuses an object refinement using an open numeric enum as a literal tag; use a member-specific tag from a multi-member enum, a string enum, or a plain literal tag (adamic/enum-tag)"
+      },
+      "after": {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "/workspace/scratch/namedeval-kind-runtime/adapted-B/src/compiler/transformers/namedEvaluation.ts:67:1",
+        "phase": "refusal_scan",
+        "kind": "Refused",
+        "where": "/workspace/scratch/namedeval-kind-runtime/adapted-B/src/compiler/transformers/namedEvaluation.ts:89:60",
+        "reason": "an object refinement using an open numeric enum as a literal tag",
+        "text": "/workspace/scratch/namedeval-kind-runtime/adapted-B/src/compiler/transformers/namedEvaluation.ts:89:60: Adamic 0.1 refuses an object refinement using an open numeric enum as a literal tag; use a member-specific tag from a multi-member enum, a string enum, or a plain literal tag (adamic/enum-tag)"
+      }
+    }
+  ],
+  "strictCanonicalGone": [
+    {
+      "root_kind": "",
+      "depth": 0,
+      "measurement": "measured on a checker-rejected program",
+      "unit": "/workspace/scratch/namedeval-kind-runtime/adapted-B/src/compiler/transformers/namedEvaluation.ts:179:1",
+      "phase": "lowering",
+      "kind": "Refused",
+      "where": "/workspace/scratch/namedeval-kind-runtime/adapted-B/src/compiler/transformers/namedEvaluation.ts:173:1",
+      "reason": "overload 1 of injectClassNamedEvaluationHelperBlockIfMissing result Extract<ClassDeclaration, Pick<...>> | Extract<...> cannot be served by implementation result ClassLikeDeclaration",
+      "text": "/workspace/scratch/namedeval-kind-runtime/adapted-B/src/compiler/transformers/namedEvaluation.ts:173:1: Adamic 0.1 refuses overload 1 of injectClassNamedEvaluationHelperBlockIfMissing result Extract<ClassDeclaration, Pick<...>> | Extract<...> cannot be served by implementation result ClassLikeDeclaration; make the implementation result covariant with every overload result"
+    },
+    {
+      "root_kind": "",
+      "depth": 0,
+      "measurement": "measured on a checker-rejected program",
+      "unit": "/workspace/scratch/namedeval-kind-runtime/adapted-B/src/compiler/transformers/namedEvaluation.ts:179:1",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/workspace/scratch/namedeval-kind-runtime/adapted-B/src/compiler/transformers/namedEvaluation.ts:179:1",
+      "reason": "function signature or prologue failed; continued at next declaration",
+      "text": "/workspace/scratch/namedeval-kind-runtime/adapted-B/src/compiler/transformers/namedEvaluation.ts:173:1: Adamic 0.1 refuses overload 1 of injectClassNamedEvaluationHelperBlockIfMissing result Extract<ClassDeclaration, Pick<...>> | Extract<...> cannot be served by implementation result ClassLikeDeclaration; make the implementation result covariant with every overload result",
+      "start": 7070,
+      "end": 8605
+    }
+  ],
+  "strictCanonicalAppeared": [
+    {
+      "root_kind": "",
+      "depth": 0,
+      "measurement": "measured on a checker-rejected program",
+      "unit": "/workspace/scratch/namedeval-kind-runtime/adapted-B/src/compiler/transformers/namedEvaluation.ts:179:1",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/workspace/scratch/namedeval-kind-runtime/adapted-B/src/compiler/transformers/namedEvaluation.ts:203:11",
+      "reason": "a value of type ClassNamedEvaluationHelperBlock",
+      "text": "/workspace/scratch/namedeval-kind-runtime/adapted-B/src/compiler/transformers/namedEvaluation.ts:203:11: stage 0 can't lower a value of type ClassNamedEvaluationHelperBlock yet"
+    },
+    {
+      "root_kind": "",
+      "depth": 0,
+      "measurement": "measured on a checker-rejected program",
+      "unit": "/workspace/scratch/namedeval-kind-runtime/adapted-B/src/compiler/transformers/namedEvaluation.ts:179:1",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/workspace/scratch/namedeval-kind-runtime/adapted-B/src/compiler/transformers/namedEvaluation.ts:203:5",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/workspace/scratch/namedeval-kind-runtime/adapted-B/src/compiler/transformers/namedEvaluation.ts:203:11: stage 0 can't lower a value of type ClassNamedEvaluationHelperBlock yet",
+      "start": 7486,
+      "end": 7598
+    },
+    {
+      "root_kind": "",
+      "depth": 0,
+      "measurement": "measured on a checker-rejected program",
+      "unit": "/workspace/scratch/namedeval-kind-runtime/adapted-B/src/compiler/transformers/namedEvaluation.ts:179:1",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/workspace/scratch/namedeval-kind-runtime/adapted-B/src/compiler/factory/emitNode.ts:139:17",
+      "reason": "a function returning ExpressionStatement & { readonly expression: CallExpression & { readonly expression: Identifier; }; }",
+      "text": "/workspace/scratch/namedeval-kind-runtime/adapted-B/src/compiler/factory/emitNode.ts:139:17: stage 0 can't lower a function returning ExpressionStatement & { readonly expression: CallExpression & { readonly expression: Identifier; }; } yet"
+    },
+    {
+      "root_kind": "",
+      "depth": 0,
+      "measurement": "measured on a checker-rejected program",
+      "unit": "/workspace/scratch/namedeval-kind-runtime/adapted-B/src/compiler/transformers/namedEvaluation.ts:179:1",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/workspace/scratch/namedeval-kind-runtime/adapted-B/src/compiler/transformers/namedEvaluation.ts:205:9",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/workspace/scratch/namedeval-kind-runtime/adapted-B/src/compiler/factory/emitNode.ts:139:17: stage 0 can't lower a function returning ExpressionStatement & { readonly expression: CallExpression & { readonly expression: Identifier; }; } yet",
+      "start": 7620,
+      "end": 7700
+    },
+    {
+      "root_kind": "",
+      "depth": 0,
+      "measurement": "measured on a checker-rejected program",
+      "unit": "/workspace/scratch/namedeval-kind-runtime/adapted-B/src/compiler/transformers/namedEvaluation.ts:179:1",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/workspace/scratch/namedeval-kind-runtime/adapted-B/src/compiler/transformers/classThis.ts:72:1",
+      "reason": "checked predicate overload target ClassThisAssignmentBlock",
+      "text": "/workspace/scratch/namedeval-kind-runtime/adapted-B/src/compiler/transformers/classThis.ts:72:1: stage 0 can't lower checked predicate overload target ClassThisAssignmentBlock yet"
+    },
+    {
+      "root_kind": "",
+      "depth": 0,
+      "measurement": "measured on a checker-rejected program",
+      "unit": "/workspace/scratch/namedeval-kind-runtime/adapted-B/src/compiler/transformers/namedEvaluation.ts:179:1",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/workspace/scratch/namedeval-kind-runtime/adapted-B/src/compiler/transformers/namedEvaluation.ts:208:5",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/workspace/scratch/namedeval-kind-runtime/adapted-B/src/compiler/transformers/classThis.ts:72:1: stage 0 can't lower checked predicate overload target ClassThisAssignmentBlock yet",
+      "start": 7707,
+      "end": 7794
+    },
+    {
+      "root_kind": "",
+      "depth": 0,
+      "measurement": "measured on a checker-rejected program",
+      "unit": "/workspace/scratch/namedeval-kind-runtime/adapted-B/src/compiler/transformers/namedEvaluation.ts:179:1",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/workspace/scratch/namedeval-kind-runtime/adapted-B/src/compiler/transformers/namedEvaluation.ts:209:43",
+      "reason": "reading insertionIndex",
+      "text": "/workspace/scratch/namedeval-kind-runtime/adapted-B/src/compiler/transformers/namedEvaluation.ts:209:43: stage 0 can't lower reading insertionIndex yet"
+    },
+    {
+      "root_kind": "",
+      "depth": 0,
+      "measurement": "measured on a checker-rejected program",
+      "unit": "/workspace/scratch/namedeval-kind-runtime/adapted-B/src/compiler/transformers/namedEvaluation.ts:179:1",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/workspace/scratch/namedeval-kind-runtime/adapted-B/src/compiler/transformers/namedEvaluation.ts:209:5",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/workspace/scratch/namedeval-kind-runtime/adapted-B/src/compiler/transformers/namedEvaluation.ts:209:43: stage 0 can't lower reading insertionIndex yet",
+      "start": 7794,
+      "end": 7854
+    },
+    {
+      "root_kind": "",
+      "depth": 0,
+      "measurement": "measured on a checker-rejected program",
+      "unit": "/workspace/scratch/namedeval-kind-runtime/adapted-B/src/compiler/transformers/namedEvaluation.ts:179:1",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/workspace/scratch/namedeval-kind-runtime/adapted-B/src/compiler/transformers/namedEvaluation.ts:210:41",
+      "reason": "reading insertionIndex",
+      "text": "/workspace/scratch/namedeval-kind-runtime/adapted-B/src/compiler/transformers/namedEvaluation.ts:210:41: stage 0 can't lower reading insertionIndex yet"
+    },
+    {
+      "root_kind": "",
+      "depth": 0,
+      "measurement": "measured on a checker-rejected program",
+      "unit": "/workspace/scratch/namedeval-kind-runtime/adapted-B/src/compiler/transformers/namedEvaluation.ts:179:1",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/workspace/scratch/namedeval-kind-runtime/adapted-B/src/compiler/transformers/namedEvaluation.ts:210:5",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/workspace/scratch/namedeval-kind-runtime/adapted-B/src/compiler/transformers/namedEvaluation.ts:210:41: stage 0 can't lower reading insertionIndex yet",
+      "start": 7854,
+      "end": 7912
+    },
+    {
+      "root_kind": "",
+      "depth": 0,
+      "measurement": "measured on a checker-rejected program",
+      "unit": "/workspace/scratch/namedeval-kind-runtime/adapted-B/src/compiler/transformers/namedEvaluation.ts:179:1",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/workspace/scratch/namedeval-kind-runtime/adapted-B/src/compiler/transformers/namedEvaluation.ts:211:49",
+      "reason": "reading leading",
+      "text": "/workspace/scratch/namedeval-kind-runtime/adapted-B/src/compiler/transformers/namedEvaluation.ts:211:49: stage 0 can't lower reading leading yet"
+    },
+    {
+      "root_kind": "",
+      "depth": 0,
+      "measurement": "measured on a checker-rejected program",
+      "unit": "/workspace/scratch/namedeval-kind-runtime/adapted-B/src/compiler/transformers/namedEvaluation.ts:179:1",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/workspace/scratch/namedeval-kind-runtime/adapted-B/src/compiler/transformers/namedEvaluation.ts:211:5",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/workspace/scratch/namedeval-kind-runtime/adapted-B/src/compiler/transformers/namedEvaluation.ts:211:49: stage 0 can't lower reading leading yet",
+      "start": 7912,
+      "end": 8007
+    },
+    {
+      "root_kind": "",
+      "depth": 0,
+      "measurement": "measured on a checker-rejected program",
+      "unit": "/workspace/scratch/namedeval-kind-runtime/adapted-B/src/compiler/transformers/namedEvaluation.ts:179:1",
+      "phase": "lowering",
+      "kind": "Refused",
+      "where": "/workspace/scratch/namedeval-kind-runtime/adapted-B/src/compiler/utilities.ts:10657:6",
+      "reason": "a value of type T seen as TextRange, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace",
+      "text": "/workspace/scratch/namedeval-kind-runtime/adapted-B/src/compiler/utilities.ts:10657:6: Adamic 0.1 refuses a value of type T seen as TextRange, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace; keep pos readonly in the type it's seen as, or copy the value ({ ...value }) (adamic/invariant-mutable); use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
+    },
+    {
+      "root_kind": "",
+      "depth": 0,
+      "measurement": "measured on a checker-rejected program",
+      "unit": "/workspace/scratch/namedeval-kind-runtime/adapted-B/src/compiler/transformers/namedEvaluation.ts:179:1",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/workspace/scratch/namedeval-kind-runtime/adapted-B/src/compiler/utilities.ts:10657:5",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/workspace/scratch/namedeval-kind-runtime/adapted-B/src/compiler/utilities.ts:10657:6: Adamic 0.1 refuses a value of type T seen as TextRange, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace; keep pos readonly in the type it's seen as, or copy the value ({ ...value }) (adamic/invariant-mutable); use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+      "start": 427673,
+      "end": 427710
+    },
+    {
+      "root_kind": "",
+      "depth": 0,
+      "measurement": "measured on a checker-rejected program",
+      "unit": "/workspace/scratch/namedeval-kind-runtime/adapted-B/src/compiler/transformers/namedEvaluation.ts:179:1",
+      "phase": "lowering",
+      "kind": "Refused",
+      "where": "/workspace/scratch/namedeval-kind-runtime/adapted-B/src/compiler/utilities.ts:10647:6",
+      "reason": "a value of type T seen as TextRange, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace",
+      "text": "/workspace/scratch/namedeval-kind-runtime/adapted-B/src/compiler/utilities.ts:10647:6: Adamic 0.1 refuses a value of type T seen as TextRange, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace; keep pos readonly in the type it's seen as, or copy the value ({ ...value }) (adamic/invariant-mutable); use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
+    },
+    {
+      "root_kind": "",
+      "depth": 0,
+      "measurement": "measured on a checker-rejected program",
+      "unit": "/workspace/scratch/namedeval-kind-runtime/adapted-B/src/compiler/transformers/namedEvaluation.ts:179:1",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/workspace/scratch/namedeval-kind-runtime/adapted-B/src/compiler/utilities.ts:10647:5",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/workspace/scratch/namedeval-kind-runtime/adapted-B/src/compiler/utilities.ts:10647:6: Adamic 0.1 refuses a value of type T seen as TextRange, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace; keep pos readonly in the type it's seen as, or copy the value ({ ...value }) (adamic/invariant-mutable); use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+      "start": 427403,
+      "end": 427440
+    },
+    {
+      "root_kind": "",
+      "depth": 0,
+      "measurement": "measured on a checker-rejected program",
+      "unit": "/workspace/scratch/namedeval-kind-runtime/adapted-B/src/compiler/transformers/namedEvaluation.ts:179:1",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/workspace/scratch/namedeval-kind-runtime/adapted-B/src/compiler/transformers/namedEvaluation.ts:212:18",
+      "reason": "reading members",
+      "text": "/workspace/scratch/namedeval-kind-runtime/adapted-B/src/compiler/transformers/namedEvaluation.ts:212:18: stage 0 can't lower reading members yet"
+    },
+    {
+      "root_kind": "",
+      "depth": 0,
+      "measurement": "measured on a checker-rejected program",
+      "unit": "/workspace/scratch/namedeval-kind-runtime/adapted-B/src/compiler/transformers/namedEvaluation.ts:179:1",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/workspace/scratch/namedeval-kind-runtime/adapted-B/src/compiler/transformers/namedEvaluation.ts:212:5",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/workspace/scratch/namedeval-kind-runtime/adapted-B/src/compiler/transformers/namedEvaluation.ts:212:18: stage 0 can't lower reading members yet",
+      "start": 8007,
+      "end": 8049
+    },
+    {
+      "root_kind": "",
+      "depth": 0,
+      "measurement": "measured on a checker-rejected program",
+      "unit": "/workspace/scratch/namedeval-kind-runtime/adapted-B/src/compiler/transformers/namedEvaluation.ts:179:1",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/workspace/scratch/namedeval-kind-runtime/adapted-B/src/compiler/transformers/namedEvaluation.ts:221:13",
+      "reason": "reading members",
+      "text": "/workspace/scratch/namedeval-kind-runtime/adapted-B/src/compiler/transformers/namedEvaluation.ts:221:13: stage 0 can't lower reading members yet"
+    },
+    {
+      "root_kind": "",
+      "depth": 0,
+      "measurement": "measured on a checker-rejected program",
+      "unit": "/workspace/scratch/namedeval-kind-runtime/adapted-B/src/compiler/transformers/namedEvaluation.ts:179:1",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/workspace/scratch/namedeval-kind-runtime/adapted-B/src/compiler/transformers/namedEvaluation.ts:214:5",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/workspace/scratch/namedeval-kind-runtime/adapted-B/src/compiler/transformers/namedEvaluation.ts:221:13: stage 0 can't lower reading members yet",
+      "start": 8049,
+      "end": 8522
+    },
+    {
+      "root_kind": "",
+      "depth": 0,
+      "measurement": "measured on a checker-rejected program",
+      "unit": "/workspace/scratch/namedeval-kind-runtime/adapted-B/src/compiler/transformers/namedEvaluation.ts:179:1",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/workspace/scratch/namedeval-kind-runtime/adapted-B/src/compiler/transformers/namedEvaluation.ts:232:5",
+      "reason": "writing a possibly absent optional own field",
+      "text": "/workspace/scratch/namedeval-kind-runtime/adapted-B/src/compiler/transformers/namedEvaluation.ts:232:5: stage 0 can't lower writing a possibly absent optional own field yet"
+    },
+    {
+      "root_kind": "",
+      "depth": 0,
+      "measurement": "measured on a checker-rejected program",
+      "unit": "/workspace/scratch/namedeval-kind-runtime/adapted-B/src/compiler/transformers/namedEvaluation.ts:179:1",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/workspace/scratch/namedeval-kind-runtime/adapted-B/src/compiler/transformers/namedEvaluation.ts:232:5",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/workspace/scratch/namedeval-kind-runtime/adapted-B/src/compiler/transformers/namedEvaluation.ts:232:5: stage 0 can't lower writing a possibly absent optional own field yet",
+      "start": 8522,
+      "end": 8584
+    }
+  ],
+  "new": [],
+  "reached": [
+    {
+      "root_kind": "",
+      "depth": 0,
+      "measurement": "measured on a checker-rejected program",
+      "unit": "/workspace/scratch/namedeval-kind-runtime/adapted-B/src/compiler/transformers/namedEvaluation.ts:179:1",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/workspace/scratch/namedeval-kind-runtime/adapted-B/src/compiler/transformers/namedEvaluation.ts:203:11",
+      "reason": "a value of type ClassNamedEvaluationHelperBlock",
+      "text": "/workspace/scratch/namedeval-kind-runtime/adapted-B/src/compiler/transformers/namedEvaluation.ts:203:11: stage 0 can't lower a value of type ClassNamedEvaluationHelperBlock yet"
+    },
+    {
+      "root_kind": "",
+      "depth": 0,
+      "measurement": "measured on a checker-rejected program",
+      "unit": "/workspace/scratch/namedeval-kind-runtime/adapted-B/src/compiler/transformers/namedEvaluation.ts:179:1",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/workspace/scratch/namedeval-kind-runtime/adapted-B/src/compiler/transformers/namedEvaluation.ts:203:5",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/workspace/scratch/namedeval-kind-runtime/adapted-B/src/compiler/transformers/namedEvaluation.ts:203:11: stage 0 can't lower a value of type ClassNamedEvaluationHelperBlock yet",
+      "start": 7486,
+      "end": 7598
+    },
+    {
+      "root_kind": "",
+      "depth": 0,
+      "measurement": "measured on a checker-rejected program",
+      "unit": "/workspace/scratch/namedeval-kind-runtime/adapted-B/src/compiler/transformers/namedEvaluation.ts:179:1",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/workspace/scratch/namedeval-kind-runtime/adapted-B/src/compiler/factory/emitNode.ts:139:17",
+      "reason": "a function returning ExpressionStatement & { readonly expression: CallExpression & { readonly expression: Identifier; }; }",
+      "text": "/workspace/scratch/namedeval-kind-runtime/adapted-B/src/compiler/factory/emitNode.ts:139:17: stage 0 can't lower a function returning ExpressionStatement & { readonly expression: CallExpression & { readonly expression: Identifier; }; } yet"
+    },
+    {
+      "root_kind": "",
+      "depth": 0,
+      "measurement": "measured on a checker-rejected program",
+      "unit": "/workspace/scratch/namedeval-kind-runtime/adapted-B/src/compiler/transformers/namedEvaluation.ts:179:1",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/workspace/scratch/namedeval-kind-runtime/adapted-B/src/compiler/transformers/namedEvaluation.ts:205:9",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/workspace/scratch/namedeval-kind-runtime/adapted-B/src/compiler/factory/emitNode.ts:139:17: stage 0 can't lower a function returning ExpressionStatement & { readonly expression: CallExpression & { readonly expression: Identifier; }; } yet",
+      "start": 7620,
+      "end": 7700
+    },
+    {
+      "root_kind": "",
+      "depth": 0,
+      "measurement": "measured on a checker-rejected program",
+      "unit": "/workspace/scratch/namedeval-kind-runtime/adapted-B/src/compiler/transformers/namedEvaluation.ts:179:1",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/workspace/scratch/namedeval-kind-runtime/adapted-B/src/compiler/transformers/classThis.ts:72:1",
+      "reason": "checked predicate overload target ClassThisAssignmentBlock",
+      "text": "/workspace/scratch/namedeval-kind-runtime/adapted-B/src/compiler/transformers/classThis.ts:72:1: stage 0 can't lower checked predicate overload target ClassThisAssignmentBlock yet"
+    },
+    {
+      "root_kind": "",
+      "depth": 0,
+      "measurement": "measured on a checker-rejected program",
+      "unit": "/workspace/scratch/namedeval-kind-runtime/adapted-B/src/compiler/transformers/namedEvaluation.ts:179:1",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/workspace/scratch/namedeval-kind-runtime/adapted-B/src/compiler/transformers/namedEvaluation.ts:208:5",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/workspace/scratch/namedeval-kind-runtime/adapted-B/src/compiler/transformers/classThis.ts:72:1: stage 0 can't lower checked predicate overload target ClassThisAssignmentBlock yet",
+      "start": 7707,
+      "end": 7794
+    },
+    {
+      "root_kind": "",
+      "depth": 0,
+      "measurement": "measured on a checker-rejected program",
+      "unit": "/workspace/scratch/namedeval-kind-runtime/adapted-B/src/compiler/transformers/namedEvaluation.ts:179:1",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/workspace/scratch/namedeval-kind-runtime/adapted-B/src/compiler/transformers/namedEvaluation.ts:209:43",
+      "reason": "reading insertionIndex",
+      "text": "/workspace/scratch/namedeval-kind-runtime/adapted-B/src/compiler/transformers/namedEvaluation.ts:209:43: stage 0 can't lower reading insertionIndex yet"
+    },
+    {
+      "root_kind": "",
+      "depth": 0,
+      "measurement": "measured on a checker-rejected program",
+      "unit": "/workspace/scratch/namedeval-kind-runtime/adapted-B/src/compiler/transformers/namedEvaluation.ts:179:1",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/workspace/scratch/namedeval-kind-runtime/adapted-B/src/compiler/transformers/namedEvaluation.ts:209:5",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/workspace/scratch/namedeval-kind-runtime/adapted-B/src/compiler/transformers/namedEvaluation.ts:209:43: stage 0 can't lower reading insertionIndex yet",
+      "start": 7794,
+      "end": 7854
+    },
+    {
+      "root_kind": "",
+      "depth": 0,
+      "measurement": "measured on a checker-rejected program",
+      "unit": "/workspace/scratch/namedeval-kind-runtime/adapted-B/src/compiler/transformers/namedEvaluation.ts:179:1",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/workspace/scratch/namedeval-kind-runtime/adapted-B/src/compiler/transformers/namedEvaluation.ts:210:41",
+      "reason": "reading insertionIndex",
+      "text": "/workspace/scratch/namedeval-kind-runtime/adapted-B/src/compiler/transformers/namedEvaluation.ts:210:41: stage 0 can't lower reading insertionIndex yet"
+    },
+    {
+      "root_kind": "",
+      "depth": 0,
+      "measurement": "measured on a checker-rejected program",
+      "unit": "/workspace/scratch/namedeval-kind-runtime/adapted-B/src/compiler/transformers/namedEvaluation.ts:179:1",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/workspace/scratch/namedeval-kind-runtime/adapted-B/src/compiler/transformers/namedEvaluation.ts:210:5",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/workspace/scratch/namedeval-kind-runtime/adapted-B/src/compiler/transformers/namedEvaluation.ts:210:41: stage 0 can't lower reading insertionIndex yet",
+      "start": 7854,
+      "end": 7912
+    },
+    {
+      "root_kind": "",
+      "depth": 0,
+      "measurement": "measured on a checker-rejected program",
+      "unit": "/workspace/scratch/namedeval-kind-runtime/adapted-B/src/compiler/transformers/namedEvaluation.ts:179:1",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/workspace/scratch/namedeval-kind-runtime/adapted-B/src/compiler/transformers/namedEvaluation.ts:211:49",
+      "reason": "reading leading",
+      "text": "/workspace/scratch/namedeval-kind-runtime/adapted-B/src/compiler/transformers/namedEvaluation.ts:211:49: stage 0 can't lower reading leading yet"
+    },
+    {
+      "root_kind": "",
+      "depth": 0,
+      "measurement": "measured on a checker-rejected program",
+      "unit": "/workspace/scratch/namedeval-kind-runtime/adapted-B/src/compiler/transformers/namedEvaluation.ts:179:1",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/workspace/scratch/namedeval-kind-runtime/adapted-B/src/compiler/transformers/namedEvaluation.ts:211:5",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/workspace/scratch/namedeval-kind-runtime/adapted-B/src/compiler/transformers/namedEvaluation.ts:211:49: stage 0 can't lower reading leading yet",
+      "start": 7912,
+      "end": 8007
+    },
+    {
+      "root_kind": "",
+      "depth": 0,
+      "measurement": "measured on a checker-rejected program",
+      "unit": "/workspace/scratch/namedeval-kind-runtime/adapted-B/src/compiler/transformers/namedEvaluation.ts:179:1",
+      "phase": "lowering",
+      "kind": "Refused",
+      "where": "/workspace/scratch/namedeval-kind-runtime/adapted-B/src/compiler/utilities.ts:10657:6",
+      "reason": "a value of type T seen as TextRange, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace",
+      "text": "/workspace/scratch/namedeval-kind-runtime/adapted-B/src/compiler/utilities.ts:10657:6: Adamic 0.1 refuses a value of type T seen as TextRange, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace; keep pos readonly in the type it's seen as, or copy the value ({ ...value }) (adamic/invariant-mutable); use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
+    },
+    {
+      "root_kind": "",
+      "depth": 0,
+      "measurement": "measured on a checker-rejected program",
+      "unit": "/workspace/scratch/namedeval-kind-runtime/adapted-B/src/compiler/transformers/namedEvaluation.ts:179:1",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/workspace/scratch/namedeval-kind-runtime/adapted-B/src/compiler/utilities.ts:10657:5",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/workspace/scratch/namedeval-kind-runtime/adapted-B/src/compiler/utilities.ts:10657:6: Adamic 0.1 refuses a value of type T seen as TextRange, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace; keep pos readonly in the type it's seen as, or copy the value ({ ...value }) (adamic/invariant-mutable); use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+      "start": 427673,
+      "end": 427710
+    },
+    {
+      "root_kind": "",
+      "depth": 0,
+      "measurement": "measured on a checker-rejected program",
+      "unit": "/workspace/scratch/namedeval-kind-runtime/adapted-B/src/compiler/transformers/namedEvaluation.ts:179:1",
+      "phase": "lowering",
+      "kind": "Refused",
+      "where": "/workspace/scratch/namedeval-kind-runtime/adapted-B/src/compiler/utilities.ts:10647:6",
+      "reason": "a value of type T seen as TextRange, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace",
+      "text": "/workspace/scratch/namedeval-kind-runtime/adapted-B/src/compiler/utilities.ts:10647:6: Adamic 0.1 refuses a value of type T seen as TextRange, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace; keep pos readonly in the type it's seen as, or copy the value ({ ...value }) (adamic/invariant-mutable); use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
+    },
+    {
+      "root_kind": "",
+      "depth": 0,
+      "measurement": "measured on a checker-rejected program",
+      "unit": "/workspace/scratch/namedeval-kind-runtime/adapted-B/src/compiler/transformers/namedEvaluation.ts:179:1",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/workspace/scratch/namedeval-kind-runtime/adapted-B/src/compiler/utilities.ts:10647:5",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/workspace/scratch/namedeval-kind-runtime/adapted-B/src/compiler/utilities.ts:10647:6: Adamic 0.1 refuses a value of type T seen as TextRange, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace; keep pos readonly in the type it's seen as, or copy the value ({ ...value }) (adamic/invariant-mutable); use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+      "start": 427403,
+      "end": 427440
+    },
+    {
+      "root_kind": "",
+      "depth": 0,
+      "measurement": "measured on a checker-rejected program",
+      "unit": "/workspace/scratch/namedeval-kind-runtime/adapted-B/src/compiler/transformers/namedEvaluation.ts:179:1",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/workspace/scratch/namedeval-kind-runtime/adapted-B/src/compiler/transformers/namedEvaluation.ts:212:18",
+      "reason": "reading members",
+      "text": "/workspace/scratch/namedeval-kind-runtime/adapted-B/src/compiler/transformers/namedEvaluation.ts:212:18: stage 0 can't lower reading members yet"
+    },
+    {
+      "root_kind": "",
+      "depth": 0,
+      "measurement": "measured on a checker-rejected program",
+      "unit": "/workspace/scratch/namedeval-kind-runtime/adapted-B/src/compiler/transformers/namedEvaluation.ts:179:1",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/workspace/scratch/namedeval-kind-runtime/adapted-B/src/compiler/transformers/namedEvaluation.ts:212:5",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/workspace/scratch/namedeval-kind-runtime/adapted-B/src/compiler/transformers/namedEvaluation.ts:212:18: stage 0 can't lower reading members yet",
+      "start": 8007,
+      "end": 8049
+    },
+    {
+      "root_kind": "",
+      "depth": 0,
+      "measurement": "measured on a checker-rejected program",
+      "unit": "/workspace/scratch/namedeval-kind-runtime/adapted-B/src/compiler/transformers/namedEvaluation.ts:179:1",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/workspace/scratch/namedeval-kind-runtime/adapted-B/src/compiler/transformers/namedEvaluation.ts:221:13",
+      "reason": "reading members",
+      "text": "/workspace/scratch/namedeval-kind-runtime/adapted-B/src/compiler/transformers/namedEvaluation.ts:221:13: stage 0 can't lower reading members yet"
+    },
+    {
+      "root_kind": "",
+      "depth": 0,
+      "measurement": "measured on a checker-rejected program",
+      "unit": "/workspace/scratch/namedeval-kind-runtime/adapted-B/src/compiler/transformers/namedEvaluation.ts:179:1",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/workspace/scratch/namedeval-kind-runtime/adapted-B/src/compiler/transformers/namedEvaluation.ts:214:5",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/workspace/scratch/namedeval-kind-runtime/adapted-B/src/compiler/transformers/namedEvaluation.ts:221:13: stage 0 can't lower reading members yet",
+      "start": 8049,
+      "end": 8522
+    },
+    {
+      "root_kind": "",
+      "depth": 0,
+      "measurement": "measured on a checker-rejected program",
+      "unit": "/workspace/scratch/namedeval-kind-runtime/adapted-B/src/compiler/transformers/namedEvaluation.ts:179:1",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "/workspace/scratch/namedeval-kind-runtime/adapted-B/src/compiler/transformers/namedEvaluation.ts:232:5",
+      "reason": "writing a possibly absent optional own field",
+      "text": "/workspace/scratch/namedeval-kind-runtime/adapted-B/src/compiler/transformers/namedEvaluation.ts:232:5: stage 0 can't lower writing a possibly absent optional own field yet"
+    },
+    {
+      "root_kind": "",
+      "depth": 0,
+      "measurement": "measured on a checker-rejected program",
+      "unit": "/workspace/scratch/namedeval-kind-runtime/adapted-B/src/compiler/transformers/namedEvaluation.ts:179:1",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/workspace/scratch/namedeval-kind-runtime/adapted-B/src/compiler/transformers/namedEvaluation.ts:232:5",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "/workspace/scratch/namedeval-kind-runtime/adapted-B/src/compiler/transformers/namedEvaluation.ts:232:5: stage 0 can't lower writing a possibly absent optional own field yet",
+      "start": 8522,
+      "end": 8584
+    }
+  ],
+  "gone": [
+    {
+      "root_kind": "",
+      "depth": 0,
+      "measurement": "measured on a checker-rejected program",
+      "unit": "/workspace/scratch/namedeval-kind-runtime/adapted-B/src/compiler/transformers/namedEvaluation.ts:179:1",
+      "phase": "lowering",
+      "kind": "Refused",
+      "where": "/workspace/scratch/namedeval-kind-runtime/adapted-B/src/compiler/transformers/namedEvaluation.ts:173:1",
+      "reason": "overload 1 of injectClassNamedEvaluationHelperBlockIfMissing result Extract<ClassDeclaration, Pick<...>> | Extract<...> cannot be served by implementation result ClassLikeDeclaration",
+      "text": "/workspace/scratch/namedeval-kind-runtime/adapted-B/src/compiler/transformers/namedEvaluation.ts:173:1: Adamic 0.1 refuses overload 1 of injectClassNamedEvaluationHelperBlockIfMissing result Extract<ClassDeclaration, Pick<...>> | Extract<...> cannot be served by implementation result ClassLikeDeclaration; make the implementation result covariant with every overload result"
+    },
+    {
+      "root_kind": "",
+      "depth": 0,
+      "measurement": "measured on a checker-rejected program",
+      "unit": "/workspace/scratch/namedeval-kind-runtime/adapted-B/src/compiler/transformers/namedEvaluation.ts:179:1",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "/workspace/scratch/namedeval-kind-runtime/adapted-B/src/compiler/transformers/namedEvaluation.ts:179:1",
+      "reason": "function signature or prologue failed; continued at next declaration",
+      "text": "/workspace/scratch/namedeval-kind-runtime/adapted-B/src/compiler/transformers/namedEvaluation.ts:173:1: Adamic 0.1 refuses overload 1 of injectClassNamedEvaluationHelperBlockIfMissing result Extract<ClassDeclaration, Pick<...>> | Extract<...> cannot be served by implementation result ClassLikeDeclaration; make the implementation result covariant with every overload result",
+      "start": 7070,
+      "end": 8605
+    }
+  ],
+  "changed": []
+}
