@@ -349,7 +349,7 @@ func (l *lowering) overloadCallbackAssigned(implementation *ast.Node, symbol *as
 	assigned := false
 	var writes ast.Visitor
 	writes = func(node *ast.Node) bool {
-		if ast.IsIdentifier(node) && l.symbol(node) == symbol {
+		if ast.IsIdentifier(node) && l.valueSymbol(node) == symbol {
 			for target := node; target.Parent != nil; target = target.Parent {
 				if ast.IsAssignmentTarget(target) {
 					assigned = true

@@ -85,7 +85,7 @@ func (l *lowering) enumerationBindingWritten(symbol *ast.Symbol) bool {
 		if target != nil {
 			var inspect ast.Visitor
 			inspect = func(part *ast.Node) bool {
-				if ast.IsIdentifier(part) && l.symbol(part) == symbol {
+				if ast.IsIdentifier(part) && l.valueSymbol(part) == symbol {
 					written = true
 				}
 				return part.ForEachChild(inspect)
