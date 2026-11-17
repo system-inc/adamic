@@ -37,7 +37,7 @@ original argument, arbitrary reentrant aliases or whole-program escape lifetimes
 | Overload | Result | Calls | Reads only | Writes / writable parameter | Writable slot / return | Identity vs argument |
 | --- | --- | ---: | ---: | ---: | ---: | ---: |
 | 1 | `U[]` | 5 | 2 | 0 | 3 | 0 |
-| 2 | `T[]` | 60 | 18 | 7 | 39 | 2 |
+| 2 | `T[]` | 60 | 16 | 7 | 41 | 2 |
 | 5 | `U[] or undefined` | 11 | 4 | 2 | 5 | 0 |
 | 6 | `T[] or undefined` | 13 | 4 | 2 | 8 | 0 |
 
@@ -336,6 +336,26 @@ filter(context.inferences, hasInferenceCandidates)
 ```
 
 variable inferences : InferenceInfo[].
+
+### src/compiler/checker.ts:27086:34 — overload 2
+
+Classes: store. May return argument as-is: **yes**.
+
+```ts
+filter(sources, t => !contains(matchedSources, t))
+```
+
+contextual writable slot : Type[].
+
+### src/compiler/checker.ts:27087:34 — overload 2
+
+Classes: store. May return argument as-is: **yes**.
+
+```ts
+filter(targets, t => !contains(matchedTargets, t))
+```
+
+contextual writable slot : Type[].
 
 ### src/compiler/checker.ts:27577:36 — overload 2
 
@@ -824,3 +844,8 @@ node stage3/census/filter-overload-count/outside.cjs TREE outside.json
 
 Raw rows retain all read sites, result types, contexts, local symbol references,
 and the exact declaration selection. No Loom submission has been made.
+
+Count audit correction: overload-2 calls checker.ts:27086:34 and :27087:34
+occupy writable tuple-result elements (`[Type[], Type[]]`). The final table includes
+them as stores. This correction changes overload 2 from 18 reads / 39 stores to
+16 reads / 41 stores; all call totals and narrowing-overload counts stay unchanged.

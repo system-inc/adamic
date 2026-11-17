@@ -3989,7 +3989,7 @@
     },
     {
       "flags": {
-        "store": false,
+        "store": true,
         "write": false,
         "identity": false
       },
@@ -4000,8 +4000,8 @@
       "argument": "sources",
       "argument_type": "Type[]",
       "result_type": "Type[]",
-      "kind": "read",
-      "reason": "",
+      "kind": "store",
+      "reason": "contextual writable slot : Type[]",
       "context": [
         {
           "kind": "ConditionalExpression",
@@ -4026,7 +4026,7 @@
     },
     {
       "flags": {
-        "store": false,
+        "store": true,
         "write": false,
         "identity": false
       },
@@ -4037,8 +4037,8 @@
       "argument": "targets",
       "argument_type": "Type[]",
       "result_type": "Type[]",
-      "kind": "read",
-      "reason": "",
+      "kind": "store",
+      "reason": "contextual writable slot : Type[]",
       "context": [
         {
           "kind": "ConditionalExpression",

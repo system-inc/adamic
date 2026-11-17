@@ -22,6 +22,7 @@ else if(ts.isPropertyAssignment(x.parent)){kind='store';reason='property : '+typ
 else if(ts.isCallExpression(x.parent)){const call=x.parent,ix=call.arguments.indexOf(x),sig=c.getResolvedSignature(call),param=sig?.parameters[Math.min(ix,sig.parameters.length-1)];if(param){const pt=c.getTypeOfSymbolAtLocation(param,call);reason='parameter : '+c.typeToString(pt);if(writable(pt))kind='write';}}
 if(ts.isAsExpression(x)&&writable(c.getTypeAtLocation(x))){kind='store';reason='writable type assertion : '+type(x);}
 const refs=[],refNodes=[];if(slot&&ts.isIdentifier(slot.name)){const sym=c.getSymbolAtLocation(slot.name);function scan(z){if(ts.isIdentifier(z)&&c.getSymbolAtLocation(z)===sym&&z!==slot.name){refNodes.push(z);refs.push({where:where(z),parent:z.parent.getText().slice(0,700),context:context(z)});};ts.forEachChild(z,scan);}scan(f);}
+const contextual=c.getContextualType(n);if(kind==='read'&&writable(contextual)){kind='store';reason='contextual writable slot : '+c.typeToString(contextual);}
 const flags={store:kind==='store',write:kind==='write',identity:false},uses=[];
 for(const z of [n,...refNodes]){
  let q=z;while(ts.isNonNullExpression(q.parent)||ts.isParenthesizedExpression(q.parent))q=q.parent;
