@@ -71,3 +71,7 @@ conversion stop in executeCommandLine. None is graded as a fresh regression
 in a previously unblocked unit. Entry raw streams, timings, receipts and the
 planned scheduler-interruption log are retained under entry/. The probes
 completed normally; the scheduler itself exited 130 after joining them.
+
+## Exact-file checkpoint
+
+The compiler caller-file pairs have completed. No non-target ordinal or non-ordinal overload movement has appeared in the completed pairs. Three of the 17 compiler/services mapped calls have an observed certified-storage stop so far; this is provisional until services finish. Both revisions panic while preparing computed accessor names in six harness-file contexts; their child exit codes are 2, and no complete-stream conclusions are drawn from these failed attempts. Server/services/testRunner and scan-all runs continue.

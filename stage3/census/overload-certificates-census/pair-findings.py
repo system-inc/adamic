@@ -29,7 +29,7 @@ def flatten(records):
   for f in r.get('findings') or []:
    findings.append({'context':context,'unitKey':[context,relative(f.get('unit','program'))],'tuple':list(fingerprint(f)),'finding':f})
  return findings,units
-pairs=[];headFindings=[];overloadLedger=[]
+pairs=[];headFindings=[];overloadLedger=[];overloadMentions=[];nonOrdinalMoves=[]
 index={(r['label'],r['mode'],r['file']):r for r in manifest if r['state']=='complete' and r.get('exit')==0}
 for (label,mode,file),b in sorted(index.items()):
  if label!='base' or ('head',mode,file) not in index:continue
@@ -67,14 +67,24 @@ for (label,mode,file),b in sorted(index.items()):
  pair={'mode':mode,'file':file,'baseHeader':br[0],'headHeader':hr[0],'headerIdentical':br[0]==hr[0],'baseRelationReport':br[-1],'headRelationReport':hr[-1],'baseFindings':len(bf),'headFindings':len(hf),'unchanged':unchanged,'counts':dict(collections.Counter(c['grade'] for c in changes)),'changes':changes,'unitStatuses':{'base':{k[1]:v.get('status') for k,v in bu.items()},'head':{k[1]:v.get('status') for k,v in hu.items()}}}
  assert pair['baseFindings']==unchanged+sum(c['grade'] in ('gone','changed') for c in changes)
  assert pair['headFindings']==unchanged+sum(c['grade'] in ('new','reached','changed') for c in changes)
+ pair['kindCounts']={'base':dict(collections.Counter(x['finding']['kind'] for x in bf)),'head':dict(collections.Counter(x['finding']['kind'] for x in hf))}
  pair['unitIdentitiesEqual']=bu.keys()==hu.keys()
  pair['unitStatusChanges']=[{'unitKey':list(k),'base':bu.get(k,{}).get('status'),'head':hu.get(k,{}).get('status')} for k in bu.keys()|hu.keys() if bu.get(k,{}).get('status')!=hu.get(k,{}).get('status')]
  changedUnits={tuple(c['unitKey']) for c in changes}
  pair['changedUnitFindings']=[{'unitKey':list(u),'base':buckets[u]['base'],'head':buckets[u]['head']} for u in sorted(changedUnits)]
+ for change in changes:
+  for side in ['base','head']:
+   value=change.get(side)
+   if not value:continue
+   reason=strip(value['finding'].get('reason',''))
+   if re.search(r'\boverload(?:ed)?\b',reason) and not re.search(r'overload \d+ of ',reason) and not reason.startswith(('a certified overload','an overload certified by its body')):
+    nonOrdinalMoves.append({'mode':mode,'selectedFile':file,'side':side,'change':change})
  pairs.append(pair)
  for side,rows in [('base',bf),('head',hf)]:
   for row in rows:
-   f=row['finding'];m=re.search(r'overload (\d+) of (\S+)',f.get('reason',''))
+   f=row['finding'];
+   if re.search(r'\boverload(?:ed)?\b',strip(f.get('reason',''))):overloadMentions.append({'side':side,'mode':mode,'selectedFile':file,**row})
+   m=re.search(r'overload (\d+) of (\S+)',f.get('reason',''))
    if m:overloadLedger.append({'side':side,'mode':mode,'selectedFile':file,'set':m.group(2),'ordinal':int(m.group(1)),**row})
 primary=[c for c in callers['programs']['allSrc']['calls'] if c['mapped'] and c['file'].startswith(('src/compiler/','src/services/'))]
 assert len(primary)==17,len(primary)
@@ -85,14 +95,17 @@ for f in headFindings:
 for c in primary:
  observations=[]
  for f in allStorage:
+  if f['mode'] not in ('entry','full'):continue
   loc=location(f['finding'].get('where'))
   if loc and (loc.group(1),int(loc.group(2)),int(loc.group(3)))==(c['file'],c['line'],c['column']):observations.append(f)
  words=sorted({f['finding']['reason'] for f in observations})
  rows.append({'call':c,'storageStopObserved':bool(observations),'words':words,'observations':observations})
 expected=2+2*len(callers['fullCensusFiles'])+4
 completed=sum(r.get('state')=='complete' and r.get('exit')==0 and (r['mode']=='scan' or r.get('streamComplete')) for r in manifest if r['mode']!='full-directory')
-result={'coverage':{'expectedRequiredRuns':expected,'completeRequiredRuns':completed,'allRequiredComplete':completed==expected},'comparison':'same-source-unit multiset of (kind, phase, position-stripped reason, position-stripped full text)','grading':'same tuple unchanged; same unit and same overload claim family with different wording changed; remaining base gone; remaining head reached if unit was already blocked outside independent scan phases, otherwise new','pairs':pairs,'mapped17':rows,'storageStopCalls17':sum(r['storageStopObserved'] for r in rows),'allHeadStorageFindings':allStorage,'overloadLedger':overloadLedger}
+result={'coverage':{'expectedRequiredRuns':expected,'completeRequiredRuns':completed,'allRequiredComplete':completed==expected,'attemptedRequiredRuns':sum(r['mode']!='full-directory' and r.get('state') in ('complete','failed') for r in manifest),'failedRequiredRuns':[r for r in manifest if r['mode']!='full-directory' and r.get('state')=='failed']},'comparison':'same-source-unit multiset of (kind, phase, position-stripped reason, position-stripped full text)','grading':'same tuple unchanged; same unit and same overload claim family with different wording changed; remaining base gone; remaining head reached if unit was already blocked outside independent scan phases, otherwise new','pairs':pairs,'mapped17':rows,'storageStopCalls17':sum(r['storageStopObserved'] for r in rows),'allHeadStorageFindings':allStorage,'overloadLedger':overloadLedger,'allOverloadMentions':overloadMentions,'nonOrdinalOverloadMoves':nonOrdinalMoves}
 (out/'paired.json').write_text(json.dumps(result,indent=2)+'\n')
+(out/'all-overload-mentions.json').write_text(json.dumps(overloadMentions,indent=2)+'\n')
+(out/'non-ordinal-overload-moves.json').write_text(json.dumps(nonOrdinalMoves,indent=2)+'\n')
 (out/'overload-ledger.json').write_text(json.dumps(overloadLedger,indent=2)+'\n')
 summary={'coverage':result['coverage'],'pairedRuns':len(pairs),'pairCounts':[{'mode':p['mode'],'file':p['file'],'base':p.get('baseFindings'),'head':p.get('headFindings'),'counts':p.get('counts',{})} for p in pairs],'storageStopCalls17':result['storageStopCalls17'],'mapped17':[{'file':r['call']['file'],'line':r['call']['line'],'column':r['call']['column'],'stopped':r['storageStopObserved'],'words':r['words']} for r in rows]}
 (out/'summary.json').write_text(json.dumps(summary,indent=2)+'\n');print(json.dumps(summary,indent=2))

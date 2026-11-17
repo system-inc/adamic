@@ -1,6 +1,6 @@
 import os,sys,pathlib,subprocess,json,time,hashlib
-scratch=pathlib.Path('/workspace/scratch/overload-certificates-census')
-label=sys.argv[1];source=scratch/label;dest=scratch/(label+'-tools');dest.mkdir(exist_ok=True)
+scratch=pathlib.Path(sys.argv[1]).resolve()
+label=sys.argv[2];source=scratch/label;dest=scratch/(label+'-tools');dest.mkdir(exist_ok=True)
 rows=[]
 def run(name,args):
  start=time.time()
