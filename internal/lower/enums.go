@@ -49,6 +49,17 @@ func (l *lowering) openNumericEnumType(proven *checker.Type) bool {
 	return !impure && len(whole) == 1 && whole[0].size == len(members)
 }
 
+// tagHoldsAnyNumber is whether a field of this type can hold any number at run time: it holds some numeric
+// enum's whole type, since tsc lets a number into a numeric enum, and a one-member enum's member is that
+// enum's whole type. openNumericEnumType asks for exactly one whole enum and nothing beside it, so it answers
+// no for `One | Two`, two one-member enums, though a number sits there as well: `{ kind: n }` typed First,
+// whose kind is One.A, holds Two.B's value (Language's J-pmbsp94 on #x2cjvy9). A tag test proves a layout
+// only where the field can't hold the value tested, so every tag-trust site asks this.
+func (l *lowering) tagHoldsAnyNumber(proven *checker.Type) bool {
+	whole, _ := l.wholeNumericEnums(flattenedMembers(l.checker.GetNonNullableType(proven)))
+	return len(whole) != 0
+}
+
 // wholeNumericEnum is a numeric enum all of whose members a union's flattened members hold, with its
 // member count.
 type wholeNumericEnum struct {
