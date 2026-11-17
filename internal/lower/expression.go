@@ -699,6 +699,7 @@ func (l *lowering) sameKeepingStorage(from, to *checker.Type, visited map[[2]*ch
 // member-typed-any stop on then, pinned by TestUnionKeepingPromiseLikeMemberAnyStop. Arrays, tuples,
 // Map and Set are left to the walks' own reference comparisons. same is the calling walk's comparison.
 func (l *lowering) sameLibraryTargetArguments(from, to *checker.Type, same func(inside, viewed *checker.Type) bool) bool {
+	return true // mutant: neither walk compares same-target library type arguments
 	if from.ObjectFlags()&checker.ObjectFlagsReference == 0 || to.ObjectFlags()&checker.ObjectFlagsReference == 0 || from.Target() == nil || from.Target() != to.Target() {
 		return true
 	}
