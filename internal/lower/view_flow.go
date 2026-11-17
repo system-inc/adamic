@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"reflect"
 	"slices"
+	"strings"
 	"sync"
 
 	"github.com/system-inc/adamic/internal/ir"
@@ -33,6 +34,15 @@ type allocationFlowGraph struct {
 	// that couldn't had its writes, returns and calls left out, so checkFlowLiveness holds it to
 	// that at the end of lowering.
 	running []bool
+	// recordWrites are the values recordValuesNode's sources hold, each with the write that stored
+	// it, in the order collect met them, so recordValuesUnknown can name the first it can't place.
+	recordWrites []recordWrite
+}
+
+// recordWrite is one value stored into a record, and where: the IR that stored it, in which function.
+type recordWrite struct {
+	value ir.Expression
+	by    string
 }
 
 // unknownAt is why a node's value may come from somewhere the graph doesn't name, if it may: a
@@ -51,6 +61,50 @@ func (graph *allocationFlowGraph) unknownAt(node int) (string, bool) {
 
 func (graph *allocationFlowGraph) resultNode(function int) int {
 	return len(graph.program.Locals) + function + 1
+}
+
+// recordValuesNode is every value any record of the program holds, one node past the functions'
+// results: a read of a record's entry (a RecordCall get, a RecordCoalesce) is a value of it. It's one
+// node for every record, never one per record type, since tsc sees CompilerOptions as OptionsBase and
+// as MapLike and back, and a write through one type is read through another (Runtime's ruling on
+// #y852c3c: judge by allocation, never by declared type). Its sources are every value collect sees
+// stored into a record (noteRecordWrite); one the graph can't place makes every read of it Unknown,
+// through unknown() as any source does, and never sets a program-wide flag itself.
+func (graph *allocationFlowGraph) recordValuesNode() int {
+	return len(graph.program.Locals) + len(graph.program.Functions) + 1
+}
+
+// noteRecordWrite adds value, stored into a record by what by names in function (-1 for the program's
+// own body), to recordValuesNode's sources. A known scalar holds no allocation (viewArrayAggregate),
+// so it's no source: a record of numbers and strings beside its arrays doesn't make the node Unknown.
+func (graph *allocationFlowGraph) noteRecordWrite(value ir.Expression, by string, function int) {
+	if !viewArrayAggregate(value) {
+		return
+	}
+	where := "the program's body"
+	if function >= 0 {
+		where = "function " + graph.program.Functions[function].Name
+	}
+	values := graph.recordValuesNode()
+	graph.sources[values] = append(graph.sources[values], value)
+	graph.recordWrites = append(graph.recordWrites, recordWrite{value: value, by: by + " in " + where})
+}
+
+// recordValuesUnknown is whether recordValuesNode can hold a value the graph can't place, and why: the
+// first write, in the order collect met them, whose value reaches no known allocation, named by the IR
+// that stored it, where, and its value's reasons. A node no write feeds reaches no allocation, which is
+// Unknown too, as ReachingAllocations says of any value with no producer.
+func (graph *allocationFlowGraph) recordValuesUnknown() (bool, string) {
+	reaches := graph.ReachingAllocations(ir.RecordCall{Method: "get"})
+	if !reaches.Unknown {
+		return false, ""
+	}
+	for _, write := range graph.recordWrites {
+		if stored := graph.ReachingAllocations(write.value); stored.Unknown {
+			return true, write.by + ": " + strings.Join(stored.Reasons, "; ")
+		}
+	}
+	return true, strings.Join(reaches.Reasons, "; ")
 }
 
 func newAllocationFlowGraph(program *ir.Program) *allocationFlowGraph {
@@ -133,10 +187,46 @@ func collectAllocationFlowGraph(program *ir.Program, calls *closureCalls) *alloc
 			}
 		}
 	}
+	// Every IR that stores into a record feeds recordValuesNode. Native writes a record in exactly these
+	// places (emit_records.go, entries_records.go, emit_statements.go's writeProperty): a RecordLiteral's
+	// entries, and its spread, which copies another record's values, already the node's; a RecordCall
+	// set or defineHidden's value; a RecordCoalesce's fallback; an entries record (an ObjectLiteral with
+	// Record) and its writes (a SetProperty with Record). Where the program makes an entries record at
+	// all, writeProperty stores any field write through a record that reaches it, so every SetProperty's
+	// value is a record's too; those wait in fieldWrites until the walk knows.
+	entriesRecords := false
+	type fieldWrite struct {
+		write    recordWrite
+		function int
+	}
+	var fieldWrites []fieldWrite
 	collect := func(body []ir.Statement, function int) {
 		walk(body, func(node any) bool {
 			graph.noteWrites(reflect.ValueOf(node))
 			switch value := node.(type) {
+			case ir.RecordLiteral:
+				for _, entry := range value.Entries {
+					graph.noteRecordWrite(entry.Value, "a record literal's entry", function)
+				}
+			case ir.RecordCall:
+				if (value.Method == "set" || value.Method == "defineHidden") && len(value.Arguments) == 3 {
+					graph.noteRecordWrite(value.Arguments[2], "a record "+value.Method, function)
+				}
+			case ir.RecordCoalesce:
+				graph.noteRecordWrite(value.Value, "a record ??=", function)
+			case ir.ObjectLiteral:
+				if value.Record {
+					entriesRecords = true
+					for _, field := range value.Fields {
+						graph.noteRecordWrite(field.Value, "an entries record literal's field "+field.Name, function)
+					}
+				}
+			case ir.SetProperty:
+				if value.Record {
+					graph.noteRecordWrite(value.Value, "an entries record write of "+value.Name, function)
+				} else {
+					fieldWrites = append(fieldWrites, fieldWrite{write: recordWrite{value: value.Value, by: "a field write of " + value.Name + ", which a record may take"}, function: function})
+				}
 			case ir.BoundClosure:
 				for _, parameter := range program.Functions[value.Function].Parameters {
 					graph.unknownParameters[parameter+1] = true
@@ -200,6 +290,11 @@ func collectAllocationFlowGraph(program *ir.Program, calls *closureCalls) *alloc
 			continue
 		}
 		collect(function.Body, i)
+	}
+	if entriesRecords {
+		for _, field := range fieldWrites {
+			graph.noteRecordWrite(field.write.value, field.write.by, field.function)
+		}
 	}
 	// Outside code calls the entry module's exported functions (the JavaScript backend's
 	// ModuleExports, wasm32's handleRequest) with anything, so every parameter of one is unknown,
@@ -607,6 +702,19 @@ func (graph *allocationFlowGraph) follow(expression ir.Expression, allocation fu
 	follow := func(value ir.Expression) { graph.follow(value, allocation, demand, unknown) }
 	if expression == nil {
 		unknown("missing expression")
+		return
+	}
+	// A record entry's read is a value some record holds. It's asked before GraphTypes, which a
+	// RecordCall carries for the arrays values and entries make, allocations views don't track.
+	switch read := expression.(type) {
+	case ir.RecordCall:
+		if read.Method == "get" {
+			demand(graph.recordValuesNode())
+			return
+		}
+	case ir.RecordCoalesce:
+		// r[k] ??= value is the entry r holds, or value, stored there and so one of the node's sources.
+		demand(graph.recordValuesNode())
 		return
 	}
 	value := reflect.ValueOf(expression)

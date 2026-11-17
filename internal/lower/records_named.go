@@ -170,8 +170,10 @@ const recordSlotArrayStop = "a dictionary member narrowed to an array without an
 // only that it's an array, hands the array itself back, identity kept, and registers it as a view origin,
 // as a cast does (view): V3's element-checked view (#6wfvfhm) then checks every element as it's handed
 // out through any reach of it, never cached (ir.ViewElement), and stops every other road at compile time
-// (checkViewArrays): a write, join, slice, sort, a spread. The record isn't tracked by the allocation flow
-// graph, so the origin's reach is unknown, and every array read in a program that makes one is demanded.
+// (checkViewArrays): a write, join, slice, sort, a spread. The origin reaches what every record of the
+// program holds, one allocation-flow node (recordValuesNode), so the arrays stored into records are
+// viewed and the program's other arrays aren't; a record written a value the graph can't place makes
+// that node Unknown, and every array read in the program demanded, failing closed.
 //
 // A member whose element V3 can't contract (a function, a nullable reference, any or unknown), a member
 // that admits null (which the checked narrow stops on), and a read the element key's pre-pass doesn't see

@@ -217,3 +217,71 @@ function count(hooks: Hooks): number { const handlers = hooks.handlers; return h
 		t.Fatalf("a function element: got %v, want NotYet %q", err, recordSlotArrayStop)
 	}
 }
+
+// recordSlotEach is tsc's slot read in a function, the loop handing out each element of rootDirs.
+const recordSlotEach = `function each(options: Options): void {
+    const dirs = options.rootDirs;
+    if (dirs) {
+        for (const d of dirs) {
+            console.log(d);
+        }
+    }
+}
+each(opts);
+`
+
+// recordValuesOf is the lowered program's record node (recordValuesNode): whether it can hold a value the
+// flow graph can't place, and why.
+func recordValuesOf(program *ir.Program) (bool, string) {
+	assignAllocationSites(program)
+	return newAllocationFlowGraph(program).recordValuesUnknown()
+}
+
+// Every record's values are one allocation-flow node (Runtime's ruling on #y852c3c), so the slot origin
+// reaches the arrays records hold, here the literal's, and not the whole program. The unrelated number[]
+// is the regression pin for the widening 2c8671ab made: there the RecordCall was untracked, the origin's
+// reach Unknown, and xs.push and xs.join stopped as reads through a checked view.
+func TestRecordSlotValuesAreOneFlowNode(t *testing.T) {
+	t.Parallel()
+	program, err := lowerSourceAs(t, recordSlotOptions+recordSlotEach+`const xs = [1, 2];
+xs.push(3);
+console.log(xs.join(","));
+`, ".ts")
+	if err != nil {
+		t.Fatalf("an unrelated array stopped beside the slot read: %v", err)
+	}
+	if unknown, why := recordValuesOf(program); unknown {
+		t.Fatalf("a record built from a literal of known arrays has Unknown values: %s", why)
+	}
+	if !recordSlotView(program, "readonly string[]") {
+		t.Fatal("the slot read made no view origin")
+	}
+	if handouts := checkedHandouts(program); len(handouts) != 1 || handouts[0] != "string" {
+		t.Fatalf("the slot reach's handout isn't checked: %v", handouts)
+	}
+}
+
+// A record written a value the graph can't place, a closure's parameter, which a call the graph doesn't
+// see may pass anything, makes the record node Unknown, named by that write. Every slot reach is then
+// Unknown too, so its writes still stop: fail closed, as before the node.
+func TestRecordSlotValuesUnplacedFailClosed(t *testing.T) {
+	t.Parallel()
+	unplaced := recordSlotOptions + `const put = (dirs: string[]): void => {
+    opts.rootDirs = dirs;
+};
+put(["x"]);
+` + recordSlotEach
+	program, err := lowerSourceAs(t, unplaced, ".ts")
+	if err != nil {
+		t.Fatalf("the unplaced write's program stopped: %v", err)
+	}
+	unknown, why := recordValuesOf(program)
+	if !unknown || !strings.Contains(why, "a record set in function ") || !strings.Contains(why, "parameter may receive untracked or omitted arguments") {
+		t.Fatalf("got unknown %t, %q; want Unknown, named by the record set of the closure's parameter", unknown, why)
+	}
+	_, err = lowerSourceAs(t, unplaced+"opts.lib.push(\"x\");\n", ".ts")
+	var notYet *NotYet
+	if !errors.As(err, &notYet) || notYet.What != "a checked view's array read through push (not checked yet)" {
+		t.Fatalf("got %v, want the push through the slot reach to stop", err)
+	}
+}
