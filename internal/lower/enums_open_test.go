@@ -11,7 +11,7 @@ import (
 func TestNumericEnumsAreOpen(t *testing.T) {
 	t.Parallel()
 	for _, probe := range []struct{ name, source string }{
-		{"singleton", "enum E { A } function numeric(): number { return 42; } const e: E = numeric(); console.log(`${e}`);"},
+		{"whole", "enum E { A, B } function numeric(): number { return 42; } const e: E = numeric(); console.log(`${e}`);"},
 		{"member_tags", "enum Kind { A, B } interface A { readonly kind: Kind.A; readonly value: string } interface B { readonly kind: Kind.B; readonly value: number } const a: A = { kind: Kind.A, value: 'text' }; function show(value: A | B): void { if(value.kind === Kind.B) { console.log(`${value.value + 1}`); } } show(a);"},
 		{"coalesce", "enum Flags { None = 0, A = 1 << 0, B = 1 << 1, Pair = A | B } const map = new Map<string, Flags>(); console.log(`${map.get('high') ?? Flags.None}`);"},
 		{"arithmetic", "enum E { A, B } function next(n: number): E { return n + 1; } let e: E = next(40); e++; e += 7; e <<= 1;"},
@@ -46,7 +46,12 @@ func TestNumericEnumsAreOpen(t *testing.T) {
 		}
 		lowersAndAgreesWithNode(t, probe.source+observation)
 	}
-
+	// A one-member enum's member is the enum's whole type to the checker, but the slot promises its one
+	// value, which a tag test trusts, so it's no open slot and a number into it is refused (openEnumSlot,
+	// Adamic's ruling on #x2cjvy9, Nov 17). It was the singleton row above.
+	if _, err := lowerSource(t, "enum E { A } function numeric(): number { return 42; } const e: E = numeric(); console.log(`${e}`);"); err == nil || !strings.Contains(err.Error(), "enum-literal") {
+		t.Fatalf("a number into a one-member enum: want the enum-literal refusal, got %v", err)
+	}
 }
 
 func TestStringEnumsStayClosed(t *testing.T) {

@@ -114,8 +114,8 @@ func (l *lowering) strictViewContract(node *ast.Node, target *checker.Type) (ir.
 }
 
 func (l *lowering) viewContractLiterals(target *checker.Type) []ir.ViewLiteral {
-	// A whole numeric enum admits numbers outside its declared members.
-	if l.openNumericEnumType(target) {
+	// A whole numeric enum admits numbers outside its declared members, a one-member enum's included.
+	if l.tagHoldsAnyNumber(target) {
 		return nil
 	}
 	if target.Flags()&checker.TypeFlagsUnion != 0 {

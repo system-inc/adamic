@@ -86,7 +86,7 @@ func (l *lowering) recordReadDeclared(node *ast.Node, read ir.Expression, here *
 	// viewLiterals gives none. Lower's ruling on #1w8gvx9. A whole numeric enum is no closed list:
 	// numeric enums are open (docs/rulings.md, resolved October 19), so any number is one of its values,
 	// and only a strict subset of its members (ModuleKind.ESNext | ModuleKind.CommonJS) is held.
-	if allowed := l.viewLiterals(l.checker.GetNonNullableType(here)); len(allowed) != 0 && !l.openNumericEnumType(here) {
+	if allowed := l.viewLiterals(l.checker.GetNonNullableType(here)); len(allowed) != 0 && !l.tagHoldsAnyNumber(here) {
 		present := b.local("present", to.Present())
 		var member ir.Expression
 		for _, literal := range allowed {
