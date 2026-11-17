@@ -51,6 +51,28 @@ console.log(String("a" in r));
 class C { *[Symbol.iterator]() { yield 1; } }
 console.log(String(new C() !== undefined));
 `, ""},
+		// unknown.go's member scans: in on an unknown asks presenceHazard, and a read of the narrowed
+		// unknown asks dynamicReadHazard, each walking every class's members, the iterable one's included.
+		{"in and a read of an unknown beside an iterable class", `class C { [Symbol.iterator]() { return [1][Symbol.iterator](); } }
+function show(u: unknown): string {
+    if (typeof u === "object" && u !== null && "a" in u) {
+        return String(u.a);
+    }
+    return "none";
+}
+console.log(show({ a: 1 }));
+`, ""},
+		{"a read of an unknown field beside an iterable class", `class C { [Symbol.iterator]() { return [1][Symbol.iterator](); } }
+interface Holder { value: unknown }
+function read(holder: Holder): string {
+    const value = holder.value;
+    if (typeof value === "object" && value !== null && "a" in value) {
+        return String(value.a);
+    }
+    return "none";
+}
+console.log(read({ value: { a: 1 } }));
+`, ""},
 	} {
 		t.Run(test.name, func(t *testing.T) {
 			t.Parallel()
