@@ -1,0 +1,59 @@
+package oracle
+
+// A probe for #r11wppy's operand-landing rule, in a proof commit only, never landed: a value returned
+// through nested conditionals into a declared return type whose field is wider and writable. Each probe
+// prints whether it lowers and, if it does, what Node, the sanitized native build and the JavaScript
+// backend print.
+
+import (
+	"fmt"
+	"os"
+	"path/filepath"
+	"testing"
+)
+
+func TestZZLandingProbe(t *testing.T) {
+	probes := map[string]string{
+		"nested_return": `interface FileInfo { readonly version: string; signature: string | undefined; }
+type Encoded = Omit<FileInfo, 'signature'> & { signature?: string | false };
+type Out = string | Encoded;
+const state: FileInfo = { version: 'v', signature: 'v2' };
+function encode(value: FileInfo, same: boolean, kept: boolean): Out {
+	return same ? value.version : kept ? value : { version: value.version, signature: false };
+}
+const out = encode(state, false, true);
+if (typeof out !== 'string') {
+	out.signature = false;
+}
+const signature = state.signature;
+console.log(signature === undefined ? 'undefined' : signature.toUpperCase());
+`,
+		"direct_return": `interface FileInfo { readonly version: string; signature: string | undefined; }
+type Encoded = Omit<FileInfo, 'signature'> & { signature?: string | false };
+const state: FileInfo = { version: 'v', signature: 'v2' };
+function encode(value: FileInfo): Encoded {
+	return value;
+}
+const out = encode(state);
+out.signature = false;
+const signature = state.signature;
+console.log(signature === undefined ? 'undefined' : signature.toUpperCase());
+`,
+	}
+	for name, source := range probes {
+		path := filepath.Join(t.TempDir(), name+".ts")
+		if err := os.WriteFile(path, []byte(source), 0o644); err != nil {
+			t.Fatal(err)
+		}
+		truth := onNode(t, path)
+		program, err := lowered(t, path)
+		if err != nil {
+			fmt.Printf("PROBE %s: stops: %v\n", name, err)
+			continue
+		}
+		sanitized, _ := nativelyUncached(t, program)
+		javascript := onJavaScriptBackend(t, program)
+		fmt.Printf("PROBE %s: LOWERS; Node %q exit %d stderr %q; sanitized %q exit %d stderr %.300q; javascript %q exit %d\n", name,
+			truth.stdout, truth.exitCode, truth.stderr, sanitized.stdout, sanitized.exitCode, sanitized.stderr, javascript.stdout, javascript.exitCode)
+	}
+}
