@@ -1,0 +1,36 @@
+// A class keyed by Symbol.iterator beside reads of unknown values (#ppgk12h): in on an unknown and a read of the
+// narrowed unknown each walk every class's members by name, and a computed name spells none, so the walk passes over
+// it rather than asking its node for text, which panicked.
+class Counter {
+    [Symbol.iterator]() {
+        let index = 0;
+        return { next() { index++; return { value: index, done: index > 2 }; } };
+    }
+}
+
+function show(u: unknown): string {
+    if (typeof u === "object" && u !== null && "a" in u) {
+        return String(u.a);
+    }
+    return "none";
+}
+
+interface Holder {
+    value: unknown;
+}
+
+function read(holder: Holder): string {
+    const value = holder.value;
+    if (typeof value === "object" && value !== null && "a" in value) {
+        return String(value.a);
+    }
+    return "none";
+}
+
+console.log(show({ a: 1 }));
+console.log(show(3));
+console.log(read({ value: { a: 2 } }));
+console.log(read({ value: 3 }));
+for (const count of new Counter()) {
+    console.log(String(count));
+}
