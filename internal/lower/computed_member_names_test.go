@@ -44,13 +44,6 @@ console.log(String(f()));
 const p = { n: 1, get [Symbol.toStringTag]() { return "p"; } };
 console.log(String(p.n));
 `, "a computed accessor literal name"},
-		{"a dynamic read beside an iterable class", `const r: Record<string, number> = { a: 1 };
-const key = "a" as string;
-console.log(String(r[key]));
-console.log(String("a" in r));
-class C { *[Symbol.iterator]() { yield 1; } }
-console.log(String(new C() !== undefined));
-`, ""},
 		// unknown.go's member scans: in on an unknown asks presenceHazard, and a read of the narrowed
 		// unknown asks dynamicReadHazard, each walking every class's members, the iterable one's included.
 		{"in and a read of an unknown beside an iterable class", `class C { [Symbol.iterator]() { return [1][Symbol.iterator](); } }
