@@ -93,6 +93,7 @@ enum adamic_kind {
 	adamic_kind_async_frame,
 	adamic_kind_async_promise,
 	adamic_kind_async_reaction,
+	adamic_kind_foreign,
 #ifdef ADAMIC_CANONICAL_CLOSURES
 	adamic_kind_environment,
 	adamic_kind_generator,
@@ -577,6 +578,18 @@ size_t *adamic_object_ordered(const adamic_object *object);
 adamic_object *adamic_object_construct(const adamic_shape *shape);
 // An object's allocation size as adamic_object_new or adamic_object_construct made it, the second longer by its write order.
 size_t adamic_object_allocation_size(const adamic_object *object);
+
+// adamic_foreign is a value another runtime made, held by Adamic: an Objective-C object, so far
+// (foreign.c, docs/apple.md). It's an object of no fields to everything that looks at objects, so
+// nothing can read it as one by accident, and its last release lets go of what it holds, through its
+// kind's release.
+typedef struct adamic_foreign_kind {
+	const char *name;
+	void (*release)(void *pointer);
+} adamic_foreign_kind;
+adamic_object *adamic_foreign_new(void *pointer, const adamic_foreign_kind *kind);
+void *adamic_foreign_pointer(const adamic_object *object);
+void adamic_foreign_dropped(adamic_object *object);
 
 bool adamic_instanceof(const void *value, const adamic_class *wanted);
 size_t adamic_virtual(const adamic_object *object, size_t slot);
