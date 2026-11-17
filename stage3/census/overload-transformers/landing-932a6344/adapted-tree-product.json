@@ -1,0 +1,15 @@
+{
+  "command": [
+    "go",
+    "test",
+    "-v",
+    "./stage3/lane/adaptedtree",
+    "-run",
+    "^TestProduct_Stage3AdaptedTree$",
+    "-count=1",
+    "-timeout=45m"
+  ],
+  "cwd": "/workspace/scratch/get-properties-landing",
+  "exit": 0,
+  "seconds": 652.9539086818695
+}

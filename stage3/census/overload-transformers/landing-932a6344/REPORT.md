@@ -29,3 +29,11 @@ The only new production refusal sites are the two pre-existing walls accepted by
 PASS restoring-mutant-red: all three overload refusal replays return, and every baseline semantic finding is reproduced. PASS public-typescript.d.ts-byte-identical: actual adapted-base and candidate upstream npm-ci/Hereby dts outputs match; SHA-256 129e05979b0c292c75322d2446906a5bff055a00e10b5efbb1bed1f8bac38873. tsserverlibrary.d.ts also matches. PASS adapter contracts and shard-generated check.
 
 Whole candidate apply and TestProduct_Stage3AdaptedTree are running. The unfiltered whole lane remains pending until those complete. No landing push has occurred.
+
+## Build proof completion
+
+PASS stage3/apply.sh whole: exit 0, 626.21 s. All 79 produced compiler sources match the measured candidate byte-for-byte.
+
+PASS TestProduct_Stage3AdaptedTree: exit 0, 652.95 s, independently built with stock compiler and harness.
+
+The tested landing snapshot remains unchanged. The full unfiltered stage3/lane/run.sh is now running, with the standard eight workers, unchanged expectations, and no filter.
