@@ -153,6 +153,40 @@ func castAt(line string, column int) bool {
 	return previous == ' ' || previous == '\t' || previous == ')' || previous == ']'
 }
 
+// otherCastTo names the line of a cast in lines claiming declared other than the one at line and column, or
+// 0. The stop names no position, so with two such casts it could come from the unnamed one and still match
+// (Compiler's should on #0r4chfs, #s1gqkzm). A cast's source type isn't text, so any other cast to the same
+// target text counts, and so does one whose target only opens with it (as A | C beside as A): the cost is a
+// refusal, never a wrong accept. A word as in a comment that castAt reads as a cast counts too.
+func otherCastTo(lines []string, line, column int, declared string) int {
+	for index, text := range lines {
+		for start := strings.Index(text, "as"); start >= 0; start = nextAs(text, start) {
+			if (index+1 == line && start+1 == column) || !castAt(text, start+1) {
+				continue
+			}
+			target := strings.TrimLeft(text[start+3:], " \t")
+			if rest, found := strings.CutPrefix(target, declared); found && (rest == "" || !continuesType(rest[0])) {
+				return index + 1
+			}
+		}
+	}
+	return 0
+}
+
+// nextAs is where the word as next starts in text after start, or -1.
+func nextAs(text string, start int) int {
+	at := strings.Index(text[start+1:], "as")
+	if at < 0 {
+		return -1
+	}
+	return start + 1 + at
+}
+
+// continuesType says a target text goes on past this byte: a name, a member, a type argument or an array.
+func continuesType(character byte) bool {
+	return character == '_' || character == '$' || character == '.' || character == '<' || character == '[' || ('0' <= character && character <= '9') || ('a' <= character && character <= 'z') || ('A' <= character && character <= 'Z')
+}
+
 // repairRuns says a form's repair is arbitrary text, so the run holds the repaired copy to Node as well.
 func repairRuns(form string) bool {
 	return form == checkedBoundaryForm || form == castFailedForm
@@ -246,6 +280,9 @@ func validateWitnessSource(source []byte, witness negativeWitness) error {
 	} else if witness.Form == castFailedForm {
 		if !castAt(declaration, witness.Column) {
 			return fmt.Errorf("no as cast starts at %s:%d", witness.Declaration, witness.Column)
+		}
+		if other := otherCastTo(lines, line, witness.Column, witness.DeclaredType); other != 0 {
+			return fmt.Errorf("line %d holds another cast to %s, so the stop could be its", other, witness.DeclaredType)
 		}
 		if bytes.Count(source, []byte(witness.RepairFrom)) != 1 {
 			return fmt.Errorf("a cast_failed repair must replace exactly one place")
