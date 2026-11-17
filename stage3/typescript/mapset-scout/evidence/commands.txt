@@ -1,0 +1,7 @@
+Repository: system-inc/adamic
+Base: 1d3efe7b92236a0bb94aba6bfd5652f6d0f6dfa6
+Meter branch commit: e4b34e0e31c6bc661275ad1467bb9a21db805b20
+
+git ls-tree -r --name-only e4b34e0e31c6bc661275ad1467bb9a21db805b20 stage3/meter/runs/20261117T130646Z.rUAmui/
+stage3/apply.sh /workspace/mapset-adapted > /workspace/mapset-apply.log 2>&1
+Exit status: 1
