@@ -109,6 +109,36 @@ func TestNegativeCastFailedPosition(t *testing.T) {
 	}
 }
 
+// The stop names no position, so a source holding another cast to the entry's type, whose stop would read the
+// same, is refused, wherever it sits; a cast to another type, or a word as before something else, is not
+// (#s1gqkzm). Mutant: otherCastTo finding nothing accepts every "refused" row.
+func TestNegativeCastFailedOneCast(t *testing.T) {
+	t.Parallel()
+	_, witness, _ := castFailedFixture("input.ts")
+	for name, test := range map[string]struct {
+		added   string
+		refused bool
+	}{
+		"same cast after":     {"const again = shape as Circle;\n", true},
+		"same cast in a call": {"console.log((shape as Circle).kind);\n", true},
+		"opening target":      {"const either = shape as Circle | Square;\n", true},
+		"another target":      {"const other = shape as Square;\n", false},
+		"a longer name":       {"type Circles = readonly Circle[];\nconst many = [shape] as Circles;\n", false},
+		"the word as":         {"// read as the circle it claims to be\n", false},
+	} {
+		source := []byte(castFailedSource + test.added)
+		bad := witness
+		bad.TypeCorrectSHA256 = contentHash(repairedSource(source, bad))
+		err := validateWitnessSource(source, bad)
+		if test.refused && (err == nil || !strings.Contains(err.Error(), "holds another cast to Circle")) {
+			t.Errorf("%s: a second cast to Circle accepted: %v", name, err)
+		}
+		if !test.refused && err != nil {
+			t.Errorf("%s: refused: %v", name, err)
+		}
+	}
+}
+
 // castFailedCommand runs the command on castFailedSource held at corpus/<name> under an entry declaring
 // corpus/<declared>, with a compiler whose backends print printed and then stop at the cast whenever the lie
 // is in the program.
