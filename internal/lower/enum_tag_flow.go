@@ -1,6 +1,7 @@
 package lower
 
 import (
+	"fmt"
 	_ "unsafe"
 
 	"github.com/microsoft/TypeScript/tsc/shim/ast"
@@ -124,20 +125,32 @@ func enumTagReducedType(receiver *checker.Checker, of *checker.Type) *checker.Ty
 func (l *lowering) enumTagRefinementProven(reference *ast.Node, declared *checker.Type) bool {
 	data := reference.FlowNodeData()
 	if data == nil || data.FlowNode == nil {
+		l.probeSet("no-flow-node", nil)
 		return false
 	}
 	walk := &enumTagWalk{l: l, reference: reference, declared: declared, seen: map[*ast.FlowNode]bool{}, firstProof: -1, exempt: map[*ast.Node]bool{}}
 	if reference.Kind == ast.KindPropertyAccessExpression {
 		tests, local := l.accessLocalTests(reference)
 		if !local {
+			l.probeSet("access-not-local", nil)
 			return false
 		}
 		walk.tests = tests
 	}
-	if !walk.visit(data.FlowNode) || walk.proved == 0 {
+	l.probeReset()
+	if !walk.visit(data.FlowNode) {
+		l.probeSet("visit", nil)
 		return false
 	}
-	return walk.tests == nil || !l.codeBetween(walk.firstProof, reference, walk.exempt)
+	if walk.proved == 0 {
+		l.probeSet("nothing-proved", nil)
+		return false
+	}
+	if walk.tests != nil && l.codeBetween(walk.firstProof, reference, walk.exempt) {
+		l.probeSet("code-between", nil)
+		return false
+	}
+	return true
 }
 
 type enumTagWalk struct {
@@ -152,6 +165,8 @@ type enumTagWalk struct {
 	tests      []*ast.Node
 	firstProof int
 	exempt     map[*ast.Node]bool
+	stepWhy    string
+	stepDetail string
 }
 
 // proves counts a step that narrows the reference. For an access reference it must sit in one of
@@ -201,7 +216,10 @@ func (w *enumTagWalk) visit(flow *ast.FlowNode) bool {
 				// nothing, and nothing before it reaches the read. One that narrows to what was assigned
 				// isn't a recognized step.
 				assigned := predicateFlowType(w.l.checker, w.reference, w.declared, w.declared, nil, flow)
-				return checker.Checker_isTypeIdenticalTo(w.l.checker, assigned, w.declared)
+				if !checker.Checker_isTypeIdenticalTo(w.l.checker, assigned, w.declared) {
+					return w.fail("assignment-narrows", flow.Node)
+				}
+				return true
 			}
 			if enumTagContainsReference(w.l.checker, w.reference, flow.Node) {
 				return true
@@ -211,25 +229,25 @@ func (w *enumTagWalk) visit(flow *ast.FlowNode) bool {
 			if field := w.directField(flow.Node); field == "" {
 				if call, exact := w.exactKindCall(flow.Node); exact {
 					if !w.kindPredicateStep(flow, call) {
-						return false
+						return w.fail("kind-predicate-step:"+w.stepWhy, flow.Node)
 					}
 					flow = flow.Antecedent
 					continue
 				}
 			}
 			if !w.step(flow, w.directField(flow.Node)) {
-				return false
+				return w.fail("condition:"+w.stepWhy, flow.Node)
 			}
 			flow = flow.Antecedent
 		case flow.Flags&ast.FlowFlagsSwitchClause != 0:
 			data := flow.Node.AsFlowSwitchClauseData()
 			if !w.stepAt(flow, nil, w.directField(data.SwitchStatement.AsSwitchStatement().Expression)) {
-				return false
+				return w.fail("switch:"+w.stepWhy, data.SwitchStatement.AsSwitchStatement().Expression)
 			}
 			flow = flow.Antecedent
 		case flow.Flags&(ast.FlowFlagsCall|ast.FlowFlagsArrayMutation) != 0:
 			if !w.step(flow, "") {
-				return false
+				return w.fail("call-or-mutation:"+w.stepWhy, flow.Node)
 			}
 			flow = flow.Antecedent
 		case flow.Flags&ast.FlowFlagsReduceLabel != 0:
@@ -243,10 +261,16 @@ func (w *enumTagWalk) visit(flow *ast.FlowNode) bool {
 			}
 			return true
 		default:
-			return false
+			return w.fail(fmt.Sprintf("flow-flags-%#x", uint32(flow.Flags)), flow.Node)
 		}
 	}
 	return true
+}
+
+// fail records the walk's first failing step for the probe (#x2cjvy9's split), not for landing.
+func (w *enumTagWalk) fail(why string, at *ast.Node) bool {
+	w.l.probeSetDetail(why, at, w.stepDetail)
+	return false
 }
 
 // step judges one narrowing step. A recognized comparison on field passes when that field can't
@@ -264,8 +288,12 @@ func (w *enumTagWalk) stepAt(flow *ast.FlowNode, at *ast.Node, field string) boo
 	before := predicateFlowType(w.l.checker, w.reference, w.declared, w.declared, nil, flow.Antecedent)
 	if field != "" {
 		if w.l.enumTagWalkHazardOf(before, field) != enumTagNoHazard {
+			w.stepWhy = "hazard-on-" + field
+			w.stepDetail = w.l.probeHazardDetail(before, field)
 			return false
 		}
+		w.stepWhy = "comparison-outside-local-tests"
+		w.stepDetail = ""
 		return w.proves(at)
 	}
 	after := predicateFlowType(w.l.checker, w.reference, w.declared, w.declared, nil, flow)
@@ -273,8 +301,12 @@ func (w *enumTagWalk) stepAt(flow *ast.FlowNode, at *ast.Node, field string) boo
 		return true
 	}
 	if checker.Checker_isTypeIdenticalTo(w.l.checker, after, w.l.checker.GetNonNullableType(before)) {
+		w.stepWhy = "nonnull-outside-local-tests"
+		w.stepDetail = ""
 		return w.proves(at)
 	}
+	w.stepWhy = "narrows-by-unrecognized-step"
+	w.stepDetail = w.l.checker.TypeToString(before) + " -> " + w.l.checker.TypeToString(after)
 	return false
 }
 
@@ -469,10 +501,14 @@ func (w *enumTagWalk) kindPredicateStep(flow *ast.FlowNode, call kindCall) bool 
 		}
 		property := w.l.checker.GetPropertyOfType(member, call.field)
 		if property == nil || property.Flags&(ast.SymbolFlagsGetAccessor|ast.SymbolFlagsSetAccessor|ast.SymbolFlagsMethod) != 0 {
+			w.stepWhy = "field-missing-or-accessor"
+			w.stepDetail = w.l.checker.TypeToString(member)
 			return false
 		}
 	}
 	if w.l.enumTagWalkHazardOf(before, call.field) != enumTagNoHazard {
+		w.stepWhy = "hazard"
+		w.stepDetail = w.l.probeHazardDetail(before, call.field)
 		return false
 	}
 	taken := flow.Flags&ast.FlowFlagsTrueCondition != 0
@@ -502,13 +538,22 @@ func (w *enumTagWalk) kindPredicateStep(flow *ast.FlowNode, call kindCall) bool 
 		}
 	}
 	if len(kept) == 0 {
+		w.stepWhy = "nothing-kept"
+		w.stepDetail = w.l.checker.TypeToString(before)
 		return false
 	}
 	after := enumTagReducedType(w.l.checker, predicateFlowType(w.l.checker, w.reference, w.declared, w.declared, nil, flow))
 	if !checker.Checker_isTypeIdenticalTo(w.l.checker, after, enumTagReducedType(w.l.checker, w.l.checker.GetUnionType(kept))) {
+		w.stepWhy = "type-disagrees"
+		w.stepDetail = w.l.checker.TypeToString(before) + " -> checker " + w.l.checker.TypeToString(after) + " vs body " + w.l.checker.TypeToString(w.l.checker.GetUnionType(kept))
 		return false
 	}
-	return w.predicateProves(flow.Node, call)
+	if !w.predicateProves(flow.Node, call) {
+		w.stepWhy = "not-local-or-accessor-name"
+		w.stepDetail = ""
+		return false
+	}
+	return true
 }
 
 // directField is the field a recognized comparison reads off the reference: `r.f === x`, `!==`,
