@@ -334,6 +334,18 @@ console.log(Object.keys(a.r).join(','));
 	{"Object.assign into a record target", graphRecordTable + `Object.assign(a.r, { k: [b] });
 console.log(Object.keys(a.r).join(','));
 `, "Object.assign on a record"},
+	// A record of a type the graph doesn't select, written into a graph slot on the cycle: a record of
+	// numbers holds no graph value, so graphTypes never selects it, and judgeRecordSlots stops the write
+	// (scan-all's record-stop control, Correctness's fixture on #1vb0x5s). This is the stop's positive
+	// witness: every other road here lowers.
+	{"an unselected record written into a graph slot", `interface Node { name: string; next: Node[]; r: Node[] | Record<string, number> }
+const a: Node = { name: 'a' + '', next: [], r: {} };
+const b: Node = { name: 'b' + '', next: [a], r: {} };
+a.next.push(b);
+a.r = a.next.slice();
+a.r = { k: 1 };
+console.log(a.name);
+`, "a record written into a graph slot"},
 	// One record literal, held by both nodes, holding one of them: M7's road, whose emitted C makes
 	// exactly one graph record.
 	{"one record shared by two nodes", `interface Node { name: string; next: Node[]; r: Record<string, Node> }
