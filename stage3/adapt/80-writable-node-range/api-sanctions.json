@@ -1,0 +1,22 @@
+[
+  {
+    "path": [
+      "Node"
+    ],
+    "kind": "HeritageClause",
+    "replace": "member",
+    "before": "extends ReadonlyTextRange",
+    "after": "extends TextRange",
+    "why": "Adamic, task aryr7ea, under rulings.md:391: tsc's own public setTextRange writes pos and end on a node after the factory made it, so Node's and NodeArray's pos and end are writable, as TextRange's are. Code that type-checked still does; a consumer may now write node.pos or array.end with no cast, where upstream's types forbid it."
+  },
+  {
+    "path": [
+      "NodeArray"
+    ],
+    "kind": "HeritageClause",
+    "replace": "member",
+    "before": "extends ReadonlyArray<T>, ReadonlyTextRange",
+    "after": "extends ReadonlyArray<T>, TextRange",
+    "why": "Adamic, task aryr7ea, under rulings.md:391: tsc's own public setTextRange writes pos and end on a node after the factory made it, so Node's and NodeArray's pos and end are writable, as TextRange's are. Code that type-checked still does; a consumer may now write node.pos or array.end with no cast, where upstream's types forbid it."
+  }
+]
