@@ -1,0 +1,10 @@
+[
+  {
+    "file": "src/compiler/checker.ts",
+    "owner": "getRestrictiveTypeParameter",
+    "before": "function getRestrictiveTypeParameter(tp: TypeParameter) {\n        return !tp.constraint && !getConstraintDeclaration(tp) || tp.constraint === noConstraintType ? tp : tp.restrictiveInstantiation || (\n            tp.restrictiveInstantiation = createTypeParameter(tp.symbol), (tp.restrictiveInstantiation as TypeParameter).constraint = noConstraintType, tp.restrictiveInstantiation\n        );\n    }",
+    "after": "function getRestrictiveTypeParameter(tp: TypeParameter) {\n        if (!tp.constraint && !getConstraintDeclaration(tp) || tp.constraint === noConstraintType) {\n            return tp;\n        }\n        if (!tp.restrictiveInstantiation) {\n            const restrictiveInstantiation = createTypeParameter(tp.symbol);\n            restrictiveInstantiation.constraint = noConstraintType;\n            tp.restrictiveInstantiation = restrictiveInstantiation;\n        }\n        return tp.restrictiveInstantiation;\n    }",
+    "ownerBeforeSha256": "c1767f985faab6a2646926a9d06b7deb38fc970a6c95d4c2c4f4653490c105f9",
+    "ownerAfterSha256": "77d14591e6294120b310b5c79bea0bc5f545260368432fc1b7059b5cb5b32a1f"
+  }
+]
