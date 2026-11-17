@@ -545,9 +545,11 @@ func (l *lowering) overloadCertificateStorage(node, overload *ast.Node, resolved
 // only by the ir.Type each side lowers to, level by level, through the functions lowering and the emitter
 // hold a checker type by: kept for the result, an array's element and a Map's value, representation for a
 // Map's key and a Set's element, as mapTypes and the array roads read them. The same at the top and, through
-// an array, Map or Set, the same all the way down. Never checker identity or assignability, since two types
-// tsc calls one can lower differently, a branded arm or a literal widened in one place (Compiler's
-// condition on #5fws6q8). Any other type with type arguments, a tuple among them, isn't read: false.
+// an array, Map or Set, the same all the way down. Never checker identity or assignability in kept's place,
+// since two types tsc calls one can lower differently, a branded arm or a literal widened in one place (Compiler's
+// condition on #5fws6q8). Any other type with type arguments, a tuple among them, is reached only once kept
+// has agreed at its level, and is then the same only when it's one type with read, since its arguments
+// aren't held by any road read here.
 func (l *lowering) overloadCertificateSameStorage(stored, read *checker.Type) bool {
 	return l.overloadCertificateSameHeld(stored, read, false)
 }
@@ -580,6 +582,9 @@ func (l *lowering) overloadCertificateSameHeld(stored, read *checker.Type, keyed
 		return ""
 	}
 	kind := collection(stored)
+	if kind == "" && collection(read) == "" {
+		return identicalTypes(l.checker, stored, read) // Only after kept agreed at this level.
+	}
 	if kind == "" || kind != collection(read) || len(storedArguments) != len(readArguments) {
 		return false
 	}
