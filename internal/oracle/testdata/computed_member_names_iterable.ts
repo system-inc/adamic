@@ -3,7 +3,8 @@
 // it rather than asking its node for text, which panicked.
 class Counter {
     [Symbol.iterator]() {
-        return [1, 2][Symbol.iterator]();
+        let index = 0;
+        return { next() { index++; return { value: index, done: index > 2 }; } };
     }
 }
 
@@ -30,4 +31,6 @@ console.log(show({ a: 1 }));
 console.log(show(3));
 console.log(read({ value: { a: 2 } }));
 console.log(read({ value: 3 }));
-console.log(String(new Counter() !== undefined));
+for (const count of new Counter()) {
+    console.log(String(count));
+}
