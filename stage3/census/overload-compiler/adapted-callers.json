@@ -1,0 +1,526 @@
+{
+  "tree": "/workspace/scratch/ev14ch9/base-tree",
+  "roots": 21234,
+  "version": "6.0.3",
+  "sets": {
+    "getDiagnostics": {
+      "declarations": [
+        {
+          "file": "src/compiler/types.ts",
+          "line": 10093,
+          "text": "getDiagnostics(fileName: string): DiagnosticWithLocation[];"
+        },
+        {
+          "file": "src/compiler/types.ts",
+          "line": 10092,
+          "text": "getDiagnostics(): Diagnostic[];"
+        },
+        {
+          "file": "src/compiler/utilities.ts",
+          "line": 6124,
+          "text": "function getDiagnostics(fileName?: string): Diagnostic[] {\r\n        if (fileName) {\r\n            return fileDiagnostics.get(fileName) || [];\r\n        }\r\n\r\n        const fileDiags: Diagnostic[] = flatMapToMutable(filesWithDiagnostics, f => fileDiagnostics.get(f));\r\n        if (!nonFileDiagnostics.length) {\r\n            return fileDiags;\r\n        }\r\n        fileDiags.unshift(...nonFileDiagnostics);\r\n        return fileDiags;\r\n    }"
+        },
+        {
+          "file": "src/compiler/utilities.ts",
+          "line": 6123,
+          "text": "function getDiagnostics(): Diagnostic[];"
+        },
+        {
+          "file": "src/compiler/utilities.ts",
+          "line": 6122,
+          "text": "function getDiagnostics(fileName: string): DiagnosticWithLocation[];"
+        }
+      ],
+      "calls": [
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 49757,
+          "use": "returned",
+          "result": "Diagnostic[]",
+          "args": [],
+          "text": "diagnostics.getDiagnostics()",
+          "context": "return diagnostics.getDiagnostics();",
+          "resolved": "getDiagnostics(): Diagnostic[];"
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 49733,
+          "use": "bound",
+          "result": "DiagnosticWithLocation[]",
+          "args": [
+            {
+              "text": "sourceFile.fileName",
+              "type": "string"
+            }
+          ],
+          "text": "diagnostics.getDiagnostics(sourceFile.fileName)",
+          "context": "semanticDiagnostics = diagnostics.getDiagnostics(sourceFile.fileName)",
+          "resolved": "getDiagnostics(fileName: string): DiagnosticWithLocation[];"
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 1922,
+          "use": "argument",
+          "result": "DiagnosticWithLocation[]",
+          "args": [
+            {
+              "text": "file.fileName",
+              "type": "string"
+            }
+          ],
+          "text": "suggestionDiagnostics.getDiagnostics(file.fileName)",
+          "context": "addRange(diagnostics, suggestionDiagnostics.getDiagnostics(file.fileName))",
+          "resolved": "getDiagnostics(fileName: string): DiagnosticWithLocation[];"
+        },
+        {
+          "file": "src/compiler/emitter.ts",
+          "line": 789,
+          "use": "PropertyAssignment",
+          "result": "Diagnostic[]",
+          "args": [],
+          "text": "emitterDiagnostics.getDiagnostics()",
+          "context": "diagnostics: emitterDiagnostics.getDiagnostics()",
+          "resolved": "getDiagnostics(): Diagnostic[];"
+        },
+        {
+          "file": "src/compiler/program.ts",
+          "line": 3278,
+          "use": "argument",
+          "result": "DiagnosticWithLocation[]",
+          "args": [
+            {
+              "text": "resolvedRef.sourceFile.fileName",
+              "type": "string"
+            }
+          ],
+          "text": "programDiagnostics.getCombinedDiagnostics(program).getDiagnostics(resolvedRef.sourceFile.fileName)",
+          "context": "concatenate(diagnostics, programDiagnostics.getCombinedDiagnostics(program).getDiagnostics(resolvedRef.sourceFile.fileName))",
+          "resolved": "getDiagnostics(fileName: string): DiagnosticWithLocation[];"
+        },
+        {
+          "file": "src/compiler/program.ts",
+          "line": 3276,
+          "use": "bound",
+          "result": "DiagnosticWithLocation[]",
+          "args": [
+            {
+              "text": "options.configFile.fileName",
+              "type": "string"
+            }
+          ],
+          "text": "programDiagnostics.getCombinedDiagnostics(program).getDiagnostics(options.configFile.fileName)",
+          "context": "diagnostics = programDiagnostics.getCombinedDiagnostics(program).getDiagnostics(options.configFile.fileName)",
+          "resolved": "getDiagnostics(fileName: string): DiagnosticWithLocation[];"
+        },
+        {
+          "file": "src/compiler/program.ts",
+          "line": 2819,
+          "use": "bound",
+          "result": "DiagnosticWithLocation[]",
+          "args": [
+            {
+              "text": "sourceFile.fileName",
+              "type": "string"
+            }
+          ],
+          "text": "programDiagnostics.getCombinedDiagnostics(program).getDiagnostics(sourceFile.fileName)",
+          "context": "programDiagnosticsInFile = programDiagnostics.getCombinedDiagnostics(program).getDiagnostics(sourceFile.fileName)",
+          "resolved": "getDiagnostics(fileName: string): DiagnosticWithLocation[];"
+        },
+        {
+          "file": "src/compiler/programDiagnostics.ts",
+          "line": 157,
+          "use": "member read",
+          "result": "Diagnostic[] | undefined",
+          "args": [],
+          "text": "configDiagnostics?.getDiagnostics()",
+          "context": "configDiagnostics?.getDiagnostics().forEach",
+          "resolved": "getDiagnostics(): Diagnostic[];"
+        },
+        {
+          "file": "src/testRunner/unittests/diagnosticCollection.ts",
+          "line": 76,
+          "use": "bound",
+          "result": "Diagnostic[]",
+          "args": [],
+          "text": "collection.getDiagnostics()",
+          "context": "result = collection.getDiagnostics()",
+          "resolved": "getDiagnostics(): Diagnostic[];"
+        },
+        {
+          "file": "src/testRunner/unittests/diagnosticCollection.ts",
+          "line": 55,
+          "use": "bound",
+          "result": "Diagnostic[]",
+          "args": [],
+          "text": "collection.getDiagnostics()",
+          "context": "result = collection.getDiagnostics()",
+          "resolved": "getDiagnostics(): Diagnostic[];"
+        },
+        {
+          "file": "src/testRunner/unittests/diagnosticCollection.ts",
+          "line": 23,
+          "use": "bound",
+          "result": "Diagnostic[]",
+          "args": [],
+          "text": "collection.getDiagnostics()",
+          "context": "result = collection.getDiagnostics()",
+          "resolved": "getDiagnostics(): Diagnostic[];"
+        }
+      ],
+      "counts": {
+        "returned": 1,
+        "bound": 6,
+        "argument": 2,
+        "PropertyAssignment": 1,
+        "member read": 1
+      }
+    },
+    "getSupportedExtensionsWithJsonIfResolveJsonModule": {
+      "declarations": [
+        {
+          "file": "src/compiler/utilities.ts",
+          "line": 10018,
+          "text": "export function getSupportedExtensionsWithJsonIfResolveJsonModule(options: CompilerOptions | undefined, supportedExtensions: readonly string[][]): readonly string[][] {\r\n    if (!options || !getResolveJsonModule(options)) return supportedExtensions;\r\n    if (supportedExtensions === allSupportedExtensions) return allSupportedExtensionsWithJson;\r\n    if (supportedExtensions === supportedTSExtensions) return supportedTSExtensionsWithJson;\r\n    return [...supportedExtensions, [Extension.Json]];\r\n}"
+        },
+        {
+          "file": "src/compiler/utilities.ts",
+          "line": 10016,
+          "text": "export function getSupportedExtensionsWithJsonIfResolveJsonModule(options: CompilerOptions | undefined, supportedExtensions: readonly string[][]): readonly string[][];"
+        },
+        {
+          "file": "src/compiler/utilities.ts",
+          "line": 10014,
+          "text": "export function getSupportedExtensionsWithJsonIfResolveJsonModule(options: CompilerOptions | undefined, supportedExtensions: readonly Extension[][]): readonly Extension[][];"
+        },
+        {
+          "file": "src/compiler/commandLineParser.ts",
+          "line": 63,
+          "text": "getSupportedExtensionsWithJsonIfResolveJsonModule"
+        },
+        {
+          "file": "src/compiler/program.ts",
+          "line": 145,
+          "text": "getSupportedExtensionsWithJsonIfResolveJsonModule"
+        }
+      ],
+      "calls": [
+        {
+          "file": "src/compiler/utilities.ts",
+          "line": 10152,
+          "use": "argument",
+          "result": "readonly string[][]",
+          "args": [
+            {
+              "text": "compilerOptions",
+              "type": "CompilerOptions | undefined"
+            },
+            {
+              "text": "supportedExtensions",
+              "type": "readonly string[][]"
+            }
+          ],
+          "text": "getSupportedExtensionsWithJsonIfResolveJsonModule(compilerOptions, supportedExtensions)",
+          "context": "flatten(getSupportedExtensionsWithJsonIfResolveJsonModule(compilerOptions, supportedExtensions))",
+          "resolved": "export function getSupportedExtensionsWithJsonIfResolveJsonModule(options: CompilerOptions | undefined, supportedExtensions: readonly string[][]): readonly string[][];"
+        },
+        {
+          "file": "src/compiler/commandLineParser.ts",
+          "line": 3976,
+          "use": "bound",
+          "result": "readonly string[][]",
+          "args": [
+            {
+              "text": "options",
+              "type": "CompilerOptions"
+            },
+            {
+              "text": "supportedExtensions",
+              "type": "readonly string[][]"
+            }
+          ],
+          "text": "getSupportedExtensionsWithJsonIfResolveJsonModule(options, supportedExtensions)",
+          "context": "supportedExtensionsWithJsonIfResolveJsonModule = getSupportedExtensionsWithJsonIfResolveJsonModule(options, supportedExtensions)",
+          "resolved": "export function getSupportedExtensionsWithJsonIfResolveJsonModule(options: CompilerOptions | undefined, supportedExtensions: readonly string[][]): readonly string[][];"
+        },
+        {
+          "file": "src/compiler/program.ts",
+          "line": 1586,
+          "use": "bound",
+          "result": "readonly Extension[][]",
+          "args": [
+            {
+              "text": "options",
+              "type": "CompilerOptions"
+            },
+            {
+              "text": "supportedExtensions",
+              "type": "readonly Extension[][]"
+            }
+          ],
+          "text": "getSupportedExtensionsWithJsonIfResolveJsonModule(options, supportedExtensions)",
+          "context": "supportedExtensionsWithJsonIfResolveJsonModule = getSupportedExtensionsWithJsonIfResolveJsonModule(options, supportedExtensions)",
+          "resolved": "export function getSupportedExtensionsWithJsonIfResolveJsonModule(options: CompilerOptions | undefined, supportedExtensions: readonly Extension[][]): readonly Extension[][];"
+        },
+        {
+          "file": "src/services/stringCompletions.ts",
+          "line": 734,
+          "use": "ConditionalExpression",
+          "result": "readonly string[][]",
+          "args": [
+            {
+              "text": "compilerOptions",
+              "type": "CompilerOptions"
+            },
+            {
+              "text": "extensions",
+              "type": "string[][]"
+            }
+          ],
+          "text": "getSupportedExtensionsWithJsonIfResolveJsonModule(compilerOptions, extensions)",
+          "context": "moduleResolutionUsesNodeModules(moduleResolution) ?\r\n        getSupportedExtensionsWithJsonIfResolveJsonModule(compilerOptions, extensions) :\r\n        extensions",
+          "resolved": "export function getSupportedExtensionsWithJsonIfResolveJsonModule(options: CompilerOptions | undefined, supportedExtensions: readonly string[][]): readonly string[][];"
+        }
+      ],
+      "counts": {
+        "argument": 1,
+        "bound": 2,
+        "ConditionalExpression": 1
+      }
+    },
+    "convertOrRepopulateDiagnosticMessageChainArray": {
+      "declarations": [
+        {
+          "file": "src/compiler/builder.ts",
+          "line": 558,
+          "text": "function convertOrRepopulateDiagnosticMessageChainArray<T extends DiagnosticMessageChain | ReusableDiagnosticMessageChain>(\r\n    array: T[] | undefined,\r\n    sourceFile: SourceFile | undefined,\r\n    newProgram: Program,\r\n    repopulateInfo: (chain: T) => RepopulateDiagnosticChainInfo | undefined,\r\n): DiagnosticMessageChain[] | undefined {\r\n    return sameMap(array, chain => convertOrRepopulateDiagnosticMessageChain(chain, sourceFile, newProgram, repopulateInfo));\r\n}"
+        }
+      ],
+      "calls": [
+        {
+          "file": "src/compiler/builder.ts",
+          "line": 554,
+          "use": "bound",
+          "result": "DiagnosticMessageChain[] | undefined",
+          "args": [
+            {
+              "text": "chain.next as T[]",
+              "type": "T[]"
+            },
+            {
+              "text": "sourceFile",
+              "type": "SourceFile | undefined"
+            },
+            {
+              "text": "newProgram",
+              "type": "Program"
+            },
+            {
+              "text": "repopulateInfo",
+              "type": "(chain: T) => RepopulateDiagnosticChainInfo | undefined"
+            }
+          ],
+          "text": "convertOrRepopulateDiagnosticMessageChainArray(chain.next as T[], sourceFile, newProgram, repopulateInfo)",
+          "context": "next = convertOrRepopulateDiagnosticMessageChainArray(chain.next as T[], sourceFile, newProgram, repopulateInfo)",
+          "resolved": "function convertOrRepopulateDiagnosticMessageChainArray<T extends DiagnosticMessageChain | ReusableDiagnosticMessageChain>(\r\n    array: T[] | undefined,\r\n    sourceFile: SourceFile | undefined,\r\n    newProgram: Program,\r\n    repopulateInfo: (chain: T) => RepopulateDiagnosticChainInfo | undefined,\r\n): DiagnosticMessageChain[] | undefined {\r\n    return sameMap(array, chain => convertOrRepopulateDiagnosticMessageChain(chain, sourceFile, newProgram, repopulateInfo));\r\n}"
+        },
+        {
+          "file": "src/compiler/builder.ts",
+          "line": 551,
+          "use": "PropertyAssignment",
+          "result": "DiagnosticMessageChain[] | undefined",
+          "args": [
+            {
+              "text": "chain.next as T[]",
+              "type": "T[]"
+            },
+            {
+              "text": "sourceFile",
+              "type": "SourceFile | undefined"
+            },
+            {
+              "text": "newProgram",
+              "type": "Program"
+            },
+            {
+              "text": "repopulateInfo",
+              "type": "(chain: T) => RepopulateDiagnosticChainInfo | undefined"
+            }
+          ],
+          "text": "convertOrRepopulateDiagnosticMessageChainArray(chain.next as T[], sourceFile, newProgram, repopulateInfo)",
+          "context": "next: convertOrRepopulateDiagnosticMessageChainArray(chain.next as T[], sourceFile, newProgram, repopulateInfo)",
+          "resolved": "function convertOrRepopulateDiagnosticMessageChainArray<T extends DiagnosticMessageChain | ReusableDiagnosticMessageChain>(\r\n    array: T[] | undefined,\r\n    sourceFile: SourceFile | undefined,\r\n    newProgram: Program,\r\n    repopulateInfo: (chain: T) => RepopulateDiagnosticChainInfo | undefined,\r\n): DiagnosticMessageChain[] | undefined {\r\n    return sameMap(array, chain => convertOrRepopulateDiagnosticMessageChain(chain, sourceFile, newProgram, repopulateInfo));\r\n}"
+        },
+        {
+          "file": "src/compiler/builder.ts",
+          "line": 545,
+          "use": "PropertyAssignment",
+          "result": "DiagnosticMessageChain[] | undefined",
+          "args": [
+            {
+              "text": "chain.next as T[]",
+              "type": "T[]"
+            },
+            {
+              "text": "sourceFile",
+              "type": "SourceFile | undefined"
+            },
+            {
+              "text": "newProgram",
+              "type": "Program"
+            },
+            {
+              "text": "repopulateInfo",
+              "type": "(chain: T) => RepopulateDiagnosticChainInfo | undefined"
+            }
+          ],
+          "text": "convertOrRepopulateDiagnosticMessageChainArray(chain.next as T[], sourceFile, newProgram, repopulateInfo)",
+          "context": "next: convertOrRepopulateDiagnosticMessageChainArray(chain.next as T[], sourceFile, newProgram, repopulateInfo)",
+          "resolved": "function convertOrRepopulateDiagnosticMessageChainArray<T extends DiagnosticMessageChain | ReusableDiagnosticMessageChain>(\r\n    array: T[] | undefined,\r\n    sourceFile: SourceFile | undefined,\r\n    newProgram: Program,\r\n    repopulateInfo: (chain: T) => RepopulateDiagnosticChainInfo | undefined,\r\n): DiagnosticMessageChain[] | undefined {\r\n    return sameMap(array, chain => convertOrRepopulateDiagnosticMessageChain(chain, sourceFile, newProgram, repopulateInfo));\r\n}"
+        }
+      ],
+      "counts": {
+        "bound": 1,
+        "PropertyAssignment": 2
+      }
+    },
+    "convertOptionsFromJson": {
+      "declarations": [
+        {
+          "file": "src/compiler/commandLineParser.ts",
+          "line": 3795,
+          "text": "function convertOptionsFromJson<TRaw>(optionsNameMap: Map<string, CommandLineOption>, jsonOptions: TRaw, basePath: string, defaultOptions: CompilerOptions | TypeAcquisition | WatchOptions | undefined, diagnostics: DidYouMeanOptionsDiagnostics, errors: Diagnostic[]) {\r\n    if (!jsonOptions) {\r\n        return;\r\n    }\r\n\r\n    for (const id in jsonOptions) {\r\n        const opt = optionsNameMap.get(id);\r\n        if (opt) {\r\n            (defaultOptions || (defaultOptions = {}))[opt.name] = convertJsonOption(opt, jsonOptions[id], basePath, errors);\r\n        }\r\n        else {\r\n            errors.push(createUnknownOptionError(id, diagnostics));\r\n        }\r\n    }\r\n    return defaultOptions;\r\n}"
+        },
+        {
+          "file": "src/compiler/commandLineParser.ts",
+          "line": 3794,
+          "text": "function convertOptionsFromJson<TRaw>(optionsNameMap: Map<string, CommandLineOption>, jsonOptions: TRaw, basePath: string, defaultOptions: CompilerOptions | TypeAcquisition, diagnostics: DidYouMeanOptionsDiagnostics, errors: Diagnostic[]): CompilerOptions | TypeAcquisition | undefined;"
+        },
+        {
+          "file": "src/compiler/commandLineParser.ts",
+          "line": 3793,
+          "text": "function convertOptionsFromJson<TRaw>(optionsNameMap: Map<string, CommandLineOption>, jsonOptions: TRaw, basePath: string, defaultOptions: undefined, diagnostics: DidYouMeanOptionsDiagnostics, errors: Diagnostic[]): WatchOptions | undefined;"
+        }
+      ],
+      "calls": [
+        {
+          "file": "src/compiler/commandLineParser.ts",
+          "line": 3790,
+          "use": "returned",
+          "result": "WatchOptions | undefined",
+          "args": [
+            {
+              "text": "getCommandLineWatchOptionsMap()",
+              "type": "Map<string, CommandLineOption>"
+            },
+            {
+              "text": "jsonOptions",
+              "type": "TRaw"
+            },
+            {
+              "text": "basePath",
+              "type": "string"
+            },
+            {
+              "text": "undefined",
+              "type": "undefined"
+            },
+            {
+              "text": "watchOptionsDidYouMeanDiagnostics",
+              "type": "ParseCommandLineWorkerDiagnostics"
+            },
+            {
+              "text": "errors",
+              "type": "Diagnostic[]"
+            }
+          ],
+          "text": "convertOptionsFromJson(getCommandLineWatchOptionsMap(), jsonOptions, basePath, /*defaultOptions*/ undefined, watchOptionsDidYouMeanDiagnostics, errors)",
+          "context": "return convertOptionsFromJson(getCommandLineWatchOptionsMap(), jsonOptions, basePath, /*defaultOptions*/ undefined, watchOptionsDidYouMeanDiagnostics, errors);",
+          "resolved": "function convertOptionsFromJson<TRaw>(optionsNameMap: Map<string, CommandLineOption>, jsonOptions: TRaw, basePath: string, defaultOptions: undefined, diagnostics: DidYouMeanOptionsDiagnostics, errors: Diagnostic[]): WatchOptions | undefined;"
+        },
+        {
+          "file": "src/compiler/commandLineParser.ts",
+          "line": 3785,
+          "use": "discarded",
+          "result": "CompilerOptions | TypeAcquisition | undefined",
+          "args": [
+            {
+              "text": "getCommandLineTypeAcquisitionMap()",
+              "type": "Map<string, CommandLineOption>"
+            },
+            {
+              "text": "jsonOptions",
+              "type": "TRaw"
+            },
+            {
+              "text": "basePath",
+              "type": "string"
+            },
+            {
+              "text": "options",
+              "type": "TypeAcquisition"
+            },
+            {
+              "text": "typeAcquisitionDidYouMeanDiagnostics",
+              "type": "DidYouMeanOptionsDiagnostics"
+            },
+            {
+              "text": "errors",
+              "type": "Diagnostic[]"
+            }
+          ],
+          "text": "convertOptionsFromJson(getCommandLineTypeAcquisitionMap(), jsonOptions, basePath, options, typeAcquisitionDidYouMeanDiagnostics, errors)",
+          "context": "convertOptionsFromJson(getCommandLineTypeAcquisitionMap(), jsonOptions, basePath, options, typeAcquisitionDidYouMeanDiagnostics, errors);",
+          "resolved": "function convertOptionsFromJson<TRaw>(optionsNameMap: Map<string, CommandLineOption>, jsonOptions: TRaw, basePath: string, defaultOptions: CompilerOptions | TypeAcquisition, diagnostics: DidYouMeanOptionsDiagnostics, errors: Diagnostic[]): CompilerOptions | TypeAcquisition | undefined;"
+        },
+        {
+          "file": "src/compiler/commandLineParser.ts",
+          "line": 3772,
+          "use": "discarded",
+          "result": "CompilerOptions | TypeAcquisition | undefined",
+          "args": [
+            {
+              "text": "getCommandLineCompilerOptionsMap()",
+              "type": "Map<string, CommandLineOption>"
+            },
+            {
+              "text": "jsonOptions",
+              "type": "TRaw"
+            },
+            {
+              "text": "basePath",
+              "type": "string"
+            },
+            {
+              "text": "options",
+              "type": "CompilerOptions"
+            },
+            {
+              "text": "compilerOptionsDidYouMeanDiagnostics",
+              "type": "ParseCommandLineWorkerDiagnostics"
+            },
+            {
+              "text": "errors",
+              "type": "Diagnostic[]"
+            }
+          ],
+          "text": "convertOptionsFromJson(getCommandLineCompilerOptionsMap(), jsonOptions, basePath, options, compilerOptionsDidYouMeanDiagnostics, errors)",
+          "context": "convertOptionsFromJson(getCommandLineCompilerOptionsMap(), jsonOptions, basePath, options, compilerOptionsDidYouMeanDiagnostics, errors);",
+          "resolved": "function convertOptionsFromJson<TRaw>(optionsNameMap: Map<string, CommandLineOption>, jsonOptions: TRaw, basePath: string, defaultOptions: CompilerOptions | TypeAcquisition, diagnostics: DidYouMeanOptionsDiagnostics, errors: Diagnostic[]): CompilerOptions | TypeAcquisition | undefined;"
+        }
+      ],
+      "counts": {
+        "returned": 1,
+        "discarded": 2
+      }
+    }
+  },
+  "resolutionErrors": [
+    {
+      "file": "tests/cases/conformance/importDefer/dynamicImportDefer.ts",
+      "line": 10,
+      "text": "import.defer(\"./a.js\")",
+      "error": "Error: Debug Failure. False expression: Trying to get the type of `import.defer` in `import.defer(...)`"
+    }
+  ]
+}
