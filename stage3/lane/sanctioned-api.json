@@ -597,6 +597,21 @@
       "after": "[\"PropertySignature\",[\"ReadonlyKeyword\"],[\"Identifier\",\"typeParameters\"],[\"QuestionToken\"],[\"UnionType\",[\"TypeReference\",[\"Identifier\",\"NodeArray\"],[\"TypeReference\",[\"Identifier\",\"TypeParameterDeclaration\"]]],[\"UndefinedKeyword\"]]]"
     },
     {
+      "declaration": "member:[\"ts\",\"InterfaceTypeWithDeclaredMembers\",\"declaredCallSignatures\"]#0",
+      "before": "[\"PropertySignature\",[\"Identifier\",\"declaredCallSignatures\"],[\"ArrayType\",[\"TypeReference\",[\"Identifier\",\"Signature\"]]]]",
+      "after": "[\"PropertySignature\",[\"Identifier\",\"declaredCallSignatures\"],[\"TypeOperator\",[\"ArrayType\",[\"TypeReference\",[\"Identifier\",\"Signature\"]]]]]"
+    },
+    {
+      "declaration": "member:[\"ts\",\"InterfaceTypeWithDeclaredMembers\",\"declaredConstructSignatures\"]#0",
+      "before": "[\"PropertySignature\",[\"Identifier\",\"declaredConstructSignatures\"],[\"ArrayType\",[\"TypeReference\",[\"Identifier\",\"Signature\"]]]]",
+      "after": "[\"PropertySignature\",[\"Identifier\",\"declaredConstructSignatures\"],[\"TypeOperator\",[\"ArrayType\",[\"TypeReference\",[\"Identifier\",\"Signature\"]]]]]"
+    },
+    {
+      "declaration": "member:[\"ts\",\"InterfaceTypeWithDeclaredMembers\",\"declaredIndexInfos\"]#0",
+      "before": "[\"PropertySignature\",[\"Identifier\",\"declaredIndexInfos\"],[\"ArrayType\",[\"TypeReference\",[\"Identifier\",\"IndexInfo\"]]]]",
+      "after": "[\"PropertySignature\",[\"Identifier\",\"declaredIndexInfos\"],[\"TypeOperator\",[\"ArrayType\",[\"TypeReference\",[\"Identifier\",\"IndexInfo\"]]]]]"
+    },
+    {
       "declaration": "member:[\"ts\",\"JSDoc\",\"comment\"]#0",
       "before": "[\"PropertySignature\",[\"ReadonlyKeyword\"],[\"Identifier\",\"comment\"],[\"QuestionToken\"],[\"UnionType\",[\"StringKeyword\"],[\"TypeReference\",[\"Identifier\",\"NodeArray\"],[\"TypeReference\",[\"Identifier\",\"JSDocComment\"]]]]]",
       "after": "[\"PropertySignature\",[\"ReadonlyKeyword\"],[\"Identifier\",\"comment\"],[\"QuestionToken\"],[\"UnionType\",[\"StringKeyword\"],[\"TypeReference\",[\"Identifier\",\"NodeArray\"],[\"TypeReference\",[\"Identifier\",\"JSDocComment\"]]],[\"UndefinedKeyword\"]]]"
@@ -3363,6 +3378,30 @@
       "line": 6216
     },
     {
+      "adaptation": "adapt/96-readonly-declared-members/api-sanctions.json row 1 {\"path\":[\"InterfaceTypeWithDeclaredMembers\",\"declaredCallSignatures\"],\"kind\":\"PropertySignature\",\"before\":\"Signature[]\",\"after\":\"readonly Signature[]\",\"why\":\"Adamic, task r11wppy item 1, the public change: each member holds tsc's shared emptyArray (never[]) for a type with no members of that kind, so it is a readonly array. Code that pushes onto one, or assigns it to a mutable array, stops type-checking; code that reads it is unaffected.\"}",
+      "path": [
+        "InterfaceTypeWithDeclaredMembers",
+        "declaredCallSignatures"
+      ],
+      "line": 6736
+    },
+    {
+      "adaptation": "adapt/96-readonly-declared-members/api-sanctions.json row 2 {\"path\":[\"InterfaceTypeWithDeclaredMembers\",\"declaredConstructSignatures\"],\"kind\":\"PropertySignature\",\"before\":\"Signature[]\",\"after\":\"readonly Signature[]\",\"why\":\"Adamic, task r11wppy item 1, the public change: each member holds tsc's shared emptyArray (never[]) for a type with no members of that kind, so it is a readonly array. Code that pushes onto one, or assigns it to a mutable array, stops type-checking; code that reads it is unaffected.\"}",
+      "path": [
+        "InterfaceTypeWithDeclaredMembers",
+        "declaredConstructSignatures"
+      ],
+      "line": 6737
+    },
+    {
+      "adaptation": "adapt/96-readonly-declared-members/api-sanctions.json row 3 {\"path\":[\"InterfaceTypeWithDeclaredMembers\",\"declaredIndexInfos\"],\"kind\":\"PropertySignature\",\"before\":\"IndexInfo[]\",\"after\":\"readonly IndexInfo[]\",\"why\":\"Adamic, task r11wppy item 1, the public change: each member holds tsc's shared emptyArray (never[]) for a type with no members of that kind, so it is a readonly array. Code that pushes onto one, or assigns it to a mutable array, stops type-checking; code that reads it is unaffected.\"}",
+      "path": [
+        "InterfaceTypeWithDeclaredMembers",
+        "declaredIndexInfos"
+      ],
+      "line": 6738
+    },
+    {
       "adaptation": "adapt/97-cli-axolotl-d/api-sanctions.json row 1 {\"path\":[\"ModuleResolutionHost\",\"trace\"],\"kind\":\"MethodSignature\",\"replace\":\"member\",\"before\":\"trace?(s: string): void;\",\"after\":\"trace?: { trace(s: string): void; }[\\\"trace\\\"] | undefined;\",\"why\":\"createCompilerHostFromProgramHost stores maybeBind(host, host.trace) (watch.ts:774), undefined when the program host has no trace\"}",
       "path": [
         "ModuleResolutionHost",
@@ -3726,6 +3765,10 @@
     {
       "file": "stage3/adapt/95-checker-axolotl-e/api-sanctions.json",
       "sha256": "5d7e48d39c9dcfb9522b9377e863ed08ec38c9d33fb225fd35081e7a3bb1083a"
+    },
+    {
+      "file": "stage3/adapt/96-readonly-declared-members/api-sanctions.json",
+      "sha256": "2d281a5334ce61a97c639be61fcefba0c21bc5326a011936bfb2baaff494d93f"
     },
     {
       "file": "stage3/adapt/97-cli-axolotl-d/api-sanctions.json",
@@ -4812,6 +4855,19 @@
     "     }\n",
     "     interface Type {\n",
     "         getFlags(): TypeFlags;\n",
+    "@@ -6733,9 +6731,9 @@\n",
+    "     type BaseType = ObjectType | IntersectionType | TypeVariable;\n",
+    "     interface InterfaceTypeWithDeclaredMembers extends InterfaceType {\n",
+    "         declaredProperties: Symbol[];\n",
+    "-        declaredCallSignatures: Signature[];\n",
+    "-        declaredConstructSignatures: Signature[];\n",
+    "-        declaredIndexInfos: IndexInfo[];\n",
+    "+        declaredCallSignatures: readonly Signature[];\n",
+    "+        declaredConstructSignatures: readonly Signature[];\n",
+    "+        declaredIndexInfos: readonly IndexInfo[];\n",
+    "     }\n",
+    "     /**\n",
+    "      * Type references (ObjectFlags.Reference). When a class or interface has type parameters or\n",
     "@@ -6819,11 +6817,11 @@\n",
     "         checkType: Type;\n",
     "         extendsType: Type;\n",
