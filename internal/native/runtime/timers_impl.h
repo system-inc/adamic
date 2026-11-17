@@ -360,7 +360,8 @@ static bool timer_foreign_handle(const adamic_object *object) {
     return false;
 }
 double adamic_node_clear_timeout(const adamic_heap *value) {
-    if (value == NULL || value->kind != adamic_kind_object) return 0;
+    /* clearTimeout(null) is a no-op, as clearTimeout(undefined) is; the union's null is a bare header (#hy1sanv). */
+    if (value == NULL || value == &adamic_null || value->kind != adamic_kind_object) return 0;
     const adamic_object *object = (const adamic_object *)value;
     if (object->shape != &timeout_shape) {
         if (timer_foreign_handle(object)) {

@@ -3,7 +3,9 @@
 
 bool adamic_instanceof(const void *value, const adamic_class *wanted) {
 	const adamic_heap *heap = value;
-	if (heap == NULL || heap->kind != adamic_kind_object) { return false; }
+	// A union's null is the static adamic_null, a bare header of kind object with no class after it, so it's
+	// told apart before the class is read (#hy1sanv).
+	if (heap == NULL || heap == &adamic_null || heap->kind != adamic_kind_object) { return false; }
 	const adamic_object *object = value;
 	for (const adamic_class *class = object->class; class != NULL; class = class->base) {
 		if (class == wanted || (wanted->definition != 0 && class->definition == wanted->definition)) { return true; }
