@@ -249,6 +249,13 @@ func (l *lowering) censusOverload(implementation, overload *ast.Node, ordinal in
 		if l.narrowOverload(overload) {
 			return nil // In .ts each call resolving to it checks its result (overloadResultCheck, rulings.md:127).
 		}
+		if l.overloadArrayCertificate(implementation, overload) {
+			// The body builds a fresh array of its iterable's elements or their mapped values only, which is
+			// this overload's result when its arguments are exactly the caller's, so every call keeps that
+			// premise at overloadCertificateCall (certificate A, Adamic's ruling on #5fws6q8).
+			l.noteOverloadCertificate(overload, true)
+			return nil
+		}
 		what := label + " result " + l.checker.TypeToString(promised) + " cannot be served by implementation result " + l.checker.TypeToString(produced)
 		if failed != nil {
 			what += " (return at " + l.program.Where(failed) + " isn't the value its predicate checked)"
