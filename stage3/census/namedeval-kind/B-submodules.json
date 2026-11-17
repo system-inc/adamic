@@ -1,0 +1,14 @@
+{
+  "command": [
+    "git",
+    "submodule",
+    "update",
+    "--init",
+    "--recursive",
+    "--depth",
+    "1"
+  ],
+  "cwd": "/workspace/scratch/namedeval-kind-B",
+  "exit": 0,
+  "seconds": 22.30915403366089
+}

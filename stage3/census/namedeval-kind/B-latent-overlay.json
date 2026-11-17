@@ -1,0 +1,11 @@
+{
+  "command": [
+    "python3",
+    "stage3/census/latent/make_overlay.py",
+    "/workspace/scratch/namedeval-kind-B",
+    "/workspace/scratch/namedeval-kind-runtime/B/latent-overlay"
+  ],
+  "cwd": "/workspace/scratch/namedeval-kind-B",
+  "exit": 0,
+  "seconds": 2.878335475921631
+}
