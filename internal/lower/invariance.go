@@ -722,11 +722,17 @@ func (l *lowering) refuseWidening(node *ast.Node) error {
 		if viewSite(node) {
 			contextual = l.slotType(node)
 		}
+		read := false
 		if contextual == nil && !l.conditionalBranchInSlot(node) {
-			// With no type written for it, a value can still be taken into a wider one tsc made: the
-			// union of a conditional's branches reduced to the wider (flag ? dogs : animals is an
-			// Animal[]), a literal's elements likewise, a function's returns likewise.
-			contextual = l.impliedTarget(node)
+			// An operand of ||, ?? or ?: is judged where its expression lands (operandLanding): against a
+			// declared slot's type, or as a read where nothing holds it.
+			contextual, read = l.operandLanding(node)
+			if contextual == nil {
+				// With no type written for it, a value can still be taken into a wider one tsc made: the
+				// union of a conditional's branches reduced to the wider (flag ? dogs : animals is an
+				// Animal[]), a literal's elements likewise, a function's returns likewise.
+				contextual = l.impliedTarget(node)
+			}
 		}
 		if contextual == nil {
 			return nil
@@ -738,7 +744,11 @@ func (l *lowering) refuseWidening(node *ast.Node) error {
 				return nil
 			}
 		}
-		found = l.freshOrWidened(node, own, contextual)
+		if read {
+			found = l.readWidened(node, own, contextual)
+		} else {
+			found = l.freshOrWidened(node, own, contextual)
+		}
 		if found == nil && node.Parent != nil && node.Parent.Kind == ast.KindPropertyAssignment && node.Parent.AsPropertyAssignment().Initializer == node {
 			if name := node.Parent.Name(); name != nil && (ast.IsIdentifier(name) || ast.IsStringLiteral(name) || ast.IsNumericLiteral(name)) {
 				if literal := l.slotType(node.Parent.Parent); literal != nil {
@@ -1094,6 +1104,99 @@ func (l *lowering) conditionalBranchInSlot(node *ast.Node) bool {
 		return false
 	}
 	return viewSite(parent) && l.slotType(parent) != nil
+}
+
+// operandLanding is where an operand of ||, ?? or ?: lands, read up through parentheses and the nested
+// operators of those three, which pass the landing down (Adamic's ruling on #r11wppy, applying #7n03qzg,
+// rulings.md:71 and :93). The operator's own type holds nothing, has no storage, and no name writes
+// through it, so the operand is judged once, where the value goes:
+//   - A declared slot (an annotated binding, parameter default or field, an argument's parameter, a
+//     return or an arrow's body under a declared return type): slot is that slot's type, as if the
+//     operand were written there, so a readonly T[] lowers and a T[] still refuses the mutable widening.
+//   - A consumer that holds nothing (a spread's operand, a for...of's iterable): read is set, and the
+//     operand is judged against the operator's implied type as a read (readWidened).
+//
+// Anything else answers neither, and the operand keeps the operator's implied type: an unannotated
+// binding, whose inferred type is the mutable one, a receiver ((a || empty).push(x)), an assignment or
+// an element write, a cast or a satisfies, an unannotated return. So does a declared slot the checker
+// gives no type, which fails closed. Every later handle is judged at its own site, as always.
+func (l *lowering) operandLanding(node *ast.Node) (slot *checker.Type, read bool) {
+	value := node
+	for value.Parent != nil && value.Parent.Kind == ast.KindParenthesizedExpression {
+		value = value.Parent
+	}
+	operand := false
+	for parent := value.Parent; parent != nil && passesLanding(parent, value); parent = value.Parent {
+		operand = true
+		value = parent
+		for value.Parent != nil && value.Parent.Kind == ast.KindParenthesizedExpression {
+			value = value.Parent
+		}
+	}
+	parent := value.Parent
+	if !operand || parent == nil {
+		return nil, false
+	}
+	declared := false
+	switch parent.Kind {
+	case ast.KindVariableDeclaration, ast.KindParameter, ast.KindPropertyDeclaration:
+		// An unannotated binding holds the operator's inferred type, which is mutable: no landing.
+		declared = parent.Initializer() == value && parent.Type() != nil
+	case ast.KindCallExpression:
+		declared = parent.AsCallExpression().Expression != value
+	case ast.KindNewExpression:
+		declared = parent.AsNewExpression().Expression != value
+	case ast.KindReturnStatement:
+		function := parent
+		for function != nil && !ast.IsFunctionLike(function) {
+			function = function.Parent
+		}
+		declared = function != nil && function.Type() != nil
+	case ast.KindArrowFunction:
+		declared = parent.Body() == value && parent.Type() != nil
+	case ast.KindSpreadElement:
+		return nil, parent.AsSpreadElement().Expression == value
+	case ast.KindForOfStatement:
+		return nil, parent.AsForInOrOfStatement().Expression == value
+	}
+	if !declared {
+		return nil, false
+	}
+	return l.slotType(value), false
+}
+
+// passesLanding is whether value, under its parentheses, is an operand of parent that the value passes
+// through to parent's own landing: a conditional's branch, or either operand of || or ??.
+func passesLanding(parent, value *ast.Node) bool {
+	switch parent.Kind {
+	case ast.KindConditionalExpression:
+		conditional := parent.AsConditionalExpression()
+		return conditional.WhenTrue == value || conditional.WhenFalse == value
+	case ast.KindBinaryExpression:
+		switch parent.AsBinaryExpression().OperatorToken.Kind {
+		case ast.KindBarBarToken, ast.KindQuestionQuestionToken:
+			return true
+		}
+	}
+	return false
+}
+
+// readWidened judges an operand that lands where nothing holds it (operandLanding): a spread or a
+// for...of reads its elements out once, so nothing writes through the operator's type, and the
+// operand's own slots are covariant there, as a fresh container's are (freshOrWidened). What it holds
+// is kept by the reader, an element bound to the loop's name or copied into the new array, so that is
+// still walked as a view: `for (const list of dogLists || animalLists) list.push(cat)` writes a cat
+// among the dogs. An operand that isn't a container pairing one in the implied type is judged as before.
+func (l *lowering) readWidened(node *ast.Node, own *checker.Type, contextual *checker.Type) *widening {
+	source, target := l.withoutUndefined(own), l.withoutUndefined(contextual)
+	for _, viewed := range l.containers(target) {
+		for _, inside := range l.containers(source) {
+			if l.sameContainer(inside, viewed) {
+				return l.widenedArguments(inside, viewed, false, map[[2]*checker.Type]bool{})
+			}
+		}
+	}
+	return l.freshOrWidened(node, own, contextual)
 }
 
 // castSlotWidened judges an as or satisfies at a view site as the value it is: the cast's own type
