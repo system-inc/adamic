@@ -86,8 +86,15 @@ func (l *lowering) censusReturnProof(implementation, overload *ast.Node, admitte
 	var scan ast.Visitor
 	scan = func(node *ast.Node) bool {
 		if ast.IsIdentifier(node) && ast.IsAssignmentTarget(node) {
+			// A shorthand name is the property to GetSymbolAtLocation, so ({ x } = other) is found through
+			// the variable it writes, or the write would go unseen and a reassigned parameter be taken for
+			// the argument the overload typed.
+			written := l.symbol(node)
+			if node.Parent != nil && node.Parent.Kind == ast.KindShorthandPropertyAssignment {
+				written = l.checker.GetShorthandAssignmentValueSymbol(node.Parent)
+			}
 			for _, parameter := range parameters {
-				if l.symbol(node) == l.symbol(parameter.Name()) {
+				if written == l.symbol(parameter.Name()) {
 					unchanged = false
 				}
 			}
