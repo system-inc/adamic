@@ -156,19 +156,19 @@ Each control runs both the requested full single-file latent census (`LATENT_FUL
 
 | Original overload | Original line | Exact signature | Resolved calls (713 roots) | declareModule refuses | Exact reason words |
 | --- | ---: | --- | ---: | --- | --- |
-| 1 | 261 | `export function filter<T, U extends T>(array: T[], f: (x: T) => x is U): U[];` | 5 | yes | `overload 1 of filter result U[] cannot be served by implementation result readonly T[] | undefined` |
-| 2 | 263 | `export function filter<T>(array: T[], f: (x: T) => boolean): T[];` | 60 | yes | `overload 1 of filter result T[] cannot be served by implementation result readonly T[] | undefined` |
-| 3 | 265 | `export function filter<T, U extends T>(array: readonly T[], f: (x: T) => x is U): readonly U[];` | 14 | yes | `overload 1 of filter result readonly U[] cannot be served by implementation result readonly T[] | undefined` |
+| 1 | 261 | `export function filter<T, U extends T>(array: T[], f: (x: T) => x is U): U[];` | 5 | yes | `overload 1 of filter result U[] cannot be served by implementation result readonly T[] \| undefined` |
+| 2 | 263 | `export function filter<T>(array: T[], f: (x: T) => boolean): T[];` | 60 | yes | `overload 1 of filter result T[] cannot be served by implementation result readonly T[] \| undefined` |
+| 3 | 265 | `export function filter<T, U extends T>(array: readonly T[], f: (x: T) => x is U): readonly U[];` | 14 | yes | `overload 1 of filter result readonly U[] cannot be served by implementation result readonly T[] \| undefined` |
 | 4 | 267 | `export function filter<T>(array: readonly T[], f: (x: T) => boolean): readonly T[];` | 41 | no | `none observed; scan completed` |
-| 5 | 269 | `export function filter<T, U extends T>(array: T[] | undefined, f: (x: T) => x is U): U[] | undefined;` | 11 | yes | `overload 1 of filter result U[] | undefined cannot be served by implementation result readonly T[] | undefined` |
-| 6 | 271 | `export function filter<T>(array: T[] | undefined, f: (x: T) => boolean): T[] | undefined;` | 13 | yes | `overload 1 of filter result T[] | undefined cannot be served by implementation result readonly T[] | undefined` |
-| 7 | 273 | `export function filter<T, U extends T>(array: readonly T[] | undefined, f: (x: T) => x is U): readonly U[] | undefined;` | 9 | yes | `overload 1 of filter result readonly U[] | undefined cannot be served by implementation result readonly T[] | undefined` |
-| 8 | 275 | `export function filter<T>(array: readonly T[] | undefined, f: (x: T) => boolean): readonly T[] | undefined;` | 4 | no | `none observed; scan completed` |
+| 5 | 269 | `export function filter<T, U extends T>(array: T[] \| undefined, f: (x: T) => x is U): U[] \| undefined;` | 11 | yes | `overload 1 of filter result U[] \| undefined cannot be served by implementation result readonly T[] \| undefined` |
+| 6 | 271 | `export function filter<T>(array: T[] \| undefined, f: (x: T) => boolean): T[] \| undefined;` | 13 | yes | `overload 1 of filter result T[] \| undefined cannot be served by implementation result readonly T[] \| undefined` |
+| 7 | 273 | `export function filter<T, U extends T>(array: readonly T[] \| undefined, f: (x: T) => x is U): readonly U[] \| undefined;` | 9 | yes | `overload 1 of filter result readonly U[] \| undefined cannot be served by implementation result readonly T[] \| undefined` |
+| 8 | 275 | `export function filter<T>(array: readonly T[] \| undefined, f: (x: T) => boolean): readonly T[] \| undefined;` | 4 | no | `none observed; scan completed` |
 
 | Group control | Original overloads retained | declareModule result |
 | --- | --- | --- |
-| boolean | 2, 4, 6, 8 | `263:1`: `overload 1 of filter result T[] cannot be served by implementation result readonly T[] | undefined` |
-| readonly | 3, 4, 7, 8 | `265:1`: `overload 1 of filter result readonly U[] cannot be served by implementation result readonly T[] | undefined` |
+| boolean | 2, 4, 6, 8 | `263:1`: `overload 1 of filter result T[] cannot be served by implementation result readonly T[] \| undefined` |
+| readonly | 3, 4, 7, 8 | `265:1`: `overload 1 of filter result readonly U[] cannot be served by implementation result readonly T[] \| undefined` |
 
 **Answer:** every mutable-result overload (1, 2, 5, 6) and both readonly narrowing overloads (3, 7) refuse in these controls. The refusal is not limited to narrowing callbacks: boolean overloads 2 and 6 also refuse. Only readonly boolean overloads 4 and 8 escape this declaration refusal in isolation. The group controls report their first declaration stop only; their later overloads are judged individually by the eight single-overload controls. Overload 4 does exclude undefined from the implementation result, but that presence-only narrowing is admitted by the existing `censusNullableOverloadResult` rule; the broader statement that every formally narrower result refuses would therefore be false.
 
@@ -190,33 +190,33 @@ Self compilation uses the instrumented `built/local/tsc.js -b src/compiler src/t
 
 The whole unfiltered lane uses the original run.py executed in memory with the original after-apply instrumentation hook and `FILTER_FREEZE_WORKERS=4`, matching df886e40's canonical run on this four-CPU environment. All runners, test selection and 40,000 ms timeout remain unchanged. The lane's eight-worker guard is untouched; its actual verdict is retained, never relabeled as a pass.
 
-Table cells: **calls / returns identical to argument / array identities**. Calls count entries, not only successful returns. Writes count post-call writes identified by observer provenance; every site's zero is retained.
+Table cells: **calls / returns identical to argument / array identities**. Calls count entries, not only successful returns. Array identities count returning invocations, not distinct arrays. Writes count post-call writes identified by observer provenance; every site's zero is retained.
 
 | Original site | Overload | Self | Whole lane | Writes self / lane |
 | --- | ---: | ---: | ---: | ---: |
-| `src/compiler/utilitiesPublic.ts:1030:16` | 7 | 0 / 0 / 0 | pending | 0 / pending |
-| `src/compiler/utilitiesPublic.ts:1036:16` | 7 | 0 / 0 / 0 | pending | 0 / pending |
-| `src/compiler/utilities.ts:4691:20` | 7 | 0 / 0 / 0 | pending | 0 / pending |
-| `src/compiler/utilities.ts:8019:12` | 3 | 0 / 0 / 0 | pending | 0 / pending |
-| `src/compiler/commandLineParser.ts:3188:54` | 7 | 2 / 2 / 0 | pending | 0 / pending |
-| `src/compiler/checker.ts:3138:58` | 3 | 0 / 0 / 0 | pending | 0 / pending |
-| `src/compiler/checker.ts:11961:38` | 3 | 0 / 0 / 0 | pending | 0 / pending |
-| `src/compiler/checker.ts:32639:25` | 3 | 596 / 24 / 24 | pending | 0 / pending |
-| `src/compiler/checker.ts:46866:33` | 3 | 14,330 / 14,312 / 14,312 | pending | 0 / pending |
-| `src/compiler/transformers/utilities.ts:603:12` | 3 | 0 / 0 / 0 | pending | 0 / pending |
-| `src/compiler/transformers/ts.ts:1053:13` | 3 | 0 / 0 / 0 | pending | 0 / pending |
-| `src/compiler/transformers/ts.ts:1086:38` | 7 | 0 / 0 / 0 | pending | 0 / pending |
-| `src/compiler/transformers/ts.ts:1100:42` | 7 | 0 / 0 / 0 | pending | 0 / pending |
-| `src/compiler/transformers/ts.ts:1102:42` | 7 | 0 / 0 / 0 | pending | 0 / pending |
-| `src/compiler/transformers/ts.ts:1383:13` | 3 | 0 / 0 / 0 | pending | 0 / pending |
-| `src/compiler/transformers/classFields.ts:852:25` | 7 | 0 / 0 / 0 | pending | 0 / pending |
-| `src/compiler/transformers/classFields.ts:1707:16` | 3 | 0 / 0 / 0 | pending | 0 / pending |
-| `src/services/utilities.ts:2616:38` | 3 | 0 / 0 / 0 | pending | 0 / pending |
-| `src/services/codefixes/convertFunctionToEs6Class.ts:314:39` | 7 | 0 / 0 / 0 | pending | 0 / pending |
-| `src/services/codefixes/convertToEsModule.ts:137:29` | 3 | 0 / 0 / 0 | pending | 0 / pending |
-| `src/services/goToDefinition.ts:180:30` | 3 | 0 / 0 / 0 | pending | 0 / pending |
-| `src/testRunner/unittests/services/organizeImports.ts:1133:25` | 3 | 0 / 0 / 0 | pending | 0 / pending |
-| `src/testRunner/unittests/services/organizeImports.ts:1140:25` | 3 | 0 / 0 / 0 | pending | 0 / pending |
+| `src/compiler/utilitiesPublic.ts:1030:16` | 7 | 0 / 0 / 0 | 4,080 / 3,281 / 3,281 | 0 / 0 |
+| `src/compiler/utilitiesPublic.ts:1036:16` | 7 | 0 / 0 / 0 | 6 / 6 / 6 | 0 / 0 |
+| `src/compiler/utilities.ts:4691:20` | 7 | 0 / 0 / 0 | 1,725 / 229 / 160 | 0 / 0 |
+| `src/compiler/utilities.ts:8019:12` | 3 | 0 / 0 / 0 | 2,893 / 2,225 / 2,225 | 0 / 0 |
+| `src/compiler/commandLineParser.ts:3188:54` | 7 | 2 / 2 / 0 | 9,902 / 9,900 / 1,197 | 0 / 0 |
+| `src/compiler/checker.ts:3138:58` | 3 | 0 / 0 / 0 | 80 / 0 / 0 | 0 / 0 |
+| `src/compiler/checker.ts:11961:38` | 3 | 0 / 0 / 0 | 148 / 0 / 0 | 0 / 0 |
+| `src/compiler/checker.ts:32639:25` | 3 | 596 / 24 / 24 | 2,516 / 371 / 371 | 0 / 0 |
+| `src/compiler/checker.ts:46866:33` | 3 | 14,330 / 14,312 / 14,312 | 816,900 / 814,917 / 814,917 | 0 / 0 |
+| `src/compiler/transformers/utilities.ts:603:12` | 3 | 0 / 0 / 0 | 11,433 / 1,771 / 1,771 | 0 / 0 |
+| `src/compiler/transformers/ts.ts:1053:13` | 3 | 0 / 0 / 0 | 1,892 / 1,259 / 1,259 | 0 / 0 |
+| `src/compiler/transformers/ts.ts:1086:38` | 7 | 0 / 0 / 0 | 88 / 85 / 85 | 0 / 0 |
+| `src/compiler/transformers/ts.ts:1100:42` | 7 | 0 / 0 / 0 | 318 / 314 / 266 | 0 / 0 |
+| `src/compiler/transformers/ts.ts:1102:42` | 7 | 0 / 0 / 0 | 318 / 48 / 0 | 0 / 0 |
+| `src/compiler/transformers/ts.ts:1383:13` | 3 | 0 / 0 / 0 | 3,417 / 1,982 / 1,982 | 0 / 0 |
+| `src/compiler/transformers/classFields.ts:852:25` | 7 | 0 / 0 / 0 | 422 / 205 / 63 | 0 / 0 |
+| `src/compiler/transformers/classFields.ts:1707:16` | 3 | 0 / 0 / 0 | 21,883 / 104 / 104 | 0 / 0 |
+| `src/services/utilities.ts:2616:38` | 3 | 0 / 0 / 0 | 667 / 82 / 82 | 0 / 0 |
+| `src/services/codefixes/convertFunctionToEs6Class.ts:314:39` | 7 | 0 / 0 / 0 | 69 / 69 / 5 | 0 / 3 |
+| `src/services/codefixes/convertToEsModule.ts:137:29` | 3 | 0 / 0 / 0 | 34 / 1 / 1 | 0 / 0 |
+| `src/services/goToDefinition.ts:180:30` | 3 | 0 / 0 / 0 | 3 / 0 / 0 | 0 / 0 |
+| `src/testRunner/unittests/services/organizeImports.ts:1133:25` | 3 | 0 / 0 / 0 | 30 / 30 / 30 | 0 / 0 |
+| `src/testRunner/unittests/services/organizeImports.ts:1140:25` | 3 | 0 / 0 / 0 | 16 / 16 / 16 | 0 / 0 |
 
 **self:** totals `{"calls": 14928, "completed": 14928, "frozen_arrays": 14336, "identity": 14338, "undefined_identity": 2}`; freeze writes 0, unrelated candidates 0, unclassified candidates 0, observer errors 0.
 
@@ -224,11 +224,31 @@ Sites with **no calls** in self: `src/compiler/utilitiesPublic.ts:1030:16`, `src
 
 Called sites with **no exercised array identity** in self: `src/compiler/commandLineParser.ts:3188:54`.
 
+**lane:** totals `{"calls": 878840, "completed": 878840, "frozen_arrays": 827821, "identity": 836895, "undefined_identity": 9074}`; freeze writes 3, unrelated candidates 6, unclassified candidates 3, observer errors 0.
+
+Sites with **no calls** in lane: none.
+
+Called sites with **no exercised array identity** in lane: `src/compiler/checker.ts:3138:58`, `src/compiler/checker.ts:11961:38`, `src/compiler/transformers/ts.ts:1102:42`, `src/services/goToDefinition.ts:180:30`.
+
 **bootstrap:** totals `{"calls": 0, "completed": 0, "frozen_arrays": 0, "identity": 0, "undefined_identity": 0}`; freeze writes 0, unrelated candidates 0, unclassified candidates 0, observer errors 0.
 
-Whole lane is running; this checkpoint makes no complete-lane claim.
+Actual lane verdict:
 
-A live lane observation identifies a post-call `__pos` assignment by `textChanges.ts:191:16` (`setPos`) to the frozen array from `services/codefixes/convertFunctionToEs6Class.ts:314:39`. The same error is rethrown by the fourslash harness; it is not a second write. [Raw observation and source proof](../filter-readonly-freeze/evidence/early-write-observation.json) are retained. Final totals await whole-lane completion.
+```text
+FAIL stage3 landing lane: test counts: expected {'passing': 106366, 'failing': 1, 'pending': 0}, observed {'passing': 106363, 'failing': 4, 'pending': 0} [causes: timeout=0, baseline-content=1, baseline-missing=0, exception=3, other=0]
+```
+
+The complete lane records **3 provenance-backed post-call write attempts**. They are array metadata writes to `__pos` by `setPos` in `src/services/textChanges.ts:191:16`, via `onBeforeEmitNodeArray` at :1434:13. The filtered modifier array is reused as the new class declaration modifiers and reaches the printer. These are not element/index/length writes. Blocked writes can abort the remainder of a failing test body, so these counts describe execution under freezing, not an unfrozen workload.
+
+| Write site | Writer | Test case |
+| --- | --- | --- |
+| `src/services/codefixes/convertFunctionToEs6Class.ts:314:39` | `setPos` | fourslash tests tests/cases/fourslash/convertFunctionToEs6Class_asyncMethods.ts fourslash test convertFunctionToEs6Class_asyncMethods.ts runs correctly |
+| `src/services/codefixes/convertFunctionToEs6Class.ts:314:39` | `setPos` | fourslash tests tests/cases/fourslash/convertFunctionToEs6Class_exportModifier2.ts fourslash test convertFunctionToEs6Class_exportModifier2.ts runs correctly |
+| `src/services/codefixes/convertFunctionToEs6Class.ts:314:39` | `setPos` | fourslash tests tests/cases/fourslash/convertFunctionToEs6Class_exportModifier1.ts fourslash test convertFunctionToEs6Class_exportModifier1.ts runs correctly |
+
+Exception classification after source review: `{"freeze-write": 3, "propagated-freeze-error": 3, "unrelated-explicit-decorator-error": 6}`; unresolved candidates: 0. The original byte-identical aggregator leaves provenance-free rethrows marked unclassified; classify.py records them separately only when process, test title and complete stack match a provenance-backed write and the top frame is the source-proven `runCode` catch/rethrow. Raw observations and original classifications are retained. See [classification](../filter-readonly-freeze/evidence/exception-classification.json) and [source proof](../filter-readonly-freeze/evidence/early-write-observation.json).
+
+Whole-lane oracle counts: `{"failing": 4, "passing": 106363, "pending": 0}`; phase exits: `{"build": 0, "install": 0, "tests": 1}`. Workers: 4; runners: all; tests filter: None. The full [guard report](../filter-readonly-freeze/evidence/lane-report.json) also retains `workers: expected 8, observed 4`.
 
 **Identity remains a premise.** Direct comparisons with the argument: 0. The reused static lexical/local-reference inventory does not see arbitrary later comparisons through a stored slot and is not a whole-program identity proof. Freezing preserves identity, so no observation here proves that changing identity by copying is safe. Likewise zero observed writes is limited to the workloads and paths exercised.
 

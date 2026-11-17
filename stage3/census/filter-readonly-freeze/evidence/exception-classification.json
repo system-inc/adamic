@@ -1,0 +1,424 @@
+{
+  "self": {
+    "events": [],
+    "counts": {},
+    "unresolved": []
+  },
+  "lane": {
+    "events": [
+      {
+        "original_classification": "freeze-write",
+        "classification": "freeze-write",
+        "description_sha256": "f5468371d3ff75bbe85774ca7bebacd9ba40d70863cdade61b0b1354b3e47d5a",
+        "pid": 12496,
+        "case": {
+          "title": " fourslash tests tests/cases/fourslash/convertFunctionToEs6Class_asyncMethods.ts fourslash test convertFunctionToEs6Class_asyncMethods.ts runs correctly",
+          "type": "test"
+        },
+        "top_frame": {
+          "function": "setPos",
+          "url": "file:///workspace/scratch/ev14ch9-readonly-freeze/lane/adapted-tree/built/local/run.js",
+          "scriptId": "200",
+          "line": 179542,
+          "column": 11
+        },
+        "matched_freeze_write_indices": [],
+        "evidence": null
+      },
+      {
+        "original_classification": "unclassified",
+        "classification": "propagated-freeze-error",
+        "description_sha256": "f5468371d3ff75bbe85774ca7bebacd9ba40d70863cdade61b0b1354b3e47d5a",
+        "pid": 12496,
+        "case": {
+          "title": " fourslash tests tests/cases/fourslash/convertFunctionToEs6Class_asyncMethods.ts fourslash test convertFunctionToEs6Class_asyncMethods.ts runs correctly",
+          "type": "test"
+        },
+        "top_frame": {
+          "function": "runCode",
+          "url": "file:///workspace/scratch/ev14ch9-readonly-freeze/lane/adapted-tree/built/local/run.js",
+          "scriptId": "200",
+          "line": 214003,
+          "column": 5
+        },
+        "matched_freeze_write_indices": [
+          0
+        ],
+        "evidence": "Identical process, case and complete error stack to a provenance-backed write. src/harness/fourslashImpl.ts runCode catch accesses err.stack then executes throw err; no assignment at this observation. See early-write-observation.json source snippet."
+      },
+      {
+        "original_classification": "freeze-write",
+        "classification": "freeze-write",
+        "description_sha256": "54b48cb2aebddddd623884afbc3739da8e8de96d96d02c22879d8ca60308c0c4",
+        "pid": 12496,
+        "case": {
+          "title": " fourslash tests tests/cases/fourslash/convertFunctionToEs6Class_exportModifier2.ts fourslash test convertFunctionToEs6Class_exportModifier2.ts runs correctly",
+          "type": "test"
+        },
+        "top_frame": {
+          "function": "setPos",
+          "url": "file:///workspace/scratch/ev14ch9-readonly-freeze/lane/adapted-tree/built/local/run.js",
+          "scriptId": "200",
+          "line": 179542,
+          "column": 11
+        },
+        "matched_freeze_write_indices": [],
+        "evidence": null
+      },
+      {
+        "original_classification": "unclassified",
+        "classification": "propagated-freeze-error",
+        "description_sha256": "54b48cb2aebddddd623884afbc3739da8e8de96d96d02c22879d8ca60308c0c4",
+        "pid": 12496,
+        "case": {
+          "title": " fourslash tests tests/cases/fourslash/convertFunctionToEs6Class_exportModifier2.ts fourslash test convertFunctionToEs6Class_exportModifier2.ts runs correctly",
+          "type": "test"
+        },
+        "top_frame": {
+          "function": "runCode",
+          "url": "file:///workspace/scratch/ev14ch9-readonly-freeze/lane/adapted-tree/built/local/run.js",
+          "scriptId": "200",
+          "line": 214003,
+          "column": 5
+        },
+        "matched_freeze_write_indices": [
+          2
+        ],
+        "evidence": "Identical process, case and complete error stack to a provenance-backed write. src/harness/fourslashImpl.ts runCode catch accesses err.stack then executes throw err; no assignment at this observation. See early-write-observation.json source snippet."
+      },
+      {
+        "original_classification": "unrelated-explicit-decorator-error",
+        "classification": "unrelated-explicit-decorator-error",
+        "description_sha256": "ed64ea1ca4c66c2d52ea8c14003282ff41a21a1b7f6c867ea83828afd16ed508",
+        "pid": 12496,
+        "case": {
+          "title": " unittests:: evaluation:: esDecorators context .addInitializer for: class cannot call after decoration",
+          "type": "test"
+        },
+        "top_frame": {
+          "function": "context.addInitializer",
+          "url": "",
+          "scriptId": "2616",
+          "line": 12,
+          "column": 59
+        },
+        "matched_freeze_write_indices": [],
+        "evidence": "src/compiler/factory/emitHelpers.ts:783 explicitly throws this TypeError when done, before extraInitializers.push; six esDecorators cannot-call-after-decoration tests assert it."
+      },
+      {
+        "original_classification": "unrelated-explicit-decorator-error",
+        "classification": "unrelated-explicit-decorator-error",
+        "description_sha256": "1fac7c70dcdc58ac747b90e7c119b47d73939851fa4cf3608e4ccd8dbce16c71",
+        "pid": 12496,
+        "case": {
+          "title": " unittests:: evaluation:: esDecorators context .addInitializer for: method cannot call after decoration",
+          "type": "test"
+        },
+        "top_frame": {
+          "function": "context.addInitializer",
+          "url": "",
+          "scriptId": "2620",
+          "line": 19,
+          "column": 59
+        },
+        "matched_freeze_write_indices": [],
+        "evidence": "src/compiler/factory/emitHelpers.ts:783 explicitly throws this TypeError when done, before extraInitializers.push; six esDecorators cannot-call-after-decoration tests assert it."
+      },
+      {
+        "original_classification": "unrelated-explicit-decorator-error",
+        "classification": "unrelated-explicit-decorator-error",
+        "description_sha256": "d449081a2c9be633b33760944e54346eb0b85f595606af01500d2114bba3b461",
+        "pid": 12496,
+        "case": {
+          "title": " unittests:: evaluation:: esDecorators context .addInitializer for: getter cannot call after decoration",
+          "type": "test"
+        },
+        "top_frame": {
+          "function": "context.addInitializer",
+          "url": "",
+          "scriptId": "2626",
+          "line": 19,
+          "column": 59
+        },
+        "matched_freeze_write_indices": [],
+        "evidence": "src/compiler/factory/emitHelpers.ts:783 explicitly throws this TypeError when done, before extraInitializers.push; six esDecorators cannot-call-after-decoration tests assert it."
+      },
+      {
+        "original_classification": "unrelated-explicit-decorator-error",
+        "classification": "unrelated-explicit-decorator-error",
+        "description_sha256": "b61d760153b9b3fcf21a3741f457920d5fffb49be8dc6418f033114b7b134e6d",
+        "pid": 12496,
+        "case": {
+          "title": " unittests:: evaluation:: esDecorators context .addInitializer for: setter cannot call after decoration",
+          "type": "test"
+        },
+        "top_frame": {
+          "function": "context.addInitializer",
+          "url": "",
+          "scriptId": "2632",
+          "line": 19,
+          "column": 59
+        },
+        "matched_freeze_write_indices": [],
+        "evidence": "src/compiler/factory/emitHelpers.ts:783 explicitly throws this TypeError when done, before extraInitializers.push; six esDecorators cannot-call-after-decoration tests assert it."
+      },
+      {
+        "original_classification": "unrelated-explicit-decorator-error",
+        "classification": "unrelated-explicit-decorator-error",
+        "description_sha256": "a416b1a710f0caf7ed7871ce5bb6344c2fe653417a02108dec47f0310c128174",
+        "pid": 12496,
+        "case": {
+          "title": " unittests:: evaluation:: esDecorators context .addInitializer for: field cannot call after decoration",
+          "type": "test"
+        },
+        "top_frame": {
+          "function": "context.addInitializer",
+          "url": "",
+          "scriptId": "2638",
+          "line": 12,
+          "column": 59
+        },
+        "matched_freeze_write_indices": [],
+        "evidence": "src/compiler/factory/emitHelpers.ts:783 explicitly throws this TypeError when done, before extraInitializers.push; six esDecorators cannot-call-after-decoration tests assert it."
+      },
+      {
+        "original_classification": "unrelated-explicit-decorator-error",
+        "classification": "unrelated-explicit-decorator-error",
+        "description_sha256": "afbb72c6c7874c5691cbc90c0059499aca58ee4fbc20e820accf1016bac53f0c",
+        "pid": 12496,
+        "case": {
+          "title": " unittests:: evaluation:: esDecorators context .addInitializer for: auto-accessor cannot call after decoration",
+          "type": "test"
+        },
+        "top_frame": {
+          "function": "context.addInitializer",
+          "url": "",
+          "scriptId": "2644",
+          "line": 12,
+          "column": 59
+        },
+        "matched_freeze_write_indices": [],
+        "evidence": "src/compiler/factory/emitHelpers.ts:783 explicitly throws this TypeError when done, before extraInitializers.push; six esDecorators cannot-call-after-decoration tests assert it."
+      },
+      {
+        "original_classification": "freeze-write",
+        "classification": "freeze-write",
+        "description_sha256": "05c51c37506d288f11a8ddfcb2e725c17fe51ab60fe7afcf734bc1ed1c4db224",
+        "pid": 12509,
+        "case": {
+          "title": " fourslash tests tests/cases/fourslash/convertFunctionToEs6Class_exportModifier1.ts fourslash test convertFunctionToEs6Class_exportModifier1.ts runs correctly",
+          "type": "test"
+        },
+        "top_frame": {
+          "function": "setPos",
+          "url": "file:///workspace/scratch/ev14ch9-readonly-freeze/lane/adapted-tree/built/local/run.js",
+          "scriptId": "200",
+          "line": 179542,
+          "column": 11
+        },
+        "matched_freeze_write_indices": [],
+        "evidence": null
+      },
+      {
+        "original_classification": "unclassified",
+        "classification": "propagated-freeze-error",
+        "description_sha256": "05c51c37506d288f11a8ddfcb2e725c17fe51ab60fe7afcf734bc1ed1c4db224",
+        "pid": 12509,
+        "case": {
+          "title": " fourslash tests tests/cases/fourslash/convertFunctionToEs6Class_exportModifier1.ts fourslash test convertFunctionToEs6Class_exportModifier1.ts runs correctly",
+          "type": "test"
+        },
+        "top_frame": {
+          "function": "runCode",
+          "url": "file:///workspace/scratch/ev14ch9-readonly-freeze/lane/adapted-tree/built/local/run.js",
+          "scriptId": "200",
+          "line": 214003,
+          "column": 5
+        },
+        "matched_freeze_write_indices": [
+          10
+        ],
+        "evidence": "Identical process, case and complete error stack to a provenance-backed write. src/harness/fourslashImpl.ts runCode catch accesses err.stack then executes throw err; no assignment at this observation. See early-write-observation.json source snippet."
+      }
+    ],
+    "counts": {
+      "freeze-write": 3,
+      "propagated-freeze-error": 3,
+      "unrelated-explicit-decorator-error": 6
+    },
+    "unresolved": []
+  },
+  "control": {
+    "events": [
+      {
+        "original_classification": "freeze-write",
+        "classification": "freeze-write",
+        "description_sha256": "8c20e2c7215bc8d37b404a7b4e0c1aa4c8363000507543df53eecb80891236ed",
+        "pid": 12006,
+        "case": null,
+        "top_frame": {
+          "function": "",
+          "url": "file:///workspace/scratch/ev14ch9/stage3/census/filter-readonly-freeze/control.cjs",
+          "scriptId": "119",
+          "line": 8,
+          "column": 27
+        },
+        "matched_freeze_write_indices": [],
+        "evidence": null
+      },
+      {
+        "original_classification": "freeze-write",
+        "classification": "freeze-write",
+        "description_sha256": "8c20e2c7215bc8d37b404a7b4e0c1aa4c8363000507543df53eecb80891236ed",
+        "pid": 12006,
+        "case": null,
+        "top_frame": {
+          "function": "",
+          "url": "file:///workspace/scratch/ev14ch9/stage3/census/filter-readonly-freeze/control.cjs",
+          "scriptId": "119",
+          "line": 8,
+          "column": 27
+        },
+        "matched_freeze_write_indices": [],
+        "evidence": null
+      },
+      {
+        "original_classification": "freeze-write",
+        "classification": "freeze-write",
+        "description_sha256": "a67e3d7077c9f0a793473d71f435f7957c14c506afc986219cb03a06e8436c59",
+        "pid": 12006,
+        "case": null,
+        "top_frame": {
+          "function": "",
+          "url": "file:///workspace/scratch/ev14ch9/stage3/census/filter-readonly-freeze/control.cjs",
+          "scriptId": "119",
+          "line": 8,
+          "column": 51
+        },
+        "matched_freeze_write_indices": [],
+        "evidence": null
+      },
+      {
+        "original_classification": "freeze-write",
+        "classification": "freeze-write",
+        "description_sha256": "a67e3d7077c9f0a793473d71f435f7957c14c506afc986219cb03a06e8436c59",
+        "pid": 12006,
+        "case": null,
+        "top_frame": {
+          "function": "",
+          "url": "file:///workspace/scratch/ev14ch9/stage3/census/filter-readonly-freeze/control.cjs",
+          "scriptId": "119",
+          "line": 8,
+          "column": 51
+        },
+        "matched_freeze_write_indices": [],
+        "evidence": null
+      },
+      {
+        "original_classification": "freeze-write",
+        "classification": "freeze-write",
+        "description_sha256": "09e50b25290f9fb0a6466c5dcd13df4df1b18b16573b9036c76a21b987b2a5bd",
+        "pid": 12006,
+        "case": null,
+        "top_frame": {
+          "function": "a.<computed>",
+          "url": "file:///workspace/scratch/ev14ch9/stage3/census/filter-readonly-freeze/control.cjs",
+          "scriptId": "119",
+          "line": 8,
+          "column": 77
+        },
+        "matched_freeze_write_indices": [],
+        "evidence": null
+      },
+      {
+        "original_classification": "freeze-write",
+        "classification": "freeze-write",
+        "description_sha256": "09e50b25290f9fb0a6466c5dcd13df4df1b18b16573b9036c76a21b987b2a5bd",
+        "pid": 12006,
+        "case": null,
+        "top_frame": {
+          "function": "a.<computed>",
+          "url": "file:///workspace/scratch/ev14ch9/stage3/census/filter-readonly-freeze/control.cjs",
+          "scriptId": "119",
+          "line": 8,
+          "column": 77
+        },
+        "matched_freeze_write_indices": [],
+        "evidence": null
+      },
+      {
+        "original_classification": "freeze-write",
+        "classification": "freeze-write",
+        "description_sha256": "4e8f4574d98b874b752ec9f278ff01bebc87ffb3c07e946fceeddcb5256538bf",
+        "pid": 12006,
+        "case": null,
+        "top_frame": {
+          "function": "a.length",
+          "url": "file:///workspace/scratch/ev14ch9/stage3/census/filter-readonly-freeze/control.cjs",
+          "scriptId": "119",
+          "line": 8,
+          "column": 102
+        },
+        "matched_freeze_write_indices": [],
+        "evidence": null
+      },
+      {
+        "original_classification": "freeze-write",
+        "classification": "freeze-write",
+        "description_sha256": "4e8f4574d98b874b752ec9f278ff01bebc87ffb3c07e946fceeddcb5256538bf",
+        "pid": 12006,
+        "case": null,
+        "top_frame": {
+          "function": "a.length",
+          "url": "file:///workspace/scratch/ev14ch9/stage3/census/filter-readonly-freeze/control.cjs",
+          "scriptId": "119",
+          "line": 8,
+          "column": 102
+        },
+        "matched_freeze_write_indices": [],
+        "evidence": null
+      },
+      {
+        "original_classification": "freeze-write",
+        "classification": "freeze-write",
+        "description_sha256": "e100040710f7858f7a8bf62c5b346d6e9360ebf884c8bf94d8ea327526390bf7",
+        "pid": 12006,
+        "case": null,
+        "top_frame": {
+          "function": "cases",
+          "url": "file:///workspace/scratch/ev14ch9/stage3/census/filter-readonly-freeze/control.cjs",
+          "scriptId": "119",
+          "line": 8,
+          "column": 129
+        },
+        "matched_freeze_write_indices": [],
+        "evidence": null
+      },
+      {
+        "original_classification": "freeze-write",
+        "classification": "freeze-write",
+        "description_sha256": "e100040710f7858f7a8bf62c5b346d6e9360ebf884c8bf94d8ea327526390bf7",
+        "pid": 12006,
+        "case": null,
+        "top_frame": {
+          "function": "cases",
+          "url": "file:///workspace/scratch/ev14ch9/stage3/census/filter-readonly-freeze/control.cjs",
+          "scriptId": "119",
+          "line": 8,
+          "column": 129
+        },
+        "matched_freeze_write_indices": [],
+        "evidence": null
+      }
+    ],
+    "counts": {
+      "freeze-write": 10
+    },
+    "unresolved": []
+  },
+  "bootstrap": {
+    "events": [],
+    "counts": {},
+    "unresolved": []
+  }
+}

@@ -1,0 +1,8 @@
+{
+  "file": "src/compiler/factory/emitHelpers.ts",
+  "line": 783,
+  "sha256": "91b00027e787379b88b6bf7bbf7a0ec8ae57e0d92233e6ddf7f4aa61d90c82ab",
+  "source": "                context.addInitializer = function (f) { if (done) throw new TypeError(\"Cannot add initializers after decoration has completed\"); extraInitializers.push(accept(f || null)); };",
+  "count": 6,
+  "explanation": "The explicit done check throws before extraInitializers.push; these six deliberate decorator-test TypeErrors have no frozen-array provenance and are not post-call writes."
+}

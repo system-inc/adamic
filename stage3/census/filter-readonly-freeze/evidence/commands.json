@@ -1,0 +1,44 @@
+{
+  "working_root": "/workspace/scratch/ev14ch9",
+  "upstream": "050880ce59e30b356b686bd3144efe24f875ebc8",
+  "self_install": [
+    "npm",
+    "ci",
+    "--no-audit",
+    "--no-fund"
+  ],
+  "bootstrap": [
+    "npm",
+    "run",
+    "build"
+  ],
+  "self": [
+    "node",
+    "built/local/tsc.js",
+    "-b",
+    "src/compiler",
+    "src/tsc",
+    "--force",
+    "--pretty",
+    "false"
+  ],
+  "control": [
+    "node",
+    "--require",
+    "stage3/census/filter-readonly-freeze/observe.cjs",
+    "stage3/census/filter-readonly-freeze/control.cjs",
+    "/workspace/scratch/ev14ch9-readonly-freeze/self-tree/built/local/typescript.js"
+  ],
+  "lane": [
+    "python3",
+    "stage3/census/filter-readonly-freeze/run-lane.py",
+    "/workspace/scratch/ev14ch9-readonly-freeze/lane"
+  ],
+  "observer": "/workspace/scratch/ev14ch9/stage3/census/filter-readonly-freeze/observe.cjs",
+  "FILTER_FREEZE_WORKERS": "4",
+  "TMPDIR": "/workspace/scratch/ev14ch9-proof/tmp",
+  "GOTMPDIR": "/workspace/scratch/ev14ch9-proof/tmp",
+  "GOCACHE": "/workspace/scratch/ev14ch9-proof/go-cache",
+  "ADAMIC_TYPESCRIPT_SOURCE": "/workspace/scratch/ev14ch9-typescript",
+  "cpu_quota": "400000 100000"
+}

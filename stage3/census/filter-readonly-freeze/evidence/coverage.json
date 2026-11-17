@@ -1,0 +1,52 @@
+{
+  "self": {
+    "totals": {
+      "calls": 14928,
+      "completed": 14928,
+      "identity": 14338,
+      "frozen_arrays": 14336,
+      "undefined_identity": 2
+    },
+    "uncalled": [
+      "src/compiler/utilitiesPublic.ts:1030:16",
+      "src/compiler/utilitiesPublic.ts:1036:16",
+      "src/compiler/utilities.ts:4691:20",
+      "src/compiler/utilities.ts:8019:12",
+      "src/compiler/checker.ts:3138:58",
+      "src/compiler/checker.ts:11961:38",
+      "src/compiler/transformers/utilities.ts:603:12",
+      "src/compiler/transformers/ts.ts:1053:13",
+      "src/compiler/transformers/ts.ts:1086:38",
+      "src/compiler/transformers/ts.ts:1100:42",
+      "src/compiler/transformers/ts.ts:1102:42",
+      "src/compiler/transformers/ts.ts:1383:13",
+      "src/compiler/transformers/classFields.ts:852:25",
+      "src/compiler/transformers/classFields.ts:1707:16",
+      "src/services/utilities.ts:2616:38",
+      "src/services/codefixes/convertFunctionToEs6Class.ts:314:39",
+      "src/services/codefixes/convertToEsModule.ts:137:29",
+      "src/services/goToDefinition.ts:180:30",
+      "src/testRunner/unittests/services/organizeImports.ts:1133:25",
+      "src/testRunner/unittests/services/organizeImports.ts:1140:25"
+    ],
+    "called_without_array_identity": [
+      "src/compiler/commandLineParser.ts:3188:54"
+    ]
+  },
+  "lane": {
+    "totals": {
+      "calls": 878840,
+      "completed": 878840,
+      "identity": 836895,
+      "frozen_arrays": 827821,
+      "undefined_identity": 9074
+    },
+    "uncalled": [],
+    "called_without_array_identity": [
+      "src/compiler/checker.ts:3138:58",
+      "src/compiler/checker.ts:11961:38",
+      "src/compiler/transformers/ts.ts:1102:42",
+      "src/services/goToDefinition.ts:180:30"
+    ]
+  }
+}

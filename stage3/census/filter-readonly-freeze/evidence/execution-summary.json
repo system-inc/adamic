@@ -1,0 +1,24 @@
+{
+  "self_install_exit": 0,
+  "bootstrap_exit": 0,
+  "canonical_self_exit": 0,
+  "control_exit": 0,
+  "lane_exit": 1,
+  "lane_execution": {
+    "commit": "2f473173fbc6c553083dc223f11e5869be6a2b1e",
+    "apply_exit": 0,
+    "oracle_exit": 1,
+    "platform": {
+      "os": "linux",
+      "arch": "x64",
+      "node": "v24.19.0"
+    },
+    "instrument_exit": 0,
+    "wall_seconds": 1569.536
+  },
+  "oracle_phase_exits": {
+    "install": 0,
+    "build": 0,
+    "tests": 1
+  }
+}
