@@ -62,16 +62,16 @@ has no filter declaration. Thus filter itself does not trigger the public-line g
 
 ## Every non-read call
 
-For each site, **may return argument as-is: yes** is the conservative static
-answer: these are ordinary array/optional-array arguments, not contracts forcing
-one element to fail the predicate. Empty inputs or all-matching elements reach
-return array. This is not an assertion that a particular lane invocation exercised
-that path. The earlier runtime census is not reused as current runtime evidence.
-No site is cleared by assuming that filtering always allocates.
+No-drop answers below are three-valued. **Yes** has a local constructive
+all-match case; **no** has a source guard forcing a rejected element;
+**unknown** is not a proof of allocation or aliasing. Merely having an array type
+that admits an empty array does not prove that this call can receive one. The
+initial blanket yes was too strong and is superseded here. The alias subtask is
+therefore incomplete at the unknown sites; none is treated as safe for copying.
 
 ### src/compiler/utilities.ts:642:12 — overload 2
 
-Classes: store. May return argument as-is: **yes**.
+Classes: store. May return argument as-is: **yes**. The symbol can have no declarations: the fallback emptyArray is returned unchanged.
 
 ```ts
 filter(symbol.declarations || emptyArray, d => d.kind === kind)
@@ -81,7 +81,7 @@ writable type assertion : T[].
 
 ### src/compiler/utilities.ts:2773:12 — overload 6
 
-Classes: store. May return argument as-is: **yes**.
+Classes: store. May return argument as-is: **yes**. An undefined commentRanges argument takes the implementation return-array path.
 
 ```ts
 filter(commentRanges, comment =>
@@ -95,7 +95,7 @@ return : CommentRange[] | undefined.
 
 ### src/compiler/utilities.ts:7029:31 — overload 6
 
-Classes: store. May return argument as-is: **yes**.
+Classes: store. May return argument as-is: **yes**. No leading comments makes getLeadingCommentRanges return undefined, returned unchanged.
 
 ```ts
 filter(getLeadingCommentRanges(text, node.pos), isPinnedCommentLocal)
@@ -105,7 +105,7 @@ assignment : CommentRange[] | undefined.
 
 ### src/compiler/factory/utilities.ts:761:12 — overload 5
 
-Classes: store. May return argument as-is: **yes**.
+Classes: store. May return argument as-is: **yes**. A helper list consisting entirely of unscoped emit helpers passes every predicate.
 
 ```ts
 filter(getEmitHelpers(sourceFile), helper => !helper.scoped)
@@ -115,7 +115,7 @@ return : UnscopedEmitHelper[] | undefined.
 
 ### src/compiler/commandLineParser.ts:2550:16 — overload 1
 
-Classes: store. May return argument as-is: **yes**.
+Classes: store. May return argument as-is: **yes**. A JSON array containing only valid JSON expressions maps to entirely defined values.
 
 ```ts
 filter(elements.map(element => convertPropertyValueToJson(element, elementOption)), v => v !== undefined)
@@ -125,7 +125,7 @@ return : AdamicJsonRecoveryValue[] | undefined.
 
 ### src/compiler/commandLineParser.ts:3909:12 — overload 2
 
-Classes: store. May return argument as-is: **yes**.
+Classes: store. May return argument as-is: **unknown**. No complete source-reachability witness or forced-drop proof was established for this call.
 
 ```ts
 filter(map<TValues[number], CompilerOptionsValue>(values, (v, index) => convertJsonOption(option.element, v, basePath, errors, propertyAssignment, valueExpression?.elements[index], sourceFile)), v => option.listPreserveFalsyValues ? true : !!v)
@@ -135,7 +135,7 @@ return : any[].
 
 ### src/compiler/checker.ts:6586:39 — overload 5
 
-Classes: store. May return argument as-is: **yes**.
+Classes: store. May return argument as-is: **yes**. A symbol whose declarations are all class-like passes every predicate.
 
 ```ts
 filter(symbol.declarations, isClassLike)
@@ -145,7 +145,7 @@ variable classDeclarations : ClassLikeDeclaration[] | undefined.
 
 ### src/compiler/checker.ts:6604:27 — overload 6
 
-Classes: store. May return argument as-is: **yes**.
+Classes: store. May return argument as-is: **unknown**. No complete source-reachability witness or forced-drop proof was established for this call.
 
 ```ts
 filter(symbol.declarations, isDeclKind)
@@ -155,7 +155,7 @@ variable decls : Declaration[] | undefined.
 
 ### src/compiler/checker.ts:7627:47 — overload 2
 
-Classes: store. May return argument as-is: **yes**.
+Classes: store. May return argument as-is: **unknown**. No complete source-reachability witness or forced-drop proof was established for this call.
 
 ```ts
 filter(indexInfo.components, e => {
@@ -168,7 +168,7 @@ variable newComponents : ElementWithComputedPropertyName[].
 
 ### src/compiler/checker.ts:9417:28 — overload 1
 
-Classes: store. May return argument as-is: **yes**.
+Classes: store. May return argument as-is: **yes**. A variable statement with only identifier binding names maps to entirely defined identifiers.
 
 ```ts
 filter(map(statement.declarationList.declarations, getNameOfDeclaration), isIdentifierAndNotUndefined)
@@ -178,7 +178,7 @@ return : Identifier[].
 
 ### src/compiler/checker.ts:9419:24 — overload 1
 
-Classes: store. May return argument as-is: **yes**.
+Classes: store. May return argument as-is: **yes**. A named declaration with an identifier name makes the single literal element pass.
 
 ```ts
 filter([getNameOfDeclaration(statement as DeclarationStatement)], isIdentifierAndNotUndefined)
@@ -188,7 +188,7 @@ return : Identifier[].
 
 ### src/compiler/checker.ts:9433:43 — overload 2
 
-Classes: store. May return argument as-is: **yes**.
+Classes: store. May return argument as-is: **unknown**. No complete source-reachability witness or forced-drop proof was established for this call.
 
 ```ts
 filter(statements, s => !!(getEffectiveModifierFlags(s) & ModifierFlags.Export))
@@ -198,7 +198,7 @@ variable excessExports : Statement[].
 
 ### src/compiler/checker.ts:9474:33 — overload 2
 
-Classes: store. May return argument as-is: **yes**.
+Classes: store. May return argument as-is: **unknown**. No complete source-reachability witness or forced-drop proof was established for this call.
 
 ```ts
 filter(statements, d => isExportDeclaration(d) && !d.moduleSpecifier && !!d.exportClause && isNamedExports(d.exportClause))
@@ -208,7 +208,7 @@ writable type assertion : ExportDeclaration[].
 
 ### src/compiler/checker.ts:9476:40 — overload 2
 
-Classes: store. May return argument as-is: **yes**.
+Classes: store. May return argument as-is: **no**. length(exports) > 1 guarantees at least two export declarations in statements for which this nonExports predicate is false.
 
 ```ts
 filter(statements, d => !isExportDeclaration(d) || !!d.moduleSpecifier || !d.exportClause)
@@ -218,7 +218,7 @@ variable nonExports : Statement[].
 
 ### src/compiler/checker.ts:9488:35 — overload 2
 
-Classes: store. May return argument as-is: **yes**.
+Classes: store. May return argument as-is: **unknown**. No complete source-reachability witness or forced-drop proof was established for this call.
 
 ```ts
 filter(statements, d => isExportDeclaration(d) && !!d.moduleSpecifier && !!d.exportClause && isNamedExports(d.exportClause))
@@ -228,7 +228,7 @@ writable type assertion : ExportDeclaration[].
 
 ### src/compiler/checker.ts:9521:55 — overload 2
 
-Classes: store. May return argument as-is: **yes**.
+Classes: store. May return argument as-is: **unknown**. No complete source-reachability witness or forced-drop proof was established for this call.
 
 ```ts
 filter(indices, i => nodeHasName(statements[i]!, name))
@@ -238,7 +238,7 @@ variable associatedIndices : number[].
 
 ### src/compiler/checker.ts:10025:24 — overload 2
 
-Classes: store. May return argument as-is: **yes**.
+Classes: store. May return argument as-is: **unknown**. No complete source-reachability witness or forced-drop proof was established for this call.
 
 ```ts
 filter(exports, m => isNamespaceMember(m) && isIdentifierText(m.escapedName as string, ScriptTarget.ESNext))
@@ -248,7 +248,7 @@ return : Symbol[].
 
 ### src/compiler/checker.ts:10094:37 — overload 2
 
-Classes: store. May return argument as-is: **yes**.
+Classes: store. May return argument as-is: **unknown**. No complete source-reachability witness or forced-drop proof was established for this call.
 
 ```ts
 filter(getPropertiesOfType(getTypeOfSymbol(symbol)), p => !!(p.flags & SymbolFlags.EnumMember))
@@ -258,7 +258,7 @@ variable memberProps : Symbol[].
 
 ### src/compiler/checker.ts:10162:35 — overload 2
 
-Classes: store. May return argument as-is: **yes**.
+Classes: store. May return argument as-is: **unknown**. No complete source-reachability witness or forced-drop proof was established for this call.
 
 ```ts
 filter(getPropertiesOfType(type), isNamespaceMember)
@@ -268,7 +268,7 @@ variable props : Symbol[].
 
 ### src/compiler/checker.ts:10322:43 — overload 2
 
-Classes: store. May return argument as-is: **yes**.
+Classes: store. May return argument as-is: **unknown**. No complete source-reachability witness or forced-drop proof was established for this call.
 
 ```ts
 filter(symbolProps, s => !isHashPrivate(s))
@@ -278,7 +278,7 @@ variable publicSymbolProps : Symbol[].
 
 ### src/compiler/checker.ts:16748:77 — overload 6
 
-Classes: write. May return argument as-is: **yes**.
+Classes: write. May return argument as-is: **unknown**. No complete source-reachability witness or forced-drop proof was established for this call.
 
 ```ts
 filter(siblingSymbols, s => s !== indexSymbol)
@@ -294,7 +294,7 @@ concatenate(computedPropertySymbols, filter(siblingSymbols, s => s !== indexSymb
 
 ### src/compiler/checker.ts:18223:27 — overload 2
 
-Classes: store. May return argument as-is: **yes**.
+Classes: store. May return argument as-is: **unknown**. No complete source-reachability witness or forced-drop proof was established for this call.
 
 ```ts
 filter(types, isPatternLiteralType)
@@ -304,7 +304,7 @@ writable type assertion : (TemplateLiteralType | StringMappingType)[].
 
 ### src/compiler/checker.ts:18565:26 — overload 2
 
-Classes: store. May return argument as-is: **yes**.
+Classes: store. May return argument as-is: **unknown**. No complete source-reachability witness or forced-drop proof was established for this call.
 
 ```ts
 filter(types, t => !!(t.flags & TypeFlags.StringLiteral))
@@ -314,7 +314,7 @@ variable literals : Type[].
 
 ### src/compiler/checker.ts:19962:87 — overload 6
 
-Classes: store. May return argument as-is: **yes**.
+Classes: store. May return argument as-is: **unknown**. No complete source-reachability witness or forced-drop proof was established for this call.
 
 ```ts
 filter(allOuterTypeParameters, tp => isTypeParameterPossiblyReferenced(tp, node))
@@ -324,7 +324,7 @@ variable outerTypeParameters : TypeParameter[] | undefined.
 
 ### src/compiler/checker.ts:20763:17 — overload 2
 
-Classes: store. May return argument as-is: **yes**.
+Classes: store. May return argument as-is: **unknown**. No complete source-reachability witness or forced-drop proof was established for this call.
 
 ```ts
 filter(typeParameters, tp => some(allDeclarations, d => isTypeParameterPossiblyReferenced(tp, d)))
@@ -334,7 +334,7 @@ assignment : TypeParameter[] | undefined.
 
 ### src/compiler/checker.ts:26375:28 — overload 2
 
-Classes: store. May return argument as-is: **yes**.
+Classes: store. May return argument as-is: **unknown**. No complete source-reachability witness or forced-drop proof was established for this call.
 
 ```ts
 filter(context.inferences, hasInferenceCandidates)
@@ -344,7 +344,7 @@ variable inferences : InferenceInfo[].
 
 ### src/compiler/checker.ts:27086:34 — overload 2
 
-Classes: store. May return argument as-is: **yes**.
+Classes: store. May return argument as-is: **no**. The matchedSources branch is taken only after at least one source was appended from sources; contains rejects that source.
 
 ```ts
 filter(sources, t => !contains(matchedSources, t))
@@ -354,7 +354,7 @@ contextual writable slot : Type[].
 
 ### src/compiler/checker.ts:27087:34 — overload 2
 
-Classes: store. May return argument as-is: **yes**.
+Classes: store. May return argument as-is: **no**. The matchedTargets branch is taken only after at least one target was appended from targets; contains rejects that target.
 
 ```ts
 filter(targets, t => !contains(matchedTargets, t))
@@ -364,7 +364,7 @@ contextual writable slot : Type[].
 
 ### src/compiler/checker.ts:27577:36 — overload 2
 
-Classes: store. May return argument as-is: **yes**.
+Classes: store. May return argument as-is: **unknown**. No complete source-reachability witness or forced-drop proof was established for this call.
 
 ```ts
 filter(candidates, isObjectOrArrayLiteralType)
@@ -374,7 +374,7 @@ variable objectLiterals : Type[].
 
 ### src/compiler/checker.ts:27580:36 — overload 2
 
-Classes: write. May return argument as-is: **yes**.
+Classes: write. May return argument as-is: **no**. objectLiterals.length is nonzero, so candidates contains an object/array literal rejected by the negated predicate.
 
 ```ts
 filter(candidates, t => !isObjectOrArrayLiteralType(t))
@@ -390,7 +390,7 @@ concatenate(filter(candidates, t => !isObjectOrArrayLiteralType(t)), [literalsTy
 
 ### src/compiler/checker.ts:28532:30 — overload 2
 
-Classes: store, write, identity. May return argument as-is: **yes**.
+Classes: store, write, identity. May return argument as-is: **yes**. The caller-supplied predicate f can accept every union constituent; the following equality explicitly handles that case.
 
 ```ts
 filter(types, f)
@@ -412,7 +412,7 @@ getUnionTypeFromSortedList(filtered, (type as UnionType).objectFlags & (ObjectFl
 
 ### src/compiler/checker.ts:28545:40 — overload 2
 
-Classes: store, write. May return argument as-is: **yes**.
+Classes: store, write. May return argument as-is: **unknown**. No complete source-reachability witness or forced-drop proof was established for this call.
 
 ```ts
 filter(originTypes, t => !!(t.flags & TypeFlags.Union) || f(t))
@@ -428,7 +428,7 @@ createOriginUnionOrIntersectionType(TypeFlags.Union, originFiltered)
 
 ### src/compiler/checker.ts:35256:25 — overload 2
 
-Classes: store. May return argument as-is: **yes**.
+Classes: store. May return argument as-is: **unknown**. No complete source-reachability witness or forced-drop proof was established for this call.
 
 ```ts
 filter(props, prop => isValidPropertyAccessForCompletions(parent, containingType, prop))
@@ -438,7 +438,7 @@ assignment : Symbol[].
 
 ### src/compiler/checker.ts:45744:39 — overload 2
 
-Classes: store, identity. May return argument as-is: **yes**.
+Classes: store, identity. May return argument as-is: **yes**. A union containing no StringLike constituent passes every predicate; the following inequality handles the dropped case.
 
 ```ts
 filter(arrayTypes, t => !(t.flags & TypeFlags.StringLike))
@@ -454,7 +454,7 @@ filteredTypes !== arrayTypes
 
 ### src/compiler/checker.ts:47509:16 — overload 5
 
-Classes: store. May return argument as-is: **yes**.
+Classes: store. May return argument as-is: **yes**. A symbol consisting solely of class/interface declarations passes every predicate.
 
 ```ts
 filter(symbol.declarations, (d: Declaration): d is ClassDeclaration | InterfaceDeclaration => d.kind === SyntaxKind.ClassDeclaration || d.kind === SyntaxKind.InterfaceDeclaration)
@@ -464,7 +464,7 @@ return : (InterfaceDeclaration | ClassDeclaration)[] | undefined.
 
 ### src/compiler/checker.ts:51301:28 — overload 6
 
-Classes: store. May return argument as-is: **yes**.
+Classes: store. May return argument as-is: **unknown**. No complete source-reachability witness or forced-drop proof was established for this call.
 
 ```ts
 filter(getExportSymbolOfValueSymbolIfExported(symbol).declarations, declaration => {
@@ -497,7 +497,7 @@ return : Declaration[] | undefined.
 
 ### src/compiler/checker.ts:51492:55 — overload 2
 
-Classes: store. May return argument as-is: **yes**.
+Classes: store. May return argument as-is: **unknown**. No complete source-reachability witness or forced-drop proof was established for this call.
 
 ```ts
 filter(info.components, e => {
@@ -510,7 +510,7 @@ variable newComponents : ElementWithComputedPropertyName[].
 
 ### src/compiler/transformers/declarations.ts:430:40 — overload 6
 
-Classes: store. May return argument as-is: **yes**.
+Classes: store. May return argument as-is: **unknown**. No complete source-reachability witness or forced-drop proof was established for this call.
 
 ```ts
 filter(symbol.declarations, d => getSourceFileOfNode(d) !== containingFile)
@@ -520,7 +520,7 @@ variable augmentingDeclarations : Declaration[] | undefined.
 
 ### src/compiler/emitter.ts:688:15 — overload 2
 
-Classes: store. May return argument as-is: **yes**.
+Classes: store. May return argument as-is: **unknown**. No complete source-reachability witness or forced-drop proof was established for this call.
 
 ```ts
 filter(fileNames, file => !(options.noEmitForJsFiles && fileExtensionIsOneOf(file, supportedJSExtensionsFlat)) && !isDeclarationFileName(file))
@@ -530,7 +530,7 @@ return : string[].
 
 ### src/compiler/program.ts:2150:30 — overload 2
 
-Classes: store. May return argument as-is: **yes**.
+Classes: store. May return argument as-is: **unknown**. No complete source-reachability witness or forced-drop proof was established for this call.
 
 ```ts
 filter(files, file => sourceFileMayBeEmitted(file, program))
@@ -540,7 +540,7 @@ variable emittedFiles : SourceFile[].
 
 ### src/compiler/program.ts:2910:35 — overload 2
 
-Classes: store. May return argument as-is: **yes**.
+Classes: store. May return argument as-is: **unknown**. No complete source-reachability witness or forced-drop proof was established for this call.
 
 ```ts
 filter(bindDiagnostics, d => plainJSErrors.has(d.code))
@@ -550,7 +550,7 @@ assignment : DiagnosticWithLocation[].
 
 ### src/compiler/program.ts:2911:36 — overload 2
 
-Classes: store. May return argument as-is: **yes**.
+Classes: store. May return argument as-is: **unknown**. No complete source-reachability witness or forced-drop proof was established for this call.
 
 ```ts
 filter(checkDiagnostics, d => plainJSErrors.has(d.code))
@@ -560,7 +560,7 @@ assignment : Diagnostic[].
 
 ### src/compiler/executeCommandLine.ts:177:25 — overload 2
 
-Classes: store, write. May return argument as-is: **yes**.
+Classes: store, write. May return argument as-is: **unknown**. No complete source-reachability witness or forced-drop proof was established for this call.
 
 ```ts
 filter(optionDeclarations.concat(tscBuildOption), option => option.showInHelp !== false)
@@ -576,7 +576,7 @@ filter(helpOptions, v => !!v.showInSimplifiedHelpView)
 
 ### src/compiler/executeCommandLine.ts:181:9 — overload 2
 
-Classes: store. May return argument as-is: **yes**.
+Classes: store. May return argument as-is: **unknown**. No complete source-reachability witness or forced-drop proof was established for this call.
 
 ```ts
 filter(helpOptions, v => !!v.showInSimplifiedHelpView)
@@ -586,7 +586,7 @@ return : CommandLineOption[] | SortedReadonlyArray<CommandLineOption>.
 
 ### src/services/transpile.ts:243:9 — overload 2
 
-Classes: store. May return argument as-is: **yes**.
+Classes: store. May return argument as-is: **unknown**. No complete source-reachability witness or forced-drop proof was established for this call.
 
 ```ts
 filter(optionDeclarations, o => typeof o.type === "object" && !forEachEntry(o.type, v => typeof v !== "number"))
@@ -596,7 +596,7 @@ writable type assertion : CommandLineOptionOfCustomType[].
 
 ### src/services/services.ts:780:81 — overload 5
 
-Classes: write. May return argument as-is: **yes**.
+Classes: write. May return argument as-is: **yes**. A getter-only declaration list passes every isGetAccessor test.
 
 ```ts
 filter(this.declarations, isGetAccessor)
@@ -612,7 +612,7 @@ getJsDocTagsOfDeclarations(filter(this.declarations, isGetAccessor), checker)
 
 ### src/services/services.ts:790:81 — overload 5
 
-Classes: write. May return argument as-is: **yes**.
+Classes: write. May return argument as-is: **yes**. A setter-only declaration list passes every isSetAccessor test.
 
 ```ts
 filter(this.declarations, isSetAccessor)
@@ -628,7 +628,7 @@ getJsDocTagsOfDeclarations(filter(this.declarations, isSetAccessor), checker)
 
 ### src/services/services.ts:3603:11 — overload 2
 
-Classes: store. May return argument as-is: **yes**.
+Classes: store. May return argument as-is: **unknown**. No complete source-reachability witness or forced-drop proof was established for this call.
 
 ```ts
 filter(contextualType.types, t => !checker.isTypeInvalidDueToUnionDiscriminant(t, node.parent))
@@ -638,7 +638,7 @@ variable filteredTypes : Type[].
 
 ### src/services/callHierarchy.ts:482:19 — overload 5
 
-Classes: store. May return argument as-is: **yes**.
+Classes: store. May return argument as-is: **unknown**. No complete source-reachability witness or forced-drop proof was established for this call.
 
 ```ts
 filter(FindAllReferences.findReferenceOrRenameEntries(program, cancellationToken, program.getSourceFiles(), location, /*position*/ 0, { use: FindAllReferences.FindReferencesUse.References }, convertEntryToCallSite), isDefined)
@@ -648,7 +648,7 @@ variable calls : CallSite[] | undefined.
 
 ### src/services/codefixes/fixAddMissingMember.ts:773:12 — overload 2
 
-Classes: store. May return argument as-is: **yes**.
+Classes: store. May return argument as-is: **unknown**. No complete source-reachability witness or forced-drop proof was established for this call.
 
 ```ts
 filter(targetProps, targetProp => isIdentifierText(targetProp.name, target, LanguageVariant.JSX) && !((targetProp.flags & SymbolFlags.Optional || getCheckFlags(targetProp) & CheckFlags.Partial) || seenNames.has(targetProp.escapedName)))
@@ -658,7 +658,7 @@ return : Symbol[].
 
 ### src/services/codefixes/fixAddMissingParam.ts:143:46 — overload 5
 
-Classes: store. May return argument as-is: **yes**.
+Classes: store. May return argument as-is: **yes**. A declaration list consisting only of convertible signatures passes every predicate.
 
 ```ts
 filter(type.symbol.declarations, isConvertibleSignatureDeclaration)
@@ -668,7 +668,7 @@ variable convertibleSignatureDeclarations : ConvertibleSignatureDeclaration[] | 
 
 ### src/services/completions.ts:2332:39 — overload 2
 
-Classes: store. May return argument as-is: **yes**.
+Classes: store. May return argument as-is: **unknown**. No complete source-reachability witness or forced-drop proof was established for this call.
 
 ```ts
 filter((effectiveType as UnionType).types, type => checker.getSignaturesOfType(type, SignatureKind.Call).length > 0)
@@ -678,7 +678,7 @@ variable functionTypes : Type[].
 
 ### src/services/completions.ts:4532:40 — overload 2
 
-Classes: write. May return argument as-is: **yes**.
+Classes: write. May return argument as-is: **unknown**. No complete source-reachability witness or forced-drop proof was established for this call.
 
 ```ts
 filter(members, s => !existingMemberEscapedNames.has(s.escapedName))
@@ -694,7 +694,7 @@ concatenate(symbols, filter(members, s => !existingMemberEscapedNames.has(s.esca
 
 ### src/services/completions.ts:4695:19 — overload 2
 
-Classes: store. May return argument as-is: **yes**.
+Classes: store. May return argument as-is: **unknown**. No complete source-reachability witness or forced-drop proof was established for this call.
 
 ```ts
 filter(typeChecker.getTypeAtLocation(importAttributes).getApparentProperties(), attr => !existing.has(attr.escapedName))
@@ -704,7 +704,7 @@ assignment : Symbol[].
 
 ### src/services/completions.ts:5624:9 — overload 2
 
-Classes: write. May return argument as-is: **yes**.
+Classes: write. May return argument as-is: **unknown**. No complete source-reachability witness or forced-drop proof was established for this call.
 
 ```ts
 filter(
@@ -732,7 +732,7 @@ checker.getUnionType(
 
 ### src/services/completions.ts:5637:30 — overload 2
 
-Classes: store. May return argument as-is: **yes**.
+Classes: store. May return argument as-is: **unknown**. No complete source-reachability witness or forced-drop proof was established for this call.
 
 ```ts
 filter(properties, hasDeclarationOtherThanSelf)
@@ -742,7 +742,7 @@ return : Symbol[].
 
 ### src/services/stringCompletions.ts:614:18 — overload 2
 
-Classes: store. May return argument as-is: **yes**.
+Classes: store. May return argument as-is: **unknown**. No complete source-reachability witness or forced-drop proof was established for this call.
 
 ```ts
 filter(type.getApparentProperties(), prop => !(prop.valueDeclaration && isPrivateIdentifierClassElementDeclaration(prop.valueDeclaration)))
@@ -752,7 +752,7 @@ property : Symbol[].
 
 ### src/services/goToDefinition.ts:628:68 — overload 6
 
-Classes: store, write. May return argument as-is: **yes**.
+Classes: store, write. May return argument as-is: **unknown**. No complete source-reachability witness or forced-drop proof was established for this call.
 
 ```ts
 filter(symbol.declarations, declarationFilter)
@@ -768,7 +768,7 @@ filter(filteredDeclarations, d => !isExpandoDeclaration(d))
 
 ### src/services/goToDefinition.ts:634:29 — overload 6
 
-Classes: store. May return argument as-is: **yes**.
+Classes: store. May return argument as-is: **unknown**. No complete source-reachability witness or forced-drop proof was established for this call.
 
 ```ts
 filter(filteredDeclarations, d => !isExpandoDeclaration(d))
@@ -778,7 +778,7 @@ variable withoutExpandos : Declaration[] | undefined.
 
 ### src/server/project.ts:1659:16 — overload 2
 
-Classes: store. May return argument as-is: **yes**.
+Classes: store. May return argument as-is: **unknown**. No complete source-reachability witness or forced-drop proof was established for this call.
 
 ```ts
 filter(include, i => !existing.includes(i))
@@ -788,7 +788,7 @@ return : string[].
 
 ### src/server/session.ts:2856:33 — overload 2
 
-Classes: store. May return argument as-is: **yes**.
+Classes: store. May return argument as-is: **unknown**. No complete source-reachability witness or forced-drop proof was established for this call.
 
 ```ts
 filter(projectItems, item => tryAddSeenItem(item) && !getMappedLocationForProject(documentSpanLocation(item), project))
@@ -798,7 +798,7 @@ variable unseenItems : NavigateToItem[].
 
 ### src/harness/fourslashImpl.ts:2394:23 — overload 2
 
-Classes: store, write. May return argument as-is: **yes**.
+Classes: store, write. May return argument as-is: **unknown**. No complete source-reachability witness or forced-drop proof was established for this call.
 
 ```ts
 ts.filter(this.getCompilerTestFiles(), f => !ts.endsWith(f.unitName, ".json"))
@@ -820,7 +820,7 @@ this.getSemanticDiagnosticBaselineText(files)
 
 ### src/harness/fourslashImpl.ts:3285:30 — overload 2
 
-Classes: store. May return argument as-is: **yes**.
+Classes: store. May return argument as-is: **unknown**. No complete source-reachability witness or forced-drop proof was established for this call.
 
 ```ts
 ts.filter(actual, f => kind === undefined ? true : f.kind === kind)
@@ -883,5 +883,5 @@ Thus neither declaration-only road meets this task's goal at this main. Providin
 the narrowed result needs a proof/check shape beyond this adaptation; a checked
 result view is road (c), and the user explicitly requires stopping there.
 **No stage3 adapter, ledger line, landing commit or filter-readonly-1 branch is created.**
-The count branch remains report-only. Full evidence and the explicit list of
+The count branch remains report-only. Result-use classes are counted; the no-drop alias answer remains unknown at some non-read sites, explicitly listed above. Full evidence and the explicit list of
 unrun landing checks live on `typescript/filter-readonly-evidence`. No Loom submission.

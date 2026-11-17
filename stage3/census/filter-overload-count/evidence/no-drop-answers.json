@@ -1,0 +1,317 @@
+{
+  "src/compiler/utilities.ts:642:12": {
+    "overload": 2,
+    "answer": "yes",
+    "reason": "The symbol can have no declarations: the fallback emptyArray is returned unchanged."
+  },
+  "src/compiler/utilities.ts:2773:12": {
+    "overload": 6,
+    "answer": "yes",
+    "reason": "An undefined commentRanges argument takes the implementation return-array path."
+  },
+  "src/compiler/utilities.ts:7029:31": {
+    "overload": 6,
+    "answer": "yes",
+    "reason": "No leading comments makes getLeadingCommentRanges return undefined, returned unchanged."
+  },
+  "src/compiler/factory/utilities.ts:761:12": {
+    "overload": 5,
+    "answer": "yes",
+    "reason": "A helper list consisting entirely of unscoped emit helpers passes every predicate."
+  },
+  "src/compiler/commandLineParser.ts:2550:16": {
+    "overload": 1,
+    "answer": "yes",
+    "reason": "A JSON array containing only valid JSON expressions maps to entirely defined values."
+  },
+  "src/compiler/commandLineParser.ts:3909:12": {
+    "overload": 2,
+    "answer": "unknown",
+    "reason": "No complete source-reachability witness or forced-drop proof was established for this call."
+  },
+  "src/compiler/checker.ts:6586:39": {
+    "overload": 5,
+    "answer": "yes",
+    "reason": "A symbol whose declarations are all class-like passes every predicate."
+  },
+  "src/compiler/checker.ts:6604:27": {
+    "overload": 6,
+    "answer": "unknown",
+    "reason": "No complete source-reachability witness or forced-drop proof was established for this call."
+  },
+  "src/compiler/checker.ts:7627:47": {
+    "overload": 2,
+    "answer": "unknown",
+    "reason": "No complete source-reachability witness or forced-drop proof was established for this call."
+  },
+  "src/compiler/checker.ts:9417:28": {
+    "overload": 1,
+    "answer": "yes",
+    "reason": "A variable statement with only identifier binding names maps to entirely defined identifiers."
+  },
+  "src/compiler/checker.ts:9419:24": {
+    "overload": 1,
+    "answer": "yes",
+    "reason": "A named declaration with an identifier name makes the single literal element pass."
+  },
+  "src/compiler/checker.ts:9433:43": {
+    "overload": 2,
+    "answer": "unknown",
+    "reason": "No complete source-reachability witness or forced-drop proof was established for this call."
+  },
+  "src/compiler/checker.ts:9474:33": {
+    "overload": 2,
+    "answer": "unknown",
+    "reason": "No complete source-reachability witness or forced-drop proof was established for this call."
+  },
+  "src/compiler/checker.ts:9476:40": {
+    "overload": 2,
+    "answer": "no",
+    "reason": "length(exports) > 1 guarantees at least two export declarations in statements for which this nonExports predicate is false."
+  },
+  "src/compiler/checker.ts:9488:35": {
+    "overload": 2,
+    "answer": "unknown",
+    "reason": "No complete source-reachability witness or forced-drop proof was established for this call."
+  },
+  "src/compiler/checker.ts:9521:55": {
+    "overload": 2,
+    "answer": "unknown",
+    "reason": "No complete source-reachability witness or forced-drop proof was established for this call."
+  },
+  "src/compiler/checker.ts:10025:24": {
+    "overload": 2,
+    "answer": "unknown",
+    "reason": "No complete source-reachability witness or forced-drop proof was established for this call."
+  },
+  "src/compiler/checker.ts:10094:37": {
+    "overload": 2,
+    "answer": "unknown",
+    "reason": "No complete source-reachability witness or forced-drop proof was established for this call."
+  },
+  "src/compiler/checker.ts:10162:35": {
+    "overload": 2,
+    "answer": "unknown",
+    "reason": "No complete source-reachability witness or forced-drop proof was established for this call."
+  },
+  "src/compiler/checker.ts:10322:43": {
+    "overload": 2,
+    "answer": "unknown",
+    "reason": "No complete source-reachability witness or forced-drop proof was established for this call."
+  },
+  "src/compiler/checker.ts:16748:77": {
+    "overload": 6,
+    "answer": "unknown",
+    "reason": "No complete source-reachability witness or forced-drop proof was established for this call."
+  },
+  "src/compiler/checker.ts:18223:27": {
+    "overload": 2,
+    "answer": "unknown",
+    "reason": "No complete source-reachability witness or forced-drop proof was established for this call."
+  },
+  "src/compiler/checker.ts:18565:26": {
+    "overload": 2,
+    "answer": "unknown",
+    "reason": "No complete source-reachability witness or forced-drop proof was established for this call."
+  },
+  "src/compiler/checker.ts:19962:87": {
+    "overload": 6,
+    "answer": "unknown",
+    "reason": "No complete source-reachability witness or forced-drop proof was established for this call."
+  },
+  "src/compiler/checker.ts:20763:17": {
+    "overload": 2,
+    "answer": "unknown",
+    "reason": "No complete source-reachability witness or forced-drop proof was established for this call."
+  },
+  "src/compiler/checker.ts:26375:28": {
+    "overload": 2,
+    "answer": "unknown",
+    "reason": "No complete source-reachability witness or forced-drop proof was established for this call."
+  },
+  "src/compiler/checker.ts:27086:34": {
+    "overload": 2,
+    "answer": "no",
+    "reason": "The matchedSources branch is taken only after at least one source was appended from sources; contains rejects that source."
+  },
+  "src/compiler/checker.ts:27087:34": {
+    "overload": 2,
+    "answer": "no",
+    "reason": "The matchedTargets branch is taken only after at least one target was appended from targets; contains rejects that target."
+  },
+  "src/compiler/checker.ts:27577:36": {
+    "overload": 2,
+    "answer": "unknown",
+    "reason": "No complete source-reachability witness or forced-drop proof was established for this call."
+  },
+  "src/compiler/checker.ts:27580:36": {
+    "overload": 2,
+    "answer": "no",
+    "reason": "objectLiterals.length is nonzero, so candidates contains an object/array literal rejected by the negated predicate."
+  },
+  "src/compiler/checker.ts:28532:30": {
+    "overload": 2,
+    "answer": "yes",
+    "reason": "The caller-supplied predicate f can accept every union constituent; the following equality explicitly handles that case."
+  },
+  "src/compiler/checker.ts:28545:40": {
+    "overload": 2,
+    "answer": "unknown",
+    "reason": "No complete source-reachability witness or forced-drop proof was established for this call."
+  },
+  "src/compiler/checker.ts:35256:25": {
+    "overload": 2,
+    "answer": "unknown",
+    "reason": "No complete source-reachability witness or forced-drop proof was established for this call."
+  },
+  "src/compiler/checker.ts:45744:39": {
+    "overload": 2,
+    "answer": "yes",
+    "reason": "A union containing no StringLike constituent passes every predicate; the following inequality handles the dropped case."
+  },
+  "src/compiler/checker.ts:47509:16": {
+    "overload": 5,
+    "answer": "yes",
+    "reason": "A symbol consisting solely of class/interface declarations passes every predicate."
+  },
+  "src/compiler/checker.ts:51301:28": {
+    "overload": 6,
+    "answer": "unknown",
+    "reason": "No complete source-reachability witness or forced-drop proof was established for this call."
+  },
+  "src/compiler/checker.ts:51492:55": {
+    "overload": 2,
+    "answer": "unknown",
+    "reason": "No complete source-reachability witness or forced-drop proof was established for this call."
+  },
+  "src/compiler/transformers/declarations.ts:430:40": {
+    "overload": 6,
+    "answer": "unknown",
+    "reason": "No complete source-reachability witness or forced-drop proof was established for this call."
+  },
+  "src/compiler/emitter.ts:688:15": {
+    "overload": 2,
+    "answer": "unknown",
+    "reason": "No complete source-reachability witness or forced-drop proof was established for this call."
+  },
+  "src/compiler/program.ts:2150:30": {
+    "overload": 2,
+    "answer": "unknown",
+    "reason": "No complete source-reachability witness or forced-drop proof was established for this call."
+  },
+  "src/compiler/program.ts:2910:35": {
+    "overload": 2,
+    "answer": "unknown",
+    "reason": "No complete source-reachability witness or forced-drop proof was established for this call."
+  },
+  "src/compiler/program.ts:2911:36": {
+    "overload": 2,
+    "answer": "unknown",
+    "reason": "No complete source-reachability witness or forced-drop proof was established for this call."
+  },
+  "src/compiler/executeCommandLine.ts:177:25": {
+    "overload": 2,
+    "answer": "unknown",
+    "reason": "No complete source-reachability witness or forced-drop proof was established for this call."
+  },
+  "src/compiler/executeCommandLine.ts:181:9": {
+    "overload": 2,
+    "answer": "unknown",
+    "reason": "No complete source-reachability witness or forced-drop proof was established for this call."
+  },
+  "src/services/transpile.ts:243:9": {
+    "overload": 2,
+    "answer": "unknown",
+    "reason": "No complete source-reachability witness or forced-drop proof was established for this call."
+  },
+  "src/services/services.ts:780:81": {
+    "overload": 5,
+    "answer": "yes",
+    "reason": "A getter-only declaration list passes every isGetAccessor test."
+  },
+  "src/services/services.ts:790:81": {
+    "overload": 5,
+    "answer": "yes",
+    "reason": "A setter-only declaration list passes every isSetAccessor test."
+  },
+  "src/services/services.ts:3603:11": {
+    "overload": 2,
+    "answer": "unknown",
+    "reason": "No complete source-reachability witness or forced-drop proof was established for this call."
+  },
+  "src/services/callHierarchy.ts:482:19": {
+    "overload": 5,
+    "answer": "unknown",
+    "reason": "No complete source-reachability witness or forced-drop proof was established for this call."
+  },
+  "src/services/codefixes/fixAddMissingMember.ts:773:12": {
+    "overload": 2,
+    "answer": "unknown",
+    "reason": "No complete source-reachability witness or forced-drop proof was established for this call."
+  },
+  "src/services/codefixes/fixAddMissingParam.ts:143:46": {
+    "overload": 5,
+    "answer": "yes",
+    "reason": "A declaration list consisting only of convertible signatures passes every predicate."
+  },
+  "src/services/completions.ts:2332:39": {
+    "overload": 2,
+    "answer": "unknown",
+    "reason": "No complete source-reachability witness or forced-drop proof was established for this call."
+  },
+  "src/services/completions.ts:4532:40": {
+    "overload": 2,
+    "answer": "unknown",
+    "reason": "No complete source-reachability witness or forced-drop proof was established for this call."
+  },
+  "src/services/completions.ts:4695:19": {
+    "overload": 2,
+    "answer": "unknown",
+    "reason": "No complete source-reachability witness or forced-drop proof was established for this call."
+  },
+  "src/services/completions.ts:5624:9": {
+    "overload": 2,
+    "answer": "unknown",
+    "reason": "No complete source-reachability witness or forced-drop proof was established for this call."
+  },
+  "src/services/completions.ts:5637:30": {
+    "overload": 2,
+    "answer": "unknown",
+    "reason": "No complete source-reachability witness or forced-drop proof was established for this call."
+  },
+  "src/services/stringCompletions.ts:614:18": {
+    "overload": 2,
+    "answer": "unknown",
+    "reason": "No complete source-reachability witness or forced-drop proof was established for this call."
+  },
+  "src/services/goToDefinition.ts:628:68": {
+    "overload": 6,
+    "answer": "unknown",
+    "reason": "No complete source-reachability witness or forced-drop proof was established for this call."
+  },
+  "src/services/goToDefinition.ts:634:29": {
+    "overload": 6,
+    "answer": "unknown",
+    "reason": "No complete source-reachability witness or forced-drop proof was established for this call."
+  },
+  "src/server/project.ts:1659:16": {
+    "overload": 2,
+    "answer": "unknown",
+    "reason": "No complete source-reachability witness or forced-drop proof was established for this call."
+  },
+  "src/server/session.ts:2856:33": {
+    "overload": 2,
+    "answer": "unknown",
+    "reason": "No complete source-reachability witness or forced-drop proof was established for this call."
+  },
+  "src/harness/fourslashImpl.ts:2394:23": {
+    "overload": 2,
+    "answer": "unknown",
+    "reason": "No complete source-reachability witness or forced-drop proof was established for this call."
+  },
+  "src/harness/fourslashImpl.ts:3285:30": {
+    "overload": 2,
+    "answer": "unknown",
+    "reason": "No complete source-reachability witness or forced-drop proof was established for this call."
+  }
+}
