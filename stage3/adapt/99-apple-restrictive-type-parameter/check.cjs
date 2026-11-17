@@ -36,8 +36,10 @@ const differing = [...new Set([...beforeFiles, ...afterFiles])].filter(name => {
     const a = path.join(before, name), b = path.join(after, name);
     return !fs.existsSync(a) || !fs.existsSync(b) || !fs.readFileSync(a).equals(fs.readFileSync(b));
 }).sort();
-const beforeChecker = fs.readFileSync(path.join(before, pin.file), 'utf8');
-const afterChecker = fs.readFileSync(path.join(after, pin.file), 'utf8');
+// The owner is located on LF text, as adapt.cjs locates it; a CRLF tree compares the same after the replacement.
+const beforeChecker = fs.readFileSync(path.join(before, pin.file), 'utf8').replace(/\r\n/g, '\n');
+const afterChecker = fs.readFileSync(path.join(after, pin.file), 'utf8').replace(/\r\n/g, '\n');
+console.log(`check: checker.ts line endings: before ${/\r\n/.test(fs.readFileSync(path.join(before, pin.file), 'utf8')) ? 'CRLF' : 'LF'}, after ${/\r\n/.test(fs.readFileSync(path.join(after, pin.file), 'utf8')) ? 'CRLF' : 'LF'}`);
 const beforeOwner = locate(beforeChecker), afterOwner = locate(afterChecker);
 const restored = afterChecker.slice(0, afterOwner.start) + pin.before + afterChecker.slice(afterOwner.end);
 verdict(
