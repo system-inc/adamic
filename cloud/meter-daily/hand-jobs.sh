@@ -8,15 +8,20 @@
 #
 # POSIX sh, since the gate's tool list declares sh and its Go test (cloud/meter_daily_test.go) runs it that way.
 
+# The pgrep it runs: METER_PGREP names one by its full path, so the test's fake is the one that runs and a fake that
+# can't be run fails the case on its own words, never falling through PATH to the box's real process table (#9q5d4hn:
+# a fake written beside a parallel case's fork read "text file busy", and dash ran Eve's real pgrep).
+handPgrep=${METER_PGREP:-pgrep}
+
 # handJobKeeper prints the pid of the box's hand-job keeper, or nothing when it has none.
 handJobKeeper() {
 	# pgrep exits 1 when nothing matches, and run.sh runs under set -e and pipefail, where that would end the run.
-	{ pgrep -u "${METER_KEEPER_USER:-ahra}" -f 'loom control keep' 2> /dev/null || true; } | head -n 1
+	{ "$handPgrep" -u "${METER_KEEPER_USER:-ahra}" -f 'loom control keep' 2> /dev/null || true; } | head -n 1
 }
 
 # handJobHeld succeeds while the keeper whose pid is $1 has a child: a hand job running on this box.
 handJobHeld() {
-	[ -n "$({ pgrep -P "$1" 2> /dev/null || true; } | head -n 1)" ]
+	[ -n "$({ "$handPgrep" -P "$1" 2> /dev/null || true; } | head -n 1)" ]
 }
 
 # Its variables carry a hand prefix: sh has no locals, and run.sh's own globals (step, above all) must survive it.

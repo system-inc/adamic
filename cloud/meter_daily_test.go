@@ -117,8 +117,11 @@ printf 'code=%s step=%s\n' "$code" "$step"
 			path = value
 		}
 	}
+	// The fake pgrep by its full path, never by PATH: a fake that can't be run reds the case, and the box's own pgrep is
+	// never read (#9q5d4hn). Mutant: the fakes written 0644, so none can run: every case with a keeper reds on the
+	// script's own "no hand-job keeper" line, never on a real pid.
 	command.Env = append(environment, "PATH="+bin+":"+path, "FAKE_KEEPER="+keeper, "FAKE_HELD_READS="+counter,
-		"METER_HAND_JOB_WAIT=2", "METER_HAND_JOB_STEP=1")
+		"METER_HAND_JOB_WAIT=2", "METER_HAND_JOB_STEP=1", "METER_PGREP="+filepath.Join(bin, "pgrep"))
 	output, err := command.CombinedOutput()
 	if err != nil {
 		t.Fatalf("sh: %v\n%s", err, output)
