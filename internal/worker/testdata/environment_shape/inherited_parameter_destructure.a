@@ -1,0 +1,6 @@
+import type {HttpRequest,HttpResponse} from 'adamic/http';
+interface Environment {readonly ZONE:string; readonly GREETING:string}
+function kind({constructor}:Environment):string { return typeof constructor; }
+export function handle(request:HttpRequest, environment:Environment):HttpResponse {
+return {status:200,headers:[],body:kind(environment)};
+}
