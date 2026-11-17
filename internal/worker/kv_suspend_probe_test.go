@@ -29,7 +29,7 @@ func TestKVSuspendProbe(t *testing.T) {
 		}
 		env := types.GetDeclaredTypeOfSymbol(envSymbol)
 		symbol := env.Symbol()
-		check := lower.CheckWorkerEnvironment(p, types, env)
+		check := lower.CheckWorkerEnvironment(p, types, env, nil)
 		release()
 		var lowered error
 		if check == nil {
