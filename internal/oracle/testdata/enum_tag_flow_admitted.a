@@ -1,7 +1,7 @@
 // A union with a tag that can lie (X's extra, an open enum Y lacks, like tsc's templateFlags)
 // refined only by steps its incoming types prove: each read below is admitted and agrees with Node.
 enum Kind { Text, Count }
-enum Extra { Only }
+enum Extra { Only, Other }
 interface X { readonly kind: Kind.Text; readonly extra: Extra; readonly text: string }
 interface Y { readonly kind: Kind.Count; readonly count: number }
 type Node = X | Y;

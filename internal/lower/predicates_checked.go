@@ -115,7 +115,7 @@ func (l *lowering) checkedPredicateClosedRemainder(call *ast.CallExpression, ind
 			}
 		}
 		tag := l.fieldLiteral(member, "kind")
-		if tag == nil {
+		if tag == nil || l.tagHoldsAnyNumber(tag) {
 			return nil
 		}
 		for _, other := range tags {
@@ -542,7 +542,7 @@ func (l *lowering) checkedPredicateTagDomainSeen(source, target *checker.Type, p
 	for _, member := range members {
 		held := l.fieldLiteral(member, "kind")
 		if held == nil && positive {
-			if field := l.checker.GetPropertyOfType(member, "kind"); member.Flags()&checker.TypeFlagsPrimitive == 0 && field != nil && l.openNumericEnumType(l.checker.GetTypeOfSymbol(field)) && l.checker.IsTypeAssignableTo(tag, l.checker.GetTypeOfSymbol(field)) && !l.checker.IsTypeAssignableTo(member, target) {
+			if field := l.checker.GetPropertyOfType(member, "kind"); member.Flags()&checker.TypeFlagsPrimitive == 0 && field != nil && l.tagHoldsAnyNumber(l.checker.GetTypeOfSymbol(field)) && !l.checker.IsTypeAssignableTo(member, target) {
 				return false
 			}
 			continue
@@ -552,6 +552,10 @@ func (l *lowering) checkedPredicateTagDomainSeen(source, target *checker.Type, p
 		}
 		key, ok := predicateLiteral(held)
 		if !ok {
+			return false
+		}
+		// A member whose kind is a one-member enum's member holds any number, so the wanted value too.
+		if positive && l.tagHoldsAnyNumber(held) && !l.checker.IsTypeAssignableTo(member, target) {
 			return false
 		}
 		if key == wanted && !l.checker.IsTypeAssignableTo(member, target) {

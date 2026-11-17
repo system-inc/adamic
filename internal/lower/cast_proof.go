@@ -397,7 +397,8 @@ func (l *lowering) unionMemberProof(source, target *checker.Type, refused error)
 		valid := true
 		for _, member := range members {
 			literal := l.fieldLiteral(member, proof.field)
-			if literal == nil {
+			// A one-member enum's member holds any number, so it tells no member apart (tagHoldsAnyNumber).
+			if literal == nil || l.tagHoldsAnyNumber(literal) {
 				valid = false
 				break
 			}
