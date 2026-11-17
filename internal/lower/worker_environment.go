@@ -5,21 +5,33 @@ import (
 
 	"github.com/microsoft/TypeScript/tsc/shim/ast"
 	"github.com/microsoft/TypeScript/tsc/shim/checker"
+	"github.com/system-inc/adamic/internal/ir"
 	"github.com/system-inc/adamic/internal/load"
 )
 
 // CheckWorkerEnvironment checks the bridge's projected environment, after the Worker
 // signature is checked and before lowering or writing output. All imported modules
 // share the entry interface's symbol. No checker fact escapes into IR or a cache.
-func CheckWorkerEnvironment(program *load.Program, types *checker.Checker, environment *checker.Type) error {
+func CheckWorkerEnvironment(program *load.Program, types *checker.Checker, environment *checker.Type, capabilitySites ...map[ir.SourcePosition]bool) error {
 	// The checked Worker contract owns discovery. Never rediscover it here: a
 	// missed export must not silently disable the environment boundary.
 	if environment == nil {
 		return fmt.Errorf("worker: compiler bug: two-parameter handle has no checked environment type")
 	}
+	return checkWorkerBindings(program, types, environment, capabilitySites...)
+}
+
+// One shared walk, with the environment absent for a one-parameter handler.
+func CheckWorkerCapabilities(program *load.Program, types *checker.Checker, sites map[ir.SourcePosition]bool) error {
+	return checkWorkerBindings(program, types, nil, sites)
+}
+func checkWorkerBindings(program *load.Program, types *checker.Checker, environment *checker.Type, capabilitySites ...map[ir.SourcePosition]bool) error {
 	entry := program.Files()[0]
 	l := &lowering{program: program, checker: types}
 	rules := workerEnvironmentRules{l: l, environment: environment}
+	if len(capabilitySites) != 0 {
+		rules.capabilitySites = capabilitySites[0]
+	}
 	modules, _ := ESMModuleOrder(types, entry)
 	for _, module := range modules {
 		var found error
@@ -40,13 +52,14 @@ func CheckWorkerEnvironment(program *load.Program, types *checker.Checker, envir
 }
 
 type workerEnvironmentRules struct {
-	l           *lowering
-	environment *checker.Type
-	exhausted   bool
+	l               *lowering
+	environment     *checker.Type
+	exhausted       bool
+	capabilitySites map[ir.SourcePosition]bool
 }
 
 func (r *workerEnvironmentRules) exact(t *checker.Type) bool {
-	return t != nil && t.Symbol() != nil && t.Symbol() == r.environment.Symbol() && t.Flags()&checker.TypeFlagsObject != 0
+	return r.environment != nil && t != nil && t.Symbol() != nil && t.Symbol() == r.environment.Symbol() && t.Flags()&checker.TypeFlagsObject != 0
 }
 
 // A predicate or assertion can narrow the environment to an intersection without
@@ -70,11 +83,11 @@ func (r *workerEnvironmentRules) environmentValue(t *checker.Type) bool {
 // handler's parameter, a const local or a parameter of that exact interface.
 // A class field or a this holding it refuses. Walk every type position, not names
 // of bindings: aliases, unions, containers and callable views cannot hide it.
-func (r *workerEnvironmentRules) holds(t *checker.Type, seen map[*checker.Type]bool, depth int) bool {
+func (r *workerEnvironmentRules) holds(t *checker.Type, seen map[*checker.Type]bool, depth int, kvOnly ...bool) bool {
 	if t == nil || seen[t] {
 		return false
 	}
-	if r.exact(t) {
+	if (len(kvOnly) == 0 && r.exact(t)) || r.kv(t) {
 		return true
 	}
 	seen[t] = true
@@ -84,7 +97,7 @@ func (r *workerEnvironmentRules) holds(t *checker.Type, seen map[*checker.Type]b
 	}
 	if alias := t.Alias(); alias != nil {
 		for _, argument := range alias.TypeArguments() {
-			if r.holds(argument, seen, depth+1) {
+			if r.holds(argument, seen, depth+1, kvOnly...) {
 				return true
 			}
 		}
@@ -119,7 +132,7 @@ func (r *workerEnvironmentRules) holds(t *checker.Type, seen map[*checker.Type]b
 		}
 	}
 	for _, inside := range next {
-		if r.holds(inside, seen, depth+1) {
+		if r.holds(inside, seen, depth+1, kvOnly...) {
 			return true
 		}
 	}
@@ -177,10 +190,18 @@ func (r *workerEnvironmentRules) slot(node *ast.Node) error {
 	case ast.KindThisKeyword:
 		t = r.l.checker.GetTypeAtLocation(node)
 	}
+	// Lower #bxaz0p1 rule 1: the environment remains its designated container;
+	// only its declared KV field, an exact const local or an exact parameter adds
+	// another KV slot. The same holds walk judges both symbols.
+	allowed = allowed || r.kvSlot(node, t)
+	r.noteCapability(node, t)
 	r.exhausted = false
 	if t != nil && !allowed && r.holds(t, map[*checker.Type]bool{}, 0) {
 		if r.exhausted {
 			return r.l.notYet(node, "proving a worker environment slot free of its interface beyond 64 type positions")
+		}
+		if r.holds(t, map[*checker.Type]bool{}, 0, true) {
+			return r.kvRefused(node, node.Kind.String()+" slot")
 		}
 		return r.refused(node, node.Kind.String()+" slot")
 	}
@@ -212,7 +233,7 @@ func (r *workerEnvironmentRules) parameterField(node *ast.Node) bool {
 }
 
 // CheckSignature admits only required readonly data properties of type exactly
-// string. A declared name can therefore never be a method such as hasOwnProperty
+// string or the registered KV namespace. A declared name can therefore never be a method such as hasOwnProperty
 // or a constructor: Function field (Language's e03/e04).
 func (r *workerEnvironmentRules) declared(access *ast.Node) bool {
 	var name string
@@ -263,6 +284,9 @@ func workerEnvironmentUse(node *ast.Node) string {
 
 func (r *workerEnvironmentRules) workerEnvironmentCheck(node *ast.Node) error {
 	if err := r.slot(node); err != nil {
+		return err
+	}
+	if err := r.kvUse(node); err != nil {
 		return err
 	}
 	if ast.IsAssignmentTarget(node) && r.parameterField(node) {

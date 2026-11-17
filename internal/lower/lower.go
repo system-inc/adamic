@@ -50,20 +50,49 @@ const (
 )
 
 func Lower(ctx context.Context, program *load.Program) (*ir.Program, error) {
-	return LowerWithOptions(ctx, program, Options{ProgramRegion: os.Getenv("ADAMIC_PROGRAM_REGION") == "1", OwnershipQuery: os.Getenv("ADAMIC_OWNERSHIP_QUERY") == "1"})
+	return LowerWithOptions(ctx, program, environmentOptions())
+}
+
+// environmentOptions are the Options a build reads from its environment, the same for a program and a Worker.
+func environmentOptions() Options {
+	return Options{ProgramRegion: os.Getenv("ADAMIC_PROGRAM_REGION") == "1", OwnershipQuery: os.Getenv("ADAMIC_OWNERSHIP_QUERY") == "1"}
 }
 
 func LowerWithOptions(ctx context.Context, program *load.Program, options Options) (*ir.Program, error) {
+	return lowerTarget(ctx, program, options, false, nil)
+}
+
+// LowerWorker uses the environment symbol already proved by CheckSignature. It
+// never discovers a handle or makes a second interpretation of that contract.
+func LowerWorker(ctx context.Context, program *load.Program, environment *ast.Symbol) (*ir.Program, error) {
+	return lowerTarget(ctx, program, environmentOptions(), true, environment)
+}
+func lowerTarget(ctx context.Context, program *load.Program, options Options, worker bool, environment *ast.Symbol) (*ir.Program, error) {
 	files := program.Files()
 	if len(files) != 1 {
 		return nil, fmt.Errorf("lower: stage 0 compiles a program from one entry file, got %d", len(files))
 	}
 	entry := files[0]
+	if !worker {
+		if site := program.WorkersImport(); site != nil {
+			return nil, &Refused{Where: program.Where(site), What: "an import of adamic/workers outside a Worker", Fix: "compile it with adamic worker"}
+		}
+	}
+
 	// The lower phase's line on $ADAMIC_BUILD_LOG, once a program: a program region's discovery pass is in it.
 	defer buildlog.Phase("lower", time.Now())
 	// Stage 0 checks single-threaded, so one checker answers for every file.
 	typeChecker, release := program.Checker(ctx, entry)
 	defer release()
+	if worker {
+		if environment != nil {
+			if err := CheckWorkerEnvironment(program, typeChecker, typeChecker.GetDeclaredTypeOfSymbol(environment)); err != nil {
+				return nil, err
+			}
+		} else if err := CheckWorkerCapabilities(program, typeChecker, nil); err != nil {
+			return nil, err
+		}
+	}
 
 	var plan *programMembership
 	if options.ProgramRegion {
