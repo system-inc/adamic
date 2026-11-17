@@ -23,7 +23,7 @@ func (l *lowering) keptCheckDowncastRefusal(node *ast.Node) error {
 	if err != nil {
 		return err
 	}
-	if len(proof.classes) > 0 || !proof.interfaceView && !proof.structuralView && len(proof.allowed) == 0 {
+	if len(proof.classes) > 0 || !proof.interfaceView && !proof.structuralView && !proof.overlap && len(proof.allowed) == 0 {
 		return nil
 	}
 	source := l.checker.TypeToString(l.concrete(l.checker.GetTypeAtLocation(node.AsAsExpression().Expression)))

@@ -67,6 +67,9 @@ func (l *lowering) castValue(node *ast.Node) (ir.Expression, error) {
 		}
 		value = ir.Coalesce{Value: value, Panic: ir.StringConstant{Index: l.constant(message)}, Of: ir.Object}
 	}
+	if proof.overlap {
+		return l.overlapViewCast(node, value, source, target)
+	}
 	if proof.structuralView {
 		return l.structuralViewCast(node, value, source, target)
 	}
