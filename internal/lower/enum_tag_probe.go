@@ -11,11 +11,13 @@ import (
 	"sync"
 
 	"github.com/microsoft/TypeScript/tsc/shim/ast"
+	"github.com/microsoft/TypeScript/tsc/shim/checker"
 )
 
 type enumTagProbeRecord struct {
-	why string
-	at  *ast.Node
+	why    string
+	at     *ast.Node
+	detail string
 }
 
 var (
@@ -33,6 +35,33 @@ func (l *lowering) probeSet(why string, at *ast.Node) {
 		return
 	}
 	enumTagProbeState.Store(l, enumTagProbeRecord{why: why, at: at})
+}
+
+func (l *lowering) probeSetDetail(why string, at *ast.Node, detail string) {
+	if _, ok := enumTagProbeState.Load(l); ok {
+		return
+	}
+	enumTagProbeState.Store(l, enumTagProbeRecord{why: why, at: at, detail: detail})
+}
+
+// probeHazardDetail names the first member whose field an open numeric enum types and that isn't one
+// type in every member, as enumTagHazardOf finds it, or says the hazard is a shared value.
+func (l *lowering) probeHazardDetail(union *checker.Type, field string) string {
+	if union.Flags()&checker.TypeFlagsUnion == 0 {
+		return "not a union"
+	}
+	for _, member := range union.Types() {
+		for _, property := range l.checker.GetPropertiesOfType(member) {
+			if field != "" && property.Name != field {
+				continue
+			}
+			tag := l.checker.GetTypeOfSymbol(property)
+			if l.openNumericEnumType(tag) && !sharedByEveryMember(l.checker, union, property.Name, tag) {
+				return "open " + property.Name + " on " + l.checker.TypeToString(member) + ": " + l.checker.TypeToString(tag)
+			}
+		}
+	}
+	return "shared value"
 }
 
 func (l *lowering) probeWrite(node, reference *ast.Node) {
@@ -76,6 +105,7 @@ func (l *lowering) probeWrite(node, reference *ast.Node) {
 		"at":        at,
 		"atKind":    atKind,
 		"atText":    text(record.at),
+		"detail":    record.detail,
 	})
 	enumTagProbeMutex.Lock()
 	defer enumTagProbeMutex.Unlock()
