@@ -7,7 +7,7 @@ import subprocess
 import tempfile
 
 HERE = Path(__file__).resolve().parent
-RUNTIME = HERE.parents[1] / 'runtime'
+RUNTIME = HERE.parents[2] / 'native_runtime' / 'c'
 FLAGS = ['-std=c11', '-Wall', '-Wextra', '-Werror', '-pedantic', '-O1', '-g',
          '-pthread', '-fno-omit-frame-pointer']
 MODES = ['resolve', 'reject', 'early', 'double', 'abandon', 'cancel', 'cancel-abandon', 'exit',
