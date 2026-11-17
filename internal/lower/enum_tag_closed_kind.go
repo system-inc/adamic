@@ -135,7 +135,16 @@ func (l *lowering) closedKindReason(of *checker.Type, field, construct string, s
 
 // closedKindReaches is whether a value built at built reaches of with no hatch: built is assignable to of,
 // or, as the object a write's target reads off can be, is a union with a member that is.
+//
+// A site whose type is any reaches nothing here: a value is any only through a cast to any or a binding
+// typed any, and lowering refuses both in .ts and .a (no-unchecked-cast, and "a value of type any"), so a
+// program that holds such a write never compiles and no value it makes is ever read (job J-q7nwd21: the
+// dot form, a string key, tsc's clone loop `(clone as any)[key] = (node as any)[key]`, a binding and a
+// parameter, each refused). Without this, that one write in nodeFactory.ts kept every supertype open.
 func (l *lowering) closedKindReaches(built, of *checker.Type) bool {
+	if built.Flags()&checker.TypeFlagsAny != 0 {
+		return false
+	}
 	if l.checker.IsTypeAssignableTo(built, of) {
 		return true
 	}
