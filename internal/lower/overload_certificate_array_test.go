@@ -79,12 +79,16 @@ console.log(doubled.join(","));
 // Lower's probe (J-h37mw8d on #5fws6q8): overload 1 called where the mapper changes the element's type.
 // The instance stores (T | U)[] while the call reads U[], and before the storage condition the string to
 // number row lowered and printed 1.0,1.0 natively where Node prints 4.0,2.0, each boxed union read as a
-// number. Each row now stops at the call or agrees with Node natively. Mutant: the storage condition
-// dropped, and the string to number row lowers and disagrees natively.
+// number. Each row now stops at the call or agrees with Node natively. The union mapper row is Compiler's:
+// its T | U is a union arm collapsing onto U, the instance's result and the call's both (string | number)[]
+// as tsc infers U from the mapper's result, so the same ir.Type at each level decides it, never their being
+// one checker type. Mutant: the storage condition dropped, and the string to number row lowers and
+// disagrees natively.
 func TestOverloadCertificateArrayInstanceStorage(t *testing.T) {
 	t.Parallel()
 	for _, probe := range []struct{ name, source, want string }{
 		{"string to number", overloadCertificateArrayFrom + "const names = new Map<string, string>([[\"a\", \"xyz\"], [\"b\", \"q\"]]);\nconst sizes = arrayFrom(names.values(), s => s.length);\nconsole.log(sizes.map(n => (n + 1).toFixed(1)).join(\",\"));\n", "4.0,2.0\n"},
+		{"string through a union mapper", overloadCertificateArrayFrom + "const names = new Map<string, string>([[\"a\", \"xyz\"], [\"b\", \"q\"]]);\nconst got = arrayFrom(names.values(), (x: string | number) => x);\nconsole.log(got.map(x => typeof x === \"string\" ? x.toUpperCase() : (x + 1).toFixed(1)).join(\",\"));\n", "XYZ,Q\n"},
 		{"number to string", overloadCertificateArrayFrom + "const counts = new Map<string, number>([[\"a\", 3], [\"b\", 1]]);\nconst named = arrayFrom(counts.values(), x => `v${x}`);\nconsole.log(named.map(s => s.toUpperCase()).join(\",\"));\nconst first = named[0];\nconsole.log(`${first === undefined ? -1 : first.length}`);\n", "V3,V1\n2\n"},
 	} {
 		t.Run(probe.name, func(t *testing.T) {

@@ -142,4 +142,5 @@ Expected: `TestOverloadCertificateArrayInstanceStorage/string_to_number` reds: t
 4.0,2.0 (J-h37mw8d), so the row's native check fails. Every `TestOverloadCertificateMapInstanceStorage` row reds
 too, each stopping inside the instance where no Map of a union lowers, in words other than the storage
 condition's. The T = U rows, `TestOverloadCertificateArrayFromLowers` and `TestOverloadCertificateArrayToMapLowers`,
-stay green: their instances store what the call reads.
+stay green: their instances store what the call reads, and so does
+`TestOverloadCertificateArrayInstanceStorage/string_through_a_union_mapper`, which lowers either way.

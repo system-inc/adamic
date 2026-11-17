@@ -541,16 +541,26 @@ func (l *lowering) overloadCertificateStorage(node, overload *ast.Node, resolved
 	return nil
 }
 
-// overloadCertificateSameStorage is whether a value of type stored is held as one of type read is, level by
-// level, by the lowering's own representation of each level, kept as an element or a Map value is: the same
-// at the top and, for an array or a Map or Set, the same elements, keys and values all the way down. Any
-// other type with type arguments, a tuple among them, is the same only when it's one type with read.
+// overloadCertificateSameStorage is whether a value of type stored is held as one of type read is, decided
+// only by the ir.Type each side lowers to, level by level, through the functions lowering and the emitter
+// hold a checker type by: kept for the result, an array's element and a Map's value, representation for a
+// Map's key and a Set's element, as mapTypes and the array roads read them. The same at the top and, through
+// an array, Map or Set, the same all the way down. Never checker identity or assignability, since two types
+// tsc calls one can lower differently, a branded arm or a literal widened in one place (Compiler's
+// condition on #5fws6q8). Any other type with type arguments, a tuple among them, isn't read: false.
 func (l *lowering) overloadCertificateSameStorage(stored, read *checker.Type) bool {
-	if identicalTypes(l.checker, stored, read) {
-		return true
+	return l.overloadCertificateSameHeld(stored, read, false)
+}
+
+// overloadCertificateSameHeld is overloadCertificateSameStorage at one level, keyed when that level is a
+// Map's key or a Set's element.
+func (l *lowering) overloadCertificateSameHeld(stored, read *checker.Type, keyed bool) bool {
+	held := l.kept
+	if keyed {
+		held = l.representation
 	}
-	storedHeld, storedKnown := l.kept(stored)
-	readHeld, readKnown := l.kept(read)
+	storedHeld, storedKnown := held(stored)
+	readHeld, readKnown := held(read)
 	if !storedKnown || !readKnown || storedHeld != readHeld {
 		return false
 	}
@@ -569,11 +579,12 @@ func (l *lowering) overloadCertificateSameStorage(stored, read *checker.Type) bo
 		}
 		return ""
 	}
-	if collection(stored) == "" || collection(stored) != collection(read) || len(storedArguments) != len(readArguments) {
+	kind := collection(stored)
+	if kind == "" || kind != collection(read) || len(storedArguments) != len(readArguments) {
 		return false
 	}
 	for index := range storedArguments {
-		if !l.overloadCertificateSameStorage(storedArguments[index], readArguments[index]) {
+		if !l.overloadCertificateSameHeld(storedArguments[index], readArguments[index], kind != "Array" && index == 0) {
 			return false
 		}
 	}
