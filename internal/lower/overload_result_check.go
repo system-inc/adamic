@@ -68,8 +68,9 @@ func (l *lowering) narrowOverloadJudged(overload *ast.Node) bool {
 		return false
 	}
 	// A narrowing, never a different result: every value the overload promises is one the implementation
-	// can produce, and the promise is one the call can check.
-	return l.checker.IsTypeAssignableTo(to, from) && l.overloadResultCheckable(to, map[*checker.Type]bool{})
+	// can produce, and the promise is one the call can check, whole or, for an Extract by kind, at each
+	// call's instance (overloadKindExtract).
+	return l.checker.IsTypeAssignableTo(to, from) && (l.overloadResultCheckable(to, map[*checker.Type]bool{}) || l.overloadKindExtract(to, from))
 }
 
 // overloadResultCheckable is whether predicateMembership checks promised whole at a call: undefined, a
