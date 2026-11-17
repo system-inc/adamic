@@ -54,3 +54,20 @@ own receipts and return their own exit codes. The full batch has its own
 coordinator/manifest. This is scheduling only, not a cancellation or alteration
 of a compiler probe. Any coordinator exit is recorded separately from probe
 exits. The final report will require all stream trailers and exact selections.
+
+## Completed entry checkpoint
+
+Both first-error tsc.ts entry probes exited **0**, with full relation trailers,
+CommonJSBundle, identical checker-clean headers, and no relation overflow at
+load or end. Findings: **4,488 -> 4,485**. Grades: **6 gone, 3 reached,
+0 new, 0 changed**. There are **19 non-target overload sets / 67 findings**
+in the entry ledger, all unchanged. The full caller-file survey is incomplete,
+so this is not yet an overall answer for the additional contexts.
+
+The six removed observations are arrayFrom overload 1 at four caller units and
+arrayToMap overload 2 at two caller units. The three newly reached stops are
+the arrayFrom/arrayToMap storage refusals in builder and a ToPrimitive/String
+conversion stop in executeCommandLine. None is graded as a fresh regression
+in a previously unblocked unit. Entry raw streams, timings, receipts and the
+planned scheduler-interruption log are retained under entry/. The probes
+completed normally; the scheduler itself exited 130 after joining them.

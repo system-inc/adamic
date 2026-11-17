@@ -1,0 +1,11 @@
+{"label": "head", "mode": "entry", "file": "src/tsc/tsc.ts", "exit": 0, "seconds": 1881.424080634, "maxRssKiB": 3901196, "streamComplete": true, "findings": 4485, "boundary": null}
+{"label": "base", "mode": "entry", "file": "src/tsc/tsc.ts", "exit": 0, "seconds": 1898.2267636330002, "maxRssKiB": 3882716, "streamComplete": true, "findings": 4488, "boundary": null}
+Traceback (most recent call last):
+  File "/workspace/scratch/overload-certificates-census/report/stage3/census/overload-certificates-census/run-pair.py", line 44, in <module>
+    while not ((tree/'patch-set.md').exists() and all((scratch/(label+'-tools')/'provenance.json').exists() for label in ['base','head'])):time.sleep(2)
+                    ^^^^^^^^^^
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/concurrent/futures/_base.py", line 451, in result
+    self._condition.wait(timeout)
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/threading.py", line 355, in wait
+    waiter.acquire()
+KeyboardInterrupt

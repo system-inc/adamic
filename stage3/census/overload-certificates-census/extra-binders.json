@@ -1,0 +1,384 @@
+{
+  "scope": "syntactic sibling function declarations with more implementation binders; not an acceptance census",
+  "rows": [
+    {
+      "file": "src/compiler/core.ts",
+      "line": 1449,
+      "column": 1,
+      "name": "group",
+      "entryReach": true,
+      "implementationBinders": [
+        "T",
+        "K"
+      ],
+      "overloadBinders": [
+        "T"
+      ],
+      "overload": "export function group<T>(values: readonly T[], getGroupId: (value: T) => string): readonly (readonly T[])[];",
+      "implementationSignature": "export function group<T, K>(values: readonly T[], getGroupId: (value: T) => K, resultSelector: (values: readonly T[]) => readonly T[] = identity): readonly (readonly T[])[] "
+    },
+    {
+      "file": "src/compiler/core.ts",
+      "line": 1431,
+      "column": 1,
+      "name": "arrayToMultiMap",
+      "entryReach": true,
+      "implementationBinders": [
+        "K",
+        "V",
+        "U"
+      ],
+      "overloadBinders": [
+        "K",
+        "V"
+      ],
+      "overload": "export function arrayToMultiMap<K, V>(values: readonly V[], makeKey: (value: V) => K): MultiMap<K, V>;",
+      "implementationSignature": "export function arrayToMultiMap<K, V, U>(values: readonly V[], makeKey: (value: V) => K, makeValue: (value: V) => V | U = identity): MultiMap<K, V | U> "
+    },
+    {
+      "file": "src/compiler/core.ts",
+      "line": 1417,
+      "column": 1,
+      "name": "arrayToNumericMap",
+      "entryReach": true,
+      "implementationBinders": [
+        "T",
+        "U"
+      ],
+      "overloadBinders": [
+        "T"
+      ],
+      "overload": "export function arrayToNumericMap<T>(array: readonly T[], makeKey: (value: T) => number): T[];",
+      "implementationSignature": "export function arrayToNumericMap<T, U>(array: readonly T[], makeKey: (value: T) => number, makeValue: (value: T) => T | U = identity): (T | U)[] "
+    },
+    {
+      "file": "src/compiler/core.ts",
+      "line": 1398,
+      "column": 1,
+      "name": "arrayToMap",
+      "entryReach": true,
+      "implementationBinders": [
+        "K",
+        "V1",
+        "V2"
+      ],
+      "overloadBinders": [
+        "K",
+        "V"
+      ],
+      "overload": "export function arrayToMap<K, V>(array: readonly V[], makeKey: (value: V) => K | undefined): Map<K, V>;",
+      "implementationSignature": "export function arrayToMap<K, V1, V2>(array: readonly V1[], makeKey: (value: V1) => K | undefined, makeValue: (value: V1) => V1 | V2 = identity): Map<K, V1 | V2> "
+    },
+    {
+      "file": "src/compiler/core.ts",
+      "line": 1402,
+      "column": 1,
+      "name": "arrayToMap",
+      "entryReach": true,
+      "implementationBinders": [
+        "K",
+        "V1",
+        "V2"
+      ],
+      "overloadBinders": [
+        "T"
+      ],
+      "overload": "export function arrayToMap<T>(array: readonly T[], makeKey: (value: T) => string | undefined): Map<string, T>;",
+      "implementationSignature": "export function arrayToMap<K, V1, V2>(array: readonly V1[], makeKey: (value: V1) => K | undefined, makeValue: (value: V1) => V1 | V2 = identity): Map<K, V1 | V2> "
+    },
+    {
+      "file": "src/compiler/core.ts",
+      "line": 1404,
+      "column": 1,
+      "name": "arrayToMap",
+      "entryReach": true,
+      "implementationBinders": [
+        "K",
+        "V1",
+        "V2"
+      ],
+      "overloadBinders": [
+        "T",
+        "U"
+      ],
+      "overload": "export function arrayToMap<T, U>(array: readonly T[], makeKey: (value: T) => string | undefined, makeValue: (value: T) => U): Map<string, U>;",
+      "implementationSignature": "export function arrayToMap<K, V1, V2>(array: readonly V1[], makeKey: (value: V1) => K | undefined, makeValue: (value: V1) => V1 | V2 = identity): Map<K, V1 | V2> "
+    },
+    {
+      "file": "src/compiler/core.ts",
+      "line": 1336,
+      "column": 1,
+      "name": "arrayFrom",
+      "entryReach": true,
+      "implementationBinders": [
+        "T",
+        "U"
+      ],
+      "overloadBinders": [
+        "T"
+      ],
+      "overload": "export function arrayFrom<T>(iterator: Iterable<T>): T[];",
+      "implementationSignature": "export function arrayFrom<T, U>(iterator: Iterable<T>, map?: (t: T) => U): (T | U)[] "
+    },
+    {
+      "file": "src/compiler/core.ts",
+      "line": 805,
+      "column": 1,
+      "name": "sortAndDeduplicate",
+      "entryReach": true,
+      "implementationBinders": [
+        "T"
+      ],
+      "overloadBinders": [],
+      "overload": "export function sortAndDeduplicate(array: readonly string[]): SortedReadonlyArray<string>;",
+      "implementationSignature": "export function sortAndDeduplicate<T>(array: readonly T[], comparer?: Comparer<T>, equalityComparer?: EqualityComparer<T>): SortedReadonlyArray<T> "
+    },
+    {
+      "file": "src/compiler/program.ts",
+      "line": 2193,
+      "column": 5,
+      "name": "resolveTypeReferenceDirectiveNamesReusingOldState",
+      "entryReach": true,
+      "implementationBinders": [
+        "T extends string | FileReference"
+      ],
+      "overloadBinders": [],
+      "overload": "function resolveTypeReferenceDirectiveNamesReusingOldState(typeDirectiveNames: readonly FileReference[], containingFile: SourceFile): readonly ResolvedTypeReferenceDirectiveWithFailedLookupLocations[];",
+      "implementationSignature": "function resolveTypeReferenceDirectiveNamesReusingOldState<T extends string | FileReference>(typeDirectiveNames: readonly T[], containingFile: string | SourceFile): readonly ResolvedTypeReferenceDirectiveWithFailedLookupLocations[] "
+    },
+    {
+      "file": "src/compiler/program.ts",
+      "line": 2194,
+      "column": 5,
+      "name": "resolveTypeReferenceDirectiveNamesReusingOldState",
+      "entryReach": true,
+      "implementationBinders": [
+        "T extends string | FileReference"
+      ],
+      "overloadBinders": [],
+      "overload": "function resolveTypeReferenceDirectiveNamesReusingOldState(typeDirectiveNames: readonly string[], containingFile: string): readonly ResolvedTypeReferenceDirectiveWithFailedLookupLocations[];",
+      "implementationSignature": "function resolveTypeReferenceDirectiveNamesReusingOldState<T extends string | FileReference>(typeDirectiveNames: readonly T[], containingFile: string | SourceFile): readonly ResolvedTypeReferenceDirectiveWithFailedLookupLocations[] "
+    },
+    {
+      "file": "src/compiler/scanner.ts",
+      "line": 941,
+      "column": 1,
+      "name": "forEachTrailingCommentRange",
+      "entryReach": true,
+      "implementationBinders": [
+        "T",
+        "U"
+      ],
+      "overloadBinders": [
+        "U"
+      ],
+      "overload": "export function forEachTrailingCommentRange<U>(text: string, pos: number, cb: (pos: number, end: number, kind: CommentKind, hasTrailingNewLine: boolean) => U): U | undefined;",
+      "implementationSignature": "export function forEachTrailingCommentRange<T, U>(text: string, pos: number, cb: (pos: number, end: number, kind: CommentKind, hasTrailingNewLine: boolean, state: T) => U, state?: T): U | undefined "
+    },
+    {
+      "file": "src/compiler/scanner.ts",
+      "line": 935,
+      "column": 1,
+      "name": "forEachLeadingCommentRange",
+      "entryReach": true,
+      "implementationBinders": [
+        "T",
+        "U"
+      ],
+      "overloadBinders": [
+        "U"
+      ],
+      "overload": "export function forEachLeadingCommentRange<U>(text: string, pos: number, cb: (pos: number, end: number, kind: CommentKind, hasTrailingNewLine: boolean) => U): U | undefined;",
+      "implementationSignature": "export function forEachLeadingCommentRange<T, U>(text: string, pos: number, cb: (pos: number, end: number, kind: CommentKind, hasTrailingNewLine: boolean, state: T) => U, state?: T): U | undefined "
+    },
+    {
+      "file": "src/compiler/utilities.ts",
+      "line": 8247,
+      "column": 1,
+      "name": "mutateMap",
+      "entryReach": true,
+      "implementationBinders": [
+        "K",
+        "T",
+        "U"
+      ],
+      "overloadBinders": [
+        "K",
+        "T"
+      ],
+      "overload": "export function mutateMap<K, T>(map: Map<K, T>, newMap: ReadonlySet<K> | undefined, options: MutateMapWithNewSetOptions<K, T>): void;",
+      "implementationSignature": "export function mutateMap<K, T, U>(map: Map<K, T>, newMap: ReadonlyMap<K, U> | ReadonlySet<K> | undefined, options: MutateMapOptions<K, T, U>) "
+    },
+    {
+      "file": "src/compiler/utilities.ts",
+      "line": 8198,
+      "column": 1,
+      "name": "mutateMapSkippingNewValues",
+      "entryReach": true,
+      "implementationBinders": [
+        "K",
+        "T",
+        "U"
+      ],
+      "overloadBinders": [
+        "K",
+        "T"
+      ],
+      "overload": "export function mutateMapSkippingNewValues<K, T>(\r\n    map: Map<K, T>,\r\n    newMap: ReadonlySet<K> | undefined,\r\n    options: MutateMapSkippingNewValuesDelete<K, T>,\r\n): void;",
+      "implementationSignature": "export function mutateMapSkippingNewValues<K, T, U>(\r\n    map: Map<K, T>,\r\n    newMap: ReadonlyMap<K, U> | ReadonlySet<K> | undefined,\r\n    options: MutateMapSkippingNewValuesOptions<K, T, U>,\r\n) "
+    },
+    {
+      "file": "src/compiler/utilitiesPublic.ts",
+      "line": 766,
+      "column": 1,
+      "name": "getOriginalNode",
+      "entryReach": true,
+      "implementationBinders": [
+        "T extends Node"
+      ],
+      "overloadBinders": [],
+      "overload": "export function getOriginalNode(node: Node): Node;",
+      "implementationSignature": "export function getOriginalNode<T extends Node>(node: Node | undefined, nodeTest?: (node: Node) => node is T): T | undefined "
+    },
+    {
+      "file": "src/compiler/utilitiesPublic.ts",
+      "line": 768,
+      "column": 1,
+      "name": "getOriginalNode",
+      "entryReach": true,
+      "implementationBinders": [
+        "T extends Node"
+      ],
+      "overloadBinders": [],
+      "overload": "export function getOriginalNode(node: Node | undefined): Node | undefined;",
+      "implementationSignature": "export function getOriginalNode<T extends Node>(node: Node | undefined, nodeTest?: (node: Node) => node is T): T | undefined "
+    },
+    {
+      "file": "src/compiler/factory/nodeFactory.ts",
+      "line": 1441,
+      "column": 5,
+      "name": "createToken",
+      "entryReach": true,
+      "implementationBinders": [
+        "TKind extends SyntaxKind"
+      ],
+      "overloadBinders": [],
+      "overload": "function createToken(token: SyntaxKind.SuperKeyword): SuperExpression;",
+      "implementationSignature": "function createToken<TKind extends SyntaxKind>(token: TKind) "
+    },
+    {
+      "file": "src/compiler/factory/nodeFactory.ts",
+      "line": 1442,
+      "column": 5,
+      "name": "createToken",
+      "entryReach": true,
+      "implementationBinders": [
+        "TKind extends SyntaxKind"
+      ],
+      "overloadBinders": [],
+      "overload": "function createToken(token: SyntaxKind.ThisKeyword): ThisExpression;",
+      "implementationSignature": "function createToken<TKind extends SyntaxKind>(token: TKind) "
+    },
+    {
+      "file": "src/compiler/factory/nodeFactory.ts",
+      "line": 1443,
+      "column": 5,
+      "name": "createToken",
+      "entryReach": true,
+      "implementationBinders": [
+        "TKind extends SyntaxKind"
+      ],
+      "overloadBinders": [],
+      "overload": "function createToken(token: SyntaxKind.NullKeyword): NullLiteral;",
+      "implementationSignature": "function createToken<TKind extends SyntaxKind>(token: TKind) "
+    },
+    {
+      "file": "src/compiler/factory/nodeFactory.ts",
+      "line": 1444,
+      "column": 5,
+      "name": "createToken",
+      "entryReach": true,
+      "implementationBinders": [
+        "TKind extends SyntaxKind"
+      ],
+      "overloadBinders": [],
+      "overload": "function createToken(token: SyntaxKind.TrueKeyword): TrueLiteral;",
+      "implementationSignature": "function createToken<TKind extends SyntaxKind>(token: TKind) "
+    },
+    {
+      "file": "src/compiler/factory/nodeFactory.ts",
+      "line": 1445,
+      "column": 5,
+      "name": "createToken",
+      "entryReach": true,
+      "implementationBinders": [
+        "TKind extends SyntaxKind"
+      ],
+      "overloadBinders": [],
+      "overload": "function createToken(token: SyntaxKind.FalseKeyword): FalseLiteral;",
+      "implementationSignature": "function createToken<TKind extends SyntaxKind>(token: TKind) "
+    },
+    {
+      "file": "src/compiler/factory/nodeFactory.ts",
+      "line": 1446,
+      "column": 5,
+      "name": "createToken",
+      "entryReach": true,
+      "implementationBinders": [
+        "TKind extends SyntaxKind"
+      ],
+      "overloadBinders": [],
+      "overload": "function createToken(token: SyntaxKind.EndOfFileToken): EndOfFileToken;",
+      "implementationSignature": "function createToken<TKind extends SyntaxKind>(token: TKind) "
+    },
+    {
+      "file": "src/compiler/factory/nodeFactory.ts",
+      "line": 1447,
+      "column": 5,
+      "name": "createToken",
+      "entryReach": true,
+      "implementationBinders": [
+        "TKind extends SyntaxKind"
+      ],
+      "overloadBinders": [],
+      "overload": "function createToken(token: SyntaxKind.Unknown): Token<SyntaxKind.Unknown>;",
+      "implementationSignature": "function createToken<TKind extends SyntaxKind>(token: TKind) "
+    },
+    {
+      "file": "src/compiler/factory/utilities.ts",
+      "line": 1436,
+      "column": 1,
+      "name": "createBinaryExpressionTrampoline",
+      "entryReach": true,
+      "implementationBinders": [
+        "TOuterState",
+        "TState",
+        "TResult"
+      ],
+      "overloadBinders": [
+        "TState",
+        "TResult"
+      ],
+      "overload": "export function createBinaryExpressionTrampoline<TState, TResult>(\r\n    onEnter: (node: BinaryExpression, prev: TState | undefined) => TState,\r\n    onLeft: ((left: Expression, userState: TState, node: BinaryExpression) => BinaryExpression | void) | undefined,\r\n    onOperator: ((operatorToken: BinaryOperatorToken, userState: TState, node: BinaryExpression) => void) | undefined,\r\n    onRight: ((right: Expression, userState: TState, node: BinaryExpression) => BinaryExpression | void) | undefined,\r\n    onExit: (node: BinaryExpression, userState: TState) => TResult,\r\n    foldState: ((userState: TState, result: TResult, side: \"left\" | \"right\") => TState) | undefined,\r\n): (node: BinaryExpression) => TResult;",
+      "implementationSignature": "export function createBinaryExpressionTrampoline<TOuterState, TState, TResult>(\r\n    onEnter: (node: BinaryExpression, prev: TState | undefined, outerState: TOuterState) => TState,\r\n    onLeft: ((left: Expression, userState: TState, node: BinaryExpression) => BinaryExpression | void) | undefined,\r\n    onOperator: ((operatorToken: BinaryOperatorToken, userState: TState, node: BinaryExpression) => void) | undefined,\r\n    onRight: ((right: Expression, userState: TState, node: BinaryExpression) => BinaryExpression | void) | undefined,\r\n    onExit: (node: BinaryExpression, userState: TState) => TResult,\r\n    foldState: ((userState: TState, result: TResult, side: \"left\" | \"right\") => TState) | undefined,\r\n) "
+    },
+    {
+      "file": "src/compiler/transformers/typeSerializer.ts",
+      "line": 151,
+      "column": 5,
+      "name": "setSerializerContextAnd",
+      "entryReach": true,
+      "implementationBinders": [
+        "TNode extends Node | undefined",
+        "T",
+        "R"
+      ],
+      "overloadBinders": [
+        "TNode extends Node | undefined",
+        "R"
+      ],
+      "overload": "function setSerializerContextAnd<TNode extends Node | undefined, R>(serializerContext: RuntimeTypeSerializerContext, cb: (node: TNode) => R, node: TNode): R;",
+      "implementationSignature": "function setSerializerContextAnd<TNode extends Node | undefined, T, R>(serializerContext: RuntimeTypeSerializerContext, cb: (node: TNode, arg?: T) => R, node: TNode, arg?: T) "
+    }
+  ]
+}

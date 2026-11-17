@@ -13,7 +13,7 @@ baseRoot=str(tree)+'/'
 def relative(s):return str(s).replace(baseRoot,'')
 def strip(s):
  s=relative(s or '')
- return re.sub(r'((?:[^\s:\"\'<>]+/)?[^\s:\"\'<>]+\.(?:ts|tsx|a|go)):\d+(?::\d+)?',r'\1',s)
+ return re.sub(r'((?:[^\s:\"\'<>]+/)?[^\s:\"\'<>]+\.(?:ts|tsx|a|go)):\d+(?::\d+)?','<position>',s)
 def fingerprint(f):return tuple([f.get('kind',''),f.get('phase',''),strip(f.get('reason','')),strip(f.get('text',''))])
 def family(f):
  reason=strip(f.get('reason',''));m=re.search(r'overload (\d+) of (\S+) (result|parameter \S+|type parameter \S+|type \S+)',reason)
@@ -67,6 +67,10 @@ for (label,mode,file),b in sorted(index.items()):
  pair={'mode':mode,'file':file,'baseHeader':br[0],'headHeader':hr[0],'headerIdentical':br[0]==hr[0],'baseRelationReport':br[-1],'headRelationReport':hr[-1],'baseFindings':len(bf),'headFindings':len(hf),'unchanged':unchanged,'counts':dict(collections.Counter(c['grade'] for c in changes)),'changes':changes,'unitStatuses':{'base':{k[1]:v.get('status') for k,v in bu.items()},'head':{k[1]:v.get('status') for k,v in hu.items()}}}
  assert pair['baseFindings']==unchanged+sum(c['grade'] in ('gone','changed') for c in changes)
  assert pair['headFindings']==unchanged+sum(c['grade'] in ('new','reached','changed') for c in changes)
+ pair['unitIdentitiesEqual']=bu.keys()==hu.keys()
+ pair['unitStatusChanges']=[{'unitKey':list(k),'base':bu.get(k,{}).get('status'),'head':hu.get(k,{}).get('status')} for k in bu.keys()|hu.keys() if bu.get(k,{}).get('status')!=hu.get(k,{}).get('status')]
+ changedUnits={tuple(c['unitKey']) for c in changes}
+ pair['changedUnitFindings']=[{'unitKey':list(u),'base':buckets[u]['base'],'head':buckets[u]['head']} for u in sorted(changedUnits)]
  pairs.append(pair)
  for side,rows in [('base',bf),('head',hf)]:
   for row in rows:
@@ -87,7 +91,7 @@ for c in primary:
  rows.append({'call':c,'storageStopObserved':bool(observations),'words':words,'observations':observations})
 expected=2+2*len(callers['fullCensusFiles'])+4
 completed=sum(r.get('state')=='complete' and r.get('exit')==0 and (r['mode']=='scan' or r.get('streamComplete')) for r in manifest if r['mode']!='full-directory')
-result={'coverage':{'expectedRequiredRuns':expected,'completeRequiredRuns':completed,'allRequiredComplete':completed==expected},'comparison':'unit-scoped multiset of (kind, phase, position-stripped reason, position-stripped full text)','grading':'same tuple unchanged; same unit and same overload claim family with different wording changed; remaining base gone; remaining head reached if unit was already blocked outside independent scan phases, otherwise new','pairs':pairs,'mapped17':rows,'storageStopCalls17':sum(r['storageStopObserved'] for r in rows),'allHeadStorageFindings':allStorage,'overloadLedger':overloadLedger}
+result={'coverage':{'expectedRequiredRuns':expected,'completeRequiredRuns':completed,'allRequiredComplete':completed==expected},'comparison':'same-source-unit multiset of (kind, phase, position-stripped reason, position-stripped full text)','grading':'same tuple unchanged; same unit and same overload claim family with different wording changed; remaining base gone; remaining head reached if unit was already blocked outside independent scan phases, otherwise new','pairs':pairs,'mapped17':rows,'storageStopCalls17':sum(r['storageStopObserved'] for r in rows),'allHeadStorageFindings':allStorage,'overloadLedger':overloadLedger}
 (out/'paired.json').write_text(json.dumps(result,indent=2)+'\n')
 (out/'overload-ledger.json').write_text(json.dumps(overloadLedger,indent=2)+'\n')
 summary={'coverage':result['coverage'],'pairedRuns':len(pairs),'pairCounts':[{'mode':p['mode'],'file':p['file'],'base':p.get('baseFindings'),'head':p.get('headFindings'),'counts':p.get('counts',{})} for p in pairs],'storageStopCalls17':result['storageStopCalls17'],'mapped17':[{'file':r['call']['file'],'line':r['call']['line'],'column':r['call']['column'],'stopped':r['storageStopObserved'],'words':r['words']} for r in rows]}
