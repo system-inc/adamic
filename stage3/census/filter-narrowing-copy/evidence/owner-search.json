@@ -1,0 +1,567 @@
+[
+  {
+    "file": "stage3/adapt/49-honest-optionals/adapt.cjs",
+    "matches": [
+      {
+        "site": "src/compiler/checker.ts:6586:39",
+        "names": [
+          "createTypeChecker"
+        ],
+        "exact_call": false
+      },
+      {
+        "site": "src/compiler/checker.ts:9417:28",
+        "names": [
+          "createTypeChecker"
+        ],
+        "exact_call": false
+      },
+      {
+        "site": "src/compiler/checker.ts:9419:24",
+        "names": [
+          "createTypeChecker"
+        ],
+        "exact_call": false
+      },
+      {
+        "site": "src/compiler/checker.ts:10370:48",
+        "names": [
+          "createTypeChecker"
+        ],
+        "exact_call": false
+      },
+      {
+        "site": "src/compiler/checker.ts:16764:27",
+        "names": [
+          "createTypeChecker"
+        ],
+        "exact_call": false
+      },
+      {
+        "site": "src/compiler/checker.ts:47509:16",
+        "names": [
+          "createTypeChecker"
+        ],
+        "exact_call": false
+      }
+    ]
+  },
+  {
+    "file": "stage3/adapt/99-correctness-core-multimap/owners.json",
+    "matches": [
+      {
+        "site": "src/compiler/checker.ts:6586:39",
+        "names": [
+          "createTypeChecker",
+          "createNodeBuilder"
+        ],
+        "exact_call": false
+      },
+      {
+        "site": "src/compiler/checker.ts:9417:28",
+        "names": [
+          "createTypeChecker",
+          "createNodeBuilder"
+        ],
+        "exact_call": false
+      },
+      {
+        "site": "src/compiler/checker.ts:9419:24",
+        "names": [
+          "createTypeChecker",
+          "createNodeBuilder"
+        ],
+        "exact_call": false
+      },
+      {
+        "site": "src/compiler/checker.ts:10370:48",
+        "names": [
+          "createTypeChecker",
+          "createNodeBuilder"
+        ],
+        "exact_call": false
+      },
+      {
+        "site": "src/compiler/checker.ts:16764:27",
+        "names": [
+          "createTypeChecker"
+        ],
+        "exact_call": false
+      },
+      {
+        "site": "src/compiler/checker.ts:47509:16",
+        "names": [
+          "createTypeChecker"
+        ],
+        "exact_call": false
+      }
+    ]
+  },
+  {
+    "file": "stage3/adapt/99-correctness-core-or-predicate/owners.json",
+    "matches": [
+      {
+        "site": "src/compiler/checker.ts:6586:39",
+        "names": [
+          "createTypeChecker",
+          "createNodeBuilder"
+        ],
+        "exact_call": false
+      },
+      {
+        "site": "src/compiler/checker.ts:9417:28",
+        "names": [
+          "createTypeChecker",
+          "createNodeBuilder",
+          "symbolTableToDeclarationStatements"
+        ],
+        "exact_call": false
+      },
+      {
+        "site": "src/compiler/checker.ts:9419:24",
+        "names": [
+          "createTypeChecker",
+          "createNodeBuilder",
+          "symbolTableToDeclarationStatements"
+        ],
+        "exact_call": false
+      },
+      {
+        "site": "src/compiler/checker.ts:10370:48",
+        "names": [
+          "createTypeChecker",
+          "createNodeBuilder",
+          "symbolTableToDeclarationStatements"
+        ],
+        "exact_call": false
+      },
+      {
+        "site": "src/compiler/checker.ts:16764:27",
+        "names": [
+          "createTypeChecker"
+        ],
+        "exact_call": false
+      },
+      {
+        "site": "src/compiler/checker.ts:47509:16",
+        "names": [
+          "createTypeChecker"
+        ],
+        "exact_call": false
+      }
+    ]
+  },
+  {
+    "file": "stage3/adapt/95-checker-axolotl-a/adapt.cjs",
+    "matches": [
+      {
+        "site": "src/compiler/checker.ts:6586:39",
+        "names": [
+          "createTypeChecker"
+        ],
+        "exact_call": false
+      },
+      {
+        "site": "src/compiler/checker.ts:9417:28",
+        "names": [
+          "createTypeChecker"
+        ],
+        "exact_call": false
+      },
+      {
+        "site": "src/compiler/checker.ts:9419:24",
+        "names": [
+          "createTypeChecker"
+        ],
+        "exact_call": false
+      },
+      {
+        "site": "src/compiler/checker.ts:10370:48",
+        "names": [
+          "createTypeChecker"
+        ],
+        "exact_call": false
+      },
+      {
+        "site": "src/compiler/checker.ts:16764:27",
+        "names": [
+          "createTypeChecker"
+        ],
+        "exact_call": false
+      },
+      {
+        "site": "src/compiler/checker.ts:47509:16",
+        "names": [
+          "createTypeChecker"
+        ],
+        "exact_call": false
+      }
+    ]
+  },
+  {
+    "file": "stage3/adapt/95-checker-axolotl-g/adapt.cjs",
+    "matches": [
+      {
+        "site": "src/compiler/checker.ts:6586:39",
+        "names": [
+          "createTypeChecker"
+        ],
+        "exact_call": false
+      },
+      {
+        "site": "src/compiler/checker.ts:9417:28",
+        "names": [
+          "createTypeChecker"
+        ],
+        "exact_call": false
+      },
+      {
+        "site": "src/compiler/checker.ts:9419:24",
+        "names": [
+          "createTypeChecker"
+        ],
+        "exact_call": false
+      },
+      {
+        "site": "src/compiler/checker.ts:10370:48",
+        "names": [
+          "createTypeChecker"
+        ],
+        "exact_call": false
+      },
+      {
+        "site": "src/compiler/checker.ts:16764:27",
+        "names": [
+          "createTypeChecker"
+        ],
+        "exact_call": false
+      },
+      {
+        "site": "src/compiler/checker.ts:47509:16",
+        "names": [
+          "createTypeChecker"
+        ],
+        "exact_call": false
+      }
+    ]
+  },
+  {
+    "file": "stage3/adapt/99-correctness-receiver-parser/owners.json",
+    "matches": [
+      {
+        "site": "src/compiler/commandLineParser.ts:2550:16",
+        "names": [
+          "convertToJson"
+        ],
+        "exact_call": false
+      }
+    ]
+  },
+  {
+    "file": "stage3/adapt/95-checker-axolotl-f/adapt.cjs",
+    "matches": [
+      {
+        "site": "src/compiler/checker.ts:6586:39",
+        "names": [
+          "createTypeChecker"
+        ],
+        "exact_call": false
+      },
+      {
+        "site": "src/compiler/checker.ts:9417:28",
+        "names": [
+          "createTypeChecker"
+        ],
+        "exact_call": false
+      },
+      {
+        "site": "src/compiler/checker.ts:9419:24",
+        "names": [
+          "createTypeChecker"
+        ],
+        "exact_call": false
+      },
+      {
+        "site": "src/compiler/checker.ts:10370:48",
+        "names": [
+          "createTypeChecker"
+        ],
+        "exact_call": false
+      },
+      {
+        "site": "src/compiler/checker.ts:16764:27",
+        "names": [
+          "createTypeChecker"
+        ],
+        "exact_call": false
+      },
+      {
+        "site": "src/compiler/checker.ts:47509:16",
+        "names": [
+          "createTypeChecker"
+        ],
+        "exact_call": false
+      }
+    ]
+  },
+  {
+    "file": "stage3/adapt/99-correctness-receiver-transformers/owners.json",
+    "matches": [
+      {
+        "site": "src/compiler/transformers/ts.ts:1088:38",
+        "names": [
+          "transformTypeScript",
+          "injectClassTypeMetadata"
+        ],
+        "exact_call": true
+      }
+    ]
+  },
+  {
+    "file": "stage3/adapt/95-checker-axolotl-d/adapt.cjs",
+    "matches": [
+      {
+        "site": "src/compiler/checker.ts:6586:39",
+        "names": [
+          "createTypeChecker"
+        ],
+        "exact_call": false
+      },
+      {
+        "site": "src/compiler/checker.ts:9417:28",
+        "names": [
+          "createTypeChecker"
+        ],
+        "exact_call": false
+      },
+      {
+        "site": "src/compiler/checker.ts:9419:24",
+        "names": [
+          "createTypeChecker"
+        ],
+        "exact_call": false
+      },
+      {
+        "site": "src/compiler/checker.ts:10370:48",
+        "names": [
+          "createTypeChecker"
+        ],
+        "exact_call": false
+      },
+      {
+        "site": "src/compiler/checker.ts:16764:27",
+        "names": [
+          "createTypeChecker"
+        ],
+        "exact_call": false
+      },
+      {
+        "site": "src/compiler/checker.ts:47509:16",
+        "names": [
+          "createTypeChecker"
+        ],
+        "exact_call": false
+      }
+    ]
+  },
+  {
+    "file": "stage3/adapt/99-correctness-axolotl-j/adapt.cjs",
+    "matches": [
+      {
+        "site": "src/compiler/commandLineParser.ts:3157:32",
+        "names": [
+          "parseJsonConfigFileContentWorker",
+          "getConfigFileSpecs"
+        ],
+        "exact_call": true
+      },
+      {
+        "site": "src/compiler/checker.ts:6586:39",
+        "names": [
+          "createTypeChecker"
+        ],
+        "exact_call": false
+      },
+      {
+        "site": "src/compiler/checker.ts:9417:28",
+        "names": [
+          "createTypeChecker"
+        ],
+        "exact_call": false
+      },
+      {
+        "site": "src/compiler/checker.ts:9419:24",
+        "names": [
+          "createTypeChecker"
+        ],
+        "exact_call": false
+      },
+      {
+        "site": "src/compiler/checker.ts:10370:48",
+        "names": [
+          "createTypeChecker"
+        ],
+        "exact_call": false
+      },
+      {
+        "site": "src/compiler/checker.ts:16764:27",
+        "names": [
+          "createTypeChecker"
+        ],
+        "exact_call": false
+      },
+      {
+        "site": "src/compiler/checker.ts:47509:16",
+        "names": [
+          "createTypeChecker"
+        ],
+        "exact_call": false
+      }
+    ]
+  },
+  {
+    "file": "stage3/adapt/90-void-widening/targets.json",
+    "matches": [
+      {
+        "site": "src/compiler/checker.ts:6586:39",
+        "names": [
+          "createTypeChecker",
+          "createNodeBuilder"
+        ],
+        "exact_call": false
+      },
+      {
+        "site": "src/compiler/checker.ts:9417:28",
+        "names": [
+          "createTypeChecker",
+          "createNodeBuilder"
+        ],
+        "exact_call": false
+      },
+      {
+        "site": "src/compiler/checker.ts:9419:24",
+        "names": [
+          "createTypeChecker",
+          "createNodeBuilder"
+        ],
+        "exact_call": false
+      },
+      {
+        "site": "src/compiler/checker.ts:10370:48",
+        "names": [
+          "createTypeChecker",
+          "createNodeBuilder"
+        ],
+        "exact_call": false
+      },
+      {
+        "site": "src/compiler/checker.ts:16764:27",
+        "names": [
+          "createTypeChecker"
+        ],
+        "exact_call": false
+      },
+      {
+        "site": "src/compiler/checker.ts:47509:16",
+        "names": [
+          "createTypeChecker"
+        ],
+        "exact_call": false
+      }
+    ]
+  },
+  {
+    "file": "stage3/adapt/99-correctness-axolotl-r/owners.json",
+    "matches": [
+      {
+        "site": "src/compiler/checker.ts:6586:39",
+        "names": [
+          "createTypeChecker"
+        ],
+        "exact_call": false
+      },
+      {
+        "site": "src/compiler/checker.ts:9417:28",
+        "names": [
+          "createTypeChecker"
+        ],
+        "exact_call": false
+      },
+      {
+        "site": "src/compiler/checker.ts:9419:24",
+        "names": [
+          "createTypeChecker"
+        ],
+        "exact_call": false
+      },
+      {
+        "site": "src/compiler/checker.ts:10370:48",
+        "names": [
+          "createTypeChecker"
+        ],
+        "exact_call": false
+      },
+      {
+        "site": "src/compiler/checker.ts:16764:27",
+        "names": [
+          "createTypeChecker"
+        ],
+        "exact_call": false
+      },
+      {
+        "site": "src/compiler/checker.ts:47509:16",
+        "names": [
+          "createTypeChecker"
+        ],
+        "exact_call": false
+      }
+    ]
+  },
+  {
+    "file": "stage3/adapt/95-checker-axolotl-c/adapt.cjs",
+    "matches": [
+      {
+        "site": "src/compiler/checker.ts:6586:39",
+        "names": [
+          "createTypeChecker"
+        ],
+        "exact_call": false
+      },
+      {
+        "site": "src/compiler/checker.ts:9417:28",
+        "names": [
+          "createTypeChecker"
+        ],
+        "exact_call": false
+      },
+      {
+        "site": "src/compiler/checker.ts:9419:24",
+        "names": [
+          "createTypeChecker"
+        ],
+        "exact_call": false
+      },
+      {
+        "site": "src/compiler/checker.ts:10370:48",
+        "names": [
+          "createTypeChecker"
+        ],
+        "exact_call": false
+      },
+      {
+        "site": "src/compiler/checker.ts:16764:27",
+        "names": [
+          "createTypeChecker"
+        ],
+        "exact_call": false
+      },
+      {
+        "site": "src/compiler/checker.ts:47509:16",
+        "names": [
+          "createTypeChecker"
+        ],
+        "exact_call": false
+      }
+    ]
+  }
+]

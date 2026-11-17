@@ -1,0 +1,208 @@
+{
+  "baseline_findings": 14,
+  "trial_findings": 14,
+  "new": [],
+  "gone": [],
+  "changed": [],
+  "all_findings": [
+    {
+      "root_kind": "",
+      "depth": 0,
+      "measurement": "measured on a checker-rejected program",
+      "unit": "TREE/src/compiler/core.ts:805:1",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "TREE/src/compiler/core.ts:738:9",
+      "reason": "a value of type NonNullable<T>",
+      "text": "TREE/src/compiler/core.ts:738:9: stage 0 can't lower a value of type NonNullable<T> yet"
+    },
+    {
+      "root_kind": "",
+      "depth": 0,
+      "measurement": "measured on a checker-rejected program",
+      "unit": "TREE/src/compiler/core.ts:805:1",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "TREE/src/compiler/core.ts:738:5",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "TREE/src/compiler/core.ts:738:9: stage 0 can't lower a value of type NonNullable<T> yet",
+      "start": 25532,
+      "end": 25561
+    },
+    {
+      "root_kind": "",
+      "depth": 0,
+      "measurement": "measured on a checker-rejected program",
+      "unit": "TREE/src/compiler/core.ts:805:1",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "TREE/src/compiler/core.ts:739:31",
+      "reason": "an array of NonNullable<T>",
+      "text": "TREE/src/compiler/core.ts:739:31: stage 0 can't lower an array of NonNullable<T> yet"
+    },
+    {
+      "root_kind": "",
+      "depth": 0,
+      "measurement": "measured on a checker-rejected program",
+      "unit": "TREE/src/compiler/core.ts:805:1",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "TREE/src/compiler/core.ts:739:5",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "TREE/src/compiler/core.ts:739:31: stage 0 can't lower an array of NonNullable<T> yet",
+      "start": 25561,
+      "end": 25600
+    },
+    {
+      "root_kind": "",
+      "depth": 0,
+      "measurement": "measured on a checker-rejected program",
+      "unit": "TREE/src/compiler/core.ts:805:1",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "TREE/src/compiler/core.ts:741:15",
+      "reason": "a value of type NonNullable<T>",
+      "text": "TREE/src/compiler/core.ts:741:15: stage 0 can't lower a value of type NonNullable<T> yet"
+    },
+    {
+      "root_kind": "",
+      "depth": 0,
+      "measurement": "measured on a checker-rejected program",
+      "unit": "TREE/src/compiler/core.ts:805:1",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "TREE/src/compiler/core.ts:741:9",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "TREE/src/compiler/core.ts:741:15: stage 0 can't lower a value of type NonNullable<T> yet",
+      "start": 25646,
+      "end": 25679
+    },
+    {
+      "root_kind": "",
+      "depth": 0,
+      "measurement": "measured on a checker-rejected program",
+      "unit": "TREE/src/compiler/core.ts:805:1",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "TREE/src/compiler/core.ts:742:26",
+      "reason": "reading next",
+      "text": "TREE/src/compiler/core.ts:742:26: stage 0 can't lower reading next yet"
+    },
+    {
+      "root_kind": "",
+      "depth": 0,
+      "measurement": "measured on a checker-rejected program",
+      "unit": "TREE/src/compiler/core.ts:805:1",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "TREE/src/compiler/core.ts:742:9",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "TREE/src/compiler/core.ts:742:26: stage 0 can't lower reading next yet",
+      "start": 25679,
+      "end": 26112
+    },
+    {
+      "root_kind": "",
+      "depth": 0,
+      "measurement": "measured on a checker-rejected program",
+      "unit": "TREE/src/compiler/core.ts:805:1",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "TREE/src/compiler/core.ts:756:9",
+      "reason": "an array of T",
+      "text": "TREE/src/compiler/core.ts:756:9: stage 0 can't lower an array of T yet"
+    },
+    {
+      "root_kind": "",
+      "depth": 0,
+      "measurement": "measured on a checker-rejected program",
+      "unit": "TREE/src/compiler/core.ts:805:1",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "TREE/src/compiler/core.ts:756:9",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "TREE/src/compiler/core.ts:756:9: stage 0 can't lower an array of T yet",
+      "start": 26112,
+      "end": 26155
+    },
+    {
+      "root_kind": "",
+      "depth": 0,
+      "measurement": "measured on a checker-rejected program",
+      "unit": "TREE/src/compiler/core.ts:805:1",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "TREE/src/compiler/core.ts:759:12",
+      "reason": "reading deduplicated",
+      "text": "TREE/src/compiler/core.ts:759:12: stage 0 can't lower reading deduplicated yet"
+    },
+    {
+      "root_kind": "",
+      "depth": 0,
+      "measurement": "measured on a checker-rejected program",
+      "unit": "TREE/src/compiler/core.ts:805:1",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "TREE/src/compiler/core.ts:759:5",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "TREE/src/compiler/core.ts:759:12: stage 0 can't lower reading deduplicated yet",
+      "start": 26162,
+      "end": 26227
+    },
+    {
+      "root_kind": "",
+      "depth": 0,
+      "measurement": "measured on a checker-rejected program",
+      "unit": "TREE/src/compiler/core.ts:805:1",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "where": "TREE/src/compiler/core.ts:1049:63",
+      "reason": "an array of T",
+      "text": "TREE/src/compiler/core.ts:1049:63: stage 0 can't lower an array of T yet"
+    },
+    {
+      "root_kind": "",
+      "depth": 0,
+      "measurement": "measured on a checker-rejected program",
+      "unit": "TREE/src/compiler/core.ts:805:1",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "where": "TREE/src/compiler/core.ts:1049:5",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "TREE/src/compiler/core.ts:1049:63: stage 0 can't lower an array of T yet",
+      "start": 37585,
+      "end": 37716
+    }
+  ],
+  "filter_counts_before": {
+    "1": 5,
+    "2": 60,
+    "3": 14,
+    "4": 41,
+    "5": 11,
+    "6": 13,
+    "7": 9,
+    "8": 4
+  },
+  "filter_counts_after": {
+    "2": 60,
+    "3": 14,
+    "4": 41,
+    "6": 13,
+    "7": 9,
+    "8": 4
+  },
+  "unchanged_other_calls": 141,
+  "new_helpers": [
+    {
+      "name": "filterNarrowed",
+      "status": "deferred_generic_instantiation",
+      "instantiated": false
+    },
+    {
+      "name": "filterNarrowedOptional",
+      "status": "deferred_generic_instantiation",
+      "instantiated": false
+    }
+  ]
+}

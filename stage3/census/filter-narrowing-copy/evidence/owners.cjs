@@ -1,0 +1,4 @@
+const ts=require('/workspace/scratch/ev14ch9/stage3/api/node_modules/typescript'),fs=require('fs'),path=require('path');
+const root='/workspace/scratch/ev14ch9-proof/before';const rows=JSON.parse(fs.readFileSync('/workspace/scratch/ev14ch9-proof/sites.json'));
+const result=rows.map(r=>{const file=r.site.split(':')[0],s=fs.readFileSync(path.join(root,file),'utf8'),f=ts.createSourceFile(file,s,ts.ScriptTarget.Latest,true);let found;
+function walk(n){if(ts.isCallExpression(n)&&n.getText(f)===r.call)found=n;ts.forEachChild(n,walk)}walk(f);if(!found)throw Error(r.site);let chain=[];for(let n=found.parent;n;n=n.parent)if(ts.isFunctionLike(n)&&n.name)chain.unshift(n.name.getText(f));return {...r,owners:chain};});fs.writeFileSync('/workspace/scratch/ev14ch9-proof/site-owners.json',JSON.stringify(result,null,2)+'\n');console.log(result.map(x=>x.site+' '+x.owners.join('/')).join('\n'));

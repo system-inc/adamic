@@ -1,0 +1,162 @@
+[
+  {
+    "site": "src/compiler/factory/utilities.ts:761:12",
+    "call": "filter(getEmitHelpers(sourceFile), helper => !helper.scoped)",
+    "argument": "getEmitHelpers(sourceFile)",
+    "overload": 5,
+    "owners": [
+      "getImportedHelpers"
+    ]
+  },
+  {
+    "site": "src/compiler/commandLineParser.ts:2550:16",
+    "call": "filter(elements.map(element => convertPropertyValueToJson(element, elementOption)), v => v !== undefined)",
+    "argument": "elements.map(element => convertPropertyValueToJson(element, elementOption))",
+    "overload": 1,
+    "owners": [
+      "convertToJson",
+      "convertArrayLiteralExpressionToJson"
+    ]
+  },
+  {
+    "site": "src/compiler/commandLineParser.ts:3157:32",
+    "call": "filter([outDir, declarationDir], (d): d is string => !!d)",
+    "argument": "[outDir, declarationDir]",
+    "overload": 1,
+    "owners": [
+      "parseJsonConfigFileContentWorker",
+      "getConfigFileSpecs"
+    ]
+  },
+  {
+    "site": "src/compiler/checker.ts:6586:39",
+    "call": "filter(symbol.declarations, isClassLike)",
+    "argument": "symbol.declarations",
+    "overload": 5,
+    "owners": [
+      "createTypeChecker",
+      "createNodeBuilder",
+      "simplifyClassDeclaration"
+    ]
+  },
+  {
+    "site": "src/compiler/checker.ts:9417:28",
+    "call": "filter(map(statement.declarationList.declarations, getNameOfDeclaration), isIdentifierAndNotUndefined)",
+    "argument": "map(statement.declarationList.declarations, getNameOfDeclaration)",
+    "overload": 1,
+    "owners": [
+      "createTypeChecker",
+      "createNodeBuilder",
+      "symbolTableToDeclarationStatements",
+      "getNamesOfDeclaration"
+    ]
+  },
+  {
+    "site": "src/compiler/checker.ts:9419:24",
+    "call": "filter([getNameOfDeclaration(statement as DeclarationStatement)], isIdentifierAndNotUndefined)",
+    "argument": "[getNameOfDeclaration(statement as DeclarationStatement)]",
+    "overload": 1,
+    "owners": [
+      "createTypeChecker",
+      "createNodeBuilder",
+      "symbolTableToDeclarationStatements",
+      "getNamesOfDeclaration"
+    ]
+  },
+  {
+    "site": "src/compiler/checker.ts:10370:48",
+    "call": "filter(symbol.declarations, d => isClassDeclaration(d) || isClassExpression(d))",
+    "argument": "symbol.declarations",
+    "overload": 1,
+    "owners": [
+      "createTypeChecker",
+      "createNodeBuilder",
+      "symbolTableToDeclarationStatements",
+      "serializeAsClass"
+    ]
+  },
+  {
+    "site": "src/compiler/checker.ts:16764:27",
+    "call": "filter(type.symbol && type.symbol.declarations, isTypeParameterDeclaration)",
+    "argument": "type.symbol && type.symbol.declarations",
+    "overload": 5,
+    "owners": [
+      "createTypeChecker",
+      "getConstraintDeclaration"
+    ]
+  },
+  {
+    "site": "src/compiler/checker.ts:47509:16",
+    "call": "filter(symbol.declarations, (d: Declaration): d is ClassDeclaration | InterfaceDeclaration => d.kind === SyntaxKind.ClassDeclaration || d.kind === SyntaxKind.InterfaceDeclaration)",
+    "argument": "symbol.declarations",
+    "overload": 5,
+    "owners": [
+      "createTypeChecker",
+      "getClassOrInterfaceDeclarationsOfSymbol"
+    ]
+  },
+  {
+    "site": "src/compiler/transformers/ts.ts:1088:38",
+    "call": "filter(skipWhile(modifiers, isExportOrDefaultModifier), isModifier)",
+    "argument": "skipWhile(modifiers, isExportOrDefaultModifier)",
+    "overload": 5,
+    "owners": [
+      "transformTypeScript",
+      "injectClassTypeMetadata"
+    ]
+  },
+  {
+    "site": "src/services/services.ts:745:94",
+    "call": "filter(this.declarations, isGetAccessor)",
+    "argument": "this.declarations",
+    "overload": 5,
+    "owners": [
+      "getContextualJsDocTags"
+    ]
+  },
+  {
+    "site": "src/services/services.ts:755:94",
+    "call": "filter(this.declarations, isSetAccessor)",
+    "argument": "this.declarations",
+    "overload": 5,
+    "owners": [
+      "getContextualJsDocTags"
+    ]
+  },
+  {
+    "site": "src/services/services.ts:780:81",
+    "call": "filter(this.declarations, isGetAccessor)",
+    "argument": "this.declarations",
+    "overload": 5,
+    "owners": [
+      "getContextualJsDocTags"
+    ]
+  },
+  {
+    "site": "src/services/services.ts:790:81",
+    "call": "filter(this.declarations, isSetAccessor)",
+    "argument": "this.declarations",
+    "overload": 5,
+    "owners": [
+      "getContextualJsDocTags"
+    ]
+  },
+  {
+    "site": "src/services/callHierarchy.ts:482:19",
+    "call": "filter(FindAllReferences.findReferenceOrRenameEntries(program, cancellationToken, program.getSourceFiles(), location, /*position*/ 0, { use: FindAllReferences.FindReferencesUse.References }, convertEntryToCallSite), isDefined)",
+    "argument": "FindAllReferences.findReferenceOrRenameEntries(program, cancellationToken, program.getSourceFiles(), location, /*position*/ 0, { use: FindAllReferences.FindReferencesUse.References }, convertEntryToCallSite)",
+    "overload": 5,
+    "owners": [
+      "getIncomingCalls"
+    ]
+  },
+  {
+    "site": "src/services/codefixes/fixAddMissingParam.ts:143:46",
+    "call": "filter(type.symbol.declarations, isConvertibleSignatureDeclaration)",
+    "argument": "type.symbol.declarations",
+    "overload": 5,
+    "owners": [
+      "getInfo"
+    ]
+  }
+]
