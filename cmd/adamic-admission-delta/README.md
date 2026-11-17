@@ -194,7 +194,9 @@ not a <T>`, and `declared_type` is `<T>`, the type the cast claimed. That messag
 names no position, so the entry names the cast's line in `declaration`, a `.ts`
 path, and in `column` where the cast's `as` keyword starts, 1-based. The tool holds
 the source to it: the word `as` at that column, after whitespace or a closing
-bracket, before whitespace, and outside any string. The repair replaces exactly one
+bracket, before whitespace, and outside any string. Since the stop could as well come
+from another cast to the same `<T>`, a source holding a second cast whose target text
+is `<T>`, or opens with it (`as A | C` beside `as A`), is refused (#s1gqkzm). The repair replaces exactly one
 place and keeps the cast at the same line and column, so the copy that agrees with
 Node shows the check doesn't fire on a true claim. Node erases the cast and goes
 on, so both backends' stdout must equal each other and be what Node printed up to
