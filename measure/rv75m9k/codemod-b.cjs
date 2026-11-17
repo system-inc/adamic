@@ -130,9 +130,12 @@ if (refusals.length) { for (const refusal of refusals) console.log('refused ' + 
 let total = 0;
 for (const [file, fileEdits] of edits) {
     const name = path.join(tree, file), text = fs.readFileSync(name, 'utf8');
-    if (text.includes('\r')) throw new Error(`${file}: carriage returns`);
+    // The file keeps its own line ending: positions are the checker's, on the file's own bytes, and inserted lines end
+    // the way the file's lines do. A file mixing endings is refused.
+    const crlf = text.includes('\r\n');
+    if (crlf ? /(?<!\r)\n/.test(text) : text.includes('\r')) throw new Error(`${file}: mixed line endings`);
     let result = text;
-    for (const edit of fileEdits.sort((a, b) => b.start - a.start || b.end - a.end)) result = result.slice(0, edit.start) + edit.text + result.slice(edit.end);
+    for (const edit of fileEdits.sort((a, b) => b.start - a.start || b.end - a.end)) result = result.slice(0, edit.start) + (crlf ? edit.text.replace(/\n/g, '\r\n') : edit.text) + result.slice(edit.end);
     const parsed = ts.createSourceFile(file, result, ts.ScriptTarget.Latest, true);
     if (parsed.parseDiagnostics.length) throw new Error(`${file}: the rewrite doesn't parse: ${parsed.parseDiagnostics[0].messageText}`);
     total += fileEdits.length;
