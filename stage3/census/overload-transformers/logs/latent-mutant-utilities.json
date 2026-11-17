@@ -1,0 +1,17 @@
+{
+  "command": [
+    "env",
+    "-u",
+    "LATENT_SPECULATIVE",
+    "LATENT_FULL=1",
+    "LATENT_ASSERT_NO_OUTPUT=1",
+    "CENSUS_MODULE_FORMAT=CommonJSBundle",
+    "LATENT_ONLY_FILE=/workspace/scratch/overload-transformers-runtime/mutant-adapted/src/compiler/transformers/utilities.ts",
+    "/workspace/scratch/overload-transformers-runtime/latent",
+    "/workspace/scratch/overload-transformers-runtime/mutant-adapted/src/compiler",
+    "stage3/census/overload-transformers/latent-mutant-utilities.jsonl"
+  ],
+  "cwd": "/workspace/scratch/overload-transformers",
+  "exit": 0,
+  "seconds": 134.1585750579834
+}

@@ -1,14 +1,58 @@
-# Transformer overloads — #ev14ch9
+# Transformer overloads — final report, #ev14ch9
 
-Base: cf468df0747075e50d326a97ff03e8530d7a1a88. Upstream: TypeScript v6.0.3, 050880ce59e30b356b686bd3144efe24f875ebc8.
+Base: cf468df0747075e50d326a97ff03e8530d7a1a88. TypeScript v6.0.3: 050880ce59e30b356b686bd3144efe24f875ebc8.
 
-Initial report checkpoint, before adaptation construction. Three sets, three reported result sites; one proposed build, two stops. No landing branch exists yet and no proof is claimed passed.
+**All three sets stop under road (iii). No landing branch, adaptation or ledger entry qualifies.** The getProperties type-only candidate removes the overload refusal but exposes a new unchecked-cast refusal, failing the required 0-new gate. The two namedEvaluation sets need node-kind precision that the available declaration/body proofs cannot establish.
 
-| Set | Resolved callers | Road | Planned branch |
-| --- | ---: | --- | --- |
-| utilities.ts getProperties | 2 | (i) Widen only the true overload result to readonly PropertyDeclaration[] | typescript/overload-transformers-get-properties-1 |
-| namedEvaluation.ts:173 injectClassNamedEvaluationHelperBlockIfMissing | 3 | (iii) Stop: kind-preserving generic result needed by a caller; current proof cannot follow member tests or reassignment | none |
-| namedEvaluation.ts:469 transformNamedEvaluation | 23 | (iii) Stop: 23 assignments retain node-specific views; widening loses required kinds; current proof cannot follow switch/member tests | none |
+| Set | Result sites in brief | Checker-resolved callers | Final road | Landing branch / SHA |
+| --- | ---: | ---: | --- | --- |
+| getProperties | 1 | 2 | (iii), attempted (i) fails no-new gate | none / none |
+| injectClassNamedEvaluationHelperBlockIfMissing | 1 | 3 | (iii), kind-preserving result needs a ruling | none / none |
+| transformNamedEvaluation | 1 | 23 | (iii), kind-specific assignment results need a ruling | none / none |
+
+The evidence branch is typescript/overload-transformers-evidence. Its first report was pushed as 0bd4986bf before constructing any adapter; INITIAL_REPORT.md preserves that frozen proposal. Checkpoints 4fcba3c9f and 3abfb80bc preserve the controls/tooling and rejection respectively. No force push was used. Rejected source and whole-owner pins are retained under rejected-get-properties, outside stage3/adapt. Production lowering, API sanctions, worker counts and lane expectations were not edited.
+
+## Proof receipts for the rejected getProperties candidate
+
+| Required proof | Status | Observation |
+| --- | --- | --- |
+| Type-only JavaScript | PASS | Commented and comment-free transpiled owner-file output is byte-identical; LF/CRLF, drift, duplicates, half-adapted text, mixed endings, exact restore and zero-write replay controls pass |
+| scan-all, owner file | NOT PROVEN | 5,070 events on both sides, 0 new/gone/changed. Both stop at core.ts:261:1, overload 1 of filter, before this set is reached; Completed=false. This is not a target disappearance pass |
+| Full latent, utilities.ts | FAIL | 146 -> 146 events; 6 new, 6 gone, 0 changed semantic events. Three new Refused replays at one cast site, plus three Boundary records, replace the overload events |
+| Full latent, ts.ts caller | PASS | 660 -> 656 events; 0 new, 4 gone, 0 changed |
+| Full latent, classFields.ts caller | FAIL | 633 -> 624 events; 2 new, 11 gone, 1 changed |
+| Restoring mutant | PASS | Exact baseline findings restored: 146 events, including all three overload-refusal replays; 0 delta versus baseline |
+| Stock TypeScript 6.0.3 | PASS | Complete sorted 79 roots, locked Node declarations: 0 -> 0 diagnostics, 0 new |
+| adamic types | PASS | Complete sorted 79 candidate roots, exit 0 and no diagnostics |
+| Candidate stage3/apply.sh | NOT RUN | Gate failed before a candidate product was authorized. Baseline apply passed (997.83 s); direct candidate adapter and replay passed |
+| Upstream npm ci / hereby dts | PASS | Unmodified and candidate builds pass; both public bundles byte-identical |
+| TestProduct_Stage3AdaptedTree | NOT RUN | Rejected at the no-new-findings gate |
+| Whole unfiltered stage3/lane | NOT RUN | Rejected at the no-new-findings gate |
+| Ledger | NOT RUN | No qualifying landing change |
+| Road (ii) counter / Node witnesses | NOT RUN | No JavaScript-changing road built |
+
+Every full latent run uses LATENT_FULL=1, LATENT_ASSERT_NO_OUTPUT=1, LATENT_ONLY_FILE set to the measured absolute path, and CommonJSBundle. All runs finish with a relation_report trailer and no output-guard failure. Headers report zero checker diagnostics. The tool's fixed measurement label still says "measured on a checker-rejected program"; the headers, rather than that generic label, establish that these inputs are checker-clean.
+
+For each of the two namedEvaluation stops, scan-all, full candidate latent census, restoring mutant, stock candidate check, adamic types, candidate apply, public declaration comparison, adapted-tree product, whole lane and ledger are NOT RUN: neither set has a candidate edit. No proof from the getProperties experiment is claimed for them.
+
+## Why the getProperties proposal cannot land
+
+Widening only the true overload removes its unneeded initialized-element claim. Full measurement then reaches the existing `as PropertyDeclaration[]` return at transformers/utilities.ts:590:12 and refuses `a cast the runtime can't check`. That is a new finding relative to the main census, even though the text of that cast already existed. It cannot be waved away as a pre-existing latent issue: the required gate counts newly exposed findings too.
+
+Dropping the narrow overload instead exposes the same return cast. Narrowing the implementation result to initialized properties would be false for the false caller. A predicate annotation on the existing boolean helper would overclaim: it returns false for some genuine PropertyDeclaration values depending on initializer/static flags. Splitting the filter into multiple traversals would change JavaScript, intermediate allocations and AST reads; no whole-lane value proof was built for that road. Stop and report rather than ship an adaptation with a new refusal.
+
+The classFields.ts caller census also fails independently: it exposes a new NotYet at binder.ts:2258:13 for writing a checked field that may hold undefined/null, plus its Boundary, and changes the Boundary at classFields.ts:2314:13 from an identifier-assignment stop to the existing core.ts filter-overload refusal. All of those records are listed below.
+
+scan-all independently cannot establish this site's disappearance on this base: both import-closure runs abort at the existing filter overload in core.ts. Their identical event totals prove only the recorded scope. Full latent census supplies the actual getProperties before/after evidence.
+
+## Public declaration bytes
+
+- typescript.d.ts: 588452 bytes, SHA-256 `c967e03c8dbb4770f7e2f0b71b5d13593de679a41cc2b60266c4b69f1342a263`, byte-identical before/after.
+- tsserverlibrary.d.ts: 866 bytes, SHA-256 `cee9e9bf9a8f67388ee878afd5e172189421bae6625076b774d68563d036fbfd`, byte-identical before/after.
+
+## Source and caller reading
+
+The original reading/road analysis follows. Its inventory counts refer to the initial pre-generation checkout. The successful expanded inventory in whole-checkout-callers.json additionally covers JavaScript: after diagnostic generation, 81,470 files, 21,233 TypeScript and 18,210 JavaScript files, 710 src roots, 7 additional candidate roots and 832 program files. It confirms the same 28 direct calls. There are no function-value escapes: target references consist of 28 calls, 7 declarations and 6 imports. Candidate spelling filters only select work; callee symbols and getResolvedSignature declaration identity establish every reported caller. The original exhaustive TypeScript call traversal is retained at 0bd4986bf and upstream-callers.json.
 
 ## Read and caller census
 
@@ -20,7 +64,7 @@ Ownership search covered every stage3/adapt owners.json, targets.json and adapt.
 
 Two overloads, one implementation. One true argument at ts.ts:858 feeds some solely for array nonemptiness (one caller); one false argument at classFields.ts:2312 binds instanceProperties for ordinary PropertyDeclaration processing (one caller). No caller requires InitializedPropertyDeclaration. The true result promises initialized elements, but the implementation's readonly PropertyDeclaration[] does not serve that promise under censusRelated. There is no presence difference, callback predicate or void promise. Its reached return has a cast, which censusReturnProof refuses; narrowOverload never accepts arrays.
 
-Proposed road (i): widen the first overload's result to the already-served readonly PropertyDeclaration[]. Preserve both overloads, all parameters, the body, documentation and runtime values. No public API baseline declares this internal function. Byte-identical commented and comment-free emits will be asserted by the adapter, and the whole source/declaration checks remain required.
+Attempted road (i), subsequently rejected by the no-new-findings gate: widen the first overload's result to the already-served readonly PropertyDeclaration[]. Preserve both overloads, all parameters, the body, documentation and runtime values. No public API baseline declares this internal function. Byte-identical commented and comment-free emits will be asserted by the adapter, and the whole source/declaration checks remain required.
 
 ### injectClassNamedEvaluationHelperBlockIfMissing
 
@@ -38,28 +82,400 @@ The implementation's inferred union of factory-update results does not serve the
 
 Candidate (i), widening or dropping the overload, loses node-specific views at the assignment callers. Annotating the implementation with the generic Extract would need unproved casts. Candidate (ii), expanding the switch to if tests on node.kind, still fails censusTrustedTest. New type shapes, assertions or specialized wrappers require a ruling. Stop under (iii); no adaptation or ledger line is built.
 
-## Proof status at initial checkpoint
 
-For getProperties: scan-all, full latent census (utilities.ts, ts.ts, classFields.ts), restoring mutant, stock 79-root diagnostics, Adamic types, apply.sh, upstream npm ci/Hereby dts declaration comparison, TestProduct_Stage3AdaptedTree and unfiltered lane: NOT RUN. No before/after finding delta is claimed yet.
+## Complete finding deltas
 
-For both stopped sets: every build proof above is NOT RUN; no source edit was built. Node witnesses, lane value counter and body-restoring mutant are NOT RUN because no road (ii) is proposed.
+Paths below are normalized only by removing their respective measured-tree prefixes. Event identity retains all fields except raw start/end byte offsets; the shorter annotation shifts later spans by 11 bytes. delta-latent-utilities-raw.json preserves all raw metadata differences, including eleven Boundary span shifts with identical site, kind, unit, phase, reason and words. These are not changed semantic findings. No production refusal is omitted. All newly exposed cast events are failures of the gate.
 
-## Checkpoint 2 — tooling and adapter contracts
+### Full latent utilities
 
-The initial report was pushed as 0bd4986bf before constructing any adapter. A draft getProperties adapter now exists only in the scratch worktree; it is not a landing commit. Its LF/CRLF, exact restoration, zero-write replay, duplicate, drift, half-adapted and mixed-ending controls pass. Both commented and comment-free JavaScript outputs compare byte-for-byte. The first construction attempt had a Python syntax error and its consequent missing-module runs failed; those logs are retained and are not proof passes. The corrected runs are named *-fixed.
+```json
+{
+  "new": [
+    {
+      "depth": 0,
+      "kind": "Refused",
+      "measurement": "measured on a checker-rejected program",
+      "phase": "lowering",
+      "reason": "a cast the runtime can't check",
+      "root_kind": "",
+      "text": "src/compiler/transformers/utilities.ts:590:12: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+      "unit": "src/compiler/transformers/utilities.ts:585:1",
+      "where": "src/compiler/transformers/utilities.ts:590:12"
+    },
+    {
+      "depth": 0,
+      "kind": "Boundary",
+      "measurement": "measured on a checker-rejected program",
+      "phase": "lowering",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "root_kind": "",
+      "text": "src/compiler/transformers/utilities.ts:590:12: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+      "unit": "src/compiler/transformers/utilities.ts:585:1",
+      "where": "src/compiler/transformers/utilities.ts:590:5"
+    },
+    {
+      "depth": 0,
+      "kind": "Refused",
+      "measurement": "measured on a checker-rejected program",
+      "phase": "lowering",
+      "reason": "a cast the runtime can't check",
+      "root_kind": "",
+      "text": "src/compiler/transformers/utilities.ts:590:12: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+      "unit": "src/compiler/transformers/utilities.ts:587:1",
+      "where": "src/compiler/transformers/utilities.ts:590:12"
+    },
+    {
+      "depth": 0,
+      "kind": "Boundary",
+      "measurement": "measured on a checker-rejected program",
+      "phase": "lowering",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "root_kind": "",
+      "text": "src/compiler/transformers/utilities.ts:590:12: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+      "unit": "src/compiler/transformers/utilities.ts:587:1",
+      "where": "src/compiler/transformers/utilities.ts:590:5"
+    },
+    {
+      "depth": 0,
+      "kind": "Refused",
+      "measurement": "measured on a checker-rejected program",
+      "phase": "lowering",
+      "reason": "a cast the runtime can't check",
+      "root_kind": "",
+      "text": "src/compiler/transformers/utilities.ts:590:12: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+      "unit": "src/compiler/transformers/utilities.ts:589:1",
+      "where": "src/compiler/transformers/utilities.ts:590:12"
+    },
+    {
+      "depth": 0,
+      "kind": "Boundary",
+      "measurement": "measured on a checker-rejected program",
+      "phase": "lowering",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "root_kind": "",
+      "text": "src/compiler/transformers/utilities.ts:590:12: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+      "unit": "src/compiler/transformers/utilities.ts:589:1",
+      "where": "src/compiler/transformers/utilities.ts:590:5"
+    }
+  ],
+  "gone": [
+    {
+      "depth": 0,
+      "kind": "Refused",
+      "measurement": "measured on a checker-rejected program",
+      "phase": "lowering",
+      "reason": "overload 1 of getProperties result readonly InitializedPropertyDeclaration[] cannot be served by implementation result readonly PropertyDeclaration[]",
+      "root_kind": "",
+      "text": "src/compiler/transformers/utilities.ts:585:1: Adamic 0.1 refuses overload 1 of getProperties result readonly InitializedPropertyDeclaration[] cannot be served by implementation result readonly PropertyDeclaration[]; make the implementation result covariant with every overload result",
+      "unit": "src/compiler/transformers/utilities.ts:585:1",
+      "where": "src/compiler/transformers/utilities.ts:585:1"
+    },
+    {
+      "depth": 0,
+      "kind": "Boundary",
+      "measurement": "measured on a checker-rejected program",
+      "phase": "lowering",
+      "reason": "function signature or prologue failed; continued at next declaration",
+      "root_kind": "",
+      "text": "src/compiler/transformers/utilities.ts:585:1: Adamic 0.1 refuses overload 1 of getProperties result readonly InitializedPropertyDeclaration[] cannot be served by implementation result readonly PropertyDeclaration[]; make the implementation result covariant with every overload result",
+      "unit": "src/compiler/transformers/utilities.ts:585:1",
+      "where": "src/compiler/transformers/utilities.ts:585:1"
+    },
+    {
+      "depth": 0,
+      "kind": "Refused",
+      "measurement": "measured on a checker-rejected program",
+      "phase": "lowering",
+      "reason": "overload 1 of getProperties result readonly InitializedPropertyDeclaration[] cannot be served by implementation result readonly PropertyDeclaration[]",
+      "root_kind": "",
+      "text": "src/compiler/transformers/utilities.ts:585:1: Adamic 0.1 refuses overload 1 of getProperties result readonly InitializedPropertyDeclaration[] cannot be served by implementation result readonly PropertyDeclaration[]; make the implementation result covariant with every overload result",
+      "unit": "src/compiler/transformers/utilities.ts:587:1",
+      "where": "src/compiler/transformers/utilities.ts:585:1"
+    },
+    {
+      "depth": 0,
+      "kind": "Boundary",
+      "measurement": "measured on a checker-rejected program",
+      "phase": "lowering",
+      "reason": "function signature or prologue failed; continued at next declaration",
+      "root_kind": "",
+      "text": "src/compiler/transformers/utilities.ts:585:1: Adamic 0.1 refuses overload 1 of getProperties result readonly InitializedPropertyDeclaration[] cannot be served by implementation result readonly PropertyDeclaration[]; make the implementation result covariant with every overload result",
+      "unit": "src/compiler/transformers/utilities.ts:587:1",
+      "where": "src/compiler/transformers/utilities.ts:587:1"
+    },
+    {
+      "depth": 0,
+      "kind": "Refused",
+      "measurement": "measured on a checker-rejected program",
+      "phase": "lowering",
+      "reason": "overload 1 of getProperties result readonly InitializedPropertyDeclaration[] cannot be served by implementation result readonly PropertyDeclaration[]",
+      "root_kind": "",
+      "text": "src/compiler/transformers/utilities.ts:585:1: Adamic 0.1 refuses overload 1 of getProperties result readonly InitializedPropertyDeclaration[] cannot be served by implementation result readonly PropertyDeclaration[]; make the implementation result covariant with every overload result",
+      "unit": "src/compiler/transformers/utilities.ts:589:1",
+      "where": "src/compiler/transformers/utilities.ts:585:1"
+    },
+    {
+      "depth": 0,
+      "kind": "Boundary",
+      "measurement": "measured on a checker-rejected program",
+      "phase": "lowering",
+      "reason": "function signature or prologue failed; continued at next declaration",
+      "root_kind": "",
+      "text": "src/compiler/transformers/utilities.ts:585:1: Adamic 0.1 refuses overload 1 of getProperties result readonly InitializedPropertyDeclaration[] cannot be served by implementation result readonly PropertyDeclaration[]; make the implementation result covariant with every overload result",
+      "unit": "src/compiler/transformers/utilities.ts:589:1",
+      "where": "src/compiler/transformers/utilities.ts:589:1"
+    }
+  ],
+  "changed": []
+}
+```
 
-The scan-all product, the guarded full latent overlay/binary and the stock Adamic binary built successfully. Upstream npm ci and unmodified Hereby dts passed; declarations-before retains both emitted public bundles. The baseline adaptation is still running. No census disappearance, type-check comparison, candidate declaration comparison, adapted-tree product or full lane pass is claimed yet.
+### Full latent ts
 
-The initial exhaustive TypeScript-only caller inventory is immutable in checkpoint 0bd4986bf. Expanded inventory attempts after npm installation hit stock-TypeScript stack overflows while exploring unrelated dependency/fixture code; their own exit codes and stderr are retained. The expanded audit filters candidate spellings, then verifies callee symbol and getResolvedSignature declaration identity; text never establishes a caller. Identifier-reference auditing is retained to expose any function-value escape that would require following an indirect call.
+```json
+{
+  "new": [],
+  "gone": [
+    {
+      "depth": 0,
+      "kind": "NotYet",
+      "measurement": "measured on a checker-rejected program",
+      "phase": "lowering",
+      "reason": "an array of InitializedPropertyDeclaration",
+      "root_kind": "",
+      "text": "src/compiler/core.ts:622:31: stage 0 can't lower an array of InitializedPropertyDeclaration yet",
+      "unit": "src/compiler/transformers/ts.ts:855:5",
+      "where": "src/compiler/core.ts:622:31"
+    },
+    {
+      "depth": 0,
+      "kind": "Boundary",
+      "measurement": "measured on a checker-rejected program",
+      "phase": "lowering",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "root_kind": "",
+      "text": "src/compiler/core.ts:622:31: stage 0 can't lower an array of InitializedPropertyDeclaration yet",
+      "unit": "src/compiler/transformers/ts.ts:855:5",
+      "where": "src/compiler/core.ts:622:17"
+    },
+    {
+      "depth": 0,
+      "kind": "Refused",
+      "measurement": "measured on a checker-rejected program",
+      "phase": "lowering",
+      "reason": "overload 1 of getProperties result readonly InitializedPropertyDeclaration[] cannot be served by implementation result readonly PropertyDeclaration[]",
+      "root_kind": "",
+      "text": "src/compiler/transformers/utilities.ts:585:1: Adamic 0.1 refuses overload 1 of getProperties result readonly InitializedPropertyDeclaration[] cannot be served by implementation result readonly PropertyDeclaration[]; make the implementation result covariant with every overload result",
+      "unit": "src/compiler/transformers/ts.ts:855:5",
+      "where": "src/compiler/transformers/utilities.ts:585:1"
+    },
+    {
+      "depth": 0,
+      "kind": "Boundary",
+      "measurement": "measured on a checker-rejected program",
+      "phase": "lowering",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "root_kind": "",
+      "text": "src/compiler/transformers/utilities.ts:585:1: Adamic 0.1 refuses overload 1 of getProperties result readonly InitializedPropertyDeclaration[] cannot be served by implementation result readonly PropertyDeclaration[]; make the implementation result covariant with every overload result",
+      "unit": "src/compiler/transformers/ts.ts:855:5",
+      "where": "src/compiler/transformers/ts.ts:857:9"
+    }
+  ],
+  "changed": []
+}
+```
 
-## Checkpoint 3 — no landing qualifies
+### Full latent classFields
 
-The getProperties candidate fails the required full latent no-new-findings gate. The overload result site disappears, but the newly reached implementation return is refused at transformers/utilities.ts:590:12: `a cast the runtime can't check`. The full owner runs each contain 146 findings over 54 declaration units. There are three new Refused events at that one cast site (one replay per declaration), plus three new Boundary records; three overload Refused events and their three signature Boundary records disappear. There are zero changed semantic findings. Every event is listed in delta-latent-utilities.json; delta-latent-utilities-raw.json additionally records eleven Boundary source-span metadata changes caused solely by the 11-byte shorter annotation. No event wording changed at those eleven boundaries. compare.py ignores only the raw start/end offsets when comparing event identity.
+```json
+{
+  "new": [
+    {
+      "depth": 0,
+      "kind": "NotYet",
+      "measurement": "measured on a checker-rejected program",
+      "phase": "lowering",
+      "reason": "writing a checked object field that may hold undefined or null, whose checked write can't change the representation its slot holds",
+      "root_kind": "",
+      "text": "src/compiler/binder.ts:2258:13: stage 0 can't lower writing a checked object field that may hold undefined or null, whose checked write can't change the representation its slot holds yet",
+      "unit": "src/compiler/transformers/classFields.ts:2310:5",
+      "where": "src/compiler/binder.ts:2258:13"
+    },
+    {
+      "depth": 0,
+      "kind": "Boundary",
+      "measurement": "measured on a checker-rejected program",
+      "phase": "lowering",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "root_kind": "",
+      "text": "src/compiler/binder.ts:2258:13: stage 0 can't lower writing a checked object field that may hold undefined or null, whose checked write can't change the representation its slot holds yet",
+      "unit": "src/compiler/transformers/classFields.ts:2310:5",
+      "where": "src/compiler/transformers/classFields.ts:2322:13"
+    }
+  ],
+  "gone": [
+    {
+      "depth": 0,
+      "kind": "Refused",
+      "measurement": "measured on a checker-rejected program",
+      "phase": "lowering",
+      "reason": "overload 1 of getProperties result readonly InitializedPropertyDeclaration[] cannot be served by implementation result readonly PropertyDeclaration[]",
+      "root_kind": "",
+      "text": "src/compiler/transformers/utilities.ts:585:1: Adamic 0.1 refuses overload 1 of getProperties result readonly InitializedPropertyDeclaration[] cannot be served by implementation result readonly PropertyDeclaration[]; make the implementation result covariant with every overload result",
+      "unit": "src/compiler/transformers/classFields.ts:2310:5",
+      "where": "src/compiler/transformers/utilities.ts:585:1"
+    },
+    {
+      "depth": 0,
+      "kind": "Boundary",
+      "measurement": "measured on a checker-rejected program",
+      "phase": "lowering",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "root_kind": "",
+      "text": "src/compiler/transformers/utilities.ts:585:1: Adamic 0.1 refuses overload 1 of getProperties result readonly InitializedPropertyDeclaration[] cannot be served by implementation result readonly PropertyDeclaration[]; make the implementation result covariant with every overload result",
+      "unit": "src/compiler/transformers/classFields.ts:2310:5",
+      "where": "src/compiler/transformers/classFields.ts:2311:9"
+    },
+    {
+      "depth": 0,
+      "kind": "NotYet",
+      "measurement": "measured on a checker-rejected program",
+      "phase": "lowering",
+      "reason": "reading instanceProperties",
+      "root_kind": "",
+      "text": "src/compiler/transformers/classFields.ts:2312:26: stage 0 can't lower reading instanceProperties yet",
+      "unit": "src/compiler/transformers/classFields.ts:2310:5",
+      "where": "src/compiler/transformers/classFields.ts:2312:26"
+    },
+    {
+      "depth": 0,
+      "kind": "Boundary",
+      "measurement": "measured on a checker-rejected program",
+      "phase": "lowering",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "root_kind": "",
+      "text": "src/compiler/transformers/classFields.ts:2312:26: stage 0 can't lower reading instanceProperties yet",
+      "unit": "src/compiler/transformers/classFields.ts:2310:5",
+      "where": "src/compiler/transformers/classFields.ts:2312:9"
+    },
+    {
+      "depth": 0,
+      "kind": "NotYet",
+      "measurement": "measured on a checker-rejected program",
+      "phase": "lowering",
+      "reason": "assigning to an Identifier",
+      "root_kind": "",
+      "text": "src/compiler/transformers/classFields.ts:2314:13: stage 0 can't lower assigning to an Identifier yet",
+      "unit": "src/compiler/transformers/classFields.ts:2310:5",
+      "where": "src/compiler/transformers/classFields.ts:2314:13"
+    },
+    {
+      "depth": 0,
+      "kind": "NotYet",
+      "measurement": "measured on a checker-rejected program",
+      "phase": "lowering",
+      "reason": "reading properties",
+      "root_kind": "",
+      "text": "src/compiler/transformers/classFields.ts:2318:43: stage 0 can't lower reading properties yet",
+      "unit": "src/compiler/transformers/classFields.ts:2310:5",
+      "where": "src/compiler/transformers/classFields.ts:2318:43"
+    },
+    {
+      "depth": 0,
+      "kind": "Boundary",
+      "measurement": "measured on a checker-rejected program",
+      "phase": "lowering",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "root_kind": "",
+      "text": "src/compiler/transformers/classFields.ts:2318:43: stage 0 can't lower reading properties yet",
+      "unit": "src/compiler/transformers/classFields.ts:2310:5",
+      "where": "src/compiler/transformers/classFields.ts:2318:9"
+    },
+    {
+      "depth": 0,
+      "kind": "NotYet",
+      "measurement": "measured on a checker-rejected program",
+      "phase": "lowering",
+      "reason": "reading needsConstructorBody",
+      "root_kind": "",
+      "text": "src/compiler/transformers/classFields.ts:2321:30: stage 0 can't lower reading needsConstructorBody yet",
+      "unit": "src/compiler/transformers/classFields.ts:2310:5",
+      "where": "src/compiler/transformers/classFields.ts:2321:30"
+    },
+    {
+      "depth": 0,
+      "kind": "Boundary",
+      "measurement": "measured on a checker-rejected program",
+      "phase": "lowering",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "root_kind": "",
+      "text": "src/compiler/transformers/classFields.ts:2321:30: stage 0 can't lower reading needsConstructorBody yet",
+      "unit": "src/compiler/transformers/classFields.ts:2310:5",
+      "where": "src/compiler/transformers/classFields.ts:2321:9"
+    },
+    {
+      "depth": 0,
+      "kind": "NotYet",
+      "measurement": "measured on a checker-rejected program",
+      "phase": "lowering",
+      "reason": "reading properties",
+      "root_kind": "",
+      "text": "src/compiler/transformers/classFields.ts:2353:76: stage 0 can't lower reading properties yet",
+      "unit": "src/compiler/transformers/classFields.ts:2310:5",
+      "where": "src/compiler/transformers/classFields.ts:2353:76"
+    },
+    {
+      "depth": 0,
+      "kind": "Boundary",
+      "measurement": "measured on a checker-rejected program",
+      "phase": "lowering",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "root_kind": "",
+      "text": "src/compiler/transformers/classFields.ts:2353:76: stage 0 can't lower reading properties yet",
+      "unit": "src/compiler/transformers/classFields.ts:2310:5",
+      "where": "src/compiler/transformers/classFields.ts:2353:13"
+    }
+  ],
+  "changed": [
+    {
+      "site": [
+        "src/compiler/transformers/classFields.ts:2314:13",
+        "Boundary"
+      ],
+      "before": [
+        {
+          "depth": 0,
+          "kind": "Boundary",
+          "measurement": "measured on a checker-rejected program",
+          "phase": "lowering",
+          "reason": "failed statement; state rolled back; continued at next statement or declaration",
+          "root_kind": "",
+          "text": "src/compiler/transformers/classFields.ts:2314:13: stage 0 can't lower assigning to an Identifier yet",
+          "unit": "src/compiler/transformers/classFields.ts:2310:5",
+          "where": "src/compiler/transformers/classFields.ts:2314:13"
+        }
+      ],
+      "after": [
+        {
+          "depth": 0,
+          "kind": "Boundary",
+          "measurement": "measured on a checker-rejected program",
+          "phase": "lowering",
+          "reason": "failed statement; state rolled back; continued at next statement or declaration",
+          "root_kind": "",
+          "text": "src/compiler/core.ts:261:1: Adamic 0.1 refuses overload 1 of filter result U[] cannot be served by implementation result readonly T[] | undefined; make the implementation result covariant with every overload result",
+          "unit": "src/compiler/transformers/classFields.ts:2310:5",
+          "where": "src/compiler/transformers/classFields.ts:2314:13"
+        }
+      ]
+    }
+  ]
+}
+```
 
-The candidate is therefore rejected and will not receive a landing branch or ledger line. The draft is preserved under rejected-get-properties for review, outside stage3/adapt. Dropping the narrow overload instead would expose the same implementation cast. Narrowing the implementation to initialized properties would be false for the false caller. A predicate annotation on the existing boolean helper would also overclaim: it returns false for some genuine PropertyDeclaration values depending on initializer/static flags. Splitting the filter into multiple traversals would change JavaScript, intermediate allocations and AST reads, and has no whole-lane value proof; that road is not built. The final road for this set is (iii), stop and report.
+scan-all: new=[], gone=[], changed=[]; target absent from both recorded scopes. Full streams, exact commands, real child exit codes, source hashes and metadata are in the adjacent JSON/JSONL files and logs/. Restoring-mutant events are in restoring-mutant-result.json; its baseline delta is delta-mutant.json.
 
-Corrected stock TypeScript 6.0.3 checks use the locked Node type input and all 79 roots: 0 diagnostics before, 0 after, 0 new. The earlier no-Node-input probe is invalid and retained only as a failed setup attempt. Adamic types on all 79 candidate roots exits 0 with no diagnostics. Both upstream Hereby declaration builds pass, with byte-identical typescript.d.ts and tsserverlibrary.d.ts (full hashes in public-declarations.json). Candidate apply/product/lane will not be run after this gate failure. The baseline apply passed in 997.83 seconds; that is not a candidate whole-apply pass.
+## Non-proof attempts retained
 
-The successful expanded whole-checkout inventory is in whole-checkout-callers.json: after upstream diagnostic generation, 81,470 files, 21,233 TypeScript and 18,210 JavaScript files, 710 src roots, 7 additional candidate test/script roots, 832 program files. It agrees exactly with the initial exhaustive inventory: 28 resolved direct calls and no function-value escapes (28 call references, 7 declaration references, 6 import references). The later inventories exclude npm implementations from traversal; unrelated dependencies were the cause of the failed exploratory runs.
-
-Remaining running measurements at this checkpoint: scan-all before/after, caller-file latent comparisons and the restoring mutant. No passing result is inferred from a still-running command.
+The first adapter construction had a Python syntax error; consequent missing-module runs failed. Corrected *-fixed and adapter-controls receipts establish the actual contracts. Expanded caller-inventory attempts hit stock-TypeScript stack overflows in unrelated dependency/fixture exploration; the successful scoped-symbol/signature audit and initial exhaustive inventory agree. The first stock probe omitted Node declarations and is invalid; only the corrected *-with-node pair is used. No failed attempt is reported as a pass. Wrapper receipts preserve each child's own return code. No evidence is placed on a landing branch.
