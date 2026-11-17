@@ -41,9 +41,9 @@ Old:
 
 ```go
 		if overloadArrayWritten(found.node) {
-			return shape, false // An index, length or whole write puts a value no push proved (array-index-write).
+			return false // An index, length or whole write puts a value no push proved (array-index-write).
 		}
-		return shape, false // Any other read is an alias, a second view that can write what no push proved (array-alias).
+		return false // Any other read is an alias or a mutator no certificate judged, writing what nothing proved (array-alias, map-alias, map-wrong-set).
 	}
 ```
 
@@ -51,10 +51,13 @@ New:
 
 ```go
 		if overloadArrayWritten(found.node) {
-			return shape, false // An index, length or whole write puts a value no push proved (array-index-write).
+			return false // An index, length or whole write puts a value no push proved (array-index-write).
 		}
 	}
 ```
+
+The walk is overloadLocalConfined since certificate B shares it, so this edit reds B's alias rows too
+(overload-certificate-map.mutants.md, its mutant 3).
 
 Expected: `TestOverloadCertificateArrayNegativesStayRefused/alias_over_a_parameter` reds: `const alias = out`
 is a read that is neither a push's receiver nor the return, and with nothing refusing it the census accepts

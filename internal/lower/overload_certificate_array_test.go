@@ -258,13 +258,14 @@ console.log(out);
 }
 
 // overloadCertificateProbe loads modules from main.ts and hands back a lowering over main.ts's checker,
-// the first call, new or tagged template in main.ts the checker resolves to an overload of arrayFrom,
-// and that overload. The node is found by what it resolves to; the gate under test reads only symbols.
-func overloadCertificateProbe(t *testing.T, modules map[string]string) (*lowering, *ast.Node, *ast.Node) {
+// the first call, new or tagged template in main.ts the checker resolves to an overload of the set named
+// name, and that overload. The node is found by what it resolves to; the gate under test reads only
+// symbols.
+func overloadCertificateProbe(t *testing.T, name string, modules map[string]string) (*lowering, *ast.Node, *ast.Node) {
 	t.Helper()
 	directory := t.TempDir()
-	for name, source := range modules {
-		if err := os.WriteFile(filepath.Join(directory, name), []byte(source), 0o644); err != nil {
+	for module, source := range modules {
+		if err := os.WriteFile(filepath.Join(directory, module), []byte(source), 0o644); err != nil {
 			t.Fatal(err)
 		}
 	}
@@ -290,7 +291,7 @@ func overloadCertificateProbe(t *testing.T, modules map[string]string) (*lowerin
 		if node.Kind == ast.KindCallExpression || node.Kind == ast.KindNewExpression || node.Kind == ast.KindTaggedTemplateExpression {
 			if resolved := checked.GetResolvedSignature(node); resolved != nil {
 				declaration := resolved.Declaration()
-				if declaration != nil && declaration.Kind == ast.KindFunctionDeclaration && declaration.Body() == nil && declaration.Name() != nil && declaration.Name().Text() == "arrayFrom" {
+				if declaration != nil && declaration.Kind == ast.KindFunctionDeclaration && declaration.Body() == nil && declaration.Name() != nil && declaration.Name().Text() == name {
 					found, overload = node, declaration
 					return true
 				}
@@ -300,7 +301,7 @@ func overloadCertificateProbe(t *testing.T, modules map[string]string) (*lowerin
 	}
 	file.AsNode().ForEachChild(visit)
 	if found == nil {
-		t.Fatal("no entry into arrayFrom in main.ts")
+		t.Fatalf("no entry into %s in main.ts", name)
 	}
 	return l, found, overload
 }
@@ -337,7 +338,7 @@ func TestOverloadCertificateArrayGate(t *testing.T) {
 	} {
 		t.Run(probe.name, func(t *testing.T) {
 			t.Parallel()
-			l, node, overload := overloadCertificateProbe(t, probe.modules)
+			l, node, overload := overloadCertificateProbe(t, "arrayFrom", probe.modules)
 			if erase := l.overloadCertificateEntry(node, overload); erase != probe.direct {
 				t.Fatalf("overloadCertificateEntry: got %v, want %v", erase, probe.direct)
 			}
@@ -361,7 +362,7 @@ func TestOverloadCertificateArrayGate(t *testing.T) {
 // reference to the set, the gate answers false, whatever stops that reference elsewhere.
 func TestOverloadCertificateArrayEntryRefusesANonCall(t *testing.T) {
 	t.Parallel()
-	l, call, overload := overloadCertificateProbe(t, map[string]string{"main.ts": overloadCertificateArrayFrom + "const items: number[] = [3, 1, 2];\nconst reference = arrayFrom;\nconsole.log(reference(items, x => x * 2).join(\",\"));\n"})
+	l, call, overload := overloadCertificateProbe(t, "arrayFrom", map[string]string{"main.ts": overloadCertificateArrayFrom + "const items: number[] = [3, 1, 2];\nconst reference = arrayFrom;\nconsole.log(reference(items, x => x * 2).join(\",\"));\n"})
 	if call.Kind != ast.KindCallExpression {
 		t.Fatalf("want the call through reference, got %v", call.Kind)
 	}

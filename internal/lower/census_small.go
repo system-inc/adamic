@@ -256,6 +256,13 @@ func (l *lowering) censusOverload(implementation, overload *ast.Node, ordinal in
 			l.noteOverloadCertificate(overload, true)
 			return nil
 		}
+		if l.overloadMapCertificate(implementation, overload) {
+			// The body builds a fresh Map whose every set puts a key and a value this overload's Map holds when
+			// its arguments are exactly the caller's, its mapper's default discharged, so every call keeps that
+			// premise at overloadCertificateCall (certificate B, Adamic's ruling on #5fws6q8).
+			l.noteOverloadCertificate(overload, true)
+			return nil
+		}
 		what := label + " result " + l.checker.TypeToString(promised) + " cannot be served by implementation result " + l.checker.TypeToString(produced)
 		if failed != nil {
 			what += " (return at " + l.program.Where(failed) + " isn't the value its predicate checked)"
