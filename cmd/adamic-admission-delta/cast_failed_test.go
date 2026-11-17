@@ -109,9 +109,10 @@ func TestNegativeCastFailedPosition(t *testing.T) {
 	}
 }
 
-// The stop names no position, so a source holding another cast to the entry's type, whose stop would read the
-// same, is refused, wherever it sits; a cast to another type, or a word as before something else, is not
-// (#s1gqkzm). Mutant: otherCastTo finding nothing accepts every "refused" row.
+// The stop names no position, and it names the concrete target rather than the text written, so a witness
+// holds one cast: any other word as refuses it, wherever it sits, strings and comments included, and only
+// as const and names holding the letters are kept (Compiler on #s1gqkzm). Mutant: otherAs finding nothing
+// accepts every "refused" row.
 func TestNegativeCastFailedOneCast(t *testing.T) {
 	t.Parallel()
 	_, witness, _ := castFailedFixture("input.ts")
@@ -119,19 +120,25 @@ func TestNegativeCastFailedOneCast(t *testing.T) {
 		added   string
 		refused bool
 	}{
-		"same cast after":     {"const again = shape as Circle;\n", true},
-		"same cast in a call": {"console.log((shape as Circle).kind);\n", true},
-		"opening target":      {"const either = shape as Circle | Square;\n", true},
-		"another target":      {"const other = shape as Square;\n", false},
-		"a longer name":       {"type Circles = readonly Circle[];\nconst many = [shape] as Circles;\n", false},
-		"the word as":         {"// read as the circle it claims to be\n", false},
+		"same cast after":       {"const again = shape as Circle;\n", true},
+		"same cast in a call":   {"console.log((shape as Circle).kind);\n", true},
+		"opening target":        {"const either = shape as Circle | Square;\n", true},
+		"another target":        {"const other = shape as Square;\n", true},
+		"an alias":              {"type C = Circle;\nconst aliased = shape as C;\n", true},
+		"a generic":             {"function claim<T>(value: unknown): T { return value as T; }\n", true},
+		"a parenthesized type":  {"const wrapped = shape as (Circle);\n", true},
+		"a line-final as":       {"const broken = shape as\n  Circle;\n", true},
+		"a template before":     {"const text = `s` as string;\n", true},
+		"the word in a comment": {"// read as the circle it claims to be\n", true},
+		"as const":              {"const sizes = [1, 2] as const;\nconst tight = [3]  as\tconst;\n", false},
+		"names holding as":      {"const alias = 1, cast = 2, has = 3, asCircle = 4, $as = 5, as_ = 6;\n", false},
 	} {
 		source := []byte(castFailedSource + test.added)
 		bad := witness
 		bad.TypeCorrectSHA256 = contentHash(repairedSource(source, bad))
 		err := validateWitnessSource(source, bad)
-		if test.refused && (err == nil || !strings.Contains(err.Error(), "holds another cast to Circle")) {
-			t.Errorf("%s: a second cast to Circle accepted: %v", name, err)
+		if test.refused && (err == nil || !strings.Contains(err.Error(), "holds another as")) {
+			t.Errorf("%s: a second as accepted: %v", name, err)
 		}
 		if !test.refused && err != nil {
 			t.Errorf("%s: refused: %v", name, err)
