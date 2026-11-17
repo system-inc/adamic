@@ -7,5 +7,5 @@ function pick(a: number, f?: (x: number) => string): number | string {
 function f(x: number): string { return "bad"; }
 const o: { g: (a: number, f: (x: number) => string) => number } = { g: pick };
 const r = o.g(1, f);
-console.log(r + 1);
+console.log(String(r + 1));
 console.log(r.toFixed(0));

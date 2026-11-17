@@ -6,6 +6,8 @@ function pick(a: number, f?: (x: number) => string): number | string {
 }
 function f(x: number): string { return "bad"; }
 const gs: ((a: number, f: (x: number) => string) => number)[] = [pick];
-const r = gs[0](1, f);
-console.log(r + 1);
+const g = gs[0];
+if (g === undefined) throw new Error("missing callback");
+const r = g(1, f);
+console.log(String(r + 1));
 console.log(r.toFixed(0));

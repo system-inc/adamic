@@ -6,5 +6,5 @@ function pick(a: number, f?: (x: number) => string): number | string {
 }
 function f(x: number): string { return "bad"; }
 const r: number = pick.call(undefined, 1, f);
-console.log(r + 1);
+console.log(String(r + 1));
 console.log(r.toFixed(0));

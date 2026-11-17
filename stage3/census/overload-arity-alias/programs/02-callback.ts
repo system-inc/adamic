@@ -7,5 +7,5 @@ function pick(a: number, f?: (x: number) => string): number | string {
 function f(x: number): string { return "bad"; }
 function invoke(g: (a: number, f: (x: number) => string) => number): number { return g(1, f); }
 const r = invoke(pick);
-console.log(r + 1);
+console.log(String(r + 1));
 console.log(r.toFixed(0));

@@ -4,6 +4,6 @@ function pick(a: number, f?: (x: number) => string): number[] | string {
     return [a];
 }
 function f(x: number): string { return "bad"; }
-const r = pick(1)[0];
-console.log(r + 1);
+const r = pick(1)[0] ?? 0;
+console.log(String(r + 1));
 console.log(r.toFixed(0));

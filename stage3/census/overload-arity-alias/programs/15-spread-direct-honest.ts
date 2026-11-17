@@ -7,5 +7,5 @@ function pick(a: number, f?: (x: number) => string): number | string {
 function f(x: number): string { return "bad"; }
 const args: [number, (x: number) => string] = [1, f];
 const r = pick(...args);
-console.log(r + 1);
-console.log(r.length);
+console.log(String(r + 1));
+console.log(String(r.length));
