@@ -21,7 +21,8 @@ func TestClassification(t *testing.T) {
 	}{
 		{accepted, accepted, "accepted-by-both"}, {refused, refused, "refused-by-both"},
 		{refused, accepted, "newly-accepted"}, {accepted, refused, "newly-refused"},
-		{observation{Exit: 1, Stderr: "panic: broken"}, accepted, "compiler-crash"},
+		{observation{Exit: 1, Stderr: "panic: broken"}, accepted, "newly-accepted"}, // A crash fixed (#ppgk12h).
+		{accepted, observation{Exit: 1, Stderr: "panic: broken"}, "compiler-crash"},
 		{observation{Exit: -1, Error: "timeout"}, refused, "compiler-timeout"},
 		{observation{Exit: 1, Stderr: "missing input"}, accepted, "compiler-error"},
 	}
