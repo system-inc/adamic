@@ -41,6 +41,7 @@ function program() {
 
 const baseline = new Set(program());
 console.log(`baseline diagnostics: ${baseline.size}`);
+const excluded = new Set((process.env.VERIFY_EXCLUDE || '').split(/[\s,]+/).filter(Boolean));
 const lines = fs.readFileSync(editsPath, 'utf8').split('\n');
 const kept = [], left = [];
 for (let i = 0; i + 2 < lines.length + 1; i++) {
@@ -53,6 +54,8 @@ for (let i = 0; i + 2 < lines.length + 1; i++) {
         : /export type ScriptTargetFeatures/.test(old) ? 'alias, adaptation 77'
         : /readonly never\[\] \|/.test(now) ? 'written slot'
         : (head[1] === 'src/compiler/core.ts' && /export function append</.test(old)) ? 'append overload, its implementation writes'
+        : head[1].startsWith('src/services/') ? 'services, outside the compiled closure the sites live in'
+        : excluded.has(`${head[1]}:${head[2]}`) ? 'excluded by hand: its readonly reaches a write'
         : '';
     (why ? left : kept).push({...edit, why});
 }
@@ -74,6 +77,14 @@ for (const [file, edits] of byFile) {
 const after = program();
 const fresh = after.filter(d => !baseline.has(d));
 console.log(`after: ${after.length} diagnostics, ${fresh.length} new`);
-for (const d of fresh) console.log(`  NEW ${d}`);
+for (const d of fresh) {
+    console.log(`  NEW ${d}`);
+    const at = d.match(/^(src\/\S+):(\d+) /);
+    if (at) {
+        const text = fs.readFileSync(path.join(path.dirname(outSource), at[1]), 'utf8').split('\n');
+        for (let n = Math.max(0, Number(at[2]) - 3); n < Number(at[2]); n++) console.log(`      ${n + 1}| ${text[n].replace(/\r$/, '').slice(0, 200)}`);
+    }
+}
+for (const edit of kept) console.log(`  kept ${edit.file}:${edit.line} ${edit.now.trim().slice(0, 150)}`);
 console.log(`VERDICT ${misses === 0 && fresh.length === 0 ? 'OK' : 'FAIL'}`);
 process.exit(misses === 0 && fresh.length === 0 ? 0 : 1);
