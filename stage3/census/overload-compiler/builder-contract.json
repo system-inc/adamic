@@ -1,0 +1,29 @@
+{
+  "initial": {
+    "files": 2,
+    "edits": 3,
+    "javascriptChanging": true
+  },
+  "second": {
+    "files": 0,
+    "edits": 0,
+    "javascriptChanging": true
+  },
+  "noWriteSecondRun": true,
+  "refusals": [
+    "half-owner-0",
+    "changed-owner-0",
+    "half-owner-1",
+    "changed-owner-1",
+    "half-owner-2",
+    "changed-owner-2",
+    "half-single-overload",
+    "half-slice-cast",
+    "half-return-cast",
+    "mixed-file-core.ts",
+    "mixed-file-builder.ts",
+    "parse-error",
+    "moved-owner"
+  ],
+  "unrelatedEditAccepted": true
+}

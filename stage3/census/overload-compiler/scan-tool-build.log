@@ -1,0 +1,8 @@
+=== RUN   TestProduct_ScanAllInstrumentedProbe
+=== PAUSE TestProduct_ScanAllInstrumentedProbe
+=== CONT  TestProduct_ScanAllInstrumentedProbe
+    products_test.go:80: build scan-all-instrumented f41b91c97d42 miss 532.41
+    products_test.go:80: scan-all-instrumented probe: /workspace/scratch/ev14ch9/build-cache/local/f41b91c97d420fc9eb22166e8bd071817a2199431b4480a919fd6657089e0f5e/probe
+--- PASS: TestProduct_ScanAllInstrumentedProbe (536.36s)
+PASS
+ok  	github.com/system-inc/adamic/stage3/census/scan-all	536.390s

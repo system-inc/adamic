@@ -1,0 +1,138 @@
+{
+  "mode": "extensions",
+  "roots": 77,
+  "diagnostics": [
+    {
+      "file": "src/compiler/_namespaces/ts.ts",
+      "line": 12,
+      "code": 2307,
+      "message": "Cannot find module '../diagnosticInformationMap.generated.js' or its corresponding type declarations."
+    },
+    {
+      "file": "src/compiler/binder.ts",
+      "line": 51,
+      "code": 2724,
+      "message": "'\"./_namespaces/ts.js\"' has no exported member named 'Diagnostics'. Did you mean 'Diagnostic'?"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 155,
+      "code": 2724,
+      "message": "'\"./_namespaces/ts.js\"' has no exported member named 'Diagnostics'. Did you mean 'Diagnostic'?"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 21758,
+      "code": 2345,
+      "message": "Argument of type '() => DiagnosticMessage | undefined' is not assignable to parameter of type '() => DiagnosticMessage'.\n  Type 'DiagnosticMessage | undefined' is not assignable to type 'DiagnosticMessage'.\n    Type 'undefined' is not assignable to type 'DiagnosticMessage'."
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 21778,
+      "code": 2345,
+      "message": "Argument of type '() => DiagnosticMessage | undefined' is not assignable to parameter of type '() => DiagnosticMessage'.\n  Type 'DiagnosticMessage | undefined' is not assignable to type 'DiagnosticMessage'.\n    Type 'undefined' is not assignable to type 'DiagnosticMessage'."
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 22697,
+      "code": 2345,
+      "message": "Argument of type 'DiagnosticMessage | undefined' is not assignable to parameter of type 'DiagnosticMessage'.\n  Type 'undefined' is not assignable to type 'DiagnosticMessage'."
+    },
+    {
+      "file": "src/compiler/commandLineParser.ts",
+      "line": 30,
+      "code": 2724,
+      "message": "'\"./_namespaces/ts.js\"' has no exported member named 'Diagnostics'. Did you mean 'Diagnostic'?"
+    },
+    {
+      "file": "src/compiler/executeCommandLine.ts",
+      "line": 36,
+      "code": 2724,
+      "message": "'\"./_namespaces/ts.js\"' has no exported member named 'Diagnostics'. Did you mean 'Diagnostic'?"
+    },
+    {
+      "file": "src/compiler/moduleNameResolver.ts",
+      "line": 23,
+      "code": 2724,
+      "message": "'\"./_namespaces/ts.js\"' has no exported member named 'Diagnostics'. Did you mean 'Diagnostic'?"
+    },
+    {
+      "file": "src/compiler/parser.ts",
+      "line": 67,
+      "code": 2724,
+      "message": "'\"./_namespaces/ts.js\"' has no exported member named 'Diagnostics'. Did you mean 'Diagnostic'?"
+    },
+    {
+      "file": "src/compiler/program.ts",
+      "line": 62,
+      "code": 2724,
+      "message": "'\"./_namespaces/ts.js\"' has no exported member named 'Diagnostics'. Did you mean 'Diagnostic'?"
+    },
+    {
+      "file": "src/compiler/programDiagnostics.ts",
+      "line": 16,
+      "code": 2724,
+      "message": "'\"./_namespaces/ts.js\"' has no exported member named 'Diagnostics'. Did you mean 'Diagnostic'?"
+    },
+    {
+      "file": "src/compiler/resolutionCache.ts",
+      "line": 12,
+      "code": 2724,
+      "message": "'\"./_namespaces/ts.js\"' has no exported member named 'Diagnostics'. Did you mean 'Diagnostic'?"
+    },
+    {
+      "file": "src/compiler/scanner.ts",
+      "line": 13,
+      "code": 2724,
+      "message": "'\"./_namespaces/ts.js\"' has no exported member named 'Diagnostics'. Did you mean 'Diagnostic'?"
+    },
+    {
+      "file": "src/compiler/sys.ts",
+      "line": 1597,
+      "code": 2307,
+      "message": "Cannot find module 'source-map-support' or its corresponding type declarations."
+    },
+    {
+      "file": "src/compiler/transformers/declarations.ts",
+      "line": 33,
+      "code": 2724,
+      "message": "'\"../_namespaces/ts.js\"' has no exported member named 'Diagnostics'. Did you mean 'Diagnostic'?"
+    },
+    {
+      "file": "src/compiler/transformers/declarations/diagnostics.ts",
+      "line": 18,
+      "code": 2724,
+      "message": "'\"../../_namespaces/ts.js\"' has no exported member named 'Diagnostics'. Did you mean 'Diagnostic'?"
+    },
+    {
+      "file": "src/compiler/tsbuildPublic.ts",
+      "line": 38,
+      "code": 2724,
+      "message": "'\"./_namespaces/ts.js\"' has no exported member named 'Diagnostics'. Did you mean 'Diagnostic'?"
+    },
+    {
+      "file": "src/compiler/utilities.ts",
+      "line": 102,
+      "code": 2724,
+      "message": "'\"./_namespaces/ts.js\"' has no exported member named 'Diagnostics'. Did you mean 'Diagnostic'?"
+    },
+    {
+      "file": "src/compiler/utilitiesPublic.ts",
+      "line": 51,
+      "code": 2724,
+      "message": "'\"./_namespaces/ts.js\"' has no exported member named 'Diagnostics'. Did you mean 'Diagnostic'?"
+    },
+    {
+      "file": "src/compiler/watch.ts",
+      "line": 30,
+      "code": 2724,
+      "message": "'\"./_namespaces/ts.js\"' has no exported member named 'Diagnostics'. Did you mean 'Diagnostic'?"
+    },
+    {
+      "file": "src/compiler/watchPublic.ts",
+      "line": 31,
+      "code": 2724,
+      "message": "'\"./_namespaces/ts.js\"' has no exported member named 'Diagnostics'. Did you mean 'Diagnostic'?"
+    }
+  ]
+}
