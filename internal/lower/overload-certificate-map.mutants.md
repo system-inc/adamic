@@ -1,10 +1,12 @@
 # Certificate B for arrayToMap, under certificate A's per-call gate: mutants (#5fws6q8)
 
 Each mutant is one exact edit on this head, applied alone, run, then restored from `HEAD`. The pins are
-internal/lower/overload_certificate_map_test.go: `TestOverloadCertificateArrayToMapLowers` (tsc's arrayToMap,
-overloads 1 to 3 each called directly, agreeing with Node natively and on the JavaScript backend),
-`TestOverloadCertificateArrayToMapFourthOverloadStops` (all four overloads stop at overload 4's parameter
-census, before the certificate is asked), `TestOverloadCertificateMapNegativesStayRefused` (Correctness's five
+internal/lower/overload_certificate_map_test.go: `TestOverloadCertificateArrayToMapLowers` (tsc's arrayToMap whole,
+each of its four overloads called directly, agreeing with Node natively and on the JavaScript backend),
+`TestOverloadCertificateArrayToMapFourthOverloadServed` (the four-overload set with overload 4 called lowers,
+its V2 witnessed as U by censusInferRemainder), `TestOverloadCertificateArrayToMapFourthOverloadElementSetStaysRefused`
+(overload 4 over a body that sets the element is refused for its result by the certificate),
+`TestOverloadCertificateMapNegativesStayRefused` (Correctness's five
 Map negatives as she wrote them, and eight canonical rows each standing on its own hazard),
 `TestOverloadCertificateMapIdentityDefaultAccepted`, `TestOverloadCertificateMapPrototypeRewriteStaysRefused` and
 `TestOverloadCertificateMapGate` (a direct entry; comma and spread entries NotYet at the call). Mutants 3 and 4
@@ -90,3 +92,28 @@ func (l *lowering) overloadCertificateEntry(node *ast.Node, overload *ast.Node) 
 Expected: `TestOverloadCertificateMapGate/comma_callee` and `/spread_argument` red: overloadCertificateEntry
 answers true for each, and lowered whole neither stops at the gate in its words. The direct row, the lowering
 pins and the negatives stay green. A's comma, spread and tagged template rows red with them.
+
+## 5. The remainder read dropped: overload 4's V2 is bottom again
+
+File: internal/lower/census_small.go
+
+Old:
+
+```go
+				l.censusInferRemainder(pair[0], pair[1], served, inferred)
+```
+
+New:
+
+```go
+				_, _ = pair, served
+```
+
+Expected: `TestOverloadCertificateArrayToMapFourthOverloadServed` reds, refused at overload 4's parameter
+makeValue as before the witness: V2 is bottom, the implementation's makeValue is (value: T) => T, and
+(value: T) => U doesn't serve it. So does every row lowering tsc's whole set, since the census refuses the set
+at overload 4 whichever overload a call resolves to: each `TestOverloadCertificateArrayToMapLowers` subtest,
+and the comma and spread rows of `TestOverloadCertificateMapGate` (refused before the gate's words). The
+element-set negative reds too, refused at the parameter rather than its result, which is the row's point: the
+witness gets overload 4 to the certificate, and the certificate refuses it. The Map negatives, the identity
+rows and A's rows stay green.

@@ -12,8 +12,8 @@ const overloadCertificateIdentity = `function identity<T>(x: T): T {
 }
 `
 
-// tsc's core.ts arrayToMap overloads 1 to 3 and its implementation, which builds a fresh Map in an index
-// loop and returns it, certificate B's shape (#5fws6q8). Overload 4 is overloadCertificateArrayToMapFourth.
+// tsc's core.ts arrayToMap overloads 1 to 3, overload 4, and its implementation, which builds a fresh Map
+// in an index loop and returns it, certificate B's shape (#5fws6q8).
 const overloadCertificateArrayToMapOverloads = `function arrayToMap<K, V>(array: readonly V[], makeKey: (value: V) => K | undefined): Map<K, V>;
 function arrayToMap<K, V1, V2>(array: readonly V1[], makeKey: (value: V1) => K | undefined, makeValue: (value: V1) => V2): Map<K, V2>;
 function arrayToMap<T>(array: readonly T[], makeKey: (value: T) => string | undefined): Map<string, T>;
@@ -33,8 +33,8 @@ const overloadCertificateArrayToMapImplementation = `function arrayToMap<K, V1, 
 }
 `
 
-// overloadCertificateArrayToMap is tsc's arrayToMap with its first three overloads, over identity.
-const overloadCertificateArrayToMap = overloadCertificateIdentity + overloadCertificateArrayToMapOverloads + overloadCertificateArrayToMapImplementation
+// overloadCertificateArrayToMap is tsc's arrayToMap whole, its four overloads over identity.
+const overloadCertificateArrayToMap = overloadCertificateIdentity + overloadCertificateArrayToMapOverloads + overloadCertificateArrayToMapFourth + overloadCertificateArrayToMapImplementation
 
 // overloadCertificateMapShow prints a Map<string, string> in insertion order, as both sides iterate it.
 const overloadCertificateMapShow = `const items: string[] = ["a", "bb", "ccc"];
@@ -45,19 +45,21 @@ function show(entries: Map<string, string>): void {
 }
 `
 
-// Each of overloads 1 to 3 called directly lowers and agrees with Node on the JavaScript backend and
-// natively. The census accepts overload 2, Map<K, V2> over Map<K, V1 | V2>, by certificate B where it
-// refused it before (census_small.go's result refusal, the scout's first arrayToMap failure). Overloads 1
-// and 3 omit the mapper; the census accepts them by relation, the implementation's V2 witnessed as their
-// element (inferTypes' one missing union binder), before any certificate is asked. Overload 3 is reached
-// by its one type argument, since overload 1 takes every call it would. The mapper maps a string to a
-// string, so the implementation's instance holds Map<string, string> as the overload promises.
+// tsc's arrayToMap whole, each of its four overloads called directly, lowers and agrees with Node on the
+// JavaScript backend and natively. The census accepts overloads 2 and 4, Map<K, V2> and Map<string, U>
+// over Map<K, V1 | V2>, by certificate B where it refused them before (census_small.go's result refusal,
+// the scout's first arrayToMap failure, and overload 4's parameter makeValue). Overloads 1 and 3 omit the
+// mapper; the census accepts them by relation, the implementation's V2 witnessed as their element
+// (inferTypes' one missing union binder), before any certificate is asked. Overloads 3 and 4 are reached
+// by their type arguments, since overloads 1 and 2 take every call they would. The mapper maps a string
+// to a string, so the implementation's instance holds Map<string, string> as the overload promises.
 func TestOverloadCertificateArrayToMapLowers(t *testing.T) {
 	t.Parallel()
 	for _, probe := range []struct{ name, call, want string }{
 		{"overload 1", `show(arrayToMap(items, s => s.length > 2 ? undefined : s.toUpperCase()));`, "A=a\nBB=bb\n"},
 		{"overload 2", `show(arrayToMap(items, s => s.length > 2 ? undefined : s.toUpperCase(), s => s + s));`, "A=aa\nBB=bbbb\n"},
 		{"overload 3", `show(arrayToMap<string>(items, s => s.length > 2 ? undefined : s.toUpperCase()));`, "A=a\nBB=bb\n"},
+		{"overload 4", `show(arrayToMap<string, string>(items, s => s.length > 2 ? undefined : s.toUpperCase(), s => s + s));`, "A=aa\nBB=bbbb\n"},
 	} {
 		t.Run(probe.name, func(t *testing.T) {
 			t.Parallel()
@@ -69,19 +71,34 @@ func TestOverloadCertificateArrayToMapLowers(t *testing.T) {
 	}
 }
 
-// tsc's arrayToMap with all four overloads stops at overload 4's parameter census, before its result is
-// asked, so certificate B never sees it. Overload 4 has two binders to the implementation's three;
-// censusOverload's witness reads V1 as T and K as string, but finds none for V2 (makeValue's V1 | V2
-// against U, where T isn't U), so V2 is bottom, the implementation's makeValue is (value: T) => T, and
-// overload 4's (value: T) => U doesn't serve it. overloadCallbackUse can't help, since makeValue has a
-// default. Serving overload 4 needs a witness V2 = U, the inference's to give, not this certificate's.
-func TestOverloadCertificateArrayToMapFourthOverloadStops(t *testing.T) {
+// tsc's arrayToMap overload 4 has two binders to the implementation's three. inferTypes witnesses V1 as T
+// and K as string but none for V2 (makeValue's V1 | V2 against U, where T doesn't fit U), and bottom made
+// the implementation's makeValue (value: T) => T, which overload 4's (value: T) => U doesn't serve, so
+// the census refused the set at overload 4's parameter. censusInferRemainder reads V2 as U, makeValue is
+// (value: T) => T | U, which (value: T) => U serves, and the result goes to certificate B as overload 2's
+// does, so the set lowers whole. Mutant: the remainder read dropped, and overload 4 refuses again.
+func TestOverloadCertificateArrayToMapFourthOverloadServed(t *testing.T) {
 	t.Parallel()
-	source := overloadCertificateIdentity + overloadCertificateArrayToMapOverloads + overloadCertificateArrayToMapFourth + overloadCertificateArrayToMapImplementation + overloadCertificateMapShow + "show(arrayToMap(items, s => s.toUpperCase(), s => s + s));\n"
+	source := overloadCertificateArrayToMap + overloadCertificateMapShow + "show(arrayToMap<string, string>(items, s => s.toUpperCase(), s => s + s));\n"
+	if _, err := lowerSourceAs(t, source, ".ts"); err != nil {
+		t.Fatalf("want tsc's arrayToMap with overload 4 called to lower, got %v", err)
+	}
+}
+
+// The witness only lets overload 4 reach the result's judgment; the certificate still judges it. An
+// implementation that sets the element where tsc's sets makeValue's answer passes the parameter census
+// under V2 = U as tsc's does, and is refused at overload 4's declaration for its result, since its body
+// isn't certificate B's shape and a T is no U.
+func TestOverloadCertificateArrayToMapFourthOverloadElementSetStaysRefused(t *testing.T) {
+	t.Parallel()
+	source := overloadCertificateIdentity + overloadCertificateArrayToMapFourth + strings.Replace(overloadCertificateArrayToMapImplementation, "result.set(key, makeValue(value))", "result.set(key, value)", 1) + `const made = arrayToMap<number, string>([1], v => "k", v => "s");
+const actual = made.get("k");
+console.log(` + "`expected string, got ${typeof actual}`" + `);
+`
 	_, err := lowerSourceAs(t, source, ".ts")
 	var refused *Refused
-	if !errors.As(err, &refused) || !strings.Contains(refused.What, "overload 4 of arrayToMap parameter makeValue cannot be served by implementation parameter makeValue") {
-		t.Fatalf("want overload 4 of arrayToMap refused at its declaration for parameter makeValue, got %v", err)
+	if !errors.As(err, &refused) || !strings.Contains(refused.What, "overload 1 of arrayToMap result Map<string, U> ") || !strings.Contains(refused.What, "cannot be served by implementation result") {
+		t.Fatalf("want overload 4 of tsc's set, alone here, refused at its declaration for its result, got %v", err)
 	}
 }
 

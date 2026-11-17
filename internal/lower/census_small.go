@@ -151,12 +151,25 @@ func (l *lowering) censusOverload(implementation, overload *ast.Node, ordinal in
 		if len(servedTypes) > len(declaredTypes) {
 			// Extra binders need a witness from the entire signature, not positional
 			// alpha-renaming: implementations may insert a binder before an old one.
+			pairs := [][2]*checker.Type{}
 			for index, parameter := range implementation.Parameters() {
 				if index < len(overload.Parameters()) {
-					l.inferTypes(l.checker.GetTypeAtLocation(parameter), l.checker.GetTypeAtLocation(overload.Parameters()[index]), inferred)
+					pairs = append(pairs, [2]*checker.Type{l.checker.GetTypeAtLocation(parameter), l.checker.GetTypeAtLocation(overload.Parameters()[index])})
 				}
 			}
-			l.inferTypes(l.checker.GetReturnTypeOfSignature(l.checker.GetSignatureFromDeclaration(implementation)), l.checker.GetReturnTypeOfSignature(l.checker.GetSignatureFromDeclaration(overload)), inferred)
+			pairs = append(pairs, [2]*checker.Type{l.checker.GetReturnTypeOfSignature(l.checker.GetSignatureFromDeclaration(implementation)), l.checker.GetReturnTypeOfSignature(l.checker.GetSignatureFromDeclaration(overload))})
+			for _, pair := range pairs {
+				l.inferTypes(pair[0], pair[1], inferred)
+			}
+			served := map[*checker.Type]bool{}
+			for _, parameter := range servedTypes {
+				served[l.checker.GetTypeAtLocation(parameter.Name())] = true
+			}
+			// What inferTypes left unwitnessed in a union, once every pair has witnessed what it can, before
+			// the bottom fallback below (censusInferRemainder).
+			for _, pair := range pairs {
+				l.censusInferRemainder(pair[0], pair[1], served, inferred)
+			}
 		}
 		for index, parameter := range servedTypes {
 			source := l.checker.GetTypeAtLocation(parameter.Name())
@@ -270,6 +283,99 @@ func (l *lowering) censusOverload(implementation, overload *ast.Node, ordinal in
 		return &Refused{Where: l.program.Where(overload), What: what, Fix: "make the implementation result covariant with every overload result"}
 	}
 	return nil
+}
+
+// censusInferRemainder reads, for censusOverload alone, a witness inferTypes leaves out: a binder of served
+// that is a member of a union in the implementation's declared type, every other member of which is
+// witnessed or concrete, stands for the overload's type there less each of its members another member's
+// witness already takes, or for the whole of it when that leaves nothing or it isn't a union. tsc's
+// arrayToMap overload 4 is the case: makeValue's V1 | V2 against U, V1 witnessed as T, where inferTypes'
+// union arm asks T to fit U and witnesses nothing, so V2 was bottom and the parameter census refused
+// makeValue; here V2 is U. inferTypes is left as it is, since it also instantiates real generic calls. A
+// witness read here is a candidate like any other: censusOverload still holds every constraint, parameter
+// and the result to it, and a generic implementation's body is right under every instantiation its
+// constraints allow, so a better witness lets an overload through only where its parameters and result
+// relate under it (Lower's design on #5fws6q8). The walk is inferTypes': through an optional member, a
+// reference's type arguments, and a call signature's parameters and result. It never overwrites a
+// witness, and a union with more than one unwitnessed binder gives none.
+func (l *lowering) censusInferRemainder(declared, instantiated *checker.Type, served map[*checker.Type]bool, inferred map[*checker.Type]*checker.Type) {
+	if declared == nil || instantiated == nil {
+		return
+	}
+	if declared.Flags()&checker.TypeFlagsUnion != 0 {
+		var missing *checker.Type
+		known := []*checker.Type{}
+		for _, member := range declared.Types() {
+			if witness, found := inferred[member]; found {
+				known = append(known, witness)
+			} else if member.Flags()&checker.TypeFlagsTypeParameter != 0 {
+				if missing != nil {
+					return // More than one unwitnessed binder has no unique witness.
+				}
+				missing = member
+			} else {
+				known = append(known, l.concrete(member))
+			}
+		}
+		if missing != nil {
+			if served[missing] {
+				inferred[missing] = l.censusRemainder(l.concrete(instantiated), known)
+			}
+			return
+		}
+		// An optional implementation parameter wraps the member the overload exposes, as in inferTypes.
+		if present := l.definedMembers(declared); len(present) == 1 {
+			given := l.checker.GetUnionType(l.definedMembers(instantiated))
+			if given.Flags()&checker.TypeFlagsUndefined == 0 {
+				l.censusInferRemainder(present[0], given, served, inferred)
+			}
+		}
+		return
+	}
+	if declared.Flags()&checker.TypeFlagsObject == 0 || instantiated.Flags()&checker.TypeFlagsObject == 0 {
+		return
+	}
+	if declared.ObjectFlags()&checker.ObjectFlagsReference != 0 && instantiated.ObjectFlags()&checker.ObjectFlagsReference != 0 {
+		declaredArguments, instantiatedArguments := l.checker.GetTypeArguments(declared), l.checker.GetTypeArguments(instantiated)
+		for index := range declaredArguments {
+			if index < len(instantiatedArguments) {
+				l.censusInferRemainder(declaredArguments[index], instantiatedArguments[index], served, inferred)
+			}
+		}
+	}
+	declaredSignatures, instantiatedSignatures := l.checker.GetSignaturesOfType(declared, checker.SignatureKindCall), l.checker.GetSignaturesOfType(instantiated, checker.SignatureKindCall)
+	if len(declaredSignatures) == 0 || len(instantiatedSignatures) == 0 {
+		return
+	}
+	declaredParameters, instantiatedParameters := declaredSignatures[0].Parameters(), instantiatedSignatures[0].Parameters()
+	for index := range declaredParameters {
+		if index < len(instantiatedParameters) {
+			l.censusInferRemainder(l.checker.GetTypeOfSymbol(declaredParameters[index]), l.checker.GetTypeOfSymbol(instantiatedParameters[index]), served, inferred)
+		}
+	}
+	l.censusInferRemainder(l.checker.GetReturnTypeOfSignature(declaredSignatures[0]), l.checker.GetReturnTypeOfSignature(instantiatedSignatures[0]), served, inferred)
+}
+
+// censusRemainder is instantiated less each of its members some type of known already takes, or the whole
+// of it when that leaves nothing or it isn't a union.
+func (l *lowering) censusRemainder(instantiated *checker.Type, known []*checker.Type) *checker.Type {
+	if instantiated.Flags()&checker.TypeFlagsUnion == 0 {
+		return instantiated
+	}
+	kept := []*checker.Type{}
+	for _, member := range instantiated.Types() {
+		taken := false
+		for _, other := range known {
+			taken = taken || l.checker.IsTypeAssignableTo(member, other)
+		}
+		if !taken {
+			kept = append(kept, member)
+		}
+	}
+	if len(kept) == 0 {
+		return instantiated
+	}
+	return l.checker.GetUnionType(kept)
 }
 
 func (l *lowering) censusOverloadParameter(parameters []*ast.Node, index int) (*checker.Type, *ast.Node, bool, error) {

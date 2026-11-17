@@ -62,9 +62,11 @@ The walk is overloadLocalConfined since certificate B shares it, so this edit re
 Expected: `TestOverloadCertificateArrayNegativesStayRefused/alias_over_a_parameter` reds: `const alias = out`
 is a read that is neither a push's receiver nor the return, and with nothing refusing it the census accepts
 bad by the certificate, so the row no longer stops at its declaration (it stops later at the call, the
-implementation's (string | number)[] in another representation than string[], or lowers). Her own alias
-program stays green (its loop is over a literal), and so do the index write, capture, getter and default
-rows (a write, a closure, a loop body that isn't pushes, a default), the pin and the gate rows.
+implementation's (string | number)[] in another representation than string[], or lowers).
+`/shorthand_alias_over_a_parameter` and `/spread_shorthand_alias_over_a_parameter` red with it (J-mp6tpwf):
+`{ out }` is the same kind of read, found through the value it stores, and this line is what refuses it. Her
+own alias program stays green (its loop is over a literal), and so do the index write, capture, getter and
+default rows (a write, a closure, a loop body that isn't pushes, a default), the pin and the gate rows.
 
 ## 3. The shorthand arm dropped: a shorthand property's name read as the property
 
