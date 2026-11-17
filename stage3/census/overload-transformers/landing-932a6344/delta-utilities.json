@@ -1,0 +1,141 @@
+{
+  "before": 146,
+  "after": 146,
+  "new": [
+    {
+      "depth": 0,
+      "kind": "Refused",
+      "measurement": "measured on a checker-rejected program",
+      "phase": "lowering",
+      "reason": "a cast the runtime can't check",
+      "root_kind": "",
+      "text": "src/compiler/transformers/utilities.ts:590:12: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+      "unit": "src/compiler/transformers/utilities.ts:585:1",
+      "where": "src/compiler/transformers/utilities.ts:590:12"
+    },
+    {
+      "depth": 0,
+      "kind": "Boundary",
+      "measurement": "measured on a checker-rejected program",
+      "phase": "lowering",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "root_kind": "",
+      "text": "src/compiler/transformers/utilities.ts:590:12: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+      "unit": "src/compiler/transformers/utilities.ts:585:1",
+      "where": "src/compiler/transformers/utilities.ts:590:5"
+    },
+    {
+      "depth": 0,
+      "kind": "Refused",
+      "measurement": "measured on a checker-rejected program",
+      "phase": "lowering",
+      "reason": "a cast the runtime can't check",
+      "root_kind": "",
+      "text": "src/compiler/transformers/utilities.ts:590:12: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+      "unit": "src/compiler/transformers/utilities.ts:587:1",
+      "where": "src/compiler/transformers/utilities.ts:590:12"
+    },
+    {
+      "depth": 0,
+      "kind": "Boundary",
+      "measurement": "measured on a checker-rejected program",
+      "phase": "lowering",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "root_kind": "",
+      "text": "src/compiler/transformers/utilities.ts:590:12: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+      "unit": "src/compiler/transformers/utilities.ts:587:1",
+      "where": "src/compiler/transformers/utilities.ts:590:5"
+    },
+    {
+      "depth": 0,
+      "kind": "Refused",
+      "measurement": "measured on a checker-rejected program",
+      "phase": "lowering",
+      "reason": "a cast the runtime can't check",
+      "root_kind": "",
+      "text": "src/compiler/transformers/utilities.ts:590:12: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+      "unit": "src/compiler/transformers/utilities.ts:589:1",
+      "where": "src/compiler/transformers/utilities.ts:590:12"
+    },
+    {
+      "depth": 0,
+      "kind": "Boundary",
+      "measurement": "measured on a checker-rejected program",
+      "phase": "lowering",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "root_kind": "",
+      "text": "src/compiler/transformers/utilities.ts:590:12: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+      "unit": "src/compiler/transformers/utilities.ts:589:1",
+      "where": "src/compiler/transformers/utilities.ts:590:5"
+    }
+  ],
+  "gone": [
+    {
+      "depth": 0,
+      "kind": "Refused",
+      "measurement": "measured on a checker-rejected program",
+      "phase": "lowering",
+      "reason": "overload 1 of getProperties result readonly InitializedPropertyDeclaration[] cannot be served by implementation result readonly PropertyDeclaration[]",
+      "root_kind": "",
+      "text": "src/compiler/transformers/utilities.ts:585:1: Adamic 0.1 refuses overload 1 of getProperties result readonly InitializedPropertyDeclaration[] cannot be served by implementation result readonly PropertyDeclaration[]; make the implementation result covariant with every overload result",
+      "unit": "src/compiler/transformers/utilities.ts:585:1",
+      "where": "src/compiler/transformers/utilities.ts:585:1"
+    },
+    {
+      "depth": 0,
+      "kind": "Boundary",
+      "measurement": "measured on a checker-rejected program",
+      "phase": "lowering",
+      "reason": "function signature or prologue failed; continued at next declaration",
+      "root_kind": "",
+      "text": "src/compiler/transformers/utilities.ts:585:1: Adamic 0.1 refuses overload 1 of getProperties result readonly InitializedPropertyDeclaration[] cannot be served by implementation result readonly PropertyDeclaration[]; make the implementation result covariant with every overload result",
+      "unit": "src/compiler/transformers/utilities.ts:585:1",
+      "where": "src/compiler/transformers/utilities.ts:585:1"
+    },
+    {
+      "depth": 0,
+      "kind": "Refused",
+      "measurement": "measured on a checker-rejected program",
+      "phase": "lowering",
+      "reason": "overload 1 of getProperties result readonly InitializedPropertyDeclaration[] cannot be served by implementation result readonly PropertyDeclaration[]",
+      "root_kind": "",
+      "text": "src/compiler/transformers/utilities.ts:585:1: Adamic 0.1 refuses overload 1 of getProperties result readonly InitializedPropertyDeclaration[] cannot be served by implementation result readonly PropertyDeclaration[]; make the implementation result covariant with every overload result",
+      "unit": "src/compiler/transformers/utilities.ts:587:1",
+      "where": "src/compiler/transformers/utilities.ts:585:1"
+    },
+    {
+      "depth": 0,
+      "kind": "Boundary",
+      "measurement": "measured on a checker-rejected program",
+      "phase": "lowering",
+      "reason": "function signature or prologue failed; continued at next declaration",
+      "root_kind": "",
+      "text": "src/compiler/transformers/utilities.ts:585:1: Adamic 0.1 refuses overload 1 of getProperties result readonly InitializedPropertyDeclaration[] cannot be served by implementation result readonly PropertyDeclaration[]; make the implementation result covariant with every overload result",
+      "unit": "src/compiler/transformers/utilities.ts:587:1",
+      "where": "src/compiler/transformers/utilities.ts:587:1"
+    },
+    {
+      "depth": 0,
+      "kind": "Refused",
+      "measurement": "measured on a checker-rejected program",
+      "phase": "lowering",
+      "reason": "overload 1 of getProperties result readonly InitializedPropertyDeclaration[] cannot be served by implementation result readonly PropertyDeclaration[]",
+      "root_kind": "",
+      "text": "src/compiler/transformers/utilities.ts:585:1: Adamic 0.1 refuses overload 1 of getProperties result readonly InitializedPropertyDeclaration[] cannot be served by implementation result readonly PropertyDeclaration[]; make the implementation result covariant with every overload result",
+      "unit": "src/compiler/transformers/utilities.ts:589:1",
+      "where": "src/compiler/transformers/utilities.ts:585:1"
+    },
+    {
+      "depth": 0,
+      "kind": "Boundary",
+      "measurement": "measured on a checker-rejected program",
+      "phase": "lowering",
+      "reason": "function signature or prologue failed; continued at next declaration",
+      "root_kind": "",
+      "text": "src/compiler/transformers/utilities.ts:585:1: Adamic 0.1 refuses overload 1 of getProperties result readonly InitializedPropertyDeclaration[] cannot be served by implementation result readonly PropertyDeclaration[]; make the implementation result covariant with every overload result",
+      "unit": "src/compiler/transformers/utilities.ts:589:1",
+      "where": "src/compiler/transformers/utilities.ts:589:1"
+    }
+  ],
+  "changed": []
+}

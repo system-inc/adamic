@@ -1,4 +1,6 @@
-# Transformer overloads — final report, #ev14ch9
+# Transformer overloads — original census decision, #ev14ch9
+
+Compiler subsequently accepted getProperties under the delegation. The current-main landing and fresh proof receipts are in [landing-932a6344/REPORT.md](landing-932a6344/REPORT.md). The original stop below records the correctly enforced pre-ruling gate; the two namedEvaluation sets remain stopped.
 
 Base: cf468df0747075e50d326a97ff03e8530d7a1a88. TypeScript v6.0.3: 050880ce59e30b356b686bd3144efe24f875ebc8.
 

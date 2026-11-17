@@ -1,0 +1,185 @@
+{
+  "before": 633,
+  "after": 624,
+  "new": [
+    {
+      "depth": 0,
+      "kind": "NotYet",
+      "measurement": "measured on a checker-rejected program",
+      "phase": "lowering",
+      "reason": "writing a checked object field that may hold undefined or null, whose checked write can't change the representation its slot holds",
+      "root_kind": "",
+      "text": "src/compiler/binder.ts:2258:13: stage 0 can't lower writing a checked object field that may hold undefined or null, whose checked write can't change the representation its slot holds yet",
+      "unit": "src/compiler/transformers/classFields.ts:2310:5",
+      "where": "src/compiler/binder.ts:2258:13"
+    },
+    {
+      "depth": 0,
+      "kind": "Boundary",
+      "measurement": "measured on a checker-rejected program",
+      "phase": "lowering",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "root_kind": "",
+      "text": "src/compiler/binder.ts:2258:13: stage 0 can't lower writing a checked object field that may hold undefined or null, whose checked write can't change the representation its slot holds yet",
+      "unit": "src/compiler/transformers/classFields.ts:2310:5",
+      "where": "src/compiler/transformers/classFields.ts:2322:13"
+    }
+  ],
+  "gone": [
+    {
+      "depth": 0,
+      "kind": "Refused",
+      "measurement": "measured on a checker-rejected program",
+      "phase": "lowering",
+      "reason": "overload 1 of getProperties result readonly InitializedPropertyDeclaration[] cannot be served by implementation result readonly PropertyDeclaration[]",
+      "root_kind": "",
+      "text": "src/compiler/transformers/utilities.ts:585:1: Adamic 0.1 refuses overload 1 of getProperties result readonly InitializedPropertyDeclaration[] cannot be served by implementation result readonly PropertyDeclaration[]; make the implementation result covariant with every overload result",
+      "unit": "src/compiler/transformers/classFields.ts:2310:5",
+      "where": "src/compiler/transformers/utilities.ts:585:1"
+    },
+    {
+      "depth": 0,
+      "kind": "Boundary",
+      "measurement": "measured on a checker-rejected program",
+      "phase": "lowering",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "root_kind": "",
+      "text": "src/compiler/transformers/utilities.ts:585:1: Adamic 0.1 refuses overload 1 of getProperties result readonly InitializedPropertyDeclaration[] cannot be served by implementation result readonly PropertyDeclaration[]; make the implementation result covariant with every overload result",
+      "unit": "src/compiler/transformers/classFields.ts:2310:5",
+      "where": "src/compiler/transformers/classFields.ts:2311:9"
+    },
+    {
+      "depth": 0,
+      "kind": "NotYet",
+      "measurement": "measured on a checker-rejected program",
+      "phase": "lowering",
+      "reason": "reading instanceProperties",
+      "root_kind": "",
+      "text": "src/compiler/transformers/classFields.ts:2312:26: stage 0 can't lower reading instanceProperties yet",
+      "unit": "src/compiler/transformers/classFields.ts:2310:5",
+      "where": "src/compiler/transformers/classFields.ts:2312:26"
+    },
+    {
+      "depth": 0,
+      "kind": "Boundary",
+      "measurement": "measured on a checker-rejected program",
+      "phase": "lowering",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "root_kind": "",
+      "text": "src/compiler/transformers/classFields.ts:2312:26: stage 0 can't lower reading instanceProperties yet",
+      "unit": "src/compiler/transformers/classFields.ts:2310:5",
+      "where": "src/compiler/transformers/classFields.ts:2312:9"
+    },
+    {
+      "depth": 0,
+      "kind": "NotYet",
+      "measurement": "measured on a checker-rejected program",
+      "phase": "lowering",
+      "reason": "assigning to an Identifier",
+      "root_kind": "",
+      "text": "src/compiler/transformers/classFields.ts:2314:13: stage 0 can't lower assigning to an Identifier yet",
+      "unit": "src/compiler/transformers/classFields.ts:2310:5",
+      "where": "src/compiler/transformers/classFields.ts:2314:13"
+    },
+    {
+      "depth": 0,
+      "kind": "NotYet",
+      "measurement": "measured on a checker-rejected program",
+      "phase": "lowering",
+      "reason": "reading properties",
+      "root_kind": "",
+      "text": "src/compiler/transformers/classFields.ts:2318:43: stage 0 can't lower reading properties yet",
+      "unit": "src/compiler/transformers/classFields.ts:2310:5",
+      "where": "src/compiler/transformers/classFields.ts:2318:43"
+    },
+    {
+      "depth": 0,
+      "kind": "Boundary",
+      "measurement": "measured on a checker-rejected program",
+      "phase": "lowering",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "root_kind": "",
+      "text": "src/compiler/transformers/classFields.ts:2318:43: stage 0 can't lower reading properties yet",
+      "unit": "src/compiler/transformers/classFields.ts:2310:5",
+      "where": "src/compiler/transformers/classFields.ts:2318:9"
+    },
+    {
+      "depth": 0,
+      "kind": "NotYet",
+      "measurement": "measured on a checker-rejected program",
+      "phase": "lowering",
+      "reason": "reading needsConstructorBody",
+      "root_kind": "",
+      "text": "src/compiler/transformers/classFields.ts:2321:30: stage 0 can't lower reading needsConstructorBody yet",
+      "unit": "src/compiler/transformers/classFields.ts:2310:5",
+      "where": "src/compiler/transformers/classFields.ts:2321:30"
+    },
+    {
+      "depth": 0,
+      "kind": "Boundary",
+      "measurement": "measured on a checker-rejected program",
+      "phase": "lowering",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "root_kind": "",
+      "text": "src/compiler/transformers/classFields.ts:2321:30: stage 0 can't lower reading needsConstructorBody yet",
+      "unit": "src/compiler/transformers/classFields.ts:2310:5",
+      "where": "src/compiler/transformers/classFields.ts:2321:9"
+    },
+    {
+      "depth": 0,
+      "kind": "NotYet",
+      "measurement": "measured on a checker-rejected program",
+      "phase": "lowering",
+      "reason": "reading properties",
+      "root_kind": "",
+      "text": "src/compiler/transformers/classFields.ts:2353:76: stage 0 can't lower reading properties yet",
+      "unit": "src/compiler/transformers/classFields.ts:2310:5",
+      "where": "src/compiler/transformers/classFields.ts:2353:76"
+    },
+    {
+      "depth": 0,
+      "kind": "Boundary",
+      "measurement": "measured on a checker-rejected program",
+      "phase": "lowering",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "root_kind": "",
+      "text": "src/compiler/transformers/classFields.ts:2353:76: stage 0 can't lower reading properties yet",
+      "unit": "src/compiler/transformers/classFields.ts:2310:5",
+      "where": "src/compiler/transformers/classFields.ts:2353:13"
+    }
+  ],
+  "changed": [
+    {
+      "site": [
+        "src/compiler/transformers/classFields.ts:2314:13",
+        "Boundary"
+      ],
+      "before": [
+        {
+          "depth": 0,
+          "kind": "Boundary",
+          "measurement": "measured on a checker-rejected program",
+          "phase": "lowering",
+          "reason": "failed statement; state rolled back; continued at next statement or declaration",
+          "root_kind": "",
+          "text": "src/compiler/transformers/classFields.ts:2314:13: stage 0 can't lower assigning to an Identifier yet",
+          "unit": "src/compiler/transformers/classFields.ts:2310:5",
+          "where": "src/compiler/transformers/classFields.ts:2314:13"
+        }
+      ],
+      "after": [
+        {
+          "depth": 0,
+          "kind": "Boundary",
+          "measurement": "measured on a checker-rejected program",
+          "phase": "lowering",
+          "reason": "failed statement; state rolled back; continued at next statement or declaration",
+          "root_kind": "",
+          "text": "src/compiler/core.ts:261:1: Adamic 0.1 refuses overload 1 of filter result U[] cannot be served by implementation result readonly T[] | undefined; make the implementation result covariant with every overload result",
+          "unit": "src/compiler/transformers/classFields.ts:2310:5",
+          "where": "src/compiler/transformers/classFields.ts:2314:13"
+        }
+      ]
+    }
+  ]
+}
