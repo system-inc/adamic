@@ -38,8 +38,8 @@ The control rule locations below refer to main `89614cc0f9d6aa7b7fe96b56c5c6c1c3
 
 - `count-stop` and `count-clean`: argument-count observation through a bound function; `checkBoundArguments`, `internal/lower/function_bind.go:361`, diagnosis at line 377. The twin returns its parameter without reading `arguments`.
 - `rest-stop` and `rest-clean`: direct rest-parameter bind; the production body-lowering check in `functionBind`, `internal/lower/function_bind.go:54`. Main rejects this before `checkBoundArguments`, so this pair claims a first body stop, not a tail result. The twin has no rest parameter.
-- `record-stop` and `record-clean`: record written directly into a graph slot; `findCycles` / `graphTypes` / `noteRecordSlot`, `internal/lower/graph_records.go:16`. The twin uses arrays of nodes rather than a record.
-- `cycle-stop` and `cycle-clean`: record held inside an array written into a cyclic graph holder; the same production record rule, whose `holdsRecordSeen` follows array elements (`internal/lower/graph_records.go:54`). The twin uses node arrays. These share the record validator but exercise different written value types.
+- `record-stop` and `record-clean`: a union graph slot written with a node-array slice and a `Record<string, number>` exercises `lowering.findCycles` because the scalar record type remains unselected even when records can join graph regions; the twin uses arrays of nodes rather than a record.
+- `cycle-stop` and `cycle-clean`: a union graph slot written with `[a]` and an array containing a `Record<string, number>` exercises the same unselected scalar record stop through array elements (`holdsRecordSeen` / `heldRecordsSeen`); the twin uses node arrays.
 
 No `declaresBeyond` control is claimed: that rule is absent from this main. The eight controls target rules main actually has. Each has its own first-error mutant run, which must turn that control red; clean twins prove continuation by completion, rather than by inventing a clean rule event.
 
