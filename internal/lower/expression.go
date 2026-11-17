@@ -439,9 +439,10 @@ func (l *lowering) sameKeepingWalkMode(from, to *checker.Type, visited map[[2]*c
 	fromMembers, fromCount := members(from)
 	toMembers, toCount := members(to)
 	// Compare unions before present erases them, including unions reached through slots.
-	// Callable slot checks apply only to the one-callable-member case below.
+	// Callable slot comparisons apply to the one-callable-member case below.
 	if fromCount > 1 || toCount > 1 {
 		if toCount <= 1 && l.present(to) == nil {
+			// An unreadable side answers same until #77r8j7m: the flat inversion stopped brands, generics and never (measured Nov 16).
 			return true
 		}
 		// A value written into a Weak slot may create a Weak. Below that value's
@@ -479,6 +480,7 @@ func (l *lowering) sameKeepingWalkMode(from, to *checker.Type, visited map[[2]*c
 			}
 		}
 		pair := [2]*checker.Type{from, to}
+		// Coinductive same: any false on the cycle fails the whole walk; see TestUnionKeepingRepeatingLapFinishes.
 		if visited[pair] {
 			return true
 		}
@@ -496,6 +498,7 @@ func (l *lowering) sameKeepingWalkMode(from, to *checker.Type, visited map[[2]*c
 		for _, member := range fromMembers {
 			for _, target := range toMembers {
 				const nullish = checker.TypeFlagsUndefined | checker.TypeFlagsNull
+				// Nullish members store nothing, and the union tag says which member is live.
 				if (member.Flags()&nullish != 0) != (target.Flags()&nullish != 0) {
 					continue
 				}
@@ -507,6 +510,8 @@ func (l *lowering) sameKeepingWalkMode(from, to *checker.Type, visited map[[2]*c
 		return true
 	}
 	from, to = l.present(from), l.present(to)
+	// An unreadable side answers same until #77r8j7m: the flat inversion stopped brands, generics and never (measured Nov 16).
+	// Coinductive same: any false on the cycle fails the whole walk; see TestUnionKeepingRepeatingLapFinishes.
 	if from == nil || to == nil || from == to || visited[[2]*checker.Type{from, to}] {
 		return true
 	}
@@ -581,7 +586,7 @@ func (l *lowering) sameKeepingWalkMode(from, to *checker.Type, visited map[[2]*c
 func (l *lowering) sameKeepingStorage(from, to *checker.Type, visited map[[2]*checker.Type]bool, nesting *keepingNesting, singleCallable bool) bool {
 	// A pair already open on this path answers same for now: the walk is a conjunction, so any
 	// difference on the cycle fails the whole walk, and this provisional same is never the answer
-	// reported. Without it, a repeating lap's types never grow, so the nesting bound never stops it.
+	// reported (TestUnionKeepingRepeatingLapFinishes). Without it, a repeating lap's types never grow, so the nesting bound never stops it.
 	pair := keepingPair{from: from, to: to, singleCallable: singleCallable}
 	if nesting.open[pair] {
 		return true
@@ -591,10 +596,15 @@ func (l *lowering) sameKeepingStorage(from, to *checker.Type, visited map[[2]*ch
 	}
 	nesting.open[pair] = true
 	defer delete(nesting.open, pair)
+	// Typed arrays and Buffers aren't judged here: under all pairs a typed array meets every other
+	// member as a non-twin (Uint8Array beside Box, or beside Uint16Array), so a kind check stops
+	// legitimate writes (TestNarrowedUnionTypedArrayTag's write, measured Nov 16). Their twin rule is
+	// its own task (#r496zrk, row 14); ordinary mode keeps its top-level checks.
 	// Closure slots have no type descriptor, so callable twins must agree on parameter and result representation (#svbn0aj, a1).
 	sameCallablePair := func(inside, viewed *checker.Type) bool {
 		if !l.keepingCallable(inside) || !l.keepingCallable(viewed) {
-			return true
+			// One callable side skips only signatures: storage falls through to its index/property comparison below.
+			return l.sameKeepingWalkMode(inside, viewed, visited, true, nesting, true, false)
 		}
 		inside, viewed = l.present(inside), l.present(viewed)
 		fromSignatures := l.checker.GetSignaturesOfType(inside, checker.SignatureKindCall)
@@ -608,10 +618,18 @@ func (l *lowering) sameKeepingStorage(from, to *checker.Type, visited map[[2]*ch
 		sameCallable := func(inside, viewed *checker.Type) bool {
 			return l.callableKeeping(inside, viewed, toSignatures[0], visited, nesting)
 		}
+		fromThis, toThis := fromSignatures[0].ThisParameter(), toSignatures[0].ThisParameter()
+		if (fromThis == nil) != (toThis == nil) {
+			return false
+		}
+		if fromThis != nil && !sameCallable(l.checker.GetTypeOfSymbol(fromThis), l.checker.GetTypeOfSymbol(toThis)) {
+			return false
+		}
 		fromParameters, toParameters := fromSignatures[0].Parameters(), toSignatures[0].Parameters()
 		if l.censusNeverRestSignature(toSignatures[0]) {
 			toParameters = nil
 		}
+		// The callee never reads view parameters past its own; restCollectedOtherwise judges a rest.
 		for index := 0; index < len(fromParameters) && index < len(toParameters); index++ {
 			if !sameCallable(l.checker.GetTypeOfSymbol(fromParameters[index]), l.checker.GetTypeOfSymbol(toParameters[index])) {
 				return false
@@ -635,13 +653,20 @@ func (l *lowering) sameKeepingStorage(from, to *checker.Type, visited map[[2]*ch
 	if !ok {
 		return false
 	}
-	// typeof narrows to the one callable member's own signature (#xmnp0x8); multiple callable members use the union's combined signature (#q6wf1bp).
-	if l.keepingCallable(from) || l.keepingCallable(to) {
-		if singleCallable && l.keepingCallable(from) && l.keepingCallable(to) {
+	if l.keepingCallable(from) && l.keepingCallable(to) {
+		if singleCallable {
 			return sameCallablePair(from, to)
 		}
+		// Multiple callable members use the callable contract's combined signature, pinned by
+		// TestCallableContractP18, TestCallableContractReceiverEvaluatedOnce, TestCallableContractWideProducer
+		// and TestCallableContractSpreadRefused; deleting a pin or loosening its contract owes this skip a review.
+		// Narrowing to one member stops (TestUnionKeepingSeveralCallableGuardStop, the r6 guard probe);
+		// lifting that stop must add row 6's comparison in the same head (#q6wf1bp).
 		return true
 	}
+	// With only one callable side, compare its own properties too. This rests on row 13's reason:
+	// optional_widening.go refuses a view property its structural source lacks (Language's w01, #q6wf1bp).
+	// If that reason changes, this fall-through must change with it.
 	same := func(inside, viewed *checker.Type) bool {
 		if l.keepingCallable(inside) || l.keepingCallable(viewed) {
 			return sameCallablePair(inside, viewed)
@@ -652,14 +677,36 @@ func (l *lowering) sameKeepingStorage(from, to *checker.Type, visited map[[2]*ch
 	}
 	if from.ObjectFlags()&checker.ObjectFlagsReference != 0 && to.ObjectFlags()&checker.ObjectFlagsReference != 0 && (l.isArrayType(from) || checker.IsTupleType(from) || l.isLibraryType(from, "Map", "ReadonlyMap", "Set", "ReadonlySet")) {
 		fromArguments, toArguments := l.typeArguments(from), l.typeArguments(to)
-		for index := 0; index < len(fromArguments) && index < len(toArguments); index++ {
-			if !same(fromArguments[index], toArguments[index]) {
-				return false
+		if checker.IsTupleType(from) && l.isArrayType(to) && len(toArguments) == 1 {
+			for _, element := range fromArguments {
+				if !same(element, toArguments[0]) {
+					return false
+				}
+			}
+		} else {
+			// Unequal tuple lengths are non-twins in all pairs; fixed longer views are unassignable, and optional extra elements rest on row 13's missing-property rule.
+			for index := 0; index < len(fromArguments) && index < len(toArguments); index++ {
+				if !same(fromArguments[index], toArguments[index]) {
+					return false
+				}
 			}
 		}
 	}
-	for _, inside := range l.checker.GetIndexInfosOfType(from) {
-		for _, viewed := range l.checker.GetIndexInfosOfType(to) {
+	fromIndexes, toIndexes := l.checker.GetIndexInfosOfType(from), l.checker.GetIndexInfosOfType(to)
+	if len(fromIndexes) == 0 && len(toIndexes) != 0 {
+		for _, inside := range l.checker.GetPropertiesOfType(from) {
+			if inside.Flags&ast.SymbolFlagsMethod != 0 {
+				continue
+			}
+			for _, viewed := range toIndexes {
+				if !same(l.checker.GetTypeOfSymbol(inside), viewed.ValueType()) {
+					return false
+				}
+			}
+		}
+	}
+	for _, inside := range fromIndexes {
+		for _, viewed := range toIndexes {
 			if !same(inside.ValueType(), viewed.ValueType()) {
 				return false
 			}
@@ -667,13 +714,18 @@ func (l *lowering) sameKeepingStorage(from, to *checker.Type, visited map[[2]*ch
 	}
 	for _, viewed := range l.checker.GetPropertiesOfType(to) {
 		inside := l.checker.GetPropertyOfType(from, viewed.Name)
-		// A view method over a source method stays skipped (row 7, #3h04df3): then on Promise and
-		// PromiseLike, and an array's methods, are generic on both sides and would fail closed. A view
-		// method over a source property is a stored closure called through its own slots, so it's
-		// compared like any callable field (Held's read: (x: Weakly) => string seen as read(x: Strong)).
+		// The one open skip in storage mode: a view method over a source method isn't compared.
+		// Comparing it through sameCallablePair stopped every async program (Promise<T> seen as
+		// T | PromiseLike<T>, through then's generic signature) and arrays seen through unions, measured
+		// Nov 16, so it waits on a proof that compares a generic target's type arguments instead of its
+		// members (#3h04df3). A view method over a source property is a stored closure called through its
+		// own slots, so it's compared like any callable field (Held's read: (x: Weakly) => string seen as
+		// read(x: Strong)).
 		if viewed.Flags&ast.SymbolFlagsMethod != 0 && (inside == nil || inside.Flags&ast.SymbolFlagsMethod != 0) {
 			continue
 		}
+		// A missing source property is never read through this view: optional_widening.go refuses
+		// such a structural widening first (Language's w01, #q6wf1bp); keep that rule and this skip together.
 		if inside != nil && !same(l.checker.GetTypeOfSymbol(inside), l.checker.GetTypeOfSymbol(viewed)) {
 			return false
 		}
