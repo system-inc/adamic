@@ -172,7 +172,7 @@ func (l *lowering) viewWalkIndexed(modules []*ast.SourceFile, fields map[string]
 	// (refuseReachedContractGetters), never by its name alone (#c7w6j0y).
 	var getters []*ast.Node
 	for _, getter := range index.getters {
-		if fields[getter.Name().Text()] {
+		if name, named := memberKeyText(getter); named && fields[name] {
 			getters = append(getters, getter)
 		}
 	}

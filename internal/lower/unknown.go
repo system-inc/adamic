@@ -273,7 +273,7 @@ func (l *lowering) dynamicReadHazard(name string) bool {
 	}
 	for _, declaration := range l.classes {
 		for _, member := range declaration.Members() {
-			if member.Name() != nil && member.Name().Text() == name && member.Kind != ast.KindPropertyDeclaration {
+			if text, named := memberKeyText(member); named && text == name && member.Kind != ast.KindPropertyDeclaration {
 				return true
 			}
 		}
@@ -317,7 +317,8 @@ func (l *lowering) presenceHazard(name string) string {
 		}
 		if node.Kind == ast.KindClassDeclaration {
 			for _, member := range node.Members() {
-				if member.Kind == ast.KindMethodDeclaration && member.Name().Text() == name {
+				text, named := memberKeyText(member)
+				if named && member.Kind == ast.KindMethodDeclaration && text == name {
 					for _, parameter := range member.Parameters() {
 						if held, known := l.representation(l.checker.GetTypeAtLocation(parameter.Name())); known && slotless(held) {
 							reason = "a method's presence is not in its native dispatch table"
@@ -329,7 +330,7 @@ func (l *lowering) presenceHazard(name string) string {
 						}
 					}
 				}
-				if member.Name() != nil && member.Name().Text() == name && ast.HasSyntacticModifier(member, ast.ModifierFlagsAmbient) {
+				if named && text == name && ast.HasSyntacticModifier(member, ast.ModifierFlagsAmbient) {
 					reason = "an ambient class field has no JavaScript own property"
 				}
 			}

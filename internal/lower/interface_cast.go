@@ -137,7 +137,7 @@ func (l *lowering) viewWalkWhole(modules []*ast.SourceFile, fields map[string]bo
 		}
 		// A getter named as a contract field is judged by what can reach this view, once lowering
 		// is done (refuseReachedContractGetters), never by its name alone (#c7w6j0y).
-		if part.Kind == ast.KindGetAccessor && part.Name() != nil && fields[part.Name().Text()] {
+		if name, named := memberKeyText(part); named && part.Kind == ast.KindGetAccessor && fields[name] {
 			getters = append(getters, part)
 		}
 		if refused == nil {
@@ -423,7 +423,7 @@ func (l *lowering) legacyView(node *ast.Node, value ir.Expression, source, targe
 			return true
 		}
 		// As view's: judged by reach once lowering is done (refuseReachedContractGetters).
-		if part.Kind == ast.KindGetAccessor && part.Name() != nil && fields[part.Name().Text()] {
+		if name, named := memberKeyText(part); named && part.Kind == ast.KindGetAccessor && fields[name] {
 			getters = append(getters, part)
 		}
 		if part.Kind == ast.KindObjectBindingPattern {

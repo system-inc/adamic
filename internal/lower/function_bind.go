@@ -623,8 +623,8 @@ func (l *lowering) bindReceiverRule(node *ast.Node) error {
 		l.bindGetters = map[string]bool{}
 		var visit ast.Visitor
 		visit = func(current *ast.Node) bool {
-			if current.Kind == ast.KindGetAccessor && current.Name() != nil {
-				l.bindGetters[current.Name().Text()] = true
+			if name, named := memberKeyText(current); named && current.Kind == ast.KindGetAccessor {
+				l.bindGetters[name] = true
 			}
 			current.ForEachChild(visit)
 			return false

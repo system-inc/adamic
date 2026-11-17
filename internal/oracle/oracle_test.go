@@ -590,6 +590,9 @@ var fixtures = []struct {
 	{"internal/oracle/testdata/view_write_union_boolean.ts", true, false},
 	{"internal/oracle/testdata/view_write_union_slot.ts", true, true},
 	{"internal/oracle/testdata/view_write_misfit.ts", true, true},
+	// A class keyed by Symbol.iterator beside in on an unknown and a read of it, whose member walks pass over a
+	// name that spells no text (#ppgk12h).
+	{"internal/oracle/testdata/computed_member_names_iterable.ts", true, false},
 }
 
 // run is one execution's observable behavior: what the oracle compares.
