@@ -62,7 +62,8 @@ interface Second extends Base {
 const honest: Second = { kind: Many.B, b: 2 };
 `
 
-const oneMemberSlotRefusal = "an unproven value assigned to a numeric literal or enum member slot One.A"
+// The checker prints a one-member enum's member as its enum, One.
+const oneMemberSlotRefusal = "an unproven value assigned to a numeric literal or enum member slot One;"
 
 // Every road Language built stops at the write, in .a and .ts: the write alone (q00), the predicate beside
 // one-member enums (q02) and beside a multi-member enum (q05), and the comparison then cast (q01).
