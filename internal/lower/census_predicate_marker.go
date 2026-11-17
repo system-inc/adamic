@@ -43,7 +43,7 @@ func (l *lowering) censusPredicateMarkerContract(annotation *ast.Node) bool {
 	found, safe := false, true
 	var visit ast.Visitor
 	visit = func(node *ast.Node) bool {
-		if ast.IsIdentifier(node) && !ast.IsPartOfTypeNode(node) && l.symbol(node) == symbol {
+		if ast.IsIdentifier(node) && !ast.IsPartOfTypeNode(node) && l.valueSymbol(node) == symbol {
 			found = true
 			argument := node
 			for argument.Parent != nil && argument.Parent.Kind == ast.KindParenthesizedExpression {

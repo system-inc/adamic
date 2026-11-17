@@ -62,7 +62,7 @@ func (l *lowering) predicateOverloadAssigned(implementation *ast.Node, symbol *a
 	assigned := false
 	var writes ast.Visitor
 	writes = func(node *ast.Node) bool {
-		if node.Kind == ast.KindIdentifier && ast.IsAssignmentTarget(node) && l.symbol(node) == symbol {
+		if node.Kind == ast.KindIdentifier && ast.IsAssignmentTarget(node) && l.valueSymbol(node) == symbol {
 			assigned = true
 		}
 		return assigned || node.ForEachChild(writes)
@@ -316,7 +316,7 @@ func (l *lowering) predicateOverloadBinding(implementation *ast.Node, local *ast
 		if ast.IsFunctionLike(node) {
 			var writes ast.Visitor
 			writes = func(inner *ast.Node) bool {
-				if inner.Kind == ast.KindIdentifier && ast.IsAssignmentTarget(inner) && l.symbol(inner) == local {
+				if inner.Kind == ast.KindIdentifier && ast.IsAssignmentTarget(inner) && l.valueSymbol(inner) == local {
 					written = true
 				}
 				return written || inner.ForEachChild(writes)

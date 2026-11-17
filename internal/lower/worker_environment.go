@@ -191,7 +191,7 @@ func (r *workerEnvironmentRules) parameterField(node *ast.Node) bool {
 	if node.Kind != ast.KindIdentifier {
 		return false
 	}
-	symbol := r.l.checker.GetSymbolAtLocation(node)
+	symbol := r.l.valueSymbol(node)
 	if symbol == nil {
 		return false
 	}
