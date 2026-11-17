@@ -428,6 +428,10 @@ type lowering struct {
 	// lowering (overload_result_check.go, #z5d0jye).
 	narrowOverloads map[*ast.Node]bool
 	overloadCalls   map[*ast.Node]bool
+	// overloadCertificates holds, for each overload judged, whether censusOverload accepted it by
+	// certificate A, whose calls overloadCertificateCall holds to a direct entry
+	// (overload_certificate_array.go, #5fws6q8).
+	overloadCertificates map[*ast.Node]bool
 	// predicateParametersAdmitted holds each predicate parameter predicateArgumentProof admitted for its
 	// checked closure, and predicateParametersBuilt each one lowering passed as that closure, which
 	// checkCheckedPredicateParameters holds alike once lowering is done (predicate_parameter_value.go).
