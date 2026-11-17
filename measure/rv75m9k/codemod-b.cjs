@@ -14,8 +14,7 @@
 // private static method (IdentifierNameMap.toKey) becomes a private static readonly arrow field beside it, made once.
 //
 // It refuses, before writing anything, a receiver that isn't an identifier or a chain of property reads on one, a read
-// whose statement can't take a statement before it, a statement that writes the receiver's root, a view name already in
-// scope, and a site it can't find. Usage: NODE_PATH=... node codemod-b.cjs <tree> <roadB-sites.json> [--dry-run]
+// whose statement can't take a statement before it, a statement that writes the receiver's root,  and a site it can't find. Usage: NODE_PATH=... node codemod-b.cjs <tree> <roadB-sites.json> [--dry-run]
 const ts = require('typescript'), fs = require('node:fs'), path = require('node:path');
 const [tree, sitesPath, mode] = process.argv.slice(2);
 const sites = JSON.parse(fs.readFileSync(sitesPath, 'utf8'));
@@ -68,6 +67,12 @@ function nameInScope(location, name) {
 }
 
 const views = new Map(); // statement -> { file, receiverText, viewName, members: Set, statement }
+const plannedNames = new Map(); // block-scope container -> names planned in it
+function blockOf(statement) {
+    for (let current = statement.parent; current; current = current.parent)
+        if (ts.isBlock(current) || ts.isCaseBlock(current) || ts.isModuleBlock(current) || ts.isSourceFile(current)) return current;
+    return statement.getSourceFile();
+}
 for (const site of sites) {
     const [file, line, column] = site.site.split(':');
     const sourceFile = program.getSourceFile(path.join(tree, file));
@@ -104,9 +109,14 @@ for (const site of sites) {
     if (writesRoot(statement, rootOf(node.expression))) { refusals.push(`${site.site}: its statement writes ${rootOf(node.expression).text}`); continue; }
     const key = `${file}|${statement.getStart(sourceFile)}|${receiverText}`;
     if (!views.has(key)) {
-        const base = receiverText.split('.').pop() + 'View';
-        if (nameInScope(statement, base)) { refusals.push(`${site.site}: ${base} is already in scope`); continue; }
-        views.set(key, { file, sourceFile, statement, receiverText, viewName: base, members: new Map() });
+        // A view's name is free in its statement's scope and unique in its block: case clauses share one block scope.
+        const container = blockOf(statement), base = receiverText.split('.').pop() + 'View';
+        const planned = plannedNames.get(container) || new Set();
+        let viewName = base;
+        for (let suffix = 2; nameInScope(statement, viewName) || planned.has(viewName); suffix++) viewName = base + suffix;
+        planned.add(viewName);
+        plannedNames.set(container, planned);
+        views.set(key, { file, sourceFile, statement, receiverText, viewName, members: new Map() });
     }
     const view = views.get(key);
     const optional = checker.getSymbolAtLocation(node.name).flags & ts.SymbolFlags.Optional ? '?' : '';

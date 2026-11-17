@@ -10,15 +10,16 @@ export STAGE3_PRODUCT_STORE="$TMPDIR/store" STAGE3_CACHE="$TMPDIR/stage3-cache" 
 tree="$TMPDIR/tree"
 bash stage3/apply.sh --build-product "$tree" > "$TMPDIR/apply.log" 2>&1 && echo "PASS adapted tree built" || { echo "FAIL apply"; tail -30 "$TMPDIR/apply.log"; exit 1; }
 node "$here/scan.cjs" "$tree" "$here/names.json" "$TMPDIR/b-sites.json" | grep -E '^scan'
-cp -p "$tree"/src/compiler/*.ts "$TMPDIR/" 2>/dev/null; ( cd "$tree" && git stash list >/dev/null; git -C "$tree" add -A src >/dev/null 2>&1; git -C "$tree" -c user.name=job -c user.email=job@loom.invalid commit -qm before-b >/dev/null 2>&1 ) || true
+before="$TMPDIR/before-src"; mkdir -p "$before"; cp -R "$tree/src/compiler" "$before/"
 node "$here/codemod-b.cjs" "$tree" "$TMPDIR/b-sites.json" && echo "PASS codemod" || { echo "FAIL codemod"; exit 1; }
 node "$here/scan.cjs" "$tree" "$here/names.json" "$TMPDIR/b-after.json" | grep -vE '^(A |written)'
 echo "== source difference"
-git -C "$tree" diff --stat | tail -3
-git -C "$tree" diff -U0 | grep -E '^[-+][^-+]' | cut -c1-260
+changed=$(cd "$before" && for f in $(find compiler -name '*.ts'); do cmp -s "$f" "$tree/src/$f" || echo "src/$f"; done)
+echo "changed files: $(echo $changed | wc -w)"
+for file in $changed; do diff -U0 "$before/${file#src/}" "$tree/$file" | grep -E '^[-+][^-+]' | cut -c1-260; done
 echo "== emitted JavaScript difference"
-for file in $(git -C "$tree" diff --name-only); do
-	git -C "$tree" show "HEAD:$file" > "$TMPDIR/b.ts"
+for file in $changed; do
+	cp "$before/${file#src/}" "$TMPDIR/b.ts"
 	node -e 'const ts = require("typescript"), fs = require("node:fs"); for (const [i, o] of [[process.argv[1], process.argv[2]], [process.argv[3], process.argv[4]]]) fs.writeFileSync(o, ts.transpileModule(fs.readFileSync(i, "utf8"), { compilerOptions: { target: ts.ScriptTarget.ES2020, module: ts.ModuleKind.CommonJS } }).outputText)' "$TMPDIR/b.ts" "$TMPDIR/b.js" "$tree/$file" "$TMPDIR/a.js"
 	echo "-- $file: $(diff "$TMPDIR/b.js" "$TMPDIR/a.js" | grep -c '^[<>]') changed lines"
 	diff "$TMPDIR/b.js" "$TMPDIR/a.js" | grep '^[<>]' | cut -c1-220
