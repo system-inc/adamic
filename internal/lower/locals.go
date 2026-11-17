@@ -203,6 +203,24 @@ func (l *lowering) symbol(node *ast.Node) *ast.Symbol {
 	return l.checker.GetExportSymbolOfSymbol(symbol)
 }
 
+// valueSymbol is the symbol an identifier reads or writes as a value, as symbol gives it. A shorthand
+// property's name is the property to GetSymbolAtLocation, so { x } and ({ x } = other) are resolved to the
+// variable they read and write, or a walk asking whether a name reads or writes x would miss both
+// (#3sdynvn). An identifier in the shorthand's default, the y of { x = y }, is an ordinary reference.
+func (l *lowering) valueSymbol(node *ast.Node) *ast.Symbol {
+	if parent := node.Parent; parent == nil || parent.Kind != ast.KindShorthandPropertyAssignment || parent.Name() != node {
+		return l.symbol(node)
+	}
+	symbol := l.checker.GetShorthandAssignmentValueSymbol(node.Parent)
+	if symbol == nil {
+		return nil
+	}
+	if symbol.Flags&ast.SymbolFlagsAlias != 0 {
+		symbol = l.checker.GetAliasedSymbol(symbol)
+	}
+	return l.checker.GetExportSymbolOfSymbol(symbol)
+}
+
 // local finds the local an identifier refers to, and notes a capture if it belongs to another
 // function.
 func (l *lowering) local(identifier *ast.Node) (int, bool) {

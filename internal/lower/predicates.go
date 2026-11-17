@@ -75,7 +75,7 @@ func (l *lowering) proveFlowPredicate(node *ast.Node) error {
 	var changed *ast.Node
 	var visit ast.Visitor
 	visit = func(current *ast.Node) bool {
-		if current.Kind == ast.KindIdentifier && l.checker.GetSymbolAtLocation(current) == l.checker.GetSymbolAtLocation(parameter.Name()) && ast.IsAssignmentTarget(current) {
+		if current.Kind == ast.KindIdentifier && l.valueSymbol(current) == l.symbol(parameter.Name()) && ast.IsAssignmentTarget(current) {
 			changed = current
 		}
 		current.ForEachChild(visit)
@@ -503,7 +503,7 @@ func (l *lowering) predicateParameter(node *ast.Node) *ast.Node {
 	changed := false
 	var visit ast.Visitor
 	visit = func(n *ast.Node) bool {
-		if n.Kind == ast.KindIdentifier && l.checker.GetSymbolAtLocation(n) == symbol && ast.IsAssignmentTarget(n) {
+		if n.Kind == ast.KindIdentifier && l.valueSymbol(n) == symbol && ast.IsAssignmentTarget(n) {
 			changed = true
 		}
 		n.ForEachChild(visit)
@@ -889,7 +889,7 @@ func (l *lowering) assignedSymbol(symbol *ast.Symbol) bool {
 		var writes ast.Visitor
 		writes = func(n *ast.Node) bool {
 			if n.Kind == ast.KindIdentifier && ast.IsAssignmentTarget(n) {
-				l.assignedSymbols[l.symbol(n)] = true
+				l.assignedSymbols[l.valueSymbol(n)] = true
 			}
 			n.ForEachChild(writes)
 			return false
