@@ -158,6 +158,19 @@ for (const site of sites) {
     const optional = checker.getSymbolAtLocation(node.name).flags & ts.SymbolFlags.Optional ? '?' : '';
     view.members.set(name, `readonly ${name}${optional}: (typeof ${receiverText})["${name}"]`);
     addEdit(file, { start: node.expression.getStart(sourceFile), end: node.expression.end, text: view.viewName });
+    // A presence test in an if's condition narrows the member for the block it guards, so every read of the same
+    // member on the same receiver in that block goes through the view too, calls included: the view is the receiver's
+    // own object, so a call through it passes the same this, and the narrowing holds.
+    if (ts.isIfStatement(statement) && node.pos >= statement.expression.pos && node.end <= statement.expression.end) {
+        const symbol = checker.getSymbolAtLocation(node.name);
+        (function visit(inner) {
+            if (ts.isPropertyAccessExpression(inner) && inner.name.text === name && inner.expression.getText(sourceFile) === receiverText && checker.getSymbolAtLocation(inner.name) === symbol) {
+                addEdit(file, { start: inner.expression.getStart(sourceFile), end: inner.expression.end, text: view.viewName });
+                console.log(`guarded ${file}:${sourceFile.getLineAndCharacterOfPosition(inner.getStart(sourceFile)).line + 1} ${receiverText}.${name} reads through ${view.viewName}`);
+            }
+            ts.forEachChild(inner, visit);
+        })(statement.thenStatement);
+    }
 }
 // Two views of different receivers before one statement need different names.
 const namesByStatement = new Map();
