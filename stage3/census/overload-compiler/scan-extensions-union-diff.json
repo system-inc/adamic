@@ -1,0 +1,50 @@
+{
+  "mode": "scan",
+  "baseline_events": 5074,
+  "candidate_events": 5075,
+  "gone": [],
+  "new": [
+    {
+      "count": 1,
+      "event": [
+        "scan stop",
+        "refusal_scan/stringWideningRefusal",
+        "src/compiler/program.ts:1588:119",
+        "a value of type readonly Extension[][] seen as readonly (string[] | Extension[])[], which can write string where Extension is read"
+      ]
+    }
+  ],
+  "changed": [
+    {
+      "count": 1,
+      "before": [
+        "scan stop",
+        "refusal_scan/stringWideningRefusal",
+        "src/compiler/utilities.ts:10019:64",
+        "a value of type readonly Extension[][] seen as readonly string[][], which can write string where Extension is read"
+      ],
+      "after": [
+        "scan stop",
+        "refusal_scan/stringWideningRefusal",
+        "src/compiler/utilities.ts:10019:64",
+        "a value of type readonly Extension[][] seen as readonly (string[] | Extension[])[], which can write string where Extension is read"
+      ]
+    },
+    {
+      "count": 1,
+      "before": [
+        "scan stop",
+        "refusal_scan/stringWideningRefusal",
+        "src/compiler/utilities.ts:10020:63",
+        "a value of type readonly Extension[][] seen as readonly string[][], which can write string where Extension is read"
+      ],
+      "after": [
+        "scan stop",
+        "refusal_scan/stringWideningRefusal",
+        "src/compiler/utilities.ts:10020:63",
+        "a value of type readonly Extension[][] seen as readonly (string[] | Extension[])[], which can write string where Extension is read"
+      ]
+    }
+  ],
+  "comparison": "Unchanged source lines are mapped by SequenceMatcher; exact function-unit starts are matched by unique named function ancestry in the TypeScript AST. Changed words at an equal rule/site are paired and listed in full; no changed words are suppressed."
+}

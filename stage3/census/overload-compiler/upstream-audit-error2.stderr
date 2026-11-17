@@ -1,0 +1,17 @@
+/workspace/scratch/ev14ch9/adamic/stage3/api/node_modules/typescript/lib/typescript.js:3858
+    throw e;
+    ^
+
+Error: Debug Failure. False expression: Trying to get the type of `import.defer` in `import.defer(...)`
+    at checkMetaProperty (/workspace/scratch/ev14ch9/adamic/stage3/api/node_modules/typescript/lib/typescript.js:82703:15)
+    at checkExpressionWorker (/workspace/scratch/ev14ch9/adamic/stage3/api/node_modules/typescript/lib/typescript.js:85725:16)
+    at checkExpression (/workspace/scratch/ev14ch9/adamic/stage3/api/node_modules/typescript/lib/typescript.js:85601:32)
+    at resolveCallExpression (/workspace/scratch/ev14ch9/adamic/stage3/api/node_modules/typescript/lib/typescript.js:81626:20)
+    at resolveSignature (/workspace/scratch/ev14ch9/adamic/stage3/api/node_modules/typescript/lib/typescript.js:82110:16)
+    at getResolvedSignature (/workspace/scratch/ev14ch9/adamic/stage3/api/node_modules/typescript/lib/typescript.js:82137:20)
+    at getResolvedSignatureWorker (/workspace/scratch/ev14ch9/adamic/stage3/api/node_modules/typescript/lib/typescript.js:51619:34)
+    at Object.getResolvedSignature (/workspace/scratch/ev14ch9/adamic/stage3/api/node_modules/typescript/lib/typescript.js:51343:72)
+    at Object.<anonymous> (/workspace/scratch/ev14ch9/adamic/stage3/census/overload-compiler/callers.cjs:10:402)
+    at Module._compile (node:internal/modules/cjs/loader:1872:14)
+
+Node.js v24.19.0

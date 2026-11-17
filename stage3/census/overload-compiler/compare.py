@@ -1,8 +1,9 @@
 """Compare full observations, mapping unchanged candidate lines back through the source diff."""
-import collections,difflib,json,pathlib,re,sys
+import collections,difflib,json,pathlib,re,sys,subprocess
 mode,before,after,old_tree,new_tree,destination=sys.argv[1:]
 a=pathlib.Path(old_tree);b=pathlib.Path(new_tree)
 line_maps={}
+function_sites=json.loads(subprocess.check_output(["node",str(pathlib.Path(__file__).with_name("function-sites.cjs")),str(a),str(b)],text=True))
 for file in a.joinpath('src').rglob('*.ts'):
  rel=file.relative_to(a);other=b/rel
  if not other.exists():continue
@@ -15,6 +16,7 @@ for file in a.joinpath('src').rglob('*.ts'):
 
 def norm(s,tree,candidate=False):
  s=s.replace(str(tree)+'/','')
+ if candidate and s in function_sites:return function_sites[s]
  def replace(m):
   file,line,col=m.groups();line=int(line)
   if candidate and file in line_maps:line=line_maps[file].get(line,line)
@@ -36,6 +38,6 @@ for old_key in sorted(list(removed)):
  for new_key in sorted(list(added)):
   if old_key[:-1]==new_key[:-1] and removed[old_key] and added[new_key]:
    count=min(removed[old_key],added[new_key]);changed.append({'count':count,'before':list(old_key),'after':list(new_key)});removed[old_key]-=count;added[new_key]-=count
-result={'mode':mode,'baseline_events':len(old),'candidate_events':len(new),'gone':[{'count':n,'event':list(k)} for k,n in sorted(removed.items()) if n],'new':[{'count':n,'event':list(k)} for k,n in sorted(added.items()) if n],'changed':changed,'comparison':'Unchanged source lines are mapped by SequenceMatcher. Changed words at an equal rule/site are paired and listed in full; no changed words are suppressed.'}
+result={'mode':mode,'baseline_events':len(old),'candidate_events':len(new),'gone':[{'count':n,'event':list(k)} for k,n in sorted(removed.items()) if n],'new':[{'count':n,'event':list(k)} for k,n in sorted(added.items()) if n],'changed':changed,'comparison':'Unchanged source lines are mapped by SequenceMatcher; exact function-unit starts are matched by unique named function ancestry in the TypeScript AST. Changed words at an equal rule/site are paired and listed in full; no changed words are suppressed.'}
 pathlib.Path(destination).write_text(json.dumps(result,indent=2)+'\n')
 print(json.dumps({k:v if not isinstance(v,list) else sum(x['count'] for x in v) for k,v in result.items() if k!='comparison'}))

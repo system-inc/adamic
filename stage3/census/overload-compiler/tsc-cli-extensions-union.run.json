@@ -1,0 +1,14 @@
+{
+  "command": [
+    "node",
+    "stage3/api/node_modules/typescript/bin/tsc",
+    "-p",
+    "/workspace/scratch/ev14ch9/extensions-union-tree/src/compiler/tsconfig.json",
+    "--noEmit",
+    "--typeRoots",
+    "/workspace/scratch/ev14ch9/adamic/stage3/api/node_modules/@types"
+  ],
+  "exit": 0,
+  "elapsed_seconds": 52.83387564400027,
+  "environment": {}
+}

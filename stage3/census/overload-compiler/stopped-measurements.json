@@ -1,0 +1,26 @@
+[
+  {
+    "pid": 14752,
+    "measurement": "latent-extensions-program-main",
+    "action": "SIGTERM",
+    "reason": "Both extension candidate roads failed the scan-all zero-new/zero-changed gate; remaining full census is not acceptance evidence."
+  },
+  {
+    "pid": 14763,
+    "measurement": "latent-extensions-program-candidate",
+    "action": "SIGTERM",
+    "reason": "Both extension candidate roads failed the scan-all zero-new/zero-changed gate; remaining full census is not acceptance evidence."
+  },
+  {
+    "pid": 15281,
+    "measurement": "latent-extensions-owner-main",
+    "action": "SIGTERM",
+    "reason": "Both extension candidate roads failed the scan-all zero-new/zero-changed gate; remaining full census is not acceptance evidence."
+  },
+  {
+    "pid": 15291,
+    "measurement": "latent-extensions-union-owner",
+    "action": "SIGTERM",
+    "reason": "Both extension candidate roads failed the scan-all zero-new/zero-changed gate; remaining full census is not acceptance evidence."
+  }
+]
