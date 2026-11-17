@@ -56,8 +56,10 @@ func TestUnionToInterfaceCastsStayRefused(t *testing.T) {
 		{"in .a", members + "function f(x: A | D): Named { return x as Named; }", ".a", "in .a whose checks no proof erases"},
 		// A member the view could write a field it can't hold: B's box holds v: 'b', and seen as Holder a write of any
 		// string to box.v would break it. A upcasts, so it's an overlap, and overlapViewCast's per-member widened loop
-		// makes it NotYet, naming B (Adamic's should on c80470e1). castUnionWrites doesn't see it: box is readonly.
-		{"a member the view could write past", "enum K { A = 1, B = 2 } interface Holder { readonly box: { v: string } } interface A { readonly kind: K.A; readonly box: { v: string } } interface B { readonly kind: K.B; readonly box: { v: 'b' } } function f(x: A | B): Holder { return x as Holder; }", ".ts", "could write B a field it can't hold"},
+		// makes it NotYet, naming B (Adamic's should on c80470e1). C, which has no box, keeps the union as a whole
+		// from relating to Holder, so the cast-site widening refusal (refuseWidening) doesn't take it first, and
+		// castUnionWrites doesn't see it either: box isn't on every member, and it's readonly.
+		{"a member the view could write past", "enum K { A = 1, B = 2, C = 3 } interface Holder { readonly box: { v: string } } interface A { readonly kind: K.A; readonly box: { v: string } } interface B { readonly kind: K.B; readonly box: { v: 'b' } } interface C { readonly kind: K.C; readonly c: number } function f(x: A | B | C): Holder { return x as Holder; }", ".ts", "could write B a field it can't hold"},
 		{"tsc alone relates: readonly seen as writable", "enum K { A = 1, B = 2 } interface Named { name: string } interface A { readonly kind: K.A; name: string } interface B { readonly kind: K.B; readonly name: string } function f(x: A | B): Named { return x as Named; }", ".ts", ""},
 		{"tsc alone relates: a method's parameter", "enum K { A = 1, B = 2 } interface Handler { handle(x: string | number): void } interface A { readonly kind: K.A; handle(x: string | number): void } interface B { readonly kind: K.B; handle(x: string): void } function f(x: A | B): Handler { return x as Handler; }", ".ts", ""},
 		{"tsc alone relates: a missing optional field", "enum K { A = 1, B = 2 } interface Named { readonly name: string; readonly extra?: number } interface A { readonly kind: K.A; readonly name: string; readonly extra?: number } interface B { readonly kind: K.B; readonly name: string } function f(x: A | B): Named { return x as Named; }", ".ts", ""},
