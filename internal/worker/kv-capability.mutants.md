@@ -11,6 +11,7 @@ No KV binding reaches a built Worker in this head.
 | kv-registration: omit the host registration | TestWorkerKVCapabilityStops/object_literal | 62 |
 | kv-ingress: admit the field without the bridge check | TestWorkerKVIngressWaitsForBridge | 166 |
 | kv-field-name: trust the program interface's spelling | TestWorkerKVFieldIdentityIsPreludeSymbol | 103 |
+| kv-purity: drop the capability loop in CheckPure | TestWorkerKVPurityRefusesOpaqueBindings | 151 |
 
 The let, callback and object-literal checks require ordinary Worker lowering to
 complete after the mutation: another lowering stop is not the named witness.

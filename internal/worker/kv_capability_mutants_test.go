@@ -8,6 +8,7 @@ var kvCapabilityMutants = []workerMutation{
 	{"kv-registration", "internal/lower/library_node.go", `if load.WorkerKV(l.checker, proven) {`, `if false && load.WorkerKV(l.checker, proven) {`, "TestWorkerKVCapabilityStops/object_literal", "KV capability boundary object_literal"},
 	{"kv-ingress", "internal/worker/environment.go", `return nil, &lower.NotYet{Where: "worker", What: "environment field " + strconv.Quote(field.Name) + ": a Workers binding in the environment waits on the bridge's KV check"}`, `_ = (*lower.NotYet)(nil); fields = append(fields, field.Name); continue`, "TestWorkerKVIngressWaitsForBridge", "KV ingress contract"},
 	{"kv-field-name", "internal/worker/environment.go", `load.WorkerKV(types, types.GetTypeOfSymbol(field))`, `types.GetTypeOfSymbol(field).Symbol()!=nil && types.GetTypeOfSymbol(field).Symbol().Name=="KvNamespace"`, "TestWorkerKVFieldIdentityIsPreludeSymbol", "KV field identity"},
+	{"kv-purity", "internal/worker/purity.go", `if sites[program.Functions[index].Position] {`, `if false && sites[program.Functions[index].Position] {`, "TestWorkerKVPurityRefusesOpaqueBindings", "KV purity"},
 }
 
 func TestProduct_WorkerKVSlotMutant(t *testing.T) {
@@ -30,9 +31,13 @@ func TestProduct_WorkerKVFieldMutant(t *testing.T) {
 	t.Parallel()
 	buildWorkerMutant(t, kvCapabilityMutants[4], false)
 }
+func TestProduct_WorkerKVPurityMutant(t *testing.T) {
+	t.Parallel()
+	buildWorkerMutant(t, kvCapabilityMutants[5], false)
+}
 func TestWorkerKVCapabilityMutantsAreCaught(t *testing.T) {
 	t.Parallel()
-	for _, i := range []int{0, 1, 2, 3, 4} {
+	for _, i := range []int{0, 1, 2, 3, 4, 5} {
 		m := kvCapabilityMutants[i]
 		t.Run(m.name, func(t *testing.T) { t.Parallel(); runWorkerMutant(t, m) })
 	}
