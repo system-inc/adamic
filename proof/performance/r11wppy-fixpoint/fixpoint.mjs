@@ -4,7 +4,12 @@
 // (an alias slot is put back instead), CompilerOptions.lib and .types are never edited, and a type alias under src
 // is edited as its own slot. Never merged: a proof only.
 //
-// Usage: node fixpoint.mjs <adapted tree> <never-sites.tsv> <out directory>
+// With --hold-public (the third pass) a Public slot is never edited either: it is Held. Once the rounds converge,
+// each readonly value still going into a Held or Dropped slot has its source put back and marked Blocked, round
+// after round, so what stays Readonly is the Local and Internal change alone, and each Held slot shows the listed
+// sites it holds. The table is then table3.md.
+//
+// Usage: node fixpoint.mjs <adapted tree> <never-sites.tsv> <out directory> [--hold-public]
 //
 // Every edit is an insertion of text with no line break ("readonly ", "Readonly", "(readonly ", ")" and a written
 // slot's "readonly never[] | "), so line
@@ -31,10 +36,14 @@ if (!fs.existsSync(typeScriptPath)) throw new Error(`no TypeScript at ${typeScri
 if (!fs.existsSync(path.join(typeRootsPath, 'node'))) throw new Error(`no @types/node under ${typeRootsPath}`);
 const ts = createRequire(import.meta.url)(typeScriptPath);
 
-const [adaptedArgument, sitesArgument, outArgument] = process.argv.slice(2);
+const [adaptedArgument, sitesArgument, outArgument, ...flagArguments] = process.argv.slice(2);
 if (!adaptedArgument || !sitesArgument || !outArgument) {
-    throw new Error('usage: node fixpoint.mjs <adapted tree> <never-sites.tsv> <out directory>');
+    throw new Error('usage: node fixpoint.mjs <adapted tree> <never-sites.tsv> <out directory> [--hold-public]');
 }
+for (const flag of flagArguments) {
+    if (flag !== '--hold-public') throw new Error(`unknown argument ${flag}: the only flag is --hold-public`);
+}
+const holdPublic = flagArguments.includes('--hold-public');
 const adaptedDirectory = path.resolve(adaptedArgument);
 const sitesPath = path.resolve(sitesArgument);
 fs.mkdirSync(path.resolve(outArgument), {recursive: true});
@@ -42,6 +51,8 @@ fs.mkdirSync(path.resolve(outArgument), {recursive: true});
 const outDirectory = fs.realpathSync(path.resolve(outArgument));
 const outSource = path.join(outDirectory, 'src');
 const maximumRounds = 80;
+const maximumBlockRounds = 40;
+const tableName = holdPublic ? 'table3.md' : 'table.md';
 const sourceLineLimit = 160;
 const programDirectories = ['compiler', 'services', 'server', 'jsTyping', 'deprecatedCompat', 'tsc', 'tsserver',
     'typescript', 'typingsInstaller', 'typingsInstallerCore', 'watchGuard'];
@@ -165,15 +176,18 @@ function toCurrent(absolute, target) {
     }
     throw new Error(`${relativeName(absolute)}: an insertion at ${target.original} is not live`);
 }
-function render(absolute) {
-    const text = originalText.get(absolute);
+// The insertions must be ordered as sortInsertions orders them
+function renderWith(text, insertions) {
     let result = '';
     let cursor = 0;
-    for (const insertion of insertionsOf(absolute)) {
+    for (const insertion of insertions) {
         result += text.slice(cursor, insertion.original) + insertion.text;
         cursor = insertion.original;
     }
     return result + text.slice(cursor);
+}
+function render(absolute) {
+    return renderWith(originalText.get(absolute), insertionsOf(absolute));
 }
 function originalLineColumn(absolute, originalPosition) {
     const starts = lineStartsOf(originalText.get(absolute));
@@ -713,6 +727,7 @@ function slotFromResolution(resolution, describedDiagnostic, checker, created) {
         return slot;
     }
     slot.visibility = visibilityOf(resolution.declaration);
+    // A Held slot is checked after its plan, so only a slot this script would have edited is Held
     if (droppedSlots.has(`${identity.relative} ${identity.label}`)) {
         slot.state = 'Dropped';
         slot.name = 'never edited, by Adamic\'s ruling';
@@ -734,7 +749,9 @@ function slotFromResolution(resolution, describedDiagnostic, checker, created) {
     planReadonly(target.typeNode, sourceFile, plan);
     slot.originalType = clip(target.typeNode.getText(sourceFile), 100);
     const aliasSlots = plan.aliases.map(declaration => aliasSlot(declaration, checker, created));
-    if (plan.insertions.length > 0) {
+    if (plan.insertions.length > 0 && holdPublic && slot.visibility === 'Public') {
+        holdSlot(slot, plan, identity.absolute, resolution.elementDepth);
+    } else if (plan.insertions.length > 0) {
         slot.state = 'Readonly';
         slot.changed = plan.changed.map(text => clip(text, 60));
         slot.untouchedMembers = [...plan.named, ...plan.other.map(kind => `<${kind}>`), ...aliasSlots.map(alias => `alias slot ${alias.key}`)];
@@ -762,6 +779,15 @@ function pendingFrom(plan, absolute, slot, defaultRank) {
     });
 }
 
+// A Public slot under --hold-public: never edited, but its own insertions are kept so the table can say what its
+// one line of readonly would change in the declaration file
+function holdSlot(slot, plan, absolute, defaultRank) {
+    slot.state = 'Held';
+    slot.name = 'public, never edited under --hold-public';
+    slot.changed = plan.changed.map(text => clip(text, 60));
+    slot.heldInsertions = pendingFrom(plan, absolute, slot, defaultRank);
+}
+
 // A type alias declared under src, edited as its own slot of kind Alias: every mutable array inside its body
 function aliasSlot(declaration, checker, created) {
     const sourceFile = declaration.getSourceFile();
@@ -781,7 +807,9 @@ function aliasSlot(declaration, checker, created) {
     const plan = newPlan(checker);
     planDeep(declaration.type, sourceFile, plan, 0);
     const nested = plan.aliases.filter(inner => inner !== declaration).map(inner => aliasSlot(inner, checker, created));
-    if (plan.insertions.length > 0) {
+    if (plan.insertions.length > 0 && holdPublic && slot.visibility === 'Public') {
+        holdSlot(slot, plan, absolute, 0);
+    } else if (plan.insertions.length > 0) {
         slot.state = 'Readonly';
         slot.changed = plan.changed.map(text => clip(text, 60));
         slot.untouchedMembers = nested.map(alias => `alias slot ${alias.key}`);
@@ -798,7 +826,8 @@ function newSlot(identity) {
         key: identity.key, relative: identity.relative, line: identity.line, label: identity.label, absolute: identity.absolute,
         kind: 'Slot', state: undefined, visibility: undefined, name: undefined, originalType: undefined, changed: [], untouchedMembers: [],
         pendingInsertions: [], insertions: [], writes: [], diagnosticSites: new Set(), notes: new Set(), round: currentRound, seed: false,
-        typeSpan: undefined, aliasSlotKeys: [],
+        typeSpan: undefined, aliasSlotKeys: [], heldInsertions: [], blockedBy: undefined, blockedVia: undefined, blockedAt: undefined,
+        blockedRound: undefined, listedSiteNames: [],
     };
 }
 
@@ -870,6 +899,220 @@ function writeReceiver(record, errorNode) {
         }
     }
     return undefined;
+}
+
+// The one test for a readonly value going into a mutable slot, for the rounds and for blocking alike
+function isReadonlyIntoMutable(record) {
+    return record.code === 4104 || record.message.includes(readonlyPhrase);
+}
+
+const sharedArrayNames = new Set(['emptyArray', 'resolvingEmptyArray']);
+function skipParenthesesAndAssertions(expression) {
+    let target = expression;
+    while (ts.isParenthesizedExpression(target) || ts.isNonNullExpression(target)) target = target.expression;
+    return target;
+}
+function resolvedSymbolOf(node, checker) {
+    let symbol = checker.getSymbolAtLocation(node);
+    if (symbol && symbol.flags & ts.SymbolFlags.Alias) symbol = checker.getAliasedSymbol(symbol);
+    return symbol;
+}
+// An expression naming emptyArray or resolvingEmptyArray as declared in core.ts or utilities.ts
+function isSharedArray(expression, checker) {
+    const target = skipParenthesesAndAssertions(expression);
+    const name = ts.isIdentifier(target) ? target : ts.isPropertyAccessExpression(target) ? target.name : undefined;
+    if (!name || !sharedArrayNames.has(name.text)) return false;
+    const declaration = resolvedSymbolOf(name, checker)?.valueDeclaration;
+    if (!declaration || !ts.isVariableDeclaration(declaration)) return false;
+    return ['src/compiler/core.ts', 'src/compiler/utilities.ts'].includes(relativeName(path.resolve(declaration.getSourceFile().fileName)));
+}
+
+// The slot at the end of a chain of blocking: a Held or Dropped slot is its own root, a Blocked slot names its
+// root, and an alias reference reads through to its alias slot
+function rootOf(slot) {
+    const effective = slot && slot.state === 'AliasRef' ? slots.get(slot.aliasSlotKeys[0]) : slot;
+    if (!effective) return undefined;
+    if (effective.state === 'Held' || effective.state === 'Dropped') return effective.key;
+    if (effective.state === 'Blocked') return effective.blockedBy;
+    return undefined;
+}
+// A resolution's slot when this script already holds one; blocking never makes a slot
+function existingSlotOf(resolution, record) {
+    if (resolution.unresolved) return slots.get(`${record.relative}:${record.line} unresolved: ${resolution.unresolved}`);
+    return slots.get(slotIdentity(resolution.declaration, resolution.elementDepth).key);
+}
+
+// The value a readonly-into-mutable diagnostic carries, read from the node it sits on the way resolveReceivingSlot
+// reads the receiver: a return's expression, a declaration's initializer, an assignment's right side, a property's
+// initializer, a shorthand property's value, a class member that misses its base, or the expression itself
+function diagnosticValue(errorNode, code) {
+    if (ts.isReturnStatement(errorNode)) {
+        return errorNode.expression ? {expression: errorNode.expression} : {unresolved: 'return with no expression'};
+    }
+    if (ts.isShorthandPropertyAssignment(errorNode)) return {shorthand: errorNode};
+    if (ts.isPropertyAssignment(errorNode)) return {expression: errorNode.initializer};
+    if (ts.isVariableDeclaration(errorNode) || ts.isParameter(errorNode) || ts.isPropertyDeclaration(errorNode)) {
+        return errorNode.initializer ? {expression: errorNode.initializer} : {unresolved: `${kindName(errorNode.kind)} with no initializer`};
+    }
+    const parent = errorNode.parent;
+    if (parent && parent.name === errorNode) {
+        // The same test resolveReceivingSlot makes: then the member itself is the value its base won't take
+        if (ts.isClassLike(parent.parent) && (ts.isMethodDeclaration(parent) || ts.isGetAccessorDeclaration(parent)
+            || (ts.isPropertyDeclaration(parent) && (code === 2416 || !parent.initializer)))) {
+            return {member: parent};
+        }
+        if (ts.isShorthandPropertyAssignment(parent)) return {shorthand: parent};
+        if (ts.isVariableDeclaration(parent) || ts.isParameter(parent) || ts.isPropertyDeclaration(parent) || ts.isPropertyAssignment(parent)) {
+            return parent.initializer ? {expression: parent.initializer} : {unresolved: `${kindName(parent.kind)} with no initializer`};
+        }
+    }
+    if (parent && ts.isBinaryExpression(parent) && parent.operatorToken.kind === ts.SyntaxKind.EqualsToken && parent.left === errorNode) {
+        return {expression: parent.right};
+    }
+    if (ts.isExpression(errorNode)) return {expression: errorNode};
+    return {unresolved: `the value at a ${kindName(errorNode.kind)}`};
+}
+
+// The expressions a value can come from: through parentheses, `as`, `satisfies`, `!` and a spread argument, both
+// arms of `?:`, both operands of `||` and `??`, and the plain elements of an array literal (a spread inside one
+// copies, so its operand's readonly doesn't flow on)
+function valueLeaves(expression, leaves) {
+    let target = expression;
+    while (ts.isParenthesizedExpression(target) || ts.isNonNullExpression(target) || ts.isAsExpression(target)
+        || ts.isSatisfiesExpression(target) || ts.isTypeAssertionExpression(target) || ts.isSpreadElement(target)) {
+        target = target.expression;
+    }
+    if (ts.isConditionalExpression(target)) {
+        valueLeaves(target.whenTrue, leaves);
+        valueLeaves(target.whenFalse, leaves);
+    } else if (ts.isBinaryExpression(target) && passThroughOperators.has(target.operatorToken.kind)) {
+        valueLeaves(target.left, leaves);
+        valueLeaves(target.right, leaves);
+    } else if (ts.isArrayLiteralExpression(target)) {
+        for (const element of target.elements) {
+            if (!ts.isSpreadElement(element) && !ts.isOmittedExpression(element)) valueLeaves(element, leaves);
+        }
+    } else {
+        leaves.push(target);
+    }
+    return leaves;
+}
+
+// A resolved source, or, for an unannotated variable declared in the copy of src, the sources of its initializer
+// (up to five deep, as expressionSlot follows aliases), so `const tags = a || emptyArray` reaches both
+function followSource(resolution, leaf, checker, via, found) {
+    const declaration = resolution.declaration;
+    if (ts.isVariableDeclaration(declaration) && !declaration.type && declaration.initializer && via.length < 5
+        && currentText.has(path.resolve(declaration.getSourceFile().fileName))) {
+        const followed = [...via, nameText(declaration.name) ?? '<binding>'];
+        for (const inner of valueLeaves(declaration.initializer, [])) leafSources(inner, checker, resolution.elementDepth, followed, found);
+        return;
+    }
+    found.push({resolution, leaf, via});
+}
+function leafSources(leaf, checker, elementDepth, via, found) {
+    if (isSharedArray(leaf, checker)) {
+        found.push({sentinel: true, leaf, via});
+        return;
+    }
+    const resolution = expressionSlot(leaf, checker, elementDepth, false, via);
+    if (resolution.unresolved) {
+        found.push({unresolved: resolution.unresolved, leaf, via});
+        return;
+    }
+    followSource(resolution, leaf, checker, via, found);
+}
+
+// A node's site, in a held file by its untouched offsets, otherwise as the program has it
+function siteOfAnyNode(node) {
+    const sourceFile = node.getSourceFile();
+    if (currentText.has(path.resolve(sourceFile.fileName))) return siteOfNode(node);
+    const position = sourceFile.getLineAndCharacterOfPosition(node.getStart(sourceFile));
+    return {site: `${sourceFile.fileName}:${position.line + 1}:${position.character + 1}`, line: position.line + 1, source: ''};
+}
+
+// Blocking, under --hold-public. Each readonly value still going into a Held, Dropped or Blocked slot once the rounds converge: when
+// its source is a slot this script made readonly, the slot is marked Blocked under the receiver's root and put back
+// after the round; when its source is the shared array itself, the site is sentinel residue under that root.
+const sentinelResidue = new Map();
+const unhandledSources = new Map();
+// Returns true when the receiver has a root, so the diagnostic is blocking's to read
+function blockFrom(record, checker, step, blocking) {
+    const sourceFile = program.getSourceFile(record.absolute);
+    const errorNode = errorNodeAt(sourceFile, record.diagnostic.start, record.diagnostic.length ?? 0);
+    const resolution = resolveReceivingSlot(errorNode, checker, record.code);
+    let receiver;
+    let root;
+    for (const each of resolution.list ?? [resolution]) {
+        const slot = existingSlotOf(each, record);
+        const eachRoot = rootOf(slot);
+        if (eachRoot) {
+            receiver = slot;
+            root = eachRoot;
+            break;
+        }
+    }
+    // A residue into any other slot (a named type, an unannotated one) stays as the rounds left it
+    if (!root) return false;
+    const value = diagnosticValue(errorNode, record.code);
+    const found = [];
+    if (value.unresolved) {
+        found.push({unresolved: value.unresolved, leaf: errorNode, via: []});
+    } else if (value.member) {
+        found.push({resolution: {declaration: value.member, elementDepth: 0, via: []}, leaf: value.member.name, via: []});
+    } else if (value.shorthand) {
+        const symbol = checker.getShorthandAssignmentValueSymbol(value.shorthand);
+        const declared = symbol ? declarationOfSymbol(symbol, checker) : {unresolved: 'no value symbol for a shorthand property'};
+        if (declared.unresolved) found.push({unresolved: declared.unresolved, leaf: value.shorthand.name, via: []});
+        else followSource({declaration: declared.declaration, elementDepth: 0, via: []}, value.shorthand.name, checker, [], found);
+    } else {
+        for (const leaf of valueLeaves(value.expression, [])) leafSources(leaf, checker, 0, [], found);
+    }
+    let handled = false;
+    const reasons = [];
+    for (const source of found) {
+        const viaText = source.via.length ? ` via ${source.via.join(', ')}` : '';
+        if (source.unresolved) {
+            reasons.push(`${clip(source.leaf.getText(), 60)}: unresolved, ${source.unresolved}${viaText}`);
+            continue;
+        }
+        const slot = source.sentinel ? undefined : slots.get(slotIdentity(source.resolution.declaration, source.resolution.elementDepth).key);
+        if (source.sentinel || slot?.seed) {
+            const leafFile = source.leaf.getSourceFile();
+            const leafAbsolute = path.resolve(leafFile.fileName);
+            const leafStart = currentText.has(leafAbsolute) ? toOriginal(leafAbsolute, source.leaf.getStart(leafFile)) : undefined;
+            const where = siteOfAnyNode(source.leaf);
+            sentinelResidue.set(`${record.relative}|${record.originalStart}|${where.site}`, {
+                site: where.site, source: where.source, diagnosticSite: record.site, relative: record.relative, originalStart: record.originalStart,
+                originalEnd: record.originalEnd, leafRelative: relativeName(leafAbsolute), leafStart, receiver: receiver.key, root, via: source.via, lastStep: step,
+            });
+            handled = true;
+            continue;
+        }
+        if (slot && slot.state === 'Readonly') {
+            // The declaration was found again in this program, so the revert checks its insertions against it
+            checkRevert(slot, source.resolution.declaration);
+            slot.state = 'Blocked';
+            slot.blockedBy = root;
+            slot.blockedVia = receiver.key;
+            slot.blockedAt = record.site;
+            slot.blockedRound = step;
+            blocking.set(slot.key, slot);
+            handled = true;
+            continue;
+        }
+        if (slot && blocking.has(slot.key)) {
+            handled = true;
+            continue;
+        }
+        const sourceKey = slot ? slot.key : slotIdentity(source.resolution.declaration, source.resolution.elementDepth).key;
+        reasons.push(`${clip(source.leaf.getText(), 60)}: ${sourceKey}${viaText} is ${slot ? slot.state : 'no slot of this script'}`);
+    }
+    if (!handled) {
+        unhandledSources.set(record.key, {site: record.site, code: record.code, receiver: receiver.key, root,
+            reasons: reasons.length ? reasons : ['no source found'], source: clip(lineText(originalText.get(record.absolute), record.line - 1)), lastStep: step});
+    }
+    return true;
 }
 
 // 3. The baseline
@@ -987,7 +1230,7 @@ for (let round = 1; round <= maximumRounds; round++) {
 }
 
 function classify(record, round, checker, created, reverting) {
-    const isReadonlyClass = record.code === 4104 || record.message.includes(readonlyPhrase);
+    const isReadonlyClass = isReadonlyIntoMutable(record);
     const sourceFile = record.absolute ? program.getSourceFile(record.absolute) : undefined;
     if (isReadonlyClass && sourceFile && record.held) {
         record.kind = 'Readonly';
@@ -1046,12 +1289,86 @@ function classify(record, round, checker, created, reverting) {
     return 'Other';
 }
 
+// The blocking rounds, under --hold-public: each reads the program, blocks the sources of every readonly value still
+// going into a Held, Dropped or Blocked slot, then puts those slots back, until a round blocks nothing. Putting a
+// slot back makes its own sources flow readonly into it, which the next round reads.
+const blockRoundSummaries = [];
+let blockRounds = 0;
+let blockSettled = false;
+if (holdPublic && !converged) log('blocking skipped: the rounds did not converge');
+if (holdPublic && converged) {
+    for (let blockRound = 1; blockRound <= maximumBlockRounds; blockRound++) {
+        blockRounds = blockRound;
+        // Steps continue the rounds' count, so "seen in the final round" reads the same across both phases
+        const step = rounds + blockRound;
+        currentRound = step;
+        const roundBegan = Date.now();
+        // The converged round changed no text, so the program it built is the first blocking round's
+        if (blockRound > 1) program = buildProgram(program);
+        const checker = program.getTypeChecker();
+        const fresh = allDiagnostics(program).filter(record => !baselineKeys.has(record.key));
+        const blocking = new Map();
+        let readonlyCount = 0;
+        let rootedCount = 0;
+        let otherCount = 0;
+        for (const record of fresh) {
+            try {
+                if (isReadonlyIntoMutable(record) && record.held && program.getSourceFile(record.absolute)) {
+                    record.kind = 'Readonly';
+                    readonlyCount++;
+                    if (blockFrom(record, checker, step, blocking)) rootedCount++;
+                    continue;
+                }
+                // Writes and the rest are read as the rounds read them, so the final tables stay whole. Putting a
+                // slot back only takes readonly away, so nothing here should make a slot or find one written.
+                const created = [];
+                const reverting = new Map();
+                classify(record, step, checker, created, reverting);
+                if (created.length > 0 || reverting.size > 0) {
+                    scriptErrors.push(`${record.site} code ${record.code}: blocking round ${blockRound} made ${created.length} slots and found ${reverting.size} written, which converged rounds should not`);
+                }
+                otherCount++;
+            } catch (error) {
+                scriptErrors.push(`blocking round ${blockRound}, ${record.site} code ${record.code}: ${error && error.stack ? error.stack.split('\n').slice(0, 3).join(' / ') : String(error)}`);
+                console.error(`fixpoint: blocking at ${record.site} code ${record.code} threw: ${error && error.stack ? error.stack : error}`);
+                otherCount++;
+            }
+        }
+        finalRecords = fresh;
+        // Every check above ran while the text still matched this program; only now does the text move
+        const touched = new Set();
+        for (const slot of blocking.values()) {
+            for (const absolute of revertInsertions(slot)) touched.add(absolute);
+        }
+        for (const absolute of touched) currentText.set(absolute, render(absolute));
+        const residue = [...sentinelResidue.values()].filter(row => row.lastStep === step).length;
+        const unhandled = [...unhandledSources.values()].filter(row => row.lastStep === step).length;
+        const summary = {round: blockRound, fresh: fresh.length, readonlyCount, rootedCount, otherCount, blocked: blocking.size, residue, unhandled,
+            seconds: (Date.now() - roundBegan) / 1000};
+        blockRoundSummaries.push(summary);
+        log(`blocking round ${blockRound}: ${fresh.length} new diagnostics (${readonlyCount} readonly into mutable, ${rootedCount} into a held, dropped `
+            + `or blocked slot), ${blocking.size} blocked, ${residue} sentinel residue, ${unhandled} unhandled, ${summary.seconds.toFixed(1)} s`);
+        if (blocking.size === 0) {
+            blockSettled = true;
+            break;
+        }
+    }
+    if (!blockSettled) {
+        log(`FAIL: blocking still put slots back after ${maximumBlockRounds} rounds`);
+        // The last round moved the text, and the sections below read node positions against it
+        program = buildProgram(program);
+    }
+}
+// The last step any round read, for what counts as present in the final round
+const finalStep = rounds + blockRounds;
+
 // The final texts go to disk, so the copy under out/src is the fixpoint
 for (const [absolute, text] of currentText) {
     if (text !== originalText.get(absolute)) fs.writeFileSync(absolute, text);
 }
 
-// 7. The declaration-file lines for public slots left readonly
+// 7. The declaration-file lines for public slots left readonly, or under --hold-public for every file the final
+// edits touch
 function changedLineCount(before, after) {
     const counts = new Map();
     for (const line of before.split('\n')) counts.set(line, (counts.get(line) ?? 0) + 1);
@@ -1066,27 +1383,33 @@ function changedLineCount(before, after) {
     return {total, lines};
 }
 const declarationOptions = {...baseOptions, stripInternal: true, isolatedDeclarations: true, declarationMap: false, sourceMap: false};
-const publicFiles = [...new Set([...slots.values()].filter(slot => slot.state === 'Readonly' && slot.visibility === 'Public').map(slot => slot.absolute))].sort();
-const declarationDiffs = [];
-for (const absolute of publicFiles) {
+// An untouched file's declaration text is read once, since the held slots' previews reuse it
+const untouchedDeclarations = new Map();
+function declarationDiff(absolute, after) {
     const before = originalText.get(absolute);
-    const after = currentText.get(absolute);
     try {
         let diff;
         if (absolute.endsWith('.d.ts')) {
             diff = changedLineCount(before, after);
         } else {
             const fileName = absolute;
-            const declarationBefore = ts.transpileDeclaration(before, {compilerOptions: declarationOptions, fileName}).outputText;
+            if (!untouchedDeclarations.has(absolute)) {
+                untouchedDeclarations.set(absolute, ts.transpileDeclaration(before, {compilerOptions: declarationOptions, fileName}).outputText);
+            }
             const declarationAfter = ts.transpileDeclaration(after, {compilerOptions: declarationOptions, fileName}).outputText;
-            diff = changedLineCount(declarationBefore, declarationAfter);
+            diff = changedLineCount(untouchedDeclarations.get(absolute), declarationAfter);
         }
-        declarationDiffs.push({relative: relativeName(absolute), total: diff.total, lines: diff.lines});
+        return {relative: relativeName(absolute), total: diff.total, lines: diff.lines};
     } catch (error) {
-        declarationDiffs.push({relative: relativeName(absolute), total: 0, lines: [], error: clip(String(error && error.message ? error.message : error), 200)});
+        return {relative: relativeName(absolute), total: 0, lines: [], error: clip(String(error && error.message ? error.message : error), 200)};
     }
 }
+const publicFiles = [...new Set([...slots.values()].filter(slot => slot.state === 'Readonly' && slot.visibility === 'Public').map(slot => slot.absolute))].sort();
+const editedFiles = [...insertionsByFile.keys()].filter(absolute => insertionsOf(absolute).length > 0).sort();
+const declarationDiffs = (holdPublic ? editedFiles : publicFiles).map(absolute => declarationDiff(absolute, currentText.get(absolute)));
 const declarationLineTotal = declarationDiffs.reduce((sum, diff) => sum + diff.total, 0);
+const declarationErrors = declarationDiffs.filter(diff => diff.error).length;
+if (holdPublic) log(`declaration check: ${declarationLineTotal} changed lines over ${declarationDiffs.length} edited files, ${declarationErrors} that threw`);
 
 // 8. The sentinels
 const sentinelPattern = /(?:[!=]==?\s*(?:ts\.)?(?:emptyArray|resolvingEmptyArray)\b)|(?:\b(?:emptyArray|resolvingEmptyArray)\s*[!=]==?)/;
@@ -1102,6 +1425,8 @@ for (const absolute of [...currentText.keys()].sort()) {
 }
 
 // 9. The listed sites
+const finalResidue = [...sentinelResidue.values()].filter(row => row.lastStep === finalStep);
+const finalUnhandled = [...unhandledSources.values()].filter(row => row.lastStep === finalStep);
 const siteRows = [];
 for (const raw of fs.readFileSync(sitesPath, 'utf8').split('\n')) {
     if (!raw.trim()) continue;
@@ -1131,26 +1456,42 @@ for (const raw of fs.readFileSync(sitesPath, 'utf8').split('\n')) {
     const candidates = [...readonlyDiagnostics.values()].filter(diagnostic => diagnostic.relative === relative);
     const covering = candidates.find(diagnostic => diagnostic.originalStart <= offset && (offset < diagnostic.originalEnd || offset === diagnostic.originalStart))
         ?? candidates.find(diagnostic => diagnostic.line === line);
-    if (!covering) {
+    // Sentinel residue claims the site first: its shared array, its diagnostic's span, or the diagnostic that covers it
+    const residue = finalResidue.find(row => (row.leafRelative === relative && row.leafStart === offset)
+        || (row.relative === relative && ((row.originalStart <= offset && offset < row.originalEnd) || covering?.originalStart === row.originalStart)));
+    if (!covering && !residue) {
         siteRows.push({site, words, group: 'unmatched', note: 'no readonly-into-mutable diagnostic here'});
         continue;
     }
-    const slot = slots.get(covering.slotKey);
-    siteRows.push({site, words, group: siteGroupOf(slot), slotKey: covering.slotKey, byLine: !(covering.originalStart <= offset && offset < covering.originalEnd)});
-    if (slot) slot.listedSites = (slot.listedSites ?? 0) + 1;
+    const slotKey = covering ? covering.slotKey : residue.receiver;
+    const slot = slots.get(slotKey);
+    const byLine = covering ? !(covering.originalStart <= offset && offset < covering.originalEnd) : false;
+    if (residue) {
+        siteRows.push({site, words, group: `Sentinel residue by ${residue.root}`, root: residue.root, slotKey, residue: residue.site, byLine});
+    } else {
+        siteRows.push({site, words, group: siteGroupOf(slot), root: rootOf(slot), slotKey, byLine});
+    }
+    if (slot) {
+        slot.listedSites = (slot.listedSites ?? 0) + 1;
+        slot.listedSiteNames.push(site);
+    }
     // A slot whose type is an alias edited on its own counts its sites under that alias slot too
     for (const aliasKey of slot?.aliasSlotKeys ?? []) {
         const alias = slots.get(aliasKey);
-        if (alias) alias.listedSites = (alias.listedSites ?? 0) + 1;
+        if (alias) {
+            alias.listedSites = (alias.listedSites ?? 0) + 1;
+            alias.listedSiteNames.push(site);
+        }
     }
 }
-// WrittenUnion counts as Written; an alias reference counts as its alias slot's state
+// WrittenUnion counts as Written, a Blocked slot by its root; an alias reference counts as its alias slot's state
 function siteGroupOf(slot) {
     if (!slot) return 'unmatched';
     if (slot.state === 'AliasRef') {
         const alias = slots.get(slot.aliasSlotKeys[0]);
         return alias ? `${siteGroupOf(alias)} (alias)` : 'AliasRef';
     }
+    if (slot.state === 'Blocked') return `Blocked by ${slot.blockedBy}`;
     return slot.state === 'WrittenUnion' ? 'Written' : slot.state;
 }
 const siteGroups = new Map();
@@ -1159,29 +1500,9 @@ for (const row of siteRows) siteGroups.set(row.group, (siteGroups.get(row.group)
 // The final program is the fixpoint's when the rounds converged: the last round built it and changed nothing
 const finalChecker = program.getTypeChecker();
 const heldProgramFiles = program.getSourceFiles().filter(sourceFile => currentText.has(path.resolve(sourceFile.fileName)));
-const sharedArrayNames = new Set(['emptyArray', 'resolvingEmptyArray']);
 const comparisonOperators = new Set([ts.SyntaxKind.EqualsEqualsEqualsToken, ts.SyntaxKind.ExclamationEqualsEqualsToken,
     ts.SyntaxKind.EqualsEqualsToken, ts.SyntaxKind.ExclamationEqualsToken]);
 
-function skipParenthesesAndAssertions(expression) {
-    let target = expression;
-    while (ts.isParenthesizedExpression(target) || ts.isNonNullExpression(target)) target = target.expression;
-    return target;
-}
-function resolvedSymbolOf(node) {
-    let symbol = finalChecker.getSymbolAtLocation(node);
-    if (symbol && symbol.flags & ts.SymbolFlags.Alias) symbol = finalChecker.getAliasedSymbol(symbol);
-    return symbol;
-}
-// An expression naming emptyArray or resolvingEmptyArray as declared in core.ts or utilities.ts
-function isSharedArray(expression) {
-    const target = skipParenthesesAndAssertions(expression);
-    const name = ts.isIdentifier(target) ? target : ts.isPropertyAccessExpression(target) ? target.name : undefined;
-    if (!name || !sharedArrayNames.has(name.text)) return false;
-    const declaration = resolvedSymbolOf(name)?.valueDeclaration;
-    if (!declaration || !ts.isVariableDeclaration(declaration)) return false;
-    return ['src/compiler/core.ts', 'src/compiler/utilities.ts'].includes(relativeName(path.resolve(declaration.getSourceFile().fileName)));
-}
 function isWriteTarget(node) {
     const parent = node.parent;
     if (ts.isBinaryExpression(parent) && parent.left === node
@@ -1221,13 +1542,13 @@ for (const sourceFile of heldProgramFiles) {
     if (!sourceFile.text.includes('mptyArray')) continue;
     const visit = node => {
         if (ts.isBinaryExpression(node) && comparisonOperators.has(node.operatorToken.kind)) {
-            const leftShared = isSharedArray(node.left);
-            const rightShared = isSharedArray(node.right);
+            const leftShared = isSharedArray(node.left, finalChecker);
+            const rightShared = isSharedArray(node.right, finalChecker);
             if (leftShared !== rightShared) {
                 const operand = skipParenthesesAndAssertions(leftShared ? node.right : node.left);
                 const where = siteOfNode(node);
                 const nameNode = ts.isPropertyAccessExpression(operand) ? operand.name : ts.isIdentifier(operand) ? operand : undefined;
-                const symbol = nameNode ? resolvedSymbolOf(nameNode) : undefined;
+                const symbol = nameNode ? resolvedSymbolOf(nameNode, finalChecker) : undefined;
                 const declaration = symbol?.valueDeclaration ?? (symbol?.declarations?.length === 1 ? symbol.declarations[0] : undefined);
                 const row = {site: where.site, source: where.source, operand: clip(operand.getText(sourceFile), 60)};
                 if (!declaration) {
@@ -1258,7 +1579,7 @@ if (targetsByName.size > 0) {
         const visit = node => {
             if (ts.isIdentifier(node) && targetsByName.has(node.text)) {
                 const candidates = targetsByName.get(node.text);
-                const symbol = resolvedSymbolOf(node);
+                const symbol = resolvedSymbolOf(node, finalChecker);
                 const target = symbol && candidates.find(candidate => symbol === candidate.symbol || (symbol.declarations ?? []).includes(candidate.declaration));
                 const isDeclarationName = target && node.parent && node.parent.name === node && node.parent === target.declaration;
                 if (target && !isDeclarationName) {
@@ -1372,7 +1693,7 @@ for (const absolute of [...insertionsByFile.keys()].sort()) {
 fs.writeFileSync(path.join(outDirectory, 'edits.diff'), diffLines.join('\n') + '\n');
 log(`edits.diff: ${diffLines.length} lines`);
 
-// table.md
+// table.md, or table3.md under --hold-public
 function cell(value) {
     return String(value ?? '').replace(/\|/g, '\\|').replace(/[\r\n]+/g, ' ');
 }
@@ -1389,10 +1710,47 @@ for (const slot of allSlots) stateCounts.set(slot.state, (stateCounts.get(slot.s
 const readonlySlots = allSlots.filter(slot => slot.state === 'Readonly');
 const visibilityCounts = new Map();
 for (const slot of readonlySlots) visibilityCounts.set(slot.visibility, (visibilityCounts.get(slot.visibility) ?? 0) + 1);
-const finalUnattributed = [...unattributedWrites.values()].filter(write => write.lastRound === rounds);
-const finalUnclassified = [...unclassified.values()].filter(entry => entry.lastRound === rounds);
+const finalUnattributed = [...unattributedWrites.values()].filter(write => write.lastRound === finalStep);
+const finalUnclassified = [...unclassified.values()].filter(entry => entry.lastRound === finalStep);
 const finalConflicts = finalRecords.filter(record => record.kind === 'Readonly').length;
 const formatCounts = counts => [...counts].sort((left, right) => String(left[0]).localeCompare(String(right[0]))).map(([name, count]) => `${name} ${count}`).join(', ') || 'none';
+
+// Under --hold-public every slot left Readonly must be Local or Internal, or the change is not the internal one
+const publicReadonly = holdPublic ? readonlySlots.filter(slot => slot.visibility !== 'Local' && slot.visibility !== 'Internal') : [];
+if (publicReadonly.length > 0) log(`FAIL: ${publicReadonly.length} slots left Readonly are not Local or Internal: ${publicReadonly.map(slot => slot.key).join('; ')}`);
+const blockedSlots = allSlots.filter(slot => slot.state === 'Blocked');
+// The minimal public set: each Held slot at the root of a Blocked chain or of sentinel residue, with the listed sites
+// it holds, and what its own readonly alone would change in its declaration file
+const minimalPublicSet = [];
+const heldWithSitesOnly = [];
+for (const held of allSlots.filter(slot => slot.state === 'Held')) {
+    const blockedUnder = blockedSlots.filter(slot => slot.blockedBy === held.key);
+    const residueUnder = finalResidue.filter(row => row.root === held.key);
+    const sitesUnder = siteRows.filter(row => row.root === held.key).map(row => row.site);
+    if (sitesUnder.length === 0) continue;
+    if (blockedUnder.length === 0 && residueUnder.length === 0) {
+        heldWithSitesOnly.push(`${held.key} (${sitesUnder.join(', ')})`);
+        continue;
+    }
+    let preview;
+    if (held.heldInsertions.length > 0) {
+        const insertions = [...held.heldInsertions];
+        sortInsertions(insertions);
+        preview = declarationDiff(held.absolute, renderWith(originalText.get(held.absolute), insertions));
+    }
+    minimalPublicSet.push({held, blockedUnder, residueUnder, sitesUnder, preview, source: clip(lineText(originalText.get(held.absolute), held.line - 1))});
+}
+minimalPublicSet.sort((left, right) => right.sitesUnder.length - left.sitesUnder.length || bySite(left.held.key, right.held.key));
+const minimalPublicSites = new Set(minimalPublicSet.flatMap(row => row.sitesUnder));
+// Listed sites by group, in the order the ruling reads them: Readonly, Blocked, sentinel residue, Written, the rest
+function groupRank(group) {
+    if (group.startsWith('Readonly')) return 0;
+    if (group.startsWith('Blocked')) return 1;
+    if (group.startsWith('Sentinel residue')) return 2;
+    if (group.startsWith('Written')) return 3;
+    return 4;
+}
+const orderedSiteGroups = [...siteGroups].sort((left, right) => groupRank(left[0]) - groupRank(right[0]) || bySite(left[0], right[0]));
 
 const markdown = [];
 markdown.push('# #r11wppy item 1: the readonly fixpoint for emptyArray and resolvingEmptyArray\n');
@@ -1400,16 +1758,31 @@ if (baselineRecords.length > 50) {
     markdown.push(`**The baseline holds ${baselineRecords.length} diagnostics, over 50: the program's setup may not match tsc's own build. The first 30 are listed at the end.**\n`);
 }
 markdown.push('## Summary\n');
+if (holdPublic && !blockSettled) {
+    markdown.push(`**Blocking still put slots back after ${maximumBlockRounds} rounds: what is left Readonly is not settled.**\n`);
+}
+if (publicReadonly.length > 0) {
+    markdown.push(`**${publicReadonly.length} slots left Readonly are not Local or Internal; see the internal manifest.**\n`);
+}
 markdown.push(table(['Measure', 'Value'], [
     ['Baseline diagnostics', baselineRecords.length],
     ['TypeScript', ts.version],
     ['Program', `${rootNames.length} root files, ${program.getSourceFiles().length} source files; src/harness and src/testRunner left out, since they need mocha and chai types the box doesn't have`],
-    ['Rounds', `${rounds}${converged ? ', converged' : `, not converged within ${maximumRounds}`}`],
+    [holdPublic ? 'Rounds, forward phase' : 'Rounds', `${rounds}${converged ? ', converged' : `, not converged within ${maximumRounds}`}`],
+    ...(holdPublic ? [['Rounds, blocking phase', `${blockRounds}${blockSettled ? ', settled' : converged ? `, not settled within ${maximumBlockRounds}` : ', skipped'}`]] : []),
     ['Slots by state', formatCounts(stateCounts)],
     ['Readonly slots by visibility', formatCounts(visibilityCounts)],
-    ['Public d.ts lines changed', `${declarationLineTotal} over ${declarationDiffs.length} files`],
+    holdPublic
+        ? ['Declaration check', `${declarationLineTotal} changed lines over ${declarationDiffs.length} edited files, expected 0${declarationErrors ? `; ${declarationErrors} files threw` : ''}`]
+        : ['Public d.ts lines changed', `${declarationLineTotal} over ${declarationDiffs.length} files`],
     ['Sentinel reads', `${sentinels.length} lines by text; ${sentinelComparisons.length} comparisons in the program by slot class: ${formatCounts(sentinelClassCounts)}`],
     [`Listed sites (${siteRows.length}) by group`, formatCounts(siteGroups)],
+    ...(holdPublic ? [
+        ['Sentinel residue in the final round', finalResidue.length],
+        ['Unhandled blocking sources in the final round', finalUnhandled.length],
+        ['Minimal public set', `${minimalPublicSet.length} held slots holding ${minimalPublicSites.size} listed sites`],
+        ['Slots left Readonly that are not Local or Internal', publicReadonly.length],
+    ] : []),
     ['Readonly-into-mutable diagnostics left in the final round', finalConflicts],
     ['Unattributed writes in the final round', `${finalUnattributed.length} (${unattributedWrites.size} ever seen)`],
     ['Unclassified diagnostics in the final round', `${finalUnclassified.length} (${unclassified.size} ever seen)`],
@@ -1419,8 +1792,19 @@ markdown.push(table(['Measure', 'Value'], [
 markdown.push(table(['Round', 'New diagnostics', 'Readonly into mutable', 'Writes', 'Other', 'New slots', 'Made readonly', 'Written', 'Seconds'],
     roundSummaries.map(summary => [summary.round, summary.fresh, summary.readonlyCount, summary.writeCount, summary.otherCount, summary.newSlots,
         summary.madeReadonly, summary.written, summary.seconds.toFixed(1)])));
+if (holdPublic) {
+    markdown.push(table(['Blocking round', 'New diagnostics', 'Readonly into mutable', 'Into a held, dropped or blocked slot', 'Blocked', 'Sentinel residue', 'Unhandled', 'Other', 'Seconds'],
+        blockRoundSummaries.map(summary => [summary.round, summary.fresh, summary.readonlyCount, summary.rootedCount, summary.blocked, summary.residue,
+            summary.unhandled, summary.otherCount, summary.seconds.toFixed(1)])));
+    markdown.push('### Listed sites by group\n');
+    markdown.push('Readonly: the site\'s slot stays readonly, and every such slot is Local or Internal. Blocked by a root: the slot was put back because its readonly value reached that Held or Dropped slot. Sentinel residue by a root: the shared array itself goes into a slot under that root. Held or Dropped: the site goes straight into that slot.\n');
+    markdown.push(table(['Group', 'Listed sites'], orderedSiteGroups.map(([group, count]) => [group, count])));
+}
 markdown.push('Visibility: Public shows in a declaration file; Internal carries @internal on itself or an ancestor; Local lives in a function body, is private, or sits under a statement the module doesn\'t export, so no declaration file shows it.\n');
 markdown.push('Written slots stay refused in the build, by Adamic\'s ruling. WrittenUnion is a written slot typed `readonly never[] | <original>` only so the fixpoint converges and counts; its sites count under Written. Dropped slots are never edited, by the same ruling. AliasRef is a slot typed by an alias under src, which is edited as its own slot of kind Alias.\n');
+if (holdPublic) {
+    markdown.push('Held is a Public slot the rounds would have made readonly, left as tsc wrote it under --hold-public. Blocked is a slot the rounds made readonly and blocking put back, because its readonly value reached a Held or Dropped slot, directly or through other Blocked slots; it names the slot at the end of that chain as its root.\n');
+}
 
 markdown.push('## Slots written\n');
 markdown.push(table(['Slot', 'Edit', 'Writes', 'Listed sites', 'Diagnostics'], allSlots.filter(slot => slot.state === 'Written' || slot.state === 'WrittenUnion').map(slot => [
@@ -1431,19 +1815,65 @@ markdown.push(table(['Slot', 'Edit', 'Writes', 'Listed sites', 'Diagnostics'], a
     slot.diagnosticSites.size,
 ])));
 
-markdown.push('## Slots made readonly\n');
-markdown.push(table(['Slot', 'Kind', 'Visibility', 'Type', 'Members left', 'Note', 'Listed sites', 'Diagnostics', 'Round'], readonlySlots.map(slot => [
-    `${slot.key}${slot.seed ? ' (seed)' : ''}`, slot.kind, slot.visibility, slot.originalType, slot.untouchedMembers.join(', '),
-    [...slot.notes].join(' ; '), slot.listedSites ?? 0, slot.diagnosticSites.size, slot.round,
-])));
-markdown.push('### Public d.ts lines by file\n');
-markdown.push(table(['File', 'Changed lines', 'First changed lines'], declarationDiffs.map(diff => [
-    diff.relative, diff.error ? `transpileDeclaration threw: ${diff.error}` : diff.total, diff.lines.slice(0, 6).map(line => clip(line, 100)).join(' ; '),
-])));
+if (holdPublic) {
+    markdown.push('## Internal manifest\n');
+    markdown.push('Every slot left Readonly: the change that builds alone, with every Public slot as tsc wrote it.\n');
+    if (publicReadonly.length > 0) markdown.push(`**Not Local or Internal: ${publicReadonly.map(slot => `${slot.key} (${slot.visibility})`).join(', ')}.**\n`);
+    markdown.push(table(['Slot', 'Kind', 'Visibility', 'Type', 'Members left', 'Note', 'Listed sites', 'Which', 'Diagnostics', 'Round'], readonlySlots.map(slot => [
+        `${slot.key}${slot.seed ? ' (seed)' : ''}`, slot.kind, slot.visibility, slot.originalType, slot.untouchedMembers.join(', '),
+        [...slot.notes].join(' ; '), slot.listedSiteNames.length, slot.listedSiteNames.join(', '), slot.diagnosticSites.size, slot.round,
+    ])));
+    markdown.push('### Declaration check\n');
+    markdown.push(`transpileDeclaration with stripInternal, before and after the final edits, over every file they touch: ${declarationLineTotal} changed lines, expected 0.\n`);
+    if (declarationLineTotal !== 0) markdown.push(`**${declarationLineTotal} declaration lines changed where 0 were expected.**\n`);
+    markdown.push(table(['File', 'Changed lines', 'First changed lines'], declarationDiffs.map(diff => [
+        diff.relative, diff.error ? `transpileDeclaration threw: ${diff.error}` : diff.total, diff.lines.slice(0, 6).map(line => clip(line, 100)).join(' ; '),
+    ])));
+
+    markdown.push('## Minimal public set\n');
+    markdown.push('Each Held slot at the root of a Blocked chain or of sentinel residue, holding at least one listed site: the slots blocked under it, its residue, the listed sites they hold (a site going straight into the Held slot counts too), and the declaration lines its own readonly alone would change, read by transpileDeclaration on the untouched file with only that insertion.\n');
+    markdown.push(table(['Held slot', 'Source', 'Blocked under it', 'Sentinel residue', 'Listed sites', 'Which', 'd.ts lines with its readonly'], minimalPublicSet.map(row => [
+        row.held.key, row.source, row.blockedUnder.map(slot => slot.key).join(' ; '), row.residueUnder.map(residue => residue.site).join(' ; '),
+        row.sitesUnder.length, row.sitesUnder.join(', '),
+        row.preview
+            ? (row.preview.error ? `transpileDeclaration threw: ${row.preview.error}` : `${row.preview.total}: ${row.preview.lines.slice(0, 6).map(line => clip(line, 100)).join(' ; ')}`)
+            : 'no insertion kept',
+    ])));
+    if (heldWithSitesOnly.length > 0) {
+        markdown.push(`Held slots that take listed sites directly but root no Blocked slot and no residue, so their sources went unhandled: ${heldWithSitesOnly.join('; ')}.\n`);
+    }
+
+    markdown.push('## Slots blocked\n');
+    markdown.push(table(['Slot', 'Visibility', 'Type', 'Root', 'Through', 'At', 'Blocking round', 'Listed sites'], blockedSlots.map(slot => [
+        slot.key, slot.visibility, slot.originalType, slot.blockedBy, slot.blockedVia, slot.blockedAt, slot.blockedRound - rounds, slot.listedSiteNames.join(', '),
+    ])));
+
+    markdown.push('## Sentinel residue\n');
+    markdown.push('The shared array itself going into a Held, Dropped or Blocked slot in the final round.\n');
+    markdown.push(table(['Site', 'Source', 'Root', 'Receiver', 'Diagnostic', 'Via'], finalResidue.sort((left, right) => bySite(left.site, right.site)).map(row => [
+        row.site, row.source, row.root, row.receiver, row.diagnosticSite, row.via.join(', '),
+    ])));
+
+    markdown.push('## Unhandled blocking sources\n');
+    markdown.push('A readonly value going into a Held, Dropped or Blocked slot in the final round whose source is neither a slot this script left readonly nor the shared array, so nothing was put back for it.\n');
+    markdown.push(table(['Site', 'Code', 'Receiver', 'Root', 'Why', 'Source'], finalUnhandled.sort((left, right) => bySite(left.site, right.site)).map(row => [
+        row.site, row.code, row.receiver, row.root, row.reasons.join(' ; '), row.source,
+    ])));
+} else {
+    markdown.push('## Slots made readonly\n');
+    markdown.push(table(['Slot', 'Kind', 'Visibility', 'Type', 'Members left', 'Note', 'Listed sites', 'Diagnostics', 'Round'], readonlySlots.map(slot => [
+        `${slot.key}${slot.seed ? ' (seed)' : ''}`, slot.kind, slot.visibility, slot.originalType, slot.untouchedMembers.join(', '),
+        [...slot.notes].join(' ; '), slot.listedSites ?? 0, slot.diagnosticSites.size, slot.round,
+    ])));
+    markdown.push('### Public d.ts lines by file\n');
+    markdown.push(table(['File', 'Changed lines', 'First changed lines'], declarationDiffs.map(diff => [
+        diff.relative, diff.error ? `transpileDeclaration threw: ${diff.error}` : diff.total, diff.lines.slice(0, 6).map(line => clip(line, 100)).join(' ; '),
+    ])));
+}
 
 markdown.push('## Named types and unannotated\n');
 markdown.push(table(['Slot', 'State', 'Name', 'Note', 'Listed sites', 'Diagnostics'],
-    allSlots.filter(slot => ['NamedType', 'Unannotated', 'AlreadyReadonly', 'Outside', 'Unresolved', 'Dropped', 'AliasRef'].includes(slot.state)).map(slot => [
+    allSlots.filter(slot => ['NamedType', 'Unannotated', 'AlreadyReadonly', 'Outside', 'Unresolved', 'Dropped', 'Held', 'AliasRef'].includes(slot.state)).map(slot => [
         slot.key, slot.state, slot.name, [...slot.notes].join(' ; '), slot.listedSites ?? 0,
         [...slot.diagnosticSites].slice(0, 4).join(' ; ') + (slot.diagnosticSites.size > 4 ? ` ; and ${slot.diagnosticSites.size - 4} more` : ''),
     ])));
@@ -1487,14 +1917,19 @@ if (baselineRecords.length > 0) {
     markdown.push(table(['Code', 'Site', 'Message'], baselineRecords.slice(0, 30).map(record => [record.code, record.site, clip(record.message, 200)])));
 }
 
-fs.writeFileSync(path.join(outDirectory, 'table.md'), markdown.join('\n'));
+fs.writeFileSync(path.join(outDirectory, tableName), markdown.join('\n'));
 fs.writeFileSync(path.join(outDirectory, 'result.json'), JSON.stringify({
     typeScript: ts.version, baseline: baselineRecords.length, rounds, converged, roundSummaries,
-    slots: allSlots.map(slot => ({...slot, diagnosticSites: [...slot.diagnosticSites], notes: [...slot.notes], insertions: slot.insertions.map(insertion => ({original: insertion.original, text: insertion.text})), pendingInsertions: undefined, absolute: undefined})),
+    slots: allSlots.map(slot => ({...slot, diagnosticSites: [...slot.diagnosticSites], notes: [...slot.notes], insertions: slot.insertions.map(insertion => ({original: insertion.original, text: insertion.text})),
+        heldInsertions: slot.heldInsertions.map(insertion => ({original: insertion.original, text: insertion.text})), pendingInsertions: undefined, absolute: undefined})),
     declarationDiffs, sentinels, sentinelComparisons, unmatchedExplained, siteRows, unattributedWrites: [...unattributedWrites.values()], unclassified: [...unclassified.values()], scriptErrors,
+    ...(holdPublic ? {blockRounds, blockSettled, blockRoundSummaries, sentinelResidue: finalResidue, unhandledSources: finalUnhandled, publicReadonly: publicReadonly.map(slot => slot.key),
+        minimalPublicSet: minimalPublicSet.map(row => ({held: row.held.key, blocked: row.blockedUnder.map(slot => slot.key), residue: row.residueUnder.map(residue => residue.site), sites: row.sitesUnder, declaration: row.preview}))} : {}),
 }, null, 2));
-log(`table.md written: ${allSlots.length} slots, ${readonlySlots.length} readonly, ${(stateCounts.get('Written') ?? 0) + (stateCounts.get('WrittenUnion') ?? 0)} written, `
+log(`${tableName} written: ${allSlots.length} slots, ${readonlySlots.length} readonly, ${(stateCounts.get('Written') ?? 0) + (stateCounts.get('WrittenUnion') ?? 0)} written, `
     + `${siteRows.length - (siteGroups.get('unmatched') ?? 0)} of ${siteRows.length} listed sites matched`);
 
 if (scriptErrors.length > 0) process.exit(5);
 if (!converged) process.exit(4);
+if (holdPublic && !blockSettled) process.exit(6);
+if (publicReadonly.length > 0) process.exit(7);
