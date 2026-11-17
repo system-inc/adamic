@@ -1,0 +1,33 @@
+{
+  "self_lane_source_hashes_equal": true,
+  "bundles": [
+    {
+      "tree": "self-tree",
+      "file": "built/local/typescript.js",
+      "sha256": "fe26285060a2d84a245ff3992b33aff2a68c401e9775992c04b776ae847496a9",
+      "strict": true,
+      "instrumented": true
+    },
+    {
+      "tree": "self-tree",
+      "file": "built/local/_tsc.js",
+      "sha256": "44211927689cf537407da5212899e105f8684b2d143a79846dd16f014c2818ed",
+      "strict": true,
+      "instrumented": true
+    },
+    {
+      "tree": "lane/adapted-tree",
+      "file": "built/local/typescript.js",
+      "sha256": "fe26285060a2d84a245ff3992b33aff2a68c401e9775992c04b776ae847496a9",
+      "strict": true,
+      "instrumented": true
+    },
+    {
+      "tree": "lane/adapted-tree",
+      "file": "built/local/_tsc.js",
+      "sha256": "44211927689cf537407da5212899e105f8684b2d143a79846dd16f014c2818ed",
+      "strict": true,
+      "instrumented": true
+    }
+  ]
+}

@@ -170,7 +170,7 @@ Each control runs both the requested full single-file latent census (`LATENT_FUL
 | boolean | 2, 4, 6, 8 | `263:1`: `overload 1 of filter result T[] cannot be served by implementation result readonly T[] | undefined` |
 | readonly | 3, 4, 7, 8 | `265:1`: `overload 1 of filter result readonly U[] cannot be served by implementation result readonly T[] | undefined` |
 
-**Answer:** every mutable-result overload (1, 2, 5, 6) and both readonly narrowing overloads (3, 7) refuse in these controls. The refusal is not limited to narrowing callbacks: boolean overloads 2 and 6 also refuse. Only readonly boolean overloads 4 and 8 escape this declaration refusal in isolation. The group controls report their first declaration stop only; their later overloads are judged individually by the eight single-overload controls.
+**Answer:** every mutable-result overload (1, 2, 5, 6) and both readonly narrowing overloads (3, 7) refuse in these controls. The refusal is not limited to narrowing callbacks: boolean overloads 2 and 6 also refuse. Only readonly boolean overloads 4 and 8 escape this declaration refusal in isolation. The group controls report their first declaration stop only; their later overloads are judged individually by the eight single-overload controls. Overload 4 does exclude undefined from the implementation result, but that presence-only narrowing is admitted by the existing `censusNullableOverloadResult` rule; the broader statement that every formally narrower result refuses would therefore be false.
 
 The full latent census records **0 findings for each of the ten controls**, with all retained signatures and the implementation marked `deferred_generic_instantiation`, without instantiation witnesses. This is a coverage gap, not evidence that the six refused declarations lower. Scan-all's `Completed: true` for controls 4 and 8 is measurement traversal only, not backend acceptance.
 
@@ -227,6 +227,8 @@ Called sites with **no exercised array identity** in self: `src/compiler/command
 **bootstrap:** totals `{"calls": 0, "completed": 0, "frozen_arrays": 0, "identity": 0, "undefined_identity": 0}`; freeze writes 0, unrelated candidates 0, unclassified candidates 0, observer errors 0.
 
 Whole lane is running; this checkpoint makes no complete-lane claim.
+
+A live lane observation identifies a post-call `__pos` assignment by `textChanges.ts:191:16` (`setPos`) to the frozen array from `services/codefixes/convertFunctionToEs6Class.ts:314:39`. The same error is rethrown by the fourslash harness; it is not a second write. [Raw observation and source proof](../filter-readonly-freeze/evidence/early-write-observation.json) are retained. Final totals await whole-lane completion.
 
 **Identity remains a premise.** Direct comparisons with the argument: 0. The reused static lexical/local-reference inventory does not see arbitrary later comparisons through a stored slot and is not a whole-program identity proof. Freezing preserves identity, so no observation here proves that changing identity by copying is safe. Likewise zero observed writes is limited to the workloads and paths exercised.
 

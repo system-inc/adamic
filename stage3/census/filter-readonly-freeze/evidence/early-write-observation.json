@@ -1,0 +1,664 @@
+{
+  "status": "partial live observation; whole lane still running",
+  "events": [
+    {
+      "pid": 12509,
+      "argv": [
+        "/workspace/adamic-tools/bin/node",
+        "/workspace/scratch/ev14ch9-readonly-freeze/lane/adapted-tree/built/local/run.js",
+        "--config=\"/workspace/scratch/ev14ch9-proof/tmp/ts-tests1/task-config3.json\""
+      ],
+      "cwd": "/workspace/scratch/ev14ch9-readonly-freeze/lane/adapted-tree",
+      "case": {
+        "title": " fourslash tests tests/cases/fourslash/convertFunctionToEs6Class_exportModifier1.ts fourslash test convertFunctionToEs6Class_exportModifier1.ts runs correctly",
+        "type": "test"
+      },
+      "description": "TypeError: Cannot add property __pos, object is not extensible\n    at setPos (/workspace/scratch/ev14ch9-readonly-freeze/lane/adapted-tree/src/services/textChanges.ts:191:16)\n    at onBeforeEmitNodeArray (/workspace/scratch/ev14ch9-readonly-freeze/lane/adapted-tree/src/services/textChanges.ts:1434:13)\n    at emitNodeList (/workspace/scratch/ev14ch9-readonly-freeze/lane/adapted-tree/src/compiler/emitter.ts:4698:9)\n    at emitList (/workspace/scratch/ev14ch9-readonly-freeze/lane/adapted-tree/src/compiler/emitter.ts:4663:9)\n    at emitModifierList (/workspace/scratch/ev14ch9-readonly-freeze/lane/adapted-tree/src/compiler/emitter.ts:4517:9)\n    at emitDecoratorsAndModifiers (/workspace/scratch/ev14ch9-readonly-freeze/lane/adapted-tree/src/compiler/emitter.ts:4452:24)\n    at emitClassDeclarationOrExpression (/workspace/scratch/ev14ch9-readonly-freeze/lane/adapted-tree/src/compiler/emitter.ts:3557:9)\n    at emitClassDeclaration (/workspace/scratch/ev14ch9-readonly-freeze/lane/adapted-tree/src/compiler/emitter.ts:3553:9)\n    at pipelineEmitWithHintWorker (/workspace/scratch/ev14ch9-readonly-freeze/lane/adapted-tree/src/compiler/emitter.ts:1738:28)\n    at pipelineEmitWithHint (/workspace/scratch/ev14ch9-readonly-freeze/lane/adapted-tree/src/compiler/emitter.ts:1544:13)\n    at pipelineEmitWithComments (/workspace/scratch/ev14ch9-readonly-freeze/lane/adapted-tree/src/compiler/emitter.ts:5800:9)\n    at pipelineEmit (/workspace/scratch/ev14ch9-readonly-freeze/lane/adapted-tree/src/compiler/emitter.ts:1484:9)\n    at print (/workspace/scratch/ev14ch9-readonly-freeze/lane/adapted-tree/src/compiler/emitter.ts:1399:9)\n    at Object.writeNode (/workspace/scratch/ev14ch9-readonly-freeze/lane/adapted-tree/src/compiler/emitter.ts:1342:9)\n    at getNonformattedText (/workspace/scratch/ev14ch9-readonly-freeze/lane/adapted-tree/src/services/textChanges.ts:1359:20)\n    at getFormattedTextOfNode (/workspace/scratch/ev14ch9-readonly-freeze/lane/adapted-tree/src/services/textChanges.ts:1330:32)\n    at format (/workspace/scratch/ev14ch9-readonly-freeze/lane/adapted-tree/src/services/textChanges.ts:1317:37)\n    at computeNewText (/workspace/scratch/ev14ch9-readonly-freeze/lane/adapted-tree/src/services/textChanges.ts:1320:15)\n    at /workspace/scratch/ev14ch9-readonly-freeze/lane/adapted-tree/src/services/textChanges.ts:1282:33\n    at mapDefined (/workspace/scratch/ev14ch9-readonly-freeze/lane/adapted-tree/src/compiler/core.ts:498:28)\n    at /workspace/scratch/ev14ch9-readonly-freeze/lane/adapted-tree/src/services/textChanges.ts:1277:33\n    at mapDefined (/workspace/scratch/ev14ch9-readonly-freeze/lane/adapted-tree/src/compiler/core.ts:498:28)\n    at Object.getTextChangesFromChanges (/workspace/scratch/ev14ch9-readonly-freeze/lane/adapted-tree/src/services/textChanges.ts:1267:16)\n    at _ChangeTracker.getChanges (/workspace/scratch/ev14ch9-readonly-freeze/lane/adapted-tree/src/services/textChanges.ts:1183:39)\n    at _ChangeTracker.with (/workspace/scratch/ev14ch9-readonly-freeze/lane/adapted-tree/src/services/textChanges.ts:507:24)\n    at Object.getCodeActions (/workspace/scratch/ev14ch9-readonly-freeze/lane/adapted-tree/src/services/codefixes/convertFunctionToEs6Class.ts:75:51)\n    at /workspace/scratch/ev14ch9-readonly-freeze/lane/adapted-tree/src/services/codeFixProvider.ts:89:46\n    at flatMap (/workspace/scratch/ev14ch9-readonly-freeze/lane/adapted-tree/src/compiler/core.ts:403:23)\n    at Object.getFixes (/workspace/scratch/ev14ch9-readonly-freeze/lane/adapted-tree/src/services/codeFixProvider.ts:89:12)\n    at /workspace/scratch/ev14ch9-readonly-freeze/lane/adapted-tree/src/services/services.ts:2712:28\n    at flatMap (/workspace/scratch/ev14ch9-readonly-freeze/lane/adapted-tree/src/compiler/core.ts:403:23)\n    at Object.getCodeFixesAtPosition (/workspace/scratch/ev14ch9-readonly-freeze/lane/adapted-tree/src/services/services.ts:2710:16)\n    at Function.proxy.<computed> [as getCodeFixesAtPosition] (/workspace/scratch/ev14ch9-readonly-freeze/lane/adapted-tree/src/harness/fourslashImpl.ts:466:61)\n    at /workspace/scratch/ev14ch9-readonly-freeze/lane/adapted-tree/src/harness/fourslashImpl.ts:3543:41\n    at flatMap (/workspace/scratch/ev14ch9-readonly-freeze/lane/adapted-tree/src/compiler/core.ts:403:23)\n    at _TestState.getCodeFixes (/workspace/scratch/ev14ch9-readonly-freeze/lane/adapted-tree/src/harness/fourslashImpl.ts:3533:19)\n    at _TestState.verifyCodeFix (/workspace/scratch/ev14ch9-readonly-freeze/lane/adapted-tree/src/harness/fourslashImpl.ts:3428:30)\n    at Verify.codeFix (/workspace/scratch/ev14ch9-readonly-freeze/lane/adapted-tree/src/harness/fourslashInterfaceImpl.ts:206:20)\n    at eval (convertFunctionToEs6Class_exportModifier1.js:9:8)\n    at runCode (/workspace/scratch/ev14ch9-readonly-freeze/lane/adapted-tree/src/harness/fourslashImpl.ts:4721:9)\n    at runFourSlashTestContent (/workspace/scratch/ev14ch9-readonly-freeze/lane/adapted-tree/src/harness/fourslashImpl.ts:4692:5)\n    at runFourSlashTest (/workspace/scratch/ev14ch9-readonly-freeze/lane/adapted-tree/src/harness/fourslashImpl.ts:4675:5)\n    at Context.<anonymous> (/workspace/scratch/ev14ch9-readonly-freeze/lane/adapted-tree/src/testRunner/fourslashRunner.ts:59:39)\n    at callFn (/workspace/scratch/ev14ch9-readonly-freeze/lane/adapted-tree/node_modules/mocha/lib/runnable.js:364:21)\n    at Test2.Runnable.run (/workspace/scratch/ev14ch9-readonly-freeze/lane/adapted-tree/node_modules/mocha/lib/runnable.js:352:5)\n    at Test2.Mocha.Runnable.run (/workspace/scratch/ev14ch9/stage3/census/filter-readonly-freeze/observe.cjs:64:131)\n    at Test2.Mocha.Runnable.run (/workspace/scratch/ev14ch9/stage3/oracle/observe-errors.cjs:11:24)\n    at Runner.runTest (/workspace/scratch/ev14ch9-readonly-freeze/lane/adapted-tree/node_modules/mocha/lib/runner.js:677:10)\n    at /workspace/scratch/ev14ch9-readonly-freeze/lane/adapted-tree/node_modules/mocha/lib/runner.js:800:12\n    at next (/workspace/scratch/ev14ch9-readonly-freeze/lane/adapted-tree/node_modules/mocha/lib/runner.js:592:14)\n    at /workspace/scratch/ev14ch9-readonly-freeze/lane/adapted-tree/node_modules/mocha/lib/runner.js:602:7\n    at next (/workspace/scratch/ev14ch9-readonly-freeze/lane/adapted-tree/node_modules/mocha/lib/runner.js:485:14)\n    at Immediate._onImmediate (/workspace/scratch/ev14ch9-readonly-freeze/lane/adapted-tree/node_modules/mocha/lib/runner.js:570:5)\n    at processImmediate (node:internal/timers:534:21)",
+      "frames": [
+        {
+          "function": "setPos",
+          "url": "",
+          "scriptId": "200",
+          "line": 179542,
+          "column": 11
+        },
+        {
+          "function": "onBeforeEmitNodeArray",
+          "url": "",
+          "scriptId": "200",
+          "line": 179812,
+          "column": 7
+        },
+        {
+          "function": "emitNodeList",
+          "url": "",
+          "scriptId": "200",
+          "line": 122954,
+          "column": 46
+        },
+        {
+          "function": "emitList",
+          "url": "",
+          "scriptId": "200",
+          "line": 122920,
+          "column": 5
+        },
+        {
+          "function": "emitModifierList",
+          "url": "",
+          "scriptId": "200",
+          "line": 122808,
+          "column": 5
+        },
+        {
+          "function": "emitDecoratorsAndModifiers",
+          "url": "",
+          "scriptId": "200",
+          "line": 122753,
+          "column": 16
+        },
+        {
+          "function": "emitClassDeclarationOrExpression",
+          "url": "",
+          "scriptId": "200",
+          "line": 121967,
+          "column": 5
+        },
+        {
+          "function": "emitClassDeclaration",
+          "url": "",
+          "scriptId": "200",
+          "line": 121964,
+          "column": 5
+        },
+        {
+          "function": "pipelineEmitWithHintWorker",
+          "url": "",
+          "scriptId": "200",
+          "line": 120327,
+          "column": 18
+        },
+        {
+          "function": "pipelineEmitWithHint",
+          "url": "",
+          "scriptId": "200",
+          "line": 120132,
+          "column": 7
+        },
+        {
+          "function": "pipelineEmitWithComments",
+          "url": "",
+          "scriptId": "200",
+          "line": 123888,
+          "column": 5
+        },
+        {
+          "function": "pipelineEmit",
+          "url": "",
+          "scriptId": "200",
+          "line": 120080,
+          "column": 5
+        },
+        {
+          "function": "print",
+          "url": "",
+          "scriptId": "200",
+          "line": 119998,
+          "column": 5
+        },
+        {
+          "function": "writeNode",
+          "url": "",
+          "scriptId": "200",
+          "line": 119939,
+          "column": 5
+        },
+        {
+          "function": "getNonformattedText",
+          "url": "",
+          "scriptId": "200",
+          "line": 180752,
+          "column": 20
+        },
+        {
+          "function": "getFormattedTextOfNode",
+          "url": "",
+          "scriptId": "200",
+          "line": 180728,
+          "column": 32
+        },
+        {
+          "function": "format2",
+          "url": "",
+          "scriptId": "200",
+          "line": 180722,
+          "column": 32
+        },
+        {
+          "function": "computeNewText",
+          "url": "",
+          "scriptId": "200",
+          "line": 180723,
+          "column": 224
+        },
+        {
+          "function": "",
+          "url": "",
+          "scriptId": "200",
+          "line": 180684,
+          "column": 29
+        },
+        {
+          "function": "mapDefined",
+          "url": "",
+          "scriptId": "200",
+          "line": 373,
+          "column": 22
+        },
+        {
+          "function": "",
+          "url": "",
+          "scriptId": "200",
+          "line": 180681,
+          "column": 32
+        },
+        {
+          "function": "mapDefined",
+          "url": "",
+          "scriptId": "200",
+          "line": 373,
+          "column": 22
+        },
+        {
+          "function": "getTextChangesFromChanges",
+          "url": "",
+          "scriptId": "200",
+          "line": 180675,
+          "column": 16
+        },
+        {
+          "function": "getChanges",
+          "url": "",
+          "scriptId": "200",
+          "line": 180661,
+          "column": 39
+        },
+        {
+          "function": "with",
+          "url": "",
+          "scriptId": "200",
+          "line": 180140,
+          "column": 24
+        },
+        {
+          "function": "getCodeActions",
+          "url": "",
+          "scriptId": "200",
+          "line": 156001,
+          "column": 66
+        },
+        {
+          "function": "",
+          "url": "",
+          "scriptId": "200",
+          "line": 154712,
+          "column": 46
+        },
+        {
+          "function": "flatMap",
+          "url": "",
+          "scriptId": "200",
+          "line": 303,
+          "column": 17
+        },
+        {
+          "function": "getFixes",
+          "url": "",
+          "scriptId": "200",
+          "line": 154712,
+          "column": 10
+        },
+        {
+          "function": "",
+          "url": "",
+          "scriptId": "200",
+          "line": 152279,
+          "column": 33
+        },
+        {
+          "function": "flatMap",
+          "url": "",
+          "scriptId": "200",
+          "line": 303,
+          "column": 17
+        },
+        {
+          "function": "getCodeFixesAtPosition",
+          "url": "",
+          "scriptId": "200",
+          "line": 152277,
+          "column": 12
+        },
+        {
+          "function": "proxy.<computed>",
+          "url": "",
+          "scriptId": "200",
+          "line": 214592,
+          "column": 48
+        },
+        {
+          "function": "",
+          "url": "",
+          "scriptId": "200",
+          "line": 217211,
+          "column": 39
+        },
+        {
+          "function": "flatMap",
+          "url": "",
+          "scriptId": "200",
+          "line": 303,
+          "column": 17
+        },
+        {
+          "function": "getCodeFixes",
+          "url": "",
+          "scriptId": "200",
+          "line": 217201,
+          "column": 16
+        },
+        {
+          "function": "verifyCodeFix",
+          "url": "",
+          "scriptId": "200",
+          "line": 217094,
+          "column": 31
+        },
+        {
+          "function": "codeFix",
+          "url": "",
+          "scriptId": "200",
+          "line": 212565,
+          "column": 20
+        },
+        {
+          "function": "",
+          "url": "",
+          "scriptId": "518",
+          "line": 9,
+          "column": 8
+        },
+        {
+          "function": "runCode",
+          "url": "",
+          "scriptId": "200",
+          "line": 214000,
+          "column": 5
+        },
+        {
+          "function": "runFourSlashTestContent",
+          "url": "",
+          "scriptId": "200",
+          "line": 213976,
+          "column": 3
+        },
+        {
+          "function": "runFourSlashTest",
+          "url": "",
+          "scriptId": "200",
+          "line": 213963,
+          "column": 3
+        },
+        {
+          "function": "",
+          "url": "",
+          "scriptId": "200",
+          "line": 218261,
+          "column": 19
+        },
+        {
+          "function": "callFn",
+          "url": "",
+          "scriptId": "171",
+          "line": 364,
+          "column": 21
+        },
+        {
+          "function": "Runnable.run",
+          "url": "",
+          "scriptId": "171",
+          "line": 352,
+          "column": 5
+        },
+        {
+          "function": "Mocha.Runnable.run",
+          "url": "",
+          "scriptId": "116",
+          "line": 64,
+          "column": 131
+        },
+        {
+          "function": "Mocha.Runnable.run",
+          "url": "",
+          "scriptId": "199",
+          "line": 11,
+          "column": 24
+        },
+        {
+          "function": "Runner.runTest",
+          "url": "",
+          "scriptId": "166",
+          "line": 677,
+          "column": 10
+        },
+        {
+          "function": "",
+          "url": "",
+          "scriptId": "166",
+          "line": 800,
+          "column": 12
+        },
+        {
+          "function": "next",
+          "url": "",
+          "scriptId": "166",
+          "line": 592,
+          "column": 14
+        },
+        {
+          "function": "",
+          "url": "",
+          "scriptId": "166",
+          "line": 602,
+          "column": 7
+        },
+        {
+          "function": "next",
+          "url": "",
+          "scriptId": "166",
+          "line": 485,
+          "column": 14
+        },
+        {
+          "function": "",
+          "url": "",
+          "scriptId": "166",
+          "line": 570,
+          "column": 5
+        },
+        {
+          "function": "processImmediate",
+          "url": "",
+          "scriptId": "10",
+          "line": 534,
+          "column": 21
+        }
+      ],
+      "frozen_aliases": [
+        {
+          "variable": "n",
+          "sites": [
+            "src/services/codefixes/convertFunctionToEs6Class.ts:314:39"
+          ],
+          "frame": {
+            "function": "setPos",
+            "url": "",
+            "scriptId": "200",
+            "line": 179542,
+            "column": 11
+          }
+        },
+        {
+          "variable": "nodes",
+          "sites": [
+            "src/services/codefixes/convertFunctionToEs6Class.ts:314:39"
+          ],
+          "frame": {
+            "function": "onBeforeEmitNodeArray",
+            "url": "",
+            "scriptId": "200",
+            "line": 179812,
+            "column": 7
+          }
+        },
+        {
+          "variable": "children",
+          "sites": [
+            "src/services/codefixes/convertFunctionToEs6Class.ts:314:39"
+          ],
+          "frame": {
+            "function": "emitNodeList",
+            "url": "",
+            "scriptId": "200",
+            "line": 122954,
+            "column": 46
+          }
+        },
+        {
+          "variable": "children",
+          "sites": [
+            "src/services/codefixes/convertFunctionToEs6Class.ts:314:39"
+          ],
+          "frame": {
+            "function": "emitList",
+            "url": "",
+            "scriptId": "200",
+            "line": 122920,
+            "column": 5
+          }
+        },
+        {
+          "variable": "modifiers",
+          "sites": [
+            "src/services/codefixes/convertFunctionToEs6Class.ts:314:39"
+          ],
+          "frame": {
+            "function": "emitModifierList",
+            "url": "",
+            "scriptId": "200",
+            "line": 122808,
+            "column": 5
+          }
+        },
+        {
+          "variable": "modifiers",
+          "sites": [
+            "src/services/codefixes/convertFunctionToEs6Class.ts:314:39"
+          ],
+          "frame": {
+            "function": "emitDecoratorsAndModifiers",
+            "url": "",
+            "scriptId": "200",
+            "line": 122753,
+            "column": 16
+          }
+        }
+      ],
+      "observed_sites": [
+        "src/compiler/utilitiesPublic.ts:1030:16",
+        "src/compiler/utilities.ts:8019:12",
+        "src/compiler/commandLineParser.ts:3188:54",
+        "src/compiler/checker.ts:32639:25",
+        "src/compiler/checker.ts:46866:33",
+        "src/compiler/transformers/utilities.ts:603:12",
+        "src/compiler/transformers/ts.ts:1053:13",
+        "src/compiler/transformers/ts.ts:1100:42",
+        "src/compiler/transformers/ts.ts:1383:13",
+        "src/compiler/transformers/classFields.ts:852:25",
+        "src/compiler/transformers/classFields.ts:1707:16",
+        "src/services/utilities.ts:2616:38",
+        "src/services/codefixes/convertFunctionToEs6Class.ts:314:39",
+        "src/services/codefixes/convertToEsModule.ts:137:29"
+      ]
+    },
+    {
+      "pid": 12509,
+      "argv": [
+        "/workspace/adamic-tools/bin/node",
+        "/workspace/scratch/ev14ch9-readonly-freeze/lane/adapted-tree/built/local/run.js",
+        "--config=\"/workspace/scratch/ev14ch9-proof/tmp/ts-tests1/task-config3.json\""
+      ],
+      "cwd": "/workspace/scratch/ev14ch9-readonly-freeze/lane/adapted-tree",
+      "case": {
+        "title": " fourslash tests tests/cases/fourslash/convertFunctionToEs6Class_exportModifier1.ts fourslash test convertFunctionToEs6Class_exportModifier1.ts runs correctly",
+        "type": "test"
+      },
+      "description": "TypeError: Cannot add property __pos, object is not extensible\n    at setPos (/workspace/scratch/ev14ch9-readonly-freeze/lane/adapted-tree/src/services/textChanges.ts:191:16)\n    at onBeforeEmitNodeArray (/workspace/scratch/ev14ch9-readonly-freeze/lane/adapted-tree/src/services/textChanges.ts:1434:13)\n    at emitNodeList (/workspace/scratch/ev14ch9-readonly-freeze/lane/adapted-tree/src/compiler/emitter.ts:4698:9)\n    at emitList (/workspace/scratch/ev14ch9-readonly-freeze/lane/adapted-tree/src/compiler/emitter.ts:4663:9)\n    at emitModifierList (/workspace/scratch/ev14ch9-readonly-freeze/lane/adapted-tree/src/compiler/emitter.ts:4517:9)\n    at emitDecoratorsAndModifiers (/workspace/scratch/ev14ch9-readonly-freeze/lane/adapted-tree/src/compiler/emitter.ts:4452:24)\n    at emitClassDeclarationOrExpression (/workspace/scratch/ev14ch9-readonly-freeze/lane/adapted-tree/src/compiler/emitter.ts:3557:9)\n    at emitClassDeclaration (/workspace/scratch/ev14ch9-readonly-freeze/lane/adapted-tree/src/compiler/emitter.ts:3553:9)\n    at pipelineEmitWithHintWorker (/workspace/scratch/ev14ch9-readonly-freeze/lane/adapted-tree/src/compiler/emitter.ts:1738:28)\n    at pipelineEmitWithHint (/workspace/scratch/ev14ch9-readonly-freeze/lane/adapted-tree/src/compiler/emitter.ts:1544:13)\n    at pipelineEmitWithComments (/workspace/scratch/ev14ch9-readonly-freeze/lane/adapted-tree/src/compiler/emitter.ts:5800:9)\n    at pipelineEmit (/workspace/scratch/ev14ch9-readonly-freeze/lane/adapted-tree/src/compiler/emitter.ts:1484:9)\n    at print (/workspace/scratch/ev14ch9-readonly-freeze/lane/adapted-tree/src/compiler/emitter.ts:1399:9)\n    at Object.writeNode (/workspace/scratch/ev14ch9-readonly-freeze/lane/adapted-tree/src/compiler/emitter.ts:1342:9)\n    at getNonformattedText (/workspace/scratch/ev14ch9-readonly-freeze/lane/adapted-tree/src/services/textChanges.ts:1359:20)\n    at getFormattedTextOfNode (/workspace/scratch/ev14ch9-readonly-freeze/lane/adapted-tree/src/services/textChanges.ts:1330:32)\n    at format (/workspace/scratch/ev14ch9-readonly-freeze/lane/adapted-tree/src/services/textChanges.ts:1317:37)\n    at computeNewText (/workspace/scratch/ev14ch9-readonly-freeze/lane/adapted-tree/src/services/textChanges.ts:1320:15)\n    at /workspace/scratch/ev14ch9-readonly-freeze/lane/adapted-tree/src/services/textChanges.ts:1282:33\n    at mapDefined (/workspace/scratch/ev14ch9-readonly-freeze/lane/adapted-tree/src/compiler/core.ts:498:28)\n    at /workspace/scratch/ev14ch9-readonly-freeze/lane/adapted-tree/src/services/textChanges.ts:1277:33\n    at mapDefined (/workspace/scratch/ev14ch9-readonly-freeze/lane/adapted-tree/src/compiler/core.ts:498:28)\n    at Object.getTextChangesFromChanges (/workspace/scratch/ev14ch9-readonly-freeze/lane/adapted-tree/src/services/textChanges.ts:1267:16)\n    at _ChangeTracker.getChanges (/workspace/scratch/ev14ch9-readonly-freeze/lane/adapted-tree/src/services/textChanges.ts:1183:39)\n    at _ChangeTracker.with (/workspace/scratch/ev14ch9-readonly-freeze/lane/adapted-tree/src/services/textChanges.ts:507:24)\n    at Object.getCodeActions (/workspace/scratch/ev14ch9-readonly-freeze/lane/adapted-tree/src/services/codefixes/convertFunctionToEs6Class.ts:75:51)\n    at /workspace/scratch/ev14ch9-readonly-freeze/lane/adapted-tree/src/services/codeFixProvider.ts:89:46\n    at flatMap (/workspace/scratch/ev14ch9-readonly-freeze/lane/adapted-tree/src/compiler/core.ts:403:23)\n    at Object.getFixes (/workspace/scratch/ev14ch9-readonly-freeze/lane/adapted-tree/src/services/codeFixProvider.ts:89:12)\n    at /workspace/scratch/ev14ch9-readonly-freeze/lane/adapted-tree/src/services/services.ts:2712:28\n    at flatMap (/workspace/scratch/ev14ch9-readonly-freeze/lane/adapted-tree/src/compiler/core.ts:403:23)\n    at Object.getCodeFixesAtPosition (/workspace/scratch/ev14ch9-readonly-freeze/lane/adapted-tree/src/services/services.ts:2710:16)\n    at Function.proxy.<computed> [as getCodeFixesAtPosition] (/workspace/scratch/ev14ch9-readonly-freeze/lane/adapted-tree/src/harness/fourslashImpl.ts:466:61)\n    at /workspace/scratch/ev14ch9-readonly-freeze/lane/adapted-tree/src/harness/fourslashImpl.ts:3543:41\n    at flatMap (/workspace/scratch/ev14ch9-readonly-freeze/lane/adapted-tree/src/compiler/core.ts:403:23)\n    at _TestState.getCodeFixes (/workspace/scratch/ev14ch9-readonly-freeze/lane/adapted-tree/src/harness/fourslashImpl.ts:3533:19)\n    at _TestState.verifyCodeFix (/workspace/scratch/ev14ch9-readonly-freeze/lane/adapted-tree/src/harness/fourslashImpl.ts:3428:30)\n    at Verify.codeFix (/workspace/scratch/ev14ch9-readonly-freeze/lane/adapted-tree/src/harness/fourslashInterfaceImpl.ts:206:20)\n    at eval (convertFunctionToEs6Class_exportModifier1.js:9:8)\n    at runCode (/workspace/scratch/ev14ch9-readonly-freeze/lane/adapted-tree/src/harness/fourslashImpl.ts:4721:9)\n    at runFourSlashTestContent (/workspace/scratch/ev14ch9-readonly-freeze/lane/adapted-tree/src/harness/fourslashImpl.ts:4692:5)\n    at runFourSlashTest (/workspace/scratch/ev14ch9-readonly-freeze/lane/adapted-tree/src/harness/fourslashImpl.ts:4675:5)\n    at Context.<anonymous> (/workspace/scratch/ev14ch9-readonly-freeze/lane/adapted-tree/src/testRunner/fourslashRunner.ts:59:39)\n    at callFn (/workspace/scratch/ev14ch9-readonly-freeze/lane/adapted-tree/node_modules/mocha/lib/runnable.js:364:21)\n    at Test2.Runnable.run (/workspace/scratch/ev14ch9-readonly-freeze/lane/adapted-tree/node_modules/mocha/lib/runnable.js:352:5)\n    at Test2.Mocha.Runnable.run (/workspace/scratch/ev14ch9/stage3/census/filter-readonly-freeze/observe.cjs:64:131)\n    at Test2.Mocha.Runnable.run (/workspace/scratch/ev14ch9/stage3/oracle/observe-errors.cjs:11:24)\n    at Runner.runTest (/workspace/scratch/ev14ch9-readonly-freeze/lane/adapted-tree/node_modules/mocha/lib/runner.js:677:10)\n    at /workspace/scratch/ev14ch9-readonly-freeze/lane/adapted-tree/node_modules/mocha/lib/runner.js:800:12\n    at next (/workspace/scratch/ev14ch9-readonly-freeze/lane/adapted-tree/node_modules/mocha/lib/runner.js:592:14)\n    at /workspace/scratch/ev14ch9-readonly-freeze/lane/adapted-tree/node_modules/mocha/lib/runner.js:602:7\n    at next (/workspace/scratch/ev14ch9-readonly-freeze/lane/adapted-tree/node_modules/mocha/lib/runner.js:485:14)\n    at Immediate._onImmediate (/workspace/scratch/ev14ch9-readonly-freeze/lane/adapted-tree/node_modules/mocha/lib/runner.js:570:5)\n    at processImmediate (node:internal/timers:534:21)",
+      "frames": [
+        {
+          "function": "runCode",
+          "url": "",
+          "scriptId": "200",
+          "line": 214003,
+          "column": 5
+        },
+        {
+          "function": "runFourSlashTestContent",
+          "url": "",
+          "scriptId": "200",
+          "line": 213976,
+          "column": 3
+        },
+        {
+          "function": "runFourSlashTest",
+          "url": "",
+          "scriptId": "200",
+          "line": 213963,
+          "column": 3
+        },
+        {
+          "function": "",
+          "url": "",
+          "scriptId": "200",
+          "line": 218261,
+          "column": 19
+        },
+        {
+          "function": "callFn",
+          "url": "",
+          "scriptId": "171",
+          "line": 364,
+          "column": 21
+        },
+        {
+          "function": "Runnable.run",
+          "url": "",
+          "scriptId": "171",
+          "line": 352,
+          "column": 5
+        },
+        {
+          "function": "Mocha.Runnable.run",
+          "url": "",
+          "scriptId": "116",
+          "line": 64,
+          "column": 131
+        },
+        {
+          "function": "Mocha.Runnable.run",
+          "url": "",
+          "scriptId": "199",
+          "line": 11,
+          "column": 24
+        },
+        {
+          "function": "Runner.runTest",
+          "url": "",
+          "scriptId": "166",
+          "line": 677,
+          "column": 10
+        },
+        {
+          "function": "",
+          "url": "",
+          "scriptId": "166",
+          "line": 800,
+          "column": 12
+        },
+        {
+          "function": "next",
+          "url": "",
+          "scriptId": "166",
+          "line": 592,
+          "column": 14
+        },
+        {
+          "function": "",
+          "url": "",
+          "scriptId": "166",
+          "line": 602,
+          "column": 7
+        },
+        {
+          "function": "next",
+          "url": "",
+          "scriptId": "166",
+          "line": 485,
+          "column": 14
+        },
+        {
+          "function": "",
+          "url": "",
+          "scriptId": "166",
+          "line": 570,
+          "column": 5
+        },
+        {
+          "function": "processImmediate",
+          "url": "",
+          "scriptId": "10",
+          "line": 534,
+          "column": 21
+        }
+      ],
+      "frozen_aliases": [],
+      "observed_sites": [
+        "src/compiler/utilitiesPublic.ts:1030:16",
+        "src/compiler/utilities.ts:8019:12",
+        "src/compiler/commandLineParser.ts:3188:54",
+        "src/compiler/checker.ts:32639:25",
+        "src/compiler/checker.ts:46866:33",
+        "src/compiler/transformers/utilities.ts:603:12",
+        "src/compiler/transformers/ts.ts:1053:13",
+        "src/compiler/transformers/ts.ts:1100:42",
+        "src/compiler/transformers/ts.ts:1383:13",
+        "src/compiler/transformers/classFields.ts:852:25",
+        "src/compiler/transformers/classFields.ts:1707:16",
+        "src/services/utilities.ts:2616:38",
+        "src/services/codefixes/convertFunctionToEs6Class.ts:314:39",
+        "src/services/codefixes/convertToEsModule.ts:137:29"
+      ]
+    }
+  ],
+  "source_snippets": [
+    {
+      "file": "src/services/textChanges.ts",
+      "sha256": "5db6f7eebe7cb63431042f1a63d189058fbdf245559f6042ef125f6d6ec916a5",
+      "start_line": 188,
+      "end_line": 193,
+      "text": "\nfunction setPos(n: TextRange, pos: number): void {\n    Debug.assert(typeof pos === \"number\");\n    (n as any).__pos = pos;\n}\n"
+    },
+    {
+      "file": "src/services/textChanges.ts",
+      "sha256": "5db6f7eebe7cb63431042f1a63d189058fbdf245559f6042ef125f6d6ec916a5",
+      "start_line": 1432,
+      "end_line": 1437,
+      "text": "    const onBeforeEmitNodeArray: PrintHandlers[\"onBeforeEmitNodeArray\"] = nodes => {\n        if (nodes) {\n            setPos(nodes, lastNonTriviaPosition);\n        }\n    };\n    const onAfterEmitNodeArray: PrintHandlers[\"onAfterEmitNodeArray\"] = nodes => {"
+    },
+    {
+      "file": "src/harness/fourslashImpl.ts",
+      "sha256": "22515b4c0e7548c35803e055a86236d5a9b16eb9b40b3fc8b7fe78bbbc7e6486",
+      "start_line": 4725,
+      "end_line": 4731,
+      "text": "        err.stack?.toString();\n        throw err;\n    }\n    finally {\n        sourceMapSupport.resetRetrieveHandlers();\n    }\n}"
+    },
+    {
+      "file": "src/services/codefixes/convertFunctionToEs6Class.ts",
+      "sha256": "9e3f9971bd2a528e966a19f409d42261423d07d20abc78ab1e5142fbcadde4bb",
+      "start_line": 300,
+      "end_line": 315,
+      "text": "    function createClassFromFunction(node: FunctionDeclaration | FunctionExpression): ClassDeclaration {\n        const memberElements = createClassElementsFromSymbol(ctorSymbol);\n        if (node.body) {\n            memberElements.unshift(factory.createConstructorDeclaration(/*modifiers*/ undefined, node.parameters, node.body));\n        }\n\n        const modifiers = getModifierKindFromSource(node, SyntaxKind.ExportKeyword);\n        const cls = factory.createClassDeclaration(modifiers, node.name, /*typeParameters*/ undefined, /*heritageClauses*/ undefined, memberElements);\n        // Don't call copyComments here because we'll already leave them in place\n        return cls;\n    }\n}\n\nfunction getModifierKindFromSource(source: Node, kind: Modifier[\"kind\"]): readonly Modifier[] | undefined {\n    return canHaveModifiers(source) ? (() => { const __adamicFreezeArg = source.modifiers; (globalThis as any).__adamicFilterFreezeBegin(\"src/services/codefixes/convertFunctionToEs6Class.ts:314:39\"); return ((globalThis as any).__adamicFilterFreeze as <R>(site: string, result: R, argument: unknown) => R)(\"src/services/codefixes/convertFunctionToEs6Class.ts:314:39\", filter(__adamicFreezeArg, (modifier): modifier is Modifier => modifier.kind === kind), __adamicFreezeArg); })() : undefined;\n}"
+    }
+  ],
+  "interpretation": "The setPos assignment to n.__pos targets an array whose WeakMap provenance identifies original readonly overload-7 site src/services/codefixes/convertFunctionToEs6Class.ts:314:39. The runCode event has the identical pid, case and complete error stack, and its source catch rethrows err; it is propagation, not another assignment."
+}
