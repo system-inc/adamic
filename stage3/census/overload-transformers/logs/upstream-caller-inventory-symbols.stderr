@@ -1,0 +1,17 @@
+/workspace/scratch/overload-transformers/stage3/api/node_modules/typescript/lib/typescript.js:33028
+function forEachChildInBlock(node, cbNode, cbNodes) {
+                            ^
+
+RangeError: Maximum call stack size exceeded
+    at forEachChildInBlock (/workspace/scratch/overload-transformers/stage3/api/node_modules/typescript/lib/typescript.js:33028:29)
+    at forEachChild (/workspace/scratch/overload-transformers/stage3/api/node_modules/typescript/lib/typescript.js:33072:35)
+    at traverse (/workspace/scratch/overload-transformers/stage3/api/node_modules/typescript/lib/typescript.js:18006:16)
+    at visitNode2 (/workspace/scratch/overload-transformers/stage3/api/node_modules/typescript/lib/typescript.js:32551:18)
+    at forEachChildInIfStatement (/workspace/scratch/overload-transformers/stage3/api/node_modules/typescript/lib/typescript.js:32784:51)
+    at forEachChild (/workspace/scratch/overload-transformers/stage3/api/node_modules/typescript/lib/typescript.js:33072:35)
+    at traverse (/workspace/scratch/overload-transformers/stage3/api/node_modules/typescript/lib/typescript.js:18006:16)
+    at visitNode2 (/workspace/scratch/overload-transformers/stage3/api/node_modules/typescript/lib/typescript.js:32551:18)
+    at forEachChildInIfStatement (/workspace/scratch/overload-transformers/stage3/api/node_modules/typescript/lib/typescript.js:32784:93)
+    at forEachChild (/workspace/scratch/overload-transformers/stage3/api/node_modules/typescript/lib/typescript.js:33072:35)
+
+Node.js v24.19.0

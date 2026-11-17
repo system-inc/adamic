@@ -1,0 +1,17 @@
+/workspace/scratch/overload-transformers/stage3/api/node_modules/typescript/lib/typescript.js:84173
+    return source.flags & 134217728 /* Union */ ? every(source.types, (subType) => allTypesAssignableToKind(subType, kind, strict)) : isTypeAssignableToKind(source, kind, strict);
+                                                                      ^
+
+RangeError: Maximum call stack size exceeded
+    at /workspace/scratch/overload-transformers/stage3/api/node_modules/typescript/lib/typescript.js:84173:71
+    at every (/workspace/scratch/overload-transformers/stage3/api/node_modules/typescript/lib/typescript.js:2382:12)
+    at allTypesAssignableToKind (/workspace/scratch/overload-transformers/stage3/api/node_modules/typescript/lib/typescript.js:84173:51)
+    at getPromisedTypeOfPromise (/workspace/scratch/overload-transformers/stage3/api/node_modules/typescript/lib/typescript.js:86965:9)
+    at getAwaitedTypeOfPromise (/workspace/scratch/overload-transformers/stage3/api/node_modules/typescript/lib/typescript.js:86948:26)
+    at helper (/workspace/scratch/overload-transformers/stage3/api/node_modules/typescript/lib/typescript.js:88299:27)
+    at bothHelper (/workspace/scratch/overload-transformers/stage3/api/node_modules/typescript/lib/typescript.js:88276:7)
+    at checkTestingKnownTruthyCallableOrAwaitableOrEnumMemberType (/workspace/scratch/overload-transformers/stage3/api/node_modules/typescript/lib/typescript.js:88273:5)
+    at checkConditionalExpression (/workspace/scratch/overload-transformers/stage3/api/node_modules/typescript/lib/typescript.js:85150:5)
+    at checkExpressionWorker (/workspace/scratch/overload-transformers/stage3/api/node_modules/typescript/lib/typescript.js:85739:16)
+
+Node.js v24.19.0

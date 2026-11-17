@@ -43,3 +43,11 @@ Candidate (i), widening or dropping the overload, loses node-specific views at t
 For getProperties: scan-all, full latent census (utilities.ts, ts.ts, classFields.ts), restoring mutant, stock 79-root diagnostics, Adamic types, apply.sh, upstream npm ci/Hereby dts declaration comparison, TestProduct_Stage3AdaptedTree and unfiltered lane: NOT RUN. No before/after finding delta is claimed yet.
 
 For both stopped sets: every build proof above is NOT RUN; no source edit was built. Node witnesses, lane value counter and body-restoring mutant are NOT RUN because no road (ii) is proposed.
+
+## Checkpoint 2 — tooling and adapter contracts
+
+The initial report was pushed as 0bd4986bf before constructing any adapter. A draft getProperties adapter now exists only in the scratch worktree; it is not a landing commit. Its LF/CRLF, exact restoration, zero-write replay, duplicate, drift, half-adapted and mixed-ending controls pass. Both commented and comment-free JavaScript outputs compare byte-for-byte. The first construction attempt had a Python syntax error and its consequent missing-module runs failed; those logs are retained and are not proof passes. The corrected runs are named *-fixed.
+
+The scan-all product, the guarded full latent overlay/binary and the stock Adamic binary built successfully. Upstream npm ci and unmodified Hereby dts passed; declarations-before retains both emitted public bundles. The baseline adaptation is still running. No census disappearance, type-check comparison, candidate declaration comparison, adapted-tree product or full lane pass is claimed yet.
+
+The initial exhaustive TypeScript-only caller inventory is immutable in checkpoint 0bd4986bf. Expanded inventory attempts after npm installation hit stock-TypeScript stack overflows while exploring unrelated dependency/fixture code; their own exit codes and stderr are retained. The expanded audit filters candidate spellings, then verifies callee symbol and getResolvedSignature declaration identity; text never establishes a caller. Identifier-reference auditing is retained to expose any function-value escape that would require following an indirect call.

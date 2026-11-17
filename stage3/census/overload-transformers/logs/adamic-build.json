@@ -1,0 +1,15 @@
+{
+  "command": [
+    "go",
+    "build",
+    "-trimpath",
+    "-ldflags=-buildid=",
+    "-buildvcs=false",
+    "-o",
+    "/workspace/scratch/overload-transformers-runtime/adamic",
+    "./cmd/adamic"
+  ],
+  "cwd": "/workspace/scratch/overload-transformers",
+  "exit": 0,
+  "seconds": 106.75327682495117
+}

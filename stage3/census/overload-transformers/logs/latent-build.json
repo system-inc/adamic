@@ -1,0 +1,17 @@
+{
+  "command": [
+    "go",
+    "build",
+    "-trimpath",
+    "-ldflags=-buildid=",
+    "-buildvcs=false",
+    "-overlay",
+    "/workspace/scratch/overload-transformers-runtime/latent-overlay/overlay.json",
+    "-o",
+    "/workspace/scratch/overload-transformers-runtime/latent",
+    "./stage3/census/latent/tool/main.go"
+  ],
+  "cwd": "/workspace/scratch/overload-transformers",
+  "exit": 0,
+  "seconds": 426.481511592865
+}

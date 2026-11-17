@@ -1,0 +1,14 @@
+{
+  "command": [
+    "go",
+    "test",
+    "-v",
+    "./stage3/census/scan-all",
+    "-run",
+    "^TestProduct_ScanAllInstrumentedProbe$",
+    "-count=1"
+  ],
+  "cwd": "/workspace/scratch/overload-transformers",
+  "exit": 0,
+  "seconds": 559.9709873199463
+}

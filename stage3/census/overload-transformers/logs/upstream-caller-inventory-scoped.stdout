@@ -1,0 +1,1152 @@
+{
+  "typescript": "6.0.3",
+  "tree": "/workspace/scratch/overload-transformers-typescript",
+  "coverage": {
+    "files": 81470,
+    "tsFiles": 21233,
+    "jsFiles": 18210,
+    "sourceRoots": 710,
+    "testCandidateRoots": 7,
+    "programFiles": 832
+  },
+  "owners": [
+    {
+      "file": "src/compiler/transformers/utilities.ts",
+      "line": 585,
+      "column": 1,
+      "name": "getProperties",
+      "body": false,
+      "text": "export function getProperties(node: ClassExpression | ClassDeclaration, requireInitializer: true, isStatic: boolean): readonly InitializedPropertyDeclaration[];",
+      "return": "readonly InitializedPropertyDeclaration[]"
+    },
+    {
+      "file": "src/compiler/transformers/utilities.ts",
+      "line": 587,
+      "column": 1,
+      "name": "getProperties",
+      "body": false,
+      "text": "export function getProperties(node: ClassExpression | ClassDeclaration, requireInitializer: boolean, isStatic: boolean): readonly PropertyDeclaration[];",
+      "return": "readonly PropertyDeclaration[]"
+    },
+    {
+      "file": "src/compiler/transformers/utilities.ts",
+      "line": 589,
+      "column": 1,
+      "name": "getProperties",
+      "body": true,
+      "text": "export function getProperties(node: ClassExpression | ClassDeclaration, requireInitializer: boolean, isStatic: boolean): readonly PropertyDeclaration[] {\r\n    return filter(node.members, m => isInitializedOrStaticProperty(m, requireInitializer, isStatic)) as PropertyDeclaration[];\r\n}",
+      "return": "readonly PropertyDeclaration[]"
+    },
+    {
+      "file": "src/compiler/transformers/namedEvaluation.ts",
+      "line": 173,
+      "column": 1,
+      "name": "injectClassNamedEvaluationHelperBlockIfMissing",
+      "body": false,
+      "text": "export function injectClassNamedEvaluationHelperBlockIfMissing<T extends ClassLikeDeclaration>(\r\n    context: TransformationContext,\r\n    node: T,\r\n    assignedName: Expression,\r\n    thisExpression?: Expression,\r\n): Extract<ClassLikeDeclaration, Pick<T, \"kind\">>;",
+      "return": "Extract<import(\"../types.js\").ClassDeclaration, Pick<T, \"kind\">> | Extract<import(\"../types.js\").ClassExpression, Pick<T, \"kind\">>"
+    },
+    {
+      "file": "src/compiler/transformers/namedEvaluation.ts",
+      "line": 179,
+      "column": 1,
+      "name": "injectClassNamedEvaluationHelperBlockIfMissing",
+      "body": true,
+      "text": "export function injectClassNamedEvaluationHelperBlockIfMissing(\r\n    context: TransformationContext,\r\n    node: ClassLikeDeclaration,\r\n    assignedName: Expression,\r\n    thisExpression?: Expression,\r\n) {\r\n    // given:\r\n    //\r\n    //  let C = class {\r\n    //  };\r\n    //\r\n    // produces:\r\n    //\r\n    //  let C = class {\r\n    //      static { __setFunctionName(this, \"C\"); }\r\n    //  };\r\n\r\n    // NOTE: If the class has a `_classThis` assignment block, this helper will be injected after that block.\r\n\r\n    if (classHasExplicitlyAssignedName(node)) {\r\n        return node;\r\n    }\r\n\r\n    const { factory } = context;\r\n    const namedEvaluationBlock = createClassNamedEvaluationHelperBlock(context, assignedName, thisExpression);\r\n    if (node.name) {\r\n        setSourceMapRange(namedEvaluationBlock.body.statements[0], node.name);\r\n    }\r\n\r\n    const insertionIndex = findIndex(node.members, isClassThisAssignmentBlock) + 1;\r\n    const leading = node.members.slice(0, insertionIndex);\r\n    const trailing = node.members.slice(insertionIndex);\r\n    const members = factory.createNodeArray([...leading, namedEvaluationBlock, ...trailing]);\r\n    setTextRange(members, node.members);\r\n\r\n    node = isClassDeclaration(node) ?\r\n        factory.updateClassDeclaration(\r\n            node,\r\n            node.modifiers,\r\n            node.name,\r\n            node.typeParameters,\r\n            node.heritageClauses,\r\n            members,\r\n        ) :\r\n        factory.updateClassExpression(\r\n            node,\r\n            node.modifiers,\r\n            node.name,\r\n            node.typeParameters,\r\n            node.heritageClauses,\r\n            members,\r\n        );\r\n\r\n    getOrCreateEmitNode(node).assignedName = assignedName;\r\n    return node;\r\n}",
+      "return": "ClassLikeDeclaration"
+    },
+    {
+      "file": "src/compiler/transformers/namedEvaluation.ts",
+      "line": 469,
+      "column": 1,
+      "name": "transformNamedEvaluation",
+      "body": false,
+      "text": "export function transformNamedEvaluation<T extends NamedEvaluation>(context: TransformationContext, node: T, ignoreEmptyStringLiteral?: boolean, assignedName?: string): Extract<NamedEvaluation, Pick<T, \"kind\" | keyof T & \"operatorToken\" | keyof T & \"name\">>;",
+      "return": "Extract<PropertyAssignment & { readonly name: Identifier; readonly initializer: WrappedExpression<AnonymousFunctionDefinition>; }, Pick<T, \"kind\" | (keyof T & \"operatorToken\") | (keyof T & \"name\")>> | Extract<ShorthandPropertyAssignment & { readonly objectAssignmentInitializer: WrappedExpression<AnonymousFunctionDefinition>; }, Pick<T, \"kind\" | (keyof T & \"operatorToken\") | (keyof T & \"name\")>> | Extract<VariableDeclaration & { readonly name: Identifier; readonly initializer: WrappedExpression<AnonymousFunctionDefinition>; }, Pick<T, \"kind\" | (keyof T & \"operatorToken\") | (keyof T & \"name\")>> | Extract<ParameterDeclaration & { readonly name: Identifier; readonly dotDotDotToken: undefined; readonly initializer: WrappedExpression<AnonymousFunctionDefinition>; }, Pick<T, \"kind\" | (keyof T & \"operatorToken\") | (keyof T & \"name\")>> | Extract<BindingElement & { readonly name: Identifier; readonly dotDotDotToken: undefined; readonly initializer: WrappedExpression<AnonymousFunctionDefinition>; }, Pick<T, \"kind\" | (keyof T & \"operatorToken\") | (keyof T & \"name\")>> | Extract<PropertyDeclaration & { readonly initializer: WrappedExpression<AnonymousFunctionDefinition>; }, Pick<T, \"kind\" | (keyof T & \"operatorToken\") | (keyof T & \"name\")>> | Extract<import(\"../types.js\").AssignmentExpression<import(\"../types.js\").EqualsToken> & { readonly left: Identifier; readonly right: WrappedExpression<AnonymousFunctionDefinition>; }, Pick<T, \"kind\" | (keyof T & \"operatorToken\") | (keyof T & \"name\")>> | Extract<import(\"../types.js\").AssignmentExpression<import(\"../types.js\").AmpersandAmpersandEqualsToken | import(\"../types.js\").BarBarEqualsToken | import(\"../types.js\").QuestionQuestionEqualsToken> & { readonly left: Identifier; readonly right: WrappedExpression<AnonymousFunctionDefinition>; }, Pick<T, \"kind\" | (keyof T & \"operatorToken\") | (keyof T & \"name\")>> | Extract<ExportAssignment & { readonly expression: WrappedExpression<AnonymousFunctionDefinition>; }, Pick<T, \"kind\" | (keyof T & \"operatorToken\") | (keyof T & \"name\")>>"
+    },
+    {
+      "file": "src/compiler/transformers/namedEvaluation.ts",
+      "line": 470,
+      "column": 1,
+      "name": "transformNamedEvaluation",
+      "body": true,
+      "text": "export function transformNamedEvaluation(context: TransformationContext, node: NamedEvaluation, ignoreEmptyStringLiteral?: boolean, assignedName?: string) {\r\n    switch (node.kind) {\r\n        case SyntaxKind.PropertyAssignment:\r\n            return transformNamedEvaluationOfPropertyAssignment(context, node, ignoreEmptyStringLiteral, assignedName);\r\n        case SyntaxKind.ShorthandPropertyAssignment:\r\n            return transformNamedEvaluationOfShorthandAssignmentProperty(context, node, ignoreEmptyStringLiteral, assignedName);\r\n        case SyntaxKind.VariableDeclaration:\r\n            return transformNamedEvaluationOfVariableDeclaration(context, node, ignoreEmptyStringLiteral, assignedName);\r\n        case SyntaxKind.Parameter:\r\n            return transformNamedEvaluationOfParameterDeclaration(context, node, ignoreEmptyStringLiteral, assignedName);\r\n        case SyntaxKind.BindingElement:\r\n            return transformNamedEvaluationOfBindingElement(context, node, ignoreEmptyStringLiteral, assignedName);\r\n        case SyntaxKind.PropertyDeclaration:\r\n            return transformNamedEvaluationOfPropertyDeclaration(context, node, ignoreEmptyStringLiteral, assignedName);\r\n        case SyntaxKind.BinaryExpression:\r\n            return transformNamedEvaluationOfAssignmentExpression(context, node, ignoreEmptyStringLiteral, assignedName);\r\n        case SyntaxKind.ExportAssignment:\r\n            return transformNamedEvaluationOfExportAssignment(context, node, ignoreEmptyStringLiteral, assignedName);\r\n    }\r\n}",
+      "return": "PropertyDeclaration | PropertyAssignment | ShorthandPropertyAssignment | VariableDeclaration | ParameterDeclaration | BindingElement | ExportAssignment | BinaryExpression"
+    }
+  ],
+  "calls": [
+    {
+      "file": "src/compiler/transformers/namedEvaluation.ts",
+      "line": 250,
+      "column": 14,
+      "name": "injectClassNamedEvaluationHelperBlockIfMissing",
+      "declaration": {
+        "file": "src/compiler/transformers/namedEvaluation.ts",
+        "line": 173,
+        "column": 1
+      },
+      "result": "import(\"../types.js\").ClassExpression",
+      "arguments": [
+        {
+          "text": "context",
+          "type": "TransformationContext"
+        },
+        {
+          "text": "innerExpression",
+          "type": "import(\"../types.js\").ClassExpression & { readonly name?: undefined; }"
+        },
+        {
+          "text": "assignedName",
+          "type": "Expression"
+        }
+      ],
+      "parent": "CallExpression",
+      "context": "cast(injectClassNamedEvaluationHelperBlockIfMissing(context, innerExpression, assignedName), isClassExpression)",
+      "statement": "const updatedExpression = isClassExpression(innerExpression) ?\r\n        cast(injectClassNamedEvaluationHelperBlockIfMissing(context, innerExpression, assignedName), isClassExpression) :\r\n        context.getEmitHelperFactory().createSetFunctionNameHelper(innerExpression, assignedName);"
+    },
+    {
+      "file": "src/compiler/transformers/ts.ts",
+      "line": 858,
+      "column": 18,
+      "name": "getProperties",
+      "declaration": {
+        "file": "src/compiler/transformers/utilities.ts",
+        "line": 585,
+        "column": 1
+      },
+      "result": "readonly import(\"../types.js\").InitializedPropertyDeclaration[]",
+      "arguments": [
+        {
+          "text": "node",
+          "type": "ClassDeclaration"
+        },
+        {
+          "text": "true",
+          "type": "true"
+        },
+        {
+          "text": "true",
+          "type": "true"
+        }
+      ],
+      "parent": "CallExpression",
+      "context": "some(getProperties(node, /*requireInitializer*/ true, /*isStatic*/ true))",
+      "statement": "if (some(getProperties(node, /*requireInitializer*/ true, /*isStatic*/ true))) facts |= ClassFacts.HasStaticInitializedProperties;"
+    },
+    {
+      "file": "src/compiler/transformers/classFields.ts",
+      "line": 694,
+      "column": 20,
+      "name": "transformNamedEvaluation",
+      "declaration": {
+        "file": "src/compiler/transformers/namedEvaluation.ts",
+        "line": 469,
+        "column": 1
+      },
+      "result": "PropertyAssignment & { readonly name: Identifier; readonly initializer: import(\"../types.js\").WrappedExpression<AnonymousFunctionDefinition>; }",
+      "arguments": [
+        {
+          "text": "context",
+          "type": "TransformationContext"
+        },
+        {
+          "text": "node",
+          "type": "PropertyAssignment & { readonly name: Identifier; readonly initializer: import(\"../types.js\").WrappedExpression<AnonymousFunctionDefinition>; }"
+        }
+      ],
+      "parent": "BinaryExpression",
+      "context": "node = transformNamedEvaluation(context, node)",
+      "statement": "node = transformNamedEvaluation(context, node);"
+    },
+    {
+      "file": "src/compiler/transformers/classFields.ts",
+      "line": 729,
+      "column": 20,
+      "name": "transformNamedEvaluation",
+      "declaration": {
+        "file": "src/compiler/transformers/namedEvaluation.ts",
+        "line": 469,
+        "column": 1
+      },
+      "result": "VariableDeclaration & { readonly name: Identifier; readonly initializer: import(\"../types.js\").WrappedExpression<AnonymousFunctionDefinition>; }",
+      "arguments": [
+        {
+          "text": "context",
+          "type": "TransformationContext"
+        },
+        {
+          "text": "node",
+          "type": "VariableDeclaration & { readonly name: Identifier; readonly initializer: import(\"../types.js\").WrappedExpression<AnonymousFunctionDefinition>; }"
+        }
+      ],
+      "parent": "BinaryExpression",
+      "context": "node = transformNamedEvaluation(context, node)",
+      "statement": "node = transformNamedEvaluation(context, node);"
+    },
+    {
+      "file": "src/compiler/transformers/classFields.ts",
+      "line": 753,
+      "column": 20,
+      "name": "transformNamedEvaluation",
+      "declaration": {
+        "file": "src/compiler/transformers/namedEvaluation.ts",
+        "line": 469,
+        "column": 1
+      },
+      "result": "ParameterDeclaration & { readonly name: Identifier; readonly dotDotDotToken: undefined; readonly initializer: import(\"../types.js\").WrappedExpression<AnonymousFunctionDefinition>; }",
+      "arguments": [
+        {
+          "text": "context",
+          "type": "TransformationContext"
+        },
+        {
+          "text": "node",
+          "type": "ParameterDeclaration & { readonly name: Identifier; readonly dotDotDotToken: undefined; readonly initializer: import(\"../types.js\").WrappedExpression<AnonymousFunctionDefinition>; }"
+        }
+      ],
+      "parent": "BinaryExpression",
+      "context": "node = transformNamedEvaluation(context, node)",
+      "statement": "node = transformNamedEvaluation(context, node);"
+    },
+    {
+      "file": "src/compiler/transformers/classFields.ts",
+      "line": 777,
+      "column": 20,
+      "name": "transformNamedEvaluation",
+      "declaration": {
+        "file": "src/compiler/transformers/namedEvaluation.ts",
+        "line": 469,
+        "column": 1
+      },
+      "result": "BindingElement & { readonly name: Identifier; readonly dotDotDotToken: undefined; readonly initializer: import(\"../types.js\").WrappedExpression<AnonymousFunctionDefinition>; }",
+      "arguments": [
+        {
+          "text": "context",
+          "type": "TransformationContext"
+        },
+        {
+          "text": "node",
+          "type": "BindingElement & { readonly name: Identifier; readonly dotDotDotToken: undefined; readonly initializer: import(\"../types.js\").WrappedExpression<AnonymousFunctionDefinition>; }"
+        }
+      ],
+      "parent": "BinaryExpression",
+      "context": "node = transformNamedEvaluation(context, node)",
+      "statement": "node = transformNamedEvaluation(context, node);"
+    },
+    {
+      "file": "src/compiler/transformers/classFields.ts",
+      "line": 794,
+      "column": 20,
+      "name": "transformNamedEvaluation",
+      "declaration": {
+        "file": "src/compiler/transformers/namedEvaluation.ts",
+        "line": 469,
+        "column": 1
+      },
+      "result": "ExportAssignment & { readonly expression: import(\"../types.js\").WrappedExpression<AnonymousFunctionDefinition>; }",
+      "arguments": [
+        {
+          "text": "context",
+          "type": "TransformationContext"
+        },
+        {
+          "text": "node",
+          "type": "ExportAssignment & { readonly expression: import(\"../types.js\").WrappedExpression<AnonymousFunctionDefinition>; }"
+        },
+        {
+          "text": "true",
+          "type": "true"
+        },
+        {
+          "text": "node.isExportEquals ? \"\" : \"default\"",
+          "type": "\"\" | \"default\""
+        }
+      ],
+      "parent": "BinaryExpression",
+      "context": "node = transformNamedEvaluation(context, node, /*ignoreEmptyStringLiteral*/ true, node.isExportEquals ? \"\" : \"default\")",
+      "statement": "node = transformNamedEvaluation(context, node, /*ignoreEmptyStringLiteral*/ true, node.isExportEquals ? \"\" : \"default\");"
+    },
+    {
+      "file": "src/compiler/transformers/classFields.ts",
+      "line": 1003,
+      "column": 20,
+      "name": "transformNamedEvaluation",
+      "declaration": {
+        "file": "src/compiler/transformers/namedEvaluation.ts",
+        "line": 469,
+        "column": 1
+      },
+      "result": "never",
+      "arguments": [
+        {
+          "text": "context",
+          "type": "TransformationContext"
+        },
+        {
+          "text": "node",
+          "type": "PrivateIdentifierPropertyDeclaration & PropertyDeclaration & { readonly initializer: import(\"../types.js\").WrappedExpression<AnonymousFunctionDefinition>; }"
+        }
+      ],
+      "parent": "BinaryExpression",
+      "context": "node = transformNamedEvaluation(context, node)",
+      "statement": "node = transformNamedEvaluation(context, node);"
+    },
+    {
+      "file": "src/compiler/transformers/classFields.ts",
+      "line": 1536,
+      "column": 24,
+      "name": "transformNamedEvaluation",
+      "declaration": {
+        "file": "src/compiler/transformers/namedEvaluation.ts",
+        "line": 469,
+        "column": 1
+      },
+      "result": "(AssignmentExpression<EqualsToken> & { readonly left: Identifier; readonly right: import(\"../types.js\").WrappedExpression<AnonymousFunctionDefinition>; }) | (AssignmentExpression<import(\"../types.js\").AmpersandAmpersandEqualsToken | import(\"../types.js\").BarBarEqualsToken | import(\"../types.js\").QuestionQuestionEqualsToken> & { readonly left: Identifier; readonly right: import(\"../types.js\").WrappedExpression<AnonymousFunctionDefinition>; })",
+      "arguments": [
+        {
+          "text": "context",
+          "type": "TransformationContext"
+        },
+        {
+          "text": "node",
+          "type": "(AssignmentExpression<EqualsToken> & { readonly left: Identifier; readonly right: import(\"../types.js\").WrappedExpression<AnonymousFunctionDefinition>; }) | (AssignmentExpression<import(\"../types.js\").AmpersandAmpersandEqualsToken | import(\"../types.js\").BarBarEqualsToken | import(\"../types.js\").QuestionQuestionEqualsToken> & { readonly left: Identifier; readonly right: import(\"../types.js\").WrappedExpression<AnonymousFunctionDefinition>; })"
+        }
+      ],
+      "parent": "BinaryExpression",
+      "context": "node = transformNamedEvaluation(context, node)",
+      "statement": "node = transformNamedEvaluation(context, node);"
+    },
+    {
+      "file": "src/compiler/transformers/classFields.ts",
+      "line": 2312,
+      "column": 36,
+      "name": "getProperties",
+      "declaration": {
+        "file": "src/compiler/transformers/utilities.ts",
+        "line": 587,
+        "column": 1
+      },
+      "result": "readonly PropertyDeclaration[]",
+      "arguments": [
+        {
+          "text": "node",
+          "type": "ClassDeclaration | ClassExpression"
+        },
+        {
+          "text": "false",
+          "type": "false"
+        },
+        {
+          "text": "false",
+          "type": "false"
+        }
+      ],
+      "parent": "VariableDeclaration",
+      "context": "instanceProperties = getProperties(node, /*requireInitializer*/ false, /*isStatic*/ false)",
+      "statement": "const instanceProperties = getProperties(node, /*requireInitializer*/ false, /*isStatic*/ false);"
+    },
+    {
+      "file": "src/compiler/transformers/classFields.ts",
+      "line": 2538,
+      "column": 24,
+      "name": "transformNamedEvaluation",
+      "declaration": {
+        "file": "src/compiler/transformers/namedEvaluation.ts",
+        "line": 469,
+        "column": 1
+      },
+      "result": "PropertyDeclaration & { readonly initializer: import(\"../types.js\").WrappedExpression<AnonymousFunctionDefinition>; }",
+      "arguments": [
+        {
+          "text": "context",
+          "type": "TransformationContext"
+        },
+        {
+          "text": "property",
+          "type": "PropertyDeclaration & { readonly initializer: import(\"../types.js\").WrappedExpression<AnonymousFunctionDefinition>; }"
+        }
+      ],
+      "parent": "BinaryExpression",
+      "context": "property = transformNamedEvaluation(context, property)",
+      "statement": "property = transformNamedEvaluation(context, property);"
+    },
+    {
+      "file": "src/compiler/transformers/classFields.ts",
+      "line": 3059,
+      "column": 20,
+      "name": "transformNamedEvaluation",
+      "declaration": {
+        "file": "src/compiler/transformers/namedEvaluation.ts",
+        "line": 469,
+        "column": 1
+      },
+      "result": "AssignmentExpression<EqualsToken> & { readonly left: Identifier; readonly right: import(\"../types.js\").WrappedExpression<AnonymousFunctionDefinition>; }",
+      "arguments": [
+        {
+          "text": "context",
+          "type": "TransformationContext"
+        },
+        {
+          "text": "node",
+          "type": "AssignmentExpression<EqualsToken> & { readonly left: Identifier; readonly right: import(\"../types.js\").WrappedExpression<AnonymousFunctionDefinition>; }"
+        }
+      ],
+      "parent": "BinaryExpression",
+      "context": "node = transformNamedEvaluation(context, node)",
+      "statement": "node = transformNamedEvaluation(context, node);"
+    },
+    {
+      "file": "src/compiler/transformers/classFields.ts",
+      "line": 3124,
+      "column": 20,
+      "name": "transformNamedEvaluation",
+      "declaration": {
+        "file": "src/compiler/transformers/namedEvaluation.ts",
+        "line": 469,
+        "column": 1
+      },
+      "result": "ShorthandPropertyAssignment & { readonly objectAssignmentInitializer: import(\"../types.js\").WrappedExpression<AnonymousFunctionDefinition>; }",
+      "arguments": [
+        {
+          "text": "context",
+          "type": "TransformationContext"
+        },
+        {
+          "text": "node",
+          "type": "ShorthandPropertyAssignment & { readonly objectAssignmentInitializer: import(\"../types.js\").WrappedExpression<AnonymousFunctionDefinition>; }"
+        }
+      ],
+      "parent": "BinaryExpression",
+      "context": "node = transformNamedEvaluation(context, node)",
+      "statement": "node = transformNamedEvaluation(context, node);"
+    },
+    {
+      "file": "src/compiler/transformers/esDecorators.ts",
+      "line": 676,
+      "column": 20,
+      "name": "injectClassNamedEvaluationHelperBlockIfMissing",
+      "declaration": {
+        "file": "src/compiler/transformers/namedEvaluation.ts",
+        "line": 173,
+        "column": 1
+      },
+      "result": "ClassDeclaration | ClassExpression",
+      "arguments": [
+        {
+          "text": "context",
+          "type": "TransformationContext"
+        },
+        {
+          "text": "node",
+          "type": "ClassLikeDeclaration"
+        },
+        {
+          "text": "factory.createStringLiteral(\"\")",
+          "type": "import(\"../types.js\").StringLiteral"
+        }
+      ],
+      "parent": "BinaryExpression",
+      "context": "node = injectClassNamedEvaluationHelperBlockIfMissing(context, node, factory.createStringLiteral(\"\"))",
+      "statement": "node = injectClassNamedEvaluationHelperBlockIfMissing(context, node, factory.createStringLiteral(\"\"));"
+    },
+    {
+      "file": "src/compiler/transformers/esDecorators.ts",
+      "line": 1062,
+      "column": 24,
+      "name": "injectClassNamedEvaluationHelperBlockIfMissing",
+      "declaration": {
+        "file": "src/compiler/transformers/namedEvaluation.ts",
+        "line": 173,
+        "column": 1
+      },
+      "result": "ClassDeclaration",
+      "arguments": [
+        {
+          "text": "context",
+          "type": "TransformationContext"
+        },
+        {
+          "text": "node",
+          "type": "ClassDeclaration"
+        },
+        {
+          "text": "className",
+          "type": "import(\"../types.js\").StringLiteral"
+        }
+      ],
+      "parent": "BinaryExpression",
+      "context": "node = injectClassNamedEvaluationHelperBlockIfMissing(context, node, className)",
+      "statement": "node = injectClassNamedEvaluationHelperBlockIfMissing(context, node, className);"
+    },
+    {
+      "file": "src/compiler/transformers/esDecorators.ts",
+      "line": 1497,
+      "column": 20,
+      "name": "transformNamedEvaluation",
+      "declaration": {
+        "file": "src/compiler/transformers/namedEvaluation.ts",
+        "line": 469,
+        "column": 1
+      },
+      "result": "PropertyDeclaration & { readonly initializer: WrappedExpression<AnonymousFunctionDefinition>; }",
+      "arguments": [
+        {
+          "text": "context",
+          "type": "TransformationContext"
+        },
+        {
+          "text": "node",
+          "type": "PropertyDeclaration & { readonly initializer: WrappedExpression<AnonymousFunctionDefinition>; }"
+        },
+        {
+          "text": "canIgnoreEmptyStringLiteralInAssignedName(node.initializer)",
+          "type": "boolean"
+        }
+      ],
+      "parent": "BinaryExpression",
+      "context": "node = transformNamedEvaluation(context, node, canIgnoreEmptyStringLiteralInAssignedName(node.initializer))",
+      "statement": "node = transformNamedEvaluation(context, node, canIgnoreEmptyStringLiteralInAssignedName(node.initializer));"
+    },
+    {
+      "file": "src/compiler/transformers/esDecorators.ts",
+      "line": 1702,
+      "column": 20,
+      "name": "transformNamedEvaluation",
+      "declaration": {
+        "file": "src/compiler/transformers/namedEvaluation.ts",
+        "line": 469,
+        "column": 1
+      },
+      "result": "ParameterDeclaration & { readonly name: Identifier; readonly dotDotDotToken: undefined; readonly initializer: WrappedExpression<AnonymousFunctionDefinition>; }",
+      "arguments": [
+        {
+          "text": "context",
+          "type": "TransformationContext"
+        },
+        {
+          "text": "node",
+          "type": "ParameterDeclaration & { readonly name: Identifier; readonly dotDotDotToken: undefined; readonly initializer: WrappedExpression<AnonymousFunctionDefinition>; }"
+        },
+        {
+          "text": "canIgnoreEmptyStringLiteralInAssignedName(node.initializer)",
+          "type": "boolean"
+        }
+      ],
+      "parent": "BinaryExpression",
+      "context": "node = transformNamedEvaluation(context, node, canIgnoreEmptyStringLiteralInAssignedName(node.initializer))",
+      "statement": "node = transformNamedEvaluation(context, node, canIgnoreEmptyStringLiteralInAssignedName(node.initializer));"
+    },
+    {
+      "file": "src/compiler/transformers/esDecorators.ts",
+      "line": 1789,
+      "column": 24,
+      "name": "transformNamedEvaluation",
+      "declaration": {
+        "file": "src/compiler/transformers/namedEvaluation.ts",
+        "line": 469,
+        "column": 1
+      },
+      "result": "(import(\"../types.js\").AssignmentExpression<import(\"../types.js\").EqualsToken> & { readonly left: Identifier; readonly right: WrappedExpression<AnonymousFunctionDefinition>; }) | (import(\"../types.js\").AssignmentExpression<import(\"../types.js\").AmpersandAmpersandEqualsToken | import(\"../types.js\").BarBarEqualsToken | import(\"../types.js\").QuestionQuestionEqualsToken> & { readonly left: Identifier; readonly right: WrappedExpression<AnonymousFunctionDefinition>; })",
+      "arguments": [
+        {
+          "text": "context",
+          "type": "TransformationContext"
+        },
+        {
+          "text": "node",
+          "type": "(import(\"../types.js\").AssignmentExpression<import(\"../types.js\").EqualsToken> & { readonly left: Identifier; readonly right: WrappedExpression<AnonymousFunctionDefinition>; }) | (import(\"../types.js\").AssignmentExpression<import(\"../types.js\").AmpersandAmpersandEqualsToken | import(\"../types.js\").BarBarEqualsToken | import(\"../types.js\").QuestionQuestionEqualsToken> & { readonly left: Identifier; readonly right: WrappedExpression<AnonymousFunctionDefinition>; })"
+        },
+        {
+          "text": "canIgnoreEmptyStringLiteralInAssignedName(node.right)",
+          "type": "boolean"
+        }
+      ],
+      "parent": "BinaryExpression",
+      "context": "node = transformNamedEvaluation(context, node, canIgnoreEmptyStringLiteralInAssignedName(node.right))",
+      "statement": "node = transformNamedEvaluation(context, node, canIgnoreEmptyStringLiteralInAssignedName(node.right));"
+    },
+    {
+      "file": "src/compiler/transformers/esDecorators.ts",
+      "line": 1974,
+      "column": 20,
+      "name": "transformNamedEvaluation",
+      "declaration": {
+        "file": "src/compiler/transformers/namedEvaluation.ts",
+        "line": 469,
+        "column": 1
+      },
+      "result": "PropertyAssignment & { readonly name: Identifier; readonly initializer: WrappedExpression<AnonymousFunctionDefinition>; }",
+      "arguments": [
+        {
+          "text": "context",
+          "type": "TransformationContext"
+        },
+        {
+          "text": "node",
+          "type": "PropertyAssignment & { readonly name: Identifier; readonly initializer: WrappedExpression<AnonymousFunctionDefinition>; }"
+        },
+        {
+          "text": "canIgnoreEmptyStringLiteralInAssignedName(node.initializer)",
+          "type": "boolean"
+        }
+      ],
+      "parent": "BinaryExpression",
+      "context": "node = transformNamedEvaluation(context, node, canIgnoreEmptyStringLiteralInAssignedName(node.initializer))",
+      "statement": "node = transformNamedEvaluation(context, node, canIgnoreEmptyStringLiteralInAssignedName(node.initializer));"
+    },
+    {
+      "file": "src/compiler/transformers/esDecorators.ts",
+      "line": 1996,
+      "column": 20,
+      "name": "transformNamedEvaluation",
+      "declaration": {
+        "file": "src/compiler/transformers/namedEvaluation.ts",
+        "line": 469,
+        "column": 1
+      },
+      "result": "VariableDeclaration & { readonly name: Identifier; readonly initializer: WrappedExpression<AnonymousFunctionDefinition>; }",
+      "arguments": [
+        {
+          "text": "context",
+          "type": "TransformationContext"
+        },
+        {
+          "text": "node",
+          "type": "VariableDeclaration & { readonly name: Identifier; readonly initializer: WrappedExpression<AnonymousFunctionDefinition>; }"
+        },
+        {
+          "text": "canIgnoreEmptyStringLiteralInAssignedName(node.initializer)",
+          "type": "boolean"
+        }
+      ],
+      "parent": "BinaryExpression",
+      "context": "node = transformNamedEvaluation(context, node, canIgnoreEmptyStringLiteralInAssignedName(node.initializer))",
+      "statement": "node = transformNamedEvaluation(context, node, canIgnoreEmptyStringLiteralInAssignedName(node.initializer));"
+    },
+    {
+      "file": "src/compiler/transformers/esDecorators.ts",
+      "line": 2020,
+      "column": 20,
+      "name": "transformNamedEvaluation",
+      "declaration": {
+        "file": "src/compiler/transformers/namedEvaluation.ts",
+        "line": 469,
+        "column": 1
+      },
+      "result": "BindingElement & { readonly name: Identifier; readonly dotDotDotToken: undefined; readonly initializer: WrappedExpression<AnonymousFunctionDefinition>; }",
+      "arguments": [
+        {
+          "text": "context",
+          "type": "TransformationContext"
+        },
+        {
+          "text": "node",
+          "type": "BindingElement & { readonly name: Identifier; readonly dotDotDotToken: undefined; readonly initializer: WrappedExpression<AnonymousFunctionDefinition>; }"
+        },
+        {
+          "text": "canIgnoreEmptyStringLiteralInAssignedName(node.initializer)",
+          "type": "boolean"
+        }
+      ],
+      "parent": "BinaryExpression",
+      "context": "node = transformNamedEvaluation(context, node, canIgnoreEmptyStringLiteralInAssignedName(node.initializer))",
+      "statement": "node = transformNamedEvaluation(context, node, canIgnoreEmptyStringLiteralInAssignedName(node.initializer));"
+    },
+    {
+      "file": "src/compiler/transformers/esDecorators.ts",
+      "line": 2066,
+      "column": 24,
+      "name": "transformNamedEvaluation",
+      "declaration": {
+        "file": "src/compiler/transformers/namedEvaluation.ts",
+        "line": 469,
+        "column": 1
+      },
+      "result": "import(\"../types.js\").AssignmentExpression<import(\"../types.js\").EqualsToken> & { readonly left: Identifier; readonly right: WrappedExpression<AnonymousFunctionDefinition>; }",
+      "arguments": [
+        {
+          "text": "context",
+          "type": "TransformationContext"
+        },
+        {
+          "text": "node",
+          "type": "import(\"../types.js\").AssignmentExpression<import(\"../types.js\").EqualsToken> & { readonly left: Identifier; readonly right: WrappedExpression<AnonymousFunctionDefinition>; }"
+        },
+        {
+          "text": "canIgnoreEmptyStringLiteralInAssignedName(node.right)",
+          "type": "boolean"
+        }
+      ],
+      "parent": "BinaryExpression",
+      "context": "node = transformNamedEvaluation(context, node, canIgnoreEmptyStringLiteralInAssignedName(node.right))",
+      "statement": "node = transformNamedEvaluation(context, node, canIgnoreEmptyStringLiteralInAssignedName(node.right));"
+    },
+    {
+      "file": "src/compiler/transformers/esDecorators.ts",
+      "line": 2132,
+      "column": 20,
+      "name": "transformNamedEvaluation",
+      "declaration": {
+        "file": "src/compiler/transformers/namedEvaluation.ts",
+        "line": 469,
+        "column": 1
+      },
+      "result": "ShorthandPropertyAssignment & { readonly objectAssignmentInitializer: WrappedExpression<AnonymousFunctionDefinition>; }",
+      "arguments": [
+        {
+          "text": "context",
+          "type": "TransformationContext"
+        },
+        {
+          "text": "node",
+          "type": "ShorthandPropertyAssignment & { readonly objectAssignmentInitializer: WrappedExpression<AnonymousFunctionDefinition>; }"
+        },
+        {
+          "text": "canIgnoreEmptyStringLiteralInAssignedName(node.objectAssignmentInitializer)",
+          "type": "boolean"
+        }
+      ],
+      "parent": "BinaryExpression",
+      "context": "node = transformNamedEvaluation(context, node, canIgnoreEmptyStringLiteralInAssignedName(node.objectAssignmentInitializer))",
+      "statement": "node = transformNamedEvaluation(context, node, canIgnoreEmptyStringLiteralInAssignedName(node.objectAssignmentInitializer));"
+    },
+    {
+      "file": "src/compiler/transformers/esDecorators.ts",
+      "line": 2174,
+      "column": 20,
+      "name": "transformNamedEvaluation",
+      "declaration": {
+        "file": "src/compiler/transformers/namedEvaluation.ts",
+        "line": 469,
+        "column": 1
+      },
+      "result": "ExportAssignment & { readonly expression: WrappedExpression<AnonymousFunctionDefinition>; }",
+      "arguments": [
+        {
+          "text": "context",
+          "type": "TransformationContext"
+        },
+        {
+          "text": "node",
+          "type": "ExportAssignment & { readonly expression: WrappedExpression<AnonymousFunctionDefinition>; }"
+        },
+        {
+          "text": "canIgnoreEmptyStringLiteralInAssignedName(node.expression)",
+          "type": "boolean"
+        }
+      ],
+      "parent": "BinaryExpression",
+      "context": "node = transformNamedEvaluation(context, node, canIgnoreEmptyStringLiteralInAssignedName(node.expression))",
+      "statement": "node = transformNamedEvaluation(context, node, canIgnoreEmptyStringLiteralInAssignedName(node.expression));"
+    },
+    {
+      "file": "src/compiler/transformers/esnext.ts",
+      "line": 357,
+      "column": 39,
+      "name": "transformNamedEvaluation",
+      "declaration": {
+        "file": "src/compiler/transformers/namedEvaluation.ts",
+        "line": 469,
+        "column": 1
+      },
+      "result": "VariableDeclaration & { readonly name: Identifier; readonly initializer: import(\"../types.js\").WrappedExpression<import(\"../utilities.js\").AnonymousFunctionDefinition>; }",
+      "arguments": [
+        {
+          "text": "context",
+          "type": "TransformationContext"
+        },
+        {
+          "text": "declaration",
+          "type": "VariableDeclaration & { readonly name: Identifier; readonly initializer: import(\"../types.js\").WrappedExpression<import(\"../utilities.js\").AnonymousFunctionDefinition>; }"
+        }
+      ],
+      "parent": "BinaryExpression",
+      "context": "declaration = transformNamedEvaluation(context, declaration)",
+      "statement": "declaration = transformNamedEvaluation(context, declaration);"
+    },
+    {
+      "file": "src/compiler/transformers/esnext.ts",
+      "line": 458,
+      "column": 31,
+      "name": "transformNamedEvaluation",
+      "declaration": {
+        "file": "src/compiler/transformers/namedEvaluation.ts",
+        "line": 469,
+        "column": 1
+      },
+      "result": "(import(\"../types.js\").AssignmentExpression<import(\"../types.js\").EqualsToken> & { readonly left: Identifier; readonly right: import(\"../types.js\").WrappedExpression<import(\"../utilities.js\").AnonymousFunctionDefinition>; }) | (import(\"../types.js\").AssignmentExpression<import(\"../types.js\").AmpersandAmpersandEqualsToken | import(\"../types.js\").BarBarEqualsToken | import(\"../types.js\").QuestionQuestionEqualsToken> & { readonly left: Identifier; readonly right: import(\"../types.js\").WrappedExpression<import(\"../utilities.js\").AnonymousFunctionDefinition>; })",
+      "arguments": [
+        {
+          "text": "context",
+          "type": "TransformationContext"
+        },
+        {
+          "text": "innerExpression",
+          "type": "(import(\"../types.js\").AssignmentExpression<import(\"../types.js\").EqualsToken> & { readonly left: Identifier; readonly right: import(\"../types.js\").WrappedExpression<import(\"../utilities.js\").AnonymousFunctionDefinition>; }) | (import(\"../types.js\").AssignmentExpression<import(\"../types.js\").AmpersandAmpersandEqualsToken | import(\"../types.js\").BarBarEqualsToken | import(\"../types.js\").QuestionQuestionEqualsToken> & { readonly left: Identifier; readonly right: import(\"../types.js\").WrappedExpression<import(\"../utilities.js\").AnonymousFunctionDefinition>; })"
+        },
+        {
+          "text": "false",
+          "type": "false"
+        },
+        {
+          "text": "\"default\"",
+          "type": "\"default\""
+        }
+      ],
+      "parent": "BinaryExpression",
+      "context": "innerExpression = transformNamedEvaluation(context, innerExpression, /*ignoreEmptyStringLiteral*/ false, \"default\")",
+      "statement": "innerExpression = transformNamedEvaluation(context, innerExpression, /*ignoreEmptyStringLiteral*/ false, \"default\");"
+    },
+    {
+      "file": "src/compiler/transformers/esnext.ts",
+      "line": 537,
+      "column": 30,
+      "name": "transformNamedEvaluation",
+      "declaration": {
+        "file": "src/compiler/transformers/namedEvaluation.ts",
+        "line": 469,
+        "column": 1
+      },
+      "result": "(import(\"../types.js\").AssignmentExpression<import(\"../types.js\").EqualsToken> & { readonly left: Identifier; readonly right: import(\"../types.js\").WrappedExpression<import(\"../utilities.js\").AnonymousFunctionDefinition>; }) | (import(\"../types.js\").AssignmentExpression<import(\"../types.js\").AmpersandAmpersandEqualsToken | import(\"../types.js\").BarBarEqualsToken | import(\"../types.js\").QuestionQuestionEqualsToken> & { readonly left: Identifier; readonly right: import(\"../types.js\").WrappedExpression<import(\"../utilities.js\").AnonymousFunctionDefinition>; })",
+      "arguments": [
+        {
+          "text": "context",
+          "type": "TransformationContext"
+        },
+        {
+          "text": "expression",
+          "type": "(import(\"../types.js\").AssignmentExpression<import(\"../types.js\").EqualsToken> & { readonly left: Identifier; readonly right: import(\"../types.js\").WrappedExpression<import(\"../utilities.js\").AnonymousFunctionDefinition>; }) | (import(\"../types.js\").AssignmentExpression<import(\"../types.js\").AmpersandAmpersandEqualsToken | import(\"../types.js\").BarBarEqualsToken | import(\"../types.js\").QuestionQuestionEqualsToken> & { readonly left: Identifier; readonly right: import(\"../types.js\").WrappedExpression<import(\"../utilities.js\").AnonymousFunctionDefinition>; })"
+        },
+        {
+          "text": "false",
+          "type": "false"
+        }
+      ],
+      "parent": "BinaryExpression",
+      "context": "expression = transformNamedEvaluation(context, expression, /*ignoreEmptyStringLiteral*/ false)",
+      "statement": "expression = transformNamedEvaluation(context, expression, /*ignoreEmptyStringLiteral*/ false);"
+    },
+    {
+      "file": "src/compiler/transformers/esnext.ts",
+      "line": 575,
+      "column": 30,
+      "name": "transformNamedEvaluation",
+      "declaration": {
+        "file": "src/compiler/transformers/namedEvaluation.ts",
+        "line": 469,
+        "column": 1
+      },
+      "result": "(import(\"../types.js\").AssignmentExpression<import(\"../types.js\").EqualsToken> & { readonly left: Identifier; readonly right: import(\"../types.js\").WrappedExpression<import(\"../utilities.js\").AnonymousFunctionDefinition>; }) | (import(\"../types.js\").AssignmentExpression<import(\"../types.js\").AmpersandAmpersandEqualsToken | import(\"../types.js\").BarBarEqualsToken | import(\"../types.js\").QuestionQuestionEqualsToken> & { readonly left: Identifier; readonly right: import(\"../types.js\").WrappedExpression<import(\"../utilities.js\").AnonymousFunctionDefinition>; })",
+      "arguments": [
+        {
+          "text": "context",
+          "type": "TransformationContext"
+        },
+        {
+          "text": "expression",
+          "type": "(import(\"../types.js\").AssignmentExpression<import(\"../types.js\").EqualsToken> & { readonly left: Identifier; readonly right: import(\"../types.js\").WrappedExpression<import(\"../utilities.js\").AnonymousFunctionDefinition>; }) | (import(\"../types.js\").AssignmentExpression<import(\"../types.js\").AmpersandAmpersandEqualsToken | import(\"../types.js\").BarBarEqualsToken | import(\"../types.js\").QuestionQuestionEqualsToken> & { readonly left: Identifier; readonly right: import(\"../types.js\").WrappedExpression<import(\"../utilities.js\").AnonymousFunctionDefinition>; })"
+        },
+        {
+          "text": "false",
+          "type": "false"
+        },
+        {
+          "text": "\"default\"",
+          "type": "\"default\""
+        }
+      ],
+      "parent": "BinaryExpression",
+      "context": "expression = transformNamedEvaluation(context, expression, /*ignoreEmptyStringLiteral*/ false, \"default\")",
+      "statement": "expression = transformNamedEvaluation(context, expression, /*ignoreEmptyStringLiteral*/ false, \"default\");"
+    }
+  ],
+  "references": [
+    {
+      "file": "src/compiler/transformers/utilities.ts",
+      "line": 585,
+      "column": 17,
+      "name": "getProperties",
+      "parent": "FunctionDeclaration"
+    },
+    {
+      "file": "src/compiler/transformers/utilities.ts",
+      "line": 587,
+      "column": 17,
+      "name": "getProperties",
+      "parent": "FunctionDeclaration"
+    },
+    {
+      "file": "src/compiler/transformers/utilities.ts",
+      "line": 589,
+      "column": 17,
+      "name": "getProperties",
+      "parent": "FunctionDeclaration"
+    },
+    {
+      "file": "src/compiler/transformers/namedEvaluation.ts",
+      "line": 173,
+      "column": 17,
+      "name": "injectClassNamedEvaluationHelperBlockIfMissing",
+      "parent": "FunctionDeclaration"
+    },
+    {
+      "file": "src/compiler/transformers/namedEvaluation.ts",
+      "line": 179,
+      "column": 17,
+      "name": "injectClassNamedEvaluationHelperBlockIfMissing",
+      "parent": "FunctionDeclaration"
+    },
+    {
+      "file": "src/compiler/transformers/namedEvaluation.ts",
+      "line": 250,
+      "column": 14,
+      "name": "injectClassNamedEvaluationHelperBlockIfMissing",
+      "parent": "CallExpression"
+    },
+    {
+      "file": "src/compiler/transformers/namedEvaluation.ts",
+      "line": 469,
+      "column": 17,
+      "name": "transformNamedEvaluation",
+      "parent": "FunctionDeclaration"
+    },
+    {
+      "file": "src/compiler/transformers/namedEvaluation.ts",
+      "line": 470,
+      "column": 17,
+      "name": "transformNamedEvaluation",
+      "parent": "FunctionDeclaration"
+    },
+    {
+      "file": "src/compiler/transformers/ts.ts",
+      "line": 60,
+      "column": 5,
+      "name": "getProperties",
+      "parent": "ImportSpecifier"
+    },
+    {
+      "file": "src/compiler/transformers/ts.ts",
+      "line": 858,
+      "column": 18,
+      "name": "getProperties",
+      "parent": "CallExpression"
+    },
+    {
+      "file": "src/compiler/transformers/classFields.ts",
+      "line": 66,
+      "column": 5,
+      "name": "getProperties",
+      "parent": "ImportSpecifier"
+    },
+    {
+      "file": "src/compiler/transformers/classFields.ts",
+      "line": 212,
+      "column": 5,
+      "name": "transformNamedEvaluation",
+      "parent": "ImportSpecifier"
+    },
+    {
+      "file": "src/compiler/transformers/classFields.ts",
+      "line": 694,
+      "column": 20,
+      "name": "transformNamedEvaluation",
+      "parent": "CallExpression"
+    },
+    {
+      "file": "src/compiler/transformers/classFields.ts",
+      "line": 729,
+      "column": 20,
+      "name": "transformNamedEvaluation",
+      "parent": "CallExpression"
+    },
+    {
+      "file": "src/compiler/transformers/classFields.ts",
+      "line": 753,
+      "column": 20,
+      "name": "transformNamedEvaluation",
+      "parent": "CallExpression"
+    },
+    {
+      "file": "src/compiler/transformers/classFields.ts",
+      "line": 777,
+      "column": 20,
+      "name": "transformNamedEvaluation",
+      "parent": "CallExpression"
+    },
+    {
+      "file": "src/compiler/transformers/classFields.ts",
+      "line": 794,
+      "column": 20,
+      "name": "transformNamedEvaluation",
+      "parent": "CallExpression"
+    },
+    {
+      "file": "src/compiler/transformers/classFields.ts",
+      "line": 1003,
+      "column": 20,
+      "name": "transformNamedEvaluation",
+      "parent": "CallExpression"
+    },
+    {
+      "file": "src/compiler/transformers/classFields.ts",
+      "line": 1536,
+      "column": 24,
+      "name": "transformNamedEvaluation",
+      "parent": "CallExpression"
+    },
+    {
+      "file": "src/compiler/transformers/classFields.ts",
+      "line": 2312,
+      "column": 36,
+      "name": "getProperties",
+      "parent": "CallExpression"
+    },
+    {
+      "file": "src/compiler/transformers/classFields.ts",
+      "line": 2538,
+      "column": 24,
+      "name": "transformNamedEvaluation",
+      "parent": "CallExpression"
+    },
+    {
+      "file": "src/compiler/transformers/classFields.ts",
+      "line": 3059,
+      "column": 20,
+      "name": "transformNamedEvaluation",
+      "parent": "CallExpression"
+    },
+    {
+      "file": "src/compiler/transformers/classFields.ts",
+      "line": 3124,
+      "column": 20,
+      "name": "transformNamedEvaluation",
+      "parent": "CallExpression"
+    },
+    {
+      "file": "src/compiler/transformers/esDecorators.ts",
+      "line": 63,
+      "column": 5,
+      "name": "injectClassNamedEvaluationHelperBlockIfMissing",
+      "parent": "ImportSpecifier"
+    },
+    {
+      "file": "src/compiler/transformers/esDecorators.ts",
+      "line": 180,
+      "column": 5,
+      "name": "transformNamedEvaluation",
+      "parent": "ImportSpecifier"
+    },
+    {
+      "file": "src/compiler/transformers/esDecorators.ts",
+      "line": 676,
+      "column": 20,
+      "name": "injectClassNamedEvaluationHelperBlockIfMissing",
+      "parent": "CallExpression"
+    },
+    {
+      "file": "src/compiler/transformers/esDecorators.ts",
+      "line": 1062,
+      "column": 24,
+      "name": "injectClassNamedEvaluationHelperBlockIfMissing",
+      "parent": "CallExpression"
+    },
+    {
+      "file": "src/compiler/transformers/esDecorators.ts",
+      "line": 1497,
+      "column": 20,
+      "name": "transformNamedEvaluation",
+      "parent": "CallExpression"
+    },
+    {
+      "file": "src/compiler/transformers/esDecorators.ts",
+      "line": 1702,
+      "column": 20,
+      "name": "transformNamedEvaluation",
+      "parent": "CallExpression"
+    },
+    {
+      "file": "src/compiler/transformers/esDecorators.ts",
+      "line": 1789,
+      "column": 24,
+      "name": "transformNamedEvaluation",
+      "parent": "CallExpression"
+    },
+    {
+      "file": "src/compiler/transformers/esDecorators.ts",
+      "line": 1974,
+      "column": 20,
+      "name": "transformNamedEvaluation",
+      "parent": "CallExpression"
+    },
+    {
+      "file": "src/compiler/transformers/esDecorators.ts",
+      "line": 1996,
+      "column": 20,
+      "name": "transformNamedEvaluation",
+      "parent": "CallExpression"
+    },
+    {
+      "file": "src/compiler/transformers/esDecorators.ts",
+      "line": 2020,
+      "column": 20,
+      "name": "transformNamedEvaluation",
+      "parent": "CallExpression"
+    },
+    {
+      "file": "src/compiler/transformers/esDecorators.ts",
+      "line": 2066,
+      "column": 24,
+      "name": "transformNamedEvaluation",
+      "parent": "CallExpression"
+    },
+    {
+      "file": "src/compiler/transformers/esDecorators.ts",
+      "line": 2132,
+      "column": 20,
+      "name": "transformNamedEvaluation",
+      "parent": "CallExpression"
+    },
+    {
+      "file": "src/compiler/transformers/esDecorators.ts",
+      "line": 2174,
+      "column": 20,
+      "name": "transformNamedEvaluation",
+      "parent": "CallExpression"
+    },
+    {
+      "file": "src/compiler/transformers/esnext.ts",
+      "line": 53,
+      "column": 5,
+      "name": "transformNamedEvaluation",
+      "parent": "ImportSpecifier"
+    },
+    {
+      "file": "src/compiler/transformers/esnext.ts",
+      "line": 357,
+      "column": 39,
+      "name": "transformNamedEvaluation",
+      "parent": "CallExpression"
+    },
+    {
+      "file": "src/compiler/transformers/esnext.ts",
+      "line": 458,
+      "column": 31,
+      "name": "transformNamedEvaluation",
+      "parent": "CallExpression"
+    },
+    {
+      "file": "src/compiler/transformers/esnext.ts",
+      "line": 537,
+      "column": 30,
+      "name": "transformNamedEvaluation",
+      "parent": "CallExpression"
+    },
+    {
+      "file": "src/compiler/transformers/esnext.ts",
+      "line": 575,
+      "column": 30,
+      "name": "transformNamedEvaluation",
+      "parent": "CallExpression"
+    }
+  ]
+}

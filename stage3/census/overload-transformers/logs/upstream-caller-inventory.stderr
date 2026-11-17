@@ -1,0 +1,17 @@
+/workspace/scratch/overload-transformers/stage3/api/node_modules/typescript/lib/typescript.js:52269
+  function isDeprecatedSymbol(symbol) {
+                             ^
+
+RangeError: Maximum call stack size exceeded
+    at isDeprecatedSymbol (/workspace/scratch/overload-transformers/stage3/api/node_modules/typescript/lib/typescript.js:52269:30)
+    at checkIdentifierCalculateNodeCheckFlags (/workspace/scratch/overload-transformers/stage3/api/node_modules/typescript/lib/typescript.js:76730:9)
+    at checkIdentifier (/workspace/scratch/overload-transformers/stage3/api/node_modules/typescript/lib/typescript.js:76769:5)
+    at checkExpressionWorker (/workspace/scratch/overload-transformers/stage3/api/node_modules/typescript/lib/typescript.js:85658:16)
+    at checkExpression (/workspace/scratch/overload-transformers/stage3/api/node_modules/typescript/lib/typescript.js:85601:32)
+    at checkNonNullExpression (/workspace/scratch/overload-transformers/stage3/api/node_modules/typescript/lib/typescript.js:79626:29)
+    at getQuickTypeOfExpression (/workspace/scratch/overload-transformers/stage3/api/node_modules/typescript/lib/typescript.js:85572:139)
+    at getTypeOfExpression (/workspace/scratch/overload-transformers/stage3/api/node_modules/typescript/lib/typescript.js:85531:23)
+    at getAssignedTypeOfBinaryExpression (/workspace/scratch/overload-transformers/stage3/api/node_modules/typescript/lib/typescript.js:74479:103)
+    at getAssignedType (/workspace/scratch/overload-transformers/stage3/api/node_modules/typescript/lib/typescript.js:74504:16)
+
+Node.js v24.19.0

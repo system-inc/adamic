@@ -1,0 +1,10 @@
+{
+  "command": [
+    "node",
+    "stage3/adapt/99-correctness-overload-get-properties/mutant.cjs",
+    "/workspace/scratch/overload-transformers-typescript"
+  ],
+  "cwd": "/workspace/scratch/overload-transformers",
+  "exit": 1,
+  "seconds": 0.19154977798461914
+}
