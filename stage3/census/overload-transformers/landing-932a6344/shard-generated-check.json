@@ -1,0 +1,11 @@
+{
+  "command": [
+    "python3",
+    "-B",
+    "stage3/lane/generate_shards.py",
+    "--check"
+  ],
+  "cwd": "/workspace/scratch/get-properties-landing",
+  "exit": 0,
+  "seconds": 0.15927338600158691
+}

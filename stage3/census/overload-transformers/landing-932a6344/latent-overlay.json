@@ -1,0 +1,11 @@
+{
+  "command": [
+    "python3",
+    "stage3/census/latent/make_overlay.py",
+    "/workspace/scratch/get-properties-landing",
+    "/workspace/scratch/get-properties-runtime/latent-overlay"
+  ],
+  "cwd": "/workspace/scratch/get-properties-landing",
+  "exit": 0,
+  "seconds": 1.5774099826812744
+}

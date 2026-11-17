@@ -1,0 +1,17 @@
+{
+  "command": [
+    "go",
+    "build",
+    "-trimpath",
+    "-ldflags=-buildid=",
+    "-buildvcs=false",
+    "-overlay",
+    "/workspace/scratch/get-properties-runtime/latent-overlay/overlay.json",
+    "-o",
+    "/workspace/scratch/get-properties-runtime/latent",
+    "./stage3/census/latent/tool/main.go"
+  ],
+  "cwd": "/workspace/scratch/get-properties-landing",
+  "exit": 0,
+  "seconds": 22.706696271896362
+}
