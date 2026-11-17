@@ -75,6 +75,41 @@ func graphAllocationSites(value reflect.Value, next *int) reflect.Value {
 	return sites(value)
 }
 
+// graphLocalWrites is how graphFlows' collect takes every IR field that writes a local, keyed as
+// view_flow.go's flowLocalWrites is: empty for a source, a node whose Value collect seeds as the
+// local's (Declare and Assign), and otherwise how collect takes it, and why. Its rows are exactly
+// local_uses.go's localFields' write rows (TestGraphLocalWritesAreLocalFieldsWrites), so an IR node
+// that comes to write a local is classified here before a graph value can reach a demanded local
+// through a writer collect doesn't follow, a leak or worse (#hny64km).
+var graphLocalWrites = map[string]string{
+	"Declare.Local": "",
+	"Assign.Local":  "",
+	// collect's ForOf case.
+	"ForOf.Local": "over an array literal, its elements are the binding's sources; over anything else, an element was planned where it was stored",
+	// graphUnknownWriters, which a demand of the local stops at.
+	"Binding.Local":  "a pattern over an array literal is unknown, its elements' parts never seeded; over anything else, an element was planned where it was stored",
+	"Try.CatchLocal": "unknown: the binding takes what was thrown",
+}
+
+// graphUnknownWriters records, by local plus one, each local node writes with a value collect doesn't
+// follow, with the stop a graph-typed demand of it is (graphLocalWrites' unknown rows). A thrown value
+// is always an Error today (exceptions.go) and none is graph-typed, so a catch's stop is defense; a
+// pattern over an array literal binds its elements' parts, which no source names (#hny64km).
+func graphUnknownWriters(node any, unknown map[int]string) {
+	switch value := node.(type) {
+	case ir.Try:
+		if value.HasCatch && value.CatchLocal >= 0 {
+			unknown[value.CatchLocal+1] = "a graph value a catch binding takes, which the plan doesn't follow"
+		}
+	case ir.ForOf:
+		if _, isLiteral := value.Iterable.(ir.ArrayLiteral); isLiteral {
+			for _, binding := range value.Pattern {
+				unknown[binding.Local+1] = "a graph value a for-of pattern takes from an array literal, which the plan doesn't follow"
+			}
+		}
+	}
+}
+
 // graphFlows works backwards from graph views to the allocations that can supply
 // them. Local assignments and function results are joined across all paths; this
 // is a may-flow proof, not an execution or a choice of one conditional branch.
@@ -82,8 +117,10 @@ func graphAllocationSites(value reflect.Value, next *int) reflect.Value {
 // identities. They select the existing allocation emission without runtime work.
 // follow classifies every IR expression by graphFlowRules (graph_flow_classes.go), and a graph
 // value through one the plan doesn't follow is NotYet at the site that demanded it, never a leak.
-// An argument passed to a function value whose targets are Unknown is followed too, quietly: it
-// plans what it reaches and never stops (#41vb71c).
+// collect takes every local-writing field by graphLocalWrites, and a demanded local some node writes
+// with a value collect doesn't follow is NotYet at the local the same way (#hny64km). An argument
+// passed to a function value whose targets are Unknown is followed too, quietly: it plans what it
+// reaches and never stops (#41vb71c).
 func (f *cycleFinder) graphFlows() error {
 	program := f.l.result
 	next := 0
@@ -113,6 +150,9 @@ func (f *cycleFinder) graphFlows() error {
 	resultNode := func(function int) int { return len(program.Locals) + function + 1 }
 	yieldNode := func(function int) int { return len(program.Locals) + len(program.Functions) + function + 1 }
 	sources := map[int][]ir.Expression{}
+	// unknownWriter is each local some node writes with a value collect doesn't follow
+	// (graphUnknownWriters), by node: a demand of one stops rather than plans only its other writers.
+	unknownWriter := map[int]string{}
 	wanted := map[int]bool{}
 	queue := []int{}
 	demand := func(node int) {
@@ -253,6 +293,7 @@ func (f *cycleFinder) graphFlows() error {
 	}
 	collect := func(body []ir.Statement, function int) {
 		walk(body, func(node any) bool {
+			graphUnknownWriters(node, unknownWriter)
 			switch value := node.(type) {
 			case ir.Declare:
 				members(value.Value, f.l.localTypes[value.Local], graphDemand{node: value.Local + 1})
@@ -346,7 +387,8 @@ func (f *cycleFinder) graphFlows() error {
 				}
 			// A for-of binding over an array literal is each of its elements, the binding's sources as
 			// an assignment's value would be (#dnb0yhj, s5). Over anything else, an element was stored
-			// by a write this seeds where it was made.
+			// by a write this seeds where it was made. A pattern's locals aren't sources here:
+			// graphUnknownWriters takes them (graphLocalWrites).
 			case ir.ForOf:
 				if literal, isLiteral := value.Iterable.(ir.ArrayLiteral); isLiteral && value.Pattern == nil {
 					sources[value.Local+1] = append(sources[value.Local+1], literal.Elements...)
@@ -391,6 +433,12 @@ func (f *cycleFinder) graphFlows() error {
 	}
 	// The stop reported is the least by place and words, so it doesn't hang on map order.
 	var stopped *NotYet
+	stop := func(at graphDemand, what string) {
+		failure := &NotYet{Where: where(at), What: what}
+		if stopped == nil || failure.Where < stopped.Where || failure.Where == stopped.Where && failure.What < stopped.What {
+			stopped = failure
+		}
+	}
 	var follow func(ir.Expression, graphDemand, bool)
 	follow = func(expression ir.Expression, at graphDemand, quiet bool) {
 		if expression == nil {
@@ -401,10 +449,7 @@ func (f *cycleFinder) graphFlows() error {
 			return
 		}
 		if step.stop {
-			failure := &NotYet{Where: where(at), What: fmt.Sprintf("a graph value through %T the plan doesn't follow", expression)}
-			if stopped == nil || failure.Where < stopped.Where || failure.Where == stopped.Where && failure.What < stopped.What {
-				stopped = failure
-			}
+			stop(at, fmt.Sprintf("a graph value through %T the plan doesn't follow", expression))
 			return
 		}
 		if step.planned {
@@ -433,6 +478,11 @@ func (f *cycleFinder) graphFlows() error {
 	for len(queue) > 0 {
 		node := queue[len(queue)-1]
 		queue = queue[:len(queue)-1]
+		// A graph value may reach this local through a writer collect doesn't follow, so planning its
+		// sources alone would leave that value unplanned. A quiet demand never stops, as follow's doesn't.
+		if what, unknown := unknownWriter[node]; unknown {
+			stop(graphDemand{node: node}, what)
+		}
 		for _, expression := range sources[node] {
 			follow(expression, graphDemand{node: node}, false)
 		}
