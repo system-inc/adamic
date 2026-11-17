@@ -1,0 +1,109 @@
+{
+  "calls": 192,
+  "identityReaders": [
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 25492,
+      "uses": [
+        {
+          "line": 25500,
+          "kind": "BinaryExpression",
+          "identity": true,
+          "text": "primaryTypes === types",
+          "context": "return primaryTypes === types ? superTypeOrUnion : getNullableType(superTypeOrUnion, getCombinedTypeFlags(types) & TypeFlags.Nullable);"
+        }
+      ]
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 23106,
+      "uses": [
+        {
+          "line": 23107,
+          "kind": "BinaryExpression",
+          "identity": true,
+          "text": "constraints !== (source as IntersectionType).types",
+          "context": "if (constraints !== (source as IntersectionType).types) {\r\n                    source = getIntersectionType(constraints);\r\n                    if (source.flags & TypeFlags.Never) {\r\n                        return Ternary.False;\r\n                    }\r\n                    if (!(source.flags & TypeFlags.Intersection)) {\r\n                        return isRelatedTo(source, target, RecursionFlags.Source, /*reportErrors*/ false) ||\r\n                            isRelatedTo(target, source, RecursionFlags.Source, /*reportErrors*/ false);\r\n                    }\r\n                }"
+        }
+      ]
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 22368,
+      "uses": [
+        {
+          "line": 22369,
+          "kind": "BinaryExpression",
+          "identity": true,
+          "text": "elements !== normalizedElements",
+          "context": "return elements !== normalizedElements ? createNormalizedTupleType(type.target, normalizedElements) : type;"
+        }
+      ]
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 22347,
+      "uses": [
+        {
+          "line": 22348,
+          "kind": "BinaryExpression",
+          "identity": true,
+          "text": "normalizedTypes !== type.types",
+          "context": "if (normalizedTypes !== type.types) {\r\n                return getIntersectionType(normalizedTypes);\r\n            }"
+        }
+      ]
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 15829,
+      "uses": [
+        {
+          "line": 15830,
+          "kind": "BinaryExpression",
+          "identity": true,
+          "text": "reducedTypes === unionType.types",
+          "context": "if (reducedTypes === unionType.types) {\r\n            return unionType;\r\n        }"
+        }
+      ]
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 14065,
+      "uses": [
+        {
+          "line": 14066,
+          "kind": "BinaryExpression",
+          "identity": true,
+          "text": "types !== (type as IntersectionType).types",
+          "context": "return types !== (type as IntersectionType).types ? getIntersectionType(types) : type;"
+        }
+      ]
+    },
+    {
+      "file": "src/services/codefixes/helpers.ts",
+      "line": 440,
+      "uses": [
+        {
+          "line": 459,
+          "kind": "BinaryExpression",
+          "identity": true,
+          "text": "parameters !== newParameters",
+          "context": "if (parameters !== newParameters) {\r\n            parameters = setTextRange(factory.createNodeArray(newParameters, parameters.hasTrailingComma), parameters);\r\n        }"
+        }
+      ]
+    },
+    {
+      "file": "src/services/codefixes/helpers.ts",
+      "line": 411,
+      "uses": [
+        {
+          "line": 436,
+          "kind": "BinaryExpression",
+          "identity": true,
+          "text": "typeParameters !== newTypeParameters",
+          "context": "if (typeParameters !== newTypeParameters) {\r\n                typeParameters = setTextRange(factory.createNodeArray(newTypeParameters, typeParameters.hasTrailingComma), typeParameters);\r\n            }"
+        }
+      ]
+    }
+  ]
+}

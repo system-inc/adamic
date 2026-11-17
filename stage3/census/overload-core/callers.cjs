@@ -1,12 +1,13 @@
 'use strict';
 const fs=require('fs'),path=require('path'),cp=require('child_process');
-const ts=require('/workspace/scratch/ev14ch9/adamic/stage3/api/node_modules/typescript');
+const ts=require(process.env.TYPESCRIPT_API ? path.resolve(process.env.TYPESCRIPT_API) : path.resolve(__dirname, '../../api/node_modules/typescript'));
 const tree=path.resolve(process.argv[2]), output=process.argv[3];
 const names=new Set(['arrayFrom','arrayToMap','reduceLeft','sameMap']);
 const files=cp.execFileSync('git',['-C',tree,'ls-files','-z'],{maxBuffer:20e6}).toString().split('\0').filter(f=>/\.[cm]?[jt]sx?$/.test(f)&&fs.existsSync(path.join(tree,f)));
 // Generated namespace files must join the root closure too.
 const src=ts.sys.readDirectory(path.join(tree,'src'),['.ts','.tsx','.js','.mjs'],undefined,['**/*']);
-const other=files.filter(f=>!f.startsWith('src/')).map(f=>path.join(tree,f));
+const index=JSON.parse(fs.readFileSync(process.env.CALLERS_INDEX));
+const other=index.candidates.map(f=>path.join(tree,f));
 const options={strict:true,target:ts.ScriptTarget.ESNext,module:ts.ModuleKind.NodeNext,moduleResolution:ts.ModuleResolutionKind.NodeNext,allowJs:true,checkJs:true,skipLibCheck:true,noEmit:true,types:[]};
 const calls=[],owners={},scan=[];
 function walk(root,fn){const stack=[root];while(stack.length){const n=stack.pop();fn(n);ts.forEachChild(n,c=>{stack.push(c);});}}
@@ -34,7 +35,7 @@ function run(roots, phase){
     callCount++;
     const expression=ts.isTaggedTemplateExpression(n)?n.tag:n.expression;
     const spelling=ts.isIdentifier(expression)?expression.text:ts.isPropertyAccessExpression(expression)?expression.name.text:undefined;
-    if(!candidateNames.has(spelling)){return;}
+    if(phase!=='src'&&!candidateNames.has(spelling)){return;}
     let symbol=checker.getSymbolAtLocation(ts.isTaggedTemplateExpression(n)?n.tag:n.expression);
     const seen=new Set();
     function refers(s){
@@ -46,7 +47,7 @@ function run(roots, phase){
         return false;
       });
     }
-    const sig=refers(symbol)?checker.getResolvedSignature(n):undefined,d=sig?.declaration;
+    const sig=(phase==='src'||refers(symbol))?checker.getResolvedSignature(n):undefined,d=sig?.declaration;
     if(d&&ts.isFunctionDeclaration(d)&&d.name&&names.has(d.name.text)&&path.resolve(d.getSourceFile().fileName)===path.join(tree,'src/compiler/core.ts')){
      const loc=sf.getLineAndCharacterOfPosition(n.getStart(sf));
      let p=n.parent;while(ts.isParenthesizedExpression(p)||ts.isNonNullExpression(p)||ts.isAsExpression(p)){p=p.parent;}
@@ -64,4 +65,4 @@ run(src,'src');fs.writeFileSync(output+'.src',JSON.stringify({owners,counts:call
 for(let i=0;!process.env.CALLERS_SRC_ONLY&&i<other.length;i+=400){run([...other.slice(i,i+400),path.join(tree,'src/compiler/core.ts')],'other-'+i);if(global.gc)global.gc();}
 for(const name of Object.keys(owners)) owners[name]=[...new Set(owners[name])];
 const counts={};for(const c of calls){const x=counts[c.set]??={total:0,categories:{},files:{},arity:{}};x.total++;x.categories[c.category]=(x.categories[c.category]||0)+1;x.files[c.file]=(x.files[c.file]||0)+1;x.arity[c.arguments.length]=(x.arity[c.arguments.length]||0)+1;}
-fs.writeFileSync(output,JSON.stringify({version:ts.version,tree,trackedCodeFiles:files.length,scan,owners,counts,calls},null,2)+'\n');
+fs.writeFileSync(output,JSON.stringify({version:ts.version,tree,trackedCodeFiles:files.length,index,scan,owners,counts,calls},null,2)+'\n');

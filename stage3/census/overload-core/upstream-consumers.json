@@ -1,0 +1,2992 @@
+[
+  {
+    "set": "reduceLeft",
+    "file": "src/compiler/core.ts",
+    "line": 2015,
+    "call": "reduceLeft(items, (x, y) => compare(x, y) === Comparison.LessThan ? x : y)",
+    "signature": "(array: readonly T[], f: (memo: T, value: T, i: number) => T): T | undefined",
+    "uses": [],
+    "callbackParameters": [
+      "T",
+      "T"
+    ],
+    "callbackResult": "T"
+  },
+  {
+    "set": "arrayFrom",
+    "file": "src/compiler/core.ts",
+    "line": 1713,
+    "call": "arrayFrom(multiMap.values())",
+    "signature": "(iterator: Iterable<TElement | TElement[]>): (TElement | TElement[])[]",
+    "uses": []
+  },
+  {
+    "set": "arrayFrom",
+    "file": "src/compiler/core.ts",
+    "line": 1457,
+    "call": "arrayFrom(arrayToMultiMap(values, getGroupId).values(), resultSelector)",
+    "signature": "(iterator: Iterable<T[]>, map: (t: T[]) => readonly T[]): (readonly T[])[]",
+    "uses": [],
+    "callbackParameters": [
+      "readonly T[]"
+    ],
+    "callbackResult": "readonly T[]"
+  },
+  {
+    "set": "arrayFrom",
+    "file": "src/compiler/utilities.ts",
+    "line": 1222,
+    "call": "arrayFrom(directivesByLine.entries())",
+    "signature": "(iterator: Iterable<[string, CommentDirective]>): [string, CommentDirective][]",
+    "uses": []
+  },
+  {
+    "set": "sameMap",
+    "file": "src/compiler/factory/parenthesizerRules.ts",
+    "line": 669,
+    "call": "sameMap(typeArguments, parenthesizeOrdinalTypeArgument)",
+    "signature": "(array: readonly TypeNode[], f: (x: TypeNode, i: number) => TypeNode): readonly TypeNode[]",
+    "uses": [],
+    "callbackParameters": [
+      "TypeNode",
+      "number"
+    ],
+    "callbackResult": "TypeNode"
+  },
+  {
+    "set": "sameMap",
+    "file": "src/compiler/factory/parenthesizerRules.ts",
+    "line": 614,
+    "call": "sameMap(types, parenthesizeElementTypeOfTupleType)",
+    "signature": "(array: readonly (TypeNode | NamedTupleMember)[], f: (x: TypeNode | NamedTupleMember, i: number) => TypeNode): readonly TypeNode[]",
+    "uses": [],
+    "callbackParameters": [
+      "TypeNode | NamedTupleMember"
+    ],
+    "callbackResult": "TypeNode"
+  },
+  {
+    "set": "sameMap",
+    "file": "src/compiler/factory/parenthesizerRules.ts",
+    "line": 534,
+    "call": "sameMap(members, parenthesizeConstituentTypeOfIntersectionType)",
+    "signature": "(array: readonly TypeNode[], f: (x: TypeNode, i: number) => TypeNode): readonly TypeNode[]",
+    "uses": [],
+    "callbackParameters": [
+      "TypeNode"
+    ],
+    "callbackResult": "TypeNode"
+  },
+  {
+    "set": "sameMap",
+    "file": "src/compiler/factory/parenthesizerRules.ts",
+    "line": 516,
+    "call": "sameMap(members, parenthesizeConstituentTypeOfUnionType)",
+    "signature": "(array: readonly TypeNode[], f: (x: TypeNode, i: number) => TypeNode): readonly TypeNode[]",
+    "uses": [],
+    "callbackParameters": [
+      "TypeNode"
+    ],
+    "callbackResult": "TypeNode"
+  },
+  {
+    "set": "sameMap",
+    "file": "src/compiler/factory/parenthesizerRules.ts",
+    "line": 423,
+    "call": "sameMap(elements, parenthesizeExpressionForDisallowedComma)",
+    "signature": "(array: readonly Expression[], f: (x: Expression, i: number) => Expression): readonly Expression[]",
+    "uses": [
+      {
+        "line": 424,
+        "kind": "CallExpression",
+        "identity": false,
+        "text": "factory.createNodeArray(result, elements.hasTrailingComma)",
+        "context": "return setTextRange(factory.createNodeArray(result, elements.hasTrailingComma), elements);"
+      }
+    ],
+    "callbackParameters": [
+      "Expression"
+    ],
+    "callbackResult": "Expression",
+    "binding": "result"
+  },
+  {
+    "set": "reduceLeft",
+    "file": "src/compiler/factory/nodeFactory.ts",
+    "line": 6756,
+    "call": "reduceLeft(expressions, factory.createComma)",
+    "signature": "(array: readonly Expression[], f: (memo: Expression, value: Expression, i: number) => Expression): Expression | undefined",
+    "uses": [],
+    "callbackParameters": [
+      "Expression",
+      "Expression"
+    ],
+    "callbackResult": "BinaryExpression"
+  },
+  {
+    "set": "arrayFrom",
+    "file": "src/compiler/commandLineParser.ts",
+    "line": 4014,
+    "call": "arrayFrom(wildCardJsonFileMap.values())",
+    "signature": "(iterator: Iterable<string>): string[]",
+    "uses": []
+  },
+  {
+    "set": "arrayFrom",
+    "file": "src/compiler/commandLineParser.ts",
+    "line": 4012,
+    "call": "arrayFrom(wildcardFileMap.values())",
+    "signature": "(iterator: Iterable<string>): string[]",
+    "uses": [
+      {
+        "line": 4014,
+        "kind": "CallExpression",
+        "identity": false,
+        "text": "literalFiles.concat(wildcardFiles, arrayFrom(wildCardJsonFileMap.values()))",
+        "context": "return literalFiles.concat(wildcardFiles, arrayFrom(wildCardJsonFileMap.values()));"
+      }
+    ],
+    "binding": "wildcardFiles"
+  },
+  {
+    "set": "arrayFrom",
+    "file": "src/compiler/commandLineParser.ts",
+    "line": 4011,
+    "call": "arrayFrom(literalFileMap.values())",
+    "signature": "(iterator: Iterable<string>): string[]",
+    "uses": [
+      {
+        "line": 4014,
+        "kind": "PropertyAccessExpression",
+        "identity": false,
+        "text": "literalFiles.concat",
+        "context": "return literalFiles.concat(wildcardFiles, arrayFrom(wildCardJsonFileMap.values()));"
+      }
+    ],
+    "binding": "literalFiles"
+  },
+  {
+    "set": "arrayFrom",
+    "file": "src/compiler/commandLineParser.ts",
+    "line": 3449,
+    "call": "arrayFrom(result.extendedSourceFiles.keys())",
+    "signature": "(iterator: Iterable<string>): string[]",
+    "uses": []
+  },
+  {
+    "set": "arrayToMap",
+    "file": "src/compiler/commandLineParser.ts",
+    "line": 2307,
+    "call": "arrayToMap(options, getOptionName)",
+    "signature": "(array: readonly CommandLineOption[], makeKey: (value: CommandLineOption) => string | undefined): Map<string, CommandLineOption>",
+    "uses": [],
+    "callbackParameters": [
+      "CommandLineOption"
+    ],
+    "callbackResult": "string"
+  },
+  {
+    "set": "arrayFrom",
+    "file": "src/compiler/commandLineParser.ts",
+    "line": 1873,
+    "call": "arrayFrom(opt.type.keys())",
+    "signature": "(iterator: Iterable<string>): string[]",
+    "uses": [
+      {
+        "line": 1874,
+        "kind": "ConditionalExpression",
+        "identity": false,
+        "text": "opt.deprecatedKeys ? namesOfType.filter(k => !opt.deprecatedKeys!.has(k)) : namesOfType",
+        "context": "const stringNames = (opt.deprecatedKeys ? namesOfType.filter(k => !opt.deprecatedKeys!.has(k)) : namesOfType).map(key => `'${key}'`).join(\", \");"
+      },
+      {
+        "line": 1874,
+        "kind": "PropertyAccessExpression",
+        "identity": false,
+        "text": "namesOfType.filter",
+        "context": "const stringNames = (opt.deprecatedKeys ? namesOfType.filter(k => !opt.deprecatedKeys!.has(k)) : namesOfType).map(key => `'${key}'`).join(\", \");"
+      }
+    ],
+    "binding": "namesOfType"
+  },
+  {
+    "set": "arrayFrom",
+    "file": "src/compiler/moduleSpecifiers.ts",
+    "line": 868,
+    "call": "arrayFrom(\r\n            allFileNames.entries(),\r\n            ([fileName, { isRedirect, isInNodeModules }]): ModulePath => ({ path: fileName, isRedirect, isInNodeModules }),\r\n        )",
+    "signature": "(iterator: Iterable<[string, { path: string; isRedirect: boolean; isInNodeModules: boolean; }]>, map: (t: [string, { path: string; isRedirect: boolean; isInNodeModules: boolean; }]) => ModulePath): ModulePath[]",
+    "uses": [
+      {
+        "line": 873,
+        "kind": "SpreadElement",
+        "identity": false,
+        "text": "...remainingPaths",
+        "context": "sortedPaths.push(...remainingPaths);"
+      },
+      {
+        "line": 872,
+        "kind": "PropertyAccessExpression",
+        "identity": false,
+        "text": "remainingPaths.sort",
+        "context": "remainingPaths.sort(comparePathsByRedirectAndNumberOfDirectorySeparators);"
+      },
+      {
+        "line": 872,
+        "kind": "PropertyAccessExpression",
+        "identity": false,
+        "text": "remainingPaths.length",
+        "context": "if (remainingPaths.length > 1) remainingPaths.sort(comparePathsByRedirectAndNumberOfDirectorySeparators);"
+      }
+    ],
+    "callbackParameters": [
+      "[string, { path: string; isRedirect: boolean; isInNodeModules: boolean; }]"
+    ],
+    "callbackResult": "ModulePath",
+    "binding": "remainingPaths"
+  },
+  {
+    "set": "arrayFrom",
+    "file": "src/compiler/checker.ts",
+    "line": 51671,
+    "call": "arrayFrom(conflictingSymbols.keys())",
+    "signature": "(iterator: Iterable<string>): string[]",
+    "uses": []
+  },
+  {
+    "set": "arrayFrom",
+    "file": "src/compiler/checker.ts",
+    "line": 51529,
+    "call": "arrayFrom(exports.values())",
+    "signature": "(iterator: Iterable<Symbol>): Symbol[]",
+    "uses": []
+  },
+  {
+    "set": "arrayFrom",
+    "file": "src/compiler/checker.ts",
+    "line": 51465,
+    "call": "arrayFrom(getMembersOfSymbol(sym).values())",
+    "signature": "(iterator: Iterable<Symbol>): Symbol[]",
+    "uses": []
+  },
+  {
+    "set": "arrayFrom",
+    "file": "src/compiler/checker.ts",
+    "line": 47714,
+    "call": "arrayFrom(seen.values())",
+    "signature": "(iterator: Iterable<Symbol>): Symbol[]",
+    "uses": []
+  },
+  {
+    "set": "sameMap",
+    "file": "src/compiler/checker.ts",
+    "line": 38254,
+    "call": "sameMap(applicableSignatures, sig => {\r\n                const typeArgumentTypes = checkTypeArguments(sig, typeArguments!, /*reportErrors*/ true);\r\n                return typeArgumentTypes ? getSignatureInstantiation(sig, typeArgumentTypes, isInJSFile(sig.declaration)) : sig;\r\n            })",
+    "signature": "(array: readonly Signature[], f: (x: Signature, i: number) => Signature): readonly Signature[]",
+    "uses": [],
+    "callbackParameters": [
+      "Signature"
+    ],
+    "callbackResult": "Signature"
+  },
+  {
+    "set": "sameMap",
+    "file": "src/compiler/checker.ts",
+    "line": 38246,
+    "call": "sameMap((type as IntersectionType).types, getInstantiatedTypePart)",
+    "signature": "(array: Type[], f: (x: Type, i: number) => Type): Type[]",
+    "uses": [],
+    "callbackParameters": [
+      "Type"
+    ],
+    "callbackResult": "Type"
+  },
+  {
+    "set": "arrayFrom",
+    "file": "src/compiler/checker.ts",
+    "line": 35280,
+    "call": "arrayFrom(symbols.values())",
+    "signature": "(iterator: Iterable<Symbol>): Symbol[]",
+    "uses": [
+      {
+        "line": 35291,
+        "kind": "CallExpression",
+        "identity": false,
+        "text": "getSpellingSuggestionForName(unescapeLeadingUnderscores(name), candidates, meaning)",
+        "context": "return getSpellingSuggestionForName(unescapeLeadingUnderscores(name), candidates, meaning);"
+      },
+      {
+        "line": 35290,
+        "kind": "CallExpression",
+        "identity": false,
+        "text": "sortSymbolsIfTSGoCompat(candidates)",
+        "context": "sortSymbolsIfTSGoCompat(candidates);"
+      },
+      {
+        "line": 35288,
+        "kind": "CallExpression",
+        "identity": false,
+        "text": "concatenate(primitives, candidates)",
+        "context": "candidates = concatenate(primitives, candidates);"
+      },
+      {
+        "line": 35288,
+        "kind": "BinaryExpression",
+        "identity": false,
+        "text": "candidates = concatenate(primitives, candidates)",
+        "context": "candidates = concatenate(primitives, candidates);"
+      }
+    ],
+    "binding": "candidates"
+  },
+  {
+    "set": "sameMap",
+    "file": "src/compiler/checker.ts",
+    "line": 33401,
+    "call": "sameMap(elementTypes, (t, i) => elementFlags[i] & ElementFlags.Variadic ? getIndexedAccessTypeOrUndefined(t, numberType) || anyType : t)",
+    "signature": "(array: Type[], f: (x: Type, i: number) => Type): Type[]",
+    "uses": [],
+    "callbackParameters": [
+      "Type",
+      "number"
+    ],
+    "callbackResult": "Type"
+  },
+  {
+    "set": "reduceLeft",
+    "file": "src/compiler/checker.ts",
+    "line": 33087,
+    "call": "reduceLeft(\r\n                signatures,\r\n                (left: Signature | undefined, right) =>\r\n                    left === right || !left ? left\r\n                        : compareTypeParametersIdentical(left.typeParameters, right!.typeParameters) ? combineSignaturesOfIntersectionMembers(left, right!)\r\n                        : undefined,\r\n            )",
+    "signature": "(array: readonly (Signature | undefined)[], f: (memo: Signature | undefined, value: Signature | undefined, i: number) => Signature | undefined): Signature | undefined",
+    "uses": [],
+    "callbackParameters": [
+      "Signature | undefined",
+      "Signature | undefined"
+    ],
+    "callbackResult": "Signature | undefined"
+  },
+  {
+    "set": "sameMap",
+    "file": "src/compiler/checker.ts",
+    "line": 29463,
+    "call": "sameMap(types, finalizeEvolvingArrayType)",
+    "signature": "(array: Type[], f: (x: Type, i: number) => Type): Type[]",
+    "uses": [],
+    "callbackParameters": [
+      "Type"
+    ],
+    "callbackResult": "Type"
+  },
+  {
+    "set": "reduceLeft",
+    "file": "src/compiler/checker.ts",
+    "line": 28235,
+    "call": "reduceLeft((type as UnionType).types, (facts, t) => facts | getTypeFactsWorker(t, callerOnlyNeeds), TypeFacts.None)",
+    "signature": "(array: readonly Type[] | undefined, f: (memo: number, value: Type, i: number) => number, initial: number, start?: number | undefined, count?: number | undefined): number",
+    "uses": [],
+    "callbackParameters": [
+      "TypeFacts.None",
+      "Type"
+    ],
+    "callbackResult": "number"
+  },
+  {
+    "set": "sameMap",
+    "file": "src/compiler/checker.ts",
+    "line": 27598,
+    "call": "sameMap(candidates, getWidenedLiteralType)",
+    "signature": "(array: Type[], f: (x: Type, i: number) => Type): Type[]",
+    "uses": [],
+    "callbackParameters": [
+      "Type"
+    ],
+    "callbackResult": "Type"
+  },
+  {
+    "set": "sameMap",
+    "file": "src/compiler/checker.ts",
+    "line": 27597,
+    "call": "sameMap(candidates, getRegularTypeOfLiteralType)",
+    "signature": "(array: Type[], f: (x: Type, i: number) => Type): Type[]",
+    "uses": [],
+    "callbackParameters": [
+      "Type"
+    ],
+    "callbackResult": "Type"
+  },
+  {
+    "set": "reduceLeft",
+    "file": "src/compiler/checker.ts",
+    "line": 27317,
+    "call": "reduceLeft(constraintTypes, (left, right) =>\r\n                                    !(right.flags & allTypeFlags) ? left :\r\n                                        left.flags & TypeFlags.String ? left : right.flags & TypeFlags.String ? source :\r\n                                        left.flags & TypeFlags.TemplateLiteral ? left : right.flags & TypeFlags.TemplateLiteral && isTypeMatchedByTemplateLiteralType(source, right as TemplateLiteralType) ? source :\r\n                                        left.flags & TypeFlags.StringMapping ? left : right.flags & TypeFlags.StringMapping && str === applyStringMapping(right.symbol, str) ? source :\r\n                                        left.flags & TypeFlags.StringLiteral ? left : right.flags & TypeFlags.StringLiteral && (right as StringLiteralType).value === str ? right :\r\n                                        left.flags & TypeFlags.Number ? left : right.flags & TypeFlags.Number ? getNumberLiteralType(+str) :\r\n                                        left.flags & TypeFlags.Enum ? left : right.flags & TypeFlags.Enum ? getNumberLiteralType(+str) :\r\n                                        left.flags & TypeFlags.NumberLiteral ? left : right.flags & TypeFlags.NumberLiteral && (right as NumberLiteralType).value === +str ? right :\r\n                                        left.flags & TypeFlags.BigInt ? left : right.flags & TypeFlags.BigInt ? parseBigIntLiteralType(str) :\r\n                                        left.flags & TypeFlags.BigIntLiteral ? left : right.flags & TypeFlags.BigIntLiteral && pseudoBigIntToString((right as BigIntLiteralType).value) === str ? right :\r\n                                        left.flags & TypeFlags.Boolean ? left : right.flags & TypeFlags.Boolean ? str === \"true\" ? trueType : str === \"false\" ? falseType : booleanType :\r\n                                        left.flags & TypeFlags.BooleanLiteral ? left : right.flags & TypeFlags.BooleanLiteral && (right as IntrinsicType).intrinsicName === str ? right :\r\n                                        left.flags & TypeFlags.Undefined ? left : right.flags & TypeFlags.Undefined && (right as IntrinsicType).intrinsicName === str ? right :\r\n                                        left.flags & TypeFlags.Null ? left : right.flags & TypeFlags.Null && (right as IntrinsicType).intrinsicName === str ? right :\r\n                                        left, neverType as Type)",
+    "signature": "(array: readonly Type[] | undefined, f: (memo: Type, value: Type, i: number) => Type, initial: Type, start?: number | undefined, count?: number | undefined): Type",
+    "uses": [
+      {
+        "line": 27335,
+        "kind": "CallExpression",
+        "identity": false,
+        "text": "inferFromTypes(matchingType, target)",
+        "context": "inferFromTypes(matchingType, target);"
+      },
+      {
+        "line": 27334,
+        "kind": "PropertyAccessExpression",
+        "identity": false,
+        "text": "matchingType.flags",
+        "context": "if (!(matchingType.flags & TypeFlags.Never)) {\r\n                                    inferFromTypes(matchingType, target);\r\n                                    continue;\r\n                                }"
+      }
+    ],
+    "callbackParameters": [
+      "Type",
+      "Type"
+    ],
+    "callbackResult": "Type",
+    "binding": "matchingType"
+  },
+  {
+    "set": "reduceLeft",
+    "file": "src/compiler/checker.ts",
+    "line": 27300,
+    "call": "reduceLeft(constraintTypes, (flags, t) => flags | t.flags, 0 as TypeFlags)",
+    "signature": "(array: readonly Type[] | undefined, f: (memo: number, value: Type, i: number) => number, initial: number, start?: number | undefined, count?: number | undefined): number",
+    "uses": [
+      {
+        "line": 27318,
+        "kind": "BinaryExpression",
+        "identity": false,
+        "text": "right.flags & allTypeFlags",
+        "context": "(left, right) =>\r\n                                    !(right.flags & allTypeFlags) ? left :\r\n                                        left.flags & TypeFlags.String ? left : right.flags & TypeFlags.String ? source :\r\n                                        left.flags & TypeFlags.TemplateLiteral ? left : right.flags & TypeFlags.TemplateLiteral && isTypeMatchedByTemplateLiteralType(source, right as TemplateLiteralType) ? source :\r\n                                        left.flags & TypeFlags.StringMapping ? left : right.flags & TypeFlags.StringMapping && str === applyStringMapping(right.symbol, str) ? source :\r\n                                        left.flags & TypeFlags.StringLiteral ? left : right.flags & TypeFlags.StringLiteral && (right as StringLiteralType).value === str ? right :\r\n                                        left.flags & TypeFlags.Number ? left : right.flags & TypeFlags.Number ? getNumberLiteralType(+str) :\r\n                                        left.flags & TypeFlags.Enum ? left : right.flags & TypeFlags.Enum ? getNumberLiteralType(+str) :\r\n                                        left.flags & TypeFlags.NumberLiteral ? left : right.flags & TypeFlags.NumberLiteral && (right as NumberLiteralType).value === +str ? right :\r\n                                        left.flags & TypeFlags.BigInt ? left : right.flags & TypeFlags.BigInt ? parseBigIntLiteralType(str) :\r\n                                        left.flags & TypeFlags.BigIntLiteral ? left : right.flags & TypeFlags.BigIntLiteral && pseudoBigIntToString((right as BigIntLiteralType).value) === str ? right :\r\n                                        left.flags & TypeFlags.Boolean ? left : right.flags & TypeFlags.Boolean ? str === \"true\" ? trueType : str === \"false\" ? falseType : booleanType :\r\n                                        left.flags & TypeFlags.BooleanLiteral ? left : right.flags & TypeFlags.BooleanLiteral && (right as IntrinsicType).intrinsicName === str ? right :\r\n                                        left.flags & TypeFlags.Undefined ? left : right.flags & TypeFlags.Undefined && (right as IntrinsicType).intrinsicName === str ? right :\r\n                                        left.flags & TypeFlags.Null ? left : right.flags & TypeFlags.Null && (right as IntrinsicType).intrinsicName === str ? right :\r\n                                        left"
+      },
+      {
+        "line": 27313,
+        "kind": "BinaryExpression",
+        "identity": false,
+        "text": "allTypeFlags &= ~TypeFlags.BigIntLike",
+        "context": "allTypeFlags &= ~TypeFlags.BigIntLike;"
+      },
+      {
+        "line": 27312,
+        "kind": "BinaryExpression",
+        "identity": false,
+        "text": "allTypeFlags & TypeFlags.BigIntLike",
+        "context": "if (allTypeFlags & TypeFlags.BigIntLike && !isValidBigIntString(str, /*roundTripOnly*/ true)) {\r\n                                    allTypeFlags &= ~TypeFlags.BigIntLike;\r\n                                }"
+      },
+      {
+        "line": 27308,
+        "kind": "BinaryExpression",
+        "identity": false,
+        "text": "allTypeFlags &= ~TypeFlags.NumberLike",
+        "context": "allTypeFlags &= ~TypeFlags.NumberLike;"
+      },
+      {
+        "line": 27307,
+        "kind": "BinaryExpression",
+        "identity": false,
+        "text": "allTypeFlags & TypeFlags.NumberLike",
+        "context": "if (allTypeFlags & TypeFlags.NumberLike && !isValidNumberString(str, /*roundTripOnly*/ true)) {\r\n                                    allTypeFlags &= ~TypeFlags.NumberLike;\r\n                                }"
+      },
+      {
+        "line": 27303,
+        "kind": "BinaryExpression",
+        "identity": false,
+        "text": "allTypeFlags & TypeFlags.String",
+        "context": "if (!(allTypeFlags & TypeFlags.String)) {\r\n                                const str = (source as StringLiteralType).value;\r\n\r\n                                // If the type contains `number` or a number literal and the string isn't a valid number, exclude numbers\r\n                                if (allTypeFlags & TypeFlags.NumberLike && !isValidNumberString(str, /*roundTripOnly*/ true)) {\r\n                                    allTypeFlags &= ~TypeFlags.NumberLike;\r\n                                }\r\n\r\n                                // If the type contains `bigint` or a bigint literal and the string isn't a valid bigint, exclude bigints\r\n                                if (allTypeFlags & TypeFlags.BigIntLike && !isValidBigIntString(str, /*roundTripOnly*/ true)) {\r\n                                    allTypeFlags &= ~TypeFlags.BigIntLike;\r\n                                }\r\n\r\n                                // for each type in the constraint, find the highest priority matching type\r\n                                const matchingType = reduceLeft(constraintTypes, (left, right) =>\r\n                                    !(right.flags & allTypeFlags) ? left :\r\n                                        left.flags & TypeFlags.String ? left : right.flags & TypeFlags.String ? source :\r\n                                        left.flags & TypeFlags.TemplateLiteral ? left : right.flags & TypeFlags.TemplateLiteral && isTypeMatchedByTemplateLiteralType(source, right as TemplateLiteralType) ? source :\r\n                                        left.flags & TypeFlags.StringMapping ? left : right.flags & TypeFlags.StringMapping && str === applyStringMapping(right.symbol, str) ? source :\r\n                                        left.flags & TypeFlags.StringLiteral ? left : right.flags & TypeFlags.StringLiteral && (right as StringLiteralType).value === str ? right :\r\n                                        left.flags & TypeFlags.Number ? left : right.flags & TypeFlags.Number ? getNumberLiteralType(+str) :\r\n                                        left.flags & TypeFlags.Enum ? left : right.flags & TypeFlags.Enum ? getNumberLiteralType(+str) :\r\n                                        left.flags & TypeFlags.NumberLiteral ? left : right.flags & TypeFlags.NumberLiteral && (right as NumberLiteralType).value === +str ? right :\r\n                                        left.flags & TypeFlags.BigInt ? left : right.flags & TypeFlags.BigInt ? parseBigIntLiteralType(str) :\r\n                                        left.flags & TypeFlags.BigIntLiteral ? left : right.flags & TypeFlags.BigIntLiteral && pseudoBigIntToString((right as BigIntLiteralType).value) === str ? right :\r\n                                        left.flags & TypeFlags.Boolean ? left : right.flags & TypeFlags.Boolean ? str === \"true\" ? trueType : str === \"false\" ? falseType : booleanType :\r\n                                        left.flags & TypeFlags.BooleanLiteral ? left : right.flags & TypeFlags.BooleanLiteral && (right as IntrinsicType).intrinsicName === str ? right :\r\n                                        left.flags & TypeFlags.Undefined ? left : right.flags & TypeFlags.Undefined && (right as IntrinsicType).intrinsicName === str ? right :\r\n                                        left.flags & TypeFlags.Null ? left : right.flags & TypeFlags.Null && (right as IntrinsicType).intrinsicName === str ? right :\r\n                                        left, neverType as Type);\r\n\r\n                                if (!(matchingType.flags & TypeFlags.Never)) {\r\n                                    inferFromTypes(matchingType, target);\r\n                                    continue;\r\n                                }\r\n                            }"
+      }
+    ],
+    "callbackParameters": [
+      "TypeFlags",
+      "Type"
+    ],
+    "callbackResult": "number",
+    "binding": "allTypeFlags"
+  },
+  {
+    "set": "reduceLeft",
+    "file": "src/compiler/checker.ts",
+    "line": 26649,
+    "call": "reduceLeft(mappingStack, (memo, value) => getStringMappingType(value, memo), source)",
+    "signature": "(array: readonly Symbol[] | undefined, f: (memo: Type, value: Symbol, i: number) => Type, initial: Type, start?: number | undefined, count?: number | undefined): Type",
+    "uses": [
+      {
+        "line": 26650,
+        "kind": "BinaryExpression",
+        "identity": true,
+        "text": "mappedSource === source",
+        "context": "return mappedSource === source && isMemberOfStringMapping(source, target);"
+      }
+    ],
+    "callbackParameters": [
+      "Type",
+      "Symbol"
+    ],
+    "callbackResult": "Type",
+    "binding": "mappedSource"
+  },
+  {
+    "set": "sameMap",
+    "file": "src/compiler/checker.ts",
+    "line": 26493,
+    "call": "sameMap(source.target.elementFlags, f => f & ElementFlags.Optional ? ElementFlags.Required : f)",
+    "signature": "(array: readonly ElementFlags[], f: (x: ElementFlags, i: number) => ElementFlags): readonly ElementFlags[]",
+    "uses": [],
+    "callbackParameters": [
+      "ElementFlags"
+    ],
+    "callbackResult": "ElementFlags"
+  },
+  {
+    "set": "sameMap",
+    "file": "src/compiler/checker.ts",
+    "line": 26045,
+    "call": "sameMap(getTypeArguments(type), getWidenedType)",
+    "signature": "(array: readonly Type[], f: (x: Type, i: number) => Type): readonly Type[]",
+    "uses": [],
+    "callbackParameters": [
+      "Type"
+    ],
+    "callbackResult": "Type"
+  },
+  {
+    "set": "sameMap",
+    "file": "src/compiler/checker.ts",
+    "line": 26042,
+    "call": "sameMap((type as IntersectionType).types, getWidenedType)",
+    "signature": "(array: Type[], f: (x: Type, i: number) => Type): Type[]",
+    "uses": [],
+    "callbackParameters": [
+      "Type"
+    ],
+    "callbackResult": "Type"
+  },
+  {
+    "set": "sameMap",
+    "file": "src/compiler/checker.ts",
+    "line": 26035,
+    "call": "sameMap((type as UnionType).types, t => t.flags & TypeFlags.Nullable ? t : getWidenedTypeWithContext(t, unionContext))",
+    "signature": "(array: Type[], f: (x: Type, i: number) => Type): Type[]",
+    "uses": [
+      {
+        "line": 26039,
+        "kind": "CallExpression",
+        "identity": false,
+        "text": "some(widenedTypes, isEmptyObjectType)",
+        "context": "result = getUnionType(widenedTypes, some(widenedTypes, isEmptyObjectType) ? UnionReduction.Subtype : UnionReduction.Literal);"
+      },
+      {
+        "line": 26039,
+        "kind": "CallExpression",
+        "identity": false,
+        "text": "getUnionType(widenedTypes, some(widenedTypes, isEmptyObjectType) ? UnionReduction.Subtype : UnionReduction.Literal)",
+        "context": "result = getUnionType(widenedTypes, some(widenedTypes, isEmptyObjectType) ? UnionReduction.Subtype : UnionReduction.Literal);"
+      }
+    ],
+    "callbackParameters": [
+      "Type"
+    ],
+    "callbackResult": "Type",
+    "binding": "widenedTypes"
+  },
+  {
+    "set": "sameMap",
+    "file": "src/compiler/checker.ts",
+    "line": 26012,
+    "call": "sameMap(getIndexInfosOfType(type), info => createIndexInfo(info.keyType, getWidenedType(info.type), info.isReadonly, info.declaration, info.components))",
+    "signature": "(array: readonly IndexInfo[], f: (x: IndexInfo, i: number) => IndexInfo): readonly IndexInfo[]",
+    "uses": [],
+    "callbackParameters": [
+      "IndexInfo"
+    ],
+    "callbackResult": "IndexInfo"
+  },
+  {
+    "set": "arrayFrom",
+    "file": "src/compiler/checker.ts",
+    "line": 25972,
+    "call": "arrayFrom(names.values())",
+    "signature": "(iterator: Iterable<Symbol>): Symbol[]",
+    "uses": []
+  },
+  {
+    "set": "reduceLeft",
+    "file": "src/compiler/checker.ts",
+    "line": 25512,
+    "call": "reduceLeft(types, (s, t) => isTypeSubtypeOf(t, s) ? t : s)",
+    "signature": "(array: readonly Type[], f: (memo: Type, value: Type, i: number) => Type): Type | undefined",
+    "uses": [],
+    "callbackParameters": [
+      "Type",
+      "Type"
+    ],
+    "callbackResult": "Type"
+  },
+  {
+    "set": "reduceLeft",
+    "file": "src/compiler/checker.ts",
+    "line": 25507,
+    "call": "reduceLeft(types, (s, t) => isTypeSubtypeOf(s, t) ? t : s)",
+    "signature": "(array: readonly Type[], f: (memo: Type, value: Type, i: number) => Type): Type | undefined",
+    "uses": [],
+    "callbackParameters": [
+      "Type",
+      "Type"
+    ],
+    "callbackResult": "Type"
+  },
+  {
+    "set": "reduceLeft",
+    "file": "src/compiler/checker.ts",
+    "line": 25504,
+    "call": "reduceLeft(types, (s, t) => isTypeStrictSubtypeOf(s, t) ? t : s)",
+    "signature": "(array: readonly Type[], f: (memo: Type, value: Type, i: number) => Type): Type | undefined",
+    "uses": [
+      {
+        "line": 25506,
+        "kind": "ConditionalExpression",
+        "identity": false,
+        "text": "every(types, t => t === candidate || isTypeStrictSubtypeOf(t, candidate)) ?\r\n            candidate :\r\n            reduceLeft(types, (s, t) => isTypeSubtypeOf(s, t) ? t : s)!",
+        "context": "return every(types, t => t === candidate || isTypeStrictSubtypeOf(t, candidate)) ?\r\n            candidate :\r\n            reduceLeft(types, (s, t) => isTypeSubtypeOf(s, t) ? t : s)!;"
+      },
+      {
+        "line": 25505,
+        "kind": "CallExpression",
+        "identity": false,
+        "text": "isTypeStrictSubtypeOf(t, candidate)",
+        "context": "t => t === candidate || isTypeStrictSubtypeOf(t, candidate)"
+      },
+      {
+        "line": 25505,
+        "kind": "BinaryExpression",
+        "identity": true,
+        "text": "t === candidate",
+        "context": "t => t === candidate || isTypeStrictSubtypeOf(t, candidate)"
+      }
+    ],
+    "callbackParameters": [
+      "Type",
+      "Type"
+    ],
+    "callbackResult": "Type",
+    "binding": "candidate"
+  },
+  {
+    "set": "sameMap",
+    "file": "src/compiler/checker.ts",
+    "line": 25489,
+    "call": "sameMap(types, t => filterType(t, u => !(u.flags & TypeFlags.Nullable)))",
+    "signature": "(array: Type[], f: (x: Type, i: number) => Type): Type[]",
+    "uses": [],
+    "callbackParameters": [
+      "Type"
+    ],
+    "callbackResult": "Type"
+  },
+  {
+    "set": "reduceLeft",
+    "file": "src/compiler/checker.ts",
+    "line": 25481,
+    "call": "reduceLeft(types, (flags, t) => flags | (t.flags & TypeFlags.Union ? getCombinedTypeFlags((t as UnionType).types) : t.flags), 0 as TypeFlags)",
+    "signature": "(array: readonly Type[] | undefined, f: (memo: number, value: Type, i: number) => number, initial: number, start?: number | undefined, count?: number | undefined): number",
+    "uses": [],
+    "callbackParameters": [
+      "TypeFlags",
+      "Type"
+    ],
+    "callbackResult": "number"
+  },
+  {
+    "set": "reduceLeft",
+    "file": "src/compiler/checker.ts",
+    "line": 25098,
+    "call": "reduceLeft(tp.symbol?.declarations, (modifiers, d) => modifiers | getEffectiveModifierFlags(d), ModifierFlags.None)",
+    "signature": "(array: readonly Declaration[] | undefined, f: (memo: number, value: Declaration, i: number) => number, initial: number, start?: number | undefined, count?: number | undefined): number",
+    "uses": [],
+    "callbackParameters": [
+      "ModifierFlags",
+      "Declaration"
+    ],
+    "callbackResult": "number"
+  },
+  {
+    "set": "arrayFrom",
+    "file": "src/compiler/checker.ts",
+    "line": 24402,
+    "call": "arrayFrom(getUnmatchedProperties(source, target, requireOptionalProperties, /*matchDiscriminantProperties*/ false))",
+    "signature": "(iterator: Iterable<Symbol>): Symbol[]",
+    "uses": [
+      {
+        "line": 24424,
+        "kind": "CallExpression",
+        "identity": false,
+        "text": "map(props, p => symbolToString(p))",
+        "context": "reportError(Diagnostics.Type_0_is_missing_the_following_properties_from_type_1_Colon_2, typeToString(source), typeToString(target), map(props, p => symbolToString(p)).join(\", \"));"
+      },
+      {
+        "line": 24421,
+        "kind": "PropertyAccessExpression",
+        "identity": false,
+        "text": "props.length",
+        "context": "reportError(Diagnostics.Type_0_is_missing_the_following_properties_from_type_1_Colon_2_and_3_more, typeToString(source), typeToString(target), map(props.slice(0, 4), p => symbolToString(p)).join(\", \"), props.length - 4);"
+      },
+      {
+        "line": 24421,
+        "kind": "PropertyAccessExpression",
+        "identity": false,
+        "text": "props.slice",
+        "context": "reportError(Diagnostics.Type_0_is_missing_the_following_properties_from_type_1_Colon_2_and_3_more, typeToString(source), typeToString(target), map(props.slice(0, 4), p => symbolToString(p)).join(\", \"), props.length - 4);"
+      },
+      {
+        "line": 24420,
+        "kind": "PropertyAccessExpression",
+        "identity": false,
+        "text": "props.length",
+        "context": "if (props.length > 5) { // arbitrary cutoff for too-long list form\r\n                    reportError(Diagnostics.Type_0_is_missing_the_following_properties_from_type_1_Colon_2_and_3_more, typeToString(source), typeToString(target), map(props.slice(0, 4), p => symbolToString(p)).join(\", \"), props.length - 4);\r\n                }\r\n                else {\r\n                    reportError(Diagnostics.Type_0_is_missing_the_following_properties_from_type_1_Colon_2, typeToString(source), typeToString(target), map(props, p => symbolToString(p)).join(\", \"));\r\n                }"
+      },
+      {
+        "line": 24409,
+        "kind": "PropertyAccessExpression",
+        "identity": false,
+        "text": "props.length",
+        "context": "if (props.length === 1) {\r\n                const propName = symbolToString(unmatchedProperty, /*enclosingDeclaration*/ undefined, SymbolFlags.None, SymbolFormatFlags.AllowAnyNodeKind | SymbolFormatFlags.WriteComputedProps);\r\n                reportError(Diagnostics.Property_0_is_missing_in_type_1_but_required_in_type_2, propName, ...getTypeNamesForErrorDisplay(source, target));\r\n                if (length(unmatchedProperty.declarations)) {\r\n                    associateRelatedInfo(createDiagnosticForNode(unmatchedProperty.declarations![0], Diagnostics._0_is_declared_here, propName));\r\n                }\r\n                if (shouldSkipElaboration && errorInfo) {\r\n                    overrideNextErrorInfo++;\r\n                }\r\n            }\r\n            else if (tryElaborateArrayLikeErrors(source, target, /*reportErrors*/ false)) {\r\n                if (props.length > 5) { // arbitrary cutoff for too-long list form\r\n                    reportError(Diagnostics.Type_0_is_missing_the_following_properties_from_type_1_Colon_2_and_3_more, typeToString(source), typeToString(target), map(props.slice(0, 4), p => symbolToString(p)).join(\", \"), props.length - 4);\r\n                }\r\n                else {\r\n                    reportError(Diagnostics.Type_0_is_missing_the_following_properties_from_type_1_Colon_2, typeToString(source), typeToString(target), map(props, p => symbolToString(p)).join(\", \"));\r\n                }\r\n                if (shouldSkipElaboration && errorInfo) {\r\n                    overrideNextErrorInfo++;\r\n                }\r\n            }"
+      }
+    ],
+    "binding": "props"
+  },
+  {
+    "set": "reduceLeft",
+    "file": "src/compiler/checker.ts",
+    "line": 24121,
+    "call": "reduceLeft(info, (value, chain) => value + 1 + countMessageChainBreadth(chain.next), 0)",
+    "signature": "(array: readonly DiagnosticMessageChain[] | undefined, f: (memo: number, value: DiagnosticMessageChain, i: number) => number, initial: number, start?: number | undefined, count?: number | undefined): number",
+    "uses": [],
+    "callbackParameters": [
+      "number",
+      "DiagnosticMessageChain"
+    ],
+    "callbackResult": "number"
+  },
+  {
+    "set": "sameMap",
+    "file": "src/compiler/checker.ts",
+    "line": 23103,
+    "call": "sameMap((source as IntersectionType).types, t => t.flags & TypeFlags.Instantiable ? getBaseConstraintOfType(t) || unknownType : t)",
+    "signature": "(array: Type[], f: (x: Type, i: number) => Type): Type[]",
+    "uses": [
+      {
+        "line": 23105,
+        "kind": "CallExpression",
+        "identity": false,
+        "text": "getIntersectionType(constraints)",
+        "context": "source = getIntersectionType(constraints);"
+      },
+      {
+        "line": 23104,
+        "kind": "BinaryExpression",
+        "identity": true,
+        "text": "constraints !== (source as IntersectionType).types",
+        "context": "if (constraints !== (source as IntersectionType).types) {\r\n                    source = getIntersectionType(constraints);\r\n                    if (source.flags & TypeFlags.Never) {\r\n                        return Ternary.False;\r\n                    }\r\n                    if (!(source.flags & TypeFlags.Intersection)) {\r\n                        return isRelatedTo(source, target, RecursionFlags.Source, /*reportErrors*/ false) ||\r\n                            isRelatedTo(target, source, RecursionFlags.Source, /*reportErrors*/ false);\r\n                    }\r\n                }"
+      }
+    ],
+    "callbackParameters": [
+      "Type"
+    ],
+    "callbackResult": "Type",
+    "binding": "constraints"
+  },
+  {
+    "set": "reduceLeft",
+    "file": "src/compiler/checker.ts",
+    "line": 22977,
+    "call": "reduceLeft(types, appendPropType, /*initial*/ undefined)",
+    "signature": "(array: readonly Type[] | undefined, f: (memo: Type[] | undefined, value: Type, i: number) => Type[] | undefined, initial: Type[] | undefined, start?: number | undefined, count?: number | undefined): Type[] | undefined",
+    "uses": [],
+    "callbackParameters": [
+      "Type[] | undefined",
+      "Type"
+    ],
+    "callbackResult": "Type[]"
+  },
+  {
+    "set": "sameMap",
+    "file": "src/compiler/checker.ts",
+    "line": 22365,
+    "call": "sameMap(elements, t => t.flags & TypeFlags.Simplifiable ? getSimplifiedType(t, writing) : t)",
+    "signature": "(array: readonly Type[], f: (x: Type, i: number) => Type): readonly Type[]",
+    "uses": [
+      {
+        "line": 22366,
+        "kind": "CallExpression",
+        "identity": false,
+        "text": "createNormalizedTupleType(type.target, normalizedElements)",
+        "context": "return elements !== normalizedElements ? createNormalizedTupleType(type.target, normalizedElements) : type;"
+      },
+      {
+        "line": 22366,
+        "kind": "BinaryExpression",
+        "identity": true,
+        "text": "elements !== normalizedElements",
+        "context": "return elements !== normalizedElements ? createNormalizedTupleType(type.target, normalizedElements) : type;"
+      }
+    ],
+    "callbackParameters": [
+      "Type"
+    ],
+    "callbackResult": "Type",
+    "binding": "normalizedElements"
+  },
+  {
+    "set": "sameMap",
+    "file": "src/compiler/checker.ts",
+    "line": 22344,
+    "call": "sameMap(type.types, t => getNormalizedType(t, writing))",
+    "signature": "(array: Type[], f: (x: Type, i: number) => Type): Type[]",
+    "uses": [
+      {
+        "line": 22346,
+        "kind": "CallExpression",
+        "identity": false,
+        "text": "getIntersectionType(normalizedTypes)",
+        "context": "return getIntersectionType(normalizedTypes);"
+      },
+      {
+        "line": 22345,
+        "kind": "BinaryExpression",
+        "identity": true,
+        "text": "normalizedTypes !== type.types",
+        "context": "if (normalizedTypes !== type.types) {\r\n                return getIntersectionType(normalizedTypes);\r\n            }"
+      }
+    ],
+    "callbackParameters": [
+      "Type"
+    ],
+    "callbackResult": "Type",
+    "binding": "normalizedTypes"
+  },
+  {
+    "set": "sameMap",
+    "file": "src/compiler/checker.ts",
+    "line": 20246,
+    "call": "sameMap(indexInfos, info => getIndexInfoWithReadonly(info, readonly))",
+    "signature": "(array: readonly IndexInfo[], f: (x: IndexInfo, i: number) => IndexInfo): readonly IndexInfo[]",
+    "uses": [],
+    "callbackParameters": [
+      "IndexInfo"
+    ],
+    "callbackResult": "IndexInfo"
+  },
+  {
+    "set": "reduceLeft",
+    "file": "src/compiler/checker.ts",
+    "line": 19482,
+    "call": "reduceLeft((type as UnionOrIntersectionType).types, (flags, t) => flags | getGenericObjectFlags(t), 0)",
+    "signature": "(array: readonly Type[] | undefined, f: (memo: number, value: Type, i: number) => number, initial: number, start?: number | undefined, count?: number | undefined): number",
+    "uses": [],
+    "callbackParameters": [
+      "number",
+      "Type"
+    ],
+    "callbackResult": "number"
+  },
+  {
+    "set": "reduceLeft",
+    "file": "src/compiler/checker.ts",
+    "line": 18839,
+    "call": "reduceLeft(types, (n, t) => n + getConstituentCount(t), 0)",
+    "signature": "(array: readonly Type[] | undefined, f: (memo: number, value: Type, i: number) => number, initial: number, start?: number | undefined, count?: number | undefined): number",
+    "uses": [],
+    "callbackParameters": [
+      "number",
+      "Type"
+    ],
+    "callbackResult": "number"
+  },
+  {
+    "set": "reduceLeft",
+    "file": "src/compiler/checker.ts",
+    "line": 18799,
+    "call": "reduceLeft(types, (n, t) => t.flags & TypeFlags.Union ? n * (t as UnionType).types.length : t.flags & TypeFlags.Never ? 0 : n, 1)",
+    "signature": "(array: readonly Type[] | undefined, f: (memo: number, value: Type, i: number) => number, initial: number, start?: number | undefined, count?: number | undefined): number",
+    "uses": [],
+    "callbackParameters": [
+      "number",
+      "Type"
+    ],
+    "callbackResult": "number"
+  },
+  {
+    "set": "arrayFrom",
+    "file": "src/compiler/checker.ts",
+    "line": 18662,
+    "call": "arrayFrom(typeMembershipMap.values())",
+    "signature": "(iterator: Iterable<Type>): Type[]",
+    "uses": [
+      {
+        "line": 18791,
+        "kind": "CallExpression",
+        "identity": false,
+        "text": "createIntersectionType(typeSet, objectFlags, aliasSymbol, aliasTypeArguments)",
+        "context": "result = createIntersectionType(typeSet, objectFlags, aliasSymbol, aliasTypeArguments);"
+      },
+      {
+        "line": 18786,
+        "kind": "CallExpression",
+        "identity": false,
+        "text": "createOriginUnionOrIntersectionType(TypeFlags.Intersection, typeSet)",
+        "context": "const origin = some(constituents, t => !!(t.flags & TypeFlags.Intersection)) && getConstituentCountOfTypes(constituents) > getConstituentCountOfTypes(typeSet) ? createOriginUnionOrIntersectionType(TypeFlags.Intersection, typeSet) : undefined;"
+      },
+      {
+        "line": 18786,
+        "kind": "CallExpression",
+        "identity": false,
+        "text": "getConstituentCountOfTypes(typeSet)",
+        "context": "const origin = some(constituents, t => !!(t.flags & TypeFlags.Intersection)) && getConstituentCountOfTypes(constituents) > getConstituentCountOfTypes(typeSet) ? createOriginUnionOrIntersectionType(TypeFlags.Intersection, typeSet) : undefined;"
+      },
+      {
+        "line": 18782,
+        "kind": "CallExpression",
+        "identity": false,
+        "text": "getCrossProductIntersections(typeSet, flags)",
+        "context": "const constituents = getCrossProductIntersections(typeSet, flags);"
+      },
+      {
+        "line": 18779,
+        "kind": "CallExpression",
+        "identity": false,
+        "text": "checkCrossProductUnion(typeSet)",
+        "context": "if (!checkCrossProductUnion(typeSet)) {\r\n                        return errorType;\r\n                    }"
+      },
+      {
+        "line": 18773,
+        "kind": "PropertyAccessExpression",
+        "identity": false,
+        "text": "typeSet.slice",
+        "context": "result = getIntersectionType([getIntersectionType(typeSet.slice(0, middle), flags), getIntersectionType(typeSet.slice(middle), flags)], flags, aliasSymbol, aliasTypeArguments);"
+      },
+      {
+        "line": 18773,
+        "kind": "PropertyAccessExpression",
+        "identity": false,
+        "text": "typeSet.slice",
+        "context": "result = getIntersectionType([getIntersectionType(typeSet.slice(0, middle), flags), getIntersectionType(typeSet.slice(middle), flags)], flags, aliasSymbol, aliasTypeArguments);"
+      },
+      {
+        "line": 18772,
+        "kind": "PropertyAccessExpression",
+        "identity": false,
+        "text": "typeSet.length",
+        "context": "const middle = Math.floor(typeSet.length / 2);"
+      },
+      {
+        "line": 18767,
+        "kind": "PropertyAccessExpression",
+        "identity": false,
+        "text": "typeSet.length",
+        "context": "if (typeSet.length >= 3 && types.length > 2) {\r\n                    // When we have three or more constituents, more than two inputs (to head off infinite reexpansion), some of which are unions, we employ a \"divide and conquer\" strategy\r\n                    // where A & B & C & D is processed as (A & B) & (C & D). Since intersections of unions often produce far smaller\r\n                    // unions of intersections than the full cartesian product (due to some intersections becoming `never`), this can\r\n                    // dramatically reduce the overall work.\r\n                    const middle = Math.floor(typeSet.length / 2);\r\n                    result = getIntersectionType([getIntersectionType(typeSet.slice(0, middle), flags), getIntersectionType(typeSet.slice(middle), flags)], flags, aliasSymbol, aliasTypeArguments);\r\n                }\r\n                else {\r\n                    // We are attempting to construct a type of the form X & (A | B) & (C | D). Transform this into a type of\r\n                    // the form X & A & C | X & A & D | X & B & C | X & B & D. If the estimated size of the resulting union type\r\n                    // exceeds 100000 constituents, report an error.\r\n                    if (!checkCrossProductUnion(typeSet)) {\r\n                        return errorType;\r\n                    }\r\n                    const constituents = getCrossProductIntersections(typeSet, flags);\r\n                    // We attach a denormalized origin type when at least one constituent of the cross-product union is an\r\n                    // intersection (i.e. when the intersection didn't just reduce one or more unions to smaller unions) and\r\n                    // the denormalized origin has fewer constituents than the union itself.\r\n                    const origin = some(constituents, t => !!(t.flags & TypeFlags.Intersection)) && getConstituentCountOfTypes(constituents) > getConstituentCountOfTypes(typeSet) ? createOriginUnionOrIntersectionType(TypeFlags.Intersection, typeSet) : undefined;\r\n                    result = getUnionType(constituents, UnionReduction.Literal, aliasSymbol, aliasTypeArguments, origin);\r\n                }"
+      },
+      {
+        "line": 18765,
+        "kind": "CallExpression",
+        "identity": false,
+        "text": "getIntersectionType(typeSet, flags)",
+        "context": "result = getUnionType([getIntersectionType(typeSet, flags), nullType], UnionReduction.Literal, aliasSymbol, aliasTypeArguments);"
+      },
+      {
+        "line": 18764,
+        "kind": "CallExpression",
+        "identity": false,
+        "text": "removeFromEach(typeSet, TypeFlags.Null)",
+        "context": "removeFromEach(typeSet, TypeFlags.Null);"
+      },
+      {
+        "line": 18763,
+        "kind": "CallExpression",
+        "identity": false,
+        "text": "every(typeSet, t => !!(t.flags & TypeFlags.Union && ((t as UnionType).types[0].flags & TypeFlags.Null || (t as UnionType).types[1].flags & TypeFlags.Null)))",
+        "context": "if (every(typeSet, t => !!(t.flags & TypeFlags.Union && ((t as UnionType).types[0].flags & TypeFlags.Null || (t as UnionType).types[1].flags & TypeFlags.Null)))) {\r\n                    removeFromEach(typeSet, TypeFlags.Null);\r\n                    result = getUnionType([getIntersectionType(typeSet, flags), nullType], UnionReduction.Literal, aliasSymbol, aliasTypeArguments);\r\n                }\r\n                else if (typeSet.length >= 3 && types.length > 2) {\r\n                    // When we have three or more constituents, more than two inputs (to head off infinite reexpansion), some of which are unions, we employ a \"divide and conquer\" strategy\r\n                    // where A & B & C & D is processed as (A & B) & (C & D). Since intersections of unions often produce far smaller\r\n                    // unions of intersections than the full cartesian product (due to some intersections becoming `never`), this can\r\n                    // dramatically reduce the overall work.\r\n                    const middle = Math.floor(typeSet.length / 2);\r\n                    result = getIntersectionType([getIntersectionType(typeSet.slice(0, middle), flags), getIntersectionType(typeSet.slice(middle), flags)], flags, aliasSymbol, aliasTypeArguments);\r\n                }\r\n                else {\r\n                    // We are attempting to construct a type of the form X & (A | B) & (C | D). Transform this into a type of\r\n                    // the form X & A & C | X & A & D | X & B & C | X & B & D. If the estimated size of the resulting union type\r\n                    // exceeds 100000 constituents, report an error.\r\n                    if (!checkCrossProductUnion(typeSet)) {\r\n                        return errorType;\r\n                    }\r\n                    const constituents = getCrossProductIntersections(typeSet, flags);\r\n                    // We attach a denormalized origin type when at least one constituent of the cross-product union is an\r\n                    // intersection (i.e. when the intersection didn't just reduce one or more unions to smaller unions) and\r\n                    // the denormalized origin has fewer constituents than the union itself.\r\n                    const origin = some(constituents, t => !!(t.flags & TypeFlags.Intersection)) && getConstituentCountOfTypes(constituents) > getConstituentCountOfTypes(typeSet) ? createOriginUnionOrIntersectionType(TypeFlags.Intersection, typeSet) : undefined;\r\n                    result = getUnionType(constituents, UnionReduction.Literal, aliasSymbol, aliasTypeArguments, origin);\r\n                }"
+      },
+      {
+        "line": 18761,
+        "kind": "CallExpression",
+        "identity": false,
+        "text": "getIntersectionType(typeSet, flags)",
+        "context": "result = getUnionType([getIntersectionType(typeSet, flags), containedUndefinedType], UnionReduction.Literal, aliasSymbol, aliasTypeArguments);"
+      },
+      {
+        "line": 18760,
+        "kind": "CallExpression",
+        "identity": false,
+        "text": "removeFromEach(typeSet, TypeFlags.Undefined)",
+        "context": "removeFromEach(typeSet, TypeFlags.Undefined);"
+      },
+      {
+        "line": 18759,
+        "kind": "CallExpression",
+        "identity": false,
+        "text": "some(typeSet, containsMissingType)",
+        "context": "const containedUndefinedType = some(typeSet, containsMissingType) ? missingType : undefinedType;"
+      },
+      {
+        "line": 18758,
+        "kind": "CallExpression",
+        "identity": false,
+        "text": "every(typeSet, t => !!(t.flags & TypeFlags.Union && (t as UnionType).types[0].flags & TypeFlags.Undefined))",
+        "context": "if (every(typeSet, t => !!(t.flags & TypeFlags.Union && (t as UnionType).types[0].flags & TypeFlags.Undefined))) {\r\n                    const containedUndefinedType = some(typeSet, containsMissingType) ? missingType : undefinedType;\r\n                    removeFromEach(typeSet, TypeFlags.Undefined);\r\n                    result = getUnionType([getIntersectionType(typeSet, flags), containedUndefinedType], UnionReduction.Literal, aliasSymbol, aliasTypeArguments);\r\n                }\r\n                else if (every(typeSet, t => !!(t.flags & TypeFlags.Union && ((t as UnionType).types[0].flags & TypeFlags.Null || (t as UnionType).types[1].flags & TypeFlags.Null)))) {\r\n                    removeFromEach(typeSet, TypeFlags.Null);\r\n                    result = getUnionType([getIntersectionType(typeSet, flags), nullType], UnionReduction.Literal, aliasSymbol, aliasTypeArguments);\r\n                }\r\n                else if (typeSet.length >= 3 && types.length > 2) {\r\n                    // When we have three or more constituents, more than two inputs (to head off infinite reexpansion), some of which are unions, we employ a \"divide and conquer\" strategy\r\n                    // where A & B & C & D is processed as (A & B) & (C & D). Since intersections of unions often produce far smaller\r\n                    // unions of intersections than the full cartesian product (due to some intersections becoming `never`), this can\r\n                    // dramatically reduce the overall work.\r\n                    const middle = Math.floor(typeSet.length / 2);\r\n                    result = getIntersectionType([getIntersectionType(typeSet.slice(0, middle), flags), getIntersectionType(typeSet.slice(middle), flags)], flags, aliasSymbol, aliasTypeArguments);\r\n                }\r\n                else {\r\n                    // We are attempting to construct a type of the form X & (A | B) & (C | D). Transform this into a type of\r\n                    // the form X & A & C | X & A & D | X & B & C | X & B & D. If the estimated size of the resulting union type\r\n                    // exceeds 100000 constituents, report an error.\r\n                    if (!checkCrossProductUnion(typeSet)) {\r\n                        return errorType;\r\n                    }\r\n                    const constituents = getCrossProductIntersections(typeSet, flags);\r\n                    // We attach a denormalized origin type when at least one constituent of the cross-product union is an\r\n                    // intersection (i.e. when the intersection didn't just reduce one or more unions to smaller unions) and\r\n                    // the denormalized origin has fewer constituents than the union itself.\r\n                    const origin = some(constituents, t => !!(t.flags & TypeFlags.Intersection)) && getConstituentCountOfTypes(constituents) > getConstituentCountOfTypes(typeSet) ? createOriginUnionOrIntersectionType(TypeFlags.Intersection, typeSet) : undefined;\r\n                    result = getUnionType(constituents, UnionReduction.Literal, aliasSymbol, aliasTypeArguments, origin);\r\n                }"
+      },
+      {
+        "line": 18756,
+        "kind": "CallExpression",
+        "identity": false,
+        "text": "getIntersectionType(typeSet, flags, aliasSymbol, aliasTypeArguments)",
+        "context": "result = getIntersectionType(typeSet, flags, aliasSymbol, aliasTypeArguments);"
+      },
+      {
+        "line": 18752,
+        "kind": "CallExpression",
+        "identity": false,
+        "text": "intersectUnionsOfPrimitiveTypes(typeSet)",
+        "context": "if (intersectUnionsOfPrimitiveTypes(typeSet)) {\r\n                    // When the intersection creates a reduced set (which might mean that *all* union types have\r\n                    // disappeared), we restart the operation to get a new set of combined flags. Once we have\r\n                    // reduced we'll never reduce again, so this occurs at most once.\r\n                    result = getIntersectionType(typeSet, flags, aliasSymbol, aliasTypeArguments);\r\n                }\r\n                else if (every(typeSet, t => !!(t.flags & TypeFlags.Union && (t as UnionType).types[0].flags & TypeFlags.Undefined))) {\r\n                    const containedUndefinedType = some(typeSet, containsMissingType) ? missingType : undefinedType;\r\n                    removeFromEach(typeSet, TypeFlags.Undefined);\r\n                    result = getUnionType([getIntersectionType(typeSet, flags), containedUndefinedType], UnionReduction.Literal, aliasSymbol, aliasTypeArguments);\r\n                }\r\n                else if (every(typeSet, t => !!(t.flags & TypeFlags.Union && ((t as UnionType).types[0].flags & TypeFlags.Null || (t as UnionType).types[1].flags & TypeFlags.Null)))) {\r\n                    removeFromEach(typeSet, TypeFlags.Null);\r\n                    result = getUnionType([getIntersectionType(typeSet, flags), nullType], UnionReduction.Literal, aliasSymbol, aliasTypeArguments);\r\n                }\r\n                else if (typeSet.length >= 3 && types.length > 2) {\r\n                    // When we have three or more constituents, more than two inputs (to head off infinite reexpansion), some of which are unions, we employ a \"divide and conquer\" strategy\r\n                    // where A & B & C & D is processed as (A & B) & (C & D). Since intersections of unions often produce far smaller\r\n                    // unions of intersections than the full cartesian product (due to some intersections becoming `never`), this can\r\n                    // dramatically reduce the overall work.\r\n                    const middle = Math.floor(typeSet.length / 2);\r\n                    result = getIntersectionType([getIntersectionType(typeSet.slice(0, middle), flags), getIntersectionType(typeSet.slice(middle), flags)], flags, aliasSymbol, aliasTypeArguments);\r\n                }\r\n                else {\r\n                    // We are attempting to construct a type of the form X & (A | B) & (C | D). Transform this into a type of\r\n                    // the form X & A & C | X & A & D | X & B & C | X & B & D. If the estimated size of the resulting union type\r\n                    // exceeds 100000 constituents, report an error.\r\n                    if (!checkCrossProductUnion(typeSet)) {\r\n                        return errorType;\r\n                    }\r\n                    const constituents = getCrossProductIntersections(typeSet, flags);\r\n                    // We attach a denormalized origin type when at least one constituent of the cross-product union is an\r\n                    // intersection (i.e. when the intersection didn't just reduce one or more unions to smaller unions) and\r\n                    // the denormalized origin has fewer constituents than the union itself.\r\n                    const origin = some(constituents, t => !!(t.flags & TypeFlags.Intersection)) && getConstituentCountOfTypes(constituents) > getConstituentCountOfTypes(typeSet) ? createOriginUnionOrIntersectionType(TypeFlags.Intersection, typeSet) : undefined;\r\n                    result = getUnionType(constituents, UnionReduction.Literal, aliasSymbol, aliasTypeArguments, origin);\r\n                }"
+      },
+      {
+        "line": 18748,
+        "kind": "CallExpression",
+        "identity": false,
+        "text": "getTypeListId(typeSet)",
+        "context": "const id = getTypeListId(typeSet) + (flags & IntersectionFlags.NoConstraintReduction ? \"*\" : getAliasId(aliasSymbol, aliasTypeArguments));"
+      },
+      {
+        "line": 18718,
+        "kind": "ElementAccessExpression",
+        "identity": false,
+        "text": "typeSet[1 - typeVarIndex]",
+        "context": "const primitiveType = typeSet[1 - typeVarIndex];"
+      },
+      {
+        "line": 18717,
+        "kind": "ElementAccessExpression",
+        "identity": false,
+        "text": "typeSet[typeVarIndex]",
+        "context": "const typeVariable = typeSet[typeVarIndex];"
+      },
+      {
+        "line": 18716,
+        "kind": "ElementAccessExpression",
+        "identity": false,
+        "text": "typeSet[0]",
+        "context": "const typeVarIndex = typeSet[0].flags & TypeFlags.TypeVariable ? 0 : 1;"
+      },
+      {
+        "line": 18715,
+        "kind": "PropertyAccessExpression",
+        "identity": false,
+        "text": "typeSet.length",
+        "context": "if (typeSet.length === 2 && !(flags & IntersectionFlags.NoConstraintReduction)) {\r\n            const typeVarIndex = typeSet[0].flags & TypeFlags.TypeVariable ? 0 : 1;\r\n            const typeVariable = typeSet[typeVarIndex];\r\n            const primitiveType = typeSet[1 - typeVarIndex];\r\n            if (\r\n                typeVariable.flags & TypeFlags.TypeVariable &&\r\n                (primitiveType.flags & (TypeFlags.Primitive | TypeFlags.NonPrimitive) && !isGenericStringLikeType(primitiveType) || includes & TypeFlags.IncludesEmptyObject)\r\n            ) {\r\n                // We have an intersection T & P or P & T, where T is a type variable and P is a primitive type, the object type, or {}.\r\n                const constraint = getBaseConstraintOfType(typeVariable);\r\n                // Check that T's constraint is similarly composed of primitive types, the object type, or {}.\r\n                if (constraint && everyType(constraint, t => !!(t.flags & (TypeFlags.Primitive | TypeFlags.NonPrimitive)) || isEmptyAnonymousObjectType(t))) {\r\n                    // If T's constraint is a subtype of P, simply return T. For example, given `T extends \"a\" | \"b\"`,\r\n                    // the intersection `T & string` reduces to just T.\r\n                    if (isTypeStrictSubtypeOf(constraint, primitiveType)) {\r\n                        return typeVariable;\r\n                    }\r\n                    if (!(constraint.flags & TypeFlags.Union && someType(constraint, c => isTypeStrictSubtypeOf(c, primitiveType)))) {\r\n                        // No constituent of T's constraint is a subtype of P. If P is also not a subtype of T's constraint,\r\n                        // then the constraint and P are unrelated, and the intersection reduces to never. For example, given\r\n                        // `T extends \"a\" | \"b\"`, the intersection `T & number` reduces to never.\r\n                        if (!isTypeStrictSubtypeOf(primitiveType, constraint)) {\r\n                            return neverType;\r\n                        }\r\n                    }\r\n                    // Some constituent of T's constraint is a subtype of P, or P is a subtype of T's constraint. Thus,\r\n                    // the intersection further constrains the type variable. For example, given `T extends string | number`,\r\n                    // the intersection `T & \"a\"` is marked as a constrained type variable. Likewise, given `T extends \"a\" | 1`,\r\n                    // the intersection `T & number` is marked as a constrained type variable.\r\n                    objectFlags = ObjectFlags.IsConstrainedTypeVariable;\r\n                }\r\n            }\r\n        }"
+      },
+      {
+        "line": 18713,
+        "kind": "ElementAccessExpression",
+        "identity": false,
+        "text": "typeSet[0]",
+        "context": "return typeSet[0];"
+      },
+      {
+        "line": 18712,
+        "kind": "PropertyAccessExpression",
+        "identity": false,
+        "text": "typeSet.length",
+        "context": "if (typeSet.length === 1) {\r\n            return typeSet[0];\r\n        }"
+      },
+      {
+        "line": 18709,
+        "kind": "PropertyAccessExpression",
+        "identity": false,
+        "text": "typeSet.length",
+        "context": "if (typeSet.length === 0) {\r\n            return unknownType;\r\n        }"
+      },
+      {
+        "line": 18707,
+        "kind": "PropertyAccessExpression",
+        "identity": false,
+        "text": "typeSet.indexOf",
+        "context": "typeSet[typeSet.indexOf(undefinedType)] = missingType;"
+      },
+      {
+        "line": 18707,
+        "kind": "ElementAccessExpression",
+        "identity": false,
+        "text": "typeSet[typeSet.indexOf(undefinedType)]",
+        "context": "typeSet[typeSet.indexOf(undefinedType)] = missingType;"
+      },
+      {
+        "line": 18704,
+        "kind": "CallExpression",
+        "identity": false,
+        "text": "removeRedundantSupertypes(typeSet, includes)",
+        "context": "removeRedundantSupertypes(typeSet, includes);"
+      },
+      {
+        "line": 18687,
+        "kind": "CallExpression",
+        "identity": false,
+        "text": "extractRedundantTemplateLiterals(typeSet)",
+        "context": "if (includes & (TypeFlags.TemplateLiteral | TypeFlags.StringMapping) && includes & TypeFlags.StringLiteral && extractRedundantTemplateLiterals(typeSet)) {\r\n            return neverType;\r\n        }"
+      },
+      {
+        "line": 18674,
+        "kind": "CallExpression",
+        "identity": false,
+        "text": "contains(typeSet, silentNeverType)",
+        "context": "return contains(typeSet, silentNeverType) ? silentNeverType : neverType;"
+      }
+    ],
+    "binding": "typeSet"
+  },
+  {
+    "set": "reduceLeft",
+    "file": "src/compiler/checker.ts",
+    "line": 18386,
+    "call": "reduceLeft(namedUnions, (sum, union) => sum + (union as UnionType).types.length, 0)",
+    "signature": "(array: readonly Type[] | undefined, f: (memo: number, value: Type, i: number) => number, initial: number, start?: number | undefined, count?: number | undefined): number",
+    "uses": [
+      {
+        "line": 18387,
+        "kind": "BinaryExpression",
+        "identity": false,
+        "text": "namedTypesCount + reducedTypes.length",
+        "context": "if (namedTypesCount + reducedTypes.length === typeSet.length) {\r\n                for (const t of namedUnions) {\r\n                    insertType(reducedTypes, t);\r\n                }\r\n                origin = createOriginUnionOrIntersectionType(TypeFlags.Union, reducedTypes);\r\n            }"
+      }
+    ],
+    "callbackParameters": [
+      "number",
+      "Type"
+    ],
+    "callbackResult": "number",
+    "binding": "namedTypesCount"
+  },
+  {
+    "set": "sameMap",
+    "file": "src/compiler/checker.ts",
+    "line": 18002,
+    "call": "sameMap(expandedTypes.slice(firstRestIndex, lastOptionalOrRestIndex + 1), (t, i) => expandedFlags[firstRestIndex + i] & ElementFlags.Variadic ? getIndexedAccessType(t, numberType) : t)",
+    "signature": "(array: Type[], f: (x: Type, i: number) => Type): Type[]",
+    "uses": [],
+    "callbackParameters": [
+      "Type",
+      "number"
+    ],
+    "callbackResult": "Type"
+  },
+  {
+    "set": "arrayFrom",
+    "file": "src/compiler/checker.ts",
+    "line": 16693,
+    "call": "arrayFrom(getMembersOfSymbol(indexSymbol.parent).values())",
+    "signature": "(iterator: Iterable<Symbol>): Symbol[]",
+    "uses": []
+  },
+  {
+    "set": "arrayFrom",
+    "file": "src/compiler/checker.ts",
+    "line": 16689,
+    "call": "arrayFrom(getMembersOfSymbol(symbol).values())",
+    "signature": "(iterator: Iterable<Symbol>): Symbol[]",
+    "uses": []
+  },
+  {
+    "set": "sameMap",
+    "file": "src/compiler/checker.ts",
+    "line": 16593,
+    "call": "sameMap(signature.typeParameters, tp => tp.mapper ? instantiateType(tp, tp.mapper) : tp)",
+    "signature": "(array: readonly TypeParameter[] | undefined, f: (x: TypeParameter, i: number) => Type): readonly Type[] | undefined",
+    "uses": [],
+    "callbackParameters": [
+      "TypeParameter"
+    ],
+    "callbackResult": "Type"
+  },
+  {
+    "set": "reduceLeft",
+    "file": "src/compiler/checker.ts",
+    "line": 16006,
+    "call": "reduceLeft(applicableInfos, (isReadonly, info) => isReadonly && info.isReadonly, /*initial*/ true)",
+    "signature": "(array: readonly IndexInfo[] | undefined, f: (memo: boolean, value: IndexInfo, i: number) => boolean, initial: boolean, start?: number | undefined, count?: number | undefined): boolean",
+    "uses": [],
+    "callbackParameters": [
+      "boolean",
+      "IndexInfo"
+    ],
+    "callbackResult": "boolean"
+  },
+  {
+    "set": "sameMap",
+    "file": "src/compiler/checker.ts",
+    "line": 15826,
+    "call": "sameMap(unionType.types, getReducedType)",
+    "signature": "(array: Type[], f: (x: Type, i: number) => Type): Type[]",
+    "uses": [
+      {
+        "line": 15830,
+        "kind": "CallExpression",
+        "identity": false,
+        "text": "getUnionType(reducedTypes)",
+        "context": "const reduced = getUnionType(reducedTypes);"
+      },
+      {
+        "line": 15827,
+        "kind": "BinaryExpression",
+        "identity": true,
+        "text": "reducedTypes === unionType.types",
+        "context": "if (reducedTypes === unionType.types) {\r\n            return unionType;\r\n        }"
+      }
+    ],
+    "callbackParameters": [
+      "Type"
+    ],
+    "callbackResult": "Type",
+    "binding": "reducedTypes"
+  },
+  {
+    "set": "arrayFrom",
+    "file": "src/compiler/checker.ts",
+    "line": 15685,
+    "call": "arrayFrom(propSet.values())",
+    "signature": "(iterator: Iterable<Symbol>): Symbol[]",
+    "uses": []
+  },
+  {
+    "set": "arrayFrom",
+    "file": "src/compiler/checker.ts",
+    "line": 15145,
+    "call": "arrayFrom(props.values())",
+    "signature": "(iterator: Iterable<Symbol>): Symbol[]",
+    "uses": []
+  },
+  {
+    "set": "sameMap",
+    "file": "src/compiler/checker.ts",
+    "line": 14785,
+    "call": "sameMap((type as UnionType).types, getLowerBoundOfKeyType)",
+    "signature": "(array: Type[], f: (x: Type, i: number) => Type): Type[]",
+    "uses": [],
+    "callbackParameters": [
+      "Type"
+    ],
+    "callbackResult": "Type"
+  },
+  {
+    "set": "arrayFrom",
+    "file": "src/compiler/checker.ts",
+    "line": 14643,
+    "call": "arrayFrom(members.values())",
+    "signature": "(iterator: Iterable<Symbol>): Symbol[]",
+    "uses": []
+  },
+  {
+    "set": "reduceLeft",
+    "file": "src/compiler/checker.ts",
+    "line": 14565,
+    "call": "reduceLeft(getIndexInfosOfType(t), (infos, newInfo) => appendIndexInfo(infos, newInfo, /*union*/ false), indexInfos)",
+    "signature": "(array: readonly IndexInfo[] | undefined, f: (memo: IndexInfo[] | undefined, value: IndexInfo, i: number) => IndexInfo[] | undefined, initial: IndexInfo[] | undefined, start?: number | undefined, count?: number | undefined): IndexInfo[] | undefined",
+    "uses": [],
+    "callbackParameters": [
+      "IndexInfo[] | undefined",
+      "IndexInfo"
+    ],
+    "callbackResult": "IndexInfo[]"
+  },
+  {
+    "set": "sameMap",
+    "file": "src/compiler/checker.ts",
+    "line": 14062,
+    "call": "sameMap((type as IntersectionType).types, t => getTypeWithThisArgument(t, thisArgument, needApparentType))",
+    "signature": "(array: Type[], f: (x: Type, i: number) => Type): Type[]",
+    "uses": [
+      {
+        "line": 14063,
+        "kind": "CallExpression",
+        "identity": false,
+        "text": "getIntersectionType(types)",
+        "context": "return types !== (type as IntersectionType).types ? getIntersectionType(types) : type;"
+      },
+      {
+        "line": 14063,
+        "kind": "BinaryExpression",
+        "identity": true,
+        "text": "types !== (type as IntersectionType).types",
+        "context": "return types !== (type as IntersectionType).types ? getIntersectionType(types) : type;"
+      }
+    ],
+    "callbackParameters": [
+      "Type"
+    ],
+    "callbackResult": "Type",
+    "binding": "types"
+  },
+  {
+    "set": "arrayFrom",
+    "file": "src/compiler/checker.ts",
+    "line": 13982,
+    "call": "arrayFrom(assignments.values())",
+    "signature": "(iterator: Iterable<Declaration>): Declaration[]",
+    "uses": [
+      {
+        "line": 13983,
+        "kind": "ForOfStatement",
+        "identity": false,
+        "text": "for (const member of decls) {\r\n                    const assignmentKind = getAssignmentDeclarationKind(member as BinaryExpression | CallExpression);\r\n                    const isInstanceMember = assignmentKind === AssignmentDeclarationKind.PrototypeProperty\r\n                        || isBinaryExpression(member) && isPossiblyAliasedThisProperty(member, assignmentKind)\r\n                        || assignmentKind === AssignmentDeclarationKind.ObjectDefinePrototypeProperty\r\n                        || assignmentKind === AssignmentDeclarationKind.Prototype; // A straight `Prototype` assignment probably can never have a computed name\r\n                    if (isStatic === !isInstanceMember) {\r\n                        if (hasLateBindableName(member)) {\r\n                            lateBindMember(symbol, earlySymbols, lateSymbols, member);\r\n                        }\r\n                    }\r\n                }",
+        "context": "for (const member of decls) {\r\n                    const assignmentKind = getAssignmentDeclarationKind(member as BinaryExpression | CallExpression);\r\n                    const isInstanceMember = assignmentKind === AssignmentDeclarationKind.PrototypeProperty\r\n                        || isBinaryExpression(member) && isPossiblyAliasedThisProperty(member, assignmentKind)\r\n                        || assignmentKind === AssignmentDeclarationKind.ObjectDefinePrototypeProperty\r\n                        || assignmentKind === AssignmentDeclarationKind.Prototype; // A straight `Prototype` assignment probably can never have a computed name\r\n                    if (isStatic === !isInstanceMember) {\r\n                        if (hasLateBindableName(member)) {\r\n                            lateBindMember(symbol, earlySymbols, lateSymbols, member);\r\n                        }\r\n                    }\r\n                }"
+      }
+    ],
+    "binding": "decls"
+  },
+  {
+    "set": "sameMap",
+    "file": "src/compiler/checker.ts",
+    "line": 13313,
+    "call": "sameMap(type.typeParameters, (t, i) => type.elementFlags[i] & ElementFlags.Variadic ? getIndexedAccessType(t, numberType) : t)",
+    "signature": "(array: TypeParameter[] | undefined, f: (x: TypeParameter, i: number) => Type): Type[] | undefined",
+    "uses": [
+      {
+        "line": 13314,
+        "kind": "BinaryExpression",
+        "identity": false,
+        "text": "elementTypes || emptyArray",
+        "context": "return createArrayType(getUnionType(elementTypes || emptyArray), type.readonly);"
+      }
+    ],
+    "callbackParameters": [
+      "TypeParameter",
+      "number"
+    ],
+    "callbackResult": "Type",
+    "binding": "elementTypes"
+  },
+  {
+    "set": "sameMap",
+    "file": "src/compiler/checker.ts",
+    "line": 13195,
+    "call": "sameMap<Signature>(signatures, sig => some(sig.typeParameters) ? getSignatureInstantiation(sig, typeArguments, isInJSFile(location)) : sig)",
+    "signature": "(array: readonly Signature[], f: (x: Signature, i: number) => Signature): readonly Signature[]",
+    "uses": [],
+    "callbackParameters": [
+      "Signature"
+    ],
+    "callbackResult": "Signature"
+  },
+  {
+    "set": "arrayFrom",
+    "file": "src/compiler/checker.ts",
+    "line": 10020,
+    "call": "arrayFrom(membersSet)",
+    "signature": "(iterator: Iterable<Symbol>): Symbol[]",
+    "uses": []
+  },
+  {
+    "set": "arrayFrom",
+    "file": "src/compiler/checker.ts",
+    "line": 10011,
+    "call": "arrayFrom(getExportsOfSymbol(symbol).values())",
+    "signature": "(iterator: Iterable<Symbol>): Symbol[]",
+    "uses": [
+      {
+        "line": 10022,
+        "kind": "CallExpression",
+        "identity": false,
+        "text": "filter(exports, m => isNamespaceMember(m) && isIdentifierText(m.escapedName as string, ScriptTarget.ESNext))",
+        "context": "return filter(exports, m => isNamespaceMember(m) && isIdentifierText(m.escapedName as string, ScriptTarget.ESNext));"
+      },
+      {
+        "line": 10020,
+        "kind": "BinaryExpression",
+        "identity": false,
+        "text": "exports = arrayFrom(membersSet)",
+        "context": "exports = arrayFrom(membersSet);"
+      },
+      {
+        "line": 10014,
+        "kind": "NewExpression",
+        "identity": false,
+        "text": "new Set(exports)",
+        "context": "const membersSet = new Set(exports);"
+      }
+    ],
+    "binding": "exports"
+  },
+  {
+    "set": "sameMap",
+    "file": "src/compiler/checker.ts",
+    "line": 7432,
+    "call": "sameMap(typeArguments, (t, i) => removeMissingType(t, !!((type.target as TupleType).elementFlags[i] & ElementFlags.Optional)))",
+    "signature": "(array: readonly Type[], f: (x: Type, i: number) => Type): readonly Type[]",
+    "uses": [],
+    "callbackParameters": [
+      "Type",
+      "number"
+    ],
+    "callbackResult": "Type"
+  },
+  {
+    "set": "arrayFrom",
+    "file": "src/compiler/checker.ts",
+    "line": 5564,
+    "call": "arrayFrom(typeofNEFacts.keys())",
+    "signature": "(iterator: Iterable<string>): string[]",
+    "uses": []
+  },
+  {
+    "set": "arrayFrom",
+    "file": "src/compiler/checker.ts",
+    "line": 2900,
+    "call": "arrayFrom(moduleAugmentation.symbol.exports.entries())",
+    "signature": "(iterator: Iterable<[__String, Symbol]>): [__String, Symbol][]",
+    "uses": []
+  },
+  {
+    "set": "arrayFrom",
+    "file": "src/compiler/checker.ts",
+    "line": 1982,
+    "call": "arrayFrom(candidatesSet)",
+    "signature": "(iterator: Iterable<Signature>): Signature[]",
+    "uses": []
+  },
+  {
+    "set": "reduceLeft",
+    "file": "src/compiler/checker.ts",
+    "line": 1613,
+    "call": "reduceLeft(host.getSourceFiles(), (n, s) => n + s.symbolCount, symbolCount)",
+    "signature": "(array: readonly SourceFile[] | undefined, f: (memo: number, value: SourceFile, i: number) => number, initial: number, start?: number | undefined, count?: number | undefined): number",
+    "uses": [],
+    "callbackParameters": [
+      "number",
+      "SourceFile"
+    ],
+    "callbackResult": "number"
+  },
+  {
+    "set": "reduceLeft",
+    "file": "src/compiler/checker.ts",
+    "line": 1612,
+    "call": "reduceLeft(host.getSourceFiles(), (n, s) => n + s.identifierCount, 0)",
+    "signature": "(array: readonly SourceFile[] | undefined, f: (memo: number, value: SourceFile, i: number) => number, initial: number, start?: number | undefined, count?: number | undefined): number",
+    "uses": [],
+    "callbackParameters": [
+      "number",
+      "SourceFile"
+    ],
+    "callbackResult": "number"
+  },
+  {
+    "set": "reduceLeft",
+    "file": "src/compiler/checker.ts",
+    "line": 1611,
+    "call": "reduceLeft(host.getSourceFiles(), (n, s) => n + s.nodeCount, 0)",
+    "signature": "(array: readonly SourceFile[] | undefined, f: (memo: number, value: SourceFile, i: number) => number, initial: number, start?: number | undefined, count?: number | undefined): number",
+    "uses": [],
+    "callbackParameters": [
+      "number",
+      "SourceFile"
+    ],
+    "callbackResult": "number"
+  },
+  {
+    "set": "arrayFrom",
+    "file": "src/compiler/sourcemap.ts",
+    "line": 740,
+    "call": "arrayFrom(decoder, processMapping)",
+    "signature": "(iterator: Iterable<Mapping>, map: (t: Mapping) => MappedPosition): MappedPosition[]",
+    "uses": [
+      {
+        "line": 748,
+        "kind": "BinaryExpression",
+        "identity": false,
+        "text": "decodedMappings = mappings",
+        "context": "decodedMappings = mappings;"
+      }
+    ],
+    "callbackParameters": [
+      "Mapping"
+    ],
+    "callbackResult": "MappedPosition",
+    "binding": "mappings"
+  },
+  {
+    "set": "arrayFrom",
+    "file": "src/compiler/transformers/esnext.ts",
+    "line": 205,
+    "call": "arrayFrom(exportBindings.values())",
+    "signature": "(iterator: Iterable<ExportSpecifier>): ExportSpecifier[]",
+    "uses": []
+  },
+  {
+    "set": "sameMap",
+    "file": "src/compiler/transformers/jsx.ts",
+    "line": 451,
+    "call": "sameMap(node.expression.properties, p => Debug.checkDefined(visitNode(p, visitor, isObjectLiteralElementLike)))",
+    "signature": "(array: readonly (PropertyAssignment | ShorthandPropertyAssignment | SpreadAssignment | MethodDeclaration | GetAccessorDeclaration | SetAccessorDeclaration)[], f: (x: PropertyAssignment | ShorthandPropertyAssignment | SpreadAssignment | MethodDeclaration | GetAccessorDeclaration | SetAccessorDeclaration, i: number) => PropertyAssignment | ShorthandPropertyAssignment | SpreadAssignment | MethodDeclaration | GetAccessorDeclaration | SetAccessorDeclaration): readonly (PropertyAssignment | ShorthandPropertyAssignment | SpreadAssignment | MethodDeclaration | GetAccessorDeclaration | SetAccessorDeclaration)[]",
+    "uses": [],
+    "callbackParameters": [
+      "PropertyAssignment | ShorthandPropertyAssignment | SpreadAssignment | MethodDeclaration | GetAccessorDeclaration | SetAccessorDeclaration"
+    ],
+    "callbackResult": "PropertyAssignment | ShorthandPropertyAssignment | SpreadAssignment | MethodDeclaration | GetAccessorDeclaration | SetAccessorDeclaration"
+  },
+  {
+    "set": "arrayFrom",
+    "file": "src/compiler/transformers/jsx.ts",
+    "line": 187,
+    "call": "arrayFrom(importSpecifiersMap.values(), s => factory.createBindingElement(/*dotDotDotToken*/ undefined, s.propertyName, s.name))",
+    "signature": "(iterator: Iterable<ImportSpecifier>, map: (t: ImportSpecifier) => BindingElement): BindingElement[]",
+    "uses": [],
+    "callbackParameters": [
+      "ImportSpecifier"
+    ],
+    "callbackResult": "BindingElement"
+  },
+  {
+    "set": "arrayFrom",
+    "file": "src/compiler/transformers/jsx.ts",
+    "line": 177,
+    "call": "arrayFrom(importSpecifiersMap.values())",
+    "signature": "(iterator: Iterable<ImportSpecifier>): ImportSpecifier[]",
+    "uses": []
+  },
+  {
+    "set": "arrayFrom",
+    "file": "src/compiler/transformers/jsx.ts",
+    "line": 174,
+    "call": "arrayFrom(currentFileState.utilizedImplicitRuntimeImports.entries())",
+    "signature": "(iterator: Iterable<[string, Map<string, ImportSpecifier>]>): [string, Map<string, ImportSpecifier>][]",
+    "uses": []
+  },
+  {
+    "set": "reduceLeft",
+    "file": "src/compiler/transformers/generators.ts",
+    "line": 1169,
+    "call": "reduceLeft(properties, reduceProperty, [] as Expression[], numInitialProperties)",
+    "signature": "(array: readonly (PropertyAssignment | ShorthandPropertyAssignment | SpreadAssignment | MethodDeclaration | GetAccessorDeclaration | SetAccessorDeclaration)[] | undefined, f: (memo: Expression[], value: PropertyAssignment | ShorthandPropertyAssignment | SpreadAssignment | MethodDeclaration | GetAccessorDeclaration | SetAccessorDeclaration, i: number) => Expression[], initial: Expression[], start?: number | undefined, count?: number | undefined): Expression[]",
+    "uses": [
+      {
+        "line": 1172,
+        "kind": "CallExpression",
+        "identity": false,
+        "text": "factory.inlineExpressions(expressions)",
+        "context": "return factory.inlineExpressions(expressions);"
+      },
+      {
+        "line": 1171,
+        "kind": "PropertyAccessExpression",
+        "identity": false,
+        "text": "expressions.push",
+        "context": "expressions.push(multiLine ? startOnNewLine(setParent(setTextRange(factory.cloneNode(temp), temp), temp.parent)) : temp);"
+      }
+    ],
+    "callbackParameters": [
+      "Expression[]",
+      "ObjectLiteralElementLike"
+    ],
+    "callbackResult": "Expression[]",
+    "binding": "expressions"
+  },
+  {
+    "set": "reduceLeft",
+    "file": "src/compiler/transformers/generators.ts",
+    "line": 1101,
+    "call": "reduceLeft(elements, reduceElement, [] as Expression[], numInitialElements)",
+    "signature": "(array: readonly Expression[] | undefined, f: (memo: Expression[], value: Expression, i: number) => Expression[], initial: Expression[], start?: number | undefined, count?: number | undefined): Expression[]",
+    "uses": [
+      {
+        "line": 1105,
+        "kind": "ConditionalExpression",
+        "identity": false,
+        "text": "leadingElement ? [leadingElement, ...expressions] : expressions",
+        "context": "return temp\r\n            ? factory.createArrayConcatCall(temp, [factory.createArrayLiteralExpression(expressions, multiLine)])\r\n            : setTextRange(\r\n                factory.createArrayLiteralExpression(leadingElement ? [leadingElement, ...expressions] : expressions, multiLine),\r\n                location,\r\n            );"
+      },
+      {
+        "line": 1105,
+        "kind": "SpreadElement",
+        "identity": false,
+        "text": "...expressions",
+        "context": "return temp\r\n            ? factory.createArrayConcatCall(temp, [factory.createArrayLiteralExpression(expressions, multiLine)])\r\n            : setTextRange(\r\n                factory.createArrayLiteralExpression(leadingElement ? [leadingElement, ...expressions] : expressions, multiLine),\r\n                location,\r\n            );"
+      },
+      {
+        "line": 1103,
+        "kind": "CallExpression",
+        "identity": false,
+        "text": "factory.createArrayLiteralExpression(expressions, multiLine)",
+        "context": "return temp\r\n            ? factory.createArrayConcatCall(temp, [factory.createArrayLiteralExpression(expressions, multiLine)])\r\n            : setTextRange(\r\n                factory.createArrayLiteralExpression(leadingElement ? [leadingElement, ...expressions] : expressions, multiLine),\r\n                location,\r\n            );"
+      }
+    ],
+    "callbackParameters": [
+      "Expression[]",
+      "Expression"
+    ],
+    "callbackResult": "Expression[]",
+    "binding": "expressions"
+  },
+  {
+    "set": "arrayFrom",
+    "file": "src/compiler/transformers/module/module.ts",
+    "line": 2481,
+    "call": "arrayFrom(bindingsSet)",
+    "signature": "(iterator: Iterable<Identifier>): Identifier[]",
+    "uses": []
+  },
+  {
+    "set": "reduceLeft",
+    "file": "src/compiler/transformers/module/module.ts",
+    "line": 632,
+    "call": "reduceLeft(currentModuleInfo.exportedNames, (prev, nextId) =>\r\n                    nextId.kind === SyntaxKind.StringLiteral\r\n                        ? factory.createAssignment(factory.createElementAccessExpression(factory.createIdentifier(\"exports\"), factory.createStringLiteral(nextId.text)), prev)\r\n                        : factory.createAssignment(factory.createPropertyAccessExpression(factory.createIdentifier(\"exports\"), factory.createIdentifier(idText(nextId))), prev), factory.createVoidZero() as Expression)",
+    "signature": "(array: readonly ModuleExportName[] | undefined, f: (memo: Expression, value: ModuleExportName, i: number) => Expression, initial: Expression, start?: number | undefined, count?: number | undefined): Expression",
+    "uses": [],
+    "callbackParameters": [
+      "Expression",
+      "ModuleExportName"
+    ],
+    "callbackResult": "AssignmentExpression<EqualsToken>"
+  },
+  {
+    "set": "reduceLeft",
+    "file": "src/compiler/transformers/module/module.ts",
+    "line": 292,
+    "call": "reduceLeft(\r\n                            currentModuleInfo.exportedNames.slice(i, i + chunkSize),\r\n                            (prev, nextId) =>\r\n                                nextId.kind === SyntaxKind.StringLiteral\r\n                                    ? factory.createAssignment(factory.createElementAccessExpression(factory.createIdentifier(\"exports\"), factory.createStringLiteral(nextId.text)), prev)\r\n                                    : factory.createAssignment(factory.createPropertyAccessExpression(factory.createIdentifier(\"exports\"), factory.createIdentifier(idText(nextId))), prev),\r\n                            factory.createVoidZero() as Expression,\r\n                        )",
+    "signature": "(array: readonly ModuleExportName[] | undefined, f: (memo: Expression, value: ModuleExportName, i: number) => Expression, initial: Expression, start?: number | undefined, count?: number | undefined): Expression",
+    "uses": [],
+    "callbackParameters": [
+      "Expression",
+      "ModuleExportName"
+    ],
+    "callbackResult": "AssignmentExpression<EqualsToken>"
+  },
+  {
+    "set": "arrayToMap",
+    "file": "src/compiler/watchUtilities.ts",
+    "line": 414,
+    "call": "arrayToMap(options?.configFile?.extendedSourceFiles || emptyArray, toPath)",
+    "signature": "(array: readonly string[], makeKey: (value: string) => Path | undefined): Map<Path, string>",
+    "uses": [
+      {
+        "line": 423,
+        "kind": "PropertyAccessExpression",
+        "identity": false,
+        "text": "extendedConfigs.forEach",
+        "context": "extendedConfigs.forEach((extendedConfigFileName, extendedConfigFilePath) => {\r\n        const existing = extendedConfigFilesMap.get(extendedConfigFilePath);\r\n        if (existing) {\r\n            existing.projects.add(projectPath);\r\n        }\r\n        else {\r\n            // start watching previously unseen extended config\r\n            extendedConfigFilesMap.set(extendedConfigFilePath, {\r\n                projects: new Set([projectPath]),\r\n                watcher: createExtendedConfigFileWatch(extendedConfigFileName, extendedConfigFilePath),\r\n                close: () => {\r\n                    const existing = extendedConfigFilesMap.get(extendedConfigFilePath);\r\n                    if (!existing || existing.projects.size !== 0) return;\r\n                    existing.watcher.close();\r\n                    extendedConfigFilesMap.delete(extendedConfigFilePath);\r\n                },\r\n            });\r\n        }\r\n    });"
+      },
+      {
+        "line": 417,
+        "kind": "PropertyAccessExpression",
+        "identity": false,
+        "text": "extendedConfigs.has",
+        "context": "if (!extendedConfigs.has(extendedConfigFilePath)) {\r\n            watcher.projects.delete(projectPath);\r\n            watcher.close();\r\n        }"
+      }
+    ],
+    "callbackParameters": [
+      "string"
+    ],
+    "callbackResult": "Path",
+    "binding": "extendedConfigs"
+  },
+  {
+    "set": "arrayFrom",
+    "file": "src/compiler/builderState.ts",
+    "line": 624,
+    "call": "arrayFrom(mapDefinedIterator(seenFileNamesMap.values(), value => value))",
+    "signature": "(iterator: Iterable<SourceFile>): SourceFile[]",
+    "uses": []
+  },
+  {
+    "set": "arrayFrom",
+    "file": "src/compiler/builderState.ts",
+    "line": 512,
+    "call": "arrayFrom(keys.keys())",
+    "signature": "(iterator: Iterable<Path>): Path[]",
+    "uses": []
+  },
+  {
+    "set": "arrayFrom",
+    "file": "src/compiler/builderState.ts",
+    "line": 493,
+    "call": "arrayFrom(mapDefinedIterator(seenMap.keys(), path => programOfThisState.getSourceFileByPath(path)?.fileName ?? path))",
+    "signature": "(iterator: Iterable<string>): string[]",
+    "uses": []
+  },
+  {
+    "set": "arrayToMap",
+    "file": "src/compiler/builder.ts",
+    "line": 2390,
+    "call": "arrayToMap(diagnostics, value => toFilePath(value[0]), value => value[1])",
+    "signature": "(array: readonly IncrementalBuildInfoDiagnosticOfFile[], makeKey: (value: IncrementalBuildInfoDiagnosticOfFile) => Path | undefined, makeValue: (value: IncrementalBuildInfoDiagnosticOfFile) => readonly ReusableDiagnostic[]): Map<Path, readonly ReusableDiagnostic[]>",
+    "uses": [],
+    "callbackParameters": [
+      "IncrementalBuildInfoDiagnosticOfFile"
+    ],
+    "callbackResult": "Path"
+  },
+  {
+    "set": "arrayToMap",
+    "file": "src/compiler/builder.ts",
+    "line": 2318,
+    "call": "arrayToMap(buildInfo.affectedFilesPendingEmit, value => toFilePath(isNumber(value) ? value : value[0]), value => toBuilderFileEmit(value, fullEmitForOptions!))",
+    "signature": "(array: readonly IncrementalBuildInfoFilePendingEmit[], makeKey: (value: IncrementalBuildInfoFilePendingEmit) => Path | undefined, makeValue: (value: IncrementalBuildInfoFilePendingEmit) => BuilderFileEmit): Map<Path, BuilderFileEmit>",
+    "uses": [],
+    "callbackParameters": [
+      "IncrementalBuildInfoFilePendingEmit"
+    ],
+    "callbackResult": "Path"
+  },
+  {
+    "set": "arrayFrom",
+    "file": "src/compiler/builder.ts",
+    "line": 1561,
+    "call": "arrayFrom(state.changedFilesSet.keys())",
+    "signature": "(iterator: Iterable<Path>): Path[]",
+    "uses": []
+  },
+  {
+    "set": "arrayFrom",
+    "file": "src/compiler/builder.ts",
+    "line": 1492,
+    "call": "arrayFrom(state.emitDiagnosticsPerFile.keys())",
+    "signature": "(iterator: Iterable<Path>): Path[]",
+    "uses": []
+  },
+  {
+    "set": "arrayFrom",
+    "file": "src/compiler/builder.ts",
+    "line": 1398,
+    "call": "arrayFrom(set.keys(), toFileId)",
+    "signature": "(iterator: Iterable<Path>, map: (t: Path) => IncrementalBuildInfoFileId): IncrementalBuildInfoFileId[]",
+    "uses": [],
+    "callbackParameters": [
+      "Path"
+    ],
+    "callbackResult": "IncrementalBuildInfoFileId"
+  },
+  {
+    "set": "arrayFrom",
+    "file": "src/compiler/builder.ts",
+    "line": 1343,
+    "call": "arrayFrom(state.affectedFilesPendingEmit.keys())",
+    "signature": "(iterator: Iterable<Path>): Path[]",
+    "uses": []
+  },
+  {
+    "set": "arrayFrom",
+    "file": "src/compiler/builder.ts",
+    "line": 1332,
+    "call": "arrayFrom(state.referencedMap.keys())",
+    "signature": "(iterator: Iterable<Path>): Path[]",
+    "uses": []
+  },
+  {
+    "set": "arrayFrom",
+    "file": "src/compiler/builder.ts",
+    "line": 1292,
+    "call": "arrayFrom(state.fileInfos.entries(), ([key, value]): IncrementalMultiFileEmitBuildInfoFileInfo => {\r\n        // Ensure fileId\r\n        const fileId = toFileId(key);\r\n        tryAddRoot(key, fileId);\r\n        Debug.assert(fileNames[fileId - 1] === relativeToBuildInfo(key));\r\n        const oldSignature = state.oldSignatures?.get(key);\r\n        const actualSignature = oldSignature !== undefined ? oldSignature || undefined : value.signature;\r\n        if (state.compilerOptions.composite) {\r\n            const file = state.program.getSourceFileByPath(key)!;\r\n            if (!isJsonSourceFile(file) && sourceFileMayBeEmitted(file, state.program)) {\r\n                const emitSignature = state.emitSignatures?.get(key);\r\n                if (emitSignature !== actualSignature) {\r\n                    emitSignatures = append(\r\n                        emitSignatures,\r\n                        emitSignature === undefined ?\r\n                            fileId : // There is no emit, encode as false\r\n                            // fileId, signature: emptyArray if signature only differs in dtsMap option than our own compilerOptions otherwise EmitSignature\r\n                            [fileId, !isString(emitSignature) && emitSignature[0] === actualSignature ? emptyArray as [] : emitSignature],\r\n                    );\r\n                }\r\n            }\r\n        }\r\n        return value.version === actualSignature ?\r\n            value.affectsGlobalScope || value.impliedFormat ?\r\n                // If file version is same as signature, dont serialize signature\r\n                { version: value.version, signature: undefined, affectsGlobalScope: value.affectsGlobalScope, impliedFormat: value.impliedFormat } :\r\n                // If file info only contains version and signature and both are same we can just write string\r\n                value.version :\r\n            actualSignature !== undefined ? // If signature is not same as version, encode signature in the fileInfo\r\n            oldSignature === undefined ?\r\n                // If we havent computed signature, use fileInfo as is\r\n                value :\r\n                // Serialize fileInfo with new updated signature\r\n                { version: value.version, signature: actualSignature, affectsGlobalScope: value.affectsGlobalScope, impliedFormat: value.impliedFormat } :\r\n            // Signature of the FileInfo is undefined, serialize it as false\r\n            { version: value.version, signature: false, affectsGlobalScope: value.affectsGlobalScope, impliedFormat: value.impliedFormat };\r\n    })",
+    "signature": "(iterator: Iterable<[Path, FileInfo]>, map: (t: [Path, FileInfo]) => IncrementalMultiFileEmitBuildInfoFileInfo): IncrementalMultiFileEmitBuildInfoFileInfo[]",
+    "uses": [],
+    "callbackParameters": [
+      "[Path, FileInfo]"
+    ],
+    "callbackResult": "IncrementalMultiFileEmitBuildInfoFileInfo",
+    "binding": "fileInfos"
+  },
+  {
+    "set": "arrayFrom",
+    "file": "src/compiler/builder.ts",
+    "line": 1258,
+    "call": "arrayFrom(state.fileInfos.entries(), ([key, value]): IncrementalBundleEmitBuildInfoFileInfo => {\r\n            // Ensure fileId\r\n            const fileId = toFileId(key);\r\n            tryAddRoot(key, fileId);\r\n            return value.impliedFormat ?\r\n                { version: value.version, impliedFormat: value.impliedFormat, signature: undefined, affectsGlobalScope: undefined } :\r\n                value.version;\r\n        })",
+    "signature": "(iterator: Iterable<[Path, FileInfo]>, map: (t: [Path, FileInfo]) => IncrementalBundleEmitBuildInfoFileInfo): IncrementalBundleEmitBuildInfoFileInfo[]",
+    "uses": [],
+    "callbackParameters": [
+      "[Path, FileInfo]"
+    ],
+    "callbackResult": "IncrementalBundleEmitBuildInfoFileInfo",
+    "binding": "fileInfos"
+  },
+  {
+    "set": "arrayFrom",
+    "file": "src/compiler/builder.ts",
+    "line": 1246,
+    "call": "arrayFrom(rootFileNames, r => relativeToBuildInfo(r))",
+    "signature": "(iterator: Iterable<Path>, map: (t: Path) => string): string[]",
+    "uses": [],
+    "callbackParameters": [
+      "Path"
+    ],
+    "callbackResult": "string"
+  },
+  {
+    "set": "sameMap",
+    "file": "src/compiler/builder.ts",
+    "line": 564,
+    "call": "sameMap(array, chain => convertOrRepopulateDiagnosticMessageChain(chain, sourceFile, newProgram, repopulateInfo))",
+    "signature": "(array: T[] | undefined, f: (x: T, i: number) => DiagnosticMessageChain): DiagnosticMessageChain[] | undefined",
+    "uses": [],
+    "callbackParameters": [
+      "T"
+    ],
+    "callbackResult": "DiagnosticMessageChain"
+  },
+  {
+    "set": "sameMap",
+    "file": "src/compiler/builder.ts",
+    "line": 526,
+    "call": "sameMap(diagnostics, diag => {\r\n        if (isString(diag.messageText)) return diag;\r\n        const repopulatedChain = convertOrRepopulateDiagnosticMessageChain(diag.messageText, diag.file, newProgram, chain => chain.repopulateInfo?.());\r\n        return repopulatedChain === diag.messageText ?\r\n            diag :\r\n            { ...diag, messageText: repopulatedChain };\r\n    })",
+    "signature": "(array: readonly Diagnostic[], f: (x: Diagnostic, i: number) => Diagnostic): readonly Diagnostic[]",
+    "uses": [],
+    "callbackParameters": [
+      "Diagnostic"
+    ],
+    "callbackResult": "Diagnostic"
+  },
+  {
+    "set": "arrayFrom",
+    "file": "src/compiler/tsbuildPublic.ts",
+    "line": 1061,
+    "call": "arrayFrom(\r\n                    internalMap.values(),\r\n                    data =>\r\n                        state.host.realpath && (isPackageJsonInfo(data) || data.directoryExists) ?\r\n                            state.host.realpath(combinePaths(data.packageDirectory, \"package.json\")) :\r\n                            combinePaths(data.packageDirectory, \"package.json\"),\r\n                )",
+    "signature": "(iterator: Iterable<PackageJsonInfoCacheEntry>, map: (t: PackageJsonInfoCacheEntry) => string): string[]",
+    "uses": [],
+    "callbackParameters": [
+      "PackageJsonInfoCacheEntry"
+    ],
+    "callbackResult": "string"
+  },
+  {
+    "set": "arrayFrom",
+    "file": "src/compiler/executeCommandLine.ts",
+    "line": 313,
+    "call": "arrayFrom(type.entries())",
+    "signature": "(iterator: Iterable<[string, string | number]>): [string, string | number][]",
+    "uses": []
+  },
+  {
+    "set": "arrayFrom",
+    "file": "src/services/documentHighlights.ts",
+    "line": 119,
+    "call": "arrayFrom(mapDefinedIterator(map.entries(), ([fileName, highlightSpans]) => {\r\n            if (!sourceFilesSet.has(fileName)) {\r\n                if (!program.redirectTargetsMap.has(toPath(fileName, program.getCurrentDirectory(), getCanonicalFileName))) {\r\n                    return undefined;\r\n                }\r\n                const redirectTarget = program.getSourceFile(fileName);\r\n                const redirect = find(sourceFilesToSearch, f => !!f.redirectInfo && f.redirectInfo.redirectTarget === redirectTarget)!;\r\n                fileName = redirect.fileName;\r\n                Debug.assert(sourceFilesSet.has(fileName));\r\n            }\r\n            return { fileName, highlightSpans };\r\n        }))",
+    "signature": "(iterator: Iterable<{ fileName: string; highlightSpans: HighlightSpan[]; }>): { fileName: string; highlightSpans: HighlightSpan[]; }[]",
+    "uses": []
+  },
+  {
+    "set": "arrayFrom",
+    "file": "src/services/documentRegistry.ts",
+    "line": 197,
+    "call": "arrayFrom(buckets.keys())",
+    "signature": "(iterator: Iterable<DocumentRegistryBucketKeyWithMode>): DocumentRegistryBucketKeyWithMode[]",
+    "uses": []
+  },
+  {
+    "set": "arrayFrom",
+    "file": "src/services/refactorProvider.ts",
+    "line": 27,
+    "call": "arrayFrom(flatMapIterator(refactors.values(), refactor =>\r\n        context.cancellationToken && context.cancellationToken.isCancellationRequested() ||\r\n            !refactor.kinds?.some(kind => refactorKindBeginsWith(kind, context.kind)) ? undefined :\r\n            refactor.getAvailableActions(context, includeInteractiveActions)))",
+    "signature": "(iterator: Iterable<ApplicableRefactorInfo>): ApplicableRefactorInfo[]",
+    "uses": []
+  },
+  {
+    "set": "arrayFrom",
+    "file": "src/services/refactors/convertImport.ts",
+    "line": 276,
+    "call": "arrayFrom(neededNamedImports.values(), element => factory.createImportSpecifier(element.isTypeOnly, element.propertyName && factory.cloneNode(element.propertyName), factory.cloneNode(element.name)))",
+    "signature": "(iterator: Iterable<ImportSpecifier>, map: (t: ImportSpecifier) => ImportSpecifier): ImportSpecifier[]",
+    "uses": [
+      {
+        "line": 277,
+        "kind": "CallExpression",
+        "identity": false,
+        "text": "createImport(importDecl, /*defaultImportName*/ undefined, newNamedImports)",
+        "context": "changes.insertNodeAfter(sourceFile, toConvert.parent.parent, createImport(importDecl, /*defaultImportName*/ undefined, newNamedImports));"
+      }
+    ],
+    "callbackParameters": [
+      "ImportSpecifier"
+    ],
+    "callbackResult": "ImportSpecifier",
+    "binding": "newNamedImports"
+  },
+  {
+    "set": "arrayFrom",
+    "file": "src/services/refactors/moveToFile.ts",
+    "line": 1076,
+    "call": "arrayFrom(targetToSourceExports)",
+    "signature": "(iterator: Iterable<[ExportDeclaration, Set<TopLevelDeclaration>]>): [ExportDeclaration, Set<TopLevelDeclaration>][]",
+    "uses": []
+  },
+  {
+    "set": "arrayFrom",
+    "file": "src/services/refactors/moveToFile.ts",
+    "line": 268,
+    "call": "arrayFrom(usage.oldFileImportsFromTargetFile.keys())",
+    "signature": "(iterator: Iterable<Symbol>): Symbol[]",
+    "uses": []
+  },
+  {
+    "set": "arrayFrom",
+    "file": "src/services/refactors/extractSymbol.ts",
+    "line": 1083,
+    "call": "arrayFrom(typeParameterUsages.values(), type => ({ type, declaration: getFirstDeclarationBeforePosition(type, context.startPosition) }))",
+    "signature": "(iterator: Iterable<TypeParameter>, map: (t: TypeParameter) => { type: TypeParameter; declaration: Declaration | undefined; }): { type: TypeParameter; declaration: Declaration | undefined; }[]",
+    "uses": [
+      {
+        "line": 1088,
+        "kind": "CallExpression",
+        "identity": false,
+        "text": "mapDefined(typeParametersAndDeclarations, ({ declaration }) => declaration as TypeParameterDeclaration)",
+        "context": "const typeParameters: readonly TypeParameterDeclaration[] | undefined = typeParametersAndDeclarations.length === 0\r\n        ? undefined\r\n        : mapDefined(typeParametersAndDeclarations, ({ declaration }) => declaration as TypeParameterDeclaration);"
+      },
+      {
+        "line": 1086,
+        "kind": "PropertyAccessExpression",
+        "identity": false,
+        "text": "typeParametersAndDeclarations.length",
+        "context": "const typeParameters: readonly TypeParameterDeclaration[] | undefined = typeParametersAndDeclarations.length === 0\r\n        ? undefined\r\n        : mapDefined(typeParametersAndDeclarations, ({ declaration }) => declaration as TypeParameterDeclaration);"
+      },
+      {
+        "line": 1084,
+        "kind": "PropertyAccessExpression",
+        "identity": false,
+        "text": "typeParametersAndDeclarations.sort",
+        "context": "typeParametersAndDeclarations.sort(compareTypesByDeclarationOrder);"
+      }
+    ],
+    "callbackParameters": [
+      "TypeParameter"
+    ],
+    "callbackResult": "{ type: TypeParameter; declaration: Declaration | undefined; }",
+    "binding": "typeParametersAndDeclarations"
+  },
+  {
+    "set": "arrayFrom",
+    "file": "src/services/codeFixProvider.ts",
+    "line": 67,
+    "call": "arrayFrom(errorCodeToFixes.keys())",
+    "signature": "(iterator: Iterable<string>): string[]",
+    "uses": []
+  },
+  {
+    "set": "arrayFrom",
+    "file": "src/services/codefixes/convertToEsModule.ts",
+    "line": 567,
+    "call": "arrayFrom(mapIterator(namedBindingsNames.entries(), ([propertyName, idName]) => factory.createImportSpecifier(/*isTypeOnly*/ false, propertyName === idName ? undefined : factory.createIdentifier(propertyName), factory.createIdentifier(idName))))",
+    "signature": "(iterator: Iterable<ImportSpecifier>): ImportSpecifier[]",
+    "uses": []
+  },
+  {
+    "set": "arrayFrom",
+    "file": "src/services/codefixes/convertToEsModule.ts",
+    "line": 461,
+    "call": "arrayFrom(useSitesToUnqualify.keys())",
+    "signature": "(iterator: Iterable<Node>): Node[]",
+    "uses": []
+  },
+  {
+    "set": "sameMap",
+    "file": "src/services/codefixes/convertToTypeOnlyImport.ts",
+    "line": 144,
+    "call": "sameMap(importClause.namedBindings.elements, e => factory.updateImportSpecifier(e, /*isTypeOnly*/ false, e.propertyName, e.name))",
+    "signature": "(array: readonly ImportSpecifier[], f: (x: ImportSpecifier, i: number) => ImportSpecifier): readonly ImportSpecifier[]",
+    "uses": [],
+    "callbackParameters": [
+      "ImportSpecifier"
+    ],
+    "callbackResult": "ImportSpecifier"
+  },
+  {
+    "set": "sameMap",
+    "file": "src/services/codefixes/importFixes.ts",
+    "line": 1951,
+    "call": "sameMap(existingSpecifiers, e => factory.updateImportSpecifier(e, /*isTypeOnly*/ true, e.propertyName, e.name))",
+    "signature": "(array: readonly ImportSpecifier[], f: (x: ImportSpecifier, i: number) => ImportSpecifier): readonly ImportSpecifier[]",
+    "uses": [],
+    "callbackParameters": [
+      "ImportSpecifier"
+    ],
+    "callbackResult": "ImportSpecifier"
+  },
+  {
+    "set": "arrayFrom",
+    "file": "src/services/codefixes/importFixes.ts",
+    "line": 1581,
+    "call": "arrayFrom(\r\n            flatMapIterator(exportInfo.values(), exportInfos => getImportFixes(exportInfos, symbolToken.getStart(sourceFile), isValidTypeOnlyUseSite, useRequire, program, sourceFile, host, preferences).fixes),\r\n            fix => ({ fix, symbolName, errorIdentifierText: symbolToken.text, isJsxNamespaceFix: symbolName !== symbolToken.text }),\r\n        )",
+    "signature": "(iterator: Iterable<ImportFixWithModuleSpecifier>, map: (t: ImportFixWithModuleSpecifier) => { fix: ImportFixWithModuleSpecifier; symbolName: string; errorIdentifierText: string; isJsxNamespaceFix: boolean; }): { fix: ImportFixWithModuleSpecifier; symbolName: string; errorIdentifierText: string; isJsxNamespaceFix: boolean; }[]",
+    "uses": [],
+    "callbackParameters": [
+      "ImportFixWithModuleSpecifier"
+    ],
+    "callbackResult": "{ fix: ImportFixWithModuleSpecifier; symbolName: string; errorIdentifierText: string; isJsxNamespaceFix: boolean; }"
+  },
+  {
+    "set": "arrayFrom",
+    "file": "src/services/codefixes/importFixes.ts",
+    "line": 686,
+    "call": "arrayFrom(namedImports.entries(), ([name, [addAsTypeOnly, propertyName]]) => ({ addAsTypeOnly, propertyName, name }))",
+    "signature": "(iterator: Iterable<[string, [AddAsTypeOnly, (string | undefined)?]]>, map: (t: [string, [AddAsTypeOnly, (string | undefined)?]]) => { addAsTypeOnly: AddAsTypeOnly; propertyName: string | undefined; name: string; }): { addAsTypeOnly: AddAsTypeOnly; propertyName: string | undefined; name: string; }[]",
+    "uses": [],
+    "callbackParameters": [
+      "[string, [AddAsTypeOnly, (string | undefined)?]]"
+    ],
+    "callbackResult": "{ addAsTypeOnly: AddAsTypeOnly; propertyName: string | undefined; name: string; }"
+  },
+  {
+    "set": "arrayFrom",
+    "file": "src/services/codefixes/importFixes.ts",
+    "line": 672,
+    "call": "arrayFrom(namedImports.entries(), ([name, { addAsTypeOnly, propertyName }]) => ({ addAsTypeOnly, propertyName, name }))",
+    "signature": "(iterator: Iterable<[string, { addAsTypeOnly: AddAsTypeOnly; propertyName?: string | undefined; }]>, map: (t: [string, { addAsTypeOnly: AddAsTypeOnly; propertyName?: string | undefined; }]) => { addAsTypeOnly: AddAsTypeOnly; propertyName: string | undefined; name: string; }): { addAsTypeOnly: AddAsTypeOnly; propertyName: string | undefined; name: string; }[]",
+    "uses": [],
+    "callbackParameters": [
+      "[string, { addAsTypeOnly: AddAsTypeOnly; propertyName?: string | undefined; }]"
+    ],
+    "callbackResult": "{ addAsTypeOnly: AddAsTypeOnly; propertyName: string | undefined; name: string; }"
+  },
+  {
+    "set": "arrayFrom",
+    "file": "src/services/codefixes/fixAddMissingMember.ts",
+    "line": 344,
+    "call": "arrayFrom(checker.getUnmatchedProperties(checker.getTypeAtLocation(parent.initializer), targetType, /*requireOptionalProperties*/ false, /*matchDiscriminantProperties*/ false))",
+    "signature": "(iterator: Iterable<Symbol>): Symbol[]",
+    "uses": [
+      {
+        "line": 345,
+        "kind": "CallExpression",
+        "identity": false,
+        "text": "length(properties)",
+        "context": "if (!length(properties)) return undefined;"
+      }
+    ],
+    "binding": "properties"
+  },
+  {
+    "set": "arrayFrom",
+    "file": "src/services/codefixes/fixAddMissingMember.ts",
+    "line": 333,
+    "call": "arrayFrom(checker.getUnmatchedProperties(checker.getTypeAtLocation(parent), targetType.getNonNullableType(), /*requireOptionalProperties*/ false, /*matchDiscriminantProperties*/ false))",
+    "signature": "(iterator: Iterable<Symbol>): Symbol[]",
+    "uses": [
+      {
+        "line": 334,
+        "kind": "CallExpression",
+        "identity": false,
+        "text": "length(properties)",
+        "context": "if (!length(properties)) return undefined;"
+      }
+    ],
+    "binding": "properties"
+  },
+  {
+    "set": "arrayFrom",
+    "file": "src/services/codefixes/fixAddMissingMember.ts",
+    "line": 323,
+    "call": "arrayFrom(checker.getUnmatchedProperties(checker.getTypeAtLocation(parent), checker.getParameterType(signature, argIndex).getNonNullableType(), /*requireOptionalProperties*/ false, /*matchDiscriminantProperties*/ false))",
+    "signature": "(iterator: Iterable<Symbol>): Symbol[]",
+    "uses": [
+      {
+        "line": 324,
+        "kind": "CallExpression",
+        "identity": false,
+        "text": "length(properties)",
+        "context": "if (!length(properties)) return undefined;"
+      }
+    ],
+    "binding": "properties"
+  },
+  {
+    "set": "arrayFrom",
+    "file": "src/services/codefixes/helpers.ts",
+    "line": 747,
+    "call": "arrayFrom(argumentTypeParameters.entries())",
+    "signature": "(iterator: Iterable<[string, ArgumentTypeParameterAndConstraint | undefined]>): [string, ArgumentTypeParameterAndConstraint | undefined][]",
+    "uses": []
+  },
+  {
+    "set": "arrayFrom",
+    "file": "src/services/codefixes/helpers.ts",
+    "line": 586,
+    "call": "arrayFrom(\r\n        usedNames.values(),\r\n        usedName => factory.createTypeParameterDeclaration(/*modifiers*/ undefined, usedName, constraintsByName.get(usedName)?.constraint),\r\n    )",
+    "signature": "(iterator: Iterable<string>, map: (t: string) => TypeParameterDeclaration): TypeParameterDeclaration[]",
+    "uses": [],
+    "callbackParameters": [
+      "string"
+    ],
+    "callbackResult": "TypeParameterDeclaration"
+  },
+  {
+    "set": "sameMap",
+    "file": "src/services/codefixes/helpers.ts",
+    "line": 440,
+    "call": "sameMap(parameters, parameterDecl => {\r\n            let type = isJs ? undefined : parameterDecl.type;\r\n            if (type) {\r\n                const importableReference = tryGetAutoImportableReferenceFromTypeNode(type, scriptTarget);\r\n                if (importableReference) {\r\n                    type = importableReference.typeNode;\r\n                    importSymbols(importAdder, importableReference.symbols);\r\n                }\r\n            }\r\n            return factory.updateParameterDeclaration(\r\n                parameterDecl,\r\n                parameterDecl.modifiers,\r\n                parameterDecl.dotDotDotToken,\r\n                parameterDecl.name,\r\n                isJs ? undefined : parameterDecl.questionToken,\r\n                type,\r\n                parameterDecl.initializer,\r\n            );\r\n        })",
+    "signature": "(array: readonly ParameterDeclaration[], f: (x: ParameterDeclaration, i: number) => ParameterDeclaration): readonly ParameterDeclaration[]",
+    "uses": [
+      {
+        "line": 460,
+        "kind": "CallExpression",
+        "identity": false,
+        "text": "factory.createNodeArray(newParameters, parameters.hasTrailingComma)",
+        "context": "parameters = setTextRange(factory.createNodeArray(newParameters, parameters.hasTrailingComma), parameters);"
+      },
+      {
+        "line": 459,
+        "kind": "BinaryExpression",
+        "identity": true,
+        "text": "parameters !== newParameters",
+        "context": "if (parameters !== newParameters) {\r\n            parameters = setTextRange(factory.createNodeArray(newParameters, parameters.hasTrailingComma), parameters);\r\n        }"
+      }
+    ],
+    "callbackParameters": [
+      "ParameterDeclaration"
+    ],
+    "callbackResult": "ParameterDeclaration",
+    "binding": "newParameters"
+  },
+  {
+    "set": "sameMap",
+    "file": "src/services/codefixes/helpers.ts",
+    "line": 411,
+    "call": "sameMap(typeParameters, typeParameterDecl => {\r\n                let constraint = typeParameterDecl.constraint;\r\n                let defaultType = typeParameterDecl.default;\r\n                if (constraint) {\r\n                    const importableReference = tryGetAutoImportableReferenceFromTypeNode(constraint, scriptTarget);\r\n                    if (importableReference) {\r\n                        constraint = importableReference.typeNode;\r\n                        importSymbols(importAdder, importableReference.symbols);\r\n                    }\r\n                }\r\n                if (defaultType) {\r\n                    const importableReference = tryGetAutoImportableReferenceFromTypeNode(defaultType, scriptTarget);\r\n                    if (importableReference) {\r\n                        defaultType = importableReference.typeNode;\r\n                        importSymbols(importAdder, importableReference.symbols);\r\n                    }\r\n                }\r\n                return factory.updateTypeParameterDeclaration(\r\n                    typeParameterDecl,\r\n                    typeParameterDecl.modifiers,\r\n                    typeParameterDecl.name,\r\n                    constraint,\r\n                    defaultType,\r\n                );\r\n            })",
+    "signature": "(array: readonly TypeParameterDeclaration[], f: (x: TypeParameterDeclaration, i: number) => TypeParameterDeclaration): readonly TypeParameterDeclaration[]",
+    "uses": [
+      {
+        "line": 437,
+        "kind": "CallExpression",
+        "identity": false,
+        "text": "factory.createNodeArray(newTypeParameters, typeParameters.hasTrailingComma)",
+        "context": "typeParameters = setTextRange(factory.createNodeArray(newTypeParameters, typeParameters.hasTrailingComma), typeParameters);"
+      },
+      {
+        "line": 436,
+        "kind": "BinaryExpression",
+        "identity": true,
+        "text": "typeParameters !== newTypeParameters",
+        "context": "if (typeParameters !== newTypeParameters) {\r\n                typeParameters = setTextRange(factory.createNodeArray(newTypeParameters, typeParameters.hasTrailingComma), typeParameters);\r\n            }"
+      }
+    ],
+    "callbackParameters": [
+      "TypeParameterDeclaration"
+    ],
+    "callbackResult": "TypeParameterDeclaration",
+    "binding": "newTypeParameters"
+  },
+  {
+    "set": "arrayFrom",
+    "file": "src/services/stringCompletions.ts",
+    "line": 1337,
+    "call": "arrayFrom(names.values())",
+    "signature": "(iterator: Iterable<NameAndKind>): NameAndKind[]",
+    "uses": []
+  },
+  {
+    "set": "arrayFrom",
+    "file": "src/services/stringCompletions.ts",
+    "line": 1098,
+    "call": "arrayFrom(result.values())",
+    "signature": "(iterator: Iterable<NameAndKind>): NameAndKind[]",
+    "uses": []
+  },
+  {
+    "set": "arrayFrom",
+    "file": "src/services/stringCompletions.ts",
+    "line": 763,
+    "call": "arrayFrom(getCompletionEntriesForDirectoryFragment(fragment, baseDirectory, extensionOptions, program, host, moduleSpecifierResolutionHost, /*moduleSpecifierIsRelative*/ true, exclude).values())",
+    "signature": "(iterator: Iterable<NameAndKind>): NameAndKind[]",
+    "uses": []
+  },
+  {
+    "set": "arrayFrom",
+    "file": "src/services/stringCompletions.ts",
+    "line": 719,
+    "call": "arrayFrom(getCompletionEntriesForDirectoryFragment(literalValue, scriptDirectory, extensionOptions, program, host, moduleSpecifierResolutionHost, /*moduleSpecifierIsRelative*/ true, scriptPath).values())",
+    "signature": "(iterator: Iterable<NameAndKind>): NameAndKind[]",
+    "uses": []
+  },
+  {
+    "set": "arrayFrom",
+    "file": "src/services/symbolDisplay.ts",
+    "line": 249,
+    "call": "arrayFrom(modifiers.values())",
+    "signature": "(iterator: Iterable<string>): string[]",
+    "uses": []
+  },
+  {
+    "set": "arrayFrom",
+    "file": "src/server/project.ts",
+    "line": 2686,
+    "call": "arrayFrom(rootNames.values())",
+    "signature": "(iterator: Iterable<string>): string[]",
+    "uses": []
+  },
+  {
+    "set": "arrayFrom",
+    "file": "src/server/project.ts",
+    "line": 2592,
+    "call": "arrayFrom(dependencyNames.keys())",
+    "signature": "(iterator: Iterable<string>): string[]",
+    "uses": []
+  },
+  {
+    "set": "arrayToMap",
+    "file": "src/server/project.ts",
+    "line": 2101,
+    "call": "arrayToMap(\r\n                allFiles,\r\n                info => info.fileName,\r\n                info => info.isSourceOfProjectReferenceRedirect,\r\n            )",
+    "signature": "(array: readonly FileWithProjectReferenceRedirectInfo[], makeKey: (value: FileWithProjectReferenceRedirectInfo) => string | undefined, makeValue: (value: FileWithProjectReferenceRedirectInfo) => boolean): Map<string, boolean>",
+    "uses": [],
+    "callbackParameters": [
+      "FileWithProjectReferenceRedirectInfo"
+    ],
+    "callbackResult": "string"
+  },
+  {
+    "set": "arrayFrom",
+    "file": "src/server/project.ts",
+    "line": 2056,
+    "call": "arrayFrom(updatedFileNames.keys())",
+    "signature": "(iterator: Iterable<string>): string[]",
+    "uses": []
+  },
+  {
+    "set": "arrayToMap",
+    "file": "src/server/project.ts",
+    "line": 2047,
+    "call": "arrayToMap(\r\n                this.getFileNamesWithRedirectInfo(!!includeProjectReferenceRedirectInfo).concat(externalFiles),\r\n                info => info.fileName,\r\n                info => info.isSourceOfProjectReferenceRedirect,\r\n            )",
+    "signature": "(array: readonly FileWithProjectReferenceRedirectInfo[], makeKey: (value: FileWithProjectReferenceRedirectInfo) => string | undefined, makeValue: (value: FileWithProjectReferenceRedirectInfo) => boolean): Map<string, boolean>",
+    "uses": [
+      {
+        "line": 2075,
+        "kind": "BinaryExpression",
+        "identity": false,
+        "text": "this.lastReportedFileNames = currentFiles",
+        "context": "this.lastReportedFileNames = currentFiles;"
+      },
+      {
+        "line": 2071,
+        "kind": "PropertyAccessExpression",
+        "identity": false,
+        "text": "currentFiles.has",
+        "context": "if (!currentFiles.has(fileName)) {\r\n                    removed.set(fileName, isSourceOfProjectReferenceRedirect);\r\n                }"
+      },
+      {
+        "line": 2059,
+        "kind": "CallExpression",
+        "identity": false,
+        "text": "forEachEntry(currentFiles, (isSourceOfProjectReferenceRedirect, fileName) => {\r\n                if (!lastReportedFileNames.has(fileName)) {\r\n                    added.set(fileName, isSourceOfProjectReferenceRedirect);\r\n                }\r\n                else if (includeProjectReferenceRedirectInfo && isSourceOfProjectReferenceRedirect !== lastReportedFileNames.get(fileName)) {\r\n                    updatedRedirects.push({\r\n                        fileName,\r\n                        isSourceOfProjectReferenceRedirect,\r\n                    });\r\n                }\r\n            })",
+        "context": "forEachEntry(currentFiles, (isSourceOfProjectReferenceRedirect, fileName) => {\r\n                if (!lastReportedFileNames.has(fileName)) {\r\n                    added.set(fileName, isSourceOfProjectReferenceRedirect);\r\n                }\r\n                else if (includeProjectReferenceRedirectInfo && isSourceOfProjectReferenceRedirect !== lastReportedFileNames.get(fileName)) {\r\n                    updatedRedirects.push({\r\n                        fileName,\r\n                        isSourceOfProjectReferenceRedirect,\r\n                    });\r\n                }\r\n            });"
+      }
+    ],
+    "callbackParameters": [
+      "FileWithProjectReferenceRedirectInfo"
+    ],
+    "callbackResult": "string",
+    "binding": "currentFiles"
+  },
+  {
+    "set": "arrayFrom",
+    "file": "src/server/project.ts",
+    "line": 2018,
+    "call": "arrayFrom(files.keys())",
+    "signature": "(iterator: Iterable<string>): string[]",
+    "uses": []
+  },
+  {
+    "set": "arrayFrom",
+    "file": "src/server/project.ts",
+    "line": 2014,
+    "call": "arrayFrom(files.entries(), ([fileName, isSourceOfProjectReferenceRedirect]): protocol.FileWithProjectReferenceRedirectInfo => ({\r\n                    fileName,\r\n                    isSourceOfProjectReferenceRedirect,\r\n                }))",
+    "signature": "(iterator: Iterable<[string, boolean]>, map: (t: [string, boolean]) => FileWithProjectReferenceRedirectInfo): FileWithProjectReferenceRedirectInfo[]",
+    "uses": [],
+    "callbackParameters": [
+      "[string, boolean]"
+    ],
+    "callbackResult": "FileWithProjectReferenceRedirectInfo"
+  },
+  {
+    "set": "arrayFrom",
+    "file": "src/server/project.ts",
+    "line": 1208,
+    "call": "arrayFrom(ts.mapDefinedIterator(this.rootFilesMap.values(), value => value.info))",
+    "signature": "(iterator: Iterable<ScriptInfo>): ScriptInfo[]",
+    "uses": []
+  },
+  {
+    "set": "arrayFrom",
+    "file": "src/server/project.ts",
+    "line": 1199,
+    "call": "arrayFrom(ts.mapDefinedIterator(this.rootFilesMap.values(), value => value.info?.fileName))",
+    "signature": "(iterator: Iterable<string & { __normalizedPathTag: any; }>): (string & { __normalizedPathTag: any; })[]",
+    "uses": []
+  },
+  {
+    "set": "arrayFrom",
+    "file": "src/server/editorServices.ts",
+    "line": 5540,
+    "call": "arrayFrom(this.pendingPluginEnablements.entries())",
+    "signature": "(iterator: Iterable<[Project, Promise<BeginEnablePluginResult>[]]>): [Project, Promise<BeginEnablePluginResult>[]][]",
+    "uses": [
+      {
+        "line": 5545,
+        "kind": "CallExpression",
+        "identity": false,
+        "text": "this.enableRequestedPluginsWorker(entries)",
+        "context": "this.currentPluginEnablementPromise = this.enableRequestedPluginsWorker(entries);"
+      }
+    ],
+    "binding": "entries"
+  },
+  {
+    "set": "arrayFrom",
+    "file": "src/server/editorServices.ts",
+    "line": 4757,
+    "call": "arrayFrom(this.configuredProjects.values())",
+    "signature": "(iterator: Iterable<ConfiguredProject>): ConfiguredProject[]",
+    "uses": [
+      {
+        "line": 4758,
+        "kind": "ForOfStatement",
+        "identity": false,
+        "text": "for (const project of currentConfiguredProjects) {\r\n            // If this project has potential project reference for any of the project we are loading ancestor tree for\r\n            // load this project first\r\n            if (forEachPotentialProjectReference(project, potentialRefPath => forProjects.has(potentialRefPath))) {\r\n                updateProjectIfDirty(project);\r\n            }\r\n            this.ensureProjectChildren(project, forProjects, seenProjects);\r\n        }",
+        "context": "for (const project of currentConfiguredProjects) {\r\n            // If this project has potential project reference for any of the project we are loading ancestor tree for\r\n            // load this project first\r\n            if (forEachPotentialProjectReference(project, potentialRefPath => forProjects.has(potentialRefPath))) {\r\n                updateProjectIfDirty(project);\r\n            }\r\n            this.ensureProjectChildren(project, forProjects, seenProjects);\r\n        }"
+      }
+    ],
+    "binding": "currentConfiguredProjects"
+  },
+  {
+    "set": "arrayFrom",
+    "file": "src/server/editorServices.ts",
+    "line": 3726,
+    "call": "arrayFrom(this.openFilesWithNonRootedDiskPath.keys())",
+    "signature": "(iterator: Iterable<string>): string[]",
+    "uses": []
+  },
+  {
+    "set": "arrayFrom",
+    "file": "src/server/editorServices.ts",
+    "line": 3725,
+    "call": "arrayFrom(this.openFilesWithNonRootedDiskPath.keys())",
+    "signature": "(iterator: Iterable<string>): string[]",
+    "uses": []
+  },
+  {
+    "set": "arrayFrom",
+    "file": "src/server/editorServices.ts",
+    "line": 3724,
+    "call": "arrayFrom(this.openFilesWithNonRootedDiskPath.keys())",
+    "signature": "(iterator: Iterable<string>): string[]",
+    "uses": []
+  },
+  {
+    "set": "arrayFrom",
+    "file": "src/server/editorServices.ts",
+    "line": 3463,
+    "call": "arrayFrom(\r\n            mapDefinedIterator(\r\n                this.filenameToScriptInfo.entries(),\r\n                entry => entry[1].deferredDelete ? undefined : entry,\r\n            ),\r\n            ([path, scriptInfo]) => ({ path, fileName: scriptInfo.fileName }),\r\n        )",
+    "signature": "(iterator: Iterable<[Path, ScriptInfo]>, map: (t: [Path, ScriptInfo]) => { path: Path; fileName: NormalizedPath; }): { path: Path; fileName: NormalizedPath; }[]",
+    "uses": [
+      {
+        "line": 3470,
+        "kind": "CallExpression",
+        "identity": false,
+        "text": "JSON.stringify(names)",
+        "context": "this.logger.msg(`Could not find file ${JSON.stringify(fileName)}.\\nAll files are: ${JSON.stringify(names)}`, Msg.Err);"
+      }
+    ],
+    "callbackParameters": [
+      "[Path, ScriptInfo]"
+    ],
+    "callbackResult": "{ path: Path; fileName: NormalizedPath; }",
+    "binding": "names"
+  },
+  {
+    "set": "arrayFrom",
+    "file": "src/server/editorServices.ts",
+    "line": 2203,
+    "call": "arrayFrom(\r\n                                    mapDefinedIterator(\r\n                                        this.filenameToScriptInfo.values(),\r\n                                        info =>\r\n                                            info.isAttached(project) ?\r\n                                                {\r\n                                                    fileName: info.fileName,\r\n                                                    projects: info.containingProjects.map(p => p.projectName),\r\n                                                    hasMixedContent: info.hasMixedContent,\r\n                                                } : undefined,\r\n                                    ),\r\n                                )",
+    "signature": "(iterator: Iterable<{ fileName: NormalizedPath; projects: string[]; hasMixedContent: boolean; }>): { fileName: NormalizedPath; projects: string[]; hasMixedContent: boolean; }[]",
+    "uses": []
+  },
+  {
+    "set": "arrayFrom",
+    "file": "src/server/editorServices.ts",
+    "line": 1668,
+    "call": "arrayFrom(this.openFiles.keys(), path => this.getScriptInfoForPath(path)!.fileName)",
+    "signature": "(iterator: Iterable<Path>, map: (t: Path) => NormalizedPath): NormalizedPath[]",
+    "uses": [],
+    "callbackParameters": [
+      "Path"
+    ],
+    "callbackResult": "NormalizedPath"
+  },
+  {
+    "set": "arrayFrom",
+    "file": "src/server/session.ts",
+    "line": 3979,
+    "call": "arrayFrom(performanceData.diagnosticsDuration, ([file, data]) => ({ ...data, file }))",
+    "signature": "(iterator: Iterable<[NormalizedPath, DiagnosticPerformanceData]>, map: (t: [NormalizedPath, DiagnosticPerformanceData]) => { file: NormalizedPath; semanticDiag?: number | undefined; syntaxDiag?: number | undefined; suggestionDiag?: number | undefined; regionSemanticDiag?: number | undefined; }): { file: NormalizedPath; semanticDiag?: number | undefined; syntaxDiag?: number | undefined; suggestionDiag?: number | undefined; regionSemanticDiag?: number | undefined; }[]",
+    "uses": [],
+    "callbackParameters": [
+      "[NormalizedPath, DiagnosticPerformanceData]"
+    ],
+    "callbackResult": "{ file: NormalizedPath; semanticDiag?: number | undefined; syntaxDiag?: number | undefined; suggestionDiag?: number | undefined; regionSemanticDiag?: number | undefined; }"
+  },
+  {
+    "set": "arrayFrom",
+    "file": "src/server/session.ts",
+    "line": 2224,
+    "call": "arrayFrom(map.values())",
+    "signature": "(iterator: Iterable<SpanGroup>): SpanGroup[]",
+    "uses": []
+  },
+  {
+    "set": "arrayFrom",
+    "file": "src/server/session.ts",
+    "line": 1721,
+    "call": "arrayFrom(definitionSet.values())",
+    "signature": "(iterator: Iterable<DefinitionInfo>): DefinitionInfo[]",
+    "uses": []
+  },
+  {
+    "set": "arrayFrom",
+    "file": "src/server/session.ts",
+    "line": 1499,
+    "call": "arrayFrom(this.projectService.configuredProjects.values())",
+    "signature": "(iterator: Iterable<ConfiguredProject>): ConfiguredProject[]",
+    "uses": []
+  },
+  {
+    "set": "arrayFrom",
+    "file": "src/harness/vfsUtil.ts",
+    "line": 493,
+    "call": "ts.arrayFrom(this._getLinks(node).keys())",
+    "signature": "(iterator: Iterable<string>): string[]",
+    "uses": []
+  },
+  {
+    "set": "arrayFrom",
+    "file": "src/harness/harnessIO.ts",
+    "line": 1563,
+    "call": "ts.arrayFrom(writtenFiles.keys())",
+    "signature": "(iterator: Iterable<string>): string[]",
+    "uses": [
+      {
+        "line": 1564,
+        "kind": "PropertyAccessExpression",
+        "identity": false,
+        "text": "writtenFilesArray.length",
+        "context": "errorMsg += `Baseline missing ${missing.length} files:${\"\\n    \" + missing.slice(0, 5).join(\"\\n    \") + (missing.length > 5 ? \"\\n\" + `    and ${missing.length - 5} more` : \"\") + \"\\n\"}Written ${writtenFiles.size} files:${\"\\n    \" + writtenFilesArray.slice(0, 5).join(\"\\n    \") + (writtenFilesArray.length > 5 ? \"\\n\" + `    and ${writtenFilesArray.length - 5} more` : \"\")}`;"
+      },
+      {
+        "line": 1564,
+        "kind": "PropertyAccessExpression",
+        "identity": false,
+        "text": "writtenFilesArray.length",
+        "context": "errorMsg += `Baseline missing ${missing.length} files:${\"\\n    \" + missing.slice(0, 5).join(\"\\n    \") + (missing.length > 5 ? \"\\n\" + `    and ${missing.length - 5} more` : \"\") + \"\\n\"}Written ${writtenFiles.size} files:${\"\\n    \" + writtenFilesArray.slice(0, 5).join(\"\\n    \") + (writtenFilesArray.length > 5 ? \"\\n\" + `    and ${writtenFilesArray.length - 5} more` : \"\")}`;"
+      },
+      {
+        "line": 1564,
+        "kind": "PropertyAccessExpression",
+        "identity": false,
+        "text": "writtenFilesArray.slice",
+        "context": "errorMsg += `Baseline missing ${missing.length} files:${\"\\n    \" + missing.slice(0, 5).join(\"\\n    \") + (missing.length > 5 ? \"\\n\" + `    and ${missing.length - 5} more` : \"\") + \"\\n\"}Written ${writtenFiles.size} files:${\"\\n    \" + writtenFilesArray.slice(0, 5).join(\"\\n    \") + (writtenFilesArray.length > 5 ? \"\\n\" + `    and ${writtenFilesArray.length - 5} more` : \"\")}`;"
+      }
+    ],
+    "binding": "writtenFilesArray"
+  },
+  {
+    "set": "arrayFrom",
+    "file": "src/harness/harnessIO.ts",
+    "line": 1357,
+    "call": "ts.arrayFrom(directories)",
+    "signature": "(iterator: Iterable<string>): string[]",
+    "uses": []
+  },
+  {
+    "set": "arrayFrom",
+    "file": "src/harness/harnessIO.ts",
+    "line": 1107,
+    "call": "ts.arrayFrom(values.entries())",
+    "signature": "(iterator: Iterable<[string, string | number]>): [string, string | number][]",
+    "uses": []
+  },
+  {
+    "set": "arrayFrom",
+    "file": "src/harness/harnessIO.ts",
+    "line": 1023,
+    "call": "ts.arrayFrom(outputFiles)",
+    "signature": "(iterator: Iterable<TextDocument>): TextDocument[]",
+    "uses": [
+      {
+        "line": 1027,
+        "kind": "ForOfStatement",
+        "identity": false,
+        "text": "for (const outputFile of files) {\r\n            yield [checkDuplicatedFileName(outputFile.file, dupeCase), \"/*====== \" + outputFile.file + \" ======*/\\r\\n\" + Utils.removeByteOrderMark(outputFile.text)];\r\n        }",
+        "context": "for (const outputFile of files) {\r\n            yield [checkDuplicatedFileName(outputFile.file, dupeCase), \"/*====== \" + outputFile.file + \" ======*/\\r\\n\" + Utils.removeByteOrderMark(outputFile.text)];\r\n        }"
+      },
+      {
+        "line": 1024,
+        "kind": "PropertyAccessExpression",
+        "identity": false,
+        "text": "files.slice",
+        "context": "files.slice().sort((a, b) => ts.compareStringsCaseSensitive(cleanName(a.file), cleanName(b.file)));"
+      }
+    ],
+    "binding": "files"
+  },
+  {
+    "set": "arrayFrom",
+    "file": "src/harness/projectServiceStateLogger.ts",
+    "line": 255,
+    "call": "arrayFrom(dataMap.entries())",
+    "signature": "(iterator: Iterable<[T, Data]>): [T, Data][]",
+    "uses": []
+  },
+  {
+    "set": "arrayFrom",
+    "file": "src/harness/watchUtils.ts",
+    "line": 219,
+    "call": "arrayFrom(map.keys())",
+    "signature": "(iterator: Iterable<string>): string[]",
+    "uses": []
+  },
+  {
+    "set": "arrayFrom",
+    "file": "src/harness/documentsUtil.ts",
+    "line": 38,
+    "call": "ts.arrayFrom(this.meta)",
+    "signature": "(iterator: Iterable<[string, string]>): [string, string][]",
+    "uses": []
+  },
+  {
+    "set": "arrayFrom",
+    "file": "src/harness/compilerImpl.ts",
+    "line": 194,
+    "call": "ts.arrayFrom(this.dts.values())",
+    "signature": "(iterator: Iterable<TextDocument>): TextDocument[]",
+    "uses": []
+  },
+  {
+    "set": "arrayFrom",
+    "file": "src/harness/compilerImpl.ts",
+    "line": 194,
+    "call": "ts.arrayFrom(this.js.values())",
+    "signature": "(iterator: Iterable<TextDocument>): TextDocument[]",
+    "uses": []
+  },
+  {
+    "set": "arrayFrom",
+    "file": "src/harness/fourslashImpl.ts",
+    "line": 5113,
+    "call": "ts.arrayFrom(set.keys())",
+    "signature": "(iterator: Iterable<string>): string[]",
+    "uses": []
+  },
+  {
+    "set": "arrayFrom",
+    "file": "src/harness/fourslashImpl.ts",
+    "line": 2976,
+    "call": "ts.arrayFrom(this.testData.markerPositions.keys())",
+    "signature": "(iterator: Iterable<string>): string[]",
+    "uses": []
+  },
+  {
+    "set": "arrayFrom",
+    "file": "src/harness/fourslashImpl.ts",
+    "line": 2609,
+    "call": "ts.arrayFrom(masked)",
+    "signature": "(iterator: Iterable<string>): string[]",
+    "uses": []
+  },
+  {
+    "set": "arrayFrom",
+    "file": "src/harness/fourslashImpl.ts",
+    "line": 2608,
+    "call": "ts.arrayFrom(masked)",
+    "signature": "(iterator: Iterable<string>): string[]",
+    "uses": []
+  },
+  {
+    "set": "arrayFrom",
+    "file": "src/harness/fourslashImpl.ts",
+    "line": 2599,
+    "call": "ts.arrayFrom(fileContent)",
+    "signature": "(iterator: Iterable<string>): string[]",
+    "uses": []
+  },
+  {
+    "set": "arrayFrom",
+    "file": "src/harness/fourslashImpl.ts",
+    "line": 2484,
+    "call": "ts.arrayFrom(this.testData.markerPositions.entries(), ([name, marker]) => {\r\n            this.goToMarker(marker);\r\n            const completions = this.getCompletionListAtCaret(preferences);\r\n            return {\r\n                marker: { ...marker, name },\r\n                item: {\r\n                    ...completions,\r\n                    entries: completions?.entries.map(entry => ({\r\n                        ...entry,\r\n                        ...this.getCompletionEntryDetails(entry.name, entry.source, entry.data, preferences),\r\n                    })),\r\n                },\r\n            };\r\n        })",
+    "signature": "(iterator: Iterable<[string, Marker]>, map: (t: [string, Marker]) => { marker: { name: string; fileName: string; position: number; data?: {} | undefined; }; item: { entries: { name: string; kind: ScriptElementKind; kindModifiers?: string | undefined; displayParts?: SymbolDisplayPart[] | undefined; documentation?: SymbolDisplayPart[] | undefined; tags?: JSDocTagInfo[] | undefined; codeActions?: CodeAction[] | undefined; source?: string | SymbolDisplayPart[] | undefined; sourceDisplay?: SymbolDisplayPart[] | undefined; sortText: string; insertText?: string | undefined; filterText?: string | undefined; isSnippet?: true | undefined; replacementSpan?: TextSpan | undefined; hasAction?: true | undefined; labelDetails?: CompletionEntryLabelDetails | undefined; isRecommended?: true | undefined; isFromUncheckedFile?: true | undefined; isPackageJsonImport?: true | undefined; isImportStatementCompletion?: true | undefined; symbol?: Symbol | undefined; data?: CompletionEntryData | undefined; commitCharacters?: string[] | undefined; }[] | undefined; flags?: CompletionInfoFlags | undefined; isGlobalCompletion?: boolean | undefined; isMemberCompletion?: boolean | undefined; optionalReplacementSpan?: TextSpan | undefined; isNewIdentifierLocation?: boolean | undefined; isIncomplete?: true | undefined; defaultCommitCharacters?: string[] | undefined; }; }): { marker: { name: string; fileName: string; position: number; data?: {} | undefined; }; item: { entries: { name: string; kind: ScriptElementKind; kindModifiers?: string | undefined; displayParts?: SymbolDisplayPart[] | undefined; documentation?: SymbolDisplayPart[] | undefined; tags?: JSDocTagInfo[] | undefined; codeActions?: CodeAction[] | undefined; source?: string | SymbolDisplayPart[] | undefined; sourceDisplay?: SymbolDisplayPart[] | undefined; sortText: string; insertText?: string | undefined; filterText?: string | undefined; isSnippet?: true | undefined; replacementSpan?: TextSpan | undefined; hasAction?: true | undefined; labelDetails?: CompletionEntryLabelDetails | undefined; isRecommended?: true | undefined; isFromUncheckedFile?: true | undefined; isPackageJsonImport?: true | undefined; isImportStatementCompletion?: true | undefined; symbol?: Symbol | undefined; data?: CompletionEntryData | undefined; commitCharacters?: string[] | undefined; }[] | undefined; flags?: CompletionInfoFlags | undefined; isGlobalCompletion?: boolean | undefined; isMemberCompletion?: boolean | undefined; optionalReplacementSpan?: TextSpan | undefined; isNewIdentifierLocation?: boolean | undefined; isIncomplete?: true | undefined; defaultCommitCharacters?: string[] | undefined; }; }[]",
+    "uses": [
+      {
+        "line": 2534,
+        "kind": "CallExpression",
+        "identity": false,
+        "text": "stringify(result, (key, value) => {\r\n                return key === \"exportMapKey\"\r\n                    ? value.replace(/ \\d+ /g, \" * \")\r\n                    : value;\r\n            })",
+        "context": "this.baseline(\r\n            \"Completions\",\r\n            annotations + \"\\n\\n\" + stringify(result, (key, value) => {\r\n                return key === \"exportMapKey\"\r\n                    ? value.replace(/ \\d+ /g, \" * \")\r\n                    : value;\r\n            }),\r\n        );"
+      },
+      {
+        "line": 2516,
+        "kind": "ForOfStatement",
+        "identity": false,
+        "text": "for (const r of result) {\r\n            for (const entry of r.item.entries ?? ts.emptyArray) {\r\n                for (const tag of entry.tags ?? ts.emptyArray) {\r\n                    for (const part of tag.text ?? ts.emptyArray) {\r\n                        if (part.kind === \"linkName\") {\r\n                            const link = part as ts.JSDocLinkDisplayPart;\r\n                            if (/lib.*\\.d\\.ts$/.test(link.target.fileName)) {\r\n                                // The object literal isn't a complete TextSpan, but we're only going to\r\n                                // use these results in the baseline for diffing, so just overwrite.\r\n                                (link.target.textSpan as any) = { start: \"--\", length: \"--\" };\r\n                            }\r\n                        }\r\n                    }\r\n                }\r\n            }\r\n        }",
+        "context": "for (const r of result) {\r\n            for (const entry of r.item.entries ?? ts.emptyArray) {\r\n                for (const tag of entry.tags ?? ts.emptyArray) {\r\n                    for (const part of tag.text ?? ts.emptyArray) {\r\n                        if (part.kind === \"linkName\") {\r\n                            const link = part as ts.JSDocLinkDisplayPart;\r\n                            if (/lib.*\\.d\\.ts$/.test(link.target.fileName)) {\r\n                                // The object literal isn't a complete TextSpan, but we're only going to\r\n                                // use these results in the baseline for diffing, so just overwrite.\r\n                                (link.target.textSpan as any) = { start: \"--\", length: \"--\" };\r\n                            }\r\n                        }\r\n                    }\r\n                }\r\n            }\r\n        }"
+      },
+      {
+        "line": 2499,
+        "kind": "CallExpression",
+        "identity": false,
+        "text": "this.annotateContentWithTooltips(\r\n            result,\r\n            \"completions\",\r\n            item => {\r\n                if (item.optionalReplacementSpan) {\r\n                    const { start, length } = item.optionalReplacementSpan;\r\n                    return start && length === 0 ? { start, length: 1 } : item.optionalReplacementSpan;\r\n                }\r\n                return undefined;\r\n            },\r\n            item =>\r\n                item.entries?.flatMap(\r\n                    entry =>\r\n                        entry.displayParts\r\n                            ? entry.displayParts.map(p => p.text).join(\"\").split(\"\\n\")\r\n                            : [`(${entry.kindModifiers}${entry.kind}) ${entry.name}`],\r\n                ),\r\n        )",
+        "context": "const annotations = this.annotateContentWithTooltips(\r\n            result,\r\n            \"completions\",\r\n            item => {\r\n                if (item.optionalReplacementSpan) {\r\n                    const { start, length } = item.optionalReplacementSpan;\r\n                    return start && length === 0 ? { start, length: 1 } : item.optionalReplacementSpan;\r\n                }\r\n                return undefined;\r\n            },\r\n            item =>\r\n                item.entries?.flatMap(\r\n                    entry =>\r\n                        entry.displayParts\r\n                            ? entry.displayParts.map(p => p.text).join(\"\").split(\"\\n\")\r\n                            : [`(${entry.kindModifiers}${entry.kind}) ${entry.name}`],\r\n                ),\r\n        );"
+      }
+    ],
+    "callbackParameters": [
+      "[string, Marker]"
+    ],
+    "callbackResult": "{ marker: { name: string; fileName: string; position: number; data?: {} | undefined; }; item: { entries: { name: string; kind: ScriptElementKind; kindModifiers?: string | undefined; displayParts?: SymbolDisplayPart[] | undefined; documentation?: SymbolDisplayPart[] | undefined; tags?: JSDocTagInfo[] | undefined; codeActions?: CodeAction[] | undefined; source?: string | SymbolDisplayPart[] | undefined; sourceDisplay?: SymbolDisplayPart[] | undefined; sortText: string; insertText?: string | undefined; filterText?: string | undefined; isSnippet?: true | undefined; replacementSpan?: TextSpan | undefined; hasAction?: true | undefined; labelDetails?: CompletionEntryLabelDetails | undefined; isRecommended?: true | undefined; isFromUncheckedFile?: true | undefined; isPackageJsonImport?: true | undefined; isImportStatementCompletion?: true | undefined; symbol?: Symbol | undefined; data?: CompletionEntryData | undefined; commitCharacters?: string[] | undefined; }[] | undefined; flags?: CompletionInfoFlags | undefined; isGlobalCompletion?: boolean | undefined; isMemberCompletion?: boolean | undefined; optionalReplacementSpan?: TextSpan | undefined; isNewIdentifierLocation?: boolean | undefined; isIncomplete?: true | undefined; defaultCommitCharacters?: string[] | undefined; }; }",
+    "binding": "result"
+  },
+  {
+    "set": "arrayFrom",
+    "file": "src/harness/fourslashImpl.ts",
+    "line": 2450,
+    "call": "ts.arrayFrom(this.testData.markerPositions.entries(), ([name, marker]) => ({\r\n            marker: { ...marker, name },\r\n            item: this.languageService.getSignatureHelpItems(marker.fileName, marker.position, /*options*/ undefined),\r\n        }))",
+    "signature": "(iterator: Iterable<[string, Marker]>, map: (t: [string, Marker]) => { marker: { name: string; fileName: string; position: number; data?: {} | undefined; }; item: SignatureHelpItems | undefined; }): { marker: { name: string; fileName: string; position: number; data?: {} | undefined; }; item: SignatureHelpItems | undefined; }[]",
+    "uses": [
+      {
+        "line": 2480,
+        "kind": "CallExpression",
+        "identity": false,
+        "text": "stringify(result)",
+        "context": "this.baseline(\"SignatureHelp\", annotations + \"\\n\\n\" + stringify(result));"
+      },
+      {
+        "line": 2455,
+        "kind": "CallExpression",
+        "identity": false,
+        "text": "this.annotateContentWithTooltips(\r\n            result,\r\n            \"signature help\",\r\n            () => undefined, // use default: marker.position\r\n            (item, previous) => {\r\n                const { documentation, tags, prefixDisplayParts, suffixDisplayParts, separatorDisplayParts, parameters } = item.items[item.selectedItemIndex];\r\n                const tooltip = [];\r\n                let signature = \"\";\r\n                if (prefixDisplayParts.length) signature += prefixDisplayParts.map(p => p.text).join(\"\");\r\n                const separator = separatorDisplayParts.map(p => p.text).join(\"\");\r\n                signature += parameters.map((p, i) => {\r\n                    const text = p.displayParts.map(dp => dp.text).join(\"\");\r\n                    return i === item.argumentIndex ? \"**\" + text + \"**\" : text;\r\n                }).join(separator);\r\n                if (suffixDisplayParts.length) signature += suffixDisplayParts.map(p => p.text).join(\"\");\r\n                tooltip.push(signature);\r\n                // only display signature documentation on the last argument when multiple arguments are marked\r\n                if (previous?.applicableSpan.start !== item.applicableSpan.start) {\r\n                    if (documentation?.length) tooltip.push(...documentation.map(p => p.text).join(\"\").split(\"\\n\"));\r\n                    if (tags?.length) {\r\n                        tooltip.push(...tags.map(p => `@${p.name} ${p.text?.map(dp => dp.text).join(\"\") ?? \"\"}`).join(\"\\n\").split(\"\\n\"));\r\n                    }\r\n                }\r\n                return tooltip;\r\n            },\r\n        )",
+        "context": "const annotations = this.annotateContentWithTooltips(\r\n            result,\r\n            \"signature help\",\r\n            () => undefined, // use default: marker.position\r\n            (item, previous) => {\r\n                const { documentation, tags, prefixDisplayParts, suffixDisplayParts, separatorDisplayParts, parameters } = item.items[item.selectedItemIndex];\r\n                const tooltip = [];\r\n                let signature = \"\";\r\n                if (prefixDisplayParts.length) signature += prefixDisplayParts.map(p => p.text).join(\"\");\r\n                const separator = separatorDisplayParts.map(p => p.text).join(\"\");\r\n                signature += parameters.map((p, i) => {\r\n                    const text = p.displayParts.map(dp => dp.text).join(\"\");\r\n                    return i === item.argumentIndex ? \"**\" + text + \"**\" : text;\r\n                }).join(separator);\r\n                if (suffixDisplayParts.length) signature += suffixDisplayParts.map(p => p.text).join(\"\");\r\n                tooltip.push(signature);\r\n                // only display signature documentation on the last argument when multiple arguments are marked\r\n                if (previous?.applicableSpan.start !== item.applicableSpan.start) {\r\n                    if (documentation?.length) tooltip.push(...documentation.map(p => p.text).join(\"\").split(\"\\n\"));\r\n                    if (tags?.length) {\r\n                        tooltip.push(...tags.map(p => `@${p.name} ${p.text?.map(dp => dp.text).join(\"\") ?? \"\"}`).join(\"\\n\").split(\"\\n\"));\r\n                    }\r\n                }\r\n                return tooltip;\r\n            },\r\n        );"
+      }
+    ],
+    "callbackParameters": [
+      "[string, Marker]"
+    ],
+    "callbackResult": "{ marker: { name: string; fileName: string; position: number; data?: {} | undefined; }; item: SignatureHelpItems | undefined; }",
+    "binding": "result"
+  },
+  {
+    "set": "arrayFrom",
+    "file": "src/harness/fourslashImpl.ts",
+    "line": 2418,
+    "call": "ts.arrayFrom(this.testData.markerPositions.entries(), ([name, marker]) => {\r\n            const verbosityLevel = toArray(verbosityLevels?.[name]);\r\n            const items = verbosityLevel.map(verbosityLevel => {\r\n                const item: ts.QuickInfo & { verbosityLevel?: number; } | undefined = this.languageService.getQuickInfoAtPosition(\r\n                    marker.fileName,\r\n                    marker.position,\r\n                    maximumLength,\r\n                    verbosityLevel,\r\n                );\r\n                if (item) item.verbosityLevel = verbosityLevel;\r\n                return {\r\n                    marker: { ...marker, name },\r\n                    item,\r\n                };\r\n            });\r\n            return items;\r\n        })",
+    "signature": "(iterator: Iterable<[string, Marker]>, map: (t: [string, Marker]) => { marker: { name: string; fileName: string; position: number; data?: {} | undefined; }; item: (QuickInfo & { verbosityLevel?: number | undefined; }) | undefined; }[]): { marker: { name: string; fileName: string; position: number; data?: {} | undefined; }; item: (QuickInfo & { verbosityLevel?: number | undefined; }) | undefined; }[][]",
+    "uses": [],
+    "callbackParameters": [
+      "[string, Marker]"
+    ],
+    "callbackResult": "{ marker: { name: string; fileName: string; position: number; data?: {} | undefined; }; item: (QuickInfo & { verbosityLevel?: number | undefined; }) | undefined; }[]"
+  },
+  {
+    "set": "arrayToMap",
+    "file": "src/testRunner/projectsRunner.ts",
+    "line": 472,
+    "call": "ts.arrayToMap(ts.optionDeclarations, option => option.name)",
+    "signature": "(array: readonly CommandLineOption[], makeKey: (value: CommandLineOption) => string | undefined): Map<string, CommandLineOption>",
+    "uses": [
+      {
+        "line": 475,
+        "kind": "PropertyAccessExpression",
+        "identity": false,
+        "text": "optionNameMap.get",
+        "context": "const option = optionNameMap.get(name);"
+      }
+    ],
+    "callbackParameters": [
+      "CommandLineOption"
+    ],
+    "callbackResult": "string",
+    "binding": "optionNameMap"
+  },
+  {
+    "set": "arrayToMap",
+    "file": "src/testRunner/unittests/helpers.ts",
+    "line": 107,
+    "call": "ts.arrayToMap(texts, t => t.name, t => {\r\n        if (oldProgram) {\r\n            let oldFile = oldProgram.getSourceFile(t.name) as SourceFileWithText;\r\n            if (oldFile && oldFile.redirectInfo) {\r\n                oldFile = oldFile.redirectInfo.unredirected;\r\n            }\r\n            if (oldFile && oldFile.sourceText!.getVersion() === t.text.getVersion()) {\r\n                return oldFile;\r\n            }\r\n        }\r\n        return createSourceFileWithText(t.name, t.text, target);\r\n    })",
+    "signature": "(array: readonly NamedSourceText[], makeKey: (value: NamedSourceText) => string | undefined, makeValue: (value: NamedSourceText) => SourceFileWithText): Map<string, SourceFileWithText>",
+    "uses": [
+      {
+        "line": 122,
+        "kind": "CallExpression",
+        "identity": false,
+        "text": "ts.mapEntries(files, (fileName, file) => [ts.toPath(fileName, currentDirectory, getCanonicalFileName), file])",
+        "context": "const filesByPath = ts.mapEntries(files, (fileName, file) => [ts.toPath(fileName, currentDirectory, getCanonicalFileName), file]);"
+      }
+    ],
+    "callbackParameters": [
+      "NamedSourceText"
+    ],
+    "callbackResult": "string",
+    "binding": "files"
+  },
+  {
+    "set": "arrayFrom",
+    "file": "src/testRunner/unittests/compilerCore.ts",
+    "line": 145,
+    "call": "ts.arrayFrom(set.entries())",
+    "signature": "(iterator: Iterable<[number, number]>): [number, number][]",
+    "uses": [
+      {
+        "line": 147,
+        "kind": "PropertyAccessExpression",
+        "identity": false,
+        "text": "actualTuple.map",
+        "context": "actual = actualTuple.map(([v, _]) => v);"
+      },
+      {
+        "line": 146,
+        "kind": "PropertyAccessExpression",
+        "identity": false,
+        "text": "actualTuple.some",
+        "context": "assert.isFalse(actualTuple.some(([v, k]) => v !== k));"
+      }
+    ],
+    "binding": "actualTuple"
+  },
+  {
+    "set": "arrayFrom",
+    "file": "src/testRunner/unittests/compilerCore.ts",
+    "line": 141,
+    "call": "ts.arrayFrom(set.values())",
+    "signature": "(iterator: Iterable<number>): number[]",
+    "uses": []
+  },
+  {
+    "set": "arrayFrom",
+    "file": "src/testRunner/unittests/compilerCore.ts",
+    "line": 137,
+    "call": "ts.arrayFrom(set.keys())",
+    "signature": "(iterator: Iterable<number>): number[]",
+    "uses": []
+  },
+  {
+    "set": "arrayFrom",
+    "file": "src/testRunner/unittests/customTransforms.ts",
+    "line": 23,
+    "call": "ts.arrayFrom(fileMap.keys())",
+    "signature": "(iterator: Iterable<string>): string[]",
+    "uses": []
+  },
+  {
+    "set": "arrayToMap",
+    "file": "src/testRunner/unittests/customTransforms.ts",
+    "line": 8,
+    "call": "ts.arrayToMap(roots, file => file.fileName)",
+    "signature": "(array: readonly SourceFile[], makeKey: (value: SourceFile) => string | undefined): Map<string, SourceFile>",
+    "uses": [
+      {
+        "line": 23,
+        "kind": "PropertyAccessExpression",
+        "identity": false,
+        "text": "fileMap.keys",
+        "context": "const program = ts.createProgram(ts.arrayFrom(fileMap.keys()), { newLine: ts.NewLineKind.LineFeed, ...options }, host);"
+      },
+      {
+        "line": 19,
+        "kind": "PropertyAccessExpression",
+        "identity": false,
+        "text": "fileMap.get",
+        "context": "fileName => fileMap.has(fileName) ? fileMap.get(fileName)!.text : undefined"
+      },
+      {
+        "line": 19,
+        "kind": "PropertyAccessExpression",
+        "identity": false,
+        "text": "fileMap.has",
+        "context": "fileName => fileMap.has(fileName) ? fileMap.get(fileName)!.text : undefined"
+      },
+      {
+        "line": 18,
+        "kind": "PropertyAccessExpression",
+        "identity": false,
+        "text": "fileMap.has",
+        "context": "fileName => fileMap.has(fileName)"
+      },
+      {
+        "line": 11,
+        "kind": "PropertyAccessExpression",
+        "identity": false,
+        "text": "fileMap.get",
+        "context": "fileName => fileMap.get(fileName)"
+      }
+    ],
+    "callbackParameters": [
+      "SourceFile"
+    ],
+    "callbackResult": "string",
+    "binding": "fileMap"
+  },
+  {
+    "set": "arrayToMap",
+    "file": "src/testRunner/unittests/moduleResolution.ts",
+    "line": 1037,
+    "call": "ts.arrayToMap(ts.map(files, f => ts.createSourceFile(f.name, f.content, ts.ScriptTarget.ES2015)), f => f.fileName)",
+    "signature": "(array: readonly SourceFile[], makeKey: (value: SourceFile) => string | undefined): Map<string, SourceFile>",
+    "uses": [
+      {
+        "line": 1049,
+        "kind": "PropertyAccessExpression",
+        "identity": false,
+        "text": "sourceFiles.get",
+        "context": "const file = sourceFiles.get(fileName);"
+      },
+      {
+        "line": 1040,
+        "kind": "PropertyAccessExpression",
+        "identity": false,
+        "text": "sourceFiles.get",
+        "context": "fileName => sourceFiles.get(fileName)"
+      },
+      {
+        "line": 1039,
+        "kind": "PropertyAccessExpression",
+        "identity": false,
+        "text": "sourceFiles.has",
+        "context": "fileName => sourceFiles.has(fileName)"
+      }
+    ],
+    "callbackParameters": [
+      "SourceFile"
+    ],
+    "callbackResult": "string",
+    "binding": "sourceFiles"
+  },
+  {
+    "set": "arrayFrom",
+    "file": "src/testRunner/unittests/programApi.ts",
+    "line": 85,
+    "call": "ts.arrayFrom(program1.getMissingFilePaths().keys())",
+    "signature": "(iterator: Iterable<Path>): Path[]",
+    "uses": [
+      {
+        "line": 87,
+        "kind": "CallExpression",
+        "identity": false,
+        "text": "assert.deepEqual(missing0, missing1)",
+        "context": "assert.deepEqual(missing0, missing1);"
+      }
+    ],
+    "binding": "missing1"
+  },
+  {
+    "set": "arrayFrom",
+    "file": "src/testRunner/unittests/programApi.ts",
+    "line": 84,
+    "call": "ts.arrayFrom(program0.getMissingFilePaths().keys())",
+    "signature": "(iterator: Iterable<Path>): Path[]",
+    "uses": [
+      {
+        "line": 87,
+        "kind": "CallExpression",
+        "identity": false,
+        "text": "assert.deepEqual(missing0, missing1)",
+        "context": "assert.deepEqual(missing0, missing1);"
+      },
+      {
+        "line": 86,
+        "kind": "PropertyAccessExpression",
+        "identity": false,
+        "text": "missing0.length",
+        "context": "assert.equal(missing0.length, 1);"
+      }
+    ],
+    "binding": "missing0"
+  },
+  {
+    "set": "arrayFrom",
+    "file": "src/testRunner/unittests/programApi.ts",
+    "line": 17,
+    "call": "ts.arrayFrom(ts.mapDefinedIterator(map.keys(), k => map.has(k) ? k : undefined))",
+    "signature": "(iterator: Iterable<string>): string[]",
+    "uses": [
+      {
+        "line": 18,
+        "kind": "TemplateSpan",
+        "identity": false,
+        "text": "notFound} in actual: ${",
+        "context": "assert.equal(notFound.length, 0, `Not found ${notFound} in actual: ${missingPaths} expected: ${expected}`);"
+      },
+      {
+        "line": 18,
+        "kind": "PropertyAccessExpression",
+        "identity": false,
+        "text": "notFound.length",
+        "context": "assert.equal(notFound.length, 0, `Not found ${notFound} in actual: ${missingPaths} expected: ${expected}`);"
+      }
+    ],
+    "binding": "notFound"
+  },
+  {
+    "set": "arrayFrom",
+    "file": "src/testRunner/unittests/programApi.ts",
+    "line": 10,
+    "call": "ts.arrayFrom(missing.keys())",
+    "signature": "(iterator: Iterable<Path>): Path[]",
+    "uses": [
+      {
+        "line": 18,
+        "kind": "TemplateSpan",
+        "identity": false,
+        "text": "missingPaths} expected: ${",
+        "context": "assert.equal(notFound.length, 0, `Not found ${notFound} in actual: ${missingPaths} expected: ${expected}`);"
+      },
+      {
+        "line": 14,
+        "kind": "TemplateSpan",
+        "identity": false,
+        "text": "missingPaths} expected: ${",
+        "context": "assert.isTrue(value, `${missing} to be ${value === undefined ? \"not present\" : \"present only once\"}, in actual: ${missingPaths} expected: ${expected}`);"
+      },
+      {
+        "line": 12,
+        "kind": "ForOfStatement",
+        "identity": false,
+        "text": "for (const missing of missingPaths) {\r\n        const value = map.has(missing);\r\n        assert.isTrue(value, `${missing} to be ${value === undefined ? \"not present\" : \"present only once\"}, in actual: ${missingPaths} expected: ${expected}`);\r\n        map.delete(missing);\r\n    }",
+        "context": "for (const missing of missingPaths) {\r\n        const value = map.has(missing);\r\n        assert.isTrue(value, `${missing} to be ${value === undefined ? \"not present\" : \"present only once\"}, in actual: ${missingPaths} expected: ${expected}`);\r\n        map.delete(missing);\r\n    }"
+      }
+    ],
+    "binding": "missingPaths"
+  },
+  {
+    "set": "arrayFrom",
+    "file": "src/testRunner/unittests/helpers/tsserver.ts",
+    "line": 292,
+    "call": "ts.arrayFrom(this.watchChanges.values())",
+    "signature": "(iterator: Iterable<WatchChangeRequestArgs>): WatchChangeRequestArgs[]",
+    "uses": []
+  },
+  {
+    "set": "arrayFrom",
+    "file": "src/testRunner/unittests/helpers/virtualFileSystemWithWatch.ts",
+    "line": 280,
+    "call": "arrayFrom(this.map.keys())",
+    "signature": "(iterator: Iterable<number>): number[]",
+    "uses": [
+      {
+        "line": 281,
+        "kind": "ForOfStatement",
+        "identity": false,
+        "text": "for (const key of keys) {\r\n                this.invokeCallback(key);\r\n            }",
+        "context": "for (const key of keys) {\r\n                this.invokeCallback(key);\r\n            }"
+      }
+    ],
+    "binding": "keys"
+  },
+  {
+    "set": "arrayFrom",
+    "file": "src/testRunner/unittests/reuseProgramStructure.ts",
+    "line": 69,
+    "call": "ts.arrayFrom(program.getMissingFilePaths().values())",
+    "signature": "(iterator: Iterable<string>): string[]",
+    "uses": []
+  },
+  {
+    "set": "arrayFrom",
+    "file": "src/testRunner/unittests/tscWatch/incremental.ts",
+    "line": 209,
+    "call": "ts.arrayFrom(builderProgram.state.referencedMap!.keys())",
+    "signature": "(iterator: Iterable<Path>): Path[]",
+    "uses": []
+  }
+]

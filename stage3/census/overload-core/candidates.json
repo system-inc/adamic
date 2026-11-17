@@ -1,0 +1,914 @@
+{
+  "roots": [
+    "src/compiler/binder.ts",
+    "src/compiler/builder.ts",
+    "src/compiler/builderPublic.ts",
+    "src/compiler/builderState.ts",
+    "src/compiler/builderStatePublic.ts",
+    "src/compiler/checker.ts",
+    "src/compiler/commandLineParser.ts",
+    "src/compiler/core.ts",
+    "src/compiler/corePublic.ts",
+    "src/compiler/debug.ts",
+    "src/compiler/diagnosticInformationMap.generated.ts",
+    "src/compiler/emitter.ts",
+    "src/compiler/executeCommandLine.ts",
+    "src/compiler/expressionToTypeNode.ts",
+    "src/compiler/hostErrors.ts",
+    "src/compiler/moduleNameResolver.ts",
+    "src/compiler/moduleSpecifiers.ts",
+    "src/compiler/parser.ts",
+    "src/compiler/path.ts",
+    "src/compiler/performance.ts",
+    "src/compiler/performanceCore.ts",
+    "src/compiler/program.ts",
+    "src/compiler/programDiagnostics.ts",
+    "src/compiler/resolutionCache.ts",
+    "src/compiler/scanner.ts",
+    "src/compiler/semver.ts",
+    "src/compiler/sourcemap.ts",
+    "src/compiler/symbolWalker.ts",
+    "src/compiler/sys.ts",
+    "src/compiler/tracing.ts",
+    "src/compiler/transformer.ts",
+    "src/compiler/tsbuild.ts",
+    "src/compiler/tsbuildPublic.ts",
+    "src/compiler/types.ts",
+    "src/compiler/utilities.ts",
+    "src/compiler/utilitiesPublic.ts",
+    "src/compiler/visitorPublic.ts",
+    "src/compiler/watch.ts",
+    "src/compiler/watchPublic.ts",
+    "src/compiler/watchUtilities.ts",
+    "src/compiler/_namespaces/ts.moduleSpecifiers.ts",
+    "src/compiler/_namespaces/ts.performance.ts",
+    "src/compiler/_namespaces/ts.ts",
+    "src/compiler/factory/baseNodeFactory.ts",
+    "src/compiler/factory/emitHelpers.ts",
+    "src/compiler/factory/emitNode.ts",
+    "src/compiler/factory/nodeChildren.ts",
+    "src/compiler/factory/nodeConverters.ts",
+    "src/compiler/factory/nodeFactory.ts",
+    "src/compiler/factory/nodeTests.ts",
+    "src/compiler/factory/parenthesizerRules.ts",
+    "src/compiler/factory/utilities.ts",
+    "src/compiler/factory/utilitiesPublic.ts",
+    "src/compiler/transformers/classFields.ts",
+    "src/compiler/transformers/classThis.ts",
+    "src/compiler/transformers/declarations.ts",
+    "src/compiler/transformers/destructuring.ts",
+    "src/compiler/transformers/es2015.ts",
+    "src/compiler/transformers/es2016.ts",
+    "src/compiler/transformers/es2017.ts",
+    "src/compiler/transformers/es2018.ts",
+    "src/compiler/transformers/es2019.ts",
+    "src/compiler/transformers/es2020.ts",
+    "src/compiler/transformers/es2021.ts",
+    "src/compiler/transformers/esDecorators.ts",
+    "src/compiler/transformers/esnext.ts",
+    "src/compiler/transformers/generators.ts",
+    "src/compiler/transformers/jsx.ts",
+    "src/compiler/transformers/legacyDecorators.ts",
+    "src/compiler/transformers/namedEvaluation.ts",
+    "src/compiler/transformers/taggedTemplate.ts",
+    "src/compiler/transformers/ts.ts",
+    "src/compiler/transformers/typeSerializer.ts",
+    "src/compiler/transformers/utilities.ts",
+    "src/compiler/transformers/declarations/diagnostics.ts",
+    "src/compiler/transformers/module/esnextAnd2015.ts",
+    "src/compiler/transformers/module/impliedNodeFormatDependent.ts",
+    "src/compiler/transformers/module/module.ts",
+    "src/compiler/transformers/module/system.ts"
+  ],
+  "baselineCount": 0,
+  "candidates": {
+    "arrayFrom": {
+      "description": "drop all overloads, default unused mapped binder to never",
+      "edits": [
+        {
+          "start": 46703,
+          "end": 46703,
+          "after": " = never"
+        },
+        {
+          "start": 46576,
+          "end": 46653,
+          "after": ""
+        },
+        {
+          "start": 46442,
+          "end": 46576,
+          "after": ""
+        }
+      ],
+      "javascriptIdentical": true,
+      "diagnosticCount": 11,
+      "newDiagnostics": [
+        {
+          "file": "src/compiler/builder.ts",
+          "line": 1291,
+          "code": 2322,
+          "message": "Type '([Path, FileInfo] | IncrementalBundleEmitBuildInfoFileInfo)[]' is not assignable to type 'readonly IncrementalBundleEmitBuildInfoFileInfo[]'.\n  Type '[Path, FileInfo] | IncrementalBundleEmitBuildInfoFileInfo' is not assignable to type 'IncrementalBundleEmitBuildInfoFileInfo'.\n    Type '[Path, FileInfo]' is not assignable to type 'IncrementalBundleEmitBuildInfoFileInfo'."
+        },
+        {
+          "file": "src/compiler/builder.ts",
+          "line": 1386,
+          "code": 2322,
+          "message": "Type '([Path, FileInfo] | IncrementalMultiFileEmitBuildInfoFileInfo)[]' is not assignable to type 'readonly IncrementalMultiFileEmitBuildInfoFileInfo[]'.\n  Type '[Path, FileInfo] | IncrementalMultiFileEmitBuildInfoFileInfo' is not assignable to type 'IncrementalMultiFileEmitBuildInfoFileInfo'.\n    Type '[Path, FileInfo]' is not assignable to type 'IncrementalMultiFileEmitBuildInfoFileInfo'."
+        },
+        {
+          "file": "src/compiler/builder.ts",
+          "line": 1421,
+          "code": 2345,
+          "message": "Argument of type '(a: number | undefined, b: number | undefined) => Comparison' is not assignable to parameter of type '(a: Path | IncrementalBuildInfoFileId, b: Path | IncrementalBuildInfoFileId) => number'.\n  Types of parameters 'a' and 'a' are incompatible.\n    Type 'Path | IncrementalBuildInfoFileId' is not assignable to type 'number | undefined'.\n      Type 'Path' is not assignable to type 'number | undefined'."
+        },
+        {
+          "file": "src/compiler/builder.ts",
+          "line": 1425,
+          "code": 2769,
+          "message": "No overload matches this call.\n  Overload 1 of 3, '(to: (readonly IncrementalBuildInfoFileId[])[], value: readonly IncrementalBuildInfoFileId[] | undefined): (readonly IncrementalBuildInfoFileId[])[]', gave the following error.\n    Argument of type '(readonly IncrementalBuildInfoFileId[])[] | undefined' is not assignable to parameter of type '(readonly IncrementalBuildInfoFileId[])[]'.\n      Type 'undefined' is not assignable to type '(readonly IncrementalBuildInfoFileId[])[]'.\n  Overload 2 of 3, '(to: (readonly IncrementalBuildInfoFileId[])[] | undefined, value: readonly IncrementalBuildInfoFileId[]): (readonly IncrementalBuildInfoFileId[])[]', gave the following error.\n    Argument of type '(Path | IncrementalBuildInfoFileId)[]' is not assignable to parameter of type 'readonly IncrementalBuildInfoFileId[]'.\n      Type 'Path | IncrementalBuildInfoFileId' is not assignable to type 'IncrementalBuildInfoFileId'.\n        Type 'Path' is not assignable to type 'IncrementalBuildInfoFileId'.\n          Type 'Path' is not assignable to type 'number'.\n  Overload 3 of 3, '(to: (readonly IncrementalBuildInfoFileId[])[] | undefined, value: readonly IncrementalBuildInfoFileId[] | undefined): (readonly IncrementalBuildInfoFileId[])[] | undefined', gave the following error.\n    Argument of type '(Path | IncrementalBuildInfoFileId)[]' is not assignable to parameter of type 'readonly IncrementalBuildInfoFileId[]'.\n      Type 'Path | IncrementalBuildInfoFileId' is not assignable to type 'IncrementalBuildInfoFileId'.\n        Type 'Path' is not assignable to type 'IncrementalBuildInfoFileId'.\n          Type 'Path' is not assignable to type 'number'."
+        },
+        {
+          "file": "src/compiler/moduleSpecifiers.ts",
+          "line": 872,
+          "code": 2345,
+          "message": "Argument of type '(a: ModulePath, b: ModulePath) => Comparison' is not assignable to parameter of type '(a: ModulePath | [string, { path: string; isRedirect: boolean; isInNodeModules: boolean; }], b: ModulePath | [string, { path: string; isRedirect: boolean; isInNodeModules: boolean; }]) => number'.\n  Types of parameters 'a' and 'a' are incompatible.\n    Type 'ModulePath | [string, { path: string; isRedirect: boolean; isInNodeModules: boolean; }]' is not assignable to type 'ModulePath'.\n      Type '[string, { path: string; isRedirect: boolean; isInNodeModules: boolean; }]' is not assignable to type 'ModulePath'."
+        },
+        {
+          "file": "src/compiler/moduleSpecifiers.ts",
+          "line": 873,
+          "code": 2345,
+          "message": "Argument of type 'ModulePath | [string, { path: string; isRedirect: boolean; isInNodeModules: boolean; }]' is not assignable to parameter of type 'ModulePath'.\n  Type '[string, { path: string; isRedirect: boolean; isInNodeModules: boolean; }]' is not assignable to type 'ModulePath'."
+        },
+        {
+          "file": "src/compiler/sourcemap.ts",
+          "line": 751,
+          "code": 2322,
+          "message": "Type '(Mapping | MappedPosition)[]' is not assignable to type 'readonly MappedPosition[]'.\n  Type 'Mapping | MappedPosition' is not assignable to type 'MappedPosition'.\n    Type 'Mapping' is missing the following properties from type 'MappedPosition': generatedPosition, source, sourcePosition"
+        },
+        {
+          "file": "src/compiler/sourcemap.ts",
+          "line": 760,
+          "code": 2532,
+          "message": "Object is possibly 'undefined'."
+        },
+        {
+          "file": "src/compiler/sourcemap.ts",
+          "line": 774,
+          "code": 2532,
+          "message": "Object is possibly 'undefined'."
+        },
+        {
+          "file": "src/compiler/transformers/jsx.ts",
+          "line": 186,
+          "code": 2345,
+          "message": "Argument of type '(BindingElement | ImportSpecifier)[]' is not assignable to parameter of type 'readonly BindingElement[]'.\n  Type 'BindingElement | ImportSpecifier' is not assignable to type 'BindingElement'.\n    Property '_flowContainerBrand' is missing in type 'ImportSpecifier' but required in type 'BindingElement'."
+        },
+        {
+          "file": "src/compiler/tsbuildPublic.ts",
+          "line": 1060,
+          "code": 2345,
+          "message": "Argument of type 'Set<string | PackageJsonInfoCacheEntry> | undefined' is not assignable to parameter of type 'Set<string> | undefined'.\n  Type 'Set<string | PackageJsonInfoCacheEntry>' is not assignable to type 'Set<string>'.\n    Type 'string | PackageJsonInfoCacheEntry' is not assignable to type 'string'.\n      Type 'PackageJsonInfo' is not assignable to type 'string'."
+        }
+      ]
+    },
+    "arrayToMap": {
+      "description": "drop all overloads, default unused mapped binder to never",
+      "edits": [
+        {
+          "start": 49202,
+          "end": 49202,
+          "after": " = never"
+        },
+        {
+          "start": 48985,
+          "end": 49146,
+          "after": ""
+        },
+        {
+          "start": 48855,
+          "end": 48985,
+          "after": ""
+        },
+        {
+          "start": 48694,
+          "end": 48855,
+          "after": ""
+        },
+        {
+          "start": 48144,
+          "end": 48694,
+          "after": ""
+        }
+      ],
+      "javascriptIdentical": true,
+      "diagnosticCount": 2,
+      "newDiagnostics": [
+        {
+          "file": "src/compiler/builder.ts",
+          "line": 2344,
+          "code": 2322,
+          "message": "Type 'Map<Path, BuilderFileEmit | IncrementalBuildInfoFilePendingEmit> | undefined' is not assignable to type 'ReadonlyMap<Path, BuilderFileEmit> | undefined'.\n  Type 'Map<Path, BuilderFileEmit | IncrementalBuildInfoFilePendingEmit>' is not assignable to type 'ReadonlyMap<Path, BuilderFileEmit>'.\n    Types of property 'forEach' are incompatible.\n      Type '(callbackfn: (value: BuilderFileEmit | IncrementalBuildInfoFilePendingEmit, key: Path, map: Map<Path, BuilderFileEmit | IncrementalBuildInfoFilePendingEmit>) => void, thisArg?: any) => void' is not assignable to type '(callbackfn: (value: BuilderFileEmit, key: Path, map: ReadonlyMap<Path, BuilderFileEmit>) => void, thisArg?: any) => void'.\n        Types of parameters 'callbackfn' and 'callbackfn' are incompatible.\n          Types of parameters 'value' and 'value' are incompatible.\n            Type 'BuilderFileEmit | IncrementalBuildInfoFilePendingEmit' is not assignable to type 'BuilderFileEmit'.\n              Type '[fileId: IncrementalBuildInfoFileId]' is not assignable to type 'BuilderFileEmit'."
+        },
+        {
+          "file": "src/compiler/builder.ts",
+          "line": 2416,
+          "code": 2322,
+          "message": "Type 'Map<Path, readonly ReusableDiagnostic[] | IncrementalBuildInfoDiagnosticOfFile> | undefined' is not assignable to type 'Map<Path, readonly ReusableDiagnostic[]> | undefined'.\n  Type 'Map<Path, readonly ReusableDiagnostic[] | IncrementalBuildInfoDiagnosticOfFile>' is not assignable to type 'Map<Path, readonly ReusableDiagnostic[]>'.\n    Type 'readonly ReusableDiagnostic[] | IncrementalBuildInfoDiagnosticOfFile' is not assignable to type 'readonly ReusableDiagnostic[]'.\n      Type 'IncrementalBuildInfoDiagnosticOfFile' is not assignable to type 'readonly ReusableDiagnostic[]'.\n        Type 'readonly ReusableDiagnostic[] | IncrementalBuildInfoFileId' is not assignable to type 'ReusableDiagnostic'.\n          Type 'readonly ReusableDiagnostic[]' is missing the following properties from type 'ReusableDiagnostic': category, code, file, start, messageText"
+        }
+      ]
+    },
+    "reduceLeft": {
+      "description": "drop all overloads",
+      "edits": [
+        {
+          "start": 43931,
+          "end": 44057,
+          "after": ""
+        },
+        {
+          "start": 43756,
+          "end": 43931,
+          "after": ""
+        }
+      ],
+      "javascriptIdentical": true,
+      "diagnosticCount": 105,
+      "newDiagnostics": [
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 1614,
+          "code": 2322,
+          "message": "Type 'SourceFile | undefined' is not assignable to type 'number'.\n  Type 'undefined' is not assignable to type 'number'."
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 1614,
+          "code": 18048,
+          "message": "'n' is possibly 'undefined'."
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 1614,
+          "code": 2365,
+          "message": "Operator '+' cannot be applied to types 'SourceFile' and 'number'."
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 1614,
+          "code": 2345,
+          "message": "Argument of type 'number' is not assignable to parameter of type 'SourceFile'."
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 1615,
+          "code": 2322,
+          "message": "Type 'SourceFile | undefined' is not assignable to type 'number'.\n  Type 'undefined' is not assignable to type 'number'."
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 1615,
+          "code": 18048,
+          "message": "'n' is possibly 'undefined'."
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 1615,
+          "code": 2365,
+          "message": "Operator '+' cannot be applied to types 'SourceFile' and 'number'."
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 1615,
+          "code": 2345,
+          "message": "Argument of type 'number' is not assignable to parameter of type 'SourceFile'."
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 1616,
+          "code": 2322,
+          "message": "Type 'SourceFile | undefined' is not assignable to type 'number'.\n  Type 'undefined' is not assignable to type 'number'."
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 1616,
+          "code": 18048,
+          "message": "'n' is possibly 'undefined'."
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 1616,
+          "code": 2365,
+          "message": "Operator '+' cannot be applied to types 'SourceFile' and 'number'."
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 1616,
+          "code": 2345,
+          "message": "Argument of type 'number' is not assignable to parameter of type 'SourceFile'."
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 14568,
+          "code": 2322,
+          "message": "Type 'IndexInfo | undefined' is not assignable to type 'IndexInfo[] | undefined'.\n  Type 'IndexInfo' is missing the following properties from type 'IndexInfo[]': length, pop, push, concat, and 28 more."
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 14568,
+          "code": 2739,
+          "message": "Type 'IndexInfo[]' is missing the following properties from type 'IndexInfo': keyType, type, isReadonly"
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 14568,
+          "code": 2345,
+          "message": "Argument of type 'IndexInfo | undefined' is not assignable to parameter of type 'IndexInfo[] | undefined'.\n  Type 'IndexInfo' is missing the following properties from type 'IndexInfo[]': length, pop, push, concat, and 28 more."
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 16009,
+          "code": 2345,
+          "message": "Argument of type 'IndexInfo | undefined' is not assignable to parameter of type 'boolean'.\n  Type 'undefined' is not assignable to type 'boolean'."
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 16009,
+          "code": 2322,
+          "message": "Type 'boolean | undefined' is not assignable to type 'IndexInfo'.\n  Type 'undefined' is not assignable to type 'IndexInfo'."
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 18389,
+          "code": 18048,
+          "message": "'sum' is possibly 'undefined'."
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 18389,
+          "code": 2365,
+          "message": "Operator '+' cannot be applied to types 'Type' and 'number'."
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 18389,
+          "code": 2345,
+          "message": "Argument of type 'number' is not assignable to parameter of type 'Type'."
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 18390,
+          "code": 18048,
+          "message": "'namedTypesCount' is possibly 'undefined'."
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 18390,
+          "code": 2365,
+          "message": "Operator '+' cannot be applied to types 'Type' and 'number'."
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 18802,
+          "code": 2322,
+          "message": "Type 'number | Type | undefined' is not assignable to type 'Type'.\n  Type 'undefined' is not assignable to type 'Type'."
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 18802,
+          "code": 2362,
+          "message": "The left-hand side of an arithmetic operation must be of type 'any', 'number', 'bigint' or an enum type."
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 18802,
+          "code": 18048,
+          "message": "'n' is possibly 'undefined'."
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 18807,
+          "code": 18048,
+          "message": "'size' is possibly 'undefined'."
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 18807,
+          "code": 2365,
+          "message": "Operator '>=' cannot be applied to types 'Type' and 'number'."
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 18808,
+          "code": 2322,
+          "message": "Type 'Type | undefined' is not assignable to type 'string | number | boolean | Args | readonly (string | number | boolean | Args | null | undefined)[] | null | undefined'.\n  Type 'Type' is not assignable to type 'string | number | boolean | Args | readonly (string | number | boolean | Args | null | undefined)[] | null | undefined'.\n    Type 'Type' is not assignable to type 'Args'.\n      Index signature for type 'string' is missing in type 'Type'."
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 18818,
+          "code": 2365,
+          "message": "Operator '<' cannot be applied to types 'number' and 'Type'."
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 18818,
+          "code": 18048,
+          "message": "'count' is possibly 'undefined'."
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 18842,
+          "code": 2322,
+          "message": "Type 'Type | undefined' is not assignable to type 'number'.\n  Type 'undefined' is not assignable to type 'number'."
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 18842,
+          "code": 18048,
+          "message": "'n' is possibly 'undefined'."
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 18842,
+          "code": 2365,
+          "message": "Operator '+' cannot be applied to types 'Type' and 'number'."
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 18842,
+          "code": 2345,
+          "message": "Argument of type 'number' is not assignable to parameter of type 'Type'."
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 19485,
+          "code": 2363,
+          "message": "The right-hand side of an arithmetic operation must be of type 'any', 'number', 'bigint' or an enum type."
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 19485,
+          "code": 2532,
+          "message": "Object is possibly 'undefined'."
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 19485,
+          "code": 2362,
+          "message": "The left-hand side of an arithmetic operation must be of type 'any', 'number', 'bigint' or an enum type."
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 19485,
+          "code": 18048,
+          "message": "'flags' is possibly 'undefined'."
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 19485,
+          "code": 2322,
+          "message": "Type 'number' is not assignable to type 'Type'."
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 22980,
+          "code": 2345,
+          "message": "Argument of type 'Type[]' is not assignable to parameter of type 'readonly Type[][]'.\n  Type 'Type' is missing the following properties from type 'Type[]': length, pop, push, concat, and 28 more."
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 24124,
+          "code": 2322,
+          "message": "Type 'DiagnosticMessageChain | undefined' is not assignable to type 'number'.\n  Type 'undefined' is not assignable to type 'number'."
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 24124,
+          "code": 18048,
+          "message": "'value' is possibly 'undefined'."
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 24124,
+          "code": 2365,
+          "message": "Operator '+' cannot be applied to types 'DiagnosticMessageChain' and 'number'."
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 24124,
+          "code": 2345,
+          "message": "Argument of type 'number' is not assignable to parameter of type 'DiagnosticMessageChain'."
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 25101,
+          "code": 2362,
+          "message": "The left-hand side of an arithmetic operation must be of type 'any', 'number', 'bigint' or an enum type."
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 25101,
+          "code": 2532,
+          "message": "Object is possibly 'undefined'."
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 25101,
+          "code": 2362,
+          "message": "The left-hand side of an arithmetic operation must be of type 'any', 'number', 'bigint' or an enum type."
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 25101,
+          "code": 18048,
+          "message": "'modifiers' is possibly 'undefined'."
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 25101,
+          "code": 2322,
+          "message": "Type 'number' is not assignable to type 'Declaration'."
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 25484,
+          "code": 2322,
+          "message": "Type 'Type | undefined' is not assignable to type 'TypeFlags'.\n  Type 'undefined' is not assignable to type 'TypeFlags'."
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 25484,
+          "code": 2362,
+          "message": "The left-hand side of an arithmetic operation must be of type 'any', 'number', 'bigint' or an enum type."
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 25484,
+          "code": 18048,
+          "message": "'flags' is possibly 'undefined'."
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 25484,
+          "code": 2322,
+          "message": "Type 'number' is not assignable to type 'Type'."
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 25507,
+          "code": 2322,
+          "message": "Type 'Type | undefined' is not assignable to type 'Type'.\n  Type 'undefined' is not assignable to type 'Type'."
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 25507,
+          "code": 2345,
+          "message": "Argument of type 'Type | undefined' is not assignable to parameter of type 'Type'.\n  Type 'undefined' is not assignable to type 'Type'."
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 25510,
+          "code": 2322,
+          "message": "Type 'Type | undefined' is not assignable to type 'Type'.\n  Type 'undefined' is not assignable to type 'Type'."
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 25510,
+          "code": 2345,
+          "message": "Argument of type 'Type | undefined' is not assignable to parameter of type 'Type'.\n  Type 'undefined' is not assignable to type 'Type'."
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 25515,
+          "code": 2322,
+          "message": "Type 'Type | undefined' is not assignable to type 'Type'.\n  Type 'undefined' is not assignable to type 'Type'."
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 25515,
+          "code": 2345,
+          "message": "Argument of type 'Type | undefined' is not assignable to parameter of type 'Type'.\n  Type 'undefined' is not assignable to type 'Type'."
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 26652,
+          "code": 2739,
+          "message": "Type 'Type' is missing the following properties from type 'Symbol': escapedName, mergeId, constEnumOnlyModule"
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 26652,
+          "code": 2345,
+          "message": "Argument of type 'Symbol | undefined' is not assignable to parameter of type 'Type'.\n  Type 'undefined' is not assignable to type 'Type'."
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 26653,
+          "code": 2367,
+          "message": "This comparison appears to be unintentional because the types 'Symbol | undefined' and 'Type' have no overlap."
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 27303,
+          "code": 2322,
+          "message": "Type 'Type | undefined' is not assignable to type 'TypeFlags'.\n  Type 'undefined' is not assignable to type 'TypeFlags'."
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 27303,
+          "code": 2362,
+          "message": "The left-hand side of an arithmetic operation must be of type 'any', 'number', 'bigint' or an enum type."
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 27303,
+          "code": 18048,
+          "message": "'flags' is possibly 'undefined'."
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 27303,
+          "code": 2322,
+          "message": "Type 'number' is not assignable to type 'Type'."
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 27321,
+          "code": 2322,
+          "message": "Type 'Type | undefined' is not assignable to type 'Type'.\n  Type 'undefined' is not assignable to type 'Type'."
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 27322,
+          "code": 18048,
+          "message": "'left' is possibly 'undefined'."
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 27323,
+          "code": 18048,
+          "message": "'left' is possibly 'undefined'."
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 27324,
+          "code": 18048,
+          "message": "'left' is possibly 'undefined'."
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 27325,
+          "code": 18048,
+          "message": "'left' is possibly 'undefined'."
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 27326,
+          "code": 18048,
+          "message": "'left' is possibly 'undefined'."
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 27327,
+          "code": 18048,
+          "message": "'left' is possibly 'undefined'."
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 27328,
+          "code": 18048,
+          "message": "'left' is possibly 'undefined'."
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 27329,
+          "code": 18048,
+          "message": "'left' is possibly 'undefined'."
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 27330,
+          "code": 18048,
+          "message": "'left' is possibly 'undefined'."
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 27331,
+          "code": 18048,
+          "message": "'left' is possibly 'undefined'."
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 27332,
+          "code": 18048,
+          "message": "'left' is possibly 'undefined'."
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 27333,
+          "code": 18048,
+          "message": "'left' is possibly 'undefined'."
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 27334,
+          "code": 18048,
+          "message": "'left' is possibly 'undefined'."
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 27337,
+          "code": 18048,
+          "message": "'matchingType' is possibly 'undefined'."
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 27338,
+          "code": 2345,
+          "message": "Argument of type 'Type | undefined' is not assignable to parameter of type 'Type'.\n  Type 'undefined' is not assignable to type 'Type'."
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 28238,
+          "code": 2322,
+          "message": "Type 'Type | undefined' is not assignable to type 'TypeFacts'.\n  Type 'undefined' is not assignable to type 'TypeFacts'."
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 28238,
+          "code": 2362,
+          "message": "The left-hand side of an arithmetic operation must be of type 'any', 'number', 'bigint' or an enum type."
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 28238,
+          "code": 18048,
+          "message": "'facts' is possibly 'undefined'."
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 28238,
+          "code": 2322,
+          "message": "Type 'number' is not assignable to type 'Type'."
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 33092,
+          "code": 2345,
+          "message": "Argument of type '(left: Signature | undefined, right: Signature) => Signature | undefined' is not assignable to parameter of type '(memo: Signature | undefined, value: Signature, i: number) => Signature'.\n  Type 'Signature | undefined' is not assignable to type 'Signature'.\n    Type 'undefined' is not assignable to type 'Signature'."
+        },
+        {
+          "file": "src/compiler/core.ts",
+          "line": 2013,
+          "code": 2322,
+          "message": "Type 'T | undefined' is not assignable to type 'T'.\n  'T' could be instantiated with an arbitrary type which could be unrelated to 'T | undefined'."
+        },
+        {
+          "file": "src/compiler/core.ts",
+          "line": 2013,
+          "code": 2345,
+          "message": "Argument of type 'T | undefined' is not assignable to parameter of type 'T'.\n  'T' could be instantiated with an arbitrary type which could be unrelated to 'T | undefined'."
+        },
+        {
+          "file": "src/compiler/factory/nodeFactory.ts",
+          "line": 6756,
+          "code": 2345,
+          "message": "Argument of type '(left: Expression, right: Expression) => BinaryExpression' is not assignable to parameter of type '(memo: Expression | undefined, value: Expression, i: number) => Expression'.\n  Types of parameters 'left' and 'memo' are incompatible.\n    Type 'Expression | undefined' is not assignable to type 'Expression'.\n      Type 'undefined' is not assignable to type 'Expression'."
+        },
+        {
+          "file": "src/compiler/transformers/generators.ts",
+          "line": 1100,
+          "code": 2345,
+          "message": "Argument of type 'NodeArray<Expression>' is not assignable to parameter of type 'readonly Expression[][]'.\n  Types of property 'concat' are incompatible.\n    Type '{ (...items: ConcatArray<Expression>[]): Expression[]; (...items: (Expression | ConcatArray<Expression>)[]): Expression[]; }' is not assignable to type '{ (...items: ConcatArray<Expression[]>[]): Expression[][]; (...items: (Expression[] | ConcatArray<Expression[]>)[]): Expression[][]; }'.\n      Types of parameters 'items' and 'items' are incompatible.\n        Type 'ConcatArray<Expression[]>' is not assignable to type 'ConcatArray<Expression>'.\n          Type 'Expression[]' is missing the following properties from type 'Expression': _expressionBrand, kind, flags, modifierFlagsCache, and 4 more."
+        },
+        {
+          "file": "src/compiler/transformers/generators.ts",
+          "line": 1104,
+          "code": 2488,
+          "message": "Type 'Expression[] | undefined' must have a '[Symbol.iterator]()' method that returns an iterator."
+        },
+        {
+          "file": "src/compiler/transformers/generators.ts",
+          "line": 1168,
+          "code": 2345,
+          "message": "Argument of type 'NodeArray<ObjectLiteralElementLike>' is not assignable to parameter of type 'readonly Expression[][]'.\n  Types of property 'concat' are incompatible.\n    Type '{ (...items: ConcatArray<ObjectLiteralElementLike>[]): ObjectLiteralElementLike[]; (...items: (ObjectLiteralElementLike | ConcatArray<...>)[]): ObjectLiteralElementLike[]; }' is not assignable to type '{ (...items: ConcatArray<Expression[]>[]): Expression[][]; (...items: (Expression[] | ConcatArray<Expression[]>)[]): Expression[][]; }'.\n      Types of parameters 'items' and 'items' are incompatible.\n        Type 'ConcatArray<Expression[]>' is not assignable to type 'ConcatArray<ObjectLiteralElementLike>'.\n          Type 'Expression[]' is not assignable to type 'ObjectLiteralElementLike'."
+        },
+        {
+          "file": "src/compiler/transformers/generators.ts",
+          "line": 1170,
+          "code": 18048,
+          "message": "'expressions' is possibly 'undefined'."
+        },
+        {
+          "file": "src/compiler/transformers/generators.ts",
+          "line": 1171,
+          "code": 2345,
+          "message": "Argument of type 'Expression[] | undefined' is not assignable to parameter of type 'readonly Expression[]'.\n  Type 'undefined' is not assignable to type 'readonly Expression[]'."
+        },
+        {
+          "file": "src/compiler/transformers/module/module.ts",
+          "line": 291,
+          "code": 2345,
+          "message": "Argument of type 'Expression | undefined' is not assignable to parameter of type 'Expression'.\n  Type 'undefined' is not assignable to type 'Expression'."
+        },
+        {
+          "file": "src/compiler/transformers/module/module.ts",
+          "line": 295,
+          "code": 2769,
+          "message": "No overload matches this call.\n  Overload 1 of 2, '(left: ObjectLiteralExpression | ArrayLiteralExpression, right: Expression): DestructuringAssignment', gave the following error.\n    Argument of type 'ElementAccessExpression' is not assignable to parameter of type 'ObjectLiteralExpression | ArrayLiteralExpression'.\n      Type 'ElementAccessExpression' is missing the following properties from type 'ObjectLiteralExpression': properties, _primaryExpressionBrand\n  Overload 2 of 2, '(left: Expression, right: Expression): AssignmentExpression<EqualsToken>', gave the following error.\n    Argument of type 'Expression | undefined' is not assignable to parameter of type 'Expression'.\n      Type 'undefined' is not assignable to type 'Expression'."
+        },
+        {
+          "file": "src/compiler/transformers/module/module.ts",
+          "line": 295,
+          "code": 2339,
+          "message": "Property 'text' does not exist on type 'Expression'."
+        },
+        {
+          "file": "src/compiler/transformers/module/module.ts",
+          "line": 296,
+          "code": 2769,
+          "message": "No overload matches this call.\n  Overload 1 of 2, '(left: ObjectLiteralExpression | ArrayLiteralExpression, right: Expression): DestructuringAssignment', gave the following error.\n    Argument of type 'PropertyAccessExpression' is not assignable to parameter of type 'ObjectLiteralExpression | ArrayLiteralExpression'.\n      Type 'PropertyAccessExpression' is missing the following properties from type 'ObjectLiteralExpression': properties, _primaryExpressionBrand\n  Overload 2 of 2, '(left: Expression, right: Expression): AssignmentExpression<EqualsToken>', gave the following error.\n    Argument of type 'Expression | undefined' is not assignable to parameter of type 'Expression'.\n      Type 'undefined' is not assignable to type 'Expression'."
+        },
+        {
+          "file": "src/compiler/transformers/module/module.ts",
+          "line": 296,
+          "code": 2345,
+          "message": "Argument of type 'Expression' is not assignable to parameter of type 'Identifier | PrivateIdentifier'.\n  Type 'Expression' is missing the following properties from type 'PrivateIdentifier': escapedText, _primaryExpressionBrand, _memberExpressionBrand, _leftHandSideExpressionBrand, and 2 more."
+        },
+        {
+          "file": "src/compiler/transformers/module/module.ts",
+          "line": 631,
+          "code": 2345,
+          "message": "Argument of type 'Expression | undefined' is not assignable to parameter of type 'Expression'.\n  Type 'undefined' is not assignable to type 'Expression'."
+        },
+        {
+          "file": "src/compiler/transformers/module/module.ts",
+          "line": 633,
+          "code": 2769,
+          "message": "No overload matches this call.\n  Overload 1 of 2, '(left: ObjectLiteralExpression | ArrayLiteralExpression, right: Expression): DestructuringAssignment', gave the following error.\n    Argument of type 'ElementAccessExpression' is not assignable to parameter of type 'ObjectLiteralExpression | ArrayLiteralExpression'.\n      Type 'ElementAccessExpression' is missing the following properties from type 'ObjectLiteralExpression': properties, _primaryExpressionBrand\n  Overload 2 of 2, '(left: Expression, right: Expression): AssignmentExpression<EqualsToken>', gave the following error.\n    Argument of type 'Expression | undefined' is not assignable to parameter of type 'Expression'.\n      Type 'undefined' is not assignable to type 'Expression'."
+        },
+        {
+          "file": "src/compiler/transformers/module/module.ts",
+          "line": 633,
+          "code": 2339,
+          "message": "Property 'text' does not exist on type 'Expression'."
+        },
+        {
+          "file": "src/compiler/transformers/module/module.ts",
+          "line": 634,
+          "code": 2769,
+          "message": "No overload matches this call.\n  Overload 1 of 2, '(left: ObjectLiteralExpression | ArrayLiteralExpression, right: Expression): DestructuringAssignment', gave the following error.\n    Argument of type 'PropertyAccessExpression' is not assignable to parameter of type 'ObjectLiteralExpression | ArrayLiteralExpression'.\n      Type 'PropertyAccessExpression' is missing the following properties from type 'ObjectLiteralExpression': properties, _primaryExpressionBrand\n  Overload 2 of 2, '(left: Expression, right: Expression): AssignmentExpression<EqualsToken>', gave the following error.\n    Argument of type 'Expression | undefined' is not assignable to parameter of type 'Expression'.\n      Type 'undefined' is not assignable to type 'Expression'."
+        },
+        {
+          "file": "src/compiler/transformers/module/module.ts",
+          "line": 634,
+          "code": 2345,
+          "message": "Argument of type 'Expression' is not assignable to parameter of type 'Identifier | PrivateIdentifier'.\n  Type 'Expression' is missing the following properties from type 'PrivateIdentifier': escapedText, _primaryExpressionBrand, _memberExpressionBrand, _leftHandSideExpressionBrand, and 2 more."
+        }
+      ]
+    },
+    "sameMap": {
+      "description": "drop mutable overloads, retain readonly overloads",
+      "edits": [
+        {
+          "start": 11786,
+          "end": 11918,
+          "after": ""
+        },
+        {
+          "start": 11465,
+          "end": 11660,
+          "after": ""
+        }
+      ],
+      "javascriptIdentical": true,
+      "diagnosticCount": 4,
+      "newDiagnostics": [
+        {
+          "file": "src/compiler/builder.ts",
+          "line": 580,
+          "code": 4104,
+          "message": "The type 'readonly DiagnosticMessageChain[]' is 'readonly' and cannot be assigned to the mutable type 'DiagnosticMessageChain[]'."
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 25496,
+          "code": 2345,
+          "message": "Argument of type 'readonly Type[]' is not assignable to parameter of type 'Type[]'.\n  The type 'readonly Type[]' is 'readonly' and cannot be assigned to the mutable type 'Type[]'."
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 25498,
+          "code": 2345,
+          "message": "Argument of type 'readonly Type[]' is not assignable to parameter of type 'Type[]'.\n  The type 'readonly Type[]' is 'readonly' and cannot be assigned to the mutable type 'Type[]'."
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 27607,
+          "code": 2345,
+          "message": "Argument of type 'readonly Type[]' is not assignable to parameter of type 'Type[]'.\n  The type 'readonly Type[]' is 'readonly' and cannot be assigned to the mutable type 'Type[]'."
+        }
+      ]
+    }
+  }
+}

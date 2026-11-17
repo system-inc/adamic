@@ -1,0 +1,41 @@
+{
+  "mentions": {
+    "arrayFrom": [
+      "stage3/adapt/99-correctness-write-file-construct/owners.json",
+      "stage3/adapt/99-correctness-receiver-transformers/owners.json",
+      "stage3/adapt/99-correctness-core-multimap/owners.json",
+      "stage3/adapt/99-correctness-core-or-predicate/owners.json"
+    ],
+    "arrayToMap": [],
+    "reduceLeft": [
+      "stage3/adapt/99-correctness-receiver-transformers/owners.json",
+      "stage3/adapt/99-correctness-core-multimap/owners.json",
+      "stage3/adapt/49-honest-optionals/adapt.cjs"
+    ],
+    "sameMap": [
+      "stage3/adapt/99-correctness-receiver-transformers/owners.json",
+      "stage3/adapt/99-correctness-axolotl-k/owners.json",
+      "stage3/adapt/99-correctness-core-multimap/owners.json",
+      "stage3/adapt/76-truthful-casts/adapt.cjs"
+    ]
+  },
+  "wholeOwnerPins": [
+    {
+      "path": "stage3/adapt/99-correctness-axolotl-k/owners.json",
+      "file": "core.ts",
+      "owner": "sameMap",
+      "beforeDeclarations": 5,
+      "afterDeclarations": 5,
+      "ownerBeforeSha256": "36b52a691873fb7bab7441c63e5192e497e2dab0f0dd1408342fece73613788d",
+      "ownerAfterSha256": "65e2442289120f91246b62eab1ab7ea402456ce450cc17aecf046a4c3c65bc90"
+    }
+  ],
+  "rulesSha256": {
+    "internal/lower/census_small.go": "c220dd55f6b11b27dd916f88831495bca0136bdbe0b8addc71eca4f4f87e6577",
+    "internal/lower/overload_predicate_result.go": "6de227da208b172011555c65ae11690284927ef13f4636784abb999d3a57c0bd",
+    "internal/lower/census_overload_proof.go": "a48eccd54e8a8d9e5fe9c5a770c219c2a321f16e5c869778e4ad0a101a0310a0",
+    "internal/lower/overload_result_check.go": "10c2c79687b9980843b168bce7d9336e293e94cc28f409c7bb94ea1f63d0554e",
+    "internal/lower/overload_callback_use.go": "b9e6d0bfc3ead277428d939a5ba29b8613fc68e98189d1947260b40391bca24f",
+    "internal/lower/predicates.go": "afb84d6f0e3280896e074dde0dc08b2164bf51457fd2e79b4edb1d4cbc9e22c5"
+  }
+}

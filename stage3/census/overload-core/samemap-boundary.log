@@ -1,0 +1,29 @@
+{
+  "javascriptIdentical": true,
+  "diagnostics": [
+    {
+      "file": "src/compiler/builder.ts",
+      "line": 544,
+      "code": 2322,
+      "message": "Type 'readonly DiagnosticMessageChain[] | undefined' is not assignable to type 'DiagnosticMessageChain[] | undefined'.\n  The type 'readonly DiagnosticMessageChain[]' is 'readonly' and cannot be assigned to the mutable type 'DiagnosticMessageChain[]'."
+    },
+    {
+      "file": "src/compiler/builder.ts",
+      "line": 550,
+      "code": 2322,
+      "message": "Type 'readonly DiagnosticMessageChain[] | undefined' is not assignable to type 'DiagnosticMessageChain[] | undefined'.\n  The type 'readonly DiagnosticMessageChain[]' is 'readonly' and cannot be assigned to the mutable type 'DiagnosticMessageChain[]'."
+    },
+    {
+      "file": "src/compiler/builder.ts",
+      "line": 559,
+      "code": 2322,
+      "message": "Type 'readonly DiagnosticMessageChain[] | undefined' is not assignable to type 'DiagnosticMessageChain[] | undefined'.\n  The type 'readonly DiagnosticMessageChain[]' is 'readonly' and cannot be assigned to the mutable type 'DiagnosticMessageChain[]'."
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 25500,
+      "code": 2345,
+      "message": "Argument of type 'readonly Type[]' is not assignable to parameter of type 'Type[]'.\n  The type 'readonly Type[]' is 'readonly' and cannot be assigned to the mutable type 'Type[]'."
+    }
+  ]
+}
