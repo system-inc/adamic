@@ -17,7 +17,11 @@ for mode in ['CommonJSBundle','EcmaScript']:
  s += ['']
  for g in groups:
   n=len(former.intersection(g['roots']))
-  if n:s += [f'Of the former 73 roots, **{n} first meet `{g["where"]}` ({g["kind"]})**: {g["reason"]}.','']
+  if n:
+   membership=(' (root `'+next(iter(former.intersection(g['roots'])))+'`)') if n==1 else ''
+   s += [f'Of the former 73 roots, **{n} first meet `{g["where"]}` ({g["kind"]})**{membership}: {g["reason"]}.','']
+ sysrow=next(c for c in cs if c['module_format']==mode and c['root']=='sys.ts')
+ s += ['The `sys.ts` root '+('is unchanged' if sysrow['unchanged'] else 'moves')+' at `'+sysrow['after'][0]+'` ('+sysrow['after'][1]+'): '+sysrow['after'][2]+'.','']
 for mode in ['CommonJSBundle','EcmaScript']:
  groups=read('head/'+mode+'/grouped-first-stops.json')
  s += ['## '+mode+': grouped table','','| Roots | Location | Kind | Exact reason | Phase | Owner |','|---:|---|---|---|---|---|']
