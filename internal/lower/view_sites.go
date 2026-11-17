@@ -73,10 +73,21 @@ func (index *viewSiteIndex) sites(modules []*ast.SourceFile) *viewSiteIndex {
 // markCheckedField is the one place lowering adds a CheckedFields key, so viewWalkIndexed knows which
 // names gained one: checkedFieldWrites counts each new key under the field name it checks. Only
 // readiness writes past it, and only once lowering is done, where no view is made again.
-// TestCheckedFieldsAreWrittenThroughMarkCheckedField holds every other write to it.
-func (l *lowering) markCheckedField(key, name string) {
+// TestCheckedFieldsAreWrittenThroughMarkCheckedField holds every other write to it. RecordFree is
+// whether the view registering it is one no record can be read through (viewRecordFree), false wherever
+// that isn't known; it's kept for every registration of the key, a key already present included, since
+// any one view a record may reach is enough to keep the key's reads stopped (checkRecordGuardedReads).
+func (l *lowering) markCheckedField(key, name string, recordFree bool) {
 	if l.result.CheckedFields == nil {
 		l.result.CheckedFields = map[string]bool{}
+	}
+	if l.checkedFieldRecordFree == nil {
+		l.checkedFieldRecordFree = map[string]bool{}
+	}
+	if _, seen := l.checkedFieldRecordFree[key]; !recordFree {
+		l.checkedFieldRecordFree[key] = false
+	} else if !seen {
+		l.checkedFieldRecordFree[key] = true
 	}
 	if l.result.CheckedFields[key] {
 		return
