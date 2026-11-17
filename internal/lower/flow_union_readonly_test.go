@@ -21,7 +21,8 @@ type FlowNode = FlowStart | FlowLabel | FlowAssignment;
 `
 
 const flowUnionProgram = `function addAntecedent(label: FlowLabel, antecedent: FlowNode): void {
-	(label.antecedent || (label.antecedent = [])).push(antecedent);
+	if (label.antecedent) label.antecedent.push(antecedent);
+	else label.antecedent = [antecedent];
 }
 const start: FlowStart = { flags: 1, node: undefined, antecedent: undefined };
 const label: FlowLabel = { flags: 2, node: undefined, antecedent: undefined };
@@ -49,7 +50,7 @@ func TestFlowUnionWritableArmsRefused(t *testing.T) {
 	writable := strings.ReplaceAll(flowUnionArms, "readonly antecedent", "antecedent")
 	_, err := lowerSource(t, writable+flowUnionProgram)
 	var refusal *Refused
-	if !errors.As(err, &refusal) || !strings.Contains(refusal.What, "seen as") || !strings.Contains(refusal.What, "can write") {
+	if !errors.As(err, &refusal) || !strings.Contains(refusal.What, "FlowLabel seen as") || !strings.Contains(refusal.What, "can write") {
 		t.Fatalf("with antecedent writable on every arm, a FlowLabel seen as the union should be refused as a view that can write, got %v", err)
 	}
 	t.Logf("refused as expected: %s at %s", refusal.What, refusal.Where)
