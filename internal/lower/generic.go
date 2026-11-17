@@ -30,26 +30,8 @@ func (l *lowering) instantiateFunctionSignature(call *ast.Node, declaration *ast
 	if resolved == nil || target == nil {
 		return 0, l.notYet(call, "a call to a generic function whose signature the checker didn't resolve")
 	}
-	concreteTypes := map[*checker.Type]*checker.Type{}
-	// Class-generic calls supply this callee's resolved mapper. Ordinary recursive
-	// calls must infer their own arguments: the outer mapper can still describe the
-	// same declaration's previous instantiation, as nest<T>([item], depth - 1) does.
-	if l.genericUsesClasses(declaration, map[*ast.Node]bool{}) {
-		for _, parameter := range declaration.TypeParameters() {
-			declaredType := l.checker.GetTypeAtLocation(parameter.Name())
-			concrete := l.concrete(declaredType)
-			if concrete != declaredType && concrete.Flags()&checker.TypeFlagsTypeParameter == 0 {
-				concreteTypes[declaredType] = concrete
-			}
-		}
-	}
-	declared, given := target.Parameters(), resolved.Parameters()
-	for index := range declared {
-		if index < len(given) {
-			l.inferTypes(l.checker.GetTypeOfSymbol(declared[index]), l.checker.GetTypeOfSymbol(given[index]), concreteTypes)
-		}
-	}
-	l.inferTypes(l.checker.GetReturnTypeOfSignature(target), l.checker.GetReturnTypeOfSignature(resolved), concreteTypes)
+	concreteTypes := l.instanceTypes(declaration, target, resolved)
+	given := resolved.Parameters()
 
 	// An explicit type argument can make tsc view a mutable argument through a wider type without
 	// giving the argument that contextual type. Judge the instantiated parameter directly: the
@@ -166,6 +148,34 @@ func (l *lowering) instantiateFunctionSignature(call *ast.Node, declaration *ast
 		return 0, err
 	}
 	return index, nil
+}
+
+// instanceTypes is what each of declaration's type parameters stands for in the instance a call resolved
+// to resolved lowers, read back from target, declaration's own signature, against resolved: the one
+// reading instantiateFunctionSignature lowers the instance by, and certificate A's and B's storage
+// condition reads the instance's result by (overloadCertificateStorage), so the two never disagree.
+func (l *lowering) instanceTypes(declaration *ast.Node, target, resolved *checker.Signature) map[*checker.Type]*checker.Type {
+	concreteTypes := map[*checker.Type]*checker.Type{}
+	// Class-generic calls supply this callee's resolved mapper. Ordinary recursive
+	// calls must infer their own arguments: the outer mapper can still describe the
+	// same declaration's previous instantiation, as nest<T>([item], depth - 1) does.
+	if l.genericUsesClasses(declaration, map[*ast.Node]bool{}) {
+		for _, parameter := range declaration.TypeParameters() {
+			declaredType := l.checker.GetTypeAtLocation(parameter.Name())
+			concrete := l.concrete(declaredType)
+			if concrete != declaredType && concrete.Flags()&checker.TypeFlagsTypeParameter == 0 {
+				concreteTypes[declaredType] = concrete
+			}
+		}
+	}
+	declared, given := target.Parameters(), resolved.Parameters()
+	for index := range declared {
+		if index < len(given) {
+			l.inferTypes(l.checker.GetTypeOfSymbol(declared[index]), l.checker.GetTypeOfSymbol(given[index]), concreteTypes)
+		}
+	}
+	l.inferTypes(l.checker.GetReturnTypeOfSignature(target), l.checker.GetReturnTypeOfSignature(resolved), concreteTypes)
+	return concreteTypes
 }
 
 // instanceMapper is the type mapper an instance's body is lowered under: each type parameter read back
