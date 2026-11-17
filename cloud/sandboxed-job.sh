@@ -71,7 +71,9 @@ def image(why):
 try:
     if not repository or not commit:
         image('the runner names no LOOM_JOB_REPOSITORY and LOOM_JOB_COMMIT')
-    path = os.path.join(lays, repository, commit + '.json')
+    # The cache names a commit's lay by the hex sha256 of its repository, a newline and its commit (loom-node's
+    # WholeFileName, Loom's must on #nodecache), in a lays/ no job can list, so a job opens only its own commit's lay
+    path = os.path.join(lays, hashlib.sha256((repository + '\n' + commit).encode()).hexdigest() + '.json')
     if not os.path.exists(path):
         image('no lay for this commit')
     try:

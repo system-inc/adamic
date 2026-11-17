@@ -271,7 +271,9 @@ sandboxed_git && echo "sandboxed_git=ok"`)
 
 // sandboxed-job.sh takes the node's laid Go module cache only when loom-node's cache proxy laid this very commit whole
 // (#nodecache): a lay file for the runner's repository and commit, naming the laid cache at its one path, whose goSums
-// are the tree's go.sum and go.work.sum files exactly, each with its sha256. Every other case keeps the image's GOMODCACHE and says why,
+// are the tree's go.sum and go.work.sum files exactly, each with its sha256. The lay is found by the name the cache
+// gives it, the hex sha256 of the repository, a newline and the commit, in a lays/ of mode 0711, and a file at the old
+// per-repository path is never read. Every other case keeps the image's GOMODCACHE and says why,
 // a lay that doesn't parse included, and the preamble still returns 0. GOPROXY, GOSUMDB and GOFLAGS are the image's in
 // every case. The test sources the script in a temporary tree with two go.sum files (one in a submodule) and a root
 // go.work.sum, and decoys under the .git directories the walk skips, beside a temporary lays directory and laid cache.
@@ -280,7 +282,8 @@ sandboxed_git && echo "sandboxed_git=ok"`)
 // red on no lay); the sha256 check taken out (its `if hashlib.sha256(...) != named[path]:` made `if False:`, red on a
 // go.sum that differs); the set check taken out (`found ^ set(named)` made `set()`, red on a go.sum the lay doesn't
 // name); the walk finding go.sum alone (`name in ('go.sum', 'go.work.sum')` made `name == 'go.sum'`, red on the whole
-// lay, whose go.work.sum the tree then seems to lack).
+// lay, whose go.work.sum the tree then seems to lack); the lay looked for at the old per-repository path
+// (`os.path.join(lays, repository, commit + '.json')`, red on the whole lay and on the old path's).
 func TestSandboxedJobTakesTheNodesLaidModulesOnlyWhole(t *testing.T) {
 	t.Parallel()
 	script, err := filepath.Abs("sandboxed-job.sh")
@@ -339,17 +342,34 @@ func TestSandboxedJobTakesTheNodesLaidModulesOnlyWhole(t *testing.T) {
 			}
 		}, false, "cohere/go.sum is in the lay alone"},
 		{"a lay that doesn't parse", func(*testing.T, string, []map[string]string) []byte { return []byte(`{"repository":"adamic",`) }, nil, false, "the lay doesn't parse"},
+		// A file at the per-repository path the cache wrote before its name moved, lays/adamic/<commit>.json, and none at
+		// the name: were the old path read, its why would be the stand-in's, never "no lay"
+		{"a lay at the old per-repository path, which the cache no longer writes", func(*testing.T, string, []map[string]string) []byte { return nil }, func(t *testing.T, tree string) {
+			old := filepath.Join(filepath.Dir(tree), "lays", "adamic")
+			if err := os.Mkdir(old, 0o755); err != nil {
+				t.Fatal(err)
+			}
+			if err := os.WriteFile(filepath.Join(old, commit+".json"), []byte(`{"repository":"adamic",`), 0o444); err != nil {
+				t.Fatal(err)
+			}
+		}, false, "no lay for this commit"},
 	} {
 		t.Run(test.name, func(t *testing.T) {
 			t.Parallel()
 			directory := t.TempDir()
 			tree, lays, laid, image := filepath.Join(directory, "tree"), filepath.Join(directory, "lays"), filepath.Join(directory, "mod"), filepath.Join(directory, "image-mod")
 			for _, made := range []string{filepath.Join(tree, "cohere"), filepath.Join(tree, ".git", "modules", "cohere"), filepath.Join(tree, "cohere", ".git"),
-				filepath.Join(lays, "adamic"), laid, image} {
+				laid, image} {
 				if err := os.MkdirAll(made, 0o755); err != nil {
 					t.Fatal(err)
 				}
 			}
+			// lays/ as the cache makes it, 0711: a job opens its own lay by name and lists nothing
+			if err := os.Mkdir(lays, 0o711); err != nil {
+				t.Fatal(err)
+			}
+			nameDigest := sha256.Sum256([]byte("adamic\n" + commit))
+			layPath := filepath.Join(lays, hex.EncodeToString(nameDigest[:])+".json")
 			goSums := []map[string]string{}
 			for _, path := range []string{"cohere/go.sum", "go.sum", "go.work.sum"} {
 				if err := os.WriteFile(filepath.Join(tree, path), []byte(sums[path]), 0o644); err != nil {
@@ -373,7 +393,7 @@ func TestSandboxedJobTakesTheNodesLaidModulesOnlyWhole(t *testing.T) {
 				lay = test.lay(t, laid, goSums)
 			}
 			if lay != nil {
-				if err := os.WriteFile(filepath.Join(lays, "adamic", commit+".json"), lay, 0o444); err != nil {
+				if err := os.WriteFile(layPath, lay, 0o444); err != nil {
 					t.Fatal(err)
 				}
 			}
