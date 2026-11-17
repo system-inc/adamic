@@ -1,0 +1,30 @@
+// A factory whose interface declares a method and whose object implements it with a getter that returns a closure,
+// read through a readonly view of the interface's own member type: tsc's NodeFactory, read the way #rv75m9k's road B
+// reads it. Each read runs the getter, so the first read makes a closure adding 11 and the second one adding 12.
+interface Factory {
+    make(value: number): number;
+    readonly label: string;
+}
+
+function adder(offset: number): (value: number) => number {
+    return (value: number): number => value + offset;
+}
+
+function createFactory(offset: number): Factory {
+    let reads = 0;
+    const factory: Factory = {
+        get make() {
+            reads = reads + 1;
+            return adder(offset + reads);
+        },
+        label: "factory",
+    };
+    return factory;
+}
+
+const factory = createFactory(10);
+const view: { readonly make: (typeof factory)["make"] } = factory;
+const first = view.make;
+console.log(String(first(1)));
+console.log(String(view.make(1)));
+console.log(factory.label);
