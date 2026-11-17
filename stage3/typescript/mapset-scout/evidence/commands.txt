@@ -1,7 +1,61 @@
-Repository: system-inc/adamic
-Base: 1d3efe7b92236a0bb94aba6bfd5652f6d0f6dfa6
-Meter branch commit: e4b34e0e31c6bc661275ad1467bb9a21db805b20
+Base compiler source: 1d3efe7b92236a0bb94aba6bfd5652f6d0f6dfa6 (report-only commits on top)
+Working directory: /workspace/mapset-scout
 
+Preparation (all exit 0):
+git submodule update --init --recursive
+git clone --depth 1 --branch v6.0.3 https://github.com/microsoft/TypeScript.git /workspace/mapset-upstream
+git -C /workspace/mapset-upstream rev-parse HEAD
+# 050880ce59e30b356b686bd3144efe24f875ebc8
+(cd stage3/api && npm ci --ignore-scripts --no-audit --no-fund)
+ADAMIC_TYPESCRIPT_SOURCE=/workspace/mapset-upstream stage3/apply.sh /workspace/mapset-adapted
+# The successful retry is evidence/apply-retry.log.gz. The earlier failure remains in evidence/apply.log.
+
+Measurement tool preparation (Go 1.27.1 on PATH; all exit 0):
+export PATH=/workspace/adamic-tools/go/bin:/workspace/adamic-tools/bin:$PATH
+python3 stage3/census/latent/make_overlay.py /workspace/mapset-scout /workspace/mapset-tools/latent-overlay
+gofmt -w /workspace/mapset-tools/latent-overlay/*.go
+python3 stage3/meter/entry_overlay.py /workspace/mapset-tools/latent-overlay /workspace/mapset-tools/entry-overlay
+gofmt -w /workspace/mapset-tools/entry-overlay/*.go
+go build -buildvcs=false -overlay=/workspace/mapset-tools/entry-overlay/overlay.json -o /workspace/mapset-tools/entry-census ./stage3/census/latent/tool
+
+Official entry census (exit 0; no LATENT_ONLY_FILE selection):
+CENSUS_MODULE_FORMAT=CommonJSBundle LATENT_FULL=0 LATENT_ASSERT_NO_OUTPUT=1 LATENT_TAIL=1 LATENT_TIMES=/workspace/mapset-first-times.jsonl /workspace/mapset-tools/entry-census /workspace/mapset-adapted/src/tsc/tsc.ts /workspace/mapset-first.jsonl
+
+Official full single-file censuses (each exit 0; separate commands, exact absolute selectors):
+CENSUS_MODULE_FORMAT=CommonJSBundle LATENT_FULL=1 LATENT_ASSERT_NO_OUTPUT=1 LATENT_TAIL=1 LATENT_ONLY_FILE=/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts LATENT_TIMES=/workspace/mapset-full-utilitiesPublic-times.jsonl /workspace/mapset-tools/entry-census /workspace/mapset-adapted/src/tsc/tsc.ts /workspace/mapset-full-utilitiesPublic.jsonl
+CENSUS_MODULE_FORMAT=CommonJSBundle LATENT_FULL=1 LATENT_ASSERT_NO_OUTPUT=1 LATENT_TAIL=1 LATENT_ONLY_FILE=/workspace/mapset-adapted/src/compiler/utilities.ts LATENT_TIMES=/workspace/mapset-full-utilities-times.jsonl /workspace/mapset-tools/entry-census /workspace/mapset-adapted/src/tsc/tsc.ts /workspace/mapset-full-utilities.jsonl
+CENSUS_MODULE_FORMAT=CommonJSBundle LATENT_FULL=1 LATENT_ASSERT_NO_OUTPUT=1 LATENT_TAIL=1 LATENT_ONLY_FILE=/workspace/mapset-adapted/src/compiler/transformers/utilities.ts LATENT_TIMES=/workspace/mapset-full-transformers-utilities-times.jsonl /workspace/mapset-tools/entry-census /workspace/mapset-adapted/src/tsc/tsc.ts /workspace/mapset-full-transformers-utilities.jsonl
+
+Exact finding selection (applied to each completed raw stream's findings arrays):
+finding["reason"] == "a Map or Set interface implemented by a value that isn't a Map or Set"
+# Retain every event; count distinct meter sites by (kind, where, reason, text).
+# First error: 37 events / 35 sites. Full selected files: 29/29, 12/7, 4/4 (events/sites).
+
+Source extraction:
+SCOUT_TYPESCRIPT=/workspace/mapset-scout/stage3/api/node_modules/typescript node stage3/typescript/mapset-scout/evidence/read-sites.cjs /workspace/mapset-first.jsonl /workspace/mapset-adapted /workspace/mapset-sites.json
+
+Diagnostic tool (not used for official counts; decompress .patch.gz evidence before applying):
+# Copy entry-overlay/overlay.json to a scratch overlay; add a replacement for container_fit.go using diagnostic-overlay.patch.gz.
+# Repository internal/ files remain unchanged.
+gofmt -w /workspace/mapset-tools/trace/container_fit.go
+go build -buildvcs=false -overlay=/workspace/mapset-tools/trace/overlay.json -o /workspace/mapset-tools/trace-census ./stage3/census/latent/tool
+# Run the same full single-file commands for utilitiesPublic.ts and utilities.ts with trace-census.
+# Outputs: /workspace/mapset-trace-utilitiesPublic.jsonl and /workspace/mapset-trace-utilities.jsonl.
+# stderr: corresponding .log files. MAPSET_TRACE JSON records are retained in trace-*.jsonl.gz.
+# Both filtered finding arrays exactly equal their official counterpart: trace-comparison.json.
+
+Diagnostic replay:
+# The stock replay worker's entry reach caused source-route panics. In scratch only, apply replay-entry-order.patch.gz.
+# Its overlay inherits entry-overlay's LatentEntryReach, preserving tsc.ts as the first file.
+go build -buildvcs=false -overlay=/workspace/mapset-tools/trace/replay-overlay.json -o /workspace/mapset-tools/trace-replay-entry ./stage3/census/latent/replay/worker
+# Each of the following sites was passed as an exact absolute -where; all seven retries exited 0:
+# parser.ts:472:12; parser.ts:496:17; factory/utilities.ts:1614:9;
+# transformers/utilities.ts:126:25; transformers/utilities.ts:161:25; transformers/utilities.ts:175:118;
+# utilities.ts:4780:34.
+# Template for each SITE:
+CENSUS_MODULE_FORMAT=CommonJSBundle LATENT_FULL=1 LATENT_ASSERT_NO_OUTPUT=1 LATENT_TAIL=1 /workspace/mapset-tools/trace-replay-entry -project /workspace/mapset-adapted/src/tsc/tsc.ts -where /workspace/mapset-adapted/src/compiler/SITE -kind NotYet -reason "a Map or Set interface implemented by a value that isn't a Map or Set"
+# Exact successful traces and reproduced messages: replay-*.log.txt.
+
+Recorded run inventory:
 git ls-tree -r --name-only e4b34e0e31c6bc661275ad1467bb9a21db805b20 stage3/meter/runs/20261117T130646Z.rUAmui/
-stage3/apply.sh /workspace/mapset-adapted > /workspace/mapset-apply.log 2>&1
-Exit status: 1
+# No recorded per-site diagnostic stream was used; regeneration replaces that missing input.

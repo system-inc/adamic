@@ -1,0 +1,50 @@
+{
+  "first": {
+    "exit_code": 0,
+    "module_format": "CommonJSBundle",
+    "latent_mode": "first-error",
+    "checker_rejected": false,
+    "diagnostic_count": 0,
+    "completion_status": "relation_report",
+    "events": 37,
+    "distinct_sites": 35,
+    "raw_stream_sha256": "921f84140f3ff9f791da25a29a40c2837bf0a1a4d862a3903f7ed12b1619b455",
+    "timed_units": 4062
+  },
+  "full-utilitiesPublic": {
+    "exit_code": 0,
+    "module_format": "CommonJSBundle",
+    "latent_mode": "full",
+    "checker_rejected": false,
+    "diagnostic_count": 0,
+    "completion_status": "relation_report",
+    "events": 29,
+    "distinct_sites": 29,
+    "raw_stream_sha256": "7c923047d2a8ac58b14c217ec3ab9ec575f0a7e4a1871b7c2c74b7e0429855fb",
+    "timed_units": 243
+  },
+  "full-utilities": {
+    "exit_code": 0,
+    "module_format": "CommonJSBundle",
+    "latent_mode": "full",
+    "checker_rejected": false,
+    "diagnostic_count": 0,
+    "completion_status": "relation_report",
+    "events": 12,
+    "distinct_sites": 7,
+    "raw_stream_sha256": "24554e0e1d181477adcf78376501e623794ec8eda304873f70e41d431f73636b",
+    "timed_units": 867
+  },
+  "full-transformers-utilities": {
+    "exit_code": 0,
+    "module_format": "CommonJSBundle",
+    "latent_mode": "full",
+    "checker_rejected": false,
+    "diagnostic_count": 0,
+    "completion_status": "relation_report",
+    "events": 4,
+    "distinct_sites": 4,
+    "raw_stream_sha256": "ce23a15abf149b87efa983dcd636691770cad2cca5afb1d97214a02f38c129d8",
+    "timed_units": 48
+  }
+}

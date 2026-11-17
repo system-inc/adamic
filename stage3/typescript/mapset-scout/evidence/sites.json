@@ -1,0 +1,1438 @@
+[
+  {
+    "where": "/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts:625:22",
+    "file": "src/compiler/utilitiesPublic.ts",
+    "line": 625,
+    "column": 22,
+    "events": [
+      {
+        "depth": 0,
+        "kind": "NotYet",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "lowering",
+        "reason": "a Map or Set interface implemented by a value that isn't a Map or Set",
+        "root_kind": "",
+        "text": "/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts:625:22: stage 0 can't lower a Map or Set interface implemented by a value that isn't a Map or Set yet",
+        "unit": "/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts:623:1",
+        "where": "/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts:625:22"
+      }
+    ],
+    "units": [
+      {
+        "where": "/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts:623:1",
+        "name": "isEmptyBindingPattern",
+        "text": "/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts:625:22: stage 0 can't lower a Map or Set interface implemented by a value that isn't a Map or Set yet"
+      }
+    ],
+    "source_line": "        return every(node.elements, isEmptyBindingElement);",
+    "identifier": "node",
+    "context": {
+      "name": "isEmptyBindingPattern",
+      "line": 623,
+      "text": "export function isEmptyBindingPattern(node: BindingName): node is BindingPattern {\r\n    if (isBindingPattern(node)) {\r\n        return every(node.elements, isEmptyBindingElement);\r\n    }\r\n    return false;\r\n}"
+    },
+    "id": 1,
+    "value_class": "d",
+    "construction_status": "array construction family traced"
+  },
+  {
+    "where": "/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts:1035:30",
+    "file": "src/compiler/utilitiesPublic.ts",
+    "line": 1035,
+    "column": 30,
+    "events": [
+      {
+        "depth": 0,
+        "kind": "NotYet",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "lowering",
+        "reason": "a Map or Set interface implemented by a value that isn't a Map or Set",
+        "root_kind": "",
+        "text": "/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts:1035:30: stage 0 can't lower a Map or Set interface implemented by a value that isn't a Map or Set yet",
+        "unit": "/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts:1034:1",
+        "where": "/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts:1035:30"
+      }
+    ],
+    "units": [
+      {
+        "where": "/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts:1034:1",
+        "name": "getModifiers",
+        "text": "/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts:1035:30: stage 0 can't lower a Map or Set interface implemented by a value that isn't a Map or Set yet"
+      }
+    ],
+    "source_line": "    if (hasSyntacticModifier(node, ModifierFlags.Modifier)) {",
+    "identifier": "node",
+    "context": {
+      "name": "getModifiers",
+      "line": 1034,
+      "text": "export function getModifiers(node: HasModifiers): readonly Modifier[] | undefined {\r\n    if (hasSyntacticModifier(node, ModifierFlags.Modifier)) {\r\n        return filter(node.modifiers, isModifier);\r\n    }\r\n}"
+    },
+    "id": 2,
+    "value_class": "untraced",
+    "construction_status": "AST input/result; construction untraced"
+  },
+  {
+    "where": "/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts:1082:31",
+    "file": "src/compiler/utilitiesPublic.ts",
+    "line": 1082,
+    "column": 31,
+    "events": [
+      {
+        "depth": 0,
+        "kind": "NotYet",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "lowering",
+        "reason": "a Map or Set interface implemented by a value that isn't a Map or Set",
+        "root_kind": "",
+        "text": "/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts:1082:31: stage 0 can't lower a Map or Set interface implemented by a value that isn't a Map or Set yet",
+        "unit": "/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts:1080:1",
+        "where": "/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts:1082:31"
+      }
+    ],
+    "units": [
+      {
+        "where": "/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts:1080:1",
+        "name": "getJSDocTypeParameterTagsWorker",
+        "text": "/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts:1082:31: stage 0 can't lower a Map or Set interface implemented by a value that isn't a Map or Set yet"
+      }
+    ],
+    "source_line": "    return getJSDocTagsWorker(param.parent, noCache).filter((tag): tag is JSDocTemplateTag => isJSDocTemplateTag(tag) && tag.typeParameters.some(tp => tp.name.escapedText === name));",
+    "identifier": "param",
+    "context": {
+      "name": "getJSDocTypeParameterTagsWorker",
+      "line": 1080,
+      "text": "function getJSDocTypeParameterTagsWorker(param: TypeParameterDeclaration, noCache?: boolean): readonly JSDocTemplateTag[] {\r\n    const name = param.name.escapedText;\r\n    return getJSDocTagsWorker(param.parent, noCache).filter((tag): tag is JSDocTemplateTag => isJSDocTemplateTag(tag) && tag.typeParameters.some(tp => tp.name.escapedText === name));\r\n}"
+    },
+    "id": 3,
+    "value_class": "untraced",
+    "construction_status": "AST input/result; construction untraced"
+  },
+  {
+    "where": "/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts:1111:37",
+    "file": "src/compiler/utilitiesPublic.ts",
+    "line": 1111,
+    "column": 37,
+    "events": [
+      {
+        "depth": 0,
+        "kind": "NotYet",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "lowering",
+        "reason": "a Map or Set interface implemented by a value that isn't a Map or Set",
+        "root_kind": "",
+        "text": "/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts:1111:37: stage 0 can't lower a Map or Set interface implemented by a value that isn't a Map or Set yet",
+        "unit": "/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts:1110:1",
+        "where": "/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts:1111:37"
+      }
+    ],
+    "units": [
+      {
+        "where": "/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts:1110:1",
+        "name": "hasJSDocParameterTags",
+        "text": "/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts:1111:37: stage 0 can't lower a Map or Set interface implemented by a value that isn't a Map or Set yet"
+      }
+    ],
+    "source_line": "    return !!getFirstJSDocTag(node, isJSDocParameterTag);",
+    "identifier": "isJSDocParameterTag",
+    "declaration": {
+      "file": "src/compiler/factory/nodeTests.ts",
+      "line": 1148,
+      "name": "isJSDocParameterTag",
+      "text": "export function isJSDocParameterTag(node: Node): node is JSDocParameterTag {\r\n    return node.kind === SyntaxKind.JSDocParameterTag;\r\n}"
+    },
+    "context": {
+      "name": "hasJSDocParameterTags",
+      "line": 1110,
+      "text": "export function hasJSDocParameterTags(node: FunctionLikeDeclaration | SignatureDeclaration): boolean {\r\n    return !!getFirstJSDocTag(node, isJSDocParameterTag);\r\n}"
+    },
+    "id": 4,
+    "value_class": "e",
+    "construction_status": "named function declaration traced"
+  },
+  {
+    "where": "/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts:1116:35",
+    "file": "src/compiler/utilitiesPublic.ts",
+    "line": 1116,
+    "column": 35,
+    "events": [
+      {
+        "depth": 0,
+        "kind": "NotYet",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "lowering",
+        "reason": "a Map or Set interface implemented by a value that isn't a Map or Set",
+        "root_kind": "",
+        "text": "/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts:1116:35: stage 0 can't lower a Map or Set interface implemented by a value that isn't a Map or Set yet",
+        "unit": "/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts:1115:1",
+        "where": "/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts:1116:35"
+      }
+    ],
+    "units": [
+      {
+        "where": "/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts:1115:1",
+        "name": "getJSDocAugmentsTag",
+        "text": "/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts:1116:35: stage 0 can't lower a Map or Set interface implemented by a value that isn't a Map or Set yet"
+      }
+    ],
+    "source_line": "    return getFirstJSDocTag(node, isJSDocAugmentsTag);",
+    "identifier": "isJSDocAugmentsTag",
+    "declaration": {
+      "file": "src/compiler/factory/nodeTests.ts",
+      "line": 1096,
+      "name": "isJSDocAugmentsTag",
+      "text": "export function isJSDocAugmentsTag(node: Node): node is JSDocAugmentsTag {\r\n    return node.kind === SyntaxKind.JSDocAugmentsTag;\r\n}"
+    },
+    "context": {
+      "name": "getJSDocAugmentsTag",
+      "line": 1115,
+      "text": "export function getJSDocAugmentsTag(node: Node): JSDocAugmentsTag | undefined {\r\n    return getFirstJSDocTag(node, isJSDocAugmentsTag);\r\n}"
+    },
+    "id": 5,
+    "value_class": "e",
+    "construction_status": "named function declaration traced"
+  },
+  {
+    "where": "/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts:1121:34",
+    "file": "src/compiler/utilitiesPublic.ts",
+    "line": 1121,
+    "column": 34,
+    "events": [
+      {
+        "depth": 0,
+        "kind": "NotYet",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "lowering",
+        "reason": "a Map or Set interface implemented by a value that isn't a Map or Set",
+        "root_kind": "",
+        "text": "/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts:1121:34: stage 0 can't lower a Map or Set interface implemented by a value that isn't a Map or Set yet",
+        "unit": "/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts:1120:1",
+        "where": "/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts:1121:34"
+      }
+    ],
+    "units": [
+      {
+        "where": "/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts:1120:1",
+        "name": "getJSDocImplementsTags",
+        "text": "/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts:1121:34: stage 0 can't lower a Map or Set interface implemented by a value that isn't a Map or Set yet"
+      }
+    ],
+    "source_line": "    return getAllJSDocTags(node, isJSDocImplementsTag);",
+    "identifier": "isJSDocImplementsTag",
+    "declaration": {
+      "file": "src/compiler/factory/nodeTests.ts",
+      "line": 1180,
+      "name": "isJSDocImplementsTag",
+      "text": "export function isJSDocImplementsTag(node: Node): node is JSDocImplementsTag {\r\n    return node.kind === SyntaxKind.JSDocImplementsTag;\r\n}"
+    },
+    "context": {
+      "name": "getJSDocImplementsTags",
+      "line": 1120,
+      "text": "export function getJSDocImplementsTags(node: Node): readonly JSDocImplementsTag[] {\r\n    return getAllJSDocTags(node, isJSDocImplementsTag);\r\n}"
+    },
+    "id": 6,
+    "value_class": "e",
+    "construction_status": "named function declaration traced"
+  },
+  {
+    "where": "/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts:1126:35",
+    "file": "src/compiler/utilitiesPublic.ts",
+    "line": 1126,
+    "column": 35,
+    "events": [
+      {
+        "depth": 0,
+        "kind": "NotYet",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "lowering",
+        "reason": "a Map or Set interface implemented by a value that isn't a Map or Set",
+        "root_kind": "",
+        "text": "/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts:1126:35: stage 0 can't lower a Map or Set interface implemented by a value that isn't a Map or Set yet",
+        "unit": "/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts:1125:1",
+        "where": "/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts:1126:35"
+      }
+    ],
+    "units": [
+      {
+        "where": "/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts:1125:1",
+        "name": "getJSDocClassTag",
+        "text": "/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts:1126:35: stage 0 can't lower a Map or Set interface implemented by a value that isn't a Map or Set yet"
+      }
+    ],
+    "source_line": "    return getFirstJSDocTag(node, isJSDocClassTag);",
+    "identifier": "isJSDocClassTag",
+    "declaration": {
+      "file": "src/compiler/factory/nodeTests.ts",
+      "line": 1104,
+      "name": "isJSDocClassTag",
+      "text": "export function isJSDocClassTag(node: Node): node is JSDocClassTag {\r\n    return node.kind === SyntaxKind.JSDocClassTag;\r\n}"
+    },
+    "context": {
+      "name": "getJSDocClassTag",
+      "line": 1125,
+      "text": "export function getJSDocClassTag(node: Node): JSDocClassTag | undefined {\r\n    return getFirstJSDocTag(node, isJSDocClassTag);\r\n}"
+    },
+    "id": 7,
+    "value_class": "e",
+    "construction_status": "named function declaration traced"
+  },
+  {
+    "where": "/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts:1131:35",
+    "file": "src/compiler/utilitiesPublic.ts",
+    "line": 1131,
+    "column": 35,
+    "events": [
+      {
+        "depth": 0,
+        "kind": "NotYet",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "lowering",
+        "reason": "a Map or Set interface implemented by a value that isn't a Map or Set",
+        "root_kind": "",
+        "text": "/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts:1131:35: stage 0 can't lower a Map or Set interface implemented by a value that isn't a Map or Set yet",
+        "unit": "/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts:1130:1",
+        "where": "/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts:1131:35"
+      }
+    ],
+    "units": [
+      {
+        "where": "/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts:1130:1",
+        "name": "getJSDocPublicTag",
+        "text": "/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts:1131:35: stage 0 can't lower a Map or Set interface implemented by a value that isn't a Map or Set yet"
+      }
+    ],
+    "source_line": "    return getFirstJSDocTag(node, isJSDocPublicTag);",
+    "identifier": "isJSDocPublicTag",
+    "declaration": {
+      "file": "src/compiler/factory/nodeTests.ts",
+      "line": 1112,
+      "name": "isJSDocPublicTag",
+      "text": "export function isJSDocPublicTag(node: Node): node is JSDocPublicTag {\r\n    return node.kind === SyntaxKind.JSDocPublicTag;\r\n}"
+    },
+    "context": {
+      "name": "getJSDocPublicTag",
+      "line": 1130,
+      "text": "export function getJSDocPublicTag(node: Node): JSDocPublicTag | undefined {\r\n    return getFirstJSDocTag(node, isJSDocPublicTag);\r\n}"
+    },
+    "id": 8,
+    "value_class": "e",
+    "construction_status": "named function declaration traced"
+  },
+  {
+    "where": "/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts:1136:35",
+    "file": "src/compiler/utilitiesPublic.ts",
+    "line": 1136,
+    "column": 35,
+    "events": [
+      {
+        "depth": 0,
+        "kind": "NotYet",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "lowering",
+        "reason": "a Map or Set interface implemented by a value that isn't a Map or Set",
+        "root_kind": "",
+        "text": "/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts:1136:35: stage 0 can't lower a Map or Set interface implemented by a value that isn't a Map or Set yet",
+        "unit": "/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts:1135:1",
+        "where": "/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts:1136:35"
+      }
+    ],
+    "units": [
+      {
+        "where": "/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts:1135:1",
+        "name": "getJSDocPublicTagNoCache",
+        "text": "/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts:1136:35: stage 0 can't lower a Map or Set interface implemented by a value that isn't a Map or Set yet"
+      }
+    ],
+    "source_line": "    return getFirstJSDocTag(node, isJSDocPublicTag, /*noCache*/ true);",
+    "identifier": "isJSDocPublicTag",
+    "declaration": {
+      "file": "src/compiler/factory/nodeTests.ts",
+      "line": 1112,
+      "name": "isJSDocPublicTag",
+      "text": "export function isJSDocPublicTag(node: Node): node is JSDocPublicTag {\r\n    return node.kind === SyntaxKind.JSDocPublicTag;\r\n}"
+    },
+    "context": {
+      "name": "getJSDocPublicTagNoCache",
+      "line": 1135,
+      "text": "export function getJSDocPublicTagNoCache(node: Node): JSDocPublicTag | undefined {\r\n    return getFirstJSDocTag(node, isJSDocPublicTag, /*noCache*/ true);\r\n}"
+    },
+    "id": 9,
+    "value_class": "e",
+    "construction_status": "named function declaration traced"
+  },
+  {
+    "where": "/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts:1141:35",
+    "file": "src/compiler/utilitiesPublic.ts",
+    "line": 1141,
+    "column": 35,
+    "events": [
+      {
+        "depth": 0,
+        "kind": "NotYet",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "lowering",
+        "reason": "a Map or Set interface implemented by a value that isn't a Map or Set",
+        "root_kind": "",
+        "text": "/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts:1141:35: stage 0 can't lower a Map or Set interface implemented by a value that isn't a Map or Set yet",
+        "unit": "/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts:1140:1",
+        "where": "/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts:1141:35"
+      }
+    ],
+    "units": [
+      {
+        "where": "/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts:1140:1",
+        "name": "getJSDocPrivateTag",
+        "text": "/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts:1141:35: stage 0 can't lower a Map or Set interface implemented by a value that isn't a Map or Set yet"
+      }
+    ],
+    "source_line": "    return getFirstJSDocTag(node, isJSDocPrivateTag);",
+    "identifier": "isJSDocPrivateTag",
+    "declaration": {
+      "file": "src/compiler/factory/nodeTests.ts",
+      "line": 1116,
+      "name": "isJSDocPrivateTag",
+      "text": "export function isJSDocPrivateTag(node: Node): node is JSDocPrivateTag {\r\n    return node.kind === SyntaxKind.JSDocPrivateTag;\r\n}"
+    },
+    "context": {
+      "name": "getJSDocPrivateTag",
+      "line": 1140,
+      "text": "export function getJSDocPrivateTag(node: Node): JSDocPrivateTag | undefined {\r\n    return getFirstJSDocTag(node, isJSDocPrivateTag);\r\n}"
+    },
+    "id": 10,
+    "value_class": "e",
+    "construction_status": "named function declaration traced"
+  },
+  {
+    "where": "/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts:1146:35",
+    "file": "src/compiler/utilitiesPublic.ts",
+    "line": 1146,
+    "column": 35,
+    "events": [
+      {
+        "depth": 0,
+        "kind": "NotYet",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "lowering",
+        "reason": "a Map or Set interface implemented by a value that isn't a Map or Set",
+        "root_kind": "",
+        "text": "/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts:1146:35: stage 0 can't lower a Map or Set interface implemented by a value that isn't a Map or Set yet",
+        "unit": "/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts:1145:1",
+        "where": "/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts:1146:35"
+      }
+    ],
+    "units": [
+      {
+        "where": "/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts:1145:1",
+        "name": "getJSDocPrivateTagNoCache",
+        "text": "/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts:1146:35: stage 0 can't lower a Map or Set interface implemented by a value that isn't a Map or Set yet"
+      }
+    ],
+    "source_line": "    return getFirstJSDocTag(node, isJSDocPrivateTag, /*noCache*/ true);",
+    "identifier": "isJSDocPrivateTag",
+    "declaration": {
+      "file": "src/compiler/factory/nodeTests.ts",
+      "line": 1116,
+      "name": "isJSDocPrivateTag",
+      "text": "export function isJSDocPrivateTag(node: Node): node is JSDocPrivateTag {\r\n    return node.kind === SyntaxKind.JSDocPrivateTag;\r\n}"
+    },
+    "context": {
+      "name": "getJSDocPrivateTagNoCache",
+      "line": 1145,
+      "text": "export function getJSDocPrivateTagNoCache(node: Node): JSDocPrivateTag | undefined {\r\n    return getFirstJSDocTag(node, isJSDocPrivateTag, /*noCache*/ true);\r\n}"
+    },
+    "id": 11,
+    "value_class": "e",
+    "construction_status": "named function declaration traced"
+  },
+  {
+    "where": "/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts:1151:35",
+    "file": "src/compiler/utilitiesPublic.ts",
+    "line": 1151,
+    "column": 35,
+    "events": [
+      {
+        "depth": 0,
+        "kind": "NotYet",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "lowering",
+        "reason": "a Map or Set interface implemented by a value that isn't a Map or Set",
+        "root_kind": "",
+        "text": "/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts:1151:35: stage 0 can't lower a Map or Set interface implemented by a value that isn't a Map or Set yet",
+        "unit": "/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts:1150:1",
+        "where": "/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts:1151:35"
+      }
+    ],
+    "units": [
+      {
+        "where": "/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts:1150:1",
+        "name": "getJSDocProtectedTag",
+        "text": "/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts:1151:35: stage 0 can't lower a Map or Set interface implemented by a value that isn't a Map or Set yet"
+      }
+    ],
+    "source_line": "    return getFirstJSDocTag(node, isJSDocProtectedTag);",
+    "identifier": "isJSDocProtectedTag",
+    "declaration": {
+      "file": "src/compiler/factory/nodeTests.ts",
+      "line": 1120,
+      "name": "isJSDocProtectedTag",
+      "text": "export function isJSDocProtectedTag(node: Node): node is JSDocProtectedTag {\r\n    return node.kind === SyntaxKind.JSDocProtectedTag;\r\n}"
+    },
+    "context": {
+      "name": "getJSDocProtectedTag",
+      "line": 1150,
+      "text": "export function getJSDocProtectedTag(node: Node): JSDocProtectedTag | undefined {\r\n    return getFirstJSDocTag(node, isJSDocProtectedTag);\r\n}"
+    },
+    "id": 12,
+    "value_class": "e",
+    "construction_status": "named function declaration traced"
+  },
+  {
+    "where": "/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts:1156:35",
+    "file": "src/compiler/utilitiesPublic.ts",
+    "line": 1156,
+    "column": 35,
+    "events": [
+      {
+        "depth": 0,
+        "kind": "NotYet",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "lowering",
+        "reason": "a Map or Set interface implemented by a value that isn't a Map or Set",
+        "root_kind": "",
+        "text": "/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts:1156:35: stage 0 can't lower a Map or Set interface implemented by a value that isn't a Map or Set yet",
+        "unit": "/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts:1155:1",
+        "where": "/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts:1156:35"
+      }
+    ],
+    "units": [
+      {
+        "where": "/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts:1155:1",
+        "name": "getJSDocProtectedTagNoCache",
+        "text": "/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts:1156:35: stage 0 can't lower a Map or Set interface implemented by a value that isn't a Map or Set yet"
+      }
+    ],
+    "source_line": "    return getFirstJSDocTag(node, isJSDocProtectedTag, /*noCache*/ true);",
+    "identifier": "isJSDocProtectedTag",
+    "declaration": {
+      "file": "src/compiler/factory/nodeTests.ts",
+      "line": 1120,
+      "name": "isJSDocProtectedTag",
+      "text": "export function isJSDocProtectedTag(node: Node): node is JSDocProtectedTag {\r\n    return node.kind === SyntaxKind.JSDocProtectedTag;\r\n}"
+    },
+    "context": {
+      "name": "getJSDocProtectedTagNoCache",
+      "line": 1155,
+      "text": "export function getJSDocProtectedTagNoCache(node: Node): JSDocProtectedTag | undefined {\r\n    return getFirstJSDocTag(node, isJSDocProtectedTag, /*noCache*/ true);\r\n}"
+    },
+    "id": 13,
+    "value_class": "e",
+    "construction_status": "named function declaration traced"
+  },
+  {
+    "where": "/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts:1161:35",
+    "file": "src/compiler/utilitiesPublic.ts",
+    "line": 1161,
+    "column": 35,
+    "events": [
+      {
+        "depth": 0,
+        "kind": "NotYet",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "lowering",
+        "reason": "a Map or Set interface implemented by a value that isn't a Map or Set",
+        "root_kind": "",
+        "text": "/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts:1161:35: stage 0 can't lower a Map or Set interface implemented by a value that isn't a Map or Set yet",
+        "unit": "/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts:1160:1",
+        "where": "/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts:1161:35"
+      }
+    ],
+    "units": [
+      {
+        "where": "/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts:1160:1",
+        "name": "getJSDocReadonlyTag",
+        "text": "/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts:1161:35: stage 0 can't lower a Map or Set interface implemented by a value that isn't a Map or Set yet"
+      }
+    ],
+    "source_line": "    return getFirstJSDocTag(node, isJSDocReadonlyTag);",
+    "identifier": "isJSDocReadonlyTag",
+    "declaration": {
+      "file": "src/compiler/factory/nodeTests.ts",
+      "line": 1124,
+      "name": "isJSDocReadonlyTag",
+      "text": "export function isJSDocReadonlyTag(node: Node): node is JSDocReadonlyTag {\r\n    return node.kind === SyntaxKind.JSDocReadonlyTag;\r\n}"
+    },
+    "context": {
+      "name": "getJSDocReadonlyTag",
+      "line": 1160,
+      "text": "export function getJSDocReadonlyTag(node: Node): JSDocReadonlyTag | undefined {\r\n    return getFirstJSDocTag(node, isJSDocReadonlyTag);\r\n}"
+    },
+    "id": 14,
+    "value_class": "e",
+    "construction_status": "named function declaration traced"
+  },
+  {
+    "where": "/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts:1166:35",
+    "file": "src/compiler/utilitiesPublic.ts",
+    "line": 1166,
+    "column": 35,
+    "events": [
+      {
+        "depth": 0,
+        "kind": "NotYet",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "lowering",
+        "reason": "a Map or Set interface implemented by a value that isn't a Map or Set",
+        "root_kind": "",
+        "text": "/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts:1166:35: stage 0 can't lower a Map or Set interface implemented by a value that isn't a Map or Set yet",
+        "unit": "/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts:1165:1",
+        "where": "/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts:1166:35"
+      }
+    ],
+    "units": [
+      {
+        "where": "/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts:1165:1",
+        "name": "getJSDocReadonlyTagNoCache",
+        "text": "/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts:1166:35: stage 0 can't lower a Map or Set interface implemented by a value that isn't a Map or Set yet"
+      }
+    ],
+    "source_line": "    return getFirstJSDocTag(node, isJSDocReadonlyTag, /*noCache*/ true);",
+    "identifier": "isJSDocReadonlyTag",
+    "declaration": {
+      "file": "src/compiler/factory/nodeTests.ts",
+      "line": 1124,
+      "name": "isJSDocReadonlyTag",
+      "text": "export function isJSDocReadonlyTag(node: Node): node is JSDocReadonlyTag {\r\n    return node.kind === SyntaxKind.JSDocReadonlyTag;\r\n}"
+    },
+    "context": {
+      "name": "getJSDocReadonlyTagNoCache",
+      "line": 1165,
+      "text": "export function getJSDocReadonlyTagNoCache(node: Node): JSDocReadonlyTag | undefined {\r\n    return getFirstJSDocTag(node, isJSDocReadonlyTag, /*noCache*/ true);\r\n}"
+    },
+    "id": 15,
+    "value_class": "e",
+    "construction_status": "named function declaration traced"
+  },
+  {
+    "where": "/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts:1170:35",
+    "file": "src/compiler/utilitiesPublic.ts",
+    "line": 1170,
+    "column": 35,
+    "events": [
+      {
+        "depth": 0,
+        "kind": "NotYet",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "lowering",
+        "reason": "a Map or Set interface implemented by a value that isn't a Map or Set",
+        "root_kind": "",
+        "text": "/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts:1170:35: stage 0 can't lower a Map or Set interface implemented by a value that isn't a Map or Set yet",
+        "unit": "/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts:1169:1",
+        "where": "/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts:1170:35"
+      }
+    ],
+    "units": [
+      {
+        "where": "/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts:1169:1",
+        "name": "getJSDocOverrideTagNoCache",
+        "text": "/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts:1170:35: stage 0 can't lower a Map or Set interface implemented by a value that isn't a Map or Set yet"
+      }
+    ],
+    "source_line": "    return getFirstJSDocTag(node, isJSDocOverrideTag, /*noCache*/ true);",
+    "identifier": "isJSDocOverrideTag",
+    "declaration": {
+      "file": "src/compiler/factory/nodeTests.ts",
+      "line": 1128,
+      "name": "isJSDocOverrideTag",
+      "text": "export function isJSDocOverrideTag(node: Node): node is JSDocOverrideTag {\r\n    return node.kind === SyntaxKind.JSDocOverrideTag;\r\n}"
+    },
+    "context": {
+      "name": "getJSDocOverrideTagNoCache",
+      "line": 1169,
+      "text": "export function getJSDocOverrideTagNoCache(node: Node): JSDocOverrideTag | undefined {\r\n    return getFirstJSDocTag(node, isJSDocOverrideTag, /*noCache*/ true);\r\n}"
+    },
+    "id": 16,
+    "value_class": "e",
+    "construction_status": "named function declaration traced"
+  },
+  {
+    "where": "/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts:1175:35",
+    "file": "src/compiler/utilitiesPublic.ts",
+    "line": 1175,
+    "column": 35,
+    "events": [
+      {
+        "depth": 0,
+        "kind": "NotYet",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "lowering",
+        "reason": "a Map or Set interface implemented by a value that isn't a Map or Set",
+        "root_kind": "",
+        "text": "/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts:1175:35: stage 0 can't lower a Map or Set interface implemented by a value that isn't a Map or Set yet",
+        "unit": "/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts:1174:1",
+        "where": "/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts:1175:35"
+      }
+    ],
+    "units": [
+      {
+        "where": "/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts:1174:1",
+        "name": "getJSDocDeprecatedTag",
+        "text": "/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts:1175:35: stage 0 can't lower a Map or Set interface implemented by a value that isn't a Map or Set yet"
+      }
+    ],
+    "source_line": "    return getFirstJSDocTag(node, isJSDocDeprecatedTag);",
+    "identifier": "isJSDocDeprecatedTag",
+    "declaration": {
+      "file": "src/compiler/factory/nodeTests.ts",
+      "line": 1136,
+      "name": "isJSDocDeprecatedTag",
+      "text": "export function isJSDocDeprecatedTag(node: Node): node is JSDocDeprecatedTag {\r\n    return node.kind === SyntaxKind.JSDocDeprecatedTag;\r\n}"
+    },
+    "context": {
+      "name": "getJSDocDeprecatedTag",
+      "line": 1174,
+      "text": "export function getJSDocDeprecatedTag(node: Node): JSDocDeprecatedTag | undefined {\r\n    return getFirstJSDocTag(node, isJSDocDeprecatedTag);\r\n}"
+    },
+    "id": 17,
+    "value_class": "e",
+    "construction_status": "named function declaration traced"
+  },
+  {
+    "where": "/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts:1180:35",
+    "file": "src/compiler/utilitiesPublic.ts",
+    "line": 1180,
+    "column": 35,
+    "events": [
+      {
+        "depth": 0,
+        "kind": "NotYet",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "lowering",
+        "reason": "a Map or Set interface implemented by a value that isn't a Map or Set",
+        "root_kind": "",
+        "text": "/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts:1180:35: stage 0 can't lower a Map or Set interface implemented by a value that isn't a Map or Set yet",
+        "unit": "/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts:1179:1",
+        "where": "/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts:1180:35"
+      }
+    ],
+    "units": [
+      {
+        "where": "/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts:1179:1",
+        "name": "getJSDocDeprecatedTagNoCache",
+        "text": "/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts:1180:35: stage 0 can't lower a Map or Set interface implemented by a value that isn't a Map or Set yet"
+      }
+    ],
+    "source_line": "    return getFirstJSDocTag(node, isJSDocDeprecatedTag, /*noCache*/ true);",
+    "identifier": "isJSDocDeprecatedTag",
+    "declaration": {
+      "file": "src/compiler/factory/nodeTests.ts",
+      "line": 1136,
+      "name": "isJSDocDeprecatedTag",
+      "text": "export function isJSDocDeprecatedTag(node: Node): node is JSDocDeprecatedTag {\r\n    return node.kind === SyntaxKind.JSDocDeprecatedTag;\r\n}"
+    },
+    "context": {
+      "name": "getJSDocDeprecatedTagNoCache",
+      "line": 1179,
+      "text": "export function getJSDocDeprecatedTagNoCache(node: Node): JSDocDeprecatedTag | undefined {\r\n    return getFirstJSDocTag(node, isJSDocDeprecatedTag, /*noCache*/ true);\r\n}"
+    },
+    "id": 18,
+    "value_class": "e",
+    "construction_status": "named function declaration traced"
+  },
+  {
+    "where": "/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts:1190:35",
+    "file": "src/compiler/utilitiesPublic.ts",
+    "line": 1190,
+    "column": 35,
+    "events": [
+      {
+        "depth": 0,
+        "kind": "NotYet",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "lowering",
+        "reason": "a Map or Set interface implemented by a value that isn't a Map or Set",
+        "root_kind": "",
+        "text": "/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts:1190:35: stage 0 can't lower a Map or Set interface implemented by a value that isn't a Map or Set yet",
+        "unit": "/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts:1189:1",
+        "where": "/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts:1190:35"
+      }
+    ],
+    "units": [
+      {
+        "where": "/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts:1189:1",
+        "name": "getJSDocThisTag",
+        "text": "/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts:1190:35: stage 0 can't lower a Map or Set interface implemented by a value that isn't a Map or Set yet"
+      }
+    ],
+    "source_line": "    return getFirstJSDocTag(node, isJSDocThisTag);",
+    "identifier": "isJSDocThisTag",
+    "declaration": {
+      "file": "src/compiler/factory/nodeTests.ts",
+      "line": 1156,
+      "name": "isJSDocThisTag",
+      "text": "export function isJSDocThisTag(node: Node): node is JSDocThisTag {\r\n    return node.kind === SyntaxKind.JSDocThisTag;\r\n}"
+    },
+    "context": {
+      "name": "getJSDocThisTag",
+      "line": 1189,
+      "text": "export function getJSDocThisTag(node: Node): JSDocThisTag | undefined {\r\n    return getFirstJSDocTag(node, isJSDocThisTag);\r\n}"
+    },
+    "id": 19,
+    "value_class": "e",
+    "construction_status": "named function declaration traced"
+  },
+  {
+    "where": "/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts:1195:35",
+    "file": "src/compiler/utilitiesPublic.ts",
+    "line": 1195,
+    "column": 35,
+    "events": [
+      {
+        "depth": 0,
+        "kind": "NotYet",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "lowering",
+        "reason": "a Map or Set interface implemented by a value that isn't a Map or Set",
+        "root_kind": "",
+        "text": "/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts:1195:35: stage 0 can't lower a Map or Set interface implemented by a value that isn't a Map or Set yet",
+        "unit": "/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts:1194:1",
+        "where": "/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts:1195:35"
+      }
+    ],
+    "units": [
+      {
+        "where": "/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts:1194:1",
+        "name": "getJSDocReturnTag",
+        "text": "/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts:1195:35: stage 0 can't lower a Map or Set interface implemented by a value that isn't a Map or Set yet"
+      }
+    ],
+    "source_line": "    return getFirstJSDocTag(node, isJSDocReturnTag);",
+    "identifier": "isJSDocReturnTag",
+    "declaration": {
+      "file": "src/compiler/factory/nodeTests.ts",
+      "line": 1152,
+      "name": "isJSDocReturnTag",
+      "text": "export function isJSDocReturnTag(node: Node): node is JSDocReturnTag {\r\n    return node.kind === SyntaxKind.JSDocReturnTag;\r\n}"
+    },
+    "context": {
+      "name": "getJSDocReturnTag",
+      "line": 1194,
+      "text": "export function getJSDocReturnTag(node: Node): JSDocReturnTag | undefined {\r\n    return getFirstJSDocTag(node, isJSDocReturnTag);\r\n}"
+    },
+    "id": 20,
+    "value_class": "e",
+    "construction_status": "named function declaration traced"
+  },
+  {
+    "where": "/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts:1200:35",
+    "file": "src/compiler/utilitiesPublic.ts",
+    "line": 1200,
+    "column": 35,
+    "events": [
+      {
+        "depth": 0,
+        "kind": "NotYet",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "lowering",
+        "reason": "a Map or Set interface implemented by a value that isn't a Map or Set",
+        "root_kind": "",
+        "text": "/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts:1200:35: stage 0 can't lower a Map or Set interface implemented by a value that isn't a Map or Set yet",
+        "unit": "/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts:1199:1",
+        "where": "/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts:1200:35"
+      }
+    ],
+    "units": [
+      {
+        "where": "/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts:1199:1",
+        "name": "getJSDocTemplateTag",
+        "text": "/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts:1200:35: stage 0 can't lower a Map or Set interface implemented by a value that isn't a Map or Set yet"
+      }
+    ],
+    "source_line": "    return getFirstJSDocTag(node, isJSDocTemplateTag);",
+    "identifier": "isJSDocTemplateTag",
+    "declaration": {
+      "file": "src/compiler/factory/nodeTests.ts",
+      "line": 1164,
+      "name": "isJSDocTemplateTag",
+      "text": "export function isJSDocTemplateTag(node: Node): node is JSDocTemplateTag {\r\n    return node.kind === SyntaxKind.JSDocTemplateTag;\r\n}"
+    },
+    "context": {
+      "name": "getJSDocTemplateTag",
+      "line": 1199,
+      "text": "export function getJSDocTemplateTag(node: Node): JSDocTemplateTag | undefined {\r\n    return getFirstJSDocTag(node, isJSDocTemplateTag);\r\n}"
+    },
+    "id": 21,
+    "value_class": "e",
+    "construction_status": "named function declaration traced"
+  },
+  {
+    "where": "/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts:1204:35",
+    "file": "src/compiler/utilitiesPublic.ts",
+    "line": 1204,
+    "column": 35,
+    "events": [
+      {
+        "depth": 0,
+        "kind": "NotYet",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "lowering",
+        "reason": "a Map or Set interface implemented by a value that isn't a Map or Set",
+        "root_kind": "",
+        "text": "/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts:1204:35: stage 0 can't lower a Map or Set interface implemented by a value that isn't a Map or Set yet",
+        "unit": "/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts:1203:1",
+        "where": "/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts:1204:35"
+      }
+    ],
+    "units": [
+      {
+        "where": "/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts:1203:1",
+        "name": "getJSDocSatisfiesTag",
+        "text": "/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts:1204:35: stage 0 can't lower a Map or Set interface implemented by a value that isn't a Map or Set yet"
+      }
+    ],
+    "source_line": "    return getFirstJSDocTag(node, isJSDocSatisfiesTag);",
+    "identifier": "isJSDocSatisfiesTag",
+    "declaration": {
+      "file": "src/compiler/factory/nodeTests.ts",
+      "line": 1184,
+      "name": "isJSDocSatisfiesTag",
+      "text": "export function isJSDocSatisfiesTag(node: Node): node is JSDocSatisfiesTag {\r\n    return node.kind === SyntaxKind.JSDocSatisfiesTag;\r\n}"
+    },
+    "context": {
+      "name": "getJSDocSatisfiesTag",
+      "line": 1203,
+      "text": "export function getJSDocSatisfiesTag(node: Node): JSDocSatisfiesTag | undefined {\r\n    return getFirstJSDocTag(node, isJSDocSatisfiesTag);\r\n}"
+    },
+    "id": 22,
+    "value_class": "e",
+    "construction_status": "named function declaration traced"
+  },
+  {
+    "where": "/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts:1210:40",
+    "file": "src/compiler/utilitiesPublic.ts",
+    "line": 1210,
+    "column": 40,
+    "events": [
+      {
+        "depth": 0,
+        "kind": "NotYet",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "lowering",
+        "reason": "a Map or Set interface implemented by a value that isn't a Map or Set",
+        "root_kind": "",
+        "text": "/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts:1210:40: stage 0 can't lower a Map or Set interface implemented by a value that isn't a Map or Set yet",
+        "unit": "/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts:1208:1",
+        "where": "/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts:1210:40"
+      }
+    ],
+    "units": [
+      {
+        "where": "/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts:1208:1",
+        "name": "getJSDocTypeTag",
+        "text": "/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts:1210:40: stage 0 can't lower a Map or Set interface implemented by a value that isn't a Map or Set yet"
+      }
+    ],
+    "source_line": "    const tag = getFirstJSDocTag(node, isJSDocTypeTag);",
+    "identifier": "isJSDocTypeTag",
+    "declaration": {
+      "file": "src/compiler/factory/nodeTests.ts",
+      "line": 1160,
+      "name": "isJSDocTypeTag",
+      "text": "export function isJSDocTypeTag(node: Node): node is JSDocTypeTag {\r\n    return node.kind === SyntaxKind.JSDocTypeTag;\r\n}"
+    },
+    "context": {
+      "name": "getJSDocTypeTag",
+      "line": 1208,
+      "text": "export function getJSDocTypeTag(node: Node): JSDocTypeTag | undefined {\r\n    // We should have already issued an error if there were multiple type jsdocs, so just use the first one.\r\n    const tag = getFirstJSDocTag(node, isJSDocTypeTag);\r\n    if (tag && tag.typeExpression && tag.typeExpression.type) {\r\n        return tag;\r\n    }\r\n    return undefined;\r\n}"
+    },
+    "id": 23,
+    "value_class": "e",
+    "construction_status": "named function declaration traced"
+  },
+  {
+    "where": "/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts:1229:84",
+    "file": "src/compiler/utilitiesPublic.ts",
+    "line": 1229,
+    "column": 84,
+    "events": [
+      {
+        "depth": 0,
+        "kind": "NotYet",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "lowering",
+        "reason": "a Map or Set interface implemented by a value that isn't a Map or Set",
+        "root_kind": "",
+        "text": "/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts:1229:84: stage 0 can't lower a Map or Set interface implemented by a value that isn't a Map or Set yet",
+        "unit": "/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts:1228:1",
+        "where": "/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts:1229:84"
+      }
+    ],
+    "units": [
+      {
+        "where": "/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts:1228:1",
+        "name": "getJSDocType",
+        "text": "/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts:1229:84: stage 0 can't lower a Map or Set interface implemented by a value that isn't a Map or Set yet"
+      }
+    ],
+    "source_line": "    let tag: JSDocTypeTag | JSDocParameterTag | undefined = getFirstJSDocTag(node, isJSDocTypeTag);",
+    "identifier": "isJSDocTypeTag",
+    "declaration": {
+      "file": "src/compiler/factory/nodeTests.ts",
+      "line": 1160,
+      "name": "isJSDocTypeTag",
+      "text": "export function isJSDocTypeTag(node: Node): node is JSDocTypeTag {\r\n    return node.kind === SyntaxKind.JSDocTypeTag;\r\n}"
+    },
+    "context": {
+      "name": "getJSDocType",
+      "line": 1228,
+      "text": "export function getJSDocType(node: Node): TypeNode | undefined {\r\n    let tag: JSDocTypeTag | JSDocParameterTag | undefined = getFirstJSDocTag(node, isJSDocTypeTag);\r\n    if (!tag && isParameter(node)) {\r\n        tag = find(getJSDocParameterTags(node), tag => !!tag.typeExpression);\r\n    }\r\n\r\n    return tag && tag.typeExpression && tag.typeExpression.type;\r\n}"
+    },
+    "id": 24,
+    "value_class": "e",
+    "construction_status": "named function declaration traced"
+  },
+  {
+    "where": "/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts:1357:28",
+    "file": "src/compiler/utilitiesPublic.ts",
+    "line": 1357,
+    "column": 28,
+    "events": [
+      {
+        "depth": 0,
+        "kind": "NotYet",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "lowering",
+        "reason": "a Map or Set interface implemented by a value that isn't a Map or Set",
+        "root_kind": "",
+        "text": "/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts:1357:28: stage 0 can't lower a Map or Set interface implemented by a value that isn't a Map or Set yet",
+        "unit": "/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts:1355:1",
+        "where": "/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts:1357:28"
+      }
+    ],
+    "units": [
+      {
+        "where": "/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts:1355:1",
+        "name": "getEffectiveConstraintOfTypeParameter",
+        "text": "/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts:1357:28: stage 0 can't lower a Map or Set interface implemented by a value that isn't a Map or Set yet"
+      }
+    ],
+    "source_line": "        isJSDocTemplateTag(node.parent) && node === node.parent.typeParameters[0] ? node.parent.constraint :",
+    "identifier": "node",
+    "context": {
+      "name": "getEffectiveConstraintOfTypeParameter",
+      "line": 1355,
+      "text": "export function getEffectiveConstraintOfTypeParameter(node: TypeParameterDeclaration): TypeNode | undefined {\r\n    return node.constraint ? node.constraint :\r\n        isJSDocTemplateTag(node.parent) && node === node.parent.typeParameters[0] ? node.parent.constraint :\r\n        undefined;\r\n}"
+    },
+    "id": 25,
+    "value_class": "untraced",
+    "construction_status": "AST input/result; construction untraced"
+  },
+  {
+    "where": "/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts:2638:76",
+    "file": "src/compiler/utilitiesPublic.ts",
+    "line": 2638,
+    "column": 76,
+    "events": [
+      {
+        "depth": 0,
+        "kind": "NotYet",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "lowering",
+        "reason": "a Map or Set interface implemented by a value that isn't a Map or Set",
+        "root_kind": "",
+        "text": "/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts:2638:76: stage 0 can't lower a Map or Set interface implemented by a value that isn't a Map or Set yet",
+        "unit": "/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts:2637:1",
+        "where": "/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts:2638:76"
+      }
+    ],
+    "units": [
+      {
+        "where": "/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts:2637:1",
+        "name": "hasRestParameter",
+        "text": "/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts:2638:76: stage 0 can't lower a Map or Set interface implemented by a value that isn't a Map or Set yet"
+      }
+    ],
+    "source_line": "    const last = lastOrUndefined<ParameterDeclaration | JSDocParameterTag>(s.parameters);",
+    "identifier": "s",
+    "context": {
+      "name": "hasRestParameter",
+      "line": 2637,
+      "text": "export function hasRestParameter(s: SignatureDeclaration | JSDocSignature): boolean {\r\n    const last = lastOrUndefined<ParameterDeclaration | JSDocParameterTag>(s.parameters);\r\n    return !!last && isRestParameter(last);\r\n}"
+    },
+    "id": 26,
+    "value_class": "d",
+    "construction_status": "array construction family traced"
+  },
+  {
+    "where": "/workspace/mapset-adapted/src/compiler/utilities.ts:3095:20",
+    "file": "src/compiler/utilities.ts",
+    "line": 3095,
+    "column": 20,
+    "events": [
+      {
+        "depth": 0,
+        "kind": "NotYet",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "lowering",
+        "reason": "a Map or Set interface implemented by a value that isn't a Map or Set",
+        "root_kind": "",
+        "text": "/workspace/mapset-adapted/src/compiler/utilities.ts:3095:20: stage 0 can't lower a Map or Set interface implemented by a value that isn't a Map or Set yet",
+        "unit": "/workspace/mapset-adapted/src/compiler/utilities.ts:3113:1",
+        "where": "/workspace/mapset-adapted/src/compiler/utilities.ts:3095:20"
+      },
+      {
+        "depth": 0,
+        "kind": "NotYet",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "lowering",
+        "reason": "a Map or Set interface implemented by a value that isn't a Map or Set",
+        "root_kind": "",
+        "text": "/workspace/mapset-adapted/src/compiler/utilities.ts:3095:20: stage 0 can't lower a Map or Set interface implemented by a value that isn't a Map or Set yet",
+        "unit": "/workspace/mapset-adapted/src/compiler/utilities.ts:12296:1",
+        "where": "/workspace/mapset-adapted/src/compiler/utilities.ts:3095:20"
+      },
+      {
+        "depth": 0,
+        "kind": "NotYet",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "lowering",
+        "reason": "a Map or Set interface implemented by a value that isn't a Map or Set",
+        "root_kind": "",
+        "text": "/workspace/mapset-adapted/src/compiler/utilities.ts:3095:20: stage 0 can't lower a Map or Set interface implemented by a value that isn't a Map or Set yet",
+        "unit": "/workspace/mapset-adapted/src/compiler/utilities.ts:12304:1",
+        "where": "/workspace/mapset-adapted/src/compiler/utilities.ts:3095:20"
+      }
+    ],
+    "units": [
+      {
+        "where": "/workspace/mapset-adapted/src/compiler/utilities.ts:3113:1",
+        "name": "getTsConfigPropArrayElementValue",
+        "text": "/workspace/mapset-adapted/src/compiler/utilities.ts:3095:20: stage 0 can't lower a Map or Set interface implemented by a value that isn't a Map or Set yet"
+      },
+      {
+        "where": "/workspace/mapset-adapted/src/compiler/utilities.ts:12296:1",
+        "name": "getPropertyArrayElementValue",
+        "text": "/workspace/mapset-adapted/src/compiler/utilities.ts:3095:20: stage 0 can't lower a Map or Set interface implemented by a value that isn't a Map or Set yet"
+      },
+      {
+        "where": "/workspace/mapset-adapted/src/compiler/utilities.ts:12304:1",
+        "name": "getOptionsSyntaxByValue",
+        "text": "/workspace/mapset-adapted/src/compiler/utilities.ts:3095:20: stage 0 can't lower a Map or Set interface implemented by a value that isn't a Map or Set yet"
+      }
+    ],
+    "source_line": "    return forEach(objectLiteral?.properties, property => {",
+    "identifier": "objectLiteral",
+    "context": {
+      "name": "forEachPropertyAssignment",
+      "line": 3094,
+      "text": "export function forEachPropertyAssignment<T>(objectLiteral: ObjectLiteralExpression | undefined, key: string, callback: (property: PropertyAssignment) => T | undefined, key2?: string): T | undefined {\r\n    return forEach(objectLiteral?.properties, property => {\r\n        if (!isPropertyAssignment(property)) return undefined;\r\n        const propName = tryGetTextOfPropertyName(property.name);\r\n        return key === propName || (key2 && key2 === propName) ?\r\n            callback(property) :\r\n            undefined;\r\n    });\r\n}"
+    },
+    "id": 27,
+    "value_class": "d",
+    "construction_status": "array construction family traced"
+  },
+  {
+    "where": "/workspace/mapset-adapted/src/compiler/utilities.ts:4429:82",
+    "file": "src/compiler/utilities.ts",
+    "line": 4429,
+    "column": 82,
+    "events": [
+      {
+        "depth": 0,
+        "kind": "NotYet",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "lowering",
+        "reason": "a Map or Set interface implemented by a value that isn't a Map or Set",
+        "root_kind": "",
+        "text": "/workspace/mapset-adapted/src/compiler/utilities.ts:4429:82: stage 0 can't lower a Map or Set interface implemented by a value that isn't a Map or Set yet",
+        "unit": "/workspace/mapset-adapted/src/compiler/utilities.ts:4426:1",
+        "where": "/workspace/mapset-adapted/src/compiler/utilities.ts:4429:82"
+      }
+    ],
+    "units": [
+      {
+        "where": "/workspace/mapset-adapted/src/compiler/utilities.ts:4426:1",
+        "name": "getNamespaceDeclarationNode",
+        "text": "/workspace/mapset-adapted/src/compiler/utilities.ts:4429:82: stage 0 can't lower a Map or Set interface implemented by a value that isn't a Map or Set yet"
+      }
+    ],
+    "source_line": "            return node.importClause && tryCast(node.importClause.namedBindings, isNamespaceImport);",
+    "identifier": "isNamespaceImport",
+    "declaration": {
+      "file": "src/compiler/factory/nodeTests.ts",
+      "line": 870,
+      "name": "isNamespaceImport",
+      "text": "export function isNamespaceImport(node: Node): node is NamespaceImport {\r\n    return node.kind === SyntaxKind.NamespaceImport;\r\n}"
+    },
+    "context": {
+      "name": "getNamespaceDeclarationNode",
+      "line": 4426,
+      "text": "export function getNamespaceDeclarationNode(node: ImportDeclaration | ImportEqualsDeclaration | ExportDeclaration): ImportEqualsDeclaration | NamespaceImport | NamespaceExport | undefined {\r\n    switch (node.kind) {\r\n        case SyntaxKind.ImportDeclaration:\r\n            return node.importClause && tryCast(node.importClause.namedBindings, isNamespaceImport);\r\n        case SyntaxKind.ImportEqualsDeclaration:\r\n            return node;\r\n        case SyntaxKind.ExportDeclaration:\r\n            return node.exportClause && tryCast(node.exportClause, isNamespaceExport);\r\n        default:\r\n            return Debug.assertNever(node);\r\n    }\r\n}"
+    },
+    "id": 28,
+    "value_class": "e",
+    "construction_status": "named function declaration traced"
+  },
+  {
+    "where": "/workspace/mapset-adapted/src/compiler/utilities.ts:4780:34",
+    "file": "src/compiler/utilities.ts",
+    "line": 4780,
+    "column": 34,
+    "events": [
+      {
+        "depth": 0,
+        "kind": "NotYet",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "lowering",
+        "reason": "a Map or Set interface implemented by a value that isn't a Map or Set",
+        "root_kind": "",
+        "text": "/workspace/mapset-adapted/src/compiler/utilities.ts:4780:34: stage 0 can't lower a Map or Set interface implemented by a value that isn't a Map or Set yet",
+        "unit": "/workspace/mapset-adapted/src/compiler/utilities.ts:4779:1",
+        "where": "/workspace/mapset-adapted/src/compiler/utilities.ts:4780:34"
+      }
+    ],
+    "units": [
+      {
+        "where": "/workspace/mapset-adapted/src/compiler/utilities.ts:4779:1",
+        "name": "getJSDocOverloadTags",
+        "text": "/workspace/mapset-adapted/src/compiler/utilities.ts:4780:34: stage 0 can't lower a Map or Set interface implemented by a value that isn't a Map or Set yet"
+      }
+    ],
+    "source_line": "    return getAllJSDocTags(node, isJSDocOverloadTag);",
+    "identifier": "isJSDocOverloadTag",
+    "declaration": {
+      "file": "src/compiler/factory/nodeTests.ts",
+      "line": 1132,
+      "name": "isJSDocOverloadTag",
+      "text": "export function isJSDocOverloadTag(node: Node): node is JSDocOverloadTag {\r\n    return node.kind === SyntaxKind.JSDocOverloadTag;\r\n}"
+    },
+    "context": {
+      "name": "getJSDocOverloadTags",
+      "line": 4779,
+      "text": "export function getJSDocOverloadTags(node: Node): readonly JSDocOverloadTag[] {\r\n    return getAllJSDocTags(node, isJSDocOverloadTag);\r\n}"
+    },
+    "id": 29,
+    "value_class": "e",
+    "construction_status": "named function declaration traced"
+  },
+  {
+    "where": "/workspace/mapset-adapted/src/compiler/factory/utilities.ts:1614:9",
+    "file": "src/compiler/factory/utilities.ts",
+    "line": 1614,
+    "column": 9,
+    "events": [
+      {
+        "depth": 0,
+        "kind": "NotYet",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "lowering",
+        "reason": "a Map or Set interface implemented by a value that isn't a Map or Set",
+        "root_kind": "",
+        "text": "/workspace/mapset-adapted/src/compiler/factory/utilities.ts:1614:9: stage 0 can't lower a Map or Set interface implemented by a value that isn't a Map or Set yet",
+        "unit": "/workspace/mapset-adapted/src/compiler/factory/utilities.ts:1611:1",
+        "where": "/workspace/mapset-adapted/src/compiler/factory/utilities.ts:1614:9"
+      }
+    ],
+    "units": [
+      {
+        "where": "/workspace/mapset-adapted/src/compiler/factory/utilities.ts:1611:1",
+        "name": "createAccessorPropertyBackingField",
+        "text": "/workspace/mapset-adapted/src/compiler/factory/utilities.ts:1614:9: stage 0 can't lower a Map or Set interface implemented by a value that isn't a Map or Set yet"
+      }
+    ],
+    "source_line": "        modifiers,",
+    "identifier": "modifiers",
+    "context": {
+      "name": "createAccessorPropertyBackingField",
+      "line": 1611,
+      "text": "export function createAccessorPropertyBackingField(factory: NodeFactory, node: PropertyDeclaration, modifiers: ModifiersArray | undefined, initializer: Expression | undefined): PropertyDeclaration {\r\n    return factory.updatePropertyDeclaration(\r\n        node,\r\n        modifiers,\r\n        factory.getGeneratedPrivateNameForNode(node.name, /*prefix*/ undefined, \"_accessor_storage\"),\r\n        /*questionOrExclamationToken*/ undefined,\r\n        /*type*/ undefined,\r\n        initializer,\r\n    );\r\n}"
+    },
+    "id": 30,
+    "value_class": "d",
+    "construction_status": "array construction family traced"
+  },
+  {
+    "where": "/workspace/mapset-adapted/src/compiler/parser.ts:472:12",
+    "file": "src/compiler/parser.ts",
+    "line": 472,
+    "column": 12,
+    "events": [
+      {
+        "depth": 0,
+        "kind": "NotYet",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "lowering",
+        "reason": "a Map or Set interface implemented by a value that isn't a Map or Set",
+        "root_kind": "",
+        "text": "/workspace/mapset-adapted/src/compiler/parser.ts:472:12: stage 0 can't lower a Map or Set interface implemented by a value that isn't a Map or Set yet",
+        "unit": "/workspace/mapset-adapted/src/compiler/parser.ts:469:1",
+        "where": "/workspace/mapset-adapted/src/compiler/parser.ts:472:12"
+      }
+    ],
+    "units": [
+      {
+        "where": "/workspace/mapset-adapted/src/compiler/parser.ts:469:1",
+        "name": "isFileProbablyExternalModule",
+        "text": "/workspace/mapset-adapted/src/compiler/parser.ts:472:12: stage 0 can't lower a Map or Set interface implemented by a value that isn't a Map or Set yet"
+      }
+    ],
+    "source_line": "    return forEach(sourceFile.statements, isAnExternalModuleIndicatorNode) ||",
+    "identifier": "forEach",
+    "declaration": {
+      "file": "src/compiler/core.ts",
+      "line": 33,
+      "name": "forEach",
+      "text": "export function forEach<T, U>(array: readonly T[] | undefined, callback: (element: T, index: number) => U | undefined): U | undefined {\r\n    if (array !== undefined) {\r\n        for (let i = 0; i < array.length; i++) {\r\n            const result = callback(array[i]!, i);\r\n            if (result) {\r\n                return result;\r\n            }\r\n        }\r\n    }\r\n    return undefined;\r\n}"
+    },
+    "context": {
+      "name": "isFileProbablyExternalModule",
+      "line": 469,
+      "text": "export function isFileProbablyExternalModule(sourceFile: SourceFile): Node | undefined {\r\n    // Try to use the first top-level import/export when available, then\r\n    // fall back to looking for an 'import.meta' somewhere in the tree if necessary.\r\n    return forEach(sourceFile.statements, isAnExternalModuleIndicatorNode) ||\r\n        getImportMetaIfNecessary(sourceFile);\r\n}"
+    },
+    "id": 31,
+    "value_class": "untraced",
+    "construction_status": "AST input/result; construction untraced"
+  },
+  {
+    "where": "/workspace/mapset-adapted/src/compiler/parser.ts:496:17",
+    "file": "src/compiler/parser.ts",
+    "line": 496,
+    "column": 17,
+    "events": [
+      {
+        "depth": 0,
+        "kind": "NotYet",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "lowering",
+        "reason": "a Map or Set interface implemented by a value that isn't a Map or Set",
+        "root_kind": "",
+        "text": "/workspace/mapset-adapted/src/compiler/parser.ts:496:17: stage 0 can't lower a Map or Set interface implemented by a value that isn't a Map or Set yet",
+        "unit": "/workspace/mapset-adapted/src/compiler/parser.ts:495:1",
+        "where": "/workspace/mapset-adapted/src/compiler/parser.ts:496:17"
+      }
+    ],
+    "units": [
+      {
+        "where": "/workspace/mapset-adapted/src/compiler/parser.ts:495:1",
+        "name": "hasModifierOfKind",
+        "text": "/workspace/mapset-adapted/src/compiler/parser.ts:496:17: stage 0 can't lower a Map or Set interface implemented by a value that isn't a Map or Set yet"
+      }
+    ],
+    "source_line": "    return some(node.modifiers, m => m.kind === kind);",
+    "identifier": "node",
+    "context": {
+      "name": "hasModifierOfKind",
+      "line": 495,
+      "text": "function hasModifierOfKind(node: HasModifiers, kind: SyntaxKind) {\r\n    return some(node.modifiers, m => m.kind === kind);\r\n}"
+    },
+    "id": 32,
+    "value_class": "d",
+    "construction_status": "array construction family traced"
+  },
+  {
+    "where": "/workspace/mapset-adapted/src/compiler/transformers/utilities.ts:126:25",
+    "file": "src/compiler/transformers/utilities.ts",
+    "line": 126,
+    "column": 25,
+    "events": [
+      {
+        "depth": 0,
+        "kind": "NotYet",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "lowering",
+        "reason": "a Map or Set interface implemented by a value that isn't a Map or Set",
+        "root_kind": "",
+        "text": "/workspace/mapset-adapted/src/compiler/transformers/utilities.ts:126:25: stage 0 can't lower a Map or Set interface implemented by a value that isn't a Map or Set yet",
+        "unit": "/workspace/mapset-adapted/src/compiler/transformers/utilities.ts:124:1",
+        "where": "/workspace/mapset-adapted/src/compiler/transformers/utilities.ts:126:25"
+      }
+    ],
+    "units": [
+      {
+        "where": "/workspace/mapset-adapted/src/compiler/transformers/utilities.ts:124:1",
+        "name": "containsDefaultReference",
+        "text": "/workspace/mapset-adapted/src/compiler/transformers/utilities.ts:126:25: stage 0 can't lower a Map or Set interface implemented by a value that isn't a Map or Set yet"
+      }
+    ],
+    "source_line": "    if (!isNamedImports(node) && !isNamedExports(node)) return false;",
+    "identifier": "node",
+    "context": {
+      "name": "containsDefaultReference",
+      "line": 124,
+      "text": "function containsDefaultReference(node: NamedImportBindings | NamedExportBindings | undefined) {\r\n    if (!node) return false;\r\n    if (!isNamedImports(node) && !isNamedExports(node)) return false;\r\n    return some(node.elements, isNamedDefaultReference);\r\n}"
+    },
+    "id": 33,
+    "value_class": "untraced",
+    "construction_status": "AST input/result; construction untraced"
+  },
+  {
+    "where": "/workspace/mapset-adapted/src/compiler/transformers/utilities.ts:161:25",
+    "file": "src/compiler/transformers/utilities.ts",
+    "line": 161,
+    "column": 25,
+    "events": [
+      {
+        "depth": 0,
+        "kind": "NotYet",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "lowering",
+        "reason": "a Map or Set interface implemented by a value that isn't a Map or Set",
+        "root_kind": "",
+        "text": "/workspace/mapset-adapted/src/compiler/transformers/utilities.ts:161:25: stage 0 can't lower a Map or Set interface implemented by a value that isn't a Map or Set yet",
+        "unit": "/workspace/mapset-adapted/src/compiler/transformers/utilities.ts:153:1",
+        "where": "/workspace/mapset-adapted/src/compiler/transformers/utilities.ts:161:25"
+      }
+    ],
+    "units": [
+      {
+        "where": "/workspace/mapset-adapted/src/compiler/transformers/utilities.ts:153:1",
+        "name": "getImportNeedsImportStarHelper",
+        "text": "/workspace/mapset-adapted/src/compiler/transformers/utilities.ts:161:25: stage 0 can't lower a Map or Set interface implemented by a value that isn't a Map or Set yet"
+      }
+    ],
+    "source_line": "    if (!isNamedImports(bindings)) return false;",
+    "identifier": "bindings",
+    "context": {
+      "name": "getImportNeedsImportStarHelper",
+      "line": 153,
+      "text": "export function getImportNeedsImportStarHelper(node: ImportDeclaration): boolean {\r\n    if (!!getNamespaceDeclarationNode(node)) {\r\n        return true;\r\n    }\r\n    const bindings = node.importClause && node.importClause.namedBindings;\r\n    if (!bindings) {\r\n        return false;\r\n    }\r\n    if (!isNamedImports(bindings)) return false;\r\n    let defaultRefCount = 0;\r\n    for (const binding of bindings.elements) {\r\n        if (isNamedDefaultReference(binding)) {\r\n            defaultRefCount++;\r\n        }\r\n    }\r\n    // Import star is required if there's default named refs mixed with non-default refs, or if theres non-default refs and it has a default import\r\n    return (defaultRefCount > 0 && defaultRefCount !== bindings.elements.length) || (!!(bindings.elements.length - defaultRefCount) && isDefaultImport(node));\r\n}"
+    },
+    "id": 34,
+    "value_class": "untraced",
+    "construction_status": "AST input/result; construction untraced"
+  },
+  {
+    "where": "/workspace/mapset-adapted/src/compiler/transformers/utilities.ts:175:118",
+    "file": "src/compiler/transformers/utilities.ts",
+    "line": 175,
+    "column": 118,
+    "events": [
+      {
+        "depth": 0,
+        "kind": "NotYet",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "lowering",
+        "reason": "a Map or Set interface implemented by a value that isn't a Map or Set",
+        "root_kind": "",
+        "text": "/workspace/mapset-adapted/src/compiler/transformers/utilities.ts:175:118: stage 0 can't lower a Map or Set interface implemented by a value that isn't a Map or Set yet",
+        "unit": "/workspace/mapset-adapted/src/compiler/transformers/utilities.ts:173:1",
+        "where": "/workspace/mapset-adapted/src/compiler/transformers/utilities.ts:175:118"
+      }
+    ],
+    "units": [
+      {
+        "where": "/workspace/mapset-adapted/src/compiler/transformers/utilities.ts:173:1",
+        "name": "getImportNeedsImportDefaultHelper",
+        "text": "/workspace/mapset-adapted/src/compiler/transformers/utilities.ts:175:118: stage 0 can't lower a Map or Set interface implemented by a value that isn't a Map or Set yet"
+      }
+    ],
+    "source_line": "    return !getImportNeedsImportStarHelper(node) && (isDefaultImport(node) || (!!node.importClause && isNamedImports(node.importClause.namedBindings!) && containsDefaultReference(node.importClause.namedBindings))); // TODO: GH#18217",
+    "identifier": "node",
+    "context": {
+      "name": "getImportNeedsImportDefaultHelper",
+      "line": 173,
+      "text": "export function getImportNeedsImportDefaultHelper(node: ImportDeclaration): boolean {\r\n    // Import default is needed if there's a default import or a default ref and no other refs (meaning an import star helper wasn't requested)\r\n    return !getImportNeedsImportStarHelper(node) && (isDefaultImport(node) || (!!node.importClause && isNamedImports(node.importClause.namedBindings!) && containsDefaultReference(node.importClause.namedBindings))); // TODO: GH#18217\r\n}"
+    },
+    "id": 35,
+    "value_class": "untraced",
+    "construction_status": "AST input/result; construction untraced"
+  }
+]

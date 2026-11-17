@@ -1,0 +1,1076 @@
+[
+  {
+    "site": "/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts:625:22",
+    "unit": "/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts:623:1",
+    "first_refusing_pair": {
+      "depth": 5,
+      "target": "readonly (BindingElement | OmittedExpression)[]",
+      "target_generic": true,
+      "target_known": true,
+      "target_rep": 5,
+      "unit": "/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts:623:1",
+      "value": "readonly BindingElement[]",
+      "value_generic": true,
+      "value_known": true,
+      "value_rep": 5
+    },
+    "root_pairs": [
+      {
+        "depth": 0,
+        "target": "readonly (BindingElement | OmittedExpression)[] | undefined",
+        "target_generic": true,
+        "target_known": true,
+        "target_rep": 5,
+        "unit": "/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts:623:1",
+        "value": "NodeArray<BindingElement> | NodeArray<ArrayBindingElement>",
+        "value_generic": true,
+        "value_known": true,
+        "value_rep": 5
+      }
+    ]
+  },
+  {
+    "site": "/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts:1035:30",
+    "unit": "/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts:1034:1",
+    "first_refusing_pair": {
+      "depth": 7,
+      "target": "Node",
+      "target_generic": false,
+      "target_known": true,
+      "target_rep": 4,
+      "unit": "/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts:1034:1",
+      "value": "EndOfFileToken",
+      "value_generic": true,
+      "value_known": false,
+      "value_rep": 0
+    },
+    "root_pairs": [
+      {
+        "depth": 0,
+        "target": "Node",
+        "target_generic": false,
+        "target_known": true,
+        "target_rep": 4,
+        "unit": "/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts:1034:1",
+        "value": "HasModifiers",
+        "value_generic": false,
+        "value_known": true,
+        "value_rep": 4
+      }
+    ]
+  },
+  {
+    "site": "/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts:1082:31",
+    "unit": "/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts:1080:1",
+    "first_refusing_pair": {
+      "depth": 5,
+      "target": "Node",
+      "target_generic": false,
+      "target_known": true,
+      "target_rep": 4,
+      "unit": "/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts:1080:1",
+      "value": "EndOfFileToken",
+      "value_generic": true,
+      "value_known": false,
+      "value_rep": 0
+    },
+    "root_pairs": [
+      {
+        "depth": 0,
+        "target": "Node",
+        "target_generic": false,
+        "target_known": true,
+        "target_rep": 4,
+        "unit": "/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts:1080:1",
+        "value": "InferTypeNode | DeclarationWithTypeParameterChildren",
+        "value_generic": false,
+        "value_known": true,
+        "value_rep": 4
+      }
+    ]
+  },
+  {
+    "site": "/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts:1111:37",
+    "unit": "/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts:1110:1",
+    "first_refusing_pair": {
+      "depth": 5,
+      "target": "Node",
+      "target_generic": false,
+      "target_known": true,
+      "target_rep": 4,
+      "unit": "/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts:1110:1",
+      "value": "EndOfFileToken",
+      "value_generic": true,
+      "value_known": false,
+      "value_rep": 0
+    },
+    "root_pairs": [
+      {
+        "depth": 0,
+        "target": "(tag: JSDocTag) => tag is JSDocParameterTag",
+        "target_generic": true,
+        "target_known": true,
+        "target_rep": 8,
+        "unit": "/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts:1110:1",
+        "value": "(node: Node) => node is JSDocParameterTag",
+        "value_generic": false,
+        "value_known": true,
+        "value_rep": 8
+      }
+    ]
+  },
+  {
+    "site": "/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts:1116:35",
+    "unit": "/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts:1115:1",
+    "first_refusing_pair": {
+      "depth": 5,
+      "target": "Node",
+      "target_generic": false,
+      "target_known": true,
+      "target_rep": 4,
+      "unit": "/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts:1115:1",
+      "value": "EndOfFileToken",
+      "value_generic": true,
+      "value_known": false,
+      "value_rep": 0
+    },
+    "root_pairs": [
+      {
+        "depth": 0,
+        "target": "(tag: JSDocTag) => tag is JSDocAugmentsTag",
+        "target_generic": true,
+        "target_known": true,
+        "target_rep": 8,
+        "unit": "/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts:1115:1",
+        "value": "(node: Node) => node is JSDocAugmentsTag",
+        "value_generic": false,
+        "value_known": true,
+        "value_rep": 8
+      }
+    ]
+  },
+  {
+    "site": "/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts:1121:34",
+    "unit": "/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts:1120:1",
+    "first_refusing_pair": {
+      "depth": 5,
+      "target": "Node",
+      "target_generic": false,
+      "target_known": true,
+      "target_rep": 4,
+      "unit": "/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts:1120:1",
+      "value": "EndOfFileToken",
+      "value_generic": true,
+      "value_known": false,
+      "value_rep": 0
+    },
+    "root_pairs": [
+      {
+        "depth": 0,
+        "target": "(tag: JSDocTag) => tag is JSDocImplementsTag",
+        "target_generic": true,
+        "target_known": true,
+        "target_rep": 8,
+        "unit": "/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts:1120:1",
+        "value": "(node: Node) => node is JSDocImplementsTag",
+        "value_generic": false,
+        "value_known": true,
+        "value_rep": 8
+      }
+    ]
+  },
+  {
+    "site": "/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts:1126:35",
+    "unit": "/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts:1125:1",
+    "first_refusing_pair": {
+      "depth": 5,
+      "target": "Node",
+      "target_generic": false,
+      "target_known": true,
+      "target_rep": 4,
+      "unit": "/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts:1125:1",
+      "value": "EndOfFileToken",
+      "value_generic": true,
+      "value_known": false,
+      "value_rep": 0
+    },
+    "root_pairs": [
+      {
+        "depth": 0,
+        "target": "(tag: JSDocTag) => tag is JSDocClassTag",
+        "target_generic": true,
+        "target_known": true,
+        "target_rep": 8,
+        "unit": "/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts:1125:1",
+        "value": "(node: Node) => node is JSDocClassTag",
+        "value_generic": false,
+        "value_known": true,
+        "value_rep": 8
+      }
+    ]
+  },
+  {
+    "site": "/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts:1131:35",
+    "unit": "/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts:1130:1",
+    "first_refusing_pair": {
+      "depth": 5,
+      "target": "Node",
+      "target_generic": false,
+      "target_known": true,
+      "target_rep": 4,
+      "unit": "/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts:1130:1",
+      "value": "EndOfFileToken",
+      "value_generic": true,
+      "value_known": false,
+      "value_rep": 0
+    },
+    "root_pairs": [
+      {
+        "depth": 0,
+        "target": "(tag: JSDocTag) => tag is JSDocPublicTag",
+        "target_generic": true,
+        "target_known": true,
+        "target_rep": 8,
+        "unit": "/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts:1130:1",
+        "value": "(node: Node) => node is JSDocPublicTag",
+        "value_generic": false,
+        "value_known": true,
+        "value_rep": 8
+      }
+    ]
+  },
+  {
+    "site": "/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts:1136:35",
+    "unit": "/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts:1135:1",
+    "first_refusing_pair": {
+      "depth": 5,
+      "target": "Node",
+      "target_generic": false,
+      "target_known": true,
+      "target_rep": 4,
+      "unit": "/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts:1135:1",
+      "value": "EndOfFileToken",
+      "value_generic": true,
+      "value_known": false,
+      "value_rep": 0
+    },
+    "root_pairs": [
+      {
+        "depth": 0,
+        "target": "(tag: JSDocTag) => tag is JSDocPublicTag",
+        "target_generic": true,
+        "target_known": true,
+        "target_rep": 8,
+        "unit": "/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts:1135:1",
+        "value": "(node: Node) => node is JSDocPublicTag",
+        "value_generic": false,
+        "value_known": true,
+        "value_rep": 8
+      }
+    ]
+  },
+  {
+    "site": "/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts:1141:35",
+    "unit": "/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts:1140:1",
+    "first_refusing_pair": {
+      "depth": 5,
+      "target": "Node",
+      "target_generic": false,
+      "target_known": true,
+      "target_rep": 4,
+      "unit": "/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts:1140:1",
+      "value": "EndOfFileToken",
+      "value_generic": true,
+      "value_known": false,
+      "value_rep": 0
+    },
+    "root_pairs": [
+      {
+        "depth": 0,
+        "target": "(tag: JSDocTag) => tag is JSDocPrivateTag",
+        "target_generic": true,
+        "target_known": true,
+        "target_rep": 8,
+        "unit": "/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts:1140:1",
+        "value": "(node: Node) => node is JSDocPrivateTag",
+        "value_generic": false,
+        "value_known": true,
+        "value_rep": 8
+      }
+    ]
+  },
+  {
+    "site": "/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts:1146:35",
+    "unit": "/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts:1145:1",
+    "first_refusing_pair": {
+      "depth": 5,
+      "target": "Node",
+      "target_generic": false,
+      "target_known": true,
+      "target_rep": 4,
+      "unit": "/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts:1145:1",
+      "value": "EndOfFileToken",
+      "value_generic": true,
+      "value_known": false,
+      "value_rep": 0
+    },
+    "root_pairs": [
+      {
+        "depth": 0,
+        "target": "(tag: JSDocTag) => tag is JSDocPrivateTag",
+        "target_generic": true,
+        "target_known": true,
+        "target_rep": 8,
+        "unit": "/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts:1145:1",
+        "value": "(node: Node) => node is JSDocPrivateTag",
+        "value_generic": false,
+        "value_known": true,
+        "value_rep": 8
+      }
+    ]
+  },
+  {
+    "site": "/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts:1151:35",
+    "unit": "/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts:1150:1",
+    "first_refusing_pair": {
+      "depth": 5,
+      "target": "Node",
+      "target_generic": false,
+      "target_known": true,
+      "target_rep": 4,
+      "unit": "/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts:1150:1",
+      "value": "EndOfFileToken",
+      "value_generic": true,
+      "value_known": false,
+      "value_rep": 0
+    },
+    "root_pairs": [
+      {
+        "depth": 0,
+        "target": "(tag: JSDocTag) => tag is JSDocProtectedTag",
+        "target_generic": true,
+        "target_known": true,
+        "target_rep": 8,
+        "unit": "/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts:1150:1",
+        "value": "(node: Node) => node is JSDocProtectedTag",
+        "value_generic": false,
+        "value_known": true,
+        "value_rep": 8
+      }
+    ]
+  },
+  {
+    "site": "/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts:1156:35",
+    "unit": "/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts:1155:1",
+    "first_refusing_pair": {
+      "depth": 5,
+      "target": "Node",
+      "target_generic": false,
+      "target_known": true,
+      "target_rep": 4,
+      "unit": "/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts:1155:1",
+      "value": "EndOfFileToken",
+      "value_generic": true,
+      "value_known": false,
+      "value_rep": 0
+    },
+    "root_pairs": [
+      {
+        "depth": 0,
+        "target": "(tag: JSDocTag) => tag is JSDocProtectedTag",
+        "target_generic": true,
+        "target_known": true,
+        "target_rep": 8,
+        "unit": "/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts:1155:1",
+        "value": "(node: Node) => node is JSDocProtectedTag",
+        "value_generic": false,
+        "value_known": true,
+        "value_rep": 8
+      }
+    ]
+  },
+  {
+    "site": "/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts:1161:35",
+    "unit": "/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts:1160:1",
+    "first_refusing_pair": {
+      "depth": 5,
+      "target": "Node",
+      "target_generic": false,
+      "target_known": true,
+      "target_rep": 4,
+      "unit": "/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts:1160:1",
+      "value": "EndOfFileToken",
+      "value_generic": true,
+      "value_known": false,
+      "value_rep": 0
+    },
+    "root_pairs": [
+      {
+        "depth": 0,
+        "target": "(tag: JSDocTag) => tag is JSDocReadonlyTag",
+        "target_generic": true,
+        "target_known": true,
+        "target_rep": 8,
+        "unit": "/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts:1160:1",
+        "value": "(node: Node) => node is JSDocReadonlyTag",
+        "value_generic": false,
+        "value_known": true,
+        "value_rep": 8
+      }
+    ]
+  },
+  {
+    "site": "/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts:1166:35",
+    "unit": "/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts:1165:1",
+    "first_refusing_pair": {
+      "depth": 5,
+      "target": "Node",
+      "target_generic": false,
+      "target_known": true,
+      "target_rep": 4,
+      "unit": "/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts:1165:1",
+      "value": "EndOfFileToken",
+      "value_generic": true,
+      "value_known": false,
+      "value_rep": 0
+    },
+    "root_pairs": [
+      {
+        "depth": 0,
+        "target": "(tag: JSDocTag) => tag is JSDocReadonlyTag",
+        "target_generic": true,
+        "target_known": true,
+        "target_rep": 8,
+        "unit": "/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts:1165:1",
+        "value": "(node: Node) => node is JSDocReadonlyTag",
+        "value_generic": false,
+        "value_known": true,
+        "value_rep": 8
+      }
+    ]
+  },
+  {
+    "site": "/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts:1170:35",
+    "unit": "/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts:1169:1",
+    "first_refusing_pair": {
+      "depth": 5,
+      "target": "Node",
+      "target_generic": false,
+      "target_known": true,
+      "target_rep": 4,
+      "unit": "/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts:1169:1",
+      "value": "EndOfFileToken",
+      "value_generic": true,
+      "value_known": false,
+      "value_rep": 0
+    },
+    "root_pairs": [
+      {
+        "depth": 0,
+        "target": "(tag: JSDocTag) => tag is JSDocOverrideTag",
+        "target_generic": true,
+        "target_known": true,
+        "target_rep": 8,
+        "unit": "/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts:1169:1",
+        "value": "(node: Node) => node is JSDocOverrideTag",
+        "value_generic": false,
+        "value_known": true,
+        "value_rep": 8
+      }
+    ]
+  },
+  {
+    "site": "/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts:1175:35",
+    "unit": "/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts:1174:1",
+    "first_refusing_pair": {
+      "depth": 5,
+      "target": "Node",
+      "target_generic": false,
+      "target_known": true,
+      "target_rep": 4,
+      "unit": "/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts:1174:1",
+      "value": "EndOfFileToken",
+      "value_generic": true,
+      "value_known": false,
+      "value_rep": 0
+    },
+    "root_pairs": [
+      {
+        "depth": 0,
+        "target": "(tag: JSDocTag) => tag is JSDocDeprecatedTag",
+        "target_generic": true,
+        "target_known": true,
+        "target_rep": 8,
+        "unit": "/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts:1174:1",
+        "value": "(node: Node) => node is JSDocDeprecatedTag",
+        "value_generic": false,
+        "value_known": true,
+        "value_rep": 8
+      }
+    ]
+  },
+  {
+    "site": "/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts:1180:35",
+    "unit": "/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts:1179:1",
+    "first_refusing_pair": {
+      "depth": 5,
+      "target": "Node",
+      "target_generic": false,
+      "target_known": true,
+      "target_rep": 4,
+      "unit": "/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts:1179:1",
+      "value": "EndOfFileToken",
+      "value_generic": true,
+      "value_known": false,
+      "value_rep": 0
+    },
+    "root_pairs": [
+      {
+        "depth": 0,
+        "target": "(tag: JSDocTag) => tag is JSDocDeprecatedTag",
+        "target_generic": true,
+        "target_known": true,
+        "target_rep": 8,
+        "unit": "/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts:1179:1",
+        "value": "(node: Node) => node is JSDocDeprecatedTag",
+        "value_generic": false,
+        "value_known": true,
+        "value_rep": 8
+      }
+    ]
+  },
+  {
+    "site": "/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts:1190:35",
+    "unit": "/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts:1189:1",
+    "first_refusing_pair": {
+      "depth": 5,
+      "target": "Node",
+      "target_generic": false,
+      "target_known": true,
+      "target_rep": 4,
+      "unit": "/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts:1189:1",
+      "value": "EndOfFileToken",
+      "value_generic": true,
+      "value_known": false,
+      "value_rep": 0
+    },
+    "root_pairs": [
+      {
+        "depth": 0,
+        "target": "(tag: JSDocTag) => tag is JSDocThisTag",
+        "target_generic": true,
+        "target_known": true,
+        "target_rep": 8,
+        "unit": "/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts:1189:1",
+        "value": "(node: Node) => node is JSDocThisTag",
+        "value_generic": false,
+        "value_known": true,
+        "value_rep": 8
+      }
+    ]
+  },
+  {
+    "site": "/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts:1195:35",
+    "unit": "/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts:1194:1",
+    "first_refusing_pair": {
+      "depth": 5,
+      "target": "Node",
+      "target_generic": false,
+      "target_known": true,
+      "target_rep": 4,
+      "unit": "/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts:1194:1",
+      "value": "EndOfFileToken",
+      "value_generic": true,
+      "value_known": false,
+      "value_rep": 0
+    },
+    "root_pairs": [
+      {
+        "depth": 0,
+        "target": "(tag: JSDocTag) => tag is JSDocReturnTag",
+        "target_generic": true,
+        "target_known": true,
+        "target_rep": 8,
+        "unit": "/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts:1194:1",
+        "value": "(node: Node) => node is JSDocReturnTag",
+        "value_generic": false,
+        "value_known": true,
+        "value_rep": 8
+      }
+    ]
+  },
+  {
+    "site": "/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts:1200:35",
+    "unit": "/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts:1199:1",
+    "first_refusing_pair": {
+      "depth": 5,
+      "target": "Node",
+      "target_generic": false,
+      "target_known": true,
+      "target_rep": 4,
+      "unit": "/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts:1199:1",
+      "value": "EndOfFileToken",
+      "value_generic": true,
+      "value_known": false,
+      "value_rep": 0
+    },
+    "root_pairs": [
+      {
+        "depth": 0,
+        "target": "(tag: JSDocTag) => tag is JSDocTemplateTag",
+        "target_generic": true,
+        "target_known": true,
+        "target_rep": 8,
+        "unit": "/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts:1199:1",
+        "value": "(node: Node) => node is JSDocTemplateTag",
+        "value_generic": false,
+        "value_known": true,
+        "value_rep": 8
+      }
+    ]
+  },
+  {
+    "site": "/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts:1204:35",
+    "unit": "/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts:1203:1",
+    "first_refusing_pair": {
+      "depth": 5,
+      "target": "Node",
+      "target_generic": false,
+      "target_known": true,
+      "target_rep": 4,
+      "unit": "/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts:1203:1",
+      "value": "EndOfFileToken",
+      "value_generic": true,
+      "value_known": false,
+      "value_rep": 0
+    },
+    "root_pairs": [
+      {
+        "depth": 0,
+        "target": "(tag: JSDocTag) => tag is JSDocSatisfiesTag",
+        "target_generic": true,
+        "target_known": true,
+        "target_rep": 8,
+        "unit": "/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts:1203:1",
+        "value": "(node: Node) => node is JSDocSatisfiesTag",
+        "value_generic": false,
+        "value_known": true,
+        "value_rep": 8
+      }
+    ]
+  },
+  {
+    "site": "/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts:1210:40",
+    "unit": "/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts:1208:1",
+    "first_refusing_pair": {
+      "depth": 5,
+      "target": "Node",
+      "target_generic": false,
+      "target_known": true,
+      "target_rep": 4,
+      "unit": "/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts:1208:1",
+      "value": "EndOfFileToken",
+      "value_generic": true,
+      "value_known": false,
+      "value_rep": 0
+    },
+    "root_pairs": [
+      {
+        "depth": 0,
+        "target": "(tag: JSDocTag) => tag is JSDocTypeTag",
+        "target_generic": true,
+        "target_known": true,
+        "target_rep": 8,
+        "unit": "/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts:1208:1",
+        "value": "(node: Node) => node is JSDocTypeTag",
+        "value_generic": false,
+        "value_known": true,
+        "value_rep": 8
+      }
+    ]
+  },
+  {
+    "site": "/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts:1229:84",
+    "unit": "/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts:1228:1",
+    "first_refusing_pair": {
+      "depth": 5,
+      "target": "Node",
+      "target_generic": false,
+      "target_known": true,
+      "target_rep": 4,
+      "unit": "/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts:1228:1",
+      "value": "EndOfFileToken",
+      "value_generic": true,
+      "value_known": false,
+      "value_rep": 0
+    },
+    "root_pairs": [
+      {
+        "depth": 0,
+        "target": "(tag: JSDocTag) => tag is JSDocTypeTag",
+        "target_generic": true,
+        "target_known": true,
+        "target_rep": 8,
+        "unit": "/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts:1228:1",
+        "value": "(node: Node) => node is JSDocTypeTag",
+        "value_generic": false,
+        "value_known": true,
+        "value_rep": 8
+      }
+    ]
+  },
+  {
+    "site": "/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts:1357:28",
+    "unit": "/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts:1355:1",
+    "first_refusing_pair": {
+      "depth": 5,
+      "target": "Node",
+      "target_generic": false,
+      "target_known": true,
+      "target_rep": 4,
+      "unit": "/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts:1355:1",
+      "value": "EndOfFileToken",
+      "value_generic": true,
+      "value_known": false,
+      "value_rep": 0
+    },
+    "root_pairs": [
+      {
+        "depth": 0,
+        "target": "Node",
+        "target_generic": false,
+        "target_known": true,
+        "target_rep": 4,
+        "unit": "/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts:1355:1",
+        "value": "InferTypeNode | DeclarationWithTypeParameterChildren",
+        "value_generic": false,
+        "value_known": true,
+        "value_rep": 4
+      }
+    ]
+  },
+  {
+    "site": "/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts:2638:76",
+    "unit": "/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts:2637:1",
+    "first_refusing_pair": {
+      "depth": 5,
+      "target": "readonly (JSDocParameterTag | ParameterDeclaration)[]",
+      "target_generic": true,
+      "target_known": true,
+      "target_rep": 5,
+      "unit": "/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts:2637:1",
+      "value": "readonly ParameterDeclaration[]",
+      "value_generic": true,
+      "value_known": true,
+      "value_rep": 5
+    },
+    "root_pairs": [
+      {
+        "depth": 0,
+        "target": "readonly (JSDocParameterTag | ParameterDeclaration)[] | undefined",
+        "target_generic": true,
+        "target_known": true,
+        "target_rep": 5,
+        "unit": "/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts:2637:1",
+        "value": "NodeArray<ParameterDeclaration> | readonly JSDocParameterTag[]",
+        "value_generic": true,
+        "value_known": true,
+        "value_rep": 5
+      }
+    ]
+  },
+  {
+    "site": "/workspace/mapset-adapted/src/compiler/utilities.ts:3095:20",
+    "unit": "/workspace/mapset-adapted/src/compiler/utilities.ts:3113:1",
+    "first_refusing_pair": {
+      "depth": 5,
+      "target": "readonly (GetAccessorDeclaration | MethodDeclaration | PropertyAssignment | SetAccessorDeclaration | ShorthandPropertyAssignment | SpreadAssignment)[]",
+      "target_generic": true,
+      "target_known": true,
+      "target_rep": 5,
+      "unit": "/workspace/mapset-adapted/src/compiler/utilities.ts:3113:1",
+      "value": "readonly ObjectLiteralElementLike[]",
+      "value_generic": true,
+      "value_known": true,
+      "value_rep": 5
+    },
+    "root_pairs": [
+      {
+        "depth": 0,
+        "target": "readonly (GetAccessorDeclaration | MethodDeclaration | PropertyAssignment | SetAccessorDeclaration | ShorthandPropertyAssignment | SpreadAssignment)[] | undefined",
+        "target_generic": true,
+        "target_known": true,
+        "target_rep": 5,
+        "unit": "/workspace/mapset-adapted/src/compiler/utilities.ts:3113:1",
+        "value": "NodeArray<ObjectLiteralElementLike> | undefined",
+        "value_generic": true,
+        "value_known": true,
+        "value_rep": 5
+      }
+    ]
+  },
+  {
+    "site": "/workspace/mapset-adapted/src/compiler/utilities.ts:4429:82",
+    "unit": "/workspace/mapset-adapted/src/compiler/utilities.ts:4426:1",
+    "first_refusing_pair": {
+      "depth": 8,
+      "target": "Node",
+      "target_generic": false,
+      "target_known": true,
+      "target_rep": 4,
+      "unit": "/workspace/mapset-adapted/src/compiler/utilities.ts:4426:1",
+      "value": "EndOfFileToken",
+      "value_generic": true,
+      "value_known": false,
+      "value_rep": 0
+    },
+    "root_pairs": [
+      {
+        "depth": 0,
+        "target": "(value: NamedImports | NamespaceImport) => value is NamespaceImport",
+        "target_generic": true,
+        "target_known": true,
+        "target_rep": 8,
+        "unit": "/workspace/mapset-adapted/src/compiler/utilities.ts:4426:1",
+        "value": "(node: Node) => node is NamespaceImport",
+        "value_generic": false,
+        "value_known": true,
+        "value_rep": 8
+      }
+    ]
+  },
+  {
+    "site": "/workspace/mapset-adapted/src/compiler/utilities.ts:4780:34",
+    "unit": "/workspace/mapset-adapted/src/compiler/utilities.ts:4779:1",
+    "first_refusing_pair": {
+      "depth": 5,
+      "target": "Node",
+      "target_generic": false,
+      "target_known": true,
+      "target_rep": 4,
+      "unit": "/workspace/mapset-adapted/src/compiler/utilities.ts:4779:1",
+      "value": "EndOfFileToken",
+      "value_generic": true,
+      "value_known": false,
+      "value_rep": 0
+    },
+    "root_pairs": [
+      {
+        "depth": 0,
+        "target": "(tag: JSDocTag) => tag is JSDocOverloadTag",
+        "target_generic": true,
+        "target_known": true,
+        "target_rep": 8,
+        "unit": "/workspace/mapset-adapted/src/compiler/utilities.ts:4779:1",
+        "value": "(node: Node) => node is JSDocOverloadTag",
+        "value_generic": false,
+        "value_known": true,
+        "value_rep": 8
+      },
+      {
+        "depth": 0,
+        "target": "(tag: JSDocTag) => tag is JSDocOverloadTag",
+        "target_generic": true,
+        "target_known": true,
+        "target_rep": 8,
+        "unit": "/workspace/mapset-adapted/src/compiler/utilities.ts:4779:1",
+        "value": "(node: Node) => node is JSDocOverloadTag",
+        "value_generic": false,
+        "value_known": true,
+        "value_rep": 8
+      }
+    ]
+  },
+  {
+    "site": "/workspace/mapset-adapted/src/compiler/factory/utilities.ts:1614:9",
+    "unit": "/workspace/mapset-adapted/src/compiler/factory/utilities.ts:1611:1",
+    "first_refusing_pair": {
+      "depth": 5,
+      "target": "readonly ModifierLike[]",
+      "target_generic": true,
+      "target_known": true,
+      "target_rep": 5,
+      "unit": "/workspace/mapset-adapted/src/compiler/factory/utilities.ts:1611:1",
+      "value": "readonly Modifier[]",
+      "value_generic": true,
+      "value_known": true,
+      "value_rep": 5
+    },
+    "root_pairs": [
+      {
+        "depth": 0,
+        "target": "readonly ModifierLike[] | undefined",
+        "target_generic": true,
+        "target_known": true,
+        "target_rep": 5,
+        "unit": "/workspace/mapset-adapted/src/compiler/factory/utilities.ts:1611:1",
+        "value": "ModifiersArray | undefined",
+        "value_generic": true,
+        "value_known": true,
+        "value_rep": 5
+      }
+    ]
+  },
+  {
+    "site": "/workspace/mapset-adapted/src/compiler/parser.ts:472:12",
+    "unit": "/workspace/mapset-adapted/src/compiler/parser.ts:469:1",
+    "first_refusing_pair": {
+      "depth": 8,
+      "target": "Node",
+      "target_generic": false,
+      "target_known": true,
+      "target_rep": 4,
+      "unit": "/workspace/mapset-adapted/src/compiler/parser.ts:469:1",
+      "value": "EndOfFileToken",
+      "value_generic": true,
+      "value_known": false,
+      "value_rep": 0
+    },
+    "root_pairs": [
+      {
+        "depth": 0,
+        "target": "Node | undefined",
+        "target_generic": false,
+        "target_known": true,
+        "target_rep": 4,
+        "unit": "/workspace/mapset-adapted/src/compiler/parser.ts:469:1",
+        "value": "ArrowFunction | ClassDeclaration | ClassExpression | ConstructorDeclaration | ConstructorTypeNode | ... 20 more ... | undefined",
+        "value_generic": false,
+        "value_known": true,
+        "value_rep": 4
+      }
+    ]
+  },
+  {
+    "site": "/workspace/mapset-adapted/src/compiler/parser.ts:496:17",
+    "unit": "/workspace/mapset-adapted/src/compiler/parser.ts:495:1",
+    "first_refusing_pair": {
+      "depth": 5,
+      "target": "readonly (AbstractKeyword | AccessorKeyword | AsyncKeyword | ConstKeyword | DeclareKeyword | Decorator | ... 9 more ... | StaticKeyword)[]",
+      "target_generic": true,
+      "target_known": true,
+      "target_rep": 5,
+      "unit": "/workspace/mapset-adapted/src/compiler/parser.ts:495:1",
+      "value": "readonly Modifier[]",
+      "value_generic": true,
+      "value_known": true,
+      "value_rep": 5
+    },
+    "root_pairs": [
+      {
+        "depth": 0,
+        "target": "readonly (AbstractKeyword | AccessorKeyword | AsyncKeyword | ConstKeyword | DeclareKeyword | Decorator | ... 9 more ... | StaticKeyword)[] | undefined",
+        "target_generic": true,
+        "target_known": true,
+        "target_rep": 5,
+        "unit": "/workspace/mapset-adapted/src/compiler/parser.ts:495:1",
+        "value": "NodeArray<Modifier> | NodeArray<ModifierLike> | undefined",
+        "value_generic": true,
+        "value_known": true,
+        "value_rep": 5
+      }
+    ]
+  },
+  {
+    "site": "/workspace/mapset-adapted/src/compiler/transformers/utilities.ts:126:25",
+    "unit": "/workspace/mapset-adapted/src/compiler/transformers/utilities.ts:124:1",
+    "first_refusing_pair": {
+      "depth": 7,
+      "target": "Node",
+      "target_generic": false,
+      "target_known": true,
+      "target_rep": 4,
+      "unit": "/workspace/mapset-adapted/src/compiler/transformers/utilities.ts:124:1",
+      "value": "EndOfFileToken",
+      "value_generic": true,
+      "value_known": false,
+      "value_rep": 0
+    },
+    "root_pairs": [
+      {
+        "depth": 0,
+        "target": "Node",
+        "target_generic": false,
+        "target_known": true,
+        "target_rep": 4,
+        "unit": "/workspace/mapset-adapted/src/compiler/transformers/utilities.ts:124:1",
+        "value": "NamedExportBindings | NamedImportBindings",
+        "value_generic": false,
+        "value_known": true,
+        "value_rep": 4
+      },
+      {
+        "depth": 0,
+        "target": "readonly (ExportSpecifier | ImportSpecifier)[] | undefined",
+        "target_generic": true,
+        "target_known": true,
+        "target_rep": 5,
+        "unit": "/workspace/mapset-adapted/src/compiler/transformers/utilities.ts:124:1",
+        "value": "NodeArray<ExportSpecifier> | NodeArray<ImportSpecifier>",
+        "value_generic": true,
+        "value_known": true,
+        "value_rep": 5
+      }
+    ]
+  },
+  {
+    "site": "/workspace/mapset-adapted/src/compiler/transformers/utilities.ts:161:25",
+    "unit": "/workspace/mapset-adapted/src/compiler/transformers/utilities.ts:153:1",
+    "first_refusing_pair": {
+      "depth": 7,
+      "target": "Node",
+      "target_generic": false,
+      "target_known": true,
+      "target_rep": 4,
+      "unit": "/workspace/mapset-adapted/src/compiler/transformers/utilities.ts:153:1",
+      "value": "EndOfFileToken",
+      "value_generic": true,
+      "value_known": false,
+      "value_rep": 0
+    },
+    "root_pairs": [
+      {
+        "depth": 0,
+        "target": "Node",
+        "target_generic": false,
+        "target_known": true,
+        "target_rep": 4,
+        "unit": "/workspace/mapset-adapted/src/compiler/transformers/utilities.ts:153:1",
+        "value": "NamedImportBindings",
+        "value_generic": false,
+        "value_known": true,
+        "value_rep": 4
+      }
+    ]
+  },
+  {
+    "site": "/workspace/mapset-adapted/src/compiler/transformers/utilities.ts:175:118",
+    "unit": "/workspace/mapset-adapted/src/compiler/transformers/utilities.ts:173:1",
+    "first_refusing_pair": {
+      "depth": 7,
+      "target": "Node",
+      "target_generic": false,
+      "target_known": true,
+      "target_rep": 4,
+      "unit": "/workspace/mapset-adapted/src/compiler/transformers/utilities.ts:173:1",
+      "value": "EndOfFileToken",
+      "value_generic": true,
+      "value_known": false,
+      "value_rep": 0
+    },
+    "root_pairs": [
+      {
+        "depth": 0,
+        "target": "Node",
+        "target_generic": false,
+        "target_known": true,
+        "target_rep": 4,
+        "unit": "/workspace/mapset-adapted/src/compiler/transformers/utilities.ts:173:1",
+        "value": "NamedImportBindings | undefined",
+        "value_generic": false,
+        "value_known": true,
+        "value_rep": 4
+      }
+    ]
+  }
+]
