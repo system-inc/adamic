@@ -732,6 +732,12 @@ func (l *lowering) refuseWidening(node *ast.Node) error {
 			return nil
 		}
 		own = l.checker.GetTypeAtLocation(node)
+		if andLeftOperand(node) {
+			// Only the left's falsy arms reach an &&'s result: one that can only be an object never does.
+			if own = l.falsyArms(own); own == nil {
+				return nil
+			}
+		}
 		found = l.freshOrWidened(node, own, contextual)
 		if found == nil && node.Parent != nil && node.Parent.Kind == ast.KindPropertyAssignment && node.Parent.AsPropertyAssignment().Initializer == node {
 			if name := node.Parent.Name(); name != nil && (ast.IsIdentifier(name) || ast.IsStringLiteral(name) || ast.IsNumericLiteral(name)) {
