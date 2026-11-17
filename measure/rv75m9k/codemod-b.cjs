@@ -117,17 +117,10 @@ for (const site of sites) {
     if (!node) { refusals.push(`${site.site}: no property read found there`); continue; }
     const member = site.member, name = node.name.text;
     if (staticFieldMembers.has(member)) {
-        // An inline arrow whose parameters take the types the callee's own parameter declares, so the value is seen as
-        // exactly what it's handed to (a wider parameter is "a function taking A seen as one taking B"). A static field
-        // would be read before its initializer runs. It's made only on the generated-name path that reads it.
-        const declaration = memberSignature(checker.getSymbolAtLocation(node.name));
-        const contextual = checker.getContextualType(node);
-        const signature = contextual && checker.getSignaturesOfType(contextual, ts.SignatureKind.Call)[0];
-        if (!signature) { refusals.push(`${site.site}: no contextual call signature for ${member}`); continue; }
-        const list = signature.getParameters().map(parameter => `${parameter.name}: ${checker.typeToString(checker.getTypeOfSymbolAtLocation(parameter, node), node, ts.TypeFormatFlags.NoTruncation)}`).join(', ');
-        const names = signature.getParameters().map(parameter => parameter.name).join(', ');
-        addEdit(file, { start: node.getStart(sourceFile), end: node.end, text: `((${list}) => ${node.expression.getText(sourceFile)}.${name}(${names}))` });
-        console.log(`arrow ${site.site} ${member}: inline, typed as its callee's parameter (${list})`);
+        // Left: an arrow typed as the callee's parameter hands a generated name to toKey's wider parameter, which is
+        // refused as "GeneratedIdentifier | GeneratedPrivateIdentifier seen as Identifier | PrivateIdentifier" (J-em2bd4g),
+        // and a static field is read before its initializer (J-k54c7qc). That's a relation question, not this family's.
+        console.log(`left ${site.site} ${member}: an arrow moves its refusal to the relation of the generated name it's handed; it keeps its refusal`);
         continue;
     }
     if (!isStableReceiver(node.expression)) { refusals.push(`${site.site}: receiver ${node.expression.getText(sourceFile)} isn't an identifier or a chain of reads on one`); continue; }
