@@ -2,7 +2,7 @@
 # factory.sh: the measurement for #v879py5's adaptation, a scratch script that never lands. 26 latent refusals, all in
 # nodeFactory.ts, are the lazy getters of createNodeFactory's factory literal handing out a function whose comment
 # parameter is NodeArray<JSDocComment> where NodeFactory's member takes string | NodeArray<JSDocComment>.
-# stage3/adapt/73-jsdoc-tag-comment-parameters widens the four memoized arrows those getters call to the type of the
+# stage3/adapt/96-emit-jsdoc-tag-comment-parameters widens the four memoized arrows those getters call to the type of the
 # workers they forward to. Compiler accepts it on: the family at 0 with 0 new TS diagnostics, the latent total, the lane
 # green, the adaptation dropped bringing the 26 back, and whether T's inference at the getters moves anything else. Run
 # from an adamic tree's root, on a sealed job as
@@ -10,9 +10,9 @@
 #   source /opt/adamic-block/environment.sh && source cloud/sealed-job.sh && export GOFLAGS=... && sealed_typescript_source &&
 #   sealed_npm stage3/api stage3/typescript && ... && bash scratch-v879py5/factory.sh
 #
-#   before: stage3/apply.sh over a copy of this tree's stage3 inputs with 73-jsdoc-tag-comment-parameters left out, which
+#   before: stage3/apply.sh over a copy of this tree's stage3 inputs with 96-emit-jsdoc-tag-comment-parameters left out, which
 #           is also the mutant: the adaptation dropped
-#   after:  this tree's own stage3/apply.sh, which runs 73 after 72-readonly-diagnostic-slots and before 75
+#   after:  this tree's own stage3/apply.sh, which runs 96-emit after 91-patcher-discard, whose pin on createNodeFactory reads upstream text
 #
 #   sources: the two src trees differ only in src/compiler/factory/nodeFactory.ts, by `string | ` in the four arrows
 #   (1) diagnostics: one ts.createProgram per tree over all upstream src, 70's options, stock TypeScript 6.0.3; PASS is
@@ -22,7 +22,7 @@
 #       and after. PASS is the family at 26 before (the mutant) and 0 after, and no other reason moved, which is the
 #       answer on T's inference at the getters
 #   (3) the lane, whole, on the after tree: every unit of stage3/lane/shards.json run by shard.py against the after tree
-#       built by hereby with stage3/typescript's install, as the gate's product path runs it. 73 carries no API sanction,
+#       built by hereby with stage3/typescript's install, as the gate's product path runs it. 96 carries no API sanction,
 #       since no public declaration moves, so stage3-lane-byte-comparisons must pass too
 #   (4) emit: both trees built by hereby; PASS is every file under built/local byte-identical, so the JavaScript and
 #       typescript.d.ts don't move
@@ -36,8 +36,8 @@
 set -u
 
 root=$PWD
-[ -f "$root/stage3/apply.sh" ] && [ -f "$root/stage3/adapt/73-jsdoc-tag-comment-parameters/adapt.cjs" ] || {
-	echo "factory: $root is not an adamic tree's root carrying 73-jsdoc-tag-comment-parameters, so nothing ran"
+[ -f "$root/stage3/apply.sh" ] && [ -f "$root/stage3/adapt/96-emit-jsdoc-tag-comment-parameters/adapt.cjs" ] || {
+	echo "factory: $root is not an adamic tree's root carrying 96-emit-jsdoc-tag-comment-parameters, so nothing ran"
 	exit 64
 }
 stamp=$(date -u +%Y%m%dT%H%M%SZ)
@@ -106,7 +106,7 @@ fi
 modules="$root/stage3/api/node_modules"
 [ "$(node -p 'require(process.argv[1] + "/typescript/package.json").version' "$modules" 2> /dev/null)" = 6.0.3 ] || { echo "factory: stage3/api's typescript isn't laid at 6.0.3"; exit 66; }
 
-# Before's stage3: this tree's apply inputs with 73-jsdoc-tag-comment-parameters left out, and nothing else changed.
+# Before's stage3: this tree's apply inputs with 96-emit-jsdoc-tag-comment-parameters left out, and nothing else changed.
 mutant="$work/mutant/stage3"
 mkdir -p "$mutant/adapt" || exit 64
 for input in apply.sh apply.py caches.py source.json api; do
@@ -114,7 +114,7 @@ for input in apply.sh apply.py caches.py source.json api; do
 done
 for entry in "$root/stage3/adapt"/* "$root/stage3/adapt"/.[!.]*; do
 	[ -e "$entry" ] || [ -L "$entry" ] || continue
-	[ "$(basename "$entry")" = 73-jsdoc-tag-comment-parameters ] || cp -a "$entry" "$mutant/adapt/" || exit 64
+	[ "$(basename "$entry")" = 96-emit-jsdoc-tag-comment-parameters ] || cp -a "$entry" "$mutant/adapt/" || exit 64
 done
 diff -rq "$root/stage3/adapt" "$mutant/adapt" > "$out/before-inputs.diff" 2>&1
 echo "factory: before's adapt differs from this tree's by: $(tr '\n' ' ' < "$out/before-inputs.diff")"
@@ -172,7 +172,7 @@ if [ "$applyAfterExit" != 0 ]; then
 	say "factory: verdict (4) emit SKIP: no after tree"
 	exit 1
 fi
-say "factory: verdict apply PASS: both applies exited 0; after's patch-set row: $(grep -F '73-jsdoc-tag-comment-parameters' "$after/patch-set.md")"
+say "factory: verdict apply PASS: both applies exited 0; after's patch-set row: $(grep -F '96-emit-jsdoc-tag-comment-parameters' "$after/patch-set.md")"
 
 # The sources: src before and after differ only in factory/nodeFactory.ts, by `string | ` before the comment parameter's
 # type in the four arrows, one line each, and nothing else on those lines.

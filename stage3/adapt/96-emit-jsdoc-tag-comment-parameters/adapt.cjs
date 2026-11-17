@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 'use strict';
-// Adaptation 73, #v879py5: in src/compiler/factory/nodeFactory.ts, the four memoized arrows that build the JSDoc simple
+// Adaptation 96-emit, #v879py5: in src/compiler/factory/nodeFactory.ts, the four memoized arrows that build the JSDoc simple
 // and type-like tag factories type their comment parameter narrower than both sides of them. Each is handed out by a
 // lazy getter as a NodeFactory member, which types.ts declares as taking `comment?: string | NodeArray<JSDocComment>`,
 // and each only forwards comment to a worker typed `string | NodeArray<JSDocComment>` too. tsc relates a method's
