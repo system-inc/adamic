@@ -1,0 +1,125 @@
+[
+  {
+    "name": "latent-overlay",
+    "args": [
+      "python3",
+      "/workspace/scratch/overload-certificates-census/head/stage3/census/latent/make_overlay.py",
+      "/workspace/scratch/overload-certificates-census/head",
+      "/workspace/scratch/overload-certificates-census/head-tools/latent-overlay"
+    ],
+    "exit": 0,
+    "seconds": 1.6228766441345215
+  },
+  {
+    "name": "latent-gofmt",
+    "args": [
+      "gofmt",
+      "-w",
+      "/workspace/scratch/overload-certificates-census/head-tools/latent-overlay/internal_lower_latent_deferred_probe_test.go",
+      "/workspace/scratch/overload-certificates-census/head-tools/latent-overlay/internal_lower_latent_full.go",
+      "/workspace/scratch/overload-certificates-census/head-tools/latent-overlay/internal_load_load.go",
+      "/workspace/scratch/overload-certificates-census/head-tools/latent-overlay/internal_lower_latent_progress.go",
+      "/workspace/scratch/overload-certificates-census/head-tools/latent-overlay/internal_lower_expression.go",
+      "/workspace/scratch/overload-certificates-census/head-tools/latent-overlay/internal_lower_functions.go",
+      "/workspace/scratch/overload-certificates-census/head-tools/latent-overlay/internal_lower_latent_timing.go",
+      "/workspace/scratch/overload-certificates-census/head-tools/latent-overlay/stage3_census_latent_tool_main.go",
+      "/workspace/scratch/overload-certificates-census/head-tools/latent-overlay/stage3_census_latent_tool_relation_overflow_test.go",
+      "/workspace/scratch/overload-certificates-census/head-tools/latent-overlay/stage3_census_latent_replay_worker_main.go",
+      "/workspace/scratch/overload-certificates-census/head-tools/latent-overlay/internal_lower_statements.go",
+      "/workspace/scratch/overload-certificates-census/head-tools/latent-overlay/internal_lower_entries_records.go",
+      "/workspace/scratch/overload-certificates-census/head-tools/latent-overlay/internal_lower_latent_state.go",
+      "/workspace/scratch/overload-certificates-census/head-tools/latent-overlay/internal_lower_latent_speculative.go",
+      "/workspace/scratch/overload-certificates-census/head-tools/latent-overlay/internal_lower_refusals.go",
+      "/workspace/scratch/overload-certificates-census/head-tools/latent-overlay/internal_lower_latent_piece.go",
+      "/workspace/scratch/overload-certificates-census/head-tools/latent-overlay/internal_lower_latent_hook.go",
+      "/workspace/scratch/overload-certificates-census/head-tools/latent-overlay/internal_load_latent_hook.go",
+      "/workspace/scratch/overload-certificates-census/head-tools/latent-overlay/internal_lower_latent_pass_ledger.go",
+      "/workspace/scratch/overload-certificates-census/head-tools/latent-overlay/internal_lower_locals.go",
+      "/workspace/scratch/overload-certificates-census/head-tools/latent-overlay/internal_lower_lower.go",
+      "/workspace/scratch/overload-certificates-census/head-tools/latent-overlay/internal_lower_generic.go",
+      "/workspace/scratch/overload-certificates-census/head-tools/latent-overlay/internal_lower_latent_scoped_tail_test.go",
+      "/workspace/scratch/overload-certificates-census/head-tools/latent-overlay/internal_lower_latent_relation_overflow.go",
+      "/workspace/scratch/overload-certificates-census/head-tools/latent-overlay/internal_lower_latent_scoped_tail.go",
+      "/workspace/scratch/overload-certificates-census/head-tools/latent-overlay/internal_lower_latent_units.go",
+      "/workspace/scratch/overload-certificates-census/head-tools/latent-overlay/internal_lower_latent_replay.go"
+    ],
+    "exit": 0,
+    "seconds": 0.036041259765625
+  },
+  {
+    "name": "entry-overlay",
+    "args": [
+      "python3",
+      "/workspace/scratch/overload-certificates-census/head/stage3/meter/entry_overlay.py",
+      "/workspace/scratch/overload-certificates-census/head-tools/latent-overlay",
+      "/workspace/scratch/overload-certificates-census/head-tools/entry-overlay"
+    ],
+    "exit": 0,
+    "seconds": 0.027913331985473633
+  },
+  {
+    "name": "entry-gofmt",
+    "args": [
+      "gofmt",
+      "-w",
+      "/workspace/scratch/overload-certificates-census/head-tools/entry-overlay/entry_main.go",
+      "/workspace/scratch/overload-certificates-census/head-tools/entry-overlay/entry_load_hook.go"
+    ],
+    "exit": 0,
+    "seconds": 0.004590272903442383
+  },
+  {
+    "name": "entry-build",
+    "args": [
+      "go",
+      "build",
+      "-buildvcs=false",
+      "-overlay=/workspace/scratch/overload-certificates-census/head-tools/entry-overlay/overlay.json",
+      "-o",
+      "/workspace/scratch/overload-certificates-census/head-tools/entry-census",
+      "./stage3/census/latent/tool"
+    ],
+    "exit": 0,
+    "seconds": 276.84023547172546
+  },
+  {
+    "name": "latent-build",
+    "args": [
+      "go",
+      "build",
+      "-buildvcs=false",
+      "-overlay=/workspace/scratch/overload-certificates-census/head-tools/latent-overlay/overlay.json",
+      "-o",
+      "/workspace/scratch/overload-certificates-census/head-tools/latent-census",
+      "./stage3/census/latent/tool"
+    ],
+    "exit": 0,
+    "seconds": 50.59329915046692
+  },
+  {
+    "name": "scan-overlay",
+    "args": [
+      "python3",
+      "/workspace/scratch/overload-certificates-census/head/stage3/census/scan-all/make_overlay.py",
+      "/workspace/scratch/overload-certificates-census/head-tools/scan-overlay"
+    ],
+    "exit": 0,
+    "seconds": 0.23682904243469238
+  },
+  {
+    "name": "scan-build",
+    "args": [
+      "go",
+      "build",
+      "-trimpath",
+      "-ldflags=-buildid=",
+      "-buildvcs=false",
+      "-overlay=/workspace/scratch/overload-certificates-census/head-tools/scan-overlay/overlay.json",
+      "-o",
+      "/workspace/scratch/overload-certificates-census/head-tools/scan-all",
+      "./stage3/census/scan-all/tool/main.go"
+    ],
+    "exit": 0,
+    "seconds": 47.55387496948242
+  }
+]

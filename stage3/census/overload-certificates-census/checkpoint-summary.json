@@ -1,0 +1,146 @@
+{
+  "coverage": {
+    "expectedRequiredRuns": 100,
+    "completeRequiredRuns": 2,
+    "allRequiredComplete": false
+  },
+  "pairedRuns": 2,
+  "pairCounts": [
+    {
+      "mode": "full",
+      "file": "src/compiler/core.ts",
+      "base": 14,
+      "head": 14,
+      "counts": {}
+    },
+    {
+      "mode": "full-directory",
+      "file": "src/compiler/core.ts",
+      "base": 14,
+      "head": 14,
+      "counts": {}
+    }
+  ],
+  "storageStopCalls17": 0,
+  "mapped17": [
+    {
+      "file": "src/compiler/core.ts",
+      "line": 1454,
+      "column": 12,
+      "stopped": false,
+      "words": []
+    },
+    {
+      "file": "src/compiler/moduleSpecifiers.ts",
+      "line": 868,
+      "column": 32,
+      "stopped": false,
+      "words": []
+    },
+    {
+      "file": "src/compiler/sourcemap.ts",
+      "line": 743,
+      "column": 30,
+      "stopped": false,
+      "words": []
+    },
+    {
+      "file": "src/compiler/transformers/jsx.ts",
+      "line": 186,
+      "column": 68,
+      "stopped": false,
+      "words": []
+    },
+    {
+      "file": "src/compiler/builder.ts",
+      "line": 2416,
+      "column": 31,
+      "stopped": false,
+      "words": []
+    },
+    {
+      "file": "src/compiler/builder.ts",
+      "line": 2344,
+      "column": 77,
+      "stopped": false,
+      "words": []
+    },
+    {
+      "file": "src/compiler/builder.ts",
+      "line": 1421,
+      "column": 25,
+      "stopped": false,
+      "words": []
+    },
+    {
+      "file": "src/compiler/builder.ts",
+      "line": 1315,
+      "column": 23,
+      "stopped": false,
+      "words": []
+    },
+    {
+      "file": "src/compiler/builder.ts",
+      "line": 1281,
+      "column": 27,
+      "stopped": false,
+      "words": []
+    },
+    {
+      "file": "src/compiler/builder.ts",
+      "line": 1269,
+      "column": 19,
+      "stopped": false,
+      "words": []
+    },
+    {
+      "file": "src/compiler/tsbuildPublic.ts",
+      "line": 1060,
+      "column": 40,
+      "stopped": false,
+      "words": []
+    },
+    {
+      "file": "src/services/refactors/convertImport.ts",
+      "line": 276,
+      "column": 52,
+      "stopped": false,
+      "words": []
+    },
+    {
+      "file": "src/services/refactors/extractSymbol.ts",
+      "line": 1083,
+      "column": 43,
+      "stopped": false,
+      "words": []
+    },
+    {
+      "file": "src/services/codefixes/importFixes.ts",
+      "line": 1582,
+      "column": 16,
+      "stopped": false,
+      "words": []
+    },
+    {
+      "file": "src/services/codefixes/importFixes.ts",
+      "line": 687,
+      "column": 33,
+      "stopped": false,
+      "words": []
+    },
+    {
+      "file": "src/services/codefixes/importFixes.ts",
+      "line": 673,
+      "column": 17,
+      "stopped": false,
+      "words": []
+    },
+    {
+      "file": "src/services/codefixes/helpers.ts",
+      "line": 586,
+      "column": 12,
+      "stopped": false,
+      "words": []
+    }
+  ]
+}

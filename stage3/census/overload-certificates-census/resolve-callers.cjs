@@ -23,6 +23,6 @@ for(const [mode,roots] of [['entry',[tree+'/src/tsc/tsc.ts']],['allSrc',ts.sys.r
  }
  const files=[...new Set(calls.map(c=>c.file))].sort(),summary={sources:sources.length,callExpressions,calls:calls.length,mapped:calls.filter(c=>c.mapped).length,files:files.length,perSet:Object.fromEntries(['arrayFrom','arrayToMap'].map(n=>[n,{calls:calls.filter(c=>c.set===n).length,mapped:calls.filter(c=>c.set===n&&c.mapped).length}]))};
  result.programs[mode]={roots:roots.map(f=>path.relative(tree,f)),summary,sources:sources.sort(),sourceHashes:hashes,files,overloads,calls};
- fs.writeFileSync(output,JSON.stringify(result,null,2)+'\n');console.log(mode,JSON.stringify(summary));
+ fs.writeFileSync(output+'.partial',JSON.stringify(result,null,2)+'\n');console.log(mode,JSON.stringify(summary));
 }
 const entry=new Set(result.programs.entry.sources);result.fullCensusFiles=[...new Set(['src/compiler/core.ts',...result.programs.allSrc.files])].sort().map(file=>({file,entryReach:entry.has(file),root:entry.has(file)?'src/tsc/tsc.ts':file}));fs.writeFileSync(output,JSON.stringify(result,null,2)+'\n');

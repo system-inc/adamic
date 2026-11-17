@@ -25,3 +25,32 @@ No declaration-pass count, certified-call count, or other-overload conclusion
 is established yet. The final report will retain child exits, complete streams,
 position-stripped finding tuples, reached-stop distinctions, source hashes,
 and probe build provenance. A blocked/incomplete run will be labeled as such.
+
+## Preparation checkpoint
+
+Both shas' entry, normal latent and scan-all builds completed, with SHA-256
+provenance under builds/. Both apply keys are
+`6c54c265b3ddf357d631b5dc1bb7f13cf328782bdf8f8e9db38e24a5aec7fae4`.
+The shared adapted tree is at the upstream pin and its source fingerprints are
+retained. SETUP.json and callers.json record the exact source/program scope.
+
+The `tsc.ts` checker closure contains 81 sources and **11 mapped calls**, not 17.
+The prior scout's compiler/services domain contains the requested **17** (the
+other six are service calls outside the entry closure). Whole-src resolution
+finds 129 calls, 27 mapped, across 47 files. All 47 exact files are scheduled,
+including core.ts. The 17-call answer will be reported separately from the extra
+server/harness/testRunner calls.
+
+The completed core.ts full pair has 14 findings on each side and no changes.
+Its generic declarations are deferred: this absence is not being counted as
+proof that their overloads pass. A separate normal-overlay compiler-directory
+core pair agrees (14/14), and remains a supplemental scope, never substituted
+for the entry-root pair.
+
+Execution note: entry and full batches run concurrently, each with two workers.
+The initial coordinator's main thread was interrupted to prevent it scheduling
+a duplicate full batch; its already-running entry children continue, write their
+own receipts and return their own exit codes. The full batch has its own
+coordinator/manifest. This is scheduling only, not a cancellation or alteration
+of a compiler probe. Any coordinator exit is recorded separately from probe
+exits. The final report will require all stream trailers and exact selections.
