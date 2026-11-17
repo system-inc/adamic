@@ -58,6 +58,15 @@ func (l *lowering) enumTagHazardOf(union *checker.Type, field string) enumTagHaz
 //go:linkname enumTagContainsReference github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).containsMatchingReference
 func enumTagContainsReference(receiver *checker.Checker, source, target *ast.Node) bool
 
+// The checker's reduction of a type: a union less the intersections in it that hold no value, whose
+// members' discriminants conflict (`ParameterDeclaration & ClassDeclaration`, made when an
+// intersection of unions like `HasModifiers & HasDecorators` distributes), and such an intersection
+// itself reduced to never. The checker's narrowing drops those members, so the walk does too: one
+// has no field to read, and asking it for one would fail a step that holds for every value.
+//
+//go:linkname enumTagReducedType github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).getReducedType
+func enumTagReducedType(receiver *checker.Checker, of *checker.Type) *checker.Type
+
 // enumTagRefinementProven reports whether every step that narrowed reference, on every path into
 // it, is either a recognized comparison on one of its fields read directly that passes against
 // the type flowing into it, or a step that changes nothing but null and undefined there, and at
@@ -406,7 +415,7 @@ func (w *enumTagWalk) exactKindCall(node *ast.Node) (kindCall, bool) {
 // takes: a predicate whose type disagrees with its own body proves nothing here. R-T80's check at the
 // call is kept; only the refusal of the read moves.
 func (w *enumTagWalk) kindPredicateStep(flow *ast.FlowNode, call kindCall) bool {
-	before := predicateFlowType(w.l.checker, w.reference, w.declared, w.declared, nil, flow.Antecedent)
+	before := enumTagReducedType(w.l.checker, predicateFlowType(w.l.checker, w.reference, w.declared, w.declared, nil, flow.Antecedent))
 	members := []*checker.Type{before}
 	if before.Flags()&checker.TypeFlagsUnion != 0 {
 		members = before.Types()
@@ -449,8 +458,8 @@ func (w *enumTagWalk) kindPredicateStep(flow *ast.FlowNode, call kindCall) bool 
 	if len(kept) == 0 {
 		return false
 	}
-	after := predicateFlowType(w.l.checker, w.reference, w.declared, w.declared, nil, flow)
-	if !checker.Checker_isTypeIdenticalTo(w.l.checker, after, w.l.checker.GetUnionType(kept)) {
+	after := enumTagReducedType(w.l.checker, predicateFlowType(w.l.checker, w.reference, w.declared, w.declared, nil, flow))
+	if !checker.Checker_isTypeIdenticalTo(w.l.checker, after, enumTagReducedType(w.l.checker, w.l.checker.GetUnionType(kept))) {
 		return false
 	}
 	return w.predicateProves(flow.Node, call)
@@ -490,7 +499,7 @@ func (w *enumTagWalk) fieldRead(node *ast.Node) string {
 	name := access.Name().Text()
 	// On a union the property read is the checker's union of each member's own, which doesn't carry
 	// an accessor's flags, so each member's own is asked: a getter is a call, never a field read.
-	owner := w.l.checker.GetTypeAtLocation(access.Expression)
+	owner := enumTagReducedType(w.l.checker, w.l.checker.GetTypeAtLocation(access.Expression))
 	members := []*checker.Type{owner}
 	if owner.Flags()&checker.TypeFlagsUnion != 0 {
 		members = owner.Types()
@@ -560,7 +569,7 @@ func (l *lowering) accessLocalTests(read *ast.Node) ([]*ast.Node, bool) {
 // object can be: never an accessor or a method, whose every read can answer differently.
 func (l *lowering) plainDataLink(link *ast.Node) bool {
 	access := link.AsPropertyAccessExpression()
-	owner := l.checker.GetTypeAtLocation(access.Expression)
+	owner := enumTagReducedType(l.checker, l.checker.GetTypeAtLocation(access.Expression))
 	members := []*checker.Type{owner}
 	if owner.Flags()&checker.TypeFlagsUnion != 0 {
 		members = owner.Types()
