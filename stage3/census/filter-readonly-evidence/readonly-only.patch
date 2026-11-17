@@ -1,0 +1,20 @@
+--- before/src/compiler/core.ts
++++ after/src/compiler/core.ts
+@@ -258,7 +258,7 @@
+  *
+  * @internal
+  */
+-export function filter<T, U extends T>(array: T[], f: (x: T) => x is U): U[];
++export function filter<T, U extends T>(array: T[], f: (x: T) => x is U): readonly U[];
+ /** @internal */
+ export function filter<T>(array: T[], f: (x: T) => boolean): T[];
+ /** @internal */
+@@ -266,7 +266,7 @@
+ /** @internal */
+ export function filter<T>(array: readonly T[], f: (x: T) => boolean): readonly T[];
+ /** @internal */
+-export function filter<T, U extends T>(array: T[] | undefined, f: (x: T) => x is U): U[] | undefined;
++export function filter<T, U extends T>(array: T[] | undefined, f: (x: T) => x is U): readonly U[] | undefined;
+ /** @internal */
+ export function filter<T>(array: T[] | undefined, f: (x: T) => boolean): T[] | undefined;
+ /** @internal */

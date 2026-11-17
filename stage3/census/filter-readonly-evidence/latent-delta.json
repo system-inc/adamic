@@ -1,0 +1,111 @@
+{
+  "baseline_diagnostics": [],
+  "readonly_diagnostics": [
+    "/workspace/scratch/filter-ev14ch9/readonly-probe/src/compiler/checker.ts:9417:21: error TS4104: The type 'readonly Identifier[]' is 'readonly' and cannot be assigned to the mutable type 'Identifier[]'.",
+    "/workspace/scratch/filter-ev14ch9/readonly-probe/src/compiler/checker.ts:9419:17: error TS4104: The type 'readonly Identifier[]' is 'readonly' and cannot be assigned to the mutable type 'Identifier[]'.",
+    "/workspace/scratch/filter-ev14ch9/readonly-probe/src/compiler/commandLineParser.ts:2591:17: error TS2322: Type 'readonly AdamicJsonRecoveryValue[] | undefined' is not assignable to type 'AdamicJsonRecoveryValue | undefined'.\n  Type 'readonly AdamicJsonRecoveryValue[]' is not assignable to type 'AdamicJsonRecoveryValue | undefined'.\n    The type 'readonly AdamicJsonRecoveryValue[]' is 'readonly' and cannot be assigned to the mutable type 'AdamicJsonRecoveryValue[]'.",
+    "/workspace/scratch/filter-ev14ch9/readonly-probe/src/compiler/factory/utilities.ts:745:134: error TS2345: Argument of type 'readonly UnscopedEmitHelper[] | undefined' is not assignable to parameter of type 'UnscopedEmitHelper[] | undefined'.\n  The type 'readonly UnscopedEmitHelper[]' is 'readonly' and cannot be assigned to the mutable type 'UnscopedEmitHelper[]'."
+  ],
+  "module_format": "CommonJSBundle",
+  "baseline_findings": 14,
+  "readonly_findings": 14,
+  "new": [],
+  "gone": [],
+  "unchanged_by_phase": {
+    "lowering": 14
+  },
+  "generic_filter_units": [
+    {
+      "measurement": "measured on a checker-rejected program",
+      "where": "/workspace/scratch/filter-ev14ch9/adapted/src/compiler/core.ts:261:1",
+      "kind": "KindFunctionDeclaration",
+      "instantiated": false,
+      "status": "deferred_generic_instantiation",
+      "checker_diagnostics": [],
+      "name": "filter",
+      "top": "/workspace/scratch/filter-ev14ch9/adapted/src/compiler/core.ts:261:1"
+    },
+    {
+      "measurement": "measured on a checker-rejected program",
+      "where": "/workspace/scratch/filter-ev14ch9/adapted/src/compiler/core.ts:263:1",
+      "kind": "KindFunctionDeclaration",
+      "instantiated": false,
+      "status": "deferred_generic_instantiation",
+      "checker_diagnostics": [],
+      "name": "filter",
+      "top": "/workspace/scratch/filter-ev14ch9/adapted/src/compiler/core.ts:263:1"
+    },
+    {
+      "measurement": "measured on a checker-rejected program",
+      "where": "/workspace/scratch/filter-ev14ch9/adapted/src/compiler/core.ts:265:1",
+      "kind": "KindFunctionDeclaration",
+      "instantiated": false,
+      "status": "deferred_generic_instantiation",
+      "checker_diagnostics": [],
+      "name": "filter",
+      "top": "/workspace/scratch/filter-ev14ch9/adapted/src/compiler/core.ts:265:1"
+    },
+    {
+      "measurement": "measured on a checker-rejected program",
+      "where": "/workspace/scratch/filter-ev14ch9/adapted/src/compiler/core.ts:267:1",
+      "kind": "KindFunctionDeclaration",
+      "instantiated": false,
+      "status": "deferred_generic_instantiation",
+      "checker_diagnostics": [],
+      "name": "filter",
+      "top": "/workspace/scratch/filter-ev14ch9/adapted/src/compiler/core.ts:267:1"
+    },
+    {
+      "measurement": "measured on a checker-rejected program",
+      "where": "/workspace/scratch/filter-ev14ch9/adapted/src/compiler/core.ts:269:1",
+      "kind": "KindFunctionDeclaration",
+      "instantiated": false,
+      "status": "deferred_generic_instantiation",
+      "checker_diagnostics": [],
+      "name": "filter",
+      "top": "/workspace/scratch/filter-ev14ch9/adapted/src/compiler/core.ts:269:1"
+    },
+    {
+      "measurement": "measured on a checker-rejected program",
+      "where": "/workspace/scratch/filter-ev14ch9/adapted/src/compiler/core.ts:271:1",
+      "kind": "KindFunctionDeclaration",
+      "instantiated": false,
+      "status": "deferred_generic_instantiation",
+      "checker_diagnostics": [],
+      "name": "filter",
+      "top": "/workspace/scratch/filter-ev14ch9/adapted/src/compiler/core.ts:271:1"
+    },
+    {
+      "measurement": "measured on a checker-rejected program",
+      "where": "/workspace/scratch/filter-ev14ch9/adapted/src/compiler/core.ts:273:1",
+      "kind": "KindFunctionDeclaration",
+      "instantiated": false,
+      "status": "deferred_generic_instantiation",
+      "checker_diagnostics": [],
+      "name": "filter",
+      "top": "/workspace/scratch/filter-ev14ch9/adapted/src/compiler/core.ts:273:1"
+    },
+    {
+      "measurement": "measured on a checker-rejected program",
+      "where": "/workspace/scratch/filter-ev14ch9/adapted/src/compiler/core.ts:275:1",
+      "kind": "KindFunctionDeclaration",
+      "instantiated": false,
+      "status": "deferred_generic_instantiation",
+      "checker_diagnostics": [],
+      "name": "filter",
+      "top": "/workspace/scratch/filter-ev14ch9/adapted/src/compiler/core.ts:275:1"
+    },
+    {
+      "measurement": "measured on a checker-rejected program",
+      "where": "/workspace/scratch/filter-ev14ch9/adapted/src/compiler/core.ts:277:1",
+      "kind": "KindFunctionDeclaration",
+      "body_start": 9779,
+      "body_end": 10271,
+      "instantiated": false,
+      "status": "deferred_generic_instantiation",
+      "checker_diagnostics": [],
+      "name": "filter",
+      "top": "/workspace/scratch/filter-ev14ch9/adapted/src/compiler/core.ts:277:1"
+    }
+  ]
+}
