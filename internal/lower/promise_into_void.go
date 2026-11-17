@@ -33,7 +33,7 @@ func (l *lowering) refusePromiseIntoVoid(node *ast.Node) error {
 		return nil
 	}
 	if found.depthLimit {
-		return l.notYet(node, "a structural relation deeper than 64 type pairs while checking promise-returning functions seen as void-returning")
+		return l.notYet(node, "a structural relation deeper than "+strconv.Itoa(promiseIntoVoidDepth)+" type pairs while checking promise-returning functions seen as void-returning")
 	}
 	what := "an unawaited async task: a " + l.checker.TypeToString(found.returns) + " at the " + name + " site"
 	if found.path != "" {
@@ -55,12 +55,25 @@ type promiseDiscard struct {
 	depthLimit bool
 }
 
+// promiseIntoVoidDepth bounds promiseIntoVoid's depth, which is the length of the current path of type
+// pairs, not the pairs in the whole walk: the relation's own pair is at 0, and every recursive step (a
+// union member, a constraint, an element, a type argument, a signature's return or parameter, a
+// property) passes depth+1, so a pair's depth is how many steps its one road from the site took. The
+// bound isn't what ends a cyclic walk: seen holds every pair visited in this walk, so a pair met again
+// returns nil at once, and that ends a walk through a self-referential type such as
+// `interface List { next: List | undefined }` when it comes back to a pair it has related. Past the bound
+// the walk answers depthLimit and the site is NotYet. It was 64, as voidWidened's and anyRelated's still
+// are, until Adamic's ruling on #96pc420: over sys.ts's closure, 24 relations passed 64 and every one
+// ended under 256 (4096 walked the same pairs), at no measured cost.
+const promiseIntoVoidDepth = 256
+
 // promiseIntoVoid walks source against target through the positions voidWidened walks: union members on
 // either side, a type parameter's constraint, array and tuple elements, a reference's type arguments,
 // signatures' returns covariantly and parameters contravariantly (so a callee typed to take a void
-// callback, seen as taking a promise-returning one, is found too), and properties. Its bound is 64 pairs,
-// past which it answers depthLimit so the caller fails closed. This is the third walk of that shape,
-// beside voidWidened and anyRelated; folding them into one is owed.
+// callback, seen as taking a promise-returning one, is found too), and properties. Its bound is
+// promiseIntoVoidDepth, 256 pairs along one path, past which it answers depthLimit so the caller fails
+// closed. This is the third walk of that shape, beside voidWidened and anyRelated; folding them into one
+// is owed.
 func (l *lowering) promiseIntoVoid(source, target *checker.Type, depth int, seen map[[2]*checker.Type]bool) *promiseDiscard {
 	if source == nil || target == nil || source == target {
 		return nil
@@ -70,7 +83,7 @@ func (l *lowering) promiseIntoVoid(source, target *checker.Type, depth int, seen
 		return nil
 	}
 	seen[pair] = true
-	if depth >= 64 {
+	if depth >= promiseIntoVoidDepth {
 		return &promiseDiscard{depthLimit: true}
 	}
 	// A value that can hold a promise seen as a type that names none: void, unknown, {}, object, any, or
