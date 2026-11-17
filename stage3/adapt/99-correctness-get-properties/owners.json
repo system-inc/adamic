@@ -1,0 +1,12 @@
+[
+  {
+    "file": "transformers/utilities.ts",
+    "owner": "getProperties",
+    "beforeDeclarations": 3,
+    "afterDeclarations": 3,
+    "before": "export function getProperties(node: ClassExpression | ClassDeclaration, requireInitializer: true, isStatic: boolean): readonly InitializedPropertyDeclaration[];\n/** @internal */\nexport function getProperties(node: ClassExpression | ClassDeclaration, requireInitializer: boolean, isStatic: boolean): readonly PropertyDeclaration[];\n/** @internal */\nexport function getProperties(node: ClassExpression | ClassDeclaration, requireInitializer: boolean, isStatic: boolean): readonly PropertyDeclaration[] {\n    return filter(node.members, m => isInitializedOrStaticProperty(m, requireInitializer, isStatic)) as PropertyDeclaration[];\n}",
+    "after": "export function getProperties(node: ClassExpression | ClassDeclaration, requireInitializer: true, isStatic: boolean): readonly PropertyDeclaration[];\n/** @internal */\nexport function getProperties(node: ClassExpression | ClassDeclaration, requireInitializer: boolean, isStatic: boolean): readonly PropertyDeclaration[];\n/** @internal */\nexport function getProperties(node: ClassExpression | ClassDeclaration, requireInitializer: boolean, isStatic: boolean): readonly PropertyDeclaration[] {\n    return filter(node.members, m => isInitializedOrStaticProperty(m, requireInitializer, isStatic)) as PropertyDeclaration[];\n}",
+    "ownerBeforeSha256": "bd5557a06737ae8fd9ddaa24f074e4e69ad7bdcc66fa763f7fd1a1bd21a8331c",
+    "ownerAfterSha256": "791ba5b26617ce7190a095fd8a5d9cf19bd968748b7b2ba1baeb724c743b431a"
+  }
+]
