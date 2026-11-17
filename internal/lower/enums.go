@@ -16,7 +16,7 @@ func (l *lowering) enumAssignable(from, to *checker.Type) bool {
 	if target := enumObjectSymbol(to); target != nil && from.Flags()&(checker.TypeFlagsUndefined|checker.TypeFlagsNull|checker.TypeFlagsNever) == 0 {
 		return enumObjectSymbol(from) == target
 	}
-	if to.Flags()&checker.TypeFlagsNumberLiteral != 0 && l.openNumericEnumType(from) && !l.openNumericEnumType(to) {
+	if to.Flags()&checker.TypeFlagsNumberLiteral != 0 && l.openNumericEnumType(from) && !l.openEnumSlot(to) {
 		return false
 	}
 	if to.Flags()&checker.TypeFlagsEnumLike == 0 {
@@ -31,7 +31,7 @@ func (l *lowering) enumAssignable(from, to *checker.Type) bool {
 		return true
 	}
 	if l.numericEnum(l.enumIdentity(to)) {
-		if !l.openNumericEnumType(to) {
+		if !l.openEnumSlot(to) {
 			return !l.openNumericEnumType(from) && from.Flags()&checker.TypeFlagsNumberLiteral != 0 && l.checker.IsTypeAssignableTo(from, to)
 		}
 		return from.Flags()&(checker.TypeFlagsNumberLike|checker.TypeFlagsNever) != 0
@@ -58,6 +58,20 @@ func (l *lowering) openNumericEnumType(proven *checker.Type) bool {
 func (l *lowering) tagHoldsAnyNumber(proven *checker.Type) bool {
 	whole, _ := l.wholeNumericEnums(flattenedMembers(l.checker.GetNonNullableType(proven)))
 	return len(whole) != 0
+}
+
+// openEnumSlot is whether a slot of this type takes any number: it's a numeric enum's whole type, as
+// openNumericEnumType says, and that enum has more than one member. A one-member enum's member is its enum's
+// whole type to the checker, and tsc lets a number into it, but the slot promises the member's one value, and
+// a tag test over it trusts that promise: `{ kind: n }` typed First, whose kind is One.A, held Two.B's value
+// past isSecond's proof (Language's q02 and q05 on #x2cjvy9, Adamic's ruling). So that slot is a literal
+// slot, and an unproven number into it is refused as any member literal's is (adamic/enum-literal).
+func (l *lowering) openEnumSlot(proven *checker.Type) bool {
+	if !l.openNumericEnumType(proven) {
+		return false
+	}
+	whole, _ := l.wholeNumericEnums(flattenedMembers(l.checker.GetNonNullableType(proven)))
+	return len(whole) == 1 && whole[0].size > 1
 }
 
 // wholeNumericEnum is a numeric enum all of whose members a union's flattened members hold, with its
@@ -710,7 +724,7 @@ func (l *lowering) literalUpdateSlot(updated *ast.Node) *checker.Type {
 	}
 	for _, slot := range slots {
 		slot = l.checker.GetNonNullableType(slot)
-		if (slot.Flags()&checker.TypeFlagsNumberLiteral != 0 || l.numericEnum(l.enumIdentity(slot))) && !l.openNumericEnumType(slot) {
+		if (slot.Flags()&checker.TypeFlagsNumberLiteral != 0 || l.numericEnum(l.enumIdentity(slot))) && !l.openEnumSlot(slot) {
 			return slot
 		}
 	}
