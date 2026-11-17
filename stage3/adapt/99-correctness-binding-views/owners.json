@@ -66,7 +66,21 @@
     "before": "export interface DiagnosticWithLocation extends Diagnostic {\n    file: SourceFile;\n    start: number;\n    length: number;\n}",
     "after": "export interface DiagnosticWithLocation extends Diagnostic {\n    file: SourceFile;\n    start: number;\n    length: number;\n}\n\n/** @internal */\nexport interface DiagnosticReadView extends Diagnostic {\n    readonly file: SourceFile | undefined;\n    readonly start: number | undefined;\n    readonly length: number | undefined;\n}",
     "ownerBeforeSha256": "0eb02037947463a599ab7e47cb1c9da1a19dbf73328cd6a5c0e93332e1e61769",
-    "ownerAfterSha256": "6c2086c1c5aa3f367567c01ff372c9e9959ffc01311bec5b890a00b942de7ed4"
+    "ownerAfterSha256": "6c2086c1c5aa3f367567c01ff372c9e9959ffc01311bec5b890a00b942de7ed4",
+    "variants": [
+      {
+        "before": "export interface DiagnosticWithLocation extends Diagnostic {\n    file: SourceFile;\n    start: number;\n    length: number;\n}",
+        "after": "export interface DiagnosticWithLocation extends Diagnostic {\n    file: SourceFile;\n    start: number;\n    length: number;\n}\n\n/** @internal */\nexport interface DiagnosticReadView extends Diagnostic {\n    readonly file: SourceFile | undefined;\n    readonly start: number | undefined;\n    readonly length: number | undefined;\n}",
+        "ownerBeforeSha256": "0eb02037947463a599ab7e47cb1c9da1a19dbf73328cd6a5c0e93332e1e61769",
+        "ownerAfterSha256": "6c2086c1c5aa3f367567c01ff372c9e9959ffc01311bec5b890a00b942de7ed4"
+      },
+      {
+        "before": "export interface DiagnosticWithLocation extends Diagnostic {\n    readonly file: SourceFile;\n    readonly start: number;\n    readonly length: number;\n}",
+        "after": "export interface DiagnosticWithLocation extends Diagnostic {\n    readonly file: SourceFile;\n    readonly start: number;\n    readonly length: number;\n}\n\n/** @internal */\nexport interface DiagnosticReadView extends Diagnostic {\n    readonly file: SourceFile | undefined;\n    readonly start: number | undefined;\n    readonly length: number | undefined;\n}",
+        "ownerBeforeSha256": "e8bdc323894fbf505ae02710c698d110cb591e871cf26defb3dfdcfb914a893d",
+        "ownerAfterSha256": "234314860c4d91b12c781900601209ec9488a599266012213c764aaafb170062"
+      }
+    ]
   },
   {
     "file": "utilitiesPublic.ts",
