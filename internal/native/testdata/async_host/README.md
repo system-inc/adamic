@@ -1,6 +1,6 @@
 # Host-resolved promises
 
-The public C interface is `../../runtime/async.h`. `adamic_promise` is an alias
+The public C interface is `../../../native_runtime/c/async.h`. `adamic_promise` is an alias
 for unit 1's `adamic_async_promise`; its fields, layout, and heap kind are
 unchanged. The implementation is private to `async.c` through
 `async_host_impl.h`. No compiler or Apple implementation is added here.
