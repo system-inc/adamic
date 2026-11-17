@@ -1,0 +1,16 @@
+'use strict';
+// #ev14ch9 measurement mutant: restore only the previous chain-array overload set.
+const fs=require('node:fs'),path=require('node:path'),assert=require('node:assert/strict');
+const adapter=require('./adapt.cjs'),pin=adapter.owners.find(p=>p.previousAfter);
+assert.equal(process.argv.length,3,'usage: mutant.cjs TREE');
+const name=path.join(path.resolve(process.argv[2]),'src/compiler',pin.file),raw=fs.readFileSync(name,'utf8');
+assert(!raw.includes('\r\n')||!raw.replace(/\r\n/g,'').includes('\n'),'mixed line endings');
+const text=raw.replace(/\r\n/g,'\n'),source=adapter.parse(pin.file,text);
+const nodes=source.statements.filter(n=>n.name?.text===pin.owner);
+assert.equal(nodes.length,pin.afterDeclarations,'owner count drift');
+const start=nodes[0].getStart(source),end=nodes.at(-1).end;
+assert.equal(text.slice(start,end),pin.after,'after pin drift');
+let after=text.slice(0,start)+pin.previousAfter+text.slice(end);
+for(const removeComments of [false,true])assert.equal(adapter.transpile(after,removeComments),adapter.transpile(text,removeComments),'mutant JavaScript drift');
+if(raw.includes('\r\n'))after=after.replace(/\n/g,'\r\n');
+fs.writeFileSync(name,after);console.log(JSON.stringify({files:1,restored:pin.owner,javascriptChanging:false}));

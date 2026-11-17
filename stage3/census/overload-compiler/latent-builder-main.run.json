@@ -1,0 +1,14 @@
+{
+  "command": [
+    "/workspace/scratch/ev14ch9/latent",
+    "/workspace/scratch/ev14ch9/base-tree/src/compiler",
+    "/workspace/scratch/ev14ch9/adamic/stage3/census/overload-compiler/latent-builder-main.jsonl"
+  ],
+  "exit": 0,
+  "elapsed_seconds": 300.82428206600025,
+  "environment": {
+    "LATENT_ONLY_FILE": "/workspace/scratch/ev14ch9/base-tree/src/compiler/builder.ts",
+    "LATENT_FULL": "1",
+    "LATENT_ASSERT_NO_OUTPUT": "1"
+  }
+}

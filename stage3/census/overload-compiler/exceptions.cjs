@@ -1,0 +1,9 @@
+'use strict';
+const fs=require('fs'),path=require('path'),ts=require('../../api/node_modules/typescript');
+const tree='/workspace/scratch/ev14ch9/TypeScript';
+const sources=[require('./js-callers.json'),require('./final-callers-decoded.json')];
+const failures=sources.flatMap(s=>s.resolutionErrors.map(e=>({...e,tree:s.tree}))),roots=[...new Set(failures.map(e=>path.join(tree,e.file)))];
+roots.push(...fs.readdirSync(tree+'/src/compiler',{recursive:true}).filter(f=>f.endsWith('.ts')).map(f=>path.join(tree,'src/compiler',f)));
+const p=ts.createProgram(roots,{allowJs:true,checkJs:true,target:ts.ScriptTarget.ES2024,module:ts.ModuleKind.NodeNext,moduleResolution:ts.ModuleResolutionKind.NodeNext,skipLibCheck:true}),c=p.getTypeChecker(),rows=[];
+for(const e of failures){const f=p.getSourceFile(path.join(tree,e.file)),stack=[f];let call;while(stack.length){const n=stack.pop();if(ts.isCallExpression(n)&&f.getLineAndCharacterOfPosition(n.getStart()).line+1===e.line&&n.getText()===e.text){call=n;break;}ts.forEachChild(n,x=>{stack.push(x);});}if(!call)throw Error('missing exception site');const callee=call.expression;let symbol=ts.isMetaProperty(callee)?undefined:c.getSymbolAtLocation(callee);if(symbol?.flags&ts.SymbolFlags.Alias)symbol=c.getAliasedSymbol(symbol);const declarations=(symbol?.declarations||[]).map(d=>({file:path.relative(tree,d.getSourceFile().fileName),name:d.name?.getText(),kind:ts.SyntaxKind[d.kind]}));const isMetaProperty=ts.isMetaProperty(callee);if(!isMetaProperty&&!declarations.length)throw Error('exception callee still unknown');if(declarations.some(d=>d.file.startsWith('src/compiler/')))throw Error('exception may target source owner');rows.push({...e,calleeKind:ts.SyntaxKind[callee.kind],declarations,excluded:isMetaProperty?'import meta-property cannot denote a named source function':'checker binds callee to a different declaration outside src/compiler'});}
+console.log(JSON.stringify(rows,null,2));

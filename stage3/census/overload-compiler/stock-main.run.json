@@ -1,0 +1,13 @@
+{
+  "command": [
+    "node",
+    "--max-old-space-size=4096",
+    "stage3/census/overload-compiler/trial.cjs",
+    "/workspace/scratch/ev14ch9/base-tree",
+    "baseline",
+    "/workspace/scratch/ev14ch9/unused.ts"
+  ],
+  "exit": 0,
+  "elapsed_seconds": 42.231741586,
+  "environment": {}
+}

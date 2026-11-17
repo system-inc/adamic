@@ -1,0 +1,164 @@
+[
+  {
+    "file": "lib/_tsc.js",
+    "line": 90539,
+    "text": "tryGetNameFromType(getTypeOfExpression(node.expression))",
+    "error": "RangeError: Maximum call stack size exceeded",
+    "tree": "/workspace/scratch/ev14ch9/TypeScript",
+    "calleeKind": "Identifier",
+    "declarations": [
+      {
+        "file": "lib/_tsc.js",
+        "name": "tryGetNameFromType",
+        "kind": "FunctionDeclaration"
+      }
+    ],
+    "excluded": "checker binds callee to a different declaration outside src/compiler"
+  },
+  {
+    "file": "lib/typescript.js",
+    "line": 95174,
+    "text": "tryGetNameFromType(getTypeOfExpression(node.expression))",
+    "error": "RangeError: Maximum call stack size exceeded",
+    "tree": "/workspace/scratch/ev14ch9/TypeScript",
+    "calleeKind": "Identifier",
+    "declarations": [
+      {
+        "file": "lib/typescript.js",
+        "name": "tryGetNameFromType",
+        "kind": "FunctionDeclaration"
+      }
+    ],
+    "excluded": "checker binds callee to a different declaration outside src/compiler"
+  },
+  {
+    "file": "tests/baselines/reference/dynamicImportDefer(module=commonjs).js",
+    "line": 23,
+    "text": "import.defer(\"./a.js\")",
+    "error": "Error: Debug Failure. False expression: Trying to get the type of `import.defer` in `import.defer(...)`",
+    "tree": "/workspace/scratch/ev14ch9/TypeScript",
+    "calleeKind": "MetaProperty",
+    "declarations": [],
+    "excluded": "import meta-property cannot denote a named source function"
+  },
+  {
+    "file": "tests/baselines/reference/dynamicImportDefer(module=commonjs).js",
+    "line": 9,
+    "text": "import.defer(\"./a.js\")",
+    "error": "Error: Debug Failure. False expression: Trying to get the type of `import.defer` in `import.defer(...)`",
+    "tree": "/workspace/scratch/ev14ch9/TypeScript",
+    "calleeKind": "MetaProperty",
+    "declarations": [],
+    "excluded": "import meta-property cannot denote a named source function"
+  },
+  {
+    "file": "tests/baselines/reference/dynamicImportDefer(module=es2015).js",
+    "line": 20,
+    "text": "import.defer(\"./a.js\")",
+    "error": "Error: Debug Failure. False expression: Trying to get the type of `import.defer` in `import.defer(...)`",
+    "tree": "/workspace/scratch/ev14ch9/TypeScript",
+    "calleeKind": "MetaProperty",
+    "declarations": [],
+    "excluded": "import meta-property cannot denote a named source function"
+  },
+  {
+    "file": "tests/baselines/reference/dynamicImportDefer(module=es2015).js",
+    "line": 9,
+    "text": "import.defer(\"./a.js\")",
+    "error": "Error: Debug Failure. False expression: Trying to get the type of `import.defer` in `import.defer(...)`",
+    "tree": "/workspace/scratch/ev14ch9/TypeScript",
+    "calleeKind": "MetaProperty",
+    "declarations": [],
+    "excluded": "import meta-property cannot denote a named source function"
+  },
+  {
+    "file": "tests/baselines/reference/dynamicImportDefer(module=es2020).js",
+    "line": 20,
+    "text": "import.defer(\"./a.js\")",
+    "error": "Error: Debug Failure. False expression: Trying to get the type of `import.defer` in `import.defer(...)`",
+    "tree": "/workspace/scratch/ev14ch9/TypeScript",
+    "calleeKind": "MetaProperty",
+    "declarations": [],
+    "excluded": "import meta-property cannot denote a named source function"
+  },
+  {
+    "file": "tests/baselines/reference/dynamicImportDefer(module=es2020).js",
+    "line": 9,
+    "text": "import.defer(\"./a.js\")",
+    "error": "Error: Debug Failure. False expression: Trying to get the type of `import.defer` in `import.defer(...)`",
+    "tree": "/workspace/scratch/ev14ch9/TypeScript",
+    "calleeKind": "MetaProperty",
+    "declarations": [],
+    "excluded": "import meta-property cannot denote a named source function"
+  },
+  {
+    "file": "tests/baselines/reference/dynamicImportDefer(module=esnext).js",
+    "line": 20,
+    "text": "import.defer(\"./a.js\")",
+    "error": "Error: Debug Failure. False expression: Trying to get the type of `import.defer` in `import.defer(...)`",
+    "tree": "/workspace/scratch/ev14ch9/TypeScript",
+    "calleeKind": "MetaProperty",
+    "declarations": [],
+    "excluded": "import meta-property cannot denote a named source function"
+  },
+  {
+    "file": "tests/baselines/reference/dynamicImportDefer(module=esnext).js",
+    "line": 9,
+    "text": "import.defer(\"./a.js\")",
+    "error": "Error: Debug Failure. False expression: Trying to get the type of `import.defer` in `import.defer(...)`",
+    "tree": "/workspace/scratch/ev14ch9/TypeScript",
+    "calleeKind": "MetaProperty",
+    "declarations": [],
+    "excluded": "import meta-property cannot denote a named source function"
+  },
+  {
+    "file": "tests/baselines/reference/dynamicImportDefer(module=nodenext).js",
+    "line": 24,
+    "text": "import.defer(\"./a.js\")",
+    "error": "Error: Debug Failure. False expression: Trying to get the type of `import.defer` in `import.defer(...)`",
+    "tree": "/workspace/scratch/ev14ch9/TypeScript",
+    "calleeKind": "MetaProperty",
+    "declarations": [],
+    "excluded": "import meta-property cannot denote a named source function"
+  },
+  {
+    "file": "tests/baselines/reference/dynamicImportDefer(module=nodenext).js",
+    "line": 9,
+    "text": "import.defer(\"./a.js\")",
+    "error": "Error: Debug Failure. False expression: Trying to get the type of `import.defer` in `import.defer(...)`",
+    "tree": "/workspace/scratch/ev14ch9/TypeScript",
+    "calleeKind": "MetaProperty",
+    "declarations": [],
+    "excluded": "import meta-property cannot denote a named source function"
+  },
+  {
+    "file": "tests/baselines/reference/dynamicImportDefer(module=preserve).js",
+    "line": 20,
+    "text": "import.defer(\"./a.js\")",
+    "error": "Error: Debug Failure. False expression: Trying to get the type of `import.defer` in `import.defer(...)`",
+    "tree": "/workspace/scratch/ev14ch9/TypeScript",
+    "calleeKind": "MetaProperty",
+    "declarations": [],
+    "excluded": "import meta-property cannot denote a named source function"
+  },
+  {
+    "file": "tests/baselines/reference/dynamicImportDefer(module=preserve).js",
+    "line": 9,
+    "text": "import.defer(\"./a.js\")",
+    "error": "Error: Debug Failure. False expression: Trying to get the type of `import.defer` in `import.defer(...)`",
+    "tree": "/workspace/scratch/ev14ch9/TypeScript",
+    "calleeKind": "MetaProperty",
+    "declarations": [],
+    "excluded": "import meta-property cannot denote a named source function"
+  },
+  {
+    "file": "tests/cases/conformance/importDefer/dynamicImportDefer.ts",
+    "line": 10,
+    "text": "import.defer(\"./a.js\")",
+    "error": "Error: Debug Failure. False expression: Trying to get the type of `import.defer` in `import.defer(...)`",
+    "tree": "/workspace/scratch/ev14ch9/base-tree",
+    "calleeKind": "MetaProperty",
+    "declarations": [],
+    "excluded": "import meta-property cannot denote a named source function"
+  }
+]

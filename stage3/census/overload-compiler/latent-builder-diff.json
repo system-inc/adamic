@@ -1,0 +1,209 @@
+{
+  "mode": "latent",
+  "baseline_events": 453,
+  "candidate_events": 449,
+  "gone": [
+    {
+      "count": 1,
+      "event": [
+        "",
+        "src/compiler/builder.ts:572:1",
+        "lowering",
+        "Boundary",
+        "src/compiler/builder.ts:572:1",
+        "function signature or prologue failed; continued at next declaration"
+      ]
+    },
+    {
+      "count": 1,
+      "event": [
+        "",
+        "src/compiler/builder.ts:572:1",
+        "lowering",
+        "Refused",
+        "src/compiler/builder.ts:567:5",
+        "overload 1 of convertOrRepopulateDiagnosticMessageChainArray parameter array cannot be served by implementation parameter array"
+      ]
+    },
+    {
+      "count": 1,
+      "event": [
+        "",
+        "src/compiler/builder.ts:572:1",
+        "refusal_scan",
+        "Refused",
+        "src/compiler/builder.ts:580:106",
+        "a value of type DiagnosticMessageChain seen as DiagnosticMessageChain | ReusableDiagnosticMessageChain, which can write ReusableDiagnosticMessageChain[] | undefined where DiagnosticMessageChain[] | undefined is read"
+      ]
+    },
+    {
+      "count": 1,
+      "event": [
+        "",
+        "src/compiler/builder.ts:572:1",
+        "refusal_scan",
+        "Refused",
+        "src/compiler/builder.ts:580:137",
+        "a value of type (chain: DiagnosticMessageChain | ReusableDiagnosticMessageChain) => RepopulateDiagnosticChainInfo | undefined seen as (chain: DiagnosticMessageChain) => RepopulateDiagnosticChainInfo | undefined, which can write ReusableDiagnosticMessageChain[] | undefined where DiagnosticMessageChain[] | undefined is read"
+      ]
+    },
+    {
+      "count": 1,
+      "event": [
+        "",
+        "src/compiler/builder.ts:584:5",
+        "lowering",
+        "Boundary",
+        "src/compiler/builder.ts:585:9",
+        "failed statement; state rolled back; continued at next statement or declaration"
+      ]
+    },
+    {
+      "count": 1,
+      "event": [
+        "",
+        "src/compiler/builder.ts:584:5",
+        "lowering",
+        "Refused",
+        "src/compiler/builder.ts:585:16",
+        "in that narrows a union of object types (any object with the key passes)"
+      ]
+    },
+    {
+      "count": 1,
+      "event": [
+        "",
+        "src/compiler/builder.ts:584:5",
+        "refusal_scan",
+        "Refused",
+        "src/compiler/builder.ts:585:56",
+        "an object refinement using an open numeric enum as a literal tag"
+      ]
+    },
+    {
+      "count": 1,
+      "event": [
+        "",
+        "src/compiler/builder.ts:584:5",
+        "refusal_scan",
+        "Refused",
+        "src/compiler/builder.ts:585:75",
+        "an object refinement using an open numeric enum as a literal tag"
+      ]
+    },
+    {
+      "count": 1,
+      "event": [
+        "",
+        "src/compiler/builder.ts:584:5",
+        "refusal_scan",
+        "Refused",
+        "src/compiler/builder.ts:586:17",
+        "an object refinement using an open numeric enum as a literal tag"
+      ]
+    },
+    {
+      "count": 1,
+      "event": [
+        "",
+        "src/compiler/builder.ts:584:5",
+        "refusal_scan",
+        "Refused",
+        "src/compiler/builder.ts:586:45",
+        "an object refinement using an open numeric enum as a literal tag"
+      ]
+    },
+    {
+      "count": 1,
+      "event": [
+        "",
+        "src/compiler/builder.ts:618:1",
+        "lowering",
+        "Refused",
+        "src/compiler/builder.ts:567:5",
+        "overload 1 of convertOrRepopulateDiagnosticMessageChainArray parameter array cannot be served by implementation parameter array"
+      ]
+    }
+  ],
+  "new": [
+    {
+      "count": 1,
+      "event": [
+        "",
+        "src/compiler/builder.ts:566:1",
+        "refusal_scan",
+        "Refused",
+        "src/compiler/builder.ts:574:134",
+        "a value of type T & DiagnosticMessageChain seen as DiagnosticMessageChain | ReusableDiagnosticMessageChain, which can write ReusableDiagnosticMessageChain[] | undefined where DiagnosticMessageChain[] | (ReusableDiagnosticMessageChain[] & DiagnosticMessageChain[]) | undefined is read"
+      ]
+    },
+    {
+      "count": 1,
+      "event": [
+        "",
+        "src/compiler/builder.ts:566:1",
+        "refusal_scan",
+        "Refused",
+        "src/compiler/builder.ts:579:21",
+        "an unproven predicate argument for parameter predicate (argument \"isFullChain\")"
+      ]
+    },
+    {
+      "count": 1,
+      "event": [
+        "",
+        "src/compiler/builder.ts:618:1",
+        "lowering",
+        "Boundary",
+        "src/compiler/builder.ts:579:5",
+        "failed statement; state rolled back; continued at next statement or declaration"
+      ]
+    },
+    {
+      "count": 1,
+      "event": [
+        "",
+        "src/compiler/builder.ts:618:1",
+        "lowering",
+        "NotYet",
+        "src/compiler/builder.ts:579:21",
+        "a generic function as a value"
+      ]
+    },
+    {
+      "count": 1,
+      "event": [
+        "",
+        "src/compiler/builder.ts:618:1",
+        "lowering",
+        "Refused",
+        "src/compiler/builder.ts:544:66",
+        "a cast the runtime can't check"
+      ]
+    },
+    {
+      "count": 1,
+      "event": [
+        "",
+        "src/compiler/builder.ts:618:1",
+        "lowering",
+        "Refused",
+        "src/compiler/builder.ts:550:66",
+        "a cast the runtime can't check"
+      ]
+    },
+    {
+      "count": 1,
+      "event": [
+        "",
+        "src/compiler/builder.ts:618:1",
+        "lowering",
+        "Refused",
+        "src/compiler/builder.ts:553:65",
+        "a cast the runtime can't check"
+      ]
+    }
+  ],
+  "changed": [],
+  "comparison": "Unchanged source lines are mapped by SequenceMatcher. Changed words at an equal rule/site are paired and listed in full; no changed words are suppressed."
+}

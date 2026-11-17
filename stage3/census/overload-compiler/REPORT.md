@@ -2,7 +2,7 @@
 
 Base: cf468df0747075e50d326a97ff03e8530d7a1a88. Upstream: TypeScript 6.0.3, 050880ce59e30b356b686bd3144efe24f875ebc8.
 
-This is the pre-adaptation checkpoint. No candidate adapter has been built. The four requested lowering files have been read in full. createBuilderProgram is excluded and remains untouched.
+The required pre-adaptation report was pushed first at 6e7c19568, before either candidate was constructed. The four requested lowering files have been read in full. createBuilderProgram is excluded and remains untouched.
 
 | Set (upstream line) | Resolved calls | Classification | Road to investigate |
 | --- | ---: | --- | --- |
@@ -11,11 +11,17 @@ This is the pre-adaptation checkpoint. No candidate adapter has been built. The 
 | builder.ts:558 convertOrRepopulateDiagnosticMessageChainArray | 3 | 1 binding; 2 next property initializers; all pass T[] plus the matching (T) callback | (i) investigate a generic implementation matching the overload, amending 99-correctness-axolotl-k |
 | commandLineParser.ts:3775 convertOptionsFromJson | 3 | 2 discarded calls with default objects; 1 returned watch result with undefined default | (iii) stop pending a truthful watch result boundary; a new accumulator shape or a cast is outside the authorized roads |
 
+## Current checkpoint
+
+Builder is now stopped: full single-file latent census has 453 baseline events and 449 candidate events, with 11 gone, **7 new**, and 0 changed after unchanged-line mapping. The requested overload refusal disappears, but new findings violate the acceptance gate. Full event tuples are in [latent-builder-diff.json](latent-builder-diff.json); raw streams, commands, exits and stderr are alongside it. The new findings include an unproven predicate argument, a generic function as a value, a mutable recursive-chain view, and three runtime-uncheckable casts newly reached by lowering. No landing branch is created.
+
+The builder candidate passes stock TypeScript 6.0.3 with **0 diagnostics over all 79 roots**, just like the baseline. Both full-file JavaScript comparisons pass, and all 13 existing owner-contract refusal controls plus zero-write replay pass. These checks do not override the failed census gate. Baseline stage3/apply.sh passed. The matching scan-all runs, extension caller census, and restoring mutant are still running at this checkpoint. Product, lane and dts builds are not run for a rejected candidate.
+
 ## Caller audit
 
-callers.cjs uses TypeScript 6.0.3 getResolvedSignature on call/new/tagged-template expressions. It recognizes declarations by their checker-resolved declaration and source owner, including DiagnosticCollection's returned interface signatures. It does not count text matches. adapted-callers.json records 21,234 TypeScript roots across the checkout, including src/harness, src/testRunner and tests; src-callers.json is a separate source-only cross-check. Each resolved call includes its source, complete call, immediate use, argument types and resolved overload declaration. These preliminary adapted-tree reads occurred while baseline application was still running; they will be repeated on the completed tree before being used as final proof. JavaScript fixture coverage is not yet audited.
+callers.cjs uses TypeScript 6.0.3 getResolvedSignature on call/new/tagged-template expressions. It recognizes declarations by their checker-resolved declaration and source owner, including DiagnosticCollection's returned interface signatures. It does not count text matches. adapted-callers.json records 21,234 TypeScript roots across the checkout, including src/harness, src/testRunner and tests; src-callers.json is a separate source-only cross-check. Each resolved call includes its source, complete call, immediate use, argument types and resolved overload declaration. These preliminary adapted-tree reads occurred while baseline application was still running; they will be repeated on the completed tree before being used as final proof. The completed final audit is [final-callers-decoded.json](final-callers-decoded.json): 21,236 TypeScript roots, no changes during its checker walk, and the same 11/4/3/3 counts. The JavaScript pass covers 18,289 roots including compiler declaration roots and finds no additional calls to these source owners. [CALLERS.md](CALLERS.md) gives every resolved caller and its result/argument classification.
 
-The whole-checkout checker encounters one exception in the deliberately invalid tests/cases/conformance/importDefer/dynamicImportDefer.ts:10, import.defer("./a.js"). This exception is retained in resolutionErrors and is not counted as a resolved call. A first upstream audit aborted on this exception and its empty output is not evidence.
+The whole-checkout checker encounters one exception in the deliberately invalid tests/cases/conformance/importDefer/dynamicImportDefer.ts:10, import.defer("./a.js"). This exception is retained in resolutionErrors and is not counted as a resolved call. The JavaScript pass has 14 checker exceptions, including generated import.defer baselines and two deep LKG calls. [exceptions-reviewed.json](exceptions-reviewed.json) excludes all 15 exception sites: named callees bind to lib declarations outside the four source owners, and import meta-properties cannot denote those named functions. A first upstream audit aborted on this exception and its empty output is not evidence.
 
 ## Failure rules and candidate roads
 

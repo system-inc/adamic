@@ -1,0 +1,48 @@
+diff --git a/stage3/adapt/99-correctness-axolotl-k/README.md b/stage3/adapt/99-correctness-axolotl-k/README.md
+index bd245bcef..ff7cde8dd 100644
+--- a/stage3/adapt/99-correctness-axolotl-k/README.md
++++ b/stage3/adapt/99-correctness-axolotl-k/README.md
+@@ -117,3 +117,5 @@ All measured checks pass. [PROOF.md](PROOF.md) records the 11 matching valid Nod
+ rows, red mutant, no-write contract, 79-root Adamic checks, byte-identical public
+ declarations, complete passing lane and Go fixtures. [CENSUS.md](CENSUS.md)
+ records all 73 movers: every one now stops at core.ts:381:26 in unchanged flatten.
++
++#ev14ch9 amendment: the chain-array owner has one generic implementation, retaining the caller’s T in its array and callback. Its local full-chain predicate retains the tested subtype, and sameMap names separate input and output types. This changes annotations only: the previous complete after pin is retained for a JavaScript equality assertion with comments kept and removed. Existing guards, mapping, copies and identity returns are byte-identical. The whole owner’s after text, declaration count and SHA-256 are amended here. Evidence and proof status live on typescript/overload-compiler-evidence, stage3/census/overload-compiler/REPORT.md.
+diff --git a/stage3/adapt/99-correctness-axolotl-k/adapt.cjs b/stage3/adapt/99-correctness-axolotl-k/adapt.cjs
+index a288926a3..65283e3af 100644
+--- a/stage3/adapt/99-correctness-axolotl-k/adapt.cjs
++++ b/stage3/adapt/99-correctness-axolotl-k/adapt.cjs
+@@ -32,8 +32,13 @@ function transpile(text, removeComments = false) {
+ }
+ function adapt(tree) {
+     assert.equal(ts.version, '6.0.3');
++    for (const pin of owners.filter(owner => owner.previousAfter)) {
++        assert.equal(digest(pin.previousAfter), pin.previousAfterSha256, 'amendment pin drift');
++        for (const removeComments of [false, true]) assert.equal(transpile(pin.after, removeComments), transpile(pin.previousAfter, removeComments), 'type-only amendment changed JavaScript');
++    }
+     const plans = [...new Set(owners.map(owner => owner.file))].map(file => {
+         const name = path.join(tree, 'src/compiler', file), raw = fs.readFileSync(name, 'utf8');
++        assert(!raw.includes('\r\n') || !raw.replace(/\r\n/g, '').includes('\n'), 'mixed line endings');
+         const text = raw.replace(/\r\n/g, '\n'), state = locate(file, text);
+         let after = text;
+         for (const edit of state.edits.sort((a, b) => b.start - a.start)) after = after.slice(0, edit.start) + edit.after + after.slice(edit.end);
+diff --git a/stage3/adapt/99-correctness-axolotl-k/owners.json b/stage3/adapt/99-correctness-axolotl-k/owners.json
+index 0e6ecb8e2..38318c3d8 100644
+--- a/stage3/adapt/99-correctness-axolotl-k/owners.json
++++ b/stage3/adapt/99-correctness-axolotl-k/owners.json
+@@ -23,10 +23,12 @@
+     "file": "builder.ts",
+     "owner": "convertOrRepopulateDiagnosticMessageChainArray",
+     "beforeDeclarations": 1,
+-    "afterDeclarations": 2,
++    "afterDeclarations": 1,
+     "before": "function convertOrRepopulateDiagnosticMessageChainArray<T extends DiagnosticMessageChain | ReusableDiagnosticMessageChain>(\n    array: T[] | undefined,\n    sourceFile: SourceFile | undefined,\n    newProgram: Program,\n    repopulateInfo: (chain: T) => RepopulateDiagnosticChainInfo | undefined,\n): DiagnosticMessageChain[] | undefined {\n    return sameMap(array, chain => convertOrRepopulateDiagnosticMessageChain(chain, sourceFile, newProgram, repopulateInfo));\n}",
+-    "after": "function convertOrRepopulateDiagnosticMessageChainArray<T extends DiagnosticMessageChain | ReusableDiagnosticMessageChain>(\n    array: T[] | undefined,\n    sourceFile: SourceFile | undefined,\n    newProgram: Program,\n    repopulateInfo: (chain: T) => RepopulateDiagnosticChainInfo | undefined,\n): DiagnosticMessageChain[] | undefined;\nfunction convertOrRepopulateDiagnosticMessageChainArray(\n    array: (DiagnosticMessageChain | ReusableDiagnosticMessageChain)[] | undefined,\n    sourceFile: SourceFile | undefined,\n    newProgram: Program,\n    repopulateInfo: (chain: DiagnosticMessageChain | ReusableDiagnosticMessageChain) => RepopulateDiagnosticChainInfo | undefined,\n): DiagnosticMessageChain[] | undefined {\n    if (array === undefined) return array;\n    if (array.every(isFullChain)) {\n        return sameMap<DiagnosticMessageChain>(array, chain => convertOrRepopulateDiagnosticMessageChain(chain, sourceFile, newProgram, repopulateInfo));\n    }\n    return array.map(chain => convertOrRepopulateDiagnosticMessageChain(chain, sourceFile, newProgram, repopulateInfo));\n\n    function isFullChain(chain: DiagnosticMessageChain | ReusableDiagnosticMessageChain): chain is DiagnosticMessageChain {\n        return \"messageText\" in chain && \"category\" in chain && \"code\" in chain\n            && (chain.next === undefined || chain.next.every(isFullChain));\n    }\n}",
++    "after": "function convertOrRepopulateDiagnosticMessageChainArray<T extends DiagnosticMessageChain | ReusableDiagnosticMessageChain>(\n    array: T[] | undefined,\n    sourceFile: SourceFile | undefined,\n    newProgram: Program,\n    repopulateInfo: (chain: T) => RepopulateDiagnosticChainInfo | undefined,\n): DiagnosticMessageChain[] | undefined {\n    if (array === undefined) return array;\n    if (array.every(isFullChain)) {\n        return sameMap<T & DiagnosticMessageChain, DiagnosticMessageChain>(array, chain => convertOrRepopulateDiagnosticMessageChain(chain, sourceFile, newProgram, repopulateInfo));\n    }\n    return array.map(chain => convertOrRepopulateDiagnosticMessageChain(chain, sourceFile, newProgram, repopulateInfo));\n\n    function isFullChain<U extends DiagnosticMessageChain | ReusableDiagnosticMessageChain>(chain: U): chain is U & DiagnosticMessageChain {\n        return \"messageText\" in chain && \"category\" in chain && \"code\" in chain\n            && (chain.next === undefined || chain.next.every(isFullChain));\n    }\n}",
+     "ownerBeforeSha256": "1243e12ccd737226f07bbd7eca05e2ebd81157d7ab3269abae60457c1c992097",
+-    "ownerAfterSha256": "282e5e35ccb721f99e76df10937e9b104507d3a3e813f5b82aec54df242932ea"
++    "ownerAfterSha256": "a101fa76639add1b1efc9bc160fb39f2da17c335cb0640a53778a443d7324e5e",
++    "previousAfter": "function convertOrRepopulateDiagnosticMessageChainArray<T extends DiagnosticMessageChain | ReusableDiagnosticMessageChain>(\n    array: T[] | undefined,\n    sourceFile: SourceFile | undefined,\n    newProgram: Program,\n    repopulateInfo: (chain: T) => RepopulateDiagnosticChainInfo | undefined,\n): DiagnosticMessageChain[] | undefined;\nfunction convertOrRepopulateDiagnosticMessageChainArray(\n    array: (DiagnosticMessageChain | ReusableDiagnosticMessageChain)[] | undefined,\n    sourceFile: SourceFile | undefined,\n    newProgram: Program,\n    repopulateInfo: (chain: DiagnosticMessageChain | ReusableDiagnosticMessageChain) => RepopulateDiagnosticChainInfo | undefined,\n): DiagnosticMessageChain[] | undefined {\n    if (array === undefined) return array;\n    if (array.every(isFullChain)) {\n        return sameMap<DiagnosticMessageChain>(array, chain => convertOrRepopulateDiagnosticMessageChain(chain, sourceFile, newProgram, repopulateInfo));\n    }\n    return array.map(chain => convertOrRepopulateDiagnosticMessageChain(chain, sourceFile, newProgram, repopulateInfo));\n\n    function isFullChain(chain: DiagnosticMessageChain | ReusableDiagnosticMessageChain): chain is DiagnosticMessageChain {\n        return \"messageText\" in chain && \"category\" in chain && \"code\" in chain\n            && (chain.next === undefined || chain.next.every(isFullChain));\n    }\n}",
++    "previousAfterSha256": "282e5e35ccb721f99e76df10937e9b104507d3a3e813f5b82aec54df242932ea"
+   }
+ ]
