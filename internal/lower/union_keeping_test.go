@@ -665,3 +665,152 @@ if (viewed.kind === 'read') console.log(viewed.read(make()));
 		})
 	}
 }
+
+// t2 differed from Node in the checked runner and in leak-checking mode (#3h04df3).
+func TestUnionKeepingPromiseTypeArgumentsStop(t *testing.T) {
+	t.Parallel()
+	for _, extension := range []string{".a", ".ts"} {
+		t.Run(extension, func(t *testing.T) {
+			_, err := lowerSourceAs(t, `import type { Weak } from 'adamic';
+interface Box { readonly label: string }
+type Strong = { readonly kind: 'v'; readonly v: Box } | { readonly kind: 'w'; readonly w: number };
+type Weakly = { readonly kind: 'v'; readonly v: Weak<Box> } | { readonly kind: 'w'; readonly w: number };
+function show(x: Weakly): string { return x.kind === 'v' ? x.v?.label ?? 'none' : 'w'; }
+async function produce(): Promise<Strong> { return { kind: 'v', v: { label: 'label' } }; }
+function hold(): Promise<Strong> | number { return produce(); }
+async function main(): Promise<void> {
+  const held: Promise<Strong> | number = hold();
+  const viewed: Promise<Weakly> | number = held;
+  if (typeof viewed !== 'number') {
+    const x = await viewed;
+    console.log(show(x));
+  }
+}
+await main();
+`, extension)
+			var ny *NotYet
+			want := "main" + extension + ":10:44"
+			if !errors.As(err, &ny) || !strings.HasSuffix(ny.Where, want) {
+				t.Fatalf("t2: got %v, want NotYet at %s", err, want)
+			}
+		})
+	}
+}
+
+// Language's b01 (no union, the ordinary walk) and b04 (a function's return, reached through
+// sameCallablePair and callableKeeping) differed from Node natively on main cf468df0 (#3h04df3).
+// Each stops at its view's line.
+func TestKeepingPromiseTypeArgumentsOrdinaryStop(t *testing.T) {
+	t.Parallel()
+	for _, extension := range []string{".a", ".ts"} {
+		for _, row := range []struct{ name, source, line string }{
+			{"b01", `import type { Weak } from 'adamic';
+interface Box { readonly label: string }
+type Strong = { readonly kind: 'v'; readonly v: Box } | { readonly kind: 'w'; readonly w: number };
+type Weakly = { readonly kind: 'v'; readonly v: Weak<Box> } | { readonly kind: 'w'; readonly w: number };
+function show(x: Weakly): string { return x.kind === 'v' ? x.v?.label ?? 'none' : 'w'; }
+async function produce(): Promise<Strong> { return { kind: 'v', v: { label: 'label' } }; }
+async function main(): Promise<void> {
+  const held: Promise<Strong> = produce();
+  const viewed: Promise<Weakly> = held;
+  console.log(show(await viewed));
+}
+await main();
+`, ":9:"},
+			{"b04", `import type { Weak } from 'adamic';
+interface Box { readonly label: string }
+type Strong = { readonly kind: 'v'; readonly v: Box } | { readonly kind: 'w'; readonly w: number };
+type Weakly = { readonly kind: 'v'; readonly v: Weak<Box> } | { readonly kind: 'w'; readonly w: number };
+function show(x: Weakly): string { return x.kind === 'v' ? x.v?.label ?? 'none' : 'w'; }
+async function produce(): Promise<Strong> { return { kind: 'v', v: { label: 'label' } }; }
+function hold(): (() => Promise<Strong>) | number { return produce; }
+async function main(): Promise<void> {
+  const held: (() => Promise<Strong>) | number = hold();
+  const viewed: (() => Promise<Weakly>) | number = held;
+  if (typeof viewed !== "number") console.log(show(await viewed()));
+}
+await main();
+`, ":10:"},
+		} {
+			t.Run(row.name+extension, func(t *testing.T) {
+				_, err := lowerSourceAs(t, row.source, extension)
+				var ny *NotYet
+				want := "main" + extension + row.line
+				if !errors.As(err, &ny) || !strings.Contains(ny.Where, want) {
+					t.Fatalf("%s: got %v, want NotYet on line %s", row.name, err, want)
+				}
+			})
+		}
+	}
+}
+
+func TestUnionKeepingPromiseTypeArgumentsAgree(t *testing.T) {
+	t.Parallel()
+	for _, extension := range []string{".a", ".ts"} {
+		t.Run(extension, func(t *testing.T) {
+			lowersAndAgreesWithNodeAs(t, `interface Box { readonly label: string }
+async function produce(): Promise<Box> { return { label: 'label' }; }
+function hold(): Promise<Box> | number { return produce(); }
+async function main(): Promise<void> {
+  const held: Promise<Box> | number = hold();
+  const viewed: Promise<Box | undefined> | number = held;
+  if (typeof viewed !== 'number') {
+    const x = await viewed;
+    console.log(x?.label ?? 'none');
+  }
+}
+await main();
+`, extension)
+		})
+	}
+}
+
+// Different Promise and PromiseLike targets stay covered by this existing stop (#3h04df3).
+func TestUnionKeepingPromiseLikeMemberAnyStop(t *testing.T) {
+	t.Parallel()
+	for _, extension := range []string{".a", ".ts"} {
+		for _, row := range []struct{ name, source, where string }{
+			{"t1", `import type { Weak } from 'adamic';
+interface Box { readonly label: string }
+type Strong = { readonly kind: 'v'; readonly v: Box } | { readonly kind: 'w'; readonly w: number };
+type Weakly = { readonly kind: 'v'; readonly v: Weak<Box> } | { readonly kind: 'w'; readonly w: number };
+function show(x: Weakly): string { return x.kind === 'v' ? x.v?.label ?? 'none' : 'w'; }
+async function produce(): Promise<Strong> { return { kind: 'v', v: { label: 'label' } }; }
+function hold(): Promise<Strong> | number { return produce(); }
+async function main(): Promise<void> {
+  const held: Promise<Strong> | number = hold();
+  const viewed: PromiseLike<Weakly> | number = held;
+  if (typeof viewed !== 'number') {
+    const x = await viewed;
+    console.log(show(x));
+  }
+}
+await main();
+`, ":10:48"},
+			{"t7", `import type { Weak } from 'adamic';
+interface Box { readonly label: string }
+type Strong = { readonly kind: 'v'; readonly v: Box } | { readonly kind: 'w'; readonly w: number };
+type Weakly = { readonly kind: 'v'; readonly v: Weak<Box> } | { readonly kind: 'w'; readonly w: number };
+function show(x: Weakly): string { return x.kind === 'v' ? x.v?.label ?? 'none' : 'w'; }
+async function produce(): Promise<Strong> { return { kind: 'v', v: { label: 'label' } }; }
+function hold(): Promise<Strong> { return produce(); }
+async function main(): Promise<void> {
+  const held: Promise<Strong> = hold();
+  const viewed: PromiseLike<Weakly> = held;
+  const x = await viewed;
+  console.log(show(x));
+}
+await main();
+`, ":10:39"},
+		} {
+			t.Run(row.name+extension, func(t *testing.T) {
+				_, err := lowerSourceAs(t, row.source, extension)
+				var ny *NotYet
+				want := "main" + extension + row.where
+				if !errors.As(err, &ny) || !strings.HasSuffix(ny.Where, want) || !strings.Contains(ny.What, "a member typed any (then()) related to PromiseLike") {
+					t.Fatalf("%s: got %v, want the PromiseLike member-typed-any NotYet at %s", row.name, err, want)
+				}
+			})
+		}
+	}
+}
