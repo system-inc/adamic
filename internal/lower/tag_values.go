@@ -28,6 +28,10 @@ func tagLiteralsDistinct(first, second *checker.Type) bool {
 // be the alias.
 func (l *lowering) enumValueUnique(tag *checker.Type) bool {
 	symbol := tag.Symbol()
+	// A one-member numeric enum's member is its enum's whole type, which holds any number (tagHoldsAnyNumber).
+	if l.tagHoldsAnyNumber(tag) {
+		return false
+	}
 	if tag.Flags()&checker.TypeFlagsEnumLiteral == 0 || symbol == nil || symbol.Flags&ast.SymbolFlagsEnumMember == 0 {
 		return true
 	}

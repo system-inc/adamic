@@ -1,7 +1,7 @@
 // a-check: refused an object refinement using an open numeric enum as a literal tag
 // Two steps: kind narrows A | B | C to B | C, then tag, an open enum in B, narrows to C.
 enum Kind { A, B, C }
-enum BTag { B }
+enum BTag { B, Wide = 77 }
 enum CTag { C = 1, D = 2 }
 interface A { readonly kind: Kind.A; readonly value: boolean }
 interface B { readonly kind: Kind.B; readonly tag: BTag; readonly value: string }
