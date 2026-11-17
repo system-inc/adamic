@@ -2,8 +2,9 @@
 # #rv75m9k road A on the adapted tree at this commit: scan (before), pin owners, adapt, scan again (after), replay (zero
 # writes), restore with the mutant and check every touched file is back byte for byte. Prints owners.json whole at the
 # end, so the adaptation's pins come from the tree the box built, never from a Mac's upstream copy.
-# Sealed: source /opt/adamic-block/environment.sh and cloud/sealed-job.sh first.
+# Sealed: it sources the image's environment and cloud/sealed-job.sh itself, since their helpers are shell functions.
 set -uo pipefail
+source /opt/adamic-block/environment.sh && source cloud/sealed-job.sh || { echo "FAIL sealed environment"; exit 1; }
 here=$(cd "$(dirname "$0")" && pwd)
 sealed_typescript_source >/dev/null && echo "PASS typescript source" || { echo "FAIL typescript source"; exit 1; }
 sealed_npm stage3/api >/dev/null && echo "PASS stage3/api installed" || { echo "FAIL stage3/api"; exit 1; }

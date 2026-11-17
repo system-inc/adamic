@@ -1,8 +1,9 @@
 #!/usr/bin/env bash
 # #rv75m9k: builds stage3's adapted tree at this commit, then scans its src/compiler for methods read as values (scan.cjs),
 # printing each road-A member's declaration as the adapted tree holds it and the stock checker's diagnostic count.
-# Sealed: source /opt/adamic-block/environment.sh and cloud/sealed-job.sh first.
+# Sealed: it sources the image's environment and cloud/sealed-job.sh itself, since their helpers are shell functions.
 set -uo pipefail
+source /opt/adamic-block/environment.sh && source cloud/sealed-job.sh || { echo "FAIL sealed environment"; exit 1; }
 here=$(cd "$(dirname "$0")" && pwd)
 sealed_typescript_source && echo "PASS typescript source" || { echo "FAIL typescript source"; exit 1; }
 sealed_npm stage3/api && echo "PASS stage3/api installed" || { echo "FAIL stage3/api"; exit 1; }
