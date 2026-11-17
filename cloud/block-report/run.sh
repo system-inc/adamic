@@ -8,8 +8,8 @@
 #
 # Everything the build fetches was laid on the image ahead of time by cloud/block-report/environment.sh, read-only, and
 # its environment.sh is sourced here: Go reads modules only from that cache and npm only from its cache, so a module the
-# image lacks fails closed with its name, never by reaching out. Then cloud/sealed-job.sh, the tree's own preamble for a
-# sealed job, is sourced, so each gap the sealed road has settled is settled here the same way (#3jge4gw: the reports
+# image lacks fails closed with its name, never by reaching out. Then cloud/sandboxed-job.sh, the tree's own preamble for a
+# sandboxed job, is sourced, so each gap the sandboxed road has settled is settled here the same way (#3jge4gw: the reports
 # before it failed on setup gaps, not on the block).
 #
 # The wrapper lays the asked commit as archives: no .git, and gitlinks one level deep, so cohere arrives and
@@ -25,7 +25,7 @@ environment=${BLOCK_REPORT_ENVIRONMENT:-/opt/adamic-block/environment.sh}
 # A commit from before the preamble would report its own setup gaps, so it reports nothing at all (#3jge4gw). Until the
 # preamble is on main, an ask may carry its copy in and name it (BLOCK_REPORT_PREAMBLE, a path inside the tree, as a probe
 # lays it), which Node allowed on #zwzer5f for image 1.0.10's first night: the steps are the preamble's either way.
-preamble=${BLOCK_REPORT_PREAMBLE:-cloud/sealed-job.sh}
+preamble=${BLOCK_REPORT_PREAMBLE:-cloud/sandboxed-job.sh}
 [ -f "$preamble" ] || { echo "block-report: this commit has no $preamble, so nothing ran and the report counts nothing"; exit 64; }
 # shellcheck disable=SC1090
 . "$environment" || { echo "block-report: $environment didn't source, so nothing ran"; exit 64; }
@@ -39,7 +39,7 @@ echo "block-report: $(go version 2>&1)"
 # The streams and every scratch file live outside the tree under test: tests that walk or count the tree see anything
 # inside it, leading dot or not (J-bp8ryag, Nov 12: ten packages failed only because the first run kept them in the
 # tree). The data-disk directory the runner names beside the tree ($LOOM_JOB_SCRATCH, Machines' #kq1sg4k v2, where
-# sealed-job.sh puts the build cache too) is taken first, since the unit's /tmp is a small private tmpfs that 1.0.9's
+# sandboxed-job.sh puts the build cache too) is taken first, since the unit's /tmp is a small private tmpfs that 1.0.9's
 # streams filled (J-4vcc0ar); /tmp only when the runner names none.
 out="${BLOCK_REPORT_OUT:-${LOOM_JOB_SCRATCH:+$LOOM_JOB_SCRATCH/block-report}}"
 out="${out:-/tmp/block-report}"
@@ -91,11 +91,11 @@ else
 fi
 
 # The image's TypeScript source is root's, and internal/buildcache.PinnedGit reads it with no configuration that could
-# name it safe, so the job reads a copy of its own (J-r6ctetr, Nov 12). The preamble's sealed_typescript_source makes
+# name it safe, so the job reads a copy of its own (J-r6ctetr, Nov 12). The preamble's sandboxed_typescript_source makes
 # it, and the products below read it (#3jge4gw).
-sealed_typescript_source || { echo "block-report: sealed_typescript_source failed, in its words above, so nothing ran"; exit 64; }
+sandboxed_typescript_source || { echo "block-report: sandboxed_typescript_source failed, in its words above, so nothing ran"; exit 64; }
 
-# node_modules for each npm project the image cached, installed offline from its cache by the preamble's sealed_npm, but
+# node_modules for each npm project the image cached, installed offline from its cache by the preamble's sandboxed_npm, but
 # only where the project's own .gitignore keeps node_modules out of the tree. Any other project's dependencies
 # environment.sh lays outside the tree, and an install in cloud/markdown-width left a node_modules that markdowninline's
 # corpus walk read as untracked files (#3jge4gw).
@@ -111,8 +111,8 @@ done
 if [ -n "$npmProjects" ]; then
 	# The projects are the image's own directory names, so they split as words here.
 	# shellcheck disable=SC2086
-	sealed_npm $npmProjects > "$out/npm.log" 2>&1 ||
-		{ echo "block-report: sealed_npm failed, so nothing ran: $(tail -n 5 "$out/npm.log" | tr '\n' ' ')"; exit 64; }
+	sandboxed_npm $npmProjects > "$out/npm.log" 2>&1 ||
+		{ echo "block-report: sandboxed_npm failed, so nothing ran: $(tail -n 5 "$out/npm.log" | tr '\n' ' ')"; exit 64; }
 	echo "block-report: node_modules installed offline in$npmProjects"
 fi
 
@@ -147,7 +147,7 @@ def say(line):
     print('block-report: products: ' + line, flush=True)
 
 def path_of(name):
-    # As sealed_products reads a package: ./<path> or the module's import path, held to plain path segments.
+    # As sandboxed_products reads a package: ./<path> or the module's import path, held to plain path segments.
     for prefix in ('./', 'github.com/system-inc/adamic/'):
         if name.startswith(prefix):
             name = name[len(prefix):]
@@ -160,7 +160,7 @@ def target(path):
     return '.' if path == '.' else './' + path + '/'
 
 # Every package go list ./... gives, or a rehearsal's own (BLOCK_REPORT_PACKAGES) with each one's
-# compiler-dependencies.json entries, as sealed_products brings them.
+# compiler-dependencies.json entries, as sandboxed_products brings them.
 if named:
     listed = {}
     if os.path.exists(dependencies_file):

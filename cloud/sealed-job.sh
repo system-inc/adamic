@@ -1,3 +1,7 @@
+# cloud/sealed-job.sh is the old name of cloud/sandboxed-job.sh, kept unchanged for the proofs and commits that still
+# source it. It goes in the change after ahra's probe step (modules/loom/LoomJobProbe.ts) and skill LoomJobs teach the
+# new name (#sbxadamic).
+#
 # cloud/sealed-job.sh: the preamble a sealed proof sources on a rented machine, right after the image's own
 # environment, so each gap the sealed road shows is one small landing here rather than a line every mind relearns
 # (Loom's suggestion, taken by Adamic, #t2fbrq3):

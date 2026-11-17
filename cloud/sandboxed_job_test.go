@@ -9,16 +9,16 @@ import (
 	"github.com/system-inc/adamic/internal/toolchain"
 )
 
-// sealed-job.sh keeps the kit's own files outside the tree it lays, so a walker that reads every file under $PWD never
+// sandboxed-job.sh keeps the kit's own files outside the tree it lays, so a walker that reads every file under $PWD never
 // meets them (internal/acheck read the cache's runtime.a as programs on CLI's J-0pmqbfg; Adamic's rule on #qee4r6g). The
 // build cache and the TypeScript copy go to LOOM_JOB_SCRATCH where the runner names one and to TMPDIR where it doesn't,
 // and a scratch inside the tree is refused before the command.
 //
 // Mutants: ADAMIC_BUILD_CACHE_DIR exported under $PWD again (both outside cases red on the cache); the TypeScript copy
 // under $PWD again (both red on the copy); the inside-the-tree refusal taken out (the inside case sources clean).
-func TestSealedJobKeepsTheKitOutsideTheTree(t *testing.T) {
+func TestSandboxedJobKeepsTheKitOutsideTheTree(t *testing.T) {
 	t.Parallel()
-	script, err := filepath.Abs("sealed-job.sh")
+	script, err := filepath.Abs("sandboxed-job.sh")
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -44,9 +44,9 @@ func TestSealedJobKeepsTheKitOutsideTheTree(t *testing.T) {
 				t.Fatal(err)
 			}
 			scratch := test.scratch(tree, outside)
-			sourced := `. "$SEALED_JOB_SCRIPT" || { echo "sourced=failed"; exit 0; }
+			sourced := `. "$SANDBOXED_JOB_SCRIPT" || { echo "sourced=failed"; exit 0; }
 echo "sourced=ok"
-sealed_typescript_source > /dev/null || exit 1
+sandboxed_typescript_source > /dev/null || exit 1
 printf 'cache=%s\ncopy=%s\n' "$ADAMIC_BUILD_CACHE_DIR" "$ADAMIC_TYPESCRIPT_SOURCE"
 `
 			command := toolchain.Command("bash", "-c", sourced)
@@ -65,7 +65,7 @@ printf 'cache=%s\ncopy=%s\n' "$ADAMIC_BUILD_CACHE_DIR" "$ADAMIC_TYPESCRIPT_SOURC
 					kept = append(kept, variable)
 				}
 			}
-			kept = append(kept, "SEALED_JOB_SCRIPT="+script, "TMPDIR="+filepath.Join(outside, "tmp"), "ADAMIC_TYPESCRIPT_SOURCE="+source)
+			kept = append(kept, "SANDBOXED_JOB_SCRIPT="+script, "TMPDIR="+filepath.Join(outside, "tmp"), "ADAMIC_TYPESCRIPT_SOURCE="+source)
 			if scratch != "" {
 				kept = append(kept, "LOOM_JOB_SCRATCH="+scratch)
 			}
@@ -113,15 +113,15 @@ printf 'cache=%s\ncopy=%s\n' "$ADAMIC_BUILD_CACHE_DIR" "$ADAMIC_TYPESCRIPT_SOURC
 	}
 }
 
-// sealed_products gives its go test no clock but the job's own ceiling: go's default 10 minutes killed internal/oracle's
+// sandboxed_products gives its go test no clock but the job's own ceiling: go's default 10 minutes killed internal/oracle's
 // products before they settled on Lunatic's 8 cores (Library's J-1xphvcc, routed by Runtime on #jobs), so a slow box
 // read as the head's red. The test sources the script in a temporary tree beside a stand-in go that writes down the
 // arguments it was given, and holds that the products' go test asked `-timeout 0`.
 //
-// Mutant: the `-timeout 0` taken out of sealed_products' go test (the stand-in's arguments name no timeout, red here).
-func TestSealedProductsGivesGoNoClockButTheJobs(t *testing.T) {
+// Mutant: the `-timeout 0` taken out of sandboxed_products' go test (the stand-in's arguments name no timeout, red here).
+func TestSandboxedProductsGivesGoNoClockButTheJobs(t *testing.T) {
 	t.Parallel()
-	script, err := filepath.Abs("sealed-job.sh")
+	script, err := filepath.Abs("sandboxed-job.sh")
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -141,9 +141,9 @@ func TestSealedProductsGivesGoNoClockButTheJobs(t *testing.T) {
 		t.Fatal(err)
 	}
 	// The TypeScript copy is the image's road, not this test's: it stands in as done.
-	sourced := `. "$SEALED_JOB_SCRIPT" || exit 1
-sealed_typescript_source() { :; }
-sealed_products ./internal/oracle
+	sourced := `. "$SANDBOXED_JOB_SCRIPT" || exit 1
+sandboxed_typescript_source() { :; }
+sandboxed_products ./internal/oracle
 `
 	command := toolchain.Command("bash", "-c", sourced)
 	if command.Err != nil {
@@ -167,9 +167,9 @@ sealed_products ./internal/oracle
 		}
 	}
 	command.Env = append(kept, "PATH="+bin+":"+path, "TMPDIR="+filepath.Join(directory, "tmp"), "GO_ARGUMENTS="+said,
-		"SEALED_JOB_SCRIPT="+script)
+		"SANDBOXED_JOB_SCRIPT="+script)
 	if output, err := command.CombinedOutput(); err != nil {
-		t.Fatalf("sealed_products: %v\n%s", err, output)
+		t.Fatalf("sandboxed_products: %v\n%s", err, output)
 	}
 	data, err := os.ReadFile(said)
 	if err != nil {
@@ -184,17 +184,17 @@ sealed_products ./internal/oracle
 			return
 		}
 	}
-	t.Fatalf("sealed_products' go test named no -timeout 0, so go's own 10 minutes would end a slow settle: %q", arguments)
+	t.Fatalf("sandboxed_products' go test named no -timeout 0, so go's own 10 minutes would end a slow settle: %q", arguments)
 }
 
-// sealed_git leaves a tree that is already a repository as it is and returns 0, so an `&&` chain goes on to its command:
-// the runner lays sealed trees with a .git since Nov 16, and the refusal it made then cost Emit's jobs a run each
+// sandboxed_git leaves a tree that is already a repository as it is and returns 0, so an `&&` chain goes on to its command:
+// the runner lays sandboxed trees with a .git since Nov 16, and the refusal it made then cost Emit's jobs a run each
 // (#6zvxhjq). A tree with no .git still becomes one commit holding the tree as laid.
 //
-// Mutant: the old refusal put back (`[ ! -e .git ] || sealedJobFail ... || return 1`), red on the repository case.
-func TestSealedGitLeavesARepositoryAsItIs(t *testing.T) {
+// Mutant: the old refusal put back (`[ ! -e .git ] || sandboxedJobFail ... || return 1`), red on the repository case.
+func TestSandboxedGitLeavesARepositoryAsItIs(t *testing.T) {
 	t.Parallel()
-	script, err := filepath.Abs("sealed-job.sh")
+	script, err := filepath.Abs("sandboxed-job.sh")
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -227,8 +227,8 @@ func TestSealedGitLeavesARepositoryAsItIs(t *testing.T) {
 				git("commit", "-q", "-m", "the runner's own commit")
 				head = git("rev-parse", "HEAD")
 			}
-			command := toolchain.Command("bash", "-c", `. "$SEALED_JOB_SCRIPT" || exit 1
-sealed_git && echo "sealed_git=ok"`)
+			command := toolchain.Command("bash", "-c", `. "$SANDBOXED_JOB_SCRIPT" || exit 1
+sandboxed_git && echo "sandboxed_git=ok"`)
 			if command.Err != nil {
 				t.Fatal(command.Err)
 			}
@@ -244,11 +244,11 @@ sealed_git && echo "sealed_git=ok"`)
 					kept = append(kept, variable)
 				}
 			}
-			command.Env = append(kept, "TMPDIR="+filepath.Join(directory, "tmp"), "SEALED_JOB_SCRIPT="+script)
+			command.Env = append(kept, "TMPDIR="+filepath.Join(directory, "tmp"), "SANDBOXED_JOB_SCRIPT="+script)
 			output, err := command.CombinedOutput()
 			said := string(output)
-			if err != nil || !strings.Contains(said, "sealed_git=ok") {
-				t.Fatalf("want sealed_git to return 0, got %v:\n%s", err, said)
+			if err != nil || !strings.Contains(said, "sandboxed_git=ok") {
+				t.Fatalf("want sandboxed_git to return 0, got %v:\n%s", err, said)
 			}
 			if repository {
 				if now := git("rev-parse", "HEAD"); now != head {
