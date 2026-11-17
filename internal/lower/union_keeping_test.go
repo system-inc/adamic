@@ -665,3 +665,226 @@ if (viewed.kind === 'read') console.log(viewed.read(make()));
 		})
 	}
 }
+
+// These Promise payload views differed from Node in the checked runner (#3h04df3).
+func TestUnionKeepingPromiseTypeArgumentsStop(t *testing.T) {
+	t.Parallel()
+	for _, extension := range []string{".a", ".ts"} {
+		for _, row := range []struct{ name, source, where string }{
+			{"t2", `import type { Weak } from 'adamic';
+interface Box { readonly label: string }
+type Strong = { readonly kind: 'v'; readonly v: Box } | { readonly kind: 'w'; readonly w: number };
+type Weakly = { readonly kind: 'v'; readonly v: Weak<Box> } | { readonly kind: 'w'; readonly w: number };
+function show(x: Weakly): string { return x.kind === 'v' ? x.v?.label ?? 'none' : 'w'; }
+async function produce(): Promise<Strong> { return { kind: 'v', v: { label: 'label' } }; }
+function hold(): Promise<Strong> | number { return produce(); }
+async function main(): Promise<void> {
+  const held: Promise<Strong> | number = hold();
+  const viewed: Promise<Weakly> | number = held;
+  if (typeof viewed !== 'number') {
+    const x = await viewed;
+    console.log(show(x));
+  }
+}
+await main();
+`, ":10:44"},
+			{"b01", `import type { Weak } from 'adamic';
+interface Box { readonly label: string }
+type Strong = { readonly kind: 'v'; readonly v: Box } | { readonly kind: 'w'; readonly w: number };
+type Weakly = { readonly kind: 'v'; readonly v: Weak<Box> } | { readonly kind: 'w'; readonly w: number };
+function show(x: Weakly): string { return x.kind === 'v' ? x.v?.label ?? 'none' : 'w'; }
+async function produce(): Promise<Strong> { return { kind: 'v', v: { label: 'label' } }; }
+async function main(): Promise<void> {
+  const held: Promise<Strong> = produce();
+  const viewed: Promise<Weakly> = held;
+  const x = await viewed;
+  console.log(show(x));
+}
+await main();
+`, ":9:35"},
+			{"b02", `import type { Weak } from 'adamic';
+interface Box { readonly label: string }
+type Strong = { readonly kind: 'v'; readonly v: Box } | { readonly kind: 'w'; readonly w: number };
+type Weakly = { readonly kind: 'v'; readonly v: Weak<Box> } | { readonly kind: 'w'; readonly w: number };
+function show(x: Weakly): string { return x.kind === 'v' ? x.v?.label ?? 'none' : 'w'; }
+type Later<T> = Promise<T>;
+async function produce(): Promise<Strong> { return { kind: 'v', v: { label: 'label' } }; }
+function hold(): Later<Strong> | number { return produce(); }
+async function main(): Promise<void> {
+  const held: Later<Strong> | number = hold();
+  const viewed: Later<Weakly> | number = held;
+  if (typeof viewed !== 'number') {
+    const x = await viewed;
+    console.log(show(x));
+  }
+}
+await main();
+`, ":11:42"},
+			{"b03", `import type { Weak } from 'adamic';
+interface Box { readonly label: string }
+type Strong = { readonly kind: 'v'; readonly v: Box } | { readonly kind: 'w'; readonly w: number };
+type Weakly = { readonly kind: 'v'; readonly v: Weak<Box> } | { readonly kind: 'w'; readonly w: number };
+function show(x: Weakly): string { return x.kind === 'v' ? x.v?.label ?? 'none' : 'w'; }
+async function produce(): Promise<Strong> { return { kind: 'v', v: { label: 'label' } }; }
+function hold(): { readonly p: Promise<Strong> } | number { return { p: produce() }; }
+async function main(): Promise<void> {
+  const held: { readonly p: Promise<Strong> } | number = hold();
+  const viewed: { readonly p: Promise<Weakly> } | number = held;
+  if (typeof viewed !== 'number') {
+    const x = await viewed.p;
+    console.log(show(x));
+  }
+}
+await main();
+`, ":10:60"},
+			{"b04", `import type { Weak } from 'adamic';
+interface Box { readonly label: string }
+type Strong = { readonly kind: 'v'; readonly v: Box } | { readonly kind: 'w'; readonly w: number };
+type Weakly = { readonly kind: 'v'; readonly v: Weak<Box> } | { readonly kind: 'w'; readonly w: number };
+function show(x: Weakly): string { return x.kind === 'v' ? x.v?.label ?? 'none' : 'w'; }
+async function produce(): Promise<Strong> { return { kind: 'v', v: { label: 'label' } }; }
+function hold(): (() => Promise<Strong>) | number { return produce; }
+async function main(): Promise<void> {
+  const held: (() => Promise<Strong>) | number = hold();
+  const viewed: (() => Promise<Weakly>) | number = held;
+  if (typeof viewed !== 'number') {
+    const x = await viewed();
+    console.log(show(x));
+  }
+}
+await main();
+`, ":10:52"},
+			{"b05", `import type { Weak } from 'adamic';
+interface Box { readonly label: string }
+type Strong = { readonly kind: 'v'; readonly v: Box } | { readonly kind: 'w'; readonly w: number };
+type Weakly = { readonly kind: 'v'; readonly v: Weak<Box> } | { readonly kind: 'w'; readonly w: number };
+function show(x: Weakly): string { return x.kind === 'v' ? x.v?.label ?? 'none' : 'w'; }
+async function produce(): Promise<Strong> { return { kind: 'v', v: { label: 'label' } }; }
+function hold(): Promise<Strong> | number { return produce(); }
+async function consume(viewed: Promise<Weakly> | number): Promise<void> {
+  if (typeof viewed !== 'number') {
+    const x = await viewed;
+    console.log(show(x));
+  }
+}
+const held: Promise<Strong> | number = hold();
+await consume(held);
+`, ":15:15"},
+			{"b07", `import type { Weak } from 'adamic';
+interface Box { readonly label: string }
+type Strong = { readonly kind: 'v'; readonly v: Box } | { readonly kind: 'w'; readonly w: number };
+type Weakly = { readonly kind: 'v'; readonly v: Weak<Box> } | { readonly kind: 'w'; readonly w: number };
+function show(x: Weakly): string { return x.kind === 'v' ? x.v?.label ?? 'none' : 'w'; }
+async function produce(): Promise<Strong> { return { kind: 'v', v: { label: 'label' } }; }
+function hold(): Promise<Strong> | string { return produce(); }
+async function main(): Promise<void> {
+  const held: Promise<Strong> | string = hold();
+  const viewed: Promise<Weakly> | string = held;
+  if (typeof viewed !== 'string') {
+    const x = await viewed;
+    console.log(show(x));
+  }
+}
+await main();
+`, ":10:44"},
+		} {
+			t.Run(row.name+extension, func(t *testing.T) {
+				_, err := lowerSourceAs(t, row.source, extension)
+				var ny *NotYet
+				want := "main" + extension + row.where
+				if !errors.As(err, &ny) || !strings.HasSuffix(ny.Where, want) {
+					t.Fatalf("%s: got %v, want NotYet at %s", row.name, err, want)
+				}
+			})
+		}
+	}
+}
+
+func TestUnionKeepingPromiseTypeArgumentsAgree(t *testing.T) {
+	t.Parallel()
+	for _, extension := range []string{".a", ".ts"} {
+		for _, row := range []struct{ name, source string }{
+			{"nullable", `interface Box { readonly label: string }
+async function produce(): Promise<Box> { return { label: 'label' }; }
+function hold(): Promise<Box> | number { return produce(); }
+async function main(): Promise<void> {
+  const held: Promise<Box> | number = hold();
+  const viewed: Promise<Box | undefined> | number = held;
+  if (typeof viewed !== 'number') {
+    const x = await viewed;
+    console.log(x?.label ?? 'none');
+  }
+}
+await main();
+`},
+			{"c01", `import type { Weak } from 'adamic';
+interface Box { readonly label: string }
+type Strong = { readonly kind: 'v'; readonly v: Box } | { readonly kind: 'w'; readonly w: number };
+type Weakly = { readonly kind: 'v'; readonly v: Weak<Box> } | { readonly kind: 'w'; readonly w: number };
+function show(x: Weakly): string { return x.kind === 'v' ? x.v?.label ?? 'none' : 'w'; }
+async function produce(): Promise<Strong> { return { kind: 'v', v: { label: 'label' } }; }
+async function main(): Promise<void> {
+  const held: Promise<Strong> = produce();
+  const viewed: Promise<Strong> | number = held;
+  if (typeof viewed !== 'number') {
+    const x = await viewed;
+    console.log(x.kind === 'v' ? x.v.label : 'w');
+  }
+}
+await main();
+`},
+		} {
+			t.Run(row.name+extension, func(t *testing.T) { lowersAndAgreesWithNodeAs(t, row.source, extension) })
+		}
+	}
+}
+
+// Different Promise and PromiseLike targets stay covered by this existing stop (#3h04df3).
+func TestUnionKeepingPromiseLikeMemberAnyStop(t *testing.T) {
+	t.Parallel()
+	for _, extension := range []string{".a", ".ts"} {
+		for _, row := range []struct{ name, source, where string }{
+			{"t1", `import type { Weak } from 'adamic';
+interface Box { readonly label: string }
+type Strong = { readonly kind: 'v'; readonly v: Box } | { readonly kind: 'w'; readonly w: number };
+type Weakly = { readonly kind: 'v'; readonly v: Weak<Box> } | { readonly kind: 'w'; readonly w: number };
+function show(x: Weakly): string { return x.kind === 'v' ? x.v?.label ?? 'none' : 'w'; }
+async function produce(): Promise<Strong> { return { kind: 'v', v: { label: 'label' } }; }
+function hold(): Promise<Strong> | number { return produce(); }
+async function main(): Promise<void> {
+  const held: Promise<Strong> | number = hold();
+  const viewed: PromiseLike<Weakly> | number = held;
+  if (typeof viewed !== 'number') {
+    const x = await viewed;
+    console.log(show(x));
+  }
+}
+await main();
+`, ":10:48"},
+			{"t7", `import type { Weak } from 'adamic';
+interface Box { readonly label: string }
+type Strong = { readonly kind: 'v'; readonly v: Box } | { readonly kind: 'w'; readonly w: number };
+type Weakly = { readonly kind: 'v'; readonly v: Weak<Box> } | { readonly kind: 'w'; readonly w: number };
+function show(x: Weakly): string { return x.kind === 'v' ? x.v?.label ?? 'none' : 'w'; }
+async function produce(): Promise<Strong> { return { kind: 'v', v: { label: 'label' } }; }
+function hold(): Promise<Strong> { return produce(); }
+async function main(): Promise<void> {
+  const held: Promise<Strong> = hold();
+  const viewed: PromiseLike<Weakly> = held;
+  const x = await viewed;
+  console.log(show(x));
+}
+await main();
+`, ":10:39"},
+		} {
+			t.Run(row.name+extension, func(t *testing.T) {
+				_, err := lowerSourceAs(t, row.source, extension)
+				var ny *NotYet
+				want := "main" + extension + row.where
+				if !errors.As(err, &ny) || !strings.HasSuffix(ny.Where, want) || !strings.Contains(ny.What, "a member typed any (then()) related to PromiseLike") {
+					t.Fatalf("%s: got %v, want the PromiseLike member-typed-any NotYet at %s", row.name, err, want)
+				}
+			})
+		}
+	}
+}

@@ -561,6 +561,14 @@ func (l *lowering) sameKeepingWalkMode(from, to *checker.Type, visited map[[2]*c
 				return false
 			}
 		}
+	case sameLibraryReferenceTarget(from, to):
+		// A library method holds no slot, but its type arguments describe what the value holds (#3h04df3).
+		fromArguments, toArguments := l.typeArguments(from), l.typeArguments(to)
+		for index := 0; index < len(fromArguments) && index < len(toArguments); index++ {
+			if !same(fromArguments[index], toArguments[index]) {
+				return false
+			}
+		}
 	default:
 		for _, viewed := range l.checker.GetPropertiesOfType(to) {
 			if viewed.Flags&ast.SymbolFlagsMethod != 0 {
@@ -572,6 +580,23 @@ func (l *lowering) sameKeepingWalkMode(from, to *checker.Type, visited map[[2]*c
 			if inside := l.checker.GetPropertyOfType(from, viewed.Name); inside != nil && !same(l.checker.GetTypeOfSymbol(inside), l.checker.GetTypeOfSymbol(viewed)) {
 				return false
 			}
+		}
+	}
+	return true
+}
+
+// sameLibraryReferenceTarget reports two references to one target declared only in library files.
+func sameLibraryReferenceTarget(from, to *checker.Type) bool {
+	if from.ObjectFlags()&checker.ObjectFlagsReference == 0 || to.ObjectFlags()&checker.ObjectFlagsReference == 0 || from.Target() == nil || from.Target() != to.Target() {
+		return false
+	}
+	symbol := from.Target().Symbol()
+	if symbol == nil || len(symbol.Declarations) == 0 {
+		return false
+	}
+	for _, declaration := range symbol.Declarations {
+		if !load.IsLibrary(ast.GetSourceFileOfNode(declaration)) {
+			return false
 		}
 	}
 	return true
@@ -651,6 +676,16 @@ func (l *lowering) sameKeepingStorage(from, to *checker.Type, visited map[[2]*ch
 		return fromKnown && toKnown && fromWeak == toWeak && l.sameKeepingWalkMode(inside, viewed, visited, true, nesting, true, false)
 	}
 	if from.ObjectFlags()&checker.ObjectFlagsReference != 0 && to.ObjectFlags()&checker.ObjectFlagsReference != 0 && (l.isArrayType(from) || checker.IsTupleType(from) || l.isLibraryType(from, "Map", "ReadonlyMap", "Set", "ReadonlySet")) {
+		fromArguments, toArguments := l.typeArguments(from), l.typeArguments(to)
+		for index := 0; index < len(fromArguments) && index < len(toArguments); index++ {
+			if !same(fromArguments[index], toArguments[index]) {
+				return false
+			}
+		}
+	}
+	// The same-target guard keeps non-twin pairs out when storage pairs every union member.
+	// Promise and PromiseLike have different targets; t1 and t7 keep their member-typed-any stop.
+	if sameLibraryReferenceTarget(from, to) && !(l.isArrayType(from) || checker.IsTupleType(from) || l.isLibraryType(from, "Map", "ReadonlyMap", "Set", "ReadonlySet")) {
 		fromArguments, toArguments := l.typeArguments(from), l.typeArguments(to)
 		for index := 0; index < len(fromArguments) && index < len(toArguments); index++ {
 			if !same(fromArguments[index], toArguments[index]) {

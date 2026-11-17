@@ -202,3 +202,34 @@ Expected: `TestUnionKeepingMethodViewPropertySourceStop/.a` and `/.ts` fail with
 lowers again, which natively retained a handle as a target in the read adapter on main
 1c1d6568. The reverse subtests keep passing, since their refusal comes from the method
 bivariance rule, not from this walk.
+
+## Same-target library type arguments in both walks (#3h04df3)
+
+Remove both new comparisons: the library-reference case in `sameKeepingWalkMode`
+and the separate library-reference check in `sameKeepingStorage`. Leave the
+existing array, tuple, Map and Set comparisons unchanged.
+
+```
+go test -count=1 -v -timeout 10m ./internal/lower/ -run '^TestUnionKeepingPromiseTypeArgumentsStop$'
+```
+
+One mutant removed both checks using a Go overlay, then the overlay was excluded
+from subsequent runs. The working source kept both checks. The command exits 1;
+all fourteen subtests go red with `got <nil>, want NotYet at main<ext><position>`:
+
+| Pin, in .a and .ts | Position |
+| --- | --- |
+| `TestUnionKeepingPromiseTypeArgumentsStop/t2<ext>` | `:10:44` |
+| `TestUnionKeepingPromiseTypeArgumentsStop/b01<ext>` | `:9:35` |
+| `TestUnionKeepingPromiseTypeArgumentsStop/b02<ext>` | `:11:42` |
+| `TestUnionKeepingPromiseTypeArgumentsStop/b03<ext>` | `:10:60` |
+| `TestUnionKeepingPromiseTypeArgumentsStop/b04<ext>` | `:10:52` |
+| `TestUnionKeepingPromiseTypeArgumentsStop/b05<ext>` | `:15:15` |
+| `TestUnionKeepingPromiseTypeArgumentsStop/b07<ext>` | `:10:44` |
+
+Removing the checks makes every shape lower again, including b01 without a union
+and b04 through a callable's result. t2 differs from Node: the checked runner and
+leak-checking mode both exit 1 in `adamic_retain`, while Node prints `label` and
+exits 0. The nullable-Promise and c01 controls keep lowering and agreeing with
+Node. The t1/t7 pins retain the different-target PromiseLike member-typed-any stop.
+Output: `/workspace/scratch/promise-type-arguments-1/expanded/mutant.log`.
