@@ -48,50 +48,57 @@ func (l *lowering) typeOf(node *ast.Node) (ir.Type, error) {
 	if l.checker.GetTypeAtLocation(node).Flags()&checker.TypeFlagsUndefined != 0 && (node.Kind == ast.KindVoidExpression || voidInitializer(node)) {
 		return ir.Object, nil
 	}
-	if valueType, isKnown := l.representation(l.checker.GetTypeAtLocation(node)); isKnown {
+	proven := l.checker.GetTypeAtLocation(node)
+	valueType, isKnown, reason := l.representationReason(proven)
+	if isKnown {
 		return valueType, nil
 	}
-	if l.checker.GetTypeAtLocation(node).Flags()&checker.TypeFlagsAny != 0 {
+	if proven.Flags()&checker.TypeFlagsAny != 0 {
 		return 0, l.refuseAnyValue(node)
 	}
-	return 0, l.notYet(node, "a value of type "+l.checker.TypeToString(l.checker.GetTypeAtLocation(node)))
+	return 0, l.notYet(node, "a value of type "+l.checker.TypeToString(proven)+", "+reason)
 }
 
 func (l *lowering) representation(proven *checker.Type) (ir.Type, bool) {
+	of, known, _ := l.representationReason(proven)
+	return of, known
+}
+
+func (l *lowering) representationReason(proven *checker.Type) (ir.Type, bool, string) {
 	proven = l.concrete(proven)
 	if _, _, known := l.nodeArrayLayoutOf(proven); known {
-		return ir.Array, true
+		return ir.Array, true, ""
 	}
 	if kind := l.typedArrayKind(proven); kind != 0 {
-		return kind, true
+		return kind, true, ""
 	}
 	if l.isLibraryType(proven, "Function") {
 		// Opaque callable values keep closure storage; the refusal pass forbids invocation.
-		return ir.Closure, true
+		return ir.Closure, true, ""
 	}
 	flags := proven.Flags()
 	if flags&(checker.TypeFlagsUnknown|checker.TypeFlagsNonPrimitive) != 0 {
-		return ir.Union, true
+		return ir.Union, true, ""
 	}
 	if flags&checker.TypeFlagsIntersection != 0 {
 		for _, part := range proven.Types() {
 			if part.Flags()&checker.TypeFlagsNonPrimitive != 0 {
-				return ir.Union, true
+				return ir.Union, true, ""
 			}
 		}
 	}
 	if l.nodeBufferType(proven, "Buffer") {
-		return ir.Array, true
+		return ir.Array, true, ""
 	}
 	if flags&checker.TypeFlagsObject != 0 && (l.enumerationRecordStorageType(proven) || l.enumerationReadonlyType(proven)) {
-		return ir.Object, true
+		return ir.Object, true, ""
 	}
 	if l.finitePartialRecordElement(proven) != nil {
-		return ir.Record, true
+		return ir.Record, true, ""
 	}
 	if flags&checker.TypeFlagsObject != 0 && enumObjectSymbol(proven) == nil && len(l.checker.GetIndexInfosOfType(proven)) > 0 && !l.isArrayType(proven) && !checker.IsTupleType(proven) && !l.isLibraryType(proven, "RegExpExecArray", "RegExpMatchArray", "RegExpIndicesArray") {
 		if l.recordElement(proven) != nil {
-			return ir.Record, true
+			return ir.Record, true, ""
 		}
 		regex := false
 		for _, info := range l.checker.GetIndexInfosOfType(proven) {
@@ -103,52 +110,55 @@ func (l *lowering) representation(proven *checker.Type) (ir.Type, bool) {
 			}
 		}
 		if !regex {
-			return 0, false
+			return 0, false, l.indexSignatureRepresentationReason(proven)
 		}
 	}
 	if flags&checker.TypeFlagsTypeParameter != 0 {
 		// Inside a generic class, a type parameter is what this instantiation made it.
 		substituted, isKnown := l.substitution[proven]
-		return substituted, isKnown
+		if !isKnown {
+			return substituted, false, "a type parameter this instantiation doesn't fix"
+		}
+		return substituted, true, ""
 	}
 	if flags&checker.TypeFlagsIntersection != 0 {
 		// Target & WeakBrand is what a Weak<Target> reads as where it's present: the target.
 		if target := l.weakTarget(proven); target != nil {
-			return l.representation(target)
+			return l.representationReason(target)
 		}
 		if primitive := l.phantomBase(proven); primitive != nil {
 			if l.phantomUndefined(proven) {
-				return ir.Object, true
+				return ir.Object, true, ""
 			}
-			return l.representation(primitive)
+			return l.representationReason(primitive)
 		}
 		return l.objectIntersection(proven)
 	}
 	switch {
 	case flags&(checker.TypeFlagsNull|checker.TypeFlagsUndefined|checker.TypeFlagsVoid) != 0:
-		return ir.Object, true
+		return ir.Object, true, ""
 	case flags&checker.TypeFlagsNumberLike != 0:
-		return ir.Number, true
+		return ir.Number, true, ""
 	case flags&checker.TypeFlagsStringLike != 0:
-		return ir.String, true
+		return ir.String, true, ""
 	case flags&checker.TypeFlagsBooleanLike != 0:
-		return ir.Boolean, true
+		return ir.Boolean, true, ""
 	case flags&checker.TypeFlagsObject != 0 && (l.isArrayType(proven) || l.isLibraryType(proven, "RegExpExecArray", "RegExpMatchArray", "RegExpIndicesArray")):
-		return ir.Array, true
+		return ir.Array, true, ""
 	case flags&checker.TypeFlagsObject != 0 && l.isLibraryType(proven, "Map", "ReadonlyMap", "Set", "ReadonlySet"):
 		// A Set is held as a Map whose values aren't used (set.go).
-		return ir.Map, true
+		return ir.Map, true, ""
 	case flags&checker.TypeFlagsObject != 0 && l.isLibraryType(proven, "Promise"):
-		return ir.Promise, true
+		return ir.Promise, true, ""
 	case flags&checker.TypeFlagsObject != 0 && !isClassInstance(proven) && (l.checker.IsTypeAssignableTo(l.checker.GetNumberType(), proven) || l.checker.IsTypeAssignableTo(l.checker.GetStringType(), proven) || l.checker.IsTypeAssignableTo(l.checker.GetBooleanType(), proven)):
 		// Structural types such as {} admit primitives. Their slots must preserve
 		// the runtime brand with the same boxes used for scalar/reference unions.
-		return ir.Union, true
+		return ir.Union, true, ""
 	case flags&checker.TypeFlagsObject != 0 && len(l.checker.GetSignaturesOfType(proven, checker.SignatureKindCall)) == 0:
-		return ir.Object, true
+		return ir.Object, true, ""
 	case flags&checker.TypeFlagsObject != 0:
 		// An object with call signatures is a function, held as a closure.
-		return ir.Closure, true
+		return ir.Closure, true, ""
 	case flags&checker.TypeFlagsUnion != 0:
 		if l.includesNull(proven) && !dynamicObjectType(proven) {
 			// Preserve the area's nullable reference and RegExp protocols. Only
@@ -158,15 +168,15 @@ func (l *lowering) representation(proven *checker.Type) (ir.Type, bool) {
 				if member.Flags()&(checker.TypeFlagsNull|checker.TypeFlagsUndefined) != 0 {
 					continue
 				}
-				of, known := l.representation(member)
+				of, known, reason := l.representationReason(member)
 				if !known {
-					return 0, false
+					return 0, false, "a union whose member " + l.checker.TypeToString(member) + " has no representation: " + reason
 				}
 				// A dictionary is boxed too: a bare record pointer has no null of its own.
 				boxed = boxed || !of.IsReference() || of == ir.String || of == ir.Union || of == ir.Record
 			}
 			if boxed {
-				return ir.Union, true
+				return ir.Union, true, ""
 			}
 		}
 		var shared ir.Type
@@ -182,9 +192,9 @@ func (l *lowering) representation(proven *checker.Type) (ir.Type, bool) {
 				weak = true
 				continue
 			}
-			memberType, isKnown := l.representation(member)
+			memberType, isKnown, reason := l.representationReason(member)
 			if !isKnown {
-				return 0, false
+				return 0, false, "a union whose member " + l.checker.TypeToString(member) + " has no representation: " + reason
 			}
 			if shared != 0 && memberType != shared {
 				mixed = true
@@ -192,22 +202,65 @@ func (l *lowering) representation(proven *checker.Type) (ir.Type, bool) {
 			shared = memberType
 		}
 		if weak {
-			return ir.Weak, shared == 0
+			if shared != 0 {
+				return ir.Weak, false, "a union of a weak reference and other members"
+			}
+			return ir.Weak, true, ""
 		}
 		if mixed {
 			// Members held differently (string | number) are one Union, which holds undefined too.
-			return ir.Union, true
+			return ir.Union, true, ""
 		}
 		if shared != 0 && !shared.IsReference() && l.includesUndefined(proven) {
 			// number | undefined and boolean | undefined are each a present-and-value pair.
 			if maybe := ir.Maybe(shared); maybe.IsMaybe() {
-				return maybe, true
+				return maybe, true, ""
 			}
-			return 0, false
+			return 0, false, l.scalarUndefinedRepresentationReason(proven)
 		}
-		return shared, shared != 0
+		if shared == 0 {
+			return shared, false, "a union with no member that holds a value"
+		}
+		return shared, true, ""
 	}
-	return 0, false
+	switch {
+	case flags&checker.TypeFlagsNever != 0:
+		return 0, false, "never (no value has it)"
+	case flags&checker.TypeFlagsESSymbolLike != 0:
+		return 0, false, "a symbol"
+	case flags&checker.TypeFlagsBigIntLike != 0:
+		return 0, false, "a bigint"
+	case flags&checker.TypeFlagsIndexedAccess != 0:
+		return 0, false, "an unresolved indexed access"
+	case flags&checker.TypeFlagsConditional != 0:
+		return 0, false, "an unresolved conditional type"
+	case flags&checker.TypeFlagsIndex != 0:
+		return 0, false, "an unresolved keyof"
+	default:
+		return 0, false, "a type no storage is defined for"
+	}
+}
+
+func (l *lowering) indexSignatureRepresentationReason(proven *checker.Type) string {
+	if base := l.nodeArrayBase(proven, map[*checker.Type]bool{}); base != nil && proven.Symbol() != nil {
+		declared := proven.Symbol().Members
+		for _, property := range l.checker.GetPropertiesOfType(proven) {
+			if declared[property.Name] != nil && l.checker.GetPropertyOfType(base, property.Name) == nil {
+				return "an array type with its own member " + property.Name + ", held as neither an array nor an object"
+			}
+		}
+	}
+	return "a type with an index signature that isn't a string record"
+}
+
+func (l *lowering) scalarUndefinedRepresentationReason(proven *checker.Type) string {
+	var values []string
+	for _, member := range proven.Types() {
+		if member.Flags()&(checker.TypeFlagsNull|checker.TypeFlagsUndefined) == 0 && !l.phantomUndefined(member) {
+			values = append(values, l.checker.TypeToString(member))
+		}
+	}
+	return strings.Join(values, " | ") + " | undefined, which has no present-and-value pair"
 }
 
 // isLibraryType reports whether a type is one of the library's, by name: Map, not a program's own

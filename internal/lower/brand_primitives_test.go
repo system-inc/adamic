@@ -39,7 +39,7 @@ func TestBrandPrimitivesNotYet(t *testing.T) {
 			t.Parallel()
 			_, err := lowerSourceAs(t, probe.source, ".ts")
 			var gap *NotYet
-			want := "main.ts:1:7: stage 0 can't lower a value of type " + probe.what + " yet"
+			want := "main.ts:1:7: stage 0 can't lower a value of type " + probe.what + ", an intersection whose member " + probe.name + " isn't a plain object shape (a primitive) yet"
 			if !errors.As(err, &gap) || !strings.HasSuffix(err.Error(), want) {
 				t.Fatalf("got %v, want NotYet ending %q", err, want)
 			}
