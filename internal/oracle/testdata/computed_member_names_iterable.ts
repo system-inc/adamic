@@ -28,6 +28,6 @@ function read(holder: Holder): string {
 
 console.log(show({ a: 1 }));
 console.log(show(3));
-console.log(read({ value: { a: "two" } }));
-console.log(read({ value: null }));
+console.log(read({ value: { a: 2 } }));
+console.log(read({ value: 3 }));
 console.log(String(new Counter() !== undefined));
