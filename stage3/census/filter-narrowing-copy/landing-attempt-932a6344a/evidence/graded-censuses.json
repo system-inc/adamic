@@ -1,0 +1,329 @@
+[
+  {
+    "file": "src/compiler/commandLineParser.ts",
+    "before": 510,
+    "after": 508,
+    "unchanged": 500,
+    "gone": [
+      {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "/workspace/scratch/ev14ch9-landing-proof/before/src/compiler/commandLineParser.ts:2493:1",
+        "phase": "lowering",
+        "kind": "Refused",
+        "where": "/workspace/scratch/ev14ch9-landing-proof/before/src/compiler/core.ts:261:1",
+        "reason": "overload 1 of filter result U[] cannot be served by implementation result readonly T[] | undefined",
+        "text": "/workspace/scratch/ev14ch9-landing-proof/before/src/compiler/core.ts:261:1: Adamic 0.1 refuses overload 1 of filter result U[] cannot be served by implementation result readonly T[] | undefined; make the implementation result covariant with every overload result"
+      },
+      {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "/workspace/scratch/ev14ch9-landing-proof/before/src/compiler/commandLineParser.ts:2493:1",
+        "phase": "lowering",
+        "kind": "Boundary",
+        "where": "/workspace/scratch/ev14ch9-landing-proof/before/src/compiler/commandLineParser.ts:2550:9",
+        "reason": "failed statement; state rolled back; continued at next statement or declaration",
+        "text": "/workspace/scratch/ev14ch9-landing-proof/before/src/compiler/core.ts:261:1: Adamic 0.1 refuses overload 1 of filter result U[] cannot be served by implementation result readonly T[] | undefined; make the implementation result covariant with every overload result",
+        "start": 100629,
+        "end": 100792
+      },
+      {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "/workspace/scratch/ev14ch9-landing-proof/before/src/compiler/commandLineParser.ts:2540:5",
+        "phase": "lowering",
+        "kind": "Refused",
+        "where": "/workspace/scratch/ev14ch9-landing-proof/before/src/compiler/core.ts:261:1",
+        "reason": "overload 1 of filter result U[] cannot be served by implementation result readonly T[] | undefined",
+        "text": "/workspace/scratch/ev14ch9-landing-proof/before/src/compiler/core.ts:261:1: Adamic 0.1 refuses overload 1 of filter result U[] cannot be served by implementation result readonly T[] | undefined; make the implementation result covariant with every overload result"
+      },
+      {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "/workspace/scratch/ev14ch9-landing-proof/before/src/compiler/commandLineParser.ts:2540:5",
+        "phase": "lowering",
+        "kind": "Boundary",
+        "where": "/workspace/scratch/ev14ch9-landing-proof/before/src/compiler/commandLineParser.ts:2550:9",
+        "reason": "failed statement; state rolled back; continued at next statement or declaration",
+        "text": "/workspace/scratch/ev14ch9-landing-proof/before/src/compiler/core.ts:261:1: Adamic 0.1 refuses overload 1 of filter result U[] cannot be served by implementation result readonly T[] | undefined; make the implementation result covariant with every overload result",
+        "start": 100629,
+        "end": 100792
+      },
+      {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "/workspace/scratch/ev14ch9-landing-proof/before/src/compiler/commandLineParser.ts:2660:1",
+        "phase": "lowering",
+        "kind": "Refused",
+        "where": "/workspace/scratch/ev14ch9-landing-proof/before/src/compiler/core.ts:261:1",
+        "reason": "overload 1 of filter result U[] cannot be served by implementation result readonly T[] | undefined",
+        "text": "/workspace/scratch/ev14ch9-landing-proof/before/src/compiler/core.ts:261:1: Adamic 0.1 refuses overload 1 of filter result U[] cannot be served by implementation result readonly T[] | undefined; make the implementation result covariant with every overload result"
+      },
+      {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "/workspace/scratch/ev14ch9-landing-proof/before/src/compiler/commandLineParser.ts:3031:1",
+        "phase": "lowering",
+        "kind": "Refused",
+        "where": "/workspace/scratch/ev14ch9-landing-proof/before/src/compiler/core.ts:261:1",
+        "reason": "overload 1 of filter result U[] cannot be served by implementation result readonly T[] | undefined",
+        "text": "/workspace/scratch/ev14ch9-landing-proof/before/src/compiler/core.ts:261:1: Adamic 0.1 refuses overload 1 of filter result U[] cannot be served by implementation result readonly T[] | undefined; make the implementation result covariant with every overload result"
+      },
+      {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "/workspace/scratch/ev14ch9-landing-proof/before/src/compiler/commandLineParser.ts:3031:1",
+        "phase": "lowering",
+        "kind": "Boundary",
+        "where": "/workspace/scratch/ev14ch9-landing-proof/before/src/compiler/commandLineParser.ts:3157:17",
+        "reason": "failed statement; state rolled back; continued at next statement or declaration",
+        "text": "/workspace/scratch/ev14ch9-landing-proof/before/src/compiler/core.ts:261:1: Adamic 0.1 refuses overload 1 of filter result U[] cannot be served by implementation result readonly T[] | undefined; make the implementation result covariant with every overload result",
+        "start": 129927,
+        "end": 130018
+      },
+      {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "/workspace/scratch/ev14ch9-landing-proof/before/src/compiler/commandLineParser.ts:3042:1",
+        "phase": "lowering",
+        "kind": "Refused",
+        "where": "/workspace/scratch/ev14ch9-landing-proof/before/src/compiler/core.ts:261:1",
+        "reason": "overload 1 of filter result U[] cannot be served by implementation result readonly T[] | undefined",
+        "text": "/workspace/scratch/ev14ch9-landing-proof/before/src/compiler/core.ts:261:1: Adamic 0.1 refuses overload 1 of filter result U[] cannot be served by implementation result readonly T[] | undefined; make the implementation result covariant with every overload result"
+      },
+      {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "/workspace/scratch/ev14ch9-landing-proof/before/src/compiler/commandLineParser.ts:3042:1",
+        "phase": "lowering",
+        "kind": "Boundary",
+        "where": "/workspace/scratch/ev14ch9-landing-proof/before/src/compiler/commandLineParser.ts:3157:17",
+        "reason": "failed statement; state rolled back; continued at next statement or declaration",
+        "text": "/workspace/scratch/ev14ch9-landing-proof/before/src/compiler/core.ts:261:1: Adamic 0.1 refuses overload 1 of filter result U[] cannot be served by implementation result readonly T[] | undefined; make the implementation result covariant with every overload result",
+        "start": 129927,
+        "end": 130018
+      },
+      {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "/workspace/scratch/ev14ch9-landing-proof/before/src/compiler/commandLineParser.ts:4077:1",
+        "phase": "lowering",
+        "kind": "Refused",
+        "where": "/workspace/scratch/ev14ch9-landing-proof/before/src/compiler/core.ts:261:1",
+        "reason": "overload 1 of filter result U[] cannot be served by implementation result readonly T[] | undefined",
+        "text": "/workspace/scratch/ev14ch9-landing-proof/before/src/compiler/core.ts:261:1: Adamic 0.1 refuses overload 1 of filter result U[] cannot be served by implementation result readonly T[] | undefined; make the implementation result covariant with every overload result"
+      }
+    ],
+    "changed": [],
+    "reached_in_already_blocked_unit": [
+      {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "/workspace/scratch/ev14ch9-landing-proof/after/src/compiler/commandLineParser.ts:2494:1",
+        "phase": "lowering",
+        "kind": "NotYet",
+        "where": "/workspace/scratch/ev14ch9-landing-proof/after/src/compiler/core.ts:302:13",
+        "reason": "checked predicate overload target null",
+        "text": "/workspace/scratch/ev14ch9-landing-proof/after/src/compiler/core.ts:302:13: stage 0 can't lower checked predicate overload target null yet"
+      },
+      {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "/workspace/scratch/ev14ch9-landing-proof/after/src/compiler/commandLineParser.ts:2494:1",
+        "phase": "lowering",
+        "kind": "Boundary",
+        "where": "/workspace/scratch/ev14ch9-landing-proof/after/src/compiler/core.ts:302:9",
+        "reason": "failed statement; state rolled back; continued at next statement or declaration",
+        "text": "/workspace/scratch/ev14ch9-landing-proof/after/src/compiler/core.ts:302:13: stage 0 can't lower checked predicate overload target null yet",
+        "start": 10273,
+        "end": 10342
+      },
+      {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "/workspace/scratch/ev14ch9-landing-proof/after/src/compiler/commandLineParser.ts:2541:5",
+        "phase": "lowering",
+        "kind": "NotYet",
+        "where": "/workspace/scratch/ev14ch9-landing-proof/after/src/compiler/core.ts:302:13",
+        "reason": "checked predicate overload target null",
+        "text": "/workspace/scratch/ev14ch9-landing-proof/after/src/compiler/core.ts:302:13: stage 0 can't lower checked predicate overload target null yet"
+      },
+      {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "/workspace/scratch/ev14ch9-landing-proof/after/src/compiler/commandLineParser.ts:2541:5",
+        "phase": "lowering",
+        "kind": "Boundary",
+        "where": "/workspace/scratch/ev14ch9-landing-proof/after/src/compiler/core.ts:302:9",
+        "reason": "failed statement; state rolled back; continued at next statement or declaration",
+        "text": "/workspace/scratch/ev14ch9-landing-proof/after/src/compiler/core.ts:302:13: stage 0 can't lower checked predicate overload target null yet",
+        "start": 10273,
+        "end": 10342
+      },
+      {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "/workspace/scratch/ev14ch9-landing-proof/after/src/compiler/commandLineParser.ts:2661:1",
+        "phase": "lowering",
+        "kind": "Refused",
+        "where": "/workspace/scratch/ev14ch9-landing-proof/after/src/compiler/core.ts:263:1",
+        "reason": "overload 1 of filter result T[] cannot be served by implementation result readonly T[] | undefined",
+        "text": "/workspace/scratch/ev14ch9-landing-proof/after/src/compiler/core.ts:263:1: Adamic 0.1 refuses overload 1 of filter result T[] cannot be served by implementation result readonly T[] | undefined; make the implementation result covariant with every overload result"
+      },
+      {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "/workspace/scratch/ev14ch9-landing-proof/after/src/compiler/commandLineParser.ts:3032:1",
+        "phase": "lowering",
+        "kind": "Refused",
+        "where": "/workspace/scratch/ev14ch9-landing-proof/after/src/compiler/core.ts:263:1",
+        "reason": "overload 1 of filter result T[] cannot be served by implementation result readonly T[] | undefined",
+        "text": "/workspace/scratch/ev14ch9-landing-proof/after/src/compiler/core.ts:263:1: Adamic 0.1 refuses overload 1 of filter result T[] cannot be served by implementation result readonly T[] | undefined; make the implementation result covariant with every overload result"
+      },
+      {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "/workspace/scratch/ev14ch9-landing-proof/after/src/compiler/commandLineParser.ts:3043:1",
+        "phase": "lowering",
+        "kind": "Refused",
+        "where": "/workspace/scratch/ev14ch9-landing-proof/after/src/compiler/core.ts:263:1",
+        "reason": "overload 1 of filter result T[] cannot be served by implementation result readonly T[] | undefined",
+        "text": "/workspace/scratch/ev14ch9-landing-proof/after/src/compiler/core.ts:263:1: Adamic 0.1 refuses overload 1 of filter result T[] cannot be served by implementation result readonly T[] | undefined; make the implementation result covariant with every overload result"
+      },
+      {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "/workspace/scratch/ev14ch9-landing-proof/after/src/compiler/commandLineParser.ts:4078:1",
+        "phase": "lowering",
+        "kind": "Refused",
+        "where": "/workspace/scratch/ev14ch9-landing-proof/after/src/compiler/core.ts:263:1",
+        "reason": "overload 1 of filter result T[] cannot be served by implementation result readonly T[] | undefined",
+        "text": "/workspace/scratch/ev14ch9-landing-proof/after/src/compiler/core.ts:263:1: Adamic 0.1 refuses overload 1 of filter result T[] cannot be served by implementation result readonly T[] | undefined; make the implementation result covariant with every overload result"
+      }
+    ],
+    "new_in_previously_clean_units": [],
+    "comparison_key": [
+      "unit",
+      "phase",
+      "kind",
+      "where",
+      "reason"
+    ],
+    "classification_note": "Reaching a previously blocked unit is not counted as a new finding. Reached stops in the new helper still fail the separate requirement that its body lowers without a stop. Raw sources and spans are retained."
+  },
+  {
+    "file": "src/compiler/core.ts",
+    "before": 14,
+    "after": 14,
+    "unchanged": 14,
+    "gone": [],
+    "changed": [],
+    "reached_in_already_blocked_unit": [],
+    "new_in_previously_clean_units": [],
+    "comparison_key": [
+      "unit",
+      "phase",
+      "kind",
+      "where",
+      "reason"
+    ],
+    "classification_note": "Reaching a previously blocked unit is not counted as a new finding. Reached stops in the new helper still fail the separate requirement that its body lowers without a stop. Raw sources and spans are retained."
+  },
+  {
+    "file": "src/compiler/factory/utilities.ts",
+    "before": 240,
+    "after": 239,
+    "unchanged": 237,
+    "gone": [
+      {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "/workspace/scratch/ev14ch9-landing-proof/before/src/compiler/factory/utilities.ts:760:1",
+        "phase": "refusal_scan",
+        "kind": "Refused",
+        "where": "/workspace/scratch/ev14ch9-landing-proof/before/src/compiler/factory/utilities.ts:761:47",
+        "reason": "an unproven predicate argument for parameter f (argument \"helper => !helper.scoped\")",
+        "text": "/workspace/scratch/ev14ch9-landing-proof/before/src/compiler/factory/utilities.ts:761:47: Adamic 0.1 refuses an unproven predicate argument for parameter f (argument \"helper => !helper.scoped\"); pass a named function or arrow whose body proves both predicate branches; return a boolean and narrow at the caller (adamic/no-type-predicate)"
+      },
+      {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "/workspace/scratch/ev14ch9-landing-proof/before/src/compiler/factory/utilities.ts:760:1",
+        "phase": "lowering",
+        "kind": "Refused",
+        "where": "/workspace/scratch/ev14ch9-landing-proof/before/src/compiler/core.ts:261:1",
+        "reason": "overload 1 of filter result U[] cannot be served by implementation result readonly T[] | undefined",
+        "text": "/workspace/scratch/ev14ch9-landing-proof/before/src/compiler/core.ts:261:1: Adamic 0.1 refuses overload 1 of filter result U[] cannot be served by implementation result readonly T[] | undefined; make the implementation result covariant with every overload result"
+      },
+      {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "/workspace/scratch/ev14ch9-landing-proof/before/src/compiler/factory/utilities.ts:760:1",
+        "phase": "lowering",
+        "kind": "Boundary",
+        "where": "/workspace/scratch/ev14ch9-landing-proof/before/src/compiler/factory/utilities.ts:761:5",
+        "reason": "failed statement; state rolled back; continued at next statement or declaration",
+        "text": "/workspace/scratch/ev14ch9-landing-proof/before/src/compiler/core.ts:261:1: Adamic 0.1 refuses overload 1 of filter result U[] cannot be served by implementation result readonly T[] | undefined; make the implementation result covariant with every overload result",
+        "start": 30486,
+        "end": 30560
+      }
+    ],
+    "changed": [],
+    "reached_in_already_blocked_unit": [
+      {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "/workspace/scratch/ev14ch9-landing-proof/after/src/compiler/factory/utilities.ts:761:1",
+        "phase": "lowering",
+        "kind": "NotYet",
+        "where": "/workspace/scratch/ev14ch9-landing-proof/after/src/compiler/core.ts:313:13",
+        "reason": "checked predicate overload target UnscopedEmitHelper",
+        "text": "/workspace/scratch/ev14ch9-landing-proof/after/src/compiler/core.ts:313:13: stage 0 can't lower checked predicate overload target UnscopedEmitHelper yet"
+      },
+      {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "/workspace/scratch/ev14ch9-landing-proof/after/src/compiler/factory/utilities.ts:761:1",
+        "phase": "lowering",
+        "kind": "Boundary",
+        "where": "/workspace/scratch/ev14ch9-landing-proof/after/src/compiler/core.ts:313:9",
+        "reason": "failed statement; state rolled back; continued at next statement or declaration",
+        "text": "/workspace/scratch/ev14ch9-landing-proof/after/src/compiler/core.ts:313:13: stage 0 can't lower checked predicate overload target UnscopedEmitHelper yet",
+        "start": 10630,
+        "end": 10699
+      }
+    ],
+    "new_in_previously_clean_units": [],
+    "comparison_key": [
+      "unit",
+      "phase",
+      "kind",
+      "where",
+      "reason"
+    ],
+    "classification_note": "Reaching a previously blocked unit is not counted as a new finding. Reached stops in the new helper still fail the separate requirement that its body lowers without a stop. Raw sources and spans are retained."
+  }
+]

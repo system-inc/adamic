@@ -1,0 +1,43 @@
+{
+  "requested_at": 1794912399.8638256,
+  "requests": [
+    {
+      "pid": 14850,
+      "arguments": [
+        "python3",
+        "/workspace/scratch/ev14ch9-landing-proof/run-latent.py"
+      ],
+      "signal": "SIGTERM",
+      "reason": "Stopped after proof 1 reproducibly failed; incomplete measurements are not graded as passes."
+    },
+    {
+      "pid": 15066,
+      "arguments": [
+        "/workspace/scratch/ev14ch9-landing-proof/latent",
+        "/workspace/scratch/ev14ch9-landing-proof/before/src/compiler",
+        "/workspace/scratch/ev14ch9-landing-proof/census/before-src_compiler_transformers_ts.ts.jsonl"
+      ],
+      "signal": "SIGTERM",
+      "reason": "Stopped after proof 1 reproducibly failed; incomplete measurements are not graded as passes."
+    },
+    {
+      "pid": 15074,
+      "arguments": [
+        "/workspace/scratch/ev14ch9-landing-proof/latent",
+        "/workspace/scratch/ev14ch9-landing-proof/after/src/compiler",
+        "/workspace/scratch/ev14ch9-landing-proof/census/after-src_compiler_transformers_ts.ts.jsonl"
+      ],
+      "signal": "SIGTERM",
+      "reason": "Stopped after proof 1 reproducibly failed; incomplete measurements are not graded as passes."
+    },
+    {
+      "pid": 15089,
+      "arguments": [
+        "/workspace/scratch/ev14ch9-landing-proof/scan",
+        "/workspace/scratch/ev14ch9-landing-proof/after/src/compiler/core.ts"
+      ],
+      "signal": "SIGTERM",
+      "reason": "Stopped after proof 1 reproducibly failed; incomplete measurements are not graded as passes."
+    }
+  ]
+}

@@ -1,0 +1,27 @@
+{
+  "base": "932a6344af63dc7c8728fffac05584c176d0475f",
+  "status": "read, not run",
+  "scope": "Inspected local continuations and named helpers; not a whole-program alias proof.",
+  "sites": [
+    {
+      "site": "checker.ts:9417",
+      "argument": "Temporary map result from declaration names; no retained external array handle.",
+      "continuation": "getNamesOfDeclaration returns it to its sole flatMap caller. addRange(undefined, from) clones with slice; subsequent additions push into the separate accumulator. map then creates export specifiers. No input/result array write or identity comparison in the inspected continuation."
+    },
+    {
+      "site": "checker.ts:9419",
+      "argument": "Temporary one-element array literal of a declaration name.",
+      "continuation": "Same flatMap/addRange/map continuation as :9417; no original argument array is retained or compared."
+    },
+    {
+      "site": "transformers/ts.ts:1088",
+      "argument": "skipWhile may provide the original modifiers array or a sliced array.",
+      "continuation": "addRange copies elements into the already separate modifiersArray. The factory creates its NodeArray from that new array and setTextRange writes that new result; original modifiers supplies the range. No comparison or write through either filter handle found in this path."
+    },
+    {
+      "site": "services/callHierarchy.ts:482",
+      "argument": "Temporary reference-finding result array.",
+      "continuation": "calls is tested for presence then read by group/arrayToMultiMap, which creates separate bucket arrays; the result selector reads entries and maps ranges to new spans. No identity comparison or write to the filter input/result array found in this path."
+    }
+  ]
+}

@@ -253,3 +253,9 @@ Whole-lane oracle counts: `{"failing": 4, "passing": 106363, "pending": 0}`; pha
 **Identity remains a premise.** Direct comparisons with the argument: 0. The reused static lexical/local-reference inventory does not see arbitrary later comparisons through a stored slot and is not a whole-program identity proof. Freezing preserves identity, so no observation here proves that changing identity by copying is safe. Likewise zero observed writes is limited to the workloads and paths exercised.
 
 [Measurement tools and raw evidence](../filter-readonly-freeze/) contain the site inventory, type-preservation check, static comparison count, per-process counters, exception stacks, source hashes, logs and exact exit codes. Raw bootstrap, preliminary self, canonical self, control and lane observations are kept separate. No landing adaptation, ledger line or internal/ change.
+
+## Landing attempt on current main 932a6344a
+
+The later ruling authorizes the 1/5 copy despite the remaining declaration refusals. A fresh attempt on `932a6344af63dc7c8728fffac05584c176d0475f` stops at **proof 1**, for a different reason: the new helper's `f(value)` call reaches `checked predicate overload target null` for the actual JSON-conversion caller. Checker-clean concrete probes reproduce it in both shapes; no-null controls pass. This is not a demonstrated certificate A refusal.
+
+The isolated declaration control moves :261 -> :263 (original overload 2), but no landing adaptation or push was made. [All eight proof lines, reached-stop grading, source scope and raw evidence](landing-attempt-932a6344a/REPORT.md) are retained.

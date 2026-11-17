@@ -1,0 +1,53 @@
+{
+  "base": "932a6344af63dc7c8728fffac05584c176d0475f",
+  "stop": "predicate membership for null, not a demonstrated certificate A refusal",
+  "checks": [
+    {
+      "proof": 1,
+      "result": "FAIL",
+      "detail": "New helper body stops at core.ts:302:13, f(value): checked predicate overload target null. Actual caller and checker-clean reduced probes reproduce it. Remaining caller-file censuses stopped after this failure."
+    },
+    {
+      "proof": 2,
+      "result": "FAIL",
+      "detail": "Whole-import-closure comparison incomplete after the stop. PASS limited isolated-owner control: filter declaration 261:1 moves to 263:1, original overload 2 now ordinal 1. Whole closure before first declaration stop is utilitiesPublic.ts:830:1, getParseTreeNode, not filter."
+    },
+    {
+      "proof": 3,
+      "result": "FAIL",
+      "detail": "Not run for a landing adaptation after proof 1 failed. Unchanged baseline apply exits 0; no TestProduct_Stage3AdaptedTree run."
+    },
+    {
+      "proof": 4,
+      "result": "FAIL",
+      "detail": "Not run: new unfrozen copying lane blocked by proof 1."
+    },
+    {
+      "proof": 5,
+      "result": "FAIL",
+      "detail": "Not run: built-compiler before/after Node witnesses blocked by proof 1. Reduced lowering probes are not Node witnesses."
+    },
+    {
+      "proof": 6,
+      "result": "FAIL",
+      "detail": "Not run: alias-restoring mutant blocked by proof 1."
+    },
+    {
+      "proof": 7,
+      "result": "FAIL",
+      "detail": "Not run: public declaration byte comparison blocked by proof 1."
+    },
+    {
+      "proof": 8,
+      "result": "PASS",
+      "detail": "Four sites read by hand on the pinned tip and scratch candidate, including flatMap/addRange and group continuations. No array write through either handle or identity use found in those inspected paths. Read, not run."
+    }
+  ],
+  "landing_pushed": false,
+  "adapter_created": false,
+  "ledger_changed": false,
+  "internal_changed": false,
+  "cancelled_census_driver_exit": 143,
+  "cancelled_full_scan_child_exit": -15,
+  "cancelled_scan_wrapper_exit": 1
+}
