@@ -183,23 +183,14 @@ func (l *lowering) overloadArrayShapeOf(implementation *ast.Node) (overloadArray
 	}
 	references := []reference{}
 	written, leaves := false, false
-	// referenced is the variable an identifier reads or writes. A shorthand property's name is the
-	// property to the checker, so { result } and ({ map } = other) are found through the value they store
-	// or take, or the walk would miss an alias of the local or a write to a parameter.
-	referenced := func(identifier *ast.Node) *ast.Symbol {
-		if identifier.Parent != nil && identifier.Parent.Kind == ast.KindShorthandPropertyAssignment {
-			return l.checker.GetShorthandAssignmentValueSymbol(identifier.Parent)
-		}
-		return l.symbol(identifier)
-	}
 	var visit func(node *ast.Node, captured bool)
 	visit = func(node *ast.Node, captured bool) {
-		if ast.IsIdentifier(node) && node != declarations[0].Name() && referenced(node) == shape.local {
+		if ast.IsIdentifier(node) && node != declarations[0].Name() && l.referencedSymbol(node) == shape.local {
 			references = append(references, reference{node: node, captured: captured})
 		}
 		if ast.IsIdentifier(node) && ast.IsAssignmentTarget(node) {
 			for _, parameter := range parameters {
-				if referenced(node) == l.symbol(parameter.Name()) {
+				if l.referencedSymbol(node) == l.symbol(parameter.Name()) {
 					written = true
 				}
 			}
@@ -236,6 +227,17 @@ func (l *lowering) overloadArrayShapeOf(implementation *ast.Node) (overloadArray
 		return shape, false // Any other read is an alias, a second view that can write what no push proved (array-alias).
 	}
 	return shape, true
+}
+
+// referencedSymbol is the variable identifier reads or writes. A shorthand property's name is the property
+// to the checker, so { result } and ({ map } = other) are found through the value they store or take, or a
+// walk would miss an alias of a local or a write to a parameter. Every body walk a certificate makes
+// resolves its identifiers here (overloadArrayShapeOf, overloadNodeTestProof).
+func (l *lowering) referencedSymbol(identifier *ast.Node) *ast.Symbol {
+	if identifier.Parent != nil && identifier.Parent.Kind == ast.KindShorthandPropertyAssignment {
+		return l.checker.GetShorthandAssignmentValueSymbol(identifier.Parent)
+	}
+	return l.symbol(identifier)
 }
 
 // overloadArrayWritten is whether reference, an identifier, is written itself or is the receiver of an
@@ -393,9 +395,11 @@ func (l *lowering) overloadCertificateEntry(node *ast.Node, overload *ast.Node) 
 }
 
 // overloadCertificateCall is nil unless node, a call, a new or a tagged template, resolves to an overload
-// census accepted by certificate A and enters it other than directly (overloadCertificateEntry). An array
-// result can't be checked at the call, so that entry is NotYet, naming its form. Each road a call enters
-// lowering by asks it beside noteOverloadCall, before the callee or an argument is lowered.
+// census accepted by certificate A or by the node-test proof and enters it other than directly
+// (overloadCertificateEntry), or enters the node-test proof's directly and overloadNodeTestCall refuses
+// it. An array result can't be checked at the call, and the node-test proof's premise is the caller's
+// arguments, so a non-direct entry is NotYet, naming its form. Each road a call enters lowering by asks it
+// beside noteOverloadCall, before the callee or an argument is lowered.
 func (l *lowering) overloadCertificateCall(node *ast.Node) error {
 	if node.Kind != ast.KindCallExpression && node.Kind != ast.KindNewExpression && node.Kind != ast.KindTaggedTemplateExpression {
 		return nil
@@ -409,7 +413,17 @@ func (l *lowering) overloadCertificateCall(node *ast.Node) error {
 	if err != nil {
 		return err
 	}
-	if !certified || l.overloadCertificateEntry(node, overload) {
+	tested, err := l.overloadNodeTestCertified(overload)
+	if err != nil {
+		return err
+	}
+	if !certified && !tested {
+		return nil
+	}
+	if l.overloadCertificateEntry(node, overload) {
+		if tested {
+			return l.overloadNodeTestCall(node, resolved)
+		}
 		return nil
 	}
 	form := "a callee other than the overload set's name"

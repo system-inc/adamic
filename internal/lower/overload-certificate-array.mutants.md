@@ -70,24 +70,25 @@ File: internal/lower/overload_certificate_array.go
 Old:
 
 ```go
-	referenced := func(identifier *ast.Node) *ast.Symbol {
-		if identifier.Parent != nil && identifier.Parent.Kind == ast.KindShorthandPropertyAssignment {
-			return l.checker.GetShorthandAssignmentValueSymbol(identifier.Parent)
-		}
-		return l.symbol(identifier)
+func (l *lowering) referencedSymbol(identifier *ast.Node) *ast.Symbol {
+	if identifier.Parent != nil && identifier.Parent.Kind == ast.KindShorthandPropertyAssignment {
+		return l.checker.GetShorthandAssignmentValueSymbol(identifier.Parent)
 	}
+	return l.symbol(identifier)
+}
 ```
 
 New:
 
 ```go
-	referenced := func(identifier *ast.Node) *ast.Symbol {
-		return l.symbol(identifier)
-	}
+func (l *lowering) referencedSymbol(identifier *ast.Node) *ast.Symbol {
+	return l.symbol(identifier)
+}
 ```
 
 Expected: `TestOverloadCertificateArrayNegativesStayRefused/shorthand_alias_over_a_parameter` reds, and
 `/spread_shorthand_alias_over_a_parameter` and `/mapper_written_through_a_destructuring_assignment` with it:
 `{ out }`'s name, and `({ map } = other)`'s, resolve to the object literal's property, so the walk sees neither
 the alias nor the parameter write, the census accepts bad by the certificate, and each row no longer stops at its
-declaration (it stops later at the call, or lowers). Every other row stays green.
+declaration (it stops later at the call, or lowers). Every other row stays green. referencedSymbol is shared with the
+node-test proof, so this edit reds that proof's two shorthand rows too (overload-parse-tree-node.mutants.md, m3).
