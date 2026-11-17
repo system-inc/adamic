@@ -69,6 +69,40 @@ func (l *lowering) optionalAssignmentValue(node *ast.Node, target *checker.Type)
 	return nil
 }
 
+// freshAssignmentHandles proves an assignment chain's value is a container made right there (a
+// literal, or a copy freshValue names) whose only handles are the chain's targets, each declaring
+// exactly what the value is seen as (#r11wppy, applying #7n03qzg). tsc types the literal in
+// `(list || (list = [])).push(item)` or `lists[i] = list = []` as never[], which the slot would
+// otherwise refuse though nothing else holds it. Every handle is judged, never only the outermost:
+// in `v = (b = a = [])` a write through v lands where a reads. A pattern, a handle with no write
+// type, or an any or unknown one (an evolving let's) proves nothing, and the caller judges as before.
+func (l *lowering) freshAssignmentHandles(node *ast.Node, contextual *checker.Type) bool {
+	value := node
+	for value.Kind == ast.KindBinaryExpression && value.AsBinaryExpression().OperatorToken.Kind == ast.KindEqualsToken {
+		value = ast.SkipParentheses(value.AsBinaryExpression().Right)
+	}
+	if value.Kind != ast.KindObjectLiteralExpression && value.Kind != ast.KindArrayLiteralExpression && !l.freshValue(value) {
+		return false
+	}
+	contextual = l.withoutUndefined(contextual)
+	for assignment := node; assignment.Kind == ast.KindBinaryExpression && assignment.AsBinaryExpression().OperatorToken.Kind == ast.KindEqualsToken; assignment = ast.SkipParentheses(assignment.AsBinaryExpression().Right) {
+		left := ast.SkipParentheses(assignment.AsBinaryExpression().Left)
+		if left.Kind == ast.KindObjectLiteralExpression || left.Kind == ast.KindArrayLiteralExpression {
+			return false
+		}
+		handle := l.assignmentWriteType(left)
+		if handle == nil || handle.Flags()&(checker.TypeFlagsAny|checker.TypeFlagsUnknown) != 0 {
+			return false
+		}
+		// A handle declared T[] | undefined writes a T[].
+		handle = l.withoutUndefined(handle)
+		if l.widened(handle, contextual, map[[2]*checker.Type]bool{}) != nil || !l.checker.IsTypeAssignableTo(handle, contextual) {
+			return false
+		}
+	}
+	return true
+}
+
 // assignmentPrimitiveMembers proves there is no object alias, including in a union.
 // An intersection, object, non-primitive or opaque type is never taken as that proof.
 func assignmentPrimitiveMembers(proven *checker.Type) bool {
