@@ -1,0 +1,36 @@
+{
+  "set": "visitNode",
+  "normalization": "tree prefix, matching source lines and matching characters on modified lines; equal-length replacement hunks map lines positionally; raw records retained",
+  "baselineUnique": 79,
+  "candidateUnique": 79,
+  "new": [
+    {
+      "kind": "Boundary",
+      "where": "<tree>/src/compiler/visitorPublic.ts:148:1",
+      "reason": "function signature or prologue failed; continued at next declaration",
+      "text": "<tree>/src/compiler/visitorPublic.ts:122:1: Adamic 0.1 refuses overload 1 of visitNode result TOut | (TIn & undefined) | (TVisited & undefined) cannot be served by implementation result Node | undefined (return at <tree>/src/compiler/visitorPublic.ts:156:9 isn't the value its predicate checked); make the implementation result covariant with every overload result"
+    },
+    {
+      "kind": "Refused",
+      "where": "<tree>/src/compiler/visitorPublic.ts:122:1",
+      "reason": "overload 1 of visitNode result TOut | (TIn & undefined) | (TVisited & undefined) cannot be served by implementation result Node | undefined (return at <tree>/src/compiler/visitorPublic.ts:156:9 isn't the value its predicate checked)",
+      "text": "<tree>/src/compiler/visitorPublic.ts:122:1: Adamic 0.1 refuses overload 1 of visitNode result TOut | (TIn & undefined) | (TVisited & undefined) cannot be served by implementation result Node | undefined (return at <tree>/src/compiler/visitorPublic.ts:156:9 isn't the value its predicate checked); make the implementation result covariant with every overload result"
+    }
+  ],
+  "gone": [
+    {
+      "kind": "Boundary",
+      "where": "<tree>/src/compiler/visitorPublic.ts:148:1",
+      "reason": "function signature or prologue failed; continued at next declaration",
+      "text": "<tree>/src/compiler/visitorPublic.ts:123:5: Adamic 0.1 refuses overload 1 of visitNode parameter node cannot be served by implementation parameter node; make the implementation accept every value admitted by this overload, without mutable widening or bivariance"
+    },
+    {
+      "kind": "Refused",
+      "where": "<tree>/src/compiler/visitorPublic.ts:123:5",
+      "reason": "overload 1 of visitNode parameter node cannot be served by implementation parameter node",
+      "text": "<tree>/src/compiler/visitorPublic.ts:123:5: Adamic 0.1 refuses overload 1 of visitNode parameter node cannot be served by implementation parameter node; make the implementation accept every value admitted by this overload, without mutable widening or bivariance"
+    }
+  ],
+  "newNonBoundary": 1,
+  "goneNonBoundary": 1
+}

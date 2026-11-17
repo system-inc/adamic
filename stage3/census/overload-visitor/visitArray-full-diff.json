@@ -1,0 +1,23 @@
+{
+  "set": "visitArray",
+  "normalization": "tree prefix, matching source lines and matching characters on modified lines; equal-length replacement hunks map lines positionally; raw records retained",
+  "baselineUnique": 79,
+  "candidateUnique": 77,
+  "new": [],
+  "gone": [
+    {
+      "kind": "Boundary",
+      "where": "<tree>/src/compiler/visitorPublic.ts:289:1",
+      "reason": "function signature or prologue failed; continued at next declaration",
+      "text": "<tree>/src/compiler/visitorPublic.ts:276:5: Adamic 0.1 refuses overload 1 of visitArray parameter visitor cannot be served by implementation parameter visitor; make the implementation accept every value admitted by this overload, without mutable widening or bivariance"
+    },
+    {
+      "kind": "Refused",
+      "where": "<tree>/src/compiler/visitorPublic.ts:276:5",
+      "reason": "overload 1 of visitArray parameter visitor cannot be served by implementation parameter visitor",
+      "text": "<tree>/src/compiler/visitorPublic.ts:276:5: Adamic 0.1 refuses overload 1 of visitArray parameter visitor cannot be served by implementation parameter visitor; make the implementation accept every value admitted by this overload, without mutable widening or bivariance"
+    }
+  ],
+  "newNonBoundary": 0,
+  "goneNonBoundary": 1
+}

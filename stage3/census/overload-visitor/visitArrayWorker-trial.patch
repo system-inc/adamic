@@ -1,0 +1,25 @@
+--- baseline/src/compiler/visitorPublic.ts
++++ visitArrayWorker/src/compiler/visitorPublic.ts
+@@ -311,20 +311,8 @@
+     return visitArrayWorker(nodes, visitor, test, start, count);
+ }
+ 
+-function visitArrayWorker<TIn extends Node, TInArray extends readonly TIn[], TOut extends Node>(
+-    nodes: TInArray,
+-    visitor: Visitor<TIn, Node | undefined>,
+-    test: (node: Node) => node is TOut,
+-    start: number,
+-    count: number,
+-): readonly TOut[];
+-function visitArrayWorker<TIn extends Node, TInArray extends readonly TIn[]>(
+-    nodes: TInArray,
+-    visitor: Visitor<TIn, Node | undefined>,
+-    test: ((node: Node) => boolean) | undefined,
+-    start: number,
+-    count: number,
+-): readonly Node[];
++
++
+ function visitArrayWorker(
+     nodes: readonly Node[],
+     visitor: Visitor | undefined,

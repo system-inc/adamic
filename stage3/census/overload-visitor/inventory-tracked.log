@@ -1,0 +1,197 @@
+{
+  "filesScanned": 39469,
+  "candidateFiles": 47,
+  "roots": 604,
+  "counts": {
+    "visitNode": {
+      "total": 433,
+      "byUse": {
+        "ConditionalExpression": 11,
+        "discarded": 5,
+        "passed as argument": 271,
+        "binary expression": 20,
+        "variable initializer": 86,
+        "ArrayLiteralExpression": 5,
+        "returned": 16,
+        "NonNullExpression": 9,
+        "ArrowFunction": 10
+      },
+      "files": [
+        "src/compiler/factory/nodeFactory.ts",
+        "src/compiler/checker.ts",
+        "src/compiler/transformers/destructuring.ts",
+        "src/compiler/transformers/taggedTemplate.ts",
+        "src/compiler/transformers/ts.ts",
+        "src/compiler/transformers/classFields.ts",
+        "src/compiler/transformers/legacyDecorators.ts",
+        "src/compiler/transformers/esDecorators.ts",
+        "src/compiler/transformers/es2017.ts",
+        "src/compiler/transformers/es2018.ts",
+        "src/compiler/transformers/es2019.ts",
+        "src/compiler/transformers/es2020.ts",
+        "src/compiler/transformers/es2021.ts",
+        "src/compiler/transformers/esnext.ts",
+        "src/compiler/transformers/jsx.ts",
+        "src/compiler/transformers/es2016.ts",
+        "src/compiler/transformers/es2015.ts",
+        "src/compiler/transformers/generators.ts",
+        "src/compiler/transformers/module/module.ts",
+        "src/compiler/transformers/module/system.ts",
+        "src/compiler/transformers/declarations.ts",
+        "src/compiler/expressionToTypeNode.ts",
+        "src/services/refactors/extractSymbol.ts",
+        "src/services/codefixes/annotateWithTypeFromJSDoc.ts",
+        "src/services/codefixes/helpers.ts",
+        "src/testRunner/unittests/customTransforms.ts",
+        "src/testRunner/unittests/transform.ts"
+      ]
+    },
+    "visitNodes": {
+      "total": 187,
+      "byUse": {
+        "returned": 4,
+        "passed as argument": 105,
+        "ConditionalExpression": 17,
+        "variable initializer": 48,
+        "SpreadElement": 2,
+        "ArrowFunction": 1,
+        "binary expression": 9,
+        "PropertyAccessExpression": 1
+      },
+      "files": [
+        "src/compiler/checker.ts",
+        "src/compiler/visitorPublic.ts",
+        "src/compiler/transformers/ts.ts",
+        "src/compiler/transformers/classFields.ts",
+        "src/compiler/transformers/legacyDecorators.ts",
+        "src/compiler/transformers/esDecorators.ts",
+        "src/compiler/transformers/es2017.ts",
+        "src/compiler/transformers/es2018.ts",
+        "src/compiler/transformers/es2020.ts",
+        "src/compiler/transformers/esnext.ts",
+        "src/compiler/transformers/es2015.ts",
+        "src/compiler/transformers/generators.ts",
+        "src/compiler/transformers/module/module.ts",
+        "src/compiler/transformers/module/system.ts",
+        "src/compiler/transformers/module/esnextAnd2015.ts",
+        "src/compiler/transformers/declarations.ts",
+        "src/compiler/expressionToTypeNode.ts",
+        "src/services/refactors/extractSymbol.ts",
+        "src/services/codefixes/annotateWithTypeFromJSDoc.ts",
+        "src/services/codefixes/helpers.ts",
+        "src/services/textChanges.ts"
+      ]
+    },
+    "visitArray": {
+      "total": 5,
+      "byUse": {
+        "returned": 2,
+        "passed as argument": 2,
+        "SpreadElement": 1
+      },
+      "files": [
+        "src/compiler/transformers/classFields.ts",
+        "src/compiler/transformers/esnext.ts",
+        "src/compiler/transformers/module/esnextAnd2015.ts",
+        "src/compiler/transformers/declarations.ts"
+      ]
+    },
+    "visitArrayWorker": {
+      "total": 2,
+      "byUse": {
+        "variable initializer": 1,
+        "returned": 1
+      },
+      "files": [
+        "src/compiler/visitorPublic.ts"
+      ]
+    },
+    "visitParameterList": {
+      "total": 42,
+      "byUse": {
+        "passed as argument": 25,
+        "variable initializer": 5,
+        "ConditionalExpression": 9,
+        "returned": 2,
+        "binary expression": 1
+      },
+      "files": [
+        "src/compiler/visitorPublic.ts",
+        "src/compiler/transformers/ts.ts",
+        "src/compiler/transformers/classFields.ts",
+        "src/compiler/transformers/es2017.ts",
+        "src/compiler/transformers/es2018.ts",
+        "src/compiler/transformers/es2015.ts",
+        "src/compiler/transformers/generators.ts"
+      ]
+    },
+    "visitEachChild": {
+      "total": 229,
+      "byUse": {
+        "variable initializer": 19,
+        "returned": 171,
+        "ConditionalExpression": 4,
+        "binary expression": 17,
+        "passed as argument": 11,
+        "ArrowFunction": 7
+      },
+      "files": [
+        "src/compiler/utilities.ts",
+        "src/compiler/transformers/taggedTemplate.ts",
+        "src/compiler/transformers/ts.ts",
+        "src/compiler/transformers/classFields.ts",
+        "src/compiler/transformers/legacyDecorators.ts",
+        "src/compiler/transformers/esDecorators.ts",
+        "src/compiler/transformers/es2017.ts",
+        "src/compiler/transformers/es2018.ts",
+        "src/compiler/transformers/es2019.ts",
+        "src/compiler/transformers/es2020.ts",
+        "src/compiler/transformers/es2021.ts",
+        "src/compiler/transformers/esnext.ts",
+        "src/compiler/transformers/jsx.ts",
+        "src/compiler/transformers/es2016.ts",
+        "src/compiler/transformers/es2015.ts",
+        "src/compiler/transformers/generators.ts",
+        "src/compiler/transformers/module/module.ts",
+        "src/compiler/transformers/module/system.ts",
+        "src/compiler/transformers/module/esnextAnd2015.ts",
+        "src/compiler/transformers/declarations.ts",
+        "src/services/refactors/extractSymbol.ts",
+        "src/services/codefixes/annotateWithTypeFromJSDoc.ts",
+        "src/services/codefixes/helpers.ts",
+        "src/services/textChanges.ts",
+        "src/testRunner/unittests/customTransforms.ts",
+        "src/testRunner/unittests/transform.ts",
+        "src/testRunner/unittests/tsbuild/publicApi.ts",
+        "src/testRunner/unittests/tsbuildWatch/publicApi.ts"
+      ]
+    },
+    "getParseTreeNode": {
+      "total": 86,
+      "byUse": {
+        "variable initializer": 60,
+        "passed as argument": 16,
+        "binary expression": 3,
+        "NonNullExpression": 2,
+        "AsExpression": 4,
+        "PrefixUnaryExpression": 1
+      },
+      "files": [
+        "src/compiler/debug.ts",
+        "src/compiler/utilitiesPublic.ts",
+        "src/compiler/utilities.ts",
+        "src/compiler/factory/emitNode.ts",
+        "src/compiler/factory/utilities.ts",
+        "src/compiler/checker.ts",
+        "src/compiler/transformers/ts.ts",
+        "src/compiler/transformers/typeSerializer.ts",
+        "src/compiler/transformers/es2015.ts",
+        "src/compiler/transformers/declarations.ts",
+        "src/compiler/transformer.ts",
+        "src/compiler/emitter.ts",
+        "src/services/symbolDisplay.ts",
+        "src/harness/typeWriter.ts"
+      ]
+    }
+  }
+}

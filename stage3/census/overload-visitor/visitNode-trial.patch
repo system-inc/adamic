@@ -1,0 +1,11 @@
+--- baseline/src/compiler/visitorPublic.ts
++++ visitNode/src/compiler/visitorPublic.ts
+@@ -146,7 +146,7 @@
+     lift?: (node: readonly Node[]) => Node,
+ ): Node | (TIn & undefined) | (TVisited & undefined);
+ export function visitNode(
+-    node: Node,
++    node: Node | undefined,
+     visitor: Visitor,
+     test?: (node: Node) => boolean,
+     lift?: (node: readonly Node[]) => Node,

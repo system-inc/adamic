@@ -1,0 +1,60 @@
+{
+  "visitArrayWorker": {
+    "baselineEvents": 5070,
+    "candidateEvents": 5070,
+    "new": [],
+    "gone": [],
+    "assignedOverloadObserved": false,
+    "boundary": "production abort at lowering.declareModule",
+    "underlyingAbort": {
+      "Kind": "first declaration/body/tail stop",
+      "Rule": "lowering.declareModule",
+      "Site": "/workspace/overload-visitor-scratch/visitArrayWorker/src/compiler/core.ts:261:1",
+      "Words": "overload 1 of filter result U[] cannot be served by implementation result readonly T[] | undefined"
+    }
+  },
+  "visitParameterList": {
+    "baselineEvents": 5070,
+    "candidateEvents": 5071,
+    "new": [
+      {
+        "Kind": "scan stop",
+        "Rule": "refusal_scan/constraintRelationRefusal",
+        "Site": "<tree>/src/compiler/visitorPublic.ts:395:153",
+        "Words": "a generic instantiation whose type argument for TIn, constrained to Node, can't be read",
+        "count": 1
+      }
+    ],
+    "gone": [],
+    "assignedOverloadObserved": false,
+    "boundary": "production abort at lowering.declareModule",
+    "underlyingAbort": {
+      "Kind": "first declaration/body/tail stop",
+      "Rule": "lowering.declareModule",
+      "Site": "/workspace/overload-visitor-scratch/visitParameterList/src/compiler/core.ts:261:1",
+      "Words": "overload 1 of filter result U[] cannot be served by implementation result readonly T[] | undefined"
+    }
+  },
+  "visitEachChild": {
+    "baselineEvents": 5070,
+    "candidateEvents": 5071,
+    "new": [
+      {
+        "Kind": "scan stop",
+        "Rule": "refusal_scan/constraintRelationRefusal",
+        "Site": "<tree>/src/compiler/visitorPublic.ts:598:139",
+        "Words": "a generic instantiation whose type argument for TIn, constrained to Node, can't be read",
+        "count": 1
+      }
+    ],
+    "gone": [],
+    "assignedOverloadObserved": false,
+    "boundary": "production abort at lowering.declareModule",
+    "underlyingAbort": {
+      "Kind": "first declaration/body/tail stop",
+      "Rule": "lowering.declareModule",
+      "Site": "/workspace/overload-visitor-scratch/visitEachChild/src/compiler/core.ts:261:1",
+      "Words": "overload 1 of filter result U[] cannot be served by implementation result readonly T[] | undefined"
+    }
+  }
+}

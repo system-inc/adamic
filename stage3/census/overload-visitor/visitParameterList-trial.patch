@@ -1,0 +1,11 @@
+--- baseline/src/compiler/visitorPublic.ts
++++ visitParameterList/src/compiler/visitorPublic.ts
+@@ -392,7 +392,7 @@
+  */
+ export function visitParameterList(nodes: NodeArray<ParameterDeclaration>, visitor: Visitor, context: TransformationContext, nodesVisitor?: NodesVisitor): NodeArray<ParameterDeclaration>;
+ export function visitParameterList(nodes: NodeArray<ParameterDeclaration> | undefined, visitor: Visitor, context: TransformationContext, nodesVisitor?: NodesVisitor): NodeArray<ParameterDeclaration> | undefined;
+-export function visitParameterList(nodes: NodeArray<ParameterDeclaration> | undefined, visitor: Visitor, context: TransformationContext, nodesVisitor = visitNodes) {
++export function visitParameterList(nodes: NodeArray<ParameterDeclaration> | undefined, visitor: Visitor, context: TransformationContext, nodesVisitor: NodesVisitor = visitNodes) {
+     let updated: NodeArray<ParameterDeclaration> | undefined;
+     context.startLexicalEnvironment();
+     if (nodes) {

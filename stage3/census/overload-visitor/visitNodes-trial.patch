@@ -1,0 +1,15 @@
+--- baseline/src/compiler/visitorPublic.ts
++++ visitNodes/src/compiler/visitorPublic.ts
+@@ -220,9 +220,9 @@
+     start?: number,
+     count?: number,
+ ): NodeArray<Node> | (TInArray & undefined);
+-export function visitNodes(
+-    nodes: NodeArray<Node> | undefined,
+-    visitor: Visitor,
++export function visitNodes<TIn extends Node>(
++    nodes: NodeArray<TIn> | undefined,
++    visitor: Visitor<TIn, Node | undefined>,
+     test?: (node: Node) => boolean,
+     start?: number,
+     count?: number,
