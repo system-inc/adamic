@@ -12,8 +12,12 @@ function dependencies(file){if(edges.has(file))return edges.get(file);const next
  for(const ref of info.typeReferenceDirectives){const resolved=ts.resolveTypeReferenceDirective(ref.fileName,file,options,ts.sys).resolvedTypeReferenceDirective?.resolvedFileName;if(resolved)next.push(path.resolve(resolved));}
  return next;
 }
-const candidates=[];
-for(const file of files){const seen=new Set(),todo=[file];let reaches=false;while(todo.length){const next=todo.pop();if(next===core){reaches=true;break;}if(seen.has(next))continue;seen.add(next);todo.push(...dependencies(next));}if(reaches)candidates.push(file);}
-const calls=[];
-for(const file of candidates){const p=ts.createProgram([file],options),c=p.getTypeChecker(),f=p.getSourceFile(file),todo=[f];while(todo.length){const n=todo.pop();if(ts.isCallExpression(n)){const d=c.getResolvedSignature(n)?.declaration;if(d?.getSourceFile().fileName===core&&d.name?.getText()==='filter'){const lc=f.getLineAndCharacterOfPosition(n.getStart());calls.push({file,line:lc.line+1,call:n.getText(),declaration:d.getText()});}}ts.forEachChild(n,x=>{todo.push(x);});}}
-fs.writeFileSync(out,JSON.stringify({options,files,candidates,calls,edges:Object.fromEntries(edges)},null,2));console.log(JSON.stringify({files:files.length,candidates:candidates.length,calls:calls.length,modules:edges.size}));
+const todo=[...files],expanded=new Set(),reverse=new Map();
+while(todo.length){const file=todo.pop();if(expanded.has(file))continue;expanded.add(file);for(const dep of dependencies(file)){if(!reverse.has(dep))reverse.set(dep,[]);reverse.get(dep).push(file);todo.push(dep);}}
+const reaches=new Set(),pending=[core];while(pending.length){const file=pending.pop();if(reaches.has(file))continue;reaches.add(file);pending.push(...(reverse.get(file)||[]));}
+const candidates=files.filter(f=>reaches.has(f));
+console.log(JSON.stringify({files:files.length,candidates:candidates.length,modules:edges.size}));
+fs.writeFileSync(out+'.selection.json',JSON.stringify({files,candidates,edges:Object.fromEntries(edges)},null,2));
+const calls=[],program=ts.createProgram(candidates,options),c=program.getTypeChecker();let callExpressions=0;
+for(const file of candidates){const f=program.getSourceFile(file),todo=[f];while(todo.length){const n=todo.pop();if(ts.isCallExpression(n)){callExpressions++;const d=c.getResolvedSignature(n)?.declaration;if(d?.getSourceFile().fileName===core&&d.name?.getText()==='filter'){const lc=f.getLineAndCharacterOfPosition(n.getStart());calls.push({file,line:lc.line+1,call:n.getText(),declaration:d.getText()});}}ts.forEachChild(n,x=>{todo.push(x);});}}
+fs.writeFileSync(out,JSON.stringify({options,files,candidates,callExpressions,calls,edges:Object.fromEntries(edges)},null,2));console.log(JSON.stringify({files:files.length,candidates:candidates.length,calls:calls.length,callExpressions,modules:edges.size}));

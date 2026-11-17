@@ -17,8 +17,13 @@ The testRunner/typings exclusions are removed. Both independent traversals resol
 roots include compiler, services, server, harness, testRunner and the other src trees.
 Outside src, AST traversal examines 20,523 .ts/.tsx/.mts/.cts files; 40 contain a
 syntactic filter call. Separate checker programs for those files resolve zero calls
-to core filter. Separate programs prevent test-fixture globals merging. Outside-src
-programs use noLib; no claim of a diagnostic-free production program is made.
+to core filter. Separate programs prevent test-fixture globals merging in that supplementary pass.
+An additional resolved import/reference graph audit covers aliases without selecting
+by callee name: 20,614 modules, 6,487 outside-src roots reaching core.ts, 15,480
+call expressions resolved, zero core-filter calls. The latter pass uses one checker
+program for those roots (including fourslash scripts); it is an inventory, not
+an admitted diagnostic-free fixture program. The separate 40-file pass uses noLib.
+No claim of a diagnostic-free production program is made.
 All selection is by AST plus TypeScript getResolvedSignature, never text matching.
 
 Classes overlap: a writable slot can also be passed to a writable parameter and
@@ -48,7 +53,7 @@ already readonly: 3 = 14 calls, 4 = 41, 7 = 9, 8 = 4.
 The implementation returns readonly T[] or undefined. It returns its argument
 when no predicate call rejects an element; the empty-array and undefined paths
 also return the argument. No copying is proposed. The separate readonly boolean
-call utilities.ts:4686:31 compares its result with jsDoc.tags; it is overload 8,
+call utilities.ts:4687:31 compares its result with jsDoc.tags; it is overload 8,
 outside this writable-result table. The two additional identities below are real
 writable-result callers and must also survive any implementation change.
 
@@ -840,6 +845,7 @@ With the unchanged completed adapted tree TREE:
 node stage3/census/filter-overload-count/contexts.cjs TREE contexts.json
 node stage3/census/filter-overload-count/supplement.cjs TREE calls.json
 node stage3/census/filter-overload-count/outside.cjs TREE outside.json
+node stage3/census/filter-overload-count/import-closure.cjs TREE import-closure.json
 ```
 
 Raw rows retain all read sites, result types, contexts, local symbol references,
