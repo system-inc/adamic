@@ -85,15 +85,18 @@ func TestFunctionTypeClaimIsCheckedAtTheCall(t *testing.T) {
 }
 
 // What the check at the call can't reach keeps its refusal. A library's claim is called inside the
-// library, so a checked parameter forwarded to filter or find keeps predicateArguments' proof (Lower's
-// must). An overload whose implementation takes a plain callback calls it unchecked, so the overload's
-// argument keeps its proof too: overload_optional_impl writes the callback or undefined out, which
+// library, so a checked parameter forwarded to find keeps predicateArguments' proof (Lower's must). One
+// forwarded to lib's filter is passed as its checked closure, which checks its own claim, and filter's
+// result is an array it makes (#ea4d18v), so forward_filter lowers and agrees with Node. An overload
+// whose implementation takes a plain callback calls it unchecked, so the overload's argument keeps its
+// proof too: overload_optional_impl writes the callback or undefined out, which
 // predicateParameter trusts as a plain callback, and overload_union_impl names it through an alias,
 // which plainCallbackType doesn't read, so only checkedFunctionTypeClaim's overload rule keeps its
 // argument's proof. A target with no runtime test is NotYet at the call, never a vacuous check. .a
 // needs proof and refuses the claim. Mutants: the library test dropped, which admits the forwards; the
 // overload's implementation rule dropped, which lets overload_union_impl's argument through to the
-// census proof's refusal of its result.
+// census proof's refusal of its result; libraryFilterContract answering false, which refuses
+// forward_filter again.
 func TestFunctionTypeClaimKeepsWhatTheCallCantCheck(t *testing.T) {
 	t.Parallel()
 	read := func(name string) string {
@@ -104,7 +107,6 @@ func TestFunctionTypeClaimKeepsWhatTheCallCantCheck(t *testing.T) {
 		return string(source)
 	}
 	for _, refusal := range []struct{ name, what string }{
-		{"forward_filter", `an unproven predicate argument for parameter predicate (argument "test")`},
 		{"forward_find", `an unproven predicate argument for parameter predicate (argument "test")`},
 		{"overload_union_impl", `an unproven predicate argument for parameter assert (argument "(node: Node): void => {}")`},
 		{"overload_optional_impl", `an unproven predicate argument for parameter assert (argument "(node: Node): void => {}")`},
@@ -115,6 +117,7 @@ func TestFunctionTypeClaimKeepsWhatTheCallCantCheck(t *testing.T) {
 			t.Errorf("%s: want refused as %q in .ts, got %v", refusal.name, refusal.what, err)
 		}
 	}
+	lowersAndAgreesWithNodeAs(t, read("forward_filter"), ".ts")
 	// A method's check reads the method off the receiver after the arguments, and JavaScript reads it
 	// before them, so arguments that run code stop it: method_order swaps the method in an argument, and
 	// Node calls the old one (Lower's must 1); getter_order swaps it in a class's getter, read through a
