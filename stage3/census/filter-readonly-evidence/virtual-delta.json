@@ -1,0 +1,177 @@
+{
+  "readonly": {
+    "baseline": 2765,
+    "variant": 2771,
+    "new": [
+      {
+        "code": 4104,
+        "file": "src/compiler/checker.ts",
+        "line": 9417,
+        "character": 21,
+        "message": "The type 'readonly Identifier[]' is 'readonly' and cannot be assigned to the mutable type 'Identifier[]'."
+      },
+      {
+        "code": 4104,
+        "file": "src/compiler/checker.ts",
+        "line": 9419,
+        "character": 17,
+        "message": "The type 'readonly Identifier[]' is 'readonly' and cannot be assigned to the mutable type 'Identifier[]'."
+      },
+      {
+        "code": 2322,
+        "file": "src/compiler/commandLineParser.ts",
+        "line": 2591,
+        "character": 17,
+        "message": "Type 'readonly AdamicJsonRecoveryValue[] | undefined' is not assignable to type 'AdamicJsonRecoveryValue | undefined'.\n  Type 'readonly AdamicJsonRecoveryValue[]' is not assignable to type 'AdamicJsonRecoveryValue | undefined'.\n    The type 'readonly AdamicJsonRecoveryValue[]' is 'readonly' and cannot be assigned to the mutable type 'AdamicJsonRecoveryValue[]'."
+      },
+      {
+        "code": 2345,
+        "file": "src/compiler/factory/utilities.ts",
+        "line": 745,
+        "character": 134,
+        "message": "Argument of type 'readonly UnscopedEmitHelper[] | undefined' is not assignable to parameter of type 'UnscopedEmitHelper[] | undefined'.\n  The type 'readonly UnscopedEmitHelper[]' is 'readonly' and cannot be assigned to the mutable type 'UnscopedEmitHelper[]'."
+      },
+      {
+        "code": 2345,
+        "file": "src/services/services.ts",
+        "line": 780,
+        "character": 81,
+        "message": "Argument of type 'readonly GetAccessorDeclaration[] | undefined' is not assignable to parameter of type 'Declaration[] | undefined'.\n  The type 'readonly GetAccessorDeclaration[]' is 'readonly' and cannot be assigned to the mutable type 'Declaration[]'."
+      },
+      {
+        "code": 2345,
+        "file": "src/services/services.ts",
+        "line": 790,
+        "character": 81,
+        "message": "Argument of type 'readonly SetAccessorDeclaration[] | undefined' is not assignable to parameter of type 'Declaration[] | undefined'.\n  The type 'readonly SetAccessorDeclaration[]' is 'readonly' and cannot be assigned to the mutable type 'Declaration[]'."
+      }
+    ],
+    "gone": []
+  },
+  "drop": {
+    "baseline": 2765,
+    "variant": 2782,
+    "new": [
+      {
+        "code": 2322,
+        "file": "src/compiler/checker.ts",
+        "line": 9417,
+        "character": 21,
+        "message": "Type '(DeclarationName | undefined)[]' is not assignable to type 'Identifier[]'.\n  Type 'DeclarationName | undefined' is not assignable to type 'Identifier'.\n    Type 'undefined' is not assignable to type 'Identifier'."
+      },
+      {
+        "code": 2322,
+        "file": "src/compiler/checker.ts",
+        "line": 9419,
+        "character": 17,
+        "message": "Type '(DeclarationName | undefined)[]' is not assignable to type 'Identifier[]'.\n  Type 'DeclarationName | undefined' is not assignable to type 'Identifier'.\n    Type 'undefined' is not assignable to type 'Identifier'."
+      },
+      {
+        "code": 2345,
+        "file": "src/compiler/checker.ts",
+        "line": 16764,
+        "character": 27,
+        "message": "Argument of type 'Declaration[] | undefined' is not assignable to parameter of type 'readonly TypeParameterDeclaration[] | undefined'.\n  Type 'Declaration[]' is not assignable to type 'readonly TypeParameterDeclaration[]'.\n    Type 'Declaration' is missing the following properties from type 'TypeParameterDeclaration': name, _jsdocContainerBrand"
+      },
+      {
+        "code": 2345,
+        "file": "src/compiler/checker.ts",
+        "line": 46976,
+        "character": 45,
+        "message": "Argument of type 'Declaration[]' is not assignable to parameter of type 'readonly DeclarationWithTypeParameters[]'.\n  Type 'Declaration' is not assignable to type 'DeclarationWithTypeParameters'.\n    Type 'Declaration' is missing the following properties from type 'TypeAliasDeclaration': name, type, _statementBrand, _jsdocContainerBrand, _localsContainerBrand"
+      },
+      {
+        "code": 2339,
+        "file": "src/compiler/checker.ts",
+        "line": 46980,
+        "character": 39,
+        "message": "Property 'name' does not exist on type 'Declaration'."
+      },
+      {
+        "code": 2322,
+        "file": "src/compiler/commandLineParser.ts",
+        "line": 2591,
+        "character": 17,
+        "message": "Type '(AdamicJsonRecoveryValue | undefined)[] | undefined' is not assignable to type 'AdamicJsonRecoveryValue | undefined'.\n  Type '(AdamicJsonRecoveryValue | undefined)[]' is not assignable to type 'AdamicJsonRecoveryValue | undefined'.\n    Type '(AdamicJsonRecoveryValue | undefined)[]' is not assignable to type 'AdamicJsonRecoveryValue[]'.\n      Type 'AdamicJsonRecoveryValue | undefined' is not assignable to type 'AdamicJsonRecoveryValue'.\n        Type 'undefined' is not assignable to type 'AdamicJsonRecoveryValue'."
+      },
+      {
+        "code": 2322,
+        "file": "src/compiler/commandLineParser.ts",
+        "line": 3157,
+        "character": 17,
+        "message": "Type '(string | undefined)[]' is not assignable to type 'readonly string[]'.\n  Type 'string | undefined' is not assignable to type 'string'.\n    Type 'undefined' is not assignable to type 'string'."
+      },
+      {
+        "code": 2339,
+        "file": "src/compiler/factory/utilities.ts",
+        "line": 713,
+        "character": 47,
+        "message": "Property 'importName' does not exist on type 'EmitHelper'.\n  Property 'importName' does not exist on type 'ScopedEmitHelper'."
+      },
+      {
+        "code": 2345,
+        "file": "src/compiler/factory/utilities.ts",
+        "line": 745,
+        "character": 134,
+        "message": "Argument of type 'EmitHelper[] | undefined' is not assignable to parameter of type 'UnscopedEmitHelper[] | undefined'.\n  Type 'EmitHelper[]' is not assignable to type 'UnscopedEmitHelper[]'.\n    Type 'EmitHelper' is not assignable to type 'UnscopedEmitHelper'.\n      Type 'ScopedEmitHelper' is not assignable to type 'UnscopedEmitHelper'.\n        Types of property 'scoped' are incompatible.\n          Type 'true' is not assignable to type 'false'."
+      },
+      {
+        "code": 2769,
+        "file": "src/services/callHierarchy.ts",
+        "line": 483,
+        "character": 26,
+        "message": "No overload matches this call.\n  Overload 1 of 4, '(values: readonly CallSite[], getGroupId: (value: CallSite) => number, resultSelector: (values: readonly CallSite[]) => CallHierarchyIncomingCall): CallHierarchyIncomingCall[]', gave the following error.\n    Argument of type '(CallSite | undefined)[]' is not assignable to parameter of type 'readonly CallSite[]'.\n      Type 'CallSite | undefined' is not assignable to type 'CallSite'.\n        Type 'undefined' is not assignable to type 'CallSite'.\n  Overload 2 of 4, '(values: readonly CallSite[], getGroupId: (value: CallSite) => string, resultSelector: (values: readonly CallSite[]) => CallHierarchyIncomingCall): CallHierarchyIncomingCall[]', gave the following error.\n    Argument of type '(CallSite | undefined)[]' is not assignable to parameter of type 'readonly CallSite[]'.\n      Type 'CallSite | undefined' is not assignable to type 'CallSite'.\n        Type 'undefined' is not assignable to type 'CallSite'."
+      },
+      {
+        "code": 2339,
+        "file": "src/services/codefixes/fixAddMissingParam.ts",
+        "line": 151,
+        "character": 32,
+        "message": "Property 'body' does not exist on type 'Declaration'."
+      },
+      {
+        "code": 2345,
+        "file": "src/services/codefixes/fixAddMissingParam.ts",
+        "line": 157,
+        "character": 29,
+        "message": "Argument of type 'Declaration' is not assignable to parameter of type 'FunctionLikeDeclaration'.\n  Type 'Declaration' is missing the following properties from type 'ArrowFunction': equalsGreaterThanToken, body, name, _expressionBrand, and 5 more."
+      },
+      {
+        "code": 2339,
+        "file": "src/services/codefixes/fixAddMissingParam.ts",
+        "line": 164,
+        "character": 60,
+        "message": "Property 'parameters' does not exist on type 'Declaration'."
+      },
+      {
+        "code": 2345,
+        "file": "src/services/codefixes/fixAddMissingParam.ts",
+        "line": 170,
+        "character": 67,
+        "message": "Argument of type 'Declaration' is not assignable to parameter of type 'ConvertibleSignatureDeclaration'.\n  Type 'Declaration' is missing the following properties from type 'ArrowFunction': equalsGreaterThanToken, body, name, _expressionBrand, and 5 more."
+      },
+      {
+        "code": 2339,
+        "file": "src/services/codefixes/fixAddMissingParam.ts",
+        "line": 175,
+        "character": 75,
+        "message": "Property 'parameters' does not exist on type 'Declaration'."
+      },
+      {
+        "code": 2345,
+        "file": "src/services/codefixes/fixAddMissingParam.ts",
+        "line": 191,
+        "character": 27,
+        "message": "Argument of type 'Declaration[]' is not assignable to parameter of type 'ConvertibleSignatureDeclaration[]'.\n  Type 'Declaration' is not assignable to type 'ConvertibleSignatureDeclaration'.\n    Type 'Declaration' is missing the following properties from type 'ArrowFunction': equalsGreaterThanToken, body, name, _expressionBrand, and 5 more."
+      },
+      {
+        "code": 2322,
+        "file": "src/services/codefixes/fixAddMissingParam.ts",
+        "line": 205,
+        "character": 9,
+        "message": "Type 'Declaration[]' is not assignable to type 'ConvertibleSignatureDeclaration[]'.\n  Type 'Declaration' is not assignable to type 'ConvertibleSignatureDeclaration'.\n    Type 'Declaration' is missing the following properties from type 'ArrowFunction': equalsGreaterThanToken, body, name, _expressionBrand, and 5 more."
+      }
+    ],
+    "gone": []
+  }
+}
