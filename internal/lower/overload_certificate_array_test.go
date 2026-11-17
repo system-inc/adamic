@@ -33,11 +33,13 @@ const overloadCertificateGateWords = "an overload certified by its body, entered
 // census accepts overload 1, U[] over (T | U)[], by certificate A where it refused it before
 // (census_small.go's result refusal). Overload 2 it already accepted by relation, its implementation's
 // extra binder U witnessed as T, so (T | T)[] is T[] (Correctness's scout lists only overload 1 refused).
+// The iterable is a Map's values iterator, as tsc hands arrayFrom map.keys(): an Iterable<T> slot lowers
+// only where every value reaching it is a collection's iterator (iterable_views.go).
 func TestOverloadCertificateArrayFromLowers(t *testing.T) {
 	t.Parallel()
-	source := overloadCertificateArrayFrom + `const items: number[] = [3, 1, 2];
-const plain = arrayFrom(items);
-const doubled = arrayFrom(items, x => x * 2);
+	source := overloadCertificateArrayFrom + `const counts = new Map<string, number>([["a", 3], ["b", 1], ["c", 2]]);
+const plain = arrayFrom(counts.values());
+const doubled = arrayFrom(counts.values(), x => x * 2);
 console.log(plain.join(","));
 console.log(doubled.join(","));
 `
@@ -245,15 +247,18 @@ func overloadCertificateProbe(t *testing.T, modules map[string]string) (*lowerin
 // The gate keys erasure to the call: each row enters overload 1, the one certificate A accepts, and its
 // entry is answered by overloadCertificateEntry on its own node. Lowered whole, a non-direct entry is
 // NotYet at the call in the gate's words, naming its form, before its callee is lowered, so it never
-// leans on overloadSetValueStop. A direct entry never says the
-// gate's words; whether a direct row lowers past the gate is that road's own question, logged. tsc
+// leans on overloadSetValueStop. A direct entry never says the gate's words; whether a direct row
+// lowers past the gate is that road's own question, logged. tsc
 // refuses (0, arrayFrom)(it) itself (a comma's left side with no effect, 2695, exempt only before an
 // access), so the comma row's left side counts; and new of a function returning an array is tsc's
-// error 2350, so there's no new row. Mutant: overloadCertificateEntry answering true for every call
+// error 2350, so there's no new row. The direct rows hand arrayFrom a Map's values iterator, the one
+// iterable its Iterable<T> slot lowers; the non-direct rows keep an array, since the gate stops them
+// before any argument is lowered. Mutant: overloadCertificateEntry answering true for every call
 // expression, new and tagged template, and the comma, spread and tagged rows go red.
 func TestOverloadCertificateArrayGate(t *testing.T) {
 	t.Parallel()
 	const items = "const items: number[] = [3, 1, 2];\n"
+	const counts = "const counts = new Map<string, number>([[\"a\", 3], [\"b\", 1], [\"c\", 2]]);\n"
 	exported := strings.ReplaceAll(overloadCertificateArrayFrom, "function arrayFrom", "export function arrayFrom")
 	for _, probe := range []struct {
 		name    string
@@ -261,10 +266,10 @@ func TestOverloadCertificateArrayGate(t *testing.T) {
 		direct  bool
 		form    string
 	}{
-		{"parenthesized callee", map[string]string{"main.ts": overloadCertificateArrayFrom + items + "const got = (arrayFrom)(items, x => x * 2);\nconsole.log(got.join(\",\"));\n"}, true, ""},
-		{"optional call", map[string]string{"main.ts": overloadCertificateArrayFrom + items + "const got = arrayFrom?.(items, x => x * 2);\nconsole.log(got.join(\",\"));\n"}, true, ""},
-		{"import alias", map[string]string{"library.ts": exported, "main.ts": "import { arrayFrom as af } from \"./library\";\n" + items + "const got = af(items, x => x * 2);\nconsole.log(got.join(\",\"));\n"}, true, ""},
-		{"namespace member", map[string]string{"main.ts": "namespace ts {\n" + exported + "}\n" + items + "const got = ts.arrayFrom(items, x => x * 2);\nconsole.log(got.join(\",\"));\n"}, true, ""},
+		{"parenthesized callee", map[string]string{"main.ts": overloadCertificateArrayFrom + counts + "const got = (arrayFrom)(counts.values(), x => x * 2);\nconsole.log(got.join(\",\"));\n"}, true, ""},
+		{"optional call", map[string]string{"main.ts": overloadCertificateArrayFrom + counts + "const got = arrayFrom?.(counts.values(), x => x * 2);\nconsole.log(got.join(\",\"));\n"}, true, ""},
+		{"import alias", map[string]string{"library.ts": exported, "main.ts": "import { arrayFrom as af } from \"./library\";\n" + counts + "const got = af(counts.values(), x => x * 2);\nconsole.log(got.join(\",\"));\n"}, true, ""},
+		{"namespace member", map[string]string{"main.ts": "namespace ts {\n" + exported + "}\n" + counts + "const got = ts.arrayFrom(counts.values(), x => x * 2);\nconsole.log(got.join(\",\"));\n"}, true, ""},
 		{"comma callee", map[string]string{"main.ts": overloadCertificateArrayFrom + items + "let touched = 0;\nconst got = (touched++, arrayFrom)(items, x => x * 2);\nconsole.log(got.join(\",\"));\n"}, false, "a comma expression callee"},
 		{"spread argument", map[string]string{"main.ts": overloadCertificateArrayFrom + items + "const args: [number[], (x: number) => number] = [items, x => x * 2];\nconst got = arrayFrom(...args);\nconsole.log(got.join(\",\"));\n"}, false, "a spread argument"},
 		{"tagged template", map[string]string{"main.ts": overloadCertificateArrayFrom + "const got = arrayFrom`a${(t: string) => t.length}`;\nconsole.log(got.join(\",\"));\n"}, false, "a tagged template"},
