@@ -249,6 +249,11 @@ func (l *lowering) censusOverload(implementation, overload *ast.Node, ordinal in
 		if l.narrowOverload(overload) {
 			return nil // In .ts each call resolving to it checks its result (overloadResultCheck, rulings.md:127).
 		}
+		if l.checkedAssertionSource(implementation) && l.checkedAssertionSource(overload) && l.overloadKindExtractIntersection(promised, produced) {
+			// tsc's transformNamedEvaluation shape, a gap Adamic named rather than a covariance error, and in
+			// .ts only: a .a file never holds a hidden gap, so there it stays the refusal below (#0kkpw2e set 2).
+			return l.notYet(overload, "an overload result Extract over intersection members the implementation's result doesn't serve")
+		}
 		what := label + " result " + l.checker.TypeToString(promised) + " cannot be served by implementation result " + l.checker.TypeToString(produced)
 		if failed != nil {
 			what += " (return at " + l.program.Where(failed) + " isn't the value its predicate checked)"
