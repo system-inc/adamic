@@ -130,6 +130,32 @@ func TestClosedKindDomains(t *testing.T) {
 	}
 }
 
+// A generic factory builds its S at whatever kind it's handed: wrap<T>(kind: T, ...) returns
+// `{ kind, text }`, whose type `{ kind: T; text: string }` isn't assignable to Expr while T is a type
+// parameter, yet wrap(Kind.Block, ...) typed Expr is an Expr with Block's kind. Its permissive instantiation
+// reaches Expr, so Expr stays open and isBlock's narrowing over Block | Expr stays refused, held in a
+// container and a field too (Language's k01 and k02 on #x2cjvy9, which lowered at 53c2277e and stopped where
+// Node ran on). decodeJson<Expr> builds an Expr whose kind its text holds, and keeps Expr open the same way.
+// Mutant m6 (the permissive instantiation skipped) lowers the generic rows.
+func TestClosedKindGenericAndDecodedBuildsStayOpen(t *testing.T) {
+	t.Parallel()
+	const types = "import { decodeJson } from 'adamic';\nenum Kind { Block = 1, Text = 2, Call = 3 }\ninterface Node { readonly kind: Kind }\ninterface Block extends Node { readonly kind: Kind.Block; readonly count: number }\ninterface Expr extends Node { readonly text: string }\nfunction isBlock(node: Node): node is Block { return node.kind === Kind.Block; }\nfunction show(body: Block | Expr): string { return isBlock(body) ? String(body.count) : body.text; }\nconst block: Block = { kind: Kind.Block, count: 2 };\nconsole.log(show(block));\n"
+	const wrap = "function wrap<T>(kind: T, text: string): { kind: T; text: string } { return { kind, text }; }\n"
+	for _, probe := range []struct{ name, source string }{
+		{"generic literal", wrap + "const lie: Expr = wrap(Kind.Block, 'xyz');\nconsole.log(show(lie));\n"},
+		{"generic in a container", wrap + "const held: Expr[] = [];\nheld.push(wrap(Kind.Block, 'xyz'));\nfor (const lie of held) { console.log(show(lie)); }\n"},
+		{"generic in a field", wrap + "interface Holder { body: Expr }\nconst holder: Holder = { body: wrap(Kind.Text, 'ok') };\nholder.body = wrap(Kind.Block, 'xyz');\nconsole.log(show(holder.body));\n"},
+		{"decoded", "const decoded = decodeJson<Expr>('{\"kind\":1,\"text\":\"xyz\"}');\nif (decoded.kind === 'Ok') console.log(show(decoded.value));\n"},
+	} {
+		t.Run(probe.name, func(t *testing.T) {
+			t.Parallel()
+			if _, err := lowerSourceAs(t, types+probe.source, ".a"); err == nil || !strings.Contains(err.Error(), kindPredicateRefusal) {
+				t.Fatalf("want %q, got %v", kindPredicateRefusal, err)
+			}
+		})
+	}
+}
+
 // A write of kind through any, tsc's clone loop in nodeFactory.ts, leaves S closed: lowering refuses the
 // cast to any, so the program never compiles and the write makes no value (closedKindReaches, J-q7nwd21).
 // The same write through a mutable Lit, typed, keeps Lit open. Mutant m5 (any reaches every S) opens the first row.

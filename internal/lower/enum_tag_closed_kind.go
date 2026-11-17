@@ -1,6 +1,8 @@
 package lower
 
 import (
+	_ "unsafe"
+
 	"github.com/microsoft/TypeScript/tsc/shim/ast"
 	"github.com/microsoft/TypeScript/tsc/shim/checker"
 )
@@ -27,7 +29,9 @@ import (
 //   - Build sites: every object literal, spread included, new, class and Object.assign the program writes,
 //     and every write of the field, whose built type is assignable to S. A literal kind adds to K(S); one
 //     that isn't leaves S open, and the reason names the site. So `{ kind: K.B, ...brands }` typed S puts
-//     B in K(S), and `new N(kindOf())` of a class N assignable to S keeps S open.
+//     B in K(S), and `new N(kindOf())` of a class N assignable to S keeps S open. A build whose type holds a
+//     type parameter reaches S when it does at some instantiation, its permissive one judged (closedKindReaches),
+//     and a decodeJson<T> call builds a T whose kind its text chooses.
 //
 // The walk alone reads K(S) (enumTagWalkHazardOf, enumTagClosedTag). R-T80's provers ask
 // enumTagHazardOf and keep the hazard.
@@ -145,6 +149,16 @@ func (l *lowering) closedKindReaches(built, of *checker.Type) bool {
 	if built.Flags()&checker.TypeFlagsAny != 0 {
 		return false
 	}
+	// A type holding a type parameter, `{ kind: T; text: string }` in a generic factory, reaches S at every
+	// instantiation its permissive one, each type parameter as any, is assignable to; the factory instantiated
+	// at a kind outside K(S) would hand S a lie (Language's k01 on #x2cjvy9). An any made of the mapper is no
+	// value typed any, so it reaches.
+	if permissive := closedKindPermissive(l.checker, built); permissive != built {
+		if permissive.Flags()&checker.TypeFlagsAny != 0 {
+			return true
+		}
+		built = permissive
+	}
 	if l.checker.IsTypeAssignableTo(built, of) {
 		return true
 	}
@@ -157,6 +171,11 @@ func (l *lowering) closedKindReaches(built, of *checker.Type) bool {
 	}
 	return false
 }
+
+// The checker's permissive instantiation: every type parameter as any, the type itself when it holds none.
+//
+//go:linkname closedKindPermissive github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).getPermissiveInstantiation
+func closedKindPermissive(receiver *checker.Checker, of *checker.Type) *checker.Type
 
 // closedKindFieldType is the type owner's field has, or nil when it has none.
 func (l *lowering) closedKindFieldType(owner *checker.Type, field string) *checker.Type {
@@ -263,6 +282,10 @@ func (l *lowering) closedKindBuildSites() []closedKindSite {
 			if callee.Kind == ast.KindPropertyAccessExpression && callee.Name().Text() == "assign" && l.isLibraryGlobal(callee.AsPropertyAccessExpression().Expression, "Object") {
 				built(node, l.checker.GetTypeAtLocation(node))
 			}
+			// decodeJson<T> builds a T from its text, its kind whatever the text holds (Language, #x2cjvy9).
+			if call := node.AsCallExpression(); l.isPreludeFunction(call.Expression, "decodeJson") && call.TypeArguments != nil && len(call.TypeArguments.Nodes) == 1 {
+				built(node, l.checker.GetTypeFromTypeNode(call.TypeArguments.Nodes[0]))
+			}
 		case ast.KindPropertyAccessExpression:
 			if ast.IsAssignmentTarget(node) {
 				built(node, l.checker.GetTypeAtLocation(node.AsPropertyAccessExpression().Expression))
@@ -313,6 +336,9 @@ func (l *lowering) closedKindBuildKind(site closedKindSite, field string) (*chec
 	case ast.KindNewExpression:
 		return l.closedKindFieldType(site.of, field), "a new", true
 	case ast.KindCallExpression:
+		if l.isPreludeFunction(site.node.AsCallExpression().Expression, "decodeJson") {
+			return nil, "decodeJson", true
+		}
 		return l.closedKindFieldType(site.of, field), "Object.assign", true
 	}
 	return l.closedKindFieldType(site.of, field), "the class " + l.checker.TypeToString(site.of), true
