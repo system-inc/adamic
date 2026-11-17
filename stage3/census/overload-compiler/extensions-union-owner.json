@@ -1,0 +1,10 @@
+{
+  "file": "utilities.ts",
+  "owner": "getSupportedExtensionsWithJsonIfResolveJsonModule",
+  "before": "export function getSupportedExtensionsWithJsonIfResolveJsonModule(options: CompilerOptions | undefined, supportedExtensions: readonly Extension[][]): readonly Extension[][];\n/** @internal */\nexport function getSupportedExtensionsWithJsonIfResolveJsonModule(options: CompilerOptions | undefined, supportedExtensions: readonly string[][]): readonly string[][];\n/** @internal */\nexport function getSupportedExtensionsWithJsonIfResolveJsonModule(options: CompilerOptions | undefined, supportedExtensions: readonly string[][]): readonly string[][] {\n    if (!options || !getResolveJsonModule(options)) return supportedExtensions;\n    if (supportedExtensions === allSupportedExtensions) return allSupportedExtensionsWithJson;\n    if (supportedExtensions === supportedTSExtensions) return supportedTSExtensionsWithJson;\n    return [...supportedExtensions, [Extension.Json]];\n}",
+  "after": "export function getSupportedExtensionsWithJsonIfResolveJsonModule(options: CompilerOptions | undefined, supportedExtensions: readonly (Extension[] | string[])[]): readonly (Extension[] | string[])[] {\n    if (!options || !getResolveJsonModule(options)) return supportedExtensions;\n    if (supportedExtensions === allSupportedExtensions) return allSupportedExtensionsWithJson;\n    if (supportedExtensions === supportedTSExtensions) return supportedTSExtensionsWithJson;\n    return [...supportedExtensions, [Extension.Json]];\n}",
+  "beforeDeclarations": 3,
+  "afterDeclarations": 1,
+  "ownerBeforeSha256": "1919c9470ba7c3ddf8f75feedd49e551e67e3920ddb4bd8f1d05e6788124029b",
+  "ownerAfterSha256": "5d619bce79a56a8e904fee14cdc9e1f72a682ba0e442273c908a39b062d4cb2b"
+}
