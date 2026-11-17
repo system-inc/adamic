@@ -23,6 +23,10 @@ func (l *lowering) classDeadZoneGap(node *ast.Node) error {
 		return nil
 	}
 	symbol := l.checker.GetSymbolAtLocation(node)
+	// { Late } reads the class too, though its name's own symbol is the property (#3sdynvn).
+	if node.Parent != nil && node.Parent.Kind == ast.KindShorthandPropertyAssignment {
+		symbol = l.valueSymbol(node)
+	}
 	if symbol == nil || symbol.Flags&ast.SymbolFlagsClass == 0 {
 		return nil
 	}

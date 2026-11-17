@@ -786,7 +786,7 @@ func (l *lowering) predicateOverloadProven(implementation, overload *ast.Node) b
 	changed := false
 	var writes ast.Visitor
 	writes = func(node *ast.Node) bool {
-		if ast.IsIdentifier(node) && l.symbol(node) == l.symbol(parameter.Name()) && ast.IsAssignmentTarget(node) {
+		if ast.IsIdentifier(node) && l.valueSymbol(node) == l.symbol(parameter.Name()) && ast.IsAssignmentTarget(node) {
 			changed = true
 		}
 		node.ForEachChild(writes)
@@ -1368,7 +1368,7 @@ func (l *lowering) proveInferredPredicate(function *ast.Node, target *checker.Ty
 	changed := false
 	var writes ast.Visitor
 	writes = func(node *ast.Node) bool {
-		if node.Kind == ast.KindIdentifier && l.symbol(node) == l.symbol(parameter.Name()) && ast.IsAssignmentTarget(node) {
+		if node.Kind == ast.KindIdentifier && l.valueSymbol(node) == l.symbol(parameter.Name()) && ast.IsAssignmentTarget(node) {
 			changed = true
 		}
 		node.ForEachChild(writes)

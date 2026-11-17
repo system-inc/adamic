@@ -416,7 +416,8 @@ func (l *lowering) staticInitializationReads(node, declaration *ast.Node, availa
 				}
 			}
 		}
-		if ast.IsIdentifier(child) && l.symbol(child) == l.symbol(declaration.Name()) && !ast.IsDeclarationName(child) {
+		// A shorthand { C } is a declaration name too, the property's, and a read of the class besides.
+		if ast.IsIdentifier(child) && l.valueSymbol(child) == l.symbol(declaration.Name()) && (!ast.IsDeclarationName(child) || child.Parent.Kind == ast.KindShorthandPropertyAssignment) {
 			if !insideClass(child, declaration) {
 				failure = &Refused{Where: l.program.Where(child), What: "an outside helper reading a class during its declaration (the temporal dead zone)", Fix: "run the helper after the class declaration, or read this inside a static method"}
 				return true
