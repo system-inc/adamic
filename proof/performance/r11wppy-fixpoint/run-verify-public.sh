@@ -5,7 +5,7 @@
 set -u
 A="$TMPDIR/adapted"
 bash stage3/apply.sh "$A" > "$TMPDIR/apply.log" 2>&1 || { echo "VERDICT FAIL apply"; tail -5 "$TMPDIR/apply.log"; exit 3; }
-for variant in second; do
+for variant in annotations; do
 	echo "=== $variant"
 	VERIFY_KEEP_SERVICES=1 node proof/performance/r11wppy-fixpoint/verify.mjs "$A" "proof/performance/r11wppy-fixpoint/edits-public-$variant.diff" "$TMPDIR/verify-$variant" | grep -vE '^  (kept |left out \(services)'
 done
