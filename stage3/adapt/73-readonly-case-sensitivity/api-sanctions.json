@@ -1,0 +1,13 @@
+[
+  {
+    "path": [
+      "ModuleResolutionHost",
+      "useCaseSensitiveFileNames"
+    ],
+    "kind": "PropertySignature",
+    "replace": "member",
+    "before": "useCaseSensitiveFileNames?: boolean | (() => boolean) | undefined;",
+    "after": "readonly useCaseSensitiveFileNames?: boolean | (() => boolean) | undefined;",
+    "why": "Adamic, task hes7595, under rulings.md:391: the member is readonly, certified by the compiled program's gate. Code that assigns useCaseSensitiveFileNames through a ModuleResolutionHost view stops type-checking (TS2540); code that reads it is unaffected, and a host that declares it as a method keeps its method."
+  }
+]

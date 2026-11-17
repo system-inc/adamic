@@ -812,6 +812,11 @@
       "after": "[\"PropertySignature\",[\"Identifier\",\"trace\"],[\"QuestionToken\"],[\"UnionType\",[\"IndexedAccessType\",[\"TypeLiteral\",[\"MethodSignature\",[\"Identifier\",\"trace\"],[\"Parameter\",[\"Identifier\",\"s\"],[\"StringKeyword\"]],[\"VoidKeyword\"]]],[\"LiteralType\",[\"StringLiteral\",\"trace\"]]],[\"UndefinedKeyword\"]]]"
     },
     {
+      "declaration": "member:[\"ts\",\"ModuleResolutionHost\",\"useCaseSensitiveFileNames\"]#0",
+      "before": "[\"PropertySignature\",[\"Identifier\",\"useCaseSensitiveFileNames\"],[\"QuestionToken\"],[\"UnionType\",[\"BooleanKeyword\"],[\"FunctionType\",[\"BooleanKeyword\"]],[\"UndefinedKeyword\"]]]",
+      "after": "[\"PropertySignature\",[\"ReadonlyKeyword\"],[\"Identifier\",\"useCaseSensitiveFileNames\"],[\"QuestionToken\"],[\"UnionType\",[\"BooleanKeyword\"],[\"FunctionType\",[\"BooleanKeyword\"]],[\"UndefinedKeyword\"]]]"
+    },
+    {
       "declaration": "member:[\"ts\",\"NamedDeclaration\",\"name\"]#0",
       "before": "[\"PropertySignature\",[\"ReadonlyKeyword\"],[\"Identifier\",\"name\"],[\"QuestionToken\"],[\"TypeReference\",[\"Identifier\",\"DeclarationName\"]]]",
       "after": "[\"PropertySignature\",[\"ReadonlyKeyword\"],[\"Identifier\",\"name\"],[\"QuestionToken\"],[\"UnionType\",[\"TypeReference\",[\"Identifier\",\"DeclarationName\"]],[\"UndefinedKeyword\"]]]"
@@ -3342,6 +3347,14 @@
       "line": 6935
     },
     {
+      "adaptation": "adapt/73-readonly-case-sensitivity/api-sanctions.json row 1 {\"path\":[\"ModuleResolutionHost\",\"useCaseSensitiveFileNames\"],\"kind\":\"PropertySignature\",\"replace\":\"member\",\"before\":\"useCaseSensitiveFileNames?: boolean | (() => boolean) | undefined;\",\"after\":\"readonly useCaseSensitiveFileNames?: boolean | (() => boolean) | undefined;\",\"why\":\"Adamic, task hes7595, under rulings.md:391: the member is readonly, certified by the compiled program's gate. Code that assigns useCaseSensitiveFileNames through a ModuleResolutionHost view stops type-checking (TS2540); code that reads it is unaffected, and a host that declares it as a method keeps its method.\"}",
+      "path": [
+        "ModuleResolutionHost",
+        "useCaseSensitiveFileNames"
+      ],
+      "line": 7272
+    },
+    {
       "adaptation": "adapt/95-checker-axolotl-e/api-sanctions.json row 1 {\"path\":[\"TypeChecker\",\"signatureToSignatureDeclaration\"],\"kind\":\"MethodSignature\",\"before\":\"| SignatureDeclaration & {\\n                typeArguments?: NodeArray<TypeNode>;\\n            }\\n            | undefined\",\"after\":\"| SignatureDeclaration & {\\n                typeArguments?: NodeArray<TypeNode> | undefined;\\n            }\\n            | undefined\",\"why\":\"tsc can return an ArrowFunction whose typeArguments property is present and undefined.\"}",
       "path": [
         "TypeChecker",
@@ -3705,6 +3718,10 @@
     {
       "file": "stage3/adapt/72-readonly-diagnostic-slots/api-sanctions.json",
       "sha256": "ae605897491f088cbc5b4b56bb148f10d726b1b634a81f339d9ee3b1b79a5fcf"
+    },
+    {
+      "file": "stage3/adapt/73-readonly-case-sensitivity/api-sanctions.json",
+      "sha256": "a40222aeaae00bc2e00f37eac7a6a1385d78a58efac0802e0965e68f3070029e"
     },
     {
       "file": "stage3/adapt/95-checker-axolotl-e/api-sanctions.json",
@@ -4944,7 +4961,7 @@
     "         errors: Diagnostic[];\n",
     "         wildcardDirectories?: MapLike<WatchDirectoryFlags>;\n",
     "         compileOnSave?: boolean;\n",
-    "@@ -7252,23 +7250,23 @@\n",
+    "@@ -7252,24 +7250,24 @@\n",
     "     interface CreateProgramOptions {\n",
     "         rootNames: readonly string[];\n",
     "         options: CompilerOptions;\n",
@@ -4972,10 +4989,12 @@
     "+        realpath?: { realpath(path: string): string; }[\"realpath\"] | undefined;\n",
     "         getCurrentDirectory?(): string;\n",
     "-        getDirectories?(path: string): string[];\n",
+    "-        useCaseSensitiveFileNames?: boolean | (() => boolean) | undefined;\n",
     "+        getDirectories?: { getDirectories(path: string): string[]; }[\"getDirectories\"] | undefined;\n",
-    "         useCaseSensitiveFileNames?: boolean | (() => boolean) | undefined;\n",
+    "+        readonly useCaseSensitiveFileNames?: boolean | (() => boolean) | undefined;\n",
     "     }\n",
     "     /**\n",
+    "      * Used by services to specify the minimum host area required to set up source files under any compilation settings\n",
     "@@ -7307,7 +7305,7 @@\n",
     "          * This is optional for backwards-compatibility, but will be added if not provided.\n",
     "          */\n",
