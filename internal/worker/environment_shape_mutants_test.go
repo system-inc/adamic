@@ -1,0 +1,109 @@
+package worker
+
+import "testing"
+
+// One observation mutant is run separately against every L3 pin: removing the
+// common NotYet cannot be hidden by a later lowering stop or another pin.
+var environmentShapeMutants = []workerMutation{
+	{"environment-shape-observed", "internal/lower/worker_environment.go", `return r.l.notYet(node, "worker environment "+form+workerEnvironmentLift)`, `return nil`, "TestWorkerEnvironmentShapeStops/keys", "environment boundary keys"},
+	{"environment-class-holder", "internal/lower/worker_environment.go", `if t != nil && !allowed && r.holds(t, map[*checker.Type]bool{}, 0) {`, `if false && t != nil && !allowed && r.holds(t, map[*checker.Type]bool{}, 0) {`, "TestWorkerEnvironmentShapeStops/class_field", "environment boundary class_field"},
+	{"environment-parameter-write", "internal/lower/worker_environment.go", `if ast.IsAssignmentTarget(node) && r.parameterField(node) {`, `if false && ast.IsAssignmentTarget(node) && r.parameterField(node) {`, "TestWorkerEnvironmentShapeStops/parameter_write", "environment boundary parameter_write"},
+	{"environment-local-destructure", "internal/lower/worker_environment.go", `if node.Name().Kind != ast.KindIdentifier {`, `if node.Name().Kind != ast.KindIdentifier { return r.refused(node,"a const destructuring");`, "TestWorkerEnvironmentFieldReadRoads/const_destructure", "environment field read build:"},
+	{"environment-parameter-destructure", "internal/lower/worker_environment.go", "case ast.KindParameter:\n\t\tt =", "case ast.KindParameter:\n if node.Name().Kind == ast.KindObjectBindingPattern {return r.refused(node,\"a parameter destructuring\")};\n\t\tt =", "TestWorkerEnvironmentFieldReadRoads/parameter_destructure", "environment field read build:"},
+	{"environment-optional-read", "internal/lower/worker_environment.go", `if r.declared(parent) {`, `if r.declared(parent) { if parent.Flags&ast.NodeFlagsOptionalChain!=0 {return r.observation(node,"optional read")};`, "TestWorkerEnvironmentFieldReadRoads/optional_read", "environment field read build:"},
+	{"environment-container-methods", "internal/lower/worker_environment.go", `if !r.l.nodeLibraryContainer(t) {`, `if true {`, "TestWorkerEnvironmentFieldReadRoads/async_field_read", "environment field read build:"},
+	{"environment-temporary-slots", "internal/lower/worker_environment.go", `if r.exact(source) && (name == "array element" || name == "object field") {`, `if false && r.exact(source) && (name == "array element" || name == "object field") {`, "TestWorkerEnvironmentShapeStops/array_temp", "environment boundary array_temp"},
+	{"environment-parenthesized-argument", "internal/lower/worker_environment.go", `node.Kind == ast.KindParenthesizedExpression || !r.l.isExpression(node)`, `!r.l.isExpression(node)`, "TestWorkerEnvironmentFieldReadRoads/exact_argument", "environment field read build:"},
+	{"environment-discovery-missing", "internal/worker/worker.go", `return fields, environmentType, err`, `return fields, nil, err`, "TestWorkerEnvironmentShapeStops/class_field", "environment boundary class_field"},
+	{"environment-intersection-observation", "internal/lower/worker_environment.go", `if t != nil && t.Flags()&checker.TypeFlagsIntersection != 0 {`, `if false && t != nil && t.Flags()&checker.TypeFlagsIntersection != 0 {`, "TestWorkerEnvironmentShapeStops/e01", "environment boundary e01"},
+	{"environment-empty-gate", "internal/worker/worker.go", `if environmentType != nil {`, `if len(environment) != 0 {`, "TestWorkerEnvironmentEmptyShapeStops", "empty environment observation"},
+}
+
+func TestProduct_WorkerEnvironmentShapeMutant(t *testing.T) {
+	t.Parallel()
+	buildWorkerMutant(t, environmentShapeMutants[0], false)
+}
+func TestProduct_WorkerEnvironmentHolderMutant(t *testing.T) {
+	t.Parallel()
+	buildWorkerMutant(t, environmentShapeMutants[1], false)
+}
+func TestProduct_WorkerEnvironmentWriteMutant(t *testing.T) {
+	t.Parallel()
+	buildWorkerMutant(t, environmentShapeMutants[2], false)
+}
+func TestWorkerEnvironmentShapeMutantsAreCaught(t *testing.T) {
+	t.Parallel()
+	for _, m := range environmentShapeMutants {
+		t.Run(m.name, func(t *testing.T) { t.Parallel(); runWorkerMutant(t, m) })
+	}
+	t.Run("object_temp", func(t *testing.T) {
+		t.Parallel()
+		m := environmentShapeMutants[7]
+		m.check = "TestWorkerEnvironmentShapeStops/object_temp"
+		m.witness = "environment boundary object_temp"
+		runWorkerMutant(t, m)
+	})
+
+	for _, name := range []string{"let", "array", "module_binding", "return", "optional_parameter", "this_parameter", "promise_return"} {
+		t.Run(name, func(t *testing.T) {
+			t.Parallel()
+			m := environmentShapeMutants[1]
+			m.check = "TestWorkerEnvironmentShapeStops/" + name
+			m.witness = "environment boundary " + name
+			runWorkerMutant(t, m)
+		})
+	}
+
+	for _, name := range []string{"in", "values", "entries", "for_in", "spread", "json", "has_own", "reflect", "object", "unknown", "record", "structural", "union", "alias_keys", "rest_destructure", "generic_argument", "generic_new", "generic_rest", "array_unknown"} {
+		t.Run(name, func(t *testing.T) {
+			t.Parallel()
+			m := environmentShapeMutants[0]
+			m.check = "TestWorkerEnvironmentShapeStops/" + name
+			m.witness = "environment boundary " + name
+			runWorkerMutant(t, m)
+		})
+	}
+}
+
+func TestProduct_WorkerEnvironmentLocalDestructureMutant(t *testing.T) {
+	t.Parallel()
+	buildWorkerMutant(t, environmentShapeMutants[3], false)
+}
+func TestProduct_WorkerEnvironmentParameterDestructureMutant(t *testing.T) {
+	t.Parallel()
+	buildWorkerMutant(t, environmentShapeMutants[4], false)
+}
+func TestProduct_WorkerEnvironmentOptionalReadMutant(t *testing.T) {
+	t.Parallel()
+	buildWorkerMutant(t, environmentShapeMutants[5], false)
+}
+
+func TestProduct_WorkerEnvironmentAsyncContainerMutant(t *testing.T) {
+	t.Parallel()
+	buildWorkerMutant(t, environmentShapeMutants[6], false)
+}
+
+func TestProduct_WorkerEnvironmentTemporarySlotsMutant(t *testing.T) {
+	t.Parallel()
+	buildWorkerMutant(t, environmentShapeMutants[7], false)
+}
+
+func TestProduct_WorkerEnvironmentParenthesizedMutant(t *testing.T) {
+	t.Parallel()
+	buildWorkerMutant(t, environmentShapeMutants[8], false)
+}
+
+func TestProduct_WorkerEnvironmentDiscoveryMutant(t *testing.T) {
+	t.Parallel()
+	buildWorkerMutant(t, environmentShapeMutants[9], false)
+}
+
+func TestProduct_WorkerEnvironmentIntersectionMutant(t *testing.T) {
+	t.Parallel()
+	buildWorkerMutant(t, environmentShapeMutants[10], false)
+}
+
+func TestProduct_WorkerEnvironmentEmptyMutant(t *testing.T) {
+	t.Parallel()
+	buildWorkerMutant(t, environmentShapeMutants[11], false)
+}

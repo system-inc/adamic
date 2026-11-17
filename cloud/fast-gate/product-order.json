@@ -2797,6 +2797,42 @@
     ],
     "internal/worker TestProduct_WorkerEnvironmentWasmNeedleMutant": [
       "internal/worker TestProduct_WorkerChecks"
+    ],
+    "internal/worker TestProduct_WorkerEnvironmentShapeMutant": [
+      "internal/worker TestProduct_WorkerChecks"
+    ],
+    "internal/worker TestProduct_WorkerEnvironmentHolderMutant": [
+      "internal/worker TestProduct_WorkerChecks"
+    ],
+    "internal/worker TestProduct_WorkerEnvironmentWriteMutant": [
+      "internal/worker TestProduct_WorkerChecks"
+    ],
+    "internal/worker TestProduct_WorkerEnvironmentLocalDestructureMutant": [
+      "internal/worker TestProduct_WorkerChecks"
+    ],
+    "internal/worker TestProduct_WorkerEnvironmentParameterDestructureMutant": [
+      "internal/worker TestProduct_WorkerChecks"
+    ],
+    "internal/worker TestProduct_WorkerEnvironmentOptionalReadMutant": [
+      "internal/worker TestProduct_WorkerChecks"
+    ],
+    "internal/worker TestProduct_WorkerEnvironmentAsyncContainerMutant": [
+      "internal/worker TestProduct_WorkerChecks"
+    ],
+    "internal/worker TestProduct_WorkerEnvironmentTemporarySlotsMutant": [
+      "internal/worker TestProduct_WorkerChecks"
+    ],
+    "internal/worker TestProduct_WorkerEnvironmentParenthesizedMutant": [
+      "internal/worker TestProduct_WorkerChecks"
+    ],
+    "internal/worker TestProduct_WorkerEnvironmentDiscoveryMutant": [
+      "internal/worker TestProduct_WorkerChecks"
+    ],
+    "internal/worker TestProduct_WorkerEnvironmentIntersectionMutant": [
+      "internal/worker TestProduct_WorkerChecks"
+    ],
+    "internal/worker TestProduct_WorkerEnvironmentEmptyMutant": [
+      "internal/worker TestProduct_WorkerChecks"
     ]
   }
 }

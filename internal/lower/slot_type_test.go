@@ -76,6 +76,11 @@ func TestRefusalRulesReadTheirSlotThroughSlotType(t *testing.T) {
 			queue = append(queue, name)
 		}
 	}
+	// The Worker boundary is context-specific, not a generic refusal-registry
+	// rule. Audit its complete read graph explicitly, rather than accidentally
+	// reaching a method called check through an unrelated receiver's method.
+	reachedFrom["CheckWorkerEnvironment"] = "Worker environment boundary"
+	queue = append(queue, "CheckWorkerEnvironment")
 	reach := func(name, rule string) {
 		if _, reached := reachedFrom[name]; !reached && (len(functions[name]) > 0 || len(variables[name]) > 0) {
 			reachedFrom[name] = rule
@@ -147,6 +152,7 @@ func TestRefusalRulesReadTheirSlotThroughSlotType(t *testing.T) {
 // something other than the slot an argument goes into, each with what it reads instead. Any other reader
 // asks slotSet first (TestRefusalRulesReadTheirSlotThroughSlotType).
 var signatureReaders = map[string]string{
+	"workerEnvironmentCheck":            "the original parameter declaration's nominal interface identity, not the instantiated argument slot; relationSite already judges that slot through slotType and honors slotSet",
 	"boundKeyedLength":                  "the callee's declaration, parameter count and symbols, to recognize a keyed bound-length helper; no argument is judged against a parameter's slot",
 	"brandedCall":                       "the callee's type predicate, to judge a call that narrows its argument to a branded supertype",
 	"narrowOverloadCall":                "the declaration a call resolves to, to ask whether its result is checked at the call; no argument is judged against a parameter's slot",
