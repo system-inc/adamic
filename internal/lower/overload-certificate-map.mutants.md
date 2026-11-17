@@ -6,7 +6,10 @@ each of its four overloads called directly, agreeing with Node natively and on t
 `TestOverloadCertificateArrayToMapFourthOverloadServed` (the four-overload set with overload 4 called lowers,
 its V2 witnessed as U by censusInferRemainder), `TestOverloadCertificateArrayToMapFourthOverloadElementSetStaysRefused`
 (overload 4 over a body that sets the element is refused for its result by the certificate),
-`TestOverloadCertificateMapNegativesStayRefused` (Correctness's five
+`TestOverloadCertificateMapInstanceStorage` and, in
+overload_certificate_array_test.go, `TestOverloadCertificateArrayInstanceStorage` (Lower's probe J-h37mw8d:
+calls whose mapper changes the element's type, each stopping at the call in the storage condition's words or
+agreeing with Node natively), `TestOverloadCertificateMapNegativesStayRefused` (Correctness's five
 Map negatives as she wrote them, and eight canonical rows each standing on its own hazard),
 `TestOverloadCertificateMapIdentityDefaultAccepted`, `TestOverloadCertificateMapPrototypeRewriteStaysRefused` and
 `TestOverloadCertificateMapGate` (a direct entry; comma and spread entries NotYet at the call). Mutants 3 and 4
@@ -117,3 +120,26 @@ and the comma and spread rows of `TestOverloadCertificateMapGate` (refused befor
 element-set negative reds too, refused at the parameter rather than its result, which is the row's point: the
 witness gets overload 4 to the certificate, and the certificate refuses it. The Map negatives, the identity
 rows and A's rows stay green.
+
+## 6. The storage condition dropped: a direct call is erased whatever its instance stores
+
+File: internal/lower/overload_certificate_array.go
+
+Old:
+
+```go
+		return l.overloadCertificateStorage(node, overload, resolved)
+```
+
+New:
+
+```go
+		return nil
+```
+
+Expected: `TestOverloadCertificateArrayInstanceStorage/string_to_number` reds: the instance builds
+(string | number)[] of boxed unions, the call reads number[], and natively it prints 1.0,1.0 where Node prints
+4.0,2.0 (J-h37mw8d), so the row's native check fails. Every `TestOverloadCertificateMapInstanceStorage` row reds
+too, each stopping inside the instance where no Map of a union lowers, in words other than the storage
+condition's. The T = U rows, `TestOverloadCertificateArrayFromLowers` and `TestOverloadCertificateArrayToMapLowers`,
+stay green: their instances store what the call reads.

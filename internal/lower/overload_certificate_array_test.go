@@ -29,6 +29,33 @@ function arrayFrom<T, U>(iterator: Iterable<T>, map?: (t: T) => U): (T | U)[] {
 // overloadCertificateGateWords is what the gate says before an entry's form.
 const overloadCertificateGateWords = "an overload certified by its body, entered other than by a direct call: "
 
+// overloadCertificateStorageWords is what the gate says before the instance's stored result, at a direct
+// call whose instance stores its result otherwise than the call reads it.
+const overloadCertificateStorageWords = "a certified overload whose implementation stores "
+
+// overloadCertificateInstanceRow lowers source, a direct call to a certified overload whose element isn't
+// its mapped value, so the implementation's instance stores T | U where the call reads U. A stop must be
+// NotYet at the call in the storage condition's words; when stops is false, lowering whole is allowed too,
+// and must then agree with Node on the JavaScript backend and natively, want being what Node prints. The
+// native run is the one that matters: the JavaScript backend has no representations to confuse.
+func overloadCertificateInstanceRow(t *testing.T, source, want string, stops bool) {
+	t.Helper()
+	_, err := lowerSourceAs(t, source, ".ts")
+	if err != nil || stops {
+		var notYet *NotYet
+		if !errors.As(err, &notYet) || !strings.HasPrefix(notYet.What, overloadCertificateStorageWords) {
+			t.Fatalf("want NotYet at the call in the words %q, got %v", overloadCertificateStorageWords, err)
+		}
+		t.Logf("stops at the call: %s", notYet.What)
+		return
+	}
+	program := lowersAndAgreesWithNodeAs(t, source, ".ts")
+	if code, stdout, stderr := brandedNative(t, program); code != 0 || stdout != want {
+		t.Fatalf("native: exit %d, stdout %q, stderr %q; want %q, what Node prints", code, stdout, stderr, want)
+	}
+	t.Log("lowers and agrees with Node natively")
+}
+
 // Both overloads called directly lower and agree with Node on the JavaScript backend and natively. The
 // census accepts overload 1, U[] over (T | U)[], by certificate A where it refused it before
 // (census_small.go's result refusal). Overload 2 it already accepted by relation, its implementation's
@@ -46,6 +73,24 @@ console.log(doubled.join(","));
 	program := lowersAndAgreesWithNodeAs(t, source, ".ts")
 	if code, stdout, stderr := brandedNative(t, program); code != 0 || stdout != "3,1,2\n6,2,4\n" {
 		t.Fatalf("native: exit %d, stdout %q, stderr %q; want what Node prints", code, stdout, stderr)
+	}
+}
+
+// Lower's probe (J-h37mw8d on #5fws6q8): overload 1 called where the mapper changes the element's type.
+// The instance stores (T | U)[] while the call reads U[], and before the storage condition the string to
+// number row lowered and printed 1.0,1.0 natively where Node prints 4.0,2.0, each boxed union read as a
+// number. Each row now stops at the call or agrees with Node natively. Mutant: the storage condition
+// dropped, and the string to number row lowers and disagrees natively.
+func TestOverloadCertificateArrayInstanceStorage(t *testing.T) {
+	t.Parallel()
+	for _, probe := range []struct{ name, source, want string }{
+		{"string to number", overloadCertificateArrayFrom + "const names = new Map<string, string>([[\"a\", \"xyz\"], [\"b\", \"q\"]]);\nconst sizes = arrayFrom(names.values(), s => s.length);\nconsole.log(sizes.map(n => (n + 1).toFixed(1)).join(\",\"));\n", "4.0,2.0\n"},
+		{"number to string", overloadCertificateArrayFrom + "const counts = new Map<string, number>([[\"a\", 3], [\"b\", 1]]);\nconst named = arrayFrom(counts.values(), x => `v${x}`);\nconsole.log(named.map(s => s.toUpperCase()).join(\",\"));\nconst first = named[0];\nconsole.log(`${first === undefined ? -1 : first.length}`);\n", "V3,V1\n2\n"},
+	} {
+		t.Run(probe.name, func(t *testing.T) {
+			t.Parallel()
+			overloadCertificateInstanceRow(t, probe.source, probe.want, false)
+		})
 	}
 }
 

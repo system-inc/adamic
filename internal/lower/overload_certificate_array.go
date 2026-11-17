@@ -21,8 +21,12 @@ import (
 // only mapped values. That reading takes the overload's arguments as exactly what the caller passed,
 // which holds only at a direct call the checker resolved to that overload. So the certificate erases the
 // result's check per call, never per declaration: overloadCertificateCall stops every other entry, and an
-// array result can't be checked at a call, so each one is NotYet there. Certificate B
-// (overload_certificate_map.go) reads its own shape and shares this file's frame, confinement and gate.
+// array result can't be checked at a call, so each one is NotYet there. The certificate is a fact about
+// values, never about how they're held: a direct call is erased only where the implementation's instance
+// at that call stores its result as the call reads it (overloadCertificateStorage), since arrayFrom's
+// instance at T = string, U = number builds a (string | number)[] of boxed unions the call would read as
+// number[] (Lower's probe J-h37mw8d on #5fws6q8). Certificate B (overload_certificate_map.go) reads its own
+// shape and shares this file's frame, confinement and gate.
 
 // overloadArrayShape is what certificate A reads from an implementation's body.
 type overloadArrayShape struct {
@@ -470,9 +474,11 @@ func (l *lowering) overloadCertificateEntry(node *ast.Node, overload *ast.Node) 
 }
 
 // overloadCertificateCall is nil unless node, a call, a new or a tagged template, resolves to an overload
-// census accepted by certificate A or B and enters it other than directly (overloadCertificateEntry). An
-// array or Map result can't be checked at the call, so that entry is NotYet, naming its form. Each road a
-// call enters lowering by asks it beside noteOverloadCall, before the callee or an argument is lowered.
+// census accepted by certificate A or B and either enters it other than directly (overloadCertificateEntry)
+// or, entering directly, calls an instance that stores its result otherwise than the call reads it
+// (overloadCertificateStorage). An array or Map result can't be checked at the call, so either is NotYet,
+// naming why. Each road a call enters lowering by asks it beside noteOverloadCall, before the callee or an
+// argument is lowered.
 func (l *lowering) overloadCertificateCall(node *ast.Node) error {
 	if node.Kind != ast.KindCallExpression && node.Kind != ast.KindNewExpression && node.Kind != ast.KindTaggedTemplateExpression {
 		return nil
@@ -486,8 +492,11 @@ func (l *lowering) overloadCertificateCall(node *ast.Node) error {
 	if err != nil {
 		return err
 	}
-	if !certified || l.overloadCertificateEntry(node, overload) {
+	if !certified {
 		return nil
+	}
+	if l.overloadCertificateEntry(node, overload) {
+		return l.overloadCertificateStorage(node, overload, resolved)
 	}
 	form := "a callee other than the overload set's name"
 	switch {
@@ -501,6 +510,74 @@ func (l *lowering) overloadCertificateCall(node *ast.Node) error {
 		form = "a comma expression callee"
 	}
 	return l.notYet(node, "an overload certified by its body, entered other than by a direct call: "+form)
+}
+
+// overloadCertificateStorage is nil when the implementation's instance a direct call to overload lowers
+// stores its result as the call reads overload's promise, resolved, and NotYet at the call otherwise.
+// The instance's result is the implementation's own, instantiated as instantiateFunctionSignature
+// instantiates it for this call (instanceTypes), never by a second inference; a non-generic
+// implementation's is its declared result. The certificates prove which values the result holds, not how
+// it holds them: at arrayFrom's T = string, U = number the instance builds (string | number)[], each
+// element a boxed union, and the call reading number[] read each box as a number (Lower's probe J-h37mw8d
+// on #5fws6q8, native 1.0,1.0 where Node prints 4.0,2.0). Fails closed on anything it can't read.
+func (l *lowering) overloadCertificateStorage(node, overload *ast.Node, resolved *checker.Signature) error {
+	implementation := l.censusImplementation(overload)
+	if implementation == nil {
+		return l.notYet(node, "a certified overload whose implementation isn't found")
+	}
+	signature := l.checker.GetSignatureFromDeclaration(implementation)
+	stored := l.concrete(l.checker.GetReturnTypeOfSignature(signature))
+	if declaration, isGeneric := l.generics[l.symbol(implementation.Name())]; isGeneric {
+		// The declaration the call lowers its instance of, as call does, read as instantiateFunctionSignature reads it.
+		target := l.checker.GetSignatureFromDeclaration(declaration)
+		if mapper := l.instanceMapper(declaration, l.instanceTypes(declaration, target, resolved)); mapper != nil {
+			stored = instantiateType(l.checker, l.checker.GetReturnTypeOfSignature(target), mapper)
+		}
+	}
+	read := l.concrete(l.checker.GetReturnTypeOfSignature(resolved))
+	if !l.overloadCertificateSameStorage(stored, read) {
+		return l.notYet(node, "a certified overload whose implementation stores "+l.checker.TypeToString(stored)+" where the call reads "+l.checker.TypeToString(read))
+	}
+	return nil
+}
+
+// overloadCertificateSameStorage is whether a value of type stored is held as one of type read is, level by
+// level, by the lowering's own representation of each level, kept as an element or a Map value is: the same
+// at the top and, for an array or a Map or Set, the same elements, keys and values all the way down. Any
+// other type with type arguments, a tuple among them, is the same only when it's one type with read.
+func (l *lowering) overloadCertificateSameStorage(stored, read *checker.Type) bool {
+	if identicalTypes(l.checker, stored, read) {
+		return true
+	}
+	storedHeld, storedKnown := l.kept(stored)
+	readHeld, readKnown := l.kept(read)
+	if !storedKnown || !readKnown || storedHeld != readHeld {
+		return false
+	}
+	storedArguments, readArguments := l.typeArguments(stored), l.typeArguments(read)
+	if len(storedArguments) == 0 && len(readArguments) == 0 {
+		return true
+	}
+	collection := func(proven *checker.Type) string {
+		switch {
+		case l.isArrayType(proven):
+			return "Array"
+		case l.isLibraryType(proven, "Map", "ReadonlyMap"):
+			return "Map"
+		case l.isLibraryType(proven, "Set", "ReadonlySet"):
+			return "Set"
+		}
+		return ""
+	}
+	if collection(stored) == "" || collection(stored) != collection(read) || len(storedArguments) != len(readArguments) {
+		return false
+	}
+	for index := range storedArguments {
+		if !l.overloadCertificateSameStorage(storedArguments[index], readArguments[index]) {
+			return false
+		}
+	}
+	return true
 }
 
 // overloadCertificateSpread is whether call, a call expression, passes a spread argument.

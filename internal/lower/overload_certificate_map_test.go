@@ -52,10 +52,8 @@ function show(entries: Map<string, string>): void {
 // mapper; the census accepts them by relation, the implementation's V2 witnessed as their element
 // (inferTypes' one missing union binder), before any certificate is asked. Overloads 3 and 4 are reached
 // by their type arguments, since overloads 1 and 2 take every call they would. The mapper maps a string
-// to a string, so the implementation's instance holds Map<string, string> as the overload promises, but
-// for one overload 4 row whose elements are numbers and whose values are strings: there T isn't U, so
-// inferTypes' own union arm can't witness V2, and the row shows both the census's V2 = U and the call's
-// instance of the implementation are right.
+// to a string, so the implementation's instance holds Map<string, string> as the overload promises; rows
+// where it doesn't are TestOverloadCertificateMapInstanceStorage's.
 func TestOverloadCertificateArrayToMapLowers(t *testing.T) {
 	t.Parallel()
 	for _, probe := range []struct{ name, call, want string }{
@@ -63,7 +61,6 @@ func TestOverloadCertificateArrayToMapLowers(t *testing.T) {
 		{"overload 2", `show(arrayToMap(items, s => s.length > 2 ? undefined : s.toUpperCase(), s => s + s));`, "A=aa\nBB=bbbb\n"},
 		{"overload 3", `show(arrayToMap<string>(items, s => s.length > 2 ? undefined : s.toUpperCase()));`, "A=a\nBB=bb\n"},
 		{"overload 4", `show(arrayToMap<string, string>(items, s => s.length > 2 ? undefined : s.toUpperCase(), s => s + s));`, "A=aa\nBB=bbbb\n"},
-		{"overload 4 from numbers to strings", "const numbers: number[] = [1, 2, 3];\nshow(arrayToMap<number, string>(numbers, n => `k${n}`, n => `v${n * 2}`));", "k1=v2\nk2=v4\nk3=v6\n"},
 	} {
 		t.Run(probe.name, func(t *testing.T) {
 			t.Parallel()
@@ -215,6 +212,31 @@ const actual = bad([0], v => "a", undefined).get("a");
 			if !errors.As(err, &refused) || !strings.Contains(refused.What, "overload 1 of bad result Map<string, string> ") || !strings.Contains(refused.What, "cannot be served by implementation result Map<string, string | number>") {
 				t.Fatalf("want overload 1 of bad refused at its declaration for its result, got %v", err)
 			}
+		})
+	}
+}
+
+// Lower's probe (J-h37mw8d on #5fws6q8) for certificate B: overloads 2 and 4 called where the mapper
+// changes the element's type, so the instance stores Map<K, V1 | V2> where the call reads Map<K, V2>.
+// Each row stops at the call in the storage condition's words or agrees with Node natively. Overload 4
+// from numbers to strings must stop: the call's own reading of the instance (instanceTypes) witnesses no V2
+// there, inferTypes' union arm asking a number to fit a string, so the instance's result isn't read at all.
+// Mutant: the storage condition dropped, and every row stops elsewhere, inside the instance, where no Map
+// of a union lowers.
+func TestOverloadCertificateMapInstanceStorage(t *testing.T) {
+	t.Parallel()
+	show := "function show(entries: Map<string, string>): void {\n    for (const [key, value] of entries) {\n        console.log(`${key}=${value.toUpperCase()}`);\n    }\n}\nconst numbers: number[] = [1, 2, 3];\n"
+	for _, probe := range []struct {
+		name, source, want string
+		stops              bool
+	}{
+		{"overload 2 number to string", overloadCertificateArrayToMap + show + "show(arrayToMap(numbers, n => `k${n}`, n => `v${n * 2}`));\n", "k1=V2\nk2=V4\nk3=V6\n", false},
+		{"overload 2 string to number", overloadCertificateArrayToMap + "const items: string[] = [\"a\", \"bb\"];\nconst lengths = arrayToMap(items, s => s, s => s.length);\nfor (const [key, value] of lengths) console.log(`${key}=${(value + 1).toFixed(1)}`);\n", "a=2.0\nbb=3.0\n", false},
+		{"overload 4 number to string", overloadCertificateArrayToMap + show + "show(arrayToMap<number, string>(numbers, n => `k${n}`, n => `v${n * 2}`));\n", "k1=V2\nk2=V4\nk3=V6\n", true},
+	} {
+		t.Run(probe.name, func(t *testing.T) {
+			t.Parallel()
+			overloadCertificateInstanceRow(t, probe.source, probe.want, probe.stops)
 		})
 	}
 }
