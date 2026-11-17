@@ -27,6 +27,15 @@ measure() {
 		echo "types $label exit=$? diagnostics=$(wc -l < "$TMPDIR/$label.types.err")"
 	fi
 }
+phase="${PHASE:-both}"
+if [ "$phase" = after ]; then
+	node "$here/scan.cjs" "$tree" "$here/names.json" "$TMPDIR/b-sites.json" > /dev/null && node "$here/codemod-b.cjs" "$tree" "$TMPDIR/b-sites.json" | grep -E '^codemod:'
+fi
+if [ "$phase" != both ]; then
+	measure "$phase"
+	for file in $files; do echo "== keys $phase $file"; python3 "$here/compare.py" --keys "$TMPDIR/$phase.$(echo "$file" | tr / _).jsonl" | gzip -9 | base64 -w0; echo; done
+	echo "== end"; exit 0
+fi
 echo "== before"; measure before
 node "$here/scan.cjs" "$tree" "$here/names.json" "$TMPDIR/b-sites.json" | grep -E '^scan'
 node "$here/codemod-b.cjs" "$tree" "$TMPDIR/b-sites.json" | grep -E '^(codemod:|refused)' || { echo "FAIL codemod"; exit 1; }

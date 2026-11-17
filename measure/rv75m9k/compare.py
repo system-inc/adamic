@@ -58,6 +58,11 @@ def where(record):
     return '?'
 
 
+if sys.argv[1] == '--keys':
+    # One census's findings as pairing keys, one per line, for a run split across two jobs.
+    for record in load(sys.argv[2]):
+        print(' | '.join(key(record)) + ' @ ' + where(record).split('src/')[-1])
+    sys.exit(0)
 file, before_path, after_path = sys.argv[1:]
 before, after = load(before_path), load(after_path)
 for name, records in (('before', before), ('after', after)):
