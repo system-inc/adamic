@@ -3,5 +3,5 @@
   "restack": { "on": true },
   "first": [],
   "door": { "heavy": 1000, "pacedAfter": 2, "waiting": 10, "files": 400, "censusWithin": 15 },
-  "witness": { "every": 1000, "hours": 36, "machines": ["Home-f3279c"], "fullBlock": { "box": "Eve", "hours": 24 } }
+  "witness": { "every": 1000, "hours": 36, "fullBlock": { "box": "Eve", "hours": 24 } }
 }
