@@ -15,7 +15,7 @@ import (
 func TestZZLandingProbe(t *testing.T) {
 	probes := map[string]string{
 		"nested_return": `interface FileInfo { readonly version: string; signature: string | undefined; }
-type Encoded = Omit<FileInfo, 'signature'> & { signature?: string | false };
+type Encoded = Omit<FileInfo, 'signature'> & { signature?: string | false | undefined };
 type Out = string | Encoded;
 const state: FileInfo = { version: 'v', signature: 'v2' };
 function encode(value: FileInfo, same: boolean, kept: boolean): Out {
@@ -29,7 +29,7 @@ const signature = state.signature;
 console.log(signature === undefined ? 'undefined' : signature.toUpperCase());
 `,
 		"direct_return": `interface FileInfo { readonly version: string; signature: string | undefined; }
-type Encoded = Omit<FileInfo, 'signature'> & { signature?: string | false };
+type Encoded = Omit<FileInfo, 'signature'> & { signature?: string | false | undefined };
 const state: FileInfo = { version: 'v', signature: 'v2' };
 function encode(value: FileInfo): Encoded {
 	return value;
