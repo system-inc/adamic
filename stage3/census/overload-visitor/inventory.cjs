@@ -2,7 +2,7 @@
 const fs=require('fs'),path=require('path'),ts=require('../../api/node_modules/typescript');
 const tree=path.resolve(process.argv[2]), output=process.argv[3];
 const names=new Set(['visitNode','visitNodes','visitArray','visitArrayWorker','visitParameterList','visitEachChild','getParseTreeNode']);
-const files=ts.sys.readDirectory(tree,['.ts','.tsx','.js'],['**/node_modules/**','**/.git/**']);
+const files=require('node:child_process').execFileSync('git',['-C',tree,'ls-files','-z'],{maxBuffer:32*1024*1024}).toString().split('\0').filter(f=>/\.(?:[cm]?[jt]s|[jt]sx)$/.test(f)).map(f=>path.join(tree,f));
 const candidates=[];
 for(const file of files){
  const text=fs.readFileSync(file,'utf8');

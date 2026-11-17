@@ -50,3 +50,16 @@ Read census_small.go, overload_predicate_result.go, census_overload_proof.go and
 - getParseTreeNode overload 2: Node | undefined does not serve rigid T | undefined. The body reassigns node while traversing original and may return node without nodeTest; it is outside both return proof and predicate-return proof. Merely annotating its result T would assert what the body does not establish. Candidate (iii): stop; changing the public overload to promise Node | undefined is a declaration change, and a ruling about original-node subtype preservation would be needed for a different proof road.
 
 These are candidates, not acceptance claims. No adaptation will be pushed without the required zero-new/zero-changed census evidence.
+
+## Failed owner-census gates (checkpoint)
+
+The baseline full visitorPublic census completed: 41 units, 95 raw findings, no stock checker diagnostics. All runs use LATENT_FULL=1, LATENT_ASSERT_NO_OUTPUT=1, LATENT_ONLY_FILE at the owner file and CommonJSBundle. Raw files and full new/gone records are retained, including recovery Boundary events separately. compare-full.py normalizes tree roots, exact unchanged source lines, and matching characters on edited signature lines so line/column movement cannot count as a semantic change.
+
+| Trial | New non-Boundary findings | Gone non-Boundary findings | Gate |
+|---|---:|---:|---|
+| visitNodes correlated implementation | 2 | 1 | FAIL: narrower array-result refusal and generic function-value refusal |
+| visitArrayWorker remove internal overloads | 3 | 1 | FAIL: newly reached union-member checks in body |
+| visitParameterList implementation annotation | 1 | 1 | FAIL: generic instantiation at default value |
+| visitEachChild implementation annotation | 1 | 0 | FAIL: generic instantiation at default value; assigned overload 2 not visible in this owner's full census |
+
+Each full-diff.json lists every new and gone finding in full. A removed overload refusal that exposes a new failure is not accepted. No adaptation directory or landing branch has been created. The remaining trial measurements and scan-all runs are still in progress. Full caller-file runs, restoring mutants, candidate declarations, product builds and lanes have not been run because no candidate has passed its owner gate.

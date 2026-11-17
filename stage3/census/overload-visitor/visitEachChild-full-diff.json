@@ -1,0 +1,17 @@
+{
+  "set": "visitEachChild",
+  "normalization": "tree prefix, matching source lines and matching characters on modified lines; equal-length replacement hunks map lines positionally; raw records retained",
+  "baselineUnique": 79,
+  "candidateUnique": 80,
+  "new": [
+    {
+      "kind": "NotYet",
+      "where": "<tree>/src/compiler/visitorPublic.ts:598:139",
+      "reason": "a generic instantiation whose type argument for TIn, constrained to Node, can't be read",
+      "text": "<tree>/src/compiler/visitorPublic.ts:598:139: stage 0 can't lower a generic instantiation whose type argument for TIn, constrained to Node, can't be read yet"
+    }
+  ],
+  "gone": [],
+  "newNonBoundary": 1,
+  "goneNonBoundary": 0
+}

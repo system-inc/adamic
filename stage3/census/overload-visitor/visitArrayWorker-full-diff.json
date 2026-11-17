@@ -1,0 +1,60 @@
+{
+  "set": "visitArrayWorker",
+  "normalization": "tree prefix, matching source lines and matching characters on modified lines; equal-length replacement hunks map lines positionally; raw records retained",
+  "baselineUnique": 79,
+  "candidateUnique": 83,
+  "new": [
+    {
+      "kind": "Boundary",
+      "where": "<tree>/src/compiler/visitorPublic.ts:355:21",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "<tree>/src/compiler/visitorPublic.ts:355:47: stage 0 can't lower a narrowed union member whose object tag cannot be checked with typeof; keep differently held object kinds in separately typed variables yet"
+    },
+    {
+      "kind": "Boundary",
+      "where": "<tree>/src/compiler/visitorPublic.ts:361:21",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "<tree>/src/compiler/visitorPublic.ts:361:38: stage 0 can't lower a narrowed union member whose object tag cannot be checked with typeof; keep differently held object kinds in separately typed variables yet"
+    },
+    {
+      "kind": "Boundary",
+      "where": "<tree>/src/compiler/visitorPublic.ts:362:21",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "text": "<tree>/src/compiler/visitorPublic.ts:362:34: stage 0 can't lower a narrowed union member whose object tag cannot be checked with typeof; keep differently held object kinds in separately typed variables yet"
+    },
+    {
+      "kind": "NotYet",
+      "where": "<tree>/src/compiler/visitorPublic.ts:355:47",
+      "reason": "a narrowed union member whose object tag cannot be checked with typeof; keep differently held object kinds in separately typed variables",
+      "text": "<tree>/src/compiler/visitorPublic.ts:355:47: stage 0 can't lower a narrowed union member whose object tag cannot be checked with typeof; keep differently held object kinds in separately typed variables yet"
+    },
+    {
+      "kind": "NotYet",
+      "where": "<tree>/src/compiler/visitorPublic.ts:361:38",
+      "reason": "a narrowed union member whose object tag cannot be checked with typeof; keep differently held object kinds in separately typed variables",
+      "text": "<tree>/src/compiler/visitorPublic.ts:361:38: stage 0 can't lower a narrowed union member whose object tag cannot be checked with typeof; keep differently held object kinds in separately typed variables yet"
+    },
+    {
+      "kind": "NotYet",
+      "where": "<tree>/src/compiler/visitorPublic.ts:362:34",
+      "reason": "a narrowed union member whose object tag cannot be checked with typeof; keep differently held object kinds in separately typed variables",
+      "text": "<tree>/src/compiler/visitorPublic.ts:362:34: stage 0 can't lower a narrowed union member whose object tag cannot be checked with typeof; keep differently held object kinds in separately typed variables yet"
+    }
+  ],
+  "gone": [
+    {
+      "kind": "Boundary",
+      "where": "<tree>/src/compiler/visitorPublic.ts:328:1",
+      "reason": "function signature or prologue failed; continued at next declaration",
+      "text": "<tree>/src/compiler/visitorPublic.ts:316:5: Adamic 0.1 refuses overload 1 of visitArrayWorker parameter visitor cannot be served by implementation parameter visitor; make the implementation accept every value admitted by this overload, without mutable widening or bivariance"
+    },
+    {
+      "kind": "Refused",
+      "where": "<tree>/src/compiler/visitorPublic.ts:316:5",
+      "reason": "overload 1 of visitArrayWorker parameter visitor cannot be served by implementation parameter visitor",
+      "text": "<tree>/src/compiler/visitorPublic.ts:316:5: Adamic 0.1 refuses overload 1 of visitArrayWorker parameter visitor cannot be served by implementation parameter visitor; make the implementation accept every value admitted by this overload, without mutable widening or bivariance"
+    }
+  ],
+  "newNonBoundary": 3,
+  "goneNonBoundary": 1
+}
