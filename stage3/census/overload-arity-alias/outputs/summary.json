@@ -158,5 +158,37 @@
     "native_exit": null,
     "stdout_equal": null,
     "stderr_equal": null
+  },
+  {
+    "program": "21-original-declaration.ts",
+    "node_exit": 0,
+    "build_exit": 0,
+    "native_exit": 0,
+    "stdout_equal": true,
+    "stderr_equal": true
+  },
+  {
+    "program": "22-body-only-declaration.ts",
+    "node_exit": 0,
+    "build_exit": 0,
+    "native_exit": 0,
+    "stdout_equal": true,
+    "stderr_equal": true
+  },
+  {
+    "program": "23-no-if-native.ts",
+    "node_exit": 0,
+    "build_exit": 0,
+    "native_exit": 0,
+    "stdout_equal": true,
+    "stderr_equal": true
+  },
+  {
+    "program": "24-same-result-native.ts",
+    "node_exit": 0,
+    "build_exit": 0,
+    "native_exit": 0,
+    "stdout_equal": true,
+    "stderr_equal": true
   }
 ]
