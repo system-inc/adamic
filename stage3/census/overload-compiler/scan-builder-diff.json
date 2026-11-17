@@ -1,0 +1,92 @@
+{
+  "mode": "scan",
+  "baseline_events": 5070,
+  "candidate_events": 5067,
+  "gone": [
+    {
+      "count": 1,
+      "event": [
+        "scan stop",
+        "refusal_scan/constraintRelationRefusal",
+        "src/compiler/builder.ts:580:106",
+        "a value of type DiagnosticMessageChain seen as DiagnosticMessageChain | ReusableDiagnosticMessageChain, which can write ReusableDiagnosticMessageChain[] | undefined where DiagnosticMessageChain[] | undefined is read"
+      ]
+    },
+    {
+      "count": 1,
+      "event": [
+        "scan stop",
+        "refusal_scan/enumRefusal",
+        "src/compiler/builder.ts:585:56",
+        "an object refinement using an open numeric enum as a literal tag"
+      ]
+    },
+    {
+      "count": 1,
+      "event": [
+        "scan stop",
+        "refusal_scan/enumRefusal",
+        "src/compiler/builder.ts:585:75",
+        "an object refinement using an open numeric enum as a literal tag"
+      ]
+    },
+    {
+      "count": 1,
+      "event": [
+        "scan stop",
+        "refusal_scan/enumRefusal",
+        "src/compiler/builder.ts:586:17",
+        "an object refinement using an open numeric enum as a literal tag"
+      ]
+    },
+    {
+      "count": 1,
+      "event": [
+        "scan stop",
+        "refusal_scan/enumRefusal",
+        "src/compiler/builder.ts:586:45",
+        "an object refinement using an open numeric enum as a literal tag"
+      ]
+    },
+    {
+      "count": 1,
+      "event": [
+        "scan stop",
+        "refusal_scan/stringWideningRefusal",
+        "src/compiler/builder.ts:580:137",
+        "a value of type (chain: DiagnosticMessageChain | ReusableDiagnosticMessageChain) => RepopulateDiagnosticChainInfo | undefined seen as (chain: DiagnosticMessageChain) => RepopulateDiagnosticChainInfo | undefined, which can write ReusableDiagnosticMessageChain[] | undefined where DiagnosticMessageChain[] | undefined is read"
+      ]
+    }
+  ],
+  "new": [
+    {
+      "count": 1,
+      "event": [
+        "scan stop",
+        "refusal_scan/constraintRelationRefusal",
+        "src/compiler/builder.ts:574:134",
+        "a value of type T & DiagnosticMessageChain seen as DiagnosticMessageChain | ReusableDiagnosticMessageChain, which can write ReusableDiagnosticMessageChain[] | undefined where DiagnosticMessageChain[] | (ReusableDiagnosticMessageChain[] & DiagnosticMessageChain[]) | undefined is read"
+      ]
+    },
+    {
+      "count": 1,
+      "event": [
+        "scan stop",
+        "refusal_scan/predicateArguments",
+        "src/compiler/builder.ts:579:21",
+        "an unproven predicate argument for parameter predicate (argument \"isFullChain\")"
+      ]
+    },
+    {
+      "count": 1,
+      "event": [
+        "scan stop",
+        "refusal_scan/predicateArgumentsRefusal",
+        "src/compiler/builder.ts:579:21",
+        "an unproven predicate argument for parameter predicate (argument \"isFullChain\")"
+      ]
+    }
+  ],
+  "changed": [],
+  "comparison": "Unchanged source lines are mapped by SequenceMatcher. Changed words at an equal rule/site are paired and listed in full; no changed words are suppressed."
+}

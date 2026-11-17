@@ -1,0 +1,19 @@
+{
+  "mode": "scan",
+  "baseline_events": 5074,
+  "candidate_events": 5075,
+  "gone": [],
+  "new": [
+    {
+      "count": 1,
+      "event": [
+        "scan stop",
+        "refusal_scan/stringWideningRefusal",
+        "src/compiler/program.ts:1588:119",
+        "a value of type readonly Extension[][] seen as readonly string[][], which can write string where Extension is read"
+      ]
+    }
+  ],
+  "changed": [],
+  "comparison": "Unchanged source lines are mapped by SequenceMatcher. Changed words at an equal rule/site are paired and listed in full; no changed words are suppressed."
+}

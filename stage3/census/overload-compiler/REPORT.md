@@ -36,3 +36,9 @@ convertOptionsFromJson's watch overload promises WatchOptions | undefined while 
 ## Proof status at checkpoint
 
 For every set: scan-all, full single-file latent census (owner and caller files), restoring mutant, stock tsc over 79 roots, adamic types, candidate apply, upstream npm ci + hereby dts equality, TestProduct_Stage3AdaptedTree, whole unfiltered lane, and landing ledger: **not run**. No landing branch or landing SHA exists. Baseline setup and measurement-tool preparation are in progress, not adaptation acceptance.
+
+## Extension follow-up road, before construction
+
+The first candidate fails scan-all: 0 gone, 1 new, 0 changed. The full new event is `refusal_scan/stringWideningRefusal` at `src/compiler/program.ts:1588:119`: `a value of type readonly Extension[][] seen as readonly string[][], which can write string where Extension is read`.
+
+A second road (i) will be checked before stopping this set: one implementation signature taking and returning `readonly (Extension[] | string[])[]`. This keeps both existing mutable inner-array views as separate union members under the existing readonly outer array, instead of widening an Extension[] into string[]. It introduces no record or runtime shape and changes no public declaration. The four caller/result classifications remain the same. Full acceptance still requires the original site gone and zero new/changed events; no landing branch exists.
