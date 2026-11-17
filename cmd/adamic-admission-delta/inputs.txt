@@ -58,11 +58,14 @@ cohere/static_single_assignment
 cohere/unicode_properties
 go.mod
 go.work
+internal/apple/generate
+internal/apple/naming
 internal/buildlog
 internal/flow
 internal/fresh
 internal/ir
 internal/load
 internal/lower
+internal/platform
 internal/regexp
 internal/unicodeproperties
