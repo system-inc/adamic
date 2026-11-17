@@ -39,6 +39,39 @@ out.signature = false;
 const signature = state.signature;
 console.log(signature === undefined ? 'undefined' : signature.toUpperCase());
 `,
+		"enum_literal_slot": `enum E { A = 0, B = 1, C = 2 }
+const holder: { k: E } = { k: E.C };
+const open: E = holder.k;
+const k: E.B | E.C = open || E.B;
+console.log(String(k));
+`,
+		"enum_literal_argument": `enum E { A = 0, B = 1, C = 2 }
+const holder: { k: E } = { k: E.C };
+const open: E = holder.k;
+function f(k: E.B | E.C): void {
+	console.log(String(k));
+}
+f(open || E.B);
+`,
+		"enum_open_slot_control": `enum E { A = 0, B = 1, C = 2 }
+const holder: { k: E } = { k: E.C };
+const open: E = holder.k;
+const k: E = open || E.B;
+console.log(String(k));
+`,
+		"spread_array_or_set": `const flag = Date.now() > 0;
+const list: number[] = [1, 2];
+const set: Set<number> = new Set([3]);
+const all = [...(flag ? list : set)];
+console.log(String(all.length));
+`,
+		"forof_array_or_set": `const flag = Date.now() > 0;
+const list: number[] = [1, 2];
+const set: Set<number> = new Set([3]);
+for (const value of flag ? list : set) {
+	console.log(String(value));
+}
+`,
 	}
 	for name, source := range probes {
 		path := filepath.Join(t.TempDir(), name+".ts")
