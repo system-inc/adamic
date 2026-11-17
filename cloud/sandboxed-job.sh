@@ -99,7 +99,7 @@ try:
     for directory, directories, files in os.walk('.'):
         directories[:] = [name for name in directories if name != '.git']
         for name in files:
-            if name in ('go.sum', 'go.work.sum'):
+            if name == 'go.sum':
                 found.add(os.path.relpath(os.path.join(directory, name), '.'))
     for path in sorted(found ^ set(named)):
         image('%s is in the %s alone' % (path, 'tree' if path in found else 'lay'))
