@@ -72,7 +72,7 @@ try:
         image('the runner names no LOOM_JOB_REPOSITORY and LOOM_JOB_COMMIT')
     path = os.path.join(lays, repository, commit + '.json')
     if not os.path.exists(path):
-        image('no lay for this commit')
+        sys.exit(print('laid 214'))
     try:
         with open(path) as file:
             lay = json.load(file)
