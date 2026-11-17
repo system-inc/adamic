@@ -11,7 +11,7 @@ const assignByteStore = "  adamic_object_field_types(target)[adamic_slot_index(t
 
 func objectAssignBytesBinary(t *testing.T, mutant string) string {
 	t.Helper()
-	library, err := os.ReadFile("runtime/library_object.c")
+	library, err := os.ReadFile("../native_runtime/c/library_object.c")
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -37,7 +37,7 @@ func objectAssignBytesBinary(t *testing.T, mutant string) string {
 		source = strings.Replace(source, assignByteStore, replacement, 1)
 	}
 	source = strings.ReplaceAll(source, "adamic_object_assign(", "probe_adamic_object_assign(")
-	provider, err := os.ReadFile("runtime/json_objects.c")
+	provider, err := os.ReadFile("../native_runtime/c/json_objects.c")
 	if err != nil {
 		t.Fatal(err)
 	}
