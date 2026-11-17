@@ -1,0 +1,26 @@
+{
+  "pass": true,
+  "landingCommit": "6870a814639a6ae2745da20ce791483271a2d6ea",
+  "base": "932a6344af63dc7c8728fffac05584c176d0475f",
+  "proofs": {
+    "whole apply": "PASS",
+    "TestProduct_Stage3AdaptedTree": "PASS",
+    "whole unfiltered lane": "PASS",
+    "restoring mutant red": "PASS",
+    "public typescript.d.ts byte-identical": "PASS"
+  },
+  "laneCounts": {
+    "passing": 106366,
+    "failing": 1,
+    "pending": 0
+  },
+  "shardRegenerationRequired": false,
+  "landingFiles": [
+    "stage3/adapt/99-correctness-get-properties/README.md",
+    "stage3/adapt/99-correctness-get-properties/adapt.cjs",
+    "stage3/adapt/99-correctness-get-properties/mutant.cjs",
+    "stage3/adapt/99-correctness-get-properties/owners.json",
+    "stage3/upstream/LEDGER.md"
+  ],
+  "landingWorktreeClean": true
+}
