@@ -1,9 +1,9 @@
 // a-check: refused an object refinement using an open numeric enum as a literal tag
 // The refinement lands on a smaller union, Y | Z. AKind is open, so x's tag can hold a number
 // other than AKind.A while x keeps its string payload: Node prints text1.
-enum AKind { A }
-enum BKind { B = 1 }
-enum CKind { C = 2 }
+enum AKind { A, Wide = 77 }
+enum BKind { B = 1, Wide = 77 }
+enum CKind { C = 2, Wide = 77 }
 interface X { readonly tag: AKind; readonly value: string }
 interface Y { readonly tag: BKind; readonly value: number }
 interface Z { readonly tag: CKind; readonly value: number }

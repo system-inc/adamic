@@ -2,7 +2,7 @@
 // Two paths reach the read: one narrows by kind, which proves the layout, and one by an alias of
 // tag, an open enum in A. The alias path takes a, whose tag holds BKind.B's number: Node prints text1.
 enum Kind { A, B }
-enum AKind { A }
+enum AKind { A, Wide = 77 }
 enum BKind { B = 1, C = 2 }
 interface A { readonly kind: Kind.A; readonly tag: AKind; readonly value: string }
 interface B { readonly kind: Kind.B; readonly tag: BKind.B; readonly value: number }
