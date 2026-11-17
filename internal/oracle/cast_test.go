@@ -30,6 +30,11 @@ var checkedCastFixtures = []struct {
 	{"cast_class_fails.a", "Animal", "Dog"},
 	{"cast_class_union_fails.a", "Bird | Cat | Dog", "Cat | Dog"},
 	{"cast_class_generic_fails.a", "Base<number>", "Box<number>"},
+	// A source with undefined beside its tagged members (#b5w3ycg slice 2): an undefined value fails the
+	// absent check, and a present one with a wrong tag fails the tag check, both with the cast's message.
+	{"cast_absent_arm_fails.ts", "A | B | undefined", "A"},
+	{"cast_absent_arm_tag_fails.ts", "A | B | C | undefined", "A | C"},
+	{"cast_absent_arm_missing_fails.ts", "A | B | undefined", "A"},
 }
 
 func TestCheckedCastFlushesOutput(t *testing.T) {
@@ -106,7 +111,7 @@ func TestCheckedCastRunsNoCatchOrFinally(t *testing.T) {
 }
 
 func init() {
-	for _, file := range []string{"cast_enum_numeric.ts", "cast_enum_string.ts", "cast_enum_const.ts", "cast_class.a", "cast_operand_once.ts"} {
+	for _, file := range []string{"cast_enum_numeric.ts", "cast_enum_string.ts", "cast_enum_const.ts", "cast_class.a", "cast_operand_once.ts", "cast_absent_arm.ts"} {
 		fixtures = append(fixtures, struct {
 			path    string
 			lowers  bool

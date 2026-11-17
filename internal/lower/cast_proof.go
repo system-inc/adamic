@@ -24,6 +24,13 @@ type castProof struct {
 	// overloadDefault is an `x as unknown as T` pair every overload proves (overload_default_cast.go):
 	// erased, lowered as x.
 	overloadDefault bool
+	// absent is a member cast whose source holds undefined beside its tagged members and whose target
+	// doesn't (absentArm): undefined is one more member, told by its own run-time test, so the cast
+	// checks presence before the tag, and an undefined value fails the cast as a wrong tag does. It rests on
+	// the tag being a field the checked view loads: a getter-backed tag stops first as "a getter in a checked
+	// field contract" (Language's v03 on #ha4hbqt), so the absent test and the tag test can't disagree through
+	// one.
+	absent bool
 }
 
 // castRepair is the fix a refused cast names, by file kind. In .a a cast to a union member is refused too
@@ -274,6 +281,11 @@ func (l *lowering) castProof(node *ast.Node) (castProof, error) {
 		}
 		return castProof{classes: targets}, nil
 	}
+	if present := l.absentArm(source, target); present != nil {
+		proof, err := l.unionMemberProof(present, target, refused)
+		proof.absent = err == nil
+		return proof, err
+	}
 	if source.Flags()&checker.TypeFlagsUnion == 0 {
 
 		// A proof's view is no view: neither its origin nor its contract's getters outlive it.
@@ -298,6 +310,43 @@ func (l *lowering) castProof(node *ast.Node) (castProof, error) {
 
 		return castProof{}, refused
 	}
+	return l.unionMemberProof(source, target, refused)
+}
+
+// absentArm is source without its undefined, where the cast is a member cast over a represented union
+// with undefined beside it (`node as IsContainer` of a `HasContainerFlags | undefined`): the source holds
+// one plain undefined and two or more other members, none of them void, null or a phantom undefined, and
+// the target holds no undefined, void or null. Otherwise nil, and the cast is judged as it was. A target
+// that keeps undefined would pass an absent value through, which CheckedCast can't hold yet.
+func (l *lowering) absentArm(source, target *checker.Type) *checker.Type {
+	if source.Flags()&checker.TypeFlagsUnion == 0 || l.includesUndefined(target) || l.includesNull(target) {
+		return nil
+	}
+	undefined, others := 0, 0
+	for _, member := range source.Types() {
+		switch {
+		case member.Flags() == checker.TypeFlagsUndefined:
+			undefined++
+		case member.Flags()&(checker.TypeFlagsUndefined|checker.TypeFlagsVoid|checker.TypeFlagsNull) != 0 || l.phantomUndefined(member):
+			return nil
+		default:
+			others++
+		}
+	}
+	if undefined != 1 || others < 2 {
+		return nil
+	}
+	present := l.checker.GetNonNullableType(source)
+	if present.Flags()&checker.TypeFlagsUnion == 0 || len(present.Types()) != others {
+		return nil
+	}
+	return present
+}
+
+// unionMemberProof proves a cast from a represented union to some of its members by a tag every
+// member holds as a distinct literal.
+func (l *lowering) unionMemberProof(source, target *checker.Type, refused error) (castProof, error) {
+	members, targets := castMembers(source), castMembers(target)
 	if !l.castUnionWrites(source) {
 		return castProof{}, refused
 	}
