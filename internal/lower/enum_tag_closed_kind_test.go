@@ -130,6 +130,21 @@ func TestClosedKindDomains(t *testing.T) {
 	}
 }
 
+// A write of kind through any, tsc's clone loop in nodeFactory.ts, leaves S closed: lowering refuses the
+// cast to any, so the program never compiles and the write makes no value (closedKindReaches, J-q7nwd21).
+// The same write through a mutable Lit, typed, keeps Lit open. Mutant m5 (any reaches every S) opens the first row.
+func TestClosedKindWriteThroughAnyReachesNothing(t *testing.T) {
+	t.Parallel()
+	const clone = "function clone(n: Ex, c: Ex): Ex {\n  for (const key in n) { (c as any)[key] = (n as any)[key]; }\n  return c;\n}\n"
+	if l, _, kinds, closed, reason := closedKindsAt(t, closedKindTypes+clone, "Lit"); !closed || kinds.Flags()&checker.TypeFlagsUnion == 0 || len(kinds.Types()) != 3 {
+		t.Fatalf("want Lit closed with its 3 kinds beside a write through any, got closed %v, kinds %s, reason %q", closed, l.checker.TypeToString(kinds), reason)
+	}
+	const typed = "function retag(e: Mutable): void { e.kind = numeric(); }\ntype Mutable = { -readonly [P in keyof Lit]: Lit[P] };\nfunction numeric(): K { return K.Body; }\n"
+	if _, _, _, closed, reason := closedKindsAt(t, closedKindTypes+typed, "Lit"); closed || !strings.Contains(reason, "a write of kind") {
+		t.Fatalf("want Lit open on a typed write of kind, got closed %v, reason %q", closed, reason)
+	}
+}
+
 // An unbranded supertype Open, with a class or a function that builds a value assignable to it with a
 // kind chosen at run time, stays open: Open's value of kind Body would have Open's layout. So isBody's
 // narrowing over Body | Open keeps the open-enum refusal. The control has no such build, and lowers.
