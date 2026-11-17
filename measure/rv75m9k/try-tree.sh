@@ -30,4 +30,6 @@ echo "== owners.log"
 cat "$TMPDIR/owners.log"
 echo "== owners.json base64"
 gzip -9c "$work/owners.json" | base64 -w0; echo
+echo "== before.json base64"
+gzip -9c "$TMPDIR/before.json" | base64 -w0; echo
 echo "== end"
