@@ -274,12 +274,13 @@ func (l *lowering) refuseReachedContractGetters(reach *accessorReach, owned map[
 	for _, contract := range l.contractGetters {
 		viewed, unknown := reach.graph.viewedFrom([]ir.Expression{contract.origin}, true)
 		for _, getter := range contract.getters {
-			if !owned[getter.Name().Text()] {
+			name, _ := memberKeyText(getter) // Each getter here was collected by its name.
+			if !owned[name] {
 				continue
 			}
 			reached := unknown
 			for site := range viewed {
-				reached = reached || reach.owners[site][getter.Name().Text()]
+				reached = reached || reach.owners[site][name]
 			}
 			if reached {
 				return l.notYet(getter, "a getter in a checked field contract")
@@ -600,13 +601,28 @@ func (l *lowering) checkAccessorSpreads() error {
 	return nil
 }
 
+// memberKeyText is the text a member's name spells, when it spells one: an identifier, a private name,
+// a string or numeric literal, or a computed name holding one (tsgo's TryGetTextOfPropertyName). A
+// computed name of any other kind ([Symbol.toStringTag], [key]) spells none, and asking its node for
+// text panics (#ppgk12h). Every lowering of a member so named stops ("a method with a computed name"
+// in a class, "a field with a computed name", "a computed accessor literal name" in a literal), save a
+// method keyed by Symbol.iterator, whose key is a symbol no string names. So a walk over the whole
+// program asking whether a string names a member passes over it: no object the program builds owns it
+// under any string.
+func memberKeyText(node *ast.Node) (string, bool) {
+	if node.Name() == nil {
+		return "", false
+	}
+	return ast.TryGetTextOfPropertyName(node.Name())
+}
+
 func (l *lowering) noteAccessorNames(modules []*ast.SourceFile) {
 	l.accessorNames = map[string]bool{}
 	for _, module := range modules {
 		var visit ast.Visitor
 		visit = func(node *ast.Node) bool {
-			if node.Kind == ast.KindGetAccessor && node.Name() != nil {
-				l.accessorNames[node.Name().Text()] = true
+			if name, named := memberKeyText(node); named && node.Kind == ast.KindGetAccessor {
+				l.accessorNames[name] = true
 			}
 			return node.ForEachChild(visit)
 		}
