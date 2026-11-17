@@ -10,7 +10,7 @@ import (
 	"github.com/microsoft/TypeScript/tsc/shim/core"
 	"github.com/microsoft/TypeScript/tsc/shim/parser"
 	"github.com/microsoft/TypeScript/tsc/shim/tspath"
-	"github.com/system-inc/adamic/internal/toolchain"
+	"github.com/system-inc/adamic/internal/platform"
 )
 
 // A platform stop has two independent keys: our parse of the revision's modules,
@@ -168,7 +168,7 @@ func (r *revisionImports) apple(file string) (bool, error) {
 }
 
 func platformStopped(o observation) bool {
-	return o.Exit == toolchain.PlatformMissingExitCode && o.Error == ""
+	return o.Exit == platform.MissingExitCode && o.Error == ""
 }
 
 // stop makes the whole row unjudged, including observations already recorded.
