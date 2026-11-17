@@ -6,6 +6,7 @@ package lower
 
 import (
 	"encoding/json"
+	"fmt"
 	"os"
 	"strings"
 	"sync"
@@ -56,8 +57,9 @@ func (l *lowering) probeHazardDetail(union *checker.Type, field string) string {
 				continue
 			}
 			tag := l.checker.GetTypeOfSymbol(property)
-			if l.openNumericEnumType(tag) && !sharedByEveryMember(l.checker, union, property.Name, tag) {
-				return "open " + property.Name + " on " + l.checker.TypeToString(member) + ": " + l.checker.TypeToString(tag)
+			if l.openNumericEnumType(tag) && !sharedByEveryMember(l.checker, union, property.Name, tag) && l.enumTagClosedTag(union, member, property.Name, tag) == nil {
+				_, closed, reason := l.closedKinds(member, property.Name)
+				return "open " + property.Name + " on " + l.checker.TypeToString(member) + ": " + l.checker.TypeToString(tag) + fmt.Sprintf(" | closed=%v %s", closed, reason)
 			}
 		}
 	}
