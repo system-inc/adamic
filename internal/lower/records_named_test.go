@@ -79,8 +79,9 @@ if (x instanceof Box) { swap(); console.log(String(x.v)); }`)
 
 // A fixed object or a dictionary read off a union slot is proven by a heap test only when it's the one
 // member of its runtime class in the slot's union (recordSlotMemberUnique): tsc's configFile and paths
-// read so. An array beside other arrays (rootDirs), two fixed objects, two dictionaries and a member whose
-// heap class isn't vouched for (object, which may be either) keep the NotYet.
+// read so. An array beside other arrays (rootDirs) is a checked view's origin (recordReadSlotView). Two
+// fixed objects, two dictionaries and a member whose heap class isn't vouched for (object, which may be
+// either) keep the NotYet.
 func TestNamedRecordHeapMemberReads(t *testing.T) {
 	t.Parallel()
 	options := func(index string) string {
@@ -112,11 +113,14 @@ interface Options { configFile?: Source; paths?: { [index: string]: string[] }; 
 			}
 		})
 	}
-	// An array read stops under its own reason until the element-checked view lands (#y852c3c).
-	_, err := lowerSource(t, options(tscShape)+"function read(o: Options): number { const roots = o.rootDirs; return roots ? roots.length : 0; }")
-	var arrayStop *NotYet
-	if !errors.As(err, &arrayStop) || !strings.Contains(err.Error(), "a dictionary member narrowed to an array without an element-checked view") {
-		t.Fatalf("an array beside arrays: got %v, want the array NotYet", err)
+	// An array beside arrays has no checked tag either, so it's read as a checked view's origin instead
+	// (#y852c3c): its elements are each checked as they're handed out, and its contract is readonly.
+	p, err := lowerSource(t, options(tscShape)+"function read(o: Options): number { const roots = o.rootDirs; return roots ? roots.length : 0; }")
+	if err != nil {
+		t.Fatalf("an array beside arrays: %v", err)
+	}
+	if !recordSlotView(p, "readonly string[]") {
+		t.Fatal("an array beside arrays made no view origin with a readonly contract")
 	}
 	for _, probe := range []struct{ name, source string }{
 		{"two fixed objects", options("string | string[] | { [index: string]: string[] } | Source | Other | undefined") + "function read(o: Options): string { const file = o.configFile; return file ? file.text : \"none\"; }"},
@@ -139,12 +143,12 @@ func TestNamedRecordRefusals(t *testing.T) {
 	// Each probe stays not yet in .ts. In .a, the write and the view a declared property's type could
 	// lie through are refused instead (refusedInA, TestNamedRecordLiesAreRefusedInA). The view drops a
 	// property held as a union, whose read comes back unchecked: one whose read is checked lowers in .ts
-	// (#6c4swvt G3a, internal/oracle/testdata/records_options_base).
+	// (#6c4swvt G3a, internal/oracle/testdata/records_options_base). A number[] member's read, once a row
+	// here, is a checked view's origin since #y852c3c (TestRecordSlotArrayReadIsACheckedView).
 	for _, probe := range []struct {
 		source, reason string
 		refusedInA     bool
 	}{
-		{`interface R {named?:number[];[key:string]:number[]|string|undefined} function read(r:R):number|undefined {return r.named?.length;}`, "dictionary member narrowed to an array without an element-checked view", false},
 		{`interface R {named?:number;[key:string]:number|string|undefined} function write(r:R,k:string):void {r[k]="wrong";}`, "named property named", true},
 		{`interface R {named?:number|string;[key:string]:number|string|boolean|undefined} const r:R={}; const view:Record<string,number|string|boolean|undefined>=r;`, "seen as", true},
 		{`interface R {readonly named:number;[key:string]:number} const r:R={named:1}; const view:Record<string,number>=r;`, "seen as", false},
@@ -200,9 +204,10 @@ func TestNamedRecordLiesAreRefusedInA(t *testing.T) {
 // same write through an alias, a chained assignment and a parameter. In a slot boxed by a number in the
 // index, a declared property is left to its read only when that read is proven to stop on a lie
 // (readGuardedInUnionSlot): w10's literal there (b10) is judged, since a function's tag says only
-// "function", and a plain object's (b8), an array's (a8), a Map's (p8) and a dictionary's (r8) reads stop.
-// Each row stops so in .a and .ts alike: in .a the declared-key write judges the value by the same
-// registry first (records_declared_keys.go). Mutants: slotType ignoring the slot a caller set lowers
+// "function", and a plain object's (b8), a Map's (p8) and a dictionary's (r8) reads stop, and an array's
+// (a8) is a checked view's origin, whose element read stops on the lie natively. Each row stops in .a and
+// .ts alike, all but a8's .ts read, which lowers: in .a the declared-key write judges the value by the
+// same registry first (records_declared_keys.go). Mutants: slotType ignoring the slot a caller set lowers
 // w8, which then prints POINT natively; recordComputedEntry skipped lowers w8's literal and b10 in .ts;
 // refuseWidening's rules skipped in refuseInSlot's run lowers the invariance and enum pins.
 func TestNamedRecordWritesAreJudgedAsTheirDirectTwins(t *testing.T) {
@@ -270,20 +275,20 @@ const key = keys[0] ?? "other";
 		}
 	}
 	// The reads that hold readGuardedInUnionSlot, in .ts: a lie under a declared plain object (b8, w8's
-	// literal boxed), array (a8), Map (p8) or dictionary (r8) in a boxed slot is left to its read, which
-	// stops as an object kind with no checked tag, or an array with no element-checked view (#y852c3c). Each goes red if the skip stops naming its kind (the
-	// write's stop comes first) or the read stops stopping. A computed method is no data entry, a stop
-	// of its own. In .a the declared-key write comes first and refuses each by the fix inA names: b8 by
-	// its direct twin's nominal rule, the others as a value names can't take, and the computed method,
-	// whose function is no one expression's value, is not yet.
-	for _, probe := range []struct{ name, source, reason, inA string }{
-		{"b8 object construction boxed", boxed(w8) + "const places: Places = { names: new Point(), [key]: new Other() };\nconsole.log(places.names.describe().toUpperCase());\n", "narrowed to an object kind without a checked runtime tag", "Refused: construct that class or a subclass; use an interface for structural values (adamic/nominal-class)"},
-		{"a8 array construction boxed", `type Lists = { names: string[]; [k: string]: string[] | number[] | number };
+	// literal boxed), Map (p8) or dictionary (r8) in a boxed slot is left to its read, which stops as an
+	// object kind with no checked tag. Each goes red if the skip stops naming its kind (the write's stop
+	// comes first) or the read stops stopping. A computed method is no data entry, a stop of its own. In
+	// .a the declared-key write comes first and refuses each by the fix inA names: b8 by its direct twin's
+	// nominal rule, the others as a value names can't take, and the computed method, whose function is no
+	// one expression's value, is not yet.
+	a8 := `type Lists = { names: string[]; [k: string]: string[] | number[] | number };
 const keys: string[] = ["names", "other"];
 const key = keys[0] ?? "other";
 const lists: Lists = { names: ["a"], [key]: [1, 2] };
 console.log((lists.names[0] ?? "").toUpperCase());
-`, "narrowed to an array without an element-checked view", "Refused: " + declaredKeysFix},
+`
+	for _, probe := range []struct{ name, source, reason, inA string }{
+		{"b8 object construction boxed", boxed(w8) + "const places: Places = { names: new Point(), [key]: new Other() };\nconsole.log(places.names.describe().toUpperCase());\n", "narrowed to an object kind without a checked runtime tag", "Refused: construct that class or a subclass; use an interface for structural values (adamic/nominal-class)"},
 		{"p8 map construction boxed", `type Tables = { names: Map<string, string>; [k: string]: Map<string, string> | Map<string, number> | number };
 const keys: string[] = ["names", "other"];
 const key = keys[0] ?? "other";
@@ -311,6 +316,24 @@ console.log((tables.names["a"] ?? "").toUpperCase());
 			}
 		})
 	}
+	// a8, the array, in .ts: the [1, 2] its computed entry leaves under names is left to the read, which is a
+	// checked view's origin since #y852c3c, so the program lowers and lists.names[0] stays a checked element
+	// read (natively its number[]'s scalar storage fails the string contract at the read, where Node throws
+	// at toUpperCase). It goes red if the skip stops naming arrays (the write's stop comes first) or the read
+	// is put back raw. In .a the declared-key write still refuses it first.
+	t.Run("a8 array construction boxed", func(t *testing.T) {
+		t.Parallel()
+		program, err := lowerSourceAs(t, a8, ".ts")
+		if err != nil {
+			t.Fatalf("got %v, want a8 lowered with its read checked", err)
+		}
+		if !checkedElementRead(program, "lists.names[0]") {
+			t.Fatal("lists.names[0] isn't a checked element read")
+		}
+		if _, err := lowerSource(t, a8); err == nil || ruleOf(err) != "Refused: "+declaredKeysFix {
+			t.Fatalf("in .a: got %v, want Refused: %s", err, declaredKeysFix)
+		}
+	})
 	for _, extension := range []string{".a", ".ts"} {
 		if _, err := lowerSourceAs(t, `interface Options { target?: number; required: number; [option: string]: number | undefined }
 function write(options: Options, key: string): void { options[key] = 9; }`, extension); err != nil {

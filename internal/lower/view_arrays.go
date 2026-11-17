@@ -92,9 +92,10 @@ type viewElementKey struct {
 }
 
 // collectViewedElements is the key's pre-pass. A view is made only at a cast or a type predicate
-// (a speculation's result is a cast too), so it reads every one in every module the program loads,
-// .a and .ts alike, and collects the element type of every array its target can hold, through
-// the edges viewContract builds contracts along. A target that names a type parameter is
+// (a speculation's result is a cast too), or at a record's array member read out of its union slot
+// (recordReadSlotView, by the one test recordSlotArrayRead), so it reads every one in every module the
+// program loads, .a and .ts alike, and collects the element type of every array its target can hold,
+// through the edges viewContract builds contracts along. A target that names a type parameter is
 // instantiated where it lowers, past what the pre-pass can see, so it sets every.
 //
 // It's also where a view of a type that instantiates itself deeper at each step stops (#k031ey0): a
@@ -191,6 +192,10 @@ func (l *lowering) collectViewedElements(modules []*ast.SourceFile) error {
 		case ast.KindTypePredicate:
 			if written := node.AsTypePredicateNode().Type; written != nil {
 				view(node, l.checker.GetTypeAtLocation(written))
+			}
+		case ast.KindPropertyAccessExpression, ast.KindElementAccessExpression:
+			if declared := l.recordSlotArrayRead(node); declared != nil {
+				view(node, declared)
 			}
 		}
 		return stop != nil || node.ForEachChild(visit)
