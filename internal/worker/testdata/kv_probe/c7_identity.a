@@ -3,6 +3,6 @@ import type {KvNamespace} from 'adamic/workers';
 interface Environment {readonly GREETING:string; readonly KV:KvNamespace}
 function f(kv:KvNamespace):void {}
 export function handle(request:HttpRequest,environment:Environment):HttpResponse {
-const n:number=f.length;
-return {status:200,headers:[],body:environment.GREETING+request.path+n};
+const same:boolean=f===f;
+return {status:200,headers:[],body:environment.GREETING+request.path+same};
 }
