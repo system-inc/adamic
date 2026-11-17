@@ -131,6 +131,13 @@ func (l *lowering) widened(from *checker.Type, to *checker.Type, visited map[[2]
 				}
 			}
 		}
+		if from.Flags()&checker.TypeFlagsNumberLike != 0 && l.openEnumSlot(to) {
+			// A number's arm is judged against the slot's enum part alone, and a whole numeric enum there
+			// holds any number (rulings.md:243), as the open enum arm above says of the enum on its own. tsc
+			// lets a number into each of its member literals, so the walk below would pick the first and
+			// refuse what the slot takes (#snypn8c c2). An object's arm still walks the object members below.
+			return nil
+		}
 		taken := false
 		for _, member := range members {
 			if !l.checker.IsTypeAssignableTo(from, member) {
@@ -1376,7 +1383,9 @@ func (l *lowering) freshOrWidened(node *ast.Node, own *checker.Type, contextual 
 	if own.Flags()&checker.TypeFlagsNever != 0 && l.enumNeverIdentity(node, map[*ast.Node]bool{}) != nil {
 		return nil
 	}
-	targetLiteral := (contextual.Flags()&checker.TypeFlagsNumberLiteral != 0 || l.numericEnum(l.enumIdentity(contextual))) && !l.openNumericEnumType(contextual)
+	// A slot is a literal one by its enum part alone (openEnumSlot), so a whole enum beside an object, as in
+	// `CompilerOptions | BuilderFileEmit`, is open.
+	targetLiteral := (contextual.Flags()&checker.TypeFlagsNumberLiteral != 0 || l.numericEnum(l.enumIdentity(contextual))) && !l.openEnumSlot(contextual)
 	if targetLiteral {
 		if declared := l.enumStoredType(node); declared != nil {
 			if l.openNumericEnumType(declared) && !l.enumMemberOrigin(node, l.enumIdentity(declared), map[*ast.Node]bool{}) {
