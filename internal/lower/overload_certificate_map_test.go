@@ -52,7 +52,10 @@ function show(entries: Map<string, string>): void {
 // mapper; the census accepts them by relation, the implementation's V2 witnessed as their element
 // (inferTypes' one missing union binder), before any certificate is asked. Overloads 3 and 4 are reached
 // by their type arguments, since overloads 1 and 2 take every call they would. The mapper maps a string
-// to a string, so the implementation's instance holds Map<string, string> as the overload promises.
+// to a string, so the implementation's instance holds Map<string, string> as the overload promises, but
+// for one overload 4 row whose elements are numbers and whose values are strings: there T isn't U, so
+// inferTypes' own union arm can't witness V2, and the row shows both the census's V2 = U and the call's
+// instance of the implementation are right.
 func TestOverloadCertificateArrayToMapLowers(t *testing.T) {
 	t.Parallel()
 	for _, probe := range []struct{ name, call, want string }{
@@ -60,6 +63,7 @@ func TestOverloadCertificateArrayToMapLowers(t *testing.T) {
 		{"overload 2", `show(arrayToMap(items, s => s.length > 2 ? undefined : s.toUpperCase(), s => s + s));`, "A=aa\nBB=bbbb\n"},
 		{"overload 3", `show(arrayToMap<string>(items, s => s.length > 2 ? undefined : s.toUpperCase()));`, "A=a\nBB=bb\n"},
 		{"overload 4", `show(arrayToMap<string, string>(items, s => s.length > 2 ? undefined : s.toUpperCase(), s => s + s));`, "A=aa\nBB=bbbb\n"},
+		{"overload 4 from numbers to strings", "const numbers: number[] = [1, 2, 3];\nshow(arrayToMap<number, string>(numbers, n => `k${n}`, n => `v${n * 2}`));", "k1=v2\nk2=v4\nk3=v6\n"},
 	} {
 		t.Run(probe.name, func(t *testing.T) {
 			t.Parallel()
