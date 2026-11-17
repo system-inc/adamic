@@ -153,6 +153,8 @@ func TestRefusalRulesReadTheirSlotThroughSlotType(t *testing.T) {
 // asks slotSet first (TestRefusalRulesReadTheirSlotThroughSlotType).
 var signatureReaders = map[string]string{
 	"workerEnvironmentCheck":            "the original parameter declaration's nominal interface identity, not the instantiated argument slot; relationSite already judges that slot through slotType and honors slotSet",
+	"resolvedDeclaration":               "the Apple overload declaration, to select its foreign-call tag; no argument parameter slot is read",
+	"foreignNew":                        "the Apple constructor declaration, to select its init tag; native arguments are converted by that tag, not a contextual parameter slot",
 	"boundKeyedLength":                  "the callee's declaration, parameter count and symbols, to recognize a keyed bound-length helper; no argument is judged against a parameter's slot",
 	"brandedCall":                       "the callee's type predicate, to judge a call that narrows its argument to a branded supertype",
 	"narrowOverloadCall":                "the declaration a call resolves to, to ask whether its result is checked at the call; no argument is judged against a parameter's slot",
