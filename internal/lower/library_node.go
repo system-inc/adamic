@@ -85,6 +85,10 @@ func (l *lowering) nodeHostObject(proven *checker.Type) (registered func(member 
 	if proven == nil || proven.Symbol() == nil {
 		return nil, false
 	}
+	// Adamic #bxaz0p1: only a registration names a trusted Workers binding.
+	if load.WorkerKV(l.checker, proven) {
+		return func(*ast.Symbol) bool { return false }, true
+	}
 	if l.isIntlCollatorType(proven) {
 		return func(*ast.Symbol) bool { return false }, true
 	}
@@ -287,6 +291,9 @@ func (l *lowering) nodeHostViewReach(own, view *checker.Type, depth int, seen ma
 		}
 		member := l.checker.GetPropertyOfType(own, property.Name)
 		if host && (member == nil || !registered(member)) {
+			if name := workersMemberName(member); name != "" {
+				return name
+			}
 			if name := nodeLibraryName(member); name != "" {
 				return name
 			}

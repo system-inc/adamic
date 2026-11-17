@@ -1,0 +1,8 @@
+import type {HttpRequest,HttpResponse} from 'adamic/http';
+import type {KvNamespace} from 'adamic/workers';
+interface Environment {readonly GREETING:string; readonly KV:KvNamespace}
+interface Box<T>{readonly value:T}
+export function handle(request:HttpRequest,environment:Environment):HttpResponse {
+const value:Box<KvNamespace>={value:environment.KV};
+return {status:200,headers:[],body:environment.GREETING+request.path};
+}
