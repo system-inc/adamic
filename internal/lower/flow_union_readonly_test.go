@@ -30,7 +30,7 @@ const seen: FlowNode = label;
 const holder: { flow: FlowNode | undefined } = { flow: undefined };
 holder.flow = label;
 const assignment: FlowAssignment = { flags: 3, node: "x", antecedent: label };
-console.log(seen.flags, holder.flow.flags, assignment.node, assignment.antecedent.flags, label.antecedent ? label.antecedent.length : 0);
+console.log(String(seen.flags) + ' ' + String(holder.flow.flags) + ' ' + assignment.node + ' ' + String(assignment.antecedent.flags) + ' ' + String(label.antecedent ? label.antecedent.length : 0));
 `
 
 func TestFlowUnionReadonlyArmsRelate(t *testing.T) {
@@ -67,7 +67,7 @@ func TestFlowUnionDowncastToLabel(t *testing.T) {
 	return 0;
 }
 const label: FlowLabel = { flags: 2, node: undefined, antecedent: undefined };
-console.log(antecedents(label));
+console.log(String(antecedents(label)));
 `
 	if _, err := lowerSource(t, program); err != nil {
 		t.Logf("the union cast to FlowLabel: %v", err)
