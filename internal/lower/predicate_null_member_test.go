@@ -86,9 +86,9 @@ console.log(String(count([new Box(1), null, new Box(2)], (value): value is null 
 }
 
 // A lying claim of string | null that passes undefined stops at the check, exit 70 with the located
-// message, on sanitized native and the JavaScript backend, where Node counts 3. undefined is a union's
+// message, on sanitized native and the JavaScript backend, where Node counts 2. undefined is a union's
 // no pointer, never its null sentinel, so the null member doesn't admit it. Mutant: null tested as
-// undefined (m33-mutant.diff), where both backends print 3 and exit 0.
+// undefined (m33-mutant.diff), where both backends print 2 and exit 0. The array holds no null, so only the undefined test can stop it.
 func TestCheckedPredicateNullMemberRefusesUndefined(t *testing.T) {
 	t.Parallel()
 	source := `function count(values: (string | null | undefined)[], test: (value: string | null | undefined) => value is string | null): number {
@@ -96,7 +96,9 @@ func TestCheckedPredicateNullMemberRefusesUndefined(t *testing.T) {
   for (const value of values) { if (test(value)) found += 1; }
   return found;
 }
-const values: (string | null | undefined)[] = ["a", null, undefined];
+const values: (string | null | undefined)[] = [];
+values.push("a");
+values.push(undefined);
 console.log(String(count(values, (value): value is string | null => true)));
 `
 	directory := t.TempDir()
@@ -124,7 +126,7 @@ console.log(String(count(values, (value): value is string | null => true)));
 			t.Fatalf("%s: exit %d stdout %q stderr %q; want %d %q, stderr %q...%q", command.Path, got, out.String(), errs.String(), code, stdout, stderrPrefix, stderrPart)
 		}
 	}
-	run(exec.Command("node", "--disable-warning=ExperimentalWarning", runner, path), "3\n", "", "", 0)
+	run(exec.Command("node", "--disable-warning=ExperimentalWarning", runner, path), "2\n", "", "", 0)
 	program, err := lowerTypeScriptAssertionSource(t, source)
 	if err != nil {
 		t.Fatal(err)
