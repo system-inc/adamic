@@ -97,6 +97,8 @@ if failed:
   lines += ['- '+r['label']+' `'+r['file']+'`: child exit '+str(r['exit'])+'; '+(s/r['log']).read_text().splitlines()[0]+'. Full log: `runs/'+r['log'].removeprefix('results/')+'`.','']
 lines += ['Scan-all is unchanged for both roots: 4,836 stops before and after, with `production abort at lowering.declareModule` on both revisions. It provides no evidence beyond that boundary.','']
 (dest/'REPORT.md').write_text(('\n'.join(lines)+'\n').replace('paired.json','paired.json.gz'))
+for document in dest.glob('*.md'):
+ document.write_text(document.read_text().rstrip()+'\n')
 manifestHashes={str(p.relative_to(dest)):hashlib.sha256(p.read_bytes()).hexdigest() for p in sorted(dest.rglob('*')) if p.is_file() and '__pycache__' not in p.parts and p.name!='SHA256SUMS.json'}
 (dest/'SHA256SUMS.json').write_text(json.dumps(manifestHashes,indent=2,sort_keys=True)+'\n')
 print(json.dumps(summary,indent=2))

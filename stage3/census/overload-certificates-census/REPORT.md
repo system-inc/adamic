@@ -118,4 +118,3 @@ The scripts and exact executed commands are retained here. There is no adaptatio
 - head `src/harness/vfsUtil.ts`: child exit 2; panic: Unhandled case in Node.Text: *ast.ComputedPropertyName. Full log: `runs/head/full/src__harness__vfsUtil.log`.
 
 Scan-all is unchanged for both roots: 4,836 stops before and after, with `production abort at lowering.declareModule` on both revisions. It provides no evidence beyond that boundary.
-
