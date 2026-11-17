@@ -27,6 +27,7 @@ func TestRefusalRulesRunInOrder(t *testing.T) {
 		// intlCollatorRefusal names each road to a collator head 1 of #zjndrx5 doesn't build at the
 		// node that takes it, before a rule that meets the call, the class or the member first would
 		// call it something else.
+		"149 workersMemberRefusal",
 		"150 intlCollatorRefusal",
 		// objectAssignCallableSourceRefusal judges an Object.assign call by its sources' types at the call, before
 		// knownLoweringGap or functionCallRefusal meet the call and before lowering reaches the intersection value

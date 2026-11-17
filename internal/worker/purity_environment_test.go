@@ -44,7 +44,7 @@ func TestCheckPureRefusesEnvironmentHostIR(t *testing.T) {
 		t.Run(one.name, func(t *testing.T) {
 			t.Parallel()
 			program := &ir.Program{Functions: []ir.Function{{Name: "mutate", Body: []ir.Statement{ir.Evaluate{Value: one.value}}}}}
-			if err := CheckPure(program, 0); err == nil || !strings.Contains(err.Error(), "impure: host operation") {
+			if err := CheckPure(program, 0, nil); err == nil || !strings.Contains(err.Error(), "impure: host operation") {
 				t.Fatalf("want host effect refusal, got %v", err)
 			}
 		})

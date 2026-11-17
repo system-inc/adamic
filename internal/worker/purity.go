@@ -13,7 +13,7 @@ import (
 // expression with no case here must be ir.Inert, or it is refused: an operation
 // added later, which could run code or reach the host, fails closed until it is
 // reviewed (Compiler's and Adamic's ruling on #qk8rztp S2c-2b).
-func CheckPure(program *ir.Program, function int) error {
+func CheckPure(program *ir.Program, function int, capabilities map[ir.SourcePosition]bool) error {
 	visited := make(map[int]bool)
 	var inspect func(int) error
 	var walk func(reflect.Value) error
@@ -22,6 +22,10 @@ func CheckPure(program *ir.Program, function int) error {
 			return nil
 		}
 		visited[index] = true
+		if capabilities[program.Functions[index].Position] {
+			return fmt.Errorf("impure: holds workers:KvNamespace")
+		}
+
 		if err := walk(reflect.ValueOf(program.Functions[index].Body)); err != nil {
 			function := program.Functions[index]
 			position := function.Position
