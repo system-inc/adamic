@@ -2833,6 +2833,21 @@
     ],
     "internal/worker TestProduct_WorkerEnvironmentEmptyMutant": [
       "internal/worker TestProduct_WorkerChecks"
+    ],
+    "internal/worker TestProduct_WorkerKVSlotMutant": [
+      "internal/worker TestProduct_WorkerChecks"
+    ],
+    "internal/worker TestProduct_WorkerKVFunctionMutant": [
+      "internal/worker TestProduct_WorkerChecks"
+    ],
+    "internal/worker TestProduct_WorkerKVRegistrationMutant": [
+      "internal/worker TestProduct_WorkerChecks"
+    ],
+    "internal/worker TestProduct_WorkerKVFieldMutant": [
+      "internal/worker TestProduct_WorkerChecks"
+    ],
+    "internal/worker TestProduct_WorkerKVIngressMutant": [
+      "internal/worker TestProduct_WorkerChecks"
     ]
   }
 }
