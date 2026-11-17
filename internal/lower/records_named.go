@@ -56,10 +56,7 @@ func (l *lowering) recordReadDeclared(node *ast.Node, read ir.Expression, here *
 	case ir.Object, ir.Record:
 		return l.recordReadHeapMember(node, read, here, to)
 	case ir.Array:
-		// Arrays of different element types share one heap kind, and walking the elements proves nothing
-		// once another alias pushes into it, so an array read waits on an element-checked view, ruled on
-		// #3xq2xzc and built in Baobab (#y852c3c): tsc's typeRoots, rootDirs, moduleSuffixes and types.
-		return nil, l.notYet(node, "a dictionary member narrowed to an array without an element-checked view")
+		return l.recordReadSlotView(node, read, here, to)
 	default:
 		return nil, l.notYet(node, "a dictionary member narrowed to an object kind without a checked runtime tag")
 	}
@@ -141,6 +138,15 @@ func (l *lowering) recordReadHeapMember(node *ast.Node, read ir.Expression, here
 	if l.includesNull(here) || !l.recordSlotMemberUnique(recordReceiver(node), declared, to) {
 		return nil, l.notYet(node, "a dictionary member narrowed to an object kind without a checked runtime tag")
 	}
+	return l.recordCheckedHeapRead(node, read, here, declared, to), nil
+}
+
+// recordCheckedHeapRead is the read of a reference member out of a slot boxed as a union, held to its
+// runtime class: undefined where the declared type admits it, and otherwise a checked narrow that stops
+// on any other class, naming the read. Its caller has proven what the class can't: recordReadHeapMember
+// that no other member of the union has it, recordReadSlotView that each element is checked as it's
+// handed out.
+func (l *lowering) recordCheckedHeapRead(node *ast.Node, read ir.Expression, here, declared *checker.Type, to ir.Type) ir.Expression {
 	b := l.libraryArrayBuilder([]ir.Expression{read})
 	value := b.read(b.parameters[0])
 	if l.includesUndefined(here) {
@@ -150,7 +156,101 @@ func (l *lowering) recordReadHeapMember(node *ast.Node, read ir.Expression, here
 	// A write through the index signature, by a computed key or through a wider alias, can leave any
 	// member of the slot's union under a declared key. The stop names the read and what it found.
 	message := "field read failed: " + recordReadExpression(node) + " is not a " + named + "; expected " + named + ", found another member of the index signature's union, which a computed-key or index-signature write may have stored"
-	return b.finish("record_declared_member", ir.Narrow{Value: value, To: to, Checked: true, Message: message}), nil
+	return b.finish("record_declared_member", ir.Narrow{Value: value, To: to, Checked: true, Message: message})
+}
+
+// recordSlotArrayStop is an array member's read out of a slot boxed as a union where no element-checked
+// view takes it (recordReadSlotView), ruled on #3xq2xzc.
+const recordSlotArrayStop = "a dictionary member narrowed to an array without an element-checked view"
+
+// recordReadSlotView is recordReadDeclared's read of an array member out of a slot boxed as a union:
+// tsc's CompilerOptions lib, types, typeRoots, rootDirs, moduleSuffixes and customConditions (#y852c3c).
+// Arrays of different element types share one heap kind there, and walking the elements proves nothing
+// once another alias pushes into the array, so no check made once at the read is sound. The read checks
+// only that it's an array, hands the array itself back, identity kept, and registers it as a view origin,
+// as a cast does (view): V3's element-checked view (#6wfvfhm) then checks every element as it's handed
+// out through any reach of it, never cached (ir.ViewElement), and stops every other road at compile time
+// (checkViewArrays): a write, join, slice, sort, a spread. The record isn't tracked by the allocation flow
+// graph, so the origin's reach is unknown, and every array read in a program that makes one is demanded.
+//
+// A member whose element V3 can't contract (a function, a nullable reference, any or unknown), a member
+// that admits null (which the checked narrow stops on), and a read the element key's pre-pass doesn't see
+// (recordSlotArrayRead: a weak field read's receiver is no record type) keep the stop. paths never
+// reaches here: MapLike<string[]> is a dictionary, read by recordReadHeapMember.
+func (l *lowering) recordReadSlotView(node *ast.Node, read ir.Expression, here *checker.Type, to ir.Type) (ir.Expression, error) {
+	declared := l.recordSlotArrayRead(node)
+	if declared == nil || l.includesNull(here) {
+		return nil, l.notYet(node, recordSlotArrayStop)
+	}
+	// The element as the pre-pass keyed it (collectViewedElements), so the contract below is no miss.
+	element := l.viewArrayElementType(declared)
+	if element == nil {
+		return nil, l.notYet(node, recordSlotArrayStop)
+	}
+	if held := l.concrete(element); held.Flags()&(checker.TypeFlagsAny|checker.TypeFlagsUnknown) != 0 || l.mentionsTypeParameter(held, map[*checker.Type]bool{}) {
+		return nil, l.notYet(node, recordSlotArrayStop)
+	}
+	// The origin is viewed as ReadonlyArray<E> whatever the member's declared type, mutable in tsc's own.
+	// V3 checks an element only through a readonly view (elementContractCheckable), and demands no array
+	// read in the whole program unless some array contract is readonly (checkViewArrays' hasArrayView), so
+	// a writable contract here would leave every read raw, silently. The reach is readonly in fact: every
+	// road that writes through a demanded reach is one checkViewArrays stops (viewArrayRoads admits only
+	// handouts and roads that read no element), and the library calls that write their argument
+	// (writingLibraryMembers) never lower with an array there: Object.assign takes only a literal's plain
+	// object as its target, the descriptor and prototype writers are refused (objectCallArguments), and
+	// Reflect's writers aren't lowered. The contract is V3's own, built as a cast to readonly E[] builds
+	// it (unionAggregateContract), so it's never a second one.
+	id, err := l.viewContract(node, predicateReadonlyArray(l.checker, element, true))
+	if err != nil {
+		switch err.(type) {
+		case *NotYet, *Refused:
+			return nil, l.notYet(node, recordSlotArrayStop)
+		}
+		return nil, err
+	}
+	if !elementContractCheckable(l.result, id, map[ir.ViewContractID]bool{}) {
+		return nil, l.notYet(node, recordSlotArrayStop)
+	}
+	array := l.recordCheckedHeapRead(node, read, here, declared, to)
+	l.result.ViewOrigins = append(l.result.ViewOrigins, array)
+	return array, nil
+}
+
+// recordSlotArrayRead is the array type node, a named read of a record whose values are boxed as a
+// union, is declared as, or nil. It's the one test of where recordReadSlotView makes an origin, asked by
+// the element key's pre-pass too (collectViewedElements), so every origin's element is one the key saw.
+func (l *lowering) recordSlotArrayRead(node *ast.Node) *checker.Type {
+	n := ast.SkipParentheses(node)
+	var receiver *ast.Node
+	name := ""
+	switch n.Kind {
+	case ast.KindPropertyAccessExpression:
+		receiver, name = n.AsPropertyAccessExpression().Expression, n.Name().Text()
+	case ast.KindElementAccessExpression:
+		receiver = n.AsElementAccessExpression().Expression
+	default:
+		return nil
+	}
+	if !l.recordReadTarget(n) {
+		return nil
+	}
+	// The slot recordAccess reads: the record's own, or a union of like records'.
+	receiverType := l.checker.GetTypeAtLocation(receiver)
+	element := l.recordElement(receiverType)
+	if element == nil {
+		element = l.recordUnionElement(receiverType, name)
+	}
+	if element == nil {
+		return nil
+	}
+	if of, known := l.recordStorageType(element); !known || of != ir.Union {
+		return nil
+	}
+	declared := l.checker.GetNonNullableType(l.concrete(l.checker.GetTypeAtLocation(n)))
+	if !l.isArrayType(declared) {
+		return nil
+	}
+	return declared
 }
 
 // recordSlotMemberUnique is whether declared is the only member of receiver's index signature value
@@ -267,9 +367,11 @@ func (l *lowering) recordComputedEntry(literal, entry *ast.Node, of ir.Type) err
 // (records_union_lying.ts is Adamic's .ts witness). A plain object or a dictionary that's the one
 // member of its heap class in the slot's union is read through a checked heap narrow
 // (recordReadHeapMember), which stops on the other class; beside another of its class it has no
-// checked tag, and neither has an array or a Map, so their read is not yet: Language's b8, a8 and p8,
-// and r8, the MapLike that records_union_options.ts, tsc's commandLineParser shape, declares. A function's tag says only
-// "function", so it's judged (b10), as is any representation not here.
+// checked tag, and neither has a Map, so their read is not yet: Language's b8 and p8, and r8, the
+// MapLike that records_union_options.ts, tsc's commandLineParser shape, declares. An array is read as a
+// checked view's origin (recordReadSlotView), so a lie under it stops at the first element read that
+// hands it out, or the read is not yet where V3 can't check its element: Language's a8. A function's tag
+// says only "function", so it's judged (b10), as is any representation not here.
 var readGuardedInUnionSlot = map[ir.Type]bool{ir.Number: true, ir.String: true, ir.Boolean: true, ir.Object: true, ir.Array: true, ir.Map: true, ir.Record: true}
 
 // namedWriteStop stops a value written under a name the key can't promise into receiver, through its

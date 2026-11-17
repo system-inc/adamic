@@ -12,7 +12,7 @@ import (
 
 func TestViewArrays(t *testing.T) {
 	t.Parallel()
-	for _, name := range []string{"tagged-null-lie", "guard-forwarded", "guard-mutable-param", "guard-slice", "guard-spread", "guard-from", "legacy-null", "generic-object-lie", "identity", "cast-unknown", "cast-object", "cast-union", "storage-scalar", "storage-reference-lie", "storage-boolean-lie", "storage-maybe-lie", "renamed-lie", "find-result-lie", "findLast-result-lie", "join", "json", "string", "index-good", "index-lie", "try-lie", "optional-element", "unrelated-maybe", "at-lie", "per-read", "bounds", "object-wide", "generic", "no-element", "for-of-good", "for-of-lie", "values-lie", "forEach-good", "forEach-lie", "map-good", "map-lie", "filter-good", "filter-lie", "filter-predicate-good", "filter-predicate-lie", "narrowing-cast", "some-good", "some-lie", "every-good", "every-lie", "find-good", "find-lie", "findIndex-good", "findIndex-lie", "findLast-good", "findLast-lie", "findLastIndex-good", "findLastIndex-lie", "reduce-good", "reduce-lie", "mutable", "slice", "spread", "concat"} {
+	for _, name := range []string{"tagged-null-lie", "guard-forwarded", "guard-mutable-param", "guard-slice", "guard-spread", "guard-from", "legacy-null", "generic-object-lie", "identity", "cast-unknown", "cast-object", "cast-union", "storage-scalar", "storage-reference-lie", "storage-boolean-lie", "storage-maybe-lie", "renamed-lie", "find-result-lie", "findLast-result-lie", "join", "json", "string", "index-good", "index-lie", "try-lie", "optional-element", "unrelated-maybe", "at-lie", "per-read", "bounds", "object-wide", "generic", "no-element", "for-of-good", "for-of-lie", "values-lie", "forEach-good", "forEach-lie", "map-good", "map-lie", "filter-good", "filter-lie", "filter-predicate-good", "filter-predicate-lie", "narrowing-cast", "some-good", "some-lie", "every-good", "every-lie", "find-good", "find-lie", "findIndex-good", "findIndex-lie", "findLast-good", "findLast-lie", "findLastIndex-good", "findLastIndex-lie", "reduce-good", "reduce-lie", "mutable", "slice", "spread", "concat", "record-slot-alias-lie", "record-slot-undefined-lie"} {
 		t.Run(name, func(t *testing.T) {
 			t.Parallel()
 			path, err := filepath.Abs("testdata/views_v3/" + name + ".ts")
@@ -88,7 +88,7 @@ func TestViewArrays(t *testing.T) {
 						found = ", found reference storage\n"
 					case "storage-boolean-lie":
 						found = ", found boolean\n"
-					case "storage-maybe-lie":
+					case "storage-maybe-lie", "record-slot-undefined-lie":
 						found = ", found undefined\n"
 					}
 					if strings.Contains(name, "result-lie") || name == "generic-object-lie" {
@@ -161,4 +161,13 @@ var elementStopWords = map[string]string{
 	"at-lie":     "adamic: panic: element read failed: view._children.at(-1) is not a Node; expected Node, found number\n",
 	"map-lie":    "adamic: panic: element read failed: view._children's element, in map is not a Node; expected Node, found number\n",
 	"for-of-lie": "adamic: panic: element read failed: view._children's element, in for...of is not a Node; expected Node, found number\n",
+	// A record's string[] member read out of its union slot (#y852c3c): a (string | number)[] alias stored
+	// under lib through the index signature holds a 1, and the slot reach's read names itself. A pushed 1
+	// can't be the lie: a push into any array of a program with a slot origin stops at compile time
+	// (internal/lower TestRecordSlotArrayWritesStop), so the alias holds it from the start, as per-read does.
+	"record-slot-alias-lie": "adamic: panic: element read failed: opts.lib[1] is not a string; expected string, found number\n",
+	// The same read of an undefined a (string | undefined)[] stored under lib holds: a NULL slot, as a
+	// hole is natively, which the string contract fails closed on and never reads as a string. A real hole
+	// can't be made there: an index write past the end, the only road to one, stops at compile time too.
+	"record-slot-undefined-lie": "adamic: panic: element read failed: opts.lib[1] is not a string; expected string, found undefined\n",
 }
