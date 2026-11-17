@@ -12,8 +12,14 @@ import (
 
 // Bind arguments enter a normal factory call before any closure is allocated.
 // Its captured parameter cells own the snapshots and participate in the cycle proof.
-// thisArg is captured but never handed to a this body. This is sound only while
-// expression.go stops this outside methods; lifting that stop owes a receiver pass here.
+// thisArg is captured, and the kept call hands it to a target that takes a this
+// (adamicBoundCall, adamic_bound_closure_call). A bind lowered here hands a this
+// body only its own receiver, a class method bound to the object it's read off
+// (BoundMethod): expression.go stops this outside methods, a function expression
+// refuses it, bindReceiverRule stops a method bound to another object, and a bind
+// of a host member value is a use checkHostMemberValues stops. A .call of a host
+// member value (hostMemberValueCallThrough) hands thisArg to a literal's method,
+// and checkHostMemberValues holds it to the literal the method was read off.
 func (l *lowering) functionBind(node *ast.Node) (ir.Expression, bool, error) {
 	call := node.AsCallExpression()
 	callee := ast.SkipParentheses(call.Expression)
@@ -89,68 +95,14 @@ func (l *lowering) functionBind(node *ast.Node) (ir.Expression, bool, error) {
 		types = append(types, l.checker.GetTypeAtLocation(written))
 		nodes = append(nodes, written)
 	}
-	maker := len(l.result.Functions)
-	l.result.Functions = append(l.result.Functions, ir.Function{Name: "bind_factory", Returns: ir.Closure})
-	wrapper := len(l.result.Functions)
-	l.result.Functions = append(l.result.Functions, ir.Function{Name: "bound_function", Closure: true})
-	environment := []int{}
-	reads := []ir.Expression{}
-	for index, value := range values {
-		local := len(l.result.Locals)
-		l.result.Locals = append(l.result.Locals, ir.Local{Name: "bound_value", Type: value.Type(), Function: maker, Captured: true})
-		l.noteLocal(local, types[index], nodes[index])
-		environment = append(environment, local)
-		reads = append(reads, ir.Read{Local: local, Of: value.Type()})
-	}
-	boundType := l.concrete(l.checker.GetNonNullableType(l.checker.GetTypeAtLocation(node)))
-	boundSignatures := l.checker.GetSignaturesOfType(boundType, checker.SignatureKindCall)
-	if len(boundSignatures) != 1 {
-		return nil, true, l.notYet(node, "bind result without one declared function signature")
-	}
-	function := l.result.Functions[wrapper]
-	function.Source.Role = "bound_function"
-	function.Environment = environment
-	arguments := append([]ir.Expression{}, reads[2:]...)
-	// The library models bind's remaining parameters as a generic rest tuple.
-	// Use the declared target's slots after the fixed prefix, rather than treating
-	// that tuple as a single object argument.
-	for _, parameter := range parameters[min(len(values)-2, len(parameters)):] {
-		proven := l.checker.GetTypeOfSymbol(parameter)
-		of, known := l.bindParameterType(parameter)
-		if !known {
-			return nil, true, l.notYet(node, "a bound function parameter without a value representation")
-		}
-		local := len(l.result.Locals)
-		l.result.Locals = append(l.result.Locals, ir.Local{Name: "argument", Type: of, Function: wrapper})
-		l.noteLocal(local, proven, node)
-		function.Parameters = append(function.Parameters, local)
-		arguments = append(arguments, ir.Read{Local: local, Of: of})
-	}
-	returns := l.checker.GetReturnTypeOfSignature(boundSignatures[0])
-	if returns.Flags()&(checker.TypeFlagsVoid|checker.TypeFlagsNever) == 0 {
-		var known bool
-		function.Returns, known = l.representation(returns)
-		if !known {
-			return nil, true, l.notYet(node, "a bound function result without a value representation")
-		}
-	}
-	invoke := ir.CallClosure{Bound: true, Closure: reads[0], Arguments: arguments, FunctionType: int(proven.Id()), Returns: function.Returns}
+	boundName := ""
 	if method {
-		invoke.BoundName = target.Name().Text()
+		boundName = target.Name().Text()
 	}
-	if function.Returns == 0 {
-		function.Body = []ir.Statement{ir.Evaluate{Value: invoke}, ir.Return{}}
-	} else {
-		function.Body = []ir.Statement{ir.Return{Value: invoke}}
-	}
-	l.result.Functions[wrapper] = function
-	l.closureRecords = append(l.closureRecords, closureRecord{proven: boundType, function: wrapper, node: node})
-	made, err := l.programAllocation(node, l.graphAllocation(ir.BoundClosure{Function: wrapper, Fixed: len(values) - 2}, node))
+	maker, _, err := l.boundFactory(node, node, values, types, nodes, parameters, proven, l.concrete(l.checker.GetNonNullableType(l.checker.GetTypeAtLocation(node))), boundName)
 	if err != nil {
 		return nil, true, err
 	}
-	l.result.Functions[maker].Parameters = environment
-	l.result.Functions[maker].Body = []ir.Statement{ir.Return{Value: made}}
 	if method {
 		l.wholeObjectCopies = append(l.wholeObjectCopies, wholeObjectCopy{node: target, source: values[1], copied: l.checker.GetTypeAtLocation(target.AsPropertyAccessExpression().Expression), reader: "bind lookup"})
 		return ir.BoundMethod{Object: values[1], Name: target.Name().Text(), Optional: access.QuestionDotToken != nil, Fixed: values[2:], Factory: maker}, true, nil
@@ -170,6 +122,75 @@ func (l *lowering) functionBind(node *ast.Node) (ir.Expression, bool, error) {
 		}}, true, nil
 	}
 	return ir.Call{Function: maker, Arguments: values, Returns: ir.Closure}, true, nil
+}
+
+// boundFactory makes the factory a bind lowers to and the wrapper its bound closure runs, for node, the
+// call that binds: values are the target, the thisArg and the fixed arguments as lowered, types the
+// checker's type of each and nodes the nodes that wrote them, parameters the target's declared ones and
+// proven its type. bound is the bound function's type, whose one signature gives the wrapper's result, and
+// site the node the bound closure is allocated as. boundName names a class method bound through its
+// receiver, or is empty. It gives the factory, whose call with values makes the bound closure, and the
+// wrapper's result. A .call of a host member value lowers through it too (hostMemberValueCallThrough).
+func (l *lowering) boundFactory(node, site *ast.Node, values []ir.Expression, types []*checker.Type, nodes []*ast.Node, parameters []*ast.Symbol, proven, bound *checker.Type, boundName string) (int, ir.Type, error) {
+	maker := len(l.result.Functions)
+	l.result.Functions = append(l.result.Functions, ir.Function{Name: "bind_factory", Returns: ir.Closure})
+	wrapper := len(l.result.Functions)
+	l.result.Functions = append(l.result.Functions, ir.Function{Name: "bound_function", Closure: true})
+	environment := []int{}
+	reads := []ir.Expression{}
+	for index, value := range values {
+		local := len(l.result.Locals)
+		l.result.Locals = append(l.result.Locals, ir.Local{Name: "bound_value", Type: value.Type(), Function: maker, Captured: true})
+		l.noteLocal(local, types[index], nodes[index])
+		environment = append(environment, local)
+		reads = append(reads, ir.Read{Local: local, Of: value.Type()})
+	}
+	boundSignatures := l.checker.GetSignaturesOfType(bound, checker.SignatureKindCall)
+	if len(boundSignatures) != 1 {
+		return 0, 0, l.notYet(node, "bind result without one declared function signature")
+	}
+	function := l.result.Functions[wrapper]
+	function.Source.Role = "bound_function"
+	function.Environment = environment
+	arguments := append([]ir.Expression{}, reads[2:]...)
+	// The library models bind's remaining parameters as a generic rest tuple.
+	// Use the declared target's slots after the fixed prefix, rather than treating
+	// that tuple as a single object argument.
+	for _, parameter := range parameters[min(len(values)-2, len(parameters)):] {
+		proven := l.checker.GetTypeOfSymbol(parameter)
+		of, known := l.bindParameterType(parameter)
+		if !known {
+			return 0, 0, l.notYet(node, "a bound function parameter without a value representation")
+		}
+		local := len(l.result.Locals)
+		l.result.Locals = append(l.result.Locals, ir.Local{Name: "argument", Type: of, Function: wrapper})
+		l.noteLocal(local, proven, node)
+		function.Parameters = append(function.Parameters, local)
+		arguments = append(arguments, ir.Read{Local: local, Of: of})
+	}
+	returns := l.checker.GetReturnTypeOfSignature(boundSignatures[0])
+	if returns.Flags()&(checker.TypeFlagsVoid|checker.TypeFlagsNever) == 0 {
+		var known bool
+		function.Returns, known = l.representation(returns)
+		if !known {
+			return 0, 0, l.notYet(node, "a bound function result without a value representation")
+		}
+	}
+	invoke := ir.CallClosure{Bound: true, BoundName: boundName, Closure: reads[0], Arguments: arguments, FunctionType: int(proven.Id()), Returns: function.Returns}
+	if function.Returns == 0 {
+		function.Body = []ir.Statement{ir.Evaluate{Value: invoke}, ir.Return{}}
+	} else {
+		function.Body = []ir.Statement{ir.Return{Value: invoke}}
+	}
+	l.result.Functions[wrapper] = function
+	l.closureRecords = append(l.closureRecords, closureRecord{proven: bound, function: wrapper, node: node})
+	made, err := l.programAllocation(site, l.graphAllocation(ir.BoundClosure{Function: wrapper, Fixed: len(values) - 2}, site))
+	if err != nil {
+		return 0, 0, err
+	}
+	l.result.Functions[maker].Parameters = environment
+	l.result.Functions[maker].Body = []ir.Statement{ir.Return{Value: made}}
+	return maker, function.Returns, nil
 }
 
 // Bound descriptors and rebinding are deliberately separate promises. Follow
