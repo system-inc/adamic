@@ -1,32 +1,40 @@
 #!/usr/bin/env node
 'use strict';
-// Adaptation 77, #5pstmvw: ObjectType's five resolved slots in src/compiler/types.ts, members, properties,
-// callSignatures, constructSignatures and indexInfos, become readonly. ResolvedType redeclares all five required, so a
-// ResolvedType (or a GenericType | ResolvedType) seen as ObjectType was a view that could write undefined where
-// ResolvedType reads a value (21 refusals in checker.ts). With the slots readonly on ObjectType the view can't write
-// them. ResolvedType keeps its own five writable, as upstream declares them, and every other interface in the family
-// stays as upstream declares it. A new internal interface, ObjectTypeUnderConstruction, redeclares all five writable,
-// and checker.ts names it only where a slot is written outside ResolvedType: createObjectType's local, which its own
-// five writes go through, while createObjectType still returns ObjectType; the declarations of the two callers that
-// write the slots of the type createObjectType gives them, getOrCreateTypeFromSignature and getTypeWithoutSignatures;
-// and a type assertion at three writes through a narrower interface, resolveAnonymousTypeMembers' two, of
-// callSignatures and constructSignatures after setStructuredTypeMembers, and resolveBaseTypesOfClass' reset of an
-// InterfaceType's members to undefined, the hole Adamic named, which is refused at its own assertion rather than
-// hidden. Returning the view from createObjectType made every caller's downcast a cast from the view, eight sites the
-// meter refused (J-7zaedjy). A redeclaration on a family interface would make one interface's slot writable while its
-// siblings' stay readonly, and tsc's subtype reduction never takes a readonly property for a subtype of a writable one:
-// a writable AnonymousType slot stopped getObjectTypeInstantiation's AnonymousType | DeferredTypeReference |
-// GenericType from reducing (TS2345 at its instantiations.set), and a writable members on InterfaceType and GenericType
-// made an ObjectType seen as GenericType a readonly slot become writable. checker.ts imports the new name with its own
-// `import type` from ./types.js, after its last import, and leaves the import from ./_namespaces/ts.js byte for byte as
-// it was: later adaptations (99-correctness-core-multimap among them) pin that declaration's whole text and find it as
-// the one import of that module. Every edit is a declaration, a cast's type, a type assertion or a type-only import, so
-// the emitted JavaScript doesn't change. All five slots are internal and the new interface is internal, so the
-// published declarations don't change either. README.md says what certifies it, the writes counted, and the mutant that
-// brings the refusals back. The edits are found through the stock AST, never by a line: each refuses unless it finds
-// exactly upstream's declarations or statements, and a second run changes nothing. It sorts after 76-truthful-casts, so
-// every later adaptation and every consumer reads apply's tree with the slots readonly. 75-optional-widening and
-// 76-truthful-casts edit none of these interfaces or functions, so the match expects upstream's shape.
+// Adaptation 77, #5pstmvw, with #2gf0k9w: ObjectType's five resolved slots in src/compiler/types.ts, members,
+// properties, callSignatures, constructSignatures and indexInfos, become readonly. ResolvedType redeclares all five
+// required, so a ResolvedType (or a GenericType | ResolvedType) seen as ObjectType was a view that could write
+// undefined where ResolvedType reads a value (21 refusals in checker.ts). With the slots readonly on ObjectType the
+// view can't write them. ResolvedType keeps its own five writable, as upstream declares them, and every other interface
+// in the family stays as upstream declares it. A new internal interface, ObjectTypeUnderConstruction, redeclares all
+// five writable, and checker.ts names it only where a slot is written outside ResolvedType, in the shape Adamic ruled
+// on #2gf0k9w: the view is born at a creator's own creation cast, used only by the writers, and leaves as the finished
+// type, never cast back from it. createObjectType's body moves whole into a new createObjectTypeUnderConstruction right
+// before it, which returns the view; createObjectType keeps its signature and returns that function's result, an
+// upcast; and the two callers that write the slots of the type they're given, getOrCreateTypeFromSignature and
+// getTypeWithoutSignatures, call the new function instead. Three writes through a narrower interface go through a type
+// assertion to the view: resolveAnonymousTypeMembers' two, of callSignatures and constructSignatures after
+// setStructuredTypeMembers, and resolveBaseTypesOfClass' reset of an InterfaceType's members to undefined, the hole
+// Adamic named, which is refused at its own assertion rather than hidden. Returning the view from createObjectType made
+// every caller's downcast a cast from the view, eight sites the meter refused (J-7zaedjy), and casting a caller's
+// createObjectType result to the view is a cast from the finished type back to a writable one, which stopped
+// getTypeWithoutSignatures (J-c9fy9cp). A redeclaration on a family interface would make one interface's slot writable
+// while its siblings' stay readonly, and tsc's subtype reduction never takes a readonly property for a subtype of a
+// writable one: a writable AnonymousType slot stopped getObjectTypeInstantiation's AnonymousType |
+// DeferredTypeReference | GenericType from reducing (TS2345 at its instantiations.set), and a writable members on
+// InterfaceType and GenericType made an ObjectType seen as GenericType a readonly slot become writable. checker.ts
+// imports the view with its own `import type` from ./types.js, after its last import, and leaves the import from
+// ./_namespaces/ts.js byte for byte as it was: later adaptations (99-correctness-core-multimap among them) pin that
+// declaration's whole text and find it as the one import of that module. The emitted JavaScript changes by the creator
+// alone: one function added, createObjectType's body a call to it, and two call sites renamed. It makes the same object
+// with the same keys in the same order and the same values; README.md names the diff. Every other edit is a
+// declaration, a cast's type, a type assertion or a type-only import, which the emitter erases. All five slots are
+// internal and the new interface is internal, so the published declarations don't change. README.md says what certifies
+// it, the writes counted, and the mutants that bring the refusals back. The edits are found through the stock AST,
+// never by a line: each refuses unless it finds exactly upstream's declarations or statements, or all of them already
+// adapted, and a second run changes nothing. The new function's name must be new to the whole program. It sorts after
+// 76-truthful-casts, so every later adaptation and every consumer reads apply's tree with the slots readonly.
+// 75-optional-widening and 76-truthful-casts edit none of these interfaces or functions, so the match expects
+// upstream's shape.
 const fs = require('node:fs');
 const path = require('node:path');
 const ts = require(process.env.CENSUS_TYPESCRIPT || 'typescript');
@@ -56,9 +64,10 @@ const untouched = {
     GenericType: 'extends InterfaceType, TypeReference',
     AnonymousType: 'extends ObjectType',
 };
-// The callers that write the slots of the type createObjectType gives them: in the one function of each name, with that
-// parameter list, the one declaration of that text, upstream's or with the cast already at its initializer's end.
-const casted = [
+// The creator of the view, and the callers that write the slots of the type they're given: in the one function of each
+// name, with that parameter list, the one declaration of that text, upstream's or calling the creator already.
+const creatorName = 'createObjectTypeUnderConstruction';
+const writers = [
     { function: 'getOrCreateTypeFromSignature', parameters: 'signature: Signature',
         declaration: 'const type = createObjectType(ObjectFlags.Anonymous | ObjectFlags.SingleSignatureType, signature.declaration?.symbol)' },
     { function: 'getTypeWithoutSignatures', parameters: 'type: Type',
@@ -174,7 +183,7 @@ for (const [name, expected] of Object.entries(untouched)) {
 const viewText = [
     '', '',
     '/** @internal */',
-    '// What createObjectType makes: an ObjectType whose resolved slots are still being written',
+    '// What createObjectTypeUnderConstruction makes: an ObjectType whose resolved slots are still being written',
     `export interface ${view} extends ObjectType {`,
     ...Object.keys(slotTypes).map(slot => `    ${slot}?: ${optionalType(slot)};`),
     '}',
@@ -202,53 +211,112 @@ function functionNamed(name, parameters) {
 }
 const checkerEdits = [];
 
-// createObjectType keeps upstream's return annotation, ObjectType, and its local takes the view, so its own five writes
-// go through it and `return type;` is an upcast. Upstream's
-//     const type = createTypeWithSymbol(TypeFlags.Object, symbol!) as ObjectType;
+// The creator, as Adamic ruled on #2gf0k9w: the view is born at its own creation cast, used only by the writers, and
+// leaves as the finished type. createObjectType's body moves whole into a new function right before it, which returns
+// the view, and createObjectType keeps its signature and returns that function's result, an upcast. Upstream's
+//     function createObjectType(objectFlags: ObjectFlags, symbol?: Symbol): ObjectType {
+//         const type = createTypeWithSymbol(TypeFlags.Object, symbol!) as ObjectType;
+//         type.objectFlags = objectFlags;
+//         type.members = undefined;
+//         ... properties, callSignatures, constructSignatures and indexInfos the same ...
+//         return type;
+//     }
 // becomes
-//     const type = createTypeWithSymbol(TypeFlags.Object, symbol!) as ObjectTypeUnderConstruction;
-const creator = functionNamed('createObjectType', 'objectFlags: ObjectFlags, symbol?: Symbol');
+//     function createObjectTypeUnderConstruction(objectFlags: ObjectFlags, symbol?: Symbol): ObjectTypeUnderConstruction {
+//         const type = createTypeWithSymbol(TypeFlags.Object, symbol!) as ObjectTypeUnderConstruction;
+//         ... the same six writes ...
+//         return type;
+//     }
+//
+//     function createObjectType(objectFlags: ObjectFlags, symbol?: Symbol): ObjectType {
+//         return createObjectTypeUnderConstruction(objectFlags, symbol);
+//     }
+const creatorParameters = 'objectFlags: ObjectFlags, symbol?: Symbol';
+const creator = functionNamed('createObjectType', creatorParameters);
 if (creator.type?.getText(checker.source) !== 'ObjectType')
     throw new Error(`expected createObjectType to return ObjectType, found ${creator.type?.getText(checker.source)}`);
-const creatorFirst = creator.body.statements[0];
-const cast = creatorFirst && ts.isVariableStatement(creatorFirst) ? creatorFirst.declarationList.declarations[0]?.initializer : undefined;
-const castType = cast && ts.isAsExpression(cast) ? cast.type.getText(checker.source) : undefined;
-if (castType !== 'ObjectType' && castType !== view) throw new Error(`unexpected first statement of createObjectType: ${creatorFirst?.getText(checker.source)}`);
-const expectedStatements = [
-    `const type = createTypeWithSymbol(TypeFlags.Object, symbol!) as ${castType};`,
+const creatorBody = cast => [
+    `const type = createTypeWithSymbol(TypeFlags.Object, symbol!) as ${cast};`,
     'type.objectFlags = objectFlags;',
     ...Object.keys(slotTypes).map(slot => `type.${slot} = undefined;`),
     'return type;',
 ];
-if (creator.body.statements.map(statement => statement.getText(checker.source)).join('\n') !== expectedStatements.join('\n'))
-    throw new Error(`unexpected createObjectType: ${creator.getText(checker.source)}`);
-if (castType === 'ObjectType') checkerEdits.push({ start: cast.type.getStart(checker.source), end: cast.type.getEnd(), text: view });
+const creatorLine = checker.text.lastIndexOf('\n', creator.getStart(checker.source)) + 1;
+const indent = checker.text.slice(creatorLine, creator.getStart(checker.source));
+if (indent.trim() !== '') throw new Error('expected createObjectType to open its own line');
+const block = statements => statements.map(statement => `${checker.newline}${indent}    ${statement}`).join('') + `${checker.newline}${indent}}`;
+const creatorText = `function ${creatorName}(${creatorParameters}): ${view} {${block(creatorBody(view))}` +
+    `${checker.newline}${checker.newline}${indent}function createObjectType(${creatorParameters}): ObjectType {` +
+    block([`return ${creatorName}(objectFlags, symbol);`]);
+const creatorStatements = creator.body.statements.map(statement => statement.getText(checker.source)).join('\n');
+let creatorEdited;
+if (creatorStatements === creatorBody('ObjectType').join('\n')) {
+    creatorEdited = true;
+    checkerEdits.push({ start: creator.getStart(checker.source), end: creator.getEnd(), text: creatorText });
+}
+else if (creatorStatements === `return ${creatorName}(objectFlags, symbol);`) {
+    creatorEdited = false;
+    const made = functionNamed(creatorName, creatorParameters);
+    if (checker.text.slice(made.getStart(checker.source), creator.getEnd()) !== creatorText)
+        throw new Error(`expected ${creatorName} right before createObjectType, as this adaptation writes them`);
+}
+else throw new Error(`unexpected createObjectType: ${creator.getText(checker.source)}`);
 
-// The two writing callers: the declaration's initializer gains ` as ObjectTypeUnderConstruction` at its end, which the
-// emitter erases, and nothing else in them changes. Upstream's
+// The two writing callers call the creator, with the same arguments, and nothing else in them changes. Upstream's
 //     const type = createObjectType(ObjectFlags.Anonymous | ObjectFlags.SingleSignatureType, signature.declaration?.symbol);
 //     const result = createObjectType(ObjectFlags.Anonymous, type.symbol);
 // become
-//     const type = createObjectType(ObjectFlags.Anonymous | ObjectFlags.SingleSignatureType, signature.declaration?.symbol) as ObjectTypeUnderConstruction;
-//     const result = createObjectType(ObjectFlags.Anonymous, type.symbol) as ObjectTypeUnderConstruction;
-const castedCallers = [];
-for (const caller of casted) {
-    const owner = functionNamed(caller.function, caller.parameters);
-    const upstream = `${caller.declaration};`;
-    const adapted = `${caller.declaration} as ${view};`;
+//     const type = createObjectTypeUnderConstruction(ObjectFlags.Anonymous | ObjectFlags.SingleSignatureType, signature.declaration?.symbol);
+//     const result = createObjectTypeUnderConstruction(ObjectFlags.Anonymous, type.symbol);
+const writerCalls = [];
+for (const writer of writers) {
+    const owner = functionNamed(writer.function, writer.parameters);
+    const upstream = `${writer.declaration};`;
+    const adapted = `${writer.declaration.replace('= createObjectType(', `= ${creatorName}(`)};`;
     const found = [];
     ts.forEachChild(owner.body, function find(node) {
         if (ts.isVariableStatement(node) && [upstream, adapted].includes(node.getText(checker.source))) found.push(node);
         ts.forEachChild(node, find);
     });
-    if (found.length !== 1) throw new Error(`expected \`${upstream}\` once in ${caller.function}, adapted or not, found ${found.length}`);
+    if (found.length !== 1) throw new Error(`expected \`${upstream}\` once in ${writer.function}, adapted or not, found ${found.length}`);
     const edited = found[0].getText(checker.source) === upstream;
     if (edited) {
-        const initializer = found[0].declarationList.declarations[0].initializer;
-        checkerEdits.push({ start: initializer.getEnd(), end: initializer.getEnd(), text: ` as ${view}` });
+        const call = found[0].declarationList.declarations[0].initializer;
+        if (!call || !ts.isCallExpression(call) || !ts.isIdentifier(call.expression) || call.expression.text !== 'createObjectType')
+            throw new Error(`unexpected initializer in ${upstream}`);
+        checkerEdits.push({ start: call.expression.getStart(checker.source), end: call.expression.getEnd(), text: creatorName });
     }
-    castedCallers.push({ function: caller.function, where: where(checker, found[0]), edited, statement: adapted });
+    writerCalls.push({ function: writer.function, where: where(checker, found[0]), edited, statement: adapted });
 }
+// All or nothing: a creator without its callers, or callers without their creator, is no tree this adaptation wrote.
+const state = edited => edited ? 'upstream' : 'adapted';
+if (writerCalls.some(call => call.edited !== creatorEdited))
+    throw new Error(`expected createObjectType and its two writing callers all upstream or all adapted, found the creator ` +
+        `${state(creatorEdited)} and the callers ${writerCalls.map(call => state(call.edited)).join(', ')}`);
+
+// The creator's name is new to the program. Upstream, no file under src names it; adapted, checker.ts names it four
+// times, as the creator's own name and as the callee in createObjectType and the two writers, and no other file does.
+const creatorUses = [];
+for (const relative of fs.readdirSync(path.join(tree, 'src'), { recursive: true }).map(String).filter(name => name.endsWith('.ts')).sort()) {
+    const fileName = path.join(tree, 'src', relative);
+    const text = fs.readFileSync(fileName, 'utf8');
+    if (!text.includes(creatorName)) continue;
+    const source = ts.createSourceFile(fileName, text, ts.ScriptTarget.Latest, true);
+    ts.forEachChild(source, function find(node) {
+        if (ts.isIdentifier(node) && node.text === creatorName) {
+            let owner = node.parent;
+            while (owner && !(ts.isFunctionDeclaration(owner) && owner.name !== node)) owner = owner.parent;
+            const role = ts.isFunctionDeclaration(node.parent) && node.parent.name === node ? 'declaration'
+                : ts.isCallExpression(node.parent) && node.parent.expression === node ? `call in ${owner?.name?.text ?? '<top>'}` : 'other';
+            creatorUses.push({ file: path.join('src', relative), role });
+        }
+        ts.forEachChild(node, find);
+    });
+}
+const expectedUses = creatorEdited ? [] : ['declaration', 'call in createObjectType', ...writers.map(writer => `call in ${writer.function}`)];
+const uses = creatorUses.map(use => `${use.file} ${use.role}`).sort();
+if (uses.join('\n') !== expectedUses.map(role => `src/compiler/checker.ts ${role}`).sort().join('\n'))
+    throw new Error(`expected ${creatorName} ${creatorEdited ? 'nowhere under src' : 'only as this adaptation writes it'}, found ${JSON.stringify(uses)}`);
 
 // The asserted writes. Each receiver becomes a type assertion to the view, which the emitter erases, parentheses and
 // all. resolveAnonymousTypeMembers' two, after setStructuredTypeMembers has resolved the type:
@@ -311,7 +379,7 @@ else throw new Error(`expected checker.ts to import ${view} once, as this adapta
 // Every check passes before either file is written.
 write(types, typeEdits);
 write(checker, checkerEdits);
-console.log(JSON.stringify({ typescript: ts.version, task: '#5pstmvw', certificate: "the compiled program's gate", slots,
-    createObjectType: { where: where(checker, creator), edited: castType === 'ObjectType', local: view, returns: 'ObjectType' },
-    castedCallers, assertedWrites,
+console.log(JSON.stringify({ typescript: ts.version, task: '#5pstmvw', followUp: '#2gf0k9w', certificate: "the compiled program's gate", slots,
+    creator: { name: creatorName, where: where(checker, creator), edited: creatorEdited, returns: view },
+    writerCalls, assertedWrites,
     import: { ...imported, statement: importText } }, null, 2));
