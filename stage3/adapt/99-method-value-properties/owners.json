@@ -1,0 +1,322 @@
+[
+  {
+    "file": "src/compiler/resolutionCache.ts",
+    "interface": "ResolutionCacheHost",
+    "member": "globalCacheResolutionModuleName",
+    "overloads": 1,
+    "before": "globalCacheResolutionModuleName?(externalModuleName: string): string;",
+    "after": "readonly globalCacheResolutionModuleName?: (externalModuleName: string) => string;",
+    "beforeSha256": "28936fef923eae41e38aeeff2e02a03f6827b7a99cac6af20dfab6b1e34783ad",
+    "afterSha256": "c055f723783456f15a8db9ef849a9f4282056885fb832ac39319e382ed4f5e52"
+  },
+  {
+    "file": "src/compiler/types.ts",
+    "interface": "EmitHost",
+    "member": "getCanonicalFileName",
+    "overloads": 1,
+    "before": "getCanonicalFileName(fileName: string): string;",
+    "after": "readonly getCanonicalFileName: (fileName: string) => string;",
+    "beforeSha256": "a8acdc7523efcb479beb4f9ce8a36a585652e04b94d51c5981e315c79929bef8",
+    "afterSha256": "602e309a47b24c6e3e654d1890ba8d3f1793d81ff10e750abeac3776381d4932"
+  },
+  {
+    "file": "src/compiler/types.ts",
+    "interface": "EmitResolver",
+    "member": "hasGlobalName",
+    "overloads": 1,
+    "before": "hasGlobalName(name: string): boolean;",
+    "after": "readonly hasGlobalName: (name: string) => boolean;",
+    "beforeSha256": "ffb21aae0f6836dd3c519fa3753a4842f7e0aa1b19032ecccaa9426dd6fe33e7",
+    "afterSha256": "acc7d9ede88419305ad05a726e50b0f72b2b0028d64ffe1e5db1de289f95c1d7"
+  },
+  {
+    "file": "src/compiler/types.ts",
+    "interface": "NodeConverters",
+    "member": "convertToArrayAssignmentElement",
+    "overloads": 1,
+    "before": "convertToArrayAssignmentElement(element: ArrayBindingOrAssignmentElement): Expression;",
+    "after": "readonly convertToArrayAssignmentElement: (element: ArrayBindingOrAssignmentElement) => Expression;",
+    "beforeSha256": "20ef8f66d59e1c5ebb407a1a65e311e65728879183866c496b4704f1851aa87f",
+    "afterSha256": "76aa870c81a6cedbb84af0d2b4de36c71aa3580b502a217621e1248037d9adb1"
+  },
+  {
+    "file": "src/compiler/types.ts",
+    "interface": "NodeConverters",
+    "member": "convertToObjectAssignmentElement",
+    "overloads": 1,
+    "before": "convertToObjectAssignmentElement(element: ObjectBindingOrAssignmentElement): ObjectLiteralElementLike;",
+    "after": "readonly convertToObjectAssignmentElement: (element: ObjectBindingOrAssignmentElement) => ObjectLiteralElementLike;",
+    "beforeSha256": "2397c0cbb940a342884fe2f7b6ff2f66447cb12f66d4d79c5388671310ecf301",
+    "afterSha256": "51736f0eaf809c94d2bc08246d638db7a9d49fbdcb386f1fbab2d8fdf1ce5b69"
+  },
+  {
+    "file": "src/compiler/types.ts",
+    "interface": "NodeFactory",
+    "member": "cloneNode",
+    "overloads": 1,
+    "before": "cloneNode<T extends Node | undefined>(node: T): T;",
+    "after": "readonly cloneNode: <T extends Node | undefined>(node: T) => T;",
+    "beforeSha256": "cca84fa2b9724a46696a19a632b24b030d0886a9aed73e2f8dd99a860a09f624",
+    "afterSha256": "a131f2966e1d486af1387e91cc95fae6f114549fec03189cbd3f0b63589ec24a"
+  },
+  {
+    "file": "src/compiler/types.ts",
+    "interface": "NodeFactory",
+    "member": "liftToBlock",
+    "overloads": 1,
+    "before": "liftToBlock(nodes: readonly Node[]): Statement;",
+    "after": "readonly liftToBlock: (nodes: readonly Node[]) => Statement;",
+    "beforeSha256": "6955217a2d93d487af022eef619a58bd08bd20a678a29c7463f3c590b78b77b6",
+    "afterSha256": "a0b38812d566b82ef5c5eb0af67269d35ef7eb4706f22d967d5f656eb4e45d13"
+  },
+  {
+    "file": "src/compiler/types.ts",
+    "interface": "ParenthesizerRules",
+    "member": "parenthesizeBranchOfConditionalExpression",
+    "overloads": 1,
+    "before": "parenthesizeBranchOfConditionalExpression(branch: Expression): Expression;",
+    "after": "readonly parenthesizeBranchOfConditionalExpression: (branch: Expression) => Expression;",
+    "beforeSha256": "29a696c873e56e555c24bde06cead0f3d0138bc3bc94d3729218f75c8b89be8f",
+    "afterSha256": "ba0be3f66e091e8cce24ce5c2889cf3bc5b3f8b0241ed5fd11f2c8ffe061fc4d"
+  },
+  {
+    "file": "src/compiler/types.ts",
+    "interface": "ParenthesizerRules",
+    "member": "parenthesizeCheckTypeOfConditionalType",
+    "overloads": 1,
+    "before": "parenthesizeCheckTypeOfConditionalType(type: TypeNode): TypeNode;",
+    "after": "readonly parenthesizeCheckTypeOfConditionalType: (type: TypeNode) => TypeNode;",
+    "beforeSha256": "34daaffeda37bf0e1830dd7e5aac369292f6f5140c852bec78cb9e4338502c03",
+    "afterSha256": "9619f9602015a28b6388dd1c163903d5f93db992d767bc74c39391362f61b2c6"
+  },
+  {
+    "file": "src/compiler/types.ts",
+    "interface": "ParenthesizerRules",
+    "member": "parenthesizeConciseBodyOfArrowFunction",
+    "overloads": 2,
+    "before": "parenthesizeConciseBodyOfArrowFunction(body: Expression): Expression;\n    parenthesizeConciseBodyOfArrowFunction(body: ConciseBody): ConciseBody;",
+    "after": "readonly parenthesizeConciseBodyOfArrowFunction: { (body: Expression): Expression; (body: ConciseBody): ConciseBody; };",
+    "beforeSha256": "35b3e3b075cbb96c762793d129267d0459ba6c0828f71ed10a0b95dfbd0ddf82",
+    "afterSha256": "852fcdbc81e4dd4042fa0daa390b827596af52f2abf83a0cc45f22ad2c13bcd4"
+  },
+  {
+    "file": "src/compiler/types.ts",
+    "interface": "ParenthesizerRules",
+    "member": "parenthesizeConditionOfConditionalExpression",
+    "overloads": 1,
+    "before": "parenthesizeConditionOfConditionalExpression(condition: Expression): Expression;",
+    "after": "readonly parenthesizeConditionOfConditionalExpression: (condition: Expression) => Expression;",
+    "beforeSha256": "f62554995dd7f52123ea27ab6001f71b134b86dee08a1495efb6ba16fe022725",
+    "afterSha256": "81883a5534e642f34c002a5039ebb2740e9a124b6bbbd6067bdaf2b638f38ff4"
+  },
+  {
+    "file": "src/compiler/types.ts",
+    "interface": "ParenthesizerRules",
+    "member": "parenthesizeConstituentTypeOfIntersectionType",
+    "overloads": 1,
+    "before": "parenthesizeConstituentTypeOfIntersectionType(type: TypeNode): TypeNode;",
+    "after": "readonly parenthesizeConstituentTypeOfIntersectionType: (type: TypeNode) => TypeNode;",
+    "beforeSha256": "463128e016a040d88308e9e6f1d3e30a7b7259cd41bc1be267a283160041af5e",
+    "afterSha256": "5751d83b57720e09cd3507993881afe48434433a28322b044b87271400e61fe4"
+  },
+  {
+    "file": "src/compiler/types.ts",
+    "interface": "ParenthesizerRules",
+    "member": "parenthesizeConstituentTypeOfUnionType",
+    "overloads": 1,
+    "before": "parenthesizeConstituentTypeOfUnionType(type: TypeNode): TypeNode;",
+    "after": "readonly parenthesizeConstituentTypeOfUnionType: (type: TypeNode) => TypeNode;",
+    "beforeSha256": "272911831aa473bb84a0d3871d42005200b11396c71d8e8cb337a27e06d0de56",
+    "afterSha256": "85384889f70661a5717c1ecd3aa556e63232c176c4ba403745edbc3effd3de9d"
+  },
+  {
+    "file": "src/compiler/types.ts",
+    "interface": "ParenthesizerRules",
+    "member": "parenthesizeConstituentTypesOfIntersectionType",
+    "overloads": 1,
+    "before": "parenthesizeConstituentTypesOfIntersectionType(constituents: readonly TypeNode[]): NodeArray<TypeNode>;",
+    "after": "readonly parenthesizeConstituentTypesOfIntersectionType: (constituents: readonly TypeNode[]) => NodeArray<TypeNode>;",
+    "beforeSha256": "6a78a9a44c2178459ed5e5f43cc3348e4cd5b664331453518c5855c73829a9b9",
+    "afterSha256": "41b35cc1d29e85cea065bad9bb934753bb1ea5d14152d59474f49f2b9e36b11a"
+  },
+  {
+    "file": "src/compiler/types.ts",
+    "interface": "ParenthesizerRules",
+    "member": "parenthesizeConstituentTypesOfUnionType",
+    "overloads": 1,
+    "before": "parenthesizeConstituentTypesOfUnionType(constituents: readonly TypeNode[]): NodeArray<TypeNode>;",
+    "after": "readonly parenthesizeConstituentTypesOfUnionType: (constituents: readonly TypeNode[]) => NodeArray<TypeNode>;",
+    "beforeSha256": "3e830e4559c7312c3b863f4af831a4ba951a3c420325828e8ee7a88555dae1f6",
+    "afterSha256": "e1ecd9edc0575194b283e0264de8a20f1c4cd0e25075fb7a70d15487a5f93c29"
+  },
+  {
+    "file": "src/compiler/types.ts",
+    "interface": "ParenthesizerRules",
+    "member": "parenthesizeElementTypeOfTupleType",
+    "overloads": 1,
+    "before": "parenthesizeElementTypeOfTupleType(type: TypeNode | NamedTupleMember): TypeNode | NamedTupleMember;",
+    "after": "readonly parenthesizeElementTypeOfTupleType: (type: TypeNode | NamedTupleMember) => TypeNode | NamedTupleMember;",
+    "beforeSha256": "a547c47a481edd21e8995499ff623ac0e03e1645e06afa9d9d807a95925eb005",
+    "afterSha256": "dc929c82673c2e88a4dbfc38dd4cffdf54168f117d0541e858cad65eaed9357e"
+  },
+  {
+    "file": "src/compiler/types.ts",
+    "interface": "ParenthesizerRules",
+    "member": "parenthesizeExpressionForDisallowedComma",
+    "overloads": 1,
+    "before": "parenthesizeExpressionForDisallowedComma(expression: Expression): Expression;",
+    "after": "readonly parenthesizeExpressionForDisallowedComma: (expression: Expression) => Expression;",
+    "beforeSha256": "fda63f73321676f665690f7513d8c2e7cf16b5376332833f2814a9b9fb8c8940",
+    "afterSha256": "b88475961cc14a68265853a0750903e4c5fa8a5f37f69a0cf432250a9c6290e2"
+  },
+  {
+    "file": "src/compiler/types.ts",
+    "interface": "ParenthesizerRules",
+    "member": "parenthesizeExpressionOfComputedPropertyName",
+    "overloads": 1,
+    "before": "parenthesizeExpressionOfComputedPropertyName(expression: Expression): Expression;",
+    "after": "readonly parenthesizeExpressionOfComputedPropertyName: (expression: Expression) => Expression;",
+    "beforeSha256": "2a80956feb07fee0f7a6d319500f5b24847bb060cc17adc911bf7605db84c52f",
+    "afterSha256": "65b5c6a0ad528e7e629b3a10a8aaa8e78e44818dc3563b59e741983eace4c5a4"
+  },
+  {
+    "file": "src/compiler/types.ts",
+    "interface": "ParenthesizerRules",
+    "member": "parenthesizeExpressionOfExportDefault",
+    "overloads": 1,
+    "before": "parenthesizeExpressionOfExportDefault(expression: Expression): Expression;",
+    "after": "readonly parenthesizeExpressionOfExportDefault: (expression: Expression) => Expression;",
+    "beforeSha256": "0be5ade5cff558a3cbd0bdd5efcba12dfc7f852e29fa534654989395aad9bc58",
+    "afterSha256": "4a9749d052681e2ef52d3e1b650dc1cfbdc65dcbd44c8766873c916edce4a0a8"
+  },
+  {
+    "file": "src/compiler/types.ts",
+    "interface": "ParenthesizerRules",
+    "member": "parenthesizeExpressionOfExpressionStatement",
+    "overloads": 1,
+    "before": "parenthesizeExpressionOfExpressionStatement(expression: Expression): Expression;",
+    "after": "readonly parenthesizeExpressionOfExpressionStatement: (expression: Expression) => Expression;",
+    "beforeSha256": "a9da523e0f3e9e001c614d3ce5dbd46286bbaab399e0cba05ffd440f5a5eb4d7",
+    "afterSha256": "90d5823d4ced8e97a38d6be7a72a847babf5c6d71632c8a2c1eae92e211c91ce"
+  },
+  {
+    "file": "src/compiler/types.ts",
+    "interface": "ParenthesizerRules",
+    "member": "parenthesizeExpressionOfNew",
+    "overloads": 1,
+    "before": "parenthesizeExpressionOfNew(expression: Expression): LeftHandSideExpression;",
+    "after": "readonly parenthesizeExpressionOfNew: (expression: Expression) => LeftHandSideExpression;",
+    "beforeSha256": "bf49701dc688e73b2a90e111afc7fa3851080719205431e8ca949772efd1483f",
+    "afterSha256": "6d9096e2c1177607598d5baf1e09219cf1df7fa601974d07553acd94393f6dad"
+  },
+  {
+    "file": "src/compiler/types.ts",
+    "interface": "ParenthesizerRules",
+    "member": "parenthesizeExtendsTypeOfConditionalType",
+    "overloads": 1,
+    "before": "parenthesizeExtendsTypeOfConditionalType(type: TypeNode): TypeNode;",
+    "after": "readonly parenthesizeExtendsTypeOfConditionalType: (type: TypeNode) => TypeNode;",
+    "beforeSha256": "a69400efd4f567dc738eb31525bc87d482cbd55dc6cbf450b249d8cdcce1c8ac",
+    "afterSha256": "8f7d5b97087ef8c756e543b02d912d478dfc18447e59a53f530f574ae71f8d3f"
+  },
+  {
+    "file": "src/compiler/types.ts",
+    "interface": "ParenthesizerRules",
+    "member": "parenthesizeLeadingTypeArgument",
+    "overloads": 1,
+    "before": "parenthesizeLeadingTypeArgument(typeNode: TypeNode): TypeNode;",
+    "after": "readonly parenthesizeLeadingTypeArgument: (typeNode: TypeNode) => TypeNode;",
+    "beforeSha256": "f88ae6cf670fdd2aeaa003e60ca7408e5273cd12f6c2fa3bc4798c4eceac5e3d",
+    "afterSha256": "e71a3623fd4a8c942429e527996c874606e9abda859de1f54c0c92cd25448c06"
+  },
+  {
+    "file": "src/compiler/types.ts",
+    "interface": "ParenthesizerRules",
+    "member": "parenthesizeLeftSideOfAccess",
+    "overloads": 1,
+    "before": "parenthesizeLeftSideOfAccess(expression: Expression, optionalChain?: boolean): LeftHandSideExpression;",
+    "after": "readonly parenthesizeLeftSideOfAccess: (expression: Expression, optionalChain?: boolean) => LeftHandSideExpression;",
+    "beforeSha256": "f13cdc62eb17f500ed973bf26d276ff4c0a51393ff7df2bc38963f2615978159",
+    "afterSha256": "07b48a6675c7875a0a9e7f27731e0f301f581ef789cc6de989a883a61cdaf39d"
+  },
+  {
+    "file": "src/compiler/types.ts",
+    "interface": "ParenthesizerRules",
+    "member": "parenthesizeNonArrayTypeOfPostfixType",
+    "overloads": 1,
+    "before": "parenthesizeNonArrayTypeOfPostfixType(type: TypeNode): TypeNode;",
+    "after": "readonly parenthesizeNonArrayTypeOfPostfixType: (type: TypeNode) => TypeNode;",
+    "beforeSha256": "9def9eb915b22e905f7d38abef09ca2829e9d4b74ae44c50b3ef7e6e82ef269c",
+    "afterSha256": "1199078380f5386b095967b658fdcb2b1c6696bd4e4fc903d1184acb3ac294c9"
+  },
+  {
+    "file": "src/compiler/types.ts",
+    "interface": "ParenthesizerRules",
+    "member": "parenthesizeOperandOfPostfixUnary",
+    "overloads": 1,
+    "before": "parenthesizeOperandOfPostfixUnary(operand: Expression): LeftHandSideExpression;",
+    "after": "readonly parenthesizeOperandOfPostfixUnary: (operand: Expression) => LeftHandSideExpression;",
+    "beforeSha256": "d9d156eb9d8645dc1c74372866af28d37a7a35a235bc976e3e5b75bed7fa3b14",
+    "afterSha256": "7bb44d8d525ef409a7c2683c38b645980cba91c6fff3a169414c2e61a44fe40f"
+  },
+  {
+    "file": "src/compiler/types.ts",
+    "interface": "ParenthesizerRules",
+    "member": "parenthesizeOperandOfPrefixUnary",
+    "overloads": 1,
+    "before": "parenthesizeOperandOfPrefixUnary(operand: Expression): UnaryExpression;",
+    "after": "readonly parenthesizeOperandOfPrefixUnary: (operand: Expression) => UnaryExpression;",
+    "beforeSha256": "5efac7090ef97ba0462e53c4c1ce910ecb0c4149870712c0f509f99e07a6cdb4",
+    "afterSha256": "0cd762a8c378b5d96732abf8a0c9de5e71ce452cf0d1ac590c46001543ebf763"
+  },
+  {
+    "file": "src/compiler/types.ts",
+    "interface": "ParenthesizerRules",
+    "member": "parenthesizeOperandOfReadonlyTypeOperator",
+    "overloads": 1,
+    "before": "parenthesizeOperandOfReadonlyTypeOperator(type: TypeNode): TypeNode;",
+    "after": "readonly parenthesizeOperandOfReadonlyTypeOperator: (type: TypeNode) => TypeNode;",
+    "beforeSha256": "9339d6d80b154807e4c9df45e2ca1b4e2b647083540863ccf43732adc6f15f29",
+    "afterSha256": "2460873db693236f5138dca3609d00f09b7ae6399d9749408324d090876e01a7"
+  },
+  {
+    "file": "src/compiler/types.ts",
+    "interface": "ParenthesizerRules",
+    "member": "parenthesizeOperandOfTypeOperator",
+    "overloads": 1,
+    "before": "parenthesizeOperandOfTypeOperator(type: TypeNode): TypeNode;",
+    "after": "readonly parenthesizeOperandOfTypeOperator: (type: TypeNode) => TypeNode;",
+    "beforeSha256": "388870f1a1c23b30897e7e59091c95ff8144fe13b656fab80e698d299f24e698",
+    "afterSha256": "5ecaaffa4208f7d65f3f3e645b0eb1839a1c4f4a70e3c14ff8214b229c70c10b"
+  },
+  {
+    "file": "src/compiler/types.ts",
+    "interface": "ParenthesizerRules",
+    "member": "parenthesizeTypeOfOptionalType",
+    "overloads": 1,
+    "before": "parenthesizeTypeOfOptionalType(type: TypeNode): TypeNode;",
+    "after": "readonly parenthesizeTypeOfOptionalType: (type: TypeNode) => TypeNode;",
+    "beforeSha256": "a2987475ca5af2868761430eed18d4a6f0561a6eef420c939f89b3674ec9b716",
+    "afterSha256": "6b75e05d39519ba9f3cb53152b2bc65bef9b7ccce7c8c000a0e5bbe89c932db1"
+  },
+  {
+    "file": "src/compiler/types.ts",
+    "interface": "Program",
+    "member": "getCommonSourceDirectory",
+    "overloads": 1,
+    "before": "getCommonSourceDirectory(): string;",
+    "after": "readonly getCommonSourceDirectory: () => string;",
+    "beforeSha256": "0f9a2a38bcb9e5e5bbe61ebb8b95425c80d5c24e5c1629b17c50dbc63016e540",
+    "afterSha256": "5508e020a05cc40dbff835e3c088eaa88ffc4be4d3e30fbf953a20699235d701"
+  },
+  {
+    "file": "src/compiler/types.ts",
+    "interface": "Program",
+    "member": "getFileIncludeReasons",
+    "overloads": 1,
+    "before": "getFileIncludeReasons(): MultiMap<Path, FileIncludeReason>;",
+    "after": "readonly getFileIncludeReasons: () => MultiMap<Path, FileIncludeReason>;",
+    "beforeSha256": "39e0ffa1f830617f0bf6222952d01a5e137cc42b10d485dde1984f09517793d0",
+    "afterSha256": "e1e045c5639b7f2d0455a232264bbb2a2044a299e75efa06f401b691a6a78e91"
+  }
+]
