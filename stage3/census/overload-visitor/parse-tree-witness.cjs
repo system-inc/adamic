@@ -1,0 +1,18 @@
+'use strict';
+const assert=require('node:assert/strict');
+const ts=require('../../api/node_modules/typescript');
+const fs=require('node:fs');
+const source=fs.readFileSync(process.argv[2]+'/src/compiler/utilitiesPublic.ts','utf8');
+const sf=ts.createSourceFile('utilitiesPublic.ts',source,ts.ScriptTarget.Latest,true);
+const fn=sf.statements.find(n=>ts.isFunctionDeclaration(n)&&n.name?.text==='getParseTreeNode'&&n.body);
+assert(fn);
+const js=ts.transpileModule(fn.getText(sf).replace(/^export /,''),{compilerOptions:{target:ts.ScriptTarget.ESNext,module:ts.ModuleKind.CommonJS}}).outputText;
+const flags={Synthesized:16};
+const get=Function('isParseTreeNode',js+'; return getParseTreeNode;')(n=>(n.flags&flags.Synthesized)===0);
+const original={kind:'NumericLiteral',flags:0};
+const node={kind:'Identifier',flags:16,original};
+assert.equal(get(node),original);
+assert.equal(get(node,n=>n.kind==='Identifier'),undefined);
+const parse={kind:'Identifier',flags:0};
+assert.equal(get(parse,()=>false),parse);
+console.log(JSON.stringify({withoutTestReturnsOriginalByIdentity:true,originalCanHaveDifferentKind:true,withTestRejectsDifferentOriginal:true,parseInputReturnedEvenWhenTestFalse:true}));

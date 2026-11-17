@@ -1,0 +1,17 @@
+/workspace/overload-visitor-scratch/adamic/stage3/api/node_modules/typescript/lib/typescript.js:74083
+  function isMatchingReference(source, target) {
+                              ^
+
+RangeError: Maximum call stack size exceeded
+    at isMatchingReference (/workspace/overload-visitor-scratch/adamic/stage3/api/node_modules/typescript/lib/typescript.js:74083:31)
+    at getTypeAtFlowAssignment (/workspace/overload-visitor-scratch/adamic/stage3/api/node_modules/typescript/lib/typescript.js:75139:11)
+    at getTypeAtFlowNode (/workspace/overload-visitor-scratch/adamic/stage3/api/node_modules/typescript/lib/typescript.js:75078:18)
+    at getTypeAtFlowBranchLabel (/workspace/overload-visitor-scratch/adamic/stage3/api/node_modules/typescript/lib/typescript.js:75298:26)
+    at getTypeAtFlowNode (/workspace/overload-visitor-scratch/adamic/stage3/api/node_modules/typescript/lib/typescript.js:75098:48)
+    at getTypeAtFlowBranchLabel (/workspace/overload-visitor-scratch/adamic/stage3/api/node_modules/typescript/lib/typescript.js:75298:26)
+    at getTypeAtFlowNode (/workspace/overload-visitor-scratch/adamic/stage3/api/node_modules/typescript/lib/typescript.js:75098:48)
+    at getTypeAtFlowBranchLabel (/workspace/overload-visitor-scratch/adamic/stage3/api/node_modules/typescript/lib/typescript.js:75298:26)
+    at getTypeAtFlowNode (/workspace/overload-visitor-scratch/adamic/stage3/api/node_modules/typescript/lib/typescript.js:75098:48)
+    at getTypeAtFlowCondition (/workspace/overload-visitor-scratch/adamic/stage3/api/node_modules/typescript/lib/typescript.js:75250:24)
+
+Node.js v24.19.0
