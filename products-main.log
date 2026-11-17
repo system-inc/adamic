@@ -1,0 +1,186 @@
+=== RUN   TestProduct_ScanAllInstrumentedProbe
+=== PAUSE TestProduct_ScanAllInstrumentedProbe
+=== RUN   TestProduct_ScanAllProductionProbe
+=== PAUSE TestProduct_ScanAllProductionProbe
+=== CONT  TestProduct_ScanAllInstrumentedProbe
+=== CONT  TestProduct_ScanAllProductionProbe
+panic: test timed out after 10m0s
+	running tests:
+		TestProduct_ScanAllInstrumentedProbe (10m0s)
+		TestProduct_ScanAllProductionProbe (10m0s)
+
+goroutine 82 [running]:
+testing.(*M).startAlarm.func1()
+	/workspace/adamic-tools/go/src/testing/testing.go:2959 +0x34a
+created by time.goFunc
+	/workspace/adamic-tools/go/src/time/sleep.go:182 +0x2d
+
+goroutine 1 [chan receive, 9 minutes]:
+testing.tRunner.func1()
+	/workspace/adamic-tools/go/src/testing/testing.go:2142 +0x425
+testing.tRunner(0x246b4f58488, 0x246b4f79bc8)
+	/workspace/adamic-tools/go/src/testing/testing.go:2199 +0x123
+testing.runTests({0x7e581b, 0x1c}, {0x7f254f, 0x33}, 0x246b4f2a168, {0xc07d28, 0xb, 0xb}, {0xc2b71c1654834a23, 0x8bb2d723ec, ...})
+	/workspace/adamic-tools/go/src/testing/testing.go:2740 +0x510
+testing.(*M).Run(0x246b4f18c80)
+	/workspace/adamic-tools/go/src/testing/testing.go:2600 +0x6af
+main.main()
+	_testmain.go:66 +0x9b
+
+goroutine 21 [syscall, 9 minutes]:
+syscall.Syscall6(0xf7, 0x3, 0xe, 0x246b4ddac88, 0x4, 0x246b86a8000, 0x0)
+	/workspace/adamic-tools/go/src/syscall/syscall_linux.go:96 +0x39
+internal/syscall/unix.Waitid(0x246b4ddacb6?, 0x246b4ddade0?, 0x542ccb?, 0x18?, 0xb7aa00?)
+	/workspace/adamic-tools/go/src/internal/syscall/unix/waitid_linux.go:18 +0x39
+os.(*Process).pidfdWait.func1(...)
+	/workspace/adamic-tools/go/src/os/pidfd_linux.go:108
+os.ignoringEINTR(...)
+	/workspace/adamic-tools/go/src/os/file_posix.go:263
+os.(*Process).pidfdWait(0x246b86840c0)
+	/workspace/adamic-tools/go/src/os/pidfd_linux.go:107 +0x1cf
+os.(*Process).wait(0x4?)
+	/workspace/adamic-tools/go/src/os/exec_unix.go:25 +0x1a
+os.(*Process).Wait(...)
+	/workspace/adamic-tools/go/src/os/exec.go:347
+os/exec.(*Cmd).Wait(0x246b8690000)
+	/workspace/adamic-tools/go/src/os/exec/exec.go:944 +0x45
+os/exec.(*Cmd).Run(0x246b8690000)
+	/workspace/adamic-tools/go/src/os/exec/exec.go:643 +0x2d
+os/exec.(*Cmd).CombinedOutput(0x246b8690000)
+	/workspace/adamic-tools/go/src/os/exec/exec.go:1061 +0x8f
+github.com/system-inc/adamic/stage3/census/scan-all.scanAllProduct.func1.1({0x7d901b, 0x2}, {0x246b504e000, 0x9, 0x9})
+	/workspace/et209ny/main/stage3/census/scan-all/products_test.go:47 +0x6a
+github.com/system-inc/adamic/stage3/census/scan-all.scanAllProduct.func1({0x246b8614320, 0x43})
+	/workspace/et209ny/main/stage3/census/scan-all/products_test.go:73 +0x6d6
+github.com/system-inc/adamic/internal/buildcache.relocating.func1({0x246b8614320, 0x43})
+	/workspace/et209ny/main/internal/buildcache/relative.go:55 +0x78
+github.com/system-inc/adamic/internal/buildcache.filled({0x246b8602150, 0x62}, {0x246b50c0000, 0xd436}, 0x246b4ddb850)
+	/workspace/et209ny/main/internal/buildcache/buildcache.go:450 +0x1a8
+github.com/system-inc/adamic/internal/buildcache.get({{0x7e13fc, 0x15}, {0x246b5096008, 0x3df, 0x3ff}, {0x246b4ef8200, 0x10, 0x10}, {0x246b501a2c0, 0x3, ...}}, ...)
+	/workspace/et209ny/main/internal/buildcache/buildcache.go:388 +0x1310
+github.com/system-inc/adamic/internal/buildcache.product({0xbae708, 0x246b4f586c8}, {{0x7e13fc, 0x15}, {0x246b5096008, 0x3df, 0x3ff}, {0x246b4ef8200, 0x10, 0x10}, ...}, ...)
+	/workspace/et209ny/main/internal/buildcache/buildcache.go:220 +0x9f
+github.com/system-inc/adamic/internal/buildcache.Product({0xbae708, 0x246b4f586c8}, {{0x7e13fc, 0x15}, {0x246b5096008, 0x3df, 0x3ff}, {0x246b4ef8200, 0x10, 0x10}, ...}, ...)
+	/workspace/et209ny/main/internal/buildcache/buildcache.go:50 +0x97
+github.com/system-inc/adamic/stage3/census/scan-all.scanAllProduct(0x246b4f586c8, 0x1)
+	/workspace/et209ny/main/stage3/census/scan-all/products_test.go:35 +0x55b
+github.com/system-inc/adamic/stage3/census/scan-all.TestProduct_ScanAllInstrumentedProbe(0x246b4f586c8)
+	/workspace/et209ny/main/stage3/census/scan-all/products_test.go:80 +0x27
+testing.tRunner(0x246b4f586c8, 0xbae948)
+	/workspace/adamic-tools/go/src/testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 1
+	/workspace/adamic-tools/go/src/testing/testing.go:2258 +0x4d4
+
+goroutine 22 [syscall, 9 minutes]:
+syscall.Syscall6(0xf7, 0x3, 0xb, 0x246b5136c88, 0x4, 0x246b4f5a510, 0x0)
+	/workspace/adamic-tools/go/src/syscall/syscall_linux.go:96 +0x39
+internal/syscall/unix.Waitid(0x246b5136cb6?, 0x246b5136de0?, 0x542ccb?, 0x18?, 0xb7aa00?)
+	/workspace/adamic-tools/go/src/internal/syscall/unix/waitid_linux.go:18 +0x39
+os.(*Process).pidfdWait.func1(...)
+	/workspace/adamic-tools/go/src/os/pidfd_linux.go:108
+os.ignoringEINTR(...)
+	/workspace/adamic-tools/go/src/os/file_posix.go:263
+os.(*Process).pidfdWait(0x246b62b2d40)
+	/workspace/adamic-tools/go/src/os/pidfd_linux.go:107 +0x1cf
+os.(*Process).wait(0x4?)
+	/workspace/adamic-tools/go/src/os/exec_unix.go:25 +0x1a
+os.(*Process).Wait(...)
+	/workspace/adamic-tools/go/src/os/exec.go:347
+os/exec.(*Cmd).Wait(0x246b62d2000)
+	/workspace/adamic-tools/go/src/os/exec/exec.go:944 +0x45
+os/exec.(*Cmd).Run(0x246b62d2000)
+	/workspace/adamic-tools/go/src/os/exec/exec.go:643 +0x2d
+os/exec.(*Cmd).CombinedOutput(0x246b62d2000)
+	/workspace/adamic-tools/go/src/os/exec/exec.go:1061 +0x8f
+github.com/system-inc/adamic/stage3/census/scan-all.scanAllProduct.func1.1({0x7d901b, 0x2}, {0x246b4f701b0, 0x9, 0x9})
+	/workspace/et209ny/main/stage3/census/scan-all/products_test.go:47 +0x6a
+github.com/system-inc/adamic/stage3/census/scan-all.scanAllProduct.func1({0x246b62b8be0, 0x43})
+	/workspace/et209ny/main/stage3/census/scan-all/products_test.go:73 +0x6d6
+github.com/system-inc/adamic/internal/buildcache.relocating.func1({0x246b62b8be0, 0x43})
+	/workspace/et209ny/main/internal/buildcache/relative.go:55 +0x78
+github.com/system-inc/adamic/internal/buildcache.filled({0x246b62be850, 0x62}, {0x246b5120000, 0xd434}, 0x246b5137850)
+	/workspace/et209ny/main/internal/buildcache/buildcache.go:450 +0x1a8
+github.com/system-inc/adamic/internal/buildcache.get({{0x7dfff2, 0x13}, {0x246b5096008, 0x3df, 0x3ff}, {0x246b4ef8200, 0x10, 0x10}, {0x246b4eaba00, 0x3, ...}}, ...)
+	/workspace/et209ny/main/internal/buildcache/buildcache.go:388 +0x1310
+github.com/system-inc/adamic/internal/buildcache.product({0xbae708, 0x246b4f58908}, {{0x7dfff2, 0x13}, {0x246b5096008, 0x3df, 0x3ff}, {0x246b4ef8200, 0x10, 0x10}, ...}, ...)
+	/workspace/et209ny/main/internal/buildcache/buildcache.go:220 +0x9f
+github.com/system-inc/adamic/internal/buildcache.Product({0xbae708, 0x246b4f58908}, {{0x7dfff2, 0x13}, {0x246b5096008, 0x3df, 0x3ff}, {0x246b4ef8200, 0x10, 0x10}, ...}, ...)
+	/workspace/et209ny/main/internal/buildcache/buildcache.go:50 +0x97
+github.com/system-inc/adamic/stage3/census/scan-all.scanAllProduct(0x246b4f58908, 0x0)
+	/workspace/et209ny/main/stage3/census/scan-all/products_test.go:35 +0x55b
+github.com/system-inc/adamic/stage3/census/scan-all.TestProduct_ScanAllProductionProbe(0x246b4f58908)
+	/workspace/et209ny/main/stage3/census/scan-all/products_test.go:81 +0x25
+testing.tRunner(0x246b4f58908, 0xbae950)
+	/workspace/adamic-tools/go/src/testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 1
+	/workspace/adamic-tools/go/src/testing/testing.go:2258 +0x4d4
+
+goroutine 49 [IO wait, 9 minutes]:
+internal/poll.runtime_pollWait(0x7f98cf2cca00, 0x72)
+	/workspace/adamic-tools/go/src/runtime/netpoll.go:351 +0x85
+internal/poll.(*pollDesc).wait(0x246b869c060?, 0x246b861c400?, 0x1)
+	/workspace/adamic-tools/go/src/internal/poll/fd_poll_runtime.go:84 +0x27
+internal/poll.(*pollDesc).waitRead(...)
+	/workspace/adamic-tools/go/src/internal/poll/fd_poll_runtime.go:89
+internal/poll.(*FD).Read(0x246b869c060, {0x246b861c400, 0x200, 0x200})
+	/workspace/adamic-tools/go/src/internal/poll/fd_unix.go:170 +0x2a8
+os.(*File).read(...)
+	/workspace/adamic-tools/go/src/os/file_posix.go:30
+os.(*File).Read(0x246b4e82020, {0x246b861c400?, 0x0?, 0x0?})
+	/workspace/adamic-tools/go/src/os/file.go:144 +0x4f
+bytes.(*Buffer).ReadFrom(0x246b8680060, {0xbaa738, 0x246b4e82020})
+	/workspace/adamic-tools/go/src/bytes/buffer.go:229 +0x98
+io.copyBuffer({0xbaabd8, 0x246b8680060}, {0xbaa738, 0x246b4e82020}, {0x0, 0x0, 0x0})
+	/workspace/adamic-tools/go/src/io/io.go:415 +0x151
+io.Copy(...)
+	/workspace/adamic-tools/go/src/io/io.go:388
+os.genericWriteTo(0x246b4e82020?, {0xbaabd8?, 0x246b8680060?})
+	/workspace/adamic-tools/go/src/os/file.go:295 +0x35
+os.(*File).WriteTo(0x246b4e82020, {0xbaabd8, 0x246b8680060})
+	/workspace/adamic-tools/go/src/os/file.go:273 +0x9c
+io.copyBuffer({0xbaabd8, 0x246b8680060}, {0xbaa7b8, 0x246b4e82020}, {0x0, 0x0, 0x0})
+	/workspace/adamic-tools/go/src/io/io.go:411 +0x9d
+io.Copy(...)
+	/workspace/adamic-tools/go/src/io/io.go:388
+os/exec.(*Cmd).writerDescriptor.func1()
+	/workspace/adamic-tools/go/src/os/exec/exec.go:613 +0x34
+os/exec.(*Cmd).Start.func2(0x0?)
+	/workspace/adamic-tools/go/src/os/exec/exec.go:768 +0x2c
+created by os/exec.(*Cmd).Start in goroutine 21
+	/workspace/adamic-tools/go/src/os/exec/exec.go:767 +0x92b
+
+goroutine 66 [IO wait, 9 minutes]:
+internal/poll.runtime_pollWait(0x7f98cf2cc600, 0x72)
+	/workspace/adamic-tools/go/src/runtime/netpoll.go:351 +0x85
+internal/poll.(*pollDesc).wait(0x246b4dc4420?, 0x246b5032a00?, 0x1)
+	/workspace/adamic-tools/go/src/internal/poll/fd_poll_runtime.go:84 +0x27
+internal/poll.(*pollDesc).waitRead(...)
+	/workspace/adamic-tools/go/src/internal/poll/fd_poll_runtime.go:89
+internal/poll.(*FD).Read(0x246b4dc4420, {0x246b5032a00, 0x200, 0x200})
+	/workspace/adamic-tools/go/src/internal/poll/fd_unix.go:170 +0x2a8
+os.(*File).read(...)
+	/workspace/adamic-tools/go/src/os/file_posix.go:30
+os.(*File).Read(0x246b4f08158, {0x246b5032a00?, 0x4ca650?, 0x0?})
+	/workspace/adamic-tools/go/src/os/file.go:144 +0x4f
+bytes.(*Buffer).ReadFrom(0x246b62c0690, {0xbaa738, 0x246b4f08158})
+	/workspace/adamic-tools/go/src/bytes/buffer.go:229 +0x98
+io.copyBuffer({0xbaabd8, 0x246b62c0690}, {0xbaa738, 0x246b4f08158}, {0x0, 0x0, 0x0})
+	/workspace/adamic-tools/go/src/io/io.go:415 +0x151
+io.Copy(...)
+	/workspace/adamic-tools/go/src/io/io.go:388
+os.genericWriteTo(0x246b4f08158?, {0xbaabd8?, 0x246b62c0690?})
+	/workspace/adamic-tools/go/src/os/file.go:295 +0x35
+os.(*File).WriteTo(0x246b4f08158, {0xbaabd8, 0x246b62c0690})
+	/workspace/adamic-tools/go/src/os/file.go:273 +0x9c
+io.copyBuffer({0xbaabd8, 0x246b62c0690}, {0xbaa7b8, 0x246b4f08158}, {0x0, 0x0, 0x0})
+	/workspace/adamic-tools/go/src/io/io.go:411 +0x9d
+io.Copy(...)
+	/workspace/adamic-tools/go/src/io/io.go:388
+os/exec.(*Cmd).writerDescriptor.func1()
+	/workspace/adamic-tools/go/src/os/exec/exec.go:613 +0x34
+os/exec.(*Cmd).Start.func2(0x0?)
+	/workspace/adamic-tools/go/src/os/exec/exec.go:768 +0x2c
+created by os/exec.(*Cmd).Start in goroutine 22
+	/workspace/adamic-tools/go/src/os/exec/exec.go:767 +0x92b
+FAIL	github.com/system-inc/adamic/stage3/census/scan-all	600.131s
+FAIL

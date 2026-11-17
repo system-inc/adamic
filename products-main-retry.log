@@ -1,0 +1,16 @@
+=== RUN   TestProduct_ScanAllInstrumentedProbe
+=== PAUSE TestProduct_ScanAllInstrumentedProbe
+=== RUN   TestProduct_ScanAllProductionProbe
+=== PAUSE TestProduct_ScanAllProductionProbe
+=== CONT  TestProduct_ScanAllInstrumentedProbe
+=== CONT  TestProduct_ScanAllProductionProbe
+=== NAME  TestProduct_ScanAllInstrumentedProbe
+    products_test.go:80: build scan-all-instrumented f41b91c97d42 miss 142.92
+    products_test.go:80: scan-all-instrumented probe: /workspace/et209ny/products/local/f41b91c97d420fc9eb22166e8bd071817a2199431b4480a919fd6657089e0f5e/probe
+--- PASS: TestProduct_ScanAllInstrumentedProbe (145.66s)
+=== NAME  TestProduct_ScanAllProductionProbe
+    products_test.go:81: build scan-all-production fc4cd7210fc6 miss 142.95
+    products_test.go:81: scan-all-production probe: /workspace/et209ny/products/local/fc4cd7210fc6457c5f06879df6180b575aff9160c0a68cac51b0924c8e12d68f/probe
+--- PASS: TestProduct_ScanAllProductionProbe (145.70s)
+PASS
+ok  	github.com/system-inc/adamic/stage3/census/scan-all	145.733s

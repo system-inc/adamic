@@ -1,0 +1,2 @@
+plain production cycle-stop: {"Completed": false, "Error": "/workspace/et209ny/tmp/tmp6mk0x9lj/control.ts:3:1: stage 0 can't lower a record written into a graph slot, where the write at /workspace/et209ny/tmp/tmp6mk0x9lj/control.ts:3:1 may close a cycle through it, in a graph program: a record can't join a graph region yet"}
+cycle-stop production and scan-continuation control passed

@@ -1,0 +1,18 @@
+=== RUN   TestScanAllCycleStopAfterEarlierScanStop
+=== PAUSE TestScanAllCycleStopAfterEarlierScanStop
+=== CONT  TestScanAllCycleStopAfterEarlierScanStop
+    controls_test.go:50: build scan-all-instrumented f41b91c97d42 hit 0.41
+    controls_test.go:50: scan-all-instrumented probe: /workspace/et209ny/products/local/f41b91c97d420fc9eb22166e8bd071817a2199431b4480a919fd6657089e0f5e/probe
+    controls_test.go:50: build scan-all-production fc4cd7210fc6 hit 0.01
+    controls_test.go:50: scan-all-production probe: /workspace/et209ny/products/local/fc4cd7210fc6457c5f06879df6180b575aff9160c0a68cac51b0924c8e12d68f/probe
+    controls_test.go:50: cycle-stop: exit status 1
+        plain production cycle-stop: {"Completed": false, "Error": "/workspace/et209ny/tmp/tmp65sqsq44/control.ts:3:1: stage 0 can't lower a record written into a graph slot, where the write at /workspace/et209ny/tmp/tmp65sqsq44/control.ts:3:1 may close a cycle through it, in a graph program: a record can't join a graph region yet"}
+        Traceback (most recent call last):
+          File "/workspace/et209ny/main/stage3/census/scan-all/controls.py", line 25, in <module>
+            assert any(target in s['Words'] for s in stops) == positive, ('continuation-target',name,r)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        AssertionError: ('continuation-target', 'cycle-stop', {'Scope': 'One root import-closure run. Records refusal-scan stops only, plus the first declaration, body or tail stop reached; blind past that first stop. A zero for a body or tail rule is never a pass. Preparation failures can prevent scanning entirely.', 'Stops': [{'Kind': 'scan stop', 'Rule': 'lowering.scoutRefuse', 'Site': '/workspace/et209ny/tmp/tmp65sqsq44/control.ts:1:1', 'Words': '@ts-check checking pragma'}], 'Completed': False, 'Functions': 0, 'Locals': 0, 'Boundary': 'production abort at lowering.scoutRefuse', 'UnderlyingAbort': {'Kind': 'scan stop', 'Rule': 'lowering.scoutRefuse', 'Site': '/workspace/et209ny/tmp/tmp65sqsq44/control.ts:1:1', 'Words': '@ts-check checking pragma'}})
+--- FAIL: TestScanAllCycleStopAfterEarlierScanStop (0.88s)
+FAIL
+FAIL	github.com/system-inc/adamic/stage3/census/scan-all	0.886s
+FAIL
