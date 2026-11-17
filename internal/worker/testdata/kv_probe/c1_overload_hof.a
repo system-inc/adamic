@@ -1,0 +1,9 @@
+import type {HttpRequest,HttpResponse} from 'adamic/http';
+import type {KvNamespace} from 'adamic/workers';
+interface Environment {readonly GREETING:string; readonly KV:KvNamespace}
+function f(kv:KvNamespace):void; function f():void; function f(kv?:unknown):void {}
+function run(g:()=>void):void { g(); }
+export function handle(request:HttpRequest,environment:Environment):HttpResponse {
+run(f);
+return {status:200,headers:[],body:environment.GREETING+request.path};
+}
