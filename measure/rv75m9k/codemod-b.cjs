@@ -22,6 +22,8 @@ const sites = JSON.parse(fs.readFileSync(sitesPath, 'utf8')).filter(site =>
     (!process.env.ROAD_B_ONLY || site.site.startsWith(process.env.ROAD_B_ONLY + ':')) && (!process.env.ROAD_B_EXCEPT || !site.site.startsWith(process.env.ROAD_B_EXCEPT + ':')));
 const arrowMembers = new Set(['System.directoryExists', 'System.createDirectory']);
 const staticFieldMembers = new Set(['IdentifierNameMap.toKey']);
+// Helpers run once per call on a hot path, where an arrow before the statement would be made every call.
+const perCallHelpers = new Set(['toPath', 'relName']);
 
 const config = ts.getParsedCommandLineOfConfigFile(path.join(tree, 'src/compiler/tsconfig.json'), {}, { ...ts.sys, onUnRecoverableConfigFileDiagnostic: () => {} });
 config.options.typeRoots = [path.join(process.env.NODE_PATH.split(':')[0], '@types')];
@@ -115,28 +117,50 @@ for (const site of sites) {
     if (!node) { refusals.push(`${site.site}: no property read found there`); continue; }
     const member = site.member, name = node.name.text;
     if (staticFieldMembers.has(member)) {
+        // An inline arrow whose parameters take the types the callee's own parameter declares, so the value is seen as
+        // exactly what it's handed to (a wider parameter is "a function taking A seen as one taking B"). A static field
+        // would be read before its initializer runs. It's made only on the generated-name path that reads it.
         const declaration = memberSignature(checker.getSymbolAtLocation(node.name));
-        const classDeclaration = declaration.parent;
-        const fieldName = name + 'Function';
-        const parameters = parametersText(declaration);
-        addEdit(file, { start: node.name.getStart(sourceFile), end: node.name.end, text: fieldName });
-        const key = `${file}|field|${classDeclaration.name.text}.${fieldName}`;
-        if (!views.has(key)) {
-            views.set(key, true);
-            const returnType = declaration.type ? ': ' + declaration.type.getText(sourceFile) : '';
-            // Above the method's JSDoc, so the comment stays the method's.
-            const at = declaration.getStart(sourceFile, true);
-            const indentation = ' '.repeat(sourceFile.getLineAndCharacterOfPosition(at).character);
-            addEdit(file, { start: at, end: at, text: `private static readonly ${fieldName} = (${parameters.list})${returnType} => ${classDeclaration.name.text}.${name}(${parameters.names});\n\n${indentation}` });
-        }
+        const contextual = checker.getContextualType(node);
+        const signature = contextual && checker.getSignaturesOfType(contextual, ts.SignatureKind.Call)[0];
+        if (!signature) { refusals.push(`${site.site}: no contextual call signature for ${member}`); continue; }
+        const list = signature.getParameters().map(parameter => `${parameter.name}: ${checker.typeToString(checker.getTypeOfSymbolAtLocation(parameter, node), node, ts.TypeFormatFlags.NoTruncation)}`).join(', ');
+        const names = signature.getParameters().map(parameter => parameter.name).join(', ');
+        addEdit(file, { start: node.getStart(sourceFile), end: node.end, text: `((${list}) => ${node.expression.getText(sourceFile)}.${name}(${names}))` });
+        console.log(`arrow ${site.site} ${member}: inline, typed as its callee's parameter (${list})`);
         continue;
     }
     if (!isStableReceiver(node.expression)) { refusals.push(`${site.site}: receiver ${node.expression.getText(sourceFile)} isn't an identifier or a chain of reads on one`); continue; }
     const receiverText = node.expression.getText(sourceFile);
-    if (arrowMembers.has(member)) {
+    const intersection = Boolean(checker.getTypeAtLocation(node.expression).flags & ts.TypeFlags.Intersection);
+    if (arrowMembers.has(member) || intersection) {
+        // An exact-parameter arrow through the receiver. For a member the object holds as a literal method a view would
+        // stop at the read (erasedMethodField); for an intersection-typed receiver lowering can't hold the value a view
+        // needs. The arrow is one const, made once: at the top of the function that declares the receiver's root for
+        // a parameter root, otherwise just before the site's statement. A save-then-override site is left: an arrow
+        // reads the member at call time and would call the override. So is a per-call helper, where the arrow would be
+        // made on every call.
+        const enclosing = ts.findAncestor(node, ts.isFunctionLike);
+        const enclosingName = enclosing && enclosing.name ? enclosing.name.getText(sourceFile) : '';
+        if (site.use === 'variable initializer' || perCallHelpers.has(enclosingName)) { console.log(`left ${site.site} ${member}: ${site.use === 'variable initializer' ? 'save-then-override, where an arrow would call the override' : `in ${enclosingName}, a per-call helper`}; it keeps its refusal`); continue; }
         const declaration = memberSignature(checker.getSymbolAtLocation(node.name));
         const parameters = parametersText(declaration);
-        addEdit(file, { start: node.getStart(sourceFile), end: node.end, text: `((${parameters.list}) => ${receiverText}.${name}(${parameters.names}))` });
+        const constName = receiverText.split('.').map((part, index) => index ? part[0].toUpperCase() + part.slice(1) : part).join('') + name[0].toUpperCase() + name.slice(1);
+        const rootDeclaration = checker.getSymbolAtLocation(rootOf(node.expression)).valueDeclaration;
+        const body = rootDeclaration && ts.isParameter(rootDeclaration) && rootDeclaration.parent.body && ts.isBlock(rootDeclaration.parent.body) ? rootDeclaration.parent.body : undefined;
+        const anchor = body ? body.statements[0] : statementOf(node);
+        if (!anchor) { refusals.push(`${site.site}: nowhere to make the arrow`); continue; }
+        const key = `${file}|arrow|${anchor.getStart(sourceFile)}|${constName}`;
+        if (!views.has(key)) {
+            views.set(key, true);
+            if (nameInScope(anchor, constName)) { refusals.push(`${site.site}: ${constName} is already in scope`); continue; }
+            const at = anchor.getStart(sourceFile, true);
+            const indentation = ' '.repeat(sourceFile.getLineAndCharacterOfPosition(at).character);
+            const returnType = declaration.type ? ': ' + declaration.type.getText(declaration.getSourceFile()) : '';
+            addEdit(file, { start: at, end: at, text: `const ${constName} = (${parameters.list})${returnType} => ${receiverText}.${name}(${parameters.names});\n${indentation}` });
+        }
+        addEdit(file, { start: node.getStart(sourceFile), end: node.end, text: constName });
+        console.log(`arrow ${site.site} ${member}: ${constName}, made once ${body ? 'at the top of the function declaring ' + rootOf(node.expression).text : 'before its statement'}`);
         continue;
     }
     const statement = statementOf(node);

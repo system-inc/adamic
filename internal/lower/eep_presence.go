@@ -1,6 +1,10 @@
 package lower
 
 import (
+	"fmt"
+	"os"
+	"strings"
+
 	"github.com/microsoft/TypeScript/tsc/shim/ast"
 	"github.com/microsoft/TypeScript/tsc/shim/checker"
 )
@@ -10,6 +14,14 @@ import (
 func (l *lowering) eepPropertyPresence(node *ast.Node) error {
 	access := node.AsPropertyAccessExpression()
 	name := node.Name().Text()
+	// #rv75m9k trace, evidence branch only, never to land: is a JSDoc creator's read reached, and with what?
+	if os.Getenv("RV75M9K_TRACE") != "" && strings.HasPrefix(name, "createJSDoc") {
+		method := false
+		if symbol := l.checker.GetSymbolAtLocation(node.Name()); symbol != nil {
+			method = symbol.Flags&ast.SymbolFlagsMethod != 0
+		}
+		fmt.Fprintf(os.Stderr, "rv75m9k-trace %v %s accessorName=%v method=%v accessorNames=%d\n", l.program.Where(node), name, l.accessorNames[name], method, len(l.accessorNames))
+	}
 	receiver := l.concrete(l.checker.GetTypeAtLocation(access.Expression))
 	if name == "length" && (access.QuestionDotToken != nil || !checker.IsTupleType(receiver)) {
 		members := []*checker.Type{receiver}
