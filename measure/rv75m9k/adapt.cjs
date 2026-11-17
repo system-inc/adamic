@@ -2,8 +2,8 @@
 // #rv75m9k, road A: each @internal method signature tsc reads as a value becomes a readonly function-typed property of
 // the same type, so the read is a field read and not "a method read as a value". Type-only: no emitted JavaScript
 // changes, and every member is @internal, so typescript.d.ts doesn't move. owners.json pins each member whole, before
-// and after, by its interface; the adapter refuses drift, a duplicate or missing member, an overload, a half-adapted
-// tree and mixed endings before writing anything, and a second run writes nothing. mutant.cjs restores every member.
+// and after, by its interface; the adapter refuses drift, a duplicate or missing member, a changed overload group, a
+// half-adapted tree and mixed endings before writing anything, and a second run writes nothing. mutant.cjs restores every member.
 const fs = require('node:fs'), path = require('node:path'), crypto = require('node:crypto'), assert = require('node:assert/strict'), ts = require('typescript');
 const owners = require('./owners.json');
 const digest = text => crypto.createHash('sha256').update(text).digest('hex');
@@ -21,20 +21,22 @@ function plan(tree, restore = false) {
         for (const pin of owners.filter(candidate => candidate.file === file)) {
             assert.equal(digest(pin.before), pin.beforeSha256, `${pin.interface}.${pin.member}: before pin corrupt`);
             assert.equal(digest(pin.after), pin.afterSha256, `${pin.interface}.${pin.member}: after pin corrupt`);
-            const interfaces = [];
+            // Interfaces merge: the member lives in exactly one declaration of its interface in this file.
+            const named = member => member.name && ts.isIdentifier(member.name) && member.name.text === pin.member;
+            const holders = [];
             ts.forEachChild(source, function find(node) {
-                if (ts.isInterfaceDeclaration(node) && node.name.text === pin.interface) interfaces.push(node);
+                if (ts.isInterfaceDeclaration(node) && node.name.text === pin.interface && node.members.some(named)) holders.push(node);
                 ts.forEachChild(node, find);
             });
-            assert.equal(interfaces.length, 1, `${file}: expected one interface ${pin.interface}, found ${interfaces.length}`);
-            // Every member of that name: an overload group can't become one function-typed property without a ruling.
-            const members = interfaces[0].members.filter(member => member.name && ts.isIdentifier(member.name) && member.name.text === pin.member);
-            assert.equal(members.length, 1, `${pin.interface}.${pin.member}: expected one member, found ${members.length} (missing, duplicate or overloaded)`);
-            const member = members[0], start = member.getStart(source), end = member.end, current = text.slice(start, end), hash = digest(current);
-            assert(hash === pin.beforeSha256 || hash === pin.afterSha256, `${pin.interface}.${pin.member}: drift or half-adapted member`);
-            const adapted = hash === pin.afterSha256;
+            assert.equal(holders.length, 1, `${file}: expected one declaration of ${pin.interface} holding ${pin.member}, found ${holders.length}`);
+            // Every member of that name, adjacent: before, an overload group of pin.overloads method signatures; after, one property.
+            const members = holders[0].members.filter(named);
+            const adapted = members.length === 1 && ts.isPropertySignature(members[0]);
+            assert.equal(members.length, adapted ? 1 : pin.overloads, `${pin.interface}.${pin.member}: expected ${pin.overloads} member(s), found ${members.length} (missing, duplicate or a changed overload group)`);
+            assert(adapted || members.every(member => ts.isMethodSignature(member)), `${pin.interface}.${pin.member}: unexpected member kind`);
+            const start = members[0].getStart(source), end = members.at(-1).end, current = text.slice(start, end), hash = digest(current);
+            assert(hash === (adapted ? pin.afterSha256 : pin.beforeSha256), `${pin.interface}.${pin.member}: drift or half-adapted member`);
             assert.equal(current, adapted ? pin.after : pin.before);
-            assert(adapted ? ts.isPropertySignature(member) : ts.isMethodSignature(member), `${pin.interface}.${pin.member}: unexpected member kind`);
             states.push(adapted);
             if (restore ? adapted : !adapted) edits.push({ start, end, value: restore ? pin.before : pin.after });
         }

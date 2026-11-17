@@ -60,7 +60,7 @@ function useOf(node) {
     return ts.SyntaxKind[parent.kind];
 }
 
-const sites = [];
+const sites = [], writes = new Set();
 for (const sourceFile of program.getSourceFiles()) {
     if (!path.resolve(sourceFile.fileName).startsWith(path.resolve(tree, 'src/compiler') + path.sep)) continue;
     const visit = (node) => {
@@ -68,6 +68,9 @@ for (const sourceFile of program.getSourceFiles()) {
             let symbol = checker.getSymbolAtLocation(node.name);
             if (symbol && symbol.flags & ts.SymbolFlags.Alias) symbol = checker.getAliasedSymbol(symbol);
             const use = useOf(node);
+            // A member the tree assigns can't become a readonly field, so road A leaves it a method (owners.cjs).
+            if (symbol && symbol.flags & ts.SymbolFlags.Method && use === 'write')
+                for (const declaration of symbol.declarations || []) if (declaration.parent.name) writes.add(`${declaration.parent.name.text}.${node.name.text}`);
             if (symbol && symbol.flags & ts.SymbolFlags.Method && !['write', 'presence', 'bind/call/apply'].includes(use)) {
                 const declarations = symbol.declarations || [];
                 const where = sourceFile.getLineAndCharacterOfPosition(node.getStart());
@@ -90,6 +93,8 @@ for (const sourceFile of program.getSourceFiles()) {
     visit(sourceFile);
 }
 fs.writeFileSync(out, JSON.stringify(sites, null, 1));
+fs.writeFileSync(out.replace(/\.json$/, '.writes.json'), JSON.stringify([...writes].sort(), null, 1));
+console.log('written members: ' + [...writes].sort().join(' '));
 const count = (key) => Object.entries(sites.reduce((counts, site) => ({ ...counts, [key(site)]: (counts[key(site)] || 0) + 1 }), {})).sort((a, b) => b[1] - a[1]);
 console.log(`scan: ${config.fileNames.length} roots, ${diagnostics.length} stock diagnostics, ${sites.length} method value reads under ${names.size} names`);
 for (const diagnostic of diagnostics.slice(0, 10)) console.log('diagnostic: ' + ts.formatDiagnostic(diagnostic, { getCanonicalFileName: (f) => f, getCurrentDirectory: () => tree, getNewLine: () => '\n' }).trim());
