@@ -380,9 +380,11 @@ func (l *lowering) overloadCertificateEntry(node *ast.Node, overload *ast.Node) 
 }
 
 // overloadCertificateCall is nil unless node, a call, a new or a tagged template, resolves to an overload
-// census accepted by certificate A and enters it other than directly (overloadCertificateEntry). An array
-// result can't be checked at the call, so that entry is NotYet, naming its form. Each road a call enters
-// lowering by asks it beside noteOverloadCall, before the callee or an argument is lowered.
+// census accepted by certificate A or by the node-test proof and enters it other than directly
+// (overloadCertificateEntry), or enters the node-test proof's directly and overloadNodeTestCall refuses
+// it. An array result can't be checked at the call, and the node-test proof's premise is the caller's
+// arguments, so a non-direct entry is NotYet, naming its form. Each road a call enters lowering by asks it
+// beside noteOverloadCall, before the callee or an argument is lowered.
 func (l *lowering) overloadCertificateCall(node *ast.Node) error {
 	if node.Kind != ast.KindCallExpression && node.Kind != ast.KindNewExpression && node.Kind != ast.KindTaggedTemplateExpression {
 		return nil
@@ -396,7 +398,17 @@ func (l *lowering) overloadCertificateCall(node *ast.Node) error {
 	if err != nil {
 		return err
 	}
-	if !certified || l.overloadCertificateEntry(node, overload) {
+	tested, err := l.overloadNodeTestCertified(overload)
+	if err != nil {
+		return err
+	}
+	if !certified && !tested {
+		return nil
+	}
+	if l.overloadCertificateEntry(node, overload) {
+		if tested {
+			return l.overloadNodeTestCall(node, resolved)
+		}
 		return nil
 	}
 	form := "a callee other than the overload set's name"
