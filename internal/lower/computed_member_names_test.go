@@ -77,6 +77,7 @@ console.log(read({ value: { a: 1 } }));
 		t.Run(test.name, func(t *testing.T) {
 			t.Parallel()
 			err := lowerWithoutPanic(t, test.source)
+			t.Logf("lowering stops at: %v", err)
 			if test.want == "" {
 				return // Reaching the end without a panic is the pin; lowering may stop or not.
 			}
