@@ -1,0 +1,10 @@
+import type {HttpRequest,HttpResponse} from 'adamic/http';
+import type {KvNamespace} from 'adamic/workers';
+interface Environment {readonly GREETING:string; readonly KV:KvNamespace}
+const kept: Promise<void>[] = [];
+async function later(e:Environment):Promise<void> {}
+
+export function handle(request:HttpRequest,environment:Environment):HttpResponse {
+kept.push(later.call(undefined, environment));
+return {status:200,headers:[],body:environment.GREETING+request.path};
+}
