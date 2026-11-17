@@ -334,6 +334,11 @@ func (l *lowering) closedKindBuildKind(site closedKindSite, field string) (*chec
 	case ast.KindObjectLiteralExpression:
 		return l.closedKindObjectLiteral(site, field), "an object literal", true
 	case ast.KindNewExpression:
+		// A Proxy's get trap answers any kind for the target's type, so its build is open whatever that type
+		// says (Language's should on #x2cjvy9); today `new Proxy` doesn't lower, and this holds it when it does.
+		if callee := ast.SkipParentheses(site.node.AsNewExpression().Expression); callee.Kind == ast.KindIdentifier && l.isLibraryGlobal(callee, "Proxy") {
+			return nil, "a new Proxy", true
+		}
 		return l.closedKindFieldType(site.of, field), "a new", true
 	case ast.KindCallExpression:
 		if l.isPreludeFunction(site.node.AsCallExpression().Expression, "decodeJson") {

@@ -156,6 +156,16 @@ func TestClosedKindGenericAndDecodedBuildsStayOpen(t *testing.T) {
 	}
 }
 
+// A Proxy of an Ident answers whatever kind its get trap chooses, so its build keeps Ex open even though its
+// type says Ident (Language's should on #x2cjvy9). Today `new Proxy` doesn't lower; this holds the rule when
+// it does.
+func TestClosedKindProxyIsAnOpenBuild(t *testing.T) {
+	t.Parallel()
+	if _, _, _, closed, reason := closedKindsAt(t, closedKindTypes+"const proxied: Ident = new Proxy<Ident>(ident, {});\n", "Ex"); closed || !strings.Contains(reason, "a new Proxy") {
+		t.Fatalf("want Ex open on a new Proxy, got closed %v, reason %q", closed, reason)
+	}
+}
+
 // A write of kind through any, tsc's clone loop in nodeFactory.ts, leaves S closed: lowering refuses the
 // cast to any, so the program never compiles and the write makes no value (closedKindReaches, J-q7nwd21).
 // The same write through a mutable Lit, typed, keeps Lit open. Mutant m5 (any reaches every S) opens the first row.
