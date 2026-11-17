@@ -21,7 +21,8 @@ function ownerPathOf(node, source) {
 function namedOwners(source) {
     const found = [];
     (function visit(node) {
-        if ((ts.isFunctionDeclaration(node) || ts.isMethodDeclaration(node)) && node.name && node.body) found.push(node);
+        // Overload signatures too: the engine counts every declaration of the name, and pins them as one span.
+        if ((ts.isFunctionDeclaration(node) || ts.isMethodDeclaration(node)) && node.name) found.push(node);
         ts.forEachChild(node, visit);
     })(source);
     return found;
