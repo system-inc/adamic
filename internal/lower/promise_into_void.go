@@ -28,7 +28,7 @@ func (l *lowering) refusePromiseIntoVoid(node *ast.Node) error {
 			source = awaited
 		}
 	}
-	found := l.promiseIntoVoid(source, target, 0, map[[2]*checker.Type]bool{})
+	found := l.promiseProbeWalk(node, source, target)
 	if found == nil {
 		return nil
 	}
@@ -70,7 +70,9 @@ func (l *lowering) promiseIntoVoid(source, target *checker.Type, depth int, seen
 		return nil
 	}
 	seen[pair] = true
-	if depth >= 64 {
+	defer l.promiseProbePush(source, target, depth)()
+	if depth >= promiseProbeBound {
+		promiseProbeAtLimit()
 		return &promiseDiscard{depthLimit: true}
 	}
 	// A value that can hold a promise seen as a type that names none: void, unknown, {}, object, any, or
