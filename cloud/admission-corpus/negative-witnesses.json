@@ -670,7 +670,7 @@
       "exit": 70,
       "stderr": "adamic: panic: cast failed: this A | B | undefined is not a A\n"
     },
-    "ecc9dcbba95f3993e4c6e4c38e09e7b8ba3c1c00b1bbb204701eaab69ae379f5": {
+    "030f83b71c08d6af5154030b4684f0d3011f730acea9ca4c1041e521a660b0bd": {
       "form": "cast_failed",
       "ruling_task": "#b5w3ycg",
       "ruling": "Adamic, Nov 16, applying rulings.md:9 and :385",
@@ -679,7 +679,7 @@
       "declared_type": "A",
       "repair_from": "{ e: undefined }",
       "repair_to": "{ d: { kind: Kind.A, n: 1 }, e: undefined }",
-      "type_correct_sha256": "3ac6691cf569da4ac819f970fdf4ba0a39a0203e35548500b7581f72e639329e",
+      "type_correct_sha256": "a06b54b5676408aacf417a1eddc8735af9cac3c344782e1b162dae70145ef767",
       "exit": 70,
       "stderr": "adamic: panic: cast failed: this A | B | undefined is not a A\n"
     },
