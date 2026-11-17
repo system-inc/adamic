@@ -49,6 +49,34 @@ func (l *lowering) openNumericEnumType(proven *checker.Type) bool {
 	return !impure && len(whole) == 1 && whole[0].size == len(members)
 }
 
+// openEnumSlot is whether a slot's enum part is open: its numeric members, counted at the slot's own level,
+// are exactly every member of one numeric enum, with no other numeric literal beside them (Adamic's ruling on
+// #snypn8c, c2). An object, a string or a boolean beside them is no part of it, so tsc's
+// `CompilerOptions | BuilderFileEmit` (builder.ts:788) is the whole open enum as the enum alone is
+// (rulings.md:243), where openNumericEnumType, counting CompilerOptions, read it as a literal slot and refused
+// a whole BuilderFileEmit into it. A member, a strict subset, or a whole enum beside another enum's lone
+// member stays a literal slot, as rulings.md:247 needs.
+func (l *lowering) openEnumSlot(slot *checker.Type) bool {
+	part := enumPart(flattenedMembers(l.checker.GetNonNullableType(slot)))
+	whole, impure := l.wholeNumericEnums(part)
+	// Whole means two or more members (Adamic's ruling on #x2cjvy9, condition 2): a one-member numeric enum is
+	// closed, so `Options | One` is a member slot, refused for a number as `One.A` is.
+	return !impure && len(whole) == 1 && whole[0].size >= 2 && whole[0].size == len(part)
+}
+
+// enumPart is a slot's members less those that are known not to be numbers: objects, strings and booleans
+// (null and undefined are gone already). Any other member, an intersection or a type parameter among them,
+// stays in, where it isn't one enum's member, so the slot reads as a literal one, as it did before.
+func enumPart(members []*checker.Type) []*checker.Type {
+	var part []*checker.Type
+	for _, member := range members {
+		if member.Flags()&(checker.TypeFlagsObject|checker.TypeFlagsStringLike|checker.TypeFlagsBooleanLike|checker.TypeFlagsNull|checker.TypeFlagsUndefined) == 0 {
+			part = append(part, member)
+		}
+	}
+	return part
+}
+
 // wholeNumericEnum is a numeric enum all of whose members a union's flattened members hold, with its
 // member count.
 type wholeNumericEnum struct {
