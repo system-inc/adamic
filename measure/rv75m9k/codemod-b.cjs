@@ -17,7 +17,9 @@
 // whose statement can't take a statement before it, a statement that writes the receiver's root,  and a site it can't find. Usage: NODE_PATH=... node codemod-b.cjs <tree> <roadB-sites.json> [--dry-run]
 const ts = require('typescript'), fs = require('node:fs'), path = require('node:path');
 const [tree, sitesPath, mode] = process.argv.slice(2);
-const sites = JSON.parse(fs.readFileSync(sitesPath, 'utf8'));
+// ROAD_B_ONLY / ROAD_B_EXCEPT (a file path) narrow the run to one file or to every other, to bisect a census change.
+const sites = JSON.parse(fs.readFileSync(sitesPath, 'utf8')).filter(site =>
+    (!process.env.ROAD_B_ONLY || site.site.startsWith(process.env.ROAD_B_ONLY + ':')) && (!process.env.ROAD_B_EXCEPT || !site.site.startsWith(process.env.ROAD_B_EXCEPT + ':')));
 const arrowMembers = new Set(['System.directoryExists', 'System.createDirectory']);
 const staticFieldMembers = new Set(['IdentifierNameMap.toKey']);
 
