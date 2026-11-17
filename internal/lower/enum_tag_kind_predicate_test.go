@@ -127,8 +127,9 @@ func TestKindPredicateWalkRefusals(t *testing.T) {
 	for _, probe := range []struct{ name, types, source, refusal string }{
 		// Controls: today's comparisons, as the walk judged them before this change.
 		{"comparison control", kindPredicateTypes, "function show(n: N): string { return n.kind === K.A ? `a ${n.a}` : 'b'; }\nconsole.log(show({ kind: K.A, flag: F.X, a: 1 }));\n", ""},
-		// The comparison's own hazard, met by the predicate's call.
-		{"wide kind call", "enum K { A = 1, B = 2 }\nenum F { X = 1 }\ninterface A { readonly kind: K.A; readonly flag: F; readonly a: number }\ninterface B { readonly kind: K; readonly b: string }\ntype N = A | B;\n", "function isA(n: N): n is A { return n.kind === K.A; }\n" + show, kindPredicateRefusal},
+		// The comparison's own hazard, met by the predicate's call. wide is a B whose kind is chosen at run
+		// time, which keeps B open (closedKinds, enum_tag_closed_kind.go).
+		{"wide kind call", "enum K { A = 1, B = 2 }\nenum F { X = 1 }\ninterface A { readonly kind: K.A; readonly flag: F; readonly a: number }\ninterface B { readonly kind: K; readonly b: string }\ntype N = A | B;\nfunction numeric(): number { return 1; }\nconst wide: B = { kind: numeric(), b: 'wide' };\n", "function isA(n: N): n is A { return n.kind === K.A; }\n" + show, kindPredicateRefusal},
 		{"shared value call", "enum K { A = 1, Z = 5 }\nenum L { B = 1, W = 6 }\ninterface A { readonly kind: K.A; readonly a: number }\ninterface B { readonly kind: L.B; readonly b: string }\ntype N = A | B;\n", "function isA(n: N): n is A { return n.kind === K.A; }\nfunction show(n: N): string { return isA(n) ? `a ${n.a}` : 'b'; }\nconsole.log(show({ kind: K.A, a: 1 }));\n", "share a value"},
 		{"shared value comparison", "enum K { A = 1, Z = 5 }\nenum L { B = 1, W = 6 }\ninterface A { readonly kind: K.A; readonly a: number }\ninterface B { readonly kind: L.B; readonly b: string }\ntype N = A | B;\n", "function show(n: N): string { return n.kind === K.A ? `a ${n.a}` : 'b'; }\nconsole.log(show({ kind: K.A, a: 1 }));\n", "share a value"},
 		// Condition 2: the checker narrows by the declared type, so one that disagrees proves nothing.
@@ -243,13 +244,16 @@ func TestEnumTagTypePositions(t *testing.T) {
 
 // The same union's actual refinement still needs a runtime tag proof, with the existing diagnostic
 // words at the read itself. A type-position exemption must not let this unproven layout through.
+// wide is an X whose kind is chosen at run time, which keeps X's open member open (closedKinds,
+// enum_tag_closed_kind.go). It follows the read, so the read stays at 4:71.
 func TestEnumTagRuntimeRefinementPosition(t *testing.T) {
 	t.Parallel()
 	const read = "function read(value: X): Tagged { if (value.kind === Kind.B) { return value.literal; } return value.literal; }\n"
+	const wide = "function numeric(): number { return 1; }\nconst wide: X = { kind: numeric(), literal: { kind: Kind.A, value: 1 }, name: { kind: Kind.A, value: 2 } };\n"
 	for _, extension := range []string{".a", ".ts"} {
 		t.Run(extension, func(t *testing.T) {
 			t.Parallel()
-			_, err := lowerSourceAs(t, enumTagTypePositionTypes+read, extension)
+			_, err := lowerSourceAs(t, enumTagTypePositionTypes+read+wide, extension)
 			var refused *Refused
 			if !errors.As(err, &refused) || refused.What != kindPredicateRefusal ||
 				refused.Fix != "use a member-specific tag from a multi-member enum, a string enum, or a plain literal tag (adamic/enum-tag)" ||
@@ -263,17 +267,19 @@ func TestEnumTagRuntimeRefinementPosition(t *testing.T) {
 // A heritage base runs even though ExpressionWithTypeArguments is classified as a type node.
 // Judge the actual read directly so an earlier class-heritage stop cannot mask this rule.
 // Mutant run and restored: drop hasTypeAncestor's ExpressionWithTypeArguments expression case;
-// the heritage row returns nil instead of the ordinary read's enum-tag Refused.
+// the heritage row returns nil instead of the ordinary read's enum-tag Refused. wide is an X whose kind is
+// chosen at run time, which keeps X's open member open (closedKinds, enum_tag_closed_kind.go).
 func TestEnumTagHeritageExpressionRefusal(t *testing.T) {
 	t.Parallel()
 	types := strings.ReplaceAll(enumTagTypePositionTypes, "readonly literal: Tagged", "readonly literal: Tagged & { readonly base: typeof Base }") + "class Base {}\n"
+	const wide = "function numeric(): number { return 1; }\nconst wide: X = { kind: numeric(), literal: { kind: Kind.A, value: 1, base: Base }, name: { kind: Kind.A, value: 2 } };\n"
 	var ordinary *Refused
 	for _, probe := range []struct{ name, body string }{
 		{"ordinary", "return value.kind === Kind.B ? value.literal.base : Base;"},
 		{"heritage", "class D extends (value.kind === Kind.B ? value.literal.base : Base) {}"},
 	} {
 		t.Run(probe.name, func(t *testing.T) {
-			l, statements := enumGuardProof(t, types+"function use(value: X) { "+probe.body+" }\n")
+			l, statements := enumGuardProof(t, types+"function use(value: X) { "+probe.body+" }\n"+wide)
 			var read *ast.Node
 			var visit ast.Visitor
 			visit = func(node *ast.Node) bool {
