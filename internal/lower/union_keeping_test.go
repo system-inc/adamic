@@ -618,6 +618,211 @@ run({ kind: 'v', f(x: number): string { return `+"`n${x}`"+`; } });
 	}
 }
 
+func TestUnionKeepingPositiveProofArms(t *testing.T) {
+	t.Parallel()
+	for _, extension := range []string{".a", ".ts"} {
+		for _, row := range []struct {
+			name, from, to, prelude string
+			storage                 bool
+		}{
+			{"constructor_static", `typeof C`, `{ readonly v: Weak<Box> }`, `declare class C { static v: Box; }
+`, true},
+			{"nested_constructor_static", `{ readonly member: typeof C }`, `{ readonly member: { readonly v: Weak<Box> } }`, `declare class C { static v: Box; }
+`, true},
+			{"property_to_index", `{ readonly a: NonNullable<Weak<Box>> }`, `{ readonly [key: string]: Box }`, ``, true},
+			{"tuple_later_element", `readonly [Weak<A>, B]`, `readonly (Weak<A> | B)[]`, `interface A { readonly kind: 'a'; readonly label: string }
+interface B { readonly kind: 'b'; readonly count: number }
+`, true},
+			{"this_slot", `(this: Box | number, n: number) => string`, `(this: number, n: number) => string`, ``, true},
+			{"this_missing", `(this: Box, n: number) => string`, `(n: number) => string`, ``, true},
+		} {
+			t.Run(row.name+extension, func(t *testing.T) {
+				source := "import type { Weak } from 'adamic';\ninterface Box { readonly label: string }\n" + row.prelude + "\ndeclare const from: " + row.from + ";\ndeclare const to: " + row.to + ";\n"
+				program, err := load.Load([]string{writeAgreementSource(t, "main"+extension, source)})
+				if err != nil {
+					t.Fatal(err)
+				}
+				checked, release := program.Checker(t.Context(), program.Files()[0])
+				defer release()
+				var from, to *checker.Type
+				var visit ast.Visitor
+				visit = func(node *ast.Node) bool {
+					if ast.IsIdentifier(node) {
+						switch node.Text() {
+						case "from":
+							from = checked.GetTypeAtLocation(node)
+						case "to":
+							to = checked.GetTypeAtLocation(node)
+						}
+					}
+					return node.ForEachChild(visit)
+				}
+				program.Files()[0].Node.ForEachChild(visit)
+				if from == nil || to == nil {
+					t.Fatal("missing keeping proof types")
+				}
+				l := &lowering{program: program, checker: checked}
+				same := false
+				if row.storage {
+					same = l.sameKeepingStorage(from, to, map[[2]*checker.Type]bool{}, &keepingNesting{}, true)
+				} else {
+					same = l.sameKeepingWalk(from, to, map[[2]*checker.Type]bool{})
+				}
+				if same {
+					t.Fatalf("%s -> %s: got same without a storage proof", row.from, row.to)
+				}
+			})
+		}
+	}
+}
+
+func TestUnionKeepingPositiveProofSkipsAgree(t *testing.T) {
+	t.Parallel()
+	for _, extension := range []string{".a", ".ts"} {
+		for _, row := range []struct{ name, source string }{
+			{"nullish_slot", `interface Box { readonly label: string }
+function see(value: { readonly v: Box } | undefined): string { const view: { readonly v: Box } | undefined = value; return view === undefined ? 'none' : view.v.label; }
+console.log(see({ v: { label: 'label' } })); console.log(see(undefined));
+`},
+			{"nullish_members", `interface Box { readonly label: string }
+function see(value: { readonly v: Box } | { readonly w: number } | undefined): string {
+  const view: { readonly v: Box } | { readonly w: number } | undefined = value;
+  if (view === undefined) return 'none';
+  return 'present';
+}
+console.log(see(undefined));
+`},
+			{"extra_view_parameter", `type Held = { readonly kind: 'v'; readonly f: (a: number) => string } | { readonly kind: 'w' };
+type Viewed = { readonly kind: 'v'; readonly f: (a: number, b: number) => string } | { readonly kind: 'w' };
+function see(value: Held): void { const view: Viewed = value; if (view.kind === 'v') console.log(view.f(1, 2)); }
+see({ kind: 'v', f: (a: number): string => String(a) });
+`},
+			{"intrinsic_adapter", `const values: number[] = [1, 2];
+console.log(values.map((value: number | string): string => typeof value === 'number' ? String(value + 1) : value).join(','));
+`},
+		} {
+			t.Run(row.name+extension, func(t *testing.T) { lowersAndAgreesWithNodeAs(t, row.source, extension) })
+		}
+	}
+}
+
+// r9 also has an independent representation stop; PositiveProofArms isolates the storage comparison.
+func TestUnionKeepingPositiveProofViewsStop(t *testing.T) {
+	t.Parallel()
+	for _, extension := range []string{".a", ".ts"} {
+		for _, row := range []struct{ name, source, where, what string }{
+			{"r5", `import type { Weak } from 'adamic';
+interface Box { readonly label: string }
+const owner: Box = { label: 'label' };
+class C { static v: Box = owner; }
+function see(value: typeof C | { readonly kind: 'w'; readonly w: number }): void {
+  const view: { readonly v: Weak<Box> } | { readonly kind: 'w'; readonly w: number } = value;
+  if ('v' in view) console.log(view.v?.label ?? 'none');
+}
+see(C);
+`, ":6:88", `a typeof C | { readonly kind: "w"; readonly w: number; } seen as a { readonly v: Weak<Box>; } | { readonly kind: "w"; readonly w: number; }`},
+			{"r9", `import type { Weak } from 'adamic';
+interface Box { readonly label: string }
+const owner: Box = { label: 'label' };
+type V = { kind: 'v'; a: NonNullable<Weak<Box>> };
+function see(value: V | { readonly kind: 'w'; readonly w: number }): void {
+  const view: { readonly [key: string]: Box | 'v' } | { readonly kind: 'w'; readonly w: number } = value;
+}
+see({ kind: 'v', a: owner });
+`, ":6:17", `a non-mutable unrestricted string signature, or numeric, symbol, patterned or callable dictionary storage`},
+			{"r10", `import type { Weak } from 'adamic';
+interface Box { readonly label: string }
+const owner: Box = { label: 'label' };
+function see(value: readonly [Weak<Box>, Box] | { readonly kind: 'w' }): void {
+  const view: readonly Weak<Box>[] | { readonly kind: 'w' } = value;
+}
+see([owner, owner]);
+`, ":5:63", `a { readonly kind: "w"; } | readonly [Weak<Box>, Box] seen as a readonly Weak<Box>[] | { readonly kind: "w"; }`},
+			{"r15", `import type { Weak } from 'adamic';
+interface Box { readonly label: string }
+const owner: Box = { label: 'label' };
+type Held = { readonly kind: 'v'; readonly f: (this: Box | number, n: number) => string } | { readonly kind: 'w' };
+type Viewed = { readonly kind: 'v'; readonly f: (this: number, n: number) => string } | { readonly kind: 'w' };
+function see(value: Held): void {
+  const view: Viewed = value;
+}
+console.log('control');
+`, ":7:24", `a Held seen as a Viewed`},
+			{"r16", `import type { Weak } from 'adamic';
+interface Box { readonly label: string }
+const owner: Box = { label: 'label' };
+class Getter { readonly kind = 'v'; get v(): Box { return owner; } }
+function see(value: Getter | { readonly kind: 'w' }): void {
+  const view: { readonly kind: 'v'; readonly v: Weak<Box> } | { readonly kind: 'w' } = value;
+}
+see(new Getter());
+`, ":6:88", `a Getter | { readonly kind: "w"; } seen as a { readonly kind: "v"; readonly v: Weak<Box>; } | { readonly kind: "w"; }`},
+		} {
+			t.Run(row.name+extension, func(t *testing.T) {
+				_, err := lowerSourceAs(t, row.source, extension)
+				var ny *NotYet
+				if !errors.As(err, &ny) || !strings.HasSuffix(ny.Where, "main"+extension+row.where) || !strings.HasPrefix(ny.What, row.what) {
+					t.Fatalf("got %v, want NotYet at main%s%s for %s", err, extension, row.where, row.what)
+				}
+			})
+		}
+	}
+}
+
+func TestUnionKeepingSeveralCallableGuardStop(t *testing.T) {
+	t.Parallel()
+	for _, extension := range []string{".a", ".ts"} {
+		t.Run(extension, func(t *testing.T) {
+			_, err := lowerSourceAs(t, `import type { Weak } from 'adamic';
+class Box {
+  readonly label: string;
+  constructor(label: string) { this.label = label; }
+}
+const owner = new Box('c');
+type Value = ((x: number | string) => string) | ((b: boolean) => void) | Box;
+type View = ((x: number) => string) | ((b: boolean) => void) | Box;
+function isNumber(v: View): v is (x: number) => string { return typeof v === 'function' && v.length === 1; }
+function run(value: Value): void {
+  const x: View = value;
+  if (isNumber(x)) console.log(x(1));
+}
+function f(x: number | string): string { return typeof x === 'number' ? `+"`"+`n${x}`+"`"+` : x; }
+run(f);
+`, extension)
+			var refused *Refused
+			where, rule := ":9:58", "adamic/no-type-predicate"
+			if extension == ".ts" {
+				where, rule = ":11:19", "adamic/no-void-widening"
+			}
+			if !errors.As(err, &refused) || !strings.HasSuffix(refused.Where, "main"+extension+where) || !strings.Contains(err.Error(), rule) {
+				t.Fatalf("r6 guard: got %v, want %s refusal at main%s%s", err, rule, extension, where)
+			}
+		})
+	}
+}
+
+func TestUnionKeepingMissingPropertyWideningStops(t *testing.T) {
+	t.Parallel()
+	for _, extension := range []string{".a", ".ts"} {
+		t.Run(extension, func(t *testing.T) {
+			_, err := lowerSourceAs(t, `import type { Weak } from 'adamic';
+interface Box { readonly label: string }
+const owner: Box = { label: 'label' };
+function see(a: { readonly kind: 'v'; readonly x: Box }): void {
+  const b: { readonly kind: 'v' } = a;
+  const c: { readonly kind: 'v'; readonly x?: Weak<Box> } = b;
+  console.log(c.x?.label ?? 'none');
+}
+see({ kind: 'v', x: owner });
+`, extension)
+			var refused *Refused
+			if !errors.As(err, &refused) || !strings.HasSuffix(refused.Where, "main"+extension+":6:61") || !strings.Contains(refused.What, "optional property x in") || !strings.Contains(refused.What, "absent from structural source") {
+				t.Fatalf("w01: got %v, want missing optional x refused at main%s:6:61", err, extension)
+			}
+		})
+	}
+}
+
 // TestUnionKeepingMethodViewPropertySourceStop pins #3h04df3's narrow stop: a function stored in a
 // union member's field, seen through a member that declares it as a method, is a stored closure
 // called through its own slots. Its Weakly parameter seen as Strong lowered and, natively, the read
