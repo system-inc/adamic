@@ -836,6 +836,24 @@ func (l *lowering) predicateMembership(node *ast.Node, value ir.Expression, sour
 	if target.Flags()&checker.TypeFlagsUndefined != 0 {
 		return nil, isType("undefined"), nil
 	}
+	// null is tested as x === null is (combine, expression.go), against how the value holds it (#m33ax27).
+	// A union holds null as its sentinel and undefined as no pointer, so the two never meet. A bare
+	// reference holds at most one of them as no pointer, and its source says which, so it's null only
+	// where the source holds null and not undefined. A number, a boolean or their maybe pairs never hold
+	// null. A bare reference whose source may hold both is held alike, and stops.
+	if target.Flags()&checker.TypeFlagsNull != 0 {
+		switch {
+		case value.Type() == ir.Union:
+			return nil, ir.IsNull{Value: value}, nil
+		case !value.Type().IsReference():
+			return nil, ir.BooleanConstant{Value: false}, nil
+		case l.includesNull(source) && !l.includesUndefined(source):
+			return nil, ir.IsNull{Value: value}, nil
+		case !l.mayHoldNull(source):
+			return nil, ir.IsNull{Value: value, AlwaysFalse: true}, nil
+		}
+		return nil, nil, l.notYet(node, "a predicate overload null member over "+l.checker.TypeToString(source)+", whose null and undefined are held alike")
+	}
 	name := ""
 	of := ir.Type(0)
 	switch {
