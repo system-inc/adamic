@@ -8,6 +8,7 @@ import (
 	"github.com/microsoft/TypeScript/tsc/shim/ast"
 	"github.com/microsoft/TypeScript/tsc/shim/checker"
 	"github.com/system-inc/adamic/internal/load"
+	"github.com/system-inc/adamic/internal/lower"
 )
 
 func environmentRefusal(field, reason string) error {
@@ -62,6 +63,10 @@ func workerEnvironmentFields(types *checker.Checker, proven *checker.Type) ([]st
 		}
 		if !types.IsReadonlySymbol(field) {
 			return nil, environmentRefusal(field.Name, "must be readonly")
+		}
+		// Runtime ingress is deliberately closed until the bridge validates KV.
+		if load.WorkerKV(types, types.GetTypeOfSymbol(field)) {
+			return nil, &lower.NotYet{Where: "worker", What: "environment field " + strconv.Quote(field.Name) + ": a Workers binding in the environment waits on the bridge's KV check"}
 		}
 		if types.GetTypeOfSymbol(field) != types.GetStringType() {
 			return nil, environmentRefusal(field.Name, "must have type exactly string")

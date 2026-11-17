@@ -300,13 +300,18 @@ func BuildWith(entry, output string, options Options) error {
 	if genericExport != "" {
 		return fmt.Errorf("worker: exported generic function %s is not yet supported; fix: export a concrete function", genericExport)
 	}
+	capabilitySites := map[ir.SourcePosition]bool{}
+	var environmentSymbol *ast.Symbol
 	if environmentType != nil {
-		if err := lower.CheckWorkerEnvironment(program, types, environmentType); err != nil {
+		environmentSymbol = environmentType.Symbol()
+		if err := lower.CheckWorkerEnvironment(program, types, environmentType, capabilitySites); err != nil {
 			return err
 		}
+	} else if err := lower.CheckWorkerCapabilities(program, types, capabilitySites); err != nil {
+		return err
 	}
 	release()
-	lowered, err := lower.Lower(context.Background(), program)
+	lowered, err := lower.LowerWorker(context.Background(), program, environmentSymbol)
 	if err != nil {
 		return err
 	}
@@ -335,7 +340,7 @@ func BuildWith(entry, output string, options Options) error {
 		return err
 	}
 	if len(options.Wasm) != 0 {
-		backend.ExternalFunctions, imports, wasm, err = wasmFiles(entry, program, lowered, options)
+		backend.ExternalFunctions, imports, wasm, err = wasmFiles(entry, program, lowered, options, capabilitySites)
 		if err != nil {
 			return err
 		}
