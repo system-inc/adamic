@@ -1281,6 +1281,29 @@ func (l *lowering) freshOrWidened(node *ast.Node, own *checker.Type, contextual 
 			}
 		}
 		return nil
+	case ast.KindBinaryExpression:
+		binary := node.AsBinaryExpression()
+		switch binary.OperatorToken.Kind {
+		case ast.KindEqualsToken:
+			// A fresh literal held only by the chain's targets, each declaring what the slot reads
+			// (freshAssignmentHandles). Anything else is judged by its own type below.
+			if l.freshAssignmentHandles(node, contextual) {
+				return nil
+			}
+		case ast.KindBarBarToken, ast.KindQuestionQuestionToken:
+			// Either operand is the value, as a conditional's branches are: each judged as it is, so
+			// a fresh one keeps its freshness (#r11wppy). The left keeps its own type: no truthy
+			// narrowing is invented for it, so a left that refuses on its own still refuses.
+			for _, operand := range []*ast.Node{binary.Left, binary.Right} {
+				if found := l.freshOrWidened(operand, l.checker.GetTypeAtLocation(operand), contextual); found != nil {
+					if found.viewed == nil {
+						found.viewed = l.checker.GetTypeAtLocation(operand)
+					}
+					return found
+				}
+			}
+			return nil
+		}
 	}
 	visited := map[[2]*checker.Type]bool{}
 	if !l.freshValue(node) {
