@@ -20,6 +20,12 @@
 #     `git show HEAD:<file>` or reads `git status`. It costs about 27 s over adamic's tree (Loom's J-a5zgp8d), so only a
 #     script that needs it calls it. HEAD has no history, no parent and no remote, so a job that reads `git log`, a
 #     submodule's own repository or a remote still wants a house box. A tree the runner laid with a .git keeps it.
+#   - GOMODCACHE is the node's laid cache when loom-node's cache proxy laid this very commit whole, and the image's
+#     otherwise (#nodecache). The proxy's word is a lay file it writes only once every module the commit names is in
+#     its cache. The node's cache is taken only when that file names this repository and commit, names the cache at
+#     its one path, and lists the tree's go.sum files exactly as laid here, each with the same sha256. Anything else,
+#     a failed read included, keeps the image's cache, and one line on stderr says which and why. GOPROXY, GOSUMDB and
+#     GOFLAGS stay the image's either way.
 # Loom folds what's settled here into the image's environment.sh at its next build, so this file shrinks over time.
 
 sandboxedJobFail() {
@@ -45,6 +51,72 @@ mkdir -p "$npm_config_logs_dir" || sandboxedJobFail "couldn't make npm's log dir
 # empty and git refuses a commit with no name. A house box's own identity is never overridden.
 export GIT_AUTHOR_NAME="${GIT_AUTHOR_NAME:-sandboxed-job}" GIT_AUTHOR_EMAIL="${GIT_AUTHOR_EMAIL:-sandboxed-job@loom.invalid}"
 export GIT_COMMITTER_NAME="${GIT_COMMITTER_NAME:-sandboxed-job}" GIT_COMMITTER_EMAIL="${GIT_COMMITTER_EMAIL:-sandboxed-job@loom.invalid}"
+
+# The node's laid Go module cache, or the image's. The lay file is the proxy's contract with Loom (#nodecache): one JSON
+# object, written atomically and only once the commit's modules are all laid, naming the repository, the commit, the
+# cache (one exact path, never a path the file chooses, so a lay can't point a job at another directory) and every
+# go.sum in the commit's tree, submodules included, by path from the root with the sha256 of its bytes. The tree's own
+# go.sum files are found by walking it from the root, skipping every .git, a submodule's included. A miss, a mismatch or
+# a failed read keeps the image's GOMODCACHE: none of it ever fails the preamble. SANDBOXED_JOB_LAYS and
+# SANDBOXED_JOB_LAID_GOMODCACHE are the test's stand-ins.
+sandboxedJobLays="${SANDBOXED_JOB_LAYS:-/var/cache/loom-node-cache/go/lays}"
+sandboxedJobLaidGoModuleCache="${SANDBOXED_JOB_LAID_GOMODCACHE:-/var/cache/loom-node-cache/go/mod}"
+sandboxedJobGoModules=$(python3 -I - "$sandboxedJobLays" "$sandboxedJobLaidGoModuleCache" "${LOOM_JOB_REPOSITORY:-}" "${LOOM_JOB_COMMIT:-}" 2> /dev/null << 'PYTHON'
+import hashlib, json, os, sys
+lays, laid, repository, commit = sys.argv[1:5]
+def image(why):
+    print('image ' + why)
+    sys.exit(0)
+try:
+    if not repository or not commit:
+        image('the runner names no LOOM_JOB_REPOSITORY and LOOM_JOB_COMMIT')
+    path = os.path.join(lays, repository, commit + '.json')
+    if not os.path.exists(path):
+        image('no lay for this commit')
+    try:
+        with open(path) as file:
+            lay = json.load(file)
+    except (OSError, ValueError) as error:
+        image("the lay doesn't parse: %s" % error)
+    if not isinstance(lay, dict):
+        image('the lay is no object')
+    if lay.get('repository') != repository:
+        image('the lay names another repository')
+    if lay.get('commit') != commit:
+        image('the lay names another commit')
+    if lay.get('gomodcache') != laid:
+        image('the lay names the cache %r, not %s' % (lay.get('gomodcache'), laid))
+    if not (os.path.isdir(laid) and os.access(laid, os.R_OK | os.X_OK)):
+        image('the laid cache %s is no readable directory' % laid)
+    sums = lay.get('goSums')
+    if not isinstance(sums, list) or not all(
+            isinstance(entry, dict) and isinstance(entry.get('path'), str) and isinstance(entry.get('sha256'), str)
+            for entry in sums):
+        image("the lay's goSums don't parse")
+    named = {entry['path']: entry['sha256'].lower() for entry in sums}
+    found = set()
+    for directory, directories, files in os.walk('.'):
+        directories[:] = [name for name in directories if name != '.git']
+        if 'go.sum' in files:
+            found.add(os.path.relpath(os.path.join(directory, 'go.sum'), '.'))
+    for path in sorted(found ^ set(named)):
+        image('go.sum %s is in the %s alone' % (path, 'tree' if path in found else 'lay'))
+    for path in sorted(named):
+        with open(path, 'rb') as file:
+            if hashlib.sha256(file.read()).hexdigest() != named[path]:
+                image('go.sum %s differs' % path)
+    print('laid %s' % lay.get('modules'))
+except Exception as error:
+    image("the lay couldn't be checked: %s" % error)
+PYTHON
+) || sandboxedJobGoModules="image the lay couldn't be checked: python3 failed"
+case "$sandboxedJobGoModules" in
+	"laid "*)
+		export GOMODCACHE="$sandboxedJobLaidGoModuleCache"
+		echo "sandboxed-job: go modules: the node's laid cache for ${LOOM_JOB_COMMIT:0:12} (${sandboxedJobGoModules#laid } modules)" >&2
+		;;
+	*) echo "sandboxed-job: go modules: the image's cache (${sandboxedJobGoModules#image })" >&2 ;;
+esac
 
 # sandboxed_typescript_source: the image's TypeScript source becomes the job's own copy, in the job's scratch, and
 # ADAMIC_TYPESCRIPT_SOURCE names it. The image's copy is root's and the job runs as its own user, so git calls it dubious

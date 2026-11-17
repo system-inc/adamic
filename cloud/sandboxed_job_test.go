@@ -1,6 +1,9 @@
 package cloud
 
 import (
+	"crypto/sha256"
+	"encoding/hex"
+	"encoding/json"
 	"os"
 	"path/filepath"
 	"strings"
@@ -264,4 +267,171 @@ sandboxed_git && echo "sandboxed_git=ok"`)
 			}
 		})
 	}
+}
+
+// sandboxed-job.sh takes the node's laid Go module cache only when loom-node's cache proxy laid this very commit whole
+// (#nodecache): a lay file for the runner's repository and commit, naming the laid cache at its one path, whose goSums
+// are the tree's go.sum files exactly, each with its sha256. Every other case keeps the image's GOMODCACHE and says why,
+// a lay that doesn't parse included, and the preamble still returns 0. GOPROXY, GOSUMDB and GOFLAGS are the image's in
+// every case. The test sources the script in a temporary tree with two go.sum files (one in a submodule, and decoys
+// under the .git directories the walk skips) beside a temporary lays directory and laid cache.
+//
+// Mutants: the no-lay branch taking the laid cache (`image('no lay for this commit')` made `sys.exit(print('laid 214'))`,
+// red on no lay); the sha256 check taken out (its `if hashlib.sha256(...) != named[path]:` made `if False:`, red on a
+// go.sum that differs); the set check taken out (`found ^ set(named)` made `set()`, red on a go.sum the lay doesn't
+// name).
+func TestSandboxedJobTakesTheNodesLaidModulesOnlyWhole(t *testing.T) {
+	t.Parallel()
+	script, err := filepath.Abs("sandboxed-job.sh")
+	if err != nil {
+		t.Fatal(err)
+	}
+	const commit = "0123456789abcdef0123456789abcdef01234567"
+	const goFlags = "-buildvcs=false -trimpath -mod=readonly"
+	sums := map[string]string{"go.sum": "example.invalid/a v1.0.0 h1:a=\n", "cohere/go.sum": "example.invalid/b v1.0.0 h1:b=\n"}
+	for _, test := range []struct {
+		name string
+		// lay returns the lay file's bytes, or nil for no file; tree changes the tree after its go.sum files are written.
+		lay  func(t *testing.T, laid string, goSums []map[string]string) []byte
+		tree func(t *testing.T, tree string)
+		laid bool
+		why  string
+	}{
+		{"a lay for this commit, whole", nil, nil, true, ""},
+		{"no lay for this commit", func(*testing.T, string, []map[string]string) []byte { return nil }, nil, false, "no lay for this commit"},
+		{"a lay naming another commit", func(t *testing.T, laid string, goSums []map[string]string) []byte {
+			return layOf(t, "adamic", "fedcba9876543210fedcba9876543210fedcba98", laid, goSums)
+		}, nil, false, "the lay names another commit"},
+		{"a lay naming another repository", func(t *testing.T, laid string, goSums []map[string]string) []byte {
+			return layOf(t, "cohere", commit, laid, goSums)
+		}, nil, false, "the lay names another repository"},
+		{"a lay naming another cache", func(t *testing.T, laid string, goSums []map[string]string) []byte {
+			return layOf(t, "adamic", commit, laid+"-elsewhere", goSums)
+		}, nil, false, "the lay names the cache"},
+		{"a go.sum that differs", nil, func(t *testing.T, tree string) {
+			if err := os.WriteFile(filepath.Join(tree, "cohere", "go.sum"), []byte("example.invalid/b v1.0.1 h1:c=\n"), 0o644); err != nil {
+				t.Fatal(err)
+			}
+		}, false, "go.sum cohere/go.sum differs"},
+		{"a go.sum the lay doesn't name", nil, func(t *testing.T, tree string) {
+			if err := os.MkdirAll(filepath.Join(tree, "tools"), 0o755); err != nil {
+				t.Fatal(err)
+			}
+			if err := os.WriteFile(filepath.Join(tree, "tools", "go.sum"), []byte("example.invalid/c v1.0.0 h1:c=\n"), 0o644); err != nil {
+				t.Fatal(err)
+			}
+		}, false, "go.sum tools/go.sum is in the tree alone"},
+		{"a go.sum the tree lacks", nil, func(t *testing.T, tree string) {
+			if err := os.Remove(filepath.Join(tree, "cohere", "go.sum")); err != nil {
+				t.Fatal(err)
+			}
+		}, false, "go.sum cohere/go.sum is in the lay alone"},
+		{"a lay that doesn't parse", func(*testing.T, string, []map[string]string) []byte { return []byte(`{"repository":"adamic",`) }, nil, false, "the lay doesn't parse"},
+	} {
+		t.Run(test.name, func(t *testing.T) {
+			t.Parallel()
+			directory := t.TempDir()
+			tree, lays, laid, image := filepath.Join(directory, "tree"), filepath.Join(directory, "lays"), filepath.Join(directory, "mod"), filepath.Join(directory, "image-mod")
+			for _, made := range []string{filepath.Join(tree, "cohere"), filepath.Join(tree, ".git", "modules", "cohere"), filepath.Join(tree, "cohere", ".git"),
+				filepath.Join(lays, "adamic"), laid, image} {
+				if err := os.MkdirAll(made, 0o755); err != nil {
+					t.Fatal(err)
+				}
+			}
+			goSums := []map[string]string{}
+			for _, path := range []string{"cohere/go.sum", "go.sum"} {
+				if err := os.WriteFile(filepath.Join(tree, path), []byte(sums[path]), 0o644); err != nil {
+					t.Fatal(err)
+				}
+				digest := sha256.Sum256([]byte(sums[path]))
+				goSums = append(goSums, map[string]string{"path": path, "sha256": hex.EncodeToString(digest[:])})
+			}
+			// Under the root's .git and a submodule's, where the walk never looks: go.sum files the lay doesn't name, so
+			// reading either would refuse the lay.
+			for _, decoy := range []string{filepath.Join(tree, ".git", "modules", "cohere", "go.sum"), filepath.Join(tree, "cohere", ".git", "go.sum")} {
+				if err := os.WriteFile(decoy, []byte("not the tree's\n"), 0o644); err != nil {
+					t.Fatal(err)
+				}
+			}
+			if test.tree != nil {
+				test.tree(t, tree)
+			}
+			lay := layOf(t, "adamic", commit, laid, goSums)
+			if test.lay != nil {
+				lay = test.lay(t, laid, goSums)
+			}
+			if lay != nil {
+				if err := os.WriteFile(filepath.Join(lays, "adamic", commit+".json"), lay, 0o444); err != nil {
+					t.Fatal(err)
+				}
+			}
+			command := toolchain.Command("bash", "-c", `. "$SANDBOXED_JOB_SCRIPT" || { echo "sourced=failed"; exit 0; }
+echo "sourced=ok"
+printf 'gomodcache=%s\ngoproxy=%s\ngosumdb=%s\ngoflags=%s\n' "$GOMODCACHE" "$GOPROXY" "$GOSUMDB" "$GOFLAGS"
+`)
+			if command.Err != nil {
+				t.Fatal(command.Err)
+			}
+			command.Dir = tree
+			environment := command.Env
+			if environment == nil {
+				environment = os.Environ()
+			}
+			kept := make([]string, 0, len(environment)+10)
+			for _, variable := range environment {
+				name, _, _ := strings.Cut(variable, "=")
+				switch name {
+				case "TMPDIR", "ADAMIC_BUILD_CACHE_DIR", "LOOM_JOB_SCRATCH", "LOOM_JOB_REPOSITORY", "LOOM_JOB_COMMIT", "SANDBOXED_JOB_LAYS",
+					"SANDBOXED_JOB_LAID_GOMODCACHE", "GOMODCACHE", "GOPROXY", "GOSUMDB", "GOFLAGS":
+				default:
+					kept = append(kept, variable)
+				}
+			}
+			command.Env = append(kept, "SANDBOXED_JOB_SCRIPT="+script, "TMPDIR="+filepath.Join(directory, "tmp"), "LOOM_JOB_REPOSITORY=adamic",
+				"LOOM_JOB_COMMIT="+commit, "SANDBOXED_JOB_LAYS="+lays, "SANDBOXED_JOB_LAID_GOMODCACHE="+laid, "GOMODCACHE="+image,
+				"GOPROXY=off", "GOSUMDB=off", "GOFLAGS="+goFlags)
+			output, err := command.CombinedOutput()
+			said := string(output)
+			if err != nil || !strings.Contains(said, "sourced=ok") {
+				t.Fatalf("want the source to pass, got %v:\n%s", err, said)
+			}
+			values := map[string]string{}
+			for _, line := range strings.Split(said, "\n") {
+				if name, value, ok := strings.Cut(line, "="); ok {
+					values[name] = value
+				}
+			}
+			for name, want := range map[string]string{"goproxy": "off", "gosumdb": "off", "goflags": goFlags} {
+				if values[name] != want {
+					t.Errorf("%s is %q, want the image's %q", name, values[name], want)
+				}
+			}
+			if test.laid {
+				if values["gomodcache"] != laid {
+					t.Errorf("GOMODCACHE is %q, want the node's laid cache %s", values["gomodcache"], laid)
+				}
+				if want := "sandboxed-job: go modules: the node's laid cache for " + commit[:12] + " (214 modules)"; !strings.Contains(said, want) {
+					t.Errorf("want %q said, got:\n%s", want, said)
+				}
+				return
+			}
+			if values["gomodcache"] != image {
+				t.Errorf("GOMODCACHE is %q, want the image's %s", values["gomodcache"], image)
+			}
+			if want := "sandboxed-job: go modules: the image's cache (" + test.why; !strings.Contains(said, want) {
+				t.Errorf("want %q said, got:\n%s", want, said)
+			}
+		})
+	}
+}
+
+// layOf is a lay file as loom-node's cache proxy writes one.
+func layOf(t *testing.T, repository, commit, gomodcache string, goSums []map[string]string) []byte {
+	t.Helper()
+	data, err := json.Marshal(map[string]any{"repository": repository, "commit": commit, "gomodcache": gomodcache, "goSums": goSums,
+		"modules": 214, "laidAt": 1763337600000})
+	if err != nil {
+		t.Fatal(err)
+	}
+	return data
 }
