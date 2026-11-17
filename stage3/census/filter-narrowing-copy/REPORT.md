@@ -147,3 +147,33 @@ pinned by core-multimap. No pins or adaptation directories were changed.
 After the readonly stop, full caller-file censuses, scan-all of the entire
 adapted import closures, JavaScript comparison and all remaining acceptance
 checks were not run. This is the required stop report, not a landed copy.
+
+## Measurement 1: all original filter overloads (2026-11-17)
+
+Report only on base `49f1d643064a9231f7f343d8bbd02ba718866e6a`, using the unchanged completed adapted baseline from the first investigation. Each single-overload control keeps **only that signature and the complete unchanged adapted implementation**. Other lines are blanked, so original coordinates survive. The implementation is at line 277. There are no calls in the isolated files. Original ordinals below are distinct from the diagnostic ordinal, which is 1 in each single-overload control.
+
+Each control runs both the requested full single-file latent census (`LATENT_FULL=1 LATENT_ASSERT_NO_OUTPUT=1 LATENT_ONLY_FILE=<exact control core.ts> CENSUS_MODULE_FORMAT=CommonJSBundle`) and the unchanged scan-all measurement probe. **The declareModule answer comes from scan-all**, since all ten latent runs defer generic declarations and therefore do not perform that declaration judgment. Every child exits 0; this is measurement completion, not compiler acceptance.
+
+| Original overload | Original line | Exact signature | Resolved calls (713 roots) | declareModule refuses | Exact reason words |
+| --- | ---: | --- | ---: | --- | --- |
+| 1 | 261 | `export function filter<T, U extends T>(array: T[], f: (x: T) => x is U): U[];` | 5 | yes | `overload 1 of filter result U[] cannot be served by implementation result readonly T[] | undefined` |
+| 2 | 263 | `export function filter<T>(array: T[], f: (x: T) => boolean): T[];` | 60 | yes | `overload 1 of filter result T[] cannot be served by implementation result readonly T[] | undefined` |
+| 3 | 265 | `export function filter<T, U extends T>(array: readonly T[], f: (x: T) => x is U): readonly U[];` | 14 | yes | `overload 1 of filter result readonly U[] cannot be served by implementation result readonly T[] | undefined` |
+| 4 | 267 | `export function filter<T>(array: readonly T[], f: (x: T) => boolean): readonly T[];` | 41 | no | `none observed; scan completed` |
+| 5 | 269 | `export function filter<T, U extends T>(array: T[] | undefined, f: (x: T) => x is U): U[] | undefined;` | 11 | yes | `overload 1 of filter result U[] | undefined cannot be served by implementation result readonly T[] | undefined` |
+| 6 | 271 | `export function filter<T>(array: T[] | undefined, f: (x: T) => boolean): T[] | undefined;` | 13 | yes | `overload 1 of filter result T[] | undefined cannot be served by implementation result readonly T[] | undefined` |
+| 7 | 273 | `export function filter<T, U extends T>(array: readonly T[] | undefined, f: (x: T) => x is U): readonly U[] | undefined;` | 9 | yes | `overload 1 of filter result readonly U[] | undefined cannot be served by implementation result readonly T[] | undefined` |
+| 8 | 275 | `export function filter<T>(array: readonly T[] | undefined, f: (x: T) => boolean): readonly T[] | undefined;` | 4 | no | `none observed; scan completed` |
+
+| Group control | Original overloads retained | declareModule result |
+| --- | --- | --- |
+| boolean | 2, 4, 6, 8 | `263:1`: `overload 1 of filter result T[] cannot be served by implementation result readonly T[] | undefined` |
+| readonly | 3, 4, 7, 8 | `265:1`: `overload 1 of filter result readonly U[] cannot be served by implementation result readonly T[] | undefined` |
+
+**Answer:** every mutable-result overload (1, 2, 5, 6) and both readonly narrowing overloads (3, 7) refuse in these controls. The refusal is not limited to narrowing callbacks: boolean overloads 2 and 6 also refuse. Only readonly boolean overloads 4 and 8 escape this declaration refusal in isolation. The group controls report their first declaration stop only; their later overloads are judged individually by the eight single-overload controls.
+
+The full latent census records **0 findings for each of the ten controls**, with all retained signatures and the implementation marked `deferred_generic_instantiation`, without instantiation witnesses. This is a coverage gap, not evidence that the six refused declarations lower. Scan-all's `Completed: true` for controls 4 and 8 is measurement traversal only, not backend acceptance.
+
+Reproduce with `python3 overload-measurement/run.py BASELINE_TREE SCRATCH SCAN_BINARY LATENT_BINARY` from this report's directory, using the unchanged main scan-all and latent overlays built earlier. [Raw controls and observations](overload-measurement/evidence/) include exact sources, stdout, stderr, exit codes, full latent streams, and combined results. The resolved counts are the existing completed 713-root census in `evidence/before-count.json.gz`.
+
+No landing adaptation, ledger line or internal source change. This measurement is pushed before measurement 2 begins.
