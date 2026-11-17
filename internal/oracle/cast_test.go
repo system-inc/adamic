@@ -111,7 +111,7 @@ func TestCheckedCastRunsNoCatchOrFinally(t *testing.T) {
 }
 
 func init() {
-	for _, file := range []string{"cast_enum_numeric.ts", "cast_enum_string.ts", "cast_enum_const.ts", "cast_class.a", "cast_operand_once.ts", "cast_absent_arm.ts"} {
+	for _, file := range []string{"cast_enum_numeric.ts", "cast_enum_string.ts", "cast_enum_const.ts", "cast_class.a", "cast_operand_once.ts", "cast_absent_arm.ts", "cast_union_interface.ts"} {
 		fixtures = append(fixtures, struct {
 			path    string
 			lowers  bool
@@ -259,5 +259,63 @@ func TestCheckedCastMutants(t *testing.T) {
 				}
 			}
 		})
+	}
+}
+
+// A represented union cast to an interface that only overlaps it is a checked view with no test at the cast (#b5w3ycg
+// 2d, Adamic's ruling under rulings.md:18): a value that isn't the interface stops at its first read through the view,
+// with the view's own message, on both backends alike, while Node runs on.
+func TestOverlapViewStopsAtTheRead(t *testing.T) {
+	t.Parallel()
+	program, path := castFixture(t, "cast_union_interface_lie.ts")
+	native, _ := natively(t, program)
+	javaScript := onJavaScriptBackend(t, program)
+	for backend, result := range map[string]run{"native": native, "JavaScript": javaScript} {
+		if result.exitCode != 70 || string(result.stdout) != "casting\n" || !strings.HasPrefix(string(result.stderr), "adamic: panic: field read failed:") || strings.Contains(string(result.stderr), "cast failed") {
+			t.Errorf("%s: exit %d, stdout %q, stderr %q; want 70 at the read, never at the cast", backend, result.exitCode, result.stdout, result.stderr)
+		}
+	}
+	if string(native.stderr) != string(javaScript.stderr) {
+		t.Errorf("the backends stop differently: native %q, JavaScript %q", native.stderr, javaScript.stderr)
+	}
+	if node := onNode(t, path); node.exitCode != 0 || string(node.stdout) != "casting\nundefined\n" {
+		t.Fatalf("source on Node must run on: exit %d stdout %q", node.exitCode, node.stdout)
+	}
+}
+
+// A write through the overlap view into a slot a member hides by width (Language's q02 and q04 on #ha4hbqt): the
+// per-member write judgment reads declared types and can't see the hidden field, so the view's own write check is
+// what stops it, before anything reads the slot as its declared type. Both backends stop alike at exit 70 while
+// Node runs on. Mutant: adamic_object_view_write returning at once reds the native side.
+func TestOverlapViewWriteIntoHiddenSlotStops(t *testing.T) {
+	t.Parallel()
+	for _, fixture := range []string{"cast_union_interface_hidden_write.ts", "cast_union_interface_hidden_object.ts"} {
+		t.Run(fixture, func(t *testing.T) {
+			t.Parallel()
+			program, path := castFixture(t, fixture)
+			native, _ := natively(t, program)
+			javaScript := onJavaScriptBackend(t, program)
+			for backend, result := range map[string]run{"native": native, "JavaScript": javaScript} {
+				if result.exitCode != 70 || string(result.stdout) != "writing\n" || !strings.HasPrefix(string(result.stderr), "adamic: panic: field read failed:") {
+					t.Errorf("%s: exit %d, stdout %q, stderr %q; want 70 at the write", backend, result.exitCode, result.stdout, result.stderr)
+				}
+			}
+			if string(native.stderr) != string(javaScript.stderr) {
+				t.Errorf("the backends stop differently: native %q, JavaScript %q", native.stderr, javaScript.stderr)
+			}
+			if node := onNode(t, path); node.exitCode != 0 {
+				t.Fatalf("source on Node must run on: exit %d stderr %q", node.exitCode, node.stderr)
+			}
+		})
+	}
+}
+
+func init() {
+	for _, file := range []string{"cast_union_interface_lie.ts", "cast_union_interface_hidden_write.ts", "cast_union_interface_hidden_object.ts"} {
+		fixtures = append(fixtures, struct {
+			path    string
+			lowers  bool
+			checked bool
+		}{"internal/oracle/testdata/" + file, true, true})
 	}
 }
