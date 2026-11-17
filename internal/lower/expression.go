@@ -293,6 +293,9 @@ func (l *lowering) expression(node *ast.Node) (ir.Expression, error) {
 		return nil, err
 	}
 	l.noteOverloadCall(node)
+	if err := l.overloadCertificateCall(node); err != nil {
+		return nil, err
+	}
 	value, err := l.value(node)
 	l.recordRegExpServedRead(node, value)
 	if err == nil {
@@ -1983,6 +1986,9 @@ func boxedSlot(valueType ir.Type) bool {
 func (l *lowering) call(node *ast.Node) (ir.Expression, error) {
 	l.inspectorRecordBuiltUse(node)
 	l.noteOverloadCall(node)
+	if err := l.overloadCertificateCall(node); err != nil {
+		return nil, err
+	}
 	call := node.AsCallExpression()
 	callee := ast.SkipParentheses(call.Expression)
 	if function, isNested := l.nestedGeneratorCallee(callee); isNested {
@@ -2096,6 +2102,9 @@ func (l *lowering) call(node *ast.Node) (ir.Expression, error) {
 // callFunction lowers a call's arguments, in order, and the call to function.
 func (l *lowering) callFunction(call *ast.CallExpression, function int) (ir.Expression, error) {
 	l.noteOverloadCall(call.AsNode())
+	if err := l.overloadCertificateCall(call.AsNode()); err != nil {
+		return nil, err
+	}
 	arguments, spread, err := l.callArguments(call.Arguments.Nodes)
 	if err != nil {
 		return nil, err
@@ -2290,6 +2299,9 @@ func (l *lowering) optionalCall(call *ast.Node) error {
 func (l *lowering) callClosure(node *ast.Node) (ir.Expression, error) {
 	l.inspectorRecordBuiltUse(node)
 	l.noteOverloadCall(node)
+	if err := l.overloadCertificateCall(node); err != nil {
+		return nil, err
+	}
 	signatures := l.checker.GetSignaturesOfType(l.checker.GetTypeAtLocation(node.AsCallExpression().Expression), checker.SignatureKindCall)
 	if len(signatures) == 1 && l.censusNeverRestSignature(signatures[0]) {
 		// never[] admits a zero-argument call in TypeScript. The erased slot does
