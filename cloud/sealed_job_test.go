@@ -186,3 +186,82 @@ sealed_products ./internal/oracle
 	}
 	t.Fatalf("sealed_products' go test named no -timeout 0, so go's own 10 minutes would end a slow settle: %q", arguments)
 }
+
+// sealed_git leaves a tree that is already a repository as it is and returns 0, so an `&&` chain goes on to its command:
+// the runner lays sealed trees with a .git since Nov 16, and the refusal it made then cost Emit's jobs a run each
+// (#6zvxhjq). A tree with no .git still becomes one commit holding the tree as laid.
+//
+// Mutant: the old refusal put back (`[ ! -e .git ] || sealedJobFail ... || return 1`), red on the repository case.
+func TestSealedGitLeavesARepositoryAsItIs(t *testing.T) {
+	t.Parallel()
+	script, err := filepath.Abs("sealed-job.sh")
+	if err != nil {
+		t.Fatal(err)
+	}
+	for _, repository := range []bool{true, false} {
+		t.Run(map[bool]string{true: "a tree laid with its .git", false: "a tree laid with none"}[repository], func(t *testing.T) {
+			t.Parallel()
+			directory := t.TempDir()
+			tree := filepath.Join(directory, "tree")
+			if err := os.MkdirAll(tree, 0o755); err != nil {
+				t.Fatal(err)
+			}
+			if err := os.WriteFile(filepath.Join(tree, "go.mod"), []byte("module example.invalid/tree\n"), 0o644); err != nil {
+				t.Fatal(err)
+			}
+			git := func(arguments ...string) string {
+				command := toolchain.Command("git", append([]string{"-C", tree, "-c", "user.name=test", "-c", "user.email=test@loom.invalid", "-c", "commit.gpgsign=false"}, arguments...)...)
+				if command.Err != nil {
+					t.Fatal(command.Err)
+				}
+				output, err := command.CombinedOutput()
+				if err != nil {
+					t.Fatalf("git %v: %v\n%s", arguments, err, output)
+				}
+				return strings.TrimSpace(string(output))
+			}
+			head := ""
+			if repository {
+				git("init", "-q")
+				git("add", "-A")
+				git("commit", "-q", "-m", "the runner's own commit")
+				head = git("rev-parse", "HEAD")
+			}
+			command := toolchain.Command("bash", "-c", `. "$SEALED_JOB_SCRIPT" || exit 1
+sealed_git && echo "sealed_git=ok"`)
+			if command.Err != nil {
+				t.Fatal(command.Err)
+			}
+			command.Dir = tree
+			environment := command.Env
+			if environment == nil {
+				environment = os.Environ()
+			}
+			kept := make([]string, 0, len(environment)+2)
+			for _, variable := range environment {
+				name, _, _ := strings.Cut(variable, "=")
+				if name != "TMPDIR" && name != "ADAMIC_BUILD_CACHE_DIR" && name != "LOOM_JOB_SCRATCH" {
+					kept = append(kept, variable)
+				}
+			}
+			command.Env = append(kept, "TMPDIR="+filepath.Join(directory, "tmp"), "SEALED_JOB_SCRIPT="+script)
+			output, err := command.CombinedOutput()
+			said := string(output)
+			if err != nil || !strings.Contains(said, "sealed_git=ok") {
+				t.Fatalf("want sealed_git to return 0, got %v:\n%s", err, said)
+			}
+			if repository {
+				if now := git("rev-parse", "HEAD"); now != head {
+					t.Errorf("the tree's HEAD moved from %s to %s: its history wasn't left alone", head, now)
+				}
+				if !strings.Contains(said, "already a repository") {
+					t.Errorf("want it said that the tree is already a repository, got:\n%s", said)
+				}
+				return
+			}
+			if count := git("rev-list", "--count", "HEAD"); count != "1" {
+				t.Errorf("want one commit holding the tree as laid, got %s", count)
+			}
+		})
+	}
+}

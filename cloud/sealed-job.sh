@@ -17,7 +17,7 @@
 #   - sealed_git gives the job a one-commit git of the tree as laid, for a mutant script that restores a file with
 #     `git show HEAD:<file>` or reads `git status`. It costs about 27 s over adamic's tree (Loom's J-a5zgp8d), so only a
 #     script that needs it calls it. HEAD has no history, no parent and no remote, so a job that reads `git log`, a
-#     submodule's own repository or a remote still wants a house box.
+#     submodule's own repository or a remote still wants a house box. A tree the runner laid with a .git keeps it.
 # Loom folds what's settled here into the image's environment.sh at its next build, so this file shrinks over time.
 
 sealedJobFail() {
@@ -61,10 +61,17 @@ sealed_typescript_source() {
 }
 
 # sealed_git: the tree as laid becomes one commit, HEAD, in a .git of the job's own, read back clean. Run from the tree's
-# root. It refuses a tree that already has a .git, so a house box's real history is never covered over.
+# root. A tree that is already a repository (the runner lays sealed trees with a .git since Nov 16) is left as it is,
+# its history never covered over, and sealed_git says so and returns 0, so an `&&` chain goes on to the command (Emit's
+# finding, #6zvxhjq). A .git with no HEAD to read still refuses.
 sealed_git() {
 	[ -f go.work ] || [ -f go.mod ] || sealedJobFail "sealed_git runs from the tree's root" || return 1
-	[ ! -e .git ] || sealedJobFail "this tree already has a .git; sealed_git is for a laid tree with none" || return 1
+	if [ -e .git ]; then
+		local head
+		head=$(git rev-parse --verify -q HEAD) || sealedJobFail "this tree has a .git with no HEAD to read" || return 1
+		echo "sealed-job: the tree is already a repository at ${head:0:12}; sealed_git leaves its history as it is"
+		return 0
+	fi
 	git init -q || sealedJobFail "git init failed" || return 1
 	git add -A || sealedJobFail "git add failed" || return 1
 	git -c user.name=sealed-job -c user.email=sealed-job@loom.invalid -c commit.gpgsign=false commit -q --no-verify \
