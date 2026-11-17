@@ -1,0 +1,177 @@
+src/compiler/checker.ts:5339
+-    function getAlternativeContainingModules(symbol: Symbol, enclosingDeclaration: Node): Symbol[] {
++    function getAlternativeContainingModules(symbol: Symbol, enclosingDeclaration: Node): readonly Symbol[] {
+src/compiler/checker.ts:5645
+-    function getNamedOrIndexSignatureMembers(members: SymbolTable, symbol: Symbol): Symbol[] {
++    function getNamedOrIndexSignatureMembers(members: SymbolTable, symbol: Symbol): readonly Symbol[] {
+src/compiler/checker.ts:13256
+-    function getImplementsTypes(type: InterfaceType): BaseType[] {
++    function getImplementsTypes(type: InterfaceType): readonly BaseType[] {
+src/compiler/checker.ts:13257
+-        let resolvedImplementsTypes: BaseType[] = emptyArray;
++        let resolvedImplementsTypes: readonly never[] | BaseType[] = emptyArray;
+src/compiler/checker.ts:13724
+-    function createInstantiatedSymbolTable(symbols: Symbol[], mapper: TypeMapper, mappingThisOnly: boolean): SymbolTable {
++    function createInstantiatedSymbolTable(symbols: readonly Symbol[], mapper: TypeMapper, mappingThisOnly: boolean): SymbolTable {
+src/compiler/checker.ts:13732
+-    function addInheritedMembers(symbols: SymbolTable, baseSymbols: Symbol[]) {
++    function addInheritedMembers(symbols: SymbolTable, baseSymbols: readonly Symbol[]) {
+src/compiler/checker.ts:14316
+-    function getUnionSignatures(signatureLists: readonly (readonly Signature[])[]): Signature[] {
++    function getUnionSignatures(signatureLists: readonly (readonly Signature[])[]): readonly Signature[] {
+src/compiler/checker.ts:14487
+-    function getUnionIndexInfos(types: readonly Type[]): IndexInfo[] {
++    function getUnionIndexInfos(types: readonly Type[]): readonly IndexInfo[] {
+src/compiler/checker.ts:14620
+-        let indexInfos: IndexInfo[] | undefined;
++        let indexInfos: readonly IndexInfo[] | undefined;
+src/compiler/checker.ts:15132
+-    function getAllPossiblePropertiesOfTypes(types: readonly Type[]): Symbol[] {
++    function getAllPossiblePropertiesOfTypes(types: readonly Type[]): readonly Symbol[] {
+src/compiler/checker.ts:24127
+-            function relateVariances(sourceTypeArguments: readonly Type[] | undefined, targetTypeArguments: readonly Type[] | undefined, variances: VarianceFlags[], intersectionState: IntersectionState) {
++            function relateVariances(sourceTypeArguments: readonly Type[] | undefined, targetTypeArguments: readonly Type[] | undefined, variances: readonly VarianceFlags[], intersectionState: IntersectionState) {
+src/compiler/checker.ts:24286
+-        function excludeProperties(properties: Symbol[], excludedProperties: Set<__String> | undefined) {
++        function excludeProperties(properties: readonly Symbol[], excludedProperties: Set<__String> | undefined) {
+src/compiler/checker.ts:25009
+-    function getVariances(type: GenericType): VarianceFlags[] {
++    function getVariances(type: GenericType): readonly VarianceFlags[] {
+src/compiler/checker.ts:25025
+-    function getVariancesWorker(symbol: Symbol, typeParameters: readonly TypeParameter[] = emptyArray): VarianceFlags[] {
++    function getVariancesWorker(symbol: Symbol, typeParameters: readonly TypeParameter[] = emptyArray): readonly VarianceFlags[] {
+src/compiler/checker.ts:25106
+-    function hasCovariantVoidArgument(typeArguments: readonly Type[], variances: VarianceFlags[]): boolean {
++    function hasCovariantVoidArgument(typeArguments: readonly Type[], variances: readonly VarianceFlags[]): boolean {
+src/compiler/checker.ts:27985
+-    function findDiscriminantProperties(sourceProperties: Symbol[], target: Type): Symbol[] | undefined {
++    function findDiscriminantProperties(sourceProperties: readonly Symbol[], target: Type): Symbol[] | undefined {
+src/compiler/checker.ts:35353
+-    function getSpellingSuggestionForName(name: string, symbols: Symbol[], meaning: SymbolFlags): Symbol | undefined {
++    function getSpellingSuggestionForName(name: string, symbols: readonly Symbol[], meaning: SymbolFlags): Symbol | undefined {
+src/compiler/checker.ts:47699
+-    function getNonInheritedProperties(type: InterfaceType, baseTypes: BaseType[], properties: Symbol[]) {
++    function getNonInheritedProperties(type: InterfaceType, baseTypes: readonly BaseType[], properties: readonly Symbol[]) {
+src/compiler/checker.ts:50924
+-    function getPropertiesOfContainerFunction(node: Declaration): Symbol[] {
++    function getPropertiesOfContainerFunction(node: Declaration): readonly Symbol[] {
+src/compiler/core.ts:17
+-export const emptyArray: never[] = [] as never[];
++export const emptyArray: readonly never[] = [] as never[];
+src/compiler/core.ts:931
+-export function append<T extends {}>(to: T[], value: T | undefined): T[];
++export function append<T extends {}>(to: readonly T[], value: T | undefined): T[];
+src/compiler/types.ts:5374
+-    /** @internal */ createAnonymousType(symbol: Symbol | undefined, members: SymbolTable, callSignatures: Signature[], constructSignatures: Signature[], indexInfos: IndexInfo[]): Type;
++    /** @internal */ createAnonymousType(symbol: Symbol | undefined, members: SymbolTable, callSignatures: Signature[], constructSignatures: readonly Signature[], indexInfos: readonly IndexInfo[]): Type;
+src/compiler/types.ts:5438
+-    getAllPossiblePropertiesOfTypes(type: readonly Type[]): Symbol[];
++    getAllPossiblePropertiesOfTypes(type: readonly Type[]): readonly Symbol[];
+src/compiler/types.ts:5925
+-    getPropertiesOfContainerFunction(node: Declaration): Symbol[];
++    getPropertiesOfContainerFunction(node: Declaration): readonly Symbol[];
+src/compiler/types.ts:6097
+-    extendedContainers?: Symbol[];              // Containers (other than the parent) which this symbol is aliased in
++    extendedContainers?: readonly Symbol[];              // Containers (other than the parent) which this symbol is aliased in
+src/compiler/types.ts:6099
+-    variances?: VarianceFlags[];                // Alias symbol type argument variance cache
++    variances?: readonly VarianceFlags[];                // Alias symbol type argument variance cache
+src/compiler/types.ts:6620
+-    /** @internal */ properties?: Symbol[] | undefined;             // Properties
++    /** @internal */ properties?: readonly Symbol[] | undefined;             // Properties
+src/compiler/types.ts:6637
+-    resolvedBaseTypes: BaseType[];                    // Resolved base types
++    resolvedBaseTypes: readonly never[] | BaseType[];                    // Resolved base types
+src/compiler/utilities.ts:614
+-export const resolvingEmptyArray: never[] = [];
++export const resolvingEmptyArray: readonly never[] = [];
+src/compiler/utilities.ts:1379
+-export type ScriptTargetFeatures = ReadonlyMap<string, ReadonlyMap<string, string[]>>;
++export type ScriptTargetFeatures = ReadonlyMap<string, ReadonlyMap<string, readonly string[]>>;
+src/services/codefixes/addOptionalPropertyUndefined.ts:57
+-function getPropertiesToAdd(file: SourceFile, span: TextSpan, checker: TypeChecker): Symbol[] {
++function getPropertiesToAdd(file: SourceFile, span: TextSpan, checker: TypeChecker): readonly Symbol[] {
+src/services/codefixes/addOptionalPropertyUndefined.ts:118
+-function addUndefinedToOptionalProperty(changes: textChanges.ChangeTracker, toAdd: Symbol[]) {
++function addUndefinedToOptionalProperty(changes: textChanges.ChangeTracker, toAdd: readonly Symbol[]) {
+src/services/completions.ts:3588
+-    let symbols: Symbol[] = [];
++    let symbols: readonly never[] | Symbol[] = [];
+src/services/completions.ts:4272
+-    function collectObjectLiteralMethodSymbols(members: Symbol[], enclosingDeclaration: ObjectLiteralExpression): void {
++    function collectObjectLiteralMethodSymbols(members: readonly Symbol[], enclosingDeclaration: ObjectLiteralExpression): void {
+src/services/completions.ts:4555
+-        let typeMembers: Symbol[] | undefined;
++        let typeMembers: readonly Symbol[] | undefined;
+src/services/completions.ts:5126
+-    function filterObjectMembersList(contextualMemberSymbols: Symbol[], existingMembers: readonly Declaration[]): Symbol[] {
++    function filterObjectMembersList(contextualMemberSymbols: readonly Symbol[], existingMembers: readonly Declaration[]): readonly Symbol[] {
+src/services/completions.ts:5290
+-    function filterJsxAttributes(symbols: Symbol[], attributes: NodeArray<JsxAttribute | JsxSpreadAttribute>): Symbol[] {
++    function filterJsxAttributes(symbols: readonly Symbol[], attributes: NodeArray<JsxAttribute | JsxSpreadAttribute>): Symbol[] {
+src/services/completions.ts:5621
+-export function getPropertiesForObjectExpression(contextualType: Type, completionsType: Type | undefined, obj: ObjectLiteralExpression | JsxAttributes, checker: TypeChecker): Symbol[] {
++export function getPropertiesForObjectExpression(contextualType: Type, completionsType: Type | undefined, obj: ObjectLiteralExpression | JsxAttributes, checker: TypeChecker): readonly Symbol[] {
+src/services/completions.ts:5660
+-function containsNonPublicProperties(props: Symbol[]) {
++function containsNonPublicProperties(props: readonly Symbol[]) {
+src/services/completions.ts:5668
+-function getPropertiesForCompletion(type: Type, checker: TypeChecker): Symbol[] {
++function getPropertiesForCompletion(type: Type, checker: TypeChecker): readonly Symbol[] {
+src/services/findAllReferences.ts:1120
+-    function mergeReferences(program: Program, ...referencesToMerge: (SymbolAndEntries[] | undefined)[]): SymbolAndEntries[] | undefined {
++    function mergeReferences(program: Program, ...referencesToMerge: (readonly SymbolAndEntries[] | undefined)[]): readonly SymbolAndEntries[] | undefined {
+src/services/findAllReferences.ts:1121
+-        let result: SymbolAndEntries[] | undefined;
++        let result: readonly never[] | SymbolAndEntries[] | undefined;
+src/services/findAllReferences.ts:1172
+-    function getReferencedSymbolsForModule(program: Program, symbol: Symbol, excludeImportTypeOfExportEquals: boolean, sourceFiles: readonly SourceFile[], sourceFilesSet: ReadonlySet<string>): SymbolAndEntries[] {
++    function getReferencedSymbolsForModule(program: Program, symbol: Symbol, excludeImportTypeOfExportEquals: boolean, sourceFiles: readonly SourceFile[], sourceFilesSet: ReadonlySet<string>): readonly SymbolAndEntries[] {
+src/services/services.ts:642
+-    public getChildren(): Node[] {
++    public getChildren(): readonly Node[] {
+src/services/services.ts:680
+-    contextualGetAccessorDocumentationComment?: SymbolDisplayPart[];
++    contextualGetAccessorDocumentationComment?: readonly SymbolDisplayPart[];
+src/services/services.ts:681
+-    contextualSetAccessorDocumentationComment?: SymbolDisplayPart[];
++    contextualSetAccessorDocumentationComment?: readonly SymbolDisplayPart[];
+src/services/services.ts:683
+-    contextualGetAccessorTags?: JSDocTagInfo[];
++    contextualGetAccessorTags?: readonly JSDocTagInfo[];
+src/services/services.ts:684
+-    contextualSetAccessorTags?: JSDocTagInfo[];
++    contextualSetAccessorTags?: readonly JSDocTagInfo[];
+src/services/services.ts:739
+-    getContextualDocumentationComment(context: Node | undefined, checker: TypeChecker | undefined): SymbolDisplayPart[] {
++    getContextualDocumentationComment(context: Node | undefined, checker: TypeChecker | undefined): readonly SymbolDisplayPart[] {
+src/services/services.ts:774
+-    getContextualJsDocTags(context: Node | undefined, checker: TypeChecker | undefined): JSDocTagInfo[] {
++    getContextualJsDocTags(context: Node | undefined, checker: TypeChecker | undefined): readonly JSDocTagInfo[] {
+src/services/symbolDisplay.ts:255
+-    documentation: SymbolDisplayPart[];
++    documentation: readonly SymbolDisplayPart[];
+src/services/symbolDisplay.ts:257
+-    tags: JSDocTagInfo[] | undefined;
++    tags: readonly JSDocTagInfo[] | undefined;
+src/services/symbolDisplay.ts:274
+-    let documentation: SymbolDisplayPart[] = [];
++    let documentation: readonly SymbolDisplayPart[] = [];
+src/services/symbolDisplay.ts:275
+-    let tags: JSDocTagInfo[] = [];
++    let tags: readonly JSDocTagInfo[] = [];
+src/services/symbolDisplay.ts:280
+-    let documentationFromAlias: SymbolDisplayPart[] | undefined;
++    let documentationFromAlias: readonly SymbolDisplayPart[] | undefined;
+src/services/symbolDisplay.ts:281
+-    let tagsFromAlias: JSDocTagInfo[] | undefined;
++    let tagsFromAlias: readonly JSDocTagInfo[] | undefined;
+src/services/types.ts:101
+-        getContextualDocumentationComment(context: Node | undefined, checker: TypeChecker | undefined): SymbolDisplayPart[];
++        getContextualDocumentationComment(context: Node | undefined, checker: TypeChecker | undefined): readonly SymbolDisplayPart[];
+src/services/types.ts:104
+-        getContextualJsDocTags(context: Node | undefined, checker: TypeChecker | undefined): JSDocTagInfo[];
++        getContextualJsDocTags(context: Node | undefined, checker: TypeChecker | undefined): readonly JSDocTagInfo[];
+src/services/types.ts:1908
+-    getCodeActions(context: CodeFixContext): CodeFixAction[] | undefined;
++    getCodeActions(context: CodeFixContext): readonly CodeFixAction[] | undefined;
