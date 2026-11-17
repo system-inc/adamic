@@ -528,6 +528,10 @@ func (l *lowering) sameKeepingWalkMode(from, to *checker.Type, visited map[[2]*c
 		toKept, _ := l.kept(viewed)
 		return (fromKept == ir.Weak) == (toKept == ir.Weak) && l.sameKeepingWalkMode(inside, viewed, visited, false, nesting, true, false)
 	}
+	// Checked before the switch, so the property loop below still runs for these pairs.
+	if !l.sameLibraryTargetArguments(from, to, same) {
+		return false
+	}
 	fromSignatures := l.checker.GetSignaturesOfType(from, checker.SignatureKindCall)
 	toSignatures := l.checker.GetSignaturesOfType(to, checker.SignatureKindCall)
 	switch {
@@ -658,6 +662,9 @@ func (l *lowering) sameKeepingStorage(from, to *checker.Type, visited map[[2]*ch
 			}
 		}
 	}
+	if !l.sameLibraryTargetArguments(from, to, same) {
+		return false
+	}
 	for _, inside := range l.checker.GetIndexInfosOfType(from) {
 		for _, viewed := range l.checker.GetIndexInfosOfType(to) {
 			if !same(inside.ValueType(), viewed.ValueType()) {
@@ -675,6 +682,41 @@ func (l *lowering) sameKeepingStorage(from, to *checker.Type, visited map[[2]*ch
 			continue
 		}
 		if inside != nil && !same(l.checker.GetTypeOfSymbol(inside), l.checker.GetTypeOfSymbol(viewed)) {
+			return false
+		}
+	}
+	return true
+}
+
+// sameLibraryTargetArguments compares the type arguments of two references to one library-declared
+// target. A library method holds no slot, but its declaring type's arguments describe what the value
+// holds, and the method skips never compare them: Promise<Strong> seen as Promise<Weakly> lowered and
+// read a strong payload as weak, with or without a union around it (#3h04df3, Language's b00 to b07).
+// The same-target guard keeps non-twin pairs out, since storage mode pairs every member with every
+// member. A target with any program declaration is left alone: that leans on a program augmenting a
+// library interface being refused as a global augmentation today (t8 on #3h04df3), so read this again
+// if that refusal lifts. Promise seen as PromiseLike is two targets and isn't judged here: t1 and t7 keep the
+// member-typed-any stop on then, pinned by TestUnionKeepingPromiseLikeMemberAnyStop. Arrays, tuples,
+// Map and Set are left to the walks' own reference comparisons. same is the calling walk's comparison.
+func (l *lowering) sameLibraryTargetArguments(from, to *checker.Type, same func(inside, viewed *checker.Type) bool) bool {
+	if from.ObjectFlags()&checker.ObjectFlagsReference == 0 || to.ObjectFlags()&checker.ObjectFlagsReference == 0 || from.Target() == nil || from.Target() != to.Target() {
+		return true
+	}
+	if l.isArrayType(from) || checker.IsTupleType(from) || l.isLibraryType(from, "Map", "ReadonlyMap", "Set", "ReadonlySet") {
+		return true
+	}
+	symbol := from.Target().Symbol()
+	if symbol == nil || len(symbol.Declarations) == 0 {
+		return true
+	}
+	for _, declaration := range symbol.Declarations {
+		if !load.IsLibrary(ast.GetSourceFileOfNode(declaration)) {
+			return true
+		}
+	}
+	fromArguments, toArguments := l.typeArguments(from), l.typeArguments(to)
+	for index := 0; index < len(fromArguments) && index < len(toArguments); index++ {
+		if !same(fromArguments[index], toArguments[index]) {
 			return false
 		}
 	}

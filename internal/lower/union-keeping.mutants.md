@@ -202,3 +202,30 @@ Expected: `TestUnionKeepingMethodViewPropertySourceStop/.a` and `/.ts` fail with
 lowers again, which natively retained a handle as a target in the read adapter on main
 1c1d6568. The reverse subtests keep passing, since their refusal comes from the method
 bivariance rule, not from this walk.
+
+## Same-target library type arguments (#3h04df3)
+
+Make `sameLibraryTargetArguments` return true at its top, so neither walk compares a
+same-target library pair's type arguments, leaving the array, tuple, Map and Set
+comparisons unchanged. TestUnionKeepingPromiseTypeArgumentsStop (storage mode) and
+TestKeepingPromiseTypeArgumentsOrdinaryStop's b01 and b04 (the ordinary walk) must go red.
+The first run below, on 01bf6caf, was the storage-only check:
+
+```
+go test -count=1 -v -timeout 10m ./internal/lower/ -run '^TestUnionKeepingPromiseTypeArgumentsStop$'
+```
+
+The mutant was planted once with a Go overlay and then excluded from subsequent
+runs; the working source kept the new check. The command exits 1. Both
+`TestUnionKeepingPromiseTypeArgumentsStop/.a` and `.ts` go red:
+
+```
+t2: got <nil>, want NotYet at main.a:10:44
+t2: got <nil>, want NotYet at main.ts:10:44
+```
+
+Without the check, t2 lowers and differs from Node: the checked runner and
+leak-checking mode both exit 1 in `adamic_retain`, while Node prints `label` and
+exits 0. The same-keeping Promise control remains admitted, and the t1/t7 pins
+keep the different-target PromiseLike member-typed-any stop.
+Output: `/workspace/scratch/promise-type-arguments-1/mutant.log`.
