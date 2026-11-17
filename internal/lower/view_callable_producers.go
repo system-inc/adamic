@@ -34,7 +34,9 @@ func reachingCallableProducers(graph *allocationFlowGraph, expression ir.Express
 	var follow func(ir.Expression, int)
 	var demand func(int)
 	demand = func(node int) {
-		if seenNodes[node] {
+		// Every record's values are one node (recordValuesNode), so a closure any record holds isn't a
+		// producer of this read's: a record entry's read stays the unknown frontier it was before the node.
+		if seenNodes[node] || node == graph.recordValuesNode() {
 			return
 		}
 		seenNodes[node] = true
