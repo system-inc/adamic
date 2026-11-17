@@ -14,18 +14,29 @@ import sys
 position = re.compile(r'(\.ts)?:\d+:\d+')
 
 
+def findings(value, out):
+    """Every finding nested anywhere in a census row: a dict carrying a phase or a reason."""
+    if isinstance(value, dict):
+        if 'phase' in value or 'reason' in value:
+            out.append(value)
+        for child in value.values():
+            findings(child, out)
+    elif isinstance(value, list):
+        for child in value:
+            findings(child, out)
+
+
 def load(path):
-    records, trailer = [], None
+    rows, records = [], []
     with open(path) as stream:
         for line in stream:
             line = line.strip()
-            if not line:
-                continue
-            try:
-                record = json.loads(line)
-            except json.JSONDecodeError:
-                continue
-            records.append(record)
+            if line:
+                rows.append(json.loads(line))
+    if not rows or rows[-1].get('status') != 'relation_report':
+        print(f'note {path}: no relation_report trailer, so this census did not finish')
+    for row in rows[1:-1]:
+        findings(row, records)
     return records
 
 
@@ -67,5 +78,5 @@ for record in after:
     if shown[k] < added[k]:
         shown[k] += 1
         print(f'added {file} {where(record)} {" | ".join(k)[:300]}')
-if before and not any(isinstance(record, dict) and record.get('kind') in ('Trailer', 'Relations', 'Done') for record in before):
-    print(f'note {file}: keys of the last before record {sorted(before[-1].keys())}')
+if before:
+    print(f'sample {file}: {json.dumps(before[0])[:400]}')

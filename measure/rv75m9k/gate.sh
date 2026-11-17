@@ -42,7 +42,8 @@ const config = ts.getParsedCommandLineOfConfigFile(path.join(tree, "src/compiler
 const options = { ...config.options, noEmit: false, declaration: true, emitDeclarationOnly: true, stripInternal: true, outDir: undefined, declarationDir: undefined, composite: false, incremental: false, typeRoots: [path.join(process.env.NODE_PATH, "@types")] };
 const program = ts.createProgram(config.fileNames, options);
 const declarations = new Map();
-program.emit(undefined, (name, text) => declarations.set(path.relative(tree, name), text));
+// A declaration map records source columns, which a retyped member moves; the declarations themselves are the API.
+program.emit(undefined, (name, text) => { if (!name.endsWith(".map")) declarations.set(path.relative(tree, name), text); });
 for (const [name, text] of [...declarations].sort()) lines.push("d.ts " + crypto.createHash("sha256").update(text).digest("hex") + " " + name);
 lines.push("stock diagnostics " + ts.getPreEmitDiagnostics(program).length);
 fs.writeFileSync(out, lines.join("\n") + "\n");
