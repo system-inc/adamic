@@ -23,9 +23,9 @@
 #   - GOMODCACHE is the node's laid cache when loom-node's cache proxy laid this very commit whole, and the image's
 #     otherwise (#nodecache). The proxy's word is a lay file it writes only once every module the commit names is in
 #     its cache. The node's cache is taken only when that file names this repository and commit, names the cache at
-#     its one path, and lists the tree's go.sum files exactly as laid here, each with the same sha256. Anything else,
-#     a failed read included, keeps the image's cache, and one line on stderr says which and why. GOPROXY, GOSUMDB and
-#     GOFLAGS stay the image's either way.
+#     its one path, and lists the tree's go.sum and go.work.sum files exactly as laid here, each with the same sha256.
+#     Anything else, a failed read included, keeps the image's cache, and one line on stderr says which and why.
+#     GOPROXY, GOSUMDB and GOFLAGS stay the image's either way.
 # Loom folds what's settled here into the image's environment.sh at its next build, so this file shrinks over time.
 
 sandboxedJobFail() {
@@ -55,8 +55,9 @@ export GIT_COMMITTER_NAME="${GIT_COMMITTER_NAME:-sandboxed-job}" GIT_COMMITTER_E
 # The node's laid Go module cache, or the image's. The lay file is the proxy's contract with Loom (#nodecache): one JSON
 # object, written atomically and only once the commit's modules are all laid, naming the repository, the commit, the
 # cache (one exact path, never a path the file chooses, so a lay can't point a job at another directory) and every
-# go.sum in the commit's tree, submodules included, by path from the root with the sha256 of its bytes. The tree's own
-# go.sum files are found by walking it from the root, skipping every .git, a submodule's included. A miss, a mismatch or
+# go.sum and go.work.sum in the commit's tree, submodules included, by path from the root with the sha256 of its bytes
+# (both names, the proxy's owner on #nodecache: go checks a workspace's modules against its go.work.sum too). The tree's
+# own are found by walking it from the root, skipping every .git, a submodule's included. A miss, a mismatch or
 # a failed read keeps the image's GOMODCACHE: none of it ever fails the preamble. SANDBOXED_JOB_LAYS and
 # SANDBOXED_JOB_LAID_GOMODCACHE are the test's stand-ins.
 sandboxedJobLays="${SANDBOXED_JOB_LAYS:-/var/cache/loom-node-cache/go/lays}"
@@ -97,14 +98,15 @@ try:
     found = set()
     for directory, directories, files in os.walk('.'):
         directories[:] = [name for name in directories if name != '.git']
-        if 'go.sum' in files:
-            found.add(os.path.relpath(os.path.join(directory, 'go.sum'), '.'))
+        for name in files:
+            if name in ('go.sum', 'go.work.sum'):
+                found.add(os.path.relpath(os.path.join(directory, name), '.'))
     for path in sorted(found ^ set(named)):
-        image('go.sum %s is in the %s alone' % (path, 'tree' if path in found else 'lay'))
+        image('%s is in the %s alone' % (path, 'tree' if path in found else 'lay'))
     for path in sorted(named):
         with open(path, 'rb') as file:
             if hashlib.sha256(file.read()).hexdigest() != named[path]:
-                image('go.sum %s differs' % path)
+                image('%s differs' % path)
     print('laid %s' % lay.get('modules'))
 except Exception as error:
     image("the lay couldn't be checked: %s" % error)

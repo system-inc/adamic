@@ -271,15 +271,16 @@ sandboxed_git && echo "sandboxed_git=ok"`)
 
 // sandboxed-job.sh takes the node's laid Go module cache only when loom-node's cache proxy laid this very commit whole
 // (#nodecache): a lay file for the runner's repository and commit, naming the laid cache at its one path, whose goSums
-// are the tree's go.sum files exactly, each with its sha256. Every other case keeps the image's GOMODCACHE and says why,
+// are the tree's go.sum and go.work.sum files exactly, each with its sha256. Every other case keeps the image's GOMODCACHE and says why,
 // a lay that doesn't parse included, and the preamble still returns 0. GOPROXY, GOSUMDB and GOFLAGS are the image's in
-// every case. The test sources the script in a temporary tree with two go.sum files (one in a submodule, and decoys
-// under the .git directories the walk skips) beside a temporary lays directory and laid cache.
+// every case. The test sources the script in a temporary tree with two go.sum files (one in a submodule) and a root
+// go.work.sum, and decoys under the .git directories the walk skips, beside a temporary lays directory and laid cache.
 //
 // Mutants: the no-lay branch taking the laid cache (`image('no lay for this commit')` made `sys.exit(print('laid 214'))`,
 // red on no lay); the sha256 check taken out (its `if hashlib.sha256(...) != named[path]:` made `if False:`, red on a
 // go.sum that differs); the set check taken out (`found ^ set(named)` made `set()`, red on a go.sum the lay doesn't
-// name).
+// name); the walk finding go.sum alone (`name in ('go.sum', 'go.work.sum')` made `name == 'go.sum'`, red on the whole
+// lay, whose go.work.sum the tree then seems to lack).
 func TestSandboxedJobTakesTheNodesLaidModulesOnlyWhole(t *testing.T) {
 	t.Parallel()
 	script, err := filepath.Abs("sandboxed-job.sh")
@@ -288,7 +289,8 @@ func TestSandboxedJobTakesTheNodesLaidModulesOnlyWhole(t *testing.T) {
 	}
 	const commit = "0123456789abcdef0123456789abcdef01234567"
 	const goFlags = "-buildvcs=false -trimpath -mod=readonly"
-	sums := map[string]string{"go.sum": "example.invalid/a v1.0.0 h1:a=\n", "cohere/go.sum": "example.invalid/b v1.0.0 h1:b=\n"}
+	sums := map[string]string{"go.sum": "example.invalid/a v1.0.0 h1:a=\n", "cohere/go.sum": "example.invalid/b v1.0.0 h1:b=\n",
+		"go.work.sum": "example.invalid/w v1.0.0 h1:w=\n"}
 	for _, test := range []struct {
 		name string
 		// lay returns the lay file's bytes, or nil for no file; tree changes the tree after its go.sum files are written.
@@ -312,7 +314,12 @@ func TestSandboxedJobTakesTheNodesLaidModulesOnlyWhole(t *testing.T) {
 			if err := os.WriteFile(filepath.Join(tree, "cohere", "go.sum"), []byte("example.invalid/b v1.0.1 h1:c=\n"), 0o644); err != nil {
 				t.Fatal(err)
 			}
-		}, false, "go.sum cohere/go.sum differs"},
+		}, false, "cohere/go.sum differs"},
+		{"a go.work.sum that differs", nil, func(t *testing.T, tree string) {
+			if err := os.WriteFile(filepath.Join(tree, "go.work.sum"), []byte("example.invalid/w v1.0.1 h1:x=\n"), 0o644); err != nil {
+				t.Fatal(err)
+			}
+		}, false, "go.work.sum differs"},
 		{"a go.sum the lay doesn't name", nil, func(t *testing.T, tree string) {
 			if err := os.MkdirAll(filepath.Join(tree, "tools"), 0o755); err != nil {
 				t.Fatal(err)
@@ -320,12 +327,17 @@ func TestSandboxedJobTakesTheNodesLaidModulesOnlyWhole(t *testing.T) {
 			if err := os.WriteFile(filepath.Join(tree, "tools", "go.sum"), []byte("example.invalid/c v1.0.0 h1:c=\n"), 0o644); err != nil {
 				t.Fatal(err)
 			}
-		}, false, "go.sum tools/go.sum is in the tree alone"},
+		}, false, "tools/go.sum is in the tree alone"},
+		{"a go.work.sum the lay doesn't name", nil, func(t *testing.T, tree string) {
+			if err := os.WriteFile(filepath.Join(tree, "cohere", "go.work.sum"), []byte("example.invalid/v v1.0.0 h1:v=\n"), 0o644); err != nil {
+				t.Fatal(err)
+			}
+		}, false, "cohere/go.work.sum is in the tree alone"},
 		{"a go.sum the tree lacks", nil, func(t *testing.T, tree string) {
 			if err := os.Remove(filepath.Join(tree, "cohere", "go.sum")); err != nil {
 				t.Fatal(err)
 			}
-		}, false, "go.sum cohere/go.sum is in the lay alone"},
+		}, false, "cohere/go.sum is in the lay alone"},
 		{"a lay that doesn't parse", func(*testing.T, string, []map[string]string) []byte { return []byte(`{"repository":"adamic",`) }, nil, false, "the lay doesn't parse"},
 	} {
 		t.Run(test.name, func(t *testing.T) {
@@ -339,7 +351,7 @@ func TestSandboxedJobTakesTheNodesLaidModulesOnlyWhole(t *testing.T) {
 				}
 			}
 			goSums := []map[string]string{}
-			for _, path := range []string{"cohere/go.sum", "go.sum"} {
+			for _, path := range []string{"cohere/go.sum", "go.sum", "go.work.sum"} {
 				if err := os.WriteFile(filepath.Join(tree, path), []byte(sums[path]), 0o644); err != nil {
 					t.Fatal(err)
 				}
