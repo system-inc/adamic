@@ -54,7 +54,7 @@ for (let i = 0; i + 2 < lines.length + 1; i++) {
         : /export type ScriptTargetFeatures/.test(old) ? 'alias, adaptation 77'
         : /readonly never\[\] \|/.test(now) ? 'written slot'
         : (head[1] === 'src/compiler/core.ts' && /export function append</.test(old)) ? 'append overload, its implementation writes'
-        : head[1].startsWith('src/services/') ? 'services, outside the compiled closure the sites live in'
+        : head[1].startsWith('src/services/') && !process.env.VERIFY_KEEP_SERVICES ? 'services, outside the compiled closure the sites live in'
         : excluded.has(`${head[1]}:${head[2]}`) ? 'excluded by hand: its readonly reaches a write'
         : '';
     (why ? left : kept).push({...edit, why});
@@ -68,7 +68,16 @@ for (const [file, edits] of byFile) {
     const absolute = path.join(path.dirname(outSource), file);
     const text = fs.readFileSync(absolute, 'utf8').split('\n');
     for (const edit of edits) {
-        const at = edit.line - 1;
+        let at = edit.line - 1;
+        if (edit.line === 0) {
+            // Line 0: the one line whose trimmed text is the edit's old text, kept at its own indentation.
+            const found = text.map((line, index) => [line.replace(/\r$/, '').trim(), index]).filter(([line]) => line === edit.old.trim());
+            if (found.length !== 1) { console.log(`MISS ${file}: ${found.length} lines read ${edit.old.trim()}`); misses++; continue; }
+            at = found[0][1];
+            const indent = text[at].match(/^\s*/)[0];
+            text[at] = indent + edit.now.trim() + (text[at].endsWith('\r') ? '\r' : '');
+            continue;
+        }
         if (text[at] === undefined || text[at].replace(/\r$/, '') !== edit.old) { console.log(`MISS ${file}:${edit.line}: the line isn't the edit's old text`); misses++; continue; }
         text[at] = edit.now + (text[at].endsWith('\r') ? '\r' : '');
     }
