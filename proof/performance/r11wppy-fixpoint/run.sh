@@ -1,7 +1,9 @@
 #!/usr/bin/env bash
 # #r11wppy item 1: the readonly fixpoint table for tsc's shared emptyArray and resolvingEmptyArray, read in tsc's
 # adapted tree at this commit's parent. Run from the tree's root after environment.sh, sealed-job.sh,
-# sealed_typescript_source and sealed_npm stage3/api. Never merged.
+# sealed_typescript_source and sealed_npm stage3/api. The second pass adds shorthand properties, class members that
+# miss their base, alias bodies, written slots as unions, Dropped slots, sentinels by slot and unmatched sites
+# explained. Never merged.
 set -u
 : "${TMPDIR:?TMPDIR must name a writable directory}"
 stamp() { echo "==== $(date -u +%Y-%m-%dT%H:%M:%SZ) $*"; }
@@ -35,7 +37,7 @@ stamp "verdict"
 case $status in
 	0) echo "VERDICT OK" ;;
 	4) echo "VERDICT FAIL no fixpoint within 80 rounds" ;;
-	5) echo "VERDICT FAIL the script hit errors while classifying diagnostics (listed under Script errors)" ;;
+	5) echo "VERDICT FAIL the script hit errors while classifying or editing (listed under Script errors)" ;;
 	*) echo "VERDICT FAIL fixpoint.mjs exited $status" ;;
 esac
 [ "$status" -eq 0 ] || exit 1

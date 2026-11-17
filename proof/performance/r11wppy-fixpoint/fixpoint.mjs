@@ -1,10 +1,13 @@
 // #r11wppy item 1: the readonly fixpoint for tsc's shared emptyArray and resolvingEmptyArray. Both are typed
 // `readonly never[]`, then every slot that receives one is made readonly too, round after round, until a round
-// makes no edit. A slot tsc really writes through is put back and marked written. Never merged: a proof only.
+// makes no edit. A slot tsc really writes through becomes `readonly never[] | <original>` so the rounds converge
+// (an alias slot is put back instead), CompilerOptions.lib and .types are never edited, and a type alias under src
+// is edited as its own slot. Never merged: a proof only.
 //
 // Usage: node fixpoint.mjs <adapted tree> <never-sites.tsv> <out directory>
 //
-// Every edit is an insertion of text with no line break ("readonly ", "Readonly", "(readonly " and ")"), so line
+// Every edit is an insertion of text with no line break ("readonly ", "Readonly", "(readonly ", ")" and a written
+// slot's "readonly never[] | "), so line
 // numbers never move, and each insertion is kept at its offset in the untouched copy. A file's text is always the
 // untouched text plus its live insertions, so a revert drops a slot's insertions and offsets never go stale.
 import fs from 'node:fs';
@@ -375,6 +378,9 @@ function visibilityOf(declaration) {
 const slots = new Map();
 const readonlyDiagnostics = new Map();
 const scriptErrors = [];
+let currentRound = 0;
+// Adamic's ruling: these two are never edited, and are recorded as Dropped with their sites
+const droppedSlots = new Set(['src/compiler/types.ts prop CompilerOptions.lib', 'src/compiler/types.ts prop CompilerOptions.types']);
 
 function slotIdentity(declaration, elementDepth) {
     const sourceFile = declaration.getSourceFile();
@@ -407,20 +413,37 @@ function slotTypeNode(declaration, elementDepth) {
 function isKeywordOrLiteralType(typeNode) {
     return ts.isLiteralTypeNode(typeNode) || (typeNode.kind >= ts.SyntaxKind.FirstKeyword && typeNode.kind <= ts.SyntaxKind.LastKeyword);
 }
+function newPlan(checker) {
+    return {checker, insertions: [], changed: [], named: [], other: [], aliases: [], already: false};
+}
+// A rank orders insertions at one offset: an outer array's "readonly " (lower rank) before its element's "(readonly "
+function pushArrayInsertion(typeNode, sourceFile, plan, rank) {
+    const start = typeNode.getStart(sourceFile);
+    // An element type of an array type needs parentheses: (readonly T[])[]
+    if (ts.isArrayTypeNode(typeNode.parent) && typeNode.parent.elementType === typeNode) {
+        plan.insertions.push({position: start, text: '(readonly ', rank}, {position: typeNode.end, text: ')', rank});
+    } else {
+        plan.insertions.push({position: start, text: 'readonly ', rank});
+    }
+    plan.changed.push(typeNode.getText(sourceFile));
+}
+// The type alias a reference names, when the alias is declared in the copy of src
+function heldAliasOf(typeReference, checker) {
+    if (!checker) return undefined;
+    let symbol = checker.getSymbolAtLocation(typeReference.typeName);
+    if (!symbol) return undefined;
+    if (symbol.flags & ts.SymbolFlags.Alias) symbol = checker.getAliasedSymbol(symbol);
+    const declaration = (symbol.declarations ?? []).find(candidate => ts.isTypeAliasDeclaration(candidate));
+    if (!declaration || !currentText.has(path.resolve(declaration.getSourceFile().fileName))) return undefined;
+    return declaration;
+}
 function planReadonly(typeNode, sourceFile, plan) {
     if (ts.isParenthesizedTypeNode(typeNode)) {
         planReadonly(typeNode.type, sourceFile, plan);
         return;
     }
     if (ts.isArrayTypeNode(typeNode)) {
-        const start = typeNode.getStart(sourceFile);
-        // An element type of an array type needs parentheses: (readonly T[])[]
-        if (ts.isArrayTypeNode(typeNode.parent) && typeNode.parent.elementType === typeNode) {
-            plan.insertions.push({position: start, text: '(readonly '}, {position: typeNode.end, text: ')'});
-        } else {
-            plan.insertions.push({position: start, text: 'readonly '});
-        }
-        plan.changed.push(typeNode.getText(sourceFile));
+        pushArrayInsertion(typeNode, sourceFile, plan, undefined);
         return;
     }
     if (ts.isTypeReferenceNode(typeNode)) {
@@ -431,7 +454,9 @@ function planReadonly(typeNode, sourceFile, plan) {
         } else if (name === 'ReadonlyArray') {
             plan.already = true;
         } else {
-            plan.named.push(name);
+            const alias = heldAliasOf(typeNode, plan.checker);
+            if (alias) plan.aliases.push(alias);
+            else plan.named.push(name);
         }
         return;
     }
@@ -446,6 +471,59 @@ function planReadonly(typeNode, sourceFile, plan) {
         return;
     }
     plan.other.push(kindName(typeNode.kind));
+}
+
+// An alias body: every mutable X[] or Array<X> anywhere inside it becomes readonly, and aliases it names are
+// gathered to be edited as their own slots
+function planDeep(typeNode, sourceFile, plan, rank) {
+    if (ts.isTypeOperatorNode(typeNode) && typeNode.operator === ts.SyntaxKind.ReadonlyKeyword) {
+        // The array right under readonly already is; its elements still count
+        if (ts.isArrayTypeNode(typeNode.type)) planDeep(typeNode.type.elementType, sourceFile, plan, rank + 1);
+        else planDeep(typeNode.type, sourceFile, plan, rank + 1);
+        return;
+    }
+    if (ts.isArrayTypeNode(typeNode)) {
+        pushArrayInsertion(typeNode, sourceFile, plan, rank);
+        planDeep(typeNode.elementType, sourceFile, plan, rank + 1);
+        return;
+    }
+    if (ts.isTypeReferenceNode(typeNode)) {
+        const name = typeNode.typeName.getText(sourceFile);
+        if (name === 'Array') {
+            plan.insertions.push({position: typeNode.typeName.getStart(sourceFile), text: 'Readonly', rank});
+            plan.changed.push(typeNode.getText(sourceFile));
+        } else if (name !== 'ReadonlyArray') {
+            const alias = heldAliasOf(typeNode, plan.checker);
+            if (alias && !plan.aliases.includes(alias)) plan.aliases.push(alias);
+        }
+        for (const argument of typeNode.typeArguments ?? []) planDeep(argument, sourceFile, plan, rank + 1);
+        return;
+    }
+    ts.forEachChild(typeNode, child => {
+        planDeep(child, sourceFile, plan, rank);
+        return undefined;
+    });
+}
+
+function isReadonlyTypeNode(typeNode) {
+    if (!typeNode) return false;
+    if (ts.isParenthesizedTypeNode(typeNode)) return isReadonlyTypeNode(typeNode.type);
+    if (ts.isTypeOperatorNode(typeNode)) return typeNode.operator === ts.SyntaxKind.ReadonlyKeyword;
+    if (ts.isTypeReferenceNode(typeNode)) return typeNode.typeName.getText() === 'ReadonlyArray';
+    if (ts.isUnionTypeNode(typeNode)) {
+        const members = typeNode.types.filter(member => !isKeywordOrLiteralType(member));
+        return members.length > 0 && members.every(isReadonlyTypeNode);
+    }
+    return false;
+}
+
+// Where a written slot's `readonly never[] | <original>` goes, in untouched offsets, and which parentheses it needs
+function typeSpanOf(typeNode, sourceFile, absolute, rank) {
+    const parent = typeNode.parent;
+    const outer = ts.isArrayTypeNode(parent) || ts.isTypeOperatorNode(parent) || ts.isIndexedAccessTypeNode(parent)
+        || ts.isIntersectionTypeNode(parent) || ts.isOptionalTypeNode(parent) || ts.isUnionTypeNode(parent);
+    const inner = ts.isFunctionTypeNode(typeNode) || ts.isConstructorTypeNode(typeNode) || ts.isConditionalTypeNode(typeNode);
+    return {start: toOriginal(absolute, typeNode.getStart(sourceFile)), end: toOriginal(absolute, typeNode.end), outer, inner, rank};
 }
 
 function containingFunction(node) {
@@ -525,8 +603,32 @@ function objectPropertySlot(objectLiteral, nameNode, checker, elementDepth) {
     return {declaration: found.declaration, elementDepth, via: []};
 }
 
+// A class member that no longer fits the interface or base member it implements. The class member's own type is
+// the slot when every base member's type is already readonly; otherwise each base member's type is, found through
+// the heritage clauses' types.
+function heritageSlot(member, checker) {
+    const classNode = member.parent;
+    const name = nameText(member.name);
+    if (!ts.isClassLike(classNode) || name === undefined) return {unresolved: `${kindName(member.kind)} outside a class`};
+    const className = nameText(classNode.name) ?? '<class>';
+    const bases = [];
+    for (const clause of classNode.heritageClauses ?? []) {
+        for (const typeExpression of clause.types) {
+            const property = checker.getPropertyOfType(checker.getTypeAtLocation(typeExpression), name);
+            for (const declaration of property?.declarations ?? []) {
+                if (!bases.includes(declaration)) bases.push(declaration);
+            }
+        }
+    }
+    if (bases.length === 0) return {unresolved: `${className}.${name} has no base member`};
+    if (bases.every(declaration => isReadonlyTypeNode(declaration.type))) {
+        return {declaration: member, elementDepth: 0, via: [], heritage: `class side: ${className}.${name}, its base already readonly`};
+    }
+    return {list: bases.map(declaration => ({declaration, elementDepth: 0, via: [], heritage: `base side, for ${className}.${name}`}))};
+}
+
 // The receiving slot of a readonly value going into a mutable one, from the node the diagnostic sits on, walking up
-function resolveReceivingSlot(errorNode, checker) {
+function resolveReceivingSlot(errorNode, checker, code) {
     let node = errorNode;
     let elementDepth = 0;
     for (let step = 0; step < 64; step++) {
@@ -534,11 +636,20 @@ function resolveReceivingSlot(errorNode, checker) {
             const fn = containingFunction(node);
             return fn ? {declaration: fn, elementDepth, via: []} : {unresolved: 'return outside a function'};
         }
+        if ((ts.isShorthandPropertyAssignment(node) || ts.isPropertyAssignment(node)) && node.parent && ts.isObjectLiteralExpression(node.parent)) {
+            return objectPropertySlot(node.parent, node.name, checker, elementDepth);
+        }
         if ((ts.isVariableDeclaration(node) || ts.isPropertyDeclaration(node) || ts.isParameter(node)) && step === 0) {
             return {declaration: node, elementDepth, via: []};
         }
         const parent = node.parent;
         if (!parent) return {unresolved: `${kindName(node.kind)} with no parent`};
+        // 2416 is a member not assignable to the same member in a base; a property with no initializer can only
+        // miss through its base
+        if (parent.name === node && ts.isClassLike(parent.parent) && (ts.isMethodDeclaration(parent) || ts.isGetAccessorDeclaration(parent)
+            || (ts.isPropertyDeclaration(parent) && (code === 2416 || !parent.initializer)))) {
+            return heritageSlot(parent, checker);
+        }
         if ((ts.isVariableDeclaration(parent) || ts.isPropertyDeclaration(parent) || ts.isParameter(parent))
             && (parent.name === node || parent.initializer === node)) {
             return {declaration: parent, elementDepth, via: []};
@@ -577,7 +688,8 @@ function resolveReceivingSlot(errorNode, checker) {
 
 // A slot made or found from a resolution in the current program. A new Readonly slot's insertions are converted
 // to untouched offsets now, while the current text still matches the program that reported it.
-function slotFromResolution(resolution, describedDiagnostic) {
+// Every slot made here is pushed onto `created`, alias slots too.
+function slotFromResolution(resolution, describedDiagnostic, checker, created) {
     if (resolution.unresolved) {
         const key = `${describedDiagnostic.relative}:${describedDiagnostic.line} unresolved: ${resolution.unresolved}`;
         let slot = slots.get(key);
@@ -587,42 +699,52 @@ function slotFromResolution(resolution, describedDiagnostic) {
             slot.name = resolution.unresolved;
             slots.set(key, slot);
         }
-        return {slot, created: false};
+        return slot;
     }
     const identity = slotIdentity(resolution.declaration, resolution.elementDepth);
     const existing = slots.get(identity.key);
-    if (existing) return {slot: existing, created: false};
+    if (existing) return existing;
     const slot = newSlot(identity);
     slots.set(identity.key, slot);
+    created.push(slot);
     if (!currentText.has(identity.absolute)) {
         slot.state = 'Outside';
         slot.name = 'declared outside the copy of src';
-        return {slot, created: true};
+        return slot;
     }
     slot.visibility = visibilityOf(resolution.declaration);
+    if (droppedSlots.has(`${identity.relative} ${identity.label}`)) {
+        slot.state = 'Dropped';
+        slot.name = 'never edited, by Adamic\'s ruling';
+        return slot;
+    }
     const target = slotTypeNode(resolution.declaration, resolution.elementDepth);
     if (target.missing) {
         slot.state = 'Unannotated';
         slot.name = kindName(resolution.declaration.kind);
-        return {slot, created: true};
+        return slot;
     }
     if (target.named) {
         slot.state = 'NamedType';
         slot.name = target.named;
-        return {slot, created: true};
+        return slot;
     }
     const sourceFile = resolution.declaration.getSourceFile();
-    const plan = {insertions: [], changed: [], named: [], other: [], already: false};
+    const plan = newPlan(checker);
     planReadonly(target.typeNode, sourceFile, plan);
     slot.originalType = clip(target.typeNode.getText(sourceFile), 100);
+    const aliasSlots = plan.aliases.map(declaration => aliasSlot(declaration, checker, created));
     if (plan.insertions.length > 0) {
         slot.state = 'Readonly';
         slot.changed = plan.changed.map(text => clip(text, 60));
-        slot.untouchedMembers = [...plan.named, ...plan.other.map(kind => `<${kind}>`)];
-        slot.pendingInsertions = plan.insertions.map(insertion => {
-            if (/[\r\n\u2028\u2029]/.test(insertion.text)) throw new Error('an insertion may not hold a line break');
-            return {absolute: identity.absolute, original: toOriginal(identity.absolute, insertion.position), text: insertion.text, rank: resolution.elementDepth, slotKey: slot.key};
-        });
+        slot.untouchedMembers = [...plan.named, ...plan.other.map(kind => `<${kind}>`), ...aliasSlots.map(alias => `alias slot ${alias.key}`)];
+        slot.pendingInsertions = pendingFrom(plan, identity.absolute, slot, resolution.elementDepth);
+        slot.typeSpan = typeSpanOf(target.typeNode, sourceFile, identity.absolute, resolution.elementDepth);
+    } else if (aliasSlots.length > 0) {
+        // The alias is edited as its own slot, and this slot's sites count under it
+        slot.state = 'AliasRef';
+        slot.aliasSlotKeys = aliasSlots.map(alias => alias.key);
+        slot.name = `${slot.originalType}, edited as ${slot.aliasSlotKeys.join(', ')}`;
     } else if (plan.already) {
         slot.state = 'AlreadyReadonly';
         slot.name = slot.originalType;
@@ -630,28 +752,64 @@ function slotFromResolution(resolution, describedDiagnostic) {
         slot.state = 'NamedType';
         slot.name = [...plan.named, ...plan.other.map(kind => `<${kind}>`)].join(', ') || '<nothing to edit>';
     }
-    return {slot, created: true};
+    return slot;
+}
+
+function pendingFrom(plan, absolute, slot, defaultRank) {
+    return plan.insertions.map(insertion => {
+        if (/[\r\n\u2028\u2029]/.test(insertion.text)) throw new Error('an insertion may not hold a line break');
+        return {absolute, original: toOriginal(absolute, insertion.position), text: insertion.text, rank: insertion.rank ?? defaultRank, slotKey: slot.key};
+    });
+}
+
+// A type alias declared under src, edited as its own slot of kind Alias: every mutable array inside its body
+function aliasSlot(declaration, checker, created) {
+    const sourceFile = declaration.getSourceFile();
+    const absolute = path.resolve(sourceFile.fileName);
+    const relative = relativeName(absolute);
+    const line = sourceFile.getLineAndCharacterOfPosition(declaration.getStart(sourceFile)).line + 1;
+    const label = `alias ${declaration.name.text}`;
+    const key = `${relative}:${line} ${label}`;
+    const existing = slots.get(key);
+    if (existing) return existing;
+    const slot = newSlot({key, absolute, relative, line, label});
+    slot.kind = 'Alias';
+    slots.set(key, slot);
+    created.push(slot);
+    slot.visibility = visibilityOf(declaration);
+    slot.originalType = clip(declaration.type.getText(sourceFile), 100);
+    const plan = newPlan(checker);
+    planDeep(declaration.type, sourceFile, plan, 0);
+    const nested = plan.aliases.filter(inner => inner !== declaration).map(inner => aliasSlot(inner, checker, created));
+    if (plan.insertions.length > 0) {
+        slot.state = 'Readonly';
+        slot.changed = plan.changed.map(text => clip(text, 60));
+        slot.untouchedMembers = nested.map(alias => `alias slot ${alias.key}`);
+        slot.pendingInsertions = pendingFrom(plan, absolute, slot, 0);
+    } else {
+        slot.state = 'NamedType';
+        slot.name = `alias with no mutable array inside${nested.length ? `; names ${nested.map(alias => alias.key).join(', ')}` : ''}`;
+    }
+    return slot;
 }
 
 function newSlot(identity) {
     return {
         key: identity.key, relative: identity.relative, line: identity.line, label: identity.label, absolute: identity.absolute,
-        state: undefined, visibility: undefined, name: undefined, originalType: undefined, changed: [], untouchedMembers: [],
-        pendingInsertions: [], insertions: [], writes: [], diagnosticSites: new Set(), round: undefined, seed: false,
+        kind: 'Slot', state: undefined, visibility: undefined, name: undefined, originalType: undefined, changed: [], untouchedMembers: [],
+        pendingInsertions: [], insertions: [], writes: [], diagnosticSites: new Set(), notes: new Set(), round: currentRound, seed: false,
+        typeSpan: undefined, aliasSlotKeys: [],
     };
 }
 
-// Returns false, leaving the slot unedited, when another live insertion holds the same offset and rank, since
-// then their order in the text would be a guess
+// Returns true, or a description of the clash, leaving the slot unedited, when another live insertion holds the
+// same offset and rank, since then their order in the text would be a guess
 function applyInsertions(slot) {
     for (const insertion of slot.pendingInsertions) {
         const clash = insertionsOf(insertion.absolute).find(other => other.original === insertion.original && other.rank === insertion.rank);
         if (clash) {
-            scriptErrors.push(`${slot.key}: its insertion at ${insertion.original} clashes with ${clash.slotKey}'s; left unedited`);
-            slot.state = 'Unresolved';
-            slot.name = `insertion clash with ${clash.slotKey}`;
             slot.pendingInsertions = [];
-            return false;
+            return `its insertion at ${insertion.original} clashes with ${clash.slotKey}'s`;
         }
     }
     for (const insertion of slot.pendingInsertions) {
@@ -737,17 +895,17 @@ function findSeed(relativeFile, name) {
 const seedSlots = [];
 for (const [relativeFile, name] of [['compiler/core.ts', 'emptyArray'], ['compiler/utilities.ts', 'resolvingEmptyArray']]) {
     const declaration = findSeed(relativeFile, name);
-    const {slot} = slotFromResolution({declaration, elementDepth: 0, via: []}, undefined);
+    const slot = slotFromResolution({declaration, elementDepth: 0, via: []}, undefined, program.getTypeChecker(), []);
     if (slot.state !== 'Readonly') {
         throw new Error(`${name} in src/${relativeFile} has type ${slot.originalType ?? '<none>'}, state ${slot.state}: expected a mutable array to make readonly`);
     }
     slot.seed = true;
-    slot.round = 0;
     seedSlots.push(slot);
 }
 const touchedBySeed = new Set();
 for (const slot of seedSlots) {
-    if (!applyInsertions(slot)) throw new Error(`the seed ${slot.key} couldn't be applied: ${slot.name}`);
+    const applied = applyInsertions(slot);
+    if (applied !== true) throw new Error(`the seed ${slot.key} couldn't be applied: ${applied}`);
     touchedBySeed.add(slot.absolute);
 }
 for (const absolute of touchedBySeed) currentText.set(absolute, render(absolute));
@@ -762,6 +920,7 @@ let rounds = 0;
 let converged = false;
 for (let round = 1; round <= maximumRounds; round++) {
     rounds = round;
+    currentRound = round;
     const roundBegan = Date.now();
     program = buildProgram(program);
     const checker = program.getTypeChecker();
@@ -788,16 +947,39 @@ for (let round = 1; round <= maximumRounds; round++) {
     const touched = new Set();
     for (const slot of reverting.values()) {
         for (const absolute of revertInsertions(slot)) touched.add(absolute);
+        if (slot.state !== 'WrittenUnion') continue;
+        // Adamic ruled that written slots stay refused in the build. This union exists only so the fixpoint converges
+        // and counts: the slot still takes the shared array, and its writes stay errors under the union.
+        const span = slot.typeSpan;
+        const prefix = `${span.outer ? '(' : ''}readonly never[] | ${span.inner ? '(' : ''}`;
+        const suffix = `${span.inner ? ')' : ''}${span.outer ? ')' : ''}`;
+        slot.pendingInsertions = [{absolute: slot.absolute, original: span.start, text: prefix, rank: span.rank, slotKey: slot.key}];
+        if (suffix) slot.pendingInsertions.push({absolute: slot.absolute, original: span.end, text: suffix, rank: span.rank, slotKey: slot.key});
+        const applied = applyInsertions(slot);
+        if (applied !== true) {
+            scriptErrors.push(`${slot.key}: its union couldn't be applied, ${applied}; left as written and put back`);
+            slot.state = 'Written';
+        }
     }
-    const forward = created.filter(slot => slot.state === 'Readonly' && slot.pendingInsertions.length > 0)
-        .filter(slot => applyInsertions(slot));
-    for (const slot of forward) touched.add(slot.absolute);
+    const forward = [];
+    for (const slot of created) {
+        if (slot.state !== 'Readonly' || slot.pendingInsertions.length === 0) continue;
+        const applied = applyInsertions(slot);
+        if (applied === true) {
+            forward.push(slot);
+            touched.add(slot.absolute);
+        } else {
+            scriptErrors.push(`${slot.key}: ${applied}; left unedited`);
+            slot.state = 'Unresolved';
+            slot.name = `insertion clash: ${applied}`;
+        }
+    }
     for (const absolute of touched) currentText.set(absolute, render(absolute));
     const summary = {round, fresh: fresh.length, readonlyCount, writeCount, otherCount, madeReadonly: forward.length, written: reverting.size,
         newSlots: created.length, seconds: (Date.now() - roundBegan) / 1000};
     roundSummaries.push(summary);
     log(`round ${round}: ${fresh.length} new diagnostics (${readonlyCount} readonly into mutable, ${writeCount} writes, ${otherCount} other), `
-        + `${created.length} new slots, ${forward.length} made readonly, ${reverting.size} written and put back, ${summary.seconds.toFixed(1)} s`);
+        + `${created.length} new slots, ${forward.length} made readonly, ${reverting.size} written, ${summary.seconds.toFixed(1)} s`);
     if (forward.length === 0 && reverting.size === 0) {
         converged = true;
         break;
@@ -810,18 +992,20 @@ function classify(record, round, checker, created, reverting) {
     if (isReadonlyClass && sourceFile && record.held) {
         record.kind = 'Readonly';
         const errorNode = errorNodeAt(sourceFile, record.diagnostic.start, record.diagnostic.length ?? 0);
-        const resolution = resolveReceivingSlot(errorNode, checker);
-        const result = slotFromResolution(resolution, record);
-        if (result.created) {
-            result.slot.round = round;
-            created.push(result.slot);
+        const resolution = resolveReceivingSlot(errorNode, checker, record.code);
+        // A class member that misses its base can resolve to several base members; the first holds the site
+        let primary;
+        for (const each of resolution.list ?? [resolution]) {
+            const slot = slotFromResolution(each, record, checker, created);
+            if (each.heritage) slot.notes.add(each.heritage);
+            slot.diagnosticSites.add(record.site);
+            primary ??= slot;
         }
-        result.slot.diagnosticSites.add(record.site);
-        record.slotKey = result.slot.key;
+        record.slotKey = primary.key;
         const diagnosticKey = `${record.relative}|${record.originalStart}|${record.code}`;
         if (!readonlyDiagnostics.has(diagnosticKey)) {
             readonlyDiagnostics.set(diagnosticKey, {relative: record.relative, absolute: record.absolute, originalStart: record.originalStart,
-                originalEnd: record.originalEnd, line: record.line, site: record.site, slotKey: result.slot.key, round});
+                originalEnd: record.originalEnd, line: record.line, site: record.site, slotKey: primary.key, round});
         }
         return 'Readonly';
     }
@@ -834,15 +1018,19 @@ function classify(record, round, checker, created, reverting) {
             const target = expressionSlot(write.receiver, checker, 0, true, []);
             let slot;
             if (!target.unresolved) slot = slots.get(slotIdentity(target.declaration, target.elementDepth).key);
-            const live = slot && (slot.state === 'Readonly' || (slot.state === 'Written' && reverting.has(slot.key)));
+            // A WrittenUnion slot's writes stay errors under its union every round, so they are recorded once each
+            const live = slot && (slot.state === 'Readonly' || slot.state === 'WrittenUnion' || (slot.state === 'Written' && reverting.has(slot.key)));
             if (live) {
                 if (slot.state === 'Readonly') {
                     checkRevert(slot, target.declaration);
-                    slot.state = 'Written';
+                    // An alias slot, or one with no span, is put back; any other written slot converges as a union
+                    slot.state = slot.kind === 'Alias' || !slot.typeSpan ? 'Written' : 'WrittenUnion';
                     slot.writtenRound = round;
                     reverting.set(slot.key, slot);
                 }
-                slot.writes.push({site: record.site, code: record.code, property: write.property, via: target.via, source});
+                if (!slot.writes.some(each => each.site === record.site)) {
+                    slot.writes.push({site: record.site, code: record.code, property: write.property, via: target.via, source});
+                }
             } else {
                 const receiverDeclaration = target.unresolved
                     ? `unresolved: ${target.unresolved}`
@@ -948,11 +1136,227 @@ for (const raw of fs.readFileSync(sitesPath, 'utf8').split('\n')) {
         continue;
     }
     const slot = slots.get(covering.slotKey);
-    siteRows.push({site, words, group: slot?.state ?? 'unmatched', slotKey: covering.slotKey, byLine: !(covering.originalStart <= offset && offset < covering.originalEnd)});
+    siteRows.push({site, words, group: siteGroupOf(slot), slotKey: covering.slotKey, byLine: !(covering.originalStart <= offset && offset < covering.originalEnd)});
     if (slot) slot.listedSites = (slot.listedSites ?? 0) + 1;
+    // A slot whose type is an alias edited on its own counts its sites under that alias slot too
+    for (const aliasKey of slot?.aliasSlotKeys ?? []) {
+        const alias = slots.get(aliasKey);
+        if (alias) alias.listedSites = (alias.listedSites ?? 0) + 1;
+    }
+}
+// WrittenUnion counts as Written; an alias reference counts as its alias slot's state
+function siteGroupOf(slot) {
+    if (!slot) return 'unmatched';
+    if (slot.state === 'AliasRef') {
+        const alias = slots.get(slot.aliasSlotKeys[0]);
+        return alias ? `${siteGroupOf(alias)} (alias)` : 'AliasRef';
+    }
+    return slot.state === 'WrittenUnion' ? 'Written' : slot.state;
 }
 const siteGroups = new Map();
 for (const row of siteRows) siteGroups.set(row.group, (siteGroups.get(row.group) ?? 0) + 1);
+
+// The final program is the fixpoint's when the rounds converged: the last round built it and changed nothing
+const finalChecker = program.getTypeChecker();
+const heldProgramFiles = program.getSourceFiles().filter(sourceFile => currentText.has(path.resolve(sourceFile.fileName)));
+const sharedArrayNames = new Set(['emptyArray', 'resolvingEmptyArray']);
+const comparisonOperators = new Set([ts.SyntaxKind.EqualsEqualsEqualsToken, ts.SyntaxKind.ExclamationEqualsEqualsToken,
+    ts.SyntaxKind.EqualsEqualsToken, ts.SyntaxKind.ExclamationEqualsToken]);
+
+function skipParenthesesAndAssertions(expression) {
+    let target = expression;
+    while (ts.isParenthesizedExpression(target) || ts.isNonNullExpression(target)) target = target.expression;
+    return target;
+}
+function resolvedSymbolOf(node) {
+    let symbol = finalChecker.getSymbolAtLocation(node);
+    if (symbol && symbol.flags & ts.SymbolFlags.Alias) symbol = finalChecker.getAliasedSymbol(symbol);
+    return symbol;
+}
+// An expression naming emptyArray or resolvingEmptyArray as declared in core.ts or utilities.ts
+function isSharedArray(expression) {
+    const target = skipParenthesesAndAssertions(expression);
+    const name = ts.isIdentifier(target) ? target : ts.isPropertyAccessExpression(target) ? target.name : undefined;
+    if (!name || !sharedArrayNames.has(name.text)) return false;
+    const declaration = resolvedSymbolOf(name)?.valueDeclaration;
+    if (!declaration || !ts.isVariableDeclaration(declaration)) return false;
+    return ['src/compiler/core.ts', 'src/compiler/utilities.ts'].includes(relativeName(path.resolve(declaration.getSourceFile().fileName)));
+}
+function isWriteTarget(node) {
+    const parent = node.parent;
+    if (ts.isBinaryExpression(parent) && parent.left === node
+        && parent.operatorToken.kind >= ts.SyntaxKind.FirstAssignment && parent.operatorToken.kind <= ts.SyntaxKind.LastAssignment) {
+        return true;
+    }
+    if ((ts.isPrefixUnaryExpression(parent) || ts.isPostfixUnaryExpression(parent))
+        && (parent.operator === ts.SyntaxKind.PlusPlusToken || parent.operator === ts.SyntaxKind.MinusMinusToken)) {
+        return true;
+    }
+    return ts.isDeleteExpression(parent);
+}
+// How a reference writes through its array, or undefined when it reads it or assigns a whole value to it
+function referenceWrite(reference) {
+    let outer = reference;
+    while (ts.isParenthesizedExpression(outer.parent) || ts.isNonNullExpression(outer.parent)) outer = outer.parent;
+    const parent = outer.parent;
+    if (ts.isPropertyAccessExpression(parent) && parent.expression === outer) {
+        if (writeMethods.has(parent.name.text) && ts.isCallExpression(parent.parent) && parent.parent.expression === parent) return `.${parent.name.text}()`;
+        if (parent.name.text === 'length' && isWriteTarget(parent)) return 'length =';
+    }
+    if (ts.isElementAccessExpression(parent) && parent.expression === outer && isWriteTarget(parent)) return '[i] =';
+    return undefined;
+}
+function siteOfNode(node) {
+    const sourceFile = node.getSourceFile();
+    const absolute = path.resolve(sourceFile.fileName);
+    const {line, column} = originalLineColumn(absolute, toOriginal(absolute, node.getStart(sourceFile)));
+    return {site: `${relativeName(absolute)}:${line}:${column}`, line, source: clip(lineText(originalText.get(absolute), line - 1))};
+}
+
+// 6. Sentinels by slot: each comparison with the shared array, the other operand's declaration, and every reference
+// to that symbol in the program
+const sentinelComparisons = [];
+const sentinelTargets = new Map();
+for (const sourceFile of heldProgramFiles) {
+    if (!sourceFile.text.includes('mptyArray')) continue;
+    const visit = node => {
+        if (ts.isBinaryExpression(node) && comparisonOperators.has(node.operatorToken.kind)) {
+            const leftShared = isSharedArray(node.left);
+            const rightShared = isSharedArray(node.right);
+            if (leftShared !== rightShared) {
+                const operand = skipParenthesesAndAssertions(leftShared ? node.right : node.left);
+                const where = siteOfNode(node);
+                const nameNode = ts.isPropertyAccessExpression(operand) ? operand.name : ts.isIdentifier(operand) ? operand : undefined;
+                const symbol = nameNode ? resolvedSymbolOf(nameNode) : undefined;
+                const declaration = symbol?.valueDeclaration ?? (symbol?.declarations?.length === 1 ? symbol.declarations[0] : undefined);
+                const row = {site: where.site, source: where.source, operand: clip(operand.getText(sourceFile), 60)};
+                if (!declaration) {
+                    row.slot = nameNode ? 'no declaration for the operand' : `operand is a ${kindName(operand.kind)}, with no symbol`;
+                    row.classification = 'Unknown';
+                } else {
+                    const key = slotIdentity(declaration, 0).key;
+                    row.slot = key;
+                    if (!sentinelTargets.has(key)) {
+                        sentinelTargets.set(key, {key, symbol, declaration, name: symbol.name, references: 0, writes: []});
+                    }
+                }
+                sentinelComparisons.push(row);
+            }
+        }
+        ts.forEachChild(node, visit);
+    };
+    visit(sourceFile);
+}
+const targetsByName = new Map();
+for (const target of sentinelTargets.values()) {
+    const list = targetsByName.get(target.name) ?? [];
+    list.push(target);
+    targetsByName.set(target.name, list);
+}
+if (targetsByName.size > 0) {
+    for (const sourceFile of heldProgramFiles) {
+        const visit = node => {
+            if (ts.isIdentifier(node) && targetsByName.has(node.text)) {
+                const candidates = targetsByName.get(node.text);
+                const symbol = resolvedSymbolOf(node);
+                const target = symbol && candidates.find(candidate => symbol === candidate.symbol || (symbol.declarations ?? []).includes(candidate.declaration));
+                const isDeclarationName = target && node.parent && node.parent.name === node && node.parent === target.declaration;
+                if (target && !isDeclarationName) {
+                    target.references++;
+                    const reference = ts.isPropertyAccessExpression(node.parent) && node.parent.name === node ? node.parent : node;
+                    const how = referenceWrite(reference);
+                    if (how) target.writes.push({...siteOfNode(reference), how});
+                }
+            }
+            ts.forEachChild(node, visit);
+        };
+        visit(sourceFile);
+    }
+}
+for (const row of sentinelComparisons) {
+    const target = sentinelTargets.get(row.slot);
+    if (!target) continue;
+    row.classification = target.writes.length > 0 ? 'Written' : 'AssignedOnly';
+    row.references = target.references;
+    row.firstWrite = target.writes.length > 0 ? `${target.writes[0].site} ${target.writes[0].how}: ${target.writes[0].source}` : '';
+    row.writeCount = target.writes.length;
+}
+const sentinelClassCounts = new Map();
+for (const row of sentinelComparisons) sentinelClassCounts.set(row.classification, (sentinelClassCounts.get(row.classification) ?? 0) + 1);
+
+// 7. Unmatched sites explained, in the final program
+function arrayKindOf(type) {
+    const name = type.getSymbol()?.name;
+    if (name === 'ReadonlyArray') return 'Readonly';
+    if (name === 'Array') return 'Mutable';
+    if (finalChecker.isTupleType(type)) return type.target?.readonly ? 'Readonly' : 'Mutable';
+    return undefined;
+}
+function contextualReadonly(type) {
+    if (!type) return 'no contextual type';
+    if (type.isUnion()) {
+        const kinds = type.types.map(arrayKindOf).filter(kind => kind !== undefined);
+        if (kinds.length === 0) return 'no array members';
+        return kinds.every(kind => kind === 'Readonly') ? 'yes' : 'no';
+    }
+    const kind = arrayKindOf(type);
+    if (kind === undefined) return 'not an array';
+    return kind === 'Readonly' ? 'yes' : 'no';
+}
+function currentFromOriginal(absolute, original) {
+    let shift = 0;
+    for (const insertion of insertionsOf(absolute)) {
+        if (insertion.original > original) break;
+        shift += insertion.text.length;
+    }
+    return original + shift;
+}
+const unmatchedExplained = [];
+for (const row of siteRows.filter(each => each.group === 'unmatched')) {
+    const match = /^(.*):(\d+):(\d+)$/.exec(row.site);
+    const explained = {site: row.site, words: row.words};
+    unmatchedExplained.push(explained);
+    if (!match) {
+        explained.note = 'not file:line:col';
+        continue;
+    }
+    const absolute = path.join(outDirectory, match[1]);
+    const sourceFile = program.getSourceFile(absolute);
+    const text = originalText.get(absolute);
+    if (!sourceFile || text === undefined) {
+        explained.note = 'file not in the program';
+        continue;
+    }
+    const starts = lineStartsOf(text);
+    const line = Number(match[2]);
+    if (line < 1 || line > starts.length) {
+        explained.note = 'line past the file';
+        continue;
+    }
+    const position = currentFromOriginal(absolute, starts[line - 1] + Number(match[3]) - 1);
+    try {
+        const node = deepestNodeAt(sourceFile, position);
+        explained.kind = kindName(node.kind);
+        const chain = [];
+        for (let parent = node.parent; parent && chain.length < 3; parent = parent.parent) {
+            chain.push(kindName(parent.kind));
+            if (ts.isStatement(parent) || ts.isSourceFile(parent)) break;
+        }
+        explained.parents = chain.join(' < ');
+        if (node.getStart(sourceFile) !== position) {
+            explained.note = `no node starts here; the deepest node holding it is a ${explained.kind}`;
+        } else if (!ts.isExpression(node)) {
+            explained.note = `not an expression: ${explained.kind}`;
+        } else {
+            explained.type = clip(finalChecker.typeToString(finalChecker.getTypeAtLocation(node)), 120);
+            const contextual = finalChecker.getContextualType(node);
+            explained.contextual = contextual ? clip(finalChecker.typeToString(contextual), 120) : '<none>';
+            explained.contextualReadonly = contextualReadonly(contextual);
+        }
+    } catch (error) {
+        explained.note = `explaining threw: ${clip(String(error && error.message ? error.message : error), 160)}`;
+    }
+}
 
 // edits.diff: every live insertion, as the untouched line and the final line
 const diffLines = [];
@@ -1004,31 +1408,33 @@ markdown.push(table(['Measure', 'Value'], [
     ['Slots by state', formatCounts(stateCounts)],
     ['Readonly slots by visibility', formatCounts(visibilityCounts)],
     ['Public d.ts lines changed', `${declarationLineTotal} over ${declarationDiffs.length} files`],
-    ['Sentinel reads', sentinels.length],
+    ['Sentinel reads', `${sentinels.length} lines by text; ${sentinelComparisons.length} comparisons in the program by slot class: ${formatCounts(sentinelClassCounts)}`],
     [`Listed sites (${siteRows.length}) by group`, formatCounts(siteGroups)],
     ['Readonly-into-mutable diagnostics left in the final round', finalConflicts],
     ['Unattributed writes in the final round', `${finalUnattributed.length} (${unattributedWrites.size} ever seen)`],
     ['Unclassified diagnostics in the final round', `${finalUnclassified.length} (${unclassified.size} ever seen)`],
-    ['Script errors while classifying', scriptErrors.length],
+    ['Script errors while classifying or editing', scriptErrors.length],
     ['edits.diff lines', diffLines.length],
 ]));
 markdown.push(table(['Round', 'New diagnostics', 'Readonly into mutable', 'Writes', 'Other', 'New slots', 'Made readonly', 'Written', 'Seconds'],
     roundSummaries.map(summary => [summary.round, summary.fresh, summary.readonlyCount, summary.writeCount, summary.otherCount, summary.newSlots,
         summary.madeReadonly, summary.written, summary.seconds.toFixed(1)])));
 markdown.push('Visibility: Public shows in a declaration file; Internal carries @internal on itself or an ancestor; Local lives in a function body, is private, or sits under a statement the module doesn\'t export, so no declaration file shows it.\n');
+markdown.push('Written slots stay refused in the build, by Adamic\'s ruling. WrittenUnion is a written slot typed `readonly never[] | <original>` only so the fixpoint converges and counts; its sites count under Written. Dropped slots are never edited, by the same ruling. AliasRef is a slot typed by an alias under src, which is edited as its own slot of kind Alias.\n');
 
 markdown.push('## Slots written\n');
-markdown.push(table(['Slot', 'Writes', 'Listed sites', 'Diagnostics'], allSlots.filter(slot => slot.state === 'Written').map(slot => [
+markdown.push(table(['Slot', 'Edit', 'Writes', 'Listed sites', 'Diagnostics'], allSlots.filter(slot => slot.state === 'Written' || slot.state === 'WrittenUnion').map(slot => [
     `${slot.key}${slot.seed ? ' (seed)' : ''}`,
+    slot.state === 'WrittenUnion' ? `readonly never[] | ${slot.originalType}` : 'put back',
     slot.writes.map(write => `${write.site} ${write.property}${write.via.length ? ` via ${write.via.join(', ')}` : ''}: ${write.source}`).join(' ; '),
     slot.listedSites ?? 0,
     slot.diagnosticSites.size,
 ])));
 
 markdown.push('## Slots made readonly\n');
-markdown.push(table(['Slot', 'Visibility', 'Type', 'Members left', 'Listed sites', 'Diagnostics', 'Round'], readonlySlots.map(slot => [
-    `${slot.key}${slot.seed ? ' (seed)' : ''}`, slot.visibility, slot.originalType, slot.untouchedMembers.join(', '),
-    slot.listedSites ?? 0, slot.diagnosticSites.size, slot.round,
+markdown.push(table(['Slot', 'Kind', 'Visibility', 'Type', 'Members left', 'Note', 'Listed sites', 'Diagnostics', 'Round'], readonlySlots.map(slot => [
+    `${slot.key}${slot.seed ? ' (seed)' : ''}`, slot.kind, slot.visibility, slot.originalType, slot.untouchedMembers.join(', '),
+    [...slot.notes].join(' ; '), slot.listedSites ?? 0, slot.diagnosticSites.size, slot.round,
 ])));
 markdown.push('### Public d.ts lines by file\n');
 markdown.push(table(['File', 'Changed lines', 'First changed lines'], declarationDiffs.map(diff => [
@@ -1036,9 +1442,10 @@ markdown.push(table(['File', 'Changed lines', 'First changed lines'], declaratio
 ])));
 
 markdown.push('## Named types and unannotated\n');
-markdown.push(table(['Slot', 'State', 'Name', 'Listed sites', 'Diagnostics'],
-    allSlots.filter(slot => ['NamedType', 'Unannotated', 'AlreadyReadonly', 'Outside', 'Unresolved'].includes(slot.state)).map(slot => [
-        slot.key, slot.state, slot.name, slot.listedSites ?? 0, [...slot.diagnosticSites].slice(0, 4).join(' ; ') + (slot.diagnosticSites.size > 4 ? ` ; and ${slot.diagnosticSites.size - 4} more` : ''),
+markdown.push(table(['Slot', 'State', 'Name', 'Note', 'Listed sites', 'Diagnostics'],
+    allSlots.filter(slot => ['NamedType', 'Unannotated', 'AlreadyReadonly', 'Outside', 'Unresolved', 'Dropped', 'AliasRef'].includes(slot.state)).map(slot => [
+        slot.key, slot.state, slot.name, [...slot.notes].join(' ; '), slot.listedSites ?? 0,
+        [...slot.diagnosticSites].slice(0, 4).join(' ; ') + (slot.diagnosticSites.size > 4 ? ` ; and ${slot.diagnosticSites.size - 4} more` : ''),
     ])));
 
 markdown.push('## Unattributed writes\n');
@@ -1057,8 +1464,20 @@ if (scriptErrors.length > 0) {
 markdown.push('## Sentinels\n');
 markdown.push(table(['Site', 'Source'], sentinels.map(sentinel => [sentinel.site, sentinel.source])));
 
+markdown.push('## Sentinels by slot\n');
+markdown.push('Each comparison with the shared array in the program, the other operand\'s declaration, and every reference to it found by symbol across the program. Written means some reference calls a mutating method, assigns an element, or assigns length; AssignedOnly means every reference reads it or assigns a whole value. A write through a local alias of the slot is not seen.\n');
+markdown.push(table(['Site', 'Operand', 'Slot', 'Class', 'References', 'Writes', 'First write', 'Source'], sentinelComparisons.map(row => [
+    row.site, row.operand, row.slot, row.classification, row.references ?? '', row.writeCount ?? '', row.firstWrite ?? '', row.source,
+])));
+
 markdown.push('## Unmatched sites\n');
 markdown.push(table(['Site', 'Why', 'Words'], siteRows.filter(row => row.group === 'unmatched').map(row => [row.site, row.note, clip(row.words)])));
+
+markdown.push('## Unmatched sites explained\n');
+markdown.push('The deepest node starting at each unmatched site, read in the final program: its own type, its contextual type, whether that contextual type is readonly (a readonly array, or a union whose array members all are), and up to three parent kinds toward the statement.\n');
+markdown.push(table(['Site', 'Node', 'Type', 'Contextual type', 'Contextual readonly', 'Parents', 'Note'], unmatchedExplained.map(row => [
+    row.site, row.kind ?? '', row.type ?? '', row.contextual ?? '', row.contextualReadonly ?? '', row.parents ?? '', row.note ?? '',
+])));
 
 markdown.push('## Listed sites by slot\n');
 markdown.push(table(['Site', 'Group', 'Slot', 'Matched by'], siteRows.filter(row => row.group !== 'unmatched').map(row => [row.site, row.group, row.slotKey, row.byLine ? 'line' : 'span'])));
@@ -1071,10 +1490,10 @@ if (baselineRecords.length > 0) {
 fs.writeFileSync(path.join(outDirectory, 'table.md'), markdown.join('\n'));
 fs.writeFileSync(path.join(outDirectory, 'result.json'), JSON.stringify({
     typeScript: ts.version, baseline: baselineRecords.length, rounds, converged, roundSummaries,
-    slots: allSlots.map(slot => ({...slot, diagnosticSites: [...slot.diagnosticSites], insertions: slot.insertions.map(insertion => ({original: insertion.original, text: insertion.text})), pendingInsertions: undefined, absolute: undefined})),
-    declarationDiffs, sentinels, siteRows, unattributedWrites: [...unattributedWrites.values()], unclassified: [...unclassified.values()], scriptErrors,
+    slots: allSlots.map(slot => ({...slot, diagnosticSites: [...slot.diagnosticSites], notes: [...slot.notes], insertions: slot.insertions.map(insertion => ({original: insertion.original, text: insertion.text})), pendingInsertions: undefined, absolute: undefined})),
+    declarationDiffs, sentinels, sentinelComparisons, unmatchedExplained, siteRows, unattributedWrites: [...unattributedWrites.values()], unclassified: [...unclassified.values()], scriptErrors,
 }, null, 2));
-log(`table.md written: ${allSlots.length} slots, ${readonlySlots.length} readonly, ${stateCounts.get('Written') ?? 0} written, `
+log(`table.md written: ${allSlots.length} slots, ${readonlySlots.length} readonly, ${(stateCounts.get('Written') ?? 0) + (stateCounts.get('WrittenUnion') ?? 0)} written, `
     + `${siteRows.length - (siteGroups.get('unmatched') ?? 0)} of ${siteRows.length} listed sites matched`);
 
 if (scriptErrors.length > 0) process.exit(5);
