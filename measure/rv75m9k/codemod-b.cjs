@@ -66,6 +66,39 @@ function nameInScope(location, name) {
     return checker.getSymbolsInScope(location, ts.SymbolFlags.Value).some(symbol => symbol.name === name);
 }
 
+// Every symbol the program writes: an assignment's target, compound or not, ++ and --, through an identifier or a
+// property read. A view reads its receiver before its statement's earlier operands run, so it's value-identical only
+// when nothing can reassign the receiver in between; a receiver whose root and every link of its chain are never
+// written anywhere in the program can't be. (Writes by element access or Object.assign aren't seen; the census and a
+// lane count are the second line for those.)
+const written = new Set();
+for (const sourceFile of program.getSourceFiles()) {
+    if (sourceFile.isDeclarationFile) continue;
+    (function visit(node) {
+        let target;
+        if (ts.isBinaryExpression(node) && node.operatorToken.kind >= ts.SyntaxKind.FirstAssignment && node.operatorToken.kind <= ts.SyntaxKind.LastAssignment) target = node.left;
+        if ((ts.isPrefixUnaryExpression(node) || ts.isPostfixUnaryExpression(node)) && (node.operator === ts.SyntaxKind.PlusPlusToken || node.operator === ts.SyntaxKind.MinusMinusToken)) target = node.operand;
+        if (target && (ts.isIdentifier(target) || ts.isPropertyAccessExpression(target))) {
+            const symbol = checker.getSymbolAtLocation(ts.isPropertyAccessExpression(target) ? target.name : target);
+            if (symbol) written.add(symbol);
+        }
+        ts.forEachChild(node, visit);
+    })(sourceFile);
+}
+function receiverEvidence(receiver) {
+    const links = [];
+    for (let current = receiver; ; current = current.expression) {
+        const symbol = checker.getSymbolAtLocation(ts.isPropertyAccessExpression(current) ? current.name : current);
+        const name = ts.isPropertyAccessExpression(current) ? current.name.text : current.text;
+        if (!symbol) return { ok: false, why: `${name} has no symbol` };
+        const declaration = symbol.valueDeclaration;
+        const constant = declaration && ts.isVariableDeclaration(declaration) && (ts.getCombinedNodeFlags(declaration) & ts.NodeFlags.Const);
+        if (written.has(symbol)) return { ok: false, why: `${name} is written in the program` };
+        links.push(`${name} ${constant ? 'const' : ts.isParameter(declaration || receiver) ? 'parameter, never written' : 'never written'}`);
+        if (!ts.isPropertyAccessExpression(current)) break;
+    }
+    return { ok: true, why: links.reverse().join(', ') };
+}
 const views = new Map(); // statement -> { file, receiverText, viewName, members: Set, statement }
 const plannedNames = new Map(); // block-scope container -> names planned in it
 function blockOf(statement) {
@@ -107,6 +140,9 @@ for (const site of sites) {
     const statement = statementOf(node);
     if (!statement) { refusals.push(`${site.site}: no statement it can be placed before`); continue; }
     if (writesRoot(statement, rootOf(node.expression))) { refusals.push(`${site.site}: its statement writes ${rootOf(node.expression).text}`); continue; }
+    const evidence = receiverEvidence(node.expression);
+    if (!evidence.ok) { refusals.push(`${site.site}: the view would read ${receiverText} early, and ${evidence.why}`); continue; }
+    console.log(`evidence ${site.site} ${receiverText}: ${evidence.why}`);
     const key = `${file}|${statement.getStart(sourceFile)}|${receiverText}`;
     if (!views.has(key)) {
         // A view's name is free in its statement's scope and unique in its block: case clauses share one block scope.
