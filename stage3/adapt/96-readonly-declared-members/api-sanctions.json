@@ -1,0 +1,42 @@
+[
+  {
+    "path": [
+      "InterfaceTypeWithDeclaredMembers",
+      "declaredProperties"
+    ],
+    "kind": "PropertySignature",
+    "before": "Symbol[]",
+    "after": "readonly Symbol[]",
+    "why": "Adamic, task r11wppy item 1, the public change: each member holds tsc's shared emptyArray (never[]) for a type with no members of that kind, so it is a readonly array. Code that pushes onto one, or assigns it to a mutable array, stops type-checking; code that reads it is unaffected."
+  },
+  {
+    "path": [
+      "InterfaceTypeWithDeclaredMembers",
+      "declaredCallSignatures"
+    ],
+    "kind": "PropertySignature",
+    "before": "Signature[]",
+    "after": "readonly Signature[]",
+    "why": "Adamic, task r11wppy item 1, the public change: each member holds tsc's shared emptyArray (never[]) for a type with no members of that kind, so it is a readonly array. Code that pushes onto one, or assigns it to a mutable array, stops type-checking; code that reads it is unaffected."
+  },
+  {
+    "path": [
+      "InterfaceTypeWithDeclaredMembers",
+      "declaredConstructSignatures"
+    ],
+    "kind": "PropertySignature",
+    "before": "Signature[]",
+    "after": "readonly Signature[]",
+    "why": "Adamic, task r11wppy item 1, the public change: each member holds tsc's shared emptyArray (never[]) for a type with no members of that kind, so it is a readonly array. Code that pushes onto one, or assigns it to a mutable array, stops type-checking; code that reads it is unaffected."
+  },
+  {
+    "path": [
+      "InterfaceTypeWithDeclaredMembers",
+      "declaredIndexInfos"
+    ],
+    "kind": "PropertySignature",
+    "before": "IndexInfo[]",
+    "after": "readonly IndexInfo[]",
+    "why": "Adamic, task r11wppy item 1, the public change: each member holds tsc's shared emptyArray (never[]) for a type with no members of that kind, so it is a readonly array. Code that pushes onto one, or assigns it to a mutable array, stops type-checking; code that reads it is unaffected."
+  }
+]
