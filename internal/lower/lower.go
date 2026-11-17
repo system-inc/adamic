@@ -114,6 +114,7 @@ func lowerWithElementKey(key *viewElementKey, program *load.Program, typeChecker
 	defer func() { err = lowering.hostMemberPending(lowering.regexpServedPending(err)) }()
 	lowering.debug = debug
 	lowering.moduleFormat = moduleFormat
+	lowering.probeKindSets()
 	lowering.result.ProgramRegion = discovery || plan != nil
 	if plan != nil {
 		lowering.result.ProgramTypes = plan.types
