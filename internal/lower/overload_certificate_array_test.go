@@ -35,9 +35,9 @@ const overloadCertificateGateWords = "an overload certified by its body, entered
 // extra binder U witnessed as T, so (T | T)[] is T[] (Correctness's scout lists only overload 1 refused).
 func TestOverloadCertificateArrayFromLowers(t *testing.T) {
 	t.Parallel()
-	source := overloadCertificateArrayFrom + `const set = new Set<number>([3, 1, 2]);
-const plain = arrayFrom(set);
-const doubled = arrayFrom(set, x => x * 2);
+	source := overloadCertificateArrayFrom + `const items: number[] = [3, 1, 2];
+const plain = arrayFrom(items);
+const doubled = arrayFrom(items, x => x * 2);
 console.log(plain.join(","));
 console.log(doubled.join(","));
 `
@@ -55,7 +55,7 @@ console.log(doubled.join(","));
 // certificates B and C's, not this one's.
 func TestOverloadCertificateArrayNegativesStayRefused(t *testing.T) {
 	t.Parallel()
-	const observe = "console.log(JSON.stringify({ expectedType: \"string\", actualType: typeof actual, actual }));\n"
+	const observe = "console.log(`expected string, got ${typeof actual}`);\n"
 	for _, probe := range []struct{ name, source string }{
 		{"index write", `function bad(): string[];
 function bad(): (string | number)[] {
@@ -185,7 +185,7 @@ function bad(values: string[]): (string | number)[] {
     return out;
 }
 const actual = bad(["ok"])[0];
-console.log(JSON.stringify({ expectedType: "string", actualType: typeof actual, actual }));
+console.log(` + "`expected string, got ${typeof actual}`" + `);
 `
 	_, err := lowerSourceAs(t, source, ".ts")
 	var refused *Refused
@@ -253,7 +253,7 @@ func overloadCertificateProbe(t *testing.T, modules map[string]string) (*lowerin
 // expression, new and tagged template, and the comma, spread and tagged rows go red.
 func TestOverloadCertificateArrayGate(t *testing.T) {
 	t.Parallel()
-	const set = "const set = new Set<number>([3, 1, 2]);\n"
+	const items = "const items: number[] = [3, 1, 2];\n"
 	exported := strings.ReplaceAll(overloadCertificateArrayFrom, "function arrayFrom", "export function arrayFrom")
 	for _, probe := range []struct {
 		name    string
@@ -261,12 +261,12 @@ func TestOverloadCertificateArrayGate(t *testing.T) {
 		direct  bool
 		form    string
 	}{
-		{"parenthesized callee", map[string]string{"main.ts": overloadCertificateArrayFrom + set + "const got = (arrayFrom)(set, x => x * 2);\nconsole.log(got.join(\",\"));\n"}, true, ""},
-		{"optional call", map[string]string{"main.ts": overloadCertificateArrayFrom + set + "const got = arrayFrom?.(set, x => x * 2);\nconsole.log(got.join(\",\"));\n"}, true, ""},
-		{"import alias", map[string]string{"library.ts": exported, "main.ts": "import { arrayFrom as af } from \"./library\";\n" + set + "const got = af(set, x => x * 2);\nconsole.log(got.join(\",\"));\n"}, true, ""},
-		{"namespace member", map[string]string{"main.ts": "namespace ts {\n" + exported + "}\n" + set + "const got = ts.arrayFrom(set, x => x * 2);\nconsole.log(got.join(\",\"));\n"}, true, ""},
-		{"comma callee", map[string]string{"main.ts": overloadCertificateArrayFrom + set + "let touched = 0;\nconst got = (touched++, arrayFrom)(set, x => x * 2);\nconsole.log(got.join(\",\"));\n"}, false, "a comma expression callee"},
-		{"spread argument", map[string]string{"main.ts": overloadCertificateArrayFrom + set + "const args: [Set<number>, (x: number) => number] = [set, x => x * 2];\nconst got = arrayFrom(...args);\nconsole.log(got.join(\",\"));\n"}, false, "a spread argument"},
+		{"parenthesized callee", map[string]string{"main.ts": overloadCertificateArrayFrom + items + "const got = (arrayFrom)(items, x => x * 2);\nconsole.log(got.join(\",\"));\n"}, true, ""},
+		{"optional call", map[string]string{"main.ts": overloadCertificateArrayFrom + items + "const got = arrayFrom?.(items, x => x * 2);\nconsole.log(got.join(\",\"));\n"}, true, ""},
+		{"import alias", map[string]string{"library.ts": exported, "main.ts": "import { arrayFrom as af } from \"./library\";\n" + items + "const got = af(items, x => x * 2);\nconsole.log(got.join(\",\"));\n"}, true, ""},
+		{"namespace member", map[string]string{"main.ts": "namespace ts {\n" + exported + "}\n" + items + "const got = ts.arrayFrom(items, x => x * 2);\nconsole.log(got.join(\",\"));\n"}, true, ""},
+		{"comma callee", map[string]string{"main.ts": overloadCertificateArrayFrom + items + "let touched = 0;\nconst got = (touched++, arrayFrom)(items, x => x * 2);\nconsole.log(got.join(\",\"));\n"}, false, "a comma expression callee"},
+		{"spread argument", map[string]string{"main.ts": overloadCertificateArrayFrom + items + "const args: [number[], (x: number) => number] = [items, x => x * 2];\nconst got = arrayFrom(...args);\nconsole.log(got.join(\",\"));\n"}, false, "a spread argument"},
 		{"tagged template", map[string]string{"main.ts": overloadCertificateArrayFrom + "const got = arrayFrom`a${(t: string) => t.length}`;\nconsole.log(got.join(\",\"));\n"}, false, "a tagged template"},
 	} {
 		t.Run(probe.name, func(t *testing.T) {
@@ -295,7 +295,7 @@ func TestOverloadCertificateArrayGate(t *testing.T) {
 // reference to the set, the gate answers false, whatever stops that reference elsewhere.
 func TestOverloadCertificateArrayEntryRefusesANonCall(t *testing.T) {
 	t.Parallel()
-	l, call, overload := overloadCertificateProbe(t, map[string]string{"main.ts": overloadCertificateArrayFrom + "const set = new Set<number>([3, 1, 2]);\nconst reference = arrayFrom;\nconsole.log(reference(set, x => x * 2).join(\",\"));\n"})
+	l, call, overload := overloadCertificateProbe(t, map[string]string{"main.ts": overloadCertificateArrayFrom + "const items: number[] = [3, 1, 2];\nconst reference = arrayFrom;\nconsole.log(reference(items, x => x * 2).join(\",\"));\n"})
 	if call.Kind != ast.KindCallExpression {
 		t.Fatalf("want the call through reference, got %v", call.Kind)
 	}
