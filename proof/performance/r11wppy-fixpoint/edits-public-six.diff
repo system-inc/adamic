@@ -1,0 +1,72 @@
+src/compiler/checker.ts:5645
+-    function getNamedOrIndexSignatureMembers(members: SymbolTable, symbol: Symbol): Symbol[] {
++    function getNamedOrIndexSignatureMembers(members: SymbolTable, symbol: Symbol): readonly Symbol[] {
+src/compiler/checker.ts:13256
+-    function getImplementsTypes(type: InterfaceType): BaseType[] {
++    function getImplementsTypes(type: InterfaceType): readonly BaseType[] {
+src/compiler/checker.ts:13724
+-    function createInstantiatedSymbolTable(symbols: Symbol[], mapper: TypeMapper, mappingThisOnly: boolean): SymbolTable {
++    function createInstantiatedSymbolTable(symbols: readonly Symbol[], mapper: TypeMapper, mappingThisOnly: boolean): SymbolTable {
+src/compiler/checker.ts:13732
+-    function addInheritedMembers(symbols: SymbolTable, baseSymbols: Symbol[]) {
++    function addInheritedMembers(symbols: SymbolTable, baseSymbols: readonly Symbol[]) {
+src/compiler/checker.ts:14316
+-    function getUnionSignatures(signatureLists: readonly (readonly Signature[])[]): Signature[] {
++    function getUnionSignatures(signatureLists: readonly (readonly Signature[])[]): readonly Signature[] {
+src/compiler/checker.ts:14487
+-    function getUnionIndexInfos(types: readonly Type[]): IndexInfo[] {
++    function getUnionIndexInfos(types: readonly Type[]): readonly IndexInfo[] {
+src/compiler/checker.ts:24127
+-            function relateVariances(sourceTypeArguments: readonly Type[] | undefined, targetTypeArguments: readonly Type[] | undefined, variances: VarianceFlags[], intersectionState: IntersectionState) {
++            function relateVariances(sourceTypeArguments: readonly Type[] | undefined, targetTypeArguments: readonly Type[] | undefined, variances: readonly VarianceFlags[], intersectionState: IntersectionState) {
+src/compiler/checker.ts:24286
+-        function excludeProperties(properties: Symbol[], excludedProperties: Set<__String> | undefined) {
++        function excludeProperties(properties: readonly Symbol[], excludedProperties: Set<__String> | undefined) {
+src/compiler/checker.ts:25009
+-    function getVariances(type: GenericType): VarianceFlags[] {
++    function getVariances(type: GenericType): readonly VarianceFlags[] {
+src/compiler/checker.ts:25025
+-    function getVariancesWorker(symbol: Symbol, typeParameters: readonly TypeParameter[] = emptyArray): VarianceFlags[] {
++    function getVariancesWorker(symbol: Symbol, typeParameters: readonly TypeParameter[] = emptyArray): readonly VarianceFlags[] {
+src/compiler/checker.ts:25106
+-    function hasCovariantVoidArgument(typeArguments: readonly Type[], variances: VarianceFlags[]): boolean {
++    function hasCovariantVoidArgument(typeArguments: readonly Type[], variances: readonly VarianceFlags[]): boolean {
+src/compiler/checker.ts:27985
+-    function findDiscriminantProperties(sourceProperties: Symbol[], target: Type): Symbol[] | undefined {
++    function findDiscriminantProperties(sourceProperties: readonly Symbol[], target: Type): Symbol[] | undefined {
+src/compiler/checker.ts:35353
+-    function getSpellingSuggestionForName(name: string, symbols: Symbol[], meaning: SymbolFlags): Symbol | undefined {
++    function getSpellingSuggestionForName(name: string, symbols: readonly Symbol[], meaning: SymbolFlags): Symbol | undefined {
+src/compiler/checker.ts:47699
+-    function getNonInheritedProperties(type: InterfaceType, baseTypes: BaseType[], properties: Symbol[]) {
++    function getNonInheritedProperties(type: InterfaceType, baseTypes: readonly BaseType[], properties: readonly Symbol[]) {
+src/compiler/checker.ts:50924
+-    function getPropertiesOfContainerFunction(node: Declaration): Symbol[] {
++    function getPropertiesOfContainerFunction(node: Declaration): readonly Symbol[] {
+src/compiler/types.ts:5374
+-    /** @internal */ createAnonymousType(symbol: Symbol | undefined, members: SymbolTable, callSignatures: Signature[], constructSignatures: Signature[], indexInfos: IndexInfo[]): Type;
++    /** @internal */ createAnonymousType(symbol: Symbol | undefined, members: SymbolTable, callSignatures: Signature[], constructSignatures: readonly Signature[], indexInfos: readonly IndexInfo[]): Type;
+src/compiler/types.ts:5925
+-    getPropertiesOfContainerFunction(node: Declaration): Symbol[];
++    getPropertiesOfContainerFunction(node: Declaration): readonly Symbol[];
+src/compiler/types.ts:6099
+-    variances?: VarianceFlags[];                // Alias symbol type argument variance cache
++    variances?: readonly VarianceFlags[];                // Alias symbol type argument variance cache
+src/compiler/types.ts:5086
+-    getPropertiesOfType(type: Type): Symbol[];
++    getPropertiesOfType(type: Type): readonly Symbol[];
+src/compiler/types.ts:5096
+-    getBaseTypes(type: InterfaceType): BaseType[];
++    getBaseTypes(type: InterfaceType): readonly BaseType[];
+src/compiler/types.ts:6647
+-    declaredProperties: Symbol[];                   // Declared members
++    declaredProperties: readonly Symbol[];                   // Declared members
+src/compiler/types.ts:6648
+-    declaredCallSignatures: Signature[];            // Declared call signatures
++    declaredCallSignatures: readonly Signature[];            // Declared call signatures
+src/compiler/types.ts:6649
+-    declaredConstructSignatures: Signature[];       // Declared construct signatures
++    declaredConstructSignatures: readonly Signature[];       // Declared construct signatures
+src/compiler/types.ts:6650
+-    declaredIndexInfos: IndexInfo[];                // Declared index signatures
++    declaredIndexInfos: readonly IndexInfo[];                // Declared index signatures
