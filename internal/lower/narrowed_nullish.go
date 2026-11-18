@@ -6,6 +6,7 @@ import (
 
 	"github.com/microsoft/TypeScript/tsc/shim/ast"
 	"github.com/microsoft/TypeScript/tsc/shim/checker"
+	"github.com/system-inc/adamic/internal/ir"
 	"github.com/system-inc/adamic/internal/load"
 )
 
@@ -53,6 +54,7 @@ func (l *lowering) narrowedNullishReadGap(node *ast.Node) error {
 func init() {
 	refusalRules.register(3330, "narrowedNullishReadGap", (*lowering).narrowedNullishReadGap)
 	refusalRules.register(3340, "narrowedNeverReadGap", (*lowering).narrowedNeverReadGap)
+	refusalRules.register(3350, "narrowedArmReadGap", (*lowering).narrowedArmReadGap)
 }
 
 // narrowedNeverReadGap is narrowedNullishReadGap's twin for never (rulings.md:74 and :151, #v59xyph). A
@@ -80,6 +82,90 @@ func (l *lowering) narrowedNeverReadGap(node *ast.Node) error {
 		return nil // Declared never, it holds no value a read could hand on.
 	}
 	return l.notYet(node, "a read the checker narrowed to never of a binding a call may write")
+}
+
+// narrowedArmReadGap stops a stale narrowing before a read can use the wrong layout, including
+// a narrowing that only strips undefined or null. The other twins own reads narrowed to nullish
+// or never.
+func (l *lowering) narrowedArmReadGap(node *ast.Node) error {
+	shorthand := node.Parent != nil && node.Parent.Kind == ast.KindShorthandPropertyAssignment
+	if node.Kind != ast.KindIdentifier || !l.isExpression(node) || (ast.IsDeclarationName(node) && !shorthand) || (ast.IsAssignmentTarget(node) && pureWrite(node)) {
+		return nil
+	}
+	symbol := l.bindingNamed(node)
+	if symbol == nil || symbol.Flags&ast.SymbolFlagsVariable == 0 || !l.writtenAcrossFunctions(symbol) {
+		return nil
+	}
+	narrowed, declared := l.checker.GetTypeAtLocation(node), l.checker.GetTypeOfSymbol(symbol)
+	if narrowed.Id() == declared.Id() || narrowed.Flags()&checker.TypeFlagsNever != 0 {
+		return nil
+	}
+	if _, nullish := l.nullishUnit(narrowed); nullish {
+		return nil
+	}
+	storage, known := l.representation(declared)
+	if known && storage == ir.Union {
+		return nil // localRead checks the held union member at runtime before narrowing it.
+	}
+	if narrowedStorage, narrowedKnown := l.representation(narrowed); known && narrowedKnown && narrowedStorage == storage && !storage.IsReference() {
+		// The read uses the same scalar storage as the write, so it reads the real value,
+		// as Node does, whatever a call wrote.
+		return nil
+	}
+	if !l.codeMayRunBeforeArmRead(node) {
+		return nil
+	}
+	writer := "a function"
+	if write := l.firstCrossFunctionWrite(symbol); write != nil {
+		if function := callBoundary(write); function != nil && ast.IsFunctionLike(function) && function.Name() != nil {
+			writer = function.Name().Text()
+		}
+	}
+	name := node.Text()
+	return l.notYet(node, "a read of "+name+" narrowed to "+l.checker.TypeToString(narrowed)+" where a call may have rewritten it ("+name+" is assigned inside "+writer+")")
+}
+
+// codeMayRunBeforeArmRead looks for code that may run before the read in its own
+// call boundary. A loop can also run code after the read before its next iteration.
+func (l *lowering) codeMayRunBeforeArmRead(read *ast.Node) bool {
+	boundary := callBoundary(read)
+	if boundary == nil || read.Pos() < 0 {
+		return true
+	}
+	if l.armReadCodeIn(boundary, read.Pos()) {
+		return true
+	}
+	for at := read.Parent; at != boundary; at = at.Parent {
+		if ast.IsIterationStatement(at, false) && (l.mayRunCode(at) || l.armReadCodeIn(at, at.End())) {
+			return true
+		}
+	}
+	return false
+}
+
+// armReadCodeIn visits nodes that finish by end without entering nested call
+// boundaries. The code that calls a nested function is counted at the call site.
+func (l *lowering) armReadCodeIn(container *ast.Node, end int) bool {
+	var visit ast.Visitor
+	visit = func(node *ast.Node) bool {
+		if node.Pos() < 0 || node.End() < node.Pos() {
+			return true
+		}
+		if node.Pos() >= end {
+			return false
+		}
+		if node.End() <= end {
+			switch node.Kind {
+			case ast.KindUnknown, ast.KindWithStatement, ast.KindClassDeclaration:
+				return true
+			}
+			if l.mayRunCode(node) {
+				return true
+			}
+		}
+		return !isCallBoundary(node) && node.ForEachChild(visit)
+	}
+	return container.ForEachChild(visit)
 }
 
 // passedAtDeclaredType reports whether read is the whole argument of a direct call to a function the
@@ -889,12 +975,17 @@ func (l *lowering) nullishUnit(t *checker.Type) (string, bool) {
 // or for-of head. One walk over every module of the program collects the answer for every symbol the
 // first time it's asked; the answer is the program's alone, so nothing invalidates it.
 func (l *lowering) writtenAcrossFunctions(symbol *ast.Symbol) bool {
+	return l.firstCrossFunctionWrite(symbol) != nil
+}
+
+// firstCrossFunctionWrite returns the first such assignment target in program walk order.
+func (l *lowering) firstCrossFunctionWrite(symbol *ast.Symbol) *ast.Node {
 	if l.crossFunctionWrites == nil {
-		l.crossFunctionWrites = map[*ast.Symbol]bool{}
+		l.crossFunctionWrites = map[*ast.Symbol]*ast.Node{}
 		l.walkProgramModules(func(node *ast.Node) {
 			if node.Kind == ast.KindIdentifier && ast.IsAssignmentTarget(node) {
-				if written := l.bindingNamed(node); written != nil && written.ValueDeclaration != nil && callBoundary(node) != callBoundary(written.ValueDeclaration) {
-					l.crossFunctionWrites[written] = true
+				if written := l.bindingNamed(node); written != nil && written.ValueDeclaration != nil && l.crossFunctionWrites[written] == nil && callBoundary(node) != callBoundary(written.ValueDeclaration) {
+					l.crossFunctionWrites[written] = node
 				}
 			}
 		})
@@ -929,9 +1020,13 @@ func (l *lowering) walkProgramModules(visit func(*ast.Node)) {
 // static block. Its source file where there is none.
 func callBoundary(node *ast.Node) *ast.Node {
 	for at := node.Parent; at != nil; at = at.Parent {
-		if ast.IsFunctionLike(at) || at.Kind == ast.KindClassStaticBlockDeclaration || at.Kind == ast.KindPropertyDeclaration || at.Kind == ast.KindSourceFile {
+		if isCallBoundary(at) {
 			return at
 		}
 	}
 	return nil
+}
+
+func isCallBoundary(node *ast.Node) bool {
+	return ast.IsFunctionLike(node) || node.Kind == ast.KindClassStaticBlockDeclaration || node.Kind == ast.KindPropertyDeclaration || node.Kind == ast.KindSourceFile
 }
