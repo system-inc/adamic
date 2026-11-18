@@ -1,0 +1,4125 @@
+{
+  "version": "6.0.3",
+  "scope": "79 compiler roots and their compiler source closure; named and literal-key writes, named declarations; dynamic-key and spread constructors need separate manual tracing",
+  "source_text_range_incompatible_declarations_or_literal_values": [],
+  "declarations": [
+    {
+      "property": "name",
+      "where": "src/compiler/tracing.ts:139:39",
+      "owner": "TypeLiteral",
+      "type": "string",
+      "source": "name: string;"
+    },
+    {
+      "property": "jsDocCache",
+      "where": "src/compiler/types.ts:964:5",
+      "owner": "JSDocArray",
+      "type": "readonly JSDocTag[] | undefined",
+      "source": "jsDocCache?: readonly JSDocTag[] | undefined;"
+    },
+    {
+      "property": "name",
+      "where": "src/compiler/types.ts:1763:5",
+      "owner": "NamedDeclaration",
+      "type": "DeclarationName | undefined",
+      "source": "readonly name?: DeclarationName | undefined;"
+    },
+    {
+      "property": "name",
+      "where": "src/compiler/types.ts:1768:5",
+      "owner": "DynamicNamedDeclaration",
+      "type": "ComputedPropertyName",
+      "source": "readonly name: ComputedPropertyName;"
+    },
+    {
+      "property": "name",
+      "where": "src/compiler/types.ts:1779:5",
+      "owner": "LateBoundDeclaration",
+      "type": "LateBoundName",
+      "source": "readonly name: LateBoundName;"
+    },
+    {
+      "property": "name",
+      "where": "src/compiler/types.ts:1793:5",
+      "owner": "DeclarationStatement",
+      "type": "Identifier | StringLiteral | NumericLiteral | undefined",
+      "source": "readonly name?: Identifier | StringLiteral | NumericLiteral | undefined;"
+    },
+    {
+      "property": "name",
+      "where": "src/compiler/types.ts:1831:5",
+      "owner": "TypeParameterDeclaration",
+      "type": "Identifier",
+      "source": "readonly name: Identifier;"
+    },
+    {
+      "property": "constraint",
+      "where": "src/compiler/types.ts:1833:5",
+      "owner": "TypeParameterDeclaration",
+      "type": "TypeNode | undefined",
+      "source": "readonly constraint?: TypeNode | undefined;"
+    },
+    {
+      "property": "name",
+      "where": "src/compiler/types.ts:1842:5",
+      "owner": "SignatureDeclarationBase",
+      "type": "PropertyName | undefined",
+      "source": "readonly name?: PropertyName | undefined;"
+    },
+    {
+      "property": "name",
+      "where": "src/compiler/types.ts:1878:5",
+      "owner": "VariableDeclaration",
+      "type": "BindingName",
+      "source": "readonly name: BindingName;"
+    },
+    {
+      "property": "name",
+      "where": "src/compiler/types.ts:1899:5",
+      "owner": "ParameterDeclaration",
+      "type": "BindingName",
+      "source": "readonly name: BindingName;"
+    },
+    {
+      "property": "name",
+      "where": "src/compiler/types.ts:1911:5",
+      "owner": "BindingElement",
+      "type": "BindingName",
+      "source": "readonly name: BindingName;"
+    },
+    {
+      "property": "name",
+      "where": "src/compiler/types.ts:1923:5",
+      "owner": "PropertySignature",
+      "type": "PropertyName",
+      "source": "readonly name: PropertyName;"
+    },
+    {
+      "property": "name",
+      "where": "src/compiler/types.ts:1936:5",
+      "owner": "PropertyDeclaration",
+      "type": "PropertyName",
+      "source": "readonly name: PropertyName;"
+    },
+    {
+      "property": "name",
+      "where": "src/compiler/types.ts:1949:5",
+      "owner": "PrivateIdentifierPropertyDeclaration",
+      "type": "PrivateIdentifier",
+      "source": "name: PrivateIdentifier;"
+    },
+    {
+      "property": "name",
+      "where": "src/compiler/types.ts:1953:5",
+      "owner": "PrivateIdentifierAutoAccessorPropertyDeclaration",
+      "type": "PrivateIdentifier",
+      "source": "name: PrivateIdentifier;"
+    },
+    {
+      "property": "name",
+      "where": "src/compiler/types.ts:1957:5",
+      "owner": "PrivateIdentifierMethodDeclaration",
+      "type": "PrivateIdentifier",
+      "source": "name: PrivateIdentifier;"
+    },
+    {
+      "property": "name",
+      "where": "src/compiler/types.ts:1961:5",
+      "owner": "PrivateIdentifierGetAccessorDeclaration",
+      "type": "PrivateIdentifier",
+      "source": "name: PrivateIdentifier;"
+    },
+    {
+      "property": "name",
+      "where": "src/compiler/types.ts:1965:5",
+      "owner": "PrivateIdentifierSetAccessorDeclaration",
+      "type": "PrivateIdentifier",
+      "source": "name: PrivateIdentifier;"
+    },
+    {
+      "property": "name",
+      "where": "src/compiler/types.ts:1982:5",
+      "owner": "ObjectLiteralElement",
+      "type": "PropertyName | undefined",
+      "source": "readonly name?: PropertyName | undefined;"
+    },
+    {
+      "property": "name",
+      "where": "src/compiler/types.ts:1996:5",
+      "owner": "PropertyAssignment",
+      "type": "PropertyName",
+      "source": "readonly name: PropertyName;"
+    },
+    {
+      "property": "name",
+      "where": "src/compiler/types.ts:2008:5",
+      "owner": "ShorthandPropertyAssignment",
+      "type": "Identifier",
+      "source": "readonly name: Identifier;"
+    },
+    {
+      "property": "name",
+      "where": "src/compiler/types.ts:2088:5",
+      "owner": "FunctionDeclaration",
+      "type": "Identifier | undefined",
+      "source": "readonly name?: Identifier | undefined;"
+    },
+    {
+      "property": "name",
+      "where": "src/compiler/types.ts:2096:5",
+      "owner": "MethodSignature",
+      "type": "PropertyName",
+      "source": "readonly name: PropertyName;"
+    },
+    {
+      "property": "name",
+      "where": "src/compiler/types.ts:2112:5",
+      "owner": "MethodDeclaration",
+      "type": "PropertyName",
+      "source": "readonly name: PropertyName;"
+    },
+    {
+      "property": "name",
+      "where": "src/compiler/types.ts:2142:5",
+      "owner": "GetAccessorDeclaration",
+      "type": "PropertyName",
+      "source": "readonly name: PropertyName;"
+    },
+    {
+      "property": "name",
+      "where": "src/compiler/types.ts:2155:5",
+      "owner": "SetAccessorDeclaration",
+      "type": "PropertyName",
+      "source": "readonly name: PropertyName;"
+    },
+    {
+      "property": "name",
+      "where": "src/compiler/types.ts:2283:5",
+      "owner": "NamedTupleMember",
+      "type": "Identifier",
+      "source": "readonly name: Identifier;"
+    },
+    {
+      "property": "types",
+      "where": "src/compiler/types.ts:2302:5",
+      "owner": "UnionTypeNode",
+      "type": "NodeArray<TypeNode>",
+      "source": "readonly types: NodeArray<TypeNode>;"
+    },
+    {
+      "property": "types",
+      "where": "src/compiler/types.ts:2307:5",
+      "owner": "IntersectionTypeNode",
+      "type": "NodeArray<TypeNode>",
+      "source": "readonly types: NodeArray<TypeNode>;"
+    },
+    {
+      "property": "name",
+      "where": "src/compiler/types.ts:2754:5",
+      "owner": "FunctionExpression",
+      "type": "Identifier | undefined",
+      "source": "readonly name?: Identifier | undefined;"
+    },
+    {
+      "property": "name",
+      "where": "src/compiler/types.ts:2763:5",
+      "owner": "ArrowFunction",
+      "type": "never",
+      "source": "readonly name: never;"
+    },
+    {
+      "property": "name",
+      "where": "src/compiler/types.ts:2973:5",
+      "owner": "PropertyAccessExpression",
+      "type": "MemberName",
+      "source": "readonly name: MemberName;"
+    },
+    {
+      "property": "name",
+      "where": "src/compiler/types.ts:2978:5",
+      "owner": "PrivateIdentifierPropertyAccessExpression",
+      "type": "PrivateIdentifier",
+      "source": "readonly name: PrivateIdentifier;"
+    },
+    {
+      "property": "name",
+      "where": "src/compiler/types.ts:2983:5",
+      "owner": "PropertyAccessChain",
+      "type": "MemberName",
+      "source": "readonly name: MemberName;"
+    },
+    {
+      "property": "name",
+      "where": "src/compiler/types.ts:2999:5",
+      "owner": "PropertyAccessEntityNameExpression",
+      "type": "Identifier",
+      "source": "readonly name: Identifier;"
+    },
+    {
+      "property": "name",
+      "where": "src/compiler/types.ts:3176:5",
+      "owner": "MetaProperty",
+      "type": "Identifier",
+      "source": "readonly name: Identifier;"
+    },
+    {
+      "property": "name",
+      "where": "src/compiler/types.ts:3182:5",
+      "owner": "ImportMetaProperty",
+      "type": "Identifier & { readonly escapedText: { __escapedIdentifier: void; } & \"meta\"; }",
+      "source": "readonly name: Identifier & { readonly escapedText: __String & \"meta\"; };"
+    },
+    {
+      "property": "name",
+      "where": "src/compiler/types.ts:3187:5",
+      "owner": "ImportDeferProperty",
+      "type": "Identifier & { readonly escapedText: { __escapedIdentifier: void; } & \"defer\"; }",
+      "source": "readonly name: Identifier & { readonly escapedText: __String & \"defer\"; };"
+    },
+    {
+      "property": "name",
+      "where": "src/compiler/types.ts:3233:5",
+      "owner": "JsxNamespacedName",
+      "type": "Identifier",
+      "source": "readonly name: Identifier;"
+    },
+    {
+      "property": "name",
+      "where": "src/compiler/types.ts:3277:5",
+      "owner": "JsxAttribute",
+      "type": "JsxAttributeName",
+      "source": "readonly name: JsxAttributeName;"
+    },
+    {
+      "property": "name",
+      "where": "src/compiler/types.ts:3360:5",
+      "owner": "MissingDeclaration",
+      "type": "Identifier | undefined",
+      "source": "readonly name?: Identifier;"
+    },
+    {
+      "property": "name",
+      "where": "src/compiler/types.ts:3545:5",
+      "owner": "ClassLikeDeclarationBase",
+      "type": "Identifier | undefined",
+      "source": "readonly name?: Identifier | undefined;"
+    },
+    {
+      "property": "name",
+      "where": "src/compiler/types.ts:3555:5",
+      "owner": "ClassDeclaration",
+      "type": "Identifier | undefined",
+      "source": "readonly name?: Identifier | undefined;"
+    },
+    {
+      "property": "name",
+      "where": "src/compiler/types.ts:3569:5",
+      "owner": "ClassElement",
+      "type": "PropertyName | undefined",
+      "source": "readonly name?: PropertyName | undefined;"
+    },
+    {
+      "property": "name",
+      "where": "src/compiler/types.ts:3574:5",
+      "owner": "TypeElement",
+      "type": "PropertyName | undefined",
+      "source": "readonly name?: PropertyName | undefined;"
+    },
+    {
+      "property": "name",
+      "where": "src/compiler/types.ts:3581:5",
+      "owner": "InterfaceDeclaration",
+      "type": "Identifier",
+      "source": "readonly name: Identifier;"
+    },
+    {
+      "property": "types",
+      "where": "src/compiler/types.ts:3591:5",
+      "owner": "HeritageClause",
+      "type": "NodeArray<ExpressionWithTypeArguments>",
+      "source": "readonly types: NodeArray<ExpressionWithTypeArguments>;"
+    },
+    {
+      "property": "name",
+      "where": "src/compiler/types.ts:3597:5",
+      "owner": "TypeAliasDeclaration",
+      "type": "Identifier",
+      "source": "readonly name: Identifier;"
+    },
+    {
+      "property": "name",
+      "where": "src/compiler/types.ts:3607:5",
+      "owner": "EnumMember",
+      "type": "PropertyName",
+      "source": "readonly name: PropertyName;"
+    },
+    {
+      "property": "name",
+      "where": "src/compiler/types.ts:3614:5",
+      "owner": "EnumDeclaration",
+      "type": "Identifier",
+      "source": "readonly name: Identifier;"
+    },
+    {
+      "property": "name",
+      "where": "src/compiler/types.ts:3635:5",
+      "owner": "ModuleDeclaration",
+      "type": "ModuleName",
+      "source": "readonly name: ModuleName;"
+    },
+    {
+      "property": "name",
+      "where": "src/compiler/types.ts:3644:5",
+      "owner": "NamespaceDeclaration",
+      "type": "Identifier",
+      "source": "readonly name: Identifier;"
+    },
+    {
+      "property": "name",
+      "where": "src/compiler/types.ts:3653:5",
+      "owner": "JSDocNamespaceDeclaration",
+      "type": "Identifier",
+      "source": "readonly name: Identifier;"
+    },
+    {
+      "property": "name",
+      "where": "src/compiler/types.ts:3676:5",
+      "owner": "ImportEqualsDeclaration",
+      "type": "Identifier",
+      "source": "readonly name: Identifier;"
+    },
+    {
+      "property": "name",
+      "where": "src/compiler/types.ts:3725:5",
+      "owner": "ImportClause",
+      "type": "Identifier | undefined",
+      "source": "readonly name?: Identifier | undefined;"
+    },
+    {
+      "property": "name",
+      "where": "src/compiler/types.ts:3745:5",
+      "owner": "ImportAttribute",
+      "type": "ImportAttributeName",
+      "source": "readonly name: ImportAttributeName;"
+    },
+    {
+      "property": "name",
+      "where": "src/compiler/types.ts:3760:5",
+      "owner": "NamespaceImport",
+      "type": "Identifier",
+      "source": "readonly name: Identifier;"
+    },
+    {
+      "property": "name",
+      "where": "src/compiler/types.ts:3766:5",
+      "owner": "NamespaceExport",
+      "type": "ModuleExportName",
+      "source": "readonly name: ModuleExportName;"
+    },
+    {
+      "property": "name",
+      "where": "src/compiler/types.ts:3771:5",
+      "owner": "NamespaceExportDeclaration",
+      "type": "Identifier",
+      "source": "readonly name: Identifier;"
+    },
+    {
+      "property": "name",
+      "where": "src/compiler/types.ts:3808:5",
+      "owner": "ImportSpecifier",
+      "type": "Identifier",
+      "source": "readonly name: Identifier;"
+    },
+    {
+      "property": "name",
+      "where": "src/compiler/types.ts:3817:5",
+      "owner": "ExportSpecifier",
+      "type": "ModuleExportName",
+      "source": "readonly name: ModuleExportName;"
+    },
+    {
+      "property": "name",
+      "where": "src/compiler/types.ts:3835:51",
+      "owner": "TypeLiteral",
+      "type": "Identifier",
+      "source": "readonly name: Identifier;"
+    },
+    {
+      "property": "resolutionMode",
+      "where": "src/compiler/types.ts:3862:5",
+      "owner": "FileReference",
+      "type": "ResolutionMode",
+      "source": "resolutionMode?: ResolutionMode;"
+    },
+    {
+      "property": "preserve",
+      "where": "src/compiler/types.ts:3863:5",
+      "owner": "FileReference",
+      "type": "boolean | undefined",
+      "source": "preserve?: boolean;"
+    },
+    {
+      "property": "name",
+      "where": "src/compiler/types.ts:3892:5",
+      "owner": "JSDocNameReference",
+      "type": "EntityName | JSDocMemberName",
+      "source": "readonly name: EntityName | JSDocMemberName;"
+    },
+    {
+      "property": "name",
+      "where": "src/compiler/types.ts:3966:5",
+      "owner": "JSDocLink",
+      "type": "EntityName | JSDocMemberName | undefined",
+      "source": "readonly name?: EntityName | JSDocMemberName | undefined;"
+    },
+    {
+      "property": "name",
+      "where": "src/compiler/types.ts:3972:5",
+      "owner": "JSDocLinkCode",
+      "type": "EntityName | JSDocMemberName | undefined",
+      "source": "readonly name?: EntityName | JSDocMemberName | undefined;"
+    },
+    {
+      "property": "name",
+      "where": "src/compiler/types.ts:3978:5",
+      "owner": "JSDocLinkPlain",
+      "type": "EntityName | JSDocMemberName | undefined",
+      "source": "readonly name?: EntityName | JSDocMemberName | undefined;"
+    },
+    {
+      "property": "constraint",
+      "where": "src/compiler/types.ts:4052:5",
+      "owner": "JSDocTemplateTag",
+      "type": "JSDocTypeExpression | undefined",
+      "source": "readonly constraint: JSDocTypeExpression | undefined;"
+    },
+    {
+      "property": "name",
+      "where": "src/compiler/types.ts:4058:5",
+      "owner": "JSDocSeeTag",
+      "type": "JSDocNameReference | undefined",
+      "source": "readonly name?: JSDocNameReference | undefined;"
+    },
+    {
+      "property": "name",
+      "where": "src/compiler/types.ts:4075:5",
+      "owner": "JSDocTypedefTag",
+      "type": "Identifier | undefined",
+      "source": "readonly name?: Identifier | undefined;"
+    },
+    {
+      "property": "name",
+      "where": "src/compiler/types.ts:4083:5",
+      "owner": "JSDocCallbackTag",
+      "type": "Identifier | undefined",
+      "source": "readonly name?: Identifier | undefined;"
+    },
+    {
+      "property": "name",
+      "where": "src/compiler/types.ts:4107:5",
+      "owner": "JSDocPropertyLikeTag",
+      "type": "EntityName",
+      "source": "readonly name: EntityName;"
+    },
+    {
+      "property": "name",
+      "where": "src/compiler/types.ts:4280:5",
+      "owner": "AmdDependency",
+      "type": "string | undefined",
+      "source": "name?: string | undefined;"
+    },
+    {
+      "property": "getPositionOfLineAndCharacter",
+      "where": "src/compiler/types.ts:4297:5",
+      "owner": "SourceFileLike",
+      "type": "((line: number, character: number, allowEdits?: true | undefined) => number) | undefined",
+      "source": "getPositionOfLineAndCharacter?: ((line: number, character: number, allowEdits?: true) => number) | undefined;"
+    },
+    {
+      "property": "packageJsonScope",
+      "where": "src/compiler/types.ts:4305:5",
+      "owner": "FutureSourceFile",
+      "type": "PackageJsonInfo | undefined",
+      "source": "readonly packageJsonScope?: PackageJsonInfo;"
+    },
+    {
+      "property": "packageJsonScope",
+      "where": "src/compiler/types.ts:4396:22",
+      "owner": "SourceFile",
+      "type": "PackageJsonInfo | undefined",
+      "source": "packageJsonScope?: PackageJsonInfo | undefined;"
+    },
+    {
+      "property": "version",
+      "where": "src/compiler/types.ts:4452:22",
+      "owner": "SourceFile",
+      "type": "string",
+      "source": "version: string;"
+    },
+    {
+      "property": "source",
+      "where": "src/compiler/types.ts:4576:5",
+      "owner": "ResolvedRefAndSource",
+      "type": "string | undefined",
+      "source": "source?: string;"
+    },
+    {
+      "property": "types",
+      "where": "src/compiler/types.ts:6751:5",
+      "owner": "UnionOrIntersectionType",
+      "type": "Type[]",
+      "source": "types: Type[];"
+    },
+    {
+      "property": "source",
+      "where": "src/compiler/types.ts:6824:5",
+      "owner": "ReverseMappedType",
+      "type": "Type",
+      "source": "source: Type;"
+    },
+    {
+      "property": "constraint",
+      "where": "src/compiler/types.ts:6897:5",
+      "owner": "TypeParameter",
+      "type": "Type | undefined",
+      "source": "constraint?: Type;"
+    },
+    {
+      "property": "constraint",
+      "where": "src/compiler/types.ts:6932:5",
+      "owner": "IndexedAccessType",
+      "type": "Type | undefined",
+      "source": "constraint?: Type;"
+    },
+    {
+      "property": "types",
+      "where": "src/compiler/types.ts:6987:5",
+      "owner": "TemplateLiteralType",
+      "type": "readonly Type[]",
+      "source": "types: readonly Type[];"
+    },
+    {
+      "property": "constraint",
+      "where": "src/compiler/types.ts:7005:5",
+      "owner": "SubstitutionType",
+      "type": "Type",
+      "source": "constraint: Type;"
+    },
+    {
+      "property": "name",
+      "where": "src/compiler/types.ts:7092:89",
+      "owner": "TypeLiteral",
+      "type": "ComputedPropertyName",
+      "source": "name: ComputedPropertyName;"
+    },
+    {
+      "property": "source",
+      "where": "src/compiler/types.ts:7114:35",
+      "owner": "TypeLiteral",
+      "type": "Type",
+      "source": "source: Type;"
+    },
+    {
+      "property": "reportsUnnecessary",
+      "where": "src/compiler/types.ts:7250:5",
+      "owner": "DiagnosticMessage",
+      "type": "{} | undefined",
+      "source": "reportsUnnecessary?: {} | undefined;"
+    },
+    {
+      "property": "repopulateInfo",
+      "where": "src/compiler/types.ts:7281:5",
+      "owner": "DiagnosticMessageChain",
+      "type": "(() => RepopulateDiagnosticChainInfo) | undefined",
+      "source": "repopulateInfo?: () => RepopulateDiagnosticChainInfo;"
+    },
+    {
+      "property": "reportsUnnecessary",
+      "where": "src/compiler/types.ts:7288:5",
+      "owner": "Diagnostic",
+      "type": "{} | undefined",
+      "source": "reportsUnnecessary?: {} | undefined;"
+    },
+    {
+      "property": "source",
+      "where": "src/compiler/types.ts:7291:5",
+      "owner": "Diagnostic",
+      "type": "string | undefined",
+      "source": "source?: string | undefined;"
+    },
+    {
+      "property": "name",
+      "where": "src/compiler/types.ts:7398:5",
+      "owner": "PluginImport",
+      "type": "string",
+      "source": "name: string;"
+    },
+    {
+      "property": "originalPath",
+      "where": "src/compiler/types.ts:7405:5",
+      "owner": "ProjectReference",
+      "type": "string | undefined",
+      "source": "originalPath?: string | undefined;"
+    },
+    {
+      "property": "all",
+      "where": "src/compiler/types.ts:7438:22",
+      "owner": "CompilerOptions",
+      "type": "boolean | undefined",
+      "source": "all?: boolean;"
+    },
+    {
+      "property": "types",
+      "where": "src/compiler/types.ts:7592:5",
+      "owner": "CompilerOptions",
+      "type": "string[] | undefined",
+      "source": "types?: string[];"
+    },
+    {
+      "property": "version",
+      "where": "src/compiler/types.ts:7597:22",
+      "owner": "CompilerOptions",
+      "type": "boolean | undefined",
+      "source": "version?: boolean | undefined;"
+    },
+    {
+      "property": "watchOptions",
+      "where": "src/compiler/types.ts:7738:5",
+      "owner": "ParsedCommandLine",
+      "type": "WatchOptions | undefined",
+      "source": "watchOptions?: WatchOptions | undefined;"
+    },
+    {
+      "property": "name",
+      "where": "src/compiler/types.ts:7789:5",
+      "owner": "CommandLineOptionBase",
+      "type": "string",
+      "source": "name: string;"
+    },
+    {
+      "property": "getGlobalTypingsCacheLocation",
+      "where": "src/compiler/types.ts:8032:22",
+      "owner": "ModuleResolutionHost",
+      "type": "(() => string | undefined) | undefined",
+      "source": "getGlobalTypingsCacheLocation?(): string | undefined;"
+    },
+    {
+      "property": "originalPath",
+      "where": "src/compiler/types.ts:8072:5",
+      "owner": "ResolvedModuleFull",
+      "type": "string | undefined",
+      "source": "readonly originalPath?: string | undefined;"
+    },
+    {
+      "property": "name",
+      "where": "src/compiler/types.ts:8091:5",
+      "owner": "PackageId",
+      "type": "string",
+      "source": "name: string;"
+    },
+    {
+      "property": "version",
+      "where": "src/compiler/types.ts:8098:5",
+      "owner": "PackageId",
+      "type": "string",
+      "source": "version: string;"
+    },
+    {
+      "property": "failedLookupLocations",
+      "where": "src/compiler/types.ts:8121:5",
+      "owner": "ResolvedModuleWithFailedLookupLocations",
+      "type": "string[] | undefined",
+      "source": "failedLookupLocations?: string[] | undefined;"
+    },
+    {
+      "property": "originalPath",
+      "where": "src/compiler/types.ts:8144:5",
+      "owner": "ResolvedTypeReferenceDirective",
+      "type": "string | undefined",
+      "source": "originalPath?: string | undefined;"
+    },
+    {
+      "property": "failedLookupLocations",
+      "where": "src/compiler/types.ts:8152:22",
+      "owner": "ResolvedTypeReferenceDirectiveWithFailedLookupLocations",
+      "type": "string[] | undefined",
+      "source": "failedLookupLocations?: string[] | undefined;"
+    },
+    {
+      "property": "source",
+      "where": "src/compiler/types.ts:8333:5",
+      "owner": "SourceMapRange",
+      "type": "SourceMapSource | undefined",
+      "source": "source?: SourceMapSource;"
+    },
+    {
+      "property": "skipTrivia",
+      "where": "src/compiler/types.ts:8340:5",
+      "owner": "SourceMapSource",
+      "type": "((pos: number) => number) | undefined",
+      "source": "skipTrivia?: (pos: number) => number;"
+    },
+    {
+      "property": "name",
+      "where": "src/compiler/types.ts:8441:5",
+      "owner": "EmitHelperBase",
+      "type": "string",
+      "source": "readonly name: string;"
+    },
+    {
+      "property": "version",
+      "where": "src/compiler/types.ts:9827:5",
+      "owner": "BuildInfo",
+      "type": "string",
+      "source": "version: string;"
+    },
+    {
+      "property": "version",
+      "where": "src/compiler/types.ts:9918:5",
+      "owner": "RawSourceMap",
+      "type": "3",
+      "source": "version: 3;"
+    },
+    {
+      "property": "getGlobalTypingsCacheLocation",
+      "where": "src/compiler/types.ts:10029:5",
+      "owner": "ModuleSpecifierResolutionHost",
+      "type": "(() => string | undefined) | undefined",
+      "source": "getGlobalTypingsCacheLocation?: { getGlobalTypingsCacheLocation(): string | undefined; }[\"getGlobalTypingsCacheLocation\"] | undefined;"
+    },
+    {
+      "property": "getGlobalTypingsCacheLocation",
+      "where": "src/compiler/types.ts:10029:39",
+      "owner": "TypeLiteral",
+      "type": "() => string | undefined",
+      "source": "getGlobalTypingsCacheLocation(): string | undefined;"
+    },
+    {
+      "property": "skipLogging",
+      "where": "src/compiler/types.ts:10109:5",
+      "owner": "ErrorOutputContainer",
+      "type": "boolean | undefined",
+      "source": "skipLogging?: boolean;"
+    },
+    {
+      "property": "name",
+      "where": "src/compiler/types.ts:10254:5",
+      "owner": "PragmaArgumentSpecification",
+      "type": "TName",
+      "source": "name: TName;"
+    },
+    {
+      "property": "name",
+      "where": "src/compiler/types.ts:10357:64",
+      "owner": "TypeLiteral",
+      "type": "TName",
+      "source": "name: infer TName;"
+    },
+    {
+      "property": "name",
+      "where": "src/compiler/types.ts:10372:13",
+      "owner": "TypeLiteral",
+      "type": "\"types\"",
+      "source": "readonly name: \"types\";"
+    },
+    {
+      "property": "name",
+      "where": "src/compiler/types.ts:10376:13",
+      "owner": "TypeLiteral",
+      "type": "\"lib\"",
+      "source": "readonly name: \"lib\";"
+    },
+    {
+      "property": "name",
+      "where": "src/compiler/types.ts:10380:13",
+      "owner": "TypeLiteral",
+      "type": "\"path\"",
+      "source": "readonly name: \"path\";"
+    },
+    {
+      "property": "name",
+      "where": "src/compiler/types.ts:10384:13",
+      "owner": "TypeLiteral",
+      "type": "\"no-default-lib\"",
+      "source": "readonly name: \"no-default-lib\";"
+    },
+    {
+      "property": "name",
+      "where": "src/compiler/types.ts:10387:13",
+      "owner": "TypeLiteral",
+      "type": "\"resolution-mode\"",
+      "source": "readonly name: \"resolution-mode\";"
+    },
+    {
+      "property": "name",
+      "where": "src/compiler/types.ts:10390:13",
+      "owner": "TypeLiteral",
+      "type": "\"preserve\"",
+      "source": "readonly name: \"preserve\";"
+    },
+    {
+      "property": "name",
+      "where": "src/compiler/types.ts:10397:13",
+      "owner": "TypeLiteral",
+      "type": "\"path\"",
+      "source": "readonly name: \"path\";"
+    },
+    {
+      "property": "name",
+      "where": "src/compiler/types.ts:10399:13",
+      "owner": "TypeLiteral",
+      "type": "\"name\"",
+      "source": "readonly name: \"name\";"
+    },
+    {
+      "property": "name",
+      "where": "src/compiler/types.ts:10406:13",
+      "owner": "TypeLiteral",
+      "type": "\"name\"",
+      "source": "readonly name: \"name\";"
+    },
+    {
+      "property": "name",
+      "where": "src/compiler/types.ts:10418:13",
+      "owner": "TypeLiteral",
+      "type": "\"factory\"",
+      "source": "readonly name: \"factory\";"
+    },
+    {
+      "property": "name",
+      "where": "src/compiler/types.ts:10424:13",
+      "owner": "TypeLiteral",
+      "type": "\"factory\"",
+      "source": "readonly name: \"factory\";"
+    },
+    {
+      "property": "name",
+      "where": "src/compiler/types.ts:10430:13",
+      "owner": "TypeLiteral",
+      "type": "\"factory\"",
+      "source": "readonly name: \"factory\";"
+    },
+    {
+      "property": "name",
+      "where": "src/compiler/types.ts:10436:13",
+      "owner": "TypeLiteral",
+      "type": "\"factory\"",
+      "source": "readonly name: \"factory\";"
+    },
+    {
+      "property": "name",
+      "where": "src/compiler/types.ts:10446:70",
+      "owner": "TypeLiteral",
+      "type": "K",
+      "source": "name: K;"
+    },
+    {
+      "property": "getGlobalTypingsCacheLocation",
+      "where": "src/compiler/sys.ts:1512:13",
+      "owner": "NodeResolutionSystem",
+      "type": "(() => string | undefined) | undefined",
+      "source": "getGlobalTypingsCacheLocation?(): string | undefined;"
+    },
+    {
+      "property": "getGlobalTypingsCacheLocation",
+      "where": "src/compiler/sys.ts:1523:13",
+      "owner": "NodeModuleResolutionHost",
+      "type": "(() => string | undefined) | undefined",
+      "source": "getGlobalTypingsCacheLocation?: () => string | undefined;"
+    },
+    {
+      "property": "name",
+      "where": "src/compiler/scanner.ts:2640:49",
+      "owner": "TypeLiteral",
+      "type": "string",
+      "source": "name: string;"
+    },
+    {
+      "property": "name",
+      "where": "src/compiler/utilitiesPublic.ts:617:101",
+      "owner": "TypeLiteral",
+      "type": "Identifier",
+      "source": "name: Identifier;"
+    },
+    {
+      "property": "name",
+      "where": "src/compiler/utilitiesPublic.ts:950:78",
+      "owner": "TypeLiteral",
+      "type": "DeclarationName",
+      "source": "name: DeclarationName;"
+    },
+    {
+      "property": "name",
+      "where": "src/compiler/utilities.ts:2090:85",
+      "owner": "TypeLiteral",
+      "type": "StringLiteral",
+      "source": "name: StringLiteral;"
+    },
+    {
+      "property": "name",
+      "where": "src/compiler/utilities.ts:5475:27",
+      "owner": "TypeLiteral",
+      "type": "undefined",
+      "source": "readonly name?: undefined;"
+    },
+    {
+      "property": "name",
+      "where": "src/compiler/utilities.ts:5476:30",
+      "owner": "TypeLiteral",
+      "type": "undefined",
+      "source": "readonly name?: undefined;"
+    },
+    {
+      "property": "name",
+      "where": "src/compiler/utilities.ts:5507:30",
+      "owner": "TypeLiteral",
+      "type": "Identifier",
+      "source": "readonly name: Identifier;"
+    },
+    {
+      "property": "name",
+      "where": "src/compiler/utilities.ts:5509:31",
+      "owner": "TypeLiteral",
+      "type": "Identifier",
+      "source": "readonly name: Identifier;"
+    },
+    {
+      "property": "name",
+      "where": "src/compiler/utilities.ts:5510:32",
+      "owner": "TypeLiteral",
+      "type": "Identifier",
+      "source": "readonly name: Identifier;"
+    },
+    {
+      "property": "name",
+      "where": "src/compiler/utilities.ts:5511:26",
+      "owner": "TypeLiteral",
+      "type": "Identifier",
+      "source": "readonly name: Identifier;"
+    },
+    {
+      "property": "name",
+      "where": "src/compiler/utilities.ts:5552:30",
+      "owner": "TypeLiteral",
+      "type": "Identifier",
+      "source": "readonly name: Identifier;"
+    },
+    {
+      "property": "name",
+      "where": "src/compiler/utilities.ts:5554:31",
+      "owner": "TypeLiteral",
+      "type": "Identifier",
+      "source": "readonly name: Identifier;"
+    },
+    {
+      "property": "name",
+      "where": "src/compiler/utilities.ts:5555:32",
+      "owner": "TypeLiteral",
+      "type": "Identifier",
+      "source": "readonly name: Identifier;"
+    },
+    {
+      "property": "name",
+      "where": "src/compiler/utilities.ts:5556:26",
+      "owner": "TypeLiteral",
+      "type": "Identifier",
+      "source": "readonly name: Identifier;"
+    },
+    {
+      "property": "types",
+      "where": "src/compiler/utilities.ts:9027:93",
+      "owner": "TypeLiteral",
+      "type": "string[]",
+      "source": "types: string[];"
+    },
+    {
+      "property": "name",
+      "where": "src/compiler/factory/emitHelpers.ts:62:5",
+      "owner": "ESDecorateClassContext",
+      "type": "Expression",
+      "source": "name: Expression;"
+    },
+    {
+      "property": "name",
+      "where": "src/compiler/factory/emitHelpers.ts:77:5",
+      "owner": "ESDecorateClassElementContext",
+      "type": "ESDecorateName",
+      "source": "name: ESDecorateName;"
+    },
+    {
+      "property": "name",
+      "where": "src/compiler/factory/emitHelpers.ts:92:25",
+      "owner": "TypeLiteral",
+      "type": "Expression",
+      "source": "name: Expression;"
+    },
+    {
+      "property": "name",
+      "where": "src/compiler/factory/emitHelpers.ts:93:26",
+      "owner": "TypeLiteral",
+      "type": "Identifier | PrivateIdentifier",
+      "source": "name: Identifier | PrivateIdentifier;"
+    },
+    {
+      "property": "name",
+      "where": "src/compiler/factory/utilities.ts:362:141",
+      "owner": "TypeLiteral",
+      "type": "Identifier | StringLiteral | NoSubstitutionTemplateLiteral | NumericLiteral | ComputedPropertyName | BigIntLiteral",
+      "source": "readonly name: Exclude<PropertyName, PrivateIdentifier>;"
+    },
+    {
+      "property": "name",
+      "where": "src/compiler/factory/utilities.ts:472:117",
+      "owner": "TypeLiteral",
+      "type": "Identifier | StringLiteral | NoSubstitutionTemplateLiteral | NumericLiteral | ComputedPropertyName | BigIntLiteral",
+      "source": "readonly name: Exclude<PropertyName, PrivateIdentifier>;"
+    },
+    {
+      "property": "packageJsonScope",
+      "where": "src/compiler/parser.ts:1336:22",
+      "owner": "CreateSourceFileOptions",
+      "type": "PackageJsonInfo | undefined",
+      "source": "packageJsonScope?: PackageJsonInfo | undefined;"
+    },
+    {
+      "property": "name",
+      "where": "src/compiler/parser.ts:9368:65",
+      "owner": "TypeLiteral",
+      "type": "EntityName",
+      "source": "name: EntityName;"
+    },
+    {
+      "property": "watchOptions",
+      "where": "src/compiler/commandLineParser.ts:1918:5",
+      "owner": "BaseParsedCommandLine",
+      "type": "WatchOptions | undefined",
+      "source": "watchOptions: WatchOptions | undefined;"
+    },
+    {
+      "property": "watchOptions",
+      "where": "src/compiler/commandLineParser.ts:2153:5",
+      "owner": "ParsedBuildCommand",
+      "type": "WatchOptions | undefined",
+      "source": "watchOptions: WatchOptions | undefined;"
+    },
+    {
+      "property": "onUnRecoverableConfigFileDiagnostic",
+      "where": "src/compiler/commandLineParser.ts:2219:5",
+      "owner": "ConfigFileDiagnosticsReporter",
+      "type": "DiagnosticReporter",
+      "source": "onUnRecoverableConfigFileDiagnostic: DiagnosticReporter;"
+    },
+    {
+      "property": "watchOptions",
+      "where": "src/compiler/commandLineParser.ts:2677:32",
+      "owner": "TypeLiteral",
+      "type": "object | undefined",
+      "source": "watchOptions?: object | undefined;"
+    },
+    {
+      "property": "watchOptions",
+      "where": "src/compiler/commandLineParser.ts:3397:5",
+      "owner": "ParsedTsconfig",
+      "type": "WatchOptions | undefined",
+      "source": "watchOptions?: WatchOptions | undefined;"
+    },
+    {
+      "property": "watchOptions",
+      "where": "src/compiler/commandLineParser.ts:3411:5",
+      "owner": "ExtendsResult",
+      "type": "WatchOptions | undefined",
+      "source": "watchOptions?: WatchOptions | undefined;"
+    },
+    {
+      "property": "originalPath",
+      "where": "src/compiler/moduleNameResolver.ts:168:5",
+      "owner": "Resolved",
+      "type": "string | true | undefined",
+      "source": "readonly originalPath?: string | true | undefined;"
+    },
+    {
+      "property": "failedLookupLocations",
+      "where": "src/compiler/moduleNameResolver.ts:322:5",
+      "owner": "ModuleResolutionState",
+      "type": "string[] | undefined",
+      "source": "failedLookupLocations: string[] | undefined;"
+    },
+    {
+      "property": "types",
+      "where": "src/compiler/moduleNameResolver.ts:341:5",
+      "owner": "PackageJsonPathFields",
+      "type": "string | undefined",
+      "source": "types?: string;"
+    },
+    {
+      "property": "name",
+      "where": "src/compiler/moduleNameResolver.ts:348:5",
+      "owner": "PackageJsonPathFields",
+      "type": "string | undefined",
+      "source": "name?: string;"
+    },
+    {
+      "property": "name",
+      "where": "src/compiler/moduleNameResolver.ts:355:5",
+      "owner": "PackageJson",
+      "type": "string | undefined",
+      "source": "name?: string;"
+    },
+    {
+      "property": "version",
+      "where": "src/compiler/moduleNameResolver.ts:356:5",
+      "owner": "PackageJson",
+      "type": "string | undefined",
+      "source": "version?: string;"
+    },
+    {
+      "property": "version",
+      "where": "src/compiler/moduleNameResolver.ts:423:5",
+      "owner": "VersionPaths",
+      "type": "string",
+      "source": "version: string;"
+    },
+    {
+      "property": "name",
+      "where": "src/compiler/moduleSpecifiers.ts:882:33",
+      "owner": "TypeLiteral",
+      "type": "StringLiteral",
+      "source": "name: StringLiteral;"
+    },
+    {
+      "property": "name",
+      "where": "src/compiler/moduleSpecifiers.ts:920:101",
+      "owner": "TypeLiteral",
+      "type": "StringLiteral",
+      "source": "name: StringLiteral;"
+    },
+    {
+      "property": "packageRootPath",
+      "where": "src/compiler/moduleSpecifiers.ts:1249:96",
+      "owner": "TypeLiteral",
+      "type": "string | undefined",
+      "source": "packageRootPath?: string;"
+    },
+    {
+      "property": "name",
+      "where": "src/compiler/checker.ts:8014:13",
+      "owner": "SignatureToSignatureDeclarationOptions",
+      "type": "PropertyName | undefined",
+      "source": "name?: PropertyName;"
+    },
+    {
+      "property": "name",
+      "where": "src/compiler/checker.ts:8287:38",
+      "owner": "TypeLiteral",
+      "type": "__String",
+      "source": "name: __String;"
+    },
+    {
+      "property": "name",
+      "where": "src/compiler/checker.ts:38496:113",
+      "owner": "TypeLiteral",
+      "type": "Identifier",
+      "source": "name: Identifier;"
+    },
+    {
+      "property": "source",
+      "where": "src/compiler/sourcemap.ts:659:5",
+      "owner": "MappedPosition",
+      "type": "string | undefined",
+      "source": "readonly source: string | undefined;"
+    },
+    {
+      "property": "source",
+      "where": "src/compiler/sourcemap.ts:666:5",
+      "owner": "SourceMappedPosition",
+      "type": "string",
+      "source": "source: string;"
+    },
+    {
+      "property": "name",
+      "where": "src/compiler/transformers/destructuring.ts:254:81",
+      "owner": "TypeLiteral",
+      "type": "BindingName",
+      "source": "name: BindingName;"
+    },
+    {
+      "property": "name",
+      "where": "src/compiler/transformers/esDecorators.ts:1240:45",
+      "owner": "TypeLiteral",
+      "type": "PrivateIdentifier",
+      "source": "readonly name: PrivateIdentifier;"
+    },
+    {
+      "property": "name",
+      "where": "src/compiler/transformers/jsx.ts:96:55",
+      "owner": "TypeLiteral",
+      "type": "Identifier",
+      "source": "name: Identifier;"
+    },
+    {
+      "property": "name",
+      "where": "src/compiler/transformers/jsx.ts:113:87",
+      "owner": "TypeLiteral",
+      "type": "Identifier",
+      "source": "name: Identifier;"
+    },
+    {
+      "property": "name",
+      "where": "src/compiler/transformers/es2015.ts:1329:69",
+      "owner": "TypeLiteral",
+      "type": "CapturedThis",
+      "source": "readonly name: CapturedThis;"
+    },
+    {
+      "property": "name",
+      "where": "src/compiler/transformers/module/system.ts:139:9",
+      "owner": "DependencyGroup",
+      "type": "StringLiteral",
+      "source": "name: StringLiteral;"
+    },
+    {
+      "property": "packageJsonScope",
+      "where": "src/compiler/program.ts:856:5",
+      "owner": "SourceFileImportsList",
+      "type": "PackageJsonInfo | undefined",
+      "source": "packageJsonScope?: SourceFile[\"packageJsonScope\"];"
+    },
+    {
+      "property": "onUnRecoverableConfigFileDiagnostic",
+      "where": "src/compiler/program.ts:5116:47",
+      "owner": "TypeLiteral",
+      "type": "DiagnosticReporter | undefined",
+      "source": "onUnRecoverableConfigFileDiagnostic?: DiagnosticReporter;"
+    },
+    {
+      "property": "name",
+      "where": "src/compiler/builderStatePublic.ts:13:5",
+      "owner": "OutputFile",
+      "type": "string",
+      "source": "name: string;"
+    },
+    {
+      "property": "version",
+      "where": "src/compiler/builderState.ts:105:9",
+      "owner": "FileInfo",
+      "type": "string",
+      "source": "readonly version: string;"
+    },
+    {
+      "property": "reportsUnnecessary",
+      "where": "src/compiler/builder.ts:96:5",
+      "owner": "ReusableDiagnostic",
+      "type": "{} | undefined",
+      "source": "reportsUnnecessary?: {} | undefined;"
+    },
+    {
+      "property": "source",
+      "where": "src/compiler/builder.ts:98:5",
+      "owner": "ReusableDiagnostic",
+      "type": "string | undefined",
+      "source": "source?: string | undefined;"
+    },
+    {
+      "property": "failedLookupLocations",
+      "where": "src/compiler/resolutionCache.ts:169:5",
+      "owner": "ResolutionWithFailedLookupLocations",
+      "type": "string[] | undefined",
+      "source": "failedLookupLocations?: string[] | undefined;"
+    },
+    {
+      "property": "isInvalidated",
+      "where": "src/compiler/resolutionCache.ts:171:5",
+      "owner": "ResolutionWithFailedLookupLocations",
+      "type": "boolean | undefined",
+      "source": "isInvalidated?: boolean;"
+    },
+    {
+      "property": "createProgram",
+      "where": "src/compiler/watch.ts:906:5",
+      "owner": "CreateWatchCompilerHostInput",
+      "type": "CreateProgram<T> | undefined",
+      "source": "createProgram?: CreateProgram<T> | undefined;"
+    },
+    {
+      "property": "watchOptions",
+      "where": "src/compiler/watch.ts:947:5",
+      "owner": "CreateWatchCompilerHostOfFilesAndCompilerOptionsInput",
+      "type": "WatchOptions | undefined",
+      "source": "watchOptions: WatchOptions | undefined;"
+    },
+    {
+      "property": "createProgram",
+      "where": "src/compiler/watchPublic.ts:138:5",
+      "owner": "IncrementalProgramOptions",
+      "type": "CreateProgram<T> | undefined",
+      "source": "createProgram?: CreateProgram<T>;"
+    },
+    {
+      "property": "createProgram",
+      "where": "src/compiler/watchPublic.ts:178:5",
+      "owner": "ProgramHost",
+      "type": "CreateProgram<T>",
+      "source": "createProgram: CreateProgram<T>;"
+    },
+    {
+      "property": "watchOptions",
+      "where": "src/compiler/watchPublic.ts:298:5",
+      "owner": "WatchCompilerHostOfFilesAndCompilerOptions",
+      "type": "WatchOptions | undefined",
+      "source": "watchOptions?: WatchOptions | undefined;"
+    },
+    {
+      "property": "version",
+      "where": "src/compiler/watchPublic.ts:422:9",
+      "owner": "FilePresentOnHost",
+      "type": "string",
+      "source": "version: string;"
+    },
+    {
+      "property": "version",
+      "where": "src/compiler/watchPublic.ts:428:9",
+      "owner": "FilePresenceUnknownOnHost",
+      "type": "false",
+      "source": "version: false;"
+    },
+    {
+      "property": "version",
+      "where": "src/compiler/tsbuild.ts:158:9",
+      "owner": "TsVersionOutOfDate",
+      "type": "string",
+      "source": "version: string;"
+    },
+    {
+      "property": "name",
+      "where": "src/compiler/executeCommandLine.ts:93:5",
+      "owner": "Statistic",
+      "type": "string",
+      "source": "name: string;"
+    },
+    {
+      "property": "createProgram",
+      "where": "src/compiler/executeCommandLine.ts:982:77",
+      "owner": "TypeLiteral",
+      "type": "CreateProgram<T>",
+      "source": "createProgram: CreateProgram<T>;"
+    },
+    {
+      "property": "name",
+      "where": "src/compiler/binder.ts:323:5",
+      "owner": "ActiveLabel",
+      "type": "__String",
+      "source": "name: __String;"
+    }
+  ],
+  "writes": [
+    {
+      "property": "name",
+      "where": "src/compiler/tracing.ts:95:22",
+      "receiver": "{ name: string; args: { name: string; }; cat: string; ph: string; ts: number; pid: number; tid: number; }",
+      "value": "\"process_name\"",
+      "expression": "name: \"process_name\""
+    },
+    {
+      "property": "name",
+      "where": "src/compiler/tracing.ts:95:52",
+      "receiver": "{ name: string; }",
+      "value": "\"tsc\"",
+      "expression": "name: \"tsc\""
+    },
+    {
+      "property": "name",
+      "where": "src/compiler/tracing.ts:95:142",
+      "receiver": "{ name: string; args: { name: string; }; cat: string; ph: string; ts: number; pid: number; tid: number; }",
+      "value": "\"thread_name\"",
+      "expression": "name: \"thread_name\""
+    },
+    {
+      "property": "name",
+      "where": "src/compiler/tracing.ts:95:171",
+      "receiver": "{ name: string; }",
+      "value": "\"Main\"",
+      "expression": "name: \"Main\""
+    },
+    {
+      "property": "name",
+      "where": "src/compiler/tracing.ts:95:262",
+      "receiver": "{ name: string; cat: string; ph: string; ts: number; pid: number; tid: number; }",
+      "value": "\"TracingStartedInBrowser\"",
+      "expression": "name: \"TracingStartedInBrowser\""
+    },
+    {
+      "property": "name",
+      "where": "src/compiler/types.ts:10276:15",
+      "receiver": "{ readonly name: \"types\"; readonly optional: true; readonly captureSpan: true; }",
+      "value": "\"types\"",
+      "expression": "name: \"types\""
+    },
+    {
+      "property": "name",
+      "where": "src/compiler/types.ts:10277:15",
+      "receiver": "{ readonly name: \"lib\"; readonly optional: true; readonly captureSpan: true; }",
+      "value": "\"lib\"",
+      "expression": "name: \"lib\""
+    },
+    {
+      "property": "name",
+      "where": "src/compiler/types.ts:10278:15",
+      "receiver": "{ readonly name: \"path\"; readonly optional: true; readonly captureSpan: true; }",
+      "value": "\"path\"",
+      "expression": "name: \"path\""
+    },
+    {
+      "property": "name",
+      "where": "src/compiler/types.ts:10279:15",
+      "receiver": "{ readonly name: \"no-default-lib\"; readonly optional: true; }",
+      "value": "\"no-default-lib\"",
+      "expression": "name: \"no-default-lib\""
+    },
+    {
+      "property": "name",
+      "where": "src/compiler/types.ts:10280:15",
+      "receiver": "{ readonly name: \"resolution-mode\"; readonly optional: true; }",
+      "value": "\"resolution-mode\"",
+      "expression": "name: \"resolution-mode\""
+    },
+    {
+      "property": "name",
+      "where": "src/compiler/types.ts:10281:15",
+      "receiver": "{ readonly name: \"preserve\"; readonly optional: true; }",
+      "value": "\"preserve\"",
+      "expression": "name: \"preserve\""
+    },
+    {
+      "property": "name",
+      "where": "src/compiler/types.ts:10286:18",
+      "receiver": "{ readonly name: \"path\"; }",
+      "value": "\"path\"",
+      "expression": "name: \"path\""
+    },
+    {
+      "property": "name",
+      "where": "src/compiler/types.ts:10286:36",
+      "receiver": "{ readonly name: \"name\"; readonly optional: true; }",
+      "value": "\"name\"",
+      "expression": "name: \"name\""
+    },
+    {
+      "property": "name",
+      "where": "src/compiler/types.ts:10290:18",
+      "receiver": "{ readonly name: \"name\"; }",
+      "value": "\"name\"",
+      "expression": "name: \"name\""
+    },
+    {
+      "property": "name",
+      "where": "src/compiler/types.ts:10300:18",
+      "receiver": "{ readonly name: \"factory\"; }",
+      "value": "\"factory\"",
+      "expression": "name: \"factory\""
+    },
+    {
+      "property": "name",
+      "where": "src/compiler/types.ts:10304:18",
+      "receiver": "{ readonly name: \"factory\"; }",
+      "value": "\"factory\"",
+      "expression": "name: \"factory\""
+    },
+    {
+      "property": "name",
+      "where": "src/compiler/types.ts:10308:18",
+      "receiver": "{ readonly name: \"factory\"; }",
+      "value": "\"factory\"",
+      "expression": "name: \"factory\""
+    },
+    {
+      "property": "name",
+      "where": "src/compiler/types.ts:10312:18",
+      "receiver": "{ readonly name: \"factory\"; }",
+      "value": "\"factory\"",
+      "expression": "name: \"factory\""
+    },
+    {
+      "property": "getGlobalTypingsCacheLocation",
+      "where": "src/compiler/sys.ts:1629:67",
+      "receiver": "NodeModuleResolutionHost",
+      "value": "() => string | undefined",
+      "expression": "moduleResolutionHost.getGlobalTypingsCacheLocation = () => nodeSystem.getGlobalTypingsCacheLocation!()"
+    },
+    {
+      "property": "name",
+      "where": "src/compiler/scanner.ts:3010:96",
+      "receiver": "{ pos: number; end: number; name: string; }",
+      "value": "string",
+      "expression": "name: tokenValue"
+    },
+    {
+      "property": "jsDocCache",
+      "where": "src/compiler/utilitiesPublic.ts:1271:13",
+      "receiver": "JSDocArray",
+      "value": "readonly JSDocTag[]",
+      "expression": "node.jsDoc.jsDocCache = tags"
+    },
+    {
+      "property": "repopulateInfo",
+      "where": "src/compiler/utilities.ts:870:17",
+      "receiver": "DiagnosticMessageChain",
+      "value": "() => { moduleReference: string; mode: ResolutionMode; packageName: string | undefined; }",
+      "expression": "result.repopulateInfo = () => ({ moduleReference, mode, packageName: packageName === moduleReference ? undefined : packageName })"
+    },
+    {
+      "property": "repopulateInfo",
+      "where": "src/compiler/utilities.ts:902:5",
+      "receiver": "DiagnosticMessageChain",
+      "value": "() => boolean",
+      "expression": "result.repopulateInfo = () => true"
+    },
+    {
+      "property": "skipTrivia",
+      "where": "src/compiler/utilities.ts:8550:5",
+      "receiver": "Partial<SourceMapSource>",
+      "value": "(pos: number) => number",
+      "expression": "this.skipTrivia = skipTrivia || (pos => pos)"
+    },
+    {
+      "property": "reportsUnnecessary",
+      "where": "src/compiler/utilities.ts:8631:9",
+      "receiver": "{ file: undefined; start: number; length: number; messageText: string; category: DiagnosticCategory; code: number; reportsUnnecessary: {} | undefined; fileName: string; }",
+      "value": "{} | undefined",
+      "expression": "reportsUnnecessary: message.reportsUnnecessary"
+    },
+    {
+      "property": "reportsUnnecessary",
+      "where": "src/compiler/utilities.ts:8656:9",
+      "receiver": "{ file: SourceFile; start: number; length: number; messageText: string | DiagnosticMessageChain; category: DiagnosticCategory; code: number; reportsUnnecessary: {} | undefined; }",
+      "value": "{} | undefined",
+      "expression": "reportsUnnecessary: diagnostic.reportsUnnecessary"
+    },
+    {
+      "property": "reportsUnnecessary",
+      "where": "src/compiler/utilities.ts:8701:9",
+      "receiver": "{ file: SourceFile; start: number; length: number; messageText: string; category: DiagnosticCategory; code: number; reportsUnnecessary: {} | undefined; reportsDeprecated: {} | undefined; }",
+      "value": "{} | undefined",
+      "expression": "reportsUnnecessary: message.reportsUnnecessary"
+    },
+    {
+      "property": "reportsUnnecessary",
+      "where": "src/compiler/utilities.ts:8733:9",
+      "receiver": "{ file: undefined; start: undefined; length: undefined; messageText: string; category: DiagnosticCategory; code: number; reportsUnnecessary: {} | undefined; reportsDeprecated: {} | undefined; }",
+      "value": "{} | undefined",
+      "expression": "reportsUnnecessary: message.reportsUnnecessary"
+    },
+    {
+      "property": "name",
+      "where": "src/compiler/factory/nodeFactory.ts:1624:9",
+      "receiver": "Mutable<TypeParameterDeclaration>",
+      "value": "Identifier",
+      "expression": "node.name = asName(name)"
+    },
+    {
+      "property": "constraint",
+      "where": "src/compiler/factory/nodeFactory.ts:1625:9",
+      "receiver": "Mutable<TypeParameterDeclaration>",
+      "value": "TypeNode | undefined",
+      "expression": "node.constraint = constraint"
+    },
+    {
+      "property": "name",
+      "where": "src/compiler/factory/nodeFactory.ts:1656:9",
+      "receiver": "Mutable<ParameterDeclaration>",
+      "value": "Identifier | ObjectBindingPattern | ArrayBindingPattern",
+      "expression": "node.name = asName(name)"
+    },
+    {
+      "property": "name",
+      "where": "src/compiler/factory/nodeFactory.ts:1730:9",
+      "receiver": "Mutable<PropertySignature>",
+      "value": "Identifier | StringLiteral | NoSubstitutionTemplateLiteral | NumericLiteral | ComputedPropertyName | PrivateIdentifier | BigIntLiteral",
+      "expression": "node.name = asName(name)"
+    },
+    {
+      "property": "name",
+      "where": "src/compiler/factory/nodeFactory.ts:1774:9",
+      "receiver": "Mutable<PropertyDeclaration>",
+      "value": "Identifier | StringLiteral | NoSubstitutionTemplateLiteral | NumericLiteral | ComputedPropertyName | PrivateIdentifier | BigIntLiteral",
+      "expression": "node.name = asName(name)"
+    },
+    {
+      "property": "name",
+      "where": "src/compiler/factory/nodeFactory.ts:1823:9",
+      "receiver": "Mutable<MethodSignature>",
+      "value": "Identifier | StringLiteral | NoSubstitutionTemplateLiteral | NumericLiteral | ComputedPropertyName | PrivateIdentifier | BigIntLiteral",
+      "expression": "node.name = asName(name)"
+    },
+    {
+      "property": "name",
+      "where": "src/compiler/factory/nodeFactory.ts:1871:9",
+      "receiver": "Mutable<MethodDeclaration>",
+      "value": "Identifier | StringLiteral | NoSubstitutionTemplateLiteral | NumericLiteral | ComputedPropertyName | PrivateIdentifier | BigIntLiteral",
+      "expression": "node.name = asName(name)"
+    },
+    {
+      "property": "name",
+      "where": "src/compiler/factory/nodeFactory.ts:2044:9",
+      "receiver": "Mutable<GetAccessorDeclaration>",
+      "value": "Identifier | StringLiteral | NoSubstitutionTemplateLiteral | NumericLiteral | ComputedPropertyName | PrivateIdentifier | BigIntLiteral",
+      "expression": "node.name = asName(name)"
+    },
+    {
+      "property": "name",
+      "where": "src/compiler/factory/nodeFactory.ts:2107:9",
+      "receiver": "Mutable<SetAccessorDeclaration>",
+      "value": "Identifier | StringLiteral | NoSubstitutionTemplateLiteral | NumericLiteral | ComputedPropertyName | PrivateIdentifier | BigIntLiteral",
+      "expression": "node.name = asName(name)"
+    },
+    {
+      "property": "name",
+      "where": "src/compiler/factory/nodeFactory.ts:2496:9",
+      "receiver": "Mutable<NamedTupleMember>",
+      "value": "Identifier",
+      "expression": "node.name = name"
+    },
+    {
+      "property": "types",
+      "where": "src/compiler/factory/nodeFactory.ts:2547:9",
+      "receiver": "Mutable<UnionTypeNode | IntersectionTypeNode>",
+      "value": "NodeArray<TypeNode>",
+      "expression": "node.types = factory.createNodeArray(parenthesize(types))"
+    },
+    {
+      "property": "name",
+      "where": "src/compiler/factory/nodeFactory.ts:2820:9",
+      "receiver": "Mutable<BindingElement>",
+      "value": "Identifier | ObjectBindingPattern | ArrayBindingPattern",
+      "expression": "node.name = asName(name)"
+    },
+    {
+      "property": "name",
+      "where": "src/compiler/factory/nodeFactory.ts:2890:9",
+      "receiver": "Mutable<PropertyAccessExpression>",
+      "value": "MemberName",
+      "expression": "node.name = name"
+    },
+    {
+      "property": "name",
+      "where": "src/compiler/factory/nodeFactory.ts:3189:9",
+      "receiver": "Mutable<FunctionExpression>",
+      "value": "Identifier | undefined",
+      "expression": "node.name = asName(name)"
+    },
+    {
+      "property": "name",
+      "where": "src/compiler/factory/nodeFactory.ts:3660:9",
+      "receiver": "Mutable<ClassExpression>",
+      "value": "Identifier | undefined",
+      "expression": "node.name = asName(name)"
+    },
+    {
+      "property": "name",
+      "where": "src/compiler/factory/nodeFactory.ts:3797:9",
+      "receiver": "Mutable<MetaProperty>",
+      "value": "Identifier",
+      "expression": "node.name = name"
+    },
+    {
+      "property": "name",
+      "where": "src/compiler/factory/nodeFactory.ts:4253:9",
+      "receiver": "Mutable<VariableDeclaration>",
+      "value": "Identifier | ObjectBindingPattern | ArrayBindingPattern",
+      "expression": "node.name = asName(name)"
+    },
+    {
+      "property": "name",
+      "where": "src/compiler/factory/nodeFactory.ts:4312:9",
+      "receiver": "Mutable<FunctionDeclaration>",
+      "value": "Identifier | undefined",
+      "expression": "node.name = asName(name)"
+    },
+    {
+      "property": "name",
+      "where": "src/compiler/factory/nodeFactory.ts:4392:9",
+      "receiver": "Mutable<ClassDeclaration>",
+      "value": "Identifier | undefined",
+      "expression": "node.name = asName(name)"
+    },
+    {
+      "property": "name",
+      "where": "src/compiler/factory/nodeFactory.ts:4445:9",
+      "receiver": "Mutable<InterfaceDeclaration>",
+      "value": "Identifier",
+      "expression": "node.name = asName(name)"
+    },
+    {
+      "property": "name",
+      "where": "src/compiler/factory/nodeFactory.ts:4482:9",
+      "receiver": "Mutable<TypeAliasDeclaration>",
+      "value": "Identifier",
+      "expression": "node.name = asName(name)"
+    },
+    {
+      "property": "name",
+      "where": "src/compiler/factory/nodeFactory.ts:4517:9",
+      "receiver": "Mutable<EnumDeclaration>",
+      "value": "Identifier",
+      "expression": "node.name = asName(name)"
+    },
+    {
+      "property": "name",
+      "where": "src/compiler/factory/nodeFactory.ts:4553:9",
+      "receiver": "Mutable<ModuleDeclaration>",
+      "value": "ModuleName",
+      "expression": "node.name = name"
+    },
+    {
+      "property": "name",
+      "where": "src/compiler/factory/nodeFactory.ts:4624:9",
+      "receiver": "Mutable<NamespaceExportDeclaration>",
+      "value": "Identifier",
+      "expression": "node.name = asName(name)"
+    },
+    {
+      "property": "name",
+      "where": "src/compiler/factory/nodeFactory.ts:4657:9",
+      "receiver": "Mutable<ImportEqualsDeclaration>",
+      "value": "Identifier",
+      "expression": "node.name = asName(name)"
+    },
+    {
+      "property": "name",
+      "where": "src/compiler/factory/nodeFactory.ts:4734:9",
+      "receiver": "Mutable<ImportClause>",
+      "value": "Identifier | undefined",
+      "expression": "node.name = name"
+    },
+    {
+      "property": "name",
+      "where": "src/compiler/factory/nodeFactory.ts:4778:9",
+      "receiver": "Mutable<AssertEntry>",
+      "value": "ImportAttributeName",
+      "expression": "node.name = name"
+    },
+    {
+      "property": "name",
+      "where": "src/compiler/factory/nodeFactory.ts:4831:9",
+      "receiver": "Mutable<ImportAttribute>",
+      "value": "ImportAttributeName",
+      "expression": "node.name = name"
+    },
+    {
+      "property": "name",
+      "where": "src/compiler/factory/nodeFactory.ts:4848:9",
+      "receiver": "Mutable<NamespaceImport>",
+      "value": "Identifier",
+      "expression": "node.name = name"
+    },
+    {
+      "property": "name",
+      "where": "src/compiler/factory/nodeFactory.ts:4864:9",
+      "receiver": "Mutable<NamespaceExport>",
+      "value": "ModuleExportName",
+      "expression": "node.name = name"
+    },
+    {
+      "property": "name",
+      "where": "src/compiler/factory/nodeFactory.ts:4899:9",
+      "receiver": "Mutable<ImportSpecifier>",
+      "value": "Identifier",
+      "expression": "node.name = name"
+    },
+    {
+      "property": "name",
+      "where": "src/compiler/factory/nodeFactory.ts:5018:9",
+      "receiver": "Mutable<ExportSpecifier>",
+      "value": "Identifier | StringLiteral",
+      "expression": "node.name = asName(name)"
+    },
+    {
+      "property": "constraint",
+      "where": "src/compiler/factory/nodeFactory.ts:5216:9",
+      "receiver": "Mutable<JSDocTemplateTag>",
+      "value": "JSDocTypeExpression | undefined",
+      "expression": "node.constraint = constraint"
+    },
+    {
+      "property": "name",
+      "where": "src/compiler/factory/nodeFactory.ts:5236:9",
+      "receiver": "Mutable<JSDocTypedefTag>",
+      "value": "Identifier | undefined",
+      "expression": "node.name = getJSDocTypeAliasName(fullName)"
+    },
+    {
+      "property": "name",
+      "where": "src/compiler/factory/nodeFactory.ts:5257:9",
+      "receiver": "Mutable<JSDocParameterTag>",
+      "value": "EntityName",
+      "expression": "node.name = name"
+    },
+    {
+      "property": "name",
+      "where": "src/compiler/factory/nodeFactory.ts:5279:9",
+      "receiver": "Mutable<JSDocPropertyTag>",
+      "value": "EntityName",
+      "expression": "node.name = name"
+    },
+    {
+      "property": "name",
+      "where": "src/compiler/factory/nodeFactory.ts:5302:9",
+      "receiver": "Mutable<JSDocCallbackTag>",
+      "value": "Identifier | undefined",
+      "expression": "node.name = getJSDocTypeAliasName(fullName)"
+    },
+    {
+      "property": "name",
+      "where": "src/compiler/factory/nodeFactory.ts:5361:9",
+      "receiver": "Mutable<JSDocSeeTag>",
+      "value": "JSDocNameReference | undefined",
+      "expression": "node.name = name"
+    },
+    {
+      "property": "name",
+      "where": "src/compiler/factory/nodeFactory.ts:5377:9",
+      "receiver": "Mutable<JSDocNameReference>",
+      "value": "EntityName | JSDocMemberName",
+      "expression": "node.name = name"
+    },
+    {
+      "property": "name",
+      "where": "src/compiler/factory/nodeFactory.ts:5409:9",
+      "receiver": "Mutable<JSDocLink>",
+      "value": "EntityName | JSDocMemberName | undefined",
+      "expression": "node.name = name"
+    },
+    {
+      "property": "name",
+      "where": "src/compiler/factory/nodeFactory.ts:5424:9",
+      "receiver": "Mutable<JSDocLinkCode>",
+      "value": "EntityName | JSDocMemberName | undefined",
+      "expression": "node.name = name"
+    },
+    {
+      "property": "name",
+      "where": "src/compiler/factory/nodeFactory.ts:5439:9",
+      "receiver": "Mutable<JSDocLinkPlain>",
+      "value": "EntityName | JSDocMemberName | undefined",
+      "expression": "node.name = name"
+    },
+    {
+      "property": "name",
+      "where": "src/compiler/factory/nodeFactory.ts:5745:9",
+      "receiver": "Mutable<JsxAttribute>",
+      "value": "JsxAttributeName",
+      "expression": "node.name = name"
+    },
+    {
+      "property": "name",
+      "where": "src/compiler/factory/nodeFactory.ts:5815:9",
+      "receiver": "Mutable<JsxNamespacedName>",
+      "value": "Identifier",
+      "expression": "node.name = name"
+    },
+    {
+      "property": "types",
+      "where": "src/compiler/factory/nodeFactory.ts:5873:9",
+      "receiver": "Mutable<HeritageClause>",
+      "value": "NodeArray<ExpressionWithTypeArguments>",
+      "expression": "node.types = createNodeArray(types)"
+    },
+    {
+      "property": "name",
+      "where": "src/compiler/factory/nodeFactory.ts:5925:9",
+      "receiver": "Mutable<PropertyAssignment>",
+      "value": "Identifier | StringLiteral | NoSubstitutionTemplateLiteral | NumericLiteral | ComputedPropertyName | PrivateIdentifier | BigIntLiteral",
+      "expression": "node.name = asName(name)"
+    },
+    {
+      "property": "name",
+      "where": "src/compiler/factory/nodeFactory.ts:5959:9",
+      "receiver": "Mutable<ShorthandPropertyAssignment>",
+      "value": "Identifier",
+      "expression": "node.name = asName(name)"
+    },
+    {
+      "property": "name",
+      "where": "src/compiler/factory/nodeFactory.ts:6018:9",
+      "receiver": "Mutable<EnumMember>",
+      "value": "Identifier | StringLiteral | NoSubstitutionTemplateLiteral | NumericLiteral | ComputedPropertyName | PrivateIdentifier | BigIntLiteral",
+      "expression": "node.name = asName(name)"
+    },
+    {
+      "property": "packageJsonScope",
+      "where": "src/compiler/factory/nodeFactory.ts:6086:9",
+      "receiver": "Mutable<SourceFile>",
+      "value": "undefined",
+      "expression": "node.packageJsonScope = undefined"
+    },
+    {
+      "property": "packageJsonScope",
+      "where": "src/compiler/factory/nodeFactory.ts:6127:9",
+      "receiver": "Mutable<SourceFile>",
+      "value": "PackageJsonInfo | undefined",
+      "expression": "node.packageJsonScope = source.packageJsonScope"
+    },
+    {
+      "property": "name",
+      "where": "src/compiler/factory/emitHelpers.ts:731:5",
+      "receiver": "{ name: string; importName: string; scoped: false; priority: number; text: string; }",
+      "value": "\"typescript:decorate\"",
+      "expression": "name: \"typescript:decorate\""
+    },
+    {
+      "property": "name",
+      "where": "src/compiler/factory/emitHelpers.ts:745:5",
+      "receiver": "{ name: string; importName: string; scoped: false; priority: number; text: string; }",
+      "value": "\"typescript:metadata\"",
+      "expression": "name: \"typescript:metadata\""
+    },
+    {
+      "property": "name",
+      "where": "src/compiler/factory/emitHelpers.ts:756:5",
+      "receiver": "{ name: string; importName: string; scoped: false; priority: number; text: string; }",
+      "value": "\"typescript:param\"",
+      "expression": "name: \"typescript:param\""
+    },
+    {
+      "property": "name",
+      "where": "src/compiler/factory/emitHelpers.ts:768:5",
+      "receiver": "{ name: string; importName: string; scoped: false; priority: number; text: string; }",
+      "value": "\"typescript:esDecorate\"",
+      "expression": "name: \"typescript:esDecorate\""
+    },
+    {
+      "property": "name",
+      "where": "src/compiler/factory/emitHelpers.ts:803:5",
+      "receiver": "{ name: string; importName: string; scoped: false; priority: number; text: string; }",
+      "value": "\"typescript:runInitializers\"",
+      "expression": "name: \"typescript:runInitializers\""
+    },
+    {
+      "property": "name",
+      "where": "src/compiler/factory/emitHelpers.ts:820:5",
+      "receiver": "{ name: string; importName: string; scoped: false; priority: number; text: string; }",
+      "value": "\"typescript:assign\"",
+      "expression": "name: \"typescript:assign\""
+    },
+    {
+      "property": "name",
+      "where": "src/compiler/factory/emitHelpers.ts:839:5",
+      "receiver": "{ name: string; importName: string; scoped: false; text: string; }",
+      "value": "\"typescript:await\"",
+      "expression": "name: \"typescript:await\""
+    },
+    {
+      "property": "name",
+      "where": "src/compiler/factory/emitHelpers.ts:847:5",
+      "receiver": "{ name: string; importName: string; scoped: false; dependencies: UnscopedEmitHelper[]; text: string; }",
+      "value": "\"typescript:asyncGenerator\"",
+      "expression": "name: \"typescript:asyncGenerator\""
+    },
+    {
+      "property": "name",
+      "where": "src/compiler/factory/emitHelpers.ts:867:5",
+      "receiver": "{ name: string; importName: string; scoped: false; dependencies: UnscopedEmitHelper[]; text: string; }",
+      "value": "\"typescript:asyncDelegator\"",
+      "expression": "name: \"typescript:asyncDelegator\""
+    },
+    {
+      "property": "name",
+      "where": "src/compiler/factory/emitHelpers.ts:880:5",
+      "receiver": "{ name: string; importName: string; scoped: false; text: string; }",
+      "value": "\"typescript:asyncValues\"",
+      "expression": "name: \"typescript:asyncValues\""
+    },
+    {
+      "property": "name",
+      "where": "src/compiler/factory/emitHelpers.ts:896:5",
+      "receiver": "{ name: string; importName: string; scoped: false; text: string; }",
+      "value": "\"typescript:rest\"",
+      "expression": "name: \"typescript:rest\""
+    },
+    {
+      "property": "name",
+      "where": "src/compiler/factory/emitHelpers.ts:916:5",
+      "receiver": "{ name: string; importName: string; scoped: false; priority: number; text: string; }",
+      "value": "\"typescript:awaiter\"",
+      "expression": "name: \"typescript:awaiter\""
+    },
+    {
+      "property": "name",
+      "where": "src/compiler/factory/emitHelpers.ts:935:5",
+      "receiver": "{ name: string; importName: string; scoped: false; priority: number; text: string; }",
+      "value": "\"typescript:extends\"",
+      "expression": "name: \"typescript:extends\""
+    },
+    {
+      "property": "name",
+      "where": "src/compiler/factory/emitHelpers.ts:959:5",
+      "receiver": "{ name: string; importName: string; scoped: false; priority: number; text: string; }",
+      "value": "\"typescript:makeTemplateObject\"",
+      "expression": "name: \"typescript:makeTemplateObject\""
+    },
+    {
+      "property": "name",
+      "where": "src/compiler/factory/emitHelpers.ts:971:5",
+      "receiver": "{ name: string; importName: string; scoped: false; text: string; }",
+      "value": "\"typescript:read\"",
+      "expression": "name: \"typescript:read\""
+    },
+    {
+      "property": "name",
+      "where": "src/compiler/factory/emitHelpers.ts:994:5",
+      "receiver": "{ name: string; importName: string; scoped: false; text: string; }",
+      "value": "\"typescript:spreadArray\"",
+      "expression": "name: \"typescript:spreadArray\""
+    },
+    {
+      "property": "name",
+      "where": "src/compiler/factory/emitHelpers.ts:1010:5",
+      "receiver": "{ name: string; importName: string; scoped: false; text: string; }",
+      "value": "\"typescript:propKey\"",
+      "expression": "name: \"typescript:propKey\""
+    },
+    {
+      "property": "name",
+      "where": "src/compiler/factory/emitHelpers.ts:1021:5",
+      "receiver": "{ name: string; importName: string; scoped: false; text: string; }",
+      "value": "\"typescript:setFunctionName\"",
+      "expression": "name: \"typescript:setFunctionName\""
+    },
+    {
+      "property": "name",
+      "where": "src/compiler/factory/emitHelpers.ts:1034:5",
+      "receiver": "{ name: string; importName: string; scoped: false; text: string; }",
+      "value": "\"typescript:values\"",
+      "expression": "name: \"typescript:values\""
+    },
+    {
+      "property": "name",
+      "where": "src/compiler/factory/emitHelpers.ts:1115:5",
+      "receiver": "{ name: string; importName: string; scoped: false; priority: number; text: string; }",
+      "value": "\"typescript:generator\"",
+      "expression": "name: \"typescript:generator\""
+    },
+    {
+      "property": "name",
+      "where": "src/compiler/factory/emitHelpers.ts:1152:5",
+      "receiver": "{ name: string; importName: string; scoped: false; priority: number; text: string; }",
+      "value": "\"typescript:commonjscreatebinding\"",
+      "expression": "name: \"typescript:commonjscreatebinding\""
+    },
+    {
+      "property": "name",
+      "where": "src/compiler/factory/emitHelpers.ts:1171:5",
+      "receiver": "{ name: string; importName: string; scoped: false; priority: number; text: string; }",
+      "value": "\"typescript:commonjscreatevalue\"",
+      "expression": "name: \"typescript:commonjscreatevalue\""
+    },
+    {
+      "property": "name",
+      "where": "src/compiler/factory/emitHelpers.ts:1185:5",
+      "receiver": "{ name: string; importName: string; scoped: false; dependencies: UnscopedEmitHelper[]; priority: number; text: string; }",
+      "value": "\"typescript:commonjsimportstar\"",
+      "expression": "name: \"typescript:commonjsimportstar\""
+    },
+    {
+      "property": "name",
+      "where": "src/compiler/factory/emitHelpers.ts:1212:5",
+      "receiver": "{ name: string; importName: string; scoped: false; text: string; }",
+      "value": "\"typescript:commonjsimportdefault\"",
+      "expression": "name: \"typescript:commonjsimportdefault\""
+    },
+    {
+      "property": "name",
+      "where": "src/compiler/factory/emitHelpers.ts:1222:5",
+      "receiver": "{ name: string; importName: string; scoped: false; dependencies: UnscopedEmitHelper[]; priority: number; text: string; }",
+      "value": "\"typescript:export-star\"",
+      "expression": "name: \"typescript:export-star\""
+    },
+    {
+      "property": "name",
+      "where": "src/compiler/factory/emitHelpers.ts:1282:5",
+      "receiver": "{ name: string; importName: string; scoped: false; text: string; }",
+      "value": "\"typescript:classPrivateFieldGet\"",
+      "expression": "name: \"typescript:classPrivateFieldGet\""
+    },
+    {
+      "property": "name",
+      "where": "src/compiler/factory/emitHelpers.ts:1345:5",
+      "receiver": "{ name: string; importName: string; scoped: false; text: string; }",
+      "value": "\"typescript:classPrivateFieldSet\"",
+      "expression": "name: \"typescript:classPrivateFieldSet\""
+    },
+    {
+      "property": "name",
+      "where": "src/compiler/factory/emitHelpers.ts:1370:5",
+      "receiver": "{ name: string; importName: string; scoped: false; text: string; }",
+      "value": "\"typescript:classPrivateFieldIn\"",
+      "expression": "name: \"typescript:classPrivateFieldIn\""
+    },
+    {
+      "property": "name",
+      "where": "src/compiler/factory/emitHelpers.ts:1381:5",
+      "receiver": "{ name: string; importName: string; scoped: false; text: string; }",
+      "value": "\"typescript:addDisposableResource\"",
+      "expression": "name: \"typescript:addDisposableResource\""
+    },
+    {
+      "property": "name",
+      "where": "src/compiler/factory/emitHelpers.ts:1415:5",
+      "receiver": "{ name: string; importName: string; scoped: false; text: string; }",
+      "value": "\"typescript:disposeResources\"",
+      "expression": "name: \"typescript:disposeResources\""
+    },
+    {
+      "property": "name",
+      "where": "src/compiler/factory/emitHelpers.ts:1452:5",
+      "receiver": "{ name: string; importName: string; scoped: false; text: string; }",
+      "value": "\"typescript:rewriteRelativeImportExtensions\"",
+      "expression": "name: \"typescript:rewriteRelativeImportExtensions\""
+    },
+    {
+      "property": "name",
+      "where": "src/compiler/factory/emitHelpers.ts:1468:5",
+      "receiver": "{ name: string; scoped: true; text: (uniqueName: EmitHelperUniqueNameCallback) => string; }",
+      "value": "\"typescript:async-super\"",
+      "expression": "name: \"typescript:async-super\""
+    },
+    {
+      "property": "name",
+      "where": "src/compiler/factory/emitHelpers.ts:1476:5",
+      "receiver": "{ name: string; scoped: true; text: (uniqueName: EmitHelperUniqueNameCallback) => string; }",
+      "value": "\"typescript:advanced-async-super\"",
+      "expression": "name: \"typescript:advanced-async-super\""
+    },
+    {
+      "property": "jsDocCache",
+      "where": "src/compiler/parser.ts:3146:13",
+      "receiver": "JSDocArray",
+      "value": "undefined",
+      "expression": "node.jsDoc.jsDocCache = undefined"
+    },
+    {
+      "property": "resolutionMode",
+      "where": "src/compiler/parser.ts:10624:126",
+      "receiver": "{ resolutionMode: ModuleKind.CommonJS | ModuleKind.ESNext; }",
+      "value": "ModuleKind.CommonJS | ModuleKind.ESNext",
+      "expression": "resolutionMode: parsed"
+    },
+    {
+      "property": "name",
+      "where": "src/compiler/parser.ts:10641:29",
+      "receiver": "{ name: string | undefined; path: string; }",
+      "value": "string | undefined",
+      "expression": "name: x.arguments.name"
+    },
+    {
+      "property": "name",
+      "where": "src/compiler/commandLineParser.ts:128:5",
+      "receiver": "{ name: string; type: \"boolean\"; defaultValueDescription: false; }",
+      "value": "\"compileOnSave\"",
+      "expression": "name: \"compileOnSave\""
+    },
+    {
+      "property": "preserve",
+      "where": "src/compiler/commandLineParser.ts:134:5",
+      "receiver": "{ preserve: JsxEmit.Preserve; \"react-native\": JsxEmit.ReactNative; \"react-jsx\": JsxEmit.ReactJSX; \"react-jsxdev\": JsxEmit.ReactJSXDev; react: JsxEmit.React; }",
+      "value": "JsxEmit.Preserve",
+      "expression": "\"preserve\": JsxEmit.Preserve"
+    },
+    {
+      "property": "name",
+      "where": "src/compiler/commandLineParser.ts:291:9",
+      "receiver": "{ name: string; type: Map<string, WatchFileKind>; category: DiagnosticMessage; description: DiagnosticMessage; defaultValueDescription: WatchFileKind; }",
+      "value": "\"watchFile\"",
+      "expression": "name: \"watchFile\""
+    },
+    {
+      "property": "name",
+      "where": "src/compiler/commandLineParser.ts:305:9",
+      "receiver": "{ name: string; type: Map<string, WatchDirectoryKind>; category: DiagnosticMessage; description: DiagnosticMessage; defaultValueDescription: WatchDirectoryKind; }",
+      "value": "\"watchDirectory\"",
+      "expression": "name: \"watchDirectory\""
+    },
+    {
+      "property": "name",
+      "where": "src/compiler/commandLineParser.ts:317:9",
+      "receiver": "{ name: string; type: Map<string, PollingWatchKind>; category: DiagnosticMessage; description: DiagnosticMessage; defaultValueDescription: PollingWatchKind; }",
+      "value": "\"fallbackPolling\"",
+      "expression": "name: \"fallbackPolling\""
+    },
+    {
+      "property": "name",
+      "where": "src/compiler/commandLineParser.ts:329:9",
+      "receiver": "{ name: string; type: \"boolean\"; category: DiagnosticMessage; description: DiagnosticMessage; defaultValueDescription: false; }",
+      "value": "\"synchronousWatchDirectory\"",
+      "expression": "name: \"synchronousWatchDirectory\""
+    },
+    {
+      "property": "name",
+      "where": "src/compiler/commandLineParser.ts:336:9",
+      "receiver": "{ name: string; type: \"list\"; element: { name: string; type: \"string\"; isFilePath: true; extraValidation: (spec: CompilerOptionsValue, disallowTrailingRecursion?: boolean | undefined) => [...] | undefined; }; allowConfigDirTemplateSubstitution: true; category: DiagnosticMessage; description: DiagnosticMessage; }",
+      "value": "\"excludeDirectories\"",
+      "expression": "name: \"excludeDirectories\""
+    },
+    {
+      "property": "name",
+      "where": "src/compiler/commandLineParser.ts:339:13",
+      "receiver": "{ name: string; type: \"string\"; isFilePath: true; extraValidation: (spec: CompilerOptionsValue, disallowTrailingRecursion?: boolean | undefined) => [DiagnosticMessage, string] | undefined; }",
+      "value": "\"excludeDirectory\"",
+      "expression": "name: \"excludeDirectory\""
+    },
+    {
+      "property": "name",
+      "where": "src/compiler/commandLineParser.ts:349:9",
+      "receiver": "{ name: string; type: \"list\"; element: { name: string; type: \"string\"; isFilePath: true; extraValidation: (spec: CompilerOptionsValue, disallowTrailingRecursion?: boolean | undefined) => [...] | undefined; }; allowConfigDirTemplateSubstitution: true; category: DiagnosticMessage; description: DiagnosticMessage; }",
+      "value": "\"excludeFiles\"",
+      "expression": "name: \"excludeFiles\""
+    },
+    {
+      "property": "name",
+      "where": "src/compiler/commandLineParser.ts:352:13",
+      "receiver": "{ name: string; type: \"string\"; isFilePath: true; extraValidation: (spec: CompilerOptionsValue, disallowTrailingRecursion?: boolean | undefined) => [DiagnosticMessage, string] | undefined; }",
+      "value": "\"excludeFile\"",
+      "expression": "name: \"excludeFile\""
+    },
+    {
+      "property": "name",
+      "where": "src/compiler/commandLineParser.ts:366:9",
+      "receiver": "{ name: string; shortName: string; type: \"boolean\"; showInSimplifiedHelpView: true; isCommandLineOnly: true; category: DiagnosticMessage; description: DiagnosticMessage; defaultValueDescription: false; }",
+      "value": "\"help\"",
+      "expression": "name: \"help\""
+    },
+    {
+      "property": "name",
+      "where": "src/compiler/commandLineParser.ts:376:9",
+      "receiver": "{ name: string; shortName: string; type: \"boolean\"; isCommandLineOnly: true; category: DiagnosticMessage; defaultValueDescription: false; }",
+      "value": "\"help\"",
+      "expression": "name: \"help\""
+    },
+    {
+      "property": "name",
+      "where": "src/compiler/commandLineParser.ts:384:9",
+      "receiver": "{ name: string; shortName: string; type: \"boolean\"; showInSimplifiedHelpView: true; isCommandLineOnly: true; category: DiagnosticMessage; description: DiagnosticMessage; defaultValueDescription: false; }",
+      "value": "\"watch\"",
+      "expression": "name: \"watch\""
+    },
+    {
+      "property": "name",
+      "where": "src/compiler/commandLineParser.ts:394:9",
+      "receiver": "{ name: string; type: \"boolean\"; showInSimplifiedHelpView: false; category: DiagnosticMessage; description: DiagnosticMessage; defaultValueDescription: false; }",
+      "value": "\"preserveWatchOutput\"",
+      "expression": "name: \"preserveWatchOutput\""
+    },
+    {
+      "property": "name",
+      "where": "src/compiler/commandLineParser.ts:402:9",
+      "receiver": "{ name: string; type: \"boolean\"; category: DiagnosticMessage; description: DiagnosticMessage; defaultValueDescription: false; }",
+      "value": "\"listFiles\"",
+      "expression": "name: \"listFiles\""
+    },
+    {
+      "property": "name",
+      "where": "src/compiler/commandLineParser.ts:409:9",
+      "receiver": "{ name: string; type: \"boolean\"; category: DiagnosticMessage; description: DiagnosticMessage; defaultValueDescription: false; }",
+      "value": "\"explainFiles\"",
+      "expression": "name: \"explainFiles\""
+    },
+    {
+      "property": "name",
+      "where": "src/compiler/commandLineParser.ts:416:9",
+      "receiver": "{ name: string; type: \"boolean\"; category: DiagnosticMessage; description: DiagnosticMessage; defaultValueDescription: false; }",
+      "value": "\"listEmittedFiles\"",
+      "expression": "name: \"listEmittedFiles\""
+    },
+    {
+      "property": "name",
+      "where": "src/compiler/commandLineParser.ts:423:9",
+      "receiver": "{ name: string; type: \"boolean\"; showInSimplifiedHelpView: true; category: DiagnosticMessage; description: DiagnosticMessage; defaultValueDescription: true; }",
+      "value": "\"pretty\"",
+      "expression": "name: \"pretty\""
+    },
+    {
+      "property": "name",
+      "where": "src/compiler/commandLineParser.ts:431:9",
+      "receiver": "{ name: string; type: \"boolean\"; category: DiagnosticMessage; description: DiagnosticMessage; defaultValueDescription: false; }",
+      "value": "\"traceResolution\"",
+      "expression": "name: \"traceResolution\""
+    },
+    {
+      "property": "name",
+      "where": "src/compiler/commandLineParser.ts:438:9",
+      "receiver": "{ name: string; type: \"boolean\"; category: DiagnosticMessage; description: DiagnosticMessage; defaultValueDescription: false; }",
+      "value": "\"diagnostics\"",
+      "expression": "name: \"diagnostics\""
+    },
+    {
+      "property": "name",
+      "where": "src/compiler/commandLineParser.ts:445:9",
+      "receiver": "{ name: string; type: \"boolean\"; category: DiagnosticMessage; description: DiagnosticMessage; defaultValueDescription: false; }",
+      "value": "\"extendedDiagnostics\"",
+      "expression": "name: \"extendedDiagnostics\""
+    },
+    {
+      "property": "name",
+      "where": "src/compiler/commandLineParser.ts:452:9",
+      "receiver": "{ name: string; type: \"string\"; isFilePath: true; paramType: DiagnosticMessage; category: DiagnosticMessage; description: DiagnosticMessage; defaultValueDescription: string; }",
+      "value": "\"generateCpuProfile\"",
+      "expression": "name: \"generateCpuProfile\""
+    },
+    {
+      "property": "name",
+      "where": "src/compiler/commandLineParser.ts:461:9",
+      "receiver": "{ name: string; type: \"string\"; isFilePath: true; paramType: DiagnosticMessage; category: DiagnosticMessage; description: DiagnosticMessage; }",
+      "value": "\"generateTrace\"",
+      "expression": "name: \"generateTrace\""
+    },
+    {
+      "property": "name",
+      "where": "src/compiler/commandLineParser.ts:469:9",
+      "receiver": "{ name: string; shortName: string; type: \"boolean\"; category: DiagnosticMessage; description: DiagnosticMessage; transpileOptionValue: undefined; defaultValueDescription: DiagnosticMessage; }",
+      "value": "\"incremental\"",
+      "expression": "name: \"incremental\""
+    },
+    {
+      "property": "name",
+      "where": "src/compiler/commandLineParser.ts:478:9",
+      "receiver": "{ name: string; shortName: string; type: \"boolean\"; affectsBuildInfo: true; showInSimplifiedHelpView: true; category: DiagnosticMessage; transpileOptionValue: undefined; description: DiagnosticMessage; defaultValueDescription: DiagnosticMessage; }",
+      "value": "\"declaration\"",
+      "expression": "name: \"declaration\""
+    },
+    {
+      "property": "name",
+      "where": "src/compiler/commandLineParser.ts:490:9",
+      "receiver": "{ name: string; type: \"boolean\"; affectsBuildInfo: true; showInSimplifiedHelpView: true; category: DiagnosticMessage; defaultValueDescription: false; description: DiagnosticMessage; }",
+      "value": "\"declarationMap\"",
+      "expression": "name: \"declarationMap\""
+    },
+    {
+      "property": "name",
+      "where": "src/compiler/commandLineParser.ts:500:9",
+      "receiver": "{ name: string; type: \"boolean\"; affectsBuildInfo: true; showInSimplifiedHelpView: true; category: DiagnosticMessage; description: DiagnosticMessage; transpileOptionValue: undefined; defaultValueDescription: false; }",
+      "value": "\"emitDeclarationOnly\"",
+      "expression": "name: \"emitDeclarationOnly\""
+    },
+    {
+      "property": "name",
+      "where": "src/compiler/commandLineParser.ts:511:9",
+      "receiver": "{ name: string; type: \"boolean\"; affectsBuildInfo: true; showInSimplifiedHelpView: true; category: DiagnosticMessage; defaultValueDescription: false; description: DiagnosticMessage; }",
+      "value": "\"sourceMap\"",
+      "expression": "name: \"sourceMap\""
+    },
+    {
+      "property": "name",
+      "where": "src/compiler/commandLineParser.ts:521:9",
+      "receiver": "{ name: string; type: \"boolean\"; affectsBuildInfo: true; category: DiagnosticMessage; description: DiagnosticMessage; defaultValueDescription: false; }",
+      "value": "\"inlineSourceMap\"",
+      "expression": "name: \"inlineSourceMap\""
+    },
+    {
+      "property": "name",
+      "where": "src/compiler/commandLineParser.ts:530:9",
+      "receiver": "{ name: string; type: \"boolean\"; showInSimplifiedHelpView: false; category: DiagnosticMessage; description: DiagnosticMessage; transpileOptionValue: true; defaultValueDescription: false; }",
+      "value": "\"noCheck\"",
+      "expression": "name: \"noCheck\""
+    },
+    {
+      "property": "name",
+      "where": "src/compiler/commandLineParser.ts:540:9",
+      "receiver": "{ name: string; type: \"boolean\"; showInSimplifiedHelpView: true; category: DiagnosticMessage; description: DiagnosticMessage; transpileOptionValue: undefined; defaultValueDescription: false; }",
+      "value": "\"noEmit\"",
+      "expression": "name: \"noEmit\""
+    },
+    {
+      "property": "name",
+      "where": "src/compiler/commandLineParser.ts:549:9",
+      "receiver": "{ name: string; type: \"boolean\"; affectsSemanticDiagnostics: true; affectsEmit: true; affectsBuildInfo: true; category: DiagnosticMessage; description: DiagnosticMessage; defaultValueDescription: false; }",
+      "value": "\"assumeChangesOnlyAffectDirectDependencies\"",
+      "expression": "name: \"assumeChangesOnlyAffectDirectDependencies\""
+    },
+    {
+      "property": "name",
+      "where": "src/compiler/commandLineParser.ts:559:9",
+      "receiver": "{ name: string; type: \"string\"; category: DiagnosticMessage; isCommandLineOnly: true; description: DiagnosticMessage; defaultValueDescription: DiagnosticMessage; }",
+      "value": "\"locale\"",
+      "expression": "name: \"locale\""
+    },
+    {
+      "property": "name",
+      "where": "src/compiler/commandLineParser.ts:574:5",
+      "receiver": "{ name: string; shortName: string; type: Map<string, ScriptTarget>; affectsSourceFile: true; affectsModuleResolution: true; affectsEmit: true; affectsBuildInfo: true; ... 5 more ...; defaultValueDescription: ScriptTarget; }",
+      "value": "\"target\"",
+      "expression": "name: \"target\""
+    },
+    {
+      "property": "name",
+      "where": "src/compiler/commandLineParser.ts:607:5",
+      "receiver": "{ name: string; shortName: string; type: Map<string, ModuleKind>; deprecatedKeys: Set<string>; affectsSourceFile: true; affectsModuleResolution: true; affectsEmit: true; ... 5 more ...; defaultValueDescription: undefined; }",
+      "value": "\"module\"",
+      "expression": "name: \"module\""
+    },
+    {
+      "property": "preserve",
+      "where": "src/compiler/commandLineParser.ts:624:9",
+      "receiver": "{ none: ModuleKind.None; commonjs: ModuleKind.CommonJS; amd: ModuleKind.AMD; system: ModuleKind.System; umd: ModuleKind.UMD; es6: ModuleKind.ES2015; ... 8 more ...; preserve: ModuleKind.Preserve; }",
+      "value": "ModuleKind.Preserve",
+      "expression": "preserve: ModuleKind.Preserve"
+    },
+    {
+      "property": "name",
+      "where": "src/compiler/commandLineParser.ts:641:9",
+      "receiver": "{ name: string; type: \"boolean\"; showInSimplifiedHelpView: true; category: DiagnosticMessage; description: DiagnosticMessage; defaultValueDescription: false; }",
+      "value": "\"all\"",
+      "expression": "name: \"all\""
+    },
+    {
+      "property": "name",
+      "where": "src/compiler/commandLineParser.ts:649:9",
+      "receiver": "{ name: string; shortName: string; type: \"boolean\"; showInSimplifiedHelpView: true; category: DiagnosticMessage; description: DiagnosticMessage; defaultValueDescription: false; }",
+      "value": "\"version\"",
+      "expression": "name: \"version\""
+    },
+    {
+      "property": "name",
+      "where": "src/compiler/commandLineParser.ts:658:9",
+      "receiver": "{ name: string; type: \"boolean\"; showInSimplifiedHelpView: true; category: DiagnosticMessage; description: DiagnosticMessage; defaultValueDescription: false; }",
+      "value": "\"init\"",
+      "expression": "name: \"init\""
+    },
+    {
+      "property": "name",
+      "where": "src/compiler/commandLineParser.ts:666:9",
+      "receiver": "{ name: string; shortName: string; type: \"string\"; isFilePath: true; showInSimplifiedHelpView: true; category: DiagnosticMessage; paramType: DiagnosticMessage; description: DiagnosticMessage; }",
+      "value": "\"project\"",
+      "expression": "name: \"project\""
+    },
+    {
+      "property": "name",
+      "where": "src/compiler/commandLineParser.ts:676:9",
+      "receiver": "{ name: string; type: \"boolean\"; showInSimplifiedHelpView: true; category: DiagnosticMessage; isCommandLineOnly: true; description: DiagnosticMessage; defaultValueDescription: false; }",
+      "value": "\"showConfig\"",
+      "expression": "name: \"showConfig\""
+    },
+    {
+      "property": "name",
+      "where": "src/compiler/commandLineParser.ts:685:9",
+      "receiver": "{ name: string; type: \"boolean\"; category: DiagnosticMessage; isCommandLineOnly: true; description: DiagnosticMessage; defaultValueDescription: false; }",
+      "value": "\"listFilesOnly\"",
+      "expression": "name: \"listFilesOnly\""
+    },
+    {
+      "property": "name",
+      "where": "src/compiler/commandLineParser.ts:693:9",
+      "receiver": "{ name: string; type: \"boolean\"; showInSimplifiedHelpView: true; category: DiagnosticMessage; isCommandLineOnly: true; description: DiagnosticMessage; defaultValueDescription: false; }",
+      "value": "\"ignoreConfig\"",
+      "expression": "name: \"ignoreConfig\""
+    },
+    {
+      "property": "name",
+      "where": "src/compiler/commandLineParser.ts:706:9",
+      "receiver": "{ name: string; type: \"list\"; element: { name: string; type: Map<string, string>; defaultValueDescription: undefined; }; affectsProgramStructure: true; showInSimplifiedHelpView: true; category: DiagnosticMessage; description: DiagnosticMessage; transpileOptionValue: undefined; }",
+      "value": "\"lib\"",
+      "expression": "name: \"lib\""
+    },
+    {
+      "property": "name",
+      "where": "src/compiler/commandLineParser.ts:709:13",
+      "receiver": "{ name: string; type: Map<string, string>; defaultValueDescription: undefined; }",
+      "value": "\"lib\"",
+      "expression": "name: \"lib\""
+    },
+    {
+      "property": "name",
+      "where": "src/compiler/commandLineParser.ts:720:9",
+      "receiver": "{ name: string; type: \"boolean\"; allowJsFlag: true; affectsBuildInfo: true; showInSimplifiedHelpView: true; category: DiagnosticMessage; description: DiagnosticMessage; defaultValueDescription: DiagnosticMessage; }",
+      "value": "\"allowJs\"",
+      "expression": "name: \"allowJs\""
+    },
+    {
+      "property": "name",
+      "where": "src/compiler/commandLineParser.ts:730:9",
+      "receiver": "{ name: string; type: \"boolean\"; affectsModuleResolution: true; affectsSemanticDiagnostics: true; affectsBuildInfo: true; showInSimplifiedHelpView: true; category: DiagnosticMessage; description: DiagnosticMessage; defaultValueDescription: false; }",
+      "value": "\"checkJs\"",
+      "expression": "name: \"checkJs\""
+    },
+    {
+      "property": "name",
+      "where": "src/compiler/commandLineParser.ts:741:9",
+      "receiver": "{ name: string; type: Map<string, JsxEmit>; affectsSourceFile: true; affectsEmit: true; affectsBuildInfo: true; affectsModuleResolution: true; affectsSemanticDiagnostics: true; ... 4 more ...; defaultValueDescription: undefined; }",
+      "value": "\"jsx\"",
+      "expression": "name: \"jsx\""
+    },
+    {
+      "property": "name",
+      "where": "src/compiler/commandLineParser.ts:758:9",
+      "receiver": "{ name: string; type: \"string\"; affectsEmit: true; affectsBuildInfo: true; affectsDeclarationPath: true; isFilePath: true; paramType: DiagnosticMessage; showInSimplifiedHelpView: true; category: DiagnosticMessage; description: DiagnosticMessage; transpileOptionValue: undefined; }",
+      "value": "\"outFile\"",
+      "expression": "name: \"outFile\""
+    },
+    {
+      "property": "name",
+      "where": "src/compiler/commandLineParser.ts:771:9",
+      "receiver": "{ name: string; type: \"string\"; affectsEmit: true; affectsBuildInfo: true; affectsDeclarationPath: true; isFilePath: true; paramType: DiagnosticMessage; showInSimplifiedHelpView: true; category: DiagnosticMessage; description: DiagnosticMessage; }",
+      "value": "\"outDir\"",
+      "expression": "name: \"outDir\""
+    },
+    {
+      "property": "name",
+      "where": "src/compiler/commandLineParser.ts:783:9",
+      "receiver": "{ name: string; type: \"string\"; affectsEmit: true; affectsBuildInfo: true; affectsDeclarationPath: true; isFilePath: true; paramType: DiagnosticMessage; category: DiagnosticMessage; description: DiagnosticMessage; defaultValueDescription: DiagnosticMessage; }",
+      "value": "\"rootDir\"",
+      "expression": "name: \"rootDir\""
+    },
+    {
+      "property": "name",
+      "where": "src/compiler/commandLineParser.ts:795:9",
+      "receiver": "{ name: string; type: \"boolean\"; affectsBuildInfo: true; isTSConfigOnly: true; category: DiagnosticMessage; transpileOptionValue: undefined; defaultValueDescription: false; description: DiagnosticMessage; }",
+      "value": "\"composite\"",
+      "expression": "name: \"composite\""
+    },
+    {
+      "property": "name",
+      "where": "src/compiler/commandLineParser.ts:806:9",
+      "receiver": "{ name: string; type: \"string\"; affectsEmit: true; affectsBuildInfo: true; isFilePath: true; paramType: DiagnosticMessage; category: DiagnosticMessage; transpileOptionValue: undefined; defaultValueDescription: string; description: DiagnosticMessage; }",
+      "value": "\"tsBuildInfoFile\"",
+      "expression": "name: \"tsBuildInfoFile\""
+    },
+    {
+      "property": "name",
+      "where": "src/compiler/commandLineParser.ts:818:9",
+      "receiver": "{ name: string; type: \"boolean\"; affectsEmit: true; affectsBuildInfo: true; showInSimplifiedHelpView: true; category: DiagnosticMessage; defaultValueDescription: false; description: DiagnosticMessage; }",
+      "value": "\"removeComments\"",
+      "expression": "name: \"removeComments\""
+    },
+    {
+      "property": "name",
+      "where": "src/compiler/commandLineParser.ts:828:9",
+      "receiver": "{ name: string; type: \"boolean\"; affectsEmit: true; affectsBuildInfo: true; affectsSourceFile: true; category: DiagnosticMessage; description: DiagnosticMessage; defaultValueDescription: false; }",
+      "value": "\"importHelpers\"",
+      "expression": "name: \"importHelpers\""
+    },
+    {
+      "property": "name",
+      "where": "src/compiler/commandLineParser.ts:838:9",
+      "receiver": "{ name: string; type: Map<string, ImportsNotUsedAsValues>; affectsEmit: true; affectsSemanticDiagnostics: true; affectsBuildInfo: true; category: DiagnosticMessage; description: DiagnosticMessage; defaultValueDescription: ImportsNotUsedAsValues; }",
+      "value": "\"importsNotUsedAsValues\"",
+      "expression": "name: \"importsNotUsedAsValues\""
+    },
+    {
+      "property": "preserve",
+      "where": "src/compiler/commandLineParser.ts:841:13",
+      "receiver": "{ remove: ImportsNotUsedAsValues.Remove; preserve: ImportsNotUsedAsValues.Preserve; error: ImportsNotUsedAsValues.Error; }",
+      "value": "ImportsNotUsedAsValues.Preserve",
+      "expression": "preserve: ImportsNotUsedAsValues.Preserve"
+    },
+    {
+      "property": "name",
+      "where": "src/compiler/commandLineParser.ts:852:9",
+      "receiver": "{ name: string; type: \"boolean\"; affectsEmit: true; affectsBuildInfo: true; category: DiagnosticMessage; description: DiagnosticMessage; defaultValueDescription: false; }",
+      "value": "\"downlevelIteration\"",
+      "expression": "name: \"downlevelIteration\""
+    },
+    {
+      "property": "name",
+      "where": "src/compiler/commandLineParser.ts:861:9",
+      "receiver": "{ name: string; type: \"boolean\"; category: DiagnosticMessage; description: DiagnosticMessage; transpileOptionValue: true; defaultValueDescription: false; }",
+      "value": "\"isolatedModules\"",
+      "expression": "name: \"isolatedModules\""
+    },
+    {
+      "property": "name",
+      "where": "src/compiler/commandLineParser.ts:869:9",
+      "receiver": "{ name: string; type: \"boolean\"; affectsEmit: true; affectsSemanticDiagnostics: true; affectsBuildInfo: true; category: DiagnosticMessage; description: DiagnosticMessage; defaultValueDescription: false; }",
+      "value": "\"verbatimModuleSyntax\"",
+      "expression": "name: \"verbatimModuleSyntax\""
+    },
+    {
+      "property": "name",
+      "where": "src/compiler/commandLineParser.ts:879:9",
+      "receiver": "{ name: string; type: \"boolean\"; category: DiagnosticMessage; description: DiagnosticMessage; defaultValueDescription: false; affectsBuildInfo: true; affectsSemanticDiagnostics: true; }",
+      "value": "\"isolatedDeclarations\"",
+      "expression": "name: \"isolatedDeclarations\""
+    },
+    {
+      "property": "name",
+      "where": "src/compiler/commandLineParser.ts:888:9",
+      "receiver": "{ name: string; type: \"boolean\"; category: DiagnosticMessage; description: DiagnosticMessage; defaultValueDescription: false; affectsBuildInfo: true; affectsSemanticDiagnostics: true; }",
+      "value": "\"erasableSyntaxOnly\"",
+      "expression": "name: \"erasableSyntaxOnly\""
+    },
+    {
+      "property": "name",
+      "where": "src/compiler/commandLineParser.ts:897:9",
+      "receiver": "{ name: string; type: \"boolean\"; affectsProgramStructure: true; category: DiagnosticMessage; description: DiagnosticMessage; defaultValueDescription: false; }",
+      "value": "\"libReplacement\"",
+      "expression": "name: \"libReplacement\""
+    },
+    {
+      "property": "name",
+      "where": "src/compiler/commandLineParser.ts:907:9",
+      "receiver": "{ name: string; type: \"boolean\"; affectsBuildInfo: true; showInSimplifiedHelpView: true; category: DiagnosticMessage; description: DiagnosticMessage; defaultValueDescription: true; }",
+      "value": "\"strict\"",
+      "expression": "name: \"strict\""
+    },
+    {
+      "property": "name",
+      "where": "src/compiler/commandLineParser.ts:920:9",
+      "receiver": "{ name: string; type: \"boolean\"; affectsSemanticDiagnostics: true; affectsBuildInfo: true; strictFlag: true; category: DiagnosticMessage; description: DiagnosticMessage; defaultValueDescription: DiagnosticMessage; }",
+      "value": "\"noImplicitAny\"",
+      "expression": "name: \"noImplicitAny\""
+    },
+    {
+      "property": "name",
+      "where": "src/compiler/commandLineParser.ts:930:9",
+      "receiver": "{ name: string; type: \"boolean\"; affectsSemanticDiagnostics: true; affectsBuildInfo: true; strictFlag: true; category: DiagnosticMessage; description: DiagnosticMessage; defaultValueDescription: DiagnosticMessage; }",
+      "value": "\"strictNullChecks\"",
+      "expression": "name: \"strictNullChecks\""
+    },
+    {
+      "property": "name",
+      "where": "src/compiler/commandLineParser.ts:940:9",
+      "receiver": "{ name: string; type: \"boolean\"; affectsSemanticDiagnostics: true; affectsBuildInfo: true; strictFlag: true; category: DiagnosticMessage; description: DiagnosticMessage; defaultValueDescription: DiagnosticMessage; }",
+      "value": "\"strictFunctionTypes\"",
+      "expression": "name: \"strictFunctionTypes\""
+    },
+    {
+      "property": "name",
+      "where": "src/compiler/commandLineParser.ts:950:9",
+      "receiver": "{ name: string; type: \"boolean\"; affectsSemanticDiagnostics: true; affectsBuildInfo: true; strictFlag: true; category: DiagnosticMessage; description: DiagnosticMessage; defaultValueDescription: DiagnosticMessage; }",
+      "value": "\"strictBindCallApply\"",
+      "expression": "name: \"strictBindCallApply\""
+    },
+    {
+      "property": "name",
+      "where": "src/compiler/commandLineParser.ts:960:9",
+      "receiver": "{ name: string; type: \"boolean\"; affectsSemanticDiagnostics: true; affectsBuildInfo: true; strictFlag: true; category: DiagnosticMessage; description: DiagnosticMessage; defaultValueDescription: DiagnosticMessage; }",
+      "value": "\"strictPropertyInitialization\"",
+      "expression": "name: \"strictPropertyInitialization\""
+    },
+    {
+      "property": "name",
+      "where": "src/compiler/commandLineParser.ts:970:9",
+      "receiver": "{ name: string; type: \"boolean\"; affectsSemanticDiagnostics: true; affectsBuildInfo: true; strictFlag: true; category: DiagnosticMessage; description: DiagnosticMessage; defaultValueDescription: DiagnosticMessage; }",
+      "value": "\"strictBuiltinIteratorReturn\"",
+      "expression": "name: \"strictBuiltinIteratorReturn\""
+    },
+    {
+      "property": "name",
+      "where": "src/compiler/commandLineParser.ts:980:9",
+      "receiver": "{ name: string; type: \"boolean\"; affectsSemanticDiagnostics: true; affectsBuildInfo: true; showInHelp: false; category: DiagnosticMessage; description: DiagnosticMessage; defaultValueDescription: false; }",
+      "value": "\"stableTypeOrdering\"",
+      "expression": "name: \"stableTypeOrdering\""
+    },
+    {
+      "property": "name",
+      "where": "src/compiler/commandLineParser.ts:990:9",
+      "receiver": "{ name: string; type: \"boolean\"; affectsSemanticDiagnostics: true; affectsBuildInfo: true; strictFlag: true; category: DiagnosticMessage; description: DiagnosticMessage; defaultValueDescription: DiagnosticMessage; }",
+      "value": "\"noImplicitThis\"",
+      "expression": "name: \"noImplicitThis\""
+    },
+    {
+      "property": "name",
+      "where": "src/compiler/commandLineParser.ts:1000:9",
+      "receiver": "{ name: string; type: \"boolean\"; affectsSemanticDiagnostics: true; affectsBuildInfo: true; strictFlag: true; category: DiagnosticMessage; description: DiagnosticMessage; defaultValueDescription: DiagnosticMessage; }",
+      "value": "\"useUnknownInCatchVariables\"",
+      "expression": "name: \"useUnknownInCatchVariables\""
+    },
+    {
+      "property": "name",
+      "where": "src/compiler/commandLineParser.ts:1010:9",
+      "receiver": "{ name: string; type: \"boolean\"; affectsSourceFile: true; affectsEmit: true; affectsBuildInfo: true; category: DiagnosticMessage; description: DiagnosticMessage; defaultValueDescription: true; }",
+      "value": "\"alwaysStrict\"",
+      "expression": "name: \"alwaysStrict\""
+    },
+    {
+      "property": "name",
+      "where": "src/compiler/commandLineParser.ts:1022:9",
+      "receiver": "{ name: string; type: \"boolean\"; affectsSemanticDiagnostics: true; affectsBuildInfo: true; category: DiagnosticMessage; description: DiagnosticMessage; defaultValueDescription: false; }",
+      "value": "\"noUnusedLocals\"",
+      "expression": "name: \"noUnusedLocals\""
+    },
+    {
+      "property": "name",
+      "where": "src/compiler/commandLineParser.ts:1031:9",
+      "receiver": "{ name: string; type: \"boolean\"; affectsSemanticDiagnostics: true; affectsBuildInfo: true; category: DiagnosticMessage; description: DiagnosticMessage; defaultValueDescription: false; }",
+      "value": "\"noUnusedParameters\"",
+      "expression": "name: \"noUnusedParameters\""
+    },
+    {
+      "property": "name",
+      "where": "src/compiler/commandLineParser.ts:1040:9",
+      "receiver": "{ name: string; type: \"boolean\"; affectsSemanticDiagnostics: true; affectsBuildInfo: true; category: DiagnosticMessage; description: DiagnosticMessage; defaultValueDescription: false; }",
+      "value": "\"exactOptionalPropertyTypes\"",
+      "expression": "name: \"exactOptionalPropertyTypes\""
+    },
+    {
+      "property": "name",
+      "where": "src/compiler/commandLineParser.ts:1049:9",
+      "receiver": "{ name: string; type: \"boolean\"; affectsSemanticDiagnostics: true; affectsBuildInfo: true; category: DiagnosticMessage; description: DiagnosticMessage; defaultValueDescription: false; }",
+      "value": "\"noImplicitReturns\"",
+      "expression": "name: \"noImplicitReturns\""
+    },
+    {
+      "property": "name",
+      "where": "src/compiler/commandLineParser.ts:1058:9",
+      "receiver": "{ name: string; type: \"boolean\"; affectsBindDiagnostics: true; affectsSemanticDiagnostics: true; affectsBuildInfo: true; category: DiagnosticMessage; description: DiagnosticMessage; defaultValueDescription: false; }",
+      "value": "\"noFallthroughCasesInSwitch\"",
+      "expression": "name: \"noFallthroughCasesInSwitch\""
+    },
+    {
+      "property": "name",
+      "where": "src/compiler/commandLineParser.ts:1068:9",
+      "receiver": "{ name: string; type: \"boolean\"; affectsSemanticDiagnostics: true; affectsBuildInfo: true; category: DiagnosticMessage; description: DiagnosticMessage; defaultValueDescription: false; }",
+      "value": "\"noUncheckedIndexedAccess\"",
+      "expression": "name: \"noUncheckedIndexedAccess\""
+    },
+    {
+      "property": "name",
+      "where": "src/compiler/commandLineParser.ts:1077:9",
+      "receiver": "{ name: string; type: \"boolean\"; affectsSemanticDiagnostics: true; affectsBuildInfo: true; category: DiagnosticMessage; description: DiagnosticMessage; defaultValueDescription: false; }",
+      "value": "\"noImplicitOverride\"",
+      "expression": "name: \"noImplicitOverride\""
+    },
+    {
+      "property": "name",
+      "where": "src/compiler/commandLineParser.ts:1086:9",
+      "receiver": "{ name: string; type: \"boolean\"; affectsSemanticDiagnostics: true; affectsBuildInfo: true; showInSimplifiedHelpView: false; category: DiagnosticMessage; description: DiagnosticMessage; defaultValueDescription: false; }",
+      "value": "\"noPropertyAccessFromIndexSignature\"",
+      "expression": "name: \"noPropertyAccessFromIndexSignature\""
+    },
+    {
+      "property": "name",
+      "where": "src/compiler/commandLineParser.ts:1098:9",
+      "receiver": "{ name: string; type: Map<string, ModuleResolutionKind>; deprecatedKeys: Set<string>; affectsSourceFile: true; affectsModuleResolution: true; paramType: DiagnosticMessage; category: DiagnosticMessage; description: DiagnosticMessage; defaultValueDescription: DiagnosticMessage; }",
+      "value": "\"moduleResolution\"",
+      "expression": "name: \"moduleResolution\""
+    },
+    {
+      "property": "name",
+      "where": "src/compiler/commandLineParser.ts:1117:9",
+      "receiver": "{ name: string; type: \"string\"; affectsModuleResolution: true; isFilePath: true; category: DiagnosticMessage; description: DiagnosticMessage; }",
+      "value": "\"baseUrl\"",
+      "expression": "name: \"baseUrl\""
+    },
+    {
+      "property": "name",
+      "where": "src/compiler/commandLineParser.ts:1127:9",
+      "receiver": "{ name: string; type: \"object\"; affectsModuleResolution: true; allowConfigDirTemplateSubstitution: true; isTSConfigOnly: true; category: DiagnosticMessage; description: DiagnosticMessage; transpileOptionValue: undefined; }",
+      "value": "\"paths\"",
+      "expression": "name: \"paths\""
+    },
+    {
+      "property": "name",
+      "where": "src/compiler/commandLineParser.ts:1139:9",
+      "receiver": "{ name: string; type: \"list\"; isTSConfigOnly: true; element: { name: string; type: \"string\"; isFilePath: true; }; affectsModuleResolution: true; allowConfigDirTemplateSubstitution: true; category: DiagnosticMessage; description: DiagnosticMessage; transpileOptionValue: undefined; defaultValueDescription: DiagnosticM...",
+      "value": "\"rootDirs\"",
+      "expression": "name: \"rootDirs\""
+    },
+    {
+      "property": "name",
+      "where": "src/compiler/commandLineParser.ts:1143:13",
+      "receiver": "{ name: string; type: \"string\"; isFilePath: true; }",
+      "value": "\"rootDirs\"",
+      "expression": "name: \"rootDirs\""
+    },
+    {
+      "property": "name",
+      "where": "src/compiler/commandLineParser.ts:1155:9",
+      "receiver": "{ name: string; type: \"list\"; element: { name: string; type: \"string\"; isFilePath: true; }; affectsModuleResolution: true; allowConfigDirTemplateSubstitution: true; category: DiagnosticMessage; description: DiagnosticMessage; }",
+      "value": "\"typeRoots\"",
+      "expression": "name: \"typeRoots\""
+    },
+    {
+      "property": "name",
+      "where": "src/compiler/commandLineParser.ts:1158:13",
+      "receiver": "{ name: string; type: \"string\"; isFilePath: true; }",
+      "value": "\"typeRoots\"",
+      "expression": "name: \"typeRoots\""
+    },
+    {
+      "property": "name",
+      "where": "src/compiler/commandLineParser.ts:1168:9",
+      "receiver": "{ name: string; type: \"list\"; element: { name: string; type: \"string\"; }; affectsProgramStructure: true; showInSimplifiedHelpView: true; category: DiagnosticMessage; description: DiagnosticMessage; transpileOptionValue: undefined; }",
+      "value": "\"types\"",
+      "expression": "name: \"types\""
+    },
+    {
+      "property": "name",
+      "where": "src/compiler/commandLineParser.ts:1171:13",
+      "receiver": "{ name: string; type: \"string\"; }",
+      "value": "\"types\"",
+      "expression": "name: \"types\""
+    },
+    {
+      "property": "name",
+      "where": "src/compiler/commandLineParser.ts:1181:9",
+      "receiver": "{ name: string; type: \"boolean\"; affectsSemanticDiagnostics: true; affectsBuildInfo: true; category: DiagnosticMessage; description: DiagnosticMessage; defaultValueDescription: true; }",
+      "value": "\"allowSyntheticDefaultImports\"",
+      "expression": "name: \"allowSyntheticDefaultImports\""
+    },
+    {
+      "property": "name",
+      "where": "src/compiler/commandLineParser.ts:1190:9",
+      "receiver": "{ name: string; type: \"boolean\"; affectsSemanticDiagnostics: true; affectsEmit: true; affectsBuildInfo: true; showInSimplifiedHelpView: true; category: DiagnosticMessage; description: DiagnosticMessage; defaultValueDescription: true; }",
+      "value": "\"esModuleInterop\"",
+      "expression": "name: \"esModuleInterop\""
+    },
+    {
+      "property": "name",
+      "where": "src/compiler/commandLineParser.ts:1201:9",
+      "receiver": "{ name: string; type: \"boolean\"; category: DiagnosticMessage; description: DiagnosticMessage; defaultValueDescription: false; }",
+      "value": "\"preserveSymlinks\"",
+      "expression": "name: \"preserveSymlinks\""
+    },
+    {
+      "property": "name",
+      "where": "src/compiler/commandLineParser.ts:1208:9",
+      "receiver": "{ name: string; type: \"boolean\"; affectsSemanticDiagnostics: true; affectsBuildInfo: true; category: DiagnosticMessage; description: DiagnosticMessage; defaultValueDescription: false; }",
+      "value": "\"allowUmdGlobalAccess\"",
+      "expression": "name: \"allowUmdGlobalAccess\""
+    },
+    {
+      "property": "name",
+      "where": "src/compiler/commandLineParser.ts:1217:9",
+      "receiver": "{ name: string; type: \"list\"; element: { name: string; type: \"string\"; }; listPreserveFalsyValues: true; affectsModuleResolution: true; category: DiagnosticMessage; description: DiagnosticMessage; }",
+      "value": "\"moduleSuffixes\"",
+      "expression": "name: \"moduleSuffixes\""
+    },
+    {
+      "property": "name",
+      "where": "src/compiler/commandLineParser.ts:1220:13",
+      "receiver": "{ name: string; type: \"string\"; }",
+      "value": "\"suffix\"",
+      "expression": "name: \"suffix\""
+    },
+    {
+      "property": "name",
+      "where": "src/compiler/commandLineParser.ts:1229:9",
+      "receiver": "{ name: string; type: \"boolean\"; affectsSemanticDiagnostics: true; affectsBuildInfo: true; category: DiagnosticMessage; description: DiagnosticMessage; defaultValueDescription: false; transpileOptionValue: undefined; }",
+      "value": "\"allowImportingTsExtensions\"",
+      "expression": "name: \"allowImportingTsExtensions\""
+    },
+    {
+      "property": "name",
+      "where": "src/compiler/commandLineParser.ts:1239:9",
+      "receiver": "{ name: string; type: \"boolean\"; affectsSemanticDiagnostics: true; affectsBuildInfo: true; category: DiagnosticMessage; description: DiagnosticMessage; defaultValueDescription: false; }",
+      "value": "\"rewriteRelativeImportExtensions\"",
+      "expression": "name: \"rewriteRelativeImportExtensions\""
+    },
+    {
+      "property": "name",
+      "where": "src/compiler/commandLineParser.ts:1248:9",
+      "receiver": "{ name: string; type: \"boolean\"; affectsModuleResolution: true; category: DiagnosticMessage; description: DiagnosticMessage; defaultValueDescription: DiagnosticMessage; }",
+      "value": "\"resolvePackageJsonExports\"",
+      "expression": "name: \"resolvePackageJsonExports\""
+    },
+    {
+      "property": "name",
+      "where": "src/compiler/commandLineParser.ts:1256:9",
+      "receiver": "{ name: string; type: \"boolean\"; affectsModuleResolution: true; category: DiagnosticMessage; description: DiagnosticMessage; defaultValueDescription: DiagnosticMessage; }",
+      "value": "\"resolvePackageJsonImports\"",
+      "expression": "name: \"resolvePackageJsonImports\""
+    },
+    {
+      "property": "name",
+      "where": "src/compiler/commandLineParser.ts:1264:9",
+      "receiver": "{ name: string; type: \"list\"; element: { name: string; type: \"string\"; }; affectsModuleResolution: true; category: DiagnosticMessage; description: DiagnosticMessage; }",
+      "value": "\"customConditions\"",
+      "expression": "name: \"customConditions\""
+    },
+    {
+      "property": "name",
+      "where": "src/compiler/commandLineParser.ts:1267:13",
+      "receiver": "{ name: string; type: \"string\"; }",
+      "value": "\"condition\"",
+      "expression": "name: \"condition\""
+    },
+    {
+      "property": "name",
+      "where": "src/compiler/commandLineParser.ts:1275:9",
+      "receiver": "{ name: string; type: \"boolean\"; affectsSemanticDiagnostics: true; affectsBuildInfo: true; category: DiagnosticMessage; description: DiagnosticMessage; defaultValueDescription: true; }",
+      "value": "\"noUncheckedSideEffectImports\"",
+      "expression": "name: \"noUncheckedSideEffectImports\""
+    },
+    {
+      "property": "name",
+      "where": "src/compiler/commandLineParser.ts:1286:9",
+      "receiver": "{ name: string; type: \"string\"; affectsEmit: true; affectsBuildInfo: true; paramType: DiagnosticMessage; category: DiagnosticMessage; description: DiagnosticMessage; }",
+      "value": "\"sourceRoot\"",
+      "expression": "name: \"sourceRoot\""
+    },
+    {
+      "property": "name",
+      "where": "src/compiler/commandLineParser.ts:1295:9",
+      "receiver": "{ name: string; type: \"string\"; affectsEmit: true; affectsBuildInfo: true; paramType: DiagnosticMessage; category: DiagnosticMessage; description: DiagnosticMessage; }",
+      "value": "\"mapRoot\"",
+      "expression": "name: \"mapRoot\""
+    },
+    {
+      "property": "name",
+      "where": "src/compiler/commandLineParser.ts:1304:9",
+      "receiver": "{ name: string; type: \"boolean\"; affectsEmit: true; affectsBuildInfo: true; category: DiagnosticMessage; description: DiagnosticMessage; defaultValueDescription: false; }",
+      "value": "\"inlineSources\"",
+      "expression": "name: \"inlineSources\""
+    },
+    {
+      "property": "name",
+      "where": "src/compiler/commandLineParser.ts:1315:9",
+      "receiver": "{ name: string; type: \"boolean\"; affectsEmit: true; affectsSemanticDiagnostics: true; affectsBuildInfo: true; category: DiagnosticMessage; description: DiagnosticMessage; defaultValueDescription: false; }",
+      "value": "\"experimentalDecorators\"",
+      "expression": "name: \"experimentalDecorators\""
+    },
+    {
+      "property": "name",
+      "where": "src/compiler/commandLineParser.ts:1325:9",
+      "receiver": "{ name: string; type: \"boolean\"; affectsSemanticDiagnostics: true; affectsEmit: true; affectsBuildInfo: true; category: DiagnosticMessage; description: DiagnosticMessage; defaultValueDescription: false; }",
+      "value": "\"emitDecoratorMetadata\"",
+      "expression": "name: \"emitDecoratorMetadata\""
+    },
+    {
+      "property": "name",
+      "where": "src/compiler/commandLineParser.ts:1337:9",
+      "receiver": "{ name: string; type: \"string\"; category: DiagnosticMessage; description: DiagnosticMessage; defaultValueDescription: string; }",
+      "value": "\"jsxFactory\"",
+      "expression": "name: \"jsxFactory\""
+    },
+    {
+      "property": "name",
+      "where": "src/compiler/commandLineParser.ts:1344:9",
+      "receiver": "{ name: string; type: \"string\"; category: DiagnosticMessage; description: DiagnosticMessage; defaultValueDescription: string; }",
+      "value": "\"jsxFragmentFactory\"",
+      "expression": "name: \"jsxFragmentFactory\""
+    },
+    {
+      "property": "name",
+      "where": "src/compiler/commandLineParser.ts:1351:9",
+      "receiver": "{ name: string; type: \"string\"; affectsSemanticDiagnostics: true; affectsEmit: true; affectsBuildInfo: true; affectsModuleResolution: true; affectsSourceFile: true; category: DiagnosticMessage; description: DiagnosticMessage; defaultValueDescription: string; }",
+      "value": "\"jsxImportSource\"",
+      "expression": "name: \"jsxImportSource\""
+    },
+    {
+      "property": "name",
+      "where": "src/compiler/commandLineParser.ts:1363:9",
+      "receiver": "{ name: string; type: \"boolean\"; affectsModuleResolution: true; category: DiagnosticMessage; description: DiagnosticMessage; defaultValueDescription: false; }",
+      "value": "\"resolveJsonModule\"",
+      "expression": "name: \"resolveJsonModule\""
+    },
+    {
+      "property": "name",
+      "where": "src/compiler/commandLineParser.ts:1371:9",
+      "receiver": "{ name: string; type: \"boolean\"; affectsProgramStructure: true; category: DiagnosticMessage; description: DiagnosticMessage; defaultValueDescription: false; }",
+      "value": "\"allowArbitraryExtensions\"",
+      "expression": "name: \"allowArbitraryExtensions\""
+    },
+    {
+      "property": "name",
+      "where": "src/compiler/commandLineParser.ts:1380:9",
+      "receiver": "{ name: string; type: \"string\"; affectsEmit: true; affectsBuildInfo: true; affectsDeclarationPath: true; isFilePath: false; category: DiagnosticMessage; paramType: DiagnosticMessage; transpileOptionValue: undefined; description: DiagnosticMessage; }",
+      "value": "\"out\"",
+      "expression": "name: \"out\""
+    },
+    {
+      "property": "name",
+      "where": "src/compiler/commandLineParser.ts:1393:9",
+      "receiver": "{ name: string; type: \"string\"; affectsEmit: true; affectsBuildInfo: true; category: DiagnosticMessage; description: DiagnosticMessage; defaultValueDescription: string; }",
+      "value": "\"reactNamespace\"",
+      "expression": "name: \"reactNamespace\""
+    },
+    {
+      "property": "name",
+      "where": "src/compiler/commandLineParser.ts:1402:9",
+      "receiver": "{ name: string; type: \"boolean\"; affectsBuildInfo: true; category: DiagnosticMessage; description: DiagnosticMessage; defaultValueDescription: false; }",
+      "value": "\"skipDefaultLibCheck\"",
+      "expression": "name: \"skipDefaultLibCheck\""
+    },
+    {
+      "property": "name",
+      "where": "src/compiler/commandLineParser.ts:1411:9",
+      "receiver": "{ name: string; type: \"string\"; category: DiagnosticMessage; description: DiagnosticMessage; defaultValueDescription: string; }",
+      "value": "\"charset\"",
+      "expression": "name: \"charset\""
+    },
+    {
+      "property": "name",
+      "where": "src/compiler/commandLineParser.ts:1418:9",
+      "receiver": "{ name: string; type: \"boolean\"; affectsEmit: true; affectsBuildInfo: true; category: DiagnosticMessage; description: DiagnosticMessage; defaultValueDescription: false; }",
+      "value": "\"emitBOM\"",
+      "expression": "name: \"emitBOM\""
+    },
+    {
+      "property": "name",
+      "where": "src/compiler/commandLineParser.ts:1427:9",
+      "receiver": "{ name: string; type: Map<string, NewLineKind>; affectsEmit: true; affectsBuildInfo: true; paramType: DiagnosticMessage; category: DiagnosticMessage; description: DiagnosticMessage; defaultValueDescription: string; }",
+      "value": "\"newLine\"",
+      "expression": "name: \"newLine\""
+    },
+    {
+      "property": "name",
+      "where": "src/compiler/commandLineParser.ts:1440:9",
+      "receiver": "{ name: string; type: \"boolean\"; affectsSemanticDiagnostics: true; affectsBuildInfo: true; category: DiagnosticMessage; description: DiagnosticMessage; defaultValueDescription: false; }",
+      "value": "\"noErrorTruncation\"",
+      "expression": "name: \"noErrorTruncation\""
+    },
+    {
+      "property": "name",
+      "where": "src/compiler/commandLineParser.ts:1449:9",
+      "receiver": "{ name: string; type: \"boolean\"; category: DiagnosticMessage; affectsProgramStructure: true; description: DiagnosticMessage; transpileOptionValue: true; defaultValueDescription: false; }",
+      "value": "\"noLib\"",
+      "expression": "name: \"noLib\""
+    },
+    {
+      "property": "name",
+      "where": "src/compiler/commandLineParser.ts:1460:9",
+      "receiver": "{ name: string; type: \"boolean\"; affectsModuleResolution: true; category: DiagnosticMessage; description: DiagnosticMessage; transpileOptionValue: true; defaultValueDescription: false; }",
+      "value": "\"noResolve\"",
+      "expression": "name: \"noResolve\""
+    },
+    {
+      "property": "name",
+      "where": "src/compiler/commandLineParser.ts:1471:9",
+      "receiver": "{ name: string; type: \"boolean\"; affectsEmit: true; affectsBuildInfo: true; category: DiagnosticMessage; description: DiagnosticMessage; defaultValueDescription: false; }",
+      "value": "\"stripInternal\"",
+      "expression": "name: \"stripInternal\""
+    },
+    {
+      "property": "name",
+      "where": "src/compiler/commandLineParser.ts:1480:9",
+      "receiver": "{ name: string; type: \"boolean\"; affectsProgramStructure: true; category: DiagnosticMessage; description: DiagnosticMessage; defaultValueDescription: false; }",
+      "value": "\"disableSizeLimit\"",
+      "expression": "name: \"disableSizeLimit\""
+    },
+    {
+      "property": "name",
+      "where": "src/compiler/commandLineParser.ts:1488:9",
+      "receiver": "{ name: string; type: \"boolean\"; isTSConfigOnly: true; category: DiagnosticMessage; description: DiagnosticMessage; defaultValueDescription: false; }",
+      "value": "\"disableSourceOfProjectReferenceRedirect\"",
+      "expression": "name: \"disableSourceOfProjectReferenceRedirect\""
+    },
+    {
+      "property": "name",
+      "where": "src/compiler/commandLineParser.ts:1496:9",
+      "receiver": "{ name: string; type: \"boolean\"; isTSConfigOnly: true; category: DiagnosticMessage; description: DiagnosticMessage; defaultValueDescription: false; }",
+      "value": "\"disableSolutionSearching\"",
+      "expression": "name: \"disableSolutionSearching\""
+    },
+    {
+      "property": "name",
+      "where": "src/compiler/commandLineParser.ts:1504:9",
+      "receiver": "{ name: string; type: \"boolean\"; isTSConfigOnly: true; category: DiagnosticMessage; description: DiagnosticMessage; defaultValueDescription: false; }",
+      "value": "\"disableReferencedProjectLoad\"",
+      "expression": "name: \"disableReferencedProjectLoad\""
+    },
+    {
+      "property": "name",
+      "where": "src/compiler/commandLineParser.ts:1512:9",
+      "receiver": "{ name: string; type: \"boolean\"; affectsSemanticDiagnostics: true; affectsBuildInfo: true; category: DiagnosticMessage; description: DiagnosticMessage; defaultValueDescription: false; }",
+      "value": "\"noImplicitUseStrict\"",
+      "expression": "name: \"noImplicitUseStrict\""
+    },
+    {
+      "property": "name",
+      "where": "src/compiler/commandLineParser.ts:1521:9",
+      "receiver": "{ name: string; type: \"boolean\"; affectsEmit: true; affectsBuildInfo: true; category: DiagnosticMessage; description: DiagnosticMessage; defaultValueDescription: false; }",
+      "value": "\"noEmitHelpers\"",
+      "expression": "name: \"noEmitHelpers\""
+    },
+    {
+      "property": "name",
+      "where": "src/compiler/commandLineParser.ts:1530:9",
+      "receiver": "{ name: string; type: \"boolean\"; affectsEmit: true; affectsBuildInfo: true; category: DiagnosticMessage; transpileOptionValue: undefined; description: DiagnosticMessage; defaultValueDescription: false; }",
+      "value": "\"noEmitOnError\"",
+      "expression": "name: \"noEmitOnError\""
+    },
+    {
+      "property": "name",
+      "where": "src/compiler/commandLineParser.ts:1540:9",
+      "receiver": "{ name: string; type: \"boolean\"; affectsEmit: true; affectsBuildInfo: true; category: DiagnosticMessage; description: DiagnosticMessage; defaultValueDescription: false; }",
+      "value": "\"preserveConstEnums\"",
+      "expression": "name: \"preserveConstEnums\""
+    },
+    {
+      "property": "name",
+      "where": "src/compiler/commandLineParser.ts:1549:9",
+      "receiver": "{ name: string; type: \"string\"; affectsEmit: true; affectsBuildInfo: true; affectsDeclarationPath: true; isFilePath: true; paramType: DiagnosticMessage; category: DiagnosticMessage; transpileOptionValue: undefined; description: DiagnosticMessage; }",
+      "value": "\"declarationDir\"",
+      "expression": "name: \"declarationDir\""
+    },
+    {
+      "property": "name",
+      "where": "src/compiler/commandLineParser.ts:1561:9",
+      "receiver": "{ name: string; type: \"boolean\"; affectsBuildInfo: true; category: DiagnosticMessage; description: DiagnosticMessage; defaultValueDescription: false; }",
+      "value": "\"skipLibCheck\"",
+      "expression": "name: \"skipLibCheck\""
+    },
+    {
+      "property": "name",
+      "where": "src/compiler/commandLineParser.ts:1570:9",
+      "receiver": "{ name: string; type: \"boolean\"; affectsBindDiagnostics: true; affectsSemanticDiagnostics: true; affectsBuildInfo: true; category: DiagnosticMessage; description: DiagnosticMessage; defaultValueDescription: undefined; }",
+      "value": "\"allowUnusedLabels\"",
+      "expression": "name: \"allowUnusedLabels\""
+    },
+    {
+      "property": "name",
+      "where": "src/compiler/commandLineParser.ts:1580:9",
+      "receiver": "{ name: string; type: \"boolean\"; affectsBindDiagnostics: true; affectsSemanticDiagnostics: true; affectsBuildInfo: true; category: DiagnosticMessage; description: DiagnosticMessage; defaultValueDescription: undefined; }",
+      "value": "\"allowUnreachableCode\"",
+      "expression": "name: \"allowUnreachableCode\""
+    },
+    {
+      "property": "name",
+      "where": "src/compiler/commandLineParser.ts:1590:9",
+      "receiver": "{ name: string; type: \"boolean\"; affectsSemanticDiagnostics: true; affectsBuildInfo: true; category: DiagnosticMessage; description: DiagnosticMessage; defaultValueDescription: false; }",
+      "value": "\"suppressExcessPropertyErrors\"",
+      "expression": "name: \"suppressExcessPropertyErrors\""
+    },
+    {
+      "property": "name",
+      "where": "src/compiler/commandLineParser.ts:1599:9",
+      "receiver": "{ name: string; type: \"boolean\"; affectsSemanticDiagnostics: true; affectsBuildInfo: true; category: DiagnosticMessage; description: DiagnosticMessage; defaultValueDescription: false; }",
+      "value": "\"suppressImplicitAnyIndexErrors\"",
+      "expression": "name: \"suppressImplicitAnyIndexErrors\""
+    },
+    {
+      "property": "name",
+      "where": "src/compiler/commandLineParser.ts:1608:9",
+      "receiver": "{ name: string; type: \"boolean\"; affectsModuleResolution: true; category: DiagnosticMessage; description: DiagnosticMessage; defaultValueDescription: true; }",
+      "value": "\"forceConsistentCasingInFileNames\"",
+      "expression": "name: \"forceConsistentCasingInFileNames\""
+    },
+    {
+      "property": "name",
+      "where": "src/compiler/commandLineParser.ts:1616:9",
+      "receiver": "{ name: string; type: \"number\"; affectsModuleResolution: true; category: DiagnosticMessage; description: DiagnosticMessage; defaultValueDescription: number; }",
+      "value": "\"maxNodeModuleJsDepth\"",
+      "expression": "name: \"maxNodeModuleJsDepth\""
+    },
+    {
+      "property": "name",
+      "where": "src/compiler/commandLineParser.ts:1624:9",
+      "receiver": "{ name: string; type: \"boolean\"; affectsSemanticDiagnostics: true; affectsBuildInfo: true; category: DiagnosticMessage; description: DiagnosticMessage; defaultValueDescription: false; }",
+      "value": "\"noStrictGenericChecks\"",
+      "expression": "name: \"noStrictGenericChecks\""
+    },
+    {
+      "property": "name",
+      "where": "src/compiler/commandLineParser.ts:1633:9",
+      "receiver": "{ name: string; type: \"boolean\"; affectsSemanticDiagnostics: true; affectsEmit: true; affectsBuildInfo: true; category: DiagnosticMessage; description: DiagnosticMessage; defaultValueDescription: DiagnosticMessage; }",
+      "value": "\"useDefineForClassFields\"",
+      "expression": "name: \"useDefineForClassFields\""
+    },
+    {
+      "property": "name",
+      "where": "src/compiler/commandLineParser.ts:1643:9",
+      "receiver": "{ name: string; type: \"boolean\"; affectsEmit: true; affectsBuildInfo: true; category: DiagnosticMessage; description: DiagnosticMessage; defaultValueDescription: false; }",
+      "value": "\"preserveValueImports\"",
+      "expression": "name: \"preserveValueImports\""
+    },
+    {
+      "property": "name",
+      "where": "src/compiler/commandLineParser.ts:1653:9",
+      "receiver": "{ name: string; type: \"boolean\"; category: DiagnosticMessage; description: DiagnosticMessage; defaultValueDescription: false; }",
+      "value": "\"keyofStringsOnly\"",
+      "expression": "name: \"keyofStringsOnly\""
+    },
+    {
+      "property": "name",
+      "where": "src/compiler/commandLineParser.ts:1661:9",
+      "receiver": "{ name: string; type: \"list\"; isTSConfigOnly: true; element: { name: string; type: \"object\"; }; description: DiagnosticMessage; category: DiagnosticMessage; }",
+      "value": "\"plugins\"",
+      "expression": "name: \"plugins\""
+    },
+    {
+      "property": "name",
+      "where": "src/compiler/commandLineParser.ts:1665:13",
+      "receiver": "{ name: string; type: \"object\"; }",
+      "value": "\"plugin\"",
+      "expression": "name: \"plugin\""
+    },
+    {
+      "property": "name",
+      "where": "src/compiler/commandLineParser.ts:1672:9",
+      "receiver": "{ name: string; type: Map<string, ModuleDetectionKind>; affectsSourceFile: true; affectsModuleResolution: true; description: DiagnosticMessage; category: DiagnosticMessage; defaultValueDescription: DiagnosticMessage; }",
+      "value": "\"moduleDetection\"",
+      "expression": "name: \"moduleDetection\""
+    },
+    {
+      "property": "name",
+      "where": "src/compiler/commandLineParser.ts:1685:9",
+      "receiver": "{ name: string; type: \"string\"; defaultValueDescription: undefined; }",
+      "value": "\"ignoreDeprecations\"",
+      "expression": "name: \"ignoreDeprecations\""
+    },
+    {
+      "property": "name",
+      "where": "src/compiler/commandLineParser.ts:1735:5",
+      "receiver": "{ name: string; type: \"boolean\"; shortName: string; showInSimplifiedHelpView: true; category: DiagnosticMessage; description: DiagnosticMessage; defaultValueDescription: false; }",
+      "value": "\"build\"",
+      "expression": "name: \"build\""
+    },
+    {
+      "property": "name",
+      "where": "src/compiler/commandLineParser.ts:1749:9",
+      "receiver": "{ name: string; shortName: string; category: DiagnosticMessage; description: DiagnosticMessage; type: \"boolean\"; defaultValueDescription: false; }",
+      "value": "\"verbose\"",
+      "expression": "name: \"verbose\""
+    },
+    {
+      "property": "name",
+      "where": "src/compiler/commandLineParser.ts:1757:9",
+      "receiver": "{ name: string; shortName: string; category: DiagnosticMessage; description: DiagnosticMessage; type: \"boolean\"; defaultValueDescription: false; }",
+      "value": "\"dry\"",
+      "expression": "name: \"dry\""
+    },
+    {
+      "property": "name",
+      "where": "src/compiler/commandLineParser.ts:1765:9",
+      "receiver": "{ name: string; shortName: string; category: DiagnosticMessage; description: DiagnosticMessage; type: \"boolean\"; defaultValueDescription: false; }",
+      "value": "\"force\"",
+      "expression": "name: \"force\""
+    },
+    {
+      "property": "name",
+      "where": "src/compiler/commandLineParser.ts:1773:9",
+      "receiver": "{ name: string; category: DiagnosticMessage; description: DiagnosticMessage; type: \"boolean\"; defaultValueDescription: false; }",
+      "value": "\"clean\"",
+      "expression": "name: \"clean\""
+    },
+    {
+      "property": "name",
+      "where": "src/compiler/commandLineParser.ts:1780:9",
+      "receiver": "{ name: string; category: DiagnosticMessage; description: DiagnosticMessage; type: \"boolean\"; defaultValueDescription: false; }",
+      "value": "\"stopBuildOnErrors\"",
+      "expression": "name: \"stopBuildOnErrors\""
+    },
+    {
+      "property": "name",
+      "where": "src/compiler/commandLineParser.ts:1798:9",
+      "receiver": "{ name: string; type: \"boolean\"; defaultValueDescription: false; }",
+      "value": "\"enable\"",
+      "expression": "name: \"enable\""
+    },
+    {
+      "property": "name",
+      "where": "src/compiler/commandLineParser.ts:1803:9",
+      "receiver": "{ name: string; type: \"list\"; element: { name: string; type: \"string\"; }; }",
+      "value": "\"include\"",
+      "expression": "name: \"include\""
+    },
+    {
+      "property": "name",
+      "where": "src/compiler/commandLineParser.ts:1806:13",
+      "receiver": "{ name: string; type: \"string\"; }",
+      "value": "\"include\"",
+      "expression": "name: \"include\""
+    },
+    {
+      "property": "name",
+      "where": "src/compiler/commandLineParser.ts:1811:9",
+      "receiver": "{ name: string; type: \"list\"; element: { name: string; type: \"string\"; }; }",
+      "value": "\"exclude\"",
+      "expression": "name: \"exclude\""
+    },
+    {
+      "property": "name",
+      "where": "src/compiler/commandLineParser.ts:1814:13",
+      "receiver": "{ name: string; type: \"string\"; }",
+      "value": "\"exclude\"",
+      "expression": "name: \"exclude\""
+    },
+    {
+      "property": "name",
+      "where": "src/compiler/commandLineParser.ts:1819:9",
+      "receiver": "{ name: string; type: \"boolean\"; defaultValueDescription: false; }",
+      "value": "\"disableFilenameBasedTypeAcquisition\"",
+      "expression": "name: \"disableFilenameBasedTypeAcquisition\""
+    },
+    {
+      "property": "name",
+      "where": "src/compiler/commandLineParser.ts:2343:5",
+      "receiver": "{ name: string; type: \"listOrElement\"; element: { name: string; type: \"string\"; }; category: DiagnosticMessage; disallowNullOrUndefined: true; }",
+      "value": "\"extends\"",
+      "expression": "name: \"extends\""
+    },
+    {
+      "property": "name",
+      "where": "src/compiler/commandLineParser.ts:2346:9",
+      "receiver": "{ name: string; type: \"string\"; }",
+      "value": "\"extends\"",
+      "expression": "name: \"extends\""
+    },
+    {
+      "property": "name",
+      "where": "src/compiler/commandLineParser.ts:2353:5",
+      "receiver": "{ name: string; type: \"object\"; elementOptions: Map<string, CommandLineOption>; extraKeyDiagnostics: ParseCommandLineWorkerDiagnostics; }",
+      "value": "\"compilerOptions\"",
+      "expression": "name: \"compilerOptions\""
+    },
+    {
+      "property": "name",
+      "where": "src/compiler/commandLineParser.ts:2359:5",
+      "receiver": "{ name: string; type: \"object\"; elementOptions: Map<string, CommandLineOption>; extraKeyDiagnostics: ParseCommandLineWorkerDiagnostics; }",
+      "value": "\"watchOptions\"",
+      "expression": "name: \"watchOptions\""
+    },
+    {
+      "property": "name",
+      "where": "src/compiler/commandLineParser.ts:2365:5",
+      "receiver": "{ name: string; type: \"object\"; elementOptions: Map<string, CommandLineOption>; extraKeyDiagnostics: DidYouMeanOptionsDiagnostics; }",
+      "value": "\"typeAcquisition\"",
+      "expression": "name: \"typeAcquisition\""
+    },
+    {
+      "property": "name",
+      "where": "src/compiler/commandLineParser.ts:2374:13",
+      "receiver": "{ name: never; type: \"object\"; elementOptions: Map<string, CommandLineOption>; }",
+      "value": "never",
+      "expression": "name: undefined!"
+    },
+    {
+      "property": "name",
+      "where": "src/compiler/commandLineParser.ts:2382:21",
+      "receiver": "{ name: string; type: \"list\"; element: { name: string; type: \"object\"; }; category: DiagnosticMessage; }",
+      "value": "\"references\"",
+      "expression": "name: \"references\""
+    },
+    {
+      "property": "name",
+      "where": "src/compiler/commandLineParser.ts:2385:25",
+      "receiver": "{ name: string; type: \"object\"; }",
+      "value": "\"references\"",
+      "expression": "name: \"references\""
+    },
+    {
+      "property": "name",
+      "where": "src/compiler/commandLineParser.ts:2391:21",
+      "receiver": "{ name: string; type: \"list\"; element: { name: string; type: \"string\"; }; category: DiagnosticMessage; }",
+      "value": "\"files\"",
+      "expression": "name: \"files\""
+    },
+    {
+      "property": "name",
+      "where": "src/compiler/commandLineParser.ts:2394:25",
+      "receiver": "{ name: string; type: \"string\"; }",
+      "value": "\"files\"",
+      "expression": "name: \"files\""
+    },
+    {
+      "property": "name",
+      "where": "src/compiler/commandLineParser.ts:2400:21",
+      "receiver": "{ name: string; type: \"list\"; element: { name: string; type: \"string\"; }; category: DiagnosticMessage; defaultValueDescription: DiagnosticMessage; }",
+      "value": "\"include\"",
+      "expression": "name: \"include\""
+    },
+    {
+      "property": "name",
+      "where": "src/compiler/commandLineParser.ts:2403:25",
+      "receiver": "{ name: string; type: \"string\"; }",
+      "value": "\"include\"",
+      "expression": "name: \"include\""
+    },
+    {
+      "property": "name",
+      "where": "src/compiler/commandLineParser.ts:2410:21",
+      "receiver": "{ name: string; type: \"list\"; element: { name: string; type: \"string\"; }; category: DiagnosticMessage; defaultValueDescription: DiagnosticMessage; }",
+      "value": "\"exclude\"",
+      "expression": "name: \"exclude\""
+    },
+    {
+      "property": "name",
+      "where": "src/compiler/commandLineParser.ts:2413:25",
+      "receiver": "{ name: string; type: \"string\"; }",
+      "value": "\"exclude\"",
+      "expression": "name: \"exclude\""
+    },
+    {
+      "property": "version",
+      "where": "src/compiler/commandLineParser.ts:2689:13",
+      "receiver": "{ showConfig: undefined; configFile: undefined; configFilePath: undefined; help: undefined; init: undefined; listFiles: undefined; listEmittedFiles: undefined; project: undefined; build: undefined; version: undefined; }",
+      "value": "undefined",
+      "expression": "version: undefined"
+    },
+    {
+      "property": "watchOptions",
+      "where": "src/compiler/commandLineParser.ts:2691:9",
+      "receiver": "{ compileOnSave: true | undefined; include?: readonly string[] | undefined; exclude?: readonly string[] | undefined; compilerOptions: { showConfig: undefined; configFile: undefined; configFilePath: undefined; ... 6 more ...; version: undefined; }; watchOptions: object | undefined; references: { ...; }[] | undefined;...",
+      "value": "object | undefined",
+      "expression": "watchOptions: watchOptionMap && optionMapToObject(watchOptionMap)"
+    },
+    {
+      "property": "originalPath",
+      "where": "src/compiler/commandLineParser.ts:2692:120",
+      "receiver": "{ path: string; originalPath: undefined; prepend?: boolean | undefined; circular?: boolean | undefined; }",
+      "value": "undefined",
+      "expression": "originalPath: undefined"
+    },
+    {
+      "property": "originalPath",
+      "where": "src/compiler/commandLineParser.ts:3227:25",
+      "receiver": "{ path: string; originalPath: string; prepend: boolean | undefined; circular: boolean | undefined; }",
+      "value": "string",
+      "expression": "originalPath: ref.path"
+    },
+    {
+      "property": "watchOptions",
+      "where": "src/compiler/commandLineParser.ts:3472:9",
+      "receiver": "ParsedTsconfig",
+      "value": "WatchOptions | undefined",
+      "expression": "ownConfig.watchOptions = ownConfig.watchOptions && result.watchOptions ?\r\n            assignWatchOptions(result, ownConfig.watchOptions) :\r\n            ownConfig.watchOptions || result.watchOptions"
+    },
+    {
+      "property": "watchOptions",
+      "where": "src/compiler/commandLineParser.ts:3504:13",
+      "receiver": "ExtendsResult",
+      "value": "WatchOptions | undefined",
+      "expression": "result.watchOptions = result.watchOptions && extendedConfig.watchOptions ?\r\n                assignWatchOptions(result, extendedConfig.watchOptions) :\r\n                result.watchOptions || extendedConfig.watchOptions"
+    },
+    {
+      "property": "name",
+      "where": "src/compiler/moduleNameResolver.ts:133:17",
+      "receiver": "{ name: string; subModuleName: string; version: string; peerDependencies: string | undefined; }",
+      "value": "string",
+      "expression": "name: packageJsonContent.name"
+    },
+    {
+      "property": "version",
+      "where": "src/compiler/moduleNameResolver.ts:135:17",
+      "receiver": "{ name: string; subModuleName: string; version: string; peerDependencies: string | undefined; }",
+      "value": "string",
+      "expression": "version: packageJsonContent.version"
+    },
+    {
+      "property": "failedLookupLocations",
+      "where": "src/compiler/moduleNameResolver.ts:271:13",
+      "receiver": "ResolvedModuleWithFailedLookupLocations",
+      "value": "string[] | undefined",
+      "expression": "resultFromCache.failedLookupLocations = updateResolutionField(resultFromCache.failedLookupLocations, failedLookupLocations)"
+    },
+    {
+      "property": "failedLookupLocations",
+      "where": "src/compiler/moduleNameResolver.ts:279:17",
+      "receiver": "{ failedLookupLocations: string[] | undefined; affectingLocations: string[] | undefined; resolutionDiagnostics: Diagnostic[] | undefined; resolvedModule: ResolvedModuleFull | undefined; alternateResult?: string | undefined; }",
+      "value": "string[] | undefined",
+      "expression": "failedLookupLocations: initializeResolutionFieldForReadonlyCache(resultFromCache.failedLookupLocations, failedLookupLocations)"
+    },
+    {
+      "property": "originalPath",
+      "where": "src/compiler/moduleNameResolver.ts:288:13",
+      "receiver": "{ resolvedFileName: string; originalPath: string | undefined; extension: string; isExternalLibraryImport: boolean; packageId: PackageId | undefined; resolvedUsingTsExtension: boolean; }",
+      "value": "string | undefined",
+      "expression": "originalPath: resolved.originalPath === true ? undefined : resolved.originalPath"
+    },
+    {
+      "property": "failedLookupLocations",
+      "where": "src/compiler/moduleNameResolver.ts:294:9",
+      "receiver": "{ resolvedModule: { resolvedFileName: string; originalPath: string | undefined; extension: string; isExternalLibraryImport: boolean; packageId: PackageId | undefined; resolvedUsingTsExtension: boolean; } | undefined; failedLookupLocations: string[] | undefined; affectingLocations: string[] | undefined; resolutionDia...",
+      "value": "string[] | undefined",
+      "expression": "failedLookupLocations: initializeResolutionField(failedLookupLocations)"
+    },
+    {
+      "property": "version",
+      "where": "src/compiler/moduleNameResolver.ts:474:22",
+      "receiver": "{ version: string; paths: MapLike<string[]>; }",
+      "value": "string",
+      "expression": "version: key"
+    },
+    {
+      "property": "originalPath",
+      "where": "src/compiler/moduleNameResolver.ts:522:9",
+      "receiver": "{ resolvedFileName: string; originalPath: string | undefined; }",
+      "value": "string | undefined",
+      "expression": "originalPath: pathsAreEqual ? undefined : fileName"
+    },
+    {
+      "property": "failedLookupLocations",
+      "where": "src/compiler/moduleNameResolver.ts:637:9",
+      "receiver": "{ resolvedTypeReferenceDirective: ResolvedTypeReferenceDirective | undefined; failedLookupLocations: string[] | undefined; affectingLocations: string[] | undefined; resolutionDiagnostics: Diagnostic[] | undefined; }",
+      "value": "string[] | undefined",
+      "expression": "failedLookupLocations: initializeResolutionField(failedLookupLocations)"
+    },
+    {
+      "property": "failedLookupLocations",
+      "where": "src/compiler/moduleNameResolver.ts:2262:80",
+      "receiver": "{ failedLookupLocations: never[]; conditions: string[]; host: GetPackageJsonEntrypointsHost; compilerOptions: CompilerOptions; traceEnabled: boolean; ... 8 more ...; resolvedPackageDirectory: boolean; }",
+      "value": "never[]",
+      "expression": "failedLookupLocations: []"
+    },
+    {
+      "property": "failedLookupLocations",
+      "where": "src/compiler/moduleNameResolver.ts:2365:9",
+      "receiver": "{ host: ModuleResolutionHost; compilerOptions: CompilerOptions; traceEnabled: boolean; failedLookupLocations: undefined; affectingLocations: undefined; ... 7 more ...; resolvedPackageDirectory: false; }",
+      "value": "undefined",
+      "expression": "failedLookupLocations: undefined"
+    },
+    {
+      "property": "originalPath",
+      "where": "src/compiler/moduleNameResolver.ts:2777:29",
+      "receiver": "{ path: string; extension: string; packageId: PackageId | undefined; originalPath: string | undefined; resolvedUsingTsExtension: boolean | undefined; }",
+      "value": "string | undefined",
+      "expression": "originalPath: result.resolvedModule.originalPath"
+    },
+    {
+      "property": "originalPath",
+      "where": "src/compiler/moduleNameResolver.ts:3252:17",
+      "receiver": "{ path: string; originalPath: string | true; extension: string; packageId: PackageId | undefined; resolvedUsingTsExtension: boolean | undefined; }",
+      "value": "string | true",
+      "expression": "originalPath: result.resolvedModule.originalPath || true"
+    },
+    {
+      "property": "constraint",
+      "where": "src/compiler/checker.ts:2172:5",
+      "receiver": "TypeParameter",
+      "value": "TypeParameter",
+      "expression": "markerSubType.constraint = markerSuperType"
+    },
+    {
+      "property": "constraint",
+      "where": "src/compiler/checker.ts:2177:5",
+      "receiver": "TypeParameter",
+      "value": "TypeParameter",
+      "expression": "markerSubTypeForCheck.constraint = markerSuperTypeForCheck"
+    },
+    {
+      "property": "name",
+      "where": "src/compiler/checker.ts:7804:196",
+      "receiver": "{ name: Identifier | StringLiteral | NumericLiteral | ComputedPropertyName | PrivateIdentifier; }",
+      "value": "Identifier | StringLiteral | NumericLiteral | ComputedPropertyName | PrivateIdentifier",
+      "expression": "name: propertyName"
+    },
+    {
+      "property": "name",
+      "where": "src/compiler/checker.ts:7815:196",
+      "receiver": "{ name: Identifier | StringLiteral | NumericLiteral | ComputedPropertyName | PrivateIdentifier; }",
+      "value": "Identifier | StringLiteral | NumericLiteral | ComputedPropertyName | PrivateIdentifier",
+      "expression": "name: propertyName"
+    },
+    {
+      "property": "name",
+      "where": "src/compiler/checker.ts:7827:127",
+      "receiver": "{ name: Identifier | StringLiteral | NumericLiteral | ComputedPropertyName | PrivateIdentifier; }",
+      "value": "Identifier | StringLiteral | NumericLiteral | ComputedPropertyName | PrivateIdentifier",
+      "expression": "name: propertyName"
+    },
+    {
+      "property": "name",
+      "where": "src/compiler/checker.ts:7835:123",
+      "receiver": "{ name: Identifier | StringLiteral | NumericLiteral | ComputedPropertyName | PrivateIdentifier; }",
+      "value": "Identifier | StringLiteral | NumericLiteral | ComputedPropertyName | PrivateIdentifier",
+      "expression": "name: propertyName"
+    },
+    {
+      "property": "name",
+      "where": "src/compiler/checker.ts:7846:135",
+      "receiver": "{ name: Identifier | StringLiteral | NumericLiteral | ComputedPropertyName | PrivateIdentifier; questionToken: PunctuationToken<...> | undefined; }",
+      "value": "Identifier | StringLiteral | NumericLiteral | ComputedPropertyName | PrivateIdentifier",
+      "expression": "name: propertyName"
+    },
+    {
+      "property": "name",
+      "where": "src/compiler/checker.ts:10164:120",
+      "receiver": "{ name: Identifier; }",
+      "value": "Identifier",
+      "expression": "name: factory.createIdentifier(localName)"
+    },
+    {
+      "property": "constraint",
+      "where": "src/compiler/checker.ts:13504:17",
+      "receiver": "TypeParameter",
+      "value": "InterfaceType",
+      "expression": "type.thisType.constraint = type"
+    },
+    {
+      "property": "constraint",
+      "where": "src/compiler/checker.ts:16855:17",
+      "receiver": "TypeParameter",
+      "value": "Type",
+      "expression": "typeParameter.constraint = targetConstraint ? instantiateType(targetConstraint, typeParameter.mapper) : noConstraintType"
+    },
+    {
+      "property": "constraint",
+      "where": "src/compiler/checker.ts:16860:21",
+      "receiver": "TypeParameter",
+      "value": "Type",
+      "expression": "typeParameter.constraint = getInferredTypeParameterConstraint(typeParameter) || noConstraintType"
+    },
+    {
+      "property": "constraint",
+      "where": "src/compiler/checker.ts:16869:21",
+      "receiver": "TypeParameter",
+      "value": "Type",
+      "expression": "typeParameter.constraint = type"
+    },
+    {
+      "property": "constraint",
+      "where": "src/compiler/checker.ts:17258:9",
+      "receiver": "SubstitutionType",
+      "value": "Type",
+      "expression": "result.constraint = constraint"
+    },
+    {
+      "property": "constraint",
+      "where": "src/compiler/checker.ts:17927:9",
+      "receiver": "TypeParameter",
+      "value": "TupleType & InterfaceTypeWithDeclaredMembers",
+      "expression": "type.thisType.constraint = type"
+    },
+    {
+      "property": "types",
+      "where": "src/compiler/checker.ts:18312:9",
+      "receiver": "UnionOrIntersectionType",
+      "value": "Type[]",
+      "expression": "result.types = types"
+    },
+    {
+      "property": "types",
+      "where": "src/compiler/checker.ts:18458:13",
+      "receiver": "UnionType",
+      "value": "Type[]",
+      "expression": "type.types = types"
+    },
+    {
+      "property": "types",
+      "where": "src/compiler/checker.ts:18653:9",
+      "receiver": "IntersectionType",
+      "value": "Type[]",
+      "expression": "result.types = types"
+    },
+    {
+      "property": "types",
+      "where": "src/compiler/checker.ts:19122:9",
+      "receiver": "TemplateLiteralType",
+      "value": "readonly Type[]",
+      "expression": "type.types = types"
+    },
+    {
+      "property": "constraint",
+      "where": "src/compiler/checker.ts:20682:13",
+      "receiver": "TypeParameter",
+      "value": "ResolvedType",
+      "expression": "restrictiveInstantiation.constraint = noConstraintType"
+    },
+    {
+      "property": "constraint",
+      "where": "src/compiler/checker.ts:22949:17",
+      "receiver": "TypeParameter",
+      "value": "Type",
+      "expression": "syntheticParam.constraint = instantiateType(target, makeUnaryTypeMapper(source, syntheticParam))"
+    },
+    {
+      "property": "source",
+      "where": "src/compiler/checker.ts:26516:9",
+      "receiver": "ReverseMappedType",
+      "value": "Type",
+      "expression": "reversed.source = source"
+    },
+    {
+      "property": "skipLogging",
+      "where": "src/compiler/checker.ts:36175:81",
+      "receiver": "{ errors: undefined; skipLogging: true; }",
+      "value": "true",
+      "expression": "skipLogging: true"
+    },
+    {
+      "property": "skipLogging",
+      "where": "src/compiler/checker.ts:45952:109",
+      "receiver": "{ errors: undefined; skipLogging: true; }",
+      "value": "true",
+      "expression": "skipLogging: true"
+    },
+    {
+      "property": "getGlobalTypingsCacheLocation",
+      "where": "src/compiler/checker.ts:54308:9",
+      "receiver": "{ getCommonSourceDirectory: () => string; getCurrentDirectory: () => string; getSymlinkCache: any; getPackageJsonInfoCache: () => PackageJsonInfoCache | undefined; ... 9 more ...; getGlobalTypingsCacheLocation: any; }",
+      "value": "any",
+      "expression": "getGlobalTypingsCacheLocation: host.getGlobalTypingsCacheLocation?.bind(host)"
+    },
+    {
+      "property": "version",
+      "where": "src/compiler/sourcemap.ts:327:13",
+      "receiver": "{ version: 3; file: string; sourceRoot: string; sources: string[]; names: string[]; mappings: string; sourcesContent: (string | null)[] | undefined; }",
+      "value": "3",
+      "expression": "version: 3"
+    },
+    {
+      "property": "name",
+      "where": "src/compiler/transformers/destructuring.ts:324:56",
+      "receiver": "{ pendingExpressions: undefined; name: BindingName; value: Expression; location: TextRange | undefined; original: Node | undefined; }",
+      "value": "BindingName",
+      "expression": "name: target"
+    },
+    {
+      "property": "name",
+      "where": "src/compiler/transformers/namedEvaluation.ts:90:28",
+      "receiver": "{ assignedName: Identifier; name: ComputedPropertyName; }",
+      "value": "ComputedPropertyName",
+      "expression": "name: updatedName"
+    },
+    {
+      "property": "name",
+      "where": "src/compiler/transformers/esDecorators.ts:887:34",
+      "receiver": "{ kind: \"class\"; name: PropertyAccessExpression; metadata: Identifier; }",
+      "value": "PropertyAccessExpression",
+      "expression": "name: classNameReference"
+    },
+    {
+      "property": "name",
+      "where": "src/compiler/transformers/esDecorators.ts:1295:51",
+      "receiver": "{ computed: false; name: Identifier | PrivateIdentifier; }",
+      "value": "Identifier | PrivateIdentifier",
+      "expression": "name: member.name"
+    },
+    {
+      "property": "name",
+      "where": "src/compiler/transformers/esDecorators.ts:1298:50",
+      "receiver": "{ computed: true; name: StringLiteral; }",
+      "value": "StringLiteral",
+      "expression": "name: factory.createStringLiteralFromNode(member.name)"
+    },
+    {
+      "property": "name",
+      "where": "src/compiler/transformers/esDecorators.ts:1303:54",
+      "receiver": "{ computed: true; name: StringLiteral; }",
+      "value": "StringLiteral",
+      "expression": "name: factory.createStringLiteralFromNode(expression)"
+    },
+    {
+      "property": "name",
+      "where": "src/compiler/transformers/esDecorators.ts:1308:54",
+      "receiver": "{ computed: true; name: Expression; }",
+      "value": "Expression",
+      "expression": "name: referencedName"
+    },
+    {
+      "property": "name",
+      "where": "src/compiler/transformers/esDecorators.ts:1315:17",
+      "receiver": "{ kind: \"method\" | \"getter\" | \"setter\" | \"accessor\" | \"field\"; name: ESDecorateName; static: boolean; private: boolean; access: { get: boolean; set: boolean; }; metadata: Identifier; }",
+      "value": "ESDecorateName",
+      "expression": "name: propertyName"
+    },
+    {
+      "property": "name",
+      "where": "src/compiler/transformers/module/module.ts:2499:5",
+      "receiver": "{ name: string; scoped: true; text: string; }",
+      "value": "\"typescript:dynamicimport-sync-require\"",
+      "expression": "name: \"typescript:dynamicimport-sync-require\""
+    },
+    {
+      "property": "name",
+      "where": "src/compiler/transformers/module/system.ts:292:25",
+      "receiver": "{ name: StringLiteral; externalImports: (ImportEqualsDeclaration | ExportDeclaration | ImportDeclaration)[]; }",
+      "value": "StringLiteral",
+      "expression": "name: externalModuleName"
+    },
+    {
+      "property": "failedLookupLocations",
+      "where": "src/compiler/program.ts:1368:9",
+      "receiver": "ModuleResolutionState",
+      "value": "string[]",
+      "expression": "state.failedLookupLocations = packageJsonLocations"
+    },
+    {
+      "property": "getGlobalTypingsCacheLocation",
+      "where": "src/compiler/program.ts:1966:9",
+      "receiver": "{ getRootFileNames: () => readonly string[]; getSourceFile: (fileName: string) => SourceFile | undefined; getSourceFileByPath: (path: Path) => SourceFile | undefined; ... 76 more ...; getGlobalTypingsCacheLocation: any; }",
+      "value": "any",
+      "expression": "getGlobalTypingsCacheLocation: host.getGlobalTypingsCacheLocation?.bind(host)"
+    },
+    {
+      "property": "packageJsonScope",
+      "where": "src/compiler/program.ts:2410:13",
+      "receiver": "SourceFile",
+      "value": "PackageJsonInfo | undefined",
+      "expression": "newSourceFile.packageJsonScope = sourceFileOptions.packageJsonScope"
+    },
+    {
+      "property": "getGlobalTypingsCacheLocation",
+      "where": "src/compiler/program.ts:2646:13",
+      "receiver": "{ getCanonicalFileName: (fileName: string) => string; getCommonSourceDirectory: () => string; getCompilerOptions: () => CompilerOptions; getCurrentDirectory: () => string; ... 24 more ...; getGlobalTypingsCacheLocation: (() => string | undefined) | undefined; }",
+      "value": "(() => string | undefined) | undefined",
+      "expression": "getGlobalTypingsCacheLocation: program.getGlobalTypingsCacheLocation"
+    },
+    {
+      "property": "packageJsonScope",
+      "where": "src/compiler/program.ts:3527:9",
+      "receiver": "SourceFile",
+      "value": "PackageJsonInfo | undefined",
+      "expression": "redirect.packageJsonScope = sourceFileOptions.packageJsonScope"
+    },
+    {
+      "property": "packageJsonScope",
+      "where": "src/compiler/program.ts:3682:13",
+      "receiver": "SourceFile",
+      "value": "PackageJsonInfo | undefined",
+      "expression": "file.packageJsonScope = sourceFileOptions.packageJsonScope"
+    },
+    {
+      "property": "source",
+      "where": "src/compiler/program.ts:4069:91",
+      "receiver": "{ resolvedRef: ResolvedProjectReference; source: string; }",
+      "value": "string",
+      "expression": "source: fileName"
+    },
+    {
+      "property": "onUnRecoverableConfigFileDiagnostic",
+      "where": "src/compiler/program.ts:5131:9",
+      "receiver": "{ fileExists: (f: string) => boolean; readDirectory(root: string, extensions: readonly string[], excludes: readonly string[] | undefined, includes: readonly string[], depth: number | undefined): string[]; readFile: (f: string) => string | undefined; ... 6 more ...; trace: ((s: string) => void) | undefined; }",
+      "value": "DiagnosticReporter",
+      "expression": "onUnRecoverableConfigFileDiagnostic: host.onUnRecoverableConfigFileDiagnostic || returnUndefined"
+    },
+    {
+      "property": "name",
+      "where": "src/compiler/builderState.ts:52:28",
+      "receiver": "{ name: string; writeByteOrderMark: boolean; text: string; }",
+      "value": "string",
+      "expression": "name: fileName"
+    },
+    {
+      "property": "reportsUnnecessary",
+      "where": "src/compiler/builder.ts:599:9",
+      "receiver": "Diagnostic",
+      "value": "{} | undefined",
+      "expression": "result.reportsUnnecessary = diagnostic.reportsUnnecessary"
+    },
+    {
+      "property": "source",
+      "where": "src/compiler/builder.ts:601:9",
+      "receiver": "Diagnostic",
+      "value": "string | undefined",
+      "expression": "result.source = diagnostic.source"
+    },
+    {
+      "property": "version",
+      "where": "src/compiler/builder.ts:1286:19",
+      "receiver": "{ version: string; impliedFormat: ModuleKind.CommonJS | ModuleKind.ESNext; signature: undefined; affectsGlobalScope: undefined; }",
+      "value": "string",
+      "expression": "version: value.version"
+    },
+    {
+      "property": "version",
+      "where": "src/compiler/builder.ts:1340:19",
+      "receiver": "{ version: string; signature: undefined; affectsGlobalScope: true | undefined; impliedFormat: ResolutionMode; }",
+      "value": "string",
+      "expression": "version: value.version"
+    },
+    {
+      "property": "version",
+      "where": "src/compiler/builder.ts:1348:19",
+      "receiver": "{ version: string; signature: string; affectsGlobalScope: true | undefined; impliedFormat: ResolutionMode; }",
+      "value": "string",
+      "expression": "version: value.version"
+    },
+    {
+      "property": "version",
+      "where": "src/compiler/builder.ts:1350:15",
+      "receiver": "{ version: string; signature: false; affectsGlobalScope: true | undefined; impliedFormat: ResolutionMode; }",
+      "value": "string",
+      "expression": "version: value.version"
+    },
+    {
+      "property": "reportsUnnecessary",
+      "where": "src/compiler/builder.ts:1529:13",
+      "receiver": "ReusableDiagnostic",
+      "value": "{} | undefined",
+      "expression": "result.reportsUnnecessary = diagnostic.reportsUnnecessary"
+    },
+    {
+      "property": "source",
+      "where": "src/compiler/builder.ts:1531:13",
+      "receiver": "ReusableDiagnostic",
+      "value": "string | undefined",
+      "expression": "result.source = diagnostic.source"
+    },
+    {
+      "property": "version",
+      "where": "src/compiler/builder.ts:2254:11",
+      "receiver": "{ version: string; signature: string; affectsGlobalScope: undefined; impliedFormat: undefined; }",
+      "value": "string",
+      "expression": "version: fileInfo"
+    },
+    {
+      "property": "version",
+      "where": "src/compiler/builder.ts:2257:11",
+      "receiver": "{ version: string; signature: string | undefined; affectsGlobalScope: true | undefined; impliedFormat: ResolutionMode; }",
+      "value": "string",
+      "expression": "version: fileInfo.version"
+    },
+    {
+      "property": "version",
+      "where": "src/compiler/builder.ts:2294:56",
+      "receiver": "{ version: string; signature: undefined; affectsGlobalScope: undefined; impliedFormat: undefined; }",
+      "value": "string",
+      "expression": "version: fileInfo"
+    },
+    {
+      "property": "failedLookupLocations",
+      "where": "src/compiler/resolutionCache.ts:566:13",
+      "receiver": "ResolvedModuleWithFailedLookupLocations",
+      "value": "string[] | undefined",
+      "expression": "primaryResult.failedLookupLocations = updateResolutionField(primaryResult.failedLookupLocations, failedLookupLocations)"
+    },
+    {
+      "property": "isInvalidated",
+      "where": "src/compiler/resolutionCache.ts:1482:13",
+      "receiver": "ResolutionWithFailedLookupLocations",
+      "value": "true",
+      "expression": "resolution.isInvalidated = invalidated = true"
+    },
+    {
+      "property": "onUnRecoverableConfigFileDiagnostic",
+      "where": "src/compiler/watch.ts:221:5",
+      "receiver": "ParseConfigFileHost",
+      "value": "(diagnostic: Diagnostic) => void",
+      "expression": "host.onUnRecoverableConfigFileDiagnostic = diagnostic => reportUnrecoverableDiagnostic(system, reportDiagnostic, diagnostic)"
+    },
+    {
+      "property": "onUnRecoverableConfigFileDiagnostic",
+      "where": "src/compiler/watch.ts:223:5",
+      "receiver": "ParseConfigFileHost",
+      "value": "never",
+      "expression": "host.onUnRecoverableConfigFileDiagnostic = undefined!"
+    },
+    {
+      "property": "version",
+      "where": "src/compiler/watch.ts:832:13",
+      "receiver": "any",
+      "value": "string",
+      "expression": "result.version = getSourceFileVersionAsHashFromText(compilerHost, result.text)"
+    },
+    {
+      "property": "createProgram",
+      "where": "src/compiler/watch.ts:862:9",
+      "receiver": "{ useCaseSensitiveFileNames: () => boolean; getNewLine: () => string; getCurrentDirectory: () => string; getDefaultLibLocation: () => string; getDefaultLibFileName: (options: CompilerOptions) => string; ... 13 more ...; now: any; }",
+      "value": "CreateProgram<T>",
+      "expression": "createProgram: createProgram || createEmitAndSemanticDiagnosticsBuilderProgram as any as CreateProgram<T>"
+    },
+    {
+      "property": "onUnRecoverableConfigFileDiagnostic",
+      "where": "src/compiler/watch.ts:935:5",
+      "receiver": "WatchCompilerHostOfConfigFile<T>",
+      "value": "(diagnostic: Diagnostic) => void",
+      "expression": "host.onUnRecoverableConfigFileDiagnostic = diagnostic => reportUnrecoverableDiagnostic(system, diagnosticReporter, diagnostic)"
+    },
+    {
+      "property": "watchOptions",
+      "where": "src/compiler/watch.ts:968:5",
+      "receiver": "WatchCompilerHostOfFilesAndCompilerOptions<T>",
+      "value": "WatchOptions | undefined",
+      "expression": "host.watchOptions = watchOptions"
+    },
+    {
+      "property": "watchOptions",
+      "where": "src/compiler/watchPublic.ts:374:13",
+      "receiver": "{ rootFiles: string[]; options: CompilerOptions; watchOptions: WatchOptions; projectReferences: readonly ProjectReference[]; system: System; createProgram: CreateProgram<...> | undefined; reportDiagnostic: DiagnosticReporter | undefined; reportWatchStatus: WatchStatusReporter | undefined; }",
+      "value": "WatchOptions",
+      "expression": "watchOptions: watchOptionsOrExtraFileExtensions as WatchOptions"
+    },
+    {
+      "property": "version",
+      "where": "src/compiler/watchPublic.ts:773:21",
+      "receiver": "FilePresentOnHost | FilePresenceUnknownOnHost",
+      "value": "string",
+      "expression": "hostSourceFile.version = sourceFile.version"
+    },
+    {
+      "property": "version",
+      "where": "src/compiler/watchPublic.ts:789:62",
+      "receiver": "{ sourceFile: SourceFile; version: string; fileWatcher: FileWatcher; }",
+      "value": "string",
+      "expression": "version: sourceFile.version"
+    },
+    {
+      "property": "version",
+      "where": "src/compiler/watchPublic.ts:805:46",
+      "receiver": "{ version: false; }",
+      "value": "false",
+      "expression": "version: false"
+    },
+    {
+      "property": "version",
+      "where": "src/compiler/watchPublic.ts:808:17",
+      "receiver": "FilePresenceUnknownOnHost",
+      "value": "false",
+      "expression": "(hostSourceFile as FilePresenceUnknownOnHost).version = false"
+    },
+    {
+      "property": "onUnRecoverableConfigFileDiagnostic",
+      "where": "src/compiler/watchPublic.ts:1034:9",
+      "receiver": "ParseConfigFileHost",
+      "value": "(_?: unknown) => void",
+      "expression": "parseConfigFileHost.onUnRecoverableConfigFileDiagnostic = noop"
+    },
+    {
+      "property": "onUnRecoverableConfigFileDiagnostic",
+      "where": "src/compiler/watchPublic.ts:1042:9",
+      "receiver": "ParseConfigFileHost",
+      "value": "DiagnosticReporter",
+      "expression": "parseConfigFileHost.onUnRecoverableConfigFileDiagnostic = onUnRecoverableConfigFileDiagnostic"
+    },
+    {
+      "property": "onUnRecoverableConfigFileDiagnostic",
+      "where": "src/compiler/tsbuildPublic.ts:596:9",
+      "receiver": "ParseConfigFileHost",
+      "value": "(d: Diagnostic) => Diagnostic",
+      "expression": "parseConfigFileHost.onUnRecoverableConfigFileDiagnostic = d => diagnostic = d"
+    },
+    {
+      "property": "onUnRecoverableConfigFileDiagnostic",
+      "where": "src/compiler/tsbuildPublic.ts:598:9",
+      "receiver": "ParseConfigFileHost",
+      "value": "(_?: unknown) => void",
+      "expression": "parseConfigFileHost.onUnRecoverableConfigFileDiagnostic = noop"
+    },
+    {
+      "property": "version",
+      "where": "src/compiler/tsbuildPublic.ts:1545:13",
+      "receiver": "{ type: UpToDateStatusType.TsVersionOutputOfDate; version: string; }",
+      "value": "string",
+      "expression": "version: buildInfo.version"
+    },
+    {
+      "property": "createProgram",
+      "where": "src/compiler/executeCommandLine.ts:984:5",
+      "receiver": "{ createProgram: CreateProgram<T>; }",
+      "value": "(rootNames: readonly string[] | undefined, options: CompilerOptions | undefined, host: CompilerHost | undefined, oldProgram: T | undefined, configFileParsingDiagnostics: readonly Diagnostic[] | undefined, projectReferences: readonly ProjectReference[] | undefined) => T",
+      "expression": "host.createProgram = (rootNames, options, host, oldProgram, configFileParsingDiagnostics, projectReferences) => {\r\n        Debug.assert(rootNames !== undefined || (options === undefined && !!oldProgram));\r\n        if (options !== undefined) {\r\n            enableStatisticsAndTracing(sys, options, isBuildMode);\r\n        }\r\n        return compileUsingBuilder(rootNames, options, host, oldProgram, configFileParsingDiagnostics, projectReferences);\r\n    }"
+    },
+    {
+      "property": "name",
+      "where": "src/compiler/executeCommandLine.ts:1110:11",
+      "receiver": "{ name: string; value: number; type: StatisticType.count; }",
+      "value": "\"Projects in scope\"",
+      "expression": "name: \"Projects in scope\""
+    },
+    {
+      "property": "name",
+      "where": "src/compiler/executeCommandLine.ts:1116:9",
+      "receiver": "Statistic",
+      "value": "string",
+      "expression": "s.name = `Aggregate ${s.name}`"
+    },
+    {
+      "property": "name",
+      "where": "src/compiler/executeCommandLine.ts:1120:62",
+      "receiver": "{ name: string; value: number; type: StatisticType.time; }",
+      "value": "string",
+      "expression": "name: `${getNameFromSolutionBuilderMarkOrMeasure(name)} time`"
+    },
+    {
+      "property": "name",
+      "where": "src/compiler/executeCommandLine.ts:1131:31",
+      "receiver": "{ name: string; value: number; type: StatisticType.count; }",
+      "value": "string",
+      "expression": "name: getNameFromSolutionBuilderMarkOrMeasure(name)"
+    },
+    {
+      "property": "name",
+      "where": "src/compiler/executeCommandLine.ts:1190:38",
+      "receiver": "{ name: string; value: number; type: StatisticType.memory; }",
+      "value": "\"Memory used\"",
+      "expression": "name: \"Memory used\""
+    },
+    {
+      "property": "name",
+      "where": "src/compiler/binder.ts:1791:13",
+      "receiver": "{ next: ActiveLabel | undefined; name: __String; breakTarget: FlowLabel; continueTarget: undefined; referenced: false; }",
+      "value": "__String",
+      "expression": "name: node.label.escapedText"
+    }
+  ]
+}

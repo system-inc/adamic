@@ -1,0 +1,33 @@
+{
+  "typescript": "6.0.3",
+  "serializedCompilerOptions": {
+    "input": {
+      "all": true,
+      "module": "ModuleKind.ESNext"
+    },
+    "output": {
+      "module": "esnext"
+    },
+    "hasOwnAll": false,
+    "moduleRuntimeType": "string",
+    "warning": "Only all absence is certified for this family. Serialized module is a string, so this does not certify the whole object as CompilerOptions."
+  },
+  "jsDocArray": {
+    "before": {
+      "isArray": true,
+      "ownKeys": [
+        "0"
+      ],
+      "hasOwnCache": false
+    },
+    "after": {
+      "sameArray": true,
+      "hasOwnCache": true,
+      "cacheIsArray": true,
+      "tagKinds": [
+        "JSDocDeprecatedTag"
+      ]
+    },
+    "warning": "Absence is an allocation-time fact, not an invariant of every JSDoc[] alias after publishing it as JSDocArray."
+  }
+}

@@ -1,0 +1,2622 @@
+[
+  {
+    "id": "S001",
+    "group": "G34",
+    "S": "ReusableDiagnosticRelatedInformation",
+    "T": "ReusableDiagnostic",
+    "P": "reportsUnnecessary",
+    "depth": 0,
+    "kind": "Refused",
+    "measurement": "measured on a checker-clean entry-root program",
+    "phase": "refusal_scan",
+    "reason": "optional property reportsUnnecessary in ReusableDiagnostic absent from structural source ReusableDiagnosticRelatedInformation, which can hide fields",
+    "root_kind": "",
+    "text": "/workspace/depthgate2-adapted/src/compiler/builder.ts:1528:48: Adamic 0.1 refuses optional property reportsUnnecessary in ReusableDiagnostic absent from structural source ReusableDiagnosticRelatedInformation, which can hide fields; declare reportsUnnecessary on the source type, or build a fresh object with known fields (adamic/no-optional-widening)",
+    "unit": "/workspace/depthgate2-adapted/src/compiler/builder.ts:1258:1",
+    "where": "/workspace/depthgate2-adapted/src/compiler/builder.ts:1528:48",
+    "owning_units": [
+      "/workspace/depthgate2-adapted/src/compiler/builder.ts:1258:1"
+    ],
+    "event_count": 1
+  },
+  {
+    "id": "S002",
+    "group": "G32",
+    "S": "SerializedDiagnosticMessageChain",
+    "T": "DiagnosticMessageChain",
+    "P": "repopulateInfo",
+    "depth": 0,
+    "kind": "Refused",
+    "measurement": "measured on a checker-clean entry-root program",
+    "phase": "refusal_scan",
+    "reason": "optional property repopulateInfo in DiagnosticMessageChain absent from structural source SerializedDiagnosticMessageChain, which can hide fields",
+    "root_kind": "",
+    "text": "/workspace/depthgate2-adapted/src/compiler/builder.ts:559:14: Adamic 0.1 refuses optional property repopulateInfo in DiagnosticMessageChain absent from structural source SerializedDiagnosticMessageChain, which can hide fields; declare repopulateInfo on the source type, or build a fresh object with known fields (adamic/no-optional-widening)",
+    "unit": "/workspace/depthgate2-adapted/src/compiler/builder.ts:534:1",
+    "where": "/workspace/depthgate2-adapted/src/compiler/builder.ts:559:14",
+    "owning_units": [
+      "/workspace/depthgate2-adapted/src/compiler/builder.ts:534:1"
+    ],
+    "event_count": 1
+  },
+  {
+    "id": "S003",
+    "group": "G33",
+    "S": "DiagnosticRelatedInformation",
+    "T": "Diagnostic",
+    "P": "reportsUnnecessary",
+    "depth": 0,
+    "kind": "Refused",
+    "measurement": "measured on a checker-clean entry-root program",
+    "phase": "refusal_scan",
+    "reason": "optional property reportsUnnecessary in Diagnostic absent from structural source DiagnosticRelatedInformation, which can hide fields",
+    "root_kind": "",
+    "text": "/workspace/depthgate2-adapted/src/compiler/builder.ts:598:36: Adamic 0.1 refuses optional property reportsUnnecessary in Diagnostic absent from structural source DiagnosticRelatedInformation, which can hide fields; declare reportsUnnecessary on the source type, or build a fresh object with known fields (adamic/no-optional-widening)",
+    "unit": "/workspace/depthgate2-adapted/src/compiler/builder.ts:590:1",
+    "where": "/workspace/depthgate2-adapted/src/compiler/builder.ts:598:36",
+    "owning_units": [
+      "/workspace/depthgate2-adapted/src/compiler/builder.ts:590:1"
+    ],
+    "event_count": 1
+  },
+  {
+    "id": "S004",
+    "group": "G03",
+    "S": "Type",
+    "T": "TypeParameter",
+    "P": "constraint",
+    "depth": 0,
+    "kind": "Refused",
+    "measurement": "measured on a checker-clean entry-root program",
+    "phase": "refusal_scan",
+    "reason": "optional property constraint in TypeParameter absent from structural source Type, which can hide fields",
+    "root_kind": "",
+    "text": "/workspace/depthgate2-adapted/src/compiler/checker.ts:13244:71: Adamic 0.1 refuses optional property constraint in TypeParameter absent from structural source Type, which can hide fields; declare constraint on the source type, or build a fresh object with known fields (adamic/no-optional-widening)",
+    "unit": "/workspace/depthgate2-adapted/src/compiler/checker.ts:1490:1",
+    "where": "/workspace/depthgate2-adapted/src/compiler/checker.ts:13244:71",
+    "owning_units": [
+      "/workspace/depthgate2-adapted/src/compiler/checker.ts:1490:1"
+    ],
+    "event_count": 1
+  },
+  {
+    "id": "S005",
+    "group": "G03",
+    "S": "Type",
+    "T": "TypeParameter",
+    "P": "constraint",
+    "depth": 0,
+    "kind": "Refused",
+    "measurement": "measured on a checker-clean entry-root program",
+    "phase": "refusal_scan",
+    "reason": "optional property constraint in TypeParameter absent from structural source Type, which can hide fields",
+    "root_kind": "",
+    "text": "/workspace/depthgate2-adapted/src/compiler/checker.ts:13276:58: Adamic 0.1 refuses optional property constraint in TypeParameter absent from structural source Type, which can hide fields; declare constraint on the source type, or build a fresh object with known fields (adamic/no-optional-widening)",
+    "unit": "/workspace/depthgate2-adapted/src/compiler/checker.ts:1490:1",
+    "where": "/workspace/depthgate2-adapted/src/compiler/checker.ts:13276:58",
+    "owning_units": [
+      "/workspace/depthgate2-adapted/src/compiler/checker.ts:1490:1"
+    ],
+    "event_count": 1
+  },
+  {
+    "id": "S006",
+    "group": "G03",
+    "S": "Type",
+    "T": "TypeParameter",
+    "P": "constraint",
+    "depth": 0,
+    "kind": "Refused",
+    "measurement": "measured on a checker-clean entry-root program",
+    "phase": "refusal_scan",
+    "reason": "optional property constraint in TypeParameter absent from structural source Type, which can hide fields",
+    "root_kind": "",
+    "text": "/workspace/depthgate2-adapted/src/compiler/checker.ts:13612:16: Adamic 0.1 refuses optional property constraint in TypeParameter absent from structural source Type, which can hide fields; declare constraint on the source type, or build a fresh object with known fields (adamic/no-optional-widening)",
+    "unit": "/workspace/depthgate2-adapted/src/compiler/checker.ts:1490:1",
+    "where": "/workspace/depthgate2-adapted/src/compiler/checker.ts:13612:16",
+    "owning_units": [
+      "/workspace/depthgate2-adapted/src/compiler/checker.ts:1490:1"
+    ],
+    "event_count": 1
+  },
+  {
+    "id": "S007",
+    "group": "G03",
+    "S": "Type",
+    "T": "TypeParameter",
+    "P": "constraint",
+    "depth": 0,
+    "kind": "Refused",
+    "measurement": "measured on a checker-clean entry-root program",
+    "phase": "refusal_scan",
+    "reason": "optional property constraint in TypeParameter absent from structural source Type, which can hide fields",
+    "root_kind": "",
+    "text": "/workspace/depthgate2-adapted/src/compiler/checker.ts:16607:33: Adamic 0.1 refuses optional property constraint in TypeParameter absent from structural source Type, which can hide fields; declare constraint on the source type, or build a fresh object with known fields (adamic/no-optional-widening)",
+    "unit": "/workspace/depthgate2-adapted/src/compiler/checker.ts:1490:1",
+    "where": "/workspace/depthgate2-adapted/src/compiler/checker.ts:16607:33",
+    "owning_units": [
+      "/workspace/depthgate2-adapted/src/compiler/checker.ts:1490:1"
+    ],
+    "event_count": 1
+  },
+  {
+    "id": "S008",
+    "group": "G03",
+    "S": "Type",
+    "T": "TypeParameter",
+    "P": "constraint",
+    "depth": 0,
+    "kind": "Refused",
+    "measurement": "measured on a checker-clean entry-root program",
+    "phase": "refusal_scan",
+    "reason": "optional property constraint in TypeParameter absent from structural source Type, which can hide fields",
+    "root_kind": "",
+    "text": "/workspace/depthgate2-adapted/src/compiler/checker.ts:19948:30: Adamic 0.1 refuses optional property constraint in TypeParameter absent from structural source Type, which can hide fields; declare constraint on the source type, or build a fresh object with known fields (adamic/no-optional-widening)",
+    "unit": "/workspace/depthgate2-adapted/src/compiler/checker.ts:1490:1",
+    "where": "/workspace/depthgate2-adapted/src/compiler/checker.ts:19948:30",
+    "owning_units": [
+      "/workspace/depthgate2-adapted/src/compiler/checker.ts:1490:1"
+    ],
+    "event_count": 1
+  },
+  {
+    "id": "S009",
+    "group": "G05",
+    "S": "{ errors?: Diagnostic[] | undefined; }",
+    "T": "ErrorOutputContainer",
+    "P": "skipLogging",
+    "depth": 0,
+    "kind": "Refused",
+    "measurement": "measured on a checker-clean entry-root program",
+    "phase": "refusal_scan",
+    "reason": "optional property skipLogging in ErrorOutputContainer absent from structural source { errors?: Diagnostic[] | undefined; }, which can hide fields",
+    "root_kind": "",
+    "text": "/workspace/depthgate2-adapted/src/compiler/checker.ts:21355:119: Adamic 0.1 refuses optional property skipLogging in ErrorOutputContainer absent from structural source { errors?: Diagnostic[] | undefined; }, which can hide fields; declare skipLogging on the source type, or build a fresh object with known fields (adamic/no-optional-widening)",
+    "unit": "/workspace/depthgate2-adapted/src/compiler/checker.ts:1490:1",
+    "where": "/workspace/depthgate2-adapted/src/compiler/checker.ts:21355:119",
+    "owning_units": [
+      "/workspace/depthgate2-adapted/src/compiler/checker.ts:1490:1"
+    ],
+    "event_count": 1
+  },
+  {
+    "id": "S010",
+    "group": "G05",
+    "S": "{ errors?: Diagnostic[] | undefined; }",
+    "T": "ErrorOutputContainer",
+    "P": "skipLogging",
+    "depth": 0,
+    "kind": "Refused",
+    "measurement": "measured on a checker-clean entry-root program",
+    "phase": "refusal_scan",
+    "reason": "optional property skipLogging in ErrorOutputContainer absent from structural source { errors?: Diagnostic[] | undefined; }, which can hide fields",
+    "root_kind": "",
+    "text": "/workspace/depthgate2-adapted/src/compiler/checker.ts:21498:139: Adamic 0.1 refuses optional property skipLogging in ErrorOutputContainer absent from structural source { errors?: Diagnostic[] | undefined; }, which can hide fields; declare skipLogging on the source type, or build a fresh object with known fields (adamic/no-optional-widening)",
+    "unit": "/workspace/depthgate2-adapted/src/compiler/checker.ts:1490:1",
+    "where": "/workspace/depthgate2-adapted/src/compiler/checker.ts:21498:139",
+    "owning_units": [
+      "/workspace/depthgate2-adapted/src/compiler/checker.ts:1490:1"
+    ],
+    "event_count": 1
+  },
+  {
+    "id": "S011",
+    "group": "G05",
+    "S": "{ errors?: Diagnostic[] | undefined; }",
+    "T": "ErrorOutputContainer",
+    "P": "skipLogging",
+    "depth": 0,
+    "kind": "Refused",
+    "measurement": "measured on a checker-clean entry-root program",
+    "phase": "refusal_scan",
+    "reason": "optional property skipLogging in ErrorOutputContainer absent from structural source { errors?: Diagnostic[] | undefined; }, which can hide fields",
+    "root_kind": "",
+    "text": "/workspace/depthgate2-adapted/src/compiler/checker.ts:21591:145: Adamic 0.1 refuses optional property skipLogging in ErrorOutputContainer absent from structural source { errors?: Diagnostic[] | undefined; }, which can hide fields; declare skipLogging on the source type, or build a fresh object with known fields (adamic/no-optional-widening)",
+    "unit": "/workspace/depthgate2-adapted/src/compiler/checker.ts:1490:1",
+    "where": "/workspace/depthgate2-adapted/src/compiler/checker.ts:21591:145",
+    "owning_units": [
+      "/workspace/depthgate2-adapted/src/compiler/checker.ts:1490:1"
+    ],
+    "event_count": 1
+  },
+  {
+    "id": "S012",
+    "group": "G05",
+    "S": "{ errors?: Diagnostic[] | undefined; }",
+    "T": "ErrorOutputContainer",
+    "P": "skipLogging",
+    "depth": 0,
+    "kind": "Refused",
+    "measurement": "measured on a checker-clean entry-root program",
+    "phase": "refusal_scan",
+    "reason": "optional property skipLogging in ErrorOutputContainer absent from structural source { errors?: Diagnostic[] | undefined; }, which can hide fields",
+    "root_kind": "",
+    "text": "/workspace/depthgate2-adapted/src/compiler/checker.ts:21594:134: Adamic 0.1 refuses optional property skipLogging in ErrorOutputContainer absent from structural source { errors?: Diagnostic[] | undefined; }, which can hide fields; declare skipLogging on the source type, or build a fresh object with known fields (adamic/no-optional-widening)",
+    "unit": "/workspace/depthgate2-adapted/src/compiler/checker.ts:1490:1",
+    "where": "/workspace/depthgate2-adapted/src/compiler/checker.ts:21594:134",
+    "owning_units": [
+      "/workspace/depthgate2-adapted/src/compiler/checker.ts:1490:1"
+    ],
+    "event_count": 1
+  },
+  {
+    "id": "S013",
+    "group": "G05",
+    "S": "{ errors?: Diagnostic[] | undefined; }",
+    "T": "ErrorOutputContainer",
+    "P": "skipLogging",
+    "depth": 0,
+    "kind": "Refused",
+    "measurement": "measured on a checker-clean entry-root program",
+    "phase": "refusal_scan",
+    "reason": "optional property skipLogging in ErrorOutputContainer absent from structural source { errors?: Diagnostic[] | undefined; }, which can hide fields",
+    "root_kind": "",
+    "text": "/workspace/depthgate2-adapted/src/compiler/checker.ts:21681:145: Adamic 0.1 refuses optional property skipLogging in ErrorOutputContainer absent from structural source { errors?: Diagnostic[] | undefined; }, which can hide fields; declare skipLogging on the source type, or build a fresh object with known fields (adamic/no-optional-widening)",
+    "unit": "/workspace/depthgate2-adapted/src/compiler/checker.ts:1490:1",
+    "where": "/workspace/depthgate2-adapted/src/compiler/checker.ts:21681:145",
+    "owning_units": [
+      "/workspace/depthgate2-adapted/src/compiler/checker.ts:1490:1"
+    ],
+    "event_count": 1
+  },
+  {
+    "id": "S014",
+    "group": "G05",
+    "S": "{ errors?: Diagnostic[] | undefined; }",
+    "T": "ErrorOutputContainer",
+    "P": "skipLogging",
+    "depth": 0,
+    "kind": "Refused",
+    "measurement": "measured on a checker-clean entry-root program",
+    "phase": "refusal_scan",
+    "reason": "optional property skipLogging in ErrorOutputContainer absent from structural source { errors?: Diagnostic[] | undefined; }, which can hide fields",
+    "root_kind": "",
+    "text": "/workspace/depthgate2-adapted/src/compiler/checker.ts:21684:134: Adamic 0.1 refuses optional property skipLogging in ErrorOutputContainer absent from structural source { errors?: Diagnostic[] | undefined; }, which can hide fields; declare skipLogging on the source type, or build a fresh object with known fields (adamic/no-optional-widening)",
+    "unit": "/workspace/depthgate2-adapted/src/compiler/checker.ts:1490:1",
+    "where": "/workspace/depthgate2-adapted/src/compiler/checker.ts:21684:134",
+    "owning_units": [
+      "/workspace/depthgate2-adapted/src/compiler/checker.ts:1490:1"
+    ],
+    "event_count": 1
+  },
+  {
+    "id": "S015",
+    "group": "G03",
+    "S": "Type",
+    "T": "TypeParameter",
+    "P": "constraint",
+    "depth": 0,
+    "kind": "Refused",
+    "measurement": "measured on a checker-clean entry-root program",
+    "phase": "refusal_scan",
+    "reason": "optional property constraint in TypeParameter absent from structural source Type, which can hide fields",
+    "root_kind": "",
+    "text": "/workspace/depthgate2-adapted/src/compiler/checker.ts:23690:67: Adamic 0.1 refuses optional property constraint in TypeParameter absent from structural source Type, which can hide fields; declare constraint on the source type, or build a fresh object with known fields (adamic/no-optional-widening)",
+    "unit": "/workspace/depthgate2-adapted/src/compiler/checker.ts:1490:1",
+    "where": "/workspace/depthgate2-adapted/src/compiler/checker.ts:23690:67",
+    "owning_units": [
+      "/workspace/depthgate2-adapted/src/compiler/checker.ts:1490:1"
+    ],
+    "event_count": 1
+  },
+  {
+    "id": "S016",
+    "group": "G03",
+    "S": "Type",
+    "T": "TypeParameter",
+    "P": "constraint",
+    "depth": 0,
+    "kind": "Refused",
+    "measurement": "measured on a checker-clean entry-root program",
+    "phase": "refusal_scan",
+    "reason": "optional property constraint in TypeParameter absent from structural source Type, which can hide fields",
+    "root_kind": "",
+    "text": "/workspace/depthgate2-adapted/src/compiler/checker.ts:23696:71: Adamic 0.1 refuses optional property constraint in TypeParameter absent from structural source Type, which can hide fields; declare constraint on the source type, or build a fresh object with known fields (adamic/no-optional-widening)",
+    "unit": "/workspace/depthgate2-adapted/src/compiler/checker.ts:1490:1",
+    "where": "/workspace/depthgate2-adapted/src/compiler/checker.ts:23696:71",
+    "owning_units": [
+      "/workspace/depthgate2-adapted/src/compiler/checker.ts:1490:1"
+    ],
+    "event_count": 1
+  },
+  {
+    "id": "S017",
+    "group": "G12",
+    "S": "InterfaceType",
+    "T": "TypeParameter",
+    "P": "constraint",
+    "depth": 0,
+    "kind": "Refused",
+    "measurement": "measured on a checker-clean entry-root program",
+    "phase": "refusal_scan",
+    "reason": "optional property constraint in TypeParameter absent from structural source InterfaceType, which can hide fields",
+    "root_kind": "",
+    "text": "/workspace/depthgate2-adapted/src/compiler/checker.ts:25216:31: Adamic 0.1 refuses optional property constraint in TypeParameter absent from structural source InterfaceType, which can hide fields; declare constraint on the source type, or build a fresh object with known fields (adamic/no-optional-widening)",
+    "unit": "/workspace/depthgate2-adapted/src/compiler/checker.ts:1490:1",
+    "where": "/workspace/depthgate2-adapted/src/compiler/checker.ts:25216:31",
+    "owning_units": [
+      "/workspace/depthgate2-adapted/src/compiler/checker.ts:1490:1"
+    ],
+    "event_count": 1
+  },
+  {
+    "id": "S018",
+    "group": "G08",
+    "S": "DiagnosticRelatedInformation",
+    "T": "DiagnosticReadView",
+    "P": "reportsUnnecessary",
+    "depth": 0,
+    "kind": "Refused",
+    "measurement": "measured on a checker-clean entry-root program",
+    "phase": "refusal_scan",
+    "reason": "optional property reportsUnnecessary in DiagnosticReadView absent from structural source DiagnosticRelatedInformation, which can hide fields",
+    "root_kind": "",
+    "text": "/workspace/depthgate2-adapted/src/compiler/checker.ts:2819:109: Adamic 0.1 refuses optional property reportsUnnecessary in DiagnosticReadView absent from structural source DiagnosticRelatedInformation, which can hide fields; declare reportsUnnecessary on the source type, or build a fresh object with known fields (adamic/no-optional-widening)",
+    "unit": "/workspace/depthgate2-adapted/src/compiler/checker.ts:1490:1",
+    "where": "/workspace/depthgate2-adapted/src/compiler/checker.ts:2819:109",
+    "owning_units": [
+      "/workspace/depthgate2-adapted/src/compiler/checker.ts:1490:1"
+    ],
+    "event_count": 1
+  },
+  {
+    "id": "S019",
+    "group": "G08",
+    "S": "DiagnosticRelatedInformation",
+    "T": "DiagnosticReadView",
+    "P": "reportsUnnecessary",
+    "depth": 0,
+    "kind": "Refused",
+    "measurement": "measured on a checker-clean entry-root program",
+    "phase": "refusal_scan",
+    "reason": "optional property reportsUnnecessary in DiagnosticReadView absent from structural source DiagnosticRelatedInformation, which can hide fields",
+    "root_kind": "",
+    "text": "/workspace/depthgate2-adapted/src/compiler/checker.ts:2819:174: Adamic 0.1 refuses optional property reportsUnnecessary in DiagnosticReadView absent from structural source DiagnosticRelatedInformation, which can hide fields; declare reportsUnnecessary on the source type, or build a fresh object with known fields (adamic/no-optional-widening)",
+    "unit": "/workspace/depthgate2-adapted/src/compiler/checker.ts:1490:1",
+    "where": "/workspace/depthgate2-adapted/src/compiler/checker.ts:2819:174",
+    "owning_units": [
+      "/workspace/depthgate2-adapted/src/compiler/checker.ts:1490:1"
+    ],
+    "event_count": 1
+  },
+  {
+    "id": "S020",
+    "group": "G12",
+    "S": "InterfaceType",
+    "T": "TypeParameter",
+    "P": "constraint",
+    "depth": 0,
+    "kind": "Refused",
+    "measurement": "measured on a checker-clean entry-root program",
+    "phase": "refusal_scan",
+    "reason": "optional property constraint in TypeParameter absent from structural source InterfaceType, which can hide fields",
+    "root_kind": "",
+    "text": "/workspace/depthgate2-adapted/src/compiler/checker.ts:31813:31: Adamic 0.1 refuses optional property constraint in TypeParameter absent from structural source InterfaceType, which can hide fields; declare constraint on the source type, or build a fresh object with known fields (adamic/no-optional-widening)",
+    "unit": "/workspace/depthgate2-adapted/src/compiler/checker.ts:1490:1",
+    "where": "/workspace/depthgate2-adapted/src/compiler/checker.ts:31813:31",
+    "owning_units": [
+      "/workspace/depthgate2-adapted/src/compiler/checker.ts:1490:1"
+    ],
+    "event_count": 1
+  },
+  {
+    "id": "S021",
+    "group": "G03",
+    "S": "Type",
+    "T": "TypeParameter",
+    "P": "constraint",
+    "depth": 0,
+    "kind": "Refused",
+    "measurement": "measured on a checker-clean entry-root program",
+    "phase": "refusal_scan",
+    "reason": "optional property constraint in TypeParameter absent from structural source Type, which can hide fields",
+    "root_kind": "",
+    "text": "/workspace/depthgate2-adapted/src/compiler/checker.ts:35806:48: Adamic 0.1 refuses optional property constraint in TypeParameter absent from structural source Type, which can hide fields; declare constraint on the source type, or build a fresh object with known fields (adamic/no-optional-widening)",
+    "unit": "/workspace/depthgate2-adapted/src/compiler/checker.ts:1490:1",
+    "where": "/workspace/depthgate2-adapted/src/compiler/checker.ts:35806:48",
+    "owning_units": [
+      "/workspace/depthgate2-adapted/src/compiler/checker.ts:1490:1"
+    ],
+    "event_count": 1
+  },
+  {
+    "id": "S022",
+    "group": "G02",
+    "S": "SourceFile",
+    "T": "SourceFileLike",
+    "P": "getPositionOfLineAndCharacter",
+    "depth": 0,
+    "kind": "Refused",
+    "measurement": "measured on a checker-clean entry-root program",
+    "phase": "refusal_scan",
+    "reason": "optional property getPositionOfLineAndCharacter in SourceFileLike absent from structural source SourceFile, which can hide fields",
+    "root_kind": "",
+    "text": "/workspace/depthgate2-adapted/src/compiler/checker.ts:49348:52: Adamic 0.1 refuses optional property getPositionOfLineAndCharacter in SourceFileLike absent from structural source SourceFile, which can hide fields; declare getPositionOfLineAndCharacter on the source type, or build a fresh object with known fields (adamic/no-optional-widening)",
+    "unit": "/workspace/depthgate2-adapted/src/compiler/checker.ts:1490:1",
+    "where": "/workspace/depthgate2-adapted/src/compiler/checker.ts:49348:52",
+    "owning_units": [
+      "/workspace/depthgate2-adapted/src/compiler/checker.ts:1490:1"
+    ],
+    "event_count": 1
+  },
+  {
+    "id": "S023",
+    "group": "G03",
+    "S": "Type",
+    "T": "TypeParameter",
+    "P": "constraint",
+    "depth": 0,
+    "kind": "Refused",
+    "measurement": "measured on a checker-clean entry-root program",
+    "phase": "refusal_scan",
+    "reason": "optional property constraint in TypeParameter absent from structural source Type, which can hide fields",
+    "root_kind": "",
+    "text": "/workspace/depthgate2-adapted/src/compiler/checker.ts:6968:54: Adamic 0.1 refuses optional property constraint in TypeParameter absent from structural source Type, which can hide fields; declare constraint on the source type, or build a fresh object with known fields (adamic/no-optional-widening)",
+    "unit": "/workspace/depthgate2-adapted/src/compiler/checker.ts:1490:1",
+    "where": "/workspace/depthgate2-adapted/src/compiler/checker.ts:6968:54",
+    "owning_units": [
+      "/workspace/depthgate2-adapted/src/compiler/checker.ts:1490:1"
+    ],
+    "event_count": 1
+  },
+  {
+    "id": "S024",
+    "group": "G03",
+    "S": "Type",
+    "T": "TypeParameter",
+    "P": "constraint",
+    "depth": 0,
+    "kind": "Refused",
+    "measurement": "measured on a checker-clean entry-root program",
+    "phase": "refusal_scan",
+    "reason": "optional property constraint in TypeParameter absent from structural source Type, which can hide fields",
+    "root_kind": "",
+    "text": "/workspace/depthgate2-adapted/src/compiler/checker.ts:7131:128: Adamic 0.1 refuses optional property constraint in TypeParameter absent from structural source Type, which can hide fields; declare constraint on the source type, or build a fresh object with known fields (adamic/no-optional-widening)",
+    "unit": "/workspace/depthgate2-adapted/src/compiler/checker.ts:1490:1",
+    "where": "/workspace/depthgate2-adapted/src/compiler/checker.ts:7131:128",
+    "owning_units": [
+      "/workspace/depthgate2-adapted/src/compiler/checker.ts:1490:1"
+    ],
+    "event_count": 1
+  },
+  {
+    "id": "S025",
+    "group": "G03",
+    "S": "Type",
+    "T": "TypeParameter",
+    "P": "constraint",
+    "depth": 0,
+    "kind": "Refused",
+    "measurement": "measured on a checker-clean entry-root program",
+    "phase": "refusal_scan",
+    "reason": "optional property constraint in TypeParameter absent from structural source Type, which can hide fields",
+    "root_kind": "",
+    "text": "/workspace/depthgate2-adapted/src/compiler/checker.ts:7142:90: Adamic 0.1 refuses optional property constraint in TypeParameter absent from structural source Type, which can hide fields; declare constraint on the source type, or build a fresh object with known fields (adamic/no-optional-widening)",
+    "unit": "/workspace/depthgate2-adapted/src/compiler/checker.ts:1490:1",
+    "where": "/workspace/depthgate2-adapted/src/compiler/checker.ts:7142:90",
+    "owning_units": [
+      "/workspace/depthgate2-adapted/src/compiler/checker.ts:1490:1"
+    ],
+    "event_count": 1
+  },
+  {
+    "id": "S026",
+    "group": "G03",
+    "S": "Type",
+    "T": "TypeParameter",
+    "P": "constraint",
+    "depth": 0,
+    "kind": "Refused",
+    "measurement": "measured on a checker-clean entry-root program",
+    "phase": "refusal_scan",
+    "reason": "optional property constraint in TypeParameter absent from structural source Type, which can hide fields",
+    "root_kind": "",
+    "text": "/workspace/depthgate2-adapted/src/compiler/checker.ts:9276:95: Adamic 0.1 refuses optional property constraint in TypeParameter absent from structural source Type, which can hide fields; declare constraint on the source type, or build a fresh object with known fields (adamic/no-optional-widening)",
+    "unit": "/workspace/depthgate2-adapted/src/compiler/checker.ts:1490:1",
+    "where": "/workspace/depthgate2-adapted/src/compiler/checker.ts:9276:95",
+    "owning_units": [
+      "/workspace/depthgate2-adapted/src/compiler/checker.ts:1490:1"
+    ],
+    "event_count": 1
+  },
+  {
+    "id": "S027",
+    "group": "G20",
+    "S": "object",
+    "T": "CompilerOptions",
+    "P": "all",
+    "depth": 0,
+    "kind": "Refused",
+    "measurement": "measured on a checker-clean entry-root program",
+    "phase": "refusal_scan",
+    "reason": "optional property all in CompilerOptions absent from structural source object, which can hide fields",
+    "root_kind": "",
+    "text": "/workspace/depthgate2-adapted/src/compiler/commandLineParser.ts:2679:13: Adamic 0.1 refuses optional property all in CompilerOptions absent from structural source object, which can hide fields; declare all on the source type, or build a fresh object with known fields (adamic/no-optional-widening)",
+    "unit": "/workspace/depthgate2-adapted/src/compiler/commandLineParser.ts:2660:1",
+    "where": "/workspace/depthgate2-adapted/src/compiler/commandLineParser.ts:2679:13",
+    "owning_units": [
+      "/workspace/depthgate2-adapted/src/compiler/commandLineParser.ts:2660:1"
+    ],
+    "event_count": 1
+  },
+  {
+    "id": "S028",
+    "group": "G45",
+    "S": "{ include: readonly string[] | undefined; exclude: readonly string[] | undefined; }",
+    "T": "TSConfig & { watchOptions?: object | undefined; }",
+    "P": "watchOptions",
+    "depth": 0,
+    "kind": "Refused",
+    "measurement": "measured on a checker-clean entry-root program",
+    "phase": "refusal_scan",
+    "reason": "optional property watchOptions in TSConfig & { watchOptions?: object | undefined; } absent from structural source { include: readonly string[] | undefined; exclude: readonly string[] | undefined; }, which can hide fields",
+    "root_kind": "",
+    "text": "/workspace/depthgate2-adapted/src/compiler/commandLineParser.ts:2694:9: Adamic 0.1 refuses optional property watchOptions in TSConfig & { watchOptions?: object | undefined; } absent from structural source { include: readonly string[] | undefined; exclude: readonly string[] | undefined; }, which can hide fields; declare watchOptions on the source type, or build a fresh object with known fields (adamic/no-optional-widening)",
+    "unit": "/workspace/depthgate2-adapted/src/compiler/commandLineParser.ts:2660:1",
+    "where": "/workspace/depthgate2-adapted/src/compiler/commandLineParser.ts:2694:9",
+    "owning_units": [
+      "/workspace/depthgate2-adapted/src/compiler/commandLineParser.ts:2660:1"
+    ],
+    "event_count": 1
+  },
+  {
+    "id": "S029",
+    "group": "G35",
+    "S": "SourceFile",
+    "T": "SourceMapSource",
+    "P": "skipTrivia",
+    "depth": 0,
+    "kind": "Refused",
+    "measurement": "measured on a checker-clean entry-root program",
+    "phase": "refusal_scan",
+    "reason": "optional property skipTrivia in SourceMapSource absent from structural source SourceFile, which can hide fields",
+    "root_kind": "",
+    "text": "/workspace/depthgate2-adapted/src/compiler/emitter.ts:1409:32: Adamic 0.1 refuses optional property skipTrivia in SourceMapSource absent from structural source SourceFile, which can hide fields; declare skipTrivia on the source type, or build a fresh object with known fields (adamic/no-optional-widening)",
+    "unit": "/workspace/depthgate2-adapted/src/compiler/emitter.ts:1213:1",
+    "where": "/workspace/depthgate2-adapted/src/compiler/emitter.ts:1409:32",
+    "owning_units": [
+      "/workspace/depthgate2-adapted/src/compiler/emitter.ts:1213:1"
+    ],
+    "event_count": 1
+  },
+  {
+    "id": "S030",
+    "group": "G17",
+    "S": "Node",
+    "T": "SourceMapRange",
+    "P": "source",
+    "depth": 0,
+    "kind": "Refused",
+    "measurement": "measured on a checker-clean entry-root program",
+    "phase": "refusal_scan",
+    "reason": "optional property source in SourceMapRange absent from structural source Node, which can hide fields",
+    "root_kind": "",
+    "text": "/workspace/depthgate2-adapted/src/compiler/factory/emitNode.ts:133:12: Adamic 0.1 refuses optional property source in SourceMapRange absent from structural source Node, which can hide fields; declare source on the source type, or build a fresh object with known fields (adamic/no-optional-widening)",
+    "unit": "/workspace/depthgate2-adapted/src/compiler/factory/emitNode.ts:132:1",
+    "where": "/workspace/depthgate2-adapted/src/compiler/factory/emitNode.ts:133:12",
+    "owning_units": [
+      "/workspace/depthgate2-adapted/src/compiler/factory/emitNode.ts:132:1"
+    ],
+    "event_count": 1
+  },
+  {
+    "id": "S031",
+    "group": "G01",
+    "S": "TextRange",
+    "T": "SourceMapRange",
+    "P": "source",
+    "depth": 0,
+    "kind": "Refused",
+    "measurement": "measured on a checker-clean entry-root program",
+    "phase": "refusal_scan",
+    "reason": "optional property source in SourceMapRange absent from structural source TextRange, which can hide fields",
+    "root_kind": "",
+    "text": "/workspace/depthgate2-adapted/src/compiler/factory/nodeFactory.ts:7489:45: Adamic 0.1 refuses optional property source in SourceMapRange absent from structural source TextRange, which can hide fields; declare source on the source type, or build a fresh object with known fields (adamic/no-optional-widening)",
+    "unit": "/workspace/depthgate2-adapted/src/compiler/factory/nodeFactory.ts:7432:1",
+    "where": "/workspace/depthgate2-adapted/src/compiler/factory/nodeFactory.ts:7489:45",
+    "owning_units": [
+      "/workspace/depthgate2-adapted/src/compiler/factory/nodeFactory.ts:7432:1"
+    ],
+    "event_count": 1
+  },
+  {
+    "id": "S032",
+    "group": "G29",
+    "S": "{ path: string; extension: string; packageId: PackageId | undefined; resolvedUsingTsExtension: boolean | undefined; }",
+    "T": "Resolved",
+    "P": "originalPath",
+    "depth": 0,
+    "kind": "Refused",
+    "measurement": "measured on a checker-clean entry-root program",
+    "phase": "refusal_scan",
+    "reason": "optional property originalPath in Resolved absent from structural source { path: string; extension: string; packageId: PackageId | undefined; resolvedUsingTsExtension: boolean | undefined; }, which can hide fields",
+    "root_kind": "",
+    "text": "/workspace/depthgate2-adapted/src/compiler/moduleNameResolver.ts:140:12: Adamic 0.1 refuses optional property originalPath in Resolved absent from structural source { path: string; extension: string; packageId: PackageId | undefined; resolvedUsingTsExtension: boolean | undefined; }, which can hide fields; declare originalPath on the source type, or build a fresh object with known fields (adamic/no-optional-widening)",
+    "unit": "/workspace/depthgate2-adapted/src/compiler/moduleNameResolver.ts:127:1",
+    "where": "/workspace/depthgate2-adapted/src/compiler/moduleNameResolver.ts:140:12",
+    "owning_units": [
+      "/workspace/depthgate2-adapted/src/compiler/moduleNameResolver.ts:127:1"
+    ],
+    "event_count": 1
+  },
+  {
+    "id": "S033",
+    "group": "G07",
+    "S": "PackageJsonPathFields",
+    "T": "PackageJson",
+    "P": "version",
+    "depth": 0,
+    "kind": "Refused",
+    "measurement": "measured on a checker-clean entry-root program",
+    "phase": "refusal_scan",
+    "reason": "optional property version in PackageJson absent from structural source PackageJsonPathFields, which can hide fields",
+    "root_kind": "",
+    "text": "/workspace/depthgate2-adapted/src/compiler/moduleNameResolver.ts:2409:82: Adamic 0.1 refuses optional property version in PackageJson absent from structural source PackageJsonPathFields, which can hide fields; declare version on the source type, or build a fresh object with known fields (adamic/no-optional-widening)",
+    "unit": "/workspace/depthgate2-adapted/src/compiler/moduleNameResolver.ts:2407:1",
+    "where": "/workspace/depthgate2-adapted/src/compiler/moduleNameResolver.ts:2409:82",
+    "owning_units": [
+      "/workspace/depthgate2-adapted/src/compiler/moduleNameResolver.ts:2407:1"
+    ],
+    "event_count": 1
+  },
+  {
+    "id": "S034",
+    "group": "G07",
+    "S": "PackageJsonPathFields",
+    "T": "PackageJson",
+    "P": "version",
+    "depth": 0,
+    "kind": "Refused",
+    "measurement": "measured on a checker-clean entry-root program",
+    "phase": "refusal_scan",
+    "reason": "optional property version in PackageJson absent from structural source PackageJsonPathFields, which can hide fields",
+    "root_kind": "",
+    "text": "/workspace/depthgate2-adapted/src/compiler/moduleNameResolver.ts:2422:51: Adamic 0.1 refuses optional property version in PackageJson absent from structural source PackageJsonPathFields, which can hide fields; declare version on the source type, or build a fresh object with known fields (adamic/no-optional-widening)",
+    "unit": "/workspace/depthgate2-adapted/src/compiler/moduleNameResolver.ts:2421:1",
+    "where": "/workspace/depthgate2-adapted/src/compiler/moduleNameResolver.ts:2422:51",
+    "owning_units": [
+      "/workspace/depthgate2-adapted/src/compiler/moduleNameResolver.ts:2421:1"
+    ],
+    "event_count": 1
+  },
+  {
+    "id": "S035",
+    "group": "G15",
+    "S": "object",
+    "T": "PackageJson",
+    "P": "name",
+    "depth": 0,
+    "kind": "Refused",
+    "measurement": "measured on a checker-clean entry-root program",
+    "phase": "refusal_scan",
+    "reason": "optional property name in PackageJson absent from structural source object, which can hide fields",
+    "root_kind": "",
+    "text": "/workspace/depthgate2-adapted/src/compiler/moduleNameResolver.ts:2470:36: Adamic 0.1 refuses optional property name in PackageJson absent from structural source object, which can hide fields; declare name on the source type, or build a fresh object with known fields (adamic/no-optional-widening)",
+    "unit": "/workspace/depthgate2-adapted/src/compiler/moduleNameResolver.ts:2445:1",
+    "where": "/workspace/depthgate2-adapted/src/compiler/moduleNameResolver.ts:2470:36",
+    "owning_units": [
+      "/workspace/depthgate2-adapted/src/compiler/moduleNameResolver.ts:2445:1"
+    ],
+    "event_count": 1
+  },
+  {
+    "id": "S036",
+    "group": "G07",
+    "S": "PackageJsonPathFields",
+    "T": "PackageJson",
+    "P": "version",
+    "depth": 0,
+    "kind": "Refused",
+    "measurement": "measured on a checker-clean entry-root program",
+    "phase": "refusal_scan",
+    "reason": "optional property version in PackageJson absent from structural source PackageJsonPathFields, which can hide fields",
+    "root_kind": "",
+    "text": "/workspace/depthgate2-adapted/src/compiler/moduleNameResolver.ts:2494:56: Adamic 0.1 refuses optional property version in PackageJson absent from structural source PackageJsonPathFields, which can hide fields; declare version on the source type, or build a fresh object with known fields (adamic/no-optional-widening)",
+    "unit": "/workspace/depthgate2-adapted/src/compiler/moduleNameResolver.ts:2489:1",
+    "where": "/workspace/depthgate2-adapted/src/compiler/moduleNameResolver.ts:2494:56",
+    "owning_units": [
+      "/workspace/depthgate2-adapted/src/compiler/moduleNameResolver.ts:2489:1"
+    ],
+    "event_count": 1
+  },
+  {
+    "id": "S037",
+    "group": "G07",
+    "S": "PackageJsonPathFields",
+    "T": "PackageJson",
+    "P": "version",
+    "depth": 0,
+    "kind": "Refused",
+    "measurement": "measured on a checker-clean entry-root program",
+    "phase": "refusal_scan",
+    "reason": "optional property version in PackageJson absent from structural source PackageJsonPathFields, which can hide fields",
+    "root_kind": "",
+    "text": "/workspace/depthgate2-adapted/src/compiler/moduleNameResolver.ts:2497:93: Adamic 0.1 refuses optional property version in PackageJson absent from structural source PackageJsonPathFields, which can hide fields; declare version on the source type, or build a fresh object with known fields (adamic/no-optional-widening)",
+    "unit": "/workspace/depthgate2-adapted/src/compiler/moduleNameResolver.ts:2489:1",
+    "where": "/workspace/depthgate2-adapted/src/compiler/moduleNameResolver.ts:2497:93",
+    "owning_units": [
+      "/workspace/depthgate2-adapted/src/compiler/moduleNameResolver.ts:2489:1"
+    ],
+    "event_count": 1
+  },
+  {
+    "id": "S038",
+    "group": "G07",
+    "S": "PackageJsonPathFields",
+    "T": "PackageJson",
+    "P": "version",
+    "depth": 0,
+    "kind": "Refused",
+    "measurement": "measured on a checker-clean entry-root program",
+    "phase": "refusal_scan",
+    "reason": "optional property version in PackageJson absent from structural source PackageJsonPathFields, which can hide fields",
+    "root_kind": "",
+    "text": "/workspace/depthgate2-adapted/src/compiler/moduleNameResolver.ts:2498:116: Adamic 0.1 refuses optional property version in PackageJson absent from structural source PackageJsonPathFields, which can hide fields; declare version on the source type, or build a fresh object with known fields (adamic/no-optional-widening)",
+    "unit": "/workspace/depthgate2-adapted/src/compiler/moduleNameResolver.ts:2489:1",
+    "where": "/workspace/depthgate2-adapted/src/compiler/moduleNameResolver.ts:2498:116",
+    "owning_units": [
+      "/workspace/depthgate2-adapted/src/compiler/moduleNameResolver.ts:2489:1"
+    ],
+    "event_count": 1
+  },
+  {
+    "id": "S039",
+    "group": "G15",
+    "S": "object",
+    "T": "PackageJson",
+    "P": "name",
+    "depth": 0,
+    "kind": "Refused",
+    "measurement": "measured on a checker-clean entry-root program",
+    "phase": "refusal_scan",
+    "reason": "optional property name in PackageJson absent from structural source object, which can hide fields",
+    "root_kind": "",
+    "text": "/workspace/depthgate2-adapted/src/compiler/moduleNameResolver.ts:831:89: Adamic 0.1 refuses optional property name in PackageJson absent from structural source object, which can hide fields; declare name on the source type, or build a fresh object with known fields (adamic/no-optional-widening)",
+    "unit": "/workspace/depthgate2-adapted/src/compiler/moduleNameResolver.ts:813:1",
+    "where": "/workspace/depthgate2-adapted/src/compiler/moduleNameResolver.ts:831:89",
+    "owning_units": [
+      "/workspace/depthgate2-adapted/src/compiler/moduleNameResolver.ts:813:1"
+    ],
+    "event_count": 1
+  },
+  {
+    "id": "S040",
+    "group": "G30",
+    "S": "{ moduleFileToTry: string; }",
+    "T": "{ moduleFileToTry: string; packageRootPath?: string; blockedByExports?: true; verbatimFromExports?: true; }",
+    "P": "packageRootPath",
+    "depth": 0,
+    "kind": "Refused",
+    "measurement": "measured on a checker-clean entry-root program",
+    "phase": "refusal_scan",
+    "reason": "optional property packageRootPath in { moduleFileToTry: string; packageRootPath?: string; blockedByExports?: true; verbatimFromExports?: true; } absent from structural source { moduleFileToTry: string; }, which can hide fields",
+    "root_kind": "",
+    "text": "/workspace/depthgate2-adapted/src/compiler/moduleSpecifiers.ts:1277:30: Adamic 0.1 refuses optional property packageRootPath in { moduleFileToTry: string; packageRootPath?: string; blockedByExports?: true; verbatimFromExports?: true; } absent from structural source { moduleFileToTry: string; }, which can hide fields; declare packageRootPath on the source type, or build a fresh object with known fields (adamic/no-optional-widening)",
+    "unit": "/workspace/depthgate2-adapted/src/compiler/moduleSpecifiers.ts:1186:1",
+    "where": "/workspace/depthgate2-adapted/src/compiler/moduleSpecifiers.ts:1277:30",
+    "owning_units": [
+      "/workspace/depthgate2-adapted/src/compiler/moduleSpecifiers.ts:1186:1"
+    ],
+    "event_count": 1
+  },
+  {
+    "id": "S041",
+    "group": "G16",
+    "S": "Pick<SourceFile, \"fileName\" | \"impliedNodeFormat\">",
+    "T": "Pick<SourceFile, \"fileName\" | \"impliedNodeFormat\" | \"packageJsonScope\">",
+    "P": "packageJsonScope",
+    "depth": 0,
+    "kind": "Refused",
+    "measurement": "measured on a checker-clean entry-root program",
+    "phase": "refusal_scan",
+    "reason": "optional property packageJsonScope in Pick<SourceFile, \"fileName\" | \"impliedNodeFormat\" | \"packageJsonScope\"> absent from structural source Pick<SourceFile, \"fileName\" | \"impliedNodeFormat\">, which can hide fields",
+    "root_kind": "",
+    "text": "/workspace/depthgate2-adapted/src/compiler/moduleSpecifiers.ts:200:71: Adamic 0.1 refuses optional property packageJsonScope in Pick<SourceFile, \"fileName\" | \"impliedNodeFormat\" | \"packageJsonScope\"> absent from structural source Pick<SourceFile, \"fileName\" | \"impliedNodeFormat\">, which can hide fields; declare packageJsonScope on the source type, or build a fresh object with known fields (adamic/no-optional-widening)",
+    "unit": "/workspace/depthgate2-adapted/src/compiler/moduleSpecifiers.ts:182:1",
+    "where": "/workspace/depthgate2-adapted/src/compiler/moduleSpecifiers.ts:200:71",
+    "owning_units": [
+      "/workspace/depthgate2-adapted/src/compiler/moduleSpecifiers.ts:182:1"
+    ],
+    "event_count": 1
+  },
+  {
+    "id": "S042",
+    "group": "G16",
+    "S": "Pick<SourceFile, \"fileName\" | \"impliedNodeFormat\">",
+    "T": "Pick<SourceFile, \"fileName\" | \"impliedNodeFormat\" | \"packageJsonScope\">",
+    "P": "packageJsonScope",
+    "depth": 0,
+    "kind": "Refused",
+    "measurement": "measured on a checker-clean entry-root program",
+    "phase": "refusal_scan",
+    "reason": "optional property packageJsonScope in Pick<SourceFile, \"fileName\" | \"impliedNodeFormat\" | \"packageJsonScope\"> absent from structural source Pick<SourceFile, \"fileName\" | \"impliedNodeFormat\">, which can hide fields",
+    "root_kind": "",
+    "text": "/workspace/depthgate2-adapted/src/compiler/moduleSpecifiers.ts:243:63: Adamic 0.1 refuses optional property packageJsonScope in Pick<SourceFile, \"fileName\" | \"impliedNodeFormat\" | \"packageJsonScope\"> absent from structural source Pick<SourceFile, \"fileName\" | \"impliedNodeFormat\">, which can hide fields; declare packageJsonScope on the source type, or build a fresh object with known fields (adamic/no-optional-widening)",
+    "unit": "/workspace/depthgate2-adapted/src/compiler/moduleSpecifiers.ts:182:1",
+    "where": "/workspace/depthgate2-adapted/src/compiler/moduleSpecifiers.ts:243:63",
+    "owning_units": [
+      "/workspace/depthgate2-adapted/src/compiler/moduleSpecifiers.ts:182:1"
+    ],
+    "event_count": 1
+  },
+  {
+    "id": "S043",
+    "group": "G02",
+    "S": "SourceFile",
+    "T": "SourceFileLike",
+    "P": "getPositionOfLineAndCharacter",
+    "depth": 0,
+    "kind": "Refused",
+    "measurement": "measured on a checker-clean entry-root program",
+    "phase": "refusal_scan",
+    "reason": "optional property getPositionOfLineAndCharacter in SourceFileLike absent from structural source SourceFile, which can hide fields",
+    "root_kind": "",
+    "text": "/workspace/depthgate2-adapted/src/compiler/parser.ts:10015:36: Adamic 0.1 refuses optional property getPositionOfLineAndCharacter in SourceFileLike absent from structural source SourceFile, which can hide fields; declare getPositionOfLineAndCharacter on the source type, or build a fresh object with known fields (adamic/no-optional-widening)",
+    "unit": "/workspace/depthgate2-adapted/src/compiler/parser.ts:9929:1",
+    "where": "/workspace/depthgate2-adapted/src/compiler/parser.ts:10015:36",
+    "owning_units": [
+      "/workspace/depthgate2-adapted/src/compiler/parser.ts:9929:1"
+    ],
+    "event_count": 1
+  },
+  {
+    "id": "S044",
+    "group": "G02",
+    "S": "SourceFile",
+    "T": "SourceFileLike",
+    "P": "getPositionOfLineAndCharacter",
+    "depth": 0,
+    "kind": "Refused",
+    "measurement": "measured on a checker-clean entry-root program",
+    "phase": "refusal_scan",
+    "reason": "optional property getPositionOfLineAndCharacter in SourceFileLike absent from structural source SourceFile, which can hide fields",
+    "root_kind": "",
+    "text": "/workspace/depthgate2-adapted/src/compiler/parser.ts:10015:48: Adamic 0.1 refuses optional property getPositionOfLineAndCharacter in SourceFileLike absent from structural source SourceFile, which can hide fields; declare getPositionOfLineAndCharacter on the source type, or build a fresh object with known fields (adamic/no-optional-widening)",
+    "unit": "/workspace/depthgate2-adapted/src/compiler/parser.ts:9929:1",
+    "where": "/workspace/depthgate2-adapted/src/compiler/parser.ts:10015:48",
+    "owning_units": [
+      "/workspace/depthgate2-adapted/src/compiler/parser.ts:9929:1"
+    ],
+    "event_count": 1
+  },
+  {
+    "id": "S045",
+    "group": "G02",
+    "S": "SourceFile",
+    "T": "SourceFileLike",
+    "P": "getPositionOfLineAndCharacter",
+    "depth": 0,
+    "kind": "Refused",
+    "measurement": "measured on a checker-clean entry-root program",
+    "phase": "refusal_scan",
+    "reason": "optional property getPositionOfLineAndCharacter in SourceFileLike absent from structural source SourceFile, which can hide fields",
+    "root_kind": "",
+    "text": "/workspace/depthgate2-adapted/src/compiler/parser.ts:10087:37: Adamic 0.1 refuses optional property getPositionOfLineAndCharacter in SourceFileLike absent from structural source SourceFile, which can hide fields; declare getPositionOfLineAndCharacter on the source type, or build a fresh object with known fields (adamic/no-optional-widening)",
+    "unit": "/workspace/depthgate2-adapted/src/compiler/parser.ts:9929:1",
+    "where": "/workspace/depthgate2-adapted/src/compiler/parser.ts:10087:37",
+    "owning_units": [
+      "/workspace/depthgate2-adapted/src/compiler/parser.ts:9929:1"
+    ],
+    "event_count": 1
+  },
+  {
+    "id": "S046",
+    "group": "G02",
+    "S": "SourceFile",
+    "T": "SourceFileLike",
+    "P": "getPositionOfLineAndCharacter",
+    "depth": 0,
+    "kind": "Refused",
+    "measurement": "measured on a checker-clean entry-root program",
+    "phase": "refusal_scan",
+    "reason": "optional property getPositionOfLineAndCharacter in SourceFileLike absent from structural source SourceFile, which can hide fields",
+    "root_kind": "",
+    "text": "/workspace/depthgate2-adapted/src/compiler/parser.ts:10244:42: Adamic 0.1 refuses optional property getPositionOfLineAndCharacter in SourceFileLike absent from structural source SourceFile, which can hide fields; declare getPositionOfLineAndCharacter on the source type, or build a fresh object with known fields (adamic/no-optional-widening)",
+    "unit": "/workspace/depthgate2-adapted/src/compiler/parser.ts:9929:1",
+    "where": "/workspace/depthgate2-adapted/src/compiler/parser.ts:10244:42",
+    "owning_units": [
+      "/workspace/depthgate2-adapted/src/compiler/parser.ts:9929:1"
+    ],
+    "event_count": 1
+  },
+  {
+    "id": "S047",
+    "group": "G31",
+    "S": "{ resolutionMode: ModuleKind.CommonJS | ModuleKind.ESNext; }",
+    "T": "FileReference",
+    "P": "preserve",
+    "depth": 0,
+    "kind": "Refused",
+    "measurement": "measured on a checker-clean entry-root program",
+    "phase": "refusal_scan",
+    "reason": "optional property preserve in FileReference absent from structural source { resolutionMode: ModuleKind.CommonJS | ModuleKind.ESNext; }, which can hide fields",
+    "root_kind": "",
+    "text": "/workspace/depthgate2-adapted/src/compiler/parser.ts:10624:111: Adamic 0.1 refuses optional property preserve in FileReference absent from structural source { resolutionMode: ModuleKind.CommonJS | ModuleKind.ESNext; }, which can hide fields; declare preserve on the source type, or build a fresh object with known fields (adamic/no-optional-widening)",
+    "unit": "/workspace/depthgate2-adapted/src/compiler/parser.ts:10602:1",
+    "where": "/workspace/depthgate2-adapted/src/compiler/parser.ts:10624:111",
+    "owning_units": [
+      "/workspace/depthgate2-adapted/src/compiler/parser.ts:10602:1"
+    ],
+    "event_count": 1
+  },
+  {
+    "id": "S048",
+    "group": "G10",
+    "S": "{ preserve: true; }",
+    "T": "FileReference",
+    "P": "resolutionMode",
+    "depth": 0,
+    "kind": "Refused",
+    "measurement": "measured on a checker-clean entry-root program",
+    "phase": "refusal_scan",
+    "reason": "optional property resolutionMode in FileReference absent from structural source { preserve: true; }, which can hide fields",
+    "root_kind": "",
+    "text": "/workspace/depthgate2-adapted/src/compiler/parser.ts:10624:158: Adamic 0.1 refuses optional property resolutionMode in FileReference absent from structural source { preserve: true; }, which can hide fields; declare resolutionMode on the source type, or build a fresh object with known fields (adamic/no-optional-widening)",
+    "unit": "/workspace/depthgate2-adapted/src/compiler/parser.ts:10602:1",
+    "where": "/workspace/depthgate2-adapted/src/compiler/parser.ts:10624:158",
+    "owning_units": [
+      "/workspace/depthgate2-adapted/src/compiler/parser.ts:10602:1"
+    ],
+    "event_count": 1
+  },
+  {
+    "id": "S049",
+    "group": "G10",
+    "S": "{ preserve: true; }",
+    "T": "FileReference",
+    "P": "resolutionMode",
+    "depth": 0,
+    "kind": "Refused",
+    "measurement": "measured on a checker-clean entry-root program",
+    "phase": "refusal_scan",
+    "reason": "optional property resolutionMode in FileReference absent from structural source { preserve: true; }, which can hide fields",
+    "root_kind": "",
+    "text": "/workspace/depthgate2-adapted/src/compiler/parser.ts:10627:104: Adamic 0.1 refuses optional property resolutionMode in FileReference absent from structural source { preserve: true; }, which can hide fields; declare resolutionMode on the source type, or build a fresh object with known fields (adamic/no-optional-widening)",
+    "unit": "/workspace/depthgate2-adapted/src/compiler/parser.ts:10602:1",
+    "where": "/workspace/depthgate2-adapted/src/compiler/parser.ts:10627:104",
+    "owning_units": [
+      "/workspace/depthgate2-adapted/src/compiler/parser.ts:10602:1"
+    ],
+    "event_count": 1
+  },
+  {
+    "id": "S050",
+    "group": "G10",
+    "S": "{ preserve: true; }",
+    "T": "FileReference",
+    "P": "resolutionMode",
+    "depth": 0,
+    "kind": "Refused",
+    "measurement": "measured on a checker-clean entry-root program",
+    "phase": "refusal_scan",
+    "reason": "optional property resolutionMode in FileReference absent from structural source { preserve: true; }, which can hide fields",
+    "root_kind": "",
+    "text": "/workspace/depthgate2-adapted/src/compiler/parser.ts:10630:100: Adamic 0.1 refuses optional property resolutionMode in FileReference absent from structural source { preserve: true; }, which can hide fields; declare resolutionMode on the source type, or build a fresh object with known fields (adamic/no-optional-widening)",
+    "unit": "/workspace/depthgate2-adapted/src/compiler/parser.ts:10602:1",
+    "where": "/workspace/depthgate2-adapted/src/compiler/parser.ts:10630:100",
+    "owning_units": [
+      "/workspace/depthgate2-adapted/src/compiler/parser.ts:10602:1"
+    ],
+    "event_count": 1
+  },
+  {
+    "id": "S051",
+    "group": "G44",
+    "S": "{ [index: string]: string | { value: string; pos: number; end: number; }; }",
+    "T": "{ types?: { value: string; pos: number; end: number; }; } & { lib?: { value: string; pos: number; end: number; }; } & { path?: { value: string; pos: number; end: number; }; } & { \"no-default-lib\"?: string; } & { \"resolution-mode\"?: string; } & ...",
+    "P": "types",
+    "depth": 0,
+    "kind": "Refused",
+    "measurement": "measured on a checker-clean entry-root program",
+    "phase": "refusal_scan",
+    "reason": "optional property types in { types?: { value: string; pos: number; end: number; }; } & { lib?: { value: string; pos: number; end: number; }; } & { path?: { value: string; pos: number; end: number; }; } & { \"no-default-lib\"?: string; } & { \"resolution-mode\"?: string; } & ... absent from structural source { [index: string]: string | { value: string; pos: number; end: number; }; }, which can hide fields",
+    "root_kind": "",
+    "text": "/workspace/depthgate2-adapted/src/compiler/parser.ts:10728:53: Adamic 0.1 refuses optional property types in { types?: { value: string; pos: number; end: number; }; } & { lib?: { value: string; pos: number; end: number; }; } & { path?: { value: string; pos: number; end: number; }; } & { \"no-default-lib\"?: string; } & { \"resolution-mode\"?: string; } & ... absent from structural source { [index: string]: string | { value: string; pos: number; end: number; }; }, which can hide fields; declare types on the source type, or build a fresh object with known fields (adamic/no-optional-widening)",
+    "unit": "/workspace/depthgate2-adapted/src/compiler/parser.ts:10697:1",
+    "where": "/workspace/depthgate2-adapted/src/compiler/parser.ts:10728:53",
+    "owning_units": [
+      "/workspace/depthgate2-adapted/src/compiler/parser.ts:10697:1"
+    ],
+    "event_count": 1
+  },
+  {
+    "id": "S052",
+    "group": "G43",
+    "S": "{ [index: string]: string | undefined; }",
+    "T": "{ types?: { value: string; pos: number; end: number; }; } & { lib?: { value: string; pos: number; end: number; }; } & { path?: { value: string; pos: number; end: number; }; } & { \"no-default-lib\"?: string; } & { \"resolution-mode\"?: string; } & ...",
+    "P": "types",
+    "depth": 0,
+    "kind": "Refused",
+    "measurement": "measured on a checker-clean entry-root program",
+    "phase": "refusal_scan",
+    "reason": "optional property types in { types?: { value: string; pos: number; end: number; }; } & { lib?: { value: string; pos: number; end: number; }; } & { path?: { value: string; pos: number; end: number; }; } & { \"no-default-lib\"?: string; } & { \"resolution-mode\"?: string; } & ... absent from structural source { [index: string]: string | undefined; }, which can hide fields",
+    "root_kind": "",
+    "text": "/workspace/depthgate2-adapted/src/compiler/parser.ts:10760:45: Adamic 0.1 refuses optional property types in { types?: { value: string; pos: number; end: number; }; } & { lib?: { value: string; pos: number; end: number; }; } & { path?: { value: string; pos: number; end: number; }; } & { \"no-default-lib\"?: string; } & { \"resolution-mode\"?: string; } & ... absent from structural source { [index: string]: string | undefined; }, which can hide fields; declare types on the source type, or build a fresh object with known fields (adamic/no-optional-widening)",
+    "unit": "/workspace/depthgate2-adapted/src/compiler/parser.ts:10750:1",
+    "where": "/workspace/depthgate2-adapted/src/compiler/parser.ts:10760:45",
+    "owning_units": [
+      "/workspace/depthgate2-adapted/src/compiler/parser.ts:10750:1"
+    ],
+    "event_count": 1
+  },
+  {
+    "id": "S053",
+    "group": "G26",
+    "S": "JSDoc[]",
+    "T": "JSDocArray",
+    "P": "jsDocCache",
+    "depth": 0,
+    "kind": "Refused",
+    "measurement": "measured on a checker-clean entry-root program",
+    "phase": "refusal_scan",
+    "reason": "optional property jsDocCache in JSDocArray absent from structural source JSDoc[], which can hide fields",
+    "root_kind": "",
+    "text": "/workspace/depthgate2-adapted/src/compiler/parser.ts:1827:40: Adamic 0.1 refuses optional property jsDocCache in JSDocArray absent from structural source JSDoc[], which can hide fields; declare jsDocCache on the source type, or build a fresh object with known fields (adamic/no-optional-widening)",
+    "unit": "/workspace/depthgate2-adapted/src/compiler/parser.ts:1437:1",
+    "where": "/workspace/depthgate2-adapted/src/compiler/parser.ts:1827:40",
+    "owning_units": [
+      "/workspace/depthgate2-adapted/src/compiler/parser.ts:1437:1"
+    ],
+    "event_count": 1
+  },
+  {
+    "id": "S054",
+    "group": "G27",
+    "S": "CompilerHost",
+    "T": "CompilerHost & { onUnRecoverableConfigFileDiagnostic?: DiagnosticReporter; }",
+    "P": "onUnRecoverableConfigFileDiagnostic",
+    "depth": 0,
+    "kind": "Refused",
+    "measurement": "measured on a checker-clean entry-root program",
+    "phase": "refusal_scan",
+    "reason": "optional property onUnRecoverableConfigFileDiagnostic in CompilerHost & { onUnRecoverableConfigFileDiagnostic?: DiagnosticReporter; } absent from structural source CompilerHost, which can hide fields",
+    "root_kind": "",
+    "text": "/workspace/depthgate2-adapted/src/compiler/program.ts:1584:67: Adamic 0.1 refuses optional property onUnRecoverableConfigFileDiagnostic in CompilerHost & { onUnRecoverableConfigFileDiagnostic?: DiagnosticReporter; } absent from structural source CompilerHost, which can hide fields; declare onUnRecoverableConfigFileDiagnostic on the source type, or build a fresh object with known fields (adamic/no-optional-widening)",
+    "unit": "/workspace/depthgate2-adapted/src/compiler/program.ts:1521:1",
+    "where": "/workspace/depthgate2-adapted/src/compiler/program.ts:1584:67",
+    "owning_units": [
+      "/workspace/depthgate2-adapted/src/compiler/program.ts:1521:1"
+    ],
+    "event_count": 1
+  },
+  {
+    "id": "S055",
+    "group": "G13",
+    "S": "{ resolvedModule: ResolvedModuleFull; }",
+    "T": "ResolvedModuleWithFailedLookupLocations",
+    "P": "failedLookupLocations",
+    "depth": 0,
+    "kind": "Refused",
+    "measurement": "measured on a checker-clean entry-root program",
+    "phase": "refusal_scan",
+    "reason": "optional property failedLookupLocations in ResolvedModuleWithFailedLookupLocations absent from structural source { resolvedModule: ResolvedModuleFull; }, which can hide fields",
+    "root_kind": "",
+    "text": "/workspace/depthgate2-adapted/src/compiler/program.ts:1615:42: Adamic 0.1 refuses optional property failedLookupLocations in ResolvedModuleWithFailedLookupLocations absent from structural source { resolvedModule: ResolvedModuleFull; }, which can hide fields; declare failedLookupLocations on the source type, or build a fresh object with known fields (adamic/no-optional-widening)",
+    "unit": "/workspace/depthgate2-adapted/src/compiler/program.ts:1521:1",
+    "where": "/workspace/depthgate2-adapted/src/compiler/program.ts:1615:42",
+    "owning_units": [
+      "/workspace/depthgate2-adapted/src/compiler/program.ts:1521:1"
+    ],
+    "event_count": 1
+  },
+  {
+    "id": "S056",
+    "group": "G13",
+    "S": "{ resolvedModule: ResolvedModuleFull; }",
+    "T": "ResolvedModuleWithFailedLookupLocations",
+    "P": "failedLookupLocations",
+    "depth": 0,
+    "kind": "Refused",
+    "measurement": "measured on a checker-clean entry-root program",
+    "phase": "refusal_scan",
+    "reason": "optional property failedLookupLocations in ResolvedModuleWithFailedLookupLocations absent from structural source { resolvedModule: ResolvedModuleFull; }, which can hide fields",
+    "root_kind": "",
+    "text": "/workspace/depthgate2-adapted/src/compiler/program.ts:1616:13: Adamic 0.1 refuses optional property failedLookupLocations in ResolvedModuleWithFailedLookupLocations absent from structural source { resolvedModule: ResolvedModuleFull; }, which can hide fields; declare failedLookupLocations on the source type, or build a fresh object with known fields (adamic/no-optional-widening)",
+    "unit": "/workspace/depthgate2-adapted/src/compiler/program.ts:1521:1",
+    "where": "/workspace/depthgate2-adapted/src/compiler/program.ts:1616:13",
+    "owning_units": [
+      "/workspace/depthgate2-adapted/src/compiler/program.ts:1521:1"
+    ],
+    "event_count": 1
+  },
+  {
+    "id": "S057",
+    "group": "G22",
+    "S": "{ resolvedTypeReferenceDirective: ResolvedTypeReferenceDirective | undefined; }",
+    "T": "ResolvedTypeReferenceDirectiveWithFailedLookupLocations",
+    "P": "failedLookupLocations",
+    "depth": 0,
+    "kind": "Refused",
+    "measurement": "measured on a checker-clean entry-root program",
+    "phase": "refusal_scan",
+    "reason": "optional property failedLookupLocations in ResolvedTypeReferenceDirectiveWithFailedLookupLocations absent from structural source { resolvedTypeReferenceDirective: ResolvedTypeReferenceDirective | undefined; }, which can hide fields",
+    "root_kind": "",
+    "text": "/workspace/depthgate2-adapted/src/compiler/program.ts:1661:13: Adamic 0.1 refuses optional property failedLookupLocations in ResolvedTypeReferenceDirectiveWithFailedLookupLocations absent from structural source { resolvedTypeReferenceDirective: ResolvedTypeReferenceDirective | undefined; }, which can hide fields; declare failedLookupLocations on the source type, or build a fresh object with known fields (adamic/no-optional-widening)",
+    "unit": "/workspace/depthgate2-adapted/src/compiler/program.ts:1521:1",
+    "where": "/workspace/depthgate2-adapted/src/compiler/program.ts:1661:13",
+    "owning_units": [
+      "/workspace/depthgate2-adapted/src/compiler/program.ts:1521:1"
+    ],
+    "event_count": 1
+  },
+  {
+    "id": "S058",
+    "group": "G02",
+    "S": "SourceFile",
+    "T": "SourceFileLike",
+    "P": "getPositionOfLineAndCharacter",
+    "depth": 0,
+    "kind": "Refused",
+    "measurement": "measured on a checker-clean entry-root program",
+    "phase": "refusal_scan",
+    "reason": "optional property getPositionOfLineAndCharacter in SourceFileLike absent from structural source SourceFile, which can hide fields",
+    "root_kind": "",
+    "text": "/workspace/depthgate2-adapted/src/compiler/program.ts:738:57: Adamic 0.1 refuses optional property getPositionOfLineAndCharacter in SourceFileLike absent from structural source SourceFile, which can hide fields; declare getPositionOfLineAndCharacter on the source type, or build a fresh object with known fields (adamic/no-optional-widening)",
+    "unit": "/workspace/depthgate2-adapted/src/compiler/program.ts:717:1",
+    "where": "/workspace/depthgate2-adapted/src/compiler/program.ts:738:57",
+    "owning_units": [
+      "/workspace/depthgate2-adapted/src/compiler/program.ts:717:1"
+    ],
+    "event_count": 1
+  },
+  {
+    "id": "S059",
+    "group": "G02",
+    "S": "SourceFile",
+    "T": "SourceFileLike",
+    "P": "getPositionOfLineAndCharacter",
+    "depth": 0,
+    "kind": "Refused",
+    "measurement": "measured on a checker-clean entry-root program",
+    "phase": "refusal_scan",
+    "reason": "optional property getPositionOfLineAndCharacter in SourceFileLike absent from structural source SourceFile, which can hide fields",
+    "root_kind": "",
+    "text": "/workspace/depthgate2-adapted/src/compiler/program.ts:739:76: Adamic 0.1 refuses optional property getPositionOfLineAndCharacter in SourceFileLike absent from structural source SourceFile, which can hide fields; declare getPositionOfLineAndCharacter on the source type, or build a fresh object with known fields (adamic/no-optional-widening)",
+    "unit": "/workspace/depthgate2-adapted/src/compiler/program.ts:717:1",
+    "where": "/workspace/depthgate2-adapted/src/compiler/program.ts:739:76",
+    "owning_units": [
+      "/workspace/depthgate2-adapted/src/compiler/program.ts:717:1"
+    ],
+    "event_count": 1
+  },
+  {
+    "id": "S060",
+    "group": "G24",
+    "S": "ResolvedModuleWithFailedLookupLocations",
+    "T": "ResolutionWithFailedLookupLocations",
+    "P": "isInvalidated",
+    "depth": 0,
+    "kind": "Refused",
+    "measurement": "measured on a checker-clean entry-root program",
+    "phase": "refusal_scan",
+    "reason": "optional property isInvalidated in ResolutionWithFailedLookupLocations absent from structural source ResolvedModuleWithFailedLookupLocations, which can hide fields",
+    "root_kind": "",
+    "text": "/workspace/depthgate2-adapted/src/compiler/resolutionCache.ts:1021:16: Adamic 0.1 refuses optional property isInvalidated in ResolutionWithFailedLookupLocations absent from structural source ResolvedModuleWithFailedLookupLocations, which can hide fields; declare isInvalidated on the source type, or build a fresh object with known fields (adamic/no-optional-widening)",
+    "unit": "/workspace/depthgate2-adapted/src/compiler/resolutionCache.ts:581:1",
+    "where": "/workspace/depthgate2-adapted/src/compiler/resolutionCache.ts:1021:16",
+    "owning_units": [
+      "/workspace/depthgate2-adapted/src/compiler/resolutionCache.ts:581:1"
+    ],
+    "event_count": 1
+  },
+  {
+    "id": "S061",
+    "group": "G14",
+    "S": "ResolvedModuleWithFailedLookupLocations",
+    "T": "CachedResolvedModuleWithFailedLookupLocations",
+    "P": "isInvalidated",
+    "depth": 0,
+    "kind": "Refused",
+    "measurement": "measured on a checker-clean entry-root program",
+    "phase": "refusal_scan",
+    "reason": "optional property isInvalidated in CachedResolvedModuleWithFailedLookupLocations absent from structural source ResolvedModuleWithFailedLookupLocations, which can hide fields",
+    "root_kind": "",
+    "text": "/workspace/depthgate2-adapted/src/compiler/resolutionCache.ts:1028:27: Adamic 0.1 refuses optional property isInvalidated in CachedResolvedModuleWithFailedLookupLocations absent from structural source ResolvedModuleWithFailedLookupLocations, which can hide fields; declare isInvalidated on the source type, or build a fresh object with known fields (adamic/no-optional-widening)",
+    "unit": "/workspace/depthgate2-adapted/src/compiler/resolutionCache.ts:581:1",
+    "where": "/workspace/depthgate2-adapted/src/compiler/resolutionCache.ts:1028:27",
+    "owning_units": [
+      "/workspace/depthgate2-adapted/src/compiler/resolutionCache.ts:581:1"
+    ],
+    "event_count": 1
+  },
+  {
+    "id": "S062",
+    "group": "G14",
+    "S": "ResolvedModuleWithFailedLookupLocations",
+    "T": "CachedResolvedModuleWithFailedLookupLocations",
+    "P": "isInvalidated",
+    "depth": 0,
+    "kind": "Refused",
+    "measurement": "measured on a checker-clean entry-root program",
+    "phase": "refusal_scan",
+    "reason": "optional property isInvalidated in CachedResolvedModuleWithFailedLookupLocations absent from structural source ResolvedModuleWithFailedLookupLocations, which can hide fields",
+    "root_kind": "",
+    "text": "/workspace/depthgate2-adapted/src/compiler/resolutionCache.ts:1053:26: Adamic 0.1 refuses optional property isInvalidated in CachedResolvedModuleWithFailedLookupLocations absent from structural source ResolvedModuleWithFailedLookupLocations, which can hide fields; declare isInvalidated on the source type, or build a fresh object with known fields (adamic/no-optional-widening)",
+    "unit": "/workspace/depthgate2-adapted/src/compiler/resolutionCache.ts:581:1",
+    "where": "/workspace/depthgate2-adapted/src/compiler/resolutionCache.ts:1053:26",
+    "owning_units": [
+      "/workspace/depthgate2-adapted/src/compiler/resolutionCache.ts:581:1"
+    ],
+    "event_count": 1
+  },
+  {
+    "id": "S063",
+    "group": "G25",
+    "S": "ResolvedTypeReferenceDirectiveWithFailedLookupLocations",
+    "T": "ResolutionWithFailedLookupLocations",
+    "P": "isInvalidated",
+    "depth": 0,
+    "kind": "Refused",
+    "measurement": "measured on a checker-clean entry-root program",
+    "phase": "refusal_scan",
+    "reason": "optional property isInvalidated in ResolutionWithFailedLookupLocations absent from structural source ResolvedTypeReferenceDirectiveWithFailedLookupLocations, which can hide fields",
+    "root_kind": "",
+    "text": "/workspace/depthgate2-adapted/src/compiler/resolutionCache.ts:992:16: Adamic 0.1 refuses optional property isInvalidated in ResolutionWithFailedLookupLocations absent from structural source ResolvedTypeReferenceDirectiveWithFailedLookupLocations, which can hide fields; declare isInvalidated on the source type, or build a fresh object with known fields (adamic/no-optional-widening)",
+    "unit": "/workspace/depthgate2-adapted/src/compiler/resolutionCache.ts:581:1",
+    "where": "/workspace/depthgate2-adapted/src/compiler/resolutionCache.ts:992:16",
+    "owning_units": [
+      "/workspace/depthgate2-adapted/src/compiler/resolutionCache.ts:581:1"
+    ],
+    "event_count": 1
+  },
+  {
+    "id": "S064",
+    "group": "G23",
+    "S": "ResolvedTypeReferenceDirectiveWithFailedLookupLocations",
+    "T": "CachedResolvedTypeReferenceDirectiveWithFailedLookupLocations",
+    "P": "isInvalidated",
+    "depth": 0,
+    "kind": "Refused",
+    "measurement": "measured on a checker-clean entry-root program",
+    "phase": "refusal_scan",
+    "reason": "optional property isInvalidated in CachedResolvedTypeReferenceDirectiveWithFailedLookupLocations absent from structural source ResolvedTypeReferenceDirectiveWithFailedLookupLocations, which can hide fields",
+    "root_kind": "",
+    "text": "/workspace/depthgate2-adapted/src/compiler/resolutionCache.ts:999:27: Adamic 0.1 refuses optional property isInvalidated in CachedResolvedTypeReferenceDirectiveWithFailedLookupLocations absent from structural source ResolvedTypeReferenceDirectiveWithFailedLookupLocations, which can hide fields; declare isInvalidated on the source type, or build a fresh object with known fields (adamic/no-optional-widening)",
+    "unit": "/workspace/depthgate2-adapted/src/compiler/resolutionCache.ts:581:1",
+    "where": "/workspace/depthgate2-adapted/src/compiler/resolutionCache.ts:999:27",
+    "owning_units": [
+      "/workspace/depthgate2-adapted/src/compiler/resolutionCache.ts:581:1"
+    ],
+    "event_count": 1
+  },
+  {
+    "id": "S065",
+    "group": "G41",
+    "S": "ParameterDeclaration",
+    "T": "SourceMapRange",
+    "P": "source",
+    "depth": 0,
+    "kind": "Refused",
+    "measurement": "measured on a checker-clean entry-root program",
+    "phase": "refusal_scan",
+    "reason": "optional property source in SourceMapRange absent from structural source ParameterDeclaration, which can hide fields",
+    "root_kind": "",
+    "text": "/workspace/depthgate2-adapted/src/compiler/transformers/classFields.ts:2465:42: Adamic 0.1 refuses optional property source in SourceMapRange absent from structural source ParameterDeclaration, which can hide fields; declare source on the source type, or build a fresh object with known fields (adamic/no-optional-widening)",
+    "unit": "/workspace/depthgate2-adapted/src/compiler/transformers/classFields.ts:355:1",
+    "where": "/workspace/depthgate2-adapted/src/compiler/transformers/classFields.ts:2465:42",
+    "owning_units": [
+      "/workspace/depthgate2-adapted/src/compiler/transformers/classFields.ts:355:1"
+    ],
+    "event_count": 1
+  },
+  {
+    "id": "S066",
+    "group": "G01",
+    "S": "TextRange",
+    "T": "SourceMapRange",
+    "P": "source",
+    "depth": 0,
+    "kind": "Refused",
+    "measurement": "measured on a checker-clean entry-root program",
+    "phase": "refusal_scan",
+    "reason": "optional property source in SourceMapRange absent from structural source TextRange, which can hide fields",
+    "root_kind": "",
+    "text": "/workspace/depthgate2-adapted/src/compiler/transformers/classFields.ts:2469:42: Adamic 0.1 refuses optional property source in SourceMapRange absent from structural source TextRange, which can hide fields; declare source on the source type, or build a fresh object with known fields (adamic/no-optional-widening)",
+    "unit": "/workspace/depthgate2-adapted/src/compiler/transformers/classFields.ts:355:1",
+    "where": "/workspace/depthgate2-adapted/src/compiler/transformers/classFields.ts:2469:42",
+    "owning_units": [
+      "/workspace/depthgate2-adapted/src/compiler/transformers/classFields.ts:355:1"
+    ],
+    "event_count": 1
+  },
+  {
+    "id": "S067",
+    "group": "G01",
+    "S": "TextRange",
+    "T": "SourceMapRange",
+    "P": "source",
+    "depth": 0,
+    "kind": "Refused",
+    "measurement": "measured on a checker-clean entry-root program",
+    "phase": "refusal_scan",
+    "reason": "optional property source in SourceMapRange absent from structural source TextRange, which can hide fields",
+    "root_kind": "",
+    "text": "/workspace/depthgate2-adapted/src/compiler/transformers/classFields.ts:2505:43: Adamic 0.1 refuses optional property source in SourceMapRange absent from structural source TextRange, which can hide fields; declare source on the source type, or build a fresh object with known fields (adamic/no-optional-widening)",
+    "unit": "/workspace/depthgate2-adapted/src/compiler/transformers/classFields.ts:355:1",
+    "where": "/workspace/depthgate2-adapted/src/compiler/transformers/classFields.ts:2505:43",
+    "owning_units": [
+      "/workspace/depthgate2-adapted/src/compiler/transformers/classFields.ts:355:1"
+    ],
+    "event_count": 1
+  },
+  {
+    "id": "S068",
+    "group": "G04",
+    "S": "Identifier",
+    "T": "SourceMapRange",
+    "P": "source",
+    "depth": 0,
+    "kind": "Refused",
+    "measurement": "measured on a checker-clean entry-root program",
+    "phase": "refusal_scan",
+    "reason": "optional property source in SourceMapRange absent from structural source Identifier, which can hide fields",
+    "root_kind": "",
+    "text": "/workspace/depthgate2-adapted/src/compiler/transformers/classFields.ts:2611:42: Adamic 0.1 refuses optional property source in SourceMapRange absent from structural source Identifier, which can hide fields; declare source on the source type, or build a fresh object with known fields (adamic/no-optional-widening)",
+    "unit": "/workspace/depthgate2-adapted/src/compiler/transformers/classFields.ts:355:1",
+    "where": "/workspace/depthgate2-adapted/src/compiler/transformers/classFields.ts:2611:42",
+    "owning_units": [
+      "/workspace/depthgate2-adapted/src/compiler/transformers/classFields.ts:355:1"
+    ],
+    "event_count": 1
+  },
+  {
+    "id": "S069",
+    "group": "G04",
+    "S": "Identifier",
+    "T": "SourceMapRange",
+    "P": "source",
+    "depth": 0,
+    "kind": "Refused",
+    "measurement": "measured on a checker-clean entry-root program",
+    "phase": "refusal_scan",
+    "reason": "optional property source in SourceMapRange absent from structural source Identifier, which can hide fields",
+    "root_kind": "",
+    "text": "/workspace/depthgate2-adapted/src/compiler/transformers/classFields.ts:3306:50: Adamic 0.1 refuses optional property source in SourceMapRange absent from structural source Identifier, which can hide fields; declare source on the source type, or build a fresh object with known fields (adamic/no-optional-widening)",
+    "unit": "/workspace/depthgate2-adapted/src/compiler/transformers/classFields.ts:355:1",
+    "where": "/workspace/depthgate2-adapted/src/compiler/transformers/classFields.ts:3306:50",
+    "owning_units": [
+      "/workspace/depthgate2-adapted/src/compiler/transformers/classFields.ts:355:1"
+    ],
+    "event_count": 1
+  },
+  {
+    "id": "S070",
+    "group": "G06",
+    "S": "Expression",
+    "T": "SourceMapRange",
+    "P": "source",
+    "depth": 0,
+    "kind": "Refused",
+    "measurement": "measured on a checker-clean entry-root program",
+    "phase": "refusal_scan",
+    "reason": "optional property source in SourceMapRange absent from structural source Expression, which can hide fields",
+    "root_kind": "",
+    "text": "/workspace/depthgate2-adapted/src/compiler/transformers/classFields.ts:931:41: Adamic 0.1 refuses optional property source in SourceMapRange absent from structural source Expression, which can hide fields; declare source on the source type, or build a fresh object with known fields (adamic/no-optional-widening)",
+    "unit": "/workspace/depthgate2-adapted/src/compiler/transformers/classFields.ts:355:1",
+    "where": "/workspace/depthgate2-adapted/src/compiler/transformers/classFields.ts:931:41",
+    "owning_units": [
+      "/workspace/depthgate2-adapted/src/compiler/transformers/classFields.ts:355:1"
+    ],
+    "event_count": 1
+  },
+  {
+    "id": "S071",
+    "group": "G06",
+    "S": "Expression",
+    "T": "SourceMapRange",
+    "P": "source",
+    "depth": 0,
+    "kind": "Refused",
+    "measurement": "measured on a checker-clean entry-root program",
+    "phase": "refusal_scan",
+    "reason": "optional property source in SourceMapRange absent from structural source Expression, which can hide fields",
+    "root_kind": "",
+    "text": "/workspace/depthgate2-adapted/src/compiler/transformers/classFields.ts:934:47: Adamic 0.1 refuses optional property source in SourceMapRange absent from structural source Expression, which can hide fields; declare source on the source type, or build a fresh object with known fields (adamic/no-optional-widening)",
+    "unit": "/workspace/depthgate2-adapted/src/compiler/transformers/classFields.ts:355:1",
+    "where": "/workspace/depthgate2-adapted/src/compiler/transformers/classFields.ts:934:47",
+    "owning_units": [
+      "/workspace/depthgate2-adapted/src/compiler/transformers/classFields.ts:355:1"
+    ],
+    "event_count": 1
+  },
+  {
+    "id": "S072",
+    "group": "G04",
+    "S": "Identifier",
+    "T": "SourceMapRange",
+    "P": "source",
+    "depth": 0,
+    "kind": "Refused",
+    "measurement": "measured on a checker-clean entry-root program",
+    "phase": "refusal_scan",
+    "reason": "optional property source in SourceMapRange absent from structural source Identifier, which can hide fields",
+    "root_kind": "",
+    "text": "/workspace/depthgate2-adapted/src/compiler/transformers/classThis.ts:122:59: Adamic 0.1 refuses optional property source in SourceMapRange absent from structural source Identifier, which can hide fields; declare source on the source type, or build a fresh object with known fields (adamic/no-optional-widening)",
+    "unit": "/workspace/depthgate2-adapted/src/compiler/transformers/classThis.ts:104:1",
+    "where": "/workspace/depthgate2-adapted/src/compiler/transformers/classThis.ts:122:59",
+    "owning_units": [
+      "/workspace/depthgate2-adapted/src/compiler/transformers/classThis.ts:104:1"
+    ],
+    "event_count": 1
+  },
+  {
+    "id": "S073",
+    "group": "G17",
+    "S": "Node",
+    "T": "SourceMapRange",
+    "P": "source",
+    "depth": 0,
+    "kind": "Refused",
+    "measurement": "measured on a checker-clean entry-root program",
+    "phase": "refusal_scan",
+    "reason": "optional property source in SourceMapRange absent from structural source Node, which can hide fields",
+    "root_kind": "",
+    "text": "/workspace/depthgate2-adapted/src/compiler/transformers/es2015.ts:2172:49: Adamic 0.1 refuses optional property source in SourceMapRange absent from structural source Node, which can hide fields; declare source on the source type, or build a fresh object with known fields (adamic/no-optional-widening)",
+    "unit": "/workspace/depthgate2-adapted/src/compiler/transformers/es2015.ts:489:1",
+    "where": "/workspace/depthgate2-adapted/src/compiler/transformers/es2015.ts:2172:49",
+    "owning_units": [
+      "/workspace/depthgate2-adapted/src/compiler/transformers/es2015.ts:489:1"
+    ],
+    "event_count": 1
+  },
+  {
+    "id": "S074",
+    "group": "G11",
+    "S": "BigIntLiteral",
+    "T": "SourceMapRange",
+    "P": "source",
+    "depth": 0,
+    "kind": "Refused",
+    "measurement": "measured on a checker-clean entry-root program",
+    "phase": "refusal_scan",
+    "reason": "optional property source in SourceMapRange absent from structural source BigIntLiteral, which can hide fields",
+    "root_kind": "",
+    "text": "/workspace/depthgate2-adapted/src/compiler/transformers/es2015.ts:2359:35: Adamic 0.1 refuses optional property source in SourceMapRange absent from structural source BigIntLiteral, which can hide fields; declare source on the source type, or build a fresh object with known fields (adamic/no-optional-widening)",
+    "unit": "/workspace/depthgate2-adapted/src/compiler/transformers/es2015.ts:489:1",
+    "where": "/workspace/depthgate2-adapted/src/compiler/transformers/es2015.ts:2359:35",
+    "owning_units": [
+      "/workspace/depthgate2-adapted/src/compiler/transformers/es2015.ts:489:1"
+    ],
+    "event_count": 1
+  },
+  {
+    "id": "S075",
+    "group": "G11",
+    "S": "BigIntLiteral",
+    "T": "SourceMapRange",
+    "P": "source",
+    "depth": 0,
+    "kind": "Refused",
+    "measurement": "measured on a checker-clean entry-root program",
+    "phase": "refusal_scan",
+    "reason": "optional property source in SourceMapRange absent from structural source BigIntLiteral, which can hide fields",
+    "root_kind": "",
+    "text": "/workspace/depthgate2-adapted/src/compiler/transformers/es2015.ts:2368:41: Adamic 0.1 refuses optional property source in SourceMapRange absent from structural source BigIntLiteral, which can hide fields; declare source on the source type, or build a fresh object with known fields (adamic/no-optional-widening)",
+    "unit": "/workspace/depthgate2-adapted/src/compiler/transformers/es2015.ts:489:1",
+    "where": "/workspace/depthgate2-adapted/src/compiler/transformers/es2015.ts:2368:41",
+    "owning_units": [
+      "/workspace/depthgate2-adapted/src/compiler/transformers/es2015.ts:489:1"
+    ],
+    "event_count": 1
+  },
+  {
+    "id": "S076",
+    "group": "G01",
+    "S": "TextRange",
+    "T": "SourceMapRange",
+    "P": "source",
+    "depth": 0,
+    "kind": "Refused",
+    "measurement": "measured on a checker-clean entry-root program",
+    "phase": "refusal_scan",
+    "reason": "optional property source in SourceMapRange absent from structural source TextRange, which can hide fields",
+    "root_kind": "",
+    "text": "/workspace/depthgate2-adapted/src/compiler/transformers/es2015.ts:2635:71: Adamic 0.1 refuses optional property source in SourceMapRange absent from structural source TextRange, which can hide fields; declare source on the source type, or build a fresh object with known fields (adamic/no-optional-widening)",
+    "unit": "/workspace/depthgate2-adapted/src/compiler/transformers/es2015.ts:489:1",
+    "where": "/workspace/depthgate2-adapted/src/compiler/transformers/es2015.ts:2635:71",
+    "owning_units": [
+      "/workspace/depthgate2-adapted/src/compiler/transformers/es2015.ts:489:1"
+    ],
+    "event_count": 1
+  },
+  {
+    "id": "S077",
+    "group": "G01",
+    "S": "TextRange",
+    "T": "SourceMapRange",
+    "P": "source",
+    "depth": 0,
+    "kind": "Refused",
+    "measurement": "measured on a checker-clean entry-root program",
+    "phase": "refusal_scan",
+    "reason": "optional property source in SourceMapRange absent from structural source TextRange, which can hide fields",
+    "root_kind": "",
+    "text": "/workspace/depthgate2-adapted/src/compiler/transformers/es2015.ts:2804:52: Adamic 0.1 refuses optional property source in SourceMapRange absent from structural source TextRange, which can hide fields; declare source on the source type, or build a fresh object with known fields (adamic/no-optional-widening)",
+    "unit": "/workspace/depthgate2-adapted/src/compiler/transformers/es2015.ts:489:1",
+    "where": "/workspace/depthgate2-adapted/src/compiler/transformers/es2015.ts:2804:52",
+    "owning_units": [
+      "/workspace/depthgate2-adapted/src/compiler/transformers/es2015.ts:489:1"
+    ],
+    "event_count": 1
+  },
+  {
+    "id": "S078",
+    "group": "G01",
+    "S": "TextRange",
+    "T": "SourceMapRange",
+    "P": "source",
+    "depth": 0,
+    "kind": "Refused",
+    "measurement": "measured on a checker-clean entry-root program",
+    "phase": "refusal_scan",
+    "reason": "optional property source in SourceMapRange absent from structural source TextRange, which can hide fields",
+    "root_kind": "",
+    "text": "/workspace/depthgate2-adapted/src/compiler/transformers/es2015.ts:3045:52: Adamic 0.1 refuses optional property source in SourceMapRange absent from structural source TextRange, which can hide fields; declare source on the source type, or build a fresh object with known fields (adamic/no-optional-widening)",
+    "unit": "/workspace/depthgate2-adapted/src/compiler/transformers/es2015.ts:489:1",
+    "where": "/workspace/depthgate2-adapted/src/compiler/transformers/es2015.ts:3045:52",
+    "owning_units": [
+      "/workspace/depthgate2-adapted/src/compiler/transformers/es2015.ts:489:1"
+    ],
+    "event_count": 1
+  },
+  {
+    "id": "S079",
+    "group": "G42",
+    "S": "SuperExpression",
+    "T": "SourceMapRange",
+    "P": "source",
+    "depth": 0,
+    "kind": "Refused",
+    "measurement": "measured on a checker-clean entry-root program",
+    "phase": "refusal_scan",
+    "reason": "optional property source in SourceMapRange absent from structural source SuperExpression, which can hide fields",
+    "root_kind": "",
+    "text": "/workspace/depthgate2-adapted/src/compiler/transformers/es2015.ts:4835:39: Adamic 0.1 refuses optional property source in SourceMapRange absent from structural source SuperExpression, which can hide fields; declare source on the source type, or build a fresh object with known fields (adamic/no-optional-widening)",
+    "unit": "/workspace/depthgate2-adapted/src/compiler/transformers/es2015.ts:489:1",
+    "where": "/workspace/depthgate2-adapted/src/compiler/transformers/es2015.ts:4835:39",
+    "owning_units": [
+      "/workspace/depthgate2-adapted/src/compiler/transformers/es2015.ts:489:1"
+    ],
+    "event_count": 1
+  },
+  {
+    "id": "S080",
+    "group": "G18",
+    "S": "VariableDeclaration",
+    "T": "SourceMapRange",
+    "P": "source",
+    "depth": 0,
+    "kind": "Refused",
+    "measurement": "measured on a checker-clean entry-root program",
+    "phase": "refusal_scan",
+    "reason": "optional property source in SourceMapRange absent from structural source VariableDeclaration, which can hide fields",
+    "root_kind": "",
+    "text": "/workspace/depthgate2-adapted/src/compiler/transformers/es2017.ts:629:13: Adamic 0.1 refuses optional property source in SourceMapRange absent from structural source VariableDeclaration, which can hide fields; declare source on the source type, or build a fresh object with known fields (adamic/no-optional-widening)",
+    "unit": "/workspace/depthgate2-adapted/src/compiler/transformers/es2017.ts:120:1",
+    "where": "/workspace/depthgate2-adapted/src/compiler/transformers/es2017.ts:629:13",
+    "owning_units": [
+      "/workspace/depthgate2-adapted/src/compiler/transformers/es2017.ts:120:1"
+    ],
+    "event_count": 1
+  },
+  {
+    "id": "S081",
+    "group": "G06",
+    "S": "Expression",
+    "T": "SourceMapRange",
+    "P": "source",
+    "depth": 0,
+    "kind": "Refused",
+    "measurement": "measured on a checker-clean entry-root program",
+    "phase": "refusal_scan",
+    "reason": "optional property source in SourceMapRange absent from structural source Expression, which can hide fields",
+    "root_kind": "",
+    "text": "/workspace/depthgate2-adapted/src/compiler/transformers/es2018.ts:789:51: Adamic 0.1 refuses optional property source in SourceMapRange absent from structural source Expression, which can hide fields; declare source on the source type, or build a fresh object with known fields (adamic/no-optional-widening)",
+    "unit": "/workspace/depthgate2-adapted/src/compiler/transformers/es2018.ts:155:1",
+    "where": "/workspace/depthgate2-adapted/src/compiler/transformers/es2018.ts:789:51",
+    "owning_units": [
+      "/workspace/depthgate2-adapted/src/compiler/transformers/es2018.ts:155:1"
+    ],
+    "event_count": 1
+  },
+  {
+    "id": "S082",
+    "group": "G06",
+    "S": "Expression",
+    "T": "SourceMapRange",
+    "P": "source",
+    "depth": 0,
+    "kind": "Refused",
+    "measurement": "measured on a checker-clean entry-root program",
+    "phase": "refusal_scan",
+    "reason": "optional property source in SourceMapRange absent from structural source Expression, which can hide fields",
+    "root_kind": "",
+    "text": "/workspace/depthgate2-adapted/src/compiler/transformers/es2018.ts:793:53: Adamic 0.1 refuses optional property source in SourceMapRange absent from structural source Expression, which can hide fields; declare source on the source type, or build a fresh object with known fields (adamic/no-optional-widening)",
+    "unit": "/workspace/depthgate2-adapted/src/compiler/transformers/es2018.ts:155:1",
+    "where": "/workspace/depthgate2-adapted/src/compiler/transformers/es2018.ts:793:53",
+    "owning_units": [
+      "/workspace/depthgate2-adapted/src/compiler/transformers/es2018.ts:155:1"
+    ],
+    "event_count": 1
+  },
+  {
+    "id": "S083",
+    "group": "G01",
+    "S": "TextRange",
+    "T": "SourceMapRange",
+    "P": "source",
+    "depth": 0,
+    "kind": "Refused",
+    "measurement": "measured on a checker-clean entry-root program",
+    "phase": "refusal_scan",
+    "reason": "optional property source in SourceMapRange absent from structural source TextRange, which can hide fields",
+    "root_kind": "",
+    "text": "/workspace/depthgate2-adapted/src/compiler/transformers/esDecorators.ts:1078:56: Adamic 0.1 refuses optional property source in SourceMapRange absent from structural source TextRange, which can hide fields; declare source on the source type, or build a fresh object with known fields (adamic/no-optional-widening)",
+    "unit": "/workspace/depthgate2-adapted/src/compiler/transformers/esDecorators.ts:296:1",
+    "where": "/workspace/depthgate2-adapted/src/compiler/transformers/esDecorators.ts:1078:56",
+    "owning_units": [
+      "/workspace/depthgate2-adapted/src/compiler/transformers/esDecorators.ts:296:1"
+    ],
+    "event_count": 1
+  },
+  {
+    "id": "S084",
+    "group": "G01",
+    "S": "TextRange",
+    "T": "SourceMapRange",
+    "P": "source",
+    "depth": 0,
+    "kind": "Refused",
+    "measurement": "measured on a checker-clean entry-root program",
+    "phase": "refusal_scan",
+    "reason": "optional property source in SourceMapRange absent from structural source TextRange, which can hide fields",
+    "root_kind": "",
+    "text": "/workspace/depthgate2-adapted/src/compiler/transformers/esDecorators.ts:1086:56: Adamic 0.1 refuses optional property source in SourceMapRange absent from structural source TextRange, which can hide fields; declare source on the source type, or build a fresh object with known fields (adamic/no-optional-widening)",
+    "unit": "/workspace/depthgate2-adapted/src/compiler/transformers/esDecorators.ts:296:1",
+    "where": "/workspace/depthgate2-adapted/src/compiler/transformers/esDecorators.ts:1086:56",
+    "owning_units": [
+      "/workspace/depthgate2-adapted/src/compiler/transformers/esDecorators.ts:296:1"
+    ],
+    "event_count": 1
+  },
+  {
+    "id": "S085",
+    "group": "G01",
+    "S": "TextRange",
+    "T": "SourceMapRange",
+    "P": "source",
+    "depth": 0,
+    "kind": "Refused",
+    "measurement": "measured on a checker-clean entry-root program",
+    "phase": "refusal_scan",
+    "reason": "optional property source in SourceMapRange absent from structural source TextRange, which can hide fields",
+    "root_kind": "",
+    "text": "/workspace/depthgate2-adapted/src/compiler/transformers/esDecorators.ts:1230:40: Adamic 0.1 refuses optional property source in SourceMapRange absent from structural source TextRange, which can hide fields; declare source on the source type, or build a fresh object with known fields (adamic/no-optional-widening)",
+    "unit": "/workspace/depthgate2-adapted/src/compiler/transformers/esDecorators.ts:296:1",
+    "where": "/workspace/depthgate2-adapted/src/compiler/transformers/esDecorators.ts:1230:40",
+    "owning_units": [
+      "/workspace/depthgate2-adapted/src/compiler/transformers/esDecorators.ts:296:1"
+    ],
+    "event_count": 1
+  },
+  {
+    "id": "S086",
+    "group": "G01",
+    "S": "TextRange",
+    "T": "SourceMapRange",
+    "P": "source",
+    "depth": 0,
+    "kind": "Refused",
+    "measurement": "measured on a checker-clean entry-root program",
+    "phase": "refusal_scan",
+    "reason": "optional property source in SourceMapRange absent from structural source TextRange, which can hide fields",
+    "root_kind": "",
+    "text": "/workspace/depthgate2-adapted/src/compiler/transformers/esDecorators.ts:1357:56: Adamic 0.1 refuses optional property source in SourceMapRange absent from structural source TextRange, which can hide fields; declare source on the source type, or build a fresh object with known fields (adamic/no-optional-widening)",
+    "unit": "/workspace/depthgate2-adapted/src/compiler/transformers/esDecorators.ts:296:1",
+    "where": "/workspace/depthgate2-adapted/src/compiler/transformers/esDecorators.ts:1357:56",
+    "owning_units": [
+      "/workspace/depthgate2-adapted/src/compiler/transformers/esDecorators.ts:296:1"
+    ],
+    "event_count": 1
+  },
+  {
+    "id": "S087",
+    "group": "G01",
+    "S": "TextRange",
+    "T": "SourceMapRange",
+    "P": "source",
+    "depth": 0,
+    "kind": "Refused",
+    "measurement": "measured on a checker-clean entry-root program",
+    "phase": "refusal_scan",
+    "reason": "optional property source in SourceMapRange absent from structural source TextRange, which can hide fields",
+    "root_kind": "",
+    "text": "/workspace/depthgate2-adapted/src/compiler/transformers/esDecorators.ts:1389:56: Adamic 0.1 refuses optional property source in SourceMapRange absent from structural source TextRange, which can hide fields; declare source on the source type, or build a fresh object with known fields (adamic/no-optional-widening)",
+    "unit": "/workspace/depthgate2-adapted/src/compiler/transformers/esDecorators.ts:296:1",
+    "where": "/workspace/depthgate2-adapted/src/compiler/transformers/esDecorators.ts:1389:56",
+    "owning_units": [
+      "/workspace/depthgate2-adapted/src/compiler/transformers/esDecorators.ts:296:1"
+    ],
+    "event_count": 1
+  },
+  {
+    "id": "S088",
+    "group": "G06",
+    "S": "Expression",
+    "T": "SourceMapRange",
+    "P": "source",
+    "depth": 0,
+    "kind": "Refused",
+    "measurement": "measured on a checker-clean entry-root program",
+    "phase": "refusal_scan",
+    "reason": "optional property source in SourceMapRange absent from structural source Expression, which can hide fields",
+    "root_kind": "",
+    "text": "/workspace/depthgate2-adapted/src/compiler/transformers/esDecorators.ts:1596:45: Adamic 0.1 refuses optional property source in SourceMapRange absent from structural source Expression, which can hide fields; declare source on the source type, or build a fresh object with known fields (adamic/no-optional-widening)",
+    "unit": "/workspace/depthgate2-adapted/src/compiler/transformers/esDecorators.ts:296:1",
+    "where": "/workspace/depthgate2-adapted/src/compiler/transformers/esDecorators.ts:1596:45",
+    "owning_units": [
+      "/workspace/depthgate2-adapted/src/compiler/transformers/esDecorators.ts:296:1"
+    ],
+    "event_count": 1
+  },
+  {
+    "id": "S089",
+    "group": "G06",
+    "S": "Expression",
+    "T": "SourceMapRange",
+    "P": "source",
+    "depth": 0,
+    "kind": "Refused",
+    "measurement": "measured on a checker-clean entry-root program",
+    "phase": "refusal_scan",
+    "reason": "optional property source in SourceMapRange absent from structural source Expression, which can hide fields",
+    "root_kind": "",
+    "text": "/workspace/depthgate2-adapted/src/compiler/transformers/esDecorators.ts:1599:51: Adamic 0.1 refuses optional property source in SourceMapRange absent from structural source Expression, which can hide fields; declare source on the source type, or build a fresh object with known fields (adamic/no-optional-widening)",
+    "unit": "/workspace/depthgate2-adapted/src/compiler/transformers/esDecorators.ts:296:1",
+    "where": "/workspace/depthgate2-adapted/src/compiler/transformers/esDecorators.ts:1599:51",
+    "owning_units": [
+      "/workspace/depthgate2-adapted/src/compiler/transformers/esDecorators.ts:296:1"
+    ],
+    "event_count": 1
+  },
+  {
+    "id": "S090",
+    "group": "G11",
+    "S": "BigIntLiteral",
+    "T": "SourceMapRange",
+    "P": "source",
+    "depth": 0,
+    "kind": "Refused",
+    "measurement": "measured on a checker-clean entry-root program",
+    "phase": "refusal_scan",
+    "reason": "optional property source in SourceMapRange absent from structural source BigIntLiteral, which can hide fields",
+    "root_kind": "",
+    "text": "/workspace/depthgate2-adapted/src/compiler/transformers/esDecorators.ts:1611:50: Adamic 0.1 refuses optional property source in SourceMapRange absent from structural source BigIntLiteral, which can hide fields; declare source on the source type, or build a fresh object with known fields (adamic/no-optional-widening)",
+    "unit": "/workspace/depthgate2-adapted/src/compiler/transformers/esDecorators.ts:296:1",
+    "where": "/workspace/depthgate2-adapted/src/compiler/transformers/esDecorators.ts:1611:50",
+    "owning_units": [
+      "/workspace/depthgate2-adapted/src/compiler/transformers/esDecorators.ts:296:1"
+    ],
+    "event_count": 1
+  },
+  {
+    "id": "S091",
+    "group": "G01",
+    "S": "TextRange",
+    "T": "SourceMapRange",
+    "P": "source",
+    "depth": 0,
+    "kind": "Refused",
+    "measurement": "measured on a checker-clean entry-root program",
+    "phase": "refusal_scan",
+    "reason": "optional property source in SourceMapRange absent from structural source TextRange, which can hide fields",
+    "root_kind": "",
+    "text": "/workspace/depthgate2-adapted/src/compiler/transformers/esDecorators.ts:1719:40: Adamic 0.1 refuses optional property source in SourceMapRange absent from structural source TextRange, which can hide fields; declare source on the source type, or build a fresh object with known fields (adamic/no-optional-widening)",
+    "unit": "/workspace/depthgate2-adapted/src/compiler/transformers/esDecorators.ts:296:1",
+    "where": "/workspace/depthgate2-adapted/src/compiler/transformers/esDecorators.ts:1719:40",
+    "owning_units": [
+      "/workspace/depthgate2-adapted/src/compiler/transformers/esDecorators.ts:296:1"
+    ],
+    "event_count": 1
+  },
+  {
+    "id": "S092",
+    "group": "G01",
+    "S": "TextRange",
+    "T": "SourceMapRange",
+    "P": "source",
+    "depth": 0,
+    "kind": "Refused",
+    "measurement": "measured on a checker-clean entry-root program",
+    "phase": "refusal_scan",
+    "reason": "optional property source in SourceMapRange absent from structural source TextRange, which can hide fields",
+    "root_kind": "",
+    "text": "/workspace/depthgate2-adapted/src/compiler/transformers/esDecorators.ts:2286:33: Adamic 0.1 refuses optional property source in SourceMapRange absent from structural source TextRange, which can hide fields; declare source on the source type, or build a fresh object with known fields (adamic/no-optional-widening)",
+    "unit": "/workspace/depthgate2-adapted/src/compiler/transformers/esDecorators.ts:296:1",
+    "where": "/workspace/depthgate2-adapted/src/compiler/transformers/esDecorators.ts:2286:33",
+    "owning_units": [
+      "/workspace/depthgate2-adapted/src/compiler/transformers/esDecorators.ts:296:1"
+    ],
+    "event_count": 1
+  },
+  {
+    "id": "S093",
+    "group": "G01",
+    "S": "TextRange",
+    "T": "SourceMapRange",
+    "P": "source",
+    "depth": 0,
+    "kind": "Refused",
+    "measurement": "measured on a checker-clean entry-root program",
+    "phase": "refusal_scan",
+    "reason": "optional property source in SourceMapRange absent from structural source TextRange, which can hide fields",
+    "root_kind": "",
+    "text": "/workspace/depthgate2-adapted/src/compiler/transformers/esDecorators.ts:2294:35: Adamic 0.1 refuses optional property source in SourceMapRange absent from structural source TextRange, which can hide fields; declare source on the source type, or build a fresh object with known fields (adamic/no-optional-widening)",
+    "unit": "/workspace/depthgate2-adapted/src/compiler/transformers/esDecorators.ts:296:1",
+    "where": "/workspace/depthgate2-adapted/src/compiler/transformers/esDecorators.ts:2294:35",
+    "owning_units": [
+      "/workspace/depthgate2-adapted/src/compiler/transformers/esDecorators.ts:296:1"
+    ],
+    "event_count": 1
+  },
+  {
+    "id": "S094",
+    "group": "G01",
+    "S": "TextRange",
+    "T": "SourceMapRange",
+    "P": "source",
+    "depth": 0,
+    "kind": "Refused",
+    "measurement": "measured on a checker-clean entry-root program",
+    "phase": "refusal_scan",
+    "reason": "optional property source in SourceMapRange absent from structural source TextRange, which can hide fields",
+    "root_kind": "",
+    "text": "/workspace/depthgate2-adapted/src/compiler/transformers/esDecorators.ts:609:56: Adamic 0.1 refuses optional property source in SourceMapRange absent from structural source TextRange, which can hide fields; declare source on the source type, or build a fresh object with known fields (adamic/no-optional-widening)",
+    "unit": "/workspace/depthgate2-adapted/src/compiler/transformers/esDecorators.ts:296:1",
+    "where": "/workspace/depthgate2-adapted/src/compiler/transformers/esDecorators.ts:609:56",
+    "owning_units": [
+      "/workspace/depthgate2-adapted/src/compiler/transformers/esDecorators.ts:296:1"
+    ],
+    "event_count": 1
+  },
+  {
+    "id": "S095",
+    "group": "G01",
+    "S": "TextRange",
+    "T": "SourceMapRange",
+    "P": "source",
+    "depth": 0,
+    "kind": "Refused",
+    "measurement": "measured on a checker-clean entry-root program",
+    "phase": "refusal_scan",
+    "reason": "optional property source in SourceMapRange absent from structural source TextRange, which can hide fields",
+    "root_kind": "",
+    "text": "/workspace/depthgate2-adapted/src/compiler/transformers/esDecorators.ts:618:56: Adamic 0.1 refuses optional property source in SourceMapRange absent from structural source TextRange, which can hide fields; declare source on the source type, or build a fresh object with known fields (adamic/no-optional-widening)",
+    "unit": "/workspace/depthgate2-adapted/src/compiler/transformers/esDecorators.ts:296:1",
+    "where": "/workspace/depthgate2-adapted/src/compiler/transformers/esDecorators.ts:618:56",
+    "owning_units": [
+      "/workspace/depthgate2-adapted/src/compiler/transformers/esDecorators.ts:296:1"
+    ],
+    "event_count": 1
+  },
+  {
+    "id": "S096",
+    "group": "G01",
+    "S": "TextRange",
+    "T": "SourceMapRange",
+    "P": "source",
+    "depth": 0,
+    "kind": "Refused",
+    "measurement": "measured on a checker-clean entry-root program",
+    "phase": "refusal_scan",
+    "reason": "optional property source in SourceMapRange absent from structural source TextRange, which can hide fields",
+    "root_kind": "",
+    "text": "/workspace/depthgate2-adapted/src/compiler/transformers/esDecorators.ts:892:52: Adamic 0.1 refuses optional property source in SourceMapRange absent from structural source TextRange, which can hide fields; declare source on the source type, or build a fresh object with known fields (adamic/no-optional-widening)",
+    "unit": "/workspace/depthgate2-adapted/src/compiler/transformers/esDecorators.ts:296:1",
+    "where": "/workspace/depthgate2-adapted/src/compiler/transformers/esDecorators.ts:892:52",
+    "owning_units": [
+      "/workspace/depthgate2-adapted/src/compiler/transformers/esDecorators.ts:296:1"
+    ],
+    "event_count": 1
+  },
+  {
+    "id": "S097",
+    "group": "G01",
+    "S": "TextRange",
+    "T": "SourceMapRange",
+    "P": "source",
+    "depth": 0,
+    "kind": "Refused",
+    "measurement": "measured on a checker-clean entry-root program",
+    "phase": "refusal_scan",
+    "reason": "optional property source in SourceMapRange absent from structural source TextRange, which can hide fields",
+    "root_kind": "",
+    "text": "/workspace/depthgate2-adapted/src/compiler/transformers/esDecorators.ts:922:62: Adamic 0.1 refuses optional property source in SourceMapRange absent from structural source TextRange, which can hide fields; declare source on the source type, or build a fresh object with known fields (adamic/no-optional-widening)",
+    "unit": "/workspace/depthgate2-adapted/src/compiler/transformers/esDecorators.ts:296:1",
+    "where": "/workspace/depthgate2-adapted/src/compiler/transformers/esDecorators.ts:922:62",
+    "owning_units": [
+      "/workspace/depthgate2-adapted/src/compiler/transformers/esDecorators.ts:296:1"
+    ],
+    "event_count": 1
+  },
+  {
+    "id": "S098",
+    "group": "G37",
+    "S": "ClassDeclaration",
+    "T": "SourceMapRange",
+    "P": "source",
+    "depth": 0,
+    "kind": "Refused",
+    "measurement": "measured on a checker-clean entry-root program",
+    "phase": "refusal_scan",
+    "reason": "optional property source in SourceMapRange absent from structural source ClassDeclaration, which can hide fields",
+    "root_kind": "",
+    "text": "/workspace/depthgate2-adapted/src/compiler/transformers/esnext.ts:539:43: Adamic 0.1 refuses optional property source in SourceMapRange absent from structural source ClassDeclaration, which can hide fields; declare source on the source type, or build a fresh object with known fields (adamic/no-optional-widening)",
+    "unit": "/workspace/depthgate2-adapted/src/compiler/transformers/esnext.ts:72:1",
+    "where": "/workspace/depthgate2-adapted/src/compiler/transformers/esnext.ts:539:43",
+    "owning_units": [
+      "/workspace/depthgate2-adapted/src/compiler/transformers/esnext.ts:72:1"
+    ],
+    "event_count": 1
+  },
+  {
+    "id": "S099",
+    "group": "G19",
+    "S": "VariableStatement",
+    "T": "SourceMapRange",
+    "P": "source",
+    "depth": 0,
+    "kind": "Refused",
+    "measurement": "measured on a checker-clean entry-root program",
+    "phase": "refusal_scan",
+    "reason": "optional property source in SourceMapRange absent from structural source VariableStatement, which can hide fields",
+    "root_kind": "",
+    "text": "/workspace/depthgate2-adapted/src/compiler/transformers/esnext.ts:596:42: Adamic 0.1 refuses optional property source in SourceMapRange absent from structural source VariableStatement, which can hide fields; declare source on the source type, or build a fresh object with known fields (adamic/no-optional-widening)",
+    "unit": "/workspace/depthgate2-adapted/src/compiler/transformers/esnext.ts:72:1",
+    "where": "/workspace/depthgate2-adapted/src/compiler/transformers/esnext.ts:596:42",
+    "owning_units": [
+      "/workspace/depthgate2-adapted/src/compiler/transformers/esnext.ts:72:1"
+    ],
+    "event_count": 1
+  },
+  {
+    "id": "S100",
+    "group": "G18",
+    "S": "VariableDeclaration",
+    "T": "SourceMapRange",
+    "P": "source",
+    "depth": 0,
+    "kind": "Refused",
+    "measurement": "measured on a checker-clean entry-root program",
+    "phase": "refusal_scan",
+    "reason": "optional property source in SourceMapRange absent from structural source VariableDeclaration, which can hide fields",
+    "root_kind": "",
+    "text": "/workspace/depthgate2-adapted/src/compiler/transformers/esnext.ts:617:39: Adamic 0.1 refuses optional property source in SourceMapRange absent from structural source VariableDeclaration, which can hide fields; declare source on the source type, or build a fresh object with known fields (adamic/no-optional-widening)",
+    "unit": "/workspace/depthgate2-adapted/src/compiler/transformers/esnext.ts:72:1",
+    "where": "/workspace/depthgate2-adapted/src/compiler/transformers/esnext.ts:617:39",
+    "owning_units": [
+      "/workspace/depthgate2-adapted/src/compiler/transformers/esnext.ts:72:1"
+    ],
+    "event_count": 1
+  },
+  {
+    "id": "S101",
+    "group": "G36",
+    "S": "ArrayBindingPattern",
+    "T": "SourceMapRange",
+    "P": "source",
+    "depth": 0,
+    "kind": "Refused",
+    "measurement": "measured on a checker-clean entry-root program",
+    "phase": "refusal_scan",
+    "reason": "optional property source in SourceMapRange absent from structural source ArrayBindingPattern, which can hide fields",
+    "root_kind": "",
+    "text": "/workspace/depthgate2-adapted/src/compiler/transformers/generators.ts:1389:79: Adamic 0.1 refuses optional property source in SourceMapRange absent from structural source ArrayBindingPattern, which can hide fields; declare source on the source type, or build a fresh object with known fields (adamic/no-optional-widening)",
+    "unit": "/workspace/depthgate2-adapted/src/compiler/transformers/generators.ts:337:1",
+    "where": "/workspace/depthgate2-adapted/src/compiler/transformers/generators.ts:1389:79",
+    "owning_units": [
+      "/workspace/depthgate2-adapted/src/compiler/transformers/generators.ts:337:1"
+    ],
+    "event_count": 1
+  },
+  {
+    "id": "S102",
+    "group": "G39",
+    "S": "InitializedVariableDeclaration",
+    "T": "SourceMapRange",
+    "P": "source",
+    "depth": 0,
+    "kind": "Refused",
+    "measurement": "measured on a checker-clean entry-root program",
+    "phase": "refusal_scan",
+    "reason": "optional property source in SourceMapRange absent from structural source InitializedVariableDeclaration, which can hide fields",
+    "root_kind": "",
+    "text": "/workspace/depthgate2-adapted/src/compiler/transformers/generators.ts:1392:13: Adamic 0.1 refuses optional property source in SourceMapRange absent from structural source InitializedVariableDeclaration, which can hide fields; declare source on the source type, or build a fresh object with known fields (adamic/no-optional-widening)",
+    "unit": "/workspace/depthgate2-adapted/src/compiler/transformers/generators.ts:337:1",
+    "where": "/workspace/depthgate2-adapted/src/compiler/transformers/generators.ts:1392:13",
+    "owning_units": [
+      "/workspace/depthgate2-adapted/src/compiler/transformers/generators.ts:337:1"
+    ],
+    "event_count": 1
+  },
+  {
+    "id": "S103",
+    "group": "G04",
+    "S": "Identifier",
+    "T": "SourceMapRange",
+    "P": "source",
+    "depth": 0,
+    "kind": "Refused",
+    "measurement": "measured on a checker-clean entry-root program",
+    "phase": "refusal_scan",
+    "reason": "optional property source in SourceMapRange absent from structural source Identifier, which can hide fields",
+    "root_kind": "",
+    "text": "/workspace/depthgate2-adapted/src/compiler/transformers/generators.ts:2076:50: Adamic 0.1 refuses optional property source in SourceMapRange absent from structural source Identifier, which can hide fields; declare source on the source type, or build a fresh object with known fields (adamic/no-optional-widening)",
+    "unit": "/workspace/depthgate2-adapted/src/compiler/transformers/generators.ts:337:1",
+    "where": "/workspace/depthgate2-adapted/src/compiler/transformers/generators.ts:2076:50",
+    "owning_units": [
+      "/workspace/depthgate2-adapted/src/compiler/transformers/generators.ts:337:1"
+    ],
+    "event_count": 1
+  },
+  {
+    "id": "S104",
+    "group": "G19",
+    "S": "VariableStatement",
+    "T": "SourceMapRange",
+    "P": "source",
+    "depth": 0,
+    "kind": "Refused",
+    "measurement": "measured on a checker-clean entry-root program",
+    "phase": "refusal_scan",
+    "reason": "optional property source in SourceMapRange absent from structural source VariableStatement, which can hide fields",
+    "root_kind": "",
+    "text": "/workspace/depthgate2-adapted/src/compiler/transformers/generators.ts:751:17: Adamic 0.1 refuses optional property source in SourceMapRange absent from structural source VariableStatement, which can hide fields; declare source on the source type, or build a fresh object with known fields (adamic/no-optional-widening)",
+    "unit": "/workspace/depthgate2-adapted/src/compiler/transformers/generators.ts:337:1",
+    "where": "/workspace/depthgate2-adapted/src/compiler/transformers/generators.ts:751:17",
+    "owning_units": [
+      "/workspace/depthgate2-adapted/src/compiler/transformers/generators.ts:337:1"
+    ],
+    "event_count": 1
+  },
+  {
+    "id": "S105",
+    "group": "G01",
+    "S": "TextRange",
+    "T": "SourceMapRange",
+    "P": "source",
+    "depth": 0,
+    "kind": "Refused",
+    "measurement": "measured on a checker-clean entry-root program",
+    "phase": "refusal_scan",
+    "reason": "optional property source in SourceMapRange absent from structural source TextRange, which can hide fields",
+    "root_kind": "",
+    "text": "/workspace/depthgate2-adapted/src/compiler/transformers/legacyDecorators.ts:434:40: Adamic 0.1 refuses optional property source in SourceMapRange absent from structural source TextRange, which can hide fields; declare source on the source type, or build a fresh object with known fields (adamic/no-optional-widening)",
+    "unit": "/workspace/depthgate2-adapted/src/compiler/transformers/legacyDecorators.ts:89:1",
+    "where": "/workspace/depthgate2-adapted/src/compiler/transformers/legacyDecorators.ts:434:40",
+    "owning_units": [
+      "/workspace/depthgate2-adapted/src/compiler/transformers/legacyDecorators.ts:89:1"
+    ],
+    "event_count": 1
+  },
+  {
+    "id": "S106",
+    "group": "G01",
+    "S": "TextRange",
+    "T": "SourceMapRange",
+    "P": "source",
+    "depth": 0,
+    "kind": "Refused",
+    "measurement": "measured on a checker-clean entry-root program",
+    "phase": "refusal_scan",
+    "reason": "optional property source in SourceMapRange absent from structural source TextRange, which can hide fields",
+    "root_kind": "",
+    "text": "/workspace/depthgate2-adapted/src/compiler/transformers/legacyDecorators.ts:516:40: Adamic 0.1 refuses optional property source in SourceMapRange absent from structural source TextRange, which can hide fields; declare source on the source type, or build a fresh object with known fields (adamic/no-optional-widening)",
+    "unit": "/workspace/depthgate2-adapted/src/compiler/transformers/legacyDecorators.ts:89:1",
+    "where": "/workspace/depthgate2-adapted/src/compiler/transformers/legacyDecorators.ts:516:40",
+    "owning_units": [
+      "/workspace/depthgate2-adapted/src/compiler/transformers/legacyDecorators.ts:89:1"
+    ],
+    "event_count": 1
+  },
+  {
+    "id": "S107",
+    "group": "G01",
+    "S": "TextRange",
+    "T": "SourceMapRange",
+    "P": "source",
+    "depth": 0,
+    "kind": "Refused",
+    "measurement": "measured on a checker-clean entry-root program",
+    "phase": "refusal_scan",
+    "reason": "optional property source in SourceMapRange absent from structural source TextRange, which can hide fields",
+    "root_kind": "",
+    "text": "/workspace/depthgate2-adapted/src/compiler/transformers/legacyDecorators.ts:659:35: Adamic 0.1 refuses optional property source in SourceMapRange absent from structural source TextRange, which can hide fields; declare source on the source type, or build a fresh object with known fields (adamic/no-optional-widening)",
+    "unit": "/workspace/depthgate2-adapted/src/compiler/transformers/legacyDecorators.ts:89:1",
+    "where": "/workspace/depthgate2-adapted/src/compiler/transformers/legacyDecorators.ts:659:35",
+    "owning_units": [
+      "/workspace/depthgate2-adapted/src/compiler/transformers/legacyDecorators.ts:89:1"
+    ],
+    "event_count": 1
+  },
+  {
+    "id": "S108",
+    "group": "G01",
+    "S": "TextRange",
+    "T": "SourceMapRange",
+    "P": "source",
+    "depth": 0,
+    "kind": "Refused",
+    "measurement": "measured on a checker-clean entry-root program",
+    "phase": "refusal_scan",
+    "reason": "optional property source in SourceMapRange absent from structural source TextRange, which can hide fields",
+    "root_kind": "",
+    "text": "/workspace/depthgate2-adapted/src/compiler/transformers/legacyDecorators.ts:697:39: Adamic 0.1 refuses optional property source in SourceMapRange absent from structural source TextRange, which can hide fields; declare source on the source type, or build a fresh object with known fields (adamic/no-optional-widening)",
+    "unit": "/workspace/depthgate2-adapted/src/compiler/transformers/legacyDecorators.ts:89:1",
+    "where": "/workspace/depthgate2-adapted/src/compiler/transformers/legacyDecorators.ts:697:39",
+    "owning_units": [
+      "/workspace/depthgate2-adapted/src/compiler/transformers/legacyDecorators.ts:89:1"
+    ],
+    "event_count": 1
+  },
+  {
+    "id": "S109",
+    "group": "G04",
+    "S": "Identifier",
+    "T": "SourceMapRange",
+    "P": "source",
+    "depth": 0,
+    "kind": "Refused",
+    "measurement": "measured on a checker-clean entry-root program",
+    "phase": "refusal_scan",
+    "reason": "optional property source in SourceMapRange absent from structural source Identifier, which can hide fields",
+    "root_kind": "",
+    "text": "/workspace/depthgate2-adapted/src/compiler/transformers/legacyDecorators.ts:835:50: Adamic 0.1 refuses optional property source in SourceMapRange absent from structural source Identifier, which can hide fields; declare source on the source type, or build a fresh object with known fields (adamic/no-optional-widening)",
+    "unit": "/workspace/depthgate2-adapted/src/compiler/transformers/legacyDecorators.ts:89:1",
+    "where": "/workspace/depthgate2-adapted/src/compiler/transformers/legacyDecorators.ts:835:50",
+    "owning_units": [
+      "/workspace/depthgate2-adapted/src/compiler/transformers/legacyDecorators.ts:89:1"
+    ],
+    "event_count": 1
+  },
+  {
+    "id": "S110",
+    "group": "G04",
+    "S": "Identifier",
+    "T": "SourceMapRange",
+    "P": "source",
+    "depth": 0,
+    "kind": "Refused",
+    "measurement": "measured on a checker-clean entry-root program",
+    "phase": "refusal_scan",
+    "reason": "optional property source in SourceMapRange absent from structural source Identifier, which can hide fields",
+    "root_kind": "",
+    "text": "/workspace/depthgate2-adapted/src/compiler/transformers/namedEvaluation.ts:205:68: Adamic 0.1 refuses optional property source in SourceMapRange absent from structural source Identifier, which can hide fields; declare source on the source type, or build a fresh object with known fields (adamic/no-optional-widening)",
+    "unit": "/workspace/depthgate2-adapted/src/compiler/transformers/namedEvaluation.ts:179:1",
+    "where": "/workspace/depthgate2-adapted/src/compiler/transformers/namedEvaluation.ts:205:68",
+    "owning_units": [
+      "/workspace/depthgate2-adapted/src/compiler/transformers/namedEvaluation.ts:179:1"
+    ],
+    "event_count": 1
+  },
+  {
+    "id": "S111",
+    "group": "G01",
+    "S": "TextRange",
+    "T": "SourceMapRange",
+    "P": "source",
+    "depth": 0,
+    "kind": "Refused",
+    "measurement": "measured on a checker-clean entry-root program",
+    "phase": "refusal_scan",
+    "reason": "optional property source in SourceMapRange absent from structural source TextRange, which can hide fields",
+    "root_kind": "",
+    "text": "/workspace/depthgate2-adapted/src/compiler/transformers/ts.ts:1625:40: Adamic 0.1 refuses optional property source in SourceMapRange absent from structural source TextRange, which can hide fields; declare source on the source type, or build a fresh object with known fields (adamic/no-optional-widening)",
+    "unit": "/workspace/depthgate2-adapted/src/compiler/transformers/ts.ts:236:1",
+    "where": "/workspace/depthgate2-adapted/src/compiler/transformers/ts.ts:1625:40",
+    "owning_units": [
+      "/workspace/depthgate2-adapted/src/compiler/transformers/ts.ts:236:1"
+    ],
+    "event_count": 1
+  },
+  {
+    "id": "S112",
+    "group": "G38",
+    "S": "EnumDeclaration",
+    "T": "SourceMapRange",
+    "P": "source",
+    "depth": 0,
+    "kind": "Refused",
+    "measurement": "measured on a checker-clean entry-root program",
+    "phase": "refusal_scan",
+    "reason": "optional property source in SourceMapRange absent from structural source EnumDeclaration, which can hide fields",
+    "root_kind": "",
+    "text": "/workspace/depthgate2-adapted/src/compiler/transformers/ts.ts:2038:62: Adamic 0.1 refuses optional property source in SourceMapRange absent from structural source EnumDeclaration, which can hide fields; declare source on the source type, or build a fresh object with known fields (adamic/no-optional-widening)",
+    "unit": "/workspace/depthgate2-adapted/src/compiler/transformers/ts.ts:236:1",
+    "where": "/workspace/depthgate2-adapted/src/compiler/transformers/ts.ts:2038:62",
+    "owning_units": [
+      "/workspace/depthgate2-adapted/src/compiler/transformers/ts.ts:236:1"
+    ],
+    "event_count": 1
+  },
+  {
+    "id": "S113",
+    "group": "G40",
+    "S": "ModuleDeclaration",
+    "T": "SourceMapRange",
+    "P": "source",
+    "depth": 0,
+    "kind": "Refused",
+    "measurement": "measured on a checker-clean entry-root program",
+    "phase": "refusal_scan",
+    "reason": "optional property source in SourceMapRange absent from structural source ModuleDeclaration, which can hide fields",
+    "root_kind": "",
+    "text": "/workspace/depthgate2-adapted/src/compiler/transformers/ts.ts:2041:46: Adamic 0.1 refuses optional property source in SourceMapRange absent from structural source ModuleDeclaration, which can hide fields; declare source on the source type, or build a fresh object with known fields (adamic/no-optional-widening)",
+    "unit": "/workspace/depthgate2-adapted/src/compiler/transformers/ts.ts:236:1",
+    "where": "/workspace/depthgate2-adapted/src/compiler/transformers/ts.ts:2041:46",
+    "owning_units": [
+      "/workspace/depthgate2-adapted/src/compiler/transformers/ts.ts:236:1"
+    ],
+    "event_count": 1
+  },
+  {
+    "id": "S114",
+    "group": "G01",
+    "S": "TextRange",
+    "T": "SourceMapRange",
+    "P": "source",
+    "depth": 0,
+    "kind": "Refused",
+    "measurement": "measured on a checker-clean entry-root program",
+    "phase": "refusal_scan",
+    "reason": "optional property source in SourceMapRange absent from structural source TextRange, which can hide fields",
+    "root_kind": "",
+    "text": "/workspace/depthgate2-adapted/src/compiler/transformers/ts.ts:2528:39: Adamic 0.1 refuses optional property source in SourceMapRange absent from structural source TextRange, which can hide fields; declare source on the source type, or build a fresh object with known fields (adamic/no-optional-widening)",
+    "unit": "/workspace/depthgate2-adapted/src/compiler/transformers/ts.ts:236:1",
+    "where": "/workspace/depthgate2-adapted/src/compiler/transformers/ts.ts:2528:39",
+    "owning_units": [
+      "/workspace/depthgate2-adapted/src/compiler/transformers/ts.ts:236:1"
+    ],
+    "event_count": 1
+  },
+  {
+    "id": "S115",
+    "group": "G01",
+    "S": "TextRange",
+    "T": "SourceMapRange",
+    "P": "source",
+    "depth": 0,
+    "kind": "Refused",
+    "measurement": "measured on a checker-clean entry-root program",
+    "phase": "refusal_scan",
+    "reason": "optional property source in SourceMapRange absent from structural source TextRange, which can hide fields",
+    "root_kind": "",
+    "text": "/workspace/depthgate2-adapted/src/compiler/transformers/ts.ts:2531:38: Adamic 0.1 refuses optional property source in SourceMapRange absent from structural source TextRange, which can hide fields; declare source on the source type, or build a fresh object with known fields (adamic/no-optional-widening)",
+    "unit": "/workspace/depthgate2-adapted/src/compiler/transformers/ts.ts:236:1",
+    "where": "/workspace/depthgate2-adapted/src/compiler/transformers/ts.ts:2531:38",
+    "owning_units": [
+      "/workspace/depthgate2-adapted/src/compiler/transformers/ts.ts:236:1"
+    ],
+    "event_count": 1
+  },
+  {
+    "id": "S116",
+    "group": "G04",
+    "S": "Identifier",
+    "T": "SourceMapRange",
+    "P": "source",
+    "depth": 0,
+    "kind": "Refused",
+    "measurement": "measured on a checker-clean entry-root program",
+    "phase": "refusal_scan",
+    "reason": "optional property source in SourceMapRange absent from structural source Identifier, which can hide fields",
+    "root_kind": "",
+    "text": "/workspace/depthgate2-adapted/src/compiler/transformers/ts.ts:2564:33: Adamic 0.1 refuses optional property source in SourceMapRange absent from structural source Identifier, which can hide fields; declare source on the source type, or build a fresh object with known fields (adamic/no-optional-widening)",
+    "unit": "/workspace/depthgate2-adapted/src/compiler/transformers/ts.ts:236:1",
+    "where": "/workspace/depthgate2-adapted/src/compiler/transformers/ts.ts:2564:33",
+    "owning_units": [
+      "/workspace/depthgate2-adapted/src/compiler/transformers/ts.ts:236:1"
+    ],
+    "event_count": 1
+  },
+  {
+    "id": "S117",
+    "group": "G01",
+    "S": "TextRange",
+    "T": "SourceMapRange",
+    "P": "source",
+    "depth": 0,
+    "kind": "Refused",
+    "measurement": "measured on a checker-clean entry-root program",
+    "phase": "refusal_scan",
+    "reason": "optional property source in SourceMapRange absent from structural source TextRange, which can hide fields",
+    "root_kind": "",
+    "text": "/workspace/depthgate2-adapted/src/compiler/transformers/ts.ts:994:45: Adamic 0.1 refuses optional property source in SourceMapRange absent from structural source TextRange, which can hide fields; declare source on the source type, or build a fresh object with known fields (adamic/no-optional-widening)",
+    "unit": "/workspace/depthgate2-adapted/src/compiler/transformers/ts.ts:236:1",
+    "where": "/workspace/depthgate2-adapted/src/compiler/transformers/ts.ts:994:45",
+    "owning_units": [
+      "/workspace/depthgate2-adapted/src/compiler/transformers/ts.ts:236:1"
+    ],
+    "event_count": 1
+  },
+  {
+    "id": "S118",
+    "group": "G09",
+    "S": "SolutionBuilderHost<T>",
+    "T": "ModuleResolutionHost",
+    "P": "getGlobalTypingsCacheLocation",
+    "depth": 0,
+    "kind": "Refused",
+    "measurement": "measured on a checker-clean entry-root program",
+    "phase": "refusal_scan",
+    "reason": "optional property getGlobalTypingsCacheLocation in ModuleResolutionHost absent from structural source SolutionBuilderHost<T>, which can hide fields",
+    "root_kind": "",
+    "text": "/workspace/depthgate2-adapted/src/compiler/tsbuildPublic.ts:454:17: Adamic 0.1 refuses optional property getGlobalTypingsCacheLocation in ModuleResolutionHost absent from structural source SolutionBuilderHost<T>, which can hide fields; declare getGlobalTypingsCacheLocation on the source type, or build a fresh object with known fields (adamic/no-optional-widening)",
+    "unit": "/workspace/depthgate2-adapted/src/compiler/tsbuildPublic.ts:428:1",
+    "where": "/workspace/depthgate2-adapted/src/compiler/tsbuildPublic.ts:454:17",
+    "owning_units": [
+      "/workspace/depthgate2-adapted/src/compiler/tsbuildPublic.ts:428:1"
+    ],
+    "event_count": 1
+  },
+  {
+    "id": "S119",
+    "group": "G09",
+    "S": "SolutionBuilderHost<T>",
+    "T": "ModuleResolutionHost",
+    "P": "getGlobalTypingsCacheLocation",
+    "depth": 0,
+    "kind": "Refused",
+    "measurement": "measured on a checker-clean entry-root program",
+    "phase": "refusal_scan",
+    "reason": "optional property getGlobalTypingsCacheLocation in ModuleResolutionHost absent from structural source SolutionBuilderHost<T>, which can hide fields",
+    "root_kind": "",
+    "text": "/workspace/depthgate2-adapted/src/compiler/tsbuildPublic.ts:476:17: Adamic 0.1 refuses optional property getGlobalTypingsCacheLocation in ModuleResolutionHost absent from structural source SolutionBuilderHost<T>, which can hide fields; declare getGlobalTypingsCacheLocation on the source type, or build a fresh object with known fields (adamic/no-optional-widening)",
+    "unit": "/workspace/depthgate2-adapted/src/compiler/tsbuildPublic.ts:428:1",
+    "where": "/workspace/depthgate2-adapted/src/compiler/tsbuildPublic.ts:476:17",
+    "owning_units": [
+      "/workspace/depthgate2-adapted/src/compiler/tsbuildPublic.ts:428:1"
+    ],
+    "event_count": 1
+  },
+  {
+    "id": "S120",
+    "group": "G09",
+    "S": "SolutionBuilderHost<T>",
+    "T": "ModuleResolutionHost",
+    "P": "getGlobalTypingsCacheLocation",
+    "depth": 0,
+    "kind": "Refused",
+    "measurement": "measured on a checker-clean entry-root program",
+    "phase": "refusal_scan",
+    "reason": "optional property getGlobalTypingsCacheLocation in ModuleResolutionHost absent from structural source SolutionBuilderHost<T>, which can hide fields",
+    "root_kind": "",
+    "text": "/workspace/depthgate2-adapted/src/compiler/tsbuildPublic.ts:490:17: Adamic 0.1 refuses optional property getGlobalTypingsCacheLocation in ModuleResolutionHost absent from structural source SolutionBuilderHost<T>, which can hide fields; declare getGlobalTypingsCacheLocation on the source type, or build a fresh object with known fields (adamic/no-optional-widening)",
+    "unit": "/workspace/depthgate2-adapted/src/compiler/tsbuildPublic.ts:428:1",
+    "where": "/workspace/depthgate2-adapted/src/compiler/tsbuildPublic.ts:490:17",
+    "owning_units": [
+      "/workspace/depthgate2-adapted/src/compiler/tsbuildPublic.ts:428:1"
+    ],
+    "event_count": 1
+  },
+  {
+    "id": "S121",
+    "group": "G28",
+    "S": "SolutionBuilderHost<T>",
+    "T": "ProgramHost<T> & { onUnRecoverableConfigFileDiagnostic?: DiagnosticReporter; }",
+    "P": "onUnRecoverableConfigFileDiagnostic",
+    "depth": 0,
+    "kind": "Refused",
+    "measurement": "measured on a checker-clean entry-root program",
+    "phase": "refusal_scan",
+    "reason": "optional property onUnRecoverableConfigFileDiagnostic in ProgramHost<T> & { onUnRecoverableConfigFileDiagnostic?: DiagnosticReporter; } absent from structural source SolutionBuilderHost<T>, which can hide fields",
+    "root_kind": "",
+    "text": "/workspace/depthgate2-adapted/src/compiler/tsbuildPublic.ts:501:66: Adamic 0.1 refuses optional property onUnRecoverableConfigFileDiagnostic in ProgramHost<T> & { onUnRecoverableConfigFileDiagnostic?: DiagnosticReporter; } absent from structural source SolutionBuilderHost<T>, which can hide fields; declare onUnRecoverableConfigFileDiagnostic on the source type, or build a fresh object with known fields (adamic/no-optional-widening)",
+    "unit": "/workspace/depthgate2-adapted/src/compiler/tsbuildPublic.ts:428:1",
+    "where": "/workspace/depthgate2-adapted/src/compiler/tsbuildPublic.ts:501:66",
+    "owning_units": [
+      "/workspace/depthgate2-adapted/src/compiler/tsbuildPublic.ts:428:1"
+    ],
+    "event_count": 1
+  },
+  {
+    "id": "S122",
+    "group": "G02",
+    "S": "SourceFile",
+    "T": "SourceFileLike",
+    "P": "getPositionOfLineAndCharacter",
+    "depth": 0,
+    "kind": "Refused",
+    "measurement": "measured on a checker-clean entry-root program",
+    "phase": "refusal_scan",
+    "reason": "optional property getPositionOfLineAndCharacter in SourceFileLike absent from structural source SourceFile, which can hide fields",
+    "root_kind": "",
+    "text": "/workspace/depthgate2-adapted/src/compiler/utilities.ts:1261:24: Adamic 0.1 refuses optional property getPositionOfLineAndCharacter in SourceFileLike absent from structural source SourceFile, which can hide fields; declare getPositionOfLineAndCharacter on the source type, or build a fresh object with known fields (adamic/no-optional-widening)",
+    "unit": "/workspace/depthgate2-adapted/src/compiler/utilities.ts:1240:1",
+    "where": "/workspace/depthgate2-adapted/src/compiler/utilities.ts:1261:24",
+    "owning_units": [
+      "/workspace/depthgate2-adapted/src/compiler/utilities.ts:1240:1"
+    ],
+    "event_count": 1
+  },
+  {
+    "id": "S123",
+    "group": "G02",
+    "S": "SourceFile",
+    "T": "SourceFileLike",
+    "P": "getPositionOfLineAndCharacter",
+    "depth": 0,
+    "kind": "Refused",
+    "measurement": "measured on a checker-clean entry-root program",
+    "phase": "refusal_scan",
+    "reason": "optional property getPositionOfLineAndCharacter in SourceFileLike absent from structural source SourceFile, which can hide fields",
+    "root_kind": "",
+    "text": "/workspace/depthgate2-adapted/src/compiler/utilities.ts:2532:70: Adamic 0.1 refuses optional property getPositionOfLineAndCharacter in SourceFileLike absent from structural source SourceFile, which can hide fields; declare getPositionOfLineAndCharacter on the source type, or build a fresh object with known fields (adamic/no-optional-widening)",
+    "unit": "/workspace/depthgate2-adapted/src/compiler/utilities.ts:2524:1",
+    "where": "/workspace/depthgate2-adapted/src/compiler/utilities.ts:2532:70",
+    "owning_units": [
+      "/workspace/depthgate2-adapted/src/compiler/utilities.ts:2524:1"
+    ],
+    "event_count": 1
+  },
+  {
+    "id": "S124",
+    "group": "G02",
+    "S": "SourceFile",
+    "T": "SourceFileLike",
+    "P": "getPositionOfLineAndCharacter",
+    "depth": 0,
+    "kind": "Refused",
+    "measurement": "measured on a checker-clean entry-root program",
+    "phase": "refusal_scan",
+    "reason": "optional property getPositionOfLineAndCharacter in SourceFileLike absent from structural source SourceFile, which can hide fields",
+    "root_kind": "",
+    "text": "/workspace/depthgate2-adapted/src/compiler/utilities.ts:7945:37: Adamic 0.1 refuses optional property getPositionOfLineAndCharacter in SourceFileLike absent from structural source SourceFile, which can hide fields; declare getPositionOfLineAndCharacter on the source type, or build a fresh object with known fields (adamic/no-optional-widening)",
+    "unit": "/workspace/depthgate2-adapted/src/compiler/utilities.ts:7943:1",
+    "where": "/workspace/depthgate2-adapted/src/compiler/utilities.ts:7945:37",
+    "owning_units": [
+      "/workspace/depthgate2-adapted/src/compiler/utilities.ts:7943:1"
+    ],
+    "event_count": 1
+  },
+  {
+    "id": "S125",
+    "group": "G02",
+    "S": "SourceFile",
+    "T": "SourceFileLike",
+    "P": "getPositionOfLineAndCharacter",
+    "depth": 0,
+    "kind": "Refused",
+    "measurement": "measured on a checker-clean entry-root program",
+    "phase": "refusal_scan",
+    "reason": "optional property getPositionOfLineAndCharacter in SourceFileLike absent from structural source SourceFile, which can hide fields",
+    "root_kind": "",
+    "text": "/workspace/depthgate2-adapted/src/compiler/utilities.ts:7950:37: Adamic 0.1 refuses optional property getPositionOfLineAndCharacter in SourceFileLike absent from structural source SourceFile, which can hide fields; declare getPositionOfLineAndCharacter on the source type, or build a fresh object with known fields (adamic/no-optional-widening)",
+    "unit": "/workspace/depthgate2-adapted/src/compiler/utilities.ts:7949:1",
+    "where": "/workspace/depthgate2-adapted/src/compiler/utilities.ts:7950:37",
+    "owning_units": [
+      "/workspace/depthgate2-adapted/src/compiler/utilities.ts:7949:1"
+    ],
+    "event_count": 1
+  },
+  {
+    "id": "S126",
+    "group": "G02",
+    "S": "SourceFile",
+    "T": "SourceFileLike",
+    "P": "getPositionOfLineAndCharacter",
+    "depth": 0,
+    "kind": "Refused",
+    "measurement": "measured on a checker-clean entry-root program",
+    "phase": "refusal_scan",
+    "reason": "optional property getPositionOfLineAndCharacter in SourceFileLike absent from structural source SourceFile, which can hide fields",
+    "root_kind": "",
+    "text": "/workspace/depthgate2-adapted/src/compiler/utilities.ts:7960:37: Adamic 0.1 refuses optional property getPositionOfLineAndCharacter in SourceFileLike absent from structural source SourceFile, which can hide fields; declare getPositionOfLineAndCharacter on the source type, or build a fresh object with known fields (adamic/no-optional-widening)",
+    "unit": "/workspace/depthgate2-adapted/src/compiler/utilities.ts:7959:1",
+    "where": "/workspace/depthgate2-adapted/src/compiler/utilities.ts:7960:37",
+    "owning_units": [
+      "/workspace/depthgate2-adapted/src/compiler/utilities.ts:7959:1"
+    ],
+    "event_count": 1
+  },
+  {
+    "id": "S127",
+    "group": "G02",
+    "S": "SourceFile",
+    "T": "SourceFileLike",
+    "P": "getPositionOfLineAndCharacter",
+    "depth": 0,
+    "kind": "Refused",
+    "measurement": "measured on a checker-clean entry-root program",
+    "phase": "refusal_scan",
+    "reason": "optional property getPositionOfLineAndCharacter in SourceFileLike absent from structural source SourceFile, which can hide fields",
+    "root_kind": "",
+    "text": "/workspace/depthgate2-adapted/src/compiler/utilities.ts:7972:37: Adamic 0.1 refuses optional property getPositionOfLineAndCharacter in SourceFileLike absent from structural source SourceFile, which can hide fields; declare getPositionOfLineAndCharacter on the source type, or build a fresh object with known fields (adamic/no-optional-widening)",
+    "unit": "/workspace/depthgate2-adapted/src/compiler/utilities.ts:7969:1",
+    "where": "/workspace/depthgate2-adapted/src/compiler/utilities.ts:7972:37",
+    "owning_units": [
+      "/workspace/depthgate2-adapted/src/compiler/utilities.ts:7969:1"
+    ],
+    "event_count": 1
+  },
+  {
+    "id": "S128",
+    "group": "G02",
+    "S": "SourceFile",
+    "T": "SourceFileLike",
+    "P": "getPositionOfLineAndCharacter",
+    "depth": 0,
+    "kind": "Refused",
+    "measurement": "measured on a checker-clean entry-root program",
+    "phase": "refusal_scan",
+    "reason": "optional property getPositionOfLineAndCharacter in SourceFileLike absent from structural source SourceFile, which can hide fields",
+    "root_kind": "",
+    "text": "/workspace/depthgate2-adapted/src/compiler/utilities.ts:7978:37: Adamic 0.1 refuses optional property getPositionOfLineAndCharacter in SourceFileLike absent from structural source SourceFile, which can hide fields; declare getPositionOfLineAndCharacter on the source type, or build a fresh object with known fields (adamic/no-optional-widening)",
+    "unit": "/workspace/depthgate2-adapted/src/compiler/utilities.ts:7976:1",
+    "where": "/workspace/depthgate2-adapted/src/compiler/utilities.ts:7978:37",
+    "owning_units": [
+      "/workspace/depthgate2-adapted/src/compiler/utilities.ts:7976:1"
+    ],
+    "event_count": 1
+  },
+  {
+    "id": "S129",
+    "group": "G08",
+    "S": "DiagnosticRelatedInformation",
+    "T": "DiagnosticReadView",
+    "P": "reportsUnnecessary",
+    "depth": 0,
+    "kind": "Refused",
+    "measurement": "measured on a checker-clean entry-root program",
+    "phase": "refusal_scan",
+    "reason": "optional property reportsUnnecessary in DiagnosticReadView absent from structural source DiagnosticRelatedInformation, which can hide fields",
+    "root_kind": "",
+    "text": "/workspace/depthgate2-adapted/src/compiler/utilities.ts:8809:39: Adamic 0.1 refuses optional property reportsUnnecessary in DiagnosticReadView absent from structural source DiagnosticRelatedInformation, which can hide fields; declare reportsUnnecessary on the source type, or build a fresh object with known fields (adamic/no-optional-widening)",
+    "unit": "/workspace/depthgate2-adapted/src/compiler/utilities.ts:8802:1",
+    "where": "/workspace/depthgate2-adapted/src/compiler/utilities.ts:8809:39",
+    "owning_units": [
+      "/workspace/depthgate2-adapted/src/compiler/utilities.ts:8802:1"
+    ],
+    "event_count": 1
+  },
+  {
+    "id": "S130",
+    "group": "G08",
+    "S": "DiagnosticRelatedInformation",
+    "T": "DiagnosticReadView",
+    "P": "reportsUnnecessary",
+    "depth": 0,
+    "kind": "Refused",
+    "measurement": "measured on a checker-clean entry-root program",
+    "phase": "refusal_scan",
+    "reason": "optional property reportsUnnecessary in DiagnosticReadView absent from structural source DiagnosticRelatedInformation, which can hide fields",
+    "root_kind": "",
+    "text": "/workspace/depthgate2-adapted/src/compiler/utilities.ts:8809:44: Adamic 0.1 refuses optional property reportsUnnecessary in DiagnosticReadView absent from structural source DiagnosticRelatedInformation, which can hide fields; declare reportsUnnecessary on the source type, or build a fresh object with known fields (adamic/no-optional-widening)",
+    "unit": "/workspace/depthgate2-adapted/src/compiler/utilities.ts:8802:1",
+    "where": "/workspace/depthgate2-adapted/src/compiler/utilities.ts:8809:44",
+    "owning_units": [
+      "/workspace/depthgate2-adapted/src/compiler/utilities.ts:8802:1"
+    ],
+    "event_count": 1
+  },
+  {
+    "id": "S131",
+    "group": "G21",
+    "S": "IncrementalCompilationOptions",
+    "T": "IncrementalProgramOptions<EmitAndSemanticDiagnosticsBuilderProgram>",
+    "P": "createProgram",
+    "depth": 0,
+    "kind": "Refused",
+    "measurement": "measured on a checker-clean entry-root program",
+    "phase": "refusal_scan",
+    "reason": "optional property createProgram in IncrementalProgramOptions<EmitAndSemanticDiagnosticsBuilderProgram> absent from structural source IncrementalCompilationOptions, which can hide fields",
+    "root_kind": "",
+    "text": "/workspace/depthgate2-adapted/src/compiler/watch.ts:990:53: Adamic 0.1 refuses optional property createProgram in IncrementalProgramOptions<EmitAndSemanticDiagnosticsBuilderProgram> absent from structural source IncrementalCompilationOptions, which can hide fields; declare createProgram on the source type, or build a fresh object with known fields (adamic/no-optional-widening)",
+    "unit": "/workspace/depthgate2-adapted/src/compiler/watch.ts:987:1",
+    "where": "/workspace/depthgate2-adapted/src/compiler/watch.ts:990:53",
+    "owning_units": [
+      "/workspace/depthgate2-adapted/src/compiler/watch.ts:987:1"
+    ],
+    "event_count": 1
+  }
+]

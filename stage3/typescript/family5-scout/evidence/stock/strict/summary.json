@@ -1,0 +1,507 @@
+[
+  {
+    "id": "C01",
+    "groups": [
+      "G01",
+      "G04",
+      "G06",
+      "G11",
+      "G17",
+      "G18",
+      "G19",
+      "G36",
+      "G37",
+      "G38",
+      "G39",
+      "G40",
+      "G41",
+      "G42"
+    ],
+    "file": "types.ts",
+    "owner": "TextRange",
+    "member": "source?: SourceMapSource;",
+    "public": true,
+    "anchors": [
+      {
+        "owner": "TextRange",
+        "line": 28
+      }
+    ],
+    "root_count": 79,
+    "diagnostic_count": 2,
+    "diagnostics": [
+      {
+        "code": 2379,
+        "file": "src/compiler/factory/nodeFactory.ts",
+        "line": 7182,
+        "column": 25,
+        "message": "Argument of type 'Mutable<T>' is not assignable to parameter of type 'Node' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.\n  Types of property 'source' are incompatible.\n    Type 'T[\"source\"]' is not assignable to type 'SourceMapSource'.\n      Type 'SourceMapSource | undefined' is not assignable to type 'SourceMapSource'.\n        Type 'undefined' is not assignable to type 'SourceMapSource'."
+      },
+      {
+        "code": 2379,
+        "file": "src/compiler/factory/nodeFactory.ts",
+        "line": 7183,
+        "column": 26,
+        "message": "Argument of type 'Mutable<T>' is not assignable to parameter of type 'TextRange' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.\n  Types of property 'source' are incompatible.\n    Type 'T[\"source\"]' is not assignable to type 'SourceMapSource'.\n      Type 'SourceMapSource | undefined' is not assignable to type 'SourceMapSource'.\n        Type 'undefined' is not assignable to type 'SourceMapSource'."
+      }
+    ],
+    "emitted_js_byte_identical": true,
+    "original_sha256": "7ae9a509881c3da4052e06388289a8e94c269576d38a8a808d9e08425c817239",
+    "candidate_sha256": "687a5be66a602248084a150b9b214cc3e8134a06405e13541b94a4d7645215d8"
+  },
+  {
+    "id": "C02",
+    "groups": [
+      "G02"
+    ],
+    "file": "types.ts",
+    "owner": "Node",
+    "member": "/** @internal */ getPositionOfLineAndCharacter?: ((line: number, character: number, allowEdits?: true) => number) | undefined;",
+    "public": false,
+    "anchors": [
+      {
+        "owner": "Node",
+        "line": 942
+      }
+    ],
+    "root_count": 79,
+    "diagnostic_count": 0,
+    "diagnostics": [],
+    "emitted_js_byte_identical": true,
+    "original_sha256": "7ae9a509881c3da4052e06388289a8e94c269576d38a8a808d9e08425c817239",
+    "candidate_sha256": "32f9f13f13f029d50f4223800dde15b67bdb4b6a648a8ed33f9fad384d0f4b35"
+  },
+  {
+    "id": "C03",
+    "groups": [
+      "G03",
+      "G12"
+    ],
+    "file": "types.ts",
+    "owner": "Type",
+    "member": "/** @internal */ constraint?: Type;",
+    "public": false,
+    "anchors": [
+      {
+        "owner": "Type",
+        "line": 6450
+      }
+    ],
+    "root_count": 79,
+    "diagnostic_count": 0,
+    "diagnostics": [],
+    "emitted_js_byte_identical": true,
+    "original_sha256": "7ae9a509881c3da4052e06388289a8e94c269576d38a8a808d9e08425c817239",
+    "candidate_sha256": "248ce19578d9ebb84ac943a85ee1dcb57d17dfa2643bcd01185a03306ceaa35b"
+  },
+  {
+    "id": "C04",
+    "groups": [
+      "G08",
+      "G33"
+    ],
+    "file": "types.ts",
+    "owner": "DiagnosticRelatedInformation",
+    "member": "readonly reportsUnnecessary?: {} | undefined;",
+    "public": true,
+    "anchors": [
+      {
+        "owner": "DiagnosticRelatedInformation",
+        "line": 7317
+      }
+    ],
+    "root_count": 79,
+    "diagnostic_count": 0,
+    "diagnostics": [],
+    "emitted_js_byte_identical": true,
+    "original_sha256": "7ae9a509881c3da4052e06388289a8e94c269576d38a8a808d9e08425c817239",
+    "candidate_sha256": "41f6803663f16d5d09da6ea3e033032285f330c4b40e12de0d27e917952f5d35"
+  },
+  {
+    "id": "C05",
+    "groups": [
+      "G34"
+    ],
+    "file": "builder.ts",
+    "owner": "ReusableDiagnosticRelatedInformation",
+    "member": "reportsUnnecessary?: {} | undefined;",
+    "public": false,
+    "anchors": [
+      {
+        "owner": "ReusableDiagnosticRelatedInformation",
+        "line": 104
+      }
+    ],
+    "root_count": 79,
+    "diagnostic_count": 0,
+    "diagnostics": [],
+    "emitted_js_byte_identical": true,
+    "original_sha256": "e61715b93ab7e1b3ddd01744871aa182ade41bca9f6827fe1dde7bc79a332345",
+    "candidate_sha256": "059636bf4ab13f564580b134fc70edf0890f6c37ad7c13725567fcdb89cd8b0b"
+  },
+  {
+    "id": "C06",
+    "groups": [
+      "G14",
+      "G23",
+      "G24",
+      "G25"
+    ],
+    "file": "types.ts",
+    "owners": [
+      "ResolvedModuleWithFailedLookupLocations",
+      "ResolvedTypeReferenceDirectiveWithFailedLookupLocations"
+    ],
+    "member": "/** @internal */ isInvalidated?: boolean;",
+    "public": false,
+    "anchors": [
+      {
+        "owner": "ResolvedModuleWithFailedLookupLocations",
+        "line": 8118
+      },
+      {
+        "owner": "ResolvedTypeReferenceDirectiveWithFailedLookupLocations",
+        "line": 8151
+      }
+    ],
+    "root_count": 79,
+    "diagnostic_count": 0,
+    "diagnostics": [],
+    "emitted_js_byte_identical": true,
+    "original_sha256": "7ae9a509881c3da4052e06388289a8e94c269576d38a8a808d9e08425c817239",
+    "candidate_sha256": "ace17d7b7b16a6d94a8af6c249c3fa40c23e13c6eddf3fc30640336346846865"
+  },
+  {
+    "id": "C07",
+    "groups": [
+      "G35"
+    ],
+    "file": "types.ts",
+    "owner": "SourceFile",
+    "member": "/** @internal */ skipTrivia?: (pos: number) => number;",
+    "public": false,
+    "anchors": [
+      {
+        "owner": "SourceFile",
+        "line": 4326
+      }
+    ],
+    "root_count": 79,
+    "diagnostic_count": 0,
+    "diagnostics": [],
+    "emitted_js_byte_identical": true,
+    "original_sha256": "7ae9a509881c3da4052e06388289a8e94c269576d38a8a808d9e08425c817239",
+    "candidate_sha256": "de8c5a7a2722776906303ce8999047ee34c7d7146315509ec0c7b9f2097866cf"
+  },
+  {
+    "id": "C08",
+    "groups": [
+      "G05"
+    ],
+    "file": "checker.ts",
+    "replace": [
+      "{ errors?: Diagnostic[] | undefined; }",
+      "ErrorOutputContainer"
+    ],
+    "public": false,
+    "anchors": [
+      {
+        "text": "{ errors?: Diagnostic[] | undefined; }",
+        "occurrences": 5
+      }
+    ],
+    "root_count": 79,
+    "diagnostic_count": 0,
+    "diagnostics": [],
+    "emitted_js_byte_identical": true,
+    "original_sha256": "bc23b2e4c5afcf2e97dacfd2d9ca86b29fe4141d51fef6c6a5c801a67d6023a4",
+    "candidate_sha256": "dc4e63ddf305b18dd8433cea0c867653e5549be4abf463cd225825498b802916"
+  },
+  {
+    "id": "C10",
+    "groups": [
+      "G27"
+    ],
+    "file": "types.ts",
+    "owner": "CompilerHost",
+    "member": "/** @internal */ onUnRecoverableConfigFileDiagnostic?: (diagnostic: Diagnostic) => void;",
+    "public": false,
+    "anchors": [
+      {
+        "owner": "CompilerHost",
+        "line": 8164
+      }
+    ],
+    "root_count": 79,
+    "diagnostic_count": 0,
+    "diagnostics": [],
+    "emitted_js_byte_identical": true,
+    "original_sha256": "7ae9a509881c3da4052e06388289a8e94c269576d38a8a808d9e08425c817239",
+    "candidate_sha256": "d9d380cc505125d35b5a407d1f01ef3e4742a8609bbc01c824421dc6be155c4f"
+  },
+  {
+    "id": "C11",
+    "groups": [
+      "G21"
+    ],
+    "file": "watch.ts",
+    "owner": "IncrementalCompilationOptions",
+    "member": "createProgram?: import(\"./watchPublic.js\").CreateProgram<EmitAndSemanticDiagnosticsBuilderProgram>;",
+    "public": false,
+    "anchors": [
+      {
+        "owner": "IncrementalCompilationOptions",
+        "line": 974
+      }
+    ],
+    "root_count": 79,
+    "diagnostic_count": 0,
+    "diagnostics": [],
+    "emitted_js_byte_identical": true,
+    "original_sha256": "528312d6c0bab1d388e94bde20b8635ff7d2deb31a7f80b2b4fe5bb253de6934",
+    "candidate_sha256": "f2012fc4895052dd76fd41d935def2cf517de8faa37ed77ac096cab733262c2a"
+  },
+  {
+    "id": "C12",
+    "groups": [
+      "G16"
+    ],
+    "file": "moduleSpecifiers.ts",
+    "replace": [
+      "Pick<SourceFile, \"fileName\" | \"impliedNodeFormat\">",
+      "Pick<SourceFile, \"fileName\" | \"impliedNodeFormat\" | \"packageJsonScope\">"
+    ],
+    "public": false,
+    "anchors": [
+      {
+        "text": "Pick<SourceFile, \"fileName\" | \"impliedNodeFormat\">",
+        "occurrences": 2
+      }
+    ],
+    "root_count": 79,
+    "diagnostic_count": 0,
+    "diagnostics": [],
+    "emitted_js_byte_identical": true,
+    "original_sha256": "c47362305fba2170d24acf89f8e4ab97949639510fe4f4e9849a7a27ddeefccd",
+    "candidate_sha256": "17bed16d0b89c35ab360111bbde14a31139a8def8a3dca235dffe023376fa8ae"
+  },
+  {
+    "id": "C09b",
+    "groups": [
+      "G09",
+      "G28"
+    ],
+    "file": "tsbuildPublic.ts",
+    "owner": "SolutionBuilderHostBase",
+    "member": "/** @internal */ getGlobalTypingsCacheLocation?: () => string | undefined;\n    /** @internal */ onUnRecoverableConfigFileDiagnostic?: (diagnostic: Diagnostic) => void;",
+    "public": false,
+    "anchors": [
+      {
+        "owner": "SolutionBuilderHostBase",
+        "line": 215
+      }
+    ],
+    "root_count": 79,
+    "diagnostic_count": 0,
+    "diagnostics": [],
+    "emitted_js_byte_identical": true,
+    "original_sha256": "6b7ba6ae5c0f9422019a0457e600d01ec7f7b15639e3815590bf82af97cdbbae",
+    "candidate_sha256": "13842be8f439fb7965a8cec117695d15a006474ded23045e7a79bfe909c69e55"
+  },
+  {
+    "id": "C13",
+    "groups": [
+      "G43"
+    ],
+    "file": "parser.ts",
+    "replacements": [
+      [
+        "{ [index: string]: string | undefined; }",
+        "{ [index: string]: string | undefined; types?: never; }"
+      ]
+    ],
+    "public": false,
+    "anchors": [
+      {
+        "text": "{ [index: string]: string | undefined; }",
+        "occurrences": 2
+      }
+    ],
+    "root_count": 79,
+    "diagnostic_count": 0,
+    "diagnostics": [],
+    "emitted_js_byte_identical": true,
+    "original_sha256": "a8057cb4e9133a281f08c4a92b3326ec4e71148419af51e30a8dd90c3892f055",
+    "candidate_sha256": "2d139008a061e0beac8c209f5303b6b2ceac28d611e8ed5d9c2d983e344b05fb"
+  },
+  {
+    "id": "C14b",
+    "groups": [
+      "G44"
+    ],
+    "file": "parser.ts",
+    "replace": [
+      "{ [index: string]: string | { value: string; pos: number; end: number; }; }",
+      "{ [index: string]: string | { value: string; pos: number; end: number; } | undefined; types?: { value: string; pos: number; end: number; }; }"
+    ],
+    "public": false,
+    "anchors": [
+      {
+        "text": "{ [index: string]: string | { value: string; pos: number; end: number; }; }",
+        "occurrences": 1
+      }
+    ],
+    "root_count": 79,
+    "diagnostic_count": 0,
+    "diagnostics": [],
+    "emitted_js_byte_identical": true,
+    "original_sha256": "a8057cb4e9133a281f08c4a92b3326ec4e71148419af51e30a8dd90c3892f055",
+    "candidate_sha256": "5768f287d72687f8e81c5b2d10af467d8ba5114a9f886187bda8560a9476ebf7"
+  },
+  {
+    "id": "C15",
+    "groups": [
+      "G13",
+      "G22"
+    ],
+    "file": "program.ts",
+    "replacements": [
+      [
+        ").map(resolved =>",
+        ").map<ResolvedModuleWithFailedLookupLocations>(resolved =>"
+      ],
+      [
+        ").map(resolvedTypeReferenceDirective =>",
+        ").map<ResolvedTypeReferenceDirectiveWithFailedLookupLocations>(resolvedTypeReferenceDirective =>"
+      ]
+    ],
+    "public": false,
+    "anchors": [
+      {
+        "text": ").map(resolved =>",
+        "occurrences": 1
+      },
+      {
+        "text": ").map(resolvedTypeReferenceDirective =>",
+        "occurrences": 1
+      }
+    ],
+    "root_count": 79,
+    "diagnostic_count": 0,
+    "diagnostics": [],
+    "emitted_js_byte_identical": true,
+    "original_sha256": "4e64ca897273cb221174254a173b4c9571a979e187e364c14f34d06a52a08363",
+    "candidate_sha256": "ac0fa94e81fe88b84fa13aef27ba3919a95bfb403df5de2e1940659c042417e1"
+  },
+  {
+    "id": "C16",
+    "groups": [
+      "G30"
+    ],
+    "file": "moduleSpecifiers.ts",
+    "replace": [
+      "{ moduleFileToTry: string; }",
+      "{ moduleFileToTry: string; packageRootPath?: never; }"
+    ],
+    "public": false,
+    "anchors": [
+      {
+        "text": "{ moduleFileToTry: string; }",
+        "occurrences": 2
+      }
+    ],
+    "root_count": 79,
+    "diagnostic_count": 0,
+    "diagnostics": [],
+    "emitted_js_byte_identical": true,
+    "original_sha256": "c47362305fba2170d24acf89f8e4ab97949639510fe4f4e9849a7a27ddeefccd",
+    "candidate_sha256": "530501692ad6f5c658be85644865baf43b41308828b6f4b68cbc2268f82c39b9"
+  },
+  {
+    "id": "C12b",
+    "groups": [
+      "G16"
+    ],
+    "file": "moduleSpecifiers.ts",
+    "replace": [
+      "importingSourceFile: Pick<SourceFile, \"fileName\" | \"impliedNodeFormat\">",
+      "importingSourceFile: Pick<SourceFile, \"fileName\" | \"impliedNodeFormat\" | \"packageJsonScope\">"
+    ],
+    "public": false,
+    "anchors": [
+      {
+        "text": "importingSourceFile: Pick<SourceFile, \"fileName\" | \"impliedNodeFormat\">",
+        "occurrences": 1
+      }
+    ],
+    "root_count": 79,
+    "diagnostic_count": 0,
+    "diagnostics": [],
+    "emitted_js_byte_identical": true,
+    "original_sha256": "c47362305fba2170d24acf89f8e4ab97949639510fe4f4e9849a7a27ddeefccd",
+    "candidate_sha256": "0ccbe7334130076a4c88d8c05fc77c0125d210298e38619e775fd535ae4bfb2e"
+  },
+  {
+    "id": "C01b",
+    "groups": [
+      "G01",
+      "G04",
+      "G06",
+      "G11",
+      "G17",
+      "G18",
+      "G19",
+      "G36",
+      "G37",
+      "G38",
+      "G39",
+      "G40",
+      "G41",
+      "G42"
+    ],
+    "file": "types.ts",
+    "files": [
+      "types.ts",
+      "factory/nodeFactory.ts"
+    ],
+    "owner": "TextRange",
+    "member": "source?: SourceMapSource;",
+    "secondary_edits": [
+      {
+        "file": "factory/nodeFactory.ts",
+        "line": 7182,
+        "from": "setOriginal(updated, original);",
+        "to": "setOriginal(updated as T, original);"
+      },
+      {
+        "file": "factory/nodeFactory.ts",
+        "line": 7183,
+        "from": "setTextRange(updated, original);",
+        "to": "setTextRange(updated as T, original);"
+      }
+    ],
+    "anchors": [
+      {
+        "owner": "TextRange",
+        "line": 28
+      }
+    ],
+    "public": true,
+    "root_count": 79,
+    "diagnostic_count": 0,
+    "diagnostics": [],
+    "emitted_js_byte_identical": true,
+    "file_hashes": [
+      {
+        "file": "types.ts",
+        "original_sha256": "7ae9a509881c3da4052e06388289a8e94c269576d38a8a808d9e08425c817239",
+        "candidate_sha256": "687a5be66a602248084a150b9b214cc3e8134a06405e13541b94a4d7645215d8"
+      },
+      {
+        "file": "factory/nodeFactory.ts",
+        "original_sha256": "8d70e0dc4fb44498e5e782151d790910fc573b55628a7becc6ad1c84c6f850ff",
+        "candidate_sha256": "65e0a4ce8a6a0ca46876b2261dd9234066ca715fa19ac7a8157089873656416e"
+      }
+    ]
+  }
+]

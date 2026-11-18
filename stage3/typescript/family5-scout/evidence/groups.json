@@ -1,0 +1,628 @@
+[
+  {
+    "id": "G01",
+    "S": "TextRange",
+    "T": "SourceMapRange",
+    "P": "source",
+    "meter_sites": 26,
+    "reason": "optional property source in SourceMapRange absent from structural source TextRange, which can hide fields",
+    "regenerated_sites": 26,
+    "site_ids": [
+      "S031",
+      "S066",
+      "S067",
+      "S076",
+      "S077",
+      "S078",
+      "S083",
+      "S084",
+      "S085",
+      "S086",
+      "S087",
+      "S091",
+      "S092",
+      "S093",
+      "S094",
+      "S095",
+      "S096",
+      "S097",
+      "S105",
+      "S106",
+      "S107",
+      "S108",
+      "S111",
+      "S114",
+      "S115",
+      "S117"
+    ]
+  },
+  {
+    "id": "G02",
+    "S": "SourceFile",
+    "T": "SourceFileLike",
+    "P": "getPositionOfLineAndCharacter",
+    "meter_sites": 14,
+    "reason": "optional property getPositionOfLineAndCharacter in SourceFileLike absent from structural source SourceFile, which can hide fields",
+    "regenerated_sites": 14,
+    "site_ids": [
+      "S022",
+      "S043",
+      "S044",
+      "S045",
+      "S046",
+      "S058",
+      "S059",
+      "S122",
+      "S123",
+      "S124",
+      "S125",
+      "S126",
+      "S127",
+      "S128"
+    ]
+  },
+  {
+    "id": "G03",
+    "S": "Type",
+    "T": "TypeParameter",
+    "P": "constraint",
+    "meter_sites": 12,
+    "reason": "optional property constraint in TypeParameter absent from structural source Type, which can hide fields",
+    "regenerated_sites": 12,
+    "site_ids": [
+      "S004",
+      "S005",
+      "S006",
+      "S007",
+      "S008",
+      "S015",
+      "S016",
+      "S021",
+      "S023",
+      "S024",
+      "S025",
+      "S026"
+    ]
+  },
+  {
+    "id": "G04",
+    "S": "Identifier",
+    "T": "SourceMapRange",
+    "P": "source",
+    "meter_sites": 7,
+    "reason": "optional property source in SourceMapRange absent from structural source Identifier, which can hide fields",
+    "regenerated_sites": 7,
+    "site_ids": [
+      "S068",
+      "S069",
+      "S072",
+      "S103",
+      "S109",
+      "S110",
+      "S116"
+    ]
+  },
+  {
+    "id": "G05",
+    "S": "{ errors?: Diagnostic[] | undefined; }",
+    "T": "ErrorOutputContainer",
+    "P": "skipLogging",
+    "meter_sites": 6,
+    "reason": "optional property skipLogging in ErrorOutputContainer absent from structural source { errors?: Diagnostic[] | undefined; }, which can hide fields",
+    "regenerated_sites": 6,
+    "site_ids": [
+      "S009",
+      "S010",
+      "S011",
+      "S012",
+      "S013",
+      "S014"
+    ]
+  },
+  {
+    "id": "G06",
+    "S": "Expression",
+    "T": "SourceMapRange",
+    "P": "source",
+    "meter_sites": 6,
+    "reason": "optional property source in SourceMapRange absent from structural source Expression, which can hide fields",
+    "regenerated_sites": 6,
+    "site_ids": [
+      "S070",
+      "S071",
+      "S081",
+      "S082",
+      "S088",
+      "S089"
+    ]
+  },
+  {
+    "id": "G07",
+    "S": "PackageJsonPathFields",
+    "T": "PackageJson",
+    "P": "version",
+    "meter_sites": 5,
+    "reason": "optional property version in PackageJson absent from structural source PackageJsonPathFields, which can hide fields",
+    "regenerated_sites": 5,
+    "site_ids": [
+      "S033",
+      "S034",
+      "S036",
+      "S037",
+      "S038"
+    ]
+  },
+  {
+    "id": "G08",
+    "S": "DiagnosticRelatedInformation",
+    "T": "DiagnosticReadView",
+    "P": "reportsUnnecessary",
+    "meter_sites": 4,
+    "reason": "optional property reportsUnnecessary in DiagnosticReadView absent from structural source DiagnosticRelatedInformation, which can hide fields",
+    "regenerated_sites": 4,
+    "site_ids": [
+      "S018",
+      "S019",
+      "S129",
+      "S130"
+    ]
+  },
+  {
+    "id": "G09",
+    "S": "SolutionBuilderHost<T>",
+    "T": "ModuleResolutionHost",
+    "P": "getGlobalTypingsCacheLocation",
+    "meter_sites": 3,
+    "reason": "optional property getGlobalTypingsCacheLocation in ModuleResolutionHost absent from structural source SolutionBuilderHost<T>, which can hide fields",
+    "regenerated_sites": 3,
+    "site_ids": [
+      "S118",
+      "S119",
+      "S120"
+    ]
+  },
+  {
+    "id": "G10",
+    "S": "{ preserve: true; }",
+    "T": "FileReference",
+    "P": "resolutionMode",
+    "meter_sites": 3,
+    "reason": "optional property resolutionMode in FileReference absent from structural source { preserve: true; }, which can hide fields",
+    "regenerated_sites": 3,
+    "site_ids": [
+      "S048",
+      "S049",
+      "S050"
+    ]
+  },
+  {
+    "id": "G11",
+    "S": "BigIntLiteral",
+    "T": "SourceMapRange",
+    "P": "source",
+    "meter_sites": 3,
+    "reason": "optional property source in SourceMapRange absent from structural source BigIntLiteral, which can hide fields",
+    "regenerated_sites": 3,
+    "site_ids": [
+      "S074",
+      "S075",
+      "S090"
+    ]
+  },
+  {
+    "id": "G12",
+    "S": "InterfaceType",
+    "T": "TypeParameter",
+    "P": "constraint",
+    "meter_sites": 2,
+    "reason": "optional property constraint in TypeParameter absent from structural source InterfaceType, which can hide fields",
+    "regenerated_sites": 2,
+    "site_ids": [
+      "S017",
+      "S020"
+    ]
+  },
+  {
+    "id": "G13",
+    "S": "{ resolvedModule: ResolvedModuleFull; }",
+    "T": "ResolvedModuleWithFailedLookupLocations",
+    "P": "failedLookupLocations",
+    "meter_sites": 2,
+    "reason": "optional property failedLookupLocations in ResolvedModuleWithFailedLookupLocations absent from structural source { resolvedModule: ResolvedModuleFull; }, which can hide fields",
+    "regenerated_sites": 2,
+    "site_ids": [
+      "S055",
+      "S056"
+    ]
+  },
+  {
+    "id": "G14",
+    "S": "ResolvedModuleWithFailedLookupLocations",
+    "T": "CachedResolvedModuleWithFailedLookupLocations",
+    "P": "isInvalidated",
+    "meter_sites": 2,
+    "reason": "optional property isInvalidated in CachedResolvedModuleWithFailedLookupLocations absent from structural source ResolvedModuleWithFailedLookupLocations, which can hide fields",
+    "regenerated_sites": 2,
+    "site_ids": [
+      "S061",
+      "S062"
+    ]
+  },
+  {
+    "id": "G15",
+    "S": "object",
+    "T": "PackageJson",
+    "P": "name",
+    "meter_sites": 2,
+    "reason": "optional property name in PackageJson absent from structural source object, which can hide fields",
+    "regenerated_sites": 2,
+    "site_ids": [
+      "S035",
+      "S039"
+    ]
+  },
+  {
+    "id": "G16",
+    "S": "Pick<SourceFile, \"fileName\" | \"impliedNodeFormat\">",
+    "T": "Pick<SourceFile, \"fileName\" | \"impliedNodeFormat\" | \"packageJsonScope\">",
+    "P": "packageJsonScope",
+    "meter_sites": 2,
+    "reason": "optional property packageJsonScope in Pick<SourceFile, \"fileName\" | \"impliedNodeFormat\" | \"packageJsonScope\"> absent from structural source Pick<SourceFile, \"fileName\" | \"impliedNodeFormat\">, which can hide fields",
+    "regenerated_sites": 2,
+    "site_ids": [
+      "S041",
+      "S042"
+    ]
+  },
+  {
+    "id": "G17",
+    "S": "Node",
+    "T": "SourceMapRange",
+    "P": "source",
+    "meter_sites": 2,
+    "reason": "optional property source in SourceMapRange absent from structural source Node, which can hide fields",
+    "regenerated_sites": 2,
+    "site_ids": [
+      "S030",
+      "S073"
+    ]
+  },
+  {
+    "id": "G18",
+    "S": "VariableDeclaration",
+    "T": "SourceMapRange",
+    "P": "source",
+    "meter_sites": 2,
+    "reason": "optional property source in SourceMapRange absent from structural source VariableDeclaration, which can hide fields",
+    "regenerated_sites": 2,
+    "site_ids": [
+      "S080",
+      "S100"
+    ]
+  },
+  {
+    "id": "G19",
+    "S": "VariableStatement",
+    "T": "SourceMapRange",
+    "P": "source",
+    "meter_sites": 2,
+    "reason": "optional property source in SourceMapRange absent from structural source VariableStatement, which can hide fields",
+    "regenerated_sites": 2,
+    "site_ids": [
+      "S099",
+      "S104"
+    ]
+  },
+  {
+    "id": "G20",
+    "S": "object",
+    "T": "CompilerOptions",
+    "P": "all",
+    "meter_sites": 1,
+    "reason": "optional property all in CompilerOptions absent from structural source object, which can hide fields",
+    "regenerated_sites": 1,
+    "site_ids": [
+      "S027"
+    ]
+  },
+  {
+    "id": "G21",
+    "S": "IncrementalCompilationOptions",
+    "T": "IncrementalProgramOptions<EmitAndSemanticDiagnosticsBuilderProgram>",
+    "P": "createProgram",
+    "meter_sites": 1,
+    "reason": "optional property createProgram in IncrementalProgramOptions<EmitAndSemanticDiagnosticsBuilderProgram> absent from structural source IncrementalCompilationOptions, which can hide fields",
+    "regenerated_sites": 1,
+    "site_ids": [
+      "S131"
+    ]
+  },
+  {
+    "id": "G22",
+    "S": "{ resolvedTypeReferenceDirective: ResolvedTypeReferenceDirective | undefined; }",
+    "T": "ResolvedTypeReferenceDirectiveWithFailedLookupLocations",
+    "P": "failedLookupLocations",
+    "meter_sites": 1,
+    "reason": "optional property failedLookupLocations in ResolvedTypeReferenceDirectiveWithFailedLookupLocations absent from structural source { resolvedTypeReferenceDirective: ResolvedTypeReferenceDirective | undefined; }, which can hide fields",
+    "regenerated_sites": 1,
+    "site_ids": [
+      "S057"
+    ]
+  },
+  {
+    "id": "G23",
+    "S": "ResolvedTypeReferenceDirectiveWithFailedLookupLocations",
+    "T": "CachedResolvedTypeReferenceDirectiveWithFailedLookupLocations",
+    "P": "isInvalidated",
+    "meter_sites": 1,
+    "reason": "optional property isInvalidated in CachedResolvedTypeReferenceDirectiveWithFailedLookupLocations absent from structural source ResolvedTypeReferenceDirectiveWithFailedLookupLocations, which can hide fields",
+    "regenerated_sites": 1,
+    "site_ids": [
+      "S064"
+    ]
+  },
+  {
+    "id": "G24",
+    "S": "ResolvedModuleWithFailedLookupLocations",
+    "T": "ResolutionWithFailedLookupLocations",
+    "P": "isInvalidated",
+    "meter_sites": 1,
+    "reason": "optional property isInvalidated in ResolutionWithFailedLookupLocations absent from structural source ResolvedModuleWithFailedLookupLocations, which can hide fields",
+    "regenerated_sites": 1,
+    "site_ids": [
+      "S060"
+    ]
+  },
+  {
+    "id": "G25",
+    "S": "ResolvedTypeReferenceDirectiveWithFailedLookupLocations",
+    "T": "ResolutionWithFailedLookupLocations",
+    "P": "isInvalidated",
+    "meter_sites": 1,
+    "reason": "optional property isInvalidated in ResolutionWithFailedLookupLocations absent from structural source ResolvedTypeReferenceDirectiveWithFailedLookupLocations, which can hide fields",
+    "regenerated_sites": 1,
+    "site_ids": [
+      "S063"
+    ]
+  },
+  {
+    "id": "G26",
+    "S": "JSDoc[]",
+    "T": "JSDocArray",
+    "P": "jsDocCache",
+    "meter_sites": 1,
+    "reason": "optional property jsDocCache in JSDocArray absent from structural source JSDoc[], which can hide fields",
+    "regenerated_sites": 1,
+    "site_ids": [
+      "S053"
+    ]
+  },
+  {
+    "id": "G27",
+    "S": "CompilerHost",
+    "T": "CompilerHost & { onUnRecoverableConfigFileDiagnostic?: DiagnosticReporter; }",
+    "P": "onUnRecoverableConfigFileDiagnostic",
+    "meter_sites": 1,
+    "reason": "optional property onUnRecoverableConfigFileDiagnostic in CompilerHost & { onUnRecoverableConfigFileDiagnostic?: DiagnosticReporter; } absent from structural source CompilerHost, which can hide fields",
+    "regenerated_sites": 1,
+    "site_ids": [
+      "S054"
+    ]
+  },
+  {
+    "id": "G28",
+    "S": "SolutionBuilderHost<T>",
+    "T": "ProgramHost<T> & { onUnRecoverableConfigFileDiagnostic?: DiagnosticReporter; }",
+    "P": "onUnRecoverableConfigFileDiagnostic",
+    "meter_sites": 1,
+    "reason": "optional property onUnRecoverableConfigFileDiagnostic in ProgramHost<T> & { onUnRecoverableConfigFileDiagnostic?: DiagnosticReporter; } absent from structural source SolutionBuilderHost<T>, which can hide fields",
+    "regenerated_sites": 1,
+    "site_ids": [
+      "S121"
+    ]
+  },
+  {
+    "id": "G29",
+    "S": "{ path: string; extension: string; packageId: PackageId | undefined; resolvedUsingTsExtension: boolean | undefined; }",
+    "T": "Resolved",
+    "P": "originalPath",
+    "meter_sites": 1,
+    "reason": "optional property originalPath in Resolved absent from structural source { path: string; extension: string; packageId: PackageId | undefined; resolvedUsingTsExtension: boolean | undefined; }, which can hide fields",
+    "regenerated_sites": 1,
+    "site_ids": [
+      "S032"
+    ]
+  },
+  {
+    "id": "G30",
+    "S": "{ moduleFileToTry: string; }",
+    "T": "{ moduleFileToTry: string; packageRootPath?: string; blockedByExports?: true; verbatimFromExports?: true; }",
+    "P": "packageRootPath",
+    "meter_sites": 1,
+    "reason": "optional property packageRootPath in { moduleFileToTry: string; packageRootPath?: string; blockedByExports?: true; verbatimFromExports?: true; } absent from structural source { moduleFileToTry: string; }, which can hide fields",
+    "regenerated_sites": 1,
+    "site_ids": [
+      "S040"
+    ]
+  },
+  {
+    "id": "G31",
+    "S": "{ resolutionMode: ModuleKind.CommonJS | ModuleKind.ESNext; }",
+    "T": "FileReference",
+    "P": "preserve",
+    "meter_sites": 1,
+    "reason": "optional property preserve in FileReference absent from structural source { resolutionMode: ModuleKind.CommonJS | ModuleKind.ESNext; }, which can hide fields",
+    "regenerated_sites": 1,
+    "site_ids": [
+      "S047"
+    ]
+  },
+  {
+    "id": "G32",
+    "S": "SerializedDiagnosticMessageChain",
+    "T": "DiagnosticMessageChain",
+    "P": "repopulateInfo",
+    "meter_sites": 1,
+    "reason": "optional property repopulateInfo in DiagnosticMessageChain absent from structural source SerializedDiagnosticMessageChain, which can hide fields",
+    "regenerated_sites": 1,
+    "site_ids": [
+      "S002"
+    ]
+  },
+  {
+    "id": "G33",
+    "S": "DiagnosticRelatedInformation",
+    "T": "Diagnostic",
+    "P": "reportsUnnecessary",
+    "meter_sites": 1,
+    "reason": "optional property reportsUnnecessary in Diagnostic absent from structural source DiagnosticRelatedInformation, which can hide fields",
+    "regenerated_sites": 1,
+    "site_ids": [
+      "S003"
+    ]
+  },
+  {
+    "id": "G34",
+    "S": "ReusableDiagnosticRelatedInformation",
+    "T": "ReusableDiagnostic",
+    "P": "reportsUnnecessary",
+    "meter_sites": 1,
+    "reason": "optional property reportsUnnecessary in ReusableDiagnostic absent from structural source ReusableDiagnosticRelatedInformation, which can hide fields",
+    "regenerated_sites": 1,
+    "site_ids": [
+      "S001"
+    ]
+  },
+  {
+    "id": "G35",
+    "S": "SourceFile",
+    "T": "SourceMapSource",
+    "P": "skipTrivia",
+    "meter_sites": 1,
+    "reason": "optional property skipTrivia in SourceMapSource absent from structural source SourceFile, which can hide fields",
+    "regenerated_sites": 1,
+    "site_ids": [
+      "S029"
+    ]
+  },
+  {
+    "id": "G36",
+    "S": "ArrayBindingPattern",
+    "T": "SourceMapRange",
+    "P": "source",
+    "meter_sites": 1,
+    "reason": "optional property source in SourceMapRange absent from structural source ArrayBindingPattern, which can hide fields",
+    "regenerated_sites": 1,
+    "site_ids": [
+      "S101"
+    ]
+  },
+  {
+    "id": "G37",
+    "S": "ClassDeclaration",
+    "T": "SourceMapRange",
+    "P": "source",
+    "meter_sites": 1,
+    "reason": "optional property source in SourceMapRange absent from structural source ClassDeclaration, which can hide fields",
+    "regenerated_sites": 1,
+    "site_ids": [
+      "S098"
+    ]
+  },
+  {
+    "id": "G38",
+    "S": "EnumDeclaration",
+    "T": "SourceMapRange",
+    "P": "source",
+    "meter_sites": 1,
+    "reason": "optional property source in SourceMapRange absent from structural source EnumDeclaration, which can hide fields",
+    "regenerated_sites": 1,
+    "site_ids": [
+      "S112"
+    ]
+  },
+  {
+    "id": "G39",
+    "S": "InitializedVariableDeclaration",
+    "T": "SourceMapRange",
+    "P": "source",
+    "meter_sites": 1,
+    "reason": "optional property source in SourceMapRange absent from structural source InitializedVariableDeclaration, which can hide fields",
+    "regenerated_sites": 1,
+    "site_ids": [
+      "S102"
+    ]
+  },
+  {
+    "id": "G40",
+    "S": "ModuleDeclaration",
+    "T": "SourceMapRange",
+    "P": "source",
+    "meter_sites": 1,
+    "reason": "optional property source in SourceMapRange absent from structural source ModuleDeclaration, which can hide fields",
+    "regenerated_sites": 1,
+    "site_ids": [
+      "S113"
+    ]
+  },
+  {
+    "id": "G41",
+    "S": "ParameterDeclaration",
+    "T": "SourceMapRange",
+    "P": "source",
+    "meter_sites": 1,
+    "reason": "optional property source in SourceMapRange absent from structural source ParameterDeclaration, which can hide fields",
+    "regenerated_sites": 1,
+    "site_ids": [
+      "S065"
+    ]
+  },
+  {
+    "id": "G42",
+    "S": "SuperExpression",
+    "T": "SourceMapRange",
+    "P": "source",
+    "meter_sites": 1,
+    "reason": "optional property source in SourceMapRange absent from structural source SuperExpression, which can hide fields",
+    "regenerated_sites": 1,
+    "site_ids": [
+      "S079"
+    ]
+  },
+  {
+    "id": "G43",
+    "S": "{ [index: string]: string | undefined; }",
+    "T": "{ types?: { value: string; pos: number; end: number; }; } & { lib?: { value: string; pos: number; end: number; }; } & { path?: { value: string; pos: number; end: number; }; } & { \"no-default-lib\"?: string; } & { \"resolution-mode\"?: string; } & ...",
+    "P": "types",
+    "meter_sites": 1,
+    "reason": "optional property types in { types?: { value: string; pos: number; end: number; }; } & { lib?: { value: string; pos: number; end: number; }; } & { path?: { value: string; pos: number; end: number; }; } & { \"no-default-lib\"?: string; } & { \"resolution-mode\"?: string; } & ... absent from structural source { [index: string]: string | undefined; }, which can hide fields",
+    "regenerated_sites": 1,
+    "site_ids": [
+      "S052"
+    ]
+  },
+  {
+    "id": "G44",
+    "S": "{ [index: string]: string | { value: string; pos: number; end: number; }; }",
+    "T": "{ types?: { value: string; pos: number; end: number; }; } & { lib?: { value: string; pos: number; end: number; }; } & { path?: { value: string; pos: number; end: number; }; } & { \"no-default-lib\"?: string; } & { \"resolution-mode\"?: string; } & ...",
+    "P": "types",
+    "meter_sites": 1,
+    "reason": "optional property types in { types?: { value: string; pos: number; end: number; }; } & { lib?: { value: string; pos: number; end: number; }; } & { path?: { value: string; pos: number; end: number; }; } & { \"no-default-lib\"?: string; } & { \"resolution-mode\"?: string; } & ... absent from structural source { [index: string]: string | { value: string; pos: number; end: number; }; }, which can hide fields",
+    "regenerated_sites": 1,
+    "site_ids": [
+      "S051"
+    ]
+  },
+  {
+    "id": "G45",
+    "S": "{ include: readonly string[] | undefined; exclude: readonly string[] | undefined; }",
+    "T": "TSConfig & { watchOptions?: object | undefined; }",
+    "P": "watchOptions",
+    "meter_sites": 1,
+    "reason": "optional property watchOptions in TSConfig & { watchOptions?: object | undefined; } absent from structural source { include: readonly string[] | undefined; exclude: readonly string[] | undefined; }, which can hide fields",
+    "regenerated_sites": 1,
+    "site_ids": [
+      "S028"
+    ]
+  }
+]

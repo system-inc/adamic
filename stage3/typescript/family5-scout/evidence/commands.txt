@@ -1,0 +1,45 @@
+# The measurement reused the original c56b0229 canonical entry tool and apply product.
+# Prior successful preparation, retained in preparation/*.gz:
+# In /workspace/depthgate2-base at c56b0229 (now followed only by report commits):
+# git -c protocol.file.allow=always -c url.file:///workspace/depthgate-base/cohere.insteadOf=https://github.com/system-inc/cohere.git -c url.file:///workspace/depthgate-base/cohere/TypeScript.insteadOf=https://github.com/system-inc/TypeScript.git submodule update --init --recursive --depth 1
+# cd stage3/api; npm ci --ignore-scripts --no-audit --no-fund
+# ADAMIC_TYPESCRIPT_SOURCE=/workspace/mapset-upstream stage3/apply.sh /workspace/depthgate2-adapted
+# upstream verified 050880ce59e30b356b686bd3144efe24f875ebc8 (v6.0.3)
+# python3 stage3/census/latent/make_overlay.py /workspace/depthgate2-base /workspace/depthgate2-tools-base/latent-overlay
+# gofmt -w /workspace/depthgate2-tools-base/latent-overlay/*.go
+# python3 stage3/meter/entry_overlay.py /workspace/depthgate2-tools-base/latent-overlay /workspace/depthgate2-tools-base/entry-overlay
+# gofmt -w /workspace/depthgate2-tools-base/entry-overlay/*.go
+# go build -buildvcs=false -overlay=/workspace/depthgate2-tools-base/entry-overlay/overlay.json -o /workspace/depthgate2-tools-base/entry-census ./stage3/census/latent/tool
+# Actual unchanged binary SHA256: 909c659b0238b08320d3bd51717a04ce7119ad4b022685999e2d1be538ce5776
+
+# Exact fresh run, cwd /workspace/depthgate2-base, child stderr captured whole through a pipe:
+# LATENT_FULL=0 LATENT_ASSERT_NO_OUTPUT=1 LATENT_TAIL=1 CENSUS_MODULE_FORMAT=CommonJSBundle LATENT_TIMES=/dev/stderr
+# LATENT_ONLY_FILE is unset; inherited LATENT_* and ADAMIC_PROBE_* settings were removed.
+# /workspace/depthgate2-tools-base/entry-census /workspace/depthgate2-adapted/src/tsc/tsc.ts /workspace/family5-run/base-tsc-entry-r1/latent.jsonl
+python3 /workspace/family5-runner.py > /workspace/family5-runner.log 2>&1
+python3 /workspace/family5-extract.py
+node /workspace/family5-context.cjs
+node /workspace/family5-audit.cjs
+node /workspace/family5-constructors.cjs
+
+# Stock checker baselines: 79 compiler project roots, pinned TypeScript 6.0.3 and bundled Node types.
+node /workspace/family5-stock.cjs /workspace/depthgate2-adapted /workspace/family5-stock-baseline.json
+FAMILY5_STOCK_STRICT=1 node /workspace/family5-stock.cjs /workspace/depthgate2-adapted /workspace/family5-stock-strict-baseline.json
+# Scratch source copy used independently for EACH candidate:
+# copy src/ and package.json from /workspace/depthgate2-adapted to /workspace/family5-candidate;
+# apply only the candidate listed in selected-candidates.json, by named owner/member or exact source anchor;
+# run the same two checker commands with /workspace/family5-candidate as root and the candidate's result file;
+# compare stock transpileModule ES2020/ESNext JS before/after for every changed file;
+# reset every changed scratch file to its original bytes before testing the next candidate.
+# Final proposals, source anchors, original/candidate hashes and both checker outcomes are retained.
+# Edit-applying scripts and candidate source edits are intentionally not committed.
+
+# Concrete runtime input/construction witnesses, using stock TypeScript APIs:
+node /workspace/family5-hazards.cjs
+node /workspace/family5-diagnostic-hazard.cjs
+node /workspace/family5-rule-evidence.cjs
+# The diagnostic probe extracts the exact original function bodies and only erases types;
+# it does not patch builder.ts or claim an end-to-end native reproduction.
+
+python3 /workspace/family5-package.py
+python3 /workspace/family5-validate.py

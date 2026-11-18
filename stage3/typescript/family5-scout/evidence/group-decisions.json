@@ -1,0 +1,1133 @@
+[
+  {
+    "id": "G01",
+    "S": "TextRange",
+    "T": "SourceMapRange",
+    "P": "source",
+    "meter_sites": 26,
+    "reason": "optional property source in SourceMapRange absent from structural source TextRange, which can hide fields",
+    "regenerated_sites": 26,
+    "site_ids": [
+      "S031",
+      "S066",
+      "S067",
+      "S076",
+      "S077",
+      "S078",
+      "S083",
+      "S084",
+      "S085",
+      "S086",
+      "S087",
+      "S091",
+      "S092",
+      "S093",
+      "S094",
+      "S095",
+      "S096",
+      "S097",
+      "S105",
+      "S106",
+      "S107",
+      "S108",
+      "S111",
+      "S114",
+      "S115",
+      "S117"
+    ],
+    "road": "i",
+    "candidate": "C01b",
+    "evidence": "Node/Token/Identifier constructors in utilities.ts:8507,8521,8533; baseNodeFactory.ts:41 and node factories; range helpers utilities.ts:7869,7890 return either the original range or fresh pos/end objects. Named-write/declaration audit finds no TextRange-compatible source field with an incompatible type. Other source:string/Type fields belong to non-TextRange owners. SourceMapRange itself can carry a compatible SourceMapSource (customTransforms.ts:154 is an existing positive API fixture), so never is not the proposed contract.",
+    "premise": "Owned constructor/write facts plus adaptation 72's relation-site certificate. The declaration alone caused two strict TS2379 errors at nodeFactory.ts:7182-7183; two erased updated as T views in the existing update<T> helper recover the already returned T extends Node and remove them. Foreign client compatibility is a public contract consequence, not silently assumed.",
+    "by_relation_position": {
+      "assignment": [
+        "S031"
+      ],
+      "argument": [
+        "S066",
+        "S067",
+        "S076",
+        "S077",
+        "S078",
+        "S083",
+        "S084",
+        "S085",
+        "S086",
+        "S087",
+        "S091",
+        "S092",
+        "S093",
+        "S094",
+        "S095",
+        "S096",
+        "S097",
+        "S105",
+        "S106",
+        "S107",
+        "S108",
+        "S111",
+        "S114",
+        "S115",
+        "S117"
+      ]
+    }
+  },
+  {
+    "id": "G02",
+    "S": "SourceFile",
+    "T": "SourceFileLike",
+    "P": "getPositionOfLineAndCharacter",
+    "meter_sites": 14,
+    "reason": "optional property getPositionOfLineAndCharacter in SourceFileLike absent from structural source SourceFile, which can hide fields",
+    "regenerated_sites": 14,
+    "site_ids": [
+      "S022",
+      "S043",
+      "S044",
+      "S045",
+      "S046",
+      "S058",
+      "S059",
+      "S122",
+      "S123",
+      "S124",
+      "S125",
+      "S126",
+      "S127",
+      "S128"
+    ],
+    "road": "i",
+    "candidate": "C02",
+    "evidence": "Compiler SourceFiles are allocated by baseNodeFactory.ts:41 via the Node constructor (utilities.ts:8507) and initialized by parser.ts:1951. They omit the method; services SourceFileObject (services/services.ts:1067,1133) implements the matching callable. scanner.ts:468 uses it only if present. No incompatible constructor or write found.",
+    "premise": "Put the internal optional method on Node (types.ts:942), inherited by compiler SourceFile. This avoids optional/required merging on SourceFile, whose public services augmentation already declares a required method at services/types.ts:172.",
+    "by_relation_position": {
+      "argument": [
+        "S022",
+        "S043",
+        "S044",
+        "S045",
+        "S046",
+        "S058",
+        "S059",
+        "S123",
+        "S124",
+        "S125",
+        "S126",
+        "S127",
+        "S128"
+      ],
+      "assignment": [
+        "S122"
+      ]
+    }
+  },
+  {
+    "id": "G03",
+    "S": "Type",
+    "T": "TypeParameter",
+    "P": "constraint",
+    "meter_sites": 12,
+    "reason": "optional property constraint in TypeParameter absent from structural source Type, which can hide fields",
+    "regenerated_sites": 12,
+    "site_ids": [
+      "S004",
+      "S005",
+      "S006",
+      "S007",
+      "S008",
+      "S015",
+      "S016",
+      "S021",
+      "S023",
+      "S024",
+      "S025",
+      "S026"
+    ],
+    "road": "i",
+    "candidate": "C03",
+    "evidence": "checker.ts:5521/5575 constructs Type/TypeParameter through the allocator Type constructor (utilities.ts:8491); TypeParameter, substitution and this-type constraint caches store Type-valued constraints (checker.ts:16855-16869,17258,17927). AST TypeParameterDeclaration.constraint is a different Node/TypeNode field, not a Type-object counterexample.",
+    "premise": "Add the compatible internal cache declaration on Type, inherited by InterfaceType; never would be false for real TypeParameter/substitution instances.",
+    "by_relation_position": {
+      "argument": [
+        "S004",
+        "S005",
+        "S007",
+        "S015",
+        "S016",
+        "S021",
+        "S023",
+        "S024",
+        "S025",
+        "S026"
+      ],
+      "return": [
+        "S006"
+      ],
+      "assignment": [
+        "S008"
+      ]
+    }
+  },
+  {
+    "id": "G04",
+    "S": "Identifier",
+    "T": "SourceMapRange",
+    "P": "source",
+    "meter_sites": 7,
+    "reason": "optional property source in SourceMapRange absent from structural source Identifier, which can hide fields",
+    "regenerated_sites": 7,
+    "site_ids": [
+      "S068",
+      "S069",
+      "S072",
+      "S103",
+      "S109",
+      "S110",
+      "S116"
+    ],
+    "road": "i",
+    "candidate": "C01b",
+    "evidence": "Node/Token/Identifier constructors in utilities.ts:8507,8521,8533; baseNodeFactory.ts:41 and node factories; range helpers utilities.ts:7869,7890 return either the original range or fresh pos/end objects. Named-write/declaration audit finds no TextRange-compatible source field with an incompatible type. Other source:string/Type fields belong to non-TextRange owners. SourceMapRange itself can carry a compatible SourceMapSource (customTransforms.ts:154 is an existing positive API fixture), so never is not the proposed contract.",
+    "premise": "Owned constructor/write facts plus adaptation 72's relation-site certificate. The declaration alone caused two strict TS2379 errors at nodeFactory.ts:7182-7183; two erased updated as T views in the existing update<T> helper recover the already returned T extends Node and remove them. Foreign client compatibility is a public contract consequence, not silently assumed.",
+    "by_relation_position": {
+      "argument": [
+        "S068",
+        "S069",
+        "S072",
+        "S103",
+        "S109",
+        "S110",
+        "S116"
+      ]
+    }
+  },
+  {
+    "id": "G05",
+    "S": "{ errors?: Diagnostic[] | undefined; }",
+    "T": "ErrorOutputContainer",
+    "P": "skipLogging",
+    "meter_sites": 6,
+    "reason": "optional property skipLogging in ErrorOutputContainer absent from structural source { errors?: Diagnostic[] | undefined; }, which can hide fields",
+    "regenerated_sites": 6,
+    "site_ids": [
+      "S009",
+      "S010",
+      "S011",
+      "S012",
+      "S013",
+      "S014"
+    ],
+    "road": "i",
+    "candidate": "C08",
+    "evidence": "checkTypeAssignableTo (checker.ts:21354) and four resultObj annotations erase the skipLogging field of ErrorOutputContainer; values are forwarded containers or fresh {}. Real containers at checker.ts:36175 and45952 use skipLogging:true. All named writes/initializers are Boolean-compatible.",
+    "premise": "Name ErrorOutputContainer in the existing owned annotations; preserve the actual Boolean flag rather than claim absence.",
+    "by_relation_position": {
+      "argument": [
+        "S009",
+        "S010",
+        "S011",
+        "S012",
+        "S013",
+        "S014"
+      ]
+    }
+  },
+  {
+    "id": "G06",
+    "S": "Expression",
+    "T": "SourceMapRange",
+    "P": "source",
+    "meter_sites": 6,
+    "reason": "optional property source in SourceMapRange absent from structural source Expression, which can hide fields",
+    "regenerated_sites": 6,
+    "site_ids": [
+      "S070",
+      "S071",
+      "S081",
+      "S082",
+      "S088",
+      "S089"
+    ],
+    "road": "i",
+    "candidate": "C01b",
+    "evidence": "Node/Token/Identifier constructors in utilities.ts:8507,8521,8533; baseNodeFactory.ts:41 and node factories; range helpers utilities.ts:7869,7890 return either the original range or fresh pos/end objects. Named-write/declaration audit finds no TextRange-compatible source field with an incompatible type. Other source:string/Type fields belong to non-TextRange owners. SourceMapRange itself can carry a compatible SourceMapSource (customTransforms.ts:154 is an existing positive API fixture), so never is not the proposed contract.",
+    "premise": "Owned constructor/write facts plus adaptation 72's relation-site certificate. The declaration alone caused two strict TS2379 errors at nodeFactory.ts:7182-7183; two erased updated as T views in the existing update<T> helper recover the already returned T extends Node and remove them. Foreign client compatibility is a public contract consequence, not silently assumed.",
+    "by_relation_position": {
+      "argument": [
+        "S070",
+        "S071",
+        "S081",
+        "S082",
+        "S088",
+        "S089"
+      ]
+    }
+  },
+  {
+    "id": "G07",
+    "S": "PackageJsonPathFields",
+    "T": "PackageJson",
+    "P": "version",
+    "meter_sites": 5,
+    "reason": "optional property version in PackageJson absent from structural source PackageJsonPathFields, which can hide fields",
+    "regenerated_sites": 5,
+    "site_ids": [
+      "S033",
+      "S034",
+      "S036",
+      "S037",
+      "S038"
+    ],
+    "road": "iii",
+    "candidate": null,
+    "evidence": "Concrete stock TypeScript inputs: package.json {name:42,version:\"1.0.0\",types:\"index.d.ts\"} remains object with numeric name after readJson; {name:\"pkg\",version:7,types:\"index.d.ts\"} remains cached PackageJsonPathFields with numeric version. moduleNameResolver.ts:2470 and utilities.ts:7785-7810 preserve raw extras. Both resolver/cache witnesses are recorded.",
+    "premise": "All declared S fields are valid in the relevant witness: object imposes no name contract; PackageJsonPathFields has a valid string name/types and does not declare version. A string/never declaration would be false without input validation.",
+    "by_relation_position": {
+      "argument": [
+        "S033",
+        "S034",
+        "S036",
+        "S037",
+        "S038"
+      ]
+    }
+  },
+  {
+    "id": "G08",
+    "S": "DiagnosticRelatedInformation",
+    "T": "DiagnosticReadView",
+    "P": "reportsUnnecessary",
+    "meter_sites": 4,
+    "reason": "optional property reportsUnnecessary in DiagnosticReadView absent from structural source DiagnosticRelatedInformation, which can hide fields",
+    "regenerated_sites": 4,
+    "site_ids": [
+      "S018",
+      "S019",
+      "S129",
+      "S130"
+    ],
+    "road": "iii",
+    "candidate": null,
+    "evidence": "A valid ReusableDiagnosticRelatedInformation record in an accepted build-info relatedInformation array carries extra reportsUnnecessary:null. All required declared source fields are present and valid. Original convertToDiagnosticRelatedInformation (builder.ts:618) and toReusableDiagnosticRelatedInformation (:1543) are executed as source-extracted probes and preserve null by spread. Null is outside the target {}|undefined marker type.",
+    "premise": "This is a group-wide source-pool counterexample, not a claim that every listed coordinate was executed with the witness. C04/C05 gave zero stock diagnostics but are rejected as untruthful global declarations. Neither spread strips the hidden extra; input validation or stronger provenance would be needed before widening.",
+    "by_relation_position": {
+      "argument": [
+        "S018",
+        "S019",
+        "S129",
+        "S130"
+      ]
+    }
+  },
+  {
+    "id": "G09",
+    "S": "SolutionBuilderHost<T>",
+    "T": "ModuleResolutionHost",
+    "P": "getGlobalTypingsCacheLocation",
+    "meter_sites": 3,
+    "reason": "optional property getGlobalTypingsCacheLocation in ModuleResolutionHost absent from structural source SolutionBuilderHost<T>, which can hide fields",
+    "regenerated_sites": 3,
+    "site_ids": [
+      "S118",
+      "S119",
+      "S120"
+    ],
+    "road": "i",
+    "candidate": "C09b",
+    "evidence": "createSolutionBuilderHostBase (tsbuildPublic.ts:294) obtains createProgramHost and adds known reporting functions. The default objects omit getGlobalTypingsCacheLocation; installed getters/reporters and parse-config callback writes are callable with the stated signature (program.ts:1966; tsbuildPublic.ts:596,598).",
+    "premise": "Add internal optional contracts to SolutionBuilderHostBase, not ProgramHost. The broader ProgramHost candidate caused TS2320 through ConfigFileDiagnosticsReporter inheritance and is rejected.",
+    "by_relation_position": {
+      "argument": [
+        "S118",
+        "S119",
+        "S120"
+      ]
+    }
+  },
+  {
+    "id": "G10",
+    "S": "{ preserve: true; }",
+    "T": "FileReference",
+    "P": "resolutionMode",
+    "meter_sites": 3,
+    "reason": "optional property resolutionMode in FileReference absent from structural source { preserve: true; }, which can hide fields",
+    "regenerated_sites": 3,
+    "site_ids": [
+      "S048",
+      "S049",
+      "S050"
+    ],
+    "road": "ii",
+    "candidate": null,
+    "evidence": "parser.ts:10624,10627,10630 spreads only conditional branches {preserve} / {} and {resolutionMode:parsed} / {}. preserve is derived by equality to \"true\"; parsed is validated by parseResolutionMode. Neither nonempty constructor has the other key.",
+    "premise": "Recognize certified unaliased fresh literal branches as the spread operand, checking each original branch before copy; do not treat a spread of an arbitrary view, alias, or assignment handle as absence evidence. Needs a ruling; no lowering code proposed.",
+    "by_relation_position": {
+      "spread": [
+        "S048",
+        "S049",
+        "S050"
+      ]
+    }
+  },
+  {
+    "id": "G11",
+    "S": "BigIntLiteral",
+    "T": "SourceMapRange",
+    "P": "source",
+    "meter_sites": 3,
+    "reason": "optional property source in SourceMapRange absent from structural source BigIntLiteral, which can hide fields",
+    "regenerated_sites": 3,
+    "site_ids": [
+      "S074",
+      "S075",
+      "S090"
+    ],
+    "road": "i",
+    "candidate": "C01b",
+    "evidence": "Node/Token/Identifier constructors in utilities.ts:8507,8521,8533; baseNodeFactory.ts:41 and node factories; range helpers utilities.ts:7869,7890 return either the original range or fresh pos/end objects. Named-write/declaration audit finds no TextRange-compatible source field with an incompatible type. Other source:string/Type fields belong to non-TextRange owners. SourceMapRange itself can carry a compatible SourceMapSource (customTransforms.ts:154 is an existing positive API fixture), so never is not the proposed contract.",
+    "premise": "Owned constructor/write facts plus adaptation 72's relation-site certificate. The declaration alone caused two strict TS2379 errors at nodeFactory.ts:7182-7183; two erased updated as T views in the existing update<T> helper recover the already returned T extends Node and remove them. Foreign client compatibility is a public contract consequence, not silently assumed.",
+    "by_relation_position": {
+      "argument": [
+        "S074",
+        "S075",
+        "S090"
+      ]
+    }
+  },
+  {
+    "id": "G12",
+    "S": "InterfaceType",
+    "T": "TypeParameter",
+    "P": "constraint",
+    "meter_sites": 2,
+    "reason": "optional property constraint in TypeParameter absent from structural source InterfaceType, which can hide fields",
+    "regenerated_sites": 2,
+    "site_ids": [
+      "S017",
+      "S020"
+    ],
+    "road": "i",
+    "candidate": "C03",
+    "evidence": "checker.ts:5521/5575 constructs Type/TypeParameter through the allocator Type constructor (utilities.ts:8491); TypeParameter, substitution and this-type constraint caches store Type-valued constraints (checker.ts:16855-16869,17258,17927). AST TypeParameterDeclaration.constraint is a different Node/TypeNode field, not a Type-object counterexample.",
+    "premise": "Add the compatible internal cache declaration on Type, inherited by InterfaceType; never would be false for real TypeParameter/substitution instances.",
+    "by_relation_position": {
+      "assignment": [
+        "S017",
+        "S020"
+      ]
+    }
+  },
+  {
+    "id": "G13",
+    "S": "{ resolvedModule: ResolvedModuleFull; }",
+    "T": "ResolvedModuleWithFailedLookupLocations",
+    "P": "failedLookupLocations",
+    "meter_sites": 2,
+    "reason": "optional property failedLookupLocations in ResolvedModuleWithFailedLookupLocations absent from structural source { resolvedModule: ResolvedModuleFull; }, which can hide fields",
+    "regenerated_sites": 2,
+    "site_ids": [
+      "S055",
+      "S056"
+    ],
+    "road": "i",
+    "candidate": "C15",
+    "evidence": "program.ts:1615-1628 and1653-1668 creates new outer resolution wrappers in Array.map callbacks. The only fields are resolvedModule/resolvedTypeReferenceDirective; any spread is confined to the nested module object. No failedLookupLocations field is copied into the new outer wrapper.",
+    "premise": "Explicit map result type arguments name the public result interfaces at their fresh construction, without changing JavaScript or globally changing Array.",
+    "by_relation_position": {
+      "assignment": [
+        "S055"
+      ],
+      "return": [
+        "S056"
+      ]
+    }
+  },
+  {
+    "id": "G14",
+    "S": "ResolvedModuleWithFailedLookupLocations",
+    "T": "CachedResolvedModuleWithFailedLookupLocations",
+    "P": "isInvalidated",
+    "meter_sites": 2,
+    "reason": "optional property isInvalidated in CachedResolvedModuleWithFailedLookupLocations absent from structural source ResolvedModuleWithFailedLookupLocations, which can hide fields",
+    "regenerated_sites": 2,
+    "site_ids": [
+      "S061",
+      "S062"
+    ],
+    "road": "i",
+    "candidate": "C06",
+    "evidence": "Resolution wrappers come from module resolver/host result constructors and cache maps; resolutionCache.ts:1482 writes isInvalidated=true on reused resolution objects. The named-write audit finds that Boolean write, no conflicting declaration/value.",
+    "premise": "Both public result-interface owners gain an @internal Boolean slot; never is false because cached values really acquire true.",
+    "by_relation_position": {
+      "property in object literal": [
+        "S061"
+      ],
+      "assignment": [
+        "S062"
+      ]
+    }
+  },
+  {
+    "id": "G15",
+    "S": "object",
+    "T": "PackageJson",
+    "P": "name",
+    "meter_sites": 2,
+    "reason": "optional property name in PackageJson absent from structural source object, which can hide fields",
+    "regenerated_sites": 2,
+    "site_ids": [
+      "S035",
+      "S039"
+    ],
+    "road": "iii",
+    "candidate": null,
+    "evidence": "Concrete stock TypeScript inputs: package.json {name:42,version:\"1.0.0\",types:\"index.d.ts\"} remains object with numeric name after readJson; {name:\"pkg\",version:7,types:\"index.d.ts\"} remains cached PackageJsonPathFields with numeric version. moduleNameResolver.ts:2470 and utilities.ts:7785-7810 preserve raw extras. Both resolver/cache witnesses are recorded.",
+    "premise": "All declared S fields are valid in the relevant witness: object imposes no name contract; PackageJsonPathFields has a valid string name/types and does not declare version. A string/never declaration would be false without input validation.",
+    "by_relation_position": {
+      "assignment": [
+        "S035",
+        "S039"
+      ]
+    }
+  },
+  {
+    "id": "G16",
+    "S": "Pick<SourceFile, \"fileName\" | \"impliedNodeFormat\">",
+    "T": "Pick<SourceFile, \"fileName\" | \"impliedNodeFormat\" | \"packageJsonScope\">",
+    "P": "packageJsonScope",
+    "meter_sites": 2,
+    "reason": "optional property packageJsonScope in Pick<SourceFile, \"fileName\" | \"impliedNodeFormat\" | \"packageJsonScope\"> absent from structural source Pick<SourceFile, \"fileName\" | \"impliedNodeFormat\">, which can hide fields",
+    "regenerated_sites": 2,
+    "site_ids": [
+      "S041",
+      "S042"
+    ],
+    "road": "i",
+    "candidate": "C12b",
+    "evidence": "getModuleSpecifierPreferences importingSourceFile (moduleSpecifiers.ts:186) is a Pick that erases packageJsonScope. The value paths are SourceFile/FutureSourceFile metadata; types.ts:4305 already gives FutureSourceFile its compatible PackageJsonInfo scope. Resolver construction and implied-format setup supply that same cache object, or omit it.",
+    "premise": "Add packageJsonScope to only this parameter Pick. Both sites (:200 and :243) read this parameter; no unrelated Pick is needed.",
+    "by_relation_position": {
+      "argument": [
+        "S041",
+        "S042"
+      ]
+    }
+  },
+  {
+    "id": "G17",
+    "S": "Node",
+    "T": "SourceMapRange",
+    "P": "source",
+    "meter_sites": 2,
+    "reason": "optional property source in SourceMapRange absent from structural source Node, which can hide fields",
+    "regenerated_sites": 2,
+    "site_ids": [
+      "S030",
+      "S073"
+    ],
+    "road": "i",
+    "candidate": "C01b",
+    "evidence": "Node/Token/Identifier constructors in utilities.ts:8507,8521,8533; baseNodeFactory.ts:41 and node factories; range helpers utilities.ts:7869,7890 return either the original range or fresh pos/end objects. Named-write/declaration audit finds no TextRange-compatible source field with an incompatible type. Other source:string/Type fields belong to non-TextRange owners. SourceMapRange itself can carry a compatible SourceMapSource (customTransforms.ts:154 is an existing positive API fixture), so never is not the proposed contract.",
+    "premise": "Owned constructor/write facts plus adaptation 72's relation-site certificate. The declaration alone caused two strict TS2379 errors at nodeFactory.ts:7182-7183; two erased updated as T views in the existing update<T> helper recover the already returned T extends Node and remove them. Foreign client compatibility is a public contract consequence, not silently assumed.",
+    "by_relation_position": {
+      "return": [
+        "S030"
+      ],
+      "argument": [
+        "S073"
+      ]
+    }
+  },
+  {
+    "id": "G18",
+    "S": "VariableDeclaration",
+    "T": "SourceMapRange",
+    "P": "source",
+    "meter_sites": 2,
+    "reason": "optional property source in SourceMapRange absent from structural source VariableDeclaration, which can hide fields",
+    "regenerated_sites": 2,
+    "site_ids": [
+      "S080",
+      "S100"
+    ],
+    "road": "i",
+    "candidate": "C01b",
+    "evidence": "Node/Token/Identifier constructors in utilities.ts:8507,8521,8533; baseNodeFactory.ts:41 and node factories; range helpers utilities.ts:7869,7890 return either the original range or fresh pos/end objects. Named-write/declaration audit finds no TextRange-compatible source field with an incompatible type. Other source:string/Type fields belong to non-TextRange owners. SourceMapRange itself can carry a compatible SourceMapSource (customTransforms.ts:154 is an existing positive API fixture), so never is not the proposed contract.",
+    "premise": "Owned constructor/write facts plus adaptation 72's relation-site certificate. The declaration alone caused two strict TS2379 errors at nodeFactory.ts:7182-7183; two erased updated as T views in the existing update<T> helper recover the already returned T extends Node and remove them. Foreign client compatibility is a public contract consequence, not silently assumed.",
+    "by_relation_position": {
+      "argument": [
+        "S080",
+        "S100"
+      ]
+    }
+  },
+  {
+    "id": "G19",
+    "S": "VariableStatement",
+    "T": "SourceMapRange",
+    "P": "source",
+    "meter_sites": 2,
+    "reason": "optional property source in SourceMapRange absent from structural source VariableStatement, which can hide fields",
+    "regenerated_sites": 2,
+    "site_ids": [
+      "S099",
+      "S104"
+    ],
+    "road": "i",
+    "candidate": "C01b",
+    "evidence": "Node/Token/Identifier constructors in utilities.ts:8507,8521,8533; baseNodeFactory.ts:41 and node factories; range helpers utilities.ts:7869,7890 return either the original range or fresh pos/end objects. Named-write/declaration audit finds no TextRange-compatible source field with an incompatible type. Other source:string/Type fields belong to non-TextRange owners. SourceMapRange itself can carry a compatible SourceMapSource (customTransforms.ts:154 is an existing positive API fixture), so never is not the proposed contract.",
+    "premise": "Owned constructor/write facts plus adaptation 72's relation-site certificate. The declaration alone caused two strict TS2379 errors at nodeFactory.ts:7182-7183; two erased updated as T views in the existing update<T> helper recover the already returned T extends Node and remove them. Foreign client compatibility is a public contract consequence, not silently assumed.",
+    "by_relation_position": {
+      "argument": [
+        "S099",
+        "S104"
+      ]
+    }
+  },
+  {
+    "id": "G20",
+    "S": "object",
+    "T": "CompilerOptions",
+    "P": "all",
+    "meter_sites": 1,
+    "reason": "optional property all in CompilerOptions absent from structural source object, which can hide fields",
+    "regenerated_sites": 1,
+    "site_ids": [
+      "S027"
+    ],
+    "road": "ii",
+    "candidate": null,
+    "evidence": "optionMapToObject (commandLineParser.ts:2729) calls Object.fromEntries. Every compiled-program caller feeds serializeCompilerOptions/serializeWatchOptions. serializeOptionBaseObject (:2795-2847) skips all because its fixed declaration (:641) has the Command_line_Options category; watch options have no all definition. Runtime witness serializing {all:true,module:ESNext} has no all key.",
+    "premise": "A call-specific key-set certificate for this serializer result, not Object.fromEntries in general. This proves only all absence: serialized module is a string, so it does not certify the entire object as CompilerOptions or promise the next field will pass.",
+    "by_relation_position": {
+      "spread": [
+        "S027"
+      ]
+    }
+  },
+  {
+    "id": "G21",
+    "S": "IncrementalCompilationOptions",
+    "T": "IncrementalProgramOptions<EmitAndSemanticDiagnosticsBuilderProgram>",
+    "P": "createProgram",
+    "meter_sites": 1,
+    "reason": "optional property createProgram in IncrementalProgramOptions<EmitAndSemanticDiagnosticsBuilderProgram> absent from structural source IncrementalCompilationOptions, which can hide fields",
+    "regenerated_sites": 1,
+    "site_ids": [
+      "S131"
+    ],
+    "road": "i",
+    "candidate": "C11",
+    "evidence": "performIncrementalCompilation (watch.ts:987) forwards its input into createIncrementalProgram. CLI/controller constructors omit createProgram; supplied overrides are the same CreateProgram<EmitAndSemanticDiagnosticsBuilderProgram> factory contract used by watchPublic.ts:132-151.",
+    "premise": "Declare the optional factory on the internal IncrementalCompilationOptions owner, not never.",
+    "by_relation_position": {
+      "argument": [
+        "S131"
+      ]
+    }
+  },
+  {
+    "id": "G22",
+    "S": "{ resolvedTypeReferenceDirective: ResolvedTypeReferenceDirective | undefined; }",
+    "T": "ResolvedTypeReferenceDirectiveWithFailedLookupLocations",
+    "P": "failedLookupLocations",
+    "meter_sites": 1,
+    "reason": "optional property failedLookupLocations in ResolvedTypeReferenceDirectiveWithFailedLookupLocations absent from structural source { resolvedTypeReferenceDirective: ResolvedTypeReferenceDirective | undefined; }, which can hide fields",
+    "regenerated_sites": 1,
+    "site_ids": [
+      "S057"
+    ],
+    "road": "i",
+    "candidate": "C15",
+    "evidence": "program.ts:1615-1628 and1653-1668 creates new outer resolution wrappers in Array.map callbacks. The only fields are resolvedModule/resolvedTypeReferenceDirective; any spread is confined to the nested module object. No failedLookupLocations field is copied into the new outer wrapper.",
+    "premise": "Explicit map result type arguments name the public result interfaces at their fresh construction, without changing JavaScript or globally changing Array.",
+    "by_relation_position": {
+      "return": [
+        "S057"
+      ]
+    }
+  },
+  {
+    "id": "G23",
+    "S": "ResolvedTypeReferenceDirectiveWithFailedLookupLocations",
+    "T": "CachedResolvedTypeReferenceDirectiveWithFailedLookupLocations",
+    "P": "isInvalidated",
+    "meter_sites": 1,
+    "reason": "optional property isInvalidated in CachedResolvedTypeReferenceDirectiveWithFailedLookupLocations absent from structural source ResolvedTypeReferenceDirectiveWithFailedLookupLocations, which can hide fields",
+    "regenerated_sites": 1,
+    "site_ids": [
+      "S064"
+    ],
+    "road": "i",
+    "candidate": "C06",
+    "evidence": "Resolution wrappers come from module resolver/host result constructors and cache maps; resolutionCache.ts:1482 writes isInvalidated=true on reused resolution objects. The named-write audit finds that Boolean write, no conflicting declaration/value.",
+    "premise": "Both public result-interface owners gain an @internal Boolean slot; never is false because cached values really acquire true.",
+    "by_relation_position": {
+      "property in object literal": [
+        "S064"
+      ]
+    }
+  },
+  {
+    "id": "G24",
+    "S": "ResolvedModuleWithFailedLookupLocations",
+    "T": "ResolutionWithFailedLookupLocations",
+    "P": "isInvalidated",
+    "meter_sites": 1,
+    "reason": "optional property isInvalidated in ResolutionWithFailedLookupLocations absent from structural source ResolvedModuleWithFailedLookupLocations, which can hide fields",
+    "regenerated_sites": 1,
+    "site_ids": [
+      "S060"
+    ],
+    "road": "i",
+    "candidate": "C06",
+    "evidence": "Resolution wrappers come from module resolver/host result constructors and cache maps; resolutionCache.ts:1482 writes isInvalidated=true on reused resolution objects. The named-write audit finds that Boolean write, no conflicting declaration/value.",
+    "premise": "Both public result-interface owners gain an @internal Boolean slot; never is false because cached values really acquire true.",
+    "by_relation_position": {
+      "return": [
+        "S060"
+      ]
+    }
+  },
+  {
+    "id": "G25",
+    "S": "ResolvedTypeReferenceDirectiveWithFailedLookupLocations",
+    "T": "ResolutionWithFailedLookupLocations",
+    "P": "isInvalidated",
+    "meter_sites": 1,
+    "reason": "optional property isInvalidated in ResolutionWithFailedLookupLocations absent from structural source ResolvedTypeReferenceDirectiveWithFailedLookupLocations, which can hide fields",
+    "regenerated_sites": 1,
+    "site_ids": [
+      "S063"
+    ],
+    "road": "i",
+    "candidate": "C06",
+    "evidence": "Resolution wrappers come from module resolver/host result constructors and cache maps; resolutionCache.ts:1482 writes isInvalidated=true on reused resolution objects. The named-write audit finds that Boolean write, no conflicting declaration/value.",
+    "premise": "Both public result-interface owners gain an @internal Boolean slot; never is false because cached values really acquire true.",
+    "by_relation_position": {
+      "return": [
+        "S063"
+      ]
+    }
+  },
+  {
+    "id": "G26",
+    "S": "JSDoc[]",
+    "T": "JSDocArray",
+    "P": "jsDocCache",
+    "meter_sites": 1,
+    "reason": "optional property jsDocCache in JSDocArray absent from structural source JSDoc[], which can hide fields",
+    "regenerated_sites": 1,
+    "site_ids": [
+      "S053"
+    ],
+    "road": "ii",
+    "candidate": null,
+    "evidence": "withJSDoc (parser.ts:1820-1834) calls mapDefined. core.ts:494 allocates result=[] and pushes elements; callback receives only input element/index and cannot see the result before return. The array is unpublished until node.jsDoc=jsDoc. getJSDocTags later legitimately adds jsDocCache (utilitiesPublic.ts:1271); runtime witness confirms absent-before/present-after.",
+    "premise": "A closed fresh-array factory / no-escape proof at this publication point; never is not an invariant of all JSDoc[] values after aliasing. Do not exempt arbitrary array-returning calls.",
+    "by_relation_position": {
+      "assignment": [
+        "S053"
+      ]
+    }
+  },
+  {
+    "id": "G27",
+    "S": "CompilerHost",
+    "T": "CompilerHost & { onUnRecoverableConfigFileDiagnostic?: DiagnosticReporter; }",
+    "P": "onUnRecoverableConfigFileDiagnostic",
+    "meter_sites": 1,
+    "reason": "optional property onUnRecoverableConfigFileDiagnostic in CompilerHost & { onUnRecoverableConfigFileDiagnostic?: DiagnosticReporter; } absent from structural source CompilerHost, which can hide fields",
+    "regenerated_sites": 1,
+    "site_ids": [
+      "S054"
+    ],
+    "road": "i",
+    "candidate": "C10",
+    "evidence": "CompilerHost is created by program.ts createCompilerHostWorker; watch/config helpers install DiagnosticReporter-compatible callbacks or omit them. program.ts:5131 uses the optional callback with a returnUndefined fallback. Named callback writes are listed in the audit.",
+    "premise": "Add an @internal optional callable to CompilerHost; constructors are not nominal-class-only, so the nominal exemption is not the premise.",
+    "by_relation_position": {
+      "argument": [
+        "S054"
+      ]
+    }
+  },
+  {
+    "id": "G28",
+    "S": "SolutionBuilderHost<T>",
+    "T": "ProgramHost<T> & { onUnRecoverableConfigFileDiagnostic?: DiagnosticReporter; }",
+    "P": "onUnRecoverableConfigFileDiagnostic",
+    "meter_sites": 1,
+    "reason": "optional property onUnRecoverableConfigFileDiagnostic in ProgramHost<T> & { onUnRecoverableConfigFileDiagnostic?: DiagnosticReporter; } absent from structural source SolutionBuilderHost<T>, which can hide fields",
+    "regenerated_sites": 1,
+    "site_ids": [
+      "S121"
+    ],
+    "road": "i",
+    "candidate": "C09b",
+    "evidence": "createSolutionBuilderHostBase (tsbuildPublic.ts:294) obtains createProgramHost and adds known reporting functions. The default objects omit getGlobalTypingsCacheLocation; installed getters/reporters and parse-config callback writes are callable with the stated signature (program.ts:1966; tsbuildPublic.ts:596,598).",
+    "premise": "Add internal optional contracts to SolutionBuilderHostBase, not ProgramHost. The broader ProgramHost candidate caused TS2320 through ConfigFileDiagnosticsReporter inheritance and is rejected.",
+    "by_relation_position": {
+      "argument": [
+        "S121"
+      ]
+    }
+  },
+  {
+    "id": "G29",
+    "S": "{ path: string; extension: string; packageId: PackageId | undefined; resolvedUsingTsExtension: boolean | undefined; }",
+    "T": "Resolved",
+    "P": "originalPath",
+    "meter_sites": 1,
+    "reason": "optional property originalPath in Resolved absent from structural source { path: string; extension: string; packageId: PackageId | undefined; resolvedUsingTsExtension: boolean | undefined; }, which can hide fields",
+    "regenerated_sites": 1,
+    "site_ids": [
+      "S032"
+    ],
+    "road": "ii",
+    "candidate": null,
+    "evidence": "withPackageId (moduleNameResolver.ts:127-140) returns r && a fresh literal containing exactly path,extension,packageId,resolvedUsingTsExtension. The false branch is undefined; the new object has no originalPath and no spreads.",
+    "premise": "Carry literal freshness through this short-circuit expression without treating a named object or assignment handle as fresh; equivalent to the existing conditional-branch premise, not a structural-object blanket exception.",
+    "by_relation_position": {
+      "return": [
+        "S032"
+      ]
+    }
+  },
+  {
+    "id": "G30",
+    "S": "{ moduleFileToTry: string; }",
+    "T": "{ moduleFileToTry: string; packageRootPath?: string; blockedByExports?: true; verbatimFromExports?: true; }",
+    "P": "packageRootPath",
+    "meter_sites": 1,
+    "reason": "optional property packageRootPath in { moduleFileToTry: string; packageRootPath?: string; blockedByExports?: true; verbatimFromExports?: true; } absent from structural source { moduleFileToTry: string; }, which can hide fields",
+    "regenerated_sites": 1,
+    "site_ids": [
+      "S040"
+    ],
+    "road": "i",
+    "candidate": "C16",
+    "evidence": "tryGetModuleNameFromExportsOrImports (moduleSpecifiers.ts:1020) and tryGetModuleNameFromExports (:1122) return fresh objects with exactly moduleFileToTry, or recursive results of the same constructors. tryDirectoryWithPackageJson (:1277) spreads that known result. No arbitrary package-JSON object is returned as that result.",
+    "premise": "Add packageRootPath?:never to both private fixed-field helper result annotations; this is constructor-specific, not a never claim about every structurally compatible object.",
+    "by_relation_position": {
+      "spread": [
+        "S040"
+      ]
+    }
+  },
+  {
+    "id": "G31",
+    "S": "{ resolutionMode: ModuleKind.CommonJS | ModuleKind.ESNext; }",
+    "T": "FileReference",
+    "P": "preserve",
+    "meter_sites": 1,
+    "reason": "optional property preserve in FileReference absent from structural source { resolutionMode: ModuleKind.CommonJS | ModuleKind.ESNext; }, which can hide fields",
+    "regenerated_sites": 1,
+    "site_ids": [
+      "S047"
+    ],
+    "road": "ii",
+    "candidate": null,
+    "evidence": "parser.ts:10624,10627,10630 spreads only conditional branches {preserve} / {} and {resolutionMode:parsed} / {}. preserve is derived by equality to \"true\"; parsed is validated by parseResolutionMode. Neither nonempty constructor has the other key.",
+    "premise": "Recognize certified unaliased fresh literal branches as the spread operand, checking each original branch before copy; do not treat a spread of an arbitrary view, alias, or assignment handle as absence evidence. Needs a ruling; no lowering code proposed.",
+    "by_relation_position": {
+      "spread": [
+        "S047"
+      ]
+    }
+  },
+  {
+    "id": "G32",
+    "S": "SerializedDiagnosticMessageChain",
+    "T": "DiagnosticMessageChain",
+    "P": "repopulateInfo",
+    "meter_sites": 1,
+    "reason": "optional property repopulateInfo in DiagnosticMessageChain absent from structural source SerializedDiagnosticMessageChain, which can hide fields",
+    "regenerated_sites": 1,
+    "site_ids": [
+      "S002"
+    ],
+    "road": "iii",
+    "candidate": null,
+    "evidence": "A version-matched accepted .tsbuildinfo has a SerializedDiagnosticMessageChain with valid messageText/category/code and an undeclared repopulateInfo:42. readBuilderProgram keeps it in reusable diagnostics; emitter.ts:1144, watchPublic.ts:105 and builder.ts:2277 trace the input. builder.ts:534-567 checks message/category/code/next but never validates/removes that extra before returning or spreading it.",
+    "premise": "The hidden value is a number, not the target callback. A spread and the current isFullChain guard do not establish absence; claiming repopulateInfo?:never/function on the serialized source is false.",
+    "by_relation_position": {
+      "spread": [
+        "S002"
+      ]
+    }
+  },
+  {
+    "id": "G33",
+    "S": "DiagnosticRelatedInformation",
+    "T": "Diagnostic",
+    "P": "reportsUnnecessary",
+    "meter_sites": 1,
+    "reason": "optional property reportsUnnecessary in Diagnostic absent from structural source DiagnosticRelatedInformation, which can hide fields",
+    "regenerated_sites": 1,
+    "site_ids": [
+      "S003"
+    ],
+    "road": "iii",
+    "candidate": null,
+    "evidence": "A valid ReusableDiagnosticRelatedInformation record in an accepted build-info relatedInformation array carries extra reportsUnnecessary:null. All required declared source fields are present and valid. Original convertToDiagnosticRelatedInformation (builder.ts:618) and toReusableDiagnosticRelatedInformation (:1543) are executed as source-extracted probes and preserve null by spread. Null is outside the target {}|undefined marker type.",
+    "premise": "This is a group-wide source-pool counterexample, not a claim that every listed coordinate was executed with the witness. C04/C05 gave zero stock diagnostics but are rejected as untruthful global declarations. Neither spread strips the hidden extra; input validation or stronger provenance would be needed before widening.",
+    "by_relation_position": {
+      "assignment": [
+        "S003"
+      ]
+    }
+  },
+  {
+    "id": "G34",
+    "S": "ReusableDiagnosticRelatedInformation",
+    "T": "ReusableDiagnostic",
+    "P": "reportsUnnecessary",
+    "meter_sites": 1,
+    "reason": "optional property reportsUnnecessary in ReusableDiagnostic absent from structural source ReusableDiagnosticRelatedInformation, which can hide fields",
+    "regenerated_sites": 1,
+    "site_ids": [
+      "S001"
+    ],
+    "road": "iii",
+    "candidate": null,
+    "evidence": "A valid ReusableDiagnosticRelatedInformation record in an accepted build-info relatedInformation array carries extra reportsUnnecessary:null. All required declared source fields are present and valid. Original convertToDiagnosticRelatedInformation (builder.ts:618) and toReusableDiagnosticRelatedInformation (:1543) are executed as source-extracted probes and preserve null by spread. Null is outside the target {}|undefined marker type.",
+    "premise": "This is a group-wide source-pool counterexample, not a claim that every listed coordinate was executed with the witness. C04/C05 gave zero stock diagnostics but are rejected as untruthful global declarations. Neither spread strips the hidden extra; input validation or stronger provenance would be needed before widening.",
+    "by_relation_position": {
+      "assignment": [
+        "S001"
+      ]
+    }
+  },
+  {
+    "id": "G35",
+    "S": "SourceFile",
+    "T": "SourceMapSource",
+    "P": "skipTrivia",
+    "meter_sites": 1,
+    "reason": "optional property skipTrivia in SourceMapSource absent from structural source SourceFile, which can hide fields",
+    "regenerated_sites": 1,
+    "site_ids": [
+      "S029"
+    ],
+    "road": "i",
+    "candidate": "C07",
+    "evidence": "SourceFile constructors and services SourceFileObject omit skipTrivia. The distinct SourceMapSource constructor (utilities.ts:8546-8550 and services/services.ts:1321) writes only the matching (pos:number)=>number callback. No SourceFile constructor/writer supplies another type.",
+    "premise": "Declare a compatible optional internal callback on SourceFile; retain support for a legitimate SourceFile/source-map intersection, rather than globally assert never.",
+    "by_relation_position": {
+      "argument": [
+        "S029"
+      ]
+    }
+  },
+  {
+    "id": "G36",
+    "S": "ArrayBindingPattern",
+    "T": "SourceMapRange",
+    "P": "source",
+    "meter_sites": 1,
+    "reason": "optional property source in SourceMapRange absent from structural source ArrayBindingPattern, which can hide fields",
+    "regenerated_sites": 1,
+    "site_ids": [
+      "S101"
+    ],
+    "road": "i",
+    "candidate": "C01b",
+    "evidence": "Node/Token/Identifier constructors in utilities.ts:8507,8521,8533; baseNodeFactory.ts:41 and node factories; range helpers utilities.ts:7869,7890 return either the original range or fresh pos/end objects. Named-write/declaration audit finds no TextRange-compatible source field with an incompatible type. Other source:string/Type fields belong to non-TextRange owners. SourceMapRange itself can carry a compatible SourceMapSource (customTransforms.ts:154 is an existing positive API fixture), so never is not the proposed contract.",
+    "premise": "Owned constructor/write facts plus adaptation 72's relation-site certificate. The declaration alone caused two strict TS2379 errors at nodeFactory.ts:7182-7183; two erased updated as T views in the existing update<T> helper recover the already returned T extends Node and remove them. Foreign client compatibility is a public contract consequence, not silently assumed.",
+    "by_relation_position": {
+      "argument": [
+        "S101"
+      ]
+    }
+  },
+  {
+    "id": "G37",
+    "S": "ClassDeclaration",
+    "T": "SourceMapRange",
+    "P": "source",
+    "meter_sites": 1,
+    "reason": "optional property source in SourceMapRange absent from structural source ClassDeclaration, which can hide fields",
+    "regenerated_sites": 1,
+    "site_ids": [
+      "S098"
+    ],
+    "road": "i",
+    "candidate": "C01b",
+    "evidence": "Node/Token/Identifier constructors in utilities.ts:8507,8521,8533; baseNodeFactory.ts:41 and node factories; range helpers utilities.ts:7869,7890 return either the original range or fresh pos/end objects. Named-write/declaration audit finds no TextRange-compatible source field with an incompatible type. Other source:string/Type fields belong to non-TextRange owners. SourceMapRange itself can carry a compatible SourceMapSource (customTransforms.ts:154 is an existing positive API fixture), so never is not the proposed contract.",
+    "premise": "Owned constructor/write facts plus adaptation 72's relation-site certificate. The declaration alone caused two strict TS2379 errors at nodeFactory.ts:7182-7183; two erased updated as T views in the existing update<T> helper recover the already returned T extends Node and remove them. Foreign client compatibility is a public contract consequence, not silently assumed.",
+    "by_relation_position": {
+      "argument": [
+        "S098"
+      ]
+    }
+  },
+  {
+    "id": "G38",
+    "S": "EnumDeclaration",
+    "T": "SourceMapRange",
+    "P": "source",
+    "meter_sites": 1,
+    "reason": "optional property source in SourceMapRange absent from structural source EnumDeclaration, which can hide fields",
+    "regenerated_sites": 1,
+    "site_ids": [
+      "S112"
+    ],
+    "road": "i",
+    "candidate": "C01b",
+    "evidence": "Node/Token/Identifier constructors in utilities.ts:8507,8521,8533; baseNodeFactory.ts:41 and node factories; range helpers utilities.ts:7869,7890 return either the original range or fresh pos/end objects. Named-write/declaration audit finds no TextRange-compatible source field with an incompatible type. Other source:string/Type fields belong to non-TextRange owners. SourceMapRange itself can carry a compatible SourceMapSource (customTransforms.ts:154 is an existing positive API fixture), so never is not the proposed contract.",
+    "premise": "Owned constructor/write facts plus adaptation 72's relation-site certificate. The declaration alone caused two strict TS2379 errors at nodeFactory.ts:7182-7183; two erased updated as T views in the existing update<T> helper recover the already returned T extends Node and remove them. Foreign client compatibility is a public contract consequence, not silently assumed.",
+    "by_relation_position": {
+      "argument": [
+        "S112"
+      ]
+    }
+  },
+  {
+    "id": "G39",
+    "S": "InitializedVariableDeclaration",
+    "T": "SourceMapRange",
+    "P": "source",
+    "meter_sites": 1,
+    "reason": "optional property source in SourceMapRange absent from structural source InitializedVariableDeclaration, which can hide fields",
+    "regenerated_sites": 1,
+    "site_ids": [
+      "S102"
+    ],
+    "road": "i",
+    "candidate": "C01b",
+    "evidence": "Node/Token/Identifier constructors in utilities.ts:8507,8521,8533; baseNodeFactory.ts:41 and node factories; range helpers utilities.ts:7869,7890 return either the original range or fresh pos/end objects. Named-write/declaration audit finds no TextRange-compatible source field with an incompatible type. Other source:string/Type fields belong to non-TextRange owners. SourceMapRange itself can carry a compatible SourceMapSource (customTransforms.ts:154 is an existing positive API fixture), so never is not the proposed contract.",
+    "premise": "Owned constructor/write facts plus adaptation 72's relation-site certificate. The declaration alone caused two strict TS2379 errors at nodeFactory.ts:7182-7183; two erased updated as T views in the existing update<T> helper recover the already returned T extends Node and remove them. Foreign client compatibility is a public contract consequence, not silently assumed.",
+    "by_relation_position": {
+      "argument": [
+        "S102"
+      ]
+    }
+  },
+  {
+    "id": "G40",
+    "S": "ModuleDeclaration",
+    "T": "SourceMapRange",
+    "P": "source",
+    "meter_sites": 1,
+    "reason": "optional property source in SourceMapRange absent from structural source ModuleDeclaration, which can hide fields",
+    "regenerated_sites": 1,
+    "site_ids": [
+      "S113"
+    ],
+    "road": "i",
+    "candidate": "C01b",
+    "evidence": "Node/Token/Identifier constructors in utilities.ts:8507,8521,8533; baseNodeFactory.ts:41 and node factories; range helpers utilities.ts:7869,7890 return either the original range or fresh pos/end objects. Named-write/declaration audit finds no TextRange-compatible source field with an incompatible type. Other source:string/Type fields belong to non-TextRange owners. SourceMapRange itself can carry a compatible SourceMapSource (customTransforms.ts:154 is an existing positive API fixture), so never is not the proposed contract.",
+    "premise": "Owned constructor/write facts plus adaptation 72's relation-site certificate. The declaration alone caused two strict TS2379 errors at nodeFactory.ts:7182-7183; two erased updated as T views in the existing update<T> helper recover the already returned T extends Node and remove them. Foreign client compatibility is a public contract consequence, not silently assumed.",
+    "by_relation_position": {
+      "argument": [
+        "S113"
+      ]
+    }
+  },
+  {
+    "id": "G41",
+    "S": "ParameterDeclaration",
+    "T": "SourceMapRange",
+    "P": "source",
+    "meter_sites": 1,
+    "reason": "optional property source in SourceMapRange absent from structural source ParameterDeclaration, which can hide fields",
+    "regenerated_sites": 1,
+    "site_ids": [
+      "S065"
+    ],
+    "road": "i",
+    "candidate": "C01b",
+    "evidence": "Node/Token/Identifier constructors in utilities.ts:8507,8521,8533; baseNodeFactory.ts:41 and node factories; range helpers utilities.ts:7869,7890 return either the original range or fresh pos/end objects. Named-write/declaration audit finds no TextRange-compatible source field with an incompatible type. Other source:string/Type fields belong to non-TextRange owners. SourceMapRange itself can carry a compatible SourceMapSource (customTransforms.ts:154 is an existing positive API fixture), so never is not the proposed contract.",
+    "premise": "Owned constructor/write facts plus adaptation 72's relation-site certificate. The declaration alone caused two strict TS2379 errors at nodeFactory.ts:7182-7183; two erased updated as T views in the existing update<T> helper recover the already returned T extends Node and remove them. Foreign client compatibility is a public contract consequence, not silently assumed.",
+    "by_relation_position": {
+      "argument": [
+        "S065"
+      ]
+    }
+  },
+  {
+    "id": "G42",
+    "S": "SuperExpression",
+    "T": "SourceMapRange",
+    "P": "source",
+    "meter_sites": 1,
+    "reason": "optional property source in SourceMapRange absent from structural source SuperExpression, which can hide fields",
+    "regenerated_sites": 1,
+    "site_ids": [
+      "S079"
+    ],
+    "road": "i",
+    "candidate": "C01b",
+    "evidence": "Node/Token/Identifier constructors in utilities.ts:8507,8521,8533; baseNodeFactory.ts:41 and node factories; range helpers utilities.ts:7869,7890 return either the original range or fresh pos/end objects. Named-write/declaration audit finds no TextRange-compatible source field with an incompatible type. Other source:string/Type fields belong to non-TextRange owners. SourceMapRange itself can carry a compatible SourceMapSource (customTransforms.ts:154 is an existing positive API fixture), so never is not the proposed contract.",
+    "premise": "Owned constructor/write facts plus adaptation 72's relation-site certificate. The declaration alone caused two strict TS2379 errors at nodeFactory.ts:7182-7183; two erased updated as T views in the existing update<T> helper recover the already returned T extends Node and remove them. Foreign client compatibility is a public contract consequence, not silently assumed.",
+    "by_relation_position": {
+      "argument": [
+        "S079"
+      ]
+    }
+  },
+  {
+    "id": "G43",
+    "S": "{ [index: string]: string | undefined; }",
+    "T": "{ types?: { value: string; pos: number; end: number; }; } & { lib?: { value: string; pos: number; end: number; }; } & { path?: { value: string; pos: number; end: number; }; } & { \"no-default-lib\"?: string; } & { \"resolution-mode\"?: string; } & ...",
+    "P": "types",
+    "meter_sites": 1,
+    "reason": "optional property types in { types?: { value: string; pos: number; end: number; }; } & { lib?: { value: string; pos: number; end: number; }; } & { path?: { value: string; pos: number; end: number; }; } & { \"no-default-lib\"?: string; } & { \"resolution-mode\"?: string; } & ... absent from structural source { [index: string]: string | undefined; }, which can hide fields",
+    "regenerated_sites": 1,
+    "site_ids": [
+      "S052"
+    ],
+    "road": "i",
+    "candidate": "C13",
+    "evidence": "getNamedPragmaArguments builds {} and writes keys from pragma.args. addPragmaForMatch checks the selected kind; commentPragmas (types.ts:10273-10316) gives positional SingleLine/MultiLine pragmas no types key. reference has types only in the XML kind.",
+    "premise": "On the private return and argMap annotations, types?:never truthfully states absence for all current positional constructors. This relies on the immutable current pragma-spec table/kind check, not on a generic string index signature proving absence.",
+    "by_relation_position": {
+      "property in object literal": [
+        "S052"
+      ]
+    }
+  },
+  {
+    "id": "G44",
+    "S": "{ [index: string]: string | { value: string; pos: number; end: number; }; }",
+    "T": "{ types?: { value: string; pos: number; end: number; }; } & { lib?: { value: string; pos: number; end: number; }; } & { path?: { value: string; pos: number; end: number; }; } & { \"no-default-lib\"?: string; } & { \"resolution-mode\"?: string; } & ...",
+    "P": "types",
+    "meter_sites": 1,
+    "reason": "optional property types in { types?: { value: string; pos: number; end: number; }; } & { lib?: { value: string; pos: number; end: number; }; } & { path?: { value: string; pos: number; end: number; }; } & { \"no-default-lib\"?: string; } & { \"resolution-mode\"?: string; } & ... absent from structural source { [index: string]: string | { value: string; pos: number; end: number; }; }, which can hide fields",
+    "regenerated_sites": 1,
+    "site_ids": [
+      "S051"
+    ],
+    "road": "i",
+    "candidate": "C14b",
+    "evidence": "extractPragmas builds a fresh argument dictionary. For reference/types the fixed metadata has captureSpan:true, and parser.ts:10714-10720 writes the value/pos/end object. Other XML pragmas do not construct a types key.",
+    "premise": "Declare types?:{value:string;pos:number;end:number}, and include undefined in the index value type. The first index-signature candidate was rejected with TS2411.",
+    "by_relation_position": {
+      "property in object literal": [
+        "S051"
+      ]
+    }
+  },
+  {
+    "id": "G45",
+    "S": "{ include: readonly string[] | undefined; exclude: readonly string[] | undefined; }",
+    "T": "TSConfig & { watchOptions?: object | undefined; }",
+    "P": "watchOptions",
+    "meter_sites": 1,
+    "reason": "optional property watchOptions in TSConfig & { watchOptions?: object | undefined; } absent from structural source { include: readonly string[] | undefined; exclude: readonly string[] | undefined; }, which can hide fields",
+    "regenerated_sites": 1,
+    "site_ids": [
+      "S028"
+    ],
+    "road": "ii",
+    "candidate": null,
+    "evidence": "convertToTSConfig (commandLineParser.ts:2694-2697) spreads a conditional whose only constructors are {include,exclude} and {}. Neither branch has watchOptions; the containing object already writes its own watchOptions separately.",
+    "premise": "Certify the two original unaliased literals before spread. Explicit known keys, not the spread operation or the wide configFile view, establish absence.",
+    "by_relation_position": {
+      "spread": [
+        "S028"
+      ]
+    }
+  }
+]

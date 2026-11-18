@@ -1,0 +1,142 @@
+{
+  "typescript": "6.0.3",
+  "packageInputs": [
+    {
+      "input": {
+        "name": 42,
+        "version": "1.0.0",
+        "types": "index.d.ts"
+      },
+      "readJsonResult": {
+        "name": 42,
+        "version": "1.0.0",
+        "types": "index.d.ts"
+      },
+      "cachedPackageJsonContent": {
+        "name": 42,
+        "version": "1.0.0",
+        "types": "index.d.ts"
+      },
+      "resolved": {
+        "resolvedFileName": "/project/node_modules/pkg/index.d.ts",
+        "extension": ".d.ts",
+        "isExternalLibraryImport": true,
+        "resolvedUsingTsExtension": false
+      },
+      "trace": [
+        "======== Resolving module 'pkg' from '/project/main.ts'. ========",
+        "Explicitly specified module resolution kind: 'NodeNext'.",
+        "Resolving in CJS mode with conditions 'require', 'types', 'node'.",
+        "File '/project/package.json' does not exist.",
+        "Loading module 'pkg' from 'node_modules' folder, target file types: TypeScript, JavaScript, Declaration, JSON.",
+        "Searching all ancestor node_modules directories for preferred extensions: TypeScript, Declaration.",
+        "Found 'package.json' at '/project/node_modules/pkg/package.json'.",
+        "File '/project/node_modules/pkg.ts' does not exist.",
+        "File '/project/node_modules/pkg.tsx' does not exist.",
+        "File '/project/node_modules/pkg.d.ts' does not exist.",
+        "'package.json' does not have a 'typesVersions' field.",
+        "'package.json' does not have a 'typings' field.",
+        "'package.json' has 'types' field 'index.d.ts' that references '/project/node_modules/pkg/index.d.ts'.",
+        "File '/project/node_modules/pkg/index.d.ts' exists - use it as a name resolution result.",
+        "Resolving real path for '/project/node_modules/pkg/index.d.ts', result '/project/node_modules/pkg/index.d.ts'.",
+        "======== Module name 'pkg' was successfully resolved to '/project/node_modules/pkg/index.d.ts'. ========"
+      ]
+    },
+    {
+      "input": {
+        "name": "pkg",
+        "version": 7,
+        "types": "index.d.ts"
+      },
+      "readJsonResult": {
+        "name": "pkg",
+        "version": 7,
+        "types": "index.d.ts"
+      },
+      "cachedPackageJsonContent": {
+        "name": "pkg",
+        "version": 7,
+        "types": "index.d.ts"
+      },
+      "resolved": {
+        "resolvedFileName": "/project/node_modules/pkg/index.d.ts",
+        "extension": ".d.ts",
+        "isExternalLibraryImport": true,
+        "resolvedUsingTsExtension": false
+      },
+      "trace": [
+        "======== Resolving module 'pkg' from '/project/main.ts'. ========",
+        "Explicitly specified module resolution kind: 'NodeNext'.",
+        "Resolving in CJS mode with conditions 'require', 'types', 'node'.",
+        "File '/project/package.json' does not exist.",
+        "Loading module 'pkg' from 'node_modules' folder, target file types: TypeScript, JavaScript, Declaration, JSON.",
+        "Searching all ancestor node_modules directories for preferred extensions: TypeScript, Declaration.",
+        "Found 'package.json' at '/project/node_modules/pkg/package.json'.",
+        "File '/project/node_modules/pkg.ts' does not exist.",
+        "File '/project/node_modules/pkg.tsx' does not exist.",
+        "File '/project/node_modules/pkg.d.ts' does not exist.",
+        "'package.json' does not have a 'typesVersions' field.",
+        "'package.json' does not have a 'typings' field.",
+        "'package.json' has 'types' field 'index.d.ts' that references '/project/node_modules/pkg/index.d.ts'.",
+        "File '/project/node_modules/pkg/index.d.ts' exists - use it as a name resolution result.",
+        "Resolving real path for '/project/node_modules/pkg/index.d.ts', result '/project/node_modules/pkg/index.d.ts'.",
+        "======== Module name 'pkg' was successfully resolved to '/project/node_modules/pkg/index.d.ts'. ========"
+      ]
+    }
+  ],
+  "buildInfoInput": {
+    "input": {
+      "fileNames": [
+        "./main.ts"
+      ],
+      "fileInfos": [
+        {
+          "version": "v1",
+          "signature": "v1"
+        }
+      ],
+      "root": [
+        1
+      ],
+      "options": {
+        "incremental": true
+      },
+      "semanticDiagnosticsPerFile": [
+        [
+          1,
+          [
+            {
+              "category": 1,
+              "code": 9999,
+              "file": false,
+              "start": 0,
+              "length": 0,
+              "messageText": {
+                "messageText": "cached witness",
+                "category": 1,
+                "code": 9999,
+                "repopulateInfo": 42
+              }
+            }
+          ]
+        ]
+      ],
+      "version": "6.0.3"
+    },
+    "readBuilderProgramAccepted": true,
+    "retainedDiagnostic": {
+      "category": 1,
+      "code": 9999,
+      "file": false,
+      "start": 0,
+      "length": 0,
+      "messageText": {
+        "messageText": "cached witness",
+        "category": 1,
+        "code": 9999,
+        "repopulateInfo": 42
+      }
+    },
+    "retainedRepopulateInfoType": "number"
+  }
+}

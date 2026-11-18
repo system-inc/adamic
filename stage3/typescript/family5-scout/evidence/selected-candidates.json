@@ -1,0 +1,826 @@
+[
+  {
+    "id": "C01b",
+    "groups": [
+      "G01",
+      "G04",
+      "G06",
+      "G11",
+      "G17",
+      "G18",
+      "G19",
+      "G36",
+      "G37",
+      "G38",
+      "G39",
+      "G40",
+      "G41",
+      "G42"
+    ],
+    "file": "types.ts",
+    "files": [
+      "types.ts",
+      "factory/nodeFactory.ts"
+    ],
+    "owner": "TextRange",
+    "member": "source?: SourceMapSource;",
+    "secondary_edits": [
+      {
+        "file": "factory/nodeFactory.ts",
+        "line": 7182,
+        "from": "setOriginal(updated, original);",
+        "to": "setOriginal(updated as T, original);"
+      },
+      {
+        "file": "factory/nodeFactory.ts",
+        "line": 7183,
+        "from": "setTextRange(updated, original);",
+        "to": "setTextRange(updated as T, original);"
+      }
+    ],
+    "anchors": [
+      {
+        "owner": "TextRange",
+        "line": 28
+      }
+    ],
+    "public": true,
+    "root_count": 79,
+    "diagnostic_count": 0,
+    "diagnostics": [],
+    "emitted_js_byte_identical": true,
+    "file_hashes": [
+      {
+        "file": "types.ts",
+        "original_sha256": "7ae9a509881c3da4052e06388289a8e94c269576d38a8a808d9e08425c817239",
+        "candidate_sha256": "687a5be66a602248084a150b9b214cc3e8134a06405e13541b94a4d7645215d8"
+      },
+      {
+        "file": "factory/nodeFactory.ts",
+        "original_sha256": "8d70e0dc4fb44498e5e782151d790910fc573b55628a7becc6ad1c84c6f850ff",
+        "candidate_sha256": "65e0a4ce8a6a0ca46876b2261dd9234066ca715fa19ac7a8157089873656416e"
+      }
+    ],
+    "strict_checker_result": {
+      "id": "C01b",
+      "groups": [
+        "G01",
+        "G04",
+        "G06",
+        "G11",
+        "G17",
+        "G18",
+        "G19",
+        "G36",
+        "G37",
+        "G38",
+        "G39",
+        "G40",
+        "G41",
+        "G42"
+      ],
+      "file": "types.ts",
+      "files": [
+        "types.ts",
+        "factory/nodeFactory.ts"
+      ],
+      "owner": "TextRange",
+      "member": "source?: SourceMapSource;",
+      "secondary_edits": [
+        {
+          "file": "factory/nodeFactory.ts",
+          "line": 7182,
+          "from": "setOriginal(updated, original);",
+          "to": "setOriginal(updated as T, original);"
+        },
+        {
+          "file": "factory/nodeFactory.ts",
+          "line": 7183,
+          "from": "setTextRange(updated, original);",
+          "to": "setTextRange(updated as T, original);"
+        }
+      ],
+      "anchors": [
+        {
+          "owner": "TextRange",
+          "line": 28
+        }
+      ],
+      "public": true,
+      "root_count": 79,
+      "diagnostic_count": 0,
+      "diagnostics": [],
+      "emitted_js_byte_identical": true,
+      "file_hashes": [
+        {
+          "file": "types.ts",
+          "original_sha256": "7ae9a509881c3da4052e06388289a8e94c269576d38a8a808d9e08425c817239",
+          "candidate_sha256": "687a5be66a602248084a150b9b214cc3e8134a06405e13541b94a4d7645215d8"
+        },
+        {
+          "file": "factory/nodeFactory.ts",
+          "original_sha256": "8d70e0dc4fb44498e5e782151d790910fc573b55628a7becc6ad1c84c6f850ff",
+          "candidate_sha256": "65e0a4ce8a6a0ca46876b2261dd9234066ca715fa19ac7a8157089873656416e"
+        }
+      ]
+    },
+    "declaration_locations": [
+      "src/compiler/types.ts:28",
+      "src/compiler/factory/nodeFactory.ts:7182",
+      "src/compiler/factory/nodeFactory.ts:7183"
+    ]
+  },
+  {
+    "id": "C02",
+    "groups": [
+      "G02"
+    ],
+    "file": "types.ts",
+    "owner": "Node",
+    "member": "/** @internal */ getPositionOfLineAndCharacter?: ((line: number, character: number, allowEdits?: true) => number) | undefined;",
+    "public": false,
+    "anchors": [
+      {
+        "owner": "Node",
+        "line": 942
+      }
+    ],
+    "root_count": 79,
+    "diagnostic_count": 0,
+    "diagnostics": [],
+    "emitted_js_byte_identical": true,
+    "original_sha256": "7ae9a509881c3da4052e06388289a8e94c269576d38a8a808d9e08425c817239",
+    "candidate_sha256": "32f9f13f13f029d50f4223800dde15b67bdb4b6a648a8ed33f9fad384d0f4b35",
+    "strict_checker_result": {
+      "id": "C02",
+      "groups": [
+        "G02"
+      ],
+      "file": "types.ts",
+      "owner": "Node",
+      "member": "/** @internal */ getPositionOfLineAndCharacter?: ((line: number, character: number, allowEdits?: true) => number) | undefined;",
+      "public": false,
+      "anchors": [
+        {
+          "owner": "Node",
+          "line": 942
+        }
+      ],
+      "root_count": 79,
+      "diagnostic_count": 0,
+      "diagnostics": [],
+      "emitted_js_byte_identical": true,
+      "original_sha256": "7ae9a509881c3da4052e06388289a8e94c269576d38a8a808d9e08425c817239",
+      "candidate_sha256": "32f9f13f13f029d50f4223800dde15b67bdb4b6a648a8ed33f9fad384d0f4b35"
+    },
+    "declaration_locations": [
+      "src/compiler/types.ts:942"
+    ]
+  },
+  {
+    "id": "C03",
+    "groups": [
+      "G03",
+      "G12"
+    ],
+    "file": "types.ts",
+    "owner": "Type",
+    "member": "/** @internal */ constraint?: Type;",
+    "public": false,
+    "anchors": [
+      {
+        "owner": "Type",
+        "line": 6450
+      }
+    ],
+    "root_count": 79,
+    "diagnostic_count": 0,
+    "diagnostics": [],
+    "emitted_js_byte_identical": true,
+    "original_sha256": "7ae9a509881c3da4052e06388289a8e94c269576d38a8a808d9e08425c817239",
+    "candidate_sha256": "248ce19578d9ebb84ac943a85ee1dcb57d17dfa2643bcd01185a03306ceaa35b",
+    "strict_checker_result": {
+      "id": "C03",
+      "groups": [
+        "G03",
+        "G12"
+      ],
+      "file": "types.ts",
+      "owner": "Type",
+      "member": "/** @internal */ constraint?: Type;",
+      "public": false,
+      "anchors": [
+        {
+          "owner": "Type",
+          "line": 6450
+        }
+      ],
+      "root_count": 79,
+      "diagnostic_count": 0,
+      "diagnostics": [],
+      "emitted_js_byte_identical": true,
+      "original_sha256": "7ae9a509881c3da4052e06388289a8e94c269576d38a8a808d9e08425c817239",
+      "candidate_sha256": "248ce19578d9ebb84ac943a85ee1dcb57d17dfa2643bcd01185a03306ceaa35b"
+    },
+    "declaration_locations": [
+      "src/compiler/types.ts:6450"
+    ]
+  },
+  {
+    "id": "C06",
+    "groups": [
+      "G14",
+      "G23",
+      "G24",
+      "G25"
+    ],
+    "file": "types.ts",
+    "owners": [
+      "ResolvedModuleWithFailedLookupLocations",
+      "ResolvedTypeReferenceDirectiveWithFailedLookupLocations"
+    ],
+    "member": "/** @internal */ isInvalidated?: boolean;",
+    "public": false,
+    "anchors": [
+      {
+        "owner": "ResolvedModuleWithFailedLookupLocations",
+        "line": 8118
+      },
+      {
+        "owner": "ResolvedTypeReferenceDirectiveWithFailedLookupLocations",
+        "line": 8151
+      }
+    ],
+    "root_count": 79,
+    "diagnostic_count": 0,
+    "diagnostics": [],
+    "emitted_js_byte_identical": true,
+    "original_sha256": "7ae9a509881c3da4052e06388289a8e94c269576d38a8a808d9e08425c817239",
+    "candidate_sha256": "ace17d7b7b16a6d94a8af6c249c3fa40c23e13c6eddf3fc30640336346846865",
+    "strict_checker_result": {
+      "id": "C06",
+      "groups": [
+        "G14",
+        "G23",
+        "G24",
+        "G25"
+      ],
+      "file": "types.ts",
+      "owners": [
+        "ResolvedModuleWithFailedLookupLocations",
+        "ResolvedTypeReferenceDirectiveWithFailedLookupLocations"
+      ],
+      "member": "/** @internal */ isInvalidated?: boolean;",
+      "public": false,
+      "anchors": [
+        {
+          "owner": "ResolvedModuleWithFailedLookupLocations",
+          "line": 8118
+        },
+        {
+          "owner": "ResolvedTypeReferenceDirectiveWithFailedLookupLocations",
+          "line": 8151
+        }
+      ],
+      "root_count": 79,
+      "diagnostic_count": 0,
+      "diagnostics": [],
+      "emitted_js_byte_identical": true,
+      "original_sha256": "7ae9a509881c3da4052e06388289a8e94c269576d38a8a808d9e08425c817239",
+      "candidate_sha256": "ace17d7b7b16a6d94a8af6c249c3fa40c23e13c6eddf3fc30640336346846865"
+    },
+    "declaration_locations": [
+      "src/compiler/types.ts:8118",
+      "src/compiler/types.ts:8150"
+    ]
+  },
+  {
+    "id": "C07",
+    "groups": [
+      "G35"
+    ],
+    "file": "types.ts",
+    "owner": "SourceFile",
+    "member": "/** @internal */ skipTrivia?: (pos: number) => number;",
+    "public": false,
+    "anchors": [
+      {
+        "owner": "SourceFile",
+        "line": 4326
+      }
+    ],
+    "root_count": 79,
+    "diagnostic_count": 0,
+    "diagnostics": [],
+    "emitted_js_byte_identical": true,
+    "original_sha256": "7ae9a509881c3da4052e06388289a8e94c269576d38a8a808d9e08425c817239",
+    "candidate_sha256": "de8c5a7a2722776906303ce8999047ee34c7d7146315509ec0c7b9f2097866cf",
+    "strict_checker_result": {
+      "id": "C07",
+      "groups": [
+        "G35"
+      ],
+      "file": "types.ts",
+      "owner": "SourceFile",
+      "member": "/** @internal */ skipTrivia?: (pos: number) => number;",
+      "public": false,
+      "anchors": [
+        {
+          "owner": "SourceFile",
+          "line": 4326
+        }
+      ],
+      "root_count": 79,
+      "diagnostic_count": 0,
+      "diagnostics": [],
+      "emitted_js_byte_identical": true,
+      "original_sha256": "7ae9a509881c3da4052e06388289a8e94c269576d38a8a808d9e08425c817239",
+      "candidate_sha256": "de8c5a7a2722776906303ce8999047ee34c7d7146315509ec0c7b9f2097866cf"
+    },
+    "declaration_locations": [
+      "src/compiler/types.ts:4326"
+    ]
+  },
+  {
+    "id": "C08",
+    "groups": [
+      "G05"
+    ],
+    "file": "checker.ts",
+    "replace": [
+      "{ errors?: Diagnostic[] | undefined; }",
+      "ErrorOutputContainer"
+    ],
+    "public": false,
+    "anchors": [
+      {
+        "text": "{ errors?: Diagnostic[] | undefined; }",
+        "occurrences": 5
+      }
+    ],
+    "root_count": 79,
+    "diagnostic_count": 0,
+    "diagnostics": [],
+    "emitted_js_byte_identical": true,
+    "original_sha256": "bc23b2e4c5afcf2e97dacfd2d9ca86b29fe4141d51fef6c6a5c801a67d6023a4",
+    "candidate_sha256": "dc4e63ddf305b18dd8433cea0c867653e5549be4abf463cd225825498b802916",
+    "strict_checker_result": {
+      "id": "C08",
+      "groups": [
+        "G05"
+      ],
+      "file": "checker.ts",
+      "replace": [
+        "{ errors?: Diagnostic[] | undefined; }",
+        "ErrorOutputContainer"
+      ],
+      "public": false,
+      "anchors": [
+        {
+          "text": "{ errors?: Diagnostic[] | undefined; }",
+          "occurrences": 5
+        }
+      ],
+      "root_count": 79,
+      "diagnostic_count": 0,
+      "diagnostics": [],
+      "emitted_js_byte_identical": true,
+      "original_sha256": "bc23b2e4c5afcf2e97dacfd2d9ca86b29fe4141d51fef6c6a5c801a67d6023a4",
+      "candidate_sha256": "dc4e63ddf305b18dd8433cea0c867653e5549be4abf463cd225825498b802916"
+    },
+    "declaration_locations": [
+      "src/compiler/checker.ts:21354",
+      "src/compiler/checker.ts:21449",
+      "src/compiler/checker.ts:21497",
+      "src/compiler/checker.ts:21578",
+      "src/compiler/checker.ts:21668"
+    ]
+  },
+  {
+    "id": "C09b",
+    "groups": [
+      "G09",
+      "G28"
+    ],
+    "file": "tsbuildPublic.ts",
+    "owner": "SolutionBuilderHostBase",
+    "member": "/** @internal */ getGlobalTypingsCacheLocation?: () => string | undefined;\n    /** @internal */ onUnRecoverableConfigFileDiagnostic?: (diagnostic: Diagnostic) => void;",
+    "public": false,
+    "anchors": [
+      {
+        "owner": "SolutionBuilderHostBase",
+        "line": 215
+      }
+    ],
+    "root_count": 79,
+    "diagnostic_count": 0,
+    "diagnostics": [],
+    "emitted_js_byte_identical": true,
+    "original_sha256": "6b7ba6ae5c0f9422019a0457e600d01ec7f7b15639e3815590bf82af97cdbbae",
+    "candidate_sha256": "13842be8f439fb7965a8cec117695d15a006474ded23045e7a79bfe909c69e55",
+    "strict_checker_result": {
+      "id": "C09b",
+      "groups": [
+        "G09",
+        "G28"
+      ],
+      "file": "tsbuildPublic.ts",
+      "owner": "SolutionBuilderHostBase",
+      "member": "/** @internal */ getGlobalTypingsCacheLocation?: () => string | undefined;\n    /** @internal */ onUnRecoverableConfigFileDiagnostic?: (diagnostic: Diagnostic) => void;",
+      "public": false,
+      "anchors": [
+        {
+          "owner": "SolutionBuilderHostBase",
+          "line": 215
+        }
+      ],
+      "root_count": 79,
+      "diagnostic_count": 0,
+      "diagnostics": [],
+      "emitted_js_byte_identical": true,
+      "original_sha256": "6b7ba6ae5c0f9422019a0457e600d01ec7f7b15639e3815590bf82af97cdbbae",
+      "candidate_sha256": "13842be8f439fb7965a8cec117695d15a006474ded23045e7a79bfe909c69e55"
+    },
+    "declaration_locations": [
+      "src/compiler/tsbuildPublic.ts:215"
+    ]
+  },
+  {
+    "id": "C10",
+    "groups": [
+      "G27"
+    ],
+    "file": "types.ts",
+    "owner": "CompilerHost",
+    "member": "/** @internal */ onUnRecoverableConfigFileDiagnostic?: (diagnostic: Diagnostic) => void;",
+    "public": false,
+    "anchors": [
+      {
+        "owner": "CompilerHost",
+        "line": 8164
+      }
+    ],
+    "root_count": 79,
+    "diagnostic_count": 0,
+    "diagnostics": [],
+    "emitted_js_byte_identical": true,
+    "original_sha256": "7ae9a509881c3da4052e06388289a8e94c269576d38a8a808d9e08425c817239",
+    "candidate_sha256": "d9d380cc505125d35b5a407d1f01ef3e4742a8609bbc01c824421dc6be155c4f",
+    "strict_checker_result": {
+      "id": "C10",
+      "groups": [
+        "G27"
+      ],
+      "file": "types.ts",
+      "owner": "CompilerHost",
+      "member": "/** @internal */ onUnRecoverableConfigFileDiagnostic?: (diagnostic: Diagnostic) => void;",
+      "public": false,
+      "anchors": [
+        {
+          "owner": "CompilerHost",
+          "line": 8164
+        }
+      ],
+      "root_count": 79,
+      "diagnostic_count": 0,
+      "diagnostics": [],
+      "emitted_js_byte_identical": true,
+      "original_sha256": "7ae9a509881c3da4052e06388289a8e94c269576d38a8a808d9e08425c817239",
+      "candidate_sha256": "d9d380cc505125d35b5a407d1f01ef3e4742a8609bbc01c824421dc6be155c4f"
+    },
+    "declaration_locations": [
+      "src/compiler/types.ts:8164"
+    ]
+  },
+  {
+    "id": "C11",
+    "groups": [
+      "G21"
+    ],
+    "file": "watch.ts",
+    "owner": "IncrementalCompilationOptions",
+    "member": "createProgram?: import(\"./watchPublic.js\").CreateProgram<EmitAndSemanticDiagnosticsBuilderProgram>;",
+    "public": false,
+    "anchors": [
+      {
+        "owner": "IncrementalCompilationOptions",
+        "line": 974
+      }
+    ],
+    "root_count": 79,
+    "diagnostic_count": 0,
+    "diagnostics": [],
+    "emitted_js_byte_identical": true,
+    "original_sha256": "528312d6c0bab1d388e94bde20b8635ff7d2deb31a7f80b2b4fe5bb253de6934",
+    "candidate_sha256": "f2012fc4895052dd76fd41d935def2cf517de8faa37ed77ac096cab733262c2a",
+    "strict_checker_result": {
+      "id": "C11",
+      "groups": [
+        "G21"
+      ],
+      "file": "watch.ts",
+      "owner": "IncrementalCompilationOptions",
+      "member": "createProgram?: import(\"./watchPublic.js\").CreateProgram<EmitAndSemanticDiagnosticsBuilderProgram>;",
+      "public": false,
+      "anchors": [
+        {
+          "owner": "IncrementalCompilationOptions",
+          "line": 974
+        }
+      ],
+      "root_count": 79,
+      "diagnostic_count": 0,
+      "diagnostics": [],
+      "emitted_js_byte_identical": true,
+      "original_sha256": "528312d6c0bab1d388e94bde20b8635ff7d2deb31a7f80b2b4fe5bb253de6934",
+      "candidate_sha256": "f2012fc4895052dd76fd41d935def2cf517de8faa37ed77ac096cab733262c2a"
+    },
+    "declaration_locations": [
+      "src/compiler/watch.ts:974"
+    ]
+  },
+  {
+    "id": "C12b",
+    "groups": [
+      "G16"
+    ],
+    "file": "moduleSpecifiers.ts",
+    "replace": [
+      "importingSourceFile: Pick<SourceFile, \"fileName\" | \"impliedNodeFormat\">",
+      "importingSourceFile: Pick<SourceFile, \"fileName\" | \"impliedNodeFormat\" | \"packageJsonScope\">"
+    ],
+    "public": false,
+    "anchors": [
+      {
+        "text": "importingSourceFile: Pick<SourceFile, \"fileName\" | \"impliedNodeFormat\">",
+        "occurrences": 1
+      }
+    ],
+    "root_count": 79,
+    "diagnostic_count": 0,
+    "diagnostics": [],
+    "emitted_js_byte_identical": true,
+    "original_sha256": "c47362305fba2170d24acf89f8e4ab97949639510fe4f4e9849a7a27ddeefccd",
+    "candidate_sha256": "0ccbe7334130076a4c88d8c05fc77c0125d210298e38619e775fd535ae4bfb2e",
+    "strict_checker_result": {
+      "id": "C12b",
+      "groups": [
+        "G16"
+      ],
+      "file": "moduleSpecifiers.ts",
+      "replace": [
+        "importingSourceFile: Pick<SourceFile, \"fileName\" | \"impliedNodeFormat\">",
+        "importingSourceFile: Pick<SourceFile, \"fileName\" | \"impliedNodeFormat\" | \"packageJsonScope\">"
+      ],
+      "public": false,
+      "anchors": [
+        {
+          "text": "importingSourceFile: Pick<SourceFile, \"fileName\" | \"impliedNodeFormat\">",
+          "occurrences": 1
+        }
+      ],
+      "root_count": 79,
+      "diagnostic_count": 0,
+      "diagnostics": [],
+      "emitted_js_byte_identical": true,
+      "original_sha256": "c47362305fba2170d24acf89f8e4ab97949639510fe4f4e9849a7a27ddeefccd",
+      "candidate_sha256": "0ccbe7334130076a4c88d8c05fc77c0125d210298e38619e775fd535ae4bfb2e"
+    },
+    "declaration_locations": [
+      "src/compiler/moduleSpecifiers.ts:186"
+    ]
+  },
+  {
+    "id": "C13",
+    "groups": [
+      "G43"
+    ],
+    "file": "parser.ts",
+    "replacements": [
+      [
+        "{ [index: string]: string | undefined; }",
+        "{ [index: string]: string | undefined; types?: never; }"
+      ]
+    ],
+    "public": false,
+    "anchors": [
+      {
+        "text": "{ [index: string]: string | undefined; }",
+        "occurrences": 2
+      }
+    ],
+    "root_count": 79,
+    "diagnostic_count": 0,
+    "diagnostics": [],
+    "emitted_js_byte_identical": true,
+    "original_sha256": "a8057cb4e9133a281f08c4a92b3326ec4e71148419af51e30a8dd90c3892f055",
+    "candidate_sha256": "2d139008a061e0beac8c209f5303b6b2ceac28d611e8ed5d9c2d983e344b05fb",
+    "strict_checker_result": {
+      "id": "C13",
+      "groups": [
+        "G43"
+      ],
+      "file": "parser.ts",
+      "replacements": [
+        [
+          "{ [index: string]: string | undefined; }",
+          "{ [index: string]: string | undefined; types?: never; }"
+        ]
+      ],
+      "public": false,
+      "anchors": [
+        {
+          "text": "{ [index: string]: string | undefined; }",
+          "occurrences": 2
+        }
+      ],
+      "root_count": 79,
+      "diagnostic_count": 0,
+      "diagnostics": [],
+      "emitted_js_byte_identical": true,
+      "original_sha256": "a8057cb4e9133a281f08c4a92b3326ec4e71148419af51e30a8dd90c3892f055",
+      "candidate_sha256": "2d139008a061e0beac8c209f5303b6b2ceac28d611e8ed5d9c2d983e344b05fb"
+    },
+    "declaration_locations": [
+      "src/compiler/parser.ts:10764",
+      "src/compiler/parser.ts:10768"
+    ]
+  },
+  {
+    "id": "C14b",
+    "groups": [
+      "G44"
+    ],
+    "file": "parser.ts",
+    "replace": [
+      "{ [index: string]: string | { value: string; pos: number; end: number; }; }",
+      "{ [index: string]: string | { value: string; pos: number; end: number; } | undefined; types?: { value: string; pos: number; end: number; }; }"
+    ],
+    "public": false,
+    "anchors": [
+      {
+        "text": "{ [index: string]: string | { value: string; pos: number; end: number; }; }",
+        "occurrences": 1
+      }
+    ],
+    "root_count": 79,
+    "diagnostic_count": 0,
+    "diagnostics": [],
+    "emitted_js_byte_identical": true,
+    "original_sha256": "a8057cb4e9133a281f08c4a92b3326ec4e71148419af51e30a8dd90c3892f055",
+    "candidate_sha256": "5768f287d72687f8e81c5b2d10af467d8ba5114a9f886187bda8560a9476ebf7",
+    "strict_checker_result": {
+      "id": "C14b",
+      "groups": [
+        "G44"
+      ],
+      "file": "parser.ts",
+      "replace": [
+        "{ [index: string]: string | { value: string; pos: number; end: number; }; }",
+        "{ [index: string]: string | { value: string; pos: number; end: number; } | undefined; types?: { value: string; pos: number; end: number; }; }"
+      ],
+      "public": false,
+      "anchors": [
+        {
+          "text": "{ [index: string]: string | { value: string; pos: number; end: number; }; }",
+          "occurrences": 1
+        }
+      ],
+      "root_count": 79,
+      "diagnostic_count": 0,
+      "diagnostics": [],
+      "emitted_js_byte_identical": true,
+      "original_sha256": "a8057cb4e9133a281f08c4a92b3326ec4e71148419af51e30a8dd90c3892f055",
+      "candidate_sha256": "5768f287d72687f8e81c5b2d10af467d8ba5114a9f886187bda8560a9476ebf7"
+    },
+    "declaration_locations": [
+      "src/compiler/parser.ts:10706"
+    ]
+  },
+  {
+    "id": "C15",
+    "groups": [
+      "G13",
+      "G22"
+    ],
+    "file": "program.ts",
+    "replacements": [
+      [
+        ").map(resolved =>",
+        ").map<ResolvedModuleWithFailedLookupLocations>(resolved =>"
+      ],
+      [
+        ").map(resolvedTypeReferenceDirective =>",
+        ").map<ResolvedTypeReferenceDirectiveWithFailedLookupLocations>(resolvedTypeReferenceDirective =>"
+      ]
+    ],
+    "public": false,
+    "anchors": [
+      {
+        "text": ").map(resolved =>",
+        "occurrences": 1
+      },
+      {
+        "text": ").map(resolvedTypeReferenceDirective =>",
+        "occurrences": 1
+      }
+    ],
+    "root_count": 79,
+    "diagnostic_count": 0,
+    "diagnostics": [],
+    "emitted_js_byte_identical": true,
+    "original_sha256": "4e64ca897273cb221174254a173b4c9571a979e187e364c14f34d06a52a08363",
+    "candidate_sha256": "ac0fa94e81fe88b84fa13aef27ba3919a95bfb403df5de2e1940659c042417e1",
+    "strict_checker_result": {
+      "id": "C15",
+      "groups": [
+        "G13",
+        "G22"
+      ],
+      "file": "program.ts",
+      "replacements": [
+        [
+          ").map(resolved =>",
+          ").map<ResolvedModuleWithFailedLookupLocations>(resolved =>"
+        ],
+        [
+          ").map(resolvedTypeReferenceDirective =>",
+          ").map<ResolvedTypeReferenceDirectiveWithFailedLookupLocations>(resolvedTypeReferenceDirective =>"
+        ]
+      ],
+      "public": false,
+      "anchors": [
+        {
+          "text": ").map(resolved =>",
+          "occurrences": 1
+        },
+        {
+          "text": ").map(resolvedTypeReferenceDirective =>",
+          "occurrences": 1
+        }
+      ],
+      "root_count": 79,
+      "diagnostic_count": 0,
+      "diagnostics": [],
+      "emitted_js_byte_identical": true,
+      "original_sha256": "4e64ca897273cb221174254a173b4c9571a979e187e364c14f34d06a52a08363",
+      "candidate_sha256": "ac0fa94e81fe88b84fa13aef27ba3919a95bfb403df5de2e1940659c042417e1"
+    },
+    "declaration_locations": [
+      "src/compiler/program.ts:1623",
+      "src/compiler/program.ts:1667"
+    ]
+  },
+  {
+    "id": "C16",
+    "groups": [
+      "G30"
+    ],
+    "file": "moduleSpecifiers.ts",
+    "replace": [
+      "{ moduleFileToTry: string; }",
+      "{ moduleFileToTry: string; packageRootPath?: never; }"
+    ],
+    "public": false,
+    "anchors": [
+      {
+        "text": "{ moduleFileToTry: string; }",
+        "occurrences": 2
+      }
+    ],
+    "root_count": 79,
+    "diagnostic_count": 0,
+    "diagnostics": [],
+    "emitted_js_byte_identical": true,
+    "original_sha256": "c47362305fba2170d24acf89f8e4ab97949639510fe4f4e9849a7a27ddeefccd",
+    "candidate_sha256": "530501692ad6f5c658be85644865baf43b41308828b6f4b68cbc2268f82c39b9",
+    "strict_checker_result": {
+      "id": "C16",
+      "groups": [
+        "G30"
+      ],
+      "file": "moduleSpecifiers.ts",
+      "replace": [
+        "{ moduleFileToTry: string; }",
+        "{ moduleFileToTry: string; packageRootPath?: never; }"
+      ],
+      "public": false,
+      "anchors": [
+        {
+          "text": "{ moduleFileToTry: string; }",
+          "occurrences": 2
+        }
+      ],
+      "root_count": 79,
+      "diagnostic_count": 0,
+      "diagnostics": [],
+      "emitted_js_byte_identical": true,
+      "original_sha256": "c47362305fba2170d24acf89f8e4ab97949639510fe4f4e9849a7a27ddeefccd",
+      "candidate_sha256": "530501692ad6f5c658be85644865baf43b41308828b6f4b68cbc2268f82c39b9"
+    },
+    "declaration_locations": [
+      "src/compiler/moduleSpecifiers.ts:1031",
+      "src/compiler/moduleSpecifiers.ts:1122"
+    ]
+  }
+]

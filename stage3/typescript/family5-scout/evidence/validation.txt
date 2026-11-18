@@ -1,0 +1,403 @@
+PASS record compiler/tree commits are c56b0229
+PASS regenerated entry pass completed normally
+PASS all 81 source records present exactly once plus header/trailer
+PASS first-error/CommonJSBundle/checker-clean header
+PASS exact unrestricted entry mode/tail/no-output flags; no probe flag
+PASS requested SHA and tsc entry root
+PASS original uninstrumented c56 entry binary unchanged
+PASS entire latent.jsonl archive lossless
+PASS entire stderr.log archive lossless
+PASS entire stdout.log archive lossless
+PASS frozen adapted source unchanged: src/compiler/_namespaces/ts.moduleSpecifiers.ts
+PASS scratch candidate reset: src/compiler/_namespaces/ts.moduleSpecifiers.ts
+PASS frozen adapted source unchanged: src/compiler/_namespaces/ts.performance.ts
+PASS scratch candidate reset: src/compiler/_namespaces/ts.performance.ts
+PASS frozen adapted source unchanged: src/compiler/_namespaces/ts.ts
+PASS scratch candidate reset: src/compiler/_namespaces/ts.ts
+PASS frozen adapted source unchanged: src/compiler/binder.ts
+PASS scratch candidate reset: src/compiler/binder.ts
+PASS frozen adapted source unchanged: src/compiler/builder.ts
+PASS scratch candidate reset: src/compiler/builder.ts
+PASS frozen adapted source unchanged: src/compiler/builderPublic.ts
+PASS scratch candidate reset: src/compiler/builderPublic.ts
+PASS frozen adapted source unchanged: src/compiler/builderState.ts
+PASS scratch candidate reset: src/compiler/builderState.ts
+PASS frozen adapted source unchanged: src/compiler/builderStatePublic.ts
+PASS scratch candidate reset: src/compiler/builderStatePublic.ts
+PASS frozen adapted source unchanged: src/compiler/checker.ts
+PASS scratch candidate reset: src/compiler/checker.ts
+PASS frozen adapted source unchanged: src/compiler/commandLineParser.ts
+PASS scratch candidate reset: src/compiler/commandLineParser.ts
+PASS frozen adapted source unchanged: src/compiler/core.ts
+PASS scratch candidate reset: src/compiler/core.ts
+PASS frozen adapted source unchanged: src/compiler/corePublic.ts
+PASS scratch candidate reset: src/compiler/corePublic.ts
+PASS frozen adapted source unchanged: src/compiler/debug.ts
+PASS scratch candidate reset: src/compiler/debug.ts
+PASS frozen adapted source unchanged: src/compiler/diagnosticInformationMap.generated.ts
+PASS scratch candidate reset: src/compiler/diagnosticInformationMap.generated.ts
+PASS frozen adapted source unchanged: src/compiler/emitter.ts
+PASS scratch candidate reset: src/compiler/emitter.ts
+PASS frozen adapted source unchanged: src/compiler/executeCommandLine.ts
+PASS scratch candidate reset: src/compiler/executeCommandLine.ts
+PASS frozen adapted source unchanged: src/compiler/expressionToTypeNode.ts
+PASS scratch candidate reset: src/compiler/expressionToTypeNode.ts
+PASS frozen adapted source unchanged: src/compiler/factory/baseNodeFactory.ts
+PASS scratch candidate reset: src/compiler/factory/baseNodeFactory.ts
+PASS frozen adapted source unchanged: src/compiler/factory/emitHelpers.ts
+PASS scratch candidate reset: src/compiler/factory/emitHelpers.ts
+PASS frozen adapted source unchanged: src/compiler/factory/emitNode.ts
+PASS scratch candidate reset: src/compiler/factory/emitNode.ts
+PASS frozen adapted source unchanged: src/compiler/factory/nodeChildren.ts
+PASS scratch candidate reset: src/compiler/factory/nodeChildren.ts
+PASS frozen adapted source unchanged: src/compiler/factory/nodeConverters.ts
+PASS scratch candidate reset: src/compiler/factory/nodeConverters.ts
+PASS frozen adapted source unchanged: src/compiler/factory/nodeFactory.ts
+PASS scratch candidate reset: src/compiler/factory/nodeFactory.ts
+PASS frozen adapted source unchanged: src/compiler/factory/nodeTests.ts
+PASS scratch candidate reset: src/compiler/factory/nodeTests.ts
+PASS frozen adapted source unchanged: src/compiler/factory/parenthesizerRules.ts
+PASS scratch candidate reset: src/compiler/factory/parenthesizerRules.ts
+PASS frozen adapted source unchanged: src/compiler/factory/utilities.ts
+PASS scratch candidate reset: src/compiler/factory/utilities.ts
+PASS frozen adapted source unchanged: src/compiler/factory/utilitiesPublic.ts
+PASS scratch candidate reset: src/compiler/factory/utilitiesPublic.ts
+PASS frozen adapted source unchanged: src/compiler/hostErrors.ts
+PASS scratch candidate reset: src/compiler/hostErrors.ts
+PASS frozen adapted source unchanged: src/compiler/moduleNameResolver.ts
+PASS scratch candidate reset: src/compiler/moduleNameResolver.ts
+PASS frozen adapted source unchanged: src/compiler/moduleSpecifiers.ts
+PASS scratch candidate reset: src/compiler/moduleSpecifiers.ts
+PASS frozen adapted source unchanged: src/compiler/parser.ts
+PASS scratch candidate reset: src/compiler/parser.ts
+PASS frozen adapted source unchanged: src/compiler/path.ts
+PASS scratch candidate reset: src/compiler/path.ts
+PASS frozen adapted source unchanged: src/compiler/performance.ts
+PASS scratch candidate reset: src/compiler/performance.ts
+PASS frozen adapted source unchanged: src/compiler/performanceCore.ts
+PASS scratch candidate reset: src/compiler/performanceCore.ts
+PASS frozen adapted source unchanged: src/compiler/program.ts
+PASS scratch candidate reset: src/compiler/program.ts
+PASS frozen adapted source unchanged: src/compiler/programDiagnostics.ts
+PASS scratch candidate reset: src/compiler/programDiagnostics.ts
+PASS frozen adapted source unchanged: src/compiler/resolutionCache.ts
+PASS scratch candidate reset: src/compiler/resolutionCache.ts
+PASS frozen adapted source unchanged: src/compiler/scanner.ts
+PASS scratch candidate reset: src/compiler/scanner.ts
+PASS frozen adapted source unchanged: src/compiler/semver.ts
+PASS scratch candidate reset: src/compiler/semver.ts
+PASS frozen adapted source unchanged: src/compiler/sourcemap.ts
+PASS scratch candidate reset: src/compiler/sourcemap.ts
+PASS frozen adapted source unchanged: src/compiler/symbolWalker.ts
+PASS scratch candidate reset: src/compiler/symbolWalker.ts
+PASS frozen adapted source unchanged: src/compiler/sys.ts
+PASS scratch candidate reset: src/compiler/sys.ts
+PASS frozen adapted source unchanged: src/compiler/tracing.ts
+PASS scratch candidate reset: src/compiler/tracing.ts
+PASS frozen adapted source unchanged: src/compiler/transformer.ts
+PASS scratch candidate reset: src/compiler/transformer.ts
+PASS frozen adapted source unchanged: src/compiler/transformers/classFields.ts
+PASS scratch candidate reset: src/compiler/transformers/classFields.ts
+PASS frozen adapted source unchanged: src/compiler/transformers/classThis.ts
+PASS scratch candidate reset: src/compiler/transformers/classThis.ts
+PASS frozen adapted source unchanged: src/compiler/transformers/declarations.ts
+PASS scratch candidate reset: src/compiler/transformers/declarations.ts
+PASS frozen adapted source unchanged: src/compiler/transformers/declarations/diagnostics.ts
+PASS scratch candidate reset: src/compiler/transformers/declarations/diagnostics.ts
+PASS frozen adapted source unchanged: src/compiler/transformers/destructuring.ts
+PASS scratch candidate reset: src/compiler/transformers/destructuring.ts
+PASS frozen adapted source unchanged: src/compiler/transformers/es2015.ts
+PASS scratch candidate reset: src/compiler/transformers/es2015.ts
+PASS frozen adapted source unchanged: src/compiler/transformers/es2016.ts
+PASS scratch candidate reset: src/compiler/transformers/es2016.ts
+PASS frozen adapted source unchanged: src/compiler/transformers/es2017.ts
+PASS scratch candidate reset: src/compiler/transformers/es2017.ts
+PASS frozen adapted source unchanged: src/compiler/transformers/es2018.ts
+PASS scratch candidate reset: src/compiler/transformers/es2018.ts
+PASS frozen adapted source unchanged: src/compiler/transformers/es2019.ts
+PASS scratch candidate reset: src/compiler/transformers/es2019.ts
+PASS frozen adapted source unchanged: src/compiler/transformers/es2020.ts
+PASS scratch candidate reset: src/compiler/transformers/es2020.ts
+PASS frozen adapted source unchanged: src/compiler/transformers/es2021.ts
+PASS scratch candidate reset: src/compiler/transformers/es2021.ts
+PASS frozen adapted source unchanged: src/compiler/transformers/esDecorators.ts
+PASS scratch candidate reset: src/compiler/transformers/esDecorators.ts
+PASS frozen adapted source unchanged: src/compiler/transformers/esnext.ts
+PASS scratch candidate reset: src/compiler/transformers/esnext.ts
+PASS frozen adapted source unchanged: src/compiler/transformers/generators.ts
+PASS scratch candidate reset: src/compiler/transformers/generators.ts
+PASS frozen adapted source unchanged: src/compiler/transformers/jsx.ts
+PASS scratch candidate reset: src/compiler/transformers/jsx.ts
+PASS frozen adapted source unchanged: src/compiler/transformers/legacyDecorators.ts
+PASS scratch candidate reset: src/compiler/transformers/legacyDecorators.ts
+PASS frozen adapted source unchanged: src/compiler/transformers/module/esnextAnd2015.ts
+PASS scratch candidate reset: src/compiler/transformers/module/esnextAnd2015.ts
+PASS frozen adapted source unchanged: src/compiler/transformers/module/impliedNodeFormatDependent.ts
+PASS scratch candidate reset: src/compiler/transformers/module/impliedNodeFormatDependent.ts
+PASS frozen adapted source unchanged: src/compiler/transformers/module/module.ts
+PASS scratch candidate reset: src/compiler/transformers/module/module.ts
+PASS frozen adapted source unchanged: src/compiler/transformers/module/system.ts
+PASS scratch candidate reset: src/compiler/transformers/module/system.ts
+PASS frozen adapted source unchanged: src/compiler/transformers/namedEvaluation.ts
+PASS scratch candidate reset: src/compiler/transformers/namedEvaluation.ts
+PASS frozen adapted source unchanged: src/compiler/transformers/taggedTemplate.ts
+PASS scratch candidate reset: src/compiler/transformers/taggedTemplate.ts
+PASS frozen adapted source unchanged: src/compiler/transformers/ts.ts
+PASS scratch candidate reset: src/compiler/transformers/ts.ts
+PASS frozen adapted source unchanged: src/compiler/transformers/typeSerializer.ts
+PASS scratch candidate reset: src/compiler/transformers/typeSerializer.ts
+PASS frozen adapted source unchanged: src/compiler/transformers/utilities.ts
+PASS scratch candidate reset: src/compiler/transformers/utilities.ts
+PASS frozen adapted source unchanged: src/compiler/tsbuild.ts
+PASS scratch candidate reset: src/compiler/tsbuild.ts
+PASS frozen adapted source unchanged: src/compiler/tsbuildPublic.ts
+PASS scratch candidate reset: src/compiler/tsbuildPublic.ts
+PASS frozen adapted source unchanged: src/compiler/types.ts
+PASS scratch candidate reset: src/compiler/types.ts
+PASS frozen adapted source unchanged: src/compiler/utilities.ts
+PASS scratch candidate reset: src/compiler/utilities.ts
+PASS frozen adapted source unchanged: src/compiler/utilitiesPublic.ts
+PASS scratch candidate reset: src/compiler/utilitiesPublic.ts
+PASS frozen adapted source unchanged: src/compiler/visitorPublic.ts
+PASS scratch candidate reset: src/compiler/visitorPublic.ts
+PASS frozen adapted source unchanged: src/compiler/watch.ts
+PASS scratch candidate reset: src/compiler/watch.ts
+PASS frozen adapted source unchanged: src/compiler/watchPublic.ts
+PASS scratch candidate reset: src/compiler/watchPublic.ts
+PASS frozen adapted source unchanged: src/compiler/watchUtilities.ts
+PASS scratch candidate reset: src/compiler/watchUtilities.ts
+PASS frozen adapted source unchanged: src/tsc/_namespaces/ts.ts
+PASS scratch candidate reset: src/tsc/_namespaces/ts.ts
+PASS frozen adapted source unchanged: src/tsc/tsc.ts
+PASS scratch candidate reset: src/tsc/tsc.ts
+PASS 131 positions / meter sites / events, 45 exact reason counts match record; no family tail extras
+PASS complete exact site list
+PASS all sites mapped to exact AST nodes, no nearest-line fallback
+PASS all five outer relation-position counts verified
+PASS G01: group count matches record and sites
+PASS G01: relation-position subgroups partition sites
+PASS G01: road has construction evidence and premise
+PASS G02: group count matches record and sites
+PASS G02: relation-position subgroups partition sites
+PASS G02: road has construction evidence and premise
+PASS G03: group count matches record and sites
+PASS G03: relation-position subgroups partition sites
+PASS G03: road has construction evidence and premise
+PASS G04: group count matches record and sites
+PASS G04: relation-position subgroups partition sites
+PASS G04: road has construction evidence and premise
+PASS G05: group count matches record and sites
+PASS G05: relation-position subgroups partition sites
+PASS G05: road has construction evidence and premise
+PASS G06: group count matches record and sites
+PASS G06: relation-position subgroups partition sites
+PASS G06: road has construction evidence and premise
+PASS G07: group count matches record and sites
+PASS G07: relation-position subgroups partition sites
+PASS G07: road has construction evidence and premise
+PASS G08: group count matches record and sites
+PASS G08: relation-position subgroups partition sites
+PASS G08: road has construction evidence and premise
+PASS G09: group count matches record and sites
+PASS G09: relation-position subgroups partition sites
+PASS G09: road has construction evidence and premise
+PASS G10: group count matches record and sites
+PASS G10: relation-position subgroups partition sites
+PASS G10: road has construction evidence and premise
+PASS G11: group count matches record and sites
+PASS G11: relation-position subgroups partition sites
+PASS G11: road has construction evidence and premise
+PASS G12: group count matches record and sites
+PASS G12: relation-position subgroups partition sites
+PASS G12: road has construction evidence and premise
+PASS G13: group count matches record and sites
+PASS G13: relation-position subgroups partition sites
+PASS G13: road has construction evidence and premise
+PASS G14: group count matches record and sites
+PASS G14: relation-position subgroups partition sites
+PASS G14: road has construction evidence and premise
+PASS G15: group count matches record and sites
+PASS G15: relation-position subgroups partition sites
+PASS G15: road has construction evidence and premise
+PASS G16: group count matches record and sites
+PASS G16: relation-position subgroups partition sites
+PASS G16: road has construction evidence and premise
+PASS G17: group count matches record and sites
+PASS G17: relation-position subgroups partition sites
+PASS G17: road has construction evidence and premise
+PASS G18: group count matches record and sites
+PASS G18: relation-position subgroups partition sites
+PASS G18: road has construction evidence and premise
+PASS G19: group count matches record and sites
+PASS G19: relation-position subgroups partition sites
+PASS G19: road has construction evidence and premise
+PASS G20: group count matches record and sites
+PASS G20: relation-position subgroups partition sites
+PASS G20: road has construction evidence and premise
+PASS G21: group count matches record and sites
+PASS G21: relation-position subgroups partition sites
+PASS G21: road has construction evidence and premise
+PASS G22: group count matches record and sites
+PASS G22: relation-position subgroups partition sites
+PASS G22: road has construction evidence and premise
+PASS G23: group count matches record and sites
+PASS G23: relation-position subgroups partition sites
+PASS G23: road has construction evidence and premise
+PASS G24: group count matches record and sites
+PASS G24: relation-position subgroups partition sites
+PASS G24: road has construction evidence and premise
+PASS G25: group count matches record and sites
+PASS G25: relation-position subgroups partition sites
+PASS G25: road has construction evidence and premise
+PASS G26: group count matches record and sites
+PASS G26: relation-position subgroups partition sites
+PASS G26: road has construction evidence and premise
+PASS G27: group count matches record and sites
+PASS G27: relation-position subgroups partition sites
+PASS G27: road has construction evidence and premise
+PASS G28: group count matches record and sites
+PASS G28: relation-position subgroups partition sites
+PASS G28: road has construction evidence and premise
+PASS G29: group count matches record and sites
+PASS G29: relation-position subgroups partition sites
+PASS G29: road has construction evidence and premise
+PASS G30: group count matches record and sites
+PASS G30: relation-position subgroups partition sites
+PASS G30: road has construction evidence and premise
+PASS G31: group count matches record and sites
+PASS G31: relation-position subgroups partition sites
+PASS G31: road has construction evidence and premise
+PASS G32: group count matches record and sites
+PASS G32: relation-position subgroups partition sites
+PASS G32: road has construction evidence and premise
+PASS G33: group count matches record and sites
+PASS G33: relation-position subgroups partition sites
+PASS G33: road has construction evidence and premise
+PASS G34: group count matches record and sites
+PASS G34: relation-position subgroups partition sites
+PASS G34: road has construction evidence and premise
+PASS G35: group count matches record and sites
+PASS G35: relation-position subgroups partition sites
+PASS G35: road has construction evidence and premise
+PASS G36: group count matches record and sites
+PASS G36: relation-position subgroups partition sites
+PASS G36: road has construction evidence and premise
+PASS G37: group count matches record and sites
+PASS G37: relation-position subgroups partition sites
+PASS G37: road has construction evidence and premise
+PASS G38: group count matches record and sites
+PASS G38: relation-position subgroups partition sites
+PASS G38: road has construction evidence and premise
+PASS G39: group count matches record and sites
+PASS G39: relation-position subgroups partition sites
+PASS G39: road has construction evidence and premise
+PASS G40: group count matches record and sites
+PASS G40: relation-position subgroups partition sites
+PASS G40: road has construction evidence and premise
+PASS G41: group count matches record and sites
+PASS G41: relation-position subgroups partition sites
+PASS G41: road has construction evidence and premise
+PASS G42: group count matches record and sites
+PASS G42: relation-position subgroups partition sites
+PASS G42: road has construction evidence and premise
+PASS G43: group count matches record and sites
+PASS G43: relation-position subgroups partition sites
+PASS G43: road has construction evidence and premise
+PASS G44: group count matches record and sites
+PASS G44: relation-position subgroups partition sites
+PASS G44: road has construction evidence and premise
+PASS G45: group count matches record and sites
+PASS G45: relation-position subgroups partition sites
+PASS G45: road has construction evidence and premise
+PASS 45 group indexes cover every site once
+PASS road totals: 109/8/14 sites in 33/6/6 groups
+PASS 14 selected candidates cover all and only declaration groups
+PASS project: 79-root baseline zero diagnostics
+PASS project C01b: zero stock diagnostics
+PASS project C02: zero stock diagnostics
+PASS project C03: zero stock diagnostics
+PASS project C06: zero stock diagnostics
+PASS project C07: zero stock diagnostics
+PASS project C08: zero stock diagnostics
+PASS project C09b: zero stock diagnostics
+PASS project C10: zero stock diagnostics
+PASS project C11: zero stock diagnostics
+PASS project C12b: zero stock diagnostics
+PASS project C13: zero stock diagnostics
+PASS project C14b: zero stock diagnostics
+PASS project C15: zero stock diagnostics
+PASS project C16: zero stock diagnostics
+PASS strict: 79-root baseline zero diagnostics
+PASS strict C01b: zero stock diagnostics
+PASS strict C02: zero stock diagnostics
+PASS strict C03: zero stock diagnostics
+PASS strict C06: zero stock diagnostics
+PASS strict C07: zero stock diagnostics
+PASS strict C08: zero stock diagnostics
+PASS strict C09b: zero stock diagnostics
+PASS strict C10: zero stock diagnostics
+PASS strict C11: zero stock diagnostics
+PASS strict C12b: zero stock diagnostics
+PASS strict C13: zero stock diagnostics
+PASS strict C14b: zero stock diagnostics
+PASS strict C15: zero stock diagnostics
+PASS strict C16: zero stock diagnostics
+PASS C01b: changed-file emitted JS identical
+PASS C01b: original hash matches unchanged source types.ts
+PASS C01b: original hash matches unchanged source factory/nodeFactory.ts
+PASS C01b: original declaration locations retained
+PASS C02: changed-file emitted JS identical
+PASS C02: original hash matches unchanged source types.ts
+PASS C02: original declaration locations retained
+PASS C03: changed-file emitted JS identical
+PASS C03: original hash matches unchanged source types.ts
+PASS C03: original declaration locations retained
+PASS C06: changed-file emitted JS identical
+PASS C06: original hash matches unchanged source types.ts
+PASS C06: original declaration locations retained
+PASS C07: changed-file emitted JS identical
+PASS C07: original hash matches unchanged source types.ts
+PASS C07: original declaration locations retained
+PASS C08: changed-file emitted JS identical
+PASS C08: original hash matches unchanged source checker.ts
+PASS C08: original declaration locations retained
+PASS C09b: changed-file emitted JS identical
+PASS C09b: original hash matches unchanged source tsbuildPublic.ts
+PASS C09b: original declaration locations retained
+PASS C10: changed-file emitted JS identical
+PASS C10: original hash matches unchanged source types.ts
+PASS C10: original declaration locations retained
+PASS C11: changed-file emitted JS identical
+PASS C11: original hash matches unchanged source watch.ts
+PASS C11: original declaration locations retained
+PASS C12b: changed-file emitted JS identical
+PASS C12b: original hash matches unchanged source moduleSpecifiers.ts
+PASS C12b: original declaration locations retained
+PASS C13: changed-file emitted JS identical
+PASS C13: original hash matches unchanged source parser.ts
+PASS C13: original declaration locations retained
+PASS C14b: changed-file emitted JS identical
+PASS C14b: original hash matches unchanged source parser.ts
+PASS C14b: original declaration locations retained
+PASS C15: changed-file emitted JS identical
+PASS C15: original hash matches unchanged source program.ts
+PASS C15: original declaration locations retained
+PASS C16: changed-file emitted JS identical
+PASS C16: original hash matches unchanged source moduleSpecifiers.ts
+PASS C16: original declaration locations retained
+PASS stricter options preserved, never relaxed
+PASS all measured failed candidate variants retained
+PASS zero-diagnostic but untruthful marker candidates retained and rejected
+PASS actual package input construction retains wrong-typed hidden fields
+PASS accepted build-info source chain retains hidden numeric repopulateInfo
+PASS accepted related-info cache and both exact spread constructors preserve hidden null marker
+PASS marker source witness includes every required declared field
+PASS 18 whole-function readings, largest groups first
+PASS report: no adaptation/ledger/internal or other code change relative to c56
+PASS report: no tracked source edits
+PASS tool source: no adaptation/ledger/internal or other code change relative to c56
+PASS tool source: no tracked source edits
+PASS actual tool source submodules initialized at pinned commits
+PASS packaged Python scripts parse
+PASS all REPORT.md local links resolve; final packaged Python scripts parse
+PASS original CRLF stock configs preserved losslessly as gzip; source config bytes unchanged

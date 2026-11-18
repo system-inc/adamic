@@ -1,0 +1,85 @@
+{
+  "typescript": "6.0.3",
+  "input": {
+    "fileNames": [
+      "./main.ts"
+    ],
+    "fileInfos": [
+      {
+        "version": "v1",
+        "signature": "v1"
+      }
+    ],
+    "root": [
+      1
+    ],
+    "options": {
+      "incremental": true
+    },
+    "semanticDiagnosticsPerFile": [
+      [
+        1,
+        [
+          {
+            "category": 1,
+            "code": 9999,
+            "file": false,
+            "start": 0,
+            "length": 0,
+            "messageText": "primary",
+            "relatedInformation": [
+              {
+                "category": 1,
+                "code": 9998,
+                "file": false,
+                "start": 0,
+                "length": 0,
+                "messageText": "related cache witness",
+                "reportsUnnecessary": null
+              }
+            ]
+          }
+        ]
+      ]
+    ],
+    "version": "6.0.3"
+  },
+  "readBuilderProgramAccepted": true,
+  "retainedReusableRelatedInformation": {
+    "category": 1,
+    "code": 9998,
+    "file": false,
+    "start": 0,
+    "length": 0,
+    "messageText": "related cache witness",
+    "reportsUnnecessary": null
+  },
+  "sourceExtractedProbes": [
+    {
+      "where": "src/compiler/builder.ts:618:1",
+      "source": "function convertToDiagnosticRelatedInformation(\r\n    diagnostic: ReusableDiagnosticRelatedInformation,\r\n    diagnosticFilePath: Path,\r\n    newProgram: Program,\r\n    toPath: (path: string) => Path,\r\n): DiagnosticRelatedInformation {\r\n    const { file } = diagnostic;\r\n    const sourceFile = file !== false ?\r\n        newProgram.getSourceFileByPath(file ? toPath(file) : diagnosticFilePath) :\r\n        undefined;\r\n    return {\r\n        ...diagnostic,\r\n        file: sourceFile,\r\n        messageText: isString(diagnostic.messageText) ?\r\n            diagnostic.messageText :\r\n            convertOrRepopulateDiagnosticMessageChain(diagnostic.messageText, sourceFile, newProgram, chain => (chain as ReusableRepopulateInfoChain).info),\r\n    };\r\n}"
+    },
+    {
+      "where": "src/compiler/builder.ts:1543:5",
+      "source": "function toReusableDiagnosticRelatedInformation(diagnostic: DiagnosticRelatedInformation, diagnosticFilePath: Path): ReusableDiagnosticRelatedInformation {\r\n        const { file } = diagnostic;\r\n        return {\r\n            ...diagnostic,\r\n            file: file ?\r\n                file.resolvedPath === diagnosticFilePath ?\r\n                    undefined :\r\n                    relativeToBuildInfo(file.resolvedPath) :\r\n                false,\r\n            messageText: isString(diagnostic.messageText) ? diagnostic.messageText : toReusableDiagnosticMessageChain(diagnostic.messageText),\r\n        };\r\n    }"
+    }
+  ],
+  "constructedDiagnosticRelatedInformation": {
+    "category": 1,
+    "code": 9998,
+    "start": 0,
+    "length": 0,
+    "messageText": "related cache witness",
+    "reportsUnnecessary": null
+  },
+  "constructedReusableDiagnosticRelatedInformation": {
+    "category": 1,
+    "code": 9998,
+    "file": false,
+    "start": 0,
+    "length": 0,
+    "messageText": "related cache witness",
+    "reportsUnnecessary": null
+  },
+  "conclusion": "reportsUnnecessary:null is an undeclared extra on valid declared ReusableDiagnosticRelatedInformation fields; both unmodified spread constructors preserve it. Null is outside Diagnostic/DiagnosticReadView/ReusableDiagnostic reportsUnnecessary {} | undefined."
+}
