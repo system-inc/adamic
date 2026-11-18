@@ -42,6 +42,16 @@
       "after": "[[],[\"Identifier\",\"AdamicJsonRecoveryObject\"],[],[]]"
     },
     {
+      "declaration": "InterfaceDeclaration:[\"ts\",\"Node\"]#0",
+      "before": "[[],[\"Identifier\",\"Node\"],[],[[\"HeritageClause\",[\"ExpressionWithTypeArguments\",[\"Identifier\",\"ReadonlyTextRange\"]]]]]",
+      "after": "[[],[\"Identifier\",\"Node\"],[],[[\"HeritageClause\",[\"ExpressionWithTypeArguments\",[\"Identifier\",\"TextRange\"]]]]]"
+    },
+    {
+      "declaration": "InterfaceDeclaration:[\"ts\",\"NodeArray\"]#0",
+      "before": "[[],[\"Identifier\",\"NodeArray\"],[[\"TypeParameter\",[\"Identifier\",\"T\"],[\"TypeReference\",[\"Identifier\",\"Node\"]]]],[[\"HeritageClause\",[\"ExpressionWithTypeArguments\",[\"Identifier\",\"ReadonlyArray\"],[\"TypeReference\",[\"Identifier\",\"T\"]]],[\"ExpressionWithTypeArguments\",[\"Identifier\",\"ReadonlyTextRange\"]]]]]",
+      "after": "[[],[\"Identifier\",\"NodeArray\"],[[\"TypeParameter\",[\"Identifier\",\"T\"],[\"TypeReference\",[\"Identifier\",\"Node\"]]]],[[\"HeritageClause\",[\"ExpressionWithTypeArguments\",[\"Identifier\",\"ReadonlyArray\"],[\"TypeReference\",[\"Identifier\",\"T\"]]],[\"ExpressionWithTypeArguments\",[\"Identifier\",\"TextRange\"]]]]]"
+    },
+    {
       "declaration": "TypeAliasDeclaration:[\"ts\",\"AdamicJsonRecoveryValue\"]#0",
       "before": null,
       "after": "[\"TypeAliasDeclaration\",[\"Identifier\",\"AdamicJsonRecoveryValue\"],[\"UnionType\",[\"StringKeyword\"],[\"NumberKeyword\"],[\"BooleanKeyword\"],[\"LiteralType\",[\"NullKeyword\"]],[\"ArrayType\",[\"TypeReference\",[\"Identifier\",\"AdamicJsonRecoveryValue\"]]],[\"TypeReference\",[\"Identifier\",\"AdamicJsonRecoveryObject\"]]]]"
@@ -3375,6 +3385,20 @@
       "line": 7272
     },
     {
+      "adaptation": "adapt/80-writable-node-range/api-sanctions.json row 1 {\"path\":[\"Node\"],\"kind\":\"HeritageClause\",\"replace\":\"member\",\"before\":\"extends ReadonlyTextRange\",\"after\":\"extends TextRange\",\"why\":\"Adamic, task aryr7ea, under rulings.md:391: tsc's own public setTextRange writes pos and end on a node after the factory made it, so Node's and NodeArray's pos and end are writable, as TextRange's are. Code that type-checked still does; a consumer may now write node.pos or array.end with no cast, where upstream's types forbid it.\"}",
+      "path": [
+        "Node"
+      ],
+      "line": 4305
+    },
+    {
+      "adaptation": "adapt/80-writable-node-range/api-sanctions.json row 2 {\"path\":[\"NodeArray\"],\"kind\":\"HeritageClause\",\"replace\":\"member\",\"before\":\"extends ReadonlyArray<T>, ReadonlyTextRange\",\"after\":\"extends ReadonlyArray<T>, TextRange\",\"why\":\"Adamic, task aryr7ea, under rulings.md:391: tsc's own public setTextRange writes pos and end on a node after the factory made it, so Node's and NodeArray's pos and end are writable, as TextRange's are. Code that type-checked still does; a consumer may now write node.pos or array.end with no cast, where upstream's types forbid it.\"}",
+      "path": [
+        "NodeArray"
+      ],
+      "line": 4407
+    },
+    {
       "adaptation": "adapt/81-readonly-option-values/api-sanctions.json row 1 {\"path\":[\"CompilerOptionsValue\"],\"kind\":\"TypeAliasDeclaration\",\"before\":\"string | number | boolean | (string | number)[] | string[] | MapLike<string[]> | PluginImport[] | ProjectReference[] | null | undefined\",\"after\":\"string | number | boolean | readonly (string | number)[] | readonly string[] | MapLike<string[]> | readonly PluginImport[] | readonly ProjectReference[] | null | undefined\",\"why\":\"Adamic, task w743639: CompilerOptionsValue's four array members are readonly, certified by the compiled program's gate as adaptation 72 was. Code that assigns an option value to a mutable array without a cast stops type-checking; code that reads option values is unaffected; CompilerOptions' own named members (lib, rootDirs and the rest) keep their mutable types.\"}",
       "path": [
         "CompilerOptionsValue"
@@ -3775,6 +3799,10 @@
       "sha256": "a40222aeaae00bc2e00f37eac7a6a1385d78a58efac0802e0965e68f3070029e"
     },
     {
+      "file": "stage3/adapt/80-writable-node-range/api-sanctions.json",
+      "sha256": "f3d23d253d544e825461daa89cd97b8f501a7c0a4c5ad93a9848f2ae89eb9cc5"
+    },
+    {
       "file": "stage3/adapt/81-readonly-option-values/api-sanctions.json",
       "sha256": "42376e0e5f66c6efd91942df6b39fc3d5e56ce3c8083be2171cde5849e6b6d2a"
     },
@@ -3913,6 +3941,15 @@
     "     };\n",
     "     interface TextRange {\n",
     "         pos: number;\n",
+    "@@ -4302,7 +4299,7 @@\n",
+    "         IntrinsicIndexedElement = 2,\n",
+    "         IntrinsicElement = 3,\n",
+    "     }\n",
+    "-    interface Node extends ReadonlyTextRange {\n",
+    "+    interface Node extends TextRange {\n",
+    "         readonly kind: SyntaxKind;\n",
+    "         readonly flags: NodeFlags;\n",
+    "         readonly parent: Node;\n",
     "@@ -4325,13 +4322,13 @@\n",
     "         forEachChild<T>(cbNode: (node: Node) => T | undefined, cbNodeArray?: (nodes: NodeArray<Node>) => T | undefined): T | undefined;\n",
     "     }\n",
@@ -3930,6 +3967,15 @@
     "     }\n",
     "     type HasJSDoc =\n",
     "         | AccessorDeclaration\n",
+    "@@ -4404,7 +4401,7 @@\n",
+    "     type HasExpressionInitializer = VariableDeclaration | ParameterDeclaration | BindingElement | PropertyDeclaration | PropertyAssignment | EnumMember;\n",
+    "     type HasDecorators = ParameterDeclaration | PropertyDeclaration | MethodDeclaration | GetAccessorDeclaration | SetAccessorDeclaration | ClassExpression | ClassDeclaration;\n",
+    "     type HasModifiers = TypeParameterDeclaration | ParameterDeclaration | ConstructorTypeNode | PropertySignature | PropertyDeclaration | MethodSignature | MethodDeclaration | ConstructorDeclaration | GetAccessorDeclaration | SetAccessorDeclaration | IndexSignatureDeclaration | FunctionExpression | ArrowFunction | ClassExpression | VariableStatement | FunctionDeclaration | ClassDeclaration | InterfaceDeclaration | TypeAliasDeclaration | EnumDeclaration | ModuleDeclaration | ImportEqualsDeclaration | ImportDeclaration | ExportAssignment | ExportDeclaration;\n",
+    "-    interface NodeArray<T extends Node> extends ReadonlyArray<T>, ReadonlyTextRange {\n",
+    "+    interface NodeArray<T extends Node> extends ReadonlyArray<T>, TextRange {\n",
+    "         readonly hasTrailingComma: boolean;\n",
+    "     }\n",
+    "     interface Token<TKind extends SyntaxKind> extends Node {\n",
     "@@ -4487,13 +4484,13 @@\n",
     "     type MemberName = Identifier | PrivateIdentifier;\n",
     "     type DeclarationName = PropertyName | JsxAttributeName | StringLiteralLike | ElementAccessExpression | BindingPattern | EntityNameExpression;\n",
