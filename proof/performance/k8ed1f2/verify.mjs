@@ -68,7 +68,14 @@ for (const [file, edits] of byFile) {
     const absolute = path.join(path.dirname(outSource), file);
     const text = fs.readFileSync(absolute, 'utf8').split('\n');
     for (const edit of edits) {
-        const at = edit.line - 1;
+        // A line of 0 names the edit by its whole old text, which must occur exactly once in the file, since the
+        // adapted tree's line numbers move under the adaptations before it.
+        let at = edit.line - 1;
+        if (edit.line === 0) {
+            const found = text.flatMap((line, index) => line.replace(/\r$/, '') === edit.old ? [index] : []);
+            if (found.length !== 1) { console.log(`MISS ${file}: the edit's old text occurs ${found.length} times: ${edit.old.trim().slice(0, 120)}`); misses++; continue; }
+            at = found[0];
+        }
         if (text[at] === undefined || text[at].replace(/\r$/, '') !== edit.old) { console.log(`MISS ${file}:${edit.line}: the line isn't the edit's old text`); misses++; continue; }
         text[at] = edit.now + (text[at].endsWith('\r') ? '\r' : '');
     }
