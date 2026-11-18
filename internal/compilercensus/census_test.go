@@ -15,10 +15,10 @@ import (
 // compilerNames are the C compilers a Go file can run by name.
 var compilerNames = []string{"clang", "clang++", "cc", "gcc"}
 
-// compilerSites are the functions outside internal/native that name a C compiler, each with why it may: every product a
-// test builds by compiling C goes through Build, BuildFlags or BuildTSGo, which give clang no absolute path to read. A
-// product site that ran clang itself kept its build directory in a sanitized binary's globals, random per build, twice
-// (landable-15's markdown list layout, landable-18's malformed events). A version query, buildcache.Tool(name,
+// compilerSites are the functions outside internal/native and internal/native_runtime that name a C compiler, each with
+// why it may: every product a test builds by compiling C goes through Build, BuildFlags or BuildTSGo, which give clang
+// no absolute path to read. A product site that ran clang itself kept its build directory in a sanitized binary's
+// globals, random per build, twice (landable-15's markdown list layout, landable-18's malformed events). A version query, buildcache.Tool(name,
 // "--version" or "-v"), with or without a --target= before it, or buildcache.CompilerReport(name), passes without a
 // reason (versionQuery).
 var compilerSites = map[string]string{
@@ -65,10 +65,10 @@ var compilerSites = map[string]string{
 	"stage1/cohere/css/setup_products_test.go:TestCSSGoOraclesKeyTheCompilersEnvGivesGo":              "sets CC and CXX to check the key reads them from toolchain.Env; compiles nothing",
 	"stage1/cohere/estree/misc_shards_test.go:miscArchiverTool":                                       "finds the archiver beside clang to name it in a key; compiles nothing",
 	"stage1/cohere/estree/recovery_tools_root_test.go:TestRecoveryClangMapsTheToolsRoot":              "finds clang's installation to check the port build's command maps it; compiles nothing",
-	"stage1/cohere/estree/recovery_cache_test.go:recoveryClang":                                       "the sanitized port build's clang, through native.ClangIn, from its own work directory by relative names, with that directory's prefix maps",
+	"stage1/cohere/estree/recovery_cache_test.go:recoveryClang":                                       "the sanitized port build's clang, through native_runtime.ClangIn, from its own work directory by relative names, with that directory's prefix maps",
 	"stage1/cohere/json/port_matches_prepared_split_test.go:portMatchesJsonClangToolchain":            "names clang and its archiver in a key; compiles nothing",
 	"stage1/cohere/lint/jsx_shards_test.go:TestJsxSetupKeyNamesTheBuildsCompiler":                     "sets CC to clang or gcc for child go env runs to check the key names it; compiles nothing",
-	"stage1/cohere/lint/profile_compilation_main_test.go:compilationProductKinds":                     "the profiled build, unsanitized, with its directory prefix-mapped and its clang through native.ClangIn: debug info is all that names a path",
+	"stage1/cohere/lint/profile_compilation_main_test.go:compilationProductKinds":                     "the profiled build, unsanitized, with its directory prefix-mapped and its clang through native_runtime.ClangIn: debug info is all that names a path",
 	"stage1/cohere/lint/profile_tools_root_test.go:secondToolsRoot":                                   "finds clang to reach its installation through a second root, for the profiled build's two-root pin; compiles nothing",
 	"stage1/cohere/lint/profile_test.go:buildProfile":                                                 "a profiling build into a scratch directory, never a product",
 	"stage1/cohere/markdownblocks/support_test.go:nativeMutant":                                       "a mutant compiled into a t.TempDir(), never a product",
@@ -83,9 +83,9 @@ var compilerSites = map[string]string{
 	"internal/buildcache/compiler_report_test.go:TestACompilerReportReadsTheBuildsTriplesConfigBesideClang": "hard links or copies clang beside a config to read its version report there; compiles nothing",
 }
 
-// Every Go file outside internal/native that names a C compiler does so in a function compilerSites gives a reason for:
-// a new product site that runs clang itself reds here, where a grep for one call shape let the second one through
-// (#rmmw95x). Each reason is a judgment, so a new site is one someone made. A listed function that no longer names a
+// Every Go file outside internal/native and internal/native_runtime, which compile through their own functions, that
+// names a C compiler does so in a function compilerSites gives a reason for: a new product site that runs clang itself
+// reds here, where a grep for one call shape let the second one through (#rmmw95x). Each reason is a judgment, so a new site is one someone made. A listed function that no longer names a
 // compiler reds too, so the list says what is. Mutants: a hand-rolled clang call in a product; a stale entry.
 func TestEveryCCompilerRunsThroughNative(t *testing.T) {
 	t.Parallel()
@@ -103,7 +103,7 @@ func TestEveryCCompilerRunsThroughNative(t *testing.T) {
 		relative, _ := filepath.Rel(root, path)
 		relative = filepath.ToSlash(relative)
 		if entry.IsDir() {
-			if relative == "cohere" || relative == "internal/native" || relative == "internal/compilercensus" || entry.Name() == "testdata" || entry.Name() == "node_modules" || strings.HasPrefix(entry.Name(), ".") && relative != "." {
+			if relative == "cohere" || relative == "internal/native" || relative == "internal/native_runtime" || relative == "internal/compilercensus" || entry.Name() == "testdata" || entry.Name() == "node_modules" || strings.HasPrefix(entry.Name(), ".") && relative != "." {
 				return filepath.SkipDir
 			}
 			return nil
@@ -156,8 +156,8 @@ func TestEveryCCompilerRunsThroughNative(t *testing.T) {
 }
 
 // targetedSites are compilerSites' sites that compile a program at runner time, a scratch directory's or test262's: each
-// names its target (#5xsd2ha), the build's triple through native_runtime.Flags, SourceFlags or LinkFlags, which resolve it, or
-// native_runtime.ResolveTarget for a --target of its own, and a WASI module's by its literal --target=wasm32-wasi.
+// names its target (#5xsd2ha), the build's triple through native_runtime.Flags or SourceFlags or native.LinkFlags, which
+// resolve it, or native_runtime.ResolveTarget for a --target of its own, and a WASI module's by its literal --target=wasm32-wasi.
 var targetedSites = []string{
 	"bench/apple/run.go:main",
 	"internal/apple/witness_test.go:TestProgramsAgreeWithTheirWitnesses",
@@ -172,9 +172,9 @@ var targetedSites = []string{
 	"stage1/typescript/scanner/profile_test.go:TestProfileArtifacts",
 }
 
-// targetNamers are the calls that give a compile the build's triple: the flags native resolves it in, and the
-// resolution itself.
-var targetNamers = []string{"native.Flags", "native.SourceFlags", "native.LinkFlags", "native.ResolveTarget"}
+// targetNamers are the calls that give a compile the build's triple: the flags native_runtime and native resolve it in,
+// and the resolution itself.
+var targetNamers = []string{"native_runtime.Flags", "native_runtime.SourceFlags", "native.LinkFlags", "native_runtime.ResolveTarget"}
 
 // Every site that compiles a program at runner time names its target (#5xsd2ha): its function calls one of
 // targetNamers or spells a --target= of its own. A compilerSites entry whose reason says it compiles into a t.TempDir()
@@ -228,7 +228,7 @@ func TestEveryRunnerTimeCompileNamesItsTarget(t *testing.T) {
 		case !found:
 			t.Errorf("%s: no function %s", relative, name)
 		case !named:
-			t.Errorf("%s compiles at runner time and names no target: give clang the build's triple through native.Flags or SourceFlags, or a --target from native.ResolveTarget", site)
+			t.Errorf("%s compiles at runner time and names no target: give clang the build's triple through native_runtime.Flags or SourceFlags, or a --target from native_runtime.ResolveTarget", site)
 		}
 	}
 }

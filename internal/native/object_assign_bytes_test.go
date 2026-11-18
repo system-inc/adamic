@@ -5,6 +5,8 @@ import (
 	"path/filepath"
 	"strings"
 	"testing"
+
+	"github.com/system-inc/adamic/internal/native_runtime"
 )
 
 const assignByteStore = "  adamic_object_field_types(target)[adamic_slot_index(target, slot)] = adamic_object_field_type(source, index);"
@@ -47,7 +49,7 @@ func objectAssignBytesBinary(t *testing.T, mutant string) string {
 		t.Fatal(err)
 	}
 	binary := filepath.Join(t.TempDir(), "assign-bytes")
-	if err := Build(source+"\n"+string(harness), binary, Options{Sanitize: true}); err != nil {
+	if err := Build(source+"\n"+string(harness), binary, native_runtime.Options{Sanitize: true}); err != nil {
 		t.Fatal(err)
 	}
 	return binary

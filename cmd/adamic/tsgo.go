@@ -173,7 +173,7 @@ func buildWithNativeExports(path, output string, arguments []string, buildNative
 				source, err = native.WASI(program, handler)
 			}
 		} else {
-			source = native.CWithOptions(program, options)
+			source = native.CWithOptions(program, native.EmitOptions{Options: options})
 		}
 		if err == nil {
 			err = buildNative(source, output, options)

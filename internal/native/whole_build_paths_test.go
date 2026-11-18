@@ -7,6 +7,8 @@ import (
 	"regexp"
 	goruntime "runtime"
 	"testing"
+
+	"github.com/system-inc/adamic/internal/native_runtime"
 )
 
 // A sanitized whole build's binary names no temporary object of clang's (Tests, from Compiler, Oct 12): on macOS ld's
@@ -17,7 +19,7 @@ import (
 func TestAWholeBuildNamesNoTemporaryObject(t *testing.T) {
 	t.Parallel()
 	binary := filepath.Join(t.TempDir(), "whole")
-	if err := Build(splitProbe, binary, Options{Sanitize: true}); err != nil {
+	if err := Build(splitProbe, binary, native_runtime.Options{Sanitize: true}); err != nil {
 		t.Fatal(err)
 	}
 	content, err := os.ReadFile(binary)

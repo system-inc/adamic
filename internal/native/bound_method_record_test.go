@@ -36,7 +36,7 @@ int main(void) {
 	return 0;
 }
 `
-	flags := Flags(Options{Sanitize: true})
+	flags := native_runtime.Flags(native_runtime.Options{Sanitize: true})
 	compiler, library := runtimeWithFlags(t, flags)
 	root := filepath.Dir(library)
 	flags = append(flags, "-I", root)
@@ -95,7 +95,7 @@ func boundMethodRecordKindMutant(t *testing.T, compiler, library string, flags [
 	if err := os.WriteFile(archive, data, 0o644); err != nil {
 		t.Fatal(err)
 	}
-	if output, err := exec.Command(archiverName(compiler), "rcs", archive, object).CombinedOutput(); err != nil {
+	if output, err := exec.Command(native_runtime.ArchiverName(compiler), "rcs", archive, object).CombinedOutput(); err != nil {
 		t.Fatalf("kind-check mutant archive: %v\n%s", err, output)
 	}
 	return archive

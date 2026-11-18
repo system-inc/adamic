@@ -7,6 +7,8 @@ import (
 	"strconv"
 	"strings"
 	"testing"
+
+	"github.com/system-inc/adamic/internal/native_runtime"
 )
 
 // Not parallel: the RSS comparison and recorded CPU bound are performance gates.
@@ -64,7 +66,7 @@ int main(int count, char **arguments) {
 }
 `
 	binary := filepath.Join(t.TempDir(), "resources")
-	if err := Build(harness, binary, Options{}); err != nil {
+	if err := Build(harness, binary, native_runtime.Options{}); err != nil {
 		t.Fatal(err)
 	}
 	run := func(t *testing.T, mode string) string {

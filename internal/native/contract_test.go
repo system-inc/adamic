@@ -9,6 +9,7 @@ import (
 	"strings"
 	"testing"
 
+	"github.com/system-inc/adamic/internal/native_runtime"
 	"github.com/system-inc/adamic/internal/toolchain"
 )
 
@@ -81,7 +82,7 @@ func TestArithmeticIsNeverFused(t *testing.T) {
 	}
 	for _, sanitize := range []bool{false, true} {
 		binary := filepath.Join(t.TempDir(), "fused")
-		if err := Build(fusedHarness, binary, Options{Sanitize: sanitize, cpu: cpu}); err != nil {
+		if err := Build(fusedHarness, binary, native_runtime.Options{Sanitize: sanitize, CPU: cpu}); err != nil {
 			t.Fatal(err)
 		}
 		if got := runWithInput(t, "", binary); got != "0 0 0\n" {

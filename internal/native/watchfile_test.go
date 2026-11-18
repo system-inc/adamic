@@ -5,6 +5,7 @@ import (
 	"context"
 	"fmt"
 	"github.com/system-inc/adamic/internal/leakcheck"
+	"github.com/system-inc/adamic/internal/native_runtime"
 	"os"
 	"os/exec"
 	"path/filepath"
@@ -27,9 +28,9 @@ func watchHooksProduct(t *testing.T, mutant bool) string {
 }
 func watchProviderProduct(t *testing.T, variant string) string {
 	t.Helper()
-	options := native.Options{Release: true}
+	options := native_runtime.Options{Release: true}
 	if variant == "sanitized" {
-		options = native.Options{Sanitize: true}
+		options = native_runtime.Options{Sanitize: true}
 	}
 	inputs := watchProviderInputs(variant, options)
 
@@ -50,7 +51,7 @@ func watchProviderProduct(t *testing.T, variant string) string {
 		} else {
 			changed = timerMutant(t, "timers_impl.h", "if (host_wait_hook != host_default_wait)", "if (false)")
 		}
-		library, err := native.RuntimeLibraryForSource(changed.directory, string(code), options)
+		library, err := native_runtime.RuntimeLibraryForSource(changed.directory, string(code), options)
 		if err != nil {
 			return err
 		}
@@ -144,8 +145,8 @@ func TestProduct_WatchFileBatchCheckpointMutant(t *testing.T) {
 	watchProviderProduct(t, "batch-early-jobs")
 }
 
-func watchProviderInputs(variant string, options native.Options) buildcache.Inputs {
-	flags := append(native.Flags(options), "ADAMIC_NODE_HOST")
+func watchProviderInputs(variant string, options native_runtime.Options) buildcache.Inputs {
+	flags := append(native_runtime.Flags(options), "ADAMIC_NODE_HOST")
 	for _, name := range []string{"ADAMIC_PROGRAM_REGION", "ADAMIC_NATIVE_SPLIT", "ADAMIC_NATIVE_JOBS", "CPATH", "C_INCLUDE_PATH", "SDKROOT", "MACOSX_DEPLOYMENT_TARGET"} {
 		value, set := os.LookupEnv(name)
 		flags = append(flags, fmt.Sprintf("env:%s:set=%t:value=%s", name, set, value))
@@ -160,14 +161,14 @@ func watchProviderInputs(variant string, options native.Options) buildcache.Inpu
 func TestWatchFileProductKeyIncludesBuildEnvironment(t *testing.T) {
 	root := t.TempDir()
 	t.Setenv("CPATH", "/first/include")
-	first := watchProviderInputs("control", native.Options{Release: true})
+	first := watchProviderInputs("control", native_runtime.Options{Release: true})
 	first.Files = nil
 	before, err := buildcache.Key(root, first)
 	if err != nil {
 		t.Fatal(err)
 	}
 	t.Setenv("CPATH", "/second/include")
-	second := watchProviderInputs("control", native.Options{Release: true})
+	second := watchProviderInputs("control", native_runtime.Options{Release: true})
 	second.Files = nil
 	after, err := buildcache.Key(root, second)
 	if err != nil {
@@ -180,7 +181,7 @@ func TestWatchFileProductKeyIncludesBuildEnvironment(t *testing.T) {
 
 func TestWatchFileProductKeyIncludesItsHarness(t *testing.T) {
 	t.Parallel()
-	inputs := watchProviderInputs("control", native.Options{Release: true})
+	inputs := watchProviderInputs("control", native_runtime.Options{Release: true})
 	const harness = "internal/native/testdata/watchfile/hooks.c"
 	found := false
 	for _, path := range inputs.Files {

@@ -14,6 +14,7 @@ import (
 	"github.com/system-inc/adamic/internal/buildcache"
 	"github.com/system-inc/adamic/internal/buildcache/location"
 	"github.com/system-inc/adamic/internal/compilerinputs"
+	"github.com/system-inc/adamic/internal/native_runtime"
 	"github.com/system-inc/adamic/internal/toolchain"
 )
 
@@ -26,13 +27,13 @@ var debugWitnessMutations = []buildcache.Mutation{{
 	After:  `return append([]string{"-fdebug-compilation-dir=" + options.DebugDirectory}, prefixMaps(options.DebugDirectory, "/adamic-debug-witness")...)`,
 }}
 
-var debugBuildOptions = []Options{{Release: true}, {Release: true, Debug: true}, {Release: true, Debug: true, Sanitize: true}}
+var debugBuildOptions = []native_runtime.Options{{Release: true}, {Release: true, Debug: true}, {Release: true, Debug: true, Sanitize: true}}
 
 // The compiler is linked into this test binary, so declare its inputs as values
 // does. The fixtures and this recipe are under internal too. No assertion is
 // cached: products hold executables only, and the consumer observes each run.
-func debugProductInputs(name string, options Options) buildcache.Inputs {
-	flags := append([]string{fmt.Sprintf("options=%+v", options)}, Flags(options)...)
+func debugProductInputs(name string, options native_runtime.Options) buildcache.Inputs {
+	flags := append([]string{fmt.Sprintf("options=%+v", options)}, native_runtime.Flags(options)...)
 	for _, variable := range []string{"ADAMIC_PROGRAM_REGION", "ADAMIC_NATIVE_SPLIT", "ADAMIC_NATIVE_JOBS", "CPATH", "C_INCLUDE_PATH", "SDKROOT", "MACOSX_DEPLOYMENT_TARGET"} {
 		value, set := os.LookupEnv(variable)
 		flags = append(flags, fmt.Sprintf("env:%s:set=%t:value=%s", variable, set, value))
@@ -79,7 +80,7 @@ func debugReviewProduct(t *testing.T, path string, mode int, build bool) string 
 		if err != nil {
 			return err
 		}
-		return Build(CWithOptions(program, options), filepath.Join(directory, "program"), options)
+		return Build(CWithOptions(program, EmitOptions{Options: options}), filepath.Join(directory, "program"), options)
 	})
 }
 
@@ -100,7 +101,7 @@ func runDebugReviewProducts(t *testing.T, shard, mode int) {
 
 func debugLineProduct(t *testing.T, build bool) string {
 	t.Helper()
-	return debugProduct(t, debugProductInputs("debug-line-table", Options{Debug: true, Release: true}), build, func(directory string) error {
+	return debugProduct(t, debugProductInputs("debug-line-table", native_runtime.Options{Debug: true, Release: true}), build, func(directory string) error {
 		compiler := buildcache.GoBuildInMutated(t, "", "adamic-debug-lines", "./cmd/adamic", nil, debugWitnessMutations)
 		// Each copy builds a debug and a release program, so the witnesses below can
 		// require both to match byte for byte across entry directories.
@@ -136,14 +137,14 @@ func TestProduct_DebugLineTable(t *testing.T) { t.Parallel(); debugLineProduct(t
 
 // Normalize only archive-irrelevant options. The program still receives its own
 // absolute comp_dir, split setting and sanitizer fact unchanged.
-func debugArchiveProduct(t *testing.T, options Options, build bool) string {
+func debugArchiveProduct(t *testing.T, options native_runtime.Options, build bool) string {
 	t.Helper()
 	options.DebugDirectory = ""
 	options.Split, options.Jobs = false, 0
 	if options.Sanitize || options.ThreadSanitize || options.Count {
 		options.Release = false
 	}
-	request, err := RuntimeRequestFor(options)
+	request, err := native_runtime.RuntimeRequestFor(options)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -154,24 +155,24 @@ func debugArchiveProduct(t *testing.T, options Options, build bool) string {
 }
 func TestProduct_DebugRuntimeRelease(t *testing.T) {
 	t.Parallel()
-	debugArchiveProduct(t, Options{Release: true}, true)
+	debugArchiveProduct(t, native_runtime.Options{Release: true}, true)
 }
 func TestProduct_DebugRuntimeSanitized(t *testing.T) {
 	t.Parallel()
-	debugArchiveProduct(t, Options{Sanitize: true}, true)
+	debugArchiveProduct(t, native_runtime.Options{Sanitize: true}, true)
 }
 func TestProduct_DebugRuntimeDebug(t *testing.T) {
 	t.Parallel()
-	debugArchiveProduct(t, Options{Debug: true}, true)
+	debugArchiveProduct(t, native_runtime.Options{Debug: true}, true)
 }
 func TestProduct_DebugRuntimeDebugSanitized(t *testing.T) {
 	t.Parallel()
-	debugArchiveProduct(t, Options{Debug: true, Sanitize: true}, true)
+	debugArchiveProduct(t, native_runtime.Options{Debug: true, Sanitize: true}, true)
 }
 
 func debugCommandProduct(t *testing.T, build bool) string {
 	t.Helper()
-	return debugProduct(t, debugProductInputs("debug-command-driver", Options{Debug: true}), build, func(directory string) error {
+	return debugProduct(t, debugProductInputs("debug-command-driver", native_runtime.Options{Debug: true}), build, func(directory string) error {
 		driver := buildcache.GoTest(t, "", "command.test", "./cmd/adamic", nil)
 		contents, err := os.ReadFile(driver)
 		if err != nil {
@@ -211,7 +212,7 @@ func TestProduct_DebugCommandDriver(t *testing.T) { t.Parallel(); debugCommandPr
 // miss belongs to a built-ahead product; the unit rechecks the recorded log.
 func debugSharingProduct(t *testing.T, build bool) string {
 	t.Helper()
-	return debugProduct(t, debugProductInputs("debug-runtime-sharing", Options{Debug: true, Release: true}), build, func(directory string) error {
+	return debugProduct(t, debugProductInputs("debug-runtime-sharing", native_runtime.Options{Debug: true, Release: true}), build, func(directory string) error {
 		compiler := buildcache.GoBuildInMutated(t, "", "adamic-debug-sharing", "./cmd/adamic", nil, debugWitnessMutations)
 		root := directory
 		// The cold-cache witness stays under the unit's handed output, never HOME.

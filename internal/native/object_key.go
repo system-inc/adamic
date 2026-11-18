@@ -12,6 +12,8 @@ import (
 	"sort"
 	"strings"
 	"time"
+
+	"github.com/system-inc/adamic/internal/native_runtime"
 )
 
 // A program's main.c is keyed by what its compile reads, read just before clang compiles it (#2r9xhqs, the C bytes
@@ -45,7 +47,7 @@ func objectTrust() string {
 var errUncachedObject = errors.New("native: main.c compiles uncached")
 
 // objectPlaceholders are the per-build places a compile's prefix maps take out of its object, each by the name it is
-// mapped to (linkOne's maps and clangIn's toolMaps), and the placeholder the key writes it as: the build directory, random
+// mapped to (linkOne's maps and native_runtime.ClangIn's toolMaps), and the placeholder the key writes it as: the build directory, random
 // per build, the runtime archive's directory, under each machine's cache, and where the compiler is installed. The argv
 // names each of them in its map, and in a Debug build names the build directory in main.c's path and the -I.
 var objectPlaceholders = map[string]string{"/adamic-build": "<build>", "/adamic-runtime": "<runtime>", "/adamic-compiler": "<compiler>"}
@@ -174,16 +176,16 @@ type objectKeying struct {
 // trust (objectTrust), in the build cache's two object directories, or none where the trust is neither main nor
 // candidate, or where the unit cache is off (unitCacheOff, its variable or a mismatch's mark), which turns this cache off
 // with it.
-func objectKeyer() func(compile *exec.Cmd, source string, compileFlags []string, program string, jobserver *Jobserver) error {
-	main, err := cacheDirectory("native-objects-main")
+func objectKeyer() func(compile *exec.Cmd, source string, compileFlags []string, program string, jobserver *native_runtime.Jobserver) error {
+	main, err := native_runtime.CacheDirectory("native-objects-main")
 	if err != nil {
 		return nil
 	}
-	candidate, err := cacheDirectory("native-objects-candidate")
+	candidate, err := native_runtime.CacheDirectory("native-objects-candidate")
 	if err != nil {
 		return nil
 	}
-	units, err := cacheDirectory("native-units")
+	units, err := native_runtime.CacheDirectory("native-units")
 	if err != nil {
 		return nil
 	}
@@ -222,7 +224,7 @@ func objectCacheFor(trust string, main string, candidate string, units string) (
 // under main.c's key, or compiled, and once its recheck passed, stored in the directory the cache writes. A compile the
 // key can't account for compiles uncached, and says why. With unitCheckVariable set, every hit compiles too and the two
 // objects are compared: a mismatch prints UnitMismatchPrefix's line, marks the unit cache off, and is the cold object.
-func (cache objectCache) compile(compile *exec.Cmd, source string, compileFlags []string, program string, jobserver *Jobserver) error {
+func (cache objectCache) compile(compile *exec.Cmd, source string, compileFlags []string, program string, jobserver *native_runtime.Jobserver) error {
 	keying, err := newObjectKeying(compile, source, compileFlags, program, jobserver)
 	if errors.Is(err, errUncachedObject) {
 		fmt.Fprintln(os.Stderr, err)
@@ -230,7 +232,7 @@ func (cache objectCache) compile(compile *exec.Cmd, source string, compileFlags 
 		if err != nil {
 			return err
 		}
-		buildLog("cCompile", "main.c", "", "off", clang)
+		native_runtime.BuildLog("cCompile", "main.c", "", "off", clang)
 		return nil
 	}
 	if err != nil {
@@ -241,7 +243,7 @@ func (cache objectCache) compile(compile *exec.Cmd, source string, compileFlags 
 
 // compileKeyed is compile once main.c is keyed, a step of its own so a test can move an input between the key and the
 // compile.
-func (cache objectCache) compileKeyed(keying *objectKeying, compile *exec.Cmd, jobserver *Jobserver) error {
+func (cache objectCache) compileKeyed(keying *objectKeying, compile *exec.Cmd, jobserver *native_runtime.Jobserver) error {
 	object := filepath.Join(compile.Dir, "main.o")
 	for _, directory := range cache.reads {
 		cached, found, whole := objectEntry(filepath.Join(directory, keying.key))
@@ -260,7 +262,7 @@ func (cache objectCache) compileKeyed(keying *objectKeying, compile *exec.Cmd, j
 		return err
 	}
 	// clang compiled it, so it is a miss whether or not it's stored.
-	buildLog("cCompile", "main.c", keying.key, "miss", clang)
+	native_runtime.BuildLog("cCompile", "main.c", keying.key, "miss", clang)
 	if differs := keying.recheck(jobserver); differs != "" {
 		fmt.Fprintf(os.Stderr, "native: main.c's object isn't stored: %s\n", differs)
 		return nil
@@ -276,7 +278,7 @@ const objectSumName = "main.o.sha256"
 // are whole, the sha256 its sum file names. An entry with no sum, a sum that doesn't read, or bytes that don't hash to
 // it is found but not whole.
 func objectEntry(entry string) ([]byte, bool, bool) {
-	found, ok := cachedFile(filepath.Join(entry, "main.o"))
+	found, ok := native_runtime.CachedFile(filepath.Join(entry, "main.o"))
 	if !ok {
 		return nil, false, false
 	}
@@ -294,13 +296,13 @@ func objectEntry(entry string) ([]byte, bool, bool) {
 // hit copies cached, the object found under key, to object, never linking the cache's file in place, unless
 // unitCheckVariable asks every hit compiled again: then compile makes object, and a cached object other than it is a
 // mismatch.
-func (cache objectCache) hit(key string, cached []byte, object string, compile *exec.Cmd, jobserver *Jobserver) error {
+func (cache objectCache) hit(key string, cached []byte, object string, compile *exec.Cmd, jobserver *native_runtime.Jobserver) error {
 	if os.Getenv(unitCheckVariable) == "" {
 		var copying time.Duration
-		if err := timed(&copying, func() error { return os.WriteFile(object, cached, 0o644) }); err != nil {
+		if err := native_runtime.Timed(&copying, func() error { return os.WriteFile(object, cached, 0o644) }); err != nil {
 			return err
 		}
-		buildLog("cCompile", "main.c", key, "hit", copying)
+		native_runtime.BuildLog("cCompile", "main.c", key, "hit", copying)
 		return nil
 	}
 	clang, err := compileMain(compile, jobserver)
@@ -320,10 +322,10 @@ func (cache objectCache) hit(key string, cached []byte, object string, compile *
 		}
 		fmt.Fprintln(os.Stderr, unitMismatchLine(mismatch)+"; the unit cache is "+marked)
 		noteUnitMismatch(mismatch)
-		buildLog("cCompile", "main.c", key, "miss", clang)
+		native_runtime.BuildLog("cCompile", "main.c", key, "miss", clang)
 		return nil
 	}
-	buildLog("cCompile", "main.c", key, "hit", clang)
+	native_runtime.BuildLog("cCompile", "main.c", key, "hit", clang)
 	return nil
 }
 
@@ -378,7 +380,7 @@ func (cache objectCache) store(key string, object string) error {
 // compiled, what a split unit's key refuses of the flags, the environment and clang, or a preprocessing that fails,
 // which leaves the compile to fail as it would. It runs main.c's preprocessing in the compile's directory, writing main.i
 // and main.d there.
-func newObjectKeying(compile *exec.Cmd, source string, compileFlags []string, program string, jobserver *Jobserver) (*objectKeying, error) {
+func newObjectKeying(compile *exec.Cmd, source string, compileFlags []string, program string, jobserver *native_runtime.Jobserver) (*objectKeying, error) {
 	if macro := unitTime.FindString(source); macro != "" {
 		return nil, fmt.Errorf("%w: main.c reads %s", errUncachedObject, macro)
 	}
@@ -416,7 +418,7 @@ func newObjectKeying(compile *exec.Cmd, source string, compileFlags []string, pr
 	// stated before it's hashed, so bytes that change after the hash move the change time the recheck looks at again.
 	var files []string
 	seen := map[string]bool{}
-	for _, name := range dependencies(rules) {
+	for _, name := range native_runtime.Dependencies(rules) {
 		if seen[name] {
 			continue
 		}
@@ -438,8 +440,8 @@ func newObjectKeying(compile *exec.Cmd, source string, compileFlags []string, pr
 	}
 	// v1: keyed by main.c preprocessed, every file it read by its bytes, in the dependency list's order, and the compile's
 	// arguments, every per-build place a placeholder (#2r9xhqs).
-	// The platform is the build's (buildPlatform), as its flags' --target names it, never this process's (#5xsd2ha).
-	goos, goarch := buildPlatform()
+	// The platform is the build's (native_runtime.BuildPlatform), as its flags' --target names it, never this process's (#5xsd2ha).
+	goos, goarch := native_runtime.BuildPlatform()
 	parts := []string{"adamic-objects-v1", "os " + goos, "arch " + goarch}
 	parts = append(parts, clang.parts...)
 	parts = append(parts, environmentParts...)
@@ -448,8 +450,8 @@ func newObjectKeying(compile *exec.Cmd, source string, compileFlags []string, pr
 	}
 	parts = append(parts, files...)
 	parts = append(parts, fmt.Sprintf("preprocessed %x", sha256.Sum256(objectMarkersMapped(preprocessed, places))))
-	keying.key, keying.parts = partsKey(parts), parts
-	buildLog("cPreprocess", "main.c", keying.key, "off", preprocessing)
+	keying.key, keying.parts = native_runtime.PartsKey(parts), parts
+	native_runtime.BuildLog("cPreprocess", "main.c", keying.key, "off", preprocessing)
 	return keying, nil
 }
 
@@ -465,13 +467,13 @@ func objectRefusal(err error) error {
 // run runs main.c's preprocessing, writing output and whatever more arguments ask, in the compile's directory under
 // exactly its environment, and is the bytes written to output and how long clang ran, timed inside its jobserver.Hold so
 // a token's wait isn't counted.
-func (keying *objectKeying) run(jobserver *Jobserver, output string, arguments ...string) ([]byte, time.Duration, error) {
-	command := clangIn(keying.compile.Dir, keying.compile.Path, slices.Concat(keying.preprocess, arguments, []string{"-o", output})...)
+func (keying *objectKeying) run(jobserver *native_runtime.Jobserver, output string, arguments ...string) ([]byte, time.Duration, error) {
+	command := native_runtime.ClangIn(keying.compile.Dir, keying.compile.Path, slices.Concat(keying.preprocess, arguments, []string{"-o", output})...)
 	command.Env = keying.compile.Env
 	var combined []byte
 	var clang time.Duration
 	if err := jobserver.Hold(func() error {
-		return timed(&clang, func() (err error) { combined, err = command.CombinedOutput(); return err })
+		return native_runtime.Timed(&clang, func() (err error) { combined, err = command.CombinedOutput(); return err })
 	}); err != nil {
 		return nil, clang, fmt.Errorf("%w\n%s", err, combined)
 	}
@@ -484,7 +486,7 @@ func (keying *objectKeying) run(jobserver *Jobserver, output string, arguments .
 // in which case the compile may have read other bytes than the key did, and its object may not be stored. The second
 // preprocessing writes no dependency list: the first's names every file to look at again, and a file the second reads
 // that the first didn't changes the bytes.
-func (keying *objectKeying) recheck(jobserver *Jobserver) string {
+func (keying *objectKeying) recheck(jobserver *native_runtime.Jobserver) string {
 	var differences []string
 	preprocessed, rechecking, err := keying.run(jobserver, "main.recheck.i")
 	switch {
@@ -493,7 +495,7 @@ func (keying *objectKeying) recheck(jobserver *Jobserver) string {
 	case !bytes.Equal(preprocessed, keying.preprocessed):
 		differences = append(differences, "main.c preprocessed to other bytes after its compile than before it")
 	}
-	timed(&rechecking, func() error {
+	native_runtime.Timed(&rechecking, func() error {
 		for _, read := range keying.reads {
 			if again, err := objectReadOf(keying.compile.Dir, read.name); err != nil || again != read {
 				differences = append(differences, read.name+" changed between main.c's key and its recheck (its inode or change time moved)")
@@ -501,6 +503,6 @@ func (keying *objectKeying) recheck(jobserver *Jobserver) string {
 		}
 		return nil
 	})
-	buildLog("cRecheck", "main.c", keying.key, "off", rechecking)
+	native_runtime.BuildLog("cRecheck", "main.c", keying.key, "off", rechecking)
 	return strings.Join(differences, "; ")
 }

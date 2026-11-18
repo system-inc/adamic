@@ -16,6 +16,7 @@ import (
 	bridge "github.com/system-inc/adamic/bridge/tsgo"
 	"github.com/system-inc/adamic/internal/load"
 	"github.com/system-inc/adamic/internal/lower"
+	"github.com/system-inc/adamic/internal/native_runtime"
 	"github.com/system-inc/adamic/internal/toolchain"
 )
 
@@ -61,13 +62,13 @@ int main(int argc, char **argv) {
 // check metadata the binary carries.
 var splitBuilds = []struct {
 	name    string
-	options Options
+	options native_runtime.Options
 }{
-	{"release", Options{}},
-	{"shipped release", Options{Release: true}},
-	{"debug", Options{Debug: true}},
-	{"sanitized", Options{Sanitize: true}},
-	{"thread sanitized", Options{ThreadSanitize: true}},
+	{"release", native_runtime.Options{}},
+	{"shipped release", native_runtime.Options{Release: true}},
+	{"debug", native_runtime.Options{Debug: true}},
+	{"sanitized", native_runtime.Options{Sanitize: true}},
+	{"thread sanitized", native_runtime.Options{ThreadSanitize: true}},
 }
 
 // splitBuilt is what one build made: the binary's bytes, or the error it failed with and clang's exit code.
@@ -80,19 +81,19 @@ type splitBuilt struct {
 // buildOneCallAndSplit builds source as options say twice, as one clang call that compiles and links (the build off
 // macOS before #2r9xhqs, BuildLean's still) and as a compile and then a link, in the same build directory and to the same
 // output, so the two differ by the split alone. Each is linkOne as Build reaches it, with Build's flags and its runtime.
-func buildOneCallAndSplit(t *testing.T, source string, options Options) (splitBuilt, splitBuilt) {
+func buildOneCallAndSplit(t *testing.T, source string, options native_runtime.Options) (splitBuilt, splitBuilt) {
 	t.Helper()
-	return buildOneCallAndSplitWith(t, source, options, Flags(options))
+	return buildOneCallAndSplitWith(t, source, options, native_runtime.Flags(options))
 }
 
 // buildOneCallAndSplitWith is buildOneCallAndSplit with flags in place of options' own.
-func buildOneCallAndSplitWith(t *testing.T, source string, options Options, flags []string) (splitBuilt, splitBuilt) {
+func buildOneCallAndSplitWith(t *testing.T, source string, options native_runtime.Options, flags []string) (splitBuilt, splitBuilt) {
 	t.Helper()
-	library, err := RuntimeLibraryForSource("", source, options)
+	library, err := native_runtime.RuntimeLibraryForSource("", source, options)
 	if err != nil {
 		t.Fatal(err)
 	}
-	jobserver, err := defaultJobserver()
+	jobserver, err := native_runtime.DefaultJobserver()
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -104,7 +105,7 @@ func buildOneCallAndSplitWith(t *testing.T, source string, options Options, flag
 		}
 		defer os.RemoveAll(directory)
 		defer os.Remove(output)
-		err := linkOne(directory, compilerName(options), source, output, options, flags, library, jobserver, func(directory string) ([]string, error) {
+		err := linkOne(directory, native_runtime.CompilerName(options), source, output, options, flags, library, jobserver, func(directory string) ([]string, error) {
 			return regexpCompilerLinkFlags(source, options, directory)
 		}, objectKeyer(), oneCall)
 		return splitResult(t, output, err)
@@ -192,7 +193,7 @@ var splitCorpusSources = sync.OnceValues(func() ([][2]string, error) {
 		if regexpCompilerSource(program[1]) {
 			regexpCompiler++
 		}
-		if len(Features(program[1])) > 0 {
+		if len(native_runtime.Features(program[1])) > 0 {
 			features++
 		}
 	}
@@ -204,7 +205,7 @@ var splitCorpusSources = sync.OnceValues(func() ([][2]string, error) {
 
 // testSplitCorpus holds the programs of the corpus from first up to last, built as build says, split to the one call's
 // binary byte for byte. A last past the corpus's end is its end.
-func testSplitCorpus(t *testing.T, build Options, first, last int) {
+func testSplitCorpus(t *testing.T, build native_runtime.Options, first, last int) {
 	programs, err := splitCorpusSources()
 	if err != nil {
 		t.Fatal(err)
@@ -357,7 +358,7 @@ func compiledThenLinkedCheckerIsTheOneCall(t *testing.T, index int) {
 	if output, err := toolchain.CommandIn(directory, compiler, "-g", "-c", "stubs.c", "-o", "stubs.o").CombinedOutput(); err != nil {
 		t.Fatalf("stubs: %v\n%s", err, output)
 	}
-	if output, err := toolchain.CommandIn(directory, archiverName(compiler), "rcs", "checker.a", "stubs.o").CombinedOutput(); err != nil {
+	if output, err := toolchain.CommandIn(directory, native_runtime.ArchiverName(compiler), "rcs", "checker.a", "stubs.o").CombinedOutput(); err != nil {
 		t.Fatalf("archive: %v\n%s", err, output)
 	}
 	output := filepath.Join(directory, "checker")
@@ -383,11 +384,11 @@ func TestACompiledThenLinkedProgramTakesFlagsOnlyALinkReads(t *testing.T) {
 	source := splitCorpusSource(t, "arguments.a")
 	for _, build := range []struct {
 		name    string
-		options Options
-	}{{"release", Options{}}, {"sanitized", Options{Sanitize: true}}} {
+		options native_runtime.Options
+	}{{"release", native_runtime.Options{}}, {"sanitized", native_runtime.Options{Sanitize: true}}} {
 		t.Run(build.name, func(t *testing.T) {
 			t.Parallel()
-			flags := append(Flags(build.options), "-Wl,--wrap=adamic_split_test_unreferenced", "-Xlinker", "--as-needed", "-lm")
+			flags := append(native_runtime.Flags(build.options), "-Wl,--wrap=adamic_split_test_unreferenced", "-Xlinker", "--as-needed", "-lm")
 			oneCall, split := buildOneCallAndSplitWith(t, source, build.options, flags)
 			if oneCall.failure != "" {
 				t.Fatalf("the one call failed: %s", oneCall.failure)

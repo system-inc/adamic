@@ -7,6 +7,7 @@ import (
 	"testing"
 
 	"github.com/system-inc/adamic/internal/ir"
+	"github.com/system-inc/adamic/internal/native_runtime"
 )
 
 // Absent storage has no evaluated value, even if a producer attaches a nullish
@@ -36,7 +37,7 @@ func TestAbsentNullableFieldMetadata(t *testing.T) {
 				t.Fatal("the absent field's value was evaluated")
 			}
 			binary := filepath.Join(t.TempDir(), "absent")
-			if err := Build(code, binary, Options{Sanitize: true}); err != nil {
+			if err := Build(code, binary, native_runtime.Options{Sanitize: true}); err != nil {
 				t.Fatal(err)
 			}
 			if output, err := exec.CommandContext(t.Context(), binary).CombinedOutput(); err != nil || len(output) != 0 {

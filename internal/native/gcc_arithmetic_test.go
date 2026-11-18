@@ -11,6 +11,7 @@ import (
 
 	"github.com/system-inc/adamic/internal/boundedrun"
 	"github.com/system-inc/adamic/internal/buildcache"
+	"github.com/system-inc/adamic/internal/native_runtime"
 )
 
 func gccArithmeticProduct(t *testing.T) string {
@@ -21,15 +22,15 @@ func gccArithmeticProduct(t *testing.T) string {
 		t.Skip(why)
 	}
 	// --target= is clang's, and gcc refuses it: a gcc portability build is the host's, so it names no triple.
-	flags := slices.DeleteFunc(Flags(Options{cpu: cpu}), func(s string) bool {
+	flags := slices.DeleteFunc(native_runtime.Flags(native_runtime.Options{CPU: cpu}), func(s string) bool {
 		return s == "-Wcast-function-type-strict" || s == "-Wno-self-assign" || strings.HasPrefix(s, "--target=")
 	})
-	files := []runtimeFile{{"main.c", []byte(fusedHarness)}}
-	headers, err := headersRead(files, flags, compiler)
+	files := []native_runtime.RuntimeFile{{Name: "main.c", Contents: []byte(fusedHarness)}}
+	headers, err := native_runtime.HeadersRead(files, flags, compiler)
 	if err != nil {
 		t.Fatal(err)
 	}
-	inputs := buildcache.Inputs{Name: "gcc-arithmetic", Files: []string{"go.mod", "bridge/tsgo/tsgo.h", "internal/native/gcc_arithmetic_test.go", "internal/native/contract_test.go", "internal/native/native.go", "internal/native/library.go", "internal/native/target.go"}, Flags: portableKeyParts(files, flags, compiler, headers), Toolchain: []string{buildcache.Tool(compiler, "--version"), buildcache.Tool("node", "--version")}}
+	inputs := buildcache.Inputs{Name: "gcc-arithmetic", Files: []string{"go.mod", "bridge/tsgo/tsgo.h", "internal/native/gcc_arithmetic_test.go", "internal/native/contract_test.go", "internal/native/native.go", "internal/native_runtime/options.go", "internal/native_runtime/library.go", "internal/native_runtime/target.go"}, Flags: native_runtime.PortableKeyParts(files, flags, compiler, headers), Toolchain: []string{buildcache.Tool(compiler, "--version"), buildcache.Tool("node", "--version")}}
 	return buildcache.Product(t, inputs, func(directory string) error {
 		if err := os.WriteFile(filepath.Join(directory, "main.c"), []byte(fusedHarness), 0600); err != nil {
 			return err
@@ -43,7 +44,7 @@ func gccArithmeticProduct(t *testing.T) string {
 					}
 				}
 			}
-			args := append(append(selected, prefixMaps(directory, "/adamic-gcc-arithmetic")...), "main.c", "-o", variant)
+			args := append(append(selected, native_runtime.PrefixMaps(directory, "/adamic-gcc-arithmetic")...), "main.c", "-o", variant)
 			command, release := boundedrun.Command(30*time.Second, compiler, args...)
 			command.Dir = directory
 			output, err := command.CombinedOutput()

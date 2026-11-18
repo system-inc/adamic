@@ -8,6 +8,8 @@ import (
 	"os/exec"
 	"path/filepath"
 	"testing"
+
+	"github.com/system-inc/adamic/internal/native_runtime"
 )
 
 // productCompilerArguments names every source and include directory independently of
@@ -16,7 +18,7 @@ import (
 func productCompilerArguments(t *testing.T, working string, arguments []string) []string {
 	t.Helper()
 	mapped := append([]string{}, arguments...)
-	mapped = append(mapped, prefixMaps(working, "/adamic-test-build")...)
+	mapped = append(mapped, native_runtime.PrefixMaps(working, "/adamic-test-build")...)
 	include := 0
 	source := 0
 	for index, argument := range arguments {
@@ -39,7 +41,7 @@ func productCompilerArguments(t *testing.T, working string, arguments []string) 
 			if err != nil {
 				t.Fatal(err)
 			}
-			mapped = append(mapped, prefixMaps(absolute, name)...)
+			mapped = append(mapped, native_runtime.PrefixMaps(absolute, name)...)
 		}
 	}
 	return mapped
@@ -121,13 +123,13 @@ func TestProductCompilerBytesAreIndependentOfDirectory(t *testing.T) {
 			write(filepath.Join(include, "adamic.h"), "static const char *header_file(void) { return __FILE__; }\nstatic unsigned header_shift(unsigned n) { return 1u << n; }\nconst char *heap_file(void);\n")
 			write(filepath.Join(extra, "extra.h"), "static const char *extra_file(void) { return __FILE__; }\nstatic int extra_divide(int n) { return 42 / n; }\n")
 			write(filepath.Join(scratch, "heap.c"), "#include \"adamic.h\"\nconst char *heap_file(void) { volatile unsigned n = 1; return header_shift(n) ? __FILE__ : header_file(); }\n")
-			flags := append(Flags(Options{Sanitize: true}), "-I", include, "-I"+extra)
+			flags := append(native_runtime.Flags(native_runtime.Options{Sanitize: true}), "-I", include, "-I"+extra)
 			object := filepath.Join(scratch, "heap.o")
 			staticsCompile(t, compiler, append(append([]string{}, flags...), "-c", filepath.Join(scratch, "heap.c"), "-o", object)...)
 			library := filepath.Join(scratch, "runtime.a")
-			staticsCompile(t, archiverName(compiler), "rcs", library, object)
+			staticsCompile(t, native_runtime.ArchiverName(compiler), "rcs", library, object)
 			// Exercise the replacement operation used by the remote-scan mutants too.
-			staticsCompile(t, archiverName(compiler), "r", library, object)
+			staticsCompile(t, native_runtime.ArchiverName(compiler), "r", library, object)
 			binary := buildHarnessWithLibrary(t, "#include \"adamic.h\"\n#include \"extra.h\"\n#include <stdio.h>\nint main(int count, char **arguments) { (void)arguments; puts(__FILE__); puts(header_file()); puts(extra_file()); puts(heap_file()); printf(\"%u %d\\n\", header_shift((unsigned)count), extra_divide(count)); return 0; }\n", flags, compiler, library)
 			product := map[string][]byte{}
 			for _, file := range []struct{ name, path string }{{"heap.o", object}, {"runtime.a", library}, {"harness", binary}, {"main.c", filepath.Join(filepath.Dir(binary), "main.c")}} {

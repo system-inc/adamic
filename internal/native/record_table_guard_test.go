@@ -246,13 +246,13 @@ func recordTableProblems(sources map[string]string) []string {
 
 func recordTableSources(t *testing.T) map[string]string {
 	t.Helper()
-	files, err := readRuntime(native_runtime.Sources, "c")
+	files, err := native_runtime.ReadRuntime(native_runtime.Sources, "c")
 	if err != nil {
 		t.Fatal(err)
 	}
 	sources := map[string]string{}
 	for _, file := range files {
-		sources[file.name] = string(file.contents)
+		sources[file.Name] = string(file.Contents)
 	}
 	return sources
 }

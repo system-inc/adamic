@@ -16,6 +16,7 @@ import (
 	"github.com/system-inc/adamic/internal/load"
 	"github.com/system-inc/adamic/internal/lower"
 	"github.com/system-inc/adamic/internal/native"
+	"github.com/system-inc/adamic/internal/native_runtime"
 )
 
 // records_define_hidden.a is Object.defineProperty's hidden record key, as tsc's commandLineParser hides
@@ -133,7 +134,7 @@ func recordUncaughtWitness(t *testing.T, source string, mutant func(string) stri
 		code = changed
 	}
 	binary := filepath.Join(directory, "native")
-	if err := native.Build(code, binary, native.Options{Sanitize: true}); err != nil {
+	if err := native.Build(code, binary, native_runtime.Options{Sanitize: true}); err != nil {
 		t.Fatal(err)
 	}
 	got := run([]string{"ASAN_OPTIONS=detect_leaks=0", "UBSAN_OPTIONS=halt_on_error=1"}, binary)

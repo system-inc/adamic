@@ -102,19 +102,19 @@ func regexpWitnessClosureInventory(t testing.TB) string {
 	if goruntime.GOOS != "linux" {
 		t.Skip("RegExp witness symbol closure is held on Linux")
 	}
-	options := Options{Sanitize: true}
-	files, flags, compiler, version, err := runtimeInputs("", options, nil)
+	options := native_runtime.Options{Sanitize: true}
+	files, flags, compiler, version, err := native_runtime.RuntimeInputs("", options, nil)
 	if err != nil {
 		t.Fatal(err)
 	}
-	request, err := runtimeRequest(files, flags, compiler, version, options)
+	request, err := native_runtime.RuntimeRequestOf(files, flags, compiler, version, options)
 	if err != nil {
 		t.Fatal(err)
 	}
 	libraries := regexpClosureLibraries(t, compiler)
 	inputs := buildcache.Inputs{
 		Name:      "regexp-witness-closure-inventory",
-		Files:     []string{"internal/native/regexp_witness_closure_test.go", "internal/native/regexp_test.go", "internal/native/library.go", "internal/native/jobserver.go", "internal/native/native.go", "internal/native/target.go", "internal/native_runtime/c"},
+		Files:     []string{"internal/native/regexp_witness_closure_test.go", "internal/native/regexp_test.go", "internal/native_runtime/library.go", "internal/native_runtime/jobserver.go", "internal/native/native.go", "internal/native_runtime/options.go", "internal/native_runtime/target.go", "internal/native_runtime/c"},
 		Flags:     slices.Clone(request.Portable),
 		Toolchain: []string{buildcache.CompilerReport(compiler), buildcache.Tool(request.Archiver, "--version"), buildcache.Tool("nm", "--version")},
 	}
@@ -149,33 +149,33 @@ func regexpWitnessClosureInventory(t testing.TB) string {
 				inventory.Members[name] = symbols
 			}
 		}
-		all, err := readRuntime(native_runtime.Sources, "c")
+		all, err := native_runtime.ReadRuntime(native_runtime.Sources, "c")
 		if err != nil {
 			return err
 		}
 		for _, file := range all {
-			if strings.HasSuffix(file.name, ".c") {
-				inventory.Sources = append(inventory.Sources, file.name)
+			if strings.HasSuffix(file.Name, ".c") {
+				inventory.Sources = append(inventory.Sources, file.Name)
 			}
 		}
-		var omitted, mutated []runtimeFile
+		var omitted, mutated []native_runtime.RuntimeFile
 		for _, file := range files {
-			if strings.HasSuffix(file.name, ".h") {
+			if strings.HasSuffix(file.Name, ".h") {
 				omitted = append(omitted, file)
 				mutated = append(mutated, file)
 			}
-			if strings.HasSuffix(file.name, ".c") && !regexWitnessRuntimeSources[file.name] {
+			if strings.HasSuffix(file.Name, ".c") && !regexWitnessRuntimeSources[file.Name] {
 				omitted = append(omitted, file)
 			}
-			if file.name == "weak.c" {
+			if file.Name == "weak.c" {
 				// New external call, compiled from a copy only. normalize.c is not listed.
-				changed := slices.Clone(file.contents)
+				changed := slices.Clone(file.Contents)
 				changed = append(changed, []byte("\nadamic_string *adamic_regexp_closure_probe(const adamic_string *s) { return adamic_string_normalize(s, s); }\n")...)
-				mutated = append(mutated, runtimeFile{file.name, changed})
+				mutated = append(mutated, native_runtime.RuntimeFile{Name: file.Name, Contents: changed})
 			}
 		}
-		build := func(subdirectory string, snapshot []runtimeFile) (string, error) {
-			request, err := runtimeRequest(snapshot, flags, compiler, version, options)
+		build := func(subdirectory string, snapshot []native_runtime.RuntimeFile) (string, error) {
+			request, err := native_runtime.RuntimeRequestOf(snapshot, flags, compiler, version, options)
 			if err != nil {
 				return "", err
 			}
@@ -188,7 +188,7 @@ func regexpWitnessClosureInventory(t testing.TB) string {
 			}
 			return filepath.Join(root, "runtime.a"), nil
 		}
-		if slices.ContainsFunc(omitted, func(file runtimeFile) bool { return strings.HasSuffix(file.name, ".c") }) {
+		if slices.ContainsFunc(omitted, func(file native_runtime.RuntimeFile) bool { return strings.HasSuffix(file.Name, ".c") }) {
 			archive, err := build("omitted", omitted)
 			if err != nil {
 				return err

@@ -1,8 +1,11 @@
 // Package native_runtime holds Adamic's C runtime, the sources every native program's runtime archive is built from,
-// under c/: the values, the heap and its regions, the library the emitted C calls, and the hosts it runs on.
+// under c/: the values, the heap and its regions, the library the emitted C calls, and the hosts it runs on. It builds
+// the archive too: the options and flags clang compiles with, the request a product builds ahead, the runtime cache,
+// and the jobserver the compiles run under.
 //
-// The C lives here, apart from internal/native's emitter, so the archive's sources have one home a build can key by
-// itself. Package native compiles them; this package only holds them.
+// The C and its build live here, apart from internal/native's emitter, so an archive's key holds them and nothing of
+// the compiler: this package imports none of it (compiler_free's guard). Package native compiles a program and links
+// it with the archive this package builds.
 package native_runtime
 
 import "embed"

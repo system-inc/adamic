@@ -11,6 +11,7 @@ import (
 
 	"github.com/system-inc/adamic/internal/leakcheck"
 	"github.com/system-inc/adamic/internal/native"
+	"github.com/system-inc/adamic/internal/native_runtime"
 )
 
 // Adoption makes a region of one (#5nrs3q2): a copy that holds members of a long-lived graph keeps
@@ -355,11 +356,11 @@ var graphRegionOfOnePeak = regexp.MustCompile(`peak (\d+)`)
 func TestGraphRegionOfOne(t *testing.T) {
 	t.Parallel()
 	sanitized := filepath.Join(t.TempDir(), "sanitized")
-	if err := native.Build(graphRegionOfOneHarness, sanitized, native.Options{Sanitize: true}); err != nil {
+	if err := native.Build(graphRegionOfOneHarness, sanitized, native_runtime.Options{Sanitize: true}); err != nil {
 		t.Fatal(err)
 	}
 	counted := filepath.Join(t.TempDir(), "counted")
-	if err := native.Build(graphRegionOfOneHarness, counted, native.Options{Sanitize: true, Count: true}); err != nil {
+	if err := native.Build(graphRegionOfOneHarness, counted, native_runtime.Options{Sanitize: true, Count: true}); err != nil {
 		t.Fatal(err)
 	}
 	run := func(binary, mode, loops string) leakcheck.Run {
@@ -521,7 +522,7 @@ int main(int count, char **arguments) {
 func TestGraphRegionProgramEdge(t *testing.T) {
 	t.Parallel()
 	binary := filepath.Join(t.TempDir(), "program")
-	if err := native.Build(graphRegionProgramHarness, binary, native.Options{Sanitize: true, Count: true, ProgramRegion: true}); err != nil {
+	if err := native.Build(graphRegionProgramHarness, binary, native_runtime.Options{Sanitize: true, Count: true, ProgramRegion: true}); err != nil {
 		t.Fatal(err)
 	}
 	for _, mode := range []string{"cycle", "late"} {

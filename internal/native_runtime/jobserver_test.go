@@ -1,4 +1,4 @@
-package native
+package native_runtime
 
 import (
 	"context"
@@ -122,9 +122,9 @@ func TestAJobserverThatCantBeOpenedFailsNamingIt(t *testing.T) {
 	}
 }
 
-// Native reads no environment for its jobserver (Compiler's condition 3 on #yzwm4rj): no file of internal/native, its
-// tests included, names the variable, which internal/ccjobserver alone reads, and nothing in jobserver.go reads the
-// environment at all. Mutant: withCompilerToken's os.Getenv of the variable back in jobserver.go.
+// Native reads no environment for its jobserver (Compiler's condition 3 on #yzwm4rj): no file of internal/native_runtime
+// or internal/native, their tests included, names the variable, which internal/ccjobserver alone reads, and nothing in
+// jobserver.go reads the environment at all. Mutant: withCompilerToken's os.Getenv of the variable back in jobserver.go.
 func TestNativeReadsNoJobserverVariable(t *testing.T) {
 	t.Parallel()
 	// The name spelled in two pieces, so this file doesn't name it either.
@@ -133,6 +133,11 @@ func TestNativeReadsNoJobserverVariable(t *testing.T) {
 	if err != nil || len(files) == 0 {
 		t.Fatal(files, err)
 	}
+	emitter, err := filepath.Glob(filepath.Join("..", "native", "*.go"))
+	if err != nil || len(emitter) == 0 {
+		t.Fatal(emitter, err)
+	}
+	files = append(files, emitter...)
 	for _, name := range files {
 		parsed, err := parser.ParseFile(token.NewFileSet(), name, nil, 0)
 		if err != nil {
@@ -159,9 +164,8 @@ func TestNativeReadsNoJobserverVariable(t *testing.T) {
 const childVariable = "ADAMIC_NATIVE_JOBSERVER_CHILD"
 
 // inChild runs this test binary again for the one test named, with environment added, and returns its output. A run
-// that fails, or runs past bound, fails t, naming it. The child runs with no jobserver variable: this binary imports
-// internal/ccjobserver through leakcheck, and a FIFO the unit names would set the child's jobserver before its test
-// does.
+// that fails, or runs past bound, fails t, naming it. The child runs with no jobserver variable, so a FIFO the unit
+// names can never set the child's jobserver before its test does, whatever package of its binary reads the variable.
 func inChild(t *testing.T, test string, bound time.Duration, environment ...string) string {
 	t.Helper()
 	runContext, cancel := context.WithTimeout(context.Background(), bound)
@@ -211,13 +215,14 @@ func TestTheProcessJobserverIsSetOnceChild(t *testing.T) {
 	if err := UseJobserver(second, nil); !errors.Is(err, ErrJobserverSet) {
 		t.Fatalf("another jobserver: %v", err)
 	}
-	if got, err := defaultJobserver(); got != first || err != nil {
+	if got, err := DefaultJobserver(); got != first || err != nil {
 		t.Fatalf("the process's jobserver is %v, %v, want the first", got, err)
 	}
 }
 
-// A jobserver that couldn't be opened fails every compile under the process's (condition 2): Build returns why, never
-// builds unbounded. Mutant: the open's error dropped by UseJobserver.
+// A jobserver that couldn't be opened fails every compile under the process's (condition 2): the runtime cache's build,
+// which internal/native's Build links, returns why, never builds unbounded. Mutant: the open's error dropped by
+// UseJobserver.
 func TestAProcessJobserverThatCouldntBeOpenedFailsTheBuild(t *testing.T) {
 	t.Parallel()
 	inChild(t, "TestAProcessJobserverThatCouldntBeOpenedFailsTheBuildChild", time.Minute)
@@ -232,7 +237,9 @@ func TestAProcessJobserverThatCouldntBeOpenedFailsTheBuildChild(t *testing.T) {
 	if err := UseJobserver(nil, failed); err != nil {
 		t.Fatal(err)
 	}
-	err := Build("int main(void) { return 0; }\n", filepath.Join(t.TempDir(), "program"), Options{})
+	// The header scan the cache's key reads is the first clang it runs, before any archive is looked for, so no archive
+	// another run left in a cache can stand in for the compile.
+	_, err := RuntimeLibrary("", Options{})
 	if err == nil || !errors.Is(err, failed) && !strings.Contains(err.Error(), "absent") {
 		t.Fatalf("a build under a jobserver that couldn't be opened: %v", err)
 	}
@@ -240,7 +247,7 @@ func TestAProcessJobserverThatCouldntBeOpenedFailsTheBuildChild(t *testing.T) {
 
 // The archive's build never falls back to the process's jobserver (Node's rail and Compiler's addition 3 on #yzwm4rj):
 // handed nil, RuntimeRequest.Build compiles unbounded, whatever the process's is, even one holding no token at all,
-// which any compile that took it would wait on for ever. Mutant: compileRuntime taking the process's when handed nil.
+// which any compile that took it would wait on for ever. Mutant: CompileRuntime taking the process's when handed nil.
 func TestTheArchiveBuildNeverFallsBackToTheProcessJobserver(t *testing.T) {
 	t.Parallel()
 	inChild(t, "TestTheArchiveBuildNeverFallsBackToTheProcessJobserverChild", 3*time.Minute)

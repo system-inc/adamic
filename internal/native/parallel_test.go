@@ -17,7 +17,7 @@ import (
 	"github.com/system-inc/adamic/internal/native_runtime"
 )
 
-func parallelHarness(t *testing.T, file string, options Options) string {
+func parallelHarness(t *testing.T, file string, options native_runtime.Options) string {
 	t.Helper()
 	source, err := os.ReadFile(filepath.Join("testdata", "parallel", file))
 	if err != nil {
@@ -25,7 +25,7 @@ func parallelHarness(t *testing.T, file string, options Options) string {
 	}
 	source = []byte(parallelSource(string(source)))
 	if goruntime.GOOS == "darwin" && !options.Sanitize && !options.ThreadSanitize && !options.Count {
-		return buildWithFlags(t, string(source), append(Flags(options), "-DADAMIC_MALLOC"))
+		return buildWithFlags(t, string(source), append(native_runtime.Flags(options), "-DADAMIC_MALLOC"))
 	}
 	name := "harness"
 	if options.ThreadSanitize {
@@ -82,17 +82,17 @@ func parallelRun(t *testing.T, binary string, threads string, arguments ...strin
 
 func parallelBuilds(t *testing.T) []struct {
 	name    string
-	options Options
+	options native_runtime.Options
 } {
 	builds := []struct {
 		name    string
-		options Options
-	}{{"asan", Options{Sanitize: true}}, {"asan_slabs", Options{Sanitize: true, slabs: true}}, {"count", Options{Count: true}}, {"release", Options{}}}
+		options native_runtime.Options
+	}{{"asan", native_runtime.Options{Sanitize: true}}, {"asan_slabs", native_runtime.Options{Sanitize: true, Slabs: true}}, {"count", native_runtime.Options{Count: true}}, {"release", native_runtime.Options{}}}
 	if parallelTSan(t) {
 		builds = append(builds, struct {
 			name    string
-			options Options
-		}{"tsan", Options{ThreadSanitize: true}})
+			options native_runtime.Options
+		}{"tsan", native_runtime.Options{ThreadSanitize: true}})
 	}
 	return builds
 }
@@ -138,7 +138,7 @@ func TestParallelSharedCursor(t *testing.T) {
 }
 
 // Each build keeps both worker counts together for the output equality assertion.
-func parallelMapMode(t *testing.T, mode string, options Options) {
+func parallelMapMode(t *testing.T, mode string, options native_runtime.Options) {
 	t.Helper()
 	binary := parallelHarness(t, "map.c", options)
 	one, _ := parallelRun(t, binary, "1", mode)
@@ -238,8 +238,8 @@ func parallelCheckMutant(t *testing.T, name string) {
 			if mutant.file == "" {
 				source = []byte(strings.Replace(string(source), mutant.old, mutant.changed, 1))
 			}
-			options := Options{ThreadSanitize: mutant.race}
-			library, err := RuntimeLibrary(directory, options)
+			options := native_runtime.Options{ThreadSanitize: mutant.race}
+			library, err := native_runtime.RuntimeLibrary(directory, options)
 			if err != nil {
 				t.Fatal(err)
 			}
@@ -248,8 +248,8 @@ func parallelCheckMutant(t *testing.T, name string) {
 				t.Fatal(err)
 			}
 			binary := filepath.Join(directory, "mutant")
-			arguments := append(Flags(options), "-I", filepath.Dir(library), path, "-o", binary)
-			arguments = append(arguments, RuntimeLinkFlags(library)...)
+			arguments := append(native_runtime.Flags(options), "-I", filepath.Dir(library), path, "-o", binary)
+			arguments = append(arguments, native_runtime.RuntimeLinkFlags(library)...)
 			arguments = append(arguments, "-lm")
 			if output, err := exec.Command("clang", arguments...).CombinedOutput(); err != nil {
 				t.Fatalf("mutant must compile: %v\n%s", err, output)
@@ -333,7 +333,7 @@ func parallelEnvironment(threads string, leaks bool) []string {
 	return env
 }
 
-func parallelLeaks(t *testing.T, binary string, options Options, threads string, arguments ...string) {
+func parallelLeaks(t *testing.T, binary string, options native_runtime.Options, threads string, arguments ...string) {
 	t.Helper()
 	if goruntime.GOOS != "darwin" || (options.Sanitize || options.ThreadSanitize) {
 		return
@@ -475,22 +475,22 @@ func TestParallelMutant_one_worker(t *testing.T) {
 
 func TestParallelMap_numbers_asan(t *testing.T) {
 	t.Parallel()
-	parallelMapMode(t, "numbers", Options{Sanitize: true})
+	parallelMapMode(t, "numbers", native_runtime.Options{Sanitize: true})
 }
 
 func TestParallelMap_numbers_asan_slabs(t *testing.T) {
 	t.Parallel()
-	parallelMapMode(t, "numbers", Options{Sanitize: true, slabs: true})
+	parallelMapMode(t, "numbers", native_runtime.Options{Sanitize: true, Slabs: true})
 }
 
 func TestParallelMap_numbers_count(t *testing.T) {
 	t.Parallel()
-	parallelMapMode(t, "numbers", Options{Count: true})
+	parallelMapMode(t, "numbers", native_runtime.Options{Count: true})
 }
 
 func TestParallelMap_numbers_release(t *testing.T) {
 	t.Parallel()
-	parallelMapMode(t, "numbers", Options{})
+	parallelMapMode(t, "numbers", native_runtime.Options{})
 }
 
 func TestParallelMap_numbers_tsan(t *testing.T) {
@@ -498,27 +498,27 @@ func TestParallelMap_numbers_tsan(t *testing.T) {
 	if !parallelTSan(t) {
 		t.Skip("TSan is unavailable on this platform; see capability probe")
 	}
-	parallelMapMode(t, "numbers", Options{ThreadSanitize: true})
+	parallelMapMode(t, "numbers", native_runtime.Options{ThreadSanitize: true})
 }
 
 func TestParallelMap_strings_asan(t *testing.T) {
 	t.Parallel()
-	parallelMapMode(t, "strings", Options{Sanitize: true})
+	parallelMapMode(t, "strings", native_runtime.Options{Sanitize: true})
 }
 
 func TestParallelMap_strings_asan_slabs(t *testing.T) {
 	t.Parallel()
-	parallelMapMode(t, "strings", Options{Sanitize: true, slabs: true})
+	parallelMapMode(t, "strings", native_runtime.Options{Sanitize: true, Slabs: true})
 }
 
 func TestParallelMap_strings_count(t *testing.T) {
 	t.Parallel()
-	parallelMapMode(t, "strings", Options{Count: true})
+	parallelMapMode(t, "strings", native_runtime.Options{Count: true})
 }
 
 func TestParallelMap_strings_release(t *testing.T) {
 	t.Parallel()
-	parallelMapMode(t, "strings", Options{})
+	parallelMapMode(t, "strings", native_runtime.Options{})
 }
 
 func TestParallelMap_strings_tsan(t *testing.T) {
@@ -526,27 +526,27 @@ func TestParallelMap_strings_tsan(t *testing.T) {
 	if !parallelTSan(t) {
 		t.Skip("TSan is unavailable on this platform; see capability probe")
 	}
-	parallelMapMode(t, "strings", Options{ThreadSanitize: true})
+	parallelMapMode(t, "strings", native_runtime.Options{ThreadSanitize: true})
 }
 
 func TestParallelMap_objects_asan(t *testing.T) {
 	t.Parallel()
-	parallelMapMode(t, "objects", Options{Sanitize: true})
+	parallelMapMode(t, "objects", native_runtime.Options{Sanitize: true})
 }
 
 func TestParallelMap_objects_asan_slabs(t *testing.T) {
 	t.Parallel()
-	parallelMapMode(t, "objects", Options{Sanitize: true, slabs: true})
+	parallelMapMode(t, "objects", native_runtime.Options{Sanitize: true, Slabs: true})
 }
 
 func TestParallelMap_objects_count(t *testing.T) {
 	t.Parallel()
-	parallelMapMode(t, "objects", Options{Count: true})
+	parallelMapMode(t, "objects", native_runtime.Options{Count: true})
 }
 
 func TestParallelMap_objects_release(t *testing.T) {
 	t.Parallel()
-	parallelMapMode(t, "objects", Options{})
+	parallelMapMode(t, "objects", native_runtime.Options{})
 }
 
 func TestParallelMap_objects_tsan(t *testing.T) {
@@ -554,27 +554,27 @@ func TestParallelMap_objects_tsan(t *testing.T) {
 	if !parallelTSan(t) {
 		t.Skip("TSan is unavailable on this platform; see capability probe")
 	}
-	parallelMapMode(t, "objects", Options{ThreadSanitize: true})
+	parallelMapMode(t, "objects", native_runtime.Options{ThreadSanitize: true})
 }
 
 func TestParallelMap_map_asan(t *testing.T) {
 	t.Parallel()
-	parallelMapMode(t, "map", Options{Sanitize: true})
+	parallelMapMode(t, "map", native_runtime.Options{Sanitize: true})
 }
 
 func TestParallelMap_map_asan_slabs(t *testing.T) {
 	t.Parallel()
-	parallelMapMode(t, "map", Options{Sanitize: true, slabs: true})
+	parallelMapMode(t, "map", native_runtime.Options{Sanitize: true, Slabs: true})
 }
 
 func TestParallelMap_map_count(t *testing.T) {
 	t.Parallel()
-	parallelMapMode(t, "map", Options{Count: true})
+	parallelMapMode(t, "map", native_runtime.Options{Count: true})
 }
 
 func TestParallelMap_map_release(t *testing.T) {
 	t.Parallel()
-	parallelMapMode(t, "map", Options{})
+	parallelMapMode(t, "map", native_runtime.Options{})
 }
 
 func TestParallelMap_map_tsan(t *testing.T) {
@@ -582,27 +582,27 @@ func TestParallelMap_map_tsan(t *testing.T) {
 	if !parallelTSan(t) {
 		t.Skip("TSan is unavailable on this platform; see capability probe")
 	}
-	parallelMapMode(t, "map", Options{ThreadSanitize: true})
+	parallelMapMode(t, "map", native_runtime.Options{ThreadSanitize: true})
 }
 
 func TestParallelMap_fresh_asan(t *testing.T) {
 	t.Parallel()
-	parallelMapMode(t, "fresh", Options{Sanitize: true})
+	parallelMapMode(t, "fresh", native_runtime.Options{Sanitize: true})
 }
 
 func TestParallelMap_fresh_asan_slabs(t *testing.T) {
 	t.Parallel()
-	parallelMapMode(t, "fresh", Options{Sanitize: true, slabs: true})
+	parallelMapMode(t, "fresh", native_runtime.Options{Sanitize: true, Slabs: true})
 }
 
 func TestParallelMap_fresh_count(t *testing.T) {
 	t.Parallel()
-	parallelMapMode(t, "fresh", Options{Count: true})
+	parallelMapMode(t, "fresh", native_runtime.Options{Count: true})
 }
 
 func TestParallelMap_fresh_release(t *testing.T) {
 	t.Parallel()
-	parallelMapMode(t, "fresh", Options{})
+	parallelMapMode(t, "fresh", native_runtime.Options{})
 }
 
 func TestParallelMap_fresh_tsan(t *testing.T) {
@@ -610,27 +610,27 @@ func TestParallelMap_fresh_tsan(t *testing.T) {
 	if !parallelTSan(t) {
 		t.Skip("TSan is unavailable on this platform; see capability probe")
 	}
-	parallelMapMode(t, "fresh", Options{ThreadSanitize: true})
+	parallelMapMode(t, "fresh", native_runtime.Options{ThreadSanitize: true})
 }
 
 func TestParallelMap_nested_asan(t *testing.T) {
 	t.Parallel()
-	parallelMapMode(t, "nested", Options{Sanitize: true})
+	parallelMapMode(t, "nested", native_runtime.Options{Sanitize: true})
 }
 
 func TestParallelMap_nested_asan_slabs(t *testing.T) {
 	t.Parallel()
-	parallelMapMode(t, "nested", Options{Sanitize: true, slabs: true})
+	parallelMapMode(t, "nested", native_runtime.Options{Sanitize: true, Slabs: true})
 }
 
 func TestParallelMap_nested_count(t *testing.T) {
 	t.Parallel()
-	parallelMapMode(t, "nested", Options{Count: true})
+	parallelMapMode(t, "nested", native_runtime.Options{Count: true})
 }
 
 func TestParallelMap_nested_release(t *testing.T) {
 	t.Parallel()
-	parallelMapMode(t, "nested", Options{})
+	parallelMapMode(t, "nested", native_runtime.Options{})
 }
 
 func TestParallelMap_nested_tsan(t *testing.T) {
@@ -638,27 +638,27 @@ func TestParallelMap_nested_tsan(t *testing.T) {
 	if !parallelTSan(t) {
 		t.Skip("TSan is unavailable on this platform; see capability probe")
 	}
-	parallelMapMode(t, "nested", Options{ThreadSanitize: true})
+	parallelMapMode(t, "nested", native_runtime.Options{ThreadSanitize: true})
 }
 
 func TestParallelMap_exception_asan(t *testing.T) {
 	t.Parallel()
-	parallelMapMode(t, "exception", Options{Sanitize: true})
+	parallelMapMode(t, "exception", native_runtime.Options{Sanitize: true})
 }
 
 func TestParallelMap_exception_asan_slabs(t *testing.T) {
 	t.Parallel()
-	parallelMapMode(t, "exception", Options{Sanitize: true, slabs: true})
+	parallelMapMode(t, "exception", native_runtime.Options{Sanitize: true, Slabs: true})
 }
 
 func TestParallelMap_exception_count(t *testing.T) {
 	t.Parallel()
-	parallelMapMode(t, "exception", Options{Count: true})
+	parallelMapMode(t, "exception", native_runtime.Options{Count: true})
 }
 
 func TestParallelMap_exception_release(t *testing.T) {
 	t.Parallel()
-	parallelMapMode(t, "exception", Options{})
+	parallelMapMode(t, "exception", native_runtime.Options{})
 }
 
 func TestParallelMap_exception_tsan(t *testing.T) {
@@ -666,27 +666,27 @@ func TestParallelMap_exception_tsan(t *testing.T) {
 	if !parallelTSan(t) {
 		t.Skip("TSan is unavailable on this platform; see capability probe")
 	}
-	parallelMapMode(t, "exception", Options{ThreadSanitize: true})
+	parallelMapMode(t, "exception", native_runtime.Options{ThreadSanitize: true})
 }
 
 func TestParallelMap_nested_exception_asan(t *testing.T) {
 	t.Parallel()
-	parallelMapMode(t, "nested_exception", Options{Sanitize: true})
+	parallelMapMode(t, "nested_exception", native_runtime.Options{Sanitize: true})
 }
 
 func TestParallelMap_nested_exception_asan_slabs(t *testing.T) {
 	t.Parallel()
-	parallelMapMode(t, "nested_exception", Options{Sanitize: true, slabs: true})
+	parallelMapMode(t, "nested_exception", native_runtime.Options{Sanitize: true, Slabs: true})
 }
 
 func TestParallelMap_nested_exception_count(t *testing.T) {
 	t.Parallel()
-	parallelMapMode(t, "nested_exception", Options{Count: true})
+	parallelMapMode(t, "nested_exception", native_runtime.Options{Count: true})
 }
 
 func TestParallelMap_nested_exception_release(t *testing.T) {
 	t.Parallel()
-	parallelMapMode(t, "nested_exception", Options{})
+	parallelMapMode(t, "nested_exception", native_runtime.Options{})
 }
 
 func TestParallelMap_nested_exception_tsan(t *testing.T) {
@@ -694,27 +694,27 @@ func TestParallelMap_nested_exception_tsan(t *testing.T) {
 	if !parallelTSan(t) {
 		t.Skip("TSan is unavailable on this platform; see capability probe")
 	}
-	parallelMapMode(t, "nested_exception", Options{ThreadSanitize: true})
+	parallelMapMode(t, "nested_exception", native_runtime.Options{ThreadSanitize: true})
 }
 
 func TestParallelMap_million_asan(t *testing.T) {
 	t.Parallel()
-	parallelMapMode(t, "million", Options{Sanitize: true})
+	parallelMapMode(t, "million", native_runtime.Options{Sanitize: true})
 }
 
 func TestParallelMap_million_asan_slabs(t *testing.T) {
 	t.Parallel()
-	parallelMapMode(t, "million", Options{Sanitize: true, slabs: true})
+	parallelMapMode(t, "million", native_runtime.Options{Sanitize: true, Slabs: true})
 }
 
 func TestParallelMap_million_count(t *testing.T) {
 	t.Parallel()
-	parallelMapMode(t, "million", Options{Count: true})
+	parallelMapMode(t, "million", native_runtime.Options{Count: true})
 }
 
 func TestParallelMap_million_release(t *testing.T) {
 	t.Parallel()
-	parallelMapMode(t, "million", Options{})
+	parallelMapMode(t, "million", native_runtime.Options{})
 }
 
 func TestParallelMap_million_tsan(t *testing.T) {
@@ -722,7 +722,7 @@ func TestParallelMap_million_tsan(t *testing.T) {
 	if !parallelTSan(t) {
 		t.Skip("TSan is unavailable on this platform; see capability probe")
 	}
-	parallelMapMode(t, "million", Options{ThreadSanitize: true})
+	parallelMapMode(t, "million", native_runtime.Options{ThreadSanitize: true})
 }
 
 func TestParallelMutant_fixture_shared_counter(t *testing.T) {

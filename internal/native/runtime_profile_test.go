@@ -3,6 +3,8 @@ package native
 import (
 	"path/filepath"
 	"testing"
+
+	"github.com/system-inc/adamic/internal/native_runtime"
 )
 
 // Equal heap strings may have either the same header or separate headers. Undefined is its own
@@ -25,7 +27,7 @@ int main(void) {
 	want := runWithInput(t, "", "node", "--eval", `const a=['made','here'].join(''),b=['made','here'].join(''),c=['here','made'].join('');console.log([a===a,a===b,a===c,undefined===undefined,a===undefined,undefined===a].map(Number).join(' '));`)
 	for _, sanitize := range []bool{false, true} {
 		binary := filepath.Join(t.TempDir(), "equal")
-		if err := Build(source, binary, Options{Sanitize: sanitize}); err != nil {
+		if err := Build(source, binary, native_runtime.Options{Sanitize: sanitize}); err != nil {
 			t.Fatal(err)
 		}
 		if got := runWithInput(t, "", binary); got != want {

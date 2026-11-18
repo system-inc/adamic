@@ -31,8 +31,9 @@ func open(path string) (*native_runtime.Jobserver, error) {
 	return jobserver, nil
 }
 
-// A process the variable names no jobserver for sets none, leaving native's unset, so a test binary that imports this
-// package through another (native's own, by leakcheck) can still set its children's (internal/native's inChild).
+// A process the variable names no jobserver for sets none, leaving native_runtime's unset, so a test binary that imports
+// this package through another (native's own, by leakcheck) can still set its children's, as
+// internal/native_runtime's inChild sets its own.
 func init() {
 	if process == nil && failed == nil {
 		return

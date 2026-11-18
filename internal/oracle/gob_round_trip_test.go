@@ -134,7 +134,7 @@ func gobRoundTripShard(t *testing.T, name string, shard int) {
 				t.Fatalf("one program, two gob encodings (%d and %d bytes)", first.Len(), second.Len())
 			}
 			zeros := negativeZeros(reflect.ValueOf(program))
-			want := native.CWithOptions(program, options)
+			want := native.CWithOptions(program, native.EmitOptions{Options: options})
 			var decoded ir.Program
 			if err := gob.NewDecoder(&first).Decode(&decoded); err != nil {
 				t.Fatal(err)
@@ -148,7 +148,7 @@ func gobRoundTripShard(t *testing.T, name string, shard int) {
 			if zeros > 0 {
 				t.Logf("holds %d -0 constants, as its decode does", zeros)
 			}
-			if got := native.CWithOptions(&decoded, options); got != want {
+			if got := native.CWithOptions(&decoded, native.EmitOptions{Options: options}); got != want {
 				line := firstDifferingLine([]byte(want), []byte(got))
 				t.Fatalf("the C emitted from the decode differs at line %d:\nlowered: %s\ndecoded: %s", line,
 					cLine(want, line), cLine(got, line))

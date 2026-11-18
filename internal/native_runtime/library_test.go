@@ -1,4 +1,4 @@
-package native
+package native_runtime
 
 import (
 	"bytes"
@@ -7,6 +7,7 @@ import (
 	"os"
 	"os/exec"
 	"path/filepath"
+	"regexp"
 	"strconv"
 	"strings"
 	"sync"
@@ -16,17 +17,20 @@ import (
 	"time"
 
 	"github.com/system-inc/adamic/internal/buildcache/location"
-	"github.com/system-inc/adamic/internal/native_runtime"
 	"github.com/system-inc/adamic/internal/toolchain"
 )
 
+// buildLogLine is a line BuildLog writes: kind, name, key12 or -, outcome, seconds, as internal/native's build log
+// tests read it too, where a split build's repass is one more outcome.
+var buildLogLine = regexp.MustCompile(`^(cCompile|cArchive|cLink|cBuild) (\S+) ([0-9a-f]{12}|-) (hit|miss|off|repass) ([0-9]+\.[0-9]{3})$`)
+
 func TestRuntimeKeyIncludesEveryInput(t *testing.T) {
 	t.Parallel()
-	files, err := readRuntime(native_runtime.Sources, "c")
+	files, err := ReadRuntime(Sources, "c")
 	if err != nil {
 		t.Fatal(err)
 	}
-	flags := Flags(Options{Sanitize: true, Count: true, slabs: true, cpu: "haswell"})
+	flags := Flags(Options{Sanitize: true, Count: true, Slabs: true, CPU: "haswell"})
 	key := runtimeKey(files, flags, "clang", "version 1", "")
 	for index, flag := range flags {
 		changed := append([]string{}, flags[:index]...)
@@ -36,11 +40,11 @@ func TestRuntimeKeyIncludesEveryInput(t *testing.T) {
 		}
 	}
 	for index, file := range files {
-		changed := append([]runtimeFile{}, files...)
-		changed[index].contents = append([]byte{}, file.contents...)
-		changed[index].contents[0] ^= 1
+		changed := append([]RuntimeFile{}, files...)
+		changed[index].Contents = append([]byte{}, file.Contents...)
+		changed[index].Contents[0] ^= 1
 		if runtimeKey(changed, flags, "clang", "version 1", "") == key {
-			t.Errorf("changing %s did not change the key", file.name)
+			t.Errorf("changing %s did not change the key", file.Name)
 		}
 	}
 	if runtimeKey(files, flags, "clang", "version 2", "") == key {
@@ -63,51 +67,27 @@ func TestRuntimeKeyIncludesEveryInput(t *testing.T) {
 // library. Each pair below keeps the count of parts the same, so only the boundaries differ.
 func TestRuntimeKeyKeepsBoundaries(t *testing.T) {
 	t.Parallel()
-	files := []runtimeFile{{"a.c", []byte("int a;\n")}}
+	files := []RuntimeFile{{"a.c", []byte("int a;\n")}}
 	if runtimeKey(files, []string{"a", "bc"}, "clang", "version 1", "") == runtimeKey(files, []string{"ab", "c"}, "clang", "version 1", "") {
 		t.Error(`flags ["a" "bc"] and ["ab" "c"] share a key`)
 	}
 	if runtimeKey(files, nil, "clang", "version 1", "") == runtimeKey(files, nil, "clangv", "ersion 1", "") {
 		t.Error(`compiler "clang" with version "version 1" and "clangv" with "ersion 1" share a key`)
 	}
-	split := []runtimeFile{{"a.c", []byte("bc")}}
-	moved := []runtimeFile{{"a.cb", []byte("c")}}
+	split := []RuntimeFile{{"a.c", []byte("bc")}}
+	moved := []RuntimeFile{{"a.cb", []byte("c")}}
 	if runtimeKey(split, nil, "clang", "version 1", "") == runtimeKey(moved, nil, "clang", "version 1", "") {
 		t.Error(`file "a.c" holding "bc" and "a.cb" holding "c" share a key`)
 	}
 }
 
-// Count is checked in the linked runtime itself, not merely in a comparison of keys. Build an
-// uncounted library first: a key missing ADAMIC_COUNT would reuse it and silently lose the report.
-func TestRuntimeCacheKeepsCountFlags(t *testing.T) {
-	t.Parallel()
-	const source = "int main(void) { return 0; }\n"
-	for _, count := range []bool{false, true, false} {
-		binary := filepath.Join(t.TempDir(), "main")
-		if err := Build(source, binary, Options{Count: count}); err != nil {
-			t.Fatal(err)
-		}
-		output, err := exec.Command(binary).CombinedOutput()
-		if err != nil {
-			t.Fatalf("run: %v\n%s", err, output)
-		}
-		want := ""
-		if count {
-			want = "adamic: counts: allocations 0 frees 0 retains 0 releases 0 peak 0 regions 0\n"
-		}
-		if string(output) != want {
-			t.Errorf("count %v: got %q, want %q", count, output, want)
-		}
-	}
-}
-
 func smallRuntime(t *testing.T, sources fstest.MapFS, cache string, compiler string) string {
 	t.Helper()
-	files, err := readRuntime(sources, ".")
+	files, err := ReadRuntime(sources, ".")
 	if err != nil {
 		t.Fatal(err)
 	}
-	library, err := cachedRuntime(files, Flags(Options{}), compiler, "test compiler", cache)
+	library, err := CachedRuntime(files, Flags(Options{}), compiler, "test compiler", cache)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -126,7 +106,11 @@ func runLibrary(t *testing.T, library string, want string) {
 	if output, err := toolchain.Command("clang", arguments...).CombinedOutput(); err != nil {
 		t.Fatalf("link: %v\n%s", err, output)
 	}
-	if got := runWithInput(t, "", binary); got != want {
+	output, err := exec.Command(binary).Output()
+	if err != nil {
+		t.Fatalf("run: %v", err)
+	}
+	if got := string(output); got != want {
 		t.Errorf("got %q, want %q", got, want)
 	}
 }
@@ -162,8 +146,8 @@ func TestRuntimeCacheRebuildsChangedSources(t *testing.T) {
 
 // With ADAMIC_BUILD_OUTPUT_DIR set, a runtime the build cache already holds is found there, and nothing is written for
 // it anywhere; a runtime it doesn't hold is built and published in the output directory, at the place it would have in
-// the cache. Mutants: cachedRuntime looking only where it writes (the second build runs, into the output directory);
-// cacheDirectory still the build cache's.
+// the cache. Mutants: CachedRuntime looking only where it writes (the second build runs, into the output directory);
+// CacheDirectory still the build cache's.
 // Not parallel: t.Setenv.
 func TestARuntimeTheCacheHoldsIsReadThereAndANewOneWrittenToTheOutputDirectory(t *testing.T) {
 	cache, output := t.TempDir(), filepath.Join(t.TempDir(), "output")
@@ -178,13 +162,13 @@ func TestARuntimeTheCacheHoldsIsReadThereAndANewOneWrittenToTheOutputDirectory(t
 	if err != nil {
 		t.Fatal(err)
 	}
-	written, err := cacheDirectory("native-runtime")
+	written, err := CacheDirectory("native-runtime")
 	if err != nil {
 		t.Fatal(err)
 	}
 	held := smallRuntime(t, sources, written, compiler)
 	t.Setenv(location.OutputDirectoryVariable, output)
-	if written, err = cacheDirectory("native-runtime"); err != nil || written != filepath.Join(output, "native-runtime") {
+	if written, err = CacheDirectory("native-runtime"); err != nil || written != filepath.Join(output, "native-runtime") {
 		t.Fatalf("with an output directory the runtime cache is written at %q (%v)", written, err)
 	}
 	if found := smallRuntime(t, sources, written, compiler); found != held {
@@ -220,7 +204,7 @@ func TestRuntimeCacheConcurrentBuilders(t *testing.T) {
 	if err := os.WriteFile(wrapper, []byte(script), 0o755); err != nil {
 		t.Fatal(err)
 	}
-	files := []runtimeFile{{"answer.c", []byte("int answer(void) { return 42; }\n")}}
+	files := []RuntimeFile{{"answer.c", []byte("int answer(void) { return 42; }\n")}}
 	cache := filepath.Join(directory, "cache")
 	const callers = 32
 	libraries := make([]string, callers)
@@ -230,7 +214,7 @@ func TestRuntimeCacheConcurrentBuilders(t *testing.T) {
 	for index := range callers {
 		workers.Go(func() {
 			<-start
-			libraries[index], failures[index] = cachedRuntime(files, Flags(Options{}), wrapper, "test compiler", cache)
+			libraries[index], failures[index] = CachedRuntime(files, Flags(Options{}), wrapper, "test compiler", cache)
 		})
 	}
 	close(start)
@@ -263,7 +247,7 @@ func TestRuntimeCacheConcurrentBuilders(t *testing.T) {
 func TestRuntimeCacheConcurrentProcesses(t *testing.T) {
 	t.Parallel()
 	const variable = "ADAMIC_TEST_RUNTIME_CACHE"
-	files := []runtimeFile{
+	files := []RuntimeFile{
 		{"answer.c", []byte("#include \"answer.h\"\nint answer(void) { return ANSWER; }\n")},
 		{"answer.h", []byte("#define ANSWER 42\n")},
 	}
@@ -272,7 +256,7 @@ func TestRuntimeCacheConcurrentProcesses(t *testing.T) {
 		t.Fatal(err)
 	}
 	if cache := os.Getenv(variable); cache != "" {
-		library, err := cachedRuntime(files, Flags(Options{}), compiler, "process test", cache)
+		library, err := CachedRuntime(files, Flags(Options{}), compiler, "process test", cache)
 		if err != nil {
 			t.Fatal(err)
 		}
@@ -333,9 +317,9 @@ func TestProcessesAskingForOneRuntimeBuildItOnce(t *testing.T) {
 	t.Parallel()
 	const variable = "ADAMIC_TEST_ONE_RUNTIME_BUILD"
 	// Enough units that a build takes long enough for every process to miss inside it without the lock.
-	var files []runtimeFile
+	var files []RuntimeFile
 	for index := range 16 {
-		files = append(files, runtimeFile{fmt.Sprintf("unit%d.c", index), []byte(fmt.Sprintf("int unit%d(void) { return %d; }\n", index, index))})
+		files = append(files, RuntimeFile{fmt.Sprintf("unit%d.c", index), []byte(fmt.Sprintf("int unit%d(void) { return %d; }\n", index, index))})
 	}
 	compiler, err := toolchain.Path("clang")
 	if err != nil {
@@ -343,7 +327,7 @@ func TestProcessesAskingForOneRuntimeBuildItOnce(t *testing.T) {
 	}
 	if asked := os.Getenv(variable); asked != "" {
 		cache, start, _ := strings.Cut(asked, "|")
-		if _, err := headersRead(files, Flags(Options{}), compiler); err != nil {
+		if _, err := HeadersRead(files, Flags(Options{}), compiler); err != nil {
 			t.Fatal(err)
 		}
 		at, err := strconv.ParseInt(start, 10, 64)
@@ -351,7 +335,7 @@ func TestProcessesAskingForOneRuntimeBuildItOnce(t *testing.T) {
 			t.Fatal(err)
 		}
 		time.Sleep(time.Until(time.Unix(0, at)))
-		library, err := cachedRuntime(files, Flags(Options{}), compiler, "one build test", cache)
+		library, err := CachedRuntime(files, Flags(Options{}), compiler, "one build test", cache)
 		if err != nil {
 			t.Fatal(err)
 		}
@@ -435,7 +419,7 @@ func TestProcessesAskingForOneRuntimeBuildItOnce(t *testing.T) {
 // A runtime is addressed by the system headers its compile reads, by what they hold: a C library or compiler upgrade
 // that changes one makes another runtime, never the cached one (#vt46geg: a traced build reads the runtime cache as no
 // entry, which only an address of everything the compile read makes safe). Mutants: runtimeKey not hashing headers;
-// scanHeaders skipping what is outside the sources; headersRead's memo shared across flags.
+// scanHeaders skipping what is outside the sources; HeadersRead's memo shared across flags.
 // Not parallel: it clears headerScans, the process's memo every runtime build reads.
 func TestARuntimeIsKeyedByTheSystemHeadersItsCompileReads(t *testing.T) {
 	compiler, err := toolchain.Path("clang")
@@ -444,7 +428,7 @@ func TestARuntimeIsKeyedByTheSystemHeadersItsCompileReads(t *testing.T) {
 	}
 	system := t.TempDir()
 	header := filepath.Join(system, "answer_system.h")
-	files := []runtimeFile{{"answer.c", []byte("#include <answer_system.h>\nint answer(void) { return ANSWER; }\n")}}
+	files := []RuntimeFile{{"answer.c", []byte("#include <answer_system.h>\nint answer(void) { return ANSWER; }\n")}}
 	flags := append(Flags(Options{}), "-isystem", system)
 	cache := t.TempDir()
 	build := func(value string) string {
@@ -454,14 +438,14 @@ func TestARuntimeIsKeyedByTheSystemHeadersItsCompileReads(t *testing.T) {
 		}
 		// As a new process does, with nothing held (TestARewrittenHeaderMovesAHeldScan holds one across a rewrite).
 		headerScans.Clear()
-		headers, err := headersRead(files, flags, compiler)
+		headers, err := HeadersRead(files, flags, compiler)
 		if err != nil {
 			t.Fatal(err)
 		}
 		if !strings.Contains(headers, header) {
 			t.Fatalf("the headers the compile reads don't name %s:\n%s", header, headers)
 		}
-		library, err := cachedRuntime(files, flags, compiler, "test compiler", cache)
+		library, err := CachedRuntime(files, flags, compiler, "test compiler", cache)
 		if err != nil {
 			t.Fatal(err)
 		}
@@ -475,7 +459,7 @@ func TestARuntimeIsKeyedByTheSystemHeadersItsCompileReads(t *testing.T) {
 		t.Fatalf("the same system header made another runtime: %s, then %s", first, again)
 	}
 	// The scan with -isystem is still held; the same sources without it are another scan, which can't find the header.
-	plain, err := headersRead(files, Flags(Options{}), compiler)
+	plain, err := HeadersRead(files, Flags(Options{}), compiler)
 	if err == nil || strings.Contains(plain, header) {
 		t.Fatalf("without -isystem the compile can't find the header, so listing it must fail: %q, %v", plain, err)
 	}
@@ -484,7 +468,7 @@ func TestARuntimeIsKeyedByTheSystemHeadersItsCompileReads(t *testing.T) {
 // The memo of a header scan (headerScans) is found by the sources, flags and compiler, never by the headers, so a scan it
 // holds is the answer only while each header it lists holds what it hashed: rewriting a header between two builds that
 // share the memo moves the headers part, the runtime key's, and rewriting it back finds the first again. Mutant:
-// headersRead handing out a held scan without headersHold.
+// HeadersRead handing out a held scan without headersHold.
 // Not parallel: it reads headerScans across a rewrite, and clears it first so the scan is this test's.
 func TestARewrittenHeaderMovesAHeldScan(t *testing.T) {
 	compiler, err := toolchain.Path("clang")
@@ -493,7 +477,7 @@ func TestARewrittenHeaderMovesAHeldScan(t *testing.T) {
 	}
 	system := t.TempDir()
 	header := filepath.Join(system, "answer_system.h")
-	files := []runtimeFile{{"answer.c", []byte("#include <answer_system.h>\nint answer(void) { return ANSWER; }\n")}}
+	files := []RuntimeFile{{"answer.c", []byte("#include <answer_system.h>\nint answer(void) { return ANSWER; }\n")}}
 	flags := append(Flags(Options{}), "-isystem", system)
 	headerScans.Clear()
 	read := func(value string) string {
@@ -501,7 +485,7 @@ func TestARewrittenHeaderMovesAHeldScan(t *testing.T) {
 		if err := os.WriteFile(header, []byte("#define ANSWER "+value+"\n"), 0o644); err != nil {
 			t.Fatal(err)
 		}
-		headers, err := headersRead(files, flags, compiler)
+		headers, err := HeadersRead(files, flags, compiler)
 		if err != nil {
 			t.Fatal(err)
 		}
@@ -531,7 +515,7 @@ func TestARewrittenHeaderMovesAHeldScan(t *testing.T) {
 func TestDependenciesReadClangsRules(t *testing.T) {
 	t.Parallel()
 	rules := "answer.o: answer.c /usr/include/stdio.h \\\n  /opt/with\\ space/x.h\nother.o: other.c\n"
-	got := dependencies([]byte(rules))
+	got := Dependencies([]byte(rules))
 	want := []string{"answer.c", "/usr/include/stdio.h", "/opt/with space/x.h", "other.c"}
 	if strings.Join(got, "|") != strings.Join(want, "|") {
 		t.Fatalf("got %q, want %q", got, want)
@@ -542,9 +526,9 @@ func TestDependenciesReadClangsRules(t *testing.T) {
 // the cache one at a time, and either must be the other's archive. Mutant: archiving the objects as they finish.
 func TestARuntimeIsTheSameOnAnyNumberOfWorkers(t *testing.T) {
 	t.Parallel()
-	var files []runtimeFile
+	var files []RuntimeFile
 	for index := range 8 {
-		files = append(files, runtimeFile{fmt.Sprintf("unit%d.c", index), []byte(fmt.Sprintf("int unit%d(void) { return %d; }\n", index, index))})
+		files = append(files, RuntimeFile{fmt.Sprintf("unit%d.c", index), []byte(fmt.Sprintf("int unit%d(void) { return %d; }\n", index, index))})
 	}
 	compiler, err := toolchain.Path("clang")
 	if err != nil {
@@ -553,7 +537,7 @@ func TestARuntimeIsTheSameOnAnyNumberOfWorkers(t *testing.T) {
 	var archives [][]byte
 	for _, workers := range []int{1, 4, 8} {
 		directory := t.TempDir()
-		if err := compileRuntime(files, Flags(Options{}), compiler, directory, workers, nil, ""); err != nil {
+		if err := CompileRuntime(files, Flags(Options{}), compiler, directory, workers, nil, ""); err != nil {
 			t.Fatal(err)
 		}
 		archive, err := os.ReadFile(filepath.Join(directory, "runtime.a"))
@@ -630,7 +614,7 @@ func TestASuppliedRuntimeIsAskedOncePerKey(t *testing.T) {
 // A runtime's portable parts are one list however the compiler was reached: a runner's $ADAMIC_TOOLS/bin/clang and
 // Workshop's ~/.adamic-tools/bin/clang, a link to that directory, name its resource headers and a sysroot inside its
 // installation as <compiler>/..., and leave out the compiler and its version, which a product keys by its report. A
-// header outside the installation keeps its path. Mutant: portableKeyParts naming paths as reached.
+// header outside the installation keeps its path. Mutant: PortableKeyParts naming paths as reached.
 func TestARuntimesPortablePartsAreTheSameThroughEitherLink(t *testing.T) {
 	t.Parallel()
 	home, err := filepath.EvalSymlinks(t.TempDir())
@@ -654,11 +638,11 @@ func TestARuntimesPortablePartsAreTheSameThroughEitherLink(t *testing.T) {
 	if err := os.Symlink("adamic-tools", filepath.Join(home, ".adamic-tools")); err != nil {
 		t.Fatal(err)
 	}
-	files := []runtimeFile{{"answer.c", []byte("int answer(void) { return 42; }\n")}}
+	files := []RuntimeFile{{"answer.c", []byte("int answer(void) { return 42; }\n")}}
 	parts := func(root string) []string {
 		compiler := filepath.Join(root, "bin/clang")
 		headers := filepath.Join(root, "llvm/lib/clang/20/include/stddef.h") + " 0a\n/usr/include/stdio.h 0b"
-		return portableKeyParts(files, append(Flags(Options{}), "--sysroot="+filepath.Join(root, "llvm/lib")), compiler, headers)
+		return PortableKeyParts(files, append(Flags(Options{}), "--sysroot="+filepath.Join(root, "llvm/lib")), compiler, headers)
 	}
 	runner, workshop := parts(tools), parts(filepath.Join(home, ".adamic-tools"))
 	if strings.Join(runner, "\n") != strings.Join(workshop, "\n") {

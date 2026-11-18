@@ -12,6 +12,7 @@ import (
 	"github.com/system-inc/adamic/internal/javascript"
 	"github.com/system-inc/adamic/internal/load"
 	"github.com/system-inc/adamic/internal/lower"
+	"github.com/system-inc/adamic/internal/native_runtime"
 )
 
 // optionalValueCallOutput is what testdata/optional_value_call.a prints once its seven calls are
@@ -161,7 +162,7 @@ func TestOptionalValueCallNative(t *testing.T) {
 		t.Run("sanitize="+strconv.FormatBool(sanitize), func(t *testing.T) {
 			t.Parallel()
 			binary := filepath.Join(t.TempDir(), "optional_value_call")
-			if err := Build(code, binary, Options{Sanitize: sanitize}); err != nil {
+			if err := Build(code, binary, native_runtime.Options{Sanitize: sanitize}); err != nil {
 				t.Fatal(err)
 			}
 			if got := runWithInput(t, "", binary); got != optionalValueCallOutput {

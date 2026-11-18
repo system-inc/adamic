@@ -18,6 +18,7 @@ import (
 	"github.com/system-inc/adamic/internal/load"
 	"github.com/system-inc/adamic/internal/lower"
 	"github.com/system-inc/adamic/internal/native"
+	"github.com/system-inc/adamic/internal/native_runtime"
 )
 
 // These are compiler ownership witnesses, not the later graph corpus. Each
@@ -83,7 +84,7 @@ func graphCompilerModulesWitness(t *testing.T, source string, modules map[string
 		code = changed
 	}
 	binary := filepath.Join(directory, "native")
-	if err := native.Build(code, binary, native.Options{Sanitize: true}); err != nil {
+	if err := native.Build(code, binary, native_runtime.Options{Sanitize: true}); err != nil {
 		t.Fatal(err)
 	}
 	got, diagnostic, err = run([]string{"ASAN_OPTIONS=detect_leaks=1", "UBSAN_OPTIONS=halt_on_error=1"}, binary)
@@ -92,7 +93,7 @@ func graphCompilerModulesWitness(t *testing.T, source string, modules map[string
 			if report := leakcheck.Report(t, code, binary); report == "" {
 				// A sanitizer may report leaks with exit status zero, or have leak
 				// detection disabled. Check ownership counts independently.
-				if err := native.Build(code, binary, native.Options{Count: true}); err != nil {
+				if err := native.Build(code, binary, native_runtime.Options{Count: true}); err != nil {
 					t.Fatal(err)
 				}
 				got, diagnostic, err = run(nil, binary)
@@ -120,7 +121,7 @@ func graphCompilerModulesWitness(t *testing.T, source string, modules map[string
 	if report := leakcheck.Report(t, code, binary); report != "" {
 		t.Fatal(report)
 	}
-	if err := native.Build(code, binary, native.Options{Count: true}); err != nil {
+	if err := native.Build(code, binary, native_runtime.Options{Count: true}); err != nil {
 		t.Fatal(err)
 	}
 	got, diagnostic, err = run(nil, binary)
@@ -213,7 +214,7 @@ func TestGraphCompilerLinkCountsDecrease(t *testing.T) {
 	program := graphCompilerWitness(t, strings.Replace(graphLinkSource, "console.log(a.next.name+b.next.name);", "console.log(a.next.name+b.next.name); a.next=undefined; b.next=undefined;", 1), nil)
 	counts := func(code string) []string {
 		binary := filepath.Join(t.TempDir(), "counted")
-		if err := native.Build(code, binary, native.Options{Count: true}); err != nil {
+		if err := native.Build(code, binary, native_runtime.Options{Count: true}); err != nil {
 			t.Fatal(err)
 		}
 		ctx, cancel := context.WithTimeout(context.Background(), 15*time.Second)

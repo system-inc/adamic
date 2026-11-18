@@ -7,6 +7,8 @@ import (
 	goruntime "runtime"
 	"strings"
 	"testing"
+
+	"github.com/system-inc/adamic/internal/native_runtime"
 )
 
 // The size-class allocator (heap.c) must not hide a use after a free from the address sanitizer.
@@ -43,7 +45,7 @@ int main(int count, char **arguments) {
 		{"slabs", true, "use-after-poison"},
 	} {
 		binary := filepath.Join(t.TempDir(), "harness-"+build.name)
-		if err := Build(harness, binary, Options{Sanitize: true, slabs: build.slabs}); err != nil {
+		if err := Build(harness, binary, native_runtime.Options{Sanitize: true, Slabs: build.slabs}); err != nil {
 			t.Fatal(err)
 		}
 		for _, use := range []string{"retain", "length", "none"} {
@@ -117,7 +119,7 @@ int main(int count, char **arguments) {
 }
 `
 	binary := filepath.Join(t.TempDir(), "harness")
-	if err := Build(harness, binary, Options{}); err != nil {
+	if err := Build(harness, binary, native_runtime.Options{}); err != nil {
 		t.Fatal(err)
 	}
 	peak := func(mode string) int {

@@ -9,6 +9,7 @@ import (
 
 	"github.com/system-inc/adamic/internal/load"
 	"github.com/system-inc/adamic/internal/lower"
+	"github.com/system-inc/adamic/internal/native_runtime"
 )
 
 // A native binary's bytes are a function of its source and options, wherever it's built (Oct 9: a stored
@@ -41,7 +42,7 @@ func TestBuildIsTheSameFromAnyDirectory(t *testing.T) {
 		t.Setenv("ADAMIC_BUILD_OUTPUT_DIR", "") // its writes too: an inherited output directory would take them
 		t.Setenv("TMPDIR", filepath.Join(root, "tmp"))
 		binary := filepath.Join(root, "out", "program")
-		if err := Build(source, binary, Options{Sanitize: true}); err != nil {
+		if err := Build(source, binary, native_runtime.Options{Sanitize: true}); err != nil {
 			t.Fatal(err)
 		}
 		content, err := os.ReadFile(binary)

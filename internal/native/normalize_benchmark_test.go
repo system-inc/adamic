@@ -5,6 +5,7 @@ import (
 	"path/filepath"
 	"testing"
 
+	"github.com/system-inc/adamic/internal/native_runtime"
 	"github.com/system-inc/adamic/internal/toolchain"
 )
 
@@ -25,7 +26,7 @@ func TestNormalizeLongMeasurements(t *testing.T) {
 	}
 	directory := t.TempDir()
 	binary := filepath.Join(directory, "probe")
-	if err := Build(normalizeLongProbe, binary, Options{}); err != nil {
+	if err := Build(normalizeLongProbe, binary, native_runtime.Options{}); err != nil {
 		t.Fatal(err)
 	}
 	oracle := filepath.Join(directory, "oracle.js")

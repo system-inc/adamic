@@ -6,6 +6,8 @@ import (
 	"strconv"
 	"strings"
 	"testing"
+
+	"github.com/system-inc/adamic/internal/native_runtime"
 )
 
 // Keep ordinary runs small. The worker validation uses ADAMIC_STRING_OPERATIONS=100000.
@@ -103,7 +105,7 @@ process.stdout.write(lines.join('\n') + '\n');
 		return strings.ReplaceAll(source, "@OPERATIONS@", strconv.Itoa(operations))
 	}
 	binary := filepath.Join(t.TempDir(), "string-build")
-	if err := Build(replace(harness), binary, Options{Sanitize: true}); err != nil {
+	if err := Build(replace(harness), binary, native_runtime.Options{Sanitize: true}); err != nil {
 		t.Fatal(err)
 	}
 	want := strings.Split(runWithInput(t, "", "node", "--eval", replace(oracle)), "\n")

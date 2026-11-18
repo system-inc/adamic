@@ -7,6 +7,8 @@ import (
 	"path/filepath"
 	"testing"
 	"time"
+
+	"github.com/system-inc/adamic/internal/native_runtime"
 )
 
 // Runtime controls bypass the language's prohibition on owning reference cycles.
@@ -58,7 +60,7 @@ int main(int argc, char **argv) {
 `
 	for _, sanitized := range []bool{false, true} {
 		binary := filepath.Join(t.TempDir(), "view-runtime")
-		if err := Build(source, binary, Options{Sanitize: sanitized}); err != nil {
+		if err := Build(source, binary, native_runtime.Options{Sanitize: sanitized}); err != nil {
 			t.Fatal(err)
 		}
 		for _, mode := range []string{"cycle", "guard", "deep"} {
@@ -116,7 +118,7 @@ int main(void) {
 }
 `
 	binary := filepath.Join(t.TempDir(), "tuple-selection")
-	if err := Build(source, binary, Options{Sanitize: sanitized}); err != nil {
+	if err := Build(source, binary, native_runtime.Options{Sanitize: sanitized}); err != nil {
 		t.Fatal(err)
 	}
 	output, err := exec.Command(binary).CombinedOutput()

@@ -9,18 +9,19 @@ import (
 	"time"
 
 	"github.com/system-inc/adamic/internal/boundedrun"
+	"github.com/system-inc/adamic/internal/native_runtime"
 )
 
 // These witnesses exercise runtime allocation and ownership directly, before any
 // compiler graph classification is enabled. Mutants must compile and fail at run time.
 func graphRuntimeGuard(t *testing.T, source, file, old, changed, diagnostic string, modes ...bool) {
 	t.Helper()
-	options := Options{Sanitize: true, Count: true}
-	files, flags, compiler, version, err := runtimeInputs("", options, []string{"-DADAMIC_CANONICAL_CLOSURES=1"})
+	options := native_runtime.Options{Sanitize: true, Count: true}
+	files, flags, compiler, version, err := native_runtime.RuntimeInputs("", options, []string{"-DADAMIC_CANONICAL_CLOSURES=1"})
 	if err != nil {
 		t.Fatal(err)
 	}
-	cache, err := cacheDirectory("graph-runtime")
+	cache, err := native_runtime.CacheDirectory("graph-runtime")
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -31,21 +32,21 @@ func graphRuntimeGuard(t *testing.T, source, file, old, changed, diagnostic stri
 		if mutant {
 			found := false
 			for i := range files {
-				if files[i].name != file {
+				if files[i].Name != file {
 					continue
 				}
-				text := string(files[i].contents)
+				text := string(files[i].Contents)
 				if strings.Count(text, old) != 1 {
 					t.Fatalf("missing or ambiguous mutant in %s: %q", file, old)
 				}
-				files[i].contents = []byte(strings.Replace(text, old, changed, 1))
+				files[i].Contents = []byte(strings.Replace(text, old, changed, 1))
 				found = true
 			}
 			if !found {
 				t.Fatal("missing mutant file", file)
 			}
 		}
-		library, err := cachedRuntime(files, flags, compiler, version, cache)
+		library, err := native_runtime.CachedRuntime(files, flags, compiler, version, cache)
 		if err != nil {
 			t.Fatal(err)
 		}
@@ -176,22 +177,22 @@ int main(void) {
 
 func graphRefusalGuard(t *testing.T, source string, mutant bool) {
 	t.Helper()
-	files, flags, compiler, version, err := runtimeInputs("", Options{Sanitize: true}, nil)
+	files, flags, compiler, version, err := native_runtime.RuntimeInputs("", native_runtime.Options{Sanitize: true}, nil)
 	if err != nil {
 		t.Fatal(err)
 	}
-	cache, err := cacheDirectory("graph-refusal")
+	cache, err := native_runtime.CacheDirectory("graph-refusal")
 	if err != nil {
 		t.Fatal(err)
 	}
 	if mutant {
 		for i := range files {
-			if files[i].name == "graph_regions.c" {
-				files[i].contents = []byte(strings.Replace(string(files[i].contents), "(heap->slab & (ADAMIC_SHARED_HEADER | ADAMIC_REGION_VALUE)) != 0 || heap->references != 1", "adamic_reference_count(heap) != 1", 1))
+			if files[i].Name == "graph_regions.c" {
+				files[i].Contents = []byte(strings.Replace(string(files[i].Contents), "(heap->slab & (ADAMIC_SHARED_HEADER | ADAMIC_REGION_VALUE)) != 0 || heap->references != 1", "adamic_reference_count(heap) != 1", 1))
 			}
 		}
 	}
-	library, err := cachedRuntime(files, flags, compiler, version, cache)
+	library, err := native_runtime.CachedRuntime(files, flags, compiler, version, cache)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -246,28 +247,28 @@ int main(void) {
  return 0;
 }
 `
-	files, flags, compiler, version, err := runtimeInputs("", Options{ThreadSanitize: true}, nil)
+	files, flags, compiler, version, err := native_runtime.RuntimeInputs("", native_runtime.Options{ThreadSanitize: true}, nil)
 	if err != nil {
 		t.Fatal(err)
 	}
-	cache, err := cacheDirectory("graph-task-refusal")
+	cache, err := native_runtime.CacheDirectory("graph-task-refusal")
 	if err != nil {
 		t.Fatal(err)
 	}
 	for _, mutant := range []bool{false, true} {
 		if mutant {
 			for i := range files {
-				if files[i].name == "share.c" {
+				if files[i].Name == "share.c" {
 					old := `adamic_panic("a graph region can't cross into parallel work yet", sizeof "a graph region can't cross into parallel work yet" - 1);`
-					text := string(files[i].contents)
+					text := string(files[i].Contents)
 					if strings.Count(text, old) != 1 {
 						t.Fatal("missing graph sharing guard")
 					}
-					files[i].contents = []byte(strings.Replace(text, old, "continue;", 1))
+					files[i].Contents = []byte(strings.Replace(text, old, "continue;", 1))
 				}
 			}
 		}
-		library, err := cachedRuntime(files, flags, compiler, version, cache)
+		library, err := native_runtime.CachedRuntime(files, flags, compiler, version, cache)
 		if err != nil {
 			t.Fatal(err)
 		}
@@ -330,37 +331,37 @@ int main(void) {
  return 0;
 }
 `
-	files, flags, compiler, version, err := runtimeInputs("", Options{Sanitize: true}, nil)
+	files, flags, compiler, version, err := native_runtime.RuntimeInputs("", native_runtime.Options{Sanitize: true}, nil)
 	if err != nil {
 		t.Fatal(err)
 	}
-	cache, err := cacheDirectory("graph-relocation")
+	cache, err := native_runtime.CacheDirectory("graph-relocation")
 	if err != nil {
 		t.Fatal(err)
 	}
 	for i := range files {
-		if files[i].name == "map.c" {
-			text := string(files[i].contents)
+		if files[i].Name == "map.c" {
+			text := string(files[i].Contents)
 			if strings.Count(text, "\t(void)to;") != 1 {
 				t.Fatal("missing relocation observation seam")
 			}
-			files[i].contents = []byte(strings.Replace(text, "\t(void)to;", "\tto->iterating++;", 1))
+			files[i].Contents = []byte(strings.Replace(text, "\t(void)to;", "\tto->iterating++;", 1))
 		}
 	}
 	for _, mutant := range []bool{false, true} {
 		if mutant {
 			for i := range files {
-				if files[i].name == "heap.c" {
+				if files[i].Name == "heap.c" {
 					old := "adamic_map_relocated((adamic_map *)old, (adamic_map *)heap);"
-					text := string(files[i].contents)
+					text := string(files[i].Contents)
 					if strings.Count(text, old) != 1 {
 						t.Fatal("missing relocation call")
 					}
-					files[i].contents = []byte(strings.Replace(text, old, "(void)heap;", 1))
+					files[i].Contents = []byte(strings.Replace(text, old, "(void)heap;", 1))
 				}
 			}
 		}
-		library, err := cachedRuntime(files, flags, compiler, version, cache)
+		library, err := native_runtime.CachedRuntime(files, flags, compiler, version, cache)
 		if err != nil {
 			t.Fatal(err)
 		}
@@ -485,7 +486,7 @@ int main(void) {
 }
 `
 	binary := filepath.Join(t.TempDir(), "discards")
-	if err := Build(source, binary, Options{Sanitize: true, Count: true}); err != nil {
+	if err := Build(source, binary, native_runtime.Options{Sanitize: true, Count: true}); err != nil {
 		t.Fatal(err)
 	}
 	command, release := boundedrun.Command(5*time.Second, binary)

@@ -381,7 +381,7 @@ func unitCacheOff(cache string) (string, bool) {
 	if os.Getenv(unitCacheOffVariable) == "off" {
 		return unitCacheOffVariable + "=off", true
 	}
-	if mark, ok := cachedFile(filepath.Join(cache, unitCacheOffName)); ok {
+	if mark, ok := native_runtime.CachedFile(filepath.Join(cache, unitCacheOffName)); ok {
 		contents, _ := os.ReadFile(mark)
 		return fmt.Sprintf("a cold check's mismatch is marked at %s: %s", mark, bytes.TrimSpace(contents)), true
 	}
@@ -457,7 +457,7 @@ func markUnitCacheOff(cache string, mismatch unitMismatch) error {
 // under directory holding common beside it, and kept in cache. A nil keying, or a unit whose source the key can't take
 // (unitSourceRefusal), compiles uncached. A sampled hit is compiled again, and a mismatch marks the cache off, prints
 // UnitMismatchPrefix's line naming the unit, the key and both digests, and is the cold object, never an error.
-func compileUnit(unit compilationUnit, common []runtimeFile, flags []string, compiler string, keying *unitKeying, cache, directory string, jobserver *Jobserver, sanitized bool) (string, error) {
+func compileUnit(unit compilationUnit, common []native_runtime.RuntimeFile, flags []string, compiler string, keying *unitKeying, cache, directory string, jobserver *native_runtime.Jobserver, sanitized bool) (string, error) {
 	return compileUnitAs(unit, common, flags, compiler, keying, cache, directory, jobserver, "off", sanitized)
 }
 
@@ -465,7 +465,7 @@ func compileUnit(unit compilationUnit, common []runtimeFile, flags []string, com
 // for a build that read no cache, repass for compileUnits' second pass after a mismatch (Performance on #m62spx0), so
 // a reader counting units or a hit rate leaves the pass out from the line alone, in a log several processes append to,
 // whose order no reader can trust.
-func compileUnitAs(unit compilationUnit, common []runtimeFile, flags []string, compiler string, keying *unitKeying, cache, directory string, jobserver *Jobserver, uncached string, sanitized bool) (string, error) {
+func compileUnitAs(unit compilationUnit, common []native_runtime.RuntimeFile, flags []string, compiler string, keying *unitKeying, cache, directory string, jobserver *native_runtime.Jobserver, uncached string, sanitized bool) (string, error) {
 	environment := toolchain.Env()
 	if keying != nil {
 		environment = keying.environment
@@ -480,14 +480,14 @@ func compileUnitAs(unit compilationUnit, common []runtimeFile, flags []string, c
 			return "", err
 		}
 		// An uncached unit is never keyed, since keying is what reads clang's facts before it runs, so its line names no key.
-		buildLog("cCompile", unit.name, "", uncached, clang)
+		native_runtime.BuildLog("cCompile", unit.name, "", uncached, clang)
 		path := filepath.Join(directory, "uncached-"+unit.name+".o")
 		return path, os.WriteFile(path, object, 0o644)
 	}
 	// keyed is the seconds the unit's key took, a hit's whole cost here, since a hit runs no clang (#m62spx0).
 	var keyed time.Duration
 	var key string
-	timed(&keyed, func() error { key = keying.key(unit); return nil })
+	native_runtime.Timed(&keyed, func() error { key = keying.key(unit); return nil })
 	entry := filepath.Join(cache, key)
 	object := filepath.Join(entry, "unit.o")
 	value, _ := unitBuilds.LoadOrStore(entry, &sync.Mutex{})
@@ -496,9 +496,9 @@ func compileUnitAs(unit compilationUnit, common []runtimeFile, flags []string, c
 	defer lock.Unlock()
 	// Where this process writes, then the build cache: the link the units' directory makes to it names wherever it was
 	// found.
-	if found, ok := cachedFile(object); ok {
+	if found, ok := native_runtime.CachedFile(object); ok {
 		if !keying.checked(unit) {
-			buildLog("cCompile", unit.name, key, "hit", keyed)
+			native_runtime.BuildLog("cCompile", unit.name, key, "hit", keyed)
 			return found, nil
 		}
 		cached, err := os.ReadFile(found)
@@ -521,12 +521,12 @@ func compileUnitAs(unit compilationUnit, common []runtimeFile, flags []string, c
 			noteUnitMismatch(mismatch)
 			keying.mismatched.Store(true)
 			// The cold bytes are the object, so clang made it: a miss, with the cold compile's seconds.
-			buildLog("cCompile", unit.name, key, "miss", keyed+clang)
+			native_runtime.BuildLog("cCompile", unit.name, key, "miss", keyed+clang)
 			path := filepath.Join(directory, "checked-"+unit.name+".o")
 			return path, os.WriteFile(path, cold, 0o644)
 		}
 		// The cache's object is used, so it's a hit, its seconds the key and the check's compile.
-		buildLog("cCompile", unit.name, key, "hit", keyed+clang)
+		native_runtime.BuildLog("cCompile", unit.name, key, "hit", keyed+clang)
 		return found, nil
 	}
 	contents, clang, err := compileUnitObject(unit, common, flags, compiler, environment, directory, jobserver, sanitized)
@@ -534,7 +534,7 @@ func compileUnitAs(unit compilationUnit, common []runtimeFile, flags []string, c
 		return "", err
 	}
 	// clang compiled it, so it is a miss even when another process published the same entry first.
-	buildLog("cCompile", unit.name, key, "miss", keyed+clang)
+	native_runtime.BuildLog("cCompile", unit.name, key, "miss", keyed+clang)
 	if err := os.MkdirAll(cache, 0o755); err != nil {
 		return "", err
 	}
@@ -547,7 +547,7 @@ func compileUnitAs(unit compilationUnit, common []runtimeFile, flags []string, c
 		return "", err
 	}
 	if err := os.Rename(published, entry); err != nil {
-		found, ok := cachedFile(object)
+		found, ok := native_runtime.CachedFile(object)
 		if !ok {
 			return "", err
 		}
@@ -558,19 +558,19 @@ func compileUnitAs(unit compilationUnit, common []runtimeFile, flags []string, c
 
 // compileUnitObject compiles unit from its .c, in a directory of its own under directory holding common beside it,
 // under environment exactly, and is the object's bytes and how long clang ran, timed inside its jobserver.Hold so a
-// token's wait isn't counted (library.go's buildLog).
-func compileUnitObject(unit compilationUnit, common []runtimeFile, flags []string, compiler string, environment []string, directory string, jobserver *Jobserver, sanitized bool) ([]byte, time.Duration, error) {
+// token's wait isn't counted (native_runtime.BuildLog).
+func compileUnitObject(unit compilationUnit, common []native_runtime.RuntimeFile, flags []string, compiler string, environment []string, directory string, jobserver *native_runtime.Jobserver, sanitized bool) ([]byte, time.Duration, error) {
 	temporary, err := os.MkdirTemp(directory, ".unit-")
 	if err != nil {
 		return nil, 0, err
 	}
 	defer os.RemoveAll(temporary)
-	for _, file := range append([]runtimeFile{{unit.name, []byte(unit.source)}}, common...) {
-		if err := os.WriteFile(filepath.Join(temporary, file.name), file.contents, 0o644); err != nil {
+	for _, file := range append([]native_runtime.RuntimeFile{{Name: unit.name, Contents: []byte(unit.source)}}, common...) {
+		if err := os.WriteFile(filepath.Join(temporary, file.Name), file.Contents, 0o644); err != nil {
 			return nil, 0, err
 		}
 	}
-	command := clangIn(temporary, compiler, append(slices.Clone(flags), unitCompileArguments(unit.name, temporary, flags, sanitized)...)...)
+	command := native_runtime.ClangIn(temporary, compiler, append(slices.Clone(flags), unitCompileArguments(unit.name, temporary, flags, sanitized)...)...)
 	// The environment the key read, with the directory CommandIn names as the compile's own.
 	working := []string{}
 	for _, setting := range command.Env {
@@ -582,7 +582,7 @@ func compileUnitObject(unit compilationUnit, common []runtimeFile, flags []strin
 	var output []byte
 	var clang time.Duration
 	if err := jobserver.Hold(func() error {
-		return timed(&clang, func() (err error) { output, err = command.CombinedOutput(); return err })
+		return native_runtime.Timed(&clang, func() (err error) { output, err = command.CombinedOutput(); return err })
 	}); err != nil {
 		return nil, 0, fmt.Errorf("native: compiling unit %s: %w\n%s", unit.name, err, output)
 	}
@@ -593,7 +593,7 @@ func compileUnitObject(unit compilationUnit, common []runtimeFile, flags []strin
 // compileUnits is every unit's object, jobs at once (compileUnit). Once any unit's cold check mismatches, the build's
 // cache is proved incomplete, not that unit's alone: every unit compiles again uncached, the hits already taken
 // included, so nothing is linked from keys this build caught short (Node's M4).
-func compileUnits(units []compilationUnit, common []runtimeFile, flags []string, compiler string, keying *unitKeying, cache, directory string, jobs int, jobserver *Jobserver, sanitized bool) ([]string, error) {
+func compileUnits(units []compilationUnit, common []native_runtime.RuntimeFile, flags []string, compiler string, keying *unitKeying, cache, directory string, jobs int, jobserver *native_runtime.Jobserver, sanitized bool) ([]string, error) {
 	objects := make([]string, len(units))
 	failures := make([]error, len(units))
 	pass := func(keying *unitKeying, uncached string) error {
@@ -625,18 +625,18 @@ func compileUnits(units []compilationUnit, common []runtimeFile, flags []string,
 	return objects, nil
 }
 
-func buildUnits(source, output string, options Options) error {
+func buildUnits(source, output string, options native_runtime.Options) error {
 	return buildUnitsWithLibrary(source, output, options, "", "")
 }
 
 // buildUnitsWithLibrary links the units with library, or the program's own runtime when it is empty, and with the
 // checker archive at the absolute path archive (checkerArchivePath) when it isn't empty.
-func buildUnitsWithLibrary(source, output string, options Options, library string, archive string) error {
+func buildUnitsWithLibrary(source, output string, options native_runtime.Options, library string, archive string) error {
 	header, units, err := splitC(source)
 	if err != nil {
 		return err
 	}
-	jobserver, err := defaultJobserver()
+	jobserver, err := native_runtime.DefaultJobserver()
 	if err != nil {
 		return err
 	}
@@ -649,7 +649,7 @@ func buildUnitsWithLibrary(source, output string, options Options, library strin
 		// Split and Jobs describe program compilation, never a different runtime archive.
 		runtimeOptions := options
 		runtimeOptions.Split, runtimeOptions.Jobs = false, 0
-		library, err = RuntimeLibraryForSource("", source, runtimeOptions)
+		library, err = native_runtime.RuntimeLibraryForSource("", source, runtimeOptions)
 		if err != nil {
 			return err
 		}
@@ -658,17 +658,17 @@ func buildUnitsWithLibrary(source, output string, options Options, library strin
 	if err != nil {
 		return err
 	}
-	runtimeFiles, err := readRuntime(native_runtime.Sources, "c")
+	runtimeFiles, err := native_runtime.ReadRuntime(native_runtime.Sources, "c")
 	if err != nil {
 		return err
 	}
-	common := []runtimeFile{{"units.h", []byte(header)}}
+	common := []native_runtime.RuntimeFile{{Name: "units.h", Contents: []byte(header)}}
 	for _, file := range runtimeFiles {
-		if strings.HasSuffix(file.name, ".h") {
+		if strings.HasSuffix(file.Name, ".h") {
 			common = append(common, file)
 		}
 	}
-	cache, err := cacheDirectory("native-units")
+	cache, err := native_runtime.CacheDirectory("native-units")
 	if err != nil {
 		return err
 	}
@@ -692,7 +692,7 @@ func buildUnitsWithLibrary(source, output string, options Options, library strin
 	}
 	// A unit includes units.h, and through it adamic.h, before any of the program's own #defines
 	// (the checker build puts tsgo_runtime.h first), so its features come as flags.
-	flags := append(sourceFlags(source, options), programDebugFlags(options)...)
+	flags := append(native_runtime.SourceFlags(source, options), programDebugFlags(options)...)
 	sanitized := options.Sanitize || options.ThreadSanitize
 	// The units' key is read once, before any of them compiles: a build the key can't account for, or one the cache is
 	// off for, compiles every unit uncached and says why.
@@ -731,7 +731,7 @@ func buildUnitsWithLibrary(source, output string, options Options, library strin
 	if err := os.Symlink(filepath.Dir(library), filepath.Join(directory, "runtime")); err != nil {
 		return err
 	}
-	arguments = append(arguments, RuntimeLinkFlags(filepath.Join("runtime", filepath.Base(library)))...)
+	arguments = append(arguments, native_runtime.RuntimeLinkFlags(filepath.Join("runtime", filepath.Base(library)))...)
 	if archive != "" {
 		if err := os.Symlink(archive, filepath.Join(directory, checkerArchive)); err != nil {
 			return err
@@ -745,14 +745,14 @@ func buildUnitsWithLibrary(source, output string, options Options, library strin
 	arguments = append(arguments, compilerLink...)
 	arguments = append(arguments, objectPrefixFlags()...)
 	arguments = append(arguments, "-lm")
-	link := clangIn(directory, compiler, arguments...)
+	link := native_runtime.ClangIn(directory, compiler, arguments...)
 	var linked []byte
 	var linking time.Duration
 	if err := jobserver.Hold(func() error {
-		return timed(&linking, func() (err error) { linked, err = link.CombinedOutput(); return err })
+		return native_runtime.Timed(&linking, func() (err error) { linked, err = link.CombinedOutput(); return err })
 	}); err != nil {
 		return fmt.Errorf("native: linking units: %w\n%s", err, linked)
 	}
-	buildLog("cLink", filepath.Base(output), "", "off", linking)
+	native_runtime.BuildLog("cLink", filepath.Base(output), "", "off", linking)
 	return nil
 }

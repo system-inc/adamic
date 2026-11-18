@@ -4,6 +4,8 @@ import (
 	"path/filepath"
 	"sync"
 	"testing"
+
+	"github.com/system-inc/adamic/internal/native_runtime"
 )
 
 // Counts establish both ends of the view lifetime; Node establishes its bytes.
@@ -70,7 +72,7 @@ int main(void) {
 	want := runWithInput(t, "", "node", "--eval", `const made=n=>Array.from({length:n},(_,i)=>String.fromCharCode(97+i%26)).join('');console.log(made(128).slice(10,30).slice(5,15));console.log(made(64).slice(1,33));console.log('stack survives'.slice(1,5));console.log(Array.from({length:128},(_,i)=>String.fromCharCode(i)).join('').split('').reduce((s,c)=>(s*33+c.charCodeAt(0))%1000003,0));`)
 	for _, sanitize := range []bool{false, true} {
 		binary := filepath.Join(t.TempDir(), "views")
-		if err := Build(source, binary, Options{Sanitize: sanitize, Count: true}); err != nil {
+		if err := Build(source, binary, native_runtime.Options{Sanitize: sanitize, Count: true}); err != nil {
 			t.Fatal(err)
 		}
 		if got := runWithInput(t, "", binary); got != want {
@@ -85,7 +87,7 @@ var parallelStringViewsWant struct {
 }
 
 // First-use character reads overlap on every worker; Node fixes the byte order independently.
-func parallelStringViews(t *testing.T, options Options) {
+func parallelStringViews(t *testing.T, options native_runtime.Options) {
 	t.Helper()
 	parallelStringViewsWant.Do(func() {
 		parallelStringViewsWant.output = runWithInput(t, "", "node", "--eval", `const hash=Array.from({length:128},(_,i)=>i).reduce((s,c)=>(s*33+c)%1000003,0);for(let i=0;i<128;i++)console.log(hash);`)
@@ -103,22 +105,22 @@ func parallelStringViews(t *testing.T, options Options) {
 
 func TestParallelStringViews_asan(t *testing.T) {
 	t.Parallel()
-	parallelStringViews(t, Options{Sanitize: true})
+	parallelStringViews(t, native_runtime.Options{Sanitize: true})
 }
 
 func TestParallelStringViews_asan_slabs(t *testing.T) {
 	t.Parallel()
-	parallelStringViews(t, Options{Sanitize: true, slabs: true})
+	parallelStringViews(t, native_runtime.Options{Sanitize: true, Slabs: true})
 }
 
 func TestParallelStringViews_count(t *testing.T) {
 	t.Parallel()
-	parallelStringViews(t, Options{Count: true})
+	parallelStringViews(t, native_runtime.Options{Count: true})
 }
 
 func TestParallelStringViews_release(t *testing.T) {
 	t.Parallel()
-	parallelStringViews(t, Options{})
+	parallelStringViews(t, native_runtime.Options{})
 }
 
 func TestParallelStringViews_tsan(t *testing.T) {
@@ -126,5 +128,5 @@ func TestParallelStringViews_tsan(t *testing.T) {
 	if !parallelTSan(t) {
 		t.Skip("TSan is unavailable on this platform; see capability probe")
 	}
-	parallelStringViews(t, Options{ThreadSanitize: true})
+	parallelStringViews(t, native_runtime.Options{ThreadSanitize: true})
 }
