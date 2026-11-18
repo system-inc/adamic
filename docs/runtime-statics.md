@@ -95,3 +95,14 @@ The native wait uses the existing host pipe and the nearest timer deadline; it
 never creates a delivery thread. Custom host loop hooks with timers are named
 NotYet. Timer entry destruction runs on the loop and dispatches graph references
 through ordinary adamic_release.
+
+## A shared string's locate cursor (#zbjp7m2)
+
+| Audit key | Holds / writers and timing | Classification |
+|---|---|---|
+| `string_index.c:next_index_id:1` | The next index id; build() fetch-adds it, relaxed, once per index | Atomic counter, never otherwise read or written; ids never repeat in a process |
+| `string_index.c:shared_cursor:1` | One cursor per thread for the shared index it located in last: the index's address and id, a unit and its byte offset; adamic_string_locate reads and writes it | Thread-local, never shared. The address is compared with an index reached through a live string and never dereferenced, so a freed index's stale entry is never read through |
+
+A shared string's own index is never written after sharing: its cursor fields are written only while the
+string is unshared. TestParallelSharedCursor and its two mutants (shared_cursor_id, shared_cursor_write)
+hold both halves.
