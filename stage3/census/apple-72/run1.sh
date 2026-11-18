@@ -11,17 +11,19 @@ echo "PASS apply"
 go test -count=1 -run '^TestProduct_ScanAllInstrumentedProbe$' -v ./stage3/census/scan-all/ > "$W/probe.log" 2>&1
 P=$(sed -n 's/.*scan-all-instrumented probe: //p' "$W/probe.log" | tail -1); [ -x "$P" ] || { tail -30 "$W/probe.log"; echo "FAIL probe"; exit 1; }
 echo "PASS probe"
-scan() { env "$1" "$P" "$2/src/tsc/tsc.ts" > "$3" 2> "$3.err" || { echo "FAIL scan $3"; tail -8 "$3.err"; exit 1; }; }
+scan() { env "$1" "$P" "$2/src/tsc/tsc.ts" > "$3" 2> "$3.err" || { echo "FAIL scan $3"; tail -8 "$3.err"; head -c 3000 "$3"; exit 1; }; }
 scan ADAMIC_CENSUS_72=0 "$W/tree-a" "$W/off.json"
 scan ADAMIC_CENSUS_72=1 "$W/tree-a" "$W/on.json"
 echo "PASS scans of the plain tree"
-copy "$W/tree-a" "$W/tree-b"
-node "$C/rewrite72.cjs" "$W/tree-b" "$W/off.json" "$W/sites1.json" || { echo "FAIL rewrite"; exit 1; }
-if ! node "$C/diag72.cjs" "$W/tree-a" "$W/tree-b" "$W/sites1.json" "$W/exclude.json"; then
-  python3 -I -c 'import shutil, sys; shutil.rmtree(sys.argv[1])' "$W/tree-b"; copy "$W/tree-a" "$W/tree-b"
-  node "$C/rewrite72.cjs" "$W/tree-b" "$W/off.json" "$W/sites.json" "$W/exclude.json" || { echo "FAIL rewrite 2"; exit 1; }
-  node "$C/diag72.cjs" "$W/tree-a" "$W/tree-b" "$W/sites.json" "$W/exclude2.json" || echo "GAP the second rewrite still adds stock diagnostics, named above"
-else cp "$W/sites1.json" "$W/sites.json"; fi
+# Rewrite, check with stock tsc, exclude what broke it, and again, until the rewritten tree is clean.
+clean=0
+for round in 1 2 3 4; do
+  [ -d "$W/tree-b" ] && python3 -I -c 'import shutil, sys; shutil.rmtree(sys.argv[1])' "$W/tree-b"
+  copy "$W/tree-a" "$W/tree-b"
+  node "$C/rewrite72.cjs" "$W/tree-b" "$W/off.json" "$W/sites.json" "$W/exclude.json" || { echo "FAIL rewrite round $round"; exit 1; }
+  if node "$C/diag72.cjs" "$W/tree-a" "$W/tree-b" "$W/sites.json" "$W/exclude.json"; then clean=1; echo "PASS rewritten tree clean at round $round"; break; fi
+done
+[ "$clean" = 1 ] || { echo "FAIL the rewritten tree adds stock diagnostics after four rounds"; exit 1; }
 scan ADAMIC_CENSUS_72=1 "$W/tree-b" "$W/b.json"
 echo "PASS scan of the rewritten tree"
 node "$C/classify72.cjs" "$W/tree-b" "$W/sites.json" "$W/off.json" "$W/on.json" "$W/b.json" "$W/out.json" || { echo "FAIL classify"; exit 1; }

@@ -62,6 +62,8 @@ for (const site of sites) {
     list.push({start: node.getStart(source), end: node.end, slot: spelled, key});
     edits.set(file, list);
     site.rewritten = true;
+    site.start = node.getStart(source);
+    site.end = node.end;
 }
 for (const [file, list] of edits) {
     let text = fs.readFileSync(file, 'utf8');
