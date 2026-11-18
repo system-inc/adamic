@@ -70,6 +70,9 @@ func (l *lowering) castValue(node *ast.Node) (ir.Expression, error) {
 	if proof.overlap {
 		return l.overlapViewCast(node, value, source, target)
 	}
+	if proof.kindUnion != nil {
+		return l.kindUnionValue(node, value, source, proof.kindUnion, message)
+	}
 	if proof.structuralView {
 		return l.structuralViewCast(node, value, source, target)
 	}

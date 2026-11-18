@@ -34,6 +34,9 @@ type castProof struct {
 	// overlap is a cast from a represented union to one object type that only overlaps it (overlapTarget): a
 	// checked view of the target with no test at the cast (overlapViewCast).
 	overlap bool
+	// kindUnion is a cast from an open-kind interface to a union of kinded interfaces (kindUnionCast): a tag
+	// test over the members' literals, then each member's checked view.
+	kindUnion *kindUnion
 }
 
 // castRepair is the fix a refused cast names, by file kind. In .a a cast to a union member is refused too
@@ -171,7 +174,7 @@ func (l *lowering) castRefusal(node *ast.Node) error {
 		if err != nil {
 			return err
 		}
-		if proof.interfaceView || len(proof.allowed) > 0 || len(proof.classes) > 0 {
+		if proof.interfaceView || len(proof.allowed) > 0 || len(proof.classes) > 0 || proof.kindUnion != nil {
 			if l.refusal.checkedCasts == nil {
 				l.refusal.checkedCasts = map[*ast.Node]bool{}
 			}
@@ -304,6 +307,9 @@ func (l *lowering) castProof(node *ast.Node) (castProof, error) {
 				proof.field = cast.Field
 			}
 			return proof, err
+		}
+		if cast, err := l.kindUnionCast(node, source, target); cast != nil || err != nil {
+			return castProof{kindUnion: cast}, err
 		}
 		from, fromKnown := l.representation(source)
 		to, toKnown := l.representation(target)
