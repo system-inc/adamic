@@ -1,0 +1,15 @@
+{
+  "side": "main",
+  "sha": "fbe5b72ba115a8f3060d4b5229fd578574f4505f",
+  "command": [
+    "bash",
+    "stage3/lane/run.sh",
+    "/workspace/family5-alt-run-2-main"
+  ],
+  "cwd": "/tmp/family5-land",
+  "started_utc": "2026-11-18T19:37:57.510245+00:00",
+  "exit_code": 0,
+  "exit_recovery": "exit-recovery.json",
+  "wall_seconds": 696.369,
+  "wall_source": "Lane internal execution clock; original parent wall clock was lost."
+}

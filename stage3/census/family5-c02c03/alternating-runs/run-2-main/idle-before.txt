@@ -1,0 +1,78 @@
+    PID     ELAPSED   RSS COMMAND
+    439    09:07:58 35992 /opt/codex/bin/codex exec-server --remote https://codex-cloud-environments.chatgpt.com/api --environment-id ccarenv_b64_Y2NhcmVudl80ZGQ0MDAwYWUwMzA4MTkxOWI3M2FhNmUyNTUzMDI3MQ --linux-sandbox-pid-namespace=inherit
+    123    09:07:59 35316 /usr/local/bin/dockerd --host=unix:///var/run/docker.sock --pidfile=/run/codex-docker/dockerd.pid --exec-root=/run/codex-docker/exec-ikks64dz --storage-driver=vfs --group=agent
+  64729       11:40 32332 python3 /tmp/family5-alternating/run-alternating.py
+    175    09:07:59 21312 containerd --config /run/codex-docker/exec-ikks64dz/containerd/containerd.toml
+  65309       00:00  2472 ps -eo pid,etime,rss,args --sort=-rss
+  64724       11:40  1912 /bin/bash -lc cat > /tmp/family5-alternating/plan.json <<'EOF' {"sequence":["c02","main","c02","main"],"extra_main":true,"reason":"Two earlier C02 lanes and one earlier main lane exist; one extra final main lane gives four records per side."} EOF cat > /tmp/family5-alternating/run-alternating.py <<'PY' import os,sys,time,json,subprocess,shutil,hashlib,signal,datetime from pathlib import Path R=Path('/tmp/family5-land');W=Path('/tmp/family5-alternating');SHAS={'main':'fbe5b72ba115a8f3060d4b5229fd578574f4505f','c02':'28a2e22015d0cf51667fcefa7acb246cab553817'} os.chdir(R);os.environ.update(ADAMIC_TYPESCRIPT_SOURCE='/workspace/mapset-upstream',ADAMIC_BUILD_CACHE_DIR='/workspace/family5-build-cache') initial=subprocess.check_output(['git','rev-parse','HEAD'],text=True).strip();baseline=json.loads((W/'artifact-manifest.json').read_text());expected={side:{x['file']:x[side+'_sha256'] for x in baseline if x[side+'_present']} for side in SHAS} results=[] def stamp():return datetime.datetime.now(datetime.timezone.utc).isoformat() def snapshot_artifacts(tree,side,dest):  rows=[]  for root in ['built/local','lib']:   for p in sorted((tree/root).rglob('*')):    if p.is_file():     key=str(p.relative_to(tree));data=p.read_bytes();h=hashlib.sha256(data).hexdigest();rows.append({'file':key,'bytes':len(data),'sha256':h})  (dest/'artifacts.json').write_text(json.dumps(rows,indent=2)+'\n')  jsdiff=[x for x in rows if x['file'].endswith(('.js','.cjs','.mjs')) and expected[side].get(x['file'])!=x['sha256']]  (dest/'artifact-validation.json').write_text(json.dumps({'javascript_count':sum(x['file'].endswith(('.js','.cjs','.mjs')) for x in rows),'javascript_differences_from_initial_snapshot':jsdiff},indent=2)+'\n')  if jsdiff:raise RuntimeError('New executable artifact drift: '+json.dumps(jsdiff))  def one(index,side):  sha=SHAS[side];out=Path('/workspace/family5-alt-run-'+str(index)+'-'+side);dest=W/('run-'+str(index)+'-'+side)  dest.mkdir(parents=True,exist_ok=False);assert not out.exists()  subprocess.run(['git','switch','--detach',sha],check=True)  subprocess.run(['ps','-eo','pid,etime,rss,args','--sort=-rss'],stdout=(dest/'idle-before.txt').open('w'),check=True)  cmd=['bash','stage3/lane/run.sh',str(out)];start=time.monotonic();started=stamp();print('START alternating '+str(index)+' '+side,flush=True)  (W/'current.json').write_text(json.dumps({'run':index,'side':side,'sha':sha,'started_utc':started,'result_directory':str(out)},indent=2)+'\n')  input_recorded=False  with (dest/'stdout.log').open('wb') as stdout,(dest/'stderr.log').open('wb') as stderr:   child=subprocess.Popen(cmd,stdout=stdout,stderr=stderr,start_new_session=True)   while True:    try:code=child.wait(timeout=5);break    except subprocess.TimeoutExpired:     # Small scheduling-input snapshot while install/build is active, before timed cases start.     if not input_recorded and (out/'oracle/install.log').exists():      inp={}      for name in ['.parallelperf.json','mytest.config']:       p=out/'adapted-tree'/name;inp[name]={'present':p.exists()}       if p.exists():shutil.copyfile(p,dest/('before-'+name.lstrip('.')));inp[name]['sha256']=hashlib.sha256(p.read_bytes()).hexdigest()      (dest/'scheduling-inputs.json').write_text(json.dumps(inp,indent=2)+'\n');input_recorded=True     elapsed=time.monotonic()-start     if int(elapsed)//50>int(elapsed-5)//50:      print(f'RUNNING alternating {index} {side}: {elapsed:.0f}s',flush=True)   try:os.killpg(child.pid,signal.SIGTERM)   except ProcessLookupError:pass  status={'side':side,'sha':sha,'command':cmd,'cwd':str(R),'started_utc':started,'ended_utc':stamp(),'exit_code':code,'wall_seconds':round(time.monotonic()-start,3),'environment':{k:v for k,v in os.environ.items() if k.startswith(('ADAMIC_','LATENT_','CENSUS_'))}}  (dest/'status.json').write_text(json.dumps(status,indent=2)+'\n')  if not (out/'report.json').exists():raise RuntimeError('Lane has no complete report; real child exit '+str(code))  lane=json.loads((out/'report.json').read_text());oracle=json.loads((out/'oracle/report.json').read_text()) if (out/'oracle/report.json').exists() else {}  row={'id':'new-'+str(index),'side':side,'sha':sha,'context':'alone, standard eight workers','counts':lane.get('counts'),'exit_code':code,'wall_seconds':status['wall_seconds'],'phases':oracle.get('phases'),'failures':[{k:f.get(k) for k in ['title','cause','elapsed_ms','timeout_ms','message']} for f in oracle.get('failures',[])],'execution':lane.get('execution')}  (dest/'result.json').write_text(json.dumps(row,indent=2)+'\n');results.append(row);(W/'new-runs.json').write_text(json.dumps(results,indent=2)+'\n')  print('RESULT '+json.dumps(row),flush=True)  for p in out.rglob('*'):   if not p.is_file():continue   rel=p.relative_to(out)   if rel.parts[0]=='adapted-tree' or 'node_modules' in rel.parts:continue   if p.suffix not in ['.json','.jsonl','.log','.md','.txt','.diff']:continue   to=dest/'lane'/rel;to.parent.mkdir(parents=True,exist_ok=True);shutil.copyfile(p,to)  snapshot_artifacts(out/'adapted-tree',side,dest)  # Retain all receipts and manifests; discard only this run's generated, reproducible tree to keep disk available.  shutil.rmtree(out/'adapted-tree')  if lane.get('execution',{}).get('apply_exit')!=0 or any(oracle.get('phases',{}).get(k,{}).get('exit')!=0 for k in ['install','build']):raise RuntimeError('Infrastructure phase failed in '+side+' run '+str(index))  if oracle.get('phases',{}).get('tests',{}).get('exit')==124:raise RuntimeError('Standard oracle 2400-second test limit reached; partial output retained') try:  plan=json.loads((W/'plan.json').read_text());sequence=plan['sequence']  for index,side in enumerate(sequence,1):one(index,side)  if json.loads((W/'plan.json').read_text()).get('extra_main'):one(len(sequence)+1,'main')  (W/'finished.json').write_text(json.dumps({'complete':True,'runs':len(results),'pushed':False},indent=2)+'\n') except Exception as error:  import traceback  (W/'STOP.txt').write_text(type(error).__name__+': '+str(error)+'\n'+traceback.format_exc());print('STOP '+str(error),flush=True) finally:  subprocess.run(['git','switch','--detach',initial],check=True)  (W/'current.json').write_text(json.dumps({'finished':True,'runs_complete':len(results),'pushed':False},indent=2)+'\n') PY source /workspace/adamic-tools/env.sh python3 /tmp/family5-alternating/run-alternating.py > /tmp/family5-alternating/alternating.log 2>&1
+      1    09:08:08   872 tail -f /dev/null
+      2    09:08:08   252 /usr/local/bin/caas-prefix-transfer-server --host 0.0.0.0 --port 1040
+    566    09:07:19     0 [git] <defunct>
+  10640    07:59:46     0 [git] <defunct>
+  10808    07:54:47     0 [git] <defunct>
+  21925    06:22:56     0 [git] <defunct>
+  24882    05:53:13     0 [git] <defunct>
+  25170    03:56:05     0 [git] <defunct>
+  26487    02:55:40     0 [go] <defunct>
+  26964    02:40:10     0 [git] <defunct>
+  27112    02:37:26     0 [git] <defunct>
+  27303    02:33:04     0 [git] <defunct>
+  27322    02:32:54     0 [git] <defunct>
+  27335    02:32:40     0 [git] <defunct>
+  27340    02:32:39     0 [git] <defunct>
+  27344    02:32:38     0 [git] <defunct>
+  28008    02:26:54     0 [git] <defunct>
+  28012    02:26:53     0 [git] <defunct>
+  34982    02:17:24     0 [git] <defunct>
+  37435    02:15:03     0 [esbuild] <defunct>
+  47517    02:01:20     0 [adaptedtree.tes] <defunct>
+  47809    02:00:11     0 [esbuild] <defunct>
+  47877    01:59:32     0 [esbuild] <defunct>
+  48033    01:58:42     0 [esbuild] <defunct>
+  48103    01:58:16     0 [esbuild] <defunct>
+  51197    01:31:46     0 [MainThread] <defunct>
+  51400    01:31:16     0 [git] <defunct>
+  51650    01:27:50     0 [git] <defunct>
+  51796    01:27:08     0 [git] <defunct>
+  52220    01:24:12     0 [esbuild] <defunct>
+  52300    01:23:19     0 [esbuild] <defunct>
+  52357    01:23:01     0 [esbuild] <defunct>
+  52674    01:11:15     0 [esbuild] <defunct>
+  52743    01:11:03     0 [esbuild] <defunct>
+  52796    01:10:59     0 [esbuild] <defunct>
+  52903    01:10:07     0 [esbuild] <defunct>
+  52985    01:10:00     0 [esbuild] <defunct>
+  53036    01:09:55     0 [esbuild] <defunct>
+  53142    01:09:21     0 [esbuild] <defunct>
+  53209    01:09:19     0 [esbuild] <defunct>
+  53260    01:09:17     0 [esbuild] <defunct>
+  53367    01:08:57     0 [esbuild] <defunct>
+  53434    01:08:55     0 [esbuild] <defunct>
+  53492    01:08:52     0 [esbuild] <defunct>
+  53682    01:08:22     0 [esbuild] <defunct>
+  53750    01:08:20     0 [esbuild] <defunct>
+  53801    01:08:07     0 [esbuild] <defunct>
+  53908    01:07:53     0 [esbuild] <defunct>
+  53971    01:07:50     0 [esbuild] <defunct>
+  54021    01:07:47     0 [esbuild] <defunct>
+  54137    01:07:21     0 [esbuild] <defunct>
+  54200    01:07:18     0 [esbuild] <defunct>
+  54251    01:07:16     0 [esbuild] <defunct>
+  54367    01:06:54     0 [esbuild] <defunct>
+  54434    01:06:51     0 [esbuild] <defunct>
+  54484    01:06:47     0 [esbuild] <defunct>
+  54799    01:03:21     0 [esbuild] <defunct>
+  54959    01:02:02     0 [esbuild] <defunct>
+  55129    01:01:08     0 [esbuild] <defunct>
+  55289    01:00:06     0 [esbuild] <defunct>
+  55596       56:12     0 [git] <defunct>
+  55739       53:22     0 [git] <defunct>
+  63743       38:28     0 [esbuild] <defunct>
+  63828       37:49     0 [esbuild] <defunct>
+  63879       37:39     0 [esbuild] <defunct>
+  64115       27:26     0 [git] <defunct>
+  64180       27:26     0 [git] <defunct>
+  64335       24:50     0 [git] <defunct>
+  64916       11:02     0 [esbuild] <defunct>
+  65002       10:28     0 [esbuild] <defunct>
+  65053       10:16     0 [esbuild] <defunct>

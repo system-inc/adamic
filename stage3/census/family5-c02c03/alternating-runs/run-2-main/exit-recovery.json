@@ -1,0 +1,10 @@
+{
+  "method": "Actual kernel wait status from the unreaped session-leader zombie; not inferred from the verdict.",
+  "pid": 65310,
+  "raw_proc_stat": "65310 (python3) Z 1 65310 65310 0 -1 4227340 6176 6685953 0 0 14 7 190612 18690 20 0 1 0 3288921 0 0 18446744073709551615 0 0 0 0 0 0 0 16781312 0 1 0 0 17 4 0 0 0 0 0 0 0 0 0 0 0 0 0\n",
+  "wait_status_field_52": 0,
+  "decoded_real_exit": 0,
+  "process_start_lstart": "2026-11-18 19:37:57 UTC",
+  "expected_command_start": "2026-11-18T19:37:57.510245+00:00",
+  "coordinator_loss": "Environment context refresh terminated the original coordinator; its separately-sessioned lane child completed normally."
+}

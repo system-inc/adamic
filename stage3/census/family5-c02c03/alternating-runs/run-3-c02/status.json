@@ -1,0 +1,19 @@
+{
+  "side": "c02",
+  "sha": "28a2e22015d0cf51667fcefa7acb246cab553817",
+  "command": [
+    "bash",
+    "stage3/lane/run.sh",
+    "/workspace/family5-alt-run-3-c02"
+  ],
+  "cwd": "/tmp/family5-land",
+  "started_utc": "2026-11-18T20:03:02.609950+00:00",
+  "ended_utc": "2026-11-18T20:14:50.626334+00:00",
+  "exit_code": 0,
+  "wall_seconds": 708.017,
+  "environment": {
+    "ADAMIC_TOOLS": "/workspace/adamic-tools",
+    "ADAMIC_TYPESCRIPT_SOURCE": "/workspace/mapset-upstream",
+    "ADAMIC_BUILD_CACHE_DIR": "/workspace/family5-build-cache"
+  }
+}

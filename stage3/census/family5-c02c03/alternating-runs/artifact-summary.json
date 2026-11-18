@@ -1,0 +1,209 @@
+{
+  "main_tree": "/workspace/family5-main-lane-alone/adapted-tree",
+  "c02_tree": "/workspace/family5-c02-lane/adapted-tree",
+  "c02_provenance": "Untouched original full C02 lane, before any targeted reruns or common-path source selection.",
+  "main_files": 1499,
+  "c02_files": 1499,
+  "javascript_files": 19,
+  "javascript_all_identical": true,
+  "differing_files": [
+    {
+      "file": "built/local/_tsc.js.map",
+      "main_present": true,
+      "c02_present": true,
+      "main_bytes": 2997654,
+      "c02_bytes": 2997654,
+      "main_sha256": "5ab6149a549cf6ac9828be6e20208fc58fdc9853d267373f580a55dccd4703cf",
+      "c02_sha256": "825733f1fdb75083831e6ddaf3d32723ff342c0a6309d937c06005d8534af8ce",
+      "byte_identical": false,
+      "first_difference_offset_0based": 64983
+    },
+    {
+      "file": "built/local/compiler/tsconfig.tsbuildinfo",
+      "main_present": true,
+      "c02_present": true,
+      "main_bytes": 53582,
+      "c02_bytes": 53582,
+      "main_sha256": "fce202774af19aba09205aaf36aaae94cc323a7e8ce2f260bd5405b7221480e2",
+      "c02_sha256": "3bd3a88eec489ab11b2cb62a3b83c73aaa6bc8e7459f75293d4d243c716893a2",
+      "byte_identical": false,
+      "first_difference_offset_0based": 25910
+    },
+    {
+      "file": "built/local/compiler/types.d.ts",
+      "main_present": true,
+      "c02_present": true,
+      "main_bytes": 408078,
+      "c02_bytes": 408209,
+      "main_sha256": "2fe40fac130f33c793f6d4f5a211011602b0f63579cb27b54225e284dd72700b",
+      "c02_sha256": "e3af32ea386b0fbeb98b51372732550a469764ac50260e90c117bc0fd96d239b",
+      "byte_identical": false,
+      "first_difference_offset_0based": 26127
+    },
+    {
+      "file": "built/local/compiler/types.d.ts.map",
+      "main_present": true,
+      "c02_present": true,
+      "main_bytes": 275854,
+      "c02_bytes": 275989,
+      "main_sha256": "9af80f5a0d6488608d213bd39f76affcd872cc1f6831e0d68a4465c52ab8e988",
+      "c02_sha256": "3ca5a077b20a77ac4ddccd5f360b57c7b8476eb89d23d7ce8864e023ac13278f",
+      "byte_identical": false,
+      "first_difference_offset_0based": 16640
+    },
+    {
+      "file": "built/local/deprecatedCompat/tsconfig.tsbuildinfo",
+      "main_present": true,
+      "c02_present": true,
+      "main_bytes": 47087,
+      "c02_bytes": 47087,
+      "main_sha256": "d710e7d63754ea37282bb4461a4ed0b0aa1eb6e0879602b4bc0086ae19418a91",
+      "c02_sha256": "afc147a6740b01d001e7b109d4d09d63bf74b1d9f933c108e1f8579d646a98fc",
+      "byte_identical": false,
+      "first_difference_offset_0based": 36802
+    },
+    {
+      "file": "built/local/harness/tsconfig.tsbuildinfo",
+      "main_present": true,
+      "c02_present": true,
+      "main_bytes": 92987,
+      "c02_bytes": 92987,
+      "main_sha256": "08d15aa306ce090103824fe7ba89b1ac8d18ba84c6a59a53ee62d04a1ea6a9d1",
+      "c02_sha256": "253b1f69fceb70096ef8a86e728b05d7c4fe8444270fb0c6aa2e7a7cdb4df2da",
+      "byte_identical": false,
+      "first_difference_offset_0based": 40974
+    },
+    {
+      "file": "built/local/jsTyping/tsconfig.tsbuildinfo",
+      "main_present": true,
+      "c02_present": true,
+      "main_bytes": 47708,
+      "c02_bytes": 47708,
+      "main_sha256": "fbd40b250c1d2a6e64f6300ca651b08c1f490082785d7d2969152239dd206d26",
+      "c02_sha256": "069453e46d78982b45b42efab0c245bffb045040f2750f425f992f775ee18e72",
+      "byte_identical": false,
+      "first_difference_offset_0based": 24549
+    },
+    {
+      "file": "built/local/run.js.map",
+      "main_present": true,
+      "c02_present": true,
+      "main_bytes": 6316408,
+      "c02_bytes": 6316408,
+      "main_sha256": "0beccff05da4524986e79e4cbb05c6cf802bb0dc17660e95621e5e58e741cd34",
+      "c02_sha256": "4eb694d4b3bc5bc729c1ec775c60591b5ac29ac349f48a879df2cbf45d726694",
+      "byte_identical": false,
+      "first_difference_offset_0based": 90951
+    },
+    {
+      "file": "built/local/server/tsconfig.tsbuildinfo",
+      "main_present": true,
+      "c02_present": true,
+      "main_bytes": 80287,
+      "c02_bytes": 80287,
+      "main_sha256": "1a9c7785ba6b4220c6258cd353854d49beefbd64e2354523d3a6ad20b2e3c3f2",
+      "c02_sha256": "0bc346226dc3a9f3eb3d74c8627a3cb0b847db7a1ac93162cdd7fb0b37cd4408",
+      "byte_identical": false,
+      "first_difference_offset_0based": 36387
+    },
+    {
+      "file": "built/local/services/tsconfig.tsbuildinfo",
+      "main_present": true,
+      "c02_present": true,
+      "main_bytes": 62402,
+      "c02_bytes": 62402,
+      "main_sha256": "aaa41004e5d411fc734914d8b51ae2e577fcceaf1952fefeb972a91ca0774415",
+      "c02_sha256": "cfdf5471134e8687cc409c958889c5c893053e1e2abfc40d0a53f3337595c925",
+      "byte_identical": false,
+      "first_difference_offset_0based": 22587
+    },
+    {
+      "file": "built/local/testRunner/tsconfig.tsbuildinfo",
+      "main_present": true,
+      "c02_present": true,
+      "main_bytes": 167608,
+      "c02_bytes": 167608,
+      "main_sha256": "6e4d938bfc543c56a3db2212ebc8f5009b1cbf6ebf7e058f23a0643e75ae72dd",
+      "c02_sha256": "f4dd2dafdf77d878fa5fce61f53d9470fcd36807f039e05714e1af95eafca764",
+      "byte_identical": false,
+      "first_difference_offset_0based": 66662
+    },
+    {
+      "file": "built/local/tsc/tsconfig.tsbuildinfo",
+      "main_present": true,
+      "c02_present": true,
+      "main_bytes": 20556,
+      "c02_bytes": 20556,
+      "main_sha256": "6fea462b0b8130bf4c0b2e5df936f455d4ef336aefa60f6c9eb28d2eb565b84a",
+      "c02_sha256": "2c19c5dacd9cf7659ab2b07b5cb0230c543fd81fee5c2adb1f5a44b48abe0530",
+      "byte_identical": false,
+      "first_difference_offset_0based": 12086
+    },
+    {
+      "file": "built/local/tsserver/tsconfig.tsbuildinfo",
+      "main_present": true,
+      "c02_present": true,
+      "main_bytes": 80453,
+      "c02_bytes": 80453,
+      "main_sha256": "eb9671f978f7d63d060fd1ae9c363e39624bd20b498e8c873fff778037d9b86e",
+      "c02_sha256": "f38d13cd79f48fc6696b030d17f94d7f16836cdf68d0c14a861623c737395af3",
+      "byte_identical": false,
+      "first_difference_offset_0based": 36872
+    },
+    {
+      "file": "built/local/typescript.internal.d.ts",
+      "main_present": true,
+      "c02_present": true,
+      "main_bytes": 1546565,
+      "c02_bytes": 1546700,
+      "main_sha256": "fb806fe263761efa73a9c20b2eee001a7ce384240c3381d0b0201994a5a9aeb2",
+      "c02_sha256": "42c44808ae23ca15d4ba8e4c1526a0ada4aeeb95d9623393da9d738bd77889df",
+      "byte_identical": false,
+      "first_difference_offset_0based": 417061
+    },
+    {
+      "file": "built/local/typescript.js.map",
+      "main_present": true,
+      "c02_present": true,
+      "main_bytes": 4430249,
+      "c02_bytes": 4430249,
+      "main_sha256": "a3b7839d6375dd66481c9ead6b477375b9c9c1963425f8a70d9671a5ee71d7d8",
+      "c02_sha256": "1eeedb3c1b4f42c414dde137faeb7c3eee3a7a9b9a637ae1bd11fbed4b19a6a2",
+      "byte_identical": false,
+      "first_difference_offset_0based": 93969
+    },
+    {
+      "file": "built/local/typescript/tsconfig.tsbuildinfo",
+      "main_present": true,
+      "c02_present": true,
+      "main_bytes": 50910,
+      "c02_bytes": 50910,
+      "main_sha256": "498dab3c1e9fab8c94a08e07e8113d2836d39a6a3c95f4639c4acafbef777e25",
+      "c02_sha256": "c49566bd1192582092e2d494274fff6f4e8791046251817065b08a065467cf51",
+      "byte_identical": false,
+      "first_difference_offset_0based": 22307
+    },
+    {
+      "file": "built/local/typingsInstaller/tsconfig.tsbuildinfo",
+      "main_present": true,
+      "c02_present": true,
+      "main_bytes": 79935,
+      "c02_bytes": 79935,
+      "main_sha256": "06021615a493ebfc48a14c8721f31a2b0eae282231e91b7c16df980caafc764c",
+      "c02_sha256": "02afbd8cc5c4d699dbcaff65ffc031aaa98a0641354dcfb1ac7ca8703bcc9b9c",
+      "byte_identical": false,
+      "first_difference_offset_0based": 36718
+    },
+    {
+      "file": "built/local/typingsInstallerCore/tsconfig.tsbuildinfo",
+      "main_present": true,
+      "c02_present": true,
+      "main_bytes": 48370,
+      "c02_bytes": 48370,
+      "main_sha256": "35856d3ef28bd71ed9b5b5e4457b6f62b086162de3019c279a43f9123d3c8e8d",
+      "c02_sha256": "fce6e6eea79abfc3c9890a12e7bd370fc8b213ca868f7441a3535b92f0fa6d68",
+      "byte_identical": false,
+      "first_difference_offset_0based": 24934
+    }
+  ]
+}

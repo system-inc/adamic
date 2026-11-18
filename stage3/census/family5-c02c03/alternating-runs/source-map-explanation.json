@@ -1,0 +1,104 @@
+[
+  {
+    "file": "built/local/_tsc.js.map",
+    "different_json_fields": [
+      "mappings"
+    ],
+    "generated_coordinates_all_identical": true,
+    "decoded_segments": 538763,
+    "changed_segment_classes": {
+      "('../../src/compiler/types.ts', 1, 0, True, True)": 2319
+    },
+    "examples": [
+      {
+        "generated_line_1based": 2932,
+        "generated_column_0based": 0,
+        "source": "../../src/compiler/types.ts",
+        "main_source_line_1based": 1685,
+        "c02_source_line_1based": 1686
+      },
+      {
+        "generated_line_1based": 2932,
+        "generated_column_0based": 4,
+        "source": "../../src/compiler/types.ts",
+        "main_source_line_1based": 1685,
+        "c02_source_line_1based": 1686
+      },
+      {
+        "generated_line_1based": 2932,
+        "generated_column_0based": 31,
+        "source": "../../src/compiler/types.ts",
+        "main_source_line_1based": 1685,
+        "c02_source_line_1based": 1686
+      }
+    ]
+  },
+  {
+    "file": "built/local/run.js.map",
+    "different_json_fields": [
+      "mappings"
+    ],
+    "generated_coordinates_all_identical": true,
+    "decoded_segments": 1131897,
+    "changed_segment_classes": {
+      "('../../src/compiler/types.ts', 1, 0, True, True)": 5655
+    },
+    "examples": [
+      {
+        "generated_line_1based": 2821,
+        "generated_column_0based": 0,
+        "source": "../../src/compiler/types.ts",
+        "main_source_line_1based": 7354,
+        "c02_source_line_1based": 7355
+      },
+      {
+        "generated_line_1based": 2821,
+        "generated_column_0based": 9,
+        "source": "../../src/compiler/types.ts",
+        "main_source_line_1based": 7354,
+        "c02_source_line_1based": 7355
+      },
+      {
+        "generated_line_1based": 2821,
+        "generated_column_0based": 32,
+        "source": "../../src/compiler/types.ts",
+        "main_source_line_1based": 7354,
+        "c02_source_line_1based": 7355
+      }
+    ]
+  },
+  {
+    "file": "built/local/typescript.js.map",
+    "different_json_fields": [
+      "mappings"
+    ],
+    "generated_coordinates_all_identical": true,
+    "decoded_segments": 794763,
+    "changed_segment_classes": {
+      "('../../src/compiler/types.ts', 1, 0, True, True)": 5580
+    },
+    "examples": [
+      {
+        "generated_line_1based": 5541,
+        "generated_column_0based": 0,
+        "source": "../../src/compiler/types.ts",
+        "main_source_line_1based": 1685,
+        "c02_source_line_1based": 1686
+      },
+      {
+        "generated_line_1based": 5541,
+        "generated_column_0based": 4,
+        "source": "../../src/compiler/types.ts",
+        "main_source_line_1based": 1685,
+        "c02_source_line_1based": 1686
+      },
+      {
+        "generated_line_1based": 5541,
+        "generated_column_0based": 31,
+        "source": "../../src/compiler/types.ts",
+        "main_source_line_1based": 1685,
+        "c02_source_line_1based": 1686
+      }
+    ]
+  }
+]

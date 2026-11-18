@@ -1,0 +1,48 @@
+{
+  "build_and_launch_inputs": [
+    {
+      "file": "Herebyfile.mjs",
+      "byte_identical": true,
+      "bytes": 37354,
+      "main_sha256": "e0fa650f9c35a256ffd5c97db1a0588d7df5293b638e1f179a8231c4251c6e5d",
+      "c02_sha256": "e0fa650f9c35a256ffd5c97db1a0588d7df5293b638e1f179a8231c4251c6e5d"
+    },
+    {
+      "file": "package.json",
+      "byte_identical": true,
+      "bytes": 3468,
+      "main_sha256": "f875dff6a05b632b92280bb85ba529f02e853eb12ccf3101de8ff76556ef26f2",
+      "c02_sha256": "f875dff6a05b632b92280bb85ba529f02e853eb12ccf3101de8ff76556ef26f2"
+    },
+    {
+      "file": "package-lock.json",
+      "byte_identical": true,
+      "bytes": 368947,
+      "main_sha256": "e85be648176ba25eaa38f9c1b7b7ca9bab782b0c448fb15fc44c355c40ef9a4b",
+      "c02_sha256": "e85be648176ba25eaa38f9c1b7b7ca9bab782b0c448fb15fc44c355c40ef9a4b"
+    },
+    {
+      "file": "scripts/build/tests.mjs",
+      "byte_identical": true,
+      "bytes": 7733,
+      "main_sha256": "b50a4b5e090c45d4165d7070b47acd983041ff21b8c2ff0bb3ee6f3e8282a5cc",
+      "c02_sha256": "b50a4b5e090c45d4165d7070b47acd983041ff21b8c2ff0bb3ee6f3e8282a5cc"
+    },
+    {
+      "file": "scripts/build/utils.mjs",
+      "byte_identical": true,
+      "bytes": 7146,
+      "main_sha256": "458f0566832f556f18e4720eca38f23cf91231cf2a961134c0151ef338e97e38",
+      "c02_sha256": "458f0566832f556f18e4720eca38f23cf91231cf2a961134c0151ef338e97e38"
+    },
+    {
+      "file": "scripts/build/projects.mjs",
+      "byte_identical": true,
+      "bytes": 1892,
+      "main_sha256": "593fdd028dfd3dbc34d297053a716fa47b756327031d20c0aa4447429c201bf5",
+      "c02_sha256": "593fdd028dfd3dbc34d297053a716fa47b756327031d20c0aa4447429c201bf5"
+    }
+  ],
+  "external_dependency_files_compared": 4776,
+  "external_dependency_differences": []
+}

@@ -1,0 +1,191 @@
+[
+  {
+    "id": "C02-earlier-1",
+    "side": "c02",
+    "sha": "28a2e22015d0cf51667fcefa7acb246cab553817",
+    "context": "concurrent with product/censuses",
+    "counts": {
+      "passing": 106359,
+      "failing": 3,
+      "pending": 0
+    },
+    "exit_code": 1,
+    "wall_seconds": 1864.45,
+    "phases": {
+      "install": {
+        "command": [
+          "npm",
+          "ci",
+          "--no-audit",
+          "--no-fund"
+        ],
+        "exit": 0,
+        "seconds": 10.239
+      },
+      "build": {
+        "command": [
+          "npm",
+          "run",
+          "build"
+        ],
+        "exit": 0,
+        "seconds": 114.871
+      },
+      "tests": {
+        "command": [
+          "npm",
+          "test",
+          "--",
+          "--workers=8",
+          "--lint=false",
+          "--no-colors"
+        ],
+        "exit": 1,
+        "seconds": 1594.52
+      }
+    },
+    "failures": [
+      {
+        "title": "fourslash tests tests/cases/fourslash/codeFixClassImplementInterfaceNoTruncation.ts fourslash test codeFixClassImplementInterfaceNoTruncation.ts runs correctly",
+        "cause": "timeout",
+        "elapsed_ms": 46964.01476,
+        "timeout_ms": 40000
+      },
+      {
+        "title": "compiler tests compiler tests for tests/cases/compiler/relationComplexityError.ts \"before all\" hook for \"Correct errors for tests/cases/compiler/relationComplexityError.ts\"",
+        "cause": "timeout",
+        "elapsed_ms": 55109.133596,
+        "timeout_ms": 40000
+      },
+      {
+        "title": "unittests:: Public APIs for typescript.d.ts should be acknowledged when they change",
+        "cause": "baseline-content",
+        "elapsed_ms": 4085.339037,
+        "timeout_ms": 40000
+      }
+    ],
+    "folder": "/workspace/family5-c02-lane"
+  },
+  {
+    "id": "C02-earlier-2",
+    "side": "c02",
+    "sha": "28a2e22015d0cf51667fcefa7acb246cab553817",
+    "context": "alone, eight workers",
+    "counts": {
+      "passing": 106354,
+      "failing": 3,
+      "pending": 0
+    },
+    "exit_code": 1,
+    "wall_seconds": 808.298,
+    "phases": {
+      "install": {
+        "command": [
+          "npm",
+          "ci",
+          "--no-audit",
+          "--no-fund"
+        ],
+        "exit": 0,
+        "seconds": 6.419
+      },
+      "build": {
+        "command": [
+          "npm",
+          "run",
+          "build"
+        ],
+        "exit": 0,
+        "seconds": 71.232
+      },
+      "tests": {
+        "command": [
+          "npm",
+          "test",
+          "--",
+          "--workers=8",
+          "--lint=false",
+          "--no-colors"
+        ],
+        "exit": 1,
+        "seconds": 692.117
+      }
+    },
+    "failures": [
+      {
+        "title": "compiler tests compiler tests for tests/cases/compiler/recursiveConditionalTypes.ts \"before all\" hook for \"Correct errors for tests/cases/compiler/recursiveConditionalTypes.ts\"",
+        "cause": "timeout",
+        "elapsed_ms": 42167.509889,
+        "timeout_ms": 40000
+      },
+      {
+        "title": "conformance tests conformance tests for tests/cases/conformance/types/literal/templateLiteralTypes1.ts \"before all\" hook for \"Correct errors for tests/cases/conformance/types/literal/templateLiteralTypes1.ts\"",
+        "cause": "timeout",
+        "elapsed_ms": 43073.104485,
+        "timeout_ms": 40000
+      },
+      {
+        "title": "unittests:: Public APIs for typescript.d.ts should be acknowledged when they change",
+        "cause": "baseline-content",
+        "elapsed_ms": 2480.736526,
+        "timeout_ms": 40000
+      }
+    ],
+    "folder": "/workspace/family5-c02-lane-alone"
+  },
+  {
+    "id": "main-earlier-1",
+    "side": "main",
+    "sha": "fbe5b72ba115a8f3060d4b5229fd578574f4505f",
+    "context": "alone, eight workers",
+    "counts": {
+      "passing": 106366,
+      "failing": 1,
+      "pending": 0
+    },
+    "exit_code": 0,
+    "wall_seconds": 1275.747,
+    "phases": {
+      "install": {
+        "command": [
+          "npm",
+          "ci",
+          "--no-audit",
+          "--no-fund"
+        ],
+        "exit": 0,
+        "seconds": 5.9
+      },
+      "build": {
+        "command": [
+          "npm",
+          "run",
+          "build"
+        ],
+        "exit": 0,
+        "seconds": 49.554
+      },
+      "tests": {
+        "command": [
+          "npm",
+          "test",
+          "--",
+          "--workers=8",
+          "--lint=false",
+          "--no-colors"
+        ],
+        "exit": 1,
+        "seconds": 592.349
+      }
+    },
+    "failures": [
+      {
+        "title": "unittests:: Public APIs for typescript.d.ts should be acknowledged when they change",
+        "cause": "baseline-content",
+        "elapsed_ms": 2485.732159,
+        "timeout_ms": 40000
+      }
+    ],
+    "folder": "/workspace/family5-main-lane-alone"
+  }
+]
