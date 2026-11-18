@@ -1,0 +1,16 @@
+{
+  "status": "stopped",
+  "reason": "whole lane failed with two additional 40000 ms timeouts",
+  "main": "fbe5b72ba115a8f3060d4b5229fd578574f4505f",
+  "c02_local_candidate": "28a2e22015d0cf51667fcefa7acb246cab553817",
+  "c03_landing_commit": null,
+  "landing_pushes": [],
+  "lane_counts": {
+    "passing": 106359,
+    "failing": 3,
+    "pending": 0
+  },
+  "paired_census_complete": false,
+  "new_findings_established": false,
+  "reached_stops_established": false
+}
