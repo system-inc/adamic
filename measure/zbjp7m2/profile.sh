@@ -24,8 +24,8 @@ for round in 1 2 3 4 5 6 7; do
 			node) command=("${nodeRun[@]}"); env=() ;;
 			pool/*) command=("$T/pool"); env=(ADAMIC_THREADS=${variant#pool/}) ;;
 		esac
-		env "${env[@]}" perf stat -x, -e "$events" -o "$T/stat.$variant.$round" "${command[@]}" > /dev/null 2>&1
-		/usr/bin/time -f "%e %U %S" -o "$T/time.$variant.$round" env "${env[@]}" "${command[@]}" > /dev/null
+		env "${env[@]}" perf stat -x, -e "$events" -o "$T/stat.${variant/\//-}.$round" "${command[@]}" > /dev/null 2>&1
+		/usr/bin/time -f "%e %U %S" -o "$T/time.${variant/\//-}.$round" env "${env[@]}" "${command[@]}" > /dev/null
 	done
 done
 echo "== medians of 7 rounds: wall s, user s, sys s, then perf stat"
@@ -33,9 +33,10 @@ python3 - "$T" <<'PY'
 import glob, os, statistics, sys
 root = sys.argv[1]
 for variant in ['serial', 'pool/1', 'pool/4', 'pool/8', 'node']:
-    times = [list(map(float, open(path).read().split())) for path in glob.glob(f'{root}/time.{variant}.*')]
+    name = variant.replace('/', '-')
+    times = [list(map(float, open(path).read().split()[-3:])) for path in glob.glob(f'{root}/time.{name}.*')]
     stats = {}
-    for path in glob.glob(f'{root}/stat.{variant}.*'):
+    for path in glob.glob(f'{root}/stat.{name}.*'):
         for line in open(path):
             parts = line.strip().split(',')
             if len(parts) > 3 and parts[0] and parts[0][0].isdigit():
