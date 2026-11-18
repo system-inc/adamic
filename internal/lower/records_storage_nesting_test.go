@@ -105,7 +105,7 @@ func TestRecordStorageNestingBoundsTheWalk(t *testing.T) {
 // The control: two distinct generics that don't grow, OwnBox<number> seen as DeepBox<number>, are
 // walked member by member, as Own and Deep are, and each member's pair is a level the bound never
 // reaches, so the walk answers alike and the program lowers. A self-expanding generic seen as itself
-// can't serve here: Own<number> alone still hangs, in findCycles, which this head doesn't touch.
+// can't serve here: Own<number> alone stops first in the cycle finder (#ykd89v9).
 func TestRecordStorageNestingControlLowers(t *testing.T) {
 	t.Parallel()
 	for _, extension := range []string{".a", ".ts"} {
