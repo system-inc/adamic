@@ -33,6 +33,25 @@ import (
 //     type parameter reaches S when it does at some instantiation, its permissive one judged (closedKindReaches),
 //     and a decodeJson<T> call builds a T whose kind its text chooses.
 //
+// Two builds are hatches, and add nothing (Adamic's ruling on #8eewz2n, Nov 18): a function constructor's
+// new is born as a checked view, as a cast's value is in .ts (rulings.md:18), so every read through it stays
+// checked, kind included. tsc builds every node this way (utilities.ts's Node, Token and Identifier, each
+// `function Node(this: Mutable<Node>, kind, ...)`, newed by baseNodeFactory.ts through the allocator).
+//
+//   - A write through the this of a function declaration whose this is a declared parameter, when every use
+//     of that function is a new callee or the operand of a cast to any (closedKindNewOnlyFunctions). Lowering
+//     refuses every cast to any, so no compiled program reaches the function by another road; a call,
+//     .call, .apply, .bind, storage, return or argument could write a run-time kind onto an object built
+//     elsewhere at a literal one, so any of them keeps the write a build. New of a function constructor is
+//     NotYet today (TestClosedKindFunctionConstructorNewStops holds it), so nothing is built this way yet.
+//     The allocator's getters need an escape proof before the `as any` in tsc's objectAllocator is adapted:
+//     a getter returning the function, read only into variables read only as a new callee, fails this
+//     proof today, so S opens and Node's 55 come back as hazards.
+//   - A new whose callee isn't a class (closedKindNewOfClass), seen through a construct signature: such a
+//     value is a class, whose declaration is a build counted here, a function constructor, the case above,
+//     or a declared value with no body, which doesn't lower. So a class installed by setObjectAllocator, as
+//     services' NodeObject is, keeps S open by its own declaration when its kind is open.
+//
 // The walk alone reads K(S) (enumTagWalkHazardOf, enumTagClosedTag). R-T80's provers ask
 // enumTagHazardOf and keep the hazard.
 
@@ -315,6 +334,10 @@ func (l *lowering) closedKindBuildKind(site closedKindSite, field string) (*chec
 		if !l.closedKindWritesField(site.node, field) {
 			return nil, "", false
 		}
+		if l.closedKindNewOnlyThis(site.node) {
+			// A hatch: a function constructor's object is born as a checked view.
+			return nil, "", false
+		}
 		construct := "a write of " + field
 		// Only a plain `=` with the target its whole left side writes one value, the right's.
 		assignment := ast.GetAssignmentTarget(site.node)
@@ -338,6 +361,11 @@ func (l *lowering) closedKindBuildKind(site closedKindSite, field string) (*chec
 		// says (Language's should on #x2cjvy9); today `new Proxy` doesn't lower, and this holds it when it does.
 		if callee := ast.SkipParentheses(site.node.AsNewExpression().Expression); callee.Kind == ast.KindIdentifier && l.isLibraryGlobal(callee, "Proxy") {
 			return nil, "a new Proxy", true
+		}
+		if !l.closedKindNewOfClass(site.node) {
+			// A hatch: what it builds is a class's, counted at the class, or a function constructor's, born as a
+			// checked view.
+			return nil, "", false
 		}
 		return l.closedKindFieldType(site.of, field), "a new", true
 	case ast.KindCallExpression:
@@ -406,4 +434,134 @@ func (l *lowering) closedKindObjectLiteral(site closedKindSite, field string) *c
 		return l.checker.GetTypeOfSymbol(l.checker.GetExportSymbolOfSymbol(symbol))
 	}
 	return l.closedKindFieldType(site.of, field)
+}
+
+// closedKindNewOnlyThis is whether a property or element access writes through the this of a function
+// declaration whose this is a declared parameter, arrows seen through, and that function is new-only
+// (closedKindNewOnlyFunctions): the object it writes is born as a checked view.
+func (l *lowering) closedKindNewOnlyThis(target *ast.Node) bool {
+	var object *ast.Node
+	switch target.Kind {
+	case ast.KindPropertyAccessExpression:
+		object = target.AsPropertyAccessExpression().Expression
+	case ast.KindElementAccessExpression:
+		object = target.AsElementAccessExpression().Expression
+	}
+	if object == nil || ast.SkipParentheses(object).Kind != ast.KindThisKeyword {
+		return false
+	}
+	container := ast.GetThisContainer(target, false, false)
+	if container == nil || container.Kind != ast.KindFunctionDeclaration || !closedKindDeclaresThis(container) {
+		return false
+	}
+	symbol := l.checker.GetSymbolOfDeclaration(container)
+	return symbol != nil && l.closedKindNewOnlyFunctions()[symbol]
+}
+
+// closedKindDeclaresThis is whether a function's first parameter is this.
+func closedKindDeclaresThis(function *ast.Node) bool {
+	parameters := function.Parameters()
+	return len(parameters) > 0 && parameters[0].Name() != nil && parameters[0].Name().Kind == ast.KindIdentifier && parameters[0].Name().Text() == "this"
+}
+
+// closedKindNewOnlyFunctions is, for each function declaration in the program's own files whose this is a
+// declared parameter, whether every use of it is a new callee or the operand of a cast to any, found once.
+// A use is a value reference by the function's symbol, aliases resolved, so an import or a namespace read
+// of it is followed to its use; a name in a type, an import or an export specifier isn't a use. Any other
+// use, a call, .call, .apply, .bind, storage, return or argument, makes it not new-only.
+func (l *lowering) closedKindNewOnlyFunctions() map[*ast.Symbol]bool {
+	if l.closedKindNewOnly != nil {
+		return l.closedKindNewOnly
+	}
+	l.closedKindNewOnly = map[*ast.Symbol]bool{}
+	names := map[string]bool{}
+	files := []*ast.SourceFile{}
+	for _, file := range l.program.CompilerProgram().GetSourceFiles() {
+		if neverRestProgramFile(file) {
+			files = append(files, file)
+		}
+	}
+	var declarations ast.Visitor
+	declarations = func(visited *ast.Node) bool {
+		if visited.Kind == ast.KindFunctionDeclaration && visited.Name() != nil && closedKindDeclaresThis(visited) {
+			if symbol := l.checker.GetSymbolOfDeclaration(visited); symbol != nil {
+				l.closedKindNewOnly[symbol] = true
+				names[visited.Name().Text()] = true
+			}
+		}
+		visited.ForEachChild(declarations)
+		return false
+	}
+	for _, file := range files {
+		file.AsNode().ForEachChild(declarations)
+	}
+	if len(names) == 0 {
+		return l.closedKindNewOnly
+	}
+	var uses ast.Visitor
+	uses = func(visited *ast.Node) bool {
+		if visited.Kind == ast.KindIdentifier && names[visited.Text()] {
+			l.closedKindJudgeUse(visited)
+		}
+		visited.ForEachChild(uses)
+		return false
+	}
+	for _, file := range files {
+		file.AsNode().ForEachChild(uses)
+	}
+	return l.closedKindNewOnly
+}
+
+// closedKindJudgeUse marks a candidate function not new-only when name is a value use of it that isn't a
+// new callee or the operand of a cast to any.
+func (l *lowering) closedKindJudgeUse(name *ast.Node) {
+	parent := name.Parent
+	if parent == nil || ast.IsPartOfTypeNode(name) {
+		return
+	}
+	switch parent.Kind {
+	case ast.KindImportSpecifier, ast.KindExportSpecifier, ast.KindImportClause, ast.KindNamespaceImport, ast.KindImportEqualsDeclaration:
+		return
+	case ast.KindFunctionDeclaration:
+		if parent.Name() == name {
+			return
+		}
+	}
+	symbol := l.checker.GetSymbolAtLocation(name)
+	if symbol == nil {
+		return
+	}
+	if symbol.Flags&ast.SymbolFlagsAlias != 0 {
+		symbol = l.checker.SkipAlias(symbol)
+	}
+	if !l.closedKindNewOnly[symbol] {
+		return
+	}
+	// The reference is the name, or the property access it names, as in a namespace's ts.Node.
+	reference := name
+	if parent.Kind == ast.KindPropertyAccessExpression && parent.AsPropertyAccessExpression().Name() == name {
+		reference = parent
+	}
+	for reference.Parent != nil && reference.Parent.Kind == ast.KindParenthesizedExpression {
+		reference = reference.Parent
+	}
+	user := reference.Parent
+	switch {
+	case user != nil && user.Kind == ast.KindNewExpression && user.AsNewExpression().Expression == reference:
+		return
+	case user != nil && user.Kind == ast.KindAsExpression && user.AsAsExpression().Expression == reference && user.AsAsExpression().Type.Kind == ast.KindAnyKeyword:
+		return
+	case user != nil && user.Kind == ast.KindTypeAssertionExpression && user.AsTypeAssertion().Expression == reference && user.AsTypeAssertion().Type.Kind == ast.KindAnyKeyword:
+		return
+	}
+	l.closedKindNewOnly[symbol] = false
+}
+
+// closedKindNewOfClass is whether a new's callee is a class: its type's symbol is a class symbol, as a
+// class's own name and typeof it are. A value typed only by a construct signature, as tsc's allocator
+// constructors are (`new (kind: SyntaxKind, pos: number, end: number) => Node`), isn't.
+func (l *lowering) closedKindNewOfClass(created *ast.Node) bool {
+	callee := ast.SkipParentheses(created.AsNewExpression().Expression)
+	symbol := l.checker.GetTypeAtLocation(callee).Symbol()
+	return symbol != nil && symbol.Flags&ast.SymbolFlagsClass != 0
 }
