@@ -336,7 +336,7 @@ var graphFlowRules = map[reflect.Type]graphFlowRule{
 	reflect.TypeFor[ir.DynamicProperty]():      {class: graphFlowStops, why: "a dynamic-shape read, which graphAdoptionBoundary refuses in a graph program (graph_types.go:475) before this stop is read"},
 	reflect.TypeFor[ir.DynamicKeyedProperty](): {class: graphFlowStops, why: "a dynamic-shape read, which graphAdoptionBoundary refuses in a graph program (graph_types.go:475) before this stop is read"},
 	reflect.TypeFor[ir.NodeFSFile]():           {class: graphFlowStops, why: "a host result made outside the plan (node_fs_file.go:3); one that's a string, a number or a boolean is no graph value"},
-	reflect.TypeFor[ir.NodeHostCall]():         {class: graphFlowStops, why: "a host result made outside the plan (node_fs_directory.go:3); one that's a string, a number or a boolean is no graph value"},
+	reflect.TypeFor[ir.NodeHostCall]():         {class: graphFlowStops, why: "a host result made outside the plan (node_fs_directory.go:3); one that's a string, a number, a boolean or the Promise a workers: call settles is no graph value"},
 	reflect.TypeFor[ir.ProcessCall]():          {class: graphFlowStops, why: "a host result made outside the plan (process.go:3); one that's a string, a number or a boolean is no graph value"},
 	reflect.TypeFor[ir.NodeBufferCall]():       {class: graphFlowStops, why: "a host result made outside the plan (node_buffer.go:3); one that's a string, a number or a boolean is no graph value"},
 }

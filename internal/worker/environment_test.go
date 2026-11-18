@@ -110,7 +110,7 @@ func TestWorkerEnvironmentFieldOrder(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	if !reflect.DeepEqual(fields, []string{"ZONE", "GREETING"}) {
+	if !reflect.DeepEqual(fields, []environmentField{{name: "ZONE"}, {name: "GREETING"}}) {
 		t.Fatalf("environment declaration order: %v", fields)
 	}
 	bridge, err := environmentBridge("./handler.mjs", fields, false)
@@ -124,7 +124,11 @@ func TestWorkerEnvironmentFieldOrder(t *testing.T) {
 
 func environmentBridgeNode(t *testing.T, async bool, names []string, handler, script string) {
 	t.Helper()
-	bridge, err := environmentBridge("./handler.mjs", names, async)
+	fields := make([]environmentField, len(names))
+	for index, name := range names {
+		fields[index] = environmentField{name: name}
+	}
+	bridge, err := environmentBridge("./handler.mjs", fields, async)
 	if err != nil {
 		t.Fatal(err)
 	}

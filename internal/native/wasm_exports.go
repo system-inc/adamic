@@ -44,6 +44,9 @@ func (t ABIType) representation() ir.Type {
 
 // WASIExports appends typed boundaries to the normal emitter, retaining module globals.
 func WASIExports(program *ir.Program, exports []ABIExport) (string, error) {
+	if err := HostCallRefusal(program); err != nil {
+		return "", err
+	}
 	for _, export := range exports {
 		if export.Function < 0 || export.Function >= len(program.Functions) {
 			return "", fmt.Errorf("invalid ABI function %s", export.Name)

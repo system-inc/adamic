@@ -9,6 +9,9 @@ import (
 
 // WASI emits the request ABI around one validated function, or ordinary command C for handler -1.
 func WASI(program *ir.Program, handler int) (string, error) {
+	if err := HostCallRefusal(program); err != nil {
+		return "", err
+	}
 	if handler == -1 {
 		return C(program), nil
 	}
