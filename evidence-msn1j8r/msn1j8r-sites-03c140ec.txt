@@ -1,0 +1,639 @@
+added 3 packages in 275ms
+sealed-job: npm installed offline in 1 projects
+sealed-job: the image's TypeScript source copied to /var/lib/private/loomjob/J-nr75xvq-1/.sealed-typescript-source in 2 s, the job's own
+PASS apply
+=== utilities.ts:10957
+ 10943      // with the strings '"Infinity"', '"-Infinity"', and '"NaN"' respectively.
+ 10944      return (+name).toString() === name;
+ 10945  }
+ 10946
+ 10947  /** @internal */
+ 10948  export function createPropertyNameNodeForIdentifierOrLiteral(name: string, target: ScriptTarget, singleQuote: boolean, stringNamed: boolean, isMethod: boolean): Identifier | StringLiteral | NumericLiteral {
+ 10949      const isMethodNamedNew = isMethod && name === "new";
+ 10950      return !isMethodNamedNew && isIdentifierText(name, target) ? factory.createIdentifier(name) :
+ 10951          !stringNamed && !isMethodNamedNew && isNumericLiteralName(name) && +name >= 0 ? factory.createNumericLiteral(+name) :
+ 10952          factory.createStringLiteral(name, !!singleQuote);
+ 10953  }
+ 10954
+ 10955  /** @internal */
+ 10956  export function isThisTypeParameter(type: Type): boolean {
+ 10957      return !!(type.flags & TypeFlags.TypeParameter && (type as TypeParameter).isThisType);
+ 10958  }
+ 10959
+ 10960  /** @internal */
+ 10961  export interface NodeModulePathParts {
+ 10962      readonly topLevelNodeModulesIndex: number;
+=== symbolWalker.ts:104
+    90                  if (objectFlags & ObjectFlags.Reference) {
+    91                      visitTypeReference(type as TypeReference);
+    92                  }
+    93                  if (objectFlags & ObjectFlags.Mapped) {
+    94                      visitMappedType(type as MappedType);
+    95                  }
+    96                  if (objectFlags & (ObjectFlags.Class | ObjectFlags.Interface)) {
+    97                      visitInterfaceType(type as InterfaceType);
+    98                  }
+    99                  if (objectFlags & (ObjectFlags.Tuple | ObjectFlags.Anonymous)) {
+   100                      visitObjectType(objectType);
+   101                  }
+   102              }
+   103              if (type.flags & TypeFlags.TypeParameter) {
+   104                  visitTypeParameter(type as TypeParameter);
+   105              }
+   106              if (type.flags & TypeFlags.UnionOrIntersection) {
+   107                  visitUnionOrIntersectionType(type as UnionOrIntersectionType);
+   108              }
+   109              if (type.flags & TypeFlags.Index) {
+=== checker.ts:1884
+  1870          isSymbolAccessible,
+  1871          isArrayType,
+  1872          isTupleType,
+  1873          isArrayLikeType,
+  1874          isEmptyAnonymousObjectType,
+  1875          isTypeInvalidDueToUnionDiscriminant,
+  1876          getExactOptionalProperties,
+  1877          getAllPossiblePropertiesOfTypes,
+  1878          getSuggestedSymbolForNonexistentProperty,
+  1879          getSuggestedSymbolForNonexistentJSXAttribute,
+  1880          getSuggestedSymbolForNonexistentSymbol: (location, name, meaning) => getSuggestedSymbolForNonexistentSymbol(location, escapeLeadingUnderscores(name), meaning),
+  1881          getSuggestedSymbolForNonexistentModule,
+  1882          getSuggestedSymbolForNonexistentClassMember,
+  1883          getBaseConstraintOfType,
+  1884          getDefaultFromTypeParameter: type => type && type.flags & TypeFlags.TypeParameter ? getDefaultFromTypeParameter(type as TypeParameter) : undefined,
+  1885          resolveName(name, location, meaning, excludeGlobals) {
+  1886              return resolveName(location, escapeLeadingUnderscores(name), meaning, /*nameNotFoundMessage*/ undefined, /*isUse*/ false, excludeGlobals);
+  1887          },
+  1888          getJsxNamespace: n => unescapeLeadingUnderscores(getJsxNamespace(n)),
+  1889          getJsxFragmentFactory: n => {
+=== checker.ts:2126
+  2112      var booleanType = getUnionType([regularFalseType, regularTrueType]);
+  2113      var esSymbolType = createIntrinsicType(TypeFlags.ESSymbol, "symbol");
+  2114      var voidType = createIntrinsicType(TypeFlags.Void, "void");
+  2115      var neverType = createIntrinsicType(TypeFlags.Never, "never");
+  2116      var silentNeverType = createIntrinsicType(TypeFlags.Never, "never", ObjectFlags.NonInferrableType, "silent");
+  2117      var implicitNeverType = createIntrinsicType(TypeFlags.Never, "never", /*objectFlags*/ undefined, "implicit");
+  2118      var unreachableNeverType = createIntrinsicType(TypeFlags.Never, "never", /*objectFlags*/ undefined, "unreachable");
+  2119      var nonPrimitiveType = createIntrinsicType(TypeFlags.NonPrimitive, "object");
+  2120      var stringOrNumberType = getUnionType([stringType, numberType]);
+  2121      var stringNumberSymbolType = getUnionType([stringType, numberType, esSymbolType]);
+  2122      var numberOrBigIntType = getUnionType([numberType, bigintType]);
+  2123      var templateConstraintType = getUnionType([stringType, numberType, booleanType, bigintType, nullType, undefinedType]) as UnionType;
+  2124      var numericStringType = getTemplateLiteralType(["", ""], [numberType]); // The `${number}` type
+  2125
+  2126      var restrictiveMapper: TypeMapper = makeFunctionTypeMapper(t => t.flags & TypeFlags.TypeParameter ? getRestrictiveTypeParameter(t as TypeParameter) : t, () => "(restrictive mapper)");
+  2127      var permissiveMapper: TypeMapper = makeFunctionTypeMapper(t => t.flags & TypeFlags.TypeParameter ? wildcardType : t, () => "(permissive mapper)");
+  2128      var uniqueLiteralType = createIntrinsicType(TypeFlags.Never, "never", /*objectFlags*/ undefined, "unique literal"); // `uniqueLiteralType` is a special `never` flagged by union reduction to behave as a literal
+  2129      var uniqueLiteralMapper: TypeMapper = makeFunctionTypeMapper(t => t.flags & TypeFlags.TypeParameter ? uniqueLiteralType : t, () => "(unique literal mapper)"); // replace all type parameters with the unique literal type (disregarding constraints)
+  2130      var outofbandVarianceMarkerHandler: ((onlyUnreliable: boolean) => boolean) | undefined;
+  2131      var reportUnreliableMapper = makeFunctionTypeMapper(t => {
+=== checker.ts:5571
+  5557          type.objectFlags = objectFlags;
+  5558          type.members = undefined;
+  5559          type.properties = undefined;
+  5560          type.callSignatures = undefined;
+  5561          type.constructSignatures = undefined;
+  5562          type.indexInfos = undefined;
+  5563          return type;
+  5564      }
+  5565
+  5566      function createTypeofType() {
+  5567          return getUnionType(map(stableTypeOrdering ? [...typeofNEFacts.keys()].sort() : arrayFrom(typeofNEFacts.keys()), getStringLiteralType));
+  5568      }
+  5569
+  5570      function createTypeParameter(symbol?: Symbol) {
+  5571          return createTypeWithSymbol(TypeFlags.TypeParameter, symbol!) as TypeParameter;
+  5572      }
+  5573
+  5574      // A reserved member name starts with two underscores, but the third character cannot be an underscore,
+  5575      // @, or #. A third underscore indicates an escaped form of an identifier that started
+  5576      // with at least two underscores. The @ character indicates that the name is denoted by a well known ES
+=== checker.ts:6945
+  6931              const objectFlags = getObjectFlags(type);
+  6932
+  6933              if (objectFlags & ObjectFlags.Reference) {
+  6934                  Debug.assert(!!(type.flags & TypeFlags.Object));
+  6935                  if (shouldExpandType(type, context)) {
+  6936                      context.depth += 1;
+  6937                      return createAnonymousTypeNode(type as TypeReference, /*forceClassExpansion*/ true, /*forceExpansion*/ true);
+  6938                  }
+  6939                  return (type as TypeReference).node ? visitAndTransformType(type as TypeReference, typeReferenceToTypeNode) : typeReferenceToTypeNode(type as TypeReference);
+  6940              }
+  6941              if (type.flags & TypeFlags.TypeParameter || objectFlags & ObjectFlags.ClassOrInterface) {
+  6942                  if (type.flags & TypeFlags.TypeParameter && contains(context.inferTypeParameters, type)) {
+  6943                      context.approximateLength += symbolName(type.symbol).length + 6;
+  6944                      let constraintNode: TypeNode | undefined;
+  6945                      const constraint = getConstraintOfTypeParameter(type as TypeParameter);
+  6946                      if (constraint) {
+  6947                          // If the infer type has a constraint that is not the same as the constraint
+  6948                          // we would have normally inferred based on context, we emit the constraint
+  6949                          // using `infer T extends ?`. We omit inferred constraints from type references
+  6950                          // as they may be elided.
+=== checker.ts:6951
+  6937                      return createAnonymousTypeNode(type as TypeReference, /*forceClassExpansion*/ true, /*forceExpansion*/ true);
+  6938                  }
+  6939                  return (type as TypeReference).node ? visitAndTransformType(type as TypeReference, typeReferenceToTypeNode) : typeReferenceToTypeNode(type as TypeReference);
+  6940              }
+  6941              if (type.flags & TypeFlags.TypeParameter || objectFlags & ObjectFlags.ClassOrInterface) {
+  6942                  if (type.flags & TypeFlags.TypeParameter && contains(context.inferTypeParameters, type)) {
+  6943                      context.approximateLength += symbolName(type.symbol).length + 6;
+  6944                      let constraintNode: TypeNode | undefined;
+  6945                      const constraint = getConstraintOfTypeParameter(type as TypeParameter);
+  6946                      if (constraint) {
+  6947                          // If the infer type has a constraint that is not the same as the constraint
+  6948                          // we would have normally inferred based on context, we emit the constraint
+  6949                          // using `infer T extends ?`. We omit inferred constraints from type references
+  6950                          // as they may be elided.
+  6951                          const inferredConstraint = getInferredTypeParameterConstraint(type as TypeParameter, /*omitTypeReferences*/ true);
+  6952                          if (!(inferredConstraint && isTypeIdenticalTo(constraint, inferredConstraint))) {
+  6953                              context.approximateLength += 9;
+  6954                              constraintNode = constraint && typeToTypeNodeHelper(constraint, context);
+  6955                          }
+  6956                      }
+=== checker.ts:6957
+  6943                      context.approximateLength += symbolName(type.symbol).length + 6;
+  6944                      let constraintNode: TypeNode | undefined;
+  6945                      const constraint = getConstraintOfTypeParameter(type as TypeParameter);
+  6946                      if (constraint) {
+  6947                          // If the infer type has a constraint that is not the same as the constraint
+  6948                          // we would have normally inferred based on context, we emit the constraint
+  6949                          // using `infer T extends ?`. We omit inferred constraints from type references
+  6950                          // as they may be elided.
+  6951                          const inferredConstraint = getInferredTypeParameterConstraint(type as TypeParameter, /*omitTypeReferences*/ true);
+  6952                          if (!(inferredConstraint && isTypeIdenticalTo(constraint, inferredConstraint))) {
+  6953                              context.approximateLength += 9;
+  6954                              constraintNode = constraint && typeToTypeNodeHelper(constraint, context);
+  6955                          }
+  6956                      }
+  6957                      return factory.createInferTypeNode(typeParameterToDeclarationWithConstraint(type as TypeParameter, context, constraintNode));
+  6958                  }
+  6959                  if (
+  6960                      context.flags & NodeBuilderFlags.GenerateNamesForShadowedTypeParams &&
+  6961                      type.flags & TypeFlags.TypeParameter
+  6962                  ) {
+=== checker.ts:7167
+  7153
+  7154                  // nameType and templateType nodes have to be in the new scope
+  7155                  const cleanup = enterNewScope(context, type.declaration, /*expandedParams*/ undefined, [getDeclaredTypeOfTypeParameter(getSymbolOfDeclaration(type.declaration.typeParameter))]);
+  7156                  const nameTypeNode = type.declaration.nameType ? typeToTypeNodeHelper(getNameTypeFromMappedType(type)!, context) : undefined;
+  7157                  const templateTypeNode = typeToTypeNodeHelper(removeMissingType(templateType, !!(getMappedTypeModifiers(type) & MappedTypeModifiers.IncludeOptional)), context);
+  7158                  cleanup();
+  7159
+  7160                  const mappedTypeNode = factory.createMappedTypeNode(readonlyToken, typeParameterNode, nameTypeNode, questionToken, templateTypeNode, /*members*/ undefined);
+  7161                  context.approximateLength += 10;
+  7162                  const result = setEmitFlags(mappedTypeNode, EmitFlags.SingleLine);
+  7163                  if (isHomomorphicMappedTypeWithNonHomomorphicInstantiation(type) && context.flags & NodeBuilderFlags.GenerateNamesForShadowedTypeParams) {
+  7164                      // homomorphic mapped type with a non-homomorphic naive inlining
+  7165                      // wrap it with a conditional like `SomeModifiersType extends infer U ? {..the mapped type...} : never` to ensure the resulting
+  7166                      // type stays homomorphic
+  7167                      const originalConstraint = instantiateType(getConstraintOfTypeParameter(getTypeFromTypeNode(context, (type.declaration.typeParameter.constraint! as TypeOperatorNode).type) as TypeParameter) || unknownType, type.mapper);
+  7168                      return factory.createConditionalTypeNode(
+  7169                          typeToTypeNodeHelper(getModifiersTypeFromMappedType(type), context),
+  7170                          factory.createInferTypeNode(factory.createTypeParameterDeclaration(/*modifiers*/ undefined, factory.cloneNode(newTypeVariable!.typeName) as Identifier, originalConstraint.flags & TypeFlags.Unknown ? undefined : typeToTypeNodeHelper(originalConstraint, context))),
+  7171                          result,
+  7172                          factory.createKeywordTypeNode(SyntaxKind.NeverKeyword),
+=== checker.ts:14962
+ 14948      function getModifiersTypeFromMappedType(type: MappedType) {
+ 14949          if (!type.modifiersType) {
+ 14950              if (isMappedTypeWithKeyofConstraintDeclaration(type)) {
+ 14951                  // If the constraint declaration is a 'keyof T' node, the modifiers type is T. We check
+ 14952                  // AST nodes here because, when T is a non-generic type, the logic below eagerly resolves
+ 14953                  // 'keyof T' to a literal union type and we can't recover T from that type.
+ 14954                  type.modifiersType = instantiateType(getTypeFromTypeNode((getConstraintDeclarationForMappedType(type) as TypeOperatorNode).type), type.mapper);
+ 14955              }
+ 14956              else {
+ 14957                  // Otherwise, get the declared constraint type, and if the constraint type is a type parameter,
+ 14958                  // get the constraint of that type parameter. If the resulting type is an indexed type 'keyof T',
+ 14959                  // the modifiers type is T. Otherwise, the modifiers type is unknown.
+ 14960                  const declaredType = getTypeFromMappedTypeNode(type.declaration) as MappedType;
+ 14961                  const constraint = getConstraintTypeFromMappedType(declaredType);
+ 14962                  const extendedConstraint = constraint && constraint.flags & TypeFlags.TypeParameter ? getConstraintOfTypeParameter(constraint as TypeParameter) : constraint;
+ 14963                  type.modifiersType = extendedConstraint && extendedConstraint.flags & TypeFlags.Index ? instantiateType((extendedConstraint as IndexType).type, type.mapper) : unknownType;
+ 14964              }
+ 14965          }
+ 14966          return type.modifiersType;
+ 14967      }
+=== checker.ts:15152
+ 15138          const props = createSymbolTable();
+ 15139          for (const memberType of types) {
+ 15140              for (const { escapedName } of getAugmentedPropertiesOfType(memberType)) {
+ 15141                  if (!props.has(escapedName)) {
+ 15142                      const prop = createUnionOrIntersectionProperty(unionType as UnionType, escapedName);
+ 15143                      // May be undefined if the property is private
+ 15144                      if (prop) props.set(escapedName, prop);
+ 15145                  }
+ 15146              }
+ 15147          }
+ 15148          return arrayFrom(props.values());
+ 15149      }
+ 15150
+ 15151      function getConstraintOfType(type: InstantiableType | UnionOrIntersectionType): Type | undefined {
+ 15152          return type.flags & TypeFlags.TypeParameter ? getConstraintOfTypeParameter(type as TypeParameter) :
+ 15153              type.flags & TypeFlags.IndexedAccess ? getConstraintOfIndexedAccess(type as IndexedAccessType) :
+ 15154              type.flags & TypeFlags.Conditional ? getConstraintOfConditionalType(type as ConditionalType) :
+ 15155              getBaseConstraintOfType(type);
+ 15156      }
+ 15157
+=== checker.ts:15169
+ 15155              getBaseConstraintOfType(type);
+ 15156      }
+ 15157
+ 15158      function getConstraintOfTypeParameter(typeParameter: TypeParameter): Type | undefined {
+ 15159          return hasNonCircularBaseConstraint(typeParameter) ? getConstraintFromTypeParameter(typeParameter) : undefined;
+ 15160      }
+ 15161
+ 15162      function isConstMappedType(type: MappedType, depth: number): boolean {
+ 15163          const typeVariable = getHomomorphicTypeVariable(type);
+ 15164          return !!typeVariable && isConstTypeVariable(typeVariable, depth);
+ 15165      }
+ 15166
+ 15167      function isConstTypeVariable(type: Type | undefined, depth = 0): boolean {
+ 15168          return depth < 5 && !!(type && (
+ 15169              type.flags & TypeFlags.TypeParameter && some((type as TypeParameter).symbol?.declarations, d => hasSyntacticModifier(d, ModifierFlags.Const)) ||
+ 15170              type.flags & TypeFlags.UnionOrIntersection && some((type as UnionOrIntersectionType).types, t => isConstTypeVariable(t, depth)) ||
+ 15171              type.flags & TypeFlags.IndexedAccess && isConstTypeVariable((type as IndexedAccessType).objectType, depth + 1) ||
+ 15172              type.flags & TypeFlags.Conditional && isConstTypeVariable(getConstraintOfConditionalType(type as ConditionalType), depth + 1) ||
+ 15173              type.flags & TypeFlags.Substitution && isConstTypeVariable((type as SubstitutionType).baseType, depth) ||
+ 15174              getObjectFlags(type) & ObjectFlags.Mapped && isConstMappedType(type as MappedType, depth) ||
+=== checker.ts:15352
+ 15338                  // We always explore at least 10 levels of nested constraints. Thereafter, we continue to explore
+ 15339                  // up to 50 levels of nested constraints provided there are no "deeply nested" types on the stack
+ 15340                  // (i.e. no types for which five instantiations have been recorded on the stack). If we reach 50
+ 15341                  // levels of nesting, we are presumably exploring a repeating pattern with a long cycle that hasn't
+ 15342                  // yet triggered the deeply nested limiter. We have no test cases that actually get to 50 levels of
+ 15343                  // nesting, so it is effectively just a safety stop.
+ 15344                  const identity = getRecursionIdentity(t);
+ 15345                  if (stack.length < 10 || stack.length < 50 && !contains(stack, identity)) {
+ 15346                      stack.push(identity);
+ 15347                      result = computeBaseConstraint(getSimplifiedType(t, /*writing*/ false));
+ 15348                      stack.pop();
+ 15349                  }
+ 15350                  if (!popTypeResolution()) {
+ 15351                      if (t.flags & TypeFlags.TypeParameter) {
+ 15352                          const errorNode = getConstraintDeclaration(t as TypeParameter);
+ 15353                          if (errorNode) {
+ 15354                              const diagnostic = error(errorNode, Diagnostics.Type_parameter_0_has_a_circular_constraint, typeToString(t));
+ 15355                              if (currentNode && !isNodeDescendantOf(errorNode, currentNode) && !isNodeDescendantOf(currentNode, errorNode)) {
+ 15356                                  addRelatedInfo(diagnostic, createDiagnosticForNode(currentNode, Diagnostics.Circularity_originates_in_type_at_this_location));
+ 15357                              }
+=== checker.ts:15374
+ 15360                      result = circularConstraintType;
+ 15361                  }
+ 15362                  t.immediateBaseConstraint ??= result || noConstraintType;
+ 15363              }
+ 15364              return t.immediateBaseConstraint;
+ 15365          }
+ 15366
+ 15367          function getBaseConstraint(t: Type): Type | undefined {
+ 15368              const c = getImmediateBaseConstraint(t);
+ 15369              return c !== noConstraintType && c !== circularConstraintType ? c : undefined;
+ 15370          }
+ 15371
+ 15372          function computeBaseConstraint(t: Type): Type | undefined {
+ 15373              if (t.flags & TypeFlags.TypeParameter) {
+ 15374                  const constraint = getConstraintFromTypeParameter(t as TypeParameter);
+ 15375                  return (t as TypeParameter).isThisType || !constraint ?
+ 15376                      constraint :
+ 15377                      getBaseConstraint(constraint);
+ 15378              }
+ 15379              if (t.flags & TypeFlags.UnionOrIntersection) {
+=== checker.ts:19950
+ 19936      function getInferTypeParameters(node: ConditionalTypeNode): TypeParameter[] | undefined {
+ 19937          let result: TypeParameter[] | undefined;
+ 19938          if (node.locals) {
+ 19939              node.locals.forEach(symbol => {
+ 19940                  if (symbol.flags & SymbolFlags.TypeParameter) {
+ 19941                      result = append(result, getDeclaredTypeOfSymbol(symbol));
+ 19942                  }
+ 19943              });
+ 19944          }
+ 19945          return result;
+ 19946      }
+ 19947
+ 19948      function isDistributionDependent(root: ConditionalRoot) {
+ 19949          return root.isDistributive && (
+ 19950              isTypeParameterPossiblyReferenced(root.checkType as TypeParameter, root.node.trueType) ||
+ 19951              isTypeParameterPossiblyReferenced(root.checkType as TypeParameter, root.node.falseType)
+ 19952          );
+ 19953      }
+ 19954
+ 19955      function getTypeFromConditionalTypeNode(node: ConditionalTypeNode): Type {
+=== checker.ts:20671
+ 20657      function mergeTypeMappers(mapper1: TypeMapper | undefined, mapper2: TypeMapper): TypeMapper {
+ 20658          return mapper1 ? makeCompositeTypeMapper(TypeMapKind.Merged, mapper1, mapper2) : mapper2;
+ 20659      }
+ 20660
+ 20661      function prependTypeMapping(source: Type, target: Type, mapper: TypeMapper | undefined) {
+ 20662          return !mapper ? makeUnaryTypeMapper(source, target) : makeCompositeTypeMapper(TypeMapKind.Merged, makeUnaryTypeMapper(source, target), mapper);
+ 20663      }
+ 20664
+ 20665      function appendTypeMapping(mapper: TypeMapper | undefined, source: Type, target: Type) {
+ 20666          return !mapper ? makeUnaryTypeMapper(source, target) : makeCompositeTypeMapper(TypeMapKind.Merged, mapper, makeUnaryTypeMapper(source, target));
+ 20667      }
+ 20668
+ 20669      function getRestrictiveTypeParameter(tp: TypeParameter) {
+ 20670          return !tp.constraint && !getConstraintDeclaration(tp) || tp.constraint === noConstraintType ? tp : tp.restrictiveInstantiation || (
+ 20671              tp.restrictiveInstantiation = createTypeParameter(tp.symbol), (tp.restrictiveInstantiation as TypeParameter).constraint = noConstraintType, tp.restrictiveInstantiation
+ 20672          );
+ 20673      }
+ 20674
+ 20675      function cloneTypeParameter(typeParameter: TypeParameter): TypeParameter {
+ 20676          const result = createTypeParameter(typeParameter.symbol);
+=== checker.ts:20870
+ 20856                      return !(node as FunctionLikeDeclaration).type && !!(node as FunctionLikeDeclaration).body ||
+ 20857                          some((node as FunctionLikeDeclaration).typeParameters, containsReference) ||
+ 20858                          some((node as FunctionLikeDeclaration).parameters, containsReference) ||
+ 20859                          !!(node as FunctionLikeDeclaration).type && containsReference((node as FunctionLikeDeclaration).type!);
+ 20860              }
+ 20861              return !!forEachChild(node, containsReference);
+ 20862          }
+ 20863      }
+ 20864
+ 20865      function getHomomorphicTypeVariable(type: MappedType) {
+ 20866          const constraintType = getConstraintTypeFromMappedType(type);
+ 20867          if (constraintType.flags & TypeFlags.Index) {
+ 20868              const typeVariable = getActualTypeVariable((constraintType as IndexType).type);
+ 20869              if (typeVariable.flags & TypeFlags.TypeParameter) {
+ 20870                  return typeVariable as TypeParameter;
+ 20871              }
+ 20872          }
+ 20873          return undefined;
+ 20874      }
+ 20875
+=== checker.ts:22934
+ 22920                  reportRelationError(headMessage, source, target);
+ 22921                  let canonical;
+ 22922                  if (errorInfo && errorInfo !== savedErrorState.errorInfo) {
+ 22923                      canonical = { code: errorInfo.code, messageText: errorInfo.messageText };
+ 22924                  }
+ 22925                  resetErrorInfo(savedErrorState);
+ 22926                  if (canonical && errorInfo) {
+ 22927                      errorInfo.canonicalHead = canonical;
+ 22928                  }
+ 22929
+ 22930                  lastSkippedInfo = [source, target];
+ 22931                  return;
+ 22932              }
+ 22933              reportRelationError(headMessage, source, target);
+ 22934              if (source.flags & TypeFlags.TypeParameter && source.symbol?.declarations?.[0] && !getConstraintOfType(source as TypeVariable)) {
+ 22935                  const syntheticParam = cloneTypeParameter(source as TypeParameter);
+ 22936                  syntheticParam.constraint = instantiateType(target, makeUnaryTypeMapper(source, syntheticParam));
+ 22937                  if (hasNonCircularBaseConstraint(syntheticParam)) {
+ 22938                      const targetConstraintString = typeToString(target, source.symbol.declarations[0]);
+ 22939                      associateRelatedInfo(createDiagnosticForNode(source.symbol.declarations[0], Diagnostics.This_type_parameter_might_need_an_extends_0_constraint, targetConstraintString));
+=== checker.ts:23901
+ 23887                      return Ternary.True;
+ 23888                  }
+ 23889              }
+ 23890              else if (target.flags & TypeFlags.StringMapping) {
+ 23891                  if (!(source.flags & TypeFlags.StringMapping)) {
+ 23892                      if (isMemberOfStringMapping(source, target)) {
+ 23893                          return Ternary.True;
+ 23894                      }
+ 23895                  }
+ 23896              }
+ 23897
+ 23898              if (sourceFlags & TypeFlags.TypeVariable) {
+ 23899                  // IndexedAccess comparisons are handled above in the `targetFlags & TypeFlage.IndexedAccess` branch
+ 23900                  if (!(sourceFlags & TypeFlags.IndexedAccess && targetFlags & TypeFlags.IndexedAccess)) {
+ 23901                      const constraint = getConstraintOfType(source as TypeVariable) || unknownType;
+ 23902                      // hi-speed no-this-instantiation check (less accurate, but avoids costly `this`-instantiation when the constraint will suffice), see #28231 for report on why this is needed
+ 23903                      if (result = isRelatedTo(constraint, target, RecursionFlags.Source, /*reportErrors*/ false, /*headMessage*/ undefined, intersectionState)) {
+ 23904                          return result;
+ 23905                      }
+ 23906                      // slower, fuller, this-instantiated check (necessary when comparing raw `this` types from base classes), see `subclassWithPolymorphicThisIsAssignable.ts` test for example
+=== checker.ts:25116
+ 25102      }
+ 25103
+ 25104      // Return true if the given type reference has a 'void' type argument for a covariant type parameter.
+ 25105      // See comment at call in recursiveTypeRelatedTo for when this case matters.
+ 25106      function hasCovariantVoidArgument(typeArguments: readonly Type[], variances: VarianceFlags[]): boolean {
+ 25107          for (let i = 0; i < variances.length; i++) {
+ 25108              if ((variances[i]! & VarianceFlags.VarianceMask) === VarianceFlags.Covariant && typeArguments[i]!.flags & TypeFlags.Void) {
+ 25109                  return true;
+ 25110              }
+ 25111          }
+ 25112          return false;
+ 25113      }
+ 25114
+ 25115      function isUnconstrainedTypeParameter(type: Type) {
+ 25116          return type.flags & TypeFlags.TypeParameter && !getConstraintOfTypeParameter(type as TypeParameter);
+ 25117      }
+ 25118
+ 25119      function isNonDeferredTypeReference(type: Type): type is TypeReference {
+ 25120          return !!(getObjectFlags(type) & ObjectFlags.Reference) && !(type as TypeReference).node;
+ 25121      }
+=== checker.ts:26518
+ 26504          reversed.mappedType = target;
+ 26505          reversed.constraintType = constraint;
+ 26506          return reversed;
+ 26507      }
+ 26508
+ 26509      function getTypeOfReverseMappedSymbol(symbol: ReverseMappedSymbol): Type {
+ 26510          const links = getSymbolLinks(symbol);
+ 26511          if (!links.type) {
+ 26512              links.type = inferReverseMappedType(symbol.links.propertyType, symbol.links.mappedType, symbol.links.constraintType) || unknownType;
+ 26513          }
+ 26514          return links.type;
+ 26515      }
+ 26516
+ 26517      function inferReverseMappedTypeWorker(sourceType: Type, target: MappedType, constraint: IndexType): Type {
+ 26518          const typeParameter = getIndexedAccessType(constraint.type, getTypeParameterFromMappedType(target)) as TypeParameter;
+ 26519          const templateType = getTemplateTypeFromMappedType(target);
+ 26520          const inference = createInferenceInfo(typeParameter);
+ 26521          inferTypes([inference], sourceType, templateType);
+ 26522          return getWidenedType(getTypeFromInference(inference) || unknownType);
+ 26523      }
+=== checker.ts:26918
+ 26904                          if (priority === inference.priority) {
+ 26905                              // We make contravariant inferences only if we are in a pure contravariant position,
+ 26906                              // i.e. only if we have not descended into a bivariant position.
+ 26907                              if (contravariant && !bivariant) {
+ 26908                                  if (!contains(inference.contraCandidates, candidate)) {
+ 26909                                      inference.contraCandidates = append(inference.contraCandidates, candidate);
+ 26910                                      clearCachedInferences(inferences);
+ 26911                                  }
+ 26912                              }
+ 26913                              else if (!contains(inference.candidates, candidate)) {
+ 26914                                  inference.candidates = append(inference.candidates, candidate);
+ 26915                                  clearCachedInferences(inferences);
+ 26916                              }
+ 26917                          }
+ 26918                          if (!(priority & InferencePriority.ReturnType) && target.flags & TypeFlags.TypeParameter && inference.topLevel && !isTypeParameterAtTopLevel(originalTarget, target as TypeParameter)) {
+ 26919                              inference.topLevel = false;
+ 26920                              clearCachedInferences(inferences);
+ 26921                          }
+ 26922                      }
+ 26923                      inferencePriority = Math.min(inferencePriority, priority);
+=== checker.ts:34598
+ 34584              enclosingClass = enclosingClass && isClassDerivedFromDeclaringClasses(enclosingClass, prop, writing);
+ 34585              if (flags & ModifierFlags.Static || !enclosingClass) {
+ 34586                  if (errorNode) {
+ 34587                      error(errorNode, Diagnostics.Property_0_is_protected_and_only_accessible_within_class_1_and_its_subclasses, symbolToString(prop), typeToString(getDeclaringClass(prop) || containingType));
+ 34588                  }
+ 34589                  return false;
+ 34590              }
+ 34591          }
+ 34592          // No further restrictions for static properties
+ 34593          if (flags & ModifierFlags.Static) {
+ 34594              return true;
+ 34595          }
+ 34596          if (containingType.flags & TypeFlags.TypeParameter) {
+ 34597              // get the original type -- represented as the type constraint of the 'this' type
+ 34598              containingType = (containingType as TypeParameter).isThisType ? getConstraintOfTypeParameter(containingType as TypeParameter)! : getBaseConstraintOfType(containingType as TypeParameter)!; // TODO: GH#18217 Use a different variable that's allowed to be undefined
+ 34599          }
+ 34600          if (!containingType || !hasBaseType(containingType, enclosingClass)) {
+ 34601              if (errorNode) {
+ 34602                  error(errorNode, Diagnostics.Property_0_is_protected_and_only_accessible_through_an_instance_of_class_1_This_is_an_instance_of_class_2, symbolToString(prop), typeToString(enclosingClass), typeToString(containingType));
+ 34603              }
+=== checker.ts:34617
+ 34603              }
+ 34604              return false;
+ 34605          }
+ 34606          return true;
+ 34607      }
+ 34608
+ 34609      function getEnclosingClassFromThisParameter(node: Node): InterfaceType | undefined {
+ 34610          // 'this' type for a node comes from, in priority order...
+ 34611          // 1. The type of a syntactic 'this' parameter in the enclosing function scope
+ 34612          const thisParameter = getThisParameterFromNodeContext(node);
+ 34613          let thisType = thisParameter?.type && getTypeFromTypeNode(thisParameter.type);
+ 34614          if (thisType) {
+ 34615              // 2. The constraint of a type parameter used for an explicit 'this' parameter
+ 34616              if (thisType.flags & TypeFlags.TypeParameter) {
+ 34617                  thisType = getConstraintOfTypeParameter(thisType as TypeParameter);
+ 34618              }
+ 34619          }
+ 34620          else {
+ 34621              // 3. The 'this' parameter of a contextual type
+ 34622              const thisContainer = getThisContainer(node, /*includeArrowFunctions*/ false, /*includeClassComputedPropertyName*/ false);
+--- types.ts interface Type { @ 6450
+  6450  export interface Type {
+  6451      flags: TypeFlags;                // Flags
+  6452      /** @internal */ id: TypeId;      // Unique ID
+  6453      /** @internal */ checker: TypeChecker;
+  6454      symbol: Symbol;                  // Symbol associated with type (if any)
+  6455      pattern?: DestructuringPattern;  // Destructuring pattern represented by type (if any)
+  6456      aliasSymbol?: Symbol | undefined;            // Alias associated with type
+  6457      aliasTypeArguments?: readonly Type[] | undefined; // Alias type arguments (if any)
+  6458      /** @internal */
+  6459      permissiveInstantiation?: Type;  // Instantiation with type parameters mapped to wildcard type
+  6460      /** @internal */
+  6461      restrictiveInstantiation?: Type; // Instantiation with type parameters mapped to unconstrained form
+  6462      /** @internal */
+  6463      immediateBaseConstraint?: Type;  // Immediate base constraint cache
+  6464      /** @internal */
+  6465      widened?: Type;
+  6466      /** @internal */
+  6467      resolvedStringIndexType?: IndexType;
+  6468      /** @internal */
+  6469      resolvedIndexType?: IndexType;
+  6470      /** @internal */
+  6471      resolvedBaseConstraint?: Type; // Cached widened form of the type
+  6472  }
+  6473
+  6474  /** @internal */
+  6475  // Intrinsic types (TypeFlags.Intrinsic)
+  6476  export interface IntrinsicType extends Type {
+  6477      intrinsicName: string; // Name of intrinsic type
+  6478      debugIntrinsicName: string | undefined;
+  6479      objectFlags: ObjectFlags;
+  6480  }
+--- types.ts interface InstantiableType  @ 6870
+  6870  export interface InstantiableType extends Type {
+  6871      /** @internal */
+  6872      resolvedBaseConstraint?: Type;
+  6873      /** @internal */
+  6874      resolvedIndexType?: IndexType;
+  6875      /** @internal */
+  6876      resolvedStringIndexType?: IndexType;
+  6877  }
+  6878
+  6879  // Type parameters (TypeFlags.TypeParameter)
+  6880  // dprint-ignore
+  6881  export interface TypeParameter extends InstantiableType {
+  6882      /**
+  6883       * Retrieve using getConstraintFromTypeParameter
+  6884       *
+  6885       * @internal
+  6886       */
+  6887      constraint?: Type;        // Constraint
+  6888      /** @internal */
+  6889      default?: Type;
+  6890      /** @internal */
+  6891      target?: TypeParameter;  // Instantiation target
+  6892      /** @internal */
+  6893      mapper?: TypeMapper;     // Instantiation mapper
+  6894      /** @internal */
+  6895      isThisType?: boolean;
+  6896      /** @internal */
+  6897      resolvedDefaultType?: Type;
+  6898  }
+  6899
+  6900  /** @internal */
+--- types.ts interface TypeParameter  @ 6881
+  6881  export interface TypeParameter extends InstantiableType {
+  6882      /**
+  6883       * Retrieve using getConstraintFromTypeParameter
+  6884       *
+  6885       * @internal
+  6886       */
+  6887      constraint?: Type;        // Constraint
+  6888      /** @internal */
+  6889      default?: Type;
+  6890      /** @internal */
+  6891      target?: TypeParameter;  // Instantiation target
+  6892      /** @internal */
+  6893      mapper?: TypeMapper;     // Instantiation mapper
+  6894      /** @internal */
+  6895      isThisType?: boolean;
+  6896      /** @internal */
+  6897      resolvedDefaultType?: Type;
+  6898  }
+  6899
+  6900  /** @internal */
+  6901  export const enum AccessFlags {
+  6902      None = 0,
+  6903      IncludeUndefined = 1 << 0,
+  6904      NoIndexSignatures = 1 << 1,
+  6905      Writing = 1 << 2,
+  6906      CacheSymbol = 1 << 3,
+  6907      AllowMissing = 1 << 4,
+  6908      ExpressionPosition = 1 << 5,
+  6909      ReportDeprecated = 1 << 6,
+  6910      SuppressNoImplicitAnyError = 1 << 7,
+  6911      Contextual = 1 << 8,
+--- types.ts interface TypeVariable @
+--- types.ts interface IndexedAccessType  @ 6917
+  6917  export interface IndexedAccessType extends InstantiableType {
+  6918      objectType: Type;
+  6919      indexType: Type;
+  6920      /** @internal */
+  6921      accessFlags: AccessFlags; // Only includes AccessFlags.Persistent
+  6922      constraint?: Type;
+  6923      simplifiedForReading?: Type;
+  6924      simplifiedForWriting?: Type;
+  6925  }
+  6926
+  6927  export type TypeVariable = TypeParameter | IndexedAccessType;
+  6928
+  6929  /** @internal */
+  6930  export const enum IndexFlags {
+  6931      None = 0,
+  6932      StringsOnly = 1 << 0,
+  6933      NoIndexSignatures = 1 << 1,
+  6934      NoReducibleCheck = 1 << 2,
+  6935  }
+  6936
+  6937  // keyof T types (TypeFlags.Index)
+  6938  export interface IndexType extends InstantiableType {
+  6939      type: InstantiableType | UnionOrIntersectionType;
+  6940      /** @internal */
+  6941      indexFlags: IndexFlags;
+  6942  }
+  6943
+  6944  export interface ConditionalRoot {
+  6945      node: ConditionalTypeNode;
+  6946      checkType: Type;
+  6947      extendsType: Type;
+PASS print
+job J-nr75xvq: its log written whole, 40189 bytes, sha256 bd276a75905698e03b786c3d63c71be1e5ca7596bcd138267f2dfaaa7473026d
