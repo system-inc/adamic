@@ -1,0 +1,9 @@
+main-control-c02 is green where c02 is red; user instructed a stop
+Traceback (most recent call last):
+  File "/tmp/family5-control/workflow.py", line 234, in <module>
+    c=json.loads(Path('/tmp/family5-sequential/c02/lane-alone/status.json').read_text());timeout_lane('c02',Path('/workspace/family5-c02-lane-alone'),c['exit_code']);require_box_pair('c02','main-control-c02')
+                                                                                                                                                                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/family5-control/workflow.py", line 75, in require_box_pair
+    if m['exit_code']==0:raise Stop(main_label+' is green where '+candidate_label+' is red; user instructed a stop')
+                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Stop: main-control-c02 is green where c02 is red; user instructed a stop

@@ -1,0 +1,68 @@
+    PID     ELAPSED   RSS COMMAND
+    439    08:18:57 43880 /opt/codex/bin/codex exec-server --remote https://codex-cloud-environments.chatgpt.com/api --environment-id ccarenv_b64_Y2NhcmVudl80ZGQ0MDAwYWUwMzA4MTkxOWI3M2FhNmUyNTUzMDI3MQ --linux-sandbox-pid-namespace=inherit
+    123    08:18:58 35312 /usr/local/bin/dockerd --host=unix:///var/run/docker.sock --pidfile=/run/codex-docker/dockerd.pid --exec-root=/run/codex-docker/exec-ikks64dz --storage-driver=vfs --group=agent
+    175    08:18:58 21308 containerd --config /run/codex-docker/exec-ikks64dz/containerd/containerd.toml
+  56053       00:00  2452 ps -eo pid,etime,rss,args --sort=-rss
+  55966       00:00  1856 /bin/bash -lc git switch --detach fbe5b72ba115a8f3060d4b5229fd578574f4505f source /workspace/adamic-tools/env.sh mkdir -p /tmp/family5-control ps -eo pid,etime,rss,args --sort=-rss > /tmp/family5-control/idle-before-main-lane.txt export ADAMIC_TYPESCRIPT_SOURCE=/workspace/mapset-upstream ADAMIC_BUILD_CACHE_DIR=/workspace/family5-build-cache python3 /tmp/family5-proof.py /tmp/family5-control/main/lane-alone bash stage3/lane/run.sh /workspace/family5-main-lane-alone
+      1    08:19:07   872 tail -f /dev/null
+      2    08:19:07   252 /usr/local/bin/caas-prefix-transfer-server --host 0.0.0.0 --port 1040
+    566    08:18:18     0 [git] <defunct>
+  10640    07:10:45     0 [git] <defunct>
+  10808    07:05:46     0 [git] <defunct>
+  21925    05:33:56     0 [git] <defunct>
+  24882    05:04:13     0 [git] <defunct>
+  25170    03:07:04     0 [git] <defunct>
+  26487    02:06:39     0 [go] <defunct>
+  26964    01:51:09     0 [git] <defunct>
+  27112    01:48:26     0 [git] <defunct>
+  27303    01:44:04     0 [git] <defunct>
+  27322    01:43:54     0 [git] <defunct>
+  27335    01:43:40     0 [git] <defunct>
+  27340    01:43:39     0 [git] <defunct>
+  27344    01:43:37     0 [git] <defunct>
+  28008    01:37:54     0 [git] <defunct>
+  28012    01:37:52     0 [git] <defunct>
+  34982    01:28:23     0 [git] <defunct>
+  37435    01:26:03     0 [esbuild] <defunct>
+  47517    01:12:20     0 [adaptedtree.tes] <defunct>
+  47809    01:11:11     0 [esbuild] <defunct>
+  47877    01:10:31     0 [esbuild] <defunct>
+  48033    01:09:41     0 [esbuild] <defunct>
+  48103    01:09:15     0 [esbuild] <defunct>
+  51197       42:45     0 [MainThread] <defunct>
+  51400       42:15     0 [git] <defunct>
+  51650       38:49     0 [git] <defunct>
+  51796       38:08     0 [git] <defunct>
+  52220       35:11     0 [esbuild] <defunct>
+  52300       34:18     0 [esbuild] <defunct>
+  52357       34:00     0 [esbuild] <defunct>
+  52674       22:14     0 [esbuild] <defunct>
+  52743       22:03     0 [esbuild] <defunct>
+  52796       21:58     0 [esbuild] <defunct>
+  52903       21:06     0 [esbuild] <defunct>
+  52985       20:59     0 [esbuild] <defunct>
+  53036       20:54     0 [esbuild] <defunct>
+  53142       20:21     0 [esbuild] <defunct>
+  53209       20:18     0 [esbuild] <defunct>
+  53260       20:16     0 [esbuild] <defunct>
+  53367       19:57     0 [esbuild] <defunct>
+  53434       19:54     0 [esbuild] <defunct>
+  53492       19:52     0 [esbuild] <defunct>
+  53682       19:22     0 [esbuild] <defunct>
+  53750       19:19     0 [esbuild] <defunct>
+  53801       19:06     0 [esbuild] <defunct>
+  53908       18:52     0 [esbuild] <defunct>
+  53971       18:49     0 [esbuild] <defunct>
+  54021       18:47     0 [esbuild] <defunct>
+  54137       18:20     0 [esbuild] <defunct>
+  54200       18:18     0 [esbuild] <defunct>
+  54251       18:15     0 [esbuild] <defunct>
+  54367       17:54     0 [esbuild] <defunct>
+  54434       17:50     0 [esbuild] <defunct>
+  54484       17:46     0 [esbuild] <defunct>
+  54799       14:21     0 [esbuild] <defunct>
+  54959       13:02     0 [esbuild] <defunct>
+  55129       12:07     0 [esbuild] <defunct>
+  55289       11:05     0 [esbuild] <defunct>
+  55596       07:11     0 [git] <defunct>
+  55739       04:22     0 [git] <defunct>

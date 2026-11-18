@@ -1,0 +1,126 @@
+commit 28a2e22015d0cf51667fcefa7acb246cab553817
+Author:     Kirk Ouimet <kirk@kirkouimet.com>
+AuthorDate: Wed Nov 18 17:20:32 2026 +0000
+Commit:     Kirk Ouimet <kirk@kirkouimet.com>
+CommitDate: Wed Nov 18 17:20:32 2026 +0000
+
+    stage3: declare the internal Node line-and-character callable
+
+diff --git a/stage3/adapt/99-correctness-line-and-character/README.md b/stage3/adapt/99-correctness-line-and-character/README.md
+new file mode 100644
+index 000000000..329a1229e
+--- /dev/null
++++ b/stage3/adapt/99-correctness-line-and-character/README.md
+@@ -0,0 +1,19 @@
++# Node line and character slot (C02, #pncjpqy)
++
++Type-only adaptation for TypeScript v6.0.3, commit 050880ce59e30b356b686bd3144efe24f875ebc8. Adds exactly this internal member to `Node` in `src/compiler/types.ts`:
++
++```ts
++/** @internal */ getPositionOfLineAndCharacter?: ((line: number, character: number, allowEdits?: true) => number) | undefined;
++```
++
++This follows adaptation 72's pattern: the compiled program's relation gates certify the views; this is not an absence assertion or an unchecked exemption. Scout 464502ff, C02/G02, identifies 14 first-error sites. Node is public, but this member is `@internal` and is stripped from the public typescript.d.ts.
++
++Compiler SourceFiles are constructed through parser.createSourceFile, the base node factory, and the compiler's objectAllocator Node constructor; they omit this method. Services' `SourceFileObject` implements the matching callable, including `allowEdits?: true`. Scanner's getPositionOfLineAndCharacter worker calls it only after testing its presence (scout scanner.ts:468; current source coordinates are recorded with evidence). Thus the shared Node declaration states the established internal shape without changing runtime construction or calls.
++
++Escapes include Node's AST subtypes, factory create/clone/update operations, SourceFileLike views, and service/API boundaries. No claim is made that these escapes satisfy adaptation 70's no-write audit: adaptation 72's compiled-program certificate applies. Structural sources that really carry an incompatible callable remain subject to the ordinary relation gates.
++
++Pins were searched in every adaptation's adapt.cjs, owners.json and targets.json. Adaptation 80 pins Node's heritage only; 71 pins individual members. Neither pins this complete interface. There is no existing whole Node or whole types.ts pin, so this is a new adaptation, matching the ownership distinction in 99-correctness-sourcefile-like-position.
++
++owners.json pins the complete Node interface before and after with SHA-256 and exact text. The adapter rejects drift, duplicate owners, half adaptations and mixed line endings, and preserves CRLF. Before writing it checks both commented and comment-free JavaScript are byte-identical. Replay writes nothing. mutant.cjs restores the exact original owner and is not part of normal apply.
++
++Proof commands, actual child exits, complete census streams, reached stops, public API comparison and lane receipts belong on typescript/family5-c02c03-evidence, separate from this landing directory.
+diff --git a/stage3/adapt/99-correctness-line-and-character/adapt.cjs b/stage3/adapt/99-correctness-line-and-character/adapt.cjs
+new file mode 100644
+index 000000000..2e1723fce
+--- /dev/null
++++ b/stage3/adapt/99-correctness-line-and-character/adapt.cjs
+@@ -0,0 +1,49 @@
++'use strict';
++const fs = require('node:fs');
++const path = require('node:path');
++const crypto = require('node:crypto');
++const assert = require('node:assert/strict');
++const ts = require('typescript');
++const owners = require('./owners.json');
++const digest = text => crypto.createHash('sha256').update(text).digest('hex');
++function parse(file, text) {
++    const source = ts.createSourceFile(file, text, ts.ScriptTarget.Latest, true);
++    assert.equal(source.parseDiagnostics.length, 0, `${file}: parse error`);
++    return source;
++}
++function locate(text) {
++    const pin = owners[0], source = parse(pin.file, text);
++    const found = source.statements.filter(node => ts.isInterfaceDeclaration(node) && node.name.text === pin.owner);
++    assert.equal(found.length, pin.beforeDeclarations, `${pin.owner}: owner count drift`);
++    const start = found[0].getStart(source), end = found[found.length - 1].end;
++    const spelling = text.slice(start, end), hash = digest(spelling);
++    assert([pin.ownerBeforeSha256, pin.ownerAfterSha256].includes(hash), `${pin.owner}: changed or half-adapted owner`);
++    const adapted = hash === pin.ownerAfterSha256;
++    assert.equal(spelling, adapted ? pin.after : pin.before, `${pin.owner}: exact text drift`);
++    return {start, end, adapted};
++}
++function transpile(text, removeComments = false) {
++    return ts.transpileModule(text, {compilerOptions: {target: ts.ScriptTarget.ES2024, module: ts.ModuleKind.ESNext, removeComments}}).outputText;
++}
++function rewrite(tree, restoring = false) {
++    assert.equal(ts.version, '6.0.3');
++    const pin = owners[0], name = path.join(tree, 'src/compiler', pin.file);
++    const raw = fs.readFileSync(name, 'utf8'), text = raw.replace(/\r\n/g, '\n');
++    const crlf = raw.includes('\r\n');
++    assert(!/\r(?!\n)/.test(raw) && (!crlf || !raw.replace(/\r\n/g, '').includes('\n')), 'mixed line endings');
++    const state = locate(text), wanted = !restoring;
++    if (state.adapted === wanted) return {files: 0, edits: 0, javascriptChanging: false};
++    let after = text.slice(0, state.start) + (wanted ? pin.after : pin.before) + text.slice(state.end);
++    assert.equal(locate(after).adapted, wanted, 'invalid planned result');
++    for (const removeComments of [false, true]) assert.equal(transpile(after, removeComments), transpile(text, removeComments), `${pin.file} JavaScript changed`);
++    if (crlf) after = after.replace(/\n/g, '\r\n');
++    assert.equal(fs.readFileSync(name, 'utf8'), raw, 'source changed while planning');
++    fs.writeFileSync(name, after);
++    return {files: 1, edits: 1, javascriptChanging: false};
++}
++const adapt = tree => rewrite(tree);
++module.exports = {adapt, rewrite, owners, parse, locate, transpile, digest};
++if (require.main === module) {
++    assert.equal(process.argv.length, 3, 'usage: node adapt.cjs TREE');
++    console.log(JSON.stringify(adapt(path.resolve(process.argv[2])), null, 2));
++}
+diff --git a/stage3/adapt/99-correctness-line-and-character/mutant.cjs b/stage3/adapt/99-correctness-line-and-character/mutant.cjs
+new file mode 100644
+index 000000000..05387596c
+--- /dev/null
++++ b/stage3/adapt/99-correctness-line-and-character/mutant.cjs
+@@ -0,0 +1,5 @@
++'use strict';
++const assert = require('node:assert/strict');
++const path = require('node:path');
++assert.equal(process.argv.length, 3, 'usage: node mutant.cjs TREE');
++console.log(JSON.stringify(require('./adapt.cjs').rewrite(path.resolve(process.argv[2]), true), null, 2));
+diff --git a/stage3/adapt/99-correctness-line-and-character/owners.json b/stage3/adapt/99-correctness-line-and-character/owners.json
+new file mode 100644
+index 000000000..54d9d8e53
+--- /dev/null
++++ b/stage3/adapt/99-correctness-line-and-character/owners.json
+@@ -0,0 +1,12 @@
++[
++  {
++    "file": "types.ts",
++    "owner": "Node",
++    "beforeDeclarations": 1,
++    "afterDeclarations": 1,
++    "before": "export interface Node extends TextRange {\n    readonly kind: SyntaxKind;\n    readonly flags: NodeFlags;\n    /** @internal */ modifierFlagsCache: ModifierFlags;\n    /** @internal */ readonly transformFlags: TransformFlags; // Flags for transforms\n    /** @internal */ id?: NodeId | undefined; // Unique id (used to look up NodeLinks)\n    readonly parent: Node; // Parent node (initialized by binding)\n    /** @internal */ original?: Node | undefined; // The original node if this is an updated node.\n    /** @internal */ emitNode?: EmitNode | undefined; // Associated EmitNode (initialized by transforms)\n    // NOTE: `symbol` and `localSymbol` have been moved to `Declaration`\n    //       `locals` and `nextContainer` have been moved to `LocalsContainer`\n    //       `flowNode` has been moved to `FlowContainer`\n    //       see: https://github.com/microsoft/TypeScript/pull/51682\n}",
++    "after": "export interface Node extends TextRange {\n    readonly kind: SyntaxKind;\n    readonly flags: NodeFlags;\n    /** @internal */ modifierFlagsCache: ModifierFlags;\n    /** @internal */ readonly transformFlags: TransformFlags; // Flags for transforms\n    /** @internal */ id?: NodeId | undefined; // Unique id (used to look up NodeLinks)\n    readonly parent: Node; // Parent node (initialized by binding)\n    /** @internal */ original?: Node | undefined; // The original node if this is an updated node.\n    /** @internal */ emitNode?: EmitNode | undefined; // Associated EmitNode (initialized by transforms)\n    // NOTE: `symbol` and `localSymbol` have been moved to `Declaration`\n    //       `locals` and `nextContainer` have been moved to `LocalsContainer`\n    //       `flowNode` has been moved to `FlowContainer`\n    //       see: https://github.com/microsoft/TypeScript/pull/51682\n    /** @internal */ getPositionOfLineAndCharacter?: ((line: number, character: number, allowEdits?: true) => number) | undefined;\n}",
++    "ownerBeforeSha256": "8003d407b602090f3d802b82f495d98c84deedaa980b8b68e698d67ef407d2dd",
++    "ownerAfterSha256": "d72f06dfe58bf0e035cbd1313ecc456086341c1554af8a3416538781c8e2ef08"
++  }
++]
+diff --git a/stage3/upstream/LEDGER.md b/stage3/upstream/LEDGER.md
+index ccf9ed552..efacd5758 100644
+--- a/stage3/upstream/LEDGER.md
++++ b/stage3/upstream/LEDGER.md
+@@ -902,3 +902,4 @@ mutants restore their sites, every JavaScript hunk stays inside dumpTypes, and
+ 
+ - **JavaScript-changing, value-identical, method values read through views (#rv75m9k road B):** 99-method-value-views reads 43 public (or written-after-construction) methods tsc reads as values through a readonly view of their receiver (28 views over 38 reads; the view is the receiver itself, every receiver proven never written between) or an exact-parameter arrow made once (System's two literal methods, an intersection-typed host); 6 reads keep their refusal, named (save-then-override on an intersection host, per-call helpers, toKey's relation). The receiver printer's engine, 21 owners pinned whole. A getter-backed member read through a view is pinned by internal/oracle TestGetterReadThroughView. Reached, not new (Correctness's grading): with program.ts's 480:54 stop cleared, the compilerHost literal in createCompilerHostWorker reaches 12 records in code road B doesn't touch: "a function value that captures the variable its own initializer declares" at program.ts:476:11, memoize's body in core.ts 1895 to 1901 ("assigning to an Identifier" at 1898:13, "reading value" at 1901:16, and their Boundaries), and "a presence test of a method whose presence the receiver's construction doesn't prove" at program.ts:493:41. Evidence: runtime-performance/method-values-landed, stage3/adapt/99-method-value-views/PROOF.md.
+ - **Type-only (#x2cjvy9):** The one-member enum names a sentinel in a slot that holds positions. `99-correctness-last-queried-position` annotates `lastQueriedPosition` as `number`.
++- **Type-only (#pncjpqy, C02):** `99-correctness-line-and-character` declares Node's internal optional `getPositionOfLineAndCharacter` callable, matching compiler omission and services implementation; adaptation 72's compiled-program certificate. Public stripped declarations and JavaScript unchanged.
