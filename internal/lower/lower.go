@@ -156,6 +156,11 @@ func lowerWithElementKey(key *viewElementKey, program *load.Program, typeChecker
 	if err != nil {
 		return nil, err
 	}
+	// Before any walk over the program's types, so a generic that instantiates itself deeper at each
+	// level is refused where it's declared and no walk meets it (expansive_generics.go).
+	if err := lowering.expansiveGenerics(modules); err != nil {
+		return nil, err
+	}
 	// Before any view is made or any element read lowers, so every read is keyed by the whole program.
 	if err := lowering.collectViewedElements(modules); err != nil {
 		return nil, err
