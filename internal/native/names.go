@@ -44,6 +44,9 @@ func (e *emitter) functionKey(index int, visiting map[int]bool) string {
 	}
 	visiting[index] = true
 	key += e.semanticKey(reflect.ValueOf(function.Body), visiting)
+	if function.Foreign != nil {
+		key += e.semanticKey(reflect.ValueOf(function.Foreign), visiting)
+	}
 	delete(visiting, index)
 	return key
 }

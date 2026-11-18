@@ -50,6 +50,7 @@ var shapeProducers = []struct{ name, path string }{
 	{"AsyncFrameObjects", ""}, {"WASIRecords", ""},
 	{"NodeFSDirectory", "../native_runtime/c/node_fs_directory.c"},
 	{"Directory", "../native_runtime/c/directory.c"}, {"Input", "../native_runtime/c/input.c"},
+	{"Foreign", "../native_runtime/c/foreign.c"},
 	{"Exceptions", "../native_runtime/c/exceptions.c"}, {"AsyncHost", "../native_runtime/c/async_host_impl.h"}, {"Timers", "../native_runtime/c/timers_impl.h"},
 	{"Record", "../native_runtime/c/record.c"}, {"RegExp", "../native_runtime/c/regexp.c"},
 	{"TSGo", "../native_runtime/c/tsgo.c"}, {"NodeProcess", "../native_runtime/c/node_process.c"}, {"ProcessStatus", "../native_runtime/c/process.c"},
@@ -269,6 +270,27 @@ func shapeProbeProduct(t *testing.T) string {
 		if err := Build(changed, filepath.Join(directory, "scaling-mutant"), Options{Count: true}); err != nil {
 			return err
 		}
+		foreign, err := os.ReadFile("../native_runtime/c/foreign.c")
+		if err != nil {
+			return err
+		}
+		foreignBefore := "object->shape = &foreign_shape;"
+		if strings.Count(string(foreign), foreignBefore) != 1 {
+			return fmt.Errorf("foreign shape producer mutation is stale")
+		}
+		for _, mutant := range []bool{false, true} {
+			producer, name := string(foreign), "foreign"
+			if mutant {
+				producer = strings.Replace(producer, foreignBefore, "object->shape = NULL;", 1)
+				name += "-mutant"
+			}
+			// Compile the actual producer under private names, alongside the runtime.
+			// This needs no Objective-C or SDK: the box holds a plain C pointer.
+			code := "#define adamic_foreign_new shape_probe_foreign_new\n#define adamic_foreign_pointer shape_probe_foreign_pointer\n#define adamic_foreign_dropped shape_probe_foreign_dropped\n" + producer + foreignShapeWitness
+			if err := Build(code, filepath.Join(directory, name), Options{Count: true}); err != nil {
+				return err
+			}
+		}
 		for _, sanitize := range []bool{false, true} {
 			name := "string"
 			if sanitize {
@@ -321,6 +343,43 @@ func checkShapeProducer(t *testing.T, name string) {
 func TestShapeKindsDirectory(t *testing.T) { t.Parallel(); checkShapeProducer(t, "Directory") }
 
 func TestShapeKindsInput(t *testing.T) { t.Parallel(); checkShapeProducer(t, "Input") }
+
+// The generic empty-layout control has no bitmap mutant. Check the actual
+// foreign producer too, and remove its shape assignment in the paired mutant.
+func TestShapeKindsForeign(t *testing.T) {
+	t.Parallel()
+	checkShapeProducer(t, "Foreign")
+	directory := shapeProbeProduct(t)
+	control := inlineArrayRun(t, filepath.Join(directory, "foreign"))
+	if control.exit != 0 || len(control.stdout) != 0 || !strings.HasPrefix(string(control.stderr), "adamic: counts:") {
+		t.Fatalf("foreign shape control: %+v", control)
+	}
+	mutant := inlineArrayRun(t, filepath.Join(directory, "foreign-mutant"))
+	if mutant.exit == 0 || !strings.Contains(string(mutant.stderr), "object->shape == &foreign_shape") {
+		t.Fatalf("foreign shape producer mutant survived: %+v", mutant)
+	}
+}
+
+const foreignShapeWitness = `
+#include <assert.h>
+static int foreign_payload, foreign_releases;
+static void foreign_release(void *pointer) {
+ assert(pointer == &foreign_payload);
+ foreign_releases++;
+}
+static const adamic_foreign_kind foreign_kind = {"shape probe", foreign_release};
+int main(int argc, char **argv) {
+ adamic_start(argc, argv);
+ adamic_object *object = adamic_foreign_new(&foreign_payload, &foreign_kind);
+ assert(object->shape == &foreign_shape);
+ assert(object->shape->count == 0);
+ assert(object->shape->names == NULL && object->shape->references == NULL && object->shape->kinds == NULL);
+ assert(adamic_foreign_pointer(object) == &foreign_payload);
+ adamic_release(object);
+ assert(foreign_releases == 1);
+ return 0;
+}
+`
 
 func TestShapeKindsExceptions(t *testing.T) { t.Parallel(); checkShapeProducer(t, "Exceptions") }
 

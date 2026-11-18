@@ -161,6 +161,8 @@ func buildWithNativeExports(path, output string, arguments []string, buildNative
 		} else {
 			err = native.BuildTSGo(source, output, archive, options)
 		}
+	} else if native.UsesApple(program) {
+		err = native.BuildApple(native.C(program), output, options)
 	} else {
 		var source string
 		if options.Target == "wasm32-wasi" {
