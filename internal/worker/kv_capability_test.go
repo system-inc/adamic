@@ -92,9 +92,9 @@ func TestWorkerKVMembersAndViewsStop(t *testing.T) {
 	}
 }
 
-// kvLoweredReadings are the KV fixtures that pass the environment check and lower, get_awaited the one
-// call among them (head 3b-1).
-var kvLoweredReadings = []string{"const_destructure", "parameter_destructure", "local_chain", "optional_read", "alias", "held_awaited", "held_iterated", "get_awaited"}
+// kvLoweredReadings are the KV fixtures that pass the environment check and lower, get_awaited and
+// get_helper's awaited gets the calls among them (head 3b-1).
+var kvLoweredReadings = []string{"const_destructure", "parameter_destructure", "local_chain", "optional_read", "alias", "held_awaited", "held_iterated", "get_awaited", "get_helper"}
 
 func TestWorkerKVBindingReadsLower(t *testing.T) {
 	t.Parallel()
@@ -446,7 +446,7 @@ func kvPromiseHostCalls(program *ir.Program) (awaited int, stray []string) {
 
 // A host call that settles to a Promise is only ever awaited directly, never held, passed or returned:
 // a pending one holds its arguments, a Worker binding among them, until it settles (ir.NodeHostCall).
-// Every KV fixture that lowers is walked, and get_awaited must hold its one get.
+// Every KV fixture that lowers is walked, and get_awaited and get_helper must each hold their one get.
 func TestWorkerKVPromiseHostCallsAreAwaited(t *testing.T) {
 	t.Parallel()
 	for _, name := range kvLoweredReadings {
@@ -457,7 +457,7 @@ func TestWorkerKVPromiseHostCallsAreAwaited(t *testing.T) {
 				t.Fatalf("KV promise host calls %s: not the operand of an await: %v", name, stray)
 			}
 			want := 0
-			if name == "get_awaited" {
+			if name == "get_awaited" || name == "get_helper" {
 				want = 1
 			}
 			if awaited != want {
@@ -467,18 +467,9 @@ func TestWorkerKVPromiseHostCallsAreAwaited(t *testing.T) {
 	}
 }
 
-// The built Worker runs under Node with a fake env, as Workers calls it: the awaited get's text or
-// null reaches the body, a value of any other type is the bridge's 500 with a log naming
-// workers:KvNamespace.get and never the value, and a missing or duck-failing binding is the named
-// 500 before the handler runs. GREETING's secret never reaches a body or a log.
-func TestWorkerKVGetAwaitedUnderNode(t *testing.T) {
-	t.Parallel()
-	out := filepath.Join(t.TempDir(), "worker")
-	if err := Build("testdata/kv_capability/get_awaited.a", out); err != nil {
-		t.Fatalf("KV get build: %v", err)
-	}
-	const secret = "s3cr3t-value"
-	const script = `import assert from 'node:assert/strict';
+// kvGetUnderNodeScript fetches a built get_awaited or get_helper Worker under Node with a fake env, in
+// the mode its first argument names, and asserts what Workers would answer.
+const kvGetUnderNodeScript = `import assert from 'node:assert/strict';
 const {default: worker} = await import(process.argv[1]);
 const [mode, secret] = process.argv.slice(2);
 const logs = [];
@@ -511,16 +502,77 @@ if (mode === 'text' || mode === 'null') {
 	assert.deepEqual(keys, []);
 }
 `
+
+// kvGetUnderNode runs one mode against a built Worker, failing named for the mode.
+func kvGetUnderNode(t *testing.T, out, mode, secret string) {
+	t.Helper()
+	report, err := exec.CommandContext(t.Context(), "node", "--input-type=module", "-e", kvGetUnderNodeScript, filepath.Join(out, "worker.mjs"), mode, secret).CombinedOutput()
+	if err != nil {
+		t.Fatalf("KV get under Node %s: %v\n%s", mode, err, report)
+	}
+	if strings.Contains(string(report), secret) {
+		t.Fatalf("KV get under Node %s: the environment secret reached the output:\n%s", mode, report)
+	}
+}
+
+// The built Worker runs under Node with a fake env, as Workers calls it: the awaited get's text or
+// null reaches the body, a value of any other type is the bridge's 500 with a log naming
+// workers:KvNamespace.get and never the value, and a missing or duck-failing binding is the named
+// 500 before the handler runs. GREETING's secret never reaches a body or a log.
+func TestWorkerKVGetAwaitedUnderNode(t *testing.T) {
+	t.Parallel()
+	out := filepath.Join(t.TempDir(), "worker")
+	if err := Build("testdata/kv_capability/get_awaited.a", out); err != nil {
+		t.Fatalf("KV get build: %v", err)
+	}
+	const secret = "s3cr3t-value"
 	for _, mode := range []string{"text", "null", "number", "missing", "empty_binding"} {
 		t.Run(mode, func(t *testing.T) {
 			t.Parallel()
-			report, err := exec.CommandContext(t.Context(), "node", "--input-type=module", "-e", script, filepath.Join(out, "worker.mjs"), mode, secret).CombinedOutput()
-			if err != nil {
-				t.Fatalf("KV get under Node %s: %v\n%s", mode, err, report)
-			}
-			if strings.Contains(string(report), secret) {
-				t.Fatalf("KV get under Node %s: the environment secret reached the output:\n%s", mode, report)
-			}
+			kvGetUnderNode(t, out, mode, secret)
 		})
+	}
+}
+
+// The check rides the call, so a get awaited inside a helper the handle awaits meets it too: its 42 is
+// the bridge's 500, and its text and null reach the body as the handle's own get's do.
+// Language's other path, a get awaited inside a try, isn't pinned here: the JavaScript backend's catch
+// takes every thrown value, and a Worker's runtime panics by throwing AdamicPanic, so that handle would
+// answer its catch's body where docs/rulings.md holds a panic is never caught. That divergence waits on
+// its own ruling; the catch is unchanged.
+func TestWorkerKVGetThroughHelperUnderNode(t *testing.T) {
+	t.Parallel()
+	out := filepath.Join(t.TempDir(), "worker")
+	if err := Build("testdata/kv_capability/get_helper.a", out); err != nil {
+		t.Fatalf("KV get helper build: %v", err)
+	}
+	for _, mode := range []string{"text", "null", "number"} {
+		t.Run(mode, func(t *testing.T) {
+			t.Parallel()
+			kvGetUnderNode(t, out, mode, "s3cr3t-value")
+		})
+	}
+}
+
+// get's row (docs/axioms/workers.md) stands on the prelude's one parameter: the binding's typed forms,
+// get(key, "json") among them, resolve to something other than text, and tsc refuses them at load.
+func TestWorkerKVGetTypeArgumentFailsToLoad(t *testing.T) {
+	t.Parallel()
+	_, err := load.Load([]string{"testdata/kv_capability/get_json.a"})
+	var checked *load.CheckError
+	if !errors.As(err, &checked) || !strings.Contains(err.Error(), "error TS2554: Expected 1 arguments, but got 2.") {
+		t.Fatalf("KV get type argument: want tsc's TS2554, got %v", err)
+	}
+}
+
+// A rejected get throws at its await, and a catch around it takes the rejection as a host error. The
+// catch narrowing reads what's caught as lib's Error (caughtInstanceOfError, exceptions.go), and no
+// stop meets a try around a workers: call or a read of what it caught (libraryFailure names no host
+// call). So this handle, which reads error.message, lowers today. If a rule comes to stop it, this
+// test reds with the stop's words, and the pin moves to them.
+func TestWorkerKVCaughtRejectionMessage(t *testing.T) {
+	t.Parallel()
+	if err := kvCapabilityCheck(t, "get_caught_message"); err != nil {
+		t.Fatalf("KV caught rejection: a stop now answers the caught message read, so pin its words: %v", err)
 	}
 }

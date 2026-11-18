@@ -16,8 +16,8 @@ admitted member road is `await <binding>.get(key)`.
 | kv-suspended: drop the frame rule | TestWorkerKVSuspendedResultsWait/held_promise | 267 |
 | kv-suspended-callee: judge only a named callee, not the call | TestWorkerKVSuspendedResultsWait/held_iife | 267 |
 | kv-get-await: admit any get, not only await's direct operand | TestWorkerKVGetRoadsStayStopped/get_stored | 301 |
-| kv-duck: drop the bridge's KV namespace check | TestWorkerKVGetAwaitedUnderNode/empty_binding | 519 |
-| kv-text-or-null: drop get's `.then(adamicWorkersTextOrNull)` | TestWorkerKVGetAwaitedUnderNode/number | 519 |
+| kv-duck: drop the bridge's KV namespace check | TestWorkerKVGetAwaitedUnderNode/empty_binding | 511 |
+| kv-text-or-null: drop get's `.then(adamicWorkersTextOrNull)` | TestWorkerKVGetAwaitedUnderNode/number | 511 |
 
 The let, callback and object-literal checks require ordinary Worker lowering to
 complete after the mutation: another lowering stop is not the named witness.

@@ -86,7 +86,9 @@ func workerEnvironmentFields(types *checker.Checker, proven *checker.Type) ([]en
 
 // environmentKVValidation checks each KV binding before the handler runs: an object, not null,
 // whose get, put and delete are functions, as Workers' own binding is. Anything else answers the
-// string fields' 500, its log naming the binding and never its value.
+// string fields' 500, its log naming the binding and never its value. It's a check, never a
+// contract: typeof get === 'function' proves no return type, and what holds get's value is
+// adamicWorkersTextOrNull on every admitted get (docs/axioms/workers.md).
 const environmentKVValidation = `        for (const name of environmentKVFields) {
             const value = env?.[name];
             if (value === null || typeof value !== 'object' || typeof value.get !== 'function' || typeof value.put !== 'function' || typeof value.delete !== 'function') {
