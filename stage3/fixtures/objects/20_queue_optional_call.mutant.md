@@ -1,0 +1,17 @@
+Mutant evidence for objects fixture 20's stage-0 record in status.json.
+
+What moved: #k8ed1f2's change A (applying #7n03qzg) reads a native copy's receiver without its undefined under
+`?.`, so `items?.slice()` (`items: readonly T[] | undefined`) is undefined, which holds nothing, or a new array
+native slice made, and the copy seen as `(T | undefined)[]` is fresh. The fixture's one stop, 4:41's
+adamic/invariant-mutable on `items?.slice() ?? []`, was that view, so the row moves from Refused to Compiles.
+Node's output is unchanged, and the admission delta at the head (Loom job J-r3b5zpt, Home) admitted this
+fixture as agreeing with Node: `admitted stage3/fixtures/objects/20_queue_optional_call.a (stage3): agrees
+with Node`.
+
+Measured: `go test -count=1 ./stage3/fixtures/...` at the head before this row moved (Loom job J-n5t96mg,
+azure-v118-1, adamic 4ecc2f3a over 47d03322) reported `gap changed: update status.json and check the native
+output; got {Outcome:Compiles What: Stdout:}; recorded {Outcome:Refused What:...20_queue_optional_call.a:4:41...}`.
+
+Mutant: freshValue's `if access.QuestionDotToken != nil {` (internal/lower/invariance.go) made `if false {`,
+with this row as it now is. The same command goes red on exactly this fixture, got the 4:41 refusal against the
+recorded Compiles.
