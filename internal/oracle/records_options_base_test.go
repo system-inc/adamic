@@ -154,7 +154,7 @@ func TestOptionsBaseUncheckedFieldStops(t *testing.T) {
 	}
 }
 
-// Language's must (08:38Z): an object-kind field, paths?: MapLike<string[]>, is never dropped, since the native
+// Language's must (08:38Z): a dictionary field, paths?: MapLike<string[]>, is never dropped, since the native
 // union-slot check read an honest MapLike written under it through the view as another member of the slot's union,
 // where Node and the JavaScript backend read it (paths_honest.ts, g5 p06). So each of Language's paths programs stops
 // not yet at the view, before its write: the honest one and the lies (g5 p01 to p05), which stopped at their reads.
@@ -186,6 +186,81 @@ func TestOptionsBaseObjectFieldStops(t *testing.T) {
 			var notYet *lower.NotYet
 			if !errors.As(err, &notYet) || notYet.What != want || notYet.Where != path+":19:12" {
 				t.Fatalf("want NotYet %q at :19:12, got %v", want, err)
+			}
+		})
+	}
+}
+
+// #6c4swvt's string[] head: an array member, lib?: string[], is dropped by the view, since its named read out of the
+// slot is #y852c3c's element-checked view origin. An honest string[] written under lib through OptionsBase, and a
+// (string | number)[] holding only strings, read back and agree with Node on both backends, with nothing leaked.
+// Mutant: take the array out of droppedContractChecked, and each stops not yet at the view, :20:12.
+func TestOptionsBaseArrayFieldDropped(t *testing.T) {
+	t.Parallel()
+	for name, printed := range map[string]string{
+		"lib_honest.ts": "DOM\nES2022\n2:es2022\n",
+		"lib_wide.ts":   "DOM\nES2022\n",
+	} {
+		t.Run(name, func(t *testing.T) {
+			t.Parallel()
+			path := optionsBasePath(t, name)
+			node := onNode(t, path)
+			if node.exitCode != 0 || string(node.stdout) != printed {
+				t.Fatalf("Node: %s", optionsBaseShown(node))
+			}
+			program, err := lowered(t, path)
+			if err != nil {
+				t.Fatalf("an array member dropped by OptionsBase in .ts must lower: %v", err)
+			}
+			native, sanitized := natively(t, program)
+			for backend, got := range map[string]run{"native": native, "javascript": onJavaScriptBackend(t, program)} {
+				if difference := disagreement(node, got); difference != "" {
+					t.Fatalf("%s disagrees with Node (%s): Node %s; %s %s", backend, difference, optionsBaseShown(node), backend, optionsBaseShown(got))
+				}
+			}
+			if report := leaks(t, program, sanitized); report != "" {
+				t.Fatal(report)
+			}
+		})
+	}
+}
+
+// The lies the dropped array member admits through the view, each caught on both backends alike: a 1 in a
+// (string | number)[] stops at the element read that hands it out, a string under lib at the named read's narrow, and
+// a push into the written array through the writer's own alias at compile time, since the read can't check what
+// arrives after it (V3's demanded reach). Mutant: register no view origin for the slot read (recordReadSlotView), and
+// lib_number.ts hands out the 1 as Node does, on both backends.
+func TestOptionsBaseArrayFieldLiesStop(t *testing.T) {
+	t.Parallel()
+	for name, stop := range map[string]struct{ node, stdout, stderr, notYet, at string }{
+		"lib_number.ts": {node: "before\nnumber\n", stdout: "before\n", stderr: "adamic: panic: element read failed: lib[1] is not a string; expected string, found number\n"},
+		"lib_string.ts": {node: "before\nd\no\nm\n", stdout: "before\n", stderr: "adamic: panic: field read failed: options.lib is not a string[]; expected string[], found another member of the index signature's union, which a computed-key or index-signature write may have stored\n"},
+		"lib_pushed.ts": {node: "number\n", notYet: "a checked view's array read through push (not checked yet)", at: ":22:1"},
+	} {
+		t.Run(name, func(t *testing.T) {
+			t.Parallel()
+			path := optionsBasePath(t, name)
+			node := onNode(t, path)
+			if node.exitCode != 0 || string(node.stdout) != stop.node {
+				t.Fatalf("Node: %s", optionsBaseShown(node))
+			}
+			program, err := lowered(t, path)
+			if stop.notYet != "" {
+				var notYet *lower.NotYet
+				if !errors.As(err, &notYet) || notYet.What != stop.notYet || notYet.Where != path+stop.at {
+					t.Fatalf("want NotYet %q at %s, got %v", stop.notYet, stop.at, err)
+				}
+				return
+			}
+			if err != nil {
+				t.Fatalf("must lower: %v", err)
+			}
+			native, _ := natively(t, program)
+			want := run{stdout: []byte(stop.stdout), stderr: []byte(stop.stderr), exitCode: 70}
+			for backend, got := range map[string]run{"native": native, "javascript": onJavaScriptBackend(t, program)} {
+				if difference := disagreement(want, got); difference != "" {
+					t.Fatalf("%s: %s: want %s; got %s", backend, difference, optionsBaseShown(want), optionsBaseShown(got))
+				}
 			}
 		})
 	}
