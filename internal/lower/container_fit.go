@@ -1,7 +1,9 @@
 package lower
 
 import (
+	"fmt"
 	"math"
+	"os"
 	"slices"
 	"strconv"
 
@@ -75,7 +77,90 @@ func (l *lowering) containerWhereOtherGoes(value *checker.Type, target *checker.
 		l.containerFits = map[containerFitPair]string{}
 	}
 	walk := &containerFitWalk{busy: map[containerFitPair]int{}, done: map[containerFitPair]containerFitAnswer{}, frame: containerFitAnswer{leans: containerFitNoLean}}
-	return l.containerPairGoes(value, target, libraryArgument, 0, walk)
+	stop := l.containerPairGoes(value, target, libraryArgument, 0, walk)
+	if walk.probe && os.Getenv("ADAMIC_PROBE_DEPTHGATE") != "" {
+		// Probe only, never for landing: one line per walk that met the gate with a pair that can reach a
+		// map, with what it answered and how many pairs it judged past the depth.
+		fmt.Fprintf(os.Stderr, "DEPTHGATE pastDepth=%d stop=%q\n", walk.pastDepth, stop)
+	}
+	return stop
+}
+
+// containerFitIdentityDepth is the checker's maxDepth for an expanding type, isDeeplyNestedType's 3 at
+// relater.go:3286 and :3292.
+const containerFitIdentityDepth = 3
+
+// containerFitDeeplyNested is the checker's isDeeplyNestedType (relater.go:775), copied, since the shim
+// doesn't export it: a type is deeply nested when the stack holds containerFitIdentityDepth or more types of
+// its recursion identity, each at least as new as the one before it (a higher type id is a newer
+// instantiation). An intersection is deeply nested if any member is, and matches an identity if any member
+// does.
+func containerFitDeeplyNested(proven *checker.Type, stack []*checker.Type) bool {
+	if len(stack) < containerFitIdentityDepth {
+		return false
+	}
+	target := containerRecursionIdentityTarget(proven)
+	if target.Flags()&checker.TypeFlagsIntersection != 0 {
+		return slices.ContainsFunc(target.Types(), func(member *checker.Type) bool { return containerFitDeeplyNested(member, stack) })
+	}
+	identity := containerRecursionIdentityFromTarget(target)
+	count, last := 0, checker.TypeId(0)
+	for _, held := range stack {
+		if !containerMatchesRecursionIdentity(held, identity) {
+			continue
+		}
+		if held.Id() >= last {
+			count++
+			if count >= containerFitIdentityDepth {
+				return true
+			}
+		}
+		last = held.Id()
+	}
+	return false
+}
+
+// containerMatchesRecursionIdentity is the checker's hasMatchingRecursionIdentity (relater.go).
+func containerMatchesRecursionIdentity(proven *checker.Type, identity any) bool {
+	target := containerRecursionIdentityTarget(proven)
+	if target.Flags()&checker.TypeFlagsIntersection != 0 {
+		return slices.ContainsFunc(target.Types(), func(member *checker.Type) bool { return containerMatchesRecursionIdentity(member, identity) })
+	}
+	return containerRecursionIdentityFromTarget(target) == identity
+}
+
+// containerRecursionIdentityTarget is the checker's getRecursionIdentityTarget (relater.go): an indexed
+// access is read through its object type. The checker also unwraps an instantiated homomorphic mapped type
+// to the type it maps, which the shim can't reach (getModifiersTypeFromMappedType), so a mapped type keeps
+// its own symbol below: coarser, so the bound trips sooner and fails closed.
+func containerRecursionIdentityTarget(proven *checker.Type) *checker.Type {
+	for proven.Flags()&checker.TypeFlagsIndexedAccess != 0 {
+		proven = proven.AsIndexedAccessType().ObjectType()
+	}
+	return proven
+}
+
+// containerRecursionIdentityFromTarget is the checker's getRecursionIdentityFromTarget (relater.go): the
+// identity every instantiation that can repeat shares. A type reference the checker defers is tracked there
+// by its own AST node, which the shim doesn't reach, so here it's tracked by its generic target, which every
+// such node shares: coarser, so the bound trips sooner and fails closed. A conditional type is tracked there
+// by its root's node and here by itself, which is finer, so an expanding conditional ends at the cap.
+func containerRecursionIdentityFromTarget(proven *checker.Type) any {
+	if proven.Flags()&checker.TypeFlagsObject != 0 && proven.ObjectFlags()&(checker.ObjectFlagsObjectLiteral|checker.ObjectFlagsArrayLiteral) == 0 {
+		if proven.ObjectFlags()&checker.ObjectFlagsReference != 0 && proven.Target() != nil && proven.Target() != proven && !checker.IsNonDeferredTypeReference(proven) {
+			return proven.Target()
+		}
+		if symbol := proven.Symbol(); symbol != nil && !(proven.ObjectFlags()&checker.ObjectFlagsAnonymous != 0 && symbol.Flags&ast.SymbolFlagsClass != 0) && proven.ObjectFlags()&checker.ObjectFlagsFromTypeNode == 0 {
+			return symbol
+		}
+		if checker.IsTupleType(proven) && proven.ObjectFlags()&checker.ObjectFlagsFromTypeNode == 0 {
+			return proven.Target()
+		}
+	}
+	if proven.Flags()&checker.TypeFlagsTypeParameter != 0 && proven.Symbol() != nil {
+		return proven.Symbol()
+	}
+	return proven
 }
 
 // containerFitPair is a value's type and the type it goes where, the walk's unit and the memo's key.
@@ -103,6 +188,12 @@ type containerFitWalk struct {
 	frame     containerFitAnswer
 	held      []containerFitPair
 	pastDepth int
+	// values and targets are the two sides of every pair in progress, in stack order, which the recursion
+	// identity bound reads (containerFitDeeplyNested).
+	values  []*checker.Type
+	targets []*checker.Type
+	// probe is set when the gate met a pair that can reach a map (#rt5evf5 head 2's probe, never for landing).
+	probe bool
 }
 
 // absorb gathers what a reached pair's answer rests on into the running pair's.
@@ -230,6 +321,7 @@ func (l *lowering) containerPairGoes(value *checker.Type, target *checker.Type, 
 	answer := walk.frame
 	answer.stop = stop
 	delete(walk.busy, pair)
+	walk.values, walk.targets = walk.values[:len(walk.values)-1], walk.targets[:len(walk.targets)-1]
 	if libraryArgument {
 		// Only the top's converse reads libraryArgument (shapeFitProtocols), so this answer isn't a
 		// fact about the pair alone.
@@ -313,6 +405,9 @@ func (l *lowering) containerFitInstanceBound(proven *checker.Type) bool {
 
 // containerPairJudged is containerPairGoes' judgment of a pair it hasn't met.
 func (l *lowering) containerPairJudged(value *checker.Type, target *checker.Type, libraryArgument bool, depth int, walk *containerFitWalk) string {
+	// The bound reads the pairs in progress around this one, so it's judged before this pair joins them.
+	deeplyNested := containerFitDeeplyNested(value, walk.values) || containerFitDeeplyNested(target, walk.targets)
+	walk.values, walk.targets = append(walk.values, value), append(walk.targets, target)
 	if l.containerFitInstanceBound(value) || l.containerFitInstanceBound(target) {
 		// A type parameter is what the instance being lowered made it (representation reads
 		// l.substitution), so an answer that judged one holds only in this instance.
@@ -380,17 +475,24 @@ func (l *lowering) containerPairJudged(value *checker.Type, target *checker.Type
 	}
 	if depth > containerFitDepth {
 		if l.containerFitGeneric(value) || l.containerFitGeneric(target) {
-			// A generic pair this deep stops if either side can hold a map at all, or, for the converse,
-			// if an array either side can hold could go where a shape the other side can hold is
-			// (shape_fit.go). Its answer holds only this deep.
-			walk.frame.tainted = true
-			if l.mentionsHeld(value, []ir.Type{ir.Map}, 0, map[*checker.Type]bool{}) || l.mentionsHeld(target, []ir.Type{ir.Map}, 0, map[*checker.Type]bool{}) {
+			if !l.mentionsHeld(value, []ir.Type{ir.Map}, 0, map[*checker.Type]bool{}) && !l.mentionsHeld(target, []ir.Type{ir.Map}, 0, map[*checker.Type]bool{}) {
+				// A generic pair this deep that can't reach a map stops only if an array either side can
+				// hold could go where a shape the other side can hold is (shape_fit.go). Its answer holds
+				// only this deep.
+				walk.frame.tainted = true
+				if stop := l.shapeFitReached(value, target); stop != "" {
+					return stop
+				}
+				return l.shapeFitReached(target, value)
+			}
+			// A pair that can reach a map keeps walking, as a non-generic pair does, until either side
+			// repeats a recursion identity the way an endlessly expanding instantiation must (#rt5evf5 head
+			// 2). There it fails closed as the fixed depth did, and its answer holds only on this stack.
+			walk.probe = true
+			if deeplyNested {
+				walk.frame.tainted = true
 				return containerFitDepthStop
 			}
-			if stop := l.shapeFitReached(value, target); stop != "" {
-				return stop
-			}
-			return l.shapeFitReached(target, value)
 		}
 		// Two non-generic sides keep walking, as a node narrowed from tsc's Node does through its parent
 		// chain to Node's own fields (#zrnkpdz), until the cap.
