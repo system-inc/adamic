@@ -2,7 +2,7 @@
 
 - **0** first stops moved across **79 of 79** paired source roots.
 - **0** of the **79** recorded head root stops contained either search phrase.
-- **Entry latent comparison unavailable.** Both entry processes were interrupted before either emitted findings.
+- **Entry latent comparison unavailable.** The sequential base rerun completed. The worker interrupted the sequential head rerun before it emitted findings.
 
 ## Method and interruption
 
@@ -111,3 +111,12 @@ Both entry passes ran at `src/tsc/tsc.ts` with `LATENT_FULL=0`, `LATENT_ASSERT_N
 Base recorded 2,280 timed units and head recorded 2,137. The entry tool holds its findings until after program-wide processing and relation checks. The timing records cannot establish which findings were new, gone, changed, or newly reached.
 
 See [evidence](evidence/) for the surviving raw streams, input pins, tool hashes, and reproduction commands.
+
+## Sequential entry rerun
+
+The rerun reused the checksum-verified binaries and adapted tree. Each revision ran alone from `src/tsc/tsc.ts` in CommonJSBundle first-error mode with `LATENT_TAIL=1` and `LATENT_ASSERT_NO_OUTPUT=1`. Base ran first, and its complete stream was pushed in `8b90ab7aa` before head started.
+
+- Base finished in 49 minutes 56 seconds. Its stream contains 81 source records and a final relation report, with 3,713 emitted findings across the source records and trailer. [Base evidence](evidence/base/solo-entry/)
+- Head was interrupted after 2,753 timed units. Its last completed timing record was `src/compiler/factory/utilities.ts:1701:1`. The stream contains the checker-clean header. The process emitted no finding records or relation report before it was interrupted. [Partial head evidence](evidence/revised-head/solo-entry-interrupted/)
+
+The head latent search for `polymorphic recursion` and `instantiates itself deeper` remains unresolved. Pairing by kind, phase, reason, and position-stripped message requires the head findings, so the new, gone, changed, and newly reached counts remain unresolved as well.
