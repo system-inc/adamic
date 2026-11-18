@@ -8,6 +8,7 @@ import (
 
 	"github.com/system-inc/adamic/internal/ir"
 	"github.com/system-inc/adamic/internal/native"
+	"github.com/system-inc/adamic/internal/native_runtime"
 )
 
 // Each mutant still compiles with -Werror, runs without a sanitizer finding, and exits successfully.
@@ -101,7 +102,7 @@ static bool library_mutant_next(adamic_map_iterator *iterator, adamic_value *key
 				t.Fatal("the mutant changed no code")
 			}
 			binary := filepath.Join(t.TempDir(), "mutant")
-			if err := native.Build(code, binary, native.Options{Sanitize: true}); err != nil {
+			if err := native.Build(code, binary, native_runtime.Options{Sanitize: true}); err != nil {
 				t.Fatal(err)
 			}
 			result := executeWith(t, []string{"ASAN_OPTIONS=detect_leaks=0", "UBSAN_OPTIONS=halt_on_error=1"}, binary)

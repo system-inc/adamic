@@ -4,6 +4,7 @@ import (
 	"bytes"
 	"github.com/system-inc/adamic/internal/ir"
 	"github.com/system-inc/adamic/internal/native"
+	"github.com/system-inc/adamic/internal/native_runtime"
 	"os"
 	"path/filepath"
 	"reflect"
@@ -145,7 +146,7 @@ func TestNodeFSDirectoryMutants(t *testing.T) {
 			}
 			shared := sharedDirectory(t)
 			binary := filepath.Join(shared, "mutant")
-			if err := native.Build(source, binary, native.Options{Sanitize: true}); err != nil {
+			if err := native.Build(source, binary, native_runtime.Options{Sanitize: true}); err != nil {
 				t.Fatal(err)
 			}
 			how := inputRun{directory: filepath.Dir(path)}

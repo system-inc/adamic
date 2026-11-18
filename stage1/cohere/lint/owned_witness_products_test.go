@@ -7,6 +7,7 @@ import (
 	"github.com/system-inc/adamic/internal/load"
 	"github.com/system-inc/adamic/internal/lower"
 	"github.com/system-inc/adamic/internal/native"
+	"github.com/system-inc/adamic/internal/native_runtime"
 	"io/fs"
 	"os"
 	"path/filepath"
@@ -114,7 +115,7 @@ func buildOwnedWitnessNative(t *testing.T, directory string) string {
 	t.Helper()
 	files, tools := ownedWitnessInputs(t)
 	lowered := ownedWitnessLowered(t, directory)
-	flags := append(native.Flags(native.Options{Sanitize: true, Split: true, Jobs: 4}), "Split=true", "Jobs=4", "ADAMIC_NATIVE_SPLIT="+os.Getenv("ADAMIC_NATIVE_SPLIT"))
+	flags := append(native_runtime.Flags(native_runtime.Options{Sanitize: true, Split: true, Jobs: 4}), "Split=true", "Jobs=4", "ADAMIC_NATIVE_SPLIT="+os.Getenv("ADAMIC_NATIVE_SPLIT"))
 	tools = append(tools, buildcache.CompilerReport("clang"))
 	binary := buildcache.Product(t, buildcache.Inputs{Name: "lint-owned-witnesses-sanitized", Files: files, Flags: flags, Toolchain: tools}, func(dir string) error {
 		source, err := os.ReadFile(filepath.Join(lowered, "program.c"))
@@ -122,7 +123,7 @@ func buildOwnedWitnessNative(t *testing.T, directory string) string {
 			return err
 		}
 		started := time.Now()
-		err = native.Build(string(source), filepath.Join(dir, "native"), native.Options{Sanitize: true, Split: true, Jobs: 4})
+		err = native.Build(string(source), filepath.Join(dir, "native"), native_runtime.Options{Sanitize: true, Split: true, Jobs: 4})
 		t.Logf("cold build sanitized=%s", time.Since(started))
 		return err
 	})

@@ -17,6 +17,7 @@ import (
 	"github.com/system-inc/adamic/internal/load"
 	"github.com/system-inc/adamic/internal/lower"
 	"github.com/system-inc/adamic/internal/native"
+	"github.com/system-inc/adamic/internal/native_runtime"
 )
 
 func programParseBuild(t *testing.T, enabled bool) string {
@@ -35,7 +36,7 @@ func programParseBuildKind(t *testing.T, enabled, sanitized bool) string {
 			return fmt.Errorf("main return missing")
 		}
 		code = "#include <sys/resource.h>\n#include <stdio.h>\n" + code[:at] + "\tstruct rusage graph_usage; getrusage(RUSAGE_SELF, &graph_usage); printf(\"graph_peak_rss_kib %ld\\n\", graph_usage.ru_maxrss);\n" + code[at:]
-		options := native.Options{ProgramRegion: enabled, Sanitize: sanitized, Count: !sanitized}
+		options := native_runtime.Options{ProgramRegion: enabled, Sanitize: sanitized, Count: !sanitized}
 		if enabled {
 			return programRegionBuild(t, code, filepath.Join(directory, "parse"), options)
 		}

@@ -11,7 +11,7 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/system-inc/adamic/internal/native"
+	"github.com/system-inc/adamic/internal/native_runtime"
 )
 
 // A panic in the compiler exits 4 with "adamic: compiler bug:", its value and its stack, never Go's 2, which is
@@ -67,7 +67,7 @@ func TestCompilerBugDriver(t *testing.T) {
 	if os.Getenv("ADAMIC_COMPILER_BUG_DRIVER") != "1" {
 		return
 	}
-	native.SupplyRuntimes(func(native.RuntimeRequest) (string, error) { panic(supplierPanic) })
+	native_runtime.SupplyRuntimes(func(native_runtime.RuntimeRequest) (string, error) { panic(supplierPanic) })
 	for index, argument := range os.Args {
 		if argument == "--" {
 			os.Exit(run(os.Args[index+1:]))

@@ -10,6 +10,7 @@ import (
 
 	"github.com/system-inc/adamic/internal/lower"
 	"github.com/system-inc/adamic/internal/native"
+	"github.com/system-inc/adamic/internal/native_runtime"
 )
 
 func TestGraphParallelMapRefusesRegions(t *testing.T) {
@@ -44,7 +45,7 @@ func TestGraphTaskLocalThreadSanitizer(t *testing.T) {
 		t.Fatal("task did not use graph regions")
 	}
 	binary := filepath.Join(t.TempDir(), "task-local")
-	if err := native.Build(native.C(program), binary, native.Options{ThreadSanitize: true}); err != nil {
+	if err := native.Build(native.C(program), binary, native_runtime.Options{ThreadSanitize: true}); err != nil {
 		t.Fatal(err)
 	}
 	result := executeParallel(t, "4", false, binary)
@@ -71,7 +72,7 @@ func graphOracleMutant(t *testing.T, fixture string, change func(string) string)
 		t.Fatal("mutant changed no emitted C")
 	}
 	binary := filepath.Join(t.TempDir(), "mutant")
-	if err := native.Build(changed, binary, native.Options{Sanitize: true}); err != nil {
+	if err := native.Build(changed, binary, native_runtime.Options{Sanitize: true}); err != nil {
 		t.Fatalf("mutant must compile: %v", err)
 	}
 	result := executeWith(t, []string{"ASAN_OPTIONS=detect_leaks=1", "LSAN_OPTIONS=use_stacks=0:use_registers=0", "UBSAN_OPTIONS=halt_on_error=1"}, binary)

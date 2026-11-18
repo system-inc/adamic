@@ -13,7 +13,7 @@ import (
 	"testing"
 )
 
-// nativeBuilds are internal/native's functions that run clang under the process's jobserver (native.UseJobserver).
+// nativeBuilds are internal/native's functions that run clang under the process's jobserver (native_runtime.UseJobserver).
 var nativeBuilds = []string{"Build", "BuildFlags", "BuildSharedProbe", "BuildTSGo", "BuildSplitTSGo", "RuntimeLibrary", "RuntimeLibraryForSource", "RuntimeRequestFor"}
 
 const (

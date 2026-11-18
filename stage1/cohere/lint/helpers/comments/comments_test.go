@@ -11,6 +11,7 @@ import (
 	"github.com/system-inc/adamic/internal/load"
 	"github.com/system-inc/adamic/internal/lower"
 	"github.com/system-inc/adamic/internal/native"
+	"github.com/system-inc/adamic/internal/native_runtime"
 	"github.com/system-inc/adamic/internal/testguard"
 	"github.com/system-inc/adamic/internal/toolchain"
 	"github.com/system-inc/adamic/stage1/cohere/lint/helpers/comments/oracles"
@@ -103,7 +104,7 @@ func helpersNative(t *testing.T, m nativeMutation) string {
 			if err != nil {
 				return err
 			}
-			return native.Build(native.C(ir), filepath.Join(directory, "helpers"), native.Options{Sanitize: true})
+			return native.Build(native.C(ir), filepath.Join(directory, "helpers"), native_runtime.Options{Sanitize: true})
 		})
 		product.binary = filepath.Join(directory, "helpers")
 	})

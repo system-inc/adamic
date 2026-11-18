@@ -20,6 +20,7 @@ import (
 	"github.com/system-inc/adamic/internal/load"
 	"github.com/system-inc/adamic/internal/lower"
 	"github.com/system-inc/adamic/internal/native"
+	"github.com/system-inc/adamic/internal/native_runtime"
 )
 
 type recoverySetup struct {
@@ -83,7 +84,7 @@ func recoveryPort(t *testing.T, s *recoverySetup, path string) (string, string) 
 	inputs = buildcache.Inputs{
 		Name:      "estree-sanitized-native",
 		Files:     []string{"internal/native_runtime/c", "internal/native/native.go", "internal/native/library.go", "internal/native/clang_in.go", "stage1/cohere/estree/recovery_cache_test.go"},
-		Flags:     append(native.Flags(native.Options{Sanitize: true}), fmt.Sprintf("source-sha256=%x", sha256.Sum256(code)), "relative-source-names", "canonical-debug-prefix=/adamic-estree"),
+		Flags:     append(native_runtime.Flags(native_runtime.Options{Sanitize: true}), fmt.Sprintf("source-sha256=%x", sha256.Sum256(code)), "relative-source-names", "canonical-debug-prefix=/adamic-estree"),
 		Toolchain: []string{runtime.GOOS, runtime.GOARCH, buildcache.CompilerReport("clang"), buildcache.Tool("getconf", "GNU_LIBC_VERSION")},
 	}
 	binary := recoveryProduct(t, s, inputs, func(dir string) error { return recoveryStableNative(root(t), dir, string(code)) })

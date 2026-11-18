@@ -13,6 +13,7 @@ import (
 	"github.com/system-inc/adamic/internal/ir"
 	"github.com/system-inc/adamic/internal/javascript"
 	"github.com/system-inc/adamic/internal/native"
+	"github.com/system-inc/adamic/internal/native_runtime"
 )
 
 // A branded supertype, tsc's TypeElement shape: a wide kind and a brand field typed undefined, over subtypes
@@ -920,7 +921,7 @@ func brandedStopsProgram(t *testing.T, program *ir.Program, stderr string) {
 	t.Helper()
 	directory := t.TempDir()
 	binary := filepath.Join(directory, "native")
-	if err := native.Build(native.C(program), binary, native.Options{Sanitize: true}); err != nil {
+	if err := native.Build(native.C(program), binary, native_runtime.Options{Sanitize: true}); err != nil {
 		t.Fatal(err)
 	}
 	runner, err := filepath.Abs("../../oracle/node.mjs")
@@ -953,7 +954,7 @@ func brandedStopsProgram(t *testing.T, program *ir.Program, stderr string) {
 func brandedNative(t *testing.T, program *ir.Program) (int, string, string) {
 	t.Helper()
 	binary := filepath.Join(t.TempDir(), "native")
-	if err := native.Build(native.C(program), binary, native.Options{Sanitize: true}); err != nil {
+	if err := native.Build(native.C(program), binary, native_runtime.Options{Sanitize: true}); err != nil {
 		t.Fatal(err)
 	}
 	command := exec.Command(binary)

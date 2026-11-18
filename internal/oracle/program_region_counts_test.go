@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"github.com/system-inc/adamic/internal/leakcheck"
 	"github.com/system-inc/adamic/internal/native"
+	"github.com/system-inc/adamic/internal/native_runtime"
 	"path/filepath"
 	"testing"
 )
@@ -27,7 +28,7 @@ func programRegionCountCase(relative string) {
 		code := native.C(programRegionLowered(t, absolute, true))
 		return countPortable(t, code, absolute), func() string {
 			binary := filepath.Join(t.TempDir(), "program-counted")
-			if err := programRegionBuild(t, code, binary, native.Options{ProgramRegion: true, Count: true}); err != nil {
+			if err := programRegionBuild(t, code, binary, native_runtime.Options{ProgramRegion: true, Count: true}); err != nil {
 				t.Fatal(err)
 			}
 			name, args := pinnedStack(binary)

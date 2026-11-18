@@ -2,6 +2,7 @@ package oracle
 
 import (
 	"github.com/system-inc/adamic/internal/native"
+	"github.com/system-inc/adamic/internal/native_runtime"
 	"os"
 	"path/filepath"
 	"testing"
@@ -40,7 +41,7 @@ func runRegExpInputSearchNodeUnit(t *testing.T, target string) {
 		got = onWASI(t, native.C(program))
 	} else {
 		binary := filepath.Join(t.TempDir(), "program")
-		if err := native.Build(native.C(program), binary, native.Options{Sanitize: target == "sanitized"}); err != nil {
+		if err := native.Build(native.C(program), binary, native_runtime.Options{Sanitize: target == "sanitized"}); err != nil {
 			t.Fatal(err)
 		}
 		got = execute(t, binary)

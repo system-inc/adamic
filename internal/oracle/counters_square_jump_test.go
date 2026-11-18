@@ -7,6 +7,7 @@ import (
 	"testing"
 
 	"github.com/system-inc/adamic/internal/native"
+	"github.com/system-inc/adamic/internal/native_runtime"
 )
 
 func init() {
@@ -59,7 +60,7 @@ func TestCounterSquareJumpDoubleProductMutant(t *testing.T) {
 	}
 	code = strings.Replace(code, product, local+" * "+local, 1)
 	binary := filepath.Join(t.TempDir(), "integer-square-mutant")
-	if err := native.Build(code, binary, native.Options{Sanitize: true}); err != nil {
+	if err := native.Build(code, binary, native_runtime.Options{Sanitize: true}); err != nil {
 		t.Fatal(err)
 	}
 	result := execute(t, binary)

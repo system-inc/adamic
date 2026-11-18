@@ -10,6 +10,7 @@ import (
 
 	"github.com/system-inc/adamic/internal/leakcheck"
 	"github.com/system-inc/adamic/internal/native"
+	"github.com/system-inc/adamic/internal/native_runtime"
 )
 
 // A construction cast's object is longer than adamic_object_size says, and its write order points into
@@ -62,7 +63,7 @@ func TestProgramRegionConstructedMemberStorage(t *testing.T) {
 	t.Parallel()
 	oracle, checked, _ := programConstructed(t)
 	binary := filepath.Join(t.TempDir(), "construct")
-	if err := programRegionBuild(t, checked, binary, native.Options{ProgramRegion: true, Sanitize: true}); err != nil {
+	if err := programRegionBuild(t, checked, binary, native_runtime.Options{ProgramRegion: true, Sanitize: true}); err != nil {
 		t.Fatal(err)
 	}
 	result := executeWith(t, []string{"ASAN_OPTIONS=detect_leaks=1"}, binary)
@@ -72,7 +73,7 @@ func TestProgramRegionConstructedMemberStorage(t *testing.T) {
 	report, err := leakcheck.Check(leakcheck.Program{
 		C: checked, Sanitized: binary, Counted: filepath.Join(t.TempDir(), "counted"),
 		BuildCounted: func(code, output string) error {
-			return programRegionBuild(t, code, output, native.Options{ProgramRegion: true, Count: true})
+			return programRegionBuild(t, code, output, native_runtime.Options{ProgramRegion: true, Count: true})
 		},
 		Execute: func(environment []string, name string, args ...string) leakcheck.Run {
 			return leakRun(executeWith(t, environment, name, args...))
@@ -83,7 +84,7 @@ func TestProgramRegionConstructedMemberStorage(t *testing.T) {
 	}
 	// LeakSanitizer is the Linux leak proof; counters independently account for every member.
 	countedBinary := filepath.Join(t.TempDir(), "construct-counts")
-	if err := programRegionBuild(t, checked, countedBinary, native.Options{ProgramRegion: true, Count: true}); err != nil {
+	if err := programRegionBuild(t, checked, countedBinary, native_runtime.Options{ProgramRegion: true, Count: true}); err != nil {
 		t.Fatal(err)
 	}
 	command, args := pinnedStack(countedBinary)
@@ -135,8 +136,8 @@ func TestProgramRegionConstructedOrderMutant(t *testing.T) {
 	if !changed {
 		t.Fatal("runtime mutation changed nothing")
 	}
-	options := native.Options{ProgramRegion: true, Sanitize: true}
-	archive, err := native.RuntimeLibraryForSource(directory, checked, options)
+	options := native_runtime.Options{ProgramRegion: true, Sanitize: true}
+	archive, err := native_runtime.RuntimeLibraryForSource(directory, checked, options)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -162,7 +163,7 @@ func TestProgramRegionConstructedSizeMutant(t *testing.T) {
 	}
 	mutant := strings.Replace(checked, before, "adamic_object_size("+object+"->shape->count)", 1)
 	binary := filepath.Join(t.TempDir(), "size-mutant")
-	if err := programRegionBuild(t, mutant, binary, native.Options{ProgramRegion: true, Sanitize: true}); err != nil {
+	if err := programRegionBuild(t, mutant, binary, native_runtime.Options{ProgramRegion: true, Sanitize: true}); err != nil {
 		t.Fatal(err)
 	}
 	result := executeWith(t, []string{"ASAN_OPTIONS=detect_leaks=0:halt_on_error=1", "UBSAN_OPTIONS=halt_on_error=1"}, binary)

@@ -17,6 +17,7 @@ import (
 	"github.com/system-inc/adamic/internal/load"
 	"github.com/system-inc/adamic/internal/lower"
 	"github.com/system-inc/adamic/internal/native"
+	"github.com/system-inc/adamic/internal/native_runtime"
 	"github.com/system-inc/adamic/internal/toolchain"
 )
 
@@ -64,7 +65,7 @@ func driverBinary(t *testing.T, root string) string {
 	inputs.Flags = append(inputs.Flags, source)
 	inputs.Toolchain = append(inputs.Toolchain, buildcache.CompilerReport("clang"))
 	directory := buildcache.Product(t, inputs, func(directory string) error {
-		return native.Build(source, filepath.Join(directory, "driver"), native.Options{Sanitize: true, Split: true})
+		return native.Build(source, filepath.Join(directory, "driver"), native_runtime.Options{Sanitize: true, Split: true})
 	})
 	return filepath.Join(directory, "driver")
 }

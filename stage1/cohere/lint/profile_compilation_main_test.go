@@ -7,6 +7,7 @@ import (
 	"encoding/gob"
 	"encoding/json"
 	"fmt"
+	"github.com/system-inc/adamic/internal/native_runtime"
 	"github.com/system-inc/adamic/stage1/cohere/executable"
 	"github.com/system-inc/adamic/stage1/cohere/lint/oracles"
 	"hash/fnv"
@@ -174,12 +175,12 @@ func compilationInputs(t *testing.T) buildcache.Inputs {
 // profiledCompilationDirectory is where the profiled build's debug info says it was compiled, whatever the box.
 const profiledCompilationDirectory = "/adamic-lint-profile"
 
-// profiledClang is the profiled build's clang, compiler run through native.ClangIn in this package's directory: its flags
+// profiledClang is the profiled build's clang, compiler run through native_runtime.ClangIn in this package's directory: its flags
 // map the product's directory and name the compilation directory, and ClangIn's maps take out where clang is installed,
 // which the debug info names among its include directories (#8wgk65j). A bare toolchain.Command here left that path in
 // the bytes, so two boxes whose tools sit apart built two profiled binaries for one key (#dc483fc).
 func profiledClang(compiler string, flags ...string) *exec.Cmd {
-	return native.ClangIn("", compiler, flags...)
+	return native_runtime.ClangIn("", compiler, flags...)
 }
 
 func compilationProducts(t *testing.T) string {
@@ -203,8 +204,8 @@ func compilationProductKinds(t *testing.T, kinds []string) string {
 		kind := kind
 		variant := inputs
 		variant.Name = "lint-profile-" + kind
-		options := native.Options{Count: kind == "counted", Jobs: 1}
-		variant.Flags = append(append([]string{}, inputs.Flags...), native.Flags(options)...)
+		options := native_runtime.Options{Count: kind == "counted", Jobs: 1}
+		variant.Flags = append(append([]string{}, inputs.Flags...), native_runtime.Flags(options)...)
 		// native.Build splits by ADAMIC_NATIVE_SPLIT when its options don't, so the switch is an input.
 		variant.Flags = append(variant.Flags, "ADAMIC_NATIVE_SPLIT="+os.Getenv("ADAMIC_NATIVE_SPLIT"))
 		if kind == "profiled" {
@@ -248,7 +249,7 @@ func compilationProductKinds(t *testing.T, kinds []string) string {
 				// bytes until the compilation directory was named too (#dhm3wav: Workshop's profiled 8 bytes off Adam's).
 				// The runtime's units are compiled with the program's features (its leading #defines) as flags, or
 				// their closures' layout isn't the program's.
-				flags := append(native.SourceFlags(string(source), options), "-g", "-ffile-prefix-map="+dir+"="+profiledCompilationDirectory, "-ffile-compilation-dir="+profiledCompilationDirectory, "-o", filepath.Join(dir, kind))
+				flags := append(native_runtime.SourceFlags(string(source), options), "-g", "-ffile-prefix-map="+dir+"="+profiledCompilationDirectory, "-ffile-compilation-dir="+profiledCompilationDirectory, "-o", filepath.Join(dir, kind))
 				flags = append(flags, units...)
 				flags = append(flags, "-lm")
 				command := profiledClang("clang", flags...)

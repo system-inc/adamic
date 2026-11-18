@@ -15,6 +15,7 @@ import (
 	"github.com/system-inc/adamic/internal/load"
 	"github.com/system-inc/adamic/internal/lower"
 	"github.com/system-inc/adamic/internal/native"
+	"github.com/system-inc/adamic/internal/native_runtime"
 )
 
 // installed-layout's answer is measured, not remembered: tsc 6.0.3's require("source-map-support"),
@@ -244,7 +245,7 @@ func installedLayoutNative(t *testing.T, fixture string, how installedLayoutEntr
 	}
 	library := layInstalledTypeScript(t, t.TempDir())
 	tsc := filepath.Join(library, "_tsc")
-	if err := native.Build(code, tsc, native.Options{}); err != nil {
+	if err := native.Build(code, tsc, native_runtime.Options{}); err != nil {
 		t.Fatal(err)
 	}
 	invoked := installedLayoutInvoked(t, tsc, how)

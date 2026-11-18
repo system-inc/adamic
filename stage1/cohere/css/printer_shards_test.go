@@ -22,6 +22,7 @@ import (
 	"github.com/system-inc/adamic/internal/load"
 	"github.com/system-inc/adamic/internal/lower"
 	"github.com/system-inc/adamic/internal/native"
+	"github.com/system-inc/adamic/internal/native_runtime"
 	"github.com/system-inc/adamic/stage1/cohere/css/oracles"
 )
 
@@ -42,7 +43,7 @@ func cssPrinterProduct(t *testing.T, variant int) cssExecutable {
 		inputs := buildcache.Inputs{
 			Name:      "css-printer-executable-" + strconv.Itoa(variant),
 			Files:     []string{"stage1/cohere/css", "stage1/cohere/selector", "stage1/cohere/values", "stage1/cohere/mediaquery", "stage1/cohere/cssstrings", "stage1/cohere/cssnumbers", "internal", "bridge/tsgo", "cohere/policy", "cohere/internal", "cohere/rule_runner", "cohere/go.mod", "cohere/go.sum", "cohere/TypeScript/tsc", "cohere/TypeScript-shim", "go.mod", "go.work"},
-			Flags:     append(native.Flags(native.Options{Sanitize: sanitize}), "variant="+strconv.Itoa(variant), "ADAMIC_NATIVE_SPLIT="+os.Getenv("ADAMIC_NATIVE_SPLIT")),
+			Flags:     append(native_runtime.Flags(native_runtime.Options{Sanitize: sanitize}), "variant="+strconv.Itoa(variant), "ADAMIC_NATIVE_SPLIT="+os.Getenv("ADAMIC_NATIVE_SPLIT")),
 			Toolchain: []string{runtime.Version(), buildcache.CompilerReport("clang"), runtime.GOOS, runtime.GOARCH},
 		}
 		directory := buildcache.Product(t, inputs, func(dir string) error {
@@ -70,7 +71,7 @@ func cssPrinterProduct(t *testing.T, variant int) cssExecutable {
 			if err := os.WriteFile(filepath.Join(dir, "main.mjs"), []byte(javascript.JavaScript(program)), 0644); err != nil {
 				return err
 			}
-			return native.Build(code, filepath.Join(dir, "native"), native.Options{Sanitize: sanitize})
+			return native.Build(code, filepath.Join(dir, "native"), native_runtime.Options{Sanitize: sanitize})
 		})
 		cssExecutables[index] = cssExecutable{filepath.Join(directory, "native"), filepath.Join(directory, "main.mjs"), filepath.Join(directory, "sources/css/print_main.ts")}
 	})

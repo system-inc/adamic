@@ -6,7 +6,7 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/system-inc/adamic/internal/native"
+	"github.com/system-inc/adamic/internal/native_runtime"
 )
 
 // The profiled -O2 -g binaries must answer the full corpus, not just the profile sample.
@@ -41,7 +41,7 @@ func TestCachedWidthMutantIsCaught(t *testing.T) {
 	}
 	mutation := cachedWidthMutant
 	entry := filepath.Join(portDirectory(t, &mutation), "main.ts")
-	binary := filepath.Join(mutantPortProduct(t, cachedWidthMutant, native.Options{}), "port")
+	binary := filepath.Join(mutantPortProduct(t, cachedWidthMutant, native_runtime.Options{}), "port")
 	for _, side := range []struct {
 		name   string
 		result run

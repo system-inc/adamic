@@ -11,6 +11,7 @@ import (
 
 	"github.com/system-inc/adamic/internal/javascript"
 	"github.com/system-inc/adamic/internal/native"
+	"github.com/system-inc/adamic/internal/native_runtime"
 )
 
 // A checked predicate whose target holds null tests null as a member, as it tests undefined, against
@@ -134,7 +135,7 @@ console.log(String(count(values, (value): value is string | null => true)));
 	prefix := "adamic: panic: predicate an arrow, declared at "
 	part := ", true branch: source string | null | undefined, target string | null"
 	binary := filepath.Join(directory, "native")
-	if err := native.Build(native.C(program), binary, native.Options{Sanitize: true}); err != nil {
+	if err := native.Build(native.C(program), binary, native_runtime.Options{Sanitize: true}); err != nil {
 		t.Fatal(err)
 	}
 	command := exec.Command(binary)

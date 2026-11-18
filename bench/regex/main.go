@@ -17,6 +17,7 @@ import (
 
 	_ "github.com/system-inc/adamic/internal/ccjobserver"
 	"github.com/system-inc/adamic/internal/native"
+	"github.com/system-inc/adamic/internal/native_runtime"
 	regex "github.com/system-inc/adamic/internal/regexp"
 )
 
@@ -208,7 +209,7 @@ func run(directory string, buildOnly bool) error {
 		return err
 	}
 	if os.Getenv("REGEXP_BENCH_NO_BUILD") != "1" {
-		if err = native.Build(source.String(), filepath.Join(directory, "native"), native.Options{}); err != nil {
+		if err = native.Build(source.String(), filepath.Join(directory, "native"), native_runtime.Options{}); err != nil {
 			return err
 		}
 	}

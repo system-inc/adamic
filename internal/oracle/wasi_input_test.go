@@ -8,6 +8,7 @@ import (
 	"testing"
 
 	"github.com/system-inc/adamic/internal/native"
+	"github.com/system-inc/adamic/internal/native_runtime"
 )
 
 // Match oracle/wasi.mjs: one root preopen and the working directory the
@@ -124,7 +125,7 @@ func runWASIInputShard(t *testing.T, shard int) {
 		return
 	}
 	planted, probing := familyProbe("TestWASIInputAgreesWithNode")
-	if err := native.ValidateOptions(native.Options{Target: "wasm32-wasi"}); err != nil {
+	if err := native_runtime.ValidateOptions(native_runtime.Options{Target: "wasm32-wasi"}); err != nil {
 		t.Fatal(err)
 	}
 	pass, limits, refused, fail, skip := 0, 0, 0, 0, 0
@@ -184,7 +185,7 @@ func TestWASIInputRunnerCatchesMutants(t *testing.T) {
 	probe := func(source string) run {
 		shared := sharedDirectory(t)
 		binary := filepath.Join(shared, "probe.wasm")
-		if err := native.Build(source, binary, native.Options{Target: "wasm32-wasi"}); err != nil {
+		if err := native.Build(source, binary, native_runtime.Options{Target: "wasm32-wasi"}); err != nil {
 			t.Fatal(err)
 		}
 		return onV8Input(t, inputRun{directory: filepath.Dir(path)}, binary)

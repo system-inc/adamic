@@ -19,6 +19,7 @@ import (
 	"github.com/system-inc/adamic/internal/load"
 	"github.com/system-inc/adamic/internal/lower"
 	"github.com/system-inc/adamic/internal/native"
+	"github.com/system-inc/adamic/internal/native_runtime"
 	"github.com/system-inc/adamic/stage1/typescript/scanner/oracles"
 )
 
@@ -61,8 +62,8 @@ func scannerOracleProduct(t *testing.T) string {
 
 func scannerPortProduct(t *testing.T, source string, sanitize bool) string {
 	t.Helper()
-	options := native.Options{Sanitize: sanitize}
-	flags := append(native.Flags(options), "ADAMIC_NATIVE_SPLIT="+os.Getenv("ADAMIC_NATIVE_SPLIT"))
+	options := native_runtime.Options{Sanitize: sanitize}
+	flags := append(native_runtime.Flags(options), "ADAMIC_NATIVE_SPLIT="+os.Getenv("ADAMIC_NATIVE_SPLIT"))
 	contents := make(map[string][]byte)
 	for _, name := range portFiles {
 		data, err := os.ReadFile(filepath.Join(source, name))

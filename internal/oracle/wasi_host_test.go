@@ -8,11 +8,12 @@ import (
 	"testing"
 
 	"github.com/system-inc/adamic/internal/native"
+	"github.com/system-inc/adamic/internal/native_runtime"
 )
 
 func buildWASI(t *testing.T, source, binary string) string {
 	t.Helper()
-	if err := native.Build(source, binary, native.Options{Target: "wasm32-wasi"}); err != nil {
+	if err := native.Build(source, binary, native_runtime.Options{Target: "wasm32-wasi"}); err != nil {
 		var refused *native.TargetRefused
 		if errors.As(err, &refused) {
 			return refused.Error()

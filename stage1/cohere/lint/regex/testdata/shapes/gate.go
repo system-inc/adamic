@@ -12,6 +12,7 @@ import (
 	"github.com/system-inc/adamic/internal/load"
 	"github.com/system-inc/adamic/internal/lower"
 	"github.com/system-inc/adamic/internal/native"
+	"github.com/system-inc/adamic/internal/native_runtime"
 	"github.com/system-inc/adamic/internal/toolchain"
 	"hash/fnv"
 	"os"
@@ -236,7 +237,7 @@ func main() {
 			}
 		} else { // No skip or grandfathering: native is required immediately after lowering accepts strings.
 			binary := filepath.Join(temp, "native")
-			if e = native.Build(native.C(ir), binary, native.Options{Sanitize: true}); e != nil {
+			if e = native.Build(native.C(ir), binary, native_runtime.Options{Sanitize: true}); e != nil {
 				fail("%s: %v", f.ID, e)
 			}
 			equal(f, "sanitized runtime native", want, run(binary, f.Pattern, f.Flags))

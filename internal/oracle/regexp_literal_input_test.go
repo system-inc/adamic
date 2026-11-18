@@ -3,6 +3,7 @@ package oracle
 import (
 	"errors"
 	"github.com/system-inc/adamic/internal/lower"
+	"github.com/system-inc/adamic/internal/native_runtime"
 	"os"
 	"path/filepath"
 	"testing"
@@ -34,7 +35,7 @@ func runRegExpLiteralInputNodeUnit(t *testing.T, target string) {
 		got = onWASI(t, native.C(program))
 	} else {
 		binary := filepath.Join(t.TempDir(), "program")
-		if err := native.Build(native.C(program), binary, native.Options{Sanitize: target == "sanitized"}); err != nil {
+		if err := native.Build(native.C(program), binary, native_runtime.Options{Sanitize: target == "sanitized"}); err != nil {
 			t.Fatal(err)
 		}
 		got = execute(t, binary)
@@ -78,7 +79,7 @@ func TestRegExpLiteralInputUnsafeNode(t *testing.T) {
 		return
 	}
 	binary := filepath.Join(t.TempDir(), "program")
-	if err := native.Build(native.C(program), binary, native.Options{}); err != nil {
+	if err := native.Build(native.C(program), binary, native_runtime.Options{}); err != nil {
 		t.Fatal(err)
 	}
 	if difference := disagreement(want, execute(t, binary)); difference != "" {

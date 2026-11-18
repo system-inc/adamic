@@ -8,6 +8,7 @@ import (
 	"testing"
 
 	"github.com/system-inc/adamic/internal/native"
+	"github.com/system-inc/adamic/internal/native_runtime"
 )
 
 func TestNodeProcessWASIAgreement(t *testing.T) {
@@ -57,7 +58,7 @@ func TestNodeProcessCachedDirectoryWASI(t *testing.T) {
 		t.Fatal(err)
 	}
 	binary := filepath.Join(t.TempDir(), "program.wasm")
-	if err := native.Build(native.C(program), binary, native.Options{Target: "wasm32-wasi"}); err != nil {
+	if err := native.Build(native.C(program), binary, native_runtime.Options{Target: "wasm32-wasi"}); err != nil {
 		t.Fatal(err)
 	}
 	driver, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/node_process_cached_cwd.py"))
@@ -99,11 +100,11 @@ func TestNodeProcessFreshRemovedCwdWASIRefusal(t *testing.T) {
 		t.Fatal(err)
 	}
 	binary := filepath.Join(t.TempDir(), "program")
-	if err := native.Build(native.C(program), binary, native.Options{Sanitize: true}); err != nil {
+	if err := native.Build(native.C(program), binary, native_runtime.Options{Sanitize: true}); err != nil {
 		t.Fatal(err)
 	}
 	wasm := filepath.Join(t.TempDir(), "program.wasm")
-	if err := native.Build(native.C(program), wasm, native.Options{Target: "wasm32-wasi"}); err != nil {
+	if err := native.Build(native.C(program), wasm, native_runtime.Options{Target: "wasm32-wasi"}); err != nil {
 		t.Fatal(err)
 	}
 	absolute := func(relative string) string {

@@ -10,6 +10,7 @@ import (
 	"github.com/system-inc/adamic/internal/load"
 	"github.com/system-inc/adamic/internal/lower"
 	"github.com/system-inc/adamic/internal/native"
+	"github.com/system-inc/adamic/internal/native_runtime"
 )
 
 func init() {
@@ -43,7 +44,7 @@ func init() {
 			inputs := countPortable(t, source, path) + "\nrealpath harness\n" + string(harness)
 			return inputs, func() string {
 				binary := filepath.Join(t.TempDir(), "counted")
-				if err := native.Build(source, binary, native.Options{Count: true}); err != nil {
+				if err := native.Build(source, binary, native_runtime.Options{Count: true}); err != nil {
 					t.Fatal(err)
 				}
 				got := realpathRun(t, realpathDirectory(t), binary)

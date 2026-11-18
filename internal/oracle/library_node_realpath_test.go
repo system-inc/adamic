@@ -11,6 +11,7 @@ import (
 	"github.com/system-inc/adamic/internal/childguard"
 	"github.com/system-inc/adamic/internal/javascript"
 	"github.com/system-inc/adamic/internal/native"
+	"github.com/system-inc/adamic/internal/native_runtime"
 )
 
 // Both source and backends observe exactly this filesystem, cwd and environment.
@@ -70,7 +71,7 @@ func realpathAgreement(t *testing.T, name string) {
 		t.Fatal(err)
 	}
 	binary := filepath.Join(t.TempDir(), "native")
-	if err := native.Build(native.C(program), binary, native.Options{Sanitize: true}); err != nil {
+	if err := native.Build(native.C(program), binary, native_runtime.Options{Sanitize: true}); err != nil {
 		t.Fatal(err)
 	}
 	script := filepath.Join(t.TempDir(), "program.mjs")

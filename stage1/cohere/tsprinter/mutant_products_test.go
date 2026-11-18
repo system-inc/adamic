@@ -9,6 +9,7 @@ import (
 	"testing"
 	"time"
 
+	"github.com/system-inc/adamic/internal/native_runtime"
 	"github.com/system-inc/adamic/stage1/cohere/tsprinter/oracles"
 
 	"github.com/system-inc/adamic/internal/buildcache"
@@ -19,7 +20,7 @@ var mutantNativeProducts [oracles.MutantsShards]oracles.MutantProductState
 
 func mutantNativeProduct(t *testing.T, index int) string {
 	t.Helper()
-	options := native.Options{Sanitize: true, Split: true, Jobs: 4}
+	options := native_runtime.Options{Sanitize: true, Split: true, Jobs: 4}
 	state := &mutantNativeProducts[index]
 	state.Once.Do(func() {
 		root, err := filepath.Abs(oracles.Repository)
@@ -35,7 +36,7 @@ func mutantNativeProduct(t *testing.T, index int) string {
 		state.Directory = oracles.ExpressionBuild(t, oracles.PrinterBuildInputs{
 			Name:      fmt.Sprintf("TS printer mutant %03d sanitized native", index),
 			Files:     inputs,
-			Flags:     append(native.Flags(options), "split=true", "jobs=4", fmt.Sprintf("mutation=%+v", oracles.Mutations[index])),
+			Flags:     append(native_runtime.Flags(options), "split=true", "jobs=4", fmt.Sprintf("mutation=%+v", oracles.Mutations[index])),
 			Toolchain: runtime.Version() + "\n" + buildcache.CompilerReport("clang"),
 		}, func(directory string) error {
 			path := mutatedPort(t, oracles.Mutations[index])

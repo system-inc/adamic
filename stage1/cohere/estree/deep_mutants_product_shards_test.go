@@ -4,6 +4,7 @@ import (
 	"context"
 	"crypto/sha256"
 	"fmt"
+	"github.com/system-inc/adamic/internal/native_runtime"
 	"github.com/system-inc/adamic/stage1/cohere/estree/oracles"
 	"go/ast"
 	"go/parser"
@@ -162,7 +163,7 @@ func deepMutantsNative(t *testing.T, mutation deepMutantsMutation) string {
 	for _, name := range []string{"ADAMIC_NATIVE_SPLIT"} {
 		inputs.Flags = append(inputs.Flags, name+"="+os.Getenv(name))
 	}
-	inputs.Flags = append(inputs.Flags, native.Flags(estreeFamilyNativeOptions())...)
+	inputs.Flags = append(inputs.Flags, native_runtime.Flags(estreeFamilyNativeOptions())...)
 	inputs.Flags = append(inputs.Flags, fmt.Sprintf("C=%x", sha256.Sum256(data)))
 	inputs.Toolchain = append(inputs.Toolchain, buildcache.CompilerReport("clang"))
 	product := buildcache.Product(t, inputs, func(dir string) error {

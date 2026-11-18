@@ -5,6 +5,7 @@ import (
 	"github.com/system-inc/adamic/internal/leakcheck"
 	"github.com/system-inc/adamic/internal/lower"
 	"github.com/system-inc/adamic/internal/native"
+	"github.com/system-inc/adamic/internal/native_runtime"
 	"path/filepath"
 	"strings"
 	"testing"
@@ -124,7 +125,7 @@ func graphOracleWitnessWithLayout(t *testing.T, path string, million bool) {
 	}
 	code := native.C(program)
 	countedBinary := filepath.Join(t.TempDir(), "counted")
-	if err := native.Build(code, countedBinary, native.Options{Count: true}); err != nil {
+	if err := native.Build(code, countedBinary, native_runtime.Options{Count: true}); err != nil {
 		t.Fatal(err)
 	}
 	name, arguments := pinnedStack(countedBinary)

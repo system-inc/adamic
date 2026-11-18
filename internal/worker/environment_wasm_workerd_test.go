@@ -13,7 +13,7 @@ import (
 	"time"
 
 	"github.com/system-inc/adamic/internal/buildcache"
-	"github.com/system-inc/adamic/internal/native"
+	"github.com/system-inc/adamic/internal/native_runtime"
 )
 
 func workerdEnvironmentWasmProduct(t *testing.T, build bool) string {
@@ -29,7 +29,7 @@ func workerdEnvironmentWasmProduct(t *testing.T, build bool) string {
 	inputs.Name = "workerd string environment with Wasm compute and independent twin"
 	inputs.Files = append(inputs.Files, "internal/worker/environment_wasm_workerd_test.go", "workers/environment-wasm/handler.a", "workers/environment-wasm/twin/worker.ts")
 	inputs.Toolchain = append(inputs.Toolchain, buildcache.Tool("node", "--version"))
-	request, err := native.RuntimeRequestFor(native.Options{Release: true, Target: "wasm32-wasi"})
+	request, err := native_runtime.RuntimeRequestFor(native_runtime.Options{Release: true, Target: "wasm32-wasi"})
 	if err != nil {
 		t.Fatal(err)
 	}

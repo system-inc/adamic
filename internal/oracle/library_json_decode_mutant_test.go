@@ -4,6 +4,7 @@ import (
 	"github.com/system-inc/adamic/internal/javascript"
 	"github.com/system-inc/adamic/internal/leakcheck"
 	"github.com/system-inc/adamic/internal/native"
+	"github.com/system-inc/adamic/internal/native_runtime"
 	"os"
 	"path/filepath"
 	"runtime"
@@ -16,7 +17,7 @@ import (
 func buildDecodeMutant(t *testing.T, code string) string {
 	t.Helper()
 	binary := filepath.Join(t.TempDir(), "mutant")
-	if err := native.Build(code, binary, native.Options{Sanitize: runtime.GOOS == "linux"}); err != nil {
+	if err := native.Build(code, binary, native_runtime.Options{Sanitize: runtime.GOOS == "linux"}); err != nil {
 		t.Fatal(err)
 	}
 	return binary

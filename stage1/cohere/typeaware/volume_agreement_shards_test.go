@@ -9,6 +9,7 @@ import (
 	"github.com/system-inc/adamic/internal/load"
 	"github.com/system-inc/adamic/internal/lower"
 	"github.com/system-inc/adamic/internal/native"
+	"github.com/system-inc/adamic/internal/native_runtime"
 	"os"
 	"os/exec"
 	"path/filepath"
@@ -190,7 +191,7 @@ func volumeAgreementNative(h *volumeGuardHarness, name, archive, source string, 
 		if err != nil {
 			return err
 		}
-		return native.BuildSplitTSGo(string(data), filepath.Join(dir, "native"), archive, native.Options{Sanitize: sanitize, Split: true, Jobs: 4})
+		return native.BuildSplitTSGo(string(data), filepath.Join(dir, "native"), archive, native_runtime.Options{Sanitize: sanitize, Split: true, Jobs: 4})
 	})
 	return filepath.Join(dir, "native")
 }

@@ -5,6 +5,7 @@ import (
 	"context"
 
 	"fmt"
+	"github.com/system-inc/adamic/internal/native_runtime"
 	"github.com/system-inc/adamic/stage1/cohere/lint/oracles"
 	"os"
 	"path/filepath"
@@ -196,7 +197,7 @@ func completeSuggestionNativeProduct(ctx context.Context, t *testing.T, director
 		if err != nil {
 			return err
 		}
-		return native.Build(string(data), filepath.Join(out, "scanner"), native.Options{Sanitize: true})
+		return native.Build(string(data), filepath.Join(out, "scanner"), native_runtime.Options{Sanitize: true})
 	})
 }
 

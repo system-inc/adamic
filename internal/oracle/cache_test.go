@@ -20,6 +20,7 @@ import (
 	"github.com/system-inc/adamic/internal/javascript"
 	"github.com/system-inc/adamic/internal/load"
 	"github.com/system-inc/adamic/internal/native"
+	"github.com/system-inc/adamic/internal/native_runtime"
 	"github.com/system-inc/adamic/internal/toolchain"
 )
 
@@ -184,8 +185,8 @@ func identity(t *testing.T) gateIdentity {
 			return
 		}
 		gate.nodeVersion = string(version)
-		for index, options := range []native.Options{{Sanitize: true}, {}, {Count: true}} {
-			library, err := native.RuntimeLibrary("", options)
+		for index, options := range []native_runtime.Options{{Sanitize: true}, {}, {Count: true}} {
+			library, err := native_runtime.RuntimeLibrary("", options)
 			if err != nil {
 				gateError = err
 				return
@@ -475,7 +476,7 @@ func TestGateCacheGeneratedC(t *testing.T) {
 		key := nativeResultKey(code, "runtime", "node", "harness")
 		result := reusableResult(t, cache, nativeResults, key, func() nativeResult {
 			binary := filepath.Join(t.TempDir(), "program")
-			if err := native.Build(code, binary, native.Options{}); err != nil {
+			if err := native.Build(code, binary, native_runtime.Options{}); err != nil {
 				t.Fatal(err)
 			}
 			return nativeResult{Run: record(execute(t, binary))}

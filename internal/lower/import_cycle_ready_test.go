@@ -8,6 +8,7 @@ import (
 	"testing"
 
 	"github.com/system-inc/adamic/internal/native"
+	"github.com/system-inc/adamic/internal/native_runtime"
 )
 
 // A cycle read the module order can't prove keeps its runtime dead-zone check, and one it proves loses it: lowering
@@ -60,7 +61,7 @@ func TestUndecidedCycleReadsUseReadyChecks(t *testing.T) {
 				t.Error("proven base class read retained a TDZ check")
 			}
 			binary := filepath.Join(directory, "native")
-			if err := native.Build(native.C(program), binary, native.Options{Sanitize: true}); err != nil {
+			if err := native.Build(native.C(program), binary, native_runtime.Options{Sanitize: true}); err != nil {
 				t.Fatal(err)
 			}
 			run := func(command *exec.Cmd) {

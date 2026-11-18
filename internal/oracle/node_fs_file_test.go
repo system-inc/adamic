@@ -11,6 +11,7 @@ import (
 	"testing"
 
 	"github.com/system-inc/adamic/internal/native"
+	"github.com/system-inc/adamic/internal/native_runtime"
 )
 
 var fsFileFixtures = []string{"close", "write_file", "mkdir", "date", "write_buffer"}
@@ -217,7 +218,7 @@ func TestNodeFSFileMutants(t *testing.T) {
 			code = strings.Replace(code, "#include \"adamic.h\"", "#include \"adamic.h\"\n"+one.helper, 1)
 			shared := sharedDirectory(t)
 			binary := filepath.Join(shared, "mutant")
-			if err := native.Build(code, binary, native.Options{Sanitize: true}); err != nil {
+			if err := native.Build(code, binary, native_runtime.Options{Sanitize: true}); err != nil {
 				t.Fatal(err)
 			}
 			how := fsFilePrepare(t, shared, "mutant-input")

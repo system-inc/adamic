@@ -16,11 +16,12 @@ import (
 	"github.com/system-inc/adamic/internal/ir"
 	"github.com/system-inc/adamic/internal/native"
 	"github.com/system-inc/adamic/internal/native/runtimeproducts"
+	"github.com/system-inc/adamic/internal/native_runtime"
 )
 
 func init() {
 	if runtime.GOOS == "linux" {
-		runtimeproducts.Variants = append(runtimeproducts.Variants, runtimeproducts.Variant{Name: "parallel_tsan", Options: native.Options{ThreadSanitize: true}})
+		runtimeproducts.Variants = append(runtimeproducts.Variants, runtimeproducts.Variant{Name: "parallel_tsan", Options: native_runtime.Options{ThreadSanitize: true}})
 	}
 	paths, err := filepath.Glob(filepath.Join(repository, "internal/oracle/testdata/concurrency/accepted/*.a"))
 	if err != nil {
@@ -64,23 +65,23 @@ func checkParallelCodeUnit(t *testing.T, code string, oracle run, selectedBuild,
 	t.Helper()
 	builds := []struct {
 		name    string
-		options native.Options
+		options native_runtime.Options
 	}{
-		{"asan", native.Options{Sanitize: true}},
-		{"release", native.Options{}},
-		{"asan_slabs", native.Options{Sanitize: true}},
+		{"asan", native_runtime.Options{Sanitize: true}},
+		{"release", native_runtime.Options{}},
+		{"asan_slabs", native_runtime.Options{Sanitize: true}},
 	}
 	if runtime.GOOS == "linux" {
 		builds = append(builds, struct {
 			name    string
-			options native.Options
-		}{"tsan", native.Options{ThreadSanitize: true}})
+			options native_runtime.Options
+		}{"tsan", native_runtime.Options{ThreadSanitize: true}})
 	}
 	if runtime.GOOS == "darwin" {
 		builds = append(builds, struct {
 			name    string
-			options native.Options
-		}{"malloc", native.Options{}})
+			options native_runtime.Options
+		}{"malloc", native_runtime.Options{}})
 	}
 	for _, build := range builds {
 		if selectedBuild != "" && build.name != selectedBuild {
@@ -209,7 +210,7 @@ adamic_array *oracle_reordered_map(adamic_array *items, adamic_closure *work, en
 }
 ` + source
 	binary := filepath.Join(t.TempDir(), "mutant")
-	if err := native.Build(source, binary, native.Options{Sanitize: true}); err != nil {
+	if err := native.Build(source, binary, native_runtime.Options{Sanitize: true}); err != nil {
 		t.Fatal(err)
 	}
 	for _, threads := range []string{"1", ""} {
@@ -223,7 +224,7 @@ adamic_array *oracle_reordered_map(adamic_array *items, adamic_closure *work, en
 	}
 	if runtime.GOOS == "darwin" {
 		mallocBinary := filepath.Join(t.TempDir(), "malloc-mutant")
-		buildParallelProgram(t, source, mallocBinary, native.Options{}, "ADAMIC_MALLOC")
+		buildParallelProgram(t, source, mallocBinary, native_runtime.Options{}, "ADAMIC_MALLOC")
 		report := executeParallel(t, "1", false, "leaks", "--atExit", "--", mallocBinary)
 		if report.exitCode != 0 {
 			t.Fatalf("mutant leaks: %s %s", report.stdout, report.stderr)
@@ -376,7 +377,7 @@ func TestParallelBenchmark_tsan_Default_2(t *testing.T) {
 
 // The base keeps slabs private to native tests. A snapshot header selects that
 // allocator without widening the compiler's public options for fixture tooling.
-func buildParallelProgram(t *testing.T, code, binary string, options native.Options, allocator string) {
+func buildParallelProgram(t *testing.T, code, binary string, options native_runtime.Options, allocator string) {
 	t.Helper()
 	if allocator == "" {
 		if err := native.Build(code, binary, options); err != nil {
@@ -406,7 +407,7 @@ func buildParallelProgram(t *testing.T, code, binary string, options native.Opti
 			t.Fatal(err)
 		}
 	}
-	library, err := native.RuntimeLibraryForSource(directory, code, options)
+	library, err := native_runtime.RuntimeLibraryForSource(directory, code, options)
 	if err != nil {
 		t.Fatal(err)
 	}

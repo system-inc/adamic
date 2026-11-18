@@ -12,6 +12,7 @@ import (
 
 	"github.com/system-inc/adamic/internal/javascript"
 	"github.com/system-inc/adamic/internal/native"
+	"github.com/system-inc/adamic/internal/native_runtime"
 )
 
 // A claim on a function type is checked at every call through it in .ts (#1w5bve2, agreed Oct 30):
@@ -51,7 +52,7 @@ func TestFunctionTypeClaimIsCheckedAtTheCall(t *testing.T) {
 			}
 			directory := t.TempDir()
 			binary := filepath.Join(directory, "native")
-			if err := native.Build(native.C(program), binary, native.Options{Sanitize: true}); err != nil {
+			if err := native.Build(native.C(program), binary, native_runtime.Options{Sanitize: true}); err != nil {
 				t.Fatal(err)
 			}
 			runner, err := filepath.Abs("../../oracle/node.mjs")

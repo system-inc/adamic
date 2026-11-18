@@ -5,6 +5,7 @@ import (
 	"errors"
 	"github.com/system-inc/adamic/internal/javascript"
 	"github.com/system-inc/adamic/internal/native"
+	"github.com/system-inc/adamic/internal/native_runtime"
 	"os"
 	"path/filepath"
 	"testing"
@@ -36,7 +37,7 @@ func TestGapStandsWhereGapsMdSays(t *testing.T) {
 		t.Fatal(err)
 	}
 	binary := filepath.Join(t.TempDir(), "push")
-	if err := native.Build(native.C(lowered), binary, native.Options{Sanitize: true}); err != nil {
+	if err := native.Build(native.C(lowered), binary, native_runtime.Options{Sanitize: true}); err != nil {
 		t.Fatal(err)
 	}
 	actual := execute(t, "", binary)

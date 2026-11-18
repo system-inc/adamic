@@ -24,6 +24,7 @@ import (
 	"github.com/system-inc/adamic/internal/load"
 	"github.com/system-inc/adamic/internal/lower"
 	"github.com/system-inc/adamic/internal/native"
+	"github.com/system-inc/adamic/internal/native_runtime"
 )
 
 const testDecodedOptionsAndMutantShards = 6
@@ -288,7 +289,7 @@ func decodedOptionsNative(t *testing.T) (buildcache.Inputs, func(output string) 
 		if err != nil {
 			return err
 		}
-		return native.Build(string(source), filepath.Join(output, "scanner"), native.Options{Sanitize: true, Split: true, Jobs: 4})
+		return native.Build(string(source), filepath.Join(output, "scanner"), native_runtime.Options{Sanitize: true, Split: true, Jobs: 4})
 	}
 }
 

@@ -2,6 +2,7 @@ package printer
 
 import (
 	"fmt"
+	"github.com/system-inc/adamic/internal/native_runtime"
 	"github.com/system-inc/adamic/stage1/cohere/graphql/printer/oracles"
 	"io/fs"
 	"os"
@@ -259,7 +260,7 @@ func printerLoweredProduct(t *testing.T, path string) string {
 	})
 }
 
-func printerCompiledProduct(t *testing.T, loweredProduct string, options native.Options) string {
+func printerCompiledProduct(t *testing.T, loweredProduct string, options native_runtime.Options) string {
 	t.Helper()
 	data, err := os.ReadFile(loweredProduct + "/port.c")
 	if err != nil {
@@ -271,7 +272,7 @@ func printerCompiledProduct(t *testing.T, loweredProduct string, options native.
 		name = "sanitized GraphQL printer"
 	}
 	inputs := printerInputFiles(t, filepath.Join(repository, "internal/native"), filepath.Join(repository, "internal/native_runtime"))
-	return printerBuild(t, printerBuildInputs{Name: name, Files: append([]string{loweredProduct + "/port.c"}, inputs...), Flags: native.Flags(options), Toolchain: clang}, func(dir string) error {
+	return printerBuild(t, printerBuildInputs{Name: name, Files: append([]string{loweredProduct + "/port.c"}, inputs...), Flags: native_runtime.Flags(options), Toolchain: clang}, func(dir string) error {
 		start := time.Now()
 		err := native.Build(string(data), dir+"/port", options)
 		t.Logf("clang wall %.3fs", time.Since(start).Seconds())
@@ -284,10 +285,10 @@ type printerProducts struct{ source, backend, sanitized, release string }
 func preparePrinterProducts(t *testing.T, path string) printerProducts {
 	t.Helper()
 	loweredProduct := printerLoweredProduct(t, path)
-	sanitized := printerCompiledProduct(t, loweredProduct, native.Options{Sanitize: true})
+	sanitized := printerCompiledProduct(t, loweredProduct, native_runtime.Options{Sanitize: true})
 	release := ""
 	if runtime.GOOS == "darwin" {
-		release = printerCompiledProduct(t, loweredProduct, native.Options{})
+		release = printerCompiledProduct(t, loweredProduct, native_runtime.Options{})
 	}
 	return printerProducts{source: path, backend: loweredProduct + "/program.mjs", sanitized: sanitized, release: release}
 }

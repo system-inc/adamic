@@ -20,6 +20,7 @@ import (
 	"github.com/system-inc/adamic/internal/load"
 	"github.com/system-inc/adamic/internal/lower"
 	"github.com/system-inc/adamic/internal/native"
+	"github.com/system-inc/adamic/internal/native_runtime"
 )
 
 const repository = "../../.."
@@ -152,14 +153,14 @@ func TestMain(m *testing.M) {
 // All corpora, oracle comparisons and leak checks execute afresh even uncached.
 func nativeBinary(t *testing.T, source string, sanitize bool) string {
 	t.Helper()
-	binary, err := nativeBinaryResult(source, native.Options{Sanitize: sanitize})
+	binary, err := nativeBinaryResult(source, native_runtime.Options{Sanitize: sanitize})
 	if err != nil {
 		t.Fatal(err)
 	}
 	return binary
 }
 
-func nativeBinaryResult(source string, options native.Options) (string, error) {
+func nativeBinaryResult(source string, options native_runtime.Options) (string, error) {
 	key := artifactKey{source: sha256.Sum256([]byte(source)), sanitize: options.Sanitize}
 	pending := &artifactBuild{done: make(chan struct{})}
 	actual, loaded := artifacts.LoadOrStore(key, pending)
@@ -298,21 +299,21 @@ func onJavaScriptBackend(t *testing.T, program *ir.Program, arguments ...string)
 func nativeMutant(t *testing.T, program *ir.Program, arguments ...string) run {
 	t.Helper()
 	directory := t.TempDir()
-	options := native.Options{Sanitize: true}
-	library, err := native.RuntimeLibrary("", options)
+	options := native_runtime.Options{Sanitize: true}
+	library, err := native_runtime.RuntimeLibrary("", options)
 	if err != nil {
 		t.Fatal(err)
 	}
 	source, binary := filepath.Join(directory, "main.c"), filepath.Join(directory, "mutant")
 	write(t, source, []byte(native.C(program)))
-	flags := native.Flags(options)
+	flags := native_runtime.Flags(options)
 	for index, flag := range flags {
 		if flag == "-O1" {
 			flags[index] = "-O0"
 		}
 	}
 	flags = append(flags, "-I", filepath.Dir(library), "-o", binary, source)
-	flags = append(flags, native.RuntimeLinkFlags(library)...)
+	flags = append(flags, native_runtime.RuntimeLinkFlags(library)...)
 	flags = append(flags, "-lm")
 	if output, err := combinedOutput(bounded(t, "clang", flags...)); err != nil {
 		t.Fatalf("mutant build: %v\n%s", err, output)
@@ -334,7 +335,7 @@ func leaks(t *testing.T, program *ir.Program, sanitized string, arguments ...str
 	switch runtime.GOOS {
 	case "darwin":
 		binary := filepath.Join(t.TempDir(), "port")
-		if err := native.Build(native.C(program), binary, native.Options{}); err != nil {
+		if err := native.Build(native.C(program), binary, native_runtime.Options{}); err != nil {
 			t.Fatal(err)
 		}
 		report := execute(t, nil, "leaks", append([]string{"--atExit", "--", binary}, arguments...)...)

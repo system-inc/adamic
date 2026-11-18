@@ -19,6 +19,7 @@ import (
 	"github.com/system-inc/adamic/internal/childguard"
 	"github.com/system-inc/adamic/internal/javascript"
 	"github.com/system-inc/adamic/internal/native"
+	"github.com/system-inc/adamic/internal/native_runtime"
 	"github.com/system-inc/adamic/stage1/cohere/markdownblocks/oracles"
 )
 
@@ -108,9 +109,9 @@ func malformedEventsBuildProduct(t *testing.T, ctx context.Context, main string,
 	if lowerOnly {
 		return "", filepath.Join(loweredDir, "program.mjs")
 	}
-	options := native.Options{Sanitize: true}
+	options := native_runtime.Options{Sanitize: true}
 	inputs.Name = "markdownblocks-malformed-events-native"
-	inputs.Flags = append(native.Flags(options), "ADAMIC_NATIVE_SPLIT="+os.Getenv("ADAMIC_NATIVE_SPLIT"))
+	inputs.Flags = append(native_runtime.Flags(options), "ADAMIC_NATIVE_SPLIT="+os.Getenv("ADAMIC_NATIVE_SPLIT"))
 	for _, name := range []string{"ADAMIC_CLOSURE_CONVENTION", "ADAMIC_CANONICAL_CLOSURES", "ADAMIC_CLOSURE_RECEIVERS", "ADAMIC_REGEXP_REPLACE_CALLBACK", "ADAMIC_NODE_HOST"} {
 		inputs.Flags = append(inputs.Flags, name+"="+os.Getenv(name))
 	}
@@ -329,7 +330,7 @@ func malformedEventsNode(t *testing.T, ctx context.Context, path string, argumen
 	return malformedEventsExecute(t, ctx, nil, "node", append([]string{"--disable-warning=ExperimentalWarning", runner, path}, arguments...)...)
 }
 
-func malformedEventsNativeBuild(ctx context.Context, source, output string, options native.Options) error {
+func malformedEventsNativeBuild(ctx context.Context, source, output string, options native_runtime.Options) error {
 	if err := ctx.Err(); err != nil {
 		return err
 	}

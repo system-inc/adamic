@@ -4,6 +4,7 @@ import (
 	"context"
 	"errors"
 	"fmt"
+	"github.com/system-inc/adamic/internal/native_runtime"
 	"github.com/system-inc/adamic/stage1/cohere/estree/oracles"
 	"os"
 	"os/exec"
@@ -84,14 +85,14 @@ func acceptanceMutantProducts(t *testing.T, item acceptanceMutant, compile bool)
 		return resolvedPort(t, lowered, "main.ts"), ""
 	}
 	inputs.Name = "estree-acceptance-mutant-native-" + item.name
-	inputs.Flags = append(inputs.Flags, native.Flags(native.Options{Sanitize: true, Split: true})...)
+	inputs.Flags = append(inputs.Flags, native_runtime.Flags(native_runtime.Options{Sanitize: true, Split: true})...)
 	inputs.Toolchain = append(inputs.Toolchain, buildcache.CompilerReport("clang"))
 	product := buildcache.Product(t, inputs, func(dir string) error {
 		data, err := os.ReadFile(filepath.Join(lowered, "port.c"))
 		if err != nil {
 			return err
 		}
-		return native.Build(string(data), filepath.Join(dir, "port"), native.Options{Sanitize: true, Split: true})
+		return native.Build(string(data), filepath.Join(dir, "port"), native_runtime.Options{Sanitize: true, Split: true})
 	})
 	return resolvedPort(t, lowered, "main.ts"), filepath.Join(product, "port")
 }

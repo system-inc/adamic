@@ -10,6 +10,7 @@ import (
 
 	"github.com/system-inc/adamic/internal/ir"
 	"github.com/system-inc/adamic/internal/native"
+	"github.com/system-inc/adamic/internal/native_runtime"
 )
 
 // Mutants remain valid C and must finish cleanly. Only their output differs from
@@ -30,7 +31,7 @@ func realpathMutant(t *testing.T, fixture string, change func(*ir.Program, strin
 		t.Fatal("mutant changed nothing")
 	}
 	binary := filepath.Join(t.TempDir(), "mutant")
-	if err := native.Build(source, binary, native.Options{Sanitize: true}); err != nil {
+	if err := native.Build(source, binary, native_runtime.Options{Sanitize: true}); err != nil {
 		t.Fatal(err)
 	}
 	got := realpathRun(t, cwd, binary)

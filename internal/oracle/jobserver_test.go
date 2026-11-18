@@ -19,6 +19,7 @@ import (
 	"github.com/system-inc/adamic/internal/buildcache/location"
 	"github.com/system-inc/adamic/internal/ccjobserver"
 	"github.com/system-inc/adamic/internal/native"
+	"github.com/system-inc/adamic/internal/native_runtime"
 	"github.com/system-inc/adamic/internal/toolchain"
 )
 
@@ -156,7 +157,7 @@ func TestTheJobserverNeverReachesTheEmittedCOrClangChild(t *testing.T) {
 		}
 		code := native.C(program)
 		binary := filepath.Join(out, fmt.Sprintf("program-%d", built))
-		if err := native.Build(code, binary, native.Options{}); err != nil {
+		if err := native.Build(code, binary, native_runtime.Options{}); err != nil {
 			t.Fatal(fixture.path, err)
 		}
 		bytes, err := os.ReadFile(binary)

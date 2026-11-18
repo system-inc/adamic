@@ -8,6 +8,7 @@ import (
 
 	"github.com/system-inc/adamic/internal/ir"
 	"github.com/system-inc/adamic/internal/native"
+	"github.com/system-inc/adamic/internal/native_runtime"
 )
 
 // This runtime/emitter check does not substitute for compiling the upstream
@@ -51,7 +52,7 @@ func TestNodePathRelativeRuntime(t *testing.T) {
 	helper := `static adamic_string *mutant_relative(const adamic_string *from, const adamic_string *to) { return adamic_node_path_join(2, (adamic_string *const[]){(adamic_string *)from, (adamic_string *)to}); }`
 	source = strings.Replace(source, `#include "adamic.h"`, `#include "adamic.h"`+"\n"+helper, 1)
 	mutant := filepath.Join(shared, "mutant")
-	if err := native.Build(source, mutant, native.Options{Sanitize: true}); err != nil {
+	if err := native.Build(source, mutant, native_runtime.Options{Sanitize: true}); err != nil {
 		t.Fatal(err)
 	}
 	// LeakSanitizer is Linux's: macOS's AddressSanitizer aborts when asked for it.

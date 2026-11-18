@@ -9,6 +9,7 @@ import (
 
 	"github.com/system-inc/adamic/internal/leakcheck"
 	"github.com/system-inc/adamic/internal/native"
+	"github.com/system-inc/adamic/internal/native_runtime"
 )
 
 // graphFlowLoopSource is Memory's loop witness for #y7wexf5: a long-lived cyclic graph, and a loop of
@@ -58,7 +59,7 @@ func TestGraphFlowSortedCopyPeak(t *testing.T) {
 				t.Fatalf("%s at N = %d: no graph types selected, so the loop measures nothing of graph regions", each.name, iterations)
 			}
 			binary := filepath.Join(t.TempDir(), "counted")
-			if err := native.Build(native.C(program), binary, native.Options{Count: true}); err != nil {
+			if err := native.Build(native.C(program), binary, native_runtime.Options{Count: true}); err != nil {
 				t.Fatal(err)
 			}
 			name, arguments := pinnedStack(binary)

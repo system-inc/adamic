@@ -10,6 +10,7 @@ import (
 
 	"github.com/system-inc/adamic/internal/lower"
 	"github.com/system-inc/adamic/internal/native"
+	"github.com/system-inc/adamic/internal/native_runtime"
 	"github.com/system-inc/adamic/internal/wasitest"
 )
 
@@ -34,7 +35,7 @@ func TestNodeFSWritePositionsWASI(t *testing.T) {
 	truthRun := fsFilePrepare(t, shared, "node")
 	truth := onNodeWith(t, truthRun, path)
 	binary := filepath.Join(shared, "program.wasm")
-	if err := native.Build(native.C(program), binary, native.Options{Target: "wasm32-wasi"}); err != nil {
+	if err := native.Build(native.C(program), binary, native_runtime.Options{Target: "wasm32-wasi"}); err != nil {
 		t.Fatal(err)
 	}
 	how := fsFilePrepare(t, shared, "wasi")
@@ -85,7 +86,7 @@ func TestNodeFSConsumedOptionsMutants(t *testing.T) {
 			if !probe.input {
 				truth := onNode(t, path)
 				binary := filepath.Join(t.TempDir(), "original")
-				if err := native.Build(code, binary, native.Options{Sanitize: true}); err != nil {
+				if err := native.Build(code, binary, native_runtime.Options{Sanitize: true}); err != nil {
 					t.Fatal(err)
 				}
 				got := executeWith(t, []string{"ASAN_OPTIONS=detect_leaks=1", "UBSAN_OPTIONS=halt_on_error=1"}, binary)
@@ -105,7 +106,7 @@ func TestNodeFSConsumedOptionsMutants(t *testing.T) {
 			mutated = strings.Replace(mutated, "#include \"adamic.h\"", "#include \"adamic.h\"\n"+probe.helper, 1)
 			shared := sharedDirectory(t)
 			binary := filepath.Join(shared, "mutant")
-			if err := native.Build(mutated, binary, native.Options{Sanitize: true}); err != nil {
+			if err := native.Build(mutated, binary, native_runtime.Options{Sanitize: true}); err != nil {
 				t.Fatal(err)
 			}
 			environment := []string{"ASAN_OPTIONS=detect_leaks=1", "UBSAN_OPTIONS=halt_on_error=1"}
@@ -164,7 +165,7 @@ func TestNodeFSRmUndefinedNodeMutant(t *testing.T) {
 				t.Fatal(err)
 			}
 			binary := filepath.Join(t.TempDir(), "mutant")
-			if err := native.Build(native.C(program), binary, native.Options{Sanitize: true}); err != nil {
+			if err := native.Build(native.C(program), binary, native_runtime.Options{Sanitize: true}); err != nil {
 				t.Fatal(err)
 			}
 			got := executeWith(t, []string{"ASAN_OPTIONS=detect_leaks=1", "UBSAN_OPTIONS=halt_on_error=1"}, binary)

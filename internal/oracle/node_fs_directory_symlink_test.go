@@ -9,6 +9,7 @@ import (
 	"testing"
 
 	"github.com/system-inc/adamic/internal/native"
+	"github.com/system-inc/adamic/internal/native_runtime"
 )
 
 // Mutants preserve valid execution and ownership; only Node stdout catches them.
@@ -68,7 +69,7 @@ func TestNodeFSDirectorySymlinkMutants(t *testing.T) {
 			helper := `static double mutant_symlink(const adamic_string *target,const adamic_string *path) {` + one.body + `}`
 			source = strings.Replace(source, `#include "adamic.h"`, `#include "adamic.h"`+"\n"+helper, 1)
 			binary := filepath.Join(shared, "mutant")
-			if err := native.Build(source, binary, native.Options{Sanitize: true}); err != nil {
+			if err := native.Build(source, binary, native_runtime.Options{Sanitize: true}); err != nil {
 				t.Fatal(err)
 			}
 			how := prepare("mutant-input")

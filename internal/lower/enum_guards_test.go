@@ -12,6 +12,7 @@ import (
 	"github.com/system-inc/adamic/internal/ir"
 	"github.com/system-inc/adamic/internal/load"
 	"github.com/system-inc/adamic/internal/native"
+	"github.com/system-inc/adamic/internal/native_runtime"
 )
 
 // The numeric IR has no flag-domain annotation. Query the actual checker-backed
@@ -69,7 +70,7 @@ func TestEnumMemberValuesAndReverseNameMatchNode(t *testing.T) {
 	source := `enum E { A = 1, B = 2, Alias = A } console.log(E.A + ' ' + E.B + ' ' + E.Alias + ' ' + E[1]);`
 	program := lowersAndAgreesWithNode(t, source)
 	binary := filepath.Join(t.TempDir(), "native")
-	if err := native.Build(native.C(program), binary, native.Options{Sanitize: true}); err != nil {
+	if err := native.Build(native.C(program), binary, native_runtime.Options{Sanitize: true}); err != nil {
 		t.Fatal(err)
 	}
 	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)

@@ -11,6 +11,7 @@ import (
 
 	"github.com/system-inc/adamic/internal/lower"
 	"github.com/system-inc/adamic/internal/native"
+	"github.com/system-inc/adamic/internal/native_runtime"
 )
 
 func TestNodeFSDirectoryStatConstOptionsMutant(t *testing.T) {
@@ -37,7 +38,7 @@ func TestNodeFSDirectoryStatConstOptionsMutant(t *testing.T) {
 	source = strings.Replace(source, `#include "adamic.h"`, `#include "adamic.h"`+"\n"+helper, 1)
 	shared := sharedDirectory(t)
 	binary := filepath.Join(shared, "mutant")
-	if err := native.Build(source, binary, native.Options{Sanitize: true}); err != nil {
+	if err := native.Build(source, binary, native_runtime.Options{Sanitize: true}); err != nil {
 		t.Fatal(err)
 	}
 	got := executeInput(t, how, nodeFSDirectorySanitizerEnvironment(), binary)
@@ -86,7 +87,7 @@ func TestNodeFSRealpathClosureOptionsMutant(t *testing.T) {
 		t.Fatal(err)
 	}
 	binary := filepath.Join(t.TempDir(), "mutant")
-	if err := native.Build(native.C(program), binary, native.Options{Sanitize: true}); err != nil {
+	if err := native.Build(native.C(program), binary, native_runtime.Options{Sanitize: true}); err != nil {
 		t.Fatal(err)
 	}
 	got := executeWith(t, nodeFSDirectorySanitizerEnvironment(), binary)

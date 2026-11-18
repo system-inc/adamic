@@ -10,7 +10,7 @@ import (
 	"testing"
 	"time"
 
-	"github.com/system-inc/adamic/internal/native"
+	"github.com/system-inc/adamic/internal/native_runtime"
 )
 
 // Every entry point prepares its own prerequisites before its work timer. The
@@ -58,7 +58,7 @@ func printerMutantLowered(t *testing.T, number int) string {
 func printerMutantSanitized(t *testing.T, number int) string {
 	t.Helper()
 	return mutantSanitized[number].get(t, func() string {
-		return printerCompiledProduct(t, printerMutantLowered(t, number), native.Options{Sanitize: true})
+		return printerCompiledProduct(t, printerMutantLowered(t, number), native_runtime.Options{Sanitize: true})
 	})
 }
 

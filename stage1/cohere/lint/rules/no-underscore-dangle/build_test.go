@@ -11,6 +11,7 @@ import (
 	"github.com/system-inc/adamic/internal/load"
 	"github.com/system-inc/adamic/internal/lower"
 	"github.com/system-inc/adamic/internal/native"
+	"github.com/system-inc/adamic/internal/native_runtime"
 	"os"
 	"path/filepath"
 	"regexp"
@@ -27,12 +28,12 @@ import (
 
 // Not parallel: native.Build writes the shared adamic/runtime and adamic/units caches and native.runtimeBuilds map.
 func TestProduct_NoUnderscoreDangleProfileSanitized(t *testing.T) {
-	buildcache.RequireArtifacts(t, profileNative(t, native.Options{Sanitize: true}), buildcache.Artifact{Name: "native"})
+	buildcache.RequireArtifacts(t, profileNative(t, native_runtime.Options{Sanitize: true}), buildcache.Artifact{Name: "native"})
 }
 
 // Not parallel: native.Build writes the shared adamic/runtime and adamic/units caches and native.runtimeBuilds map.
 func TestProduct_NoUnderscoreDangleProfileRelease(t *testing.T) {
-	buildcache.RequireArtifacts(t, profileNative(t, native.Options{}), buildcache.Artifact{Name: "native"})
+	buildcache.RequireArtifacts(t, profileNative(t, native_runtime.Options{}), buildcache.Artifact{Name: "native"})
 }
 
 func TestNoUnderscoreDangleProfileEmitsJavaScript(t *testing.T) {
@@ -53,13 +54,13 @@ const profileRule = "no-underscore-dangle"
 // profileNative is the profile built natively with options: lowered in this process, then compiled by clang. The
 // compiler lowering it is linked into this test binary, where no trace sees it read, so its key names the compiler's
 // paths (compilerinputs.Lowering) beside the profile's own sources.
-func profileNative(t *testing.T, options native.Options) string {
+func profileNative(t *testing.T, options native_runtime.Options) string {
 	t.Helper()
 	build := "release"
 	if options.Sanitize {
 		build = "sanitized"
 	}
-	flags := append([]string{"load.Load(profile.a)", "lower.Lower", "native.C", fmt.Sprintf("options=%+v", options)}, native.Flags(options)...)
+	flags := append([]string{"load.Load(profile.a)", "lower.Lower", "native.C", fmt.Sprintf("options=%+v", options)}, native_runtime.Flags(options)...)
 	// native.Build splits by ADAMIC_NATIVE_SPLIT when its options don't, so the switch is an input.
 	flags = append(flags, "ADAMIC_NATIVE_SPLIT="+os.Getenv("ADAMIC_NATIVE_SPLIT"))
 	inputs := buildcache.Inputs{
