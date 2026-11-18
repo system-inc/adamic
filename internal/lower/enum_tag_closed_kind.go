@@ -344,6 +344,11 @@ func (l *lowering) closedKindBuildKind(site closedKindSite, field string) (*chec
 		if callee := ast.SkipParentheses(site.node.AsNewExpression().Expression); callee.Kind == ast.KindIdentifier && l.isLibraryGlobal(callee, "Proxy") {
 			return nil, "a new Proxy", true
 		}
+		if !l.closedKindNewOfClass(site.node) {
+			// Probe only (#x2cjvy9, Node's 55): a new of a value typed only by a construct signature, not a
+			// class the program declares, as tsc's allocator constructors are, counted as a hatch.
+			return nil, "", false
+		}
 		return l.closedKindFieldType(site.of, field), "a new", true
 	case ast.KindCallExpression:
 		if l.isPreludeFunction(site.node.AsCallExpression().Expression, "decodeJson") {
@@ -433,4 +438,14 @@ func closedKindFunctionConstructorThis(target *ast.Node) bool {
 	}
 	parameters := container.Parameters()
 	return len(parameters) > 0 && parameters[0].Name() != nil && parameters[0].Name().Kind == ast.KindIdentifier && parameters[0].Name().Text() == "this"
+}
+
+// closedKindNewOfClass is whether a new's callee is a class: its type's symbol is a class symbol, so the
+// body that builds the object is one the program or the library declares as a class. A value typed only by
+// a construct signature (tsc's objectAllocator.getNodeConstructor(), `new (kind: SyntaxKind, pos: number,
+// end: number) => Node`) isn't. Probe only.
+func (l *lowering) closedKindNewOfClass(node *ast.Node) bool {
+	callee := ast.SkipParentheses(node.AsNewExpression().Expression)
+	symbol := l.checker.GetTypeAtLocation(callee).Symbol()
+	return symbol != nil && symbol.Flags&ast.SymbolFlagsClass != 0
 }
