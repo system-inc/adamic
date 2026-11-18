@@ -4,6 +4,8 @@ import (
 	"os/exec"
 	"path/filepath"
 	"testing"
+
+	"github.com/system-inc/adamic/internal/native_runtime"
 )
 
 // A graph-publication invariant: NodeArray metadata is interior storage, but its strings are shared values.
@@ -30,7 +32,7 @@ int main(void) {
 }
 `
 	binary := filepath.Join(t.TempDir(), "metadata-sharing")
-	if err := Build(source, binary, Options{Sanitize: true}); err != nil {
+	if err := Build(source, binary, native_runtime.Options{Sanitize: true}); err != nil {
 		t.Fatal(err)
 	}
 	output, err := exec.Command(binary).CombinedOutput()

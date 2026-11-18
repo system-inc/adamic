@@ -14,6 +14,8 @@ import (
 	"slices"
 	"strings"
 	"time"
+
+	"github.com/system-inc/adamic/internal/native_runtime"
 )
 
 // cString is a NUL-terminated C expression. Long names use a compound literal,
@@ -57,144 +59,13 @@ func cLiteral(value string) string {
 	return builder.String()
 }
 
-// Options says how to compile.
-type Options struct {
-	// Debug emits source locations and asks clang for debug information.
-	Debug bool
-	// DebugDirectory is the entry program's absolute directory, used only by its own compile.
-	DebugDirectory string
-	// Release enables ThinLTO only for shipped native, uncounted, unsanitized builds.
-	Release bool
-	// ProgramRegion enables the one-shot CLI Program region.
-	ProgramRegion bool
-
-	// Target is the triple clang compiles for: a native one of Triple's table, or wasm32-wasi for a WASI module. Empty
-	// is the build's own native triple (ResolveTarget), which every flag and key names in its place.
-	Target string
-
-	// Request selects a WASI reactor containing the emitted request ABI.
-	Request bool
-
-	// Split compiles generated functions in separate translation units. Off by default, and only
-	// for native targets.
-	Split bool
-
-	// Jobs bounds parallel clang processes in a split build; zero means one.
-	Jobs int
-
-	// Sanitize compiles with the address and undefined-behavior sanitizers, as the tests do.
-	Sanitize bool
-
-	// ThreadSanitize enables the separate race-check build.
-	ThreadSanitize bool
-
-	// Count makes the binary count its allocations, frees, retains and releases, and write them to
-	// stderr as it exits (runtime/count.h). Only a counted build does; the counts table is made of them.
-	Count bool
-
-	// LadderEveryStatement, for tests, writes a statement's throw checks as one ladder whenever it
-	// has any, not only where the ladder is shorter than the checks in place (exceptions.go), so the
-	// ladder's releases run on programs whose checks would otherwise be written in place. Only
-	// CWithOptions reads it.
-	LadderEveryStatement bool
-
-	// cpu, for tests, compiles for a particular processor (-march), so a test on an x86 machine can
-	// see what fused multiply-adds would do, as on arm64.
-	cpu string
-
-	// contract, for tests, lets clang fuse multiply-adds (-ffp-contract=fast, which disregards
-	// ieee754.c's FP_CONTRACT pragma): the twin of a program built as Node's arm64 release is, which
-	// GCC compiled with contraction on (fusedTwin, #4z1nx1s).
-	contract bool
-
-	// slabs, for tests, keeps the size-class allocator on in a sanitized build (heap.c), where every
-	// value otherwise comes from malloc, to show a use after a free is still caught with it on.
-	slabs bool
-}
-
-// Flags are what clang compiles a program and the runtime with. The fuzzer (internal/fuzz) compiles
-// with the same ones, so what it finds is what Build would. They always name the target, a native build's triple
-// resolved from the build's platform when Target is empty, so every key that holds them holds the target too.
-func Flags(options Options) []string {
-	options, err := ResolveTarget(options)
-	if err != nil {
-		// Every build validates its options before clang runs (ValidateOptions), refusing a platform the table holds no
-		// row for by its name, so this is only a caller asking for a key's flags on such a platform: there is no native
-		// build there to name.
-		panic(err)
-	}
-	// A program may declare a variable, a function or a parameter it never uses, or assign a variable
-	// to itself, as JavaScript allows; that's the linter's business (cohere's no-unused-vars and
-	// no-self-assign), not a reason the C can't compile.
-	flags := []string{"-std=c11", "-Wall", "-Wextra", "-Werror", "-Wcast-function-type-strict", "-pedantic", "-Wno-unused-variable", "-Wno-unused-but-set-variable", "-Wno-unused-function", "-Wno-unused-parameter", "-Wno-self-assign"}
-	// JavaScript rounds every operation on its own. clang otherwise fuses a * b + c into one
-	// multiply-add wherever the processor has one (every arm64, so every Apple silicon Mac), and
-	// 0.1 * 10 - 1 is then 5.551115123125783e-17 instead of 0. V8's own build doesn't fuse either;
-	// Node's arm64 release does, since GCC contracts by default, and its last bits aren't the
-	// language's answer (#4z1nx1s): what Node gives on x86-64 is.
-	if options.Debug {
-		flags = append(flags, "-g")
-	}
-	if options.contract {
-		flags = append(flags, "-ffp-contract=fast")
-	} else {
-		flags = append(flags, "-ffp-contract=off")
-	}
-	// Every function checks its frame against the stack's limit (stack.c), and a call in tail position
-	// that clang turns into a jump never makes a frame: a self tail call becomes a loop, and recursion
-	// with no end runs forever where Node's runs out of stack. Every call keeps its frame, as V8's do.
-	flags = append(flags, "-fno-optimize-sibling-calls")
-	if options.Target == "wasm32-wasi" {
-		flags = append(flags, "--target=wasm32-wasi", "--sysroot="+os.Getenv("WASI_SYSROOT"), "-DADAMIC_TARGET_WASI=1", "-mno-atomics")
-	}
-	if options.Target != "wasm32-wasi" {
-		flags = append(flags, "--target="+options.Target, "-pthread")
-	}
-	if options.ProgramRegion {
-		flags = append(flags, "-DADAMIC_PROGRAM_REGION")
-	}
-	if options.Count {
-		flags = append(flags, "-DADAMIC_COUNT")
-	}
-	if options.slabs {
-		flags = append(flags, "-DADAMIC_SLABS")
-	}
-	if options.cpu != "" {
-		flags = append(flags, "-march="+options.cpu)
-	}
-	if options.Sanitize && options.ThreadSanitize {
-		panic("native: ASan and TSan cannot be combined")
-	}
-	if options.ThreadSanitize {
-		return append(flags, "-O1", "-g", "-fsanitize=thread", "-DADAMIC_TSAN_TEST")
-	}
-	if options.Sanitize {
-		// UBSan keeps each check's source location as a string in the object, a header's by the path clang found it at,
-		// and no prefix map reaches those strings: a sysroot under the tools directory put its root in every object that
-		// checks code from its headers (Hot's arm64, #8wgk65j). A report names its file alone; the line and column stay.
-		return append(flags, "-O1", "-g", "-fsanitize=address,undefined", "-fno-sanitize-recover=all", "-fsanitize-undefined-strip-path-components=-1")
-	}
-	if options.Target == "wasm32-wasi" {
-		return append(flags, "-Oz")
-	}
-	flags = append(flags, "-O2")
-	if shippedRelease(options) {
-		flags = append(flags, "-flto=thin")
-	}
-	return flags
-}
-
-func shippedRelease(options Options) bool {
-	return options.Release && !options.Sanitize && !options.ThreadSanitize && !options.Count && options.Target != "wasm32-wasi"
-}
-
 // LinkFlags carries every semantic compilation flag through ThinLTO code generation.
-func LinkFlags(options Options) []string {
-	return linkFlags(Flags(options), options)
+func LinkFlags(options native_runtime.Options) []string {
+	return linkFlags(native_runtime.Flags(options), options)
 }
 
-func linkFlags(flags []string, options Options) []string {
-	if shippedRelease(options) && !darwinBuild() {
+func linkFlags(flags []string, options native_runtime.Options) []string {
+	if native_runtime.ShippedRelease(options) && !native_runtime.DarwinBuild() {
 		return append(flags, "-fuse-ld=lld")
 	}
 	return flags
@@ -224,14 +95,14 @@ func compileOnlyFlags(flags []string) []string {
 // archive's go.o carries Go's DWARF, so checker.a(go.o) would read as the build directory's path, random per build.
 // -oso_prefix takes the working directory back off. An ELF linker copies the DWARF in and records no input's path.
 func objectPrefixFlags() []string {
-	if darwinBuild() {
+	if native_runtime.DarwinBuild() {
 		return []string{"-Wl,-oso_prefix,."}
 	}
 	return nil
 }
 
 // Build compiles C source and the runtime into a native binary at output.
-func Build(source string, output string, options Options) error {
+func Build(source string, output string, options native_runtime.Options) error {
 	// Resolve the opt-in before forming runtime keys; Flags and lean builds read only Options.
 	options.ProgramRegion = options.ProgramRegion || os.Getenv("ADAMIC_PROGRAM_REGION") == "1"
 	if err := validateBuild(source, options); err != nil {
@@ -240,12 +111,12 @@ func Build(source string, output string, options Options) error {
 	if options.Target != "wasm32-wasi" && (options.Split || os.Getenv("ADAMIC_NATIVE_SPLIT") == "1") {
 		return buildUnits(source, output, options)
 	}
-	return buildOne(source, output, options, Flags(options))
+	return buildOne(source, output, options, native_runtime.Flags(options))
 }
 
 // BuildFlags is Build with the compiler flags the caller gives in place of Flags(options), in one translation unit
 // (markdownblocks' mutant canary, at -O0): the binary names no build directory, as Build's doesn't.
-func BuildFlags(source string, output string, options Options, flags []string) error {
+func BuildFlags(source string, output string, options native_runtime.Options, flags []string) error {
 	options.ProgramRegion = options.ProgramRegion || os.Getenv("ADAMIC_PROGRAM_REGION") == "1"
 	if options.ProgramRegion && !slices.Contains(flags, "-DADAMIC_PROGRAM_REGION") {
 		flags = append(slices.Clone(flags), "-DADAMIC_PROGRAM_REGION")
@@ -256,16 +127,16 @@ func BuildFlags(source string, output string, options Options, flags []string) e
 	return buildOne(source, output, options, flags)
 }
 
-func buildOne(source string, output string, options Options, flags []string) error {
-	library, err := RuntimeLibraryForSource("", source, options)
+func buildOne(source string, output string, options native_runtime.Options, flags []string) error {
+	library, err := native_runtime.RuntimeLibraryForSource("", source, options)
 	if err != nil {
 		return err
 	}
 	return buildOneWithRuntime(source, output, options, flags, library)
 }
 
-func buildOneWithRuntime(source string, output string, options Options, flags []string, library string) error {
-	jobserver, err := defaultJobserver()
+func buildOneWithRuntime(source string, output string, options native_runtime.Options, flags []string, library string) error {
+	jobserver, err := native_runtime.DefaultJobserver()
 	if err != nil {
 		return err
 	}
@@ -274,7 +145,7 @@ func buildOneWithRuntime(source string, output string, options Options, flags []
 		return fmt.Errorf("native: %w", err)
 	}
 	defer os.RemoveAll(directory)
-	return linkOne(directory, compilerName(options), source, output, options, flags, library, jobserver, func(directory string) ([]string, error) {
+	return linkOne(directory, native_runtime.CompilerName(options), source, output, options, flags, library, jobserver, func(directory string) ([]string, error) {
 		return regexpCompilerLinkFlags(source, options, directory)
 	}, objectKeyer(), false)
 }
@@ -291,12 +162,12 @@ func buildOneWithRuntime(source string, output string, options Options, flags []
 // compile and link it in one call instead, as every build there did before the split (#2r9xhqs). BuildLean keeps the
 // one call, since the split is for a cache of the compile's object and BuildLean reads no cache, and
 // TestACompiledThenLinkedProgramIsTheOneCallProgram builds both ways to hold the split's binary to the one call's bytes.
-func linkOne(directory string, compiler string, source string, output string, options Options, flags []string, library string, jobserver *Jobserver, links func(directory string) ([]string, error), compileObject func(compile *exec.Cmd, source string, compileFlags []string, program string, jobserver *Jobserver) error, oneCall bool) error {
+func linkOne(directory string, compiler string, source string, output string, options native_runtime.Options, flags []string, library string, jobserver *native_runtime.Jobserver, links func(directory string) ([]string, error), compileObject func(compile *exec.Cmd, source string, compileFlags []string, program string, jobserver *native_runtime.Jobserver) error, oneCall bool) error {
 	if err := os.WriteFile(filepath.Join(directory, "main.c"), []byte(source), 0o644); err != nil {
 		return fmt.Errorf("native: %w", err)
 	}
 	// Neither the build directory nor this machine's runtime cache may reach the binary, so its bytes are a
-	// function of its inputs wherever it's built (see cachedRuntime), except opt-in source debug paths.
+	// function of its inputs wherever it's built (see native_runtime.CachedRuntime), except opt-in source debug paths.
 	// Normally clang compiles main.c by its relative name inside the build directory, and finds headers through runtime, a link
 	// there to the cache. The prefix maps cover debug info and __FILE__, but ASan's metadata for globals keeps each source
 	// file as clang was given it (Workshop, Oct 11: <tmp>/adamic-build-<random>/main.c and <cache>/.../adamic.h in .rodata).
@@ -309,7 +180,7 @@ func linkOne(directory string, compiler string, source string, output string, op
 	if options.Debug && !options.Sanitize && !options.ThreadSanitize {
 		include, program = filepath.Join(directory, include), filepath.Join(directory, program)
 	}
-	compileFlags := append(append(append(slices.Clone(flags), prefixMaps(directory, "/adamic-build")...), prefixMaps(filepath.Dir(library), "/adamic-runtime")...), "-I", include)
+	compileFlags := append(append(append(slices.Clone(flags), native_runtime.PrefixMaps(directory, "/adamic-build")...), native_runtime.PrefixMaps(filepath.Dir(library), "/adamic-runtime")...), "-I", include)
 	compileFlags = append(compileFlags, programDebugFlags(options)...)
 	// On macOS ld's debug map records every object it links that carries debug info (a sanitized build's do) by its path,
 	// and a compile and link in one call links main.c's object from clang's own temporary file, <TMPDIR>/main-<random>.o,
@@ -320,11 +191,11 @@ func linkOne(directory string, compiler string, source string, output string, op
 	// of its own whose object a cache can hold (#2r9xhqs). The compile is the one call's compile, and the link is given
 	// the same flags, so every semantic one still reaches ThinLTO's code generation (linkFlags): the binary is the one
 	// call's bytes, release, Debug and sanitized (TestACompiledThenLinkedProgramIsTheOneCallProgram).
-	if options.Target != "wasm32-wasi" && (darwinBuild() || !oneCall) {
+	if options.Target != "wasm32-wasi" && (native_runtime.DarwinBuild() || !oneCall) {
 		// The compile takes every flag but a link's alone, which clang under -Werror refuses as an input unused by a
 		// compile (stdout columns' -Wl,--wrap= probes, TestProduct_StdoutColumnsProbes); the link below keeps them all.
 		compiled := compileOnlyFlags(compileFlags)
-		compile := clangIn(directory, compiler, append(slices.Clone(compiled), "-c", program, "-o", "main.o")...)
+		compile := native_runtime.ClangIn(directory, compiler, append(slices.Clone(compiled), "-c", program, "-o", "main.o")...)
 		if compileObject != nil && !oneCall {
 			if err := compileObject(compile, source, compiled, program, jobserver); err != nil {
 				return err
@@ -334,7 +205,7 @@ func linkOne(directory string, compiler string, source string, output string, op
 			if err != nil {
 				return err
 			}
-			buildLog("cCompile", "main.c", "", "off", compiling)
+			native_runtime.BuildLog("cCompile", "main.c", "", "off", compiling)
 		}
 		// The debug map records each object's modification time beside its name, so main.o's is the epoch's, as
 		// ZERO_AR_DATE has ar give an archive member's: a fresh main.o's would differ per build.
@@ -357,7 +228,7 @@ func linkOne(directory string, compiler string, source string, output string, op
 	if options.Target == "wasm32-wasi" {
 		arguments = append(arguments, "-Xlinker", "--whole-archive", runtimeArchive, "-Xlinker", "--no-whole-archive")
 	} else {
-		arguments = append(arguments, RuntimeLinkFlags(runtimeArchive)...)
+		arguments = append(arguments, native_runtime.RuntimeLinkFlags(runtimeArchive)...)
 	}
 	// The runtime calls libm (trunc, floor, sqrt). On macOS that's part of libSystem and comes free; on
 	// Linux it's its own library, and only the sanitizers' runtime happened to pull it in.
@@ -371,13 +242,13 @@ func linkOne(directory string, compiler string, source string, output string, op
 	}
 	arguments = append(arguments, "-lm")
 	if options.Target == "wasm32-wasi" {
-		arguments = append(arguments, WASILinkFlags(options)...)
+		arguments = append(arguments, native_runtime.WASILinkFlags(options)...)
 	}
-	command := clangIn(directory, compiler, arguments...)
+	command := native_runtime.ClangIn(directory, compiler, arguments...)
 	var combined []byte
 	var building time.Duration
 	if err := jobserver.Hold(func() error {
-		return timed(&building, func() (err error) { combined, err = command.CombinedOutput(); return err })
+		return native_runtime.Timed(&building, func() (err error) { combined, err = command.CombinedOutput(); return err })
 	}); err != nil {
 		return fmt.Errorf("native: clang failed: %w\n%s", err, combined)
 	}
@@ -388,17 +259,17 @@ func linkOne(directory string, compiler string, source string, output string, op
 	if program == "main.o" {
 		kind = "cLink"
 	}
-	buildLog(kind, filepath.Base(output), "", "off", building)
+	native_runtime.BuildLog(kind, filepath.Base(output), "", "off", building)
 	return nil
 }
 
 // compileMain runs compile, main.c's compile to main.o, holding a token of jobserver, and is how long clang ran, a wait
 // for the token left out.
-func compileMain(compile *exec.Cmd, jobserver *Jobserver) (time.Duration, error) {
+func compileMain(compile *exec.Cmd, jobserver *native_runtime.Jobserver) (time.Duration, error) {
 	var combined []byte
 	var compiling time.Duration
 	if err := jobserver.Hold(func() error {
-		return timed(&compiling, func() (err error) { combined, err = compile.CombinedOutput(); return err })
+		return native_runtime.Timed(&compiling, func() (err error) { combined, err = compile.CombinedOutput(); return err })
 	}); err != nil {
 		return 0, fmt.Errorf("native: clang failed: %w\n%s", err, combined)
 	}
@@ -415,7 +286,7 @@ func compileMain(compile *exec.Cmd, jobserver *Jobserver) (time.Duration, error)
 // The debug witnesses' overlay compiler rewrites the return line below by its
 // exact text (debugWitnessMutations in source_lines_products_test.go), so a
 // change to that line updates the mutation's Before in the same change.
-func programDebugFlags(options Options) []string {
+func programDebugFlags(options native_runtime.Options) []string {
 	if options.Debug && options.DebugDirectory != "" {
 		return []string{"-fdebug-compilation-dir=" + options.DebugDirectory}
 	}

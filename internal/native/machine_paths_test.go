@@ -13,6 +13,7 @@ import (
 
 	bridge "github.com/system-inc/adamic/bridge/tsgo"
 	"github.com/system-inc/adamic/internal/buildcache/location"
+	"github.com/system-inc/adamic/internal/native_runtime"
 	"github.com/system-inc/adamic/internal/toolchain"
 )
 
@@ -29,13 +30,13 @@ func TestNativeCachesWriteNothingUnderHome(t *testing.T) {
 	t.Parallel()
 	const variable = "ADAMIC_TEST_NATIVE_HOME"
 	if os.Getenv(variable) == "1" {
-		if _, err := RuntimeLibrary("", Options{}); err != nil {
+		if _, err := native_runtime.RuntimeLibrary("", native_runtime.Options{}); err != nil {
 			t.Fatal(err)
 		}
-		if err := Build(splitProbe, filepath.Join(t.TempDir(), "split"), Options{Split: true, Jobs: 1}); err != nil {
+		if err := Build(splitProbe, filepath.Join(t.TempDir(), "split"), native_runtime.Options{Split: true, Jobs: 1}); err != nil {
 			t.Fatal(err)
 		}
-		if _, err := splitTSGoRuntime(splitProbe, Options{}); err != nil {
+		if _, err := splitTSGoRuntime(splitProbe, native_runtime.Options{}); err != nil {
 			t.Fatal(err)
 		}
 		return
@@ -79,7 +80,7 @@ func TestNativeCachesWriteNothingUnderHome(t *testing.T) {
 // absolute path back on BuildTSGo's link line, or on buildUnitsWithLibrary's; objectPrefixFlags off.
 func TestCheckerBuildsNameNoPlaceOfTheArchive(t *testing.T) {
 	t.Parallel()
-	compiler, err := toolchain.Path(compilerName(Options{}))
+	compiler, err := toolchain.Path(native_runtime.CompilerName(native_runtime.Options{}))
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -103,11 +104,11 @@ func TestCheckerBuildsNameNoPlaceOfTheArchive(t *testing.T) {
 	}
 	// The stubs' own debug info names where they were compiled as /checker-stubs, as Go's names no place of this
 	// build's, so only the link can put the archive's directory in a binary.
-	compile := toolchain.CommandIn(place, compiler, append(prefixMaps(place, "/checker-stubs"), "-g", "-c", "stubs.c", "-o", "stubs.o")...)
+	compile := toolchain.CommandIn(place, compiler, append(native_runtime.PrefixMaps(place, "/checker-stubs"), "-g", "-c", "stubs.c", "-o", "stubs.o")...)
 	if output, err := compile.CombinedOutput(); err != nil {
 		t.Fatalf("compiling the stubs: %v\n%s", err, output)
 	}
-	archiver := toolchain.CommandIn(place, archiverName(compiler), "rcs", "tsgo.a", "stubs.o")
+	archiver := toolchain.CommandIn(place, native_runtime.ArchiverName(compiler), "rcs", "tsgo.a", "stubs.o")
 	if output, err := archiver.CombinedOutput(); err != nil {
 		t.Fatalf("archiving the stubs: %v\n%s", err, output)
 	}
@@ -117,8 +118,8 @@ func TestCheckerBuildsNameNoPlaceOfTheArchive(t *testing.T) {
 		spellings = append(spellings, []byte(real))
 	}
 	builds := map[string]func(output string) error{
-		"BuildTSGo":      func(output string) error { return BuildTSGo(splitProbe, output, archive, Options{}) },
-		"BuildSplitTSGo": func(output string) error { return BuildSplitTSGo(splitProbe, output, archive, Options{Jobs: 1}) },
+		"BuildTSGo":      func(output string) error { return BuildTSGo(splitProbe, output, archive, native_runtime.Options{}) },
+		"BuildSplitTSGo": func(output string) error { return BuildSplitTSGo(splitProbe, output, archive, native_runtime.Options{Jobs: 1}) },
 	}
 	for _, name := range []string{"BuildTSGo", "BuildSplitTSGo"} {
 		binary := filepath.Join(t.TempDir(), "checker")
@@ -160,7 +161,7 @@ func TestSplitBuildsNameNoPlaceOfTheirInputs(t *testing.T) {
 		spellings = append(spellings, []byte(real))
 	}
 	binary := filepath.Join(t.TempDir(), "split")
-	if err := Build(splitProbe, binary, Options{Split: true, Jobs: 2, Sanitize: true}); err != nil {
+	if err := Build(splitProbe, binary, native_runtime.Options{Split: true, Jobs: 2, Sanitize: true}); err != nil {
 		t.Fatal(err)
 	}
 	content, err := os.ReadFile(binary)

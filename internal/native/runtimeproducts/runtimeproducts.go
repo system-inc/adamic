@@ -6,8 +6,8 @@
 // #defines its C turns on) and its options, and an archive is about 56 C files. Compiled where a test first needed it,
 // that was 22 s of a 27 s test alone on one core, and 62 to 74 s at a 62-CPU share, where the program's own work is 5
 // (#sqmn7jk, lap 3's red): every unit compiled them all, since none was a product. So each archive is a buildcache
-// product the tree build builds ahead (Build, from a package's TestProduct_ tests), and native asks a process's
-// supplier for it (Supply), which a runner reads and never builds: one it lacks fails the build as not built.
+// product the tree build builds ahead (Build, from a package's TestProduct_ tests), and native_runtime asks a
+// process's supplier for it (Supply), which a runner reads and never builds: one it lacks fails the build as not built.
 //
 // A unit fetches only the products its own package's product tests touch, so each package whose tests read an archive
 // has a product test for it: internal/oracle builds every one (TestProduct_NativeRuntimes*, Build, and its program
@@ -30,7 +30,7 @@ import (
 	"github.com/system-inc/adamic/internal/native_runtime"
 )
 
-// A Set is one set of features some program the oracle builds turns on, in native's order (native_runtime.Features), and
+// A Set is one set of features some program the oracle builds turns on, in the runtime's order (native_runtime.Features), and
 // Witness, a program that turns on exactly these, which internal/oracle's TestRuntimeSetsAreEachUsed lowers so a set no
 // program needs any more can't stay in the table.
 type Set struct {
@@ -118,7 +118,7 @@ var CommandVariants = []Variant{
 // Groups is how many product tests each variant's archives are cut into.
 const Groups = 3
 
-// Supply gives native the archive a build asks for from its product: built here the first time on a machine that
+// Supply gives native_runtime the archive a build asks for from its product: built here the first time on a machine that
 // builds (one unit at a time, as a test waits on it), never on a runner, which reads it or fails as not built.
 func Supply(request native_runtime.RuntimeRequest) (string, error) {
 	if err := Declared(request); err != nil {
@@ -165,14 +165,15 @@ func Inputs(request native_runtime.RuntimeRequest) buildcache.Inputs {
 	}
 }
 
-// runtimeFiles are what an archive's build reads and runs of internal/native, which its lean set keys as files
-// (buildcache.LeanProduct, #earlycut): the runtime's sources (internal/native_runtime's C, and the Go file that embeds
-// it, named apart so no test beside them reaches an archive's key, TestRuntimeFilesHoldNoTest), and the files defining all the build reaches from native_runtime.RuntimeRequest.Build, which
-// TestTheRuntimeBuildReachesOnlyItsDeclaredFiles holds to them. Its lean recipe keys
-// the rest of internal/native too, the compiler with it, as it keys every package runtimeproducts imports (buildcache's
-// leanRecipeOf, Node's must 1 on #gr5y0yf item 1): a change to the tree outside that import closure leaves an archive's
-// key alone.
-var runtimeFiles = []string{"internal/native_runtime/c", "internal/native_runtime/native_runtime.go", "internal/native/jobserver.go", "internal/native/library.go", "internal/native/native.go", "internal/native/target.go"}
+// runtimeFiles are what an archive's build reads and runs, which its lean set keys as files (buildcache.LeanProduct,
+// #earlycut): internal/native_runtime's C and its Go files, each named apart so no test beside them reaches an
+// archive's key (TestRuntimeFilesHoldNoTest). The Go files define all the build reaches from
+// native_runtime.RuntimeRequest.Build, which TestTheRuntimeBuildReachesOnlyItsDeclaredFiles holds to them, and the
+// request's making and the runtime cache beside it. Its lean recipe keys the rest of runtimeproducts' import closure, as
+// it keys every package runtimeproducts imports (buildcache's leanRecipeOf, Node's must 1 on #gr5y0yf item 1), and that
+// closure holds no package of the compiler (#tb722h2 H2), so a change to internal/native, ir or flow leaves an
+// archive's key alone.
+var runtimeFiles = []string{"internal/native_runtime/c", "internal/native_runtime/jobserver.go", "internal/native_runtime/library.go", "internal/native_runtime/native_runtime.go", "internal/native_runtime/options.go", "internal/native_runtime/runtime_lock.go", "internal/native_runtime/runtime_lock_other.go", "internal/native_runtime/target.go"}
 
 // Build builds ahead the archives of the sets group owns (every third, from group) with the named variant's options,
 // one archive at a time, each compiling four units at once, the CPUs a product's unit is given (a traced build gives

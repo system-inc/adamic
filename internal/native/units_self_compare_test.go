@@ -12,6 +12,7 @@ import (
 
 	"github.com/system-inc/adamic/internal/load"
 	"github.com/system-inc/adamic/internal/lower"
+	"github.com/system-inc/adamic/internal/native_runtime"
 )
 
 func TestSplitSelfCompareAgreesWithNode(t *testing.T) {
@@ -45,7 +46,7 @@ func TestSplitSelfCompareAgreesWithNode(t *testing.T) {
 	}
 	binary := filepath.Join(t.TempDir(), "program")
 	// Build uses -Werror, including C's inline definition diagnostic.
-	if err := Build(C(lowered), binary, Options{Split: true, Jobs: 2}); err != nil {
+	if err := Build(C(lowered), binary, native_runtime.Options{Split: true, Jobs: 2}); err != nil {
 		t.Fatal(err)
 	}
 	got, err := exec.CommandContext(ctx, binary).CombinedOutput()

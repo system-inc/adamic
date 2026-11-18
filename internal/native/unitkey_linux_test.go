@@ -8,6 +8,7 @@ import (
 	"strings"
 	"testing"
 
+	"github.com/system-inc/adamic/internal/native_runtime"
 	"github.com/system-inc/adamic/internal/toolchain"
 )
 
@@ -32,7 +33,7 @@ func TestTheSearchProbeListsNothingUnderOpt(t *testing.T) {
 		t.Fatal(err)
 	}
 	probe := t.TempDir()
-	arguments := slices.Concat([]string{"-f", "-qq", "-e", "trace=openat", compiler}, Flags(Options{Debug: true, Sanitize: true}), unitSearchProbe(probe))
+	arguments := slices.Concat([]string{"-f", "-qq", "-e", "trace=openat", compiler}, native_runtime.Flags(native_runtime.Options{Debug: true, Sanitize: true}), unitSearchProbe(probe))
 	command := exec.Command(tracer, arguments...)
 	command.Dir = probe
 	output, err := command.CombinedOutput()

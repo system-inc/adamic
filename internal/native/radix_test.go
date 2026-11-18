@@ -7,6 +7,8 @@ import (
 	"path/filepath"
 	"strings"
 	"testing"
+
+	"github.com/system-inc/adamic/internal/native_runtime"
 )
 
 // radixHarness writes value.toString(radix) for each line's radix and value, as hexadecimal bits.
@@ -76,7 +78,7 @@ func TestToStringWithARadixMatchesNode(t *testing.T) {
 	}
 
 	binary := filepath.Join(t.TempDir(), "harness")
-	if err := Build(radixHarness, binary, Options{Sanitize: true}); err != nil {
+	if err := Build(radixHarness, binary, native_runtime.Options{Sanitize: true}); err != nil {
 		t.Fatal(err)
 	}
 	native := strings.Split(strings.TrimSuffix(runWithInput(t, input.String(), binary), "\n"), "\n")
@@ -128,7 +130,7 @@ int main(int count, char **arguments) {
 }
 `
 	binary := filepath.Join(t.TempDir(), "harness")
-	if err := Build(harness, binary, Options{Sanitize: true}); err != nil {
+	if err := Build(harness, binary, native_runtime.Options{Sanitize: true}); err != nil {
 		t.Fatal(err)
 	}
 	const message = "toString() radix argument must be between 2 and 36"

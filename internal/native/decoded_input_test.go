@@ -15,6 +15,7 @@ import (
 	"github.com/system-inc/adamic/internal/javascript"
 	"github.com/system-inc/adamic/internal/load"
 	"github.com/system-inc/adamic/internal/lower"
+	"github.com/system-inc/adamic/internal/native_runtime"
 )
 
 const decodedReadProbe = `#include "adamic.h"
@@ -41,22 +42,22 @@ int main(int argc, char **argv) {
 
 func decodedReadProduct(t *testing.T) string {
 	t.Helper()
-	options := Options{Sanitize: true, Count: true}
-	files, flags, compiler, version, err := runtimeInputs("", options, nil)
+	options := native_runtime.Options{Sanitize: true, Count: true}
+	files, flags, compiler, version, err := native_runtime.RuntimeInputs("", options, nil)
 	if err != nil {
 		t.Fatal(err)
 	}
-	headers, err := headersRead(files, flags, compiler)
+	headers, err := native_runtime.HeadersRead(files, flags, compiler)
 	if err != nil {
 		t.Fatal(err)
 	}
-	inputs := buildcache.Inputs{Name: "decoded-input-read", Files: []string{"internal/native_runtime/c", "internal/native/decoded_input_test.go", "internal/native/native.go", "internal/native/library.go", "internal/native/build_runtime.go", "internal/native/target.go"}, Flags: portableKeyParts(files, flags, compiler, headers), Toolchain: []string{buildcache.CompilerReport(compiler), buildcache.Tool(archiverName(compiler), "--version"), buildcache.Tool("node", "--version")}}
+	inputs := buildcache.Inputs{Name: "decoded-input-read", Files: []string{"internal/native_runtime/c", "internal/native/decoded_input_test.go", "internal/native/native.go", "internal/native_runtime/options.go", "internal/native_runtime/library.go", "internal/native/build_runtime.go", "internal/native_runtime/target.go"}, Flags: native_runtime.PortableKeyParts(files, flags, compiler, headers), Toolchain: []string{buildcache.CompilerReport(compiler), buildcache.Tool(native_runtime.ArchiverName(compiler), "--version"), buildcache.Tool("node", "--version")}}
 	return buildcache.Product(t, inputs, func(directory string) error {
-		cache, err := cacheDirectory("decoded-input-read")
+		cache, err := native_runtime.CacheDirectory("decoded-input-read")
 		if err != nil {
 			return err
 		}
-		library, err := cachedRuntime(files, flags, compiler, version, cache)
+		library, err := native_runtime.CachedRuntime(files, flags, compiler, version, cache)
 		if err != nil {
 			return err
 		}
@@ -93,7 +94,7 @@ func decodedBackendProduct(t *testing.T) string {
 		if err := os.WriteFile(filepath.Join(directory, "program.mjs"), []byte(javascript.JavaScript(lowered)), 0644); err != nil {
 			return err
 		}
-		return Build(C(lowered), filepath.Join(directory, "program"), Options{Sanitize: true, Count: true, Jobs: 1})
+		return Build(C(lowered), filepath.Join(directory, "program"), native_runtime.Options{Sanitize: true, Count: true, Jobs: 1})
 	})
 }
 func TestProduct_DecodedInputBackends(t *testing.T) { t.Parallel(); decodedBackendProduct(t) }

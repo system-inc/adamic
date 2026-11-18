@@ -12,6 +12,7 @@ import (
 
 	"github.com/system-inc/adamic/internal/leakcheck"
 	"github.com/system-inc/adamic/internal/native"
+	"github.com/system-inc/adamic/internal/native_runtime"
 )
 
 // The runtime is exercised independently of graph-type selection. A successful
@@ -80,7 +81,7 @@ func TestGraphRegionsRuntime(t *testing.T) {
 	t.Parallel()
 	for _, counted := range []bool{false, true} {
 		binary := filepath.Join(t.TempDir(), "regions")
-		if err := native.Build(graphHarness, binary, native.Options{Sanitize: true, Count: counted}); err != nil {
+		if err := native.Build(graphHarness, binary, native_runtime.Options{Sanitize: true, Count: counted}); err != nil {
 			t.Fatal(err)
 		}
 		for _, mode := range []string{"escaping", "anchor", "later", "leak", "shared"} {
@@ -127,7 +128,7 @@ func TestGraphRegionsRuntime(t *testing.T) {
 					countedBinary := binary
 					if !counted {
 						countedBinary = filepath.Join(t.TempDir(), "anchor-counted")
-						if err := native.Build(graphHarness, countedBinary, native.Options{Sanitize: true, Count: true}); err != nil {
+						if err := native.Build(graphHarness, countedBinary, native_runtime.Options{Sanitize: true, Count: true}); err != nil {
 							t.Fatal(err)
 						}
 					}
@@ -180,7 +181,7 @@ int main(void) {
 }
 `
 	binary := filepath.Join(t.TempDir(), "closure")
-	if err := native.Build(harness, binary, native.Options{Sanitize: true, Count: true}); err != nil {
+	if err := native.Build(harness, binary, native_runtime.Options{Sanitize: true, Count: true}); err != nil {
 		t.Fatal(err)
 	}
 	output, err := exec.Command(binary).CombinedOutput()
@@ -237,7 +238,7 @@ int main(void) {
 	source = strings.ReplaceAll(source, "adamic_object_size(3)", "adamic_object_size(2)")
 	directory := t.TempDir()
 	binary := filepath.Join(directory, "million")
-	if err := native.Build(source, binary, native.Options{Count: true}); err != nil {
+	if err := native.Build(source, binary, native_runtime.Options{Count: true}); err != nil {
 		t.Fatal(err)
 	}
 	output, err := exec.Command("/bin/sh", "-c", `"$@" & child=$!; wait "$child"`, "rss", binary).CombinedOutput()
@@ -261,7 +262,7 @@ int main(void) {
 	}
 	t.Logf("native runtime foundation:\n%s", output)
 	release := filepath.Join(directory, "million-release")
-	if err := native.Build(source, release, native.Options{}); err != nil {
+	if err := native.Build(source, release, native_runtime.Options{}); err != nil {
 		t.Fatal(err)
 	}
 	releaseOutput, err := exec.Command("/bin/sh", "-c", `"$@" & child=$!; wait "$child"`, "rss", release).CombinedOutput()
@@ -271,10 +272,10 @@ int main(void) {
 	if strings.Contains(string(releaseOutput), "graph region:") {
 		t.Fatal("diagnostics in release")
 	}
-	t.Logf("native release flags: %s", strings.Join(native.Flags(native.Options{}), " "))
+	t.Logf("native release flags: %s", strings.Join(native_runtime.Flags(native_runtime.Options{}), " "))
 	t.Logf("native release:\n%s", releaseOutput)
 	sanitized := filepath.Join(directory, "million-sanitized")
-	if err := native.Build(source, sanitized, native.Options{Count: true, Sanitize: true}); err != nil {
+	if err := native.Build(source, sanitized, native_runtime.Options{Count: true, Sanitize: true}); err != nil {
 		t.Fatal(err)
 	}
 	sanitizedOutput, err := exec.Command(sanitized).CombinedOutput()
@@ -352,7 +353,7 @@ func TestGraphContainerBoundary(t *testing.T) {
 `
 	source := graphHarness[:strings.Index(graphHarness, "__attribute__")] + main
 	binary := filepath.Join(t.TempDir(), "containers")
-	if err := native.Build(source, binary, native.Options{Count: true, Sanitize: true}); err != nil {
+	if err := native.Build(source, binary, native_runtime.Options{Count: true, Sanitize: true}); err != nil {
 		t.Fatal(err)
 	}
 	output, err := exec.Command(binary).CombinedOutput()
@@ -397,7 +398,7 @@ func TestGraphLazyRegions(t *testing.T) {
 `
 	source := graphHarness[:strings.Index(graphHarness, "__attribute__")] + main
 	binary := filepath.Join(t.TempDir(), "lazy")
-	if err := native.Build(source, binary, native.Options{Sanitize: true, Count: true}); err != nil {
+	if err := native.Build(source, binary, native_runtime.Options{Sanitize: true, Count: true}); err != nil {
 		t.Fatal(err)
 	}
 	output, err := exec.Command(binary).CombinedOutput()
@@ -421,7 +422,7 @@ func TestGraphLazyRegions(t *testing.T) {
 func TestGraphUnreleasedAnchorCounted(t *testing.T) {
 	t.Parallel()
 	binary := filepath.Join(t.TempDir(), "anchor-counted")
-	if err := native.Build(graphHarness, binary, native.Options{Count: true}); err != nil {
+	if err := native.Build(graphHarness, binary, native_runtime.Options{Count: true}); err != nil {
 		t.Fatal(err)
 	}
 	for _, mode := range []string{"anchor", "leak"} {
@@ -502,7 +503,7 @@ int main(int count, char **arguments) {
 `
 	source := graphHarness[:strings.Index(graphHarness, "__attribute__")] + main
 	binary := filepath.Join(t.TempDir(), "refusals")
-	if err := native.Build(source, binary, native.Options{Sanitize: true}); err != nil {
+	if err := native.Build(source, binary, native_runtime.Options{Sanitize: true}); err != nil {
 		t.Fatal(err)
 	}
 	for mode, want := range map[string]string{

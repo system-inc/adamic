@@ -3806,8 +3806,9 @@ func censusMissing(root, pkg, test string) string {
 // A lean build's recipe is the code that makes it, from the tree (leanRecipeOf): buildcache and every package of the tree
 // it links, each by every non-test file, and a lean caller's package with its whole import closure (Node's must 1 on
 // #gr5y0yf item 1). So a runtime archive keys runtimeproducts, internal/toolchain, buildcache's gobuild.go (goProduct's
-// closure and withOutsideHeaders, which run a go build) and every package runtimeproducts links, internal/native, ir and
-// flow among them, and never the settling binary's own: internal/oracle's and internal/lower's files, or a dependency's
+// closure and withOutsideHeaders, which run a go build) and every package runtimeproducts links, internal/native_runtime
+// and ccjobserver among them, and never the compiler, which runtimeproducts no longer links (internal/native, ir and
+// flow, #tb722h2 H2), nor the settling binary's own: internal/oracle's and internal/lower's files, or a dependency's
 // test files. buildcache's own lean build keys no caller and buildcache whole too, and a process naming no package is
 // refused, as recipeOf refuses it. Mutants that each fail it: the caller listed without what it links; buildcache keyed
 // by its make files alone; the caller left out; the refusal dropped.
@@ -3837,12 +3838,13 @@ func TestALeanRecipeIsTheCodeThatMakesTheBuild(t *testing.T) {
 		return slices.ContainsFunc(listed, func(entry string) bool { return strings.HasPrefix(entry, prefix) })
 	}
 	for _, want := range []string{"content internal/buildcache/make_go.go", "content internal/buildcache/gobuild.go", "content internal/buildcache/settle.go", "content internal/toolchain/", "content internal/native/runtimeproducts/runtimeproducts.go", "package listing internal/native/runtimeproducts", "content go.mod",
-		"content internal/native/library.go", "content internal/native/emit_expressions.go", "content internal/ccjobserver/", "content internal/ir/", "content internal/flow/", "package listing internal/ir"} {
+		"content internal/native_runtime/library.go", "content internal/ccjobserver/"} {
 		if !has(lean, want) {
 			t.Errorf("a runtime archive's lean recipe lacks %q: %q", want, lean)
 		}
 	}
-	for _, unwanted := range []string{"content internal/oracle/", "content internal/lower/", "content internal/native/runtimeproducts/census_test.go", "content internal/native/library_test.go", "content internal/buildcache/precise_test.go"} {
+	for _, unwanted := range []string{"content internal/oracle/", "content internal/lower/", "content internal/native/runtimeproducts/census_test.go", "content internal/native_runtime/library_test.go", "content internal/buildcache/precise_test.go",
+		"content internal/native/emit_expressions.go", "content internal/ir/", "content internal/flow/", "package listing internal/ir"} {
 		if has(lean, unwanted) {
 			t.Errorf("a runtime archive's lean recipe holds %q", unwanted)
 		}

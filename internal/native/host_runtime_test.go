@@ -11,9 +11,10 @@ import (
 
 	"github.com/system-inc/adamic/internal/leakcheck"
 	"github.com/system-inc/adamic/internal/native"
+	"github.com/system-inc/adamic/internal/native_runtime"
 )
 
-func hostBuild(t *testing.T, source, output, directory string, options native.Options) {
+func hostBuild(t *testing.T, source, output, directory string, options native_runtime.Options) {
 	t.Helper()
 	if directory == "" {
 		if err := native.Build(source, output, options); err != nil {
@@ -21,7 +22,7 @@ func hostBuild(t *testing.T, source, output, directory string, options native.Op
 		}
 		return
 	}
-	library, err := native.RuntimeLibrary(directory, options)
+	library, err := native_runtime.RuntimeLibrary(directory, options)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -29,8 +30,8 @@ func hostBuild(t *testing.T, source, output, directory string, options native.Op
 	if err := os.WriteFile(main, []byte(source), 0600); err != nil {
 		t.Fatal(err)
 	}
-	args := append(native.Flags(options), "-I", filepath.Dir(library), "-o", output, main)
-	args = append(args, native.RuntimeLinkFlags(library)...)
+	args := append(native_runtime.Flags(options), "-I", filepath.Dir(library), "-o", output, main)
+	args = append(args, native_runtime.RuntimeLinkFlags(library)...)
 	args = append(args, "-lm")
 	if out, err := exec.Command("clang", args...).CombinedOutput(); err != nil {
 		t.Fatalf("clang: %v\n%s", err, out)
@@ -134,7 +135,7 @@ func hostFixture(t *testing.T) (source, dir, oracle string, env []string) {
 	return source, dir, oracle, env
 }
 
-func runHostRuntimeContracts(t *testing.T, options native.Options) {
+func runHostRuntimeContracts(t *testing.T, options native_runtime.Options) {
 	t.Helper()
 	source, dir, oracle, env := hostFixture(t)
 	modes := []string{"output", "exit", "status", "clocks", "memory", "identity", "cwd", "environment", "realpath", "realpath-error", "realpath-walk-error", "eol"}
@@ -196,19 +197,19 @@ func runHostRuntimeContracts(t *testing.T, options native.Options) {
 
 func TestHostRuntimeContractsSanitized(t *testing.T) {
 	t.Parallel()
-	runHostRuntimeContracts(t, native.Options{Sanitize: true})
+	runHostRuntimeContracts(t, native_runtime.Options{Sanitize: true})
 }
 
 func TestHostRuntimeContractsRelease(t *testing.T) {
 	t.Parallel()
-	runHostRuntimeContracts(t, native.Options{})
+	runHostRuntimeContracts(t, native_runtime.Options{})
 }
 
 func TestHostRuntimeIntentionalTeardown(t *testing.T) {
 	t.Parallel()
 	source, dir, _, env := hostFixture(t)
 	counted := filepath.Join(dir, "counted-host")
-	hostBuild(t, source, counted, "", native.Options{Sanitize: true, Count: true})
+	hostBuild(t, source, counted, "", native_runtime.Options{Sanitize: true, Count: true})
 	for _, code := range []string{"0", "1", "2"} {
 		run := hostRun(t, env, counted, "exit", code)
 		if !bytes.Contains(run.Stderr, []byte("adamic: intentional exit:")) || !bytes.Contains(run.Stderr, []byte("frees 0")) || !bytes.Contains(run.Stderr, []byte("releases 0")) {
@@ -246,7 +247,7 @@ func runHostRuntimeMutant(t *testing.T, index int) {
 	m := mutations[index]
 	runtime := hostMutant(t, m.file, m.before, m.after)
 	binary := filepath.Join(dir, fmt.Sprintf("mutant-%d", index))
-	hostBuild(t, source, binary, runtime, native.Options{Sanitize: true})
+	hostBuild(t, source, binary, runtime, native_runtime.Options{Sanitize: true})
 	args := []string{m.mode}
 	if m.mode == "exit" {
 		args = append(args, "2")

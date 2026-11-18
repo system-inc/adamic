@@ -12,6 +12,7 @@ import (
 	"github.com/system-inc/adamic/internal/childguard"
 	"github.com/system-inc/adamic/internal/load"
 	"github.com/system-inc/adamic/internal/lower"
+	"github.com/system-inc/adamic/internal/native_runtime"
 )
 
 // A timer warning names the process that printed it, as Node's does: (node:<pid>) is the running
@@ -36,7 +37,7 @@ func TestTimerWarningNamesItsOwnProcess(t *testing.T) {
 		t.Fatal(err)
 	}
 	binary := filepath.Join(directory, "delay_nan")
-	if err := Build(C(program), binary, Options{}); err != nil {
+	if err := Build(C(program), binary, native_runtime.Options{}); err != nil {
 		t.Fatal(err)
 	}
 	ctx, cancel := context.WithTimeout(context.Background(), 2*time.Minute)

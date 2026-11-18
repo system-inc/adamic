@@ -15,6 +15,7 @@ import (
 	"github.com/system-inc/adamic/internal/javascript"
 	"github.com/system-inc/adamic/internal/load"
 	"github.com/system-inc/adamic/internal/lower"
+	"github.com/system-inc/adamic/internal/native_runtime"
 )
 
 func namedProgram(t *testing.T, entry string, overlay map[string]string) *ir.Program {
@@ -152,7 +153,7 @@ func TestSourceNamesDoNotMove(t *testing.T) {
 	}
 	for _, sanitize := range []bool{false, true} {
 		binary := filepath.Join(directory, "names")
-		if err := Build(original, binary, Options{Sanitize: sanitize}); err != nil {
+		if err := Build(original, binary, native_runtime.Options{Sanitize: sanitize}); err != nil {
 			t.Fatal(err)
 		}
 		if got := runWithInput(t, "", binary); got != runWithInput(t, "", "node", "--disable-warning=ExperimentalWarning", "../../oracle/node.mjs", entry) {
@@ -246,7 +247,7 @@ func TestImportedSpecializationsHaveSourceIdentity(t *testing.T) {
 		t.Fatal("program root relocation changed emitted text")
 	}
 	binary := filepath.Join(directory, "imported")
-	if err := Build(code, binary, Options{Sanitize: true}); err != nil {
+	if err := Build(code, binary, native_runtime.Options{Sanitize: true}); err != nil {
 		t.Fatal(err)
 	}
 	if got := runWithInput(t, "", binary); got != runWithInput(t, "", "node", "--disable-warning=ExperimentalWarning", "../../oracle/node.mjs", entry) {
@@ -287,7 +288,7 @@ func TestGeneratedRolesDoNotCollide(t *testing.T) {
 		seen[name] = true
 	}
 	binary := filepath.Join(filepath.Dir(entry), "roles")
-	if err := Build(C(program), binary, Options{Sanitize: true}); err != nil {
+	if err := Build(C(program), binary, native_runtime.Options{Sanitize: true}); err != nil {
 		t.Fatal(err)
 	}
 	if got := runWithInput(t, "", binary); got != runWithInput(t, "", "node", "--disable-warning=ExperimentalWarning", "../../oracle/node.mjs", entry) {
@@ -320,7 +321,7 @@ func TestGenericSpecializationsHaveSourceIdentity(t *testing.T) {
 		t.Fatalf("got %d concrete specializations", count)
 	}
 	binary := filepath.Join(t.TempDir(), "generic")
-	if err := Build(C(program), binary, Options{Sanitize: true}); err != nil {
+	if err := Build(C(program), binary, native_runtime.Options{Sanitize: true}); err != nil {
 		t.Fatal(err)
 	}
 	if got, want := runWithInput(t, "", binary), runWithInput(t, "", "node", "--disable-warning=ExperimentalWarning", "../../oracle/node.mjs", entry); got != want {
@@ -545,7 +546,7 @@ func stableProgramMatchesNode(t *testing.T, entry, code string) {
 	}
 	want := run("node", "--disable-warning=ExperimentalWarning", loader, entry)
 	binary := filepath.Join(t.TempDir(), "program")
-	if err := Build(code, binary, Options{Split: true, Sanitize: true, Jobs: 2}); err != nil {
+	if err := Build(code, binary, native_runtime.Options{Split: true, Sanitize: true, Jobs: 2}); err != nil {
 		t.Fatal(err)
 	}
 	if got := run(binary); !bytes.Equal(got, want) {
@@ -841,7 +842,7 @@ console.log((run(22)[0] ?? 0).toString());`
 	}
 	for _, sanitize := range []bool{false, true} {
 		binary := filepath.Join(filepath.Dir(entry), "calling-class")
-		if err := Build(code, binary, Options{Sanitize: sanitize}); err != nil {
+		if err := Build(code, binary, native_runtime.Options{Sanitize: sanitize}); err != nil {
 			t.Fatal(err)
 		}
 		if got := runWithInput(t, "", binary); got != truth {

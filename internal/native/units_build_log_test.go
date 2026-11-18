@@ -15,9 +15,10 @@ import (
 
 	"github.com/system-inc/adamic/internal/load"
 	"github.com/system-inc/adamic/internal/lower"
+	"github.com/system-inc/adamic/internal/native_runtime"
 )
 
-// buildLogLine is a line buildLog writes: kind, name, key12 or -, outcome, seconds. repass is compileUnits' second
+// buildLogLine is a line native_runtime.BuildLog writes: kind, name, key12 or -, outcome, seconds. repass is compileUnits' second
 // pass after a cold check's mismatch, every unit compiled again uncached.
 var buildLogLine = regexp.MustCompile(`^(cCompile|cArchive|cLink|cBuild) (\S+) ([0-9a-f]{12}|-) (hit|miss|off|repass) ([0-9]+\.[0-9]{3})$`)
 
@@ -58,7 +59,7 @@ int main(void) { printf("%%d\n", adamic_twice_%[1]s()); return 0; }
 		if err := os.MkdirAll(filepath.Dir(binary), 0o755); err != nil {
 			t.Fatal(err)
 		}
-		if err := Build(source, binary, Options{Split: true, Jobs: 2}); err != nil {
+		if err := Build(source, binary, native_runtime.Options{Split: true, Jobs: 2}); err != nil {
 			t.Fatal(err)
 		}
 		contents, err := os.ReadFile(binary)
@@ -147,7 +148,7 @@ int main(void) { printf("%%d\n", adamic_twice_%[1]s()); return 0; }
 func TestBuildLogKeepsANameOnOneLine(t *testing.T) {
 	log := filepath.Join(t.TempDir(), "build.log")
 	t.Setenv("ADAMIC_BUILD_LOG", log)
-	buildLog("cLink", "a b\tc\ncCompile forged 0123456789ab hit 9.000", "", "off", time.Second)
+	native_runtime.BuildLog("cLink", "a b\tc\ncCompile forged 0123456789ab hit 9.000", "", "off", time.Second)
 	written, err := os.ReadFile(log)
 	if err != nil {
 		t.Fatal(err)
@@ -166,7 +167,7 @@ func TestBuildLogKeepsANameOnOneLine(t *testing.T) {
 func TestARepassAfterAMismatchSaysRepass(t *testing.T) {
 	compiler := unitKeyCompiler(t)
 	environment := unitKeyEnvironment()
-	common := []runtimeFile{{"units.h", []byte("#define VALUE 1\n")}}
+	common := []native_runtime.RuntimeFile{{Name: "units.h", Contents: []byte("#define VALUE 1\n")}}
 	units := []compilationUnit{
 		{"alpha.c", unitFirst + "int adamic_alpha(void) { return VALUE; }\n"},
 		{"beta.c", unitFirst + "int adamic_beta(void) { return VALUE + 1; }\n"},
@@ -225,10 +226,10 @@ func TestARepassAfterAMismatchSaysRepass(t *testing.T) {
 	}
 }
 
-// phaseLine is a line buildlog.Phase writes, in buildLog's format: phase, the phase it timed, no key, off, seconds.
+// phaseLine is a line buildlog.Phase writes, in native_runtime.BuildLog's format: phase, the phase it timed, no key, off, seconds.
 var phaseLine = regexp.MustCompile(`^phase (load|lower|emit) - off [0-9]+\.[0-9]{3}$`)
 
-// A program loaded, lowered and emitted writes one phase line for each to ADAMIC_BUILD_LOG, in buildLog's format, and one
+// A program loaded, lowered and emitted writes one phase line for each to ADAMIC_BUILD_LOG, in native_runtime.BuildLog's format, and one
 // built in units writes one emit line still, since a split divides the C emitted once (#9x03wa7). The log never reaches
 // what is built: the C and the split binary are the same bytes with it set and unset. Mutants, each red: the emit line
 // written a unit rather than a program; load's line dropped; the log's path written into the C.
@@ -267,7 +268,7 @@ func TestEachPhaseLogsOnceAProgram(t *testing.T) {
 			if err := os.MkdirAll(filepath.Dir(output), 0o755); err != nil {
 				t.Fatal(err)
 			}
-			if err := Build(code, output, Options{Split: true, Jobs: 2}); err != nil {
+			if err := Build(code, output, native_runtime.Options{Split: true, Jobs: 2}); err != nil {
 				t.Fatal(err)
 			}
 			if binary, err = os.ReadFile(output); err != nil {

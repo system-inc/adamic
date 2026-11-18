@@ -14,6 +14,7 @@ import (
 	"github.com/system-inc/adamic/internal/load"
 	"github.com/system-inc/adamic/internal/lower"
 	"github.com/system-inc/adamic/internal/native"
+	"github.com/system-inc/adamic/internal/native_runtime"
 )
 
 // A rest parameter's array is packed by its caller, after lowering, so it takes its graph plan
@@ -222,7 +223,7 @@ func restPackCounts(t *testing.T, source string, withoutPlan bool) (int64, int64
 		program.RestGraphTypes = nil
 	}
 	binary := filepath.Join(directory, "counted")
-	if err := native.Build(native.C(program), binary, native.Options{Count: true}); err != nil {
+	if err := native.Build(native.C(program), binary, native_runtime.Options{Count: true}); err != nil {
 		t.Fatal(err)
 	}
 	ctx, cancel := context.WithTimeout(context.Background(), 15*time.Second)

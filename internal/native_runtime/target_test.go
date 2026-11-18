@@ -1,4 +1,4 @@
-package native
+package native_runtime
 
 import (
 	"os"
@@ -39,7 +39,7 @@ func TestWASIRefusesUnsupportedOptions(t *testing.T) {
 		{Options{Target: "unknown"}, `unsupported target "unknown"`},
 		{Options{Target: "wasm32-wasi", Sanitize: true}, "sanitizers are not supported for wasm32-wasi"},
 		{Options{Target: "wasm32-wasi", Debug: true}, "debug builds are not supported for wasm32-wasi"},
-		{Options{Target: "wasm32-wasi", cpu: "native"}, "native CPU selection is not supported for wasm32-wasi"},
+		{Options{Target: "wasm32-wasi", CPU: "native"}, "native CPU selection is not supported for wasm32-wasi"},
 	} {
 		if err := ValidateOptions(refusal.options); err == nil || !strings.Contains(err.Error(), refusal.want) {
 			t.Fatalf("%+v: got %v, want %q", refusal.options, err, refusal.want)
@@ -89,7 +89,7 @@ func TestValidateOptionsTakesTheTable(t *testing.T) {
 
 // An empty target is the build's own triple, read from `GOOS` and `GOARCH`, and this process's platform only where
 // they're unset; a build for a darwin platform not the host's is refused by name, and one for a platform the table has
-// no row for names it. Mutants: buildPlatform reading runtime.GOOS and runtime.GOARCH alone; the darwin refusal
+// no row for names it. Mutants: BuildPlatform reading runtime.GOOS and runtime.GOARCH alone; the darwin refusal
 // dropped.
 // Not parallel: t.Setenv changes the process environment variables GOOS and GOARCH.
 func TestAnEmptyTargetIsTheBuildsTriple(t *testing.T) {
@@ -130,7 +130,7 @@ func TestAnEmptyTargetIsTheBuildsTriple(t *testing.T) {
 // A build with `GOARCH` set to the arch this linux host isn't is refused by name, before clang runs: no sysroot for that
 // arch is pinned yet, and without one clang would compile against this host's C library and headers (#5xsd2ha).
 // TestACrossBuildKeysTheBuildsArch holds such a build's flags and keys; this holds that it never builds. Mutant: the
-// linux branch of nativeTargetRefusal dropped, and the build is taken.
+// linux branch of NativeTargetRefusal dropped, and the build is taken.
 // Not parallel: t.Setenv changes the process environment variables GOOS and GOARCH.
 func TestALinuxCrossBuildIsRefusedUntilItsSysrootIsPinned(t *testing.T) {
 	other := map[string]string{"amd64": "arm64", "arm64": "amd64"}[goruntime.GOARCH]
@@ -165,7 +165,7 @@ func TestATargetsPlatformIsToolchainsPlatform(t *testing.T) {
 	for _, setting := range []struct{ goos, goarch string }{{"linux", "arm64"}, {"darwin", "amd64"}, {"", ""}} {
 		t.Setenv("GOOS", setting.goos)
 		t.Setenv("GOARCH", setting.goarch)
-		goos, goarch := buildPlatform()
+		goos, goarch := BuildPlatform()
 		wantGoos, wantGoarch := toolchain.Platform(os.Environ())
 		if goos != wantGoos || goarch != wantGoarch {
 			t.Errorf("GOOS=%q GOARCH=%q: native's platform is %s/%s, toolchain's %s/%s", setting.goos, setting.goarch, goos, goarch, wantGoos, wantGoarch)
@@ -173,7 +173,7 @@ func TestATargetsPlatformIsToolchainsPlatform(t *testing.T) {
 	}
 	os.Unsetenv("GOOS")
 	os.Unsetenv("GOARCH")
-	if goos, goarch := buildPlatform(); goos != goruntime.GOOS || goarch != goruntime.GOARCH {
+	if goos, goarch := BuildPlatform(); goos != goruntime.GOOS || goarch != goruntime.GOARCH {
 		t.Errorf("unset, native's platform is %s/%s, want this process's %s/%s", goos, goarch, goruntime.GOOS, goruntime.GOARCH)
 	}
 	other := map[string]string{"amd64": "arm64", "arm64": "amd64"}[goruntime.GOARCH]
@@ -188,7 +188,7 @@ func TestATargetsPlatformIsToolchainsPlatform(t *testing.T) {
 }
 
 // One C product keyed for linux/amd64 and for linux/arm64 in one process keys apart: keyed as the products that build a
-// native program key one, by native.Flags and the compiler's report, with no platform part of their own, so the triple
+// native program key one, by Flags and the compiler's report, with no platform part of their own, so the triple
 // Flags passes as --target is the only thing that tells the two arches apart. Mutant A: Flags without the --target, and
 // the two keys collide here.
 // Not parallel: t.Setenv changes the process environment variables GOOS and GOARCH.
@@ -213,7 +213,7 @@ func TestAProductKeysEachArchApart(t *testing.T) {
 // and keys it in the runtime archive's key, as this machine and as every machine spell it, with that arch as the key's
 // platform: an arm64 build on an amd64 box holds aarch64-linux-gnu and arm64, never x86_64-linux-gnu or amd64. The
 // archive's key is read from its parts, with no clang run, since this host has no headers for the other arch. Mutant B:
-// buildPlatform returning runtime.GOARCH always, so the cross build keys as this host's arch, and this goes red.
+// BuildPlatform returning runtime.GOARCH always, so the cross build keys as this host's arch, and this goes red.
 // Not parallel: t.Setenv changes the process environment variables GOOS and GOARCH.
 func TestACrossBuildKeysTheBuildsArch(t *testing.T) {
 	other := map[string]string{"amd64": "arm64", "arm64": "amd64"}[goruntime.GOARCH]
@@ -234,10 +234,10 @@ func TestACrossBuildKeysTheBuildsArch(t *testing.T) {
 	if !slices.Contains(flags, "--target="+triple) || slices.Contains(flags, "--target="+hostTriple) {
 		t.Errorf("a linux/%s build on a %s host compiles with %q, want --target=%s alone", other, goruntime.GOARCH, flags, triple)
 	}
-	files := []runtimeFile{{"probe.c", []byte("int probe;\n")}}
+	files := []RuntimeFile{{"probe.c", []byte("int probe;\n")}}
 	for name, parts := range map[string][]string{
 		"this machine's":  runtimeKeyParts(files, flags, "clang", "clang version 20.1.8", ""),
-		"every machine's": portableKeyParts(files, flags, "clang", ""),
+		"every machine's": PortableKeyParts(files, flags, "clang", ""),
 	} {
 		for _, part := range []string{"arch " + other, "flag --target=" + triple} {
 			if !slices.Contains(parts, part) {

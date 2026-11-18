@@ -13,6 +13,7 @@ import (
 	"github.com/system-inc/adamic/internal/load"
 	"github.com/system-inc/adamic/internal/lower"
 	"github.com/system-inc/adamic/internal/native"
+	"github.com/system-inc/adamic/internal/native_runtime"
 )
 
 // adamic_object_assign stores each field as the target holds it. Lowering refuses a name held one
@@ -72,7 +73,7 @@ int main(int count, char **arguments) {
 `
 	name := "f_" + strings.Repeat("0123456789", 19) + "_end"
 	binary := filepath.Join(t.TempDir(), "assign")
-	if err := native.Build(harness, binary, native.Options{Sanitize: true}); err != nil {
+	if err := native.Build(harness, binary, native_runtime.Options{Sanitize: true}); err != nil {
 		t.Fatal(err)
 	}
 	for _, mode := range []string{"mismatch", "reverse"} {

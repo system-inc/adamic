@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"github.com/system-inc/adamic/internal/buildlog"
 	"github.com/system-inc/adamic/internal/ir"
+	"github.com/system-inc/adamic/internal/native_runtime"
 	"sort"
 	"strings"
 	"time"
@@ -24,18 +25,31 @@ import (
 // the memory model's work, measured against this.
 func C(program *ir.Program) string { return cProgram(program, -1, mainLines) }
 
+// EmitOptions say how to write a program's C: the build's Options, of which the emitter reads Debug alone, and the
+// emitter's own knobs, which are no input of the runtime's archive and so stay out of its key.
+type EmitOptions struct {
+	// Options are the build's, the ones its C is compiled with.
+	Options native_runtime.Options
+
+	// LadderEveryStatement, for tests, writes a statement's throw checks as one ladder whenever it
+	// has any, not only where the ladder is shorter than the checks in place (exceptions.go), so the
+	// ladder's releases run on programs whose checks would otherwise be written in place. Only
+	// CWithOptions reads it.
+	LadderEveryStatement bool
+}
+
 // CWithOptions includes source metadata only for a debug build.
-func CWithOptions(program *ir.Program, options Options) string {
+func CWithOptions(program *ir.Program, options EmitOptions) string {
 	return cProgram(program, -1, mainLines, options)
 }
 
-func cProgram(program *ir.Program, handler, lines int, options ...Options) string {
+func cProgram(program *ir.Program, handler, lines int, options ...EmitOptions) string {
 	// The emit phase's line on $ADAMIC_BUILD_LOG, once a program: a split build divides this one translation unit after
 	// it's emitted (splitC), so a program in units still emits here once.
 	defer buildlog.Phase("emit", time.Now())
 	emitter := &emitter{program: program}
 	if len(options) > 0 {
-		emitter.debug = options[0].Debug
+		emitter.debug = options[0].Options.Debug
 		emitter.ladderEveryStatement = options[0].LadderEveryStatement
 	}
 	// Suspension ownership is decided by function, not by program (#kha2ea0): each plan leaves out the
@@ -532,7 +546,7 @@ type emitter struct {
 	ladder *ladder
 	// ladders counts the ladders opened, each one's serial.
 	ladders int
-	// ladderEveryStatement is Options.LadderEveryStatement.
+	// ladderEveryStatement is EmitOptions.LadderEveryStatement.
 	ladderEveryStatement bool
 
 	// function is the function being emitted, and functionDepth the scope depth its body starts at.

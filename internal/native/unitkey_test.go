@@ -15,6 +15,7 @@ import (
 	"testing"
 
 	"github.com/system-inc/adamic/internal/buildcache/location"
+	"github.com/system-inc/adamic/internal/native_runtime"
 	"github.com/system-inc/adamic/internal/toolchain"
 )
 
@@ -50,7 +51,7 @@ func unitKeyEnvironment() []string {
 }
 
 // testUnitKeying is newUnitKeying's keying for these inputs, failing the test when the key can't account for them.
-func testUnitKeying(t *testing.T, first string, common []runtimeFile, flags []string, compiler string, environment []string) *unitKeying {
+func testUnitKeying(t *testing.T, first string, common []native_runtime.RuntimeFile, flags []string, compiler string, environment []string) *unitKeying {
 	t.Helper()
 	keying, err := newUnitKeying(first, common, flags, compiler, environment, false)
 	if err != nil {
@@ -94,7 +95,7 @@ func unitKeyProbe(value string) compilationUnit {
 }
 
 // compileUnitKey compiles unit under keying in a cache of directory's, failing the test on an error, and is the object.
-func compileUnitKey(t *testing.T, unit compilationUnit, common []runtimeFile, flags []string, compiler string, keying *unitKeying, directory string) string {
+func compileUnitKey(t *testing.T, unit compilationUnit, common []native_runtime.RuntimeFile, flags []string, compiler string, keying *unitKeying, directory string) string {
 	t.Helper()
 	object, err := compileUnit(unit, common, flags, compiler, keying, filepath.Join(directory, "cache"), directory, nil, false)
 	if err != nil {
@@ -108,7 +109,7 @@ func compileUnitKey(t *testing.T, unit compilationUnit, common []runtimeFile, fl
 func TestUnitKeyHoldsTheUnit(t *testing.T) {
 	t.Parallel()
 	compiler := unitKeyCompiler(t)
-	common := []runtimeFile{{"units.h", []byte("#define VALUE 1\n")}}
+	common := []native_runtime.RuntimeFile{{Name: "units.h", Contents: []byte("#define VALUE 1\n")}}
 	keying := testUnitKeying(t, unitFirst, common, unitKeyFlags, compiler, unitKeyEnvironment())
 	unit := unitKeyProbe("1")
 	changed := unitKeyProbe("2")
@@ -136,15 +137,15 @@ func TestUnitKeyHoldsCommonFiles(t *testing.T) {
 	compiler := unitKeyCompiler(t)
 	environment := unitKeyEnvironment()
 	unit := unitKeyProbe("VALUE")
-	common := []runtimeFile{{"units.h", []byte("#define VALUE 1\n")}}
+	common := []native_runtime.RuntimeFile{{Name: "units.h", Contents: []byte("#define VALUE 1\n")}}
 	keying := testUnitKeying(t, unitFirst, common, unitKeyFlags, compiler, environment)
-	changed := []runtimeFile{{"units.h", []byte("#define VALUE 2\n")}}
+	changed := []native_runtime.RuntimeFile{{Name: "units.h", Contents: []byte("#define VALUE 2\n")}}
 	changedKeying := testUnitKeying(t, unitFirst, changed, unitKeyFlags, compiler, environment)
 	if changedKeying.key(unit) == keying.key(unit) {
 		t.Fatal("a common header's bytes changed and the key held")
 	}
 	// Complete before minimal: a file nothing includes still moves the key.
-	added := append(slices.Clone(common), runtimeFile{"unused.h", []byte("#define UNUSED 1\n")})
+	added := append(slices.Clone(common), native_runtime.RuntimeFile{Name: "unused.h", Contents: []byte("#define UNUSED 1\n")})
 	if testUnitKeying(t, unitFirst, added, unitKeyFlags, compiler, environment).key(unit) == keying.key(unit) {
 		t.Fatal("a common file was added and the key held")
 	}
@@ -192,7 +193,7 @@ func TestUnitKeyHoldsShadowing(t *testing.T) {
 	environment := unitKeyEnvironment()
 	earlier, later := t.TempDir(), t.TempDir()
 	writeUnitKeyFile(t, filepath.Join(later, "shadow.h"), "#define SHADOW 1\n")
-	common := []runtimeFile{{"units.h", []byte("#include <shadow.h>\n")}}
+	common := []native_runtime.RuntimeFile{{Name: "units.h", Contents: []byte("#include <shadow.h>\n")}}
 	flags := append(slices.Clone(unitKeyFlags), "-isystem", earlier, "-isystem", later)
 	unit := unitKeyProbe("SHADOW")
 	keying := testUnitKeying(t, unitFirst, common, flags, compiler, environment)
@@ -218,7 +219,7 @@ func TestUnitKeyHoldsHasInclude(t *testing.T) {
 	environment := unitKeyEnvironment()
 	earlier, later := t.TempDir(), t.TempDir()
 	// units.h asks after maybe.h without including it, so only the __has_include names it.
-	common := []runtimeFile{{"units.h", []byte("#if __has_include(<maybe.h>)\n#define MAYBE 7\n#else\n#define MAYBE 0\n#endif\n")}}
+	common := []native_runtime.RuntimeFile{{Name: "units.h", Contents: []byte("#if __has_include(<maybe.h>)\n#define MAYBE 7\n#else\n#define MAYBE 0\n#endif\n")}}
 	flags := append(slices.Clone(unitKeyFlags), "-isystem", earlier, "-isystem", later)
 	unit := unitKeyProbe("MAYBE")
 	keying := testUnitKeying(t, unitFirst, common, flags, compiler, environment)
@@ -273,7 +274,7 @@ func TestUnitKeyHoldsIncludeNext(t *testing.T) {
 			if err := os.MkdirAll(filepath.Join(root, "middle"), 0o755); err != nil {
 				t.Fatal(err)
 			}
-			common := []runtimeFile{{"units.h", []byte("#include <wrap.h>\n")}}
+			common := []native_runtime.RuntimeFile{{Name: "units.h", Contents: []byte("#include <wrap.h>\n")}}
 			flags := slices.Clone(unitKeyFlags)
 			for _, name := range []string{"first", "middle", "last"} {
 				flags = append(flags, "-isystem", filepath.Join(root, name))
@@ -308,18 +309,18 @@ func TestUnitKeyRefusesWhatItCannotFollow(t *testing.T) {
 	compiler := unitKeyCompiler(t)
 	for _, plan := range []struct {
 		name   string
-		common []runtimeFile
+		common []native_runtime.RuntimeFile
 		why    string
 	}{
 		// x.h is beside units.h, so clang resolves the macro's include and only the key refuses.
-		{"Macro", []runtimeFile{{"units.h", []byte("#define H \"x.h\"\n#include H\n")}, {"x.h", []byte("#define X 1\n")}}, "by a macro"},
-		{"Date", []runtimeFile{{"units.h", []byte("static const char *adamic_when = __DATE__;\n")}}, "reads the time"},
-		{"Time", []runtimeFile{{"units.h", []byte("static const char *adamic_when = __TIME__;\n")}}, "reads the time"},
-		{"Timestamp", []runtimeFile{{"units.h", []byte("static const char *adamic_when = __TIMESTAMP__;\n")}}, "reads the time"},
+		{"Macro", []native_runtime.RuntimeFile{{Name: "units.h", Contents: []byte("#define H \"x.h\"\n#include H\n")}, {Name: "x.h", Contents: []byte("#define X 1\n")}}, "by a macro"},
+		{"Date", []native_runtime.RuntimeFile{{Name: "units.h", Contents: []byte("static const char *adamic_when = __DATE__;\n")}}, "reads the time"},
+		{"Time", []native_runtime.RuntimeFile{{Name: "units.h", Contents: []byte("static const char *adamic_when = __TIME__;\n")}}, "reads the time"},
+		{"Timestamp", []native_runtime.RuntimeFile{{Name: "units.h", Contents: []byte("static const char *adamic_when = __TIMESTAMP__;\n")}}, "reads the time"},
 		// clang 20 reads a file for #embed and asks after one with __has_embed, neither of which the table follows
 		// (Node's M3).
-		{"Embed", []runtimeFile{{"units.h", []byte("static const unsigned char adamic_data[] = {\n#embed \"data.bin\"\n};\n")}, {"data.bin", []byte("1")}}, "#embed or __has_embed"},
-		{"HasEmbed", []runtimeFile{{"units.h", []byte("#if __has_embed(\"absent.bin\")\n#define VALUE 1\n#endif\n")}}, "#embed or __has_embed"},
+		{"Embed", []native_runtime.RuntimeFile{{Name: "units.h", Contents: []byte("static const unsigned char adamic_data[] = {\n#embed \"data.bin\"\n};\n")}, {Name: "data.bin", Contents: []byte("1")}}, "#embed or __has_embed"},
+		{"HasEmbed", []native_runtime.RuntimeFile{{Name: "units.h", Contents: []byte("#if __has_embed(\"absent.bin\")\n#define VALUE 1\n#endif\n")}}, "#embed or __has_embed"},
 	} {
 		t.Run(plan.name, func(t *testing.T) {
 			t.Parallel()
@@ -337,11 +338,11 @@ func TestUnitKeyRefusesWhatItCannotFollow(t *testing.T) {
 func TestUnitKeyReadsAHasIncludeDefinition(t *testing.T) {
 	t.Parallel()
 	compiler := unitKeyCompiler(t)
-	fallback := []runtimeFile{{"units.h", []byte("#ifndef __has_include\n#define __has_include(x) 0\n#endif\n#  undef  __has_include\n#define VALUE 1\n")}}
+	fallback := []native_runtime.RuntimeFile{{Name: "units.h", Contents: []byte("#ifndef __has_include\n#define __has_include(x) 0\n#endif\n#  undef  __has_include\n#define VALUE 1\n")}}
 	if _, err := newUnitKeying(unitFirst, fallback, unitKeyFlags, compiler, unitKeyEnvironment(), false); err != nil {
 		t.Fatalf("a header defining __has_include refused the key: %v", err)
 	}
-	wrapped := []runtimeFile{{"units.h", []byte("#define ASKS(x) __has_include(x)\n#define VALUE 1\n")}}
+	wrapped := []native_runtime.RuntimeFile{{Name: "units.h", Contents: []byte("#define ASKS(x) __has_include(x)\n#define VALUE 1\n")}}
 	if _, err := newUnitKeying(unitFirst, wrapped, unitKeyFlags, compiler, unitKeyEnvironment(), false); !errors.Is(err, errUncachedUnit) || !strings.Contains(err.Error(), "by a macro") {
 		t.Fatalf("a __has_include of a macro's argument: want errUncachedUnit saying by a macro, got %v", err)
 	}
@@ -371,7 +372,7 @@ func TestUnitSourceRefusal(t *testing.T) {
 	}
 	// A refused unit compiles uncached under a keying, and the cache holds nothing of it.
 	compiler := unitKeyCompiler(t)
-	common := []runtimeFile{{"units.h", []byte("#define VALUE 4\n")}}
+	common := []native_runtime.RuntimeFile{{Name: "units.h", Contents: []byte("#define VALUE 4\n")}}
 	keying := testUnitKeying(t, unitFirst, common, unitKeyFlags, compiler, unitKeyEnvironment())
 	directory := t.TempDir()
 	unit := compilationUnit{"probe.c", unitFirst + "#define ADAMIC_OTHER 1\nint adamic_probe(void) { return VALUE; }\n"}
@@ -425,7 +426,7 @@ func copyUnitKeyProgram(t *testing.T, directory string, compiler string) string 
 func TestUnitKeyHoldsClangsBuild(t *testing.T) {
 	compiler := unitKeyCompiler(t)
 	environment := unitKeyEnvironment()
-	common := []runtimeFile{{"units.h", []byte("#define VALUE 1\n")}}
+	common := []native_runtime.RuntimeFile{{Name: "units.h", Contents: []byte("#define VALUE 1\n")}}
 	unit := unitKeyProbe("VALUE")
 	key := func(compiler string) string {
 		t.Helper()
@@ -498,7 +499,7 @@ func TestUnitKeyHoldsClangsBuild(t *testing.T) {
 func TestUnitKeyRefusesModules(t *testing.T) {
 	t.Parallel()
 	compiler := unitKeyCompiler(t)
-	common := []runtimeFile{{"units.h", []byte("#define VALUE 1\n")}}
+	common := []native_runtime.RuntimeFile{{Name: "units.h", Contents: []byte("#define VALUE 1\n")}}
 	for _, flag := range []string{"-fmodules", "-fmodule-map-file=/adamic-none", "-fimplicit-module-maps"} {
 		if _, err := newUnitKeying(unitFirst, common, append(slices.Clone(unitKeyFlags), flag), compiler, unitKeyEnvironment(), false); !errors.Is(err, errUncachedUnit) || !strings.Contains(err.Error(), "modules") {
 			t.Fatalf("%s: want errUncachedUnit saying modules, got %v", flag, err)
@@ -533,7 +534,7 @@ func TestUnitKeyHoldsFlags(t *testing.T) {
 	t.Parallel()
 	compiler := unitKeyCompiler(t)
 	environment := unitKeyEnvironment()
-	common := []runtimeFile{{"units.h", []byte("#ifndef VALUE\n#define VALUE 1\n#endif\n")}}
+	common := []native_runtime.RuntimeFile{{Name: "units.h", Contents: []byte("#ifndef VALUE\n#define VALUE 1\n#endif\n")}}
 	unit := unitKeyProbe("VALUE")
 	keying := testUnitKeying(t, unitFirst, common, []string{"-O2"}, compiler, environment)
 	if testUnitKeying(t, unitFirst, common, []string{"-O1"}, compiler, environment).key(unit) == keying.key(unit) {
@@ -557,7 +558,7 @@ func TestUnitKeyHoldsTarget(t *testing.T) {
 	t.Parallel()
 	compiler := unitKeyCompiler(t)
 	environment := unitKeyEnvironment()
-	common := []runtimeFile{{"units.h", []byte("#define VALUE 1\n")}}
+	common := []native_runtime.RuntimeFile{{Name: "units.h", Contents: []byte("#define VALUE 1\n")}}
 	unit := unitKeyProbe("VALUE")
 	x86 := testUnitKeying(t, unitFirst, common, []string{"-O2", "--target=x86_64-linux-gnu"}, compiler, environment)
 	arm := testUnitKeying(t, unitFirst, common, []string{"-O2", "--target=aarch64-linux-gnu"}, compiler, environment)
@@ -586,7 +587,7 @@ func TestUnitKeyHoldsEnvironment(t *testing.T) {
 	}
 	compiler := unitKeyCompiler(t)
 	environment := unitKeyEnvironment()
-	common := []runtimeFile{{"units.h", []byte("#define VALUE 1\n")}}
+	common := []native_runtime.RuntimeFile{{Name: "units.h", Contents: []byte("#define VALUE 1\n")}}
 	unit := unitKeyProbe("VALUE")
 	key := testUnitKeying(t, unitFirst, common, unitKeyFlags, compiler, environment).key(unit)
 	// Each value is one clang still compiles under, so the key reads it rather than refusing: macOS's developer
@@ -634,7 +635,7 @@ func TestUnitKeyKeepsOtherUnits(t *testing.T) {
 	environment := unitKeyEnvironment()
 	root := t.TempDir()
 	cache := filepath.Join(root, "cache")
-	common := []runtimeFile{{"units.h", []byte("#define VALUE 1\n")}}
+	common := []native_runtime.RuntimeFile{{Name: "units.h", Contents: []byte("#define VALUE 1\n")}}
 	alpha := compilationUnit{"alpha.c", unitFirst + "int adamic_alpha(void) { return VALUE; }\n"}
 	beta := compilationUnit{"beta.c", unitFirst + "int adamic_beta(void) { return VALUE + 1; }\n"}
 	directory := filepath.Join(root, "units")
@@ -714,7 +715,7 @@ func TestUnitCacheColdCheck(t *testing.T) {
 	t.Setenv(unitCheckVariable, "every")
 	t.Setenv(unitCacheOffVariable, "")
 	compiler := unitKeyCompiler(t)
-	common := []runtimeFile{{"units.h", []byte("#define VALUE 5\n")}}
+	common := []native_runtime.RuntimeFile{{Name: "units.h", Contents: []byte("#define VALUE 5\n")}}
 	keying := testUnitKeying(t, unitFirst, common, unitKeyFlags, compiler, unitKeyEnvironment())
 	unit := unitKeyProbe("VALUE")
 	directory := t.TempDir()
@@ -772,14 +773,14 @@ func TestUnitCacheColdCheck(t *testing.T) {
 func TestUnitCacheOffCompilesUncached(t *testing.T) {
 	source := "#include \"adamic.h\"\n#include <stdio.h>\nstatic int adamic_answer(void);\nstatic int adamic_answer(void) { return 42; }\nint main(void) { printf(\"%d\\n\", adamic_answer()); return 0; }\n"
 	// The runtime comes from the build cache as every build's does, before this test moves where the cache is written.
-	library, err := RuntimeLibraryForSource("", source, Options{})
+	library, err := native_runtime.RuntimeLibraryForSource("", source, native_runtime.Options{})
 	if err != nil {
 		t.Fatal(err)
 	}
 	t.Setenv(location.OutputDirectoryVariable, t.TempDir())
 	t.Setenv("ADAMIC_GATE_UNCACHED", "")
 	t.Setenv(unitCheckVariable, "")
-	cache, err := cacheDirectory("native-units")
+	cache, err := native_runtime.CacheDirectory("native-units")
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -803,7 +804,7 @@ func TestUnitCacheOffCompilesUncached(t *testing.T) {
 	build := func() {
 		t.Helper()
 		binary := filepath.Join(t.TempDir(), "program")
-		if err := buildUnitsWithLibrary(source, binary, Options{}, library, ""); err != nil {
+		if err := buildUnitsWithLibrary(source, binary, native_runtime.Options{}, library, ""); err != nil {
 			t.Fatal(err)
 		}
 		if output, err := exec.Command(binary).CombinedOutput(); err != nil || string(output) != "42\n" {
@@ -839,7 +840,7 @@ func TestUnitCacheMismatchCompilesEveryUnitCold(t *testing.T) {
 	t.Parallel()
 	compiler := unitKeyCompiler(t)
 	environment := unitKeyEnvironment()
-	common := []runtimeFile{{"units.h", []byte("#define VALUE 1\n")}}
+	common := []native_runtime.RuntimeFile{{Name: "units.h", Contents: []byte("#define VALUE 1\n")}}
 	units := []compilationUnit{
 		{"alpha.c", unitFirst + "int adamic_alpha(void) { return VALUE; }\n"},
 		{"beta.c", unitFirst + "int adamic_beta(void) { return VALUE + 1; }\n"},

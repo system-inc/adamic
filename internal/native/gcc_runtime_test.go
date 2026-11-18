@@ -25,7 +25,7 @@ func gccRuntimeUnit(t *testing.T, name string) string {
 func gccRuntimeProduct(t *testing.T, name, mutant string) string {
 	t.Helper()
 	compiler := gccAuditCompiler(t)
-	files, flags, _, _, err := gccAuditRuntimeInputs(Options{Count: true, ProgramRegion: true})
+	files, flags, _, _, err := gccAuditRuntimeInputs(native_runtime.Options{Count: true, ProgramRegion: true})
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -34,18 +34,18 @@ func gccRuntimeProduct(t *testing.T, name, mutant string) string {
 		return s == "-Wcast-function-type-strict" || s == "-Wno-self-assign" || s == "-Werror" || strings.HasPrefix(s, "-Werror=") || strings.HasPrefix(s, "--target=")
 	})
 	flags = append(flags, "-Werror=array-bounds", "-Werror=maybe-uninitialized", "-Werror=stringop-overflow", "-Werror=infinite-recursion")
-	headers, err := headersRead(files, flags, compiler)
+	headers, err := native_runtime.HeadersRead(files, flags, compiler)
 	if err != nil {
 		t.Fatal(err)
 	}
-	inputs := buildcache.Inputs{Name: "gcc-runtime-" + name + mutant, Files: []string{"go.mod", "internal/native_runtime/c", "bridge/tsgo/tsgo.h", "internal/native/gcc_runtime_test.go", "internal/native/gcc_units_test.go", "internal/native/gcc_invariants_test.go", "internal/native/native.go", "internal/native/library.go", "internal/native/target.go"}, Flags: portableKeyParts(files, flags, compiler, headers), Toolchain: []string{buildcache.Tool(compiler, "--version")}}
+	inputs := buildcache.Inputs{Name: "gcc-runtime-" + name + mutant, Files: []string{"go.mod", "internal/native_runtime/c", "bridge/tsgo/tsgo.h", "internal/native/gcc_runtime_test.go", "internal/native/gcc_units_test.go", "internal/native/gcc_invariants_test.go", "internal/native/native.go", "internal/native_runtime/options.go", "internal/native_runtime/library.go", "internal/native_runtime/target.go"}, Flags: native_runtime.PortableKeyParts(files, flags, compiler, headers), Toolchain: []string{buildcache.Tool(compiler, "--version")}}
 	return buildcache.Product(t, inputs, func(directory string) error {
 		found := false
 		for _, file := range files {
-			if file.name == name {
+			if file.Name == name {
 				found = true
 				if mutant != "" {
-					text := string(file.contents)
+					text := string(file.Contents)
 					before, after := "", ""
 					if mutant == "recursion" {
 						before = "double adamic_math_sin(double x) {"
@@ -58,11 +58,11 @@ func gccRuntimeProduct(t *testing.T, name, mutant string) string {
 					if strings.Count(text, before) != 1 {
 						return fmt.Errorf("GCC mutant seam missing: %s", mutant)
 					}
-					file.contents = []byte(strings.Replace(text, before, after, 1))
+					file.Contents = []byte(strings.Replace(text, before, after, 1))
 				}
 			}
-			if strings.HasSuffix(file.name, ".h") || file.name == name {
-				if err := os.WriteFile(filepath.Join(directory, file.name), file.contents, 0600); err != nil {
+			if strings.HasSuffix(file.Name, ".h") || file.Name == name {
+				if err := os.WriteFile(filepath.Join(directory, file.Name), file.Contents, 0600); err != nil {
 					return err
 				}
 			}
@@ -70,7 +70,7 @@ func gccRuntimeProduct(t *testing.T, name, mutant string) string {
 		if !found {
 			return fmt.Errorf("runtime unit disappeared: %s", name)
 		}
-		args := append(append(slices.Clone(flags), prefixMaps(directory, "/adamic-runtime")...), "-c", name, "-o", "unit.o")
+		args := append(append(slices.Clone(flags), native_runtime.PrefixMaps(directory, "/adamic-runtime")...), "-c", name, "-o", "unit.o")
 		command, release := boundedrun.Command(45*time.Second, compiler, args...)
 		defer release()
 		command.Dir = directory
@@ -102,14 +102,14 @@ func checkGCCRuntimeUnit(t *testing.T, name string) {
 }
 func TestGCCRuntimeInventory(t *testing.T) {
 	t.Parallel()
-	files, err := readRuntime(native_runtime.Sources, "c")
+	files, err := native_runtime.ReadRuntime(native_runtime.Sources, "c")
 	if err != nil {
 		t.Fatal(err)
 	}
 	var names []string
 	for _, file := range files {
-		if strings.HasSuffix(file.name, ".c") {
-			names = append(names, file.name)
+		if strings.HasSuffix(file.Name, ".c") {
+			names = append(names, file.Name)
 		}
 	}
 	if !slices.Equal(names, gccRuntimeUnits) {
@@ -196,13 +196,13 @@ func gccAuditCompiler(t *testing.T) string {
 
 // Cover compiler-only regex and checker bridge bodies as well as emitter features.
 // The bridge ABI header is keyed and copied with the runtime, just as BuildTSGo does.
-func gccAuditRuntimeInputs(options Options) ([]runtimeFile, []string, string, string, error) {
+func gccAuditRuntimeInputs(options native_runtime.Options) ([]native_runtime.RuntimeFile, []string, string, string, error) {
 	var features []string
-	for _, feature := range runtimeFeatures {
+	for _, feature := range native_runtime.RuntimeFeatures() {
 		features = append(features, "-D"+feature+"=1")
 	}
 	features = append(features, "-DADAMIC_REGEXP_RUNTIME_COMPILER=1", "-DADAMIC_TSGO=1")
-	files, flags, compiler, version, err := runtimeInputs("", options, features)
+	files, flags, compiler, version, err := native_runtime.RuntimeInputs("", options, features)
 	if err != nil {
 		return nil, nil, "", "", err
 	}
@@ -210,6 +210,6 @@ func gccAuditRuntimeInputs(options Options) ([]runtimeFile, []string, string, st
 	if err != nil {
 		return nil, nil, "", "", err
 	}
-	files = append(files, runtimeFile{"tsgo.h", header})
+	files = append(files, native_runtime.RuntimeFile{Name: "tsgo.h", Contents: header})
 	return files, flags, compiler, version, nil
 }

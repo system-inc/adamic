@@ -12,6 +12,7 @@ import (
 	"github.com/system-inc/adamic/internal/ir"
 	"github.com/system-inc/adamic/internal/load"
 	"github.com/system-inc/adamic/internal/lower"
+	"github.com/system-inc/adamic/internal/native_runtime"
 )
 
 // The three ownership plans run on every program, and only a suspending function's body is left out
@@ -48,7 +49,7 @@ func suspensionProgramAs(t *testing.T, source, name string) *ir.Program {
 func suspensionRun(t *testing.T, program *ir.Program, want string) {
 	t.Helper()
 	binary := filepath.Join(t.TempDir(), "native")
-	if err := Build(C(program), binary, Options{Sanitize: true}); err != nil {
+	if err := Build(C(program), binary, native_runtime.Options{Sanitize: true}); err != nil {
 		t.Fatal(err)
 	}
 	command := exec.Command(binary)

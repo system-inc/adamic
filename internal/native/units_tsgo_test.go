@@ -16,6 +16,7 @@ import (
 	"github.com/system-inc/adamic/internal/buildcache"
 	"github.com/system-inc/adamic/internal/load"
 	"github.com/system-inc/adamic/internal/lower"
+	"github.com/system-inc/adamic/internal/native_runtime"
 )
 
 // tsgoArchive is the checker archive (./bridge/tsgo/archive as a c-archive), a product built ahead by
@@ -33,7 +34,7 @@ func TestProduct_TSGoArchive(t *testing.T) {
 }
 
 // splitTSGoOptions are the options both the whole baseline and every split build are built with.
-var splitTSGoOptions = Options{Sanitize: true, Jobs: 5}
+var splitTSGoOptions = native_runtime.Options{Sanitize: true, Jobs: 5}
 
 // splitTSGoSource is the C both units build: typeaware's main.ts loaded, lowered and emitted with TSGoC, a product
 // built ahead by TestProduct_SplitTSGoSource. Every unit used to load and lower it again, a few seconds each. Built

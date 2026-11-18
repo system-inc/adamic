@@ -7,15 +7,16 @@ import (
 	"strings"
 	"testing"
 
+	"github.com/system-inc/adamic/internal/native_runtime"
 	"github.com/system-inc/adamic/internal/toolchain"
 )
 
 // runtimeMutantClang is the clang a runtime mutant product (primitiveMutants, recordMutants) compiles and links with:
-// clangIn, so after the builder's own maps, which take its scratch directories out, come the maps that take the tools
+// native_runtime.ClangIn, so after the builder's own maps, which take its scratch directories out, come the maps that take the tools
 // root out. A bare toolchain.CommandIn here mapped the build directory and not where clang is installed, so two boxes
 // whose tools sit apart could build two sets of bytes for one key (#dc483fc).
 func runtimeMutantClang(directory string, arguments ...string) *exec.Cmd {
-	return clangIn(directory, "clang", arguments...)
+	return native_runtime.ClangIn(directory, "clang", arguments...)
 }
 
 // A runtime mutant product's clang maps where clang is installed to /adamic-compiler, after the builder's own map of its
@@ -39,8 +40,8 @@ func TestRuntimeMutantClangMapsTheToolsRoot(t *testing.T) {
 		t.Skipf("clang at %s has no installation directory to map", real)
 	}
 	directory := t.TempDir()
-	own := prefixMaps(directory, "/adamic-runtime")
-	arguments := append(append(Flags(Options{Sanitize: true, Count: true}), own...), "-c", "exceptions.c", "-o", "exceptions.o")
+	own := native_runtime.PrefixMaps(directory, "/adamic-runtime")
+	arguments := append(append(native_runtime.Flags(native_runtime.Options{Sanitize: true, Count: true}), own...), "-c", "exceptions.c", "-o", "exceptions.o")
 	command := runtimeMutantClang(directory, arguments...)
 	tools := "-ffile-prefix-map=" + installation + "=/adamic-compiler"
 	at := slices.Index(command.Args, tools)

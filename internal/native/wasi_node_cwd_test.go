@@ -29,7 +29,7 @@ func nodeWASICwdRuntime(t *testing.T, host bool) {
 	if host {
 		source = "#define ADAMIC_NODE_HOST 1\n"
 	}
-	if _, err := RuntimeLibraryForSource("", source, Options{Target: "wasm32-wasi"}); err != nil {
+	if _, err := native_runtime.RuntimeLibraryForSource("", source, native_runtime.Options{Target: "wasm32-wasi"}); err != nil {
 		t.Fatal(err)
 	}
 }
@@ -59,7 +59,7 @@ int main(int argc, char **argv) {
 		source = strings.Replace(source, "adamic_start(argc, argv);", "adamic_start(argc, argv);\n adamic_node_wasi_cwd();", 1)
 	}
 	module := filepath.Join(t.TempDir(), "imports.wasm")
-	if err := Build(source, module, Options{Target: "wasm32-wasi"}); err != nil {
+	if err := Build(source, module, native_runtime.Options{Target: "wasm32-wasi"}); err != nil {
 		t.Fatal(err)
 	}
 	const inspect = `const fs=require('node:fs');console.log(JSON.stringify(WebAssembly.Module.imports(new WebAssembly.Module(fs.readFileSync(process.argv[1]))).map(i=>i.module==='wasi_snapshot_preview1'?i.name:i.module+'.'+i.name).sort()));`
@@ -184,7 +184,7 @@ int main(int argc, char **argv) {
 	}
 	source = strings.NewReplacer("%HELPER%", helper, "%MOVED%", cString(moved), "%SHOW%", show, "%ENTRIES%", entries, "%CHDIR%", change, "%FIRST%", firstCall).Replace(source)
 	module := filepath.Join(directory, "cwd.wasm")
-	if err := Build(source, module, Options{Target: "wasm32-wasi"}); err != nil {
+	if err := Build(source, module, native_runtime.Options{Target: "wasm32-wasi"}); err != nil {
 		t.Fatal(err)
 	}
 	runner, err := filepath.Abs("../../oracle/wasi.mjs")

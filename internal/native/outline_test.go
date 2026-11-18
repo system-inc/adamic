@@ -8,6 +8,7 @@ import (
 	"testing"
 
 	"github.com/system-inc/adamic/internal/ir"
+	"github.com/system-inc/adamic/internal/native_runtime"
 )
 
 func TestInitializerFlatBoundaries(t *testing.T) {
@@ -89,7 +90,7 @@ func TestInitializerCrossModuleRoot(t *testing.T) {
 	definitions := e.outlineInitializers(parts, "adamic_release(adamic_local_root);\n")
 	source := "#include \"adamic.h\"\n#include <stdio.h>\n" + definitions + "int main(void){\n" + e.out.String() + "return 0;\n}\n"
 	binary := filepath.Join(t.TempDir(), "root")
-	if err := Build(source, binary, Options{Split: true, Sanitize: true, Count: true, Jobs: 1}); err != nil {
+	if err := Build(source, binary, native_runtime.Options{Split: true, Sanitize: true, Count: true, Jobs: 1}); err != nil {
 		t.Fatal(err)
 	}
 	truth := runWithInput(t, "", "node", "-e", "const root=[];root.push(7);console.log(root.length)")
@@ -146,7 +147,7 @@ func TestInitializerChunkOrder(t *testing.T) {
 	definitions := e.outlineInitializers([]initializerPart{{module: "order.a", statements: statements}}, "")
 	source := "#include \"adamic.h\"\n#include <stdio.h>\n" + definitions + "int main(void){\n" + e.out.String() + "return 0;\n}\n"
 	binary := filepath.Join(t.TempDir(), "order")
-	if err := Build(source, binary, Options{Split: true, Sanitize: true}); err != nil {
+	if err := Build(source, binary, native_runtime.Options{Split: true, Sanitize: true}); err != nil {
 		t.Fatal(err)
 	}
 	truth := runWithInput(t, "", "node", "-e", "for(let i=0;i<300;i++)console.log(i)")
@@ -172,7 +173,7 @@ func TestInitializerBraceLiteralsCrossChunks(t *testing.T) {
 			definitions := e.outlineInitializers([]initializerPart{{module: "brace.a", statements: statements}}, "")
 			source := "#define ADAMIC_CLOSURE_CONVENTION 1\n#include \"adamic.h\"\n#include <stdio.h>\n" + definitions + "int main(void){\n" + e.out.String() + "return 0;\n}\n"
 			binary := filepath.Join(t.TempDir(), "brace")
-			if err := Build(source, binary, Options{Split: true, Sanitize: true}); err != nil {
+			if err := Build(source, binary, native_runtime.Options{Split: true, Sanitize: true}); err != nil {
 				t.Fatal(err)
 			}
 			want := "1\n"

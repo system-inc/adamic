@@ -55,14 +55,14 @@ func TestTSGoBuildSeesTheProgramsFeatures(t *testing.T) {
 		}
 		return nil
 	}
-	if len(featureFlags(source)) == 0 {
+	if len(native_runtime.FeatureFlags(source)) == 0 {
 		t.Fatal("arguments_length_extended.a no longer turns on a runtime feature; pick a program that does")
 	}
-	if err := compile(tsgoFlags(source, Options{})); err != nil {
+	if err := compile(tsgoFlags(source, native_runtime.Options{})); err != nil {
 		t.Fatalf("the checker-archive build's main.c doesn't compile with the program's features: %v", err)
 	}
 	// The test can fail: without the flags, the same C is the gate's red.
-	if err := compile(append(Flags(Options{}), "-DADAMIC_TSGO")); err == nil {
+	if err := compile(append(native_runtime.Flags(native_runtime.Options{}), "-DADAMIC_TSGO")); err == nil {
 		t.Fatal("main.c compiled without its feature flags, so this test no longer covers the include order")
 	}
 }

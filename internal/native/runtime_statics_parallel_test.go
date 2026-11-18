@@ -310,16 +310,16 @@ func staticsRaceLibrary(t *testing.T, mutantFile, old, changed string) (string, 
 	if err := os.WriteFile(filepath.Join(root, "tsgo.h"), header, 0600); err != nil {
 		t.Fatal(err)
 	}
-	filesSnapshot, err := readRuntime(os.DirFS(root), ".")
+	filesSnapshot, err := native_runtime.ReadRuntime(os.DirFS(root), ".")
 	if err != nil {
 		t.Fatal(err)
 	}
 	// The baseline archive is shared; only the changed C unit is recompiled for a mutant.
-	baseline, err := readRuntime(native_runtime.Sources, "c")
+	baseline, err := native_runtime.ReadRuntime(native_runtime.Sources, "c")
 	if err != nil {
 		t.Fatal(err)
 	}
-	baseline = append(baseline, runtimeFile{"tsgo.h", header})
+	baseline = append(baseline, native_runtime.RuntimeFile{Name: "tsgo.h", Contents: header})
 	compiler, err := exec.LookPath("clang")
 	if err != nil {
 		t.Fatal(err)
@@ -328,11 +328,11 @@ func staticsRaceLibrary(t *testing.T, mutantFile, old, changed string) (string, 
 	if err != nil {
 		t.Fatal(err)
 	}
-	cache, err := cacheDirectory("runtime-statics")
+	cache, err := native_runtime.CacheDirectory("runtime-statics")
 	if err != nil {
 		t.Fatal(err)
 	}
-	original, err := cachedRuntime(baseline, staticsRaceFlags(), compiler, string(version), cache)
+	original, err := native_runtime.CachedRuntime(baseline, staticsRaceFlags(), compiler, string(version), cache)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -341,13 +341,13 @@ func staticsRaceLibrary(t *testing.T, mutantFile, old, changed string) (string, 
 	}
 	var objects []string
 	for _, file := range filesSnapshot {
-		if !strings.HasSuffix(file.name, ".c") {
+		if !strings.HasSuffix(file.Name, ".c") {
 			continue
 		}
-		object := filepath.Join(filepath.Dir(original), strings.TrimSuffix(file.name, ".c")+".o")
-		if file.name == mutantFile {
-			object = filepath.Join(root, strings.TrimSuffix(file.name, ".c")+".o")
-			arguments := append(staticsRaceFlags(), "-I", root, "-c", filepath.Join(root, file.name), "-o", object)
+		object := filepath.Join(filepath.Dir(original), strings.TrimSuffix(file.Name, ".c")+".o")
+		if file.Name == mutantFile {
+			object = filepath.Join(root, strings.TrimSuffix(file.Name, ".c")+".o")
+			arguments := append(staticsRaceFlags(), "-I", root, "-c", filepath.Join(root, file.Name), "-o", object)
 			staticsCompile(t, "clang", arguments...)
 		}
 		objects = append(objects, object)

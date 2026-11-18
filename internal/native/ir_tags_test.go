@@ -48,31 +48,3 @@ func TestIRTypeTags(t *testing.T) {
 		}
 	}
 }
-
-// The sources and flags stay identical: the Go representation ABI itself must be
-// a key input for both local archives and portable supplied runtime products.
-func TestRuntimeKeyIncludesTypeTags(t *testing.T) {
-	t.Parallel()
-	want := "ir-tags " + ir.TypeTagFingerprint()
-	for name, parts := range map[string][]string{
-		"local":    runtimeKeyParts(nil, nil, "clang", "version", ""),
-		"portable": portableKeyParts(nil, nil, "clang", ""),
-	} {
-		found := false
-		for _, part := range parts {
-			found = found || part == want
-		}
-		if !found {
-			t.Errorf("%s cache omits representation fingerprint", name)
-		}
-		changed := append([]string(nil), parts...)
-		for index := range changed {
-			if changed[index] == want {
-				changed[index] += " changed"
-			}
-		}
-		if partsKey(parts) == partsKey(changed) {
-			t.Errorf("%s cache does not distinguish changed tags", name)
-		}
-	}
-}

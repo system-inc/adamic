@@ -7,6 +7,8 @@ import (
 	"strings"
 	"sync"
 	"testing"
+
+	"github.com/system-inc/adamic/internal/native_runtime"
 )
 
 // The index sweep: a string's UTF-16 positions found through its index (string_index.c), against
@@ -396,7 +398,7 @@ var stringIndexBinaries = func() map[string]func() (string, error) {
 				return "", err
 			}
 			binary := filepath.Join(directory, "harness")
-			return binary, Build(stringIndexReplacer(points).Replace(indexHarness), binary, Options{Sanitize: true})
+			return binary, Build(stringIndexReplacer(points).Replace(indexHarness), binary, native_runtime.Options{Sanitize: true})
 		})
 	}
 	return binaries
@@ -518,7 +520,7 @@ for (let round = 0; round < 40; round++) {
 process.stdout.write(lines.join('\n') + '\n');
 `
 	binary := filepath.Join(t.TempDir(), "append")
-	if err := Build(harness, binary, Options{Sanitize: true}); err != nil {
+	if err := Build(harness, binary, native_runtime.Options{Sanitize: true}); err != nil {
 		t.Fatal(err)
 	}
 	node := runWithInput(t, "", "node", "--eval", oracle)
@@ -557,7 +559,7 @@ int main(void) {
     return 0;
 }`
 	binary := filepath.Join(t.TempDir(), "cache-states")
-	if err := Build(strings.ReplaceAll(source, "@TEXT@", cString(text))+"\n", binary, Options{Sanitize: true}); err != nil {
+	if err := Build(strings.ReplaceAll(source, "@TEXT@", cString(text))+"\n", binary, native_runtime.Options{Sanitize: true}); err != nil {
 		t.Fatal(err)
 	}
 	node := `const literal = "é😀A".repeat(24) + "Z";

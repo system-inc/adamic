@@ -4,6 +4,8 @@ import (
 	"fmt"
 	"os"
 	"path/filepath"
+
+	"github.com/system-inc/adamic/internal/native_runtime"
 )
 
 // BuildLean compiles the C at sourcePath in one translation unit with compiler, an absolute path, and links it with the
@@ -17,23 +19,23 @@ import (
 // ADAMIC_NATIVE_SPLIT, the temporary directory `TMPDIR` names for its build directory, and the clang `PATH` finds;
 // BuildLean reads none of them, so it refuses what would: a wasm32-wasi target (WASI_SYSROOT), a split build (the unit
 // cache), a compiler named by anything but an absolute path, and a program linking the regexp compiler's archive, which
-// it isn't handed. The one environment it reads is the build's platform, `GOOS` and `GOARCH` (buildPlatform), which
+// it isn't handed. The one environment it reads is the build's platform, `GOOS` and `GOARCH` (native_runtime.BuildPlatform), which
 // resolves an empty target to the build's triple, as Flags resolves it for the key that holds its flags. Its build
 // directory is build, beside output, made at the start and removed at the end, so a trace of it reads one spelling every
 // run. runtimeproducts' TestTheLeanBuildReachesOnlyItsDeclaredFiles holds its reach to agreementproducts.NativeFiles, and
 // every program it starts to a path it's handed.
-func BuildLean(compiler string, sourcePath string, archiveDirectory string, output string, options Options, jobserver *Jobserver) error {
+func BuildLean(compiler string, sourcePath string, archiveDirectory string, output string, options native_runtime.Options, jobserver *native_runtime.Jobserver) error {
 	if options.Target == "wasm32-wasi" || options.Request || options.Split {
 		return fmt.Errorf("native: a lean build is one native translation unit, with no wasm32-wasi target, request or split: %+v", options)
 	}
 	if !filepath.IsAbs(compiler) {
 		return fmt.Errorf("native: a lean build runs the compiler it's handed by its absolute path, not %q", compiler)
 	}
-	options, err := ResolveTarget(options)
+	options, err := native_runtime.ResolveTarget(options)
 	if err != nil {
 		return err
 	}
-	if err := nativeTargetRefusal(options.Target); err != nil {
+	if err := native_runtime.NativeTargetRefusal(options.Target); err != nil {
 		return err
 	}
 	source, err := os.ReadFile(sourcePath)
@@ -48,5 +50,5 @@ func BuildLean(compiler string, sourcePath string, archiveDirectory string, outp
 		return fmt.Errorf("native: the lean build's directory: %w", err)
 	}
 	defer os.RemoveAll(directory)
-	return linkOne(directory, compiler, string(source), output, options, Flags(options), filepath.Join(archiveDirectory, "runtime.a"), jobserver, nil, nil, true)
+	return linkOne(directory, compiler, string(source), output, options, native_runtime.Flags(options), filepath.Join(archiveDirectory, "runtime.a"), jobserver, nil, nil, true)
 }

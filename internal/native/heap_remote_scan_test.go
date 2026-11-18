@@ -5,6 +5,7 @@ import (
 	"context"
 	"fmt"
 	"github.com/system-inc/adamic/internal/buildcache"
+	"github.com/system-inc/adamic/internal/native_runtime"
 	"os"
 	"os/exec"
 	"path/filepath"
@@ -17,32 +18,32 @@ import (
 // mutants. A drain counter observes work directly rather than timing empty scans.
 func remoteScanProduct(t *testing.T, sanitized bool) string {
 	t.Helper()
-	files, flags, compiler, version, err := runtimeInputs("", Options{Sanitize: sanitized, slabs: true}, []string{"-DADAMIC_SLAB_QUARANTINE_OFF"})
+	files, flags, compiler, version, err := native_runtime.RuntimeInputs("", native_runtime.Options{Sanitize: sanitized, Slabs: true}, []string{"-DADAMIC_SLAB_QUARANTINE_OFF"})
 	if err != nil {
 		t.Fatal(err)
 	}
-	headers, err := headersRead(files, flags, compiler)
+	headers, err := native_runtime.HeadersRead(files, flags, compiler)
 	if err != nil {
 		t.Fatal(err)
 	}
-	inputs := buildcache.Inputs{Name: fmt.Sprintf("heap-remote-scan-%t", sanitized), Files: []string{"internal/native_runtime/c", "internal/native/heap_remote_scan_test.go", "internal/native/slab_quarantine_test.go", "internal/native/runtime_statics_parallel_test.go", "internal/native/product_compile_test.go", "internal/native/testdata/heap_remote_scan.c", "internal/native/native.go", "internal/native/library.go", "internal/native/target.go"}, Flags: portableKeyParts(files, flags, compiler, headers), Toolchain: []string{buildcache.CompilerReport(compiler), buildcache.Tool(archiverName(compiler), "--version")}}
+	inputs := buildcache.Inputs{Name: fmt.Sprintf("heap-remote-scan-%t", sanitized), Files: []string{"internal/native_runtime/c", "internal/native/heap_remote_scan_test.go", "internal/native/slab_quarantine_test.go", "internal/native/runtime_statics_parallel_test.go", "internal/native/product_compile_test.go", "internal/native/testdata/heap_remote_scan.c", "internal/native/native.go", "internal/native_runtime/options.go", "internal/native_runtime/library.go", "internal/native_runtime/target.go"}, Flags: native_runtime.PortableKeyParts(files, flags, compiler, headers), Toolchain: []string{buildcache.CompilerReport(compiler), buildcache.Tool(native_runtime.ArchiverName(compiler), "--version")}}
 	return buildcache.Product(t, inputs, func(directory string) error {
 		source, err := os.ReadFile("testdata/heap_remote_scan.c")
 		if err != nil {
 			return err
 		}
-		cache, err := cacheDirectory("heap-remote-scan")
+		cache, err := native_runtime.CacheDirectory("heap-remote-scan")
 		if err != nil {
 			return err
 		}
 		var baseline string
 		for _, variant := range []struct{ name, guard string }{{"control", ""}, {"always", "true"}, {"never", "false"}} {
-			snapshot := append([]runtimeFile(nil), files...)
+			snapshot := append([]native_runtime.RuntimeFile(nil), files...)
 			for i := range snapshot {
-				if snapshot[i].name != "heap.c" {
+				if snapshot[i].Name != "heap.c" {
 					continue
 				}
-				text := string(snapshot[i].contents)
+				text := string(snapshot[i].Contents)
 				for _, edit := range [][2]string{
 					{"static void drain_remote(chunk *each);", "static size_t test_remote_drains;\nsize_t adamic_test_remote_drains(void) { return test_remote_drains; }\nstatic void drain_remote(chunk *each);"},
 					{"static void drain_remote(chunk *each) {", "static void drain_remote(chunk *each) {\n test_remote_drains++;"},
@@ -59,11 +60,11 @@ func remoteScanProduct(t *testing.T, sanitized bool) string {
 					}
 					text = strings.Replace(text, old, variant.guard, 1)
 				}
-				snapshot[i].contents = []byte(text)
+				snapshot[i].Contents = []byte(text)
 			}
 			library := baseline
 			if variant.guard == "" {
-				library, err = cachedRuntime(snapshot, flags, compiler, version, cache)
+				library, err = native_runtime.CachedRuntime(snapshot, flags, compiler, version, cache)
 				if err != nil {
 					return err
 				}
@@ -72,8 +73,8 @@ func remoteScanProduct(t *testing.T, sanitized bool) string {
 				// Recompile only the mutated translation unit against the same headers.
 				scratch := t.TempDir()
 				for _, file := range snapshot {
-					if file.name == "heap.c" {
-						if err := os.WriteFile(filepath.Join(scratch, "heap.c"), file.contents, 0600); err != nil {
+					if file.Name == "heap.c" {
+						if err := os.WriteFile(filepath.Join(scratch, "heap.c"), file.Contents, 0600); err != nil {
 							return err
 						}
 					}
@@ -89,7 +90,7 @@ func remoteScanProduct(t *testing.T, sanitized bool) string {
 				if err := os.WriteFile(library, data, 0600); err != nil {
 					return err
 				}
-				staticsCompile(t, archiverName(compiler), "r", library, object)
+				staticsCompile(t, native_runtime.ArchiverName(compiler), "r", library, object)
 			}
 			binary := buildHarnessWithLibrary(t, string(source), append(append([]string{}, flags...), "-I", filepath.Dir(baseline)), compiler, library)
 			data, err := os.ReadFile(binary)

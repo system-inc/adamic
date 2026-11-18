@@ -13,6 +13,8 @@ import (
 	"strings"
 	"testing"
 	"time"
+
+	"github.com/system-inc/adamic/internal/native_runtime"
 )
 
 // A cut falls only where no name a statement declares is used past it, and never takes a statement
@@ -113,7 +115,7 @@ type mainPartsRun struct {
 func runMainParts(t *testing.T, source string) mainPartsRun {
 	t.Helper()
 	binary := filepath.Join(t.TempDir(), "program")
-	if err := Build(source, binary, Options{Sanitize: true}); err != nil {
+	if err := Build(source, binary, native_runtime.Options{Sanitize: true}); err != nil {
 		t.Fatal(err)
 	}
 	ctx, cancel := context.WithTimeout(context.Background(), time.Minute)

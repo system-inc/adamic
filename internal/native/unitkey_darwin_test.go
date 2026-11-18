@@ -5,6 +5,8 @@ import (
 	"path/filepath"
 	"slices"
 	"testing"
+
+	"github.com/system-inc/adamic/internal/native_runtime"
 )
 
 // A framework directory resolves <Probe/probe.h> to Probe.framework/Headers/probe.h, or PrivateHeaders, under it: a
@@ -30,7 +32,7 @@ func TestUnitKeyHoldsFrameworks(t *testing.T) {
 			if err := os.MkdirAll(filepath.Join(root, "earlier"), 0o755); err != nil {
 				t.Fatal(err)
 			}
-			common := []runtimeFile{{"units.h", []byte(plan.header)}}
+			common := []native_runtime.RuntimeFile{{Name: "units.h", Contents: []byte(plan.header)}}
 			flags := append(slices.Clone(unitKeyFlags), "-iframework", filepath.Join(root, "earlier"), "-iframework", filepath.Join(root, "later"))
 			unit := unitKeyProbe(plan.value)
 			keying := testUnitKeying(t, unitFirst, common, flags, compiler, environment)

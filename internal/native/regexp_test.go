@@ -7,6 +7,7 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
+	"github.com/system-inc/adamic/internal/native_runtime"
 	regex "github.com/system-inc/adamic/internal/regexp"
 	"hash/fnv"
 	"math/rand"
@@ -26,7 +27,7 @@ import (
 type regexCase struct {
 	Pattern      string   `json:"pattern"`
 	PatternUnits []uint16 `json:"patternUnits"`
-	Flags        string   `json:"flags"`
+	native_runtime.Flags        string   `json:"flags"`
 	Input        []uint16 `json:"input"`
 	LastIndex    uint64   `json:"lastIndex"`
 	Expected     struct {
@@ -307,11 +308,11 @@ var regexWitnessRuntimeSources = map[string]bool{
 // regexWitnessRuntime is the shared recipe used by the product units and
 // consumers. Portable holds the source, header, platform and option inputs;
 // tool reports key the compiler and archiver without installation paths.
-func regexWitnessRuntime(t testing.TB, request RuntimeRequest, part int) string {
+func regexWitnessRuntime(t testing.TB, request native_runtime.RuntimeRequest, part int) string {
 	t.Helper()
-	files := []string{"internal/native/regexp_test.go", "internal/native/library.go", "internal/native/native.go", "internal/native/target.go"}
-	for _, file := range request.files {
-		files = append(files, "internal/native_runtime/c/"+file.name)
+	files := []string{"internal/native/regexp_test.go", "internal/native_runtime/library.go", "internal/native/native.go", "internal/native_runtime/options.go", "internal/native_runtime/target.go"}
+	for _, file := range request.Files {
+		files = append(files, "internal/native_runtime/c/"+file.Name)
 	}
 	return buildcache.Product(t, buildcache.Inputs{
 		Name: fmt.Sprintf("regexp-bytecode-witness-runtime-%d", part), Files: files, Flags: request.Portable,
@@ -319,9 +320,9 @@ func regexWitnessRuntime(t testing.TB, request RuntimeRequest, part int) string 
 	}, func(directory string) error { return request.Build(directory, 4, nil) })
 }
 
-func regexWitnessRequest(t testing.TB, options Options, part int) RuntimeRequest {
+func regexWitnessRequest(t testing.TB, options native_runtime.Options, part int) native_runtime.RuntimeRequest {
 	t.Helper()
-	files, flags, compiler, version, err := runtimeInputs("", options, nil)
+	files, flags, compiler, version, err := native_runtime.RuntimeInputs("", options, nil)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -330,18 +331,18 @@ func regexWitnessRequest(t testing.TB, options Options, part int) RuntimeRequest
 	kept := files[:0]
 	index := 0
 	for _, file := range files {
-		if strings.HasSuffix(file.name, ".h") {
+		if strings.HasSuffix(file.Name, ".h") {
 			kept = append(kept, file)
 			continue
 		}
-		if regexWitnessRuntimeSources[file.name] {
+		if regexWitnessRuntimeSources[file.Name] {
 			if index%2 == part {
 				kept = append(kept, file)
 			}
 			index++
 		}
 	}
-	request, err := runtimeRequest(kept, flags, compiler, version, options)
+	request, err := native_runtime.RuntimeRequestOf(kept, flags, compiler, version, options)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -350,21 +351,21 @@ func regexWitnessRequest(t testing.TB, options Options, part int) RuntimeRequest
 
 func TestProduct_RegExpBytecodeNativePart0(t *testing.T) {
 	t.Parallel()
-	regexWitnessRuntime(t, regexWitnessRequest(t, Options{Sanitize: true}, 0), 0)
+	regexWitnessRuntime(t, regexWitnessRequest(t, native_runtime.Options{Sanitize: true}, 0), 0)
 }
 
 func TestProduct_RegExpBytecodeNativePart1(t *testing.T) {
 	t.Parallel()
-	regexWitnessRuntime(t, regexWitnessRequest(t, Options{Sanitize: true}, 1), 1)
+	regexWitnessRuntime(t, regexWitnessRequest(t, native_runtime.Options{Sanitize: true}, 1), 1)
 }
 
-func buildRegexWitness(t *testing.T, source, binary string, options Options) {
+func buildRegexWitness(t *testing.T, source, binary string, options native_runtime.Options) {
 	t.Helper()
-	if features := featureFlags(source); len(features) != 0 {
+	if features := native_runtime.FeatureFlags(source); len(features) != 0 {
 		t.Fatalf("regex witness has undeclared runtime features: %v", features)
 	}
 	request := regexWitnessRequest(t, options, 0)
-	flags, compiler := request.flags, request.Compiler
+	flags, compiler := request.Flags, request.Compiler
 	runtime0 := regexWitnessRuntime(t, request, 0)
 	runtime1 := regexWitnessRuntime(t, regexWitnessRequest(t, options, 1), 1)
 	directory := t.TempDir()
@@ -377,11 +378,11 @@ func buildRegexWitness(t *testing.T, source, binary string, options Options) {
 	if err := os.Symlink(runtime1, filepath.Join(directory, "runtime-part1")); err != nil {
 		t.Fatal(err)
 	}
-	arguments := append(flags, prefixMaps(directory, "/adamic-build")...)
+	arguments := append(flags, native_runtime.PrefixMaps(directory, "/adamic-build")...)
 	arguments = append(arguments, "-I", "runtime", "main.c", "-o", binary)
 	archive := filepath.Join("runtime", "runtime.a")
-	arguments = append(arguments, RuntimeLinkFlags(archive)...)
-	arguments = append(arguments, RuntimeLinkFlags(filepath.Join("runtime-part1", "runtime.a"))...)
+	arguments = append(arguments, native_runtime.RuntimeLinkFlags(archive)...)
+	arguments = append(arguments, native_runtime.RuntimeLinkFlags(filepath.Join("runtime-part1", "runtime.a"))...)
 	arguments = append(arguments, "-lm")
 	output, err := toolchain.CommandIn(directory, compiler, arguments...).CombinedOutput()
 	if err != nil {
@@ -498,7 +499,7 @@ int main(int argc,char **argv) {
 	if !wasmOnly {
 		binary := filepath.Join(t.TempDir(), "regex-probes")
 		t.Logf("compiling %d patterns, %d executions, %d C bytes", len(programs), len(cases), source.Len())
-		buildRegexWitness(t, source.String(), binary, Options{Sanitize: true})
+		buildRegexWitness(t, source.String(), binary, native_runtime.Options{Sanitize: true})
 		ctx, cancel := context.WithTimeout(context.Background(), 2*time.Minute)
 		defer cancel()
 		for _, arguments := range [][]string{nil, {"unlimited"}, {"unlimited", "vm"}} {
@@ -516,7 +517,7 @@ int main(int argc,char **argv) {
 	}
 	if wasmOnly {
 		wasm := filepath.Join(t.TempDir(), "regex-probes.wasm")
-		if err := Build(source.String(), wasm, Options{Target: "wasm32-wasi"}); err != nil {
+		if err := Build(source.String(), wasm, native_runtime.Options{Target: "wasm32-wasi"}); err != nil {
 			t.Fatal(err)
 		}
 		for _, arguments := range [][]string{nil, {"unlimited"}, {"unlimited", "vm"}} {
@@ -619,7 +620,7 @@ int main(int argc, char **argv) {
 }
 `
 	binary := filepath.Join(t.TempDir(), "boundary")
-	if err := Build(source, binary, Options{Sanitize: true}); err != nil {
+	if err := Build(source, binary, native_runtime.Options{Sanitize: true}); err != nil {
 		t.Fatal(err)
 	}
 	for index, steps := range []int{2, 4} {
@@ -669,7 +670,7 @@ int main(int argc,char **argv) {
 }
 `
 	binary := filepath.Join(t.TempDir(), "iterator-shape")
-	if err := Build(source, binary, Options{Sanitize: true}); err != nil {
+	if err := Build(source, binary, native_runtime.Options{Sanitize: true}); err != nil {
 		t.Fatal(err)
 	}
 	output, err := exec.Command(binary).CombinedOutput()

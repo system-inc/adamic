@@ -111,26 +111,26 @@ func parserConstructionRun(t *testing.T, fixture string, mutationFile, before, a
 	t.Helper()
 	source := C(parserConstructionProgram(fixture))
 	binary := filepath.Join(t.TempDir(), "native")
-	options := Options{Sanitize: true}
+	options := native_runtime.Options{Sanitize: true}
 	if mutationFile == "" {
 		if err := Build(source, binary, options); err != nil {
 			t.Fatal(err)
 		}
 	} else {
-		files, err := readRuntime(native_runtime.Sources, "c")
+		files, err := native_runtime.ReadRuntime(native_runtime.Sources, "c")
 		if err != nil {
 			t.Fatal(err)
 		}
 		changed := false
 		for index := range files {
-			if files[index].name != mutationFile {
+			if files[index].Name != mutationFile {
 				continue
 			}
-			content := string(files[index].contents)
+			content := string(files[index].Contents)
 			if strings.Count(content, before) != 1 {
 				t.Fatalf("mutant needs one site in %s", mutationFile)
 			}
-			files[index].contents = []byte(strings.Replace(content, before, after, 1))
+			files[index].Contents = []byte(strings.Replace(content, before, after, 1))
 			changed = true
 		}
 		if !changed {
@@ -141,12 +141,12 @@ func parserConstructionRun(t *testing.T, fixture string, mutationFile, before, a
 		if err != nil {
 			t.Fatal(err)
 		}
-		flags := sourceFlags(source, options)
-		cache, err := cacheDirectory("native-runtime")
+		flags := native_runtime.SourceFlags(source, options)
+		cache, err := native_runtime.CacheDirectory("native-runtime")
 		if err != nil {
 			t.Fatal(err)
 		}
-		library, err := cachedRuntime(files, flags, compiler, "parser construction mutant", cache)
+		library, err := native_runtime.CachedRuntime(files, flags, compiler, "parser construction mutant", cache)
 		if err != nil {
 			t.Fatal(err)
 		}
@@ -154,8 +154,8 @@ func parserConstructionRun(t *testing.T, fixture string, mutationFile, before, a
 		if err := os.WriteFile(main, []byte(source), 0o600); err != nil {
 			t.Fatal(err)
 		}
-		arguments := append(append(append([]string{}, flags...), prefixMaps(directory, "program")...), "-I", filepath.Dir(library), main)
-		arguments = append(arguments, RuntimeLinkFlags(library)...)
+		arguments := append(append(append([]string{}, flags...), native_runtime.PrefixMaps(directory, "program")...), "-I", filepath.Dir(library), main)
+		arguments = append(arguments, native_runtime.RuntimeLinkFlags(library)...)
 		arguments = append(arguments, "-lm", "-o", binary)
 		if output, err := exec.Command(compiler, arguments...).CombinedOutput(); err != nil {
 			t.Fatalf("mutant compile: %v\n%s", err, output)

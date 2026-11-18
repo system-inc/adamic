@@ -302,11 +302,11 @@ func recordGraphRed(mode recordGraphMode, counted bool, run recordGraphRun) stri
 func TestRecordGraph(t *testing.T) {
 	t.Parallel()
 	sanitized := filepath.Join(t.TempDir(), "sanitized")
-	if err := Build(recordGraphHarness, sanitized, Options{Sanitize: true}); err != nil {
+	if err := Build(recordGraphHarness, sanitized, native_runtime.Options{Sanitize: true}); err != nil {
 		t.Fatal(err)
 	}
 	counted := filepath.Join(t.TempDir(), "counted")
-	if err := Build(recordGraphHarness, counted, Options{Sanitize: true, Count: true}); err != nil {
+	if err := Build(recordGraphHarness, counted, native_runtime.Options{Sanitize: true, Count: true}); err != nil {
 		t.Fatal(err)
 	}
 	for _, mode := range recordGraphModes {
@@ -348,22 +348,22 @@ var recordGraphMutations = []struct{ name, before, after, reds string }{
 // its record.c, and every object links directly.
 func recordGraphMutants(t *testing.T) string {
 	t.Helper()
-	flags := Flags(Options{Sanitize: true, Count: true})
+	flags := native_runtime.Flags(native_runtime.Options{Sanitize: true, Count: true})
 	inputs := buildcache.Inputs{
 		Name:      "record-graph-mutants",
-		Files:     []string{"internal/native_runtime/c", "internal/native/record_graph_test.go", "internal/native/split_units_test.go", "internal/native/runtime_mutants_test.go", "internal/native/native.go", "internal/native/library.go"},
+		Files:     []string{"internal/native_runtime/c", "internal/native/record_graph_test.go", "internal/native/split_units_test.go", "internal/native/runtime_mutants_test.go", "internal/native/native.go", "internal/native_runtime/options.go", "internal/native_runtime/library.go"},
 		Flags:     slices.Clone(flags),
 		Toolchain: []string{buildcache.CompilerReport("clang")},
 	}
 	return buildcache.Product(t, inputs, func(directory string) error {
-		files, err := readRuntime(native_runtime.Sources, "c")
+		files, err := native_runtime.ReadRuntime(native_runtime.Sources, "c")
 		if err != nil {
 			return err
 		}
 		var sources []string
 		for _, file := range files {
-			if strings.HasSuffix(file.name, ".c") {
-				sources = append(sources, file.name)
+			if strings.HasSuffix(file.Name, ".c") {
+				sources = append(sources, file.Name)
 			}
 		}
 		scratch, err := os.MkdirTemp("", "adamic-record-graph-mutants-")
@@ -372,18 +372,18 @@ func recordGraphMutants(t *testing.T) string {
 		}
 		defer os.RemoveAll(scratch)
 		compile := func(within, source string) error {
-			arguments := append(append(slices.Clone(flags), prefixMaps(within, "/adamic-runtime")...), "-c", source, "-o", strings.TrimSuffix(source, ".c")+".o")
+			arguments := append(append(slices.Clone(flags), native_runtime.PrefixMaps(within, "/adamic-runtime")...), "-c", source, "-o", strings.TrimSuffix(source, ".c")+".o")
 			if output, err := runtimeMutantClang(within, arguments...).CombinedOutput(); err != nil {
 				return fmt.Errorf("compiling runtime %s: %w\n%s", source, err, output)
 			}
 			return nil
 		}
-		write := func(within string, files []runtimeFile) error {
+		write := func(within string, files []native_runtime.RuntimeFile) error {
 			if err := os.MkdirAll(within, 0o755); err != nil {
 				return err
 			}
 			for _, file := range files {
-				if err := os.WriteFile(filepath.Join(within, file.name), file.contents, 0o644); err != nil {
+				if err := os.WriteFile(filepath.Join(within, file.Name), file.Contents, 0o644); err != nil {
 					return err
 				}
 			}
@@ -403,15 +403,15 @@ func recordGraphMutants(t *testing.T) string {
 			mutant := recordGraphMutations[index]
 			// The mutant's directory holds the runtime's headers and its record.c, so that file compiles as
 			// it would among the rest.
-			var changed []runtimeFile
+			var changed []native_runtime.RuntimeFile
 			for _, file := range files {
-				if file.name == "record.c" {
-					contents := string(file.contents)
+				if file.Name == "record.c" {
+					contents := string(file.Contents)
 					if found := strings.Count(contents, mutant.before); found != 1 {
 						return fmt.Errorf("mutant %s: its text is in record.c %d times, want once", mutant.name, found)
 					}
-					changed = append(changed, runtimeFile{file.name, []byte(strings.Replace(contents, mutant.before, mutant.after, 1))})
-				} else if strings.HasSuffix(file.name, ".h") {
+					changed = append(changed, native_runtime.RuntimeFile{Name: file.Name, Contents: []byte(strings.Replace(contents, mutant.before, mutant.after, 1))})
+				} else if strings.HasSuffix(file.Name, ".h") {
 					changed = append(changed, file)
 				}
 			}
@@ -422,7 +422,7 @@ func recordGraphMutants(t *testing.T) string {
 			if err := compile(within, "record.c"); err != nil {
 				return fmt.Errorf("mutant %s: %w", mutant.name, err)
 			}
-			arguments := append(append(slices.Clone(flags), prefixMaps(scratch, "/adamic-build")...), "-I", "runtime", "-o", filepath.Join(directory, mutant.name), "main.c")
+			arguments := append(append(slices.Clone(flags), native_runtime.PrefixMaps(scratch, "/adamic-build")...), "-I", "runtime", "-o", filepath.Join(directory, mutant.name), "main.c")
 			for _, source := range sources {
 				object := strings.TrimSuffix(source, ".c") + ".o"
 				if source == "record.c" {
