@@ -41,6 +41,13 @@ const containerFitDepth = 4
 // 1,084 judged in all, with no walk reaching the cap, so 4096 leaves room for programs larger than tsc.
 const containerFitPairCap = 4096
 
+// containerFitDepthStop is the stop for a generic pair past containerFitDepth whose either side can hold a map
+// somewhere: the walk fails closed there, since it can't follow the pair further, though no map need be in
+// the way. It was containerFitStop's words, so the meter filed these under a family they aren't in: on tsc's
+// Nov 17 meter all 35 sites were this gate, none a value going where a map is held (Correctness's scout on
+// #rt5evf5, 007759fd).
+var containerFitDepthStop = "a generic comparison deeper than " + strconv.Itoa(containerFitDepth) + " positions that can reach a Map"
+
 // containerFitCapStop is the stop for a walk that reached containerFitPairCap.
 var containerFitCapStop = "a fit walk past " + strconv.Itoa(containerFitPairCap) + " distinct pairs"
 
@@ -378,7 +385,7 @@ func (l *lowering) containerPairJudged(value *checker.Type, target *checker.Type
 			// (shape_fit.go). Its answer holds only this deep.
 			walk.frame.tainted = true
 			if l.mentionsHeld(value, []ir.Type{ir.Map}, 0, map[*checker.Type]bool{}) || l.mentionsHeld(target, []ir.Type{ir.Map}, 0, map[*checker.Type]bool{}) {
-				return containerFitStop
+				return containerFitDepthStop
 			}
 			if stop := l.shapeFitReached(value, target); stop != "" {
 				return stop
