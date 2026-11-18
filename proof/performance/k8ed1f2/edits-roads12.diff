@@ -1,0 +1,159 @@
+src/compiler/builder.ts:0
+-    semanticDiagnosticsPerFile: Map<Path, readonly ReusableDiagnostic[] | readonly Diagnostic[]>;
++    semanticDiagnosticsPerFile: ReadonlyMap<Path, readonly ReusableDiagnostic[] | readonly Diagnostic[]>;
+src/compiler/builder.ts:0
+-    emitDiagnosticsPerFile?: Map<Path, readonly ReusableDiagnostic[] | readonly Diagnostic[]> | undefined;
++    emitDiagnosticsPerFile?: ReadonlyMap<Path, readonly ReusableDiagnostic[] | readonly Diagnostic[]> | undefined;
+src/compiler/builder.ts:0
+-function assertSourceFileOkWithoutNextAffectedCall(state: BuilderProgramState, sourceFile: SourceFile | undefined) {
++function assertSourceFileOkWithoutNextAffectedCall(state: Readonly<BuilderProgramState>, sourceFile: SourceFile | undefined) {
+src/compiler/builder.ts:0
+-function removeSemanticDiagnosticsOf(state: BuilderProgramState, path: Path) {
++function removeSemanticDiagnosticsOf(state: Readonly<BuilderProgramState>, path: Path) {
+src/compiler/builder.ts:0
+-function isChangedSignature(state: BuilderProgramState, path: Path) {
++function isChangedSignature(state: Readonly<BuilderProgramState>, path: Path) {
+src/compiler/types.ts:0
+-    tracker: Required<Pick<SymbolTracker, "reportInferenceFallback">>;
++    readonly tracker: Required<Pick<SymbolTracker, "reportInferenceFallback">>;
+src/compiler/tsbuildPublic.ts:0
+-    mutateMapSkippingNewValues(state.configFileCache, currentProjects, noopOnDelete);
++    mutateMapSkippingNewValues<ResolvedConfigFilePath, ConfigFileCacheEntry>(state.configFileCache, currentProjects, noopOnDelete);
+src/compiler/tsbuildPublic.ts:0
+-    mutateMapSkippingNewValues(state.projectStatus, currentProjects, noopOnDelete);
++    mutateMapSkippingNewValues<ResolvedConfigFilePath, UpToDateStatus>(state.projectStatus, currentProjects, noopOnDelete);
+src/compiler/tsbuildPublic.ts:0
+-    mutateMapSkippingNewValues(state.builderPrograms, currentProjects, noopOnDelete);
++    mutateMapSkippingNewValues<ResolvedConfigFilePath, T>(state.builderPrograms, currentProjects, noopOnDelete);
+src/compiler/tsbuildPublic.ts:0
+-    mutateMapSkippingNewValues(state.diagnostics, currentProjects, noopOnDelete);
++    mutateMapSkippingNewValues<ResolvedConfigFilePath, readonly Diagnostic[]>(state.diagnostics, currentProjects, noopOnDelete);
+src/compiler/tsbuildPublic.ts:0
+-    mutateMapSkippingNewValues(state.projectPendingBuild, currentProjects, noopOnDelete);
++    mutateMapSkippingNewValues<ResolvedConfigFilePath, ProgramUpdateLevel>(state.projectPendingBuild, currentProjects, noopOnDelete);
+src/compiler/tsbuildPublic.ts:0
+-    mutateMapSkippingNewValues(state.projectErrorsReported, currentProjects, noopOnDelete);
++    mutateMapSkippingNewValues<ResolvedConfigFilePath, true>(state.projectErrorsReported, currentProjects, noopOnDelete);
+src/compiler/tsbuildPublic.ts:0
+-    mutateMapSkippingNewValues(state.buildInfoCache, currentProjects, noopOnDelete);
++    mutateMapSkippingNewValues<ResolvedConfigFilePath, BuildInfoCacheEntry>(state.buildInfoCache, currentProjects, noopOnDelete);
+src/compiler/tsbuildPublic.ts:0
+-    mutateMapSkippingNewValues(state.outputTimeStamps, currentProjects, noopOnDelete);
++    mutateMapSkippingNewValues<ResolvedConfigFilePath, Map<Path, Date>>(state.outputTimeStamps, currentProjects, noopOnDelete);
+src/compiler/tsbuildPublic.ts:0
+-    mutateMapSkippingNewValues(state.lastCachedPackageJsonLookups, currentProjects, noopOnDelete);
++    mutateMapSkippingNewValues<ResolvedConfigFilePath, Set<string> | undefined>(state.lastCachedPackageJsonLookups, currentProjects, noopOnDelete);
+src/compiler/executeCommandLine.ts:0
+-    options: CompilerOptions | BuildOptions,
++    options: Readonly<CompilerOptions | BuildOptions>,
+src/compiler/executeCommandLine.ts:0
+-function shouldBePretty(sys: System, options: CompilerOptions | BuildOptions) {
++function shouldBePretty(sys: System, options: Readonly<CompilerOptions | BuildOptions>) {
+src/compiler/executeCommandLine.ts:0
+-function createReportErrorSummary(sys: System, options: CompilerOptions | BuildOptions): ReportEmitErrorSummary | undefined {
++function createReportErrorSummary(sys: System, options: Readonly<CompilerOptions | BuildOptions>): ReportEmitErrorSummary | undefined {
+src/compiler/executeCommandLine.ts:0
+-function createWatchStatusReporter(sys: System, options: CompilerOptions | BuildOptions) {
++function createWatchStatusReporter(sys: System, options: Readonly<CompilerOptions | BuildOptions>) {
+src/compiler/utilities.ts:0
+-const supportedTSExtensions: readonly Extension[][] = [[Extension.Ts, Extension.Tsx, Extension.Dts], [Extension.Cts, Extension.Dcts], [Extension.Mts, Extension.Dmts]];
++const supportedTSExtensions: readonly (readonly Extension[])[] = [[Extension.Ts, Extension.Tsx, Extension.Dts], [Extension.Cts, Extension.Dcts], [Extension.Mts, Extension.Dmts]];
+src/compiler/utilities.ts:0
+-const supportedTSExtensionsWithJson: readonly Extension[][] = [...supportedTSExtensions, [Extension.Json]];
++const supportedTSExtensionsWithJson: readonly (readonly Extension[])[] = [...supportedTSExtensions, [Extension.Json]];
+src/compiler/utilities.ts:0
+-const allSupportedExtensions: readonly Extension[][] = [[Extension.Ts, Extension.Tsx, Extension.Dts, Extension.Js, Extension.Jsx], [Extension.Cts, Extension.Dcts, Extension.Cjs], [Extension.Mts, Extension.Dmts, Extension.Mjs]];
++const allSupportedExtensions: readonly (readonly Extension[])[] = [[Extension.Ts, Extension.Tsx, Extension.Dts, Extension.Js, Extension.Jsx], [Extension.Cts, Extension.Dcts, Extension.Cjs], [Extension.Mts, Extension.Dmts, Extension.Mjs]];
+src/compiler/utilities.ts:0
+-const allSupportedExtensionsWithJson: readonly Extension[][] = [...allSupportedExtensions, [Extension.Json]];
++const allSupportedExtensionsWithJson: readonly (readonly Extension[])[] = [...allSupportedExtensions, [Extension.Json]];
+src/compiler/utilities.ts:0
+-export function getSupportedExtensions(options?: CompilerOptions): readonly Extension[][];
++export function getSupportedExtensions(options?: CompilerOptions): readonly (readonly Extension[])[];
+src/compiler/utilities.ts:0
+-export function getSupportedExtensions(options?: CompilerOptions, extraFileExtensions?: readonly FileExtensionInfo[]): readonly string[][];
++export function getSupportedExtensions(options?: CompilerOptions, extraFileExtensions?: readonly FileExtensionInfo[]): readonly (readonly string[])[];
+src/compiler/utilities.ts:0
+-export function getSupportedExtensions(options?: CompilerOptions, extraFileExtensions?: readonly FileExtensionInfo[]): readonly string[][] {
++export function getSupportedExtensions(options?: CompilerOptions, extraFileExtensions?: readonly FileExtensionInfo[]): readonly (readonly string[])[] {
+src/compiler/utilities.ts:0
+-export function getSupportedExtensionsWithJsonIfResolveJsonModule(options: CompilerOptions | undefined, supportedExtensions: readonly Extension[][]): readonly Extension[][];
++export function getSupportedExtensionsWithJsonIfResolveJsonModule(options: CompilerOptions | undefined, supportedExtensions: readonly (readonly Extension[])[]): readonly (readonly Extension[])[];
+src/compiler/utilities.ts:0
+-export function getSupportedExtensionsWithJsonIfResolveJsonModule(options: CompilerOptions | undefined, supportedExtensions: readonly string[][]): readonly string[][];
++export function getSupportedExtensionsWithJsonIfResolveJsonModule(options: CompilerOptions | undefined, supportedExtensions: readonly (readonly string[])[]): readonly (readonly string[])[];
+src/compiler/utilities.ts:0
+-export function getSupportedExtensionsWithJsonIfResolveJsonModule(options: CompilerOptions | undefined, supportedExtensions: readonly string[][]): readonly string[][] {
++export function getSupportedExtensionsWithJsonIfResolveJsonModule(options: CompilerOptions | undefined, supportedExtensions: readonly (readonly string[])[]): readonly (readonly string[])[] {
+src/compiler/commandLineParser.ts:0
+-function hasFileWithHigherPriorityExtension(file: string, literalFiles: Map<string, string>, wildcardFiles: Map<string, string>, extensions: readonly string[][], keyMapper: (value: string) => string) {
++function hasFileWithHigherPriorityExtension(file: string, literalFiles: Map<string, string>, wildcardFiles: Map<string, string>, extensions: readonly (readonly string[])[], keyMapper: (value: string) => string) {
+src/compiler/commandLineParser.ts:0
+-function removeWildcardFilesWithLowerPriorityExtension(file: string, wildcardFiles: Map<string, string>, extensions: readonly string[][], keyMapper: (value: string) => string) {
++function removeWildcardFilesWithLowerPriorityExtension(file: string, wildcardFiles: Map<string, string>, extensions: readonly (readonly string[])[], keyMapper: (value: string) => string) {
+src/compiler/types.ts:0
+-    /** @internal */ getDiagnostics(sourceFile?: SourceFile, cancellationToken?: CancellationToken, nodesToCheck?: Node[]): Diagnostic[];
++    /** @internal */ getDiagnostics(sourceFile?: SourceFile, cancellationToken?: CancellationToken, nodesToCheck?: Node[]): readonly Diagnostic[];
+src/compiler/checker.ts:0
+-    function getDiagnostics(sourceFile: SourceFile, ct: CancellationToken, nodesToCheck?: Node[]): Diagnostic[] {
++    function getDiagnostics(sourceFile: SourceFile, ct: CancellationToken, nodesToCheck?: Node[]): readonly Diagnostic[] {
+src/compiler/checker.ts:0
+-    function getDiagnosticsWorker(sourceFile: SourceFile, nodesToCheck: Node[] | undefined): Diagnostic[] {
++    function getDiagnosticsWorker(sourceFile: SourceFile, nodesToCheck: Node[] | undefined): readonly Diagnostic[] {
+src/compiler/builder.ts:0
+-    signature: string | false | undefined;
++    readonly signature: string | false | undefined;
+src/compiler/watchUtilities.ts:0
+-export function createCachedDirectoryStructureHost(host: DirectoryStructureHost, currentDirectory: string, useCaseSensitiveFileNames: boolean): CachedDirectoryStructureHost | undefined {
++export function createCachedDirectoryStructureHost(host: Readonly<DirectoryStructureHost>, currentDirectory: string, useCaseSensitiveFileNames: boolean): CachedDirectoryStructureHost | undefined {
+src/compiler/program.ts:0
+-    host: (CompilerHost | ProgramHost<T>) & { onUnRecoverableConfigFileDiagnostic?: DiagnosticReporter; },
++    host: Readonly<(CompilerHost | ProgramHost<T>) & { onUnRecoverableConfigFileDiagnostic?: DiagnosticReporter; }>,
+src/compiler/watchPublic.ts:0
+-    const directoryStructureHost: DirectoryStructureHost = cachedDirectoryStructureHost || host;
++    const directoryStructureHost: Readonly<DirectoryStructureHost> = cachedDirectoryStructureHost || host;
+src/compiler/checker.ts:0
+-    function discriminateTypeByDiscriminableItems(target: UnionType, discriminators: (readonly [() => Type, __String])[], related: (source: Type, target: Type) => boolean | Ternary) {
++    function discriminateTypeByDiscriminableItems(target: UnionType, discriminators: readonly (readonly [() => Type, __String])[], related: (source: Type, target: Type) => boolean | Ternary) {
+src/compiler/utilities.ts:0
+-    function getDiagnostics(fileName?: string): Diagnostic[] {
++    function getDiagnostics(fileName?: string): readonly Diagnostic[] {
+src/compiler/core.ts:0
+-export function not<T extends unknown[]>(fn: (...args: T) => boolean): (...args: T) => boolean {
++export function not<T extends readonly unknown[]>(fn: (...args: T) => boolean): (...args: T) => boolean {
+src/compiler/moduleSpecifiers.ts:0
+-function tryGetModuleNameFromPaths(relativeToBaseUrl: string, paths: MapLike<readonly string[]>, allowedEndings: ModuleSpecifierEnding[], baseDirectory: string, getCanonicalFileName: GetCanonicalFileName, host: ModuleSpecifierResolutionHost, compilerOptions: CompilerOptions): string | undefined {
++function tryGetModuleNameFromPaths(relativeToBaseUrl: string, paths: Readonly<MapLike<readonly string[]>>, allowedEndings: ModuleSpecifierEnding[], baseDirectory: string, getCanonicalFileName: GetCanonicalFileName, host: ModuleSpecifierResolutionHost, compilerOptions: CompilerOptions): string | undefined {
+src/compiler/watchUtilities.ts:0
+-export function closeFileWatcherOf<T extends { watcher: FileWatcher; }>(objWithWatcher: T): void {
++export function closeFileWatcherOf<T extends { readonly watcher: FileWatcher; }>(objWithWatcher: T): void {
+src/compiler/resolutionCache.ts:0
+-        cache: Map<string, ModeAwareCache<T>>,
++        cache: Map<Path, ModeAwareCache<T>>,
+src/compiler/checker.ts:0
+-    function getElaborationElementForJsxChild(child: JsxChild, nameType: LiteralType, getInvalidTextDiagnostic: () => DiagnosticMessage) {
++    function getElaborationElementForJsxChild(child: JsxChild, nameType: Readonly<LiteralType>, getInvalidTextDiagnostic: () => DiagnosticMessage) {
+src/compiler/resolutionCache.ts:0
+-    directoryWatchesOfFailedLookups: Map<string, DirectoryWatchesOfFailedLookup>;
++    directoryWatchesOfFailedLookups: ReadonlyMap<string, DirectoryWatchesOfFailedLookup>;
+src/compiler/checker.ts:0
+-    function combineIterationTypes(array: (IterationTypes | undefined)[]) {
++    function combineIterationTypes(array: readonly (IterationTypes | undefined)[]) {
+src/compiler/watch.ts:0
+-function createTabularErrorsDisplay(filesInError: (ReportFileInError | undefined)[], host: HasCurrentDirectory) {
++function createTabularErrorsDisplay(filesInError: readonly (ReportFileInError | undefined)[], host: HasCurrentDirectory) {
+src/compiler/emitter.ts:0
+-    function commentWillEmitNewLine(node: CommentRange) {
++    function commentWillEmitNewLine(node: Readonly<CommentRange>) {
+src/compiler/moduleNameResolver.ts:0
+-    host: ModuleResolutionHost;
++    readonly host: ModuleResolutionHost;
+src/compiler/program.ts:0
+-export function getReferencedFileLocation(program: Program, ref: ReferencedFile): ReferenceFileLocation | SyntheticReferenceFileLocation {
++export function getReferencedFileLocation(program: Program, ref: Readonly<ReferencedFile>): ReferenceFileLocation | SyntheticReferenceFileLocation {
+src/compiler/resolutionCache.ts:0
+-    function invalidateResolutions(resolutions: Set<ResolutionWithFailedLookupLocations> | Map<string, ResolutionWithFailedLookupLocations> | undefined, canInvalidate: (resolution: ResolutionWithFailedLookupLocations) => boolean | undefined) {
++    function invalidateResolutions(resolutions: ReadonlySet<ResolutionWithFailedLookupLocations> | ReadonlyMap<string, ResolutionWithFailedLookupLocations> | undefined, canInvalidate: (resolution: ResolutionWithFailedLookupLocations) => boolean | undefined) {
+src/compiler/checker.ts:0
+-            const allDeclarations = type.objectFlags & (ObjectFlags.Reference | ObjectFlags.InstantiationExpressionType) ? [declaration] : type.symbol.declarations!;
++            const allDeclarations: readonly Node[] = type.objectFlags & (ObjectFlags.Reference | ObjectFlags.InstantiationExpressionType) ? [declaration] : type.symbol.declarations!;
