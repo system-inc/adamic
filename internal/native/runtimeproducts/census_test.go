@@ -447,7 +447,8 @@ func leanCensus(root, directory, importPath, entry string, declared []string, ex
 							findings[fmt.Sprintf("%s: starts %q by a bare name (%s), which `PATH` or the tools directories resolve, not the build's key", at(node), constant.StringVal(value), function.FullName())] = true
 						}
 					}
-					if (function.Pkg() == checked || function.Pkg().Path() == modulePath+"/internal/native_runtime") && slices.Contains(bareNamers, function.Name()) {
+					// A builtin's function has no package, so it's no bare namer.
+					if function.Pkg() != nil && (function.Pkg() == checked || function.Pkg().Path() == modulePath+"/internal/native_runtime") && slices.Contains(bareNamers, function.Name()) {
 						findings[fmt.Sprintf("%s: calls %s, naming a program by a bare name, which `PATH` or the tools directories resolve, not the build's key", at(node), function.Name())] = true
 					}
 				}
