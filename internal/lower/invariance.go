@@ -1013,6 +1013,165 @@ func returnedExpressions(function *ast.Node) []*ast.Node {
 	return returned
 }
 
+// siteResults is each value a function gives back: an arrow's expression body, or each value its own
+// return statements give (returnedExpressions).
+func siteResults(function *ast.Node) []*ast.Node {
+	if body := function.Body(); function.Kind == ast.KindArrowFunction && body != nil && body.Kind != ast.KindBlock {
+		return []*ast.Node{body}
+	}
+	return returnedExpressions(function)
+}
+
+// freshFunctionWidened judges a function value written at a view site, when it's fresh for what each call
+// returns (freshFunction), against each member of its slot as literalMethodRefusal judges a literal's
+// method: its parameters both ways (widenedParameters), and each value it returns as made at the site
+// against the slot's result (madeAtSiteWidened), never by the function's inferred result, whose own slots
+// no other name sees. A slot member that's overloaded, generic or a census never-rest signature isn't
+// related here, so judged is false and the whole value takes widened's path, as a function that isn't fresh
+// does. A member with no call signature calls nothing through it, but can still see the function's own
+// properties (a Function's readonly name, seen as a writable one), so widened walks it as it did before
+// (#k8ed1f2, Adamic's ruling).
+func (l *lowering) freshFunctionWidened(function *ast.Node, own *checker.Type, contextual *checker.Type) (*widening, bool) {
+	if !l.freshFunction(function) {
+		return nil, false
+	}
+	signature := l.checker.GetSignatureFromDeclaration(function)
+	visited := map[[2]*checker.Type]bool{}
+	for _, member := range l.methodSlotMembers(own, contextual) {
+		slotSignatures := l.checker.GetSignaturesOfType(member, checker.SignatureKindCall)
+		if len(slotSignatures) == 0 {
+			if found := l.widened(own, member, visited); found != nil {
+				return found, true
+			}
+			continue
+		}
+		if len(slotSignatures) > 1 || len(slotSignatures[0].TypeParameters()) > 0 || l.censusNeverRestSignature(slotSignatures[0]) {
+			return nil, false
+		}
+		if found := l.widenedParameters(signature, slotSignatures[0], visited); found != nil {
+			return found, true
+		}
+		result := l.checker.GetReturnTypeOfSignature(slotSignatures[0])
+		for _, returned := range siteResults(function) {
+			if found := l.madeAtSiteWidened(returned, result, visited); found != nil {
+				return found, true
+			}
+		}
+	}
+	return nil, true
+}
+
+// freshFunction reports whether a function written at a view site, an arrow or a function expression, is
+// fresh for what each call returns, #wjqtypf's per-call freshness of a literal's own method carried to a
+// function value. Each of its three conditions is read in the function's own body, never across a call
+// (#k8ed1f2, Adamic's ruling):
+//   - Every value it returns is made right there (madeAtSite). A return with no value, or falling off the
+//     end, gives undefined, which holds nothing.
+//   - It stores that value nowhere. A value built in the return expression itself can't be named by any
+//     statement before the return, and nothing after it, a finally, can name it either. The one way it can
+//     still get out is through its own members: a method, an accessor or a function expression in the
+//     returned literal is handed the literal as this when it's called, and can push it anywhere, under a
+//     type of its own (lendsItself).
+//   - The function has no handle but the slot: it's the expression judged at the site, so it's new and only
+//     the slot holds it, and a function expression doesn't mention its own name, by which it could call or
+//     store itself (namesItself). An async function or a generator gives a promise or an iterator, not what
+//     its return statements give, so it's judged whole by its type, as is one with type parameters of its
+//     own, whose returns its own parameters type.
+func (l *lowering) freshFunction(function *ast.Node) bool {
+	if function.Kind != ast.KindArrowFunction && function.Kind != ast.KindFunctionExpression {
+		return false
+	}
+	if generatorDeclaration(function) || ast.HasSyntacticModifier(function, ast.ModifierFlagsAsync) || len(l.checker.GetSignatureFromDeclaration(function).TypeParameters()) > 0 {
+		return false
+	}
+	if function.Kind == ast.KindFunctionExpression && namesItself(function) {
+		return false
+	}
+	for _, returned := range siteResults(function) {
+		if !l.madeAtSite(returned) {
+			return false
+		}
+		if lendsItself(returned) {
+			return false
+		}
+	}
+	return true
+}
+
+// madeAtSite reports whether a value a function returns is made right where it's returned, so no statement
+// before the return can name it: an object or an array literal, a new Map, Set or Array or a native copy
+// (freshValue), or a conditional whose branches both are, through parentheses. A call, a name, a parameter
+// and a property read are not, nor are ||, ??, && and =, since each can give back what something else holds
+// (#k8ed1f2, Adamic's ruling).
+func (l *lowering) madeAtSite(value *ast.Node) bool {
+	value = ast.SkipParentheses(value)
+	switch value.Kind {
+	case ast.KindObjectLiteralExpression, ast.KindArrayLiteralExpression:
+		return true
+	case ast.KindConditionalExpression:
+		conditional := value.AsConditionalExpression()
+		return l.madeAtSite(conditional.WhenTrue) && l.madeAtSite(conditional.WhenFalse)
+	case ast.KindNewExpression, ast.KindCallExpression:
+		return l.freshValue(value)
+	}
+	return false
+}
+
+// lendsItself reports whether an object literal a function returns, at any branch of a conditional, can
+// hand itself to something else when it's called: it has a method, a getter or a setter, or a this inside
+// a function in it that isn't an arrow, any of which is given the literal as this and can store it where
+// the slot never sees (#k8ed1f2, Adamic's ruling).
+func lendsItself(value *ast.Node) bool {
+	value = ast.SkipParentheses(value)
+	switch value.Kind {
+	case ast.KindConditionalExpression:
+		conditional := value.AsConditionalExpression()
+		return lendsItself(conditional.WhenTrue) || lendsItself(conditional.WhenFalse)
+	case ast.KindObjectLiteralExpression:
+		for _, member := range value.AsObjectLiteralExpression().Properties.Nodes {
+			switch member.Kind {
+			case ast.KindMethodDeclaration, ast.KindGetAccessor, ast.KindSetAccessor:
+				return true
+			}
+		}
+		return receivesThis(value, false)
+	}
+	return false
+}
+
+// receivesThis reports whether a this keyword under node sits inside a function that isn't an arrow, or a
+// class, either of which binds this to what it's called on. bound is whether node is already inside one.
+func receivesThis(node *ast.Node, bound bool) bool {
+	if node.Kind == ast.KindThisKeyword && bound {
+		return true
+	}
+	if (ast.IsFunctionLike(node) && node.Kind != ast.KindArrowFunction) || ast.IsClassLike(node) {
+		bound = true
+	}
+	return node.ForEachChild(func(child *ast.Node) bool { return receivesThis(child, bound) })
+}
+
+// namesItself reports whether a function expression with a name of its own mentions that name in its
+// parameters or its body, by which it could call itself or store itself. A name that only shadows it
+// counts too, which can only keep a function from being fresh (#k8ed1f2, Adamic's ruling).
+func namesItself(function *ast.Node) bool {
+	name := function.Name()
+	if name == nil {
+		return false
+	}
+	var visit ast.Visitor
+	visit = func(node *ast.Node) bool {
+		if node == name {
+			return false
+		}
+		if ast.IsIdentifier(node) && node.Text() == name.Text() {
+			return true
+		}
+		return node.ForEachChild(visit)
+	}
+	return function.ForEachChild(visit)
+}
+
 // unreadableLiteralMember is a getter's, a setter's or a method's stop when literalMemberKey can't read its
 // key ([key]() {}). Into a slot with an index signature it's a keyed entry of the literal, the write its
 // direct twin `handlers[key] = value` makes, which the registry's dictionary and declared-key rules judge,
@@ -1374,7 +1533,10 @@ func (l *lowering) wideningRefusal(node *ast.Node, own, contextual *checker.Type
 
 // freshOrWidened is widened for a value at a site, but a fresh one: a container made right there and
 // held by nothing else (freshValue) can't be written through another name, so its own slots are
-// covariant, and only what's inside it, held elsewhere too, is walked as a view.
+// covariant, and only what's inside it, held elsewhere too, is walked as a view. A function written
+// there is fresh the same way for what each call returns, when its own body makes every result
+// (freshFunctionWidened), and so is the copy a native map makes with such a callback
+// (freshContainerWidened).
 func (l *lowering) freshOrWidened(node *ast.Node, own *checker.Type, contextual *checker.Type) *widening {
 	node = ast.SkipParentheses(node)
 	own = l.contextualGenericType(node, own)
@@ -1403,6 +1565,19 @@ func (l *lowering) freshOrWidened(node *ast.Node, own *checker.Type, contextual 
 	case ast.KindObjectLiteralExpression, ast.KindArrayLiteralExpression:
 		// Made as the type it's written into, held by nothing else: its own parts are sites.
 		return nil
+	case ast.KindArrowFunction, ast.KindFunctionExpression:
+		// A function written right here has no handle but the slot, so it's only ever called as the slot
+		// sees it, and when every value it returns is made in its own body and stored nowhere, each call's
+		// result is new, as a literal's own method's is (literalMethodRefusal): its own slots are covariant,
+		// and only what they hold is a view (freshFunctionWidened, #k8ed1f2, Adamic's ruling). Any other
+		// function is judged by its type below.
+		// Only where today's walk refuses: an arrow whose own type the slot already holds whole (one written
+		// `(): ScriptTargetFeatures =>`) is let through as before, and its returns stop at their own sites.
+		if l.widened(own, contextual, map[[2]*checker.Type]bool{}) != nil {
+			if found, judged := l.freshFunctionWidened(node, own, contextual); judged {
+				return found
+			}
+		}
 	case ast.KindConditionalExpression:
 		// Either branch is the value: each judged as it is.
 		conditional := node.AsConditionalExpression()
@@ -1469,15 +1644,100 @@ func (l *lowering) freshOrWidened(node *ast.Node, own *checker.Type, contextual 
 	if !l.freshValue(node) {
 		return l.widened(own, contextual, visited)
 	}
+	return l.freshContainerWidened(own, contextual, l.freshMapCallback(node), visited)
+}
+
+// freshContainerWidened judges a container made at the site (freshValue, or an array literal a fresh
+// function returns) seen as contextual: no other name writes its own slots, so they're covariant, and an
+// array, tuple, map or set pairing one in contextual is judged by its elements as views (widenedArguments),
+// anything else by widened. mapped is a native map's callback that's fresh for what each call returns
+// (freshMapCallback), or nil. The copy's elements are then exactly what the callback returns, each a value
+// made in it, so each is judged as made at the site against the slot's element (madeAtSiteWidened), never
+// by map's own element type, which tsc infers from the callback's return and not from the slot. Any other
+// copy (slice, filter, concat, Array.from, a new Map) holds elements something else holds too, and is
+// walked as a view of them (#k8ed1f2, Adamic's ruling).
+func (l *lowering) freshContainerWidened(own *checker.Type, contextual *checker.Type, mapped *ast.Node, visited map[[2]*checker.Type]bool) *widening {
 	own, contextual = l.withoutUndefined(own), l.withoutUndefined(contextual)
 	for _, viewed := range l.containers(contextual) {
 		for _, inside := range l.containers(own) {
-			if l.sameContainer(inside, viewed) {
-				return l.widenedArguments(inside, viewed, false, visited)
+			if !l.sameContainer(inside, viewed) {
+				continue
 			}
+			if mapped != nil && !checker.IsTupleType(viewed) && len(l.checker.GetTypeArguments(viewed)) == 1 && l.widenedArguments(inside, viewed, false, map[[2]*checker.Type]bool{}) != nil {
+				// Only where today's walk of the copy's elements refuses, so a copy it already lets through
+				// is judged as before.
+				element := l.checker.GetTypeArguments(viewed)[0]
+				for _, returned := range siteResults(mapped) {
+					if found := l.madeAtSiteWidened(returned, element, visited); found != nil {
+						return found
+					}
+				}
+				return nil
+			}
+			return l.widenedArguments(inside, viewed, false, visited)
 		}
 	}
 	return l.widened(own, contextual, visited)
+}
+
+// freshMapCallback is a native map's callback when it's written at the call and fresh for what each call
+// returns (freshFunction), or nil. Only freshValue's copies reach it, so a map here is already proved an
+// Array's or a ReadonlyArray's own (#k8ed1f2, Adamic's ruling).
+func (l *lowering) freshMapCallback(node *ast.Node) *ast.Node {
+	if node.Kind != ast.KindCallExpression {
+		return nil
+	}
+	call := node.AsCallExpression()
+	callee := ast.SkipParentheses(call.Expression)
+	if callee.Kind != ast.KindPropertyAccessExpression || callee.AsPropertyAccessExpression().Name().Text() != "map" || len(call.Arguments.Nodes) == 0 {
+		return nil
+	}
+	callback := ast.SkipParentheses(call.Arguments.Nodes[0])
+	if !l.freshFunction(callback) {
+		return nil
+	}
+	return callback
+}
+
+// madeAtSiteWidened judges a value a fresh function returns (freshFunction) against target, what the slot
+// says each call gives: a conditional by each branch, the first finding winning; an object literal by what
+// its own slots hold, since nothing else holds the slots themselves; an array literal by its elements, as
+// freshContainerWidened judges a copy's; and a new Map, Set or Array or a native copy as freshOrWidened
+// judges one at its own site. The literal is judged here, against target, rather than left to its own
+// sites as freshOrWidened leaves one: inside a map callback, the literal's sites see map's element type,
+// which tsc takes from the callback's own return, so `holders.map(h => ({ inner: h.dogs }))` written into
+// `{ inner: Animal[] }[]` would judge h.dogs as a Dog[] and let a held Dog[] out as a writable Animal[].
+// Judged here, h.dogs is a view of Animal[], and refused. A slot member that isn't an object, or that
+// has an index signature, is judged by widened, the walk it had before (#k8ed1f2, Adamic's ruling).
+func (l *lowering) madeAtSiteWidened(value *ast.Node, target *checker.Type, visited map[[2]*checker.Type]bool) *widening {
+	value = ast.SkipParentheses(value)
+	own := l.checker.GetTypeAtLocation(value)
+	switch value.Kind {
+	case ast.KindConditionalExpression:
+		conditional := value.AsConditionalExpression()
+		for _, branch := range []*ast.Node{conditional.WhenTrue, conditional.WhenFalse} {
+			if found := l.madeAtSiteWidened(branch, target, visited); found != nil {
+				return found
+			}
+		}
+		return nil
+	case ast.KindObjectLiteralExpression:
+		for _, member := range l.literalSlotMembers(value, target) {
+			var found *widening
+			if !l.structured(member) || len(l.checker.GetIndexInfosOfType(member)) > 0 {
+				found = l.widened(own, member, visited)
+			} else {
+				found = l.widenedProperties(own, member, nil, true, visited)
+			}
+			if found != nil {
+				return found
+			}
+		}
+		return nil
+	case ast.KindArrayLiteralExpression:
+		return l.freshContainerWidened(own, target, nil, visited)
+	}
+	return l.freshOrWidened(value, own, target)
 }
 
 // freshValue reports whether an expression makes a container nothing else holds: a copy (slice,
