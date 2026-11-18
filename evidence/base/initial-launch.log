@@ -1,1 +1,2 @@
 run.sh: line 10: 22257 Killed                  "$dest/scan-all" "$tree/src/tsc/tsc.ts" > "$log/scan.json" 2> "$log/scan.log"
+run.sh: line 10: 22249 Killed                  LATENT_TIMES="$log/directory-times.jsonl" LATENT_FULL=0 "$dest/latent-census" "$tree/src/compiler" "$log/directory.jsonl" > "$log/directory.log" 2>&1

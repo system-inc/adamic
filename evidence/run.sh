@@ -28,6 +28,15 @@ scan)
     ;;
 full)
     name=${3##*/}
-    LATENT_FULL=1 LATENT_ONLY_FILE="$tree/$3" LATENT_TIMES="$log/$name-full-times.jsonl" "$dest/latent-census" "$tree/src/compiler" "$log/$name-full.jsonl" > "$log/$name-full.log" 2>&1
+    if [[ -e "$log/$name-full.jsonl" && ${CENSUS_RETRY:-0} != 1 ]]; then
+        exit 0
+    fi
+    driver=$dest/latent-census
+    root=$tree/src/compiler
+    if [[ "$3" != src/compiler/* ]]; then
+        driver=$dest/entry-census
+        root=$tree/src/tsc/tsc.ts
+    fi
+    LATENT_FULL=1 LATENT_ONLY_FILE="$tree/$3" LATENT_TIMES="$log/$name-full-times.jsonl" "$driver" "$root" "$log/$name-full.jsonl" > "$log/$name-full.log" 2>&1
     ;;
 esac

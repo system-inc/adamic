@@ -1,5 +1,6 @@
 """Pair findings within a run and owner; keep locations as evidence."""
 import collections
+import gzip
 import json
 import re
 import sys
@@ -21,7 +22,14 @@ def location(finding):
     return normalized(finding.get('site_where') or finding.get('where') or '')
 
 def rows(path):
-    records = [json.loads(line) for line in path.read_text().splitlines()]
+    if path.suffix == '.gz' or not path.exists():
+        if path.suffix != '.gz':
+            path = path.with_suffix(path.suffix + '.gz')
+        with gzip.open(path, 'rt') as source:
+            records = [json.loads(line) for line in source]
+    else:
+        with path.open() as source:
+            records = [json.loads(line) for line in source]
     header = records[0]
     if header['status'] == 'blocked':
         return header, {}, []
