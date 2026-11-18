@@ -6,6 +6,7 @@ import (
 
 	"github.com/microsoft/TypeScript/tsc/shim/ast"
 	"github.com/microsoft/TypeScript/tsc/shim/checker"
+	"github.com/system-inc/adamic/internal/ir"
 	"github.com/system-inc/adamic/internal/load"
 )
 
@@ -53,6 +54,7 @@ func (l *lowering) narrowedNullishReadGap(node *ast.Node) error {
 func init() {
 	refusalRules.register(3330, "narrowedNullishReadGap", (*lowering).narrowedNullishReadGap)
 	refusalRules.register(3340, "narrowedNeverReadGap", (*lowering).narrowedNeverReadGap)
+	refusalRules.register(3350, "narrowedArmReadGap", (*lowering).narrowedArmReadGap)
 }
 
 // narrowedNeverReadGap is narrowedNullishReadGap's twin for never (rulings.md:74 and :151, #v59xyph). A
@@ -80,6 +82,208 @@ func (l *lowering) narrowedNeverReadGap(node *ast.Node) error {
 		return nil // Declared never, it holds no value a read could hand on.
 	}
 	return l.notYet(node, "a read the checker narrowed to never of a binding a call may write")
+}
+
+// narrowedArmReadGap stops a stale narrowing before a read can use the wrong layout.
+// The other twins own reads narrowed to nullish or never.
+func (l *lowering) narrowedArmReadGap(node *ast.Node) error {
+	shorthand := node.Parent != nil && node.Parent.Kind == ast.KindShorthandPropertyAssignment
+	if node.Kind != ast.KindIdentifier || !l.isExpression(node) || (ast.IsDeclarationName(node) && !shorthand) || (ast.IsAssignmentTarget(node) && pureWrite(node)) {
+		return nil
+	}
+	symbol := l.bindingNamed(node)
+	if symbol == nil || symbol.Flags&ast.SymbolFlagsVariable == 0 || !l.writtenAcrossFunctions(symbol) {
+		return nil
+	}
+	narrowed, declared := l.checker.GetTypeAtLocation(node), l.checker.GetTypeOfSymbol(symbol)
+	if narrowed.Id() == declared.Id() || narrowed.Flags()&checker.TypeFlagsNever != 0 {
+		return nil
+	}
+	if _, nullish := l.nullishUnit(narrowed); nullish {
+		return nil
+	}
+	if l.checker.GetNonNullableType(declared).Id() == narrowed.Id() {
+		// Presence checks and undefined-aware observations handle this at runtime.
+		// #fxspptb's internal/oracle/testdata/review/agree/fxspptb_047cb0d_n_*.a witnesses hold it to Node.
+		return nil
+	}
+	storage, known := l.representation(declared)
+	if known && storage == ir.Union {
+		return nil // localRead checks the held union member at runtime before narrowing it.
+	}
+	if narrowedStorage, narrowedKnown := l.representation(narrowed); known && narrowedKnown && narrowedStorage == storage && !storage.IsReference() && !l.armReadSpecializes(node) {
+		// The read uses the same scalar storage as the write, so it reads the real value,
+		// as Node does, whatever a call wrote.
+		return nil
+	}
+	if !l.codeMayRunBeforeArmRead(node, symbol) {
+		return nil
+	}
+	writer := "a function"
+	if write := l.firstCrossFunctionWrite(symbol); write != nil {
+		if function := callBoundary(write); function != nil && ast.IsFunctionLike(function) && function.Name() != nil {
+			writer = function.Name().Text()
+		}
+	}
+	name := node.Text()
+	return l.notYet(node, "a read of "+name+" narrowed to "+l.checker.TypeToString(narrowed)+" where a call may have rewritten it ("+name+" is assigned inside "+writer+")")
+}
+
+// armReadSpecializes identifies consumers whose control flow or field dispatch
+// uses the narrowed type even though the operand itself is loaded from its slot.
+func (l *lowering) armReadSpecializes(read *ast.Node) bool {
+	for read.Parent != nil && read.Parent.Kind == ast.KindParenthesizedExpression {
+		read = read.Parent
+	}
+	parent := read.Parent
+	if parent == nil {
+		return true
+	}
+	switch parent.Kind {
+	case ast.KindSwitchStatement:
+		return parent.AsSwitchStatement().Expression == read && l.enumSwitchCovered(parent)
+	case ast.KindElementAccessExpression:
+		access := parent.AsElementAccessExpression()
+		if access.ArgumentExpression == read {
+			storage, known := l.representation(l.checker.GetTypeAtLocation(access.Expression))
+			return !known || storage == ir.Object
+		}
+	}
+	return false
+}
+
+// codeMayRunBeforeArmRead starts at the read's own call boundary. A plain write
+// refreshes the binding after its initializer or right-hand side has run.
+func (l *lowering) codeMayRunBeforeArmRead(read *ast.Node, symbol *ast.Symbol) bool {
+	boundary := callBoundary(read)
+	if boundary == nil || read.Pos() < 0 {
+		return true
+	}
+	for at := read.Parent; at != boundary; at = at.Parent {
+		if ast.IsIterationStatement(at, false) && (l.mayRunCode(at) || l.armReadCodeIn(at, at.End())) {
+			return true
+		}
+	}
+	switch boundary.Kind {
+	case ast.KindSourceFile:
+		return l.armReadDirty(boundary, read, symbol, false)
+	case ast.KindClassStaticBlockDeclaration:
+		return l.armReadDirty(boundary.AsClassStaticBlockDeclaration().Body, read, symbol, false)
+	}
+	if ast.IsFunctionLike(boundary) {
+		if body := boundary.Body(); armReadWithin(body, read) {
+			return l.armReadDirty(body, read, symbol, false)
+		}
+	}
+	// A parameter initializer, field, or unhandled boundary gets no write proof.
+	return l.armReadCodeIn(boundary, read.Pos())
+}
+
+func armReadWithin(node, read *ast.Node) bool {
+	return node != nil && node.Pos() <= read.Pos() && read.End() <= node.End()
+}
+
+// armReadDirty walks statements in order, joining conditional paths. At the
+// read it considers only code that finishes before the read, except on a loop
+// back edge, where a later call may run before the next read.
+func (l *lowering) armReadDirty(node, read *ast.Node, symbol *ast.Symbol, dirty bool) bool {
+	if node == nil {
+		return dirty
+	}
+	if node.Pos() < 0 || node.End() < node.Pos() {
+		return true
+	}
+	if ast.IsIterationStatement(node, false) {
+		if armReadWithin(node, read) {
+			return dirty // The boundary walk already checked its head and back edge.
+		}
+		bodyDirty := l.armReadDirty(node.Statement(), read, symbol, dirty)
+		return dirty || bodyDirty || l.mayRunCode(node) || l.armReadCodeIn(node, node.End())
+	}
+	switch node.Kind {
+	case ast.KindSourceFile, ast.KindBlock, ast.KindModuleBlock:
+		for _, statement := range node.Statements() {
+			dirty = l.armReadDirty(statement, read, symbol, dirty)
+			if armReadWithin(statement, read) {
+				break
+			}
+		}
+		return dirty
+	case ast.KindIfStatement:
+		branch := node.AsIfStatement()
+		dirty = l.armReadDirty(branch.Expression, read, symbol, dirty)
+		switch {
+		case armReadWithin(branch.Expression, read):
+			return dirty
+		case armReadWithin(branch.ThenStatement, read):
+			return l.armReadDirty(branch.ThenStatement, read, symbol, dirty)
+		case armReadWithin(branch.ElseStatement, read):
+			return l.armReadDirty(branch.ElseStatement, read, symbol, dirty)
+		default:
+			return l.armReadDirty(branch.ThenStatement, read, symbol, dirty) ||
+				l.armReadDirty(branch.ElseStatement, read, symbol, dirty)
+		}
+	case ast.KindVariableStatement:
+		for _, declaration := range node.AsVariableStatement().DeclarationList.AsVariableDeclarationList().Declarations.Nodes {
+			if armReadWithin(declaration, read) {
+				return dirty || l.armReadCodeIn(declaration, read.Pos())
+			}
+			if declaration.Initializer() != nil && ast.IsIdentifier(declaration.Name()) && l.bindingNamed(declaration.Name()) == symbol {
+				dirty = false
+			} else {
+				dirty = dirty || l.armReadCodeIn(declaration, declaration.End())
+			}
+		}
+		return dirty
+	case ast.KindExpressionStatement:
+		expression := ast.SkipParentheses(node.AsExpressionStatement().Expression)
+		if !armReadWithin(node, read) && expression.Kind == ast.KindBinaryExpression {
+			assignment := expression.AsBinaryExpression()
+			target := ast.SkipParentheses(assignment.Left)
+			if assignment.OperatorToken.Kind == ast.KindEqualsToken && ast.IsIdentifier(target) && l.bindingNamed(target) == symbol {
+				return false // The right-hand side finishes before this unconditional write.
+			}
+		}
+	case ast.KindReturnStatement, ast.KindThrowStatement, ast.KindBreakStatement, ast.KindContinueStatement:
+		if !armReadWithin(node, read) {
+			return dirty
+		}
+	}
+	if isCallBoundary(node) {
+		return dirty
+	}
+	if armReadWithin(node, read) {
+		return dirty || l.armReadCodeIn(node, read.Pos())
+	}
+	return dirty || l.armReadMayRunCode(node) || l.armReadCodeIn(node, node.End())
+}
+
+func (l *lowering) armReadMayRunCode(node *ast.Node) bool {
+	switch node.Kind {
+	case ast.KindUnknown, ast.KindWithStatement, ast.KindClassDeclaration:
+		return true
+	default:
+		return l.mayRunCode(node)
+	}
+}
+
+// armReadCodeIn visits nodes that finish by end without entering nested call
+// boundaries. The code that calls a nested function is counted at the call site.
+func (l *lowering) armReadCodeIn(container *ast.Node, end int) bool {
+	var visit ast.Visitor
+	visit = func(node *ast.Node) bool {
+		if node.Pos() < 0 || node.End() < node.Pos() {
+			return true
+		}
+		if node.Pos() >= end {
+			return false
+		}
+		if node.End() <= end && l.armReadMayRunCode(node) {
+			return true
+		}
+		return !isCallBoundary(node) && node.ForEachChild(visit)
+	}
+	return container.ForEachChild(visit)
 }
 
 // passedAtDeclaredType reports whether read is the whole argument of a direct call to a function the
@@ -889,12 +1093,17 @@ func (l *lowering) nullishUnit(t *checker.Type) (string, bool) {
 // or for-of head. One walk over every module of the program collects the answer for every symbol the
 // first time it's asked; the answer is the program's alone, so nothing invalidates it.
 func (l *lowering) writtenAcrossFunctions(symbol *ast.Symbol) bool {
+	return l.firstCrossFunctionWrite(symbol) != nil
+}
+
+// firstCrossFunctionWrite returns the first such assignment target in program walk order.
+func (l *lowering) firstCrossFunctionWrite(symbol *ast.Symbol) *ast.Node {
 	if l.crossFunctionWrites == nil {
-		l.crossFunctionWrites = map[*ast.Symbol]bool{}
+		l.crossFunctionWrites = map[*ast.Symbol]*ast.Node{}
 		l.walkProgramModules(func(node *ast.Node) {
 			if node.Kind == ast.KindIdentifier && ast.IsAssignmentTarget(node) {
-				if written := l.bindingNamed(node); written != nil && written.ValueDeclaration != nil && callBoundary(node) != callBoundary(written.ValueDeclaration) {
-					l.crossFunctionWrites[written] = true
+				if written := l.bindingNamed(node); written != nil && written.ValueDeclaration != nil && l.crossFunctionWrites[written] == nil && callBoundary(node) != callBoundary(written.ValueDeclaration) {
+					l.crossFunctionWrites[written] = node
 				}
 			}
 		})
@@ -929,9 +1138,13 @@ func (l *lowering) walkProgramModules(visit func(*ast.Node)) {
 // static block. Its source file where there is none.
 func callBoundary(node *ast.Node) *ast.Node {
 	for at := node.Parent; at != nil; at = at.Parent {
-		if ast.IsFunctionLike(at) || at.Kind == ast.KindClassStaticBlockDeclaration || at.Kind == ast.KindPropertyDeclaration || at.Kind == ast.KindSourceFile {
+		if isCallBoundary(at) {
 			return at
 		}
 	}
 	return nil
+}
+
+func isCallBoundary(node *ast.Node) bool {
+	return ast.IsFunctionLike(node) || node.Kind == ast.KindClassStaticBlockDeclaration || node.Kind == ast.KindPropertyDeclaration || node.Kind == ast.KindSourceFile
 }

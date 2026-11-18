@@ -111,12 +111,12 @@ func TestOverloadCallbackRefusals(t *testing.T) {
 		// isId narrowed node to Id, which says nothing about the overload's T.
 		{"a narrowing", "", overloadCallbackParameters, `    check(node !== undefined && isId(node) && (test === undefined || test(node)), message || "Unexpected node.");
 `},
-		// A closure that writes node could run before the call, so node may not hold what the caller passed.
+		// The callback proof rejects any closure write to node, even when the explicit call follows check.
 		{"a closure assigns node", "", overloadCallbackParameters, `    const reset = () => { node = undefined; };
+    check(node !== undefined && (test === undefined || test(node)), message || "Unexpected node.");
     if (message === "reset") {
         reset();
     }
-    check(node !== undefined && (test === undefined || test(node)), message || "Unexpected node.");
 `},
 		// A default replaces a missing node with one the overload's caller never passed.
 		{"a default", "const fallback: Id = { kind: 1, text: \"f\" };\n", "node: N | undefined = fallback, test: ((node: N) => boolean) | undefined, message?: string", `    check(node !== undefined && (test === undefined || test(node)), message || "Unexpected node.");

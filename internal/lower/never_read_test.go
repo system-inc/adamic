@@ -35,6 +35,25 @@ const neverReadLet = neverReadKinds + `function describe(start: N): string {
 	if (node.kind === K.B) return 'b';
 `
 
+const neverReadLetSwitch = neverReadKinds + `function describe(start: N): string {
+	let node: N = start;
+	const flip = (): void => { node = { kind: K.A, a: 1 }; };
+	switch (node.kind) {
+	case K.A: return 'a';
+	case K.B: return 'b';
+	default:
+		flip();
+`
+
+const neverReadLetSwitchEnd = `
+	}
+}
+console.log(describe({ kind: K.B, b: 2 }));
+`
+
+const neverReadNodeArmWhat = "a read of node narrowed to NodeB where a call may have rewritten it (node is assigned inside a function)"
+const neverReadShapeArmWhat = "a read of shape narrowed to \"square\" where a call may have rewritten it (shape is assigned inside a function)"
+
 // neverReadWhere is where the last occurrence of read starts in source, as main.ts:line:column.
 func neverReadWhere(t *testing.T, source, read string) string {
 	t.Helper()
@@ -63,28 +82,26 @@ func neverReadTraps(program *ir.Program) bool {
 // A read the checker types never, with something that can write its place between the earliest
 // narrowing the never is made of and the read, is rulings.md:151's case and stops as not yet at the read
 // (never_read.go). nv1 and nv5 hold the path road's call between the two checks, nv3 its call after the
-// last check, which only the earliest narrowing sees; nv2 and nv6 to nv9 the let road, which
-// narrowedNeverReadGap also stops. Each pins where it stops and that it's a not yet, never the words, so
-// the earliest-narrowing rule alone holds every row: never_read.mutants.md's third mutant unregisters
-// narrowedNeverReadGap and runs this test.
+// last check. nv2 pins the let's never read in an exhaustive switch. The remaining let rows pin
+// the earlier arm read in the original two-check programs.
 func TestNeverReadAcrossAWriteIsNotYet(t *testing.T) {
 	t.Parallel()
-	for _, probe := range []struct{ name, source, read string }{
-		{"nv1", neverReadHolder + "\tflip(holder);\n\tif (holder.node.kind === K.B) return 'b';\n\t{ const seen: unknown = holder.node; return stray(seen); }\n}\nconsole.log(describe({ node: { kind: K.B, b: 2 } }));\n", "holder.node; return"},
-		{"nv3", neverReadHolder + "\tif (holder.node.kind === K.B) {\n\t\tflip(holder);\n\t\tif (holder.node.kind === K.B) return 'still b';\n\t\t{ const seen: unknown = holder.node; return stray(seen); }\n\t}\n\treturn 'none';\n}\nconsole.log(describe({ node: { kind: K.B, b: 2 } }));\n", "holder.node; return"},
-		{"nv5", neverReadHolder + "\tflip(holder);\n\tif (holder.node.kind === K.B) return 'b';\n\t{ const count: number = holder.node; return \"count \" + String(count + 1); }\n}\nconsole.log(describe({ node: { kind: K.B, b: 2 } }));\n", "holder.node; return"},
-		{"nv2", neverReadLet + "\t{ const seen: unknown = node; return stray(seen); }\n}\nconsole.log(describe({ kind: K.B, b: 2 }));\n", "node; return"},
-		{"nv6", neverReadLet + "\t{ const count: number = node; return \"count \" + String(count + 1); }\n}\nconsole.log(describe({ kind: K.B, b: 2 }));\n", "node; return"},
-		{"nv7", neverReadLet + "\t{ const other: { readonly label: string } = node; return other.label.toUpperCase(); }\n}\nconsole.log(describe({ kind: K.B, b: 2 }));\n", "node; return"},
-		{"nv8", neverReadLet + "\t{ const other: { readonly label: string } = node; return \"label \" + String(other.label === undefined); }\n}\nconsole.log(describe({ kind: K.B, b: 2 }));\n", "node; return"},
-		{"nv9", neverReadLet + "\t{ const other: { readonly kind: string } = node; return other.kind.toUpperCase(); }\n}\nconsole.log(describe({ kind: K.B, b: 2 }));\n", "node; return"},
+	for _, probe := range []struct{ name, source, read, what string }{
+		{"nv1", neverReadHolder + "\tflip(holder);\n\tif (holder.node.kind === K.B) return 'b';\n\t{ const seen: unknown = holder.node; return stray(seen); }\n}\nconsole.log(describe({ node: { kind: K.B, b: 2 } }));\n", "holder.node; return", ""},
+		{"nv3", neverReadHolder + "\tif (holder.node.kind === K.B) {\n\t\tflip(holder);\n\t\tif (holder.node.kind === K.B) return 'still b';\n\t\t{ const seen: unknown = holder.node; return stray(seen); }\n\t}\n\treturn 'none';\n}\nconsole.log(describe({ node: { kind: K.B, b: 2 } }));\n", "holder.node; return", ""},
+		{"nv5", neverReadHolder + "\tflip(holder);\n\tif (holder.node.kind === K.B) return 'b';\n\t{ const count: number = holder.node; return \"count \" + String(count + 1); }\n}\nconsole.log(describe({ node: { kind: K.B, b: 2 } }));\n", "holder.node; return", ""},
+		{"nv2", neverReadLetSwitch + "\t\tconst seen: unknown = node; return stray(seen);" + neverReadLetSwitchEnd, "node; return", neverReadCallWrittenWhat},
+		{"nv6", neverReadLet + "\t{ const count: number = node; return \"count \" + String(count + 1); }\n}\nconsole.log(describe({ kind: K.B, b: 2 }));\n", "node.kind === K.B", neverReadNodeArmWhat},
+		{"nv7", neverReadLet + "\t{ const other: { readonly label: string } = node; return other.label.toUpperCase(); }\n}\nconsole.log(describe({ kind: K.B, b: 2 }));\n", "node.kind === K.B", neverReadNodeArmWhat},
+		{"nv8", neverReadLet + "\t{ const other: { readonly label: string } = node; return \"label \" + String(other.label === undefined); }\n}\nconsole.log(describe({ kind: K.B, b: 2 }));\n", "node.kind === K.B", neverReadNodeArmWhat},
+		{"nv9", neverReadLet + "\t{ const other: { readonly kind: string } = node; return other.kind.toUpperCase(); }\n}\nconsole.log(describe({ kind: K.B, b: 2 }));\n", "node.kind === K.B", neverReadNodeArmWhat},
 	} {
 		t.Run(probe.name, func(t *testing.T) {
 			t.Parallel()
 			_, err := lowerSourceAs(t, probe.source, ".ts")
 			var notYet *NotYet
-			if want := neverReadWhere(t, probe.source, probe.read); !errors.As(err, &notYet) || !strings.HasSuffix(notYet.Where, want) {
-				t.Fatalf("got %v, want a not yet at %s", err, want)
+			if want := neverReadWhere(t, probe.source, probe.read); !errors.As(err, &notYet) || !strings.HasSuffix(notYet.Where, want) || (probe.what != "" && notYet.What != probe.what) {
+				t.Fatalf("got %v, want a not yet at %s with words %q when specified", err, want, probe.what)
 			}
 		})
 	}
@@ -163,6 +180,22 @@ func neverReadOwnShape(writer, between string) string {
 	return "type Shape = \"circle\" | \"square\";\nfunction stray(value: unknown): string { return \"stray \" + String(value); }\nconst source: { v: Shape; shape: Shape } = { v: \"circle\", shape: \"circle\" };\nconst pair: [Shape] = [\"circle\"];\nfunction describe(start: Shape): string {\n\tlet shape: Shape = start;\n\t" + writer + "\n\tif (shape === \"circle\") return \"circle\";\n\t" + between + "\n\tif (shape === \"square\") return \"square\";\n\t{ const seen: unknown = shape; return stray(seen); }\n}\nconsole.log(describe(\"square\"));\n"
 }
 
+const neverReadOwnShapeSwitch = `type Shape = "circle" | "square";
+function stray(value: unknown): string { return "stray " + String(value); }
+function describe(start: Shape): string {
+	let shape: Shape = start;
+	const flip = (): void => { shape = "circle"; };
+	switch (shape) {
+	case "circle": return "circle";
+	case "square": return "square";
+	default:
+		flip();
+		const seen: unknown = shape; return stray(seen);
+	}
+}
+console.log(describe("square"));
+`
+
 // neverReadOwnCount is neverReadOwnShape for ++ and --: a number or string local typeof checks exhaust.
 func neverReadOwnCount(update string) string {
 	return "function stray(value: unknown): string { return \"stray \" + String(value); }\nfunction describe(start: number | string): string {\n\tlet count: number | string = start;\n\tconst bump = (): void => { if (typeof count === \"number\") " + update + "; };\n\tif (typeof count === \"string\") return \"string\";\n\tbump();\n\tif (typeof count === \"number\") return \"number\";\n\t{ const seen: unknown = count; return stray(seen); }\n}\nconsole.log(describe(1));\n"
@@ -172,28 +205,29 @@ func neverReadOwnCount(update string) string {
 // IsAssignmentTarget as rulings.md:338 does, writtenAcrossFunctions): a local its own function narrows
 // to never is trusted only when no other code writes it. An arrow declared in that function that writes
 // it and runs between the checks, a destructuring write in one (an object pattern, a shorthand and an
-// array), and ++ or -- in one are each another function's write, so each read stops as not yet at the
-// read, in .ts and .a, never a trap on a valid run (Node prints stray circle for the first five). The
-// control writes the same local by a destructuring in its own function, which the checker's flow sees:
+// array), and ++ or -- in one are each another function's write. The arrow uses an exhaustive switch
+// to pin the never diagnostic. The updates pin it through boxed union storage. The destructuring rows
+// pin the earlier arm read. Each runs in .ts and .a. The control writes the same local by a
+// destructuring in its own function, which the checker's flow sees:
 // between the checks the never vanishes and the read lowers as a read, and before them the never holds
 // and lowers to the trap.
 func TestNeverReadOwnFunctionEdges(t *testing.T) {
 	t.Parallel()
-	for _, probe := range []struct{ name, source, read string }{
-		{"arrow", neverReadOwnShape("const flip = (): void => { shape = \"circle\"; };", "flip();"), "shape; return"},
-		{"destructured_object", neverReadOwnShape("const flip = (): void => { ({ v: shape } = source); };", "flip();"), "shape; return"},
-		{"destructured_shorthand", neverReadOwnShape("const flip = (): void => { ({ shape } = source); };", "flip();"), "shape; return"},
-		{"destructured_array", neverReadOwnShape("const flip = (): void => { [shape] = pair; };", "flip();"), "shape; return"},
-		{"increment", neverReadOwnCount("count++"), "count; return"},
-		{"decrement", neverReadOwnCount("count--"), "count; return"},
+	for _, probe := range []struct{ name, source, read, what string }{
+		{"arrow", neverReadOwnShapeSwitch, "shape; return", neverReadCallWrittenWhat},
+		{"destructured_object", neverReadOwnShape("const flip = (): void => { ({ v: shape } = source); };", "flip();"), "shape === \"square\"", neverReadShapeArmWhat},
+		{"destructured_shorthand", neverReadOwnShape("const flip = (): void => { ({ shape } = source); };", "flip();"), "shape === \"square\"", neverReadShapeArmWhat},
+		{"destructured_array", neverReadOwnShape("const flip = (): void => { [shape] = pair; };", "flip();"), "shape === \"square\"", neverReadShapeArmWhat},
+		{"increment", neverReadOwnCount("count++"), "count; return", neverReadCallWrittenWhat},
+		{"decrement", neverReadOwnCount("count--"), "count; return", neverReadCallWrittenWhat},
 	} {
 		for _, extension := range []string{".ts", ".a"} {
 			t.Run(probe.name+extension, func(t *testing.T) {
 				t.Parallel()
 				_, err := lowerSourceAs(t, probe.source, extension)
 				var notYet *NotYet
-				if want := strings.Replace(neverReadWhere(t, probe.source, probe.read), "main.ts", "main"+extension, 1); !errors.As(err, &notYet) || !strings.HasSuffix(notYet.Where, want) {
-					t.Fatalf("got %v, want a not yet at %s", err, want)
+				if want := strings.Replace(neverReadWhere(t, probe.source, probe.read), "main.ts", "main"+extension, 1); !errors.As(err, &notYet) || !strings.HasSuffix(notYet.Where, want) || notYet.What != probe.what {
+					t.Fatalf("got %v, want a not yet at %s saying %q", err, want, probe.what)
 				}
 			})
 		}
