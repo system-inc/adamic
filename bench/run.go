@@ -1,6 +1,10 @@
 // Command bench times Adamic's native binaries against Node and Bun on the same programs.
 //
 //	go run ./bench [-rounds 5] [-timeout 120s] [-only nbody,trees]
+//	go run ./bench -compare <baseline sha> <candidate sha> -suite everyday [-samples 15] [-seed n]
+//
+// The second form compares two commits of Adamic on a suite of bench/suites.json, and is described
+// in compare.go; what follows is the first.
 //
 // Every program in bench/ is a fair one: the same source, as it stands, runs on all three, and all
 // three must print the same answer or the row says so. Each is built natively the way a user
@@ -71,7 +75,41 @@ func main() {
 	timeout := flag.Duration("timeout", 120*time.Second, "how long one run may take before it's reported as not finishing")
 	only := flag.String("only", "", "comma-separated benchmark names to run (default: all)")
 	threads := flag.String("threads", "", "comma-separated native thread counts, interleaved within each round (default: pool default)")
+	baseline := flag.String("compare", "", "compare two commits: -compare <baseline sha> <candidate sha> (see compare.go)")
+	suiteName := flag.String("suite", "everyday", "with -compare, the suite in bench/suites.json to compare on")
+	samples := flag.Int("samples", 15, "with -compare, how many interleaved samples; at least 6")
+	plant := flag.String("plant", "", "with -compare, \"candidate\" appends a fixed busy loop of -plant-ms to every candidate program, to prove the comparison can fail")
+	plantMs := flag.Int("plant-ms", 25, "with -plant candidate, the plant's milliseconds of busy CPU")
+	seed := flag.Uint64("seed", 0, "with -compare, the seed that draws every run's ADAMIC_BENCH_PAD length (default: the time)")
 	flag.Parse()
+
+	if *baseline != "" {
+		// The candidate is the argument after the baseline, and flag stops at it, so the flags after it
+		// are parsed again from there.
+		if flag.NArg() == 0 {
+			fail(errors.New("-compare takes two commits: -compare <baseline sha> <candidate sha>"))
+		}
+		candidate := flag.Arg(0)
+		if err := flag.CommandLine.Parse(flag.Args()[1:]); err != nil {
+			fail(err)
+		}
+		if flag.NArg() > 0 {
+			fail(fmt.Errorf("-compare takes two commits, and these are left over: %s", strings.Join(flag.Args(), " ")))
+		}
+		// The seed is the time unless -seed names one, and 0 is a seed like any other, so whether it was
+		// given is read from the flags set, in either parse.
+		seedGiven := false
+		flag.Visit(func(set *flag.Flag) {
+			if set.Name == "seed" {
+				seedGiven = true
+			}
+		})
+		if !seedGiven {
+			*seed = uint64(time.Now().UnixNano())
+		}
+		compareCommits(compareRequest{baseline: *baseline, candidate: candidate, suite: *suiteName, samples: *samples, plant: *plant, plantMs: *plantMs, only: *only, timeout: *timeout, seed: *seed})
+		return
+	}
 
 	directory, err := benchDirectory()
 	if err != nil {
@@ -103,6 +141,9 @@ func main() {
 	runtimes := availableRuntimes(*threads, modules)
 
 	describeMachine(runtimes)
+	if commit, err := exec.Command("git", "rev-parse", "--short", "HEAD").Output(); err == nil {
+		fmt.Printf("adamic: %s", commit)
+	}
 	fmt.Printf("load before: %s\n\n", loadAverage())
 
 	adamic := filepath.Join(work, "adamic")
@@ -249,13 +290,17 @@ func findPrograms(directory string, only string) ([]program, error) {
 			if err != nil {
 				return nil, err
 			}
-			programs = append(programs, program{name: name, source: source, adamic: strings.Contains(string(contents), "from 'adamic'") || strings.Contains(string(contents), `from "adamic"`)})
+			programs = append(programs, program{name: name, source: source, adamic: importsAdamic(string(contents))})
 		}
 	}
 	if len(programs) == 0 {
 		return nil, errors.New("no benchmarks to run")
 	}
 	return programs, nil
+}
+
+func importsAdamic(contents string) bool {
+	return strings.Contains(contents, "from 'adamic'") || strings.Contains(contents, `from "adamic"`)
 }
 
 // availableRuntimes is native and Node always, and Bun when it's installed.
@@ -275,10 +320,7 @@ func availableRuntimes(threads, modules string) []runtimeKind {
 		}
 	}
 	runtimes = append(runtimes, runtimeKind{name: "node", command: func(program program) []string {
-		if program.adamic || filepath.Ext(program.source) == ".a" {
-			return []string{"node", "--disable-warning=ExperimentalWarning", filepath.Join(filepath.Dir(filepath.Dir(program.source)), "oracle", "node.mjs"), program.source}
-		}
-		return []string{"node", program.source}
+		return nodeCommand(program, filepath.Dir(filepath.Dir(program.source)))
 	}})
 	if _, err := exec.LookPath("bun"); err == nil {
 		runtimes = append(runtimes, runtimeKind{name: "bun", environment: []string{"NODE_PATH=" + modules}, command: func(program program) []string {
@@ -286,6 +328,15 @@ func availableRuntimes(threads, modules string) []runtimeKind {
 		}})
 	}
 	return runtimes
+}
+
+// nodeCommand runs a program with Node: a .a source, or one importing 'adamic', through the
+// repository's oracle runner, which resolves 'adamic' to the independent sequential shim.
+func nodeCommand(program program, root string) []string {
+	if program.adamic || filepath.Ext(program.source) == ".a" {
+		return []string{"node", "--disable-warning=ExperimentalWarning", filepath.Join(root, "oracle", "node.mjs"), program.source}
+	}
+	return []string{"node", program.source}
 }
 
 // run runs a command to the end, and measures it.
@@ -455,12 +506,12 @@ func ratio(native measurement, node measurement) string {
 
 func describeMachine(runtimes []runtimeKind) {
 	fmt.Printf("date: %s\n", time.Now().UTC().Format(time.RFC3339))
+	if hostname, err := os.Hostname(); err == nil {
+		fmt.Printf("host: %s\n", hostname)
+	}
 	fmt.Printf("machine: %s/%s, %d logical CPUs, %s\n", runtime.GOOS, runtime.GOARCH, runtime.NumCPU(), cpuModel())
 	if uname, err := exec.Command("uname", "-srm").Output(); err == nil {
 		fmt.Printf("kernel: %s", uname)
-	}
-	if commit, err := exec.Command("git", "rev-parse", "--short", "HEAD").Output(); err == nil {
-		fmt.Printf("adamic: %s", commit)
 	}
 	for _, version := range [][]string{{"clang", "--version"}, {"node", "--version"}, {"bun", "--version"}} {
 		if output, err := exec.Command(version[0], version[1:]...).Output(); err == nil {
