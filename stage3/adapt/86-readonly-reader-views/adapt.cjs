@@ -36,6 +36,8 @@ const edits = [
         upstream: 'getCanonicalFileName: GetCanonicalFileName;', adapted: 'readonly getCanonicalFileName: GetCanonicalFileName;' },
 ];
 const report = [];
+// Every file is read and every edit found before anything is written, so a refusal leaves the tree as it was.
+const writes = [];
 for (const file of [...new Set(edits.map(edit => edit.file))]) {
     const fileName = path.join(tree, file);
     const text = fs.readFileSync(fileName, 'utf8');
@@ -49,16 +51,18 @@ for (const file of [...new Set(edits.map(edit => edit.file))]) {
             ts.forEachChild(node, find);
         });
         const label = `${edit.function || edit.interface}.${edit.parameter || edit.member}`;
-        if (owners.length !== 1) throw new Error(`expected exactly one ${edit.function || edit.interface} in ${file}, found ${owners.length}`);
         let target;
         if (edit.function) {
+            if (owners.length !== 1) throw new Error(`expected exactly one ${edit.function} in ${file}, found ${owners.length}`);
             const parameters = owners[0].parameters.filter(parameter => ts.isIdentifier(parameter.name) && parameter.name.text === edit.parameter);
             if (parameters.length !== 1 || !parameters[0].type) throw new Error(`expected one typed parameter ${label}`);
             target = parameters[0].type;
         }
         else {
-            const members = owners[0].members.filter(member => member.name && ts.isIdentifier(member.name) && member.name.text === edit.member);
-            if (members.length !== 1 || !ts.isPropertySignature(members[0])) throw new Error(`expected one property ${label}`);
+            // An interface may be declared more than once (types.ts merges two Programs), so the member is looked for
+            // across every declaration of it, and must be declared exactly once.
+            const members = owners.flatMap(owner => owner.members.filter(member => member.name && ts.isIdentifier(member.name) && member.name.text === edit.member));
+            if (owners.length === 0 || members.length !== 1 || !ts.isPropertySignature(members[0])) throw new Error(`expected one property ${label} across ${owners.length} declarations`);
             target = members[0];
         }
         // A property's text starts after its doc comment, so the comment and the @internal tag keep their bytes.
@@ -75,9 +79,10 @@ for (const file of [...new Set(edits.map(edit => edit.file))]) {
     }
     let adapted = text;
     for (const change of changes.sort((a, b) => b.at - a.at)) adapted = adapted.slice(0, change.at) + change.adapted + adapted.slice(change.end);
-    if (adapted !== text) {
-        if (fs.readFileSync(fileName, 'utf8') !== text) throw new Error(`source changed during adaptation: ${fileName}`);
-        fs.writeFileSync(fileName, adapted);
-    }
+    if (adapted !== text) writes.push({ fileName, text, adapted });
+}
+for (const write of writes) {
+    if (fs.readFileSync(write.fileName, 'utf8') !== write.text) throw new Error(`source changed during adaptation: ${write.fileName}`);
+    fs.writeFileSync(write.fileName, write.adapted);
 }
 console.log(JSON.stringify({ typescript: ts.version, task: '#38kdd4d', ruling: "Adamic, Nov 18, in adaptation 72's shape", edits: report }, null, 2));
