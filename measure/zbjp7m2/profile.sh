@@ -3,7 +3,7 @@
 # with a plain loop, no pool) as release natives, checks both print what Node prints, then:
 # 1. perf stat, user-space counters, interleaved, 7 rounds: serial, pool at 1, 4 and 8 threads, and Node;
 # 2. perf record at threads=1 and for serial, the top symbols by user cycles, side by side.
-# Never lands. Needs perf with kernel.perf_event_paranoid at 2 or lower (Golem, Pupa, Lunatic since Nov 17).
+# Node runs the program through oracle/node.mjs. Never lands. Needs perf with kernel.perf_event_paranoid at 2 or lower (Golem, Pupa, Lunatic since Nov 17).
 set -u
 T=$(mktemp -d)
 echo "box $(hostname) $(nproc) cpus, $(uname -r), main $(git rev-parse HEAD)"
@@ -12,15 +12,16 @@ echo "perf_event_paranoid $(cat /proc/sys/kernel/perf_event_paranoid)"
 go build -o "$T/adamic" ./cmd/adamic || { echo "FAIL adamic build"; exit 1; }
 "$T/adamic" build bench/parallel_files.a -o "$T/pool" > "$T/b1.log" 2>&1 || { echo "FAIL pool build"; cat "$T/b1.log"; exit 1; }
 "$T/adamic" build measure/zbjp7m2/serial_files.a -o "$T/serial" > "$T/b2.log" 2>&1 || { echo "FAIL serial build"; cat "$T/b2.log"; exit 1; }
-"$T/adamic" js bench/parallel_files.a > "$T/pool.js" 2> "$T/js.log" || { echo "FAIL js"; cat "$T/js.log"; exit 1; }
-want=$(node "$T/pool.js")
+# Node runs the .a through oracle/node.mjs, as bench/run.go's node row does.
+nodeRun=(node --disable-warning=ExperimentalWarning "$PWD/oracle/node.mjs" "$PWD/bench/parallel_files.a")
+want=$("${nodeRun[@]}") || { echo "FAIL node"; exit 1; }
 for run in serial pool; do got=$(ADAMIC_THREADS=1 "$T/$run"); [ "$got" = "$want" ] && echo "PASS $run prints Node's output" || { echo "FAIL $run: $got, Node: $want"; exit 1; }; done
 events=instructions:u,cycles:u,task-clock,context-switches,cpu-migrations,page-faults
 for round in 1 2 3 4 5 6 7; do
 	for variant in serial pool/1 pool/4 pool/8 node; do
 		case $variant in
 			serial) command=("$T/serial"); env=() ;;
-			node) command=(node "$T/pool.js"); env=() ;;
+			node) command=("${nodeRun[@]}"); env=() ;;
 			pool/*) command=("$T/pool"); env=(ADAMIC_THREADS=${variant#pool/}) ;;
 		esac
 		env "${env[@]}" perf stat -x, -e "$events" -o "$T/stat.$variant.$round" "${command[@]}" > /dev/null 2>&1
