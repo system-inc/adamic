@@ -340,6 +340,11 @@ func JavaScriptWith(program *ir.Program, options Options) string {
 		// A custom runtime need not expose Node exit helpers for programs without exit.
 		code = "const adamicProcessExiting = () => false;\n" + code
 	}
+	if emitter.panicIdentityUsed {
+		// Every runtime answers it, and there is no fallback: a runtime without isPanic fails to load,
+		// where a default would let a catch take a panic.
+		code = "import { isPanic as adamicIsPanic } from " + runtimeImport + ";\n" + code
+	}
 	if strings.Contains(code, "adamicWatchFileListener(") {
 		code = nodeWatchFileRuntime + code
 	}
@@ -402,6 +407,7 @@ func classCountRuntime(runtime string, counted bool) string {
 
 type emitter struct {
 	processExitUsed     bool
+	panicIdentityUsed   bool
 	hostCalleeUsed      bool
 	stdoutHandleUsed    bool
 	program             *ir.Program
@@ -766,6 +772,27 @@ func (e *emitter) statement(at *ir.Statement) {
 	case ir.Throw:
 		e.line("throw %s;", e.value(statement.Value))
 	case ir.Try:
+		// A panic, and every check the compiler inserts, is never caught (docs/rulings.md). The oracle's
+		// panic exits the process, but a Worker's throws an AdamicPanic for the bridge to answer, so every
+		// catch asks the runtime whether the value it caught is a panic. The test is the value's identity,
+		// never state a module keeps: a Worker's async handler interleaves requests at every await, so a
+		// flag shared between them would leak from one request into another.
+		e.panicIdentityUsed = true
+		panicking := ""
+		if statement.HasFinally {
+			// A finally has no caught value to test, so a catch around the try sees every throw, records
+			// in a flag of this try's own whether it is a panic, and throws it on; the finally body is
+			// skipped when it was. The body stays in the finally, never moved into a catch, so a return,
+			// break or continue through it keeps JavaScript's own completion. With a catch of the
+			// program's, the inner try holds that catch too, since a panic raised in it must skip the
+			// finally as well.
+			panicking = e.temporary()
+			e.line("let %s = false;", panicking)
+			if statement.HasCatch {
+				e.line("try {")
+				e.indent++
+			}
+		}
 		e.line("try {")
 		e.nested(statement.Body)
 		if statement.HasCatch {
@@ -773,6 +800,7 @@ func (e *emitter) statement(at *ir.Statement) {
 			e.line("} catch (%s) {", caught)
 			e.indent++
 			e.line("if (adamicProcessExiting()) throw %s;", caught)
+			e.line("if (adamicIsPanic(%s)) throw %s;", caught, caught)
 			// Stack exhaustion is terminal before user handlers or instrumentation run.
 			e.line("if (%s instanceof RangeError && %s.message === %s) panic(%s);", caught, caught, quote("Maximum call stack size exceeded"), quote(stackOverflowMessage))
 			// Part 1 of a try is its catch taking the error (flow.Instruction.Part).
@@ -784,9 +812,17 @@ func (e *emitter) statement(at *ir.Statement) {
 			e.indent--
 		}
 		if statement.HasFinally {
+			if statement.HasCatch {
+				e.line("}")
+				e.indent--
+			}
+			unwinding := e.temporary()
+			e.line("} catch (%s) {", unwinding)
+			e.line("\tif (adamicIsPanic(%s)) %s = true;", unwinding, panicking)
+			e.line("\tthrow %s;", unwinding)
 			e.line("} finally {")
 			e.indent++
-			e.line("if (!adamicProcessExiting()) {")
+			e.line("if (!adamicProcessExiting() && !%s) {", panicking)
 			e.nested(statement.Finally)
 			e.line("}")
 			e.indent--

@@ -1,0 +1,46 @@
+import { panic } from 'adamic';
+import type { HttpRequest, HttpResponse } from 'adamic/http';
+
+// Each request's try is its own. Request /a panics two async frames down, after awaits, while each
+// /b request started beside it throws an ordinary error and catches it. A /b request waits one turn
+// for each character of its path past the second before it throws, from none to seven, so some /b
+// catch and finally run while the panic of /a is still on its way up, whatever count of turns an
+// async frame takes. /count reads how many finallies ran: every /b's, never /a's.
+let finallies = 0;
+
+async function settle(): Promise<number> {
+    return 0;
+}
+
+async function explode(path: string): Promise<number> {
+    await settle();
+    if(path === '/a') {
+        panic('request a panicked');
+    }
+    return 1;
+}
+
+async function descend(path: string): Promise<number> {
+    const value = await explode(path);
+    await settle();
+    return value;
+}
+
+export async function handle(request: HttpRequest): Promise<HttpResponse> {
+    if(request.path === '/count') {
+        return { status: 200, headers: [], body: `${finallies}` };
+    }
+    try {
+        if(request.path === '/a') {
+            await descend(request.path);
+        }
+        for(let wait = 2; wait < request.path.length; wait += 1) {
+            await settle();
+        }
+        throw new Error('b');
+    } catch {
+        return { status: 200, headers: [], body: 'b-caught' };
+    } finally {
+        finallies += 1;
+    }
+}

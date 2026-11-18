@@ -61,6 +61,12 @@ export function panic(message) {
 	process.exit(70);
 }
 
+// isPanic is what the JavaScript backend's catch and finally ask of a value they caught, since a panic
+// is never the program's to catch. Here a panic exits the process where it stands (panic above, and the
+// uncaught handler), so no panic is ever a value a catch holds: false, for every value. The Workers
+// runtime, whose panic throws, answers by the value's identity (internal/worker/runtime.mjs).
+export function isPanic() { return false; }
+
 // readTextFile reads a file as Node's readFileSync(path, 'utf8') decodes it: invalid bytes become
 // U+FFFD by the WHATWG decoder's rules, and a byte-order mark stays, as U+FEFF. A failure is a value,
 // since there are no exceptions to throw yet, and its message is Adamic's own words, the same on

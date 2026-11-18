@@ -1,0 +1,23 @@
+import { panic } from 'adamic';
+
+// The twin of internal/worker's TestWorkerPanicIsNeverCaught/catch_finally: a panic raised in the
+// catch body skips the finally too. Node, native and the JavaScript backend each print "finally 1"
+// and "caught", then exit 70 with "adamic: panic: panic inside a catch with a finally".
+let finallies = 0;
+
+function respond(path: string): string {
+	try {
+		throw new Error('ordinary');
+	} catch {
+		if (path === '/panic') {
+			panic('panic inside a catch with a finally');
+		}
+		return 'caught';
+	} finally {
+		finallies += 1;
+		console.log(`finally ${finallies}`);
+	}
+}
+console.log(respond('/ok'));
+console.log(respond('/panic'));
+console.log('after: never seen');
