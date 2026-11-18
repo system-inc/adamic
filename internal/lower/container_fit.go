@@ -193,7 +193,8 @@ type containerFitWalk struct {
 	values  []*checker.Type
 	targets []*checker.Type
 	// probe is set when the gate met a pair that can reach a map (#rt5evf5 head 2's probe, never for landing).
-	probe bool
+	probe  bool
+	judged int
 }
 
 // absorb gathers what a reached pair's answer rests on into the running pair's.
@@ -408,6 +409,12 @@ func (l *lowering) containerPairJudged(value *checker.Type, target *checker.Type
 	// The bound reads the pairs in progress around this one, so it's judged before this pair joins them.
 	deeplyNested := containerFitDeeplyNested(value, walk.values) || containerFitDeeplyNested(target, walk.targets)
 	walk.values, walk.targets = append(walk.values, value), append(walk.targets, target)
+	if walk.judged++; walk.judged%500 == 0 && os.Getenv("ADAMIC_PROBE_DEPTHGATE") != "" {
+		// Probe only: where a long walk is, and what the bound reads there.
+		valueText, targetText := l.checker.TypeToString(value), l.checker.TypeToString(target)
+		fmt.Fprintf(os.Stderr, "DEPTHWALK judged=%d depth=%d stack=%d pastDepth=%d nested=%t value=%.160s [id %d flags %d object %d identity %T] target=%.160s [id %d identity %T]\n",
+			walk.judged, depth, len(walk.values), walk.pastDepth, deeplyNested, valueText, value.Id(), value.Flags(), value.ObjectFlags(), containerRecursionIdentityFromTarget(containerRecursionIdentityTarget(value)), targetText, target.Id(), containerRecursionIdentityFromTarget(containerRecursionIdentityTarget(target)))
+	}
 	if l.containerFitInstanceBound(value) || l.containerFitInstanceBound(target) {
 		// A type parameter is what the instance being lowered made it (representation reads
 		// l.substitution), so an answer that judged one holds only in this instance.
