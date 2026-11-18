@@ -118,8 +118,12 @@ func TestCheckerBuildsNameNoPlaceOfTheArchive(t *testing.T) {
 		spellings = append(spellings, []byte(real))
 	}
 	builds := map[string]func(output string) error{
-		"BuildTSGo":      func(output string) error { return BuildTSGo(splitProbe, output, archive, native_runtime.Options{}) },
-		"BuildSplitTSGo": func(output string) error { return BuildSplitTSGo(splitProbe, output, archive, native_runtime.Options{Jobs: 1}) },
+		"BuildTSGo": func(output string) error {
+			return BuildTSGo(splitProbe, output, archive, native_runtime.Options{})
+		},
+		"BuildSplitTSGo": func(output string) error {
+			return BuildSplitTSGo(splitProbe, output, archive, native_runtime.Options{Jobs: 1})
+		},
 	}
 	for _, name := range []string{"BuildTSGo", "BuildSplitTSGo"} {
 		binary := filepath.Join(t.TempDir(), "checker")

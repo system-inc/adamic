@@ -95,7 +95,9 @@ func jsonNativePortInputs(source string, sanitize bool, toolchain []string) json
 // Each factory returns the exact func(dir string) error accepted by buildcache.
 // Native.Build retains its existing compiler scratch/runtime action caches.
 func buildJSONReleasePort(source string) func(string) error {
-	return func(dir string) error { return native.Build(source, filepath.Join(dir, "port"), native_runtime.Options{}) }
+	return func(dir string) error {
+		return native.Build(source, filepath.Join(dir, "port"), native_runtime.Options{})
+	}
 }
 func buildJSONSanitizedPort(source string) func(string) error {
 	return func(dir string) error {

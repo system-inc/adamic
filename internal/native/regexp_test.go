@@ -27,7 +27,7 @@ import (
 type regexCase struct {
 	Pattern      string   `json:"pattern"`
 	PatternUnits []uint16 `json:"patternUnits"`
-	native_runtime.Flags        string   `json:"flags"`
+	Flags        string   `json:"flags"`
 	Input        []uint16 `json:"input"`
 	LastIndex    uint64   `json:"lastIndex"`
 	Expected     struct {

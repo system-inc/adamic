@@ -10,8 +10,6 @@ import (
 	"testing"
 	"time"
 	"unicode/utf16"
-
-	"github.com/system-inc/adamic/internal/native_runtime"
 )
 
 // Both the generic VM and generated straight-line runners use Node's captures.
@@ -92,7 +90,7 @@ func TestRegExpLintPatternsNode(t *testing.T) {
 		t.Fatal(err)
 	}
 	var probes []struct {
-		Name, Pattern, native_runtime.Flags string
+		Name, Pattern, Flags string
 		Inputs               []string
 	}
 	if err = json.Unmarshal(data, &probes); err != nil {
