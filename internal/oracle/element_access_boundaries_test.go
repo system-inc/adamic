@@ -3,6 +3,7 @@ package oracle
 import (
 	"errors"
 	"path/filepath"
+	"strings"
 	"testing"
 
 	"github.com/system-inc/adamic/internal/lower"
@@ -81,7 +82,8 @@ func TestElementAccessCompilerAreaBoundaries(t *testing.T) {
 				"template":       "a value of type TemplateStringsArray",
 				"paths":          "a value of type Readonly<PathPathComponents>",
 			}[name]
-			if !errors.As(err, &stop) || stop.What != want {
+			// The type is pinned here; the reason after it is representation_reason_test.go's to word.
+			if !errors.As(err, &stop) || !strings.HasPrefix(stop.What, want+", ") {
 				t.Fatalf("expected explicit NotYet representation/read boundary %q, got %v", want, err)
 			}
 			t.Logf("%s", err)
