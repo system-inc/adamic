@@ -1,12 +1,12 @@
 # #y852c3c paired TypeScript census
 
-Seven full file pairs are verified. The focused full pair covers the checker slot stop, and its unfiltered single-file pair is underway. Both unfiltered first-error pairs and both scan-all probes are complete. The initial directory processes hit the worker’s memory limit before emitting findings. The paired directory totals use the completed memory-limited retries.
+Both CommonJSBundle first-error pairs, all eight full single-file pairs, and both scan-all probes completed. The initial directory processes hit the worker’s memory limit before emitting findings. The directory totals use the completed memory-limited retries.
 
 ## 1. Record values reaching Unknown
 
 **Yes. The head’s record node was Unknown in all 20 observed unit snapshots that held a checked slot read.** The graph tracked zero record-value writes in each. `recordValuesUnknown` named no write and returned “local or result has no tracked producer; no reaching allocation established.” The parser’s `AdamicJsonRecoveryValue` and `AdamicJsonRecoveryObject` supplied no observed cause.
 
-The original `createProgram` probe stopped at “ir: virtual call has no target set.” Running the compiler’s `finishClassCalls` preparation on a disposable copy supplied the targets and let its graph query finish. It returned the same Unknown and zero writes. The prepared probe preserves all 340 findings from the focused program stream. The two overload units at `program.ts:1501:1` and `1516:1` also returned the same Unknown and zero writes after class-target preparation. Their prepared pass reproduced every one of the 932 selected findings from the unfiltered program stream. The whole-entry allocation graph remains unobserved. [Overload graph rows](evidence/head/class-target-overloads.log) · [Finding equivalence](evidence/overload-probe-equivalence.json) [Prepared graph](evidence/head/class-target-probe.log) · [Finding equivalence](evidence/class-target-probe-equivalence.json).
+The original `createProgram` probe stopped at “ir: virtual call has no target set.” Running the compiler’s `finishClassCalls` preparation on a disposable copy supplied the targets and let its graph query finish. It returned the same Unknown and zero writes. The prepared probe preserves all 340 findings from the focused program stream. The two overload units at `program.ts:1501:1` and `1516:1` also returned the same Unknown and zero writes after class-target preparation. Their prepared pass reproduced every one of the 932 selected findings from the unfiltered program stream. The whole-entry allocation graph remains unobserved. [Overload graph rows](evidence/head/class-target-overloads.log) · [Overload equivalence](evidence/overload-probe-equivalence.json) · [Prepared graph](evidence/head/class-target-probe.log) · [Program equivalence](evidence/class-target-probe-equivalence.json)
 
 
 | Unit | Checked slot-read observations | Tracked writes |
@@ -35,6 +35,8 @@ The original `createProgram` probe stopped at “ir: virtual call has no target 
 The observer queries the head allocation graph on a disposable copy of each unit snapshot. Its file streams reproduce all 504 parser, 640 resolver, 1,337 utilities, 107 program diagnostics, 198 resolution cache, and 77 watch findings at the original sites. See [the graph rows](evidence/record-values.json), [parser control](evidence/parser-probe-equivalence.json), [resolver control](evidence/resolver-probe-equivalence.json), and [utilities control](evidence/utilities-probe-equivalence.json), [program diagnostics control](evidence/programDiagnostics-probe-equivalence.json), [resolution cache control](evidence/resolutionCache-probe-equivalence.json), and [watch control](evidence/watch-probe-equivalence.json).
 
 ## 2. Slot-read sites and the Library comparison
+
+The eight full pairs cleared 33 occurrences of the slot-read stop at 21 distinct source positions. Thirty occurrences lowered without reaching a new stop. Three occurrences of the same guard in `createProgram` moved to a later stop. All twelve historical Library refusals remain stopped.
 
 ### Resolver slot reads
 
@@ -115,7 +117,7 @@ The focused first-error pair selected source units containing candidate reads. I
 
 Neither pair records a later stop newly reached in these units. See [resolution cache](evidence/resolutionCache-pair.json) and [watch](evidence/watch-pair.json).
 
-### Program slot reads and the focused checker read
+### Program and checker slot reads
 
 The unfiltered `program.ts` pair has 248 units per side, with 1,486 base findings and 1,467 head findings. All three `createProgram` declaration units lower the outer guard and reach the later call stop. [Program pair](evidence/program-pair.json)
 
@@ -124,14 +126,17 @@ The unfiltered `program.ts` pair has 248 units per side, with 1,486 base finding
 | `program.ts:1817:18` | `createProgram` at `1501:1`, `1516:1`, and `1517:1` | Moved to a later stop at `1822:17` after the `options.lib` guard lowers. The rollback records “stage 0 can't lower a function returning U \| undefined yet” at `core.ts:33:17`. |
 | `program.ts:4204:13` | The three `createProgram` units and `verifyCompilerOptions` at `4077:5` | Stopped to lowered in all four units. |
 | `program.ts:4367:13` | The three `createProgram` units and `verifyCompilerOptions` at `4077:5` | Stopped to lowered in all four units. |
-| `checker.ts:35214:17` | `containerSeemsToBeEmptyDomElement` | Stopped to lowered in the focused full pair. The observer also records the next read at `35214:41`. The unfiltered checker pair is underway. |
+| `checker.ts:35214:17` | `containerSeemsToBeEmptyDomElement` | Stopped to lowered. The observer also records the next read at `35214:41`. |
 
+
+The unfiltered checker pair measured 2,495 units and recorded 8,373 base findings against 8,371 head findings. The slot stop and its statement rollback are the entire checker delta. The selected checker observer reproduced all 1,198 findings in its coverage. [Checker pair](evidence/checker-pair.json) · [Checker probe equivalence](evidence/checker-probe-equivalence.json)
 
 ## 3. Other movements
 
 - **Gone, NotYet during lowering.** “reading value” at `commandLineParser.ts:2950:65` clears when the declaration of `value` lowers.
-- **Gone, rollback boundary during lowering.** “failed statement; state rolled back; continued at next statement or declaration” clears at `commandLineParser.ts:2871:5`, `2949:9`, and `2950:9`, at `utilities.ts:9028:5`, at `programDiagnostics.ts:410:21` in two units, at `resolutionCache.ts:1706:9` in two units, and at `watch.ts:543:45`. It also clears at `moduleNameResolver.ts:480:5`, `674:17` in two units, `699:13` in two units, `780:5`, `1583:5`, `1595:5`, `1634:9`, `2190:5`, `2196:5`, `3333:5`, and `3334:5`. The paired JSON names both owners for each duplicated site.
-- **Growth in conservative checked-view demand.** The checked slot reads add origins. In 17 snapshots their origin sets have no other origins. Each of the three `createProgram` units has 38 total origins, including three from slot reads. All 20 snapshot origin sets produce `viewed_unknown=true` with zero known allocation sites. The array check uses that flag to demand every eligible array read in those snapshots. The known-site set remains empty. The six unfiltered full file pairs and focused first-error pair have zero new, changed, or reached findings. The full program pair reaches the later rollback at `program.ts:1822:17` in all three overload units after the earlier guard lowers. It loses the older rollback at `program.ts:1817:13` in three units, and at `program.ts:4204:9` and `4367:9` in four units each. The focused checker pair loses the rollback at `checker.ts:35214:9`. Both unfiltered first-error pairs and both scan-all reports have zero new, changed, or reached findings. [Graph observations](evidence/record-values.json)
+- **Gone, rollback boundary during lowering.** “failed statement; state rolled back; continued at next statement or declaration” clears at `checker.ts:35214:9`, `commandLineParser.ts:2871:5`, `2949:9`, and `2950:9`, `utilities.ts:9028:5`, `programDiagnostics.ts:410:21` in two units, `resolutionCache.ts:1706:9` in two units, and `watch.ts:543:45`. It clears at `moduleNameResolver.ts:480:5`, `674:17` in two units, `699:13` in two units, `780:5`, `1583:5`, `1595:5`, `1634:9`, `2190:5`, `2196:5`, `3333:5`, and `3334:5`. It also clears at `program.ts:1817:13` in three units and at `program.ts:4204:9` and `4367:9` in four units each. The paired JSON preserves the owning units at every repeated site.
+- **Reached, rollback boundary during lowering.** The same rollback reason is first reached at `program.ts:1822:17` in all three `createProgram` declaration units. Its message is “stage 0 can't lower a function returning U | undefined yet” at `core.ts:33:17`. This is the only rise in finding occurrences across the full file pairs. Across those pairs there are 68 gone findings, three reached, zero changed, and zero new.
+- **Growth in conservative checked-view demand.** The checked slot reads add origins. In 17 snapshots, those reads are the entire set of origins. Each of the three `createProgram` units has 38 total origins, including three from slot reads. All 20 snapshot origin sets produce `viewed_unknown=true` with zero known allocation sites. The array check uses that flag to demand every eligible array read in the snapshot. The scan-all production boundary leaves whole-program demand unmeasured. [Graph observations](evidence/record-values.json)
 
 The unfiltered `tsc.ts` first-error pair measured 81 source files and 4,568 units per side, with zero checker diagnostics. The base recorded 4,362 findings and the head recorded 4,355. The seven first-error slot stops listed above are the entire delta. There were zero new, changed, or reached findings. [Entry pair](evidence/entry-pair.json) · [Base stream](evidence/base/entry.jsonl.gz) · [Head stream](evidence/head/entry.jsonl.gz)
 
@@ -148,6 +153,6 @@ Both sides used the same adapted TypeScript v6.0.3 source tree at upstream `0508
 
 The two compiler worktrees were pinned to `19a80811d918e392290519cbcda54b8c8c07500d` and `ae0f4d8a8467749df78602d285e73c9f6e079c3c`, with their own latent, entry and scan-all overlays. Both pins use the same checker submodules. The first-error compiler-directory and entry runs used CommonJSBundle and `LATENT_ASSERT_NO_OUTPUT=1`. The full passes used the same format and guard, `LATENT_FULL=1`, and selected one file at a time in the loaded compiler project.
 
-Pairing uses kind, phase, reason, and message with source positions stripped from the text. The table locations identify occurrences within their units. A gone finding is absent on the head. A changed finding has a head counterpart at the same site. A reached finding is a later stop first seen in a unit that already had a base stop. A new finding is a head-only stop without that progression. The paired JSON keeps the raw messages and coordinates.
+Pairing uses kind, phase, reason, and message with source positions stripped from the text. The table locations identify occurrences within their units. A gone finding is absent on the head. A changed finding has a head counterpart at the same site. A reached finding is a later stop first seen in a unit that already had a base stop. A new finding is a head-only stop without that progression. The paired JSON keeps the raw messages and coordinates. These are latent lowering observations. Both production scan-all probes stopped before whole-program lowering and exposed zero usable IR.
 
-An edit to the scratch launcher while older shells were waiting on the tools caused shell errors after both full program streams, both entry streams, and the base directory stream closed. Each measurement binary wrote the expected file records and a final relation trailer. The original streams and shell diagnostics are in the evidence.
+An edit to the scratch launcher while older shells were waiting on the tools caused shell errors after both full program streams, both entry streams, and the base directory stream closed. Each measurement binary wrote the expected file records and a final relation trailer. The original streams and shell diagnostics are in the evidence. The full checker tools separately returned exit code 0.
