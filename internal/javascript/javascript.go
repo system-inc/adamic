@@ -1186,6 +1186,10 @@ func (e *emitter) valueRaw(expression ir.Expression) string {
 				object = "((adamicSpreadSource) => " + object + ")(" + spreadValue + ")"
 			}
 		}
+		if expression.Record {
+			// An entries record is a record natively (entries_records.go), so it carries the mark (recordRuntime).
+			object = "adamicRecord(" + object + ")"
+		}
 		return object
 	case ir.PhantomMember:
 		operator := "["
