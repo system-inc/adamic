@@ -2,6 +2,7 @@ package lower
 
 import (
 	"context"
+	"errors"
 	"os"
 	"path/filepath"
 	"strings"
@@ -13,13 +14,15 @@ import (
 )
 
 // closedKindConstructorTypes is tsc's factory, small: an unbranded supertype Open, a literal of it at a
-// literal kind, and a function constructor whose this is declared, writing a kind chosen at run time, as
-// utilities.ts's Node(this: Mutable<Node>, kind, pos, end) does. kb chooses the kind at run time.
+// literal kind, and a function constructor whose this is declared, writing a kind chosen at run time (kb), as
+// utilities.ts's Node(this: Mutable<Node>, kind, pos, end) does. It takes no other parameter, since lowering
+// refuses a function whose this parameter is followed by another (dynamic receivers), so the narrowing rows
+// can lower beside it.
 const closedKindConstructorTypes = closedKindTypes +
 	"interface Open extends Node { readonly n: number }\n" +
 	"const open: Open = { kind: K.Ident, pos: 0, n: 1 };\n" +
 	"function kb(): K { return K.Ident; }\n" +
-	"function OpenNode(this: { kind: K; pos: number; n: number }, kind: K): void { this.kind = kind; this.pos = 0; this.n = 1; }\n"
+	"function OpenNode(this: { kind: K; pos: number; n: number }): void { this.kind = kb(); this.pos = 0; this.n = 1; }\n"
 
 // A function constructor's new is born as a checked view, so its writes through a declared this, and a
 // new whose callee isn't a class, add nothing to K(S), when every use of the function is a new callee or
@@ -39,14 +42,14 @@ func TestClosedKindFunctionConstructorIsAHatch(t *testing.T) {
 		reason       string
 	}{
 		{"unused", "", true, ""},
-		{"new through any", "const made: Open = new (OpenNode as any)(kb());\n", true, ""},
+		{"new through any", "const made: Open = new (OpenNode as any)();\n", true, ""},
 		{"construct signature", "declare const Make: new (kind: K) => Open;\nconst made = new Make(kb());\n", true, ""},
-		{"call", "OpenNode.call(open, kb());\n", false, "a write of kind"},
+		{"call", "OpenNode.call(open);\n", false, "a write of kind"},
 		{"bind", "const bound = OpenNode.bind(open);\n", false, "a write of kind"},
 		{"getter, no cast", "const allocator = { getOpen: () => OpenNode };\n", false, "a write of kind"},
 		{"argument", "function keep(f: unknown): void {}\nkeep(OpenNode);\n", false, "a write of kind"},
 		{"shorthand storage", "const box = { OpenNode };\n", false, "a write of kind"},
-		{"class through construct signature", "class OpenObject { kind: K; pos = 0; n = 1; constructor(kind: K) { this.kind = kind; } }\nconst Make: new (kind: K) => Open = OpenObject;\n", false, "OpenObject"},
+		{"class through construct signature", "class OpenObject { kind: K; pos = 0; n = 1; constructor(kind: K) { this.kind = kind; } }\nconst Make: new (kind: K) => Open = OpenObject;\n", false, ""},
 	} {
 		t.Run(probe.name, func(t *testing.T) {
 			t.Parallel()
@@ -76,7 +79,7 @@ func TestClosedKindFunctionConstructorNarrowing(t *testing.T) {
 	})
 	t.Run("called", func(t *testing.T) {
 		t.Parallel()
-		source := closedKindConstructorTypes + "OpenNode.call(open, kb());\n" + narrowing
+		source := closedKindConstructorTypes + "OpenNode.call(open);\n" + narrowing
 		if _, err := lowerSourceAs(t, source, ".ts"); err == nil || !strings.Contains(err.Error(), kindPredicateRefusal) {
 			t.Fatalf("want %q, got %v", kindPredicateRefusal, err)
 		}
@@ -84,21 +87,24 @@ func TestClosedKindFunctionConstructorNarrowing(t *testing.T) {
 }
 
 // The fence the hatch leans on (Adamic's first condition on #8eewz2n): a new of a function constructor
-// doesn't lower, by any road a program can write, until its object is born as a checked view. Should one
-// lower as a plain object first, this goes red, since K(S) counts such a build as a hatch.
+// doesn't lower, by any road a program can write, until its object is born as a checked view. Every road
+// is a cast, since the checker gives a function declaration no construct signature, and lowering refuses
+// the cast before the new (J-dtkcpw6: through unknown, through any, and beside a class whose construct
+// signature it matches). Should one lower as a plain object first, this goes red, since K(S) counts such
+// a build as a hatch.
 func TestClosedKindFunctionConstructorNewStops(t *testing.T) {
 	t.Parallel()
 	for _, probe := range []struct{ name, source string }{
-		{"through unknown", "const Ctor = OpenNode as unknown as new (kind: K) => Open;\nconst made = new Ctor(kb());\nconsole.log(String(made.n));\n"},
-		{"through any", "const made: Open = new (OpenNode as any)(kb());\nconsole.log(String(made.n));\n"},
-		{"beside a class", "class Real { readonly pos = 0; readonly n = 2; constructor(readonly kind: K) {} }\nconsole.log(String(new Real(K.Ident).n));\nconst Ctor = OpenNode as unknown as new (kind: K) => Open;\nconst made = new Ctor(kb());\nconsole.log(String(made.n));\n"},
+		{"through unknown", "const Ctor = OpenNode as unknown as new () => Open;\nconst made = new Ctor();\nconsole.log(String(made.n));\n"},
+		{"through any", "const made: Open = new (OpenNode as any)();\nconsole.log(String(made.n));\n"},
+		{"beside a class", "class Real { readonly pos = 0; readonly n = 2; constructor(readonly kind: K) {} }\nconsole.log(String(new Real(K.Ident).n));\nconst Ctor = OpenNode as unknown as new () => Open;\nconst made = new Ctor();\nconsole.log(String(made.n));\n"},
 	} {
 		t.Run(probe.name, func(t *testing.T) {
 			t.Parallel()
 			_, err := lowerSourceAs(t, closedKindConstructorTypes+probe.source, ".ts")
-			t.Logf("FENCE %s: %v", probe.name, err)
-			if err == nil {
-				t.Fatal("a new of a function constructor lowered: K(S) counts it a hatch only while it doesn't, or once it's born as a checked view")
+			var refused *Refused
+			if !errors.As(err, &refused) || !strings.Contains(err.Error(), "refuses a cast the runtime can't check") {
+				t.Fatalf("a new of a function constructor must stop at the cast that reaches it, got %v: K(S) counts it a hatch only while it doesn't lower, or once it's born as a checked view", err)
 			}
 		})
 	}
@@ -110,14 +116,14 @@ func TestClosedKindFunctionConstructorNewStops(t *testing.T) {
 // identifiers by the function's own name, as 8d8e651c did, closes the renamed and default rows.
 func TestClosedKindFunctionConstructorUsesUnderAnotherName(t *testing.T) {
 	t.Parallel()
-	const constructor = "(this: { kind: number; pos: number; n: number }, kind: number): void { this.kind = kind; this.pos = 0; this.n = 1; }\n"
+	const constructor = "(this: { kind: number; pos: number; n: number }): void { this.kind = Number('1'); this.pos = 0; this.n = 1; }\n"
 	for _, probe := range []struct {
 		name, lib, use string
 		closed         bool
 	}{
-		{"renamed import, called", "export function Make" + constructor, "import { Make as M } from './lib';\nM.call(open, kb());\n", false},
-		{"default import, called", "export default function Make" + constructor, "import Anything from './lib';\nAnything.call(open, kb());\n", false},
-		{"renamed import, newed through any", "export function Make" + constructor, "import { Make as M } from './lib';\nconst made: Open = new (M as any)(kb());\n", true},
+		{"renamed import, called", "export function Make" + constructor, "import { Make as M } from './lib';\nM.call(open);\n", false},
+		{"default import, called", "export default function Make" + constructor, "import Anything from './lib';\nAnything.call(open);\n", false},
+		{"renamed import, newed through any", "export function Make" + constructor, "import { Make as M } from './lib';\nconst made: Open = new (M as any)();\n", true},
 	} {
 		t.Run(probe.name, func(t *testing.T) {
 			t.Parallel()
