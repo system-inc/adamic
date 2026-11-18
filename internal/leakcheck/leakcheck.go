@@ -110,7 +110,9 @@ func Check(program Program) (string, error) {
 	case "darwin":
 		build := program.BuildCounted
 		if build == nil {
-			build = func(code, output string) error { return native.Build(code, output, native_runtime.Options{Count: true}) }
+			build = func(code, output string) error {
+				return native.Build(code, output, native_runtime.Options{Count: true})
+			}
 		}
 		if err := build(program.C, program.Counted); err != nil {
 			return "", err

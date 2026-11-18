@@ -21,7 +21,10 @@ func TestTSGoCacheShippedRelease(t *testing.T) {
 	t.Parallel()
 	tsgoCacheWitness(t, native_runtime.Options{Release: true})
 }
-func TestTSGoCacheSanitized(t *testing.T) { t.Parallel(); tsgoCacheWitness(t, native_runtime.Options{Sanitize: true}) }
+func TestTSGoCacheSanitized(t *testing.T) {
+	t.Parallel()
+	tsgoCacheWitness(t, native_runtime.Options{Sanitize: true})
+}
 
 // The fixture exercises the include-order features without calling the checker ABI.
 // Stub symbols permit a real checker link while keeping each test's setup bounded.
