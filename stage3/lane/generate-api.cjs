@@ -215,7 +215,7 @@ proofPaths.push(exitProofPath);
 assert.equal(new Set(owners.map(owner => owner.line)).size, 222, 'sanctioned owner line sets overlap');
 
 // Each adaptation may certify additional existing public type owners.
-const sanctionKinds = new Set(['PropertySignature', 'PropertyDeclaration', 'Parameter', 'MethodSignature', 'FunctionDeclaration']);
+const sanctionKinds = new Set(['PropertySignature', 'PropertyDeclaration', 'Parameter', 'MethodSignature', 'FunctionDeclaration', 'TypeAliasDeclaration']);
 const sanctionEdits = [];
 const anchorKinds = new Set(['InterfaceDeclaration', 'TypeAliasDeclaration', 'FunctionDeclaration']);
 function namespaceKey(block) {
