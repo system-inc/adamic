@@ -1,0 +1,67 @@
+// timer_dispatch: a hundred distinct durations, four timers each, armed twice around a busy main
+// loop, so Node's per-duration list order and not the timers' own deadlines decides who runs when
+// (#a6yb7d1). Node keeps one list per duration, made when its first timer is set with that list's
+// expiry, and runs every due timer of one list in insertion order before the next list
+// (lib/internal/timers.js, processTimers and listOnTimeout). A cycle:
+// 1. The first round arms durations 1 to 100 in ascending order. Each list's start is no earlier
+//    than the one before it, and its duration one more, so the lists' expiries strictly increase
+//    with their durations whatever the load, and no two lists tie.
+// 2. The main loop holds for 40 ms, then the second round arms the same durations again. Each of its
+//    timers joins its duration's list, behind the first round's, though by deadline alone the 1 ms
+//    timer of the second round (due at 41 or later) would run after every first-round timer up to
+//    40 ms.
+// 3. A finishing timer, at a duration no other timer of the cycle has, is armed last, and the main
+//    loop holds for 110 ms more, so every timer is due when the loop first runs timers. The
+//    finishing timer's list has the latest expiry, so it runs last and arms the next cycle. The two
+//    finishing durations alternate, so each finisher makes a fresh list rather than joining the one
+//    it runs in.
+// Load only lengthens the holds, which only makes more timers due, so the order is fixed. Each
+// timer records its id into a running checksum of the order; the last cycle prints it.
+import { performance } from 'node:perf_hooks';
+import 'node:timers';
+
+const durations = 100;
+const timersPerDuration = 4;
+const cycles = 3;
+let orderChecksum = 0;
+let fired = 0;
+let cyclesRun = 0;
+
+function hold(milliseconds: number): void {
+	const end = performance.now() + milliseconds;
+	while (performance.now() < end) {
+		// Holds the loop, as a slow synchronous step does.
+	}
+}
+
+function record(id: number): void {
+	orderChecksum = (orderChecksum * 31 + id) % 1000000007;
+	fired += 1;
+}
+
+function armRound(round: number): void {
+	for (let duration = 1; duration <= durations; duration += 1) {
+		for (let copy = 0; copy < timersPerDuration; copy += 1) {
+			setTimeout(record, duration, ((cyclesRun * 2 + round) * durations + duration) * timersPerDuration + copy);
+		}
+	}
+}
+
+function armCycle(): void {
+	armRound(0);
+	hold(40);
+	armRound(1);
+	setTimeout(finishCycle, durations + 1 + (cyclesRun % 2));
+	hold(durations + 10);
+}
+
+function finishCycle(): void {
+	cyclesRun += 1;
+	if (cyclesRun < cycles) {
+		armCycle();
+	} else {
+		console.log(`timer dispatch order ${orderChecksum} after ${fired} timers in ${cyclesRun} cycles`);
+	}
+}
+
+armCycle();
