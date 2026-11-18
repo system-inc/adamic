@@ -107,6 +107,15 @@ type cycleFinder struct {
 	selected []*checker.Type
 	// loose is the loose set H and what the loose-slot stop keeps (loose_slots.go).
 	loose looseSlots
+
+	// nesting bounds use's walk through a generic that instantiates itself deeper at each level
+	// (typeNesting, tsc's isDeeplyNestedType): Own<T> { next: Own<Own<T>> } makes a fresh type at every
+	// field, so where never repeats and the walk ran without end (#ykd89v9). deepest is the first type
+	// past the bound and deepestAt where it was met; findCycles stops there, since a program whose types
+	// the finder can't see to the end of isn't proven free of cycles.
+	nesting   typeNesting
+	deepest   *checker.Type
+	deepestAt *ast.Node
 }
 
 // findCycles refuses the first cycle-capable slot that isn't declared Weak and has a write that isn't
@@ -157,6 +166,13 @@ func (l *lowering) findCycles(modules []*ast.SourceFile) error {
 	// never write.
 	for _, proven := range l.instantiated {
 		finder.use(proven, l.classNodeFor(proven))
+	}
+	if finder.deepest != nil {
+		where := finder.deepestAt
+		if where == nil && len(modules) > 0 {
+			where = modules[0].AsNode()
+		}
+		return l.notYet(where, "finding cycles through a type that instantiates itself deeper at each level ("+l.checker.TypeToString(finder.deepest)+")")
 	}
 	// Program membership changes ownership only after every ordinary graph check passes.
 	if err := finder.graphTypes(modules); err != nil {
@@ -317,6 +333,14 @@ func (f *cycleFinder) use(proven *checker.Type, where *ast.Node) {
 		return
 	}
 	f.where[proven] = where
+	ok, leave := f.nesting.enter(proven)
+	defer leave()
+	if !ok {
+		if f.deepest == nil {
+			f.deepest, f.deepestAt = proven, where
+		}
+		return
+	}
 	if proven.Flags()&checker.TypeFlagsObject != 0 && proven.ObjectFlags()&checker.ObjectFlagsFreshLiteral != 0 {
 		// An object literal's own type, as the literal expression has it. Nothing is written through
 		// it: written into a declared type, the object is seen only as that, and kept in a variable
