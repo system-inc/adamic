@@ -1,0 +1,22 @@
+{
+  "command": [
+    "go",
+    "build",
+    "-buildvcs=false",
+    "-overlay=/tmp/family5-tools/entry-overlay/overlay.json",
+    "-o",
+    "/tmp/family5-c02-alternatives/tools/c02-entry-census",
+    "./stage3/census/latent/tool"
+  ],
+  "cwd": "/tmp/family5-land",
+  "environment": {
+    "ADAMIC_TOOLS": "/workspace/adamic-tools",
+    "ADAMIC_TYPESCRIPT_SOURCE": "/workspace/mapset-upstream",
+    "ADAMIC_BUILD_CACHE_DIR": "/workspace/family5-build-cache"
+  },
+  "inputs": null,
+  "started_utc": "2026-11-18T21:44:20.538300+00:00",
+  "ended_utc": "2026-11-18T21:44:23.577771+00:00",
+  "exit_code": 0,
+  "wall_seconds": 3.039
+}

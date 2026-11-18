@@ -1,0 +1,22 @@
+{
+  "phrase": "a checked view with callable field getPositionOfLineAndCharacter",
+  "events": 1,
+  "all_distinct_positions": 1,
+  "primary_distinct_positions": 1,
+  "by_kind_phase": {
+    "Refused/lowering": 1
+  },
+  "sites": [
+    {
+      "depth": 0,
+      "kind": "Refused",
+      "measurement": "measured on a checker-clean entry-root program",
+      "phase": "lowering",
+      "reason": "a checked view with callable field getPositionOfLineAndCharacter",
+      "root_kind": "",
+      "text": "/workspace/family5-c02-tree/src/compiler/utilities.ts:5339:11: Adamic 0.1 refuses a checked view with callable field getPositionOfLineAndCharacter; prove the callable body rather than asserting its signature",
+      "unit": "/workspace/family5-c02-tree/src/compiler/utilities.ts:5317:1",
+      "where": "/workspace/family5-c02-tree/src/compiler/utilities.ts:5339:11"
+    }
+  ]
+}
