@@ -16,6 +16,9 @@ import (
 // (#tzy22kd). It's nil outside that test.
 var projectionFramesOpened atomic.Pointer[atomic.Int64]
 
+// noReachingAllocation is the reason a reach that found no allocation site closes on.
+const noReachingAllocation = "no reaching allocation established"
+
 // ReachingAllocations queries the shared graph without selecting graph ownership.
 // Unknown frontiers retain checks. Joined assignments, returns and arguments use
 // the same edges as the graph-regions analysis.
@@ -134,8 +137,11 @@ func (graph *allocationFlowGraph) reachingAllocations(expression ir.Expression, 
 			follow(source, depth)
 		}
 	}
+	// viewedFrom reads this reason, alone, as proof that every leaf the query met was a non-allocation
+	// (a constant, undefined or null), since each road here that gives up names its own reason. So a new
+	// road that gives up must add a reason of its own, or viewedFrom will skip what it couldn't place.
 	if len(sites) == 0 {
-		unknown("no reaching allocation established")
+		unknown(noReachingAllocation)
 	}
 	for site := range sites {
 		result.Sites = append(result.Sites, site)

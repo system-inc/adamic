@@ -235,7 +235,7 @@ console.log(read() === undefined ? 'empty' : 'held');
 	if len(reach.Sites) != 0 {
 		t.Fatalf("reach is %+v, want no site", reach)
 	}
-	wantUnknown(t, reach, "no reaching allocation established")
+	wantUnknown(t, reach, noReachingAllocation)
 }
 
 // Road 4: x! is x ?? panic, which hands on x or stops, so it reaches what x does. Mutant 4.
@@ -265,7 +265,7 @@ console.log(forced.tag);
 	if len(reach.Sites) != 0 {
 		t.Fatalf("reach is %+v, want no site", reach)
 	}
-	wantUnknown(t, reach, "no reaching allocation established")
+	wantUnknown(t, reach, noReachingAllocation)
 }
 
 // Road 5: x || y is x where x is truthy and y otherwise, so it reaches what either does. Mutant 5.
