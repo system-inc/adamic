@@ -1,0 +1,23 @@
+import { panic } from 'adamic';
+import type { HttpRequest, HttpResponse } from 'adamic/http';
+
+// A panic inside try, a call of panic or a check the compiler inserted, is never the catch's to take:
+// the bridge answers 500. An ordinary error is still the catch's.
+export function handle(request: HttpRequest): HttpResponse {
+    try {
+        if(request.path === '/panic') {
+            panic('panic inside try');
+        }
+        if(request.path === '/bounds') {
+            // The write is past the array's end, which the inserted bounds check refuses.
+            const values: number[] = [0];
+            values[request.path.length] = 1;
+        }
+        if(request.path === '/throw') {
+            throw new Error('ordinary');
+        }
+        return { status: 200, headers: [], body: 'no panic' };
+    } catch {
+        return { status: 200, headers: [], body: 'caught' };
+    }
+}

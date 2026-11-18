@@ -1,0 +1,21 @@
+import { panic } from 'adamic';
+
+// The twin of internal/worker's TestWorkerPanicIsNeverCaught/finally: a finally runs on every way out
+// of its try but a panic's. Node, native and the JavaScript backend each print "finally 1" and
+// "no panic", then exit 70 with "adamic: panic: panic inside try with a finally".
+let finallies = 0;
+
+function respond(path: string): string {
+	try {
+		if (path === '/panic') {
+			panic('panic inside try with a finally');
+		}
+		return 'no panic';
+	} finally {
+		finallies += 1;
+		console.log(`finally ${finallies}`);
+	}
+}
+console.log(respond('/ok'));
+console.log(respond('/panic'));
+console.log('after: never seen');

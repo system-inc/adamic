@@ -1,0 +1,15 @@
+import { panic } from 'adamic';
+import type { HttpRequest, HttpResponse } from 'adamic/http';
+
+// A return from a finally overrides every other way out of its try, but never a panic's: that finally
+// doesn't run, so the bridge answers 500.
+export function handle(request: HttpRequest): HttpResponse {
+    try {
+        if(request.path === '/panic') {
+            panic('panic under a finally that returns');
+        }
+        return { status: 200, headers: [], body: 'from the try' };
+    } finally {
+        return { status: 200, headers: [], body: 'from the finally' };
+    }
+}
