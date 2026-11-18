@@ -47,7 +47,8 @@ const kept = [], left = [];
 for (let i = 0; i + 2 < lines.length + 1; i++) {
     const head = lines[i].match(/^(src\/\S+):(\d+)$/);
     if (!head) continue;
-    const old = lines[i + 1].slice(1), now = lines[i + 2].slice(1);
+    // The list was cut from tsc's own source, whose lines end in CRLF, so each text is read without its \r.
+    const old = lines[i + 1].slice(1).replace(/\r$/, ''), now = lines[i + 2].slice(1).replace(/\r$/, '');
     const edit = {file: head[1], line: Number(head[2]), old, now};
     const why = (head[1] === 'src/compiler/core.ts' && /export const emptyArray/.test(old)) ? 'sentinel'
         : /export const resolvingEmptyArray/.test(old) ? 'sentinel'
