@@ -1,0 +1,19 @@
+import { panic } from 'adamic';
+
+// The twin of internal/worker's TestWorkerPanicIsNeverCaught/finally_return: a return from a finally
+// overrides every other way out of its try, but never a panic's. Node, native and the JavaScript
+// backend each print "from the finally", then exit 70 with
+// "adamic: panic: panic under a finally that returns".
+function respond(path: string): string {
+	try {
+		if (path === '/panic') {
+			panic('panic under a finally that returns');
+		}
+		return 'from the try';
+	} finally {
+		return 'from the finally';
+	}
+}
+console.log(respond('/ok'));
+console.log(respond('/panic'));
+console.log('after: never seen');

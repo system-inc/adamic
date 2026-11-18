@@ -2860,6 +2860,15 @@
     ],
     "internal/worker TestProduct_WorkerKVSuspendedCalleeMutant": [
       "internal/worker TestProduct_WorkerChecks"
+    ],
+    "internal/worker TestProduct_WorkerPanicCatchMutant": [
+      "internal/worker TestProduct_WorkerChecks"
+    ],
+    "internal/worker TestProduct_WorkerPanicFinallyMutant": [
+      "internal/worker TestProduct_WorkerChecks"
+    ],
+    "internal/worker TestProduct_WorkerPanicUnsetMutant": [
+      "internal/worker TestProduct_WorkerChecks"
     ]
   }
 }

@@ -1,0 +1,20 @@
+import { panic } from 'adamic';
+
+// The twin of internal/worker's TestWorkerPanicIsNeverCaught/catch: a panic inside try is never the
+// catch's to take. Node, native and the JavaScript backend each print "in the try", "no panic" and
+// "in the try", then exit 70 with "adamic: panic: panic inside try".
+function respond(path: string): string {
+	try {
+		console.log('in the try');
+		if (path === '/panic') {
+			panic('panic inside try');
+		}
+		return 'no panic';
+	} catch {
+		console.log('caught a panic: never seen');
+		return 'caught';
+	}
+}
+console.log(respond('/ok'));
+console.log(respond('/panic'));
+console.log('after: never seen');
