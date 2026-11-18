@@ -1,0 +1,142 @@
+[
+  {
+    "id": "S004",
+    "group": "G03",
+    "scout": "/workspace/depthgate2-adapted/src/compiler/checker.ts:13244:71",
+    "current": "src/compiler/checker.ts:13244:71",
+    "relation": "argument",
+    "function": "getBaseConstructorTypeOfClass",
+    "expression": "baseConstructorType",
+    "statementMatches": true
+  },
+  {
+    "id": "S005",
+    "group": "G03",
+    "scout": "/workspace/depthgate2-adapted/src/compiler/checker.ts:13276:58",
+    "current": "src/compiler/checker.ts:13276:58",
+    "relation": "argument",
+    "function": "getImplementsTypes",
+    "expression": "implementsType",
+    "statementMatches": true
+  },
+  {
+    "id": "S006",
+    "group": "G03",
+    "scout": "/workspace/depthgate2-adapted/src/compiler/checker.ts:13612:16",
+    "current": "src/compiler/checker.ts:13612:16",
+    "relation": "return",
+    "function": "getDeclaredTypeOfTypeParameter",
+    "expression": "links.declaredType || (links.declaredType = createTypeParameter(symbol))",
+    "statementMatches": true
+  },
+  {
+    "id": "S007",
+    "group": "G03",
+    "scout": "/workspace/depthgate2-adapted/src/compiler/checker.ts:16607:33",
+    "current": "src/compiler/checker.ts:16607:33",
+    "relation": "argument",
+    "function": "createSignatureTypeMapper",
+    "expression": "getTypeParametersForMapper(signature)!",
+    "statementMatches": true
+  },
+  {
+    "id": "S008",
+    "group": "G03",
+    "scout": "/workspace/depthgate2-adapted/src/compiler/checker.ts:19948:30",
+    "current": "src/compiler/checker.ts:19948:30",
+    "relation": "assignment",
+    "function": "<arrow/anonymous>",
+    "expression": "append(result, getDeclaredTypeOfSymbol(symbol))",
+    "statementMatches": true
+  },
+  {
+    "id": "S015",
+    "group": "G03",
+    "scout": "/workspace/depthgate2-adapted/src/compiler/checker.ts:23690:67",
+    "current": "src/compiler/checker.ts:23690:67",
+    "relation": "argument",
+    "function": "structuredTypeRelatedToWorker",
+    "expression": "source",
+    "statementMatches": true
+  },
+  {
+    "id": "S016",
+    "group": "G03",
+    "scout": "/workspace/depthgate2-adapted/src/compiler/checker.ts:23696:71",
+    "current": "src/compiler/checker.ts:23696:71",
+    "relation": "argument",
+    "function": "structuredTypeRelatedToWorker",
+    "expression": "constraint",
+    "statementMatches": true
+  },
+  {
+    "id": "S017",
+    "group": "G12",
+    "scout": "/workspace/depthgate2-adapted/src/compiler/checker.ts:25216:31",
+    "current": "src/compiler/checker.ts:25216:31",
+    "relation": "assignment",
+    "function": "getTypeOfPropertyInBaseClass",
+    "expression": "classType && getBaseTypes(classType)[0]",
+    "statementMatches": true
+  },
+  {
+    "id": "S020",
+    "group": "G12",
+    "scout": "/workspace/depthgate2-adapted/src/compiler/checker.ts:31813:31",
+    "current": "src/compiler/checker.ts:31813:31",
+    "relation": "assignment",
+    "function": "checkSuperExpression",
+    "expression": "classType && getBaseTypes(classType)[0]",
+    "statementMatches": true
+  },
+  {
+    "id": "S021",
+    "group": "G03",
+    "scout": "/workspace/depthgate2-adapted/src/compiler/checker.ts:35806:48",
+    "current": "src/compiler/checker.ts:35806:48",
+    "relation": "argument",
+    "function": "instantiateSignatureInContextOf",
+    "expression": "getTypeParametersForMapper(signature)!",
+    "statementMatches": true
+  },
+  {
+    "id": "S023",
+    "group": "G03",
+    "scout": "/workspace/depthgate2-adapted/src/compiler/checker.ts:6968:54",
+    "current": "src/compiler/checker.ts:6968:54",
+    "relation": "argument",
+    "function": "typeToTypeNodeWorker",
+    "expression": "type",
+    "statementMatches": true
+  },
+  {
+    "id": "S024",
+    "group": "G03",
+    "scout": "/workspace/depthgate2-adapted/src/compiler/checker.ts:7131:128",
+    "current": "src/compiler/checker.ts:7131:128",
+    "relation": "argument",
+    "function": "createMappedTypeNodeFromType",
+    "expression": "getConstraintTypeFromMappedType(type)",
+    "statementMatches": true
+  },
+  {
+    "id": "S025",
+    "group": "G03",
+    "scout": "/workspace/depthgate2-adapted/src/compiler/checker.ts:7142:90",
+    "current": "src/compiler/checker.ts:7142:90",
+    "relation": "argument",
+    "function": "createMappedTypeNodeFromType",
+    "expression": "getModifiersTypeFromMappedType(target)",
+    "statementMatches": true
+  },
+  {
+    "id": "S026",
+    "group": "G03",
+    "scout": "/workspace/depthgate2-adapted/src/compiler/checker.ts:9276:95",
+    "current": "src/compiler/checker.ts:9276:95",
+    "relation": "argument",
+    "function": "attachSymbolToLeftmostIdentifier",
+    "expression": "type",
+    "statementMatches": true
+  }
+]

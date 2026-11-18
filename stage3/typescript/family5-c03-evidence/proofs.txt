@@ -1,0 +1,5 @@
+PASS main Stage 3 apply (exit 0)
+PASS adapter-apply (exit 0)
+PASS census-scan-before (exit 0)
+PASS census-scan-after (exit 0)
+FAIL census-scan-grade (exit 1)
