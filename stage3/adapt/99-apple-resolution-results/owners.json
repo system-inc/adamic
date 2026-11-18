@@ -1,0 +1,38 @@
+{
+  "edits": [
+    {
+      "candidate": "C06",
+      "file": "src/compiler/types.ts",
+      "kind": "member",
+      "owner": "ResolvedModuleWithFailedLookupLocations",
+      "member": "isInvalidated",
+      "text": "/** @internal */ isInvalidated?: boolean;"
+    },
+    {
+      "candidate": "C06",
+      "file": "src/compiler/types.ts",
+      "kind": "member",
+      "owner": "ResolvedTypeReferenceDirectiveWithFailedLookupLocations",
+      "member": "isInvalidated",
+      "text": "/** @internal */ isInvalidated?: boolean;"
+    },
+    {
+      "candidate": "C15",
+      "file": "src/compiler/program.ts",
+      "kind": "replace",
+      "owner": "createProgram",
+      "old": ").map(resolved =>",
+      "new": ").map<ResolvedModuleWithFailedLookupLocations>(resolved =>",
+      "count": 1
+    },
+    {
+      "candidate": "C15",
+      "file": "src/compiler/program.ts",
+      "kind": "replace",
+      "owner": "createProgram",
+      "old": ").map(resolvedTypeReferenceDirective => ({ resolvedTypeReferenceDirective }));",
+      "new": ").map<ResolvedTypeReferenceDirectiveWithFailedLookupLocations>(resolvedTypeReferenceDirective => ({ resolvedTypeReferenceDirective }));",
+      "count": 1
+    }
+  ]
+}
