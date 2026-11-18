@@ -8,13 +8,10 @@ echo "== rows"
 python3 -I - "$TMPDIR/w2.json" <<'PY'
 import json, sys
 d = json.load(open(sys.argv[1]))
-rows = d.get('rows') or d.get('entries')
+rows = d['entries'] if isinstance(d.get('entries'), list) else d['rows']
 for r in rows:
     fields = sorted({w['field'] for w in r.get('writes') or []})
     making = sorted({w['making'] for w in r.get('writes') or []})
     print('ROW', r.get('where'), '|', r.get('road'), '|', r.get('callee') or '-', '|', r.get('function') or '-', '|', ','.join(fields) or 'NONE', '|', ','.join(making) or '-', '|', 'fresh' if r.get('freshArgument') else '', '|', (r.get('expression') or '')[:90])
 PY
-for f in update finishUpdateBaseSignatureDeclaration finishUpdatePropertySignature finishUpdateFunctionTypeNode finishUpdateClassStaticBlockDeclaration setExportContextFlag; do
-  echo "== body $f"; grep -n "function $f\b" -A14 "$TMPDIR/t/src/compiler/factory/nodeFactory.ts" "$TMPDIR/t/src/compiler/binder.ts" 2>/dev/null | head -16
-done
 echo PASS
