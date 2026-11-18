@@ -44,7 +44,7 @@ func TestWorkerEnvironmentShapeStops(t *testing.T) {
 				release()
 				t.Fatal(err)
 			}
-			err = lower.CheckWorkerEnvironment(program, types, environment)
+			err = lower.CheckWorkerEnvironment(program, types, environment, nil)
 			release()
 			var notyet *lower.NotYet
 			var refused *lower.Refused
@@ -110,7 +110,7 @@ func TestWorkerEnvironmentMissingTypeIsCompilerBug(t *testing.T) {
 	}
 	types, release := program.Checker(context.Background(), program.Files()[0])
 	defer release()
-	err = lower.CheckWorkerEnvironment(program, types, nil)
+	err = lower.CheckWorkerEnvironment(program, types, nil, nil)
 	const want = "worker: compiler bug: two-parameter handle has no checked environment type"
 	if err == nil || err.Error() != want {
 		t.Fatalf("missing checked environment: got %v, want %s", err, want)

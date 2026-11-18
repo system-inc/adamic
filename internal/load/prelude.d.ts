@@ -41,6 +41,15 @@ declare module 'adamic' {
 	export type Weak<Target extends object> = (Target & WeakBrand) | undefined;
 }
 
+// Adamic #bxaz0p1: text KV only; get preserves null, never undefined.
+declare module 'adamic/workers' {
+	export interface KvNamespace {
+		get(key: string): Promise<string | null>;
+		put(key: string, value: string): Promise<void>;
+		delete(key: string): Promise<void>;
+	}
+}
+
 declare module 'adamic/http' {
 	export interface HttpField { readonly name: string; readonly value: string }
 	export interface HttpRequest {
