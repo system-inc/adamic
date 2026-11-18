@@ -281,6 +281,13 @@ func (l *lowering) censusOverload(implementation, overload *ast.Node, ordinal in
 			l.noteOverloadCertificate(overload, true)
 			return nil
 		}
+		if l.overloadNodeTestProof(implementation, overload) {
+			// Every return is the node argument before anything writes it, a value the node test just said
+			// yes to, or undefined: this overload's result at a call that passes its test, so each direct call
+			// is judged at overloadNodeTestCall (Adamic's ruling on #0kkpw2e set 3).
+			l.noteOverloadNodeTest(overload, true)
+			return nil
+		}
 		what := label + " result " + l.checker.TypeToString(promised) + " cannot be served by implementation result " + l.checker.TypeToString(produced)
 		if failed != nil {
 			what += " (return at " + l.program.Where(failed) + " isn't the value its predicate checked)"
@@ -457,7 +464,7 @@ func (l *lowering) censusOverloadResult(call *ast.CallExpression, value ir.Expre
 				// representation, the one its release reads it as, as a discarded result does (:146).
 				return value, nil
 			}
-			if l.narrowOverload(overload) {
+			if l.narrowOverloadCall(call.AsNode()) {
 				checked, err := l.overloadResultCheck(call.AsNode(), value)
 				if err != nil || l.overloadResultDiscarded(call.AsNode()) {
 					// A result no read reaches keeps the implementation's representation, the one its

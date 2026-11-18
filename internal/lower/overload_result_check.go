@@ -118,13 +118,14 @@ func (l *lowering) overloadResultCheckable(promised *checker.Type, visited map[*
 	return l.fieldLiteral(promised, "kind") != nil || l.brandedSupertype(promised)
 }
 
-// narrowOverloadCall is whether node, a call, a new or a tagged template, resolves to a narrow overload.
+// narrowOverloadCall is whether node, a call, a new or a tagged template, resolves to a narrow overload, or
+// is a call the node-test proof leaves to its result check (overloadNodeTestChecked).
 func (l *lowering) narrowOverloadCall(node *ast.Node) bool {
 	if node.Kind != ast.KindCallExpression && node.Kind != ast.KindNewExpression && node.Kind != ast.KindTaggedTemplateExpression {
 		return false
 	}
 	resolved := l.checker.GetResolvedSignature(node)
-	return resolved != nil && l.narrowOverload(resolved.Declaration())
+	return resolved != nil && (l.narrowOverload(resolved.Declaration()) || l.overloadNodeTestChecked(node, resolved))
 }
 
 // overloadResultCheck is value, the result of call, checked against the narrow overload the call
