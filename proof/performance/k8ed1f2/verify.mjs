@@ -55,7 +55,7 @@ for (let i = 0; i + 2 < lines.length + 1; i++) {
         : /export type ScriptTargetFeatures/.test(old) ? 'alias, adaptation 77'
         : /readonly never\[\] \|/.test(now) ? 'written slot'
         : (head[1] === 'src/compiler/core.ts' && /export function append</.test(old)) ? 'append overload, its implementation writes'
-        : head[1].startsWith('src/services/') ? 'services, outside the compiled closure the sites live in'
+        : head[1].startsWith('src/services/') && !process.env.VERIFY_KEEP_SERVICES ? 'services, outside the compiled closure the sites live in'
         : excluded.has(`${head[1]}:${head[2]}`) ? 'excluded by hand: its readonly reaches a write'
         : '';
     (why ? left : kept).push({...edit, why});

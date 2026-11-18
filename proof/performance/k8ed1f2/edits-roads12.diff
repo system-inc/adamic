@@ -157,3 +157,6 @@ src/compiler/resolutionCache.ts:0
 src/compiler/checker.ts:0
 -            const allDeclarations = type.objectFlags & (ObjectFlags.Reference | ObjectFlags.InstantiationExpressionType) ? [declaration] : type.symbol.declarations!;
 +            const allDeclarations: readonly Node[] = type.objectFlags & (ObjectFlags.Reference | ObjectFlags.InstantiationExpressionType) ? [declaration] : type.symbol.declarations!;
+src/services/stringCompletions.ts:0
+-function getSupportedExtensionsForModuleResolution(compilerOptions: CompilerOptions, typeChecker?: TypeChecker): readonly string[][] {
++function getSupportedExtensionsForModuleResolution(compilerOptions: CompilerOptions, typeChecker?: TypeChecker): readonly (readonly string[])[] {
