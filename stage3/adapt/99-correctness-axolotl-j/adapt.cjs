@@ -101,8 +101,8 @@ const owners = [
     {
         "file": "commandLineParser.ts",
         "owner": "serializeOptionBaseObject",
-        "ownerBeforeSha256": "a5b45fea04f9349ca3a04d8a30144b4a4921a2f38e5effec238ae822910b8677",
-        "ownerAfterSha256": "d48c510063b48bbf4a67df85f3ee19ee186848872fcc19ad705858567ce01bfe",
+        "ownerBeforeSha256": "b86f5a2febc8eab45172c719d160f76c33f56479d6c35ce3374e8c98a04a2621",
+        "ownerAfterSha256": "df24e2fff021e2d2114511814f2e482b6d95c09fdb883cfc523ae0a992f58fe7",
         "ownerPath": [
             "serializeOptionBaseObject"
         ]

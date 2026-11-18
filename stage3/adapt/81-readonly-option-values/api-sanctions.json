@@ -1,0 +1,11 @@
+[
+  {
+    "path": [
+      "CompilerOptionsValue"
+    ],
+    "kind": "TypeAliasDeclaration",
+    "before": "string | number | boolean | (string | number)[] | string[] | MapLike<string[]> | PluginImport[] | ProjectReference[] | null | undefined",
+    "after": "string | number | boolean | readonly (string | number)[] | readonly string[] | MapLike<string[]> | readonly PluginImport[] | readonly ProjectReference[] | null | undefined",
+    "why": "Adamic, task w743639: CompilerOptionsValue's four array members are readonly, certified by the compiled program's gate as adaptation 72 was. Code that assigns an option value to a mutable array without a cast stops type-checking; code that reads option values is unaffected; CompilerOptions' own named members (lib, rootDirs and the rest) keep their mutable types."
+  }
+]
