@@ -454,8 +454,18 @@ func (l *lowering) closedKindNewOnlyThis(target *ast.Node) bool {
 	if container == nil || container.Kind != ast.KindFunctionDeclaration || !closedKindDeclaresThis(container) {
 		return false
 	}
-	symbol := l.checker.GetSymbolOfDeclaration(container)
+	symbol := l.closedKindFunctionSymbol(container)
 	return symbol != nil && l.closedKindNewOnlyFunctions()[symbol]
+}
+
+// closedKindFunctionSymbol is a function declaration's symbol as valueSymbol gives a reference to it, its
+// export symbol, so a declaration and every use of it meet under one key.
+func (l *lowering) closedKindFunctionSymbol(function *ast.Node) *ast.Symbol {
+	symbol := l.checker.GetSymbolOfDeclaration(function)
+	if symbol == nil {
+		return nil
+	}
+	return l.checker.GetExportSymbolOfSymbol(symbol)
 }
 
 // closedKindDeclaresThis is whether a function's first parameter is this.
@@ -466,15 +476,19 @@ func closedKindDeclaresThis(function *ast.Node) bool {
 
 // closedKindNewOnlyFunctions is, for each function declaration in the program's own files whose this is a
 // declared parameter, whether every use of it is a new callee or the operand of a cast to any, found once.
-// A use is a value reference by the function's symbol, aliases resolved, so an import or a namespace read
-// of it is followed to its use; a name in a type, an import or an export specifier isn't a use. Any other
-// use, a call, .call, .apply, .bind, storage, return or argument, makes it not new-only.
+// A use is a value reference whose symbol is the function's, as valueSymbol resolves every identifier in
+// the program, aliases and shorthands included, never filtered by the function's own name first: a renamed
+// import, a default import, a re-export under another name and a namespace read are each judged where they
+// are used, and a shorthand { F } is storage (Language's two shoulds on #8eewz2n). A name in a type, an import
+// or an export specifier isn't a use. Any other use, a call, .call, .apply, .bind, storage, return or
+// argument, makes it not new-only. Two other checks also stand between such a use and a lie today: handing
+// .call an object S holds at a literal kind is a readonly-to-writable widening invariance refuses at the
+// argument, and new of a function constructor is NotYet. The proof doesn't lean on either.
 func (l *lowering) closedKindNewOnlyFunctions() map[*ast.Symbol]bool {
 	if l.closedKindNewOnly != nil {
 		return l.closedKindNewOnly
 	}
 	l.closedKindNewOnly = map[*ast.Symbol]bool{}
-	names := map[string]bool{}
 	files := []*ast.SourceFile{}
 	for _, file := range l.program.CompilerProgram().GetSourceFiles() {
 		if neverRestProgramFile(file) {
@@ -484,9 +498,8 @@ func (l *lowering) closedKindNewOnlyFunctions() map[*ast.Symbol]bool {
 	var declarations ast.Visitor
 	declarations = func(visited *ast.Node) bool {
 		if visited.Kind == ast.KindFunctionDeclaration && visited.Name() != nil && closedKindDeclaresThis(visited) {
-			if symbol := l.checker.GetSymbolOfDeclaration(visited); symbol != nil {
+			if symbol := l.closedKindFunctionSymbol(visited); symbol != nil {
 				l.closedKindNewOnly[symbol] = true
-				names[visited.Name().Text()] = true
 			}
 		}
 		visited.ForEachChild(declarations)
@@ -495,12 +508,12 @@ func (l *lowering) closedKindNewOnlyFunctions() map[*ast.Symbol]bool {
 	for _, file := range files {
 		file.AsNode().ForEachChild(declarations)
 	}
-	if len(names) == 0 {
+	if len(l.closedKindNewOnly) == 0 {
 		return l.closedKindNewOnly
 	}
 	var uses ast.Visitor
 	uses = func(visited *ast.Node) bool {
-		if visited.Kind == ast.KindIdentifier && names[visited.Text()] {
+		if visited.Kind == ast.KindIdentifier {
 			l.closedKindJudgeUse(visited)
 		}
 		visited.ForEachChild(uses)
@@ -527,14 +540,11 @@ func (l *lowering) closedKindJudgeUse(name *ast.Node) {
 			return
 		}
 	}
-	symbol := l.checker.GetSymbolAtLocation(name)
+	symbol := l.valueSymbol(name)
 	if symbol == nil {
 		return
 	}
-	if symbol.Flags&ast.SymbolFlagsAlias != 0 {
-		symbol = l.checker.SkipAlias(symbol)
-	}
-	if !l.closedKindNewOnly[symbol] {
+	if _, candidate := l.closedKindNewOnly[symbol]; !candidate {
 		return
 	}
 	// The reference is the name, or the property access it names, as in a namespace's ts.Node.

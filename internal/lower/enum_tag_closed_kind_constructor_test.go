@@ -1,8 +1,15 @@
 package lower
 
 import (
+	"context"
+	"os"
+	"path/filepath"
 	"strings"
 	"testing"
+
+	"github.com/microsoft/TypeScript/tsc/shim/ast"
+	"github.com/system-inc/adamic/internal/ir"
+	"github.com/system-inc/adamic/internal/load"
 )
 
 // closedKindConstructorTypes is tsc's factory, small: an unbranded supertype Open, a literal of it at a
@@ -22,8 +29,8 @@ const closedKindConstructorTypes = closedKindTypes +
 // through a construct signature, as setObjectAllocator installs services' NodeObject, keeps S open by its
 // own declaration when its kind is open (Adamic's third condition).
 // Mutants: m1, the this write never a hatch, opens the unused and new-through-any rows; m2, every new a
-// class's, opens the construct-signature row; m3, no use judged, closes the call, getter, argument and
-// bind rows.
+// class's, opens the construct-signature row; m3, no use judged, closes the call, getter, argument, bind
+// and shorthand rows.
 func TestClosedKindFunctionConstructorIsAHatch(t *testing.T) {
 	t.Parallel()
 	for _, probe := range []struct {
@@ -38,6 +45,7 @@ func TestClosedKindFunctionConstructorIsAHatch(t *testing.T) {
 		{"bind", "const bound = OpenNode.bind(open);\n", false, "a write of kind"},
 		{"getter, no cast", "const allocator = { getOpen: () => OpenNode };\n", false, "a write of kind"},
 		{"argument", "function keep(f: unknown): void {}\nkeep(OpenNode);\n", false, "a write of kind"},
+		{"shorthand storage", "const box = { OpenNode };\n", false, "a write of kind"},
 		{"class through construct signature", "class OpenObject { kind: K; pos = 0; n = 1; constructor(kind: K) { this.kind = kind; } }\nconst Make: new (kind: K) => Open = OpenObject;\n", false, "OpenObject"},
 	} {
 		t.Run(probe.name, func(t *testing.T) {
@@ -91,6 +99,53 @@ func TestClosedKindFunctionConstructorNewStops(t *testing.T) {
 			t.Logf("FENCE %s: %v", probe.name, err)
 			if err == nil {
 				t.Fatal("a new of a function constructor lowered: K(S) counts it a hatch only while it doesn't, or once it's born as a checked view")
+			}
+		})
+	}
+}
+
+// A use under another name is judged where it's used (Language's first should on #8eewz2n): a function
+// constructor exported from lib.ts and called under a renamed import, or a default import, keeps Open open,
+// and newed through a cast to any under the renamed import, it doesn't. Mutant: the use scan filtering
+// identifiers by the function's own name, as 8d8e651c did, closes the renamed and default rows.
+func TestClosedKindFunctionConstructorUsesUnderAnotherName(t *testing.T) {
+	t.Parallel()
+	const constructor = "(this: { kind: number; pos: number; n: number }, kind: number): void { this.kind = kind; this.pos = 0; this.n = 1; }\n"
+	for _, probe := range []struct {
+		name, lib, use string
+		closed         bool
+	}{
+		{"renamed import, called", "export function Make" + constructor, "import { Make as M } from './lib';\nM.call(open, kb());\n", false},
+		{"default import, called", "export default function Make" + constructor, "import Anything from './lib';\nAnything.call(open, kb());\n", false},
+		{"renamed import, newed through any", "export function Make" + constructor, "import { Make as M } from './lib';\nconst made: Open = new (M as any)(kb());\n", true},
+	} {
+		t.Run(probe.name, func(t *testing.T) {
+			t.Parallel()
+			main := writeAgreementSource(t, "main.ts", closedKindConstructorTypes+probe.use)
+			if err := os.WriteFile(filepath.Join(filepath.Dir(main), "lib.ts"), []byte(probe.lib), 0o644); err != nil {
+				t.Fatal(err)
+			}
+			loaded, err := load.Load([]string{main})
+			if err != nil {
+				t.Fatalf("Load: %v", err)
+			}
+			checked, release := loaded.Checker(context.Background(), loaded.Files()[0])
+			defer release()
+			l := &lowering{program: loaded, checker: checked, result: &ir.Program{}}
+			var open *ast.Node
+			for _, file := range loaded.Files() {
+				for _, statement := range file.Statements.Nodes {
+					if statement.Kind == ast.KindInterfaceDeclaration && statement.Name().Text() == "Open" {
+						open = statement
+					}
+				}
+			}
+			if open == nil {
+				t.Fatal("no interface Open")
+			}
+			_, closed, reason := l.closedKinds(l.checker.GetDeclaredTypeOfSymbol(l.checker.GetSymbolOfDeclaration(open)), "kind")
+			if closed != probe.closed {
+				t.Fatalf("want Open closed %v, got closed %v, reason %q", probe.closed, closed, reason)
 			}
 		})
 	}
