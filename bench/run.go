@@ -1,7 +1,7 @@
 // Command bench times Adamic's native binaries against Node and Bun on the same programs.
 //
 //	go run ./bench [-rounds 5] [-timeout 120s] [-only nbody,trees]
-//	go run ./bench -compare <baseline sha> <candidate sha> -suite everyday [-samples 15]
+//	go run ./bench -compare <baseline sha> <candidate sha> -suite everyday [-samples 15] [-seed n]
 //
 // The second form compares two commits of Adamic on a suite of bench/suites.json, and is described
 // in compare.go; what follows is the first.
@@ -80,6 +80,7 @@ func main() {
 	samples := flag.Int("samples", 15, "with -compare, how many interleaved samples; at least 6")
 	plant := flag.String("plant", "", "with -compare, \"candidate\" appends a fixed busy loop of -plant-ms to every candidate program, to prove the comparison can fail")
 	plantMs := flag.Int("plant-ms", 25, "with -plant candidate, the plant's milliseconds of busy CPU")
+	seed := flag.Uint64("seed", 0, "with -compare, the seed that draws every run's ADAMIC_BENCH_PAD length (default: the time)")
 	flag.Parse()
 
 	if *baseline != "" {
@@ -95,7 +96,18 @@ func main() {
 		if flag.NArg() > 0 {
 			fail(fmt.Errorf("-compare takes two commits, and these are left over: %s", strings.Join(flag.Args(), " ")))
 		}
-		compareCommits(compareRequest{baseline: *baseline, candidate: candidate, suite: *suiteName, samples: *samples, plant: *plant, plantMs: *plantMs, only: *only, timeout: *timeout})
+		// The seed is the time unless -seed names one, and 0 is a seed like any other, so whether it was
+		// given is read from the flags set, in either parse.
+		seedGiven := false
+		flag.Visit(func(set *flag.Flag) {
+			if set.Name == "seed" {
+				seedGiven = true
+			}
+		})
+		if !seedGiven {
+			*seed = uint64(time.Now().UnixNano())
+		}
+		compareCommits(compareRequest{baseline: *baseline, candidate: candidate, suite: *suiteName, samples: *samples, plant: *plant, plantMs: *plantMs, only: *only, timeout: *timeout, seed: *seed})
 		return
 	}
 

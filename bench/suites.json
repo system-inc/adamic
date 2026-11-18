@@ -11,6 +11,9 @@
 				{ "name": "tokenizer" },
 				{ "name": "trees" },
 				{ "name": "word_count" }
+			],
+			"log": [
+				{ "date": "2026-11-18", "program": "devirtualize", "change": "rounds 20000 to 160000", "why": "Node's run sat within its own startup floor, J-d1emr4h" }
 			]
 		},
 		"regression": {

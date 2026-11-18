@@ -2,12 +2,25 @@
 // candidate is faster, slower, or no different at 95% confidence, with the variation that verdict
 // rests on.
 //
-//	go run ./bench -compare <baseline sha> <candidate sha> -suite everyday [-samples 15] [-only trees] [-plant candidate [-plant-ms 25]]
+//	go run ./bench -compare <baseline sha> <candidate sha> -suite everyday [-samples 15] [-only trees] [-plant candidate [-plant-ms 25]] [-seed n]
 //
 // cmd/adamic is built at each commit in a detached worktree, and every program in the suite is built
 // with each of the two compilers from the same source, the one in this checkout, so the compiler is
 // the only thing that differs. Each sample runs the baseline, the candidate and Node once each, in an
-// order that rotates every sample, so no runner always goes first on a warm or a cold machine.
+// order (sampleOrder) that goes through all six every six samples, so no runner always goes first,
+// and no runner always runs right after the same other one: over six samples each follows each other
+// equally often, counting the run before a program's first, the last of the program before it.
+//
+// Beside the order, nothing about a side stays fixed for a whole run. Before each sample every native
+// binary, the floor's too, gets fresh pages in the page cache: a copy beside it is renamed over it, so
+// its path is the same and its physical placement, and with it how it aliases in the caches, is new.
+// Every run gets ADAMIC_BENCH_PAD, a value of a random length from 0 to 4095 drawn for that run, so the
+// stack starts somewhere new each time. The lengths come from one seeded source; the header prints the
+// seed, and -seed draws the same lengths again.
+//
+// A row whose two binaries are byte for byte the same is a control: nothing the compiler did can move
+// it, so it never gets a verdict, and the line above the table says how many controls would have
+// claimed a change and by how much, the size of change this run can't tell from the machine.
 //
 // The statistic is paired: per sample, the candidate's time over the baseline's on the program's
 // judge, user time unless the suite says wall (a parallel program spends more user time with more
@@ -31,7 +44,9 @@ package main
 import (
 	"encoding/json"
 	"fmt"
+	"io"
 	"math/big"
+	"math/rand/v2"
 	"os"
 	"os/exec"
 	"path/filepath"
@@ -51,6 +66,7 @@ type compareRequest struct {
 	plantMs   int
 	only      string
 	timeout   time.Duration
+	seed      uint64 // ADAMIC_BENCH_PAD's lengths are drawn from it
 }
 
 // suiteFile is bench/suites.json.
@@ -109,6 +125,7 @@ type compareEntry struct {
 	baseline    string
 	candidate   string
 	failure     string // why it can't be compared, from a build
+	identical   bool   // the two binaries are byte for byte the same, so the row is a control
 }
 
 // The three runners of every sample, in the order the first sample runs them.
@@ -119,6 +136,23 @@ const (
 )
 
 var runnerNames = [...]string{"baseline", "candidate", "node"}
+
+// sampleOrder is the order a sample runs its three runners in, the floor's and every program's alike.
+// The runners in a cycle can go round one way, baseline then candidate then Node, or the other,
+// baseline then Node then candidate; three samples go round one way, each starting from the next
+// runner, and the next three the other. A rotation alone keeps who runs just before whom: M3
+// (J-d1emr4h) ran the candidate right after the baseline every time, and three identical binaries
+// read a change. Over six samples each runner follows each other runner equally often, counting the
+// run before a program's first (the last of the program before, or the last of the sample before):
+// within a sample a direction's three rotations give its three pairs evenly, and the six samples'
+// seams give the six pairs once each. Alternating the direction every sample can't do that: its seams
+// put the candidate after itself twice and miss two pairs.
+func sampleOrder(sample int) [3]int {
+	directions := [2][3]int{{baselineRunner, candidateRunner, nodeRunner}, {baselineRunner, nodeRunner, candidateRunner}}
+	direction := directions[(sample/3)%2]
+	rotation := sample % 3
+	return [3]int{direction[rotation], direction[(rotation+1)%3], direction[(rotation+2)%3]}
+}
 
 // A programComparison is one row's result: the median candidate-over-baseline ratio and its 95%
 // interval with a verdict, or why there isn't one.
@@ -133,9 +167,15 @@ type programComparison struct {
 	baselineMedian  time.Duration
 	// nodeRatio and its interval are the candidate over Node, sample by sample, on the same judge.
 	nodeRatio, nodeLow, nodeHigh float64
+	// claimed is, on a control, the verdict its interval would have given, faster or slower, or empty
+	// when it would have read no change.
+	claimed string
 }
 
 const noChange = "no change at this confidence"
+
+// control is a control row's verdict cell: its two binaries are the same, so it never claims a change.
+const control = "control"
 
 // plantLoop is the plant: a fixed number of milliseconds of busy CPU, the same whatever the program's
 // size, appended to a copy of a candidate program's source, so it runs inside the timed process at the
@@ -195,6 +235,7 @@ func compareCommits(request compareRequest) {
 		plantDescription = fmt.Sprintf("candidate, a fixed %d ms busy loop appended to every candidate program", request.plantMs)
 	}
 	fmt.Printf("suite: %s, %d rows; samples: %d; plant: %s\n", request.suite, len(entries), request.samples, plantDescription)
+	fmt.Printf("seed: %d, which draws every run's ADAMIC_BENCH_PAD length; -seed %d draws the same again\n", request.seed, request.seed)
 	fmt.Printf("load before: %s\n", loadAverage())
 	fmt.Printf("processes over 5%% CPU at start: %s\n\n", busyProcesses())
 
@@ -284,13 +325,15 @@ func compareCommits(request compareRequest) {
 	// Whether each row's two binaries are byte for byte the same: in an A/A run they should be, so a
 	// verdict there is the machine or the harness, never the compiler.
 	identical, differing := []string{}, []string{}
-	for _, entry := range entries {
+	for index := range entries {
+		entry := &entries[index]
 		if entry.failure != "" {
 			continue
 		}
 		baselineBytes, baselineError := os.ReadFile(entry.baseline)
 		candidateBytes, candidateError := os.ReadFile(entry.candidate)
 		if baselineError == nil && candidateError == nil && string(baselineBytes) == string(candidateBytes) {
+			entry.identical = true
 			identical = append(identical, entry.program.name)
 		} else {
 			differing = append(differing, entry.program.name)
@@ -304,10 +347,24 @@ func compareCommits(request compareRequest) {
 	floors := [3][]measurement{}
 	floorCommands := [3][]string{{floorBinaries[0]}, {floorBinaries[1]}, nodeCommand(floor, root)}
 	stopped := make([]bool, len(entries))
+	// natives is every native binary a sample runs, each once: a program with several thread counts
+	// shares its two.
+	natives := []string{floorBinaries[0], floorBinaries[1]}
+	for _, entry := range entries {
+		if entry.failure == "" && !slices.Contains(natives, entry.baseline) {
+			natives = append(natives, entry.baseline, entry.candidate)
+		}
+	}
+	random := rand.New(rand.NewPCG(request.seed, 0))
 	for sample := 0; sample < request.samples; sample++ {
-		order := [3]int{sample % 3, (sample + 1) % 3, (sample + 2) % 3}
+		for _, native := range natives {
+			if err := freshPages(native); err != nil {
+				fail(err)
+			}
+		}
+		order := sampleOrder(sample)
 		for _, runner := range order {
-			result := run(floorCommands[runner], request.timeout)
+			result := run(floorCommands[runner], request.timeout, padded(random, nil)...)
 			floors[runner] = append(floors[runner], result)
 			fmt.Fprintf(os.Stderr, "sample %d floor %s: %s\n", sample+1, runnerNames[runner], short(result))
 		}
@@ -321,7 +378,7 @@ func compareCommits(request compareRequest) {
 			settings := [3][]string{entry.environment, entry.environment, nil}
 			taken := [3]measurement{}
 			for _, runner := range order {
-				taken[runner] = run(commands[runner], request.timeout, settings[runner]...)
+				taken[runner] = run(commands[runner], request.timeout, padded(random, settings[runner])...)
 				fmt.Fprintf(os.Stderr, "sample %d %s %s: %s\n", sample+1, entry.program.name, runnerNames[runner], short(taken[runner]))
 			}
 			samples[index] = append(samples[index], taken)
@@ -345,16 +402,39 @@ func compareCommits(request compareRequest) {
 	}
 	rank, _ := signTestRank(request.samples)
 	fmt.Printf("wall clock resolution: %s; floor, a program that only prints, fastest to slowest of %d: %s\n", resolution, request.samples, strings.Join(floorCells, ", "))
-	fmt.Printf("%d interleaved samples, the runners' order rotating each sample. The ratio is the candidate's time over the baseline's in the same sample, on the program's judge: user, CPU time in user mode across every thread, or wall. The interval is the sign test's 95%% interval for the median ratio, the %s and %s smallest of %d ratios, which assumes nothing about how times are distributed. faster needs the interval's top below 1.00, slower its bottom above 1.00.\n\n", request.samples, ordinal(rank), ordinal(request.samples+1-rank), request.samples)
-	fmt.Println("| program | judge | baseline, median | candidate / baseline, median | 95% interval | verdict | candidate / node, median and 95% interval |")
-	fmt.Println("|---|---|---|---|---|---|---|")
+	fmt.Printf("%d interleaved samples, the runners' order going through all six every six samples so each follows each other equally often, every native binary given fresh pages before each sample, and every run an ADAMIC_BENCH_PAD of random length. The ratio is the candidate's time over the baseline's in the same sample, on the program's judge: user, CPU time in user mode across every thread, or wall. The interval is the sign test's 95%% interval for the median ratio, the %s and %s smallest of %d ratios, which assumes nothing about how times are distributed. faster needs the interval's top below 1.00, slower its bottom above 1.00. A row whose two binaries are the same is a control and gets no verdict.\n\n", request.samples, ordinal(rank), ordinal(request.samples+1-rank), request.samples)
 	results := make([]programComparison, len(entries))
+	controls, claims, claimedSize := 0, []string{}, 0.0
 	for index, entry := range entries {
 		if entry.failure != "" {
 			results[index] = programComparison{failure: entry.failure}
-		} else {
-			results[index] = compareSamples(samples[index], entry.judge, floorSlowest, resolution)
+			continue
 		}
+		results[index] = compareSamples(samples[index], entry.judge, floorSlowest, resolution)
+		if !entry.identical {
+			continue
+		}
+		controls++
+		results[index] = asControl(results[index])
+		if results[index].claimed != "" {
+			claims = append(claims, fmt.Sprintf("%s %s %.3f (%.3f to %.3f)", entry.program.name, results[index].claimed, results[index].median, results[index].low, results[index].high))
+			claimedSize = max(claimedSize, 1-results[index].low, results[index].high-1)
+		}
+	}
+	// The controls go above the table, so a verdict is never read without the size of change the same
+	// bytes made on this run.
+	fmt.Printf("controls: %d rows run the same binary on both sides; %d would have claimed a change", controls, len(claims))
+	if len(claims) > 0 {
+		fmt.Printf(": %s", strings.Join(claims, ", "))
+	}
+	fmt.Println()
+	if len(claims) > 0 {
+		fmt.Printf("so a verdict on this run within %.1f%% of 1.00, the farthest a control's interval reached, is unproven: identical binaries moved that far\n", 100*claimedSize)
+	}
+	fmt.Println()
+	fmt.Println("| program | judge | baseline, median | candidate / baseline, median | 95% interval | verdict | candidate / node, median and 95% interval |")
+	fmt.Println("|---|---|---|---|---|---|---|")
+	for index, entry := range entries {
 		result := results[index]
 		if result.failure != "" {
 			fmt.Printf("| %s | %s | | | | %s | |\n", entry.program.name, entry.judge, result.failure)
@@ -574,6 +654,21 @@ func compareSamples(samples [][3]measurement, judgeOn string, floors [3]measurem
 	return programComparison{median: median, low: low, high: high, verdict: verdictOf(low, high), baselineMedian: medianDuration(baselines), candidateMedian: medianDuration(candidates), nodeMedian: medianDuration(nodes), nodeRatio: nodeMedianRatio, nodeLow: nodeLow, nodeHigh: nodeHigh}
 }
 
+// asControl makes a judged row a control: its two binaries are byte for byte the same, so nothing the
+// compiler did can move it, and whatever its interval says is the machine or the harness. It never gets
+// a verdict; the one it would have had is kept as claimed, so the run can say how far identical bytes
+// read apart. A refused row stays refused.
+func asControl(result programComparison) programComparison {
+	if result.failure != "" {
+		return result
+	}
+	if result.verdict != noChange {
+		result.claimed = result.verdict
+	}
+	result.verdict = control
+	return result
+}
+
 // judgedTime is a run's time on its program's judge.
 func judgedTime(result measurement, judgeOn string) time.Duration {
 	if judgeOn == "wall" {
@@ -782,6 +877,48 @@ func makeInput(directory, work, adamic string, input programInput, key string) (
 		return "", fmt.Errorf("making the input with %s at size %d failed: %v %s", input.Generator, input.Size, err, firstLine(stderr.String()))
 	}
 	return path, nil
+}
+
+// freshPages gives a native binary new pages in the page cache without moving it: a copy beside it,
+// renamed over it, is a new file whose pages sit wherever the kernel puts them now. A binary left alone
+// keeps the same physical pages for the whole run, and with them the same cache aliasing, a constant
+// tied to its side that no number of samples averages away.
+func freshPages(path string) error {
+	source, err := os.Open(path)
+	if err != nil {
+		return fmt.Errorf("fresh pages for %s: %w", path, err)
+	}
+	defer source.Close()
+	copied, err := os.CreateTemp(filepath.Dir(path), filepath.Base(path)+".fresh-")
+	if err != nil {
+		return fmt.Errorf("fresh pages for %s: %w", path, err)
+	}
+	if _, err := io.Copy(copied, source); err != nil {
+		copied.Close()
+		os.Remove(copied.Name())
+		return fmt.Errorf("fresh pages for %s, copying: %w", path, err)
+	}
+	if err := copied.Close(); err != nil {
+		os.Remove(copied.Name())
+		return fmt.Errorf("fresh pages for %s, closing the copy: %w", path, err)
+	}
+	if err := os.Chmod(copied.Name(), 0755); err != nil {
+		os.Remove(copied.Name())
+		return fmt.Errorf("fresh pages for %s, making the copy executable: %w", path, err)
+	}
+	if err := os.Rename(copied.Name(), path); err != nil {
+		os.Remove(copied.Name())
+		return fmt.Errorf("fresh pages for %s, renaming the copy over it: %w", path, err)
+	}
+	return nil
+}
+
+// padded is a run's settings with ADAMIC_BENCH_PAD added, a value of a random length from 0 to 4095
+// drawn for this run alone. The environment's size decides where the stack starts, and every run with
+// the same environment starts it at the same alignment, a constant tied to a side; a random size spreads
+// it over every alignment on both sides alike. The settings themselves are copied, never appended to.
+func padded(random *rand.Rand, settings []string) []string {
+	return append(slices.Clone(settings), "ADAMIC_BENCH_PAD="+strings.Repeat("x", random.IntN(4096)))
 }
 
 // plantedCopy writes a copy of a source with a plant of milliseconds appended.

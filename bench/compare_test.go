@@ -187,6 +187,131 @@ func TestAGapToNodeIsClaimedOnlyOutsideItsInterval(t *testing.T) {
 	}
 }
 
+// cyclicOrder is the order -compare ran before sampleOrder, kept only here as the mutant's shape: a
+// rotation, which runs the candidate right after the baseline in every sample (M3, J-d1emr4h).
+func cyclicOrder(sample int) [3]int {
+	return [3]int{sample % 3, (sample + 1) % 3, (sample + 2) % 3}
+}
+
+// Every sample runs each runner once, and over six samples each runner follows each other equally
+// often, counted the way compareCommits runs them: the floor and every program of a sample in its
+// order, and the seam into the next sample. A runner never follows itself, so no pair comes up short.
+func TestSampleOrderBalancesWhoRunsBeforeWhom(t *testing.T) {
+	t.Parallel()
+	for sample := 0; sample < 12; sample++ {
+		order := sampleOrder(sample)
+		seen := [3]bool{}
+		for _, runner := range order {
+			if runner < baselineRunner || runner > nodeRunner || seen[runner] {
+				t.Fatalf("sample %d's order is %v; want a permutation of the three runners", sample, order)
+			}
+			seen[runner] = true
+		}
+	}
+	// One block is the floor alone; more are the floor and that many less one programs.
+	for _, blocks := range []int{1, 2, 9} {
+		for _, cycles := range []int{1, 3} {
+			follows := [3][3]int{}
+			previous := -1
+			for sample := 0; sample < 6*cycles; sample++ {
+				for block := 0; block < blocks; block++ {
+					for _, runner := range sampleOrder(sample) {
+						if previous >= 0 {
+							follows[previous][runner]++
+						}
+						previous = runner
+					}
+				}
+			}
+			// The seam into the next sample: its first runner follows this one's last.
+			follows[previous][sampleOrder(6 * cycles)[0]]++
+			want := follows[baselineRunner][candidateRunner]
+			for before := range follows {
+				for after := range follows[before] {
+					if before == after && follows[before][after] != 0 {
+						t.Fatalf("%d blocks over %d samples: the %s ran right after itself %d times; want never", blocks, 6*cycles, runnerNames[before], follows[before][after])
+					}
+					if before != after && follows[before][after] != want {
+						t.Fatalf("%d blocks over %d samples: the %s ran right after the %s %d times, and the candidate after the baseline %d; want every pair equal, %v", blocks, 6*cycles, runnerNames[after], runnerNames[before], follows[before][after], want, follows)
+					}
+				}
+			}
+		}
+	}
+}
+
+// predecessorPlant runs one program's samples through an order the way compareCommits does, the floor's
+// three runs first, on a simulated machine where a run takes 100 ms, and 3 ms more when the run just
+// before it was the baseline's. The baseline and the candidate are the same program, so any verdict is
+// the order's alone.
+func predecessorPlant(order func(sample int) [3]int, count int) [][3]measurement {
+	samples := [][3]measurement{}
+	previous := -1
+	for sample := 0; sample < count; sample++ {
+		// The floor's runs, whose times don't matter here, only who ran last.
+		for _, runner := range order(sample) {
+			previous = runner
+		}
+		taken := [3]measurement{}
+		for _, runner := range order(sample) {
+			took := 100 * time.Millisecond
+			if previous == baselineRunner {
+				took += 3 * time.Millisecond
+			}
+			taken[runner] = measurement{elapsed: took, user: took, stdout: "42\n"}
+			previous = runner
+		}
+		samples = append(samples, taken)
+	}
+	return samples
+}
+
+// The plant: a cost carried by whoever runs after the baseline. The old rotation puts the candidate
+// there every sample, so the same program reads slower; sampleOrder puts it there only in the samples
+// that go round one way (9 of 15), so the ratios split between 1.03 and 1.00 and the interval holds
+// 1.00. The mutant must fail, or the cure proves nothing.
+func TestTheBalancedOrderGivesAPredecessorCostNoVerdict(t *testing.T) {
+	t.Parallel()
+	cyclic := compareSamples(predecessorPlant(cyclicOrder, 15), "user", fakeFloors, time.Microsecond)
+	if cyclic.verdict != "slower" {
+		t.Fatalf("the rotation read %q, median %.3f, interval %.3f to %.3f, failure %q; want slower, the bias M3 saw", cyclic.verdict, cyclic.median, cyclic.low, cyclic.high, cyclic.failure)
+	}
+	balanced := compareSamples(predecessorPlant(sampleOrder, 15), "user", fakeFloors, time.Microsecond)
+	if balanced.failure != "" || balanced.verdict != noChange {
+		t.Fatalf("sampleOrder read %q, median %.3f, interval %.3f to %.3f, failure %q; want no change", balanced.verdict, balanced.median, balanced.low, balanced.high, balanced.failure)
+	}
+}
+
+// A row whose two binaries are the same is a control: it never gets a verdict, however its ratios
+// read, and what they would have claimed is kept, so the run can say how far identical bytes moved.
+func TestAnIdenticalRowIsAControlWithoutAVerdict(t *testing.T) {
+	t.Parallel()
+	ratios := make([]float64, 15)
+	for index := range ratios {
+		ratios[index] = 1.10
+	}
+	result := asControl(compareSamples(fakeSamples(ratios), "user", fakeFloors, time.Microsecond))
+	if result.verdict != control || result.claimed != "slower" {
+		t.Fatalf("a control at 1.10 read verdict %q, claimed %q; want control, claiming slower", result.verdict, result.claimed)
+	}
+	if result.median != 1.10 || result.low != 1.10 || result.high != 1.10 {
+		t.Fatalf("a control at 1.10 kept median %v, interval %v to %v; want its ratio and interval as they were", result.median, result.low, result.high)
+	}
+	if got := verdictSentence(result.verdict, result.low, result.high); got != control {
+		t.Fatalf("a control's verdict cell read %q; want %q", got, control)
+	}
+	for index := range ratios {
+		ratios[index] = 1
+	}
+	if quiet := asControl(compareSamples(fakeSamples(ratios), "user", fakeFloors, time.Microsecond)); quiet.verdict != control || quiet.claimed != "" {
+		t.Fatalf("a control at 1.00 read verdict %q, claimed %q; want control, claiming nothing", quiet.verdict, quiet.claimed)
+	}
+	refused := asControl(programComparison{failure: "differs from Node at the candidate"})
+	if refused.verdict != "" || refused.failure == "" {
+		t.Fatalf("a refused control read verdict %q, failure %q; want it refused as it was", refused.verdict, refused.failure)
+	}
+}
+
 // The plant is the milliseconds it's asked for, whatever the program, and prints nothing.
 func TestThePlantIsItsMilliseconds(t *testing.T) {
 	t.Parallel()
