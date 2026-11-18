@@ -44,12 +44,12 @@ func TestRecordStorageComparesGenericArguments(t *testing.T) {
 		{"wide", "holder", true},
 		{"holder", "same", true},
 	} {
-		visited := map[[2]*checker.Type]bool{}
-		if got := l.sameRecordStorage(parameters[pair.from], parameters[pair.to], visited); got != pair.same {
+		walk := newRecordStorageWalk()
+		if got := l.sameRecordStorage(parameters[pair.from], parameters[pair.to], walk); got != pair.same {
 			t.Errorf("%s to %s: same storage %v, want %v", pair.from, pair.to, got, pair.same)
 		}
-		if len(visited) > 16 {
-			t.Errorf("%s to %s: %d pairs visited, want at most 16", pair.from, pair.to, len(visited))
+		if len(walk.visited) > 16 {
+			t.Errorf("%s to %s: %d pairs visited, want at most 16", pair.from, pair.to, len(walk.visited))
 		}
 	}
 }
