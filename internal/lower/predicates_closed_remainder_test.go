@@ -189,10 +189,13 @@ console.log(textOf({ name: ns }));
 }
 
 // An open remainder (Expression's kind is the whole SyntaxKind) never reaches this rule: the refinement is
-// refused first as an open numeric enum used as a literal tag, so it's held fail closed there.
+// refused first as an open numeric enum used as a literal tag, so it's held fail closed there. wide, an
+// Expression whose kind is chosen at run time, keeps Expression open (closedKinds, enum_tag_closed_kind.go).
 func TestClosedRemainderOpenRemainderRefusedFirst(t *testing.T) {
 	t.Parallel()
 	source := closedRemainderPrelude + `interface Expression extends Node { readonly _expressionBrand: undefined }
+function numeric(): number { return 1; }
+const wide: Expression = { kind: numeric(), pos: 9, _expressionBrand: undefined };
 function textOf(node: Identifier | Expression): string { return isIdentifier(node) ? node.escapedText : String(node.pos); }
 console.log(textOf(id));
 `
