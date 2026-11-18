@@ -197,7 +197,8 @@ func (l *lowering) typeOfSymbol(node *ast.Node, symbol *ast.Symbol) (ir.Type, er
 			return placeholderStorage(held), nil
 		}
 	}
-	if valueType, isKnown := l.representation(declared); isKnown {
+	valueType, isKnown, reason := l.representationReason(declared)
+	if isKnown {
 		if l.placeholderSymbolOrigin(symbol) != "" || l.result.PlaceholderViews[l.placeholderKey(symbol)] != "" {
 			valueType = placeholderStorage(valueType)
 		}
@@ -206,7 +207,7 @@ func (l *lowering) typeOfSymbol(node *ast.Node, symbol *ast.Symbol) (ir.Type, er
 	if declared.Flags()&checker.TypeFlagsAny != 0 {
 		return 0, l.refuseAnyValue(node)
 	}
-	return 0, l.notYet(node, "a value of type "+l.checker.TypeToString(declared))
+	return 0, l.notYet(node, "a value of type "+l.checker.TypeToString(declared)+", "+reason)
 }
 
 // declaredField is the representation of a field as the type an object literal is written into

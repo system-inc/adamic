@@ -42,7 +42,7 @@ var regexpServedValueRows = []struct{ name, path, stdout, diagnostic string }{
 	{"presence", "internal/oracle/testdata/regexp_served_values/presence.a", "false\ntrue\ntruthy\nfalse\ntrue\ntrue\nfalse\nfalsy\ntrue\nundefined\n", ""},
 	{"presence_narrowed", "internal/oracle/testdata/regexp_served_values/presence_narrowed.a", "true\n", ""},
 	{"receiver_any", "internal/oracle/testdata/regexp_served_values/receiver_any.a", "true\n", ":3:15: Adamic 0.1 refuses a value of type any: any has no proven type; type it unknown and narrow it where it's read, or give it its real type"},
-	{"receiver_intersection", "internal/oracle/testdata/regexp_served_values/receiver_intersection.a", "function\n", ":4:7: stage 0 can't lower a value of type Both yet"},
+	{"receiver_intersection", "internal/oracle/testdata/regexp_served_values/receiver_intersection.a", "function\n", ":4:7: stage 0 can't lower a value of type Both, an intersection whose field test is a function, which its record storage doesn't hold yet"},
 	{"receiver_parameter", "internal/oracle/testdata/regexp_served_values/receiver_parameter.a", "function\n", ":3:56: stage 0 can't lower test read as a value, in a program where a RegExp reaches a view naming test, which Adamic can't give a receiver to yet"},
 	{"receiver_regexp", "internal/oracle/testdata/regexp_served_values/receiver_regexp.a", "true\n", ""},
 	{"receiver_union", "internal/oracle/testdata/regexp_served_values/receiver_union.a", "function\n", ":3:52: stage 0 can't lower test read as a value, in a program where a RegExp reaches a view naming test, which Adamic can't give a receiver to yet"},

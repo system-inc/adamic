@@ -72,7 +72,7 @@ func TestBigintGapStandsWhereGapsMdSays(t *testing.T) {
 	}
 	_, err = lower.Lower(context.Background(), program)
 	var notYet *lower.NotYet
-	if !errors.As(err, &notYet) || notYet.What != "a value of type 1237940039285380274899124223n" {
+	if !errors.As(err, &notYet) || notYet.What != "a value of type 1237940039285380274899124223n, a bigint" {
 		t.Fatalf("gap changed: %v; update GAPS.md and undo gap 2 workaround", err)
 	}
 }
