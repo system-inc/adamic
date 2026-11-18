@@ -4,12 +4,14 @@
 // handed to them, so each handoff stops being a view that could write the field (family 4, "whose readonly field
 // becomes writable"). Adamic ruled it (Nov 18) in adaptation 72's shape. Every edited declaration is internal, so no
 // line of the published typescript.d.ts moves. It's type-only:
-// - moduleSpecifiers.ts: getModuleSpecifierPreferences' importingSourceFile and getDefaultResolutionModeForFile's file,
-//   each a Pick of SourceFile that only reads fileName, take it Readonly, as FutureSourceFile's fileName is readonly;
+// - moduleSpecifiers.ts and program.ts: getModuleSpecifierPreferences' importingSourceFile, getDefaultResolutionModeForFile's
+//   file, and the two program.ts workers it hands that file to, each a Pick of SourceFile it only reads, take it
+//   Readonly, as FutureSourceFile's fileName is readonly;
 // - types.ts: the four PrivateIdentifier declarations esDecorators.ts hands to a callback taking a readonly name say
 //   their name is readonly too;
 // - builderState.ts: canReuseOldState reads only oldState.referencedMap, so it takes a Readonly<BuilderState>;
-// - types.ts: Program's internal redirectTargetsMap is readonly, as TypeCheckerHost's already is;
+// - types.ts: Program's internal redirectTargetsMap and getCanonicalFileName are readonly, as a TypeCheckerHost read as a
+//   Program declares the first readonly and the second a method;
 // - types.ts: SourceFileMayBeEmittedHost's getCanonicalFileName is readonly, as EmitHost declares it a method.
 // Through the stock AST each edit is found by its owner and member and its exact upstream text, refused before any write
 // if anything has moved, and left as it is on a second run.
@@ -26,12 +28,20 @@ const edits = [
         upstream: 'Pick<SourceFile, "fileName" | "impliedNodeFormat">', adapted: 'Readonly<Pick<SourceFile, "fileName" | "impliedNodeFormat">>' },
     { file: 'src/compiler/moduleSpecifiers.ts', function: 'getDefaultResolutionModeForFile', parameter: 'file',
         upstream: 'Pick<SourceFile, "fileName" | "impliedNodeFormat" | "packageJsonScope">', adapted: 'Readonly<Pick<SourceFile, "fileName" | "impliedNodeFormat" | "packageJsonScope">>' },
+    // getDefaultResolutionModeForFile hands its file on to these two, which only read it, so the readonly view goes on.
+    { file: 'src/compiler/program.ts', function: 'getDefaultResolutionModeForFileWorker', parameter: 'sourceFile',
+        upstream: 'Pick<SourceFile, "fileName" | "impliedNodeFormat" | "packageJsonScope">', adapted: 'Readonly<Pick<SourceFile, "fileName" | "impliedNodeFormat" | "packageJsonScope">>' },
+    { file: 'src/compiler/program.ts', function: 'getImpliedNodeFormatForEmitWorker', parameter: 'sourceFile',
+        upstream: 'Pick<SourceFile, "fileName" | "impliedNodeFormat" | "packageJsonScope">', adapted: 'Readonly<Pick<SourceFile, "fileName" | "impliedNodeFormat" | "packageJsonScope">>' },
     { file: 'src/compiler/builderState.ts', function: 'canReuseOldState', parameter: 'oldState',
         upstream: 'BuilderState | undefined', adapted: 'Readonly<BuilderState> | undefined' },
     ...['PrivateIdentifierPropertyDeclaration', 'PrivateIdentifierMethodDeclaration', 'PrivateIdentifierGetAccessorDeclaration', 'PrivateIdentifierSetAccessorDeclaration']
         .map(name => ({ file: 'src/compiler/types.ts', interface: name, member: 'name', upstream: 'name: PrivateIdentifier;', adapted: 'readonly name: PrivateIdentifier;' })),
     { file: 'src/compiler/types.ts', interface: 'Program', member: 'redirectTargetsMap',
         upstream: 'redirectTargetsMap: MultiMap<Path, string>;', adapted: 'readonly redirectTargetsMap: MultiMap<Path, string>;' },
+    // checker.ts reads a TypeCheckerHost as a Program, whose getCanonicalFileName is a method on the host's side.
+    { file: 'src/compiler/types.ts', interface: 'Program', member: 'getCanonicalFileName',
+        upstream: 'getCanonicalFileName: GetCanonicalFileName;', adapted: 'readonly getCanonicalFileName: GetCanonicalFileName;' },
     { file: 'src/compiler/types.ts', interface: 'SourceFileMayBeEmittedHost', member: 'getCanonicalFileName',
         upstream: 'getCanonicalFileName: GetCanonicalFileName;', adapted: 'readonly getCanonicalFileName: GetCanonicalFileName;' },
 ];
