@@ -42,7 +42,7 @@ func CheckSignature(ctx context.Context, program *load.Program) error {
 	return err
 }
 
-func checkedWorkerEnvironment(types *checker.Checker, program *load.Program) ([]string, *checker.Type, error) {
+func checkedWorkerEnvironment(types *checker.Checker, program *load.Program) ([]environmentField, *checker.Type, error) {
 	entry := program.Files()[0]
 	var exported *ast.Symbol
 	for _, symbol := range types.GetExportsOfModule(entry.AsNode().Symbol()) {
