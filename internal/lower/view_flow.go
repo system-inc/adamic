@@ -77,6 +77,8 @@ func (graph *allocationFlowGraph) recordValuesNode() int {
 // noteRecordWrite adds value, stored into a record by what by names in function (-1 for the program's
 // own body), to recordValuesNode's sources. A known scalar holds no allocation (viewArrayAggregate),
 // so it's no source: a record of numbers and strings beside its arrays doesn't make the node Unknown.
+// It's the node's only way in: a value entering a record otherwise is stopped today (an index-signature
+// spread, Object.fromEntries spread in, Object.assign on a record; TestRecordValuesEnterOnlyThroughNotedWrites).
 func (graph *allocationFlowGraph) noteRecordWrite(value ir.Expression, by string, function int) {
 	if !viewArrayAggregate(value) {
 		return
