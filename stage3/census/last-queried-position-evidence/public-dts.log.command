@@ -1,0 +1,1 @@
+bash -c cmp\ \"\$1\"\ \"\$2\"\ \&\&\ sha256sum\ \"\$1\"\ \"\$2\" public-dts /workspace/last-queried-position-proof/before/built/local/typescript.d.ts /workspace/last-queried-position-proof/lane/adapted-tree/built/local/typescript.d.ts 

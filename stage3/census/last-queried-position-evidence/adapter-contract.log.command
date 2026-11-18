@@ -1,0 +1,1 @@
+env NODE_PATH=/workspace/last-queried-position/stage3/api/node_modules node /workspace/last-queried-position-proof/evidence/adapter-contract.cjs /workspace/last-queried-position/stage3/adapt/99-correctness-last-queried-position/adapt.cjs /workspace/last-queried-position-proof/before/src/compiler/parser.ts 

@@ -1,0 +1,52 @@
+{
+  "target": "src/compiler/parser.ts:10467",
+  "counts": {
+    "before": 3143,
+    "after": 3146
+  },
+  "removed": [
+    [
+      "src/compiler/parser.ts:10432:5",
+      "refusal_scan",
+      "Refused",
+      "src/compiler/parser.ts:10467:39",
+      "an unproven value assigned to a numeric literal or enum member slot InvalidPosition",
+      "src/compiler/parser.ts:10467:39: Adamic 0.1 refuses an unproven value assigned to a numeric literal or enum member slot InvalidPosition; compare with this literal and return that constant, or widen the slot to the whole numeric enum or number (adamic/enum-literal)"
+    ]
+  ],
+  "reached_in_previously_blocked_units": [
+    [
+      "src/compiler/parser.ts:10432:5",
+      "deferred",
+      "NotYet",
+      "src/compiler/parser.ts:1253:17",
+      "a member typed any (167(0)) related to QualifiedName at the assertion site",
+      "src/compiler/parser.ts:1253:17: stage 0 can't lower a member typed any (167(0)) related to QualifiedName at the assertion site yet"
+    ],
+    [
+      "src/compiler/parser.ts:10432:5",
+      "lowering",
+      "Boundary",
+      "src/compiler/parser.ts:10491:21",
+      "failed statement; state rolled back; continued at next statement or declaration",
+      "src/compiler/parser.ts:1253:17: stage 0 can't lower a member typed any (167(0)) related to QualifiedName at the assertion site yet"
+    ],
+    [
+      "src/compiler/parser.ts:10432:5",
+      "lowering",
+      "Boundary",
+      "src/compiler/parser.ts:10519:37",
+      "failed statement; state rolled back; continued at next statement or declaration",
+      "src/compiler/parser.ts:1253:17: stage 0 can't lower a member typed any (167(0)) related to QualifiedName at the assertion site yet"
+    ],
+    [
+      "src/compiler/parser.ts:10432:5",
+      "lowering",
+      "Boundary",
+      "src/compiler/parser.ts:10485:13",
+      "failed statement; state rolled back; continued at next statement or declaration",
+      "src/compiler/parser.ts:1253:17: stage 0 can't lower a member typed any (167(0)) related to QualifiedName at the assertion site yet"
+    ]
+  ],
+  "new": []
+}
