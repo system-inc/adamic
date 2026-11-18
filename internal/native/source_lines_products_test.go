@@ -24,7 +24,7 @@ import (
 var debugWitnessMutations = []buildcache.Mutation{{
 	File:   "internal/native/native.go",
 	Before: `return []string{"-fdebug-compilation-dir=" + options.DebugDirectory}`,
-	After:  `return append([]string{"-fdebug-compilation-dir=" + options.DebugDirectory}, prefixMaps(options.DebugDirectory, "/adamic-debug-witness")...)`,
+	After:  `return append([]string{"-fdebug-compilation-dir=" + options.DebugDirectory}, native_runtime.PrefixMaps(options.DebugDirectory, "/adamic-debug-witness")...)`,
 }}
 
 var debugBuildOptions = []native_runtime.Options{{Release: true}, {Release: true, Debug: true}, {Release: true, Debug: true, Sanitize: true}}
