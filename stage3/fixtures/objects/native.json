@@ -27,6 +27,15 @@
     "matches_node": true
   },
   {
+    "file": "20_queue_optional_call.a",
+    "native": {
+      "stdout": "scanner,parser\n0\n",
+      "stderr": "",
+      "exit": 0
+    },
+    "matches_node": true
+  },
+  {
     "file": "23_factory_getters.a",
     "native": {
       "stdout": "28:a:b\n57:x:y\ntrue\n",
