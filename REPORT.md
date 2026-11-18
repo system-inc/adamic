@@ -1,12 +1,47 @@
 # #y852c3c paired TypeScript census
 
-The full `commandLineParser.ts` pair is verified. The compiler-directory and `tsc.ts` first-error pairs, the scan-all runs, and the remaining file inventory are in progress. This checkpoint records the completed parser evidence and leaves the broader questions open.
+This checkpoint covers the verified full pairs for `commandLineParser.ts` and `moduleNameResolver.ts`. The compiler-directory and `tsc.ts` first-error pairs are still running. The worker killed both initial scan-all processes after exceeding its memory allowance. A serial retry is underway.
 
 ## 1. Record values reaching Unknown
 
-**Yes, in the measured head snapshot for `generateTSConfig` (`commandLineParser.ts:2849:1`).** The graph tracked zero record writes, so `recordValuesUnknown` named no write. Its exact result was “local or result has no tracked producer; no reaching allocation established.” The parser's `AdamicJsonRecoveryValue` and `AdamicJsonRecoveryObject` cannot be attributed as the cause of this observation. The full parser observer reproduced all 504 head findings at the same locations. See [the write probe log](evidence/head/record-probe-1.log) and [its equivalence check](evidence/parser-probe-equivalence.json).
+**Yes. The head's record node was Unknown in all 9 observed full-mode units that retained a checked slot read.** The graph tracked zero record writes in each. `recordValuesUnknown` named no write and returned “local or result has no tracked producer; no reaching allocation established.” The parser’s `AdamicJsonRecoveryValue` and `AdamicJsonRecoveryObject` supplied no observed cause. The whole-entry attribution is open until the broader passes finish.
+
+| Unit | Checked slot-read observations | Tracked writes |
+| --- | ---: | ---: |
+| `generateTSConfig` at `commandLineParser.ts:2849:1` | 4 | 0 |
+| `getEffectiveTypeRoots` at `moduleNameResolver.ts:479:1` | 2 | 0 |
+| `resolveTypeReferenceDirective` at `moduleNameResolver.ts:538:1` | 2 | 0 |
+| `primaryLookup` at `moduleNameResolver.ts:662:5` | 1 | 0 |
+| `secondaryLookup` at `moduleNameResolver.ts:695:5` | 1 | 0 |
+| `getConditions` at `moduleNameResolver.ts:755:1` | 1 | 0 |
+| `tryLoadModuleUsingRootDirs` at `moduleNameResolver.ts:1582:1` | 3 | 0 |
+| `tryFile` at `moduleNameResolver.ts:2189:1` | 2 | 0 |
+| `resolveFromTypeRoot` at `moduleNameResolver.ts:3332:1` | 2 | 0 |
+
+The observer queries the head allocation graph on a disposable copy of each unit snapshot. Its file streams reproduce all 504 parser and 640 resolver findings at the original sites. See [the graph rows](evidence/record-values.json), [parser control](evidence/parser-probe-equivalence.json), and [resolver control](evidence/resolver-probe-equivalence.json).
 
 ## 2. Slot-read sites and the Library comparison
+
+### Resolver slot reads
+
+The full `moduleNameResolver.ts` pair recorded 207 units on each side, 666 base findings, and 640 head findings. All thirteen occurrences of “a dictionary member narrowed to an array without an element-checked view” cleared at the eleven source sites below. Each read has a positive head observer receipt.
+
+| Site in `moduleNameResolver.ts` | Owning unit | Base to head |
+| --- | --- | --- |
+| 480:9 | `getEffectiveTypeRoots` | Stopped to lowered. |
+| 674:21 | `resolveTypeReferenceDirective`, `primaryLookup` | Stopped to lowered. |
+| 699:18 | `resolveTypeReferenceDirective`, `secondaryLookup` | Stopped to lowered. |
+| 780:36 | `getConditions` | Stopped to lowered. |
+| 1583:10 | `tryLoadModuleUsingRootDirs` | Stopped to lowered. |
+| 1595:27 | `tryLoadModuleUsingRootDirs` | Stopped to lowered. |
+| 1634:31 | `tryLoadModuleUsingRootDirs` | Stopped to lowered. |
+| 2190:10 | `tryFile` | Stopped to lowered. |
+| 2196:20 | `tryFile` | Stopped to lowered. |
+| 3333:10 | `resolveFromTypeRoot` | Stopped to lowered. |
+| 3334:28 | `resolveFromTypeRoot` | Stopped to lowered. |
+
+The guard at `480:9` also lets the following return read at `481:16` lower. The full run records no newly reached stop in this file. [Resolver pair](evidence/resolver-pair.json)
+
 ### Parser slot reads
 
 The paired full census recorded 195 units on each side and 510 base findings against 504 head findings. The two findings with the reason “a dictionary member narrowed to an array without an element-checked view” both belonged to `generateTSConfig`.
@@ -39,7 +74,9 @@ All twelve remain stopped at the same refusal. The historical locations and full
 
 ## 3. Other movements
 
-The full parser pair loses the NotYet “reading value” at `commandLineParser.ts:2950:65` after the declaration of `value` lowers. It also loses the three “failed statement; state rolled back; continued at next statement or declaration” boundary findings at `2871:5`, `2949:9` and `2950:9`. The head adds four checked slot-view observations in the `generateTSConfig` snapshot, including the second occurrence of `2949:23`. Its reach is Unknown with zero known viewed allocation sites, so the head's partial graph enters the conservative all-arrays fallback. Whole-entry allocation reach and the other file outcomes are pending.
+- **Gone, NotYet during lowering.** “reading value” at `commandLineParser.ts:2950:65` clears when the declaration of `value` lowers.
+- **Gone, rollback boundary during lowering.** “failed statement; state rolled back; continued at next statement or declaration” clears at `commandLineParser.ts:2871:5`, `2949:9` and `2950:9`. It also clears at `moduleNameResolver.ts:480:5`, `674:17` in two units, `699:13` in two units, `780:5`, `1583:5`, `1595:5`, `1634:9`, `2190:5`, `2196:5`, `3333:5` and `3334:5`. The paired JSON identifies both owning units for each duplicate site.
+- **Growth in the checked-view reach fallback.** Each observed head snapshot adds checked slot-view origins and has `viewed_unknown=true` with zero known viewed allocation sites. The array check treats that flag as demand for all eligible array reads in the snapshot. This is wider conservative demand than tracking the known allocation set. The first-error and scan-all runs have yet to establish the scope at entry. The two completed full pairs record zero new or changed findings. [Parser pair](evidence/parser-pair.json) · [Resolver pair](evidence/resolver-pair.json) · [Graph observations](evidence/record-values.json)
 
 ## Inputs and evidence
 
