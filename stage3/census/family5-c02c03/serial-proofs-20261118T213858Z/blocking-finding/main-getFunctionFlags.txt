@@ -1,0 +1,28 @@
+5317: export function getFunctionFlags(node: SignatureDeclaration | undefined): FunctionFlags {
+5318:     if (!node) {
+5319:         return FunctionFlags.Invalid;
+5320:     }
+5321: 
+5322:     let flags = FunctionFlags.Normal;
+5323:     switch (node.kind) {
+5324:         case SyntaxKind.FunctionDeclaration:
+5325:         case SyntaxKind.FunctionExpression:
+5326:         case SyntaxKind.MethodDeclaration:
+5327:             if (node.asteriskToken) {
+5328:                 flags |= FunctionFlags.Generator;
+5329:             }
+5330:             // falls through
+5331: 
+5332:         case SyntaxKind.ArrowFunction:
+5333:             if (hasSyntacticModifier(node, ModifierFlags.Async)) {
+5334:                 flags |= FunctionFlags.Async;
+5335:             }
+5336:             break;
+5337:     }
+5338: 
+5339:     if (!(node as FunctionLikeDeclaration).body) {
+5340:         flags |= FunctionFlags.Invalid;
+5341:     }
+5342: 
+5343:     return flags;
+5344: }

@@ -1,0 +1,15 @@
+{
+  "before": {
+    "G02_in_unit": 0,
+    "findings": 2
+  },
+  "after": {
+    "G02_in_unit": 0,
+    "findings": 2
+  },
+  "source_bytes_at_assertion_identical": true,
+  "classification": "changed, not reached: the inherited callable declaration triggers the first legacyView property pass before the unchanged representation limitation in its second pass",
+  "independent_findings_changed": 1,
+  "mirrored_Boundary_records_changed": 1,
+  "reached": 0
+}

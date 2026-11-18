@@ -1,0 +1,15 @@
+{
+  "command": [
+    "bash",
+    "stage3/apply.sh",
+    "/workspace/family5-c02-tree"
+  ],
+  "cwd": "/tmp/family5-land",
+  "environment": {
+    "ADAMIC_TYPESCRIPT_SOURCE": "/workspace/mapset-upstream",
+    "ADAMIC_TOOLS": "/workspace/adamic-tools",
+    "ADAMIC_BUILD_CACHE_DIR": "/workspace/family5-build-cache"
+  },
+  "exit_code": 0,
+  "wall_seconds": 862.943
+}

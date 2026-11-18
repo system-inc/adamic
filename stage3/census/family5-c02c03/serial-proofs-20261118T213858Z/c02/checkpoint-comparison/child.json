@@ -1,0 +1,14 @@
+{
+  "pid": 76368,
+  "supervisor_pid": 76367,
+  "started_utc": "2026-11-18T21:37:40.111458+00:00",
+  "command": [
+    "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+    "/tmp/family5-final-proofs/compare.py",
+    "/tmp/family5-final-proofs/c02-checkpoint-before",
+    "/tmp/family5-final-proofs/c02-checkpoint-after",
+    "/tmp/family5-final-proofs/c02/checkpoint-comparison/comparison.json",
+    "G02"
+  ],
+  "proc_stat_at_launch": "76368 (python3) R 76367 76368 76368 0 -1 4194304 26 0 0 0 0 0 0 0 20 0 1 0 4007181 28254208 0 18446744073709551615 4329472 32290168 140734015239568 0 0 0 0 0 0 0 0 0 17 3 0 0 0 0 0 23068672 32290168 765480960 140734015246863 140734015247141 140734015247141 140734015250350 0\n"
+}

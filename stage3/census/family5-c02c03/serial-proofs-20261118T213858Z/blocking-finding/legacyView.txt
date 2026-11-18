@@ -1,0 +1,23 @@
+391: func (l *lowering) legacyView(node *ast.Node, value ir.Expression, source, target *checker.Type) (ir.Expression, error) {
+392: 	if l.callableViewContract(target) {
+393: 		return nil, &Refused{Where: l.program.Where(node), What: "a checked view with a callable contract", Fix: "prove the callable body rather than asserting its signature"}
+394: 	}
+395: 	// Diagnose unreifiable contracts before temporary backend limitations.
+396: 	for _, property := range l.checker.GetPropertiesOfType(target) {
+397: 		declared := l.checker.GetTypeOfSymbol(property)
+398: 		if l.callableViewContract(declared) {
+399: 			return nil, &Refused{Where: l.program.Where(node), What: "a checked view with callable field " + property.Name, Fix: "prove the callable body rather than asserting its signature"}
+400: 		}
+401: 	}
+402: 	fields := map[string]bool{}
+403: 	for _, property := range l.checker.GetPropertiesOfType(target) {
+404: 		declared := l.checker.GetTypeOfSymbol(property)
+405: 		if l.callableViewContract(declared) {
+406: 			return nil, &Refused{Where: l.program.Where(node), What: "a checked view with callable field " + property.Name, Fix: "prove the callable body rather than asserting its signature"}
+407: 		}
+408: 		of, known := l.representation(declared)
+409: 		if property.Flags&ast.SymbolFlagsOptional != 0 || !interfaceScalar(declared) || !known || of < ir.Number || of > ir.String {
+410: 			return nil, l.notYet(node, "checked view field "+property.Name+" of type "+l.checker.TypeToString(declared))
+411: 		}
+412: 		fields[property.Name] = true
+413: 	}

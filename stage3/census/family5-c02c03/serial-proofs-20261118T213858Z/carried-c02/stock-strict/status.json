@@ -1,0 +1,17 @@
+{
+  "command": [
+    "node",
+    "/tmp/family5-stock.cjs",
+    "/workspace/family5-c02-tree",
+    "/tmp/family5-evidence/c02/stock-strict.json"
+  ],
+  "cwd": "/tmp/family5-land",
+  "environment": {
+    "ADAMIC_BUILD_CACHE_DIR": "/workspace/family5-build-cache",
+    "ADAMIC_TYPESCRIPT_SOURCE": "/workspace/mapset-upstream",
+    "ADAMIC_TOOLS": "/workspace/adamic-tools",
+    "FAMILY5_STOCK_STRICT": "1"
+  },
+  "exit_code": 0,
+  "wall_seconds": 56.083
+}

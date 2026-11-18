@@ -1,0 +1,15 @@
+{
+  "command": [
+    "node",
+    "/tmp/family5-contract.cjs",
+    "/tmp/family5-land/stage3/adapt/99-correctness-line-and-character",
+    "/tmp/family5-base-tree/src/compiler/types.ts",
+    "/tmp/family5-contract-tree"
+  ],
+  "cwd": "/tmp/family5-land",
+  "environment": {
+    "ADAMIC_TOOLS": "/workspace/adamic-tools"
+  },
+  "exit_code": 0,
+  "wall_seconds": 8.612
+}

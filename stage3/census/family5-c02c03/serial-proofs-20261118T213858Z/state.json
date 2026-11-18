@@ -1,0 +1,16 @@
+{
+  "main": "fbe5b72ba115a8f3060d4b5229fd578574f4505f",
+  "c02": "12b9e04184663f899acb76505043ad292966f236",
+  "comparisons": {
+    "c02-utilities-checkpoint": "c02/checkpoint-comparison/comparison.json"
+  },
+  "stop": "C02 introduces a changed lowering finding outside G02 at utilities.ts:5339:11 in getFunctionFlags (unit 5317:1): checked view field modifiers NotYet becomes Refused, a checked view with callable field getPositionOfLineAndCharacter. Its mirrored Boundary also changes. No landing is green.",
+  "intentional_cancellation": {
+    "proof": "c02-before/parser",
+    "child_pid": 76259,
+    "reason": "Completed utilities.ts pair has an independently introduced changed finding outside G02 at 5339:11; stop remaining proofs and withhold both landings."
+  },
+  "pushes": {},
+  "c02_pushed": false,
+  "c03_created": false
+}

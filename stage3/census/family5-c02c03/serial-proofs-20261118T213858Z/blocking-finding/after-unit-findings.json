@@ -1,0 +1,26 @@
+[
+  {
+    "depth": 0,
+    "kind": "Refused",
+    "measurement": "measured on a checker-clean entry-root program",
+    "phase": "lowering",
+    "reason": "a checked view with callable field getPositionOfLineAndCharacter",
+    "root_kind": "",
+    "text": "/workspace/family5-c02-tree/src/compiler/utilities.ts:5339:11: Adamic 0.1 refuses a checked view with callable field getPositionOfLineAndCharacter; prove the callable body rather than asserting its signature",
+    "unit": "/workspace/family5-c02-tree/src/compiler/utilities.ts:5317:1",
+    "where": "/workspace/family5-c02-tree/src/compiler/utilities.ts:5339:11"
+  },
+  {
+    "depth": 0,
+    "end": 209294,
+    "kind": "Boundary",
+    "measurement": "measured on a checker-clean entry-root program",
+    "phase": "lowering",
+    "reason": "failed statement; state rolled back; continued at next statement or declaration",
+    "root_kind": "",
+    "start": 209192,
+    "text": "/workspace/family5-c02-tree/src/compiler/utilities.ts:5339:11: Adamic 0.1 refuses a checked view with callable field getPositionOfLineAndCharacter; prove the callable body rather than asserting its signature",
+    "unit": "/workspace/family5-c02-tree/src/compiler/utilities.ts:5317:1",
+    "where": "/workspace/family5-c02-tree/src/compiler/utilities.ts:5339:5"
+  }
+]

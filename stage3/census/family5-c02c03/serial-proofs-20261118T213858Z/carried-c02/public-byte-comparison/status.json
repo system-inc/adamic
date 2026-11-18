@@ -1,0 +1,13 @@
+{
+  "command": [
+    "cmp",
+    "/tmp/family5-base-tree/built/local/typescript.d.ts",
+    "/workspace/family5-c02-tree/built/local/typescript.d.ts"
+  ],
+  "cwd": "/tmp/family5-land",
+  "environment": {
+    "ADAMIC_TOOLS": "/workspace/adamic-tools"
+  },
+  "exit_code": 0,
+  "wall_seconds": 0.057
+}

@@ -1,0 +1,23 @@
+{
+  "command": [
+    "go",
+    "test",
+    "./stage3/lane/adaptedtree",
+    "-run",
+    "^TestProduct_Stage3AdaptedTree$",
+    "-count=1",
+    "-timeout",
+    "45m",
+    "-v"
+  ],
+  "cwd": "/tmp/family5-land",
+  "started_utc": "2026-11-18T20:55:29.879645+00:00",
+  "ended_utc": "2026-11-18T21:08:17.511090+00:00",
+  "environment": {
+    "ADAMIC_TYPESCRIPT_SOURCE": "/workspace/mapset-upstream",
+    "ADAMIC_TOOLS": "/workspace/adamic-tools",
+    "ADAMIC_BUILD_CACHE_DIR": "/workspace/family5-build-cache"
+  },
+  "exit_code": 0,
+  "wall_seconds": 767.633
+}

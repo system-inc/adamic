@@ -1,0 +1,6 @@
+942:export interface Node extends TextRange {
+1757:export interface Declaration extends Node {
+1763:export interface NamedDeclaration extends Declaration {
+1841:export interface SignatureDeclarationBase extends NamedDeclaration, JSDocContainer {
+2064:export interface FunctionLikeDeclarationBase extends SignatureDeclarationBase {
+2075:export type FunctionLikeDeclaration =

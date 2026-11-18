@@ -1,0 +1,26 @@
+[
+  {
+    "depth": 0,
+    "kind": "NotYet",
+    "measurement": "measured on a checker-clean entry-root program",
+    "phase": "lowering",
+    "reason": "checked view field modifiers of type NodeArray<Modifier> | NodeArray<ModifierLike> | undefined",
+    "root_kind": "",
+    "text": "/tmp/family5-base-tree/src/compiler/utilities.ts:5339:11: stage 0 can't lower checked view field modifiers of type NodeArray<Modifier> | NodeArray<ModifierLike> | undefined yet",
+    "unit": "/tmp/family5-base-tree/src/compiler/utilities.ts:5317:1",
+    "where": "/tmp/family5-base-tree/src/compiler/utilities.ts:5339:11"
+  },
+  {
+    "depth": 0,
+    "end": 209294,
+    "kind": "Boundary",
+    "measurement": "measured on a checker-clean entry-root program",
+    "phase": "lowering",
+    "reason": "failed statement; state rolled back; continued at next statement or declaration",
+    "root_kind": "",
+    "start": 209192,
+    "text": "/tmp/family5-base-tree/src/compiler/utilities.ts:5339:11: stage 0 can't lower checked view field modifiers of type NodeArray<Modifier> | NodeArray<ModifierLike> | undefined yet",
+    "unit": "/tmp/family5-base-tree/src/compiler/utilities.ts:5317:1",
+    "where": "/tmp/family5-base-tree/src/compiler/utilities.ts:5339:5"
+  }
+]

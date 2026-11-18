@@ -1,0 +1,17 @@
+{
+  "pid": 67972,
+  "command": [
+    "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+    "/tmp/family5-final-proofs/proof.py",
+    "/tmp/family5-final-proofs/c02/product",
+    "go",
+    "test",
+    "./stage3/lane/adaptedtree",
+    "-run",
+    "^TestProduct_Stage3AdaptedTree$",
+    "-count=1",
+    "-timeout",
+    "45m",
+    "-v"
+  ]
+}
