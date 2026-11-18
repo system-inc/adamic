@@ -4,6 +4,7 @@ import (
 	"errors"
 	"fmt"
 	"path/filepath"
+	"strings"
 	"testing"
 
 	"github.com/system-inc/adamic/internal/lower"
@@ -261,6 +262,42 @@ func TestOptionsBaseArrayFieldLiesStop(t *testing.T) {
 				if difference := disagreement(want, got); difference != "" {
 					t.Fatalf("%s: %s: want %s; got %s", backend, difference, optionsBaseShown(want), optionsBaseShown(got))
 				}
+			}
+		})
+	}
+}
+
+// Runtime's road proof (#6c4swvt, 17:11Z): the head rests on every road that reads a named array member back out of
+// the record reaching recordReadSlotView's origin, or stopping. Each fixture writes a (string | number)[] holding a
+// 1 at index 1 under lib through OptionsBase, and reads it back another way: an optional chain, a literal key, a
+// destructuring, a destructured parameter, for...in and Object.entries seen as string[], and a spread copy. Node
+// reads the 1. No backend may: each road stops not yet at compile time, or at run time after the line before it.
+func TestOptionsBaseArrayMemberRoadsStop(t *testing.T) {
+	t.Parallel()
+	for _, road := range []string{"optional_chain", "literal_key", "destructure", "destructure_parameter", "for_in", "entries", "spread"} {
+		t.Run(road, func(t *testing.T) {
+			t.Parallel()
+			path := optionsBasePath(t, "lib_road_"+road+".ts")
+			node := onNode(t, path)
+			if node.exitCode != 0 || string(node.stdout) != "before\nnumber\n" {
+				t.Fatalf("Node: %s", optionsBaseShown(node))
+			}
+			program, err := lowered(t, path)
+			if err != nil {
+				var notYet *lower.NotYet
+				var refused *lower.Refused
+				if !errors.As(err, &notYet) && !errors.As(err, &refused) {
+					t.Fatalf("want a stop at compile time or at run time, got %v", err)
+				}
+				t.Logf("stops at compile time: %v", err)
+				return
+			}
+			native, _ := natively(t, program)
+			for backend, got := range map[string]run{"native": native, "javascript": onJavaScriptBackend(t, program)} {
+				if got.exitCode != 70 || string(got.stdout) != "before\n" || !strings.HasPrefix(string(got.stderr), "adamic: panic: ") {
+					t.Fatalf("%s read the 1 or stopped wrong: %s", backend, optionsBaseShown(got))
+				}
+				t.Logf("%s stops at run time: %q", backend, got.stderr)
 			}
 		})
 	}
