@@ -87,7 +87,7 @@
       "stderr": "",
       "exit": 0
     },
-    "stage0": {"outcome": "NotYet", "what": "stage3/fixtures/namespaces/06_binary_expression_state.a:8:34: stage 0 can't lower a value of type T yet"}
+    "stage0": {"outcome": "NotYet", "what": "stage3/fixtures/namespaces/06_binary_expression_state.a:8:34: stage 0 can't lower a value of type T, a type parameter this instantiation doesn't fix yet"}
   },
   {
     "file": "07_parser_singleton.a",

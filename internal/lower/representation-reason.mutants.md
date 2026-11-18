@@ -23,3 +23,4 @@ exited 1 at the listed assertion. The overlays leave the working tree intact.
 | Blank conditional reason | `expression.go:236` | `TestRepresentationReasonStops/conditional` at `representation_reason_test.go:75` |
 | Blank keyof reason | `expression.go:238` | `TestRepresentationReasonStops/keyof` at `representation_reason_test.go:75` |
 | Blank fallback reason | `expression.go:240` | `TestRepresentationReasonStops/fallback` at `representation_reason_test.go:61` |
+| Blank nested intersection field reason | `library_object.go:369` | `TestRepresentationReasonStops/unknown_field` at `representation_reason_test.go:61` and `representation_reason_test.go:75` |

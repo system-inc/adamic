@@ -20,8 +20,8 @@
       "exit": 0
     },
     "stage0": {
-      "outcome": "NotYet",
-      "what": "stage3/fixtures/real/bytes-revealed/escaped-string/main.a:10:31: stage 0 can't lower a value of type __String yet"
+      "outcome": "Compiles",
+      "what": ""
     },
     "a_check": "refused the non-null assertion !"
   },
@@ -45,8 +45,8 @@
       "exit": 0
     },
     "stage0": {
-      "outcome": "NotYet",
-      "what": "stage3/fixtures/real/bytes-revealed/initialized-variable/main.a:8:39: stage 0 can't lower a value of type InitializedVariableDeclaration yet"
+      "outcome": "Compiles",
+      "what": ""
     },
     "a_check": "checked"
   },
@@ -95,8 +95,8 @@
       "exit": 0
     },
     "stage0": {
-      "outcome": "NotYet",
-      "what": "stage3/fixtures/real/bytes-revealed/private-identifier-in/main.a:15:51: stage 0 can't lower a value of type PrivateIdentifierInExpression yet"
+      "outcome": "Compiles",
+      "what": ""
     },
     "a_check": "checked"
   },
@@ -217,8 +217,8 @@
       "exit": 0
     },
     "stage0": {
-      "outcome": "NotYet",
-      "what": "stage3/fixtures/real/bytes-revealed/parameter-property/main.a:11:51: stage 0 can't lower a value of type ParameterPropertyDeclaration yet"
+      "outcome": "Compiles",
+      "what": ""
     },
     "a_check": "checked"
   },

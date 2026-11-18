@@ -354,7 +354,8 @@ func (l *lowering) objectIntersection(proven *checker.Type) (ir.Type, bool, stri
 	l.objectIntersections[proven] = true
 	defer delete(l.objectIntersections, proven)
 	for _, field := range l.checker.GetPropertiesOfType(proven) {
-		if held, known := l.recordStorageType(l.checker.GetTypeOfSymbol(field)); !known || held == ir.Closure {
+		fieldType := l.checker.GetTypeOfSymbol(field)
+		if held, known := l.recordStorageType(fieldType); !known || held == ir.Closure {
 			kind := "of a type with no representation"
 			switch held {
 			case ir.MaybeBoolean:
@@ -363,6 +364,10 @@ func (l *lowering) objectIntersection(proven *checker.Type) (ir.Type, bool, stri
 				kind = "a function"
 			case ir.Weak:
 				kind = "a weak reference"
+			default:
+				if _, _, reason := l.representationReason(fieldType); reason != "" {
+					return 0, false, "an intersection whose field " + field.Name + " has no representation: " + reason
+				}
 			}
 			return 0, false, "an intersection whose field " + field.Name + " is " + kind + ", which its record storage doesn't hold"
 		}
