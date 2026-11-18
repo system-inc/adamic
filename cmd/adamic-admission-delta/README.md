@@ -11,6 +11,15 @@ counts, so load never reads as a red; every timed-out command is recorded, and
 the summary line says how many runs timed out, were retried, and timed out
 again (#pajbaba).
 
+A crash the change fixes is judged by head alone (Compiler's rule on
+#ppgk12h): a program the compiler crashed on at base, read from its own output
+(a Go panic, or exit 4 with `adamic: compiler bug`), and doesn't at head is
+newly accepted or newly refused by what head does, and a newly accepted one is
+held to Node as every admission is. A signal or a runtime fatal error at base
+may be the box's, so it still fails as a crash, and so does a crash at head.
+Each fix is counted on its own line, `crashes fixed: N`, with one `crash fixed`
+line per program and its class at head, and listed in `crash_fixed_paths`.
+
 ```sh
 python3 cloud/admission-corpus/manifest.py --sha HEAD > /tmp/manifest.json
 go run ./cmd/adamic-admission-delta --base origin/main --head HEAD \

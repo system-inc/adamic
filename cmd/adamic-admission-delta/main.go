@@ -49,6 +49,7 @@ type entry struct {
 	program
 	Corpus                 string       `json:"corpus"`
 	Class                  string       `json:"class"`
+	CrashFixed             bool         `json:"crash_fixed,omitempty"`
 	Base                   observation  `json:"base_compile"`
 	Head                   observation  `json:"compile"`
 	Node                   *observation `json:"node"`
@@ -120,6 +121,9 @@ type report struct {
 	StillTimedOutRuns int `json:"still_timed_out_runs"`
 	// AdmittedPaths names every program Admitted counts, the diff's and every other corpus's alike, sorted.
 	AdmittedPaths []string `json:"admitted_paths"`
+	// CrashFixedPaths names every program the compiler crashed on at base and doesn't at head, sorted; each is
+	// judged by head alone, so one newly accepted is held to Node as any admission is (#ppgk12h).
+	CrashFixedPaths []string `json:"crash_fixed_paths"`
 }
 
 func execute(dir string, limit time.Duration, name string, args ...string) observation {
@@ -163,6 +167,23 @@ func git(dir string, args ...string) (string, error) {
 	}
 	return strings.TrimSpace(o.Stdout), nil
 }
+
+// crashed is any crash: a signal, a Go panic or a runtime fatal error.
+func crashed(o observation) bool {
+	return o.Error == "crash" || strings.Contains(o.Stderr, "panic:") || strings.Contains(o.Stderr, "fatal error:")
+}
+
+// compilerCrash is the compiler's own crash, read from its output: a Go panic, or exit 4 with "adamic: compiler
+// bug" (#wjz8bc3). A signal or a runtime fatal error (an out-of-memory kill) may be the box's, never this.
+func compilerCrash(o observation) bool {
+	return o.Error == "" && ((strings.Contains(o.Stderr, "panic:") && !strings.Contains(o.Stderr, "fatal error:")) || (o.Exit == 4 && strings.Contains(o.Stderr, "adamic: compiler bug")))
+}
+
+// crashFixed is a program the compiler crashed on at base and doesn't at head.
+func crashFixed(base, head observation) bool {
+	return compilerCrash(base) && !crashed(head) && head.Error == ""
+}
+
 func compileClass(o observation) string {
 	if o.Error != "" || o.Exit < 0 || strings.Contains(o.Stderr, "panic:") || strings.Contains(o.Stderr, "fatal error:") {
 		return "error"
@@ -179,8 +200,16 @@ func classify(a, b observation) string {
 	if a.Error == "timeout" || b.Error == "timeout" {
 		return "compiler-timeout"
 	}
+	// A crash this change fixes is judged by head alone (Compiler's rule on #ppgk12h): newly accepted is held to
+	// Node as every admission is, and it's counted on its own line, "crashes fixed".
+	if crashFixed(a, b) {
+		if class := compileClass(b); class != "error" {
+			return "newly-" + class
+		}
+		return "compiler-error"
+	}
 	for _, o := range []observation{a, b} {
-		if o.Error == "crash" || strings.Contains(o.Stderr, "panic:") || strings.Contains(o.Stderr, "fatal error:") {
+		if crashed(o) {
 			return "compiler-crash"
 		}
 	}
@@ -736,6 +765,7 @@ func run(args []string) error {
 	}
 	result.Admitted = 0
 	result.AdmittedPaths = []string{}
+	result.CrashFixedPaths = []string{}
 	result.DarwinPaths = []string{}
 	for _, record := range result.Programs {
 		if record.Class == "compiler-timeout" {
@@ -750,8 +780,12 @@ func run(args []string) error {
 		if record.Class == "darwin" {
 			result.DarwinPaths = append(result.DarwinPaths, record.Path)
 		}
+		if record.CrashFixed {
+			result.CrashFixedPaths = append(result.CrashFixedPaths, record.Path)
+		}
 	}
 	sort.Strings(result.DarwinPaths)
+	sort.Strings(result.CrashFixedPaths)
 	result.DarwinCount = len(result.DarwinPaths)
 	fmt.Fprintf(os.Stderr, "darwin: %d (unjudged here; judged by the darwin witnesses)\n", result.DarwinCount)
 	fmt.Fprintf(os.Stderr, "ruled run-time stops: %d\n", result.RuledRuntimeStops)
@@ -760,6 +794,17 @@ func run(args []string) error {
 	// diff_count is how many programs base..head added or changed, never how many differ from Node, so
 	// the line says so (#zhgxzjg, a 24 read as differences).
 	fmt.Fprintf(os.Stderr, "changed programs: %d\n", result.DiffCount)
+	// A fixed crash is said on its own line, never folded silently into admitted (Compiler on #ppgk12h).
+	crashesFixed := map[string]entry{}
+	for _, record := range result.Programs {
+		if record.CrashFixed {
+			crashesFixed[record.Path] = record
+		}
+	}
+	fmt.Fprintf(os.Stderr, "crashes fixed: %d\n", len(result.CrashFixedPaths))
+	for _, path := range result.CrashFixedPaths {
+		fmt.Fprintf(os.Stderr, "crash fixed %s (%s): %s at head\n", path, crashesFixed[path].Corpus, crashesFixed[path].Class)
+	}
 	// admitted counts every corpus, not the diff alone, so each admitted program is named with how it was judged:
 	// a caller that prints only the diff's rows can't then show fewer than the count (#1zscjp1, J-1x881sm).
 	// The lines follow the sorted list, not the corpora's order, so two runs of one delta print them alike.
