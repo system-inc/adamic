@@ -1,0 +1,22 @@
+{
+  "edits": [
+    {
+      "candidate": "C13",
+      "file": "src/compiler/parser.ts",
+      "kind": "replace",
+      "owner": "getNamedPragmaArguments",
+      "old": "{ [index: string]: string | undefined; }",
+      "new": "{ [index: string]: string | undefined; types?: never; }",
+      "count": 2
+    },
+    {
+      "candidate": "C14b",
+      "file": "src/compiler/parser.ts",
+      "kind": "replace",
+      "owner": "extractPragmas",
+      "old": "const argument: { [index: string]: string | { value: string; pos: number; end: number; }; } = {};",
+      "new": "const argument: { [index: string]: string | { value: string; pos: number; end: number; } | undefined; types?: { value: string; pos: number; end: number; }; } = {};",
+      "count": 1
+    }
+  ]
+}

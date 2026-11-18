@@ -1,0 +1,49 @@
+{
+  "edits": [
+    {
+      "candidate": "C08",
+      "file": "src/compiler/checker.ts",
+      "kind": "replace",
+      "owner": "checkTypeAssignableTo",
+      "old": "errorOutputObject?: { errors?: Diagnostic[] | undefined; }",
+      "new": "errorOutputObject?: ErrorOutputContainer",
+      "count": 1
+    },
+    {
+      "candidate": "C08",
+      "file": "src/compiler/checker.ts",
+      "kind": "replace",
+      "owner": "elaborateDidYouMeanToCallOrConstruct",
+      "old": "const resultObj: { errors?: Diagnostic[] | undefined; } = errorOutputContainer || {};",
+      "new": "const resultObj: ErrorOutputContainer = errorOutputContainer || {};",
+      "count": 1
+    },
+    {
+      "candidate": "C08",
+      "file": "src/compiler/checker.ts",
+      "kind": "replace",
+      "owner": "elaborateArrowFunction",
+      "old": "const resultObj: { errors?: Diagnostic[] | undefined; } = errorOutputContainer || {};",
+      "new": "const resultObj: ErrorOutputContainer = errorOutputContainer || {};",
+      "count": 1
+    },
+    {
+      "candidate": "C08",
+      "file": "src/compiler/checker.ts",
+      "kind": "replace",
+      "owner": "elaborateElementwise",
+      "old": "const resultObj: { errors?: Diagnostic[] | undefined; } = errorOutputContainer || {};",
+      "new": "const resultObj: ErrorOutputContainer = errorOutputContainer || {};",
+      "count": 1
+    },
+    {
+      "candidate": "C08",
+      "file": "src/compiler/checker.ts",
+      "kind": "replace",
+      "owner": "elaborateIterableOrArrayLikeTargetElementwise",
+      "old": "const resultObj: { errors?: Diagnostic[] | undefined; } = errorOutputContainer || {};",
+      "new": "const resultObj: ErrorOutputContainer = errorOutputContainer || {};",
+      "count": 1
+    }
+  ]
+}
