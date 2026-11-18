@@ -418,9 +418,10 @@ func parameterCount(count int) string {
 // allocation flow, asked once lowering is done as checkHostMemberWrites asks it (ReachingAllocations):
 // a MakeClosure or BoundClosure reaching the value names its function, and undefined or null names
 // none. Anything else reaching it, or a reach the graph calls Unknown (a parameter with unseen
-// callers, an opaque call, a host value), is unknown, and checkBoundArguments falls back to every
-// function of the bound type, so unknown fails closed. The graph is built once, on the first bind
-// that needs it, its entry naming those values as the iterable views' proof names its origins
+// callers, an opaque call, a host value), is unknown. checkBoundArguments then asks boundNameReach
+// for a property target, retaining every function of the bound type when the name is unreadable,
+// so unknown fails closed. The graph is built once, on the first bind that needs it, its entry
+// naming those values as the iterable views' proof names its origins
 // (iterable_views.go); every road the graph follows, and every allocation it names itself, is left
 // to it.
 func (l *lowering) boundValueReach() func(ir.Expression) ([]int, bool) {
@@ -470,6 +471,7 @@ func (l *lowering) boundValueReach() func(ir.Expression) ([]int, bool) {
 // declares more parameters than the type it's bound as names (declaresBeyond).
 func (l *lowering) checkBoundArguments() error {
 	var reach func(ir.Expression) ([]int, bool)
+	var named func(*ast.Node) ([]int, bool)
 	for _, record := range l.closureRecords {
 		function := l.result.Functions[record.function]
 		if function.Source.Role != "bound_function" {
@@ -514,7 +516,14 @@ func (l *lowering) checkBoundArguments() error {
 					if known {
 						counted = append(counted, reached...)
 					} else {
-						counted = append(counted, typed...)
+						if named == nil {
+							named = l.boundNameReach()
+						}
+						if functions, readable := named(boundMemberTarget(record.node)); readable {
+							counted = append(counted, functions...)
+						} else {
+							counted = append(counted, typed...)
+						}
 					}
 				}
 				for _, target := range counted {
