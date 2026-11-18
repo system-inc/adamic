@@ -731,6 +731,43 @@
       "type_correct_sha256": "b877186ec1a1aac02e65c1d0ef1586415568720f8b6422761505222b2a510e83",
       "exit": 70,
       "stderr": "adamic: panic: field read failed: hidden.inner.depth is not initialized; expected number, found missing\n"
+    },
+    "a8d4a5af0cb6419fb736564fbc5723b121453402cd239546bbb115d09b42c541": {
+      "form": "cast_failed",
+      "ruling_task": "#b5w3ycg",
+      "ruling": "Adamic, Nov 3 on #b5w3ycg (tagged interface downcast: the kind checked at the cast), slice 4",
+      "declaration": "internal/oracle/testdata/cast_kind_union_fails.ts:8",
+      "column": 93,
+      "declared_type": "ElementAccessExpression | PropertyAccessExpression",
+      "repair_from": "cast(id)",
+      "repair_to": "cast(access)",
+      "type_correct_sha256": "e8ab307ce765de7c40232789a264710e29e1fb4ab6ab4d0ca800435d98b571b7",
+      "exit": 70,
+      "stderr": "adamic: panic: cast failed: this Node is not a ElementAccessExpression | PropertyAccessExpression\n"
+    },
+    "9b971a74c62a1992c99055467ea3dfaf841fe2de7f926f5bf56beaf3730713be": {
+      "form": "checked_boundary",
+      "ruling_task": "#b5w3ycg",
+      "ruling": "Adamic, Nov 3 on #b5w3ycg, slice 4: the kind proves the kind, not the layout, so a field a shared kind's narrower interface promises and the value lacks stops at its read through the view",
+      "declaration": "internal/oracle/testdata/cast_kind_shared_fails.ts:8",
+      "declared_type": "number",
+      "repair_from": "{ kind: SyntaxKind.Identifier, pos: 2, escapedText: 'visit' }",
+      "repair_to": "{ kind: SyntaxKind.PrivateIdentifier, pos: 2, escapedText: '#visit', hash: 7 }",
+      "type_correct_sha256": "462f09667fbfe2d80545198c32f137129daa0c5622b2d03d63a1513764ab0794",
+      "exit": 70,
+      "stderr": "adamic: panic: field read failed: (node as PrivateIdentifierMethodDeclaration).name.hash is not initialized; expected number, found missing\n"
+    },
+    "b99bc7f2cd9420a52c74591a38a9bc5a4d6cfb94e8b11cdcb1324ee1203a390f": {
+      "form": "checked_boundary",
+      "ruling_task": "#b5w3ycg",
+      "ruling": "Adamic, Nov 3 on #b5w3ycg, slice 4: the kind proves the kind, not the layout, so a field a shared kind's narrower interface promises and the value lacks stops at its read through the view",
+      "declaration": "internal/oracle/testdata/cast_kind_union_shared_fails.ts:9",
+      "declared_type": "number",
+      "repair_from": "{ kind: SyntaxKind.Identifier, pos: 2, escapedText: 'visit' }",
+      "repair_to": "{ kind: SyntaxKind.PrivateIdentifier, pos: 2, escapedText: '#visit', hash: 7 }",
+      "type_correct_sha256": "fd67e41ae0226a75d01c77e9d2c44ac0db904f09e13d42bb9e24858879e1c97b",
+      "exit": 70,
+      "stderr": "adamic: panic: field read failed: member.name.hash is not initialized; expected number, found missing\n"
     }
   }
 }

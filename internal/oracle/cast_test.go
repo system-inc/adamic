@@ -35,6 +35,9 @@ var checkedCastFixtures = []struct {
 	{"cast_absent_arm_fails.ts", "A | B | undefined", "A"},
 	{"cast_absent_arm_tag_fails.ts", "A | B | C | undefined", "A | C"},
 	{"cast_absent_arm_missing_fails.ts", "A | B | undefined", "A"},
+	// An open-kind interface cast to a union of kinded interfaces (#b5w3ycg slice 4): a value whose kind is
+	// outside the target's kinds fails the cast's kind test.
+	{"cast_kind_union_fails.ts", "Node", "ElementAccessExpression | PropertyAccessExpression"},
 }
 
 func TestCheckedCastFlushesOutput(t *testing.T) {
@@ -111,7 +114,7 @@ func TestCheckedCastRunsNoCatchOrFinally(t *testing.T) {
 }
 
 func init() {
-	for _, file := range []string{"cast_enum_numeric.ts", "cast_enum_string.ts", "cast_enum_const.ts", "cast_class.a", "cast_operand_once.ts", "cast_absent_arm.ts", "cast_union_interface.ts"} {
+	for _, file := range []string{"cast_enum_numeric.ts", "cast_enum_string.ts", "cast_enum_const.ts", "cast_class.a", "cast_operand_once.ts", "cast_absent_arm.ts", "cast_union_interface.ts", "cast_kind_union.ts"} {
 		fixtures = append(fixtures, struct {
 			path    string
 			lowers  bool
@@ -178,6 +181,7 @@ func TestCheckedCastMutants(t *testing.T) {
 		{"skip class", "cast_class_fails.a"},
 		{"skip class union", "cast_class_union_fails.a"},
 		{"skip generic class", "cast_class_generic_fails.a"},
+		{"skip kind union", "cast_kind_union_fails.ts"},
 		{"wrong numeric tag", "cast_enum_numeric.ts"},
 		{"wrong string tag", "cast_enum_string.ts"},
 		{"wrong class identity", "cast_class_fails.a"},
@@ -312,6 +316,44 @@ func TestOverlapViewWriteIntoHiddenSlotStops(t *testing.T) {
 
 func init() {
 	for _, file := range []string{"cast_union_interface_lie.ts", "cast_union_interface_hidden_write.ts", "cast_union_interface_hidden_object.ts"} {
+		fixtures = append(fixtures, struct {
+			path    string
+			lowers  bool
+			checked bool
+		}{"internal/oracle/testdata/" + file, true, true})
+	}
+}
+
+// Two interfaces share one kind (Compiler's pin on #b5w3ycg slice 4): a MethodDeclaration whose name is an Identifier
+// passes the kind test of a PrivateIdentifierMethodDeclaration, alone or in a union of kinds, since the tag proves the
+// kind, not the layout. The read the narrower interface promises and the value lacks stops at the read through the
+// view, with the view's own message, on both backends alike, never at the cast and never reading through, while Node
+// runs on.
+func TestKindCastSharedKindStopsAtTheRead(t *testing.T) {
+	t.Parallel()
+	for _, fixture := range []string{"cast_kind_shared_fails.ts", "cast_kind_union_shared_fails.ts"} {
+		t.Run(fixture, func(t *testing.T) {
+			t.Parallel()
+			program, path := castFixture(t, fixture)
+			native, _ := natively(t, program)
+			javaScript := onJavaScriptBackend(t, program)
+			for backend, result := range map[string]run{"native": native, "JavaScript": javaScript} {
+				if result.exitCode != 70 || string(result.stdout) != "casting\n" || !strings.HasPrefix(string(result.stderr), "adamic: panic: field read failed:") || strings.Contains(string(result.stderr), "cast failed") {
+					t.Errorf("%s: exit %d, stdout %q, stderr %q; want 70 at the read, never at the cast", backend, result.exitCode, result.stdout, result.stderr)
+				}
+			}
+			if string(native.stderr) != string(javaScript.stderr) {
+				t.Errorf("the backends stop differently: native %q, JavaScript %q", native.stderr, javaScript.stderr)
+			}
+			if node := onNode(t, path); node.exitCode != 0 || string(node.stdout) != "casting\nundefined\n" {
+				t.Fatalf("source on Node must run on: exit %d stdout %q", node.exitCode, node.stdout)
+			}
+		})
+	}
+}
+
+func init() {
+	for _, file := range []string{"cast_kind_shared_fails.ts", "cast_kind_union_shared_fails.ts"} {
 		fixtures = append(fixtures, struct {
 			path    string
 			lowers  bool
