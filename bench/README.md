@@ -23,6 +23,26 @@ The runs are interleaved round by round to spread changes in machine load across
 | `trees.ts` | binary trees: 68 million small objects allocated, walked and freed |
 | `devirtualize.a` | repeated rule visits over syntax-shaped records, with method calls in the hot loop |
 
+## Suites and comparing two commits
+
+[suites.json](suites.json) names four sets, each with the rule that decides what belongs in it:
+
+- `everyday`: the eight programs above, whole-program workloads any mind can run in about a minute.
+- `regression`: everyday plus every program a measured speed finding named, each with its finding's task id: `graph.ts` and `copy.ts` (#ahnc64w, #kha2ea0; their trailing timer is the point), `timer_burst.a` (#ezae5s0), `timer_dispatch.a` (#a6yb7d1), parallel_files at 1, 4 and 16 threads, and the record cost harness, which runs outside run.go. A program leaves only by Runtime's ruling on #re2xhwa, logged in `retired` with why.
+- `holdout`: the Benchmarks Game programs everyday doesn't cover, ported in `holdout/`, run only at a release or before a claim, never tuned on.
+- `claim`: the 1.0.0 claim's workload, native tsc's full check of src/compiler, once tsc builds natively.
+
+```
+go run ./bench -compare <baseline sha> <candidate sha> -suite everyday -samples 15
+go run ./bench -compare <sha> <sha> -suite everyday -only trees -plant candidate -plant-ms 95
+```
+
+`-compare` builds `cmd/adamic` at each commit in a detached worktree, builds every program with both from this checkout's source, and makes eight runs of each program per sample: Node, baseline, Node, candidate, Node, candidate, Node, baseline, with the sides swapped on odd samples. Each runner's runs in a sample are combined as their mean. A program is judged on user time unless the suite says `wall` (parallel_files, whose user time rises with threads by design).
+
+Each row gives the median of the per-sample ratios, candidate over baseline, and the sign test's 95% interval: the k-th smallest and k-th largest ratio (the 4th and 12th of 15), which assumes nothing about how times are distributed. `faster` means the whole interval is below 1.00, `slower` that it's all above, and anything else reads `no change at this confidence, none larger than` the interval's farther bound from 1.00: the change that run couldn't see, not proof of none. Fewer than six samples are refused. A program whose answer differs from Node's at either commit, or with a reading run.go would refuse, gets no verdict. Native against Node is a paired ratio with its own interval, and a program is listed as a loss or a win only when that interval excludes 1.00; the rest are listed as within the noise.
+
+`-plant candidate` appends a fixed busy loop, `-plant-ms` long (25 by default), to a copy of each candidate program, so an A/A comparison must read `slower` once the plant is larger than the program's sensitivity: the proof the tool can fail. An A/A run of eight programs without it should read `no change` throughout, though by the interval's own 3.5% miss rate about one run in four shows one false verdict somewhere. Both sides run from paths of the same length, and the header says whether each row's two binaries are byte-identical. On Golem, identical bytes read a change twice: an A/A read nbody a steady 3% slower (J-eewt3vf), and in M3 three of thirteen identical rows got a verdict, nbody slower at a median ratio of 1.032 (J-d1emr4h). Two causes stood, and both are cured. The order used to rotate, which kept who ran just before whom, so the candidate always ran right after the baseline; now every native run follows a Node run, so a cost carried over from the run before lands on both sides alike inside every sample, whether it's tied to the baseline as the run before or to the other side, and the baseline's positions (1 and 7) and the candidate's (3 and 5) mirror, so a steady drift through the sample lands alike too. That costs eight runs a program a sample, Node's four among them. And each side's binary kept its physical pages, and every run its environment, for the whole run, so cache aliasing and the stack's alignment were constants tied to a side; now every native binary gets fresh pages before each sample (copied and renamed over itself, at the same path), and every run gets `ADAMIC_BENCH_PAD`, a value of a random length from 0 to 4095, drawn from a seed the header prints and `-seed` repeats. A row whose two binaries are byte-identical is a control: it shows its ratio and interval with `control` in the verdict cell, never `faster` or `slower`, and a line above the table counts the controls and names any that would have claimed a change. A bias that remains shows there, and a verdict within the size a control reached is unproven on that run. Run an A/A beside any claim, on the box that makes it.
+
 ## Parallel files, October 6, 2026
 
 `parallel_files.a` generates 4,096 files, tokenizes and summarizes them through pure functions, then merges in input order. Linux amd64, AMD EPYC 9V74, four quota-limited CPUs (`nproc` 5), clang 20.1.8, Node 24.19.0, Bun 1.3.14. Best of five interleaved rounds: native 1/2/4 threads **0.744/0.454/0.312 s**, Node **0.637 s**, Bun **0.866 s**. All answers match. Load before **0.11/3.16/6.23**, after **0.69/3.10/6.14**; tests had finished, but the longer load averages still include them.
