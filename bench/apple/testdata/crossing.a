@@ -1,0 +1,38 @@
+// crossing.a: what a call into AppKit costs from Adamic, for bench/apple/run.go to time beside the
+// same loops in Swift (crossing.swift) and Objective-C (crossing.m). The first argument says which
+// loop, the second how many times.
+
+import { programArguments } from 'adamic';
+import { View } from 'apple/appkit/view';
+import { Window } from 'apple/appkit/window';
+
+const which = programArguments()[0] ?? 'scalar';
+const times = Number.parseInt(programArguments()[1] ?? '0', 10);
+
+const window = new Window({ contentRectangle: { x: 0, y: 0, width: 100, height: 100 }, styleMask: ['Titled'], backing: 'Buffered', defer: true });
+window.contentView = new View({ frame: { x: 0, y: 0, width: 100, height: 100 } });
+const view = new View({ frame: { x: 0, y: 0, width: 10, height: 10 } });
+
+let seen = 0;
+if (which === 'scalar') {
+	// A BOOL getter: one message, nothing allocated.
+	for (let index = 0; index < times; index++) {
+		if (view.isHidden) {
+			seen += 1;
+		}
+	}
+} else if (which === 'object') {
+	// An object getter: one message, and the object held by Adamic for the iteration.
+	for (let index = 0; index < times; index++) {
+		if (window.contentView !== undefined) {
+			seen += 1;
+		}
+	}
+} else {
+	// A string set and read back: two messages, each string crossing as UTF-16.
+	for (let index = 0; index < times; index++) {
+		window.title = 'Adamic';
+		seen += window.title.length;
+	}
+}
+console.log(`${which} ${times}: ${seen}`);
