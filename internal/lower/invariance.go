@@ -1437,6 +1437,27 @@ func (l *lowering) freshOrWidened(node *ast.Node, own *checker.Type, contextual 
 				}
 			}
 			return nil
+		case ast.KindAmpersandAmpersandToken:
+			// Only the right is the value, and the left reaches the result only by its falsy arms
+			// (andLeftOperand, falsyArms), so the left is judged by those, and not at all when it has none,
+			// and the right as itself, as || judges each operand: a fresh one keeps its freshness (#k8ed1f2,
+			// applying #7n03qzg). moduleNameResolver.ts's `resolved && { ... }` is a literal made right
+			// there, or undefined.
+			if falsy := l.falsyArms(l.checker.GetTypeAtLocation(binary.Left)); falsy != nil {
+				if found := l.freshOrWidened(binary.Left, falsy, contextual); found != nil {
+					if found.viewed == nil {
+						found.viewed = falsy
+					}
+					return found
+				}
+			}
+			if found := l.freshOrWidened(binary.Right, l.checker.GetTypeAtLocation(binary.Right), contextual); found != nil {
+				if found.viewed == nil {
+					found.viewed = l.checker.GetTypeAtLocation(binary.Right)
+				}
+				return found
+			}
+			return nil
 		}
 	}
 	visited := map[[2]*checker.Type]bool{}
@@ -1473,7 +1494,15 @@ func (l *lowering) freshValue(node *ast.Node) bool {
 		}
 		switch method {
 		case "slice", "filter", "map", "concat":
-			return l.isArrayType(l.checker.GetTypeAtLocation(access.Expression)) || l.isLibraryType(l.checker.GetTypeAtLocation(access.Expression), "ReadonlyArray")
+			// Under ?. the receiver reads with its undefined, but the call runs only when it's there, so
+			// x?.map(f) is undefined, which holds nothing, or native map's new array: the receiver is read
+			// without null and undefined, and is still an Array or a ReadonlyArray or it's no copy
+			// (#k8ed1f2, applying #7n03qzg).
+			receiver := l.checker.GetTypeAtLocation(access.Expression)
+			if access.QuestionDotToken != nil {
+				receiver = l.checker.GetNonNullableType(receiver)
+			}
+			return l.isArrayType(receiver) || l.isLibraryType(receiver, "ReadonlyArray")
 		}
 	}
 	return false
