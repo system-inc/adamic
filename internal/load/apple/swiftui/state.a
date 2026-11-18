@@ -1,0 +1,26 @@
+// State: a value a view keeps, which re-renders the view when it's set. Written in Adamic, served
+// as apple/swiftui/state (internal/load/apple.go).
+
+// rendering is what renders the program's views again, given by whatever shows them (a Host's
+// render of its root view's body), or undefined until something does.
+let rendering: (() => void) | undefined = undefined;
+
+// renderWhenStateChanges says what to call after any State is set.
+export function renderWhenStateChanges(render: () => void): void {
+	rendering = render;
+}
+
+export class State<Value> {
+	value: Value;
+
+	constructor(value: Value) {
+		this.value = value;
+	}
+
+	set(value: Value): void {
+		this.value = value;
+		if (rendering !== undefined) {
+			rendering();
+		}
+	}
+}
