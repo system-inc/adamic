@@ -58,9 +58,13 @@ func TestYieldResultUnwrapAgrees(t *testing.T) {
 
 func TestYieldResultUnwrapRefused(t *testing.T) {
 	t.Parallel()
-	for _, probe := range []struct{ name, node, where string }{
-		{"hazard", "true\n", ":22:16"},
-		{"own_symbol", "1\n", ":16:16"},
+	// own_symbol stops at container_fit.go's depth bound, a generic pair past it that can reach a Map, and
+	// says so: no value there is going where a map is held (#rt5evf5). hazard stops at the real check.
+	const containerFit = "stage 0 can't lower a Map or Set interface implemented by a value that isn't a Map or Set yet"
+	const depthGate = "stage 0 can't lower a generic comparison deeper than 4 positions that can reach a Map yet"
+	for _, probe := range []struct{ name, node, where, stop string }{
+		{"hazard", "true\n", ":22:16", containerFit},
+		{"own_symbol", "1\n", ":16:16", depthGate},
 	} {
 		t.Run(probe.name, func(t *testing.T) {
 			path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/yield_result_unwrap_refused", probe.name+".ts"))
@@ -73,7 +77,7 @@ func TestYieldResultUnwrapRefused(t *testing.T) {
 			}
 			_, err = lowered(t, path)
 			var gap *lower.NotYet
-			want := path + probe.where + ": stage 0 can't lower a Map or Set interface implemented by a value that isn't a Map or Set yet"
+			want := path + probe.where + ": " + probe.stop
 			if !errors.As(err, &gap) || err.Error() != want {
 				t.Fatalf("want %s, got %v", want, err)
 			}
