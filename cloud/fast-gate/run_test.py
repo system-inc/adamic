@@ -1264,10 +1264,22 @@ class DarwinLegs(unittest.TestCase):
                     self.assertIn(digest, gate.failure["detail"])
                     self.assertIn(named, gate.failure["detail"])
                     self.assertEqual(gate.exitCode(), exit)
-        # Any other failure beside a missing record is the change's red, whichever came first.
+        # Any other failure beside a missing record is the change's red, whichever came first: a later one on the gate
+        # that missed, and one before the miss on a gate of its own.
         self.clearLegs()
-        gate, status, result = self.gate(base=base, failing="vet")
+        gate, status, result = self.gate(base=base)
+        self.assertEqual(gate.exitCode(), run.DarwinLegMissingExit)
+        with mock.patch("builtins.print"):
+            gate.fail("tests", "a planted failure after the miss")
         self.assertEqual(gate.exitCode(), 1)
+        bare = run.Gate.__new__(run.Gate)
+        bare.arguments = types.SimpleNamespace(tree=self.tree, out=self.directory, sha=self.sha, tools=self.tree, full=False, run_to_end=False)
+        bare.result, bare.failure, bare.stopped, bare.complete = {}, None, None, False
+        bare.lock, bare.started, bare.killSessions, bare.status = threading.Lock(), 0.0, lambda: None, lambda *arguments: None
+        with mock.patch("builtins.print"):
+            bare.fail("tests", "a planted failure before the miss")
+            bare.fail("darwin", "needs a darwin leg", evidenceMissing=True)
+        self.assertEqual(bare.exitCode(), 1)
         # A record at another digest is no record: missing, never failed.
         self.clearLegs()
         self.record(tip, darwinPaths="f" * 64, exit=1)
