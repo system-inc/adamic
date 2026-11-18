@@ -356,7 +356,10 @@ func (l *lowering) recordLiteral(node *ast.Node, t *checker.Type) (ir.Expression
 			if element == nil {
 				return nil, l.notYet(p, "a spread into record storage from a fixed object")
 			}
-			if !l.sameRecordStorage(element, t, map[[2]*checker.Type]bool{}) || !l.sameKeeping(element, t, map[[2]*checker.Type]bool{}) {
+			if walk := newRecordStorageWalk(); !l.sameRecordStorage(element, t, walk) || !l.sameKeeping(element, t, map[[2]*checker.Type]bool{}) {
+				if walk.bounded {
+					return nil, l.recordStorageBounded(p, element, t)
+				}
 				return nil, l.notYet(p, "record spread values seen through different storage")
 			}
 			if widened := l.widened(element, t, map[[2]*checker.Type]bool{}); widened != nil {
@@ -501,9 +504,14 @@ func (l *lowering) recordStorageView(node *ast.Node) error {
 	l.droppedContractsRead = strings.HasSuffix(l.program.FileName(ast.GetSourceFileOfNode(node)), ".ts")
 	defer func() { l.droppedContractsRead = false }()
 	own := l.checker.GetTypeAtLocation(source)
-	if stored, literal := l.branchesStoredAs(source, target); literal && stored {
+	stored, literal, bounded := l.branchesStoredAs(source, target)
+	if literal && stored {
 		return nil
-	} else if literal || !l.sameRecordStorage(own, target, map[[2]*checker.Type]bool{}) {
+	}
+	if walk := newRecordStorageWalk(); literal || !l.sameRecordStorage(own, target, walk) {
+		if literal && bounded || walk.bounded {
+			return l.recordStorageBounded(node, own, target)
+		}
 		return l.notYet(node, "a "+l.checker.TypeToString(own)+" seen as "+l.checker.TypeToString(target)+" (fixed objects and records have different storage; copy explicitly)")
 	}
 	return nil
@@ -561,8 +569,10 @@ func init() { refusalRules.register(2000, "recordStorageView", (*lowering).recor
 // of a conditional, and an arrow's expression body against the target's return. A literal is stored as
 // what objectLiteral builds it as (recordLiteralElement: its slot's record, else its own type), never
 // as its own type alone, so a literal built fixed meets the target as fixed. literal reports whether
-// any arm was an object literal; when none was, the source's own type is judged as before.
-func (l *lowering) branchesStoredAs(source *ast.Node, target *checker.Type) (stored, literal bool) {
+// any arm was an object literal; when none was, the source's own type is judged as before. bounded
+// reports whether any arm's walk stopped at typeNesting's bound, so a false stored may mean only that
+// the walk couldn't see to the end (#fzx0j5z).
+func (l *lowering) branchesStoredAs(source *ast.Node, target *checker.Type) (stored, literal, bounded bool) {
 	node := ast.SkipParentheses(source)
 	switch node.Kind {
 	case ast.KindObjectLiteralExpression:
@@ -570,12 +580,13 @@ func (l *lowering) branchesStoredAs(source *ast.Node, target *checker.Type) (sto
 		if slot := l.slotType(node); slot != nil && l.recordLiteralElement(node) != nil && l.recordElement(l.checker.GetNonNullableType(slot)) != nil {
 			built = l.checker.GetNonNullableType(slot)
 		}
-		return l.sameRecordStorage(built, target, map[[2]*checker.Type]bool{}), true
+		walk := newRecordStorageWalk()
+		return l.sameRecordStorage(built, target, walk), true, walk.bounded
 	case ast.KindConditionalExpression:
 		conditional := node.AsConditionalExpression()
-		whenTrue, trueLiteral := l.branchesStoredAs(conditional.WhenTrue, target)
-		whenFalse, falseLiteral := l.branchesStoredAs(conditional.WhenFalse, target)
-		return whenTrue && whenFalse, trueLiteral || falseLiteral
+		whenTrue, trueLiteral, trueBounded := l.branchesStoredAs(conditional.WhenTrue, target)
+		whenFalse, falseLiteral, falseBounded := l.branchesStoredAs(conditional.WhenFalse, target)
+		return whenTrue && whenFalse, trueLiteral || falseLiteral, trueBounded || falseBounded
 	case ast.KindArrowFunction:
 		body := node.Body()
 		if body == nil || body.Kind == ast.KindBlock {
@@ -585,7 +596,7 @@ func (l *lowering) branchesStoredAs(source *ast.Node, target *checker.Type) (sto
 		if len(own) != 1 || len(viewed) != 1 {
 			break
 		}
-		returned, bodyLiteral := l.branchesStoredAs(body, l.checker.GetReturnTypeOfSignature(viewed[0]))
+		returned, bodyLiteral, returnedBounded := l.branchesStoredAs(body, l.checker.GetReturnTypeOfSignature(viewed[0]))
 		if !bodyLiteral {
 			break
 		}
@@ -593,33 +604,58 @@ func (l *lowering) branchesStoredAs(source *ast.Node, target *checker.Type) (sto
 		parameters := l.parameterStorage(func() bool {
 			for i := 0; i < len(ownParameters) && i < len(viewedParameters); i++ {
 				// A caller passes the viewed parameter's value into the arrow's own: that's the flow.
-				if !l.sameRecordStorage(l.checker.GetTypeOfSymbol(viewedParameters[i]), l.checker.GetTypeOfSymbol(ownParameters[i]), map[[2]*checker.Type]bool{}) {
+				if walk := newRecordStorageWalk(); !l.sameRecordStorage(l.checker.GetTypeOfSymbol(viewedParameters[i]), l.checker.GetTypeOfSymbol(ownParameters[i]), walk) {
+					bounded = walk.bounded
 					return false
 				}
 			}
 			return true
 		})
-		return returned && parameters, true
+		return returned && parameters, true, returnedBounded || bounded
 	}
-	return l.sameRecordStorage(l.checker.GetTypeAtLocation(node), target, map[[2]*checker.Type]bool{}), false
+	walk := newRecordStorageWalk()
+	return l.sameRecordStorage(l.checker.GetTypeAtLocation(node), target, walk), false, walk.bounded
+}
+
+// recordStorageWalk is one sameRecordStorage comparison: the pairs it has seen, and how deep a
+// generic that instantiates itself deeper at each level is open on each side's path (typeNesting).
+// bounded is set when typeNesting refused a side, and the walk answers false from there to its top, so
+// a false with bounded set means the walk couldn't see to the end, not that storage differs.
+type recordStorageWalk struct {
+	visited  map[[2]*checker.Type]bool
+	from, to typeNesting
+	bounded  bool
+}
+
+// newRecordStorageWalk starts a comparison. Every caller starts its own, so no answer leans on
+// another comparison's visited pairs.
+func newRecordStorageWalk() *recordStorageWalk {
+	return &recordStorageWalk{visited: map[[2]*checker.Type]bool{}}
+}
+
+// recordStorageBounded is the stop for a value of type from seen as to whose storage comparison
+// stopped at typeNesting's bound: a valid program whose types are only too deep for the walk, not yet
+// rather than different storage (#fzx0j5z).
+func (l *lowering) recordStorageBounded(node *ast.Node, from, to *checker.Type) error {
+	return l.notYet(node, "comparing record storage through a type that instantiates itself deeper at each level ("+l.checker.TypeToString(from)+" seen as "+l.checker.TypeToString(to)+")")
 }
 
 // Structural views must preserve dictionary storage at every depth, including callbacks.
-func (l *lowering) sameRecordStorage(from, to *checker.Type, visited map[[2]*checker.Type]bool) bool {
-	if from == nil || to == nil || from == to || visited[[2]*checker.Type{from, to}] {
+func (l *lowering) sameRecordStorage(from, to *checker.Type, walk *recordStorageWalk) bool {
+	if from == nil || to == nil || from == to || walk.visited[[2]*checker.Type{from, to}] {
 		return true
 	}
 	if from.Flags()&checker.TypeFlagsUnion != 0 {
-		visited[[2]*checker.Type{from, to}] = true
+		walk.visited[[2]*checker.Type{from, to}] = true
 		for _, member := range l.definedMembers(from) {
-			if member.Flags()&checker.TypeFlagsNull == 0 && !l.sameRecordStorage(member, to, visited) {
+			if member.Flags()&checker.TypeFlagsNull == 0 && !l.sameRecordStorage(member, to, walk) {
 				return false
 			}
 		}
 		return true
 	}
 	if to.Flags()&checker.TypeFlagsUnion != 0 {
-		visited[[2]*checker.Type{from, to}] = true
+		walk.visited[[2]*checker.Type{from, to}] = true
 		members := l.definedMembers(to)
 		// A value enters a union that names its own type as that member, whatever other members it's
 		// assignable to: CompilerOptions in CompilerOptions | PrinterOptions stays a record, and a read on
@@ -630,7 +666,7 @@ func (l *lowering) sameRecordStorage(from, to *checker.Type, visited map[[2]*che
 			}
 		}
 		for _, member := range members {
-			if l.checker.IsTypeAssignableTo(from, member) && !l.sameRecordStorage(from, member, visited) {
+			if l.checker.IsTypeAssignableTo(from, member) && !l.sameRecordStorage(from, member, walk) {
 				return false
 			}
 		}
@@ -644,35 +680,57 @@ func (l *lowering) sameRecordStorage(from, to *checker.Type, visited map[[2]*che
 	if base := l.pickedRecordBase(to); base != nil {
 		to = base
 	}
-	if from == nil || to == nil || from == to || visited[[2]*checker.Type{from, to}] {
+	if from == nil || to == nil || from == to || walk.visited[[2]*checker.Type{from, to}] {
 		return true
 	}
-	visited[[2]*checker.Type{from, to}] = true
+	walk.visited[[2]*checker.Type{from, to}] = true
+	// A generic that instantiates itself deeper at each level (Own<T> { next: Own<Own<T>> } seen as
+	// Deep<T> { next: Deep<Deep<T>> }) is a fresh pair at every step, so visited never repeats and the
+	// walk ran without end (#fzx0j5z). typeNesting (type_nesting.go) is tsc's isDeeplyNestedType: past
+	// its bound on either side, the walk stops and answers false with bounded set, failing closed as not
+	// yet at the caller. The pair is entered here, before any arm walks inside it, since a record's
+	// element and a signature's parameters recur through their own arms without reaching the members.
+	fromOK, leaveFrom := walk.from.enter(from)
+	defer leaveFrom()
+	toOK, leaveTo := walk.to.enter(to)
+	defer leaveTo()
+	if !fromOK || !toOK {
+		walk.bounded = true
+		return false
+	}
 	inside, viewed := l.recordElement(from), l.recordElement(to)
 	if inside != nil || viewed != nil {
-		return inside != nil && viewed != nil && l.sameRecordNamedContracts(from, to, inside, viewed, visited) && l.sameRecordStorage(inside, viewed, visited)
+		return inside != nil && viewed != nil && l.sameRecordNamedContracts(from, to, inside, viewed, walk) && l.sameRecordStorage(inside, viewed, walk)
 	}
 	a, b := l.checker.GetSignaturesOfType(from, checker.SignatureKindCall), l.checker.GetSignaturesOfType(to, checker.SignatureKindCall)
 	if len(a) > 0 && len(b) > 0 {
 		ap, bp := a[0].Parameters(), b[0].Parameters()
 		parameters := l.parameterStorage(func() bool {
 			for i := 0; i < len(ap) && i < len(bp); i++ {
-				if !l.sameRecordStorage(l.checker.GetTypeOfSymbol(ap[i]), l.checker.GetTypeOfSymbol(bp[i]), visited) {
+				if !l.sameRecordStorage(l.checker.GetTypeOfSymbol(ap[i]), l.checker.GetTypeOfSymbol(bp[i]), walk) {
 					return false
 				}
 			}
 			return true
 		})
-		return parameters && l.sameRecordStorage(l.checker.GetReturnTypeOfSignature(a[0]), l.checker.GetReturnTypeOfSignature(b[0]), visited)
+		return parameters && l.sameRecordStorage(l.checker.GetReturnTypeOfSignature(a[0]), l.checker.GetReturnTypeOfSignature(b[0]), walk)
 	}
 	if l.isArrayType(from) || checker.IsTupleType(from) || l.isLibraryType(from, "Map", "ReadonlyMap", "Set", "ReadonlySet") {
 		a, b := l.typeArguments(from), l.typeArguments(to)
 		for i := 0; i < len(a) && i < len(b); i++ {
-			if !l.sameRecordStorage(a[i], b[i], visited) {
+			if !l.sameRecordStorage(a[i], b[i], walk) {
 				return false
 			}
 		}
 		return true
+	}
+	// A promise holds the value it settles to and nothing else of the program's, so lib's Promise and
+	// PromiseLike store alike when their one type argument does. Walking their then members instead
+	// meets a fresh instantiation at every level, past typeNesting's bound: Promise<number> seen as
+	// PromiseLike<number> stopped at the bound on oracle's async adoption and callback pins (J-vsqgd66).
+	if l.isLibraryType(from, "Promise", "PromiseLike") && l.isLibraryType(to, "Promise", "PromiseLike") {
+		a, b := l.typeArguments(from), l.typeArguments(to)
+		return len(a) == 1 && len(b) == 1 && l.sameRecordStorage(a[0], b[0], walk)
 	}
 	// Two instances of one generic type store alike when their arguments do. Walking their members
 	// instead expands Promise's then and catch into fresh instantiations at every level, which no
@@ -685,7 +743,7 @@ func (l *lowering) sameRecordStorage(from, to *checker.Type, visited map[[2]*che
 			return false
 		}
 		for i := range a {
-			if !l.sameRecordStorage(a[i], b[i], visited) {
+			if !l.sameRecordStorage(a[i], b[i], walk) {
 				return false
 			}
 		}
@@ -693,7 +751,7 @@ func (l *lowering) sameRecordStorage(from, to *checker.Type, visited map[[2]*che
 	}
 	for _, property := range l.checker.GetPropertiesOfType(to) {
 		if own := l.checker.GetPropertyOfType(from, property.Name); own != nil {
-			if !l.sameRecordStorage(l.checker.GetTypeOfSymbol(own), l.checker.GetTypeOfSymbol(property), visited) {
+			if !l.sameRecordStorage(l.checker.GetTypeOfSymbol(own), l.checker.GetTypeOfSymbol(property), walk) {
 				return false
 			}
 		}

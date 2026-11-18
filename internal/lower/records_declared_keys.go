@@ -134,7 +134,9 @@ func (l *lowering) declaredKeyWrite(node *ast.Node) error {
 				if stored == nil {
 					stored = info.ValueType()
 				}
-				if property := l.declaredKeyMisfit(member, stored, names); property != nil {
+				if property, bounded := l.declaredKeyMisfit(member, stored, names); bounded {
+					return l.recordStorageBounded(node, stored, l.checker.GetNonMissingTypeOfSymbol(property))
+				} else if property != nil {
 					return &Refused{Where: l.program.Where(node), What: "a write into a record with declared properties through a key that is not one literal, of a value a declared property it can land under cannot take (" + l.checker.TypeToString(stored) + " written into " + l.checker.TypeToString(member) + " by " + sourceExpression(key) + ": " + property.Name + " is declared " + l.checker.TypeToString(l.checker.GetTypeOfSymbol(property)) + ")", Fix: declaredKeysFix}
 				}
 				if value == nil {
@@ -191,17 +193,18 @@ func (l *lowering) writtenNames(key *ast.Node) (map[string]bool, bool) {
 // optional undefined included, one the record's one storage can't hold as the property does, or a
 // readonly one. These are namedWriteStop's own checks, the ones no rule at a direct write judges, but
 // for the optional undefined: undefined under an optional property, which may hold it, is left to
-// namedWriteStop, not yet as in .ts.
-func (l *lowering) declaredKeyMisfit(receiver, written *checker.Type, names map[string]bool) *ast.Symbol {
+// namedWriteStop, not yet as in .ts. bounded reports that the storage comparison stopped at
+// typeNesting's bound, which is not yet rather than a misfit (#fzx0j5z).
+func (l *lowering) declaredKeyMisfit(receiver, written *checker.Type, names map[string]bool) (misfit *ast.Symbol, bounded bool) {
 	for _, property := range l.checker.GetPropertiesOfType(receiver) {
 		if names != nil && !names[property.Name] {
 			continue
 		}
-		if l.checker.IsReadonlySymbol(property) || !l.checker.IsTypeAssignableTo(written, l.checker.GetTypeOfSymbol(property)) || !l.sameRecordStorage(written, l.checker.GetNonMissingTypeOfSymbol(property), map[[2]*checker.Type]bool{}) {
-			return property
+		if walk := newRecordStorageWalk(); l.checker.IsReadonlySymbol(property) || !l.checker.IsTypeAssignableTo(written, l.checker.GetTypeOfSymbol(property)) || !l.sameRecordStorage(written, l.checker.GetNonMissingTypeOfSymbol(property), walk) {
+			return property, walk.bounded
 		}
 	}
-	return nil
+	return nil, false
 }
 
 // writtenWholly is the first declared property of receiver, of those names holds when it's given, whose
