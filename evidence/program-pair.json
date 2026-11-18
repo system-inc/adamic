@@ -1,0 +1,605 @@
+{
+  "identical": 1464,
+  "relocated_same_semantics": [],
+  "deltas": [
+    {
+      "grade": "gone",
+      "base": {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "/workspace/scratch/y852c3c-adapted/src/compiler/program.ts:1501:1",
+        "phase": "lowering",
+        "kind": "NotYet",
+        "where": "/workspace/scratch/y852c3c-adapted/src/compiler/program.ts:4204:13",
+        "reason": "a dictionary member narrowed to an array without an element-checked view",
+        "text": "/workspace/scratch/y852c3c-adapted/src/compiler/program.ts:4204:13: stage 0 can't lower a dictionary member narrowed to an array without an element-checked view yet",
+        "census_file": "src/compiler/program.ts"
+      }
+    },
+    {
+      "grade": "gone",
+      "base": {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "/workspace/scratch/y852c3c-adapted/src/compiler/program.ts:1501:1",
+        "phase": "lowering",
+        "kind": "Boundary",
+        "where": "/workspace/scratch/y852c3c-adapted/src/compiler/program.ts:4204:9",
+        "reason": "failed statement; state rolled back; continued at next statement or declaration",
+        "text": "/workspace/scratch/y852c3c-adapted/src/compiler/program.ts:4204:13: stage 0 can't lower a dictionary member narrowed to an array without an element-checked view yet",
+        "start": 215357,
+        "end": 215531,
+        "census_file": "src/compiler/program.ts"
+      }
+    },
+    {
+      "grade": "gone",
+      "base": {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "/workspace/scratch/y852c3c-adapted/src/compiler/program.ts:1501:1",
+        "phase": "lowering",
+        "kind": "NotYet",
+        "where": "/workspace/scratch/y852c3c-adapted/src/compiler/program.ts:4367:13",
+        "reason": "a dictionary member narrowed to an array without an element-checked view",
+        "text": "/workspace/scratch/y852c3c-adapted/src/compiler/program.ts:4367:13: stage 0 can't lower a dictionary member narrowed to an array without an element-checked view yet",
+        "census_file": "src/compiler/program.ts"
+      }
+    },
+    {
+      "grade": "gone",
+      "base": {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "/workspace/scratch/y852c3c-adapted/src/compiler/program.ts:1501:1",
+        "phase": "lowering",
+        "kind": "Boundary",
+        "where": "/workspace/scratch/y852c3c-adapted/src/compiler/program.ts:4367:9",
+        "reason": "failed statement; state rolled back; continued at next statement or declaration",
+        "text": "/workspace/scratch/y852c3c-adapted/src/compiler/program.ts:4367:13: stage 0 can't lower a dictionary member narrowed to an array without an element-checked view yet",
+        "start": 226641,
+        "end": 226930,
+        "census_file": "src/compiler/program.ts"
+      }
+    },
+    {
+      "grade": "gone",
+      "base": {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "/workspace/scratch/y852c3c-adapted/src/compiler/program.ts:1501:1",
+        "phase": "lowering",
+        "kind": "NotYet",
+        "where": "/workspace/scratch/y852c3c-adapted/src/compiler/program.ts:1817:18",
+        "reason": "a dictionary member narrowed to an array without an element-checked view",
+        "text": "/workspace/scratch/y852c3c-adapted/src/compiler/program.ts:1817:18: stage 0 can't lower a dictionary member narrowed to an array without an element-checked view yet",
+        "census_file": "src/compiler/program.ts"
+      }
+    },
+    {
+      "grade": "gone",
+      "base": {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "/workspace/scratch/y852c3c-adapted/src/compiler/program.ts:1501:1",
+        "phase": "lowering",
+        "kind": "Boundary",
+        "where": "/workspace/scratch/y852c3c-adapted/src/compiler/program.ts:1817:13",
+        "reason": "failed statement; state rolled back; continued at next statement or declaration",
+        "text": "/workspace/scratch/y852c3c-adapted/src/compiler/program.ts:1817:18: stage 0 can't lower a dictionary member narrowed to an array without an element-checked view yet",
+        "start": 87061,
+        "end": 87566,
+        "census_file": "src/compiler/program.ts"
+      }
+    },
+    {
+      "grade": "gone",
+      "base": {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "/workspace/scratch/y852c3c-adapted/src/compiler/program.ts:1516:1",
+        "phase": "lowering",
+        "kind": "NotYet",
+        "where": "/workspace/scratch/y852c3c-adapted/src/compiler/program.ts:4204:13",
+        "reason": "a dictionary member narrowed to an array without an element-checked view",
+        "text": "/workspace/scratch/y852c3c-adapted/src/compiler/program.ts:4204:13: stage 0 can't lower a dictionary member narrowed to an array without an element-checked view yet",
+        "census_file": "src/compiler/program.ts"
+      }
+    },
+    {
+      "grade": "gone",
+      "base": {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "/workspace/scratch/y852c3c-adapted/src/compiler/program.ts:1516:1",
+        "phase": "lowering",
+        "kind": "Boundary",
+        "where": "/workspace/scratch/y852c3c-adapted/src/compiler/program.ts:4204:9",
+        "reason": "failed statement; state rolled back; continued at next statement or declaration",
+        "text": "/workspace/scratch/y852c3c-adapted/src/compiler/program.ts:4204:13: stage 0 can't lower a dictionary member narrowed to an array without an element-checked view yet",
+        "start": 215357,
+        "end": 215531,
+        "census_file": "src/compiler/program.ts"
+      }
+    },
+    {
+      "grade": "gone",
+      "base": {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "/workspace/scratch/y852c3c-adapted/src/compiler/program.ts:1516:1",
+        "phase": "lowering",
+        "kind": "NotYet",
+        "where": "/workspace/scratch/y852c3c-adapted/src/compiler/program.ts:4367:13",
+        "reason": "a dictionary member narrowed to an array without an element-checked view",
+        "text": "/workspace/scratch/y852c3c-adapted/src/compiler/program.ts:4367:13: stage 0 can't lower a dictionary member narrowed to an array without an element-checked view yet",
+        "census_file": "src/compiler/program.ts"
+      }
+    },
+    {
+      "grade": "gone",
+      "base": {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "/workspace/scratch/y852c3c-adapted/src/compiler/program.ts:1516:1",
+        "phase": "lowering",
+        "kind": "Boundary",
+        "where": "/workspace/scratch/y852c3c-adapted/src/compiler/program.ts:4367:9",
+        "reason": "failed statement; state rolled back; continued at next statement or declaration",
+        "text": "/workspace/scratch/y852c3c-adapted/src/compiler/program.ts:4367:13: stage 0 can't lower a dictionary member narrowed to an array without an element-checked view yet",
+        "start": 226641,
+        "end": 226930,
+        "census_file": "src/compiler/program.ts"
+      }
+    },
+    {
+      "grade": "gone",
+      "base": {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "/workspace/scratch/y852c3c-adapted/src/compiler/program.ts:1516:1",
+        "phase": "lowering",
+        "kind": "NotYet",
+        "where": "/workspace/scratch/y852c3c-adapted/src/compiler/program.ts:1817:18",
+        "reason": "a dictionary member narrowed to an array without an element-checked view",
+        "text": "/workspace/scratch/y852c3c-adapted/src/compiler/program.ts:1817:18: stage 0 can't lower a dictionary member narrowed to an array without an element-checked view yet",
+        "census_file": "src/compiler/program.ts"
+      }
+    },
+    {
+      "grade": "gone",
+      "base": {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "/workspace/scratch/y852c3c-adapted/src/compiler/program.ts:1516:1",
+        "phase": "lowering",
+        "kind": "Boundary",
+        "where": "/workspace/scratch/y852c3c-adapted/src/compiler/program.ts:1817:13",
+        "reason": "failed statement; state rolled back; continued at next statement or declaration",
+        "text": "/workspace/scratch/y852c3c-adapted/src/compiler/program.ts:1817:18: stage 0 can't lower a dictionary member narrowed to an array without an element-checked view yet",
+        "start": 87061,
+        "end": 87566,
+        "census_file": "src/compiler/program.ts"
+      }
+    },
+    {
+      "grade": "gone",
+      "base": {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "/workspace/scratch/y852c3c-adapted/src/compiler/program.ts:1517:1",
+        "phase": "lowering",
+        "kind": "NotYet",
+        "where": "/workspace/scratch/y852c3c-adapted/src/compiler/program.ts:4204:13",
+        "reason": "a dictionary member narrowed to an array without an element-checked view",
+        "text": "/workspace/scratch/y852c3c-adapted/src/compiler/program.ts:4204:13: stage 0 can't lower a dictionary member narrowed to an array without an element-checked view yet",
+        "census_file": "src/compiler/program.ts"
+      }
+    },
+    {
+      "grade": "gone",
+      "base": {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "/workspace/scratch/y852c3c-adapted/src/compiler/program.ts:1517:1",
+        "phase": "lowering",
+        "kind": "Boundary",
+        "where": "/workspace/scratch/y852c3c-adapted/src/compiler/program.ts:4204:9",
+        "reason": "failed statement; state rolled back; continued at next statement or declaration",
+        "text": "/workspace/scratch/y852c3c-adapted/src/compiler/program.ts:4204:13: stage 0 can't lower a dictionary member narrowed to an array without an element-checked view yet",
+        "start": 215357,
+        "end": 215531,
+        "census_file": "src/compiler/program.ts"
+      }
+    },
+    {
+      "grade": "gone",
+      "base": {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "/workspace/scratch/y852c3c-adapted/src/compiler/program.ts:1517:1",
+        "phase": "lowering",
+        "kind": "NotYet",
+        "where": "/workspace/scratch/y852c3c-adapted/src/compiler/program.ts:4367:13",
+        "reason": "a dictionary member narrowed to an array without an element-checked view",
+        "text": "/workspace/scratch/y852c3c-adapted/src/compiler/program.ts:4367:13: stage 0 can't lower a dictionary member narrowed to an array without an element-checked view yet",
+        "census_file": "src/compiler/program.ts"
+      }
+    },
+    {
+      "grade": "gone",
+      "base": {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "/workspace/scratch/y852c3c-adapted/src/compiler/program.ts:1517:1",
+        "phase": "lowering",
+        "kind": "Boundary",
+        "where": "/workspace/scratch/y852c3c-adapted/src/compiler/program.ts:4367:9",
+        "reason": "failed statement; state rolled back; continued at next statement or declaration",
+        "text": "/workspace/scratch/y852c3c-adapted/src/compiler/program.ts:4367:13: stage 0 can't lower a dictionary member narrowed to an array without an element-checked view yet",
+        "start": 226641,
+        "end": 226930,
+        "census_file": "src/compiler/program.ts"
+      }
+    },
+    {
+      "grade": "gone",
+      "base": {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "/workspace/scratch/y852c3c-adapted/src/compiler/program.ts:1517:1",
+        "phase": "lowering",
+        "kind": "NotYet",
+        "where": "/workspace/scratch/y852c3c-adapted/src/compiler/program.ts:1817:18",
+        "reason": "a dictionary member narrowed to an array without an element-checked view",
+        "text": "/workspace/scratch/y852c3c-adapted/src/compiler/program.ts:1817:18: stage 0 can't lower a dictionary member narrowed to an array without an element-checked view yet",
+        "census_file": "src/compiler/program.ts"
+      }
+    },
+    {
+      "grade": "gone",
+      "base": {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "/workspace/scratch/y852c3c-adapted/src/compiler/program.ts:1517:1",
+        "phase": "lowering",
+        "kind": "Boundary",
+        "where": "/workspace/scratch/y852c3c-adapted/src/compiler/program.ts:1817:13",
+        "reason": "failed statement; state rolled back; continued at next statement or declaration",
+        "text": "/workspace/scratch/y852c3c-adapted/src/compiler/program.ts:1817:18: stage 0 can't lower a dictionary member narrowed to an array without an element-checked view yet",
+        "start": 87061,
+        "end": 87566,
+        "census_file": "src/compiler/program.ts"
+      }
+    },
+    {
+      "grade": "gone",
+      "base": {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "/workspace/scratch/y852c3c-adapted/src/compiler/program.ts:4077:5",
+        "phase": "lowering",
+        "kind": "NotYet",
+        "where": "/workspace/scratch/y852c3c-adapted/src/compiler/program.ts:4204:13",
+        "reason": "a dictionary member narrowed to an array without an element-checked view",
+        "text": "/workspace/scratch/y852c3c-adapted/src/compiler/program.ts:4204:13: stage 0 can't lower a dictionary member narrowed to an array without an element-checked view yet",
+        "census_file": "src/compiler/program.ts"
+      }
+    },
+    {
+      "grade": "gone",
+      "base": {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "/workspace/scratch/y852c3c-adapted/src/compiler/program.ts:4077:5",
+        "phase": "lowering",
+        "kind": "Boundary",
+        "where": "/workspace/scratch/y852c3c-adapted/src/compiler/program.ts:4204:9",
+        "reason": "failed statement; state rolled back; continued at next statement or declaration",
+        "text": "/workspace/scratch/y852c3c-adapted/src/compiler/program.ts:4204:13: stage 0 can't lower a dictionary member narrowed to an array without an element-checked view yet",
+        "start": 215357,
+        "end": 215531,
+        "census_file": "src/compiler/program.ts"
+      }
+    },
+    {
+      "grade": "gone",
+      "base": {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "/workspace/scratch/y852c3c-adapted/src/compiler/program.ts:4077:5",
+        "phase": "lowering",
+        "kind": "NotYet",
+        "where": "/workspace/scratch/y852c3c-adapted/src/compiler/program.ts:4367:13",
+        "reason": "a dictionary member narrowed to an array without an element-checked view",
+        "text": "/workspace/scratch/y852c3c-adapted/src/compiler/program.ts:4367:13: stage 0 can't lower a dictionary member narrowed to an array without an element-checked view yet",
+        "census_file": "src/compiler/program.ts"
+      }
+    },
+    {
+      "grade": "gone",
+      "base": {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "/workspace/scratch/y852c3c-adapted/src/compiler/program.ts:4077:5",
+        "phase": "lowering",
+        "kind": "Boundary",
+        "where": "/workspace/scratch/y852c3c-adapted/src/compiler/program.ts:4367:9",
+        "reason": "failed statement; state rolled back; continued at next statement or declaration",
+        "text": "/workspace/scratch/y852c3c-adapted/src/compiler/program.ts:4367:13: stage 0 can't lower a dictionary member narrowed to an array without an element-checked view yet",
+        "start": 226641,
+        "end": 226930,
+        "census_file": "src/compiler/program.ts"
+      }
+    },
+    {
+      "grade": "reached",
+      "head": {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "/workspace/scratch/y852c3c-adapted/src/compiler/program.ts:1501:1",
+        "phase": "lowering",
+        "kind": "Boundary",
+        "where": "/workspace/scratch/y852c3c-adapted/src/compiler/program.ts:1822:17",
+        "reason": "failed statement; state rolled back; continued at next statement or declaration",
+        "text": "/workspace/scratch/y852c3c-adapted/src/compiler/core.ts:33:17: stage 0 can't lower a function returning U | undefined yet",
+        "start": 87334,
+        "end": 87551,
+        "census_file": "src/compiler/program.ts"
+      },
+      "possible_earlier_base_stops": [
+        {
+          "root_kind": "",
+          "depth": 0,
+          "measurement": "measured on a checker-rejected program",
+          "unit": "/workspace/scratch/y852c3c-adapted/src/compiler/program.ts:1501:1",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "/workspace/scratch/y852c3c-adapted/src/compiler/program.ts:1817:18",
+          "reason": "a dictionary member narrowed to an array without an element-checked view",
+          "text": "/workspace/scratch/y852c3c-adapted/src/compiler/program.ts:1817:18: stage 0 can't lower a dictionary member narrowed to an array without an element-checked view yet",
+          "census_file": "src/compiler/program.ts"
+        }
+      ],
+      "basis": "The base options.lib condition stopped before this else-branch call. The head lowered the condition and first reached this statement stop."
+    },
+    {
+      "grade": "reached",
+      "head": {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "/workspace/scratch/y852c3c-adapted/src/compiler/program.ts:1516:1",
+        "phase": "lowering",
+        "kind": "Boundary",
+        "where": "/workspace/scratch/y852c3c-adapted/src/compiler/program.ts:1822:17",
+        "reason": "failed statement; state rolled back; continued at next statement or declaration",
+        "text": "/workspace/scratch/y852c3c-adapted/src/compiler/core.ts:33:17: stage 0 can't lower a function returning U | undefined yet",
+        "start": 87334,
+        "end": 87551,
+        "census_file": "src/compiler/program.ts"
+      },
+      "possible_earlier_base_stops": [
+        {
+          "root_kind": "",
+          "depth": 0,
+          "measurement": "measured on a checker-rejected program",
+          "unit": "/workspace/scratch/y852c3c-adapted/src/compiler/program.ts:1516:1",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "/workspace/scratch/y852c3c-adapted/src/compiler/program.ts:1817:18",
+          "reason": "a dictionary member narrowed to an array without an element-checked view",
+          "text": "/workspace/scratch/y852c3c-adapted/src/compiler/program.ts:1817:18: stage 0 can't lower a dictionary member narrowed to an array without an element-checked view yet",
+          "census_file": "src/compiler/program.ts"
+        }
+      ],
+      "basis": "The base options.lib condition stopped before this else-branch call. The head lowered the condition and first reached this statement stop."
+    },
+    {
+      "grade": "reached",
+      "head": {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "/workspace/scratch/y852c3c-adapted/src/compiler/program.ts:1517:1",
+        "phase": "lowering",
+        "kind": "Boundary",
+        "where": "/workspace/scratch/y852c3c-adapted/src/compiler/program.ts:1822:17",
+        "reason": "failed statement; state rolled back; continued at next statement or declaration",
+        "text": "/workspace/scratch/y852c3c-adapted/src/compiler/core.ts:33:17: stage 0 can't lower a function returning U | undefined yet",
+        "start": 87334,
+        "end": 87551,
+        "census_file": "src/compiler/program.ts"
+      },
+      "possible_earlier_base_stops": [
+        {
+          "root_kind": "",
+          "depth": 0,
+          "measurement": "measured on a checker-rejected program",
+          "unit": "/workspace/scratch/y852c3c-adapted/src/compiler/program.ts:1517:1",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "where": "/workspace/scratch/y852c3c-adapted/src/compiler/program.ts:1817:18",
+          "reason": "a dictionary member narrowed to an array without an element-checked view",
+          "text": "/workspace/scratch/y852c3c-adapted/src/compiler/program.ts:1817:18: stage 0 can't lower a dictionary member narrowed to an array without an element-checked view yet",
+          "census_file": "src/compiler/program.ts"
+        }
+      ],
+      "basis": "The base options.lib condition stopped before this else-branch call. The head lowered the condition and first reached this statement stop."
+    }
+  ],
+  "base": {
+    "status": "measurement",
+    "format": "CommonJSBundle",
+    "diagnostics": 0,
+    "files": 1,
+    "units": 248,
+    "findings": 1486,
+    "target_sites": [
+      {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "/workspace/scratch/y852c3c-adapted/src/compiler/program.ts:1501:1",
+        "phase": "lowering",
+        "kind": "NotYet",
+        "where": "/workspace/scratch/y852c3c-adapted/src/compiler/program.ts:4204:13",
+        "reason": "a dictionary member narrowed to an array without an element-checked view",
+        "text": "/workspace/scratch/y852c3c-adapted/src/compiler/program.ts:4204:13: stage 0 can't lower a dictionary member narrowed to an array without an element-checked view yet",
+        "census_file": "src/compiler/program.ts"
+      },
+      {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "/workspace/scratch/y852c3c-adapted/src/compiler/program.ts:1501:1",
+        "phase": "lowering",
+        "kind": "NotYet",
+        "where": "/workspace/scratch/y852c3c-adapted/src/compiler/program.ts:4367:13",
+        "reason": "a dictionary member narrowed to an array without an element-checked view",
+        "text": "/workspace/scratch/y852c3c-adapted/src/compiler/program.ts:4367:13: stage 0 can't lower a dictionary member narrowed to an array without an element-checked view yet",
+        "census_file": "src/compiler/program.ts"
+      },
+      {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "/workspace/scratch/y852c3c-adapted/src/compiler/program.ts:1501:1",
+        "phase": "lowering",
+        "kind": "NotYet",
+        "where": "/workspace/scratch/y852c3c-adapted/src/compiler/program.ts:1817:18",
+        "reason": "a dictionary member narrowed to an array without an element-checked view",
+        "text": "/workspace/scratch/y852c3c-adapted/src/compiler/program.ts:1817:18: stage 0 can't lower a dictionary member narrowed to an array without an element-checked view yet",
+        "census_file": "src/compiler/program.ts"
+      },
+      {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "/workspace/scratch/y852c3c-adapted/src/compiler/program.ts:1516:1",
+        "phase": "lowering",
+        "kind": "NotYet",
+        "where": "/workspace/scratch/y852c3c-adapted/src/compiler/program.ts:4204:13",
+        "reason": "a dictionary member narrowed to an array without an element-checked view",
+        "text": "/workspace/scratch/y852c3c-adapted/src/compiler/program.ts:4204:13: stage 0 can't lower a dictionary member narrowed to an array without an element-checked view yet",
+        "census_file": "src/compiler/program.ts"
+      },
+      {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "/workspace/scratch/y852c3c-adapted/src/compiler/program.ts:1516:1",
+        "phase": "lowering",
+        "kind": "NotYet",
+        "where": "/workspace/scratch/y852c3c-adapted/src/compiler/program.ts:4367:13",
+        "reason": "a dictionary member narrowed to an array without an element-checked view",
+        "text": "/workspace/scratch/y852c3c-adapted/src/compiler/program.ts:4367:13: stage 0 can't lower a dictionary member narrowed to an array without an element-checked view yet",
+        "census_file": "src/compiler/program.ts"
+      },
+      {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "/workspace/scratch/y852c3c-adapted/src/compiler/program.ts:1516:1",
+        "phase": "lowering",
+        "kind": "NotYet",
+        "where": "/workspace/scratch/y852c3c-adapted/src/compiler/program.ts:1817:18",
+        "reason": "a dictionary member narrowed to an array without an element-checked view",
+        "text": "/workspace/scratch/y852c3c-adapted/src/compiler/program.ts:1817:18: stage 0 can't lower a dictionary member narrowed to an array without an element-checked view yet",
+        "census_file": "src/compiler/program.ts"
+      },
+      {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "/workspace/scratch/y852c3c-adapted/src/compiler/program.ts:1517:1",
+        "phase": "lowering",
+        "kind": "NotYet",
+        "where": "/workspace/scratch/y852c3c-adapted/src/compiler/program.ts:4204:13",
+        "reason": "a dictionary member narrowed to an array without an element-checked view",
+        "text": "/workspace/scratch/y852c3c-adapted/src/compiler/program.ts:4204:13: stage 0 can't lower a dictionary member narrowed to an array without an element-checked view yet",
+        "census_file": "src/compiler/program.ts"
+      },
+      {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "/workspace/scratch/y852c3c-adapted/src/compiler/program.ts:1517:1",
+        "phase": "lowering",
+        "kind": "NotYet",
+        "where": "/workspace/scratch/y852c3c-adapted/src/compiler/program.ts:4367:13",
+        "reason": "a dictionary member narrowed to an array without an element-checked view",
+        "text": "/workspace/scratch/y852c3c-adapted/src/compiler/program.ts:4367:13: stage 0 can't lower a dictionary member narrowed to an array without an element-checked view yet",
+        "census_file": "src/compiler/program.ts"
+      },
+      {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "/workspace/scratch/y852c3c-adapted/src/compiler/program.ts:1517:1",
+        "phase": "lowering",
+        "kind": "NotYet",
+        "where": "/workspace/scratch/y852c3c-adapted/src/compiler/program.ts:1817:18",
+        "reason": "a dictionary member narrowed to an array without an element-checked view",
+        "text": "/workspace/scratch/y852c3c-adapted/src/compiler/program.ts:1817:18: stage 0 can't lower a dictionary member narrowed to an array without an element-checked view yet",
+        "census_file": "src/compiler/program.ts"
+      },
+      {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "/workspace/scratch/y852c3c-adapted/src/compiler/program.ts:4077:5",
+        "phase": "lowering",
+        "kind": "NotYet",
+        "where": "/workspace/scratch/y852c3c-adapted/src/compiler/program.ts:4204:13",
+        "reason": "a dictionary member narrowed to an array without an element-checked view",
+        "text": "/workspace/scratch/y852c3c-adapted/src/compiler/program.ts:4204:13: stage 0 can't lower a dictionary member narrowed to an array without an element-checked view yet",
+        "census_file": "src/compiler/program.ts"
+      },
+      {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "/workspace/scratch/y852c3c-adapted/src/compiler/program.ts:4077:5",
+        "phase": "lowering",
+        "kind": "NotYet",
+        "where": "/workspace/scratch/y852c3c-adapted/src/compiler/program.ts:4367:13",
+        "reason": "a dictionary member narrowed to an array without an element-checked view",
+        "text": "/workspace/scratch/y852c3c-adapted/src/compiler/program.ts:4367:13: stage 0 can't lower a dictionary member narrowed to an array without an element-checked view yet",
+        "census_file": "src/compiler/program.ts"
+      }
+    ]
+  },
+  "head": {
+    "status": "measurement",
+    "format": "CommonJSBundle",
+    "diagnostics": 0,
+    "files": 1,
+    "units": 248,
+    "findings": 1467,
+    "target_sites": []
+  }
+}
