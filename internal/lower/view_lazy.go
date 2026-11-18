@@ -293,6 +293,7 @@ func (graph *allocationFlowGraph) viewedFromNoting(origins []ir.Expression, thro
 		}
 		if literal, ok := index.arrays[site]; ok {
 			for _, element := range literal.Elements {
+				// A boxed constant element is a Union here, and reaches no site (follow's scalar constant case).
 				if viewAggregate(element) {
 					add(reach(element))
 				}
