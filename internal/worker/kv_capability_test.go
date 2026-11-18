@@ -6,6 +6,7 @@ import (
 	"os"
 	"os/exec"
 	"path/filepath"
+	"reflect"
 	"strings"
 	"testing"
 
@@ -24,7 +25,7 @@ func kvCapabilityCheck(t *testing.T, name string) error {
 	types, release := p.Checker(context.Background(), p.Files()[0])
 	// These are compiler-rule tests, not runtime ingress: the fixture's known
 	// environment declaration supplies the checked type directly. The production
-	// contract is tested separately and must still stop every KV field.
+	// contract, the bridge's KV check, is tested separately (TestWorkerKVIngressReachesBridgeCheck).
 	var envSymbol *ast.Symbol
 	for _, n := range p.Files()[0].Statements.Nodes {
 		if n.Kind == ast.KindInterfaceDeclaration && n.Name().Text() == "Environment" {
@@ -41,7 +42,7 @@ func kvCapabilityCheck(t *testing.T, name string) error {
 	release()
 	if err == nil {
 		_, ordinary := lower.LowerWorker(context.Background(), p, symbol)
-		if name == "get" || name == "put" || name == "delete" {
+		if kvLoweringStops[name] {
 			return ordinary
 		}
 		if ordinary != nil {
@@ -51,6 +52,11 @@ func kvCapabilityCheck(t *testing.T, name string) error {
 	}
 	return err
 }
+
+// kvLoweringStops are the fixtures that stop whichever check stops them: a member use that isn't head
+// 3b-1's awaited get, whose lowering error is returned when the environment check lets it by.
+var kvLoweringStops = map[string]bool{"get": true, "put": true, "delete": true, "get_stored": true, "get_then": true, "get_optional": true, "get_value": true, "get_conditional": true}
+
 func TestWorkerKVCapabilityStops(t *testing.T) {
 	t.Parallel()
 	for _, name := range []string{"object_literal", "structural_argument", "parameter_default", "property_initializer", "cast", "let", "module", "return", "union", "optional", "array", "record", "generic", "capture", "callback", "field_write", "parameter_write"} {
@@ -78,13 +84,21 @@ func TestWorkerKVMembersAndViewsStop(t *testing.T) {
 			if name == "reverse_view" && !strings.Contains(stop.What, "a member no host registration names") {
 				t.Fatalf("reverse KV view missed host walk: %v", err)
 			}
+			if name != "reverse_view" && !strings.Contains(stop.What, "workers:KvNamespace."+name+"; a Workers binding's calls wait on head 3b") {
+				t.Fatalf("KV member stop %s lost rule 149's words: %v", name, err)
+			}
 			t.Log(err)
 		})
 	}
 }
+
+// kvLoweredReadings are the KV fixtures that pass the environment check and lower, get_awaited the one
+// call among them (head 3b-1).
+var kvLoweredReadings = []string{"const_destructure", "parameter_destructure", "local_chain", "optional_read", "alias", "held_awaited", "held_iterated", "get_awaited"}
+
 func TestWorkerKVBindingReadsLower(t *testing.T) {
 	t.Parallel()
-	for _, name := range []string{"const_destructure", "parameter_destructure", "local_chain", "optional_read", "alias", "held_awaited", "held_iterated"} {
+	for _, name := range kvLoweredReadings {
 		t.Run(name, func(t *testing.T) {
 			t.Parallel()
 			if err := kvCapabilityCheck(t, name); err != nil {
@@ -157,18 +171,26 @@ func TestWorkerKVPurityRefusesOpaqueBindings(t *testing.T) {
 	}
 }
 
-func TestWorkerKVIngressWaitsForBridge(t *testing.T) {
+// Ingress is open: a KV field reaches the bridge as a binding, its name in its own list, checked
+// there as Workers' KV namespace before the handler runs, and the handler gets the binding itself.
+// A KV field read as a string would answer the string check's 500 for a real namespace.
+func TestWorkerKVIngressReachesBridgeCheck(t *testing.T) {
 	t.Parallel()
 	out := filepath.Join(t.TempDir(), "worker")
-	err := Build("testdata/kv_capability/const_destructure.a", out)
-	var stop *lower.NotYet
-	if !errors.As(err, &stop) || !strings.Contains(stop.What, `environment field "KV"`) || !strings.Contains(stop.What, "a Workers binding in the environment waits on the bridge's KV check") {
-		t.Fatalf("KV ingress contract: want field-named bridge NotYet, got %v", err)
+	if err := Build("testdata/kv_capability/const_destructure.a", out); err != nil {
+		t.Fatalf("KV ingress contract: build: %v", err)
 	}
-	if _, err := os.Stat(out); !os.IsNotExist(err) {
-		t.Fatalf("KV ingress wrote output: %v", err)
+	bridge, err := os.ReadFile(filepath.Join(out, "worker.mjs"))
+	if err != nil {
+		t.Fatal(err)
 	}
-	t.Log(stop)
+	if !strings.Contains(string(bridge), "const environmentFields = [\"GREETING\"];\nconst environmentKVFields = [\"KV\"];\n") {
+		t.Fatalf("KV ingress contract: the bridge doesn't list KV as a binding:\n%s", bridge)
+	}
+	script := `import assert from 'node:assert/strict';const {default:worker}=await import(process.argv[1]);const namespace={get:async()=>null,put:async()=>{},delete:async()=>{}};const logs=[];console.error=x=>logs.push(x);const good=await worker.fetch(new Request('https://worker.test/ok'),{GREETING:'hi',KV:namespace});assert.equal(good.status,200);assert.equal(await good.text(),'hi/ok');assert.deepEqual(logs,[]);const bad=await worker.fetch(new Request('https://worker.test/ok'),{GREETING:'hi'});assert.equal(bad.status,500);assert.equal(await bad.text(),'internal error');assert.deepEqual(logs,['environment binding "KV" is missing or not a KV namespace']);`
+	if report, err := exec.CommandContext(t.Context(), "node", "--input-type=module", "-e", script, filepath.Join(out, "worker.mjs")).CombinedOutput(); err != nil {
+		t.Fatalf("KV ingress contract: %v\n%s", err, report)
+	}
 }
 
 // Lower on #bxaz0p1: rule 3 sees only an identifier, so a static method taken through a
@@ -245,6 +267,260 @@ func TestWorkerKVSuspendedResultsWait(t *testing.T) {
 				t.Fatalf("KV suspended result %s: want the frame NotYet from the environment check, got %v", name, err)
 			}
 			t.Log(err)
+		})
+	}
+}
+
+// Head 3b-1 admits one road, await <binding>.get(key). Every other road to get stays stopped, each by
+// its own stop's words: rule 149's NotYet for a stored, chained, optional or detached get, and the
+// environment check's own refusal for a conditional receiver, a KV value outside an admitted slot.
+// The unawaited bare call is get in TestWorkerKVMembersAndViewsStop.
+func TestWorkerKVGetRoadsStayStopped(t *testing.T) {
+	t.Parallel()
+	const memberStop = "workers:KvNamespace.get; a Workers binding's calls wait on head 3b"
+	for _, road := range []struct {
+		name, words string
+		refused     bool
+	}{
+		{"get_stored", memberStop, false},
+		{"get_then", memberStop, false},
+		{"get_optional", memberStop, false},
+		{"get_value", memberStop, false},
+		{"get_conditional", "workers:KvNamespace in a value outside an admitted KV slot", true},
+	} {
+		t.Run(road.name, func(t *testing.T) {
+			t.Parallel()
+			err := kvCapabilityCheck(t, road.name)
+			var stop *lower.NotYet
+			var refused *lower.Refused
+			kind := errors.As(err, &stop)
+			if road.refused {
+				kind = errors.As(err, &refused)
+			}
+			if !kind || !strings.Contains(err.Error(), road.words) {
+				t.Fatalf("KV get road %s: want refused=%t naming %q, got %v", road.name, road.refused, road.words, err)
+			}
+			t.Log(err)
+		})
+	}
+}
+
+// kvLowered is a KV fixture's lowered Worker program, after its environment check.
+func kvLowered(t *testing.T, name string) *ir.Program {
+	t.Helper()
+	p, err := load.Load([]string{filepath.Join("testdata/kv_capability", name+".a")})
+	if err != nil {
+		t.Fatal(err)
+	}
+	types, release := p.Checker(context.Background(), p.Files()[0])
+	var envSymbol *ast.Symbol
+	for _, n := range p.Files()[0].Statements.Nodes {
+		if n.Kind == ast.KindInterfaceDeclaration && n.Name().Text() == "Environment" {
+			envSymbol = types.GetSymbolAtLocation(n.Name())
+		}
+	}
+	if envSymbol == nil {
+		release()
+		t.Fatal("fixture environment declaration missing")
+	}
+	err = lower.CheckWorkerEnvironment(p, types, types.GetDeclaredTypeOfSymbol(envSymbol), nil)
+	release()
+	if err != nil {
+		t.Fatal(err)
+	}
+	lowered, err := lower.LowerWorker(context.Background(), p, envSymbol)
+	if err != nil {
+		t.Fatal(err)
+	}
+	return lowered
+}
+
+// kvPromiseHostCalls walks a program's IR by reflection, as CheckPure does, and counts each host call
+// whose Returns is ir.Promise that an await settles directly, naming every other one. Lowering makes
+// the call await's operand; NormalizeAsync then snapshots every operand of an await into a temporary
+// declared just before it, so the operand the walk sees is that temporary, declared with the call,
+// read once and only by the await in the very next statement, and never assigned.
+func kvPromiseHostCalls(program *ir.Program) (awaited int, stray []string) {
+	reads, writes := map[int]int{}, map[int]int{}
+	var count func(reflect.Value)
+	count = func(value reflect.Value) {
+		if !value.IsValid() {
+			return
+		}
+		if value.CanInterface() {
+			switch node := value.Interface().(type) {
+			case ir.Read:
+				reads[node.Local]++
+			case ir.Assign:
+				writes[node.Local]++
+			}
+		}
+		switch value.Kind() {
+		case reflect.Interface, reflect.Pointer:
+			if !value.IsNil() {
+				count(value.Elem())
+			}
+		case reflect.Struct:
+			for index := 0; index < value.NumField(); index++ {
+				count(value.Field(index))
+			}
+		case reflect.Slice, reflect.Array:
+			for index := 0; index < value.Len(); index++ {
+				count(value.Index(index))
+			}
+		}
+	}
+	bodies := [][]ir.Statement{program.Main}
+	for _, function := range program.Functions {
+		bodies = append(bodies, function.Body)
+	}
+	for _, body := range bodies {
+		count(reflect.ValueOf(body))
+	}
+	awaits := func(statement ir.Statement, local int) bool {
+		var value ir.Expression
+		switch next := statement.(type) {
+		case ir.Declare:
+			value = next.Value
+		case ir.Evaluate:
+			value = next.Value
+		}
+		settled, isAwait := value.(ir.Await)
+		if !isAwait {
+			return false
+		}
+		read, isRead := settled.Value.(ir.Read)
+		return isRead && read.Local == local
+	}
+	var walk func(reflect.Value)
+	walk = func(value reflect.Value) {
+		if !value.IsValid() {
+			return
+		}
+		if value.CanInterface() {
+			switch node := value.Interface().(type) {
+			case []ir.Statement:
+				for index, statement := range node {
+					if declared, isDeclare := statement.(ir.Declare); isDeclare {
+						if call, isCall := declared.Value.(ir.NodeHostCall); isCall && call.Returns == ir.Promise && index+1 < len(node) && awaits(node[index+1], declared.Local) && reads[declared.Local] == 1 && writes[declared.Local] == 0 {
+							awaited++
+							walk(reflect.ValueOf(call.Arguments))
+							continue
+						}
+					}
+					walk(reflect.ValueOf(statement))
+				}
+				return
+			case ir.Await:
+				if call, isCall := node.Value.(ir.NodeHostCall); isCall && call.Returns == ir.Promise {
+					awaited++
+					walk(reflect.ValueOf(call.Arguments))
+					return
+				}
+			case ir.NodeHostCall:
+				if node.Returns == ir.Promise {
+					stray = append(stray, node.Module+"."+node.Member)
+				}
+			}
+		}
+		switch value.Kind() {
+		case reflect.Interface, reflect.Pointer:
+			if !value.IsNil() {
+				walk(value.Elem())
+			}
+		case reflect.Struct:
+			for index := 0; index < value.NumField(); index++ {
+				walk(value.Field(index))
+			}
+		case reflect.Slice, reflect.Array:
+			for index := 0; index < value.Len(); index++ {
+				walk(value.Index(index))
+			}
+		}
+	}
+	for _, body := range bodies {
+		walk(reflect.ValueOf(body))
+	}
+	return awaited, stray
+}
+
+// A host call that settles to a Promise is only ever awaited directly, never held, passed or returned:
+// a pending one holds its arguments, a Worker binding among them, until it settles (ir.NodeHostCall).
+// Every KV fixture that lowers is walked, and get_awaited must hold its one get.
+func TestWorkerKVPromiseHostCallsAreAwaited(t *testing.T) {
+	t.Parallel()
+	for _, name := range kvLoweredReadings {
+		t.Run(name, func(t *testing.T) {
+			t.Parallel()
+			awaited, stray := kvPromiseHostCalls(kvLowered(t, name))
+			if len(stray) != 0 {
+				t.Fatalf("KV promise host calls %s: not the operand of an await: %v", name, stray)
+			}
+			want := 0
+			if name == "get_awaited" {
+				want = 1
+			}
+			if awaited != want {
+				t.Fatalf("KV promise host calls %s: %d awaited, want %d", name, awaited, want)
+			}
+		})
+	}
+}
+
+// The built Worker runs under Node with a fake env, as Workers calls it: the awaited get's text or
+// null reaches the body, a value of any other type is the bridge's 500 with a log naming
+// workers:KvNamespace.get and never the value, and a missing or duck-failing binding is the named
+// 500 before the handler runs. GREETING's secret never reaches a body or a log.
+func TestWorkerKVGetAwaitedUnderNode(t *testing.T) {
+	t.Parallel()
+	out := filepath.Join(t.TempDir(), "worker")
+	if err := Build("testdata/kv_capability/get_awaited.a", out); err != nil {
+		t.Fatalf("KV get build: %v", err)
+	}
+	const secret = "s3cr3t-value"
+	const script = `import assert from 'node:assert/strict';
+const {default: worker} = await import(process.argv[1]);
+const [mode, secret] = process.argv.slice(2);
+const logs = [];
+console.error = (...values) => logs.push(values.join(' '));
+const keys = [];
+const namespace = (settled) => ({get: async (key) => { keys.push(key); return settled; }, put: async () => {}, delete: async () => {}});
+const env = {GREETING: secret};
+if (mode === 'text') env.KV = namespace('hello');
+if (mode === 'null') env.KV = namespace(null);
+if (mode === 'number') env.KV = namespace(42);
+if (mode === 'empty_binding') env.KV = {};
+const response = await worker.fetch(new Request('https://worker.test/greeting'), env);
+const body = await response.text();
+const log = logs.join('\n');
+assert(!body.includes(secret) && !log.includes(secret), 'the environment secret reached the output');
+if (mode === 'text' || mode === 'null') {
+	assert.equal(response.status, 200);
+	assert.equal(body, mode === 'text' ? 'hello' : 'none');
+	assert.deepEqual(keys, ['/greeting']);
+	assert.deepEqual(logs, []);
+} else if (mode === 'number') {
+	assert.equal(response.status, 500);
+	assert.equal(body, 'internal error');
+	assert.deepEqual(logs, ['workers:KvNamespace.get settled to a value of type number, not a string or null']);
+	assert(!log.includes('42'), 'the settled value reached the log');
+} else {
+	assert.equal(response.status, 500);
+	assert.equal(body, 'internal error');
+	assert.deepEqual(logs, ['environment binding "KV" is missing or not a KV namespace']);
+	assert.deepEqual(keys, []);
+}
+`
+	for _, mode := range []string{"text", "null", "number", "missing", "empty_binding"} {
+		t.Run(mode, func(t *testing.T) {
+			t.Parallel()
+			report, err := exec.CommandContext(t.Context(), "node", "--input-type=module", "-e", script, filepath.Join(out, "worker.mjs"), mode, secret).CombinedOutput()
+			if err != nil {
+				t.Fatalf("KV get under Node %s: %v\n%s", mode, err, report)
+			}
+			if strings.Contains(string(report), secret) {
+				t.Fatalf("KV get under Node %s: the environment secret reached the output:\n%s", mode, report)
+			}
 		})
 	}
 }

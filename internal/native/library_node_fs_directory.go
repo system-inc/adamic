@@ -7,6 +7,12 @@ import (
 )
 
 func (e *emitter) nodeHostCall(call ir.NodeHostCall) string {
+	// Native binds node:path and node:fs, synchronously. A workers: module is JavaScript's alone and a
+	// Promise form settles only under JavaScript's await, so either one here is a compiler bug said out
+	// loud, before any branch below could read it as node:fs.
+	if (call.Module != "node:path" && call.Module != "node:fs") || call.Returns == ir.Promise {
+		panic(fmt.Sprintf("native: compiler bug: no native emission for host operation %s.%s", call.Module, call.Member))
+	}
 	arguments := []string{}
 	for _, argument := range call.Arguments {
 		arguments = append(arguments, e.value(argument))
