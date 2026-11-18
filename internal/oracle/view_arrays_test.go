@@ -12,7 +12,7 @@ import (
 
 func TestViewArrays(t *testing.T) {
 	t.Parallel()
-	for _, name := range []string{"tagged-null-lie", "guard-forwarded", "guard-mutable-param", "guard-slice", "guard-spread", "guard-from", "legacy-null", "generic-object-lie", "identity", "cast-unknown", "cast-object", "cast-union", "storage-scalar", "storage-reference-lie", "storage-boolean-lie", "storage-maybe-lie", "renamed-lie", "find-result-lie", "findLast-result-lie", "join", "json", "string", "index-good", "index-lie", "try-lie", "optional-element", "unrelated-maybe", "at-lie", "per-read", "bounds", "object-wide", "generic", "no-element", "for-of-good", "for-of-lie", "values-lie", "forEach-good", "forEach-lie", "map-good", "map-lie", "filter-good", "filter-lie", "filter-predicate-good", "filter-predicate-lie", "narrowing-cast", "some-good", "some-lie", "every-good", "every-lie", "find-good", "find-lie", "findIndex-good", "findIndex-lie", "findLast-good", "findLast-lie", "findLastIndex-good", "findLastIndex-lie", "reduce-good", "reduce-lie", "mutable", "slice", "spread", "concat", "record-slot-alias-lie", "record-slot-undefined-lie"} {
+	for _, name := range []string{"tagged-null-lie", "guard-forwarded", "guard-mutable-param", "guard-slice", "guard-spread", "guard-from", "legacy-null", "generic-object-lie", "identity", "cast-unknown", "cast-object", "cast-union", "storage-scalar", "storage-reference-lie", "storage-boolean-lie", "storage-maybe-lie", "renamed-lie", "find-result-lie", "findLast-result-lie", "join", "json", "string", "index-good", "index-lie", "try-lie", "optional-element", "unrelated-maybe", "at-lie", "per-read", "bounds", "object-wide", "generic", "no-element", "for-of-good", "for-of-lie", "values-lie", "forEach-good", "forEach-lie", "map-good", "map-lie", "filter-good", "filter-lie", "filter-predicate-good", "filter-predicate-lie", "narrowing-cast", "some-good", "some-lie", "every-good", "every-lie", "find-good", "find-lie", "findIndex-good", "findIndex-lie", "findLast-good", "findLast-lie", "findLastIndex-good", "findLastIndex-lie", "reduce-good", "reduce-lie", "mutable", "slice", "spread", "concat", "record-slot-alias-lie", "record-slot-undefined-lie", "record-slot-constant"} {
 		t.Run(name, func(t *testing.T) {
 			t.Parallel()
 			path, err := filepath.Abs("testdata/views_v3/" + name + ".ts")
@@ -68,6 +68,21 @@ func TestViewArrays(t *testing.T) {
 						t.Fatalf("%s: a failed element check inside a try with a catch: %#v; native stderr %q", backend, got, backends["native"].stderr)
 					}
 				}
+			}
+			// Language's r06 on #y852c3c: a computed key leaves the string "zz" under rootDirs, which tsc allows
+			// and Node iterates (Z,Z,). A scalar constant reaches no allocation site in V3's flow, and the slot
+			// read is checked all the same: its narrow to an array stops on the string, at the read, on every
+			// backend, before the loop hands anything out.
+			if name == "record-slot-constant" {
+				if string(node.stdout) != "Z,Z,\n" {
+					t.Fatalf("Node printed %q, want Z,Z,", node.stdout)
+				}
+				for backend, got := range backends {
+					if got.exitCode != 70 || len(got.stdout) != 0 || string(got.stderr) != recordSlotConstantStop {
+						t.Fatalf("%s: got %#v, want exit 70 with %q", backend, got, recordSlotConstantStop)
+					}
+				}
+				return
 			}
 			for backend, got := range backends {
 				if !lying {
@@ -149,6 +164,9 @@ func TestViewArrayConsole(t *testing.T) {
 		t.Fatalf("want prelude's string-only console check, got %v", err)
 	}
 }
+
+// recordSlotConstantStop is the slot read's own stop in record-slot-constant.ts, naming the read as it's written.
+const recordSlotConstantStop = "adamic: panic: field read failed: options.rootDirs is not a string[]; expected string[], found another member of the index signature's union, which a computed-key or index-signature write may have stored\n"
 
 // elementStop is a checked element read's stop, in the shape of every checked stop: what was read,
 // is not a T; expected T, found K.
