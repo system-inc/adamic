@@ -1,8 +1,8 @@
 #!/usr/bin/env node
 'use strict';
-// Adaptation 77, #5pstmvw, with #2gf0k9w: ObjectType's five resolved slots in src/compiler/types.ts, members,
-// properties, callSignatures, constructSignatures and indexInfos, become readonly. ResolvedType redeclares all five
-// required, so a ResolvedType (or a GenericType | ResolvedType) seen as ObjectType was a view that could write
+// Adaptation 77, #5pstmvw, with #2gf0k9w and #38kdd4d: ObjectType's five resolved slots in src/compiler/types.ts,
+// members, properties, callSignatures, constructSignatures and indexInfos, become readonly. ResolvedType redeclares all
+// five required, so a ResolvedType (or a GenericType | ResolvedType) seen as ObjectType was a view that could write
 // undefined where ResolvedType reads a value (21 refusals in checker.ts). With the slots readonly on ObjectType the
 // view can't write them. ResolvedType keeps its own five writable, as upstream declares them, and every other interface
 // in the family stays as upstream declares it. A new internal interface, ObjectTypeUnderConstruction, redeclares all
@@ -11,30 +11,33 @@
 // type, never cast back from it. createObjectType's body moves whole into a new createObjectTypeUnderConstruction right
 // before it, which returns the view; createObjectType keeps its signature and returns that function's result, an
 // upcast; and the two callers that write the slots of the type they're given, getOrCreateTypeFromSignature and
-// getTypeWithoutSignatures, call the new function instead. Three writes through a narrower interface go through a type
-// assertion to the view: resolveAnonymousTypeMembers' two, of callSignatures and constructSignatures after
-// setStructuredTypeMembers, and resolveBaseTypesOfClass' reset of an InterfaceType's members to undefined, the hole
-// Adamic named, which is refused at its own assertion rather than hidden. Returning the view from createObjectType made
-// every caller's downcast a cast from the view, eight sites the meter refused (J-7zaedjy), and casting a caller's
-// createObjectType result to the view is a cast from the finished type back to a writable one, which stopped
-// getTypeWithoutSignatures (J-c9fy9cp). A redeclaration on a family interface would make one interface's slot writable
-// while its siblings' stay readonly, and tsc's subtype reduction never takes a readonly property for a subtype of a
-// writable one: a writable AnonymousType slot stopped getObjectTypeInstantiation's AnonymousType |
-// DeferredTypeReference | GenericType from reducing (TS2345 at its instantiations.set), and a writable members on
-// InterfaceType and GenericType made an ObjectType seen as GenericType a readonly slot become writable. checker.ts
-// imports the view with its own `import type` from ./types.js, after its last import, and leaves the import from
-// ./_namespaces/ts.js byte for byte as it was: later adaptations (99-correctness-core-multimap among them) pin that
-// declaration's whole text and find it as the one import of that module. The emitted JavaScript changes by the creator
-// alone: one function added, createObjectType's body a call to it, and two call sites renamed. It makes the same object
-// with the same keys in the same order and the same values; README.md names the diff. Every other edit is a
-// declaration, a cast's type, a type assertion or a type-only import, which the emitter erases. All five slots are
-// internal and the new interface is internal, so the published declarations don't change. README.md says what certifies
-// it, the writes counted, and the mutants that bring the refusals back. The edits are found through the stock AST,
-// never by a line: each refuses unless it finds exactly upstream's declarations or statements, or all of them already
-// adapted, and a second run changes nothing. The new function's name must be new to the whole program. It sorts after
-// 76-truthful-casts, so every later adaptation and every consumer reads apply's tree with the slots readonly.
-// 75-optional-widening and 76-truthful-casts edit none of these interfaces or functions, so the match expects
-// upstream's shape.
+// getTypeWithoutSignatures, call the new function instead. resolveBaseTypesOfClass' reset of an InterfaceType's members
+// to undefined, the hole Adamic named, goes through a type assertion to the view and is refused at its own line rather
+// than hidden. resolveAnonymousTypeMembers' two writes, of callSignatures and constructSignatures after
+// setStructuredTypeMembers, go through that call's result, as Adamic ruled on #38kdd4d: setStructuredTypeMembers casts
+// its parameter to ResolvedType, writes all five slots, and returns that same object, so the call's result, kept in a
+// new const resolved, is the type itself, seen as the ResolvedType it now is. setStructuredTypeMembers' own cast stays
+// judged where it is. Returning the view from createObjectType made every caller's downcast a cast from the view, eight
+// sites the meter refused (J-7zaedjy), and casting a caller's createObjectType result to the view is a cast from the
+// finished type back to a writable one, which stopped getTypeWithoutSignatures (J-c9fy9cp). A redeclaration on a family
+// interface would make one interface's slot writable while its siblings' stay readonly, and tsc's subtype reduction
+// never takes a readonly property for a subtype of a writable one: a writable AnonymousType slot stopped
+// getObjectTypeInstantiation's AnonymousType | DeferredTypeReference | GenericType from reducing (TS2345 at its
+// instantiations.set), and a writable members on InterfaceType and GenericType made an ObjectType seen as GenericType a
+// readonly slot become writable. checker.ts imports the view with its own `import type` from ./types.js, after its last
+// import, and leaves the import from ./_namespaces/ts.js byte for byte as it was: later adaptations
+// (99-correctness-core-multimap among them) pin that declaration's whole text and find it as the one import of that
+// module. The emitted JavaScript changes in two places: by the creator, one function added, createObjectType's body a
+// call to it, and two call sites renamed; and in resolveAnonymousTypeMembers, one const and two receivers. Each makes
+// the same objects with the same keys in the same order and the same values; README.md names both diffs. Every other
+// edit is a declaration, a cast's type, a type assertion or a type-only import, which the emitter erases. All five
+// slots are internal and the new interface is internal, so the published declarations don't change. README.md says what
+// certifies it, the writes counted, and the mutants that bring the refusals back. The edits are found through the stock
+// AST, never by a line: each refuses unless it finds exactly upstream's declarations or statements, or all of them
+// already adapted, and a second run changes nothing. The new function's name must be new to the whole program, and the
+// new const's to its function. It sorts after 76-truthful-casts, so every later adaptation and every consumer reads
+// apply's tree with the slots readonly. 75-optional-widening and 76-truthful-casts edit none of these interfaces or
+// functions, so the match expects upstream's shape.
 const fs = require('node:fs');
 const path = require('node:path');
 const ts = require(process.env.CENSUS_TYPESCRIPT || 'typescript');
@@ -76,10 +79,13 @@ const writers = [
 // The writes through a narrower interface that go through a type assertion to the view instead: in the one function of
 // each name, with that parameter list, each statement once, upstream's text or already adapted.
 const asserted = [
-    { function: 'resolveAnonymousTypeMembers', parameters: 'type: AnonymousType',
-        statements: [['callSignatures', 'getSignaturesOfSymbol(symbol)'], ['constructSignatures', 'constructSignatures']] },
     { function: 'resolveBaseTypesOfClass', parameters: 'type: InterfaceType', statements: [['members', 'undefined']] },
 ];
+// resolveAnonymousTypeMembers' two writes after setStructuredTypeMembers, which go through that call's result instead
+// (#38kdd4d): the call as upstream writes it, the const that keeps its result, and each write's slot and value.
+const resolvedName = 'resolved';
+const anonymousCall = 'setStructuredTypeMembers(type, members, emptyArray, emptyArray, indexInfos || emptyArray)';
+const anonymousWrites = [['callSignatures', 'getSignaturesOfSymbol(symbol)'], ['constructSignatures', 'constructSignatures']];
 const view = 'ObjectTypeUnderConstruction';
 const optionalType = slot => `${slotTypes[slot]} | undefined`;
 
@@ -318,15 +324,10 @@ const uses = creatorUses.map(use => `${use.file} ${use.role}`).sort();
 if (uses.join('\n') !== expectedUses.map(role => `src/compiler/checker.ts ${role}`).sort().join('\n'))
     throw new Error(`expected ${creatorName} ${creatorEdited ? 'nowhere under src' : 'only as this adaptation writes it'}, found ${JSON.stringify(uses)}`);
 
-// The asserted writes. Each receiver becomes a type assertion to the view, which the emitter erases, parentheses and
-// all. resolveAnonymousTypeMembers' two, after setStructuredTypeMembers has resolved the type:
-//     type.callSignatures = getSignaturesOfSymbol(symbol);
-//     type.constructSignatures = constructSignatures;
-// and resolveBaseTypesOfClass' reset, which really does make an InterfaceType's members undefined until they re-resolve:
+// The asserted write. Its receiver becomes a type assertion to the view, which the emitter erases, parentheses and all.
+// resolveBaseTypesOfClass' reset, which really does make an InterfaceType's members undefined until they re-resolve:
 //     type.members = undefined;
-// become
-//     (type as ObjectTypeUnderConstruction).callSignatures = getSignaturesOfSymbol(symbol);
-//     (type as ObjectTypeUnderConstruction).constructSignatures = constructSignatures;
+// becomes
 //     (type as ObjectTypeUnderConstruction).members = undefined;
 const assertedWrites = [];
 for (const owner of asserted) {
@@ -351,6 +352,102 @@ for (const owner of asserted) {
         assertedWrites.push({ function: owner.function, slot, where: where(checker, statement), edited, statement: adapted });
     }
 }
+
+// resolveAnonymousTypeMembers' two writes go through setStructuredTypeMembers' result (#38kdd4d). Upstream's
+//     setStructuredTypeMembers(type, members, emptyArray, emptyArray, indexInfos || emptyArray);
+//     ...
+//         type.callSignatures = getSignaturesOfSymbol(symbol);
+//     ...
+//         type.constructSignatures = constructSignatures;
+// becomes
+//     const resolved = setStructuredTypeMembers(type, members, emptyArray, emptyArray, indexInfos || emptyArray);
+//     ...
+//         resolved.callSignatures = getSignaturesOfSymbol(symbol);
+//     ...
+//         resolved.constructSignatures = constructSignatures;
+// and each write is accepted as upstream's, as 77's own type assertion to the view, or as this. The premise, checked
+// here: setStructuredTypeMembers' first statement casts its parameter, `const resolved = type as ResolvedType;`, its last
+// returns that const, and neither name is written between, so the call returns its argument; and nothing in
+// resolveAnonymousTypeMembers writes or redeclares `type`, so `resolved` and `type` are one object at both writes.
+// setStructuredTypeMembers itself is read, never edited: its own cast stays judged where it is.
+function assignedOrDeclared(body, name) {
+    const found = [];
+    ts.forEachChild(body, function find(node) {
+        if (ts.isBinaryExpression(node) && node.operatorToken.kind >= ts.SyntaxKind.FirstAssignment &&
+            node.operatorToken.kind <= ts.SyntaxKind.LastAssignment && ts.isIdentifier(node.left) && node.left.text === name)
+            found.push(node);
+        if ((ts.isPrefixUnaryExpression(node) || ts.isPostfixUnaryExpression(node)) && ts.isIdentifier(node.operand) && node.operand.text === name &&
+            [ts.SyntaxKind.PlusPlusToken, ts.SyntaxKind.MinusMinusToken].includes(node.operator))
+            found.push(node);
+        if ((ts.isVariableDeclaration(node) || ts.isParameter(node) || ts.isBindingElement(node) || ts.isFunctionDeclaration(node)) &&
+            node.name && ts.isIdentifier(node.name) && node.name.text === name)
+            found.push(node);
+        ts.forEachChild(node, find);
+    });
+    return found;
+}
+const structured = functionNamed('setStructuredTypeMembers',
+    'type: StructuredType, members: SymbolTable, callSignatures: readonly Signature[], constructSignatures: readonly Signature[], indexInfos: readonly IndexInfo[]');
+const structuredStatements = structured.body.statements;
+if (structured.type?.getText(checker.source) !== 'ResolvedType' ||
+    structuredStatements[0]?.getText(checker.source) !== 'const resolved = type as ResolvedType;' ||
+    structuredStatements.at(-1)?.getText(checker.source) !== 'return resolved;' ||
+    assignedOrDeclared(structured.body, 'type').length !== 0 || assignedOrDeclared(structured.body, 'resolved').length !== 1)
+    throw new Error('expected setStructuredTypeMembers to cast its parameter to ResolvedType, return it, and write neither ' +
+        `name between: ${structured.getText(checker.source)}`);
+const anonymous = functionNamed('resolveAnonymousTypeMembers', 'type: AnonymousType');
+if (assignedOrDeclared(anonymous.body, 'type').length !== 0)
+    throw new Error('expected resolveAnonymousTypeMembers never to write or redeclare type');
+const callForms = { upstream: `${anonymousCall};`, adapted: `const ${resolvedName} = ${anonymousCall};` };
+const calls = [];
+ts.forEachChild(anonymous.body, function find(node) {
+    if ((ts.isExpressionStatement(node) || ts.isVariableStatement(node)) && Object.values(callForms).includes(node.getText(checker.source)))
+        calls.push(node);
+    ts.forEachChild(node, find);
+});
+if (calls.length !== 1 || !anonymous.body.statements.includes(calls[0]))
+    throw new Error(`expected \`${anonymousCall}\` once in resolveAnonymousTypeMembers, as a statement of its body, adapted or not, found ${calls.length}`);
+const call = calls[0];
+const callAdapted = call.getText(checker.source) === callForms.adapted;
+const resolvedWrites = [];
+for (const [slot, value] of anonymousWrites) {
+    const forms = { upstream: `type.${slot} = ${value};`, asserted: `(type as ${view}).${slot} = ${value};`, adapted: `${resolvedName}.${slot} = ${value};` };
+    const found = [];
+    ts.forEachChild(anonymous.body, function find(node) {
+        if (ts.isExpressionStatement(node) && Object.values(forms).includes(node.getText(checker.source))) found.push(node);
+        ts.forEachChild(node, find);
+    });
+    if (found.length !== 1)
+        throw new Error(`expected \`${forms.upstream}\` once in resolveAnonymousTypeMembers, asserted, adapted or not, found ${found.length}`);
+    if (found[0].getStart(checker.source) < call.getEnd()) throw new Error(`expected \`${forms.upstream}\` after \`${anonymousCall}\``);
+    const form = Object.keys(forms).find(key => forms[key] === found[0].getText(checker.source));
+    resolvedWrites.push({ slot, statement: found[0], form, where: where(checker, found[0]) });
+}
+// All or nothing: the const and both writes through it, or none of them.
+if (resolvedWrites.some(write => (write.form === 'adapted') !== callAdapted))
+    throw new Error(`expected resolveAnonymousTypeMembers' call and both writes all adapted or none, found the call ` +
+        `${callAdapted ? 'adapted' : 'not'} and the writes ${resolvedWrites.map(write => write.form).join(', ')}`);
+// The new const's name is new to the function: none before, and adapted, its declaration and the two writes alone.
+const resolvedUses = [];
+ts.forEachChild(anonymous.body, function find(node) {
+    if (ts.isIdentifier(node) && node.text === resolvedName) resolvedUses.push(node);
+    ts.forEachChild(node, find);
+});
+const expectedResolvedUses = callAdapted ? 1 + anonymousWrites.length : 0;
+if (resolvedUses.length !== expectedResolvedUses)
+    throw new Error(`expected \`${resolvedName}\` ${expectedResolvedUses} times in resolveAnonymousTypeMembers, found ${resolvedUses.length}`);
+if (!callAdapted) {
+    checkerEdits.push({ start: call.getStart(checker.source), end: call.getStart(checker.source), text: `const ${resolvedName} = ` });
+    for (const write of resolvedWrites) {
+        const receiver = write.statement.expression.left.expression;
+        const expected = write.form === 'upstream' ? ts.isIdentifier(receiver) && receiver.text === 'type'
+            : ts.isParenthesizedExpression(receiver) && receiver.getText(checker.source) === `(type as ${view})`;
+        if (!expected) throw new Error(`unexpected receiver in ${write.statement.getText(checker.source)}`);
+        checkerEdits.push({ start: receiver.getStart(checker.source), end: receiver.getEnd(), text: resolvedName });
+    }
+}
+const throughResolved = { call: { where: where(checker, call), edited: !callAdapted, statement: callForms.adapted },
+    writes: resolvedWrites.map(write => ({ slot: write.slot, where: write.where, from: write.form, statement: `${resolvedName}.${write.slot} = ...` })) };
 
 // The import: one `import type` of the view from ./types.js, which declares it, as the statement after checker.ts's last
 // import. The one import from ./_namespaces/ts.js, which later adaptations pin whole, keeps its bytes; it must not
@@ -379,7 +476,7 @@ else throw new Error(`expected checker.ts to import ${view} once, as this adapta
 // Every check passes before either file is written.
 write(types, typeEdits);
 write(checker, checkerEdits);
-console.log(JSON.stringify({ typescript: ts.version, task: '#5pstmvw', followUp: '#2gf0k9w', certificate: "the compiled program's gate", slots,
+console.log(JSON.stringify({ typescript: ts.version, task: '#5pstmvw', followUps: ['#2gf0k9w', '#38kdd4d'], certificate: "the compiled program's gate", slots,
     creator: { name: creatorName, where: where(checker, creator), edited: creatorEdited, returns: view },
-    writerCalls, assertedWrites,
+    writerCalls, assertedWrites, throughResolved,
     import: { ...imported, statement: importText } }, null, 2));
