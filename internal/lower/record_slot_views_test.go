@@ -250,24 +250,13 @@ func viewedUnknownReasons(program *ir.Program) []string {
 	return reasons
 }
 
-// scalarConstantsOnly is whether every reason is a scalar constant follow takes for an untracked source.
-func scalarConstantsOnly(reasons []string) bool {
-	for _, reason := range reasons {
-		if !strings.Contains(reason, "untracked source ir.NumberConstant") && !strings.Contains(reason, "untracked source ir.StringConstant") && !strings.Contains(reason, "untracked source ir.BooleanConstant") {
-			return false
-		}
-	}
-	return len(reasons) != 0
-}
-
 // Every record's values are one allocation-flow node (Runtime's ruling on #y852c3c), so the slot origin
 // reaches the arrays records hold, here the literal's, and not the whole program. The unrelated number[]
 // is the regression pin for the widening 2c8671ab made: there the RecordCall was untracked, the origin's
 // reach Unknown, and xs.push and xs.join stopped as reads through a checked view. A red names what made
 // the origins Unknown (viewedUnknownReasons). The second row holds a (string | number)[] too: viewedFrom
-// walks a viewed array literal's elements, its boxed "a" and 2 among them, and follow takes a constant
-// for an untracked source, so that program is Unknown everywhere. That's V3's flow, not the record node,
-// and a ruling for Runtime, so the row skips quoting the reasons while they're only that.
+// walks a viewed array literal's elements, its boxed ".ios" and 2 among them, which reach no site since
+// Runtime's ruling (follow's scalar constant case), so it lowers as the first row does.
 func TestRecordSlotValuesAreOneFlowNode(t *testing.T) {
 	t.Parallel()
 	stringArrays := strings.Replace(recordSlotOptions, `, suffixes: [".ios", 2]`, "", 1)
@@ -282,11 +271,7 @@ func TestRecordSlotValuesAreOneFlowNode(t *testing.T) {
 				t.Fatalf("the slot read stopped: %v", err)
 			}
 			if reasons := viewedUnknownReasons(base); len(reasons) != 0 {
-				why := strings.Join(reasons, "\n")
-				if row.name != "string arrays" && scalarConstantsOnly(reasons) {
-					t.Skip("V3's viewedFrom takes a viewed array literal's boxed scalar element for an untracked source, so every array is demanded; a ruling for Runtime (#y852c3c):\n" + why)
-				}
-				t.Fatalf("the slot origin makes the whole program viewed:\n%s", why)
+				t.Fatalf("the slot origin makes the whole program viewed:\n%s", strings.Join(reasons, "\n"))
 			}
 			if unknown, why := recordValuesOf(base); unknown {
 				t.Fatalf("a record built from a literal of known arrays has Unknown values: %s", why)

@@ -772,6 +772,15 @@ func (graph *allocationFlowGraph) follow(expression ir.Expression, allocation fu
 	case ir.Undefined, ir.Null:
 		// Neither is an allocation, so neither adds a site. A value that's only ever one of them
 		// reaches no site, which ReachingAllocations reports as Unknown, never as a proof.
+	case ir.NumberConstant, ir.StringConstant, ir.BooleanConstant:
+		// A number, string or boolean constant, boxed or not (Box forwards here), is never an array, a
+		// record or an object: a StringConstant is a heap string natively, and no more. So it can never
+		// be the allocation a view's demand is about, and it adds no site, as undefined and null don't.
+		// Demand is judged at the aggregate's own site, and a viewed array's elements are checked per
+		// handout whatever they are, so a constant reaching no site drops no check that was ever needed
+		// (Runtime's ruling on #y852c3c). A value that's only ever constants reaches no site, which
+		// ReachingAllocations still reports as Unknown. A regular expression literal (ir.RegExpNew) is an
+		// object, not one of these, and stays an untracked source.
 	case ir.Coalesce:
 		// Value ?? Fallback is Value when it's present and Fallback otherwise: a default's
 		// declaration over its incoming argument (functions.go's lowerBody) is one. A non-null
