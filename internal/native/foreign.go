@@ -551,7 +551,7 @@ func BuildApple(source string, output string, options native_runtime.Options) er
 		return fmt.Errorf("native: %w", err)
 	}
 	defer os.RemoveAll(directory)
-	library, err := RuntimeLibraryForSource("", source, options)
+	library, err := native_runtime.RuntimeLibraryForSource("", source, options)
 	if err != nil {
 		return err
 	}
@@ -576,9 +576,9 @@ func BuildApple(source string, output string, options native_runtime.Options) er
 			units = append(units, path)
 		}
 	}
-	arguments := append(sourceFlags(source, options), "-I", filepath.Dir(library), "-I", directory, "-o", output)
+	arguments := append(native_runtime.SourceFlags(source, options), "-I", filepath.Dir(library), "-I", directory, "-o", output)
 	arguments = append(arguments, units...)
-	arguments = append(arguments, RuntimeLinkFlags(library)...)
+	arguments = append(arguments, native_runtime.RuntimeLinkFlags(library)...)
 	arguments = append(arguments, "-framework", "AppKit", "-framework", "Foundation", "-framework", "CoreFoundation", "-lobjc")
 	// SwiftUI is Swift only: a program that names one of swiftui.swift's classes links it, compiled
 	// once for each version of it and of swiftc, and Swift's libraries with it.
