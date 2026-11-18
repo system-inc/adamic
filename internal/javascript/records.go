@@ -6,7 +6,15 @@ import (
 )
 
 // The checked runtime messages are synchronized with the record C interface.
+//
+// A record and a fixed object are both plain objects here, so every record the backend makes is marked in
+// adamicRecords, as native's shape marks it: a record literal (recordLiteral) and an entries record (an
+// ObjectLiteral with Record), the two IR nodes that make one natively (emit_records.go, entries_records.go). A
+// checked narrow to a fixed object refuses a marked object, and one to a record requires the mark
+// (adamicPlaceholderNarrow), so a dictionary under a declared fixed-object key stops here as natively (#6c4swvt).
 const recordRuntime = `
+const adamicRecords = new WeakSet();
+const adamicRecord = (record) => (adamicRecords.add(record), record);
 const adamicRecordGet = (record, key) => {
  if (Object.hasOwn(record, key)) return record[key];
  if (Object.hasOwn(Object.prototype, key)) panic("record member '" + key + "' is missing; records hold own keys only");
@@ -58,5 +66,5 @@ func (e *emitter) recordLiteral(r ir.RecordLiteral) string {
 	for _, entry := range r.Entries {
 		parts = append(parts, "["+e.value(entry.Key)+"]: "+e.value(entry.Value))
 	}
-	return "({" + strings.Join(parts, ", ") + "})"
+	return "adamicRecord({" + strings.Join(parts, ", ") + "})"
 }
