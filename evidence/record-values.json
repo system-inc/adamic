@@ -228,5 +228,35 @@
     "viewed_sites": 0,
     "viewed_unknown": true,
     "write_or_reason": "local or result has no tracked producer; no reaching allocation established"
+  },
+  {
+    "prepared": "finishClassCalls",
+    "record_writes": 0,
+    "slot_reads": [
+      "/workspace/scratch/y852c3c-adapted/src/compiler/program.ts:4204:13",
+      "/workspace/scratch/y852c3c-adapted/src/compiler/program.ts:4367:13",
+      "/workspace/scratch/y852c3c-adapted/src/compiler/program.ts:1817:18"
+    ],
+    "unit": "/workspace/scratch/y852c3c-adapted/src/compiler/program.ts:1501:1",
+    "unknown": true,
+    "view_origins": 38,
+    "viewed_sites": 0,
+    "viewed_unknown": true,
+    "write_or_reason": "local or result has no tracked producer; no reaching allocation established"
+  },
+  {
+    "prepared": "finishClassCalls",
+    "record_writes": 0,
+    "slot_reads": [
+      "/workspace/scratch/y852c3c-adapted/src/compiler/program.ts:4204:13",
+      "/workspace/scratch/y852c3c-adapted/src/compiler/program.ts:4367:13",
+      "/workspace/scratch/y852c3c-adapted/src/compiler/program.ts:1817:18"
+    ],
+    "unit": "/workspace/scratch/y852c3c-adapted/src/compiler/program.ts:1516:1",
+    "unknown": true,
+    "view_origins": 38,
+    "viewed_sites": 0,
+    "viewed_unknown": true,
+    "write_or_reason": "local or result has no tracked producer; no reaching allocation established"
   }
 ]
