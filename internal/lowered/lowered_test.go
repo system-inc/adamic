@@ -373,6 +373,7 @@ func environmentReads(t *testing.T, file string) []environmentRead {
 // ./internal/load ./internal/lower names, as Linux and macOS build it, is keyed by its value or said to shape nothing the
 // IR holds, so a new read can't leave the key silently short; a read by a name no source spells fails, and so does a
 // listed variable nothing reads. Today's reads: ADAMIC_PROGRAM_REGION and ADAMIC_OWNERSHIP_QUERY (lower.Lower), keyed,
+// ADAMIC_APPLE_BINDINGS and its file contents (load.appleBindingsDirectory), keyed,
 // and ADAMIC_BUILD_LOG (buildlog.Phase), not. Mutant: an os.Getenv planted in internal/lower with no key line.
 func TestEveryEnvironmentReadOfTheLoweringIsKeyed(t *testing.T) {
 	t.Parallel()
@@ -409,12 +410,19 @@ func TestEveryEnvironmentReadOfTheLoweringIsKeyed(t *testing.T) {
 			read[found.variable] = append(read[found.variable], filepath.ToSlash(relative))
 		}
 	}
-	keyed := inputsOf(t, sources{entry: "main.ts", files: map[string][]byte{"main.ts": nil}}, Options{}, environment{getenv: func(variable string) string { return "set-" + variable }})
+	bindings := t.TempDir()
+	value := func(variable string) string {
+		if variable == "ADAMIC_APPLE_BINDINGS" {
+			return bindings
+		}
+		return "set-" + variable
+	}
+	keyed := inputsOf(t, sources{entry: "main.ts", files: map[string][]byte{"main.ts": nil}}, Options{}, environment{getenv: value})
 	for variable, where := range read {
 		_, explained := unkeyedEnvironment[variable]
 		switch {
 		case slices.Contains(keyedEnvironment, variable):
-			if !slices.Contains(keyed.Flags, variable+"=set-"+variable) {
+			if !slices.Contains(keyed.Flags, variable+"="+value(variable)) {
 				t.Errorf("%s is listed as keyed and the key holds no line of its value", variable)
 			}
 		case !explained:
@@ -506,5 +514,60 @@ func TestAProgramReadingAFileBesideItsSourcesIsRefused(t *testing.T) {
 	}
 	if _, err := loaded(t.TempDir(), sourcesOf(t, []string{entry}), Options{}); err == nil || !strings.Contains(err.Error(), "isn't one of its sources") {
 		t.Fatalf("got %v, want the read of %s refused", err, elsewhere)
+	}
+}
+
+// Replacing the generated bindings at the same path changes the IR's key: the
+// environment value alone cannot name the declarations the loader reads.
+func TestAppleBindingsContentsAtTheSamePathMoveTheKey(t *testing.T) {
+	t.Parallel()
+	directory := t.TempDir()
+	bindings := filepath.Join(directory, "bindings")
+	write := func(root, text string) {
+		t.Helper()
+		if err := os.MkdirAll(filepath.Join(root, "a"), 0755); err != nil {
+			t.Fatal(err)
+		}
+		// Tree traversal visits a/ first; relative-path byte order puts a.d.ts first.
+		if err := os.WriteFile(filepath.Join(root, "a", "item.d.ts"), []byte(text), 0644); err != nil {
+			t.Fatal(err)
+		}
+		if err := os.WriteFile(filepath.Join(root, "a.d.ts"), []byte("export {};\n"), 0644); err != nil {
+			t.Fatal(err)
+		}
+	}
+	write(bindings, "export const value: number;\n")
+	under := environment{getenv: func(name string) string {
+		if name == "ADAMIC_APPLE_BINDINGS" {
+			return bindings
+		}
+		return ""
+	}, workingDirectory: directory}
+	read := sources{entry: "main.ts", files: map[string][]byte{"main.ts": []byte("export {};\n")}}
+	before := inputsOf(t, read, Options{}, under)
+	key := keyOf(t, before)
+	var flags []string
+	for _, flag := range before.Flags {
+		if strings.HasPrefix(flag, "apple-binding ") {
+			flags = append(flags, flag)
+		}
+	}
+	want := []string{
+		fmt.Sprintf("apple-binding a.d.ts=%x", sha256.Sum256([]byte("export {};\n"))),
+		fmt.Sprintf("apple-binding a/item.d.ts=%x", sha256.Sum256([]byte("export const value: number;\n"))),
+	}
+	replacement := filepath.Join(directory, "replacement")
+	write(replacement, "export const value: string;\n")
+	if err := os.RemoveAll(bindings); err != nil {
+		t.Fatal(err)
+	}
+	if err := os.Rename(replacement, bindings); err != nil {
+		t.Fatal(err)
+	}
+	if keyOf(t, inputsOf(t, read, Options{}, under)) == key {
+		t.Fatal("different binding contents at the same path kept the lowering key")
+	}
+	if !slices.Equal(flags, want) {
+		t.Fatalf("binding file flags: got %v, want %v", flags, want)
 	}
 }
