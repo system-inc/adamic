@@ -1,10 +1,10 @@
 # #y852c3c paired TypeScript census
 
-This checkpoint covers the verified full pairs for `commandLineParser.ts` and `moduleNameResolver.ts`. The compiler-directory and `tsc.ts` first-error pairs are still running. The worker killed both initial scan-all processes after exceeding its memory allowance. A serial retry is underway.
+This checkpoint covers the verified full pairs for `commandLineParser.ts` and `moduleNameResolver.ts`. The compiler-directory and `tsc.ts` first-error pairs and the full `utilities.ts` pair are still running. The worker killed both initial scan-all processes after exceeding its memory allowance. A serial retry is underway.
 
 ## 1. Record values reaching Unknown
 
-**Yes. The head's record node was Unknown in all 9 observed full-mode units that retained a checked slot read.** The graph tracked zero record writes in each. `recordValuesUnknown` named no write and returned “local or result has no tracked producer; no reaching allocation established.” The parser’s `AdamicJsonRecoveryValue` and `AdamicJsonRecoveryObject` supplied no observed cause. The whole-entry attribution is open until the broader passes finish.
+**Yes. The head's record node was Unknown in all 9 observed full-mode units that retained a checked slot read.** The graph tracked zero record writes in each. `recordValuesUnknown` named no write and returned “local or result has no tracked producer; no reaching allocation established.” The parser’s `AdamicJsonRecoveryValue` and `AdamicJsonRecoveryObject` supplied no observed cause. A source-filtered first-error probe also found the same graph result in `usesWildcardTypes` (`utilities.ts:9027:1`), with one checked slot read at `9028:17` and zero tracked writes. Whole-entry attribution is open until the broader passes finish.
 
 | Unit | Checked slot-read observations | Tracked writes |
 | --- | ---: | ---: |
@@ -41,6 +41,10 @@ The full `moduleNameResolver.ts` pair recorded 207 units on each side, 666 base 
 | 3334:28 | `resolveFromTypeRoot` | Stopped to lowered. |
 
 The guard at `480:9` also lets the following return read at `481:16` lower. The full run records no newly reached stop in this file. [Resolver pair](evidence/resolver-pair.json)
+
+### Utilities first-error finding
+
+The focused first-error pair saw `usesWildcardTypes` stop at `utilities.ts:9028:17` on the base. On the head, the read of `options.types` lowered and the probe recorded no later stop in this unit. The full file pair is running. [Focused pair](evidence/candidate-pair.json)
 
 ### Parser slot reads
 
