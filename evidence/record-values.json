@@ -127,5 +127,29 @@
     "viewed_sites": 0,
     "viewed_unknown": true,
     "write_or_reason": "local or result has no tracked producer; no reaching allocation established"
+  },
+  {
+    "record_writes": 0,
+    "slot_reads": [
+      "/workspace/scratch/y852c3c-adapted/src/compiler/programDiagnostics.ts:410:122"
+    ],
+    "unit": "/workspace/scratch/y852c3c-adapted/src/compiler/programDiagnostics.ts:89:1",
+    "unknown": true,
+    "view_origins": 1,
+    "viewed_sites": 0,
+    "viewed_unknown": true,
+    "write_or_reason": "local or result has no tracked producer; no reaching allocation established"
+  },
+  {
+    "record_writes": 0,
+    "slot_reads": [
+      "/workspace/scratch/y852c3c-adapted/src/compiler/programDiagnostics.ts:410:122"
+    ],
+    "unit": "/workspace/scratch/y852c3c-adapted/src/compiler/programDiagnostics.ts:328:5",
+    "unknown": true,
+    "view_origins": 1,
+    "viewed_sites": 0,
+    "viewed_unknown": true,
+    "write_or_reason": "local or result has no tracked producer; no reaching allocation established"
   }
 ]

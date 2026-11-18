@@ -1,10 +1,10 @@
 # #y852c3c paired TypeScript census
 
-Three full file pairs are verified. Five additional files with full-mode base slot stops are queued for paired single-file runs. The original compiler-directory processes were killed at the worker’s memory limit before they emitted findings. The serial retry is underway. Both unfiltered `tsc.ts` first-error processes are still running. The focused first-error and scan-all pairs are complete.
+Four full file pairs are verified. Four additional files with full-mode base slot stops are queued for paired single-file runs. The original compiler-directory processes were killed at the worker’s memory limit before they emitted findings. The serial retry is underway. Both unfiltered `tsc.ts` first-error processes are still running. The focused first-error and scan-all pairs are complete.
 
 ## 1. Record values reaching Unknown
 
-**Yes. The head's record node was Unknown in all 10 observed full-mode units that retained a checked slot read.** The graph tracked zero record writes in each. `recordValuesUnknown` named no write and returned “local or result has no tracked producer; no reaching allocation established.” The parser’s `AdamicJsonRecoveryValue` and `AdamicJsonRecoveryObject` supplied no observed cause. The whole-entry allocation graph remains unobserved.
+**Yes. The head's record node was Unknown in all 12 observed full-mode units that retained a checked slot read.** The graph tracked zero record writes in each. `recordValuesUnknown` named no write and returned “local or result has no tracked producer; no reaching allocation established.” The parser’s `AdamicJsonRecoveryValue` and `AdamicJsonRecoveryObject` supplied no observed cause. The whole-entry allocation graph remains unobserved.
 
 | Unit | Checked slot-read observations | Tracked writes |
 | --- | ---: | ---: |
@@ -18,8 +18,10 @@ Three full file pairs are verified. Five additional files with full-mode base sl
 | `tryFile` at `moduleNameResolver.ts:2189:1` | 2 | 0 |
 | `resolveFromTypeRoot` at `moduleNameResolver.ts:3332:1` | 2 | 0 |
 | `usesWildcardTypes` at `utilities.ts:9027:1` | 1 | 0 |
+| `createProgramDiagnostics` at `programDiagnostics.ts:89:1` | 1 | 0 |
+| `fileIncludeReasonToRelatedInformation` at `programDiagnostics.ts:328:5` | 1 | 0 |
 
-The observer queries the head allocation graph on a disposable copy of each unit snapshot. Its file streams reproduce all 504 parser, 640 resolver, and 1,337 utilities findings at the original sites. See [the graph rows](evidence/record-values.json), [parser control](evidence/parser-probe-equivalence.json), [resolver control](evidence/resolver-probe-equivalence.json), and [utilities control](evidence/utilities-probe-equivalence.json).
+The observer queries the head allocation graph on a disposable copy of each unit snapshot. Its file streams reproduce all 504 parser, 640 resolver, 1,337 utilities, and 107 program diagnostics findings at the original sites. See [the graph rows](evidence/record-values.json), [parser control](evidence/parser-probe-equivalence.json), [resolver control](evidence/resolver-probe-equivalence.json), and [utilities control](evidence/utilities-probe-equivalence.json), and [program diagnostics control](evidence/programDiagnostics-probe-equivalence.json).
 
 ## 2. Slot-read sites and the Library comparison
 
@@ -85,9 +87,17 @@ All twelve remain stopped at the same refusal. The historical locations and full
 
 The focused first-error pair selected source units containing candidate reads. It recorded seven instances of the slot-read stop in the base and none in the head. The six resolver instances were at `480:9`, `674:21`, `780:36`, `1583:10`, `2190:10`, and `3333:10`. The other was `utilities.ts:9028:17`. All seven were gone and none of those units acquired a later stop in the focused pass. The two parser sites were visible in full mode. [Focused first-error pair](evidence/candidate-pair.json)
 
+### Program diagnostics slot read
+
+| Site | Owning unit | Base to head |
+| --- | --- | --- |
+| `programDiagnostics.ts:410:122` | `createProgramDiagnostics` and `fileIncludeReasonToRelatedInformation` | Stopped to lowered in both units. The head observer records both reads of `options.lib`, and the full pair records no newly reached stop. |
+
+[Program diagnostics pair](evidence/programDiagnostics-pair.json)
+
 ### Additional base sites from the focused full search
 
-The focused base search found another eleven occurrences at seven positions. These sites are confirmed as base stops. The corresponding head and unfiltered single-file dispositions are pending. [Base discovery stream](evidence/base/candidate-full-discovery.jsonl.gz)
+The focused base search found another nine occurrences at six positions. These sites are confirmed as base stops. The corresponding head and unfiltered single-file dispositions are pending. [Base discovery stream](evidence/base/candidate-full-discovery.jsonl.gz)
 
 | Base stop | Owning unit positions |
 | --- | --- |
@@ -95,15 +105,14 @@ The focused base search found another eleven occurrences at seven positions. The
 | `program.ts:4204:13` | `program.ts:1517:1`, `program.ts:4077:5` |
 | `program.ts:4367:13` | `program.ts:1517:1`, `program.ts:4077:5` |
 | `program.ts:1817:18` | `program.ts:1517:1` |
-| `programDiagnostics.ts:410:122` | `programDiagnostics.ts:89:1`, `programDiagnostics.ts:328:5` |
 | `resolutionCache.ts:1706:13` | `resolutionCache.ts:581:1`, `resolutionCache.ts:1704:5` |
 | `watch.ts:543:151` | `watch.ts:445:1` |
 
 ## 3. Other movements
 
 - **Gone, NotYet during lowering.** “reading value” at `commandLineParser.ts:2950:65` clears when the declaration of `value` lowers.
-- **Gone, rollback boundary during lowering.** “failed statement; state rolled back; continued at next statement or declaration” clears at `commandLineParser.ts:2871:5`, `2949:9`, and `2950:9`, and at `utilities.ts:9028:5`. It also clears at `moduleNameResolver.ts:480:5`, `674:17` in two units, `699:13` in two units, `780:5`, `1583:5`, `1595:5`, `1634:9`, `2190:5`, `2196:5`, `3333:5`, and `3334:5`. The paired JSON names both owners for each duplicated site.
-- **Growth in conservative checked-view demand.** The new origins make `viewedFrom` return `Unknown` with zero known allocation sites in all ten measured unit snapshots. The array check uses that flag to demand every eligible array read in those snapshots. The known-site set remains empty. The full file pairs and focused first-error pair have zero new, changed, or reached findings. The unfiltered census is still pending. [Graph observations](evidence/record-values.json)
+- **Gone, rollback boundary during lowering.** “failed statement; state rolled back; continued at next statement or declaration” clears at `commandLineParser.ts:2871:5`, `2949:9`, and `2950:9`, at `utilities.ts:9028:5`, and at `programDiagnostics.ts:410:21` in two units. It also clears at `moduleNameResolver.ts:480:5`, `674:17` in two units, `699:13` in two units, `780:5`, `1583:5`, `1595:5`, `1634:9`, `2190:5`, `2196:5`, `3333:5`, and `3334:5`. The paired JSON names both owners for each duplicated site.
+- **Growth in conservative checked-view demand.** The new origins make `viewedFrom` return `Unknown` with zero known allocation sites in all twelve measured unit snapshots. The array check uses that flag to demand every eligible array read in those snapshots. The known-site set remains empty. The full file pairs and focused first-error pair have zero new, changed, or reached findings. The unfiltered census is still pending. [Graph observations](evidence/record-values.json)
 
 ### Whole-entry scan-all boundary
 
