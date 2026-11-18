@@ -420,6 +420,21 @@ def seen_as(key):
     return (match['own'], match['view']) if match else None
 
 
+def function_lines(lines, name):
+    # The first and last index of the one function declared by that name in a file's lines, carriage returns stripped:
+    # its declaration line and the closing brace at the declaration's own indentation. A search scoped to it can't meet
+    # the same text elsewhere in the file (setStructuredTypeMembers writes `resolved.constructSignatures = ...` too).
+    starts = [index for index, line in enumerate(lines) if re.match(r'\s*function\s+' + re.escape(name) + r'\s*[<(]', line)]
+    if len(starts) != 1:
+        raise ValueError(f"expected one function {name}, found {len(starts)}")
+    start = starts[0]
+    indent = lines[start][:len(lines[start]) - len(lines[start].lstrip())]
+    end = next((index for index in range(start + 1, len(lines)) if lines[index] == indent + '}'), None)
+    if end is None:
+        raise ValueError(f"function {name} at line {start + 1} has no closing brace at its indentation")
+    return start, end
+
+
 def flat(text, limit=400):
     line = ' '.join(text.split())
     return line if len(line) <= limit else f"{line[:limit]} ... ({len(line)} characters)"
@@ -489,10 +504,24 @@ def occurrences(haystack, needle):
     return [index for index in range(len(haystack) - len(needle) + 1) if haystack[index:index + len(needle)] == needle]
 strays = []
 rebuilt = list(oldChecker)
+# Each search runs inside resolveAnonymousTypeMembers alone, in each tree: the call's text and setStructuredTypeMembers'
+# own `resolved.` writes stand elsewhere in checker.ts too. Every substitution keeps its line count, so before's range
+# holds in the rebuilt lines.
+UNIT = 'resolveAnonymousTypeMembers'
+try:
+    beforeRange, afterRange = flowlib.function_lines(oldChecker, UNIT), flowlib.function_lines(newChecker, UNIT)
+except ValueError as error:
+    beforeRange = afterRange = None
+    strays.append(str(error))
+def scoped(haystack, needle, bounds):
+    start, end = bounds
+    return [start + index for index in occurrences(haystack[start:end + 1], needle)]
 for name, old, new in substitutions:
-    found = occurrences(rebuilt, old)
+    if beforeRange is None:
+        break
+    found = scoped(rebuilt, old, beforeRange)
     if len(found) != 1:
-        strays.append(f"{name}: before's text found {len(found)} times, not once")
+        strays.append(f"{name}: before's text found {len(found)} times in {UNIT}, not once")
         continue
     rebuilt[found[0]:found[0] + len(old)] = new
 rebuiltOk = not strays and rebuilt == newChecker
@@ -510,7 +539,7 @@ for index in hunks:
     ranges.append((start, start + count))
 placed = {}
 for name, new in changeLines:
-    found = occurrences(newChecker, new)
+    found = scoped(newChecker, new, afterRange) if afterRange else []
     if len(found) != 1:
         placed.setdefault(None, []).append(name)
         continue
@@ -524,7 +553,8 @@ seen = list(dict.fromkeys(name for names in placed.values() for name in names))
 hunksOk = None not in placed and sorted(placed) == list(range(len(hunks)))
 # Every change stands in resolveAnonymousTypeMembers, read from after's own source.
 units = sorted({flowlib.enclosing(after, f"src/compiler/checker.ts:{index + 1}:1") for name, new in changeLines
-                for index in occurrences(newChecker, new)})
+                for index in (scoped(newChecker, new, afterRange) if afterRange else [])})
+# The rebuild compares whole files, so a change outside the function's range would still fail it.
 print(f"flow: (0) checker.ts: the changes stand in {', '.join(units)}")
 unitsOk = units == ['src/compiler/checker.ts:resolveAnonymousTypeMembers']
 checkerOk = rebuiltOk and hunksOk and unitsOk
@@ -1013,12 +1043,23 @@ restore = [('const resolved = setStructuredTypeMembers(type, members, emptyArray
            ('resolved.callSignatures = getSignaturesOfSymbol(symbol);', f'(type as {VIEW}).callSignatures = getSignaturesOfSymbol(symbol);'),
            ('resolved.constructSignatures = constructSignatures;', f'(type as {VIEW}).constructSignatures = constructSignatures;')]
 text = (after / 'src/compiler/checker.ts').read_bytes().decode()
-restored = text
+newline = '\r\n' if '\r\n' in text else '\n'
+lines = text.split(newline)
+# Each line is found inside resolveAnonymousTypeMembers alone: setStructuredTypeMembers writes
+# `resolved.constructSignatures = constructSignatures;` too.
+try:
+    start, end = flowlib.function_lines(lines, 'resolveAnonymousTypeMembers')
+except ValueError as error:
+    print(f"flow: (4) {error}; no mutant")
+    sys.exit(1)
 for adapted, asserted in restore:
-    if restored.count(adapted) != 1:
-        print(f"flow: (4) after's checker.ts holds `{adapted}` {restored.count(adapted)} times, not once; no mutant")
+    found = [index for index in range(start, end + 1) if lines[index].strip() == adapted]
+    if len(found) != 1:
+        print(f"flow: (4) resolveAnonymousTypeMembers holds `{adapted}` {len(found)} times, not once; no mutant")
         sys.exit(1)
-    restored = restored.replace(adapted, asserted)
+    line = lines[found[0]]
+    lines[found[0]] = line[:len(line) - len(line.lstrip())] + asserted
+restored = newline.join(lines)
 # A new file in the link's place, so after's checker.ts keeps its bytes.
 (mutant / 'src/compiler/checker.ts.mutant').write_bytes(restored.encode())
 os.replace(mutant / 'src/compiler/checker.ts.mutant', mutant / 'src/compiler/checker.ts')
@@ -1206,9 +1247,14 @@ assertion = 'Debug.assert(resolved === type, "setStructuredTypeMembers returns i
 text = (after / 'src/compiler/checker.ts').read_bytes().decode()
 newline = '\r\n' if '\r\n' in text else '\n'
 lines = text.split(newline)
-found = [index for index, line in enumerate(lines) if line.strip() == const]
+try:
+    start, end = flowlib.function_lines(lines, 'resolveAnonymousTypeMembers')
+except ValueError as error:
+    print(f"flow: (5) {error}; no witness")
+    sys.exit(1)
+found = [index for index in range(start, end + 1) if lines[index].strip() == const]
 if len(found) != 1:
-    print(f"flow: (5) after's checker.ts holds the const {len(found)} times, not once; no witness")
+    print(f"flow: (5) resolveAnonymousTypeMembers holds the const {len(found)} times, not once; no witness")
     sys.exit(1)
 indent = lines[found[0]][:len(lines[found[0]]) - len(lines[found[0]].lstrip())]
 lines.insert(found[0] + 1, indent + assertion)
