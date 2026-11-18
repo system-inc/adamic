@@ -340,6 +340,10 @@ func JavaScriptWith(program *ir.Program, options Options) string {
 		// A custom runtime need not expose Node exit helpers for programs without exit.
 		code = "const adamicProcessExiting = () => false;\n" + code
 	}
+	if emitter.workersTextOrNullUsed {
+		// Only a Worker reaches a workers: operation, and its runtime (internal/worker/runtime.mjs) exports this.
+		code = "import { adamicWorkersTextOrNull } from " + runtimeImport + ";\n" + code
+	}
 	if strings.Contains(code, "adamicWatchFileListener(") {
 		code = nodeWatchFileRuntime + code
 	}
@@ -421,6 +425,9 @@ type emitter struct {
 	// continues holds, innermost last, each open loop's continue label.
 	continues  []string
 	breakables []string
+
+	// workersTextOrNullUsed imports the Workers runtime's check of what a KV get settles to (library_workers.go).
+	workersTextOrNullUsed bool
 }
 
 func (e *emitter) line(format string, arguments ...any) {

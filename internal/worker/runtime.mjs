@@ -15,6 +15,12 @@ export function writeTextFile() { panic('writeTextFile: not available on Workers
 export function readDirectory() { panic('readDirectory: not available on Workers'); }
 export function fileStatus() { panic('fileStatus: not available on Workers'); }
 export function programArguments() { panic('programArguments: not available on Workers'); }
+// A KV get the handler awaits settles through this check, which changes no value: text and null pass as
+// they are, and anything else stops, named by its typeof and never by the value a binding holds.
+export function adamicWorkersTextOrNull(value) {
+	if (typeof value === 'string' || value === null) return value;
+	panic('workers:KvNamespace.get settled to a value of type ' + typeof value + ', not a string or null');
+}
 // The JavaScript backend imports decodeJson. Its Workers implementation is a separate unit, so until it
 // lands a call panics, loudly, rather than decoding with code the oracle also runs.
 export function decodeJson() { panic('decodeJson: not yet available on Workers'); }

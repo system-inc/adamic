@@ -1,10 +1,15 @@
 package javascript
 
 import (
+	"strings"
+
 	"github.com/system-inc/adamic/internal/ir"
 )
 
 func (e *emitter) nodeHostCall(call ir.NodeHostCall) string {
+	if strings.HasPrefix(call.Module, "workers:") {
+		return e.workersHostCall(call)
+	}
 	if call.Module == "node:path" {
 		return "adamicNodePath." + call.Member + "(" + e.values(call.Arguments) + ")"
 	}
