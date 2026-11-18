@@ -70,6 +70,11 @@ func (graph *allocationFlowGraph) resultNode(function int) int {
 // #y852c3c: judge by allocation, never by declared type). Its sources are every value collect sees
 // stored into a record (noteRecordWrite); one the graph can't place makes every read of it Unknown,
 // through unknown() as any source does, and never sets a program-wide flag itself.
+//
+// What it doesn't do yet on tsc (Correctness's census of #y852c3c, typescript/y852c3c-census 5366bd06):
+// in each of the 20 unit snapshots that hold a checked slot read, this node is Unknown for having no
+// writer at all ("no tracked producer"), never for a write, so those units' array demand is total, as
+// it was before the node existed. Whether production's whole-program graph has the writers is #8r6ahkv.
 func (graph *allocationFlowGraph) recordValuesNode() int {
 	return len(graph.program.Locals) + len(graph.program.Functions) + 1
 }
