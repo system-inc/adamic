@@ -1,0 +1,8 @@
+import type {HttpRequest,HttpResponse} from 'adamic/http';
+import type {KvNamespace} from 'adamic/workers';
+interface Environment {readonly GREETING:string; readonly KV:KvNamespace}
+async function later(kv:KvNamespace):Promise<string> { const value = await kv.get("k"); return value === null ? "none" : value; }
+export function compute(value:number):number { return value + 1; }
+export function handle(request:HttpRequest,environment:Environment):HttpResponse {
+return {status:200,headers:[],body:environment.GREETING+request.path};
+}

@@ -335,11 +335,16 @@ func kvLowered(t *testing.T, name string) *ir.Program {
 	return lowered
 }
 
-// kvPromiseHostCalls walks a program's IR by reflection, as CheckPure does, and counts each host call
-// whose Returns is ir.Promise that an await settles directly, naming every other one. Lowering makes
-// the call await's operand; NormalizeAsync then snapshots every operand of an await into a temporary
-// declared just before it, so the operand the walk sees is that temporary, declared with the call,
-// read once and only by the await in the very next statement, and never assigned.
+// kvPromiseHostCalls walks a program's IR by reflection and counts each host call whose Returns is
+// ir.Promise that an await settles directly, naming every other one. Lowering makes the call the
+// await's operand (awaitExpression). flow.NormalizeAsync then snapshots every operand of an await, the
+// call included, into a temporary declared just before it (asyncNormalizer's Await case), so the
+// lowered shape is Declare{t, call} followed at once by an Await of Read{t}, the await's whole value in
+// a Declare or an Evaluate. That is still the direct await: t is the normalizer's own (its temporary
+// is named "suspension"), declared with the call, read once, by that await alone, and never assigned, so nothing between the call and its
+// await can run or keep it. A call held in a program's own local, read twice, or awaited later fails.
+// Types are matched only on concrete values, never on an interface that holds one, which the walk
+// enters next: matching both counted every node twice, and the temporary's one read as two.
 func kvPromiseHostCalls(program *ir.Program) (awaited int, stray []string) {
 	reads, writes := map[int]int{}, map[int]int{}
 	var count func(reflect.Value)
@@ -347,7 +352,7 @@ func kvPromiseHostCalls(program *ir.Program) (awaited int, stray []string) {
 		if !value.IsValid() {
 			return
 		}
-		if value.CanInterface() {
+		if value.Kind() != reflect.Interface && value.CanInterface() {
 			switch node := value.Interface().(type) {
 			case ir.Read:
 				reads[node.Local]++
@@ -397,12 +402,12 @@ func kvPromiseHostCalls(program *ir.Program) (awaited int, stray []string) {
 		if !value.IsValid() {
 			return
 		}
-		if value.CanInterface() {
+		if value.Kind() != reflect.Interface && value.CanInterface() {
 			switch node := value.Interface().(type) {
 			case []ir.Statement:
 				for index, statement := range node {
 					if declared, isDeclare := statement.(ir.Declare); isDeclare {
-						if call, isCall := declared.Value.(ir.NodeHostCall); isCall && call.Returns == ir.Promise && index+1 < len(node) && awaits(node[index+1], declared.Local) && reads[declared.Local] == 1 && writes[declared.Local] == 0 {
+						if call, isCall := declared.Value.(ir.NodeHostCall); isCall && call.Returns == ir.Promise && program.Locals[declared.Local].Name == "suspension" && index+1 < len(node) && awaits(node[index+1], declared.Local) && reads[declared.Local] == 1 && writes[declared.Local] == 0 {
 							awaited++
 							walk(reflect.ValueOf(call.Arguments))
 							continue
@@ -574,5 +579,26 @@ func TestWorkerKVCaughtRejectionMessage(t *testing.T) {
 	t.Parallel()
 	if err := kvCapabilityCheck(t, "get_caught_message"); err != nil {
 		t.Fatalf("KV caught rejection: a stop now answers the caught message read, so pin its words: %v", err)
+	}
+}
+
+// The --wasm road: a sync handle, a pure selected compute, and an unselected async function that awaits
+// a get. The Worker's checks let it by (compute is pure and the async function isn't selected), and
+// the Wasm build lowers the entry as an ordinary program, which refuses the adamic/workers import by
+// name before native sees the get. HostCallRefusal stands behind that refusal; neither road panics.
+func TestWorkerKVWasmBuildRefusesTheGet(t *testing.T) {
+	t.Parallel()
+	binary := wasmCompiler(t)
+	entry, err := filepath.Abs("testdata/kv_capability/wasm_get.a")
+	if err != nil {
+		t.Fatal(err)
+	}
+	directory := filepath.Join(t.TempDir(), "refused")
+	output, err := exec.CommandContext(t.Context(), binary, "worker", entry, "--out", directory, "--wasm", "compute").CombinedOutput()
+	if err == nil || !strings.Contains(string(output), "an import of adamic/workers outside a Worker") || strings.Contains(string(output), "compiler bug") || strings.Contains(string(output), "panic") {
+		t.Fatalf("KV get under --wasm: want the named import refusal and no panic: err=%v\n%s", err, output)
+	}
+	if _, err := os.Stat(directory); !os.IsNotExist(err) {
+		t.Fatalf("KV get under --wasm wrote output: %v", err)
 	}
 }

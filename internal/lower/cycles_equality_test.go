@@ -279,6 +279,14 @@ func cycleCompareProgramModes(t *testing.T, path string, regions ...bool) {
 		if difference := cycleFirstDifferenceResolved(reflect.ValueOf(before), reflect.ValueOf(after), "program", scanTypes, indexTypes); difference != "" {
 			t.Fatalf("cycle equality difference: %s ProgramRegion=%t: %s", path, region, difference)
 		}
+		// The corpus lowers a Worker's fixture as an ordinary program, past the import refusal lowerTarget
+		// makes, so it can hold a JavaScript-only host operation native refuses by name before emission.
+		if scanErr == nil {
+			if refusal := native.HostCallRefusal(before); refusal != nil {
+				t.Logf("%s: ProgramRegion=%t not compared natively: %v", path, region, refusal)
+				continue
+			}
+		}
 		if scanErr == nil && native.C(before) != native.C(after) {
 			t.Fatalf("cycle equality difference: %s ProgramRegion=%t: emitted C differs", path, region)
 		}

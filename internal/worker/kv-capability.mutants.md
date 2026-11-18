@@ -24,11 +24,13 @@ complete after the mutation: another lowering stop is not the named witness.
 The ingress check requires the bridge to list KV as a binding and a real
 namespace to reach the handler; the retargeted mutant reads it as a string.
 
-Native's refusal of a host call it doesn't bind (a workers: module, a Promise
-form, or a module other than node:path and node:fs) lives in another package,
-so its mutant uses that package's own harness, as internal/lower's realpath
-mutant does: `TestProduct_NativeWorkersHostCallMutant` builds the mutated
-internal/native test binary with the refusal replaced by `if false {`, and
-`TestNativeWorkersHostCallMutantIsCaught` requires
+Native's refusal of a host call it doesn't emit (a workers: module, a Promise
+form, or a module other than node:path and node:fs) is `native.HostCallRefusal`,
+an ordinary error WASI and WASIExports return before emission, with the
+emitter's panic kept behind it as the backstop. It lives in another package, so
+its mutant uses that package's own harness, as internal/lower's realpath mutant
+does: `TestProduct_NativeWorkersHostCallMutant` builds the mutated
+internal/native test binary with HostCallRefusal's test made `isCall && false`,
+and `TestNativeWorkersHostCallMutantIsCaught` requires
 TestNodeHostCallRefusesWorkersAndPromises to fail at
-internal/native/library_node_fs_directory_test.go:40.
+internal/native/library_node_fs_directory_test.go:37.
