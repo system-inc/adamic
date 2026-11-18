@@ -256,7 +256,8 @@ func viewedUnknownReasons(program *ir.Program) []string {
 // reach Unknown, and xs.push and xs.join stopped as reads through a checked view. A red names what made
 // the origins Unknown (viewedUnknownReasons). The second row holds a (string | number)[] too: viewedFrom
 // walks a viewed array literal's elements, its boxed ".ios" and 2 among them, which reach no site since
-// Runtime's ruling (follow's scalar constant case), so it lowers as the first row does.
+// Runtime's ruling (follow's scalar constant case) and close on noReachingAllocation alone, which
+// viewedFrom skips, so it lowers as the first row does.
 func TestRecordSlotValuesAreOneFlowNode(t *testing.T) {
 	t.Parallel()
 	stringArrays := strings.Replace(recordSlotOptions, `, suffixes: [".ios", 2]`, "", 1)
@@ -288,6 +289,48 @@ console.log(xs.join(","));
 			}
 			if handouts := checkedHandouts(program); len(handouts) != 1 || handouts[0] != "string" {
 				t.Fatalf("the slot reach's handout isn't checked: %v", handouts)
+			}
+		})
+	}
+}
+
+// The empty-reach skip's negatives (Runtime's ruling on #y852c3c): a viewed array's element that reaches
+// no site for a reason of its own beside the closing one isn't skipped, so the program is still viewed
+// whole and the unrelated xs.push(3) stops. A conditional between a constant and a closure's parameter,
+// which the graph marks unknown since a call it doesn't see may pass anything (the MakeClosure arm); and a
+// local whose one source is a call to a function with no return, a result with no tracked producer.
+func TestRecordSlotUnplacedElementsKeepTheProgramWhole(t *testing.T) {
+	t.Parallel()
+	for _, row := range []struct{ name, source, reason string }{
+		{"a constant or a closure's parameter", `const make = (extra: string | number, cond: boolean): Options => ({ lib: ["es2020"], suffixes: [".ios", cond ? 2 : extra] });
+console.log(String(make(1, true).target));
+`, "parameter may receive untracked or omitted arguments"},
+		{"a local with no tracked producer", `function never(): string | number {
+    throw new Error("never");
+}
+const held = never();
+const other: Options = { lib: [], suffixes: [".ios", held] };
+console.log(String(other.target));
+`, "local or result has no tracked producer"},
+	} {
+		t.Run(row.name, func(t *testing.T) {
+			t.Parallel()
+			base, err := lowerSourceAs(t, recordSlotOptions+row.source+recordSlotEach, ".ts")
+			if err != nil {
+				t.Fatalf("the program stopped before its unrelated array: %v", err)
+			}
+			reasons := viewedUnknownReasons(base)
+			t.Logf("what views the program whole:\n%s", strings.Join(reasons, "\n"))
+			if !strings.Contains(strings.Join(reasons, "\n"), row.reason) {
+				t.Fatalf("the unplaced element was skipped: no reason names %q", row.reason)
+			}
+			_, err = lowerSourceAs(t, recordSlotOptions+row.source+recordSlotEach+`const xs = [1, 2];
+xs.push(3);
+console.log(xs.join(","));
+`, ".ts")
+			var notYet *NotYet
+			if !errors.As(err, &notYet) || notYet.What != "a checked view's array read through push (not checked yet)" {
+				t.Fatalf("got %v, want the unrelated push to stop in a program viewed whole", err)
 			}
 		})
 	}

@@ -258,8 +258,23 @@ func (graph *allocationFlowGraph) viewedFromNoting(origins []ir.Expression, thro
 	viewed := map[int]bool{}
 	unknown := false
 	queue := []int{}
-	reach := func(value ir.Expression) ir.AllocationSet {
+	// reach is a value's reach, noted when it's Unknown. held is a value a viewed allocation holds: a
+	// field, a spread, an element or a store, never an origin.
+	reach := func(value ir.Expression, held bool) ir.AllocationSet {
 		set := graph.ReachingAllocations(value)
+		// A held value whose reach is empty and closes on noReachingAllocation alone reaches no
+		// allocation, so it adds no site and leaves the answer known (Runtime's ruling on #y852c3c).
+		// Every road in ReachingAllocations that gives up names its own reason: unknownAt's parameter or
+		// write (shape_flow.go:130), a local or result with no tracked producer (:134), a recursive
+		// projection receiver (:39), the projected reasons (projectedSources, :319 to :366, the receiver's
+		// own carried along), and follow's missing expression, untracked allocation source, allocation
+		// with no site identity, call with no tracked target, opaque closure and untracked source
+		// (view_flow.go). Reasons are a set, deduplicated and sorted, so one reason alone means every leaf
+		// was a non-allocation: a constant, undefined or null. A boxed constant element, a Union to
+		// viewAggregate, is one.
+		if held && len(set.Sites) == 0 && len(set.Reasons) == 1 && set.Reasons[0] == noReachingAllocation {
+			return ir.AllocationSet{}
+		}
 		if set.Unknown && note != nil {
 			note(value, set.Reasons)
 		}
@@ -275,7 +290,7 @@ func (graph *allocationFlowGraph) viewedFromNoting(origins []ir.Expression, thro
 		}
 	}
 	for _, origin := range origins {
-		add(reach(origin))
+		add(reach(origin, false))
 	}
 	index := graph.projectionIndex()
 	for len(queue) != 0 {
@@ -284,25 +299,26 @@ func (graph *allocationFlowGraph) viewedFromNoting(origins []ir.Expression, thro
 		if literal, ok := index.records[site]; ok {
 			for _, field := range literal.Fields {
 				if viewAggregate(field.Value) {
-					add(reach(field.Value))
+					add(reach(field.Value, true))
 				}
 			}
 			if throughSpreads && literal.Spread != nil {
-				add(reach(literal.Spread))
+				add(reach(literal.Spread, true))
 			}
 		}
 		if literal, ok := index.arrays[site]; ok {
 			for _, element := range literal.Elements {
-				// A boxed constant element is a Union here, and reaches no site (follow's scalar constant case).
+				// A boxed constant element is a Union here, reaches no site (follow's scalar constant case), and
+				// reach skips it for its one closing reason.
 				if viewAggregate(element) {
-					add(reach(element))
+					add(reach(element, true))
 				}
 			}
 		}
 		for _, values := range index.stores[site] {
 			for _, value := range values {
 				if viewAggregate(value) {
-					add(reach(value))
+					add(reach(value, true))
 				}
 			}
 		}
