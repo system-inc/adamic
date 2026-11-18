@@ -2,7 +2,7 @@
 
 - **0** first stops moved across **79 of 79** paired source roots.
 - **0** of the **79** recorded head root stops contained either search phrase.
-- **Entry latent comparison unavailable.** The sequential base rerun completed. The worker interrupted the sequential head rerun before it emitted findings.
+- **Zero** new, gone, changed, or newly reached entry findings. Neither search phrase appeared in the completed head entry stream.
 
 ## Method and interruption
 
@@ -102,9 +102,9 @@ The root table uses the completed directory records and **10 base** and **10 hea
 
 The recorded head first stops contained neither `polymorphic recursion` nor `instantiates itself deeper`.
 
-The entry latent phrase check is unresolved because neither entry run emitted its finding records.
+The completed head entry rerun also contained neither search phrase.
 
-## Entry latent comparison
+## Initial entry interruption
 
 Both entry passes ran at `src/tsc/tsc.ts` with `LATENT_FULL=0`, `LATENT_ASSERT_NO_OUTPUT=1`, and `LATENT_TAIL=1` in CommonJSBundle mode.
 
@@ -112,11 +112,15 @@ Base recorded 2,280 timed units and head recorded 2,137. The entry tool holds it
 
 See [evidence](evidence/) for the surviving raw streams, input pins, tool hashes, and reproduction commands.
 
-## Sequential entry rerun
+## Sequential entry rerun and head restart
 
 The rerun reused the checksum-verified binaries and adapted tree. Each revision ran alone from `src/tsc/tsc.ts` in CommonJSBundle first-error mode with `LATENT_TAIL=1` and `LATENT_ASSERT_NO_OUTPUT=1`. Base ran first, and its complete stream was pushed in `8b90ab7aa` before head started.
 
 - Base finished in 49 minutes 56 seconds. Its stream contains 81 source records and a final relation report, with 3,713 emitted findings across the source records and trailer. [Base evidence](evidence/base/solo-entry/)
 - Head was interrupted after 2,753 timed units. Its last completed timing record was `src/compiler/factory/utilities.ts:1701:1`. The stream contains the checker-clean header. The process emitted no finding records or relation report before it was interrupted. [Partial head evidence](evidence/revised-head/solo-entry-interrupted/)
 
-The head latent search for `polymorphic recursion` and `instantiates itself deeper` remains unresolved. Pairing by kind, phase, reason, and position-stripped message requires the head findings, so the new, gone, changed, and newly reached counts remain unresolved as well.
+Head then completed in a separate head-only run in 49 minutes 15 seconds. The run reused the same verified head binary and adapted tree, with the same flags. It emitted 81 source records and the final relation report. The complete stream was pushed in `d8d6f39d9`. [Completed head evidence](evidence/revised-head/solo-entry/)
+
+Both completed streams emitted 3,713 findings, including two tail findings each. Matching by kind, phase, reason, and position-stripped message gave **zero new, zero gone, and zero changed findings**. Comparing the same finding keys within each emitting unit gave **zero newly reached findings**, including in units that already reported a stop. The full finding records also matched exactly.
+
+Neither `polymorphic recursion` nor `instantiates itself deeper` occurs anywhere in the completed head entry stream. [Comparison evidence](evidence/entry-comparison.json)
