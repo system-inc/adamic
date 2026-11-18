@@ -32,6 +32,9 @@ func (l *lowering) baseInstance(declaration *ast.Node, classType *checker.Type) 
 			// narrowing stands on (looseCaughtRoad, loose_slots.go).
 			return nil, l.notYet(clause, "a base that isn't a declared class")
 		}
+		if err := l.extendsApple(clause, symbol); err != nil {
+			return nil, err
+		}
 		base := symbol.Declarations[0]
 		return l.instantiate(base, baseType, clause)
 	}

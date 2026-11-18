@@ -1,0 +1,42 @@
+// A SwiftUI view shown in AppKit. Written in Adamic, served as apple/swiftui/host
+// (internal/load/apple.go), over the shim's host (apple/swiftui/hosting): it takes any view, a
+// program's own class included, and hands SwiftUI the view its bodies come to.
+
+import type { View as AppKitView } from 'apple/appkit/view';
+import { SwiftUIHost } from 'apple/swiftui/hosting';
+import { rendered, type View } from 'apple/swiftui/views';
+
+export class Host {
+	readonly hosting: SwiftUIHost;
+
+	constructor(root: View) {
+		this.hosting = new SwiftUIHost(rendered(root));
+	}
+
+	// The hosting view, for a window's contentView.
+	view(): AppKitView {
+		return this.hosting.view;
+	}
+
+	// Shows a new root: what a view's body gives when its state changes.
+	render(root: View): void {
+		this.hosting.render(rendered(root));
+	}
+
+	fittingWidth(): number {
+		return this.hosting.fittingWidth;
+	}
+
+	fittingHeight(): number {
+		return this.hosting.fittingHeight;
+	}
+
+	listRows(): number {
+		return this.hosting.listRows;
+	}
+
+	// For tests: runs the action of the last button made with this title, as a press would.
+	press(title: string): boolean {
+		return this.hosting.press(title);
+	}
+}
