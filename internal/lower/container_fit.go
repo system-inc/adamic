@@ -4,6 +4,7 @@ import (
 	"math"
 	"slices"
 	"strconv"
+	"sync/atomic"
 
 	"github.com/microsoft/TypeScript/tsc/shim/ast"
 	"github.com/microsoft/TypeScript/tsc/shim/checker"
@@ -26,11 +27,14 @@ import (
 const containerFitStop = "a Map or Set interface implemented by a value that isn't a Map or Set"
 
 // containerFitDepth is how many positions deep containerWhereOtherGoes walks any pair of a value and its
-// slot. Past it a generic pair fails closed: it stops if either side can hold a map, so a value nested
-// deeper than the walk can never carry a shaped value into a map slot unseen (Compiler's depth-5 probe on
-// #efx3yb9, a class implementing ReadonlyMap five fields down, which crashed natively and printed false
-// on JavaScript), or, for the converse (shape_fit.go), an array, so none reaches a structural slot unseen
-// either. A pair of two non-generic types keeps walking under containerFitPairCap (#zrnkpdz).
+// slot unconditionally. Past it a generic pair that can't reach a map fails closed for the converse
+// (shape_fit.go): it stops if an array either side can hold could go where a shape the other can hold is,
+// so none reaches a structural slot unseen. A generic pair that can reach a map keeps walking until either
+// side is a generic growing deeper on the walk's path (typeNesting), where it fails closed, since a value
+// nested deeper than the walk can see could carry a shaped value into a map slot unseen (Compiler's depth-5
+// probe on #efx3yb9, a class implementing ReadonlyMap five fields down, which crashed natively and printed
+// false on JavaScript). A pair of two non-generic types keeps walking too. Past the depth, every pair
+// walked counts against containerFitPairCap (#zrnkpdz, #rt5evf5).
 const containerFitDepth = 4
 
 // containerFitPairCap bounds how many distinct pairs one walk judges past containerFitDepth. Past the
@@ -42,10 +46,10 @@ const containerFitDepth = 4
 const containerFitPairCap = 4096
 
 // containerFitDepthStop is the stop for a generic pair past containerFitDepth whose either side can hold a map
-// somewhere: the walk fails closed there, since it can't follow the pair further, though no map need be in
-// the way. It was containerFitStop's words, so the meter filed these under a family they aren't in: on tsc's
-// Nov 17 meter all 35 sites were this gate, none a value going where a map is held (Correctness's scout on
-// #rt5evf5, 007759fd).
+// somewhere and is a generic growing deeper on the walk's path (typeNesting): the walk fails closed there,
+// since it can't follow the pair to its end, though no map need be in the way. It was containerFitStop's
+// words, so the meter filed these under a family they aren't in: on tsc's Nov 17 meter all 35 sites were
+// this gate, none a value going where a map is held (Correctness's scout on #rt5evf5, 007759fd).
 var containerFitDepthStop = "a generic comparison deeper than " + strconv.Itoa(containerFitDepth) + " positions that can reach a Map"
 
 // containerFitCapStop is the stop for a walk that reached containerFitPairCap.
@@ -96,14 +100,21 @@ const containerFitNoLean = math.MaxInt
 // containerFitWalk is one containerWhereOtherGoes walk's state. busy is each pair in progress by its
 // stack index; done is each pair judged in this walk; frame is the running pair's taint and leans,
 // gathered from what it reached; held is each done fit still leaning on a pair in progress, waiting for
-// that pair to finish; pastDepth counts the pairs judged past containerFitDepth.
+// that pair to finish; pastDepth counts the pairs judged past containerFitDepth; values and targets
+// count, for each side, the generics growing deeper on the path of pairs in progress.
 type containerFitWalk struct {
 	busy      map[containerFitPair]int
 	done      map[containerFitPair]containerFitAnswer
 	frame     containerFitAnswer
 	held      []containerFitPair
 	pastDepth int
+	values    typeNesting
+	targets   typeNesting
 }
+
+// containerFitPairsJudged, when a test sets it, counts the pairs containerPairJudged judges, so a pin
+// can bound a walk by its work rather than by a clock (#rt5evf5).
+var containerFitPairsJudged atomic.Pointer[atomic.Int64]
 
 // absorb gathers what a reached pair's answer rests on into the running pair's.
 func (walk *containerFitWalk) absorb(answer containerFitAnswer) {
@@ -313,6 +324,16 @@ func (l *lowering) containerFitInstanceBound(proven *checker.Type) bool {
 
 // containerPairJudged is containerPairGoes' judgment of a pair it hasn't met.
 func (l *lowering) containerPairJudged(value *checker.Type, target *checker.Type, libraryArgument bool, depth int, walk *containerFitWalk) string {
+	if counter := containerFitPairsJudged.Load(); counter != nil {
+		counter.Add(1)
+	}
+	// Every pair is open on the path while it's judged, so a generic growing deeper is seen whichever
+	// position it grows through. A refusal only matters past the depth, where it ends a walk that could
+	// otherwise go on forever; before it, the depth itself bounds the path.
+	valueOpen, leaveValue := walk.values.enter(value)
+	defer leaveValue()
+	targetOpen, leaveTarget := walk.targets.enter(target)
+	defer leaveTarget()
 	if l.containerFitInstanceBound(value) || l.containerFitInstanceBound(target) {
 		// A type parameter is what the instance being lowered made it (representation reads
 		// l.substitution), so an answer that judged one holds only in this instance.
@@ -380,17 +401,24 @@ func (l *lowering) containerPairJudged(value *checker.Type, target *checker.Type
 	}
 	if depth > containerFitDepth {
 		if l.containerFitGeneric(value) || l.containerFitGeneric(target) {
-			// A generic pair this deep stops if either side can hold a map at all, or, for the converse,
-			// if an array either side can hold could go where a shape the other side can hold is
-			// (shape_fit.go). Its answer holds only this deep.
-			walk.frame.tainted = true
-			if l.mentionsHeld(value, []ir.Type{ir.Map}, 0, map[*checker.Type]bool{}) || l.mentionsHeld(target, []ir.Type{ir.Map}, 0, map[*checker.Type]bool{}) {
+			if !l.mentionsHeld(value, []ir.Type{ir.Map}, 0, map[*checker.Type]bool{}) && !l.mentionsHeld(target, []ir.Type{ir.Map}, 0, map[*checker.Type]bool{}) {
+				// A generic pair this deep that can't reach a map stops only if an array either side can
+				// hold could go where a shape the other side can hold is (shape_fit.go). Its answer holds
+				// only this deep.
+				walk.frame.tainted = true
+				if stop := l.shapeFitReached(value, target); stop != "" {
+					return stop
+				}
+				return l.shapeFitReached(target, value)
+			}
+			if !valueOpen || !targetOpen {
+				// A side is a generic growing deeper on this path, which could go on forever, so the walk
+				// fails closed here. Its answer holds only on this path.
+				walk.frame.tainted = true
 				return containerFitDepthStop
 			}
-			if stop := l.shapeFitReached(value, target); stop != "" {
-				return stop
-			}
-			return l.shapeFitReached(target, value)
+			// Otherwise the pair keeps walking: tsc's 35 sites at this gate were predicates, NodeArrays
+			// and nodes whose walk reaches a Map only through Node's own fields (#rt5evf5).
 		}
 		// Two non-generic sides keep walking, as a node narrowed from tsc's Node does through its parent
 		// chain to Node's own fields (#zrnkpdz), until the cap.
