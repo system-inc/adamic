@@ -34,7 +34,7 @@ The complete child receipts include command, cwd, environment, elapsed time, std
 
 ## Blocking lane failures
 
-[Lane report](c02/lane-receipts/report.json), [oracle report](c02/lane-receipts/oracle/report.json), and complete compressed logs are retained. The lane took 1,864.450 seconds. Its underlying test command exited 3; the oracle and validated lane each exited 1.
+[Lane report](c02/lane-receipts/report.json), [oracle report](c02/lane-receipts/oracle/report.json), and complete compressed logs are retained. The lane took 1,864.450 seconds. The npm test command exited 1; its inner test runner reported exit 3. The oracle and validated lane each exited 1.
 
 | Failure | Cause | Measured duration |
 |---|---|---:|
