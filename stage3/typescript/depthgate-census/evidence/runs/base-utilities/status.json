@@ -1,0 +1,43 @@
+{
+  "loadavg_start": [
+    1.1689453125,
+    1.4775390625,
+    2.59619140625
+  ],
+  "cpu_quota": "400000 100000",
+  "memory_limit_bytes": "17179869184",
+  "label": "base",
+  "name": "utilities",
+  "sha": "9d64615714e5beb154effd374bef22bcce5cfd8a",
+  "command": [
+    "/workspace/depthgate-tools-base/entry-census",
+    "/workspace/depthgate-adapted/src/tsc/tsc.ts",
+    "/workspace/depthgate-runs/base-utilities/latent.jsonl"
+  ],
+  "cwd": "/workspace/depthgate-base",
+  "environment": {
+    "CENSUS_MODULE_FORMAT": "CommonJSBundle",
+    "LATENT_FULL": "1",
+    "LATENT_ASSERT_NO_OUTPUT": "1",
+    "LATENT_TAIL": "1",
+    "LATENT_ONLY_FILE": "/workspace/depthgate-adapted/src/compiler/utilities.ts",
+    "LATENT_TIMES": "/dev/stderr"
+  },
+  "binary_sha256": "ed72bf519b9706370af7c9abbe77fd82d1348e76ec0fd33481d0e311e222c39e",
+  "selected_source_sha256": "fc048c135e5c228251ce81124b82695eaebabcc3e931dcc5806f66cecd41ee82",
+  "timeout_seconds": 1800,
+  "started_utc": "2026-11-18T10:59:47Z",
+  "loadavg_end": [
+    1.4599609375,
+    1.31298828125,
+    1.95654296875
+  ],
+  "wall_seconds": 595.4286581419999,
+  "exit_code": 0,
+  "timed_out": false,
+  "sigkill_required": false,
+  "peak_rss_kib": 1791304,
+  "user_cpu_seconds": 769.89703,
+  "system_cpu_seconds": 15.173006,
+  "finished_utc": "2026-11-18T11:09:43Z"
+}

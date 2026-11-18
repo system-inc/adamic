@@ -1,0 +1,90 @@
+{
+  "base-transformers-utilities": {
+    "DEPTHGATE_lines": 0,
+    "DEPTHWALK_lines": 0,
+    "largest_pastDepth": null,
+    "pastDepth_distribution": {},
+    "above_1000": 0,
+    "unattributed_probe_lines": 0,
+    "completed_timed_units": 48,
+    "stops": {}
+  },
+  "base-utilities": {
+    "DEPTHGATE_lines": 0,
+    "DEPTHWALK_lines": 0,
+    "largest_pastDepth": null,
+    "pastDepth_distribution": {},
+    "above_1000": 0,
+    "unattributed_probe_lines": 0,
+    "completed_timed_units": 867,
+    "stops": {}
+  },
+  "base-utilitiesPublic": {
+    "DEPTHGATE_lines": 0,
+    "DEPTHWALK_lines": 0,
+    "largest_pastDepth": null,
+    "pastDepth_distribution": {},
+    "above_1000": 0,
+    "unattributed_probe_lines": 0,
+    "completed_timed_units": 243,
+    "stops": {}
+  },
+  "head-transformers-utilities": {
+    "DEPTHGATE_lines": 4,
+    "DEPTHWALK_lines": 1,
+    "largest_pastDepth": 77,
+    "pastDepth_distribution": {
+      "22": 1,
+      "74": 1,
+      "77": 2
+    },
+    "above_1000": 0,
+    "unattributed_probe_lines": 0,
+    "completed_timed_units": 48,
+    "stops": {
+      "a generic comparison deeper than 4 positions that can reach a Map": 3,
+      "": 1
+    }
+  },
+  "head-utilities": {
+    "DEPTHGATE_lines": 8,
+    "DEPTHWALK_lines": 23,
+    "largest_pastDepth": 79,
+    "pastDepth_distribution": {
+      "3": 3,
+      "52": 1,
+      "62": 1,
+      "76": 2,
+      "79": 1
+    },
+    "above_1000": 0,
+    "unattributed_probe_lines": 0,
+    "completed_timed_units": 867,
+    "stops": {
+      "": 3,
+      "a generic comparison deeper than 4 positions that can reach a Map": 5
+    }
+  },
+  "head-utilitiesPublic": {
+    "DEPTHGATE_lines": 29,
+    "DEPTHWALK_lines": 4,
+    "largest_pastDepth": 76,
+    "pastDepth_distribution": {
+      "5": 1,
+      "8": 1,
+      "43": 1,
+      "48": 1,
+      "57": 1,
+      "58": 2,
+      "59": 2,
+      "76": 20
+    },
+    "above_1000": 0,
+    "unattributed_probe_lines": 0,
+    "completed_timed_units": 243,
+    "stops": {
+      "": 2,
+      "a generic comparison deeper than 4 positions that can reach a Map": 27
+    }
+  }
+}

@@ -1,0 +1,517 @@
+{
+  "utilitiesPublic": {
+    "base_complete": true,
+    "head_complete": true,
+    "all_events": {
+      "matched_occurrences": 255,
+      "changes": [
+        {
+          "grade": "gone",
+          "base": {
+            "depth": 0,
+            "end": 24253,
+            "kind": "Boundary",
+            "measurement": "measured on a checker-clean entry-root program",
+            "phase": "lowering",
+            "reason": "failed statement; state rolled back; continued at next statement or declaration",
+            "root_kind": "",
+            "start": 24192,
+            "text": "/workspace/depthgate-adapted/src/compiler/utilitiesPublic.ts:625:22: stage 0 can't lower a generic comparison deeper than 4 positions that can reach a Map yet",
+            "unit": "/workspace/depthgate-adapted/src/compiler/utilitiesPublic.ts:623:1",
+            "where": "/workspace/depthgate-adapted/src/compiler/utilitiesPublic.ts:625:9"
+          },
+          "head": null
+        },
+        {
+          "grade": "gone",
+          "base": {
+            "depth": 0,
+            "end": 102923,
+            "kind": "Boundary",
+            "measurement": "measured on a checker-clean entry-root program",
+            "phase": "lowering",
+            "reason": "failed statement; state rolled back; continued at next statement or declaration",
+            "root_kind": "",
+            "start": 102832,
+            "text": "/workspace/depthgate-adapted/src/compiler/utilitiesPublic.ts:2638:76: stage 0 can't lower a generic comparison deeper than 4 positions that can reach a Map yet",
+            "unit": "/workspace/depthgate-adapted/src/compiler/utilitiesPublic.ts:2637:1",
+            "where": "/workspace/depthgate-adapted/src/compiler/utilitiesPublic.ts:2638:5"
+          },
+          "head": null
+        },
+        {
+          "grade": "gone",
+          "base": {
+            "depth": 0,
+            "end": 102968,
+            "kind": "Boundary",
+            "measurement": "measured on a checker-clean entry-root program",
+            "phase": "lowering",
+            "reason": "failed statement; state rolled back; continued at next statement or declaration",
+            "root_kind": "",
+            "start": 102923,
+            "text": "/workspace/depthgate-adapted/src/compiler/utilitiesPublic.ts:2639:14: stage 0 can't lower reading last yet",
+            "unit": "/workspace/depthgate-adapted/src/compiler/utilitiesPublic.ts:2637:1",
+            "where": "/workspace/depthgate-adapted/src/compiler/utilitiesPublic.ts:2639:5"
+          },
+          "head": null
+        },
+        {
+          "grade": "gone",
+          "base": {
+            "depth": 0,
+            "kind": "NotYet",
+            "measurement": "measured on a checker-clean entry-root program",
+            "phase": "lowering",
+            "reason": "a generic comparison deeper than 4 positions that can reach a Map",
+            "root_kind": "",
+            "text": "/workspace/depthgate-adapted/src/compiler/utilitiesPublic.ts:625:22: stage 0 can't lower a generic comparison deeper than 4 positions that can reach a Map yet",
+            "unit": "/workspace/depthgate-adapted/src/compiler/utilitiesPublic.ts:623:1",
+            "where": "/workspace/depthgate-adapted/src/compiler/utilitiesPublic.ts:625:22"
+          },
+          "head": null
+        },
+        {
+          "grade": "gone",
+          "base": {
+            "depth": 0,
+            "kind": "NotYet",
+            "measurement": "measured on a checker-clean entry-root program",
+            "phase": "lowering",
+            "reason": "a generic comparison deeper than 4 positions that can reach a Map",
+            "root_kind": "",
+            "text": "/workspace/depthgate-adapted/src/compiler/utilitiesPublic.ts:2638:76: stage 0 can't lower a generic comparison deeper than 4 positions that can reach a Map yet",
+            "unit": "/workspace/depthgate-adapted/src/compiler/utilitiesPublic.ts:2637:1",
+            "where": "/workspace/depthgate-adapted/src/compiler/utilitiesPublic.ts:2638:76"
+          },
+          "head": null
+        },
+        {
+          "grade": "gone",
+          "base": {
+            "depth": 0,
+            "kind": "NotYet",
+            "measurement": "measured on a checker-clean entry-root program",
+            "phase": "lowering",
+            "reason": "reading last",
+            "root_kind": "",
+            "text": "/workspace/depthgate-adapted/src/compiler/utilitiesPublic.ts:2639:14: stage 0 can't lower reading last yet",
+            "unit": "/workspace/depthgate-adapted/src/compiler/utilitiesPublic.ts:2637:1",
+            "where": "/workspace/depthgate-adapted/src/compiler/utilitiesPublic.ts:2639:14"
+          },
+          "head": null
+        }
+      ]
+    },
+    "outside_target_events": {
+      "matched_occurrences": 228,
+      "changes": [
+        {
+          "grade": "gone",
+          "base": {
+            "depth": 0,
+            "end": 24253,
+            "kind": "Boundary",
+            "measurement": "measured on a checker-clean entry-root program",
+            "phase": "lowering",
+            "reason": "failed statement; state rolled back; continued at next statement or declaration",
+            "root_kind": "",
+            "start": 24192,
+            "text": "/workspace/depthgate-adapted/src/compiler/utilitiesPublic.ts:625:22: stage 0 can't lower a generic comparison deeper than 4 positions that can reach a Map yet",
+            "unit": "/workspace/depthgate-adapted/src/compiler/utilitiesPublic.ts:623:1",
+            "where": "/workspace/depthgate-adapted/src/compiler/utilitiesPublic.ts:625:9"
+          },
+          "head": null
+        },
+        {
+          "grade": "gone",
+          "base": {
+            "depth": 0,
+            "end": 102923,
+            "kind": "Boundary",
+            "measurement": "measured on a checker-clean entry-root program",
+            "phase": "lowering",
+            "reason": "failed statement; state rolled back; continued at next statement or declaration",
+            "root_kind": "",
+            "start": 102832,
+            "text": "/workspace/depthgate-adapted/src/compiler/utilitiesPublic.ts:2638:76: stage 0 can't lower a generic comparison deeper than 4 positions that can reach a Map yet",
+            "unit": "/workspace/depthgate-adapted/src/compiler/utilitiesPublic.ts:2637:1",
+            "where": "/workspace/depthgate-adapted/src/compiler/utilitiesPublic.ts:2638:5"
+          },
+          "head": null
+        },
+        {
+          "grade": "gone",
+          "base": {
+            "depth": 0,
+            "end": 102968,
+            "kind": "Boundary",
+            "measurement": "measured on a checker-clean entry-root program",
+            "phase": "lowering",
+            "reason": "failed statement; state rolled back; continued at next statement or declaration",
+            "root_kind": "",
+            "start": 102923,
+            "text": "/workspace/depthgate-adapted/src/compiler/utilitiesPublic.ts:2639:14: stage 0 can't lower reading last yet",
+            "unit": "/workspace/depthgate-adapted/src/compiler/utilitiesPublic.ts:2637:1",
+            "where": "/workspace/depthgate-adapted/src/compiler/utilitiesPublic.ts:2639:5"
+          },
+          "head": null
+        },
+        {
+          "grade": "gone",
+          "base": {
+            "depth": 0,
+            "kind": "NotYet",
+            "measurement": "measured on a checker-clean entry-root program",
+            "phase": "lowering",
+            "reason": "reading last",
+            "root_kind": "",
+            "text": "/workspace/depthgate-adapted/src/compiler/utilitiesPublic.ts:2639:14: stage 0 can't lower reading last yet",
+            "unit": "/workspace/depthgate-adapted/src/compiler/utilitiesPublic.ts:2637:1",
+            "where": "/workspace/depthgate-adapted/src/compiler/utilitiesPublic.ts:2639:14"
+          },
+          "head": null
+        }
+      ]
+    },
+    "outside_target_distinct_findings": {
+      "matched_occurrences": 174,
+      "changes": [
+        {
+          "grade": "gone",
+          "base": {
+            "depth": 0,
+            "end": 24253,
+            "kind": "Boundary",
+            "measurement": "measured on a checker-clean entry-root program",
+            "phase": "lowering",
+            "reason": "failed statement; state rolled back; continued at next statement or declaration",
+            "root_kind": "",
+            "start": 24192,
+            "text": "/workspace/depthgate-adapted/src/compiler/utilitiesPublic.ts:625:22: stage 0 can't lower a generic comparison deeper than 4 positions that can reach a Map yet",
+            "unit": "/workspace/depthgate-adapted/src/compiler/utilitiesPublic.ts:623:1",
+            "where": "/workspace/depthgate-adapted/src/compiler/utilitiesPublic.ts:625:9"
+          },
+          "head": null
+        },
+        {
+          "grade": "gone",
+          "base": {
+            "depth": 0,
+            "end": 102923,
+            "kind": "Boundary",
+            "measurement": "measured on a checker-clean entry-root program",
+            "phase": "lowering",
+            "reason": "failed statement; state rolled back; continued at next statement or declaration",
+            "root_kind": "",
+            "start": 102832,
+            "text": "/workspace/depthgate-adapted/src/compiler/utilitiesPublic.ts:2638:76: stage 0 can't lower a generic comparison deeper than 4 positions that can reach a Map yet",
+            "unit": "/workspace/depthgate-adapted/src/compiler/utilitiesPublic.ts:2637:1",
+            "where": "/workspace/depthgate-adapted/src/compiler/utilitiesPublic.ts:2638:5"
+          },
+          "head": null
+        },
+        {
+          "grade": "gone",
+          "base": {
+            "depth": 0,
+            "end": 102968,
+            "kind": "Boundary",
+            "measurement": "measured on a checker-clean entry-root program",
+            "phase": "lowering",
+            "reason": "failed statement; state rolled back; continued at next statement or declaration",
+            "root_kind": "",
+            "start": 102923,
+            "text": "/workspace/depthgate-adapted/src/compiler/utilitiesPublic.ts:2639:14: stage 0 can't lower reading last yet",
+            "unit": "/workspace/depthgate-adapted/src/compiler/utilitiesPublic.ts:2637:1",
+            "where": "/workspace/depthgate-adapted/src/compiler/utilitiesPublic.ts:2639:5"
+          },
+          "head": null
+        },
+        {
+          "grade": "gone",
+          "base": {
+            "depth": 0,
+            "kind": "NotYet",
+            "measurement": "measured on a checker-clean entry-root program",
+            "phase": "lowering",
+            "reason": "reading last",
+            "root_kind": "",
+            "text": "/workspace/depthgate-adapted/src/compiler/utilitiesPublic.ts:2639:14: stage 0 can't lower reading last yet",
+            "unit": "/workspace/depthgate-adapted/src/compiler/utilitiesPublic.ts:2637:1",
+            "where": "/workspace/depthgate-adapted/src/compiler/utilitiesPublic.ts:2639:14"
+          },
+          "head": null
+        }
+      ]
+    }
+  },
+  "utilities": {
+    "base_complete": true,
+    "head_complete": true,
+    "all_events": {
+      "matched_occurrences": 1312,
+      "changes": [
+        {
+          "grade": "gone",
+          "base": {
+            "depth": 0,
+            "end": 113892,
+            "kind": "Boundary",
+            "measurement": "measured on a checker-clean entry-root program",
+            "phase": "lowering",
+            "reason": "failed statement; state rolled back; continued at next statement or declaration",
+            "root_kind": "",
+            "start": 113567,
+            "text": "/workspace/depthgate-adapted/src/compiler/utilities.ts:3095:20: stage 0 can't lower a generic comparison deeper than 4 positions that can reach a Map yet",
+            "unit": "/workspace/depthgate-adapted/src/compiler/utilities.ts:3113:1",
+            "where": "/workspace/depthgate-adapted/src/compiler/utilities.ts:3095:5"
+          },
+          "head": null
+        },
+        {
+          "grade": "gone",
+          "base": {
+            "depth": 0,
+            "end": 113892,
+            "kind": "Boundary",
+            "measurement": "measured on a checker-clean entry-root program",
+            "phase": "lowering",
+            "reason": "failed statement; state rolled back; continued at next statement or declaration",
+            "root_kind": "",
+            "start": 113567,
+            "text": "/workspace/depthgate-adapted/src/compiler/utilities.ts:3095:20: stage 0 can't lower a generic comparison deeper than 4 positions that can reach a Map yet",
+            "unit": "/workspace/depthgate-adapted/src/compiler/utilities.ts:12296:1",
+            "where": "/workspace/depthgate-adapted/src/compiler/utilities.ts:3095:5"
+          },
+          "head": null
+        },
+        {
+          "grade": "gone",
+          "base": {
+            "depth": 0,
+            "end": 113892,
+            "kind": "Boundary",
+            "measurement": "measured on a checker-clean entry-root program",
+            "phase": "lowering",
+            "reason": "failed statement; state rolled back; continued at next statement or declaration",
+            "root_kind": "",
+            "start": 113567,
+            "text": "/workspace/depthgate-adapted/src/compiler/utilities.ts:3095:20: stage 0 can't lower a generic comparison deeper than 4 positions that can reach a Map yet",
+            "unit": "/workspace/depthgate-adapted/src/compiler/utilities.ts:12304:1",
+            "where": "/workspace/depthgate-adapted/src/compiler/utilities.ts:3095:5"
+          },
+          "head": null
+        },
+        {
+          "grade": "gone",
+          "base": {
+            "depth": 0,
+            "kind": "NotYet",
+            "measurement": "measured on a checker-clean entry-root program",
+            "phase": "lowering",
+            "reason": "a generic comparison deeper than 4 positions that can reach a Map",
+            "root_kind": "",
+            "text": "/workspace/depthgate-adapted/src/compiler/utilities.ts:3095:20: stage 0 can't lower a generic comparison deeper than 4 positions that can reach a Map yet",
+            "unit": "/workspace/depthgate-adapted/src/compiler/utilities.ts:3113:1",
+            "where": "/workspace/depthgate-adapted/src/compiler/utilities.ts:3095:20"
+          },
+          "head": null
+        },
+        {
+          "grade": "gone",
+          "base": {
+            "depth": 0,
+            "kind": "NotYet",
+            "measurement": "measured on a checker-clean entry-root program",
+            "phase": "lowering",
+            "reason": "a generic comparison deeper than 4 positions that can reach a Map",
+            "root_kind": "",
+            "text": "/workspace/depthgate-adapted/src/compiler/utilities.ts:3095:20: stage 0 can't lower a generic comparison deeper than 4 positions that can reach a Map yet",
+            "unit": "/workspace/depthgate-adapted/src/compiler/utilities.ts:12296:1",
+            "where": "/workspace/depthgate-adapted/src/compiler/utilities.ts:3095:20"
+          },
+          "head": null
+        },
+        {
+          "grade": "gone",
+          "base": {
+            "depth": 0,
+            "kind": "NotYet",
+            "measurement": "measured on a checker-clean entry-root program",
+            "phase": "lowering",
+            "reason": "a generic comparison deeper than 4 positions that can reach a Map",
+            "root_kind": "",
+            "text": "/workspace/depthgate-adapted/src/compiler/utilities.ts:3095:20: stage 0 can't lower a generic comparison deeper than 4 positions that can reach a Map yet",
+            "unit": "/workspace/depthgate-adapted/src/compiler/utilities.ts:12304:1",
+            "where": "/workspace/depthgate-adapted/src/compiler/utilities.ts:3095:20"
+          },
+          "head": null
+        }
+      ]
+    },
+    "outside_target_events": {
+      "matched_occurrences": 1303,
+      "changes": [
+        {
+          "grade": "gone",
+          "base": {
+            "depth": 0,
+            "end": 113892,
+            "kind": "Boundary",
+            "measurement": "measured on a checker-clean entry-root program",
+            "phase": "lowering",
+            "reason": "failed statement; state rolled back; continued at next statement or declaration",
+            "root_kind": "",
+            "start": 113567,
+            "text": "/workspace/depthgate-adapted/src/compiler/utilities.ts:3095:20: stage 0 can't lower a generic comparison deeper than 4 positions that can reach a Map yet",
+            "unit": "/workspace/depthgate-adapted/src/compiler/utilities.ts:3113:1",
+            "where": "/workspace/depthgate-adapted/src/compiler/utilities.ts:3095:5"
+          },
+          "head": null
+        },
+        {
+          "grade": "gone",
+          "base": {
+            "depth": 0,
+            "end": 113892,
+            "kind": "Boundary",
+            "measurement": "measured on a checker-clean entry-root program",
+            "phase": "lowering",
+            "reason": "failed statement; state rolled back; continued at next statement or declaration",
+            "root_kind": "",
+            "start": 113567,
+            "text": "/workspace/depthgate-adapted/src/compiler/utilities.ts:3095:20: stage 0 can't lower a generic comparison deeper than 4 positions that can reach a Map yet",
+            "unit": "/workspace/depthgate-adapted/src/compiler/utilities.ts:12296:1",
+            "where": "/workspace/depthgate-adapted/src/compiler/utilities.ts:3095:5"
+          },
+          "head": null
+        },
+        {
+          "grade": "gone",
+          "base": {
+            "depth": 0,
+            "end": 113892,
+            "kind": "Boundary",
+            "measurement": "measured on a checker-clean entry-root program",
+            "phase": "lowering",
+            "reason": "failed statement; state rolled back; continued at next statement or declaration",
+            "root_kind": "",
+            "start": 113567,
+            "text": "/workspace/depthgate-adapted/src/compiler/utilities.ts:3095:20: stage 0 can't lower a generic comparison deeper than 4 positions that can reach a Map yet",
+            "unit": "/workspace/depthgate-adapted/src/compiler/utilities.ts:12304:1",
+            "where": "/workspace/depthgate-adapted/src/compiler/utilities.ts:3095:5"
+          },
+          "head": null
+        }
+      ]
+    },
+    "outside_target_distinct_findings": {
+      "matched_occurrences": 929,
+      "changes": [
+        {
+          "grade": "gone",
+          "base": {
+            "depth": 0,
+            "end": 113892,
+            "kind": "Boundary",
+            "measurement": "measured on a checker-clean entry-root program",
+            "phase": "lowering",
+            "reason": "failed statement; state rolled back; continued at next statement or declaration",
+            "root_kind": "",
+            "start": 113567,
+            "text": "/workspace/depthgate-adapted/src/compiler/utilities.ts:3095:20: stage 0 can't lower a generic comparison deeper than 4 positions that can reach a Map yet",
+            "unit": "/workspace/depthgate-adapted/src/compiler/utilities.ts:12304:1",
+            "where": "/workspace/depthgate-adapted/src/compiler/utilities.ts:3095:5"
+          },
+          "head": null
+        }
+      ]
+    }
+  },
+  "transformers-utilities": {
+    "base_complete": true,
+    "head_complete": true,
+    "all_events": {
+      "matched_occurrences": 144,
+      "changes": [
+        {
+          "grade": "gone",
+          "base": {
+            "depth": 0,
+            "end": 4126,
+            "kind": "Boundary",
+            "measurement": "measured on a checker-clean entry-root program",
+            "phase": "lowering",
+            "reason": "failed statement; state rolled back; continued at next statement or declaration",
+            "root_kind": "",
+            "start": 4068,
+            "text": "/workspace/depthgate-adapted/src/compiler/transformers/utilities.ts:127:17: stage 0 can't lower a generic comparison deeper than 4 positions that can reach a Map yet",
+            "unit": "/workspace/depthgate-adapted/src/compiler/transformers/utilities.ts:124:1",
+            "where": "/workspace/depthgate-adapted/src/compiler/transformers/utilities.ts:127:5"
+          },
+          "head": null
+        },
+        {
+          "grade": "gone",
+          "base": {
+            "depth": 0,
+            "kind": "NotYet",
+            "measurement": "measured on a checker-clean entry-root program",
+            "phase": "lowering",
+            "reason": "a generic comparison deeper than 4 positions that can reach a Map",
+            "root_kind": "",
+            "text": "/workspace/depthgate-adapted/src/compiler/transformers/utilities.ts:127:17: stage 0 can't lower a generic comparison deeper than 4 positions that can reach a Map yet",
+            "unit": "/workspace/depthgate-adapted/src/compiler/transformers/utilities.ts:124:1",
+            "where": "/workspace/depthgate-adapted/src/compiler/transformers/utilities.ts:127:17"
+          },
+          "head": null
+        }
+      ]
+    },
+    "outside_target_events": {
+      "matched_occurrences": 141,
+      "changes": [
+        {
+          "grade": "gone",
+          "base": {
+            "depth": 0,
+            "end": 4126,
+            "kind": "Boundary",
+            "measurement": "measured on a checker-clean entry-root program",
+            "phase": "lowering",
+            "reason": "failed statement; state rolled back; continued at next statement or declaration",
+            "root_kind": "",
+            "start": 4068,
+            "text": "/workspace/depthgate-adapted/src/compiler/transformers/utilities.ts:127:17: stage 0 can't lower a generic comparison deeper than 4 positions that can reach a Map yet",
+            "unit": "/workspace/depthgate-adapted/src/compiler/transformers/utilities.ts:124:1",
+            "where": "/workspace/depthgate-adapted/src/compiler/transformers/utilities.ts:127:5"
+          },
+          "head": null
+        }
+      ]
+    },
+    "outside_target_distinct_findings": {
+      "matched_occurrences": 83,
+      "changes": [
+        {
+          "grade": "gone",
+          "base": {
+            "depth": 0,
+            "end": 4126,
+            "kind": "Boundary",
+            "measurement": "measured on a checker-clean entry-root program",
+            "phase": "lowering",
+            "reason": "failed statement; state rolled back; continued at next statement or declaration",
+            "root_kind": "",
+            "start": 4068,
+            "text": "/workspace/depthgate-adapted/src/compiler/transformers/utilities.ts:127:17: stage 0 can't lower a generic comparison deeper than 4 positions that can reach a Map yet",
+            "unit": "/workspace/depthgate-adapted/src/compiler/transformers/utilities.ts:124:1",
+            "where": "/workspace/depthgate-adapted/src/compiler/transformers/utilities.ts:127:5"
+          },
+          "head": null
+        }
+      ]
+    }
+  }
+}

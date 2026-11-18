@@ -1,0 +1,70 @@
+Source pins:
+base 9d64615714e5beb154effd374bef22bcce5cfd8a
+head 54210cd4c9b850b7c2df13b30f4406c78451ea9b
+
+Fetch and isolate:
+git fetch origin 9d64615714e5beb154effd374bef22bcce5cfd8a 54210cd4c9b850b7c2df13b30f4406c78451ea9b
+git worktree add -b typescript/depthgate-census /workspace/depthgate-base 9d64615714e5beb154effd374bef22bcce5cfd8a
+git worktree add --detach /workspace/depthgate-head 54210cd4c9b850b7c2df13b30f4406c78451ea9b
+
+At each checkout, initialize its own pinned submodules (both commands exited 0):
+git -c protocol.file.allow=always -c url.file:///workspace/mapset-scout/cohere.insteadOf=https://github.com/system-inc/cohere.git -c url.file:///workspace/mapset-scout/cohere/TypeScript.insteadOf=https://github.com/system-inc/TypeScript.git submodule update --init --recursive --depth 1
+# The local clones supplied the exact gitlinks, verified in build-pins.txt.
+
+One adapted tree, using base only:
+(cd /workspace/depthgate-base/stage3/api && npm ci --ignore-scripts --no-audit --no-fund)
+git -C /workspace/mapset-upstream rev-parse HEAD
+# 050880ce59e30b356b686bd3144efe24f875ebc8; cached clone of microsoft/TypeScript tag v6.0.3.
+(cd /workspace/depthgate-base && ADAMIC_TYPESCRIPT_SOURCE=/workspace/mapset-upstream stage3/apply.sh /workspace/depthgate-adapted)
+# apply exited 0. Input source is cloned at its pin by apply, not adapted in place.
+
+Build each tool from its OWN checkout (LABEL is base or head; both exited 0):
+export PATH=/workspace/adamic-tools/go/bin:/workspace/adamic-tools/bin:$PATH
+cd /workspace/depthgate-LABEL
+python3 stage3/census/latent/make_overlay.py /workspace/depthgate-LABEL /workspace/depthgate-tools-LABEL/latent-overlay
+gofmt -w /workspace/depthgate-tools-LABEL/latent-overlay/*.go
+python3 stage3/meter/entry_overlay.py /workspace/depthgate-tools-LABEL/latent-overlay /workspace/depthgate-tools-LABEL/entry-overlay
+gofmt -w /workspace/depthgate-tools-LABEL/entry-overlay/*.go
+go build -buildvcs=false -overlay=/workspace/depthgate-tools-LABEL/entry-overlay/overlay.json -o /workspace/depthgate-tools-LABEL/entry-census ./stage3/census/latent/tool
+# No extra compiler instrumentation or source patch was added; head's existing probe logs are used.
+
+Exact historical mapping:
+# historical-sites.json was extracted from the three complete scout full streams, using its read-sites.cjs.
+SCOUT_TYPESCRIPT=/workspace/depthgate-base/stage3/api/node_modules/typescript node /workspace/depthgate-map-sites.cjs /workspace/depthgate-historical-sites.json /workspace/depthgate-adapted /workspace/depthgate-targets.json
+# 40 exact unique mappings, all retaining their line/column coordinates. targets.json preserves the anchors.
+
+Six canonical runs, sequentially in this order:
+base utilitiesPublic, head utilitiesPublic, base transformers-utilities, head transformers-utilities, base utilities, head utilities.
+python3 /workspace/depthgate-runner.py
+# Exact executable argument arrays and environments are in runs/RUN/started.json and status.json.
+# The runner redirects the child stderr to a pipe, preserving that pipe whole in runs/RUN/stderr.log.
+# Its LATENT_TIMES=/dev/stderr writes canonical unit completion records into that SAME pipe.
+# This avoids ordering guesses between separate files and does not modify any census tool.
+# /dev/stderr is a pipe in the child, so os.Create does not truncate the parent's regular stderr log.
+# wait4 supplies peak RSS (KiB); monotonic time supplies wall time. Per-run limit 1800 seconds.
+# On expiry the runner sends SIGTERM to its own child process group, then SIGKILL after 5 seconds if needed.
+# All six exited 0; the termination path was not invoked.
+
+Environment at EVERY run:
+CENSUS_MODULE_FORMAT=CommonJSBundle
+LATENT_FULL=1
+LATENT_ASSERT_NO_OUTPUT=1
+LATENT_TAIL=1
+LATENT_TIMES=/dev/stderr
+LATENT_ONLY_FILE=one exact absolute file, as follows (no wildcard or directory):
+/workspace/depthgate-adapted/src/compiler/utilitiesPublic.ts
+/workspace/depthgate-adapted/src/compiler/utilities.ts
+/workspace/depthgate-adapted/src/compiler/transformers/utilities.ts
+# Only head additionally sets ADAMIC_PROBE_DEPTHGATE=1. The base flag is unset.
+# LATENT_SPECULATIVE, other inherited LATENT_ options, and other ADAMIC_PROBE_ options are unset by the runner.
+# Tool arguments at each run:
+/workspace/depthgate-tools-LABEL/entry-census /workspace/depthgate-adapted/src/tsc/tsc.ts /workspace/depthgate-runs/RUN/latent.jsonl
+
+Analysis:
+python3 /workspace/depthgate-analyze-census.py /workspace/depthgate-runs /workspace/depthgate-targets.json /workspace/depthgate-census-analysis
+python3 /workspace/depthgate-parse-probe.py /workspace/depthgate-runs /workspace/depthgate-probe-analysis /workspace/depthgate-targets.json
+# Pair key: (kind, phase, reason with :line:column stripped, text with :line:column stripped).
+# Keep all event multiplicities; pair equal-key instances at identical unit/site first.
+# A separate distinct view deduplicates (kind, phase, where, reason, text).
+# Raw stdout/stderr/latent streams are archived whole as deterministic gzip files (mtime=0).
+# Every DEPTHWALK line is listed; no N>1000 line exists.
