@@ -1,4 +1,4 @@
-// This module's own IteratorYieldResult gets the ordinary walk: fail closed.
+// This module's own IteratorYieldResult gets the ordinary walk, which follows it to its end (#rt5evf5).
 export {};
 interface IteratorYieldResult<T> { readonly value: T; }
 interface Node { readonly m: ReadonlyMap<string, number>; }
