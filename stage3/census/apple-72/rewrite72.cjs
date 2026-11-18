@@ -22,9 +22,10 @@ for (const stop of family5) {
     sites.push({site: stop.Site, file: match ? match[1] : '', line: match ? +match[2] : 0, column: match ? +match[3] : 0, rule: stop.Rule.split('/').pop(), words: stop.Words, relative: rel});
 }
 
-const config = ts.getParsedCommandLineOfConfigFile(path.join(tree, 'src/compiler/tsconfig.json'), {noEmit: true}, {...ts.sys, onUnRecoverableConfigFileDiagnostic: d => { throw new Error(ts.flattenDiagnosticMessageText(d.messageText, '\n')); }});
-const roots = fs.readdirSync(path.join(tree, 'src/compiler'), {recursive: true}).filter(f => f.endsWith('.ts') && !f.endsWith('.d.ts')).map(f => path.join(tree, 'src/compiler', f));
-const program = ts.createProgram(roots, {...config.options, noEmit: true, composite: false, declaration: false, incremental: false, tsBuildInfoFile: undefined});
+// Adamic's one configuration (internal/load/load.go compilerOptions), over the scan's own root, so a tree this
+// calls clean is one the scan's checker loads.
+const adamicOptions = {strict: true, noUncheckedIndexedAccess: true, exactOptionalPropertyTypes: true, erasableSyntaxOnly: false, verbatimModuleSyntax: true, allowImportingTsExtensions: true, noEmit: true, module: ts.ModuleKind.ESNext, moduleDetection: ts.ModuleDetectionKind.Force, moduleResolution: ts.ModuleResolutionKind.Bundler, target: ts.ScriptTarget.ES2024, lib: ['lib.es2024.d.ts'], types: []};
+const program = ts.createProgram([path.join(tree, 'src/tsc/tsc.ts')], adamicOptions);
 const checker = program.getTypeChecker();
 
 // The value in a slot whose start the stop names: the outermost expression starting there.

@@ -10,11 +10,11 @@ const path = require('node:path');
 const ts = require('typescript');
 const [before, after, sitesFile, excludeFile] = process.argv.slice(2);
 
+// Adamic's one configuration (internal/load/load.go compilerOptions), over the scan's own root, so a tree this
+// calls clean is one the scan's checker loads.
+const adamicOptions = {strict: true, noUncheckedIndexedAccess: true, exactOptionalPropertyTypes: true, erasableSyntaxOnly: false, verbatimModuleSyntax: true, allowImportingTsExtensions: true, noEmit: true, module: ts.ModuleKind.ESNext, moduleDetection: ts.ModuleDetectionKind.Force, moduleResolution: ts.ModuleResolutionKind.Bundler, target: ts.ScriptTarget.ES2024, lib: ['lib.es2024.d.ts'], types: []};
 function setup(tree) {
-    const config = ts.getParsedCommandLineOfConfigFile(path.join(tree, 'src/compiler/tsconfig.json'), {noEmit: true}, {...ts.sys, onUnRecoverableConfigFileDiagnostic: d => { throw new Error(ts.flattenDiagnosticMessageText(d.messageText, '\n')); }});
-    const roots = fs.readdirSync(path.join(tree, 'src/compiler'), {recursive: true}).filter(f => f.endsWith('.ts') && !f.endsWith('.d.ts')).map(f => path.join(tree, 'src/compiler', f));
-    const options = {...config.options, noEmit: true, composite: false, declaration: false, incremental: false, tsBuildInfoFile: undefined};
-    return {roots, options};
+    return {roots: [path.join(tree, 'src/tsc/tsc.ts')], options: adamicOptions};
 }
 const describe = (tree, d) => {
     const where = d.file ? d.file.getLineAndCharacterOfPosition(d.start) : {line: -1};
