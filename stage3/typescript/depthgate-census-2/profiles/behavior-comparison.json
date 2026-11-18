@@ -1,0 +1,48 @@
+{
+  "base": {
+    "findings": 1313,
+    "serialized_array_bytes": 793405,
+    "sha256": "5dbdca0c6e87fbf5dbc3ca490dcbe46b0fcdbc58c4202f5cfdff03ff925c50ab",
+    "comparisons": [
+      {
+        "census2_repeat": 1,
+        "committed_reference": "/workspace/depthgate2-base/stage3/typescript/depthgate-census-2/evidence/runs/base-utilities-r1/latent.jsonl.gz",
+        "reference_archive_sha256": "190b5e758d7154b881a9ee73d59bae4f6d016e27c8886fd71d57ae75d26a97c3",
+        "findings": 1313,
+        "sha256": "5dbdca0c6e87fbf5dbc3ca490dcbe46b0fcdbc58c4202f5cfdff03ff925c50ab",
+        "byte_identical": true
+      },
+      {
+        "census2_repeat": 2,
+        "committed_reference": "/workspace/depthgate2-base/stage3/typescript/depthgate-census-2/evidence/runs/base-utilities-r2/latent.jsonl.gz",
+        "reference_archive_sha256": "5b3eb359bf0c8b3343ceda512a0bf8096f054dc8ae7ca7177393a2de873a4a76",
+        "findings": 1313,
+        "sha256": "5dbdca0c6e87fbf5dbc3ca490dcbe46b0fcdbc58c4202f5cfdff03ff925c50ab",
+        "byte_identical": true
+      }
+    ]
+  },
+  "head": {
+    "findings": 1297,
+    "serialized_array_bytes": 784843,
+    "sha256": "860c490e087d2b842ef43795ec442259d9c7b2442866cd9aaa95ee0d927a7b20",
+    "comparisons": [
+      {
+        "census2_repeat": 1,
+        "committed_reference": "/workspace/depthgate2-base/stage3/typescript/depthgate-census-2/evidence/runs/head-utilities-r1/latent.jsonl.gz",
+        "reference_archive_sha256": "cd6efc16a93341d6810bff282b1ec94c1154d2129690eccf7709b9d1d79c9b43",
+        "findings": 1297,
+        "sha256": "860c490e087d2b842ef43795ec442259d9c7b2442866cd9aaa95ee0d927a7b20",
+        "byte_identical": true
+      },
+      {
+        "census2_repeat": 2,
+        "committed_reference": "/workspace/depthgate2-base/stage3/typescript/depthgate-census-2/evidence/runs/head-utilities-r2/latent.jsonl.gz",
+        "reference_archive_sha256": "fa072da0415b67d05574846823ac30f50262239489e1f5e5b65afb51cac06f73",
+        "findings": 1297,
+        "sha256": "860c490e087d2b842ef43795ec442259d9c7b2442866cd9aaa95ee0d927a7b20",
+        "byte_identical": true
+      }
+    ]
+  }
+}

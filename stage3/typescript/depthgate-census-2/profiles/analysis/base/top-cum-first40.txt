@@ -1,0 +1,40 @@
+File: entry-census
+Build ID: 731b31acb9220e0f71187c52f0d91c7fa703431e
+Type: cpu
+Time: 2026-11-18 13:19:39 UTC
+Duration: 604.22s, Total samples = 787.74s (130.37%)
+Showing nodes accounting for 568.71s, 72.20% of 787.74s total
+Dropped 3016 nodes (cum <= 3.94s)
+      flat  flat%   sum%        cum   cum%
+     0.01s 0.0013% 0.0013%    427.77s 54.30%  github.com/system-inc/adamic/internal/lower.latentFullSelected
+         0     0% 0.0013%    422.66s 53.65%  github.com/system-inc/adamic/internal/lower.latentFull (inline)
+         0     0% 0.0013%    422.66s 53.65%  github.com/system-inc/adamic/internal/lower.latentRun
+         0     0% 0.0013%    417.28s 52.97%  github.com/system-inc/adamic/internal/lower.latentFullSelected.func7
+         0     0% 0.0013%    412.08s 52.31%  github.com/system-inc/adamic/internal/lower.LatentWithRelationChecks
+         0     0% 0.0013%    406.72s 51.63%  github.com/system-inc/adamic/internal/lower.Latent
+         0     0% 0.0013%    403.20s 51.18%  main.main
+         0     0% 0.0013%    397.40s 50.45%  runtime.main
+     0.01s 0.0013% 0.0025%    331.14s 42.04%  github.com/system-inc/adamic/internal/lower.(*lowering).latentStatement
+         0     0% 0.0025%    328.93s 41.76%  github.com/system-inc/adamic/internal/lower.(*lowering).statement (inline)
+         0     0% 0.0025%    323.60s 41.08%  github.com/system-inc/adamic/internal/lower.(*lowering).statements
+         0     0% 0.0025%    316.63s 40.19%  github.com/system-inc/adamic/internal/lower.(*lowering).lowerFunction
+         0     0% 0.0025%    311.21s 39.51%  github.com/system-inc/adamic/internal/lower.(*lowering).lowerBody
+     0.02s 0.0025% 0.0051%    284.34s 36.10%  github.com/system-inc/adamic/internal/lower.(*lowering).latentStatementRaw
+         0     0% 0.0051%    242.81s 30.82%  github.com/system-inc/adamic/internal/lower.(*lowering).enumNeverValue
+         0     0% 0.0051%    241.38s 30.64%  github.com/system-inc/adamic/internal/lower.(*lowering).value
+     0.01s 0.0013% 0.0063%    240.74s 30.56%  github.com/system-inc/adamic/internal/lower.(*lowering).latentExpressionRaw
+     0.01s 0.0013% 0.0076%    238.86s 30.32%  github.com/system-inc/adamic/internal/lower.(*lowering).latentSpecExpression
+         0     0% 0.0076%    237.02s 30.09%  github.com/system-inc/adamic/internal/lower.(*lowering).expression (inline)
+     0.06s 0.0076% 0.015%    236.06s 29.97%  github.com/system-inc/adamic/internal/lower.(*lowering).latentSnapshot
+     0.02s 0.0025% 0.018%       236s 29.96%  github.com/system-inc/adamic/internal/lower.latentCopyPointer_lowering
+     0.03s 0.0038% 0.022%    235.96s 29.95%  github.com/system-inc/adamic/internal/lower.latentCopy_lowering
+         0     0% 0.022%    222.22s 28.21%  github.com/system-inc/adamic/internal/lower.latentCopyIR[go.shape.*uint8]
+    18.11s  2.30%  2.32%    222.16s 28.20%  github.com/system-inc/adamic/internal/lower.latentCopyIR[go.shape.*uint8].func1
+    20.03s  2.54%  4.86%    207.67s 26.36%  github.com/microsoft/TypeScript/tsc/internal/ast.(*Node).ForEachChild
+     7.05s  0.89%  5.76%    204.26s 25.93%  github.com/microsoft/TypeScript/tsc/internal/ast.visit (inline)
+         0     0%  5.76%    198.89s 25.25%  github.com/system-inc/adamic/internal/lower.(*lowering).call
+     0.12s 0.015%  5.77%    198.64s 25.22%  runtime.systemstack
+     7.85s     1%  6.77%    197.92s 25.13%  github.com/microsoft/TypeScript/tsc/internal/ast.visitNodeList (inline)
+     6.15s  0.78%  7.55%    197.83s 25.11%  github.com/microsoft/TypeScript/tsc/internal/ast.visitNodes (inline)
+         0     0%  7.55%    197.57s 25.08%  github.com/system-inc/adamic/internal/lower.(*lowering).callOrMethod
+         0     0%  7.55%    186.36s 23.66%  runtime.gcBgMarkWorker

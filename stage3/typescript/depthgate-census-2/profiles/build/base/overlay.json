@@ -1,0 +1,31 @@
+{
+  "Replace": {
+    "/workspace/depthgate2-base/internal/lower/lower.go": "/workspace/depthgate2-tools-base/latent-overlay/internal_lower_lower.go",
+    "/workspace/depthgate2-base/internal/lower/entries_records.go": "/workspace/depthgate2-tools-base/latent-overlay/internal_lower_entries_records.go",
+    "/workspace/depthgate2-base/internal/lower/latent_state.go": "/workspace/depthgate2-tools-base/latent-overlay/internal_lower_latent_state.go",
+    "/workspace/depthgate2-base/internal/lower/statements.go": "/workspace/depthgate2-tools-base/latent-overlay/internal_lower_statements.go",
+    "/workspace/depthgate2-base/internal/lower/latent_relation_overflow.go": "/workspace/depthgate2-tools-base/latent-overlay/internal_lower_latent_relation_overflow.go",
+    "/workspace/depthgate2-base/stage3/census/latent/tool/relation_overflow_test.go": "/workspace/depthgate2-tools-base/latent-overlay/stage3_census_latent_tool_relation_overflow_test.go",
+    "/workspace/depthgate2-base/internal/lower/latent_scoped_tail.go": "/workspace/depthgate2-tools-base/latent-overlay/internal_lower_latent_scoped_tail.go",
+    "/workspace/depthgate2-base/internal/lower/latent_scoped_tail_test.go": "/workspace/depthgate2-tools-base/latent-overlay/internal_lower_latent_scoped_tail_test.go",
+    "/workspace/depthgate2-base/internal/lower/latent_pass_ledger.go": "/workspace/depthgate2-tools-base/latent-overlay/internal_lower_latent_pass_ledger.go",
+    "/workspace/depthgate2-base/internal/lower/latent_full.go": "/workspace/depthgate2-tools-base/latent-overlay/internal_lower_latent_full.go",
+    "/workspace/depthgate2-base/internal/lower/latent_units.go": "/workspace/depthgate2-tools-base/latent-overlay/internal_lower_latent_units.go",
+    "/workspace/depthgate2-base/internal/lower/latent_deferred_probe_test.go": "/workspace/depthgate2-tools-base/latent-overlay/internal_lower_latent_deferred_probe_test.go",
+    "/workspace/depthgate2-base/internal/lower/latent_timing.go": "/workspace/depthgate2-tools-base/latent-overlay/internal_lower_latent_timing.go",
+    "/workspace/depthgate2-base/internal/lower/latent_replay.go": "/workspace/depthgate2-tools-base/latent-overlay/internal_lower_latent_replay.go",
+    "/workspace/depthgate2-base/internal/lower/refusals.go": "/workspace/depthgate2-tools-base/latent-overlay/internal_lower_refusals.go",
+    "/workspace/depthgate2-base/internal/load/load.go": "/workspace/depthgate2-tools-base/latent-overlay/internal_load_load.go",
+    "/workspace/depthgate2-base/internal/load/latent_hook.go": "/workspace/depthgate2-tools-base/entry-overlay/entry_load_hook.go",
+    "/workspace/depthgate2-base/internal/lower/expression.go": "/workspace/depthgate2-tools-base/latent-overlay/internal_lower_expression.go",
+    "/workspace/depthgate2-base/internal/lower/functions.go": "/workspace/depthgate2-tools-base/latent-overlay/internal_lower_functions.go",
+    "/workspace/depthgate2-base/internal/lower/generic.go": "/workspace/depthgate2-tools-base/latent-overlay/internal_lower_generic.go",
+    "/workspace/depthgate2-base/internal/lower/locals.go": "/workspace/depthgate2-tools-base/latent-overlay/internal_lower_locals.go",
+    "/workspace/depthgate2-base/internal/lower/latent_hook.go": "/workspace/depthgate2-tools-base/latent-overlay/internal_lower_latent_hook.go",
+    "/workspace/depthgate2-base/stage3/census/latent/tool/main.go": "/workspace/depthgate2-profiles/base/entry_main.go",
+    "/workspace/depthgate2-base/stage3/census/latent/replay/worker/main.go": "/workspace/depthgate2-tools-base/latent-overlay/stage3_census_latent_replay_worker_main.go",
+    "/workspace/depthgate2-base/internal/lower/latent_piece.go": "/workspace/depthgate2-tools-base/latent-overlay/internal_lower_latent_piece.go",
+    "/workspace/depthgate2-base/internal/lower/latent_progress.go": "/workspace/depthgate2-tools-base/latent-overlay/internal_lower_latent_progress.go",
+    "/workspace/depthgate2-base/internal/lower/latent_speculative.go": "/workspace/depthgate2-tools-base/latent-overlay/internal_lower_latent_speculative.go"
+  }
+}

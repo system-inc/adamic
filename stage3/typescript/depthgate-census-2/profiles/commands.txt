@@ -1,0 +1,57 @@
+# Both entry mains were copied from the existing own-SHA canonical overlays.
+# prepare.py asserts they are identical, adds the identical env-gated profiling hook,
+# and replaces ONLY stage3/census/latent/tool/main.go in each scratch overlay map.
+python3 /workspace/depthgate2-profile-prepare.py
+# In each /workspace/depthgate2-{base,head}, with LABEL set accordingly:
+# PATH=/workspace/adamic-tools/go/bin:/workspace/adamic-tools/bin:$PATH
+# go build -buildvcs=false -overlay=/workspace/depthgate2-profiles/$LABEL/overlay.json -o /workspace/depthgate2-profiles/$LABEL/entry-census ./stage3/census/latent/tool
+python3 /workspace/depthgate2-profile-runner.py > /workspace/depthgate2-profile-runner.log 2>&1
+# The inherited Go distribution lacked a compiled pprof helper. AFTER BOTH runs:
+# In /workspace/adamic-tools/go/src/cmd:
+# /workspace/adamic-tools/go/bin/go build -o /workspace/adamic-tools/go/pkg/tool/linux_amd64/pprof cmd/pprof
+python3 /workspace/depthgate2-profile-compare.py
+python3 /workspace/depthgate2-profile-analyze.py
+
+# Every actual pprof command used (full paths preserve provenance):
+/workspace/adamic-tools/go/bin/go tool pprof -top /workspace/depthgate2-profiles/base/entry-census /workspace/depthgate2-profile-runs/base-utilities-r1/cpu.pprof
+/workspace/adamic-tools/go/bin/go tool pprof -top -cum /workspace/depthgate2-profiles/base/entry-census /workspace/depthgate2-profile-runs/base-utilities-r1/cpu.pprof
+/workspace/adamic-tools/go/bin/go tool pprof -raw /workspace/depthgate2-profiles/base/entry-census /workspace/depthgate2-profile-runs/base-utilities-r1/cpu.pprof
+/workspace/adamic-tools/go/bin/go tool pprof -raw '-focus=containerWhereOtherGoes|containerPairGoes|containerPairJudged' '-ignore=mentionsHeld|typeNesting' /workspace/depthgate2-profiles/base/entry-census /workspace/depthgate2-profile-runs/base-utilities-r1/cpu.pprof
+/workspace/adamic-tools/go/bin/go tool pprof -top -cum '-focus=containerWhereOtherGoes|containerPairGoes|containerPairJudged' '-ignore=mentionsHeld|typeNesting' /workspace/depthgate2-profiles/base/entry-census /workspace/depthgate2-profile-runs/base-utilities-r1/cpu.pprof
+/workspace/adamic-tools/go/bin/go tool pprof -raw '-ignore=containerWhereOtherGoes|containerPairGoes|containerPairJudged|mentionsHeld' /workspace/depthgate2-profiles/base/entry-census /workspace/depthgate2-profile-runs/base-utilities-r1/cpu.pprof
+/workspace/adamic-tools/go/bin/go tool pprof -top -cum '-ignore=containerWhereOtherGoes|containerPairGoes|containerPairJudged|mentionsHeld' /workspace/depthgate2-profiles/base/entry-census /workspace/depthgate2-profile-runs/base-utilities-r1/cpu.pprof
+/workspace/adamic-tools/go/bin/go tool pprof -raw '-focus=containerWhereOtherGoes|containerPairGoes|containerPairJudged' -ignore=mentionsHeld /workspace/depthgate2-profiles/base/entry-census /workspace/depthgate2-profile-runs/base-utilities-r1/cpu.pprof
+/workspace/adamic-tools/go/bin/go tool pprof -top -cum '-focus=containerWhereOtherGoes|containerPairGoes|containerPairJudged' -ignore=mentionsHeld /workspace/depthgate2-profiles/base/entry-census /workspace/depthgate2-profile-runs/base-utilities-r1/cpu.pprof
+/workspace/adamic-tools/go/bin/go tool pprof -raw '-focus=containerPairGoes|containerPairJudged' '-ignore=mentionsHeld|containerWhereOtherGoes' /workspace/depthgate2-profiles/base/entry-census /workspace/depthgate2-profile-runs/base-utilities-r1/cpu.pprof
+/workspace/adamic-tools/go/bin/go tool pprof -top -cum '-focus=containerPairGoes|containerPairJudged' '-ignore=mentionsHeld|containerWhereOtherGoes' /workspace/depthgate2-profiles/base/entry-census /workspace/depthgate2-profile-runs/base-utilities-r1/cpu.pprof
+/workspace/adamic-tools/go/bin/go tool pprof -raw -focus=mentionsHeld /workspace/depthgate2-profiles/base/entry-census /workspace/depthgate2-profile-runs/base-utilities-r1/cpu.pprof
+/workspace/adamic-tools/go/bin/go tool pprof -top -cum -focus=mentionsHeld /workspace/depthgate2-profiles/base/entry-census /workspace/depthgate2-profile-runs/base-utilities-r1/cpu.pprof
+/workspace/adamic-tools/go/bin/go tool pprof -raw -focus=containerWhereOtherGoes -ignore=mentionsHeld /workspace/depthgate2-profiles/base/entry-census /workspace/depthgate2-profile-runs/base-utilities-r1/cpu.pprof
+/workspace/adamic-tools/go/bin/go tool pprof -top -cum -focus=containerWhereOtherGoes -ignore=mentionsHeld /workspace/depthgate2-profiles/base/entry-census /workspace/depthgate2-profile-runs/base-utilities-r1/cpu.pprof
+/workspace/adamic-tools/go/bin/go tool pprof -raw -focus=typeNesting /workspace/depthgate2-profiles/base/entry-census /workspace/depthgate2-profile-runs/base-utilities-r1/cpu.pprof
+/workspace/adamic-tools/go/bin/go tool pprof -top -cum -focus=typeNesting /workspace/depthgate2-profiles/base/entry-census /workspace/depthgate2-profile-runs/base-utilities-r1/cpu.pprof
+/workspace/adamic-tools/go/bin/go tool pprof -raw -focus=containerWhereOtherGoes '-ignore=mentionsHeld|typeNesting' /workspace/depthgate2-profiles/base/entry-census /workspace/depthgate2-profile-runs/base-utilities-r1/cpu.pprof
+/workspace/adamic-tools/go/bin/go tool pprof -top -cum -focus=containerWhereOtherGoes '-ignore=mentionsHeld|typeNesting' /workspace/depthgate2-profiles/base/entry-census /workspace/depthgate2-profile-runs/base-utilities-r1/cpu.pprof
+/workspace/adamic-tools/go/bin/go tool pprof -raw '-ignore=containerWhereOtherGoes|mentionsHeld' /workspace/depthgate2-profiles/base/entry-census /workspace/depthgate2-profile-runs/base-utilities-r1/cpu.pprof
+/workspace/adamic-tools/go/bin/go tool pprof -top -cum '-ignore=containerWhereOtherGoes|mentionsHeld' /workspace/depthgate2-profiles/base/entry-census /workspace/depthgate2-profile-runs/base-utilities-r1/cpu.pprof
+/workspace/adamic-tools/go/bin/go tool pprof -top /workspace/depthgate2-profiles/head/entry-census /workspace/depthgate2-profile-runs/head-utilities-r1/cpu.pprof
+/workspace/adamic-tools/go/bin/go tool pprof -top -cum /workspace/depthgate2-profiles/head/entry-census /workspace/depthgate2-profile-runs/head-utilities-r1/cpu.pprof
+/workspace/adamic-tools/go/bin/go tool pprof -raw /workspace/depthgate2-profiles/head/entry-census /workspace/depthgate2-profile-runs/head-utilities-r1/cpu.pprof
+/workspace/adamic-tools/go/bin/go tool pprof -raw '-focus=containerWhereOtherGoes|containerPairGoes|containerPairJudged' '-ignore=mentionsHeld|typeNesting' /workspace/depthgate2-profiles/head/entry-census /workspace/depthgate2-profile-runs/head-utilities-r1/cpu.pprof
+/workspace/adamic-tools/go/bin/go tool pprof -top -cum '-focus=containerWhereOtherGoes|containerPairGoes|containerPairJudged' '-ignore=mentionsHeld|typeNesting' /workspace/depthgate2-profiles/head/entry-census /workspace/depthgate2-profile-runs/head-utilities-r1/cpu.pprof
+/workspace/adamic-tools/go/bin/go tool pprof -raw '-ignore=containerWhereOtherGoes|containerPairGoes|containerPairJudged|mentionsHeld' /workspace/depthgate2-profiles/head/entry-census /workspace/depthgate2-profile-runs/head-utilities-r1/cpu.pprof
+/workspace/adamic-tools/go/bin/go tool pprof -top -cum '-ignore=containerWhereOtherGoes|containerPairGoes|containerPairJudged|mentionsHeld' /workspace/depthgate2-profiles/head/entry-census /workspace/depthgate2-profile-runs/head-utilities-r1/cpu.pprof
+/workspace/adamic-tools/go/bin/go tool pprof -raw '-focus=containerWhereOtherGoes|containerPairGoes|containerPairJudged' -ignore=mentionsHeld /workspace/depthgate2-profiles/head/entry-census /workspace/depthgate2-profile-runs/head-utilities-r1/cpu.pprof
+/workspace/adamic-tools/go/bin/go tool pprof -top -cum '-focus=containerWhereOtherGoes|containerPairGoes|containerPairJudged' -ignore=mentionsHeld /workspace/depthgate2-profiles/head/entry-census /workspace/depthgate2-profile-runs/head-utilities-r1/cpu.pprof
+/workspace/adamic-tools/go/bin/go tool pprof -raw '-focus=containerPairGoes|containerPairJudged' '-ignore=mentionsHeld|containerWhereOtherGoes' /workspace/depthgate2-profiles/head/entry-census /workspace/depthgate2-profile-runs/head-utilities-r1/cpu.pprof
+/workspace/adamic-tools/go/bin/go tool pprof -top -cum '-focus=containerPairGoes|containerPairJudged' '-ignore=mentionsHeld|containerWhereOtherGoes' /workspace/depthgate2-profiles/head/entry-census /workspace/depthgate2-profile-runs/head-utilities-r1/cpu.pprof
+/workspace/adamic-tools/go/bin/go tool pprof -raw -focus=mentionsHeld /workspace/depthgate2-profiles/head/entry-census /workspace/depthgate2-profile-runs/head-utilities-r1/cpu.pprof
+/workspace/adamic-tools/go/bin/go tool pprof -top -cum -focus=mentionsHeld /workspace/depthgate2-profiles/head/entry-census /workspace/depthgate2-profile-runs/head-utilities-r1/cpu.pprof
+/workspace/adamic-tools/go/bin/go tool pprof -raw -focus=containerWhereOtherGoes -ignore=mentionsHeld /workspace/depthgate2-profiles/head/entry-census /workspace/depthgate2-profile-runs/head-utilities-r1/cpu.pprof
+/workspace/adamic-tools/go/bin/go tool pprof -top -cum -focus=containerWhereOtherGoes -ignore=mentionsHeld /workspace/depthgate2-profiles/head/entry-census /workspace/depthgate2-profile-runs/head-utilities-r1/cpu.pprof
+/workspace/adamic-tools/go/bin/go tool pprof -raw -focus=typeNesting /workspace/depthgate2-profiles/head/entry-census /workspace/depthgate2-profile-runs/head-utilities-r1/cpu.pprof
+/workspace/adamic-tools/go/bin/go tool pprof -top -cum -focus=typeNesting /workspace/depthgate2-profiles/head/entry-census /workspace/depthgate2-profile-runs/head-utilities-r1/cpu.pprof
+/workspace/adamic-tools/go/bin/go tool pprof -raw -focus=containerWhereOtherGoes '-ignore=mentionsHeld|typeNesting' /workspace/depthgate2-profiles/head/entry-census /workspace/depthgate2-profile-runs/head-utilities-r1/cpu.pprof
+/workspace/adamic-tools/go/bin/go tool pprof -top -cum -focus=containerWhereOtherGoes '-ignore=mentionsHeld|typeNesting' /workspace/depthgate2-profiles/head/entry-census /workspace/depthgate2-profile-runs/head-utilities-r1/cpu.pprof
+/workspace/adamic-tools/go/bin/go tool pprof -raw '-ignore=containerWhereOtherGoes|mentionsHeld' /workspace/depthgate2-profiles/head/entry-census /workspace/depthgate2-profile-runs/head-utilities-r1/cpu.pprof
+/workspace/adamic-tools/go/bin/go tool pprof -top -cum '-ignore=containerWhereOtherGoes|mentionsHeld' /workspace/depthgate2-profiles/head/entry-census /workspace/depthgate2-profile-runs/head-utilities-r1/cpu.pprof

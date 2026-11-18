@@ -1,0 +1,170 @@
+File: entry-census
+Build ID: 731b31acb9220e0f71187c52f0d91c7fa703431e
+Type: cpu
+Time: 2026-11-18 13:19:39 UTC
+Duration: 604.22s, Total samples = 787.74s (130.37%)
+Active filters:
+   focus=typeNesting
+Showing nodes accounting for 0.63s, 0.08% of 787.74s total
+      flat  flat%   sum%        cum   cum%
+         0     0%     0%      0.62s 0.079%  github.com/system-inc/adamic/internal/lower.(*lowering).prepareUntaggedStructuralRead
+         0     0%     0%      0.62s 0.079%  github.com/system-inc/adamic/internal/lower.(*lowering).strictViewContract
+         0     0%     0%      0.62s 0.079%  github.com/system-inc/adamic/internal/lower.(*lowering).strictViewContract.func1 (inline)
+         0     0%     0%      0.62s 0.079%  github.com/system-inc/adamic/internal/lower.(*lowering).viewContract
+         0     0%     0%      0.62s 0.079%  github.com/system-inc/adamic/internal/lower.buildUnionReadContract
+         0     0%     0%      0.60s 0.076%  github.com/system-inc/adamic/internal/lower.(*lowering).viewSchema
+         0     0%     0%      0.59s 0.075%  github.com/system-inc/adamic/internal/lower.(*lowering).view
+         0     0%     0%      0.54s 0.069%  github.com/system-inc/adamic/internal/lower.(*lowering).enumNeverValue
+         0     0%     0%      0.54s 0.069%  github.com/system-inc/adamic/internal/lower.(*lowering).value
+         0     0%     0%      0.53s 0.067%  github.com/system-inc/adamic/internal/lower.(*lowering).latentExpressionRaw
+     0.04s 0.0051% 0.0051%      0.53s 0.067%  github.com/system-inc/adamic/internal/lower.(*typeNesting).enter
+         0     0% 0.0051%      0.52s 0.066%  github.com/system-inc/adamic/internal/lower.(*lowering).latentSpecExpression
+         0     0% 0.0051%      0.50s 0.063%  github.com/system-inc/adamic/internal/lower.(*lowering).expression (inline)
+         0     0% 0.0051%      0.45s 0.057%  github.com/system-inc/adamic/internal/lower.(*lowering).call
+         0     0% 0.0051%      0.45s 0.057%  github.com/system-inc/adamic/internal/lower.(*lowering).callOrMethod
+         0     0% 0.0051%      0.44s 0.056%  github.com/system-inc/adamic/internal/lower.(*lowering).predicateMembership
+         0     0% 0.0051%      0.43s 0.055%  github.com/system-inc/adamic/internal/lower.(*lowering).callFunction
+         0     0% 0.0051%      0.43s 0.055%  github.com/system-inc/adamic/internal/lower.(*lowering).checkedPredicateCheck
+         0     0% 0.0051%      0.39s  0.05%  github.com/system-inc/adamic/internal/lower.(*lowering).censusOverloadResult
+         0     0% 0.0051%      0.38s 0.048%  github.com/system-inc/adamic/internal/lower.(*lowering).checkedPredicateResult
+         0     0% 0.0051%      0.36s 0.046%  github.com/system-inc/adamic/internal/lower.(*lowering).viewContract.func1
+         0     0% 0.0051%      0.36s 0.046%  github.com/system-inc/adamic/internal/lower.internMixedUnionViewContract
+         0     0% 0.0051%      0.34s 0.043%  github.com/system-inc/adamic/internal/lower.(*lowering).latentStatementRaw
+         0     0% 0.0051%      0.30s 0.038%  github.com/system-inc/adamic/internal/lower.(*lowering).latentStatement
+         0     0% 0.0051%      0.28s 0.036%  github.com/system-inc/adamic/internal/lower.(*lowering).statement (inline)
+         0     0% 0.0051%      0.28s 0.036%  github.com/system-inc/adamic/internal/lower.(*lowering).statements
+     0.06s 0.0076% 0.013%      0.27s 0.034%  runtime.mapassign
+         0     0% 0.013%      0.20s 0.025%  github.com/system-inc/adamic/internal/lower.(*lowering).lowerBody
+         0     0% 0.013%      0.20s 0.025%  github.com/system-inc/adamic/internal/lower.(*lowering).lowerFunction
+         0     0% 0.013%      0.19s 0.024%  github.com/system-inc/adamic/internal/lower.(*lowering).condition
+         0     0% 0.013%      0.15s 0.019%  github.com/system-inc/adamic/internal/lower.(*lowering).returnStatement
+         0     0% 0.013%      0.15s 0.019%  github.com/system-inc/adamic/internal/lower.latentFullSelected.func7
+         0     0% 0.013%      0.14s 0.018%  github.com/system-inc/adamic/internal/lower.(*lowering).ifStatement
+     0.07s 0.0089% 0.022%      0.14s 0.018%  runtime.mallocgcSmallScanNoHeaderSC5
+         0     0% 0.022%      0.13s 0.017%  github.com/system-inc/adamic/internal/lower.latentFull (inline)
+         0     0% 0.022%      0.13s 0.017%  github.com/system-inc/adamic/internal/lower.latentFullSelected
+         0     0% 0.022%      0.13s 0.017%  github.com/system-inc/adamic/internal/lower.latentRun
+         0     0% 0.022%      0.12s 0.015%  github.com/system-inc/adamic/internal/lower.(*lowering).castProof
+         0     0% 0.022%      0.12s 0.015%  github.com/system-inc/adamic/internal/lower.(*lowering).interfaceCast
+     0.10s 0.013% 0.034%      0.12s 0.015%  github.com/system-inc/adamic/internal/lower.typeRecursionIdentity
+         0     0% 0.034%      0.11s 0.014%  github.com/system-inc/adamic/internal/lower.LatentWithRelationChecks
+         0     0% 0.034%      0.10s 0.013%  github.com/system-inc/adamic/internal/lower.(*lowering).cast
+         0     0% 0.034%      0.10s 0.013%  github.com/system-inc/adamic/internal/lower.(*lowering).castValue
+         0     0% 0.034%      0.10s 0.013%  github.com/system-inc/adamic/internal/lower.Latent
+     0.02s 0.0025% 0.037%      0.10s 0.013%  runtime.nilinterhash
+         0     0% 0.037%      0.09s 0.011%  github.com/system-inc/adamic/internal/lower.(*typeNesting).enter.func4
+         0     0% 0.037%      0.09s 0.011%  internal/runtime/maps.(*table).grow
+         0     0% 0.037%      0.09s 0.011%  internal/runtime/maps.(*table).rehash
+         0     0% 0.037%      0.08s  0.01%  main.main
+         0     0% 0.037%      0.08s  0.01%  runtime.main
+     0.02s 0.0025% 0.039%      0.08s  0.01%  runtime.typehash
+         0     0% 0.039%      0.07s 0.0089%  github.com/system-inc/adamic/internal/lower.(*lowering).whileStatement
+         0     0% 0.039%      0.06s 0.0076%  github.com/system-inc/adamic/internal/lower.(*lowering).switchStatement
+     0.01s 0.0013% 0.041%      0.06s 0.0076%  internal/runtime/maps.MemHash64
+         0     0% 0.041%      0.06s 0.0076%  runtime.memhash64 (inline)
+         0     0% 0.041%      0.05s 0.0063%  github.com/microsoft/TypeScript/tsc/internal/ast.(*Node).ForEachChild
+         0     0% 0.041%      0.05s 0.0063%  github.com/microsoft/TypeScript/tsc/internal/ast.visit (inline)
+         0     0% 0.041%      0.05s 0.0063%  github.com/system-inc/adamic/internal/lower.(*lowering).callArguments
+         0     0% 0.041%      0.05s 0.0063%  github.com/system-inc/adamic/internal/lower.(*lowering).property
+         0     0% 0.041%      0.05s 0.0063%  internal/runtime/maps.(*table).reset
+     0.05s 0.0063% 0.047%      0.05s 0.0063%  internal/runtime/maps.memHash64AES
+         0     0% 0.047%      0.05s 0.0063%  internal/runtime/maps.newTable
+     0.01s 0.0013% 0.048%      0.05s 0.0063%  runtime.(*mcache).nextFree
+         0     0% 0.048%      0.04s 0.0051%  github.com/microsoft/TypeScript/tsc/internal/ast.visitNodeList (inline)
+         0     0% 0.048%      0.04s 0.0051%  github.com/microsoft/TypeScript/tsc/internal/ast.visitNodes (inline)
+         0     0% 0.048%      0.04s 0.0051%  github.com/system-inc/adamic/internal/lower.(*lowering).checkedPredicateValueBody
+         0     0% 0.048%      0.04s 0.0051%  github.com/system-inc/adamic/internal/lower.(*lowering).prefix
+         0     0% 0.048%      0.04s 0.0051%  github.com/system-inc/adamic/internal/lower.(*lowering).variables
+         0     0% 0.048%      0.04s 0.0051%  github.com/system-inc/adamic/internal/lower.(*refusalRegistry).register.func1
+         0     0% 0.048%      0.04s 0.0051%  internal/runtime/maps.newGroups (inline)
+         0     0% 0.048%      0.04s 0.0051%  internal/runtime/maps.newarray
+         0     0% 0.048%      0.04s 0.0051%  runtime.(*mcache).refill
+         0     0% 0.048%      0.04s 0.0051%  runtime.mallocgc
+         0     0% 0.048%      0.04s 0.0051%  runtime.mallocgcSmallScanHeader
+         0     0% 0.048%      0.04s 0.0051%  runtime.mapaccess1
+     0.01s 0.0013%  0.05%      0.04s 0.0051%  runtime.mapaccess2
+         0     0%  0.05%      0.04s 0.0051%  runtime.newarray
+         0     0%  0.05%      0.03s 0.0038%  github.com/microsoft/TypeScript/tsc/internal/ast.(*Block).ForEachChild (inline)
+         0     0%  0.05%      0.03s 0.0038%  github.com/microsoft/TypeScript/tsc/internal/ast.(*VariableDeclaration).ForEachChild
+         0     0%  0.05%      0.03s 0.0038%  github.com/microsoft/TypeScript/tsc/internal/ast.(*VariableDeclarationList).ForEachChild (inline)
+         0     0%  0.05%      0.03s 0.0038%  github.com/microsoft/TypeScript/tsc/internal/ast.(*VariableStatement).ForEachChild
+         0     0%  0.05%      0.03s 0.0038%  github.com/system-inc/adamic/internal/lower.(*lowering).brandedSupertypeViews
+         0     0%  0.05%      0.03s 0.0038%  github.com/system-inc/adamic/internal/lower.(*lowering).checkedPredicateArgumentProven
+         0     0%  0.05%      0.03s 0.0038%  github.com/system-inc/adamic/internal/lower.(*lowering).checkedPredicateForwarder
+         0     0%  0.05%      0.03s 0.0038%  github.com/system-inc/adamic/internal/lower.(*lowering).conditional
+         0     0%  0.05%      0.03s 0.0038%  github.com/system-inc/adamic/internal/lower.(*lowering).functionValue
+         0     0%  0.05%      0.03s 0.0038%  github.com/system-inc/adamic/internal/lower.(*lowering).predicateArgumentProof
+         0     0%  0.05%      0.03s 0.0038%  github.com/system-inc/adamic/internal/lower.(*lowering).predicateArguments
+         0     0%  0.05%      0.03s 0.0038%  github.com/system-inc/adamic/internal/lower.(*lowering).predicateRefusal
+         0     0%  0.05%      0.03s 0.0038%  github.com/system-inc/adamic/internal/lower.(*lowering).registerBrandedSupertypeViews
+     0.02s 0.0025% 0.052%      0.03s 0.0038%  runtime.(*mcentral).cacheSpan
+         0     0% 0.052%      0.03s 0.0038%  runtime.systemstack
+         0     0% 0.052%      0.02s 0.0025%  github.com/microsoft/TypeScript/tsc/internal/ast.(*IfStatement).ForEachChild
+         0     0% 0.052%      0.02s 0.0025%  github.com/system-inc/adamic/internal/lower.(*lowering).callClosure
+         0     0% 0.052%      0.02s 0.0025%  github.com/system-inc/adamic/internal/lower.(*lowering).castRefusal
+         0     0% 0.052%      0.02s 0.0025%  github.com/system-inc/adamic/internal/lower.(*lowering).instantiateFunction
+         0     0% 0.052%      0.02s 0.0025%  github.com/system-inc/adamic/internal/lower.(*lowering).instantiateFunctionSignature
+         0     0% 0.052%      0.02s 0.0025%  github.com/system-inc/adamic/internal/lower.(*lowering).latentRefuse.func2
+         0     0% 0.052%      0.02s 0.0025%  github.com/system-inc/adamic/internal/lower.(*lowering).latentRefuse.func2.2
+         0     0% 0.052%      0.02s 0.0025%  github.com/system-inc/adamic/internal/lower.(*lowering).predicateArgumentsRefusal
+         0     0% 0.052%      0.02s 0.0025%  github.com/system-inc/adamic/internal/lower.(*lowering).refuseNode.func1
+         0     0% 0.052%      0.02s 0.0025%  github.com/system-inc/adamic/internal/lower.(*lowering).viewArrayElementCheck
+     0.01s 0.0013% 0.053%      0.02s 0.0025%  internal/runtime/maps.(*table).uncheckedPutSlot
+         0     0% 0.053%      0.02s 0.0025%  internal/runtime/maps.typedmemmove
+         0     0% 0.053%      0.02s 0.0025%  runtime.(*wbBuf).get2 (inline)
+         0     0% 0.053%      0.02s 0.0025%  runtime.bulkBarrierPreWrite
+         0     0% 0.053%      0.02s 0.0025%  runtime.findObject
+     0.02s 0.0025% 0.056%      0.02s 0.0025%  runtime.gcmarknewobject
+     0.02s 0.0025% 0.058%      0.02s 0.0025%  runtime.getGCMask (inline)
+         0     0% 0.058%      0.02s 0.0025%  runtime.mallocgcSmallScanSlowPath
+     0.02s 0.0025% 0.061%      0.02s 0.0025%  runtime.memclrNoHeapPointers
+     0.02s 0.0025% 0.063%      0.02s 0.0025%  runtime.nilinterequal
+         0     0% 0.063%      0.02s 0.0025%  runtime.typedmemmove
+         0     0% 0.063%      0.02s 0.0025%  runtime.wbBufFlush
+         0     0% 0.063%      0.02s 0.0025%  runtime.wbBufFlush.func1
+         0     0% 0.063%      0.02s 0.0025%  runtime.wbBufFlush1
+         0     0% 0.063%      0.01s 0.0013%  github.com/microsoft/TypeScript/tsc/internal/ast.(*CaseBlock).ForEachChild (inline)
+         0     0% 0.063%      0.01s 0.0013%  github.com/microsoft/TypeScript/tsc/internal/ast.(*CaseOrDefaultClause).ForEachChild
+         0     0% 0.063%      0.01s 0.0013%  github.com/microsoft/TypeScript/tsc/internal/ast.(*ConditionalExpression).ForEachChild
+         0     0% 0.063%      0.01s 0.0013%  github.com/microsoft/TypeScript/tsc/internal/ast.(*ParenthesizedExpression).ForEachChild (inline)
+         0     0% 0.063%      0.01s 0.0013%  github.com/microsoft/TypeScript/tsc/internal/ast.(*ReturnStatement).ForEachChild (inline)
+         0     0% 0.063%      0.01s 0.0013%  github.com/microsoft/TypeScript/tsc/internal/ast.(*SwitchStatement).ForEachChild (inline)
+     0.01s 0.0013% 0.065%      0.01s 0.0013%  github.com/microsoft/TypeScript/tsc/internal/checker.(*Type).Flags (inline)
+     0.01s 0.0013% 0.066%      0.01s 0.0013%  github.com/microsoft/TypeScript/tsc/internal/checker.(*Type).Id (inline)
+     0.01s 0.0013% 0.067%      0.01s 0.0013%  github.com/microsoft/TypeScript/tsc/internal/checker.(*Type).Target
+         0     0% 0.067%      0.01s 0.0013%  github.com/system-inc/adamic/internal/lower.(*lowering).assignment
+         0     0% 0.067%      0.01s 0.0013%  github.com/system-inc/adamic/internal/lower.(*lowering).checkedFunctionTypeCall
+         0     0% 0.067%      0.01s 0.0013%  github.com/system-inc/adamic/internal/lower.(*lowering).checkedPredicateParameterValue
+         0     0% 0.067%      0.01s 0.0013%  github.com/system-inc/adamic/internal/lower.(*lowering).destructure
+         0     0% 0.067%      0.01s 0.0013%  github.com/system-inc/adamic/internal/lower.(*lowering).elementAccess
+         0     0% 0.067%      0.01s 0.0013%  github.com/system-inc/adamic/internal/lower.(*lowering).forOf
+         0     0% 0.067%      0.01s 0.0013%  github.com/system-inc/adamic/internal/lower.(*lowering).forStatement
+         0     0% 0.067%      0.01s 0.0013%  github.com/system-inc/adamic/internal/lower.(*lowering).labeled
+         0     0% 0.067%      0.01s 0.0013%  github.com/system-inc/adamic/internal/lower.(*lowering).latentRefuse.func1
+         0     0% 0.067%      0.01s 0.0013%  github.com/system-inc/adamic/internal/lower.(*lowering).latentRefuse.func1.2
+         0     0% 0.067%      0.01s 0.0013%  github.com/system-inc/adamic/internal/lower.(*lowering).nestedDeclarations
+         0     0% 0.067%      0.01s 0.0013%  github.com/system-inc/adamic/internal/lower.(*lowering).nonNull
+         0     0% 0.067%      0.01s 0.0013%  github.com/system-inc/adamic/internal/lower.(*lowering).overloadResultCheck
+         0     0% 0.067%      0.01s 0.0013%  github.com/system-inc/adamic/internal/lower.(*lowering).sameKeeping
+         0     0% 0.067%      0.01s 0.0013%  github.com/system-inc/adamic/internal/lower.(*lowering).sameKeepingStorage
+         0     0% 0.067%      0.01s 0.0013%  github.com/system-inc/adamic/internal/lower.(*lowering).sameKeepingStorage.func2
+         0     0% 0.067%      0.01s 0.0013%  github.com/system-inc/adamic/internal/lower.(*lowering).sameKeepingWalk (inline)
+         0     0% 0.067%      0.01s 0.0013%  github.com/system-inc/adamic/internal/lower.(*lowering).sameKeepingWalkMode
+         0     0% 0.067%      0.01s 0.0013%  github.com/system-inc/adamic/internal/lower.(*lowering).valueSlotKeeps
+         0     0% 0.067%      0.01s 0.0013%  github.com/system-inc/adamic/internal/lower.(*lowering).viewArrayIndex
+     0.01s 0.0013% 0.069%      0.01s 0.0013%  github.com/system-inc/adamic/internal/lower.(*typeNesting).enter.func1
+     0.01s 0.0013%  0.07%      0.01s 0.0013%  internal/abi.(*MapType).IndirectElem (inline)
+     0.01s 0.0013% 0.071%      0.01s 0.0013%  internal/runtime/atomic.(*Uint32).Add (inline)
+     0.01s 0.0013% 0.072%      0.01s 0.0013%  internal/runtime/maps.(*ctrlGroup).setEmpty (inline)
+     0.01s 0.0013% 0.074%      0.01s 0.0013%  internal/runtime/maps.(*groupReference).key (inline)
+     0.01s 0.0013% 0.075%      0.01s 0.0013%  internal/runtime/maps.bitset.first (inline)
+     0.01s 0.0013% 0.076%      0.01s 0.0013%  internal/runtime/maps.ctrlGroup.matchH2 (inline)
+         0     0% 0.076%      0.01s 0.0013%  runtime.(*consistentHeapStats).release
+         0     0% 0.076%      0.01s 0.0013%  runtime.(*mcentral).grow
+         0     0% 0.076%      0.01s 0.0013%  runtime.(*mheap).alloc
+         0     0% 0.076%      0.01s 0.0013%  runtime.(*mheap).alloc.func1
+         0     0% 0.076%      0.01s 0.0013%  runtime.(*mheap).allocSpan
+     0.01s 0.0013% 0.077%      0.01s 0.0013%  runtime.(*mspan).divideByElemSize (inline)
+         0     0% 0.077%      0.01s 0.0013%  runtime.(*mspan).objIndex (inline)
+     0.01s 0.0013% 0.079%      0.01s 0.0013%  runtime.(*pageAlloc).alloc
+     0.01s 0.0013%  0.08%      0.01s 0.0013%  runtime.spanOf (inline)

@@ -1,0 +1,147 @@
+PASS adapted source unchanged: src/compiler/_namespaces/ts.moduleSpecifiers.ts
+PASS adapted source unchanged: src/compiler/_namespaces/ts.performance.ts
+PASS adapted source unchanged: src/compiler/_namespaces/ts.ts
+PASS adapted source unchanged: src/compiler/binder.ts
+PASS adapted source unchanged: src/compiler/builder.ts
+PASS adapted source unchanged: src/compiler/builderPublic.ts
+PASS adapted source unchanged: src/compiler/builderState.ts
+PASS adapted source unchanged: src/compiler/builderStatePublic.ts
+PASS adapted source unchanged: src/compiler/checker.ts
+PASS adapted source unchanged: src/compiler/commandLineParser.ts
+PASS adapted source unchanged: src/compiler/core.ts
+PASS adapted source unchanged: src/compiler/corePublic.ts
+PASS adapted source unchanged: src/compiler/debug.ts
+PASS adapted source unchanged: src/compiler/diagnosticInformationMap.generated.ts
+PASS adapted source unchanged: src/compiler/emitter.ts
+PASS adapted source unchanged: src/compiler/executeCommandLine.ts
+PASS adapted source unchanged: src/compiler/expressionToTypeNode.ts
+PASS adapted source unchanged: src/compiler/factory/baseNodeFactory.ts
+PASS adapted source unchanged: src/compiler/factory/emitHelpers.ts
+PASS adapted source unchanged: src/compiler/factory/emitNode.ts
+PASS adapted source unchanged: src/compiler/factory/nodeChildren.ts
+PASS adapted source unchanged: src/compiler/factory/nodeConverters.ts
+PASS adapted source unchanged: src/compiler/factory/nodeFactory.ts
+PASS adapted source unchanged: src/compiler/factory/nodeTests.ts
+PASS adapted source unchanged: src/compiler/factory/parenthesizerRules.ts
+PASS adapted source unchanged: src/compiler/factory/utilities.ts
+PASS adapted source unchanged: src/compiler/factory/utilitiesPublic.ts
+PASS adapted source unchanged: src/compiler/hostErrors.ts
+PASS adapted source unchanged: src/compiler/moduleNameResolver.ts
+PASS adapted source unchanged: src/compiler/moduleSpecifiers.ts
+PASS adapted source unchanged: src/compiler/parser.ts
+PASS adapted source unchanged: src/compiler/path.ts
+PASS adapted source unchanged: src/compiler/performance.ts
+PASS adapted source unchanged: src/compiler/performanceCore.ts
+PASS adapted source unchanged: src/compiler/program.ts
+PASS adapted source unchanged: src/compiler/programDiagnostics.ts
+PASS adapted source unchanged: src/compiler/resolutionCache.ts
+PASS adapted source unchanged: src/compiler/scanner.ts
+PASS adapted source unchanged: src/compiler/semver.ts
+PASS adapted source unchanged: src/compiler/sourcemap.ts
+PASS adapted source unchanged: src/compiler/symbolWalker.ts
+PASS adapted source unchanged: src/compiler/sys.ts
+PASS adapted source unchanged: src/compiler/tracing.ts
+PASS adapted source unchanged: src/compiler/transformer.ts
+PASS adapted source unchanged: src/compiler/transformers/classFields.ts
+PASS adapted source unchanged: src/compiler/transformers/classThis.ts
+PASS adapted source unchanged: src/compiler/transformers/declarations.ts
+PASS adapted source unchanged: src/compiler/transformers/declarations/diagnostics.ts
+PASS adapted source unchanged: src/compiler/transformers/destructuring.ts
+PASS adapted source unchanged: src/compiler/transformers/es2015.ts
+PASS adapted source unchanged: src/compiler/transformers/es2016.ts
+PASS adapted source unchanged: src/compiler/transformers/es2017.ts
+PASS adapted source unchanged: src/compiler/transformers/es2018.ts
+PASS adapted source unchanged: src/compiler/transformers/es2019.ts
+PASS adapted source unchanged: src/compiler/transformers/es2020.ts
+PASS adapted source unchanged: src/compiler/transformers/es2021.ts
+PASS adapted source unchanged: src/compiler/transformers/esDecorators.ts
+PASS adapted source unchanged: src/compiler/transformers/esnext.ts
+PASS adapted source unchanged: src/compiler/transformers/generators.ts
+PASS adapted source unchanged: src/compiler/transformers/jsx.ts
+PASS adapted source unchanged: src/compiler/transformers/legacyDecorators.ts
+PASS adapted source unchanged: src/compiler/transformers/module/esnextAnd2015.ts
+PASS adapted source unchanged: src/compiler/transformers/module/impliedNodeFormatDependent.ts
+PASS adapted source unchanged: src/compiler/transformers/module/module.ts
+PASS adapted source unchanged: src/compiler/transformers/module/system.ts
+PASS adapted source unchanged: src/compiler/transformers/namedEvaluation.ts
+PASS adapted source unchanged: src/compiler/transformers/taggedTemplate.ts
+PASS adapted source unchanged: src/compiler/transformers/ts.ts
+PASS adapted source unchanged: src/compiler/transformers/typeSerializer.ts
+PASS adapted source unchanged: src/compiler/transformers/utilities.ts
+PASS adapted source unchanged: src/compiler/tsbuild.ts
+PASS adapted source unchanged: src/compiler/tsbuildPublic.ts
+PASS adapted source unchanged: src/compiler/types.ts
+PASS adapted source unchanged: src/compiler/utilities.ts
+PASS adapted source unchanged: src/compiler/utilitiesPublic.ts
+PASS adapted source unchanged: src/compiler/visitorPublic.ts
+PASS adapted source unchanged: src/compiler/watch.ts
+PASS adapted source unchanged: src/compiler/watchPublic.ts
+PASS adapted source unchanged: src/compiler/watchUtilities.ts
+PASS adapted source unchanged: src/tsc/_namespaces/ts.ts
+PASS adapted source unchanged: src/tsc/tsc.ts
+PASS base: compiler/source tree matches requested SHA
+PASS base: tracked checkout files unchanged before report staging
+PASS base: ONLY scratch overlay main replaced
+PASS base: expected SHA and exact rebuilt binary hash
+PASS base: complete normal run under 30 minutes
+PASS base: full/CommonJSBundle/checker-clean shared tree
+PASS base: environment identical to census-2 except CPU profile path
+PASS base: exact selected source and intended profile path
+PASS base: committed pprof bytes equal original capture
+PASS base: whole latent.jsonl archive lossless
+PASS base: whole stderr.log archive lossless
+PASS base: whole stdout.log archive lossless
+PASS base: literal first 40 lines of top
+PASS base: literal first 40 lines of top-cum
+PASS base: raw pprof report lossless: mentionsHeld.raw.txt
+PASS base: raw pprof report lossless: walk_excluding_mentionsHeld.raw.txt
+PASS base: raw pprof report lossless: typeNesting_global.raw.txt
+PASS base: raw pprof report lossless: pair_anchors_excluding_mentionsHeld.raw.txt
+PASS base: raw pprof report lossless: total.raw.txt
+PASS base: raw pprof report lossless: outside_walk_and_mentionsHeld.raw.txt
+PASS base: raw pprof report lossless: walk_excluding_mentionsHeld_and_typeNesting.raw.txt
+PASS base: raw pprof report lossless: pair_anchors_without_root_excluding_mentionsHeld.raw.txt
+PASS base: raw pprof report lossless: outside_pair_anchors_and_mentionsHeld.raw.txt
+PASS base: raw pprof report lossless: pair_anchors_excluding_mentionsHeld_and_typeNesting.raw.txt
+PASS base: no probe logging
+PASS head: compiler/source tree matches requested SHA
+PASS head: tracked checkout files unchanged before report staging
+PASS head: ONLY scratch overlay main replaced
+PASS head: expected SHA and exact rebuilt binary hash
+PASS head: complete normal run under 30 minutes
+PASS head: full/CommonJSBundle/checker-clean shared tree
+PASS head: environment identical to census-2 except CPU profile path
+PASS head: exact selected source and intended profile path
+PASS head: committed pprof bytes equal original capture
+PASS head: whole latent.jsonl archive lossless
+PASS head: whole stderr.log archive lossless
+PASS head: whole stdout.log archive lossless
+PASS head: literal first 40 lines of top
+PASS head: literal first 40 lines of top-cum
+PASS head: raw pprof report lossless: mentionsHeld.raw.txt
+PASS head: raw pprof report lossless: walk_excluding_mentionsHeld.raw.txt
+PASS head: raw pprof report lossless: typeNesting_global.raw.txt
+PASS head: raw pprof report lossless: pair_anchors_excluding_mentionsHeld.raw.txt
+PASS head: raw pprof report lossless: total.raw.txt
+PASS head: raw pprof report lossless: outside_walk_and_mentionsHeld.raw.txt
+PASS head: raw pprof report lossless: walk_excluding_mentionsHeld_and_typeNesting.raw.txt
+PASS head: raw pprof report lossless: pair_anchors_without_root_excluding_mentionsHeld.raw.txt
+PASS head: raw pprof report lossless: outside_pair_anchors_and_mentionsHeld.raw.txt
+PASS head: raw pprof report lossless: pair_anchors_excluding_mentionsHeld_and_typeNesting.raw.txt
+PASS head: no probe logging
+PASS identical profiling hook and entire overlay main on both sides
+PASS each profiled findings-array byte stream equals BOTH census-2 repeats, ordered and unnormalized
+PASS same-machine sequential base then head capture
+PASS base: disjoint sampled CPU partition exact
+PASS base: nesting subset partition exact
+PASS base: root-omitting pair-frame diagnostic exact
+PASS base: analyzed profile is captured profile
+PASS head: disjoint sampled CPU partition exact
+PASS head: nesting subset partition exact
+PASS head: root-omitting pair-frame diagnostic exact
+PASS head: analyzed profile is captured profile
+PASS all packaged Python scripts parse
+PASS all earlier census-2 evidence checksums unchanged
+PASS head profile readable using go tool pprof -top -symbolize=none without explicit executable
+PASS all PROFILE.md links resolve and packaged scripts parse
+PASS hook diffs and unmodified go version -m output preserved losslessly as gzip, including original whitespace

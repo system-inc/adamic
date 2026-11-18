@@ -1,0 +1,227 @@
+{
+  "base": {
+    "profile_sha256": "a1e73c0f0c683f1dfc514bfce2f44c0bd30f1c4a022a026cc644b038f59a0f16",
+    "binary_sha256": "496387fdac2c666d976673d922917ad6bad3267688618cdb3ba6291c1a2f3d26",
+    "buckets": {
+      "total": {
+        "cpu_ns": 787740000000,
+        "cpu_seconds": 787.74,
+        "sample_rows": 48248,
+        "max_locations": 64,
+        "cpu_ns_at_64_locations": 490000000
+      },
+      "pair_anchors_excluding_mentionsHeld_and_typeNesting": {
+        "cpu_ns": 380000000,
+        "cpu_seconds": 0.38,
+        "sample_rows": 38,
+        "max_locations": 58,
+        "cpu_ns_at_64_locations": 0
+      },
+      "outside_pair_anchors_and_mentionsHeld": {
+        "cpu_ns": 785740000000,
+        "cpu_seconds": 785.74,
+        "sample_rows": 48048,
+        "max_locations": 64,
+        "cpu_ns_at_64_locations": 490000000
+      },
+      "pair_anchors_excluding_mentionsHeld": {
+        "cpu_ns": 380000000,
+        "cpu_seconds": 0.38,
+        "sample_rows": 38,
+        "max_locations": 58,
+        "cpu_ns_at_64_locations": 0
+      },
+      "typeNesting_in_pair_anchors_excluding_mentionsHeld": {
+        "cpu_ns": 0,
+        "cpu_seconds": 0.0,
+        "method": "sum CPU sample weights whose filtered raw location stack includes typeNesting"
+      },
+      "pair_anchors_without_root_excluding_mentionsHeld": {
+        "cpu_ns": 0,
+        "cpu_seconds": 0.0,
+        "sample_rows": 0,
+        "max_locations": 0,
+        "cpu_ns_at_64_locations": 0
+      },
+      "mentionsHeld": {
+        "cpu_ns": 1620000000,
+        "cpu_seconds": 1.62,
+        "sample_rows": 162,
+        "max_locations": 60,
+        "cpu_ns_at_64_locations": 0
+      },
+      "walk_excluding_mentionsHeld": {
+        "cpu_ns": 380000000,
+        "cpu_seconds": 0.38,
+        "sample_rows": 38,
+        "max_locations": 58,
+        "cpu_ns_at_64_locations": 0
+      },
+      "typeNesting_in_walk_excluding_mentionsHeld": {
+        "cpu_ns": 0,
+        "cpu_seconds": 0.0,
+        "method": "sum CPU sample weights whose filtered raw location stack includes typeNesting"
+      },
+      "typeNesting_global": {
+        "cpu_ns": 630000000,
+        "cpu_seconds": 0.63,
+        "sample_rows": 63,
+        "max_locations": 62,
+        "cpu_ns_at_64_locations": 0
+      },
+      "walk_excluding_mentionsHeld_and_typeNesting": {
+        "cpu_ns": 380000000,
+        "cpu_seconds": 0.38,
+        "sample_rows": 38,
+        "max_locations": 58,
+        "cpu_ns_at_64_locations": 0
+      },
+      "outside_walk_and_mentionsHeld": {
+        "cpu_ns": 785740000000,
+        "cpu_seconds": 785.74,
+        "sample_rows": 48048,
+        "max_locations": 64,
+        "cpu_ns_at_64_locations": 490000000
+      }
+    }
+  },
+  "head": {
+    "profile_sha256": "d263671868dbe8bfa535294b49ee03185c04ebf77c658444ed35d63d9f4bd3fe",
+    "binary_sha256": "f27bbf0994d9eefd1b0f0bb6de72b327eb0baff7650f2fc100f5003abf5a45e2",
+    "buckets": {
+      "total": {
+        "cpu_ns": 789940000000,
+        "cpu_seconds": 789.94,
+        "sample_rows": 48321,
+        "max_locations": 64,
+        "cpu_ns_at_64_locations": 350000000
+      },
+      "pair_anchors_excluding_mentionsHeld_and_typeNesting": {
+        "cpu_ns": 370000000,
+        "cpu_seconds": 0.37,
+        "sample_rows": 37,
+        "max_locations": 58,
+        "cpu_ns_at_64_locations": 0
+      },
+      "outside_pair_anchors_and_mentionsHeld": {
+        "cpu_ns": 787900000000,
+        "cpu_seconds": 787.9,
+        "sample_rows": 48117,
+        "max_locations": 64,
+        "cpu_ns_at_64_locations": 350000000
+      },
+      "pair_anchors_excluding_mentionsHeld": {
+        "cpu_ns": 370000000,
+        "cpu_seconds": 0.37,
+        "sample_rows": 37,
+        "max_locations": 58,
+        "cpu_ns_at_64_locations": 0
+      },
+      "typeNesting_in_pair_anchors_excluding_mentionsHeld": {
+        "cpu_ns": 0,
+        "cpu_seconds": 0.0,
+        "method": "sum CPU sample weights whose filtered raw location stack includes typeNesting"
+      },
+      "pair_anchors_without_root_excluding_mentionsHeld": {
+        "cpu_ns": 0,
+        "cpu_seconds": 0.0,
+        "sample_rows": 0,
+        "max_locations": 0,
+        "cpu_ns_at_64_locations": 0
+      },
+      "mentionsHeld": {
+        "cpu_ns": 1670000000,
+        "cpu_seconds": 1.67,
+        "sample_rows": 167,
+        "max_locations": 58,
+        "cpu_ns_at_64_locations": 0
+      },
+      "walk_excluding_mentionsHeld": {
+        "cpu_ns": 370000000,
+        "cpu_seconds": 0.37,
+        "sample_rows": 37,
+        "max_locations": 58,
+        "cpu_ns_at_64_locations": 0
+      },
+      "typeNesting_in_walk_excluding_mentionsHeld": {
+        "cpu_ns": 0,
+        "cpu_seconds": 0.0,
+        "method": "sum CPU sample weights whose filtered raw location stack includes typeNesting"
+      },
+      "typeNesting_global": {
+        "cpu_ns": 730000000,
+        "cpu_seconds": 0.73,
+        "sample_rows": 73,
+        "max_locations": 62,
+        "cpu_ns_at_64_locations": 0
+      },
+      "walk_excluding_mentionsHeld_and_typeNesting": {
+        "cpu_ns": 370000000,
+        "cpu_seconds": 0.37,
+        "sample_rows": 37,
+        "max_locations": 58,
+        "cpu_ns_at_64_locations": 0
+      },
+      "outside_walk_and_mentionsHeld": {
+        "cpu_ns": 787900000000,
+        "cpu_seconds": 787.9,
+        "sample_rows": 48117,
+        "max_locations": 64,
+        "cpu_ns_at_64_locations": 350000000
+      }
+    }
+  },
+  "delta": {
+    "total_extra_cpu_seconds": 2.2000000000000455,
+    "buckets": {
+      "total": {
+        "extra_cpu_seconds": 2.2000000000000455,
+        "percent_of_total_extra_cpu": 100.0
+      },
+      "pair_anchors_excluding_mentionsHeld_and_typeNesting": {
+        "extra_cpu_seconds": -0.010000000000000009,
+        "percent_of_total_extra_cpu": -0.4545454545454456
+      },
+      "outside_pair_anchors_and_mentionsHeld": {
+        "extra_cpu_seconds": 2.159999999999968,
+        "percent_of_total_extra_cpu": 98.1818181818147
+      },
+      "pair_anchors_excluding_mentionsHeld": {
+        "extra_cpu_seconds": -0.010000000000000009,
+        "percent_of_total_extra_cpu": -0.4545454545454456
+      },
+      "typeNesting_in_pair_anchors_excluding_mentionsHeld": {
+        "extra_cpu_seconds": 0.0,
+        "percent_of_total_extra_cpu": 0.0
+      },
+      "pair_anchors_without_root_excluding_mentionsHeld": {
+        "extra_cpu_seconds": 0.0,
+        "percent_of_total_extra_cpu": 0.0
+      },
+      "mentionsHeld": {
+        "extra_cpu_seconds": 0.04999999999999982,
+        "percent_of_total_extra_cpu": 2.2727272727272174
+      },
+      "walk_excluding_mentionsHeld": {
+        "extra_cpu_seconds": -0.010000000000000009,
+        "percent_of_total_extra_cpu": -0.4545454545454456
+      },
+      "typeNesting_in_walk_excluding_mentionsHeld": {
+        "extra_cpu_seconds": 0.0,
+        "percent_of_total_extra_cpu": 0.0
+      },
+      "typeNesting_global": {
+        "extra_cpu_seconds": 0.09999999999999998,
+        "percent_of_total_extra_cpu": 4.545454545454451
+      },
+      "walk_excluding_mentionsHeld_and_typeNesting": {
+        "extra_cpu_seconds": -0.010000000000000009,
+        "percent_of_total_extra_cpu": -0.4545454545454456
+      },
+      "outside_walk_and_mentionsHeld": {
+        "extra_cpu_seconds": 2.159999999999968,
+        "percent_of_total_extra_cpu": 98.1818181818147
+      }
+    }
+  }
+}

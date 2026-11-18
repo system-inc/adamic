@@ -1,0 +1,146 @@
+File: entry-census
+Build ID: d446c7b0d8ec818d0b19f0bb784ec1e810d2e824
+Type: cpu
+Time: 2026-11-18 13:29:44 UTC
+Duration: 604.02s, Total samples = 789.94s (130.78%)
+Active filters:
+   focus=containerWhereOtherGoes|containerPairGoes|containerPairJudged
+   ignore=mentionsHeld|typeNesting
+Showing nodes accounting for 0.37s, 0.047% of 789.94s total
+      flat  flat%   sum%        cum   cum%
+     0.01s 0.0013% 0.0013%      0.37s 0.047%  github.com/system-inc/adamic/internal/lower.(*lowering).containerWhereOtherGoes
+         0     0% 0.0013%      0.37s 0.047%  github.com/system-inc/adamic/internal/lower.(*lowering).expression (inline)
+         0     0% 0.0013%      0.37s 0.047%  github.com/system-inc/adamic/internal/lower.(*lowering).latentExpressionRaw
+         0     0% 0.0013%      0.37s 0.047%  github.com/system-inc/adamic/internal/lower.(*lowering).latentSpecExpression
+         0     0% 0.0013%      0.36s 0.046%  github.com/system-inc/adamic/internal/lower.(*lowering).containerPairGoes
+     0.01s 0.0013% 0.0025%      0.36s 0.046%  github.com/system-inc/adamic/internal/lower.(*lowering).containerPairJudged
+         0     0% 0.0025%      0.35s 0.044%  github.com/system-inc/adamic/internal/lower.(*lowering).enumNeverValue
+         0     0% 0.0025%      0.35s 0.044%  github.com/system-inc/adamic/internal/lower.(*lowering).latentStatement
+         0     0% 0.0025%      0.35s 0.044%  github.com/system-inc/adamic/internal/lower.(*lowering).latentStatementRaw
+         0     0% 0.0025%      0.35s 0.044%  github.com/system-inc/adamic/internal/lower.(*lowering).statement (inline)
+         0     0% 0.0025%      0.35s 0.044%  github.com/system-inc/adamic/internal/lower.(*lowering).statements
+         0     0% 0.0025%      0.35s 0.044%  github.com/system-inc/adamic/internal/lower.(*lowering).value
+         0     0% 0.0025%      0.34s 0.043%  github.com/system-inc/adamic/internal/lower.(*lowering).lowerBody
+         0     0% 0.0025%      0.34s 0.043%  github.com/system-inc/adamic/internal/lower.(*lowering).lowerFunction
+         0     0% 0.0025%      0.30s 0.038%  github.com/system-inc/adamic/internal/lower.latentFullSelected.func7
+         0     0% 0.0025%      0.29s 0.037%  github.com/system-inc/adamic/internal/lower.latentFullSelected
+         0     0% 0.0025%      0.28s 0.035%  github.com/system-inc/adamic/internal/lower.latentFull (inline)
+         0     0% 0.0025%      0.28s 0.035%  github.com/system-inc/adamic/internal/lower.latentRun
+         0     0% 0.0025%      0.27s 0.034%  github.com/system-inc/adamic/internal/lower.(*lowering).returnStatement
+         0     0% 0.0025%      0.25s 0.032%  github.com/system-inc/adamic/internal/lower.LatentWithRelationChecks
+         0     0% 0.0025%      0.24s  0.03%  github.com/system-inc/adamic/internal/lower.Latent
+         0     0% 0.0025%      0.24s  0.03%  main.main
+         0     0% 0.0025%      0.23s 0.029%  github.com/system-inc/adamic/internal/lower.(*lowering).representation
+         0     0% 0.0025%      0.22s 0.028%  github.com/system-inc/adamic/internal/lower.(*lowering).call
+         0     0% 0.0025%      0.22s 0.028%  github.com/system-inc/adamic/internal/lower.(*lowering).callOrMethod
+         0     0% 0.0025%      0.22s 0.028%  runtime.main
+         0     0% 0.0025%      0.20s 0.025%  github.com/system-inc/adamic/internal/lower.(*lowering).callArguments
+         0     0% 0.0025%      0.20s 0.025%  github.com/system-inc/adamic/internal/lower.(*lowering).callFunction
+     0.01s 0.0013% 0.0038%      0.20s 0.025%  github.com/system-inc/adamic/internal/lower.(*lowering).isLibraryType
+         0     0% 0.0038%      0.15s 0.019%  github.com/system-inc/adamic/internal/lower.(*lowering).typedArrayKind
+         0     0% 0.0038%      0.14s 0.018%  github.com/system-inc/adamic/internal/lower.(*lowering).cast
+         0     0% 0.0038%      0.14s 0.018%  github.com/system-inc/adamic/internal/lower.(*lowering).castValue
+         0     0% 0.0038%      0.13s 0.016%  github.com/system-inc/adamic/internal/lower.(*lowering).ifStatement
+         0     0% 0.0038%      0.13s 0.016%  github.com/system-inc/adamic/internal/lower.(*lowering).shapeFit
+         0     0% 0.0038%      0.12s 0.015%  github.com/microsoft/TypeScript/tsc/internal/bundled.LibPath
+         0     0% 0.0038%      0.12s 0.015%  github.com/microsoft/TypeScript/tsc/internal/tspath.RootedDirectoryPathFromNormalized
+         0     0% 0.0038%      0.12s 0.015%  github.com/microsoft/TypeScript/tsc/internal/tspath.RootedPathFromNormalized (inline)
+         0     0% 0.0038%      0.12s 0.015%  github.com/microsoft/TypeScript/tsc/internal/tspath.TryRootedPathFromNormalized
+         0     0% 0.0038%      0.12s 0.015%  github.com/system-inc/adamic/internal/load.IsLibrary
+         0     0% 0.0038%      0.12s 0.015%  github.com/system-inc/adamic/internal/lower.(*lowering).switchStatement
+         0     0% 0.0038%      0.11s 0.014%  github.com/system-inc/adamic/internal/lower.(*lowering).property
+         0     0% 0.0038%      0.10s 0.013%  github.com/microsoft/TypeScript/tsc/internal/tspath.hasRootedURLSuffix
+     0.02s 0.0025% 0.0063%      0.07s 0.0089%  github.com/system-inc/adamic/internal/lower.(*lowering).phantomExtension
+         0     0% 0.0063%      0.07s 0.0089%  github.com/system-inc/adamic/internal/lower.(*lowering).unbranded
+         0     0% 0.0063%      0.06s 0.0076%  github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).IsTypeAssignableTo
+     0.01s 0.0013% 0.0076%      0.06s 0.0076%  github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).isTypeAssignableTo (inline)
+         0     0% 0.0076%      0.06s 0.0076%  github.com/system-inc/adamic/internal/lower.(*lowering).condition
+         0     0% 0.0076%      0.06s 0.0076%  github.com/system-inc/adamic/internal/lower.(*lowering).nodeArrayLayoutOf
+         0     0% 0.0076%      0.05s 0.0063%  github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).isTypeRelatedTo
+         0     0% 0.0076%      0.05s 0.0063%  github.com/system-inc/adamic/internal/lower.(*lowering).instantiateFunction
+         0     0% 0.0076%      0.05s 0.0063%  github.com/system-inc/adamic/internal/lower.(*lowering).instantiateFunctionSignature
+         0     0% 0.0076%      0.04s 0.0051%  github.com/microsoft/TypeScript/tsc/internal/tspath.hasURLRoot
+         0     0% 0.0076%      0.04s 0.0051%  github.com/system-inc/adamic/internal/lower.(*lowering).nodeArrayBase
+         0     0% 0.0076%      0.04s 0.0051%  github.com/system-inc/adamic/internal/lower.(*lowering).variables
+     0.02s 0.0025%  0.01%      0.04s 0.0051%  strings.IndexAny
+         0     0%  0.01%      0.03s 0.0038%  github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).GetPropertyOfType
+         0     0%  0.01%      0.03s 0.0038%  github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).getPropertyOfType (inline)
+         0     0%  0.01%      0.03s 0.0038%  github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).getPropertyOfTypeEx
+     0.02s 0.0025% 0.013%      0.03s 0.0038%  github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).isSimpleTypeRelatedTo
+     0.02s 0.0025% 0.015%      0.03s 0.0038%  github.com/microsoft/TypeScript/tsc/internal/tspath.GetEncodedRootLength
+         0     0% 0.015%      0.03s 0.0038%  github.com/system-inc/adamic/internal/lower.(*lowering).whileStatement
+         0     0% 0.015%      0.03s 0.0038%  internal/runtime/maps.(*table).rehash
+     0.02s 0.0025% 0.018%      0.03s 0.0038%  internal/stringslite.Index
+         0     0% 0.018%      0.03s 0.0038%  runtime.mapassign
+         0     0% 0.018%      0.02s 0.0025%  github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).checkTypeRelatedTo (inline)
+         0     0% 0.018%      0.02s 0.0025%  github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).checkTypeRelatedToEx
+         0     0% 0.018%      0.02s 0.0025%  github.com/microsoft/TypeScript/tsc/internal/checker.(*Relater).isRelatedToEx
+         0     0% 0.018%      0.02s 0.0025%  github.com/microsoft/TypeScript/tsc/internal/checker.(*Relater).recursiveTypeRelatedTo
+         0     0% 0.018%      0.02s 0.0025%  github.com/microsoft/TypeScript/tsc/internal/checker.(*Relation).get (inline)
+     0.02s 0.0025%  0.02%      0.02s 0.0025%  github.com/microsoft/TypeScript/tsc/internal/tspath.hasRelativePathSegment
+         0     0%  0.02%      0.02s 0.0025%  github.com/system-inc/adamic/internal/lower.(*lowering).conditional
+     0.01s 0.0013% 0.022%      0.02s 0.0025%  github.com/system-inc/adamic/internal/lower.(*lowering).containerFitInstanceBound
+         0     0% 0.022%      0.02s 0.0025%  github.com/system-inc/adamic/internal/lower.(*lowering).elementAccess
+         0     0% 0.022%      0.02s 0.0025%  github.com/system-inc/adamic/internal/lower.(*lowering).prefix
+     0.02s 0.0025% 0.024%      0.02s 0.0025%  indexbytebody
+         0     0% 0.024%      0.02s 0.0025%  internal/runtime/maps.(*table).grow
+         0     0% 0.024%      0.02s 0.0025%  internal/runtime/maps.(*table).uncheckedPutSlot
+     0.01s 0.0013% 0.025%      0.02s 0.0025%  internal/stringslite.Cut
+         0     0% 0.025%      0.02s 0.0025%  internal/stringslite.IndexByte (inline)
+         0     0% 0.025%      0.02s 0.0025%  runtime.mapaccess1
+         0     0% 0.025%      0.02s 0.0025%  runtime.mapaccess1_faststr
+     0.01s 0.0013% 0.027%      0.02s 0.0025%  runtime.mapaccess2
+     0.02s 0.0025% 0.029%      0.02s 0.0025%  runtime.mapaccess2_faststr
+         0     0% 0.029%      0.02s 0.0025%  slices.ContainsFunc[go.shape.[]*github.com/microsoft/TypeScript/tsc/internal/checker.Type,go.shape.*uint8] (inline)
+     0.01s 0.0013%  0.03%      0.02s 0.0025%  slices.IndexFunc[go.shape.[]*github.com/microsoft/TypeScript/tsc/internal/checker.Type,go.shape.*uint8] (inline)
+         0     0%  0.03%      0.02s 0.0025%  strings.Cut (inline)
+         0     0%  0.03%      0.02s 0.0025%  strings.Index (inline)
+         0     0%  0.03%      0.02s 0.0025%  strings.IndexByte (inline)
+         0     0%  0.03%      0.02s 0.0025%  strings.IndexRune
+     0.01s 0.0013% 0.032%      0.01s 0.0013%  github.com/microsoft/TypeScript/tsc/internal/ast.(*Node).DeclarationData (inline)
+         0     0% 0.032%      0.01s 0.0013%  github.com/microsoft/TypeScript/tsc/internal/ast.(*Node).Symbol (inline)
+     0.01s 0.0013% 0.033%      0.01s 0.0013%  github.com/microsoft/TypeScript/tsc/internal/ast.GetSourceFileOfNode
+         0     0% 0.033%      0.01s 0.0013%  github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).GetSymbolAtLocation
+         0     0% 0.033%      0.01s 0.0013%  github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).getSymbolAtLocation
+         0     0% 0.033%      0.01s 0.0013%  github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).getSymbolOfDeclaration
+         0     0% 0.033%      0.01s 0.0013%  github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).instantiateType
+         0     0% 0.033%      0.01s 0.0013%  github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).instantiateTypeWithAlias
+         0     0% 0.033%      0.01s 0.0013%  github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).popActiveMapper (inline)
+     0.01s 0.0013% 0.034%      0.01s 0.0013%  github.com/microsoft/TypeScript/tsc/internal/checker.(*StructuredType).CallSignatures (inline)
+     0.01s 0.0013% 0.035%      0.01s 0.0013%  github.com/microsoft/TypeScript/tsc/internal/checker.(*Type).AsInterfaceType
+         0     0% 0.035%      0.01s 0.0013%  github.com/system-inc/adamic/internal/lower.(*containerFitWalk).settle
+         0     0% 0.035%      0.01s 0.0013%  github.com/system-inc/adamic/internal/lower.(*lowering).arrayMethod
+         0     0% 0.035%      0.01s 0.0013%  github.com/system-inc/adamic/internal/lower.(*lowering).arrayMethodArguments
+         0     0% 0.035%      0.01s 0.0013%  github.com/system-inc/adamic/internal/lower.(*lowering).arrayVisit
+         0     0% 0.035%      0.01s 0.0013%  github.com/system-inc/adamic/internal/lower.(*lowering).assignment
+         0     0% 0.035%      0.01s 0.0013%  github.com/system-inc/adamic/internal/lower.(*lowering).builtin
+         0     0% 0.035%      0.01s 0.0013%  github.com/system-inc/adamic/internal/lower.(*lowering).closure
+         0     0% 0.035%      0.01s 0.0013%  github.com/system-inc/adamic/internal/lower.(*lowering).destructure
+         0     0% 0.035%      0.01s 0.0013%  github.com/system-inc/adamic/internal/lower.(*lowering).eachReached
+         0     0% 0.035%      0.01s 0.0013%  github.com/system-inc/adamic/internal/lower.(*lowering).expressionStatement
+         0     0% 0.035%      0.01s 0.0013%  github.com/system-inc/adamic/internal/lower.(*lowering).isArrayType
+         0     0% 0.035%      0.01s 0.0013%  github.com/system-inc/adamic/internal/lower.(*lowering).labeled
+         0     0% 0.035%      0.01s 0.0013%  github.com/system-inc/adamic/internal/lower.(*lowering).nestedDeclarations
+         0     0% 0.035%      0.01s 0.0013%  github.com/system-inc/adamic/internal/lower.(*lowering).shapeFitReached
+         0     0% 0.035%      0.01s 0.0013%  github.com/system-inc/adamic/internal/lower.(*lowering).shapeFitReached.func1
+     0.01s 0.0013% 0.037%      0.01s 0.0013%  indexbody
+         0     0% 0.037%      0.01s 0.0013%  internal/runtime/maps.(*Map).Clear
+         0     0% 0.037%      0.01s 0.0013%  internal/runtime/maps.(*Map).Delete
+     0.01s 0.0013% 0.038%      0.01s 0.0013%  internal/runtime/maps.(*Map).deleteSmall
+     0.01s 0.0013% 0.039%      0.01s 0.0013%  internal/runtime/maps.(*groupReference).key (inline)
+     0.01s 0.0013% 0.041%      0.01s 0.0013%  internal/runtime/maps.(*groupsReference).group (inline)
+         0     0% 0.041%      0.01s 0.0013%  internal/runtime/maps.(*table).Clear
+         0     0% 0.041%      0.01s 0.0013%  internal/runtime/maps.(*table).split
+     0.01s 0.0013% 0.042%      0.01s 0.0013%  internal/runtime/maps.ctrlGroup.matchEmptyOrDeleted (inline)
+     0.01s 0.0013% 0.043%      0.01s 0.0013%  internal/runtime/maps.ctrlGroup.matchFull (inline)
+     0.01s 0.0013% 0.044%      0.01s 0.0013%  internal/runtime/maps.ctrlGroup.matchH2 (inline)
+         0     0% 0.044%      0.01s 0.0013%  internal/runtime/maps.typedmemmove
+         0     0% 0.044%      0.01s 0.0013%  runtime.efaceeq
+     0.01s 0.0013% 0.046%      0.01s 0.0013%  runtime.f64equal
+         0     0% 0.046%      0.01s 0.0013%  runtime.mapaccess1_fast64
+         0     0% 0.046%      0.01s 0.0013%  runtime.mapaccess2_fast64
+         0     0% 0.046%      0.01s 0.0013%  runtime.mapclear
+         0     0% 0.046%      0.01s 0.0013%  runtime.mapdelete
+     0.01s 0.0013% 0.047%      0.01s 0.0013%  runtime.memmove
+         0     0% 0.047%      0.01s 0.0013%  runtime.typedmemmove
+         0     0% 0.047%      0.01s 0.0013%  strings.Contains (inline)

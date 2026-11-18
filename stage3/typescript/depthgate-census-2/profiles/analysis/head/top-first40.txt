@@ -1,0 +1,40 @@
+File: entry-census
+Build ID: d446c7b0d8ec818d0b19f0bb784ec1e810d2e824
+Type: cpu
+Time: 2026-11-18 13:29:44 UTC
+Duration: 604.02s, Total samples = 789.94s (130.78%)
+Showing nodes accounting for 565.34s, 71.57% of 789.94s total
+Dropped 3033 nodes (cum <= 3.95s)
+      flat  flat%   sum%        cum   cum%
+    54.96s  6.96%  6.96%     82.08s 10.39%  reflect.(*rtype).Field
+    31.66s  4.01% 10.97%     69.41s  8.79%  runtime.tryDeferToSpanScan
+    29.32s  3.71% 14.68%     29.32s  3.71%  runtime.spanClass.sizeclass (inline)
+    28.39s  3.59% 18.27%    119.08s 15.07%  runtime.scanObject
+    21.43s  2.71% 20.98%    207.57s 26.28%  github.com/microsoft/TypeScript/tsc/internal/ast.(*Node).ForEachChild
+    21.22s  2.69% 23.67%     21.22s  2.69%  internal/runtime/maps.ctrlGroup.matchH2 (inline)
+    18.98s  2.40% 26.07%     29.81s  3.77%  runtime.findObject
+    18.11s  2.29% 28.37%    220.74s 27.94%  github.com/system-inc/adamic/internal/lower.latentCopyIR[go.shape.*uint8].func1
+    16.31s  2.06% 30.43%     16.31s  2.06%  runtime.memclrNoHeapPointers
+    16.22s  2.05% 32.48%     16.22s  2.05%  runtime.memmove
+    11.61s  1.47% 33.95%     26.97s  3.41%  reflect.(*structType).Field
+    11.43s  1.45% 35.40%     11.43s  1.45%  internal/runtime/maps.memHashAES
+    11.36s  1.44% 36.84%     16.52s  2.09%  reflect.Value.Field
+    10.62s  1.34% 38.18%     23.08s  2.92%  github.com/system-inc/adamic/internal/lower.(*lowering).refuseViewElementReads.func1
+    10.33s  1.31% 39.49%     28.63s  3.62%  runtime.mapaccess2_fast64
+     8.95s  1.13% 40.62%     67.76s  8.58%  runtime.scanSpan
+     8.43s  1.07% 41.69%      8.77s  1.11%  internal/runtime/gc/scan.scanSpanPackedAVX512
+     8.28s  1.05% 42.74%    102.17s 12.93%  github.com/system-inc/adamic/internal/lower.latentPrivateIRField
+     8.25s  1.04% 43.78%    199.22s 25.22%  github.com/microsoft/TypeScript/tsc/internal/ast.visitNodeList (inline)
+     8.14s  1.03% 44.81%     16.91s  2.14%  github.com/system-inc/adamic/internal/lower.(*lowering).writtenAcrossFunctions.func1
+     8.11s  1.03% 45.84%    204.36s 25.87%  github.com/microsoft/TypeScript/tsc/internal/ast.visit (inline)
+     7.90s  1.00% 46.84%      7.94s  1.01%  runtime.ifaceeq
+     7.80s  0.99% 47.83%     13.04s  1.65%  reflect.Value.assignTo
+     7.69s  0.97% 48.80%     15.01s  1.90%  runtime.scanObjectSmall
+     6.75s  0.85% 49.66%     17.85s  2.26%  runtime.scanObjectsSmall
+     6.62s  0.84% 50.49%      6.76s  0.86%  internal/abi.Name.IsExported (inline)
+     6.44s  0.82% 51.31%    199.16s 25.21%  github.com/microsoft/TypeScript/tsc/internal/ast.visitNodes (inline)
+     6.07s  0.77% 52.08%     42.44s  5.37%  reflect.Value.Set
+     5.95s  0.75% 52.83%     23.93s  3.03%  runtime.mapaccess2_faststr
+     5.81s  0.74% 53.57%     14.75s  1.87%  github.com/system-inc/adamic/internal/lower.(*lowering).entriesRecordStorageTypes.func1
+     5.62s  0.71% 54.28%      6.20s  0.78%  github.com/microsoft/TypeScript/tsc/internal/ast.IsFunctionLikeKind (inline)
+     5.46s  0.69% 54.97%     26.90s  3.41%  github.com/microsoft/TypeScript/tsc/internal/binder.(*NameResolver).Resolve
