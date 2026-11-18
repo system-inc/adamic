@@ -490,7 +490,7 @@ func (l *lowering) droppedContractRead(t, held, seen *checker.Type) bool {
 // droppedContractScalars is each representation droppedContractRead drops a property of: a scalar whose
 // read from a slot boxed as a union recordReadDeclared proves by its exact tag, and by its value where
 // the declared type is literals (a number, string or boolean, their literal unions and numeric enums).
-var droppedContractScalars = map[ir.Type]bool{ir.Number: true, ir.String: true, ir.Boolean: true}
+var droppedContractScalars = map[ir.Type]bool{ir.Number: true, ir.String: true, ir.Boolean: true, ir.Array: true}
 
 // parameterStorage is check run with droppedContractsRead cleared, then restored: a function's
 // parameter is handed the other side's value, so no named contract is dropped through it, in either
