@@ -72,7 +72,7 @@ func TestAsyncStringLengthProbes(t *testing.T) {
 		{"a1: a callee first", setup + "function show(text: string): string {\n\treturn text;\n}\nconsole.log(show(`${await p}|${await q}`));\n", ""},
 		{"a2: a property read first", setup + "const box = { x: 'k' };\nconsole.log(`${box.x}${await p}|${await q}`);\n", ""},
 		{"a3: a computed key first", setup + "const key = 'k';\nconst record = { [key]: `${await p}|${await q}` };\nconsole.log(record.k);\n", "a computed field name"},
-		{"a4: a tagged template's tag first", setup + "function tag(parts: TemplateStringsArray, ...values: string[]): string {\n\treturn values.join('|');\n}\nconsole.log(tag`${await p}|${await q}`);\n", "a value of type TemplateStringsArray"},
+		{"a4: a tagged template's tag first", setup + "function tag(parts: TemplateStringsArray, ...values: string[]): string {\n\treturn values.join('|');\n}\nconsole.log(tag`${await p}|${await q}`);\n", "a value of type TemplateStringsArray, an array type with its own member raw, held as neither an array nor an object"},
 		{"a5: a destructuring default", setup + "const holder: { v?: string } = {};\nconst { v = `${await p}|${await q}` } = holder;\nconsole.log(v);\n", ""},
 		{"a6: a comma expression", setup + "console.log((big.length, `${await p}|${await q}`));\n", ""},
 
