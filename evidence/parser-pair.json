@@ -1,0 +1,145 @@
+{
+  "identical": 504,
+  "relocated_same_semantics": [],
+  "deltas": [
+    {
+      "grade": "gone",
+      "base": {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "/workspace/scratch/y852c3c-adapted/src/compiler/commandLineParser.ts:2849:1",
+        "phase": "lowering",
+        "kind": "NotYet",
+        "where": "/workspace/scratch/y852c3c-adapted/src/compiler/commandLineParser.ts:2949:23",
+        "reason": "a dictionary member narrowed to an array without an element-checked view",
+        "text": "/workspace/scratch/y852c3c-adapted/src/compiler/commandLineParser.ts:2949:23: stage 0 can't lower a dictionary member narrowed to an array without an element-checked view yet",
+        "census_file": "src/compiler/commandLineParser.ts"
+      }
+    },
+    {
+      "grade": "gone",
+      "base": {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "/workspace/scratch/y852c3c-adapted/src/compiler/commandLineParser.ts:2849:1",
+        "phase": "lowering",
+        "kind": "Boundary",
+        "where": "/workspace/scratch/y852c3c-adapted/src/compiler/commandLineParser.ts:2949:9",
+        "reason": "failed statement; state rolled back; continued at next statement or declaration",
+        "text": "/workspace/scratch/y852c3c-adapted/src/compiler/commandLineParser.ts:2949:23: stage 0 can't lower a dictionary member narrowed to an array without an element-checked view yet",
+        "start": 119340,
+        "end": 119383,
+        "census_file": "src/compiler/commandLineParser.ts"
+      }
+    },
+    {
+      "grade": "gone",
+      "base": {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "/workspace/scratch/y852c3c-adapted/src/compiler/commandLineParser.ts:2849:1",
+        "phase": "lowering",
+        "kind": "NotYet",
+        "where": "/workspace/scratch/y852c3c-adapted/src/compiler/commandLineParser.ts:2950:65",
+        "reason": "reading value",
+        "text": "/workspace/scratch/y852c3c-adapted/src/compiler/commandLineParser.ts:2950:65: stage 0 can't lower reading value yet",
+        "census_file": "src/compiler/commandLineParser.ts"
+      }
+    },
+    {
+      "grade": "gone",
+      "base": {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "/workspace/scratch/y852c3c-adapted/src/compiler/commandLineParser.ts:2849:1",
+        "phase": "lowering",
+        "kind": "Boundary",
+        "where": "/workspace/scratch/y852c3c-adapted/src/compiler/commandLineParser.ts:2950:9",
+        "reason": "failed statement; state rolled back; continued at next statement or declaration",
+        "text": "/workspace/scratch/y852c3c-adapted/src/compiler/commandLineParser.ts:2950:65: stage 0 can't lower reading value yet",
+        "start": 119383,
+        "end": 119548,
+        "census_file": "src/compiler/commandLineParser.ts"
+      }
+    },
+    {
+      "grade": "gone",
+      "base": {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "/workspace/scratch/y852c3c-adapted/src/compiler/commandLineParser.ts:2849:1",
+        "phase": "lowering",
+        "kind": "NotYet",
+        "where": "/workspace/scratch/y852c3c-adapted/src/compiler/commandLineParser.ts:2871:9",
+        "reason": "a dictionary member narrowed to an array without an element-checked view",
+        "text": "/workspace/scratch/y852c3c-adapted/src/compiler/commandLineParser.ts:2871:9: stage 0 can't lower a dictionary member narrowed to an array without an element-checked view yet",
+        "census_file": "src/compiler/commandLineParser.ts"
+      }
+    },
+    {
+      "grade": "gone",
+      "base": {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "/workspace/scratch/y852c3c-adapted/src/compiler/commandLineParser.ts:2849:1",
+        "phase": "lowering",
+        "kind": "Boundary",
+        "where": "/workspace/scratch/y852c3c-adapted/src/compiler/commandLineParser.ts:2871:5",
+        "reason": "failed statement; state rolled back; continued at next statement or declaration",
+        "text": "/workspace/scratch/y852c3c-adapted/src/compiler/commandLineParser.ts:2871:9: stage 0 can't lower a dictionary member narrowed to an array without an element-checked view yet",
+        "start": 116309,
+        "end": 116381,
+        "census_file": "src/compiler/commandLineParser.ts"
+      }
+    }
+  ],
+  "base": {
+    "status": "measurement",
+    "format": "CommonJSBundle",
+    "diagnostics": 0,
+    "files": 1,
+    "units": 195,
+    "findings": 510,
+    "target_sites": [
+      {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "/workspace/scratch/y852c3c-adapted/src/compiler/commandLineParser.ts:2849:1",
+        "phase": "lowering",
+        "kind": "NotYet",
+        "where": "/workspace/scratch/y852c3c-adapted/src/compiler/commandLineParser.ts:2949:23",
+        "reason": "a dictionary member narrowed to an array without an element-checked view",
+        "text": "/workspace/scratch/y852c3c-adapted/src/compiler/commandLineParser.ts:2949:23: stage 0 can't lower a dictionary member narrowed to an array without an element-checked view yet",
+        "census_file": "src/compiler/commandLineParser.ts"
+      },
+      {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "/workspace/scratch/y852c3c-adapted/src/compiler/commandLineParser.ts:2849:1",
+        "phase": "lowering",
+        "kind": "NotYet",
+        "where": "/workspace/scratch/y852c3c-adapted/src/compiler/commandLineParser.ts:2871:9",
+        "reason": "a dictionary member narrowed to an array without an element-checked view",
+        "text": "/workspace/scratch/y852c3c-adapted/src/compiler/commandLineParser.ts:2871:9: stage 0 can't lower a dictionary member narrowed to an array without an element-checked view yet",
+        "census_file": "src/compiler/commandLineParser.ts"
+      }
+    ]
+  },
+  "head": {
+    "status": "measurement",
+    "format": "CommonJSBundle",
+    "diagnostics": 0,
+    "files": 1,
+    "units": 195,
+    "findings": 504,
+    "target_sites": []
+  }
+}

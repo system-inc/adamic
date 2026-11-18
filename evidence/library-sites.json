@@ -1,0 +1,74 @@
+[
+  {
+    "Kind": "scan stop",
+    "Rule": "refusal_scan/stringWideningRefusal",
+    "Site": "src/compiler/commandLineParser.ts:1901:20",
+    "Words": "a value of type string[] seen as string | (string | number)[] | undefined, which can write string | number where string is read"
+  },
+  {
+    "Kind": "scan stop",
+    "Rule": "refusal_scan/stringWideningRefusal",
+    "Site": "src/compiler/commandLineParser.ts:2823:42",
+    "Words": "a value of type string[] seen as CompilerOptionsValue, which can write string | number where string is read"
+  },
+  {
+    "Kind": "scan stop",
+    "Rule": "refusal_scan/stringWideningRefusal",
+    "Site": "src/compiler/commandLineParser.ts:2831:42",
+    "Words": "a value of type string[] seen as CompilerOptionsValue, which can write string | number where string is read"
+  },
+  {
+    "Kind": "scan stop",
+    "Rule": "refusal_scan/stringWideningRefusal",
+    "Site": "src/compiler/commandLineParser.ts:2950:125",
+    "Words": "a value of type TsConfigSourceFile | CompilerOptionsValue seen as string | number | boolean | PluginImport[] | ProjectReference[] | (string | number)[] | MapLike<string[]> | TsConfigSourceFile | null | undefined, which can write string | number where string is read"
+  },
+  {
+    "Kind": "scan stop",
+    "Rule": "refusal_scan/stringWideningRefusal",
+    "Site": "src/compiler/commandLineParser.ts:2950:134",
+    "Words": "a value of type TsConfigSourceFile | CompilerOptionsValue seen as string | number | boolean | PluginImport[] | ProjectReference[] | (string | number)[] | MapLike<string[]> | TsConfigSourceFile | null | undefined, which can write string | number where string is read"
+  },
+  {
+    "Kind": "scan stop",
+    "Rule": "refusal_scan/stringWideningRefusal",
+    "Site": "src/compiler/commandLineParser.ts:2994:28",
+    "Words": "a value of type CompilerOptionsValue seen as TsConfigSourceFile | CompilerOptionsValue, which can write string | number where string is read"
+  },
+  {
+    "Kind": "scan stop",
+    "Rule": "refusal_scan/stringWideningRefusal",
+    "Site": "src/compiler/commandLineParser.ts:3012:24",
+    "Words": "a value of type string[] seen as CompilerOptionsValue, which can write string | number where string is read"
+  },
+  {
+    "Kind": "scan stop",
+    "Rule": "refusal_scan/stringWideningRefusal",
+    "Site": "src/compiler/commandLineParser.ts:3095:9",
+    "Words": "a value of type MapLike<string | number | boolean | string[] | PluginImport[] | ProjectReference[] | (string | number)[] | MapLike<string[]> | TsConfigSourceFile | null | undefined> seen as OptionsBase | undefined, which can write string | number where string is read"
+  },
+  {
+    "Kind": "scan stop",
+    "Rule": "refusal_scan/stringWideningRefusal",
+    "Site": "src/compiler/commandLineParser.ts:3298:60",
+    "Words": "a value of type string[] seen as CompilerOptionsValue, which can write string | number where string is read"
+  },
+  {
+    "Kind": "scan stop",
+    "Rule": "refusal_scan/stringWideningRefusal",
+    "Site": "src/compiler/commandLineParser.ts:3313:57",
+    "Words": "a value of type CompilerOptionsValue seen as TsConfigSourceFile | CompilerOptionsValue, which can write string | number where string is read"
+  },
+  {
+    "Kind": "scan stop",
+    "Rule": "refusal_scan/stringWideningRefusal",
+    "Site": "src/compiler/commandLineParser.ts:3807:67",
+    "Words": "a value of type CompilerOptionsValue seen as TsConfigSourceFile | CompilerOptionsValue, which can write string | number where string is read"
+  },
+  {
+    "Kind": "scan stop",
+    "Rule": "refusal_scan/stringWideningRefusal",
+    "Site": "src/compiler/commandLineParser.ts:3876:37",
+    "Words": "a value of type string | number | boolean | string[] | PluginImport[] | ProjectReference[] | (string | number)[] | MapLike<string[]> seen as CompilerOptionsValue, which can write string | number where string is read"
+  }
+]
