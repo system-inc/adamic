@@ -360,3 +360,49 @@ put(["x"]);
 		t.Fatalf("got %v, want the push through the slot reach to stop", err)
 	}
 }
+
+// recordValuesNode's sources are only noteRecordWrite's, so a value that enters a record another way
+// reaches the record node with no reason added. Three stops keep every such road closed today, each
+// pinned here by its own words (Language's should on #y852c3c, J-t76hvmt): an index-signature object
+// spread into the options literal (n01), Object.fromEntries spread in (n02), and Object.assign onto the
+// record (n03), each putting a (string | number)[] under rootDirs that the string[] slot view then reads.
+// When any of these stops lifts, that value must become a noted write or make the node Unknown, and the
+// row here goes red first.
+func TestRecordValuesEnterOnlyThroughNotedWrites(t *testing.T) {
+	t.Parallel()
+	const spreadInA = "Refused: a dictionary read through a declared property narrower than its values ("
+	const spreadInTS = "Refused: optional property target in Options absent from structural source "
+	const assign = "NotYet: Object.assign on a record"
+	for _, row := range []struct{ name, source, inA, inTS string }{
+		{"n01 an index-signature object spread", `const extra: { [k: string]: (string | number)[] } = { rootDirs: ["a", 1] };
+const filled: Options = { ...extra, lib: [] };
+for (const d of filled.rootDirs ?? []) {
+    console.log(d.toUpperCase());
+}
+`, spreadInA, spreadInTS},
+		{"n02 Object.fromEntries spread", `const filled: Options = { ...Object.fromEntries<(string | number)[]>([["rootDirs", ["a", 1]]]), lib: [] };
+for (const d of filled.rootDirs ?? []) {
+    console.log(d.toUpperCase());
+}
+`, spreadInA, spreadInTS},
+		{"n03 Object.assign", `Object.assign(opts, { rootDirs: ["a", 1] });
+for (const d of opts.rootDirs ?? []) {
+    console.log(d.toUpperCase());
+}
+`, assign, assign},
+	} {
+		for _, extension := range []string{".a", ".ts"} {
+			want := row.inTS
+			if extension == ".a" {
+				want = row.inA
+			}
+			t.Run(row.name+" "+extension, func(t *testing.T) {
+				t.Parallel()
+				_, err := lowerSourceAs(t, recordSlotOptions+row.source, extension)
+				if err == nil || !strings.HasPrefix(stoppedFor(err), want) {
+					t.Fatalf("got %v, want the stop %q: a value entering a record without a noted write must stop, or become one", err, want)
+				}
+			})
+		}
+	}
+}
