@@ -37,6 +37,10 @@ type Options struct {
 	// stderr as it exits (runtime/count.h). Only a counted build does; the counts table is made of them.
 	Count bool
 
+	// CPU, Contract and Slabs are exported only so internal/native's tests and this package's can set them; every build a
+	// product, a program or the command asks for leaves them unset. A setter outside a test is a decision about what the
+	// archives are built with, so it's said on its task, never made in passing (Runtime's should on #tb722h2).
+
 	// CPU compiles for a particular processor (-march). Tests set it, so a test on an x86 machine can see what fused
 	// multiply-adds would do, as on arm64.
 	CPU string
