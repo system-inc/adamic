@@ -14,8 +14,9 @@ import (
 // every view target first, so each such program stopped there, not yet at the view (#k031ey0). Since
 // #ykd89v9 the expansive-generic pre-pass (expansive_generics.go) runs before it and stops each one where
 // its generic is declared, refused as polymorphic recursion, so that's the stop these rows read now. collectViewedElements' bound stays as
-// defense, and through lowering its mutant (the !ok branch returning without setting stop) survives,
-// since no program reaches the walk with a growing generic any more.
+// defense, and its mutant survives through lowering, since no program reaches the walk with a growing
+// generic any more. TestCollectViewedElementsBoundsAGrowingGenericDirectly calls the walk itself and is
+// its witness.
 func TestViewedElementsStopOnAGenericThatDeepensItself(t *testing.T) {
 	t.Parallel()
 	tail := `interface Id extends N { readonly kind: 1; readonly text: string }
