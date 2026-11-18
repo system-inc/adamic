@@ -1,0 +1,325 @@
+// The Computer Language Benchmarks Game
+// https://salsa.debian.org/benchmarksgame-team/benchmarksgame/
+//
+// contributed by Joe Farro
+// parts taken from solution contributed by
+// Jos Hirth which was modified by 10iii
+//
+// Revised BSD license
+//
+// This is a specific instance of the Open Source Initiative (OSI) BSD license template
+// http://www.opensource.org/licenses/bsd-license.php
+//
+// Copyright © 2004-2008 Brent Fulgham, 2005-2024 Isaac Gouy
+// All rights reserved.
+//
+// Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following conditions are met:
+//
+//    Redistributions of source code must retain the above copyright notice, this list of conditions and the following disclaimer.
+//
+//    Redistributions in binary form must reproduce the above copyright notice, this list of conditions and the following disclaimer in the documentation and/or other materials provided with the distribution.
+//
+//    Neither the name of "The Computer Language Benchmarks Game" nor the name of "The Computer Language Shootout Benchmarks" nor the names of its contributors may be used to endorse or promote products derived from this software without specific prior written permission.
+//
+// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+//
+// Source: revcomp/revcomp.node-2.node from public/download/benchmarksgame-sourcecode.zip
+// (blob 05648fc9a0d6) at benchmarksgame commit 40296663ed350d5fe4a6ab5e367bab61cb77c219 (March 7, 2025).
+// The game has no revcomp.node or .node-1; .node-2 is its lowest-numbered Node.js entry.
+//
+// Ported to Adamic for the speed holdout (#re2xhwa). The 16,000-byte reads, the linked arrays of
+// Buffers, the reversal into one write buffer and the output are the original's. Each change is one
+// the language makes, and a comment marked "Adamic:" says which.
+//
+// Input: the game pipes in fasta's output for n = 25,000,000, the game's size, on stdin. Adamic has no
+// stdin yet, so this port reads the same bytes from a file named by its first argument, and stdinRead
+// hands them out as stdin.read did (see the end of the file).
+//
+// Adamic: `process` comes from node:process and `Buffer` from node:buffer, as every Adamic program
+// reaches them.
+import process from 'node:process';
+import { Buffer } from 'node:buffer';
+import { panic, programArguments, readTextFile } from 'adamic';
+
+const stdout = process.stdout;
+// Adamic: `const stdin = process.stdin` goes with stdin; stdinRead below takes its place.
+
+const READ_SIZE = 16000;
+const writeBuffer = Buffer.allocUnsafe((READ_SIZE + READ_SIZE / 61) | 0);
+// Adamic: the two untyped declarations get their type. reverse sets both before any read.
+let metaI: number;
+let numLines: number;
+
+// Adamic: the constructor function becomes a class with the same four fields, and its untyped fields
+// get their types.
+class LinkedArray {
+	prev: LinkedArray | undefined;
+	next: LinkedArray | undefined;
+	pos: number;
+	data: Buffer[];
+	constructor(prev?: LinkedArray) {
+		this.prev = prev;
+		this.next = undefined;
+		this.pos = 0;
+		this.data = [];
+	}
+}
+
+function getCompChar(code: number): number | undefined {
+	switch (code) {
+		case 65:
+		case 97:
+			return 84;
+		case 66:
+		case 98:
+			return 86;
+		case 67:
+		case 99:
+			return 71;
+		case 68:
+		case 100:
+			return 72;
+		case 71:
+		case 103:
+			return 67;
+		case 72:
+		case 104:
+			return 68;
+		case 75:
+		case 107:
+			return 77;
+		case 77:
+		case 109:
+			return 75;
+		case 78:
+		case 110:
+			return 78;
+		case 82:
+		case 114:
+			return 89;
+		case 83:
+		case 115:
+			return 83;
+		case 84:
+		case 85:
+			return 65;
+		case 86:
+		case 118:
+			return 66;
+		case 87:
+		case 119:
+			return 87;
+		case 116:
+		case 117:
+			return 65;
+		case 89:
+		case 121:
+			return 82;
+	}
+}
+
+function reverseCompPrint(line: Buffer): void {
+	let _metaI = metaI;
+	let _numLines = numLines;
+	let count = 0;
+	const target = writeBuffer;
+	const len = line.length;
+	const right = line.length - 1;
+
+	let ileft = 0;
+	let iright = 0;
+
+	// Adamic: a Buffer's element read is `number | undefined` under noUncheckedIndexedAccess, and c is
+	// used as a number, so each read is checked. right - iright stays within the line, so neither fires.
+	let c: number;
+	while (iright < len) {
+		c = line[right - iright] ?? panic('revcomp: read outside the line');
+		iright++;
+		if (c === 10) {
+			// skip linebreaks
+			if (iright === len) {
+				break;
+			}
+			c = line[right - iright] ?? panic('revcomp: read outside the line');
+			iright++;
+		}
+		// Adamic: getCompChar has no answer for a byte it doesn't list, and writing that `undefined`
+		// into a Buffer element is refused, so it's checked. fasta writes only bytes it lists.
+		target[ileft] = getCompChar(c) ?? panic(`revcomp: no complement for byte ${c}`);
+		ileft++;
+		count++;
+		if ((count + _metaI - _numLines) % 60 === 0) {
+			// need a linebreak
+			target[ileft] = 10;
+			ileft++;
+			count++;
+			_numLines++;
+		}
+	}
+	metaI = _metaI + count;
+	numLines = _numLines;
+	stdout.write(target.slice(0, count).toString('ascii'));
+}
+
+function reverse(la_: LinkedArray): void {
+	// reset the metaI and numLines in this section
+	metaI = 0;
+	numLines = 0;
+
+	// Adamic: `var` becomes `let`, and la's type says it reaches undefined at the head of the list.
+	let la: LinkedArray | undefined = la_,
+		lines = la.data,
+		lnIdx = la.pos - 1,
+		line = lines[lnIdx];
+
+	while (true) {
+		// Adamic: line is `Buffer | undefined` here as far as the checker can tell, so it's checked. The
+		// first line read is at pos - 1 of a list that holds pos lines, and every later one is a line
+		// the loop just found present, so it never fires.
+		reverseCompPrint(line ?? panic('revcomp: no line to reverse'));
+		lnIdx--;
+		line = lines[lnIdx];
+		if (line) {
+			continue;
+		}
+		la = la.prev;
+		if (la === undefined) {
+			break;
+		}
+		lines = la.data;
+		lnIdx = la.pos;
+		lnIdx--;
+		line = lines[lnIdx];
+	}
+	if ((metaI - numLines) % 60 !== 0) {
+		stdout.write('\n');
+	}
+}
+
+// Adamic: a write past an array's end is refused (0.1 panics where Node grows the array). The
+// original writes lines at an index no greater than their length, so a write at the end is a push.
+function storeLine(lines: Buffer[], index: number, line: Buffer): void {
+	if (index === lines.length) lines.push(line);
+	else lines[index] = line;
+}
+
+const LA_LEN = 30;
+const headLA = new LinkedArray();
+let la = headLA;
+let lnIdx = 0;
+let lines = la.data;
+
+let needHeader = true;
+// Adamic: the untyped declaration gets its type: it holds '' or a partial header's Buffer.
+let headerPartial: string | Buffer = '';
+let isFirst = true;
+
+function read(): void {
+	let chunk = stdinRead(READ_SIZE);
+	let isFinal = false;
+	if (!chunk) {
+		if (isFirst) {
+			isFirst = false;
+			return;
+		}
+		la.pos = lnIdx;
+		reverse(la);
+		return;
+	} else if (chunk.length < READ_SIZE) {
+		isFinal = true;
+	}
+	while (chunk) {
+		while (true) {
+			// if have read a partial header line, read the rest of it
+			if (needHeader) {
+				const headerEnds = chunk.indexOf('\n');
+				console.log(headerPartial.toString('ascii') + chunk.slice(0, headerEnds).toString('ascii'));
+				headerPartial = '';
+				chunk = chunk.slice(headerEnds);
+				needHeader = false;
+			}
+			const caretIdx = chunk.indexOf('>');
+			if (caretIdx > -1) {
+				// there is a caret in this chunk -- process the first part of
+				// the chunk and then continue the `while (true)` loop to process
+				// the next part of the chunk
+				storeLine(lines, lnIdx, chunk.slice(0, caretIdx));
+				// set chunk to the next section
+				chunk = chunk.slice(caretIdx);
+				la.pos = lnIdx + 1;
+				reverse(la);
+				// reset the data holders
+				la = headLA;
+				lines = la.data;
+				la.pos = 0;
+				lnIdx = 0;
+				// check to see if the entire header line is here
+				const headerEnds = chunk.indexOf('\n');
+				if (headerEnds < 0) {
+					needHeader = true;
+					headerPartial = chunk;
+					break;
+				} else {
+					// log the header
+					console.log(chunk.slice(0, headerEnds).toString('ascii'));
+					// continue processing the rest of the chunk
+					chunk = chunk.slice(headerEnds);
+				}
+			} else {
+				if (lnIdx === LA_LEN) {
+					la.pos = LA_LEN;
+					la = la.next || (la.next = new LinkedArray(la));
+					lines = la.data;
+					storeLine(lines, 0, chunk);
+					lnIdx = la.pos = 1;
+				} else {
+					storeLine(lines, lnIdx, chunk);
+					lnIdx++;
+				}
+				break;
+			}
+		}
+		chunk = stdinRead(READ_SIZE);
+	}
+	if (isFinal) {
+		la.pos = lnIdx;
+		reverse(la);
+	}
+}
+
+// Adamic: stdin becomes a file named by the first argument, because Adamic has no stdin yet. The file
+// is fasta's output, the bytes the game redirects to stdin, and fasta writes only ASCII, so its text
+// is those bytes one for one. A missing argument or a file that can't be read panics with why, to
+// stderr, exit 70.
+const input = readTextFile(programArguments()[0] ?? panic('reverse-complement: the input file must be the first argument'));
+if (input.kind === 'Error') panic(input.message);
+// The narrowed text, since a function declaration doesn't see the narrowing above.
+const inputText = input.text;
+let inputPosition = 0;
+let inputEnded = false;
+
+// Adamic: stdinRead hands out the file as stdin.read(size) hands out a stream: the next size bytes
+// while that many are there, and null when fewer are, until the stream has ended, when it hands out
+// what's left and then null.
+function stdinRead(size: number): Buffer | null {
+	const remaining = inputText.length - inputPosition;
+	if (remaining === 0 || (remaining < size && !inputEnded)) {
+		return null;
+	}
+	const chunk = Buffer.from(inputText.slice(inputPosition, inputPosition + size));
+	inputPosition += chunk.length;
+	return chunk;
+}
+
+// Adamic: `stdin.on('readable', read)` becomes the 'readable' calls Node makes for a file on stdin,
+// read until null as the stream drains (Language's should on #re2xhwa: one call of read stopped at
+// the first null, and dropped the last section). Node calls read while the file flows, and each call
+// takes every whole READ_SIZE bytes there are; read keeps all its state between calls, so one call
+// here takes them all. Node calls it once more when the stream ends, and that call takes what's left,
+// fewer than READ_SIZE bytes, so isFinal reverses the last section. Where the input is an exact
+// multiple of READ_SIZE, nothing is left, and that call's first read is null: the original's isFirst
+// branch then returns without reversing the last section, and so does this port, since it does what
+// the original does on Node (seen with a 32,000-byte input; the game's inputs aren't multiples).
+read();
+inputEnded = true;
+read();
