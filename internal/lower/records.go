@@ -72,6 +72,12 @@ func (l *lowering) recordUnionDictionaryMember(literal *ast.Node, slot *checker.
 		if element == nil || found != nil {
 			return nil
 		}
+		// Only a dictionary the program declares: a library's (Object.entries' { [s: string]: T }, Record) is a
+		// parameter its own adapter reads by the value's actual storage.
+		symbol := l.unbranded(member).Symbol()
+		if symbol == nil || len(symbol.Declarations) == 0 || load.IsLibrary(ast.GetSourceFileOfNode(symbol.Declarations[0])) || load.IsPrelude(ast.GetSourceFileOfNode(symbol.Declarations[0])) {
+			return nil
+		}
 		found = element
 	}
 	return found
