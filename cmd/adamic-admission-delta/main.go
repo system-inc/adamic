@@ -167,6 +167,7 @@ func git(dir string, args ...string) (string, error) {
 	}
 	return strings.TrimSpace(o.Stdout), nil
 }
+
 // crashed is any crash: a signal, a Go panic or a runtime fatal error.
 func crashed(o observation) bool {
 	return o.Error == "crash" || strings.Contains(o.Stderr, "panic:") || strings.Contains(o.Stderr, "fatal error:")
