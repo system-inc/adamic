@@ -1,0 +1,21 @@
+{
+  "command": [
+    "/tmp/family5-tools/entry-census",
+    "/tmp/family5-base-tree/src/tsc/tsc.ts",
+    "/tmp/family5-evidence/c02-before/program/latent.jsonl"
+  ],
+  "cwd": "/tmp/family5-land",
+  "environment": {
+    "ADAMIC_BUILD_CACHE_DIR": "/workspace/family5-build-cache",
+    "ADAMIC_TYPESCRIPT_SOURCE": "/workspace/mapset-upstream",
+    "ADAMIC_TOOLS": "/workspace/adamic-tools",
+    "LATENT_FULL": "1",
+    "LATENT_ASSERT_NO_OUTPUT": "1",
+    "LATENT_TAIL": "1",
+    "CENSUS_MODULE_FORMAT": "CommonJSBundle",
+    "LATENT_ONLY_FILE": "/tmp/family5-base-tree/src/compiler/program.ts",
+    "LATENT_TIMES": "/dev/stderr"
+  },
+  "exit_code": 0,
+  "wall_seconds": 2482.599
+}

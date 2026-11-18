@@ -1,0 +1,15 @@
+{
+  "command": [
+    "node",
+    "/tmp/family5-land/stage3/typescript/node_modules/hereby/bin/hereby.js",
+    "local"
+  ],
+  "cwd": "/tmp/family5-base-tree",
+  "environment": {
+    "ADAMIC_BUILD_CACHE_DIR": "/workspace/family5-build-cache",
+    "ADAMIC_TYPESCRIPT_SOURCE": "/workspace/mapset-upstream",
+    "ADAMIC_TOOLS": "/workspace/adamic-tools"
+  },
+  "exit_code": 0,
+  "wall_seconds": 35.7
+}

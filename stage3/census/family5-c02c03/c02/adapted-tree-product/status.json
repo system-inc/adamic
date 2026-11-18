@@ -1,0 +1,21 @@
+{
+  "command": [
+    "go",
+    "test",
+    "./stage3/lane/adaptedtree",
+    "-run",
+    "^TestProduct_Stage3AdaptedTree$",
+    "-count=1",
+    "-timeout",
+    "45m",
+    "-v"
+  ],
+  "cwd": "/tmp/family5-land",
+  "environment": {
+    "ADAMIC_TYPESCRIPT_SOURCE": "/workspace/mapset-upstream",
+    "ADAMIC_TOOLS": "/workspace/adamic-tools",
+    "ADAMIC_BUILD_CACHE_DIR": "/workspace/family5-build-cache"
+  },
+  "exit_code": -15,
+  "wall_seconds": 1871.619
+}

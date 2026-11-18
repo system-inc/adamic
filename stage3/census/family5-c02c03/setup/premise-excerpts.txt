@@ -1,0 +1,127 @@
+src/compiler/scanner.ts
+465: export function getPositionOfLineAndCharacter(sourceFile: SourceFileLike, line: number, character: number): number;
+466: /** @internal */
+467: export function getPositionOfLineAndCharacter(sourceFile: SourceFileLike, line: number, character: number, allowEdits?: true): number; // eslint-disable-line @typescript-eslint/unified-signatures
+468: export function getPositionOfLineAndCharacter(sourceFile: SourceFileLike, line: number, character: number, allowEdits?: true): number {
+469:     return sourceFile.getPositionOfLineAndCharacter ?
+470:         sourceFile.getPositionOfLineAndCharacter(line, character, allowEdits) :
+471:         computePositionOfLineAndCharacter(getLineStarts(sourceFile), line, character, sourceFile.text, allowEdits);
+472: }
+
+src/services/services.ts
+1128: 
+1129:     public getLineStarts(): readonly number[] {
+1130:         return getLineStarts(this);
+1131:     }
+1132: 
+1133:     public getPositionOfLineAndCharacter(line: number, character: number, allowEdits?: true): number {
+1134:         return computePositionOfLineAndCharacter(getLineStarts(this), line, character, this.text, allowEdits);
+1135:     }
+1136: 
+1137:     public getLineEndOfPosition(pos: number): number {
+1138:         const { line } = this.getLineAndCharacterOfPosition(pos);
+1139:         const lineStarts = this.getLineStarts();
+1140: 
+1141:         let lastCharPos: number | undefined;
+1142:         if (line + 1 >= lineStarts.length) {
+
+src/compiler/utilities.ts
+8490: 
+8491: function Type(this: Type, checker: TypeChecker, flags: TypeFlags): void {
+8492:     // Note: if modifying this, be sure to update TypeObject in src/services/services.ts
+8493:     this.flags = flags;
+8494:     if (Debug.isDebugging || tracing) {
+8495:         this.checker = checker;
+8496:     }
+8497: }
+8498: 
+8499: function Signature(this: Partial<AllocatedSignature>, checker: TypeChecker, flags: SignatureFlags): void {
+8500:     // Note: if modifying this, be sure to update SignatureObject in src/services/services.ts
+8501:     this.flags = flags;
+8502:     if (Debug.isDebugging) {
+8503:         this.checker = checker;
+8504:     }
+8505: }
+8506: 
+8507: function Node(this: Mutable<Node>, kind: SyntaxKind, pos: number, end: number): void {
+8508:     // Note: if modifying this, be sure to update NodeObject in src/services/services.ts
+8509:     this.pos = pos;
+8510:     this.end = end;
+8511:     this.kind = kind;
+8512:     this.id = 0;
+8513:     this.flags = NodeFlags.None;
+8514:     this.modifierFlagsCache = ModifierFlags.None;
+8515:     this.transformFlags = TransformFlags.None;
+8516:     this.parent = undefined!;
+8517:     this.original = undefined;
+8518:     this.emitNode = undefined;
+8519: }
+8520: 
+8521: function Token(this: Mutable<Node>, kind: SyntaxKind, pos: number, end: number): void {
+8522:     // Note: if modifying this, be sure to update TokenOrIdentifierObject in src/services/services.ts
+8523:     this.pos = pos;
+8524:     this.end = end;
+8525:     this.kind = kind;
+8526:     this.id = 0;
+8527:     this.flags = NodeFlags.None;
+8528:     this.transformFlags = TransformFlags.None;
+8529:     this.parent = undefined!;
+8530:     this.emitNode = undefined;
+
+src/compiler/checker.ts
+5518:         );
+5519:     }
+5520: 
+5521:     function createType(flags: TypeFlags): Type {
+5522:         const result = new Type(checker, flags);
+5523:         typeCount++;
+5524:         result.id = typeCount;
+5525:         tracing?.recordType(result);
+5526:         return result;
+5527:     }
+5528: 
+5529:     function createTypeWithSymbol(flags: TypeFlags, symbol: Symbol): Type {
+5530:         const result = createType(flags);
+5531:         result.symbol = symbol;
+5532:         return result;
+5533:     }
+5534: 
+5535:     function createOriginType(flags: TypeFlags): Type {
+
+src/compiler/checker.ts
+5573:     }
+5574: 
+5575:     function createTypeParameter(symbol?: Symbol) {
+5576:         return createTypeWithSymbol(TypeFlags.TypeParameter, symbol!) as TypeParameter;
+5577:     }
+5578: 
+5579:     // A reserved member name starts with two underscores, but the third character cannot be an underscore,
+5580:     // @, or #. A third underscore indicates an escaped form of an identifier that started
+5581:     // with at least two underscores. The @ character indicates that the name is denoted by a well known ES
+5582:     // Symbol instance and the # character indicates that the name is a PrivateIdentifier.
+5583:     function isReservedMemberName(name: __String) {
+5584:         return (name as string).charCodeAt(0) === CharacterCodes._ &&
+5585:             (name as string).charCodeAt(1) === CharacterCodes._ &&
+5586:             (name as string).charCodeAt(2) !== CharacterCodes._ &&
+5587:             (name as string).charCodeAt(2) !== CharacterCodes.at &&
+
+src/compiler/checker.ts
+17244:     function getSubstitutionType(baseType: Type, constraint: Type) {
+17245:         return constraint.flags & TypeFlags.AnyOrUnknown || constraint === baseType || baseType.flags & TypeFlags.Any ?
+17246:             baseType :
+17247:             getOrCreateSubstitutionType(baseType, constraint);
+17248:     }
+17249: 
+17250:     function getOrCreateSubstitutionType(baseType: Type, constraint: Type) {
+17251:         const id = `${getTypeId(baseType)}>${getTypeId(constraint)}`;
+17252:         const cached = substitutionTypes.get(id);
+17253:         if (cached) {
+17254:             return cached;
+17255:         }
+17256:         const result = createType(TypeFlags.Substitution) as SubstitutionType;
+17257:         result.baseType = baseType;
+17258:         result.constraint = constraint;
+17259:         substitutionTypes.set(id, result);
+17260:         return result;
+17261:     }
+17262: 

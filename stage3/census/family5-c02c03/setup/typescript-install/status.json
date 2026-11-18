@@ -1,0 +1,15 @@
+{
+  "command": [
+    "npm",
+    "ci",
+    "--ignore-scripts",
+    "--no-audit",
+    "--no-fund"
+  ],
+  "cwd": "/tmp/family5-land/stage3/typescript",
+  "environment": {
+    "ADAMIC_TOOLS": "/workspace/adamic-tools"
+  },
+  "exit_code": 0,
+  "wall_seconds": 19.863
+}

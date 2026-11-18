@@ -1,0 +1,9 @@
+c02/whole-lane/status.json: 1
+Traceback (most recent call last):
+  File "/tmp/family5-finish.py", line 125, in <module>
+    wait_status(statuses);lane_receipt('c02');compare('c02',E/'c02-before',E/'c02-after',['G02'])
+    ^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/family5-finish.py", line 15, in wait_status
+    if p.exists() and json.loads(p.read_text())['exit_code']!=0:raise Stop(str(p.relative_to(E))+': '+str(json.loads(p.read_text())['exit_code']))
+                                                                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Stop: c02/whole-lane/status.json: 1

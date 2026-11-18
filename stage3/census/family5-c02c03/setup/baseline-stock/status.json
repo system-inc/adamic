@@ -1,0 +1,14 @@
+{
+  "command": [
+    "node",
+    "/tmp/family5-stock.cjs",
+    "/tmp/family5-base-tree",
+    "/tmp/family5-evidence/setup/baseline-stock.json"
+  ],
+  "cwd": "/tmp/family5-land",
+  "environment": {
+    "ADAMIC_TOOLS": "/workspace/adamic-tools"
+  },
+  "exit_code": 1,
+  "wall_seconds": 26.291
+}
