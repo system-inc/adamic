@@ -110,12 +110,16 @@ func (l *lowering) boundRecordStorage(binding typeArgumentBinding) error {
 	// storage in .ts as `const wide: Dict = options` is (record_declared_keys_stops' n05 to g05).
 	l.droppedContractsRead = strings.HasSuffix(l.program.FileName(ast.GetSourceFileOfNode(binding.site)), ".ts")
 	defer func() { l.droppedContractsRead = false }()
-	if l.sameRecordStorage(binding.argument, binding.constraint, map[[2]*checker.Type]bool{}) {
+	walk := newRecordStorageWalk()
+	if l.sameRecordStorage(binding.argument, binding.constraint, walk) {
 		return nil
 	}
 	where := binding.site
 	if binding.written != nil {
 		where = binding.written
+	}
+	if walk.bounded {
+		return l.recordStorageBounded(where, binding.argument, binding.constraint)
 	}
 	return l.notYet(where, "a "+l.checker.TypeToString(binding.argument)+" bound to "+l.checker.TypeToString(binding.parameter)+", whose constraint "+l.checker.TypeToString(binding.constraint)+" is stored otherwise (fixed objects and records have different storage; copy explicitly)")
 }

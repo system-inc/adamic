@@ -126,7 +126,10 @@ func (l *lowering) recordDefineValueFits(holder *checker.Type, value *ast.Node, 
 		return l.notYet(value, "Object.defineProperty of a key the record neither declares nor takes through a string index signature")
 	}
 	from := l.checker.GetTypeAtLocation(value)
-	if !l.checker.IsTypeAssignableTo(from, element) || !l.sameRecordStorage(from, element, map[[2]*checker.Type]bool{}) {
+	if walk := newRecordStorageWalk(); !l.checker.IsTypeAssignableTo(from, element) || !l.sameRecordStorage(from, element, walk) {
+		if walk.bounded {
+			return l.recordStorageBounded(value, from, element)
+		}
 		return l.notYet(value, "Object.defineProperty with a value the record's index signature doesn't take as it stores its values")
 	}
 	if err := l.refuseInSlot(value, element); err != nil {
