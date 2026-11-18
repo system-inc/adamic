@@ -1,7 +1,7 @@
 package main
 
 import (
-	"github.com/system-inc/adamic/internal/native"
+	"github.com/system-inc/adamic/internal/native_runtime"
 	"os"
 	"path/filepath"
 	"strings"
@@ -17,7 +17,7 @@ func TestProgramRegionCLIHandsMembershipAndRuntimeOneMode(t *testing.T) {
 		t.Fatal(err)
 	}
 	called := false
-	status := buildWithNative(path, filepath.Join(t.TempDir(), "out"), nil, func(code, output string, options native.Options) error {
+	status := buildWithNative(path, filepath.Join(t.TempDir(), "out"), nil, func(code, output string, options native_runtime.Options) error {
 		called = true
 		if !options.ProgramRegion {
 			t.Fatal("Program lowering must hand the same mode to every native builder, including the checker-archive paths")

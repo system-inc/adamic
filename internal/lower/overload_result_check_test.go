@@ -11,6 +11,7 @@ import (
 
 	"github.com/system-inc/adamic/internal/javascript"
 	"github.com/system-inc/adamic/internal/native"
+	"github.com/system-inc/adamic/internal/native_runtime"
 )
 
 // overloadCheckStops runs program natively under the sanitizers and on the JavaScript backend, and each
@@ -23,7 +24,7 @@ func overloadCheckStops(t *testing.T, source, want string, checks ...string) {
 	}
 	directory := t.TempDir()
 	binary := filepath.Join(directory, "native")
-	if err := native.Build(native.C(program), binary, native.Options{Sanitize: true}); err != nil {
+	if err := native.Build(native.C(program), binary, native_runtime.Options{Sanitize: true}); err != nil {
 		t.Fatal(err)
 	}
 	runner, err := filepath.Abs("../../oracle/node.mjs")

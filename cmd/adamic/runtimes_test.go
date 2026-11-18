@@ -9,8 +9,8 @@ import (
 
 	"github.com/system-inc/adamic/internal/buildcache"
 	"github.com/system-inc/adamic/internal/ccjobserver"
-	"github.com/system-inc/adamic/internal/native"
 	"github.com/system-inc/adamic/internal/native/runtimeproducts"
+	"github.com/system-inc/adamic/internal/native_runtime"
 )
 
 // A shared archive has one builder package. The owner names the product test
@@ -21,24 +21,24 @@ import (
 // in runtimeproducts.CommandVariants.
 type commandRuntimeSpec struct {
 	name     string
-	options  native.Options
+	options  native_runtime.Options
 	features []string
 	owner    string
 }
 
 var commandRuntimes = []commandRuntimeSpec{
-	{"debug", native.Options{Release: true, Debug: true}, nil, ""},
-	{"shipped", native.Options{Release: true}, nil, "internal/oracle TestProduct_NativeRuntimesShipped0"},
-	{"counted", native.Options{Count: true}, nil, "internal/oracle TestProduct_NativeRuntimesCounted0"},
-	{"sanitized", native.Options{Sanitize: true}, nil, "internal/oracle TestProduct_NativeRuntimesSanitized0"},
-	{"wasm", native.Options{Target: "wasm32-wasi"}, nil, "internal/oracle TestProduct_NativeRuntimesWASI0"},
+	{"debug", native_runtime.Options{Release: true, Debug: true}, nil, ""},
+	{"shipped", native_runtime.Options{Release: true}, nil, "internal/oracle TestProduct_NativeRuntimesShipped0"},
+	{"counted", native_runtime.Options{Count: true}, nil, "internal/oracle TestProduct_NativeRuntimesCounted0"},
+	{"sanitized", native_runtime.Options{Sanitize: true}, nil, "internal/oracle TestProduct_NativeRuntimesSanitized0"},
+	{"wasm", native_runtime.Options{Target: "wasm32-wasi"}, nil, "internal/oracle TestProduct_NativeRuntimesWASI0"},
 	// commandRuntime drops Request, so this is the archive internal/oracle's wasm-request variant builds for the empty set.
-	{"wasm-counted", native.Options{Target: "wasm32-wasi", Count: true}, nil, "internal/oracle TestProduct_NativeRuntimesWASIRequest0"},
+	{"wasm-counted", native_runtime.Options{Target: "wasm32-wasi", Count: true}, nil, "internal/oracle TestProduct_NativeRuntimesWASIRequest0"},
 }
 
-func init() { native.SupplyRuntimes(commandRuntime) }
+func init() { native_runtime.SupplyRuntimes(commandRuntime) }
 
-func commandRuntime(request native.RuntimeRequest) (string, error) {
+func commandRuntime(request native_runtime.RuntimeRequest) (string, error) {
 	options := request.Options
 	// Request selects the link ABI only. Flags and therefore the runtime key are
 	// identical to an ordinary WASI build, whose existing archive we reuse.
@@ -52,7 +52,7 @@ func commandRuntime(request native.RuntimeRequest) (string, error) {
 	// A request's options name its triple, and a row's native options leave it empty for the build's own, so each row is
 	// compared resolved.
 	declared := slices.ContainsFunc(commandRuntimes, func(product commandRuntimeSpec) bool {
-		resolved, err := native.ResolveTarget(product.options)
+		resolved, err := native_runtime.ResolveTarget(product.options)
 		return err == nil && resolved == options && slices.Equal(product.features, request.Features)
 	})
 	if !declared {
@@ -64,7 +64,7 @@ func commandRuntime(request native.RuntimeRequest) (string, error) {
 }
 
 // The shared package owns the identity, so readers and builders cannot drift apart.
-func commandRuntimeInputs(request native.RuntimeRequest) buildcache.Inputs {
+func commandRuntimeInputs(request native_runtime.RuntimeRequest) buildcache.Inputs {
 	return runtimeproducts.Inputs(request)
 }
 
@@ -81,7 +81,7 @@ func commandRuntimeProduct(t *testing.T, name string) {
 			runtimeproducts.CommandArchive(t, product.options, product.features)
 			return
 		}
-		request, err := native.RuntimeRequestFor(product.options, product.features...)
+		request, err := native_runtime.RuntimeRequestFor(product.options, product.features...)
 		if err != nil {
 			t.Fatal(err)
 		}
@@ -121,7 +121,7 @@ func TestCommandRuntimeProductKeyHoldsEveryPart(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	request, err := native.RuntimeRequestFor(native.Options{Sanitize: true})
+	request, err := native_runtime.RuntimeRequestFor(native_runtime.Options{Sanitize: true})
 	if err != nil {
 		t.Fatal(err)
 	}

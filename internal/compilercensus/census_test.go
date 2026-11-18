@@ -156,8 +156,8 @@ func TestEveryCCompilerRunsThroughNative(t *testing.T) {
 }
 
 // targetedSites are compilerSites' sites that compile a program at runner time, a scratch directory's or test262's: each
-// names its target (#5xsd2ha), the build's triple through native.Flags, SourceFlags or LinkFlags, which resolve it, or
-// native.ResolveTarget for a --target of its own, and a WASI module's by its literal --target=wasm32-wasi.
+// names its target (#5xsd2ha), the build's triple through native_runtime.Flags, SourceFlags or LinkFlags, which resolve it, or
+// native_runtime.ResolveTarget for a --target of its own, and a WASI module's by its literal --target=wasm32-wasi.
 var targetedSites = []string{
 	"bench/apple/run.go:main",
 	"internal/apple/witness_test.go:TestProgramsAgreeWithTheirWitnesses",

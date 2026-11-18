@@ -7,6 +7,7 @@ import (
 	"github.com/system-inc/adamic/internal/compilerinputs"
 	"github.com/system-inc/adamic/internal/leakcheck"
 	"github.com/system-inc/adamic/internal/native"
+	"github.com/system-inc/adamic/internal/native_runtime"
 	"github.com/system-inc/adamic/internal/toolchain"
 	"os"
 	"path/filepath"
@@ -37,8 +38,8 @@ func allocatorSlabProduct(t *testing.T) string {
 		t.Fatal(err)
 	}
 	code := native.C(program)
-	options := native.Options{Sanitize: true, Count: true}
-	request, err := native.RuntimeRequestFor(options, native.Features(code)...)
+	options := native_runtime.Options{Sanitize: true, Count: true}
+	request, err := native_runtime.RuntimeRequestFor(options, native_runtime.Features(code)...)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -72,7 +73,7 @@ func allocatorSlabProduct(t *testing.T) string {
 				return err
 			}
 		}
-		library, err := native.RuntimeLibraryForSource(snapshot, code, options)
+		library, err := native_runtime.RuntimeLibraryForSource(snapshot, code, options)
 		if err != nil {
 			return err
 		}
@@ -115,7 +116,7 @@ func allocatorSlabProduct(t *testing.T) string {
 		// (library.go) it's mapped out of everything the compile records of a path, under each spelling of it, and heap.c
 		// is compiled from inside it by its bare name, which is what the sanitizers' source locations record: either one
 		// left out made two builds of one key differ (#d32jbpx).
-		flags := append(native.SourceFlags(code, options), "-ffile-prefix-map="+changed+"=/adamic-runtime")
+		flags := append(native_runtime.SourceFlags(code, options), "-ffile-prefix-map="+changed+"=/adamic-runtime")
 		if real, err := filepath.EvalSymlinks(changed); err == nil && real != changed {
 			flags = append(flags, "-ffile-prefix-map="+real+"=/adamic-runtime")
 		}

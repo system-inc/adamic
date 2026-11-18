@@ -4,6 +4,7 @@ import (
 	"crypto/sha256"
 	"encoding/json"
 	"fmt"
+	"github.com/system-inc/adamic/internal/native_runtime"
 	"github.com/system-inc/adamic/stage1/cohere/formatfiles/oracles"
 	"go/ast"
 	"go/parser"
@@ -201,7 +202,7 @@ func formatfilesNativeInputs(source string, mutant *mutant, sanitize bool) build
 	if !sanitize {
 		name += "-unsanitized"
 	}
-	flags := append([]string{}, native.Flags(native.Options{Sanitize: sanitize})...)
+	flags := append([]string{}, native_runtime.Flags(native_runtime.Options{Sanitize: sanitize})...)
 	if mutant != nil {
 		name += "-" + mutant.name
 		flags = append(flags, mutant.file, mutant.from, mutant.to)

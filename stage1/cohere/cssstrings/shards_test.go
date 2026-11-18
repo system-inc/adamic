@@ -5,6 +5,7 @@ import (
 	"context"
 	"crypto/sha256"
 	"fmt"
+	"github.com/system-inc/adamic/internal/native_runtime"
 	"github.com/system-inc/adamic/stage1/cohere/cssstrings/oracles"
 	"os"
 	"os/exec"
@@ -265,7 +266,7 @@ func stringsClangToolchain(t *testing.T) string {
 // which holds internal/native) and the C itself.
 func stringsNativeInputs(t *testing.T, name, programC string, sanitize bool) stringsInputs {
 	t.Helper()
-	return stringsInputs{Name: name, Files: append(stringsLowering(), programC), Flags: native.Flags(native.Options{Sanitize: sanitize}), Toolchain: stringsClangToolchain(t)}
+	return stringsInputs{Name: name, Files: append(stringsLowering(), programC), Flags: native_runtime.Flags(native_runtime.Options{Sanitize: sanitize}), Toolchain: stringsClangToolchain(t)}
 }
 
 func buildStringsNative(t *testing.T, name string, program stringsProgram, sanitize bool) string {
@@ -275,7 +276,7 @@ func buildStringsNative(t *testing.T, name string, program stringsProgram, sanit
 		if err != nil {
 			return err
 		}
-		return native.Build(string(source), filepath.Join(dir, "port"), native.Options{Sanitize: sanitize})
+		return native.Build(string(source), filepath.Join(dir, "port"), native_runtime.Options{Sanitize: sanitize})
 	})
 	return filepath.Join(dir, "port")
 }

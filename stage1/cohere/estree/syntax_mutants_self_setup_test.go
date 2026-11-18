@@ -4,6 +4,7 @@ import (
 	"bytes"
 	"encoding/json"
 	"fmt"
+	"github.com/system-inc/adamic/internal/native_runtime"
 	"github.com/system-inc/adamic/stage1/cohere/estree/oracles"
 	"os"
 	"os/exec"
@@ -97,7 +98,7 @@ func syntaxMutantNativeProduct(t *testing.T, item syntaxMutant) string {
 	lowered := syntaxMutantLoweredProduct(t, item)
 	inputs := syntaxMutantProductInputs(t, item)
 	inputs.Name = "estree-syntax-mutant-native-" + item.name
-	inputs.Flags = append(inputs.Flags, native.Flags(estreeFamilyNativeOptions())...)
+	inputs.Flags = append(inputs.Flags, native_runtime.Flags(estreeFamilyNativeOptions())...)
 	inputs.Toolchain = append(inputs.Toolchain, buildcache.CompilerReport("clang"))
 	return buildcache.Product(t, inputs, func(dir string) error {
 		data, err := os.ReadFile(filepath.Join(lowered, "port.c"))

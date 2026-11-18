@@ -7,6 +7,7 @@ import (
 	"testing"
 
 	"github.com/system-inc/adamic/internal/native"
+	"github.com/system-inc/adamic/internal/native_runtime"
 )
 
 func TestViewsDeepChain(t *testing.T) {
@@ -85,8 +86,8 @@ func TestViewsDeepChainRecursiveWalkMutant(t *testing.T) {
 			t.Fatal(err)
 		}
 	}
-	options := native.Options{Target: "wasm32-wasi"}
-	library, err := native.RuntimeLibraryForSource(directory, source, options)
+	options := native_runtime.Options{Target: "wasm32-wasi"}
+	library, err := native_runtime.RuntimeLibraryForSource(directory, source, options)
 	if err != nil {
 		t.Fatal(err)
 	}

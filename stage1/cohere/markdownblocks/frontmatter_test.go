@@ -9,7 +9,7 @@ import (
 	"testing"
 	"time"
 
-	"github.com/system-inc/adamic/internal/native"
+	"github.com/system-inc/adamic/internal/native_runtime"
 	"github.com/system-inc/adamic/stage1/cohere/markdownblocks/oracles"
 )
 
@@ -76,7 +76,7 @@ func TestFrontMatterStage(t *testing.T) {
 		t.Fatal(err)
 	}
 	program := lowered(t, main)
-	binary := filepath.Join(probeNative(t, frontMatterProbe, native.Options{Sanitize: true}), "port")
+	binary := filepath.Join(probeNative(t, frontMatterProbe, native_runtime.Options{Sanitize: true}), "port")
 	got := sanitizedRun(t, binary, cases)
 	for _, side := range []struct {
 		name   string
@@ -152,7 +152,7 @@ func TestFrontMatterStage(t *testing.T) {
 			t.Logf("source Node output-only mutant caught at output byte %d by %s", offset, inputs[index].Name)
 		})
 	}
-	fast := filepath.Join(probeNative(t, frontMatterProbe, native.Options{}), "port")
+	fast := filepath.Join(probeNative(t, frontMatterProbe, native_runtime.Options{}), "port")
 	runner, err := filepath.Abs(filepath.Join(repository, "oracle/node.mjs"))
 	if err != nil {
 		t.Fatal(err)

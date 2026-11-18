@@ -7,6 +7,7 @@ import (
 	"testing"
 
 	"github.com/system-inc/adamic/internal/native"
+	"github.com/system-inc/adamic/internal/native_runtime"
 )
 
 func init() {
@@ -107,7 +108,7 @@ int main(void){
 }
 `
 	binary := filepath.Join(t.TempDir(), "snapshot-reference")
-	if err := native.Build(probe, binary, native.Options{Sanitize: true}); err != nil {
+	if err := native.Build(probe, binary, native_runtime.Options{Sanitize: true}); err != nil {
 		t.Fatal(err)
 	}
 	if difference := disagreement(run{stdout: []byte("references preserved\n")}, execute(t, binary)); difference != "" {

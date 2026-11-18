@@ -11,6 +11,7 @@ import (
 
 	"github.com/system-inc/adamic/internal/childguard"
 	"github.com/system-inc/adamic/internal/native"
+	"github.com/system-inc/adamic/internal/native_runtime"
 	"github.com/system-inc/adamic/internal/toolchain"
 	"github.com/system-inc/adamic/internal/wasitest"
 )
@@ -42,7 +43,7 @@ func stdoutIsTTYAgreement(t *testing.T, transport string) {
 			t.Fatal(err)
 		}
 		wasm := filepath.Join(t.TempDir(), "program.wasm")
-		if err := native.Build(native.C(program), wasm, native.Options{Target: "wasm32-wasi"}); err != nil {
+		if err := native.Build(native.C(program), wasm, native_runtime.Options{Target: "wasm32-wasi"}); err != nil {
 			t.Fatal(err)
 		}
 		wasi, _ := filepath.Abs(filepath.Join(repository, "oracle/wasi.mjs"))

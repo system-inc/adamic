@@ -9,6 +9,7 @@ import (
 
 	"github.com/system-inc/adamic/internal/hostconfiguration"
 	"github.com/system-inc/adamic/internal/native"
+	"github.com/system-inc/adamic/internal/native_runtime"
 )
 
 func TestNodeProcessHostNewLine(t *testing.T) {
@@ -70,7 +71,7 @@ func nodeProcessHostNewLine(t *testing.T, statusPath string) {
 		t.Fatal("native EOL anchor changed")
 	}
 	mutant := filepath.Join(t.TempDir(), "newline-mutant")
-	if err := native.Build("#include \"adamic.h\"\nstatic adamic_string mutant_eol = ADAMIC_STRING(\"\\r\\n\");\n"+strings.Replace(code, "adamic_node_eol()", "&mutant_eol", 1), mutant, native.Options{Sanitize: true}); err != nil {
+	if err := native.Build("#include \"adamic.h\"\nstatic adamic_string mutant_eol = ADAMIC_STRING(\"\\r\\n\");\n"+strings.Replace(code, "adamic_node_eol()", "&mutant_eol", 1), mutant, native_runtime.Options{Sanitize: true}); err != nil {
 		t.Fatal(err)
 	}
 	bad := execute(t, mutant)

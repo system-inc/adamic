@@ -7,7 +7,7 @@
 // package's tests, and every caller has to run the same check, so a fix to it lands once.
 //
 // On Linux the check is LeakSanitizer, run on the sanitized binary the comparison already built. On
-// macOS it's the counted build (native.Options.Count), run twice: on its own, where a finished
+// macOS it's the counted build (native_runtime.Options.Count), run twice: on its own, where a finished
 // program's allocations must be its frees and its values in regions (runtime/count.h), the rule the
 // oracle's counts table is read by; then under leaks --atExit. The counts are the check for values:
 // outside the sanitizers every small value lives in a chunk of the runtime's size-class allocator
@@ -34,6 +34,7 @@ import (
 	_ "github.com/system-inc/adamic/internal/ccjobserver"
 	"github.com/system-inc/adamic/internal/childguard"
 	"github.com/system-inc/adamic/internal/native"
+	"github.com/system-inc/adamic/internal/native_runtime"
 )
 
 // CountsLine is the line a counted build writes last to stderr (runtime/count.c).
@@ -109,7 +110,7 @@ func Check(program Program) (string, error) {
 	case "darwin":
 		build := program.BuildCounted
 		if build == nil {
-			build = func(code, output string) error { return native.Build(code, output, native.Options{Count: true}) }
+			build = func(code, output string) error { return native.Build(code, output, native_runtime.Options{Count: true}) }
 		}
 		if err := build(program.C, program.Counted); err != nil {
 			return "", err

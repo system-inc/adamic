@@ -11,6 +11,7 @@ import (
 	"github.com/system-inc/adamic/internal/ir"
 	"github.com/system-inc/adamic/internal/javascript"
 	"github.com/system-inc/adamic/internal/native"
+	"github.com/system-inc/adamic/internal/native_runtime"
 )
 
 // A tag-proven predicate whose target has an optional field is refused for the view, which can't check
@@ -105,7 +106,7 @@ func TestTagPredicateOptionalFieldIsCheckedAtTheRead(t *testing.T) {
 			}
 			directory := t.TempDir()
 			binary := filepath.Join(directory, "native")
-			if err := native.Build(native.C(program), binary, native.Options{Sanitize: true}); err != nil {
+			if err := native.Build(native.C(program), binary, native_runtime.Options{Sanitize: true}); err != nil {
 				t.Fatal(err)
 			}
 			runner, err := filepath.Abs("../../oracle/node.mjs")

@@ -8,6 +8,7 @@ import (
 	"testing"
 
 	"github.com/system-inc/adamic/internal/native"
+	"github.com/system-inc/adamic/internal/native_runtime"
 	"github.com/system-inc/adamic/internal/wasitest"
 )
 
@@ -36,7 +37,7 @@ static bool mutant_static_dirent_is(const adamic_object *value, const char *meth
 `
 	changed = strings.Replace(changed, `#include "adamic.h"`, "#include \"adamic.h\"\n#include <string.h>\n"+helper, 1)
 	binary := filepath.Join(sharedDirectory(t), "static-dispatch-mutant")
-	if err := native.Build(changed, binary, native.Options{Sanitize: true}); err != nil {
+	if err := native.Build(changed, binary, native_runtime.Options{Sanitize: true}); err != nil {
 		t.Fatal(err)
 	}
 	how := inputRun{directory: filepath.Dir(path)}
@@ -98,7 +99,7 @@ func TestNodeFSDirectoryUnionSpecialKinds(t *testing.T) {
 	}
 	if wasitest.Leg(t, "ADAMIC_ORACLE_WASI", "the special kinds' refusal on wasm32-wasi") {
 		binary := filepath.Join(shared, "kinds.wasm")
-		if err := native.Build(native.C(program), binary, native.Options{Target: "wasm32-wasi"}); err != nil {
+		if err := native.Build(native.C(program), binary, native_runtime.Options{Target: "wasm32-wasi"}); err != nil {
 			t.Fatal(err)
 		}
 		runner, err := filepath.Abs(filepath.Join(repository, "oracle/wasi.mjs"))
@@ -131,7 +132,7 @@ static bool mutant_lossy_kind(const adamic_object *value, const char *method) {
 `
 		source = strings.Replace(source, `#include "adamic.h"`, "#include \"adamic.h\"\n"+helper, 1)
 		mutant := filepath.Join(shared, "lossy-kind.wasm")
-		if err := native.Build(source, mutant, native.Options{Target: "wasm32-wasi"}); err != nil {
+		if err := native.Build(source, mutant, native_runtime.Options{Target: "wasm32-wasi"}); err != nil {
 			t.Fatal(err)
 		}
 		actual := executeInput(t, how, nil, "node", "--disable-warning=ExperimentalWarning", runner, mutant, root)

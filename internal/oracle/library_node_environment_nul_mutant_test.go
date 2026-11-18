@@ -8,6 +8,7 @@ import (
 	"testing"
 
 	"github.com/system-inc/adamic/internal/native"
+	"github.com/system-inc/adamic/internal/native_runtime"
 )
 
 // Change the runtime's lookup itself. A rejected NUL name incorrectly misses
@@ -55,8 +56,8 @@ func TestProcessEnvironmentNULRejectMutantIsCaught(t *testing.T) {
 	if !changed {
 		t.Fatal("runtime mutation changed nothing")
 	}
-	options := native.Options{Sanitize: true}
-	archive, err := native.RuntimeLibraryForSource(directory, source, options)
+	options := native_runtime.Options{Sanitize: true}
+	archive, err := native_runtime.RuntimeLibraryForSource(directory, source, options)
 	if err != nil {
 		t.Fatal(err)
 	}

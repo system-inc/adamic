@@ -12,6 +12,7 @@ import (
 	"github.com/system-inc/adamic/internal/load"
 	"github.com/system-inc/adamic/internal/lower"
 	"github.com/system-inc/adamic/internal/native"
+	"github.com/system-inc/adamic/internal/native_runtime"
 	"github.com/system-inc/adamic/stage1/cohere/lint/registry"
 )
 
@@ -70,9 +71,9 @@ func witnessScriptKindNativeProduct(t *testing.T) string {
 	t.Helper()
 	lowered := witnessScriptKindLoweredProduct(t)
 	inputs := witnessScriptKindInputs()
-	options := native.Options{Sanitize: true, Split: true}
+	options := native_runtime.Options{Sanitize: true, Split: true}
 	inputs.Name = "witness-script-kind-native-no-debugger-v1"
-	inputs.Flags = append(native.Flags(options), "Split=true")
+	inputs.Flags = append(native_runtime.Flags(options), "Split=true")
 	inputs.Toolchain = append(inputs.Toolchain, buildcache.CompilerReport("clang"))
 	return buildcache.Product(t, inputs, func(out string) error {
 		data, err := os.ReadFile(filepath.Join(lowered, "main.c"))

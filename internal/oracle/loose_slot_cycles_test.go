@@ -10,6 +10,7 @@ import (
 	"github.com/system-inc/adamic/internal/leakcheck"
 	"github.com/system-inc/adamic/internal/lower"
 	"github.com/system-inc/adamic/internal/native"
+	"github.com/system-inc/adamic/internal/native_runtime"
 )
 
 // looseSlotWords end lower's loose-slot stop (loose_slots.go's looseStopWords), a NotYet naming the link
@@ -107,7 +108,7 @@ func TestLooseSlotCyclesStop(t *testing.T) {
 			program, err := lowered(t, path)
 			if err == nil {
 				binary := filepath.Join(t.TempDir(), "counted")
-				if buildErr := native.Build(native.C(program), binary, native.Options{Count: true}); buildErr != nil {
+				if buildErr := native.Build(native.C(program), binary, native_runtime.Options{Count: true}); buildErr != nil {
 					t.Fatalf("lowered, want a stop; the counted build failed: %v", buildErr)
 				}
 				got := execute(t, binary)

@@ -10,7 +10,7 @@ import (
 	"testing"
 
 	"github.com/system-inc/adamic/internal/buildcache"
-	"github.com/system-inc/adamic/internal/native"
+	"github.com/system-inc/adamic/internal/native_runtime"
 )
 
 func workerJSONRefused(key string) bool {
@@ -64,7 +64,7 @@ func workerJSONProduct(t *testing.T, key string, build bool) string {
 	if name == "corpus" {
 		inputs.Files = append(inputs.Files, "internal/worker/testdata/json_"+mode+"/cases.a")
 	}
-	request, err := native.RuntimeRequestFor(native.Options{Release: true})
+	request, err := native_runtime.RuntimeRequestFor(native_runtime.Options{Release: true})
 	if err != nil {
 		t.Fatal(err)
 	}

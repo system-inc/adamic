@@ -16,6 +16,7 @@ import (
 
 	_ "github.com/system-inc/adamic/internal/ccjobserver"
 	"github.com/system-inc/adamic/internal/native"
+	"github.com/system-inc/adamic/internal/native_runtime"
 )
 
 const typeAwareChildLimit = 90 * time.Second
@@ -130,7 +131,7 @@ func TestTypeAwareNativeBuildChild(t *testing.T) {
 	if err := json.Unmarshal(data, &request); err != nil {
 		t.Fatal(err)
 	}
-	if err := native.BuildTSGo(request.Source, request.Output, request.Archive, native.Options{Sanitize: request.Sanitize}); err != nil {
+	if err := native.BuildTSGo(request.Source, request.Output, request.Archive, native_runtime.Options{Sanitize: request.Sanitize}); err != nil {
 		t.Fatal(err)
 	}
 }

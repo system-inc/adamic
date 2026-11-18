@@ -6,6 +6,7 @@ import (
 	"crypto/sha256"
 	"encoding/binary"
 	"fmt"
+	"github.com/system-inc/adamic/internal/native_runtime"
 	"github.com/system-inc/adamic/stage1/cohere/estree/oracles"
 	"os"
 	"os/exec"
@@ -174,13 +175,13 @@ func miscBuild(t *testing.T, path string) (string, string) {
 		if err != nil {
 			return err
 		}
-		if err := native.Build(native.C(lowered), filepath.Join(directory, "port"), native.Options{Sanitize: true}); err != nil {
+		if err := native.Build(native.C(lowered), filepath.Join(directory, "port"), native_runtime.Options{Sanitize: true}); err != nil {
 			return err
 		}
 		return os.WriteFile(filepath.Join(directory, "port.mjs"), []byte(javascript.JavaScript(lowered)), 0644)
 	}
 	start := time.Now()
-	flags := append([]string{"main=" + path}, native.Flags(native.Options{Sanitize: true})...)
+	flags := append([]string{"main=" + path}, native_runtime.Flags(native_runtime.Options{Sanitize: true})...)
 	for _, name := range []string{"ADAMIC_NATIVE_SPLIT", "CPATH", "C_INCLUDE_PATH", "LIBRARY_PATH", "SDKROOT"} {
 		flags = append(flags, name+"="+os.Getenv(name))
 	}

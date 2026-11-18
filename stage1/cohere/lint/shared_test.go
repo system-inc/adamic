@@ -5,6 +5,7 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
+	"github.com/system-inc/adamic/internal/native_runtime"
 	"github.com/system-inc/adamic/internal/testguard"
 	"os"
 	"os/exec"
@@ -109,7 +110,7 @@ func buildPortTo(directory string, sanitize bool, binary string) error {
 	if err != nil {
 		return err
 	}
-	return native.Build(native.C(lowered), binary, native.Options{Sanitize: sanitize})
+	return native.Build(native.C(lowered), binary, native_runtime.Options{Sanitize: sanitize})
 }
 
 func emitJavaScriptTo(directory, module string) error {

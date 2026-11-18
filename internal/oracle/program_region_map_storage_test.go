@@ -9,6 +9,7 @@ import (
 
 	"github.com/system-inc/adamic/internal/leakcheck"
 	"github.com/system-inc/adamic/internal/native"
+	"github.com/system-inc/adamic/internal/native_runtime"
 )
 
 // This observes the actual input/output storage addresses, rather than trusting
@@ -46,7 +47,7 @@ func programRegionMapperStorage(t *testing.T, enabled bool) {
 	assertion := fmt.Sprintf("\n if (adamic_program_is(%s) != %t) adamic_panic(\"mapper fixture has wrong membership\", sizeof \"mapper fixture has wrong membership\" - 1);\n if (%s) adamic_panic(\"%s\", sizeof \"%s\" - 1);\n", source, enabled, condition, message, message)
 	checked := code[:m[1]] + assertion + code[m[1]:]
 	binary := filepath.Join(t.TempDir(), "storage")
-	if err := programRegionBuild(t, checked, binary, native.Options{ProgramRegion: enabled, Sanitize: true}); err != nil {
+	if err := programRegionBuild(t, checked, binary, native_runtime.Options{ProgramRegion: enabled, Sanitize: true}); err != nil {
 		t.Fatal(err)
 	}
 	resultRun := executeWith(t, []string{"ASAN_OPTIONS=detect_leaks=1"}, binary)
@@ -56,7 +57,7 @@ func programRegionMapperStorage(t *testing.T, enabled bool) {
 	report, err := leakcheck.Check(leakcheck.Program{
 		C: checked, Sanitized: binary, Counted: filepath.Join(t.TempDir(), "counted"),
 		BuildCounted: func(code, output string) error {
-			return programRegionBuild(t, code, output, native.Options{ProgramRegion: enabled, Count: true})
+			return programRegionBuild(t, code, output, native_runtime.Options{ProgramRegion: enabled, Count: true})
 		},
 		Execute: func(environment []string, name string, args ...string) leakcheck.Run {
 			return leakRun(executeWith(t, environment, name, args...))
@@ -68,7 +69,7 @@ func programRegionMapperStorage(t *testing.T, enabled bool) {
 	// LeakSanitizer is the Linux leak proof; counters independently account for
 	// every member, and must run here too rather than only on macOS.
 	countedBinary := filepath.Join(t.TempDir(), "storage-counts")
-	if err := programRegionBuild(t, checked, countedBinary, native.Options{ProgramRegion: enabled, Count: true}); err != nil {
+	if err := programRegionBuild(t, checked, countedBinary, native_runtime.Options{ProgramRegion: enabled, Count: true}); err != nil {
 		t.Fatal(err)
 	}
 	command, args := pinnedStack(countedBinary)
@@ -95,7 +96,7 @@ func programRegionMapperStorage(t *testing.T, enabled bool) {
 	}
 	mutant := guard.ReplaceAllString(checked, "bool "+unique+" = true;")
 	bad := filepath.Join(t.TempDir(), "reuse-member-mutant")
-	if err := programRegionBuild(t, mutant, bad, native.Options{ProgramRegion: true, Sanitize: true}); err != nil {
+	if err := programRegionBuild(t, mutant, bad, native_runtime.Options{ProgramRegion: true, Sanitize: true}); err != nil {
 		t.Fatal(err)
 	}
 	rejected := executeWith(t, []string{"ASAN_OPTIONS=detect_leaks=1"}, bad)

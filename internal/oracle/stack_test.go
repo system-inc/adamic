@@ -9,6 +9,7 @@ import (
 
 	"github.com/system-inc/adamic/internal/childguard"
 	"github.com/system-inc/adamic/internal/native"
+	"github.com/system-inc/adamic/internal/native_runtime"
 	"github.com/system-inc/adamic/internal/toolchain"
 )
 
@@ -64,7 +65,7 @@ func stackProbe(t *testing.T, limit int, arguments, environment []string, alone 
 		t.Fatal(err)
 	}
 	plain := filepath.Join(t.TempDir(), "plain")
-	if err := native.Build(native.C(program), plain, native.Options{}); err != nil {
+	if err := native.Build(native.C(program), plain, native_runtime.Options{}); err != nil {
 		t.Fatal(err)
 	}
 	ran := func(name string, prefix ...string) run {

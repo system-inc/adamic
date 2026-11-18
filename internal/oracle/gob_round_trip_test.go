@@ -15,6 +15,7 @@ import (
 	"github.com/system-inc/adamic/internal/load"
 	"github.com/system-inc/adamic/internal/lower"
 	"github.com/system-inc/adamic/internal/native"
+	"github.com/system-inc/adamic/internal/native_runtime"
 )
 
 // gobRoundTripPaths is every fixture stage 0 lowers, once each, from the repository root.
@@ -74,7 +75,7 @@ func negativeZeros(value reflect.Value) int {
 // The round trip is five families, one for each way native emits a program (release, Debug, the two sanitized builds
 // and wasm32-wasi), each sharded as the oracle's others are (families_test.go): one over the whole corpus was 187 s of
 // one core per variant (Golem, Oct 31), most of it checking the source.
-var gobRoundTripVariants = map[string]native.Options{
+var gobRoundTripVariants = map[string]native_runtime.Options{
 	"TestGobRoundTripEmitsTheSameRelease":         {},
 	"TestGobRoundTripEmitsTheSameDebug":           {Debug: true},
 	"TestGobRoundTripEmitsTheSameSanitized":       {Sanitize: true},

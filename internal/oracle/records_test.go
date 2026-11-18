@@ -12,6 +12,7 @@ import (
 	"github.com/system-inc/adamic/internal/leakcheck"
 	"github.com/system-inc/adamic/internal/lower"
 	"github.com/system-inc/adamic/internal/native"
+	"github.com/system-inc/adamic/internal/native_runtime"
 )
 
 // Refused record shapes are pinned by TestRecordRefusal* in records_refusal_test.go.
@@ -86,7 +87,7 @@ func TestRecordOperationMutants(t *testing.T) {
 				changed = insertCollectionMutant(changed, mutant.helper)
 			}
 			binary := filepath.Join(t.TempDir(), "mutant")
-			if err := native.Build(changed, binary, native.Options{Sanitize: true}); err != nil {
+			if err := native.Build(changed, binary, native_runtime.Options{Sanitize: true}); err != nil {
 				t.Fatal(err)
 			}
 			got := executeWith(t, []string{"ASAN_OPTIONS=detect_leaks=0", "UBSAN_OPTIONS=halt_on_error=1"}, binary)
@@ -150,7 +151,7 @@ func TestRecordOwnershipMutant(t *testing.T) {
 		t.Fatal("mutant changed no releases")
 	}
 	binary := filepath.Join(t.TempDir(), "mutant")
-	if err := native.Build(changed, binary, native.Options{Sanitize: true}); err != nil {
+	if err := native.Build(changed, binary, native_runtime.Options{Sanitize: true}); err != nil {
 		t.Fatal(err)
 	}
 	got := executeWith(t, []string{"ASAN_OPTIONS=detect_leaks=0"}, binary)

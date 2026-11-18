@@ -11,6 +11,7 @@ import (
 
 	"github.com/system-inc/adamic/internal/lower"
 	"github.com/system-inc/adamic/internal/native"
+	"github.com/system-inc/adamic/internal/native_runtime"
 	"github.com/system-inc/adamic/internal/toolchain"
 )
 
@@ -51,7 +52,7 @@ func TestWASIShimCwdImports(t *testing.T) {
 		t.Fatal(err)
 	}
 	binary := filepath.Join(t.TempDir(), "cwd.wasm")
-	if err := native.Build(native.C(program), binary, native.Options{Target: "wasm32-wasi"}); err != nil {
+	if err := native.Build(native.C(program), binary, native_runtime.Options{Target: "wasm32-wasi"}); err != nil {
 		t.Fatal(err)
 	}
 	inventory := execute(t, "node", "-e", `const fs=require('node:fs');const m=new WebAssembly.Module(fs.readFileSync(process.argv[1]));console.log(JSON.stringify(WebAssembly.Module.imports(m).filter(i=>i.module==='wasi_snapshot_preview1').map(i=>i.name).sort()));`, binary)
@@ -83,7 +84,7 @@ func runWASIShimShard(t *testing.T, shard int) {
 		return
 	}
 	planted, probing := familyProbe("TestWASIShimAgreesWithNode")
-	if err := native.ValidateOptions(native.Options{Target: "wasm32-wasi"}); err != nil {
+	if err := native_runtime.ValidateOptions(native_runtime.Options{Target: "wasm32-wasi"}); err != nil {
 		t.Fatal(err)
 	}
 	var ran, agreed, notYet, refused, excluded atomic.Int32
@@ -233,7 +234,7 @@ func TestWASIShimCheckedWitnessControl(t *testing.T) {
 		t.Fatal(err)
 	}
 	binary := filepath.Join(t.TempDir(), "program.wasm")
-	if err := native.Build(native.C(program), binary, native.Options{Target: "wasm32-wasi"}); err != nil {
+	if err := native.Build(native.C(program), binary, native_runtime.Options{Target: "wasm32-wasi"}); err != nil {
 		t.Fatal(err)
 	}
 	actual := execute(t, "node", filepath.Join(repository, "oracle", "wasi-shim.mjs"), binary)
@@ -361,7 +362,7 @@ func TestWASIShimRequest(t *testing.T) {
 		t.Fatalf("request emission: handler=%d error=%v", handler, err)
 	}
 	binary := filepath.Join(directory, "request.wasm")
-	if err := native.Build(source, binary, native.Options{Target: "wasm32-wasi", Request: true, Count: true}); err != nil {
+	if err := native.Build(source, binary, native_runtime.Options{Target: "wasm32-wasi", Request: true, Count: true}); err != nil {
 		t.Fatal(err)
 	}
 	script := filepath.Join(directory, "request.mjs")
@@ -423,7 +424,7 @@ func TestWASIShimClockReadsTheHost(t *testing.T) {
 	if os.Getenv("ADAMIC_ORACLE_WASI") != "1" {
 		t.Skip("set ADAMIC_ORACLE_WASI=1")
 	}
-	clang, err := native.WASIClang()
+	clang, err := native_runtime.WASIClang()
 	if err != nil {
 		t.Fatal(err)
 	}

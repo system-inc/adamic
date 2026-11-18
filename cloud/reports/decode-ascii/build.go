@@ -8,6 +8,7 @@ import (
 	"github.com/system-inc/adamic/internal/load"
 	"github.com/system-inc/adamic/internal/lower"
 	"github.com/system-inc/adamic/internal/native"
+	"github.com/system-inc/adamic/internal/native_runtime"
 	"os"
 	"os/exec"
 	"path/filepath"
@@ -21,7 +22,7 @@ func main() {
 	check(err)
 	lowered, err := lower.Lower(context.Background(), program)
 	check(err)
-	options := native.Options{}
+	options := native_runtime.Options{}
 	var source string
 	compiler := "clang"
 	if os.Args[3] == "wasi" {
@@ -47,24 +48,24 @@ func main() {
 	} else {
 		source = native.C(lowered)
 	}
-	library, err := native.RuntimeLibraryForSource(os.Args[1], source, options)
+	library, err := native_runtime.RuntimeLibraryForSource(os.Args[1], source, options)
 	check(err)
 	directory, err := os.MkdirTemp("", "decode-service-build-")
 	check(err)
 	defer os.RemoveAll(directory)
 	path := filepath.Join(directory, "main.c")
 	check(os.WriteFile(path, []byte(source), 0644))
-	arguments := append(native.SourceFlags(source, options), "-I", filepath.Dir(library), "-o", os.Args[4])
+	arguments := append(native_runtime.SourceFlags(source, options), "-I", filepath.Dir(library), "-o", os.Args[4])
 	if !options.Request {
 		arguments = append(arguments, path)
 	}
-	arguments = append(arguments, native.RuntimeLinkFlags(library)...)
+	arguments = append(arguments, native_runtime.RuntimeLinkFlags(library)...)
 	if options.Request {
 		arguments = append(arguments, path)
 	}
 	arguments = append(arguments, "-lm")
 	if options.Target == "wasm32-wasi" {
-		arguments = append(arguments, native.WASILinkFlags(options)...)
+		arguments = append(arguments, native_runtime.WASILinkFlags(options)...)
 	}
 	command := exec.Command(compiler, arguments...)
 	output, err := command.CombinedOutput()

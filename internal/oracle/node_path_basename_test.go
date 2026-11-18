@@ -6,6 +6,7 @@ import (
 	"testing"
 
 	"github.com/system-inc/adamic/internal/native"
+	"github.com/system-inc/adamic/internal/native_runtime"
 )
 
 func TestNodePathBasenameMutants(t *testing.T) {
@@ -38,7 +39,7 @@ func TestNodePathBasenameMutants(t *testing.T) {
 			source = strings.Replace(source, `#include "adamic.h"`, `#include "adamic.h"`+"\n"+`static adamic_string *mutant_basename(const adamic_string *path,const adamic_string *suffix) {`+one.body+`}`, 1)
 			shared := sharedDirectory(t)
 			binary := filepath.Join(shared, "mutant")
-			if err := native.Build(source, binary, native.Options{Sanitize: true}); err != nil {
+			if err := native.Build(source, binary, native_runtime.Options{Sanitize: true}); err != nil {
 				t.Fatal(err)
 			}
 			got := executeInput(t, how, nodeFSDirectorySanitizerEnvironment(), binary)

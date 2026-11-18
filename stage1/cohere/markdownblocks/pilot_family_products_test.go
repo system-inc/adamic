@@ -16,6 +16,7 @@ import (
 	"github.com/system-inc/adamic/internal/childguard"
 	"github.com/system-inc/adamic/internal/javascript"
 	"github.com/system-inc/adamic/internal/native"
+	"github.com/system-inc/adamic/internal/native_runtime"
 	"github.com/system-inc/adamic/stage1/cohere/markdownblocks/oracles"
 )
 
@@ -83,8 +84,8 @@ func pilotNativeProductFromLowered(t *testing.T, family, lowered string, sanitiz
 	if err != nil {
 		t.Fatal(err)
 	}
-	options := native.Options{Sanitize: sanitize}
-	flags := append(native.Flags(options), fmt.Sprintf("source=%x", sha256.Sum256(source)))
+	options := native_runtime.Options{Sanitize: sanitize}
+	flags := append(native_runtime.Flags(options), fmt.Sprintf("source=%x", sha256.Sum256(source)))
 	for _, name := range []string{"ADAMIC_NATIVE_SPLIT"} {
 		flags = append(flags, name+"="+os.Getenv(name))
 	}

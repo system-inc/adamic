@@ -3,6 +3,7 @@ package oracle
 import (
 	"context"
 	"github.com/system-inc/adamic/internal/native"
+	"github.com/system-inc/adamic/internal/native_runtime"
 	"os/exec"
 	"path/filepath"
 	"slices"
@@ -41,7 +42,7 @@ func releaseAgrees(t *testing.T, fixture string, mutant bool) {
 		program.Strings[0] += "!"
 	}
 	binary := filepath.Join(t.TempDir(), "shipped")
-	if err := native.Build(native.C(program), binary, native.Options{Release: true}); err != nil {
+	if err := native.Build(native.C(program), binary, native_runtime.Options{Release: true}); err != nil {
 		t.Fatal(err)
 	}
 	difference := disagreement(want, execute(t, binary))
@@ -76,7 +77,7 @@ func releaseTailMutant(t *testing.T, fixture string) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	options := native.Options{Release: true}
+	options := native_runtime.Options{Release: true}
 	flags := slices.DeleteFunc(native.LinkFlags(options), func(flag string) bool { return flag == "-fno-optimize-sibling-calls" })
 	binary := filepath.Join(t.TempDir(), "mutant")
 	if err := native.BuildFlags(native.C(program), binary, options, flags); err != nil {

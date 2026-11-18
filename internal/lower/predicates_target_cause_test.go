@@ -11,6 +11,7 @@ import (
 
 	"github.com/system-inc/adamic/internal/javascript"
 	"github.com/system-inc/adamic/internal/native"
+	"github.com/system-inc/adamic/internal/native_runtime"
 )
 
 // A checked predicate whose target is a union checks the disjunction of its members' checks (#c7w6j0y,
@@ -42,7 +43,7 @@ show({ kind: 7 } as Node);`)
 		}
 		directory := t.TempDir()
 		binary := filepath.Join(directory, "native")
-		if err := native.Build(native.C(program), binary, native.Options{Sanitize: true}); err != nil {
+		if err := native.Build(native.C(program), binary, native_runtime.Options{Sanitize: true}); err != nil {
 			t.Fatal(err)
 		}
 		runner, err := filepath.Abs("../../oracle/node.mjs")

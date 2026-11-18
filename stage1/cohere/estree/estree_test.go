@@ -10,6 +10,7 @@ import (
 	"github.com/system-inc/adamic/internal/load"
 	"github.com/system-inc/adamic/internal/lower"
 	"github.com/system-inc/adamic/internal/native"
+	"github.com/system-inc/adamic/internal/native_runtime"
 	"os"
 	"os/exec"
 	"path/filepath"
@@ -67,7 +68,7 @@ func build(t *testing.T, path string, sanitize bool) (string, string) {
 	}
 	dir := t.TempDir()
 	binary := filepath.Join(dir, "port")
-	if err := native.Build(native.C(lowered), binary, native.Options{Sanitize: sanitize}); err != nil {
+	if err := native.Build(native.C(lowered), binary, native_runtime.Options{Sanitize: sanitize}); err != nil {
 		t.Fatal(err)
 	}
 	script := filepath.Join(dir, "port.mjs")

@@ -3,6 +3,7 @@ package estree
 import (
 	"bytes"
 	"context"
+	"github.com/system-inc/adamic/internal/native_runtime"
 	"github.com/system-inc/adamic/stage1/cohere/estree/oracles"
 	"os"
 	"os/exec"
@@ -63,13 +64,13 @@ func scalarEdgeNative(t *testing.T, lowered string) string {
 	inputs := scalarEdgeInputs()
 	inputs.Name = "scalar-edges-sanitized-native-v2"
 	inputs.Toolchain = append(inputs.Toolchain, buildcache.CompilerReport("clang"))
-	inputs.Flags = append(native.Flags(native.Options{Sanitize: true, Split: true}), []string{"Sanitize=true", "Split=true", "ADAMIC_NATIVE_SPLIT=" + os.Getenv("ADAMIC_NATIVE_SPLIT")}...)
+	inputs.Flags = append(native_runtime.Flags(native_runtime.Options{Sanitize: true, Split: true}), []string{"Sanitize=true", "Split=true", "ADAMIC_NATIVE_SPLIT=" + os.Getenv("ADAMIC_NATIVE_SPLIT")}...)
 	product := buildcache.Product(t, inputs, func(dir string) error {
 		source, err := os.ReadFile(filepath.Join(lowered, "port.c"))
 		if err != nil {
 			return err
 		}
-		return native.Build(string(source), filepath.Join(dir, "port"), native.Options{Sanitize: true, Split: true})
+		return native.Build(string(source), filepath.Join(dir, "port"), native_runtime.Options{Sanitize: true, Split: true})
 	})
 	return filepath.Join(product, "port")
 }

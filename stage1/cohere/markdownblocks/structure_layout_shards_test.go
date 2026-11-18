@@ -23,6 +23,7 @@ import (
 	"github.com/system-inc/adamic/internal/ir"
 	"github.com/system-inc/adamic/internal/javascript"
 	"github.com/system-inc/adamic/internal/native"
+	"github.com/system-inc/adamic/internal/native_runtime"
 	"github.com/system-inc/adamic/stage1/cohere/markdownblocks/oracles"
 )
 
@@ -198,16 +199,16 @@ func structureLayoutBuildProduct(t *testing.T, root, target string) structureLay
 		p.program = lowered(t, main)
 	}
 	if target == "" || target == "native" {
-		options := native.Options{Sanitize: true}
-		flags := append(native.Flags(options), native.Flags(native.Options{})...)
+		options := native_runtime.Options{Sanitize: true}
+		flags := append(native_runtime.Flags(options), native_runtime.Flags(native_runtime.Options{})...)
 		flags = append(flags, fmt.Sprintf("source=%x", sha256.Sum256(source)), "ADAMIC_NATIVE_SPLIT="+os.Getenv("ADAMIC_NATIVE_SPLIT"))
 		nativeDir := buildcache.Product(t, buildcache.Inputs{Name: "markdown-structure-native-modes", Files: files, Flags: flags, Toolchain: []string{buildcache.CompilerReport("clang"), runtime.GOOS, runtime.GOARCH}}, func(dir string) error {
 			var workers sync.WaitGroup
 			sanitized := startFixtureTask(&workers, func() (struct{}, error) {
-				return struct{}{}, native.Build(string(source), filepath.Join(dir, "sanitized"), native.Options{Sanitize: true})
+				return struct{}{}, native.Build(string(source), filepath.Join(dir, "sanitized"), native_runtime.Options{Sanitize: true})
 			})
 			release := startFixtureTask(&workers, func() (struct{}, error) {
-				return struct{}{}, native.Build(string(source), filepath.Join(dir, "release"), native.Options{})
+				return struct{}{}, native.Build(string(source), filepath.Join(dir, "release"), native_runtime.Options{})
 			})
 			workers.Wait()
 			if _, err := sanitized.result(); err != nil {

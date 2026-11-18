@@ -3,6 +3,7 @@ package cssnumbers
 import (
 	"context"
 	"fmt"
+	"github.com/system-inc/adamic/internal/native_runtime"
 	"github.com/system-inc/adamic/stage1/cohere/cssnumbers/oracles"
 	"os"
 	"os/exec"
@@ -14,7 +15,6 @@ import (
 
 	"github.com/system-inc/adamic/internal/buildcache"
 	"github.com/system-inc/adamic/internal/childguard"
-	"github.com/system-inc/adamic/internal/native"
 )
 
 var numbersPreparedPrograms = make([]struct {
@@ -338,11 +338,11 @@ func TestCSSNumbersCompilerProductsKeyWhatTheCompilerLinks(t *testing.T) {
 	write(t, c, []byte("int main(void) { return 0; }\n"))
 	products := []numbersInputs{
 		numbersProgramInputs("port", main),
-		numbersNativeInputs("sanitized", c, native.Options{Sanitize: true}, "toolchain"),
-		numbersNativeInputs("native-fast", c, native.Options{Sanitize: false}, "toolchain"),
+		numbersNativeInputs("sanitized", c, native_runtime.Options{Sanitize: true}, "toolchain"),
+		numbersNativeInputs("native-fast", c, native_runtime.Options{Sanitize: false}, "toolchain"),
 	}
 	for _, mutation := range numbersMutations {
-		products = append(products, numbersProgramInputs(mutation.name, prepareNumbersMutant(t, mutation)), numbersNativeInputs(mutation.name+"-sanitized", c, native.Options{Sanitize: true}, "toolchain"))
+		products = append(products, numbersProgramInputs(mutation.name, prepareNumbersMutant(t, mutation)), numbersNativeInputs(mutation.name+"-sanitized", c, native_runtime.Options{Sanitize: true}, "toolchain"))
 	}
 	covers := func(entry, path string) bool { return entry == path || strings.HasPrefix(path, entry+"/") }
 	for _, product := range products {

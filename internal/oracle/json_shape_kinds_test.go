@@ -7,6 +7,7 @@ import (
 	"testing"
 
 	"github.com/system-inc/adamic/internal/native"
+	"github.com/system-inc/adamic/internal/native_runtime"
 )
 
 // Use the decoder's real schemas and allocations, then release the objects before
@@ -71,7 +72,7 @@ int main(int argc,char **argv) {
 func jsonDecodeShapeRun(t *testing.T, code string, sanitize bool) run {
 	t.Helper()
 	binary := filepath.Join(t.TempDir(), "shape")
-	if err := native.Build(code, binary, native.Options{Count: !sanitize, Sanitize: sanitize}); err != nil {
+	if err := native.Build(code, binary, native_runtime.Options{Count: !sanitize, Sanitize: sanitize}); err != nil {
 		t.Fatal(err)
 	}
 	return executeWith(t, []string{"ASAN_OPTIONS=detect_leaks=1"}, binary)

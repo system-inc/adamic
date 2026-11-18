@@ -7,6 +7,7 @@ import (
 	"encoding/binary"
 	"errors"
 	"fmt"
+	"github.com/system-inc/adamic/internal/native_runtime"
 	"github.com/system-inc/adamic/stage1/cohere/markdowninline/oracles"
 	"os"
 	"os/exec"
@@ -120,7 +121,7 @@ func (source inlineSource) buildBinary(dir string, sanitize bool) error {
 	if err != nil {
 		return err
 	}
-	return native.Build(string(data), filepath.Join(dir, "port"), native.Options{Sanitize: sanitize})
+	return native.Build(string(data), filepath.Join(dir, "port"), native_runtime.Options{Sanitize: sanitize})
 }
 func (source inlineSource) buildNode(dir string) error {
 	script, err := filepath.Abs("testdata/build_node.mjs")
@@ -193,7 +194,7 @@ func inlineProductSources(t *testing.T, in buildcache.Inputs, source string, nam
 // A native product keys the compiler that builds it (compilerinputs.Lowering, which holds internal/native), the recipe
 // here, and its C by content.
 func inlineNativeInputs(t *testing.T, name, source string, sanitize bool) buildcache.Inputs {
-	in := buildcache.Inputs{Name: name, Files: append(compilerinputs.Lowering(), "stage1/cohere/markdowninline/inline_products_shards_test.go"), Flags: native.Flags(native.Options{Sanitize: sanitize}), Toolchain: []string{buildcache.CompilerReport("clang"), runtime.GOOS, runtime.GOARCH}}
+	in := buildcache.Inputs{Name: name, Files: append(compilerinputs.Lowering(), "stage1/cohere/markdowninline/inline_products_shards_test.go"), Flags: native_runtime.Flags(native_runtime.Options{Sanitize: sanitize}), Toolchain: []string{buildcache.CompilerReport("clang"), runtime.GOOS, runtime.GOARCH}}
 	in.Flags = append(in.Flags, inlineEnvironment("LIBRARY_PATH", "CPATH", "C_INCLUDE_PATH", "SOURCE_DATE_EPOCH", "SDKROOT", "MACOSX_DEPLOYMENT_TARGET", "LD_LIBRARY_PATH", "DYLD_LIBRARY_PATH", "ADAMIC_NATIVE_SPLIT")...)
 	return inlineProductSources(t, in, source, "program.c")
 }

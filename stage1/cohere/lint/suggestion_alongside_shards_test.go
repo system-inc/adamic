@@ -5,6 +5,7 @@ import (
 	"context"
 
 	"fmt"
+	"github.com/system-inc/adamic/internal/native_runtime"
 	"github.com/system-inc/adamic/stage1/cohere/lint/oracles"
 	"go/ast"
 	"go/parser"
@@ -112,14 +113,14 @@ func suggestionAlongsidePrepare(t *testing.T) {
 	})
 	inputs.Name = "suggestion-alongside-native-v2"
 	inputs.Flags = append(inputs.Flags, "split=true", "jobs=4")
-	inputs.Flags = append(inputs.Flags, native.Flags(native.Options{Sanitize: true, Split: true, Jobs: 4})...)
+	inputs.Flags = append(inputs.Flags, native_runtime.Flags(native_runtime.Options{Sanitize: true, Split: true, Jobs: 4})...)
 	inputs.Toolchain = append(inputs.Toolchain, buildcache.CompilerReport("clang"))
 	built := buildcache.Product(t, inputs, func(out string) error {
 		source, err := os.ReadFile(filepath.Join(lowered, "lint.c"))
 		if err != nil {
 			return err
 		}
-		return native.Build(string(source), filepath.Join(out, "scanner"), native.Options{Sanitize: true, Split: true, Jobs: 4})
+		return native.Build(string(source), filepath.Join(out, "scanner"), native_runtime.Options{Sanitize: true, Split: true, Jobs: 4})
 	})
 	oracle := oracles.SuggestionAlongsideOracle(t, directory)
 

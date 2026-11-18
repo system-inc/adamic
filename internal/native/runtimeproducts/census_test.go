@@ -27,8 +27,8 @@ import (
 
 	"github.com/system-inc/adamic/internal/buildcache"
 	"github.com/system-inc/adamic/internal/ccjobserver"
-	"github.com/system-inc/adamic/internal/native"
 	"github.com/system-inc/adamic/internal/native/agreementproducts"
+	"github.com/system-inc/adamic/internal/native_runtime"
 )
 
 // modulePath is the repository's module, the prefix of every package of it.
@@ -61,7 +61,7 @@ var environmentReads = []string{"os.Getenv", "os.LookupEnv", "os.Environ", "os.E
 // buildLogReading is why a build may read ADAMIC_BUILD_LOG (Performance's ruling, from Runtime's on #gydfg86).
 const buildLogReading = "it names only where buildLog appends a timing line, never reaches clang's inputs or the output's bytes, and an unset or unopenable log writes nothing and fails nothing (library.go's buildLog)"
 
-// runtimeEnvironment are the environment variables native.RuntimeRequest.Build's reach may name, each with its reason.
+// runtimeEnvironment are the environment variables native_runtime.RuntimeRequest.Build's reach may name, each with its reason.
 // Any other read, or one by a name the census can't tell, is a finding.
 var runtimeEnvironment = map[string]string{
 	"ADAMIC_BUILD_LOG": buildLogReading,
@@ -841,7 +841,7 @@ func repositoryRoot(t *testing.T) string {
 
 // An archive's build reaches nothing of internal/native but the files its key declares (runtimeFiles), and no package
 // of the tree but buildcache's slice, so its lean recipe keys all the code that makes it and no compiler file (Node's
-// rails on #earlycut): what native.RuntimeRequest.Build reaches, every init and initializer that writes what it reads or
+// rails on #earlycut): what native_runtime.RuntimeRequest.Build reaches, every init and initializer that writes what it reads or
 // calls anything, no environment but runtimeEnvironment's, and nothing the census can't follow. It's one of the two
 // tests buildcache's leanCallers names as this package's census, the gate that opens the lean recipe, runtimeproducts'
 // import closure, to an archive (#gr5y0yf item 1), with TestTheArchivesBuildPathReadsOnlyWhatItsKeyHolds, the other,
@@ -998,7 +998,7 @@ func TestTheSysrootReadIsTheSysrootFlag(t *testing.T) {
 	for _, installation := range []string{fakeWASISDK(t), fakeWASISDK(t)} {
 		t.Setenv("WASI_SYSROOT", filepath.Join(installation, "share", "wasi-sysroot"))
 		for _, variant := range Variants {
-			request, err := native.RuntimeRequestFor(variant.Options)
+			request, err := native_runtime.RuntimeRequestFor(variant.Options)
 			if err != nil {
 				t.Fatalf("%s: %v", variant.Name, err)
 			}
@@ -1050,12 +1050,12 @@ func TestAProgramRegionOnlyRefusesARequest(t *testing.T) {
 	refused := 0
 	for _, variant := range Variants {
 		t.Setenv("ADAMIC_PROGRAM_REGION", "")
-		unset, err := native.RuntimeRequestFor(variant.Options)
+		unset, err := native_runtime.RuntimeRequestFor(variant.Options)
 		if err != nil {
 			t.Fatalf("%s, the variable unset: %v", variant.Name, err)
 		}
 		t.Setenv("ADAMIC_PROGRAM_REGION", "1")
-		set, err := native.RuntimeRequestFor(variant.Options)
+		set, err := native_runtime.RuntimeRequestFor(variant.Options)
 		if err != nil {
 			if !strings.Contains(err.Error(), "Program regions require a one-shot native CLI") {
 				t.Errorf("%s, the variable set, failed for another reason than a program region's refusal: %v", variant.Name, err)
@@ -1130,7 +1130,7 @@ var productsState = map[string]string{
 }
 
 // A program region's archive is keyed apart from the plain one by what the region changes in it, its flag (Node's
-// condition 1 on the program region archives): native.RuntimeRequestFor turns options.ProgramRegion into
+// condition 1 on the program region archives): native_runtime.RuntimeRequestFor turns options.ProgramRegion into
 // -DADAMIC_PROGRAM_REGION among the request's flags, which RuntimeRequest.Build compiles with and its Portable holds, so
 // Inputs holds it. For each region variant, its request and the one with ProgramRegion off differ in Inputs by that flag,
 // and by the headers part if the flag reaches what the compile includes, and nothing else, and their name keys and
@@ -1147,11 +1147,11 @@ func TestAProgramRegionKeysItsArchiveApart(t *testing.T) {
 		regions++
 		withoutRegion := variant.Options
 		withoutRegion.ProgramRegion = false
-		region, err := native.RuntimeRequestFor(variant.Options)
+		region, err := native_runtime.RuntimeRequestFor(variant.Options)
 		if err != nil {
 			t.Fatalf("%s: %v", variant.Name, err)
 		}
-		plain, err := native.RuntimeRequestFor(withoutRegion)
+		plain, err := native_runtime.RuntimeRequestFor(withoutRegion)
 		if err != nil {
 			t.Fatalf("%s without its region: %v", variant.Name, err)
 		}
@@ -1197,15 +1197,15 @@ func TestAProgramRegionKeysItsArchiveApart(t *testing.T) {
 func TestALeanArchiveRefusesWhatItDoesntDeclare(t *testing.T) {
 	t.Parallel()
 	for name, ask := range map[string]struct {
-		archive  func(t testing.TB, options native.Options, features []string) string
-		options  native.Options
+		archive  func(t testing.TB, options native_runtime.Options, features []string) string
+		options  native_runtime.Options
 		features []string
 		want     string
 	}{
 		"a feature set Sets doesn't hold":                {ProgramArchive, ProgramVariants[0].Options, []string{"ADAMIC_NO_SUCH_FEATURE"}, "undeclared Program runtime feature set: [ADAMIC_NO_SUCH_FEATURE]"},
-		"options ProgramVariants don't hold":             {ProgramArchive, native.Options{ProgramRegion: true, Target: "wasm32-wasi"}, nil, "undeclared Program runtime options: "},
+		"options ProgramVariants don't hold":             {ProgramArchive, native_runtime.Options{ProgramRegion: true, Target: "wasm32-wasi"}, nil, "undeclared Program runtime options: "},
 		"a feature set Sets doesn't hold for cmd/adamic": {CommandArchive, CommandVariants[0].Options, []string{"ADAMIC_NO_SUCH_FEATURE"}, "undeclared Command runtime feature set: [ADAMIC_NO_SUCH_FEATURE]"},
-		"options CommandVariants don't hold":             {CommandArchive, native.Options{Debug: true}, nil, "undeclared Command runtime options: "},
+		"options CommandVariants don't hold":             {CommandArchive, native_runtime.Options{Debug: true}, nil, "undeclared Command runtime options: "},
 	} {
 		recorder := &stoppingTB{TB: t}
 		func() {
@@ -1218,7 +1218,7 @@ func TestALeanArchiveRefusesWhatItDoesntDeclare(t *testing.T) {
 		}
 	}
 	for _, variant := range slices.Concat(ProgramVariants, CommandVariants) {
-		if Declared(native.RuntimeRequest{Options: variant.Options}) == nil {
+		if Declared(native_runtime.RuntimeRequest{Options: variant.Options}) == nil {
 			t.Errorf("Declared takes %s's options %+v, so Supply would build its archive mid-test", variant.Name, variant.Options)
 		}
 	}
@@ -1261,7 +1261,7 @@ func (recorder *stoppingTB) recover() {
 }
 
 // internal/oracle makes no runtime archive of its own: none of its files, its test files with them, builds a
-// native.RuntimeRequest, so every archive its tests link is built here, lean, keyed by runtimeproducts' import closure
+// native_runtime.RuntimeRequest, so every archive its tests link is built here, lean, keyed by runtimeproducts' import closure
 // (buildcache's leanRecipeOf), which holds no file of internal/oracle (buildcache's
 // TestALeanRecipeIsTheCodeThatMakesTheBuild), and an edit of an oracle test leaves every archive's key alone. Its program
 // region's archives were built there with buildcache.Product, keyed by oracle's whole test binary, so an edit of any
@@ -1323,8 +1323,8 @@ func TestCommandMakesNoArchiveOfItsOwn(t *testing.T) {
 }
 
 // archivesMadeIn is each place a Go file of directory, test files with them, builds a runtime archive: Build named on a
-// request a function there holds, a value of native.RuntimeRequestFor or a parameter or variable of
-// native.RuntimeRequest's type, and how many calls there ask runtimeproducts' function named asking (ProgramArchive or
+// request a function there holds, a value of native_runtime.RuntimeRequestFor or a parameter or variable of
+// native_runtime.RuntimeRequest's type, and how many calls there ask runtimeproducts' function named asking (ProgramArchive or
 // CommandArchive) for one. A Build in a function literal handed straight to buildcache.BuiltElsewhere finds an archive
 // and makes none: under the trace that build never runs, and the archive is its owner's, as runtimeproducts' Find finds
 // it.
@@ -1599,7 +1599,7 @@ const archiveProbe = "ADAMIC_RUNTIMEPRODUCTS_ARCHIVE_PROBE"
 func TestTheJobserverNeverReachesAnArchivesBytes(t *testing.T) {
 	t.Parallel()
 	if directory := os.Getenv(archiveProbe); directory != "" {
-		request, err := native.RuntimeRequestFor(native.Options{})
+		request, err := native_runtime.RuntimeRequestFor(native_runtime.Options{})
 		if err != nil {
 			t.Fatal(err)
 		}

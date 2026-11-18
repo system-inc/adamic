@@ -18,7 +18,7 @@ import (
 	"time"
 
 	"github.com/system-inc/adamic/internal/buildcache"
-	"github.com/system-inc/adamic/internal/native"
+	"github.com/system-inc/adamic/internal/native_runtime"
 	"github.com/system-inc/adamic/internal/toolchain"
 )
 
@@ -49,8 +49,8 @@ func bridgeProductInputs(t testing.TB, repository, name string) buildcache.Input
 		inputs.Flags = append(inputs.Flags, variable+"="+os.Getenv(variable))
 	}
 	inputs.Toolchain = append(inputs.Toolchain, buildcache.Tool("go", "env", "GOVERSION", "GOTOOLDIR"))
-	for _, options := range []native.Options{{}, {Sanitize: true}, {Sanitize: true, Count: true}} {
-		inputs.Flags = append(inputs.Flags, native.Flags(options)...)
+	for _, options := range []native_runtime.Options{{}, {Sanitize: true}, {Sanitize: true, Count: true}} {
+		inputs.Flags = append(inputs.Flags, native_runtime.Flags(options)...)
 	}
 	for _, variable := range []string{"CC", "CXX", "AR", "PKG_CONFIG"} {
 		fields := strings.Fields(strings.TrimPrefix(buildcache.Tool("go", "env", variable), "go env "+variable+": "+variable+"="))

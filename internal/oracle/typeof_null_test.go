@@ -8,6 +8,7 @@ import (
 
 	"github.com/system-inc/adamic/internal/ir"
 	"github.com/system-inc/adamic/internal/native"
+	"github.com/system-inc/adamic/internal/native_runtime"
 )
 
 var typeofNullFixtures = []string{
@@ -126,7 +127,7 @@ func TestTypeOfNullSlotPresenceMutant(t *testing.T) {
 		t.Fatal("mutant changed no slot-presence tests")
 	}
 	binary := filepath.Join(t.TempDir(), "mutant")
-	if err := native.Build(mutant, binary, native.Options{Sanitize: true}); err != nil {
+	if err := native.Build(mutant, binary, native_runtime.Options{Sanitize: true}); err != nil {
 		t.Fatal(err)
 	}
 	if report := leakChecked(t, mutant, binary); report != "" {

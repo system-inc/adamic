@@ -20,6 +20,7 @@ import (
 	"github.com/system-inc/adamic/internal/load"
 	"github.com/system-inc/adamic/internal/lower"
 	"github.com/system-inc/adamic/internal/native"
+	"github.com/system-inc/adamic/internal/native_runtime"
 	"github.com/system-inc/adamic/internal/toolchain"
 )
 
@@ -129,7 +130,7 @@ func leaks(t *testing.T, program *ir.Program, sanitized string, arguments ...str
 	t.Helper()
 	switch runtime.GOOS {
 	case "darwin":
-		binary := printerNativeProduct(t, native.C(program), native.Options{})
+		binary := printerNativeProduct(t, native.C(program), native_runtime.Options{})
 		report := execute(t, nil, "leaks", append([]string{"--atExit", "--", binary}, arguments...)...)
 		if report.exitCode == 0 {
 			return ""
@@ -151,9 +152,9 @@ type run struct {
 	exitCode       int
 }
 
-func printerNativeProduct(t *testing.T, source string, options native.Options) string {
+func printerNativeProduct(t *testing.T, source string, options native_runtime.Options) string {
 	t.Helper()
-	flags := append(native.Flags(options), fmt.Sprintf("source:%x", sha256.Sum256([]byte(source))))
+	flags := append(native_runtime.Flags(options), fmt.Sprintf("source:%x", sha256.Sum256([]byte(source))))
 	return printerBuild(t, printerBuildInputs{
 		Name: "GraphQL native input program", Files: printerInputFiles(t, filepath.Join(repository, "internal/native"), filepath.Join(repository, "internal/native_runtime")),
 		Flags: flags, Toolchain: buildcache.CompilerReport("clang"),

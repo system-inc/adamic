@@ -13,6 +13,7 @@ import (
 	"github.com/system-inc/adamic/internal/ir"
 	"github.com/system-inc/adamic/internal/leakcheck"
 	"github.com/system-inc/adamic/internal/native"
+	"github.com/system-inc/adamic/internal/native_runtime"
 )
 
 var asyncCountCases = []string{"stable", "reassigned", "captured", "expression_write", "parameter", "thrown", "root_error", "payload"}
@@ -120,22 +121,22 @@ func asyncCountProgramProduct(t *testing.T, name string, original bool) string {
 		t.Fatal(err)
 	}
 	code := native.C(p)
-	request, err := native.RuntimeRequestFor(native.Options{Sanitize: !original, Count: original}, native.Features(code)...)
+	request, err := native_runtime.RuntimeRequestFor(native_runtime.Options{Sanitize: !original, Count: original}, native_runtime.Features(code)...)
 	if err != nil {
 		t.Fatal(err)
 	}
 	inputs := buildcache.Inputs{Name: fmt.Sprintf("async-count-%t-%s", original, name), Files: append(compilerinputs.Lowering(), key, "internal/oracle/async_counts_test.go"), Flags: request.Portable, Toolchain: []string{buildcache.Tool(request.Compiler, "--target="+request.Options.Target, "--version"), buildcache.Tool(request.Archiver, "--version"), buildcache.Tool("node", "--version")}}
 	return buildcache.Product(t, inputs, func(directory string) error {
 		if original {
-			return native.Build(code, filepath.Join(directory, "counted"), native.Options{Count: true})
+			return native.Build(code, filepath.Join(directory, "counted"), native_runtime.Options{Count: true})
 		}
-		if err := native.Build(code, filepath.Join(directory, "control"), native.Options{Sanitize: true}); err != nil {
+		if err := native.Build(code, filepath.Join(directory, "control"), native_runtime.Options{Sanitize: true}); err != nil {
 			return err
 		}
-		if err := native.Build(code, filepath.Join(directory, "counted"), native.Options{Count: true}); err != nil {
+		if err := native.Build(code, filepath.Join(directory, "counted"), native_runtime.Options{Count: true}); err != nil {
 			return err
 		}
-		return native.Build(asyncCountMutant(t, name, code, p), filepath.Join(directory, "mutant"), native.Options{Sanitize: true})
+		return native.Build(asyncCountMutant(t, name, code, p), filepath.Join(directory, "mutant"), native_runtime.Options{Sanitize: true})
 	})
 }
 func checkAsyncCountRow(t *testing.T, key string, got run, budget int) int {

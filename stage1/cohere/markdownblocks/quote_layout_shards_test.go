@@ -21,6 +21,7 @@ import (
 	"github.com/system-inc/adamic/internal/childguard"
 	"github.com/system-inc/adamic/internal/javascript"
 	"github.com/system-inc/adamic/internal/native"
+	"github.com/system-inc/adamic/internal/native_runtime"
 	"github.com/system-inc/adamic/stage1/cohere/markdownblocks/oracles"
 )
 
@@ -575,10 +576,10 @@ func quoteLayoutOnNode(t *testing.T, path string, arguments ...string) run {
 }
 
 func quoteLayoutNativeProduct(t *testing.T, products quoteLayoutProducts, sanitize bool) string {
-	options := native.Options{Sanitize: sanitize}
+	options := native_runtime.Options{Sanitize: sanitize}
 	nativeInputs := products.inputs
 	nativeInputs.Name = fmt.Sprintf("markdown-quote-layout-native-%t", sanitize)
-	nativeInputs.Flags = append(append([]string{}, products.inputs.Flags...), native.Flags(options)...)
+	nativeInputs.Flags = append(append([]string{}, products.inputs.Flags...), native_runtime.Flags(options)...)
 	nativeInputs.Flags = append(nativeInputs.Flags, "ADAMIC_NATIVE_SPLIT="+os.Getenv("ADAMIC_NATIVE_SPLIT"))
 	nativeInputs.Toolchain = append([]string{runtime.Version()}, buildcache.CompilerReport("clang"))
 	dir := buildcache.Product(t, nativeInputs, func(dir string) error { return native.Build(products.source, filepath.Join(dir, "port"), options) })

@@ -16,6 +16,7 @@ import (
 	"github.com/system-inc/adamic/internal/childguard"
 	"github.com/system-inc/adamic/internal/compilerinputs"
 	"github.com/system-inc/adamic/internal/javascript"
+	"github.com/system-inc/adamic/internal/native_runtime"
 	"strings"
 	"testing"
 
@@ -143,7 +144,7 @@ func moveCountedBinary(t *testing.T, mutant bool) string {
 	}
 	inputs := moveSourceInputs()
 	inputs.Name = "moves-counted-" + variant
-	inputs.Flags = native.Flags(native.Options{Count: true})
+	inputs.Flags = native_runtime.Flags(native_runtime.Options{Count: true})
 	inputs.Toolchain = append(inputs.Toolchain, buildcache.CompilerReport("clang"))
 	directory := buildcache.Product(t, inputs, func(directory string) error {
 		generated := moveSourceFile(t, "program.c")
@@ -166,7 +167,7 @@ adamic_array *moves_count_map(adamic_array *items, adamic_closure *work, enum ad
 }
 `, abi, abi) + strings.ReplaceAll(generated, "adamic_parallel_map_move(", "moves_count_map(")
 		binary := filepath.Join(directory, "program")
-		if err := native.Build(source, binary, native.Options{Count: true}); err != nil {
+		if err := native.Build(source, binary, native_runtime.Options{Count: true}); err != nil {
 			return err
 		}
 		return nil
@@ -252,18 +253,18 @@ func TestMovesSourceKeyNamesCompiler(t *testing.T) {
 	}
 }
 
-func moveBuildOptions(build string) (native.Options, string) {
+func moveBuildOptions(build string) (native_runtime.Options, string) {
 	switch build {
 	case "asan":
-		return native.Options{Sanitize: true, Split: true, Jobs: 4}, ""
+		return native_runtime.Options{Sanitize: true, Split: true, Jobs: 4}, ""
 	case "asan_slabs":
-		return native.Options{Sanitize: true}, "ADAMIC_SLABS"
+		return native_runtime.Options{Sanitize: true}, "ADAMIC_SLABS"
 	case "tsan":
-		return native.Options{ThreadSanitize: true}, ""
+		return native_runtime.Options{ThreadSanitize: true}, ""
 	case "malloc":
-		return native.Options{}, "ADAMIC_MALLOC"
+		return native_runtime.Options{}, "ADAMIC_MALLOC"
 	default:
-		return native.Options{}, ""
+		return native_runtime.Options{}, ""
 	}
 }
 
@@ -273,7 +274,7 @@ func moveBinary(t *testing.T, build string) string {
 	options, allocator := moveBuildOptions(build)
 	inputs := moveSourceInputs()
 	inputs.Name = "moves-native-" + build
-	inputs.Flags = append(native.Flags(options), "allocator="+allocator)
+	inputs.Flags = append(native_runtime.Flags(options), "allocator="+allocator)
 	if options.Split {
 		inputs.Flags = append(inputs.Flags, fmt.Sprintf("split=true jobs=%d", options.Jobs))
 	}

@@ -10,7 +10,7 @@ import (
 	"testing"
 
 	"github.com/system-inc/adamic/internal/buildcache"
-	"github.com/system-inc/adamic/internal/native"
+	"github.com/system-inc/adamic/internal/native_runtime"
 )
 
 // Products hold compiled inputs only. Both stock-runner units replay all 600
@@ -27,7 +27,7 @@ func computeCorpusProduct(t *testing.T, mutant, build bool) string {
 	inputs.Toolchain = slices.Clone(inputs.Toolchain)
 	inputs.Files = append(inputs.Files, "internal/worker/compute_corpus_test.go", "workers/compute/handler.a", "workers/compute/native-driver.a")
 	inputs.Flags = append(inputs.Flags, fmt.Sprintf("sieve-mutant=%t", mutant))
-	request, err := native.RuntimeRequestFor(native.Options{Release: true})
+	request, err := native_runtime.RuntimeRequestFor(native_runtime.Options{Release: true})
 	if err != nil {
 		t.Fatal(err)
 	}

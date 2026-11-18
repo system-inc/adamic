@@ -8,6 +8,7 @@ import (
 	"testing"
 
 	"github.com/system-inc/adamic/internal/native"
+	"github.com/system-inc/adamic/internal/native_runtime"
 )
 
 func init() {
@@ -118,7 +119,7 @@ func TestTypedArrayIntegerBoundsMutant(t *testing.T) {
 	code := strings.ReplaceAll(control, "adamic_typed_array_get_integer(", "mutant_get_integer(")
 	code = strings.Replace(code, "#include \"adamic.h\"", "#include \"adamic.h\"\n"+body, 1)
 	binary := filepath.Join(t.TempDir(), "mutant")
-	if err := native.Build(code, binary, native.Options{Sanitize: true}); err != nil {
+	if err := native.Build(code, binary, native_runtime.Options{Sanitize: true}); err != nil {
 		t.Fatal(err)
 	}
 	result := executeWith(t, []string{"ASAN_OPTIONS=detect_leaks=1:halt_on_error=1"}, binary)
@@ -175,7 +176,7 @@ func TestTypedArrayIterationOwnerMutant(t *testing.T) {
 	}
 	mutant := holder.ReplaceAllString(control, "$1\tadamic_release($2);\n$3")
 	binary := filepath.Join(t.TempDir(), "unowned-iteration")
-	if err := native.Build(mutant, binary, native.Options{Sanitize: true}); err != nil {
+	if err := native.Build(mutant, binary, native_runtime.Options{Sanitize: true}); err != nil {
 		t.Fatal("ownership mutant must compile:", err)
 	}
 	observed := executeWith(t, []string{"ASAN_OPTIONS=detect_leaks=0:halt_on_error=1"}, binary)

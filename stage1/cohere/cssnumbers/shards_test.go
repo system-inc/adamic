@@ -5,6 +5,7 @@ import (
 	"context"
 	"crypto/sha256"
 	"fmt"
+	"github.com/system-inc/adamic/internal/native_runtime"
 	"github.com/system-inc/adamic/stage1/cohere/cssnumbers/oracles"
 	"os"
 	"os/exec"
@@ -264,13 +265,13 @@ func numbersClangToolchain(t *testing.T) string {
 
 // numbersNativeInputs keys the native binary native.Build makes from c: the compiler, whose native.Build links more
 // than internal/native (internal/ir, internal/flow, internal/toolchain, bridge/tsgo), and c by content.
-func numbersNativeInputs(name, c string, options native.Options, clang string) numbersInputs {
-	return numbersInputs{Name: name, Files: append(numbersCompilerFiles(), c), Flags: native.Flags(options), Toolchain: clang}
+func numbersNativeInputs(name, c string, options native_runtime.Options, clang string) numbersInputs {
+	return numbersInputs{Name: name, Files: append(numbersCompilerFiles(), c), Flags: native_runtime.Flags(options), Toolchain: clang}
 }
 
 func buildNumbersNative(t *testing.T, name string, program numbersProgram, sanitize bool) string {
 	t.Helper()
-	options := native.Options{Sanitize: sanitize}
+	options := native_runtime.Options{Sanitize: sanitize}
 	dir := numbersProduct(t, numbersNativeInputs(name, program.c, options, numbersClangToolchain(t)), func(dir string) error {
 		source, err := os.ReadFile(program.c)
 		if err != nil {

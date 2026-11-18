@@ -4,7 +4,7 @@ import (
 	"bytes"
 	"encoding/json"
 	"fmt"
-	"github.com/system-inc/adamic/internal/native"
+	"github.com/system-inc/adamic/internal/native_runtime"
 	"os"
 	"os/exec"
 	"path/filepath"
@@ -15,7 +15,7 @@ import (
 
 func requireWasm(t *testing.T) {
 	t.Helper()
-	if err := native.ValidateOptions(native.Options{Target: "wasm32-wasi"}); err != nil {
+	if err := native_runtime.ValidateOptions(native_runtime.Options{Target: "wasm32-wasi"}); err != nil {
 		t.Fatalf("Workers require setup.sh --wasi-sdk: %v", err)
 	}
 }

@@ -16,6 +16,7 @@ import (
 	"github.com/system-inc/adamic/internal/load"
 	"github.com/system-inc/adamic/internal/lower"
 	"github.com/system-inc/adamic/internal/native"
+	"github.com/system-inc/adamic/internal/native_runtime"
 )
 
 // Every native build the gap witnesses and the parser stage probes run is a keyed product built ahead by a TestProduct_
@@ -38,14 +39,14 @@ func TestProduct_MarkdownblocksGapsSanitized(t *testing.T) {
 func TestProduct_MarkdownblocksProbesSanitized(t *testing.T) {
 	t.Parallel()
 	for _, probe := range nativeProbes {
-		requirePort(t, probeNative(t, probe, native.Options{Sanitize: true}))
+		requirePort(t, probeNative(t, probe, native_runtime.Options{Sanitize: true}))
 	}
 }
 
 func TestProduct_MarkdownblocksProbesRelease(t *testing.T) {
 	t.Parallel()
 	for _, probe := range nativeProbes {
-		requirePort(t, probeNative(t, probe, native.Options{}))
+		requirePort(t, probeNative(t, probe, native_runtime.Options{}))
 	}
 }
 
@@ -79,7 +80,7 @@ var emittedProbes = []string{chunksProbe}
 // sanitizers, keyed by the compiler's paths, the gap's import closure and the native build.
 func gapSanitized(t *testing.T, path string) string {
 	t.Helper()
-	options := native.Options{Sanitize: true}
+	options := native_runtime.Options{Sanitize: true}
 	inputs := loweredNativeInputs("markdownblocks gap "+path+" native sanitized", options, importClosure(t, path)...)
 	return buildcache.Product(t, inputs, func(directory string) error {
 		return buildLoweredNative(path, directory, options)
@@ -88,7 +89,7 @@ func gapSanitized(t *testing.T, path string) string {
 
 // probeNative is the probe at path, relative to this package, lowered in this process and built by clang with options,
 // keyed by the compiler's paths, the probe's import closure and the native build.
-func probeNative(t *testing.T, path string, options native.Options) string {
+func probeNative(t *testing.T, path string, options native_runtime.Options) string {
 	t.Helper()
 	mode := "release"
 	if options.Sanitize {
@@ -167,8 +168,8 @@ func importClosure(t *testing.T, path string) []string {
 // no trace sees it read, so its paths are named (compilerinputs.Lowering) beside the sources, relative to the
 // repository, and this file, with the native options and flags, the environment native.Build and clang read, and
 // clang's version.
-func loweredNativeInputs(name string, options native.Options, sources ...string) buildcache.Inputs {
-	flags := append([]string{"load.Load", "lower.Lower", "native.C", fmt.Sprintf("options=%+v", options)}, native.Flags(options)...)
+func loweredNativeInputs(name string, options native_runtime.Options, sources ...string) buildcache.Inputs {
+	flags := append([]string{"load.Load", "lower.Lower", "native.C", fmt.Sprintf("options=%+v", options)}, native_runtime.Flags(options)...)
 	for _, variable := range []string{"ADAMIC_NATIVE_SPLIT", "CPATH", "C_INCLUDE_PATH", "LIBRARY_PATH", "SDKROOT", "MACOSX_DEPLOYMENT_TARGET"} {
 		value, set := os.LookupEnv(variable)
 		flags = append(flags, fmt.Sprintf("env:%s:set=%t:value=%s", variable, set, value))
@@ -196,7 +197,7 @@ func loweredEmittedInputs(name string, sources ...string) buildcache.Inputs {
 
 // buildLoweredNative lowers the program at path, relative to this package, and builds it with options as
 // directory/port.
-func buildLoweredNative(path, directory string, options native.Options) error {
+func buildLoweredNative(path, directory string, options native_runtime.Options) error {
 	entry, err := filepath.Abs(path)
 	if err != nil {
 		return err

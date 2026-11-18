@@ -12,6 +12,7 @@ import (
 	"github.com/system-inc/adamic/internal/ir"
 	"github.com/system-inc/adamic/internal/lower"
 	"github.com/system-inc/adamic/internal/native"
+	"github.com/system-inc/adamic/internal/native_runtime"
 )
 
 // TestWASIAgreesWithNode runs every ordinary fixture as a WASI command, as a family (families_test.go):
@@ -47,7 +48,7 @@ func runWASIFixtures(t *testing.T, rows []int, mutate func(string, *ir.Program))
 		t.Skip("set ADAMIC_ORACLE_WASI=1 to run the WASI oracle")
 	}
 	started := time.Now()
-	if err := native.ValidateOptions(native.Options{Target: "wasm32-wasi"}); err != nil {
+	if err := native_runtime.ValidateOptions(native_runtime.Options{Target: "wasm32-wasi"}); err != nil {
 		t.Fatal(err)
 	}
 	identity(t)

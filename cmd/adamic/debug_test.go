@@ -13,7 +13,7 @@ import (
 	"time"
 
 	"github.com/system-inc/adamic/internal/buildcache/location"
-	"github.com/system-inc/adamic/internal/native"
+	"github.com/system-inc/adamic/internal/native_runtime"
 )
 
 func TestBuildDebugFlag(t *testing.T) {
@@ -21,7 +21,7 @@ func TestBuildDebugFlag(t *testing.T) {
 	path := requestSource(t, "function f(n: number): number { return n + 1; }\nconsole.log((f(3)).toString());\n")
 	for _, arguments := range [][]string{{"--debug"}, {"--sanitize"}, nil} {
 		calls := 0
-		code := buildWithNative(path, filepath.Join(t.TempDir(), "program"), arguments, func(source, output string, options native.Options) error {
+		code := buildWithNative(path, filepath.Join(t.TempDir(), "program"), arguments, func(source, output string, options native_runtime.Options) error {
 			calls++
 			debug := slices.Contains(arguments, "--debug")
 			if options.Debug != debug || strings.Contains(source, "#line") != debug {
@@ -38,7 +38,7 @@ func TestBuildDebugFlag(t *testing.T) {
 			if options.DebugDirectory != wantDirectory {
 				t.Fatalf("debug directory=%q, want %q", options.DebugDirectory, wantDirectory)
 			}
-			if debug && !slices.Contains(native.Flags(options), "-g") {
+			if debug && !slices.Contains(native_runtime.Flags(options), "-g") {
 				t.Fatal("--debug lost -g")
 			}
 			return nil
@@ -128,7 +128,7 @@ func TestBuildDebugDirectoryFailure(t *testing.T) {
 		if err := os.Remove(directory); err != nil {
 			t.Fatal(err)
 		}
-		os.Exit(buildWithNative("fixture.a", "program", []string{"--debug"}, func(string, string, native.Options) error { panic("compile reached after cwd failure") }))
+		os.Exit(buildWithNative("fixture.a", "program", []string{"--debug"}, func(string, string, native_runtime.Options) error { panic("compile reached after cwd failure") }))
 	}
 	ctx, cancel := context.WithTimeout(context.Background(), 30*time.Second)
 	defer cancel()

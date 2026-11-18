@@ -19,6 +19,7 @@ import (
 	"github.com/system-inc/adamic/internal/load"
 	"github.com/system-inc/adamic/internal/lower"
 	"github.com/system-inc/adamic/internal/native"
+	"github.com/system-inc/adamic/internal/native_runtime"
 )
 
 // Products are built once per content address, across both leaves and processes.
@@ -179,7 +180,7 @@ func jsxTextnodesNativeFrom(t *testing.T, lowered string, inputs buildcache.Inpu
 // (mutant.json's from, to and file, and the rules directory that holds it), with the native build's own options.
 func jsxTextnodesNativeInputs(inputs buildcache.Inputs) buildcache.Inputs {
 	inputs.Name = "jsx-textnodes-mutant-native"
-	inputs.Flags = append(inputs.Flags, native.Flags(native.Options{Sanitize: true, Split: true, Jobs: 4})...)
+	inputs.Flags = append(inputs.Flags, native_runtime.Flags(native_runtime.Options{Sanitize: true, Split: true, Jobs: 4})...)
 	inputs.Flags = append(inputs.Flags, "Split=true", "Jobs=4", "ADAMIC_NATIVE_SPLIT="+os.Getenv("ADAMIC_NATIVE_SPLIT"))
 	inputs.Toolchain = append(inputs.Toolchain, buildcache.CompilerReport("clang"))
 	return inputs
@@ -191,7 +192,7 @@ func jsxTextnodesNativeBuild(lowered, out string) error {
 	if err != nil {
 		return err
 	}
-	return native.Build(string(source), filepath.Join(out, "scanner"), native.Options{Sanitize: true, Split: true, Jobs: 4})
+	return native.Build(string(source), filepath.Join(out, "scanner"), native_runtime.Options{Sanitize: true, Split: true, Jobs: 4})
 }
 
 // jsxTextnodesNativeOwner is the one product test that builds the sanitized native. Every other product test that reads

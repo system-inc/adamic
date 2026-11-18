@@ -8,6 +8,7 @@ import (
 
 	"github.com/system-inc/adamic/internal/javascript"
 	"github.com/system-inc/adamic/internal/native"
+	"github.com/system-inc/adamic/internal/native_runtime"
 )
 
 // These programs use only the schemas lowering proves statically, without runtime providers.
@@ -47,7 +48,7 @@ func fixtureAgreesOnBackend(t *testing.T, fixture string, backend int) {
 		}
 		actual = onNodeWith(t, inputRun{}, script)
 	} else {
-		options := native.Options{Sanitize: backend == 0, Count: backend == 4}
+		options := native_runtime.Options{Sanitize: backend == 0, Count: backend == 4}
 		if backend == 3 {
 			if os.Getenv("ADAMIC_ORACLE_WASI") != "1" {
 				t.Skip("set ADAMIC_ORACLE_WASI=1")
@@ -95,7 +96,7 @@ func jsonEncoderMissingProviders(t *testing.T, backend int) {
 	for _, target := range []string{"native", "wasm32-wasi"}[backend : backend+1] {
 		t.Run(target, func(t *testing.T) {
 			t.Parallel()
-			options := native.Options{}
+			options := native_runtime.Options{}
 			if target == "wasm32-wasi" {
 				if os.Getenv("ADAMIC_ORACLE_WASI") != "1" {
 					t.Skip("set ADAMIC_ORACLE_WASI=1")
@@ -140,7 +141,7 @@ func jsonEncoderGapNUL(t *testing.T, backend int) {
 		t.Fatal(err)
 	}
 	want := onNodeWith(t, inputRun{}, path)
-	options := native.Options{Sanitize: backend == 0}
+	options := native_runtime.Options{Sanitize: backend == 0}
 	if backend == 2 {
 		if os.Getenv("ADAMIC_ORACLE_WASI") != "1" {
 			t.Skip("set ADAMIC_ORACLE_WASI=1")

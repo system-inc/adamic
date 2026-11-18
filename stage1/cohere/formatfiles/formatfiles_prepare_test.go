@@ -19,6 +19,7 @@ import (
 	"github.com/system-inc/adamic/internal/ir"
 	"github.com/system-inc/adamic/internal/javascript"
 	"github.com/system-inc/adamic/internal/native"
+	"github.com/system-inc/adamic/internal/native_runtime"
 )
 
 type formatfilesPrepared struct {
@@ -229,7 +230,7 @@ func init() {
 	}
 	contents, err := os.ReadFile(source)
 	if err == nil {
-		err = native.Build(string(contents), os.Getenv("ADAMIC_FORMATFILES_NATIVE_OUTPUT"), native.Options{Sanitize: os.Getenv("ADAMIC_FORMATFILES_NATIVE_SANITIZE") == "true"})
+		err = native.Build(string(contents), os.Getenv("ADAMIC_FORMATFILES_NATIVE_OUTPUT"), native_runtime.Options{Sanitize: os.Getenv("ADAMIC_FORMATFILES_NATIVE_SANITIZE") == "true"})
 	}
 	if err != nil {
 		fmt.Fprintln(os.Stderr, err)

@@ -11,6 +11,7 @@ import (
 	"github.com/system-inc/adamic/internal/ir"
 	"github.com/system-inc/adamic/internal/leakcheck"
 	"github.com/system-inc/adamic/internal/native"
+	"github.com/system-inc/adamic/internal/native_runtime"
 )
 
 const graphMillionPath = "internal/oracle/testdata/graph_regions/million.a"
@@ -57,7 +58,7 @@ func graphMeasured(t *testing.T, code string) run {
 	}
 	code = "#include <sys/resource.h>\n#include <stdio.h>\n" + code[:at] + "\tstruct rusage graph_usage; getrusage(RUSAGE_SELF, &graph_usage); printf(\"graph_peak_rss_kib %ld\\n\", graph_usage.ru_maxrss);\n" + code[at:]
 	binary := filepath.Join(t.TempDir(), "measured")
-	if err := native.Build(code, binary, native.Options{Count: true}); err != nil {
+	if err := native.Build(code, binary, native_runtime.Options{Count: true}); err != nil {
 		t.Fatal(err)
 	}
 	name, args := pinnedStack("/bin/sh", "-c", `"$@" & child=$!; wait "$child"`, "rss", binary)

@@ -9,6 +9,7 @@ import (
 	"github.com/system-inc/adamic/internal/lower"
 	"github.com/system-inc/adamic/internal/native"
 	"github.com/system-inc/adamic/internal/native/runtimeproducts"
+	"github.com/system-inc/adamic/internal/native_runtime"
 	"os"
 	"path/filepath"
 	"strings"
@@ -63,10 +64,10 @@ func programHost14WASM(t *testing.T, counted bool) string {
 	path := filepath.Join(repository, programHost14Path)
 	code := native.C(programRegionLowered(t, path, false))
 	binary := filepath.Join(t.TempDir(), "host.wasm")
-	options := native.Options{Target: "wasm32-wasi", Count: counted}
+	options := native_runtime.Options{Target: "wasm32-wasi", Count: counted}
 	var err error
 	if counted {
-		archive := filepath.Join(runtimeproducts.ProgramArchive(t, options, native.Features(code)), "runtime.a")
+		archive := filepath.Join(runtimeproducts.ProgramArchive(t, options, native_runtime.Features(code)), "runtime.a")
 		err = native.BuildWithRuntime(code, binary, options, archive)
 	} else {
 		err = native.Build(code, binary, options)
@@ -89,7 +90,7 @@ func TestProduct_ProgramHost14WASICounted(t *testing.T) {
 	if os.Getenv("ADAMIC_ORACLE_WASI") != "1" {
 		t.Skip("set ADAMIC_ORACLE_WASI=1")
 	}
-	runtimeproducts.ProgramArchive(t, native.Options{Target: "wasm32-wasi", Count: true}, []string{"ADAMIC_NODE_HOST"})
+	runtimeproducts.ProgramArchive(t, native_runtime.Options{Target: "wasm32-wasi", Count: true}, []string{"ADAMIC_NODE_HOST"})
 }
 func TestProgramRegionHost14DefaultWASIAgreesWithNode(t *testing.T) {
 	t.Parallel()
@@ -145,7 +146,7 @@ func TestProgramRegionHost14DefaultShimPending(t *testing.T) {
 }
 func programHost14ProgramWASIPending(t *testing.T) {
 	t.Helper()
-	err := native.ValidateOptions(native.Options{ProgramRegion: true, Target: "wasm32-wasi"})
+	err := native_runtime.ValidateOptions(native_runtime.Options{ProgramRegion: true, Target: "wasm32-wasi"})
 	const reason = "native: Program regions require a one-shot native CLI"
 	if err == nil || err.Error() != reason {
 		t.Fatalf("pending Program WASI boundary changed: %v", err)

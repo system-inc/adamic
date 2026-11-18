@@ -8,6 +8,7 @@ import (
 
 	"github.com/system-inc/adamic/internal/ir"
 	"github.com/system-inc/adamic/internal/native"
+	"github.com/system-inc/adamic/internal/native_runtime"
 )
 
 func TestOct6InheritanceMutants(t *testing.T) {
@@ -95,7 +96,7 @@ func TestOct6ReleaseMutant(t *testing.T) {
 		t.Fatal("mutant changed no releases")
 	}
 	binary := filepath.Join(t.TempDir(), "mutant")
-	if err := native.Build(mutated, binary, native.Options{Sanitize: runtime.GOOS == "linux"}); err != nil {
+	if err := native.Build(mutated, binary, native_runtime.Options{Sanitize: runtime.GOOS == "linux"}); err != nil {
 		t.Fatal(err)
 	}
 	want := onNode(t, path)

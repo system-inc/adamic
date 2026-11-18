@@ -11,6 +11,7 @@ import (
 	"github.com/system-inc/adamic/internal/load"
 	"github.com/system-inc/adamic/internal/lower"
 	"github.com/system-inc/adamic/internal/native"
+	"github.com/system-inc/adamic/internal/native_runtime"
 )
 
 // gaps are GAPS.md's smallest programs, each with what Node prints running it, and where stage 0 stands
@@ -64,7 +65,7 @@ func TestEachGapStandsWhereGapsMdSaysItDoes(t *testing.T) {
 				t.Fatalf("stage 0 refuses this gap now (%v): record that in GAPS.md, where it says the program lowers", err)
 			}
 			if gap.badC != "" {
-				buildErr := native.Build(native.C(lowered), filepath.Join(t.TempDir(), "gap"), native.Options{Sanitize: true})
+				buildErr := native.Build(native.C(lowered), filepath.Join(t.TempDir(), "gap"), native_runtime.Options{Sanitize: true})
 				if buildErr == nil {
 					t.Fatalf("clang compiles this gap's C now: mark it closed here and in GAPS.md, and undo the port's workaround for it (grep -n 'gap N' *.ts)")
 				}
