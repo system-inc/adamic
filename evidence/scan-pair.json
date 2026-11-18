@@ -1,0 +1,31 @@
+{
+  "base": {
+    "Boundary": "production abort at lowering.declareModule",
+    "Completed": false,
+    "UnderlyingAbort": {
+      "Kind": "first declaration/body/tail stop",
+      "Rule": "lowering.declareModule",
+      "Site": "/workspace/scratch/y852c3c-adapted/src/compiler/core.ts:261:1",
+      "Words": "overload 1 of filter result U[] cannot be served by implementation result readonly T[] | undefined"
+    },
+    "load_error": null
+  },
+  "head": {
+    "Boundary": "production abort at lowering.declareModule",
+    "Completed": false,
+    "UnderlyingAbort": {
+      "Kind": "first declaration/body/tail stop",
+      "Rule": "lowering.declareModule",
+      "Site": "/workspace/scratch/y852c3c-adapted/src/compiler/core.ts:261:1",
+      "Words": "overload 1 of filter result U[] cannot be served by implementation result readonly T[] | undefined"
+    },
+    "load_error": null
+  },
+  "events": {
+    "base": 4716,
+    "head": 4716,
+    "unchanged": 4716
+  },
+  "gone": [],
+  "new_or_reached": []
+}

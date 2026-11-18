@@ -1,6 +1,6 @@
 # #y852c3c paired TypeScript census
 
-The three full file pairs are verified. The original compiler-directory processes were killed at the worker’s memory limit before they emitted findings. The serial retry is underway. Both unfiltered `tsc.ts` first-error processes are still running, and the focused first-error findings below have their own completed streams.
+Three full file pairs are verified. Five additional files with full-mode base slot stops are queued for paired single-file runs. The original compiler-directory processes were killed at the worker’s memory limit before they emitted findings. The serial retry is underway. Both unfiltered `tsc.ts` first-error processes are still running. The focused first-error and scan-all pairs are complete.
 
 ## 1. Record values reaching Unknown
 
@@ -85,6 +85,20 @@ All twelve remain stopped at the same refusal. The historical locations and full
 
 The focused first-error pair selected source units containing candidate reads. It recorded seven instances of the slot-read stop in the base and none in the head. The six resolver instances were at `480:9`, `674:21`, `780:36`, `1583:10`, `2190:10`, and `3333:10`. The other was `utilities.ts:9028:17`. All seven were gone and none of those units acquired a later stop in the focused pass. The two parser sites were visible in full mode. [Focused first-error pair](evidence/candidate-pair.json)
 
+### Additional base sites from the focused full search
+
+The focused base search found another eleven occurrences at seven positions. These sites are confirmed as base stops. The corresponding head and unfiltered single-file dispositions are pending. [Base discovery stream](evidence/base/candidate-full-discovery.jsonl.gz)
+
+| Base stop | Owning unit positions |
+| --- | --- |
+| `checker.ts:35214:17` | `checker.ts:35213:5` |
+| `program.ts:4204:13` | `program.ts:1517:1`, `program.ts:4077:5` |
+| `program.ts:4367:13` | `program.ts:1517:1`, `program.ts:4077:5` |
+| `program.ts:1817:18` | `program.ts:1517:1` |
+| `programDiagnostics.ts:410:122` | `programDiagnostics.ts:89:1`, `programDiagnostics.ts:328:5` |
+| `resolutionCache.ts:1706:13` | `resolutionCache.ts:581:1`, `resolutionCache.ts:1704:5` |
+| `watch.ts:543:151` | `watch.ts:445:1` |
+
 ## 3. Other movements
 
 - **Gone, NotYet during lowering.** “reading value” at `commandLineParser.ts:2950:65` clears when the declaration of `value` lowers.
@@ -93,7 +107,7 @@ The focused first-error pair selected source units containing candidate reads. I
 
 ### Whole-entry scan-all boundary
 
-The initial scan-all processes were killed along with the original directory processes at the memory limit. The base scan-all retry completed with 4,715 refusal-scan events and one production stop. It stopped during `lowering.declareModule` at `core.ts:261:1` with “overload 1 of filter result U[] cannot be served by implementation result readonly T[] | undefined.” The head scan-all retry is underway. [Base scan](evidence/base/scan.json.gz)
+Both serial retries completed. All 4,716 events paired exactly, including 4,715 refusal-scan events and the same first production stop. Both stop during `lowering.declareModule` at `core.ts:261:1` with “overload 1 of filter result U[] cannot be served by implementation result readonly T[] | undefined.” This boundary leaves the whole-entry allocation graph unobserved. [Scan pair](evidence/scan-pair.json) · [Base raw scan](evidence/base/scan.json.gz) · [Head raw scan](evidence/head/scan.json.gz)
 
 
 ## Inputs and evidence
