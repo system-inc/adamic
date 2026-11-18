@@ -263,6 +263,11 @@ func TestFindAncestorOverloadResultRefusals(t *testing.T) {
 			if probe.name == "a copy returned" {
 				source = strings.Replace(source, "        const result = callback(node);\n", "        const copy = node;\n        const result = callback(node);\n", 1)
 			}
+			if probe.name == "a closure writes node" {
+				const implementation = "function findAncestor(node: N | undefined, callback: (element: N) => boolean | \"quit\"): N | undefined {"
+				// Keep the closure writing the traversal binding and give it checked union storage.
+				source = strings.Replace(source, implementation, strings.Replace(implementation, "node: N | undefined", "node: N | undefined | null", 1), 1)
+			}
 			_, err := lowerSourceAs(t, source+call, ".ts")
 			var refused *Refused
 			if !errors.As(err, &refused) || !strings.Contains(refused.What, "findAncestor result") || !strings.Contains(refused.What, "cannot be served by implementation result") {
