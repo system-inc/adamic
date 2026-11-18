@@ -1,0 +1,51 @@
+# Successful setup and measurement commands (absolute paths retain evidence provenance).
+# Each git worktree has its own source, initialized pinned submodules and own-SHA entry binary.
+git -C /workspace/adamic fetch origin c56b022995e1e960bad71626fd2074bc46aee485 26d208af47f81143ff1db2280a5b43292deb96ba
+git -C /workspace/adamic worktree add -b typescript/depthgate-census-2 /workspace/depthgate2-base c56b022995e1e960bad71626fd2074bc46aee485
+git -C /workspace/adamic worktree add --detach /workspace/depthgate2-head 26d208af47f81143ff1db2280a5b43292deb96ba
+
+# Run in EACH /workspace/depthgate2-{base,head} checkout:
+git -c protocol.file.allow=always -c url.file:///workspace/depthgate-base/cohere.insteadOf=https://github.com/system-inc/cohere.git -c url.file:///workspace/depthgate-base/cohere/TypeScript.insteadOf=https://github.com/system-inc/TypeScript.git submodule update --init --recursive --depth 1
+
+# Verify cached pristine upstream input; expected 050880ce59e30b356b686bd3144efe24f875ebc8.
+git -C /workspace/mapset-upstream rev-parse HEAD
+# In /workspace/depthgate2-base/stage3/api:
+npm ci --ignore-scripts --no-audit --no-fund
+# In /workspace/depthgate2-base:
+ADAMIC_TYPESCRIPT_SOURCE=/workspace/mapset-upstream stage3/apply.sh /workspace/depthgate2-adapted
+
+# Build each label from that label's own source; LABEL=base then LABEL=head.
+# These are reproducible equivalents of the two separately logged builds.
+export PATH=/workspace/adamic-tools/go/bin:/workspace/adamic-tools/bin:$PATH
+for LABEL in base head; do
+    cd "/workspace/depthgate2-$LABEL" || exit 1
+    python3 stage3/census/latent/make_overlay.py "$PWD" "/workspace/depthgate2-tools-$LABEL/latent-overlay" || exit 1
+    gofmt -w /workspace/depthgate2-tools-"$LABEL"/latent-overlay/*.go || exit 1
+    python3 stage3/meter/entry_overlay.py "/workspace/depthgate2-tools-$LABEL/latent-overlay" "/workspace/depthgate2-tools-$LABEL/entry-overlay" || exit 1
+    gofmt -w /workspace/depthgate2-tools-"$LABEL"/entry-overlay/*.go || exit 1
+    go build -buildvcs=false -overlay="/workspace/depthgate2-tools-$LABEL/entry-overlay/overlay.json" -o "/workspace/depthgate2-tools-$LABEL/entry-census" ./stage3/census/latent/tool || exit 1
+done
+
+# Tree comparison and exact mapping (copies of scripts and inputs are in evidence).
+python3 /workspace/depthgate2-compare-trees.py /workspace/depthgate-adapted /workspace/depthgate2-adapted /workspace/depthgate2-tree-comparison.json
+SCOUT_TYPESCRIPT=/workspace/depthgate2-base/stage3/api/node_modules/typescript node /workspace/depthgate2-map-sites.cjs /workspace/depthgate-historical-sites.json /workspace/depthgate2-adapted /workspace/depthgate2-targets.json
+
+# All twelve sequential fresh-process runs. Runner captures exact env, command and SHA256
+# in started.json/status.json, wall time via monotonic, peak RSS via wait4, and whole stderr.
+# It removes inherited LATENT_* and ADAMIC_PROBE_* settings, and sets:
+# LATENT_FULL=1 LATENT_ASSERT_NO_OUTPUT=1 LATENT_TAIL=1 CENSUS_MODULE_FORMAT=CommonJSBundle
+# LATENT_ONLY_FILE=/workspace/depthgate2-adapted/<exact-selected-source>
+# LATENT_TIMES=/dev/stderr
+# No ADAMIC_PROBE_DEPTHGATE is set on either side.
+# Command per run:
+# /workspace/depthgate2-tools-<side>/entry-census /workspace/depthgate2-adapted/src/tsc/tsc.ts /workspace/depthgate2-runs/<side>-<file>-r<repeat>/latent.jsonl
+# ABBA order per file: base1, head1, head2, base2.
+# File order: utilitiesPublic, transformers-utilities, utilities.
+# SIGTERM at 1800 seconds, SIGKILL after 5 additional seconds if necessary.
+python3 /workspace/depthgate2-runner.py > /workspace/depthgate2-runner.log 2>&1
+
+# Analyze all complete raw runs. The same key/pairing rules as 7276d4ef are retained.
+python3 /workspace/depthgate2-analyze.py /workspace/depthgate2-runs /workspace/depthgate2-targets.json /workspace/depthgate-base/stage3/typescript/depthgate-census/evidence/site-outcomes.json /workspace/depthgate2-analysis
+# Package whole streams, stderr and stdout with gzip mtime=0; write report and all-change appendix.
+python3 /workspace/depthgate2-package.py
+python3 /workspace/depthgate2-validate.py

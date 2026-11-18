@@ -1,0 +1,59 @@
+{
+  "old_tree": "/workspace/depthgate-adapted",
+  "new_tree": "/workspace/depthgate2-adapted",
+  "definition": "All worktree directory names, symlink targets, and regular-file bytes; .git metadata excluded. Timestamps and permission bits are not byte content.",
+  "byte_identical": false,
+  "old": {
+    "entries": 84339,
+    "regular_files": 81506,
+    "regular_bytes": 403501936,
+    "manifest_sha256": "1aca51d69c45623ae5b975ab8b72a85a7922fb5bc53ab874bafa72c6d21e1331"
+  },
+  "new": {
+    "entries": 84339,
+    "regular_files": 81506,
+    "regular_bytes": 403502020,
+    "manifest_sha256": "0cc5724f671d21694d75fc9faaf9f024444dc9c6e66d1b69460f33c8ecc833fa"
+  },
+  "changed_entries": [
+    {
+      "path": "patch-set.md",
+      "old": {
+        "kind": "file",
+        "bytes": 6080,
+        "sha256": "e2366e923bce6d63a8bb28606bc52f42f7c7d31f25b29c83a2c312bfd1db8f4f"
+      },
+      "new": {
+        "kind": "file",
+        "bytes": 6172,
+        "sha256": "0f7ed78d1a2a0d7b79954044fafb9b8ace8850867838b1253b4aed42eace598e"
+      }
+    },
+    {
+      "path": "src/compiler/parser.ts",
+      "old": {
+        "kind": "file",
+        "bytes": 541223,
+        "sha256": "180b39f1094c5497ee8307d14b71c0afc62ef35c0905e2fb2f5156519e8c101e"
+      },
+      "new": {
+        "kind": "file",
+        "bytes": 541231,
+        "sha256": "a8057cb4e9133a281f08c4a92b3326ec4e71148419af51e30a8dd90c3892f055"
+      }
+    },
+    {
+      "path": "src/compiler/types.ts",
+      "old": {
+        "kind": "file",
+        "bytes": 495372,
+        "sha256": "9e74b3daed59e9d7958fd0039a4194b69f9c79c4d4ac22b6b43c68155bfd4ad5"
+      },
+      "new": {
+        "kind": "file",
+        "bytes": 495356,
+        "sha256": "7ae9a509881c3da4052e06388289a8e94c269576d38a8a808d9e08425c817239"
+      }
+    }
+  ]
+}

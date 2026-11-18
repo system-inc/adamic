@@ -1,0 +1,1102 @@
+[
+  {
+    "id": "S01",
+    "historical_where": "/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts:625:22",
+    "historical_units": [
+      {
+        "where": "/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts:623:1",
+        "name": "isEmptyBindingPattern"
+      }
+    ],
+    "file": "src/compiler/utilitiesPublic.ts",
+    "function": "isEmptyBindingPattern",
+    "historical_source_line": "        return every(node.elements, isEmptyBindingElement);",
+    "mapping": "exact source line in uniquely matched enclosing function",
+    "matches": [
+      {
+        "line": 625,
+        "column": 22,
+        "function_line": 623,
+        "source_line": "        return every(node.elements, isEmptyBindingElement);"
+      }
+    ],
+    "line": 625,
+    "column": 22,
+    "function_line": 623,
+    "source_line": "        return every(node.elements, isEmptyBindingElement);",
+    "where": "/workspace/depthgate2-adapted/src/compiler/utilitiesPublic.ts:625:22"
+  },
+  {
+    "id": "S02",
+    "historical_where": "/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts:1035:30",
+    "historical_units": [
+      {
+        "where": "/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts:1034:1",
+        "name": "getModifiers"
+      }
+    ],
+    "file": "src/compiler/utilitiesPublic.ts",
+    "function": "getModifiers",
+    "historical_source_line": "    if (hasSyntacticModifier(node, ModifierFlags.Modifier)) {",
+    "mapping": "exact source line in uniquely matched enclosing function",
+    "matches": [
+      {
+        "line": 1035,
+        "column": 30,
+        "function_line": 1034,
+        "source_line": "    if (hasSyntacticModifier(node, ModifierFlags.Modifier)) {"
+      }
+    ],
+    "line": 1035,
+    "column": 30,
+    "function_line": 1034,
+    "source_line": "    if (hasSyntacticModifier(node, ModifierFlags.Modifier)) {",
+    "where": "/workspace/depthgate2-adapted/src/compiler/utilitiesPublic.ts:1035:30"
+  },
+  {
+    "id": "S03",
+    "historical_where": "/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts:1082:31",
+    "historical_units": [
+      {
+        "where": "/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts:1080:1",
+        "name": "getJSDocTypeParameterTagsWorker"
+      }
+    ],
+    "file": "src/compiler/utilitiesPublic.ts",
+    "function": "getJSDocTypeParameterTagsWorker",
+    "historical_source_line": "    return getJSDocTagsWorker(param.parent, noCache).filter((tag): tag is JSDocTemplateTag => isJSDocTemplateTag(tag) && tag.typeParameters.some(tp => tp.name.escapedText === name));",
+    "mapping": "exact source line in uniquely matched enclosing function",
+    "matches": [
+      {
+        "line": 1082,
+        "column": 31,
+        "function_line": 1080,
+        "source_line": "    return getJSDocTagsWorker(param.parent, noCache).filter((tag): tag is JSDocTemplateTag => isJSDocTemplateTag(tag) && tag.typeParameters.some(tp => tp.name.escapedText === name));"
+      }
+    ],
+    "line": 1082,
+    "column": 31,
+    "function_line": 1080,
+    "source_line": "    return getJSDocTagsWorker(param.parent, noCache).filter((tag): tag is JSDocTemplateTag => isJSDocTemplateTag(tag) && tag.typeParameters.some(tp => tp.name.escapedText === name));",
+    "where": "/workspace/depthgate2-adapted/src/compiler/utilitiesPublic.ts:1082:31"
+  },
+  {
+    "id": "S04",
+    "historical_where": "/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts:1111:37",
+    "historical_units": [
+      {
+        "where": "/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts:1110:1",
+        "name": "hasJSDocParameterTags"
+      }
+    ],
+    "file": "src/compiler/utilitiesPublic.ts",
+    "function": "hasJSDocParameterTags",
+    "historical_source_line": "    return !!getFirstJSDocTag(node, isJSDocParameterTag);",
+    "mapping": "exact source line in uniquely matched enclosing function",
+    "matches": [
+      {
+        "line": 1111,
+        "column": 37,
+        "function_line": 1110,
+        "source_line": "    return !!getFirstJSDocTag(node, isJSDocParameterTag);"
+      }
+    ],
+    "line": 1111,
+    "column": 37,
+    "function_line": 1110,
+    "source_line": "    return !!getFirstJSDocTag(node, isJSDocParameterTag);",
+    "where": "/workspace/depthgate2-adapted/src/compiler/utilitiesPublic.ts:1111:37"
+  },
+  {
+    "id": "S05",
+    "historical_where": "/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts:1116:35",
+    "historical_units": [
+      {
+        "where": "/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts:1115:1",
+        "name": "getJSDocAugmentsTag"
+      }
+    ],
+    "file": "src/compiler/utilitiesPublic.ts",
+    "function": "getJSDocAugmentsTag",
+    "historical_source_line": "    return getFirstJSDocTag(node, isJSDocAugmentsTag);",
+    "mapping": "exact source line in uniquely matched enclosing function",
+    "matches": [
+      {
+        "line": 1116,
+        "column": 35,
+        "function_line": 1115,
+        "source_line": "    return getFirstJSDocTag(node, isJSDocAugmentsTag);"
+      }
+    ],
+    "line": 1116,
+    "column": 35,
+    "function_line": 1115,
+    "source_line": "    return getFirstJSDocTag(node, isJSDocAugmentsTag);",
+    "where": "/workspace/depthgate2-adapted/src/compiler/utilitiesPublic.ts:1116:35"
+  },
+  {
+    "id": "S06",
+    "historical_where": "/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts:1121:34",
+    "historical_units": [
+      {
+        "where": "/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts:1120:1",
+        "name": "getJSDocImplementsTags"
+      }
+    ],
+    "file": "src/compiler/utilitiesPublic.ts",
+    "function": "getJSDocImplementsTags",
+    "historical_source_line": "    return getAllJSDocTags(node, isJSDocImplementsTag);",
+    "mapping": "exact source line in uniquely matched enclosing function",
+    "matches": [
+      {
+        "line": 1121,
+        "column": 34,
+        "function_line": 1120,
+        "source_line": "    return getAllJSDocTags(node, isJSDocImplementsTag);"
+      }
+    ],
+    "line": 1121,
+    "column": 34,
+    "function_line": 1120,
+    "source_line": "    return getAllJSDocTags(node, isJSDocImplementsTag);",
+    "where": "/workspace/depthgate2-adapted/src/compiler/utilitiesPublic.ts:1121:34"
+  },
+  {
+    "id": "S07",
+    "historical_where": "/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts:1126:35",
+    "historical_units": [
+      {
+        "where": "/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts:1125:1",
+        "name": "getJSDocClassTag"
+      }
+    ],
+    "file": "src/compiler/utilitiesPublic.ts",
+    "function": "getJSDocClassTag",
+    "historical_source_line": "    return getFirstJSDocTag(node, isJSDocClassTag);",
+    "mapping": "exact source line in uniquely matched enclosing function",
+    "matches": [
+      {
+        "line": 1126,
+        "column": 35,
+        "function_line": 1125,
+        "source_line": "    return getFirstJSDocTag(node, isJSDocClassTag);"
+      }
+    ],
+    "line": 1126,
+    "column": 35,
+    "function_line": 1125,
+    "source_line": "    return getFirstJSDocTag(node, isJSDocClassTag);",
+    "where": "/workspace/depthgate2-adapted/src/compiler/utilitiesPublic.ts:1126:35"
+  },
+  {
+    "id": "S08",
+    "historical_where": "/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts:1131:35",
+    "historical_units": [
+      {
+        "where": "/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts:1130:1",
+        "name": "getJSDocPublicTag"
+      }
+    ],
+    "file": "src/compiler/utilitiesPublic.ts",
+    "function": "getJSDocPublicTag",
+    "historical_source_line": "    return getFirstJSDocTag(node, isJSDocPublicTag);",
+    "mapping": "exact source line in uniquely matched enclosing function",
+    "matches": [
+      {
+        "line": 1131,
+        "column": 35,
+        "function_line": 1130,
+        "source_line": "    return getFirstJSDocTag(node, isJSDocPublicTag);"
+      }
+    ],
+    "line": 1131,
+    "column": 35,
+    "function_line": 1130,
+    "source_line": "    return getFirstJSDocTag(node, isJSDocPublicTag);",
+    "where": "/workspace/depthgate2-adapted/src/compiler/utilitiesPublic.ts:1131:35"
+  },
+  {
+    "id": "S09",
+    "historical_where": "/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts:1136:35",
+    "historical_units": [
+      {
+        "where": "/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts:1135:1",
+        "name": "getJSDocPublicTagNoCache"
+      }
+    ],
+    "file": "src/compiler/utilitiesPublic.ts",
+    "function": "getJSDocPublicTagNoCache",
+    "historical_source_line": "    return getFirstJSDocTag(node, isJSDocPublicTag, /*noCache*/ true);",
+    "mapping": "exact source line in uniquely matched enclosing function",
+    "matches": [
+      {
+        "line": 1136,
+        "column": 35,
+        "function_line": 1135,
+        "source_line": "    return getFirstJSDocTag(node, isJSDocPublicTag, /*noCache*/ true);"
+      }
+    ],
+    "line": 1136,
+    "column": 35,
+    "function_line": 1135,
+    "source_line": "    return getFirstJSDocTag(node, isJSDocPublicTag, /*noCache*/ true);",
+    "where": "/workspace/depthgate2-adapted/src/compiler/utilitiesPublic.ts:1136:35"
+  },
+  {
+    "id": "S10",
+    "historical_where": "/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts:1141:35",
+    "historical_units": [
+      {
+        "where": "/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts:1140:1",
+        "name": "getJSDocPrivateTag"
+      }
+    ],
+    "file": "src/compiler/utilitiesPublic.ts",
+    "function": "getJSDocPrivateTag",
+    "historical_source_line": "    return getFirstJSDocTag(node, isJSDocPrivateTag);",
+    "mapping": "exact source line in uniquely matched enclosing function",
+    "matches": [
+      {
+        "line": 1141,
+        "column": 35,
+        "function_line": 1140,
+        "source_line": "    return getFirstJSDocTag(node, isJSDocPrivateTag);"
+      }
+    ],
+    "line": 1141,
+    "column": 35,
+    "function_line": 1140,
+    "source_line": "    return getFirstJSDocTag(node, isJSDocPrivateTag);",
+    "where": "/workspace/depthgate2-adapted/src/compiler/utilitiesPublic.ts:1141:35"
+  },
+  {
+    "id": "S11",
+    "historical_where": "/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts:1146:35",
+    "historical_units": [
+      {
+        "where": "/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts:1145:1",
+        "name": "getJSDocPrivateTagNoCache"
+      }
+    ],
+    "file": "src/compiler/utilitiesPublic.ts",
+    "function": "getJSDocPrivateTagNoCache",
+    "historical_source_line": "    return getFirstJSDocTag(node, isJSDocPrivateTag, /*noCache*/ true);",
+    "mapping": "exact source line in uniquely matched enclosing function",
+    "matches": [
+      {
+        "line": 1146,
+        "column": 35,
+        "function_line": 1145,
+        "source_line": "    return getFirstJSDocTag(node, isJSDocPrivateTag, /*noCache*/ true);"
+      }
+    ],
+    "line": 1146,
+    "column": 35,
+    "function_line": 1145,
+    "source_line": "    return getFirstJSDocTag(node, isJSDocPrivateTag, /*noCache*/ true);",
+    "where": "/workspace/depthgate2-adapted/src/compiler/utilitiesPublic.ts:1146:35"
+  },
+  {
+    "id": "S12",
+    "historical_where": "/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts:1151:35",
+    "historical_units": [
+      {
+        "where": "/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts:1150:1",
+        "name": "getJSDocProtectedTag"
+      }
+    ],
+    "file": "src/compiler/utilitiesPublic.ts",
+    "function": "getJSDocProtectedTag",
+    "historical_source_line": "    return getFirstJSDocTag(node, isJSDocProtectedTag);",
+    "mapping": "exact source line in uniquely matched enclosing function",
+    "matches": [
+      {
+        "line": 1151,
+        "column": 35,
+        "function_line": 1150,
+        "source_line": "    return getFirstJSDocTag(node, isJSDocProtectedTag);"
+      }
+    ],
+    "line": 1151,
+    "column": 35,
+    "function_line": 1150,
+    "source_line": "    return getFirstJSDocTag(node, isJSDocProtectedTag);",
+    "where": "/workspace/depthgate2-adapted/src/compiler/utilitiesPublic.ts:1151:35"
+  },
+  {
+    "id": "S13",
+    "historical_where": "/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts:1156:35",
+    "historical_units": [
+      {
+        "where": "/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts:1155:1",
+        "name": "getJSDocProtectedTagNoCache"
+      }
+    ],
+    "file": "src/compiler/utilitiesPublic.ts",
+    "function": "getJSDocProtectedTagNoCache",
+    "historical_source_line": "    return getFirstJSDocTag(node, isJSDocProtectedTag, /*noCache*/ true);",
+    "mapping": "exact source line in uniquely matched enclosing function",
+    "matches": [
+      {
+        "line": 1156,
+        "column": 35,
+        "function_line": 1155,
+        "source_line": "    return getFirstJSDocTag(node, isJSDocProtectedTag, /*noCache*/ true);"
+      }
+    ],
+    "line": 1156,
+    "column": 35,
+    "function_line": 1155,
+    "source_line": "    return getFirstJSDocTag(node, isJSDocProtectedTag, /*noCache*/ true);",
+    "where": "/workspace/depthgate2-adapted/src/compiler/utilitiesPublic.ts:1156:35"
+  },
+  {
+    "id": "S14",
+    "historical_where": "/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts:1161:35",
+    "historical_units": [
+      {
+        "where": "/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts:1160:1",
+        "name": "getJSDocReadonlyTag"
+      }
+    ],
+    "file": "src/compiler/utilitiesPublic.ts",
+    "function": "getJSDocReadonlyTag",
+    "historical_source_line": "    return getFirstJSDocTag(node, isJSDocReadonlyTag);",
+    "mapping": "exact source line in uniquely matched enclosing function",
+    "matches": [
+      {
+        "line": 1161,
+        "column": 35,
+        "function_line": 1160,
+        "source_line": "    return getFirstJSDocTag(node, isJSDocReadonlyTag);"
+      }
+    ],
+    "line": 1161,
+    "column": 35,
+    "function_line": 1160,
+    "source_line": "    return getFirstJSDocTag(node, isJSDocReadonlyTag);",
+    "where": "/workspace/depthgate2-adapted/src/compiler/utilitiesPublic.ts:1161:35"
+  },
+  {
+    "id": "S15",
+    "historical_where": "/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts:1166:35",
+    "historical_units": [
+      {
+        "where": "/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts:1165:1",
+        "name": "getJSDocReadonlyTagNoCache"
+      }
+    ],
+    "file": "src/compiler/utilitiesPublic.ts",
+    "function": "getJSDocReadonlyTagNoCache",
+    "historical_source_line": "    return getFirstJSDocTag(node, isJSDocReadonlyTag, /*noCache*/ true);",
+    "mapping": "exact source line in uniquely matched enclosing function",
+    "matches": [
+      {
+        "line": 1166,
+        "column": 35,
+        "function_line": 1165,
+        "source_line": "    return getFirstJSDocTag(node, isJSDocReadonlyTag, /*noCache*/ true);"
+      }
+    ],
+    "line": 1166,
+    "column": 35,
+    "function_line": 1165,
+    "source_line": "    return getFirstJSDocTag(node, isJSDocReadonlyTag, /*noCache*/ true);",
+    "where": "/workspace/depthgate2-adapted/src/compiler/utilitiesPublic.ts:1166:35"
+  },
+  {
+    "id": "S16",
+    "historical_where": "/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts:1170:35",
+    "historical_units": [
+      {
+        "where": "/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts:1169:1",
+        "name": "getJSDocOverrideTagNoCache"
+      }
+    ],
+    "file": "src/compiler/utilitiesPublic.ts",
+    "function": "getJSDocOverrideTagNoCache",
+    "historical_source_line": "    return getFirstJSDocTag(node, isJSDocOverrideTag, /*noCache*/ true);",
+    "mapping": "exact source line in uniquely matched enclosing function",
+    "matches": [
+      {
+        "line": 1170,
+        "column": 35,
+        "function_line": 1169,
+        "source_line": "    return getFirstJSDocTag(node, isJSDocOverrideTag, /*noCache*/ true);"
+      }
+    ],
+    "line": 1170,
+    "column": 35,
+    "function_line": 1169,
+    "source_line": "    return getFirstJSDocTag(node, isJSDocOverrideTag, /*noCache*/ true);",
+    "where": "/workspace/depthgate2-adapted/src/compiler/utilitiesPublic.ts:1170:35"
+  },
+  {
+    "id": "S17",
+    "historical_where": "/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts:1175:35",
+    "historical_units": [
+      {
+        "where": "/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts:1174:1",
+        "name": "getJSDocDeprecatedTag"
+      }
+    ],
+    "file": "src/compiler/utilitiesPublic.ts",
+    "function": "getJSDocDeprecatedTag",
+    "historical_source_line": "    return getFirstJSDocTag(node, isJSDocDeprecatedTag);",
+    "mapping": "exact source line in uniquely matched enclosing function",
+    "matches": [
+      {
+        "line": 1175,
+        "column": 35,
+        "function_line": 1174,
+        "source_line": "    return getFirstJSDocTag(node, isJSDocDeprecatedTag);"
+      }
+    ],
+    "line": 1175,
+    "column": 35,
+    "function_line": 1174,
+    "source_line": "    return getFirstJSDocTag(node, isJSDocDeprecatedTag);",
+    "where": "/workspace/depthgate2-adapted/src/compiler/utilitiesPublic.ts:1175:35"
+  },
+  {
+    "id": "S18",
+    "historical_where": "/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts:1180:35",
+    "historical_units": [
+      {
+        "where": "/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts:1179:1",
+        "name": "getJSDocDeprecatedTagNoCache"
+      }
+    ],
+    "file": "src/compiler/utilitiesPublic.ts",
+    "function": "getJSDocDeprecatedTagNoCache",
+    "historical_source_line": "    return getFirstJSDocTag(node, isJSDocDeprecatedTag, /*noCache*/ true);",
+    "mapping": "exact source line in uniquely matched enclosing function",
+    "matches": [
+      {
+        "line": 1180,
+        "column": 35,
+        "function_line": 1179,
+        "source_line": "    return getFirstJSDocTag(node, isJSDocDeprecatedTag, /*noCache*/ true);"
+      }
+    ],
+    "line": 1180,
+    "column": 35,
+    "function_line": 1179,
+    "source_line": "    return getFirstJSDocTag(node, isJSDocDeprecatedTag, /*noCache*/ true);",
+    "where": "/workspace/depthgate2-adapted/src/compiler/utilitiesPublic.ts:1180:35"
+  },
+  {
+    "id": "S19",
+    "historical_where": "/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts:1190:35",
+    "historical_units": [
+      {
+        "where": "/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts:1189:1",
+        "name": "getJSDocThisTag"
+      }
+    ],
+    "file": "src/compiler/utilitiesPublic.ts",
+    "function": "getJSDocThisTag",
+    "historical_source_line": "    return getFirstJSDocTag(node, isJSDocThisTag);",
+    "mapping": "exact source line in uniquely matched enclosing function",
+    "matches": [
+      {
+        "line": 1190,
+        "column": 35,
+        "function_line": 1189,
+        "source_line": "    return getFirstJSDocTag(node, isJSDocThisTag);"
+      }
+    ],
+    "line": 1190,
+    "column": 35,
+    "function_line": 1189,
+    "source_line": "    return getFirstJSDocTag(node, isJSDocThisTag);",
+    "where": "/workspace/depthgate2-adapted/src/compiler/utilitiesPublic.ts:1190:35"
+  },
+  {
+    "id": "S20",
+    "historical_where": "/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts:1195:35",
+    "historical_units": [
+      {
+        "where": "/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts:1194:1",
+        "name": "getJSDocReturnTag"
+      }
+    ],
+    "file": "src/compiler/utilitiesPublic.ts",
+    "function": "getJSDocReturnTag",
+    "historical_source_line": "    return getFirstJSDocTag(node, isJSDocReturnTag);",
+    "mapping": "exact source line in uniquely matched enclosing function",
+    "matches": [
+      {
+        "line": 1195,
+        "column": 35,
+        "function_line": 1194,
+        "source_line": "    return getFirstJSDocTag(node, isJSDocReturnTag);"
+      }
+    ],
+    "line": 1195,
+    "column": 35,
+    "function_line": 1194,
+    "source_line": "    return getFirstJSDocTag(node, isJSDocReturnTag);",
+    "where": "/workspace/depthgate2-adapted/src/compiler/utilitiesPublic.ts:1195:35"
+  },
+  {
+    "id": "S21",
+    "historical_where": "/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts:1200:35",
+    "historical_units": [
+      {
+        "where": "/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts:1199:1",
+        "name": "getJSDocTemplateTag"
+      }
+    ],
+    "file": "src/compiler/utilitiesPublic.ts",
+    "function": "getJSDocTemplateTag",
+    "historical_source_line": "    return getFirstJSDocTag(node, isJSDocTemplateTag);",
+    "mapping": "exact source line in uniquely matched enclosing function",
+    "matches": [
+      {
+        "line": 1200,
+        "column": 35,
+        "function_line": 1199,
+        "source_line": "    return getFirstJSDocTag(node, isJSDocTemplateTag);"
+      }
+    ],
+    "line": 1200,
+    "column": 35,
+    "function_line": 1199,
+    "source_line": "    return getFirstJSDocTag(node, isJSDocTemplateTag);",
+    "where": "/workspace/depthgate2-adapted/src/compiler/utilitiesPublic.ts:1200:35"
+  },
+  {
+    "id": "S22",
+    "historical_where": "/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts:1204:35",
+    "historical_units": [
+      {
+        "where": "/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts:1203:1",
+        "name": "getJSDocSatisfiesTag"
+      }
+    ],
+    "file": "src/compiler/utilitiesPublic.ts",
+    "function": "getJSDocSatisfiesTag",
+    "historical_source_line": "    return getFirstJSDocTag(node, isJSDocSatisfiesTag);",
+    "mapping": "exact source line in uniquely matched enclosing function",
+    "matches": [
+      {
+        "line": 1204,
+        "column": 35,
+        "function_line": 1203,
+        "source_line": "    return getFirstJSDocTag(node, isJSDocSatisfiesTag);"
+      }
+    ],
+    "line": 1204,
+    "column": 35,
+    "function_line": 1203,
+    "source_line": "    return getFirstJSDocTag(node, isJSDocSatisfiesTag);",
+    "where": "/workspace/depthgate2-adapted/src/compiler/utilitiesPublic.ts:1204:35"
+  },
+  {
+    "id": "S23",
+    "historical_where": "/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts:1210:40",
+    "historical_units": [
+      {
+        "where": "/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts:1208:1",
+        "name": "getJSDocTypeTag"
+      }
+    ],
+    "file": "src/compiler/utilitiesPublic.ts",
+    "function": "getJSDocTypeTag",
+    "historical_source_line": "    const tag = getFirstJSDocTag(node, isJSDocTypeTag);",
+    "mapping": "exact source line in uniquely matched enclosing function",
+    "matches": [
+      {
+        "line": 1210,
+        "column": 40,
+        "function_line": 1208,
+        "source_line": "    const tag = getFirstJSDocTag(node, isJSDocTypeTag);"
+      }
+    ],
+    "line": 1210,
+    "column": 40,
+    "function_line": 1208,
+    "source_line": "    const tag = getFirstJSDocTag(node, isJSDocTypeTag);",
+    "where": "/workspace/depthgate2-adapted/src/compiler/utilitiesPublic.ts:1210:40"
+  },
+  {
+    "id": "S24",
+    "historical_where": "/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts:1229:84",
+    "historical_units": [
+      {
+        "where": "/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts:1228:1",
+        "name": "getJSDocType"
+      }
+    ],
+    "file": "src/compiler/utilitiesPublic.ts",
+    "function": "getJSDocType",
+    "historical_source_line": "    let tag: JSDocTypeTag | JSDocParameterTag | undefined = getFirstJSDocTag(node, isJSDocTypeTag);",
+    "mapping": "exact source line in uniquely matched enclosing function",
+    "matches": [
+      {
+        "line": 1229,
+        "column": 84,
+        "function_line": 1228,
+        "source_line": "    let tag: JSDocTypeTag | JSDocParameterTag | undefined = getFirstJSDocTag(node, isJSDocTypeTag);"
+      }
+    ],
+    "line": 1229,
+    "column": 84,
+    "function_line": 1228,
+    "source_line": "    let tag: JSDocTypeTag | JSDocParameterTag | undefined = getFirstJSDocTag(node, isJSDocTypeTag);",
+    "where": "/workspace/depthgate2-adapted/src/compiler/utilitiesPublic.ts:1229:84"
+  },
+  {
+    "id": "S25",
+    "historical_where": "/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts:1339:38",
+    "historical_units": [
+      {
+        "where": "/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts:1322:1",
+        "name": "getEffectiveTypeParameterDeclarations"
+      }
+    ],
+    "file": "src/compiler/utilitiesPublic.ts",
+    "function": "getEffectiveTypeParameterDeclarations",
+    "historical_source_line": "    if (canHaveIllegalTypeParameters(node) && node.typeParameters) {",
+    "mapping": "exact source line in uniquely matched enclosing function",
+    "matches": [
+      {
+        "line": 1339,
+        "column": 38,
+        "function_line": 1322,
+        "source_line": "    if (canHaveIllegalTypeParameters(node) && node.typeParameters) {"
+      }
+    ],
+    "line": 1339,
+    "column": 38,
+    "function_line": 1322,
+    "source_line": "    if (canHaveIllegalTypeParameters(node) && node.typeParameters) {",
+    "where": "/workspace/depthgate2-adapted/src/compiler/utilitiesPublic.ts:1339:38"
+  },
+  {
+    "id": "S26",
+    "historical_where": "/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts:1342:20",
+    "historical_units": [
+      {
+        "where": "/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts:1322:1",
+        "name": "getEffectiveTypeParameterDeclarations"
+      }
+    ],
+    "file": "src/compiler/utilitiesPublic.ts",
+    "function": "getEffectiveTypeParameterDeclarations",
+    "historical_source_line": "    if (isInJSFile(node)) {",
+    "mapping": "exact source line in uniquely matched enclosing function",
+    "matches": [
+      {
+        "line": 1342,
+        "column": 20,
+        "function_line": 1322,
+        "source_line": "    if (isInJSFile(node)) {"
+      }
+    ],
+    "line": 1342,
+    "column": 20,
+    "function_line": 1322,
+    "source_line": "    if (isInJSFile(node)) {",
+    "where": "/workspace/depthgate2-adapted/src/compiler/utilitiesPublic.ts:1342:20"
+  },
+  {
+    "id": "S27",
+    "historical_where": "/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts:1357:28",
+    "historical_units": [
+      {
+        "where": "/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts:1355:1",
+        "name": "getEffectiveConstraintOfTypeParameter"
+      }
+    ],
+    "file": "src/compiler/utilitiesPublic.ts",
+    "function": "getEffectiveConstraintOfTypeParameter",
+    "historical_source_line": "        isJSDocTemplateTag(node.parent) && node === node.parent.typeParameters[0] ? node.parent.constraint :",
+    "mapping": "exact source line in uniquely matched enclosing function",
+    "matches": [
+      {
+        "line": 1357,
+        "column": 28,
+        "function_line": 1355,
+        "source_line": "        isJSDocTemplateTag(node.parent) && node === node.parent.typeParameters[0] ? node.parent.constraint :"
+      }
+    ],
+    "line": 1357,
+    "column": 28,
+    "function_line": 1355,
+    "source_line": "        isJSDocTemplateTag(node.parent) && node === node.parent.typeParameters[0] ? node.parent.constraint :",
+    "where": "/workspace/depthgate2-adapted/src/compiler/utilitiesPublic.ts:1357:28"
+  },
+  {
+    "id": "S28",
+    "historical_where": "/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts:2559:23",
+    "historical_units": [
+      {
+        "where": "/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts:2556:1",
+        "name": "hasJSDocNodes"
+      }
+    ],
+    "file": "src/compiler/utilitiesPublic.ts",
+    "function": "hasJSDocNodes",
+    "historical_source_line": "    const { jsDoc } = node as JSDocContainer;",
+    "mapping": "exact source line in uniquely matched enclosing function",
+    "matches": [
+      {
+        "line": 2559,
+        "column": 23,
+        "function_line": 2556,
+        "source_line": "    const { jsDoc } = node as JSDocContainer;"
+      }
+    ],
+    "line": 2559,
+    "column": 23,
+    "function_line": 2556,
+    "source_line": "    const { jsDoc } = node as JSDocContainer;",
+    "where": "/workspace/depthgate2-adapted/src/compiler/utilitiesPublic.ts:2559:23"
+  },
+  {
+    "id": "S29",
+    "historical_where": "/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts:2638:76",
+    "historical_units": [
+      {
+        "where": "/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts:2637:1",
+        "name": "hasRestParameter"
+      }
+    ],
+    "file": "src/compiler/utilitiesPublic.ts",
+    "function": "hasRestParameter",
+    "historical_source_line": "    const last = lastOrUndefined<ParameterDeclaration | JSDocParameterTag>(s.parameters);",
+    "mapping": "exact source line in uniquely matched enclosing function",
+    "matches": [
+      {
+        "line": 2638,
+        "column": 76,
+        "function_line": 2637,
+        "source_line": "    const last = lastOrUndefined<ParameterDeclaration | JSDocParameterTag>(s.parameters);"
+      }
+    ],
+    "line": 2638,
+    "column": 76,
+    "function_line": 2637,
+    "source_line": "    const last = lastOrUndefined<ParameterDeclaration | JSDocParameterTag>(s.parameters);",
+    "where": "/workspace/depthgate2-adapted/src/compiler/utilitiesPublic.ts:2638:76"
+  },
+  {
+    "id": "S30",
+    "historical_where": "/workspace/mapset-adapted/src/compiler/utilities.ts:3095:20",
+    "historical_units": [
+      {
+        "where": "/workspace/mapset-adapted/src/compiler/utilities.ts:3113:1",
+        "name": "getTsConfigPropArrayElementValue"
+      },
+      {
+        "where": "/workspace/mapset-adapted/src/compiler/utilities.ts:12296:1",
+        "name": "getPropertyArrayElementValue"
+      },
+      {
+        "where": "/workspace/mapset-adapted/src/compiler/utilities.ts:12304:1",
+        "name": "getOptionsSyntaxByValue"
+      }
+    ],
+    "file": "src/compiler/utilities.ts",
+    "function": "forEachPropertyAssignment",
+    "historical_source_line": "    return forEach(objectLiteral?.properties, property => {",
+    "mapping": "exact source line in uniquely matched enclosing function",
+    "matches": [
+      {
+        "line": 3095,
+        "column": 20,
+        "function_line": 3094,
+        "source_line": "    return forEach(objectLiteral?.properties, property => {"
+      }
+    ],
+    "line": 3095,
+    "column": 20,
+    "function_line": 3094,
+    "source_line": "    return forEach(objectLiteral?.properties, property => {",
+    "where": "/workspace/depthgate2-adapted/src/compiler/utilities.ts:3095:20"
+  },
+  {
+    "id": "S31",
+    "historical_where": "/workspace/mapset-adapted/src/compiler/utilities.ts:4429:82",
+    "historical_units": [
+      {
+        "where": "/workspace/mapset-adapted/src/compiler/utilities.ts:4426:1",
+        "name": "getNamespaceDeclarationNode"
+      }
+    ],
+    "file": "src/compiler/utilities.ts",
+    "function": "getNamespaceDeclarationNode",
+    "historical_source_line": "            return node.importClause && tryCast(node.importClause.namedBindings, isNamespaceImport);",
+    "mapping": "exact source line in uniquely matched enclosing function",
+    "matches": [
+      {
+        "line": 4429,
+        "column": 82,
+        "function_line": 4426,
+        "source_line": "            return node.importClause && tryCast(node.importClause.namedBindings, isNamespaceImport);"
+      }
+    ],
+    "line": 4429,
+    "column": 82,
+    "function_line": 4426,
+    "source_line": "            return node.importClause && tryCast(node.importClause.namedBindings, isNamespaceImport);",
+    "where": "/workspace/depthgate2-adapted/src/compiler/utilities.ts:4429:82"
+  },
+  {
+    "id": "S32",
+    "historical_where": "/workspace/mapset-adapted/src/compiler/utilities.ts:4780:34",
+    "historical_units": [
+      {
+        "where": "/workspace/mapset-adapted/src/compiler/utilities.ts:4779:1",
+        "name": "getJSDocOverloadTags"
+      }
+    ],
+    "file": "src/compiler/utilities.ts",
+    "function": "getJSDocOverloadTags",
+    "historical_source_line": "    return getAllJSDocTags(node, isJSDocOverloadTag);",
+    "mapping": "exact source line in uniquely matched enclosing function",
+    "matches": [
+      {
+        "line": 4780,
+        "column": 34,
+        "function_line": 4779,
+        "source_line": "    return getAllJSDocTags(node, isJSDocOverloadTag);"
+      }
+    ],
+    "line": 4780,
+    "column": 34,
+    "function_line": 4779,
+    "source_line": "    return getAllJSDocTags(node, isJSDocOverloadTag);",
+    "where": "/workspace/depthgate2-adapted/src/compiler/utilities.ts:4780:34"
+  },
+  {
+    "id": "S33",
+    "historical_where": "/workspace/mapset-adapted/src/compiler/utilities.ts:10816:71",
+    "historical_units": [
+      {
+        "where": "/workspace/mapset-adapted/src/compiler/utilities.ts:10811:1",
+        "name": "getContainingNodeArray"
+      }
+    ],
+    "file": "src/compiler/utilities.ts",
+    "function": "getContainingNodeArray",
+    "historical_source_line": "            return parent.kind === SyntaxKind.InferType ? undefined : parent.typeParameters;",
+    "mapping": "exact source line in uniquely matched enclosing function",
+    "matches": [
+      {
+        "line": 10816,
+        "column": 71,
+        "function_line": 10811,
+        "source_line": "            return parent.kind === SyntaxKind.InferType ? undefined : parent.typeParameters;"
+      }
+    ],
+    "line": 10816,
+    "column": 71,
+    "function_line": 10811,
+    "source_line": "            return parent.kind === SyntaxKind.InferType ? undefined : parent.typeParameters;",
+    "where": "/workspace/depthgate2-adapted/src/compiler/utilities.ts:10816:71"
+  },
+  {
+    "id": "S34",
+    "historical_where": "/workspace/mapset-adapted/src/compiler/utilities.ts:11649:41",
+    "historical_units": [
+      {
+        "where": "/workspace/mapset-adapted/src/compiler/utilities.ts:11493:1",
+        "name": "createNameResolver"
+      },
+      {
+        "where": "/workspace/mapset-adapted/src/compiler/utilities.ts:11513:5",
+        "name": "resolveNameHelper"
+      }
+    ],
+    "file": "src/compiler/utilities.ts",
+    "function": "resolveNameHelper",
+    "historical_source_line": "                    if (result = lookup(getSymbolOfDeclaration(location as EnumDeclaration)?.exports || emptySymbols, name, meaning & SymbolFlags.EnumMember)) {",
+    "mapping": "exact source line in uniquely matched enclosing function",
+    "matches": [
+      {
+        "line": 11649,
+        "column": 41,
+        "function_line": 11513,
+        "source_line": "                    if (result = lookup(getSymbolOfDeclaration(location as EnumDeclaration)?.exports || emptySymbols, name, meaning & SymbolFlags.EnumMember)) {"
+      }
+    ],
+    "line": 11649,
+    "column": 41,
+    "function_line": 11513,
+    "source_line": "                    if (result = lookup(getSymbolOfDeclaration(location as EnumDeclaration)?.exports || emptySymbols, name, meaning & SymbolFlags.EnumMember)) {",
+    "where": "/workspace/depthgate2-adapted/src/compiler/utilities.ts:11649:41"
+  },
+  {
+    "id": "S35",
+    "historical_where": "/workspace/mapset-adapted/src/compiler/utilities.ts:11715:72",
+    "historical_units": [
+      {
+        "where": "/workspace/mapset-adapted/src/compiler/utilities.ts:11493:1",
+        "name": "createNameResolver"
+      },
+      {
+        "where": "/workspace/mapset-adapted/src/compiler/utilities.ts:11513:5",
+        "name": "resolveNameHelper"
+      }
+    ],
+    "file": "src/compiler/utilities.ts",
+    "function": "resolveNameHelper",
+    "historical_source_line": "                        if (isClassLike(container) && (result = lookup(getSymbolOfDeclaration(container).members!, name, meaning & SymbolFlags.Type))) {",
+    "mapping": "exact source line in uniquely matched enclosing function",
+    "matches": [
+      {
+        "line": 11715,
+        "column": 72,
+        "function_line": 11513,
+        "source_line": "                        if (isClassLike(container) && (result = lookup(getSymbolOfDeclaration(container).members!, name, meaning & SymbolFlags.Type))) {"
+      }
+    ],
+    "line": 11715,
+    "column": 72,
+    "function_line": 11513,
+    "source_line": "                        if (isClassLike(container) && (result = lookup(getSymbolOfDeclaration(container).members!, name, meaning & SymbolFlags.Type))) {",
+    "where": "/workspace/depthgate2-adapted/src/compiler/utilities.ts:11715:72"
+  },
+  {
+    "id": "S36",
+    "historical_where": "/workspace/mapset-adapted/src/compiler/utilities.ts:11861:55",
+    "historical_units": [
+      {
+        "where": "/workspace/mapset-adapted/src/compiler/utilities.ts:11493:1",
+        "name": "createNameResolver"
+      },
+      {
+        "where": "/workspace/mapset-adapted/src/compiler/utilities.ts:11513:5",
+        "name": "resolveNameHelper"
+      }
+    ],
+    "file": "src/compiler/utilities.ts",
+    "function": "resolveNameHelper",
+    "historical_source_line": "            location = isJSDocTemplateTag(location) ? getEffectiveContainerForJSDocTemplateTag(location) || location.parent :",
+    "mapping": "exact source line in uniquely matched enclosing function",
+    "matches": [
+      {
+        "line": 11861,
+        "column": 55,
+        "function_line": 11513,
+        "source_line": "            location = isJSDocTemplateTag(location) ? getEffectiveContainerForJSDocTemplateTag(location) || location.parent :"
+      }
+    ],
+    "line": 11861,
+    "column": 55,
+    "function_line": 11513,
+    "source_line": "            location = isJSDocTemplateTag(location) ? getEffectiveContainerForJSDocTemplateTag(location) || location.parent :",
+    "where": "/workspace/depthgate2-adapted/src/compiler/utilities.ts:11861:55"
+  },
+  {
+    "id": "S37",
+    "historical_where": "/workspace/mapset-adapted/src/compiler/transformers/utilities.ts:126:25",
+    "historical_units": [
+      {
+        "where": "/workspace/mapset-adapted/src/compiler/transformers/utilities.ts:124:1",
+        "name": "containsDefaultReference"
+      }
+    ],
+    "file": "src/compiler/transformers/utilities.ts",
+    "function": "containsDefaultReference",
+    "historical_source_line": "    if (!isNamedImports(node) && !isNamedExports(node)) return false;",
+    "mapping": "exact source line in uniquely matched enclosing function",
+    "matches": [
+      {
+        "line": 126,
+        "column": 25,
+        "function_line": 124,
+        "source_line": "    if (!isNamedImports(node) && !isNamedExports(node)) return false;"
+      }
+    ],
+    "line": 126,
+    "column": 25,
+    "function_line": 124,
+    "source_line": "    if (!isNamedImports(node) && !isNamedExports(node)) return false;",
+    "where": "/workspace/depthgate2-adapted/src/compiler/transformers/utilities.ts:126:25"
+  },
+  {
+    "id": "S38",
+    "historical_where": "/workspace/mapset-adapted/src/compiler/transformers/utilities.ts:127:17",
+    "historical_units": [
+      {
+        "where": "/workspace/mapset-adapted/src/compiler/transformers/utilities.ts:124:1",
+        "name": "containsDefaultReference"
+      }
+    ],
+    "file": "src/compiler/transformers/utilities.ts",
+    "function": "containsDefaultReference",
+    "historical_source_line": "    return some(node.elements, isNamedDefaultReference);",
+    "mapping": "exact source line in uniquely matched enclosing function",
+    "matches": [
+      {
+        "line": 127,
+        "column": 17,
+        "function_line": 124,
+        "source_line": "    return some(node.elements, isNamedDefaultReference);"
+      }
+    ],
+    "line": 127,
+    "column": 17,
+    "function_line": 124,
+    "source_line": "    return some(node.elements, isNamedDefaultReference);",
+    "where": "/workspace/depthgate2-adapted/src/compiler/transformers/utilities.ts:127:17"
+  },
+  {
+    "id": "S39",
+    "historical_where": "/workspace/mapset-adapted/src/compiler/transformers/utilities.ts:161:25",
+    "historical_units": [
+      {
+        "where": "/workspace/mapset-adapted/src/compiler/transformers/utilities.ts:153:1",
+        "name": "getImportNeedsImportStarHelper"
+      }
+    ],
+    "file": "src/compiler/transformers/utilities.ts",
+    "function": "getImportNeedsImportStarHelper",
+    "historical_source_line": "    if (!isNamedImports(bindings)) return false;",
+    "mapping": "exact source line in uniquely matched enclosing function",
+    "matches": [
+      {
+        "line": 161,
+        "column": 25,
+        "function_line": 153,
+        "source_line": "    if (!isNamedImports(bindings)) return false;"
+      }
+    ],
+    "line": 161,
+    "column": 25,
+    "function_line": 153,
+    "source_line": "    if (!isNamedImports(bindings)) return false;",
+    "where": "/workspace/depthgate2-adapted/src/compiler/transformers/utilities.ts:161:25"
+  },
+  {
+    "id": "S40",
+    "historical_where": "/workspace/mapset-adapted/src/compiler/transformers/utilities.ts:175:118",
+    "historical_units": [
+      {
+        "where": "/workspace/mapset-adapted/src/compiler/transformers/utilities.ts:173:1",
+        "name": "getImportNeedsImportDefaultHelper"
+      }
+    ],
+    "file": "src/compiler/transformers/utilities.ts",
+    "function": "getImportNeedsImportDefaultHelper",
+    "historical_source_line": "    return !getImportNeedsImportStarHelper(node) && (isDefaultImport(node) || (!!node.importClause && isNamedImports(node.importClause.namedBindings!) && containsDefaultReference(node.importClause.namedBindings))); // TODO: GH#18217",
+    "mapping": "exact source line in uniquely matched enclosing function",
+    "matches": [
+      {
+        "line": 175,
+        "column": 118,
+        "function_line": 173,
+        "source_line": "    return !getImportNeedsImportStarHelper(node) && (isDefaultImport(node) || (!!node.importClause && isNamedImports(node.importClause.namedBindings!) && containsDefaultReference(node.importClause.namedBindings))); // TODO: GH#18217"
+      }
+    ],
+    "line": 175,
+    "column": 118,
+    "function_line": 173,
+    "source_line": "    return !getImportNeedsImportStarHelper(node) && (isDefaultImport(node) || (!!node.importClause && isNamedImports(node.importClause.namedBindings!) && containsDefaultReference(node.importClause.namedBindings))); // TODO: GH#18217",
+    "where": "/workspace/depthgate2-adapted/src/compiler/transformers/utilities.ts:175:118"
+  }
+]

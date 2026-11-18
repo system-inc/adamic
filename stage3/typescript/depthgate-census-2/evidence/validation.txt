@@ -1,0 +1,138 @@
+PASS 81-source adapted manifest unchanged
+PASS 12 run directories
+PASS base-transformers-utilities-r1: normal complete run, under 30 minutes
+PASS base-transformers-utilities-r1: full/CommonJSBundle/checker-clean 81-source header
+PASS base-transformers-utilities-r1: shared entry root and source set
+PASS base-transformers-utilities-r1: requested exact-file environment; no probe flag
+PASS base-transformers-utilities-r1: pinned own-side tool and unchanged selected source
+PASS base-transformers-utilities-r1: no probe output
+PASS base-transformers-utilities-r1: entire latent.jsonl archive is lossless
+PASS base-transformers-utilities-r1: entire stderr.log archive is lossless
+PASS base-transformers-utilities-r1: entire stdout.log archive is lossless
+PASS base-transformers-utilities-r2: normal complete run, under 30 minutes
+PASS base-transformers-utilities-r2: full/CommonJSBundle/checker-clean 81-source header
+PASS base-transformers-utilities-r2: shared entry root and source set
+PASS base-transformers-utilities-r2: requested exact-file environment; no probe flag
+PASS base-transformers-utilities-r2: pinned own-side tool and unchanged selected source
+PASS base-transformers-utilities-r2: no probe output
+PASS base-transformers-utilities-r2: entire latent.jsonl archive is lossless
+PASS base-transformers-utilities-r2: entire stderr.log archive is lossless
+PASS base-transformers-utilities-r2: entire stdout.log archive is lossless
+PASS base-utilities-r1: normal complete run, under 30 minutes
+PASS base-utilities-r1: full/CommonJSBundle/checker-clean 81-source header
+PASS base-utilities-r1: shared entry root and source set
+PASS base-utilities-r1: requested exact-file environment; no probe flag
+PASS base-utilities-r1: pinned own-side tool and unchanged selected source
+PASS base-utilities-r1: no probe output
+PASS base-utilities-r1: entire latent.jsonl archive is lossless
+PASS base-utilities-r1: entire stderr.log archive is lossless
+PASS base-utilities-r1: entire stdout.log archive is lossless
+PASS base-utilities-r2: normal complete run, under 30 minutes
+PASS base-utilities-r2: full/CommonJSBundle/checker-clean 81-source header
+PASS base-utilities-r2: shared entry root and source set
+PASS base-utilities-r2: requested exact-file environment; no probe flag
+PASS base-utilities-r2: pinned own-side tool and unchanged selected source
+PASS base-utilities-r2: no probe output
+PASS base-utilities-r2: entire latent.jsonl archive is lossless
+PASS base-utilities-r2: entire stderr.log archive is lossless
+PASS base-utilities-r2: entire stdout.log archive is lossless
+PASS base-utilitiesPublic-r1: normal complete run, under 30 minutes
+PASS base-utilitiesPublic-r1: full/CommonJSBundle/checker-clean 81-source header
+PASS base-utilitiesPublic-r1: shared entry root and source set
+PASS base-utilitiesPublic-r1: requested exact-file environment; no probe flag
+PASS base-utilitiesPublic-r1: pinned own-side tool and unchanged selected source
+PASS base-utilitiesPublic-r1: no probe output
+PASS base-utilitiesPublic-r1: entire latent.jsonl archive is lossless
+PASS base-utilitiesPublic-r1: entire stderr.log archive is lossless
+PASS base-utilitiesPublic-r1: entire stdout.log archive is lossless
+PASS base-utilitiesPublic-r2: normal complete run, under 30 minutes
+PASS base-utilitiesPublic-r2: full/CommonJSBundle/checker-clean 81-source header
+PASS base-utilitiesPublic-r2: shared entry root and source set
+PASS base-utilitiesPublic-r2: requested exact-file environment; no probe flag
+PASS base-utilitiesPublic-r2: pinned own-side tool and unchanged selected source
+PASS base-utilitiesPublic-r2: no probe output
+PASS base-utilitiesPublic-r2: entire latent.jsonl archive is lossless
+PASS base-utilitiesPublic-r2: entire stderr.log archive is lossless
+PASS base-utilitiesPublic-r2: entire stdout.log archive is lossless
+PASS head-transformers-utilities-r1: normal complete run, under 30 minutes
+PASS head-transformers-utilities-r1: full/CommonJSBundle/checker-clean 81-source header
+PASS head-transformers-utilities-r1: shared entry root and source set
+PASS head-transformers-utilities-r1: requested exact-file environment; no probe flag
+PASS head-transformers-utilities-r1: pinned own-side tool and unchanged selected source
+PASS head-transformers-utilities-r1: no probe output
+PASS head-transformers-utilities-r1: entire latent.jsonl archive is lossless
+PASS head-transformers-utilities-r1: entire stderr.log archive is lossless
+PASS head-transformers-utilities-r1: entire stdout.log archive is lossless
+PASS head-transformers-utilities-r1: no identity-bound finding anywhere
+PASS head-transformers-utilities-r2: normal complete run, under 30 minutes
+PASS head-transformers-utilities-r2: full/CommonJSBundle/checker-clean 81-source header
+PASS head-transformers-utilities-r2: shared entry root and source set
+PASS head-transformers-utilities-r2: requested exact-file environment; no probe flag
+PASS head-transformers-utilities-r2: pinned own-side tool and unchanged selected source
+PASS head-transformers-utilities-r2: no probe output
+PASS head-transformers-utilities-r2: entire latent.jsonl archive is lossless
+PASS head-transformers-utilities-r2: entire stderr.log archive is lossless
+PASS head-transformers-utilities-r2: entire stdout.log archive is lossless
+PASS head-transformers-utilities-r2: no identity-bound finding anywhere
+PASS head-utilities-r1: normal complete run, under 30 minutes
+PASS head-utilities-r1: full/CommonJSBundle/checker-clean 81-source header
+PASS head-utilities-r1: shared entry root and source set
+PASS head-utilities-r1: requested exact-file environment; no probe flag
+PASS head-utilities-r1: pinned own-side tool and unchanged selected source
+PASS head-utilities-r1: no probe output
+PASS head-utilities-r1: entire latent.jsonl archive is lossless
+PASS head-utilities-r1: entire stderr.log archive is lossless
+PASS head-utilities-r1: entire stdout.log archive is lossless
+PASS head-utilities-r1: no identity-bound finding anywhere
+PASS head-utilities-r2: normal complete run, under 30 minutes
+PASS head-utilities-r2: full/CommonJSBundle/checker-clean 81-source header
+PASS head-utilities-r2: shared entry root and source set
+PASS head-utilities-r2: requested exact-file environment; no probe flag
+PASS head-utilities-r2: pinned own-side tool and unchanged selected source
+PASS head-utilities-r2: no probe output
+PASS head-utilities-r2: entire latent.jsonl archive is lossless
+PASS head-utilities-r2: entire stderr.log archive is lossless
+PASS head-utilities-r2: entire stdout.log archive is lossless
+PASS head-utilities-r2: no identity-bound finding anywhere
+PASS head-utilitiesPublic-r1: normal complete run, under 30 minutes
+PASS head-utilitiesPublic-r1: full/CommonJSBundle/checker-clean 81-source header
+PASS head-utilitiesPublic-r1: shared entry root and source set
+PASS head-utilitiesPublic-r1: requested exact-file environment; no probe flag
+PASS head-utilitiesPublic-r1: pinned own-side tool and unchanged selected source
+PASS head-utilitiesPublic-r1: no probe output
+PASS head-utilitiesPublic-r1: entire latent.jsonl archive is lossless
+PASS head-utilitiesPublic-r1: entire stderr.log archive is lossless
+PASS head-utilitiesPublic-r1: entire stdout.log archive is lossless
+PASS head-utilitiesPublic-r1: no identity-bound finding anywhere
+PASS head-utilitiesPublic-r2: normal complete run, under 30 minutes
+PASS head-utilitiesPublic-r2: full/CommonJSBundle/checker-clean 81-source header
+PASS head-utilitiesPublic-r2: shared entry root and source set
+PASS head-utilitiesPublic-r2: requested exact-file environment; no probe flag
+PASS head-utilitiesPublic-r2: pinned own-side tool and unchanged selected source
+PASS head-utilitiesPublic-r2: no probe output
+PASS head-utilitiesPublic-r2: entire latent.jsonl archive is lossless
+PASS head-utilitiesPublic-r2: entire stderr.log archive is lossless
+PASS head-utilitiesPublic-r2: entire stdout.log archive is lossless
+PASS head-utilitiesPublic-r2: no identity-bound finding anywhere
+PASS same hostname for all runs
+PASS all 12 runs sequential
+PASS ABBA order per file
+PASS no cap finding in target or non-target records
+PASS 40 unique exactly mapped sites
+PASS both baseline repeats confirm 38 gate targets; other two are real Map
+PASS head classification: 34 lower, 4 later, 2 real Map
+PASS prior 34 identity-bound: 30 lower, 4 later
+PASS six same-side repeat comparisons agree by normalized and exact site/unit event multisets
+PASS base: all tracked checkout sources unchanged
+PASS base: protected sources unchanged
+PASS base: no staged source changes before report staging
+INFO base working-tree status: ?? stage3/typescript/depthgate-census-2/
+PASS base: submodule gitlinks verified
+PASS base: checkout still at tool input SHA before report commit
+PASS head: all tracked checkout sources unchanged
+PASS head: protected sources unchanged
+PASS head: no staged source changes before report staging
+INFO head working-tree status:
+PASS head: submodule gitlinks verified
+PASS head: checkout still at tool input SHA before report commit
+PASS all report links resolve; packaged Python scripts parse

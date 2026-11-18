@@ -1,0 +1,746 @@
+{
+  "base-utilitiesPublic-r1": {
+    "complete": true,
+    "status": {
+      "hostname": "ae770fcedbbc",
+      "kernel": "6.18.57",
+      "loadavg_start": [
+        0.81982421875,
+        2.0,
+        3.1943359375
+      ],
+      "cpu_quota": "400000 100000",
+      "memory_limit_bytes": "17179869184",
+      "label": "base",
+      "name": "utilitiesPublic",
+      "repeat": 1,
+      "sha": "c56b022995e1e960bad71626fd2074bc46aee485",
+      "command": [
+        "/workspace/depthgate2-tools-base/entry-census",
+        "/workspace/depthgate2-adapted/src/tsc/tsc.ts",
+        "/workspace/depthgate2-runs/base-utilitiesPublic-r1/latent.jsonl"
+      ],
+      "cwd": "/workspace/depthgate2-base",
+      "environment": {
+        "CENSUS_MODULE_FORMAT": "CommonJSBundle",
+        "LATENT_FULL": "1",
+        "LATENT_ASSERT_NO_OUTPUT": "1",
+        "LATENT_TAIL": "1",
+        "LATENT_ONLY_FILE": "/workspace/depthgate2-adapted/src/compiler/utilitiesPublic.ts",
+        "LATENT_TIMES": "/dev/stderr"
+      },
+      "binary_sha256": "909c659b0238b08320d3bd51717a04ce7119ad4b022685999e2d1be538ce5776",
+      "selected_source_sha256": "d3306929848b90a39f85db6293ffee3617341bedd3822cef8b4cd83b64c7fec6",
+      "timeout_seconds": 1800,
+      "started_utc": "2026-11-18T12:05:28Z",
+      "loadavg_end": [
+        1.1640625,
+        1.55859375,
+        2.76123046875
+      ],
+      "wall_seconds": 214.80026242500026,
+      "exit_code": 0,
+      "timed_out": false,
+      "sigkill_required": false,
+      "peak_rss_kib": 1143692,
+      "user_cpu_seconds": 252.935433,
+      "system_cpu_seconds": 7.845439,
+      "finished_utc": "2026-11-18T12:09:03Z"
+    },
+    "parse_errors": [],
+    "checker_rejected": false,
+    "diagnostics": [],
+    "events": 257,
+    "distinct_findings": 205,
+    "distinct_gate_sites": 29,
+    "real_Map_events": 0,
+    "cap_events": 0,
+    "kinds": {
+      "Refused": 33,
+      "NotYet": 116,
+      "Boundary": 108
+    }
+  },
+  "base-utilitiesPublic-r2": {
+    "complete": true,
+    "status": {
+      "hostname": "ae770fcedbbc",
+      "kernel": "6.18.57",
+      "loadavg_start": [
+        1.3408203125,
+        1.408203125,
+        2.2353515625
+      ],
+      "cpu_quota": "400000 100000",
+      "memory_limit_bytes": "17179869184",
+      "label": "base",
+      "name": "utilitiesPublic",
+      "repeat": 2,
+      "sha": "c56b022995e1e960bad71626fd2074bc46aee485",
+      "command": [
+        "/workspace/depthgate2-tools-base/entry-census",
+        "/workspace/depthgate2-adapted/src/tsc/tsc.ts",
+        "/workspace/depthgate2-runs/base-utilitiesPublic-r2/latent.jsonl"
+      ],
+      "cwd": "/workspace/depthgate2-base",
+      "environment": {
+        "CENSUS_MODULE_FORMAT": "CommonJSBundle",
+        "LATENT_FULL": "1",
+        "LATENT_ASSERT_NO_OUTPUT": "1",
+        "LATENT_TAIL": "1",
+        "LATENT_ONLY_FILE": "/workspace/depthgate2-adapted/src/compiler/utilitiesPublic.ts",
+        "LATENT_TIMES": "/dev/stderr"
+      },
+      "binary_sha256": "909c659b0238b08320d3bd51717a04ce7119ad4b022685999e2d1be538ce5776",
+      "selected_source_sha256": "d3306929848b90a39f85db6293ffee3617341bedd3822cef8b4cd83b64c7fec6",
+      "timeout_seconds": 1800,
+      "started_utc": "2026-11-18T12:16:18Z",
+      "loadavg_end": [
+        1.3408203125,
+        1.3525390625,
+        2.044921875
+      ],
+      "wall_seconds": 207.60025366100035,
+      "exit_code": 0,
+      "timed_out": false,
+      "sigkill_required": false,
+      "peak_rss_kib": 1130508,
+      "user_cpu_seconds": 246.867631,
+      "system_cpu_seconds": 5.943939,
+      "finished_utc": "2026-11-18T12:19:46Z"
+    },
+    "parse_errors": [],
+    "checker_rejected": false,
+    "diagnostics": [],
+    "events": 257,
+    "distinct_findings": 205,
+    "distinct_gate_sites": 29,
+    "real_Map_events": 0,
+    "cap_events": 0,
+    "kinds": {
+      "Refused": 33,
+      "NotYet": 116,
+      "Boundary": 108
+    }
+  },
+  "base-utilities-r1": {
+    "complete": true,
+    "status": {
+      "hostname": "ae770fcedbbc",
+      "kernel": "6.18.57",
+      "loadavg_start": [
+        1.36865234375,
+        1.31201171875,
+        1.806640625
+      ],
+      "cpu_quota": "400000 100000",
+      "memory_limit_bytes": "17179869184",
+      "label": "base",
+      "name": "utilities",
+      "repeat": 1,
+      "sha": "c56b022995e1e960bad71626fd2074bc46aee485",
+      "command": [
+        "/workspace/depthgate2-tools-base/entry-census",
+        "/workspace/depthgate2-adapted/src/tsc/tsc.ts",
+        "/workspace/depthgate2-runs/base-utilities-r1/latent.jsonl"
+      ],
+      "cwd": "/workspace/depthgate2-base",
+      "environment": {
+        "CENSUS_MODULE_FORMAT": "CommonJSBundle",
+        "LATENT_FULL": "1",
+        "LATENT_ASSERT_NO_OUTPUT": "1",
+        "LATENT_TAIL": "1",
+        "LATENT_ONLY_FILE": "/workspace/depthgate2-adapted/src/compiler/utilities.ts",
+        "LATENT_TIMES": "/dev/stderr"
+      },
+      "binary_sha256": "909c659b0238b08320d3bd51717a04ce7119ad4b022685999e2d1be538ce5776",
+      "selected_source_sha256": "fc048c135e5c228251ce81124b82695eaebabcc3e931dcc5806f66cecd41ee82",
+      "timeout_seconds": 1800,
+      "started_utc": "2026-11-18T12:25:33Z",
+      "loadavg_end": [
+        1.30224609375,
+        1.431640625,
+        1.6123046875
+      ],
+      "wall_seconds": 620.9935786349997,
+      "exit_code": 0,
+      "timed_out": false,
+      "sigkill_required": false,
+      "peak_rss_kib": 1724956,
+      "user_cpu_seconds": 806.022582,
+      "system_cpu_seconds": 15.762752,
+      "finished_utc": "2026-11-18T12:35:54Z"
+    },
+    "parse_errors": [],
+    "checker_rejected": false,
+    "diagnostics": [],
+    "events": 1313,
+    "distinct_findings": 932,
+    "distinct_gate_sites": 5,
+    "real_Map_events": 4,
+    "cap_events": 0,
+    "kinds": {
+      "Refused": 321,
+      "NotYet": 448,
+      "Boundary": 544
+    }
+  },
+  "base-utilities-r2": {
+    "complete": true,
+    "status": {
+      "hostname": "ae770fcedbbc",
+      "kernel": "6.18.57",
+      "loadavg_start": [
+        1.80419921875,
+        1.6171875,
+        1.52294921875
+      ],
+      "cpu_quota": "400000 100000",
+      "memory_limit_bytes": "17179869184",
+      "label": "base",
+      "name": "utilities",
+      "repeat": 2,
+      "sha": "c56b022995e1e960bad71626fd2074bc46aee485",
+      "command": [
+        "/workspace/depthgate2-tools-base/entry-census",
+        "/workspace/depthgate2-adapted/src/tsc/tsc.ts",
+        "/workspace/depthgate2-runs/base-utilities-r2/latent.jsonl"
+      ],
+      "cwd": "/workspace/depthgate2-base",
+      "environment": {
+        "CENSUS_MODULE_FORMAT": "CommonJSBundle",
+        "LATENT_FULL": "1",
+        "LATENT_ASSERT_NO_OUTPUT": "1",
+        "LATENT_TAIL": "1",
+        "LATENT_ONLY_FILE": "/workspace/depthgate2-adapted/src/compiler/utilities.ts",
+        "LATENT_TIMES": "/dev/stderr"
+      },
+      "binary_sha256": "909c659b0238b08320d3bd51717a04ce7119ad4b022685999e2d1be538ce5776",
+      "selected_source_sha256": "fc048c135e5c228251ce81124b82695eaebabcc3e931dcc5806f66cecd41ee82",
+      "timeout_seconds": 1800,
+      "started_utc": "2026-11-18T13:03:00Z",
+      "loadavg_end": [
+        1.31103515625,
+        1.47021484375,
+        1.47900390625
+      ],
+      "wall_seconds": 578.3561642410004,
+      "exit_code": 0,
+      "timed_out": false,
+      "sigkill_required": false,
+      "peak_rss_kib": 1732240,
+      "user_cpu_seconds": 756.180019,
+      "system_cpu_seconds": 13.607296,
+      "finished_utc": "2026-11-18T13:12:39Z"
+    },
+    "parse_errors": [],
+    "checker_rejected": false,
+    "diagnostics": [],
+    "events": 1313,
+    "distinct_findings": 932,
+    "distinct_gate_sites": 5,
+    "real_Map_events": 4,
+    "cap_events": 0,
+    "kinds": {
+      "Refused": 321,
+      "NotYet": 448,
+      "Boundary": 544
+    }
+  },
+  "base-transformers-utilities-r1": {
+    "complete": true,
+    "status": {
+      "hostname": "ae770fcedbbc",
+      "kernel": "6.18.57",
+      "loadavg_start": [
+        1.3408203125,
+        1.3525390625,
+        2.044921875
+      ],
+      "cpu_quota": "400000 100000",
+      "memory_limit_bytes": "17179869184",
+      "label": "base",
+      "name": "transformers-utilities",
+      "repeat": 1,
+      "sha": "c56b022995e1e960bad71626fd2074bc46aee485",
+      "command": [
+        "/workspace/depthgate2-tools-base/entry-census",
+        "/workspace/depthgate2-adapted/src/tsc/tsc.ts",
+        "/workspace/depthgate2-runs/base-transformers-utilities-r1/latent.jsonl"
+      ],
+      "cwd": "/workspace/depthgate2-base",
+      "environment": {
+        "CENSUS_MODULE_FORMAT": "CommonJSBundle",
+        "LATENT_FULL": "1",
+        "LATENT_ASSERT_NO_OUTPUT": "1",
+        "LATENT_TAIL": "1",
+        "LATENT_ONLY_FILE": "/workspace/depthgate2-adapted/src/compiler/transformers/utilities.ts",
+        "LATENT_TIMES": "/dev/stderr"
+      },
+      "binary_sha256": "909c659b0238b08320d3bd51717a04ce7119ad4b022685999e2d1be538ce5776",
+      "selected_source_sha256": "e93a7435b835345d140c66dedb80c20e721210e6fc537ae0c3604a38d90e6216",
+      "timeout_seconds": 1800,
+      "started_utc": "2026-11-18T12:19:46Z",
+      "loadavg_end": [
+        1.4814453125,
+        1.412109375,
+        2.0
+      ],
+      "wall_seconds": 90.48421509899981,
+      "exit_code": 0,
+      "timed_out": false,
+      "sigkill_required": false,
+      "peak_rss_kib": 1026616,
+      "user_cpu_seconds": 110.491858,
+      "system_cpu_seconds": 5.524078,
+      "finished_utc": "2026-11-18T12:21:17Z"
+    },
+    "parse_errors": [],
+    "checker_rejected": false,
+    "diagnostics": [],
+    "events": 145,
+    "distinct_findings": 87,
+    "distinct_gate_sites": 4,
+    "real_Map_events": 0,
+    "cap_events": 0,
+    "kinds": {
+      "Refused": 34,
+      "NotYet": 46,
+      "Boundary": 65
+    }
+  },
+  "base-transformers-utilities-r2": {
+    "complete": true,
+    "status": {
+      "hostname": "ae770fcedbbc",
+      "kernel": "6.18.57",
+      "loadavg_start": [
+        1.23291015625,
+        1.30810546875,
+        1.853515625
+      ],
+      "cpu_quota": "400000 100000",
+      "memory_limit_bytes": "17179869184",
+      "label": "base",
+      "name": "transformers-utilities",
+      "repeat": 2,
+      "sha": "c56b022995e1e960bad71626fd2074bc46aee485",
+      "command": [
+        "/workspace/depthgate2-tools-base/entry-census",
+        "/workspace/depthgate2-adapted/src/tsc/tsc.ts",
+        "/workspace/depthgate2-runs/base-transformers-utilities-r2/latent.jsonl"
+      ],
+      "cwd": "/workspace/depthgate2-base",
+      "environment": {
+        "CENSUS_MODULE_FORMAT": "CommonJSBundle",
+        "LATENT_FULL": "1",
+        "LATENT_ASSERT_NO_OUTPUT": "1",
+        "LATENT_TAIL": "1",
+        "LATENT_ONLY_FILE": "/workspace/depthgate2-adapted/src/compiler/transformers/utilities.ts",
+        "LATENT_TIMES": "/dev/stderr"
+      },
+      "binary_sha256": "909c659b0238b08320d3bd51717a04ce7119ad4b022685999e2d1be538ce5776",
+      "selected_source_sha256": "e93a7435b835345d140c66dedb80c20e721210e6fc537ae0c3604a38d90e6216",
+      "timeout_seconds": 1800,
+      "started_utc": "2026-11-18T12:24:11Z",
+      "loadavg_end": [
+        1.36865234375,
+        1.31201171875,
+        1.806640625
+      ],
+      "wall_seconds": 82.49663385199983,
+      "exit_code": 0,
+      "timed_out": false,
+      "sigkill_required": false,
+      "peak_rss_kib": 1015940,
+      "user_cpu_seconds": 100.947823,
+      "system_cpu_seconds": 3.80645,
+      "finished_utc": "2026-11-18T12:25:33Z"
+    },
+    "parse_errors": [],
+    "checker_rejected": false,
+    "diagnostics": [],
+    "events": 145,
+    "distinct_findings": 87,
+    "distinct_gate_sites": 4,
+    "real_Map_events": 0,
+    "cap_events": 0,
+    "kinds": {
+      "Refused": 34,
+      "NotYet": 46,
+      "Boundary": 65
+    }
+  },
+  "head-utilitiesPublic-r1": {
+    "complete": true,
+    "status": {
+      "hostname": "ae770fcedbbc",
+      "kernel": "6.18.57",
+      "loadavg_start": [
+        1.1640625,
+        1.55859375,
+        2.76123046875
+      ],
+      "cpu_quota": "400000 100000",
+      "memory_limit_bytes": "17179869184",
+      "label": "head",
+      "name": "utilitiesPublic",
+      "repeat": 1,
+      "sha": "26d208af47f81143ff1db2280a5b43292deb96ba",
+      "command": [
+        "/workspace/depthgate2-tools-head/entry-census",
+        "/workspace/depthgate2-adapted/src/tsc/tsc.ts",
+        "/workspace/depthgate2-runs/head-utilitiesPublic-r1/latent.jsonl"
+      ],
+      "cwd": "/workspace/depthgate2-head",
+      "environment": {
+        "CENSUS_MODULE_FORMAT": "CommonJSBundle",
+        "LATENT_FULL": "1",
+        "LATENT_ASSERT_NO_OUTPUT": "1",
+        "LATENT_TAIL": "1",
+        "LATENT_ONLY_FILE": "/workspace/depthgate2-adapted/src/compiler/utilitiesPublic.ts",
+        "LATENT_TIMES": "/dev/stderr"
+      },
+      "binary_sha256": "b7a30e1394317e33797f62f3c343e88ec4077ace109b03d54c76ac9c64049d4d",
+      "selected_source_sha256": "d3306929848b90a39f85db6293ffee3617341bedd3822cef8b4cd83b64c7fec6",
+      "timeout_seconds": 1800,
+      "started_utc": "2026-11-18T12:09:03Z",
+      "loadavg_end": [
+        1.458984375,
+        1.50927734375,
+        2.48193359375
+      ],
+      "wall_seconds": 222.47725230499964,
+      "exit_code": 0,
+      "timed_out": false,
+      "sigkill_required": false,
+      "peak_rss_kib": 1112704,
+      "user_cpu_seconds": 269.672336,
+      "system_cpu_seconds": 7.250869,
+      "finished_utc": "2026-11-18T12:12:45Z"
+    },
+    "parse_errors": [],
+    "checker_rejected": false,
+    "diagnostics": [],
+    "events": 198,
+    "distinct_findings": 144,
+    "distinct_gate_sites": 0,
+    "real_Map_events": 0,
+    "cap_events": 0,
+    "kinds": {
+      "Refused": 34,
+      "NotYet": 85,
+      "Boundary": 79
+    }
+  },
+  "head-utilitiesPublic-r2": {
+    "complete": true,
+    "status": {
+      "hostname": "ae770fcedbbc",
+      "kernel": "6.18.57",
+      "loadavg_start": [
+        1.458984375,
+        1.50927734375,
+        2.48193359375
+      ],
+      "cpu_quota": "400000 100000",
+      "memory_limit_bytes": "17179869184",
+      "label": "head",
+      "name": "utilitiesPublic",
+      "repeat": 2,
+      "sha": "26d208af47f81143ff1db2280a5b43292deb96ba",
+      "command": [
+        "/workspace/depthgate2-tools-head/entry-census",
+        "/workspace/depthgate2-adapted/src/tsc/tsc.ts",
+        "/workspace/depthgate2-runs/head-utilitiesPublic-r2/latent.jsonl"
+      ],
+      "cwd": "/workspace/depthgate2-head",
+      "environment": {
+        "CENSUS_MODULE_FORMAT": "CommonJSBundle",
+        "LATENT_FULL": "1",
+        "LATENT_ASSERT_NO_OUTPUT": "1",
+        "LATENT_TAIL": "1",
+        "LATENT_ONLY_FILE": "/workspace/depthgate2-adapted/src/compiler/utilitiesPublic.ts",
+        "LATENT_TIMES": "/dev/stderr"
+      },
+      "binary_sha256": "b7a30e1394317e33797f62f3c343e88ec4077ace109b03d54c76ac9c64049d4d",
+      "selected_source_sha256": "d3306929848b90a39f85db6293ffee3617341bedd3822cef8b4cd83b64c7fec6",
+      "timeout_seconds": 1800,
+      "started_utc": "2026-11-18T12:12:46Z",
+      "loadavg_end": [
+        1.3408203125,
+        1.408203125,
+        2.2353515625
+      ],
+      "wall_seconds": 212.48127269199995,
+      "exit_code": 0,
+      "timed_out": false,
+      "sigkill_required": false,
+      "peak_rss_kib": 1121140,
+      "user_cpu_seconds": 254.194963,
+      "system_cpu_seconds": 5.967626,
+      "finished_utc": "2026-11-18T12:16:18Z"
+    },
+    "parse_errors": [],
+    "checker_rejected": false,
+    "diagnostics": [],
+    "events": 198,
+    "distinct_findings": 144,
+    "distinct_gate_sites": 0,
+    "real_Map_events": 0,
+    "cap_events": 0,
+    "kinds": {
+      "Refused": 34,
+      "NotYet": 85,
+      "Boundary": 79
+    }
+  },
+  "head-utilities-r1": {
+    "complete": true,
+    "status": {
+      "hostname": "ae770fcedbbc",
+      "kernel": "6.18.57",
+      "loadavg_start": [
+        1.30224609375,
+        1.431640625,
+        1.6123046875
+      ],
+      "cpu_quota": "400000 100000",
+      "memory_limit_bytes": "17179869184",
+      "label": "head",
+      "name": "utilities",
+      "repeat": 1,
+      "sha": "26d208af47f81143ff1db2280a5b43292deb96ba",
+      "command": [
+        "/workspace/depthgate2-tools-head/entry-census",
+        "/workspace/depthgate2-adapted/src/tsc/tsc.ts",
+        "/workspace/depthgate2-runs/head-utilities-r1/latent.jsonl"
+      ],
+      "cwd": "/workspace/depthgate2-head",
+      "environment": {
+        "CENSUS_MODULE_FORMAT": "CommonJSBundle",
+        "LATENT_FULL": "1",
+        "LATENT_ASSERT_NO_OUTPUT": "1",
+        "LATENT_TAIL": "1",
+        "LATENT_ONLY_FILE": "/workspace/depthgate2-adapted/src/compiler/utilities.ts",
+        "LATENT_TIMES": "/dev/stderr"
+      },
+      "binary_sha256": "b7a30e1394317e33797f62f3c343e88ec4077ace109b03d54c76ac9c64049d4d",
+      "selected_source_sha256": "fc048c135e5c228251ce81124b82695eaebabcc3e931dcc5806f66cecd41ee82",
+      "timeout_seconds": 1800,
+      "started_utc": "2026-11-18T12:35:54Z",
+      "loadavg_end": [
+        1.6455078125,
+        1.47607421875,
+        1.47802734375
+      ],
+      "wall_seconds": 826.8088529250008,
+      "exit_code": 0,
+      "timed_out": false,
+      "sigkill_required": false,
+      "peak_rss_kib": 1735264,
+      "user_cpu_seconds": 1081.241228,
+      "system_cpu_seconds": 24.269176,
+      "finished_utc": "2026-11-18T12:49:41Z"
+    },
+    "parse_errors": [],
+    "checker_rejected": false,
+    "diagnostics": [],
+    "events": 1297,
+    "distinct_findings": 922,
+    "distinct_gate_sites": 0,
+    "real_Map_events": 4,
+    "cap_events": 0,
+    "kinds": {
+      "Refused": 321,
+      "NotYet": 440,
+      "Boundary": 536
+    }
+  },
+  "head-utilities-r2": {
+    "complete": true,
+    "status": {
+      "hostname": "ae770fcedbbc",
+      "kernel": "6.18.57",
+      "loadavg_start": [
+        1.6455078125,
+        1.47607421875,
+        1.47802734375
+      ],
+      "cpu_quota": "400000 100000",
+      "memory_limit_bytes": "17179869184",
+      "label": "head",
+      "name": "utilities",
+      "repeat": 2,
+      "sha": "26d208af47f81143ff1db2280a5b43292deb96ba",
+      "command": [
+        "/workspace/depthgate2-tools-head/entry-census",
+        "/workspace/depthgate2-adapted/src/tsc/tsc.ts",
+        "/workspace/depthgate2-runs/head-utilities-r2/latent.jsonl"
+      ],
+      "cwd": "/workspace/depthgate2-head",
+      "environment": {
+        "CENSUS_MODULE_FORMAT": "CommonJSBundle",
+        "LATENT_FULL": "1",
+        "LATENT_ASSERT_NO_OUTPUT": "1",
+        "LATENT_TAIL": "1",
+        "LATENT_ONLY_FILE": "/workspace/depthgate2-adapted/src/compiler/utilities.ts",
+        "LATENT_TIMES": "/dev/stderr"
+      },
+      "binary_sha256": "b7a30e1394317e33797f62f3c343e88ec4077ace109b03d54c76ac9c64049d4d",
+      "selected_source_sha256": "fc048c135e5c228251ce81124b82695eaebabcc3e931dcc5806f66cecd41ee82",
+      "timeout_seconds": 1800,
+      "started_utc": "2026-11-18T12:49:42Z",
+      "loadavg_end": [
+        1.80419921875,
+        1.6171875,
+        1.52294921875
+      ],
+      "wall_seconds": 798.0734143619993,
+      "exit_code": 0,
+      "timed_out": false,
+      "sigkill_required": false,
+      "peak_rss_kib": 1772232,
+      "user_cpu_seconds": 1039.795092,
+      "system_cpu_seconds": 28.105053,
+      "finished_utc": "2026-11-18T13:03:00Z"
+    },
+    "parse_errors": [],
+    "checker_rejected": false,
+    "diagnostics": [],
+    "events": 1297,
+    "distinct_findings": 922,
+    "distinct_gate_sites": 0,
+    "real_Map_events": 4,
+    "cap_events": 0,
+    "kinds": {
+      "Refused": 321,
+      "NotYet": 440,
+      "Boundary": 536
+    }
+  },
+  "head-transformers-utilities-r1": {
+    "complete": true,
+    "status": {
+      "hostname": "ae770fcedbbc",
+      "kernel": "6.18.57",
+      "loadavg_start": [
+        1.4814453125,
+        1.412109375,
+        2.0
+      ],
+      "cpu_quota": "400000 100000",
+      "memory_limit_bytes": "17179869184",
+      "label": "head",
+      "name": "transformers-utilities",
+      "repeat": 1,
+      "sha": "26d208af47f81143ff1db2280a5b43292deb96ba",
+      "command": [
+        "/workspace/depthgate2-tools-head/entry-census",
+        "/workspace/depthgate2-adapted/src/tsc/tsc.ts",
+        "/workspace/depthgate2-runs/head-transformers-utilities-r1/latent.jsonl"
+      ],
+      "cwd": "/workspace/depthgate2-head",
+      "environment": {
+        "CENSUS_MODULE_FORMAT": "CommonJSBundle",
+        "LATENT_FULL": "1",
+        "LATENT_ASSERT_NO_OUTPUT": "1",
+        "LATENT_TAIL": "1",
+        "LATENT_ONLY_FILE": "/workspace/depthgate2-adapted/src/compiler/transformers/utilities.ts",
+        "LATENT_TIMES": "/dev/stderr"
+      },
+      "binary_sha256": "b7a30e1394317e33797f62f3c343e88ec4077ace109b03d54c76ac9c64049d4d",
+      "selected_source_sha256": "e93a7435b835345d140c66dedb80c20e721210e6fc537ae0c3604a38d90e6216",
+      "timeout_seconds": 1800,
+      "started_utc": "2026-11-18T12:21:17Z",
+      "loadavg_end": [
+        1.08935546875,
+        1.29296875,
+        1.90380859375
+      ],
+      "wall_seconds": 85.7837964399996,
+      "exit_code": 0,
+      "timed_out": false,
+      "sigkill_required": false,
+      "peak_rss_kib": 1077836,
+      "user_cpu_seconds": 113.062445,
+      "system_cpu_seconds": 4.448,
+      "finished_utc": "2026-11-18T12:22:43Z"
+    },
+    "parse_errors": [],
+    "checker_rejected": false,
+    "diagnostics": [],
+    "events": 137,
+    "distinct_findings": 79,
+    "distinct_gate_sites": 0,
+    "real_Map_events": 0,
+    "cap_events": 0,
+    "kinds": {
+      "Refused": 34,
+      "NotYet": 42,
+      "Boundary": 61
+    }
+  },
+  "head-transformers-utilities-r2": {
+    "complete": true,
+    "status": {
+      "hostname": "ae770fcedbbc",
+      "kernel": "6.18.57",
+      "loadavg_start": [
+        1.08935546875,
+        1.29296875,
+        1.90380859375
+      ],
+      "cpu_quota": "400000 100000",
+      "memory_limit_bytes": "17179869184",
+      "label": "head",
+      "name": "transformers-utilities",
+      "repeat": 2,
+      "sha": "26d208af47f81143ff1db2280a5b43292deb96ba",
+      "command": [
+        "/workspace/depthgate2-tools-head/entry-census",
+        "/workspace/depthgate2-adapted/src/tsc/tsc.ts",
+        "/workspace/depthgate2-runs/head-transformers-utilities-r2/latent.jsonl"
+      ],
+      "cwd": "/workspace/depthgate2-head",
+      "environment": {
+        "CENSUS_MODULE_FORMAT": "CommonJSBundle",
+        "LATENT_FULL": "1",
+        "LATENT_ASSERT_NO_OUTPUT": "1",
+        "LATENT_TAIL": "1",
+        "LATENT_ONLY_FILE": "/workspace/depthgate2-adapted/src/compiler/transformers/utilities.ts",
+        "LATENT_TIMES": "/dev/stderr"
+      },
+      "binary_sha256": "b7a30e1394317e33797f62f3c343e88ec4077ace109b03d54c76ac9c64049d4d",
+      "selected_source_sha256": "e93a7435b835345d140c66dedb80c20e721210e6fc537ae0c3604a38d90e6216",
+      "timeout_seconds": 1800,
+      "started_utc": "2026-11-18T12:22:43Z",
+      "loadavg_end": [
+        1.23291015625,
+        1.30810546875,
+        1.853515625
+      ],
+      "wall_seconds": 87.66284786400047,
+      "exit_code": 0,
+      "timed_out": false,
+      "sigkill_required": false,
+      "peak_rss_kib": 1013080,
+      "user_cpu_seconds": 106.198891,
+      "system_cpu_seconds": 4.209646,
+      "finished_utc": "2026-11-18T12:24:10Z"
+    },
+    "parse_errors": [],
+    "checker_rejected": false,
+    "diagnostics": [],
+    "events": 137,
+    "distinct_findings": 79,
+    "distinct_gate_sites": 0,
+    "real_Map_events": 0,
+    "cap_events": 0,
+    "kinds": {
+      "Refused": 34,
+      "NotYet": 42,
+      "Boundary": 61
+    }
+  }
+}

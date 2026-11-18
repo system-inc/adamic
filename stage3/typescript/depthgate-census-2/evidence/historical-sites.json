@@ -1,0 +1,1558 @@
+[
+  {
+    "where": "/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts:625:22",
+    "file": "src/compiler/utilitiesPublic.ts",
+    "line": 625,
+    "column": 22,
+    "events": [
+      {
+        "depth": 0,
+        "kind": "NotYet",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "lowering",
+        "reason": "a Map or Set interface implemented by a value that isn't a Map or Set",
+        "root_kind": "",
+        "text": "/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts:625:22: stage 0 can't lower a Map or Set interface implemented by a value that isn't a Map or Set yet",
+        "unit": "/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts:623:1",
+        "where": "/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts:625:22"
+      }
+    ],
+    "units": [
+      {
+        "where": "/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts:623:1",
+        "name": "isEmptyBindingPattern",
+        "text": "/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts:625:22: stage 0 can't lower a Map or Set interface implemented by a value that isn't a Map or Set yet"
+      }
+    ],
+    "source_line": "        return every(node.elements, isEmptyBindingElement);",
+    "identifier": "node",
+    "context": {
+      "name": "isEmptyBindingPattern",
+      "line": 623,
+      "text": "export function isEmptyBindingPattern(node: BindingName): node is BindingPattern {\r\n    if (isBindingPattern(node)) {\r\n        return every(node.elements, isEmptyBindingElement);\r\n    }\r\n    return false;\r\n}"
+    }
+  },
+  {
+    "where": "/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts:1035:30",
+    "file": "src/compiler/utilitiesPublic.ts",
+    "line": 1035,
+    "column": 30,
+    "events": [
+      {
+        "depth": 0,
+        "kind": "NotYet",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "lowering",
+        "reason": "a Map or Set interface implemented by a value that isn't a Map or Set",
+        "root_kind": "",
+        "text": "/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts:1035:30: stage 0 can't lower a Map or Set interface implemented by a value that isn't a Map or Set yet",
+        "unit": "/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts:1034:1",
+        "where": "/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts:1035:30"
+      }
+    ],
+    "units": [
+      {
+        "where": "/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts:1034:1",
+        "name": "getModifiers",
+        "text": "/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts:1035:30: stage 0 can't lower a Map or Set interface implemented by a value that isn't a Map or Set yet"
+      }
+    ],
+    "source_line": "    if (hasSyntacticModifier(node, ModifierFlags.Modifier)) {",
+    "identifier": "node",
+    "context": {
+      "name": "getModifiers",
+      "line": 1034,
+      "text": "export function getModifiers(node: HasModifiers): readonly Modifier[] | undefined {\r\n    if (hasSyntacticModifier(node, ModifierFlags.Modifier)) {\r\n        return filter(node.modifiers, isModifier);\r\n    }\r\n}"
+    }
+  },
+  {
+    "where": "/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts:1082:31",
+    "file": "src/compiler/utilitiesPublic.ts",
+    "line": 1082,
+    "column": 31,
+    "events": [
+      {
+        "depth": 0,
+        "kind": "NotYet",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "lowering",
+        "reason": "a Map or Set interface implemented by a value that isn't a Map or Set",
+        "root_kind": "",
+        "text": "/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts:1082:31: stage 0 can't lower a Map or Set interface implemented by a value that isn't a Map or Set yet",
+        "unit": "/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts:1080:1",
+        "where": "/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts:1082:31"
+      }
+    ],
+    "units": [
+      {
+        "where": "/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts:1080:1",
+        "name": "getJSDocTypeParameterTagsWorker",
+        "text": "/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts:1082:31: stage 0 can't lower a Map or Set interface implemented by a value that isn't a Map or Set yet"
+      }
+    ],
+    "source_line": "    return getJSDocTagsWorker(param.parent, noCache).filter((tag): tag is JSDocTemplateTag => isJSDocTemplateTag(tag) && tag.typeParameters.some(tp => tp.name.escapedText === name));",
+    "identifier": "param",
+    "context": {
+      "name": "getJSDocTypeParameterTagsWorker",
+      "line": 1080,
+      "text": "function getJSDocTypeParameterTagsWorker(param: TypeParameterDeclaration, noCache?: boolean): readonly JSDocTemplateTag[] {\r\n    const name = param.name.escapedText;\r\n    return getJSDocTagsWorker(param.parent, noCache).filter((tag): tag is JSDocTemplateTag => isJSDocTemplateTag(tag) && tag.typeParameters.some(tp => tp.name.escapedText === name));\r\n}"
+    }
+  },
+  {
+    "where": "/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts:1111:37",
+    "file": "src/compiler/utilitiesPublic.ts",
+    "line": 1111,
+    "column": 37,
+    "events": [
+      {
+        "depth": 0,
+        "kind": "NotYet",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "lowering",
+        "reason": "a Map or Set interface implemented by a value that isn't a Map or Set",
+        "root_kind": "",
+        "text": "/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts:1111:37: stage 0 can't lower a Map or Set interface implemented by a value that isn't a Map or Set yet",
+        "unit": "/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts:1110:1",
+        "where": "/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts:1111:37"
+      }
+    ],
+    "units": [
+      {
+        "where": "/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts:1110:1",
+        "name": "hasJSDocParameterTags",
+        "text": "/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts:1111:37: stage 0 can't lower a Map or Set interface implemented by a value that isn't a Map or Set yet"
+      }
+    ],
+    "source_line": "    return !!getFirstJSDocTag(node, isJSDocParameterTag);",
+    "identifier": "isJSDocParameterTag",
+    "declaration": {
+      "file": "src/compiler/factory/nodeTests.ts",
+      "line": 1148,
+      "name": "isJSDocParameterTag",
+      "text": "export function isJSDocParameterTag(node: Node): node is JSDocParameterTag {\r\n    return node.kind === SyntaxKind.JSDocParameterTag;\r\n}"
+    },
+    "context": {
+      "name": "hasJSDocParameterTags",
+      "line": 1110,
+      "text": "export function hasJSDocParameterTags(node: FunctionLikeDeclaration | SignatureDeclaration): boolean {\r\n    return !!getFirstJSDocTag(node, isJSDocParameterTag);\r\n}"
+    }
+  },
+  {
+    "where": "/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts:1116:35",
+    "file": "src/compiler/utilitiesPublic.ts",
+    "line": 1116,
+    "column": 35,
+    "events": [
+      {
+        "depth": 0,
+        "kind": "NotYet",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "lowering",
+        "reason": "a Map or Set interface implemented by a value that isn't a Map or Set",
+        "root_kind": "",
+        "text": "/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts:1116:35: stage 0 can't lower a Map or Set interface implemented by a value that isn't a Map or Set yet",
+        "unit": "/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts:1115:1",
+        "where": "/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts:1116:35"
+      }
+    ],
+    "units": [
+      {
+        "where": "/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts:1115:1",
+        "name": "getJSDocAugmentsTag",
+        "text": "/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts:1116:35: stage 0 can't lower a Map or Set interface implemented by a value that isn't a Map or Set yet"
+      }
+    ],
+    "source_line": "    return getFirstJSDocTag(node, isJSDocAugmentsTag);",
+    "identifier": "isJSDocAugmentsTag",
+    "declaration": {
+      "file": "src/compiler/factory/nodeTests.ts",
+      "line": 1096,
+      "name": "isJSDocAugmentsTag",
+      "text": "export function isJSDocAugmentsTag(node: Node): node is JSDocAugmentsTag {\r\n    return node.kind === SyntaxKind.JSDocAugmentsTag;\r\n}"
+    },
+    "context": {
+      "name": "getJSDocAugmentsTag",
+      "line": 1115,
+      "text": "export function getJSDocAugmentsTag(node: Node): JSDocAugmentsTag | undefined {\r\n    return getFirstJSDocTag(node, isJSDocAugmentsTag);\r\n}"
+    }
+  },
+  {
+    "where": "/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts:1121:34",
+    "file": "src/compiler/utilitiesPublic.ts",
+    "line": 1121,
+    "column": 34,
+    "events": [
+      {
+        "depth": 0,
+        "kind": "NotYet",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "lowering",
+        "reason": "a Map or Set interface implemented by a value that isn't a Map or Set",
+        "root_kind": "",
+        "text": "/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts:1121:34: stage 0 can't lower a Map or Set interface implemented by a value that isn't a Map or Set yet",
+        "unit": "/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts:1120:1",
+        "where": "/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts:1121:34"
+      }
+    ],
+    "units": [
+      {
+        "where": "/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts:1120:1",
+        "name": "getJSDocImplementsTags",
+        "text": "/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts:1121:34: stage 0 can't lower a Map or Set interface implemented by a value that isn't a Map or Set yet"
+      }
+    ],
+    "source_line": "    return getAllJSDocTags(node, isJSDocImplementsTag);",
+    "identifier": "isJSDocImplementsTag",
+    "declaration": {
+      "file": "src/compiler/factory/nodeTests.ts",
+      "line": 1180,
+      "name": "isJSDocImplementsTag",
+      "text": "export function isJSDocImplementsTag(node: Node): node is JSDocImplementsTag {\r\n    return node.kind === SyntaxKind.JSDocImplementsTag;\r\n}"
+    },
+    "context": {
+      "name": "getJSDocImplementsTags",
+      "line": 1120,
+      "text": "export function getJSDocImplementsTags(node: Node): readonly JSDocImplementsTag[] {\r\n    return getAllJSDocTags(node, isJSDocImplementsTag);\r\n}"
+    }
+  },
+  {
+    "where": "/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts:1126:35",
+    "file": "src/compiler/utilitiesPublic.ts",
+    "line": 1126,
+    "column": 35,
+    "events": [
+      {
+        "depth": 0,
+        "kind": "NotYet",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "lowering",
+        "reason": "a Map or Set interface implemented by a value that isn't a Map or Set",
+        "root_kind": "",
+        "text": "/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts:1126:35: stage 0 can't lower a Map or Set interface implemented by a value that isn't a Map or Set yet",
+        "unit": "/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts:1125:1",
+        "where": "/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts:1126:35"
+      }
+    ],
+    "units": [
+      {
+        "where": "/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts:1125:1",
+        "name": "getJSDocClassTag",
+        "text": "/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts:1126:35: stage 0 can't lower a Map or Set interface implemented by a value that isn't a Map or Set yet"
+      }
+    ],
+    "source_line": "    return getFirstJSDocTag(node, isJSDocClassTag);",
+    "identifier": "isJSDocClassTag",
+    "declaration": {
+      "file": "src/compiler/factory/nodeTests.ts",
+      "line": 1104,
+      "name": "isJSDocClassTag",
+      "text": "export function isJSDocClassTag(node: Node): node is JSDocClassTag {\r\n    return node.kind === SyntaxKind.JSDocClassTag;\r\n}"
+    },
+    "context": {
+      "name": "getJSDocClassTag",
+      "line": 1125,
+      "text": "export function getJSDocClassTag(node: Node): JSDocClassTag | undefined {\r\n    return getFirstJSDocTag(node, isJSDocClassTag);\r\n}"
+    }
+  },
+  {
+    "where": "/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts:1131:35",
+    "file": "src/compiler/utilitiesPublic.ts",
+    "line": 1131,
+    "column": 35,
+    "events": [
+      {
+        "depth": 0,
+        "kind": "NotYet",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "lowering",
+        "reason": "a Map or Set interface implemented by a value that isn't a Map or Set",
+        "root_kind": "",
+        "text": "/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts:1131:35: stage 0 can't lower a Map or Set interface implemented by a value that isn't a Map or Set yet",
+        "unit": "/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts:1130:1",
+        "where": "/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts:1131:35"
+      }
+    ],
+    "units": [
+      {
+        "where": "/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts:1130:1",
+        "name": "getJSDocPublicTag",
+        "text": "/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts:1131:35: stage 0 can't lower a Map or Set interface implemented by a value that isn't a Map or Set yet"
+      }
+    ],
+    "source_line": "    return getFirstJSDocTag(node, isJSDocPublicTag);",
+    "identifier": "isJSDocPublicTag",
+    "declaration": {
+      "file": "src/compiler/factory/nodeTests.ts",
+      "line": 1112,
+      "name": "isJSDocPublicTag",
+      "text": "export function isJSDocPublicTag(node: Node): node is JSDocPublicTag {\r\n    return node.kind === SyntaxKind.JSDocPublicTag;\r\n}"
+    },
+    "context": {
+      "name": "getJSDocPublicTag",
+      "line": 1130,
+      "text": "export function getJSDocPublicTag(node: Node): JSDocPublicTag | undefined {\r\n    return getFirstJSDocTag(node, isJSDocPublicTag);\r\n}"
+    }
+  },
+  {
+    "where": "/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts:1136:35",
+    "file": "src/compiler/utilitiesPublic.ts",
+    "line": 1136,
+    "column": 35,
+    "events": [
+      {
+        "depth": 0,
+        "kind": "NotYet",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "lowering",
+        "reason": "a Map or Set interface implemented by a value that isn't a Map or Set",
+        "root_kind": "",
+        "text": "/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts:1136:35: stage 0 can't lower a Map or Set interface implemented by a value that isn't a Map or Set yet",
+        "unit": "/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts:1135:1",
+        "where": "/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts:1136:35"
+      }
+    ],
+    "units": [
+      {
+        "where": "/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts:1135:1",
+        "name": "getJSDocPublicTagNoCache",
+        "text": "/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts:1136:35: stage 0 can't lower a Map or Set interface implemented by a value that isn't a Map or Set yet"
+      }
+    ],
+    "source_line": "    return getFirstJSDocTag(node, isJSDocPublicTag, /*noCache*/ true);",
+    "identifier": "isJSDocPublicTag",
+    "declaration": {
+      "file": "src/compiler/factory/nodeTests.ts",
+      "line": 1112,
+      "name": "isJSDocPublicTag",
+      "text": "export function isJSDocPublicTag(node: Node): node is JSDocPublicTag {\r\n    return node.kind === SyntaxKind.JSDocPublicTag;\r\n}"
+    },
+    "context": {
+      "name": "getJSDocPublicTagNoCache",
+      "line": 1135,
+      "text": "export function getJSDocPublicTagNoCache(node: Node): JSDocPublicTag | undefined {\r\n    return getFirstJSDocTag(node, isJSDocPublicTag, /*noCache*/ true);\r\n}"
+    }
+  },
+  {
+    "where": "/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts:1141:35",
+    "file": "src/compiler/utilitiesPublic.ts",
+    "line": 1141,
+    "column": 35,
+    "events": [
+      {
+        "depth": 0,
+        "kind": "NotYet",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "lowering",
+        "reason": "a Map or Set interface implemented by a value that isn't a Map or Set",
+        "root_kind": "",
+        "text": "/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts:1141:35: stage 0 can't lower a Map or Set interface implemented by a value that isn't a Map or Set yet",
+        "unit": "/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts:1140:1",
+        "where": "/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts:1141:35"
+      }
+    ],
+    "units": [
+      {
+        "where": "/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts:1140:1",
+        "name": "getJSDocPrivateTag",
+        "text": "/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts:1141:35: stage 0 can't lower a Map or Set interface implemented by a value that isn't a Map or Set yet"
+      }
+    ],
+    "source_line": "    return getFirstJSDocTag(node, isJSDocPrivateTag);",
+    "identifier": "isJSDocPrivateTag",
+    "declaration": {
+      "file": "src/compiler/factory/nodeTests.ts",
+      "line": 1116,
+      "name": "isJSDocPrivateTag",
+      "text": "export function isJSDocPrivateTag(node: Node): node is JSDocPrivateTag {\r\n    return node.kind === SyntaxKind.JSDocPrivateTag;\r\n}"
+    },
+    "context": {
+      "name": "getJSDocPrivateTag",
+      "line": 1140,
+      "text": "export function getJSDocPrivateTag(node: Node): JSDocPrivateTag | undefined {\r\n    return getFirstJSDocTag(node, isJSDocPrivateTag);\r\n}"
+    }
+  },
+  {
+    "where": "/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts:1146:35",
+    "file": "src/compiler/utilitiesPublic.ts",
+    "line": 1146,
+    "column": 35,
+    "events": [
+      {
+        "depth": 0,
+        "kind": "NotYet",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "lowering",
+        "reason": "a Map or Set interface implemented by a value that isn't a Map or Set",
+        "root_kind": "",
+        "text": "/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts:1146:35: stage 0 can't lower a Map or Set interface implemented by a value that isn't a Map or Set yet",
+        "unit": "/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts:1145:1",
+        "where": "/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts:1146:35"
+      }
+    ],
+    "units": [
+      {
+        "where": "/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts:1145:1",
+        "name": "getJSDocPrivateTagNoCache",
+        "text": "/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts:1146:35: stage 0 can't lower a Map or Set interface implemented by a value that isn't a Map or Set yet"
+      }
+    ],
+    "source_line": "    return getFirstJSDocTag(node, isJSDocPrivateTag, /*noCache*/ true);",
+    "identifier": "isJSDocPrivateTag",
+    "declaration": {
+      "file": "src/compiler/factory/nodeTests.ts",
+      "line": 1116,
+      "name": "isJSDocPrivateTag",
+      "text": "export function isJSDocPrivateTag(node: Node): node is JSDocPrivateTag {\r\n    return node.kind === SyntaxKind.JSDocPrivateTag;\r\n}"
+    },
+    "context": {
+      "name": "getJSDocPrivateTagNoCache",
+      "line": 1145,
+      "text": "export function getJSDocPrivateTagNoCache(node: Node): JSDocPrivateTag | undefined {\r\n    return getFirstJSDocTag(node, isJSDocPrivateTag, /*noCache*/ true);\r\n}"
+    }
+  },
+  {
+    "where": "/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts:1151:35",
+    "file": "src/compiler/utilitiesPublic.ts",
+    "line": 1151,
+    "column": 35,
+    "events": [
+      {
+        "depth": 0,
+        "kind": "NotYet",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "lowering",
+        "reason": "a Map or Set interface implemented by a value that isn't a Map or Set",
+        "root_kind": "",
+        "text": "/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts:1151:35: stage 0 can't lower a Map or Set interface implemented by a value that isn't a Map or Set yet",
+        "unit": "/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts:1150:1",
+        "where": "/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts:1151:35"
+      }
+    ],
+    "units": [
+      {
+        "where": "/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts:1150:1",
+        "name": "getJSDocProtectedTag",
+        "text": "/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts:1151:35: stage 0 can't lower a Map or Set interface implemented by a value that isn't a Map or Set yet"
+      }
+    ],
+    "source_line": "    return getFirstJSDocTag(node, isJSDocProtectedTag);",
+    "identifier": "isJSDocProtectedTag",
+    "declaration": {
+      "file": "src/compiler/factory/nodeTests.ts",
+      "line": 1120,
+      "name": "isJSDocProtectedTag",
+      "text": "export function isJSDocProtectedTag(node: Node): node is JSDocProtectedTag {\r\n    return node.kind === SyntaxKind.JSDocProtectedTag;\r\n}"
+    },
+    "context": {
+      "name": "getJSDocProtectedTag",
+      "line": 1150,
+      "text": "export function getJSDocProtectedTag(node: Node): JSDocProtectedTag | undefined {\r\n    return getFirstJSDocTag(node, isJSDocProtectedTag);\r\n}"
+    }
+  },
+  {
+    "where": "/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts:1156:35",
+    "file": "src/compiler/utilitiesPublic.ts",
+    "line": 1156,
+    "column": 35,
+    "events": [
+      {
+        "depth": 0,
+        "kind": "NotYet",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "lowering",
+        "reason": "a Map or Set interface implemented by a value that isn't a Map or Set",
+        "root_kind": "",
+        "text": "/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts:1156:35: stage 0 can't lower a Map or Set interface implemented by a value that isn't a Map or Set yet",
+        "unit": "/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts:1155:1",
+        "where": "/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts:1156:35"
+      }
+    ],
+    "units": [
+      {
+        "where": "/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts:1155:1",
+        "name": "getJSDocProtectedTagNoCache",
+        "text": "/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts:1156:35: stage 0 can't lower a Map or Set interface implemented by a value that isn't a Map or Set yet"
+      }
+    ],
+    "source_line": "    return getFirstJSDocTag(node, isJSDocProtectedTag, /*noCache*/ true);",
+    "identifier": "isJSDocProtectedTag",
+    "declaration": {
+      "file": "src/compiler/factory/nodeTests.ts",
+      "line": 1120,
+      "name": "isJSDocProtectedTag",
+      "text": "export function isJSDocProtectedTag(node: Node): node is JSDocProtectedTag {\r\n    return node.kind === SyntaxKind.JSDocProtectedTag;\r\n}"
+    },
+    "context": {
+      "name": "getJSDocProtectedTagNoCache",
+      "line": 1155,
+      "text": "export function getJSDocProtectedTagNoCache(node: Node): JSDocProtectedTag | undefined {\r\n    return getFirstJSDocTag(node, isJSDocProtectedTag, /*noCache*/ true);\r\n}"
+    }
+  },
+  {
+    "where": "/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts:1161:35",
+    "file": "src/compiler/utilitiesPublic.ts",
+    "line": 1161,
+    "column": 35,
+    "events": [
+      {
+        "depth": 0,
+        "kind": "NotYet",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "lowering",
+        "reason": "a Map or Set interface implemented by a value that isn't a Map or Set",
+        "root_kind": "",
+        "text": "/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts:1161:35: stage 0 can't lower a Map or Set interface implemented by a value that isn't a Map or Set yet",
+        "unit": "/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts:1160:1",
+        "where": "/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts:1161:35"
+      }
+    ],
+    "units": [
+      {
+        "where": "/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts:1160:1",
+        "name": "getJSDocReadonlyTag",
+        "text": "/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts:1161:35: stage 0 can't lower a Map or Set interface implemented by a value that isn't a Map or Set yet"
+      }
+    ],
+    "source_line": "    return getFirstJSDocTag(node, isJSDocReadonlyTag);",
+    "identifier": "isJSDocReadonlyTag",
+    "declaration": {
+      "file": "src/compiler/factory/nodeTests.ts",
+      "line": 1124,
+      "name": "isJSDocReadonlyTag",
+      "text": "export function isJSDocReadonlyTag(node: Node): node is JSDocReadonlyTag {\r\n    return node.kind === SyntaxKind.JSDocReadonlyTag;\r\n}"
+    },
+    "context": {
+      "name": "getJSDocReadonlyTag",
+      "line": 1160,
+      "text": "export function getJSDocReadonlyTag(node: Node): JSDocReadonlyTag | undefined {\r\n    return getFirstJSDocTag(node, isJSDocReadonlyTag);\r\n}"
+    }
+  },
+  {
+    "where": "/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts:1166:35",
+    "file": "src/compiler/utilitiesPublic.ts",
+    "line": 1166,
+    "column": 35,
+    "events": [
+      {
+        "depth": 0,
+        "kind": "NotYet",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "lowering",
+        "reason": "a Map or Set interface implemented by a value that isn't a Map or Set",
+        "root_kind": "",
+        "text": "/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts:1166:35: stage 0 can't lower a Map or Set interface implemented by a value that isn't a Map or Set yet",
+        "unit": "/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts:1165:1",
+        "where": "/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts:1166:35"
+      }
+    ],
+    "units": [
+      {
+        "where": "/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts:1165:1",
+        "name": "getJSDocReadonlyTagNoCache",
+        "text": "/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts:1166:35: stage 0 can't lower a Map or Set interface implemented by a value that isn't a Map or Set yet"
+      }
+    ],
+    "source_line": "    return getFirstJSDocTag(node, isJSDocReadonlyTag, /*noCache*/ true);",
+    "identifier": "isJSDocReadonlyTag",
+    "declaration": {
+      "file": "src/compiler/factory/nodeTests.ts",
+      "line": 1124,
+      "name": "isJSDocReadonlyTag",
+      "text": "export function isJSDocReadonlyTag(node: Node): node is JSDocReadonlyTag {\r\n    return node.kind === SyntaxKind.JSDocReadonlyTag;\r\n}"
+    },
+    "context": {
+      "name": "getJSDocReadonlyTagNoCache",
+      "line": 1165,
+      "text": "export function getJSDocReadonlyTagNoCache(node: Node): JSDocReadonlyTag | undefined {\r\n    return getFirstJSDocTag(node, isJSDocReadonlyTag, /*noCache*/ true);\r\n}"
+    }
+  },
+  {
+    "where": "/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts:1170:35",
+    "file": "src/compiler/utilitiesPublic.ts",
+    "line": 1170,
+    "column": 35,
+    "events": [
+      {
+        "depth": 0,
+        "kind": "NotYet",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "lowering",
+        "reason": "a Map or Set interface implemented by a value that isn't a Map or Set",
+        "root_kind": "",
+        "text": "/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts:1170:35: stage 0 can't lower a Map or Set interface implemented by a value that isn't a Map or Set yet",
+        "unit": "/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts:1169:1",
+        "where": "/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts:1170:35"
+      }
+    ],
+    "units": [
+      {
+        "where": "/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts:1169:1",
+        "name": "getJSDocOverrideTagNoCache",
+        "text": "/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts:1170:35: stage 0 can't lower a Map or Set interface implemented by a value that isn't a Map or Set yet"
+      }
+    ],
+    "source_line": "    return getFirstJSDocTag(node, isJSDocOverrideTag, /*noCache*/ true);",
+    "identifier": "isJSDocOverrideTag",
+    "declaration": {
+      "file": "src/compiler/factory/nodeTests.ts",
+      "line": 1128,
+      "name": "isJSDocOverrideTag",
+      "text": "export function isJSDocOverrideTag(node: Node): node is JSDocOverrideTag {\r\n    return node.kind === SyntaxKind.JSDocOverrideTag;\r\n}"
+    },
+    "context": {
+      "name": "getJSDocOverrideTagNoCache",
+      "line": 1169,
+      "text": "export function getJSDocOverrideTagNoCache(node: Node): JSDocOverrideTag | undefined {\r\n    return getFirstJSDocTag(node, isJSDocOverrideTag, /*noCache*/ true);\r\n}"
+    }
+  },
+  {
+    "where": "/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts:1175:35",
+    "file": "src/compiler/utilitiesPublic.ts",
+    "line": 1175,
+    "column": 35,
+    "events": [
+      {
+        "depth": 0,
+        "kind": "NotYet",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "lowering",
+        "reason": "a Map or Set interface implemented by a value that isn't a Map or Set",
+        "root_kind": "",
+        "text": "/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts:1175:35: stage 0 can't lower a Map or Set interface implemented by a value that isn't a Map or Set yet",
+        "unit": "/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts:1174:1",
+        "where": "/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts:1175:35"
+      }
+    ],
+    "units": [
+      {
+        "where": "/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts:1174:1",
+        "name": "getJSDocDeprecatedTag",
+        "text": "/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts:1175:35: stage 0 can't lower a Map or Set interface implemented by a value that isn't a Map or Set yet"
+      }
+    ],
+    "source_line": "    return getFirstJSDocTag(node, isJSDocDeprecatedTag);",
+    "identifier": "isJSDocDeprecatedTag",
+    "declaration": {
+      "file": "src/compiler/factory/nodeTests.ts",
+      "line": 1136,
+      "name": "isJSDocDeprecatedTag",
+      "text": "export function isJSDocDeprecatedTag(node: Node): node is JSDocDeprecatedTag {\r\n    return node.kind === SyntaxKind.JSDocDeprecatedTag;\r\n}"
+    },
+    "context": {
+      "name": "getJSDocDeprecatedTag",
+      "line": 1174,
+      "text": "export function getJSDocDeprecatedTag(node: Node): JSDocDeprecatedTag | undefined {\r\n    return getFirstJSDocTag(node, isJSDocDeprecatedTag);\r\n}"
+    }
+  },
+  {
+    "where": "/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts:1180:35",
+    "file": "src/compiler/utilitiesPublic.ts",
+    "line": 1180,
+    "column": 35,
+    "events": [
+      {
+        "depth": 0,
+        "kind": "NotYet",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "lowering",
+        "reason": "a Map or Set interface implemented by a value that isn't a Map or Set",
+        "root_kind": "",
+        "text": "/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts:1180:35: stage 0 can't lower a Map or Set interface implemented by a value that isn't a Map or Set yet",
+        "unit": "/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts:1179:1",
+        "where": "/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts:1180:35"
+      }
+    ],
+    "units": [
+      {
+        "where": "/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts:1179:1",
+        "name": "getJSDocDeprecatedTagNoCache",
+        "text": "/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts:1180:35: stage 0 can't lower a Map or Set interface implemented by a value that isn't a Map or Set yet"
+      }
+    ],
+    "source_line": "    return getFirstJSDocTag(node, isJSDocDeprecatedTag, /*noCache*/ true);",
+    "identifier": "isJSDocDeprecatedTag",
+    "declaration": {
+      "file": "src/compiler/factory/nodeTests.ts",
+      "line": 1136,
+      "name": "isJSDocDeprecatedTag",
+      "text": "export function isJSDocDeprecatedTag(node: Node): node is JSDocDeprecatedTag {\r\n    return node.kind === SyntaxKind.JSDocDeprecatedTag;\r\n}"
+    },
+    "context": {
+      "name": "getJSDocDeprecatedTagNoCache",
+      "line": 1179,
+      "text": "export function getJSDocDeprecatedTagNoCache(node: Node): JSDocDeprecatedTag | undefined {\r\n    return getFirstJSDocTag(node, isJSDocDeprecatedTag, /*noCache*/ true);\r\n}"
+    }
+  },
+  {
+    "where": "/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts:1190:35",
+    "file": "src/compiler/utilitiesPublic.ts",
+    "line": 1190,
+    "column": 35,
+    "events": [
+      {
+        "depth": 0,
+        "kind": "NotYet",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "lowering",
+        "reason": "a Map or Set interface implemented by a value that isn't a Map or Set",
+        "root_kind": "",
+        "text": "/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts:1190:35: stage 0 can't lower a Map or Set interface implemented by a value that isn't a Map or Set yet",
+        "unit": "/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts:1189:1",
+        "where": "/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts:1190:35"
+      }
+    ],
+    "units": [
+      {
+        "where": "/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts:1189:1",
+        "name": "getJSDocThisTag",
+        "text": "/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts:1190:35: stage 0 can't lower a Map or Set interface implemented by a value that isn't a Map or Set yet"
+      }
+    ],
+    "source_line": "    return getFirstJSDocTag(node, isJSDocThisTag);",
+    "identifier": "isJSDocThisTag",
+    "declaration": {
+      "file": "src/compiler/factory/nodeTests.ts",
+      "line": 1156,
+      "name": "isJSDocThisTag",
+      "text": "export function isJSDocThisTag(node: Node): node is JSDocThisTag {\r\n    return node.kind === SyntaxKind.JSDocThisTag;\r\n}"
+    },
+    "context": {
+      "name": "getJSDocThisTag",
+      "line": 1189,
+      "text": "export function getJSDocThisTag(node: Node): JSDocThisTag | undefined {\r\n    return getFirstJSDocTag(node, isJSDocThisTag);\r\n}"
+    }
+  },
+  {
+    "where": "/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts:1195:35",
+    "file": "src/compiler/utilitiesPublic.ts",
+    "line": 1195,
+    "column": 35,
+    "events": [
+      {
+        "depth": 0,
+        "kind": "NotYet",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "lowering",
+        "reason": "a Map or Set interface implemented by a value that isn't a Map or Set",
+        "root_kind": "",
+        "text": "/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts:1195:35: stage 0 can't lower a Map or Set interface implemented by a value that isn't a Map or Set yet",
+        "unit": "/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts:1194:1",
+        "where": "/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts:1195:35"
+      }
+    ],
+    "units": [
+      {
+        "where": "/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts:1194:1",
+        "name": "getJSDocReturnTag",
+        "text": "/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts:1195:35: stage 0 can't lower a Map or Set interface implemented by a value that isn't a Map or Set yet"
+      }
+    ],
+    "source_line": "    return getFirstJSDocTag(node, isJSDocReturnTag);",
+    "identifier": "isJSDocReturnTag",
+    "declaration": {
+      "file": "src/compiler/factory/nodeTests.ts",
+      "line": 1152,
+      "name": "isJSDocReturnTag",
+      "text": "export function isJSDocReturnTag(node: Node): node is JSDocReturnTag {\r\n    return node.kind === SyntaxKind.JSDocReturnTag;\r\n}"
+    },
+    "context": {
+      "name": "getJSDocReturnTag",
+      "line": 1194,
+      "text": "export function getJSDocReturnTag(node: Node): JSDocReturnTag | undefined {\r\n    return getFirstJSDocTag(node, isJSDocReturnTag);\r\n}"
+    }
+  },
+  {
+    "where": "/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts:1200:35",
+    "file": "src/compiler/utilitiesPublic.ts",
+    "line": 1200,
+    "column": 35,
+    "events": [
+      {
+        "depth": 0,
+        "kind": "NotYet",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "lowering",
+        "reason": "a Map or Set interface implemented by a value that isn't a Map or Set",
+        "root_kind": "",
+        "text": "/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts:1200:35: stage 0 can't lower a Map or Set interface implemented by a value that isn't a Map or Set yet",
+        "unit": "/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts:1199:1",
+        "where": "/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts:1200:35"
+      }
+    ],
+    "units": [
+      {
+        "where": "/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts:1199:1",
+        "name": "getJSDocTemplateTag",
+        "text": "/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts:1200:35: stage 0 can't lower a Map or Set interface implemented by a value that isn't a Map or Set yet"
+      }
+    ],
+    "source_line": "    return getFirstJSDocTag(node, isJSDocTemplateTag);",
+    "identifier": "isJSDocTemplateTag",
+    "declaration": {
+      "file": "src/compiler/factory/nodeTests.ts",
+      "line": 1164,
+      "name": "isJSDocTemplateTag",
+      "text": "export function isJSDocTemplateTag(node: Node): node is JSDocTemplateTag {\r\n    return node.kind === SyntaxKind.JSDocTemplateTag;\r\n}"
+    },
+    "context": {
+      "name": "getJSDocTemplateTag",
+      "line": 1199,
+      "text": "export function getJSDocTemplateTag(node: Node): JSDocTemplateTag | undefined {\r\n    return getFirstJSDocTag(node, isJSDocTemplateTag);\r\n}"
+    }
+  },
+  {
+    "where": "/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts:1204:35",
+    "file": "src/compiler/utilitiesPublic.ts",
+    "line": 1204,
+    "column": 35,
+    "events": [
+      {
+        "depth": 0,
+        "kind": "NotYet",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "lowering",
+        "reason": "a Map or Set interface implemented by a value that isn't a Map or Set",
+        "root_kind": "",
+        "text": "/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts:1204:35: stage 0 can't lower a Map or Set interface implemented by a value that isn't a Map or Set yet",
+        "unit": "/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts:1203:1",
+        "where": "/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts:1204:35"
+      }
+    ],
+    "units": [
+      {
+        "where": "/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts:1203:1",
+        "name": "getJSDocSatisfiesTag",
+        "text": "/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts:1204:35: stage 0 can't lower a Map or Set interface implemented by a value that isn't a Map or Set yet"
+      }
+    ],
+    "source_line": "    return getFirstJSDocTag(node, isJSDocSatisfiesTag);",
+    "identifier": "isJSDocSatisfiesTag",
+    "declaration": {
+      "file": "src/compiler/factory/nodeTests.ts",
+      "line": 1184,
+      "name": "isJSDocSatisfiesTag",
+      "text": "export function isJSDocSatisfiesTag(node: Node): node is JSDocSatisfiesTag {\r\n    return node.kind === SyntaxKind.JSDocSatisfiesTag;\r\n}"
+    },
+    "context": {
+      "name": "getJSDocSatisfiesTag",
+      "line": 1203,
+      "text": "export function getJSDocSatisfiesTag(node: Node): JSDocSatisfiesTag | undefined {\r\n    return getFirstJSDocTag(node, isJSDocSatisfiesTag);\r\n}"
+    }
+  },
+  {
+    "where": "/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts:1210:40",
+    "file": "src/compiler/utilitiesPublic.ts",
+    "line": 1210,
+    "column": 40,
+    "events": [
+      {
+        "depth": 0,
+        "kind": "NotYet",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "lowering",
+        "reason": "a Map or Set interface implemented by a value that isn't a Map or Set",
+        "root_kind": "",
+        "text": "/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts:1210:40: stage 0 can't lower a Map or Set interface implemented by a value that isn't a Map or Set yet",
+        "unit": "/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts:1208:1",
+        "where": "/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts:1210:40"
+      }
+    ],
+    "units": [
+      {
+        "where": "/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts:1208:1",
+        "name": "getJSDocTypeTag",
+        "text": "/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts:1210:40: stage 0 can't lower a Map or Set interface implemented by a value that isn't a Map or Set yet"
+      }
+    ],
+    "source_line": "    const tag = getFirstJSDocTag(node, isJSDocTypeTag);",
+    "identifier": "isJSDocTypeTag",
+    "declaration": {
+      "file": "src/compiler/factory/nodeTests.ts",
+      "line": 1160,
+      "name": "isJSDocTypeTag",
+      "text": "export function isJSDocTypeTag(node: Node): node is JSDocTypeTag {\r\n    return node.kind === SyntaxKind.JSDocTypeTag;\r\n}"
+    },
+    "context": {
+      "name": "getJSDocTypeTag",
+      "line": 1208,
+      "text": "export function getJSDocTypeTag(node: Node): JSDocTypeTag | undefined {\r\n    // We should have already issued an error if there were multiple type jsdocs, so just use the first one.\r\n    const tag = getFirstJSDocTag(node, isJSDocTypeTag);\r\n    if (tag && tag.typeExpression && tag.typeExpression.type) {\r\n        return tag;\r\n    }\r\n    return undefined;\r\n}"
+    }
+  },
+  {
+    "where": "/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts:1229:84",
+    "file": "src/compiler/utilitiesPublic.ts",
+    "line": 1229,
+    "column": 84,
+    "events": [
+      {
+        "depth": 0,
+        "kind": "NotYet",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "lowering",
+        "reason": "a Map or Set interface implemented by a value that isn't a Map or Set",
+        "root_kind": "",
+        "text": "/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts:1229:84: stage 0 can't lower a Map or Set interface implemented by a value that isn't a Map or Set yet",
+        "unit": "/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts:1228:1",
+        "where": "/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts:1229:84"
+      }
+    ],
+    "units": [
+      {
+        "where": "/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts:1228:1",
+        "name": "getJSDocType",
+        "text": "/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts:1229:84: stage 0 can't lower a Map or Set interface implemented by a value that isn't a Map or Set yet"
+      }
+    ],
+    "source_line": "    let tag: JSDocTypeTag | JSDocParameterTag | undefined = getFirstJSDocTag(node, isJSDocTypeTag);",
+    "identifier": "isJSDocTypeTag",
+    "declaration": {
+      "file": "src/compiler/factory/nodeTests.ts",
+      "line": 1160,
+      "name": "isJSDocTypeTag",
+      "text": "export function isJSDocTypeTag(node: Node): node is JSDocTypeTag {\r\n    return node.kind === SyntaxKind.JSDocTypeTag;\r\n}"
+    },
+    "context": {
+      "name": "getJSDocType",
+      "line": 1228,
+      "text": "export function getJSDocType(node: Node): TypeNode | undefined {\r\n    let tag: JSDocTypeTag | JSDocParameterTag | undefined = getFirstJSDocTag(node, isJSDocTypeTag);\r\n    if (!tag && isParameter(node)) {\r\n        tag = find(getJSDocParameterTags(node), tag => !!tag.typeExpression);\r\n    }\r\n\r\n    return tag && tag.typeExpression && tag.typeExpression.type;\r\n}"
+    }
+  },
+  {
+    "where": "/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts:1339:38",
+    "file": "src/compiler/utilitiesPublic.ts",
+    "line": 1339,
+    "column": 38,
+    "events": [
+      {
+        "depth": 0,
+        "kind": "NotYet",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "lowering",
+        "reason": "a Map or Set interface implemented by a value that isn't a Map or Set",
+        "root_kind": "",
+        "text": "/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts:1339:38: stage 0 can't lower a Map or Set interface implemented by a value that isn't a Map or Set yet",
+        "unit": "/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts:1322:1",
+        "where": "/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts:1339:38"
+      }
+    ],
+    "units": [
+      {
+        "where": "/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts:1322:1",
+        "name": "getEffectiveTypeParameterDeclarations",
+        "text": "/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts:1339:38: stage 0 can't lower a Map or Set interface implemented by a value that isn't a Map or Set yet"
+      }
+    ],
+    "source_line": "    if (canHaveIllegalTypeParameters(node) && node.typeParameters) {",
+    "identifier": "node",
+    "context": {
+      "name": "getEffectiveTypeParameterDeclarations",
+      "line": 1322,
+      "text": "export function getEffectiveTypeParameterDeclarations(node: DeclarationWithTypeParameters): readonly TypeParameterDeclaration[] {\r\n    if (isJSDocSignature(node)) {\r\n        if (isJSDocOverloadTag(node.parent)) {\r\n            const jsDoc = getJSDocRoot(node.parent);\r\n            if (jsDoc && length(jsDoc.tags)) {\r\n                return flatMap(jsDoc.tags, tag => isJSDocTemplateTag(tag) ? tag.typeParameters : undefined);\r\n            }\r\n        }\r\n        return emptyArray;\r\n    }\r\n    if (isJSDocTypeAlias(node)) {\r\n        Debug.assert(node.parent.kind === SyntaxKind.JSDoc);\r\n        return flatMap(node.parent.tags, tag => isJSDocTemplateTag(tag) ? tag.typeParameters : undefined);\r\n    }\r\n    if (node.typeParameters) {\r\n        return node.typeParameters;\r\n    }\r\n    if (canHaveIllegalTypeParameters(node) && node.typeParameters) {\r\n        return node.typeParameters;\r\n    }\r\n    if (isInJSFile(node)) {\r\n        const decls = getJSDocTypeParameterDeclarations(node);\r\n        if (decls.length) {\r\n            return decls;\r\n        }\r\n        const typeTag = getJSDocType(node);\r\n        if (typeTag && isFunctionTypeNode(typeTag) && typeTag.typeParameters) {\r\n            return typeTag.typeParameters;\r\n        }\r\n    }\r\n    return emptyArray;\r\n}"
+    }
+  },
+  {
+    "where": "/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts:1342:20",
+    "file": "src/compiler/utilitiesPublic.ts",
+    "line": 1342,
+    "column": 20,
+    "events": [
+      {
+        "depth": 0,
+        "kind": "NotYet",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "lowering",
+        "reason": "a Map or Set interface implemented by a value that isn't a Map or Set",
+        "root_kind": "",
+        "text": "/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts:1342:20: stage 0 can't lower a Map or Set interface implemented by a value that isn't a Map or Set yet",
+        "unit": "/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts:1322:1",
+        "where": "/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts:1342:20"
+      }
+    ],
+    "units": [
+      {
+        "where": "/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts:1322:1",
+        "name": "getEffectiveTypeParameterDeclarations",
+        "text": "/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts:1342:20: stage 0 can't lower a Map or Set interface implemented by a value that isn't a Map or Set yet"
+      }
+    ],
+    "source_line": "    if (isInJSFile(node)) {",
+    "identifier": "node",
+    "context": {
+      "name": "getEffectiveTypeParameterDeclarations",
+      "line": 1322,
+      "text": "export function getEffectiveTypeParameterDeclarations(node: DeclarationWithTypeParameters): readonly TypeParameterDeclaration[] {\r\n    if (isJSDocSignature(node)) {\r\n        if (isJSDocOverloadTag(node.parent)) {\r\n            const jsDoc = getJSDocRoot(node.parent);\r\n            if (jsDoc && length(jsDoc.tags)) {\r\n                return flatMap(jsDoc.tags, tag => isJSDocTemplateTag(tag) ? tag.typeParameters : undefined);\r\n            }\r\n        }\r\n        return emptyArray;\r\n    }\r\n    if (isJSDocTypeAlias(node)) {\r\n        Debug.assert(node.parent.kind === SyntaxKind.JSDoc);\r\n        return flatMap(node.parent.tags, tag => isJSDocTemplateTag(tag) ? tag.typeParameters : undefined);\r\n    }\r\n    if (node.typeParameters) {\r\n        return node.typeParameters;\r\n    }\r\n    if (canHaveIllegalTypeParameters(node) && node.typeParameters) {\r\n        return node.typeParameters;\r\n    }\r\n    if (isInJSFile(node)) {\r\n        const decls = getJSDocTypeParameterDeclarations(node);\r\n        if (decls.length) {\r\n            return decls;\r\n        }\r\n        const typeTag = getJSDocType(node);\r\n        if (typeTag && isFunctionTypeNode(typeTag) && typeTag.typeParameters) {\r\n            return typeTag.typeParameters;\r\n        }\r\n    }\r\n    return emptyArray;\r\n}"
+    }
+  },
+  {
+    "where": "/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts:1357:28",
+    "file": "src/compiler/utilitiesPublic.ts",
+    "line": 1357,
+    "column": 28,
+    "events": [
+      {
+        "depth": 0,
+        "kind": "NotYet",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "lowering",
+        "reason": "a Map or Set interface implemented by a value that isn't a Map or Set",
+        "root_kind": "",
+        "text": "/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts:1357:28: stage 0 can't lower a Map or Set interface implemented by a value that isn't a Map or Set yet",
+        "unit": "/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts:1355:1",
+        "where": "/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts:1357:28"
+      }
+    ],
+    "units": [
+      {
+        "where": "/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts:1355:1",
+        "name": "getEffectiveConstraintOfTypeParameter",
+        "text": "/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts:1357:28: stage 0 can't lower a Map or Set interface implemented by a value that isn't a Map or Set yet"
+      }
+    ],
+    "source_line": "        isJSDocTemplateTag(node.parent) && node === node.parent.typeParameters[0] ? node.parent.constraint :",
+    "identifier": "node",
+    "context": {
+      "name": "getEffectiveConstraintOfTypeParameter",
+      "line": 1355,
+      "text": "export function getEffectiveConstraintOfTypeParameter(node: TypeParameterDeclaration): TypeNode | undefined {\r\n    return node.constraint ? node.constraint :\r\n        isJSDocTemplateTag(node.parent) && node === node.parent.typeParameters[0] ? node.parent.constraint :\r\n        undefined;\r\n}"
+    }
+  },
+  {
+    "where": "/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts:2559:23",
+    "file": "src/compiler/utilitiesPublic.ts",
+    "line": 2559,
+    "column": 23,
+    "events": [
+      {
+        "depth": 0,
+        "kind": "NotYet",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "lowering",
+        "reason": "a Map or Set interface implemented by a value that isn't a Map or Set",
+        "root_kind": "",
+        "text": "/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts:2559:23: stage 0 can't lower a Map or Set interface implemented by a value that isn't a Map or Set yet",
+        "unit": "/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts:2556:1",
+        "where": "/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts:2559:23"
+      }
+    ],
+    "units": [
+      {
+        "where": "/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts:2556:1",
+        "name": "hasJSDocNodes",
+        "text": "/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts:2559:23: stage 0 can't lower a Map or Set interface implemented by a value that isn't a Map or Set yet"
+      }
+    ],
+    "source_line": "    const { jsDoc } = node as JSDocContainer;",
+    "identifier": "node",
+    "context": {
+      "name": "hasJSDocNodes",
+      "line": 2556,
+      "text": "export function hasJSDocNodes(node: Node): node is HasJSDoc {\r\n    if (!canHaveJSDoc(node)) return false;\r\n\r\n    const { jsDoc } = node as JSDocContainer;\r\n    return !!jsDoc && jsDoc.length > 0;\r\n}"
+    }
+  },
+  {
+    "where": "/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts:2638:76",
+    "file": "src/compiler/utilitiesPublic.ts",
+    "line": 2638,
+    "column": 76,
+    "events": [
+      {
+        "depth": 0,
+        "kind": "NotYet",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "lowering",
+        "reason": "a Map or Set interface implemented by a value that isn't a Map or Set",
+        "root_kind": "",
+        "text": "/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts:2638:76: stage 0 can't lower a Map or Set interface implemented by a value that isn't a Map or Set yet",
+        "unit": "/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts:2637:1",
+        "where": "/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts:2638:76"
+      }
+    ],
+    "units": [
+      {
+        "where": "/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts:2637:1",
+        "name": "hasRestParameter",
+        "text": "/workspace/mapset-adapted/src/compiler/utilitiesPublic.ts:2638:76: stage 0 can't lower a Map or Set interface implemented by a value that isn't a Map or Set yet"
+      }
+    ],
+    "source_line": "    const last = lastOrUndefined<ParameterDeclaration | JSDocParameterTag>(s.parameters);",
+    "identifier": "s",
+    "context": {
+      "name": "hasRestParameter",
+      "line": 2637,
+      "text": "export function hasRestParameter(s: SignatureDeclaration | JSDocSignature): boolean {\r\n    const last = lastOrUndefined<ParameterDeclaration | JSDocParameterTag>(s.parameters);\r\n    return !!last && isRestParameter(last);\r\n}"
+    }
+  },
+  {
+    "where": "/workspace/mapset-adapted/src/compiler/utilities.ts:3095:20",
+    "file": "src/compiler/utilities.ts",
+    "line": 3095,
+    "column": 20,
+    "events": [
+      {
+        "depth": 0,
+        "kind": "NotYet",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "lowering",
+        "reason": "a Map or Set interface implemented by a value that isn't a Map or Set",
+        "root_kind": "",
+        "text": "/workspace/mapset-adapted/src/compiler/utilities.ts:3095:20: stage 0 can't lower a Map or Set interface implemented by a value that isn't a Map or Set yet",
+        "unit": "/workspace/mapset-adapted/src/compiler/utilities.ts:3113:1",
+        "where": "/workspace/mapset-adapted/src/compiler/utilities.ts:3095:20"
+      },
+      {
+        "depth": 0,
+        "kind": "NotYet",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "lowering",
+        "reason": "a Map or Set interface implemented by a value that isn't a Map or Set",
+        "root_kind": "",
+        "text": "/workspace/mapset-adapted/src/compiler/utilities.ts:3095:20: stage 0 can't lower a Map or Set interface implemented by a value that isn't a Map or Set yet",
+        "unit": "/workspace/mapset-adapted/src/compiler/utilities.ts:12296:1",
+        "where": "/workspace/mapset-adapted/src/compiler/utilities.ts:3095:20"
+      },
+      {
+        "depth": 0,
+        "kind": "NotYet",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "lowering",
+        "reason": "a Map or Set interface implemented by a value that isn't a Map or Set",
+        "root_kind": "",
+        "text": "/workspace/mapset-adapted/src/compiler/utilities.ts:3095:20: stage 0 can't lower a Map or Set interface implemented by a value that isn't a Map or Set yet",
+        "unit": "/workspace/mapset-adapted/src/compiler/utilities.ts:12304:1",
+        "where": "/workspace/mapset-adapted/src/compiler/utilities.ts:3095:20"
+      }
+    ],
+    "units": [
+      {
+        "where": "/workspace/mapset-adapted/src/compiler/utilities.ts:3113:1",
+        "name": "getTsConfigPropArrayElementValue",
+        "text": "/workspace/mapset-adapted/src/compiler/utilities.ts:3095:20: stage 0 can't lower a Map or Set interface implemented by a value that isn't a Map or Set yet"
+      },
+      {
+        "where": "/workspace/mapset-adapted/src/compiler/utilities.ts:12296:1",
+        "name": "getPropertyArrayElementValue",
+        "text": "/workspace/mapset-adapted/src/compiler/utilities.ts:3095:20: stage 0 can't lower a Map or Set interface implemented by a value that isn't a Map or Set yet"
+      },
+      {
+        "where": "/workspace/mapset-adapted/src/compiler/utilities.ts:12304:1",
+        "name": "getOptionsSyntaxByValue",
+        "text": "/workspace/mapset-adapted/src/compiler/utilities.ts:3095:20: stage 0 can't lower a Map or Set interface implemented by a value that isn't a Map or Set yet"
+      }
+    ],
+    "source_line": "    return forEach(objectLiteral?.properties, property => {",
+    "identifier": "objectLiteral",
+    "context": {
+      "name": "forEachPropertyAssignment",
+      "line": 3094,
+      "text": "export function forEachPropertyAssignment<T>(objectLiteral: ObjectLiteralExpression | undefined, key: string, callback: (property: PropertyAssignment) => T | undefined, key2?: string): T | undefined {\r\n    return forEach(objectLiteral?.properties, property => {\r\n        if (!isPropertyAssignment(property)) return undefined;\r\n        const propName = tryGetTextOfPropertyName(property.name);\r\n        return key === propName || (key2 && key2 === propName) ?\r\n            callback(property) :\r\n            undefined;\r\n    });\r\n}"
+    }
+  },
+  {
+    "where": "/workspace/mapset-adapted/src/compiler/utilities.ts:4429:82",
+    "file": "src/compiler/utilities.ts",
+    "line": 4429,
+    "column": 82,
+    "events": [
+      {
+        "depth": 0,
+        "kind": "NotYet",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "lowering",
+        "reason": "a Map or Set interface implemented by a value that isn't a Map or Set",
+        "root_kind": "",
+        "text": "/workspace/mapset-adapted/src/compiler/utilities.ts:4429:82: stage 0 can't lower a Map or Set interface implemented by a value that isn't a Map or Set yet",
+        "unit": "/workspace/mapset-adapted/src/compiler/utilities.ts:4426:1",
+        "where": "/workspace/mapset-adapted/src/compiler/utilities.ts:4429:82"
+      }
+    ],
+    "units": [
+      {
+        "where": "/workspace/mapset-adapted/src/compiler/utilities.ts:4426:1",
+        "name": "getNamespaceDeclarationNode",
+        "text": "/workspace/mapset-adapted/src/compiler/utilities.ts:4429:82: stage 0 can't lower a Map or Set interface implemented by a value that isn't a Map or Set yet"
+      }
+    ],
+    "source_line": "            return node.importClause && tryCast(node.importClause.namedBindings, isNamespaceImport);",
+    "identifier": "isNamespaceImport",
+    "declaration": {
+      "file": "src/compiler/factory/nodeTests.ts",
+      "line": 870,
+      "name": "isNamespaceImport",
+      "text": "export function isNamespaceImport(node: Node): node is NamespaceImport {\r\n    return node.kind === SyntaxKind.NamespaceImport;\r\n}"
+    },
+    "context": {
+      "name": "getNamespaceDeclarationNode",
+      "line": 4426,
+      "text": "export function getNamespaceDeclarationNode(node: ImportDeclaration | ImportEqualsDeclaration | ExportDeclaration): ImportEqualsDeclaration | NamespaceImport | NamespaceExport | undefined {\r\n    switch (node.kind) {\r\n        case SyntaxKind.ImportDeclaration:\r\n            return node.importClause && tryCast(node.importClause.namedBindings, isNamespaceImport);\r\n        case SyntaxKind.ImportEqualsDeclaration:\r\n            return node;\r\n        case SyntaxKind.ExportDeclaration:\r\n            return node.exportClause && tryCast(node.exportClause, isNamespaceExport);\r\n        default:\r\n            return Debug.assertNever(node);\r\n    }\r\n}"
+    }
+  },
+  {
+    "where": "/workspace/mapset-adapted/src/compiler/utilities.ts:4780:34",
+    "file": "src/compiler/utilities.ts",
+    "line": 4780,
+    "column": 34,
+    "events": [
+      {
+        "depth": 0,
+        "kind": "NotYet",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "lowering",
+        "reason": "a Map or Set interface implemented by a value that isn't a Map or Set",
+        "root_kind": "",
+        "text": "/workspace/mapset-adapted/src/compiler/utilities.ts:4780:34: stage 0 can't lower a Map or Set interface implemented by a value that isn't a Map or Set yet",
+        "unit": "/workspace/mapset-adapted/src/compiler/utilities.ts:4779:1",
+        "where": "/workspace/mapset-adapted/src/compiler/utilities.ts:4780:34"
+      }
+    ],
+    "units": [
+      {
+        "where": "/workspace/mapset-adapted/src/compiler/utilities.ts:4779:1",
+        "name": "getJSDocOverloadTags",
+        "text": "/workspace/mapset-adapted/src/compiler/utilities.ts:4780:34: stage 0 can't lower a Map or Set interface implemented by a value that isn't a Map or Set yet"
+      }
+    ],
+    "source_line": "    return getAllJSDocTags(node, isJSDocOverloadTag);",
+    "identifier": "isJSDocOverloadTag",
+    "declaration": {
+      "file": "src/compiler/factory/nodeTests.ts",
+      "line": 1132,
+      "name": "isJSDocOverloadTag",
+      "text": "export function isJSDocOverloadTag(node: Node): node is JSDocOverloadTag {\r\n    return node.kind === SyntaxKind.JSDocOverloadTag;\r\n}"
+    },
+    "context": {
+      "name": "getJSDocOverloadTags",
+      "line": 4779,
+      "text": "export function getJSDocOverloadTags(node: Node): readonly JSDocOverloadTag[] {\r\n    return getAllJSDocTags(node, isJSDocOverloadTag);\r\n}"
+    }
+  },
+  {
+    "where": "/workspace/mapset-adapted/src/compiler/utilities.ts:10816:71",
+    "file": "src/compiler/utilities.ts",
+    "line": 10816,
+    "column": 71,
+    "events": [
+      {
+        "depth": 0,
+        "kind": "NotYet",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "lowering",
+        "reason": "a Map or Set interface implemented by a value that isn't a Map or Set",
+        "root_kind": "",
+        "text": "/workspace/mapset-adapted/src/compiler/utilities.ts:10816:71: stage 0 can't lower a Map or Set interface implemented by a value that isn't a Map or Set yet",
+        "unit": "/workspace/mapset-adapted/src/compiler/utilities.ts:10811:1",
+        "where": "/workspace/mapset-adapted/src/compiler/utilities.ts:10816:71"
+      }
+    ],
+    "units": [
+      {
+        "where": "/workspace/mapset-adapted/src/compiler/utilities.ts:10811:1",
+        "name": "getContainingNodeArray",
+        "text": "/workspace/mapset-adapted/src/compiler/utilities.ts:10816:71: stage 0 can't lower a Map or Set interface implemented by a value that isn't a Map or Set yet"
+      }
+    ],
+    "source_line": "            return parent.kind === SyntaxKind.InferType ? undefined : parent.typeParameters;",
+    "identifier": "parent",
+    "context": {
+      "name": "getContainingNodeArray",
+      "line": 10811,
+      "text": "export function getContainingNodeArray(node: Node): NodeArray<Node> | undefined {\r\n    if (!node.parent) return undefined;\r\n    switch (node.kind) {\r\n        case SyntaxKind.TypeParameter:\r\n            const { parent } = node as TypeParameterDeclaration;\r\n            return parent.kind === SyntaxKind.InferType ? undefined : parent.typeParameters;\r\n        case SyntaxKind.Parameter:\r\n            return (node as ParameterDeclaration).parent.parameters;\r\n        case SyntaxKind.TemplateLiteralTypeSpan:\r\n            return (node as TemplateLiteralTypeSpan).parent.templateSpans;\r\n        case SyntaxKind.TemplateSpan:\r\n            return (node as TemplateSpan).parent.templateSpans;\r\n        case SyntaxKind.Decorator: {\r\n            const { parent } = node as Decorator;\r\n            return canHaveDecorators(parent) ? parent.modifiers :\r\n                undefined;\r\n        }\r\n        case SyntaxKind.HeritageClause:\r\n            return (node as HeritageClause).parent.heritageClauses;\r\n    }\r\n\r\n    const { parent } = node;\r\n    if (isJSDocTag(node)) {\r\n        return isJSDocTypeLiteral(node.parent) ? undefined : node.parent.tags;\r\n    }\r\n\r\n    switch (parent.kind) {\r\n        case SyntaxKind.TypeLiteral:\r\n        case SyntaxKind.InterfaceDeclaration:\r\n            return isTypeElement(node) ? (parent as TypeLiteralNode | InterfaceDeclaration).members : undefined;\r\n        case SyntaxKind.UnionType:\r\n        case SyntaxKind.IntersectionType:\r\n            return (parent as UnionOrIntersectionTypeNode).types;\r\n        case SyntaxKind.TupleType:\r\n        case SyntaxKind.ArrayLiteralExpression:\r\n        case SyntaxKind.CommaListExpression:\r\n        case SyntaxKind.NamedImports:\r\n        case SyntaxKind.NamedExports:\r\n            return (parent as TupleTypeNode | ArrayLiteralExpression | CommaListExpression | NamedImports | NamedExports).elements;\r\n        case SyntaxKind.ObjectLiteralExpression:\r\n        case SyntaxKind.JsxAttributes:\r\n            return (parent as ObjectLiteralExpressionBase<ObjectLiteralElement>).properties;\r\n        case SyntaxKind.CallExpression:\r\n        case SyntaxKind.NewExpression:\r\n            return isTypeNode(node) ? (parent as CallExpression | NewExpression).typeArguments :\r\n                (parent as CallExpression | NewExpression).expression === node ? undefined :\r\n                (parent as CallExpression | NewExpression).arguments;\r\n        case SyntaxKind.JsxElement:\r\n        case SyntaxKind.JsxFragment:\r\n            return isJsxChild(node) ? (parent as JsxElement | JsxFragment).children : undefined;\r\n        case SyntaxKind.JsxOpeningElement:\r\n        case SyntaxKind.JsxSelfClosingElement:\r\n            return isTypeNode(node) ? (parent as JsxOpeningElement | JsxSelfClosingElement).typeArguments : undefined;\r\n        case SyntaxKind.Block:\r\n        case SyntaxKind.CaseClause:\r\n        case SyntaxKind.DefaultClause:\r\n        case SyntaxKind.ModuleBlock:\r\n            return (parent as Block | CaseOrDefaultClause | ModuleBlock).statements;\r\n        case SyntaxKind.CaseBlock:\r\n            return (parent as CaseBlock).clauses;\r\n        case SyntaxKind.ClassDeclaration:\r\n        case SyntaxKind.ClassExpression:\r\n            return isClassElement(node) ? (parent as ClassLikeDeclaration).members : undefined;\r\n        case SyntaxKind.EnumDeclaration:\r\n            return isEnumMember(node) ? (parent as EnumDeclaration).members : undefined;\r\n        case SyntaxKind.SourceFile:\r\n            return (parent as SourceFile).statements;\r\n    }\r\n}"
+    }
+  },
+  {
+    "where": "/workspace/mapset-adapted/src/compiler/utilities.ts:11649:41",
+    "file": "src/compiler/utilities.ts",
+    "line": 11649,
+    "column": 41,
+    "events": [
+      {
+        "depth": 0,
+        "kind": "NotYet",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "lowering",
+        "reason": "a Map or Set interface implemented by a value that isn't a Map or Set",
+        "root_kind": "",
+        "text": "/workspace/mapset-adapted/src/compiler/utilities.ts:11649:41: stage 0 can't lower a Map or Set interface implemented by a value that isn't a Map or Set yet",
+        "unit": "/workspace/mapset-adapted/src/compiler/utilities.ts:11493:1",
+        "where": "/workspace/mapset-adapted/src/compiler/utilities.ts:11649:41"
+      },
+      {
+        "depth": 0,
+        "kind": "NotYet",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "lowering",
+        "reason": "a Map or Set interface implemented by a value that isn't a Map or Set",
+        "root_kind": "",
+        "text": "/workspace/mapset-adapted/src/compiler/utilities.ts:11649:41: stage 0 can't lower a Map or Set interface implemented by a value that isn't a Map or Set yet",
+        "unit": "/workspace/mapset-adapted/src/compiler/utilities.ts:11513:5",
+        "where": "/workspace/mapset-adapted/src/compiler/utilities.ts:11649:41"
+      }
+    ],
+    "units": [
+      {
+        "where": "/workspace/mapset-adapted/src/compiler/utilities.ts:11493:1",
+        "name": "createNameResolver",
+        "text": "/workspace/mapset-adapted/src/compiler/utilities.ts:11649:41: stage 0 can't lower a Map or Set interface implemented by a value that isn't a Map or Set yet"
+      },
+      {
+        "where": "/workspace/mapset-adapted/src/compiler/utilities.ts:11513:5",
+        "name": "resolveNameHelper",
+        "text": "/workspace/mapset-adapted/src/compiler/utilities.ts:11649:41: stage 0 can't lower a Map or Set interface implemented by a value that isn't a Map or Set yet"
+      }
+    ],
+    "source_line": "                    if (result = lookup(getSymbolOfDeclaration(location as EnumDeclaration)?.exports || emptySymbols, name, meaning & SymbolFlags.EnumMember)) {",
+    "identifier": "getSymbolOfDeclaration",
+    "declaration": {
+      "file": "src/compiler/checker.ts",
+      "line": 5317,
+      "name": "getSymbolOfDeclaration",
+      "text": "function getSymbolOfDeclaration(node: Declaration): Symbol {\r\n        return getMergedSymbol(node.symbol && getLateBoundSymbol(node.symbol));\r\n    }"
+    },
+    "context": {
+      "name": "resolveNameHelper",
+      "line": 11513,
+      "text": "function resolveNameHelper(\r\n        location: Node | undefined,\r\n        nameArg: __String | Identifier,\r\n        meaning: SymbolFlags,\r\n        nameNotFoundMessage: DiagnosticMessage | undefined,\r\n        isUse: boolean,\r\n        excludeGlobals?: boolean,\r\n    ): Symbol | undefined {\r\n        const originalLocation = location; // needed for did-you-mean error reporting, which gathers candidates starting from the original location\r\n        let result: Symbol | undefined;\r\n        let lastLocation: Node | undefined;\r\n        let lastSelfReferenceLocation: Declaration | undefined;\r\n        let propertyWithInvalidInitializer: PropertyDeclaration | undefined;\r\n        let associatedDeclarationForContainingInitializerOrBindingName: ParameterDeclaration | BindingElement | undefined;\r\n        let withinDeferredContext = false;\r\n        let grandparent: Node;\r\n        const name = isString(nameArg) ? nameArg : (nameArg as Identifier).escapedText;\r\n        loop:\r\n        while (location) {\r\n            if (name === \"const\" && isConstAssertion(location)) {\r\n                // `const` in an `as const` has no symbol, but issues no error because there is no *actual* lookup of the type\r\n                // (it refers to the constant type of the expression instead)\r\n                return undefined;\r\n            }\r\n            if (isModuleOrEnumDeclaration(location) && lastLocation && location.name === lastLocation) {\r\n                // If lastLocation is the name of a namespace or enum, skip the parent since it will have is own locals that could\r\n                // conflict.\r\n                lastLocation = location;\r\n                location = location.parent;\r\n            }\r\n            // Locals of a source file are not in scope (because they get merged into the global symbol table)\r\n            if (canHaveLocals(location) && location.locals && !isGlobalSourceFile(location)) {\r\n                if (result = lookup(location.locals, name, meaning)) {\r\n                    let useResult = true;\r\n                    if (isFunctionLike(location) && lastLocation && lastLocation !== (location as FunctionLikeDeclaration).body) {\r\n                        // symbol lookup restrictions for function-like declarations\r\n                        // - Type parameters of a function are in scope in the entire function declaration, including the parameter\r\n                        //   list and return type. However, local types are only in scope in the function body.\r\n                        // - parameters are only in the scope of function body\r\n                        // This restriction does not apply to JSDoc comment types because they are parented\r\n                        // at a higher level than type parameters would normally be\r\n                        if (meaning & result.flags & SymbolFlags.Type && lastLocation.kind !== SyntaxKind.JSDoc) {\r\n                            useResult = result.flags & SymbolFlags.TypeParameter\r\n                                // type parameters are visible in parameter list, return type and type parameter list\r\n                                ? !!(lastLocation.flags & NodeFlags.Synthesized) || // Synthetic fake scopes are added for signatures so type parameters are accessible from them\r\n                                    lastLocation === (location as FunctionLikeDeclaration).type ||\r\n                                    lastLocation.kind === SyntaxKind.Parameter ||\r\n                                    lastLocation.kind === SyntaxKind.JSDocParameterTag ||\r\n                                    lastLocation.kind === SyntaxKind.JSDocReturnTag ||\r\n                                    lastLocation.kind === SyntaxKind.TypeParameter\r\n                                // local types not visible outside the function body\r\n                                : false;\r\n                        }\r\n                        if (meaning & result.flags & SymbolFlags.Variable) {\r\n                            // expression inside parameter will lookup as normal variable scope when targeting es2015+\r\n                            if (useOuterVariableScopeInParameter(result, location, lastLocation)) {\r\n                                useResult = false;\r\n                            }\r\n                            else if (result.flags & SymbolFlags.FunctionScopedVariable) {\r\n                                // parameters are visible only inside function body, parameter list and return type\r\n                                // technically for parameter list case here we might mix parameters and variables declared in function,\r\n                                // however it is detected separately when checking initializers of parameters\r\n                                // to make sure that they reference no variables declared after them.\r\n                                useResult = lastLocation.kind === SyntaxKind.Parameter ||\r\n                                    !!(lastLocation.flags & NodeFlags.Synthesized) || // Synthetic fake scopes are added for signatures so parameters are accessible from them\r\n                                    (\r\n                                        lastLocation === (location as FunctionLikeDeclaration).type &&\r\n                                        !!findAncestor(result.valueDeclaration, isParameter)\r\n                                    );\r\n                            }\r\n                        }\r\n                    }\r\n                    else if (location.kind === SyntaxKind.ConditionalType) {\r\n                        // A type parameter declared using 'infer T' in a conditional type is visible only in\r\n                        // the true branch of the conditional type.\r\n                        useResult = lastLocation === location.trueType;\r\n                    }\r\n\r\n                    if (useResult) {\r\n                        break loop;\r\n                    }\r\n                    else {\r\n                        result = undefined;\r\n                    }\r\n                }\r\n            }\r\n            withinDeferredContext = withinDeferredContext || getIsDeferredContext(location, lastLocation);\r\n            switch (location.kind) {\r\n                case SyntaxKind.SourceFile:\r\n                    if (!isExternalOrCommonJsModule(location as SourceFile)) break;\r\n                    // falls through\r\n                case SyntaxKind.ModuleDeclaration:\r\n                    const moduleExports = getSymbolOfDeclaration(location as SourceFile | ModuleDeclaration)?.exports || emptySymbols;\r\n                    if (location.kind === SyntaxKind.SourceFile || (isModuleDeclaration(location) && location.flags & NodeFlags.Ambient && !isGlobalScopeAugmentation(location))) {\r\n                        // It's an external module. First see if the module has an export default and if the local\r\n                        // name of that export default matches.\r\n                        if (result = moduleExports.get(InternalSymbolName.Default)) {\r\n                            const localSymbol = getLocalSymbolForExportDefault(result);\r\n                            if (localSymbol && (result.flags & meaning) && localSymbol.escapedName === name) {\r\n                                break loop;\r\n                            }\r\n                            result = undefined;\r\n                        }\r\n\r\n                        // Because of module/namespace merging, a module's exports are in scope,\r\n                        // yet we never want to treat an export specifier as putting a member in scope.\r\n                        // Therefore, if the name we find is purely an export specifier, it is not actually considered in scope.\r\n                        // Two things to note about this:\r\n                        //     1. We have to check this without calling getSymbol. The problem with calling getSymbol\r\n                        //        on an export specifier is that it might find the export specifier itself, and try to\r\n                        //        resolve it as an alias. This will cause the checker to consider the export specifier\r\n                        //        a circular alias reference when it might not be.\r\n                        //     2. We check === SymbolFlags.Alias in order to check that the symbol is *purely*\r\n                        //        an alias. If we used &, we'd be throwing out symbols that have non alias aspects,\r\n                        //        which is not the desired behavior.\r\n                        const moduleExport = moduleExports.get(name);\r\n                        if (\r\n                            moduleExport &&\r\n                            moduleExport.flags === SymbolFlags.Alias &&\r\n                            (getDeclarationOfKind(moduleExport, SyntaxKind.ExportSpecifier) || getDeclarationOfKind(moduleExport, SyntaxKind.NamespaceExport))\r\n                        ) {\r\n                            break;\r\n                        }\r\n                    }\r\n\r\n                    // ES6 exports are also visible locally (except for 'default'), but commonjs exports are not (except typedefs)\r\n                    if (name !== InternalSymbolName.Default && (result = lookup(moduleExports, name, meaning & SymbolFlags.ModuleMember))) {\r\n                        if (isSourceFile(location) && location.commonJsModuleIndicator && !result.declarations?.some(isJSDocTypeAlias)) {\r\n                            result = undefined;\r\n                        }\r\n                        else {\r\n                            break loop;\r\n                        }\r\n                    }\r\n                    break;\r\n                case SyntaxKind.EnumDeclaration:\r\n                    if (result = lookup(getSymbolOfDeclaration(location as EnumDeclaration)?.exports || emptySymbols, name, meaning & SymbolFlags.EnumMember)) {\r\n                        if (nameNotFoundMessage && getIsolatedModules(compilerOptions) && !(location.flags & NodeFlags.Ambient) && getSourceFileOfNode(location) !== getSourceFileOfNode(result.valueDeclaration)) {\r\n                            error(\r\n                                originalLocation,\r\n                                Diagnostics.Cannot_access_0_from_another_file_without_qualification_when_1_is_enabled_Use_2_instead,\r\n                                unescapeLeadingUnderscores(name),\r\n                                isolatedModulesLikeFlagName,\r\n                                `${unescapeLeadingUnderscores(getSymbolOfDeclaration(location as EnumDeclaration).escapedName)}.${unescapeLeadingUnderscores(name)}`,\r\n                            );\r\n                        }\r\n                        break loop;\r\n                    }\r\n                    break;\r\n                case SyntaxKind.PropertyDeclaration:\r\n                    // TypeScript 1.0 spec (April 2014): 8.4.1\r\n                    // Initializer expressions for instance member variables are evaluated in the scope\r\n                    // of the class constructor body but are not permitted to reference parameters or\r\n                    // local variables of the constructor. This effectively means that entities from outer scopes\r\n                    // by the same name as a constructor parameter or local variable are inaccessible\r\n                    // in initializer expressions for instance member variables.\r\n                    if (!isStatic(location)) {\r\n                        const ctor = findConstructorDeclaration(location.parent as ClassLikeDeclaration);\r\n                        if (ctor && ctor.locals) {\r\n                            if (lookup(ctor.locals, name, meaning & SymbolFlags.Value)) {\r\n                                // Remember the property node, it will be used later to report appropriate error\r\n                                Debug.assertNode(location, isPropertyDeclaration);\r\n                                propertyWithInvalidInitializer = location;\r\n                            }\r\n                        }\r\n                    }\r\n                    break;\r\n                case SyntaxKind.ClassDeclaration:\r\n                case SyntaxKind.ClassExpression:\r\n                case SyntaxKind.InterfaceDeclaration:\r\n                    // The below is used to lookup type parameters within a class or interface, as they are added to the class/interface locals\r\n                    // These can never be latebound, so the symbol's raw members are sufficient. `getMembersOfNode` cannot be used, as it would\r\n                    // trigger resolving late-bound names, which we may already be in the process of doing while we're here!\r\n                    if (result = lookup(getSymbolOfDeclaration(location as ClassLikeDeclaration | InterfaceDeclaration).members || emptySymbols, name, meaning & SymbolFlags.Type)) {\r\n                        if (!isTypeParameterSymbolDeclaredInContainer(result, location)) {\r\n                            // ignore type parameters not declared in this container\r\n                            result = undefined;\r\n                            break;\r\n                        }\r\n                        if (lastLocation && isStatic(lastLocation)) {\r\n                            // TypeScript 1.0 spec (April 2014): 3.4.1\r\n                            // The scope of a type parameter extends over the entire declaration with which the type\r\n                            // parameter list is associated, with the exception of static member declarations in classes.\r\n                            if (nameNotFoundMessage) {\r\n                                error(originalLocation, Diagnostics.Static_members_cannot_reference_class_type_parameters);\r\n                            }\r\n                            return undefined;\r\n                        }\r\n                        break loop;\r\n                    }\r\n                    if (isClassExpression(location) && meaning & SymbolFlags.Class) {\r\n                        const className = location.name;\r\n                        if (className && name === className.escapedText) {\r\n                            result = location.symbol;\r\n                            break loop;\r\n                        }\r\n                    }\r\n                    break;\r\n                case SyntaxKind.ExpressionWithTypeArguments:\r\n                    // The type parameters of a class are not in scope in the base class expression.\r\n                    if (lastLocation === (location as ExpressionWithTypeArguments).expression && (location.parent as HeritageClause).token === SyntaxKind.ExtendsKeyword) {\r\n                        const container = location.parent.parent;\r\n                        if (isClassLike(container) && (result = lookup(getSymbolOfDeclaration(container).members!, name, meaning & SymbolFlags.Type))) {\r\n                            if (nameNotFoundMessage) {\r\n                                error(originalLocation, Diagnostics.Base_class_expressions_cannot_reference_class_type_parameters);\r\n                            }\r\n                            return undefined;\r\n                        }\r\n                    }\r\n                    break;\r\n                // It is not legal to reference a class's own type parameters from a computed property name that\r\n                // belongs to the class. For example:\r\n                //\r\n                //   function foo<T>() { return '' }\r\n                //   class C<T> { // <-- Class's own type parameter T\r\n                //       [foo<T>()]() { } // <-- Reference to T from class's own computed property\r\n                //   }\r\n                //\r\n                case SyntaxKind.ComputedPropertyName:\r\n                    grandparent = location.parent.parent;\r\n                    if (isClassLike(grandparent) || grandparent.kind === SyntaxKind.InterfaceDeclaration) {\r\n                        // A reference to this grandparent's type parameters would be an error\r\n                        if (result = lookup(getSymbolOfDeclaration(grandparent as ClassLikeDeclaration | InterfaceDeclaration).members!, name, meaning & SymbolFlags.Type)) {\r\n                            if (nameNotFoundMessage) {\r\n                                error(originalLocation, Diagnostics.A_computed_property_name_cannot_reference_a_type_parameter_from_its_containing_type);\r\n                            }\r\n                            return undefined;\r\n                        }\r\n                    }\r\n                    break;\r\n                case SyntaxKind.ArrowFunction:\r\n                    // when targeting ES6 or higher there is no 'arguments' in an arrow function\r\n                    // for lower compile targets the resolved symbol is used to emit an error\r\n                    if (getEmitScriptTarget(compilerOptions) >= ScriptTarget.ES2015) {\r\n                        break;\r\n                    }\r\n                    // falls through\r\n                case SyntaxKind.MethodDeclaration:\r\n                case SyntaxKind.Constructor:\r\n                case SyntaxKind.GetAccessor:\r\n                case SyntaxKind.SetAccessor:\r\n                case SyntaxKind.FunctionDeclaration:\r\n                    if (meaning & SymbolFlags.Variable && name === \"arguments\") {\r\n                        result = argumentsSymbol;\r\n                        break loop;\r\n                    }\r\n                    break;\r\n                case SyntaxKind.FunctionExpression:\r\n                    if (meaning & SymbolFlags.Variable && name === \"arguments\") {\r\n                        result = argumentsSymbol;\r\n                        break loop;\r\n                    }\r\n\r\n                    if (meaning & SymbolFlags.Function) {\r\n                        const functionName = (location as FunctionExpression).name;\r\n                        if (functionName && name === functionName.escapedText) {\r\n                            result = (location as FunctionExpression).symbol;\r\n                            break loop;\r\n                        }\r\n                    }\r\n                    break;\r\n                case SyntaxKind.Decorator:\r\n                    // Decorators are resolved at the class declaration. Resolving at the parameter\r\n                    // or member would result in looking up locals in the method.\r\n                    //\r\n                    //   function y() {}\r\n                    //   class C {\r\n                    //       method(@y x, y) {} // <-- decorator y should be resolved at the class declaration, not the parameter.\r\n                    //   }\r\n                    //\r\n                    if (location.parent && location.parent.kind === SyntaxKind.Parameter) {\r\n                        location = location.parent;\r\n                    }\r\n                    //\r\n                    //   function y() {}\r\n                    //   class C {\r\n                    //       @y method(x, y) {} // <-- decorator y should be resolved at the class declaration, not the method.\r\n                    //   }\r\n                    //\r\n\r\n                    // class Decorators are resolved outside of the class to avoid referencing type parameters of that class.\r\n                    //\r\n                    //   type T = number;\r\n                    //   declare function y(x: T): any;\r\n                    //   @param(1 as T) // <-- T should resolve to the type alias outside of class C\r\n                    //   class C<T> {}\r\n                    if (location.parent && (isClassElement(location.parent) || location.parent.kind === SyntaxKind.ClassDeclaration)) {\r\n                        location = location.parent;\r\n                    }\r\n                    break;\r\n                case SyntaxKind.JSDocTypedefTag:\r\n                case SyntaxKind.JSDocCallbackTag:\r\n                case SyntaxKind.JSDocEnumTag:\r\n                case SyntaxKind.JSDocImportTag:\r\n                    // js type aliases do not resolve names from their host, so skip past it\r\n                    const root = getJSDocRoot(location);\r\n                    if (root) {\r\n                        location = root.parent;\r\n                    }\r\n                    break;\r\n                case SyntaxKind.Parameter:\r\n                    if (\r\n                        lastLocation && (\r\n                            lastLocation === (location as ParameterDeclaration).initializer ||\r\n                            lastLocation === (location as ParameterDeclaration).name && isBindingPattern(lastLocation)\r\n                        )\r\n                    ) {\r\n                        if (!associatedDeclarationForContainingInitializerOrBindingName) {\r\n                            associatedDeclarationForContainingInitializerOrBindingName = location as ParameterDeclaration;\r\n                        }\r\n                    }\r\n                    break;\r\n                case SyntaxKind.BindingElement:\r\n                    if (\r\n                        lastLocation && (\r\n                            lastLocation === (location as BindingElement).initializer ||\r\n                            lastLocation === (location as BindingElement).name && isBindingPattern(lastLocation)\r\n                        )\r\n                    ) {\r\n                        if (isPartOfParameterDeclaration(location as BindingElement) && !associatedDeclarationForContainingInitializerOrBindingName) {\r\n                            associatedDeclarationForContainingInitializerOrBindingName = location as BindingElement;\r\n                        }\r\n                    }\r\n                    break;\r\n                case SyntaxKind.InferType:\r\n                    if (meaning & SymbolFlags.TypeParameter) {\r\n                        const parameterName = (location as InferTypeNode).typeParameter.name;\r\n                        if (parameterName && name === parameterName.escapedText) {\r\n                            result = (location as InferTypeNode).typeParameter.symbol;\r\n                            break loop;\r\n                        }\r\n                    }\r\n                    break;\r\n                case SyntaxKind.ExportSpecifier:\r\n                    // External module export bindings shouldn't be resolved to local symbols.\r\n                    if (\r\n                        lastLocation &&\r\n                        lastLocation === (location as ExportSpecifier).propertyName &&\r\n                        (location as ExportSpecifier).parent.parent.moduleSpecifier\r\n                    ) {\r\n                        location = location.parent.parent.parent;\r\n                    }\r\n                    break;\r\n            }\r\n            if (isSelfReferenceLocation(location, lastLocation)) {\r\n                lastSelfReferenceLocation = location;\r\n            }\r\n            lastLocation = location;\r\n            location = isJSDocTemplateTag(location) ? getEffectiveContainerForJSDocTemplateTag(location) || location.parent :\r\n                isJSDocParameterTag(location) || isJSDocReturnTag(location) ? getHostSignatureFromJSDoc(location) || location.parent :\r\n                location.parent;\r\n        }\r\n\r\n        // We just climbed up parents looking for the name, meaning that we started in a descendant node of `lastLocation`.\r\n        // If `result === lastSelfReferenceLocation.symbol`, that means that we are somewhere inside `lastSelfReferenceLocation` looking up a name, and resolving to `lastLocation` itself.\r\n        // That means that this is a self-reference of `lastLocation`, and shouldn't count this when considering whether `lastLocation` is used.\r\n        if (isUse && result && (!lastSelfReferenceLocation || result !== lastSelfReferenceLocation.symbol)) {\r\n            result.isReferenced! |= meaning;\r\n        }\r\n\r\n        if (!result) {\r\n            if (lastLocation) {\r\n                Debug.assertNode(lastLocation, isSourceFile);\r\n                if (lastLocation.commonJsModuleIndicator && name === \"exports\" && meaning & lastLocation.symbol.flags) {\r\n                    return lastLocation.symbol;\r\n                }\r\n            }\r\n\r\n            if (!excludeGlobals) {\r\n                result = lookup(globals, name, meaning);\r\n            }\r\n        }\r\n        if (!result) {\r\n            if (originalLocation && isInJSFile(originalLocation) && originalLocation.parent) {\r\n                if (isRequireCall(originalLocation.parent, /*requireStringLiteralLikeArgument*/ false)) {\r\n                    return requireSymbol;\r\n                }\r\n            }\r\n        }\r\n\r\n        if (nameNotFoundMessage) {\r\n            if (propertyWithInvalidInitializer && onPropertyWithInvalidInitializer(originalLocation, name, propertyWithInvalidInitializer, result)) {\r\n                return undefined;\r\n            }\r\n            if (!result) {\r\n                onFailedToResolveSymbol(originalLocation, nameArg, meaning, nameNotFoundMessage);\r\n            }\r\n            else {\r\n                onSuccessfullyResolvedSymbol(originalLocation, result, meaning, lastLocation, associatedDeclarationForContainingInitializerOrBindingName, withinDeferredContext);\r\n            }\r\n        }\r\n\r\n        return result;\r\n    }"
+    }
+  },
+  {
+    "where": "/workspace/mapset-adapted/src/compiler/utilities.ts:11715:72",
+    "file": "src/compiler/utilities.ts",
+    "line": 11715,
+    "column": 72,
+    "events": [
+      {
+        "depth": 0,
+        "kind": "NotYet",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "lowering",
+        "reason": "a Map or Set interface implemented by a value that isn't a Map or Set",
+        "root_kind": "",
+        "text": "/workspace/mapset-adapted/src/compiler/utilities.ts:11715:72: stage 0 can't lower a Map or Set interface implemented by a value that isn't a Map or Set yet",
+        "unit": "/workspace/mapset-adapted/src/compiler/utilities.ts:11493:1",
+        "where": "/workspace/mapset-adapted/src/compiler/utilities.ts:11715:72"
+      },
+      {
+        "depth": 0,
+        "kind": "NotYet",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "lowering",
+        "reason": "a Map or Set interface implemented by a value that isn't a Map or Set",
+        "root_kind": "",
+        "text": "/workspace/mapset-adapted/src/compiler/utilities.ts:11715:72: stage 0 can't lower a Map or Set interface implemented by a value that isn't a Map or Set yet",
+        "unit": "/workspace/mapset-adapted/src/compiler/utilities.ts:11513:5",
+        "where": "/workspace/mapset-adapted/src/compiler/utilities.ts:11715:72"
+      }
+    ],
+    "units": [
+      {
+        "where": "/workspace/mapset-adapted/src/compiler/utilities.ts:11493:1",
+        "name": "createNameResolver",
+        "text": "/workspace/mapset-adapted/src/compiler/utilities.ts:11715:72: stage 0 can't lower a Map or Set interface implemented by a value that isn't a Map or Set yet"
+      },
+      {
+        "where": "/workspace/mapset-adapted/src/compiler/utilities.ts:11513:5",
+        "name": "resolveNameHelper",
+        "text": "/workspace/mapset-adapted/src/compiler/utilities.ts:11715:72: stage 0 can't lower a Map or Set interface implemented by a value that isn't a Map or Set yet"
+      }
+    ],
+    "source_line": "                        if (isClassLike(container) && (result = lookup(getSymbolOfDeclaration(container).members!, name, meaning & SymbolFlags.Type))) {",
+    "identifier": "getSymbolOfDeclaration",
+    "declaration": {
+      "file": "src/compiler/checker.ts",
+      "line": 5317,
+      "name": "getSymbolOfDeclaration",
+      "text": "function getSymbolOfDeclaration(node: Declaration): Symbol {\r\n        return getMergedSymbol(node.symbol && getLateBoundSymbol(node.symbol));\r\n    }"
+    },
+    "context": {
+      "name": "resolveNameHelper",
+      "line": 11513,
+      "text": "function resolveNameHelper(\r\n        location: Node | undefined,\r\n        nameArg: __String | Identifier,\r\n        meaning: SymbolFlags,\r\n        nameNotFoundMessage: DiagnosticMessage | undefined,\r\n        isUse: boolean,\r\n        excludeGlobals?: boolean,\r\n    ): Symbol | undefined {\r\n        const originalLocation = location; // needed for did-you-mean error reporting, which gathers candidates starting from the original location\r\n        let result: Symbol | undefined;\r\n        let lastLocation: Node | undefined;\r\n        let lastSelfReferenceLocation: Declaration | undefined;\r\n        let propertyWithInvalidInitializer: PropertyDeclaration | undefined;\r\n        let associatedDeclarationForContainingInitializerOrBindingName: ParameterDeclaration | BindingElement | undefined;\r\n        let withinDeferredContext = false;\r\n        let grandparent: Node;\r\n        const name = isString(nameArg) ? nameArg : (nameArg as Identifier).escapedText;\r\n        loop:\r\n        while (location) {\r\n            if (name === \"const\" && isConstAssertion(location)) {\r\n                // `const` in an `as const` has no symbol, but issues no error because there is no *actual* lookup of the type\r\n                // (it refers to the constant type of the expression instead)\r\n                return undefined;\r\n            }\r\n            if (isModuleOrEnumDeclaration(location) && lastLocation && location.name === lastLocation) {\r\n                // If lastLocation is the name of a namespace or enum, skip the parent since it will have is own locals that could\r\n                // conflict.\r\n                lastLocation = location;\r\n                location = location.parent;\r\n            }\r\n            // Locals of a source file are not in scope (because they get merged into the global symbol table)\r\n            if (canHaveLocals(location) && location.locals && !isGlobalSourceFile(location)) {\r\n                if (result = lookup(location.locals, name, meaning)) {\r\n                    let useResult = true;\r\n                    if (isFunctionLike(location) && lastLocation && lastLocation !== (location as FunctionLikeDeclaration).body) {\r\n                        // symbol lookup restrictions for function-like declarations\r\n                        // - Type parameters of a function are in scope in the entire function declaration, including the parameter\r\n                        //   list and return type. However, local types are only in scope in the function body.\r\n                        // - parameters are only in the scope of function body\r\n                        // This restriction does not apply to JSDoc comment types because they are parented\r\n                        // at a higher level than type parameters would normally be\r\n                        if (meaning & result.flags & SymbolFlags.Type && lastLocation.kind !== SyntaxKind.JSDoc) {\r\n                            useResult = result.flags & SymbolFlags.TypeParameter\r\n                                // type parameters are visible in parameter list, return type and type parameter list\r\n                                ? !!(lastLocation.flags & NodeFlags.Synthesized) || // Synthetic fake scopes are added for signatures so type parameters are accessible from them\r\n                                    lastLocation === (location as FunctionLikeDeclaration).type ||\r\n                                    lastLocation.kind === SyntaxKind.Parameter ||\r\n                                    lastLocation.kind === SyntaxKind.JSDocParameterTag ||\r\n                                    lastLocation.kind === SyntaxKind.JSDocReturnTag ||\r\n                                    lastLocation.kind === SyntaxKind.TypeParameter\r\n                                // local types not visible outside the function body\r\n                                : false;\r\n                        }\r\n                        if (meaning & result.flags & SymbolFlags.Variable) {\r\n                            // expression inside parameter will lookup as normal variable scope when targeting es2015+\r\n                            if (useOuterVariableScopeInParameter(result, location, lastLocation)) {\r\n                                useResult = false;\r\n                            }\r\n                            else if (result.flags & SymbolFlags.FunctionScopedVariable) {\r\n                                // parameters are visible only inside function body, parameter list and return type\r\n                                // technically for parameter list case here we might mix parameters and variables declared in function,\r\n                                // however it is detected separately when checking initializers of parameters\r\n                                // to make sure that they reference no variables declared after them.\r\n                                useResult = lastLocation.kind === SyntaxKind.Parameter ||\r\n                                    !!(lastLocation.flags & NodeFlags.Synthesized) || // Synthetic fake scopes are added for signatures so parameters are accessible from them\r\n                                    (\r\n                                        lastLocation === (location as FunctionLikeDeclaration).type &&\r\n                                        !!findAncestor(result.valueDeclaration, isParameter)\r\n                                    );\r\n                            }\r\n                        }\r\n                    }\r\n                    else if (location.kind === SyntaxKind.ConditionalType) {\r\n                        // A type parameter declared using 'infer T' in a conditional type is visible only in\r\n                        // the true branch of the conditional type.\r\n                        useResult = lastLocation === location.trueType;\r\n                    }\r\n\r\n                    if (useResult) {\r\n                        break loop;\r\n                    }\r\n                    else {\r\n                        result = undefined;\r\n                    }\r\n                }\r\n            }\r\n            withinDeferredContext = withinDeferredContext || getIsDeferredContext(location, lastLocation);\r\n            switch (location.kind) {\r\n                case SyntaxKind.SourceFile:\r\n                    if (!isExternalOrCommonJsModule(location as SourceFile)) break;\r\n                    // falls through\r\n                case SyntaxKind.ModuleDeclaration:\r\n                    const moduleExports = getSymbolOfDeclaration(location as SourceFile | ModuleDeclaration)?.exports || emptySymbols;\r\n                    if (location.kind === SyntaxKind.SourceFile || (isModuleDeclaration(location) && location.flags & NodeFlags.Ambient && !isGlobalScopeAugmentation(location))) {\r\n                        // It's an external module. First see if the module has an export default and if the local\r\n                        // name of that export default matches.\r\n                        if (result = moduleExports.get(InternalSymbolName.Default)) {\r\n                            const localSymbol = getLocalSymbolForExportDefault(result);\r\n                            if (localSymbol && (result.flags & meaning) && localSymbol.escapedName === name) {\r\n                                break loop;\r\n                            }\r\n                            result = undefined;\r\n                        }\r\n\r\n                        // Because of module/namespace merging, a module's exports are in scope,\r\n                        // yet we never want to treat an export specifier as putting a member in scope.\r\n                        // Therefore, if the name we find is purely an export specifier, it is not actually considered in scope.\r\n                        // Two things to note about this:\r\n                        //     1. We have to check this without calling getSymbol. The problem with calling getSymbol\r\n                        //        on an export specifier is that it might find the export specifier itself, and try to\r\n                        //        resolve it as an alias. This will cause the checker to consider the export specifier\r\n                        //        a circular alias reference when it might not be.\r\n                        //     2. We check === SymbolFlags.Alias in order to check that the symbol is *purely*\r\n                        //        an alias. If we used &, we'd be throwing out symbols that have non alias aspects,\r\n                        //        which is not the desired behavior.\r\n                        const moduleExport = moduleExports.get(name);\r\n                        if (\r\n                            moduleExport &&\r\n                            moduleExport.flags === SymbolFlags.Alias &&\r\n                            (getDeclarationOfKind(moduleExport, SyntaxKind.ExportSpecifier) || getDeclarationOfKind(moduleExport, SyntaxKind.NamespaceExport))\r\n                        ) {\r\n                            break;\r\n                        }\r\n                    }\r\n\r\n                    // ES6 exports are also visible locally (except for 'default'), but commonjs exports are not (except typedefs)\r\n                    if (name !== InternalSymbolName.Default && (result = lookup(moduleExports, name, meaning & SymbolFlags.ModuleMember))) {\r\n                        if (isSourceFile(location) && location.commonJsModuleIndicator && !result.declarations?.some(isJSDocTypeAlias)) {\r\n                            result = undefined;\r\n                        }\r\n                        else {\r\n                            break loop;\r\n                        }\r\n                    }\r\n                    break;\r\n                case SyntaxKind.EnumDeclaration:\r\n                    if (result = lookup(getSymbolOfDeclaration(location as EnumDeclaration)?.exports || emptySymbols, name, meaning & SymbolFlags.EnumMember)) {\r\n                        if (nameNotFoundMessage && getIsolatedModules(compilerOptions) && !(location.flags & NodeFlags.Ambient) && getSourceFileOfNode(location) !== getSourceFileOfNode(result.valueDeclaration)) {\r\n                            error(\r\n                                originalLocation,\r\n                                Diagnostics.Cannot_access_0_from_another_file_without_qualification_when_1_is_enabled_Use_2_instead,\r\n                                unescapeLeadingUnderscores(name),\r\n                                isolatedModulesLikeFlagName,\r\n                                `${unescapeLeadingUnderscores(getSymbolOfDeclaration(location as EnumDeclaration).escapedName)}.${unescapeLeadingUnderscores(name)}`,\r\n                            );\r\n                        }\r\n                        break loop;\r\n                    }\r\n                    break;\r\n                case SyntaxKind.PropertyDeclaration:\r\n                    // TypeScript 1.0 spec (April 2014): 8.4.1\r\n                    // Initializer expressions for instance member variables are evaluated in the scope\r\n                    // of the class constructor body but are not permitted to reference parameters or\r\n                    // local variables of the constructor. This effectively means that entities from outer scopes\r\n                    // by the same name as a constructor parameter or local variable are inaccessible\r\n                    // in initializer expressions for instance member variables.\r\n                    if (!isStatic(location)) {\r\n                        const ctor = findConstructorDeclaration(location.parent as ClassLikeDeclaration);\r\n                        if (ctor && ctor.locals) {\r\n                            if (lookup(ctor.locals, name, meaning & SymbolFlags.Value)) {\r\n                                // Remember the property node, it will be used later to report appropriate error\r\n                                Debug.assertNode(location, isPropertyDeclaration);\r\n                                propertyWithInvalidInitializer = location;\r\n                            }\r\n                        }\r\n                    }\r\n                    break;\r\n                case SyntaxKind.ClassDeclaration:\r\n                case SyntaxKind.ClassExpression:\r\n                case SyntaxKind.InterfaceDeclaration:\r\n                    // The below is used to lookup type parameters within a class or interface, as they are added to the class/interface locals\r\n                    // These can never be latebound, so the symbol's raw members are sufficient. `getMembersOfNode` cannot be used, as it would\r\n                    // trigger resolving late-bound names, which we may already be in the process of doing while we're here!\r\n                    if (result = lookup(getSymbolOfDeclaration(location as ClassLikeDeclaration | InterfaceDeclaration).members || emptySymbols, name, meaning & SymbolFlags.Type)) {\r\n                        if (!isTypeParameterSymbolDeclaredInContainer(result, location)) {\r\n                            // ignore type parameters not declared in this container\r\n                            result = undefined;\r\n                            break;\r\n                        }\r\n                        if (lastLocation && isStatic(lastLocation)) {\r\n                            // TypeScript 1.0 spec (April 2014): 3.4.1\r\n                            // The scope of a type parameter extends over the entire declaration with which the type\r\n                            // parameter list is associated, with the exception of static member declarations in classes.\r\n                            if (nameNotFoundMessage) {\r\n                                error(originalLocation, Diagnostics.Static_members_cannot_reference_class_type_parameters);\r\n                            }\r\n                            return undefined;\r\n                        }\r\n                        break loop;\r\n                    }\r\n                    if (isClassExpression(location) && meaning & SymbolFlags.Class) {\r\n                        const className = location.name;\r\n                        if (className && name === className.escapedText) {\r\n                            result = location.symbol;\r\n                            break loop;\r\n                        }\r\n                    }\r\n                    break;\r\n                case SyntaxKind.ExpressionWithTypeArguments:\r\n                    // The type parameters of a class are not in scope in the base class expression.\r\n                    if (lastLocation === (location as ExpressionWithTypeArguments).expression && (location.parent as HeritageClause).token === SyntaxKind.ExtendsKeyword) {\r\n                        const container = location.parent.parent;\r\n                        if (isClassLike(container) && (result = lookup(getSymbolOfDeclaration(container).members!, name, meaning & SymbolFlags.Type))) {\r\n                            if (nameNotFoundMessage) {\r\n                                error(originalLocation, Diagnostics.Base_class_expressions_cannot_reference_class_type_parameters);\r\n                            }\r\n                            return undefined;\r\n                        }\r\n                    }\r\n                    break;\r\n                // It is not legal to reference a class's own type parameters from a computed property name that\r\n                // belongs to the class. For example:\r\n                //\r\n                //   function foo<T>() { return '' }\r\n                //   class C<T> { // <-- Class's own type parameter T\r\n                //       [foo<T>()]() { } // <-- Reference to T from class's own computed property\r\n                //   }\r\n                //\r\n                case SyntaxKind.ComputedPropertyName:\r\n                    grandparent = location.parent.parent;\r\n                    if (isClassLike(grandparent) || grandparent.kind === SyntaxKind.InterfaceDeclaration) {\r\n                        // A reference to this grandparent's type parameters would be an error\r\n                        if (result = lookup(getSymbolOfDeclaration(grandparent as ClassLikeDeclaration | InterfaceDeclaration).members!, name, meaning & SymbolFlags.Type)) {\r\n                            if (nameNotFoundMessage) {\r\n                                error(originalLocation, Diagnostics.A_computed_property_name_cannot_reference_a_type_parameter_from_its_containing_type);\r\n                            }\r\n                            return undefined;\r\n                        }\r\n                    }\r\n                    break;\r\n                case SyntaxKind.ArrowFunction:\r\n                    // when targeting ES6 or higher there is no 'arguments' in an arrow function\r\n                    // for lower compile targets the resolved symbol is used to emit an error\r\n                    if (getEmitScriptTarget(compilerOptions) >= ScriptTarget.ES2015) {\r\n                        break;\r\n                    }\r\n                    // falls through\r\n                case SyntaxKind.MethodDeclaration:\r\n                case SyntaxKind.Constructor:\r\n                case SyntaxKind.GetAccessor:\r\n                case SyntaxKind.SetAccessor:\r\n                case SyntaxKind.FunctionDeclaration:\r\n                    if (meaning & SymbolFlags.Variable && name === \"arguments\") {\r\n                        result = argumentsSymbol;\r\n                        break loop;\r\n                    }\r\n                    break;\r\n                case SyntaxKind.FunctionExpression:\r\n                    if (meaning & SymbolFlags.Variable && name === \"arguments\") {\r\n                        result = argumentsSymbol;\r\n                        break loop;\r\n                    }\r\n\r\n                    if (meaning & SymbolFlags.Function) {\r\n                        const functionName = (location as FunctionExpression).name;\r\n                        if (functionName && name === functionName.escapedText) {\r\n                            result = (location as FunctionExpression).symbol;\r\n                            break loop;\r\n                        }\r\n                    }\r\n                    break;\r\n                case SyntaxKind.Decorator:\r\n                    // Decorators are resolved at the class declaration. Resolving at the parameter\r\n                    // or member would result in looking up locals in the method.\r\n                    //\r\n                    //   function y() {}\r\n                    //   class C {\r\n                    //       method(@y x, y) {} // <-- decorator y should be resolved at the class declaration, not the parameter.\r\n                    //   }\r\n                    //\r\n                    if (location.parent && location.parent.kind === SyntaxKind.Parameter) {\r\n                        location = location.parent;\r\n                    }\r\n                    //\r\n                    //   function y() {}\r\n                    //   class C {\r\n                    //       @y method(x, y) {} // <-- decorator y should be resolved at the class declaration, not the method.\r\n                    //   }\r\n                    //\r\n\r\n                    // class Decorators are resolved outside of the class to avoid referencing type parameters of that class.\r\n                    //\r\n                    //   type T = number;\r\n                    //   declare function y(x: T): any;\r\n                    //   @param(1 as T) // <-- T should resolve to the type alias outside of class C\r\n                    //   class C<T> {}\r\n                    if (location.parent && (isClassElement(location.parent) || location.parent.kind === SyntaxKind.ClassDeclaration)) {\r\n                        location = location.parent;\r\n                    }\r\n                    break;\r\n                case SyntaxKind.JSDocTypedefTag:\r\n                case SyntaxKind.JSDocCallbackTag:\r\n                case SyntaxKind.JSDocEnumTag:\r\n                case SyntaxKind.JSDocImportTag:\r\n                    // js type aliases do not resolve names from their host, so skip past it\r\n                    const root = getJSDocRoot(location);\r\n                    if (root) {\r\n                        location = root.parent;\r\n                    }\r\n                    break;\r\n                case SyntaxKind.Parameter:\r\n                    if (\r\n                        lastLocation && (\r\n                            lastLocation === (location as ParameterDeclaration).initializer ||\r\n                            lastLocation === (location as ParameterDeclaration).name && isBindingPattern(lastLocation)\r\n                        )\r\n                    ) {\r\n                        if (!associatedDeclarationForContainingInitializerOrBindingName) {\r\n                            associatedDeclarationForContainingInitializerOrBindingName = location as ParameterDeclaration;\r\n                        }\r\n                    }\r\n                    break;\r\n                case SyntaxKind.BindingElement:\r\n                    if (\r\n                        lastLocation && (\r\n                            lastLocation === (location as BindingElement).initializer ||\r\n                            lastLocation === (location as BindingElement).name && isBindingPattern(lastLocation)\r\n                        )\r\n                    ) {\r\n                        if (isPartOfParameterDeclaration(location as BindingElement) && !associatedDeclarationForContainingInitializerOrBindingName) {\r\n                            associatedDeclarationForContainingInitializerOrBindingName = location as BindingElement;\r\n                        }\r\n                    }\r\n                    break;\r\n                case SyntaxKind.InferType:\r\n                    if (meaning & SymbolFlags.TypeParameter) {\r\n                        const parameterName = (location as InferTypeNode).typeParameter.name;\r\n                        if (parameterName && name === parameterName.escapedText) {\r\n                            result = (location as InferTypeNode).typeParameter.symbol;\r\n                            break loop;\r\n                        }\r\n                    }\r\n                    break;\r\n                case SyntaxKind.ExportSpecifier:\r\n                    // External module export bindings shouldn't be resolved to local symbols.\r\n                    if (\r\n                        lastLocation &&\r\n                        lastLocation === (location as ExportSpecifier).propertyName &&\r\n                        (location as ExportSpecifier).parent.parent.moduleSpecifier\r\n                    ) {\r\n                        location = location.parent.parent.parent;\r\n                    }\r\n                    break;\r\n            }\r\n            if (isSelfReferenceLocation(location, lastLocation)) {\r\n                lastSelfReferenceLocation = location;\r\n            }\r\n            lastLocation = location;\r\n            location = isJSDocTemplateTag(location) ? getEffectiveContainerForJSDocTemplateTag(location) || location.parent :\r\n                isJSDocParameterTag(location) || isJSDocReturnTag(location) ? getHostSignatureFromJSDoc(location) || location.parent :\r\n                location.parent;\r\n        }\r\n\r\n        // We just climbed up parents looking for the name, meaning that we started in a descendant node of `lastLocation`.\r\n        // If `result === lastSelfReferenceLocation.symbol`, that means that we are somewhere inside `lastSelfReferenceLocation` looking up a name, and resolving to `lastLocation` itself.\r\n        // That means that this is a self-reference of `lastLocation`, and shouldn't count this when considering whether `lastLocation` is used.\r\n        if (isUse && result && (!lastSelfReferenceLocation || result !== lastSelfReferenceLocation.symbol)) {\r\n            result.isReferenced! |= meaning;\r\n        }\r\n\r\n        if (!result) {\r\n            if (lastLocation) {\r\n                Debug.assertNode(lastLocation, isSourceFile);\r\n                if (lastLocation.commonJsModuleIndicator && name === \"exports\" && meaning & lastLocation.symbol.flags) {\r\n                    return lastLocation.symbol;\r\n                }\r\n            }\r\n\r\n            if (!excludeGlobals) {\r\n                result = lookup(globals, name, meaning);\r\n            }\r\n        }\r\n        if (!result) {\r\n            if (originalLocation && isInJSFile(originalLocation) && originalLocation.parent) {\r\n                if (isRequireCall(originalLocation.parent, /*requireStringLiteralLikeArgument*/ false)) {\r\n                    return requireSymbol;\r\n                }\r\n            }\r\n        }\r\n\r\n        if (nameNotFoundMessage) {\r\n            if (propertyWithInvalidInitializer && onPropertyWithInvalidInitializer(originalLocation, name, propertyWithInvalidInitializer, result)) {\r\n                return undefined;\r\n            }\r\n            if (!result) {\r\n                onFailedToResolveSymbol(originalLocation, nameArg, meaning, nameNotFoundMessage);\r\n            }\r\n            else {\r\n                onSuccessfullyResolvedSymbol(originalLocation, result, meaning, lastLocation, associatedDeclarationForContainingInitializerOrBindingName, withinDeferredContext);\r\n            }\r\n        }\r\n\r\n        return result;\r\n    }"
+    }
+  },
+  {
+    "where": "/workspace/mapset-adapted/src/compiler/utilities.ts:11861:55",
+    "file": "src/compiler/utilities.ts",
+    "line": 11861,
+    "column": 55,
+    "events": [
+      {
+        "depth": 0,
+        "kind": "NotYet",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "lowering",
+        "reason": "a Map or Set interface implemented by a value that isn't a Map or Set",
+        "root_kind": "",
+        "text": "/workspace/mapset-adapted/src/compiler/utilities.ts:11861:55: stage 0 can't lower a Map or Set interface implemented by a value that isn't a Map or Set yet",
+        "unit": "/workspace/mapset-adapted/src/compiler/utilities.ts:11493:1",
+        "where": "/workspace/mapset-adapted/src/compiler/utilities.ts:11861:55"
+      },
+      {
+        "depth": 0,
+        "kind": "NotYet",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "lowering",
+        "reason": "a Map or Set interface implemented by a value that isn't a Map or Set",
+        "root_kind": "",
+        "text": "/workspace/mapset-adapted/src/compiler/utilities.ts:11861:55: stage 0 can't lower a Map or Set interface implemented by a value that isn't a Map or Set yet",
+        "unit": "/workspace/mapset-adapted/src/compiler/utilities.ts:11513:5",
+        "where": "/workspace/mapset-adapted/src/compiler/utilities.ts:11861:55"
+      }
+    ],
+    "units": [
+      {
+        "where": "/workspace/mapset-adapted/src/compiler/utilities.ts:11493:1",
+        "name": "createNameResolver",
+        "text": "/workspace/mapset-adapted/src/compiler/utilities.ts:11861:55: stage 0 can't lower a Map or Set interface implemented by a value that isn't a Map or Set yet"
+      },
+      {
+        "where": "/workspace/mapset-adapted/src/compiler/utilities.ts:11513:5",
+        "name": "resolveNameHelper",
+        "text": "/workspace/mapset-adapted/src/compiler/utilities.ts:11861:55: stage 0 can't lower a Map or Set interface implemented by a value that isn't a Map or Set yet"
+      }
+    ],
+    "source_line": "            location = isJSDocTemplateTag(location) ? getEffectiveContainerForJSDocTemplateTag(location) || location.parent :",
+    "identifier": "getEffectiveContainerForJSDocTemplateTag",
+    "declaration": {
+      "file": "src/compiler/utilities.ts",
+      "line": 4766,
+      "name": "getEffectiveContainerForJSDocTemplateTag",
+      "text": "export function getEffectiveContainerForJSDocTemplateTag(node: JSDocTemplateTag): SignatureDeclaration | JSDocTypedefTag | JSDocCallbackTag | JSDocEnumTag | undefined {\r\n    if (isJSDoc(node.parent) && node.parent.tags) {\r\n        // A @template tag belongs to any @typedef, @callback, or @enum tags in the same comment block, if they exist.\r\n        const typeAlias = find(node.parent.tags, isJSDocTypeAlias);\r\n        if (typeAlias) {\r\n            return typeAlias;\r\n        }\r\n    }\r\n    // otherwise it belongs to the host it annotates\r\n    return getHostSignatureFromJSDoc(node);\r\n}"
+    },
+    "context": {
+      "name": "resolveNameHelper",
+      "line": 11513,
+      "text": "function resolveNameHelper(\r\n        location: Node | undefined,\r\n        nameArg: __String | Identifier,\r\n        meaning: SymbolFlags,\r\n        nameNotFoundMessage: DiagnosticMessage | undefined,\r\n        isUse: boolean,\r\n        excludeGlobals?: boolean,\r\n    ): Symbol | undefined {\r\n        const originalLocation = location; // needed for did-you-mean error reporting, which gathers candidates starting from the original location\r\n        let result: Symbol | undefined;\r\n        let lastLocation: Node | undefined;\r\n        let lastSelfReferenceLocation: Declaration | undefined;\r\n        let propertyWithInvalidInitializer: PropertyDeclaration | undefined;\r\n        let associatedDeclarationForContainingInitializerOrBindingName: ParameterDeclaration | BindingElement | undefined;\r\n        let withinDeferredContext = false;\r\n        let grandparent: Node;\r\n        const name = isString(nameArg) ? nameArg : (nameArg as Identifier).escapedText;\r\n        loop:\r\n        while (location) {\r\n            if (name === \"const\" && isConstAssertion(location)) {\r\n                // `const` in an `as const` has no symbol, but issues no error because there is no *actual* lookup of the type\r\n                // (it refers to the constant type of the expression instead)\r\n                return undefined;\r\n            }\r\n            if (isModuleOrEnumDeclaration(location) && lastLocation && location.name === lastLocation) {\r\n                // If lastLocation is the name of a namespace or enum, skip the parent since it will have is own locals that could\r\n                // conflict.\r\n                lastLocation = location;\r\n                location = location.parent;\r\n            }\r\n            // Locals of a source file are not in scope (because they get merged into the global symbol table)\r\n            if (canHaveLocals(location) && location.locals && !isGlobalSourceFile(location)) {\r\n                if (result = lookup(location.locals, name, meaning)) {\r\n                    let useResult = true;\r\n                    if (isFunctionLike(location) && lastLocation && lastLocation !== (location as FunctionLikeDeclaration).body) {\r\n                        // symbol lookup restrictions for function-like declarations\r\n                        // - Type parameters of a function are in scope in the entire function declaration, including the parameter\r\n                        //   list and return type. However, local types are only in scope in the function body.\r\n                        // - parameters are only in the scope of function body\r\n                        // This restriction does not apply to JSDoc comment types because they are parented\r\n                        // at a higher level than type parameters would normally be\r\n                        if (meaning & result.flags & SymbolFlags.Type && lastLocation.kind !== SyntaxKind.JSDoc) {\r\n                            useResult = result.flags & SymbolFlags.TypeParameter\r\n                                // type parameters are visible in parameter list, return type and type parameter list\r\n                                ? !!(lastLocation.flags & NodeFlags.Synthesized) || // Synthetic fake scopes are added for signatures so type parameters are accessible from them\r\n                                    lastLocation === (location as FunctionLikeDeclaration).type ||\r\n                                    lastLocation.kind === SyntaxKind.Parameter ||\r\n                                    lastLocation.kind === SyntaxKind.JSDocParameterTag ||\r\n                                    lastLocation.kind === SyntaxKind.JSDocReturnTag ||\r\n                                    lastLocation.kind === SyntaxKind.TypeParameter\r\n                                // local types not visible outside the function body\r\n                                : false;\r\n                        }\r\n                        if (meaning & result.flags & SymbolFlags.Variable) {\r\n                            // expression inside parameter will lookup as normal variable scope when targeting es2015+\r\n                            if (useOuterVariableScopeInParameter(result, location, lastLocation)) {\r\n                                useResult = false;\r\n                            }\r\n                            else if (result.flags & SymbolFlags.FunctionScopedVariable) {\r\n                                // parameters are visible only inside function body, parameter list and return type\r\n                                // technically for parameter list case here we might mix parameters and variables declared in function,\r\n                                // however it is detected separately when checking initializers of parameters\r\n                                // to make sure that they reference no variables declared after them.\r\n                                useResult = lastLocation.kind === SyntaxKind.Parameter ||\r\n                                    !!(lastLocation.flags & NodeFlags.Synthesized) || // Synthetic fake scopes are added for signatures so parameters are accessible from them\r\n                                    (\r\n                                        lastLocation === (location as FunctionLikeDeclaration).type &&\r\n                                        !!findAncestor(result.valueDeclaration, isParameter)\r\n                                    );\r\n                            }\r\n                        }\r\n                    }\r\n                    else if (location.kind === SyntaxKind.ConditionalType) {\r\n                        // A type parameter declared using 'infer T' in a conditional type is visible only in\r\n                        // the true branch of the conditional type.\r\n                        useResult = lastLocation === location.trueType;\r\n                    }\r\n\r\n                    if (useResult) {\r\n                        break loop;\r\n                    }\r\n                    else {\r\n                        result = undefined;\r\n                    }\r\n                }\r\n            }\r\n            withinDeferredContext = withinDeferredContext || getIsDeferredContext(location, lastLocation);\r\n            switch (location.kind) {\r\n                case SyntaxKind.SourceFile:\r\n                    if (!isExternalOrCommonJsModule(location as SourceFile)) break;\r\n                    // falls through\r\n                case SyntaxKind.ModuleDeclaration:\r\n                    const moduleExports = getSymbolOfDeclaration(location as SourceFile | ModuleDeclaration)?.exports || emptySymbols;\r\n                    if (location.kind === SyntaxKind.SourceFile || (isModuleDeclaration(location) && location.flags & NodeFlags.Ambient && !isGlobalScopeAugmentation(location))) {\r\n                        // It's an external module. First see if the module has an export default and if the local\r\n                        // name of that export default matches.\r\n                        if (result = moduleExports.get(InternalSymbolName.Default)) {\r\n                            const localSymbol = getLocalSymbolForExportDefault(result);\r\n                            if (localSymbol && (result.flags & meaning) && localSymbol.escapedName === name) {\r\n                                break loop;\r\n                            }\r\n                            result = undefined;\r\n                        }\r\n\r\n                        // Because of module/namespace merging, a module's exports are in scope,\r\n                        // yet we never want to treat an export specifier as putting a member in scope.\r\n                        // Therefore, if the name we find is purely an export specifier, it is not actually considered in scope.\r\n                        // Two things to note about this:\r\n                        //     1. We have to check this without calling getSymbol. The problem with calling getSymbol\r\n                        //        on an export specifier is that it might find the export specifier itself, and try to\r\n                        //        resolve it as an alias. This will cause the checker to consider the export specifier\r\n                        //        a circular alias reference when it might not be.\r\n                        //     2. We check === SymbolFlags.Alias in order to check that the symbol is *purely*\r\n                        //        an alias. If we used &, we'd be throwing out symbols that have non alias aspects,\r\n                        //        which is not the desired behavior.\r\n                        const moduleExport = moduleExports.get(name);\r\n                        if (\r\n                            moduleExport &&\r\n                            moduleExport.flags === SymbolFlags.Alias &&\r\n                            (getDeclarationOfKind(moduleExport, SyntaxKind.ExportSpecifier) || getDeclarationOfKind(moduleExport, SyntaxKind.NamespaceExport))\r\n                        ) {\r\n                            break;\r\n                        }\r\n                    }\r\n\r\n                    // ES6 exports are also visible locally (except for 'default'), but commonjs exports are not (except typedefs)\r\n                    if (name !== InternalSymbolName.Default && (result = lookup(moduleExports, name, meaning & SymbolFlags.ModuleMember))) {\r\n                        if (isSourceFile(location) && location.commonJsModuleIndicator && !result.declarations?.some(isJSDocTypeAlias)) {\r\n                            result = undefined;\r\n                        }\r\n                        else {\r\n                            break loop;\r\n                        }\r\n                    }\r\n                    break;\r\n                case SyntaxKind.EnumDeclaration:\r\n                    if (result = lookup(getSymbolOfDeclaration(location as EnumDeclaration)?.exports || emptySymbols, name, meaning & SymbolFlags.EnumMember)) {\r\n                        if (nameNotFoundMessage && getIsolatedModules(compilerOptions) && !(location.flags & NodeFlags.Ambient) && getSourceFileOfNode(location) !== getSourceFileOfNode(result.valueDeclaration)) {\r\n                            error(\r\n                                originalLocation,\r\n                                Diagnostics.Cannot_access_0_from_another_file_without_qualification_when_1_is_enabled_Use_2_instead,\r\n                                unescapeLeadingUnderscores(name),\r\n                                isolatedModulesLikeFlagName,\r\n                                `${unescapeLeadingUnderscores(getSymbolOfDeclaration(location as EnumDeclaration).escapedName)}.${unescapeLeadingUnderscores(name)}`,\r\n                            );\r\n                        }\r\n                        break loop;\r\n                    }\r\n                    break;\r\n                case SyntaxKind.PropertyDeclaration:\r\n                    // TypeScript 1.0 spec (April 2014): 8.4.1\r\n                    // Initializer expressions for instance member variables are evaluated in the scope\r\n                    // of the class constructor body but are not permitted to reference parameters or\r\n                    // local variables of the constructor. This effectively means that entities from outer scopes\r\n                    // by the same name as a constructor parameter or local variable are inaccessible\r\n                    // in initializer expressions for instance member variables.\r\n                    if (!isStatic(location)) {\r\n                        const ctor = findConstructorDeclaration(location.parent as ClassLikeDeclaration);\r\n                        if (ctor && ctor.locals) {\r\n                            if (lookup(ctor.locals, name, meaning & SymbolFlags.Value)) {\r\n                                // Remember the property node, it will be used later to report appropriate error\r\n                                Debug.assertNode(location, isPropertyDeclaration);\r\n                                propertyWithInvalidInitializer = location;\r\n                            }\r\n                        }\r\n                    }\r\n                    break;\r\n                case SyntaxKind.ClassDeclaration:\r\n                case SyntaxKind.ClassExpression:\r\n                case SyntaxKind.InterfaceDeclaration:\r\n                    // The below is used to lookup type parameters within a class or interface, as they are added to the class/interface locals\r\n                    // These can never be latebound, so the symbol's raw members are sufficient. `getMembersOfNode` cannot be used, as it would\r\n                    // trigger resolving late-bound names, which we may already be in the process of doing while we're here!\r\n                    if (result = lookup(getSymbolOfDeclaration(location as ClassLikeDeclaration | InterfaceDeclaration).members || emptySymbols, name, meaning & SymbolFlags.Type)) {\r\n                        if (!isTypeParameterSymbolDeclaredInContainer(result, location)) {\r\n                            // ignore type parameters not declared in this container\r\n                            result = undefined;\r\n                            break;\r\n                        }\r\n                        if (lastLocation && isStatic(lastLocation)) {\r\n                            // TypeScript 1.0 spec (April 2014): 3.4.1\r\n                            // The scope of a type parameter extends over the entire declaration with which the type\r\n                            // parameter list is associated, with the exception of static member declarations in classes.\r\n                            if (nameNotFoundMessage) {\r\n                                error(originalLocation, Diagnostics.Static_members_cannot_reference_class_type_parameters);\r\n                            }\r\n                            return undefined;\r\n                        }\r\n                        break loop;\r\n                    }\r\n                    if (isClassExpression(location) && meaning & SymbolFlags.Class) {\r\n                        const className = location.name;\r\n                        if (className && name === className.escapedText) {\r\n                            result = location.symbol;\r\n                            break loop;\r\n                        }\r\n                    }\r\n                    break;\r\n                case SyntaxKind.ExpressionWithTypeArguments:\r\n                    // The type parameters of a class are not in scope in the base class expression.\r\n                    if (lastLocation === (location as ExpressionWithTypeArguments).expression && (location.parent as HeritageClause).token === SyntaxKind.ExtendsKeyword) {\r\n                        const container = location.parent.parent;\r\n                        if (isClassLike(container) && (result = lookup(getSymbolOfDeclaration(container).members!, name, meaning & SymbolFlags.Type))) {\r\n                            if (nameNotFoundMessage) {\r\n                                error(originalLocation, Diagnostics.Base_class_expressions_cannot_reference_class_type_parameters);\r\n                            }\r\n                            return undefined;\r\n                        }\r\n                    }\r\n                    break;\r\n                // It is not legal to reference a class's own type parameters from a computed property name that\r\n                // belongs to the class. For example:\r\n                //\r\n                //   function foo<T>() { return '' }\r\n                //   class C<T> { // <-- Class's own type parameter T\r\n                //       [foo<T>()]() { } // <-- Reference to T from class's own computed property\r\n                //   }\r\n                //\r\n                case SyntaxKind.ComputedPropertyName:\r\n                    grandparent = location.parent.parent;\r\n                    if (isClassLike(grandparent) || grandparent.kind === SyntaxKind.InterfaceDeclaration) {\r\n                        // A reference to this grandparent's type parameters would be an error\r\n                        if (result = lookup(getSymbolOfDeclaration(grandparent as ClassLikeDeclaration | InterfaceDeclaration).members!, name, meaning & SymbolFlags.Type)) {\r\n                            if (nameNotFoundMessage) {\r\n                                error(originalLocation, Diagnostics.A_computed_property_name_cannot_reference_a_type_parameter_from_its_containing_type);\r\n                            }\r\n                            return undefined;\r\n                        }\r\n                    }\r\n                    break;\r\n                case SyntaxKind.ArrowFunction:\r\n                    // when targeting ES6 or higher there is no 'arguments' in an arrow function\r\n                    // for lower compile targets the resolved symbol is used to emit an error\r\n                    if (getEmitScriptTarget(compilerOptions) >= ScriptTarget.ES2015) {\r\n                        break;\r\n                    }\r\n                    // falls through\r\n                case SyntaxKind.MethodDeclaration:\r\n                case SyntaxKind.Constructor:\r\n                case SyntaxKind.GetAccessor:\r\n                case SyntaxKind.SetAccessor:\r\n                case SyntaxKind.FunctionDeclaration:\r\n                    if (meaning & SymbolFlags.Variable && name === \"arguments\") {\r\n                        result = argumentsSymbol;\r\n                        break loop;\r\n                    }\r\n                    break;\r\n                case SyntaxKind.FunctionExpression:\r\n                    if (meaning & SymbolFlags.Variable && name === \"arguments\") {\r\n                        result = argumentsSymbol;\r\n                        break loop;\r\n                    }\r\n\r\n                    if (meaning & SymbolFlags.Function) {\r\n                        const functionName = (location as FunctionExpression).name;\r\n                        if (functionName && name === functionName.escapedText) {\r\n                            result = (location as FunctionExpression).symbol;\r\n                            break loop;\r\n                        }\r\n                    }\r\n                    break;\r\n                case SyntaxKind.Decorator:\r\n                    // Decorators are resolved at the class declaration. Resolving at the parameter\r\n                    // or member would result in looking up locals in the method.\r\n                    //\r\n                    //   function y() {}\r\n                    //   class C {\r\n                    //       method(@y x, y) {} // <-- decorator y should be resolved at the class declaration, not the parameter.\r\n                    //   }\r\n                    //\r\n                    if (location.parent && location.parent.kind === SyntaxKind.Parameter) {\r\n                        location = location.parent;\r\n                    }\r\n                    //\r\n                    //   function y() {}\r\n                    //   class C {\r\n                    //       @y method(x, y) {} // <-- decorator y should be resolved at the class declaration, not the method.\r\n                    //   }\r\n                    //\r\n\r\n                    // class Decorators are resolved outside of the class to avoid referencing type parameters of that class.\r\n                    //\r\n                    //   type T = number;\r\n                    //   declare function y(x: T): any;\r\n                    //   @param(1 as T) // <-- T should resolve to the type alias outside of class C\r\n                    //   class C<T> {}\r\n                    if (location.parent && (isClassElement(location.parent) || location.parent.kind === SyntaxKind.ClassDeclaration)) {\r\n                        location = location.parent;\r\n                    }\r\n                    break;\r\n                case SyntaxKind.JSDocTypedefTag:\r\n                case SyntaxKind.JSDocCallbackTag:\r\n                case SyntaxKind.JSDocEnumTag:\r\n                case SyntaxKind.JSDocImportTag:\r\n                    // js type aliases do not resolve names from their host, so skip past it\r\n                    const root = getJSDocRoot(location);\r\n                    if (root) {\r\n                        location = root.parent;\r\n                    }\r\n                    break;\r\n                case SyntaxKind.Parameter:\r\n                    if (\r\n                        lastLocation && (\r\n                            lastLocation === (location as ParameterDeclaration).initializer ||\r\n                            lastLocation === (location as ParameterDeclaration).name && isBindingPattern(lastLocation)\r\n                        )\r\n                    ) {\r\n                        if (!associatedDeclarationForContainingInitializerOrBindingName) {\r\n                            associatedDeclarationForContainingInitializerOrBindingName = location as ParameterDeclaration;\r\n                        }\r\n                    }\r\n                    break;\r\n                case SyntaxKind.BindingElement:\r\n                    if (\r\n                        lastLocation && (\r\n                            lastLocation === (location as BindingElement).initializer ||\r\n                            lastLocation === (location as BindingElement).name && isBindingPattern(lastLocation)\r\n                        )\r\n                    ) {\r\n                        if (isPartOfParameterDeclaration(location as BindingElement) && !associatedDeclarationForContainingInitializerOrBindingName) {\r\n                            associatedDeclarationForContainingInitializerOrBindingName = location as BindingElement;\r\n                        }\r\n                    }\r\n                    break;\r\n                case SyntaxKind.InferType:\r\n                    if (meaning & SymbolFlags.TypeParameter) {\r\n                        const parameterName = (location as InferTypeNode).typeParameter.name;\r\n                        if (parameterName && name === parameterName.escapedText) {\r\n                            result = (location as InferTypeNode).typeParameter.symbol;\r\n                            break loop;\r\n                        }\r\n                    }\r\n                    break;\r\n                case SyntaxKind.ExportSpecifier:\r\n                    // External module export bindings shouldn't be resolved to local symbols.\r\n                    if (\r\n                        lastLocation &&\r\n                        lastLocation === (location as ExportSpecifier).propertyName &&\r\n                        (location as ExportSpecifier).parent.parent.moduleSpecifier\r\n                    ) {\r\n                        location = location.parent.parent.parent;\r\n                    }\r\n                    break;\r\n            }\r\n            if (isSelfReferenceLocation(location, lastLocation)) {\r\n                lastSelfReferenceLocation = location;\r\n            }\r\n            lastLocation = location;\r\n            location = isJSDocTemplateTag(location) ? getEffectiveContainerForJSDocTemplateTag(location) || location.parent :\r\n                isJSDocParameterTag(location) || isJSDocReturnTag(location) ? getHostSignatureFromJSDoc(location) || location.parent :\r\n                location.parent;\r\n        }\r\n\r\n        // We just climbed up parents looking for the name, meaning that we started in a descendant node of `lastLocation`.\r\n        // If `result === lastSelfReferenceLocation.symbol`, that means that we are somewhere inside `lastSelfReferenceLocation` looking up a name, and resolving to `lastLocation` itself.\r\n        // That means that this is a self-reference of `lastLocation`, and shouldn't count this when considering whether `lastLocation` is used.\r\n        if (isUse && result && (!lastSelfReferenceLocation || result !== lastSelfReferenceLocation.symbol)) {\r\n            result.isReferenced! |= meaning;\r\n        }\r\n\r\n        if (!result) {\r\n            if (lastLocation) {\r\n                Debug.assertNode(lastLocation, isSourceFile);\r\n                if (lastLocation.commonJsModuleIndicator && name === \"exports\" && meaning & lastLocation.symbol.flags) {\r\n                    return lastLocation.symbol;\r\n                }\r\n            }\r\n\r\n            if (!excludeGlobals) {\r\n                result = lookup(globals, name, meaning);\r\n            }\r\n        }\r\n        if (!result) {\r\n            if (originalLocation && isInJSFile(originalLocation) && originalLocation.parent) {\r\n                if (isRequireCall(originalLocation.parent, /*requireStringLiteralLikeArgument*/ false)) {\r\n                    return requireSymbol;\r\n                }\r\n            }\r\n        }\r\n\r\n        if (nameNotFoundMessage) {\r\n            if (propertyWithInvalidInitializer && onPropertyWithInvalidInitializer(originalLocation, name, propertyWithInvalidInitializer, result)) {\r\n                return undefined;\r\n            }\r\n            if (!result) {\r\n                onFailedToResolveSymbol(originalLocation, nameArg, meaning, nameNotFoundMessage);\r\n            }\r\n            else {\r\n                onSuccessfullyResolvedSymbol(originalLocation, result, meaning, lastLocation, associatedDeclarationForContainingInitializerOrBindingName, withinDeferredContext);\r\n            }\r\n        }\r\n\r\n        return result;\r\n    }"
+    }
+  },
+  {
+    "where": "/workspace/mapset-adapted/src/compiler/transformers/utilities.ts:126:25",
+    "file": "src/compiler/transformers/utilities.ts",
+    "line": 126,
+    "column": 25,
+    "events": [
+      {
+        "depth": 0,
+        "kind": "NotYet",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "lowering",
+        "reason": "a Map or Set interface implemented by a value that isn't a Map or Set",
+        "root_kind": "",
+        "text": "/workspace/mapset-adapted/src/compiler/transformers/utilities.ts:126:25: stage 0 can't lower a Map or Set interface implemented by a value that isn't a Map or Set yet",
+        "unit": "/workspace/mapset-adapted/src/compiler/transformers/utilities.ts:124:1",
+        "where": "/workspace/mapset-adapted/src/compiler/transformers/utilities.ts:126:25"
+      }
+    ],
+    "units": [
+      {
+        "where": "/workspace/mapset-adapted/src/compiler/transformers/utilities.ts:124:1",
+        "name": "containsDefaultReference",
+        "text": "/workspace/mapset-adapted/src/compiler/transformers/utilities.ts:126:25: stage 0 can't lower a Map or Set interface implemented by a value that isn't a Map or Set yet"
+      }
+    ],
+    "source_line": "    if (!isNamedImports(node) && !isNamedExports(node)) return false;",
+    "identifier": "node",
+    "context": {
+      "name": "containsDefaultReference",
+      "line": 124,
+      "text": "function containsDefaultReference(node: NamedImportBindings | NamedExportBindings | undefined) {\r\n    if (!node) return false;\r\n    if (!isNamedImports(node) && !isNamedExports(node)) return false;\r\n    return some(node.elements, isNamedDefaultReference);\r\n}"
+    }
+  },
+  {
+    "where": "/workspace/mapset-adapted/src/compiler/transformers/utilities.ts:127:17",
+    "file": "src/compiler/transformers/utilities.ts",
+    "line": 127,
+    "column": 17,
+    "events": [
+      {
+        "depth": 0,
+        "kind": "NotYet",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "lowering",
+        "reason": "a Map or Set interface implemented by a value that isn't a Map or Set",
+        "root_kind": "",
+        "text": "/workspace/mapset-adapted/src/compiler/transformers/utilities.ts:127:17: stage 0 can't lower a Map or Set interface implemented by a value that isn't a Map or Set yet",
+        "unit": "/workspace/mapset-adapted/src/compiler/transformers/utilities.ts:124:1",
+        "where": "/workspace/mapset-adapted/src/compiler/transformers/utilities.ts:127:17"
+      }
+    ],
+    "units": [
+      {
+        "where": "/workspace/mapset-adapted/src/compiler/transformers/utilities.ts:124:1",
+        "name": "containsDefaultReference",
+        "text": "/workspace/mapset-adapted/src/compiler/transformers/utilities.ts:127:17: stage 0 can't lower a Map or Set interface implemented by a value that isn't a Map or Set yet"
+      }
+    ],
+    "source_line": "    return some(node.elements, isNamedDefaultReference);",
+    "identifier": "node",
+    "context": {
+      "name": "containsDefaultReference",
+      "line": 124,
+      "text": "function containsDefaultReference(node: NamedImportBindings | NamedExportBindings | undefined) {\r\n    if (!node) return false;\r\n    if (!isNamedImports(node) && !isNamedExports(node)) return false;\r\n    return some(node.elements, isNamedDefaultReference);\r\n}"
+    }
+  },
+  {
+    "where": "/workspace/mapset-adapted/src/compiler/transformers/utilities.ts:161:25",
+    "file": "src/compiler/transformers/utilities.ts",
+    "line": 161,
+    "column": 25,
+    "events": [
+      {
+        "depth": 0,
+        "kind": "NotYet",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "lowering",
+        "reason": "a Map or Set interface implemented by a value that isn't a Map or Set",
+        "root_kind": "",
+        "text": "/workspace/mapset-adapted/src/compiler/transformers/utilities.ts:161:25: stage 0 can't lower a Map or Set interface implemented by a value that isn't a Map or Set yet",
+        "unit": "/workspace/mapset-adapted/src/compiler/transformers/utilities.ts:153:1",
+        "where": "/workspace/mapset-adapted/src/compiler/transformers/utilities.ts:161:25"
+      }
+    ],
+    "units": [
+      {
+        "where": "/workspace/mapset-adapted/src/compiler/transformers/utilities.ts:153:1",
+        "name": "getImportNeedsImportStarHelper",
+        "text": "/workspace/mapset-adapted/src/compiler/transformers/utilities.ts:161:25: stage 0 can't lower a Map or Set interface implemented by a value that isn't a Map or Set yet"
+      }
+    ],
+    "source_line": "    if (!isNamedImports(bindings)) return false;",
+    "identifier": "bindings",
+    "context": {
+      "name": "getImportNeedsImportStarHelper",
+      "line": 153,
+      "text": "export function getImportNeedsImportStarHelper(node: ImportDeclaration): boolean {\r\n    if (!!getNamespaceDeclarationNode(node)) {\r\n        return true;\r\n    }\r\n    const bindings = node.importClause && node.importClause.namedBindings;\r\n    if (!bindings) {\r\n        return false;\r\n    }\r\n    if (!isNamedImports(bindings)) return false;\r\n    let defaultRefCount = 0;\r\n    for (const binding of bindings.elements) {\r\n        if (isNamedDefaultReference(binding)) {\r\n            defaultRefCount++;\r\n        }\r\n    }\r\n    // Import star is required if there's default named refs mixed with non-default refs, or if theres non-default refs and it has a default import\r\n    return (defaultRefCount > 0 && defaultRefCount !== bindings.elements.length) || (!!(bindings.elements.length - defaultRefCount) && isDefaultImport(node));\r\n}"
+    }
+  },
+  {
+    "where": "/workspace/mapset-adapted/src/compiler/transformers/utilities.ts:175:118",
+    "file": "src/compiler/transformers/utilities.ts",
+    "line": 175,
+    "column": 118,
+    "events": [
+      {
+        "depth": 0,
+        "kind": "NotYet",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "lowering",
+        "reason": "a Map or Set interface implemented by a value that isn't a Map or Set",
+        "root_kind": "",
+        "text": "/workspace/mapset-adapted/src/compiler/transformers/utilities.ts:175:118: stage 0 can't lower a Map or Set interface implemented by a value that isn't a Map or Set yet",
+        "unit": "/workspace/mapset-adapted/src/compiler/transformers/utilities.ts:173:1",
+        "where": "/workspace/mapset-adapted/src/compiler/transformers/utilities.ts:175:118"
+      }
+    ],
+    "units": [
+      {
+        "where": "/workspace/mapset-adapted/src/compiler/transformers/utilities.ts:173:1",
+        "name": "getImportNeedsImportDefaultHelper",
+        "text": "/workspace/mapset-adapted/src/compiler/transformers/utilities.ts:175:118: stage 0 can't lower a Map or Set interface implemented by a value that isn't a Map or Set yet"
+      }
+    ],
+    "source_line": "    return !getImportNeedsImportStarHelper(node) && (isDefaultImport(node) || (!!node.importClause && isNamedImports(node.importClause.namedBindings!) && containsDefaultReference(node.importClause.namedBindings))); // TODO: GH#18217",
+    "identifier": "node",
+    "context": {
+      "name": "getImportNeedsImportDefaultHelper",
+      "line": 173,
+      "text": "export function getImportNeedsImportDefaultHelper(node: ImportDeclaration): boolean {\r\n    // Import default is needed if there's a default import or a default ref and no other refs (meaning an import star helper wasn't requested)\r\n    return !getImportNeedsImportStarHelper(node) && (isDefaultImport(node) || (!!node.importClause && isNamedImports(node.importClause.namedBindings!) && containsDefaultReference(node.importClause.namedBindings))); // TODO: GH#18217\r\n}"
+    }
+  }
+]
