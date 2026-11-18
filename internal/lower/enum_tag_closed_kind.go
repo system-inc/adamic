@@ -315,6 +315,11 @@ func (l *lowering) closedKindBuildKind(site closedKindSite, field string) (*chec
 		if !l.closedKindWritesField(site.node, field) {
 			return nil, "", false
 		}
+		if closedKindFunctionConstructorThis(site.node) {
+			// Probe only (#x2cjvy9, Node's 55): a write through the this of a function whose this is only
+			// declared, tsc's factory constructors, counted as a hatch, to measure what that ruling moves.
+			return nil, "", false
+		}
 		construct := "a write of " + field
 		// Only a plain `=` with the target its whole left side writes one value, the right's.
 		assignment := ast.GetAssignmentTarget(site.node)
@@ -406,4 +411,26 @@ func (l *lowering) closedKindObjectLiteral(site closedKindSite, field string) *c
 		return l.checker.GetTypeOfSymbol(l.checker.GetExportSymbolOfSymbol(symbol))
 	}
 	return l.closedKindFieldType(site.of, field)
+}
+
+// closedKindFunctionConstructorThis is whether a property or element access writes through the this of a
+// function declaration or expression whose this is a declared parameter, as tsc's factory constructors
+// are (utilities.ts:8505's Node(this: Mutable<Node>, kind, ...)), arrows seen through. Probe only.
+func closedKindFunctionConstructorThis(target *ast.Node) bool {
+	var object *ast.Node
+	switch target.Kind {
+	case ast.KindPropertyAccessExpression:
+		object = target.AsPropertyAccessExpression().Expression
+	case ast.KindElementAccessExpression:
+		object = target.AsElementAccessExpression().Expression
+	}
+	if object == nil || ast.SkipParentheses(object).Kind != ast.KindThisKeyword {
+		return false
+	}
+	container := ast.GetThisContainer(target, false, false)
+	if container == nil || (container.Kind != ast.KindFunctionDeclaration && container.Kind != ast.KindFunctionExpression) {
+		return false
+	}
+	parameters := container.Parameters()
+	return len(parameters) > 0 && parameters[0].Name() != nil && parameters[0].Name().Kind == ast.KindIdentifier && parameters[0].Name().Text() == "this"
 }

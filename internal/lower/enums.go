@@ -551,6 +551,7 @@ func (l *lowering) enumRefusal(node *ast.Node) error {
 					if hazard == enumTagSharedValueHazard {
 						return &Refused{Where: l.program.Where(node), What: "an object refinement by tags from different numeric enums that share a value", Fix: "give the members tags from one enum, or tags with distinct values (adamic/enum-tag)"}
 					}
+					l.probeWrite(node, reference)
 					return &Refused{Where: l.program.Where(node), What: "an object refinement using an open numeric enum as a literal tag", Fix: "use a member-specific tag from a multi-member enum, a string enum, or a plain literal tag (adamic/enum-tag)"}
 				}
 			}
