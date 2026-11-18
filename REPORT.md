@@ -1,12 +1,12 @@
 # #y852c3c paired TypeScript census
 
-Seven full file pairs are verified. The focused full pair covers the checker slot stop, and its unfiltered single-file pair is underway. The original compiler-directory processes were killed at the worker’s memory limit before they emitted findings. Both memory-limited directory retries are underway. The unfiltered `tsc.ts` first-error pair is complete. The focused first-error and scan-all pairs are complete.
+Seven full file pairs are verified. The focused full pair covers the checker slot stop, and its unfiltered single-file pair is underway. The original compiler-directory processes were killed at the worker’s memory limit before they emitted findings. The memory-limited base directory retry is complete. The head retry is still running. The unfiltered `tsc.ts` first-error pair is complete. The focused first-error and scan-all pairs are complete.
 
 ## 1. Record values reaching Unknown
 
 **Yes. The head’s record node was Unknown in all 20 observed unit snapshots that held a checked slot read.** The graph tracked zero record-value writes in each. `recordValuesUnknown` named no write and returned “local or result has no tracked producer; no reaching allocation established.” The parser’s `AdamicJsonRecoveryValue` and `AdamicJsonRecoveryObject` supplied no observed cause.
 
-The original `createProgram` probe stopped at “ir: virtual call has no target set.” Running the compiler’s `finishClassCalls` preparation on a disposable copy supplied the targets and let its graph query finish. It returned the same Unknown and zero writes. The prepared probe preserves all 340 findings from the focused program stream. The two overload units at `program.ts:1501:1` and `1516:1` also return the same Unknown and zero writes after class-target preparation. [Overload graph rows](evidence/head/class-target-overloads.log) The whole-entry allocation graph remains unobserved. [Prepared graph](evidence/head/class-target-probe.log) · [Finding equivalence](evidence/class-target-probe-equivalence.json).
+The original `createProgram` probe stopped at “ir: virtual call has no target set.” Running the compiler’s `finishClassCalls` preparation on a disposable copy supplied the targets and let its graph query finish. It returned the same Unknown and zero writes. The prepared probe preserves all 340 findings from the focused program stream. The two overload units at `program.ts:1501:1` and `1516:1` also returned the same Unknown and zero writes after class-target preparation. Their prepared pass reproduced every one of the 932 selected findings from the unfiltered program stream. The whole-entry allocation graph remains unobserved. [Overload graph rows](evidence/head/class-target-overloads.log) · [Finding equivalence](evidence/overload-probe-equivalence.json) [Prepared graph](evidence/head/class-target-probe.log) · [Finding equivalence](evidence/class-target-probe-equivalence.json).
 
 
 | Unit | Checked slot-read observations | Tracked writes |
@@ -135,6 +135,8 @@ The unfiltered `program.ts` pair has 248 units per side, with 1,486 base finding
 
 The unfiltered `tsc.ts` first-error pair measured 81 source files and 4,568 units per side, with zero checker diagnostics. The base recorded 4,362 findings and the head recorded 4,355. The seven first-error slot stops listed above are the entire delta. There were zero new, changed, or reached findings. [Entry pair](evidence/entry-pair.json) · [Base stream](evidence/base/entry.jsonl.gz) · [Head stream](evidence/head/entry.jsonl.gz)
 
+The unfiltered compiler-directory base retry measured 79 source files and 4,561 units, with zero checker diagnostics and 4,362 findings. It observed the same seven slot stops as the base entry stream. The head directory retry is still running. [Base directory stream](evidence/base/directory.jsonl.gz)
+
 ### Whole-entry scan-all boundary
 
 Both serial retries completed. All 4,716 events paired exactly, including 4,715 refusal-scan events and the same first production stop. Both stop during `lowering.declareModule` at `core.ts:261:1` with “overload 1 of filter result U[] cannot be served by implementation result readonly T[] | undefined.” This boundary leaves the whole-entry allocation graph unobserved. [Scan pair](evidence/scan-pair.json) · [Base raw scan](evidence/base/scan.json.gz) · [Head raw scan](evidence/head/scan.json.gz)
@@ -148,4 +150,4 @@ The two compiler worktrees were pinned to `19a80811d918e392290519cbcda54b8c8c075
 
 Pairing uses kind, phase, reason, and message with source positions stripped from the text. The table locations identify occurrences within their units. A gone finding is absent on the head. A changed finding has a head counterpart at the same site. A reached finding is a later stop first seen in a unit that already had a base stop. A new finding is a head-only stop without that progression. The paired JSON keeps the raw messages and coordinates.
 
-An edit to the scratch launcher while older shells were waiting on the tools caused shell errors after both full program and both entry streams closed. Each measurement binary wrote the expected file records and a final relation trailer. The original streams and shell diagnostics are in the evidence.
+An edit to the scratch launcher while older shells were waiting on the tools caused shell errors after both full program streams, both entry streams, and the base directory stream closed. Each measurement binary wrote the expected file records and a final relation trailer. The original streams and shell diagnostics are in the evidence.
