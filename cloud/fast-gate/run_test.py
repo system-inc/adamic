@@ -1237,6 +1237,65 @@ class DarwinLegs(unittest.TestCase):
                 self.assertEqual(result["stages_exit"]["darwin"], 1)
                 self.assertEqual(result["needs_darwin"], ["internal/apple/apple.go"])
 
+    def test_a_missing_record_exits_four_and_a_failed_one_stays_red(self):
+        # #ycqnr4b, Adamic Loom's ruling: a record missing for the candidate is the evidence missing, never the change's
+        # red, so the gate exits DarwinLegMissingExit, which the judge reads from a phase as void darwinRecordMissing. A
+        # record at the candidate's digest whose tests failed on the Mac stays exit 1. Mutants, each red here: every miss
+        # read as missing (darwinLegFailed dropped); every miss read as failed; a later failure beside a missing record
+        # not counted; a-check's paths that await a record counted as faulted, or its faulted ones not.
+        base, tip = self.candidate()
+        digest = run.darwinPathsDigest(self.tree, self.sha, self.tree)
+        self.assertEqual(run.DarwinLegMissingExit, 4)
+        retooled = dict(self.declaredTools, xcode="Xcode 27.1 (27A11)")
+        for why, fields, exit, named in (
+                ("no record", None, run.DarwinLegMissingExit, "no darwin leg recorded for darwinPaths " + digest),
+                ("a record whose tools differ", {"tools": retooled}, run.DarwinLegMissingExit, "tools.xcode is 'Xcode 27.1 (27A11)'"),
+                ("a record out of shape", {"log": {"sha256": "short"}}, run.DarwinLegMissingExit, "log.sha256 isn't 64 lowercase hex"),
+                ("a record whose leg exited 1", {"exit": 1}, 1, "exit is 1, not 0"),
+                ("a record whose tests failed", {"counts": {"passed": 11, "failed": 1, "skipped": 1}}, 1, "counts.failed is 1, not 0"),
+                ("a failed record under other tools", {"exit": 1, "tools": retooled}, 1, "exit is 1, not 0")):
+            self.clearLegs()
+            if fields is not None:
+                self.record(tip, **fields)
+            for extra in ({}, {"phase": "darwin"}, {"phase": "coverage"}):
+                with self.subTest(why, extra=extra):
+                    gate, status, result = self.gate(base=base, extra=extra)
+                    self.assertTrue(status.startswith("red:"), status)
+                    self.assertIn(digest, gate.failure["detail"])
+                    self.assertIn(named, gate.failure["detail"])
+                    self.assertEqual(gate.exitCode(), exit)
+        # Any other failure beside a missing record is the change's red, whichever came first.
+        self.clearLegs()
+        gate, status, result = self.gate(base=base, failing="vet")
+        self.assertEqual(gate.exitCode(), 1)
+        # A record at another digest is no record: missing, never failed.
+        self.clearLegs()
+        self.record(tip, darwinPaths="f" * 64, exit=1)
+        self.assertEqual(run.darwinLegVerdict(self.tree, self.sha, self.tree)[2], False)
+        # The control: a green record is exit 0.
+        self.clearLegs()
+        self.record(tip)
+        gate, status, result = self.gate(base=base)
+        self.assertEqual(gate.exitCode(), 0)
+
+    def test_a_check_waits_on_a_missing_record_and_reds_on_a_failed_one(self):
+        # A darwin path stopped on the platform with no green leg: the record missing is evidence missing, so a-check's
+        # failure says so (failedBeyondEvidence unset); a record whose tests failed, or no digest, is red as today.
+        base, tip = self.candidate()
+        self.clearLegs()
+        gate = self.aCheck("examples/apple/app.a")
+        self.assertEqual(gate.exits["a-check"], 1)
+        self.assertFalse(getattr(gate, "failedBeyondEvidence", False))
+        self.record(tip, exit=1)
+        gate = self.aCheck("examples/apple/app.a")
+        self.assertEqual(gate.exits["a-check"], 1)
+        self.assertTrue(getattr(gate, "failedBeyondEvidence", False))
+        # A path red on its own, beside the platform stop, is faulted however the leg reads.
+        self.clearLegs()
+        gate = self.aCheck("probes/probe.a", returncode=1, errors="type error TS2322\n")
+        self.assertEqual(gate.exits["a-check"], 1)
+        self.assertTrue(getattr(gate, "failedBeyondEvidence", False))
+
     def digestMode(self, sha, at=None):
         """What run.py --darwin-paths-digest at sha says, run in this process so the stubbed go list is the one it reads,
         from a checkout at at (sha unless given): its exit's code (None when it returns) and what it printed."""

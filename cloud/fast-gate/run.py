@@ -642,15 +642,37 @@ def darwinLegFor(tree, sha, tools, digest=None):
     (None, why), why naming what it looked for or the first reason a record at that digest isn't green. A file that can't
     be read or parsed holds no digest to match. darwinPathsDigest's DarwinPathsRefusal passes through to the caller.
     Tools the gate tools can't declare (darwinTools) leave no record green, so that's (None, why) too."""
+    return darwinLegVerdict(tree, sha, tools, digest)[:2]
+
+
+def darwinLegFailed(record):
+    """Whether a record says its tests failed on the pool Mac: its exit or its counts.failed is a whole number that isn't 0.
+    That's the change's code failing, read from a record at the candidate's own darwinPaths (#ycqnr4b, Adamic Loom's
+    ruling), so the change's red. Every other reason a record isn't green (tools that differ, a field out of shape) says
+    the evidence is missing, never failed."""
+    if not isinstance(record, dict):
+        return False
+    if wholeNumber(record.get("exit")) and record["exit"] != 0:
+        return True
+    counts = record.get("counts")
+    return isinstance(counts, dict) and wholeNumber(counts.get("failed")) and counts["failed"] != 0
+
+
+def darwinLegVerdict(tree, sha, tools, digest=None):
+    """darwinLegFor's answer with whose a miss is (#ycqnr4b): (name, record, False) for the first green record at the
+    candidate's darwinPaths; (None, why, True) when no record there is green and one of them says its tests failed on the
+    Mac (darwinLegFailed), the change's red; (None, why, False) when the evidence is missing: no record at that digest, one
+    there whose tools differ from the gate tools' or that's out of shape, or gate tools that can't say what tools a record
+    must match. A record at another digest is never read, so it's no record. DarwinPathsRefusal passes through."""
     digest = darwinPathsDigest(tree, sha, tools) if digest is None else digest
     try:
         declaredTools = darwinTools(tools)
     except ValueError as error:
         # No record can be green when the gate can't say what tools a record must match.
-        return None, "no darwin leg record can be green: %s" % error
+        return None, "no darwin leg record can be green: %s" % error, False
     directory = os.path.join(tools, darwinLegsDirectory)
     names = sorted(name for name in os.listdir(directory) if name.endswith(".json") and name != darwinToolsName) if os.path.isdir(directory) else []
-    why = None
+    why, failed = None, False
     for name in names:
         try:
             with open(os.path.join(directory, name)) as handle:
@@ -661,9 +683,10 @@ def darwinLegFor(tree, sha, tools, digest=None):
             continue
         refusal = darwinLegRefusal(name, record, declaredTools)
         if refusal is None:
-            return name, record
+            return name, record, False
         why = why or "%s isn't green: %s" % (name, refusal)
-    return None, why or "no darwin leg recorded for darwinPaths %s" % digest
+        failed = failed or darwinLegFailed(record)
+    return None, why or "no darwin leg recorded for darwinPaths %s" % digest, failed
 
 
 def darwinLegSummary(name, record):
@@ -1206,6 +1229,14 @@ class MemoryFloorRefusal(ChangeRefusal):
 # "refused: <why>". Every other failure keeps its traceback and exit 1, so a crash is never read as the change's red.
 RefusalExit = 3
 
+# The exit status of a gate whose every failure is a darwin leg's record missing for the candidate (#ycqnr4b, Adamic Loom's
+# ruling): no record at its darwinPaths, or one there whose tools differ or that's out of shape (darwinLegVerdict). The
+# evidence is missing, never failed, and the judge reads this exit from a phase as void darwinRecordMissing, Loom's,
+# uncharged, so the same sha comes back once its record lands. A record at the digest that says its tests failed, a
+# darwinPaths that can't be computed, and any other failure beside it keep exit 1. A phase is never traced, so traced's own
+# exit 4 never reaches a phase's.
+DarwinLegMissingExit = 4
+
 
 def main():
     if "--phase-unread" in sys.argv:
@@ -1271,7 +1302,7 @@ def main():
         gate.fail("runner", traceback.format_exc())
     finally:
         gate.finish()
-    sys.exit(0 if gate.failure is None and not gate.stopped else 1)
+    sys.exit(gate.exitCode())
 
 
 class Gate:
@@ -1790,11 +1821,13 @@ class Gate:
             self.fail("darwin", "no darwin leg can match %s, since its darwinPaths can't be computed, for %s: %s" % (
                 self.arguments.sha, named, refusal))
             return False
-        name, leg = darwinLegFor(self.arguments.tree, self.arguments.sha, self.arguments.tools, digest)
+        name, leg, failed = darwinLegVerdict(self.arguments.tree, self.arguments.sha, self.arguments.tools, digest)
         if name is None:
             self.exits["darwin"] = 1
+            # A record at this digest that says its tests failed is the change's red; every other miss is the record
+            # missing (#ycqnr4b), which exits DarwinLegMissingExit when nothing else failed.
             self.fail("darwin", "needs a darwin leg on a pool Mac (Shackler), recorded in %s/<tip>.json at darwinPaths %s, for %s: %s" % (
-                darwinLegsDirectory, digest, named, leg))
+                darwinLegsDirectory, digest, named, leg), evidenceMissing=not failed)
             return False
         self.exits["darwin"] = 0
         self.result["darwin_leg"] = darwinLegSummary(name, leg)
@@ -1850,7 +1883,8 @@ class Gate:
         if self.step("a-check-build", ["go", "build", "-o", adamic, "./cmd/adamic"]) is False:
             self.exits["a-check"] = 1
             return
-        results, failed = {}, []
+        # faulted: a path red for a reason other than its darwin leg's record missing (#ycqnr4b).
+        results, failed, faulted = {}, [], False
         # Read only when a path stops on the platform, so a check with no darwin path never reads the map or the legs.
         rules, leg = None, None
         for path in paths:
@@ -1864,16 +1898,20 @@ class Gate:
             process = self.spawn([adamic, "c", path], subprocess.PIPE, subprocess.PIPE)
             _, errors = process.communicate()
             outcome = aCheckOutcome(process.returncode, errors)
-            row = {}
+            row, awaitsRecord = {}, False
             if outcome == "failed" and process.returncode == platformMissingExit and "darwin platform missing" in errors:
                 rules = executorMap(self.arguments.tools)[0] if rules is None else rules
                 if firstExecutor(rules, path) == "darwin":
                     if leg is None:
                         try:
-                            leg = darwinLegFor(self.arguments.tree, self.arguments.sha, self.arguments.tools)
+                            leg = darwinLegVerdict(self.arguments.tree, self.arguments.sha, self.arguments.tools)
                         except DarwinPathsRefusal as refusal:
-                            # No digest is no leg, so the path keeps its live red; the darwin phase names why.
-                            leg = (None, str(refusal))
+                            # No digest is no leg, so the path keeps its live red; the darwin phase names why. It's red,
+                            # never the record missing, as the darwin phase reads it.
+                            leg = (None, str(refusal), True)
+                    # A path stopped here with no green leg, when the leg's miss is the record missing rather than a
+                    # failed record or no digest, waits on that record (#ycqnr4b), and its red is evidence missing.
+                    awaitsRecord = leg[0] is None and not leg[2]
                     if leg[0] is not None:
                         # The stop came at load, so nothing here checked the program: the Mac's run of it is the verdict.
                         row = {"source": "darwin leg " + leg[0]}
@@ -1889,11 +1927,13 @@ class Gate:
             results[path] = dict({"outcome": outcome, "expected": expect or "checked", "first": first[:300]}, **row)
             if not ok:
                 failed.append("%s: %s, expected %s (%s)" % (path, outcome, expect or "checked", first[:200]))
+                faulted = faulted or not awaitsRecord
         self.result["a_check"] = results
         self.steps["a-check"] = round(time.monotonic() - started, 1)
         self.exits["a-check"] = 1 if failed else 0
         if failed:
-            self.fail("a-check", "a-check failed for %d file%s:\n%s" % (len(failed), "" if len(failed) == 1 else "s", "\n".join(failed[:50])))
+            self.fail("a-check", "a-check failed for %d file%s:\n%s" % (len(failed), "" if len(failed) == 1 else "s", "\n".join(failed[:50])),
+                      evidenceMissing=not faulted)
 
     def catalogEntriesTouched(self, changed):
         """The bug catalog's entries whose undo patch edits a file this change touches."""
@@ -2993,8 +3033,13 @@ class Gate:
             details["launched"].set()
             self.testLaunchLock.release()
 
-    def fail(self, step, detail):
+    def fail(self, step, detail, evidenceMissing=False):
+        """The gate's first failure, named and timed. evidenceMissing says this one is a darwin leg's record missing for
+        the candidate (#ycqnr4b), never a failure of the change's code; any failure that isn't, first or later, makes
+        exitCode red, so only a gate whose every failure is a missing record exits DarwinLegMissingExit."""
         with self.lock:
+            if not evidenceMissing:
+                self.failedBeyondEvidence = True
             if self.failure is not None or getattr(self, "stopped", None):
                 return
             self.failure = {"step": step, "detail": detail, "after_seconds": round(time.monotonic() - self.started, 1)}
@@ -3141,6 +3186,15 @@ class Gate:
     def status(self, line):
         with open(os.path.join(self.arguments.out, "status.txt"), "w") as handle:
             handle.write(line + "\n")
+
+    def exitCode(self):
+        """The gate's exit status: 0 green, DarwinLegMissingExit when its every failure was a darwin leg's record missing
+        (fail's evidenceMissing, and nothing failed beside it, first or later), 1 for anything else, a stop among them."""
+        if self.failure is None and not self.stopped:
+            return 0
+        if self.failure is not None and not self.stopped and not getattr(self, "failedBeyondEvidence", False):
+            return DarwinLegMissingExit
+        return 1
 
     def finish(self):
         if getattr(self, "stopThread", None):

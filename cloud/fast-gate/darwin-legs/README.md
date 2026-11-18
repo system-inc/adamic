@@ -9,6 +9,14 @@ coverage fail with "needs a darwin leg on a pool Mac (Shackler)", naming the dar
 a-check stays red as it always was. When the gate can't compute the candidate's darwinPaths (below), they fail with "no
 darwin leg can match", naming why, and a-check stays red the same way; no record can pass a digest that doesn't exist.
 
+Whose a miss is (#ycqnr4b, Adamic Loom's ruling): when the gate's only failures are a record missing for the candidate
+(no record at its darwinPaths, or one there whose tools differ from `tools.json` or that's out of shape), it exits 4, and
+the judge reads that phase as void darwinRecordMissing, Loom's and uncharged. The Queue parks the change until a line plan
+names other gate tools, which promoting its record does, so the same sha comes back with its record. A record at the
+candidate's darwinPaths whose `exit` or `counts.failed` isn't 0, a darwinPaths that can't be computed, and any other
+failure beside the miss stay exit 1, the change's red. A change still never lands without a green record at its own
+digest, so the miss only moves the charge.
+
 The gate reads these records from its tools checkout, never from the candidate's tree and never fetched, so a change
 can't vouch for itself.
 
