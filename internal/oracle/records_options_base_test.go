@@ -191,6 +191,31 @@ func TestOptionsBaseObjectFieldStops(t *testing.T) {
 	}
 }
 
+// #6c4swvt (a), Runtime's pin: a record literal's computed entry puts a dictionary under configFile, which
+// readGuardedInUnionSlot leaves to the read's checked narrow to a fixed object (recordReadHeapMember). Native's narrow
+// tells a record by its shape; the JavaScript backend's read straight through it, as Node does, until every record it
+// makes carried a mark (javascript's adamicRecords). Both stop alike now, after the line before the read. Mutant: let
+// the JavaScript narrow to a fixed object ignore the mark, and the javascript row prints Node's undefined.
+func TestOptionsBaseComputedEntryDictionaryStops(t *testing.T) {
+	t.Parallel()
+	path := optionsBasePath(t, "computed_entry_dictionary.ts")
+	node := onNode(t, path)
+	if node.exitCode != 0 || string(node.stdout) != "before\nundefined\n" {
+		t.Fatalf("Node: %s", optionsBaseShown(node))
+	}
+	program, err := lowered(t, path)
+	if err != nil {
+		t.Fatalf("must lower, as on main: %v", err)
+	}
+	native, _ := natively(t, program)
+	want := run{stdout: []byte("before\n"), stderr: []byte("adamic: panic: field read failed: options.configFile is not a TsConfigSourceFile; expected TsConfigSourceFile, found another member of the index signature's union, which a computed-key or index-signature write may have stored\n"), exitCode: 70}
+	for backend, got := range map[string]run{"native": native, "javascript": onJavaScriptBackend(t, program)} {
+		if difference := disagreement(want, got); difference != "" {
+			t.Fatalf("%s: %s: want %s; got %s", backend, difference, optionsBaseShown(want), optionsBaseShown(got))
+		}
+	}
+}
+
 // #6c4swvt's string[] head: an array member, lib?: string[], is dropped by the view, since its named read out of the
 // slot is #y852c3c's element-checked view origin. An honest string[] written under lib through OptionsBase, and a
 // (string | number)[] holding only strings, read back and agree with Node on both backends, with nothing leaked.
