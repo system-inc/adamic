@@ -10,6 +10,12 @@
 // code points are visited. The checkpoints are built once, in one pass, and freed with the string.
 // Indexed strings also decode a compact UTF-16 view once for direct unit reads.
 //
+// A shared string's index is read by every worker at once, so its own cursor is never written after
+// sharing; each thread keeps one cursor of its own instead, for the shared index it read last, named
+// by the index's address and its id. Without it, parallelMap's workers walked from a checkpoint on
+// every read of a shared non-ASCII string (#zbjp7m2: locate's share of bench/parallel_files at one
+// worker went from 5% to 12% of its cycles).
+//
 // A string is immutable, so nothing cached can go stale while it lives, and a string's memory comes
 // back from allocate with nothing cached. The program's literals are immortal, and so is the index a
 // long one gets; stack pieces cache their length but never get an index, which nothing would free.
@@ -35,6 +41,15 @@
 #endif
 
 
+
+// The next index id, and this thread's cursor for the shared index it read last.
+static uint64_t next_index_id = 1;
+static _Thread_local struct {
+	const struct adamic_string_index *index;
+	uint64_t id;
+	size_t unit;
+	size_t offset;
+} shared_cursor;
 
 static size_t width(unsigned char lead) {
 	return lead < 0x80 ? 1 : lead < 0xe0 ? 2 : lead < 0xf0 ? 3 : 4;
@@ -79,6 +94,7 @@ static struct adamic_string_index *build(adamic_string *string, size_t units) {
 	index->units = units;
 	index->cursor_unit = 0;
 	index->cursor_offset = 0;
+	index->id = __atomic_fetch_add(&next_index_id, 1, __ATOMIC_RELAXED);
 	index->count = count;
 	index->view = NULL;
 	if (!indexed) { return index; }
@@ -207,18 +223,35 @@ size_t adamic_string_locate(const adamic_string *string, size_t unit, bool *low)
 		index = usable(string, units);
 	}
 	size_t start = 0, offset = 0;
+	// The cursor to start from: the index's own while the string is unshared, this thread's when it's
+	// shared and this thread last read this very index, and none otherwise. Either way the walk below is
+	// the same, so a read still visits at most STEP code points from the cursor or the checkpoint.
+	bool shared = adamic_is_shared(&string->heap);
+	size_t cursor_unit = 0, cursor_offset = 0;
+	bool cursor = false;
+	if (CURSOR && index != NULL) {
+		if (!shared) {
+			cursor_unit = index->cursor_unit;
+			cursor_offset = index->cursor_offset;
+			cursor = true;
+		} else if (shared_cursor.index == index && shared_cursor.id == index->id) {
+			cursor_unit = shared_cursor.unit;
+			cursor_offset = shared_cursor.offset;
+			cursor = true;
+		}
+	}
 	if (index != NULL) {
 		// Sequential reads need no checkpoint load. A near forward read remains bounded by STEP.
-		if (CURSOR && !adamic_is_shared(&string->heap) && unit >= index->cursor_unit && unit - index->cursor_unit < STEP) {
-			start = index->cursor_unit;
-			offset = index->cursor_offset;
+		if (cursor && unit >= cursor_unit && unit - cursor_unit < STEP) {
+			start = cursor_unit;
+			offset = cursor_offset;
 		} else {
 			uint32_t checkpoint = index->checkpoints[unit / STEP];
 			start = unit / STEP * STEP - (checkpoint & 1);
 			offset = checkpoint >> 1;
-			if (CURSOR && !adamic_is_shared(&string->heap) && index->cursor_unit > unit && index->cursor_unit - unit <= unit - start) {
-				start = index->cursor_unit;
-				offset = index->cursor_offset;
+			if (cursor && cursor_unit > unit && cursor_unit - unit <= unit - start) {
+				start = cursor_unit;
+				offset = cursor_offset;
 				// The cursor names a code point's first unit. Step back over continuation bytes,
 				// subtracting two units for a supplementary point and one for a lone surrogate.
 				while (start > unit) {
@@ -239,9 +272,14 @@ size_t adamic_string_locate(const adamic_string *string, size_t unit, bool *low)
 		start = next;
 		offset += size;
 	}
-	if (index != NULL && !adamic_is_shared(&string->heap)) {
+	if (index != NULL && !shared) {
 		index->cursor_unit = start;
 		index->cursor_offset = offset;
+	} else if (index != NULL) {
+		shared_cursor.index = index;
+		shared_cursor.id = index->id;
+		shared_cursor.unit = start;
+		shared_cursor.offset = offset;
 	}
 	*low = unit != start;
 	return offset;

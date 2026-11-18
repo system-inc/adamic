@@ -294,6 +294,11 @@
 `string_build_impl.h:adamic_string_false:1`
 `string_build_impl.h:adamic_string_true:1`
 `string_index.c:adamic_literal_mark:1`
+# A shared string's locate cursor, per thread (#zbjp7m2): next_index_id is only ever fetch-added, relaxed,
+# to stamp each index once; shared_cursor is thread-local, never read by another thread, and holds an
+# index address it compares and never dereferences.
+`string_index.c:next_index_id:1`
+`string_index.c:shared_cursor:1`
 `string_slice_impl.h:bytes:1`
 `string_slice_impl.h:characters:1`
 `tsgo.c:call_ns:1`

@@ -111,6 +111,32 @@ func TestParallelMemory(t *testing.T) {
 	}
 }
 
+// Four workers read one shared non-ASCII string through their own cursors, each offset checked against a
+// walk made before sharing, and a thread's cursor for a freed index isn't taken for a new index at the
+// same address (string_index.c, #zbjp7m2). The release build is the one that reuses the address (a
+// sanitizer's quarantine or the counted build's bookkeeping may not), so the reuse half is held there
+// and the readers' half everywhere. Mutants:
+// shared_cursor_id (the id check dropped) aborts the release build at the reused address, and
+// shared_cursor_write (a shared index's own cursor written) is a TSan race.
+func TestParallelSharedCursor(t *testing.T) {
+	t.Parallel()
+	for _, build := range parallelBuilds(t) {
+		t.Run(build.name, func(t *testing.T) {
+			binary := parallelHarness(t, "shared_cursor.c", build.options)
+			stdout, _ := parallelRun(t, binary, "4")
+			want := "shared cursors clean\n"
+			if build.name != "release" {
+				if stdout == "shared cursors clean, index address not reused\n" {
+					return
+				}
+			}
+			if stdout != want {
+				t.Fatalf("got %q, want %q", stdout, want)
+			}
+		})
+	}
+}
+
 // Each build keeps both worker counts together for the output equality assertion.
 func parallelMapMode(t *testing.T, mode string, options Options) {
 	t.Helper()
@@ -169,6 +195,8 @@ func parallelCheckMutant(t *testing.T, name string) {
 		{"oversized_slot", "object.c", "uint64_t packed = index <= UINT16_MAX ? pointer | ((uint64_t)index << 48) : 0;", "uint64_t packed = pointer | ((uint64_t)index << 48);", "scaling.c", "", "4", "", false},
 		{"fixed_grain", "parallel.c", "return grain == 0 ? 1 : grain > 256 ? 256 : grain;", "return 256;", "scaling.c", "", "4", "", false},
 		{"eager_strings", "share.c", "if (!shared) {", "if (!shared && heap->kind == adamic_kind_string) { adamic_string_prepare_shared((adamic_string *)heap); } if (!shared) {", "scaling.c", "", "4", "", false},
+		{"shared_cursor_id", "string_index.c", "} else if (shared_cursor.index == index && shared_cursor.id == index->id) {", "} else if (shared_cursor.index == index) {", "shared_cursor.c", "", "4", "unit 1001: offset", false},
+		{"shared_cursor_write", "string_index.c", "\tif (index != NULL && !shared) {\n\t\tindex->cursor_unit = start;", "\tif (index != NULL) {\n\t\tindex->cursor_unit = start;", "shared_cursor.c", "", "4", "WARNING: ThreadSanitizer: data race", true},
 		{"one_worker", "parallel.c", "if (thread_count == 1) { return; }", "if (thread_count == 1) { thread_count = 2; }", "map.c", "numbers", "1", "", false},
 	}
 	for _, mutant := range mutants {
@@ -383,6 +411,16 @@ func TestParallelMutant_ascii_character_write(t *testing.T) {
 func TestParallelMutant_skip_items_share(t *testing.T) {
 	t.Parallel()
 	parallelCheckMutant(t, "skip_items_share")
+}
+
+func TestParallelMutant_shared_cursor_id(t *testing.T) {
+	t.Parallel()
+	parallelCheckMutant(t, "shared_cursor_id")
+}
+
+func TestParallelMutant_shared_cursor_write(t *testing.T) {
+	t.Parallel()
+	parallelCheckMutant(t, "shared_cursor_write")
 }
 
 func TestParallelMutant_lazy_cache(t *testing.T) {
