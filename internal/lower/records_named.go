@@ -186,7 +186,7 @@ func (l *lowering) recordSlotMemberUnique(receiver *ast.Node, declared *checker.
 		}
 		unique = member
 	}
-	return unique != nil && (unique == declared || l.checker.IsTypeAssignableTo(unique, declared) && l.checker.IsTypeAssignableTo(declared, unique) && l.sameRecordStorage(unique, declared, map[[2]*checker.Type]bool{}) && l.sameRecordStorage(declared, unique, map[[2]*checker.Type]bool{}))
+	return unique != nil && (unique == declared || l.checker.IsTypeAssignableTo(unique, declared) && l.checker.IsTypeAssignableTo(declared, unique) && l.sameRecordStorage(unique, declared, newRecordStorageWalk()) && l.sameRecordStorage(declared, unique, newRecordStorageWalk()))
 }
 
 // recordSlotHeapClasses is each representation recordSlotMemberUnique tells apart at runtime: a scalar by
@@ -291,7 +291,10 @@ func (l *lowering) namedWriteStop(where *ast.Node, receiver *checker.Type, value
 			continue
 		}
 		to := l.checker.GetNonMissingTypeOfSymbol(property)
-		if l.checker.IsReadonlySymbol(property) || !l.checker.IsTypeAssignableTo(from, to) || !l.sameRecordStorage(from, to, map[[2]*checker.Type]bool{}) {
+		if walk := newRecordStorageWalk(); l.checker.IsReadonlySymbol(property) || !l.checker.IsTypeAssignableTo(from, to) || !l.sameRecordStorage(from, to, walk) {
+			if walk.bounded {
+				return l.recordStorageBounded(where, from, to)
+			}
 			return l.notYet(where, "an unrestricted dictionary write that can violate named property "+property.Name+"; use a literal key or a value accepted by every named property")
 		}
 		if err := l.refuseInSlot(value, to); err != nil {
@@ -312,7 +315,7 @@ func (l *lowering) namedWriteStop(where *ast.Node, receiver *checker.Type, value
 
 // Erasing or widening a named contract would allow another alias to write through
 // the index signature. Storage identity alone is not a proof of that relation.
-func (l *lowering) sameRecordNamedContracts(from, to, inside, viewed *checker.Type, visited map[[2]*checker.Type]bool) bool {
+func (l *lowering) sameRecordNamedContracts(from, to, inside, viewed *checker.Type, walk *recordStorageWalk) bool {
 	for index, pair := range [][3]*checker.Type{{from, to, viewed}, {to, from, inside}} {
 		if len(l.checker.GetIndexInfosOfType(pair[0])) == 0 {
 			continue // Finite partial records retain their existing element invariance rule.
@@ -328,7 +331,7 @@ func (l *lowering) sameRecordNamedContracts(from, to, inside, viewed *checker.Ty
 				continue
 			}
 			u := l.checker.GetNonMissingTypeOfSymbol(other)
-			if l.checker.IsReadonlySymbol(property) != l.checker.IsReadonlySymbol(other) || !l.checker.IsTypeAssignableTo(t, u) || !l.checker.IsTypeAssignableTo(u, t) || !l.sameRecordStorage(t, u, visited) || l.widened(t, u, map[[2]*checker.Type]bool{}) != nil || l.widened(u, t, map[[2]*checker.Type]bool{}) != nil {
+			if l.checker.IsReadonlySymbol(property) != l.checker.IsReadonlySymbol(other) || !l.checker.IsTypeAssignableTo(t, u) || !l.checker.IsTypeAssignableTo(u, t) || !l.sameRecordStorage(t, u, walk) || l.widened(t, u, map[[2]*checker.Type]bool{}) != nil || l.widened(u, t, map[[2]*checker.Type]bool{}) != nil {
 				return false
 			}
 		}

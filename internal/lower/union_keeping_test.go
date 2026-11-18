@@ -973,11 +973,22 @@ await main();
 	}
 }
 
-// Different Promise and PromiseLike targets stay covered by this existing stop (#3h04df3).
+// A Promise of one keeping seen as a PromiseLike of another (Strong's Box as Weakly's Weak<Box>) is
+// never compared by the keeping walk, which skips methods (#3h04df3), so every road from it has to stop
+// somewhere else. These rows held "a member typed any (then()) related to PromiseLike", but that stop
+// fired only after sameRecordStorage had walked then's instantiations member by member: with the record
+// walk comparing Promise and PromiseLike by what they settle to (#fzx0j5z), refuseAnyRelation no longer
+// sees it, and run beside that arm for its side effects alone, the old walk brings the stop back
+// (J-ffqtbns). Each road is now held to the stop that answers first on its own: awaiting the view, its
+// typeof-narrowed then, and a direct view with its then (J-hapgaan). The history the any stop leaned on
+// is its own task (#77ncr00).
 func TestUnionKeepingPromiseLikeMemberAnyStop(t *testing.T) {
 	t.Parallel()
 	for _, extension := range []string{".a", ".ts"} {
-		for _, row := range []struct{ name, source, where string }{
+		for _, row := range []struct {
+			name, source, where, words string
+			refused                    bool
+		}{
 			{"t1", `import type { Weak } from 'adamic';
 interface Box { readonly label: string }
 type Strong = { readonly kind: 'v'; readonly v: Box } | { readonly kind: 'w'; readonly w: number };
@@ -994,7 +1005,7 @@ async function main(): Promise<void> {
   }
 }
 await main();
-`, ":10:48"},
+`, ":12:15", "await of thenables", false},
 			{"t7", `import type { Weak } from 'adamic';
 interface Box { readonly label: string }
 type Strong = { readonly kind: 'v'; readonly v: Box } | { readonly kind: 'w'; readonly w: number };
@@ -1009,14 +1020,44 @@ async function main(): Promise<void> {
   console.log(show(x));
 }
 await main();
-`, ":10:39"},
+`, ":10:39", shapeFitPromiseStop, false},
+			{"t8", `import type { Weak } from 'adamic';
+interface Box { readonly label: string }
+type Strong = { readonly kind: 'v'; readonly v: Box } | { readonly kind: 'w'; readonly w: number };
+type Weakly = { readonly kind: 'v'; readonly v: Weak<Box> } | { readonly kind: 'w'; readonly w: number };
+function show(x: Weakly): string { return x.kind === 'v' ? x.v?.label ?? 'none' : 'w'; }
+async function produce(): Promise<Strong> { return { kind: 'v', v: { label: 'label' } }; }
+function hold(): Promise<Strong> | number { return produce(); }
+const held: Promise<Strong> | number = hold();
+const viewed: PromiseLike<Weakly> | number = held;
+if (typeof viewed !== 'number') {
+  viewed.then((x) => { console.log(show(x)); });
+}
+`, ":11:3", "inherited library member then read as an own field", true},
+			{"t9", `import type { Weak } from 'adamic';
+interface Box { readonly label: string }
+type Strong = { readonly kind: 'v'; readonly v: Box } | { readonly kind: 'w'; readonly w: number };
+type Weakly = { readonly kind: 'v'; readonly v: Weak<Box> } | { readonly kind: 'w'; readonly w: number };
+function show(x: Weakly): string { return x.kind === 'v' ? x.v?.label ?? 'none' : 'w'; }
+async function produce(): Promise<Strong> { return { kind: 'v', v: { label: 'label' } }; }
+const held: Promise<Strong> = produce();
+const viewed: PromiseLike<Weakly> = held;
+viewed.then((x) => { console.log(show(x)); });
+`, ":8:37", shapeFitPromiseStop, false},
 		} {
 			t.Run(row.name+extension, func(t *testing.T) {
 				_, err := lowerSourceAs(t, row.source, extension)
 				var ny *NotYet
+				var refused *Refused
 				want := "main" + extension + row.where
-				if !errors.As(err, &ny) || !strings.HasSuffix(ny.Where, want) || !strings.Contains(ny.What, "a member typed any (then()) related to PromiseLike") {
-					t.Fatalf("%s: got %v, want the PromiseLike member-typed-any NotYet at %s", row.name, err, want)
+				if row.refused {
+					if !errors.As(err, &refused) || !strings.HasSuffix(refused.Where, want) || !strings.Contains(refused.What, row.words) {
+						t.Fatalf("%s: got %v, want refused at %s saying %q", row.name, err, want, row.words)
+					}
+					return
+				}
+				if !errors.As(err, &ny) || !strings.HasSuffix(ny.Where, want) || !strings.Contains(ny.What, row.words) {
+					t.Fatalf("%s: got %v, want a NotYet at %s saying %q", row.name, err, want, row.words)
 				}
 			})
 		}
