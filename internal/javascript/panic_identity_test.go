@@ -49,40 +49,40 @@ func TestEveryTryTestsPanicIdentity(t *testing.T) {
 	body := code[start+len(header) : start+len(header)+end+1]
 	stack := "\t\tif (temporary_N instanceof RangeError && temporary_N.message === " + quote("Maximum call stack size exceeded") + ") panic(" + quote(stackOverflowMessage) + ");\n"
 	want := "\ttry {\n" +
-		"\t\treturn 1;\n" +
+		"\t\treturn (1);\n" +
 		"\t} catch (temporary_N) {\n" +
 		"\t\tif (adamicProcessExiting()) throw temporary_N;\n" +
 		"\t\tif (adamicIsPanic(temporary_N)) throw temporary_N;\n" +
 		stack +
-		"\t\treturn 2;\n" +
+		"\t\treturn (2);\n" +
 		"\t}\n" +
 		"\tlet temporary_N = false;\n" +
 		"\ttry {\n" +
-		"\t\treturn 3;\n" +
+		"\t\treturn (3);\n" +
 		"\t} catch (temporary_N) {\n" +
 		"\t\tif (adamicIsPanic(temporary_N)) temporary_N = true;\n" +
 		"\t\tthrow temporary_N;\n" +
 		"\t} finally {\n" +
 		"\t\tif (!adamicProcessExiting() && !temporary_N) {\n" +
-		"\t\t\treturn 4;\n" +
+		"\t\t\treturn (4);\n" +
 		"\t\t}\n" +
 		"\t}\n" +
 		"\tlet temporary_N = false;\n" +
 		"\ttry {\n" +
 		"\t\ttry {\n" +
-		"\t\t\treturn 5;\n" +
+		"\t\t\treturn (5);\n" +
 		"\t\t} catch (temporary_N) {\n" +
 		"\t\t\tif (adamicProcessExiting()) throw temporary_N;\n" +
 		"\t\t\tif (adamicIsPanic(temporary_N)) throw temporary_N;\n" +
 		"\t" + stack +
-		"\t\t\treturn 6;\n" +
+		"\t\t\treturn (6);\n" +
 		"\t\t}\n" +
 		"\t} catch (temporary_N) {\n" +
 		"\t\tif (adamicIsPanic(temporary_N)) temporary_N = true;\n" +
 		"\t\tthrow temporary_N;\n" +
 		"\t} finally {\n" +
 		"\t\tif (!adamicProcessExiting() && !temporary_N) {\n" +
-		"\t\t\treturn 7;\n" +
+		"\t\t\treturn (7);\n" +
 		"\t\t}\n" +
 		"\t}\n"
 	if got := temporaryName.ReplaceAllString(body, "temporary_N"); got != want {
