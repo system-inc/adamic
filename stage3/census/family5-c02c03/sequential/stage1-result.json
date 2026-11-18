@@ -1,0 +1,45 @@
+{
+  "lane_green": false,
+  "lane_counts": {
+    "passing": 106354,
+    "failing": 3,
+    "pending": 0
+  },
+  "timings": [
+    {
+      "case": "codeFixClassImplementInterfaceNoTruncation.ts",
+      "c02_ms": 14632.338683,
+      "main_ms": 4964.260363,
+      "c02_exit": 0,
+      "main_exit": 0,
+      "grade": "no isolated timeout on either side"
+    },
+    {
+      "case": "relationComplexityError.ts",
+      "c02_ms": 11485.15815,
+      "main_ms": 11330.505984,
+      "c02_exit": 0,
+      "main_exit": 0,
+      "grade": "no isolated timeout on either side"
+    },
+    {
+      "case": "recursiveConditionalTypes.ts",
+      "c02_ms": 5119.288494,
+      "main_ms": 5870.092521,
+      "c02_exit": 0,
+      "main_exit": 0,
+      "grade": "no isolated timeout on either side"
+    },
+    {
+      "case": "templateLiteralTypes1.ts",
+      "c02_ms": 17070.908698,
+      "main_ms": 7406.12326,
+      "c02_exit": 0,
+      "main_exit": 0,
+      "grade": "no isolated timeout on either side"
+    }
+  ],
+  "built_js_and_public_dts_equal": true,
+  "built_difference": {},
+  "next": "stop: standard lane remains red; no landing push"
+}

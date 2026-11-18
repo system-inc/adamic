@@ -1,0 +1,13 @@
+{
+  "command": [
+    "node",
+    "/tmp/family5-sequential/c02-adapter/mutant.cjs",
+    "/workspace/family5-c02-lane-alone/adapted-tree"
+  ],
+  "cwd": "/tmp/family5-land",
+  "environment": {
+    "ADAMIC_TOOLS": "/workspace/adamic-tools"
+  },
+  "exit_code": 0,
+  "wall_seconds": 2.043
+}

@@ -1,0 +1,96 @@
+{
+  "status": "stopped: isolated standard eight-worker lane remains red",
+  "attribution": "Results support box/load sensitivity; no C02-specific timeout reproduced in isolated or common-path cases. Runtime JavaScript and public declarations are byte-identical. Main full eight-worker lane was not run.",
+  "main": "fbe5b72ba115a8f3060d4b5229fd578574f4505f",
+  "c02_candidate": "28a2e22015d0cf51667fcefa7acb246cab553817",
+  "c03_commit": null,
+  "landing_pushes": [],
+  "isolated_lane_exit": 1,
+  "isolated_lane_counts": {
+    "passing": 106354,
+    "failing": 3,
+    "pending": 0
+  },
+  "paired_case_timings": [
+    {
+      "case": "codeFixClassImplementInterfaceNoTruncation.ts",
+      "c02_ms": 14632.338683,
+      "main_ms": 4964.260363,
+      "c02_exit": 0,
+      "main_exit": 0,
+      "grade": "no isolated timeout on either side"
+    },
+    {
+      "case": "relationComplexityError.ts",
+      "c02_ms": 11485.15815,
+      "main_ms": 11330.505984,
+      "c02_exit": 0,
+      "main_exit": 0,
+      "grade": "no isolated timeout on either side"
+    },
+    {
+      "case": "recursiveConditionalTypes.ts",
+      "c02_ms": 5119.288494,
+      "main_ms": 5870.092521,
+      "c02_exit": 0,
+      "main_exit": 0,
+      "grade": "no isolated timeout on either side"
+    },
+    {
+      "case": "templateLiteralTypes1.ts",
+      "c02_ms": 17070.908698,
+      "main_ms": 7406.12326,
+      "c02_exit": 0,
+      "main_exit": 0,
+      "grade": "no isolated timeout on either side"
+    }
+  ],
+  "common_path_timings": [
+    {
+      "side": "main",
+      "sha": "fbe5b72ba115a8f3060d4b5229fd578574f4505f",
+      "case": "codeFixClassImplementInterfaceNoTruncation.ts",
+      "exit_code": 0,
+      "elapsed_ms": 6549.709101,
+      "source_manifest_matches_side": true,
+      "runtime_manifest_matches_side": true,
+      "shared_path": "/workspace/family5-c02-lane-alone/adapted-tree"
+    },
+    {
+      "side": "c02",
+      "sha": "28a2e22015d0cf51667fcefa7acb246cab553817",
+      "case": "codeFixClassImplementInterfaceNoTruncation.ts",
+      "exit_code": 0,
+      "elapsed_ms": 5845.380223,
+      "source_manifest_matches_side": true,
+      "runtime_manifest_matches_side": true,
+      "shared_path": "/workspace/family5-c02-lane-alone/adapted-tree"
+    },
+    {
+      "side": "main",
+      "sha": "fbe5b72ba115a8f3060d4b5229fd578574f4505f",
+      "case": "templateLiteralTypes1.ts",
+      "exit_code": 0,
+      "elapsed_ms": 8630.22062,
+      "source_manifest_matches_side": true,
+      "runtime_manifest_matches_side": true,
+      "shared_path": "/workspace/family5-c02-lane-alone/adapted-tree"
+    },
+    {
+      "side": "c02",
+      "sha": "28a2e22015d0cf51667fcefa7acb246cab553817",
+      "case": "templateLiteralTypes1.ts",
+      "exit_code": 0,
+      "elapsed_ms": 8196.340292,
+      "source_manifest_matches_side": true,
+      "runtime_manifest_matches_side": true,
+      "shared_path": "/workspace/family5-c02-lane-alone/adapted-tree"
+    }
+  ],
+  "box": {
+    "cpu_max": "400000 100000",
+    "memory_max": "17179869184",
+    "method": "Only one proof child active; standard lane uses eight workers."
+  },
+  "next_proofs": "Product test, paired full G02 censuses and latent mutant were not started because the lane gate remains red."
+}

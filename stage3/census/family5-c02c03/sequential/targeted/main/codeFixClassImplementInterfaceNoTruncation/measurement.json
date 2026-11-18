@@ -1,0 +1,63 @@
+{
+  "side": "main",
+  "sha": "fbe5b72ba115a8f3060d4b5229fd578574f4505f",
+  "case": "codeFixClassImplementInterfaceNoTruncation.ts",
+  "runner": "fourslash",
+  "oracle_exit": 0,
+  "test_command_exit": 0,
+  "test_phase_seconds": 8.642,
+  "counts": {
+    "passing": 1,
+    "failing": 0,
+    "pending": 0
+  },
+  "case_elapsed_ms": 4964.260363,
+  "runnable_measurement": "test body",
+  "timing_events": [
+    {
+      "event": "hook end",
+      "title": "\"before each\" hook for \"fourslash test codeFixClassImplementInterfaceNoTruncation.ts runs correctly\"",
+      "kind": "hook",
+      "message": "",
+      "stack": "",
+      "stack_top": null,
+      "timeout_ms": 40000,
+      "elapsed_ms": 0.36444,
+      "pid": 53817
+    },
+    {
+      "event": "pass",
+      "title": "fourslash tests tests/cases/fourslash/codeFixClassImplementInterfaceNoTruncation.ts fourslash test codeFixClassImplementInterfaceNoTruncation.ts runs correctly",
+      "kind": "test",
+      "message": "",
+      "stack": "",
+      "stack_top": null,
+      "timeout_ms": 40000,
+      "elapsed_ms": 4964.260363,
+      "pid": 53817
+    },
+    {
+      "event": "hook end",
+      "title": "\"after each\" hook for \"fourslash test codeFixClassImplementInterfaceNoTruncation.ts runs correctly\"",
+      "kind": "hook",
+      "message": "",
+      "stack": "",
+      "stack_top": null,
+      "timeout_ms": 40000,
+      "elapsed_ms": 0.087072,
+      "pid": 53817
+    },
+    {
+      "event": "hook end",
+      "title": "fourslash tests tests/cases/fourslash/codeFixClassImplementInterfaceNoTruncation.ts \"after all\" hook for \"fourslash test codeFixClassImplementInterfaceNoTruncation.ts runs correctly\"",
+      "kind": "hook",
+      "message": "",
+      "stack": "",
+      "stack_top": null,
+      "timeout_ms": 40000,
+      "elapsed_ms": 0.036744,
+      "pid": 53817
+    }
+  ],
+  "failures": []
+}

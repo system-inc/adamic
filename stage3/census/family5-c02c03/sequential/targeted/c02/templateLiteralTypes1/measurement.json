@@ -1,0 +1,239 @@
+{
+  "side": "c02",
+  "sha": "28a2e22015d0cf51667fcefa7acb246cab553817",
+  "case": "templateLiteralTypes1.ts",
+  "runner": "conformance",
+  "oracle_exit": 0,
+  "test_command_exit": 0,
+  "test_phase_seconds": 22.922,
+  "counts": {
+    "passing": 6,
+    "failing": 0,
+    "pending": 0
+  },
+  "case_elapsed_ms": 17070.908698,
+  "runnable_measurement": "before-all compilation hook",
+  "timing_events": [
+    {
+      "event": "hook end",
+      "title": "conformance tests conformance tests for tests/cases/conformance/types/literal/templateLiteralTypes1.ts \"before all\" hook for \"Correct errors for tests/cases/conformance/types/literal/templateLiteralTypes1.ts\"",
+      "kind": "hook",
+      "message": "",
+      "stack": "",
+      "stack_top": null,
+      "timeout_ms": 40000,
+      "elapsed_ms": 17070.908698,
+      "pid": 53508
+    },
+    {
+      "event": "hook end",
+      "title": "\"before each\" hook for \"Correct errors for tests/cases/conformance/types/literal/templateLiteralTypes1.ts\"",
+      "kind": "hook",
+      "message": "",
+      "stack": "",
+      "stack_top": null,
+      "timeout_ms": 40000,
+      "elapsed_ms": 0.230458,
+      "pid": 53508
+    },
+    {
+      "event": "pass",
+      "title": "conformance tests conformance tests for tests/cases/conformance/types/literal/templateLiteralTypes1.ts Correct errors for tests/cases/conformance/types/literal/templateLiteralTypes1.ts",
+      "kind": "test",
+      "message": "",
+      "stack": "",
+      "stack_top": null,
+      "timeout_ms": 40000,
+      "elapsed_ms": 5.406996,
+      "pid": 53508
+    },
+    {
+      "event": "hook end",
+      "title": "\"after each\" hook for \"Correct errors for tests/cases/conformance/types/literal/templateLiteralTypes1.ts\"",
+      "kind": "hook",
+      "message": "",
+      "stack": "",
+      "stack_top": null,
+      "timeout_ms": 40000,
+      "elapsed_ms": 0.049655,
+      "pid": 53508
+    },
+    {
+      "event": "hook end",
+      "title": "\"before each\" hook for \"Correct module resolution tracing for tests/cases/conformance/types/literal/templateLiteralTypes1.ts\"",
+      "kind": "hook",
+      "message": "",
+      "stack": "",
+      "stack_top": null,
+      "timeout_ms": 40000,
+      "elapsed_ms": 0.016484,
+      "pid": 53508
+    },
+    {
+      "event": "pass",
+      "title": "conformance tests conformance tests for tests/cases/conformance/types/literal/templateLiteralTypes1.ts Correct module resolution tracing for tests/cases/conformance/types/literal/templateLiteralTypes1.ts",
+      "kind": "test",
+      "message": "",
+      "stack": "",
+      "stack_top": null,
+      "timeout_ms": 40000,
+      "elapsed_ms": 0.064105,
+      "pid": 53508
+    },
+    {
+      "event": "hook end",
+      "title": "\"after each\" hook for \"Correct module resolution tracing for tests/cases/conformance/types/literal/templateLiteralTypes1.ts\"",
+      "kind": "hook",
+      "message": "",
+      "stack": "",
+      "stack_top": null,
+      "timeout_ms": 40000,
+      "elapsed_ms": 0.01134,
+      "pid": 53508
+    },
+    {
+      "event": "hook end",
+      "title": "\"before each\" hook for \"Correct sourcemap content for tests/cases/conformance/types/literal/templateLiteralTypes1.ts\"",
+      "kind": "hook",
+      "message": "",
+      "stack": "",
+      "stack_top": null,
+      "timeout_ms": 40000,
+      "elapsed_ms": 0.01133,
+      "pid": 53508
+    },
+    {
+      "event": "pass",
+      "title": "conformance tests conformance tests for tests/cases/conformance/types/literal/templateLiteralTypes1.ts Correct sourcemap content for tests/cases/conformance/types/literal/templateLiteralTypes1.ts",
+      "kind": "test",
+      "message": "",
+      "stack": "",
+      "stack_top": null,
+      "timeout_ms": 40000,
+      "elapsed_ms": 0.066137,
+      "pid": 53508
+    },
+    {
+      "event": "hook end",
+      "title": "\"after each\" hook for \"Correct sourcemap content for tests/cases/conformance/types/literal/templateLiteralTypes1.ts\"",
+      "kind": "hook",
+      "message": "",
+      "stack": "",
+      "stack_top": null,
+      "timeout_ms": 40000,
+      "elapsed_ms": 0.018676,
+      "pid": 53508
+    },
+    {
+      "event": "hook end",
+      "title": "\"before each\" hook for \"Correct JS output for tests/cases/conformance/types/literal/templateLiteralTypes1.ts\"",
+      "kind": "hook",
+      "message": "",
+      "stack": "",
+      "stack_top": null,
+      "timeout_ms": 40000,
+      "elapsed_ms": 0.051809,
+      "pid": 53508
+    },
+    {
+      "event": "pass",
+      "title": "conformance tests conformance tests for tests/cases/conformance/types/literal/templateLiteralTypes1.ts Correct JS output for tests/cases/conformance/types/literal/templateLiteralTypes1.ts",
+      "kind": "test",
+      "message": "",
+      "stack": "",
+      "stack_top": null,
+      "timeout_ms": 40000,
+      "elapsed_ms": 38.48735,
+      "pid": 53508
+    },
+    {
+      "event": "hook end",
+      "title": "\"after each\" hook for \"Correct JS output for tests/cases/conformance/types/literal/templateLiteralTypes1.ts\"",
+      "kind": "hook",
+      "message": "",
+      "stack": "",
+      "stack_top": null,
+      "timeout_ms": 40000,
+      "elapsed_ms": 0.021004,
+      "pid": 53508
+    },
+    {
+      "event": "hook end",
+      "title": "\"before each\" hook for \"Correct Sourcemap output for tests/cases/conformance/types/literal/templateLiteralTypes1.ts\"",
+      "kind": "hook",
+      "message": "",
+      "stack": "",
+      "stack_top": null,
+      "timeout_ms": 40000,
+      "elapsed_ms": 0.016289,
+      "pid": 53508
+    },
+    {
+      "event": "pass",
+      "title": "conformance tests conformance tests for tests/cases/conformance/types/literal/templateLiteralTypes1.ts Correct Sourcemap output for tests/cases/conformance/types/literal/templateLiteralTypes1.ts",
+      "kind": "test",
+      "message": "",
+      "stack": "",
+      "stack_top": null,
+      "timeout_ms": 40000,
+      "elapsed_ms": 0.153986,
+      "pid": 53508
+    },
+    {
+      "event": "hook end",
+      "title": "\"after each\" hook for \"Correct Sourcemap output for tests/cases/conformance/types/literal/templateLiteralTypes1.ts\"",
+      "kind": "hook",
+      "message": "",
+      "stack": "",
+      "stack_top": null,
+      "timeout_ms": 40000,
+      "elapsed_ms": 0.016376,
+      "pid": 53508
+    },
+    {
+      "event": "hook end",
+      "title": "\"before each\" hook for \"Correct type/symbol baselines for tests/cases/conformance/types/literal/templateLiteralTypes1.ts\"",
+      "kind": "hook",
+      "message": "",
+      "stack": "",
+      "stack_top": null,
+      "timeout_ms": 40000,
+      "elapsed_ms": 0.187353,
+      "pid": 53508
+    },
+    {
+      "event": "pass",
+      "title": "conformance tests conformance tests for tests/cases/conformance/types/literal/templateLiteralTypes1.ts Correct type/symbol baselines for tests/cases/conformance/types/literal/templateLiteralTypes1.ts",
+      "kind": "test",
+      "message": "",
+      "stack": "",
+      "stack_top": null,
+      "timeout_ms": 40000,
+      "elapsed_ms": 138.981963,
+      "pid": 53508
+    },
+    {
+      "event": "hook end",
+      "title": "\"after each\" hook for \"Correct type/symbol baselines for tests/cases/conformance/types/literal/templateLiteralTypes1.ts\"",
+      "kind": "hook",
+      "message": "",
+      "stack": "",
+      "stack_top": null,
+      "timeout_ms": 40000,
+      "elapsed_ms": 0.029041,
+      "pid": 53508
+    },
+    {
+      "event": "hook end",
+      "title": "conformance tests conformance tests for tests/cases/conformance/types/literal/templateLiteralTypes1.ts \"after all\" hook for \"Correct type/symbol baselines for tests/cases/conformance/types/literal/templateLiteralTypes1.ts\"",
+      "kind": "hook",
+      "message": "",
+      "stack": "",
+      "stack_top": null,
+      "timeout_ms": 40000,
+      "elapsed_ms": 0.035447,
+      "pid": 53508
+    }
+  ],
+  "failures": []
+}

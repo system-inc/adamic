@@ -1,0 +1,18 @@
+{
+  "expected_total": 106367,
+  "observed_counts": {
+    "passing": 106354,
+    "failing": 3,
+    "pending": 0
+  },
+  "observed_total": 106357,
+  "failed_before_all_hooks": 2,
+  "skipped_test_bodies": 12,
+  "replacement_hook_failures": 2,
+  "net_total_loss": 10,
+  "arithmetic": "106367 - 12 skipped bodies + 2 failed hooks = 106357",
+  "timeout_titles": [
+    "compiler tests compiler tests for tests/cases/compiler/recursiveConditionalTypes.ts \"before all\" hook for \"Correct errors for tests/cases/compiler/recursiveConditionalTypes.ts\"",
+    "conformance tests conformance tests for tests/cases/conformance/types/literal/templateLiteralTypes1.ts \"before all\" hook for \"Correct errors for tests/cases/conformance/types/literal/templateLiteralTypes1.ts\""
+  ]
+}

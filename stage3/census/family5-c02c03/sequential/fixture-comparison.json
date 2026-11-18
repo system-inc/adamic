@@ -1,0 +1,26 @@
+[
+  {
+    "file": "tests/cases/fourslash/codeFixClassImplementInterfaceNoTruncation.ts",
+    "byte_identical": true,
+    "c02_sha256": "703cb84a740f849762536aac722dd748780262118171030fb23f0093d7af5c4f",
+    "main_sha256": "703cb84a740f849762536aac722dd748780262118171030fb23f0093d7af5c4f"
+  },
+  {
+    "file": "tests/cases/compiler/relationComplexityError.ts",
+    "byte_identical": true,
+    "c02_sha256": "a174300e3b45d62f84e72f7381d4c03875d70764c90e66e8ddf59549134d2f45",
+    "main_sha256": "a174300e3b45d62f84e72f7381d4c03875d70764c90e66e8ddf59549134d2f45"
+  },
+  {
+    "file": "tests/cases/compiler/recursiveConditionalTypes.ts",
+    "byte_identical": true,
+    "c02_sha256": "b8c611a3b369008491208a9df11b31e921a8bfe591edc58e67e5feae81564f41",
+    "main_sha256": "b8c611a3b369008491208a9df11b31e921a8bfe591edc58e67e5feae81564f41"
+  },
+  {
+    "file": "tests/cases/conformance/types/literal/templateLiteralTypes1.ts",
+    "byte_identical": true,
+    "c02_sha256": "a578a02b10654578b725c1999e2ea23b20b0ac7c79cd6b9db7c6b21e1689e586",
+    "main_sha256": "a578a02b10654578b725c1999e2ea23b20b0ac7c79cd6b9db7c6b21e1689e586"
+  }
+]

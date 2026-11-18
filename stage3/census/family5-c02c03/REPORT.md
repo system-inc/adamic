@@ -1,66 +1,127 @@
-# Family 5 C02/C03: stopped at the whole-lane proof
+# Family 5 C02/C03: sequential lane attribution
 
-Start: origin/main **fbe5b72ba115a8f3060d4b5229fd578574f4505f**. TypeScript v6.0.3 **050880ce59e30b356b686bd3144efe24f875ebc8**. Recursive submodules were initialized at their recorded pins; see [setup/submodules.txt](setup/submodules.txt).
+**Stopped at the required eight-worker lane. Neither landing is pushed.** The isolated C02 rerun exited **1**, with **106,354 passing, 3 failing, 0 pending**. The required result remains 106,366 passing and one sanctioned failure.
 
-**No landing was pushed.** The unfiltered C02 whole lane exited **1**, with **106,359 passing, 3 failing, 0 pending**, against the required 106,366 passing and one sanctioned failure. Two failures were 40-second timeouts, in addition to the sanctioned public API acknowledgement failure. The paired censuses and the product test were then terminated with SIGTERM; their incomplete results are not successful proofs.
+The measurements support **box/load sensitivity**. Neither original timeout recurred in the isolated whole lane; two different compilation hooks timed out. All four cases passed individually on both shas. All ten emitted JavaScript files and public `typescript.d.ts` are byte-identical between independently built main and C02 trees. A shared-path repeat removed the initial timing spread. This does not waive the red lane. Main's complete eight-worker lane was not run; paired cases and identical runtime artifacts are the attribution evidence.
 
-## Candidates and ownership
+Main: `fbe5b72ba115a8f3060d4b5229fd578574f4505f`. C02 local candidate: `28a2e22015d0cf51667fcefa7acb246cab553817`. C03 has no landing commit. Both adapted inputs use TypeScript v6.0.3, `050880ce59e30b356b686bd3144efe24f875ebc8`. The 748 source-file manifests differ only at types.ts; replacing C02's pinned Node owner with its pinned original makes that complete file byte-identical to main.
 
-C02 local candidate: **28a2e22015d0cf51667fcefa7acb246cab553817**, parent main above. Its only changes are the four files in `stage3/adapt/99-correctness-line-and-character` and one appended ledger line. [Complete candidate patch](c02-candidate.patch). Node remains at types.ts:942; the exact requested member is inserted at :955.
+## Idle-box lane
 
-C03 has **no landing commit**. Its external [draft](draft-c03/README.md) and one isolated adapter-contract receipt are retained. Its Type owner is at main's types.ts:6450; C02 would move the declaration to :6451. Its required proofs on C02's tree were not run.
+The [initial process snapshot](sequential/idle-before-lane.txt) shows no other proof workload. The box has a **four-core CPU quota** (`400000 100000`), **16 GiB** memory, Linux x64 and Node v24.19.0. The unmodified lane used its standard **eight workers** and standard **40,000 ms** Mocha timeout. No product build or census ran alongside it. [Serial audit](sequential/serial-audit.json): 18 real-child receipts, no inferred overlap above its 10 ms rounding tolerance.
 
-[Pin search](setup/pin-search.txt): adaptation 80 pins Node's heritage, and 71 pins individual members; neither pins the complete Node interface. No complete Node, Type or types.ts pin was found. This uses the same ownership distinction documented by main's 99-correctness-sourcefile-like-position. C02 therefore uses the requested new directory, with the complete owner pinned before and after. Both JavaScript emits are asserted identical before writing; CRLF, exact restoration, replay without writes, and rejection of owner drift, malformed candidate text, duplicate owners and mixed endings passed the scratch contract checks.
+| Run | Passing | Failing | Pending | Total reported | Real lane exit | Child wall s |
+|---|---:|---:|---:|---:|---:|---:|
+| Previous concurrent run | 106359 | 3 | 0 | 106362 | 1 | 1864.450 |
+| New isolated run | 106354 | 3 | 0 | 106357 | 1 | 808.298 |
 
-The candidate READMEs name adaptation 72's certificate, construction premises and escapes. [Source excerpts](setup/premise-excerpts.txt) and the [scout site list](setup/scout-sites.json) are retained. No internal/ change was made.
+The new oracle install and build exited **0**; its npm test child and the validated lane exited **1**. The test phase took **692.117 s**. [Whole lane report](sequential/c02/lane-receipts/report.json), [oracle report](sequential/c02/lane-receipts/oracle/report.json), complete compressed logs and raw Mocha errors are retained.
 
-## Required proof lines
-
-| Proof | C02 result | Real child exit |
+| Failure in isolated lane | Cause | Observed elapsed ms |
 |---|---|---:|
-| 1: stock tsc 6.0.3, ordinary, 79 roots, 0 diagnostics | PASS | 0 |
-| 1: stock tsc 6.0.3, strict, 79 roots, 0 diagnostics | PASS | 0 |
-| 1: adamic types over the 79 roots | PASS | 0 |
-| 2: full before/after census of all four files | INCOMPLETE | see below |
-| 3: mutant brings the sites back | NOT RUN; only byte restoration in the contract check passed | — |
-| 4: stage3/apply.sh whole | PASS | 0 |
-| 4: TestProduct_Stage3AdaptedTree, -timeout 45m | INTERRUPTED after the lane failure, before the 45-minute timeout | -15 (SIGTERM) |
-| 5: whole stage3 lane, all runners, eight workers | FAIL: 106,359 passing / 3 failing / 0 pending | 1 |
-| 6: public typescript.d.ts, cmp | PASS: byte-identical | 0 |
+| `compiler tests compiler tests for tests/cases/compiler/recursiveConditionalTypes.ts "before all" hook for "Correct errors for tests/cases/compiler/recursiveConditionalTypes.ts"` | timeout | 42167.510 |
+| `conformance tests conformance tests for tests/cases/conformance/types/literal/templateLiteralTypes1.ts "before all" hook for "Correct errors for tests/cases/conformance/types/literal/templateLiteralTypes1.ts"` | timeout | 43073.104 |
+| `unittests:: Public APIs for typescript.d.ts should be acknowledged when they change` | baseline-content | 2480.737 |
 
-C03 required proofs: **NOT RUN**. Its isolated draft contract check exited 0; that is not a proof of the requested stack.
+Both additional failures were `Timeout of 40000ms exceeded. For async tests and hooks, ensure "done()" is called; if returning a Promise, ensure it resolves.` The remaining failure is the sanctioned API acknowledgement baseline.
 
-The complete child receipts include command, cwd, environment, elapsed time, stdout and stderr. Stock checks enforce both zero diagnostics and 79 roots. The public declaration SHA-256 before and after C02 is `65c210e9d7553165606df3ac67544ea7ddcbccf2c322ed924e8e8f4c4622c5fd`.
+## Each case alone, main and C02
 
-## Blocking lane failures
+The original pair and both new failures were each measured serially, C02 then main, using the official oracle's `--tests` selection. Its documented targeted path uses one worker. No timeout override was set. Each side was checked out at its stated repository sha and used its matching adapted source tree and locked build.
 
-[Lane report](c02/lane-receipts/report.json), [oracle report](c02/lane-receipts/oracle/report.json), and complete compressed logs are retained. The lane took 1,864.450 seconds. The npm test command exited 1; its inner test runner reported exit 3. The oracle and validated lane each exited 1.
+Timing is the fourslash **test body**, or the compiler/conformance **before-all compilation hook**. A scratch preload derived from the existing error observer records pass/hook timings as well as errors; it is identical on both sides. [Observer](sequential/measure-runnables.cjs), [commands and orchestration](sequential/stage1.py), raw events, phase durations and actual exits are retained.
 
-| Failure | Cause | Measured duration |
+| Case | main s | C02 s | main oracle/test exit | C02 oracle/test exit |
+|---|---:|---:|---:|---:|
+| `codeFixClassImplementInterfaceNoTruncation.ts` | 4.964 | 14.632 | 0 / 0 | 0 / 0 |
+| `relationComplexityError.ts` | 11.331 | 11.485 | 0 / 0 | 0 / 0 |
+| `recursiveConditionalTypes.ts` | 5.870 | 5.119 | 0 / 0 | 0 / 0 |
+| `templateLiteralTypes1.ts` | 7.406 | 17.071 | 0 / 0 | 0 / 0 |
+
+Each compiler/conformance selection ran all six suite bodies successfully; the fourslash selection ran its one body successfully. No isolated timeout occurred on either side. The initial fourslash and template-literal timing spreads were not treated as evidence of a C02 regression.
+
+## Shared-path check of the two timing spreads
+
+Main's first tree was on /tmp and C02's on /workspace. The two timing outliers were repeated **main then C02** at the same /workspace path. Before each run, the complete source manifest matched that side and the executable JavaScript/public declaration manifest matched both independent builds. The restoring Node adapter selected main's source state; its normal replay selected C02. Standard targeted npm tests then ran one at a time. This input selection does not establish the latent mutant proof.
+
+| Case, same path | main s | C02 s | main test exit | C02 test exit |
+|---|---:|---:|---:|---:|
+| `codeFixClassImplementInterfaceNoTruncation.ts` | 6.550 | 5.845 | 0 | 0 |
+| `templateLiteralTypes1.ts` | 8.630 | 8.196 | 0 | 0 |
+
+[Shared-path method](sequential/common-path.py), [raw result](sequential/common-path-result.json), and [exact C02 restoration](sequential/restoration.json). All prepare/restore children also exited 0. After the final run, all source files again match C02 and all emitted JavaScript/public declarations still match both sides. The original timing spread did not persist with the shared-path check. These measurements identify load/path sensitivity, not its particular scheduler, cache or GC mechanism.
+
+## Where the five results went
+
+The original `relationComplexityError.ts` suite registers **six** bodies:
+
+1. Correct errors
+2. Correct module resolution tracing
+3. Correct sourcemap content
+4. Correct JS output
+5. Correct Sourcemap output
+6. Correct type/symbol baselines
+
+Its before-all hook failed. Mocha calls `done()` immediately on that hook error and never calls `runTests` for the suite. The six bodies therefore produced no pass, failure or pending events; the failed hook produced one failure. Net reported-total loss: **6 − 1 = 5**. The fourslash body's timeout replaced one pass with one failure and did not change the total.
+
+```text
+Original passes: 106366 - 6 skipped bodies - 1 failed fourslash body = 106359
+Original failures: 1 sanctioned + 1 failed hook + 1 failed body = 3
+Original total: 106367 - 6 skipped bodies + 1 failed hook = 106362
+```
+
+[Six-test registration](sequential/accounting/compilerRunner-suite.txt), [Mocha hook error path](sequential/accounting/mocha-before-all.txt), [original raw timeout observations](sequential/accounting/original-timeouts.json), and [machine-readable arithmetic](sequential/accounting/missing-five.json).
+
+The isolated run instead lost two six-test suites to failed before-all hooks:
+
+```text
+Isolated passes: 106366 - 12 skipped bodies = 106354
+Isolated failures: 1 sanctioned + 2 failed hooks = 3
+Isolated total: 106367 - 12 skipped bodies + 2 failed hooks = 106357
+```
+
+[Isolated-run accounting](sequential/accounting/isolated-run-total.json).
+
+## Proof gates and stop
+
+| Requested line | Current result | Real child exit |
 |---|---|---:|
-| `fourslash tests tests/cases/fourslash/codeFixClassImplementInterfaceNoTruncation.ts fourslash test codeFixClassImplementInterfaceNoTruncation.ts runs correctly` | `Timeout of 40000ms exceeded. For async tests and hooks, ensure "done()" is called; if returning a Promise, ensure it resolves.` | 46,964.015 ms |
-| `compiler tests compiler tests for tests/cases/compiler/relationComplexityError.ts "before all" hook for "Correct errors for tests/cases/compiler/relationComplexityError.ts"` | Same 40,000 ms timeout message | 55,109.134 ms |
-| `unittests:: Public APIs for typescript.d.ts should be acknowledged when they change` | Sanctioned baseline-content failure, `api/typescript.d.ts` | 4,085.339 ms |
+| C02 whole lane, idle box, standard eight workers | FAIL: 106354 / 3 / 0 | 1 |
+| Four isolated cases on main | PASS, all cases | 0 each |
+| Four isolated cases on C02 | PASS, all cases | 0 each |
+| Two shared-path cases on main | PASS, both | 0 each |
+| Two shared-path cases on C02 | PASS, both | 0 each |
+| TestProduct_Stage3AdaptedTree, -timeout 45m | NOT STARTED in this continuation; prior attempt was interrupted | — |
+| Paired full G02 censuses | NOT STARTED in this continuation; prior comparison remains incomplete | — |
+| Latent mutant site-restoration proof | NOT STARTED | — |
+| C02 landing | HELD: lane remains red | — |
+| C03 build, proofs and landing | NOT STARTED | — |
 
-The lane ran alongside the product build and two censuses. Contention is a plausible contributor to the timeouts; it was not established as their cause. No quiescent lane rerun was made. The checked-in lane fixes eight workers. This report does not classify either timeout as an adaptation regression or waive it.
+The prior same-candidate stock tsc (both configurations, 79 roots, zero diagnostics), adamic types, whole apply and public declaration comparison receipts remain PASS/0. They were not rerun here. No claim of target clearance, zero new latent findings, or reached-stop classification is made.
 
-## Census coverage and reached stops
+No timeout or worker-count change was made to obtain a green lane. A required gate is still red on this box, so this continuation stops without a landing push. The prior report and its complete partial evidence remain in [previous-stop-report.md](previous-stop-report.md).
 
-Exact environment: `LATENT_FULL=1`, `LATENT_ASSERT_NO_OUTPUT=1`, `LATENT_TAIL=1`, `CENSUS_MODULE_FORMAT=CommonJSBundle`, `LATENT_ONLY_FILE` set to each file's exact absolute path, `LATENT_TIMES=/dev/stderr`, rooted at `src/tsc/tsc.ts`. The entry tool was built from starting main with the repository's scratch measurement overlay. Tool hashes are in [setup/tool-provenance.json](setup/tool-provenance.json).
+## Complete new child receipt index
 
-The scout requires C02 coverage of program.ts (2 sites), utilities.ts (7), parser.ts (4), checker.ts (1). C03 requires checker.ts (14 sites across G03 and G12).
+| Receipt | Result | Real child exit |
+|---|---|---:|
+| c02/lane-alone | FAIL | 1 |
+| common-targeted/c02/codeFixClassImplementInterfaceNoTruncation/prepare | PASS | 0 |
+| common-targeted/c02/codeFixClassImplementInterfaceNoTruncation/test | PASS | 0 |
+| common-targeted/c02/templateLiteralTypes1/prepare | PASS | 0 |
+| common-targeted/c02/templateLiteralTypes1/test | PASS | 0 |
+| common-targeted/main/codeFixClassImplementInterfaceNoTruncation/prepare | PASS | 0 |
+| common-targeted/main/codeFixClassImplementInterfaceNoTruncation/test | PASS | 0 |
+| common-targeted/main/templateLiteralTypes1/prepare | PASS | 0 |
+| common-targeted/main/templateLiteralTypes1/test | PASS | 0 |
+| common-targeted/restore | PASS | 0 |
+| targeted/c02/codeFixClassImplementInterfaceNoTruncation | PASS | 0 |
+| targeted/c02/recursiveConditionalTypes | PASS | 0 |
+| targeted/c02/relationComplexityError | PASS | 0 |
+| targeted/c02/templateLiteralTypes1 | PASS | 0 |
+| targeted/main/codeFixClassImplementInterfaceNoTruncation | PASS | 0 |
+| targeted/main/recursiveConditionalTypes | PASS | 0 |
+| targeted/main/relationComplexityError | PASS | 0 |
+| targeted/main/templateLiteralTypes1 | PASS | 0 |
 
-| Run | Result | Real child exit | Wall seconds |
-|---|---|---:|---:|
-| C02 before, program.ts | Complete, checker-clean, normal relation_report trailer | 0 | 2482.599 |
-| C02 before, utilities.ts | Interrupted after lane failure | -15 | 93.624 |
-| C02 after, program.ts | Interrupted after lane failure | -15 | 1582.934 |
-| Remaining before/after files | Not run | — | — |
-
-The complete baseline program.ts stream contains the two G02 sites at **program.ts:738:57** and **program.ts:739:76**. Its createProgram implementation attempt completed in 969.486 seconds; it was not established to be hung. All partial streams and stderr were kept. The optional debugger attempt failed to start because its Python 3.10 shared library was missing and did not attach.
-
-**No paired finding comparison completed. Target clearance, zero new findings, and reached stops are unestablished.** There is no claimed list of zero reached stops. The prepared comparator requires an old boundary or a later-phase proof before treating an unmatched finding as reached.
-
-The early baseline stock receipt was taken while adaptation was running and reported one missing source-map-support declaration. It is preliminary. Both settled baseline stock configurations and baseline adamic types subsequently passed with zero diagnostics; their receipts are retained separately.
-
-Large logs and streams are compressed losslessly with gzip. Executable orchestration scripts are retained as evidence of the method; unexecuted commands in those scripts are not proof receipts.
+Each status file records exact commands, cwd, environment and child wall time. Full logs/events are gzip-compressed losslessly. No landing adaptation, ledger or internal/ file was changed during this continuation.

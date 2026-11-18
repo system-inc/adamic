@@ -1,0 +1,12 @@
+[
+  {
+    "file": "types.ts",
+    "owner": "Node",
+    "beforeDeclarations": 1,
+    "afterDeclarations": 1,
+    "before": "export interface Node extends TextRange {\n    readonly kind: SyntaxKind;\n    readonly flags: NodeFlags;\n    /** @internal */ modifierFlagsCache: ModifierFlags;\n    /** @internal */ readonly transformFlags: TransformFlags; // Flags for transforms\n    /** @internal */ id?: NodeId | undefined; // Unique id (used to look up NodeLinks)\n    readonly parent: Node; // Parent node (initialized by binding)\n    /** @internal */ original?: Node | undefined; // The original node if this is an updated node.\n    /** @internal */ emitNode?: EmitNode | undefined; // Associated EmitNode (initialized by transforms)\n    // NOTE: `symbol` and `localSymbol` have been moved to `Declaration`\n    //       `locals` and `nextContainer` have been moved to `LocalsContainer`\n    //       `flowNode` has been moved to `FlowContainer`\n    //       see: https://github.com/microsoft/TypeScript/pull/51682\n}",
+    "after": "export interface Node extends TextRange {\n    readonly kind: SyntaxKind;\n    readonly flags: NodeFlags;\n    /** @internal */ modifierFlagsCache: ModifierFlags;\n    /** @internal */ readonly transformFlags: TransformFlags; // Flags for transforms\n    /** @internal */ id?: NodeId | undefined; // Unique id (used to look up NodeLinks)\n    readonly parent: Node; // Parent node (initialized by binding)\n    /** @internal */ original?: Node | undefined; // The original node if this is an updated node.\n    /** @internal */ emitNode?: EmitNode | undefined; // Associated EmitNode (initialized by transforms)\n    // NOTE: `symbol` and `localSymbol` have been moved to `Declaration`\n    //       `locals` and `nextContainer` have been moved to `LocalsContainer`\n    //       `flowNode` has been moved to `FlowContainer`\n    //       see: https://github.com/microsoft/TypeScript/pull/51682\n    /** @internal */ getPositionOfLineAndCharacter?: ((line: number, character: number, allowEdits?: true) => number) | undefined;\n}",
+    "ownerBeforeSha256": "8003d407b602090f3d802b82f495d98c84deedaa980b8b68e698d67ef407d2dd",
+    "ownerAfterSha256": "d72f06dfe58bf0e035cbd1313ecc456086341c1554af8a3416538781c8e2ef08"
+  }
+]

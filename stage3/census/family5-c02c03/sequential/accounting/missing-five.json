@@ -1,0 +1,28 @@
+{
+  "expected": {
+    "passing": 106366,
+    "failing": 1,
+    "total": 106367
+  },
+  "observed": {
+    "passing": 106359,
+    "failing": 3,
+    "total": 106362
+  },
+  "affected_suite": "tests/cases/compiler/relationComplexityError.ts",
+  "scheduled_bodies": [
+    "Correct errors",
+    "Correct module resolution tracing",
+    "Correct sourcemap content",
+    "Correct JS output",
+    "Correct Sourcemap output",
+    "Correct type/symbol baselines"
+  ],
+  "skipped_bodies": 6,
+  "added_failed_hook": 1,
+  "net_total_loss": 5,
+  "passing_arithmetic": "106366 - 6 skipped compiler bodies - 1 failed fourslash body = 106359",
+  "failing_arithmetic": "1 sanctioned + 1 failed compiler hook + 1 failed fourslash body = 3",
+  "total_arithmetic": "106367 - 6 skipped bodies + 1 failed hook = 106362",
+  "pending_count_explanation": "A failed before-all hook aborts the suite; these six bodies produce neither pass nor pending records."
+}

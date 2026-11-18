@@ -1,0 +1,22 @@
+88:     private runSuite(fileName: string, test?: CompilerFileBasedTest, configuration?: FileBasedTestConfiguration) {
+89:         // Mocha holds onto the closure environment of the describe callback even after the test is done.
+90:         // Everything declared here should be cleared out in the "after" callback.
+91:         let compilerTest!: CompilerTest;
+92:         before(() => {
+93:             let payload;
+94:             if (test && test.content) {
+95:                 payload = TestCaseParser.makeUnitsFromTest(test.content, test.file);
+96:             }
+97:             compilerTest = new CompilerTest(fileName, payload, configuration);
+98:         });
+99:         it(`Correct errors for ${fileName}`, () => compilerTest.verifyDiagnostics());
+100:         it(`Correct module resolution tracing for ${fileName}`, () => compilerTest.verifyModuleResolution());
+101:         it(`Correct sourcemap content for ${fileName}`, () => compilerTest.verifySourceMapRecord());
+102:         it(`Correct JS output for ${fileName}`, () => (this.emit && compilerTest.verifyJavaScriptOutput()));
+103:         it(`Correct Sourcemap output for ${fileName}`, () => compilerTest.verifySourceMapOutput());
+104:         it(`Correct type/symbol baselines for ${fileName}`, () => compilerTest.verifyTypesAndSymbols());
+105:         after(() => {
+106:             compilerTest = undefined!;
+107:         });
+108:     }
+109: 

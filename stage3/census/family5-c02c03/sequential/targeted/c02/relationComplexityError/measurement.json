@@ -1,0 +1,239 @@
+{
+  "side": "c02",
+  "sha": "28a2e22015d0cf51667fcefa7acb246cab553817",
+  "case": "relationComplexityError.ts",
+  "runner": "compiler",
+  "oracle_exit": 0,
+  "test_command_exit": 0,
+  "test_phase_seconds": 26.988,
+  "counts": {
+    "passing": 6,
+    "failing": 0,
+    "pending": 0
+  },
+  "case_elapsed_ms": 11485.15815,
+  "runnable_measurement": "before-all compilation hook",
+  "timing_events": [
+    {
+      "event": "hook end",
+      "title": "compiler tests compiler tests for tests/cases/compiler/relationComplexityError.ts \"before all\" hook for \"Correct errors for tests/cases/compiler/relationComplexityError.ts\"",
+      "kind": "hook",
+      "message": "",
+      "stack": "",
+      "stack_top": null,
+      "timeout_ms": 40000,
+      "elapsed_ms": 11485.15815,
+      "pid": 53052
+    },
+    {
+      "event": "hook end",
+      "title": "\"before each\" hook for \"Correct errors for tests/cases/compiler/relationComplexityError.ts\"",
+      "kind": "hook",
+      "message": "",
+      "stack": "",
+      "stack_top": null,
+      "timeout_ms": 40000,
+      "elapsed_ms": 0.132544,
+      "pid": 53052
+    },
+    {
+      "event": "pass",
+      "title": "compiler tests compiler tests for tests/cases/compiler/relationComplexityError.ts Correct errors for tests/cases/compiler/relationComplexityError.ts",
+      "kind": "test",
+      "message": "",
+      "stack": "",
+      "stack_top": null,
+      "timeout_ms": 40000,
+      "elapsed_ms": 3.657194,
+      "pid": 53052
+    },
+    {
+      "event": "hook end",
+      "title": "\"after each\" hook for \"Correct errors for tests/cases/compiler/relationComplexityError.ts\"",
+      "kind": "hook",
+      "message": "",
+      "stack": "",
+      "stack_top": null,
+      "timeout_ms": 40000,
+      "elapsed_ms": 0.046971,
+      "pid": 53052
+    },
+    {
+      "event": "hook end",
+      "title": "\"before each\" hook for \"Correct module resolution tracing for tests/cases/compiler/relationComplexityError.ts\"",
+      "kind": "hook",
+      "message": "",
+      "stack": "",
+      "stack_top": null,
+      "timeout_ms": 40000,
+      "elapsed_ms": 0.020459,
+      "pid": 53052
+    },
+    {
+      "event": "pass",
+      "title": "compiler tests compiler tests for tests/cases/compiler/relationComplexityError.ts Correct module resolution tracing for tests/cases/compiler/relationComplexityError.ts",
+      "kind": "test",
+      "message": "",
+      "stack": "",
+      "stack_top": null,
+      "timeout_ms": 40000,
+      "elapsed_ms": 0.06148,
+      "pid": 53052
+    },
+    {
+      "event": "hook end",
+      "title": "\"after each\" hook for \"Correct module resolution tracing for tests/cases/compiler/relationComplexityError.ts\"",
+      "kind": "hook",
+      "message": "",
+      "stack": "",
+      "stack_top": null,
+      "timeout_ms": 40000,
+      "elapsed_ms": 0.036938,
+      "pid": 53052
+    },
+    {
+      "event": "hook end",
+      "title": "\"before each\" hook for \"Correct sourcemap content for tests/cases/compiler/relationComplexityError.ts\"",
+      "kind": "hook",
+      "message": "",
+      "stack": "",
+      "stack_top": null,
+      "timeout_ms": 40000,
+      "elapsed_ms": 0.011139,
+      "pid": 53052
+    },
+    {
+      "event": "pass",
+      "title": "compiler tests compiler tests for tests/cases/compiler/relationComplexityError.ts Correct sourcemap content for tests/cases/compiler/relationComplexityError.ts",
+      "kind": "test",
+      "message": "",
+      "stack": "",
+      "stack_top": null,
+      "timeout_ms": 40000,
+      "elapsed_ms": 0.145538,
+      "pid": 53052
+    },
+    {
+      "event": "hook end",
+      "title": "\"after each\" hook for \"Correct sourcemap content for tests/cases/compiler/relationComplexityError.ts\"",
+      "kind": "hook",
+      "message": "",
+      "stack": "",
+      "stack_top": null,
+      "timeout_ms": 40000,
+      "elapsed_ms": 0.020386,
+      "pid": 53052
+    },
+    {
+      "event": "hook end",
+      "title": "\"before each\" hook for \"Correct JS output for tests/cases/compiler/relationComplexityError.ts\"",
+      "kind": "hook",
+      "message": "",
+      "stack": "",
+      "stack_top": null,
+      "timeout_ms": 40000,
+      "elapsed_ms": 0.016742,
+      "pid": 53052
+    },
+    {
+      "event": "pass",
+      "title": "compiler tests compiler tests for tests/cases/compiler/relationComplexityError.ts Correct JS output for tests/cases/compiler/relationComplexityError.ts",
+      "kind": "test",
+      "message": "",
+      "stack": "",
+      "stack_top": null,
+      "timeout_ms": 40000,
+      "elapsed_ms": 0.543959,
+      "pid": 53052
+    },
+    {
+      "event": "hook end",
+      "title": "\"after each\" hook for \"Correct JS output for tests/cases/compiler/relationComplexityError.ts\"",
+      "kind": "hook",
+      "message": "",
+      "stack": "",
+      "stack_top": null,
+      "timeout_ms": 40000,
+      "elapsed_ms": 0.016352,
+      "pid": 53052
+    },
+    {
+      "event": "hook end",
+      "title": "\"before each\" hook for \"Correct Sourcemap output for tests/cases/compiler/relationComplexityError.ts\"",
+      "kind": "hook",
+      "message": "",
+      "stack": "",
+      "stack_top": null,
+      "timeout_ms": 40000,
+      "elapsed_ms": 0.015492,
+      "pid": 53052
+    },
+    {
+      "event": "pass",
+      "title": "compiler tests compiler tests for tests/cases/compiler/relationComplexityError.ts Correct Sourcemap output for tests/cases/compiler/relationComplexityError.ts",
+      "kind": "test",
+      "message": "",
+      "stack": "",
+      "stack_top": null,
+      "timeout_ms": 40000,
+      "elapsed_ms": 0.110894,
+      "pid": 53052
+    },
+    {
+      "event": "hook end",
+      "title": "\"after each\" hook for \"Correct Sourcemap output for tests/cases/compiler/relationComplexityError.ts\"",
+      "kind": "hook",
+      "message": "",
+      "stack": "",
+      "stack_top": null,
+      "timeout_ms": 40000,
+      "elapsed_ms": 0.011713,
+      "pid": 53052
+    },
+    {
+      "event": "hook end",
+      "title": "\"before each\" hook for \"Correct type/symbol baselines for tests/cases/compiler/relationComplexityError.ts\"",
+      "kind": "hook",
+      "message": "",
+      "stack": "",
+      "stack_top": null,
+      "timeout_ms": 40000,
+      "elapsed_ms": 0.03049,
+      "pid": 53052
+    },
+    {
+      "event": "pass",
+      "title": "compiler tests compiler tests for tests/cases/compiler/relationComplexityError.ts Correct type/symbol baselines for tests/cases/compiler/relationComplexityError.ts",
+      "kind": "test",
+      "message": "",
+      "stack": "",
+      "stack_top": null,
+      "timeout_ms": 40000,
+      "elapsed_ms": 47.092325,
+      "pid": 53052
+    },
+    {
+      "event": "hook end",
+      "title": "\"after each\" hook for \"Correct type/symbol baselines for tests/cases/compiler/relationComplexityError.ts\"",
+      "kind": "hook",
+      "message": "",
+      "stack": "",
+      "stack_top": null,
+      "timeout_ms": 40000,
+      "elapsed_ms": 0.020692,
+      "pid": 53052
+    },
+    {
+      "event": "hook end",
+      "title": "compiler tests compiler tests for tests/cases/compiler/relationComplexityError.ts \"after all\" hook for \"Correct type/symbol baselines for tests/cases/compiler/relationComplexityError.ts\"",
+      "kind": "hook",
+      "message": "",
+      "stack": "",
+      "stack_top": null,
+      "timeout_ms": 40000,
+      "elapsed_ms": 0.034317,
+      "pid": 53052
+    }
+  ],
+  "failures": []
+}

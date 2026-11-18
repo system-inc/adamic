@@ -1,0 +1,239 @@
+{
+  "side": "main",
+  "sha": "fbe5b72ba115a8f3060d4b5229fd578574f4505f",
+  "case": "recursiveConditionalTypes.ts",
+  "runner": "compiler",
+  "oracle_exit": 0,
+  "test_command_exit": 0,
+  "test_phase_seconds": 14.566,
+  "counts": {
+    "passing": 6,
+    "failing": 0,
+    "pending": 0
+  },
+  "case_elapsed_ms": 5870.092521,
+  "runnable_measurement": "before-all compilation hook",
+  "timing_events": [
+    {
+      "event": "hook end",
+      "title": "compiler tests compiler tests for tests/cases/compiler/recursiveConditionalTypes.ts \"before all\" hook for \"Correct errors for tests/cases/compiler/recursiveConditionalTypes.ts\"",
+      "kind": "hook",
+      "message": "",
+      "stack": "",
+      "stack_top": null,
+      "timeout_ms": 40000,
+      "elapsed_ms": 5870.092521,
+      "pid": 54267
+    },
+    {
+      "event": "hook end",
+      "title": "\"before each\" hook for \"Correct errors for tests/cases/compiler/recursiveConditionalTypes.ts\"",
+      "kind": "hook",
+      "message": "",
+      "stack": "",
+      "stack_top": null,
+      "timeout_ms": 40000,
+      "elapsed_ms": 0.645291,
+      "pid": 54267
+    },
+    {
+      "event": "pass",
+      "title": "compiler tests compiler tests for tests/cases/compiler/recursiveConditionalTypes.ts Correct errors for tests/cases/compiler/recursiveConditionalTypes.ts",
+      "kind": "test",
+      "message": "",
+      "stack": "",
+      "stack_top": null,
+      "timeout_ms": 40000,
+      "elapsed_ms": 15.871044,
+      "pid": 54267
+    },
+    {
+      "event": "hook end",
+      "title": "\"after each\" hook for \"Correct errors for tests/cases/compiler/recursiveConditionalTypes.ts\"",
+      "kind": "hook",
+      "message": "",
+      "stack": "",
+      "stack_top": null,
+      "timeout_ms": 40000,
+      "elapsed_ms": 0.337589,
+      "pid": 54267
+    },
+    {
+      "event": "hook end",
+      "title": "\"before each\" hook for \"Correct module resolution tracing for tests/cases/compiler/recursiveConditionalTypes.ts\"",
+      "kind": "hook",
+      "message": "",
+      "stack": "",
+      "stack_top": null,
+      "timeout_ms": 40000,
+      "elapsed_ms": 0.046666,
+      "pid": 54267
+    },
+    {
+      "event": "pass",
+      "title": "compiler tests compiler tests for tests/cases/compiler/recursiveConditionalTypes.ts Correct module resolution tracing for tests/cases/compiler/recursiveConditionalTypes.ts",
+      "kind": "test",
+      "message": "",
+      "stack": "",
+      "stack_top": null,
+      "timeout_ms": 40000,
+      "elapsed_ms": 0.163091,
+      "pid": 54267
+    },
+    {
+      "event": "hook end",
+      "title": "\"after each\" hook for \"Correct module resolution tracing for tests/cases/compiler/recursiveConditionalTypes.ts\"",
+      "kind": "hook",
+      "message": "",
+      "stack": "",
+      "stack_top": null,
+      "timeout_ms": 40000,
+      "elapsed_ms": 0.050787,
+      "pid": 54267
+    },
+    {
+      "event": "hook end",
+      "title": "\"before each\" hook for \"Correct sourcemap content for tests/cases/compiler/recursiveConditionalTypes.ts\"",
+      "kind": "hook",
+      "message": "",
+      "stack": "",
+      "stack_top": null,
+      "timeout_ms": 40000,
+      "elapsed_ms": 9.514456,
+      "pid": 54267
+    },
+    {
+      "event": "pass",
+      "title": "compiler tests compiler tests for tests/cases/compiler/recursiveConditionalTypes.ts Correct sourcemap content for tests/cases/compiler/recursiveConditionalTypes.ts",
+      "kind": "test",
+      "message": "",
+      "stack": "",
+      "stack_top": null,
+      "timeout_ms": 40000,
+      "elapsed_ms": 0.16069,
+      "pid": 54267
+    },
+    {
+      "event": "hook end",
+      "title": "\"after each\" hook for \"Correct sourcemap content for tests/cases/compiler/recursiveConditionalTypes.ts\"",
+      "kind": "hook",
+      "message": "",
+      "stack": "",
+      "stack_top": null,
+      "timeout_ms": 40000,
+      "elapsed_ms": 0.826813,
+      "pid": 54267
+    },
+    {
+      "event": "hook end",
+      "title": "\"before each\" hook for \"Correct JS output for tests/cases/compiler/recursiveConditionalTypes.ts\"",
+      "kind": "hook",
+      "message": "",
+      "stack": "",
+      "stack_top": null,
+      "timeout_ms": 40000,
+      "elapsed_ms": 1.165483,
+      "pid": 54267
+    },
+    {
+      "event": "pass",
+      "title": "compiler tests compiler tests for tests/cases/compiler/recursiveConditionalTypes.ts Correct JS output for tests/cases/compiler/recursiveConditionalTypes.ts",
+      "kind": "test",
+      "message": "",
+      "stack": "",
+      "stack_top": null,
+      "timeout_ms": 40000,
+      "elapsed_ms": 604.679664,
+      "pid": 54267
+    },
+    {
+      "event": "hook end",
+      "title": "\"after each\" hook for \"Correct JS output for tests/cases/compiler/recursiveConditionalTypes.ts\"",
+      "kind": "hook",
+      "message": "",
+      "stack": "",
+      "stack_top": null,
+      "timeout_ms": 40000,
+      "elapsed_ms": 0.048632,
+      "pid": 54267
+    },
+    {
+      "event": "hook end",
+      "title": "\"before each\" hook for \"Correct Sourcemap output for tests/cases/compiler/recursiveConditionalTypes.ts\"",
+      "kind": "hook",
+      "message": "",
+      "stack": "",
+      "stack_top": null,
+      "timeout_ms": 40000,
+      "elapsed_ms": 0.018439,
+      "pid": 54267
+    },
+    {
+      "event": "pass",
+      "title": "compiler tests compiler tests for tests/cases/compiler/recursiveConditionalTypes.ts Correct Sourcemap output for tests/cases/compiler/recursiveConditionalTypes.ts",
+      "kind": "test",
+      "message": "",
+      "stack": "",
+      "stack_top": null,
+      "timeout_ms": 40000,
+      "elapsed_ms": 0.224516,
+      "pid": 54267
+    },
+    {
+      "event": "hook end",
+      "title": "\"after each\" hook for \"Correct Sourcemap output for tests/cases/compiler/recursiveConditionalTypes.ts\"",
+      "kind": "hook",
+      "message": "",
+      "stack": "",
+      "stack_top": null,
+      "timeout_ms": 40000,
+      "elapsed_ms": 0.026155,
+      "pid": 54267
+    },
+    {
+      "event": "hook end",
+      "title": "\"before each\" hook for \"Correct type/symbol baselines for tests/cases/compiler/recursiveConditionalTypes.ts\"",
+      "kind": "hook",
+      "message": "",
+      "stack": "",
+      "stack_top": null,
+      "timeout_ms": 40000,
+      "elapsed_ms": 0.034003,
+      "pid": 54267
+    },
+    {
+      "event": "pass",
+      "title": "compiler tests compiler tests for tests/cases/compiler/recursiveConditionalTypes.ts Correct type/symbol baselines for tests/cases/compiler/recursiveConditionalTypes.ts",
+      "kind": "test",
+      "message": "",
+      "stack": "",
+      "stack_top": null,
+      "timeout_ms": 40000,
+      "elapsed_ms": 153.858918,
+      "pid": 54267
+    },
+    {
+      "event": "hook end",
+      "title": "\"after each\" hook for \"Correct type/symbol baselines for tests/cases/compiler/recursiveConditionalTypes.ts\"",
+      "kind": "hook",
+      "message": "",
+      "stack": "",
+      "stack_top": null,
+      "timeout_ms": 40000,
+      "elapsed_ms": 0.109236,
+      "pid": 54267
+    },
+    {
+      "event": "hook end",
+      "title": "compiler tests compiler tests for tests/cases/compiler/recursiveConditionalTypes.ts \"after all\" hook for \"Correct type/symbol baselines for tests/cases/compiler/recursiveConditionalTypes.ts\"",
+      "kind": "hook",
+      "message": "",
+      "stack": "",
+      "stack_top": null,
+      "timeout_ms": 40000,
+      "elapsed_ms": 0.228099,
+      "pid": 54267
+    }
+  ],
+  "failures": []
+}

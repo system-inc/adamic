@@ -1,0 +1,23 @@
+{
+  "side": "main",
+  "sha": "fbe5b72ba115a8f3060d4b5229fd578574f4505f",
+  "case": "codeFixClassImplementInterfaceNoTruncation.ts",
+  "exit_code": 0,
+  "elapsed_ms": 6549.709101,
+  "source_manifest_matches_side": true,
+  "runtime_manifest_matches_side": true,
+  "shared_path": "/workspace/family5-c02-lane-alone/adapted-tree",
+  "events": [
+    {
+      "event": "pass",
+      "title": "fourslash tests tests/cases/fourslash/codeFixClassImplementInterfaceNoTruncation.ts fourslash test codeFixClassImplementInterfaceNoTruncation.ts runs correctly",
+      "kind": "test",
+      "message": "",
+      "stack": "",
+      "stack_top": null,
+      "timeout_ms": 40000,
+      "elapsed_ms": 6549.709101,
+      "pid": 54822
+    }
+  ]
+}

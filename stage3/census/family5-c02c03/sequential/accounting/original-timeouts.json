@@ -1,0 +1,28 @@
+[
+  {
+    "title": "fourslash tests tests/cases/fourslash/codeFixClassImplementInterfaceNoTruncation.ts fourslash test codeFixClassImplementInterfaceNoTruncation.ts runs correctly",
+    "kind": "test",
+    "message": "Timeout of 40000ms exceeded. For async tests and hooks, ensure \"done()\" is called; if returning a Promise, ensure it resolves.",
+    "stack": "Error: Timeout of 40000ms exceeded. For async tests and hooks, ensure \"done()\" is called; if returning a Promise, ensure it resolves.\n    at Test2.Mocha.Runnable.run (/tmp/family5-land/stage3/oracle/observe-errors.cjs:11:24)\n    at processImmediate (node:internal/timers:534:21)",
+    "stack_top": "    at Test2.Mocha.Runnable.run (/tmp/family5-land/stage3/oracle/observe-errors.cjs:11:24)",
+    "timeout_ms": 40000,
+    "elapsed_ms": 46964.01476,
+    "pid": 48153,
+    "source": "mocha",
+    "cause": "timeout",
+    "baselines": []
+  },
+  {
+    "title": "compiler tests compiler tests for tests/cases/compiler/relationComplexityError.ts \"before all\" hook for \"Correct errors for tests/cases/compiler/relationComplexityError.ts\"",
+    "kind": "hook",
+    "message": "Timeout of 40000ms exceeded. For async tests and hooks, ensure \"done()\" is called; if returning a Promise, ensure it resolves.",
+    "stack": "Error: Timeout of 40000ms exceeded. For async tests and hooks, ensure \"done()\" is called; if returning a Promise, ensure it resolves.\n    at Hook.Mocha.Runnable.run (/tmp/family5-land/stage3/oracle/observe-errors.cjs:11:24)\n    at processImmediate (node:internal/timers:534:21)",
+    "stack_top": "    at Hook.Mocha.Runnable.run (/tmp/family5-land/stage3/oracle/observe-errors.cjs:11:24)",
+    "timeout_ms": 40000,
+    "elapsed_ms": 55109.133596,
+    "pid": 48126,
+    "source": "mocha",
+    "cause": "timeout",
+    "baselines": []
+  }
+]

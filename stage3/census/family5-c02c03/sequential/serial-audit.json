@@ -1,0 +1,114 @@
+{
+  "method": "Intervals inferred from status file modification time minus child wall time; 10 ms rounding tolerance. Orchestration waits for each real child exit before starting the next proof.",
+  "proof_intervals": [
+    {
+      "proof": "c02/lane-alone",
+      "inferred_start_unix": 1795025582.4562304,
+      "status_written_unix": 1795026390.7542305,
+      "exit_code": 1
+    },
+    {
+      "proof": "targeted/c02/codeFixClassImplementInterfaceNoTruncation",
+      "inferred_start_unix": 1795026392.6758626,
+      "status_written_unix": 1795026445.8628626,
+      "exit_code": 0
+    },
+    {
+      "proof": "targeted/c02/relationComplexityError",
+      "inferred_start_unix": 1795026445.9860616,
+      "status_written_unix": 1795026506.2320616,
+      "exit_code": 0
+    },
+    {
+      "proof": "targeted/c02/recursiveConditionalTypes",
+      "inferred_start_unix": 1795026506.345327,
+      "status_written_unix": 1795026532.036327,
+      "exit_code": 0
+    },
+    {
+      "proof": "targeted/c02/templateLiteralTypes1",
+      "inferred_start_unix": 1795026532.110449,
+      "status_written_unix": 1795026566.437449,
+      "exit_code": 0
+    },
+    {
+      "proof": "targeted/main/codeFixClassImplementInterfaceNoTruncation",
+      "inferred_start_unix": 1795026567.2822828,
+      "status_written_unix": 1795026597.978283,
+      "exit_code": 0
+    },
+    {
+      "proof": "targeted/main/relationComplexityError",
+      "inferred_start_unix": 1795026598.0389125,
+      "status_written_unix": 1795026629.1179125,
+      "exit_code": 0
+    },
+    {
+      "proof": "targeted/main/recursiveConditionalTypes",
+      "inferred_start_unix": 1795026629.1972806,
+      "status_written_unix": 1795026655.0242805,
+      "exit_code": 0
+    },
+    {
+      "proof": "targeted/main/templateLiteralTypes1",
+      "inferred_start_unix": 1795026655.11638,
+      "status_written_unix": 1795026683.57438,
+      "exit_code": 0
+    },
+    {
+      "proof": "common-targeted/main/codeFixClassImplementInterfaceNoTruncation/prepare",
+      "inferred_start_unix": 1795026870.059872,
+      "status_written_unix": 1795026873.966872,
+      "exit_code": 0
+    },
+    {
+      "proof": "common-targeted/main/codeFixClassImplementInterfaceNoTruncation/test",
+      "inferred_start_unix": 1795026874.6434667,
+      "status_written_unix": 1795026951.4814668,
+      "exit_code": 0
+    },
+    {
+      "proof": "common-targeted/c02/codeFixClassImplementInterfaceNoTruncation/prepare",
+      "inferred_start_unix": 1795026951.9196975,
+      "status_written_unix": 1795026953.9286976,
+      "exit_code": 0
+    },
+    {
+      "proof": "common-targeted/c02/codeFixClassImplementInterfaceNoTruncation/test",
+      "inferred_start_unix": 1795026954.1807072,
+      "status_written_unix": 1795027005.3477073,
+      "exit_code": 0
+    },
+    {
+      "proof": "common-targeted/main/templateLiteralTypes1/prepare",
+      "inferred_start_unix": 1795027006.0142262,
+      "status_written_unix": 1795027008.0572262,
+      "exit_code": 0
+    },
+    {
+      "proof": "common-targeted/main/templateLiteralTypes1/test",
+      "inferred_start_unix": 1795027008.3077111,
+      "status_written_unix": 1795027065.940711,
+      "exit_code": 0
+    },
+    {
+      "proof": "common-targeted/c02/templateLiteralTypes1/prepare",
+      "inferred_start_unix": 1795027066.880975,
+      "status_written_unix": 1795027070.451975,
+      "exit_code": 0
+    },
+    {
+      "proof": "common-targeted/c02/templateLiteralTypes1/test",
+      "inferred_start_unix": 1795027070.7979624,
+      "status_written_unix": 1795027125.4019625,
+      "exit_code": 0
+    },
+    {
+      "proof": "common-targeted/restore",
+      "inferred_start_unix": 1795027125.9306788,
+      "status_written_unix": 1795027127.0136788,
+      "exit_code": 0
+    }
+  ],
+  "overlaps": []
+}

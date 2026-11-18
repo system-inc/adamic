@@ -1,0 +1,20 @@
+910:   }
+911: 
+912:   this.nextSuite = next;
+913: 
+914:   this.hook(HOOK_TYPE_BEFORE_ALL, function (err) {
+915:     if (err) {
+916:       return done();
+917:     }
+918:     self.runTests(suite, next);
+919:   });
+920: };
+921: 
+922: /**
+923:  * Handle uncaught exceptions within runner.
+924:  *
+925:  * This function is bound to the instance as `Runner#uncaught` at instantiation
+926:  * time. It's intended to be listening on the `Process.uncaughtException` event.
+927:  * In order to not leak EE listeners, we need to ensure no more than a single
+928:  * `uncaughtException` listener exists per `Runner`.  The only way to do
+929:  * this--because this function needs the context (and we don't have lambdas)--is

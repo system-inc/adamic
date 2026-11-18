@@ -1,0 +1,23 @@
+{
+  "side": "c02",
+  "sha": "28a2e22015d0cf51667fcefa7acb246cab553817",
+  "case": "templateLiteralTypes1.ts",
+  "exit_code": 0,
+  "elapsed_ms": 8196.340292,
+  "source_manifest_matches_side": true,
+  "runtime_manifest_matches_side": true,
+  "shared_path": "/workspace/family5-c02-lane-alone/adapted-tree",
+  "events": [
+    {
+      "event": "hook end",
+      "title": "conformance tests conformance tests for tests/cases/conformance/types/literal/templateLiteralTypes1.ts \"before all\" hook for \"Correct errors for tests/cases/conformance/types/literal/templateLiteralTypes1.ts\"",
+      "kind": "hook",
+      "message": "",
+      "stack": "",
+      "stack_top": null,
+      "timeout_ms": 40000,
+      "elapsed_ms": 8196.340292,
+      "pid": 55323
+    }
+  ]
+}

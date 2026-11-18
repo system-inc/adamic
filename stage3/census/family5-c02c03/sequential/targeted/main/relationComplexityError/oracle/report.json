@@ -1,0 +1,60 @@
+{
+  "tree": "/tmp/family5-base-tree",
+  "nproc": 5,
+  "workers": 1,
+  "runners": "compiler",
+  "tests": "relationComplexityError\\.ts",
+  "node": "v24.19.0",
+  "phases": {
+    "install": {
+      "command": [
+        "npm",
+        "ci",
+        "--no-audit",
+        "--no-fund"
+      ],
+      "exit": 0,
+      "seconds": 5.692
+    },
+    "build": {
+      "command": [
+        "npm",
+        "run",
+        "build"
+      ],
+      "exit": 0,
+      "seconds": 5.379
+    },
+    "tests": {
+      "command": [
+        "npm",
+        "test",
+        "--",
+        "--workers=1",
+        "--lint=false",
+        "--no-colors",
+        "--runners=compiler",
+        "--tests=relationComplexityError\\.ts"
+      ],
+      "exit": 0,
+      "seconds": 19.859
+    }
+  },
+  "status": "pass",
+  "counts": {
+    "passing": 6,
+    "failing": 0,
+    "pending": 0
+  },
+  "baseline_diffs": [],
+  "failures": [],
+  "cause_counts": {
+    "timeout": 0,
+    "baseline-content": 0,
+    "baseline-missing": 0,
+    "exception": 0,
+    "other": 0
+  },
+  "baseline_previews": [],
+  "wall_seconds": 30.946
+}

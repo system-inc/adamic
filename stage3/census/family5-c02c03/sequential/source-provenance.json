@@ -1,0 +1,18 @@
+{
+  "c02": {
+    "typescript_pin": "050880ce59e30b356b686bd3144efe24f875ebc8",
+    "owner_sha256": "d72f06dfe58bf0e035cbd1313ecc456086341c1554af8a3416538781c8e2ef08",
+    "source_file_count": 748
+  },
+  "main": {
+    "typescript_pin": "050880ce59e30b356b686bd3144efe24f875ebc8",
+    "owner_sha256": "8003d407b602090f3d802b82f495d98c84deedaa980b8b68e698d67ef407d2dd",
+    "source_file_count": 748
+  },
+  "source_differences": {
+    "src/compiler/types.ts": {
+      "c02": "b994a750ae5eedd30b92326868848c91f7a5fd27179b56c3052b1cf04ec38c8e",
+      "main": "7ae9a509881c3da4052e06388289a8e94c269576d38a8a808d9e08425c817239"
+    }
+  }
+}

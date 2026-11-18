@@ -1,0 +1,19 @@
+{
+  "command": [
+    "npm",
+    "test",
+    "--",
+    "--workers=1",
+    "--lint=false",
+    "--no-colors",
+    "--runners=conformance",
+    "--tests=templateLiteralTypes1\\.ts"
+  ],
+  "cwd": "/workspace/family5-c02-lane-alone/adapted-tree",
+  "environment": {
+    "ADAMIC_TOOLS": "/workspace/adamic-tools",
+    "FAMILY5_TIMING_DIR": "/tmp/family5-sequential/common-targeted/c02/templateLiteralTypes1/times"
+  },
+  "exit_code": 0,
+  "wall_seconds": 54.604
+}
