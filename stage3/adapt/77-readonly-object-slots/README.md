@@ -1,12 +1,14 @@
 # Readonly object slots, adaptation 77
 
-Adamic, task #5pstmvw, with its follow-up #2gf0k9w. The emitted JavaScript
-changes by one creator and nothing else: a function is added,
-createObjectType's body becomes a call to it, and two call sites call it
-instead. It makes the same object, with the same keys in the same order and
-the same values ("The creator", below, names the diff). Every other edit is an
-interface member, a new interface, a cast's type, a type assertion, or an
-`import type`, and the emitter erases all of them.
+Adamic, task #5pstmvw, with its follow-ups #2gf0k9w and #38kdd4d. The emitted
+JavaScript changes in two places and nowhere else. By the creator (#2gf0k9w):
+a function is added, createObjectType's body becomes a call to it, and two call
+sites call it instead. In resolveAnonymousTypeMembers (#38kdd4d): one call's
+result is kept in a const, and two writes go through it. Each makes the same
+objects, with the same keys in the same order and the same values; the
+sections below name both diffs. Every other edit is an interface member, a new
+interface, a cast's type, a type assertion, or an `import type`, and the
+emitter erases all of them.
 
 ## The edit
 
@@ -70,7 +72,8 @@ as upstream declares it: InterfaceType, TypeReference, GenericType and
 AnonymousType declare none of the five, and `adapt.cjs` refuses if any of them
 does. They all read the slots readonly from ObjectType, so no two of them
 differ in readonly. The three writes that went through InterfaceType or
-AnonymousType take a type assertion in checker.ts instead (below).
+AnonymousType are handled in checker.ts instead (below): the reset by a type
+assertion, the two anonymous writes through setStructuredTypeMembers' result.
 
 **The trap: subtype reduction.** Making a slot writable on one subtype of
 ObjectType and not on its siblings changes which unions reduce. In tsc's
@@ -91,10 +94,10 @@ two `members` that differ in readonly and fails with TS2320). That built, and
 it kept getBaseTypes' reset compiling, but it made the reset legal for every
 InterfaceType everywhere. The meter showed what that cost: two sites of an
 ObjectType seen as GenericType, "whose readonly field members becomes
-writable" (J-mev2fpt). So the three writes take a type assertion at the write
-instead. An assertion touches one statement and no declaration, so every union
-over the family reduces as upstream's does, and whatever claim the assertion
-makes is judged at that statement and nowhere else.
+writable" (J-mev2fpt). So those writes are handled at the write instead, which
+touches one statement and no declaration: every union over the family reduces
+as upstream's does, and whatever claim the write makes is judged at that
+statement and nowhere else.
 
 **The view only where a slot is written.** checker.ts names
 ObjectTypeUnderConstruction where a slot is written outside ResolvedType, and
@@ -218,23 +221,84 @@ observable difference is a stack frame: a stack taken inside
 createTypeWithSymbol shows createObjectTypeUnderConstruction, and below it
 createObjectType where the call came through it.
 
-**checker.ts, the asserted writes.** Three writes go through a type assertion
-to the view. resolveBaseTypesOfClass (checker.ts:13317) resets an
-InterfaceType's members (:13369), and resolveAnonymousTypeMembers
-(checker.ts:14595) writes two slots after `setStructuredTypeMembers` (:14662
-and :14683):
+**checker.ts, the asserted write.** resolveBaseTypesOfClass (checker.ts:13317)
+resets an InterfaceType's members (:13369) through a type assertion to the
+view:
 
 ```ts
 (type as ObjectTypeUnderConstruction).members = undefined;
-(type as ObjectTypeUnderConstruction).callSignatures = getSignaturesOfSymbol(symbol);
-(type as ObjectTypeUnderConstruction).constructSignatures = constructSignatures;
 ```
 
 The emitter erases the assertion and its parentheses, so the JavaScript stays
-`type.members = undefined` and so on. `adapt.cjs` finds the one
-`resolveBaseTypesOfClass(type: InterfaceType)` and the one
-`resolveAnonymousTypeMembers(type: AnonymousType)`, and each statement once,
+`type.members = undefined`. `adapt.cjs` finds the one
+`resolveBaseTypesOfClass(type: InterfaceType)` and the statement once,
 upstream's text or already adapted, and refuses anything else.
+
+**checker.ts, the anonymous writes through setStructuredTypeMembers' result
+(#38kdd4d).** resolveAnonymousTypeMembers (checker.ts:14595) calls
+setStructuredTypeMembers (:14656), then writes two slots of the same type
+(:14662 and :14683). 77 first wrote them through a type assertion to the view,
+which saw an AnonymousType, whose slots are readonly, as one whose slots are
+writable, two refusals (J-gb2pzgn). Adamic ruled on #38kdd4d that they go
+through the call's result instead, which is the ResolvedType the type has just
+become:
+
+```ts
+const resolved = setStructuredTypeMembers(type, members, emptyArray, emptyArray, indexInfos || emptyArray);
+...
+    resolved.callSignatures = getSignaturesOfSymbol(symbol);
+...
+    resolved.constructSignatures = constructSignatures;
+```
+
+The premise is the callee's own body. setStructuredTypeMembers
+(checker.ts:5648) opens with `const resolved = type as ResolvedType;` (:5649),
+writes all five slots through that const, and ends with `return resolved;`
+(:5657); neither `type` nor that `resolved` is reassigned in between. So it
+returns its parameter, and the result is the same object as
+resolveAnonymousTypeMembers' `type`: `resolved === type`. Between the call and
+the two writes nothing replaces `type`: resolveAnonymousTypeMembers never
+assigns or redeclares it, and the new const is declared at the function body's
+own level, so both writes, inside their `if` blocks, see it. The reads of
+`type.callSignatures` in between are left alone; they read the same object.
+`adapt.cjs` checks each of these premises by the AST and refuses when one
+doesn't hold. It takes the call as upstream writes it or with the const, and
+each write as upstream's, as 77's asserted form, or through `resolved`. It
+refuses a tree where some of the three are adapted and some aren't, and it
+refuses if `resolved` already names anything in resolveAnonymousTypeMembers.
+
+setStructuredTypeMembers' own `as ResolvedType` (:5649) stays judged where it
+is. This change reads that cast's result, and it trusts it no more than the
+other callers that already use setStructuredTypeMembers' result
+(createAnonymousType returns it): whatever Adamic says at :5649 it still says
+there, and the measure prints that function's sites before and after to show
+they don't move.
+
+**The JavaScript diff for #38kdd4d.** With types erased, main emits
+
+```js
+setStructuredTypeMembers(type, members, emptyArray, emptyArray, indexInfos || emptyArray);
+...
+    type.callSignatures = getSignaturesOfSymbol(symbol);
+...
+    type.constructSignatures = constructSignatures;
+```
+
+and the adapted tree emits
+
+```js
+const resolved = setStructuredTypeMembers(type, members, emptyArray, emptyArray, indexInfos || emptyArray);
+...
+    resolved.callSignatures = getSignaturesOfSymbol(symbol);
+...
+    resolved.constructSignatures = constructSignatures;
+```
+
+Nothing else in the JavaScript moves. It's value-identical: the call runs as
+before, its result is `type` itself, and each write puts the same value into
+the same slot of the same object in the same order. The one difference is a
+local: resolveAnonymousTypeMembers holds one more reference to the object it
+already holds as `type`.
 
 **checker.ts, the import.** checker.ts gains one statement after its last
 import:
@@ -256,8 +320,9 @@ Every later adaptation, and every consumer, reads apply's tree with the slots
 readonly. Neither 75-optional-widening nor 76-truthful-casts edits ObjectType,
 ResolvedType, InterfaceType, GenericType, AnonymousType, createObjectType,
 getOrCreateTypeFromSignature, getTypeWithoutSignatures,
-resolveAnonymousTypeMembers or resolveBaseTypesOfClass, so the match expects
-upstream's shape. No later adaptation names createObjectType.
+resolveAnonymousTypeMembers, setStructuredTypeMembers or
+resolveBaseTypesOfClass, so the match expects upstream's shape. No later
+adaptation names createObjectType.
 
 ## Certificate
 
@@ -278,14 +343,14 @@ checker.ts. Upstream line numbers:
 | createObjectType | :5555 to :5559 | ObjectType, fresh | ObjectTypeUnderConstruction, in createObjectTypeUnderConstruction, its creation cast |
 | setStructuredTypeMembers | :5653 to :5659, six writes | ResolvedType | unchanged |
 | getBaseTypes' reset, in resolveBaseTypesOfClass | :13369 | InterfaceType | ObjectTypeUnderConstruction, by assertion |
-| resolveAnonymousTypeMembers | :14662, :14683 | AnonymousType | ObjectTypeUnderConstruction, by assertion |
+| resolveAnonymousTypeMembers | :14662, :14683 | AnonymousType | ResolvedType, setStructuredTypeMembers' result (#38kdd4d) |
 | getOrCreateTypeFromSignature | :16664 to :16668 | createObjectType's return | ObjectTypeUnderConstruction, from createObjectTypeUnderConstruction |
 | getTypeWithoutSignatures | :21255 to :21259 | createObjectType's return | ObjectTypeUnderConstruction, from createObjectTypeUnderConstruction; the regression below, closed by #2gf0k9w |
 
 There were no writes with a key that isn't a literal, none through `any`, and
 no `Object.assign` or other property road onto an ObjectType. After the edit,
 every one of the 24 writes goes through an interface that declares the slot
-writable: 18 through ObjectTypeUnderConstruction and 6 through ResolvedType.
+writable: 16 through ObjectTypeUnderConstruction and 8 through ResolvedType.
 None goes through ObjectType itself, an AnonymousType or an InterfaceType.
 
 ## Premises a reader can re-check
@@ -335,12 +400,11 @@ today. Nothing here answers them.
 line. The creator's creation cast takes createTypeWithSymbol's fresh Type to
 the view, as upstream's took it to ObjectType, and the two writers receive the
 view from the creator with no cast at all. The reset's assertion sees an
-InterfaceType as ObjectTypeUnderConstruction, and the two assertions in
-resolveAnonymousTypeMembers see an AnonymousType that way, each a readonly slot
-seen as a writable one. The two anonymous writes put defined signature lists
-into a type `setStructuredTypeMembers` has just resolved, but the assertion
-itself claims more than that. What the view moves at these relation sites is
-for the census to say, and the measure lists every reason that grows.
+InterfaceType as ObjectTypeUnderConstruction, a readonly slot seen as a
+writable one. resolveAnonymousTypeMembers' two writes name no view: they go
+through setStructuredTypeMembers' result. What the view moves at these
+relation sites is for the census to say, and the measure lists every reason
+that grows.
 
 ## Measured
 
@@ -362,6 +426,13 @@ when the emitted JavaScript didn't change at all.
 
 The creator's measure, against main without 77 as before: Measured on J-pending.
 
+#38kdd4d's measure, against main with 77 and the creator: Measured on J-pending.
+It runs the lane whole on a witness tree, the after tree plus one line the
+measure inserts and the adaptation never does,
+`Debug.assert(resolved === type, "setStructuredTypeMembers returns its parameter");`
+right after the const, so Node checks the identity wherever the lane reaches
+it.
+
 **The mutant** leaves ObjectType's `members` writable and changes nothing else.
 The object family comes back to 21.
 
@@ -377,6 +448,8 @@ each a view that makes a readonly slot writable, which is what it is:
 - **AnonymousType seen as ObjectTypeUnderConstruction, 2 sites:**
   resolveAnonymousTypeMembers' writes of `callSignatures` and
   `constructSignatures`, after setStructuredTypeMembers has resolved the type.
+  #38kdd4d removes both: the writes go through setStructuredTypeMembers'
+  result, a ResolvedType, and name no view.
 - **ObjectType seen as ObjectTypeUnderConstruction, 2 sites:** the two writing
   callers' declarations, getOrCreateTypeFromSignature and
   getTypeWithoutSignatures, each a fresh object from createObjectType cast
