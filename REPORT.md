@@ -1,10 +1,13 @@
 # #y852c3c paired TypeScript census
 
-Six full file pairs are verified. The focused full pair covers the remaining two files with observed base slot stops, and their unfiltered single-file pairs are underway. The original compiler-directory processes were killed at the worker’s memory limit before they emitted findings. The serial retry is underway. Both unfiltered `tsc.ts` first-error processes are still running. The focused first-error and scan-all pairs are complete.
+Six full file pairs are verified. The focused full pair covers the remaining two files with observed base slot stops, and their unfiltered single-file pairs are underway. The original compiler-directory processes were killed at the worker’s memory limit before they emitted findings. Both memory-limited directory retries are underway. Both unfiltered `tsc.ts` first-error processes are still running. The focused first-error and scan-all pairs are complete.
 
 ## 1. Record values reaching Unknown
 
-**Yes. The head's record node was Unknown in all 15 observed full-mode units that retained a checked slot read.** The graph tracked zero record writes in each. `recordValuesUnknown` named no write and returned “local or result has no tracked producer; no reaching allocation established.” The parser’s `AdamicJsonRecoveryValue` and `AdamicJsonRecoveryObject` supplied no observed cause. The focused full observer also found zero tracked writes and the same Unknown in `containerSeemsToBeEmptyDomElement` at `checker.ts:35213:5` and `verifyCompilerOptions` at `program.ts:4077:5`. The `createProgram` snapshot at `program.ts:1517:1` retained three slot-read observations. Its graph query stopped at “ir: virtual call has no target set” before it returned an Unknown decision or named a write. A supplemental query with class targets prepared is underway. The whole-entry allocation graph remains unobserved.
+**Yes. The head’s record node was Unknown in all 18 observed unit snapshots that held a checked slot read.** The graph tracked zero record-value writes in each. `recordValuesUnknown` named no write and returned “local or result has no tracked producer; no reaching allocation established.” The parser’s `AdamicJsonRecoveryValue` and `AdamicJsonRecoveryObject` supplied no observed cause.
+
+The original `createProgram` probe stopped at “ir: virtual call has no target set.” Running the compiler’s `finishClassCalls` preparation on a disposable copy supplied the targets and let its graph query finish. It returned the same Unknown and zero writes. The prepared probe preserves all 340 findings from the focused program stream. The whole-entry allocation graph remains unobserved. [Prepared graph](evidence/head/class-target-probe.log) · [Finding equivalence](evidence/class-target-probe-equivalence.json).
+
 
 | Unit | Checked slot-read observations | Tracked writes |
 | --- | ---: | ---: |
@@ -23,6 +26,9 @@ Six full file pairs are verified. The focused full pair covers the remaining two
 | `createResolutionCache` at `resolutionCache.ts:581:1` | 1 | 0 |
 | `canWatchTypeRootPath` at `resolutionCache.ts:1704:5` | 1 | 0 |
 | `fileIncludeReasonToDiagnostics` at `watch.ts:445:1` | 1 | 0 |
+| `containerSeemsToBeEmptyDomElement` at `checker.ts:35213:5` | 2 | 0 |
+| `verifyCompilerOptions` at `program.ts:4077:5` | 2 | 0 |
+| `createProgram` at `program.ts:1517:1`, after `finishClassCalls` | 3 | 0 |
 
 The observer queries the head allocation graph on a disposable copy of each unit snapshot. Its file streams reproduce all 504 parser, 640 resolver, 1,337 utilities, 107 program diagnostics, 198 resolution cache, and 77 watch findings at the original sites. See [the graph rows](evidence/record-values.json), [parser control](evidence/parser-probe-equivalence.json), [resolver control](evidence/resolver-probe-equivalence.json), and [utilities control](evidence/utilities-probe-equivalence.json), [program diagnostics control](evidence/programDiagnostics-probe-equivalence.json), [resolution cache control](evidence/resolutionCache-probe-equivalence.json), and [watch control](evidence/watch-probe-equivalence.json).
 
@@ -123,7 +129,7 @@ Four source locations account for six findings in the focused full pair. The unf
 
 - **Gone, NotYet during lowering.** “reading value” at `commandLineParser.ts:2950:65` clears when the declaration of `value` lowers.
 - **Gone, rollback boundary during lowering.** “failed statement; state rolled back; continued at next statement or declaration” clears at `commandLineParser.ts:2871:5`, `2949:9`, and `2950:9`, at `utilities.ts:9028:5`, at `programDiagnostics.ts:410:21` in two units, at `resolutionCache.ts:1706:9` in two units, and at `watch.ts:543:45`. It also clears at `moduleNameResolver.ts:480:5`, `674:17` in two units, `699:13` in two units, `780:5`, `1583:5`, `1595:5`, `1634:9`, `2190:5`, `2196:5`, `3333:5`, and `3334:5`. The paired JSON names both owners for each duplicated site.
-- **Growth in conservative checked-view demand.** The new origins make `viewedFrom` return `Unknown` with zero known allocation sites in all fifteen measured unit snapshots. The array check uses that flag to demand every eligible array read in those snapshots. The known-site set remains empty. The six unfiltered full file pairs and focused first-error pair have zero new, changed, or reached findings. The focused full pair reaches the later rollback at `program.ts:1822:17`, after the earlier guard lowers. It loses the older rollbacks at `checker.ts:35214:9`, `program.ts:1817:13`, and `program.ts:4204:9` and `4367:9` in two owners each. The unfiltered census is still pending. [Graph observations](evidence/record-values.json)
+- **Growth in conservative checked-view demand.** The checked slot reads add origins. In 17 snapshots their origin sets have no other origins. `createProgram` has 38 total origins, including three from slot reads. All 18 snapshot origin sets produce `viewed_unknown=true` with zero known allocation sites. The array check uses that flag to demand every eligible array read in those snapshots. The known-site set remains empty. The six unfiltered full file pairs and focused first-error pair have zero new, changed, or reached findings. The focused full pair reaches the later rollback at `program.ts:1822:17`, after the earlier guard lowers. It loses the older rollbacks at `checker.ts:35214:9`, `program.ts:1817:13`, and `program.ts:4204:9` and `4367:9` in two owners each. The unfiltered census is still pending. [Graph observations](evidence/record-values.json)
 
 ### Whole-entry scan-all boundary
 

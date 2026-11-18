@@ -18,6 +18,11 @@ probe)
     LATENT_FULL="$mode" "$dest/record-census" "$tree/src/compiler" "$log/record-probe-$tag.jsonl" > "$log/record-probe-$tag.log" 2>&1
     ;;
 directory)
+    exec 9>"$log/directory.lock"
+    flock 9
+    if [[ -s "$log/directory.jsonl" ]] && tail -n 1 "$log/directory.jsonl" | grep -q '"status":"relation_report"'; then
+        exit 0
+    fi
     LATENT_TIMES="$log/directory-times.jsonl" LATENT_FULL=0 "$dest/latent-census" "$tree/src/compiler" "$log/directory.jsonl" > "$log/directory.log" 2>&1
     ;;
 entry)
