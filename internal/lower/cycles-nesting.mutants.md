@@ -10,12 +10,7 @@ In `use` (cycles.go), keep the call and its deferred leave, and force the answer
 |---|---|
 | `	if !ok {` (the first one in `use`) | `	if ok = true; !ok {` |
 
-Run:
-
-```
-go test ./internal/lower -run 'TestCyclesNesting' -count=1 -v -timeout 60s
-```
-
-The red is Go's test timeout, `panic: test timed out after 1m0s`, with every row of
-`TestCyclesNestingStopsOnAGenericThatDeepensItself` still running, as on main before the bound.
-`TestCyclesNestingControlLowers` never grows a type and passes before the timeout.
+This mutant survives through lowering. Since #ykd89v9 the expansive-generic pre-pass stops every
+program with a generic that instantiates itself deeper before the cycle finder runs, so no program
+reaches the bound. It stays as defense, for a growth the pre-pass doesn't see (polymorphic recursion
+through an inferred call, an `import()` type).

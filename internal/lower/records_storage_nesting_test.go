@@ -26,14 +26,13 @@ func recordStorageNestingTypes(deep, own string) string {
 		"interface Own<T> { readonly next: " + own + " | undefined; readonly m: Map<string, T>; }\n"
 }
 
-const recordStorageNestingWords = "comparing record storage through a type that instantiates itself deeper at each level (Own<number> seen as Deep<number>)"
 
 // Two distinct generics that each instantiate themselves deeper at every level, Own<number> seen as
 // Deep<number>, made sameRecordStorage walk a fresh pair at every step, so its visited set never
-// repeated and lowering never ended (#fzx0j5z; Node prints true). typeNesting bounds the walk now, and
-// the view stops as not yet in the bound's words, not as different storage and not refused. The test
-// returning is the proof of bounded time. Mutant (records-storage-nesting.mutants.md): with the enter
-// checks forced ok, it runs until Go's test timeout.
+// repeated and lowering never ended (#fzx0j5z; Node prints true). typeNesting bounds the walk, and since
+// #ykd89v9 the expansive-generic pre-pass stops the program first, where Deep is declared, as not yet and
+// never refused. TestRecordStorageNestingBoundsTheWalk calls the walk itself, so it's the bound's
+// witness (records-storage-nesting.mutants.md).
 func TestRecordStorageNestingStopsAtTheView(t *testing.T) {
 	t.Parallel()
 	for _, shape := range recordStorageNestingShapes {
@@ -50,8 +49,8 @@ func TestRecordStorageNestingStopsAtTheView(t *testing.T) {
 				if errors.As(err, &refused) {
 					t.Fatalf("got refused %v, want not yet: the program is valid", err)
 				}
-				if !errors.As(err, &notYet) || !strings.Contains(notYet.What, recordStorageNestingWords) {
-					t.Fatalf("got %v, want a NotYet saying %q", err, recordStorageNestingWords)
+				if !errors.As(err, &notYet) || !strings.Contains(notYet.What, expansiveGenericsWords) {
+					t.Fatalf("got %v, want a NotYet saying %q", err, expansiveGenericsWords)
 				}
 				if program != nil {
 					t.Fatal("a stopped program came back lowered")
