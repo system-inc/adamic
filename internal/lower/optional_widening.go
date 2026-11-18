@@ -324,7 +324,11 @@ func (l *lowering) optionalAtSite(node *ast.Node) *optionalWidening {
 		// f(node) does (#8v8112n). x as const is its operand's own literal type, and its operand is judged
 		// as itself.
 		as := node.AsAsExpression()
-		found = l.optionalValue(as.Expression, l.checker.GetTypeAtLocation(node))
+		// Census prototype (#0b9xqhh): in .ts the operand's relation to the cast's type is castProof's
+		// (its optional-only road), so only the cast's own type into its slot is judged here.
+		if !census72 || strings.HasSuffix(l.program.FileName(ast.GetSourceFileOfNode(node)), ".a") {
+			found = l.optionalValue(as.Expression, l.checker.GetTypeAtLocation(node))
+		}
 		if found == nil && !(as.Type.Kind == ast.KindTypeReference && ast.IsIdentifier(as.Type.AsTypeReferenceNode().TypeName) && as.Type.AsTypeReferenceNode().TypeName.Text() == "const") {
 			found = l.optionalInSlot(node)
 		}

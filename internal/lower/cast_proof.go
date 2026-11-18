@@ -1,6 +1,7 @@
 package lower
 
 import (
+	"os"
 	"strings"
 
 	"github.com/microsoft/TypeScript/tsc/shim/ast"
@@ -231,6 +232,7 @@ func (l *lowering) castProof(node *ast.Node) (castProof, error) {
 		allClasses = allClasses && isClassInstance(member)
 	}
 	var upcastFailure error
+	census72Optional := false
 	// A structural assignability result is only an upcast candidate. Nominal
 	// downcasts may also look assignable, but still need their runtime identity check.
 	if l.checker.IsTypeAssignableTo(source, target) || l.checker.IsTypeAssignableTo(l.checker.GetWidenedType(source), target) {
@@ -239,16 +241,23 @@ func (l *lowering) castProof(node *ast.Node) (castProof, error) {
 			return castProof{}, nil
 		}
 		rawSource, rawTarget := l.checker.GetTypeAtLocation(as.Expression), l.checker.GetTypeAtLocation(node)
-		if !allClasses || l.optionalRelationFailure(rawSource, rawTarget, as.Expression, map[[2]*checker.Type]bool{}) != "" || l.freshOrWidened(as.Expression, rawSource, rawTarget) != nil {
+		// Census prototype for rulings.md:72 (#0b9xqhh), never landed: in .ts, a cast whose only failure is an
+		// optional field absent from the source goes on to the untagged checked view (sub-shape 2-o).
+		if census72 && !allClasses && !strings.HasSuffix(l.program.FileName(ast.GetSourceFileOfNode(node)), ".a") && l.optionalRelationFailure(rawSource, rawTarget, as.Expression, map[[2]*checker.Type]bool{}) != "" && l.freshOrWidened(as.Expression, rawSource, rawTarget) == nil {
+			census72Optional = true
+			upcastFailure = err
+		} else if !allClasses || l.optionalRelationFailure(rawSource, rawTarget, as.Expression, map[[2]*checker.Type]bool{}) != "" || l.freshOrWidened(as.Expression, rawSource, rawTarget) != nil {
 			if reason, ok := err.(*Refused); ok {
 				reason.Fix += "; " + l.castRepair(node)
 			}
 			return castProof{}, err
 		}
-		if reason, ok := err.(*Refused); ok {
-			reason.Fix += "; " + l.castRepair(node)
+		if !census72Optional {
+			if reason, ok := err.(*Refused); ok {
+				reason.Fix += "; " + l.castRepair(node)
+			}
+			upcastFailure = err
 		}
-		upcastFailure = err
 	}
 
 	if !allClasses && l.checker.IsTypeAssignableTo(source, target) {
@@ -307,7 +316,7 @@ func (l *lowering) castProof(node *ast.Node) (castProof, error) {
 		}
 		from, fromKnown := l.representation(source)
 		to, toKnown := l.representation(target)
-		if source.Flags()&checker.TypeFlagsObject != 0 && target.Flags()&checker.TypeFlagsObject != 0 && fromKnown && toKnown && from == ir.Object && to == ir.Object && !isClassInstance(target) && l.checker.IsTypeAssignableTo(target, source) && l.widened(target, source, map[[2]*checker.Type]bool{}) == nil && len(l.checker.GetIndexInfosOfType(target)) == 0 {
+		if source.Flags()&checker.TypeFlagsObject != 0 && target.Flags()&checker.TypeFlagsObject != 0 && fromKnown && toKnown && from == ir.Object && to == ir.Object && !isClassInstance(target) && (l.checker.IsTypeAssignableTo(target, source) || census72Optional) && l.widened(target, source, map[[2]*checker.Type]bool{}) == nil && len(l.checker.GetIndexInfosOfType(target)) == 0 {
 			return castProof{structuralView: true}, nil
 		}
 
@@ -504,3 +513,6 @@ func (l *lowering) checkedClassCast(node *ast.Node, value ir.Expression, targets
 	}})
 	return ir.Call{Function: function, Arguments: []ir.Expression{value}, Returns: ir.Object}, nil
 }
+
+// census72 switches on #0b9xqhh's census prototype (ADAMIC_CENSUS_72=1). It's a measurement head, never landed.
+var census72 = os.Getenv("ADAMIC_CENSUS_72") == "1"
