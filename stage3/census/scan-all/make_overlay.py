@@ -9,7 +9,7 @@ repo = pathlib.Path(__file__).resolve().parents[3]
 LOWER_REWRITES = [
     ('defer func() { err = lowering.hostMemberPending(lowering.regexpServedPending(err)) }()', 'defer func() { if err != nil { stop := scoutDescribe(err); scoutUnderlying = &stop }; err = lowering.hostMemberPending(lowering.regexpServedPending(err)) }()'),
     ('func LowerWithOptions(', 'func scoutLowerWithOptions('),
-    ('return LowerWithOptions(ctx, program, Options{', 'return scoutLowerWithOptions(ctx, program, Options{'),
+    ('return LowerWithOptions(ctx, program, environmentOptions())', 'return scoutLowerWithOptions(ctx, program, environmentOptions())'),
     ('func Lower(', 'func scoutLower('),
     ('lowering.refuse(module)', 'lowering.scoutRefuse(module)'),
     ('modules, err := lowering.moduleOrder(entry)', 'scoutPhase = "lowering.moduleOrder"\nmodules, err := lowering.moduleOrder(entry)'),
