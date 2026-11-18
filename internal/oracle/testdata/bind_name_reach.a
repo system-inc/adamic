@@ -1,0 +1,16 @@
+// Unrelated names cannot widen an unknown f projection back to every Unary.
+type Unary = (x: number) => number;
+function one(x: number): number { return x + 1; }
+function two(x: number, y: number = 1): number { return x + y; }
+const held: Unary = two;
+console.log(String(held(1)));
+const original = { g: one };
+const copied = { ...original };
+console.log(String(copied.g(2)));
+const elsewhere: { g: Unary; h: Unary } = { g: one, h: one };
+function put(key: 'g' | 'h'): void { elsewhere[key] ||= held; }
+put('g');
+const host = { f: (x: number): number => x + 1 };
+const otherReceiver = {};
+const bound = host.f.bind(otherReceiver);
+console.log(String(bound(3)));

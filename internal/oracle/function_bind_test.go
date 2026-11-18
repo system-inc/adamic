@@ -240,30 +240,24 @@ func TestMethodBindRecordNonfunction(t *testing.T) {
 // under the sanitizers, released, and on the JavaScript backend. The stored .a is Node's source, and its
 // .ts copy is what lowers, as predicate_parameter's pins do: the .a refuses find's `array[i]!` first.
 // The count asks only the functions the allocation flow says can be the bound value, so a bind whose
-// reach names its functions counts those alone. absent_property, present_property, absent_fixed_property
-// and null_property are function_bind.a's honest optional-property binds, moved out one to a fixture,
-// since a fixture reports only its first stop: each field read's reach is unknown, so every function of
-// the bound type counts, defaulted or withDefault's bound wrapper among them, and each stops, a known
-// over-refusal that #x909e6q lifts. Each one's words here are measured; one whose reach comes back known
-// alone would agree instead. known_reach binds a Unary whose reach
-// names only one, a one-parameter function, beside two, a two-parameter function also held as Unary: it
-// lowers and agrees, and with the reach's narrowing removed it would stop. Mutants
-// (internal/lower/function_bind_extra_parameters.mutants.md).
+// reach names its functions counts those alone. The four optional-property fixtures have unknown
+// allocation reach, but the name scan reads every initialization and write of f, so all four now
+// lower and agree. known_reach binds only one beside two, another Unary with two parameters; the
+// known allocation reach still takes precedence. Mutants are recorded beside Lower's tests.
 func TestFunctionBindExtraParameters(t *testing.T) {
 	t.Parallel()
 	const seen = "seen at 0\nseen at 1\ncircle\n"
 	const narrowCount = "bind of a function that declares 2 parameters where the type it's bound as names 1"
-	const nullaryCount = "bind of a function that declares 1 parameter where the type it's bound as names 0"
 	for _, probe := range []struct{ name, nodeOut, site, what string }{
 		{"narrow_type", seen, "narrow.bind(undefined)", narrowCount},
 		{"narrow_default", seen, "narrow.bind(undefined)", narrowCount},
 		{"own_type", seen, "", ""},
 		{"narrow_direct", seen, "", ""},
 		{"known_reach", "2\n2\n", "", ""},
-		{"absent_property", "10\nundefined\n", "absentProperty.f?.bind(otherReceiver)", nullaryCount},
-		{"present_property", "10\nfunction\n42\n", "presentProperty.f?.bind(otherReceiver)", nullaryCount},
-		{"absent_fixed_property", "10\nundefined\n", "absentFixedProperty.f?.bind(otherReceiver, propertyFixed())", narrowCount},
-		{"null_property", "10\nundefined\n", "nullProperty.f?.bind(otherReceiver, propertyFixed())", narrowCount},
+		{"absent_property", "10\nundefined\n", "", ""},
+		{"present_property", "10\nfunction\n42\n", "", ""},
+		{"absent_fixed_property", "10\nundefined\n", "", ""},
+		{"null_property", "10\nundefined\n", "", ""},
 	} {
 		t.Run(probe.name, func(t *testing.T) {
 			t.Parallel()
@@ -305,5 +299,32 @@ func TestFunctionBindExtraParameters(t *testing.T) {
 				t.Fatalf("want NotYet %q at %s, got %v", probe.what, site, err)
 			}
 		})
+	}
+}
+
+// The name fallback admits a readable f beside unrelated copies and computed writes, even
+// though two is held as Unary elsewhere and the allocation-flow projection is unknown.
+func TestFunctionBindNameReach(t *testing.T) {
+	t.Parallel()
+	path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/bind_name_reach.a"))
+	if err != nil {
+		t.Fatal(err)
+	}
+	truth := onNode(t, path)
+	if difference := disagreement(run{stdout: []byte("2\n3\n4\n")}, truth); difference != "" {
+		t.Fatalf("source Node: %s", difference)
+	}
+	program, err := lowered(t, path)
+	if err != nil {
+		t.Fatal(err)
+	}
+	sanitized, leaked, comparable := nativelyCheckingLeaks(t, program, true)
+	if leaked != "" || !comparable {
+		t.Fatalf("sanitized native: leaked %q, comparable %t", leaked, comparable)
+	}
+	for index, actual := range []run{sanitized, releasedUncached(t, program), onJavaScriptBackend(t, program)} {
+		if difference := disagreement(truth, actual); difference != "" {
+			t.Fatalf("%s: %s", []string{"sanitized native", "release native", "JavaScript backend"}[index], difference)
+		}
 	}
 }

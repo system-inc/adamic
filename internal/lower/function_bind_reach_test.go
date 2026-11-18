@@ -19,11 +19,10 @@ import (
 // narrow holds only seen, which declares an index its bound type doesn't name, reaches seen's
 // functions alone, known. known_reach's unary, holding only one, reaches one's functions alone, known,
 // so two, a two-parameter function also held as Unary, never counts and the bind lowers.
-// absent_property, function_bind.a's honest `absentProperty.f?.bind(otherReceiver)` moved out, is
-// heard as it is today: unknown, since its field read projects through the literal, where the absent
-// field or any closure call in the program (shape_flow.go's opaqueCalls) leaves the projection unknown,
-// so it falls back to every () => number function and stops, a known over-refusal. #x909e6q's lift
-// turns that row red, as its witness.
+// absent_property still has unknown allocation reach. The independent name scan now proves that
+// no function is stored under f and admits the bind; it must not turn this unknown into a known
+// allocation-flow answer. The setter probe also stays unknown: its write must keep the
+// two-parameter function in the conservative bind count.
 func TestBoundValueReach(t *testing.T) {
 	var mutex sync.Mutex
 	heard := []string{}
@@ -41,6 +40,7 @@ func TestBoundValueReach(t *testing.T) {
 		{"../oracle/testdata/bind_extra_parameters/narrow_type.a", "narrow.bind(undefined)", "seen", true},
 		{"../oracle/testdata/bind_extra_parameters/known_reach.a", "unary.bind(undefined)", "one", true},
 		{"../oracle/testdata/bind_extra_parameters/absent_property.a", "absentProperty.f?.bind(otherReceiver)", "", false},
+		{"testdata/bind_name_accessors/setter.ts", "host.f.bind(host)", "", false},
 	} {
 		source, err := os.ReadFile(probe.fixture)
 		if err != nil {
