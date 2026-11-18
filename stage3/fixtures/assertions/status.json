@@ -179,7 +179,7 @@
     },
     "stage0": {
       "outcome": "Refused",
-      "what": "stage3/fixtures/assertions/12_union_target.a:19:13: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, narrow a discriminated union by its tag (`if (shape.kind !== 'Circle') panic('why')`), downcast along nominal class ancestry, or move the file to `.ts`, where a member cast is checked (adamic/no-unchecked-cast)"
+      "what": "stage3/fixtures/assertions/12_union_target.a:19:13: Adamic 0.1 refuses a downcast from Node to ElementAccessExpression | PropertyAccessExpression in .a whose checks no proof erases; declare Node as a union with ElementAccessExpression | PropertyAccessExpression's members and narrow it, as .a writes !: if (node.kind !== 213 && node.kind !== 212) panic('why'), or move the file to .ts, where the cast stays a checked cast"
     }
   },
   {

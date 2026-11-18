@@ -8,7 +8,8 @@ import (
 )
 
 // keptCheckDowncastRefusal refuses in .a a downcast whose checks no proof erases (item 8 stage 2,
-// docs/0.1.md): a tag test against a union member, an interface view's tag test, or an untagged view's
+// docs/0.1.md): a tag test against a union member, an interface view's tag test over one kind or a union of
+// kinds (kindUnionCast), or an untagged view's
 // checked reads. Each is a check the program asserts and the compiler can't prove, so .a writes it as a
 // narrowing that panics, as it writes !, and .ts keeps it a checked cast. A construction, a node array, an
 // upcast and a phantom brand are proofs castProof already erases, and a class downcast keeps its nominal
@@ -23,7 +24,7 @@ func (l *lowering) keptCheckDowncastRefusal(node *ast.Node) error {
 	if err != nil {
 		return err
 	}
-	if len(proof.classes) > 0 || !proof.interfaceView && !proof.structuralView && !proof.overlap && len(proof.allowed) == 0 {
+	if len(proof.classes) > 0 || !proof.interfaceView && !proof.structuralView && !proof.overlap && proof.kindUnion == nil && len(proof.allowed) == 0 {
 		return nil
 	}
 	source := l.checker.TypeToString(l.concrete(l.checker.GetTypeAtLocation(node.AsAsExpression().Expression)))
@@ -34,6 +35,8 @@ func (l *lowering) keptCheckDowncastRefusal(node *ast.Node) error {
 	switch {
 	case len(proof.allowed) > 0:
 		refused.Fix = "narrow it, as .a writes !: " + l.tagNarrowing(node, proof.field, proof.allowed, proof.absent) + ", " + ts
+	case proof.kindUnion != nil:
+		refused.Fix = "declare " + source + " as a union with " + target + "'s members and narrow it, as .a writes !: " + l.tagNarrowing(node, proof.kindUnion.field, proof.kindUnion.literals, false) + ", " + ts
 	case proof.interfaceView && literal != nil:
 		refused.Fix = "declare " + source + " as a union with " + target + " as a member and narrow it, as .a writes !: " + l.tagNarrowing(node, proof.field, []*checker.Type{literal}, false) + ", " + ts
 	default:
