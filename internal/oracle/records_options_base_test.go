@@ -194,7 +194,7 @@ func TestOptionsBaseObjectFieldStops(t *testing.T) {
 // #6c4swvt's string[] head: an array member, lib?: string[], is dropped by the view, since its named read out of the
 // slot is #y852c3c's element-checked view origin. An honest string[] written under lib through OptionsBase, and a
 // (string | number)[] holding only strings, read back and agree with Node on both backends, with nothing leaked.
-// Mutant: take the array out of droppedContractChecked, and each stops not yet at the view, :20:12.
+// Mutant: take the array out of droppedContractChecked, and each stops not yet at the view, :23:12.
 func TestOptionsBaseArrayFieldDropped(t *testing.T) {
 	t.Parallel()
 	for name, printed := range map[string]string{
@@ -235,7 +235,7 @@ func TestOptionsBaseArrayFieldLiesStop(t *testing.T) {
 	for name, stop := range map[string]struct{ node, stdout, stderr, notYet, at string }{
 		"lib_number.ts": {node: "before\nnumber\n", stdout: "before\n", stderr: "adamic: panic: element read failed: lib[1] is not a string; expected string, found number\n"},
 		"lib_string.ts": {node: "before\nd\no\nm\n", stdout: "before\n", stderr: "adamic: panic: field read failed: options.lib is not a string[]; expected string[], found another member of the index signature's union, which a computed-key or index-signature write may have stored\n"},
-		"lib_pushed.ts": {node: "number\n", notYet: "a checked view's array read through push (not checked yet)", at: ":22:1"},
+		"lib_pushed.ts": {node: "number\n", notYet: "a checked view's array read through push (not checked yet)", at: ":25:1"},
 	} {
 		t.Run(name, func(t *testing.T) {
 			t.Parallel()

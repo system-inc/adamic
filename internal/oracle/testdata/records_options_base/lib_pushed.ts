@@ -16,9 +16,12 @@ interface OptionsBase {
 function substitute(options: OptionsBase, name: string, value: CompilerOptionsValue): void {
     options[name] = value;
 }
-const wide: (string | number)[] = ["dom"];
+function libKey(): string {
+    return "lib";
+}
+const wide: (string | number)[] = ["dom" as string | number];
 const options: CompilerOptions = { outDir: "out" };
-substitute(options, ["li", "b"].join(""), wide);
+substitute(options, libKey(), wide);
 wide.push(1);
 const lib = options.lib;
 if (lib) {

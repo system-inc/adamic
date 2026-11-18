@@ -16,8 +16,11 @@ interface OptionsBase {
 function substitute(options: OptionsBase, name: string, value: CompilerOptionsValue): void {
     options[name] = value;
 }
+function libKey(): string {
+    return "lib";
+}
 const options: CompilerOptions = { outDir: "out", lib: ["es2020"] };
-substitute(options, ["li", "b"].join(""), ["dom", "es2022"]);
+substitute(options, libKey(), ["dom", "es2022"]);
 const lib = options.lib;
 if (lib) {
     for (const name of lib) {

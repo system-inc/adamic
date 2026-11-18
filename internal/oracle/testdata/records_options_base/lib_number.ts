@@ -15,9 +15,12 @@ interface OptionsBase {
 function substitute(options: OptionsBase, name: string, value: CompilerOptionsValue): void {
     options[name] = value;
 }
+function libKey(): string {
+    return "lib";
+}
 const wide: (string | number)[] = ["dom", 1];
 const options: CompilerOptions = { outDir: "out" };
-substitute(options, ["li", "b"].join(""), wide);
+substitute(options, libKey(), wide);
 const lib = options.lib;
 if (lib) {
     console.log("before");
