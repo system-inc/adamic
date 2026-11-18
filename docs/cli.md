@@ -76,9 +76,9 @@ usage error.
 | --- | --- | --- | --- |
 | `-o <out>` | `build`, required | the binary's path; a relative one is under the working directory | `cmd/adamic/main.go:run`, `cmd/adamic/tsgo.go:buildWithNativeExports` |
 | `--target wasm32-wasi` | `build` | a WebAssembly module for WASI instead of a host binary. The only value accepted; any other, a second `--target`, or a missing value is a usage error | `cmd/adamic/tsgo.go:buildWithNative` |
-| `--count` | `build` | the binary counts allocations, frees, retains, releases, peak and regions and writes `adamic: counts: ...` to stderr as it exits (`-DADAMIC_COUNT`) | `cmd/adamic/tsgo.go:buildWithNative`, `internal/native/native.go:Flags`, `internal/native_runtime/c/count.c:18-34` |
+| `--count` | `build` | the binary counts allocations, frees, retains, releases, peak and regions and writes `adamic: counts: ...` to stderr as it exits (`-DADAMIC_COUNT`) | `cmd/adamic/tsgo.go:buildWithNative`, `internal/native_runtime/options.go:Flags`, `internal/native_runtime/c/count.c:18-34` |
 | `--debug` | `build` | writes `#line` directives and sets the compile directory to the entry's, so a debugger stops on and opens the `.a` lines its frames came from (native builds only: wasm32-wasi refuses it; with `--sanitize`, rows before the first `#line` keep their generated names); off the flag the C is byte for byte the same; debug paths are proven on Linux; macOS isn't verified yet. | `cmd/adamic/tsgo.go:buildWithNativeExports` |
-| `--sanitize` | `build`, native only | `-O1 -g -fsanitize=address,undefined -fno-sanitize-recover=all` in place of the release flags | `cmd/adamic/tsgo.go:buildWithNative`, `internal/native/native.go:Flags` |
+| `--sanitize` | `build`, native only | `-O1 -g -fsanitize=address,undefined -fno-sanitize-recover=all` in place of the release flags | `cmd/adamic/tsgo.go:buildWithNative`, `internal/native_runtime/options.go:Flags` |
 | `--tsgo <archive>` | `build`, native only | links a prebuilt typescript-go checker archive for programs that use it; a second `--tsgo` or a missing value is a usage error | `cmd/adamic/tsgo.go:buildWithNative` |
 | `--reactor` | `build`, wasm32-wasi only | a reactor module: `_initialize` runs once and the entry module's crossing `export function`s are exported through ABI v1 (`docs/wasm-abi.md`), instead of a command entered at `main`. Without it a module with crossing exports is a reactor anyway | `cmd/adamic/tsgo.go:buildWithNative`, `docs/wasm-abi.md` |
 | `--export <name>` | `build`, wasm32-wasi only | exports only the named functions, and implies `--reactor`; repeats, one name each. A name that isn't a crossing export exits 1 | `cmd/adamic/tsgo.go:buildWithNative`, `cmd/adamic/exports.go:exportSignatures,compileExports` |
@@ -86,7 +86,7 @@ usage error.
 | `--module-format commonjs-bundle\|esm` | `c`, `js`, `build` | the module format the program is declared in, a build input `internal/lowered`'s key holds with every other lowering option. `commonjs-bundle` declares one bundled image of CommonJS modules, as tsc ships as `_tsc.js`: every `.ts` module's `__filename` and `__dirname` are the running image's real path and its directory (in JavaScript, the emitted module's path and its directory), never a module's own; a `.a` file keeps them NotYet, and wasm32-wasi refuses them by name. `esm`, the default, keeps them NotYet everywhere (`docs/rulings.md:211`). A plain `commonjs` exits 2 saying it isn't a format Adamic builds and to use `commonjs-bundle`; any other value, a second `--module-format` or a missing value is a usage error | `cmd/adamic/main.go:renderArguments,loweringOptions,moduleFormatRefusals`, `cmd/adamic/tsgo.go:buildWithNativeExports`, `internal/lower/library_node_commonjs.go:lowering.nodeCommonJSModuleValuesBound` |
 | `--explain-checks` | `c`, `js`, `build` | writes every predicate-overload and non-null check site, proven or checked, and their totals to stderr; stdout is unchanged | `cmd/adamic/checks.go:explainPredicateChecks,explainNonNullChecks` |
 
-`--count` and `--sanitize` may be combined (`internal/native/target.go:ValidateOptions` refuses neither).
+`--count` and `--sanitize` may be combined (`internal/native_runtime/target.go:ValidateOptions` refuses neither).
 Repeating `--count`, `--sanitize`, `--reactor` or `--explain-checks` is harmless. `--reactor`, `--export` or
 `--abi-json` without `--target wasm32-wasi` exits 1 with `adamic: export ABI requires wasm32-wasi`
 (`cmd/adamic/tsgo.go:buildWithNative`).
@@ -98,18 +98,18 @@ Repeating `--count`, `--sanitize`, `--reactor` or `--explain-checks` is harmless
   a crossing export, so ABI v1 carries it (`internal/native/wasm_exports.go:WASIExports`); an alias goes
   through the request path (`cmd/adamic/request.go:requestFunction`). With no such export and no crossing
   exports, the module is a command (`cmd/adamic/tsgo.go:buildWithNative`,
-  `internal/native/target.go:WASILinkFlags`). An ambiguous function name exits 1
+  `internal/native_runtime/target.go:WASILinkFlags`). An ambiguous function name exits 1
   (`cmd/adamic/exports.go:compileExports`, `cmd/adamic/request.go:compileWASI`), and so does an alias of the
   wrong shape (`cmd/adamic/request.go:requestFunction`). A plain `handleRequest` of another shape inside the
   crossing set builds as an ABI v1 export, not a refusal.
 - `--sanitize` exits 1 with `adamic: native: sanitizers are not supported for wasm32-wasi`, `--debug`
   exits 1 with `adamic: native: debug builds are not supported for wasm32-wasi`, since the module would
-  carry no line table (`internal/native/target.go:ValidateOptions`), and `--tsgo` exits 1 with
+  carry no line table (`internal/native_runtime/target.go:ValidateOptions`), and `--tsgo` exits 1 with
   `adamic: --tsgo is not supported for wasm32-wasi` (`cmd/adamic/tsgo.go:buildWithNative`).
 - `--reactor` and `--export` build a reactor exporting the entry module's functions through ABI v1,
   and `--abi-json` writes its table (`docs/wasm-abi.md`, `cmd/adamic/tsgo.go:buildWithNative`).
-- The release is `-Oz` rather than `-O2`, with no ThinLTO (`internal/native/native.go:Flags`), and
-  links with `-Wl,--strip-debug`, which keeps the name section (`internal/native/target.go:WASILinkFlags`).
+- The release is `-Oz` rather than `-O2`, with no ThinLTO (`internal/native_runtime/options.go:Flags`), and
+  links with `-Wl,--strip-debug`, which keeps the name section (`internal/native_runtime/target.go:WASILinkFlags`).
 
 ## Exit codes
 
@@ -121,7 +121,7 @@ Repeating `--count`, `--sanitize`, `--reactor` or `--explain-checks` is harmless
 | 1 | the program doesn't check, is refused (`Refused`) or not yet compiled (`NotYet`), a target refuses an option, a tool is missing, or clang failed | `cmd/adamic/main.go:check,compileLibrary`, `cmd/adamic/tsgo.go:buildWithNative`, `cmd/adamic/request.go:compileWASI` |
 | 2 | usage error | `cmd/adamic/main.go:run`, `cmd/adamic/tsgo.go:buildWithNative` |
 | 3 | the machine: the working directory can't be read, so a relative `-o` has nowhere to go. A missing or failing toolchain still exits 1 (#z1ba56x) | `cmd/adamic/tsgo.go:buildWithNativeExports` |
-| 4 | the compiler itself panicked on `run`'s goroutine: stderr gets `adamic: compiler bug: <value>` and the stack. A panic on another goroutine, such as `internal/native`'s compiles (`internal/native/library.go:compileRuntime`, `internal/native/units.go:compileUnits`) or typescript-go's own, still ends the process with Go's 2 (#4mwb9et) | `cmd/adamic/main.go:run,reportCompilerBug` |
+| 4 | the compiler itself panicked on `run`'s goroutine: stderr gets `adamic: compiler bug: <value>` and the stack. A panic on another goroutine, such as `internal/native`'s compiles (`internal/native_runtime/library.go:CompileRuntime`, `internal/native/units.go:compileUnits`) or typescript-go's own, still ends the process with Go's 2 (#4mwb9et) | `cmd/adamic/main.go:run,reportCompilerBug` |
 
 Exit 1 covers both "your program" and "your machine": a script can't tell a refusal from a missing
 clang without reading stderr. Compiler has ruled the split (#z1ba56x): 1 the program, 2 usage
@@ -150,7 +150,7 @@ pins 3 and that the message keeps `-o` as typed, on Linux, where a removed worki
 | 70, silently | stdout or stderr couldn't be written (a closed pipe), or a closed standard descriptor couldn't be reopened on `/dev/null` at startup | `internal/native_runtime/c/adamic.c:93-103,250-258` |
 | a signal | a catchable stop signal flushes output and re-raises; SIGPIPE, SIGXFSZ and SIGUSR1 are ignored | `internal/native_runtime/c/adamic.c:137-173,281-290` |
 | SIGABRT | an internal async-loop failure | `internal/native_runtime/c/async.c:171`, `internal/native_runtime/c/async_host_impl.h` |
-| the sanitizers' own | under `--sanitize`, ASan and UBSan exit with their defaults; nothing sets `ASAN_OPTIONS` for a user build | `internal/native/native.go:Flags` |
+| the sanitizers' own | under `--sanitize`, ASan and UBSan exit with their defaults; nothing sets `ASAN_OPTIONS` for a user build | `internal/native_runtime/options.go:Flags` |
 
 70 is EX_SOFTWARE (`internal/native_runtime/c/adamic.h:1438`). `process.exit` and `process.exitCode`
 use Node-compatible status validation (`internal/lower/process.go:lowering.processValue`,
@@ -175,8 +175,8 @@ A wasm32-wasi panic leaves through the same `_exit(70)` (`internal/native_runtim
 | `PATH` | where `clang`, `llvm-ar` and `ar` are found | | `internal/toolchain/toolchain.go:Path` |
 | `ADAMIC_TOOLS` | `<ADAMIC_TOOLS>/bin` then `<ADAMIC_TOOLS>/go/bin` are searched before `PATH`, and put first on the tools' `PATH` | unset | `internal/toolchain/toolchain.go:directories,Path,searchPath` |
 | `ADAMIC_SANDBOX=1` | no fallback to `PATH`: a tool outside `ADAMIC_TOOLS` is an error naming where it looked, and the cache must be named by `ADAMIC_BUILD_CACHE_DIR` | off | `internal/toolchain/toolchain.go:Sandboxed,Path`, `internal/buildcache/location/location.go:BuildCache` |
-| `GOOS`, `GOARCH` | the platform a native build is for: its triple (`--target`) is the table's row for them, and a platform with no row exits 1 naming it. A darwin platform other than the host's exits 1 with `a darwin cross build has no pinned SDK`, and a linux one with `a linux cross build needs its pinned sysroot` | this process's own, `runtime.GOOS` and `runtime.GOARCH`: a person's road, never Loom's, whose units set both | `internal/native/target.go:buildPlatform,ResolveTarget,nativeTargetRefusal`, `internal/toolchain/triple.go:Platform,Triple` |
-| `WASI_SYSROOT` | required for `--target wasm32-wasi`, and must be a directory; the SDK's clang is taken from beside it, and must be wasi-sdk 27's | none | `internal/native/target.go:ValidateOptions,WASIClang` |
+| `GOOS`, `GOARCH` | the platform a native build is for: its triple (`--target`) is the table's row for them, and a platform with no row exits 1 naming it. A darwin platform other than the host's exits 1 with `a darwin cross build has no pinned SDK`, and a linux one with `a linux cross build needs its pinned sysroot` | this process's own, `runtime.GOOS` and `runtime.GOARCH`: a person's road, never Loom's, whose units set both | `internal/native_runtime/target.go:BuildPlatform,ResolveTarget,NativeTargetRefusal`, `internal/toolchain/triple.go:Platform,Triple` |
+| `WASI_SYSROOT` | required for `--target wasm32-wasi`, and must be a directory; the SDK's clang is taken from beside it, and must be wasi-sdk 27's | none | `internal/native_runtime/target.go:ValidateOptions,WASIClang` |
 | `ADAMIC_BUILD_CACHE_DIR` | where the compiled runtime archive is cached | `os.UserCacheDir()/adamic-build` | `internal/buildcache/location/location.go:BuildCache` |
 | `ADAMIC_BUILD_OUTPUT_DIR` | a separate directory to write cache entries to | unset | `internal/buildcache/location/location.go:OutputDirectoryVariable` |
 | `ADAMIC_CC_JOBSERVER` | a FIFO; every clang call takes a token from it first. `internal/ccjobserver` reads it once, as the process starts, and `cmd/adamic` imports that package for its effect (`cmd/adamic/tsgo.go` imports it) | unset | `internal/ccjobserver/ccjobserver.go:Variable,process` |
@@ -185,7 +185,7 @@ A wasm32-wasi panic leaves through the same `_exit(70)` (`internal/native_runtim
 | `ADAMIC_GATE_UNCACHED=1` | split builds only: bypasses the unit cache | off | `internal/native/units.go:buildUnitsWithLibrary` |
 | `ADAMIC_NATIVE_UNIT_CHECK` | split builds only: how often a unit taken from the cache is compiled again to check its bytes; set at all, every hit | one hit in 20 | `internal/native/units.go:unitCheckVariable,unitChecked` |
 | `ADAMIC_NATIVE_UNIT_CACHE=off` | split builds only: every unit compiles uncached | on | `internal/native/units.go:unitCacheOffVariable,unitCacheOff` |
-| `ADAMIC_BUILD_LOG` | appends a line per clang compile, build and archive step, with its key, outcome and seconds | unset | `internal/native/library.go:buildLog`, `internal/native/units.go:unitBuildLog,noteUnitMismatch` |
+| `ADAMIC_BUILD_LOG` | appends a line per clang compile, build and archive step, with its key, outcome and seconds | unset | `internal/native_runtime/library.go:BuildLog`, `internal/native/units.go:unitBuildLog,noteUnitMismatch` |
 | `TMPDIR` | where build directories are made | system default | `internal/native/native.go:buildOneWithRuntime`, `internal/native/units.go:buildUnitsWithLibrary` |
 
 clang and ar run under a fixed environment, not the caller's: only the variables in
@@ -193,7 +193,7 @@ clang and ar run under a fixed environment, not the caller's: only the variables
 `CC=clang CXX=clang++`, each with `--target=<triple>` for the build's `GOOS` and `GOARCH`, are set when unset
 (`internal/toolchain/triple.go:Compilers,Platform`). So `CPATH`, `SDKROOT` and `DYLD_*` never reach clang, and
 setting `CC` doesn't change which compiler a native build runs: that is always `clang` resolved as
-above (`internal/native/target.go:compilerName`).
+above (`internal/native_runtime/target.go:CompilerName`).
 
 The other `ADAMIC_BUILD_*` store settings belong to `internal/buildcache`,
 which `cmd/adamic` doesn't link (`internal/buildcache/location/location.go`'s package comment); they matter only to
@@ -212,10 +212,10 @@ the test harness.
 
 | Tool | Needed for | Found by | Version | Missing |
 | --- | --- | --- | --- | --- |
-| clang | `build`, native | `toolchain.Path("clang")` (`internal/native/library.go:runtimeInputs`) | not checked: its `--version` report only keys the runtime cache (`internal/native/library.go:runtimeInputs,runtimeKeyParts`), and `adamic --version` prints its first line (`cmd/adamic/main.go:clangVersion`). `cloud/setup.sh:98` installs 20.1.8 (`ADAMIC_LLVM_VERSION`) when no clang passes its sanitizer probe | `adamic: native: exec: "clang": executable file not found in $PATH`, exit 1 |
+| clang | `build`, native | `toolchain.Path("clang")` (`internal/native_runtime/library.go:RuntimeInputs`) | not checked: its `--version` report only keys the runtime cache (`internal/native_runtime/library.go:RuntimeInputs,runtimeKeyParts`), and `adamic --version` prints its first line (`cmd/adamic/main.go:clangVersion`). `cloud/setup.sh:98` installs 20.1.8 (`ADAMIC_LLVM_VERSION`) when no clang passes its sanitizer probe | `adamic: native: exec: "clang": executable file not found in $PATH`, exit 1 |
 | lld | `build`, shipped native release on Linux | clang's `-fuse-ld=lld` (`internal/native/native.go:linkFlags`) | | clang's link error, exit 1 |
-| `llvm-ar`, else `ar` | the runtime archive | beside the compiler, else `toolchain.Path("ar")` (`internal/native/target.go:archiverName`) | | exit 1 |
-| wasi-sdk | `--target wasm32-wasi` | `WASI_SYSROOT` (`internal/native/target.go:ValidateOptions`); clang from `<sysroot>/../../bin/clang` (`internal/native/target.go:WASIClang,compilerName`) | pinned to 27: a clang whose `--version` doesn't begin `clang version 20.1.8-wasi-sdk` is refused by name (`internal/native/target.go:WASISDKVersion,checkWASIClang`). `cloud/setup.sh --wasi-sdk` installs it, checked against its pinned sha256 (`cloud/setup.sh:184-215`) | no `WASI_SYSROOT`: `adamic: native: wasm32-wasi requires WASI_SYSROOT`, exit 1. No SDK clang beside it, or another clang: `adamic: native: wasm32-wasi is pinned to wasi-sdk 27 ...`, exit 1 |
+| `llvm-ar`, else `ar` | the runtime archive | beside the compiler, else `toolchain.Path("ar")` (`internal/native_runtime/target.go:ArchiverName`) | | exit 1 |
+| wasi-sdk | `--target wasm32-wasi` | `WASI_SYSROOT` (`internal/native_runtime/target.go:ValidateOptions`); clang from `<sysroot>/../../bin/clang` (`internal/native_runtime/target.go:WASIClang,CompilerName`) | pinned to 27: a clang whose `--version` doesn't begin `clang version 20.1.8-wasi-sdk` is refused by name (`internal/native_runtime/target.go:WASISDKVersion,checkWASIClang`). `cloud/setup.sh --wasi-sdk` installs it, checked against its pinned sha256 (`cloud/setup.sh:184-215`) | no `WASI_SYSROOT`: `adamic: native: wasm32-wasi requires WASI_SYSROOT`, exit 1. No SDK clang beside it, or another clang: `adamic: native: wasm32-wasi is pinned to wasi-sdk 27 ...`, exit 1 |
 | a tsgo checker archive | `--tsgo` | the path given (`internal/native/tsgo.go:checkerArchivePath`), built with `go build -buildmode=c-archive ./bridge/tsgo/archive` (`bridge/tsgo/README.md`) | | `adamic: native: checker archive: <stat error>`, exit 1 |
 | Node | running `adamic js` output, and the oracle | not used by `adamic` itself | `cloud/setup.sh` installs 24; only `internal/native/wasm_test.go:runWASIUnit` checks a minimum (24) | |
 | Go | building `adamic` | | `go 1.27`, `toolchain go1.27.1` (`go.mod:3,5`) | |
@@ -223,36 +223,36 @@ the test harness.
 The binary ships no toolchain: it runs whatever clang it finds. The runtime's C files are embedded
 and compiled on first use into `<cache>/native-runtime/<sha256>/runtime.a`, keyed by the build's os and arch, the
 compiler's path and version report, the archiver, the headers read and the flags, the triple among them
-(`internal/native/library.go:runtimeLibrary,runtimeKeyParts,runtimePlatformParts,cachedRuntime`).
+(`internal/native_runtime/library.go:runtimeLibrary,runtimeKeyParts,runtimePlatformParts,CachedRuntime`).
 
 ### Flags clang gets
 
 Every build: `-std=c11 -Wall -Wextra -Werror -Wcast-function-type-strict -pedantic` and the unused
-warnings off (`internal/native/native.go:Flags`), `-ffp-contract=off` so arithmetic rounds as Node does
-(`internal/native/native.go:Flags`), `-fno-optimize-sibling-calls` (`internal/native/native.go:Flags`).
-Native adds `--target=<triple>` and `-pthread` (`internal/native/native.go:Flags`), the triple the table's row for the
+warnings off (`internal/native_runtime/options.go:Flags`), `-ffp-contract=off` so arithmetic rounds as Node does
+(`internal/native_runtime/options.go:Flags`), `-fno-optimize-sibling-calls` (`internal/native_runtime/options.go:Flags`).
+Native adds `--target=<triple>` and `-pthread` (`internal/native_runtime/options.go:Flags`), the triple the table's row for the
 build's `GOOS` and `GOARCH`: x86_64-linux-gnu, aarch64-linux-gnu, arm64-apple-macosx or x86_64-apple-macosx
 (`internal/toolchain/triple.go:Triple`), this process's own platform where they're unset
-(`internal/native/target.go:buildPlatform,ResolveTarget`); wasm32-wasi adds
+(`internal/native_runtime/target.go:BuildPlatform,ResolveTarget`); wasm32-wasi adds
 `--target=wasm32-wasi --sysroot=$WASI_SYSROOT -DADAMIC_TARGET_WASI=1 -mno-atomics`
-(`internal/native/native.go:Flags`). Then `--sanitize` gets `-O1 -g` and the sanitizers, wasm32-wasi `-Oz`, and everything
-else `-O2` (`internal/native/native.go:Flags`). `adamic build` always asks for a release
+(`internal/native_runtime/options.go:Flags`). Then `--sanitize` gets `-O1 -g` and the sanitizers, wasm32-wasi `-Oz`, and everything
+else `-O2` (`internal/native_runtime/options.go:Flags`). `adamic build` always asks for a release
 (`cmd/adamic/tsgo.go:buildWithNative`), and a native build with neither `--count` nor `--sanitize` adds
-`-flto=thin` (`internal/native/native.go:Flags`). `cmd/adamic/release_test.go:auditReleaseBuild` holds that
+`-flto=thin` (`internal/native_runtime/options.go:Flags`). `cmd/adamic/release_test.go:auditReleaseBuild` holds that
 policy, and that the two semantic flags never drop.
 
 ## Targets
 
 | Target | Selected by | Tested on main by |
 | --- | --- | --- |
-| native, Linux x86_64 and arm64 | the build's `GOOS` and `GOARCH`, the host's where unset; no flag. Its triple, x86_64-linux-gnu or aarch64-linux-gnu, is always passed, and only the host's own: a linux cross build is refused until its sysroot is pinned (`internal/native/target.go:ResolveTarget,nativeTargetRefusal`) | `internal/oracle` `TestNativeAgreesWithNode_*` (`internal/oracle/families_generated_test.go:TestNativeAgreesWithNode_000`, body at `internal/oracle/oracle_test.go:runNativeAgreesShard`), leak checks, whose combined LeakSanitizer run is Linux-only (`internal/oracle/oracle_test.go:nativelyCheckingLeaks`), `internal/native` `TestReleaseFlagsReachLink` (`internal/native/release_build_test.go:TestReleaseFlagsReachLink`) |
-| native, macOS | the build's `GOOS` and `GOARCH`, the host's where unset; no flag. Its triple, arm64-apple-macosx or x86_64-apple-macosx, is always passed, and only the host's own: a darwin cross build is refused (`internal/native/target.go:nativeTargetRefusal`) | darwin branches in code (`internal/native/native.go:buildOneWithRuntime`, `internal/native/library.go:RuntimeLinkFlags`) and tests with darwin-only assertions (`internal/oracle/moves_darwin_test.go`, `internal/native/whole_build_paths_test.go:TestAWholeBuildNamesNoTemporaryObject`, `internal/native/machine_paths_test.go:TestCheckerBuildsNameNoPlaceOfTheArchive,TestSplitBuildsNameNoPlaceOfTheirInputs`). Loom's Go sources never name darwin, so as far as its code shows these run only where someone runs the suite on a Mac |
-| wasm32-wasi | `--target wasm32-wasi` | parsing and refusals ungated (`cmd/adamic/target_test.go`, `cmd/adamic/command_guards_test.go:TestBuildWASISanitizeTargetBeforeSource,TestBuildWASISanitizeTargetAfterSource`, `internal/native/target_test.go:TestWASITargetFlags`); compiled programs only with `ADAMIC_ORACLE_WASI=1` (`internal/oracle/wasi_test.go:runWASIFixtures`, `cmd/adamic/request_test.go:TestWASIRequest,TestRequestNativeStaysCommand,TestWASIRequestModuleSelection,TestWASIRequestThrows`) or `ADAMIC_TEST_WASI=1` (`internal/native/wasm_test.go:runWASIUnit`). Loom's gate sets both (`GateEnvironment` in loom's planner); `cloud/setup.sh` and `cloud/write-env.sh` set neither, so a worker's own `go test` skips them |
+| native, Linux x86_64 and arm64 | the build's `GOOS` and `GOARCH`, the host's where unset; no flag. Its triple, x86_64-linux-gnu or aarch64-linux-gnu, is always passed, and only the host's own: a linux cross build is refused until its sysroot is pinned (`internal/native_runtime/target.go:ResolveTarget,NativeTargetRefusal`) | `internal/oracle` `TestNativeAgreesWithNode_*` (`internal/oracle/families_generated_test.go:TestNativeAgreesWithNode_000`, body at `internal/oracle/oracle_test.go:runNativeAgreesShard`), leak checks, whose combined LeakSanitizer run is Linux-only (`internal/oracle/oracle_test.go:nativelyCheckingLeaks`), `internal/native` `TestReleaseFlagsReachLink` (`internal/native/release_build_test.go:TestReleaseFlagsReachLink`) |
+| native, macOS | the build's `GOOS` and `GOARCH`, the host's where unset; no flag. Its triple, arm64-apple-macosx or x86_64-apple-macosx, is always passed, and only the host's own: a darwin cross build is refused (`internal/native_runtime/target.go:NativeTargetRefusal`) | darwin branches in code (`internal/native/native.go:buildOneWithRuntime`, `internal/native_runtime/library.go:RuntimeLinkFlags`) and tests with darwin-only assertions (`internal/oracle/moves_darwin_test.go`, `internal/native/whole_build_paths_test.go:TestAWholeBuildNamesNoTemporaryObject`, `internal/native/machine_paths_test.go:TestCheckerBuildsNameNoPlaceOfTheArchive,TestSplitBuildsNameNoPlaceOfTheirInputs`). Loom's Go sources never name darwin, so as far as its code shows these run only where someone runs the suite on a Mac |
+| wasm32-wasi | `--target wasm32-wasi` | parsing and refusals ungated (`cmd/adamic/target_test.go`, `cmd/adamic/command_guards_test.go:TestBuildWASISanitizeTargetBeforeSource,TestBuildWASISanitizeTargetAfterSource`, `internal/native_runtime/target_test.go:TestWASITargetFlags`); compiled programs only with `ADAMIC_ORACLE_WASI=1` (`internal/oracle/wasi_test.go:runWASIFixtures`, `cmd/adamic/request_test.go:TestWASIRequest,TestRequestNativeStaysCommand,TestWASIRequestModuleSelection,TestWASIRequestThrows`) or `ADAMIC_TEST_WASI=1` (`internal/native/wasm_test.go:runWASIUnit`). Loom's gate sets both (`GateEnvironment` in loom's planner); `cloud/setup.sh` and `cloud/write-env.sh` set neither, so a worker's own `go test` skips them |
 | JavaScript | `adamic js` | the oracle's third run of every fixture (`internal/oracle/oracle_test.go:onJavaScriptBackend,runNativeAgreesShard`), the fuzzer (`internal/fuzz/run.go:Checkout.tryFile`) |
 | tsgo-linked native | `--tsgo <archive>` | `bridge/tsgo/products_test.go:buildBridgeProduct` and the `TestBridge*` tests over it |
 
 There is no Windows, iOS, Android or embedded target: `--target` accepts only wasm32-wasi
-(`cmd/adamic/tsgo.go:buildWithNative`, `internal/native/target.go:ValidateOptions`), and the native Go branches on
+(`cmd/adamic/tsgo.go:buildWithNative`, `internal/native_runtime/target.go:ValidateOptions`), and the native Go branches on
 architecture only to name the triple (`internal/toolchain/triple.go:Triple`). `cloud/setup.sh` provisions Linux x86_64
 and aarch64 only (`cloud/setup.sh:51-54`).
 
