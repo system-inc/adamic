@@ -65,7 +65,7 @@ func Scout(ctx context.Context, p *load.Program) (r ScoutReport) {
 	result, err := scoutLowerWithOptions(ctx, p, Options{ModuleFormat: ModuleFormatCommonJSBundle})
 	if err != nil {
 		switch scoutPhase {
-		case "entry", "lowering.moduleOrder", "lowering.collectViewedElements", "lowering.enumInitialization", "lowering.namespaceInitialization":
+		case "entry", "lowering.moduleOrder", "lowering.expansiveGenerics", "lowering.collectViewedElements", "lowering.enumInitialization", "lowering.namespaceInitialization":
 			scoutUnderlying = nil
 			r.Boundary = "preparation abort before scan at " + scoutPhase + ": " + err.Error()
 			return
