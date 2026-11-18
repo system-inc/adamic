@@ -64,5 +64,7 @@
   },
   "pushes": {},
   "comparisons": {},
-  "stop": "Stop: main-control-c02 is green where c02 is red; user instructed a stop"
+  "stop": "Main fbe5b72b control is green where C02 28a2e220 is red; stopped under the user instruction.",
+  "control_condition_met": false,
+  "new_proofs_started_after_control": []
 }
