@@ -497,7 +497,7 @@ func (l *lowering) droppedContractRead(t, held, seen *checker.Type) bool {
 // stops each other road at compile time (tsc's lib, types, typeRoots and the other string[] options,
 // #6c4swvt). A dictionary's read checks only that it's one, not what it holds, so paths keeps the view not
 // yet until a check of its values lands.
-var droppedContractChecked = map[ir.Type]bool{ir.Number: true, ir.String: true, ir.Boolean: true, ir.Array: true}
+var droppedContractChecked = map[ir.Type]bool{ir.Number: true, ir.String: true, ir.Boolean: true, ir.Array: true, ir.Record: true}
 
 // parameterStorage is check run with droppedContractsRead cleared, then restored: a function's
 // parameter is handed the other side's value, so no named contract is dropped through it, in either

@@ -49,8 +49,32 @@ func (l *lowering) recordLiteralElement(node *ast.Node) *checker.Type {
 		if e := l.recordUnionElement(l.checker.GetNonNullableType(t), ""); e != nil {
 			return e
 		}
+		if e := l.recordUnionDictionaryMember(node, l.checker.GetNonNullableType(t)); e != nil {
+			return e
+		}
 	}
 	return l.recordElement(l.checker.GetTypeAtLocation(node))
+}
+
+// recordUnionDictionaryMember (scratch probe) is the element of the one dictionary member of a union slot a
+// literal fits, when it fits no fixed-object member: tsc's { k: ["a"] } into CompilerOptionsValue is a MapLike.
+func (l *lowering) recordUnionDictionaryMember(literal *ast.Node, slot *checker.Type) *checker.Type {
+	if slot.Flags()&checker.TypeFlagsUnion == 0 {
+		return nil
+	}
+	own := l.checker.GetTypeAtLocation(literal)
+	var found *checker.Type
+	for _, member := range l.definedMembers(slot) {
+		if member.Flags()&checker.TypeFlagsObject == 0 || !l.checker.IsTypeAssignableTo(own, member) {
+			continue
+		}
+		element := l.recordElement(member)
+		if element == nil || found != nil {
+			return nil
+		}
+		found = element
+	}
+	return found
 }
 func (l *lowering) recordSlot(node *ast.Node) (ir.Type, error) {
 	t := l.recordElement(l.checker.GetTypeAtLocation(node))
