@@ -161,6 +161,15 @@ func latentFullSelected(ctx context.Context, program *load.Program, emit func(La
 			latentRecord(orderErr)
 		}
 		if orderErr == nil {
+			func() { defer latentPrepassTimer("expansiveGenerics")(); orderErr = base.expansiveGenerics(modules) }()
+			if orderErr != nil {
+				errorPhase = "prepass"
+				boundaryReason = "lowering prepass failed; unit not lowered"
+				latentFindingOwner, latentFindingPhase = program.Where(file.AsNode()), errorPhase
+				latentRecord(orderErr)
+			}
+		}
+		if orderErr == nil {
 			func() { defer latentPrepassTimer("collectViewedElements")(); orderErr = base.collectViewedElements(modules) }()
 			if orderErr != nil {
 				errorPhase = "prepass"
