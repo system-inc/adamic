@@ -312,14 +312,41 @@ func (l *lowering) objectCanFreeze() bool {
 // object, array or boxed union field is held as it is in any object, and a Weak or a two-word
 // optional boolean is not (recordStorageType). A field held as a closure waits on its own ruling. A
 // field that holds the intersection itself is the object being proven.
-func (l *lowering) objectIntersection(proven *checker.Type) (ir.Type, bool) {
+func (l *lowering) objectIntersection(proven *checker.Type) (ir.Type, bool, string) {
 	for _, part := range proven.Types() {
-		if part.Flags()&checker.TypeFlagsObject == 0 || l.isArrayType(part) || len(l.checker.GetSignaturesOfType(part, checker.SignatureKindCall)) != 0 || len(l.checker.GetSignaturesOfType(part, checker.SignatureKindConstruct)) != 0 || l.unsupportedViewFamily(part) != "" {
-			return 0, false
+		kind := ""
+		switch {
+		case part.Flags()&checker.TypeFlagsTypeParameter != 0:
+			kind = "a type parameter"
+		case part.Flags()&checker.TypeFlagsObject == 0:
+			kind = "a primitive"
+		case l.isArrayType(part):
+			kind = "an array"
+		case len(l.checker.GetSignaturesOfType(part, checker.SignatureKindCall)) != 0 ||
+			len(l.checker.GetSignaturesOfType(part, checker.SignatureKindConstruct)) != 0:
+			kind = "a function"
+		default:
+			switch l.unsupportedViewFamily(part) {
+			case "nominal class":
+				kind = "a class instance"
+			case "dictionary":
+				kind = "a dictionary"
+			case "collection":
+				kind = "a collection"
+			case "tuple":
+				kind = "a tuple"
+			case "":
+			default:
+				// Every other family still refuses; it only lacks its own words.
+				kind = "a " + l.unsupportedViewFamily(part) + " view"
+			}
+		}
+		if kind != "" {
+			return 0, false, "an intersection whose member " + l.checker.TypeToString(part) + " isn't a plain object shape (" + kind + ")"
 		}
 	}
 	if l.objectIntersections[proven] {
-		return ir.Object, true
+		return ir.Object, true, ""
 	}
 	if l.objectIntersections == nil {
 		l.objectIntersections = map[*checker.Type]bool{}
@@ -328,10 +355,19 @@ func (l *lowering) objectIntersection(proven *checker.Type) (ir.Type, bool) {
 	defer delete(l.objectIntersections, proven)
 	for _, field := range l.checker.GetPropertiesOfType(proven) {
 		if held, known := l.recordStorageType(l.checker.GetTypeOfSymbol(field)); !known || held == ir.Closure {
-			return 0, false
+			kind := "of a type with no representation"
+			switch held {
+			case ir.MaybeBoolean:
+				kind = "an optional boolean"
+			case ir.Closure:
+				kind = "a function"
+			case ir.Weak:
+				kind = "a weak reference"
+			}
+			return 0, false, "an intersection whose field " + field.Name + " is " + kind + ", which its record storage doesn't hold"
 		}
 	}
-	return ir.Object, true
+	return ir.Object, true, ""
 }
 
 // objectAssignCallableSourceRefusal refuses an Object.assign whose source is callable or constructable
