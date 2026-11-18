@@ -90,7 +90,9 @@ The mutant runner and logs are `/tmp/devirtualize-mutants.py`,
 `/tmp/devirtualize-mutants.log`, and `/tmp/devirtualize-mutant-<name>.log`.
 
 The visitor benchmark is `bench/devirtualize.a`. It repeatedly visits 128
-syntax-shaped records, each with two child records, for 20,000 rounds. A visitor
+syntax-shaped records, each with two child records, for 160,000 rounds (raised on
+Nov 18 from 20,000, past Node's startup floor, J-d1emr4h; the printed value and
+the measurements below are from 20,000 rounds). A visitor
 routes by kind to identifier/literal rules and recursively visits children. An
 inherited visitor class has the same implementations. This models the dispatch
 shape of lint, not stage 1's complete parser, checker, or rule corpus.

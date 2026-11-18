@@ -6,14 +6,16 @@
 //
 // cmd/adamic is built at each commit in a detached worktree, and every program in the suite is built
 // with each of the two compilers from the same source, the one in this checkout, so the compiler is
-// the only thing that differs. Each sample runs the baseline, the candidate and Node once each, in an
-// order (sampleOrder) that goes through all six every six samples, so no runner always goes first,
-// and no runner always runs right after the same other one: over six samples each follows each other
-// equally often, counting the run before a program's first, the last of the program before it.
+// the only thing that differs. Each sample runs the floor and every program eight times (sampleRuns):
+// Node, the baseline, Node, the candidate, Node, the candidate, Node, the baseline, with the sides
+// swapped on odd samples. Every native run follows a Node run, so a cost a run inherits from the one
+// before it lands on both sides alike within each sample, and the sides' positions mirror, so a drift
+// through the sample does too. A runner's runs in a sample are combined as their mean.
 //
-// Beside the order, nothing about a side stays fixed for a whole run. Before each sample every native
-// binary, the floor's too, gets fresh pages in the page cache: a copy beside it is renamed over it, so
-// its path is the same and its physical placement, and with it how it aliases in the caches, is new.
+// Beside the runs' order, nothing about a side stays fixed for a whole run. Before each sample every
+// native binary, the floor's too, gets fresh pages in the page cache: a copy beside it is renamed over
+// it, so its path is the same and its physical placement, and with it how it aliases in the caches,
+// is new.
 // Every run gets ADAMIC_BENCH_PAD, a value of a random length from 0 to 4095 drawn for that run, so the
 // stack starts somewhere new each time. The lengths come from one seeded source; the header prints the
 // seed, and -seed draws the same lengths again.
@@ -128,7 +130,7 @@ type compareEntry struct {
 	identical   bool   // the two binaries are byte for byte the same, so the row is a control
 }
 
-// The three runners of every sample, in the order the first sample runs them.
+// The three runners of every sample.
 const (
 	baselineRunner = iota
 	candidateRunner
@@ -137,21 +139,29 @@ const (
 
 var runnerNames = [...]string{"baseline", "candidate", "node"}
 
-// sampleOrder is the order a sample runs its three runners in, the floor's and every program's alike.
-// The runners in a cycle can go round one way, baseline then candidate then Node, or the other,
-// baseline then Node then candidate; three samples go round one way, each starting from the next
-// runner, and the next three the other. A rotation alone keeps who runs just before whom: M3
-// (J-d1emr4h) ran the candidate right after the baseline every time, and three identical binaries
-// read a change. Over six samples each runner follows each other runner equally often, counting the
-// run before a program's first (the last of the program before, or the last of the sample before):
-// within a sample a direction's three rotations give its three pairs evenly, and the six samples'
-// seams give the six pairs once each. Alternating the direction every sample can't do that: its seams
-// put the candidate after itself twice and miss two pairs.
-func sampleOrder(sample int) [3]int {
-	directions := [2][3]int{{baselineRunner, candidateRunner, nodeRunner}, {baselineRunner, nodeRunner, candidateRunner}}
-	direction := directions[(sample/3)%2]
-	rotation := sample % 3
-	return [3]int{direction[rotation], direction[(rotation+1)%3], direction[(rotation+2)%3]}
+// sampleRuns is the runs one sample makes, of the floor and of every program alike: Node, the
+// baseline, Node, the candidate, Node, the candidate, Node, the baseline, and on odd samples the same
+// with the sides swapped, so which side runs first evens out too.
+//
+// Every native run follows a Node run, so a cost a run inherits from the run before it lands on both
+// sides alike inside every sample, and the sign test judges a sample at a time, so it has to cancel
+// there, not only across samples. A rotation of three ran the candidate right after the baseline every
+// time (M3, J-d1emr4h, where three identical binaries read a change), and balancing who follows whom
+// across samples still split the ratios into samples that carried the cost and samples that didn't.
+// No shorter order cancels both kinds of cost: one tied to the baseline as the run before (in N, B, C,
+// N, C, B the candidate follows the baseline once and the baseline never follows itself, so only the
+// candidate pays), and one tied to the other side as the run before. Only Node before every native
+// run cancels both.
+//
+// Counting from 0, the baseline runs at positions 1 and 7 and the candidate at 3 and 5, both averaging
+// position 4, so a drift that grows steadily through a sample adds the same to both sides' mean. The
+// cost is eight runs a program a sample: each side's two and Node's four, each runner's combined as
+// their mean (combined).
+func sampleRuns(sample int) [8]int {
+	if sample%2 == 0 {
+		return [8]int{nodeRunner, baselineRunner, nodeRunner, candidateRunner, nodeRunner, candidateRunner, nodeRunner, baselineRunner}
+	}
+	return [8]int{nodeRunner, candidateRunner, nodeRunner, baselineRunner, nodeRunner, baselineRunner, nodeRunner, candidateRunner}
 }
 
 // A programComparison is one row's result: the median candidate-over-baseline ratio and its 95%
@@ -343,7 +353,7 @@ func compareCommits(request compareRequest) {
 
 	// samples[entry] holds each sample's three measurements, by runner.
 	samples := make([][][3]measurement, len(entries))
-	// floors[runner] holds every sample's run of the floor program.
+	// floors[runner] holds every run of the floor program, each on its own, so its slowest is one run's.
 	floors := [3][]measurement{}
 	floorCommands := [3][]string{{floorBinaries[0]}, {floorBinaries[1]}, nodeCommand(floor, root)}
 	stopped := make([]bool, len(entries))
@@ -362,11 +372,13 @@ func compareCommits(request compareRequest) {
 				fail(err)
 			}
 		}
-		order := sampleOrder(sample)
-		for _, runner := range order {
+		runs := sampleRuns(sample)
+		floorTurns := [3]int{}
+		for _, runner := range runs {
 			result := run(floorCommands[runner], request.timeout, padded(random, nil)...)
 			floors[runner] = append(floors[runner], result)
-			fmt.Fprintf(os.Stderr, "sample %d floor %s: %s\n", sample+1, runnerNames[runner], short(result))
+			floorTurns[runner]++
+			fmt.Fprintf(os.Stderr, "sample %d floor %s run %d: %s\n", sample+1, runnerNames[runner], floorTurns[runner], short(result))
 		}
 		for index, entry := range entries {
 			// A row that failed to build, failed a run, or gave another answer than Node's gets no
@@ -376,11 +388,13 @@ func compareCommits(request compareRequest) {
 			}
 			commands := [3][]string{append([]string{entry.baseline}, entry.arguments...), append([]string{entry.candidate}, entry.arguments...), append(nodeCommand(entry.program, root), entry.arguments...)}
 			settings := [3][]string{entry.environment, entry.environment, nil}
-			taken := [3]measurement{}
-			for _, runner := range order {
-				taken[runner] = run(commands[runner], request.timeout, padded(random, settings[runner])...)
-				fmt.Fprintf(os.Stderr, "sample %d %s %s: %s\n", sample+1, entry.program.name, runnerNames[runner], short(taken[runner]))
+			turns := [3][]measurement{}
+			for _, runner := range runs {
+				result := run(commands[runner], request.timeout, padded(random, settings[runner])...)
+				turns[runner] = append(turns[runner], result)
+				fmt.Fprintf(os.Stderr, "sample %d %s %s run %d: %s\n", sample+1, entry.program.name, runnerNames[runner], len(turns[runner]), short(result))
 			}
+			taken := [3]measurement{combined(turns[baselineRunner]), combined(turns[candidateRunner]), combined(turns[nodeRunner])}
 			samples[index] = append(samples[index], taken)
 			for _, runner := range []int{baselineRunner, candidateRunner} {
 				if taken[runner].failure != "" || taken[nodeRunner].failure != "" || taken[runner].stdout != taken[nodeRunner].stdout {
@@ -401,8 +415,8 @@ func compareCommits(request compareRequest) {
 		floorCells = append(floorCells, fmt.Sprintf("%s %s to %s", runnerNames[runner], seconds(bestOf(floors[runner]).elapsed), seconds(floorSlowest[runner].elapsed)))
 	}
 	rank, _ := signTestRank(request.samples)
-	fmt.Printf("wall clock resolution: %s; floor, a program that only prints, fastest to slowest of %d: %s\n", resolution, request.samples, strings.Join(floorCells, ", "))
-	fmt.Printf("%d interleaved samples, the runners' order going through all six every six samples so each follows each other equally often, every native binary given fresh pages before each sample, and every run an ADAMIC_BENCH_PAD of random length. The ratio is the candidate's time over the baseline's in the same sample, on the program's judge: user, CPU time in user mode across every thread, or wall. The interval is the sign test's 95%% interval for the median ratio, the %s and %s smallest of %d ratios, which assumes nothing about how times are distributed. faster needs the interval's top below 1.00, slower its bottom above 1.00. A row whose two binaries are the same is a control and gets no verdict.\n\n", request.samples, ordinal(rank), ordinal(request.samples+1-rank), request.samples)
+	fmt.Printf("wall clock resolution: %s; floor, a program that only prints, fastest to slowest of every run: %s\n", resolution, strings.Join(floorCells, ", "))
+	fmt.Printf("%d interleaved samples of eight runs a program: Node, baseline, Node, candidate, Node, candidate, Node, baseline, the sides swapped on odd samples, so every native run follows Node and a cost carried over from the run before lands on both sides alike, and the baseline at positions 1 and 7 and the candidate at 3 and 5 (from 0) put a steady drift on both alike too. Each runner's runs in a sample are combined as their mean. Every native binary gets fresh pages before each sample, and every run an ADAMIC_BENCH_PAD of random length. The ratio is the candidate's time over the baseline's in the same sample, on the program's judge: user, CPU time in user mode across every thread, or wall. The interval is the sign test's 95%% interval for the median ratio, the %s and %s smallest of %d ratios, which assumes nothing about how times are distributed. faster needs the interval's top below 1.00, slower its bottom above 1.00. A row whose two binaries are the same is a control and gets no verdict.\n\n", request.samples, ordinal(rank), ordinal(request.samples+1-rank), request.samples)
 	results := make([]programComparison, len(entries))
 	controls, claims, claimedSize := 0, []string{}, 0.0
 	for index, entry := range entries {
@@ -877,6 +891,30 @@ func makeInput(directory, work, adamic string, input programInput, key string) (
 		return "", fmt.Errorf("making the input with %s at size %d failed: %v %s", input.Generator, input.Size, err, firstLine(stderr.String()))
 	}
 	return path, nil
+}
+
+// combined is one runner's runs in a sample as one measurement: the mean of their wall and of their
+// user times, so a sample's time stays comparable to one run of the floor and to the clock's
+// resolution, and the larger peak. A run's failure is the sample's, naming the run, and every run must
+// print the same answer, or the sample fails naming where they part: a program whose answer changes
+// between two runs of the same binary has no time worth judging.
+func combined(runs []measurement) measurement {
+	var elapsed, user time.Duration
+	result := measurement{stdout: runs[0].stdout}
+	for index, turn := range runs {
+		if turn.failure != "" {
+			return measurement{failure: fmt.Sprintf("in run %d of %d %s", index+1, len(runs), turn.failure)}
+		}
+		if turn.stdout != runs[0].stdout {
+			return measurement{failure: fmt.Sprintf("printed %q in run %d of %d and %q in run 1, the same binary giving two answers", firstLine(turn.stdout), index+1, len(runs), firstLine(runs[0].stdout))}
+		}
+		elapsed += turn.elapsed
+		user += turn.user
+		result.peak = max(result.peak, turn.peak)
+	}
+	result.elapsed = elapsed / time.Duration(len(runs))
+	result.user = user / time.Duration(len(runs))
+	return result
 }
 
 // freshPages gives a native binary new pages in the page cache without moving it: a copy beside it,
