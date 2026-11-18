@@ -161,9 +161,11 @@ func TestClosedKindGenericAndDecodedBuildsStayOpen(t *testing.T) {
 // J-pmbsp94). Mutant m7 (closedKindLiterals reading such a member as a literal) closes it.
 func TestClosedKindOneMemberEnumStaysOpen(t *testing.T) {
 	t.Parallel()
-	const source = "enum One { A }\ninterface Base { readonly kind: One; readonly _baseBrand: undefined; readonly pos: number }\ninterface Leaf extends Base { readonly kind: One.A; readonly leaf: string }\n"
-	if _, _, _, closed, reason := closedKindsAt(t, source, "Base"); closed {
-		t.Fatalf("want Base open, since its kind is a one-member enum's, got closed, reason %q", reason)
+	// Adamic's program, its value built: a Leaf whose kind is One.A. A declared type alone adds no kind, open or
+	// not, since nothing is built at it; the build is where a kind meets S.
+	const source = "enum One { A }\ninterface Base { readonly kind: One; readonly _baseBrand: undefined; readonly pos: number }\ninterface Leaf extends Base { readonly kind: One.A; readonly leaf: string }\nconst leaf: Leaf = { kind: One.A, _baseBrand: undefined, pos: 0, leaf: 'x' };\n"
+	if _, _, _, closed, reason := closedKindsAt(t, source, "Base"); closed || !strings.Contains(reason, "an object literal") {
+		t.Fatalf("want Base open on the Leaf built with One.A, got closed %v, reason %q", closed, reason)
 	}
 }
 
