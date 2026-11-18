@@ -238,8 +238,8 @@
       "exit": 0
     },
     "stage0": {
-      "outcome": "Refused",
-      "what": "stage3/fixtures/objects/20_queue_optional_call.a:4:41: Adamic 0.1 refuses a value of type T[] seen as (T | undefined)[], which can write T | undefined where T is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)"
+      "outcome": "Compiles",
+      "what": ""
     }
   },
   {
