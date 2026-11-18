@@ -14,7 +14,9 @@ import (
 	"sync"
 	"testing"
 
+	"github.com/system-inc/adamic/internal/appleimports"
 	"github.com/system-inc/adamic/internal/buildcache"
+	"github.com/system-inc/adamic/internal/platform"
 )
 
 // repository is the module's root, where the gate ran adamic c from, each program named relative to it.
@@ -45,7 +47,10 @@ func TestProduct_Adamic(t *testing.T) {
 // error <code>" must fail exactly that way instead. A program inside a package is that package's to test. This was the
 // gate's a-check phase, which checked only the programs a change touched, so a compiler change that broke one it didn't
 // touch was never seen; here every program is checked whenever one of them or the compiler moves. The programs that
-// broke their promise when it came are known.txt's, which only shrinks; the evidence directories' are exempt.
+// broke their promise when it came are known.txt's, which only shrinks; the evidence directories' are exempt. A
+// darwin program (darwin, below) stops at load on this box before anything checks it, so it is named and left to the
+// gate's a-check phase, which holds it to the darwin leg's record for the same tip and stays red when the record
+// carries no adamic c run for it.
 func TestEveryProgramOutsideAPackageKeepsItsPromise(t *testing.T) {
 	t.Parallel()
 	adamic := buildcache.Adamic(t)
@@ -58,6 +63,7 @@ func TestEveryProgramOutsideAPackageKeepsItsPromise(t *testing.T) {
 		t.Fatal("no .a program outside a package was found, so nothing was checked")
 	}
 	broken := map[string]string{}
+	var darwinPrograms []string
 	var mutex sync.Mutex
 	root, err := filepath.Abs(repository)
 	if err != nil {
@@ -70,11 +76,15 @@ func TestEveryProgramOutsideAPackageKeepsItsPromise(t *testing.T) {
 		go func() {
 			defer workers.Done()
 			for program := range work {
-				if why := stable(checked(t, adamic, program), root); why != "" {
-					mutex.Lock()
-					broken[program] = why
-					mutex.Unlock()
+				why, isDarwin := checked(t, adamic, program)
+				mutex.Lock()
+				switch {
+				case isDarwin:
+					darwinPrograms = append(darwinPrograms, program)
+				case why != "":
+					broken[program] = stable(why, root)
 				}
+				mutex.Unlock()
 			}
 		}()
 	}
@@ -83,6 +93,12 @@ func TestEveryProgramOutsideAPackageKeepsItsPromise(t *testing.T) {
 	}
 	close(work)
 	workers.Wait()
+	// A darwin program stopped at load here, before the checker ran, so nothing on this box checked it: the gate's
+	// a-check phase holds it to the darwin leg's record for the same tip, which must carry its adamic c run.
+	slices.Sort(darwinPrograms)
+	for _, program := range darwinPrograms {
+		t.Logf("%s is darwin's: its imports reach apple/ and adamic c stopped with the platform missing; the darwin leg's record judges it", program)
+	}
 	known, err := readKnown(knownFile)
 	if err != nil {
 		t.Fatal(err)
@@ -105,6 +121,49 @@ func TestTheEvidenceExemptionIsThoseThreeDirectories(t *testing.T) {
 		"stage3/drivers/notes/a.a": false} {
 		if evidence(program) != exempt {
 			t.Errorf("%s exempt %v, want %v", program, evidence(program), exempt)
+		}
+	}
+}
+
+// A program is darwin's only when both keys agree: adamic c stopped with platform.MissingExitCode, and its own parsed
+// import graph reaches apple/, directly or through a relative import of another file. Mutants that each fail it: the
+// import key dropped, so a platform stop in a program that never imports apple/ passes unchecked; the exit key dropped,
+// so an apple/ program that fails some other way passes unchecked; the walk cut to the program's own imports, so one
+// reaching apple/ through a helper file is judged broken; an import written inside a comment or a string taken as one.
+func TestADarwinProgramIsKnownByBothKeys(t *testing.T) {
+	t.Parallel()
+	root := t.TempDir()
+	for file, content := range map[string]string{
+		"examples/apple/app.a":    "import { Window } from 'apple/appkit/window';\nconst window = new Window();\n",
+		"examples/apple/helper.a": "export { Window } from 'apple/appkit/window';\n",
+		"examples/apple/via.a":    "import { Window } from './helper.a';\nconst window = new Window();\n",
+		"examples/plain.a":        "// imports 'apple/appkit/window' only in a comment\nconst text = \"import 'apple/x'\";\n",
+	} {
+		full := filepath.Join(root, file)
+		if err := os.MkdirAll(filepath.Dir(full), 0o755); err != nil {
+			t.Fatal(err)
+		}
+		if err := os.WriteFile(full, []byte(content), 0o644); err != nil {
+			t.Fatal(err)
+		}
+	}
+	for _, judged := range []struct {
+		name, program string
+		code          int
+		darwin        bool
+	}{
+		{"an apple/ import and the platform stop", "examples/apple/app.a", platform.MissingExitCode, true},
+		{"apple/ reached through a relative import", "examples/apple/via.a", platform.MissingExitCode, true},
+		{"the platform stop without an apple/ import", "examples/plain.a", platform.MissingExitCode, false},
+		{"an apple/ import and another failure", "examples/apple/app.a", 1, false},
+		{"an apple/ import and a clean check", "examples/apple/app.a", 0, false},
+	} {
+		got, err := darwin(root, judged.program, judged.code)
+		if err != nil {
+			t.Fatalf("%s: %v", judged.name, err)
+		}
+		if got != judged.darwin {
+			t.Errorf("%s: darwin %v, want %v", judged.name, got, judged.darwin)
 		}
 	}
 }
@@ -249,12 +308,12 @@ func programsOutsidePackages(root string) ([]string, error) {
 }
 
 // checked runs adamic c on program from the repository's root, as the gate did, and says how it broke its first
-// line's promise, "" when it kept it.
-func checked(t *testing.T, adamic, program string) string {
+// line's promise, "" when it kept it, or that it is darwin's, which this box can't check.
+func checked(t *testing.T, adamic, program string) (string, bool) {
 	t.Helper()
 	content, err := os.ReadFile(filepath.Join(repository, program))
 	if err != nil {
-		return err.Error()
+		return err.Error(), false
 	}
 	header, _, _ := strings.Cut(string(content), "\n")
 	expect := ""
@@ -269,15 +328,38 @@ func checked(t *testing.T, adamic, program string) string {
 	if err := command.Run(); err != nil {
 		var exit *exec.ExitError
 		if !errors.As(err, &exit) {
-			return "running adamic c: " + err.Error()
+			return "running adamic c: " + err.Error(), false
 		}
 		code = exit.ExitCode()
 	}
-	return judge(expect, code, stderr.String())
+	isDarwin, err := darwin(repository, program, code)
+	if err != nil {
+		return "reading its imports: " + err.Error(), false
+	}
+	if isDarwin {
+		return "", true
+	}
+	return judge(expect, code, stderr.String()), false
 }
 
-// judge is the gate's rule for one program's run, from its promise (what its first line names after "// a-check:"),
-// its exit code and its standard error, stderr: why it broke the promise, "" when it kept it.
+// darwin says whether program is darwin's, by the two keys the admission delta's darwin class reads (Language's rules
+// 5 and 6 on #an8zcp1, and Adamic's ruling on #w16eq99): adamic c stopped with platform.MissingExitCode, and the
+// program's own import graph, parsed from the tree under root, reaches an apple/ module. Neither key alone is enough,
+// and a diagnostic's words are never one.
+func darwin(root, program string, code int) (bool, error) {
+	if code != platform.MissingExitCode {
+		return false, nil
+	}
+	graph := appleimports.New(func(file string) bool {
+		info, err := os.Stat(filepath.Join(root, filepath.FromSlash(file)))
+		return err == nil && info.Mode().IsRegular()
+	}, func(file string) (string, error) {
+		content, err := os.ReadFile(filepath.Join(root, filepath.FromSlash(file)))
+		return string(content), err
+	})
+	return graph.Reaches(program)
+}
+
 func judge(expect string, code int, stderr string) string {
 	outcome := "failed"
 	switch {
