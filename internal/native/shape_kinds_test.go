@@ -287,7 +287,7 @@ func shapeProbeProduct(t *testing.T) string {
 			// Compile the actual producer under private names, alongside the runtime.
 			// This needs no Objective-C or SDK: the box holds a plain C pointer.
 			code := "#define adamic_foreign_new shape_probe_foreign_new\n#define adamic_foreign_pointer shape_probe_foreign_pointer\n#define adamic_foreign_dropped shape_probe_foreign_dropped\n" + producer + foreignShapeWitness
-			if err := Build(code, filepath.Join(directory, name), Options{Count: true}); err != nil {
+			if err := Build(code, filepath.Join(directory, name), native_runtime.Options{Count: true}); err != nil {
 				return err
 			}
 		}

@@ -12,6 +12,7 @@ import (
 	"strings"
 
 	"github.com/system-inc/adamic/internal/ir"
+	"github.com/system-inc/adamic/internal/native_runtime"
 	"github.com/system-inc/adamic/internal/platform"
 )
 
@@ -530,7 +531,7 @@ func swiftUIShim() (string, error) {
 
 // BuildApple compiles a program that calls Apple's frameworks: Build's, with the Objective-C
 // conversions compiled beside it and AppKit, Foundation and libobjc linked.
-func BuildApple(source string, output string, options Options) error {
+func BuildApple(source string, output string, options native_runtime.Options) error {
 	// Discover the SDK before building runtime objects. Only discovery is a platform
 	// stop; a compiler that runs and rejects its input remains an ordinary failure.
 	sdk, err := exec.Command("xcrun", "--show-sdk-path").Output()
