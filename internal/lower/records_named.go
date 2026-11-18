@@ -460,11 +460,15 @@ func (l *lowering) sameRecordNamedContracts(from, to, inside, viewed *checker.Ty
 //     recordReadType, and the property is one whose read that check holds (droppedContractChecked): a
 //     scalar it proves by its exact tag or value, or an array, which recordReadSlotView reads as an
 //     element-checked view origin (#y852c3c), each element checked as it's handed out and every write
-//     road stopped at compile time, or stops not yet at the read where V3 can't contract its element.
-//     A function's tag says only "function", and a union is read unchecked. A dictionary, a Map or a
-//     fixed object is never dropped, Adamic's condition on Language's 08:38Z must: an honest MapLike
-//     written through the view under paths read as a non-member of the slot's union natively, where
-//     Node and the JavaScript backend read it.
+//     road stopped at compile time, or stops not yet at the read where V3 can't contract its element;
+//     or a dictionary or a fixed object, which recordReadHeapMember narrows, checked, to the slot
+//     union's only member of its runtime class, or stops not yet at the read where another member
+//     shares it. What a dictionary holds is held as any dictionary's is, by the slot's own relation:
+//     tsc admits under the slot only the member's own type, and adamic/invariant-mutable keeps its
+//     arrays from widening. A function's tag says only "function", and a union is read unchecked, and a
+//     Map has no checked narrow. Language's 08:38Z must, an honest MapLike written through the view
+//     read natively as another member, was the literal built fixed: recordUnionDictionaryMember builds
+//     it as the slot's dictionary.
 //
 // The flag is cleared while a function's parameters are walked (parameterStorage): a parameter is
 // handed the other side's value, so the view there runs against the flow and would add the contract
@@ -495,9 +499,9 @@ func (l *lowering) droppedContractRead(t, held, seen *checker.Type) bool {
 // value where the declared type is literals (a number, string or boolean, their literal unions and numeric
 // enums), and an array as recordReadSlotView's view origin, which checks every element it hands out and
 // stops each other road at compile time (tsc's lib, types, typeRoots and the other string[] options,
-// #6c4swvt). A dictionary's read checks only that it's one, not what it holds, so paths keeps the view not
-// yet until a check of its values lands.
-var droppedContractChecked = map[ir.Type]bool{ir.Number: true, ir.String: true, ir.Boolean: true, ir.Array: true, ir.Record: true}
+// #6c4swvt), and a dictionary or a fixed object by recordReadHeapMember's checked narrow (tsc's paths and
+// configFile).
+var droppedContractChecked = map[ir.Type]bool{ir.Number: true, ir.String: true, ir.Boolean: true, ir.Array: true, ir.Record: true, ir.Object: true}
 
 // parameterStorage is check run with droppedContractsRead cleared, then restored: a function's
 // parameter is handed the other side's value, so no named contract is dropped through it, in either

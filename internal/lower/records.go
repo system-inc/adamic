@@ -56,8 +56,13 @@ func (l *lowering) recordLiteralElement(node *ast.Node) *checker.Type {
 	return l.recordElement(l.checker.GetTypeAtLocation(node))
 }
 
-// recordUnionDictionaryMember (scratch probe) is the element of the one dictionary member of a union slot a
-// literal fits, when it fits no fixed-object member: tsc's { k: ["a"] } into CompilerOptionsValue is a MapLike.
+// recordUnionDictionaryMember is the element of the one dictionary member of a union slot a literal fits, when
+// it fits no fixed-object member, so the literal is built as that dictionary: tsc's { k: ["a"] } into
+// CompilerOptionsValue is a MapLike<string[]>. Built fixed, a read that narrows the slot's value to its
+// dictionary member (recordReadHeapMember) found a fixed object and stopped on an honest value, Language's g5
+// p06 on #6c4swvt. A literal that fits a fixed-object member too, or two dictionaries, is built as before, as is
+// one in a library's union (Object.entries' { [s: string]: T } | ArrayLike<T>), whose adapter reads the
+// value's own storage.
 func (l *lowering) recordUnionDictionaryMember(literal *ast.Node, slot *checker.Type) *checker.Type {
 	if slot.Flags()&checker.TypeFlagsUnion == 0 {
 		return nil
