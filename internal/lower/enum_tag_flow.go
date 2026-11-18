@@ -53,6 +53,45 @@ func (l *lowering) enumTagHazardOf(union *checker.Type, field string) enumTagHaz
 	return enumTagNoHazard
 }
 
+// enumTagWalkHazardOf is enumTagHazardOf as the walk asks it: a member whose open tag is the field and
+// which closedKinds calls closed is no open hazard, since a comparison of the field reads its kind
+// domain there (enumTagClosedTag, enum_tag_closed_kind.go). The shared-value hazard is enumTagHazardOf's.
+func (l *lowering) enumTagWalkHazardOf(union *checker.Type, field string) enumTagHazard {
+	hazard := l.enumTagHazardOf(union, field)
+	if hazard != enumTagOpenHazard {
+		return hazard
+	}
+	for _, member := range union.Types() {
+		for _, property := range l.checker.GetPropertiesOfType(member) {
+			if field != "" && property.Name != field {
+				continue
+			}
+			tag := l.checker.GetTypeOfSymbol(property)
+			if l.tagHoldsAnyNumber(tag) && !sharedByEveryMember(l.checker, union, property.Name, tag) && l.enumTagClosedTag(union, member, property.Name, tag) == nil {
+				return enumTagOpenHazard
+			}
+		}
+	}
+	if l.enumTagsShareValue(union, field) {
+		return enumTagSharedValueHazard
+	}
+	return enumTagNoHazard
+}
+
+// enumTagClosedTag is the tag the walk reads member's field as when it isn't the field's own type: K(S)
+// for S the member, when tag, the field's type there, is an open numeric enum that makes union a hazard
+// and closedKinds calls the member closed for the field. nil otherwise.
+func (l *lowering) enumTagClosedTag(union, member *checker.Type, field string, tag *checker.Type) *checker.Type {
+	if union.Flags()&checker.TypeFlagsUnion == 0 || !l.openNumericEnumType(tag) || sharedByEveryMember(l.checker, union, field, tag) {
+		return nil
+	}
+	kinds, closed, _ := l.closedKinds(member, field)
+	if !closed {
+		return nil
+	}
+	return kinds
+}
+
 // The checker's own reference prefix test: an assignment to v resets every narrowing of v.inner.
 //
 //go:linkname enumTagContainsReference github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).containsMatchingReference
@@ -219,11 +258,12 @@ func (w *enumTagWalk) step(flow *ast.FlowNode, field string) bool {
 }
 
 // stepAt is step with the node the step's narrowing is written at, which proves places for an
-// access reference.
+// access reference. A comparison asks enumTagWalkHazardOf, so a closed member's open tag passes: the
+// checker keeps that member on both sides of a comparison, so the read is of the checker's own type.
 func (w *enumTagWalk) stepAt(flow *ast.FlowNode, at *ast.Node, field string) bool {
 	before := predicateFlowType(w.l.checker, w.reference, w.declared, w.declared, nil, flow.Antecedent)
 	if field != "" {
-		if w.l.enumTagHazardOf(before, field) != enumTagNoHazard {
+		if w.l.enumTagWalkHazardOf(before, field) != enumTagNoHazard {
 			return false
 		}
 		return w.proves(at)
@@ -409,11 +449,14 @@ func (w *enumTagWalk) exactKindCall(node *ast.Node) (kindCall, bool) {
 
 // kindPredicateStep judges an exact kind predicate's call as the comparison its body makes. It
 // passes only when that comparison would: the field is read directly off every object member
-// flowing in (no accessor), and it can't lie there (enumTagHazardOf, as step asks of a comparison).
+// flowing in (no accessor), and it can't lie there (enumTagWalkHazardOf, as step asks of a comparison).
 // The checker narrows a predicate's call by the predicate's declared type, not by its body, so the
 // step also passes only when that narrowing is identical to the comparison's on the side this path
-// takes: a predicate whose type disagrees with its own body proves nothing here. R-T80's check at the
-// call is kept; only the refusal of the read moves.
+// takes: a predicate whose type disagrees with its own body proves nothing here. A closed member's tag
+// is its kind domain K(S) (enumTagClosedTag): the true side keeps it only when the compared member is in
+// K(S), and the false side drops it only when K(S) is that member alone. A kind in K(S) keeps S where the
+// predicate's type drops it, so the identity check refuses, failing closed. R-T80's check at the call is
+// kept; only the refusal of the read moves.
 func (w *enumTagWalk) kindPredicateStep(flow *ast.FlowNode, call kindCall) bool {
 	before := enumTagReducedType(w.l.checker, predicateFlowType(w.l.checker, w.reference, w.declared, w.declared, nil, flow.Antecedent))
 	members := []*checker.Type{before}
@@ -429,7 +472,7 @@ func (w *enumTagWalk) kindPredicateStep(flow *ast.FlowNode, call kindCall) bool 
 			return false
 		}
 	}
-	if w.l.enumTagHazardOf(before, call.field) != enumTagNoHazard {
+	if w.l.enumTagWalkHazardOf(before, call.field) != enumTagNoHazard {
 		return false
 	}
 	taken := flow.Flags&ast.FlowFlagsTrueCondition != 0
@@ -447,6 +490,9 @@ func (w *enumTagWalk) kindPredicateStep(flow *ast.FlowNode, call kindCall) bool 
 			continue
 		}
 		tag := w.l.checker.GetTypeOfSymbol(w.l.checker.GetPropertyOfType(member, call.field))
+		if kinds := w.l.enumTagClosedTag(before, member, call.field, tag); kinds != nil {
+			tag = kinds
+		}
 		if taken {
 			if checker.Checker_isTypeAssignableTo(w.l.checker, call.member, tag) {
 				kept = append(kept, member)
