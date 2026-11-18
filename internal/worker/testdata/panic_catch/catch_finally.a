@@ -1,0 +1,21 @@
+import { panic } from 'adamic';
+import type { HttpRequest, HttpResponse } from 'adamic/http';
+
+// A panic raised in the catch body skips the finally too: /count reads how many times it ran.
+let finallies = 0;
+
+export function handle(request: HttpRequest): HttpResponse {
+    if(request.path === '/count') {
+        return { status: 200, headers: [], body: `${finallies}` };
+    }
+    try {
+        throw new Error('ordinary');
+    } catch {
+        if(request.path === '/panic') {
+            panic('panic inside a catch with a finally');
+        }
+        return { status: 200, headers: [], body: 'caught' };
+    } finally {
+        finallies += 1;
+    }
+}

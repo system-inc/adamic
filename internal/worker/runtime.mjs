@@ -8,6 +8,12 @@ export class AdamicPanic extends Error {
 export function panic(message) {
 	throw new AdamicPanic(message);
 }
+// The JavaScript backend's catch and finally ask this of a value they caught, since a panic is never the
+// program's to catch. The answer is the value's identity, never state this module keeps: a Worker's
+// requests interleave at every await, so a flag set by one request's panic would reach another's catch.
+export function isPanic(value) {
+	return value instanceof AdamicPanic;
+}
 /* UTF8_RUNTIME */
 export const { utf8Length, utf8At } = createUtf8(panic);
 export function readTextFile() { panic('readTextFile: not available on Workers'); }

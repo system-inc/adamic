@@ -353,7 +353,7 @@ func processExitDoesNotUnwind(t *testing.T, wasm bool) {
 	}
 	for _, change := range []struct{ name, before, after, source string }{
 		{"catch guard", "if (adamicProcessExiting()) throw ", "if (false) throw ", string(data)},
-		{"finally guard", "if (!adamicProcessExiting()) {", "if (true) {", string(data)},
+		{"finally guard", "if (!adamicProcessExiting() && !", "if (true && !", string(data)},
 		{"leave guard", "if (!adamicProcessExiting()) { console.log('must not leave'); }", "if (true) { console.log('must not leave'); }", instrumented},
 	} {
 		t.Run(change.name, func(t *testing.T) {
