@@ -215,7 +215,8 @@ proofPaths.push(exitProofPath);
 assert.equal(new Set(owners.map(owner => owner.line)).size, 222, 'sanctioned owner line sets overlap');
 
 // Each adaptation may certify additional existing public type owners.
-const sanctionKinds = new Set(['PropertySignature', 'PropertyDeclaration', 'Parameter', 'MethodSignature', 'FunctionDeclaration', 'TypeAliasDeclaration']);
+// A HeritageClause is sanctioned whole (replace: member), as adaptation 80 replaces Node's and NodeArray's (#aryr7ea).
+const sanctionKinds = new Set(['PropertySignature', 'PropertyDeclaration', 'Parameter', 'MethodSignature', 'FunctionDeclaration', 'TypeAliasDeclaration', 'HeritageClause']);
 const sanctionEdits = [];
 const anchorKinds = new Set(['InterfaceDeclaration', 'TypeAliasDeclaration', 'FunctionDeclaration']);
 function namespaceKey(block) {
