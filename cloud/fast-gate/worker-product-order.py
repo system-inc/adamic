@@ -35,8 +35,8 @@ for name in ["Await", "Try", "Contract", "Wasm", "Needle"]:
 # The Wasm shards build different variants with the one unmutated compiler and the one wasm32-wasi runtime, so each
 # waits on what it reads and nothing else: the compiler, and the transform seed, which builds that runtime first and
 # which the counted variant copies (products_test.go's workerWasmProduct). The shards ran one after another, each on
-# the last, to keep two processes from compiling the identical runtime at once; cachedRuntime's lock per archive key
-# (internal/native/library.go, #0p6x7t7) does that now, and every product builds in a directory of its own, so they
+# the last, to keep two processes from compiling the identical runtime at once; CachedRuntime's lock per archive key
+# (internal/native_runtime/library.go, #0p6x7t7) does that now, and every product builds in a directory of its own, so they
 # run beside each other (#a87r8sj: the chain set a compiler tree's products span, 953 s, its last 150 s one at a time).
 for index in range(products['TestProduct_WorkerWasm']):
     waits[prefix + f'TestProduct_WorkerWasm_{index:03}'] = [seed, compiler]
