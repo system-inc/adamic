@@ -1,6 +1,6 @@
 # #y852c3c paired TypeScript census
 
-Six full file pairs are verified. The focused full pair covers the remaining two files with observed base slot stops, and their unfiltered single-file pairs are underway. The original compiler-directory processes were killed at the worker’s memory limit before they emitted findings. Both memory-limited directory retries are underway. Both unfiltered `tsc.ts` first-error processes are still running. The focused first-error and scan-all pairs are complete.
+Six full file pairs are verified. The focused full pair covers the remaining two files with observed base slot stops, and their unfiltered single-file pairs are underway. The original compiler-directory processes were killed at the worker’s memory limit before they emitted findings. Both memory-limited directory retries are underway. The base `tsc.ts` first-error run is complete. The matching head stream is still running. The focused first-error and scan-all pairs are complete.
 
 ## 1. Record values reaching Unknown
 
@@ -130,6 +130,8 @@ Four source locations account for six findings in the focused full pair. The unf
 - **Gone, NotYet during lowering.** “reading value” at `commandLineParser.ts:2950:65` clears when the declaration of `value` lowers.
 - **Gone, rollback boundary during lowering.** “failed statement; state rolled back; continued at next statement or declaration” clears at `commandLineParser.ts:2871:5`, `2949:9`, and `2950:9`, at `utilities.ts:9028:5`, at `programDiagnostics.ts:410:21` in two units, at `resolutionCache.ts:1706:9` in two units, and at `watch.ts:543:45`. It also clears at `moduleNameResolver.ts:480:5`, `674:17` in two units, `699:13` in two units, `780:5`, `1583:5`, `1595:5`, `1634:9`, `2190:5`, `2196:5`, `3333:5`, and `3334:5`. The paired JSON names both owners for each duplicated site.
 - **Growth in conservative checked-view demand.** The checked slot reads add origins. In 17 snapshots their origin sets have no other origins. `createProgram` has 38 total origins, including three from slot reads. All 18 snapshot origin sets produce `viewed_unknown=true` with zero known allocation sites. The array check uses that flag to demand every eligible array read in those snapshots. The known-site set remains empty. The six unfiltered full file pairs and focused first-error pair have zero new, changed, or reached findings. The focused full pair reaches the later rollback at `program.ts:1822:17`, after the earlier guard lowers. It loses the older rollbacks at `checker.ts:35214:9`, `program.ts:1817:13`, and `program.ts:4204:9` and `4367:9` in two owners each. The unfiltered census is still pending. [Graph observations](evidence/record-values.json)
+
+The unfiltered base entry pass measured 81 source files and 4,568 units with zero checker diagnostics. It recorded 4,362 findings, including the same seven slot-read stops as the focused first-error pass. [Base entry stream](evidence/base/entry.jsonl.gz)
 
 ### Whole-entry scan-all boundary
 
