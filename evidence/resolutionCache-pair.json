@@ -1,0 +1,113 @@
+{
+  "identical": 198,
+  "relocated_same_semantics": [],
+  "deltas": [
+    {
+      "grade": "gone",
+      "base": {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "/workspace/scratch/y852c3c-adapted/src/compiler/resolutionCache.ts:581:1",
+        "phase": "lowering",
+        "kind": "NotYet",
+        "where": "/workspace/scratch/y852c3c-adapted/src/compiler/resolutionCache.ts:1706:13",
+        "reason": "a dictionary member narrowed to an array without an element-checked view",
+        "text": "/workspace/scratch/y852c3c-adapted/src/compiler/resolutionCache.ts:1706:13: stage 0 can't lower a dictionary member narrowed to an array without an element-checked view yet",
+        "census_file": "src/compiler/resolutionCache.ts"
+      }
+    },
+    {
+      "grade": "gone",
+      "base": {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "/workspace/scratch/y852c3c-adapted/src/compiler/resolutionCache.ts:581:1",
+        "phase": "lowering",
+        "kind": "Boundary",
+        "where": "/workspace/scratch/y852c3c-adapted/src/compiler/resolutionCache.ts:1706:9",
+        "reason": "failed statement; state rolled back; continued at next statement or declaration",
+        "text": "/workspace/scratch/y852c3c-adapted/src/compiler/resolutionCache.ts:1706:13: stage 0 can't lower a dictionary member narrowed to an array without an element-checked view yet",
+        "start": 81667,
+        "end": 81800,
+        "census_file": "src/compiler/resolutionCache.ts"
+      }
+    },
+    {
+      "grade": "gone",
+      "base": {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "/workspace/scratch/y852c3c-adapted/src/compiler/resolutionCache.ts:1704:5",
+        "phase": "lowering",
+        "kind": "NotYet",
+        "where": "/workspace/scratch/y852c3c-adapted/src/compiler/resolutionCache.ts:1706:13",
+        "reason": "a dictionary member narrowed to an array without an element-checked view",
+        "text": "/workspace/scratch/y852c3c-adapted/src/compiler/resolutionCache.ts:1706:13: stage 0 can't lower a dictionary member narrowed to an array without an element-checked view yet",
+        "census_file": "src/compiler/resolutionCache.ts"
+      }
+    },
+    {
+      "grade": "gone",
+      "base": {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "/workspace/scratch/y852c3c-adapted/src/compiler/resolutionCache.ts:1704:5",
+        "phase": "lowering",
+        "kind": "Boundary",
+        "where": "/workspace/scratch/y852c3c-adapted/src/compiler/resolutionCache.ts:1706:9",
+        "reason": "failed statement; state rolled back; continued at next statement or declaration",
+        "text": "/workspace/scratch/y852c3c-adapted/src/compiler/resolutionCache.ts:1706:13: stage 0 can't lower a dictionary member narrowed to an array without an element-checked view yet",
+        "start": 81667,
+        "end": 81800,
+        "census_file": "src/compiler/resolutionCache.ts"
+      }
+    }
+  ],
+  "base": {
+    "status": "measurement",
+    "format": "CommonJSBundle",
+    "diagnostics": 0,
+    "files": 1,
+    "units": 82,
+    "findings": 202,
+    "target_sites": [
+      {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "/workspace/scratch/y852c3c-adapted/src/compiler/resolutionCache.ts:581:1",
+        "phase": "lowering",
+        "kind": "NotYet",
+        "where": "/workspace/scratch/y852c3c-adapted/src/compiler/resolutionCache.ts:1706:13",
+        "reason": "a dictionary member narrowed to an array without an element-checked view",
+        "text": "/workspace/scratch/y852c3c-adapted/src/compiler/resolutionCache.ts:1706:13: stage 0 can't lower a dictionary member narrowed to an array without an element-checked view yet",
+        "census_file": "src/compiler/resolutionCache.ts"
+      },
+      {
+        "root_kind": "",
+        "depth": 0,
+        "measurement": "measured on a checker-rejected program",
+        "unit": "/workspace/scratch/y852c3c-adapted/src/compiler/resolutionCache.ts:1704:5",
+        "phase": "lowering",
+        "kind": "NotYet",
+        "where": "/workspace/scratch/y852c3c-adapted/src/compiler/resolutionCache.ts:1706:13",
+        "reason": "a dictionary member narrowed to an array without an element-checked view",
+        "text": "/workspace/scratch/y852c3c-adapted/src/compiler/resolutionCache.ts:1706:13: stage 0 can't lower a dictionary member narrowed to an array without an element-checked view yet",
+        "census_file": "src/compiler/resolutionCache.ts"
+      }
+    ]
+  },
+  "head": {
+    "status": "measurement",
+    "format": "CommonJSBundle",
+    "diagnostics": 0,
+    "files": 1,
+    "units": 82,
+    "findings": 198,
+    "target_sites": []
+  }
+}
