@@ -1,6 +1,7 @@
 package main
 
 import (
+	"strings"
 	"sync"
 	"time"
 )
@@ -23,6 +24,7 @@ func classifyPrograms(tree, base, head string, programs []entry, workers int, li
 				}
 				record.Base.Stdout, record.Head.Stdout = "", ""
 				record.Class = classify(record.Base, record.Head)
+				record.CrashFixed = crashFixed(record.Base, record.Head) && strings.HasPrefix(record.Class, "newly-")
 			}
 		}()
 	}
