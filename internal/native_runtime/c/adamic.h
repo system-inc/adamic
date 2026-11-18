@@ -443,9 +443,13 @@ typedef struct adamic_string {
 struct adamic_string_index {
 	// Published with the view, never written after sharing.
 	size_t units;
-	// The last code point found: its first unit, and its byte offset.
+	// The last code point found: its first unit, and its byte offset. Kept here only while the
+	// string is unshared; a shared string's readers each keep their own (string_index.c).
 	size_t cursor_unit;
 	size_t cursor_offset;
+	// Stamped once when the index is built and never reused, so a thread's cursor for a shared
+	// index can't be taken for a later index allocated at the same address.
+	uint64_t id;
 	// checkpoints[k] is where unit k * STEP is: the byte offset of the code point holding it, shifted
 	// left once, and 1 when that unit is the low half of a surrogate pair, whose code point starts a
 	// unit earlier.
