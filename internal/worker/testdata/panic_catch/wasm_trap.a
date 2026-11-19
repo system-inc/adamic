@@ -1,0 +1,19 @@
+import type { HttpRequest, HttpResponse } from 'adamic/http';
+
+// transform is testdata/wasm/transform.a's, byte for byte, so that Worker's built handler.wasm is this
+// one's module too. A trap in the Wasm call is never the catch's to take: the bridge answers 500.
+export function transform(text: string, marker: string): string {
+    let result = marker;
+    for(let index = text.length - 1; index >= 0; index -= 1) {
+        result += String.fromCharCode(text.charCodeAt(index));
+    }
+    return result;
+}
+
+export function handle(request: HttpRequest): HttpResponse {
+    try {
+        return { status: 200, headers: [], body: transform(request.path, '>') };
+    } catch {
+        return { status: 200, headers: [], body: 'caught' };
+    }
+}

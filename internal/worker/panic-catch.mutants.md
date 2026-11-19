@@ -17,6 +17,14 @@ Each top-level product test builds only its own mutated worker.test.
 | panic-catch-identity: drop the catch's `adamicIsPanic` line | TestWorkerPanicIsNeverCaught/catch | `a panic reached the program catch` |
 | panic-finally-guard: drop the flag from the finally's guard | TestWorkerPanicIsNeverCaught/finally | `a finally ran while a panic unwound` |
 | panic-finally-unset: the catch around the try never sets the flag | TestWorkerPanicIsNeverCaught/finally_return | `a finally return swallowed a panic` |
+| panic-wasm-trap: drop the `WebAssembly.RuntimeError` branch from wasm.go's crossing wrapper | TestWorkerPanicIsNeverCaught/wasm_trap | `a Wasm trap reached the program catch` |
+
+The wasm_trap case builds testdata/panic_catch/wasm_trap.a with `--wasm transform`
+in process, reusing the transform Worker's module, and runs it under a Node hook
+that makes the crossing's next export call execute a real `unreachable`. The
+engine's `WebAssembly.RuntimeError` must come back as the bridge's 500 with a
+`Wasm trap: ` log, never the program catch's body, and the same Worker answers
+normally before and after.
 
 The interleaved case starts a panicking request beside eight that throw and
 catch ordinary errors, each after a different number of awaits, so some of

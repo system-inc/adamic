@@ -149,7 +149,13 @@ initializeCrossing();
 		name := "wasmFunction_" + strconv.Itoa(index)
 		external[index] = name
 		imports = append(imports, name)
-		fmt.Fprintf(&state, "export function %s(...arguments_) {\n\tpanicMessage = '';\n\ttry { return crossing[%q](...arguments_); }\n\tcatch (error) { if (error instanceof WASIExit && error.code === 70) throw new AdamicPanic(panicMessage || 'Wasm panic'); throw error; }\n}\n", name, selected[index])
+		// A panic is never the program's to catch (docs/rulings.md), and an engine trap is a panic: a
+		// `WebAssembly.RuntimeError` from `unreachable`, wasi-libc's abort, or an out-of-bounds access is
+		// where native would have aborted. So it throws as an AdamicPanic, which every emitted catch
+		// rethrows and the bridge answers 500, never as the raw error a program's catch would take. The
+		// crossing is dead after it: invoke drops the trapped instance (crossing-runtime.mjs). Native
+		// prints no wording of its own for a trap, so the message is the engine's, named as a trap.
+		fmt.Fprintf(&state, "export function %s(...arguments_) {\n\tpanicMessage = '';\n\ttry { return crossing[%q](...arguments_); }\n\tcatch (error) { if (error instanceof WASIExit && error.code === 70) throw new AdamicPanic(panicMessage || 'Wasm panic'); if (error instanceof WebAssembly.RuntimeError) throw new AdamicPanic('Wasm trap: ' + error.message); throw error; }\n}\n", name, selected[index])
 	}
 	files := []workerFile{{"handler.wasm", string(module)}, {"abi.json", string(abi)}, {"wasm-state.mjs", state.String()}}
 	for _, name := range []string{"crossing.mjs", "wtf8.mjs", "crossing-runtime.mjs", "wasi.mjs"} {
