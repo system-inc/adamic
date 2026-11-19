@@ -275,6 +275,11 @@ func lowerWithElementKey(key *viewElementKey, program *load.Program, typeChecker
 	if err := lowering.checkViewCopies(); err != nil {
 		return nil, err
 	}
+	// Before checkViewWidenedReads weighs the views: a relation rule 3300 let cross that no lowering viewed
+	// is refused in that rule's words, never read raw.
+	if err := lowering.checkRelationViewsTaken(); err != nil {
+		return nil, err
+	}
 	if err := lowering.checkViewWidenedReads(); err != nil {
 		return nil, err
 	}
@@ -533,6 +538,12 @@ type lowering struct {
 	// (source_slot_certificate.go, #2msw6t8).
 	sourceSlotWrites  []sourceSlotWrite
 	sourceSlotsJudged bool
+	// relationViews are the relations rule 3300 let cross as a checked view (rulings.md:72, #0b9xqhh), by
+	// the node whose lowered value enters the slot, recorded before lowering and never deleted, and
+	// relationViewsTaken the nodes some lowering viewed, which checkRelationViewsTaken holds every entry
+	// to once lowering is done (relation_views.go).
+	relationViews      map[*ast.Node]relationView
+	relationViewsTaken map[*ast.Node]bool
 	// narrowedReads are, for each local, the types the checker narrowed a read of it to, and
 	// narrowedFields the types it narrowed a field read to: where a predicate's view takes its
 	// value (view_widened.go).
