@@ -1,0 +1,26 @@
+// A key deleted lets go of the list a for...in reads (map.c's adamic_map_delete), so the loop after it builds
+// a new one; a key that isn't there deletes nothing and lets go of nothing. Each line is held to Node, but the
+// lines are the same with or without the let-go, since the loop's hasOwn guard skips what a stale list names.
+// The witness is this fixture's counted row: three deletes, three lists built again.
+function keysOf(record: Record<string, number>): string {
+	const keys: string[] = [];
+	for (const key in record) {
+		keys.push(key);
+	}
+	return keys.join(',');
+}
+
+const r: Record<string, number> = {};
+for (let i = 0; i < 6; i++) {
+	r['k' + String(i)] = i;
+}
+console.log('all: ' + keysOf(r));
+console.log('again: ' + keysOf(r));
+delete r['k1'];
+console.log('k1 deleted: ' + keysOf(r));
+delete r['k3'];
+console.log('k3 deleted: ' + keysOf(r));
+delete r['absent'];
+console.log('absent deleted: ' + keysOf(r));
+delete r['k5'];
+console.log('k5 deleted: ' + keysOf(r));
