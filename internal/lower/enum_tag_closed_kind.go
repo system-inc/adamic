@@ -527,7 +527,7 @@ func (l *lowering) closedKindNewOnlyFunctions() map[*ast.Symbol]bool {
 }
 
 // closedKindJudgeUse marks a candidate function not new-only when name is a value use of it that isn't a
-// new callee or the operand of a cast to any.
+// new callee, the operand of a cast to any, or the operand of an allocator getter's intersection cast.
 func (l *lowering) closedKindJudgeUse(name *ast.Node) {
 	parent := name.Parent
 	if parent == nil || ast.IsPartOfTypeNode(name) {
@@ -535,6 +535,10 @@ func (l *lowering) closedKindJudgeUse(name *ast.Node) {
 	}
 	switch parent.Kind {
 	case ast.KindImportSpecifier, ast.KindExportSpecifier, ast.KindImportClause, ast.KindNamespaceImport, ast.KindImportEqualsDeclaration:
+		return
+	case ast.KindTypeQuery:
+		// `typeof F` reads F's type and hands no value on, though tsc counts its name as an expression rather than
+		// part of a type node (adaptation 41's `F as typeof F & ReturnType<...>`).
 		return
 	case ast.KindFunctionDeclaration:
 		if parent.Name() == name {
@@ -563,6 +567,11 @@ func (l *lowering) closedKindJudgeUse(name *ast.Node) {
 	case user != nil && user.Kind == ast.KindAsExpression && user.AsAsExpression().Expression == reference && user.AsAsExpression().Type.Kind == ast.KindAnyKeyword:
 		return
 	case user != nil && user.Kind == ast.KindTypeAssertionExpression && user.AsTypeAssertion().Expression == reference && user.AsTypeAssertion().Type.Kind == ast.KindAnyKeyword:
+		return
+	case user != nil && user.Kind == ast.KindAsExpression && user.AsAsExpression().Expression == reference && user.AsAsExpression().Type.Kind == ast.KindIntersectionType && l.allocatorGetterShape(user) != nil:
+		// Adaptation 41's `typeof F & ReturnType<...>` in an allocator getter, the any road's other form
+		// (allocatorIntersectionCast). Only that exact shape: another intersection, such as `typeof F & Function`,
+		// can be a proven upcast that hands F on as a value.
 		return
 	}
 	l.closedKindNewOnly[symbol] = false
