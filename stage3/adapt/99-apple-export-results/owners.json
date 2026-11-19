@@ -1,0 +1,22 @@
+{
+  "edits": [
+    {
+      "candidate": "C16",
+      "file": "src/compiler/moduleSpecifiers.ts",
+      "kind": "replace",
+      "owner": "tryGetModuleNameFromExportsOrImports",
+      "old": "): { moduleFileToTry: string; } | undefined {",
+      "new": "): { moduleFileToTry: string; packageRootPath?: never; blockedByExports?: never; } | undefined {",
+      "count": 1
+    },
+    {
+      "candidate": "C16",
+      "file": "src/compiler/moduleSpecifiers.ts",
+      "kind": "replace",
+      "owner": "tryGetModuleNameFromExports",
+      "old": "): { moduleFileToTry: string; } | undefined {",
+      "new": "): { moduleFileToTry: string; packageRootPath?: never; blockedByExports?: never; } | undefined {",
+      "count": 1
+    }
+  ]
+}
