@@ -36,7 +36,9 @@ Adamic and Node run the holdout ports at the game's sizes, and the everyday sour
 
 Go 1.23.1 with `GOAMD64=v2` and a bare `go build`, and rustc 1.84.1 with `-C opt-level=3 -C target-cpu=ivybridge -C codegen-units=1`. The box holds both toolchains; -game takes their paths and never guesses one.
 
-[go.mod](go.mod) makes this directory its own module, so the repository's module never builds these programs, and pins the one module a Go entry imports: `github.com/GRbit/go-pcre` at v1.0.0, the only release with the `Regexp.Matcher` and `Matcher.Match` that regexredux.go-5.go calls. v1.0.1, the newest before the game's January 2025 build, has neither. [go.sum](go.sum) holds its two lines from sum.golang.org. It binds PCRE 1 through cgo, so the box needs libpcre's headers and pkg-config (`libpcre3-dev` on Debian and Ubuntu).
+[go.mod](go.mod) makes this directory its own module, so the repository's module never builds these programs, and pins the one module a Go entry imports: `github.com/GRbit/go-pcre` at v1.0.0, the only release with the `Regexp.Matcher` and `Matcher.Match` that regexredux.go-5.go calls. v1.0.1, the newest before the game's January 2025 build, has neither. go.sum is made on the box, as rust-deps' Cargo.lock is, and committed from there.
+
+go-pcre binds PCRE 1 through cgo, and regexredux.rust-7's pcre2-sys binds PCRE 2. `-pcre <prefix>` names where libpcre3 and libpcre2 are unpacked with their headers (`dpkg -x`): the two regexredux builds get pkg-config at `<prefix>/usr/lib/x86_64-linux-gnu/pkgconfig`, cgo's `-I<prefix>/usr/include` and `-L` at the libraries (with cgo's own `-O2 -g` kept), and rustc `-L native=` at them, and their runs get `LD_LIBRARY_PATH` at them, rather than an rpath, so each binary is linked as the game linked it. Without `-pcre` they build and run against the system's. Every path is a flag; none is a default.
 
 [rust-deps](rust-deps/Cargo.toml) is a library with no code of its own that depends on every crate a Rust entry names, each pinned exactly to the newest release published before 2025-02-01 that supports rustc 1.84.1, read from crates.io's API:
 
@@ -61,7 +63,7 @@ On the box, once:
 
 ```
 cd bench/game/rust-deps && cargo build --release    # with rustc 1.84.1's cargo; commit the Cargo.lock it makes
-go run ./bench -game -go <Go 1.23.1's go> -rustc <rustc 1.84.1> -crates bench/game/rust-deps/target/release/deps
+go run ./bench -game -go <Go 1.23.1's go> -rustc <rustc 1.84.1> -crates bench/game/rust-deps/target/release/deps -pcre <prefix>
 ```
 
 The runner finds each crate's rlib by the `.d` file cargo writes beside it, which names the crate's version, so two versions of one crate are told apart.

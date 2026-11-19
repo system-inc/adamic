@@ -1,14 +1,17 @@
 // Game measures Adamic against the Computer Language Benchmarks Game's own Go and Rust entries,
 // vendored unchanged in bench/game, all four languages on one box.
 //
-//	go run ./bench -game -go <Go 1.23.1's go> -rustc <rustc 1.84.1> -crates <rust-deps' target/release/deps> [-samples 15] [-only fasta,nbody] [-seed n]
+//	go run ./bench -game -go <Go 1.23.1's go> -rustc <rustc 1.84.1> -crates <rust-deps' target/release/deps> [-pcre <prefix>] [-samples 15] [-only fasta,nbody] [-seed n]
 //
 // bench/game/programs.json names each program's runners: Adamic native, built by this checkout's
 // adamic from the holdout port or the everyday source, Node running the same source, and the game's
 // entries, each built as the game built it, with the game's toolchains, which are taken as flags and
 // never guessed: Go 1.23.1 with GOAMD64=v2 and a bare go build, and rustc 1.84.1 with the game's
-// flags, linked with --extern against the rlibs bench/game/rust-deps builds. Every build is a named
-// step, bounded as compare.go bounds its steps; one that stops is a gap with the compiler's line.
+// flags, linked with --extern against the rlibs bench/game/rust-deps builds. The two regexredux
+// entries link PCRE: with -pcre, the prefix libpcre and libpcre2 are unpacked under, their builds get
+// its headers and libraries and their runs LD_LIBRARY_PATH at them; without it, the system's. Every
+// build is a named step, bounded as compare.go bounds its steps; one that stops is a gap with the
+// compiler's line.
 //
 // Every runner's output is checked against Node's byte for byte, at the row's size, before any time
 // counts, and again on every timed run: a runner whose output isn't Node's is a gap, never a timing.
@@ -55,10 +58,13 @@ type gameRequest struct {
 	goBinary string // the go that builds the Go entries, as an absolute path
 	rustc    string // the rustc that builds the Rust entries, as an absolute path
 	crates   string // the directory of rlibs the Rust entries link against, as an absolute path
-	samples  int
-	only     string
-	timeout  time.Duration
-	seed     uint64 // ADAMIC_BENCH_PAD's lengths are drawn from it
+	// pcre is the prefix libpcre and libpcre2 are unpacked under (dpkg -x), as an absolute path, or
+	// empty, when the regexredux entries build and run against the system's.
+	pcre    string
+	samples int
+	only    string
+	timeout time.Duration
+	seed    uint64 // ADAMIC_BENCH_PAD's lengths are drawn from it
 }
 
 // gameFile is bench/game/programs.json.
@@ -126,6 +132,9 @@ type gameEntry struct {
 	// its elapsed time.
 	Threads        string `json:"threads"`
 	InstructionSet string `json:"instructionSet"` // what it needs beyond the baseline, when anything
+	// Pcre says the entry links PCRE, Go's through go-pcre and Rust's through pcre2-sys, so -pcre's
+	// headers and libraries are handed to its build and its runs.
+	Pcre bool `json:"pcre"`
 	// Crates is every crate a Rust entry is linked against with --extern, by package name: those its
 	// build line passes with --extern, and those its source names that the game found through -L.
 	Crates    []string `json:"crates"`
@@ -192,8 +201,11 @@ type gameRunner struct {
 	command  []string
 	input    string // a file on standard input, how the game hands a Go or Rust entry its input
 	binary   string // the native binary, given fresh pages before each sample; none for Node
-	failure  string // why it has no timing: its build stopped, its output isn't Node's, a run failed
-	runs     []measurement
+	// environment is what every run of it adds to the process's: LD_LIBRARY_PATH at -pcre's libraries
+	// for an entry that links PCRE.
+	environment []string
+	failure     string // why it has no timing: its build stopped, its output isn't Node's, a run failed
+	runs        []measurement
 	// instructions holds each perf run's instructions:u, and instructionsFailure why one had none.
 	instructions        []int64
 	instructionsFailure string
@@ -238,17 +250,11 @@ func measureGame(request gameRequest) {
 	if request.rustc, err = absoluteTool(request.rustc, "rustc"); err != nil {
 		fail(err)
 	}
-	if request.crates != "" {
-		if request.crates, err = filepath.Abs(request.crates); err != nil {
-			fail(err)
-		}
-		information, err := os.Stat(request.crates)
-		if err != nil {
-			fail(fmt.Errorf("-crates: %w", err))
-		}
-		if !information.IsDir() {
-			fail(fmt.Errorf("-crates %s isn't a directory", request.crates))
-		}
+	if request.crates, err = absoluteDirectory(request.crates, "crates"); err != nil {
+		fail(err)
+	}
+	if request.pcre, err = absoluteDirectory(request.pcre, "pcre"); err != nil {
+		fail(err)
 	}
 	directory, err := benchDirectory()
 	if err != nil {
@@ -290,6 +296,11 @@ func measureGame(request gameRequest) {
 	}
 	fmt.Printf("go: %s, %s\n", request.goBinary, goVersion)
 	fmt.Printf("rustc: %s, %s\n", request.rustc, rustVersion)
+	if request.pcre != "" {
+		fmt.Printf("pcre: %s, its headers and libraries handed to the entries that link PCRE, which run with LD_LIBRARY_PATH=%s\n", request.pcre, request.pcreLibraries())
+	} else {
+		fmt.Println("pcre: the system's, with no -pcre")
+	}
 	fmt.Printf("game: %s (blob %s, sha256 %s) at %s commit %s\n", file.Source.Archive, file.Source.Blob, file.Source.Sha256, file.Source.Repository, file.Source.Commit)
 	fmt.Printf("programs: %d; samples: %d\n", len(benchmarks), request.samples)
 	fmt.Printf("seed: %d, which draws every run's ADAMIC_BENCH_PAD length; -seed %d draws the same again\n", request.seed, request.seed)
@@ -370,7 +381,7 @@ func measureGame(request gameRequest) {
 			ready := row.ready()
 			for _, position := range gameOrder(sample, len(ready)) {
 				runner := ready[position]
-				result := runFrom(runner.command, runner.input, request.timeout, padded(random, nil)...)
+				result := runFrom(runner.command, runner.input, request.timeout, padded(random, runner.environment)...)
 				fmt.Fprintf(os.Stderr, "sample %d %s %s: %s\n", sample+1, row.benchmark.Name, runner.name, short(result))
 				switch {
 				case result.failure != "":
@@ -426,6 +437,59 @@ func absoluteTool(name, flagName string) (string, error) {
 		return "", fmt.Errorf("-%s %s: %w", flagName, name, err)
 	}
 	return filepath.Abs(path)
+}
+
+// absoluteDirectory is a directory flag's path made absolute, or empty when the flag wasn't given.
+func absoluteDirectory(path, flagName string) (string, error) {
+	if path == "" {
+		return "", nil
+	}
+	absolute, err := filepath.Abs(path)
+	if err != nil {
+		return "", err
+	}
+	information, err := os.Stat(absolute)
+	if err != nil {
+		return "", fmt.Errorf("-%s: %w", flagName, err)
+	}
+	if !information.IsDir() {
+		return "", fmt.Errorf("-%s %s isn't a directory", flagName, absolute)
+	}
+	return absolute, nil
+}
+
+// pcreLibraries is the directory -pcre's libraries sit in, as dpkg -x unpacks them, or empty with no
+// -pcre.
+func (request gameRequest) pcreLibraries() string {
+	if request.pcre == "" {
+		return ""
+	}
+	return filepath.Join(request.pcre, "usr", "lib", "x86_64-linux-gnu")
+}
+
+// pcreBuild is what a Go build of an entry that links PCRE adds to its environment: pkg-config looks
+// in -pcre's pkgconfig directory, and cgo's compiler and linker in its headers and libraries. The
+// .pc files dpkg -x unpacks still say /usr, so the flags name the prefix's directories outright. cgo's
+// own -O2 -g stay, which setting CGO_CFLAGS or CGO_LDFLAGS would otherwise drop. Nothing without -pcre.
+func (request gameRequest) pcreBuild() []string {
+	if request.pcre == "" {
+		return nil
+	}
+	return []string{
+		"PKG_CONFIG_PATH=" + filepath.Join(request.pcreLibraries(), "pkgconfig"),
+		"CGO_CFLAGS=-O2 -g -I" + filepath.Join(request.pcre, "usr", "include"),
+		"CGO_LDFLAGS=-O2 -g -L" + request.pcreLibraries(),
+	}
+}
+
+// pcreRun is what every run of an entry that links PCRE adds to its environment, so the dynamic
+// loader finds -pcre's libraries: LD_LIBRARY_PATH, chosen over an rpath so each binary is linked as
+// the game linked it. Nothing without -pcre.
+func (request gameRequest) pcreRun() []string {
+	if request.pcre == "" {
+		return nil
+	}
+	return []string{"LD_LIBRARY_PATH=" + request.pcreLibraries()}
 }
 
 // toolchainVersion is a toolchain's first line of its version, and whether it's the game's. It's asked
@@ -628,11 +692,11 @@ func (builder gameBuilder) floors() ([]*gameRunner, error) {
 		return nil, fmt.Errorf("adamic build of the floor: %v %s", err, firstLine(string(output)))
 	}
 	goFloor := filepath.Join(floorDirectory, "go-floor")
-	if err := builder.buildGo("the floor", floorDirectory, "floor.go", goFloor); err != nil {
+	if err := builder.buildGo("the floor", floorDirectory, "floor.go", goFloor, false); err != nil {
 		return nil, err
 	}
 	rustFloor := filepath.Join(floorDirectory, "rust-floor")
-	if err := builder.buildRust("the floor", floorDirectory, "floor.rs", rustFloor, nil); err != nil {
+	if err := builder.buildRust("the floor", floorDirectory, "floor.rs", rustFloor, nil, false); err != nil {
 		return nil, err
 	}
 	return []*gameRunner{
@@ -674,16 +738,19 @@ func (builder gameBuilder) row(benchmark gameProgram) (*gameRow, error) {
 		runner := &gameRunner{name: name, language: entry.Language, binary: filepath.Join(binaries, benchmark.Name+"."+name)}
 		runner.command = []string{runner.binary, strconv.Itoa(benchmark.Size)}
 		what := benchmark.Name + "'s " + name
+		if entry.Pcre {
+			runner.environment = builder.request.pcreRun()
+		}
 		var stopped error
 		switch entry.Language {
 		case goLanguage:
-			stopped = builder.buildGo(what, filepath.Join(builder.directory, "game"), filepath.FromSlash(entry.File), runner.binary)
+			stopped = builder.buildGo(what, filepath.Join(builder.directory, "game"), filepath.FromSlash(entry.File), runner.binary, entry.Pcre)
 		case rustLanguage:
 			buildDirectory, err := builder.rustSource(benchmark.Name, name, entry.File)
 			if err != nil {
 				return nil, err
 			}
-			stopped = builder.buildRust(what, buildDirectory, benchmark.Name+".rs", runner.binary, entry.Crates)
+			stopped = builder.buildRust(what, buildDirectory, benchmark.Name+".rs", runner.binary, entry.Crates, entry.Pcre)
 		}
 		if stopped != nil {
 			runner.failure = stopped.Error()
@@ -709,10 +776,14 @@ func (builder gameBuilder) rustSource(benchmarkName, name, file string) (string,
 
 // buildGo builds a Go source as the game did, a bare go build with GOAMD64=v2, holding the toolchain
 // to -go's own (GOTOOLCHAIN=local) and keeping the repository's workspace and any GOFLAGS out of it.
-func (builder gameBuilder) buildGo(what, directory, source, binary string) error {
+// A source that links PCRE gets -pcre's headers and libraries (pcreBuild).
+func (builder gameBuilder) buildGo(what, directory, source, binary string, pcre bool) error {
 	command := exec.Command(builder.request.goBinary, "build", "-o", binary, source)
 	command.Dir = directory
 	command.Env = append(append(environment(), builder.file.Go.Environment...), "GOTOOLCHAIN=local", "GOWORK=off", "GOFLAGS=")
+	if pcre {
+		command.Env = append(command.Env, builder.request.pcreBuild()...)
+	}
 	if output, err := step("building "+what+" with "+builder.request.goBinary, command); err != nil {
 		return fmt.Errorf("go build stopped: %v %s", err, stopLine(string(output)))
 	}
@@ -720,11 +791,15 @@ func (builder gameBuilder) buildGo(what, directory, source, binary string) error
 }
 
 // buildRust builds a Rust source as the game did, with its flags, -L at the crates' directory, and
-// --extern for each crate at its pinned version.
-func (builder gameBuilder) buildRust(what, directory, source, binary string, crates []string) error {
+// --extern for each crate at its pinned version. A source that links PCRE gets -L native= at -pcre's
+// libraries too, where the linker finds the libpcre2 pcre2-sys names when it was built against them.
+func (builder gameBuilder) buildRust(what, directory, source, binary string, crates []string, pcre bool) error {
 	arguments := slices.Clone(builder.file.Rust.Flags)
 	if builder.request.crates != "" {
 		arguments = append(arguments, "-L", builder.request.crates)
+	}
+	if pcre && builder.request.pcre != "" {
+		arguments = append(arguments, "-L", "native="+builder.request.pcreLibraries())
 	}
 	for _, crate := range crates {
 		library, err := crateLibrary(builder.request.crates, crate, builder.file.Crates[crate])
@@ -809,7 +884,7 @@ func (row *gameRow) check(timeout time.Duration) {
 	node := row.runners[gameNode]
 	if node.failure == "" {
 		fmt.Fprintf(os.Stderr, "bench: checking %s's outputs against Node's\n", row.benchmark.Name)
-		reference := runFrom(node.command, node.input, timeout)
+		reference := runFrom(node.command, node.input, timeout, node.environment...)
 		if reference.failure != "" {
 			node.failure = "checking its output, it " + reference.failure
 		}
@@ -827,7 +902,7 @@ func (row *gameRow) check(timeout time.Duration) {
 		if index == gameNode || runner.failure != "" {
 			continue
 		}
-		result := runFrom(runner.command, runner.input, timeout)
+		result := runFrom(runner.command, runner.input, timeout, runner.environment...)
 		switch {
 		case result.failure != "":
 			runner.failure = "checking its output, it " + result.failure
@@ -920,7 +995,7 @@ func countEveryRunner(work string, floors []*gameRunner, rows []*gameRow, timeou
 	if err != nil {
 		return "none counted: perf isn't on this machine's PATH"
 	}
-	if _, why := countInstructions(perf, work, floors[0].command, "", timeout); why != "" {
+	if _, why := countInstructions(perf, work, floors[0].command, "", nil, timeout); why != "" {
 		return "none counted: perf stat -e instructions:u can't count here: " + why
 	}
 	for round := 0; round < instructionRounds; round++ {
@@ -928,7 +1003,7 @@ func countEveryRunner(work string, floors []*gameRunner, rows []*gameRow, timeou
 			ready := row.ready()
 			for _, position := range gameOrder(round, len(ready)) {
 				runner := ready[position]
-				count, why := countInstructions(perf, work, runner.command, runner.input, timeout)
+				count, why := countInstructions(perf, work, runner.command, runner.input, runner.environment, timeout)
 				if why != "" {
 					runner.instructionsFailure = why
 					continue
@@ -941,7 +1016,7 @@ func countEveryRunner(work string, floors []*gameRunner, rows []*gameRow, timeou
 }
 
 // countInstructions runs a command under perf stat and reads its instructions:u, or why there are none.
-func countInstructions(perf, work string, command []string, input string, timeout time.Duration) (int64, string) {
+func countInstructions(perf, work string, command []string, input string, settings []string, timeout time.Duration) (int64, string) {
 	report, err := os.CreateTemp(work, "perf-")
 	if err != nil {
 		return 0, err.Error()
@@ -949,7 +1024,7 @@ func countInstructions(perf, work string, command []string, input string, timeou
 	report.Close()
 	defer os.Remove(report.Name())
 	counted := append([]string{perf, "stat", "-e", "instructions:u", "-x", ",", "-o", report.Name(), "--"}, command...)
-	if result := runFrom(counted, input, timeout); result.failure != "" {
+	if result := runFrom(counted, input, timeout, settings...); result.failure != "" {
 		return 0, "under perf it " + result.failure
 	}
 	contents, err := os.ReadFile(report.Name())
