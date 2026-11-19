@@ -616,7 +616,13 @@ func memberKeyText(node *ast.Node) (string, bool) {
 	return ast.TryGetTextOfPropertyName(node.Name())
 }
 
-func (l *lowering) noteAccessorNames(modules []*ast.SourceFile) {
+// walkAccessorNames notes every name a getter in modules has, which a read by one of those names asks, since a
+// getter, not an own field, may answer it. noteAccessorNames runs it, or takes a copy where a latent census run
+// already walked it over the same program (accessor_names_cache.go, #hjspb3b).
+func (l *lowering) walkAccessorNames(modules []*ast.SourceFile) {
+	if counter := accessorNamesWalks.Load(); counter != nil {
+		counter.Add(1)
+	}
 	l.accessorNames = map[string]bool{}
 	for _, module := range modules {
 		var visit ast.Visitor
