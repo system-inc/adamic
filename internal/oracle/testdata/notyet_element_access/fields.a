@@ -26,7 +26,7 @@ for (const key of [Interval.Low, Interval.Medium, Interval.High]) {
     console.log(`${numericField({ 250: 1, 500: 2, 2000: 3 }, key)}`);
 }
 let current = { left: 10, right: 20 };
-let selected: Key = 'left';
+let selected = 'left' as Key; // declared Key, not narrowed to 'left': the write dispatches on the union, and rule 3350 (#h9tz4xe) has no narrowed literal to distrust
 let receiverCalls = 0;
 function receiver(): { left: number; right: number } {
     receiverCalls += 1;

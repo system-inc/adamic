@@ -66,7 +66,7 @@ func (l *lowering) constraintRelationRefusal(node *ast.Node) error {
 }
 
 func init() {
-	refusalRules.register(3350, "constraintRelationRefusal", (*lowering).constraintRelationRefusal)
+	refusalRules.register(3360, "constraintRelationRefusal", (*lowering).constraintRelationRefusal)
 }
 
 // constraintRelation judges one binding, as constraintRelationRefusal says.

@@ -617,8 +617,8 @@ type lowering struct {
 	closedKindDeclared []closedKindSite
 	closedKindBuilt    []closedKindSite
 	closedKindNewOnly  map[*ast.Symbol]bool
-	// crossFunctionWrites is every binding a function other than its own writes (narrowed_nullish.go).
-	crossFunctionWrites map[*ast.Symbol]bool
+	// crossFunctionWrites holds the first write to each binding from outside its own function.
+	crossFunctionWrites map[*ast.Symbol]*ast.Node
 	// propertyWrites is every property write in the program, by what it can reach (narrowed_nullish.go).
 	propertyWrites *propertyWrites
 	// topLevelOnlyFunctions is calledOnlyFromTopLevel's answer for each function declaration asked
