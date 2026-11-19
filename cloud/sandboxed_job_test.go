@@ -118,8 +118,8 @@ printf 'cache=%s\ncopy=%s\n' "$ADAMIC_BUILD_CACHE_DIR" "$ADAMIC_TYPESCRIPT_SOURC
 
 // sandboxed_products gives its go test no clock but the job's own ceiling: go's default 10 minutes killed internal/oracle's
 // products before they settled on Lunatic's 8 cores (Library's J-1xphvcc, routed by Runtime on #jobs), so a slow box
-// read as the head's red. The test sources the script in a temporary tree beside a stand-in go that writes down the
-// arguments it was given, and holds that the products' go test asked `-timeout 0`.
+// read as the head's red. The test sources the script in a temporary tree beside a stand-in go that lists one product
+// test and writes down the arguments its run was given, and holds that the products' go test asked `-timeout 0`.
 //
 // Mutant: the `-timeout 0` taken out of sandboxed_products' go test (the stand-in's arguments name no timeout, red here).
 func TestSandboxedProductsGivesGoNoClockButTheJobs(t *testing.T) {
@@ -139,7 +139,7 @@ func TestSandboxedProductsGivesGoNoClockButTheJobs(t *testing.T) {
 		t.Fatal(err)
 	}
 	said := filepath.Join(directory, "go-arguments")
-	stand := "#!/bin/sh\nprintf '%s\\n' \"$@\" > \"$GO_ARGUMENTS\"\n"
+	stand := "#!/bin/sh\ncase \" $* \" in *\" -list \"*) echo TestProduct_Oracle; exit 0 ;; esac\nprintf '%s\\n' \"$@\" > \"$GO_ARGUMENTS\"\n"
 	if err := os.WriteFile(filepath.Join(bin, "go"), []byte(stand), 0o755); err != nil {
 		t.Fatal(err)
 	}
@@ -188,6 +188,153 @@ sandboxed_products ./internal/oracle
 		}
 	}
 	t.Fatalf("sandboxed_products' go test named no -timeout 0, so go's own 10 minutes would end a slow settle: %q", arguments)
+}
+
+// sandboxed_products settles product tests wave by wave in the order cloud/fast-gate/product-order.json gives, a package
+// at a time, since one go test over every package ran them at once and a test that reads another's product got there
+// first (internal/worker's TestProduct_WorkerWasm_005). A wait on a test in a package the union doesn't hold brings that
+// test alone, as stage1/cohere/estree's tests wait on stage1/cohere/estree/oracles'. The test sources the script in a
+// temporary tree beside a stand-in go that lists each package's product tests from a fixed set, among go's own lines,
+// and writes down each run's package and -run expression. app is named, compiler-dependencies.json lists lib under it,
+// and oracles is reached only through a wait. A wait on a test lib doesn't list is dropped; a cycle refuses before
+// anything runs; a wave that fails stops every wave after it.
+//
+// Mutants: the closure over waits dropped (`unlisted.add(package)` made `pass`, red on the order: oracles never runs and
+// app's tests run with it unsettled); the waves run backwards (`enumerate(waves, 1)` made `enumerate(reversed(waves), 1)`,
+// red on the order).
+func TestSandboxedProductsSettlesInWaves(t *testing.T) {
+	t.Parallel()
+	script, err := filepath.Abs("sandboxed-job.sh")
+	if err != nil {
+		t.Fatal(err)
+	}
+	waits := map[string][]string{
+		"app TestProduct_App":        {"lib TestProduct_Lib", "oracles TestProduct_Oracle"},
+		"app TestProduct_AppLate":    {"app TestProduct_App", "lib TestProduct_Gone"},
+		"oracles TestProduct_Oracle": {"lib TestProduct_Lib"},
+	}
+	for _, test := range []struct {
+		name string
+		// cycle adds a wait that closes a loop; fails names the package whose run exits 1.
+		cycle   bool
+		fails   string
+		runs    []string
+		settled bool
+		said    string
+	}{
+		{"waits in order", false, "", []string{"lib ^(TestProduct_Lib)$", "oracles ^(TestProduct_Oracle)$", "app ^(TestProduct_App)$",
+			"app ^(TestProduct_AppLate)$"}, true, "products settled for 3 packages in 4 waves, 4 product tests"},
+		{"a cycle refuses", true, "", nil, false, "waits hold a cycle"},
+		{"a failing wave stops the waves after it", false, "oracles", []string{"lib ^(TestProduct_Lib)$", "oracles ^(TestProduct_Oracle)$"},
+			false, "wave 2 of 4 failed in ./oracles/"},
+	} {
+		t.Run(test.name, func(t *testing.T) {
+			t.Parallel()
+			directory := t.TempDir()
+			tree, bin := filepath.Join(directory, "tree"), filepath.Join(directory, "bin")
+			for _, made := range []string{filepath.Join(tree, "cloud", "fast-gate"), filepath.Join(tree, "app"), filepath.Join(tree, "lib"),
+				filepath.Join(tree, "oracles"), bin} {
+				if err := os.MkdirAll(made, 0o755); err != nil {
+					t.Fatal(err)
+				}
+			}
+			order := map[string][]string{}
+			for name, named := range waits {
+				order[name] = named
+			}
+			if test.cycle {
+				order["lib TestProduct_Lib"] = []string{"app TestProduct_AppLate"}
+			}
+			orderData, err := json.Marshal(map[string]any{"version": 1, "waits": order})
+			if err != nil {
+				t.Fatal(err)
+			}
+			// oracles lists a test nothing waits on, which never runs: a package reached by a wait brings only the tests
+			// waited on.
+			listing := "app TestProduct_App\napp TestProduct_AppLate\nlib TestProduct_Lib\noracles TestProduct_Oracle\noracles TestProduct_OracleUnasked\n"
+			for _, file := range [][2]string{
+				{filepath.Join(tree, "cloud", "fast-gate", "compiler-dependencies.json"), `{"packages":{"app":["lib"]}}` + "\n"},
+				{filepath.Join(tree, "cloud", "fast-gate", "product-order.json"), string(orderData)},
+				{filepath.Join(directory, "listing"), listing},
+			} {
+				if err := os.WriteFile(file[0], []byte(file[1]), 0o644); err != nil {
+					t.Fatal(err)
+				}
+			}
+			// The package is go test's last argument, ./<path>/. A listing ends with go's own ok line, as go's does.
+			stand := `#!/bin/sh
+for argument; do last=$argument; done
+package=${last#./}
+package=${package%/}
+case " $* " in
+*" -list "*)
+	sed -n "s|^$package ||p" "$GO_LISTING"
+	printf 'ok  \texample.invalid/%s\t0.01s\n' "$package"
+	exit 0
+	;;
+esac
+while [ $# -gt 0 ]; do
+	[ "$1" != -run ] || expression=$2
+	shift
+done
+echo "$package $expression" >> "$GO_RUNS"
+[ "$package" != "$GO_FAILS" ]
+`
+			if err := os.WriteFile(filepath.Join(bin, "go"), []byte(stand), 0o755); err != nil {
+				t.Fatal(err)
+			}
+			// The TypeScript copy is the image's road, not this test's: it stands in as done.
+			command := toolchain.Command("bash", "-c", `. "$SANDBOXED_JOB_SCRIPT" || exit 1
+sandboxed_typescript_source() { :; }
+if sandboxed_products ./app; then echo "settled=ok"; fi
+`)
+			if command.Err != nil {
+				t.Fatal(command.Err)
+			}
+			command.Dir = tree
+			environment := command.Env
+			if environment == nil {
+				environment = os.Environ()
+			}
+			path := os.Getenv("PATH")
+			kept := make([]string, 0, len(environment)+6)
+			for _, variable := range environment {
+				name, value, _ := strings.Cut(variable, "=")
+				switch name {
+				case "PATH":
+					path = value
+				case "TMPDIR", "ADAMIC_BUILD_CACHE_DIR", "LOOM_JOB_SCRATCH":
+				default:
+					kept = append(kept, variable)
+				}
+			}
+			runs := filepath.Join(directory, "runs")
+			command.Env = append(kept, "PATH="+bin+":"+path, "TMPDIR="+filepath.Join(directory, "tmp"), "SANDBOXED_JOB_SCRIPT="+script,
+				"GO_LISTING="+filepath.Join(directory, "listing"), "GO_RUNS="+runs, "GO_FAILS="+test.fails)
+			output, err := command.CombinedOutput()
+			said := string(output)
+			if err != nil {
+				t.Fatalf("bash: %v\n%s", err, said)
+			}
+			if settled := strings.Contains(said, "settled=ok"); settled != test.settled {
+				t.Fatalf("want sandboxed_products to return 0 %v, got:\n%s", test.settled, said)
+			}
+			if !strings.Contains(said, test.said) {
+				t.Errorf("want %q said, got:\n%s", test.said, said)
+			}
+			data, err := os.ReadFile(runs)
+			if err != nil && !os.IsNotExist(err) {
+				t.Fatal(err)
+			}
+			var ran []string
+			if text := strings.TrimSpace(string(data)); text != "" {
+				ran = strings.Split(text, "\n")
+			}
+			if strings.Join(ran, "\n") != strings.Join(test.runs, "\n") {
+				t.Errorf("want the runs\n  %s\ngot\n  %s\n%s", strings.Join(test.runs, "\n  "), strings.Join(ran, "\n  "), said)
+			}
+		})
+	}
 }
 
 // sandboxed_git leaves a tree that is already a repository as it is and returns 0, so an `&&` chain goes on to its command:
