@@ -1,0 +1,2 @@
+# cargo build --release leaves the rlibs `go run ./bench -game -crates` links against here.
+/target/

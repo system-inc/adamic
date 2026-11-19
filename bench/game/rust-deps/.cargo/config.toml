@@ -1,0 +1,8 @@
+# The entries' target, so a crate's code is built as the entry that calls it is (bench/game/README.md).
+[build]
+rustflags = ["-C", "target-cpu=ivybridge"]
+
+# The crates the pins above pull in are resolved to releases rustc 1.84.1 supports, where one exists
+# (Cargo 1.84's rust-version aware resolver), since none of them is pinned.
+[resolver]
+incompatible-rust-versions = "fallback"
