@@ -81,6 +81,9 @@ func TestRulesRefuseMistakes(t *testing.T) {
 		{"stacked null", `{"blocks": {"on": true, "budget": 2, "stacked": null}, "restack": {"on": false}}`, "true or false"},
 		{"stacked a string", `{"blocks": {"on": true, "budget": 2, "stacked": "true"}, "restack": {"on": false}}`, "cannot unmarshal string"},
 		{"stacked a number", `{"blocks": {"on": true, "budget": 2, "stacked": 1}, "restack": {"on": false}}`, "cannot unmarshal number"},
+		{"lanes null", `{"blocks": {"on": true, "budget": 2, "lanes": null}, "restack": {"on": false}}`, "true or false"},
+		{"lanes a string", `{"blocks": {"on": true, "budget": 2, "lanes": "true"}, "restack": {"on": false}}`, "cannot unmarshal string"},
+		{"lanes a number", `{"blocks": {"on": true, "budget": 2, "lanes": 1}, "restack": {"on": false}}`, "cannot unmarshal number"},
 		{"witness null", `{"blocks": {"on": true, "budget": 2}, "restack": {"on": false}, "witness": null}`, "an object {every, hours, machines}"},
 		{"witness empty", `{"blocks": {"on": true, "budget": 2}, "restack": {"on": false}, "witness": {}}`, "whole number from 1 to"},
 		{"witness unknown field", `{"blocks": {"on": true, "budget": 2}, "restack": {"on": false}, "witness": {"every": 10, "hours": 4, "machines": ["Home-f3279c"], "on": true}}`, `unknown field "on"`},
@@ -224,6 +227,22 @@ func TestRulesTakeAStacked(t *testing.T) {
 	}
 	rules, err := ParseRules([]byte(`{"blocks": {"on": true, "budget": 4}, "restack": {"on": false}}`))
 	if err != nil || rules.Blocks.Stacked != nil {
+		t.Fatalf("%+v, %v", rules.Blocks, err)
+	}
+}
+
+// A lanes the queue takes reads here too (#sera6j6, #6jrhgp7), before any rules.json names it: true or false, and absent
+// as absent, which is off, today's one tower. Mutant: a null taken as absent (TestRulesRefuseMistakes' "lanes null").
+func TestRulesTakeALanes(t *testing.T) {
+	t.Parallel()
+	for _, on := range []bool{true, false} {
+		rules, err := ParseRules([]byte(`{"blocks": {"on": true, "budget": 4, "lanes": ` + strconv.FormatBool(on) + `}, "restack": {"on": false}}`))
+		if err != nil || rules.Blocks.Lanes == nil || *rules.Blocks.Lanes != on {
+			t.Fatalf("%+v, %v", rules.Blocks, err)
+		}
+	}
+	rules, err := ParseRules([]byte(`{"blocks": {"on": true, "budget": 4}, "restack": {"on": false}}`))
+	if err != nil || rules.Blocks.Lanes != nil {
 		t.Fatalf("%+v, %v", rules.Blocks, err)
 	}
 }
