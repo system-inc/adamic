@@ -203,11 +203,20 @@ since each of their sides is a nullable pointer.
 
 ## (k) The type parameter condition removed
 
-`recordRelationView` no longer asks `relationSlotGeneric` for an argument. No row turns red:
-`generic_deferred.ts`'s relation is recorded as before this slice, and since nothing calls `admit`,
-`checkRelationViewsTaken` refuses it in the same words at the same node (12:17). A generic body some call
-instantiates would be viewed as each instantiation's type under the type mapper, which is what Lower's
-ruling forbids; no fixture holds one, since its outcome with the condition is the same refusal.
+`recordRelationView` no longer asks `relationSlotGeneric` for an argument.
+
+Red: `generic_called.ts`'s row, which wants rule 3300's refusal at 13:17 and gets a lowered program. The
+rule judges `admit`'s body as the checker types it, where `show(plain)`'s resolved slot is `Box<Tag>`. The
+walk reaches `label` through no constraint, so `constrained` doesn't refuse it, and without the condition
+the relation is recorded. `admit<number>` lowers the body, `relationViewValue` views the argument as
+`l.concrete(Box<Tag>)`, `Box<number>`, the view the ruling forbids, and the post-pass is satisfied. Its values
+are honest, so it prints `absent` as Node does.
+
+`generic_deferred.ts` stays green: nothing calls its `admit`, so `checkRelationViewsTaken` refuses it in
+the same words at the same node (12:17). An append-like slot, `T | undefined` with `T` the enclosing
+function's, can't witness (k): the walk reaches the field through `T`'s constraint, so `relationViewAdmits`
+refuses it through `constrained` with the condition or without it. Only a slot that holds the parameter
+beside the hidden field, as `Box<Tag>` holds `Tag`, depends on (k).
 
 ## (l) The Object.keys element stop removed
 

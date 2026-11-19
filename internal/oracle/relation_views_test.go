@@ -95,7 +95,8 @@ var relationViewRows = map[string]relationViewRow{
 	"generic_append.ts":         {kind: "agrees"},
 	"generic_append_lie.ts":     {kind: "panics", stdout: "absent\n", detail: "adamic: panic: field read failed: target.label"},
 	"generic_inferred_alone.ts": {kind: "agrees"},
-	"generic_deferred.ts":       {kind: "stops", detail: relationViewsDirectory + "/generic_deferred.ts:12:17: Adamic 0.1 refuses optional property label in Box<Tag> absent from structural source Plain<Tag>, which can hide fields; declare label on the source type, or build a fresh object with known fields (adamic/no-optional-widening)"},
+	"generic_called.ts":         {kind: "stops", detail: relationViewsDirectory + "/generic_called.ts:13:17: Adamic 0.1 refuses optional property label in Box<Tag> absent from structural source Plain<Tag>, which can hide fields; declare label on the source type, or build a fresh object with known fields (adamic/no-optional-widening)"},
+	"generic_deferred.ts":       {kind: "stops", detail: relationViewsDirectory + "/generic_deferred.ts:12:17:Adamic 0.1 refuses optional property label in Box<Tag> absent from structural source Plain<Tag>, which can hide fields; declare label on the source type, or build a fresh object with known fields (adamic/no-optional-widening)"},
 	// Nullable on both sides, each held as one nullable pointer.
 	"nullable_both.ts":     {kind: "agrees"},
 	"nullable_both_lie.ts": {kind: "panics", stdout: "none\none\n", detail: "adamic: panic: field read failed: target.label"},
