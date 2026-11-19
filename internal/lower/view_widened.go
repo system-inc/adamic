@@ -181,6 +181,13 @@ func (l *lowering) checkViewWidenedReads() error {
 	for _, function := range l.result.Functions {
 		walk(function.Body, inspect)
 	}
+	// A read finishAccessors made a dispatcher's call isn't a Property in the program any more, and its
+	// dispatcher's fallback reads the slot unchecked, so it's weighed here as it was lowered, its receiver as
+	// lowering made it (#3jj9dzg). Its own receiver is all that's walked: a read inside that receiver is in
+	// the program as itself, or a dispatched read of its own.
+	for _, read := range l.dispatchedReads {
+		inspect(read)
+	}
 	if refused != nil {
 		return refused
 	}
