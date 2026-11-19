@@ -1265,6 +1265,12 @@ func (l *lowering) value(node *ast.Node) (ir.Expression, error) {
 	if err != nil {
 		return nil, err
 	}
+	// A relation rule 3300 let cross as a checked view (rulings.md:72) is viewed here, every time node is
+	// lowered, where a cast's structural view sits relative to programAllocation and graphAllocation.
+	value, err = l.relationViewValue(node, value)
+	if err != nil {
+		return nil, err
+	}
 	return l.programAllocation(node, value)
 }
 
