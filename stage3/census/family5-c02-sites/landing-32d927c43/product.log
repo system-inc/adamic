@@ -1,0 +1,7 @@
+=== RUN   TestProduct_Stage3AdaptedTree
+=== PAUSE TestProduct_Stage3AdaptedTree
+=== CONT  TestProduct_Stage3AdaptedTree
+    products_test.go:29: build stage3-adapted-tree 39611014f60d miss 293.94
+--- PASS: TestProduct_Stage3AdaptedTree (294.07s)
+PASS
+ok  	github.com/system-inc/adamic/stage3/lane/adaptedtree	294.079s
