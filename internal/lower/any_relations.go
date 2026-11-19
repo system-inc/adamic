@@ -37,15 +37,23 @@ func (l *lowering) refuseAnyRelation(node *ast.Node) error {
 	if found == nil {
 		return nil
 	}
+	var stop error
+	if found.depthLimit {
+		stop = l.notYet(node, "a structural relation deeper than 64 type pairs while checking members typed any")
+	} else {
+		stop = l.notYet(node, "a member typed any ("+found.path+") related to "+l.checker.TypeToString(found.target)+" at the "+name+" site")
+	}
+	// An allocator getter's any, at its arrow or at an allocator literal of nothing but such getters, is the
+	// road's: kept with its cast's refusal and given back where the road doesn't close (#837zjkt).
+	if l.allocatorRelationSite(node) {
+		l.deferAnyRoad(node, stop, false)
+		return nil
+	}
 	// The lowest-priority stop: another rule's refusal anywhere in the module is the stronger reason, as
 	// Array.prototype.fill's method value and Object.entries over a graph record already are, so this one
 	// is kept for refuse to return only when nothing else refused.
 	if l.refusal.deferred == nil {
-		if found.depthLimit {
-			l.refusal.deferred = l.notYet(node, "a structural relation deeper than 64 type pairs while checking members typed any")
-		} else {
-			l.refusal.deferred = l.notYet(node, "a member typed any ("+found.path+") related to "+l.checker.TypeToString(found.target)+" at the "+name+" site")
-		}
+		l.refusal.deferred = stop
 	}
 	return nil
 }
