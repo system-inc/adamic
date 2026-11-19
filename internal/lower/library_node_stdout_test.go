@@ -27,7 +27,8 @@ func TestNodeStdoutWriteRefusals(t *testing.T) {
 		{`const value=process.stdout.write('x');`, "its boolean is backpressure in Node and blocking success natively"},
 		{`function f():boolean{return process.stdout.write('x');}`, "used as a value"},
 		{`function w(either: string | Uint8Array): void { process.stdout.write(either); }`, "non-string argument other than a Uint8Array"},
-		{`import {Buffer} from 'node:buffer'; process.stdout.write(Buffer.from('x'));`, "non-string argument"},
+		// A Buffer is held as a Uint8Array, so it meets the host view stop first: Buffer seen as string | Uint8Array.
+		{`import {Buffer} from 'node:buffer'; process.stdout.write(Buffer.from('x'));`, "Buffer or Hash viewed as another object type"},
 		{`process.stdout.write('x','utf8');`, "exactly one string argument"},
 		{`process.stdout.write('x',()=>{});`, "exactly one string argument"},
 		{`const args:[string]=['x'];process.stdout.write(...args);`, "spread arguments"},

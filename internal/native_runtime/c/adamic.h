@@ -885,6 +885,9 @@ typedef struct adamic_typed_array {
 } adamic_typed_array;
 
 adamic_typed_array *adamic_typed_array_new(enum adamic_typed_array_kind kind, double length);
+// A zeroed owner of a length the caller already knows, for the runtime's own byte producers (a Buffer).
+// Its data counts toward memoryUsage().arrayBuffers, as every owner's does, and heap.c's free takes it back.
+adamic_typed_array *adamic_typed_array_make(enum adamic_typed_array_kind kind, size_t length);
 adamic_typed_array *adamic_typed_array_from_numbers(enum adamic_typed_array_kind kind, const adamic_array *numbers);
 // The check is also called by compiler-inserted write checks. set always checks itself.
 // Panic text is the plain-array form: index <index> is outside an array of length <length>.
