@@ -10,6 +10,7 @@ import (
 	"github.com/system-inc/adamic/internal/leakcheck"
 	"github.com/system-inc/adamic/internal/lower"
 	"github.com/system-inc/adamic/internal/native"
+	"github.com/system-inc/adamic/internal/native_runtime"
 )
 
 // A Map's [key, value] pair is made in the runtime, outside graphAllocation: by an entries()
@@ -112,7 +113,7 @@ console.log(String(a.pairs.length));
 				t.Fatalf("native: %s; Node %q; native %q; stderr %q", difference, truth.stdout, got.stdout, got.stderr)
 			}
 			counted := filepath.Join(t.TempDir(), "counted")
-			if err := native.Build(native.C(program), counted, native.Options{Count: true}); err != nil {
+			if err := native.Build(native.C(program), counted, native_runtime.Options{Count: true}); err != nil {
 				t.Fatal(err)
 			}
 			ran := execute(t, counted)

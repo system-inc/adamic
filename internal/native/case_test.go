@@ -311,12 +311,12 @@ func caseMappingHarness(t *testing.T) (binary, oracle string) {
 	t.Helper()
 	alphabet := strings.Join(caseAlphabet, ", ")
 	source := strings.Replace(caseHarness, "ALPHABET", alphabet, 1)
-	options := Options{Sanitize: true}
+	options := native_runtime.Options{Sanitize: true}
 	// Build reads ADAMIC_NATIVE_SPLIT, and the source's bytes, alphabet and all, key it beside the flags.
 	directory := buildcache.Product(t, buildcache.Inputs{
 		Name:      "case-mapping-probe",
 		Files:     []string{"internal/native", "internal/native_runtime"},
-		Flags:     append(Flags(options), fmt.Sprintf("source=%x", sha256.Sum256([]byte(source))), "ADAMIC_NATIVE_SPLIT="+os.Getenv("ADAMIC_NATIVE_SPLIT")),
+		Flags:     append(native_runtime.Flags(options), fmt.Sprintf("source=%x", sha256.Sum256([]byte(source))), "ADAMIC_NATIVE_SPLIT="+os.Getenv("ADAMIC_NATIVE_SPLIT")),
 		Toolchain: []string{buildcache.CompilerReport("clang")},
 	}, func(directory string) error {
 		return Build(source, filepath.Join(directory, "harness"), options)

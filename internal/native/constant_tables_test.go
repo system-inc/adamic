@@ -15,6 +15,7 @@ import (
 
 	"github.com/system-inc/adamic/internal/ir"
 	"github.com/system-inc/adamic/internal/javascript"
+	"github.com/system-inc/adamic/internal/native_runtime"
 )
 
 func constantTableWitness(t *testing.T, source, template string, split, sanitize bool) string {
@@ -40,7 +41,7 @@ func constantTableConfiguredWitness(t *testing.T, source, template string, split
 		t.Fatal("missing constant template " + template)
 	}
 	binary := filepath.Join(directory, "tables")
-	if err := Build(code, binary, Options{Split: split, Sanitize: sanitize, Count: true, Jobs: 1, ProgramRegion: program.ProgramRegion}); err != nil {
+	if err := Build(code, binary, native_runtime.Options{Split: split, Sanitize: sanitize, Count: true, Jobs: 1, ProgramRegion: program.ProgramRegion}); err != nil {
 		t.Fatal(err)
 	}
 	run := func(name string, args ...string) (string, string) {

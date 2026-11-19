@@ -5,6 +5,7 @@ import (
 	"crypto/sha256"
 	"encoding/json"
 	"fmt"
+	"github.com/system-inc/adamic/internal/native_runtime"
 	"github.com/system-inc/adamic/stage1/cohere/estree/oracles"
 	"io"
 	"os"
@@ -17,7 +18,6 @@ import (
 	"testing"
 
 	"github.com/system-inc/adamic/internal/buildcache"
-	"github.com/system-inc/adamic/internal/native"
 	"github.com/system-inc/adamic/internal/toolchain"
 )
 
@@ -186,7 +186,7 @@ func recoveryStableNative(repo, directory, source string) error {
 			units = append(units, filepath.Join("runtime", name))
 		}
 	}
-	args := native.Flags(native.Options{Sanitize: true})
+	args := native_runtime.Flags(native_runtime.Options{Sanitize: true})
 	args = append(args, features...)
 	args = append(args, "-ffile-prefix-map="+work+"=/adamic-estree", "-fdebug-prefix-map="+work+"=/adamic-estree", "-I", "runtime", "port.c")
 	args = append(args, units...)
@@ -198,11 +198,11 @@ func recoveryStableNative(repo, directory, source string) error {
 	return nil
 }
 
-// recoveryClang is the sanitized port build's clang, run in its work directory through native.ClangIn: the build's own
+// recoveryClang is the sanitized port build's clang, run in its work directory through native_runtime.ClangIn: the build's own
 // flags map the work directory, and ClangIn's maps take out where clang is installed. A bare toolchain.CommandIn here
 // mapped the work directory alone, so two boxes whose tools sit apart could build two ports for one key (#dc483fc).
 func recoveryClang(work string, args ...string) *exec.Cmd {
-	return native.ClangIn(work, "clang", args...)
+	return native_runtime.ClangIn(work, "clang", args...)
 }
 
 // Oracle answers are build products too. Use stable relative input names so an
@@ -236,8 +236,8 @@ func recoveryNativeRecipe(t *testing.T, setup *recoverySetup) (string, string) {
 	source := recoveryNativeRecipeSource
 	inputs := buildcache.Inputs{
 		Name:      "estree-native-recipe-proof-a",
-		Files:     []string{"internal/native_runtime/c", "internal/native/native.go", "internal/native/library.go", "internal/native/clang_in.go", "stage1/cohere/estree/recovery_cache_test.go"},
-		Flags:     append(native.Flags(native.Options{Sanitize: true}), source),
+		Files:     []string{"internal/native_runtime/c", "internal/native_runtime/options.go", "internal/native_runtime/library.go", "stage1/cohere/estree/recovery_cache_test.go"},
+		Flags:     append(native_runtime.Flags(native_runtime.Options{Sanitize: true}), source),
 		Toolchain: []string{runtime.GOOS, runtime.GOARCH, buildcache.CompilerReport("clang"), buildcache.Tool("getconf", "GNU_LIBC_VERSION")},
 	}
 	first := recoveryProduct(t, setup, inputs, func(dir string) error { return recoveryStableNative(root(t), dir, source) })

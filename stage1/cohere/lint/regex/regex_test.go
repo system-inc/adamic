@@ -10,6 +10,7 @@ import (
 	"github.com/system-inc/adamic/internal/load"
 	"github.com/system-inc/adamic/internal/lower"
 	"github.com/system-inc/adamic/internal/native"
+	"github.com/system-inc/adamic/internal/native_runtime"
 	"github.com/system-inc/adamic/internal/toolchain"
 	"github.com/system-inc/adamic/stage1/cohere/lint/regex/oracles"
 	"os"
@@ -103,7 +104,7 @@ func buildRunnerProduct(t *testing.T, mutant bool) string {
 	if e != nil {
 		t.Fatal(e)
 	}
-	inputs := buildcache.Inputs{Name: "regex-runner", Files: slices.Concat([]string{"stage1/cohere/lint/regex/patterns.a", "stage1/cohere/lint/regex/testdata/runner.a", "stage1/cohere/lint/regex/testdata/corpus.a"}, compiler.Files), Flags: slices.Concat(compiler.Flags, native.Flags(native.Options{Sanitize: true}), []string{"ADAMIC_NATIVE_SPLIT=" + os.Getenv("ADAMIC_NATIVE_SPLIT")}), Toolchain: slices.Concat(compiler.Toolchain, []string{buildcache.CompilerReport("clang")})}
+	inputs := buildcache.Inputs{Name: "regex-runner", Files: slices.Concat([]string{"stage1/cohere/lint/regex/patterns.a", "stage1/cohere/lint/regex/testdata/runner.a", "stage1/cohere/lint/regex/testdata/corpus.a"}, compiler.Files), Flags: slices.Concat(compiler.Flags, native_runtime.Flags(native_runtime.Options{Sanitize: true}), []string{"ADAMIC_NATIVE_SPLIT=" + os.Getenv("ADAMIC_NATIVE_SPLIT")}), Toolchain: slices.Concat(compiler.Toolchain, []string{buildcache.CompilerReport("clang")})}
 	if mutant {
 		inputs.Name = "regex-runner-mutant"
 		inputs.Flags = append(inputs.Flags, "mutant "+strconv.Quote(translationMutant[0])+" "+strconv.Quote(translationMutant[1]))
@@ -130,7 +131,7 @@ func buildRunnerProduct(t *testing.T, mutant bool) string {
 		if e := os.WriteFile(filepath.Join(directory, "runner.js"), []byte(javascript.JavaScript(ir)), 0644); e != nil {
 			return e
 		}
-		return native.Build(native.C(ir), filepath.Join(directory, "runner"), native.Options{Sanitize: true})
+		return native.Build(native.C(ir), filepath.Join(directory, "runner"), native_runtime.Options{Sanitize: true})
 	})
 }
 

@@ -12,6 +12,7 @@ import (
 	"github.com/system-inc/adamic/internal/leakcheck"
 	"github.com/system-inc/adamic/internal/lower"
 	"github.com/system-inc/adamic/internal/native"
+	"github.com/system-inc/adamic/internal/native_runtime"
 )
 
 // Review witnesses are independent top-level units. Register the same sources in
@@ -175,7 +176,7 @@ func TestAsyncReviewNativeSuspensionRemovedMutant(t *testing.T) {
 	}
 	mutant := control[:location[0]] + "base->resume(base, (adamic_value){.number = 0}, false);" + control[location[1]:]
 	binary := filepath.Join(t.TempDir(), "synchronous-resume")
-	if err := native.Build(mutant, binary, native.Options{Sanitize: true}); err != nil {
+	if err := native.Build(mutant, binary, native_runtime.Options{Sanitize: true}); err != nil {
 		t.Fatal(err)
 	}
 	actual := executeWith(t, []string{"ASAN_OPTIONS=detect_leaks=1"}, binary)
@@ -224,7 +225,7 @@ func TestAsyncReviewSnapshotRetainDroppedMutant(t *testing.T) {
 	}
 	mutant := control[:location[0]] + control[location[2]:location[3]] + control[location[1]:]
 	binary := filepath.Join(t.TempDir(), "borrowed-snapshot")
-	if err := native.Build(mutant, binary, native.Options{Sanitize: true}); err != nil {
+	if err := native.Build(mutant, binary, native_runtime.Options{Sanitize: true}); err != nil {
 		t.Fatal(err)
 	}
 	actual := executeWith(t, []string{"ASAN_OPTIONS=detect_leaks=0"}, binary)
@@ -242,7 +243,7 @@ func TestAsyncReviewRejectionSwallowedMutant(t *testing.T) {
 		t.Fatal("missing rejection dispatch")
 	}
 	binary := filepath.Join(t.TempDir(), "swallowed-rejection")
-	if err := native.Build(mutant, binary, native.Options{Sanitize: true}); err != nil {
+	if err := native.Build(mutant, binary, native_runtime.Options{Sanitize: true}); err != nil {
 		t.Fatal(err)
 	}
 	actual := executeWith(t, []string{"ASAN_OPTIONS=detect_leaks=1"}, binary)

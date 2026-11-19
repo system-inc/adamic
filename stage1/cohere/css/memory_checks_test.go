@@ -14,6 +14,7 @@ import (
 	"github.com/system-inc/adamic/internal/load"
 	"github.com/system-inc/adamic/internal/lower"
 	"github.com/system-inc/adamic/internal/native"
+	"github.com/system-inc/adamic/internal/native_runtime"
 )
 
 // These mutations affect only temporary generated C. The release mutant must
@@ -55,7 +56,7 @@ func composedMemoryProduct(t *testing.T, index int) composedMemoryNatives {
 		inputs := buildcache.Inputs{
 			Name:      "css-composed-memory-mutant-" + strconv.Itoa(index),
 			Files:     cssLoweringFiles,
-			Flags:     append(append(append([]string{"mutation=" + mutation.name}, native.Flags(native.Options{})...), native.Flags(native.Options{Sanitize: true})...), "ADAMIC_NATIVE_SPLIT="+os.Getenv("ADAMIC_NATIVE_SPLIT")),
+			Flags:     append(append(append([]string{"mutation=" + mutation.name}, native_runtime.Flags(native_runtime.Options{})...), native_runtime.Flags(native_runtime.Options{Sanitize: true})...), "ADAMIC_NATIVE_SPLIT="+os.Getenv("ADAMIC_NATIVE_SPLIT")),
 			Toolchain: []string{runtime.Version(), buildcache.CompilerReport("clang"), runtime.GOOS, runtime.GOARCH},
 		}
 		directory := buildcache.Product(t, inputs, func(dir string) error {
@@ -85,10 +86,10 @@ func composedMemoryProduct(t *testing.T, index int) composedMemoryNatives {
 				}
 				code = "#include <stdlib.h>\n" + mutation.body + strings.Replace(code, anchor, anchor+"\tcss_memory_probe(argc);\n", 1)
 			}
-			if err := native.Build(code, filepath.Join(dir, "ordinary"), native.Options{}); err != nil {
+			if err := native.Build(code, filepath.Join(dir, "ordinary"), native_runtime.Options{}); err != nil {
 				return err
 			}
-			return native.Build(code, filepath.Join(dir, "sanitized"), native.Options{Sanitize: true})
+			return native.Build(code, filepath.Join(dir, "sanitized"), native_runtime.Options{Sanitize: true})
 		})
 		composedMemoryProducts[index] = composedMemoryNatives{filepath.Join(directory, "ordinary"), filepath.Join(directory, "sanitized")}
 	})

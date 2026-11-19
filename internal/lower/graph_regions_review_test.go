@@ -15,6 +15,7 @@ import (
 	"github.com/system-inc/adamic/internal/javascript"
 	"github.com/system-inc/adamic/internal/leakcheck"
 	"github.com/system-inc/adamic/internal/native"
+	"github.com/system-inc/adamic/internal/native_runtime"
 )
 
 // A refusal becoming graph ownership must agree with source Node and finish
@@ -37,7 +38,7 @@ func graphAccepted(t *testing.T, source string) *ir.Program {
 	compareAgreement(t, runAgreementNode(t, js), truth)
 	code := native.C(program)
 	binary := filepath.Join(t.TempDir(), "native")
-	if err := native.Build(code, binary, native.Options{Sanitize: true}); err != nil {
+	if err := native.Build(code, binary, native_runtime.Options{Sanitize: true}); err != nil {
 		t.Fatal(err)
 	}
 	ctx, cancel := context.WithTimeout(context.Background(), 15*time.Second)

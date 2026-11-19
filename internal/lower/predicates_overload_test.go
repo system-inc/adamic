@@ -9,6 +9,7 @@ import (
 	"testing"
 
 	"github.com/system-inc/adamic/internal/native"
+	"github.com/system-inc/adamic/internal/native_runtime"
 )
 
 // Node runs the original sources. Successful generated programs match it byte
@@ -114,7 +115,7 @@ func TestPredicateOverloadRuntime(t *testing.T) {
 				code = 70
 			}
 			binary := filepath.Join(t.TempDir(), "native")
-			if err = native.Build(native.C(program), binary, native.Options{Sanitize: true}); err != nil {
+			if err = native.Build(native.C(program), binary, native_runtime.Options{Sanitize: true}); err != nil {
 				t.Fatal(err)
 			}
 			command := exec.Command(binary)

@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"github.com/system-inc/adamic/internal/javascript"
 	"github.com/system-inc/adamic/internal/native"
+	"github.com/system-inc/adamic/internal/native_runtime"
 	"os"
 	"path/filepath"
 	"regexp"
@@ -210,7 +211,7 @@ func checkSearchShrinkMutant(t *testing.T, mutant string) {
 		t.Fatal("mutant changed nothing")
 	}
 	binary := filepath.Join(t.TempDir(), "mutant")
-	if err := native.Build(source, binary, native.Options{Sanitize: true}); err != nil {
+	if err := native.Build(source, binary, native_runtime.Options{Sanitize: true}); err != nil {
 		t.Fatal(err)
 	}
 	nativeRun := executeWith(t, []string{"ASAN_OPTIONS=detect_leaks=1"}, binary)

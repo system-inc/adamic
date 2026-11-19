@@ -17,6 +17,7 @@ import (
 	"github.com/system-inc/adamic/internal/load"
 	"github.com/system-inc/adamic/internal/lower"
 	"github.com/system-inc/adamic/internal/native"
+	"github.com/system-inc/adamic/internal/native_runtime"
 	"github.com/system-inc/adamic/stage1/cohere/css/oracles"
 )
 
@@ -207,10 +208,10 @@ func buildCSSParserProgram(t *testing.T, name, directory string) cssParserProgra
 }
 func buildCSSParserBinaries(t *testing.T, programs []cssParserProgram) []string {
 	t.Helper()
-	options := native.Options{Sanitize: true}
+	options := native_runtime.Options{Sanitize: true}
 	var binaries []string
 	for _, program := range programs {
-		dir := oracles.ParserProduct(t, oracles.ParserProductInputs{Name: program.name + " sanitized", Files: []string{program.c, repository + "/internal/native", repository + "/go.mod"}, Flags: native.Flags(options), Toolchain: buildcache.CompilerReport("clang")}, func(dir string) error {
+		dir := oracles.ParserProduct(t, oracles.ParserProductInputs{Name: program.name + " sanitized", Files: []string{program.c, repository + "/internal/native", repository + "/go.mod"}, Flags: native_runtime.Flags(options), Toolchain: buildcache.CompilerReport("clang")}, func(dir string) error {
 			source, err := os.ReadFile(program.c)
 			if err != nil {
 				return err
@@ -224,8 +225,8 @@ func buildCSSParserBinaries(t *testing.T, programs []cssParserProgram) []string 
 
 func buildCSSParserUnsanitized(t *testing.T, program cssParserProgram) string {
 	t.Helper()
-	options := native.Options{}
-	dir := oracles.ParserProduct(t, oracles.ParserProductInputs{Name: "parser unsanitized for leaks", Files: []string{program.c, repository + "/internal/native", repository + "/go.mod"}, Flags: native.Flags(options), Toolchain: buildcache.CompilerReport("clang")}, func(dir string) error {
+	options := native_runtime.Options{}
+	dir := oracles.ParserProduct(t, oracles.ParserProductInputs{Name: "parser unsanitized for leaks", Files: []string{program.c, repository + "/internal/native", repository + "/go.mod"}, Flags: native_runtime.Flags(options), Toolchain: buildcache.CompilerReport("clang")}, func(dir string) error {
 		source, err := os.ReadFile(program.c)
 		if err != nil {
 			return err

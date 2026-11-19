@@ -8,7 +8,7 @@ import (
 
 	"github.com/system-inc/adamic/internal/load"
 	"github.com/system-inc/adamic/internal/lower"
-	"github.com/system-inc/adamic/internal/native"
+	"github.com/system-inc/adamic/internal/native_runtime"
 )
 
 // Import-cycles 779ff9d closed the type-only import cycle gap. Keep Node and
@@ -34,7 +34,7 @@ func TestTypeOnlyImportCycleCompiles(t *testing.T) {
 	if _, err := lower.Lower(context.Background(), program); err != nil {
 		t.Fatalf("type-only cycle must compile after 779ff9d: %v", err)
 	}
-	binary := gapNative(t, "testdata/type_import_cycle/entry.a", "testdata/type_import_cycle", native.Options{Sanitize: true})
+	binary := gapNative(t, "testdata/type_import_cycle/entry.a", "testdata/type_import_cycle", native_runtime.Options{Sanitize: true})
 	got := execute(t, "", binary).output
 	if !bytes.Equal(got, want) {
 		t.Fatalf("native %q, Node %q", got, want)

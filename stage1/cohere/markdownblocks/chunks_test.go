@@ -12,7 +12,7 @@ import (
 	"unicode/utf16"
 
 	_ "github.com/system-inc/adamic/internal/ccjobserver"
-	"github.com/system-inc/adamic/internal/native"
+	"github.com/system-inc/adamic/internal/native_runtime"
 	"github.com/system-inc/adamic/stage1/cohere/markdownblocks/oracles"
 )
 
@@ -100,8 +100,8 @@ func TestMicromarkInputChunks(t *testing.T) {
 		t.Fatal(err)
 	}
 	emitted := filepath.Join(probeEmitted(t, chunksProbe), "port.mjs")
-	binary := filepath.Join(probeNative(t, chunksProbe, native.Options{Sanitize: true}), "port")
-	fast := filepath.Join(probeNative(t, chunksProbe, native.Options{}), "port")
+	binary := filepath.Join(probeNative(t, chunksProbe, native_runtime.Options{Sanitize: true}), "port")
+	fast := filepath.Join(probeNative(t, chunksProbe, native_runtime.Options{}), "port")
 	answer := sanitizedRun(t, binary, cases)
 	for _, side := range []struct {
 		name   string

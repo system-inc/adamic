@@ -1,4 +1,4 @@
-package native
+package native_runtime
 
 import (
 	"errors"
@@ -80,7 +80,7 @@ func UseJobserver(jobserver *Jobserver, err error) error {
 	return nil
 }
 
-// defaultJobserver is the process's jobserver (UseJobserver): nil when none was set, or why the one named couldn't be
+// DefaultJobserver is the process's jobserver (UseJobserver): nil when none was set, or why the one named couldn't be
 // opened. It's read only where a compile outside the archive's build starts, and handed down from there, never in a
 // function RuntimeRequest.Build reaches (Node's rail on #yzwm4rj).
 //
@@ -89,7 +89,7 @@ func UseJobserver(jobserver *Jobserver, err error) error {
 // and unbounded by the box's when it names none: then under the unit's CPU share and go test's parallelism alone
 // (Compiler's ruling on #yzwm4rj; a repro of internal/native#4/8 on Oct 17 ran at its p50 so). Native itself still
 // reads no environment for it (condition 3), and the tests that set the process's run in children with no variable.
-func defaultJobserver() (*Jobserver, error) {
+func DefaultJobserver() (*Jobserver, error) {
 	processJobserver.mutex.Lock()
 	defer processJobserver.mutex.Unlock()
 	return processJobserver.jobserver, processJobserver.err

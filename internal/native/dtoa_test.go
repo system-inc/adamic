@@ -14,6 +14,8 @@ import (
 	"sync"
 	"testing"
 	"time"
+
+	"github.com/system-inc/adamic/internal/native_runtime"
 )
 
 // dtoaHarness formats one number per line: which method, whether there's an argument, the argument
@@ -141,7 +143,7 @@ var dtoaHarnessBinary = sync.OnceValues(func() (string, error) {
 		return "", err
 	}
 	binary := filepath.Join(directory, "harness")
-	return binary, Build(dtoaHarness, binary, Options{Sanitize: true})
+	return binary, Build(dtoaHarness, binary, native_runtime.Options{Sanitize: true})
 })
 
 func runDtoaValues(t *testing.T, name string) {
@@ -249,7 +251,7 @@ int main(int count, char **arguments) {
 }
 `
 	binary := filepath.Join(t.TempDir(), "harness")
-	if err := Build(harness, binary, Options{Sanitize: true}); err != nil {
+	if err := Build(harness, binary, native_runtime.Options{Sanitize: true}); err != nil {
 		t.Fatal(err)
 	}
 	for _, probe := range []struct {

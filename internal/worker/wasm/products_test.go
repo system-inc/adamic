@@ -9,7 +9,7 @@ import (
 
 	"github.com/system-inc/adamic/internal/buildcache"
 	_ "github.com/system-inc/adamic/internal/ccjobserver"
-	"github.com/system-inc/adamic/internal/native"
+	"github.com/system-inc/adamic/internal/native_runtime"
 	"github.com/system-inc/adamic/internal/worker/testtools"
 )
 
@@ -18,10 +18,10 @@ func TestMain(m *testing.M) { testtools.ConfigureWASI(); os.Exit(m.Run()) }
 
 func wasiClang(t *testing.T) string {
 	t.Helper()
-	if err := native.ValidateOptions(native.Options{Target: "wasm32-wasi"}); err != nil {
+	if err := native_runtime.ValidateOptions(native_runtime.Options{Target: "wasm32-wasi"}); err != nil {
 		t.Fatal(err)
 	}
-	compiler, err := native.WASIClang()
+	compiler, err := native_runtime.WASIClang()
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -38,7 +38,7 @@ func integrationInputs(t *testing.T, name string) buildcache.Inputs {
 	}
 	inputs.Name = name
 	inputs.Files = append(append([]string{}, inputs.Files...), "internal/worker/wasm", "cmd/adamic/testdata/wasi", "internal/native/wasm")
-	request, err := native.RuntimeRequestFor(native.Options{Target: "wasm32-wasi", Count: true})
+	request, err := native_runtime.RuntimeRequestFor(native_runtime.Options{Target: "wasm32-wasi", Count: true})
 	if err != nil {
 		t.Fatal(err)
 	}

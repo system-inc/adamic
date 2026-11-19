@@ -12,6 +12,7 @@ import (
 	"github.com/system-inc/adamic/internal/javascript"
 	"github.com/system-inc/adamic/internal/lower"
 	"github.com/system-inc/adamic/internal/native"
+	"github.com/system-inc/adamic/internal/native_runtime"
 )
 
 // Reflect.get(Object(value), key, value), 94's propertyOf, lowered as a read of an unknown by a key
@@ -771,7 +772,7 @@ func TestReflectGetLiteralRowMutant(t *testing.T) {
 		t.Fatal("the table has no single literal row")
 	}
 	binary := filepath.Join(t.TempDir(), "mutant")
-	if err := native.Build(row.ReplaceAllString(code, "${1}false${2}"), binary, native.Options{Sanitize: true}); err != nil {
+	if err := native.Build(row.ReplaceAllString(code, "${1}false${2}"), binary, native_runtime.Options{Sanitize: true}); err != nil {
 		t.Fatal(err)
 	}
 	got := executeWith(t, []string{"ASAN_OPTIONS=detect_leaks=0"}, binary)

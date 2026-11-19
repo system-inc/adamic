@@ -7,7 +7,7 @@ import (
 	"path/filepath"
 	"testing"
 
-	"github.com/system-inc/adamic/internal/native"
+	"github.com/system-inc/adamic/internal/native_runtime"
 	"github.com/system-inc/adamic/internal/toolchain"
 )
 
@@ -77,14 +77,14 @@ func TestProfiledBuildIsTheSameBytesFromTwoToolsRoots(t *testing.T) {
 	// stddef.h is one of clang's own headers, under its installation; an exported function's parameter types keep its
 	// ptrdiff_t and size_t in the debug info at -O2, as the runtime's do.
 	source := "#include <stddef.h>\n#include <stdio.h>\nptrdiff_t adamic_probe_difference(ptrdiff_t left, size_t right) { return left - (ptrdiff_t)right; }\nint main(int argc, char **argv) { (void)argv; printf(\"%td\\n\", adamic_probe_difference(argc, sizeof(max_align_t))); return 0; }\n"
-	options := native.Options{Jobs: 1}
+	options := native_runtime.Options{Jobs: 1}
 	build := func(compiler string, bare bool) []byte {
 		t.Helper()
 		directory := t.TempDir()
 		if err := os.WriteFile(filepath.Join(directory, "main.c"), []byte(source), 0o644); err != nil {
 			t.Fatal(err)
 		}
-		flags := append(native.SourceFlags(source, options), "-g", "-ffile-prefix-map="+directory+"="+profiledCompilationDirectory, "-ffile-compilation-dir="+profiledCompilationDirectory, "-o", filepath.Join(directory, "profiled"), filepath.Join(directory, "main.c"), "-lm")
+		flags := append(native_runtime.SourceFlags(source, options), "-g", "-ffile-prefix-map="+directory+"="+profiledCompilationDirectory, "-ffile-compilation-dir="+profiledCompilationDirectory, "-o", filepath.Join(directory, "profiled"), filepath.Join(directory, "main.c"), "-lm")
 		var command *exec.Cmd
 		if bare {
 			command = toolchain.Command(compiler, flags...)

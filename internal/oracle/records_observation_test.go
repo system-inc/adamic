@@ -10,6 +10,7 @@ import (
 	"github.com/system-inc/adamic/internal/load"
 	"github.com/system-inc/adamic/internal/lower"
 	"github.com/system-inc/adamic/internal/native"
+	"github.com/system-inc/adamic/internal/native_runtime"
 	"os/exec"
 )
 
@@ -46,7 +47,7 @@ func TestRecordObservationGuardMutants(t *testing.T) {
 			}
 			changed = insertCollectionMutant(changed, `static bool record_mutant_has_own(const adamic_record *r, const adamic_string *k) { (void)r; (void)k; return true; }`)
 			binary := filepath.Join(t.TempDir(), "mutant")
-			if err := native.Build(changed, binary, native.Options{Sanitize: true}); err != nil {
+			if err := native.Build(changed, binary, native_runtime.Options{Sanitize: true}); err != nil {
 				t.Fatal(err)
 			}
 			got := executeWith(t, []string{"ASAN_OPTIONS=detect_leaks=0", "UBSAN_OPTIONS=halt_on_error=1"}, binary)

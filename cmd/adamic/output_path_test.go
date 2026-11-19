@@ -13,6 +13,7 @@ import (
 	"time"
 
 	"github.com/system-inc/adamic/internal/native"
+	"github.com/system-inc/adamic/internal/native_runtime"
 )
 
 // `adamic build <file> -o <relative path>` leaves the binary at that path under the working directory. native links
@@ -35,7 +36,7 @@ func TestBuildWritesARelativeOutputUnderTheWorkingDirectory(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	compile := func(source, output string, options native.Options) error {
+	compile := func(source, output string, options native_runtime.Options) error {
 		if output != binary {
 			return errors.New("native was handed -o " + output + ", want " + binary + " under the working directory")
 		}

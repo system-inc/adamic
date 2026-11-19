@@ -15,6 +15,7 @@ import (
 	"github.com/system-inc/adamic/internal/load"
 	"github.com/system-inc/adamic/internal/lower"
 	"github.com/system-inc/adamic/internal/native"
+	"github.com/system-inc/adamic/internal/native_runtime"
 )
 
 // tsc's CompilerOptions in miniature: a declared fixed object (configFile) and a declared dictionary
@@ -142,7 +143,7 @@ func recordMemberHeapLowered(t *testing.T, path string) *ir.Program {
 func recordMemberHeapRun(t *testing.T, code string) (string, string, int, string) {
 	t.Helper()
 	binary := filepath.Join(t.TempDir(), "native")
-	if err := native.Build(code, binary, native.Options{Sanitize: true}); err != nil {
+	if err := native.Build(code, binary, native_runtime.Options{Sanitize: true}); err != nil {
 		t.Fatal(err)
 	}
 	command := exec.Command(binary)

@@ -11,6 +11,7 @@ import (
 	"github.com/system-inc/adamic/internal/load"
 	"github.com/system-inc/adamic/internal/lower"
 	"github.com/system-inc/adamic/internal/native"
+	"github.com/system-inc/adamic/internal/native_runtime"
 	"github.com/system-inc/adamic/internal/testguard"
 	"github.com/system-inc/adamic/internal/toolchain"
 	"github.com/system-inc/adamic/stage1/cohere/executable"
@@ -276,7 +277,7 @@ func testShardsAgreeInputs(t *testing.T, name string) buildcache.Inputs {
 		tools = append(tools, lintGoSettings())
 		files = append(files, "go.work", "cohere/go.work", "cohere/go.work.sum")
 	}
-	return buildcache.Inputs{Name: "shards-agree-" + name, Files: files, Flags: append(native.Flags(native.Options{}), "ADAMIC_NATIVE_SPLIT="+os.Getenv("ADAMIC_NATIVE_SPLIT")), Toolchain: tools}
+	return buildcache.Inputs{Name: "shards-agree-" + name, Files: files, Flags: append(native_runtime.Flags(native_runtime.Options{}), "ADAMIC_NATIVE_SPLIT="+os.Getenv("ADAMIC_NATIVE_SPLIT")), Toolchain: tools}
 }
 func testShardsAgreeUpstream(t *testing.T) []string { t.Helper(); return oracles.ShardsAgreeCapture(t) }
 func testShardsAgreeLowered(t *testing.T, directory string) string {
@@ -302,7 +303,7 @@ func testShardsAgreeBinary(t *testing.T, directory string) string {
 		if err != nil {
 			return err
 		}
-		return native.Build(string(data), filepath.Join(d, "scanner"), native.Options{})
+		return native.Build(string(data), filepath.Join(d, "scanner"), native_runtime.Options{})
 	})
 	return filepath.Join(d, "scanner")
 }

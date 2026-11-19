@@ -4,6 +4,8 @@ import (
 	"path/filepath"
 	"strings"
 	"testing"
+
+	"github.com/system-inc/adamic/internal/native_runtime"
 )
 
 // Both programs generate the same reproducible 100,000 strings independently. Most are short;
@@ -97,7 +99,7 @@ for (let sample = 0; sample < 100000; sample++) {
 process.stdout.write(chunk);
 `
 	binary := filepath.Join(t.TempDir(), "harness")
-	if err := Build(strings.Replace(harness, "ALPHABET", alphabet, 1), binary, Options{Sanitize: true}); err != nil {
+	if err := Build(strings.Replace(harness, "ALPHABET", alphabet, 1), binary, native_runtime.Options{Sanitize: true}); err != nil {
 		t.Fatal(err)
 	}
 	compareStreams(t, 100000, []string{binary}, []string{"node", "--eval", strings.Replace(oracle, "ALPHABET", alphabet, 1)})

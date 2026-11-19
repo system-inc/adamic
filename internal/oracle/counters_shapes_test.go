@@ -8,6 +8,7 @@ import (
 
 	"github.com/system-inc/adamic/internal/ir"
 	"github.com/system-inc/adamic/internal/native"
+	"github.com/system-inc/adamic/internal/native_runtime"
 )
 
 func init() {
@@ -90,7 +91,7 @@ func TestCounterShapesProofAndFallbacks(t *testing.T) {
 		code = declaration.ReplaceAllString(code, `${1}`+"\n\tfprintf(stderr, \"integer:"+name+"\\n\");")
 	}
 	binary := filepath.Join(t.TempDir(), "trace")
-	if err := native.Build(code, binary, native.Options{Sanitize: true}); err != nil {
+	if err := native.Build(code, binary, native_runtime.Options{Sanitize: true}); err != nil {
 		t.Fatal(err)
 	}
 	result := execute(t, binary)
@@ -127,7 +128,7 @@ func TestCounterNonInvariantStepMutant(t *testing.T) {
 		Ascending: true, Inclusive: true,
 	}
 	binary := filepath.Join(t.TempDir(), "mutant")
-	if err := native.Build(native.C(program), binary, native.Options{Sanitize: true}); err != nil {
+	if err := native.Build(native.C(program), binary, native_runtime.Options{Sanitize: true}); err != nil {
 		t.Fatal(err)
 	}
 	result := execute(t, binary)
@@ -157,7 +158,7 @@ func counterPathMutation(t *testing.T, representation, initial string) {
 	}
 	code = declaration.ReplaceAllString(code, `${1}`+initial+";")
 	binary := filepath.Join(t.TempDir(), "counter-path-mutant")
-	if err := native.Build(code, binary, native.Options{Sanitize: true}); err != nil {
+	if err := native.Build(code, binary, native_runtime.Options{Sanitize: true}); err != nil {
 		t.Fatal("mutant must compile:", err)
 	}
 	result := execute(t, binary)

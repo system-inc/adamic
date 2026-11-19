@@ -8,6 +8,7 @@ import (
 	"testing"
 
 	"github.com/system-inc/adamic/internal/native"
+	"github.com/system-inc/adamic/internal/native_runtime"
 )
 
 // Adoption moves an allocation and frees the original, so it must never take memory the heap didn't
@@ -33,7 +34,7 @@ int main(int count, char **arguments) {
 `
 	source := graphHarness[:strings.Index(graphHarness, "__attribute__")] + main
 	binary := filepath.Join(t.TempDir(), "static-source")
-	if err := native.Build(source, binary, native.Options{Sanitize: true}); err != nil {
+	if err := native.Build(source, binary, native_runtime.Options{Sanitize: true}); err != nil {
 		t.Fatal(err)
 	}
 	for mode, want := range map[string]string{

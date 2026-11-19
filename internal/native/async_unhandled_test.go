@@ -10,6 +10,7 @@ import (
 
 	"github.com/system-inc/adamic/internal/leakcheck"
 	"github.com/system-inc/adamic/internal/native"
+	"github.com/system-inc/adamic/internal/native_runtime"
 )
 
 var asyncUnhandledCases = []struct{ name, stdout, message string }{
@@ -20,7 +21,7 @@ var asyncUnhandledCases = []struct{ name, stdout, message string }{
 	{"first-only", "", "first"},
 }
 
-func asyncUnhandledBuild(t *testing.T, variant string, options native.Options) string {
+func asyncUnhandledBuild(t *testing.T, variant string, options native_runtime.Options) string {
 	t.Helper()
 	data, err := os.ReadFile("testdata/unhandled_rejection/harness.c")
 	if err != nil {
@@ -67,7 +68,7 @@ func asyncUnhandledBuild(t *testing.T, variant string, options native.Options) s
 				t.Fatal(err)
 			}
 		}
-		library, buildErr := native.RuntimeLibraryForSource(directory, code, options)
+		library, buildErr := native_runtime.RuntimeLibraryForSource(directory, code, options)
 		if buildErr != nil {
 			t.Fatal(buildErr)
 		}
@@ -122,10 +123,10 @@ func TestAsyncUnhandledRejections(t *testing.T) {
 	t.Parallel()
 	for _, variant := range []struct {
 		name    string
-		options native.Options
+		options native_runtime.Options
 	}{
-		{"sanitized", native.Options{Sanitize: true}},
-		{"release", native.Options{Release: true}},
+		{"sanitized", native_runtime.Options{Sanitize: true}},
+		{"release", native_runtime.Options{Release: true}},
 	} {
 		binary := asyncUnhandledBuild(t, "control", variant.options)
 		for _, each := range asyncUnhandledCases {
@@ -141,7 +142,7 @@ func TestAsyncUnhandledRejections(t *testing.T) {
 		}
 	}
 	t.Run("handled-later/sanitized", func(t *testing.T) {
-		binary := asyncUnhandledBuild(t, "control", native.Options{Sanitize: true, Count: true})
+		binary := asyncUnhandledBuild(t, "control", native_runtime.Options{Sanitize: true, Count: true})
 		got := asyncUnhandledRun(t, binary, "handled-later")
 		if difference := asyncUnhandledDifference("handled-later", true, got); difference != "" {
 			t.Fatalf("%s: %+v", difference, got)
@@ -158,7 +159,7 @@ func TestAsyncUnhandledRejectionMutants(t *testing.T) {
 	for _, variant := range []string{"skip-check", "no-retain", "no-handled"} {
 		t.Run(variant, func(t *testing.T) {
 			counted := variant == "no-handled"
-			binary := asyncUnhandledBuild(t, variant, native.Options{Sanitize: true, Count: counted})
+			binary := asyncUnhandledBuild(t, variant, native_runtime.Options{Sanitize: true, Count: counted})
 			modes := []string{"unhandled"}
 			if variant == "skip-check" {
 				modes = append(modes, "chained")

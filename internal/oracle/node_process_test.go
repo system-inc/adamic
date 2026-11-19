@@ -13,6 +13,7 @@ import (
 	"github.com/system-inc/adamic/internal/childguard"
 	"github.com/system-inc/adamic/internal/lower"
 	"github.com/system-inc/adamic/internal/native"
+	"github.com/system-inc/adamic/internal/native_runtime"
 )
 
 func init() {
@@ -123,7 +124,7 @@ func TestNodeProcessHandleView(t *testing.T) {
 				t.Fatal(err)
 			}
 			release := filepath.Join(t.TempDir(), "release")
-			if err := native.Build(native.C(program), release, native.Options{Release: true}); err != nil {
+			if err := native.Build(native.C(program), release, native_runtime.Options{Release: true}); err != nil {
 				t.Fatal(err)
 			}
 			runner := filepath.Join(repository, "oracle/node.mjs")
@@ -276,7 +277,7 @@ func nodeProcessMutant(t *testing.T, fixture, before, after string) (string, str
 	}
 	code = strings.Replace(code, "adamic_start(argc, argv);", "adamic_start(argc, argv); mutant_node_process_start(argc, argv);", 1)
 	binary := filepath.Join(t.TempDir(), "mutant")
-	if err := native.Build(source+"\n"+code, binary, native.Options{Sanitize: true}); err != nil {
+	if err := native.Build(source+"\n"+code, binary, native_runtime.Options{Sanitize: true}); err != nil {
 		t.Fatal(err)
 	}
 	return path, binary
@@ -439,7 +440,7 @@ int main(void) {
 			implementation = nodeProcessMutantNames(changed+"\n"+code+"\n", "blocking_probe_node_")
 		}
 		probe := filepath.Join(t.TempDir(), "flags")
-		if err := native.Build(implementation, probe, native.Options{Sanitize: true}); err != nil {
+		if err := native.Build(implementation, probe, native_runtime.Options{Sanitize: true}); err != nil {
 			t.Fatal(err)
 		}
 		got := nodeProcessTerminal(t, "backpressure", probe)
@@ -594,7 +595,7 @@ int main(void) {
 			implementation = implementation[:start] + strings.Replace(implementation[start:], before, "output_mode = isatty(adamic_stdout) ? 2 : 1; (void)regular_file;", 1)
 		}
 		binary := filepath.Join(t.TempDir(), "probe")
-		if err := native.Build(prefix+implementation+harness, binary, native.Options{Sanitize: true}); err != nil {
+		if err := native.Build(prefix+implementation+harness, binary, native_runtime.Options{Sanitize: true}); err != nil {
 			t.Fatal(err)
 		}
 		got := observe(binary)

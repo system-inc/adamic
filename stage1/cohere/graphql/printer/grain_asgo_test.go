@@ -24,6 +24,7 @@ import (
 	_ "github.com/system-inc/adamic/internal/ccjobserver"
 	"github.com/system-inc/adamic/internal/childguard"
 	"github.com/system-inc/adamic/internal/native"
+	"github.com/system-inc/adamic/internal/native_runtime"
 	"github.com/system-inc/adamic/internal/testguard"
 	"github.com/system-inc/adamic/internal/toolchain"
 )
@@ -73,8 +74,8 @@ func printerAsGoNative(t *testing.T, sanitize bool) string {
 		if err != nil {
 			t.Fatal(err)
 		}
-		options := native.Options{Sanitize: sanitize, Split: true, Jobs: 4}
-		flags := append(native.Flags(options), "split=true", "jobs=4")
+		options := native_runtime.Options{Sanitize: sanitize, Split: true, Jobs: 4}
+		flags := append(native_runtime.Flags(options), "split=true", "jobs=4")
 		return printerBuild(t, printerBuildInputs{
 			Name:  fmt.Sprintf("GraphQL printer split native sanitize=%t", sanitize),
 			Files: append([]string{lowered + "/port.c"}, printerInputFiles(t, filepath.Join(repository, "internal/native"), filepath.Join(repository, "internal/native_runtime"))...),

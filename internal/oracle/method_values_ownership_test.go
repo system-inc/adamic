@@ -7,6 +7,7 @@ import (
 	"testing"
 
 	"github.com/system-inc/adamic/internal/native"
+	"github.com/system-inc/adamic/internal/native_runtime"
 )
 
 func TestLibraryMethodCaptureMutants(t *testing.T) {
@@ -37,7 +38,7 @@ func TestLibraryMethodCaptureMutants(t *testing.T) {
 				t.Fatal("mutant changed no captured cell")
 			}
 			binary := filepath.Join(t.TempDir(), "mutant")
-			if err := native.Build(mutant, binary, native.Options{Sanitize: true}); err != nil {
+			if err := native.Build(mutant, binary, native_runtime.Options{Sanitize: true}); err != nil {
 				t.Fatal(err)
 			}
 			result := executeWith(t, []string{"ASAN_OPTIONS=detect_leaks=0:abort_on_error=1:halt_on_error=1"}, binary)

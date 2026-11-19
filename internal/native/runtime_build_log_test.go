@@ -10,6 +10,7 @@ import (
 	"testing"
 	"time"
 
+	"github.com/system-inc/adamic/internal/native_runtime"
 	"github.com/system-inc/adamic/internal/toolchain"
 )
 
@@ -56,21 +57,21 @@ func loggedSeconds(t *testing.T, match []string) float64 {
 // Not parallel: it sets ADAMIC_BUILD_LOG for the process.
 func TestRuntimeArchiveLogsItsCompilesAndItsHit(t *testing.T) {
 	nonce := strconv.FormatInt(time.Now().UnixNano(), 36)
-	var files []runtimeFile
+	var files []native_runtime.RuntimeFile
 	for index := range 4 {
-		files = append(files, runtimeFile{fmt.Sprintf("unit%d.c", index), []byte(fmt.Sprintf("int unit%d_%s(void) { return %d; }\n", index, nonce, index))})
+		files = append(files, native_runtime.RuntimeFile{Name: fmt.Sprintf("unit%d.c", index), Contents: []byte(fmt.Sprintf("int unit%d_%s(void) { return %d; }\n", index, nonce, index))})
 	}
 	compiler, err := toolchain.Path("clang")
 	if err != nil {
 		t.Fatal(err)
 	}
 	quiet := t.TempDir()
-	if err := compileRuntime(files, Flags(Options{}), compiler, quiet, 2, nil, "0123456789abcdef"); err != nil {
+	if err := native_runtime.CompileRuntime(files, native_runtime.Flags(native_runtime.Options{}), compiler, quiet, 2, nil, "0123456789abcdef"); err != nil {
 		t.Fatal(err)
 	}
 	logged := t.TempDir()
 	lines := loggedSteps(t, func() {
-		if err := compileRuntime(files, Flags(Options{}), compiler, logged, 2, nil, "0123456789abcdef"); err != nil {
+		if err := native_runtime.CompileRuntime(files, native_runtime.Flags(native_runtime.Options{}), compiler, logged, 2, nil, "0123456789abcdef"); err != nil {
 			t.Fatal(err)
 		}
 	})
@@ -110,7 +111,7 @@ func TestRuntimeArchiveLogsItsCompilesAndItsHit(t *testing.T) {
 	for _, want := range []string{"miss", "hit"} {
 		var library string
 		lines := loggedSteps(t, func() {
-			if library, err = cachedRuntime(files, Flags(Options{}), compiler, "build log test", cache); err != nil {
+			if library, err = native_runtime.CachedRuntime(files, native_runtime.Flags(native_runtime.Options{}), compiler, "build log test", cache); err != nil {
 				t.Fatal(err)
 			}
 		})
@@ -148,11 +149,11 @@ func TestOneUnitBuildLogsItsClang(t *testing.T) {
 			t.Fatal(err)
 		}
 	}
-	if err := Build(source, quiet, Options{}); err != nil {
+	if err := Build(source, quiet, native_runtime.Options{}); err != nil {
 		t.Fatal(err)
 	}
 	lines := loggedSteps(t, func() {
-		if err := Build(source, logged, Options{}); err != nil {
+		if err := Build(source, logged, native_runtime.Options{}); err != nil {
 			t.Fatal(err)
 		}
 	})

@@ -11,6 +11,7 @@ import (
 	"time"
 
 	"github.com/system-inc/adamic/internal/native"
+	"github.com/system-inc/adamic/internal/native_runtime"
 )
 
 func init() {
@@ -83,7 +84,7 @@ func TestParserStackTinyLimit(t *testing.T) {
 	}
 	for _, sanitized := range []bool{false, true} {
 		binary := filepath.Join(t.TempDir(), "native")
-		if err := native.Build(native.C(program), binary, native.Options{Sanitize: sanitized}); err != nil {
+		if err := native.Build(native.C(program), binary, native_runtime.Options{Sanitize: sanitized}); err != nil {
 			t.Fatal(err)
 		}
 		for _, limit := range []string{"64", "128"} {
@@ -112,7 +113,7 @@ func TestParserStackGuardMutant(t *testing.T) {
 		t.Fatal(err)
 	}
 	binary := filepath.Join(t.TempDir(), "mutant")
-	if err := native.Build(parserStackWithoutGuard(t, native.C(program)), binary, native.Options{Sanitize: true}); err != nil {
+	if err := native.Build(parserStackWithoutGuard(t, native.C(program)), binary, native_runtime.Options{Sanitize: true}); err != nil {
 		t.Fatal(err)
 	}
 	actual := executeWith(t, []string{"ASAN_OPTIONS=detect_leaks=0"}, "/bin/sh", "-c", `ulimit -s 1024 && exec "$0"`, binary)
@@ -144,7 +145,7 @@ func TestParserStackGuardCost(t *testing.T) {
 		guarded := filepath.Join(t.TempDir(), "guarded")
 		unguarded := filepath.Join(t.TempDir(), "unguarded")
 		for binary, code := range map[string]string{guarded: source, unguarded: parserStackWithoutGuard(t, source)} {
-			if err := native.Build(code, binary, native.Options{}); err != nil {
+			if err := native.Build(code, binary, native_runtime.Options{}); err != nil {
 				t.Fatal(err)
 			}
 		}

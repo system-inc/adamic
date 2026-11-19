@@ -7,6 +7,7 @@ import (
 	"testing"
 
 	"github.com/system-inc/adamic/internal/ir"
+	"github.com/system-inc/adamic/internal/native_runtime"
 )
 
 func TestAsyncUnexpectedExceptionStops(t *testing.T) {
@@ -15,7 +16,7 @@ func TestAsyncUnexpectedExceptionStops(t *testing.T) {
 	e.checkThrown()
 	source := "#include \"adamic.h\"\nint main(void) { adamic_thrown = (adamic_object *)1;\n" + e.out.String() + "return 0; }\n"
 	binary := filepath.Join(t.TempDir(), "unexpected-exception")
-	if err := Build(source, binary, Options{}); err != nil {
+	if err := Build(source, binary, native_runtime.Options{}); err != nil {
 		t.Fatal(err)
 	}
 	output, err := exec.Command(binary).CombinedOutput()
@@ -38,7 +39,7 @@ int main(int argc, char **argv) {
 }
 `
 	binary := filepath.Join(t.TempDir(), "non-reference-rejection")
-	if err := Build(source, binary, Options{Sanitize: true}); err != nil {
+	if err := Build(source, binary, native_runtime.Options{Sanitize: true}); err != nil {
 		t.Fatal(err)
 	}
 	output, err := exec.Command(binary).CombinedOutput()

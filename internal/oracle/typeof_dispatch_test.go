@@ -6,6 +6,7 @@ import (
 	"testing"
 
 	"github.com/system-inc/adamic/internal/native"
+	"github.com/system-inc/adamic/internal/native_runtime"
 )
 
 const typeofDispatchFixture = "internal/oracle/testdata/typeof_dispatch.a"
@@ -45,7 +46,7 @@ static adamic_string *typeof_constructor_mutant(const adamic_heap *value, bool n
 }
 ` + mutant
 	binary := filepath.Join(t.TempDir(), "mutant")
-	if err := native.Build(mutant, binary, native.Options{Sanitize: true}); err != nil {
+	if err := native.Build(mutant, binary, native_runtime.Options{Sanitize: true}); err != nil {
 		t.Fatal(err)
 	}
 	if report := leakChecked(t, mutant, binary); report != "" {
@@ -85,7 +86,7 @@ static adamic_string *typeof_string_mutant(const adamic_heap *value, bool null) 
 }
 ` + mutant
 	binary := filepath.Join(t.TempDir(), "mutant")
-	if err := native.Build(mutant, binary, native.Options{Sanitize: true}); err != nil {
+	if err := native.Build(mutant, binary, native_runtime.Options{Sanitize: true}); err != nil {
 		t.Fatal(err)
 	}
 	if report := leakChecked(t, mutant, binary); report != "" {

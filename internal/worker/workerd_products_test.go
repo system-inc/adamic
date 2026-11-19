@@ -8,7 +8,7 @@ import (
 	"testing"
 
 	"github.com/system-inc/adamic/internal/buildcache"
-	"github.com/system-inc/adamic/internal/native"
+	"github.com/system-inc/adamic/internal/native_runtime"
 )
 
 // The two products compile inputs only: corpus observations always run fresh.
@@ -26,7 +26,7 @@ func workerdComputeProduct(t *testing.T, wasm, build bool) string {
 	inputs.Flags = append(inputs.Flags, fmt.Sprintf("wasm=%t", wasm))
 	if wasm {
 		requireWasm(t)
-		request, err := native.RuntimeRequestFor(native.Options{Release: true, Target: "wasm32-wasi"})
+		request, err := native_runtime.RuntimeRequestFor(native_runtime.Options{Release: true, Target: "wasm32-wasi"})
 		if err != nil {
 			t.Fatal(err)
 		}

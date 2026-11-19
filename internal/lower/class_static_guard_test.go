@@ -10,6 +10,7 @@ import (
 
 	"github.com/system-inc/adamic/internal/ir"
 	"github.com/system-inc/adamic/internal/native"
+	"github.com/system-inc/adamic/internal/native_runtime"
 )
 
 const staticSideEffectSource = `class Box { static { console.log('static side effect'); } } console.log('done');`
@@ -79,7 +80,7 @@ func TestClassStaticSideEffectMatchesNode(t *testing.T) {
 	}
 	want := []byte("static side effect\ndone\n")
 	binary := filepath.Join(directory, "native")
-	if err := native.Build(native.C(program), binary, native.Options{Sanitize: true}); err != nil {
+	if err := native.Build(native.C(program), binary, native_runtime.Options{Sanitize: true}); err != nil {
 		t.Fatal(err)
 	}
 	if got := run("native backend with ASan/UBSan", binary); !bytes.Equal(got, want) {

@@ -16,7 +16,7 @@ func TestRuntimeFilesHoldNoTest(t *testing.T) {
 	t.Parallel()
 	root := repositoryRoot(t)
 	for _, entry := range runtimeFiles {
-		// Reads: internal/native_runtime/c, internal/native
+		// Reads: internal/native_runtime
 		err := filepath.WalkDir(filepath.Join(root, filepath.FromSlash(entry)), func(path string, file fs.DirEntry, err error) error {
 			if err != nil {
 				return err

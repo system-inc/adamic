@@ -15,6 +15,7 @@ import (
 	"github.com/system-inc/adamic/internal/load"
 	"github.com/system-inc/adamic/internal/lower"
 	"github.com/system-inc/adamic/internal/native"
+	"github.com/system-inc/adamic/internal/native_runtime"
 )
 
 // gobRoundTripPaths is every fixture stage 0 lowers, once each, from the repository root.
@@ -74,7 +75,7 @@ func negativeZeros(value reflect.Value) int {
 // The round trip is five families, one for each way native emits a program (release, Debug, the two sanitized builds
 // and wasm32-wasi), each sharded as the oracle's others are (families_test.go): one over the whole corpus was 187 s of
 // one core per variant (Golem, Oct 31), most of it checking the source.
-var gobRoundTripVariants = map[string]native.Options{
+var gobRoundTripVariants = map[string]native_runtime.Options{
 	"TestGobRoundTripEmitsTheSameRelease":         {},
 	"TestGobRoundTripEmitsTheSameDebug":           {Debug: true},
 	"TestGobRoundTripEmitsTheSameSanitized":       {Sanitize: true},
@@ -133,7 +134,7 @@ func gobRoundTripShard(t *testing.T, name string, shard int) {
 				t.Fatalf("one program, two gob encodings (%d and %d bytes)", first.Len(), second.Len())
 			}
 			zeros := negativeZeros(reflect.ValueOf(program))
-			want := native.CWithOptions(program, options)
+			want := native.CWithOptions(program, native.EmitOptions{Options: options})
 			var decoded ir.Program
 			if err := gob.NewDecoder(&first).Decode(&decoded); err != nil {
 				t.Fatal(err)
@@ -147,7 +148,7 @@ func gobRoundTripShard(t *testing.T, name string, shard int) {
 			if zeros > 0 {
 				t.Logf("holds %d -0 constants, as its decode does", zeros)
 			}
-			if got := native.CWithOptions(&decoded, options); got != want {
+			if got := native.CWithOptions(&decoded, native.EmitOptions{Options: options}); got != want {
 				line := firstDifferingLine([]byte(want), []byte(got))
 				t.Fatalf("the C emitted from the decode differs at line %d:\nlowered: %s\ndecoded: %s", line,
 					cLine(want, line), cLine(got, line))

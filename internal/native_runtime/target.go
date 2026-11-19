@@ -1,4 +1,4 @@
-package native
+package native_runtime
 
 import (
 	"fmt"
@@ -12,13 +12,13 @@ import (
 	"github.com/system-inc/adamic/internal/toolchain"
 )
 
-// buildPlatform is the goos and goarch a build is for: the environment's `GOOS` and `GOARCH`, read by toolchain.Platform
+// BuildPlatform is the goos and goarch a build is for: the environment's `GOOS` and `GOARCH`, read by toolchain.Platform
 // (buildPlatformOf), the one reader cgo's compilers read too, so a build cross-compiled for arm64 on an amd64 box names,
 // keys and links arm64 (#5xsd2ha). Either one unset or empty is this process's own, runtime.GOOS or runtime.GOARCH,
 // which is what go itself builds for then. That fallback is a person's road, running adamic or go test by hand, never
 // Loom's: every unit environment Loom builds carries both. The two are read by name, so runtimeproducts' census sees
 // which variables a build reads; the process's environment holds one setting of each, as the list does.
-func buildPlatform() (goos string, goarch string) {
+func BuildPlatform() (goos string, goarch string) {
 	return buildPlatformOf([]string{"GOOS=" + os.Getenv("GOOS"), "GOARCH=" + os.Getenv("GOARCH")})
 }
 
@@ -28,14 +28,14 @@ func buildPlatformOf(environment []string) (goos string, goarch string) {
 	return toolchain.Platform(environment)
 }
 
-// darwinBuild says whether the build is for macOS (buildPlatform): its link is ld64's, which loads an archive whole with
+// DarwinBuild says whether the build is for macOS (BuildPlatform): its link is ld64's, which loads an archive whole with
 // -force_load and records each object it links in a debug map, where an ELF link takes --whole-archive and lld.
-func darwinBuild() bool {
-	goos, _ := buildPlatform()
+func DarwinBuild() bool {
+	goos, _ := BuildPlatform()
 	return goos == "darwin"
 }
 
-// ResolveTarget is options with an empty Target made the build's own triple (toolchain.Triple of buildPlatform, the one
+// ResolveTarget is options with an empty Target made the build's own triple (toolchain.Triple of BuildPlatform, the one
 // table cgo's compilers read too), so every flag and key reads a named target, never "" for native. Any other Target is
 // kept as it is, for ValidateOptions to accept or refuse. It fails only when the build's platform has no row. Flags,
 // ValidateOptions and every key resolve through it.
@@ -43,7 +43,7 @@ func ResolveTarget(options Options) (Options, error) {
 	if options.Target != "" {
 		return options, nil
 	}
-	triple, err := toolchain.Triple(buildPlatform())
+	triple, err := toolchain.Triple(BuildPlatform())
 	if err != nil {
 		return options, fmt.Errorf("native: %w", err)
 	}
@@ -51,12 +51,12 @@ func ResolveTarget(options Options) (Options, error) {
 	return options, nil
 }
 
-// nativeTargetRefusal says why a native triple can't be built here, or nil when it can: one the table doesn't hold, or a
+// NativeTargetRefusal says why a native triple can't be built here, or nil when it can: one the table doesn't hold, or a
 // triple for another platform than this host's. A darwin cross build would need an SDK for that arch, and none is
 // pinned. A linux cross build (`GOARCH=arm64` on an amd64 box) would need that arch's C library and headers, and with
 // none pinned clang would compile against this host's, so it's refused by name until #5xsd2ha's second half pins its
 // sysroot.
-func nativeTargetRefusal(triple string) error {
+func NativeTargetRefusal(triple string) error {
 	goos, goarch, found := toolchain.TriplePlatform(triple)
 	if !found {
 		return fmt.Errorf("native: unsupported target %q", triple)
@@ -83,7 +83,7 @@ func ValidateOptions(options Options) error {
 		return fmt.Errorf("native: request exports require wasm32-wasi")
 	}
 	if options.Target != "wasm32-wasi" {
-		return nativeTargetRefusal(options.Target)
+		return NativeTargetRefusal(options.Target)
 	}
 	if options.Sanitize {
 		return fmt.Errorf("native: sanitizers are not supported for wasm32-wasi")
@@ -93,7 +93,7 @@ func ValidateOptions(options Options) error {
 	if options.Debug {
 		return fmt.Errorf("native: debug builds are not supported for wasm32-wasi")
 	}
-	if options.cpu != "" {
+	if options.CPU != "" {
 		return fmt.Errorf("native: native CPU selection is not supported for wasm32-wasi")
 	}
 	sysroot := os.Getenv("WASI_SYSROOT")
@@ -148,16 +148,18 @@ func checkWASIClang(path string) error {
 	return nil
 }
 
-// The pinned SDK compiler for wasm32, and the native compiler otherwise. ValidateOptions has refused any
-// other wasm32 clang before this is reached.
-func compilerName(options Options) string {
+// CompilerName is the pinned SDK compiler for wasm32, and the native compiler otherwise. ValidateOptions has refused
+// any other wasm32 clang before this is reached.
+func CompilerName(options Options) string {
 	if options.Target == "wasm32-wasi" {
 		return filepath.Join(filepath.Dir(filepath.Dir(os.Getenv("WASI_SYSROOT"))), "bin", "clang")
 	}
 	return "clang"
 }
 
-func archiverName(compiler string) string {
+// ArchiverName is the archiver beside compiler, llvm-ar where it sits there, and ar, found as toolchain finds a bare
+// name, otherwise.
+func ArchiverName(compiler string) string {
 	candidate := filepath.Join(filepath.Dir(compiler), "llvm-ar")
 	if info, err := os.Stat(candidate); err == nil && info.Mode().IsRegular() && info.Mode().Perm()&0111 != 0 {
 		return candidate

@@ -12,6 +12,7 @@ import (
 	"github.com/system-inc/adamic/internal/ir"
 	"github.com/system-inc/adamic/internal/lower"
 	"github.com/system-inc/adamic/internal/native"
+	"github.com/system-inc/adamic/internal/native_runtime"
 )
 
 const refusalFixtureRoot = "internal/oracle/testdata/refusal_rulings/"
@@ -141,7 +142,7 @@ func rulingCount(t *testing.T, file string, typescript bool) (string, func() str
 func rulingCountRun(t *testing.T, file string, typescript bool, source string) string {
 	t.Helper()
 	binary := filepath.Join(t.TempDir(), "counted")
-	if err := native.Build(source, binary, native.Options{Count: true}); err != nil {
+	if err := native.Build(source, binary, native_runtime.Options{Count: true}); err != nil {
 		t.Fatal(err)
 	}
 	name, args := pinnedStack(binary)

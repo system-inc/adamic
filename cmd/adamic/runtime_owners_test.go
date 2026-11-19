@@ -17,8 +17,8 @@ import (
 
 	"github.com/system-inc/adamic/cmd/adamic/treewalk"
 	"github.com/system-inc/adamic/internal/buildcache"
-	"github.com/system-inc/adamic/internal/native"
 	"github.com/system-inc/adamic/internal/native/runtimeproducts"
+	"github.com/system-inc/adamic/internal/native_runtime"
 	"github.com/system-inc/adamic/internal/wasitest"
 )
 
@@ -43,7 +43,7 @@ func TestCommandRuntimeArchivesHaveOneBuilder(t *testing.T) {
 				continue
 			}
 		}
-		request, err := native.RuntimeRequestFor(product.options, product.features...)
+		request, err := native_runtime.RuntimeRequestFor(product.options, product.features...)
 		if err != nil {
 			t.Fatal(err)
 		}
@@ -82,7 +82,7 @@ func productsBuildKey(t *testing.T, root, key string, features []string) bool {
 				continue
 			}
 		}
-		request, err := native.RuntimeRequestFor(variant.Options, features...)
+		request, err := native_runtime.RuntimeRequestFor(variant.Options, features...)
 		if err != nil {
 			t.Fatal(err)
 		}

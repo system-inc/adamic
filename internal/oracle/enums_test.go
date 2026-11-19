@@ -8,6 +8,7 @@ import (
 	"github.com/system-inc/adamic/internal/ir"
 	"github.com/system-inc/adamic/internal/leakcheck"
 	"github.com/system-inc/adamic/internal/native"
+	"github.com/system-inc/adamic/internal/native_runtime"
 )
 
 func init() {
@@ -97,7 +98,7 @@ func TestEnumSemanticMutants(t *testing.T) {
 				t.Fatal("mutant changed no IR")
 			}
 			binary := filepath.Join(t.TempDir(), "mutant")
-			if err := native.Build(native.C(program), binary, native.Options{Sanitize: true}); err != nil {
+			if err := native.Build(native.C(program), binary, native_runtime.Options{Sanitize: true}); err != nil {
 				t.Fatal(err)
 			}
 			result := executeWith(t, []string{"ASAN_OPTIONS=detect_leaks=0", "UBSAN_OPTIONS=halt_on_error=1"}, binary)
@@ -134,7 +135,7 @@ func TestEnumCleanupMutant(t *testing.T) {
 	}
 	code = strings.Replace(code, release, "", 1)
 	binary := filepath.Join(t.TempDir(), "mutant")
-	if err := native.Build(code, binary, native.Options{Sanitize: true}); err != nil {
+	if err := native.Build(code, binary, native_runtime.Options{Sanitize: true}); err != nil {
 		t.Fatal(err)
 	}
 	// Dead compiler temporaries may still resemble roots in registers or the returned main stack.

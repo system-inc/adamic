@@ -3,6 +3,8 @@ package native
 import (
 	"path/filepath"
 	"testing"
+
+	"github.com/system-inc/adamic/internal/native_runtime"
 )
 
 // Direct own-property queries on Error remain NotYet in lowering. Probe the runtime
@@ -44,7 +46,7 @@ int main(void) {
 		t.Fatalf("Node changed: %q", want)
 	}
 	binary := filepath.Join(t.TempDir(), "error-message")
-	if err := Build(source, binary, Options{Sanitize: true}); err != nil {
+	if err := Build(source, binary, native_runtime.Options{Sanitize: true}); err != nil {
 		t.Fatal(err)
 	}
 	if got := runWithInput(t, "", binary); got != want {

@@ -11,6 +11,7 @@ import (
 	"github.com/system-inc/adamic/internal/leakcheck"
 	"github.com/system-inc/adamic/internal/lower"
 	"github.com/system-inc/adamic/internal/native"
+	"github.com/system-inc/adamic/internal/native_runtime"
 )
 
 const memoryExamples = "internal/oracle/testdata/memory_examples/"
@@ -43,7 +44,7 @@ func checkMemoryExample(t *testing.T, name, output string) {
 	}
 	// Rebuild the documented counts even when ordinary oracle observations are cached.
 	binary := filepath.Join(t.TempDir(), "counted")
-	if err := native.Build(native.C(program), binary, native.Options{Count: true}); err != nil {
+	if err := native.Build(native.C(program), binary, native_runtime.Options{Count: true}); err != nil {
 		t.Fatal(err)
 	}
 	command, arguments := pinnedStack(binary)

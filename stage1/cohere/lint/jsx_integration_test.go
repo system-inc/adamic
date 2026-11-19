@@ -15,6 +15,7 @@ import (
 	"github.com/system-inc/adamic/internal/load"
 	"github.com/system-inc/adamic/internal/lower"
 	"github.com/system-inc/adamic/internal/native"
+	"github.com/system-inc/adamic/internal/native_runtime"
 )
 
 // jsxSpansOracle builds testdata/jsx_spans.go inside cohere, which says whether a file holds JSX.
@@ -74,7 +75,7 @@ func buildNative(t *testing.T, entry string, sanitize bool) string {
 		t.Fatal(err)
 	}
 	binary := filepath.Join(t.TempDir(), "native")
-	if err := native.Build(native.C(lowered), binary, native.Options{Sanitize: sanitize}); err != nil {
+	if err := native.Build(native.C(lowered), binary, native_runtime.Options{Sanitize: sanitize}); err != nil {
 		t.Fatal(err)
 	}
 	return binary

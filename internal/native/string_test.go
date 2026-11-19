@@ -7,6 +7,8 @@ import (
 	"path/filepath"
 	"strings"
 	"testing"
+
+	"github.com/system-inc/adamic/internal/native_runtime"
 )
 
 // stringHarness answers one question per line: an operation, two strings as hexadecimal UTF-8, and
@@ -183,7 +185,7 @@ func TestStringsMatchJavaScript(t *testing.T) {
 	}
 
 	binary := filepath.Join(t.TempDir(), "harness")
-	if err := Build(stringHarness, binary, Options{Sanitize: true}); err != nil {
+	if err := Build(stringHarness, binary, native_runtime.Options{Sanitize: true}); err != nil {
 		t.Fatal(err)
 	}
 	native := strings.Split(strings.TrimSuffix(runWithInput(t, input.String(), binary), "\n"), "\n")

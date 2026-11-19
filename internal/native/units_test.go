@@ -12,6 +12,7 @@ import (
 	"testing"
 	"time"
 
+	"github.com/system-inc/adamic/internal/native_runtime"
 	"github.com/system-inc/adamic/internal/toolchain"
 )
 
@@ -40,7 +41,7 @@ int main(void) { int first = adamic_next(); int second = adamic_next(); printf("
 	for _, uncached := range []string{"0", "1"} {
 		t.Setenv("ADAMIC_GATE_UNCACHED", uncached)
 		binary := filepath.Join(t.TempDir(), "program")
-		if err := Build(source, binary, Options{Split: true, Sanitize: true, Jobs: 2}); err != nil {
+		if err := Build(source, binary, native_runtime.Options{Split: true, Sanitize: true, Jobs: 2}); err != nil {
 			t.Fatal(err)
 		}
 		if output, err := exec.Command(binary).CombinedOutput(); err != nil || string(output) != "1 2 2\n" {
@@ -61,8 +62,8 @@ func TestUnitCacheFlagsHoldSanitizer(t *testing.T) {
 	cache := filepath.Join(directory, "cache")
 	unit := compilationUnit{"probe.c", `int adamic_probe(int input) { return input + 2147483647; }` + "\n"}
 	// The unit is its own first line, and nothing else is beside it.
-	compile := func(options Options) string {
-		flags := Flags(options)
+	compile := func(options native_runtime.Options) string {
+		flags := native_runtime.Flags(options)
 		sanitized := options.Sanitize || options.ThreadSanitize
 		t.Helper()
 		keying, err := newUnitKeying(unit.source, nil, flags, compiler, toolchain.Env(), sanitized)
@@ -75,8 +76,8 @@ func TestUnitCacheFlagsHoldSanitizer(t *testing.T) {
 		}
 		return object
 	}
-	release := compile(Options{})
-	sanitized := compile(Options{Sanitize: true})
+	release := compile(native_runtime.Options{})
+	sanitized := compile(native_runtime.Options{Sanitize: true})
 	// Do not assert that paths differ: the runtime sanitizer observation is the proof.
 	_ = release
 	main := filepath.Join(directory, "main.c")
@@ -84,7 +85,7 @@ func TestUnitCacheFlagsHoldSanitizer(t *testing.T) {
 		t.Fatal(err)
 	}
 	binary := filepath.Join(directory, "probe")
-	args := append(Flags(Options{Sanitize: true}), main, sanitized, "-o", binary)
+	args := append(native_runtime.Flags(native_runtime.Options{Sanitize: true}), main, sanitized, "-o", binary)
 	if output, err := toolchain.Command(compiler, args...).CombinedOutput(); err != nil {
 		t.Fatalf("link: %v\n%s", err, output)
 	}
@@ -149,11 +150,11 @@ func TestUnitSystemHeaderProvenance(t *testing.T) {
 	header := "#pragma clang system_header\nstruct probe_file { int (* _Nullable close)(void *); };\n#define PROBE_VALUE 1\n"
 	firstLine := "#include \"probe-system.h\"\n"
 	unit := compilationUnit{"probe.c", firstLine + "int adamic_probe(void) { return PROBE_VALUE; }\n"}
-	flags := append(Flags(Options{}), "-Wno-system-headers")
+	flags := append(native_runtime.Flags(native_runtime.Options{}), "-Wno-system-headers")
 	// The header is one of the files beside the unit, so a change to it moves the key by its file part.
 	compile := func(header string, uncached bool) string {
 		t.Helper()
-		files := []runtimeFile{{"probe-system.h", []byte(header)}}
+		files := []native_runtime.RuntimeFile{{Name: "probe-system.h", Contents: []byte(header)}}
 		var keying *unitKeying
 		if !uncached {
 			var err error
@@ -192,7 +193,7 @@ func TestUnitSystemHeaderProvenance(t *testing.T) {
 	// The same extension must remain an error outside a system header. This prevents fixing
 	// provenance by disabling nullability or pedantic diagnostics for the whole unit.
 	userHeader := strings.TrimPrefix(header, "#pragma clang system_header\n")
-	files := []runtimeFile{{"probe-system.h", []byte(userHeader)}}
+	files := []native_runtime.RuntimeFile{{Name: "probe-system.h", Contents: []byte(userHeader)}}
 	if _, err := compileUnit(unit, files, flags, compiler, nil, cache, directory, nil, false); err == nil || !strings.Contains(err.Error(), "-Wnullability-extension") {
 		t.Fatalf("user-header extension must be rejected: %v", err)
 	}
@@ -247,9 +248,9 @@ int main(void) { printf("%d\n", 10 * adamic_a + adamic_b); return 0; }
 					}
 				}
 				binary := filepath.Join(t.TempDir(), "program")
-				options := Options{Split: true, Sanitize: true, Jobs: 2}
+				options := native_runtime.Options{Split: true, Sanitize: true, Jobs: 2}
 				if target == "wasm32-wasi" {
-					options = Options{Target: target}
+					options = native_runtime.Options{Target: target}
 				}
 				if err := Build(code, binary, options); err != nil {
 					t.Fatal(err)
@@ -301,7 +302,7 @@ int main(void) { return adamic_probe(); }
 		}
 	}
 	binary := filepath.Join(t.TempDir(), "split")
-	if err := Build(source, binary, Options{Split: true, Sanitize: true}); err != nil {
+	if err := Build(source, binary, native_runtime.Options{Split: true, Sanitize: true}); err != nil {
 		t.Fatal(err)
 	}
 	if output, err := exec.Command(binary).CombinedOutput(); err != nil || len(output) != 0 {
@@ -345,7 +346,7 @@ func TestSplitMixesHitsAndMisses(t *testing.T) {
 		if err := os.MkdirAll(filepath.Dir(binary), 0o755); err != nil {
 			t.Fatal(err)
 		}
-		if err := Build(source, binary, Options{Split: true, Jobs: 2}); err != nil {
+		if err := Build(source, binary, native_runtime.Options{Split: true, Jobs: 2}); err != nil {
 			t.Fatal(err)
 		}
 		output, err := exec.Command(binary).CombinedOutput()

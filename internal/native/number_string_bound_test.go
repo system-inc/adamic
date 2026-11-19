@@ -5,6 +5,8 @@ import (
 	"strconv"
 	"strings"
 	"testing"
+
+	"github.com/system-inc/adamic/internal/native_runtime"
 )
 
 // The runtime reports its own bound so this test follows changes to the formatter's buffer.
@@ -37,7 +39,7 @@ int main(void) {
 }
 `
 	binary := filepath.Join(t.TempDir(), "harness")
-	if err := Build(harness, binary, Options{Sanitize: true}); err != nil {
+	if err := Build(harness, binary, native_runtime.Options{Sanitize: true}); err != nil {
 		t.Fatal(err)
 	}
 	input := strings.Join(values, "\n") + "\n"

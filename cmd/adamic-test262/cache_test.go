@@ -14,6 +14,7 @@ import (
 	"time"
 
 	"github.com/system-inc/adamic/internal/native"
+	"github.com/system-inc/adamic/internal/native_runtime"
 )
 
 func TestCacheKeyDimensions(t *testing.T) {
@@ -287,7 +288,7 @@ func TestCompilerCacheProgram(t *testing.T) {
 			return value, true
 		})
 		binary := filepath.Join(t.TempDir(), "program")
-		if err := native.Build(compiled.Stdout, binary, native.Options{}); err != nil {
+		if err := native.Build(compiled.Stdout, binary, native_runtime.Options{}); err != nil {
 			t.Fatal(err)
 		}
 		result := runCommand(15*time.Second, nil, binary)

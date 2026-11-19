@@ -5,6 +5,7 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
+	"github.com/system-inc/adamic/internal/native_runtime"
 	"github.com/system-inc/adamic/stage1/cohere/gitignore/oracles"
 	"hash/fnv"
 	"os"
@@ -226,11 +227,11 @@ func portBuildProduct(t *testing.T, applied *mutant) string {
 			return err
 		}
 		source := native.C(program)
-		if err := native.Build(source, filepath.Join(dir, "port"), native.Options{Sanitize: true}); err != nil {
+		if err := native.Build(source, filepath.Join(dir, "port"), native_runtime.Options{Sanitize: true}); err != nil {
 			return err
 		}
 		if runtime.GOOS == "darwin" {
-			return native.Build(source, filepath.Join(dir, "port-leaks"), native.Options{})
+			return native.Build(source, filepath.Join(dir, "port-leaks"), native_runtime.Options{})
 		}
 		return nil
 	})

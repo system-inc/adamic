@@ -6,6 +6,8 @@ import (
 	"path/filepath"
 	"strings"
 	"testing"
+
+	"github.com/system-inc/adamic/internal/native_runtime"
 )
 
 // Every power of two a double can be, from 2^-1074 to 2^1023, with the two doubles on each side and
@@ -31,7 +33,7 @@ func TestPowersOfTwoFormatAsJavaScriptDoes(t *testing.T) {
 	}
 
 	binary := filepath.Join(t.TempDir(), "harness")
-	if err := Build(numberHarness, binary, Options{Sanitize: true}); err != nil {
+	if err := Build(numberHarness, binary, native_runtime.Options{Sanitize: true}); err != nil {
 		t.Fatal(err)
 	}
 	native := strings.Split(strings.TrimSuffix(runWithInput(t, input.String(), binary), "\n"), "\n")

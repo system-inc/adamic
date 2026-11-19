@@ -16,6 +16,7 @@ import (
 	"github.com/system-inc/adamic/internal/load"
 	"github.com/system-inc/adamic/internal/lower"
 	"github.com/system-inc/adamic/internal/native"
+	"github.com/system-inc/adamic/internal/native_runtime"
 )
 
 func init() {
@@ -72,12 +73,12 @@ func ownershipProgram(t *testing.T, path string) (string, run) {
 // built ahead; each leaf runs one Proven move independently of compilation.
 func ownershipProduct(t *testing.T, tsan bool) string {
 	t.Helper()
-	options := native.Options{Sanitize: !tsan, ThreadSanitize: tsan}
+	options := native_runtime.Options{Sanitize: !tsan, ThreadSanitize: tsan}
 	inputs := buildcache.Inputs{Name: fmt.Sprintf("ownership-query-native-%t", tsan), Files: append(compilerinputs.Lowering(), "internal/oracle/ownership_query_test.go")}
 	for _, path := range ownershipProvenPaths {
 		inputs.Files = append(inputs.Files, path)
 	}
-	request, err := native.RuntimeRequestFor(options, "ADAMIC_CANONICAL_CLOSURES")
+	request, err := native_runtime.RuntimeRequestFor(options, "ADAMIC_CANONICAL_CLOSURES")
 	if err != nil {
 		t.Fatal(err)
 	}

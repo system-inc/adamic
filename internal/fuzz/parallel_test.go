@@ -10,6 +10,7 @@ import (
 	"github.com/system-inc/adamic/internal/buildcache"
 	"github.com/system-inc/adamic/internal/leakcheck"
 	"github.com/system-inc/adamic/internal/native"
+	"github.com/system-inc/adamic/internal/native_runtime"
 )
 
 // Each runner case is independently selectable within the gate budget.
@@ -148,11 +149,11 @@ int main(void) {
 				t.Fatal(err)
 			}
 			binary := filepath.Join(directory, "sanitized")
-			if err := native.Build(code, binary, native.Options{Sanitize: true}); err != nil {
+			if err := native.Build(code, binary, native_runtime.Options{Sanitize: true}); err != nil {
 				t.Fatal(err)
 			}
 			counted := filepath.Join(directory, "counted-proof")
-			if err := native.Build(code, counted, native.Options{Count: true}); err != nil {
+			if err := native.Build(code, counted, native_runtime.Options{Count: true}); err != nil {
 				t.Fatal(err)
 			}
 			checkout := &Checkout{}

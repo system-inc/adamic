@@ -10,6 +10,7 @@ import (
 
 	"github.com/system-inc/adamic/internal/ir"
 	"github.com/system-inc/adamic/internal/native"
+	"github.com/system-inc/adamic/internal/native_runtime"
 )
 
 func TestProcessExitSafeInteger_000(t *testing.T)         { t.Parallel(); processExitSafeInteger(t, 0) }
@@ -75,7 +76,7 @@ func processExitSafeInteger(t *testing.T, shard int) {
 			code = strings.ReplaceAll(code, name+"(", "safe_mutant_"+name+"(")
 		}
 		binary := filepath.Join(t.TempDir(), "mutant")
-		if err := native.Build(implementation+"\n"+code, binary, native.Options{Sanitize: true}); err != nil {
+		if err := native.Build(implementation+"\n"+code, binary, native_runtime.Options{Sanitize: true}); err != nil {
 			t.Fatal(err)
 		}
 		got := execute(t, binary)

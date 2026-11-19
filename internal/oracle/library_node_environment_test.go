@@ -11,6 +11,7 @@ import (
 	"github.com/system-inc/adamic/internal/childguard"
 	"github.com/system-inc/adamic/internal/javascript"
 	"github.com/system-inc/adamic/internal/native"
+	"github.com/system-inc/adamic/internal/native_runtime"
 )
 
 // These host fixtures have their own explicit-environment harness: no inherited
@@ -39,9 +40,9 @@ func processEnvironmentBackends(t *testing.T, fixture string, environment []stri
 	}
 	for _, mode := range []struct {
 		name    string
-		options native.Options
+		options native_runtime.Options
 	}{
-		{"native", native.Options{}}, {"ASan", native.Options{Sanitize: true}},
+		{"native", native_runtime.Options{}}, {"ASan", native_runtime.Options{Sanitize: true}},
 	} {
 		binary := filepath.Join(t.TempDir(), mode.name)
 		if err := native.Build(native.C(program), binary, mode.options); err != nil {
@@ -141,7 +142,7 @@ func processEnvironmentMutationAgreement(t *testing.T, fixture, want string) {
 		t.Fatal(err)
 	}
 	binary := filepath.Join(t.TempDir(), "counted")
-	if err := native.Build(native.C(program), binary, native.Options{Count: true}); err != nil {
+	if err := native.Build(native.C(program), binary, native_runtime.Options{Count: true}); err != nil {
 		t.Fatal(err)
 	}
 	got := processEnvironmentRun(t, nil, binary)

@@ -9,6 +9,8 @@ import (
 	goruntime "runtime"
 	"strings"
 	"testing"
+
+	"github.com/system-inc/adamic/internal/native_runtime"
 )
 
 // parseHarness parses each line: its kind ('i' for parseInt, 'f' for parseFloat), the radix as 16
@@ -169,7 +171,7 @@ func TestNumbersParseExactlyAsJavaScriptDoes(t *testing.T) {
 	}
 
 	binary := filepath.Join(t.TempDir(), "harness")
-	if err := Build(parseHarness, binary, Options{Sanitize: true}); err != nil {
+	if err := Build(parseHarness, binary, native_runtime.Options{Sanitize: true}); err != nil {
 		t.Fatal(err)
 	}
 	native := strings.Split(strings.TrimSuffix(runWithInput(t, input.String(), binary), "\n"), "\n")

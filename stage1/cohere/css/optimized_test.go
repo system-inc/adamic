@@ -12,6 +12,7 @@ import (
 	"github.com/system-inc/adamic/internal/load"
 	"github.com/system-inc/adamic/internal/lower"
 	"github.com/system-inc/adamic/internal/native"
+	"github.com/system-inc/adamic/internal/native_runtime"
 )
 
 // cssLoweringFiles are what lowering a css program reads, the files cssPrinterProduct declares.
@@ -32,7 +33,7 @@ func cssOptimizedNative(t *testing.T, index int) string {
 		inputs := buildcache.Inputs{
 			Name:      "css-optimized-native-" + cssOptimizedMains[index],
 			Files:     cssLoweringFiles,
-			Flags:     append(native.Flags(native.Options{}), "ADAMIC_NATIVE_SPLIT="+os.Getenv("ADAMIC_NATIVE_SPLIT")),
+			Flags:     append(native_runtime.Flags(native_runtime.Options{}), "ADAMIC_NATIVE_SPLIT="+os.Getenv("ADAMIC_NATIVE_SPLIT")),
 			Toolchain: []string{runtime.Version(), buildcache.CompilerReport("clang"), runtime.GOOS, runtime.GOARCH},
 		}
 		directory := buildcache.Product(t, inputs, func(dir string) error {
@@ -48,7 +49,7 @@ func cssOptimizedNative(t *testing.T, index int) string {
 			if err != nil {
 				return err
 			}
-			return native.Build(native.C(program), filepath.Join(dir, "native"), native.Options{})
+			return native.Build(native.C(program), filepath.Join(dir, "native"), native_runtime.Options{})
 		})
 		cssOptimizedNatives[index] = filepath.Join(directory, "native")
 	})

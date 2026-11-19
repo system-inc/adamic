@@ -12,19 +12,23 @@ import (
 	bridge "github.com/system-inc/adamic/bridge/tsgo"
 	"github.com/system-inc/adamic/internal/load"
 	"github.com/system-inc/adamic/internal/lower"
+	"github.com/system-inc/adamic/internal/native_runtime"
 	"github.com/system-inc/adamic/internal/toolchain"
 )
 
-func TestTSGoCacheRelease(t *testing.T) { t.Parallel(); tsgoCacheWitness(t, Options{}) }
+func TestTSGoCacheRelease(t *testing.T) { t.Parallel(); tsgoCacheWitness(t, native_runtime.Options{}) }
 func TestTSGoCacheShippedRelease(t *testing.T) {
 	t.Parallel()
-	tsgoCacheWitness(t, Options{Release: true})
+	tsgoCacheWitness(t, native_runtime.Options{Release: true})
 }
-func TestTSGoCacheSanitized(t *testing.T) { t.Parallel(); tsgoCacheWitness(t, Options{Sanitize: true}) }
+func TestTSGoCacheSanitized(t *testing.T) {
+	t.Parallel()
+	tsgoCacheWitness(t, native_runtime.Options{Sanitize: true})
+}
 
 // The fixture exercises the include-order features without calling the checker ABI.
 // Stub symbols permit a real checker link while keeping each test's setup bounded.
-func tsgoCacheWitness(t *testing.T, options Options) {
+func tsgoCacheWitness(t *testing.T, options native_runtime.Options) {
 	t.Helper()
 	fixture, err := filepath.Abs("../oracle/testdata/arguments_length_extended.a")
 	if err != nil {
@@ -67,7 +71,7 @@ func tsgoCacheWitness(t *testing.T, options Options) {
 	if output, err := compile.CombinedOutput(); err != nil {
 		t.Fatalf("stubs: %v\n%s", err, output)
 	}
-	archive := toolchain.CommandIn(directory, archiverName(compiler), "rcs", "checker.a", "stubs.o")
+	archive := toolchain.CommandIn(directory, native_runtime.ArchiverName(compiler), "rcs", "checker.a", "stubs.o")
 	if output, err := archive.CombinedOutput(); err != nil {
 		t.Fatalf("archive: %v\n%s", err, output)
 	}

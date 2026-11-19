@@ -16,6 +16,7 @@ import (
 	"time"
 
 	"github.com/system-inc/adamic/internal/buildcache"
+	"github.com/system-inc/adamic/internal/native_runtime"
 )
 
 func debugPathFixture(t *testing.T, root string) string {
@@ -208,7 +209,7 @@ func TestDebugRuntimeArchiveShared(t *testing.T) {
 
 func TestDebugSanitizedUnitInputs(t *testing.T) {
 	t.Parallel()
-	options := Options{Debug: true, Sanitize: true, Split: true, DebugDirectory: t.TempDir()}
+	options := native_runtime.Options{Debug: true, Sanitize: true, Split: true, DebugDirectory: t.TempDir()}
 	source := "#include \"adamic.h\"\nstatic int adamic_value = 1;\nstatic int *adamic_probe(void) { return &adamic_value; }\nint main(int argc, char **argv) { (void)argv; return *adamic_probe() == argc ? 0 : 1; }\n"
 	binary := filepath.Join(t.TempDir(), "program")
 	if err := buildUnitsWithLibrary(source, binary, options, debugArchiveProduct(t, options, false), ""); err != nil {

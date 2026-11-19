@@ -16,6 +16,7 @@ import (
 	"github.com/system-inc/adamic/internal/javascript"
 	"github.com/system-inc/adamic/internal/lower"
 	"github.com/system-inc/adamic/internal/native"
+	"github.com/system-inc/adamic/internal/native_runtime"
 )
 
 func processExitOutput(t *testing.T, destination string, shared, backpressure bool, command ...string) run {
@@ -56,7 +57,7 @@ func processAsyncScript(t *testing.T, script string) string {
 // Runtime mutations are included in the generated translation unit with renamed public
 // symbols. This exercises the real output buffer, without editing the checkout or its cache.
 func processOutputProgram(t *testing.T, source, mutation string) (string, string, string) {
-	return processOutputProgramWith(t, source, mutation, native.Options{Sanitize: true})
+	return processOutputProgramWith(t, source, mutation, native_runtime.Options{Sanitize: true})
 }
 
 // processOutputSources prepares the shared source and JavaScript without building
@@ -79,7 +80,7 @@ func processOutputSources(t *testing.T, source string) (*ir.Program, string, str
 	return program, path, script
 }
 
-func processOutputProgramWith(t *testing.T, source, mutation string, options native.Options) (string, string, string) {
+func processOutputProgramWith(t *testing.T, source, mutation string, options native_runtime.Options) (string, string, string) {
 	t.Helper()
 	program, path, script := processOutputSources(t, source)
 	code := native.C(program)
@@ -148,9 +149,9 @@ func processExitOutputCase(t *testing.T, shard int) {
 		}
 		t.Run(one.name, func(t *testing.T) {
 			t.Parallel()
-			options := native.Options{Sanitize: true}
+			options := native_runtime.Options{Sanitize: true}
 			if wasm {
-				options = native.Options{Target: "wasm32-wasi"}
+				options = native_runtime.Options{Target: "wasm32-wasi"}
 			}
 			path, binary, script := processOutputProgramWith(t, one.source, "", options)
 			runner := filepath.Join(repository, "oracle/node.mjs")
@@ -307,12 +308,12 @@ func TestProcessExitDoesNotUnwind_000(t *testing.T) { t.Parallel(); processExitD
 func TestProcessExitDoesNotUnwind_001(t *testing.T) { t.Parallel(); processExitDoesNotUnwind(t, true) }
 
 func processExitDoesNotUnwind(t *testing.T, wasm bool) {
-	options := native.Options{Sanitize: true}
+	options := native_runtime.Options{Sanitize: true}
 	if wasm {
 		if os.Getenv("ADAMIC_ORACLE_WASI") != "1" {
 			t.Skip("set ADAMIC_ORACLE_WASI=1")
 		}
-		options = native.Options{Target: "wasm32-wasi"}
+		options = native_runtime.Options{Target: "wasm32-wasi"}
 	}
 	path, binary, script := processOutputProgramWith(t, "function end(): void { try { console.log('before'); process.exit(37); } catch { console.log('must not catch'); } finally { console.log('must not finally'); } console.log('must not continue'); } end(); console.log('must not return');", "", options)
 	runner := filepath.Join(repository, "oracle/node.mjs")
@@ -485,7 +486,7 @@ func processStatusMutant(t *testing.T, shard int) {
 				mutant = "#include \"adamic.h\"\n" + one.helper + "\n" + mutant
 			}
 			binary := filepath.Join(t.TempDir(), "mutant")
-			if err := native.Build(mutant, binary, native.Options{Sanitize: true}); err != nil {
+			if err := native.Build(mutant, binary, native_runtime.Options{Sanitize: true}); err != nil {
 				t.Fatal(err)
 			}
 			// LeakSanitizer is Linux's: macOS's AddressSanitizer aborts when asked for it.
@@ -573,7 +574,7 @@ func processExitWASIDrain(t *testing.T, method, destination string) {
 		t.Skip("set ADAMIC_ORACLE_WASI=1")
 	}
 	source := "const line='x'.repeat(1023); for(let index=0;index<200;index+=1){console." + method + "(line);} process.exit(37);"
-	path, binary, _ := processOutputProgramWith(t, source, "", native.Options{Target: "wasm32-wasi"})
+	path, binary, _ := processOutputProgramWith(t, source, "", native_runtime.Options{Target: "wasm32-wasi"})
 	original, err := os.ReadFile(path)
 	if err != nil {
 		t.Fatal(err)
@@ -614,7 +615,7 @@ func TestProcessExitNormalizationMutant(t *testing.T) {
 		code = strings.ReplaceAll(code, name+"(", "mutant_"+name+"(")
 	}
 	binary := filepath.Join(t.TempDir(), "mutant")
-	if err := native.Build(runtimeSource+"\n"+code, binary, native.Options{Sanitize: true}); err != nil {
+	if err := native.Build(runtimeSource+"\n"+code, binary, native_runtime.Options{Sanitize: true}); err != nil {
 		t.Fatal(err)
 	}
 	truth := onNodeWith(t, inputRun{}, path)
@@ -663,7 +664,7 @@ func processExitValidationCode(t *testing.T, shard int) {
 		code = strings.ReplaceAll(code, name+"(", "mutant_"+name+"(")
 	}
 	binary := filepath.Join(t.TempDir(), "mutant")
-	if err := native.Build(runtimeSource+"\n"+code, binary, native.Options{Sanitize: true}); err != nil {
+	if err := native.Build(runtimeSource+"\n"+code, binary, native_runtime.Options{Sanitize: true}); err != nil {
 		t.Fatal(err)
 	}
 	bad := execute(t, binary)
@@ -686,12 +687,12 @@ func processExitClosedStdout(t *testing.T, shard int) {
 	if immediate {
 		ending = "process.exit(37);"
 	}
-	options := native.Options{Sanitize: true}
+	options := native_runtime.Options{Sanitize: true}
 	if shard%3 == 2 {
 		if os.Getenv("ADAMIC_ORACLE_WASI") != "1" {
 			t.Skip("set ADAMIC_ORACLE_WASI=1")
 		}
-		options = native.Options{Target: "wasm32-wasi"}
+		options = native_runtime.Options{Target: "wasm32-wasi"}
 	}
 	var path, binary, script string
 	if shard%3 == 1 {

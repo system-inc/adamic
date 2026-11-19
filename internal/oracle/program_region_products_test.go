@@ -6,6 +6,7 @@ import (
 
 	"github.com/system-inc/adamic/internal/native"
 	"github.com/system-inc/adamic/internal/native/runtimeproducts"
+	"github.com/system-inc/adamic/internal/native_runtime"
 )
 
 func programRegionRuntimeShard(t *testing.T, variant, group int) {
@@ -16,12 +17,12 @@ func programRegionRuntimeShard(t *testing.T, variant, group int) {
 		}
 	}
 }
-func programRegionBuild(t *testing.T, code, output string, options native.Options) error {
+func programRegionBuild(t *testing.T, code, output string, options native_runtime.Options) error {
 	t.Helper()
 	if !options.ProgramRegion {
 		return native.Build(code, output, options)
 	}
-	library := filepath.Join(runtimeproducts.ProgramArchive(t, options, native.Features(code)), "runtime.a")
+	library := filepath.Join(runtimeproducts.ProgramArchive(t, options, native_runtime.Features(code)), "runtime.a")
 	return native.BuildWithRuntime(code, output, options, library)
 }
 func TestProduct_ProgramRuntimesSanitized0(t *testing.T) {

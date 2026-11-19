@@ -16,6 +16,7 @@ import (
 	"github.com/system-inc/adamic/internal/compilerinputs"
 	"github.com/system-inc/adamic/internal/javascript"
 	"github.com/system-inc/adamic/internal/native"
+	"github.com/system-inc/adamic/internal/native_runtime"
 	"github.com/system-inc/adamic/internal/toolchain"
 )
 
@@ -76,7 +77,7 @@ func stdoutColumnsProducts(t *testing.T) string {
 		if err != nil {
 			return err
 		}
-		if err := native.Build(probe, filepath.Join(directory, "control"), native.Options{Sanitize: true}); err != nil {
+		if err := native.Build(probe, filepath.Join(directory, "control"), native_runtime.Options{Sanitize: true}); err != nil {
 			return err
 		}
 		shim, err := read("internal/oracle/testdata/stdout_columns/ioctl.c")
@@ -108,7 +109,7 @@ func stdoutColumnsProducts(t *testing.T) string {
 			// runtime calls, so async.c reaches this mutant's refresh/cache.
 			pattern := regexp.MustCompile(`(?m)^(?:_Noreturn )?[a-z_]+ +(adamic_[a-z_]+)[(][^;{}]*[)] [{]`)
 			matches := pattern.FindAllStringSubmatch(source+"\n"+header, -1)
-			flags := native.Flags(native.Options{Sanitize: true})
+			flags := native_runtime.Flags(native_runtime.Options{Sanitize: true})
 			prefix := ""
 			for _, match := range matches {
 				prefix += "#define " + match[1] + " __wrap_" + match[1] + "\n"
@@ -117,7 +118,7 @@ func stdoutColumnsProducts(t *testing.T) string {
 			if len(matches) < 10 {
 				return fmt.Errorf("stdout mutant public-symbol inventory changed")
 			}
-			if err := native.BuildFlags(prefix+code, filepath.Join(directory, m.name), native.Options{Sanitize: true}, flags); err != nil {
+			if err := native.BuildFlags(prefix+code, filepath.Join(directory, m.name), native_runtime.Options{Sanitize: true}, flags); err != nil {
 				return err
 			}
 		}
@@ -127,7 +128,7 @@ func stdoutColumnsProducts(t *testing.T) string {
 			return err
 		}
 		code := native.C(program)
-		if err := native.Build(code, filepath.Join(directory, "resolved-await"), native.Options{Sanitize: true}); err != nil {
+		if err := native.Build(code, filepath.Join(directory, "resolved-await"), native_runtime.Options{Sanitize: true}); err != nil {
 			return err
 		}
 		wrapper := `
@@ -138,8 +139,8 @@ void __wrap_adamic_async_run(void) {
     __real_adamic_async_run();
 }
 `
-		flags := append(native.SourceFlags(code, native.Options{Sanitize: true}), "-Wl,--wrap=adamic_async_run")
-		if err := native.BuildFlags(code+wrapper, filepath.Join(directory, "premature-turn"), native.Options{Sanitize: true}, flags); err != nil {
+		flags := append(native_runtime.SourceFlags(code, native_runtime.Options{Sanitize: true}), "-Wl,--wrap=adamic_async_run")
+		if err := native.BuildFlags(code+wrapper, filepath.Join(directory, "premature-turn"), native_runtime.Options{Sanitize: true}, flags); err != nil {
 			return err
 		}
 		return os.WriteFile(filepath.Join(directory, "resolved-await.mjs"), []byte(javascript.JavaScript(program)), 0600)
@@ -240,7 +241,7 @@ func TestStdoutColumnsRefusesWASI(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	err = native.Build(native.C(program), filepath.Join(t.TempDir(), "columns.wasm"), native.Options{Target: "wasm32-wasi"})
+	err = native.Build(native.C(program), filepath.Join(t.TempDir(), "columns.wasm"), native_runtime.Options{Target: "wasm32-wasi"})
 	var refused *native.TargetRefused
 	if !errors.As(err, &refused) || refused.Member != "process.stdout.columns" || refused.Reason != "wasi preview1 reports no terminal size" {
 		t.Fatalf("want typed, named WASI refusal, got %v", err)

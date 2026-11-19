@@ -7,6 +7,7 @@ import (
 
 	"github.com/system-inc/adamic/internal/ir"
 	"github.com/system-inc/adamic/internal/native"
+	"github.com/system-inc/adamic/internal/native_runtime"
 )
 
 func init() {
@@ -76,7 +77,7 @@ func TestEmptyArrayRuntimeMutants(t *testing.T) {
 				t.Fatal("mutant target absent")
 			}
 			binary := filepath.Join(t.TempDir(), "mutant")
-			if err := native.Build(native.C(program), binary, native.Options{Sanitize: true}); err != nil {
+			if err := native.Build(native.C(program), binary, native_runtime.Options{Sanitize: true}); err != nil {
 				t.Fatal(err)
 			}
 			result := execute(t, binary)

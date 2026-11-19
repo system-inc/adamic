@@ -13,6 +13,7 @@ import (
 	"github.com/system-inc/adamic/internal/load"
 	"github.com/system-inc/adamic/internal/lower"
 	"github.com/system-inc/adamic/internal/native"
+	"github.com/system-inc/adamic/internal/native_runtime"
 )
 
 func programRegionLowered(t *testing.T, path string, enabled bool) *ir.Program {
@@ -42,7 +43,7 @@ func checkProgramRegionMode(t *testing.T, program *ir.Program, path string, enab
 	t.Helper()
 	code := native.C(program)
 	binary := filepath.Join(t.TempDir(), "program")
-	if err := programRegionBuild(t, code, binary, native.Options{ProgramRegion: enabled, Sanitize: true}); err != nil {
+	if err := programRegionBuild(t, code, binary, native_runtime.Options{ProgramRegion: enabled, Sanitize: true}); err != nil {
 		t.Fatal(err)
 	}
 	oracle := onNode(t, path)
@@ -50,7 +51,7 @@ func checkProgramRegionMode(t *testing.T, program *ir.Program, path string, enab
 		t.Fatalf("JavaScript backend: %s", diff)
 	}
 	plain := filepath.Join(t.TempDir(), "plain")
-	if err := programRegionBuild(t, code, plain, native.Options{ProgramRegion: enabled}); err != nil {
+	if err := programRegionBuild(t, code, plain, native_runtime.Options{ProgramRegion: enabled}); err != nil {
 		t.Fatal(err)
 	}
 	if diff := disagreement(oracle, execute(t, plain)); diff != "" {
@@ -63,7 +64,7 @@ func checkProgramRegionMode(t *testing.T, program *ir.Program, path string, enab
 	report, err := leakcheck.Check(leakcheck.Program{
 		C: code, Sanitized: binary, Counted: filepath.Join(t.TempDir(), "counted"),
 		BuildCounted: func(code, output string) error {
-			return programRegionBuild(t, code, output, native.Options{ProgramRegion: enabled, Count: true})
+			return programRegionBuild(t, code, output, native_runtime.Options{ProgramRegion: enabled, Count: true})
 		},
 		Execute: func(environment []string, name string, args ...string) leakcheck.Run {
 			return leakRun(executeWith(t, environment, name, args...))
@@ -76,7 +77,7 @@ func checkProgramRegionMode(t *testing.T, program *ir.Program, path string, enab
 		t.Fatal(report)
 	}
 	countedBinary := filepath.Join(t.TempDir(), "counts")
-	if err := programRegionBuild(t, code, countedBinary, native.Options{ProgramRegion: enabled, Count: true}); err != nil {
+	if err := programRegionBuild(t, code, countedBinary, native_runtime.Options{ProgramRegion: enabled, Count: true}); err != nil {
 		t.Fatal(err)
 	}
 	name, args := pinnedStack(countedBinary)

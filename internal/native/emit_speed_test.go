@@ -17,6 +17,7 @@ import (
 	"github.com/system-inc/adamic/internal/load"
 	"github.com/system-inc/adamic/internal/lower"
 	"github.com/system-inc/adamic/internal/native"
+	"github.com/system-inc/adamic/internal/native_runtime"
 )
 
 func initializerWitness(t *testing.T, split bool, exceptions bool) {
@@ -58,7 +59,7 @@ func initializerCompiledWitness(t *testing.T, entry string, program *ir.Program,
 		t.Fatal("initializer helpers are missing")
 	}
 	binary := filepath.Join(directory, "native")
-	if err := native.Build(code, binary, native.Options{Split: split, Sanitize: true, Count: true, Jobs: 1}); err != nil {
+	if err := native.Build(code, binary, native_runtime.Options{Split: split, Sanitize: true, Count: true, Jobs: 1}); err != nil {
 		t.Fatal(err)
 	}
 	js := filepath.Join(directory, "program.mjs")

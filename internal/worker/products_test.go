@@ -10,7 +10,7 @@ import (
 	"testing"
 
 	"github.com/system-inc/adamic/internal/buildcache"
-	"github.com/system-inc/adamic/internal/native"
+	"github.com/system-inc/adamic/internal/native_runtime"
 )
 
 // Products cache builds, never test verdicts. Behavior tests can only find them:
@@ -110,7 +110,7 @@ func workerWasmInputs(t *testing.T, key string, mutant *workerMutation) buildcac
 	inputs.Name = "worker wasm " + key
 	inputs.Files = append(inputs.Files, "internal/worker/products_test.go", "internal/worker/testdata/wasm/"+variant.entry+".a")
 	inputs.Flags = append(inputs.Flags, "selected "+variant.selected, fmt.Sprintf("counted %t", variant.counted))
-	request, err := native.RuntimeRequestFor(native.Options{Release: true, Target: "wasm32-wasi", Count: variant.counted})
+	request, err := native_runtime.RuntimeRequestFor(native_runtime.Options{Release: true, Target: "wasm32-wasi", Count: variant.counted})
 	if err != nil {
 		t.Fatal(err)
 	}

@@ -9,6 +9,7 @@ import (
 
 	"github.com/system-inc/adamic/internal/leakcheck"
 	"github.com/system-inc/adamic/internal/native"
+	"github.com/system-inc/adamic/internal/native_runtime"
 )
 
 var environmentFixtures = []string{"captured_parameter_escape", "captured_parameter_reassign", "array", "async", "callback_escape", "callbacks", "capture", "captured_parameters", "coverage_alias_join", "coverage_boundary64", "coverage_bounded_call", "coverage_callback_exits", "coverage_callback_result", "coverage_callbacks_extra", "coverage_captured_parameter", "coverage_closure_self", "coverage_collections", "coverage_initializer_throw", "coverage_local_containers", "coverage_primitives", "coverage_region_values", "coverage_returned_values", "coverage_values_exits", "direct", "exits", "field", "global", "keeping_call", "large", "local_call", "loop", "map", "returned", "set", "siblings", "unknown_call", "unknown_callback", "virtual_call"}
@@ -50,7 +51,7 @@ func environmentAgrees(t *testing.T, name string) {
 	}
 	code := native.C(program)
 	binary := filepath.Join(t.TempDir(), "counted")
-	if err := native.Build(code, binary, native.Options{Count: true}); err != nil {
+	if err := native.Build(code, binary, native_runtime.Options{Count: true}); err != nil {
 		t.Fatal(err)
 	}
 	command, args := pinnedStack(binary)
@@ -201,7 +202,7 @@ func TestEnvironmentEscapeStackMutant(t *testing.T) {
 	// use after scope. This changes no allocation or output in the healthy build.
 	source = strings.ReplaceAll(source, "static adamic_closure * "+emittedFunctionSymbol(t, source, "make"), "static __attribute__((noinline)) adamic_closure * "+emittedFunctionSymbol(t, source, "make"))
 	binary := filepath.Join(t.TempDir(), "mutant")
-	if err := native.Build(source, binary, native.Options{Sanitize: true}); err != nil {
+	if err := native.Build(source, binary, native_runtime.Options{Sanitize: true}); err != nil {
 		t.Fatal(err)
 	}
 	result := executeWith(t, []string{"ASAN_OPTIONS=detect_leaks=0:detect_stack_use_after_return=1"}, binary)
@@ -234,7 +235,7 @@ func TestEnvironmentUnknownCallStackMutant(t *testing.T) {
 	// use after scope. This changes no allocation or output in the healthy build.
 	source = strings.ReplaceAll(source, "static void "+emittedFunctionSymbol(t, source, "fill"), "static __attribute__((noinline)) void "+emittedFunctionSymbol(t, source, "fill"))
 	binary := filepath.Join(t.TempDir(), "mutant")
-	if err := native.Build(source, binary, native.Options{Sanitize: true}); err != nil {
+	if err := native.Build(source, binary, native_runtime.Options{Sanitize: true}); err != nil {
 		t.Fatal(err)
 	}
 	result := executeWith(t, []string{"ASAN_OPTIONS=detect_leaks=0:detect_stack_use_after_return=1"}, binary)
@@ -262,7 +263,7 @@ func TestEnvironmentThrowReleaseMutant(t *testing.T) {
 	}
 	source = cleanup.ReplaceAllString(source, "$1")
 	binary := filepath.Join(t.TempDir(), "mutant")
-	if err := native.Build(source, binary, native.Options{Sanitize: true}); err != nil {
+	if err := native.Build(source, binary, native_runtime.Options{Sanitize: true}); err != nil {
 		t.Fatal(err)
 	}
 	result := executeWith(t, []string{"ASAN_OPTIONS=detect_leaks=0"}, binary)
@@ -274,7 +275,7 @@ func TestEnvironmentThrowReleaseMutant(t *testing.T) {
 		// The macOS tool needs an unsanitized build of the mutated C itself.
 		// Re-emitting the original IR would silently remove this mutation.
 		release := filepath.Join(t.TempDir(), "mutant-release")
-		if err := native.Build(source, release, native.Options{}); err != nil {
+		if err := native.Build(source, release, native_runtime.Options{}); err != nil {
 			t.Fatal(err)
 		}
 		result := execute(t, "leaks", "--atExit", "--", release)
@@ -363,7 +364,7 @@ func TestEnvironmentCapturedCellOwnershipMutant(t *testing.T) {
 	}
 	code = retain.ReplaceAllString(code, "${1}${2};")
 	binary := filepath.Join(t.TempDir(), "missing-cell-owner")
-	if err := native.Build(code, binary, native.Options{Sanitize: true}); err != nil {
+	if err := native.Build(code, binary, native_runtime.Options{Sanitize: true}); err != nil {
 		t.Fatal(err)
 	}
 	result := executeWith(t, []string{"ASAN_OPTIONS=detect_leaks=0"}, binary)
@@ -389,7 +390,7 @@ func TestEnvironmentRegionThrowReleaseMutant(t *testing.T) {
 	}
 	code = cleanup.ReplaceAllString(code, "$1")
 	binary := filepath.Join(t.TempDir(), "missing-region-cleanup")
-	if err := native.Build(code, binary, native.Options{Sanitize: true}); err != nil {
+	if err := native.Build(code, binary, native_runtime.Options{Sanitize: true}); err != nil {
 		t.Fatal(err)
 	}
 	result := executeWith(t, []string{"ASAN_OPTIONS=detect_leaks=0"}, binary)
@@ -397,7 +398,7 @@ func TestEnvironmentRegionThrowReleaseMutant(t *testing.T) {
 		t.Fatal("mutant must preserve output and sanitizer behavior: " + diff)
 	}
 	counted := filepath.Join(t.TempDir(), "missing-region-counted")
-	if err := native.Build(code, counted, native.Options{Count: true}); err != nil {
+	if err := native.Build(code, counted, native_runtime.Options{Count: true}); err != nil {
 		t.Fatal(err)
 	}
 	command, arguments := pinnedStack(counted)

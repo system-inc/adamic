@@ -5,7 +5,7 @@ import (
 	"slices"
 	"testing"
 
-	"github.com/system-inc/adamic/internal/native"
+	"github.com/system-inc/adamic/internal/native_runtime"
 	"github.com/system-inc/adamic/internal/toolchain"
 )
 
@@ -30,7 +30,7 @@ func TestRecoveryClangMapsTheToolsRoot(t *testing.T) {
 	}
 	work := t.TempDir()
 	own := []string{"-ffile-prefix-map=" + work + "=/adamic-estree", "-fdebug-prefix-map=" + work + "=/adamic-estree"}
-	args := append(append(native.Flags(native.Options{Sanitize: true}), own...), "-I", "runtime", "port.c", "-o", "port", "-lm")
+	args := append(append(native_runtime.Flags(native_runtime.Options{Sanitize: true}), own...), "-I", "runtime", "port.c", "-o", "port", "-lm")
 	command := recoveryClang(work, args...)
 	tools := "-ffile-prefix-map=" + installation + "=/adamic-compiler"
 	at := slices.Index(command.Args, tools)

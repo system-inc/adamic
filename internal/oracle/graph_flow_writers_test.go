@@ -7,6 +7,7 @@ import (
 
 	"github.com/system-inc/adamic/internal/leakcheck"
 	"github.com/system-inc/adamic/internal/native"
+	"github.com/system-inc/adamic/internal/native_runtime"
 )
 
 // graphFlows seeded a demand only at a graph-typed local, a return, and a property, index, push, Map
@@ -111,7 +112,7 @@ console.log(` + "`" + `${a.kids.length} ${a.kids[0] === undefined ? -1 : a.kids[
 				t.Fatalf("native: %s; Node %q; native %q; stderr %q", difference, truth.stdout, got.stdout, got.stderr)
 			}
 			counted := filepath.Join(t.TempDir(), "counted")
-			if err := native.Build(native.C(program), counted, native.Options{Count: true}); err != nil {
+			if err := native.Build(native.C(program), counted, native_runtime.Options{Count: true}); err != nil {
 				t.Fatal(err)
 			}
 			ran := execute(t, counted)

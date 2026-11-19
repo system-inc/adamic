@@ -9,11 +9,12 @@ import (
 	"testing"
 
 	"github.com/system-inc/adamic/internal/native"
+	"github.com/system-inc/adamic/internal/native_runtime"
 )
 
 // A statement writes its throw checks as one ladder only where that's shorter than the checks in
 // place (internal/native/exceptions.go), so most fixtures' checks are written in place and their
-// own runs never take the ladder's releases. Under native.Options.LadderEveryStatement every
+// own runs never take the ladder's releases. Under native.EmitOptions.LadderEveryStatement every
 // statement with checks writes the ladder, and these tests run the exception and environment
 // fixtures that way: each built sanitized, held to Node, and leak-checked where Node exits 0.
 //
@@ -87,12 +88,12 @@ func laddersEverywhereAgree(t *testing.T, group string) {
 			if err != nil {
 				t.Fatalf("Lower: %v", err)
 			}
-			code := native.CWithOptions(program, native.Options{LadderEveryStatement: true})
+			code := native.CWithOptions(program, native.EmitOptions{LadderEveryStatement: true})
 			if strings.Contains(code, "_done:;") {
 				laddered.Add(1)
 			}
 			binary := filepath.Join(t.TempDir(), "program")
-			if err := native.Build(code, binary, native.Options{Sanitize: true}); err != nil {
+			if err := native.Build(code, binary, native_runtime.Options{Sanitize: true}); err != nil {
 				t.Fatal(err)
 			}
 			var environment []string

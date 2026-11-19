@@ -8,7 +8,7 @@ import (
 
 	"github.com/system-inc/adamic/internal/load"
 	"github.com/system-inc/adamic/internal/lower"
-	"github.com/system-inc/adamic/internal/native"
+	"github.com/system-inc/adamic/internal/native_runtime"
 )
 
 func TestDocumentedStageZeroGaps(t *testing.T) {
@@ -52,7 +52,7 @@ func TestClosedEmptyFallbackGap(t *testing.T) {
 		t.Fatal(err)
 	}
 	program := lowered(t, path)
-	binary := filepath.Join(gapPortProduct(t, "emptyFallback.ts", native.Options{Sanitize: true}), "port")
+	binary := filepath.Join(gapPortProduct(t, "emptyFallback.ts", native_runtime.Options{Sanitize: true}), "port")
 	nativeRun := sanitizedRun(t, binary)
 	for _, side := range []struct {
 		name   string
@@ -76,7 +76,7 @@ func TestClosedMultiplePushGap(t *testing.T) {
 		t.Fatal(err)
 	}
 	program := lowered(t, path)
-	binary := filepath.Join(gapPortProduct(t, "multiplePush.ts", native.Options{Sanitize: true}), "port")
+	binary := filepath.Join(gapPortProduct(t, "multiplePush.ts", native_runtime.Options{Sanitize: true}), "port")
 	nativeRun := sanitizedRun(t, binary)
 	for _, side := range []struct {
 		name   string

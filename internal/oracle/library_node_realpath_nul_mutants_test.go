@@ -8,6 +8,7 @@ import (
 	"testing"
 
 	"github.com/system-inc/adamic/internal/native"
+	"github.com/system-inc/adamic/internal/native_runtime"
 )
 
 // Mutate the runtime itself, not its caller. Both mutants must build and run
@@ -54,8 +55,8 @@ func realpathNULRuntimeMutant(t *testing.T, file, before, after string) {
 	if !changed {
 		t.Fatal("runtime mutation changed nothing")
 	}
-	options := native.Options{Sanitize: true}
-	archive, err := native.RuntimeLibraryForSource(directory, source, options)
+	options := native_runtime.Options{Sanitize: true}
+	archive, err := native_runtime.RuntimeLibraryForSource(directory, source, options)
 	if err != nil {
 		t.Fatal(err)
 	}

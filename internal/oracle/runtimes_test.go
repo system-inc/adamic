@@ -14,6 +14,7 @@ import (
 	"github.com/system-inc/adamic/internal/buildcache"
 	"github.com/system-inc/adamic/internal/native"
 	"github.com/system-inc/adamic/internal/native/runtimeproducts"
+	"github.com/system-inc/adamic/internal/native_runtime"
 	"github.com/system-inc/adamic/internal/toolchain"
 	"github.com/system-inc/adamic/internal/wasitest"
 )
@@ -23,7 +24,7 @@ import (
 // the sanitized archives its hook links as its own products, which its unit fetches, rather than the hook compiling
 // seven archives in every unit, 12 s before its first fixture could finish and most of its CPU (#43k99f8).
 func init() {
-	native.SupplyRuntimes(runtimeproducts.Supply)
+	native_runtime.SupplyRuntimes(runtimeproducts.Supply)
 }
 
 // Every variant's archives, built ahead a third of the sets at a time (runtimeproducts.Build).
@@ -101,7 +102,7 @@ func TestRuntimeSetsAreEachUsed(t *testing.T) {
 			t.Errorf("the witness of [%s], %s: %v", name, set.Witness, err)
 			continue
 		}
-		if got := native.Features(native.C(program)); !slices.Equal(got, set.Features) {
+		if got := native_runtime.Features(native.C(program)); !slices.Equal(got, set.Features) {
 			t.Errorf("the witness of [%s], %s, turns on %v: name a program that needs exactly the set, or drop the set", name, set.Witness, got)
 		}
 	}
@@ -118,7 +119,7 @@ func TestRuntimeProductKeyHoldsEveryPart(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	request, err := native.RuntimeRequestFor(native.Options{}, "ADAMIC_CLOSURE_CONVENTION")
+	request, err := native_runtime.RuntimeRequestFor(native_runtime.Options{}, "ADAMIC_CLOSURE_CONVENTION")
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -154,11 +155,11 @@ func TestRuntimeProductKeyHoldsEveryFeatureAndOption(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	asks := map[string]func(t *testing.T) native.RuntimeRequest{
-		"the plain release archive": func(t *testing.T) native.RuntimeRequest { return plain(t, native.Options{}) },
+	asks := map[string]func(t *testing.T) native_runtime.RuntimeRequest{
+		"the plain release archive": func(t *testing.T) native_runtime.RuntimeRequest { return plain(t, native_runtime.Options{}) },
 	}
 	for _, feature := range []string{"ADAMIC_CLOSURE_CONVENTION", "ADAMIC_CANONICAL_CLOSURES", "ADAMIC_CLOSURE_RECEIVERS", "ADAMIC_REGEXP_REPLACE_CALLBACK", "ADAMIC_NODE_HOST", "ADAMIC_CLOSURE_DISCARDS"} {
-		asks["the feature "+feature] = func(t *testing.T) native.RuntimeRequest { return plain(t, native.Options{}, feature) }
+		asks["the feature "+feature] = func(t *testing.T) native_runtime.RuntimeRequest { return plain(t, native_runtime.Options{}, feature) }
 	}
 	for _, option := range runtimeproducts.Variants {
 		if option.Name == "release" {
@@ -169,7 +170,7 @@ func TestRuntimeProductKeyHoldsEveryFeatureAndOption(t *testing.T) {
 				continue
 			}
 		}
-		asks["the "+option.Name+" options"] = func(t *testing.T) native.RuntimeRequest { return plain(t, option.Options) }
+		asks["the "+option.Name+" options"] = func(t *testing.T) native_runtime.RuntimeRequest { return plain(t, option.Options) }
 	}
 	var mutex sync.Mutex
 	keys := map[string]string{}
@@ -198,9 +199,9 @@ func TestRuntimeProductKeyHoldsEveryFeatureAndOption(t *testing.T) {
 	}
 }
 
-func plain(t *testing.T, options native.Options, features ...string) native.RuntimeRequest {
+func plain(t *testing.T, options native_runtime.Options, features ...string) native_runtime.RuntimeRequest {
 	t.Helper()
-	request, err := native.RuntimeRequestFor(options, features...)
+	request, err := native_runtime.RuntimeRequestFor(options, features...)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -220,7 +221,7 @@ func TestARuntimeProductKeyIsTheSameThroughEitherLink(t *testing.T) {
 			t.Fatal(err)
 		}
 		for _, features := range [][]string{nil, {"ADAMIC_CLOSURE_CONVENTION", "ADAMIC_REGEXP_REPLACE_CALLBACK"}} {
-			request := plain(t, native.Options{Sanitize: true}, features...)
+			request := plain(t, native_runtime.Options{Sanitize: true}, features...)
 			fmt.Printf("compiler %s\nkey %v %s\n", request.Compiler, features, buildcache.NameKey(root, runtimeproducts.Inputs(request)))
 		}
 		return

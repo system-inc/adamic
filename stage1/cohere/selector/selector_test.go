@@ -6,6 +6,7 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
+	"github.com/system-inc/adamic/internal/native_runtime"
 	"github.com/system-inc/adamic/stage1/cohere/selector/oracles"
 	"os"
 	"os/exec"
@@ -342,7 +343,7 @@ func leaks(t *testing.T, program *ir.Program, sanitized string, arguments ...str
 	switch runtime.GOOS {
 	case "darwin":
 		binary := filepath.Join(t.TempDir(), "port")
-		if err := native.Build(native.C(program), binary, native.Options{}); err != nil {
+		if err := native.Build(native.C(program), binary, native_runtime.Options{}); err != nil {
 			t.Fatal(err)
 		}
 		report := execute(t, nil, "leaks", append([]string{"--atExit", "--", binary}, arguments...)...)
@@ -369,7 +370,7 @@ func TestSelectorThroughput(t *testing.T) {
 	casesPath, answers := askedCases(t)
 	program := lowered(t, filepath.Join(portDirectory(t, nil), "main.ts"))
 	binary := filepath.Join(t.TempDir(), "selector")
-	if err := native.Build(native.C(program), binary, native.Options{}); err != nil {
+	if err := native.Build(native.C(program), binary, native_runtime.Options{}); err != nil {
 		t.Fatal(err)
 	}
 	count := strings.Count(answers, "case ") * 10

@@ -17,9 +17,9 @@ import (
 
 // Compile the probe in map.c's own translation unit so it measures the private hash, the real
 // insertion algorithm and the runtime's own growing table sizes, without exporting a test API.
-func mapHashProbe(t *testing.T, options Options, mutation func(string) string) (string, error) {
+func mapHashProbe(t *testing.T, options native_runtime.Options, mutation func(string) string) (string, error) {
 	t.Helper()
-	files, err := readRuntime(native_runtime.Sources, "c")
+	files, err := native_runtime.ReadRuntime(native_runtime.Sources, "c")
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -28,11 +28,11 @@ func mapHashProbe(t *testing.T, options Options, mutation func(string) string) (
 		t.Fatal(err)
 	}
 	for index := range files {
-		if files[index].name == "map.c" {
-			files[index].contents = append(append([]byte{}, files[index].contents...), harness...)
+		if files[index].Name == "map.c" {
+			files[index].Contents = append(append([]byte{}, files[index].Contents...), harness...)
 		}
-		if files[index].name == "map_set.c" && mutation != nil {
-			source := string(files[index].contents)
+		if files[index].Name == "map_set.c" && mutation != nil {
+			source := string(files[index].Contents)
 			const signature = "uint64_t adamic_map_number_hash(double number) {"
 			if strings.Count(source, signature) != 1 {
 				t.Fatal("numeric hash definition must occur exactly once")
@@ -59,20 +59,20 @@ func mapHashProbe(t *testing.T, options Options, mutation func(string) string) (
 			if changed == body {
 				t.Fatal("mutant changed no numeric hash code")
 			}
-			files[index].contents = []byte(source[:start] + changed + source[end:])
+			files[index].Contents = []byte(source[:start] + changed + source[end:])
 		}
 	}
 	compiler, err := toolchain.Path("clang")
 	if err != nil {
 		t.Fatal(err)
 	}
-	flags := Flags(options)
-	library, err := cachedRuntime(files, flags, compiler, "map hash probe", t.TempDir())
+	flags := native_runtime.Flags(options)
+	library, err := native_runtime.CachedRuntime(files, flags, compiler, "map hash probe", t.TempDir())
 	if err != nil {
 		t.Fatal(err)
 	}
 	binary := filepath.Join(t.TempDir(), "probe")
-	arguments := append(append([]string{}, flags...), RuntimeLinkFlags(library)...)
+	arguments := append(append([]string{}, flags...), native_runtime.RuntimeLinkFlags(library)...)
 	arguments = append(arguments, "-lm", "-o", binary)
 	if output, err := toolchain.Command(compiler, arguments...).CombinedOutput(); err != nil {
 		t.Fatalf("link probe: %v\n%s", err, output)
@@ -113,7 +113,7 @@ func runMapHashProbeBound(t *testing.T, name string) {
 	if !ok {
 		t.Fatalf("no map hash probe allocator %q", name)
 	}
-	output, err := mapHashProbe(t, Options{Sanitize: true, slabs: slabs}, nil)
+	output, err := mapHashProbe(t, native_runtime.Options{Sanitize: true, Slabs: slabs}, nil)
 	t.Log(output)
 	if err != nil {
 		t.Fatalf("runtime map hash: %v", err)
@@ -169,7 +169,7 @@ func runMapHashMutant(t *testing.T, name string) {
 	if !ok {
 		t.Fatalf("no map hash mutant %q", name)
 	}
-	output, err := mapHashProbe(t, Options{Sanitize: true}, func(source string) string {
+	output, err := mapHashProbe(t, native_runtime.Options{Sanitize: true}, func(source string) string {
 		if mutant.before == "" {
 			return mutant.after
 		}

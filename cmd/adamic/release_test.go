@@ -6,6 +6,7 @@ import (
 	"testing"
 
 	"github.com/system-inc/adamic/internal/native"
+	"github.com/system-inc/adamic/internal/native_runtime"
 )
 
 func TestBuildSelectsShippedReleaseLTO(t *testing.T) {
@@ -27,12 +28,12 @@ func auditReleaseBuild(t *testing.T, name string, arguments []string, thin bool)
 	t.Helper()
 	source := requestSource(t, "console.log('hello');\n")
 	calls := 0
-	compile := func(source, output string, options native.Options) error {
+	compile := func(source, output string, options native_runtime.Options) error {
 		calls++
 		if !options.Release {
 			t.Fatal("command did not select shipped release policy")
 		}
-		for _, flags := range [][]string{native.Flags(options), native.LinkFlags(options)} {
+		for _, flags := range [][]string{native_runtime.Flags(options), native.LinkFlags(options)} {
 			if slices.Contains(flags, "-flto=thin") != thin {
 				t.Fatalf("%s build has wrong LTO policy: %q", name, flags)
 			}
@@ -40,7 +41,7 @@ func auditReleaseBuild(t *testing.T, name string, arguments []string, thin bool)
 				t.Fatalf("semantic options lost: %q", flags)
 			}
 		}
-		if slices.Contains(native.Flags(options), "-fuse-ld=lld") {
+		if slices.Contains(native_runtime.Flags(options), "-fuse-ld=lld") {
 			t.Fatal("linker option reached runtime compilation")
 		}
 		// Use the real builder and its declared archive products. A wrapper compiler

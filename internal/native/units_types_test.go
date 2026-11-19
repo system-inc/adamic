@@ -7,6 +7,7 @@ import (
 	"time"
 
 	"github.com/system-inc/adamic/internal/boundedrun"
+	"github.com/system-inc/adamic/internal/native_runtime"
 )
 
 func TestSplitGeneratedTypesSharedAcrossUnits(t *testing.T) {
@@ -42,7 +43,7 @@ int main(void) { adamic_generated_link link = {30}; adamic_generated_frame_alias
 		t.Fatalf("expected state, function and main units, got %d", len(units))
 	}
 	binary := filepath.Join(t.TempDir(), "types")
-	if err := Build(source, binary, Options{Split: true, Sanitize: true, Jobs: 2}); err != nil {
+	if err := Build(source, binary, native_runtime.Options{Split: true, Sanitize: true, Jobs: 2}); err != nil {
 		t.Fatal(err)
 	}
 	command, release := boundedrun.Command(5*time.Second, binary)

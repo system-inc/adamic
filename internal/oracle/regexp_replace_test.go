@@ -3,6 +3,7 @@ package oracle
 import (
 	"bytes"
 	"github.com/system-inc/adamic/internal/native"
+	"github.com/system-inc/adamic/internal/native_runtime"
 	"os"
 	"path/filepath"
 	"strings"
@@ -53,7 +54,7 @@ func TestRegExpReplacementNodeMutants(t *testing.T) {
 			changed = strings.ReplaceAll(changed, "adamic_regex_replace_callback", "adamic_regex_replace_callback_mutant")
 			source := changed + "\n" + strings.ReplaceAll(programSource, "adamic_regex_replace_callback", "adamic_regex_replace_callback_mutant")
 			binary := filepath.Join(t.TempDir(), "mutant")
-			if err := native.Build(source, binary, native.Options{Sanitize: true}); err != nil {
+			if err := native.Build(source, binary, native_runtime.Options{Sanitize: true}); err != nil {
 				t.Fatal(err)
 			}
 			actual := executeWith(t, []string{"ASAN_OPTIONS=detect_leaks=1:halt_on_error=1"}, binary)
@@ -97,7 +98,7 @@ func TestRegExpReplacementTypeGuardMutants(t *testing.T) {
 			changed = strings.ReplaceAll(changed, "adamic_regex_replace_callback", "adamic_regex_replace_callback_mutant")
 			source := changed + "\n" + strings.ReplaceAll(native.C(program), "adamic_regex_replace_callback", "adamic_regex_replace_callback_mutant")
 			binary := filepath.Join(t.TempDir(), "mutant")
-			if err := native.Build(source, binary, native.Options{Sanitize: true}); err != nil {
+			if err := native.Build(source, binary, native_runtime.Options{Sanitize: true}); err != nil {
 				t.Fatal(err)
 			}
 			actual := executeWith(t, []string{"ASAN_OPTIONS=detect_leaks=1:halt_on_error=1"}, binary)

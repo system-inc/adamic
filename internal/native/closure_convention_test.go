@@ -12,6 +12,7 @@ import (
 	"github.com/system-inc/adamic/internal/ir"
 	"github.com/system-inc/adamic/internal/load"
 	"github.com/system-inc/adamic/internal/lower"
+	"github.com/system-inc/adamic/internal/native_runtime"
 )
 
 // The ruling explicitly requires this mutant to die in the C compiler.
@@ -26,7 +27,7 @@ func TestClosureConventionDropCount(t *testing.T) {
 		t.Fatal(err)
 	}
 	source := C(program)
-	if err := Build(source, filepath.Join(t.TempDir(), "valid"), Options{}); err != nil {
+	if err := Build(source, filepath.Join(t.TempDir(), "valid"), native_runtime.Options{}); err != nil {
 		t.Fatal(err)
 	}
 	lines := strings.Split(source, "\n")
@@ -47,7 +48,7 @@ func TestClosureConventionDropCount(t *testing.T) {
 	if !mutated {
 		t.Fatal("no counted call to mutate")
 	}
-	err = Build(strings.Join(lines, "\n"), filepath.Join(t.TempDir(), "mutant"), Options{})
+	err = Build(strings.Join(lines, "\n"), filepath.Join(t.TempDir(), "mutant"), native_runtime.Options{})
 	if err == nil || !strings.Contains(err.Error(), "too few arguments to function call") || !strings.Contains(err.Error(), "expected 3, have 2") {
 		t.Fatalf("drop-count mutant was not rejected for typed arity: %v", err)
 	}
@@ -76,7 +77,7 @@ func TestClosureConventionRuntimeDropCount(t *testing.T) {
 	changed := strings.Replace(string(runtime), original, "adamic_closure_call(callback, packed)", 1)
 	changed = strings.ReplaceAll(changed, "adamic_regex_replace_callback", "adamic_regex_replace_callback_mutant")
 	source := changed + "\n" + strings.ReplaceAll(C(program), "adamic_regex_replace_callback", "adamic_regex_replace_callback_mutant")
-	err = Build(source, filepath.Join(t.TempDir(), "mutant"), Options{})
+	err = Build(source, filepath.Join(t.TempDir(), "mutant"), native_runtime.Options{})
 	if err == nil || !strings.Contains(err.Error(), "expected 3, have 2") {
 		t.Fatalf("runtime drop-count mutant escaped the typed convention: %v", err)
 	}
@@ -86,7 +87,7 @@ func TestClosureConventionRuntimeDropCount(t *testing.T) {
 func TestClosureConventionRuntimeFeaturesIgnoreLiterals(t *testing.T) {
 	t.Parallel()
 	program := &ir.Program{Strings: []string{"adamic_regex_replace_callback", "adamic_fs_file_host_cwd"}}
-	library, err := RuntimeLibraryForSource("", C(program), Options{})
+	library, err := native_runtime.RuntimeLibraryForSource("", C(program), native_runtime.Options{})
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -121,7 +122,7 @@ func TestClosureConventionWrongOrder(t *testing.T) {
 	swapped := strings.Replace(source, old, "size_t argument_count, adamic_value *arguments", 1)
 	t.Run("definition", func(t *testing.T) {
 		t.Parallel()
-		err := Build(swapped, filepath.Join(t.TempDir(), "mutant"), Options{})
+		err := Build(swapped, filepath.Join(t.TempDir(), "mutant"), native_runtime.Options{})
 		if err == nil || !strings.Contains(err.Error(), "conflicting types") {
 			t.Fatalf("swapped definition escaped the header-derived declaration: %v", err)
 		}
@@ -149,7 +150,7 @@ func TestClosureConventionWrongOrder(t *testing.T) {
 		if !changed {
 			t.Fatal("no counted call")
 		}
-		err := Build(strings.Join(lines, "\n"), filepath.Join(t.TempDir(), "mutant"), Options{})
+		err := Build(strings.Join(lines, "\n"), filepath.Join(t.TempDir(), "mutant"), native_runtime.Options{})
 		if err == nil || (!strings.Contains(err.Error(), "int-conversion") && !strings.Contains(err.Error(), "incompatible")) {
 			t.Fatalf("swapped call escaped typed parameters: %v", err)
 		}
@@ -161,7 +162,7 @@ func TestClosureConventionWrongOrder(t *testing.T) {
 	} {
 		t.Run(probe.name, func(t *testing.T) {
 			t.Parallel()
-			err := Build(strings.Replace(source, "#include \"adamic.h\"", "#include \"adamic.h\"\n"+probe.code, 1), filepath.Join(t.TempDir(), "mutant"), Options{})
+			err := Build(strings.Replace(source, "#include \"adamic.h\"", "#include \"adamic.h\"\n"+probe.code, 1), filepath.Join(t.TempDir(), "mutant"), native_runtime.Options{})
 			if err == nil || !strings.Contains(err.Error(), probe.diagnostic) {
 				t.Fatalf("signature-erasing cast escaped compiler enforcement: %v", err)
 			}
@@ -181,9 +182,9 @@ func TestClosureConventionOwnerRuntimeSites(t *testing.T) {
 	}
 	for _, module := range []string{"parallel.c"} {
 		for _, features := range [][]string{nil, {"-DADAMIC_CLOSURE_CONVENTION=1"}, {"-DADAMIC_CLOSURE_CONVENTION=1", "-DADAMIC_CLOSURE_RECEIVERS=1", "-DADAMIC_CANONICAL_CLOSURES=1"}} {
-			arguments := append(Flags(Options{}), features...)
+			arguments := append(native_runtime.Flags(native_runtime.Options{}), features...)
 			arguments = append(arguments, "-I", root, "-c", filepath.Join(root, module), "-o", filepath.Join(t.TempDir(), "runtime.o"))
-			if output, err := exec.Command(compilerName(Options{}), arguments...).CombinedOutput(); err != nil {
+			if output, err := exec.Command(native_runtime.CompilerName(native_runtime.Options{}), arguments...).CombinedOutput(); err != nil {
 				t.Fatalf("%s with %v: %v\n%s", module, features, err, output)
 			}
 		}
@@ -205,8 +206,8 @@ func TestClosureConventionOwnerRuntimeSites(t *testing.T) {
 		if err := os.WriteFile(path, []byte(mutant), 0o644); err != nil {
 			t.Fatal(err)
 		}
-		arguments := append(Flags(Options{}), "-DADAMIC_CLOSURE_CONVENTION=1", "-I", root, "-c", path, "-o", path+".o")
-		output, err := exec.Command(compilerName(Options{}), arguments...).CombinedOutput()
+		arguments := append(native_runtime.Flags(native_runtime.Options{}), "-DADAMIC_CLOSURE_CONVENTION=1", "-I", root, "-c", path, "-o", path+".o")
+		output, err := exec.Command(native_runtime.CompilerName(native_runtime.Options{}), arguments...).CombinedOutput()
 		if err == nil || !strings.Contains(string(output), "expected 3, have 2") {
 			t.Fatalf("owner drop-count mutant escaped: %s: %v\n%s", probe.call, err, output)
 		}
@@ -277,7 +278,7 @@ func TestOptionalMethodThunksMatchNode(t *testing.T) {
 		t.Run("sanitize="+strconv.FormatBool(sanitize), func(t *testing.T) {
 			t.Parallel()
 			binary := filepath.Join(t.TempDir(), "valid")
-			if err := Build(code, binary, Options{Sanitize: sanitize}); err != nil {
+			if err := Build(code, binary, native_runtime.Options{Sanitize: sanitize}); err != nil {
 				t.Fatal(err)
 			}
 			if got := runWithInput(t, "", binary); got != want {
@@ -291,7 +292,7 @@ func TestOptionalMethodThunksMatchNode(t *testing.T) {
 		program.StructuralMethodThunks[function] = false
 	}
 	binary := filepath.Join(t.TempDir(), "mutant")
-	if err := Build(C(program), binary, Options{}); err != nil {
+	if err := Build(C(program), binary, native_runtime.Options{}); err != nil {
 		t.Fatal(err)
 	}
 	output, err := exec.Command(binary).CombinedOutput()

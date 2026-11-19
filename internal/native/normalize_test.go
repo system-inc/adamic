@@ -10,6 +10,7 @@ import (
 	"testing"
 
 	"github.com/system-inc/adamic/internal/buildcache"
+	"github.com/system-inc/adamic/internal/native_runtime"
 )
 
 // The normalization sweep: native normalize against Node's, in all four forms, byte for byte as
@@ -235,13 +236,13 @@ func normalizeHarnessBinary(t *testing.T) (binary, oracle string) {
 	t.Helper()
 	alphabet := strings.Join(normalizeAlphabet, ", ")
 	source := strings.Replace(normalizeHarness, "ALPHABET", alphabet, 1)
-	options := Options{Sanitize: true}
+	options := native_runtime.Options{Sanitize: true}
 	// Build reads ADAMIC_NATIVE_SPLIT, and the harness's own #defines choose the runtime's features, so
 	// the source's bytes key it beside the flags.
 	directory := buildcache.Product(t, buildcache.Inputs{
 		Name:      "normalization-probe",
 		Files:     []string{"internal/native", "internal/native_runtime"},
-		Flags:     append(Flags(options), fmt.Sprintf("source=%x", sha256.Sum256([]byte(source))), "ADAMIC_NATIVE_SPLIT="+os.Getenv("ADAMIC_NATIVE_SPLIT")),
+		Flags:     append(native_runtime.Flags(options), fmt.Sprintf("source=%x", sha256.Sum256([]byte(source))), "ADAMIC_NATIVE_SPLIT="+os.Getenv("ADAMIC_NATIVE_SPLIT")),
 		Toolchain: []string{buildcache.CompilerReport("clang")},
 	}, func(directory string) error {
 		return Build(source, filepath.Join(directory, "harness"), options)

@@ -7,6 +7,7 @@ import (
 	"github.com/system-inc/adamic/internal/ir"
 	"github.com/system-inc/adamic/internal/leakcheck"
 	"github.com/system-inc/adamic/internal/native"
+	"github.com/system-inc/adamic/internal/native_runtime"
 	"os"
 	"path/filepath"
 	"slices"
@@ -91,7 +92,7 @@ func TestRecordedGraphAdmissionNamespaceCurrentDirectory(t *testing.T) {
 func checkGraphAdmissionCounts(t *testing.T, program *ir.Program, truth run) {
 	t.Helper()
 	binary := filepath.Join(t.TempDir(), "counted")
-	if err := native.Build(native.C(program), binary, native.Options{Count: true}); err != nil {
+	if err := native.Build(native.C(program), binary, native_runtime.Options{Count: true}); err != nil {
 		t.Fatal(err)
 	}
 	actual := execute(t, binary)

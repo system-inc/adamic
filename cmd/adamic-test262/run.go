@@ -18,7 +18,7 @@ import (
 
 	_ "github.com/system-inc/adamic/internal/ccjobserver"
 	"github.com/system-inc/adamic/internal/childguard"
-	"github.com/system-inc/adamic/internal/native"
+	"github.com/system-inc/adamic/internal/native_runtime"
 	"github.com/system-inc/adamic/internal/toolchain"
 )
 
@@ -26,7 +26,7 @@ import (
 // owns a compiler process; tests are classified and their observations reduced in serial order.
 type engine struct {
 	// Tests may supply their declared archive; commands select the runtime per source.
-	runtimeLibrary   func(string, native.Options) (string, error)
+	runtimeLibrary   func(string, native_runtime.Options) (string, error)
 	test262          string
 	work             string
 	adamic           string
@@ -317,19 +317,19 @@ func (e *engine) attempt(test classified) result {
 		return base
 	}
 	binary := filepath.Join(directory, "program.bin")
-	options := native.Options{Sanitize: true}
+	options := native_runtime.Options{Sanitize: true}
 	var library string
 	if e.runtimeLibrary != nil {
 		library, err = e.runtimeLibrary(lowered.Stdout, options)
 	} else {
-		library, err = native.RuntimeLibraryForSource(e.include, lowered.Stdout, options)
+		library, err = native_runtime.RuntimeLibraryForSource(e.include, lowered.Stdout, options)
 	}
 	if err != nil {
 		base.Kind, base.Reason = outcomeCrashed, err.Error()
 		return base
 	}
-	arguments := append(native.SourceFlags(lowered.Stdout, options), "-I", filepath.Dir(library), "-o", binary, cPath)
-	arguments = append(arguments, native.RuntimeLinkFlags(library)...)
+	arguments := append(native_runtime.SourceFlags(lowered.Stdout, options), "-I", filepath.Dir(library), "-o", binary, cPath)
+	arguments = append(arguments, native_runtime.RuntimeLinkFlags(library)...)
 	arguments = append(arguments, "-lm")
 	nativeCommand := cacheKey(cacheKey(arguments...), binary, "15s-cpu", "2m-wall", fmt.Sprint(outputLimit), fmt.Sprint(nativeEnvironment))
 	key := nativeResultKey(lowered.Stdout, cacheKey(filepath.Base(filepath.Dir(library)), e.runtimeKey), nativeCommand, e.context)

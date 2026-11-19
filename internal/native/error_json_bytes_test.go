@@ -3,6 +3,8 @@ package native
 import (
 	"path/filepath"
 	"testing"
+
+	"github.com/system-inc/adamic/internal/native_runtime"
 )
 
 // Error construction tags remain strings to checked and dynamic readers (#z4a9p9e).
@@ -30,7 +32,7 @@ int main(void) {
 }
 `
 	binary := filepath.Join(t.TempDir(), "error-bytes")
-	if err := Build(code, binary, Options{Sanitize: true}); err != nil {
+	if err := Build(code, binary, native_runtime.Options{Sanitize: true}); err != nil {
 		t.Fatal(err)
 	}
 	if got := runWithInput(t, "", binary); got != "construction bytes read as strings\n" {

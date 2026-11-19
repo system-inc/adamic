@@ -8,17 +8,18 @@ import (
 	"time"
 
 	"github.com/system-inc/adamic/internal/boundedrun"
+	"github.com/system-inc/adamic/internal/native_runtime"
 )
 
 // Each leaf builds one control and one runtime mutant, without compiler lowering.
 func async2RuntimeGuard(t *testing.T, mode, file, old, replacement, diagnostic string) {
 	t.Helper()
-	options := Options{Sanitize: true}
-	files, flags, compiler, version, err := runtimeInputs("", options, []string{"-DADAMIC_CANONICAL_CLOSURES=1"})
+	options := native_runtime.Options{Sanitize: true}
+	files, flags, compiler, version, err := native_runtime.RuntimeInputs("", options, []string{"-DADAMIC_CANONICAL_CLOSURES=1"})
 	if err != nil {
 		t.Fatal(err)
 	}
-	cache, err := cacheDirectory("async2-runtime")
+	cache, err := native_runtime.CacheDirectory("async2-runtime")
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -30,21 +31,21 @@ func async2RuntimeGuard(t *testing.T, mode, file, old, replacement, diagnostic s
 		if mutant {
 			found := false
 			for index := range files {
-				if files[index].name != file {
+				if files[index].Name != file {
 					continue
 				}
-				text := string(files[index].contents)
+				text := string(files[index].Contents)
 				if !strings.Contains(text, old) {
 					t.Fatalf("missing mutant seam %q", old)
 				}
-				files[index].contents = []byte(strings.Replace(text, old, replacement, 1))
+				files[index].Contents = []byte(strings.Replace(text, old, replacement, 1))
 				found = true
 			}
 			if !found {
 				t.Fatalf("missing runtime file %s", file)
 			}
 		}
-		library, err := cachedRuntime(files, flags, compiler, version, cache)
+		library, err := native_runtime.CachedRuntime(files, flags, compiler, version, cache)
 		if err != nil {
 			t.Fatal(err)
 		}
