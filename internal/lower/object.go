@@ -342,9 +342,6 @@ func (l *lowering) arrayLiteral(node *ast.Node) (ir.Expression, error) {
 // elementType is the representation of an array's elements, from the checker's type for the node.
 func (l *lowering) elementType(node *ast.Node) (ir.Type, error) {
 	arrayType := l.checker.GetNonNullableType(l.concrete(l.checker.GetTypeAtLocation(node)))
-	if l.nodeBufferType(arrayType, "Buffer") {
-		return ir.Number, nil
-	}
 	if l.isLibraryType(arrayType, "RegExpExecArray", "RegExpMatchArray") {
 		return ir.String, nil
 	}
@@ -2336,6 +2333,25 @@ func (l *lowering) setIndex(target *ast.Node, valueNode *ast.Node) ([]ir.Stateme
 	if array.Type() == ir.Object && !checker.IsTupleType(l.checker.GetTypeAtLocation(access.Expression)) {
 		return l.finiteElementWrite(target, array, valueNode)
 	}
+	// A Buffer is held as a Uint8Array, but its write isn't a typed SetIndex, which panics out of bounds:
+	// buffer_set drops it silently, as Node does.
+	if l.nodeBufferType(l.checker.GetTypeAtLocation(access.Expression), "Buffer") {
+		index, err := l.expression(access.ArgumentExpression)
+		if err != nil {
+			return nil, err
+		}
+		if index.Type() != ir.Number {
+			return nil, l.notYet(target, "an array index that isn't a number")
+		}
+		value, err := l.expression(valueNode)
+		if err != nil {
+			return nil, err
+		}
+		if value.Type() != ir.Number {
+			return nil, l.notYet(valueNode, "a Buffer write of a non-number")
+		}
+		return []ir.Statement{ir.Evaluate{Value: ir.NodeBufferCall{Function: "buffer_set", Arguments: []ir.Expression{array, index, value}, Returns: ir.Number}}}, nil
+	}
 	if array.Type() != ir.Array {
 		return nil, l.notYet(target, "assigning an element of a "+typeName(array.Type()))
 	}
@@ -2353,12 +2369,6 @@ func (l *lowering) setIndex(target *ast.Node, valueNode *ast.Node) ([]ir.Stateme
 	value, err := l.expression(valueNode)
 	if err != nil {
 		return nil, err
-	}
-	if l.nodeBufferType(l.checker.GetTypeAtLocation(access.Expression), "Buffer") {
-		if value.Type() != ir.Number {
-			return nil, l.notYet(valueNode, "a Buffer write of a non-number")
-		}
-		return []ir.Statement{ir.Evaluate{Value: ir.NodeBufferCall{Function: "buffer_set", Arguments: []ir.Expression{array, index, value}, Returns: ir.Number}}}, nil
 	}
 	return []ir.Statement{ir.SetIndex{Array: array, Index: index, Value: fit(value, element), Element: element, Site: l.writeSite(access.Expression)}}, nil
 }

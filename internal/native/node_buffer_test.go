@@ -33,7 +33,7 @@ func TestNodeBufferRuntimeWithoutDeclarations(t *testing.T) {
 		for index, value := range values {
 			elements[index] = ir.NumberConstant{Value: float64(value)}
 		}
-		return call("buffer_copy", 0, ir.Array, ir.ArrayLiteral{Elements: elements, Element: ir.Number})
+		return call("buffer_copy", 0, ir.Uint8Array, ir.ArrayLiteral{Elements: elements, Element: ir.Number})
 	}
 	stringify := func(buffer ir.Expression, encoding int) ir.Expression {
 		return call("buffer_string", encoding, ir.String, buffer, ir.NumberConstant{Value: 0}, ir.NumberConstant{Value: math.Inf(1)})
@@ -44,17 +44,17 @@ func TestNodeBufferRuntimeWithoutDeclarations(t *testing.T) {
 	var source strings.Builder
 	source.WriteString("import { Buffer } from 'node:buffer'; import { createHash } from 'node:crypto';\n")
 	for _, value := range []string{"", "YQ==", " Y W\nJ\tj = = ", "YWJj====", "-__v", "Y!W@J#j"} {
-		print(stringify(call("buffer_from", 2, ir.Array, text(value)), 3))
+		print(stringify(call("buffer_from", 2, ir.Uint8Array, text(value)), 3))
 		quoted, _ := json.Marshal(value)
 		fmt.Fprintf(&source, "console.log(Buffer.from(%s,'base64').toString('hex'));\n", quoted)
 	}
 	for _, value := range []string{"", "abc", "héllo 🌍", "a\x00b"} {
-		print(stringify(call("buffer_from", 0, ir.Array, text(value)), 2))
+		print(stringify(call("buffer_from", 0, ir.Uint8Array, text(value)), 2))
 		quoted, _ := json.Marshal(value)
 		fmt.Fprintf(&source, "console.log(Buffer.from(%s,'utf8').toString('base64'));\n", quoted)
 	}
 	for _, values := range [][]int{{0xe0, 0x80, 0x80}, {0xe2, 0x82}, {0xf0, 0x90, 0x80, 0x41}, {0xed, 0xa0, 0x80}, {0xf4, 0x90, 0x80, 0x80}} {
-		print(stringify(call("buffer_from", 0, ir.Array, stringify(bytes(values), 0)), 3))
+		print(stringify(call("buffer_from", 0, ir.Uint8Array, stringify(bytes(values), 0)), 3))
 		encoded, _ := json.Marshal(values)
 		fmt.Fprintf(&source, "console.log(Buffer.from(Buffer.from(%s).toString('utf8'),'utf8').toString('hex'));\n", encoded)
 	}
@@ -65,7 +65,7 @@ func TestNodeBufferRuntimeWithoutDeclarations(t *testing.T) {
 			values = append(values, random.Intn(256))
 		}
 		decoded := stringify(bytes(values), 1)
-		print(stringify(call("buffer_from", 1, ir.Array, decoded), 3))
+		print(stringify(call("buffer_from", 1, ir.Uint8Array, decoded), 3))
 		print(call("hash_digest", 0, ir.String, call("hash_update", 0, ir.Object, call("hash_new", 0, ir.Object), decoded)))
 		encoded, _ := json.Marshal(values)
 		fmt.Fprintf(&source, "{ const text=Buffer.from(%s).toString('utf16le'); console.log(Buffer.from(text,'utf16le').toString('hex')); console.log(createHash('sha256').update(text).digest('hex')); }\n", encoded)

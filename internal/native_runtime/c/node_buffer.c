@@ -91,35 +91,26 @@ static adamic_string *decode_utf8(const unsigned char *bytes, size_t length)
 	text->length = written;
 	return text;
 }
-static void push_byte(adamic_array *array, unsigned byte)
+// Buffer.from(aBuffer) copies the bytes the source sees. Buffer.from(number[])
+// isn't here: the native emitter calls adamic_typed_array_from_numbers, whose
+// ToUint8 is a Uint8Array's and Node's.
+adamic_typed_array *adamic_node_buffer_copy(const adamic_typed_array *source)
 {
-	adamic_array_push(array, (adamic_value){.number = (double)(byte & 255)});
-}
-static unsigned byte_value(double value)
-{
-	if (!isfinite(value) || value == 0) {
-		return 0;
-	}
-	double byte = fmod(trunc(value), 256);
-	if (byte < 0) {
-		byte += 256;
-	}
-	return (unsigned)byte;
-}
-adamic_array *adamic_node_buffer_copy(const adamic_array *source)
-{
-	adamic_array *buffer = adamic_array_make(source->length, adamic_ir_Number);
-	for (size_t at = 0; at < source->length; at++) {
-		push_byte(buffer, byte_value(source->elements[at].number));
+	adamic_typed_array *buffer =
+		adamic_typed_array_make(adamic_typed_array_uint8, source->length);
+	if (source->length > 0) {
+		memcpy(buffer->data, source->data, source->length);
 	}
 	return buffer;
 }
-double adamic_node_buffer_set(adamic_array *buffer, double index, double value)
+double adamic_node_buffer_set(adamic_typed_array *buffer, double index,
+							  double value)
 {
-	adamic_value *slot = adamic_array_at(buffer, index);
-	// Uint8Array writes outside the bounds have no effect, unlike Array writes.
-	if (slot != NULL) {
-		slot->number = (double)byte_value(value);
+	// A Buffer write outside the bounds, or at an index that isn't whole, has
+	// no effect, as on Node: a compiler-checked typed write panics there, so a
+	// Buffer's writes come here instead.
+	if (index >= 0 && index < (double)buffer->length && index == trunc(index)) {
+		adamic_typed_array_write_converted(buffer, (size_t)index, value);
 	}
 	return value;
 }
@@ -155,62 +146,99 @@ static int unhex(unsigned c)
 	}
 	return -1;
 }
-adamic_array *adamic_node_buffer_from(const adamic_string *text, int encoding)
+// A typed array's length is fixed, so base64 and hex decode twice: once with
+// out NULL to count the bytes, then into a Buffer made at that count. Each
+// pass runs the same loop, so the count is exact.
+static void put_byte(uint8_t *out, size_t *written, unsigned byte)
 {
-	size_t units = adamic_string_units(text);
-	adamic_array *buffer =
-		adamic_array_make(encoding == 1 ? units * 2 : text->length, adamic_ir_Number);
-	if (encoding == 0) {
-		for (size_t at = 0; at < text->length; at++) {
-			push_byte(buffer, (unsigned)adamic_utf8_at(text, (double)at));
+	if (out != NULL) {
+		out[*written] = (uint8_t)(byte & 255);
+	}
+	*written += 1;
+}
+static size_t decode_base64(const adamic_string *text, size_t units,
+							uint8_t *out)
+{
+	// Node's Base64DecodeGroupSlow narrows each UTF-16 unit to uint8_t,
+	// skips all invalid characters, stops at '=', and emits after sextets
+	// 2/3/4.
+	size_t written = 0;
+	unsigned hi = 0, group = 0;
+	for (size_t at = 0; at < units; at++) {
+		unsigned c =
+			(unsigned)adamic_string_char_code_at(text, (double)at) & 255;
+		if (c == '=') {
+			break;
 		}
-	} else if (encoding == 1) {
+		int lo = unbase64(c);
+		if (lo < 0) {
+			continue;
+		}
+		if (group == 1) {
+			put_byte(out, &written, (hi << 2) | ((unsigned)lo >> 4));
+		}
+		if (group == 2) {
+			put_byte(out, &written, (hi << 4) | ((unsigned)lo >> 2));
+		}
+		if (group == 3) {
+			put_byte(out, &written, (hi << 6) | (unsigned)lo);
+		}
+		hi = (unsigned)lo;
+		group = (group + 1) % 4;
+	}
+	return written;
+}
+static size_t decode_hex(const adamic_string *text, size_t units, uint8_t *out)
+{
+	size_t written = 0;
+	for (size_t at = 0; at + 1 < units; at += 2) {
+		int hi = unhex(
+			(unsigned)adamic_string_char_code_at(text, (double)at) & 255);
+		int lo = unhex(
+			(unsigned)adamic_string_char_code_at(text, (double)at + 1) & 255);
+		if (hi < 0 || lo < 0) {
+			break;
+		}
+		put_byte(out, &written, ((unsigned)hi << 4) | (unsigned)lo);
+	}
+	return written;
+}
+adamic_typed_array *adamic_node_buffer_from(const adamic_string *text,
+											int encoding)
+{
+	if (encoding == 0) {
+		adamic_typed_array *buffer =
+			adamic_typed_array_make(adamic_typed_array_uint8, text->length);
+		uint8_t *out = buffer->data;
+		for (size_t at = 0; at < text->length; at++) {
+			out[at] = (uint8_t)((unsigned)adamic_utf8_at(text, (double)at) & 255);
+		}
+		return buffer;
+	}
+	size_t units = adamic_string_units(text);
+	if (encoding == 1) {
+		// Two bytes a unit. On wasm32 a wrapped size would make a Buffer
+		// shorter than the stores below, so the multiply is checked.
+		if (units > SIZE_MAX / 2) {
+			static const char message[] = "RangeError: Invalid typed array length";
+			adamic_panic(message, sizeof message - 1);
+		}
+		adamic_typed_array *buffer =
+			adamic_typed_array_make(adamic_typed_array_uint8, units * 2);
+		uint8_t *out = buffer->data;
 		for (size_t at = 0; at < units; at++) {
 			unsigned unit =
 				(unsigned)adamic_string_char_code_at(text, (double)at);
-			push_byte(buffer, unit);
-			push_byte(buffer, unit >> 8);
+			out[at * 2] = (uint8_t)(unit & 255);
+			out[at * 2 + 1] = (uint8_t)((unit >> 8) & 255);
 		}
-	} else if (encoding == 2) {
-		// Node's Base64DecodeGroupSlow narrows each UTF-16 unit to uint8_t,
-		// skips all invalid characters, stops at '=', and emits after sextets
-		// 2/3/4.
-		unsigned hi = 0, group = 0;
-		for (size_t at = 0; at < units; at++) {
-			unsigned c =
-				(unsigned)adamic_string_char_code_at(text, (double)at) & 255;
-			if (c == '=') {
-				break;
-			}
-			int lo = unbase64(c);
-			if (lo < 0) {
-				continue;
-			}
-			if (group == 1) {
-				push_byte(buffer, (hi << 2) | ((unsigned)lo >> 4));
-			}
-			if (group == 2) {
-				push_byte(buffer, (hi << 4) | ((unsigned)lo >> 2));
-			}
-			if (group == 3) {
-				push_byte(buffer, (hi << 6) | (unsigned)lo);
-			}
-			hi = (unsigned)lo;
-			group = (group + 1) % 4;
-		}
-	} else {
-		for (size_t at = 0; at + 1 < units; at += 2) {
-			int hi = unhex(
-				(unsigned)adamic_string_char_code_at(text, (double)at) & 255);
-			int lo = unhex(
-				(unsigned)adamic_string_char_code_at(text, (double)at + 1) &
-				255);
-			if (hi < 0 || lo < 0) {
-				break;
-			}
-			push_byte(buffer, ((unsigned)hi << 4) | (unsigned)lo);
-		}
+		return buffer;
 	}
+	size_t (*decode)(const adamic_string *, size_t, uint8_t *) =
+		encoding == 2 ? decode_base64 : decode_hex;
+	adamic_typed_array *buffer = adamic_typed_array_make(
+		adamic_typed_array_uint8, decode(text, units, NULL));
+	decode(text, units, buffer->data);
 	return buffer;
 }
 static size_t clamp_offset(double offset, size_t length)
@@ -223,7 +251,7 @@ static size_t clamp_offset(double offset, size_t length)
 	}
 	return (size_t)offset;
 }
-adamic_string *adamic_node_buffer_string(const adamic_array *buffer,
+adamic_string *adamic_node_buffer_string(const adamic_typed_array *buffer,
 										 double from, double to, int encoding)
 {
 	size_t start = clamp_offset(from, buffer->length),
@@ -232,18 +260,18 @@ adamic_string *adamic_node_buffer_string(const adamic_array *buffer,
 		return adamic_retain(&adamic_string_empty);
 	}
 	size_t length = end - start;
+	const uint8_t *bytes = buffer->data;
 	if (encoding == 1) {
 		adamic_string *text = adamic_string_allocate((length / 2) * 3);
 		size_t written = 0;
 		for (size_t at = start; at + 1 < end; at += 2) {
-			uint32_t point = (unsigned)buffer->elements[at].number |
-							 ((unsigned)buffer->elements[at + 1].number << 8);
+			uint32_t point = (unsigned)bytes[at] | ((unsigned)bytes[at + 1] << 8);
 			// JavaScript's UTF-16 permits lone surrogates. Store those in
 			// WTF-8, joining only a high surrogate immediately followed by a
 			// low surrogate.
 			if (point >= 0xd800 && point <= 0xdbff && at + 3 < end) {
-				unsigned low = (unsigned)buffer->elements[at + 2].number |
-							   ((unsigned)buffer->elements[at + 3].number << 8);
+				unsigned low =
+					(unsigned)bytes[at + 2] | ((unsigned)bytes[at + 3] << 8);
 				if (low >= 0xdc00 && low <= 0xdfff) {
 					point = 0x10000 + ((point - 0xd800) << 10) + low - 0xdc00;
 					at += 2;
@@ -259,7 +287,7 @@ adamic_string *adamic_node_buffer_string(const adamic_array *buffer,
 		adamic_string *text = adamic_string_allocate(length * 2);
 		char *out = (char *)text->bytes;
 		for (size_t at = 0; at < length; at++) {
-			unsigned byte = (unsigned)buffer->elements[start + at].number;
+			unsigned byte = bytes[start + at];
 			out[at * 2] = hex[byte >> 4];
 			out[at * 2 + 1] = hex[byte & 15];
 		}
@@ -272,13 +300,9 @@ adamic_string *adamic_node_buffer_string(const adamic_array *buffer,
 		char *out = (char *)text->bytes;
 		size_t written = 0;
 		for (size_t at = 0; at < length; at += 3) {
-			unsigned a = (unsigned)buffer->elements[start + at].number;
-			unsigned b = at + 1 < length
-							 ? (unsigned)buffer->elements[start + at + 1].number
-							 : 0;
-			unsigned c = at + 2 < length
-							 ? (unsigned)buffer->elements[start + at + 2].number
-							 : 0;
+			unsigned a = bytes[start + at];
+			unsigned b = at + 1 < length ? bytes[start + at + 1] : 0;
+			unsigned c = at + 2 < length ? bytes[start + at + 2] : 0;
 			out[written++] = alphabet[a >> 2];
 			out[written++] = alphabet[((a & 3) << 4) | (b >> 4)];
 			out[written++] =
@@ -287,14 +311,5 @@ adamic_string *adamic_node_buffer_string(const adamic_array *buffer,
 		}
 		return text;
 	}
-	unsigned char *bytes = malloc(length);
-	if (bytes == NULL) {
-		adamic_panic("out of memory", 13);
-	}
-	for (size_t at = 0; at < length; at++) {
-		bytes[at] = (unsigned char)buffer->elements[start + at].number;
-	}
-	adamic_string *text = decode_utf8(bytes, length);
-	free(bytes);
-	return text;
+	return decode_utf8(bytes + start, length);
 }
