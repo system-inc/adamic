@@ -1,0 +1,18 @@
+// #1hp4ww2: the cached for-in key list's best case, fasta's shape. A record whose keys never change is
+// looped over once per step, so every loop after the first reuses the list. Never lands.
+const table: Record<string, number> = { a: 0.27, c: 0.12, g: 0.12, t: 0.27, B: 0.02, D: 0.02, H: 0.02, K: 0.02, M: 0.02, N: 0.02, R: 0.02, S: 0.02, V: 0.02, W: 0.02, Y: 0.02 };
+let picked = 0;
+let seed = 42;
+for (let step = 0; step < 5000000; step++) {
+	seed = (seed * 3877 + 29573) % 139968;
+	const r = seed / 139968;
+	let sum = 0;
+	for (const key in table) {
+		sum += table[key] ?? 0;
+		if (r < sum) {
+			picked += key.length;
+			break;
+		}
+	}
+}
+console.log(`${picked}`);

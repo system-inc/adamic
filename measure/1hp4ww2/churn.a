@@ -1,0 +1,14 @@
+// #1hp4ww2: the cached for-in key list's worst case. Every iteration adds a key, so every for-in after it
+// finds its record's list let go and builds a new one: the cache costs its store and its counts and saves
+// nothing. Never lands.
+const record: Record<string, number> = {};
+let total = 0;
+for (let index = 0; index < 4000; index++) {
+	record['k' + index] = index;
+	for (const key in record) {
+		if (key.length > 4) {
+			total++;
+		}
+	}
+}
+console.log(`${total}`);
