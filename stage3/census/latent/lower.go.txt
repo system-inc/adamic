@@ -419,6 +419,12 @@ func latentRun(ctx context.Context, program *load.Program, emit func(LatentFile)
 					}
 				}
 				var prepassErr error
+				func() { defer latentPrepassTimer("expansiveGenerics")(); prepassErr = l.expansiveGenerics(modules) }()
+				if prepassErr != nil {
+					latentFindingPhase = "prepass"
+					latentRecord(prepassErr)
+					return
+				}
 				func() { defer latentPrepassTimer("collectViewedElements")(); prepassErr = l.collectViewedElements(modules) }()
 				if prepassErr != nil {
 					latentFindingPhase = "prepass"
