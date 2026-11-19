@@ -1,0 +1,20 @@
+{
+  "command": [
+    "/tmp/adamic-g02/entry-census",
+    "/tmp/adamic-g02/edit/src/tsc/tsc.ts",
+    "/tmp/adamic-g02/entry-edit/latent.jsonl"
+  ],
+  "cwd": "/tmp/adamic-g02/main",
+  "environment": {
+    "LATENT_FULL": "0",
+    "LATENT_ASSERT_NO_OUTPUT": "1",
+    "LATENT_TAIL": "1",
+    "LATENT_TIMES": "/dev/stderr",
+    "CENSUS_MODULE_FORMAT": "CommonJSBundle"
+  },
+  "adamic": "491e020de2aa138d7b608611c40a641571a5a1eb",
+  "binary_sha256": "20a2d1eb997600c93a8ff9ead989beb165d61301336087d8ea0e1d44e12d8012",
+  "started_unix": 1795057881.0373464,
+  "elapsed_seconds": 1397.01,
+  "exit_code": 0
+}
