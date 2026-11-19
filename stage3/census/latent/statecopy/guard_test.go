@@ -703,3 +703,31 @@ func TestInspectorDoomedMarkersStaySnapshotOwned(t *testing.T) {
 		t.Fatal("inspector markers must not be carried as program facts")
 	}
 }
+
+// A relation view's entry and its taken mark (rulings.md:72, #0b9xqhh) are snapshot-owned maps: a
+// rollback that discards the IR a lowering viewed a value in discards its taken mark with it, so the
+// post-pass refuses the entry unless a surviving lowering views it again. Carrying either into another
+// program's lowering would mark a view taken that its IR never made.
+func TestRelationViewsStaySnapshotOwned(t *testing.T) {
+	t.Parallel()
+	root, err := filepath.Abs("../../../..")
+	if err != nil {
+		t.Fatal(err)
+	}
+	for _, name := range []string{"relationViews", "relationViewsTaken"} {
+		if loweringFieldPolicies[name] != speculativeState {
+			t.Fatalf("%s's policy must stay snapshot-only", name)
+		}
+	}
+	text := string(generate(root, filepath.Join(root, "internal/lower/lower.go")))
+	for _, want := range []string{"result.relationViews = func(value map[*ast.Node]relationView)", "result.relationViewsTaken = func(value map[*ast.Node]bool)"} {
+		if !strings.Contains(text, want) {
+			t.Fatalf("a relation view field lost its owned map snapshot: %s", want)
+		}
+	}
+	for _, carried := range []string{"relationViews: value.relationViews", "relationViewsTaken: value.relationViewsTaken"} {
+		if strings.Contains(text, carried) {
+			t.Fatalf("a relation view field must not be carried as a program fact: %s", carried)
+		}
+	}
+}

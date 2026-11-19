@@ -21,6 +21,10 @@ type optionalWidening struct {
 	// reads its value. That's a gap in what the runtime builds, so it's NotYet, not the hiding rule's
 	// refusal. It's "" otherwise.
 	unstored string
+	// constrained says the walk reached property through a type parameter's or another instantiable
+	// type's constraint, where the value may hold it under a key the checker never names, so no
+	// relation view admits it (recordRelationView).
+	constrained bool
 }
 
 // libraryStoredMembers names, for each library interface whose values the runtime makes, the members
@@ -103,9 +107,36 @@ func (l *lowering) methodViewOwnedElsewhere(source, target *checker.Type) bool {
 	return judged && stop != ""
 }
 
+// optionalWidened is the first field of target a view of source would hide: an optional field the
+// source doesn't hold, at any depth, or a lib-declared member the runtime's shape lacks (unstored). It's
+// nil where there's none. Its walk is optionalWidenedEach's, stopped at the first.
 func (l *lowering) optionalWidened(source, target *checker.Type, skip map[string]bool, visited map[[2]*checker.Type]bool) *optionalWidening {
+	var first *optionalWidening
+	l.optionalWidenedEach(source, target, skip, visited, false, func(found *optionalWidening) bool {
+		first = found
+		return true
+	})
+	return first
+}
+
+// optionalWidenings is every field optionalWidened's walk finds hidden, in the order it meets them, not
+// only the first: a relation view must check each one it lets cross (relation_views.go).
+func (l *lowering) optionalWidenings(source, target *checker.Type, skip map[string]bool) []optionalWidening {
+	var all []optionalWidening
+	l.optionalWidenedEach(source, target, skip, map[[2]*checker.Type]bool{}, false, func(found *optionalWidening) bool {
+		all = append(all, *found)
+		return false
+	})
+	return all
+}
+
+// optionalWidenedEach walks the relation from source to target and hands each field it finds hidden to
+// each, which says whether to stop there. It says whether the walk stopped. constrained says the walk
+// is already under a type parameter's or another instantiable type's constraint, and marks what it
+// finds there.
+func (l *lowering) optionalWidenedEach(source, target *checker.Type, skip map[string]bool, visited map[[2]*checker.Type]bool, constrained bool, each func(*optionalWidening) bool) bool {
 	if source == nil || target == nil {
-		return nil
+		return false
 	}
 	if weak := l.weakTarget(source); weak != nil {
 		source = weak
@@ -120,10 +151,10 @@ func (l *lowering) optionalWidened(source, target *checker.Type, skip map[string
 	// Only an accepted assignment is a widening. Function rest parameters and checked
 	// downcasts can pair unrelated types; those belong to their own relation rules.
 	if skip == nil && !l.checker.IsTypeAssignableTo(source, target) {
-		return nil
+		return false
 	}
 	if source == target || visited[[2]*checker.Type{source, target}] {
-		return nil
+		return false
 	}
 	visited[[2]*checker.Type{source, target}] = true
 	// An intersection tsc reduces to never, whose discriminants conflict, holds no value, so it has no
@@ -132,41 +163,41 @@ func (l *lowering) optionalWidened(source, target *checker.Type, skip map[string
 	// assignability check above computes it for every source it relates, and a source it didn't is judged
 	// as an inhabited one, which fails closed.
 	if source.Flags()&checker.TypeFlagsIntersection != 0 && source.ObjectFlags()&checker.ObjectFlagsIsNeverIntersectionComputed != 0 && source.ObjectFlags()&checker.ObjectFlagsIsNeverIntersection != 0 {
-		return nil
+		return false
 	}
 	if source.Flags()&checker.TypeFlagsUnion != 0 {
 		for _, member := range source.Types() {
-			if found := l.optionalWidened(member, target, skip, visited); found != nil {
-				return found
+			if l.optionalWidenedEach(member, target, skip, visited, constrained, each) {
+				return true
 			}
 		}
-		return nil
+		return false
 	}
 	if target.Flags()&checker.TypeFlagsUnion != 0 {
 		// A value enters a union that names its own type as that member, so no other member's field is
 		// hidden from it. Seeing the union as another member later is a view of its own, checked there.
 		for _, member := range target.Types() {
 			if member == source {
-				return nil
+				return false
 			}
 		}
 		for _, member := range target.Types() {
 			if l.checker.IsTypeAssignableTo(source, member) {
-				if found := l.optionalWidened(source, member, skip, visited); found != nil {
-					return found
+				if l.optionalWidenedEach(source, member, skip, visited, constrained, each) {
+					return true
 				}
 			}
 		}
-		return nil
+		return false
 	}
 	if source.Flags()&checker.TypeFlagsTypeParameter != 0 {
-		return l.optionalWidened(l.checker.GetBaseConstraintOfType(source), target, skip, visited)
+		return l.optionalWidenedEach(l.checker.GetBaseConstraintOfType(source), target, skip, visited, true, each)
 	}
 	if target.Flags()&checker.TypeFlagsTypeParameter != 0 {
-		return l.optionalWidened(source, l.checker.GetBaseConstraintOfType(target), skip, visited)
+		return l.optionalWidenedEach(source, l.checker.GetBaseConstraintOfType(target), skip, visited, true, each)
 	}
 	if target.Flags()&(checker.TypeFlagsObject|checker.TypeFlagsIntersection) == 0 {
-		return nil
+		return false
 	}
 	// Sources without Object or Intersection flags that need the walk are object,
 	// unknown and instantiable types without a different base constraint.
@@ -177,13 +208,13 @@ func (l *lowering) optionalWidened(source, target *checker.Type, skip map[string
 	// A phantom brand's optional member never exists on the primitive it holds.
 	if source.Flags()&(checker.TypeFlagsObject|checker.TypeFlagsIntersection) == 0 {
 		if source.Flags()&checker.TypeFlagsAny != 0 {
-			return nil
+			return false
 		}
 		if source.Flags()&(checker.TypeFlagsNever|checker.TypeFlagsNull|checker.TypeFlagsUndefined|checker.TypeFlagsVoid) != 0 {
-			return nil
+			return false
 		}
 		if source.Flags()&checker.TypeFlagsPrimitive != 0 {
-			return nil
+			return false
 		}
 		if source.Flags()&checker.TypeFlagsInstantiable != 0 {
 			// The recursion asks again whether the constraint is assignable to target, and reads nil when it
@@ -191,7 +222,7 @@ func (l *lowering) optionalWidened(source, target *checker.Type, skip map[string
 			// constraint, so an accepted source whose constraint isn't assignable was related another way
 			// (to itself, or through a type parameter), which the arms above judge.
 			if constraint := l.checker.GetBaseConstraintOfType(source); constraint != nil && constraint != source {
-				return l.optionalWidened(constraint, target, skip, visited)
+				return l.optionalWidenedEach(constraint, target, skip, visited, true, each)
 			}
 		}
 	}
@@ -205,12 +236,12 @@ func (l *lowering) optionalWidened(source, target *checker.Type, skip map[string
 				at = 0
 			}
 			if at < len(targets) {
-				if found := l.optionalWidened(inside, targets[at], nil, visited); found != nil {
-					return found
+				if l.optionalWidenedEach(inside, targets[at], nil, visited, constrained, each) {
+					return true
 				}
 			}
 		}
-		return nil
+		return false
 	}
 	for _, property := range l.checker.GetPropertiesOfType(target) {
 		if skip[property.Name] {
@@ -219,7 +250,9 @@ func (l *lowering) optionalWidened(source, target *checker.Type, skip map[string
 		declared := l.checker.GetPropertyOfType(source, property.Name)
 		if declared == nil {
 			if property.Flags&ast.SymbolFlagsOptional != 0 && !l.classOptionalAbsent(source, property.Name) {
-				return &optionalWidening{property: property.Name, source: source, target: target}
+				if each(&optionalWidening{property: property.Name, source: source, target: target, constrained: constrained}) {
+					return true
+				}
 			}
 			continue
 		}
@@ -235,26 +268,29 @@ func (l *lowering) optionalWidened(source, target *checker.Type, skip map[string
 				// A well-known symbol's key is internal and per program; name it as the source spells it.
 				name = l.checker.SymbolToString(property)
 			}
-			return &optionalWidening{property: name, source: source, target: target, unstored: owner}
+			if each(&optionalWidening{property: name, source: source, target: target, unstored: owner, constrained: constrained}) {
+				return true
+			}
+			continue
 		}
-		if found := l.optionalWidened(l.checker.GetTypeOfSymbol(declared), l.checker.GetTypeOfSymbol(property), nil, visited); found != nil {
-			return found
+		if l.optionalWidenedEach(l.checker.GetTypeOfSymbol(declared), l.checker.GetTypeOfSymbol(property), nil, visited, constrained, each) {
+			return true
 		}
 	}
 	sources := l.checker.GetSignaturesOfType(source, checker.SignatureKindCall)
 	targets := l.checker.GetSignaturesOfType(target, checker.SignatureKindCall)
 	if len(sources) == 1 && len(targets) == 1 && len(sources[0].TypeParameters()) == 0 && len(targets[0].TypeParameters()) == 0 {
-		if found := l.optionalWidened(l.checker.GetReturnTypeOfSignature(sources[0]), l.checker.GetReturnTypeOfSignature(targets[0]), nil, visited); found != nil {
-			return found
+		if l.optionalWidenedEach(l.checker.GetReturnTypeOfSignature(sources[0]), l.checker.GetReturnTypeOfSignature(targets[0]), nil, visited, constrained, each) {
+			return true
 		}
 		takes, gives := sources[0].Parameters(), targets[0].Parameters()
 		for index := 0; index < len(takes) && index < len(gives); index++ {
-			if found := l.optionalWidened(l.checker.GetTypeOfSymbol(gives[index]), l.checker.GetTypeOfSymbol(takes[index]), nil, visited); found != nil {
-				return found
+			if l.optionalWidenedEach(l.checker.GetTypeOfSymbol(gives[index]), l.checker.GetTypeOfSymbol(takes[index]), nil, visited, constrained, each) {
+				return true
 			}
 		}
 	}
-	return nil
+	return false
 }
 
 func (l *lowering) optionalValue(node *ast.Node, target *checker.Type) *optionalWidening {
@@ -298,11 +334,24 @@ func (l *lowering) optionalValue(node *ast.Node, target *checker.Type) *optional
 	return l.optionalWidened(l.checker.GetTypeAtLocation(node), target, nil, map[[2]*checker.Type]bool{})
 }
 
+// relationSite is the top-level relation optionalAtSite judged, when it's one value entering one slot:
+// the node whose lowered value enters it, and the slot's type there. A relation view keys its entry by
+// that node and views the value as that type (relation_views.go). skip is the fields a spread's later
+// properties write over, which the walk judged the spread without, and nil for any other site.
+type relationSite struct {
+	value  *ast.Node
+	target *checker.Type
+	skip   map[string]bool
+}
+
 // optionalAtSite uses the same relation sites as the other view rules, before lowering.
 // A leading spread is not proof of absence: it copies fields hidden by the source's type too.
-func (l *lowering) optionalAtSite(node *ast.Node) *optionalWidening {
+// It gives the relation it judged as a relationSite where that's one value entering one slot, and nil
+// where it isn't: a cast's operand related to the cast's own type (castRefusal's to judge), or a value
+// optionalValue looked inside (a conditional's arms, an arrow's body, an assignment used as a value).
+func (l *lowering) optionalAtSite(node *ast.Node) (*optionalWidening, *relationSite) {
 	if l.nodeFSFileReadOnlyArgument(node) {
-		return nil
+		return nil, nil
 	}
 	// Only argument positions of a directly imported node:* call can use the host exemption.
 	argumentSite := node
@@ -312,11 +361,12 @@ func (l *lowering) optionalAtSite(node *ast.Node) *optionalWidening {
 	if parent := argumentSite.Parent; parent != nil && parent.Kind == ast.KindCallExpression && l.optionalNodeHostCall(parent) {
 		for index, argument := range parent.AsCallExpression().Arguments.Nodes {
 			if ast.SkipParentheses(argument) == node && l.nodeHostConsumesArgument(parent, index) {
-				return nil
+				return nil, nil
 			}
 		}
 	}
 	var found *optionalWidening
+	var site *relationSite
 	switch node.Kind {
 	case ast.KindAsExpression:
 		// The cast relates its operand to its own type, and its own type then goes into its slot as a
@@ -326,17 +376,21 @@ func (l *lowering) optionalAtSite(node *ast.Node) *optionalWidening {
 		as := node.AsAsExpression()
 		found = l.optionalValue(as.Expression, l.checker.GetTypeAtLocation(node))
 		if found == nil && !(as.Type.Kind == ast.KindTypeReference && ast.IsIdentifier(as.Type.AsTypeReferenceNode().TypeName) && as.Type.AsTypeReferenceNode().TypeName.Text() == "const") {
-			found = l.optionalInSlot(node)
+			var slot *checker.Type
+			found, slot = l.optionalInSlot(node)
+			site = &relationSite{value: node, target: slot}
 		}
 	case ast.KindShorthandPropertyAssignment:
 		target := l.slotType(node.Parent)
 		if target != nil {
-			found = l.optionalValue(node.Name(), l.checker.GetTypeOfPropertyOfType(target, node.Name().Text()))
+			slot := l.checker.GetTypeOfPropertyOfType(target, node.Name().Text())
+			found = l.optionalValue(node.Name(), slot)
+			site = &relationSite{value: node.Name(), target: slot}
 		}
 	case ast.KindSpreadAssignment:
 		target := l.slotType(node.Parent)
 		if target == nil {
-			return nil
+			return nil, nil
 		}
 		skip := map[string]bool{}
 		after := false
@@ -350,21 +404,44 @@ func (l *lowering) optionalAtSite(node *ast.Node) *optionalWidening {
 		expression := ast.SkipParentheses(node.AsSpreadAssignment().Expression)
 		if expression.Kind != ast.KindObjectLiteralExpression {
 			found = l.optionalWidened(l.checker.GetTypeAtLocation(expression), target, skip, map[[2]*checker.Type]bool{})
+			site = &relationSite{value: expression, target: target, skip: skip}
 		}
 	default:
 		if node.Kind == ast.KindParenthesizedExpression || !l.isExpression(node) {
-			return nil
+			return nil, nil
 		}
-		found = l.optionalInSlot(node)
+		var slot *checker.Type
+		found, slot = l.optionalInSlot(node)
+		if optionalValueItself(node) {
+			site = &relationSite{value: node, target: slot}
+		}
 	}
-	return found
+	if found == nil || site == nil || site.target == nil {
+		return found, nil
+	}
+	return found, site
+}
+
+// optionalValueItself says whether optionalValue judges node as the value itself, by its own type,
+// rather than looking inside it: a conditional's arms, an arrow's body and parameters, or the handles
+// of an assignment used as a value. A literal is judged at its own fields' sites. A compound or logical
+// assignment used as a value publishes through its target too, so it's no one value either.
+func optionalValueItself(node *ast.Node) bool {
+	switch skipped := ast.SkipParentheses(node); skipped.Kind {
+	case ast.KindObjectLiteralExpression, ast.KindArrayLiteralExpression, ast.KindConditionalExpression, ast.KindArrowFunction:
+		return false
+	case ast.KindBinaryExpression:
+		return !ast.IsAssignmentOperator(skipped.AsBinaryExpression().OperatorToken.Kind)
+	}
+	return true
 }
 
 // optionalInSlot judges a value against the slot it goes into: the one written for it, or the one tsc
-// implied (impliedTarget). A generic function is instantiated to its slot rather than seen through it.
-func (l *lowering) optionalInSlot(node *ast.Node) *optionalWidening {
+// implied (impliedTarget), and gives that slot's type. A generic function is instantiated to its slot
+// rather than seen through it.
+func (l *lowering) optionalInSlot(node *ast.Node) (*optionalWidening, *checker.Type) {
 	if l.genericFunction(node) {
-		return nil
+		return nil, nil
 	}
 	var target *checker.Type
 	if viewSite(node) {
@@ -374,14 +451,26 @@ func (l *lowering) optionalInSlot(node *ast.Node) *optionalWidening {
 		target = l.impliedTarget(node)
 	}
 	if target == nil {
-		return nil
+		return nil, nil
 	}
-	return l.optionalValue(node, target)
+	return l.optionalValue(node, target), target
 }
 
+// refuseOptionalWidening is rulings.md:71's hiding rule, and in .ts it's rulings.md:72's road past it
+// (#0b9xqhh): a relation the checker accepts whose only failure here is an optional field of the target
+// absent from a structural source isn't refused. recordRelationView records it, and the value crosses as
+// an untagged checked view of the slot's type, registered as a structural cast's view is
+// (relationViewValue), so every read of a field through that type is checked: absent, or holding the
+// field's type, else a panic. That rests on #80cs7rz's premise: a value admitted by a view stays checked
+// under every type it's later seen as, and any road where the flow loses the view's origin is checked or
+// NotYet program-wide, never read raw (checkViewWidenedReads). A relation no lowering took a view for is
+// refused here once lowering is done, in these words (checkRelationViewsTaken). A .a file always refuses.
 func (l *lowering) refuseOptionalWidening(node *ast.Node) error {
-	found := l.optionalAtSite(node)
+	found, site := l.optionalAtSite(node)
 	if found == nil {
+		return nil
+	}
+	if l.recordRelationView(node, found, site) {
 		return nil
 	}
 	return l.optionalWideningRefusal(node, found)

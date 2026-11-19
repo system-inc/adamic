@@ -26,8 +26,13 @@ import (
 // filter (c4). l1 backs the library
 // exemption: lib's filter<S extends T> binds S to { readonly kind: "circle" }, which hides Circle's
 // radius, and it agrees with Node natively. Each program's whole stop is pinned in its .stop file, or
-// "lowers". Mutant: constraintRelationRefusal judging nothing turns h1 back into the native compiler-bug
-// panic, and every refused row here but h2 and r2 red.
+// "lowers". h2.ts, the direct twin, is rulings.md:72's in .ts (#0b9xqhh): its relation crosses as a checked
+// view, and the lie stops loudly at the read of overrideImportMode, exit 70 on every backend, where Node prints
+// lie, its .stop file holding "panics" and the panic line's words (panicsAtTheRead). The bindings stay
+// refused in .ts too: they're constraintRelationRefusal's, which no relation view reaches. Mutants:
+// constraintRelationRefusal judging nothing turns h1 back into the native compiler-bug panic, and every
+// refused row here but h2 and r2 red; rule 3300 refusing in .ts again (internal/lower/relation_views.mutants.md)
+// turns h2.ts red.
 func TestConstraintRelationSites(t *testing.T) {
 	t.Parallel()
 	directory := "internal/oracle/testdata/constraint_relation_sites"
@@ -57,6 +62,13 @@ func TestConstraintRelationSites(t *testing.T) {
 				t.Fatalf("source Node: exit %d stderr %q", truth.exitCode, truth.stderr)
 			}
 			program, err := lowered(t, absolute)
+			if words, panics := panicsStop(string(expected)); panics {
+				if err != nil {
+					t.Fatalf("Lower: %v, want it to lower and panic at the read with %q", err, words)
+				}
+				panicsAtTheRead(t, absolute, program, "", words)
+				return
+			}
 			if stop := strings.TrimSpace(string(expected)); stop != "lowers" {
 				if err == nil {
 					t.Fatalf("lowered, want %q", stop)

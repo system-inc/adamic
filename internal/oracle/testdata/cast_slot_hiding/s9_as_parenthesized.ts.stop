@@ -1,1 +1,2 @@
-internal/oracle/testdata/cast_slot_hiding/s9_as_parenthesized.ts:5:16: Adamic 0.1 refuses optional property name in Positioned absent from structural source Node, which can hide fields; declare name on the source type, or build a fresh object with known fields (adamic/no-optional-widening)
+panics
+adamic: panic: field read failed: p.name matches no member of string | undefined; expected string | undefined, found number
