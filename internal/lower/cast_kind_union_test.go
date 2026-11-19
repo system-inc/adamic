@@ -109,28 +109,6 @@ function target(node: Node): Node { return (node as Leaf | Other).parent; }
 	}
 }
 
-// A write through the kind cast's union stays NotYet (kindUnionWrites): Adamic ruled it as #b5w3ycg's head 2,
-// and this head keeps it waiting, written through the cast, through a local, through an alias of the union, and
-// as a compound assignment.
-func TestKindUnionCastWriteStaysNotYet(t *testing.T) {
-	t.Parallel()
-	for _, probe := range []struct{ name, write string }{
-		{"object field", "(node as PropertyAccessExpression | ElementAccessExpression).expression = id;\n"},
-		{"scalar field", "(node as PropertyAccessExpression | ElementAccessExpression).flags = 1;\n"},
-		{"through a local", "const access = node as PropertyAccessExpression | ElementAccessExpression;\naccess.expression = id;\n"},
-		{"through an alias", "type AccessExpression = PropertyAccessExpression | ElementAccessExpression;\nconst access = node as AccessExpression;\naccess.flags += 1;\n"},
-	} {
-		t.Run(probe.name, func(t *testing.T) {
-			t.Parallel()
-			_, err := lowerSourceAs(t, kindUnionWriteModel+probe.write, ".ts")
-			var notYet *NotYet
-			if !errors.As(err, &notYet) || !strings.Contains(err.Error(), "waits on #b5w3ycg head 2") {
-				t.Fatalf("want NotYet at the write, waiting on head 2, got %v", err)
-			}
-		})
-	}
-}
-
 // kindUnionWriteModel is kindUnionModel's shape with fields a write can reach.
 const kindUnionWriteModel = `enum SyntaxKind { Identifier = 80, PropertyAccessExpression = 211, ElementAccessExpression = 212 }
 interface Node { readonly kind: SyntaxKind; readonly pos: number }

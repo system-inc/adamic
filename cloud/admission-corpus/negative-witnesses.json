@@ -768,6 +768,18 @@
       "type_correct_sha256": "fd67e41ae0226a75d01c77e9d2c44ac0db904f09e13d42bb9e24858879e1c97b",
       "exit": 70,
       "stderr": "adamic: panic: field read failed: member.name.hash is not initialized; expected number, found missing\n"
+    },
+    "5e559b9688bf0a67291f980c7847d2f4b008e329da8061ce84aa723b475a4b78": {
+      "form": "checked_boundary",
+      "ruling_task": "#b5w3ycg",
+      "ruling": "Adamic, Nov 17 on #b5w3ycg, head 2: a named write through a kind-checked cast's union, Rule C through a kind-checked view (rulings.md:73), whose lie stops at main's checked write",
+      "declaration": "internal/oracle/testdata/cast_kind_union_write_lie.ts:7",
+      "declared_type": "number",
+      "repair_from": "const lie: Node = { kind: SyntaxKind.ElementAccessExpression, pos: 0 };",
+      "repair_to": "const lie: ElementAccessExpression = { kind: SyntaxKind.ElementAccessExpression, pos: 0, flags: 0 };",
+      "type_correct_sha256": "52c0bffd7104037cd77e763d468245af113f908405a0eac2aafbab6590c52126",
+      "exit": 70,
+      "stderr": "adamic: panic: field read failed: <write>.flags is not initialized; expected number, found missing\n"
     }
   }
 }

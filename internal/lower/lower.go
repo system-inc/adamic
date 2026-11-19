@@ -617,6 +617,10 @@ type lowering struct {
 	closedKindDeclared []closedKindSite
 	closedKindBuilt    []closedKindSite
 	closedKindNewOnly  map[*ast.Symbol]bool
+	// kindTagCarriers is every declared type carrying a literal on a tag field, by the field and the literal's
+	// runtime value, and kindTagFields the fields it holds (cast_kind_union_writes.go, #b5w3ycg head 2).
+	kindTagCarriers map[string][]*checker.Type
+	kindTagFields   map[string]bool
 	// crossFunctionWrites is every binding a function other than its own writes (narrowed_nullish.go).
 	crossFunctionWrites map[*ast.Symbol]bool
 	// propertyWrites is every property write in the program, by what it can reach (narrowed_nullish.go).
