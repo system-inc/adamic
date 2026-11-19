@@ -2,12 +2,10 @@ package lower
 
 import (
 	"reflect"
-	"slices"
 	"strconv"
 
 	"github.com/microsoft/TypeScript/tsc/shim/ast"
 	"github.com/microsoft/TypeScript/tsc/shim/checker"
-	"github.com/system-inc/adamic/internal/ir"
 )
 
 // A named write through a kind-checked cast's union, `(node as PropertyAccessExpression |
@@ -21,7 +19,9 @@ import (
 // different types (`{ text: string }` and `{ text: number }`, both kind StringLiteral) make a valid program
 // Node runs, and a write of a string through the union would land in the number's layout, so that program is
 // NotYet, never a stop at run time (the head 2 probe's w3). A declared type carrying a cast's kind and
-// declaring no such field, or the field optional, holds no slot for it, which waits under #x0nd1mh. One declaring
+// declaring no such field holds no slot for it, which waits under #x0nd1mh. One declaring it optional is judged
+// as every optional field's write is, by whether each object reaching the write holds its slot (slot_writes.go,
+// #w8nanzw), its type compared with the others' as any carrier's is. One declaring
 // the field readonly holds the slot but promised it never changes, a promise Adamic's immutable default leans on
 // (sharing, hoisted reads), so the write is NotYet there too, whatever the members declare. The written
 // types are compared across every carrier, not only those sharing one literal, so main's checked-write road
@@ -32,10 +32,11 @@ import (
 // type, a kind written as const, or a literal whose kind widens to the open SyntaxKind, `as Node` or not), so a
 // list of declared types is a claim about types while the hazard lives in storage. The write is admitted only
 // when every allocation that can reach its receiver (ReachingAllocations) is an object the program builds whose
-// own type holds the field, required, writable, and at a type the members' written type relates to both ways;
-// an unknown reach is NotYet. The declared index stays a fast refusal and never admits on its own: a write it
-// doesn't refuse is recorded (recordKindUnionWrite) and judged once lowering is done, on the allocation graph
-// (checkKindUnionWriteReach), as checkBoundArguments judges a bind. A frozen carrier (Object.freeze) never reaches
+// own slot holds the field (reachHoldsSlot), and whose type holds it writable and at a type the members' written
+// type relates to both ways (slotWriteSite, every slot write's); an unknown reach is NotYet. The declared index stays a fast
+// refusal and never admits on its own: a write it doesn't refuse is recorded (kindUnionWrites' recordSlotWrite)
+// and judged once lowering is done, on the allocation graph (checkSlotWrites), as checkBoundArguments judges a
+// bind. A frozen carrier (Object.freeze) never reaches
 // the write, since invariance refuses its Readonly<...> type seen as the writable union first; reach itself doesn't
 // ask about freezing (Language's s03).
 //
@@ -173,7 +174,9 @@ func (l *lowering) kindUnionWriteHeld(part *ast.Node, proof *kindUnion, name str
 	write := "a write of " + name + " through a kind-checked cast's union"
 	for _, carrier := range carriers {
 		property := l.checker.GetPropertyOfType(carrier.of, name)
-		if property == nil || property.Flags&ast.SymbolFlagsProperty == 0 || property.Flags&ast.SymbolFlagsOptional != 0 {
+		// A carrier declaring name optional holds a slot for it where the object was built with one, which reach
+		// judges once the program is lowered (checkSlotWrites).
+		if property == nil || property.Flags&ast.SymbolFlagsProperty == 0 {
 			return l.notYet(part, write+", where "+l.checker.TypeToString(carrier.of)+" carries "+proof.field+" "+l.checker.TypeToString(carrier.literal)+" but its layout holds no "+name)
 		}
 		if l.checker.IsReadonlySymbol(property) {
@@ -228,25 +231,6 @@ func kindUnionNamedWrite(part *ast.Node) bool {
 	return false
 }
 
-// kindUnionWriteRecord is a named write through a kind-checked cast's union the declared index let through
-// (kindUnionWrites): part is the property access written, and proof the cast, whose members declare the
-// field's written type.
-type kindUnionWriteRecord struct {
-	part  *ast.Node
-	proof *kindUnion
-}
-
-// recordKindUnionWrite keeps part for checkKindUnionWriteReach, once: every cast of the union lowered walks
-// the program's writes again.
-func (l *lowering) recordKindUnionWrite(part *ast.Node, proof *kindUnion) {
-	for _, record := range l.kindUnionWriteRecords {
-		if record.part == part {
-			return
-		}
-	}
-	l.kindUnionWriteRecords = append(l.kindUnionWriteRecords, kindUnionWriteRecord{part: part, proof: proof})
-}
-
 // builtType is the type an object literal is built at: layout, the slot it's written into where that's an
 // object type or a union or an intersection of them, whose fields lay out the literal's storage
 // (declaredField), and own, the literal's own type, set only where it isn't layout. A zero builtType is a
@@ -277,141 +261,13 @@ func (l *lowering) noteBuiltType(id int, own, contextual *checker.Type) {
 	l.builtTypes[id] = built
 }
 
-// checkKindUnionWriteReach judges each write recordKindUnionWrite kept, once lowering is done, by Adamic's
-// amended fourth condition: every allocation reaching the store's receiver is an object the program builds
-// whose own type holds the field, required, writable and at a type the members' written type relates to both
-// ways, and an unknown reach is NotYet. Each store the write lowered to is found by its receiver, the node
-// writeSite recorded for it, and a write lowered to no store this can find fails closed. One cast's members
-// declare the field alike (kindUnionWriteHeld), so the first's is the written type.
-func (l *lowering) checkKindUnionWriteReach() error {
-	if len(l.kindUnionWriteRecords) == 0 {
-		return nil
-	}
-	assignAllocationSites(l.result)
-	literals := map[int]ir.ObjectLiteral{}
-	stores := map[*ast.Node][]ir.SetProperty{}
-	inspect := func(visited any) bool {
-		switch value := visited.(type) {
-		case ir.ObjectLiteral:
-			if len(value.GraphTypes) > 0 {
-				literals[value.GraphTypes[len(value.GraphTypes)-1]] = value
-			}
-		case ir.SetProperty:
-			if value.Site > 0 && value.Site <= len(l.writeSites) {
-				receiver := ast.SkipParentheses(l.writeSites[value.Site-1].node)
-				stores[receiver] = append(stores[receiver], value)
-			}
-		}
-		return true
-	}
-	walk(l.result.Main, inspect)
-	for _, function := range l.result.Functions {
-		walk(function.Body, inspect)
-	}
-	graph := l.flowGraph(l.result)
-	for _, record := range l.kindUnionWriteRecords {
-		name := record.part.Name().Text()
-		write := "a write of " + name + " through a kind-checked cast's union"
-		var written *checker.Type
-		for _, member := range record.proof.members {
-			if property := l.checker.GetPropertyOfType(member, name); property != nil && written == nil {
-				written = l.checker.GetTypeOfSymbol(property)
-			}
-		}
-		// Every store a named write builds is an ir.SetProperty carrying writeSite of its receiver (setProperty's
-		// fieldStore and updateProperty in class.go, the logical assignments that take setProperty's statement), so
-		// every store through this receiver, in every lowering of the part, is judged below. A lowering that builds
-		// none stores nothing: enumNeverIdentity's Evaluate for a target narrowed to never (assignments.go), which one
-		// instance of a generic body can take while another stores. The other roads without a SetProperty (a foreign
-		// send, a private static, super, process) never have a union receiver. So a store found in one lowering never
-		// stands in for a store unjudged in another, and a part with no store at all is NotYet (Compiler's question).
-		lowered := false
-		judged := map[int]bool{}
-		for _, store := range stores[ast.SkipParentheses(record.part.AsPropertyAccessExpression().Expression)] {
-			if store.Name != name || written == nil {
-				continue
-			}
-			lowered = true
-			if where := l.kindUnionWriteReach(name, written, graph.ReachingAllocations(store.Object), graph, literals, judged); where != "" {
-				return l.notYet(record.part, write+where)
-			}
-		}
-		if !lowered {
-			return l.notYet(record.part, write+", where what reaches its receiver isn't known")
+// kindUnionWritten is the type the cast proof's members declare name written at, the first's, since one cast's
+// members declare it alike (kindUnionWriteHeld), or nil where none declares it.
+func (l *lowering) kindUnionWritten(proof *kindUnion, name string) *checker.Type {
+	for _, member := range proof.members {
+		if property := l.checker.GetPropertyOfType(member, name); property != nil {
+			return l.checker.GetTypeOfSymbol(property)
 		}
 	}
 	return nil
-}
-
-// kindUnionWriteReach judges reaches, what can reach a write of name whose members declare it written, and is
-// empty when every site holds the slot alike, or else the NotYet's words after the write's. judged holds the
-// sites already admitted. A literal made with a spread copies its source's slots, so what reaches the source is
-// judged too, as the literal's own.
-func (l *lowering) kindUnionWriteReach(name string, written *checker.Type, reaches ir.AllocationSet, graph *allocationFlowGraph, literals map[int]ir.ObjectLiteral, judged map[int]bool) string {
-	if reaches.Unknown {
-		// A parameter with unseen callers, a closure's call, an opaque call's result, a host value.
-		return ", where what reaches its receiver isn't known"
-	}
-	for _, site := range reaches.Sites {
-		if judged[site] {
-			continue
-		}
-		judged[site] = true
-		literal, isLiteral := literals[site]
-		if !isLiteral || literal.Record {
-			// An array, a closure, a collection, or an object kept as counted own keys, never a field layout.
-			return ", where a value reaching it isn't an object the program builds with a field layout"
-		}
-		var built builtType
-		if literal.Class != 0 && (literal.Class > len(l.result.Classes) || !l.result.Classes[literal.Class-1].Literal) {
-			// An instance of a class, built at the class's instance type, whose declared fields are its layout.
-			built.layout = l.classHolders[literal.Class]
-		} else if len(literal.GraphTypes) > 1 {
-			// An object literal, an accessor literal's class among them, built where graphAllocation noted it.
-			built = l.builtTypes[literal.GraphTypes[0]]
-		}
-		if built.layout == nil {
-			return ", where a value reaching it is an object built at a type this can't name"
-		}
-		if literal.Class == 0 && literal.Spread == nil && !slices.ContainsFunc(literal.Fields, func(field ir.Field) bool { return field.Name == name && !field.Absent }) {
-			// A literal built without the field holds no slot for it, whatever its layout declares: one built at Node,
-			// which declares only kind and pos (TestKindUnionWriteReachesALiteralWithoutTheField).
-			return ", where a value reaching it is built as " + l.checker.TypeToString(built.layout) + " without " + name
-		}
-		if where := l.kindUnionWriteBuilt(name, written, built.layout, true); where != "" {
-			return where
-		}
-		if built.own != nil {
-			// The literal's own type, beside the slot it's built in: what it holds must be one of the members'.
-			if where := l.kindUnionWriteBuilt(name, written, built.own, false); where != "" {
-				return where
-			}
-		}
-		if literal.Spread != nil {
-			if where := l.kindUnionWriteReach(name, written, graph.ReachingAllocations(literal.Spread), graph, literals, judged); where != "" {
-				return where
-			}
-		}
-	}
-	return ""
-}
-
-// kindUnionWriteBuilt judges built, a type an object reaching a write of name is built at, against written, the
-// members' type of name: it holds name as a required, writable field, at a type written relates to both ways
-// where built is its layout, or to written alone where built is a literal's own type beside its layout, since a
-// literal's own type holds what it was written with (an Identifier where the layout holds a Node). It is empty
-// when built holds the slot so, and the NotYet's words after the write's otherwise.
-func (l *lowering) kindUnionWriteBuilt(name string, written, built *checker.Type, layout bool) string {
-	property := l.checker.GetPropertyOfType(built, name)
-	if property == nil || property.Flags&ast.SymbolFlagsProperty == 0 || property.Flags&ast.SymbolFlagsOptional != 0 {
-		return ", where a value reaching it is built as " + l.checker.TypeToString(built) + ", whose layout holds no " + name
-	}
-	if layout && l.checker.IsReadonlySymbol(property) {
-		return ", where a value reaching it is built as " + l.checker.TypeToString(built) + ", which declares " + name + " readonly"
-	}
-	held := l.checker.GetTypeOfSymbol(property)
-	if held == written || l.castAssignable(held, written) && (!layout || l.castAssignable(written, held)) {
-		return ""
-	}
-	return ", where a value reaching it is built as " + l.checker.TypeToString(built) + ", whose " + name + " is " + l.checker.TypeToString(held) + ", not " + l.checker.TypeToString(written)
 }

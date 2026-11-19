@@ -37,7 +37,7 @@ var viewReceiverCallers = []struct {
 	{"interface_cast.go legacyView checkedViewReceiverField", 1, "read guard: a checked field alias's conversion gap (checkedFieldAliasGap), by the access's own node"},
 	{"interface_cast.go checkedViewReceiverField checkedViewReceiverField", 1, "read guard: a union receiver's member, under the same node"},
 	{"destructure_view.go refuseIncompatibleDestructuredView checkedViewReceiverField", 1, "read guard: a destructured field read through an object-union view"},
-	{"view_optional_writes.go viewWriteReceiverTypeID viewReceiverTypeID", 1, "write: every SetProperty's raw id, its optional fields kept for checkViewOptionalWrites"},
+	{"view_optional_writes.go viewWriteReceiverTypeID viewReceiverTypeID", 1, "write: every SetProperty's raw id, its optional fields kept for checkSlotWrites"},
 	{"logical_assignment.go logicalAssignment viewWriteReceiverTypeID", 1, "write: a logical assignment's keyed SetProperty"},
 	{"class.go fieldStore viewWriteReceiverTypeID", 1, "write: a property assignment's SetProperty, and each arm of a computed one's"},
 	{"class.go updateProperty viewWriteReceiverTypeID", 1, "write: a compound assignment's SetProperty"},

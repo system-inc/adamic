@@ -534,15 +534,16 @@ func (l *lowering) fieldStore(target, receiver, valueNode *ast.Node, field *ast.
 	return ir.SetProperty{Object: object, Name: name, Value: value, Nullish: l.fieldNullish(valueNode, value), DeclaredType: l.checker.TypeToString(declared), Class: l.classOfField(field), Site: l.writeSite(receiver), ViewReceiverTypeID: l.viewWriteReceiverTypeID(target, receiver, name)}
 }
 
-// absentOptionalWrite refuses a write to an optional own field of a plain object when some producer left
-// a field of that name out: that object has no slot for it, and the write would find none ('a field the
+// absentOptionalWrite judges a write to an optional own field of a plain object when some producer left a
+// field of that name out: such an object has no slot for it, and the write would find none ('a field the
 // checker proved is there is missing'), whatever the field's representation. A field held in a Union is
 // refused wherever it's written, as before. A class instance declares every field, so it has the slot.
 // The field is matched by name, never by the declaration that spelled it: a literal typed Link, seen
 // through another interface or a generic's constraint that declares next again, is the same object with
-// no slot, which declaration keying missed (#g2aj1pb's g3 and g6, panicking on main 72f23939). Name
-// keying stops a write to a name some unrelated type left out too; that's the fail-closed price until
-// optional presence lifts this (#r3chqza).
+// no slot, which declaration keying missed (#g2aj1pb's g3 and g6, panicking on main 72f23939). A write to
+// a name some producer left out, unless a presence test of its spelling or a const literal giving it admits
+// it here, is recorded, and admitted once the program is lowered only where every allocation reaching it
+// holds the slot (checkSlotWrites, #w8nanzw).
 //
 // A write to an Error's cause stops here. Lifting this stop reopens a road into a catch, which the catch narrowing stands on (looseCaughtRoad, loose_slots.go).
 func (l *lowering) absentOptionalWrite(target *ast.Node) error {
@@ -554,14 +555,16 @@ func (l *lowering) absentOptionalWrite(target *ast.Node) error {
 // is the write, receiver its object's node, member the field's symbol and name its spelling, and present
 // whether a test of the same spelling proved a value there (presentBeforeWrite).
 func (l *lowering) absentOptionalFieldWrite(target, receiver *ast.Node, member *ast.Symbol, name string, present bool) error {
-	if member == nil || member.Flags&ast.SymbolFlagsOptional == 0 || isClassInstance(l.checker.GetTypeAtLocation(receiver)) {
+	// A class instance holds a slot for every field a class declares, but none for an optional member an
+	// interface merges into the class, so only a class-declared member is admitted here (#86cmqrp).
+	if member == nil || member.Flags&ast.SymbolFlagsOptional == 0 || isClassInstance(l.checker.GetTypeAtLocation(receiver)) && classDeclaresMember(member) {
 		return nil
 	}
 	if stored, _ := l.representation(l.checker.GetTypeOfSymbol(member)); stored == ir.Union {
 		return l.notYet(target, "writing a possibly absent optional own field")
 	}
 	if l.omittedOptionals[member.Name] && !present && !l.literalReceiverGivesField(receiver, name) {
-		return l.notYet(target, "writing a possibly absent optional own field")
+		l.recordSlotWrite(slotWrite{part: target, receiver: receiver, name: name, opening: "writing a possibly absent optional own field", written: l.checker.GetTypeOfSymbol(member)})
 	}
 	return nil
 }
@@ -679,12 +682,46 @@ func (l *lowering) noteOmittedOptionals(modules []*ast.SourceFile) {
 			l.noteOmittedOptionalsOf(node)
 		case ast.KindCallExpression:
 			l.noteDecodedOptionals(node)
+		case ast.KindClassDeclaration, ast.KindClassExpression:
+			l.noteMergedClassOptionals(node)
 		}
 		return node.ForEachChild(visit)
 	}
 	for _, module := range modules {
 		module.AsNode().ForEachChild(visit)
 	}
+}
+
+// noteMergedClassOptionals records every optional member a class's instances hold no slot for: one an
+// interface merges into the class or a base, which no class declares. Its instances leave that member out as
+// a literal leaves out an optional property, so a write of it is judged by what reaches it (#86cmqrp,
+// Language's attack on #w8nanzw: a merged member written through an interface lowered, and native panicked
+// where Node runs on).
+func (l *lowering) noteMergedClassOptionals(class *ast.Node) {
+	symbol := l.checker.GetSymbolOfDeclaration(class)
+	if symbol == nil {
+		return
+	}
+	instance := l.checker.GetDeclaredTypeOfSymbol(symbol)
+	if instance == nil {
+		return
+	}
+	for _, property := range l.checker.GetPropertiesOfType(instance) {
+		if property.Flags&ast.SymbolFlagsOptional != 0 && !classDeclaresMember(property) {
+			l.omittedOptionals[property.Name] = true
+		}
+	}
+}
+
+// classDeclaresMember is whether a class declares member, so its instances lay out a slot for it: some
+// declaration of it is a class's own member. An interface merged into the class declares it there alone.
+func classDeclaresMember(member *ast.Symbol) bool {
+	for _, declaration := range member.Declarations {
+		if declaration.Parent != nil && (declaration.Parent.Kind == ast.KindClassDeclaration || declaration.Parent.Kind == ast.KindClassExpression) {
+			return true
+		}
+	}
+	return false
 }
 
 func (l *lowering) noteOmittedOptionalsOf(literal *ast.Node) {
