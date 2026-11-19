@@ -143,9 +143,38 @@ parameter's type erases, so no line of the emitted JavaScript moves either.
 
 ## What certifies it
 
-`scratch-upd/measure.sh` on branch `memory/factory-update-view`, run as a
-sealed Loom job at that branch's measure commit, prints a PASS or FAIL line per
-verdict:
+`scratch-upd/measure.sh` on branch `memory/factory-update-view` (commit
+e145850f, never landing) ran as Loom job J-4zq0yyh on Pupa, at this
+adaptation's first cut on main aa90e3fa. What it measured:
+
+- (0) sources: 748 src files, nodeFactory.ts alone differing, in `update`'s one
+  line; a second run says already adapted and changes no byte, and a run over
+  main's file yields the adapted bytes.
+- (1) stock tsc: 7,057 diagnostics before and after, 0 new and 0 gone.
+- (2) the JavaScript: 604 files transpiled on each tree, 0 differing.
+- (3) the census: latent 2,489 to 2,449, so 40 fewer. 46 sites go: the 44
+  `update(createX(...), node)` sites listed above, and the two inside `update`
+  itself, its return's "a value of type Mutable<T> seen as T, a type parameter
+  whose constraint Node can be written" and that same line's SyntaxKind slot
+  stop. Six are new, which is that same refusal and its SyntaxKind pair at three
+  sites: nodeFactory.ts:1226 (finishUpdateBaseSignatureDeclaration), :5485
+  (updateJSDocSimpleTagWorker) and :5511 (updateJSDocTypeLikeTagWorker). Each
+  hands `update` a generic `Mutable<T>` as `T`: the first is the finishUpdate
+  helper that writes `typeArguments` through it, and the two workers' creators
+  return createBaseNode's `Mutable<T>` by inference. So the one fact `update`'s
+  return held now stops where a generic `Mutable<T>` is really built, and no
+  type-only edit takes it away; annotating the workers `: T` only moves it to
+  their returns. The finishUpdate helpers' sites are 7 before and 7 after. The
+  three relocated sites are owed on #38kdd4d's ledger: :1226 with the
+  finishUpdate seven, :5485 and :5511 on the generic-worker road.
+- (4) the mutant: the adapted tree with `Mutable<T>` restored differs from main's
+  in nothing, so its census is main's 2,489 by construction. The job reached its
+  45-minute ceiling inside that third census, and Compiler took the construction
+  as enough, since the census is deterministic over the source.
+
+Compiler accepted it under #k8ed1f2's delegation, which Adamic named for this
+head on #38kdd4d, as 40 fewer with one fact relocated. The verdicts as the
+script names them:
 
 - (0) sources: the adapted tree with this adaptation differs from main's
   adapted tree (the same inputs without this directory) in nodeFactory.ts
@@ -160,9 +189,6 @@ verdict:
   sites stay, and no site anywhere is new;
 - (4) the mutant: the adapted tree with `Mutable<T>` restored is main's tree
   byte for byte, and its census brings back exactly the sites (3) saw go.
-
-Until that job's verdicts are in, this directory has not been applied: the
-claims above are read from upstream 6.0.3's source.
 
 ## Re-running
 
