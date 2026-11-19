@@ -34,7 +34,7 @@ echo "== perf record, native at 1M, user cycles, top 30 symbols"
 perf record -q -e cycles:u -F 2999 -g -o "$T/r.data" "$T/regexredux" "$T/in1000000.txt" > /dev/null 2>&1
 perf report -q -i "$T/r.data" --stdio --no-children --sort symbol --percent-limit 0.5 -g none 2>/dev/null | head -30 | cut -c1-160
 echo "== callers of the top two symbols"
-for symbol in $(perf report -q -i "$T/r.data" --stdio --no-children --sort symbol -g none 2>/dev/null | awk 'NF {print $NF}' | head -2); do
+for symbol in $(perf report -q -i "$T/r.data" --stdio --no-children --sort symbol -g none 2>/dev/null | awk '$2 == "[.]" {print $3}' | head -2); do
 	echo "-- $symbol"
 	perf report -q -i "$T/r.data" --stdio --no-children --symbols "$symbol" -g caller,0.5,callee --percent-limit 1 2>/dev/null | head -25 | cut -c1-160
 done
