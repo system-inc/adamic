@@ -50,3 +50,28 @@ object slot (testdata/optional_widening/initializer.a, pinned word for word) go 
 Why only these: every .ts fixture already takes the view, and the .a rows are the only ones whose
 answer depends on the file's extension alone. Rows whose source is `object`, a class instance or a
 type parameter stay refused under this mutant, since their own condition refuses them.
+
+## (d) The slice undone: rule 3300 refusing in .ts again
+
+`refuseOptionalWidening` stops calling `recordRelationView` (or it returns false at once), so a .ts
+relation that fails only on an absent optional field is refused by the hiding rule as it was before
+#0b9xqhh. Each pin this slice moved from that refusal to a panic at the read goes red: its .stop file
+holds `panics`, so its harness wants the program to lower and stop at the read with exit 70
+(`panicsAtTheRead`), and gets rule 3300's refusal from Lower instead ("Lower: ... want it to lower and
+panic at the read").
+
+- `TestLogicalAssignmentViewsArePinned` (internal/oracle/logical_assignment_views_test.go):
+  `v07_hiding_nullish.ts` and `v09_hiding_assign_control.ts`, refused at 4:9 and 4:7.
+- `TestCastSlotHiding` (internal/oracle/cast_slot_hiding_test.go): the .ts twins s1, s2, s3, s4, s5,
+  s6, s7, s8, s9, s11, s12, s13 and s14, each refused where its cast or value enters the Positioned
+  slot. `s15_angle_assertion.ts` goes red too: it wants the TypeAssertionExpression NotYet and gets the
+  refusal, which runs first. s10 and every .a twin keep the refusal, and stay green.
+- `TestConstraintRelationSites` (internal/oracle/constraint_relation_test.go): `h2_hidden_direct.ts`,
+  refused at 5:18. The other .ts rows are refused by constraintRelationRefusal (rule 3360) at the
+  binding, in the same words, which this mutant doesn't touch.
+- `TestRelationViewsAgreeWithNode` and `TestRelationViewsPanicAtTheRead` (every row), and
+  `TestRelationViewsStop`'s road1_getter.ts, road2_wider_alias.ts, road3_other_type.ts and
+  lowered_twice.ts, which want stops lowering reaches only past the relation.
+
+Why only these: each is a .ts program whose first stop on main was rule 3300's at a relation this slice
+records. A pin refused by another rule first, or in .a, has the same outcome with the slice and without.

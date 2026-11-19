@@ -1,6 +1,6 @@
-// Language's road 2 on #0b9xqhh: between two checked reads of label through the view, a second, wider alias
-// writes a number there. Each read is checked as it runs, so the first prints and the second stops at the
-// read (exit 70) where Node prints 2.
+// Language's road 2 on #0b9xqhh, its optional form: the wider alias's label is optional, and a write of a
+// possibly absent optional own field is NotYet until :73's certificate covers it (#x0nd1mh), so this waits on
+// :73. road2_required_alias.ts is the same road with the alias's label required, which reaches the reads.
 interface Source { readonly kind: number; }
 interface Target { readonly kind: number; readonly label?: string; }
 interface Loose { kind: number; label?: string | number; }

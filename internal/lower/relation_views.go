@@ -33,7 +33,10 @@ type relationView struct {
 //     included, where the value may hold the field under a key the checker never names (Language's
 //     condition 1 on #0b9xqhh), and none may hold what isn't a structural object the program declares
 //     (relationViewOpen: a class instance, object or {}, a library's type);
-//   - the absent field isn't a Weak<T>;
+//   - the source isn't a registered Node host object (nodeHostObject), whose members are the host view
+//     walk's to judge, as methodViewOwnedElsewhere defers to it;
+//   - the absent field isn't a Weak<T>, and its type has no call or construct signature: a view can't
+//     check a callable contract today;
 //   - the type viewed is one plain object type: the slot's type, or its one object member where the slot
 //     adds undefined or null to it and the source holds neither (the T | undefined widening). A union of
 //     objects would be legacyView's, which holds only scalar fields and no optional one, so it's refused.
@@ -52,8 +55,15 @@ func (l *lowering) recordRelationView(node *ast.Node, found *optionalWidening, s
 	if l.relationViewOpen(source) || l.relationViewOpen(found.source) || l.relationViewOpen(found.target) || l.relationViewOpen(site.target) {
 		return false
 	}
-	// A Weak field is kept as a handle, not read as its target, and no checked read is built for one.
-	if absent := l.checker.GetPropertyOfType(found.target, found.property); absent == nil || l.relationViewWeak(l.checker.GetTypeOfSymbol(absent)) {
+	if _, host := l.nodeHostObject(source); host {
+		return false
+	}
+	if _, host := l.nodeHostObject(found.source); host {
+		return false
+	}
+	// A Weak field is kept as a handle, not read as its target, and no checked read is built for one, nor
+	// for a callable field's contract.
+	if absent := l.checker.GetPropertyOfType(found.target, found.property); absent == nil || l.relationViewWeak(l.checker.GetTypeOfSymbol(absent)) || l.callableViewContract(l.checker.GetTypeOfSymbol(absent)) {
 		return false
 	}
 	target := site.target
