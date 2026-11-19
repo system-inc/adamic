@@ -6,8 +6,9 @@ import "testing"
 // (internal/native/object_view_receiver_test.go), so both backends stop a receiver that isn't an object in the same
 // words. A string has own length and index keys, so without the test a widened .length read through a type a view
 // checks read on in JavaScript where native stopped with found string (Emit on #zpzm9ta). An object, a tuple and a
-// class read through its constructor stay readable. Mutant: adamicViewField without its receiver line, and the string,
-// array and function rows read on.
+// class read through its constructor stay readable. Mutant: adamicViewField without its receiver line, and every row
+// goes red, the Map row stopping as found missing and the rest reading on; the closure test dropped from
+// adamicViewReceiver, and the closure row reads its length.
 func TestViewFieldStopsAtANonObjectReceiver(t *testing.T) {
 	t.Parallel()
 	for _, row := range []struct{ name, receiver, found string }{
@@ -15,6 +16,8 @@ func TestViewFieldStopsAtANonObjectReceiver(t *testing.T) {
 		{"array", `[1, 2, 3]`, "array"},
 		{"Map", `new Map([["length", 3]])`, "Map"},
 		{"function", `function f(a, b, c) {}`, "function"},
+		// Every closure the backend makes is an AdamicClosure, an object with an own length (Emit on #zpzm9ta).
+		{"closure", `(() => { const closure = new AdamicClosure(() => 0); closure.length = 3; return closure; })()`, "function"},
 	} {
 		t.Run(row.name, func(t *testing.T) {
 			t.Parallel()
