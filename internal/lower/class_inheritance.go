@@ -550,7 +550,13 @@ func (l *lowering) finishClassCalls() {
 	}
 }
 
-func (l *lowering) noteInheritance(modules []*ast.SourceFile) {
+// walkInheritance notes every class a class in modules extends, which class.go reads as hasDescendants.
+// noteInheritance runs it, or takes a copy where a latent census run already walked it over the same checker
+// and program (inheritance_cache.go, #hjspb3b).
+func (l *lowering) walkInheritance(modules []*ast.SourceFile) {
+	if counter := inheritanceWalks.Load(); counter != nil {
+		counter.Add(1)
+	}
 	l.derivedAncestors = map[*ast.Symbol]bool{}
 	for _, module := range modules {
 		var visit ast.Visitor
