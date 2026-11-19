@@ -11,10 +11,12 @@ import (
 // walk over a view's target whose only stop was a set of types it had seen ran on it without end:
 // collectViewedElements until Go's stack overflowed (Optimizer's find on #68x1t2y), then
 // prepareUntaggedStructuralRead and viewContract, which hung (J-rae10tx, J-g91t70n). The view pre-pass sees
-// every view target first, so each such program now stops there, not yet at the view (#k031ey0). Mutant:
-// collectViewedElements' stop dropped (the !ok branch returning without setting stop), and each row hangs
-// in a later walk. Run that mutant with -run on this test alone and a short -timeout, since a hang ends
-// the whole test binary.
+// every view target first, so each such program stopped there, not yet at the view (#k031ey0). Since
+// #ykd89v9 the expansive-generic pre-pass (expansive_generics.go) runs before it and stops each one where
+// its generic is declared, refused as polymorphic recursion, so that's the stop these rows read now. collectViewedElements' bound stays as
+// defense, and its mutant survives through lowering, since no program reaches the walk with a growing
+// generic any more. TestCollectViewedElementsBoundsAGrowingGenericDirectly calls the walk itself and is
+// its witness.
 func TestViewedElementsStopOnAGenericThatDeepensItself(t *testing.T) {
 	t.Parallel()
 	tail := `interface Id extends N { readonly kind: 1; readonly text: string }
@@ -40,9 +42,9 @@ interface N { readonly kind: number; readonly grow?: G<number> }
 		t.Run(row.name, func(t *testing.T) {
 			t.Parallel()
 			_, err := lowerSourceAs(t, row.growth+tail, ".ts")
-			var notYet *NotYet
-			if !errors.As(err, &notYet) || !strings.Contains(notYet.What, "instantiates itself deeper at each step") {
-				t.Fatalf("want the growing type's not yet at its view, got %v", err)
+			var refused *Refused
+			if !errors.As(err, &refused) || !strings.Contains(refused.What, expansiveGenericsWords) {
+				t.Fatalf("want the growing generic's not yet where it's declared, got %v", err)
 			}
 		})
 	}

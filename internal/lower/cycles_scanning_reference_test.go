@@ -1704,7 +1704,11 @@ func scanLowerWithElementKey(key *viewElementKey, program *load.Program, typeChe
 	if err != nil {
 		return nil, err
 	}
-	// As lowerWithElementKey does, before any view is made or any element read lowers.
+	// As lowerWithElementKey does: the expansive-generic pre-pass, then the view pre-pass, before any view
+	// is made or any element read lowers.
+	if err := lowering.expansiveGenerics(modules); err != nil {
+		return nil, err
+	}
 	if err := lowering.collectViewedElements(modules); err != nil {
 		return nil, err
 	}
