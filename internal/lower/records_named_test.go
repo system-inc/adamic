@@ -356,24 +356,22 @@ func ruleOf(err error) string {
 	return stoppedFor(err)
 }
 
-// #6c4swvt's record-to-fixed direction, piece 1 (addedContractRead): in .ts, a record seen as one declaring a
-// named property its own values don't promise passes the storage view where the property's read is checked and
-// it's readonly or fits the record's index, and the optional-widening rule then judges it, as it does every
-// structural source missing an optional property. The writable name whose type the record's index can't hold
-// stops at the storage view itself, not at a later rule. Mutants: take addedContractRead out of
-// sameRecordNamedContracts, and the honest views stop at the storage view again; drop its readonly-or-fits
-// condition, and the writable lie gets past it.
+// #6c4swvt's record-to-fixed direction (addedContractRead, and the optional-widening rule's
+// recordAddedNameChecked): in .ts, a record seen as one declaring a named property its own values don't promise
+// lowers where the property's read is checked and it's readonly or fits the record's index. The writable name
+// whose type the record's index can't hold stops at the storage view itself, not at a later rule. Mutants: take
+// addedContractRead out of sameRecordNamedContracts, and the honest views stop at the storage view again; drop
+// its readonly-or-fits condition, and the writable lie gets past it; recordAddedNameChecked returning false, and
+// the honest views stop at the optional widening.
 func TestRecordViewAddedContracts(t *testing.T) {
 	t.Parallel()
 	const index = "string | number | boolean | undefined"
-	for name, view := range map[string]struct{ source, refused, notYet string }{
+	for name, view := range map[string]struct{ source, notYet string }{
 		"writable": {
-			source:  "interface Options { [option: string]: " + index + "; strict?: boolean; }\nconst bag: Record<string, " + index + "> = { strict: true };\nconst options: Options = bag;\nconsole.log(String(options.strict));\n",
-			refused: "optional property strict in Options absent from structural source Record<string, " + index + ">, which can hide fields",
+			source: "interface Options { [option: string]: " + index + "; strict?: boolean; }\nconst bag: Record<string, " + index + "> = { strict: true };\nconst options: Options = bag;\nconsole.log(String(options.strict));\n",
 		},
 		"readonly": {
-			source:  "interface Options { [option: string]: " + index + "; readonly strict?: boolean; }\nconst bag: Record<string, " + index + "> = { strict: true };\nconst options: Options = bag;\nconsole.log(String(options.strict));\n",
-			refused: "optional property strict in Options absent from structural source Record<string, " + index + ">, which can hide fields",
+			source: "interface Options { [option: string]: " + index + "; readonly strict?: boolean; }\nconst bag: Record<string, " + index + "> = { strict: true };\nconst options: Options = bag;\nconsole.log(String(options.strict));\n",
 		},
 		"writable beyond the record's index": {
 			source: "interface Wide { [option: string]: " + index + "; strict?: boolean; }\nconst bag: Record<string, string | number | undefined> = {};\nconst wide: Wide = bag;\nconsole.log(String(wide.strict));\n",
@@ -390,9 +388,8 @@ func TestRecordViewAddedContracts(t *testing.T) {
 				}
 				return
 			}
-			var refused *Refused
-			if !errors.As(err, &refused) || !strings.Contains(err.Error(), view.refused) {
-				t.Fatalf("want the optional-widening refusal %q, got %v", view.refused, err)
+			if err != nil {
+				t.Fatalf("a record seen in .ts as a view adding checked names must lower: %v", err)
 			}
 		})
 	}
