@@ -105,6 +105,29 @@ function hold(flow: Flow): Other | undefined { return flow; }
 	}
 }
 
+// A mutable container's element is a slot: widenedArguments asks it back to the source before it
+// recurses into widened, so the skip never reaches it, and undefined written through ys can't land
+// where xs reads a Flow (Lower's should on #hjkfhws).
+func TestInvarianceSameUnionViewStillJudgesContainerElement(t *testing.T) {
+	t.Parallel()
+	const source = sameUnionArms + `function hold(xs: Flow[]): number {
+	const ys: (Flow | undefined)[] = xs;
+	return ys.length;
+}
+console.log(String(hold([])));
+`
+	for _, extension := range []string{".a", ".ts"} {
+		t.Run(extension[1:], func(t *testing.T) {
+			t.Parallel()
+			_, err := lowerSourceAs(t, source, extension)
+			var refusal *Refused
+			if !errors.As(err, &refusal) || !strings.Contains(refusal.What, "which can write") {
+				t.Fatalf("got %v, want the mutable element refusal", err)
+			}
+		})
+	}
+}
+
 func sameUnionTypes(t *testing.T, source, extension string) (*lowering, map[string]*checker.Type) {
 	t.Helper()
 	program, err := load.Load([]string{writeAgreementSource(t, "main"+extension, source)})
