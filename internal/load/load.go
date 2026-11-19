@@ -14,6 +14,7 @@ import (
 	"path/filepath"
 	"sort"
 	"strings"
+	"sync"
 	"time"
 	"unicode/utf16"
 
@@ -239,8 +240,13 @@ func IsPrelude(sourceFile *ast.SourceFile) bool {
 // IsLibrary reports whether a declaration comes from TypeScript's bundled library (lib.es2024.d.ts and
 // the files it includes), which is where Math, Array and String are declared.
 func IsLibrary(sourceFile *ast.SourceFile) bool {
-	return sourceFile != nil && strings.HasPrefix(sourceFile.FileName().AsString(), bundled.LibPath().AsString())
+	return sourceFile != nil && strings.HasPrefix(sourceFile.FileName().AsString(), libraryPrefix())
 }
+
+// libraryPrefix is bundled.LibPath() as a string, read once. The library's root is fixed for the process (a
+// constant scheme path when the library is embedded, the bundled package's own directory otherwise), and rooting
+// it again on every IsLibrary was 3.4% of tsc's whole entry census, 48 s of 1,413 (#715zjph).
+var libraryPrefix = sync.OnceValue(func() string { return bundled.LibPath().AsString() })
 
 // rootFileName is the name the checker knows a source file by, refusing anything that isn't Adamic.
 func rootFileName(fs *sourceFS, currentDirectory tspath.RootedDirectoryPath, path string) (tspath.RootedFilePath, error) {
