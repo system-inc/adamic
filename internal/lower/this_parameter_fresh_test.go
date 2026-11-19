@@ -146,3 +146,88 @@ console.log(String(seen.tag));
 		}
 	}
 }
+
+// literalWrappedReceiver is the stored-receiver head with keep a property holding keep, a function
+// expression that declares this: { tag: string }, as the probes write it (#rj9wg3b). A satisfies, an as or a
+// ! around it leaves the function and its this as written, so each is refused at the literal as the bare
+// one is.
+func literalWrappedReceiver(keep string) string {
+	return "const stash: { tag: string }[] = [];\n" +
+		"const seen: { tag: string | undefined; keep(): void } = { tag: \"a\", keep: " + keep + " };\n" +
+		"seen.keep();\n" +
+		"seen.tag = undefined;\n" +
+		"const held = stash[0];\n" +
+		"if (held !== undefined) console.log(String(held.tag.length));\n"
+}
+
+// literalWrappedFunction is the function expression each wrapped row puts around keep.
+const literalWrappedFunction = `function (this: { tag: string }) { stash.push(this); }`
+
+func TestLiteralWrappedReceiverFreshnessRejectsStoredReceiver(t *testing.T) {
+	t.Parallel()
+	for _, fixture := range []struct {
+		name, keep string
+		extensions []string
+	}{
+		{"c09-bare", literalWrappedFunction, []string{".a", ".ts"}},
+		{"c01-parentheses", "(" + literalWrappedFunction + ")", []string{".ts"}},
+		{"c02-satisfies", "(" + literalWrappedFunction + ") satisfies (this: { tag: string }) => void", []string{".a", ".ts"}},
+		{"c03-as", "(" + literalWrappedFunction + ") as (this: { tag: string }) => void", []string{".ts"}},
+		{"c04-non-null", "(" + literalWrappedFunction + ")!", []string{".ts"}},
+	} {
+		for _, extension := range fixture.extensions {
+			t.Run(fixture.name+extension, func(t *testing.T) {
+				t.Parallel()
+				arrowRefusedAt(t, literalWrappedReceiver(fixture.keep), extension, "2:57")
+			})
+		}
+	}
+}
+
+func TestLiteralThisTypeFreshnessRejectsPropertyAndSetter(t *testing.T) {
+	t.Parallel()
+	for _, fixture := range []struct {
+		name, source string
+		extensions   []string
+	}{
+		{"c08-property", `interface Seen { tag: string | undefined; keep(): void }
+const stash: { tag: string }[] = [];
+const seen: Seen & ThisType<{ tag: string }> = { tag: "a", keep: function () { stash.push(this); } };
+seen.keep();
+seen.tag = undefined;
+const held = stash[0];
+if (held !== undefined) console.log(String(held.tag.length));
+`, []string{".ts"}},
+		{"c10-setter", `interface Seen { tag: string | undefined; keep(): void; v: number }
+const stash: { tag: string }[] = [];
+const seen: Seen & ThisType<{ tag: string }> = { tag: "a", keep() { }, set v(x: number) { stash.push(this); }, get v(): number { return 0; } };
+seen.v = 1;
+seen.tag = undefined;
+const held = stash[0];
+if (held !== undefined) console.log(String(held.tag.length));
+`, []string{".a", ".ts"}},
+	} {
+		for _, extension := range fixture.extensions {
+			t.Run(fixture.name+extension, func(t *testing.T) {
+				t.Parallel()
+				arrowRefusedAt(t, fixture.source, extension, "3:48")
+			})
+		}
+	}
+}
+
+// TestLiteralWrappedReceiverFreshnessStillLowersHonestTwin is c00: keep stores a new object, never this, so
+// the literal stays fresh and lowers.
+func TestLiteralWrappedReceiverFreshnessStillLowersHonestTwin(t *testing.T) {
+	t.Parallel()
+	const source = `const stash: { tag: string }[] = [];
+const seen: { tag: string | undefined; keep(): void } = { tag: "a", keep() { stash.push({ tag: "b" }); } };
+seen.keep();
+seen.tag = undefined;
+const held = stash[0];
+if (held !== undefined) console.log(String(held.tag.length));
+`
+	if _, err := lowerSourceAs(t, source, ".ts"); err != nil {
+		t.Fatal(err)
+	}
+}

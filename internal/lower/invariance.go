@@ -1193,13 +1193,15 @@ func lendsItself(value *ast.Node) bool {
 // writes its fields. A member whose this is the literal's own type keeps it fresh: the literal's
 // contextual type, or its own type with or without its freshness. A narrower this, declared as a
 // parameter (#69vkn0j) or given by a contextual ThisType (#n7mgy3s), doesn't, and nor does a this the
-// checker types any other way, since it can't be shown to be the literal's own.
+// checker types any other way, since it can't be shown to be the literal's own. A property's function
+// expression is read through every outer expression, parentheses, satisfies, as, <T> and ! alike
+// (#rj9wg3b): each leaves the function and its this as written.
 func (l *lowering) freshObjectLiteral(literal *ast.Node) bool {
 	for _, member := range literal.AsObjectLiteralExpression().Properties.Nodes {
 		switch member.Kind {
 		case ast.KindMethodDeclaration, ast.KindGetAccessor, ast.KindSetAccessor:
 		case ast.KindPropertyAssignment:
-			member = ast.SkipParentheses(member.AsPropertyAssignment().Initializer)
+			member = ast.SkipOuterExpressions(member.AsPropertyAssignment().Initializer, ast.OEKAll)
 			if member.Kind != ast.KindFunctionExpression {
 				continue
 			}
