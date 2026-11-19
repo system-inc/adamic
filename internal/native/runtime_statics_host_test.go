@@ -15,6 +15,7 @@ func TestRuntimeStaticsHostWorkers(t *testing.T) {
 		{name: "guarded"},
 		{"exit_lock_mutant", "host_runtime.c", "pthread_mutex_lock(&exit_lock);", "(void)&exit_lock;"},
 		{"raw_output_lock_mutant", "adamic.c", "bool adamic_write_raw(enum adamic_stream stream, const adamic_string *text) {\n\tpthread_mutex_lock(&output_lock);", "bool adamic_write_raw(enum adamic_stream stream, const adamic_string *text) {\n\t(void)&output_lock;"},
+		{"bytes_output_lock_mutant", "adamic.c", "bool adamic_write_bytes(enum adamic_stream stream, const adamic_typed_array *bytes) {\n\tpthread_mutex_lock(&output_lock);", "bool adamic_write_bytes(enum adamic_stream stream, const adamic_typed_array *bytes) {\n\t(void)&output_lock;"},
 	}
 	for _, variant := range variants {
 		t.Run(variant.name, func(t *testing.T) {
@@ -25,8 +26,13 @@ func TestRuntimeStaticsHostWorkers(t *testing.T) {
 				if variant.file == "host_runtime.c" {
 					after = strings.ReplaceAll(after, "pthread_mutex_unlock(&exit_lock);", "(void)&exit_lock;")
 				} else {
-					at := strings.Index(after, "bool adamic_write_raw(")
-					after = after[:at] + strings.ReplaceAll(after[at:], "pthread_mutex_unlock(&output_lock);", "(void)&output_lock;")
+					// Each mutant removes its own function's lock and unlock, never another's: adamic_write_bytes
+					// follows adamic_write_raw in adamic.c, and an unlock removed from there to the file's end
+					// would take its unlock too.
+					signature := variant.before[:strings.Index(variant.before, "{")+1]
+					at := strings.Index(after, signature)
+					end := at + strings.Index(after[at:], "\n}\n")
+					after = after[:at] + strings.ReplaceAll(after[at:end], "pthread_mutex_unlock(&output_lock);", "(void)&output_lock;") + after[end:]
 				}
 			}
 			library, root := staticsRaceLibrary(t, variant.file, before, after)

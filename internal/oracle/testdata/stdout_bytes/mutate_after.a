@@ -1,0 +1,9 @@
+// #vndytkn: the write is whole before it returns, as Node's is to a pipe or a file on Linux, so changing the
+// array afterwards changes nothing already written.
+import process from 'node:process';
+
+const bytes = new Uint8Array([0x50, 0x80, 0xff, 0x0a]);
+process.stdout.write(bytes);
+bytes[0] = 0x41;
+bytes[1] = 0x41;
+process.stdout.write(bytes);

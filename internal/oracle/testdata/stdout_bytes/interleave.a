@@ -1,0 +1,8 @@
+// #vndytkn: byte writes, string writes and console.log land in call order.
+import process from 'node:process';
+
+console.log('a');
+process.stdout.write(new Uint8Array([98, 10]));
+process.stdout.write('c\n');
+console.log('d');
+process.stdout.write(new Uint8Array([101, 10]));
