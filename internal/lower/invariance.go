@@ -2,6 +2,7 @@ package lower
 
 import (
 	"slices"
+	_ "unsafe"
 
 	"github.com/microsoft/TypeScript/tsc/shim/ast"
 	"github.com/microsoft/TypeScript/tsc/shim/checker"
@@ -79,6 +80,13 @@ func (l *lowering) widened(from *checker.Type, to *checker.Type, visited map[[2]
 				return nil
 			}
 		}
+	}
+	// A value held as this union admits only writes every arm accepts. Reads
+	// through one arm go through a checked cast or a narrowing, which rule 3350
+	// (narrowedArmReadGap in narrowed_nullish.go) guards against calls that undo it.
+	// Keep this premise when lifting 3350 to read the declared type (#3twb8ab).
+	if l.sameUnionView(from, to) {
+		return nil
 	}
 	from, to = l.withoutUndefined(from), l.withoutUndefined(to)
 	if from == to || visited[[2]*checker.Type{from, to}] || from.Flags()&checker.TypeFlagsNever != 0 {
@@ -531,6 +539,37 @@ func (l *lowering) narrowedFrom(from *checker.Type, to *checker.Type) bool {
 func (l *lowering) structured(proven *checker.Type) bool {
 	return proven.Flags()&(checker.TypeFlagsObject|checker.TypeFlagsIntersection) != 0
 }
+
+// sameUnionView compares checker identity after instantiation and removal of
+// added nullish members. The checker retains named union origins when filtering.
+func (l *lowering) sameUnionView(from, to *checker.Type) bool {
+	from, to = l.concrete(from), l.concrete(to)
+	if from.Flags()&checker.TypeFlagsUnion == 0 || to.Flags()&checker.TypeFlagsUnion == 0 {
+		return false
+	}
+	sourceNullish, viewNullish := unionNullishFlags(from), unionNullishFlags(to)
+	if sourceNullish&^viewNullish != 0 {
+		return false
+	}
+	difference := sourceNullish ^ viewNullish
+	if difference == 0 {
+		return from == to
+	}
+	// The subset check makes this filter a no-op on the source.
+	keep := func(member *checker.Type) bool { return member.Flags()&difference == 0 }
+	return filterUnionView(l.checker, from, keep) == filterUnionView(l.checker, to, keep)
+}
+
+func unionNullishFlags(union *checker.Type) checker.TypeFlags {
+	var flags checker.TypeFlags
+	for _, member := range union.Types() {
+		flags |= member.Flags() & (checker.TypeFlagsUndefined | checker.TypeFlagsNull)
+	}
+	return flags
+}
+
+//go:linkname filterUnionView github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).filterType
+func filterUnionView(receiver *checker.Checker, union *checker.Type, keep func(*checker.Type) bool) *checker.Type
 
 // withoutUndefined is a type with undefined taken out of it: the one type left, or the union itself
 // when several are, whose members widened walks one by one (definedMembers).
