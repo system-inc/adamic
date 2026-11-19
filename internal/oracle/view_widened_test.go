@@ -65,6 +65,10 @@ func TestViewWidenedReadIsChecked(t *testing.T) {
 		{"view_widened_predicate_closure.ts", "5\n", "h.text", ""},
 		{"view_widened_predicate_field.ts", "5\n", "b.item.text", ""},
 		{"view_widened_predicate_anonymous.ts", "5\n", "r.text", ""},
+		// Language's attacks on the premise (#zpzm9ta, J-2zfphry): a generic reader's parameter, never seen as a view where
+		// it's declared, and a read whose result is used as a key, not as a field.
+		{"view_widened_generic.ts", "5\n", "x.text", ""},
+		{"view_widened_record_key.ts", "five\n", "h.text", ""},
 	} {
 		t.Run(probe.file, func(t *testing.T) {
 			t.Parallel()
