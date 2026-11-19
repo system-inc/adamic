@@ -337,6 +337,12 @@ func generate(repository, lowerInput string) []byte {
 						// accessorNames out, so a copy sharing the holder can't write into another lowering's answer,
 						// and the accessorNames it holds is a deep copy with the rest of the lowering.
 						expr = "value." + id.Name
+					} else if name == "lowering" && id.Name == "expansiveGenericsHeld" && printed(field.Type) == "*expansiveGenericsCache" {
+						// Shared on purpose, as inheritance is: expansiveGenerics' stop by checker and program, a
+						// function of the two and the modules alone (expansive_generics_cache.go, #bmqm0k1). A lowering
+						// holds nothing of the answer, only returns its stop, a *Refused nothing writes, so a copy
+						// sharing the holder can't write into another lowering's answer.
+						expr = "value." + id.Name
 					} else {
 						expr = g.copyField(name, id, field)
 					}

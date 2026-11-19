@@ -357,6 +357,10 @@ func latentRun(ctx context.Context, program *load.Program, emit func(LatentFile)
 	// unit's pre-pass walked every module of the program for (accessor_names_cache.go, #hjspb3b: 60 s of the entry
 	// census's CPU).
 	accessorNamesHeld := &accessorNamesCache{}
+	// And one cache of expansiveGenerics' stop, a function of the checker and the program alone, which each unit's
+	// pre-pass walked every module of the program for (expansive_generics_cache.go, #bmqm0k1: 4,064 walks and 55.3 s a
+	// census run).
+	expansiveGenericsHeld := &expansiveGenericsCache{}
 	var facts *latentProgramFacts
  var modules []*ast.SourceFile
 	for _, file := range program.Files() {
@@ -365,7 +369,7 @@ func latentRun(ctx context.Context, program *load.Program, emit func(LatentFile)
 		record := LatentFile{Measurement: LatentMeasurementLabel, File: program.FileName(file), Declarations: latentDeclarations(program, file), Units: []LatentUnit{}}
 		checker, release := program.Checker(ctx, file)
 		fresh := func() *lowering {
-			return &lowering{moduleFormat: moduleformat.Resolve(ModuleFormatCommonJSBundle, ModuleFormatEcmaScript), program: program, checker: checker, result: &ir.Program{}, this: -1, functionIndex: -1, sourceIdentities: identities, typeStrings: typeStrings, numericEnums: numericEnums, viewSites: viewSites, placeholderSlots: placeholderSlots, viewedElements: viewedElements, inheritance: inheritance, accessorNamesHeld: accessorNamesHeld}
+			return &lowering{moduleFormat: moduleformat.Resolve(ModuleFormatCommonJSBundle, ModuleFormatEcmaScript), program: program, checker: checker, result: &ir.Program{}, this: -1, functionIndex: -1, sourceIdentities: identities, typeStrings: typeStrings, numericEnums: numericEnums, viewSites: viewSites, placeholderSlots: placeholderSlots, viewedElements: viewedElements, inheritance: inheritance, accessorNamesHeld: accessorNamesHeld, expansiveGenericsHeld: expansiveGenericsHeld}
 		}
 		func() {
 			defer func() {
