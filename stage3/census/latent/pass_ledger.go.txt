@@ -38,6 +38,11 @@ var latentPostLoweringSteps = []latent.PassStep{
 	// not run.
 	{Name: "checkOptionalMemberPresence"},
 	{Name: "checkViewCopies"},
+	// checkRelationViewsTaken refuses each relation rule 3300 let cross as a checked view (rulings.md:72,
+	// #0b9xqhh) that no lowering viewed. Its entries are recorded by the refusal pass, which the census
+	// runs on a lowering of its own (latentScan), never on a unit's, so a body lowered on its own holds
+	// none and the pass is recorded as not run.
+	{Name: "checkRelationViewsTaken"},
 	{Name: "checkViewWidenedReads"},
 	{Name: "checkHostMemberWrites", Scoped: true},
 	{Name: "asyncPayloadFailures", Scoped: true, Production: "if len(lowering.asyncPayloadFailures) > 0 [calls:]"},

@@ -12,11 +12,16 @@ import (
 // a Cat pushed through it was read as a Dog (v02 to v04: Node throws, both backends print on), a readonly
 // field went into a writable slot by ??= and a string write faulted natively under ASan (v06), and a
 // value hiding a string b went into an optional numeric b by ??= and panicked natively where Node prints
-// str1 (v07). Each now stops at the operator's right in its rule's words, as v01 and v09 always did with
-// =. The controls carry an honest value through each operator and agree with Node on release native,
-// sanitized native and the JavaScript backend. A stop's .stop file holds its position on the first line
-// and words its message must carry on the second. Mutant: the logical operators dropped from viewSite
-// (internal/lower/record-storage-roads.mutants.md), and v02 to v07 lower again.
+// str1 (v07). Each now stops at the operator's right in its rule's words, as v01 always did with =. v07 and
+// v09 (its twin with =) are rulings.md:72's in .ts (#0b9xqhh): the hidden b crosses as a checked view, and
+// the lie stops loudly at the read of opt.b, exit 70 on every backend, where Node prints str1. The controls
+// carry an honest value through each operator and agree with Node on release native, sanitized native and
+// the JavaScript backend. A stop's .stop file holds its position on the first line and words its message
+// must carry on the second; a panic's holds "panics" and the words its panic line carries
+// (panicsAtTheRead). Mutants: the logical operators dropped from viewSite
+// (internal/lower/record-storage-roads.mutants.md), and v02 to v06 lower again while v07 lowers with no
+// view and reads b raw; rule 3300 refusing in .ts again (internal/lower/relation_views.mutants.md), and v07
+// and v09 refuse where they want the panic.
 func TestLogicalAssignmentViewsArePinned(t *testing.T) {
 	t.Parallel()
 	directory := "internal/oracle/testdata/logical_assignment_views"
@@ -42,6 +47,13 @@ func TestLogicalAssignmentViewsArePinned(t *testing.T) {
 				t.Fatal(err)
 			}
 			program, err := lowered(t, absolute)
+			if words, panics := panicsStop(string(expected)); panics {
+				if err != nil {
+					t.Fatalf("Lower: %v, want it to lower and panic at the read with %q", err, words)
+				}
+				panicsAtTheRead(t, absolute, program, "", words)
+				return
+			}
 			truth := onNode(t, absolute)
 			if stop := strings.TrimSpace(string(expected)); stop != "lowers" {
 				position, words, _ := strings.Cut(stop, "\n")
