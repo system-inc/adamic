@@ -1,0 +1,83 @@
+[
+  {
+    "file": "scanner.ts",
+    "owner": "getLinesBetweenPositions",
+    "kind": "FunctionDeclaration",
+    "before": "/** @internal */\nexport function getLinesBetweenPositions(sourceFile: SourceFileLike, pos1: number, pos2: number): number {\n    if (pos1 === pos2) return 0;\n    const lineStarts = getLineStarts(sourceFile);\n    const lower = Math.min(pos1, pos2);\n    const isNegative = lower === pos2;\n    const upper = isNegative ? pos1 : pos2;\n    const lowerLine = computeLineOfPosition(lineStarts, lower);\n    const upperLine = computeLineOfPosition(lineStarts, upper, lowerLine);\n    return isNegative ? lowerLine - upperLine : upperLine - lowerLine;\n}",
+    "after": "/** @internal */\nexport function getLinesBetweenPositions(sourceFile: LineMapSource, pos1: number, pos2: number): number {\n    if (pos1 === pos2) return 0;\n    const lineStarts = getLineStarts(sourceFile);\n    const lower = Math.min(pos1, pos2);\n    const isNegative = lower === pos2;\n    const upper = isNegative ? pos1 : pos2;\n    const lowerLine = computeLineOfPosition(lineStarts, lower);\n    const upperLine = computeLineOfPosition(lineStarts, upper, lowerLine);\n    return isNegative ? lowerLine - upperLine : upperLine - lowerLine;\n}",
+    "ownerBeforeSha256": "c398a172304dbaa590b83c429c444e4653a77ab5f18d634a062f9974dae8d1c5",
+    "ownerAfterSha256": "68d3d7adaa2168d1ca9d3534463b57b378c3821a7b93d981dec9e7d55a690f6a"
+  },
+  {
+    "file": "utilities.ts",
+    "owner": "getEndLinePosition",
+    "kind": "FunctionDeclaration",
+    "before": "/** @internal */\nexport function getEndLinePosition(line: number, sourceFile: SourceFileLike): number {\n    Debug.assert(line >= 0);\n    const lineStarts = getLineStarts(sourceFile);\n\n    const lineIndex = line;\n    const sourceText = sourceFile.text;\n    if (lineIndex + 1 === lineStarts.length) {\n        // last line - return EOF\n        return sourceText.length - 1;\n    }\n    else {\n        // current line start\n        const start = lineStarts[lineIndex]!;\n        // take the start position of the next line - 1 = it should be some line break\n        let pos = lineStarts[lineIndex + 1]! - 1;\n        Debug.assert(isLineBreak(sourceText.charCodeAt(pos)));\n        // walk backwards skipping line breaks, stop the the beginning of current line.\n        // i.e:\n        // <some text>\n        // $ <- end of line for this position should match the start position\n        while (start <= pos && isLineBreak(sourceText.charCodeAt(pos))) {\n            pos--;\n        }\n        return pos;\n    }\n}",
+    "after": "/** @internal */\nexport function getEndLinePosition(line: number, sourceFile: LineMapSource): number {\n    Debug.assert(line >= 0);\n    const lineStarts = getLineStarts(sourceFile);\n\n    const lineIndex = line;\n    const sourceText = sourceFile.text;\n    if (lineIndex + 1 === lineStarts.length) {\n        // last line - return EOF\n        return sourceText.length - 1;\n    }\n    else {\n        // current line start\n        const start = lineStarts[lineIndex]!;\n        // take the start position of the next line - 1 = it should be some line break\n        let pos = lineStarts[lineIndex + 1]! - 1;\n        Debug.assert(isLineBreak(sourceText.charCodeAt(pos)));\n        // walk backwards skipping line breaks, stop the the beginning of current line.\n        // i.e:\n        // <some text>\n        // $ <- end of line for this position should match the start position\n        while (start <= pos && isLineBreak(sourceText.charCodeAt(pos))) {\n            pos--;\n        }\n        return pos;\n    }\n}",
+    "ownerBeforeSha256": "9d5f467758ead5e1b6579a26534220f28780de6535a795d1a31a99cbb412836b",
+    "ownerAfterSha256": "2473b45225c7a5a0c0292a74e640169f3f313980731bdae90e2b1578421ef7d2"
+  },
+  {
+    "file": "utilities.ts",
+    "owner": "getTokenPosOfNode",
+    "kind": "FunctionDeclaration",
+    "before": "/** @internal */\nexport function getTokenPosOfNode(node: Node, sourceFile?: SourceFileLike, includeJsDoc?: boolean): number {\n    // With nodes that have no width (i.e. 'Missing' nodes), we actually *don't*\n    // want to skip trivia because this will launch us forward to the next token.\n    if (nodeIsMissing(node)) {\n        return node.pos;\n    }\n\n    if (isJSDocNode(node) || node.kind === SyntaxKind.JsxText) {\n        // JsxText cannot actually contain comments, even though the scanner will think it sees comments\n        return skipTrivia((sourceFile ?? getSourceFileOfNode(node)).text, node.pos, /*stopAfterLineBreak*/ false, /*stopAtComments*/ true);\n    }\n\n    if (includeJsDoc && hasJSDocNodes(node)) {\n        return getTokenPosOfNode(node.jsDoc![0]!, sourceFile);\n    }\n\n    // For a syntax list, it is possible that one of its children has JSDocComment nodes, while\n    // the syntax list itself considers them as normal trivia. Therefore if we simply skip\n    // trivia for the list, we may have skipped the JSDocComment as well. So we should process its\n    // first child to determine the actual position of its first token.\n    if (node.kind === SyntaxKind.SyntaxList) {\n        sourceFile ??= getSourceFileOfNode(node);\n        const first = firstOrUndefined(getNodeChildren(node, sourceFile));\n        if (first) {\n            return getTokenPosOfNode(first, sourceFile, includeJsDoc);\n        }\n    }\n\n    return skipTrivia(\n        (sourceFile ?? getSourceFileOfNode(node)).text,\n        node.pos,\n        /*stopAfterLineBreak*/ false,\n        /*stopAtComments*/ false,\n        isInJSDoc(node),\n    );\n}",
+    "after": "/** @internal */\nexport function getTokenPosOfNode(node: Node, sourceFile?: { readonly text: string }, includeJsDoc?: boolean): number {\n    // With nodes that have no width (i.e. 'Missing' nodes), we actually *don't*\n    // want to skip trivia because this will launch us forward to the next token.\n    if (nodeIsMissing(node)) {\n        return node.pos;\n    }\n\n    if (isJSDocNode(node) || node.kind === SyntaxKind.JsxText) {\n        // JsxText cannot actually contain comments, even though the scanner will think it sees comments\n        return skipTrivia((sourceFile ?? getSourceFileOfNode(node)).text, node.pos, /*stopAfterLineBreak*/ false, /*stopAtComments*/ true);\n    }\n\n    if (includeJsDoc && hasJSDocNodes(node)) {\n        return getTokenPosOfNode(node.jsDoc![0]!, sourceFile);\n    }\n\n    // For a syntax list, it is possible that one of its children has JSDocComment nodes, while\n    // the syntax list itself considers them as normal trivia. Therefore if we simply skip\n    // trivia for the list, we may have skipped the JSDocComment as well. So we should process its\n    // first child to determine the actual position of its first token.\n    if (node.kind === SyntaxKind.SyntaxList) {\n        sourceFile ??= getSourceFileOfNode(node);\n        const first = firstOrUndefined(getNodeChildren(node, sourceFile));\n        if (first) {\n            return getTokenPosOfNode(first, sourceFile, includeJsDoc);\n        }\n    }\n\n    return skipTrivia(\n        (sourceFile ?? getSourceFileOfNode(node)).text,\n        node.pos,\n        /*stopAfterLineBreak*/ false,\n        /*stopAtComments*/ false,\n        isInJSDoc(node),\n    );\n}",
+    "ownerBeforeSha256": "f56479cbde376e621fc3457957a4e7b8c2ff0a5910dd1d5d839ca6084b86f670",
+    "ownerAfterSha256": "d3b947371191f0206e0fc2b40d4255a94aba813412c24fd2755720e68ccfda86"
+  },
+  {
+    "file": "factory/nodeChildren.ts",
+    "owner": "../_namespaces/ts.js",
+    "kind": "ImportDeclaration",
+    "before": "import {\n    Debug,\n    emptyArray,\n    isNodeKind,\n    type Node,\n    type SourceFileLike,\n    SyntaxKind,\n    type SyntaxList,\n} from \"../_namespaces/ts.js\";",
+    "after": "import {\n    Debug,\n    emptyArray,\n    isNodeKind,\n    type Node,\n    SyntaxKind,\n    type SyntaxList,\n} from \"../_namespaces/ts.js\";",
+    "ownerBeforeSha256": "73ee3d89e0860132bd47ebe51d11a39b9ac02f7ec745893c81e6a0b86651934f",
+    "ownerAfterSha256": "be4c20a8bbeda7b569246043f2dce3e7eb8a425b875d353bcd6170d8ac80559c"
+  },
+  {
+    "file": "factory/nodeChildren.ts",
+    "owner": "sourceFileToNodeChildren",
+    "kind": "FirstStatement",
+    "before": "const sourceFileToNodeChildren = new WeakMap<SourceFileLike, WeakMap<Node, readonly Node[] | undefined>>();",
+    "after": "const sourceFileToNodeChildren = new WeakMap<object, WeakMap<Node, readonly Node[] | undefined>>();",
+    "ownerBeforeSha256": "b53baa5ab5dd4d69d071ed83ddb6a44550ce83be22f85937bee5c0b5576da2b2",
+    "ownerAfterSha256": "12476b449026fbc2c62ee600b3030a0d3a6d181f9e1dfdc4aecb87e2484ad3cf"
+  },
+  {
+    "file": "factory/nodeChildren.ts",
+    "owner": "getNodeChildren",
+    "kind": "FunctionDeclaration",
+    "before": "/** @internal */\nexport function getNodeChildren(node: Node, sourceFile: SourceFileLike): readonly Node[] | undefined {\n    const kind = node.kind;\n    if (!isNodeKind(kind)) {\n        return emptyArray;\n    }\n    if (kind === SyntaxKind.SyntaxList) {\n        return (node as SyntaxList)._children;\n    }\n\n    return sourceFileToNodeChildren.get(sourceFile)?.get(node);\n}",
+    "after": "/** @internal */\nexport function getNodeChildren(node: Node, sourceFile: object): readonly Node[] | undefined {\n    const kind = node.kind;\n    if (!isNodeKind(kind)) {\n        return emptyArray;\n    }\n    if (kind === SyntaxKind.SyntaxList) {\n        return (node as SyntaxList)._children;\n    }\n\n    return sourceFileToNodeChildren.get(sourceFile)?.get(node);\n}",
+    "ownerBeforeSha256": "b5b299be443974c0ac040b56abbc9c983ea383e9a4bfacc870690f7b45550575",
+    "ownerAfterSha256": "8fcd76a5e67384fb638392363bc5add07374caeb38d3a6c5f700325aaa561e1c"
+  },
+  {
+    "file": "factory/nodeChildren.ts",
+    "owner": "setNodeChildren",
+    "kind": "FunctionDeclaration",
+    "before": "/** @internal */\nexport function setNodeChildren(node: Node, sourceFile: SourceFileLike, children: readonly Node[]): readonly Node[] {\n    if (node.kind === SyntaxKind.SyntaxList) {\n        // SyntaxList children are always eagerly created in the process of\n        // creating their parent's `children` list. We shouldn't need to set them here.\n        Debug.fail(\"Should not need to re-set the children of a SyntaxList.\");\n    }\n\n    let map = sourceFileToNodeChildren.get(sourceFile);\n    if (map === undefined) {\n        map = new WeakMap();\n        sourceFileToNodeChildren.set(sourceFile, map);\n    }\n    map.set(node, children);\n    return children;\n}",
+    "after": "/** @internal */\nexport function setNodeChildren(node: Node, sourceFile: object, children: readonly Node[]): readonly Node[] {\n    if (node.kind === SyntaxKind.SyntaxList) {\n        // SyntaxList children are always eagerly created in the process of\n        // creating their parent's `children` list. We shouldn't need to set them here.\n        Debug.fail(\"Should not need to re-set the children of a SyntaxList.\");\n    }\n\n    let map = sourceFileToNodeChildren.get(sourceFile);\n    if (map === undefined) {\n        map = new WeakMap();\n        sourceFileToNodeChildren.set(sourceFile, map);\n    }\n    map.set(node, children);\n    return children;\n}",
+    "ownerBeforeSha256": "74008f0486c72a27e2e959de2a461f617f0b535c146cc10de4ed14a1a0f5d4fc",
+    "ownerAfterSha256": "69c32478ce675f7a33ffeff11c90c5ab0bb58c7de072de9ea195605b37a503cc"
+  },
+  {
+    "file": "factory/nodeChildren.ts",
+    "owner": "unsetNodeChildren",
+    "kind": "FunctionDeclaration",
+    "before": "/** @internal */\nexport function unsetNodeChildren(node: Node, origSourceFile: SourceFileLike): void {\n    if (node.kind === SyntaxKind.SyntaxList) {\n        // Syntax lists are synthesized and we store their children directly on them.\n        // They are a special case where we expect incremental parsing to toss them away entirely\n        // if a change intersects with their containing parents.\n        Debug.fail(\"Did not expect to unset the children of a SyntaxList.\");\n    }\n    sourceFileToNodeChildren.get(origSourceFile)?.delete(node);\n}",
+    "after": "/** @internal */\nexport function unsetNodeChildren(node: Node, origSourceFile: object): void {\n    if (node.kind === SyntaxKind.SyntaxList) {\n        // Syntax lists are synthesized and we store their children directly on them.\n        // They are a special case where we expect incremental parsing to toss them away entirely\n        // if a change intersects with their containing parents.\n        Debug.fail(\"Did not expect to unset the children of a SyntaxList.\");\n    }\n    sourceFileToNodeChildren.get(origSourceFile)?.delete(node);\n}",
+    "ownerBeforeSha256": "05a219cbdb61c4c29d26efc4940d8bcbc745c1b34065c3745d19edd708d4e02d",
+    "ownerAfterSha256": "2476c65309251b8ab04dbca3acf1e9c7f65bb33c827be03f5dbe9ee05d4ca754"
+  },
+  {
+    "file": "factory/nodeChildren.ts",
+    "owner": "transferSourceFileChildren",
+    "kind": "FunctionDeclaration",
+    "before": "/** @internal */\nexport function transferSourceFileChildren(sourceFile: SourceFileLike, targetSourceFile: SourceFileLike): void {\n    const map = sourceFileToNodeChildren.get(sourceFile);\n    if (map !== undefined) {\n        sourceFileToNodeChildren.delete(sourceFile);\n        sourceFileToNodeChildren.set(targetSourceFile, map);\n    }\n}",
+    "after": "/** @internal */\nexport function transferSourceFileChildren(sourceFile: object, targetSourceFile: object): void {\n    const map = sourceFileToNodeChildren.get(sourceFile);\n    if (map !== undefined) {\n        sourceFileToNodeChildren.delete(sourceFile);\n        sourceFileToNodeChildren.set(targetSourceFile, map);\n    }\n}",
+    "ownerBeforeSha256": "f5b1c0ab2458a3fbf33d49d88713b64414e31971dd6d5de1537bb201dde45283",
+    "ownerAfterSha256": "0bb7cc98cf597255f2ee2d397be02279b8388700e84d1f354180d3adf2d8f2fe"
+  }
+]
