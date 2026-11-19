@@ -65,6 +65,8 @@ func TestStage3EnumBoundaries(t *testing.T) {
 	}
 }
 
+// The reverse map's first write is past the end of an empty array: both backends stop there, where Node grows it.
+// Mutant (array_set_bounds.mutant.md): the inline adamic_array_set without its bounds check.
 func TestStage3EnumSparseArrayBoundary(t *testing.T) {
 	t.Parallel()
 	path, err := filepath.Abs(filepath.Join(repository, "stage3/fixtures/enums/07_regex_array_map.a"))

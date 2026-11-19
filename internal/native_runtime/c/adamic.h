@@ -1248,9 +1248,32 @@ static inline adamic_value *adamic_array_at(const adamic_array *array, double in
 	return &array->elements[whole];
 }
 
+// adamic_array_set_outside is adamic_array_set's panic at an index the array doesn't have, kept out
+// of line so the inline write carries only its test and a call it never takes.
+__attribute__((cold)) _Noreturn void adamic_array_set_outside(const adamic_array *array, double index);
+// adamic_array_set_held is adamic_array_set's write to an array of references: it takes value into
+// slot and lets go of the reference slot held, through the graph when the array is a graph member.
+void adamic_array_set_held(adamic_array *array, adamic_value *slot, adamic_value value);
+
 // adamic_array_set is array[index] = value, which takes the value; it panics at an index the array
-// doesn't have.
-void adamic_array_set(adamic_array *array, double index, adamic_value value);
+// doesn't have. 0.1 writes only at an index the array has: JavaScript would grow the array, or leave
+// a hole, and a hole is something 0.1 can't hold. push is how to append.
+//
+// It's inline, as adamic_array_at is, so a write to an array of numbers is the bounds test and a
+// store, not a call: as a call it was 43.5% of fannkuchredux's user cycles (J-69c97as). It's
+// ADAMIC_OWNERSHIP, out of line under ASan, as retain and release are: inlined ownership paths took a
+// large unit's clang time from 21 s to 110 s there (ff1f4068).
+ADAMIC_OWNERSHIP void adamic_array_set(adamic_array *array, double index, adamic_value value) {
+	adamic_value *slot = adamic_array_at(array, index);
+	if (slot == NULL) {
+		adamic_array_set_outside(array, index);
+	}
+	if (array->references) {
+		adamic_array_set_held(array, slot, value);
+		return;
+	}
+	*slot = value;
+}
 
 // adamic_array_at_relative is array.at(index): the element's slot, or NULL (undefined).
 adamic_value *adamic_array_at_relative(const adamic_array *array, double index);
