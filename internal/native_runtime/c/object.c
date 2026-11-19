@@ -323,9 +323,51 @@ void adamic_object_set_initialized(adamic_object *object, const char *name, bool
 	adamic_object_publish(object, adamic_slot_index(object, slot));
 }
 
+// heap_kind_name names a heap value's kind the way a checked field read's failure says what it found.
+static const char *heap_kind_name(enum adamic_kind kind) {
+	switch (kind) {
+	case adamic_kind_string: return "string";
+	case adamic_kind_object: return "object";
+	case adamic_kind_array: return "array";
+	case adamic_kind_map: return "Map";
+	case adamic_kind_cell: return "cell";
+	case adamic_kind_closure: return "function";
+	case adamic_kind_map_iterator: return "Map iterator";
+	case adamic_kind_number: return "number";
+	case adamic_kind_boolean: return "boolean";
+	case adamic_kind_weak: return "Weak";
+	case adamic_kind_typed_array: return "typed array";
+	case adamic_kind_typed_array_iterator: return "typed array iterator";
+	case adamic_kind_async_frame: return "async frame";
+	case adamic_kind_async_promise: return "promise";
+	case adamic_kind_async_reaction: return "async reaction";
+	case adamic_kind_foreign: return "foreign value";
+#ifdef ADAMIC_CANONICAL_CLOSURES
+	case adamic_kind_environment: return "environment";
+	case adamic_kind_generator: return "generator";
+#endif
+	}
+	return "unknown heap kind";
+}
+
+// view_failure stops a checked field read that found found where it wanted type.
+_Noreturn static void view_failure(const char *type, const char *expression, const char *found) {
+	size_t capacity = strlen(expression) + strlen(type) + strlen(found) + 100;
+	char *message = malloc(capacity);
+	if (message == NULL) {
+		static const char oom[] = "out of memory";
+		adamic_panic(oom, sizeof oom - 1);
+	}
+	int length = snprintf(message, capacity, "field read failed: %s is not a %s; expected %s, found %s", expression, type, type, found);
+	adamic_panic(message, (size_t)length);
+}
+
 // Required-field contract checks use the shared readiness bitmap. Representation evidence is
 // checked before reading any union member, including before following a possible reference.
 adamic_value adamic_object_view(const adamic_object *object, const char *name, adamic_slot_cache *cache, unsigned char wanted, const char *type, const char *expression) {
+	// The receiver's own kind comes first: another heap kind (a string, a generator's frame) has no
+	// shape to read, not even the one adamic_record_is compares. A record is an object, so it passes.
+	if (object != NULL && object->heap.kind != adamic_kind_object) { view_failure(type, expression, heap_kind_name(object->heap.kind)); }
 	if (object != NULL && adamic_record_is(object)) return adamic_record_view(object, name, wanted, type, expression);
 	const adamic_object *owner = NULL;
 	adamic_value *slot = adamic_object_read_mode(object, name, cache, expression, type, &owner);
@@ -364,14 +406,7 @@ adamic_value adamic_object_view(const adamic_object *object, const char *name, a
 		if (value->tuple) { found = "array"; }
 		else if (value->class != NULL && value->class->is_static) { found = "function"; }
 	}
-	size_t capacity = strlen(expression) + strlen(type) + strlen(found) + 100;
-	char *message = malloc(capacity);
-	if (message == NULL) {
-		static const char oom[] = "out of memory";
-		adamic_panic(oom, sizeof oom - 1);
-	}
-	int length = snprintf(message, capacity, "field read failed: %s is not a %s; expected %s, found %s", expression, type, type, found);
-	adamic_panic(message, (size_t)length);
+	view_failure(type, expression, found);
 }
 
 void adamic_view_literal_failure(const char *expression, const char *expected, unsigned char type, adamic_value value) {
