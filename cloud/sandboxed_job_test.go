@@ -426,7 +426,7 @@ sandboxed_git && echo "sandboxed_git=ok"`)
 // its own submodule, inner, unpacked from git archive, and the manifest, git's own output for each pin. sub's pin has a
 // parent, as cohere's does, a CRLF blob under `* text=auto eol=lf`, as four of cohere's are, an executable file, and a
 // tracked file its .gitignore names. A tree laid as it was becomes two repositories at their pins that read clean, named
-// or not, and a second call leaves them as they are. A .tracked naming another commit whole, a commit object forged
+// or not, sub's index holding inner as the gitlink its pin names, and a second call leaves them as they are. A .tracked naming another commit whole, a commit object forged
 // under the pin's name, and a file changed under sub or under inner each refuse.
 //
 // Mutants: the info/attributes line dropped (red on the trees laid as they were: sub's CRLF blob is added as LF, so its
@@ -435,7 +435,9 @@ sandboxed_git && echo "sandboxed_git=ok"`)
 // rather than from the parent's index (`gitlink=$(head -c 64 "$manifest/HEAD")` after the gitlink's refusal, red on the
 // .tracked naming another commit, which is then laid); the tree check taken out (`[ "$built" = "$tree" ] ||` and its
 // refusal made `:`, red on both changed files, which then refuse only at git status, whose HEAD names a tree the
-// repository lacks, saying something else).
+// repository lacks, saying something else); the gitlinks-first update-index step taken out (red on the trees laid as
+// they were, but before the index's assertion: inner's files go in as sub's own, and the tree check refuses first, so no
+// mutant that leaves that check reaches the assertion, which holds the shape lay.sh's repository has).
 func TestSandboxedRepositoriesProvesEachPin(t *testing.T) {
 	t.Parallel()
 	script, err := filepath.Abs("sandboxed-job.sh")
@@ -533,6 +535,10 @@ sandboxed_repositories $SANDBOXED_REPOSITORIES_PATHS && echo "again=ok"
 				if count := standInGit(t, filepath.Join(tree, path), "rev-list", "--count", "HEAD"); count != "1" {
 					t.Errorf("%s holds %s commits, want its pin alone", path, count)
 				}
+			}
+			// sub's index holds inner as the gitlink its pin names, never inner's files as sub's own
+			if entry := standInGit(t, filepath.Join(tree, "sub"), "ls-files", "-s", "inner"); entry != "160000 "+pins.inner+" 0\tinner" {
+				t.Errorf("sub's index holds inner as %q, want the gitlink 160000 %s", entry, pins.inner)
 			}
 			// The tree reads its submodule at its gitlink, and sub reads inner at its own
 			for _, path := range []string{".", "sub", "sub/inner"} {

@@ -159,10 +159,12 @@ sandboxed_git() {
 	echo "sandboxed-job: one commit $(git rev-parse --short HEAD) holds the tree as laid"
 }
 
-# sandboxed_repositories [path...]: each submodule laid as a repository of its own holding exactly its pin, one commit
-# deep, as the lay kit's --repositories lays one on a house box (loom's contract/proof/lay.sh, layRepository), for a tool
-# that reads a submodule's directory as a repository: adamic's admission delta runs `git -C cohere worktree add --detach
-# <path> <pin>` (cmd/adamic-admission-delta, checkoutPinnedFrom). A sandboxed job reaches no submodule's mirror, so the
+# sandboxed_repositories [path...]: run from the tree's root before anything writes under a submodule, a sandboxed_npm
+# of a project under cohere included, since a file added there writes a tree that isn't the pin's and refuses.
+# Each submodule laid as a repository of its own holding exactly its pin, one commit deep, as the lay kit's
+# --repositories lays one on a house box (loom's contract/proof/lay.sh, layRepository), for a tool that reads a
+# submodule's directory as a repository: adamic's admission delta runs `git -C cohere worktree add --detach <path>
+# <pin>` (cmd/adamic-admission-delta, checkoutPinnedFrom). A sandboxed job reaches no submodule's mirror, so the
 # repository is built from what the job holds, the files laid at the pin and the runner's manifest of them,
 # .tracked/<path>/{HEAD,commit,files} (adamic-loom's jobwrapper, writeManifest), and the pin is proved, never taken on
 # the manifest's word (Operations on #52cxm6c):
@@ -179,9 +181,8 @@ sandboxed_git() {
 # blobs hold into LF, and the tree would never be the pin's. A checkout from it writes each blob's bytes as they are.
 # With no path named, every submodule the tree's .gitmodules lists, and inside each, every gitlink its pin holds, depth
 # first. A submodule that is already a repository at its pin is left as it is, as lay.sh leaves one, and one at another
-# commit refuses. Run from the tree's root, before anything writes under a submodule. It hashes every file each
-# submodule holds, about 77,000 over cohere's and TypeScript's pins, so only a script that reads a submodule's git
-# calls it.
+# commit refuses. It hashes every file each submodule holds, about 77,000 over cohere's and TypeScript's pins, so only a
+# script that reads a submodule's git calls it.
 sandboxed_repositories() {
 	[ -f go.work ] || [ -f go.mod ] || sandboxedJobFail "sandboxed_repositories runs from the tree's root" || return 1
 	# laid and kept are counted by sandboxedJobRepository, which sees them as bash's locals of its caller
