@@ -159,9 +159,10 @@ func (l *lowering) reachHoldsSlot(reach *slotReach, name string, reaches ir.Allo
 		return ", where what reaches its receiver isn't known"
 	}
 	if len(reaches.Sites) == 0 {
-		// No allocation reaches it: a receiver holding only undefined or null, or a store in code that never
-		// runs. The store would fault where Node throws a TypeError a program can catch, so it stops here, as
-		// checkFunctionConstructorRoads stops a new no constructor reaches (Lower's should on #w8nanzw).
+		// No allocation reaches it, and reach didn't call it unknown. The store would fault where Node throws a
+		// TypeError a program can catch, so it stops here, as checkFunctionConstructorRoads stops a new no
+		// constructor reaches (Lower's should on #w8nanzw). A guard: no lowering program was found to reach it,
+		// since a receiver only undefined can hold reads as unknown (the nothing-reaches pin, J-hygdes0).
 		return ", where nothing the program builds reaches its receiver"
 	}
 	for _, site := range reaches.Sites {
