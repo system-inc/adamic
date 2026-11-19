@@ -11,6 +11,7 @@ Exact reason is “an object refinement using an open numeric enum as a literal 
 | --- | ---: | ---: | ---: | ---: |
 | Optimizer’s tsc probe | 759 reported | 726 reported | — | — |
 | Compiler directory | 587 | 557 | 764 | 730 |
+| tsc.ts entry | 587 | Pending | 764 | Pending |
 
 Raw counts retain distinct diagnostic renderings at each position. Distinct counts use `stage3/census/pair` to collapse a receiver’s contiguous access chain per reason. The directory pass loads the compiler sources as roots, and the entry pass loads the import closure of `src/tsc/tsc.ts`.
 
@@ -36,7 +37,7 @@ None.
 
 #### Unit stop changes including the refusal scan
 
-The registry scan continues collecting findings. This view uses the first recorded scan refusal for each unit, followed by its first measured lowering or tail stop when the scan is clear.
+The registry scan continues collecting findings. This view uses the first recorded scan refusal for each unit, followed by its first measured lowering or tail stop when the scan is clear. A stop already present in the base stream can become the first effective stop at head without adding a finding.
 
 **Later effective stop**
 
@@ -50,6 +51,8 @@ The registry scan continues collecting findings. This view uses the first record
 
 ## 4. Sources still refused at head
 
+A separate head overlay logged the source whose `castAssignable` check failed, the predicate call and the refused read. Attribution requires a matching phase, unit and read position in the regular head stream. The enclosing function can be narrower than the unit the meter recorded.
+
 ### Compiler directory
 
 - Intersection of VariableDeclaration at `utilities.ts:5506`. Attribution to a unit’s first stop is unconfirmed. The standard census reports the refused read and its family reason. The source-fit route requires separate evidence.
@@ -61,8 +64,8 @@ The registry scan continues collecting findings. This view uses the first record
 
 ## Incomplete evidence
 
-- tsc.ts entry pairing incomplete ([Errno 2] No such file or directory: '/workspace/scratch/closed-kind-census/report/evidence/entry-base.jsonl.gz').
-- Ordinary 79-root comparison incomplete ([Errno 2] No such file or directory: '/workspace/scratch/closed-kind-census/report/evidence/roots-base.jsonl.gz').
-- Scan-all comparison incomplete ([Errno 2] No such file or directory: '/workspace/scratch/closed-kind-census/report/evidence/scan-all-base.jsonl.gz').
+- tsc.ts entry pairing incomplete (waiting for entry-head.jsonl.gz).
+- Ordinary 79-root comparison incomplete (waiting for roots-base.jsonl.gz).
+- Scan-all comparison incomplete (waiting for scan-all-base.jsonl.gz).
 
 Raw streams and unit timings are under [evidence/](evidence/).
