@@ -609,6 +609,7 @@ var irSpecFields = map[string]irFieldPolicy{
 	"Program.Generated":                  {"[]*GeneratedType", deepIR, "own the slice; element pointers retain GeneratedType immutable identity via irPrivateFields"},
 	"Program.AsyncEntry":                 {"int", copiedIR, "scalar or aggregate of immutable values; assignment owns its entire value"},
 	"Program.PlainReceivers":             {"SortedMap[int, bool]", deepIR, "owned container, pointer, or dynamic graph; recursively copy mutable descendants"},
+	"Program.WidenedReads":               {"SortedMap[string, bool]", deepIR, "owned container, pointer, or dynamic graph; recursively copy mutable descendants"},
 	"Program.Source":                     {"string", copiedIR, "scalar or aggregate of immutable values; assignment owns its entire value"},
 	"Program.MainModules":                {"[]MainModule", deepIR, "owned container, pointer, or dynamic graph; recursively copy mutable descendants"},
 	"Program.Strings":                    {"[]string", deepIR, "owned container, pointer, or dynamic graph; recursively copy mutable descendants"},
