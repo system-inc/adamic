@@ -1,0 +1,158 @@
+{
+  "diagnostics": {
+    "before": 0,
+    "after": 0
+  },
+  "finding_counts": {
+    "before": 441,
+    "after": 449
+  },
+  "added": [
+    {
+      "unit": "src/compiler/commandLineParser.ts:2784:1",
+      "where": "src/compiler/commandLineParser.ts:2788:38",
+      "phase": "refusal_scan",
+      "kind": "NotYet",
+      "reason": "a CompilerOptions seen as Readonly<OptionsBase> (fixed objects and records have different storage; copy explicitly)",
+      "count": 1
+    },
+    {
+      "unit": "src/compiler/commandLineParser.ts:2791:1",
+      "where": "src/compiler/commandLineParser.ts:2792:38",
+      "phase": "refusal_scan",
+      "kind": "NotYet",
+      "reason": "a WatchOptions seen as Readonly<OptionsBase> (fixed objects and records have different storage; copy explicitly)",
+      "count": 1
+    },
+    {
+      "unit": "src/compiler/commandLineParser.ts:2795:1",
+      "where": "src/compiler/core.ts:1275:32",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "reason": "detached hasOwnProperty through an object view (a value with a different native representation may be hidden by the view)",
+      "count": 1
+    },
+    {
+      "unit": "src/compiler/commandLineParser.ts:2795:1",
+      "where": "src/compiler/core.ts:1275:5",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "count": 1
+    },
+    {
+      "unit": "src/compiler/commandLineParser.ts:3077:1",
+      "where": "src/compiler/commandLineParser.ts:3095:9",
+      "phase": "refusal_scan",
+      "kind": "NotYet",
+      "reason": "a MapLike<string | number | boolean | MapLike<string[]> | readonly string[] | readonly PluginImport[] | readonly ProjectReference[] | readonly (string | number)[] | TsConfigSourceFile | null | undefined> seen as Readonly<OptionsBase> | undefined (fixed objects and records have different storage; copy explicitly)",
+      "count": 1
+    },
+    {
+      "unit": "src/compiler/commandLineParser.ts:3271:1",
+      "where": "src/compiler/commandLineParser.ts:3275:54",
+      "phase": "refusal_scan",
+      "kind": "NotYet",
+      "reason": "a WatchOptions | undefined seen as Readonly<OptionsBase> | undefined (fixed objects and records have different storage; copy explicitly)",
+      "count": 1
+    },
+    {
+      "unit": "src/compiler/commandLineParser.ts:3278:1",
+      "where": "src/compiler/commandLineParser.ts:3286:13",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "reason": "a readonly view read by a run-time key in a program with a class getter that does more than return its fields and literals joined by operators (the getter runs inside the read, unseen by the passes that follow calls)",
+      "count": 1
+    },
+    {
+      "unit": "src/compiler/commandLineParser.ts:3278:1",
+      "where": "src/compiler/commandLineParser.ts:3286:9",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "count": 1
+    },
+    {
+      "unit": "src/compiler/commandLineParser.ts:3278:1",
+      "where": "src/compiler/core.ts:1350:25",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "reason": "for...in without a proven fixed plain-object origin (arrays, prototypes and absent synthetic fields cannot be enumerated soundly)",
+      "count": 1
+    },
+    {
+      "unit": "src/compiler/commandLineParser.ts:3278:1",
+      "where": "src/compiler/core.ts:1350:9",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "count": 1
+    },
+    {
+      "unit": "src/compiler/commandLineParser.ts:3312:5",
+      "where": "src/compiler/commandLineParser.ts:3313:21",
+      "phase": "refusal_scan",
+      "kind": "NotYet",
+      "reason": "a Readonly<OptionsBase> seen as OptionsBase | undefined (fixed objects and records have different storage; copy explicitly)",
+      "count": 1
+    },
+    {
+      "unit": "src/compiler/commandLineParser.ts:3312:5",
+      "where": "src/compiler/core.ts:1350:25",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "reason": "for...in without a proven fixed plain-object origin (arrays, prototypes and absent synthetic fields cannot be enumerated soundly)",
+      "count": 1
+    },
+    {
+      "unit": "src/compiler/commandLineParser.ts:3312:5",
+      "where": "src/compiler/core.ts:1350:9",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "count": 1
+    }
+  ],
+  "removed": [
+    {
+      "unit": "src/compiler/commandLineParser.ts:2784:1",
+      "where": "src/compiler/commandLineParser.ts:2788:38",
+      "phase": "refusal_scan",
+      "kind": "NotYet",
+      "reason": "a CompilerOptions seen as OptionsBase (fixed objects and records have different storage; copy explicitly)",
+      "count": 1
+    },
+    {
+      "unit": "src/compiler/commandLineParser.ts:2791:1",
+      "where": "src/compiler/commandLineParser.ts:2792:38",
+      "phase": "refusal_scan",
+      "kind": "Refused",
+      "reason": "a value of type WatchOptions seen as OptionsBase, which can write TsConfigSourceFile | CompilerOptionsValue where CompilerOptionsValue is read",
+      "count": 1
+    },
+    {
+      "unit": "src/compiler/commandLineParser.ts:3271:1",
+      "where": "src/compiler/commandLineParser.ts:3275:54",
+      "phase": "refusal_scan",
+      "kind": "Refused",
+      "reason": "a value of type WatchOptions | undefined seen as OptionsBase | undefined, which can write TsConfigSourceFile | CompilerOptionsValue where CompilerOptionsValue is read",
+      "count": 1
+    },
+    {
+      "unit": "src/compiler/commandLineParser.ts:3278:1",
+      "where": "src/compiler/commandLineParser.ts:3288:13",
+      "phase": "lowering",
+      "kind": "Boundary",
+      "reason": "failed statement; state rolled back; continued at next statement or declaration",
+      "count": 1
+    },
+    {
+      "unit": "src/compiler/commandLineParser.ts:3278:1",
+      "where": "src/compiler/commandLineParser.ts:3289:17",
+      "phase": "lowering",
+      "kind": "NotYet",
+      "reason": "a case whose type differs from the switch's",
+      "count": 1
+    }
+  ]
+}

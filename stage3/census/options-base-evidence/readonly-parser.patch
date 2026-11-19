@@ -1,0 +1,8 @@
+--- a/src/compiler/commandLineParser.ts
++++ b/src/compiler/commandLineParser.ts
+@@ -2796 +2796 @@
+-    options: OptionsBase,
++    options: Readonly<OptionsBase>,
+@@ -3279 +3279 @@
+-    options: OptionsBase | undefined,
++    options: Readonly<OptionsBase> | undefined,

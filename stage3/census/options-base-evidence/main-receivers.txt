@@ -1,0 +1,5 @@
+{"where":"1994:100","expression":"watchOptions || (watchOptions = {})","from":"WatchOptions","callee":"parseOptionValue","parameter":"options","declaredSlot":"OptionsBase","contextualSlot":"OptionsBase"}
+{"where":"2712:36","expression":"optionMapToObject(serializeCompilerOptions(impliedCompilerOptions, pathOptions))","from":"object","callee":"assign","parameter":"args","declaredSlot":"(object | undefined)[]","contextualSlot":"object | undefined"}
+{"where":"2712:79","expression":"impliedCompilerOptions","from":"Record<string, CompilerOptionsValue>","callee":"serializeCompilerOptions","parameter":"options","declaredSlot":"CompilerOptions","contextualSlot":"CompilerOptions"}
+{"where":"2792:38","expression":"options","from":"WatchOptions","callee":"serializeOptionBaseObject","parameter":"options","declaredSlot":"OptionsBase","contextualSlot":"OptionsBase"}
+{"where":"3275:54","expression":"watchOptions","from":"WatchOptions | undefined","callee":"handleOptionConfigDirTemplateSubstitution","parameter":"options","declaredSlot":"OptionsBase | undefined","contextualSlot":"OptionsBase | undefined"}
