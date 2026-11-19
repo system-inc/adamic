@@ -449,6 +449,15 @@ func (l *lowering) finishAccessors() error {
 							receiver: presenceReachOf(reach.graph, reach.graph.ReachingAllocations(original.(ir.Property).Object), reach.owners, expression.Name),
 						})
 					}
+					// The dispatcher's fallback is the read with its view fields zeroed, so a read through a type
+					// that may hold a checked view's value (#80cs7rz) would lose the weighing checkViewWidenedReads
+					// gives a Property, and be read raw when the receiver owns no getter of the name: a checked
+					// view's value read through HasText where a class getter also satisfies HasText died in
+					// ASan on main (#3jj9dzg). The read is kept as lowering made it, receiver included, and
+					// weighed there as any other.
+					read := expression
+					read.Object = original.(ir.Property).Object
+					l.dispatchedReads = append(l.dispatchedReads, read)
 					index := dispatch(expression.Name, expression.Of, false, 0, expression, ir.SetProperty{})
 					node = ir.Call{Function: index, Arguments: []ir.Expression{expression.Object}, Returns: expression.Of}
 				}
