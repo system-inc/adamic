@@ -443,7 +443,21 @@ func TestProcessObjectsDoNotEscape(t *testing.T) {
 			if err := os.WriteFile(path, []byte("import 'node:process'; const held = "+expression+";"), 0o644); err != nil {
 				t.Fatal(err)
 			}
-			_, err := lowered(t, path)
+			program, err := lowered(t, path)
+			if expression == "process.stdout" {
+				// const held = process.stdout is stdout itself since #1trc7d3: it declares nothing and makes no
+				// object, so nothing escapes. Its name is admitted only as the receiver of write, isTTY and
+				// columns, and stdoutEscapes below holds the stop for any other use.
+				if err != nil {
+					t.Fatalf("const held = process.stdout declares nothing and must lower: %v", err)
+				}
+				for _, local := range program.Locals {
+					if local.Name == "held" {
+						t.Fatalf("const held = process.stdout made a local %+v; it must declare nothing", local)
+					}
+				}
+				return
+			}
 			var notYet *lower.NotYet
 			var refused *lower.Refused
 			if !errors.As(err, &notYet) && !errors.As(err, &refused) {
@@ -451,6 +465,19 @@ func TestProcessObjectsDoNotEscape(t *testing.T) {
 			}
 		})
 	}
+	// stdoutEscapes: the alias used as a value stops by name, so stdout never escapes as an object (#1trc7d3).
+	t.Run("process.stdout escaping", func(t *testing.T) {
+		t.Parallel()
+		path := filepath.Join(t.TempDir(), "main.a")
+		if err := os.WriteFile(path, []byte("import 'node:process'; const held = process.stdout; const again = held;"), 0o644); err != nil {
+			t.Fatal(err)
+		}
+		_, err := lowered(t, path)
+		var notYet *lower.NotYet
+		if !errors.As(err, &notYet) || notYet.What != "node:process.Process.stdout, bound to held, used other than as the receiver of write, isTTY or columns" {
+			t.Fatalf("want the alias's use as a value stopped by name, got %v", err)
+		}
+	})
 }
 
 // Every mutant builds cleanly and reaches the ordinary Node comparison, never a sanitizer failure.

@@ -1,0 +1,3 @@
+// #1trc7d3: an imported alias's isTTY reads as process.stdout's. The oracle pipes stdout.
+import { out } from './out.a';
+console.log(out.isTTY === true ? 'a terminal' : 'not a terminal');
