@@ -1,9 +1,12 @@
 package lower
 
 import (
-	"github.com/microsoft/TypeScript/tsc/shim/ast"
-	"github.com/system-inc/adamic/internal/ir"
+	"slices"
 	"strings"
+
+	"github.com/microsoft/TypeScript/tsc/shim/ast"
+	"github.com/microsoft/TypeScript/tsc/shim/checker"
+	"github.com/system-inc/adamic/internal/ir"
 )
 
 // The merged symbol exposes interface promises, not evidence of runtime storage.
@@ -103,6 +106,66 @@ func (l *lowering) mergedFieldRulings(module *ast.SourceFile) error {
 	return found
 }
 
+// reserveMergedFields adds storage for the instance members introduced by an
+// interface merge. The constructor has no initializer for these slots.
+func (l *lowering) reserveMergedFields(declaration *ast.Node, fields []ir.Field) []ir.Field {
+	if !strings.HasSuffix(l.program.FileName(ast.GetSourceFileOfNode(declaration)), ".ts") || l.mergedClass(declaration) == nil {
+		return fields
+	}
+	for _, field := range l.checker.GetPropertiesOfType(l.classType) {
+		if slices.ContainsFunc(fields, func(slot ir.Field) bool { return slot.Name == field.Name }) ||
+			l.classDeclaresField(l.classType, field.Name) {
+			continue
+		}
+		of, known := l.representation(l.checker.GetTypeOfSymbol(field))
+		if !known {
+			continue
+		}
+		value := zeroValue(of)
+		if of.IsReference() {
+			value = ir.Undefined{Of: of}
+		}
+		fields = append(fields, ir.Field{Name: field.Name, Value: value, Absent: true, Uninitialized: true})
+	}
+	return fields
+}
+
+func (l *lowering) classDeclaresField(class *checker.Type, name string) bool {
+	if field := l.checker.GetPropertyOfType(class, name); field != nil {
+		for _, declaration := range field.Declarations {
+			parent := declaration.Parent
+			if parent != nil && (parent.Kind == ast.KindClassDeclaration || parent.Kind == ast.KindClassExpression) ||
+				declaration.Kind == ast.KindParameter && parameterProperty(declaration) {
+				return true
+			}
+		}
+	}
+	for _, base := range l.classBases(class) {
+		if l.classDeclaresField(base, name) {
+			return true
+		}
+	}
+	return false
+}
+
+func (l *lowering) mergedFieldClass(field *ast.Symbol) *ast.Node {
+	if field == nil || initializedClassMember(field) {
+		return nil
+	}
+	for _, declaration := range field.Declarations {
+		if declaration.Parent != nil && declaration.Parent.Kind == ast.KindInterfaceDeclaration {
+			if class := l.mergedClass(declaration.Parent); class != nil {
+				return class
+			}
+		}
+	}
+	return nil
+}
+
+func mergedFieldView(node, class *ast.Node) string {
+	return sourceExpression(node) + " (class " + class.Name().Text() + ", interface merge)"
+}
+
 // Reuse the checked-view presence, readiness and runtime type contract at each
 // actual read. Holding or declaring the merged type needs no runtime promise.
 func (l *lowering) mergedFieldRead(node *ast.Node) error {
@@ -116,16 +179,7 @@ func (l *lowering) mergedFieldRead(node *ast.Node) error {
 			field = l.checker.GetPropertyOfType(l.checker.GetNonNullableType(l.checker.GetTypeAtLocation(access.Expression)), key.Text())
 		}
 	}
-	if field == nil || field.Flags&ast.SymbolFlagsOptional != 0 || initializedClassMember(field) {
-		return nil
-	}
-	merged := false
-	for _, declaration := range field.Declarations {
-		if declaration.Parent != nil && declaration.Parent.Kind == ast.KindInterfaceDeclaration && l.mergedClass(declaration.Parent) != nil {
-			merged = true
-		}
-	}
-	if !merged {
+	if field == nil || field.Flags&ast.SymbolFlagsOptional != 0 || l.mergedFieldClass(field) == nil {
 		return nil
 	}
 	// This module scan precedes rule 800. An unbuilt Node host member needs its
@@ -157,16 +211,8 @@ func (l *lowering) mergedComputedRead(node *ast.Node) (ir.Expression, bool, erro
 		return nil, false, nil
 	}
 	field := l.checker.GetPropertyOfType(l.checker.GetNonNullableType(l.checker.GetTypeAtLocation(access.Expression)), key.Text())
-	if field == nil || initializedClassMember(field) {
-		return nil, false, nil
-	}
-	merged := false
-	for _, declaration := range field.Declarations {
-		if declaration.Parent != nil && declaration.Parent.Kind == ast.KindInterfaceDeclaration && l.mergedClass(declaration.Parent) != nil {
-			merged = true
-		}
-	}
-	if !merged {
+	class := l.mergedFieldClass(field)
+	if class == nil {
 		return nil, false, nil
 	}
 	object, err := l.expression(access.Expression)
@@ -179,7 +225,7 @@ func (l *lowering) mergedComputedRead(node *ast.Node) (ir.Expression, bool, erro
 		return nil, true, l.notYet(node, "a merged field without runtime storage")
 	}
 	return ir.Property{Object: object, Name: field.Name, Of: of, Optional: access.QuestionDotToken != nil,
-		View: sourceExpression(node), ViewType: l.checker.TypeToString(declared), ViewWhere: l.program.Where(node),
+		View: mergedFieldView(node, class), ViewType: l.checker.TypeToString(declared), ViewWhere: l.program.Where(node),
 		ViewTypeID: int(declared.Id()), ViewContract: l.result.ViewContractTypes[int(declared.Id())],
 		ViewReceiverTypeID: int(l.checker.GetTypeAtLocation(access.Expression).Id())}, true, nil
 }

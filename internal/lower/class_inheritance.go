@@ -306,6 +306,7 @@ func (l *lowering) inheritanceConstructor(index int, declaration *ast.Node) erro
 			fields = append(fields, field)
 		}
 	}
+	fields = l.reserveMergedFields(declaration, fields)
 	l.result.Classes[instance.class-1].Fields = fields
 	if instance.base == nil {
 		initialized, err := l.fieldInitializers(declaration, this)
