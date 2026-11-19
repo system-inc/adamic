@@ -1139,6 +1139,30 @@ func lendsItself(value *ast.Node) bool {
 	return false
 }
 
+// freshObjectLiteral reports whether the literal's own slots can be built solely as its contextual
+// type. A member that declares a this parameter can expose the object at that narrower type (#69vkn0j),
+// so a literal holding one isn't fresh. A non-arrow member that reads this without declaring it, and a
+// getter under a contextual ThisType, can hand the object out the same way; both wait for their own
+// head, since their price on tsc isn't measured yet.
+func freshObjectLiteral(literal *ast.Node) bool {
+	for _, member := range literal.AsObjectLiteralExpression().Properties.Nodes {
+		switch member.Kind {
+		case ast.KindMethodDeclaration:
+		case ast.KindPropertyAssignment:
+			member = ast.SkipParentheses(member.AsPropertyAssignment().Initializer)
+			if member.Kind != ast.KindFunctionExpression {
+				continue
+			}
+		default:
+			continue
+		}
+		if ast.GetThisParameter(member) != nil {
+			return false
+		}
+	}
+	return true
+}
+
 // receivesThis reports whether a this keyword under node sits inside a function that isn't an arrow, or a
 // class, either of which binds this to what it's called on. bound is whether node is already inside one.
 func receivesThis(node *ast.Node, bound bool) bool {
@@ -1562,7 +1586,11 @@ func (l *lowering) freshOrWidened(node *ast.Node, own *checker.Type, contextual 
 		return nil
 	}
 	switch node.Kind {
-	case ast.KindObjectLiteralExpression, ast.KindArrayLiteralExpression:
+	case ast.KindObjectLiteralExpression:
+		if freshObjectLiteral(node) {
+			return nil
+		}
+	case ast.KindArrayLiteralExpression:
 		// Made as the type it's written into, held by nothing else: its own parts are sites.
 		return nil
 	case ast.KindArrowFunction, ast.KindFunctionExpression:
@@ -1722,6 +1750,9 @@ func (l *lowering) madeAtSiteWidened(value *ast.Node, target *checker.Type, visi
 		}
 		return nil
 	case ast.KindObjectLiteralExpression:
+		if !freshObjectLiteral(value) {
+			return l.widened(own, target, visited)
+		}
 		for _, member := range l.literalSlotMembers(value, target) {
 			var found *widening
 			if !l.structured(member) || len(l.checker.GetIndexInfosOfType(member)) > 0 {

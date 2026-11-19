@@ -271,6 +271,9 @@ func (l *lowering) judgeBinding(where, value *ast.Node, source, target *checker.
 // literal no member of target takes, which is judged whole as its type.
 func (l *lowering) judgeBoundObject(literal *ast.Node, target *checker.Type) error {
 	own := l.checker.GetTypeAtLocation(literal)
+	if found := l.freshOrWidened(literal, own, target); found != nil {
+		return l.wideningRefusal(literal, own, target, found)
+	}
 	taken := false
 	for _, member := range l.definedMembers(l.checker.GetNonNullableType(target)) {
 		if !l.checker.IsTypeAssignableTo(regularTypeOfObjectLiteral(l.checker, own), member) {
