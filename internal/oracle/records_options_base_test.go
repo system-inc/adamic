@@ -489,7 +489,7 @@ func TestOptionsBaseAddedNames(t *testing.T) {
 	const strict = "adamic: panic: field read failed: %s is not a boolean; expected boolean, found string, which a computed-key or index-signature write may have stored\n"
 	for name, view := range map[string]struct{ node, stdout, stderr, notYet string }{
 		"added_honest.ts":    {node: "true:out:undefined\n9:strict,outDir,target\n"},
-		"added_watch.ts":     {node: "true:x.ts\n"},
+		"added_watch.ts":     {node: "true:1:x.ts\n"},
 		"added_lie.ts":       {node: "before\nyes\n", stdout: "before\n", stderr: fmt.Sprintf(strict, "options.strict")},
 		"added_nested.ts":    {node: "true:out:a.ts\nbefore\nyes\n", stdout: "true:out:a.ts\nbefore\n", stderr: fmt.Sprintf(strict, "lie.options.strict")},
 		"added_parameter.ts": {node: "yes\n", notYet: "(fixed objects and records have different storage; copy explicitly)"},
