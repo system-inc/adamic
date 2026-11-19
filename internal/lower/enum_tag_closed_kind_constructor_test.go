@@ -87,11 +87,11 @@ func TestClosedKindFunctionConstructorNarrowing(t *testing.T) {
 }
 
 // The fence the hatch leans on (Adamic's first condition on #8eewz2n): a new of a function constructor
-// doesn't lower, by any road a program can write, until its object is born as a checked view. Every road
-// is a cast, since the checker gives a function declaration no construct signature, and lowering refuses
-// the cast before the new (J-dtkcpw6: through unknown, through any, and beside a class whose construct
-// signature it matches). Should one lower as a plain object first, this goes red, since K(S) counts such
-// a build as a hatch.
+// lowers by no road but an allocator getter's, whose object is born as a checked view (#837zjkt,
+// function_constructor_test.go). Every road is a cast, since the checker gives a function declaration no
+// construct signature, and lowering refuses each cast outside that road before the new (J-dtkcpw6: through
+// unknown, through any, and beside a class whose construct signature it matches). Should one lower as a
+// plain object first, this goes red, since K(S) counts such a build as a hatch.
 func TestClosedKindFunctionConstructorNewStops(t *testing.T) {
 	t.Parallel()
 	for _, probe := range []struct{ name, source string }{
