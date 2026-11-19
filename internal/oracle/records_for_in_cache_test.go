@@ -5,6 +5,14 @@ import (
 	"testing"
 )
 
+// delete.a's counted row is the delete's let-go witness: each of its three deletes lets go of the list, so
+// the loop after it builds one again, and the let-go dropped reuses the stale list three times
+// (records_for_in_cache.mutants.md's M4).
+func init() {
+	path := "internal/oracle/testdata/records_for_in_cache/delete.a"
+	additionalFixtureCounts = append(additionalFixtureCounts, countCase{path, func(t *testing.T) (string, func() string) { return counted(t, path, false, nil, false, false) }})
+}
+
 // #1hp4ww2: a for...in over a record reads the key list the record's table keeps (runtime record.c's
 // adamic_record_for_in_keys), made on the first loop and let go of when a write adds, deletes or hides a
 // key (map.c's adamic_map_forget_key_list). order.a loops before and after a key added, one deleted,
@@ -16,10 +24,11 @@ import (
 // let-go dropped turns order.a red at its third line, define_hidden's turns hidden.a red at its third,
 // and the shared bypass dropped is TestParallelMutant_for_in_keys_shared's TSan race. The delete's
 // let-go has no witness in output: a stale list still naming a deleted key is what the loop's hasOwn
-// guard already skips, so it frees the list sooner and changes no line.
+// guard already skips, so it frees the list sooner and changes no line. delete.a is held to Node here and
+// counted in TestCountsAreRecorded (the init above), where the let-go dropped is three allocations fewer.
 func TestRecordForInCachedKeys(t *testing.T) {
 	t.Parallel()
-	for _, name := range []string{"order.a", "hidden.a"} {
+	for _, name := range []string{"order.a", "hidden.a", "delete.a"} {
 		t.Run(name, func(t *testing.T) {
 			t.Parallel()
 			path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/records_for_in_cache", name))
