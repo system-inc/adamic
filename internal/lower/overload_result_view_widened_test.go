@@ -1,8 +1,6 @@
 package lower
 
 import (
-	"errors"
-	"strings"
 	"testing"
 )
 
@@ -28,28 +26,32 @@ func TestOverloadResultViewDirectReadLowers(t *testing.T) {
 
 // The caller's local holds the result as the call's declared type, never a narrowing, so the check's call
 // is where the value enters the view (overloadCheckCalls). A read through a wider type the result is
-// assigned or passed to is weighed as the predicate road's is, and stays NotYet until it checks against
-// the view (Language's q06 and Optimizer's matched pair on #z5d0jye: the same reads segfaulted natively
-// on step 1's road while the predicate road stopped them). Mutant: overloadResultCheck not recording its
-// call, and both lower.
-func TestOverloadResultViewWidenedReadIsWeighed(t *testing.T) {
+// assigned or passed to is weighed as the predicate road's is (Language's q06 and Optimizer's matched pair
+// on #z5d0jye: the same reads segfaulted natively on step 1's road while the predicate road stopped them),
+// and is checked where it's made (#zpzm9ta), so the lie stops at that read on sanitized native and the
+// JavaScript backend, after what the program printed before it. Mutant: overloadResultCheck not recording
+// its call, and each read is a plain one again.
+func TestOverloadResultViewWidenedReadIsChecked(t *testing.T) {
 	t.Parallel()
-	for _, probe := range []struct{ name, tail string }{
-		{"through a structural local", "const w: { readonly name: string } = r;\nconsole.log(w.name.toUpperCase());\n"},
-		{"through a parameter", "function show(v: { readonly name: string }): void { console.log(v.name.toUpperCase()); }\nshow(r);\n"},
+	for _, probe := range []struct{ name, tail, stdout, read string }{
+		{"through a structural local", "const w: { readonly name: string } = r;\nconsole.log(w.name.toUpperCase());\n", "", "w.name"},
+		{"through a parameter", "function show(v: { readonly name: string }): void { console.log(v.name.toUpperCase()); }\nshow(r);\n", "", "v.name"},
 		// A second call site of the same overload finds its view cached and registers none, so its call is an
 		// entry only because every check call is (Language's v10 on a44f6b8c, and its reverse). Mutant: only a
-		// call whose check registered a view recorded, and the second-site program lowers.
-		{"a second site widened", "const b: { readonly name: string } = tag({ kind: 2 }, true);\nconsole.log(String(r.kind));\nconsole.log(b.name.toUpperCase());\n"},
-		{"the first site widened", "const w: { readonly name: string } = r;\nconst b = tag({ kind: 2 }, true);\nconsole.log(String(b.kind));\nconsole.log(w.name.toUpperCase());\n"},
+		// call whose check registered a view recorded, and the second site's read is a plain one.
+		{"a second site widened", "const b: { readonly name: string } = tag({ kind: 2 }, true);\nconsole.log(String(r.kind));\nconsole.log(b.name.toUpperCase());\n", "1\n", "b.name"},
+		{"the first site widened", "const w: { readonly name: string } = r;\nconst b = tag({ kind: 2 }, true);\nconsole.log(String(b.kind));\nconsole.log(w.name.toUpperCase());\n", "2\n", "w.name"},
 	} {
 		t.Run(probe.name, func(t *testing.T) {
 			t.Parallel()
-			_, err := lowerSourceAs(t, overloadViewWidenedShape+probe.tail, ".ts")
-			var pending *NotYet
-			if !errors.As(err, &pending) || !strings.Contains(err.Error(), "a read of field name through type") || !strings.Contains(err.Error(), "which may hold a checked view's value") {
-				t.Fatalf("want NotYet at the widened read, got %v", err)
+			program, err := lowerSourceAs(t, overloadViewWidenedShape+probe.tail, ".ts")
+			if err != nil {
+				t.Fatalf("want the widened read lowered as a checked read, got %v", err)
 			}
+			if checked, _ := widenedReadsOf(t, program, "name"); checked == 0 {
+				t.Fatalf("%s isn't a widened read checked where it's made", probe.read)
+			}
+			overloadCheckStops(t, overloadViewWidenedShape+probe.tail, probe.stdout, "adamic: panic: field read failed: "+probe.read+" is not initialized; expected string, found missing")
 		})
 	}
 }
