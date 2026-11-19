@@ -66,6 +66,8 @@ One crossing object lives for the isolate. It initializes its Wasm instance on t
 first call, runs module top level once, and frees inputs and returned result handles.
 A Wasm panic becomes the same logged 500 as a JavaScript panic; the crossing discards
 the terminated instance and initializes a fresh instance for the next call.
+A trap crossing from Wasm is a panic too: it answers the same 500, and no catch of
+the program's takes it.
 Other thrown errors propagate. Strings preserve UTF-16 code units across the
 boundary, including lone surrogates.
 

@@ -2869,6 +2869,9 @@
     ],
     "internal/worker TestProduct_WorkerPanicUnsetMutant": [
       "internal/worker TestProduct_WorkerChecks"
+    ],
+    "internal/worker TestProduct_WorkerPanicTrapMutant": [
+      "internal/worker TestProduct_WorkerChecks"
     ]
   }
 }

@@ -6,6 +6,7 @@ var panicCatchMutants = []workerMutation{
 	{"panic-catch-identity", "internal/javascript/javascript.go", `e.line("if (adamicIsPanic(%s)) throw %s;", caught, caught)`, `_ = caught`, "TestWorkerPanicIsNeverCaught/catch", "a panic reached the program catch"},
 	{"panic-finally-guard", "internal/javascript/javascript.go", `e.line("if (!adamicProcessExiting() && !%s) {", panicking)`, `e.line("if (!adamicProcessExiting()) {"); _ = panicking`, "TestWorkerPanicIsNeverCaught/finally", "a finally ran while a panic unwound"},
 	{"panic-finally-unset", "internal/javascript/javascript.go", `e.line("\tif (adamicIsPanic(%s)) %s = true;", unwinding, panicking)`, `e.line("\tif (adamicIsPanic(%s)) %s;", unwinding, panicking)`, "TestWorkerPanicIsNeverCaught/finally_return", "a finally return swallowed a panic"},
+	{"panic-wasm-trap", "internal/worker/wasm.go", `if (error instanceof WebAssembly.RuntimeError) throw new AdamicPanic('Wasm trap: ' + error.message); `, ``, "TestWorkerPanicIsNeverCaught/wasm_trap", "a Wasm trap reached the program catch"},
 }
 
 func TestProduct_WorkerPanicCatchMutant(t *testing.T) {
@@ -19,6 +20,10 @@ func TestProduct_WorkerPanicFinallyMutant(t *testing.T) {
 func TestProduct_WorkerPanicUnsetMutant(t *testing.T) {
 	t.Parallel()
 	buildWorkerMutant(t, panicCatchMutants[2], false)
+}
+func TestProduct_WorkerPanicTrapMutant(t *testing.T) {
+	t.Parallel()
+	buildWorkerMutant(t, panicCatchMutants[3], false)
 }
 func TestWorkerPanicCatchMutantsAreCaught(t *testing.T) {
 	t.Parallel()

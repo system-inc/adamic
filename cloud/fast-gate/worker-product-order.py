@@ -30,7 +30,7 @@ for name in ["Validation", "Projection", "Contract", "Privacy", "WasmNeedle", "S
     waits[prefix + "TestProduct_WorkerEnvironment" + name + "Mutant"] = [checks]
 for name in ["Slot", "Function", "Registration", "Ingress", "Field", "Purity", "Suspended", "SuspendedCallee"]:
     waits[prefix + "TestProduct_WorkerKV" + name + "Mutant"] = [checks]
-for name in ["Catch", "Finally", "Unset"]:
+for name in ["Catch", "Finally", "Unset", "Trap"]:
     waits[prefix + "TestProduct_WorkerPanic" + name + "Mutant"] = [checks]
 for name in ["Await", "Try", "Contract", "Wasm", "Needle"]:
     waits[prefix + "TestProduct_WorkerAsync" + name + "Mutant"] = [checks]
