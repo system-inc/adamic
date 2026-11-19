@@ -108,10 +108,11 @@ func TestRecordDeclaredKeysAreRefusedInA(t *testing.T) {
 // Options, and r21 at its Readonly<Options> view's storage gap, a line before its widening: both fail
 // closed. In .ts, a storage view that drops outFile lowers since #6c4swvt G3a (r03, r04, r07 to r09,
 // r17 to r20, r27): the write through the view lands, typeof observes the number as Node does, and a
-// named read of outFile stops on it (records_options_base). Every other road keeps the stop it had
-// before the .a refusal: a view that adds outFile (r16), the named write and the optional widening stop
-// where they did, and the type-argument roads too, whose .a
-// twins are refused. A binding is a relation site (#xywvn06), but it makes no slot and no view, so the
+// named read of outFile stops on it (records_options_base). A storage view that adds outFile (r16) passes
+// the storage gate since #6c4swvt's addedContractRead, outFile's read being checked, and stops at the
+// optional widening, which judges it next. Every other road keeps the stop it had before the .a refusal:
+// the named write and the optional widening stop where they did, and the type-argument roads too, whose
+// .a twins are refused. A binding is a relation site (#xywvn06), but it makes no slot and no view, so the
 // storage gap that stops each road's direct twin doesn't stop it; g03, a Dict bound to T extends Options,
 // is refused there by the hiding rule instead, as its direct twins r05 and r23 are. Each program that
 // lowers agrees with Node on release and sanitized native and on the JavaScript backend. Mutant: the key folding dropped

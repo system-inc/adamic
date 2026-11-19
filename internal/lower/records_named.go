@@ -428,8 +428,9 @@ func (l *lowering) sameRecordNamedContracts(from, to, inside, viewed *checker.Ty
 			other := l.checker.GetPropertyOfType(pair[1], property.Name)
 			t := l.checker.GetNonMissingTypeOfSymbol(property)
 			if other == nil {
-				// A .ts view may drop the source's own contract (droppedContractRead), never add one.
-				if (l.checker.IsReadonlySymbol(property) || !l.checker.IsTypeAssignableTo(pair[2], t)) && !(index == 0 && l.droppedContractRead(t, inside, viewed)) {
+				// A .ts view may drop the source's own contract (droppedContractRead), or add one the record's
+				// values don't promise (addedContractRead), each where every named read holds it.
+				if (l.checker.IsReadonlySymbol(property) || !l.checker.IsTypeAssignableTo(pair[2], t)) && !(index == 0 && l.droppedContractRead(t, inside, viewed)) && !(index == 1 && l.addedContractRead(property, t, inside, viewed)) {
 					return false
 				}
 				continue
@@ -476,8 +477,7 @@ func (l *lowering) sameRecordNamedContracts(from, to, inside, viewed *checker.Ty
 //
 // A readonly property is dropped on the same conditions: the view may write under its name, and the
 // read holds what it finds there as it does any other write through an index signature. The other way,
-// a record seen as one declaring a property its index signature can't hold (Record<string,
-// CompilerOptionsValue> seen as CompilerOptions, or the as CompilerOptions back-cast), keeps the stop.
+// a record seen as one declaring a property its own values don't promise, is addedContractRead's.
 func (l *lowering) droppedContractRead(t, held, seen *checker.Type) bool {
 	if !l.droppedContractsRead {
 		return false
@@ -494,13 +494,14 @@ func (l *lowering) droppedContractRead(t, held, seen *checker.Type) bool {
 	return of == ir.Union && known && droppedContractChecked[stored.Present()]
 }
 
-// droppedContractChecked is each representation droppedContractRead drops a property of, whose read from a
-// slot boxed as a union recordReadDeclared holds to the declared type: a scalar by its exact tag, and by its
-// value where the declared type is literals (a number, string or boolean, their literal unions and numeric
-// enums), and an array as recordReadSlotView's view origin, which checks every element it hands out and
-// stops each other road at compile time (tsc's lib, types, typeRoots and the other string[] options,
-// #6c4swvt), and a dictionary or a fixed object by recordReadHeapMember's checked narrow (tsc's paths and
-// configFile).
+// droppedContractChecked is each representation droppedContractRead drops, and addedContractRead adds, a
+// property of, whose read from a slot boxed as a union recordReadDeclared holds to the declared type: a
+// scalar by its exact tag, and by its value where the declared type is literals (a number, string or
+// boolean, their literal unions and numeric enums), and an array as recordReadSlotView's view origin, which
+// checks every element it hands out and stops each other road at compile time (tsc's lib, types, typeRoots
+// and the other string[] options, #6c4swvt), and a dictionary or a fixed object by recordReadHeapMember's
+// checked narrow (tsc's paths and configFile). Both rest on its premise: every named read out of a slot boxed as a union is checked by the
+// declared type, whatever wrote the slot and through whatever view.
 var droppedContractChecked = map[ir.Type]bool{ir.Number: true, ir.String: true, ir.Boolean: true, ir.Array: true, ir.Record: true, ir.Object: true}
 
 // parameterStorage is check run with droppedContractsRead cleared, then restored: a function's
@@ -511,4 +512,42 @@ func (l *lowering) parameterStorage(check func() bool) bool {
 	l.droppedContractsRead = false
 	defer func() { l.droppedContractsRead = dropping }()
 	return check()
+}
+
+// addedContractRead is whether a .ts view may add a named property, a property of type t that the view
+// declares and the record seen doesn't, whose index signature holds held, through a view whose index
+// signature holds seen: the other way of droppedContractRead, tsc's Record<string, CompilerOptionsValue>
+// seen as CompilerOptions (commandLineParser.ts:2712), a MapLike seen as WatchOptions (3100), and a field
+// held as OptionsBase seen as CompilerOptions (2129) (#6c4swvt). No copy is made, so the object keeps its
+// identity, and what the record holds under the name is whatever its index signature took. It rests on
+// droppedContractChecked's premise: the view's named read of the property is checked at run time by its
+// declared type, so a value the record holds there of another type stops at that read, naming it. The
+// conditions are droppedContractRead's, from the view's side:
+//   - both index value types keep one representation, a union, and keep everything inside them alike;
+//   - the property is one of the view's own index signature's values, so it's stored at the index's
+//     representation and a read through the view's index reads its bytes;
+//   - its representation is one whose read droppedContractChecked holds;
+//   - and it's readonly, or it's one of the record's own index signature's values too, so a value the view
+//     writes under its name is one the record's index reads honestly. That's also what the invariance rule
+//     asks of the view's index as a whole, but this rule doesn't lean on another one firing at every site.
+//
+// The optional-widening rule judges the same view after this one (an optional property absent from a
+// structural source can hide fields), and keeps its stop.
+func (l *lowering) addedContractRead(property *ast.Symbol, t, held, seen *checker.Type) bool {
+	if !l.droppedContractsRead {
+		return false
+	}
+	of, known := l.recordStorageType(held)
+	viewedOf, viewedKnown := l.recordStorageType(seen)
+	if !known || !viewedKnown || of != ir.Union || viewedOf != ir.Union || !l.sameKeeping(held, seen, map[[2]*checker.Type]bool{}) {
+		return false
+	}
+	if !l.checker.IsTypeAssignableTo(t, seen) {
+		return false
+	}
+	if !l.checker.IsReadonlySymbol(property) && !l.checker.IsTypeAssignableTo(t, held) {
+		return false
+	}
+	stored, known := l.representation(t)
+	return known && droppedContractChecked[stored.Present()]
 }

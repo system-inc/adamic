@@ -1,1 +1,1 @@
-internal/oracle/testdata/record_declared_keys_stops/r16_dict_to_declared.ts:6:7: stage 0 can't lower a Dict seen as Options (fixed objects and records have different storage; copy explicitly) yet
+internal/oracle/testdata/record_declared_keys_stops/r16_dict_to_declared.ts:6:26: Adamic 0.1 refuses optional property outFile in Options absent from structural source Dict, which can hide fields; declare outFile on the source type, or build a fresh object with known fields (adamic/no-optional-widening)
