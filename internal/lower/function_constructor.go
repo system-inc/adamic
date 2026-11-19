@@ -17,8 +17,9 @@ import (
 //     and its body is the class's constructor, so the new lowers to a call of it (functionConstructorEligible,
 //     buildFunctionConstructor). It has a class of its own and a static identity class, which is what the
 //     constructor value is at run time.
-//  2. The `as any` on a getter's operand is erased only as a road to a new callee: the arrow body of an
-//     allocator literal's getter (allocatorGetterShape). Its value is a fresh object of the static identity
+//  2. The `as any` on a getter's operand, or the `typeof F & ReturnType<...>` adaptation 41 writes in its place
+//     (allocatorIntersectionCast), is erased only as a road to a new callee: the arrow body of an allocator
+//     literal's getter (allocatorGetterShape). Its value is a fresh object of the static identity
 //     class, made by nothing else. Every other use of an any keeps its refusal; this one's stops are deferred
 //     (deferAnyRoad) and given back when the road doesn't close.
 //  3. The callee is proven by reach once lowering is done (checkFunctionConstructorRoads): every allocation
@@ -134,15 +135,15 @@ func allocatorGetterArrowOf(cast *ast.Node) *ast.Node {
 	return site.Parent
 }
 
-// allocatorGetterShape is the function declaration a cast to any names when the cast is an allocator getter's
-// whole result, as utilities.ts's `getNodeConstructor: () => Node as any` is, and nil otherwise. The cast is
+// allocatorGetterShape is the function declaration a cast to any, or to allocatorIntersectionCast's intersection,
+// names when the cast is an allocator getter's whole result, as utilities.ts's `getNodeConstructor: () => Node as any` is, and nil otherwise. The cast is
 // written in .ts, its operand names a function declaration, and it's the expression body of an arrow with no
 // parameters that is a property of an object literal initializing a typed const at a module's top level. The
 // const's type gives that property one call signature with no parameters, returning a type with exactly one
 // construct signature, not generic, and no call signature, whose parameters are the function's after its this.
 func (l *lowering) allocatorGetterShape(cast *ast.Node) *ast.Node {
 	as := cast.AsAsExpression()
-	if as.Type == nil || as.Type.Kind != ast.KindAnyKeyword || strings.HasSuffix(l.program.FileName(ast.GetSourceFileOfNode(cast)), ".a") {
+	if as.Type == nil || (as.Type.Kind != ast.KindAnyKeyword && as.Type.Kind != ast.KindIntersectionType) || strings.HasSuffix(l.program.FileName(ast.GetSourceFileOfNode(cast)), ".a") {
 		return nil
 	}
 	operand := ast.SkipParentheses(as.Expression)
@@ -201,7 +202,35 @@ func (l *lowering) allocatorGetterShape(cast *ast.Node) *ast.Node {
 	if declaration == nil || l.closedKindFunctionSymbol(declaration) != symbol || len(constructs[0].Parameters()) != len(declaration.Parameters())-1 {
 		return nil
 	}
+	if as.Type.Kind == ast.KindIntersectionType && !l.allocatorIntersectionCast(as.Type, symbol, made) {
+		return nil
+	}
 	return declaration
+}
+
+// allocatorIntersectionCast is whether an intersection a getter's operand is cast to is exactly the two members
+// adaptation 41 writes in place of any, `typeof F & ReturnType<ObjectAllocator["getXConstructor"]>` (utilities.ts's
+// Symbol, Signature and SourceMapSource getters), in either order: the type of the operand's own symbol, and the
+// getter's declared return, never judged by spelling: the typeof by the symbol its query resolves to, since two
+// functions of one shape have identical types, and the return by tsc's identity relation (identicalTypes). It
+// claims nothing the road's reach proof doesn't show, so it rides the same road (Adamic's ruling on #837zjkt). A
+// third member, a typeof of another symbol, or any other second member keeps the cast's refusal.
+func (l *lowering) allocatorIntersectionCast(intersection *ast.Node, symbol *ast.Symbol, made *checker.Type) bool {
+	members := intersection.AsIntersectionTypeNode().Types.Nodes
+	if len(members) != 2 {
+		return false
+	}
+	ownQuery := func(member *ast.Node) bool {
+		if member.Kind != ast.KindTypeQuery {
+			return false
+		}
+		name := member.AsTypeQueryNode().ExprName
+		return ast.IsIdentifier(name) && l.valueSymbol(name) == symbol
+	}
+	returned := func(member *ast.Node) bool {
+		return identicalTypes(l.checker, l.checker.GetTypeFromTypeNode(member), made)
+	}
+	return (ownQuery(members[0]) && returned(members[1])) || (returned(members[0]) && ownQuery(members[1]))
 }
 
 // functionConstructorEligible is the function constructor a declaration lowers as, or nil when it isn't one:
