@@ -1,1 +1,1 @@
-internal/oracle/testdata/record_declared_keys_stops/v03_readonly_parameter.ts:5:53: stage 0 can't lower a Readonly<Options> seen as Dict (fixed objects and records have different storage; copy explicitly) yet
+internal/oracle/testdata/record_declared_keys_stops/v03_readonly_parameter.ts:5:63: Adamic 0.1 refuses a value of type Readonly<Options> seen as Dict, which can write Dict where Readonly<Options> is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)
