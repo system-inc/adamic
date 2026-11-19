@@ -27,6 +27,11 @@ var latentPostLoweringSteps = []latent.PassStep{
 	{Name: "asyncEntrySource", Scoped: true, Production: "if lowering.result.AsyncEntry > 0 [calls:modulePath,len]"},
 	{Name: "findCycles", WholeProgram: true},
 	{Name: "checkBoundArguments"},
+	// checkKindUnionWriteReach judges each named write through a kind-checked cast's union by every allocation
+	// reaching its receiver, on the whole program's allocation graph (#b5w3ycg head 2): it reads the IR,
+	// numbering its allocation sites where nothing has yet as checkBoundArguments does, and rewrites nothing
+	// else, so a body lowered on its own is recorded as not run, as checkBoundArguments is.
+	{Name: "checkKindUnionWriteReach"},
 	// checkCheckedPredicateParameters stops a predicate parameter's checked closure that may call a function
 	// declaring more parameters than it passes, and an admitted parameter lowering passed another way, by
 	// the closure records and the lowered regions of the whole program (#jqf1drp): it reads the IR and

@@ -393,7 +393,9 @@ func uninstrumentedAsyncFixture(path string) bool {
 	return false
 }
 
-// These boundary witnesses pin lowering refusals in the oracle and have no flow graph.
+// These boundary witnesses pin lowering refusals in the oracle and have no flow graph. The kind union write's lie,
+// a value built as a Node without flags, is refused at compile time by reach (#b5w3ycg head 2), no longer a stop at
+// run time. Each arm holds no comment, since review/test-split-flow/generate.py parses this switch.
 func runtimeBoundaryLoweringReason(path string) string {
 	switch filepath.Base(path) {
 	case "json_decode_coverage_empty.a", "json_decode_empty_object.a":
@@ -402,6 +404,8 @@ func runtimeBoundaryLoweringReason(path string) string {
 		return "stage 0 can't lower spreading a RegExp or its iterator yet"
 	case "coverage_view_array.a", "coverage_view_boolean.a", "coverage_view_closure.a", "coverage_view_number.a", "coverage_view_string.a":
 		return "Adamic 0.1 refuses an object spread through a view that may hold library class Array (its internal fields are not own enumerable properties); copy the fields you mean by name"
+	case "cast_kind_union_write_lie.ts":
+		return "stage 0 can't lower a write of flags through a kind-checked cast's union, where a value reaching it is built as Node without flags yet"
 	}
 	return ""
 }

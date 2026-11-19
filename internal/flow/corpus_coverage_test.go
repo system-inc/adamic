@@ -123,7 +123,7 @@ func TestFlowCorpusBoundaryDeclarations(t *testing.T) {
 		runnable[filepath.ToSlash(path)] = true
 	}
 	count := 0
-	for _, pattern := range []string{"../oracle/testdata/coverage_regexp_*.a", "../oracle/testdata/coverage_view_*.a", "../oracle/testdata/json_decode_coverage_empty.a", "../oracle/testdata/json_decode_empty_object.a"} {
+	for _, pattern := range []string{"../oracle/testdata/coverage_regexp_*.a", "../oracle/testdata/coverage_view_*.a", "../oracle/testdata/json_decode_coverage_empty.a", "../oracle/testdata/json_decode_empty_object.a", "../oracle/testdata/cast_kind_union_write_lie.ts"} {
 		paths, err := filepath.Glob(pattern)
 		if err != nil {
 			t.Fatal(err)
@@ -151,7 +151,7 @@ func TestFlowCorpusBoundaryDeclarations(t *testing.T) {
 			count++
 		}
 	}
-	if count != 10 {
-		t.Fatalf("want ten boundary declarations, got %d", count)
+	if count != 11 {
+		t.Fatalf("want eleven boundary declarations, got %d", count)
 	}
 }

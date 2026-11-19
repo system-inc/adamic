@@ -106,22 +106,23 @@ func (l *lowering) kindUnionValue(node *ast.Node, value ir.Expression, source *c
 		}
 		l.viewSources[len(l.viewSources)-1].cast = true
 	}
-	if err := l.kindUnionWrites(proof.members); err != nil {
+	if err := l.kindUnionWrites(proof); err != nil {
 		return nil, err
 	}
 	return cast, nil
 }
 
-// kindUnionWrites stops a write whose receiver is the kind cast's union, or a union of two or more of its
-// members, as NotYet: Adamic ruled that write on #b5w3ycg as head 2's, with a presence check at the write,
-// Rule C's record and a tag that can't move, and this head keeps it waiting. The union's members are compared,
-// not its identity, since an alias (AccessExpression) and the same union written out are two checker types. A
-// write after narrowing to one member (`if (a.kind === X) a.f = v`, receiver X) isn't stopped: it goes on
-// main's checked-write road through X's view, the road main's one-kind cast (interfaceCast) already admits, so
-// this head adds no write road main doesn't have. Views are keyed by type, so a write through a value of the
-// union's type that no cast made stops here too. It reads view's site index, every access of the program built
-// once (view_sites.go), so it walks no module.
-func (l *lowering) kindUnionWrites(members []*checker.Type) error {
+// kindUnionWrites judges every write whose receiver is the kind cast's union, or a union of two or more of its
+// members. The union's members are compared, not its identity, since an alias (AccessExpression) and the same
+// union written out are two checker types. A named write the program's declared types refuse is NotYet here
+// (kindUnionWriteHeld, #b5w3ycg head 2, cast_kind_union_writes.go), and one they don't is recorded, to go on
+// main's checked-write road only when every object reaching it holds its slot alike (checkKindUnionWriteReach); an element write and a destructuring's or a loop's target stay NotYet, since head 2 ruled a
+// named write alone, and so would a delete, which refuse meets first. A write after narrowing to one member
+// (`if (a.kind === X) a.f = v`, receiver X) isn't judged here: it goes on main's checked-write road through X's
+// view, the road main's one-kind cast (interfaceCast) already admits. Views are keyed by type, so a write through a value of the union's type that
+// no cast made is judged here too. It reads view's site index, every access of the program built once
+// (view_sites.go), so it walks no module.
+func (l *lowering) kindUnionWrites(proof *kindUnion) error {
 	modules, err := l.moduleOrder(l.program.Files()[0])
 	if err != nil {
 		return err
@@ -146,14 +147,23 @@ func (l *lowering) kindUnionWrites(members []*checker.Type) error {
 		within := true
 		for _, member := range held.Types() {
 			found := false
-			for _, wanted := range members {
+			for _, wanted := range proof.members {
 				found = found || member == wanted
 			}
 			within = within && found
 		}
-		if within {
-			return l.notYet(part, "a write through a kind-checked cast's union "+l.checker.TypeToString(held)+", which waits on #b5w3ycg head 2's ruled write")
+		if !within {
+			continue
 		}
+		if part.Parent.Kind == ast.KindDeleteExpression || !kindUnionNamedWrite(part) {
+			return l.notYet(part, "a write through a kind-checked cast's union "+l.checker.TypeToString(held)+" other than a named assignment, increment or decrement, which #b5w3ycg head 2 leaves waiting")
+		}
+		if err := l.kindUnionWriteHeld(part, proof, part.Name().Text()); err != nil {
+			return err
+		}
+		// The declared index refuses, never admits: what reaches the write is judged once the program is
+		// lowered (checkKindUnionWriteReach, Adamic's amendment of Nov 19).
+		l.recordKindUnionWrite(part, proof)
 	}
 	return nil
 }
