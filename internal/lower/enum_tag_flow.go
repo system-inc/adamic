@@ -454,9 +454,12 @@ func (w *enumTagWalk) exactKindCall(node *ast.Node) (kindCall, bool) {
 // step also passes only when that narrowing is identical to the comparison's on the side this path
 // takes: a predicate whose type disagrees with its own body proves nothing here. A closed member's tag
 // is its kind domain K(S) (enumTagClosedTag): the true side keeps it only when the compared member is in
-// K(S), and the false side drops it only when K(S) is that member alone. A kind in K(S) keeps S where the
-// predicate's type drops it, so the identity check refuses, failing closed. R-T80's check at the call is
-// kept; only the refusal of the read moves.
+// K(S), and the false side drops it only when K(S) is that member alone. On the true side, a closed S whose
+// every source of the compared kind relates to the predicate's type (closedKindSourcesFit) is replaced by
+// that type, as the checker narrows it: a value of S carrying the kind was built at a type the predicate
+// names (Adamic's ruling on #x2cjvy9 cause A, Nov 19). Otherwise S is kept whole where the predicate's type
+// drops it, so the identity check refuses, failing closed. R-T80's check at the call is kept; only the
+// refusal of the read moves.
 func (w *enumTagWalk) kindPredicateStep(flow *ast.FlowNode, call kindCall) bool {
 	before := enumTagReducedType(w.l.checker, predicateFlowType(w.l.checker, w.reference, w.declared, w.declared, nil, flow.Antecedent))
 	members := []*checker.Type{before}
@@ -479,6 +482,13 @@ func (w *enumTagWalk) kindPredicateStep(flow *ast.FlowNode, call kindCall) bool 
 	if call.negated {
 		taken = !taken
 	}
+	// The predicate's own type, which the checker narrows the call's true side by.
+	var claimed *checker.Type
+	if signature := w.l.checker.GetResolvedSignature(call.call); signature != nil {
+		if claim := predicateOfSignature(w.l.checker, signature); claim != nil {
+			claimed = claim.Type()
+		}
+	}
 	kept := []*checker.Type{}
 	for _, member := range members {
 		if member.Flags()&checker.TypeFlagsPrimitive != 0 {
@@ -490,12 +500,17 @@ func (w *enumTagWalk) kindPredicateStep(flow *ast.FlowNode, call kindCall) bool 
 			continue
 		}
 		tag := w.l.checker.GetTypeOfSymbol(w.l.checker.GetPropertyOfType(member, call.field))
-		if kinds := w.l.enumTagClosedTag(before, member, call.field, tag); kinds != nil {
+		kinds := w.l.enumTagClosedTag(before, member, call.field, tag)
+		if kinds != nil {
 			tag = kinds
 		}
 		if taken {
 			if checker.Checker_isTypeAssignableTo(w.l.checker, call.member, tag) {
-				kept = append(kept, member)
+				if kinds != nil && claimed != nil && w.l.closedKindSourcesFit(member, call.field, call.member, claimed) {
+					kept = append(kept, claimed)
+				} else {
+					kept = append(kept, member)
+				}
 			}
 		} else if !checker.Checker_isTypeIdenticalTo(w.l.checker, tag, call.member) {
 			kept = append(kept, member)
