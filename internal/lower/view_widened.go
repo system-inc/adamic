@@ -43,10 +43,13 @@ const (
 // A checked view's fields are checked where they're read, under the view's receiver type
 // (CheckedFieldKey). The value the view admitted can be seen as another type after: widened by an
 // assignment, an argument, a return, a field or element store, a capture or a conditional's arm.
-// A read through that type is a plain read, so it read a lying layout's field as the type it
-// claims, and native crashed where Node printed the field. Until such a read checks against the
-// view, a read of a field a view checks, through a receiver type that doesn't check it, is NotYet
-// when the receiver may hold a viewed value, failing closed when the reach is unknown.
+// A read through that type was a plain read, so it read a lying layout's field as the type it
+// claims, and native crashed where Node printed the field. So a read of a field a view checks,
+// through a receiver type that doesn't check it, is checked where it's made (Program.WidenedReads,
+// #zpzm9ta head 1) when the receiver may hold a viewed value, and when the reach is unknown. It's
+// checked by name against the read's own declared type, which is all the program assumes of its
+// result, and a lie stops there with the checked read's located message. A read whose name a
+// getter has stays NotYet, since a checked read can't run one.
 //
 // Whether it may is asked of the shared allocation graph with an entry hook: the receiver's flow
 // reaches where a value enters a view, and stops there. Asking which allocations it reaches would
@@ -65,10 +68,10 @@ const (
 // A view whose entry names no local (a predicate that narrows a field read, a structural cast of
 // something other than a local) falls back to the allocations it may reach, as checkViewCopies
 // does. Predicate views give no ViewOrigin, only nil, so that reach is unknown and every read the
-// fallback weighs is NotYet. The flow follows what the graph follows: locals (a captured one is
+// fallback weighs is checked. The flow follows what the graph follows: locals (a captured one is
 // the same local, in its cell), parameters, returns, conditional arms, and literal fields and
 // elements at a constant index. Anything else, a Map value, a for-of element or one at a computed
-// index, a callback's parameter, is Unknown, and Unknown is NotYet.
+// index, a callback's parameter, is Unknown, and a read on Unknown reach is checked.
 //
 // A field the view's source already held is honest through a type it fits, as the cast changed
 // nothing the source guaranteed. Views register as their casts lower, so this is decided once
@@ -109,8 +112,7 @@ func (l *lowering) checkViewWidenedReads() error {
 		}
 	}
 	assignAllocationSites(l.result)
-	entered := l.flowGraph(l.result)
-	entered.entry = func(value ir.Expression) int {
+	entry := func(value ir.Expression) int {
 		switch value := value.(type) {
 		case ir.CheckedCast:
 			if value.CheckedFields {
@@ -131,12 +133,15 @@ func (l *lowering) checkViewWidenedReads() error {
 				return viewedValueSite
 			}
 		case ir.Property:
-			if l.result.CheckedFields[ir.CheckedFieldKey(value.ViewReceiverTypeID, value.Name)] && viewAggregate(value) {
+			// A widened read this pass checked takes a value out of one that may be viewed, as a view member's
+			// checked read does, so what it reads is weighed as inside a viewed value.
+			if (l.result.CheckedFields[ir.CheckedFieldKey(value.ViewReceiverTypeID, value.Name)] || l.result.WidenedReads[ir.WidenedReadKey(value)]) && viewAggregate(value) {
 				return viewedFieldSite
 			}
 		}
 		return 0
 	}
+	var entered *allocationFlowGraph
 	var graph *allocationFlowGraph
 	var viewed map[int]bool
 	unknown := len(l.result.ViewOrigins) == 0
@@ -167,29 +172,70 @@ func (l *lowering) checkViewWidenedReads() error {
 				demanded = demanded || viewed[site]
 			}
 		}
-		if demanded {
-			through := "an unnamed type"
-			if receiver := l.viewTypes[read.ViewReceiverTypeID]; receiver != nil {
-				through = "type " + l.checker.TypeToString(receiver)
-			}
-			refused = &NotYet{Where: read.ViewWhere, What: "a read of field " + read.Name + " through " + through + ", which may hold a checked view's value"}
+		if !demanded {
+			return true
+		}
+		if read.Method {
+			// A method read keeps its view only where readiness certifies the callable
+			// (certifiedUntaggedCallableRead), and is a plain read otherwise, so marking it would let it through
+			// unchecked. It stays NotYet until the adapter's road for it is traced.
+			refused = &NotYet{Where: read.ViewWhere, What: "a read of method " + read.Name + " through " + l.widenedThrough(read) + ", which may hold a checked view's value"}
 			return false
 		}
+		if l.accessorNames[read.Name] {
+			// A checked read looks only at data slots, so where a getter answers the name it reads "found missing" and
+			// stops a program Node runs. That divergence is caught here, at compile time, until the checked read can call
+			// a getter (Compiler on #zpzm9ta).
+			refused = &NotYet{Where: read.ViewWhere, What: "a read of field " + read.Name + " through " + l.widenedThrough(read) + ", which may hold a checked view's value, where a getter named " + read.Name + " may answer it"}
+			return false
+		}
+		// The read is checked where it's made, by name, against its own declared type: the contract viewedField gave
+		// it, which readiness keeps once CheckedRead says so. That's enough because the read's result is used at that
+		// type, so a stored value that passes the check by name and representation is exactly what the rest of the
+		// program assumes, and a lie deeper down stops at the read that meets it, which is weighed here the same way.
+		// The mark must be made before readiness strips an unchecked read's view (lower.go runs this pass before
+		// readiness), or it changes nothing. A key two reads share, two lowerings of one source read or two reads
+		// with no place, checks both, which only adds checks. A generator frame, which has no shape, never reaches a
+		// named-field read: checkGeneratorRoads keeps it to its iteration.
+		if l.result.WidenedReads == nil {
+			l.result.WidenedReads = ir.SortedMap[string, bool]{}
+		}
+		l.result.WidenedReads[ir.WidenedReadKey(read)] = true
 		return true
 	}
-	walk(l.result.Main, inspect)
-	for _, function := range l.result.Functions {
-		walk(function.Body, inspect)
+	// Each mark can make a read of what it reads demanded, and the graph keeps what it reached (its projection
+	// frames), so each round asks a fresh one, until a round marks nothing new. A marked read is checked, so a later
+	// round passes over it, and the rounds end.
+	for {
+		entered = l.flowGraph(l.result)
+		entered.entry = entry
+		marked := len(l.result.WidenedReads)
+		walk(l.result.Main, inspect)
+		for _, function := range l.result.Functions {
+			walk(function.Body, inspect)
+		}
+		// A read finishAccessors made a dispatcher's call isn't a Property in the program any more, and its
+		// dispatcher's fallback reads the slot unchecked, so it's weighed here as it was lowered, its receiver as
+		// lowering made it (#3jj9dzg). Its own receiver is all that's walked: a read inside that receiver is in
+		// the program as itself, or a dispatched read of its own. A getter answers its name, so where it's demanded
+		// it stops NotYet by the getter rule above and is never marked.
+		for _, read := range l.dispatchedReads {
+			inspect(read)
+		}
+		if refused != nil {
+			return refused
+		}
+		if len(l.result.WidenedReads) == marked {
+			break
+		}
 	}
-	// A read finishAccessors made a dispatcher's call isn't a Property in the program any more, and its
-	// dispatcher's fallback reads the slot unchecked, so it's weighed here as it was lowered, its receiver as
-	// lowering made it (#3jj9dzg). Its own receiver is all that's walked: a read inside that receiver is in
-	// the program as itself, or a dispatched read of its own.
-	for _, read := range l.dispatchedReads {
-		inspect(read)
-	}
-	if refused != nil {
-		return refused
+	if len(l.result.WidenedReads) != 0 {
+		// checkLazyViewReads judged every checked read when findCycles ran it, before these were marked, so the marked
+		// reads are judged now by the same rules: what emission can't express, or an unsupported contract family,
+		// stops here with its own message, never at an emitter's compiler-bug panic.
+		if err := l.judgeCheckedViewReads(func(read ir.Property) bool { return l.result.WidenedReads[ir.WidenedReadKey(read)] }); err != nil {
+			return err
+		}
 	}
 	// A whole-value reader reads every field of the value and of what it holds, through no view and
 	// no type the source vouched for, so nothing a view claimed may be anywhere in it.
@@ -214,6 +260,14 @@ func (l *lowering) checkViewWidenedReads() error {
 		}
 	}
 	return nil
+}
+
+// widenedThrough names the type a widened read is made through, for its message.
+func (l *lowering) widenedThrough(read ir.Property) string {
+	if receiver := l.viewTypes[read.ViewReceiverTypeID]; receiver != nil {
+		return "type " + l.checker.TypeToString(receiver)
+	}
+	return "an unnamed type"
 }
 
 // deepReach says whether a value, or anything its fields, elements and stores hold, may reach a
