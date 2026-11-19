@@ -1,0 +1,13 @@
+// argument.ts's twin in .a, which rulings.md:72 still refuses until the relation is proven: the hiding rule's
+// refusal, word for word as before #0b9xqhh.
+interface Source { readonly kind: number; }
+interface Target { readonly kind: number; readonly label?: string; }
+
+function describe(target: Target): string {
+    return target.label === undefined ? "absent" : target.label;
+}
+const bare: Source = { kind: 1 };
+const labelled = { kind: 2, label: "two" };
+const hidden: Source = labelled;
+console.log(describe(bare));
+console.log(describe(hidden));

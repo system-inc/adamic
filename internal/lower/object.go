@@ -2026,7 +2026,15 @@ func (l *lowering) stringMethod(node *ast.Node, receiver *ast.Node, name string)
 
 // shorthand lowers the value of { value }. The name there is the field's, and asked for its symbol
 // the checker gives the field; the variable it reads is a separate question.
+//
+// It reads the name as a local and never passes value, so a relation rule 3300 let cross as a view at the
+// name (relation_views.go) would cross here raw. It refuses in that rule's words instead, on every
+// lowering, so no other lowering's view of the same name can stand for this one (Compiler's gate on
+// #0b9xqhh, relation_views.mutants.md).
 func (l *lowering) shorthand(property *ast.Node) (ir.Expression, error) {
+	if entry, recorded := l.relationViews[property.Name()]; recorded {
+		return nil, l.optionalWideningRefusal(entry.refused, &entry.hidden)
+	}
 	if value, known, err := l.nodeProcessValue(property.Name()); known {
 		return value, err
 	}
