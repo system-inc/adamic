@@ -401,3 +401,20 @@ bool adamic_write_raw(enum adamic_stream stream, const adamic_string *text) {
 	pthread_mutex_unlock(&output_lock);
 	return ok;
 }
+
+// Checked stream binding for a Uint8Array (process.stdout.write of one, #vndytkn): its bytes are written
+// as they are, never through write_text, which would turn a byte sequence that spells a lone surrogate
+// into U+FFFD as it does for a string. The write is whole before it returns, as Node's is to a pipe or a
+// file on Linux, so a change to the array afterwards writes nothing. data is never NULL: an array's is
+// allocated even at length zero and allocate panics when it can't be (typed_array.c:35-40), a view's
+// points into its owner's (typed_array.c:149), and nothing transfers or shrinks a buffer.
+bool adamic_write_bytes(enum adamic_stream stream, const adamic_typed_array *bytes) {
+	pthread_mutex_lock(&output_lock);
+	output_start();
+	flush();
+	put(stream, (const char *)bytes->data, bytes->length);
+	flush();
+	bool ok = !broken[stream];
+	pthread_mutex_unlock(&output_lock);
+	return ok;
+}

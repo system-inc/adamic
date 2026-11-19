@@ -1,0 +1,7 @@
+// #vndytkn, Memory's should: an array made in the call's own argument, owned by the statement, is borrowed
+// by the write and released after it, under the sanitizers, with nothing leaked.
+import process from 'node:process';
+
+for (let i = 0; i < 3; i++) {
+	process.stdout.write(new Uint8Array([0x61 + i, 0x0a]));
+}

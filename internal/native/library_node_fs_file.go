@@ -56,6 +56,12 @@ func (e *emitter) nodeFSFile(call ir.NodeFSFile) string {
 	}
 	if call.Operation == "host_stdout_write" {
 		code = "(adamic_write_raw(adamic_stdout, " + args[0] + "), 0.0)"
+		// A Uint8Array's bytes go out as they are, never as text (#vndytkn). The array is borrowed for the
+		// call: an owned temporary (a call's result) is the statement's, released after it (own,
+		// emit_ownership.go), and the write copies every byte out before it returns.
+		if call.Arguments[0].Type() == ir.Uint8Array {
+			code = "(adamic_write_bytes(adamic_stdout, " + args[0] + "), 0.0)"
+		}
 	}
 	if call.Operation == "host_env_set" {
 		e.line("adamic_host_environment_set(%s, %s);", args[0], args[1])
