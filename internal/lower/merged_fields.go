@@ -64,36 +64,17 @@ func initializedClassMember(field *ast.Symbol) bool {
 	return false
 }
 
-func (l *lowering) mergedDeclarationRefusal(node *ast.Node) error {
-	if node.Kind != ast.KindClassDeclaration && node.Kind != ast.KindInterfaceDeclaration {
-		return nil
-	}
-	class := l.mergedClass(node)
-	if class == nil {
-		return nil
-	}
-	for _, field := range l.checker.GetPropertiesOfType(l.checker.GetTypeAtLocation(class.Name())) {
-		if field.Flags&ast.SymbolFlagsOptional != 0 || initializedClassMember(field) {
-			continue
-		}
-		return &Refused{Where: l.program.Where(node), What: "class " + class.Name().Text() + " merged with an interface promises field " + field.Name + " that the class does not initialize", Fix: "declare and initialize " + field.Name + " in class " + class.Name().Text() + ", or use a separate interface with a checked view"}
-	}
-	return nil
-}
-
 func (l *lowering) mergedFieldRulings(module *ast.SourceFile) error {
-	adamic := strings.HasSuffix(l.program.FileName(module), ".a")
+	if strings.HasSuffix(l.program.FileName(module), ".a") {
+		return nil
+	}
 	var found error
 	var visit ast.Visitor
 	visit = func(node *ast.Node) bool {
 		if found != nil {
 			return true
 		}
-		if adamic {
-			found = l.mergedDeclarationRefusal(node)
-		} else {
-			found = l.mergedFieldRead(node)
-		}
+		found = l.mergedFieldRead(node)
 		if found != nil {
 			return true
 		}
