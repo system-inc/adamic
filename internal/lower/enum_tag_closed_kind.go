@@ -5,6 +5,7 @@ import (
 
 	"github.com/microsoft/TypeScript/tsc/shim/ast"
 	"github.com/microsoft/TypeScript/tsc/shim/checker"
+	"github.com/system-inc/adamic/internal/load"
 )
 
 // A union member S whose tag field is a whole open numeric enum, as tsc's Expression is with kind:
@@ -574,4 +575,127 @@ func (l *lowering) closedKindNewOfClass(created *ast.Node) bool {
 	callee := ast.SkipParentheses(created.AsNewExpression().Expression)
 	symbol := l.checker.GetTypeAtLocation(callee).Symbol()
 	return symbol != nil && symbol.Flags&ast.SymbolFlagsClass != 0
+}
+
+// closedKindFitKey is a closed S, its field, a kind k in K(S), and the predicate's type, the key of
+// closedKindSourcesFit's answer.
+type closedKindFitKey struct {
+	of, kind, target int
+	field            string
+}
+
+// closedKindSourcesFit is whether every source through which kind entered K(of) for field relates to target,
+// a kind predicate's type, by Adamic's relation (castAssignable, never the checker's): each declared type
+// assignable to of whose kind's literals hold kind, and each build site reaching of whose kind's literals
+// hold it (Adamic's ruling on #x2cjvy9 cause A, Nov 19, with Compiler's four conditions). When every one
+// does, a value of of carrying kind was built at a type the predicate names, so narrowing of by the predicate
+// is the checker's narrowing, not of kept whole. A source that doesn't relate fails it closed: an anonymous
+// literal typed of at kind (of's own layout), a class implementing of at kind, an intersection, a generic
+// or mapped source. Declared types are read from every file the program holds, its declaration files and
+// type-only imports included (closedKindDeclaredEverywhere), so a declaration only a type names is still a
+// source. Builds are the program's own, as K(of) counts them. A kind with no source fails closed too.
+//
+// It proves what a value holds, never how it's stored (Adamic's condition 5, Lower's Nov 17 rule): every read
+// after the narrowing goes through the value's own storage, which TestClosedKindSourcesReadEachSourceStorage
+// holds natively for a subtype source with a field ahead of the one read.
+func (l *lowering) closedKindSourcesFit(of *checker.Type, field string, kind, target *checker.Type) bool {
+	key := closedKindFitKey{of: int(of.Id()), kind: int(kind.Id()), target: int(target.Id()), field: field}
+	if fit, held := l.closedKindFits[key]; held {
+		return fit
+	}
+	fit := l.closedKindSourcesFitOf(of, field, kind, target)
+	if l.closedKindFits == nil {
+		l.closedKindFits = map[closedKindFitKey]bool{}
+	}
+	l.closedKindFits[key] = fit
+	return fit
+}
+
+func (l *lowering) closedKindSourcesFitOf(of *checker.Type, field string, kind, target *checker.Type) bool {
+	tag := l.closedKindFieldType(of, field)
+	if tag == nil {
+		return false
+	}
+	holds := func(given *checker.Type) bool {
+		literals, shape := l.closedKindLiterals(given, tag)
+		if shape != closedKindLiteral {
+			return false
+		}
+		for _, literal := range literals {
+			if checker.Checker_isTypeIdenticalTo(l.checker, literal, kind) {
+				return true
+			}
+		}
+		return false
+	}
+	sources := 0
+	for _, declared := range l.closedKindDeclaredEverywhere() {
+		// A declared union builds nothing of its own: a value of it is one of its members, so each member is
+		// the source, judged as itself (tsc's ForEachChildNodes, ArrayAssignmentElement, MemberName and the
+		// other unions of nodes, which hold every kind their members do and cast to none of them whole). An
+		// anonymous member is judged here like any other, so a lie written inside a union still fails closed.
+		members := []*checker.Type{declared.of}
+		if declared.of.Flags()&checker.TypeFlagsUnion != 0 {
+			members = declared.of.Types()
+		}
+		for _, member := range members {
+			if !l.checker.IsTypeAssignableTo(member, of) || !holds(l.closedKindFieldType(member, field)) {
+				continue
+			}
+			sources++
+			if !l.castAssignable(member, target) {
+				return false
+			}
+		}
+	}
+	for _, build := range l.closedKindBuildSites() {
+		given, _, builds := l.closedKindBuildKind(build, field)
+		if !builds || !l.closedKindReaches(build.of, of) {
+			continue
+		}
+		if given == nil {
+			// A build K(of) can't name a kind for keeps of open, so of isn't closed; fail closed all the same.
+			return false
+		}
+		if !holds(given) {
+			continue
+		}
+		sources++
+		if !l.castAssignable(build.of, target) {
+			return false
+		}
+	}
+	return sources > 0
+}
+
+// closedKindDeclaredEverywhere is every interface, type alias and class declared in any file the program
+// holds but the library and the prelude, declaration files included, found once: closedKindSourcesFit's
+// declared sources. K(S) itself reads the program's own files (closedKindDeclaredTypes), since a declaration
+// file builds nothing; a source list must not miss a declaration that names a kind (Compiler's condition 3).
+func (l *lowering) closedKindDeclaredEverywhere() []closedKindSite {
+	if l.closedKindEverywhere != nil {
+		return l.closedKindEverywhere
+	}
+	l.closedKindEverywhere = []closedKindSite{}
+	seen := map[*ast.Symbol]bool{}
+	var visit ast.Visitor
+	visit = func(visited *ast.Node) bool {
+		switch visited.Kind {
+		case ast.KindInterfaceDeclaration, ast.KindTypeAliasDeclaration, ast.KindClassDeclaration, ast.KindClassExpression:
+			if symbol := l.checker.GetSymbolOfDeclaration(visited); symbol != nil && !seen[symbol] {
+				seen[symbol] = true
+				if declared := l.checker.GetDeclaredTypeOfSymbol(symbol); declared != nil {
+					l.closedKindEverywhere = append(l.closedKindEverywhere, closedKindSite{node: visited, of: declared})
+				}
+			}
+		}
+		visited.ForEachChild(visit)
+		return false
+	}
+	for _, file := range l.program.CompilerProgram().GetSourceFiles() {
+		if file != nil && !load.IsLibrary(file) && !load.IsPrelude(file) {
+			file.AsNode().ForEachChild(visit)
+		}
+	}
+	return l.closedKindEverywhere
 }
