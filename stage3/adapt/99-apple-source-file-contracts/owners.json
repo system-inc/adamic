@@ -1,0 +1,22 @@
+{
+  "edits": [
+    {
+      "candidate": "C07",
+      "file": "src/compiler/types.ts",
+      "kind": "member",
+      "owner": "SourceFile",
+      "heritage": "extends Declaration, LocalsContainer",
+      "member": "skipTrivia",
+      "text": "/** @internal */ skipTrivia?: (pos: number) => number;"
+    },
+    {
+      "candidate": "C12b",
+      "file": "src/compiler/moduleSpecifiers.ts",
+      "kind": "replace",
+      "owner": "getModuleSpecifierPreferences",
+      "old": "importingSourceFile: Readonly<Pick<SourceFile, \"fileName\" | \"impliedNodeFormat\">>,",
+      "new": "importingSourceFile: Readonly<Pick<SourceFile, \"fileName\" | \"impliedNodeFormat\" | \"packageJsonScope\">>,",
+      "count": 1
+    }
+  ]
+}

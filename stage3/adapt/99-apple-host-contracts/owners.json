@@ -1,0 +1,36 @@
+{
+  "edits": [
+    {
+      "candidate": "C09b",
+      "file": "src/compiler/tsbuildPublic.ts",
+      "kind": "member",
+      "owner": "SolutionBuilderHostBase",
+      "member": "getGlobalTypingsCacheLocation",
+      "text": "/** @internal */ getGlobalTypingsCacheLocation?: () => string | undefined;"
+    },
+    {
+      "candidate": "C09b",
+      "file": "src/compiler/tsbuildPublic.ts",
+      "kind": "member",
+      "owner": "SolutionBuilderHostBase",
+      "member": "onUnRecoverableConfigFileDiagnostic",
+      "text": "/** @internal */ onUnRecoverableConfigFileDiagnostic?: (diagnostic: Diagnostic) => void;"
+    },
+    {
+      "candidate": "C10",
+      "file": "src/compiler/types.ts",
+      "kind": "member",
+      "owner": "CompilerHost",
+      "member": "onUnRecoverableConfigFileDiagnostic",
+      "text": "/** @internal */ onUnRecoverableConfigFileDiagnostic?: (diagnostic: Diagnostic) => void;"
+    },
+    {
+      "candidate": "C11",
+      "file": "src/compiler/watch.ts",
+      "kind": "member",
+      "owner": "IncrementalCompilationOptions",
+      "member": "createProgram",
+      "text": "createProgram?: CreateProgram<EmitAndSemanticDiagnosticsBuilderProgram>;"
+    }
+  ]
+}
