@@ -1,0 +1,22 @@
+# Stage 3 meter 20261119T144339Z
+
+The area label repeats the pinned main tree for reporter compatibility.
+
+| Run | Main SHA | Whole program | Own file | Lowering | tsc entry diagnostics |
+| --- | --- | ---: | ---: | ---: | ---: |
+| Current | 5f7a26125e8489844513ff8d6e944426d13dead6 | 79/79 | 79/79 | 2/79 | 0 |
+| 20261118T131049Z.VgAEtr | c56b022995e1e960bad71626fd2074bc46aee485 | 79/79 | 79/79 | 2/79 | 0 |
+
+Lowering, main: 2/79; root-order artifacts: 3.
+
+| Root | Stop | Reason | Node result | Classification | Program result from entry census |
+| --- | --- | --- | --- | --- | --- |
+| src/compiler/debug.ts | src/compiler/semver.ts:71:9 | a namespace read before runtime initialization, directly or through a reachable call; move that read or call after the namespace declaration | Node throws here as well; exit 1; TypeError: Cannot read properties of undefined (reading &#x27;assert&#x27;) | root-order artifact | Refused src/compiler/binder.ts:496:42: a cast the runtime can&#x27;t check (read from the entry census; source order) |
+| src/compiler/diagnosticInformationMap.generated.ts | src/compiler/commandLineParser.ts:293:35 | reading an enum before its runtime initialization; move the call after the enum declaration | Node throws here as well; exit 1; ReferenceError: __filename is not defined in ES module scope | root-order artifact | Refused src/compiler/binder.ts:496:42: a cast the runtime can&#x27;t check (read from the entry census; source order) |
+| src/compiler/types.ts | src/compiler/diagnosticInformationMap.generated.ts:13:45 | reading an enum before its runtime initialization; move the call after the enum declaration | Node throws here as well; exit 1; ReferenceError: __filename is not defined in ES module scope | root-order artifact | Refused src/compiler/binder.ts:496:42: a cast the runtime can&#x27;t check (read from the entry census; source order) |
+
+For artifact roots, lowering requires attempted units in every program source, no entry-census finding in the program, and the whole-program passes of every unit measured. No native output is claimed.
+
+Area reuses main's measurement, not a second measurement. main/ was copied to area/ before reporting and gzip; both labels use main-adapted. See compiler-mode.json measurement_sources.
+
+Elapsed: 61m 40s.
