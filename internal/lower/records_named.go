@@ -429,7 +429,7 @@ func (l *lowering) sameRecordNamedContracts(from, to, inside, viewed *checker.Ty
 			t := l.checker.GetNonMissingTypeOfSymbol(property)
 			if other == nil {
 				// A .ts view may drop the source's own contract (droppedContractRead), never add one.
-				if (l.checker.IsReadonlySymbol(property) || !l.checker.IsTypeAssignableTo(pair[2], t)) && !(index == 0 && l.droppedContractRead(t, inside, viewed)) {
+				if (l.checker.IsReadonlySymbol(property) || !l.checker.IsTypeAssignableTo(pair[2], t)) && !(index == 0 && l.droppedContractRead(t, inside, viewed)) && !(index == 1 && l.addedContractRead(t, inside, viewed)) {
 					return false
 				}
 				continue
@@ -511,4 +511,23 @@ func (l *lowering) parameterStorage(check func() bool) bool {
 	l.droppedContractsRead = false
 	defer func() { l.droppedContractsRead = dropping }()
 	return check()
+}
+
+// addedContractRead is scratch for #6c4swvt's record-to-fixed direction, never cut: droppedContractRead's
+// conditions mirrored for a named property of type t that the view declares and the record seen doesn't.
+// held is the record's index value type, seen the view's.
+func (l *lowering) addedContractRead(t, held, seen *checker.Type) bool {
+	if !l.droppedContractsRead {
+		return false
+	}
+	of, known := l.recordStorageType(held)
+	viewedOf, viewedKnown := l.recordStorageType(seen)
+	if !known || !viewedKnown || of != viewedOf || !l.sameKeeping(held, seen, map[[2]*checker.Type]bool{}) {
+		return false
+	}
+	if !l.checker.IsTypeAssignableTo(t, seen) {
+		return false
+	}
+	stored, known := l.representation(t)
+	return of == ir.Union && known && droppedContractChecked[stored.Present()]
 }
