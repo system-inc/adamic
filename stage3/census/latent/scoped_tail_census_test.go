@@ -33,12 +33,13 @@ func TestLatentScopedTailEntryFindingLoom03dg(t *testing.T) {
 		}
 		return
 	}
+	const stopPass = "checkViewOptionalWrites"
+	const stopReason = "a write to optional field name through a checked view, whose slot a fixed shape can't add"
 	path := filepath.Join(t.TempDir(), "main.ts")
-	const source = `const counts: Record<string, number> = {};
-counts["a"] = 1;
-interface A { readonly kind: 1; readonly label: string | number }
-interface B { readonly kind: 2; readonly other: string }
-function probe(n: A | B): void { const s = n as A; console.log(String(s.label)); }
+	const source = `interface Node { readonly kind: number; readonly pos: number; }
+interface Declaration extends Node { _declarationBrand: undefined; }
+interface Element extends Declaration { _elementBrand: undefined; name?: string; }
+function probe(n: Node): void { const e = n as Element; e.name = "w"; }
 `
 	if err := os.WriteFile(path, []byte(source), 0600); err != nil {
 		t.Fatal(err)
@@ -61,10 +62,20 @@ function probe(n: A | B): void { const s = n as A; console.log(String(s.label));
 				if unit.Status != "attempted" {
 					t.Fatalf("tail changed body status: %+v", unit)
 				}
+				stoppedInLedger := false
+				for _, step := range unit.PassLedger {
+					if step.Name == stopPass {
+						stoppedInLedger = step.Status == "stopped_scoped"
+					}
+				}
+				if !stoppedInLedger {
+					t.Fatalf("probe ledger lacks the %s stop: %+v", stopPass, unit.PassLedger)
+				}
 			}
 		}
 		for _, finding := range record.Findings {
-			if finding.Phase == "tail" && finding.Pass == "checkRecordGuardedReads" && finding.Reason == "a union or optional field read in a program with record storage" {
+			if finding.Phase == "tail" && finding.Pass == stopPass && finding.Kind == "NotYet" && finding.Reason == stopReason {
+				t.Logf("scoped tail stop: %+v", finding)
 				found = true
 				if finding.Unit != owner {
 					t.Fatalf("tail owner: %+v", finding)
