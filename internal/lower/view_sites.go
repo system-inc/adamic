@@ -113,7 +113,8 @@ func (l *lowering) viewWalk(node *ast.Node, modules []*ast.SourceFile, fields ma
 	return l.viewWalkIndexed(modules, fields)
 }
 
-// viewWalkIndexed is viewWalkWhole over the index. An access found checked is checked still. An access
+// viewWalkIndexed is viewWalkWhole over the index. An access found checked is checked still, and its
+// judgment, where one is kept (keepsViewJudgments), is read back rather than made again. An access
 // whose name gained no key since its last judging can't have changed, so it's skipped, side effects
 // included: its ids were asked then, and plainReceiver answers an id once. Any other access is asked as
 // the whole walk asks it. A name's count is read at the call's start, so a key one access adds during
@@ -151,9 +152,22 @@ func (l *lowering) viewWalkIndexed(modules []*ast.SourceFile, fields map[string]
 				continue
 			}
 		}
+		// A checked access's judgment is kept where keepsViewJudgments says it can't change, and read
+		// back in its place, so its refusal stops the walk where judging it again would have (#715zjph).
+		if known && l.keepsViewJudgments() {
+			if refused, kept := l.viewSiteJudged[part]; kept {
+				if refused != nil {
+					return nil, refused
+				}
+				continue
+			}
+		}
 		checked, refused := l.judgeViewAccess(part, known)
 		if checked {
 			l.markViewSiteTrue(part)
+			if l.keepsViewJudgments() {
+				l.keepViewSiteJudged(part, refused)
+			}
 		}
 		// A refusal leaves viewSiteSeen as it was: the accesses after it weren't asked.
 		if refused != nil {
@@ -186,6 +200,28 @@ func (l *lowering) markViewSiteTrue(part *ast.Node) {
 	l.viewSiteTrue[part] = true
 }
 
+// keepsViewJudgments is whether a checked access's judgment can be kept and read back for it. Every
+// view's indexed walk judged each access already found checked again, and each judgment computes the
+// representation of its receiver and its field, so lowering cost casts times accesses: 200 kind-union
+// casts beside 2,000 writes lowered in 2.72 s (Loom job J-9bt4dja), and on tsc's entry census
+// judgeViewAccess was 80 s of 1,413 s of CPU. A known access's judgment reads only its own types and, for a write,
+// recordSourceSlotWrite, which finds a target it recorded and gives nil again. Two things can still move
+// it. representation reads the substitution of the instantiation being lowered, so a judgment made
+// under one substitution may differ under another, and none is kept or read while one is in force;
+// outside an instantiation the answer reads only the access's own types. And once certifySourceSlots
+// has judged the reads, recordSourceSlotWrite gives every write its stop, so nothing is kept or read
+// after that either, though Lower makes no view then (#715zjph).
+func (l *lowering) keepsViewJudgments() bool {
+	return len(l.substitution) == 0 && !l.sourceSlotsJudged
+}
+
+func (l *lowering) keepViewSiteJudged(part *ast.Node, refused error) {
+	if l.viewSiteJudged == nil {
+		l.viewSiteJudged = map[*ast.Node]error{}
+	}
+	l.viewSiteJudged[part] = refused
+}
+
 // viewWalkState is what the whole walk can change and the indexed walk keeps, held apart so the
 // comparison mode runs both from one state.
 type viewWalkState struct {
@@ -196,6 +232,7 @@ type viewWalkState struct {
 	checkedFieldWrites map[string]int
 	viewSiteSeen       map[string]int
 	viewSiteTrue       map[*ast.Node]bool
+	viewSiteJudged     map[*ast.Node]error
 	sourceSlotWrites   []sourceSlotWrite
 }
 
@@ -208,6 +245,7 @@ func (l *lowering) viewWalkState() viewWalkState {
 		checkedFieldWrites: maps.Clone(l.checkedFieldWrites),
 		viewSiteSeen:       maps.Clone(l.viewSiteSeen),
 		viewSiteTrue:       maps.Clone(l.viewSiteTrue),
+		viewSiteJudged:     maps.Clone(l.viewSiteJudged),
 		sourceSlotWrites:   slices.Clone(l.sourceSlotWrites),
 	}
 }
@@ -220,6 +258,7 @@ func (l *lowering) restoreViewWalkState(state viewWalkState) {
 	l.checkedFieldWrites = state.checkedFieldWrites
 	l.viewSiteSeen = state.viewSiteSeen
 	l.viewSiteTrue = state.viewSiteTrue
+	l.viewSiteJudged = state.viewSiteJudged
 	l.sourceSlotWrites = state.sourceSlotWrites
 }
 

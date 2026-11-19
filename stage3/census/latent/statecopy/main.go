@@ -306,8 +306,9 @@ func generate(repository, lowerInput string) []byte {
 						// modules, which view checks against the module order it asks each time and builds again from
 						// another (view_sites.go, #q1hyhzc). One holder serves every lowering of a latent run, so a copy
 						// walks the index its original built instead of walking the whole program again. The counts and
-						// judged accesses beside it, checkedFieldWrites, viewSiteSeen and viewSiteTrue, are deep copies,
-						// and roll back with CheckedFields.
+						// judged accesses beside it, checkedFieldWrites, viewSiteSeen, viewSiteTrue and viewSiteJudged, are
+						// deep copies, and roll back with CheckedFields; viewSiteJudged's errors are shared values nothing
+						// writes, as unlowerable's is (#715zjph).
 						expr = "value." + id.Name
 					} else if name == "lowering" && id.Name == "placeholderSlots" && printed(field.Type) == "*placeholderSlotCache" {
 						// Shared on purpose, as viewSites is: notePlaceholderSlots' answer by checker and program, a
