@@ -72,12 +72,31 @@ workers find key_list NULL, write it, and retain an array one of them made with 
 `WARNING: ThreadSanitizer: data race`. Where TSan isn't available the row skips; there the harness's check
 after the join still aborts on `a shared record's loops share a list` (TestParallelForInKeys, any build).
 
-## Not witnessed: a deleted key doesn't let go of the list
+## M4. A deleted key doesn't let go of the list
 
-Removing `adamic_map_forget_key_list(map);` from `adamic_map_delete` changes no output. A list still naming a
-deleted key is exactly what the loop's hasOwn guard skips, and a key added back is an insert, which lets the
-list go (M1). The delete's let-go frees the stale list, and the deleted key's string it holds, sooner; no
-fixture can see that, so no test claims it. What the survivor costs is retention, never a wrong answer or a
-use after free: the stale list retains every key it names, so the deleted key's string stays alive until the
-next key added or the record's end, whichever comes first (Memory's read on #1hp4ww2). A counted fixture whose
-peak or frees row moves under this mutant would be its witness; none is recorded today.
+File: internal/native_runtime/c/map.c, `adamic_map_delete`.
+
+Old:
+
+```c
+	adamic_map_forget_key_list(map);
+	adamic_map_entry *entry = &map->entries[index];
+```
+
+New:
+
+```c
+	adamic_map_entry *entry = &map->entries[index];
+```
+
+Run `go test ./internal/oracle -run '^TestCountsAreRecorded_[0-9]+$/internal/oracle/testdata/records_for_in_cache/delete' -count=1 -v`.
+
+Run on a sealed box (J-h0y3200): red, the row `36 | 36 | 102 | 88 | 11 | 0` measured as `33 | 33 | 98 | 93 | 11 | 0`,
+three allocations fewer, with TestRecordForInCachedKeys green under the same mutant. No output can see this mutant: a list still
+naming a deleted key is exactly what the loop's hasOwn guard skips, so delete.a prints Node's lines either
+way (TestRecordForInCachedKeys stays green). Its counted row is the witness. delete.a deletes three keys the
+record holds, each followed by a loop that builds the list again, so the mutant reuses the stale list three
+times; its `delete r['absent']` lets go of nothing either way, and the loop after it reuses the list. What the
+survivor would cost is retention, never a wrong answer or a use after free: the stale list retains every key
+it names, so a deleted key's string stays alive until the next key added or the record's end (Memory's read
+on #1hp4ww2).
