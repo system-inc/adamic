@@ -1,0 +1,12 @@
+// #vndytkn: process.stdout.write of a Uint8Array writes its bytes as they are, every value 0 to 255 and then
+// ED A0 80, which as a string's bytes would spell a lone surrogate and be written as U+FFFD.
+import process from 'node:process';
+
+const all = new Uint8Array(259);
+for (let i = 0; i < 256; i++) {
+	all[i] = i;
+}
+all[256] = 0xed;
+all[257] = 0xa0;
+all[258] = 0x80;
+process.stdout.write(all);

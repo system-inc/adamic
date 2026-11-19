@@ -12,6 +12,8 @@ func TestNodeStdoutWriteAdmission(t *testing.T) {
 		`import process from 'node:process'; process.stdout.write('plain');`,
 		`import process from 'node:process'; ((process.stdout.write('é\ud800')));`,
 		`import host from 'node:process'; host.stdout.write('clear\x1b[2J');`,
+		`import process from 'node:process'; process.stdout.write(new Uint8Array(2));`,
+		`import process from 'node:process'; const b = new Uint8Array(4); process.stdout.write(b.subarray(1, 3));`,
 	} {
 		if _, err := lowerSource(t, source); err != nil {
 			t.Fatal(err)
@@ -24,7 +26,8 @@ func TestNodeStdoutWriteRefusals(t *testing.T) {
 	for _, one := range []struct{ source, reason string }{
 		{`const value=process.stdout.write('x');`, "its boolean is backpressure in Node and blocking success natively"},
 		{`function f():boolean{return process.stdout.write('x');}`, "used as a value"},
-		{`process.stdout.write(new Uint8Array(2));`, "non-string argument"},
+		{`process.stdout.write(new Uint16Array(2));`, "non-string argument other than a Uint8Array"},
+		{`process.stdout.write(new Int32Array(2));`, "non-string argument other than a Uint8Array"},
 		{`import {Buffer} from 'node:buffer'; process.stdout.write(Buffer.from('x'));`, "non-string argument"},
 		{`process.stdout.write('x','utf8');`, "exactly one string argument"},
 		{`process.stdout.write('x',()=>{});`, "exactly one string argument"},
