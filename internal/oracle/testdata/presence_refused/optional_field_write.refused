@@ -1,1 +1,1 @@
-internal/oracle/testdata/presence_refused/optional_field_write.a:9:1: stage 0 can't lower writing a possibly absent optional own field yet
+internal/oracle/testdata/presence_refused/optional_field_write.a:9:1: stage 0 can't lower writing a possibly absent optional own field, where a value reaching it is built as State without pending yet

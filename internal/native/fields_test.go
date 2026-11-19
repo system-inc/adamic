@@ -231,9 +231,9 @@ func TestRegexProgramsKeepCheckedFieldReads(t *testing.T) {
 // Fixed layouts cannot yet create a missing optional property. Preserve the explicit
 // failure instead of turning this already unsupported write into an out-of-bounds store.
 // This is a safety fixture, not a claim of Node parity: Node creates the field. A literal typed
-// Optional that leaves missing out has no slot for it, so stage 0 refuses the write rather than
-// let it reach the runtime's missing-slot panic, which stays behind it in object.c. An object
-// reaching set with no such type is refused earlier, as optional widening.
+// Optional that leaves missing out has no slot for it, and it reaches the write, so stage 0 refuses
+// the write rather than let it reach the runtime's missing-slot panic, which stays behind it in
+// object.c. An object reaching set with no such type is refused earlier, as optional widening.
 func TestOptionalWriteMissingSlotRemainsChecked(t *testing.T) {
 	t.Parallel()
 	path, err := filepath.Abs("testdata/field_write_absent.a")
@@ -255,7 +255,7 @@ func TestOptionalWriteMissingSlotRemainsChecked(t *testing.T) {
 	}
 	_, err = lower.Lower(context.Background(), loaded)
 	var notYet *lower.NotYet
-	if !errors.As(err, &notYet) || !strings.Contains(err.Error(), "field_write_absent.a:5:2: stage 0 can't lower writing a possibly absent optional own field yet") {
+	if !errors.As(err, &notYet) || !strings.Contains(err.Error(), "field_write_absent.a:5:2: stage 0 can't lower writing a possibly absent optional own field, where a value reaching it is built as Optional without missing yet") {
 		t.Fatalf("missing-slot write must be refused before it reaches C, got %v", err)
 	}
 }

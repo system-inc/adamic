@@ -61,8 +61,10 @@ func TestKindUnionWriteLowers(t *testing.T) {
 }
 
 // What the ruling's fourth condition leaves NotYet, at compile time: a declared type carrying one of the cast's
-// kinds whose layout holds no slot for the field (the probe's w2, BareElement), or holds it optional, waits under
-// #x0nd1mh; one declaring the field readonly (Frozen) promised it never changes; two declared types sharing a kind
+// kinds whose layout holds no slot for the field (the probe's w2, BareElement) waits under #x0nd1mh; one holding
+// it optional (LooseElement) beside a member holding it required declares it apart, number | undefined, whose
+// representation isn't the number's (slot_writes_test.go pins a union whose members all hold it optional); one
+// declaring the field readonly (Frozen) promised it never changes; two declared types sharing a kind
 // and declaring the field with different types (the probe's w3, StringLiteral and NumericText, a valid program
 // Node runs, an interface or an intersection alias, or one declaring it unknown, whose storage isn't the number's) can't take the write at all. An element write stays as head 1 left it, since head 2 ruled a named
 // write alone; a delete is refused before it's judged, as any delete is.
@@ -109,7 +111,7 @@ console.log(String(odd.text + 1));
 	} {
 		want := map[string][]string{
 			"holds no":                          {"a write of flags through a kind-checked cast's union, where BareElement carries kind SyntaxKind.ElementAccessExpression but its layout holds no flags"},
-			"holds it optional":                 {"a write of flags through a kind-checked cast's union, where LooseElement carries kind SyntaxKind.ElementAccessExpression but its layout holds no flags"},
+			"holds it optional":                 {"a write of flags through a kind-checked cast's union, where ", " share kind SyntaxKind.ElementAccessExpression but declare flags as ", "LooseElement", "number | undefined"},
 			"declares it readonly":              {"a write of flags through a kind-checked cast's union, where Frozen carries kind SyntaxKind.ElementAccessExpression but declares flags readonly"},
 			"declared apart":                    {"a write of text through a kind-checked cast's union, where ", " share kind SyntaxKind.StringLiteral but declare text as ", "StringLiteral", "NumericText"},
 			"declared apart by an intersection": {"a write of text through a kind-checked cast's union, where StringLiteral and NumericText share kind SyntaxKind.StringLiteral but declare text as string and number"},
@@ -226,8 +228,8 @@ func judgeKindUnionReach(t *testing.T, rows []kindUnionReachRow) {
 // reach stops the write of a number into its string's slot. An annotated literal type, a kind written as const, an
 // inline intersection, a return's and a parameter's literal type, a literal whose kind widens to the open
 // SyntaxKind, and one cast `as Node`, whose layout holds no flags at all. Their controls, a literal declared as
-// ElementAccessExpression and one built with a number, lower and agree. Mutant: checkKindUnionWriteReach returns
-// at once, and widened kind lowers.
+// ElementAccessExpression and one built with a number, lower and agree. Mutant: checkSlotWrites returns at once,
+// and widened kind lowers.
 func TestKindUnionWriteReachesTypesNoDeclarationNames(t *testing.T) {
 	t.Parallel()
 	annotated := kindUnionReachBuiltAs + "{ readonly kind: SyntaxKind.ElementAccessExpression; readonly pos: number; flags: string; }, whose flags is string, not number"

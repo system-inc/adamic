@@ -1,4 +1,7 @@
-// a-check: refused writing a possibly absent optional own field
+// a-check: refused assigning a field of a union of differently held members
+// newLine is optional and options leaves it out, a write NotYet wherever no reaching object holds its slot. Since
+// that is judged once the program is lowered (checkSlotWrites, #w8nanzw), lowering goes on past the write, and the
+// union's differently held members stop setNewLine's write first, still at lowering.
 type OptionValue = string | number | boolean | undefined;
 interface Options {
 	newLine?: number;

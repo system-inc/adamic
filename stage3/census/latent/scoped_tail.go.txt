@@ -125,8 +125,6 @@ func (l *lowering) latentScopedStep(name string, node *ast.Node) error {
 			l.result.Functions[l.result.AsyncEntry-1].Source = source
 			l.result.MainModules = []ir.MainModule{{Module: source.Module, Statements: len(l.result.Main)}}
 		}
-	case "checkViewOptionalWrites":
-		return l.checkViewOptionalWrites()
 	case "checkHostMemberWrites":
 		return l.checkHostMemberWrites()
 	case "asyncPayloadFailures":
