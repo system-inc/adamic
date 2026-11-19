@@ -1,0 +1,26 @@
+// #4ysqm2m: append_lie.ts's twin in .a, refused at the same argument in the invariant-mutable rule's words.
+interface Source { readonly kind: number; }
+interface Target { readonly kind: number; readonly label?: string; }
+
+function append<T>(to: T[] | undefined, value: T | undefined): T[] | undefined {
+    if (value === undefined) {
+        return to;
+    }
+    if (to === undefined) {
+        return [value];
+    }
+    to.push(value);
+    return to;
+}
+function describe(target: Target): string {
+    return target.label ?? "absent";
+}
+const bare: Source = { kind: 1 };
+const lying = { kind: 2, label: 5 };
+const hidden: Source = lying;
+const held: Target[] = [];
+append(held, bare);
+append(held, hidden);
+for (const target of held) {
+    console.log(describe(target));
+}
