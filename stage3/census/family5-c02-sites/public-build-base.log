@@ -1,0 +1,49 @@
+Using /tmp/adamic-g02/base/Herebyfile.mjs to run local
+Starting generate-diagnostics
+> /opt/codex/runtimes/codex-primary-runtime/dependencies/node/bin/node scripts/processDiagnosticMessages.mjs src/compiler/diagnosticMessages.json
+Starting lib
+Starting shim-compile-cache-tsc
+Starting shim-compile-cache-tsserver
+Starting shim-compile-cache-typings-installer
+Starting bundle-watch-guard
+Starting build-watch-guard
+Starting generate-types-map
+Finished shim-compile-cache-typings-installer in 9ms
+Finished shim-compile-cache-tsc in 9ms
+Finished shim-compile-cache-tsserver in 9ms
+Finished generate-types-map in 10ms
+Reading diagnostics from src/compiler/diagnosticMessages.json
+Finished bundle-watch-guard in 27ms
+Finished lib in 64ms
+Finished generate-diagnostics in 71ms
+Starting localize
+> /opt/codex/runtimes/codex-primary-runtime/dependencies/node/bin/node scripts/generateLocalizedDiagnosticMessages.mjs src/loc/lcl built/local src/compiler/diagnosticMessages.generated.json
+Starting bundle-tsc
+Starting build-tsc
+Starting bundle-services
+Starting build-services
+Starting bundle-tsserver
+Starting build-tsserver
+Starting bundle-typings-installer
+Starting build-typings-installer
+Starting copy-built-local-diagnostic-messages
+Finished copy-built-local-diagnostic-messages in 5ms
+Finished bundle-typings-installer in 31ms
+Finished bundle-tsserver in 33ms
+Finished bundle-tsc in 639ms
+Finished bundle-services in 663ms
+Finished localize in 900ms
+Finished build-watch-guard in 10.4s
+Finished build-tsc in 10.3s
+Finished build-services in 10.3s
+Finished build-tsserver in 10.3s
+Finished build-typings-installer in 10.3s
+Starting dts-services
+> /opt/codex/runtimes/codex-primary-runtime/dependencies/node/bin/node ./scripts/dtsBundler.mjs --entrypoint ./built/local/typescript/typescript.d.ts --output ./built/local/typescript.d.ts
+Starting lssl
+Finished lssl in 2ms
+Bundling ./built/local/typescript/typescript.d.ts to ./built/local/typescript.d.ts and ./built/local/typescript.internal.d.ts
+Finished dts-services in 1.3s
+Starting dts-lssl
+Finished dts-lssl in 1ms
+Completed local in 11.7s

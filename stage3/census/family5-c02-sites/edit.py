@@ -15,14 +15,14 @@ def update(path, edits):
 
 
 compiler = Path(sys.argv[1]) / "src/compiler"
-line_view = 'Pick<SourceFileLike, "text" | "lineMap">'
+line_view = "LineMapSource"
 update(compiler / "scanner.ts", [
-    ("getLineStarts(sourceFile: SourceFileLike)", f"getLineStarts(sourceFile: {line_view})"),
     ("getLinesBetweenPositions(sourceFile: SourceFileLike,", f"getLinesBetweenPositions(sourceFile: {line_view},"),
 ])
 update(compiler / "utilities.ts", [
+    ("    type SourceFileLike,", "    type LineMapSource, type SourceFileLike,"),
     ("getEndLinePosition(line: number, sourceFile: SourceFileLike)", f"getEndLinePosition(line: number, sourceFile: {line_view})"),
-    ("getTokenPosOfNode(node: Node, sourceFile?: SourceFileLike,", 'getTokenPosOfNode(node: Node, sourceFile?: Pick<SourceFileLike, "text">,'),
+    ("getTokenPosOfNode(node: Node, sourceFile?: SourceFileLike,", 'getTokenPosOfNode(node: Node, sourceFile?: { readonly text: string },'),
 ])
 update(compiler / "factory/nodeChildren.ts", [
     ("    type SourceFileLike,\r\n", ""),

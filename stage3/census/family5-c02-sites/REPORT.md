@@ -6,8 +6,8 @@ The site IDs and coordinates below come from the scout at `464502ff430b1c88b2e79
 
 ## Site audit
 
-- **Text** is `Pick<SourceFileLike, "text">`. The token reader inspects text and may use the file as a cache key or recurse.
-- **Line map** is `Pick<SourceFileLike, "text" | "lineMap">`. `getLineStarts` reads or fills the line map from text. Both internal callers, `getEndLinePosition` and `getLinesBetweenPositions`, need this same view.
+- **Text** is `{ readonly text: string }`. The token reader inspects text and may use the file as a cache key or recurse.
+- **Line map** is `LineMapSource`. `getLineStarts` reads or fills the line map from text. The pinned main already uses this view in `getLineStarts`. Both internal callers, `getEndLinePosition` and `getLinesBetweenPositions`, need this same view.
 - **Identity** is `object`. The node-children cache uses these parameters solely as WeakMap keys. Its key type and all four helpers use the same identity view after the edit. The source remains the same object.
 - The original parameter in each argument row is `SourceFileLike`, optional for `getTokenPosOfNode`. S122 has the corresponding optional assignment slot.
 

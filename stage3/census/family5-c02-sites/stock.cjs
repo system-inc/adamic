@@ -16,6 +16,7 @@ if (ds.length || parsed.fileNames.length !== 79) process.exit(1);
 const emitted = {};
 const emitProgram = ts.createProgram(parsed.fileNames, {
     ...options, noEmit: false, composite: false, incremental: false,
+    emitDeclarationOnly: false, isolatedDeclarations: false,
     declaration: false, declarationMap: false, sourceMap: false, inlineSourceMap: false,
     rewriteRelativeImportExtensions: true,
     outDir: path.join(root, 'stock-js'), rootDir: path.join(root, 'src'),

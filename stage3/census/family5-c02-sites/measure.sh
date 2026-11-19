@@ -12,8 +12,10 @@ run() {
     return "$code"
 }
 while [[ ! -f $root/base/patch-set.md ]]; do sleep 2; done
-run scratch-copy cp -a --reflink=auto "$root/base" "$root/edit" || exit
-run scratch-edit python3 "$evidence/edit.py" "$root/edit" || exit
+if [[ ! -d $root/edit ]]; then
+    run scratch-copy cp -a --reflink=auto "$root/base" "$root/edit" || exit
+fi
+run scratch-edit-retry python3 "$evidence/edit.py" "$root/edit" || exit
 for mode in project strict; do
     for side in base edit; do
         strict=0

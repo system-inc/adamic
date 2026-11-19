@@ -1,0 +1,7 @@
+Traceback (most recent call last):
+  File "/tmp/adamic-g02/evidence/stage3/census/family5-c02-sites/edit.py", line 19, in <module>
+    update(compiler / "scanner.ts", [
+  File "/tmp/adamic-g02/evidence/stage3/census/family5-c02-sites/edit.py", line 12, in update
+    assert updated.count(before) == 1, (path, before)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: (PosixPath('/tmp/adamic-g02/edit/src/compiler/scanner.ts'), b'getLineStarts(sourceFile: SourceFileLike)')
