@@ -175,15 +175,26 @@ sandboxed_npm() {
 # sandboxed_products <package>...: settles an adamic tree's products before a command reads them, as the lay kit's
 # --products does on a house box (loom's contract/proof/lay.sh): a unit test reads only products built ahead and never
 # builds one, and a sandboxed job's build cache starts empty. Each package (./<path> or github.com/system-inc/adamic/<path>)
-# brings every package cloud/fast-gate/compiler-dependencies.json lists under its path, and one go test -run
-# '^TestProduct_' runs over the union into ADAMIC_BUILD_CACHE_DIR. Nothing of the file is ever run: it's read as JSON.
+# brings every package cloud/fast-gate/compiler-dependencies.json lists under its path, and each package's product tests
+# are listed with go test -list. cloud/fast-gate/product-order.json's waits put them in waves, and each wave runs a
+# package at a time with -run '^(<test>|...)$' into ADAMIC_BUILD_CACHE_DIR; the first run that fails stops every run after
+# it. One go test over the whole union ran its packages at once, so internal/worker's TestProduct_WorkerWasm_005 got there
+# before TestProduct_WorkerWasmTransform had built what it reads.
+# A wait on a test in a package outside the union brings that test and whatever it waits on in turn, though not the rest
+# of its package's product tests (internal/oracle has over a hundred, and cmd/adamic's and internal/lower's wait on
+# seven): stage1/cohere/estree's product tests wait on stage1/cohere/estree/oracles', which compiler-dependencies.json
+# doesn't list under it. Here it parts from the kit, whose waits stop at the union. A wait on a test its package doesn't
+# list is dropped, as the kit drops it, and waits that hold a cycle refuse. Nothing of either file is ever run: each is
+# read as JSON, and a test's name is held to Go's identifier characters before it reaches -run.
 # It runs with -timeout 0, so the job's own ceiling is the only clock: go's default 10 minutes killed internal/oracle's
 # products before they settled on Lunatic's 8 cores (Library's J-1xphvcc, routed by Runtime on #jobs), where a 64-core
 # rented machine settles them inside it.
+# The kit runs its products under the gate's variables (ADAMIC_GATE_UNCACHED and the rest); this runs without them, as
+# the job's command does, since products keyed under them might not be the ones the command's tests read.
 sandboxed_products() {
 	[ $# -gt 0 ] || sandboxedJobFail "sandboxed_products names no package" || return 1
-	local packages
-	packages=$(python3 -I - cloud/fast-gate/compiler-dependencies.json "$@" << 'PYTHON'
+	local union
+	union=$(python3 -I - cloud/fast-gate/compiler-dependencies.json "$@" << 'PYTHON'
 import json, os, re, sys
 part = re.compile(r'^[A-Za-z0-9_][A-Za-z0-9_.-]*$')
 def path_of(name):
@@ -205,12 +216,98 @@ for name in sys.argv[2:]:
     union.add(path)
     for dependency in listed.get(path, []):
         union.add(path_of(dependency))
-print(' '.join('./' + path for path in sorted(union)))
+print(' '.join(sorted(union)))
 PYTHON
 	) || sandboxedJobFail "couldn't read the products to settle" || return 1
 	sandboxed_typescript_source || return 1
-	# The package list is held to plain paths above, so it splits as words here.
+	# The union's packages are listed first, then each package a wait reaches outside what's listed, until no wait does.
+	# Every path is held to plain parts, by the reader above or the one below, so the lists split as words here.
+	local unlisted="$union" listed="" package listing line tests=() plan productTest='^TestProduct_[A-Za-z0-9_]*$'
+	while [ -n "$unlisted" ]; do
+		for package in $unlisted; do
+			listing=$(go test -timeout 0 -list '^TestProduct_' "./$package/" < /dev/null) || {
+				printf '%s\n' "$listing" >&2
+				sandboxedJobFail "go test -list '^TestProduct_' ./$package/ failed"
+				return 1
+			}
+			# go's own lines (ok, no test files) are left: only a product test's name is taken.
+			while IFS= read -r line; do
+				case "$line" in
+					TestProduct_*)
+						[[ $line =~ $productTest ]] || sandboxedJobFail "./$package/ lists a product test named $(printf '%q' "$line")" || return 1
+						tests+=("$package $line")
+						;;
+				esac
+			done <<< "$listing"
+			listed="$listed $package"
+		done
+		# The plan is either `list <path>` lines, the packages the waits reach that aren't listed yet, or one
+		# `settle <waves> <tests>` line and a `wave <wave> <path> <expression>` line a package a wave, in order.
+		plan=$(python3 -I - cloud/fast-gate/product-order.json "$union" "$listed" "${tests[@]}" << 'PYTHON'
+import json, os, re, sys
+order, union, listed, present = sys.argv[1], set(sys.argv[2].split()), set(sys.argv[3].split()), set(sys.argv[4:])
+part = '[A-Za-z0-9_][A-Za-z0-9_.-]*'
+shape = re.compile('^%s(/%s)* TestProduct_[A-Za-z0-9_]*$' % (part, part))
+waits = {}
+if os.path.exists(order):
+    waits = json.load(open(order)).get('waits')
+    if not isinstance(waits, dict):
+        sys.exit('sandboxed-job: %s holds no waits object' % order)
+def waits_of(test):
+    named = waits.get(test, [])
+    if not isinstance(named, list) or not all(isinstance(wait, str) and shape.match(wait) for wait in named):
+        sys.exit('sandboxed-job: %s waits[%s] is no list of <path> TestProduct_<name>' % (order, json.dumps(test)))
+    return named
+# Every product test of the union, then each test one of them waits on, however far. A wait into a package not yet
+# listed asks for its listing; a wait on a test its package doesn't list, or into a directory the tree lacks, is dropped.
+chosen = set(test for test in present if test.split(' ')[0] in union)
+reaching = sorted(chosen)
+unlisted = set()
+while reaching:
+    for wait in waits_of(reaching.pop()):
+        package = wait.split(' ')[0]
+        if package not in listed:
+            if os.path.isdir(package):
+                unlisted.add(package)
+        elif wait in present and wait not in chosen:
+            chosen.add(wait)
+            reaching.append(wait)
+if unlisted:
+    for package in sorted(unlisted):
+        print('list ' + package)
+    sys.exit(0)
+needs = {test: set(wait for wait in waits_of(test) if wait in chosen) for test in chosen}
+placed, left, waves = set(), sorted(chosen), []
+while left:
+    wave = [test for test in left if needs[test] <= placed]
+    if not wave:
+        sys.exit('sandboxed-job: %s waits hold a cycle, %d tests never free to run (%s)' % (order, len(left), ', '.join(left[:6]) + (', ...' if len(left) > 6 else '')))
+    byPackage = {}
+    for test in wave:
+        package, name = test.split(' ', 1)
+        byPackage.setdefault(package, []).append(name)
+    waves.append(byPackage)
+    placed.update(wave)
+    left = [test for test in left if test not in placed]
+print('settle %d %d' % (len(waves), len(chosen)))
+for number, byPackage in enumerate(waves, 1):
+    for package in sorted(byPackage):
+        print('wave %d %s ^(%s)$' % (number, package, '|'.join(sorted(byPackage[package]))))
+PYTHON
+		) || sandboxedJobFail "couldn't put the products in waves" || return 1
+		unlisted=$(sed -n 's/^list //p' <<< "$plan")
+	done
+	local kind first second third waves=0 settled=0
+	while read -r kind first second third; do
+		case "$kind" in
+			settle) waves=$first settled=$second ;;
+			wave)
+				echo "sandboxed-job: products: wave $first of $waves: go test -count=1 -timeout 0 -run '$third' ./$second/" >&2
+				go test -count=1 -timeout 0 -run "$third" "./$second/" < /dev/null >&2 ||
+					sandboxedJobFail "the products didn't settle: wave $first of $waves failed in ./$second/, and nothing after it ran" || return 1
+				;;
+		esac
+	done <<< "$plan"
 	# shellcheck disable=SC2086
-	go test -count=1 -timeout 0 -run '^TestProduct_' $packages < /dev/null >&2 || sandboxedJobFail "the products didn't settle over $packages" || return 1
-	echo "sandboxed-job: products settled for $(echo $packages | wc -w | tr -d ' ') packages"
+	echo "sandboxed-job: products settled for $(echo $listed | wc -w | tr -d ' ') packages in $waves waves, $settled product tests"
 }
