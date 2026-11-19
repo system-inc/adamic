@@ -64,6 +64,12 @@ var loweringFieldPolicies = map[string]loweringFieldPolicy{
 	"inspectorRequireKnown":     programFact,
 	"inspectorRequirePresent":   programFact,
 	"inspectorSkippedContracts": speculativeState, // Map and paired IR indices roll back together.
+	// rulings.md:72's relation views (#0b9xqhh). The refusal pass records the entries, and a snapshot owns
+	// its copy: never carried into another program's lowering, whose refusal pass records its own.
+	"relationViews": speculativeState,
+	// The views a lowering took roll back with the IR that lowering built, so a rolled-back view leaves its
+	// entry untaken and checkRelationViewsTaken refuses it unless a surviving lowering views it again.
+	"relationViewsTaken": speculativeState,
 	// Scoped to one optionalIntrinsic invocation; snapshots preserve its immutable AST identity.
 	// It is not a carried program fact.
 	"optionalReceiverCall": scopedASTIdentity,
