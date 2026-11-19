@@ -31,7 +31,13 @@ import (
 // It reads only syntax and asks the checker only for symbols, never for a type, so it instantiates
 // nothing itself. That's why it ends: the graph is as large as the program's type parameters, however
 // deep the types the program describes would go.
-func (l *lowering) expansiveGenerics(modules []*ast.SourceFile) error {
+//
+// expansiveGenerics runs it, or takes the stop a latent census run already walked to over the same
+// checker and program (expansive_generics_cache.go, #bmqm0k1).
+func (l *lowering) walkExpansiveGenerics(modules []*ast.SourceFile) error {
+	if counter := expansiveGenericsWalks.Load(); counter != nil {
+		counter.Add(1)
+	}
 	graph := &expansiveGraph{l: l, walked: map[*ast.SourceFile]bool{}, successors: map[expansiveParameter][]expansiveParameter{}}
 	for _, module := range modules {
 		graph.enqueue(module)

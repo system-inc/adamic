@@ -479,6 +479,10 @@ type lowering struct {
 	// production leaves it nil, and each lowering walks (accessor_names_cache.go, #hjspb3b). accessorNames,
 	// below, is the answer this lowering holds.
 	accessorNamesHeld *accessorNamesCache
+	// expansiveGenericsHeld is walkExpansiveGenerics' stop by checker and program, shared by every lowering a latent
+	// run makes; production leaves it nil, and each lowering walks (expansive_generics_cache.go, #bmqm0k1). It's
+	// Held because expansiveGenerics is the method that reads it.
+	expansiveGenericsHeld *expansiveGenericsCache
 	// overloadCheckCalls holds every overload result check function (overloadResultCheck), whose call is
 	// where its value enters a view (checkViewWidenedReads).
 	overloadCheckCalls map[int]bool
