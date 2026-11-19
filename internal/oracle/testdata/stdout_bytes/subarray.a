@@ -1,0 +1,6 @@
+// #vndytkn: a view writes its own bytes, from its offset in its owner.
+import process from 'node:process';
+
+const bytes = new Uint8Array([65, 66, 67, 68, 69, 10]);
+process.stdout.write(bytes.subarray(1, 3));
+process.stdout.write(bytes.subarray(5));
