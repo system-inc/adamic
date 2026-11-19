@@ -1,2 +1,7 @@
 # The files the input fixtures read are bytes, malformed UTF-8 among them: never converted.
 internal/oracle/testdata/reading/** -text
+
+# The Benchmarks Game's programs and licenses, vendored byte for byte and checked by sha256
+# (bench/game/README.md): never converted. Their LICENSE files end their lines in CRLF.
+bench/game/LICENSE -text
+bench/game/*/* -text
