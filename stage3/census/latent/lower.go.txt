@@ -350,6 +350,9 @@ func latentRun(ctx context.Context, program *load.Program, emit func(LatentFile)
 	// lowering, which each unit's pre-pass walked every module of the program for (viewed_elements_cache.go, #hjspb3b:
 	// 284 s of the entry census's 1,413 s of CPU).
 	viewedElements := &viewedElementsCache{}
+	// And one cache of noteInheritance's answer, a function of the checker and the program alone, which each unit's
+	// pre-pass walked every module of the program for (inheritance_cache.go, #hjspb3b: 42 s of the entry census's CPU).
+	inheritance := &inheritanceCache{}
 	var facts *latentProgramFacts
  var modules []*ast.SourceFile
 	for _, file := range program.Files() {
@@ -358,7 +361,7 @@ func latentRun(ctx context.Context, program *load.Program, emit func(LatentFile)
 		record := LatentFile{Measurement: LatentMeasurementLabel, File: program.FileName(file), Declarations: latentDeclarations(program, file), Units: []LatentUnit{}}
 		checker, release := program.Checker(ctx, file)
 		fresh := func() *lowering {
-			return &lowering{moduleFormat: moduleformat.Resolve(ModuleFormatCommonJSBundle, ModuleFormatEcmaScript), program: program, checker: checker, result: &ir.Program{}, this: -1, functionIndex: -1, sourceIdentities: identities, typeStrings: typeStrings, numericEnums: numericEnums, viewSites: viewSites, placeholderSlots: placeholderSlots, viewedElements: viewedElements}
+			return &lowering{moduleFormat: moduleformat.Resolve(ModuleFormatCommonJSBundle, ModuleFormatEcmaScript), program: program, checker: checker, result: &ir.Program{}, this: -1, functionIndex: -1, sourceIdentities: identities, typeStrings: typeStrings, numericEnums: numericEnums, viewSites: viewSites, placeholderSlots: placeholderSlots, viewedElements: viewedElements, inheritance: inheritance}
 		}
 		func() {
 			defer func() {

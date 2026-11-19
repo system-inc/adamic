@@ -461,6 +461,9 @@ type lowering struct {
 	// viewedElements is walkViewedElements' answer by checker and program, shared by every lowering a latent
 	// run makes; production leaves it nil, and each lowering walks (viewed_elements_cache.go, #hjspb3b).
 	viewedElements *viewedElementsCache
+	// inheritance is walkInheritance's answer by checker and program, shared by every lowering a latent run
+	// makes; production leaves it nil, and each lowering walks (inheritance_cache.go, #hjspb3b).
+	inheritance *inheritanceCache
 	// overloadCheckCalls holds every overload result check function (overloadResultCheck), whose call is
 	// where its value enters a view (checkViewWidenedReads).
 	overloadCheckCalls map[int]bool
