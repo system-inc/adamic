@@ -70,6 +70,7 @@ func TestRefusalRulesRunInOrder(t *testing.T) {
 		"1975 recordDeclaredKeyRefusal",
 		"2000 recordStorageView",
 		"2050 classDeadZoneGap",
+		"2075 classMergeRefusal",
 		"2100 namespaceRefusal",
 		"2200 ambientRefusal",
 		"2250 hostBindingRefusal",
