@@ -13,14 +13,17 @@ import (
 // reads agree with Node on both backends with nothing leaked, the cast back to the writable record stays refused,
 // and a parameter handed a record and then an enumeration's object stops at the second call by name (Runtime's
 // must). B2's road, an enumeration's object put first into such a type, keeps its storage: enum_views' tests hold
-// it. Mutants: the classification never answering a record, and readonly_honest.ts stops at its view again; the
-// readonly covariance dropped from widened, and it's refused as a widening.
+// it. A readonly record seen as a writable one is a widening, since it may hold a narrower record
+// (readonly_writable.ts). Mutants: the classification never answering a record, and readonly_honest.ts stops at
+// its view again; the readonly covariance dropped from widened, and it's refused as a widening; the way back
+// admitted, and readonly_writable.ts lowers.
 func TestReadonlyRecordViews(t *testing.T) {
 	t.Parallel()
 	for name, view := range map[string]struct{ node, notYet, refused, at string }{
-		"readonly_honest.ts": {node: "watchFile=number,excludeFiles=object,synchronous=boolean:true\nwatchFile=number,excludeFiles=object,synchronous=boolean:false\n"},
-		"readonly_leak.ts":   {node: "4\n", refused: "(adamic/no-unchecked-cast)"},
-		"readonly_mixed.ts":  {node: "3\n4\n", notYet: "is held as a record, since ", at: ":18:"},
+		"readonly_honest.ts":   {node: "watchFile=number,excludeFiles=object,synchronous=boolean:true\nwatchFile=number,excludeFiles=object,synchronous=boolean:false\n"},
+		"readonly_leak.ts":     {node: "4\n", refused: "(adamic/no-unchecked-cast)"},
+		"readonly_mixed.ts":    {node: "3\n4\n", notYet: "is held as a record, since ", at: ":18:"},
+		"readonly_writable.ts": {node: "object\n", refused: "seen as OptionsBase, which can write OptionsBase where Readonly<OptionsBase> is read"},
 	} {
 		t.Run(name, func(t *testing.T) {
 			t.Parallel()

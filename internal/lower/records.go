@@ -548,7 +548,7 @@ func (l *lowering) recordStorageView(node *ast.Node) error {
 		if literal && bounded || walk.bounded {
 			return l.recordStorageBounded(node, own, target)
 		}
-		return l.notYet(node, "a "+l.checker.TypeToString(own)+" seen as "+l.checker.TypeToString(target)+" (fixed objects and records have different storage; copy explicitly"+l.readonlyRecordReason(target)+")")
+		return l.notYet(node, "a "+l.checker.TypeToString(own)+" seen as "+l.checker.TypeToString(target)+" (fixed objects and records have different storage; copy explicitly"+l.readonlyRecordReason(target, source)+")")
 	}
 	return nil
 }

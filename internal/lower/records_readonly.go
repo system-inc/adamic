@@ -133,17 +133,17 @@ func (l *lowering) readonlySourceKind(t *checker.Type) readonlyKind {
 	return kind
 }
 
-// readonlyRecordReason names, for the storage view's stop, why a readonly string-index type in target holds
-// what it holds: the site that decided it, and what that site put there. It's "" when no member of target
-// is a decided readonly string-index type.
-func (l *lowering) readonlyRecordReason(target *checker.Type) string {
+// readonlyRecordReason names, for the storage view's stop of source, why a readonly string-index type in target
+// holds what it holds: the site that decided it, and what that site put there. It's "" when no member of target
+// is a decided readonly string-index type, or when source is the site that decided it.
+func (l *lowering) readonlyRecordReason(target *checker.Type, source *ast.Node) string {
 	decisions := l.readonlyDecisions()
 	if target == nil || decisions == nil {
 		return ""
 	}
 	for _, member := range l.definedMembers(l.concrete(l.checker.GetNonNullableType(target))) {
 		decision, decided := decisions[l.concrete(member)]
-		if !decided {
+		if !decided || decision.site == source {
 			continue
 		}
 		held := "a fixed object"
