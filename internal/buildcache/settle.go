@@ -649,16 +649,28 @@ func (facts *traceFacts) classifyPath(name string, kinds int) classed {
 	if real := resolved(name); real != "" && real != name {
 		return facts.classifyPath(real, kinds)
 	}
+	// Home and the temporary places nest either way, so a path is classed by the deepest of them that holds it, never the
+	// first matched (Loom's ruling). A sealed image's home is /tmp/home, under a temporary place: matched first, every
+	// home read was temp's, a content read refused as temp not made by this run rather than home's, and a lookup kept as
+	// nothing, which no key then held. A keeper box's job tmpdir, ~/.cache/loom-keeper-tmp, is a temporary place under
+	// home: what the job's tools leave there stays temp, never a ~/ entry. Of two places that both hold a path one holds
+	// the other, so the longer is the deeper. A home that is itself a temporary place is home's (the ruling's tie): a
+	// lookup there keeps its ~/ entry rather than nothing. With no home (UserHomeDir failed) home holds nothing, and the
+	// temporary places class a path alone, as they always did (#e1wpvc7).
+	deepest := -1
 	for _, place := range facts.temporary {
-		if under(name, place) {
-			// What the build's own processes made there never reaches here (record leaves it out). A directory opened
-			// without O_DIRECTORY reads as content, but a directory has none (what it lists is getdents', its own read):
-			// go's os.RemoveAll opens the temporary directory so to remove what the build made in it.
-			if kinds&(readContent|readExec) != 0 && !isDirectory(name) {
-				return classed{refusal + "temp not made by this run", name}
-			}
-			return classed{}
+		if length := len(strings.TrimSuffix(place, "/")); under(name, place) && length > deepest {
+			deepest = length
 		}
+	}
+	if deepest >= 0 && !(under(name, facts.home) && len(strings.TrimSuffix(facts.home, "/")) >= deepest) {
+		// What the build's own processes made there never reaches here (record leaves it out). A directory opened
+		// without O_DIRECTORY reads as content, but a directory has none (what it lists is getdents', its own read):
+		// go's os.RemoveAll opens the temporary directory so to remove what the build made in it.
+		if kinds&(readContent|readExec) != 0 && !isDirectory(name) {
+			return classed{refusal + "temp not made by this run", name}
+		}
+		return classed{}
 	}
 	if name == "/" {
 		return classed{}
