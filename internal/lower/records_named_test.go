@@ -355,3 +355,45 @@ func ruleOf(err error) string {
 	}
 	return stoppedFor(err)
 }
+
+// #6c4swvt's record-to-fixed direction, piece 1 (addedContractRead): in .ts, a record seen as one declaring a
+// named property its own values don't promise passes the storage view where the property's read is checked and
+// it's readonly or fits the record's index, and the optional-widening rule then judges it, as it does every
+// structural source missing an optional property. The writable name whose type the record's index can't hold
+// stops at the storage view itself, not at a later rule. Mutants: take addedContractRead out of
+// sameRecordNamedContracts, and the honest views stop at the storage view again; drop its readonly-or-fits
+// condition, and the writable lie gets past it.
+func TestRecordViewAddedContracts(t *testing.T) {
+	t.Parallel()
+	const index = "string | number | boolean | undefined"
+	for name, view := range map[string]struct{ source, refused, notYet string }{
+		"writable": {
+			source:  "interface Options { [option: string]: " + index + "; strict?: boolean; }\nconst bag: Record<string, " + index + "> = { strict: true };\nconst options: Options = bag;\nconsole.log(String(options.strict));\n",
+			refused: "optional property strict in Options absent from structural source Record<string, " + index + ">, which can hide fields",
+		},
+		"readonly": {
+			source:  "interface Options { [option: string]: " + index + "; readonly strict?: boolean; }\nconst bag: Record<string, " + index + "> = { strict: true };\nconst options: Options = bag;\nconsole.log(String(options.strict));\n",
+			refused: "optional property strict in Options absent from structural source Record<string, " + index + ">, which can hide fields",
+		},
+		"writable beyond the record's index": {
+			source: "interface Wide { [option: string]: " + index + "; strict?: boolean; }\nconst bag: Record<string, string | number | undefined> = {};\nconst wide: Wide = bag;\nconsole.log(String(wide.strict));\n",
+			notYet: "a Record<string, string | number | undefined> seen as Wide (fixed objects and records have different storage; copy explicitly)",
+		},
+	} {
+		t.Run(name, func(t *testing.T) {
+			t.Parallel()
+			_, err := lowerSourceAs(t, view.source, ".ts")
+			if view.notYet != "" {
+				var notYet *NotYet
+				if !errors.As(err, &notYet) || notYet.What != view.notYet {
+					t.Fatalf("want NotYet %q at the storage view, got %v", view.notYet, err)
+				}
+				return
+			}
+			var refused *Refused
+			if !errors.As(err, &refused) || !strings.Contains(err.Error(), view.refused) {
+				t.Fatalf("want the optional-widening refusal %q, got %v", view.refused, err)
+			}
+		})
+	}
+}
