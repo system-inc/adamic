@@ -40,7 +40,11 @@ func TestNamespaceLimitsStayLoud(t *testing.T) {
 		{"explicit receiver", "namespace N {export const x=1; export function read(this:{readonly x:number}):number{return 1;}}", "explicit namespace-function"},
 	} {
 		t.Run(probe.name, func(t *testing.T) {
-			_, err := lowerSource(t, probe.source)
+			extension := ".a"
+			if probe.name == "class merge" {
+				extension = ".ts"
+			}
+			_, err := lowerSourceAs(t, probe.source, extension)
 			var notYet *NotYet
 			if !errors.As(err, &notYet) || !strings.Contains(err.Error(), probe.reason) {
 				t.Fatalf("got %v, want NotYet %s", err, probe.reason)
@@ -84,7 +88,7 @@ func TestDebugNamespaceMergedCapabilities(t *testing.T) {
 	t.Parallel()
 	for _, test := range []struct{ name, reason string }{
 		{"debug_log.a", ""},
-		{"class_merge.a", "merged with a runtime value"},
+		{"class_merge.a", "a namespace declaration merged into class Logger, adding member level"},
 		{"debug_class.a", ""},
 	} {
 		t.Run(test.name, func(t *testing.T) {
@@ -98,9 +102,9 @@ func TestDebugNamespaceMergedCapabilities(t *testing.T) {
 				return
 			}
 			_, err = lowerSource(t, string(source))
-			var notYet *NotYet
-			if !errors.As(err, &notYet) || !strings.Contains(err.Error(), test.reason) {
-				t.Fatalf("got %v, want NotYet %s", err, test.reason)
+			var refused *Refused
+			if !errors.As(err, &refused) || !strings.Contains(err.Error(), test.reason) {
+				t.Fatalf("got %v, want Refused %s", err, test.reason)
 			}
 		})
 	}

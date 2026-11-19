@@ -28,11 +28,11 @@ func init() {
 
 func TestMergedFieldAdamicUnusedRefused(t *testing.T) {
 	t.Parallel()
-	rulingRefusal(t, "merge_unused.a", false, "class Missing merged with an interface promises field promised that the class does not initialize; declare and initialize promised in class Missing, or use a separate interface with a checked view")
+	rulingRefusal(t, "merge_unused.a", false, "an interface declaration merged into class Missing, adding member promised; declare promised on the class itself")
 }
 func TestMergedFieldAdamicReadRefused(t *testing.T) {
 	t.Parallel()
-	rulingRefusal(t, "merge_missing.a", false, "class Missing merged with an interface promises field promised that the class does not initialize; declare and initialize promised in class Missing, or use a separate interface with a checked view")
+	rulingRefusal(t, "merge_missing.a", false, "an interface declaration merged into class Missing, adding member promised; declare promised on the class itself")
 }
 func TestMergedFieldTypeScriptUnusedAccepted(t *testing.T) {
 	t.Parallel()
@@ -77,5 +77,5 @@ func TestMergedFieldTypeScriptInitializedAgreesWithNode(t *testing.T) {
 
 func TestMergedFieldAdamicComputedRefused(t *testing.T) {
 	t.Parallel()
-	rulingRefusal(t, "merge_missing_computed.a", false, "class Missing merged with an interface promises field promised that the class does not initialize; declare and initialize promised in class Missing, or use a separate interface with a checked view")
+	rulingRefusal(t, "merge_missing_computed.a", false, "an interface declaration merged into class Missing, adding member promised; declare promised on the class itself")
 }
