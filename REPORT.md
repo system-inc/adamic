@@ -12,6 +12,7 @@ Exact reason is “an object refinement using an open numeric enum as a literal 
 | Optimizer’s tsc probe | 759 reported | 726 reported | — | — |
 | Compiler directory | 587 | 557 | 764 | 730 |
 | tsc.ts entry | 587 | 557 | 764 | 730 |
+| 79 ordinary root first stops | 0 | 0 | 0 | 0 |
 
 Raw counts retain distinct diagnostic renderings at each position. Distinct counts use `stage3/census/pair` to collapse a receiver’s contiguous access chain per reason. The directory pass loads the compiler sources as roots, and the entry pass loads the import closure of `src/tsc/tsc.ts`.
 
@@ -67,10 +68,10 @@ A separate head overlay logged the source whose `castAssignable` check failed, t
 
 ## 5. First stops across all 79 roots
 
+0 of 79 ordinary per-root first stops changed.
 
-## Incomplete evidence
+The meter uses `stage3/census/tool` for this table. Both streams contain 79 TypeScript roots, three non-source rows and one whole-program row. Both sides have 2 accepted roots, 76 `NotYet` stops and 1 `Refused` stop. All 79 root outcomes, positions, reasons, fixes and diagnostics match.
 
-- Ordinary 79-root comparison incomplete (waiting for roots-head.jsonl.gz).
-- Scan-all comparison incomplete (waiting for scan-all-base.jsonl.gz).
+Both independently built scan-all binaries completed the `corePublic.ts` control root with identical output and zero observations. The separate full scan-all sweep was stopped while its first two roots were still running after more than two minutes. The repository's scan-all receipt records 367 seconds for the `sys.ts` closure. That continuation sweep has a different stopping rule from the completed per-root meter table.
 
 Raw streams and unit timings are under [evidence/](evidence/).
