@@ -461,6 +461,9 @@ type lowering struct {
 	// placeholderSlots is notePlaceholderSlots' answer by checker and program, shared by every lowering a
 	// latent run makes; production leaves it nil, and each lowering walks (placeholder.go, #6xt6p1f).
 	placeholderSlots *placeholderSlotCache
+	// viewedElements is walkViewedElements' answer by checker and program, shared by every lowering a latent
+	// run makes; production leaves it nil, and each lowering walks (viewed_elements_cache.go, #hjspb3b).
+	viewedElements *viewedElementsCache
 	// overloadCheckCalls holds every overload result check function (overloadResultCheck), whose call is
 	// where its value enters a view (checkViewWidenedReads).
 	overloadCheckCalls map[int]bool
