@@ -1,0 +1,3 @@
+// #1trc7d3: an alias read off a namespace import stops at an older NotYet, unrelated to the alias.
+import * as module from './out.a';
+module.out.write('w\n');

@@ -1,0 +1,6 @@
+// #1trc7d3 on #vndytkn: the alias writes a Uint8Array's bytes as process.stdout does.
+import process from 'node:process';
+
+const out = process.stdout;
+out.write(new Uint8Array([0x80, 0xff, 0x0a]));
+out.write('after\n');

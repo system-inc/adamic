@@ -1,0 +1,3 @@
+// #1trc7d3: an alias imported through a re-export resolves to out.a's declaration.
+import { out } from './reexport.a';
+out.write('z\n');

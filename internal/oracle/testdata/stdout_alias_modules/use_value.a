@@ -1,0 +1,4 @@
+// #1trc7d3: an imported alias used as a value stops by name, as a local one does.
+import { out } from './out.a';
+const again = out;
+again.write('y\n');
