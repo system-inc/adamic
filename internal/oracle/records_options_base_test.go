@@ -4,6 +4,7 @@ import (
 	"errors"
 	"fmt"
 	"path/filepath"
+	"strings"
 	"testing"
 
 	"github.com/system-inc/adamic/internal/lower"
@@ -473,6 +474,62 @@ func TestOptionsBaseRefusedInAdamic(t *testing.T) {
 			var refused *lower.Refused
 			if !errors.As(err, &refused) || err.Error() != path+want {
 				t.Fatalf("want the view refused, %q, got %v", want, err)
+			}
+		})
+	}
+}
+
+// #6c4swvt's record-to-fixed direction, piece 2 (Runtime's ruling): a record seen in .ts as Options or
+// WatchOptions, which declare optional names the record's own values don't promise, hides nothing under them,
+// since each named read through the view is checked by its declared type (the optional-widening rule's
+// recordAddedNameChecked, on addedContractRead's conditions). The honest views agree with Node on both backends,
+// with nothing leaked, at tsc's three shapes: the view itself, a parse result whose options field is seen so
+// (commandLineParser.ts:2129) and a MapLike in a conditional's branch seen as WatchOptions (3100). A lie under
+// an added name stops at its read on both backends alike, and a view through a parameter still stops at the
+// view. Mutant: recordAddedNameChecked returning false, and every program here but the parameter's is refused
+// as one that can hide fields.
+func TestOptionsBaseAddedNames(t *testing.T) {
+	t.Parallel()
+	const strict = "adamic: panic: field read failed: %s is not a boolean; expected boolean, found string, which a computed-key or index-signature write may have stored\n"
+	for name, view := range map[string]struct{ node, stdout, stderr, notYet string }{
+		"added_honest.ts":    {node: "true:out:undefined\n9:strict,outDir,target\n"},
+		"added_watch.ts":     {node: "true:1:x.ts\n"},
+		"added_lie.ts":       {node: "before\nyes\n", stdout: "before\n", stderr: fmt.Sprintf(strict, "options.strict")},
+		"added_nested.ts":    {node: "true:out:a.ts\nbefore\nyes\n", stdout: "true:out:a.ts\nbefore\n", stderr: fmt.Sprintf(strict, "lie.options.strict")},
+		"added_parameter.ts": {node: "yes\n", notYet: "(fixed objects and records have different storage; copy explicitly)"},
+	} {
+		t.Run(name, func(t *testing.T) {
+			t.Parallel()
+			path := optionsBasePath(t, name)
+			node := onNode(t, path)
+			if node.exitCode != 0 || string(node.stdout) != view.node {
+				t.Fatalf("Node: %s", optionsBaseShown(node))
+			}
+			program, err := lowered(t, path)
+			if view.notYet != "" {
+				var notYet *lower.NotYet
+				if !errors.As(err, &notYet) || !strings.HasSuffix(notYet.What, view.notYet) {
+					t.Fatalf("want NotYet ending %q, got %v", view.notYet, err)
+				}
+				return
+			}
+			if err != nil {
+				t.Fatalf("a record seen as a view adding checked names in .ts must lower: %v", err)
+			}
+			native, sanitized := natively(t, program)
+			want := node
+			if view.stderr != "" {
+				want = run{stdout: []byte(view.stdout), stderr: []byte(view.stderr), exitCode: 70}
+			}
+			for backend, got := range map[string]run{"native": native, "javascript": onJavaScriptBackend(t, program)} {
+				if difference := disagreement(want, got); difference != "" {
+					t.Fatalf("%s: %s: want %s; got %s", backend, difference, optionsBaseShown(want), optionsBaseShown(got))
+				}
+			}
+			if view.stderr == "" {
+				if report := leaks(t, program, sanitized); report != "" {
+					t.Fatal(report)
+				}
 			}
 		})
 	}

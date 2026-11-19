@@ -218,7 +218,7 @@ func (l *lowering) optionalWidened(source, target *checker.Type, skip map[string
 		}
 		declared := l.checker.GetPropertyOfType(source, property.Name)
 		if declared == nil {
-			if property.Flags&ast.SymbolFlagsOptional != 0 && !l.classOptionalAbsent(source, property.Name) {
+			if property.Flags&ast.SymbolFlagsOptional != 0 && !l.classOptionalAbsent(source, property.Name) && !l.recordAddedNameChecked(source, target, property) {
 				return &optionalWidening{property: property.Name, source: source, target: target}
 			}
 			continue
@@ -249,12 +249,49 @@ func (l *lowering) optionalWidened(source, target *checker.Type, skip map[string
 		}
 		takes, gives := sources[0].Parameters(), targets[0].Parameters()
 		for index := 0; index < len(takes) && index < len(gives); index++ {
-			if found := l.optionalWidened(l.checker.GetTypeOfSymbol(gives[index]), l.checker.GetTypeOfSymbol(takes[index]), nil, visited); found != nil {
+			// A parameter is handed the other side's value, so no record view through it adds a
+			// contract (parameterStorage), as recordStorageView holds it.
+			var found *optionalWidening
+			l.parameterStorage(func() bool {
+				found = l.optionalWidened(l.checker.GetTypeOfSymbol(gives[index]), l.checker.GetTypeOfSymbol(takes[index]), nil, visited)
+				return true
+			})
+			if found != nil {
 				return found
 			}
 		}
 	}
 	return nil
+}
+
+// recordAddedNameChecked is whether an optional property of target, absent from source, hides nothing
+// because both are records whose named reads are checked: in .ts, source and target each have one string
+// index signature, both stored as a union and kept alike, and addedContractRead holds for the property, so
+// the view's named read of it is checked by its declared type at run time. Whatever the record holds under
+// that name, a value of another type stops at the read, naming it; nothing hidden is trusted. A typeof of
+// the read asks nothing of the declared type and answers the slot's own tag, as Node does (Language's
+// J-kranvnc), so "checked" holds for every read that uses the value, never for typeof. That's
+// droppedContractChecked's premise, the one the storage view's drop and add rest on (Runtime's ruling on
+// #6c4swvt, piece 2): tsc's OptionsBase seen as CompilerOptions (commandLineParser.ts:2129, a field
+// deep) and a MapLike seen as WatchOptions (3100).
+func (l *lowering) recordAddedNameChecked(source, target *checker.Type, property *ast.Symbol) bool {
+	if !l.droppedContractsRead {
+		return false
+	}
+	held, seen := l.recordStringIndexValue(source), l.recordStringIndexValue(target)
+	if held == nil || seen == nil {
+		return false
+	}
+	return l.addedContractRead(property, l.checker.GetNonMissingTypeOfSymbol(property), held, seen)
+}
+
+// recordStringIndexValue is the value type of t's one index signature when it's keyed by string, or nil.
+func (l *lowering) recordStringIndexValue(t *checker.Type) *checker.Type {
+	infos := l.checker.GetIndexInfosOfType(t)
+	if len(infos) != 1 || infos[0].KeyType().Flags() != checker.TypeFlagsString {
+		return nil
+	}
+	return infos[0].ValueType()
 }
 
 func (l *lowering) optionalValue(node *ast.Node, target *checker.Type) *optionalWidening {
@@ -380,6 +417,10 @@ func (l *lowering) optionalInSlot(node *ast.Node) *optionalWidening {
 }
 
 func (l *lowering) refuseOptionalWidening(node *ast.Node) error {
+	// A .ts view of a record may add a name whose read is checked (recordAddedNameChecked).
+	previous := l.droppedContractsRead
+	l.droppedContractsRead = strings.HasSuffix(l.program.FileName(ast.GetSourceFileOfNode(node)), ".ts")
+	defer func() { l.droppedContractsRead = previous }()
 	found := l.optionalAtSite(node)
 	if found == nil {
 		return nil
