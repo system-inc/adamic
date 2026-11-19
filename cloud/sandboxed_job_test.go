@@ -1,9 +1,12 @@
 package cloud
 
 import (
+	"archive/tar"
+	"bytes"
 	"crypto/sha256"
 	"encoding/hex"
 	"encoding/json"
+	"io"
 	"os"
 	"path/filepath"
 	"strings"
@@ -414,6 +417,289 @@ sandboxed_git && echo "sandboxed_git=ok"`)
 			}
 		})
 	}
+}
+
+// sandboxed_repositories lays each submodule as a repository at its pin from the files the runner laid and its manifest,
+// .tracked/<path>/{HEAD,commit,files}, and proves the pin rather than taking the manifest's word (Operations on
+// #52cxm6c): the gitlink in the parent's index, the commit object hashing to it, and the laid files writing its tree.
+// The test makes a stand-in tree as the runner lays one: a .git whose index holds sub's gitlink, sub's files and those of
+// its own submodule, inner, unpacked from git archive, and the manifest, git's own output for each pin. sub's pin has a
+// parent, as cohere's does, a CRLF blob under `* text=auto eol=lf`, as four of cohere's are, an executable file, and a
+// tracked file its .gitignore names. A tree laid as it was becomes two repositories at their pins that read clean, named
+// or not, and a second call leaves them as they are. A .tracked naming another commit whole, a commit object forged
+// under the pin's name, and a file changed under sub or under inner each refuse.
+//
+// Mutants: the info/attributes line dropped (red on the trees laid as they were: sub's CRLF blob is added as LF, so its
+// tree isn't the pin's); the commit's hash check taken out (`[ "$made" = "$gitlink" ] ||` and its refusal made `:`, red on
+// the forged commit, which then refuses only at HEAD, saying something else); the pin read from .tracked/<path>/HEAD
+// rather than from the parent's index (`gitlink=$(head -c 64 "$manifest/HEAD")` after the gitlink's refusal, red on the
+// .tracked naming another commit, which is then laid); the tree check taken out (`[ "$built" = "$tree" ] ||` and its
+// refusal made `:`, red on both changed files, which then refuse only at git status, whose HEAD names a tree the
+// repository lacks, saying something else).
+func TestSandboxedRepositoriesProvesEachPin(t *testing.T) {
+	t.Parallel()
+	script, err := filepath.Abs("sandboxed-job.sh")
+	if err != nil {
+		t.Fatal(err)
+	}
+	for _, test := range []struct {
+		name string
+		// paths are sandboxed_repositories' arguments; forge changes the laid tree before it runs, given the tree and
+		// the stand-in's commits; refused is what it says refusing, or nil for a tree it lays.
+		paths   string
+		forge   func(t *testing.T, tree string, pins standInPins)
+		refused func(pins standInPins) string
+	}{
+		{"a tree laid as it was", "", nil, nil},
+		{"a tree laid as it was, its submodule named", "sub", nil, nil},
+		{"a .tracked naming another commit whole", "", func(t *testing.T, tree string, pins standInPins) {
+			writeStandInFile(t, filepath.Join(tree, "sub", "a.txt"), "old\n", 0o644)
+			writeTracked(t, tree, "sub", pins.origin, pins.other, pins.other)
+		}, func(pins standInPins) string {
+			return ".tracked/sub/HEAD names " + pins.other[:12] + ", not sub's gitlink " + pins.sub[:12]
+		}},
+		{"a commit object forged under the pin's name", "", func(t *testing.T, tree string, pins standInPins) {
+			writeStandInFile(t, filepath.Join(tree, "sub", "a.txt"), "old\n", 0o644)
+			writeTracked(t, tree, "sub", pins.origin, pins.sub, pins.other)
+		}, func(pins standInPins) string {
+			return ".tracked/sub/commit hashes to " + pins.other[:12] + ", not sub's gitlink " + pins.sub[:12]
+		}},
+		{"a file changed under the submodule", "", func(t *testing.T, tree string, pins standInPins) {
+			writeStandInFile(t, filepath.Join(tree, "sub", "a.txt"), "a\nchanged\n", 0o644)
+		}, func(pins standInPins) string { return "the files laid under sub write the tree" }},
+		{"a file changed under the submodule's own submodule", "", func(t *testing.T, tree string, pins standInPins) {
+			writeStandInFile(t, filepath.Join(tree, "sub", "inner", "i.txt"), "changed\n", 0o644)
+		}, func(pins standInPins) string { return "the files laid under sub/inner write the tree" }},
+	} {
+		t.Run(test.name, func(t *testing.T) {
+			t.Parallel()
+			directory := t.TempDir()
+			tree, pins := layStandInTree(t, directory)
+			if test.forge != nil {
+				test.forge(t, tree, pins)
+			}
+			command := toolchain.Command("bash", "-c", `. "$SANDBOXED_JOB_SCRIPT" || exit 1
+sandboxed_repositories $SANDBOXED_REPOSITORIES_PATHS || exit 0
+echo "laid=ok"
+sandboxed_repositories $SANDBOXED_REPOSITORIES_PATHS && echo "again=ok"
+`)
+			if command.Err != nil {
+				t.Fatal(command.Err)
+			}
+			command.Dir = tree
+			environment := command.Env
+			if environment == nil {
+				environment = os.Environ()
+			}
+			kept := make([]string, 0, len(environment)+3)
+			for _, variable := range environment {
+				name, _, _ := strings.Cut(variable, "=")
+				switch name {
+				case "TMPDIR", "ADAMIC_BUILD_CACHE_DIR", "LOOM_JOB_SCRATCH", "GIT_DIR", "GIT_WORK_TREE", "GIT_INDEX_FILE":
+				default:
+					kept = append(kept, variable)
+				}
+			}
+			command.Env = append(kept, "TMPDIR="+filepath.Join(directory, "tmp"), "SANDBOXED_JOB_SCRIPT="+script,
+				"SANDBOXED_REPOSITORIES_PATHS="+test.paths)
+			output, err := command.CombinedOutput()
+			said := string(output)
+			if err != nil {
+				t.Fatalf("bash: %v\n%s", err, said)
+			}
+			if test.refused != nil {
+				if strings.Contains(said, "laid=ok") {
+					t.Fatalf("want sandboxed_repositories to refuse, got it laid:\n%s", said)
+				}
+				if want := test.refused(pins); !strings.Contains(said, want) {
+					t.Errorf("want %q said, got:\n%s", want, said)
+				}
+				return
+			}
+			if !strings.Contains(said, "laid=ok") || !strings.Contains(said, "again=ok") {
+				t.Fatalf("want sandboxed_repositories to lay the tree and then leave it, got:\n%s", said)
+			}
+			for _, want := range []string{"submodules at their pins: 2 laid as repositories from their files, 0 already one",
+				"submodules at their pins: 0 laid as repositories from their files, 2 already one",
+				"sub " + pins.sub[:12] + " is its own repository at the pin, left as it is"} {
+				if !strings.Contains(said, want) {
+					t.Errorf("want %q said, got:\n%s", want, said)
+				}
+			}
+			for path, want := range map[string]string{"sub": pins.sub, "sub/inner": pins.inner} {
+				if head := standInGit(t, filepath.Join(tree, path), "rev-parse", "HEAD"); head != want {
+					t.Errorf("%s's HEAD is %s, want its pin %s", path, head, want)
+				}
+				if count := standInGit(t, filepath.Join(tree, path), "rev-list", "--count", "HEAD"); count != "1" {
+					t.Errorf("%s holds %s commits, want its pin alone", path, count)
+				}
+			}
+			// The tree reads its submodule at its gitlink, and sub reads inner at its own
+			for _, path := range []string{".", "sub", "sub/inner"} {
+				if status := standInGit(t, filepath.Join(tree, path), "status", "--porcelain"); status != "" {
+					t.Errorf("%s doesn't read clean:\n%s", path, status)
+				}
+			}
+		})
+	}
+}
+
+// standInPins are the commits of layStandInTree's stand-in: sub's pin, the commit before it (other), inner's pin, and
+// the repository sub's commits are in.
+type standInPins struct {
+	sub, other, inner, origin string
+}
+
+// layStandInTree makes, under directory, a tree as the runner lays a sandboxed job's: its own .git, a commit whose
+// index holds the gitlink sub, the files of sub's pin and of inner's inside it unpacked from git archive, and
+// .tracked/<path>/{HEAD,commit,files} for each. sub's pin is its second commit, which differs from its first (other)
+// in a.txt alone.
+func layStandInTree(t *testing.T, directory string) (string, standInPins) {
+	t.Helper()
+	inner, origin, tree := filepath.Join(directory, "inner"), filepath.Join(directory, "origin"), filepath.Join(directory, "tree")
+	for _, made := range []string{inner, origin, tree} {
+		if err := os.MkdirAll(made, 0o755); err != nil {
+			t.Fatal(err)
+		}
+		standInGit(t, made, "init", "-q")
+	}
+	writeStandInFile(t, filepath.Join(inner, "i.txt"), "i\n", 0o644)
+	standInGit(t, inner, "add", "-A")
+	standInGit(t, inner, "commit", "-q", "-m", "inner")
+	pins := standInPins{inner: standInGit(t, inner, "rev-parse", "HEAD"), origin: origin}
+	// Each blob as its bytes are, so crlf.txt's CRLF is the blob's, as cohere's four are; the runner's mirror has no
+	// such file, so it goes before the archive
+	attributes := filepath.Join(origin, ".git", "info", "attributes")
+	writeStandInFile(t, attributes, "* -text\n", 0o644)
+	for name, file := range map[string]struct {
+		content string
+		mode    os.FileMode
+	}{
+		"a.txt": {"old\n", 0o644}, "run.sh": {"#!/bin/sh\n", 0o755}, "crlf.txt": {"one\r\ntwo\r\n", 0o644},
+		".gitattributes": {"* text=auto eol=lf\n", 0o644}, ".gitignore": {"ignored.txt\n", 0o644}, "ignored.txt": {"kept\n", 0o644},
+	} {
+		writeStandInFile(t, filepath.Join(origin, name), file.content, file.mode)
+	}
+	standInGit(t, origin, "add", "-A", "-f")
+	standInGit(t, origin, "update-index", "--add", "--cacheinfo", "160000,"+pins.inner+",inner")
+	standInGit(t, origin, "commit", "-q", "-m", "other")
+	pins.other = standInGit(t, origin, "rev-parse", "HEAD")
+	// a.txt alone is added: commit -a would take inner, a gitlink with no directory here, as gone
+	writeStandInFile(t, filepath.Join(origin, "a.txt"), "a\n", 0o644)
+	standInGit(t, origin, "add", "a.txt")
+	standInGit(t, origin, "commit", "-q", "-m", "the pin")
+	pins.sub = standInGit(t, origin, "rev-parse", "HEAD")
+	if err := os.Remove(attributes); err != nil {
+		t.Fatal(err)
+	}
+	// The tree's own commit, its index read from it, and .tracked out of its git status, as the runner's tipExclude has it
+	writeStandInFile(t, filepath.Join(tree, "go.mod"), "module example.invalid/tree\n", 0o644)
+	writeStandInFile(t, filepath.Join(tree, ".gitmodules"), "[submodule \"sub\"]\n\tpath = sub\n\turl = ../origin.git\n", 0o644)
+	standInGit(t, tree, "add", "go.mod", ".gitmodules")
+	standInGit(t, tree, "update-index", "--add", "--cacheinfo", "160000,"+pins.sub+",sub")
+	standInGit(t, tree, "commit", "-q", "-m", "the tree")
+	writeStandInFile(t, filepath.Join(tree, ".git", "info", "exclude"), "/.tracked/\n", 0o644)
+	unpackStandInArchive(t, origin, pins.sub, filepath.Join(tree, "sub"))
+	unpackStandInArchive(t, inner, pins.inner, filepath.Join(tree, "sub", "inner"))
+	writeTracked(t, tree, "sub", origin, pins.sub, pins.sub)
+	writeTracked(t, tree, "sub/inner", inner, pins.inner, pins.inner)
+	return tree, pins
+}
+
+// writeTracked writes .tracked/<path> in tree as the runner's writeManifest does, each file git's own output byte for
+// byte from repository: HEAD naming head, and the commit object and listing of commit.
+func writeTracked(t *testing.T, tree, path, repository, head, commit string) {
+	t.Helper()
+	at := filepath.Join(tree, ".tracked", filepath.FromSlash(path))
+	for name, content := range map[string][]byte{"HEAD": []byte(head + "\n"),
+		"commit": standInGitBytes(t, repository, "cat-file", "commit", commit),
+		"files":  standInGitBytes(t, repository, "ls-tree", "-r", "-z", "--full-tree", commit)} {
+		if err := os.MkdirAll(at, 0o755); err != nil {
+			t.Fatal(err)
+		}
+		if err := os.WriteFile(filepath.Join(at, name), content, 0o644); err != nil {
+			t.Fatal(err)
+		}
+	}
+}
+
+// unpackStandInArchive unpacks `git archive --format=tar <commit>` of repository into directory, as the runner's
+// ExecStartPre unpacks a submodule's archive: each directory, file and link, a file executable where its mode says so.
+// The archive holds no member for its root, and needn't hold one for a member's directory, so each is made here.
+func unpackStandInArchive(t *testing.T, repository, commit, directory string) {
+	t.Helper()
+	if err := os.MkdirAll(directory, 0o755); err != nil {
+		t.Fatal(err)
+	}
+	reader := tar.NewReader(bytes.NewReader(standInGitBytes(t, repository, "archive", "--format=tar", commit)))
+	for {
+		header, err := reader.Next()
+		if err == io.EOF {
+			return
+		}
+		if err != nil {
+			t.Fatal(err)
+		}
+		target := filepath.Join(directory, filepath.FromSlash(header.Name))
+		switch header.Typeflag {
+		case tar.TypeDir:
+			err = os.MkdirAll(target, 0o755)
+		case tar.TypeReg:
+			var content []byte
+			if content, err = io.ReadAll(reader); err == nil {
+				if err = os.MkdirAll(filepath.Dir(target), 0o755); err == nil {
+					err = os.WriteFile(target, content, os.FileMode(header.Mode)&0o777)
+				}
+			}
+		case tar.TypeSymlink:
+			if err = os.MkdirAll(filepath.Dir(target), 0o755); err == nil {
+				err = os.Symlink(header.Linkname, target)
+			}
+		case tar.TypeXGlobalHeader:
+			// git archive's pax header, naming the commit, is no member to lay
+		}
+		if err != nil {
+			t.Fatalf("unpacking %s of %s at %s: %v", header.Name, repository, commit, err)
+		}
+	}
+}
+
+// writeStandInFile writes one file of the stand-in, its directory made first.
+func writeStandInFile(t *testing.T, path, content string, mode os.FileMode) {
+	t.Helper()
+	if err := os.MkdirAll(filepath.Dir(path), 0o755); err != nil {
+		t.Fatal(err)
+	}
+	if err := os.WriteFile(path, []byte(content), mode); err != nil {
+		t.Fatal(err)
+	}
+	// WriteFile keeps the mode of a file that was there, so an executable bit is set as asked
+	if err := os.Chmod(path, mode); err != nil {
+		t.Fatal(err)
+	}
+}
+
+// standInGit is git in directory, its configuration out of reach and a test's own identity, its output trimmed.
+func standInGit(t *testing.T, directory string, arguments ...string) string {
+	t.Helper()
+	return strings.TrimSpace(string(standInGitBytes(t, directory, arguments...)))
+}
+
+// standInGitBytes is standInGit's output byte for byte, as the runner's manifest holds git's.
+func standInGitBytes(t *testing.T, directory string, arguments ...string) []byte {
+	t.Helper()
+	command := toolchain.GitCommandIn(directory, append([]string{"-c", "user.name=test", "-c", "user.email=test@loom.invalid",
+		"-c", "commit.gpgsign=false", "-c", "init.defaultBranch=main"}, arguments...)...)
+	if command.Err != nil {
+		t.Fatal(command.Err)
+	}
+	var stderr bytes.Buffer
+	command.Stderr = &stderr
+	output, err := command.Output()
+	if err != nil {
+		t.Fatalf("git %v in %s: %v\n%s", arguments, directory, err, stderr.String())
+	}
+	return output
 }
 
 // sandboxed-job.sh takes the node's laid Go module cache only when loom-node's cache proxy laid this very commit whole

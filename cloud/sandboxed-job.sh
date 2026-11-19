@@ -18,8 +18,9 @@
 #   - npm's logs go under it, since /opt/adamic-block/npmcache/_logs is read-only (WebAssembly);
 #   - sandboxed_git gives the job a one-commit git of the tree as laid, for a mutant script that restores a file with
 #     `git show HEAD:<file>` or reads `git status`. It costs about 27 s over adamic's tree (Loom's J-a5zgp8d), so only a
-#     script that needs it calls it. HEAD has no history, no parent and no remote, so a job that reads `git log`, a
-#     submodule's own repository or a remote still wants a house box. A tree the runner laid with a .git keeps it.
+#     script that needs it calls it. HEAD has no history, no parent and no remote, so a job that reads `git log` or a
+#     remote still wants a house box. A tree the runner laid with a .git keeps it. A submodule's own repository, one
+#     commit deep at its pin, is sandboxed_repositories'.
 #   - GOMODCACHE is the node's laid cache when loom-node's cache proxy laid this very commit whole, and the image's
 #     otherwise (#nodecache). The proxy's word is a lay file it writes only once every module the commit names is in
 #     its cache. The node's cache is taken only when that file names this repository and commit, names the cache at
@@ -156,6 +157,140 @@ sandboxed_git() {
 		-m "the tree as laid" || sandboxedJobFail "git commit failed" || return 1
 	[ -z "$(git status --porcelain)" ] || sandboxedJobFail "the tree doesn't read clean after its commit" || return 1
 	echo "sandboxed-job: one commit $(git rev-parse --short HEAD) holds the tree as laid"
+}
+
+# sandboxed_repositories [path...]: each submodule laid as a repository of its own holding exactly its pin, one commit
+# deep, as the lay kit's --repositories lays one on a house box (loom's contract/proof/lay.sh, layRepository), for a tool
+# that reads a submodule's directory as a repository: adamic's admission delta runs `git -C cohere worktree add --detach
+# <path> <pin>` (cmd/adamic-admission-delta, checkoutPinnedFrom). A sandboxed job reaches no submodule's mirror, so the
+# repository is built from what the job holds, the files laid at the pin and the runner's manifest of them,
+# .tracked/<path>/{HEAD,commit,files} (adamic-loom's jobwrapper, writeManifest), and the pin is proved, never taken on
+# the manifest's word (Operations on #52cxm6c):
+#   - the pin is the gitlink at <path> in its parent's own index: the tree's .git, which the runner reads from the job's
+#     commit, or the repository made here for the submodule it's inside. .tracked/<path>/HEAD must name it;
+#   - .tracked/<path>/commit, `git cat-file commit`'s bytes, must hash as a commit to the pin, so its tree line is the
+#     pin's tree;
+#   - every file laid under <path>, with the gitlinks .tracked/<path>/files lists, must write that tree.
+# A byte, a mode, a file more or fewer, or a commit or gitlink that differs breaks a hash and refuses, so a forged
+# .tracked can't name another pin. The repository is made by `git init --template=`, so it holds no hook; its HEAD is
+# the pin, detached, its .git/shallow names the pin when it has parents, since none is held, and git status reads it
+# clean. Its .git/info/attributes unsets text, filter, ident and working-tree-encoding for every path, so each file is
+# hashed as the bytes git archive laid: under cohere's `* text=auto eol=lf`, git add would turn the CRLF four of its
+# blobs hold into LF, and the tree would never be the pin's. A checkout from it writes each blob's bytes as they are.
+# With no path named, every submodule the tree's .gitmodules lists, and inside each, every gitlink its pin holds, depth
+# first. A submodule that is already a repository at its pin is left as it is, as lay.sh leaves one, and one at another
+# commit refuses. Run from the tree's root, before anything writes under a submodule. It hashes every file each
+# submodule holds, about 77,000 over cohere's and TypeScript's pins, so only a script that reads a submodule's git
+# calls it.
+sandboxed_repositories() {
+	[ -f go.work ] || [ -f go.mod ] || sandboxedJobFail "sandboxed_repositories runs from the tree's root" || return 1
+	# laid and kept are counted by sandboxedJobRepository, which sees them as bash's locals of its caller
+	local paths=("$@") key laid=0 kept=0 begun=$SECONDS path
+	if [ ${#paths[@]} -eq 0 ]; then
+		while IFS= read -r key; do
+			paths+=("${key#* }")
+		done < <(sandboxedJobGit config --no-includes --file .gitmodules --get-regexp '^submodule\..*\.path$' 2> /dev/null)
+		[ ${#paths[@]} -gt 0 ] || sandboxedJobFail "sandboxed_repositories names no path and the tree's .gitmodules lists none" || return 1
+	fi
+	for path in "${paths[@]}"; do
+		sandboxedJobRepository "${path%/}" || return 1
+	done
+	echo "sandboxed-job: submodules at their pins: $laid laid as repositories from their files, $kept already one, in $((SECONDS - begun)) s"
+}
+
+# sandboxedJobGit is git as sandboxed_repositories runs it, in lay.sh's pinned environment: no replace object, global
+# or system config, and no GIT_DIR or kin of the caller's steering which repository it reads.
+sandboxedJobGit() {
+	env -u GIT_DIR -u GIT_WORK_TREE -u GIT_INDEX_FILE -u GIT_OBJECT_DIRECTORY -u GIT_COMMON_DIR \
+		GIT_NO_REPLACE_OBJECTS=1 GIT_CONFIG_GLOBAL=/dev/null GIT_CONFIG_NOSYSTEM=1 git "$@"
+}
+
+# sandboxedJobRepository <path>: the submodule at <path> under the tree's root laid as a repository at its pin, as
+# sandboxed_repositories says, then each gitlink its index holds, inside it.
+sandboxedJobRepository() {
+	local path=$1 manifest=.tracked/$1 begun=$SECONDS fresh=no
+	case "/$path/" in
+		//* | */../* | */./* | *//*) sandboxedJobFail "$path is no submodule path inside the tree" || return 1 ;;
+	esac
+	[ -d "$path" ] && [ ! -L "$path" ] || sandboxedJobFail "$path is no directory of the tree's" || return 1
+	# The pin: the parent's index's one entry at <path>, a gitlink at stage 0. Read from inside a submodule not yet laid
+	# as a repository, the index is the tree's, which holds no entry under a gitlink, so its submodules come first.
+	local base gitlink="" entry entries=() gitlinkEntry=$'^160000 ([0-9a-f]{40}) 0\t(.*)$'
+	base=$(basename -- "$path")
+	while IFS= read -r -d '' entry; do
+		entries+=("$entry")
+	done < <(sandboxedJobGit --literal-pathspecs -C "$(dirname -- "$path")" ls-files -s -z -- "$base" 2> /dev/null)
+	if [ ${#entries[@]} -eq 1 ] && [[ ${entries[0]} =~ $gitlinkEntry ]] && [ "${BASH_REMATCH[2]}" = "$base" ]; then
+		gitlink=${BASH_REMATCH[1]}
+	fi
+	[ -n "$gitlink" ] || sandboxedJobFail "$path is no gitlink in its parent's index, so there's no pin to prove it at" || return 1
+
+	if [ -e "$path/.git" ]; then
+		local current
+		current=$(sandboxedJobGit -C "$path" rev-parse --verify -q 'HEAD^{commit}') ||
+			sandboxedJobFail "$path has a .git with no HEAD to read" || return 1
+		[ "$current" = "$gitlink" ] ||
+			sandboxedJobFail "$path is its own repository at ${current:0:12}, not its pin ${gitlink:0:12}; left alone" || return 1
+		echo "sandboxed-job: $path ${gitlink:0:12} is its own repository at the pin, left as it is" >&2
+		kept=$((kept + 1))
+	else
+		[ -f "$manifest/HEAD" ] && [ -f "$manifest/commit" ] && [ -f "$manifest/files" ] ||
+			sandboxedJobFail "$manifest doesn't hold the runner's HEAD, commit and files for $path" || return 1
+		local named made tree built
+		named=$(head -c 64 "$manifest/HEAD")
+		[ "$named" = "$gitlink" ] ||
+			sandboxedJobFail "$manifest/HEAD names ${named:0:12}, not $path's gitlink ${gitlink:0:12}" || return 1
+		made=$(sandboxedJobGit hash-object -t commit --stdin < "$manifest/commit") ||
+			sandboxedJobFail "$manifest/commit doesn't hash as a commit" || return 1
+		[ "$made" = "$gitlink" ] ||
+			sandboxedJobFail "$manifest/commit hashes to ${made:0:12}, not $path's gitlink ${gitlink:0:12}: it isn't the pin's commit" || return 1
+		tree=$(sed -n '1s/^tree \([0-9a-f]\{40\}\)$/\1/p' "$manifest/commit")
+		[ -n "$tree" ] || sandboxedJobFail "$manifest/commit names no tree on its first line" || return 1
+		# From here a refusal leaves $path/.git with no HEAD, which a second call refuses too
+		sandboxedJobGit init -q --template= --initial-branch=laying "$path" > /dev/null ||
+			sandboxedJobFail "git init of $path failed" || return 1
+		mkdir -p "$path/.git/info" && printf '* -text -filter -ident -working-tree-encoding\n' > "$path/.git/info/attributes" ||
+			sandboxedJobFail "couldn't write $path/.git/info/attributes" || return 1
+		sandboxedJobGit -C "$path" hash-object -t commit -w --stdin < "$manifest/commit" > /dev/null ||
+			sandboxedJobFail "the pin's commit wouldn't be written in $path" || return 1
+		# The gitlinks go in the index first, so git add takes each one's directory as a submodule's and adds none of
+		# its files; then every file laid, whatever a .gitignore says (-f)
+		while IFS= read -r -d '' entry; do
+			case "$entry" in
+				'160000 commit '*) printf '%s\0' "$entry" ;;
+			esac
+		done < "$manifest/files" | sandboxedJobGit -C "$path" update-index -z --index-info ||
+			sandboxedJobFail "the gitlinks $manifest/files lists wouldn't go in $path's index" || return 1
+		sandboxedJobGit -C "$path" add -A -f -- . || sandboxedJobFail "git add of the files laid under $path failed" || return 1
+		built=$(sandboxedJobGit -C "$path" write-tree) || sandboxedJobFail "git write-tree in $path failed" || return 1
+		[ "$built" = "$tree" ] ||
+			sandboxedJobFail "the files laid under $path write the tree ${built:0:12}, not its pin's ${tree:0:12}: a file under it isn't the pin's" || return 1
+		if sed '/^$/q' "$manifest/commit" | grep -q '^parent '; then
+			printf '%s\n' "$gitlink" > "$path/.git/shallow" || sandboxedJobFail "couldn't write $path/.git/shallow" || return 1
+		fi
+		printf '%s\n' "$gitlink" > "$path/.git/HEAD" || sandboxedJobFail "couldn't write $path/.git/HEAD" || return 1
+		[ "$(sandboxedJobGit -C "$path" rev-parse --verify -q 'HEAD^{commit}')" = "$gitlink" ] ||
+			sandboxedJobFail "$path's HEAD doesn't read as its pin ${gitlink:0:12}" || return 1
+		echo "sandboxed-job: $path ${gitlink:0:12} laid as a repository from its laid files, its pin proved, in $((SECONDS - begun)) s" >&2
+		laid=$((laid + 1)) fresh=yes
+	fi
+
+	# Each gitlink in its index, read whole before any is laid; the paths are the index's own, relative to <path>
+	local children=() child
+	while IFS= read -r -d '' entry; do
+		case "$entry" in
+			160000\ *) [[ $entry =~ $gitlinkEntry ]] && children+=("${BASH_REMATCH[2]}") ;;
+		esac
+	done < <(sandboxedJobGit -C "$path" ls-files -s -z)
+	for child in ${children[@]+"${children[@]}"}; do
+		sandboxedJobRepository "$path/$child" || return 1
+	done
+	# One laid here reads clean once its own submodules are laid too, by a git status that ran whole; one left as it is
+	# is its own
+	[ "$fresh" = no ] && return 0
+	local status
+	status=$(sandboxedJobGit -C "$path" status --porcelain) && [ -z "$status" ] ||
+		sandboxedJobFail "$path doesn't read clean as a repository at its pin ${gitlink:0:12}" || return 1
 }
 
 # sandboxed_npm [project...]: each npm project installed offline from the image's cache, as Loom's J-47wmdte proved:
