@@ -1,0 +1,15 @@
+// #vndytkn: a fresh array made for the call is borrowed by the write and released after it, under the
+// sanitizers, with nothing leaked.
+import process from 'node:process';
+
+function make(first: number): Uint8Array {
+	const bytes = new Uint8Array(3);
+	bytes[0] = first;
+	bytes[1] = first + 1;
+	bytes[2] = 10;
+	return bytes;
+}
+
+for (let i = 0; i < 3; i++) {
+	process.stdout.write(make(0x70 + i * 2));
+}

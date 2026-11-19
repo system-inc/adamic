@@ -391,8 +391,8 @@ func (l *lowering) nodeRealpathValue(node *ast.Node) (ir.Expression, bool, error
 	return ir.Read{Local: held, Of: ir.Closure}, true, nil
 }
 
-// Only a discarded one-string write is bound: Node's boolean is backpressure,
-// while the native primitive reports blocking success. Never expose that value.
+// Only a discarded one-argument write is bound, of a string or of a Uint8Array's bytes: Node's boolean
+// is backpressure, while the native primitive reports blocking success. Never expose that value.
 func (l *lowering) nodeStdoutWriteMember(node *ast.Node) bool {
 	node = ast.SkipParentheses(node)
 	return node.Kind == ast.KindPropertyAccessExpression && l.nodeLibraryMember(node) == "node:net.Socket.write" && l.nodeLibraryMember(node.AsPropertyAccessExpression().Expression) == "node:process.Process.stdout"
@@ -418,8 +418,10 @@ func (l *lowering) nodeStdoutWriteRefusal(node *ast.Node) error {
 	if argument.Kind == ast.KindSpreadElement {
 		return l.notYet(argument, name+" with spread arguments")
 	}
-	if of, known := l.representation(l.checker.GetTypeAtLocation(argument)); !known || of != ir.String {
-		return l.notYet(argument, name+" with a non-string argument (Buffer and Uint8Array are not bound)")
+	// A Uint8Array is written as its bytes, as Node writes it (#vndytkn): a string can't carry a byte above
+	// 127 unchanged, since it's written as UTF-8. A Buffer and the other typed arrays aren't bound yet.
+	if of, known := l.representation(l.checker.GetTypeAtLocation(argument)); !known || of != ir.String && of != ir.Uint8Array {
+		return l.notYet(argument, name+" with a non-string argument other than a Uint8Array (Buffer and the other typed arrays are not bound)")
 	}
 	return nil
 }
@@ -435,8 +437,8 @@ func (l *lowering) nodeStdoutWrite(node *ast.Node) (ir.Expression, bool, error) 
 	if err != nil {
 		return nil, true, err
 	}
-	if value.Type() != ir.String {
-		return nil, true, l.notYet(node, "node:process.Process.stdout.write with a non-string argument")
+	if value.Type() != ir.String && value.Type() != ir.Uint8Array {
+		return nil, true, l.notYet(node, "node:process.Process.stdout.write with a non-string argument other than a Uint8Array")
 	}
 	return ir.NodeFSFile{Operation: "host_stdout_write", Arguments: []ir.Expression{value}, Of: ir.Number}, true, nil
 }

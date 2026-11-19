@@ -5,6 +5,9 @@
 
 // Borrowed text, encoded as Node UTF-8; blocking whole write, no added newline; true on success.
 bool adamic_write_raw(enum adamic_stream stream, const adamic_string *text);
+// Borrowed Uint8Array, its bytes written as they are, never as text; blocking whole write before it
+// returns, so a later change to the array writes nothing; true on success.
+bool adamic_write_bytes(enum adamic_stream stream, const adamic_typed_array *bytes);
 
 // Loop-thread stdout initialization and cached width. No refresh on a read.
 void adamic_host_stdout_start(void);
