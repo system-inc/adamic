@@ -58,30 +58,46 @@ func TestYieldResultUnwrapAgrees(t *testing.T) {
 
 func TestYieldResultUnwrapRefused(t *testing.T) {
 	t.Parallel()
-	// own_symbol stops at container_fit.go's depth bound, a generic pair past it that can reach a Map, and
-	// says so: no value there is going where a map is held (#rt5evf5). hazard stops at the real check.
-	const containerFit = "stage 0 can't lower a Map or Set interface implemented by a value that isn't a Map or Set yet"
-	const depthGate = "stage 0 can't lower a generic comparison deeper than 4 positions that can reach a Map yet"
-	for _, probe := range []struct{ name, node, where, stop string }{
-		{"hazard", "true\n", ":22:16", containerFit},
-		{"own_symbol", "1\n", ":16:16", depthGate},
-	} {
-		t.Run(probe.name, func(t *testing.T) {
-			path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/yield_result_unwrap_refused", probe.name+".ts"))
-			if err != nil {
-				t.Fatal(err)
-			}
-			truth := onNode(t, path)
-			if diff := disagreement(run{stdout: []byte(probe.node)}, truth); diff != "" {
-				t.Fatal(diff)
-			}
-			_, err = lowered(t, path)
-			var gap *lower.NotYet
-			want := path + probe.where + ": " + probe.stop
-			if !errors.As(err, &gap) || err.Error() != want {
-				t.Fatalf("want %s, got %v", want, err)
-			}
-		})
+	path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/yield_result_unwrap_refused/hazard.ts"))
+	if err != nil {
+		t.Fatal(err)
+	}
+	truth := onNode(t, path)
+	if diff := disagreement(run{stdout: []byte("true\n")}, truth); diff != "" {
+		t.Fatal(diff)
+	}
+	_, err = lowered(t, path)
+	var gap *lower.NotYet
+	want := path + ":22:16: stage 0 can't lower a Map or Set interface implemented by a value that isn't a Map or Set yet"
+	if !errors.As(err, &gap) || err.Error() != want {
+		t.Fatalf("want %s, got %v", want, err)
+	}
+}
+
+// own_symbol declares its own IteratorYieldResult, which gets the ordinary walk rather than the bundled
+// lib's unwrap. Its pair reaches a Map past container_fit.go's depth and grows no generic on its path, so
+// since #rt5evf5 head 2 the walk follows it to its end, a real Map where a ReadonlyMap is held, and it lowers
+// (it stopped at the depth bound before). Mutant: the gate stopping every generic pair past the depth that
+// can reach a map stops it again.
+func TestYieldResultUnwrapOwnSymbolAgrees(t *testing.T) {
+	t.Parallel()
+	path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/yield_result_unwrap_refused/own_symbol.ts"))
+	if err != nil {
+		t.Fatal(err)
+	}
+	truth := onNode(t, path)
+	if diff := disagreement(run{stdout: []byte("1\n")}, truth); diff != "" {
+		t.Fatal(diff)
+	}
+	program, err := lowered(t, path)
+	if err != nil {
+		t.Fatal(err)
+	}
+	sanitized, _ := natively(t, program)
+	for backend, got := range map[string]run{"sanitized": sanitized, "native": released(t, program), "javascript": onJavaScriptBackend(t, program)} {
+		if diff := disagreement(truth, got); diff != "" {
+			t.Errorf("%s: %s", backend, diff)
+		}
 	}
 }
 
