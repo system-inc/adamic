@@ -1,5 +1,6 @@
-// Language's g5 p01 on #6c4swvt (08:38Z): a string written under paths, an object-kind field, through OptionsBase. An
-// object-kind field is never dropped, so the view stops not yet, before the write.
+// Language's g5 p01 on #6c4swvt (08:38Z): a string written under paths, a dictionary field, through OptionsBase. Since
+// #6c4swvt's dictionary head the view drops paths, and the named read's narrow to a dictionary stops on the lie on both
+// backends.
 interface MapLike<T> {
     [index: string]: T;
 }
