@@ -156,6 +156,48 @@ func TestClosedKindGenericAndDecodedBuildsStayOpen(t *testing.T) {
 	}
 }
 
+// Lower's seven slice-4 roads, each a value built with Block's kind at a layout that isn't Block's and seen
+// as Expr (Language's w01 to w07 on #x2cjvy9, J-1f4mec2): an annotated literal type, `as const` on the kind,
+// an inline Node & {...}, the literal type on a return and on a parameter, an unannotated literal whose kind
+// widens to the open enum, and that literal cast `as Expr`. Every one is a build K(Expr) counts by the type it
+// was built at, anonymous ones included, so Expr stays open and isBlock's narrowing over Block | Expr stays
+// refused, in .a and .ts alike, as Adamic asked on #x2cjvy9 (Nov 19). The control, a real Block and Ident,
+// lowers and agrees in .a; in .ts it stops earlier, at R-T80's membership over an open tag domain.
+// Mutant m1 (build sites skipped) closes Expr on Ident alone, and every road lowers.
+func TestClosedKindLiteralKindBuildsStayOpen(t *testing.T) {
+	t.Parallel()
+	const types = "enum Kind { Block, Ident }\ninterface Node { readonly kind: Kind }\ninterface Block extends Node { readonly kind: Kind.Block; count: number }\ninterface Expr extends Node { text: string }\ninterface Ident extends Expr { readonly kind: Kind.Ident }\n" +
+		"function isBlock(node: Node): node is Block { return node.kind === Kind.Block; }\n" +
+		"function measure(body: Block | Expr): string { try { return String(isBlock(body) ? body.count.toFixed(1).length : body.text.length); } catch (error) { return 'threw'; } }\n" +
+		"const block: Block = { kind: Kind.Block, count: 7 };\nconst ident: Ident = { kind: Kind.Ident, text: 'ab' };\n"
+	const annotated = "{ readonly kind: Kind.Block; readonly text: string }"
+	for _, probe := range []struct{ name, source string }{
+		{"annotated literal", "const odd: " + annotated + " = { kind: Kind.Block, text: 'xyz' };\nconst lie: Expr = odd;\nconsole.log(measure(ident) + ' ' + measure(lie));\n"},
+		{"as const kind", "const lie: Expr = { kind: Kind.Block as const, text: 'xyz' };\nconsole.log(measure(ident) + ' ' + measure(lie));\n"},
+		{"inline intersection", "const odd: Node & " + annotated + " = { kind: Kind.Block, text: 'xyz' };\nconst lie: Expr = odd;\nconsole.log(measure(ident) + ' ' + measure(lie));\n"},
+		{"return type", "function make(): " + annotated + " { return { kind: Kind.Block, text: 'xyz' }; }\nconst lie: Expr = make();\nconsole.log(measure(ident) + ' ' + measure(lie));\n"},
+		{"parameter type", "function take(odd: " + annotated + "): string { const lie: Expr = odd; return measure(lie); }\nconsole.log(measure(ident) + ' ' + take({ kind: Kind.Block, text: 'xyz' }));\n"},
+		{"widened kind", "const odd = { kind: Kind.Block, text: 'xyz' };\nconst lie: Expr = odd;\nconsole.log(measure(ident) + ' ' + measure(lie));\n"},
+		{"widened as", "const lie = { kind: Kind.Block, text: 'xyz' } as Expr;\nconsole.log(measure(ident) + ' ' + measure(lie));\n"},
+	} {
+		for _, extension := range []string{".a", ".ts"} {
+			t.Run(probe.name+extension, func(t *testing.T) {
+				t.Parallel()
+				if _, err := lowerSourceAs(t, types+probe.source, extension); err == nil || !strings.Contains(err.Error(), kindPredicateRefusal) {
+					t.Fatalf("want %q, got %v", kindPredicateRefusal, err)
+				}
+			})
+		}
+	}
+	t.Run("control.a", func(t *testing.T) {
+		t.Parallel()
+		program := lowersAndAgreesWithNodeAs(t, types+"console.log(measure(block) + ' ' + measure(ident));\n", ".a")
+		if code, stdout, stderr := brandedNative(t, program); code != 0 || stdout != "3 2\n" {
+			t.Fatalf("native: exit %d, stdout %q, stderr %q; want 0 and %q", code, stdout, stderr, "3 2\n")
+		}
+	})
+}
+
 // A one-member enum's member is that enum's whole type, so a kind typed One.A names no layout by its value
 // alone, and a supertype it would close stays open (Adamic's row on #x2cjvy9, Nov 17, after Language's
 // J-pmbsp94). Mutant m7 (closedKindLiterals reading such a member as a literal) closes it.
