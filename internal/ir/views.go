@@ -16,11 +16,21 @@ func (p *Program) CheckedField(receiverTypeID int, name string) bool {
 	return p.CheckedFields[CheckedFieldKey(receiverTypeID, name)] || p.CheckedFields[name] && !p.PlainReceivers[receiverTypeID]
 }
 
+// WidenedReadKey is where WidenedReads records a widened read: its CheckedFieldKey and its place in the source. Two
+// reads that share a key, two lowerings of one source read or two reads with no place, are both checked, which only adds
+// checks.
+func WidenedReadKey(read Property) string {
+	return CheckedFieldKey(read.ViewReceiverTypeID, read.Name) + "@" + read.ViewWhere
+}
+
 // CheckedRead is CheckedField for a field read, which can prove its receiver plain by its value as well
 // as its type. A read made where a storage test found neither a record nor a class instance
 // (Property.NotRecord, a weak read's fixed branch) is checked only as a view member under its receiver's
-// key, as a read through a PlainReceivers type is.
+// key, as a read through a PlainReceivers type is. A widened read (WidenedReads) is checked wherever it's made.
 func (p *Program) CheckedRead(read Property) bool {
+	if p.WidenedReads[WidenedReadKey(read)] {
+		return true
+	}
 	if read.NotRecord {
 		return p.CheckedFields[CheckedFieldKey(read.ViewReceiverTypeID, read.Name)]
 	}

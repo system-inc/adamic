@@ -44,11 +44,11 @@ console.log(textOf(num));
 }
 
 // A remainder member with node-typed fields (JsxNamespacedName's namespace and name) gives its view a contract
-// inside those fields, and #80cs7rz's rule then holds every Node.kind read whose reach is unknown, the
-// predicates' own bodies included, until #zpzm9ta makes such reads checked. So tsc's
-// getEscapedTextOfJsxAttributeName (utilities.ts:11129) moves from the open tag domain to that wall, fail
-// closed, the price the true side pays for such a target too.
-func TestClosedRemainderWithNodeFieldsWaitsOnCheckedReads(t *testing.T) {
+// inside those fields, and #80cs7rz's rule then weighs every Node.kind read whose reach is unknown, the
+// predicates' own bodies included. That held tsc's getEscapedTextOfJsxAttributeName (utilities.ts:11129) fail
+// closed until #zpzm9ta made such reads checked where they're made, so it lowers now and agrees with Node,
+// natively too. Mutant: readiness stripping a marked read's view anyway, and widenedReadsOf fails it.
+func TestClosedRemainderWithNodeFieldsIsChecked(t *testing.T) {
 	t.Parallel()
 	source := closedRemainderPrelude + `function textOf(node: Identifier | JsxNamespacedName): string {
     return isIdentifier(node) ? node.escapedText : node.namespace.escapedText + ":" + node.name.escapedText;
@@ -56,10 +56,12 @@ func TestClosedRemainderWithNodeFieldsWaitsOnCheckedReads(t *testing.T) {
 console.log(textOf(id));
 console.log(textOf(ns));
 `
-	_, err := lowerSourceAs(t, source, ".ts")
-	var pending *NotYet
-	if !errors.As(err, &pending) || !strings.Contains(err.Error(), "a read of field kind through type Node, which may hold a checked view's value") {
-		t.Fatalf("want NotYet at the widened Node.kind read, got %v", err)
+	program := lowersAndAgreesWithNodeAs(t, source, ".ts")
+	if checked, _ := widenedReadsOf(t, program, "kind"); checked == 0 {
+		t.Fatal("no Node.kind read is a widened read checked where it's made")
+	}
+	if code, stdout, stderr := brandedNative(t, program); code != 0 || stdout != "a\nns:b\n" {
+		t.Fatalf("native: exit %d, stdout %q, stderr %q; want a and ns:b, as Node prints", code, stdout, stderr)
 	}
 }
 
