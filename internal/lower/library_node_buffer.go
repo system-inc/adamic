@@ -150,7 +150,8 @@ func (l *lowering) libraryNodeBuffer(node *ast.Node) (ir.Expression, bool, error
 	call := node.AsCallExpression()
 	callee := ast.SkipParentheses(call.Expression)
 	args := call.Arguments.Nodes
-	operation, encoding, result := "", 0, ir.Array
+	// A Buffer is held as a Uint8Array (representationReason), so buffer_from and buffer_copy make one.
+	operation, encoding, result := "", 0, ir.Uint8Array
 	var receiver *ast.Node
 	if l.nodeBufferSymbol(callee, "createHash") {
 		if len(args) != 1 || ast.SkipParentheses(args[0]).Kind != ast.KindStringLiteral || args[0].Text() != "sha256" {
@@ -252,6 +253,12 @@ func (l *lowering) libraryNodeBuffer(node *ast.Node) (ir.Expression, bool, error
 				}
 				if element != ir.Number {
 					return nil, true, l.notYet(node, "Buffer.from with non-number elements")
+				}
+				operation = "buffer_copy"
+			} else if operation == "buffer_from" && value.Type() == ir.Uint8Array && l.nodeBufferType(l.checker.GetNonNullableType(l.checker.GetTypeAtLocation(args[0])), "Buffer") {
+				// Buffer.from(aBuffer) copies its bytes. Only a Buffer: Buffer.from(aUint8Array) isn't in the census.
+				if len(args) != 1 {
+					return nil, true, l.notYet(node, "Buffer.from(buffer) with an encoding")
 				}
 				operation = "buffer_copy"
 			} else if value.Type() != ir.String {

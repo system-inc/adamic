@@ -22,7 +22,7 @@ static void range_error(void) {
 	adamic_panic(message, sizeof message - 1);
 }
 
-static adamic_typed_array *allocate(enum adamic_typed_array_kind kind, size_t length) {
+adamic_typed_array *adamic_typed_array_make(enum adamic_typed_array_kind kind, size_t length) {
 	size_t size = width(kind);
 	if (length > SIZE_MAX / size) {
 		static const char message[] = "RangeError: Invalid typed array length";
@@ -49,7 +49,7 @@ adamic_typed_array *adamic_typed_array_new(enum adamic_typed_array_kind kind, do
 		static const char message[] = "RangeError: Invalid typed array length";
 		adamic_panic(message, sizeof message - 1);
 	}
-	return allocate(kind, (size_t)integer);
+	return adamic_typed_array_make(kind, (size_t)integer);
 }
 
 static double read_element(const adamic_typed_array *array, size_t index) {
@@ -83,7 +83,7 @@ void adamic_typed_array_write_converted(adamic_typed_array *array, size_t index,
 }
 
 adamic_typed_array *adamic_typed_array_from_numbers(enum adamic_typed_array_kind kind, const adamic_array *numbers) {
-	adamic_typed_array *array = allocate(kind, numbers->length);
+	adamic_typed_array *array = adamic_typed_array_make(kind, numbers->length);
 	for (size_t index = 0; index < numbers->length; index++) {
 		adamic_typed_array_write_converted(array, index, numbers->elements[index].number);
 	}

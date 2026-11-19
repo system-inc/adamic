@@ -10,7 +10,7 @@ import (
 func TestNodeFSFileOperationsAreKnown(t *testing.T) {
 	t.Parallel()
 	operations := map[string]ir.Type{
-		"read_sync": ir.Number, "read_buffer": ir.Array, "read_buffer_fd": ir.Array, "read_file": ir.String, "read_fd": ir.String, "open": ir.Number,
+		"read_sync": ir.Number, "read_buffer": ir.Uint8Array, "read_buffer_fd": ir.Uint8Array, "read_file": ir.String, "read_fd": ir.String, "open": ir.Number,
 		"write_buffer": 0, "write_buffer_fd": 0, "write": ir.Number, "close": 0, "write_file": 0, "write_fd": 0,
 		"exists": ir.Boolean, "stat": ir.Object, "mkdir": ir.String,
 		"unlink": 0, "utimes": 0, "utimes_dates": 0,

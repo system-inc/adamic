@@ -289,7 +289,7 @@ func (l *lowering) nodeFSFile(node *ast.Node) (ir.Expression, bool, error) {
 		}
 		args = []ir.Expression{args[0], flag}
 		if raw {
-			operation, of = "read_buffer", ir.Array
+			operation, of = "read_buffer", ir.Uint8Array
 		}
 	case "open":
 		if args[1].Type() != ir.String {
@@ -336,7 +336,7 @@ func (l *lowering) nodeFSFile(node *ast.Node) (ir.Expression, bool, error) {
 		}
 		args = []ir.Expression{args[0], args[1], position}
 	case "write_file":
-		if args[1].Type() == ir.Array && l.nodeBufferType(l.checker.GetTypeAtLocation(call.Arguments.Nodes[1]), "Buffer") {
+		if args[1].Type() == ir.Uint8Array && l.nodeBufferType(l.checker.GetTypeAtLocation(call.Arguments.Nodes[1]), "Buffer") {
 			operation = "write_buffer"
 		}
 		flag, mode, flush := constant("w"), number(438), ir.Expression(ir.BooleanConstant{Value: false})
@@ -429,8 +429,8 @@ func (l *lowering) nodeFSFile(node *ast.Node) (ir.Expression, bool, error) {
 		operation = "write_fd"
 	}
 	types := map[string][]ir.Type{
-		"write_buffer": {ir.String, ir.Array, ir.String, ir.Number, ir.Boolean}, "write_buffer_fd": {ir.Number, ir.Array, ir.String, ir.Number, ir.Boolean},
-		"read_sync": {ir.Number, ir.Array, ir.Number, ir.Number, ir.Number}, "read_buffer": {ir.String, ir.String}, "read_buffer_fd": {ir.Number, ir.String},
+		"write_buffer": {ir.String, ir.Uint8Array, ir.String, ir.Number, ir.Boolean}, "write_buffer_fd": {ir.Number, ir.Uint8Array, ir.String, ir.Number, ir.Boolean},
+		"read_sync": {ir.Number, ir.Uint8Array, ir.Number, ir.Number, ir.Number}, "read_buffer": {ir.String, ir.String}, "read_buffer_fd": {ir.Number, ir.String},
 		"read_file": {ir.String, ir.String}, "read_fd": {ir.Number, ir.String}, "open": {ir.String, ir.String, ir.Number},
 		"write": {ir.Number, ir.String, ir.Number}, "close": {ir.Number}, "write_file": {ir.String, ir.String, ir.String, ir.Number, ir.Boolean}, "write_fd": {ir.Number, ir.String, ir.String, ir.Number, ir.Boolean},
 		"utimes_dates": {ir.String, ir.Object, ir.Object}, "utimes_atime_date": {ir.String, ir.Object, ir.Number}, "utimes_mtime_date": {ir.String, ir.Number, ir.Object},

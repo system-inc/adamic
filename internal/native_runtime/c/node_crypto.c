@@ -80,10 +80,11 @@ adamic_object *adamic_node_hash_update(adamic_object *hash,
 									   const adamic_string *text, int encoding)
 {
 	check_finalized(hash);
-	adamic_array *input = adamic_node_buffer_from(text, encoding);
+	adamic_typed_array *input = adamic_node_buffer_from(text, encoding);
 	adamic_array *bytes = hash->slots[0].reference;
+	const uint8_t *data = input->data;
 	for (size_t i = 0; i < input->length; i++) {
-		adamic_array_push(bytes, input->elements[i]);
+		adamic_array_push(bytes, (adamic_value){.number = data[i]});
 	}
 	adamic_release(input);
 	return adamic_retain(hash);
