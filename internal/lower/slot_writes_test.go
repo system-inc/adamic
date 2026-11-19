@@ -84,7 +84,7 @@ func TestSlotWritesThroughACheckedView(t *testing.T) {
 		// own type show it never wrote it. A literal's own type is its written fields, so the own-type judgment
 		// holds this row too; the slot test alone holds a class whose member an interface merges in
 		// (view_optional_writes_test.go's merged class member, mutant (a)).
-		{"literal at Named without", prelude + "const raw: Named = { kind: 171, pos: 1 };\nrename(raw);\n", slotWriteViewOpening + "a value reaching it is built as Named without name", ""},
+		{"literal at Named without", prelude + "const raw: Named = { kind: 171, pos: 1 };\nrename(raw);\n", "writing a possibly absent optional own field, where a value reaching it is built as Named without name", ""},
 		{"spread lacking", prelude + "const bare = { kind: 171, pos: 1 };\nconst raw = { ...bare };\nrename(raw);\n", slotWriteViewOpening + "a value reaching it is built as { kind: number; pos: number; }, whose layout holds no name", ""},
 		{"one of two without", prelude + "const held: Named = { kind: 171, pos: 1, name: 'a' };\nconst bare = { kind: 171, pos: 2 };\nrename(held);\nrename(bare);\n", slotWriteViewOpening + "a value reaching it is built as { kind: number; pos: number; } without name", ""},
 		{"forEach", prelude + "const raw: Named = { kind: 171, pos: 1, name: 'a' };\n[raw].forEach(rename);\n", unknown, ""},
