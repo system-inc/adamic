@@ -28,5 +28,11 @@ static double exercise(size_t index) {
  if (!adamic_host_memory_usage(&memory)) { abort(); }
  adamic_host_backing_drop(8);
  if (!adamic_write_raw(adamic_stdout, &line)) { abort(); }
+ // process.stdout.write of a Uint8Array (#vndytkn): its bytes, under the same output lock.
+ adamic_typed_array *bytes = adamic_typed_array_new(adamic_typed_array_uint8, 2);
+ ((unsigned char *)bytes->data)[0] = 'b';
+ ((unsigned char *)bytes->data)[1] = '\n';
+ if (!adamic_write_bytes(adamic_stdout, bytes)) { abort(); }
+ adamic_release(bytes);
  return 1;
 }

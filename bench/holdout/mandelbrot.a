@@ -33,8 +33,7 @@
 //
 // The original writes each byte by handing its Uint8Array to process.stdout.write, and so does this
 // port: a string can't carry a byte above 127 to stdout unchanged, since a string is written as UTF-8.
-// Stage 0 lowers process.stdout.write for a string only today, so it stops this call as NotYet until
-// it writes bytes.
+// Stage 0 writes a Uint8Array's bytes as they are (#vndytkn).
 // Adamic: `process` is imported from node:process, as every Adamic program reaches it.
 import process from 'node:process';
 import { panic } from 'adamic';
