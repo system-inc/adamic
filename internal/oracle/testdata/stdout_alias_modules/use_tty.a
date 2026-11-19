@@ -1,0 +1,2 @@
+import { out } from './out.a';
+console.log(out.isTTY === true ? 'a terminal' : 'not a terminal');
