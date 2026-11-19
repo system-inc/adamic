@@ -1,0 +1,40 @@
+{
+  "base_findings": 3449,
+  "edit_findings": 3437,
+  "unchanged": 3437,
+  "target_base_sites": [
+    "src/compiler/checker.ts:49348:52",
+    "src/compiler/parser.ts:10015:36",
+    "src/compiler/parser.ts:10015:48",
+    "src/compiler/parser.ts:10087:37",
+    "src/compiler/parser.ts:10244:42",
+    "src/compiler/program.ts:738:57",
+    "src/compiler/program.ts:739:76",
+    "src/compiler/utilities.ts:1261:24",
+    "src/compiler/utilities.ts:2532:70",
+    "src/compiler/utilities.ts:7945:37",
+    "src/compiler/utilities.ts:7950:37",
+    "src/compiler/utilities.ts:7960:37",
+    "src/compiler/utilities.ts:7972:37",
+    "src/compiler/utilities.ts:7978:37"
+  ],
+  "target_edit_sites": [
+    "src/compiler/program.ts:738:57",
+    "src/compiler/program.ts:739:76"
+  ],
+  "grades": {
+    "gone": 12
+  }
+}
+gone src/compiler/utilities.ts:1261:24 refusal_scan optional property getPositionOfLineAndCharacter in SourceFileLike absent from structural source SourceFile, which can hide fields
+gone src/compiler/utilities.ts:2532:70 refusal_scan optional property getPositionOfLineAndCharacter in SourceFileLike absent from structural source SourceFile, which can hide fields
+gone src/compiler/utilities.ts:7945:37 refusal_scan optional property getPositionOfLineAndCharacter in SourceFileLike absent from structural source SourceFile, which can hide fields
+gone src/compiler/utilities.ts:7950:37 refusal_scan optional property getPositionOfLineAndCharacter in SourceFileLike absent from structural source SourceFile, which can hide fields
+gone src/compiler/utilities.ts:7960:37 refusal_scan optional property getPositionOfLineAndCharacter in SourceFileLike absent from structural source SourceFile, which can hide fields
+gone src/compiler/utilities.ts:7972:37 refusal_scan optional property getPositionOfLineAndCharacter in SourceFileLike absent from structural source SourceFile, which can hide fields
+gone src/compiler/utilities.ts:7978:37 refusal_scan optional property getPositionOfLineAndCharacter in SourceFileLike absent from structural source SourceFile, which can hide fields
+gone src/compiler/parser.ts:10015:36 refusal_scan optional property getPositionOfLineAndCharacter in SourceFileLike absent from structural source SourceFile, which can hide fields
+gone src/compiler/parser.ts:10015:48 refusal_scan optional property getPositionOfLineAndCharacter in SourceFileLike absent from structural source SourceFile, which can hide fields
+gone src/compiler/parser.ts:10087:37 refusal_scan optional property getPositionOfLineAndCharacter in SourceFileLike absent from structural source SourceFile, which can hide fields
+gone src/compiler/parser.ts:10244:42 refusal_scan optional property getPositionOfLineAndCharacter in SourceFileLike absent from structural source SourceFile, which can hide fields
+gone src/compiler/checker.ts:49348:52 refusal_scan optional property getPositionOfLineAndCharacter in SourceFileLike absent from structural source SourceFile, which can hide fields
