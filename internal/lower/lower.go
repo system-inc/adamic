@@ -646,11 +646,14 @@ type lowering struct {
 	// closedKindAnswers is closedKinds' answer by type and field, and closedKindDeclared and closedKindBuilt
 	// the program's declared types and build sites it judges each type against, found once; closedKindNewOnly
 	// is each function declaration with a declared this, and whether every use of it is a new callee or a
-	// cast to any (enum_tag_closed_kind.go).
-	closedKindAnswers  map[closedKindKey]closedKindAnswer
-	closedKindDeclared []closedKindSite
-	closedKindBuilt    []closedKindSite
-	closedKindNewOnly  map[*ast.Symbol]bool
+	// cast to any; closedKindEverywhere is every declared type in every file the program holds, its
+	// declaration files included, and closedKindFits each closedKindSourcesFit answer (enum_tag_closed_kind.go).
+	closedKindAnswers    map[closedKindKey]closedKindAnswer
+	closedKindDeclared   []closedKindSite
+	closedKindBuilt      []closedKindSite
+	closedKindNewOnly    map[*ast.Symbol]bool
+	closedKindEverywhere []closedKindSite
+	closedKindFits       map[closedKindFitKey]bool
 	// kindTagCarriers is every declared type carrying a literal on a tag field, by the field and the literal's
 	// runtime value, and kindTagFields the fields it holds (cast_kind_union_writes.go, #b5w3ycg head 2).
 	kindTagCarriers map[string][]*checker.Type
