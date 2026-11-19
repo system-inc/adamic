@@ -14,11 +14,6 @@ var mergedFieldRuledDivergences = []struct{ file, sourceOutput, stop string }{
 }
 
 func init() {
-	fixtures = append(fixtures, struct {
-		path            string
-		lowers, checked bool
-	}{refusalFixtureRoot + "merge_present.a", true, false})
-	// merge_present.a's bare .a record counts it; its TypeScript-mode agree and leak tests still run it.
 	for _, file := range []string{"merge_unused.a", "merge_missing.a", "merge_missing_computed.a"} {
 		additionalFixtureCounts = append(additionalFixtureCounts, countCase{refusalFixtureRoot + file, func(t *testing.T) (string, func() string) {
 			return rulingCount(t, file, true)
@@ -28,11 +23,11 @@ func init() {
 
 func TestMergedFieldAdamicUnusedRefused(t *testing.T) {
 	t.Parallel()
-	rulingRefusal(t, "merge_unused.a", false, "class Missing merged with an interface promises field promised that the class does not initialize; declare and initialize promised in class Missing, or use a separate interface with a checked view")
+	rulingRefusal(t, "merge_unused.a", false, "an interface declaration merged into class Missing, adding member promised; declare promised on the class itself")
 }
 func TestMergedFieldAdamicReadRefused(t *testing.T) {
 	t.Parallel()
-	rulingRefusal(t, "merge_missing.a", false, "class Missing merged with an interface promises field promised that the class does not initialize; declare and initialize promised in class Missing, or use a separate interface with a checked view")
+	rulingRefusal(t, "merge_missing.a", false, "an interface declaration merged into class Missing, adding member promised; declare promised on the class itself")
 }
 func TestMergedFieldTypeScriptUnusedAccepted(t *testing.T) {
 	t.Parallel()
@@ -66,9 +61,9 @@ func mergedFieldChecked(t *testing.T, index int) {
 		}
 	}
 }
-func TestMergedFieldAdamicInitializedAgreesWithNode(t *testing.T) {
+func TestMergedFieldAdamicInitializedRefused(t *testing.T) {
 	t.Parallel()
-	rulingAgrees(t, "merge_present.a", false)
+	rulingRefusal(t, "merge_present.a", false, "an interface declaration merged into class Present, adding member promised; declare promised on the class itself")
 }
 func TestMergedFieldTypeScriptInitializedAgreesWithNode(t *testing.T) {
 	t.Parallel()
@@ -77,5 +72,5 @@ func TestMergedFieldTypeScriptInitializedAgreesWithNode(t *testing.T) {
 
 func TestMergedFieldAdamicComputedRefused(t *testing.T) {
 	t.Parallel()
-	rulingRefusal(t, "merge_missing_computed.a", false, "class Missing merged with an interface promises field promised that the class does not initialize; declare and initialize promised in class Missing, or use a separate interface with a checked view")
+	rulingRefusal(t, "merge_missing_computed.a", false, "an interface declaration merged into class Missing, adding member promised; declare promised on the class itself")
 }

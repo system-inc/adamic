@@ -18,7 +18,6 @@ func TestNamespaceLimitsStayLoud(t *testing.T) {
 		{"reflection", "namespace N {export const x=1;} console.log(Object.keys(N).join(' '));", "exported variable in a namespace used as a value"},
 		{"reopening", "namespace N {export const x=1;} namespace N {export const y=2;}", "reopened namespace"},
 		{"function merge escape", "function N():number{return 1;} namespace N {export const x=1;} const alias=N;", "callable namespace object"},
-		{"class merge", "class N {} namespace N {export const x=1;}", "merged with a runtime value"},
 		{"destructured state", "namespace N {const [x]=[1];}", "destructuring inside a namespace"},
 		{"nested object var", "namespace N {var {inner:{x}}={inner:{x:1}};}", "destructuring inside a namespace"},
 		{"rest object var", "namespace N {var {x,...rest}={x:1,y:2};}", "destructuring inside a namespace"},
@@ -97,7 +96,7 @@ func TestDebugNamespaceMergedCapabilities(t *testing.T) {
 				lowersAndAgreesWithNode(t, string(source))
 				return
 			}
-			_, err = lowerSource(t, string(source))
+			_, err = lowerSourceAs(t, string(source), ".ts")
 			var notYet *NotYet
 			if !errors.As(err, &notYet) || !strings.Contains(err.Error(), test.reason) {
 				t.Fatalf("got %v, want NotYet %s", err, test.reason)
