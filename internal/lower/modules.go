@@ -192,6 +192,12 @@ func (l *lowering) declareModule(statements []*ast.Node) error {
 			if statement.Body() == nil && l.censusImplementation(statement) != nil {
 				continue
 			}
+			// A function constructor an allocator getter hands out is lowered as its synthesized class, where a
+			// new first needs it, never as a function: nothing calls it, and its this takes no argument
+			// (#837zjkt, function_constructor.go).
+			if l.functionConstructorRoads().constructors[l.closedKindFunctionSymbol(statement)] != nil {
+				continue
+			}
 			if err := l.censusOverloads(statement); err != nil {
 				return err
 			}
