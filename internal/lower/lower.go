@@ -511,6 +511,10 @@ type lowering struct {
 	// there from the reach and owners the dispatch was decided by (optional_member_presence.go). It holds
 	// plain values, never the graph, so the latent census copies it as it copies any lowering field.
 	dispatchedPresenceReads []dispatchedPresenceRead
+	// dispatchedReads are the field reads finishAccessors made a dispatcher's call, each as lowering made it,
+	// its view fields and receiver whole, which the dispatcher's fallback zeroed: checkViewWidenedReads weighs
+	// them as it weighs a read that stayed a Property (#3jj9dzg).
+	dispatchedReads []ir.Property
 	// hostMemberWrites are the writes to a method a program's interface or type literal declares, each
 	// with main's stop for it, which lowering stores as fields and checkHostMemberWrites judges once
 	// lowering is done (host_member_write.go).
