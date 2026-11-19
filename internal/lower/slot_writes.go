@@ -158,6 +158,12 @@ func (l *lowering) reachHoldsSlot(reach *slotReach, name string, reaches ir.Allo
 		// A parameter with unseen callers, a closure's call, an opaque call's result, a host value.
 		return ", where what reaches its receiver isn't known"
 	}
+	if len(reaches.Sites) == 0 {
+		// No allocation reaches it: a receiver holding only undefined or null, or a store in code that never
+		// runs. The store would fault where Node throws a TypeError a program can catch, so it stops here, as
+		// checkFunctionConstructorRoads stops a new no constructor reaches (Lower's should on #w8nanzw).
+		return ", where nothing the program builds reaches its receiver"
+	}
 	for _, site := range reaches.Sites {
 		if judged[site] {
 			continue
