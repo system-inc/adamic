@@ -1,0 +1,53 @@
+file	line	column	relation	source type	target type	optional fields of the target absent from the source	cleared by the wave (chg_1x44ww37)
+src/compiler/checker.ts	9276	95	CallExpression	Type	TypeParameter	constraint,default,target,mapper,isThisType,resolvedDefaultType	
+src/compiler/checker.ts	13244	71	CallExpression	Type	TypeParameter	constraint,default,target,mapper,isThisType,resolvedDefaultType	
+src/compiler/checker.ts	13276	58	CallExpression	Type	BaseType	constraint,default,target,mapper,isThisType,resolvedDefaultType,members,properties,callSignatures,constructSignatures,indexInfos,objectTypeWithoutAbstractConstructSignatures,uniqueLiteralFilledInstantiation,propertyCache,propertyCacheWithoutObjectFunctionPropertyAugment,simplifiedForReading,simplifiedForWriting	
+src/compiler/checker.ts	21498	139	CallExpression	{ errors?: Diagnostic[] | undefined; }	ErrorOutputContainer | undefined	skipLogging	C08
+src/compiler/checker.ts	23690	67	CallExpression	Type	TypeParameter	constraint,default,target,mapper,isThisType,resolvedDefaultType	
+src/compiler/checker.ts	23696	71	CallExpression	Type	TypeParameter	constraint,default,target,mapper,isThisType,resolvedDefaultType	
+src/compiler/utilities.ts	8809	39	CallExpression	DiagnosticRelatedInformation	DiagnosticReadView	reportsUnnecessary,reportsDeprecated,source,relatedInformation,skippedOn,canonicalHead	
+src/compiler/utilities.ts	8809	44	CallExpression	DiagnosticRelatedInformation	DiagnosticReadView	reportsUnnecessary,reportsDeprecated,source,relatedInformation,skippedOn,canonicalHead	
+src/compiler/factory/nodeFactory.ts	7489	45	BinaryExpression	(TextRange | undefined)[]	(SourceMapRange | undefined)[] | undefined		
+src/compiler/factory/emitNode.ts	133	12	ReturnStatement	Node | SourceMapRange	SourceMapRange	source	
+src/compiler/parser.ts	10728	53	PropertyAssignment	{ [index: string]: string | { value: string; pos: number; end: number; }; }	({ types?: { value: string; pos: number; end: number; } | undefined; } & { lib?: { value: string; pos: number; end: number; } | undefined; } & { path?: { value: string; pos: number; end: number; } | undefined; } & { "no-default-lib"?: string | undefined; } & { "resolution-mode"?: string | undefined; } & { preserve?: string | undefined; }) | ({ path: string; } & { name?: string | undefined; }) | { name: string; } | { factory: string; } | { factory: string; } | { factory: string; } | { factory: string; }	types,lib,path,no-default-lib,resolution-mode,preserve,name	
+src/compiler/parser.ts	10760	45	PropertyAssignment	{ [index: string]: string | undefined; }	({ types?: { value: string; pos: number; end: number; } | undefined; } & { lib?: { value: string; pos: number; end: number; } | undefined; } & { path?: { value: string; pos: number; end: number; } | undefined; } & { "no-default-lib"?: string | undefined; } & { "resolution-mode"?: string | undefined; } & { preserve?: string | undefined; }) | ({ path: string; } & { name?: string | undefined; }) | { name: string; } | { factory: string; } | { factory: string; } | { factory: string; } | { factory: string; }	types,lib,path,no-default-lib,resolution-mode,preserve,name	
+src/compiler/moduleNameResolver.ts	140	12	ReturnStatement	{ path: string; extension: string; packageId: PackageId | undefined; resolvedUsingTsExtension: boolean | undefined; } | undefined	Resolved | undefined	originalPath	
+src/compiler/moduleNameResolver.ts	2409	82	CallExpression	PackageJsonPathFields	PackageJson	version	
+src/compiler/moduleNameResolver.ts	2494	56	CallExpression	PackageJsonPathFields	PackageJson	version	
+src/compiler/moduleNameResolver.ts	2497	93	CallExpression	PackageJsonPathFields	PackageJson	version	
+src/compiler/moduleNameResolver.ts	2498	116	CallExpression	PackageJsonPathFields	PackageJson	version	
+src/compiler/moduleSpecifiers.ts	200	71	CallExpression	Pick<SourceFile, "fileName" | "impliedNodeFormat">	Pick<SourceFile, "fileName" | "impliedNodeFormat" | "packageJsonScope">	packageJsonScope	C12b
+src/compiler/moduleSpecifiers.ts	243	63	CallExpression	Pick<SourceFile, "fileName" | "impliedNodeFormat">	Pick<SourceFile, "fileName" | "impliedNodeFormat" | "packageJsonScope">	packageJsonScope	C12b
+src/compiler/transformers/classThis.ts	122	59	CallExpression	Identifier	SourceMapRange | undefined	source	
+src/compiler/transformers/namedEvaluation.ts	205	68	CallExpression	Identifier	SourceMapRange | undefined	source	
+src/compiler/transformers/ts.ts	1625	40	CallExpression	TextRange	SourceMapRange | undefined	source	
+src/compiler/transformers/classFields.ts	2505	43	CallExpression	TextRange	SourceMapRange | undefined	source	
+src/compiler/transformers/classFields.ts	2611	42	CallExpression	Identifier	SourceMapRange | undefined	source	
+src/compiler/transformers/classFields.ts	3306	50	CallExpression	Identifier	SourceMapRange | undefined	source	
+src/compiler/transformers/legacyDecorators.ts	434	40	CallExpression	TextRange	SourceMapRange | undefined	source	
+src/compiler/transformers/legacyDecorators.ts	516	40	CallExpression	TextRange	SourceMapRange | undefined	source	
+src/compiler/transformers/legacyDecorators.ts	659	35	CallExpression	TextRange	SourceMapRange | undefined	source	
+src/compiler/transformers/legacyDecorators.ts	697	39	CallExpression	TextRange	SourceMapRange | undefined	source	
+src/compiler/transformers/legacyDecorators.ts	835	50	CallExpression	Identifier	SourceMapRange | undefined	source	
+src/compiler/transformers/esDecorators.ts	1230	40	CallExpression	TextRange	SourceMapRange | undefined	source	
+src/compiler/transformers/esDecorators.ts	1357	56	CallExpression	TextRange	SourceMapRange | undefined	source	
+src/compiler/transformers/esDecorators.ts	1389	56	CallExpression	TextRange	SourceMapRange | undefined	source	
+src/compiler/transformers/esDecorators.ts	1719	40	CallExpression	TextRange	SourceMapRange | undefined	source	
+src/compiler/transformers/esDecorators.ts	2286	33	CallExpression	TextRange	SourceMapRange | undefined	source	
+src/compiler/transformers/esDecorators.ts	2294	35	CallExpression	TextRange	SourceMapRange | undefined	source	
+src/compiler/transformers/es2017.ts	629	13	CallExpression	VariableDeclaration	SourceMapRange | undefined	source	
+src/compiler/transformers/esnext.ts	539	43	CallExpression	ClassDeclaration	SourceMapRange | undefined	source	
+src/compiler/transformers/esnext.ts	596	42	CallExpression	VariableStatement	SourceMapRange | undefined	source	
+src/compiler/transformers/esnext.ts	617	39	CallExpression	VariableDeclaration	SourceMapRange | undefined	source	
+src/compiler/transformers/es2015.ts	2635	71	CallExpression	TextRange	SourceMapRange | undefined	source	
+src/compiler/transformers/es2015.ts	2804	52	CallExpression	TextRange	SourceMapRange | undefined	source	
+src/compiler/transformers/es2015.ts	3045	52	CallExpression	TextRange	SourceMapRange | undefined	source	
+src/compiler/transformers/es2015.ts	4835	39	CallExpression	SuperExpression	SourceMapRange | undefined	source	
+src/compiler/transformers/generators.ts	751	17	CallExpression	VariableStatement	SourceMapRange | undefined	source	
+src/compiler/transformers/generators.ts	2076	50	CallExpression	Identifier	SourceMapRange | undefined	source	
+src/compiler/emitter.ts	1409	32	CallExpression	SourceFile	SourceMapSource	skipTrivia	C07
+src/compiler/builder.ts	1528	48	VariableDeclaration	ReusableDiagnosticRelatedInformation	ReusableDiagnostic	reportsUnnecessary,reportDeprecated,source,relatedInformation,skippedOn	
+src/compiler/tsbuildPublic.ts	454	17	CallExpression	SolutionBuilderHost<T>	ModuleResolutionHost	getGlobalTypingsCacheLocation	C09b
+src/compiler/tsbuildPublic.ts	476	17	CallExpression	SolutionBuilderHost<T>	ModuleResolutionHost	getGlobalTypingsCacheLocation	C09b
+src/compiler/tsbuildPublic.ts	490	17	CallExpression	SolutionBuilderHost<T>	ModuleResolutionHost	getGlobalTypingsCacheLocation	C09b
+src/compiler/tsbuildPublic.ts	501	66	CallExpression	SolutionBuilderHost<T>	(CompilerHost | ProgramHost<T>) & { onUnRecoverableConfigFileDiagnostic?: DiagnosticReporter | undefined; }	getSourceFileByPath,getCancellationToken,onReleaseOldSourceFile,onReleaseParsedCommandLine,hasChangedAutomaticTypeDirectiveNames,useSourceOfProjectReferenceRedirect,getSymlinkCache,getBuildInfo,getGlobalTypingsCacheLocation,onUnRecoverableConfigFileDiagnostic	C09b
