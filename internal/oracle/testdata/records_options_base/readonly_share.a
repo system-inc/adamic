@@ -1,0 +1,18 @@
+// #6c4swvt piece 4, Runtime's sharing seam: a readonly view of a record is an alias, never immutable data. Two
+// parallel tasks, one reading through the readonly view and one writing the record it views, must be refused.
+import { parallelMap } from 'adamic';
+type Bag = Record<string, number>;
+function run(): void {
+    const bag: Bag = {};
+    bag["n"] = 1;
+    const view: Readonly<Record<string, number>> = bag;
+    const results = parallelMap([1, 2], (task) => {
+        if (task === 1) {
+            return view["n"] ?? 0;
+        }
+        bag["n"] = task;
+        return task;
+    });
+    console.log(String(results.length));
+}
+run();

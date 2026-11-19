@@ -783,6 +783,11 @@ type lowering struct {
 	// as a record may drop a named contract the reads hold (droppedContractRead, records_named.go).
 	droppedContractsRead bool
 
+	// readonlyKinds is what the program's first view site into each readonly string-index type put there,
+	// a record or a fixed object (records_readonly.go), and readonlyDeciding is set while it's walked.
+	readonlyKinds    map[*checker.Type]readonlyDecision
+	readonlyDeciding bool
+
 	// looseInits is every literal field, element or entry lowering made into a slot typed unknown or
 	// object, judged by the loose-slot stop (loose_slots.go).
 	looseInits []looseInit

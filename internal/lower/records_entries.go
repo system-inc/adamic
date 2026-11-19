@@ -44,6 +44,9 @@ func (l *lowering) enumerationRecordStorageType(t *checker.Type) bool {
 // Readonly index views admitted by main's enumeration proof keep fixed-object
 // storage. This does not admit mutable dictionary aliases or readonly writes.
 func (l *lowering) enumerationReadonlyType(t *checker.Type) bool {
+	if l.readonlyRecordType(l.concrete(t)) {
+		return false // The program holds this one as a record (records_readonly.go).
+	}
 	infos := l.checker.GetIndexInfosOfType(t)
 	if len(infos) != 1 || !infos[0].IsReadonly() || infos[0].KeyType().Flags() != checker.TypeFlagsString {
 		return false

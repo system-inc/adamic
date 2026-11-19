@@ -8,7 +8,8 @@ import (
 	"strings"
 )
 
-// recordElement recognizes resolved mutable string dictionaries, including named keys.
+// recordElement recognizes resolved mutable string dictionaries, including named keys, and a readonly one the
+// program holds as a record (readonlyRecordType).
 func (l *lowering) recordElement(t *checker.Type) *checker.Type {
 	if t == nil {
 		return nil
@@ -35,7 +36,7 @@ func (l *lowering) recordElement(t *checker.Type) *checker.Type {
 			}
 		}
 	}
-	if len(infos) != 1 || infos[0].KeyType().Flags() != checker.TypeFlagsString || infos[0].IsReadonly() || len(l.checker.GetSignaturesOfType(t, checker.SignatureKindCall)) != 0 || len(l.checker.GetSignaturesOfType(t, checker.SignatureKindConstruct)) != 0 {
+	if len(infos) != 1 || infos[0].KeyType().Flags() != checker.TypeFlagsString || infos[0].IsReadonly() && !l.readonlyRecordType(t) || len(l.checker.GetSignaturesOfType(t, checker.SignatureKindCall)) != 0 || len(l.checker.GetSignaturesOfType(t, checker.SignatureKindConstruct)) != 0 {
 		return nil
 	}
 	return infos[0].ValueType()
@@ -547,7 +548,7 @@ func (l *lowering) recordStorageView(node *ast.Node) error {
 		if literal && bounded || walk.bounded {
 			return l.recordStorageBounded(node, own, target)
 		}
-		return l.notYet(node, "a "+l.checker.TypeToString(own)+" seen as "+l.checker.TypeToString(target)+" (fixed objects and records have different storage; copy explicitly)")
+		return l.notYet(node, "a "+l.checker.TypeToString(own)+" seen as "+l.checker.TypeToString(target)+" (fixed objects and records have different storage; copy explicitly"+l.readonlyRecordReason(target)+")")
 	}
 	return nil
 }
