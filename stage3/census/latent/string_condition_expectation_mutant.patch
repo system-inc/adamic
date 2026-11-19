@@ -1,0 +1,9 @@
+--- full_audit.py
++++ full_audit.py
+@@ -19,5 +19,5 @@
+               and finding['kind'] == 'Refused'}
+     # cdddfee346 made string and number conditions lower with JavaScript truthiness.
+-    assert actual == {'var'}, actual
++    assert actual == {'a string as a condition', 'var'}, actual
+     excluded = next(unit for unit in units if unit.get('name') == 'badNested')
+     assert excluded['depth'] == 1 and excluded['parent'] and excluded['body_end'] > excluded['body_start'], excluded

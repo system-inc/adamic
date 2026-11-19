@@ -199,10 +199,10 @@ Snapshot failures and unit panics are explicit boundaries. The census therefore
 remains an observation ledger, not an exhaustive list of expression-level blockers.
 Final ownership, module ordering, and backend passes remain outside its scope.
 
-`full_audit.py BINARY [EVIDENCE_DIRECTORY]` requires three distinct refusals from
-actual lowering in one unit, named diagnosed nested exclusions, a clean nested
-container with a diagnosed child, a clean sibling, and rollback of a failed
-initializer. It runs `LATENT_MUTANT_FIRST_ERROR_ONLY=1` and
+`full_audit.py BINARY [EVIDENCE_DIRECTORY]` requires a `var` refusal from
+actual lowering, named diagnosed nested exclusions, a skipped dependency on a
+diagnosed child, a clean sibling, and rollback of a failed initializer. It runs
+`LATENT_MUTANT_FIRST_ERROR_ONLY=1` and
 `LATENT_MUTANT_KEEP_FAILED_STATE=1`; both must fail those same assertions. The
 existing legacy audits, refusal AST missing-function mutants, and no-output guard
 mutants remain in use. Generated observation headers identify `latent_mode`.

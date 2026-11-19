@@ -17,7 +17,8 @@ def check(rows):
     actual = {finding['reason'] for finding in findings
               if finding['unit'] == target['where'] and finding['phase'] == 'lowering'
               and finding['kind'] == 'Refused'}
-    assert actual == {'a string as a condition', 'a number as a condition', 'var'}, actual
+    # cdddfee346 made string and number conditions lower with JavaScript truthiness.
+    assert actual == {'var'}, actual
     excluded = next(unit for unit in units if unit.get('name') == 'badNested')
     assert excluded['depth'] == 1 and excluded['parent'] and excluded['body_end'] > excluded['body_start'], excluded
     assert excluded['status'] == 'split_checker_body' and excluded['checker_diagnostics'], excluded
@@ -31,9 +32,13 @@ def check(rows):
                and finding['unit'] == rollback['where'] for finding in findings), findings
     middle = next(unit for unit in units if unit.get('name') == 'middle')
     assert middle['status'] == 'attempted', middle
-    assert {finding['reason'] for finding in findings if finding['unit'] == middle['where']
-            and finding['phase'] == 'lowering' and finding['kind'] == 'Refused'} == {
-                'a string as a condition', 'a number as a condition', 'var'}, findings
+    grandchild = next(unit for unit in units if unit.get('name') == 'grandBad')
+    assert grandchild['status'] == 'split_checker_body' and grandchild['checker_diagnostics'], grandchild
+    middle_findings = [finding for finding in findings if finding['unit'] == middle['where']
+                       and finding['phase'] == 'lowering']
+    assert any(finding['kind'] == 'SkippedDependency' and finding['where'] == grandchild['where']
+               for finding in middle_findings), middle_findings
+    assert not any(finding['kind'] == 'Refused' for finding in middle_findings), middle_findings
     boundaries = [finding for finding in findings if finding['kind'] == 'Boundary']
     assert boundaries and all(finding.get('end', 0) > finding.get('start', 0) for finding in boundaries), boundaries
 
@@ -79,7 +84,7 @@ export function outerOnly(): void {
     try:
         check(observations['first-error-mutant'])
     except AssertionError as failure:
-        print('first-error-only mutant caught by all-three-refusals assertion:', failure)
+        print('first-error-only mutant caught by continuation assertion:', failure)
     else:
         raise AssertionError('first-error-only mutant survived')
     try:
@@ -88,7 +93,7 @@ export function outerOnly(): void {
         print('failed-state-retention mutant caught by poison binding rollback assertion')
     else:
         raise AssertionError('failed-state-retention mutant survived')
-    print('PASS: three distinct lowering refusals; named checker-diagnosed nested exclusion; eligible sibling; failed declaration rolled back; explicit byte-span boundaries; no-output guards')
+    print('PASS: var refusal; named checker-diagnosed nested exclusions; skipped dependency; eligible sibling; failed declaration rolled back; explicit byte-span boundaries; no-output guards')
 
 
 if __name__ == '__main__':
