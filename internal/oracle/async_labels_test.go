@@ -4,6 +4,7 @@ import (
 	"github.com/system-inc/adamic/internal/ir"
 	"github.com/system-inc/adamic/internal/leakcheck"
 	"github.com/system-inc/adamic/internal/native"
+	"github.com/system-inc/adamic/internal/native_runtime"
 	"path/filepath"
 	"reflect"
 	"testing"
@@ -297,7 +298,7 @@ func asyncLabelsMutation(t *testing.T, name, kind string) {
 	}
 	code := native.C(p)
 	binary := filepath.Join(t.TempDir(), "wrong-completion")
-	if err := native.Build(code, binary, native.Options{Sanitize: true}); err != nil {
+	if err := native.Build(code, binary, native_runtime.Options{Sanitize: true}); err != nil {
 		t.Fatal(err)
 	}
 	if report := leakcheck.Report(t, code, binary); report != "" {

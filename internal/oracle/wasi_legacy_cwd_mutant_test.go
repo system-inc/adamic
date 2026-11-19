@@ -7,6 +7,7 @@ import (
 	"testing"
 
 	"github.com/system-inc/adamic/internal/native"
+	"github.com/system-inc/adamic/internal/native_runtime"
 )
 
 func TestWASILegacyFileCwdNodeMutant(t *testing.T) {
@@ -41,7 +42,7 @@ int main(void) {
 	}
 	observe := func(source string) run {
 		binary := filepath.Join(t.TempDir(), "legacy.wasm")
-		if err := native.Build(source, binary, native.Options{Target: "wasm32-wasi"}); err != nil {
+		if err := native.Build(source, binary, native_runtime.Options{Target: "wasm32-wasi"}); err != nil {
 			t.Fatal(err)
 		}
 		return executeInput(t, inputRun{directory: directory}, nil, "node", "--disable-warning=ExperimentalWarning", runner, binary)

@@ -10,6 +10,7 @@ import (
 	"testing"
 
 	"github.com/system-inc/adamic/internal/native"
+	"github.com/system-inc/adamic/internal/native_runtime"
 )
 
 var wasiFileAdapters = []struct{ node, path, operation, before, after string }{
@@ -48,9 +49,9 @@ int main(void) {
  return 0;
 }
 `, probe.path, probe.operation)
-	options := native.Options{Sanitize: true}
+	options := native_runtime.Options{Sanitize: true}
 	if wasm {
-		options = native.Options{Target: "wasm32-wasi"}
+		options = native_runtime.Options{Target: "wasm32-wasi"}
 	}
 	observe := func(code string) run {
 		binary := filepath.Join(t.TempDir(), "program")
@@ -103,7 +104,7 @@ func TestWASIHostBuildBoundaryNodeMutant(t *testing.T) {
 	}
 	code := native.C(program)
 	var refused *native.TargetRefused
-	err = native.Build(code, filepath.Join(t.TempDir(), "refused.wasm"), native.Options{Target: "wasm32-wasi"})
+	err = native.Build(code, filepath.Join(t.TempDir(), "refused.wasm"), native_runtime.Options{Target: "wasm32-wasi"})
 	if !errors.As(err, &refused) || refused.Member != "process.pid" {
 		t.Fatalf("want pid target refusal: %v", err)
 	}
@@ -162,7 +163,7 @@ int main(void) {
 `, file)
 	// The control must refuse the unsupported precision, never round it silently.
 	binary := filepath.Join(directory, "control.wasm")
-	if err := native.Build(source, binary, native.Options{Target: "wasm32-wasi"}); err != nil {
+	if err := native.Build(source, binary, native_runtime.Options{Target: "wasm32-wasi"}); err != nil {
 		t.Fatal(err)
 	}
 	actual := execute(t, "node", "--disable-warning=ExperimentalWarning", filepath.Join(repository, "oracle/wasi.mjs"), binary)

@@ -3,6 +3,7 @@ package oracle
 import (
 	"fmt"
 	"github.com/system-inc/adamic/internal/ir"
+	"github.com/system-inc/adamic/internal/native_runtime"
 	"path/filepath"
 	"reflect"
 	"regexp"
@@ -32,7 +33,7 @@ func TestAsyncCompilerChecksCatchMutants(t *testing.T) {
 			t.Fatal("mutant did not change input")
 		}
 		binary := filepath.Join(t.TempDir(), "mutant")
-		if err := native.Build(code, binary, native.Options{Sanitize: true}); err != nil {
+		if err := native.Build(code, binary, native_runtime.Options{Sanitize: true}); err != nil {
 			t.Fatal(err)
 		}
 		result := execute(t, binary)
@@ -55,7 +56,7 @@ func TestAsyncCompilerChecksCatchMutants(t *testing.T) {
 			t.Fatal("mutant did not change input")
 		}
 		binary := filepath.Join(t.TempDir(), "mutant")
-		if err := native.Build(code, binary, native.Options{Sanitize: true}); err != nil {
+		if err := native.Build(code, binary, native_runtime.Options{Sanitize: true}); err != nil {
 			t.Fatal(err)
 		}
 		result := execute(t, binary)
@@ -100,13 +101,13 @@ func TestAsyncThrowReleasesFrame(t *testing.T) {
 				source = source[:location[0]] + slot.ReplaceAllString(source[location[0]:location[1]], "(void)$1;") + source[location[1]:]
 			}
 			binary := filepath.Join(t.TempDir(), "throw")
-			if err := native.Build(source, binary, native.Options{Sanitize: true}); err != nil {
+			if err := native.Build(source, binary, native_runtime.Options{Sanitize: true}); err != nil {
 				t.Fatal(err)
 			}
 			report := leakcheck.Report(t, source, binary)
 			// Exercise Darwin's counted rule on Linux too, using this actual frame mutant.
 			counted := filepath.Join(t.TempDir(), "counted-proof")
-			if err := native.Build(source, counted, native.Options{Count: true}); err != nil {
+			if err := native.Build(source, counted, native_runtime.Options{Count: true}); err != nil {
 				t.Fatal(err)
 			}
 			countedReport := leakcheck.Unbalanced(leakRun(execute(t, counted)))
@@ -185,7 +186,7 @@ func TestAsyncTypeOfWrongKindMutant(t *testing.T) {
 		t.Fatal("mutant did not change an async typeof operand")
 	}
 	binary := filepath.Join(t.TempDir(), "wrong-kind")
-	if err := native.Build(native.C(program), binary, native.Options{Sanitize: true}); err != nil {
+	if err := native.Build(native.C(program), binary, native_runtime.Options{Sanitize: true}); err != nil {
 		t.Fatal(err)
 	}
 	if report := leakcheck.Report(t, native.C(program), binary); report != "" {
@@ -255,7 +256,7 @@ func asyncLoopWitness(t *testing.T, name, want string) {
 		t.Fatalf("native: %s: %+v", diff, got)
 	}
 	binary := filepath.Join(t.TempDir(), "split-counted")
-	if err := native.Build(native.C(program), binary, native.Options{Split: true, Count: true}); err != nil {
+	if err := native.Build(native.C(program), binary, native_runtime.Options{Split: true, Count: true}); err != nil {
 		t.Fatal(err)
 	}
 	got = execute(t, binary)
@@ -522,7 +523,7 @@ func asyncLoopMutation(t *testing.T, name, kind string) {
 		t.Fatal("mutant did not change its input")
 	}
 	binary := filepath.Join(t.TempDir(), "mutant")
-	if err := native.Build(code, binary, native.Options{Sanitize: true}); err != nil {
+	if err := native.Build(code, binary, native_runtime.Options{Sanitize: true}); err != nil {
 		t.Fatal(err)
 	}
 	got := executeWith(t, []string{"ASAN_OPTIONS=detect_leaks=1"}, binary)

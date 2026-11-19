@@ -63,12 +63,12 @@ func TestOrdinaryToPrimitive(t *testing.T) {
 		t.Fatal(err)
 	}
 	for _, slabs := range []bool{false, true} {
-		options := Options{Sanitize: true, slabs: slabs, Count: true}
+		options := native_runtime.Options{Sanitize: true, Slabs: slabs, Count: true}
 		binary := filepath.Join(t.TempDir(), "primitive")
 		if err := Build(string(source), binary, options); err != nil {
 			t.Fatal(err)
 		}
-		t.Logf("clang flags: %s", strings.Join(Flags(options), " "))
+		t.Logf("clang flags: %s", strings.Join(native_runtime.Flags(options), " "))
 		for index, name := range primitiveCases {
 			t.Run(fmt.Sprintf("slabs-%t/%s", slabs, name), func(t *testing.T) {
 				want := primitiveOracle(t, index)
@@ -119,10 +119,10 @@ func primitiveMutant(t *testing.T, name string) string {
 // only its changed exceptions.c and links every object directly.
 func primitiveMutants(t *testing.T) string {
 	t.Helper()
-	flags := Flags(Options{Sanitize: true, Count: true})
+	flags := native_runtime.Flags(native_runtime.Options{Sanitize: true, Count: true})
 	inputs := buildcache.Inputs{
 		Name:      "primitive-mutants",
-		Files:     []string{"internal/native_runtime/c", "internal/native/testdata/to-primitive/runtime.c", "internal/native/to_primitive_test.go", "internal/native/split_units_test.go", "internal/native/runtime_mutants_test.go", "internal/native/native.go", "internal/native/library.go"},
+		Files:     []string{"internal/native_runtime/c", "internal/native/testdata/to-primitive/runtime.c", "internal/native/to_primitive_test.go", "internal/native/split_units_test.go", "internal/native/runtime_mutants_test.go", "internal/native/native.go", "internal/native_runtime/options.go", "internal/native_runtime/library.go"},
 		Flags:     slices.Clone(flags),
 		Toolchain: []string{buildcache.CompilerReport("clang")},
 	}
@@ -134,14 +134,14 @@ func primitiveMutants(t *testing.T) string {
 		t.Fatal(err)
 	}
 	return buildcache.Product(t, inputs, func(directory string) error {
-		files, err := readRuntime(native_runtime.Sources, "c")
+		files, err := native_runtime.ReadRuntime(native_runtime.Sources, "c")
 		if err != nil {
 			return err
 		}
 		var sources []string
 		for _, file := range files {
-			if strings.HasSuffix(file.name, ".c") {
-				sources = append(sources, file.name)
+			if strings.HasSuffix(file.Name, ".c") {
+				sources = append(sources, file.Name)
 			}
 		}
 		scratch, err := os.MkdirTemp("", "adamic-primitive-mutants-")
@@ -150,21 +150,21 @@ func primitiveMutants(t *testing.T) string {
 		}
 		defer os.RemoveAll(scratch)
 		// compile builds a directory's translation unit from inside it, mapped, so no object names the scratch
-		// directory (cachedRuntime's way).
+		// directory (native_runtime.CachedRuntime's way).
 		compile := func(within, source string) error {
-			arguments := append(append(slices.Clone(flags), prefixMaps(within, "/adamic-runtime")...), "-c", source, "-o", strings.TrimSuffix(source, ".c")+".o")
+			arguments := append(append(slices.Clone(flags), native_runtime.PrefixMaps(within, "/adamic-runtime")...), "-c", source, "-o", strings.TrimSuffix(source, ".c")+".o")
 			command := runtimeMutantClang(within, arguments...)
 			if output, err := command.CombinedOutput(); err != nil {
 				return fmt.Errorf("compiling runtime %s: %w\n%s", source, err, output)
 			}
 			return nil
 		}
-		write := func(within string, files []runtimeFile) error {
+		write := func(within string, files []native_runtime.RuntimeFile) error {
 			if err := os.MkdirAll(within, 0o755); err != nil {
 				return err
 			}
 			for _, file := range files {
-				if err := os.WriteFile(filepath.Join(within, file.name), file.contents, 0o644); err != nil {
+				if err := os.WriteFile(filepath.Join(within, file.Name), file.Contents, 0o644); err != nil {
 					return err
 				}
 			}
@@ -184,17 +184,17 @@ func primitiveMutants(t *testing.T) string {
 			mutation := primitiveMutations[index]
 			// The mutant's directory holds the runtime's headers and its changed exceptions.c, so that file compiles
 			// as it would among the rest.
-			var changed []runtimeFile
+			var changed []native_runtime.RuntimeFile
 			found := false
 			for _, file := range files {
-				if file.name == "exceptions.c" {
-					contents := string(file.contents)
+				if file.Name == "exceptions.c" {
+					contents := string(file.Contents)
 					if strings.Count(contents, mutation.before) != 1 {
 						return fmt.Errorf("mutant %s: its anchor is no longer unique in exceptions.c", mutation.name)
 					}
-					changed = append(changed, runtimeFile{file.name, []byte(strings.Replace(contents, mutation.before, mutation.after, 1))})
+					changed = append(changed, native_runtime.RuntimeFile{Name: file.Name, Contents: []byte(strings.Replace(contents, mutation.before, mutation.after, 1))})
 					found = true
-				} else if strings.HasSuffix(file.name, ".h") {
+				} else if strings.HasSuffix(file.Name, ".h") {
 					changed = append(changed, file)
 				}
 			}
@@ -210,7 +210,7 @@ func primitiveMutants(t *testing.T) string {
 			}
 			// Linked from the scratch directory by relative names, mapped, so the binary names neither it nor the
 			// product.
-			arguments := append(append(slices.Clone(flags), prefixMaps(scratch, "/adamic-build")...), "-I", "runtime", "-o", filepath.Join(directory, mutation.name), "main.c")
+			arguments := append(append(slices.Clone(flags), native_runtime.PrefixMaps(scratch, "/adamic-build")...), "-I", "runtime", "-o", filepath.Join(directory, mutation.name), "main.c")
 			for _, source := range sources {
 				object := strings.TrimSuffix(source, ".c") + ".o"
 				if source == "exceptions.c" {
@@ -283,7 +283,7 @@ func TestOrdinaryToPrimitiveProtocolGuards(t *testing.T) {
 		t.Fatal(err)
 	}
 	binary := filepath.Join(t.TempDir(), "primitive")
-	if err := Build(string(source), binary, Options{Sanitize: true, Count: true}); err != nil {
+	if err := Build(string(source), binary, native_runtime.Options{Sanitize: true, Count: true}); err != nil {
 		t.Fatal(err)
 	}
 	t.Run("terminal-invalid-hint", func(t *testing.T) {

@@ -14,6 +14,7 @@ import (
 
 	_ "github.com/system-inc/adamic/internal/ccjobserver"
 	"github.com/system-inc/adamic/internal/native"
+	"github.com/system-inc/adamic/internal/native_runtime"
 )
 
 func main() {
@@ -45,18 +46,18 @@ func main() {
 	os.Unsetenv("ADAMIC_GATE_UNCACHED")
 	report := map[string]any{
 		"generated_c_bytes": len(source), "generated_c_lines": strings.Count(string(source), "\n"),
-		"jobs": jobs, "flags": native.Flags(native.Options{}),
+		"jobs": jobs, "flags": native_runtime.Flags(native_runtime.Options{}),
 		"timing_scope": "native.Build wall time, runtime prewarmed; includes splitting, preprocessing, cache checks, compilation and linking; excludes C emission and Go startup",
 	}
 	start := time.Now()
-	if _, err := native.RuntimeLibrary("", native.Options{}); err != nil {
+	if _, err := native_runtime.RuntimeLibrary("", native_runtime.Options{}); err != nil {
 		panic(err)
 	}
 	report["runtime_preparation_seconds"] = time.Since(start).Seconds()
 	failed := false
 	for _, mode := range []string{"unsplit", "split-cold", "split-warm"} {
 		binary := filepath.Join(out, mode)
-		options := native.Options{Split: mode != "unsplit", Jobs: jobs}
+		options := native_runtime.Options{Split: mode != "unsplit", Jobs: jobs}
 		start := time.Now()
 		err := native.Build(string(source), binary, options)
 		row := map[string]any{"build_wall_seconds": time.Since(start).Seconds(), "binary": binary}

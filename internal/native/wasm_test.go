@@ -55,10 +55,10 @@ var wasiFixtures = []string{
 }
 
 // wasiCompiler is the clang every WASI build in this file runs and keys its products by: the WASI SDK's, beside
-// WASI_SYSROOT (compilerName), as the module emission and decode-ascii-wasi already were, never the box's
+// WASI_SYSROOT (native_runtime.CompilerName), as the module emission and decode-ascii-wasi already were, never the box's
 // tools/bin/clang that toolchain finds for "clang" (#jzc9yne). A path passes toolchain.Path unchanged.
 func wasiCompiler() string {
-	return compilerName(Options{Target: "wasm32-wasi"})
+	return native_runtime.CompilerName(native_runtime.Options{Target: "wasm32-wasi"})
 }
 
 // runWASIUnit runs unit's share of the WASI fixtures, opted in by ADAMIC_TEST_WASI=1. Opted in, anything it needs that's
@@ -73,7 +73,7 @@ func runWASIUnit(t *testing.T, unit int) {
 		}
 	}
 	// The toolchain is pinned: a clang other than wasi-sdk 27's fails here, by name, rather than skipping.
-	if _, err := WASIClang(); err != nil {
+	if _, err := native_runtime.WASIClang(); err != nil {
 		t.Fatal(err)
 	}
 	phase := time.Now()
@@ -272,32 +272,32 @@ func strictWASIRuntime(t *testing.T) string {
 		t.Fatal("WASI_SYSROOT missing")
 	}
 	// The runtime compiles only with wasi-sdk 27's clang, refused by name otherwise, and its version keys the product.
-	if _, err := WASIClang(); err != nil {
+	if _, err := native_runtime.WASIClang(); err != nil {
 		t.Fatal(err)
 	}
 	flags := wasiFlags(sysroot)
 	variants := slices.Sorted(maps.Keys(strictWASIRuntimeVariants))
 	inputs := buildcache.Inputs{
 		Name:      "strict-wasi-runtime",
-		Files:     []string{"internal/native_runtime/c", "internal/native/wasm_test.go", "internal/native/split_units_test.go", "internal/native/library.go"},
+		Files:     []string{"internal/native_runtime/c", "internal/native/wasm_test.go", "internal/native/split_units_test.go", "internal/native_runtime/library.go"},
 		Flags:     slices.Clone(flags),
 		Toolchain: []string{buildcache.Tool(wasiCompiler(), "--target=wasm32-wasi", "--version")},
 	}
 	for _, variant := range variants {
 		inputs.Flags = append(inputs.Flags, fmt.Sprintf("variant %s %s", variant, strings.Join(strictWASIRuntimeVariants[variant], " ")))
 	}
-	files, err := readRuntime(native_runtime.Sources, "c")
+	files, err := native_runtime.ReadRuntime(native_runtime.Sources, "c")
 	if err != nil {
 		t.Fatal(err)
 	}
 	// A planted runtime (ADAMIC_WASI_RUNTIME, for isolated mutants) lies outside the tree, so its content keys the
 	// product. It is built for this machine alone.
 	if alternate := os.Getenv("ADAMIC_WASI_RUNTIME"); alternate != "" {
-		if files, err = readRuntime(os.DirFS(alternate), "."); err != nil {
+		if files, err = native_runtime.ReadRuntime(os.DirFS(alternate), "."); err != nil {
 			t.Fatal(err)
 		}
 		for _, file := range files {
-			inputs.Flags = append(inputs.Flags, fmt.Sprintf("runtime %s %x", file.name, sha256.Sum256(file.contents)))
+			inputs.Flags = append(inputs.Flags, fmt.Sprintf("runtime %s %x", file.Name, sha256.Sum256(file.Contents)))
 		}
 	}
 	return buildcache.Product(t, inputs, func(directory string) error {
@@ -308,15 +308,15 @@ func strictWASIRuntime(t *testing.T) string {
 			}
 			var sources []string
 			for _, file := range files {
-				if err := os.WriteFile(filepath.Join(destination, file.name), file.contents, 0o644); err != nil {
+				if err := os.WriteFile(filepath.Join(destination, file.Name), file.Contents, 0o644); err != nil {
 					return err
 				}
-				if strings.HasSuffix(file.name, ".c") {
-					sources = append(sources, file.name)
+				if strings.HasSuffix(file.Name, ".c") {
+					sources = append(sources, file.Name)
 				}
 			}
 			// Each unit compiles from inside the variant's directory, mapped, so no object names where it was built.
-			compileFlags := append(append(slices.Clone(flags), strictWASIRuntimeVariants[variant]...), prefixMaps(destination, "/adamic-runtime")...)
+			compileFlags := append(append(slices.Clone(flags), strictWASIRuntimeVariants[variant]...), native_runtime.PrefixMaps(destination, "/adamic-runtime")...)
 			if err := eachInParallel(len(sources), func(index int) error {
 				command := toolchain.CommandIn(destination, wasiCompiler(), append(slices.Clone(compileFlags), "-c", sources[index], "-o", sources[index]+".o")...)
 				if output, err := command.CombinedOutput(); err != nil {

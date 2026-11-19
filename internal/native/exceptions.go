@@ -293,7 +293,7 @@ func throwMarker(text string) (int, int, error) {
 
 // settleThrows decides, where the statement's own temporaries have just been let go of, between the
 // ladder for its checks so far and their text in place, whichever is shorter (or the ladder whenever
-// there's one, under Options.LadderEveryStatement), and writes the ladder here if it's the one.
+// there's one, under EmitOptions.LadderEveryStatement), and writes the ladder here if it's the one.
 func (e *emitter) settleThrows() {
 	ladder := e.ladder
 	// An end inside an aside's work (an expression's effects) isn't the statement's, and its

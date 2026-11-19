@@ -9,6 +9,8 @@ import (
 	"strconv"
 	"strings"
 	"testing"
+
+	"github.com/system-inc/adamic/internal/native_runtime"
 )
 
 // A thread's spare heap chunks past ADAMIC_HEAP_SPARE_CAP go back to the kernel only at a quiet point
@@ -152,11 +154,11 @@ int main(int count, char **arguments) {
 func TestHeapQuietRelease(t *testing.T) {
 	t.Parallel()
 	counted := filepath.Join(t.TempDir(), "counted")
-	if err := Build(heapQuietHarness, counted, Options{Count: true}); err != nil {
+	if err := Build(heapQuietHarness, counted, native_runtime.Options{Count: true}); err != nil {
 		t.Fatal(err)
 	}
 	slabs := filepath.Join(t.TempDir(), "slabs")
-	if err := Build(heapQuietHarness, slabs, Options{Sanitize: true, Count: true, slabs: true}); err != nil {
+	if err := Build(heapQuietHarness, slabs, native_runtime.Options{Sanitize: true, Count: true, Slabs: true}); err != nil {
 		t.Fatal(err)
 	}
 	run := func(binary, mode, threads string) (string, string, int) {

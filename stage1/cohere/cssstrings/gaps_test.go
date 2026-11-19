@@ -9,6 +9,7 @@ import (
 	"github.com/system-inc/adamic/internal/load"
 	"github.com/system-inc/adamic/internal/lower"
 	"github.com/system-inc/adamic/internal/native"
+	"github.com/system-inc/adamic/internal/native_runtime"
 )
 
 func TestMultiPushGap(t *testing.T) {
@@ -29,7 +30,7 @@ func TestMultiPushGap(t *testing.T) {
 		t.Fatal(err)
 	}
 	binary := filepath.Join(t.TempDir(), "gap")
-	if err := native.Build(native.C(lowered), binary, native.Options{Sanitize: true}); err != nil {
+	if err := native.Build(native.C(lowered), binary, native_runtime.Options{Sanitize: true}); err != nil {
 		t.Fatal(err)
 	}
 	actual := stringsExecute(t, []string{"ASAN_OPTIONS=detect_leaks=1", "UBSAN_OPTIONS=halt_on_error=1"}, binary)

@@ -71,22 +71,22 @@ int main(int argc,char **argv){
 
 func asyncCountProtocolProduct(t *testing.T) string {
 	t.Helper()
-	options := Options{Sanitize: true}
-	files, flags, compiler, version, err := runtimeInputs("", options, nil)
+	options := native_runtime.Options{Sanitize: true}
+	files, flags, compiler, version, err := native_runtime.RuntimeInputs("", options, nil)
 	if err != nil {
 		t.Fatal(err)
 	}
-	headers, err := headersRead(files, flags, compiler)
+	headers, err := native_runtime.HeadersRead(files, flags, compiler)
 	if err != nil {
 		t.Fatal(err)
 	}
-	inputs := buildcache.Inputs{Name: "async-count-protocol", Files: []string{"internal/native/async_counts_test.go", "internal/native_runtime/c", "internal/native/native.go", "internal/native/library.go", "internal/native/build_runtime.go", "internal/native/target.go"}, Flags: portableKeyParts(files, flags, compiler, headers), Toolchain: []string{buildcache.CompilerReport(compiler), buildcache.Tool(archiverName(compiler), "--version")}}
+	inputs := buildcache.Inputs{Name: "async-count-protocol", Files: []string{"internal/native/async_counts_test.go", "internal/native_runtime/c", "internal/native/native.go", "internal/native_runtime/options.go", "internal/native_runtime/library.go", "internal/native/build_runtime.go", "internal/native_runtime/target.go"}, Flags: native_runtime.PortableKeyParts(files, flags, compiler, headers), Toolchain: []string{buildcache.CompilerReport(compiler), buildcache.Tool(native_runtime.ArchiverName(compiler), "--version")}}
 	return buildcache.Product(t, inputs, func(directory string) error {
-		cache, err := cacheDirectory("async-count-protocol")
+		cache, err := native_runtime.CacheDirectory("async-count-protocol")
 		if err != nil {
 			return err
 		}
-		baseline, err := cachedRuntime(files, flags, compiler, version, cache)
+		baseline, err := native_runtime.CachedRuntime(files, flags, compiler, version, cache)
 		if err != nil {
 			return err
 		}
@@ -109,8 +109,8 @@ func asyncCountProtocolProduct(t *testing.T) string {
 			}
 			scratch := t.TempDir()
 			for _, file := range files {
-				if strings.HasSuffix(file.name, ".h") {
-					if err := os.WriteFile(filepath.Join(scratch, file.name), file.contents, 0600); err != nil {
+				if strings.HasSuffix(file.Name, ".h") {
+					if err := os.WriteFile(filepath.Join(scratch, file.Name), file.Contents, 0600); err != nil {
 						return err
 					}
 				}
@@ -119,7 +119,7 @@ func asyncCountProtocolProduct(t *testing.T) string {
 				return err
 			}
 			object := filepath.Join(scratch, "async.o")
-			arguments := append(append(append([]string{}, flags...), prefixMaps(scratch, "/adamic-runtime")...), "-I", ".", "-c", "async.c", "-o", "async.o")
+			arguments := append(append(append([]string{}, flags...), native_runtime.PrefixMaps(scratch, "/adamic-runtime")...), "-I", ".", "-c", "async.c", "-o", "async.o")
 			command, release := boundedrun.Command(45*time.Second, compiler, arguments...)
 			command.Dir = scratch
 			output, compileErr := command.CombinedOutput()
@@ -135,7 +135,7 @@ func asyncCountProtocolProduct(t *testing.T) string {
 			if err := os.WriteFile(library, archive, 0600); err != nil {
 				return err
 			}
-			staticsCompile(t, archiverName(compiler), "r", library, object)
+			staticsCompile(t, native_runtime.ArchiverName(compiler), "r", library, object)
 			if err := BuildWithRuntime(asyncCountProtocol, filepath.Join(directory, mutant.name), options, library); err != nil {
 				return err
 			}

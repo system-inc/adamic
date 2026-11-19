@@ -2,6 +2,7 @@ package lint
 
 import (
 	"context"
+	"github.com/system-inc/adamic/internal/native_runtime"
 	"github.com/system-inc/adamic/stage1/cohere/executable"
 	"os"
 	"path/filepath"
@@ -74,10 +75,10 @@ func buildProfile(t *testing.T, directory string) {
 	if err := os.WriteFile(filepath.Join(directory, "main.c"), []byte(source), 0644); err != nil {
 		t.Fatal(err)
 	}
-	if err := native.Build(source, filepath.Join(directory, "scanner"), native.Options{}); err != nil {
+	if err := native.Build(source, filepath.Join(directory, "scanner"), native_runtime.Options{}); err != nil {
 		t.Fatal(err)
 	}
-	if err := native.Build(source, filepath.Join(directory, "counted"), native.Options{Count: true}); err != nil {
+	if err := native.Build(source, filepath.Join(directory, "counted"), native_runtime.Options{Count: true}); err != nil {
 		t.Fatal(err)
 	}
 	// Reads: internal/native_runtime/c/*.[ch]
@@ -104,7 +105,7 @@ func buildProfile(t *testing.T, directory string) {
 		}
 	}
 	// The runtime's units are compiled with the program's features as flags, as main.c's #defines say.
-	flags := append(native.SourceFlags(source, native.Options{}), "-g", "-o", filepath.Join(directory, "profiled"))
+	flags := append(native_runtime.SourceFlags(source, native_runtime.Options{}), "-g", "-o", filepath.Join(directory, "profiled"))
 	flags = append(flags, units...)
 	flags = append(flags, "-lm")
 	execute(t, "", "clang", flags...)

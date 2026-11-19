@@ -10,6 +10,7 @@ import (
 
 	"github.com/system-inc/adamic/internal/buildcache"
 	"github.com/system-inc/adamic/internal/native"
+	"github.com/system-inc/adamic/internal/native_runtime"
 	"github.com/system-inc/adamic/stage1/cohere/css/oracles"
 )
 
@@ -25,8 +26,8 @@ func cssParserSanitizedAgreement(t *testing.T, binary, cases string) run {
 func cssParserReleaseMutant(t *testing.T) string {
 	t.Helper()
 	program := cssParserPreparedProgram(t, -1)
-	options := native.Options{Sanitize: true}
-	dir := oracles.ParserProduct(t, oracles.ParserProductInputs{Name: "parser release mutant sanitized", Files: []string{program.c, repository + "/internal/native", repository + "/go.mod"}, Flags: append(native.Flags(options), "mutation=adamic_release dropped"), Toolchain: buildcache.CompilerReport("clang")}, func(dir string) error {
+	options := native_runtime.Options{Sanitize: true}
+	dir := oracles.ParserProduct(t, oracles.ParserProductInputs{Name: "parser release mutant sanitized", Files: []string{program.c, repository + "/internal/native", repository + "/go.mod"}, Flags: append(native_runtime.Flags(options), "mutation=adamic_release dropped"), Toolchain: buildcache.CompilerReport("clang")}, func(dir string) error {
 		source, err := os.ReadFile(program.c)
 		if err != nil {
 			return err

@@ -4,6 +4,7 @@ package main
 import (
 	"flag"
 	"github.com/system-inc/adamic/internal/native"
+	"github.com/system-inc/adamic/internal/native_runtime"
 	"os"
 	"os/exec"
 	"path/filepath"
@@ -19,12 +20,12 @@ func main() {
 		panic(err)
 	}
 	if *runtime == "" {
-		if err := native.Build(string(data), *output, native.Options{}); err != nil {
+		if err := native.Build(string(data), *output, native_runtime.Options{}); err != nil {
 			panic(err)
 		}
 		return
 	}
-	library, err := native.RuntimeLibrary(*runtime, native.Options{})
+	library, err := native_runtime.RuntimeLibrary(*runtime, native_runtime.Options{})
 	if err != nil {
 		panic(err)
 	}
@@ -37,8 +38,8 @@ func main() {
 	if err := os.WriteFile(sourcePath, data, 0600); err != nil {
 		panic(err)
 	}
-	arguments := append(native.Flags(native.Options{}), "-I", filepath.Dir(library), sourcePath, "-o", *output)
-	arguments = append(arguments, native.RuntimeLinkFlags(library)...)
+	arguments := append(native_runtime.Flags(native_runtime.Options{}), "-I", filepath.Dir(library), sourcePath, "-o", *output)
+	arguments = append(arguments, native_runtime.RuntimeLinkFlags(library)...)
 	arguments = append(arguments, "-lm")
 	if output, err := exec.Command("clang", arguments...).CombinedOutput(); err != nil {
 		panic(string(output) + err.Error())

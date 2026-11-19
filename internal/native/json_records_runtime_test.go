@@ -8,6 +8,8 @@ import (
 	"strings"
 	"testing"
 	"time"
+
+	"github.com/system-inc/adamic/internal/native_runtime"
 )
 
 func jsonRecordsRuntimeBinary(t *testing.T, mutant string) string {
@@ -45,7 +47,7 @@ func jsonRecordsRuntimeBinary(t *testing.T, mutant string) string {
 	}
 	probe := strings.ReplaceAll(string(harness), "adamic_json_stringify_runtime(", "probe_adamic_json_stringify_runtime(")
 	binary := filepath.Join(t.TempDir(), "records")
-	if err := Build(source+"\n"+probe, binary, Options{Sanitize: true, Count: true}); err != nil {
+	if err := Build(source+"\n"+probe, binary, native_runtime.Options{Sanitize: true, Count: true}); err != nil {
 		t.Fatal(err)
 	}
 	return binary

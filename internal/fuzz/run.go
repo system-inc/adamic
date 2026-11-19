@@ -20,6 +20,7 @@ import (
 	"github.com/system-inc/adamic/internal/childguard"
 	"github.com/system-inc/adamic/internal/leakcheck"
 	"github.com/system-inc/adamic/internal/native"
+	"github.com/system-inc/adamic/internal/native_runtime"
 	"github.com/system-inc/adamic/internal/toolchain"
 )
 
@@ -64,7 +65,7 @@ func PrepareBuilt(root string, adamic string, directory string) (*Checkout, erro
 	}
 	checkout := &Checkout{Root: root, directory: directory, adamic: adamic}
 	// TSan is a separate build. A machine without it still runs; the report says so.
-	tsanRuntime, tsanErr := native.RuntimeLibrary(filepath.Join(root, "internal", "native_runtime", "c"), native.Options{ThreadSanitize: true})
+	tsanRuntime, tsanErr := native_runtime.RuntimeLibrary(filepath.Join(root, "internal", "native_runtime", "c"), native_runtime.Options{ThreadSanitize: true})
 	if tsanErr != nil {
 		checkout.TSan = tsanErr.Error()
 	} else {
@@ -209,13 +210,13 @@ func (c *Checkout) tryFile(path string, directory string) Outcome {
 		return Outcome{Verdict: Finding, Key: "fuzzer", Detail: err.Error()}
 	}
 	binary := filepath.Join(directory, "program")
-	options := native.Options{Sanitize: true}
+	options := native_runtime.Options{Sanitize: true}
 	library, err := c.runtimeFor(directory, options, c.runtime)
 	if err != nil {
 		return Outcome{Verdict: Finding, Key: "fuzzer", Detail: err.Error()}
 	}
-	arguments := append(native.SourceFlags(string(lowered.Stdout), options), "-I", filepath.Dir(library), "-o", binary, filepath.Join(directory, "main.c"))
-	arguments = append(arguments, native.RuntimeLinkFlags(library)...)
+	arguments := append(native_runtime.SourceFlags(string(lowered.Stdout), options), "-I", filepath.Dir(library), "-o", binary, filepath.Join(directory, "main.c"))
+	arguments = append(arguments, native_runtime.RuntimeLinkFlags(library)...)
 	arguments = append(arguments, "-lm")
 	if output, err := toolchain.Command("clang", arguments...).CombinedOutput(); err != nil {
 		key := "clang refused the C"
@@ -425,11 +426,11 @@ func (c *Checkout) parallelRuns(outcome Outcome, binary string, directory string
 		return outcome
 	}
 	tsanBinary := filepath.Join(directory, "program-tsan")
-	tsanRuntime, err := c.runtimeFor(directory, native.Options{ThreadSanitize: true}, c.tsanRuntime)
+	tsanRuntime, err := c.runtimeFor(directory, native_runtime.Options{ThreadSanitize: true}, c.tsanRuntime)
 	if err != nil {
 		return Outcome{Verdict: Finding, Key: "fuzzer", Detail: err.Error()}
 	}
-	if err := c.link(tsanBinary, directory, native.Options{ThreadSanitize: true}, tsanRuntime); err != nil {
+	if err := c.link(tsanBinary, directory, native_runtime.Options{ThreadSanitize: true}, tsanRuntime); err != nil {
 		return Outcome{Verdict: Finding, Key: "clang refused the TSan build", Detail: err.Error()}
 	}
 	for _, threads := range []string{"", "1"} {
@@ -457,18 +458,18 @@ func (c *Checkout) parallelRuns(outcome Outcome, binary string, directory string
 // runtimeFor is the runtime a program's C links against: the one built with the features its main.c
 // defines (closure convention, canonical closures and the rest change struct layouts the runtime
 // allocates), or prebuilt when the program defines none.
-func (c *Checkout) runtimeFor(directory string, options native.Options, prebuilt string) (string, error) {
+func (c *Checkout) runtimeFor(directory string, options native_runtime.Options, prebuilt string) (string, error) {
 	source, err := os.ReadFile(filepath.Join(directory, "main.c"))
 	if err != nil {
 		return "", err
 	}
-	if prebuilt != "" && len(native.Features(string(source))) == 0 {
+	if prebuilt != "" && len(native_runtime.Features(string(source))) == 0 {
 		return prebuilt, nil
 	}
-	return native.RuntimeLibraryForSource(filepath.Join(c.Root, "internal", "native_runtime", "c"), string(source), options)
+	return native_runtime.RuntimeLibraryForSource(filepath.Join(c.Root, "internal", "native_runtime", "c"), string(source), options)
 }
 
-func (c *Checkout) link(binary string, directory string, options native.Options, runtime string) error {
+func (c *Checkout) link(binary string, directory string, options native_runtime.Options, runtime string) error {
 	source, err := os.ReadFile(filepath.Join(directory, "main.c"))
 	if err != nil {
 		return err

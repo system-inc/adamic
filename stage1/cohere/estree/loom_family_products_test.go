@@ -20,13 +20,13 @@ import (
 	"github.com/system-inc/adamic/internal/ir"
 	"github.com/system-inc/adamic/internal/load"
 	"github.com/system-inc/adamic/internal/lower"
-	"github.com/system-inc/adamic/internal/native"
+	"github.com/system-inc/adamic/internal/native_runtime"
 	"github.com/system-inc/adamic/internal/toolchain"
 )
 
 // Four workers use the gate's four CPUs; source, sanitizer flags and cases stay fixed.
-func estreeFamilyNativeOptions() native.Options {
-	return native.Options{Sanitize: true, Split: true, Jobs: 4}
+func estreeFamilyNativeOptions() native_runtime.Options {
+	return native_runtime.Options{Sanitize: true, Split: true, Jobs: 4}
 }
 
 func TestProduct_DeepMutantsNative0(t *testing.T) {

@@ -52,7 +52,7 @@ func typedArrayInlineCheck(t *testing.T, mode, helper, before, after, diagnostic
 	if node.exit != 0 || len(node.stderr) != 0 {
 		t.Fatalf("Node: %+v", node)
 	}
-	options := Options{Sanitize: true, Count: true}
+	options := native_runtime.Options{Sanitize: true, Count: true}
 	control := filepath.Join(t.TempDir(), "control")
 	if err := Build(string(source), control, options); err != nil {
 		t.Fatal(err)

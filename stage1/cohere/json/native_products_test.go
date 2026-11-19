@@ -13,6 +13,7 @@ import (
 	"github.com/system-inc/adamic/internal/load"
 	"github.com/system-inc/adamic/internal/lower"
 	"github.com/system-inc/adamic/internal/native"
+	"github.com/system-inc/adamic/internal/native_runtime"
 )
 
 // Every native build json's ordinary tests run is a keyed product built ahead by a TestProduct_ of its own, so no
@@ -32,32 +33,32 @@ var formatterMutants = []printerMutation{
 
 // Not parallel: native.Build writes the shared user cache directory adamic/runtime (and adamic/units when split builds are enabled).
 func TestProduct_JSONCachedWidthMutantRelease(t *testing.T) {
-	requireNativePort(t, mutantPortProduct(t, cachedWidthMutant, native.Options{}))
+	requireNativePort(t, mutantPortProduct(t, cachedWidthMutant, native_runtime.Options{}))
 }
 
 // Not parallel: native.Build writes the shared user cache directory adamic/runtime (and adamic/units when split builds are enabled).
 func TestProduct_JSONFormatterMutantSanitized_0(t *testing.T) {
-	requireNativePort(t, mutantPortProduct(t, formatterMutants[0], native.Options{Sanitize: true}))
+	requireNativePort(t, mutantPortProduct(t, formatterMutants[0], native_runtime.Options{Sanitize: true}))
 }
 
 // Not parallel: native.Build writes the shared user cache directory adamic/runtime (and adamic/units when split builds are enabled).
 func TestProduct_JSONFormatterMutantSanitized_1(t *testing.T) {
-	requireNativePort(t, mutantPortProduct(t, formatterMutants[1], native.Options{Sanitize: true}))
+	requireNativePort(t, mutantPortProduct(t, formatterMutants[1], native_runtime.Options{Sanitize: true}))
 }
 
 // Not parallel: native.Build writes the shared user cache directory adamic/runtime (and adamic/units when split builds are enabled).
 func TestProduct_JSONFormatterMutantSanitized_2(t *testing.T) {
-	requireNativePort(t, mutantPortProduct(t, formatterMutants[2], native.Options{Sanitize: true}))
+	requireNativePort(t, mutantPortProduct(t, formatterMutants[2], native_runtime.Options{Sanitize: true}))
 }
 
 // Not parallel: native.Build writes the shared user cache directory adamic/runtime (and adamic/units when split builds are enabled).
 func TestProduct_JSONEmptyFallbackGapSanitized(t *testing.T) {
-	requireNativePort(t, gapPortProduct(t, "emptyFallback.ts", native.Options{Sanitize: true}))
+	requireNativePort(t, gapPortProduct(t, "emptyFallback.ts", native_runtime.Options{Sanitize: true}))
 }
 
 // Not parallel: native.Build writes the shared user cache directory adamic/runtime (and adamic/units when split builds are enabled).
 func TestProduct_JSONMultiplePushGapSanitized(t *testing.T) {
-	requireNativePort(t, gapPortProduct(t, "multiplePush.ts", native.Options{Sanitize: true}))
+	requireNativePort(t, gapPortProduct(t, "multiplePush.ts", native_runtime.Options{Sanitize: true}))
 }
 
 func requireNativePort(t *testing.T, directory string) {
@@ -68,7 +69,7 @@ func requireNativePort(t *testing.T, directory string) {
 // mutantPortProduct is the port with mutation applied, lowered in this process and built by clang with options: keyed,
 // as json's lowered port is, by the compiler and the port's sources, with this file, the mutation and the native build.
 // buildJSONLoweredPortMutation refuses a mutation that doesn't change exactly one place.
-func mutantPortProduct(t *testing.T, mutation printerMutation, options native.Options) string {
+func mutantPortProduct(t *testing.T, mutation printerMutation, options native_runtime.Options) string {
 	t.Helper()
 	inputs := jsonLoweredPortInputs()
 	inputs.Name = fmt.Sprintf("json %s mutant native %s", mutation.name, nativeBuildName(options))
@@ -94,7 +95,7 @@ func mutantPortProduct(t *testing.T, mutation printerMutation, options native.Op
 
 // gapPortProduct is gaps/<file> lowered in this process and built by clang with options, keyed by the compiler, the
 // gap's source and the native build.
-func gapPortProduct(t *testing.T, file string, options native.Options) string {
+func gapPortProduct(t *testing.T, file string, options native_runtime.Options) string {
 	t.Helper()
 	inputs := buildcache.Inputs{
 		Name:      fmt.Sprintf("json gap %s native %s", file, nativeBuildName(options)),
@@ -119,7 +120,7 @@ func gapPortProduct(t *testing.T, file string, options native.Options) string {
 	})
 }
 
-func nativeBuildName(options native.Options) string {
+func nativeBuildName(options native_runtime.Options) string {
 	if options.Sanitize {
 		return "sanitized"
 	}
@@ -128,8 +129,8 @@ func nativeBuildName(options native.Options) string {
 
 // nativeBuildFlags are what a native build's output depends on beyond its C: the options, clang's flags, and the
 // environment native.Build and clang read.
-func nativeBuildFlags(options native.Options) []string {
-	flags := append([]string{fmt.Sprintf("options=%+v", options)}, native.Flags(options)...)
+func nativeBuildFlags(options native_runtime.Options) []string {
+	flags := append([]string{fmt.Sprintf("options=%+v", options)}, native_runtime.Flags(options)...)
 	return append(flags, jsonBuildEnvironment("ADAMIC_NATIVE_SPLIT", "CPATH", "C_INCLUDE_PATH", "LIBRARY_PATH", "SDKROOT", "MACOSX_DEPLOYMENT_TARGET")...)
 }
 

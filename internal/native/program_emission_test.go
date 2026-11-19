@@ -18,6 +18,7 @@ import (
 	"github.com/system-inc/adamic/internal/load"
 	"github.com/system-inc/adamic/internal/lower"
 	"github.com/system-inc/adamic/internal/native"
+	"github.com/system-inc/adamic/internal/native_runtime"
 )
 
 // These are compiler ownership witnesses, not the later graph corpus. Each
@@ -81,7 +82,7 @@ func programCompilerWitness(t *testing.T, source string, mutant func(string) str
 		code = changed
 	}
 	binary := filepath.Join(directory, "native")
-	if err := native.Build(code, binary, native.Options{Sanitize: true, ProgramRegion: true}); err != nil {
+	if err := native.Build(code, binary, native_runtime.Options{Sanitize: true, ProgramRegion: true}); err != nil {
 		t.Fatal(err)
 	}
 	got, diagnostic, err = run([]string{"ASAN_OPTIONS=detect_leaks=1", "UBSAN_OPTIONS=halt_on_error=1"}, binary)
@@ -101,7 +102,7 @@ func programCompilerWitness(t *testing.T, source string, mutant func(string) str
 	if report := leakcheck.Report(t, code, binary); report != "" {
 		t.Fatal(report)
 	}
-	if err := native.Build(code, binary, native.Options{Count: true, ProgramRegion: true}); err != nil {
+	if err := native.Build(code, binary, native_runtime.Options{Count: true, ProgramRegion: true}); err != nil {
 		t.Fatal(err)
 	}
 	got, diagnostic, err = run(nil, binary)

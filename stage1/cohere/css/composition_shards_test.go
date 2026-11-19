@@ -21,6 +21,7 @@ import (
 	"github.com/system-inc/adamic/internal/childguard"
 	"github.com/system-inc/adamic/internal/javascript"
 	"github.com/system-inc/adamic/internal/native"
+	"github.com/system-inc/adamic/internal/native_runtime"
 	"github.com/system-inc/adamic/stage1/cohere/css/oracles"
 )
 
@@ -662,7 +663,7 @@ func compositionLeaks(t *testing.T, state compositionProducts, cases string) str
 			t.Fatal(err)
 		}
 		binary := filepath.Join(t.TempDir(), "port")
-		if err := native.Build(string(source), binary, native.Options{}); err != nil {
+		if err := native.Build(string(source), binary, native_runtime.Options{}); err != nil {
 			t.Fatal(err)
 		}
 		report := compositionExecute(t, nil, "leaks", "--atExit", "--", binary, cases)
@@ -702,10 +703,10 @@ func compositionNativeProduct(t *testing.T) string {
 	}
 	inputs := compositionInputs()
 	inputs.Name = "css-composition-native"
-	inputs.Flags = append(native.Flags(native.Options{Sanitize: true}), "ADAMIC_NATIVE_SPLIT="+os.Getenv("ADAMIC_NATIVE_SPLIT"))
+	inputs.Flags = append(native_runtime.Flags(native_runtime.Options{Sanitize: true}), "ADAMIC_NATIVE_SPLIT="+os.Getenv("ADAMIC_NATIVE_SPLIT"))
 	inputs.Toolchain = append(inputs.Toolchain, buildcache.CompilerReport("clang"))
 	nativeProduct := buildcache.Product(t, inputs, func(dir string) error {
-		return native.Build(string(c), filepath.Join(dir, "port"), native.Options{Sanitize: true})
+		return native.Build(string(c), filepath.Join(dir, "port"), native_runtime.Options{Sanitize: true})
 	})
 	return filepath.Join(nativeProduct, "port")
 

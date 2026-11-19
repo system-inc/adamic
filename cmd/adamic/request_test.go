@@ -11,6 +11,7 @@ import (
 
 	"github.com/system-inc/adamic/internal/lower"
 	"github.com/system-inc/adamic/internal/native"
+	"github.com/system-inc/adamic/internal/native_runtime"
 )
 
 func requestSource(t *testing.T, source string) string {
@@ -111,7 +112,7 @@ func TestRequestNativeStaysCommand(t *testing.T) {
 		t.Fatal("native C acquired request ABI")
 	}
 	binary := filepath.Join(t.TempDir(), "program")
-	if err := native.Build(source, binary, native.Options{Sanitize: true}); err != nil {
+	if err := native.Build(source, binary, native_runtime.Options{Sanitize: true}); err != nil {
 		t.Fatal(err)
 	}
 	result, err := exec.Command(binary).CombinedOutput()

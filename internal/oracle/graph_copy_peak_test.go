@@ -10,6 +10,7 @@ import (
 
 	"github.com/system-inc/adamic/internal/leakcheck"
 	"github.com/system-inc/adamic/internal/native"
+	"github.com/system-inc/adamic/internal/native_runtime"
 )
 
 // A planned copy of a long-lived graph's array is a region of one (#5nrs3q2): dropped, it frees at
@@ -43,7 +44,7 @@ func graphCopyRun(t *testing.T, source string) (peak int) {
 		t.Fatalf("native: %s; Node %q; native %q; stderr %q", difference, truth.stdout, got.stdout, got.stderr)
 	}
 	counted := filepath.Join(t.TempDir(), "counted")
-	if err := native.Build(native.C(program), counted, native.Options{Count: true}); err != nil {
+	if err := native.Build(native.C(program), counted, native_runtime.Options{Count: true}); err != nil {
 		t.Fatal(err)
 	}
 	ran := execute(t, counted)

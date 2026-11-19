@@ -12,6 +12,7 @@ import (
 
 	"github.com/system-inc/adamic/internal/boundedrun"
 	"github.com/system-inc/adamic/internal/buildcache"
+	"github.com/system-inc/adamic/internal/native_runtime"
 	"github.com/system-inc/adamic/internal/toolchain"
 )
 
@@ -122,22 +123,22 @@ int main(int argc, char **argv) {
 // calling translation unit against that archive, isolating the inline decision.
 func retainReleaseProduct(t *testing.T, tsan bool) string {
 	t.Helper()
-	options := Options{ProgramRegion: true, Count: true, Sanitize: !tsan, ThreadSanitize: tsan}
-	files, flags, compiler, version, err := runtimeInputs("", options, []string{"-DADAMIC_CANONICAL_CLOSURES=1"})
+	options := native_runtime.Options{ProgramRegion: true, Count: true, Sanitize: !tsan, ThreadSanitize: tsan}
+	files, flags, compiler, version, err := native_runtime.RuntimeInputs("", options, []string{"-DADAMIC_CANONICAL_CLOSURES=1"})
 	if err != nil {
 		t.Fatal(err)
 	}
-	headers, err := headersRead(files, flags, compiler)
+	headers, err := native_runtime.HeadersRead(files, flags, compiler)
 	if err != nil {
 		t.Fatal(err)
 	}
-	inputs := buildcache.Inputs{Name: fmt.Sprintf("retain-release-inline-%t", tsan), Files: []string{"internal/native_runtime/c", "internal/native/retain_release_test.go", "internal/native/native.go", "internal/native/library.go", "internal/native/target.go"}, Flags: portableKeyParts(files, flags, compiler, headers), Toolchain: []string{buildcache.CompilerReport(compiler), buildcache.Tool(archiverName(compiler), "--version")}}
+	inputs := buildcache.Inputs{Name: fmt.Sprintf("retain-release-inline-%t", tsan), Files: []string{"internal/native_runtime/c", "internal/native/retain_release_test.go", "internal/native/native.go", "internal/native_runtime/options.go", "internal/native_runtime/library.go", "internal/native_runtime/target.go"}, Flags: native_runtime.PortableKeyParts(files, flags, compiler, headers), Toolchain: []string{buildcache.CompilerReport(compiler), buildcache.Tool(native_runtime.ArchiverName(compiler), "--version")}}
 	return buildcache.Product(t, inputs, func(directory string) error {
-		cache, err := cacheDirectory("retain-release-inline")
+		cache, err := native_runtime.CacheDirectory("retain-release-inline")
 		if err != nil {
 			return err
 		}
-		library, err := cachedRuntime(files, flags, compiler, version, cache)
+		library, err := native_runtime.CachedRuntime(files, flags, compiler, version, cache)
 		if err != nil {
 			return err
 		}
@@ -147,8 +148,8 @@ func retainReleaseProduct(t *testing.T, tsan bool) string {
 		}
 		defer os.RemoveAll(scratch)
 		for _, file := range files {
-			if strings.HasSuffix(file.name, ".h") {
-				if err := os.WriteFile(filepath.Join(scratch, file.name), file.contents, 0644); err != nil {
+			if strings.HasSuffix(file.Name, ".h") {
+				if err := os.WriteFile(filepath.Join(scratch, file.Name), file.Contents, 0644); err != nil {
 					return err
 				}
 			}
@@ -209,9 +210,9 @@ func retainReleaseProduct(t *testing.T, tsan bool) string {
 			if err := os.WriteFile(filepath.Join(scratch, "adamic.h"), []byte(changed), 0644); err != nil {
 				return err
 			}
-			args := append(slices.Clone(flags), prefixMaps(scratch, "/adamic-build")...)
+			args := append(slices.Clone(flags), native_runtime.PrefixMaps(scratch, "/adamic-build")...)
 			args = append(args, "-I", ".", "-o", filepath.Join(directory, name), "main.c")
-			args = append(args, RuntimeLinkFlags(library)...)
+			args = append(args, native_runtime.RuntimeLinkFlags(library)...)
 			args = append(args, "-lm")
 			if output, err := toolchain.CommandIn(scratch, compiler, args...).CombinedOutput(); err != nil {
 				return fmt.Errorf("compile %s: %w\n%s", name, err, output)

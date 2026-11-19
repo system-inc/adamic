@@ -8,6 +8,7 @@ import (
 
 	"github.com/system-inc/adamic/internal/ir"
 	"github.com/system-inc/adamic/internal/native"
+	"github.com/system-inc/adamic/internal/native_runtime"
 )
 
 // Swapping realpath key order or dropping its entry reds realpath/sanitized, realpath/release and realpath/counted.
@@ -96,7 +97,7 @@ func TestJSONErrorsWrittenAfterConstruction(t *testing.T) {
 						got = onJavaScriptBackend(t, program)
 					case "counted":
 						binary := filepath.Join(t.TempDir(), "counted")
-						if err := native.Build(native.C(program), binary, native.Options{Count: true}); err != nil {
+						if err := native.Build(native.C(program), binary, native_runtime.Options{Count: true}); err != nil {
 							t.Fatal(err)
 						}
 						got = execute(t, binary)

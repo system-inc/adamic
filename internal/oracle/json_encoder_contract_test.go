@@ -7,6 +7,7 @@ import (
 	"testing"
 
 	"github.com/system-inc/adamic/internal/native"
+	"github.com/system-inc/adamic/internal/native_runtime"
 	"github.com/system-inc/adamic/internal/wasitest"
 )
 
@@ -39,7 +40,7 @@ func jsonEncoderContract(t *testing.T, backend int) {
 	if backend == 0 {
 		t.Run("release", func(t *testing.T) {
 			binary := filepath.Join(t.TempDir(), "probe")
-			if err := native.Build(code, binary, native.Options{}); err != nil {
+			if err := native.Build(code, binary, native_runtime.Options{}); err != nil {
 				t.Fatal(err)
 			}
 			if difference := disagreement(want, execute(t, binary)); difference != "" {
@@ -75,7 +76,7 @@ func jsonEncoderContract(t *testing.T, backend int) {
 				}
 			}
 			binary := filepath.Join(t.TempDir(), "probe")
-			if err := native.Build(source, binary, native.Options{Sanitize: true}); err != nil {
+			if err := native.Build(source, binary, native_runtime.Options{Sanitize: true}); err != nil {
 				t.Fatal(err)
 			}
 			actual := executeWith(t, []string{"ASAN_OPTIONS=detect_leaks=1", "UBSAN_OPTIONS=halt_on_error=1"}, binary)

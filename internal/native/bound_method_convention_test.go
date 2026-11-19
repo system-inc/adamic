@@ -9,6 +9,7 @@ import (
 
 	"github.com/system-inc/adamic/internal/load"
 	"github.com/system-inc/adamic/internal/lower"
+	"github.com/system-inc/adamic/internal/native_runtime"
 	"github.com/system-inc/adamic/internal/toolchain"
 )
 
@@ -96,15 +97,15 @@ func TestWASICountedBoundMethodConvention(t *testing.T) {
 		t.Fatalf("source Node: exit=%d stdout=%q stderr=%q", truth.exit, truth.stdout, truth.stderr)
 	}
 	binary := filepath.Join(t.TempDir(), "native")
-	if err := Build(code, binary, Options{Sanitize: true}); err != nil {
+	if err := Build(code, binary, native_runtime.Options{Sanitize: true}); err != nil {
 		t.Fatal(err)
 	}
 	actual := observeWASI(t, repository, binary)
 	if actual.exit != 0 || string(actual.stdout) != expected || len(actual.stderr) != 0 {
 		t.Fatalf("native bound method: exit=%d stdout=%q stderr=%q", actual.exit, actual.stdout, actual.stderr)
 	}
-	options := Options{Target: "wasm32-wasi"}
-	library, err := RuntimeLibraryForSource("", code, options)
+	options := native_runtime.Options{Target: "wasm32-wasi"}
+	library, err := native_runtime.RuntimeLibraryForSource("", code, options)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -143,14 +144,14 @@ func TestWASICountedBoundMethodConvention(t *testing.T) {
 			plain := filepath.Join(scratch, "closure.c")
 			object := filepath.Join(scratch, "closure.o")
 			writeWASIFile(t, plain, runtimeSource)
-			flags := append(wasiFlags(os.Getenv("WASI_SYSROOT")), featureFlags(code)...)
+			flags := append(wasiFlags(os.Getenv("WASI_SYSROOT")), native_runtime.FeatureFlags(code)...)
 			flags = append(flags, "-UADAMIC_CLOSURE_CONVENTION", "-I", scratch, "-c", plain, "-o", object)
 			if output, err := toolchain.Command(wasiCompiler(), flags...).CombinedOutput(); err != nil {
 				t.Fatalf("plain runtime compile: %v\n%s", err, output)
 			}
 			source, module := filepath.Join(scratch, "main.c"), filepath.Join(scratch, "main.wasm")
 			writeWASIFile(t, source, code)
-			arguments := append(Flags(options), "-I", directory, "-Wl,--export=__stack_low", source, object, library, "-lm", "-o", module)
+			arguments := append(native_runtime.Flags(options), "-I", directory, "-Wl,--export=__stack_low", source, object, library, "-lm", "-o", module)
 			if output, err := toolchain.Command(wasiCompiler(), arguments...).CombinedOutput(); err != nil {
 				t.Fatalf("WASI link: %v\n%s", err, output)
 			}

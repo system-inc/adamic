@@ -5,6 +5,8 @@ import (
 	"path/filepath"
 	"strings"
 	"testing"
+
+	"github.com/system-inc/adamic/internal/native_runtime"
 )
 
 // Nonempty tables are fitted before the first store; an empty literal stays lazy.
@@ -29,7 +31,7 @@ int main(int argc, char **argv) {
 }
 `
 	binary := filepath.Join(t.TempDir(), "capacity")
-	if err := Build(source, binary, Options{Sanitize: true, Count: true}); err != nil {
+	if err := Build(source, binary, native_runtime.Options{Sanitize: true, Count: true}); err != nil {
 		t.Fatal(err)
 	}
 	for _, row := range []struct {

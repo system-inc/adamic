@@ -9,6 +9,7 @@ import (
 	"github.com/system-inc/adamic/internal/ir"
 	"github.com/system-inc/adamic/internal/javascript"
 	"github.com/system-inc/adamic/internal/native"
+	"github.com/system-inc/adamic/internal/native_runtime"
 )
 
 // Runtime/backend proof with explicit typed IR, independent of source lowering.
@@ -91,7 +92,7 @@ func nodeProcessDirectoryRuntime(t *testing.T, shard int) {
 			runtime = nodeProcessMutantNames(runtime, "mutant_node_")
 			code := nodeProcessMutantNames(native.C(program), "mutant_node_")
 			mutant := filepath.Join(t.TempDir(), "mutant")
-			if err := native.Build(runtime+"\n"+code, mutant, native.Options{Sanitize: true}); err != nil {
+			if err := native.Build(runtime+"\n"+code, mutant, native_runtime.Options{Sanitize: true}); err != nil {
 				t.Fatal(err)
 			}
 			bad := execute(t, mutant)

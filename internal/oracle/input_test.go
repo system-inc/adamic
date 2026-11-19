@@ -16,6 +16,7 @@ import (
 	"github.com/system-inc/adamic/internal/javascript"
 	"github.com/system-inc/adamic/internal/leakcheck"
 	"github.com/system-inc/adamic/internal/native"
+	"github.com/system-inc/adamic/internal/native_runtime"
 	"github.com/system-inc/adamic/internal/toolchain"
 )
 
@@ -329,7 +330,7 @@ func inputBackend(t *testing.T, how inputRun, program *ir.Program, shared string
 func inputNatively(t *testing.T, how inputRun, program *ir.Program, shared string) (run, string) {
 	t.Helper()
 	binary := filepath.Join(shared, "program")
-	if err := native.Build(native.C(program), binary, native.Options{Sanitize: true}); err != nil {
+	if err := native.Build(native.C(program), binary, native_runtime.Options{Sanitize: true}); err != nil {
 		t.Fatal(err)
 	}
 	var environment []string

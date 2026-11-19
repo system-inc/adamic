@@ -17,6 +17,7 @@ import (
 	"github.com/system-inc/adamic/internal/load"
 	"github.com/system-inc/adamic/internal/lower"
 	"github.com/system-inc/adamic/internal/native"
+	"github.com/system-inc/adamic/internal/native_runtime"
 )
 
 const testCompilerExpressionsAgreeShards = 16
@@ -75,13 +76,13 @@ func compilerExpressionsNative(t *testing.T, absolute string) string {
 	lowered := compilerExpressionsLower(t, absolute)
 	files := []string{"stage1/typescript/parser", "stage1/typescript/scanner", "internal/load", "internal/lower", "internal/ir", "internal/native", "internal/native_runtime", "cohere", "go.mod"}
 	tools := []string{buildcache.CompilerReport("clang"), buildcache.Tool("go", "version")}
-	flags := append(native.Flags(native.Options{Sanitize: true}), "ADAMIC_NATIVE_SPLIT="+os.Getenv("ADAMIC_NATIVE_SPLIT"))
+	flags := append(native_runtime.Flags(native_runtime.Options{Sanitize: true}), "ADAMIC_NATIVE_SPLIT="+os.Getenv("ADAMIC_NATIVE_SPLIT"))
 	product := buildcache.Product(t, buildcache.Inputs{Name: "compiler-expressions-native", Files: files, Flags: flags, Toolchain: tools}, func(dir string) error {
 		source, err := os.ReadFile(filepath.Join(lowered, "main.c"))
 		if err != nil {
 			return err
 		}
-		return native.Build(string(source), filepath.Join(dir, "parser"), native.Options{Sanitize: true})
+		return native.Build(string(source), filepath.Join(dir, "parser"), native_runtime.Options{Sanitize: true})
 	})
 	return filepath.Join(product, "parser")
 }

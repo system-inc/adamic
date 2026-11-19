@@ -10,6 +10,7 @@ import (
 	"testing"
 
 	"github.com/system-inc/adamic/internal/ir"
+	"github.com/system-inc/adamic/internal/native_runtime"
 )
 
 func TestJSONDecodeReferenceMatchesIR(t *testing.T) {
@@ -31,7 +32,7 @@ func TestJSONDecodeReferenceMatchesIR(t *testing.T) {
 	}
 	source.WriteString("return 0;\n}\n")
 	binary := filepath.Join(t.TempDir(), "reference")
-	if err := Build(source.String(), binary, Options{}); err != nil {
+	if err := Build(source.String(), binary, native_runtime.Options{}); err != nil {
 		t.Fatal(err)
 	}
 	stdout, stderr, err := recordRun(binary)

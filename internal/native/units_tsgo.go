@@ -8,7 +8,7 @@ import (
 
 // BuildSplitTSGo is an explicit prototype entrypoint for TSGoC output. BuildTSGo is unchanged;
 // its owner can decide whether to dispatch here when Options.Split is requested.
-func BuildSplitTSGo(source, output, archive string, options Options) error {
+func BuildSplitTSGo(source, output, archive string, options native_runtime.Options) error {
 	archive, err := checkerArchivePath(archive)
 	if err != nil {
 		return err
@@ -23,18 +23,18 @@ func BuildSplitTSGo(source, output, archive string, options Options) error {
 // Reuse the existing runtime cache with the checker ABI header in its snapshot, and ADAMIC_TSGO
 // plus the program's features in its flags. The ordinary runtime's empty tsgo.c object cannot
 // satisfy these calls, and a runtime built without the features has other layouts than the units.
-func splitTSGoRuntime(source string, options Options) (string, error) {
-	files, err := readRuntime(native_runtime.Sources, "c")
+func splitTSGoRuntime(source string, options native_runtime.Options) (string, error) {
+	files, err := native_runtime.ReadRuntime(native_runtime.Sources, "c")
 	if err != nil {
 		return "", err
 	}
-	files = append(files, runtimeFile{"tsgo.h", bridge.Header})
+	files = append(files, native_runtime.RuntimeFile{Name: "tsgo.h", Contents: bridge.Header})
 	compiler, err := toolchain.Path("clang")
 	if err != nil {
 		return "", err
 	}
 	// Under the build's triple, which picks clang's config files (#5xsd2ha), as the runtime's compiles pass it.
-	resolved, err := ResolveTarget(options)
+	resolved, err := native_runtime.ResolveTarget(options)
 	if err != nil {
 		return "", err
 	}
@@ -42,10 +42,10 @@ func splitTSGoRuntime(source string, options Options) (string, error) {
 	if err != nil {
 		return "", err
 	}
-	cache, err := cacheDirectory("native-runtime")
+	cache, err := native_runtime.CacheDirectory("native-runtime")
 	if err != nil {
 		return "", err
 	}
-	flags := append(sourceFlags(source, options), "-DADAMIC_TSGO")
-	return cachedRuntime(files, flags, compiler, string(version), cache)
+	flags := append(native_runtime.SourceFlags(source, options), "-DADAMIC_TSGO")
+	return native_runtime.CachedRuntime(files, flags, compiler, string(version), cache)
 }

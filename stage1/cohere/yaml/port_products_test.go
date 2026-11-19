@@ -17,6 +17,7 @@ import (
 	"github.com/system-inc/adamic/internal/load"
 	"github.com/system-inc/adamic/internal/lower"
 	"github.com/system-inc/adamic/internal/native"
+	"github.com/system-inc/adamic/internal/native_runtime"
 )
 
 // Every program a test of this package lowers or compiles is a product, built ahead by its TestProduct_ twin, so a
@@ -64,10 +65,10 @@ func yamlProduct(t *testing.T, key string, build func() string) string {
 type yamlBuild struct {
 	name    string
 	entries []string
-	options native.Options
+	options native_runtime.Options
 }
 
-var yamlSanitized = native.Options{Sanitize: true}
+var yamlSanitized = native_runtime.Options{Sanitize: true}
 
 func yamlStem(entry string) string {
 	return strings.TrimSuffix(filepath.Base(entry), ".ts")
@@ -96,7 +97,7 @@ func (build yamlBuild) native(t *testing.T) string {
 	t.Helper()
 	recipe := "lower+native.C+javascript.JavaScript " + strings.Join(build.entries, " ")
 	// Build branches on options Flags doesn't spell, Split and Request among them, so the options are keyed whole.
-	flags := append(native.Flags(build.options), fmt.Sprintf("options=%+v", build.options))
+	flags := append(native_runtime.Flags(build.options), fmt.Sprintf("options=%+v", build.options))
 	return yamlProduct(t, "native "+build.name+" "+recipe+" "+strings.Join(flags, " "), func() string {
 		lowered := build.lowered(t)
 		inputs := yamlPortInputs(t, "yaml-"+build.name+"-native")
@@ -173,7 +174,7 @@ var (
 	yamlWidthBuild                = yamlBuild{"width", []string{"width_main.ts"}, yamlSanitized}
 	yamlClosedGapsBuild           = yamlBuild{"closed-gaps", []string{"gaps/structuralPosition.ts", "gaps/multiplePush.ts", "gaps/stringPresence.ts", "gaps/valuePresence.ts", "gaps/assignmentValue.ts", "gaps/dynamicCase.ts", "gaps/negativeCase.ts", "gaps/stringFallback.ts", "gaps/valueConjunction.ts", "gaps/prefixIncrement.ts", "gaps/emptyAlternative.ts"}, yamlSanitized}
 	yamlSpeedProbesBuild          = yamlBuild{"speed-probes", []string{"gaps/stringUnitScan.ts", "gaps/arenaNodeRead.ts", "gaps/numericMapLookup.ts"}, yamlSanitized}
-	yamlSharedSliceBuild          = yamlBuild{"shared-slice", []string{"gaps/sharedSliceAppend.ts"}, native.Options{}}
+	yamlSharedSliceBuild          = yamlBuild{"shared-slice", []string{"gaps/sharedSliceAppend.ts"}, native_runtime.Options{}}
 	yamlSharedSliceSanitizedBuild = yamlBuild{"shared-slice", []string{"gaps/sharedSliceAppend.ts"}, yamlSanitized}
 )
 
@@ -229,12 +230,12 @@ func (mutants yamlMutants) product(t *testing.T, index int) string {
 			t.Fatal(err)
 		}
 	}
-	options := native.Options{}
+	options := native_runtime.Options{}
 	recipe := []string{"entry=" + mutants.entry, "files=" + strings.Join(files, " "), "mutated=" + mutants.mutated, "name=" + mutation.name, "from=" + mutation.from, "to=" + mutation.to}
 	return yamlProduct(t, "mutant "+mutants.family+"\n"+strings.Join(recipe, "\n"), func() string {
 		inputs := yamlPortInputs(t, "yaml-"+mutants.family+"-mutant")
 		inputs.Flags = append(inputs.Flags, recipe...)
-		inputs.Flags = append(inputs.Flags, native.Flags(options)...)
+		inputs.Flags = append(inputs.Flags, native_runtime.Flags(options)...)
 		inputs.Flags = append(inputs.Flags, fmt.Sprintf("options=%+v", options))
 		inputs.Flags = append(inputs.Flags, "ADAMIC_NATIVE_SPLIT="+os.Getenv("ADAMIC_NATIVE_SPLIT"))
 		inputs.Toolchain = append(inputs.Toolchain, buildcache.CompilerReport("clang"))

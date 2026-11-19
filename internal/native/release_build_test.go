@@ -8,6 +8,8 @@ import (
 	"slices"
 	"strings"
 	"testing"
+
+	"github.com/system-inc/adamic/internal/native_runtime"
 )
 
 // -Wcast-function-type-strict joined with the closure convention (area-next): a closure called
@@ -36,17 +38,17 @@ func TestNonShippingFlagsStayIdentical(t *testing.T) {
 	for _, release := range []bool{false, true} {
 		for _, row := range []struct {
 			name    string
-			options Options
+			options native_runtime.Options
 			suffix  string
 		}{
-			{"counted", Options{Release: release, Count: true}, " -DADAMIC_COUNT -O2"},
-			{"thread sanitized", Options{Release: release, ThreadSanitize: true}, " -O1 -g -fsanitize=thread -DADAMIC_TSAN_TEST"},
-			{"sanitized", Options{Release: release, Sanitize: true}, " -O1 -g -fsanitize=address,undefined -fno-sanitize-recover=all -fsanitize-undefined-strip-path-components=-1"},
-			{"oracle counts", Options{Release: release, Sanitize: true, Count: true}, " -DADAMIC_COUNT -O1 -g -fsanitize=address,undefined -fno-sanitize-recover=all -fsanitize-undefined-strip-path-components=-1"},
-			{"slab probe", Options{Release: release, Sanitize: true, Count: true, slabs: true, cpu: "haswell"}, " -DADAMIC_COUNT -DADAMIC_SLABS -march=haswell -O1 -g -fsanitize=address,undefined -fno-sanitize-recover=all -fsanitize-undefined-strip-path-components=-1"},
+			{"counted", native_runtime.Options{Release: release, Count: true}, " -DADAMIC_COUNT -O2"},
+			{"thread sanitized", native_runtime.Options{Release: release, ThreadSanitize: true}, " -O1 -g -fsanitize=thread -DADAMIC_TSAN_TEST"},
+			{"sanitized", native_runtime.Options{Release: release, Sanitize: true}, " -O1 -g -fsanitize=address,undefined -fno-sanitize-recover=all -fsanitize-undefined-strip-path-components=-1"},
+			{"oracle counts", native_runtime.Options{Release: release, Sanitize: true, Count: true}, " -DADAMIC_COUNT -O1 -g -fsanitize=address,undefined -fno-sanitize-recover=all -fsanitize-undefined-strip-path-components=-1"},
+			{"slab probe", native_runtime.Options{Release: release, Sanitize: true, Count: true, Slabs: true, CPU: "haswell"}, " -DADAMIC_COUNT -DADAMIC_SLABS -march=haswell -O1 -g -fsanitize=address,undefined -fno-sanitize-recover=all -fsanitize-undefined-strip-path-components=-1"},
 		} {
 			want := strings.ReplaceAll(common+row.suffix, " ", "\x00")
-			for _, got := range [][]string{Flags(row.options), LinkFlags(row.options)} {
+			for _, got := range [][]string{native_runtime.Flags(row.options), LinkFlags(row.options)} {
 				if strings.Join(got, "\x00") != want {
 					t.Errorf("%s release=%v: got %q, want %q", row.name, release, got, want)
 				}
@@ -54,7 +56,7 @@ func TestNonShippingFlagsStayIdentical(t *testing.T) {
 		}
 	}
 	want := strings.ReplaceAll(common+" -O2", " ", "\x00")
-	for _, got := range [][]string{Flags(Options{}), LinkFlags(Options{})} {
+	for _, got := range [][]string{native_runtime.Flags(native_runtime.Options{}), LinkFlags(native_runtime.Options{})} {
 		if strings.Join(got, "\x00") != want {
 			t.Errorf("ordinary oracle/test flags changed: %q", got)
 		}
@@ -63,8 +65,8 @@ func TestNonShippingFlagsStayIdentical(t *testing.T) {
 
 func TestReleaseFlagsReachLink(t *testing.T) {
 	t.Parallel()
-	options := Options{Release: true}
-	compile, link := Flags(options), LinkFlags(options)
+	options := native_runtime.Options{Release: true}
+	compile, link := native_runtime.Flags(options), LinkFlags(options)
 	if !slices.Contains(compile, "-flto=thin") {
 		t.Fatal("shipped release is not ThinLTO")
 	}
@@ -83,7 +85,7 @@ func TestReleaseArithmeticIsNeverFused(t *testing.T) {
 		t.Skip(why)
 	}
 	binary := filepath.Join(t.TempDir(), "release")
-	if err := Build(fusedHarness, binary, Options{Release: true, cpu: cpu}); err != nil {
+	if err := Build(fusedHarness, binary, native_runtime.Options{Release: true, CPU: cpu}); err != nil {
 		t.Fatal(err)
 	}
 	if got := runWithInput(t, "", binary); got != "0 0 0\n" {
@@ -95,13 +97,13 @@ func TestReleaseArithmeticIsNeverFused(t *testing.T) {
 	if err := os.WriteFile(source, []byte(fusedHarness), 0o644); err != nil {
 		t.Fatal(err)
 	}
-	library, err := RuntimeLibrary("", Options{Release: true, cpu: cpu})
+	library, err := native_runtime.RuntimeLibrary("", native_runtime.Options{Release: true, CPU: cpu})
 	if err != nil {
 		t.Fatal(err)
 	}
-	flags := slices.DeleteFunc(LinkFlags(Options{Release: true, cpu: cpu}), func(s string) bool { return s == "-ffp-contract=off" })
+	flags := slices.DeleteFunc(LinkFlags(native_runtime.Options{Release: true, CPU: cpu}), func(s string) bool { return s == "-ffp-contract=off" })
 	flags = append(flags, "-o", binary, source)
-	flags = append(flags, RuntimeLinkFlags(library)...)
+	flags = append(flags, native_runtime.RuntimeLinkFlags(library)...)
 	flags = append(flags, "-lm")
 	if output, err := exec.Command("clang", flags...).CombinedOutput(); err != nil {
 		t.Fatalf("mutant compile: %v\n%s", err, output)

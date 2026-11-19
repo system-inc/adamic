@@ -6,6 +6,7 @@ import (
 	"encoding/json"
 
 	"fmt"
+	"github.com/system-inc/adamic/internal/native_runtime"
 	"github.com/system-inc/adamic/stage1/cohere/lint/oracles"
 	"hash/fnv"
 	"os"
@@ -208,7 +209,7 @@ func rulesAgreeNative(t *testing.T) string {
 	rulesAgreeNativeOnce.Do(func() {
 		inputs := rulesAgreeBuildInputs
 		inputs.Name = "lint-rules-agree-native-sanitized"
-		inputs.Flags = append(native.Flags(native.Options{Sanitize: true, Split: true, Jobs: 4}),
+		inputs.Flags = append(native_runtime.Flags(native_runtime.Options{Sanitize: true, Split: true, Jobs: 4}),
 			"Split=true", "Jobs=4",
 			"ADAMIC_NATIVE_SPLIT="+os.Getenv("ADAMIC_NATIVE_SPLIT"))
 		inputs.Toolchain = append(inputs.Toolchain, buildcache.CompilerReport("clang"))
@@ -219,7 +220,7 @@ func rulesAgreeNative(t *testing.T) string {
 			}
 			started := time.Now()
 			defer func() { t.Logf("rules clang: %.3fs", time.Since(started).Seconds()) }()
-			return native.Build(string(source), filepath.Join(output, "scanner"), native.Options{Sanitize: true, Split: true, Jobs: 4})
+			return native.Build(string(source), filepath.Join(output, "scanner"), native_runtime.Options{Sanitize: true, Split: true, Jobs: 4})
 		})
 
 	})

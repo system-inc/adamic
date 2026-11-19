@@ -14,11 +14,12 @@ import (
 	"github.com/system-inc/adamic/internal/load"
 	"github.com/system-inc/adamic/internal/lower"
 	"github.com/system-inc/adamic/internal/native"
+	"github.com/system-inc/adamic/internal/native_runtime"
 	"github.com/system-inc/adamic/stage1/cohere/css/oracles"
 )
 
 // Widening from 6 to 24 KiB compounds the linear/quadratic scaling gap. The guard counts the printer's allocations
-// instead of timing it: a counted build (native.Options.Count) reports them, and one input gives one count on any box
+// instead of timing it: a counted build (native_runtime.Options.Count) reports them, and one input gives one count on any box
 // under any load. Timed, the same clean change read 4.04x quiet and 6.18x on a loaded Eve against a 6x bound (Loom,
 // Oct 21). Counted, the printer allocated 512,884 then 2,025,835 values (3.95x) and the prefix-rebuild mutant 1,214,890
 // then 14,536,375 (11.97x), every count the same on Pupa and Lunatic, and beside 24 CPU burners on Lunatic's 8 CPUs at
@@ -54,9 +55,9 @@ var cssPrinterCountedNatives [2]string
 func cssPrinterCounted(t *testing.T, index int) string {
 	t.Helper()
 	cssPrinterCountedOnce[index].Do(func() {
-		options := native.Options{Count: true}
+		options := native_runtime.Options{Count: true}
 		name := "css-printer-counted"
-		flags := append(native.Flags(options), "ADAMIC_NATIVE_SPLIT="+os.Getenv("ADAMIC_NATIVE_SPLIT"))
+		flags := append(native_runtime.Flags(options), "ADAMIC_NATIVE_SPLIT="+os.Getenv("ADAMIC_NATIVE_SPLIT"))
 		if applied := cssPrinterCostMutants[index]; applied != nil {
 			name = "css-printer-prefix-cost-mutant-counted"
 			flags = append(flags, applied.from, applied.to)

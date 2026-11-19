@@ -8,6 +8,7 @@ import (
 	"github.com/system-inc/adamic/internal/ir"
 	"github.com/system-inc/adamic/internal/leakcheck"
 	"github.com/system-inc/adamic/internal/native"
+	"github.com/system-inc/adamic/internal/native_runtime"
 )
 
 // capturedUnionPins are #n7sx9gz's programs: a let whose members are held differently (an object, a
@@ -102,7 +103,7 @@ func capturedUnionRuns(t *testing.T, path string, program *ir.Program, want stri
 	})
 	t.Run("counted", func(t *testing.T) {
 		binary := filepath.Join(t.TempDir(), "counted")
-		if err := native.Build(native.C(program), binary, native.Options{Count: true}); err != nil {
+		if err := native.Build(native.C(program), binary, native_runtime.Options{Count: true}); err != nil {
 			t.Fatal(err)
 		}
 		got := execute(t, binary)

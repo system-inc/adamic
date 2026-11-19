@@ -90,7 +90,7 @@ func longUnicodePortability(t *testing.T, compiler string) {
 	// keeps cold sanitizer setup within this leaf's test-grain budget.
 	flags := []string{"-std=c11", "-Wpedantic", "-Werror", "-fsigned-char", "-O0", "-g", "-fsanitize=address,undefined", "-fno-sanitize-recover=all", "-fno-omit-frame-pointer", "-fno-pie", "-ffp-contract=off", "-fno-optimize-sibling-calls"}
 	source := C(program)
-	flags = append(flags, featureFlags(source)...)
+	flags = append(flags, native_runtime.FeatureFlags(source)...)
 	compilerPath, err := exec.LookPath(compiler)
 	if err != nil {
 		t.Fatal(err)
@@ -99,16 +99,16 @@ func longUnicodePortability(t *testing.T, compiler string) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	files, err := readRuntime(native_runtime.Sources, "c")
+	files, err := native_runtime.ReadRuntime(native_runtime.Sources, "c")
 	if err != nil {
 		t.Fatal(err)
 	}
 	kept := files[:0]
 	for _, file := range files {
-		if file.name == "node_host.c" && !strings.Contains(source, "#define ADAMIC_NODE_HOST 1\n") {
+		if file.Name == "node_host.c" && !strings.Contains(source, "#define ADAMIC_NODE_HOST 1\n") {
 			continue
 		}
-		if file.name == "regexp_replace.c" && !strings.Contains(source, "#define ADAMIC_REGEXP_REPLACE_CALLBACK 1\n") {
+		if file.Name == "regexp_replace.c" && !strings.Contains(source, "#define ADAMIC_REGEXP_REPLACE_CALLBACK 1\n") {
 			continue
 		}
 		kept = append(kept, file)
@@ -117,7 +117,7 @@ func longUnicodePortability(t *testing.T, compiler string) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	library, err := cachedRuntime(kept, flags, compilerPath, string(version), filepath.Join(cache, "adamic", "c-portability"))
+	library, err := native_runtime.CachedRuntime(kept, flags, compilerPath, string(version), filepath.Join(cache, "adamic", "c-portability"))
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -127,7 +127,7 @@ func longUnicodePortability(t *testing.T, compiler string) {
 	}
 	binary := filepath.Join(directory, "native")
 	arguments := append(append([]string{}, flags...), "-no-pie", "-I", filepath.Dir(library), main, "-o", binary)
-	arguments = append(arguments, RuntimeLinkFlags(library)...)
+	arguments = append(arguments, native_runtime.RuntimeLinkFlags(library)...)
 	arguments = append(arguments, "-lm")
 	output, err := exec.Command(compilerPath, arguments...).CombinedOutput()
 	if err != nil || len(output) != 0 {

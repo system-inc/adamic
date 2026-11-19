@@ -16,6 +16,7 @@ import (
 
 	"github.com/system-inc/adamic/internal/leakcheck"
 	"github.com/system-inc/adamic/internal/native"
+	"github.com/system-inc/adamic/internal/native_runtime"
 )
 
 func programCoreCode(t *testing.T) string {
@@ -171,19 +172,19 @@ func programRegionCoreUnit(t *testing.T, index int) {
 func TestProgramRegionTarget(t *testing.T) {
 	t.Setenv("ADAMIC_PROGRAM_REGION", "")
 	const refusal = "native: Program regions require a one-shot native CLI"
-	for _, options := range []native.Options{{ProgramRegion: true, Target: "wasm32-wasi"}, {ProgramRegion: true, Request: true}} {
+	for _, options := range []native_runtime.Options{{ProgramRegion: true, Target: "wasm32-wasi"}, {ProgramRegion: true, Request: true}} {
 		if err := native.Build("int main(void) {return 0;}", filepath.Join(t.TempDir(), "refused"), options); err == nil || err.Error() != refusal {
 			t.Fatalf("want %q, got %v", refusal, err)
 		}
 	}
-	if !strings.Contains(strings.Join(native.Flags(native.Options{ProgramRegion: true}), " "), "-DADAMIC_PROGRAM_REGION") {
+	if !strings.Contains(strings.Join(native_runtime.Flags(native_runtime.Options{ProgramRegion: true}), " "), "-DADAMIC_PROGRAM_REGION") {
 		t.Fatal("missing opt-in flag")
 	}
-	if strings.Contains(strings.Join(native.Flags(native.Options{}), " "), "-DADAMIC_PROGRAM_REGION") {
+	if strings.Contains(strings.Join(native_runtime.Flags(native_runtime.Options{}), " "), "-DADAMIC_PROGRAM_REGION") {
 		t.Fatal("default enabled Program region")
 	}
 	t.Setenv("ADAMIC_PROGRAM_REGION", "1")
-	if err := native.ValidateOptions(native.Options{Target: "wasm32-wasi"}); err == nil || err.Error() != refusal {
+	if err := native_runtime.ValidateOptions(native_runtime.Options{Target: "wasm32-wasi"}); err == nil || err.Error() != refusal {
 		t.Fatalf("environment switch bypassed refusal: %v", err)
 	}
 }

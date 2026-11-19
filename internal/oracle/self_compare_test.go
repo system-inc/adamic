@@ -8,6 +8,7 @@ import (
 
 	"github.com/system-inc/adamic/internal/leakcheck"
 	"github.com/system-inc/adamic/internal/native"
+	"github.com/system-inc/adamic/internal/native_runtime"
 	"github.com/system-inc/adamic/internal/wasitest"
 )
 
@@ -62,7 +63,7 @@ func selfCompare(t *testing.T, name string) {
 		t.Fatal(report)
 	}
 	countedBinary := filepath.Join(t.TempDir(), "counted")
-	if err := native.Build(native.C(program), countedBinary, native.Options{Count: true}); err != nil {
+	if err := native.Build(native.C(program), countedBinary, native_runtime.Options{Count: true}); err != nil {
 		t.Fatal(err)
 	}
 	counted := execute(t, countedBinary)
@@ -101,7 +102,7 @@ func TestSelfCompareConstantMutant(t *testing.T) {
 		t.Fatal("mutant did not replace numeric self-equality")
 	}
 	binary := filepath.Join(t.TempDir(), "mutant")
-	if err := native.Build(source, binary, native.Options{Sanitize: true}); err != nil {
+	if err := native.Build(source, binary, native_runtime.Options{Sanitize: true}); err != nil {
 		t.Fatal(err)
 	}
 	actual := execute(t, binary)

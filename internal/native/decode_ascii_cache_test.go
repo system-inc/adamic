@@ -11,6 +11,7 @@ import (
 	"testing"
 
 	"github.com/system-inc/adamic/internal/buildcache"
+	"github.com/system-inc/adamic/internal/native_runtime"
 	"github.com/system-inc/adamic/internal/toolchain"
 )
 
@@ -87,12 +88,12 @@ func decodeASCIIDecoder(t *testing.T, target string) string {
 	// keys the decoder. It is built for this machine alone.
 	if alternate := os.Getenv("ADAMIC_DECODE_RUNTIME"); alternate != "" {
 		runtimeDirectory = alternate
-		snapshot, err := readRuntime(os.DirFS(alternate), ".")
+		snapshot, err := native_runtime.ReadRuntime(os.DirFS(alternate), ".")
 		if err != nil {
 			t.Fatal(err)
 		}
 		for _, file := range snapshot {
-			inputs.Flags = append(inputs.Flags, fmt.Sprintf("runtime %s %x", file.name, sha256.Sum256(file.contents)))
+			inputs.Flags = append(inputs.Flags, fmt.Sprintf("runtime %s %x", file.Name, sha256.Sum256(file.Contents)))
 		}
 	}
 	runtimePath := runtimeDirectory
@@ -142,7 +143,7 @@ func decodeASCIIDecoder(t *testing.T, target string) string {
 		}
 		defer os.RemoveAll(objectDirectory)
 		// The checkout's directory is mapped out of the debug information, which would otherwise name it.
-		compileFlags := prefixMaps(repository, "/adamic-decode")
+		compileFlags := native_runtime.PrefixMaps(repository, "/adamic-decode")
 		for _, flag := range flags {
 			if !strings.HasPrefix(flag, "-Wl,") {
 				compileFlags = append(compileFlags, flag)

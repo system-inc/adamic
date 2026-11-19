@@ -17,6 +17,7 @@ import (
 
 	"github.com/system-inc/adamic/internal/javascript"
 	"github.com/system-inc/adamic/internal/native"
+	"github.com/system-inc/adamic/internal/native_runtime"
 )
 
 // The fixtures compare stdout and stderr each on its own, which can't see the order the two were
@@ -39,7 +40,7 @@ func sanitized(t *testing.T, fixture string) (string, string, string) {
 	}
 	directory := t.TempDir()
 	binary := filepath.Join(directory, "program")
-	if err := native.Build(native.C(program), binary, native.Options{Sanitize: true}); err != nil {
+	if err := native.Build(native.C(program), binary, native_runtime.Options{Sanitize: true}); err != nil {
 		t.Fatal(err)
 	}
 	script := filepath.Join(directory, "program.mjs")

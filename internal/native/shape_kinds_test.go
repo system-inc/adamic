@@ -243,23 +243,23 @@ func shapeProbeProduct(t *testing.T) string {
 	}
 	code.WriteString("return 4;\n}\n")
 	source := code.String()
-	request, err := RuntimeRequestFor(Options{Count: true})
+	request, err := native_runtime.RuntimeRequestFor(native_runtime.Options{Count: true})
 	if err != nil {
 		t.Fatal(err)
 	}
 	inputs.Flags = append([]string{source}, request.Portable...)
 	inputs.Files = append(inputs.Files, "internal/native/testdata/parallel/scaling.c")
 	inputs.Toolchain = []string{buildcache.Tool(request.Compiler, "--target="+request.Options.Target, "--version"), buildcache.Tool(request.Archiver, "--version")}
-	inputs.Files = append(inputs.Files, "internal/native/native.go", "internal/native/library.go", "internal/native/target.go")
+	inputs.Files = append(inputs.Files, "internal/native/native.go", "internal/native_runtime/options.go", "internal/native_runtime/library.go", "internal/native_runtime/target.go")
 	return buildcache.Product(t, inputs, func(directory string) error {
-		if err := Build(source, filepath.Join(directory, "probe"), Options{Count: true}); err != nil {
+		if err := Build(source, filepath.Join(directory, "probe"), native_runtime.Options{Count: true}); err != nil {
 			return err
 		}
 		scaling, err := os.ReadFile("testdata/parallel/scaling.c")
 		if err != nil {
 			return err
 		}
-		if err := Build(string(scaling), filepath.Join(directory, "scaling"), Options{Count: true}); err != nil {
+		if err := Build(string(scaling), filepath.Join(directory, "scaling"), native_runtime.Options{Count: true}); err != nil {
 			return err
 		}
 		before := "adamic_object *object = adamic_object_new(&shape);"
@@ -267,7 +267,7 @@ func shapeProbeProduct(t *testing.T) string {
 			return fmt.Errorf("scaling mutation is stale")
 		}
 		changed := strings.Replace(string(scaling), before, "kinds[count-1]=adamic_field_reference;\n"+before, 1)
-		if err := Build(changed, filepath.Join(directory, "scaling-mutant"), Options{Count: true}); err != nil {
+		if err := Build(changed, filepath.Join(directory, "scaling-mutant"), native_runtime.Options{Count: true}); err != nil {
 			return err
 		}
 		foreign, err := os.ReadFile("../native_runtime/c/foreign.c")
@@ -287,7 +287,7 @@ func shapeProbeProduct(t *testing.T) string {
 			// Compile the actual producer under private names, alongside the runtime.
 			// This needs no Objective-C or SDK: the box holds a plain C pointer.
 			code := "#define adamic_foreign_new shape_probe_foreign_new\n#define adamic_foreign_pointer shape_probe_foreign_pointer\n#define adamic_foreign_dropped shape_probe_foreign_dropped\n" + producer + foreignShapeWitness
-			if err := Build(code, filepath.Join(directory, name), Options{Count: true}); err != nil {
+			if err := Build(code, filepath.Join(directory, name), native_runtime.Options{Count: true}); err != nil {
 				return err
 			}
 		}
@@ -296,7 +296,7 @@ func shapeProbeProduct(t *testing.T) string {
 			if sanitize {
 				name += "-sanitized"
 			}
-			if err := Build(stringShapeWitness, filepath.Join(directory, name), Options{Count: true, Sanitize: sanitize}); err != nil {
+			if err := Build(stringShapeWitness, filepath.Join(directory, name), native_runtime.Options{Count: true, Sanitize: sanitize}); err != nil {
 				return err
 			}
 		}
@@ -597,7 +597,7 @@ int main(int argc,char **argv) {
  return 0;
 }`
 	binary := filepath.Join(t.TempDir(), "groups")
-	if err := Build(code+"\n", binary, Options{Count: true}); err != nil {
+	if err := Build(code+"\n", binary, native_runtime.Options{Count: true}); err != nil {
 		t.Fatal(err)
 	}
 	got := inlineArrayRun(t, binary)

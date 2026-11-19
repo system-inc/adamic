@@ -11,6 +11,7 @@ import (
 
 	"github.com/system-inc/adamic/internal/ir"
 	"github.com/system-inc/adamic/internal/native"
+	"github.com/system-inc/adamic/internal/native_runtime"
 )
 
 // heap.c gives a thread's spare chunks back only at a quiet point (#vea9pph, Adamic's ruling): a wait
@@ -167,7 +168,7 @@ func TestHeapQuietPoints(t *testing.T) {
 	binary := func(t *testing.T, program *ir.Program, count bool) string {
 		t.Helper()
 		output := filepath.Join(t.TempDir(), "native")
-		if err := native.Build(native.C(program), output, native.Options{Count: count}); err != nil {
+		if err := native.Build(native.C(program), output, native_runtime.Options{Count: count}); err != nil {
 			t.Fatal(err)
 		}
 		return output

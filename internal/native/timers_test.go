@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"github.com/system-inc/adamic/internal/buildcache"
 	"github.com/system-inc/adamic/internal/compilerinputs"
+	"github.com/system-inc/adamic/internal/native_runtime"
 	"os"
 	"os/exec"
 	"path/filepath"
@@ -79,7 +80,7 @@ const timerPhaseDeadline = 3 * time.Second
 
 func TestTimerTurnPhaseYieldsToHostCompletion(t *testing.T) {
 	t.Parallel()
-	run, expired := timerRunWithin(timerPhaseDeadline, nil, timerProduct(t, "release", native.Options{Release: true}), "turn-phase")
+	run, expired := timerRunWithin(timerPhaseDeadline, nil, timerProduct(t, "release", native_runtime.Options{Release: true}), "turn-phase")
 	if expired {
 		t.Fatal("timer phase starved the pending host completion: own 3 s deadline")
 	}
@@ -107,11 +108,11 @@ func TestTimerCallbackThrowMatchesNode(t *testing.T) {
 		t.Fatalf("raw Node must throw: %+v", raw)
 	}
 	oracle := timerThrowOracle(t)
-	released := timerRun(nil, timerProduct(t, "release", native.Options{Release: true}), "throw")
+	released := timerRun(nil, timerProduct(t, "release", native_runtime.Options{Release: true}), "throw")
 	if released.ExitCode != oracle.ExitCode || !bytes.Equal(released.Stdout, oracle.Stdout) || !bytes.Equal(released.Stderr, oracle.Stderr) {
 		t.Fatalf("uncaught callback differs from Node's house format: native %+v Node %+v", released, oracle)
 	}
-	checked := timerRun([]string{"ASAN_OPTIONS=detect_leaks=0:halt_on_error=1", "UBSAN_OPTIONS=halt_on_error=1"}, timerProduct(t, "sanitized", native.Options{Sanitize: true, Count: true}), "throw")
+	checked := timerRun([]string{"ASAN_OPTIONS=detect_leaks=0:halt_on_error=1", "UBSAN_OPTIONS=halt_on_error=1"}, timerProduct(t, "sanitized", native_runtime.Options{Sanitize: true, Count: true}), "throw")
 	if checked.ExitCode != oracle.ExitCode || !bytes.Equal(checked.Stdout, oracle.Stdout) || !bytes.HasPrefix(checked.Stderr, oracle.Stderr) || bytes.Contains(checked.Stderr, []byte("Sanitizer")) || bytes.Contains(checked.Stderr, []byte("runtime error:")) {
 		t.Fatalf("sanitized uncaught callback: %+v", checked)
 	}
@@ -125,7 +126,7 @@ func timerCustomHooksRefused(run leakcheck.Run) bool {
 
 func TestTimerCustomHooksRefused(t *testing.T) {
 	t.Parallel()
-	run := timerRun(nil, timerProduct(t, "release", native.Options{Release: true}), "custom-hooks")
+	run := timerRun(nil, timerProduct(t, "release", native_runtime.Options{Release: true}), "custom-hooks")
 	if !timerCustomHooksRefused(run) || string(run.Stderr) != timerCustomHooksMessage {
 		t.Fatalf("custom hooks must refuse with the exact provider NotYet: %+v", run)
 	}
@@ -134,8 +135,8 @@ func TestTimerCustomHooksRefused(t *testing.T) {
 func TestTimersAgainstNode(t *testing.T) {
 	t.Parallel()
 	code := timerHarness(t)
-	binary := timerProduct(t, "sanitized", native.Options{Sanitize: true, Count: true})
-	released := timerProduct(t, "release", native.Options{Release: true})
+	binary := timerProduct(t, "sanitized", native_runtime.Options{Sanitize: true, Count: true})
+	released := timerProduct(t, "release", native_runtime.Options{Release: true})
 	for _, mode := range []string{"turn-phase", "order", "interval", "cancel", "cancel-self", "foreign", "unref", "unref-live", "deadlines", "graph", "arity", "host"} {
 		t.Run(mode, func(t *testing.T) {
 			run := timerRun([]string{"ASAN_OPTIONS=detect_leaks=0:halt_on_error=1", "UBSAN_OPTIONS=halt_on_error=1"}, binary, mode)
@@ -155,7 +156,7 @@ func TestTimersAgainstNode(t *testing.T) {
 			report, err := leakcheck.Check(leakcheck.Program{C: code, Sanitized: binary, Counted: filepath.Join(t.TempDir(), "counted"),
 				Arguments: func() []string { return []string{mode} }, Execute: timerRun,
 				BuildCounted: func(_ string, output string) error {
-					return copyTimerProduct(timerProduct(t, "counted", native.Options{Count: true}), output)
+					return copyTimerProduct(timerProduct(t, "counted", native_runtime.Options{Count: true}), output)
 				}})
 			if err != nil || report != "" {
 				t.Fatalf("leakcheck: %v %s", err, report)
@@ -172,8 +173,8 @@ type timerRuntime struct{ directory string }
 // the product's random staging directory into __FILE__ and the debug info, so no two builds of one mutant matched, even
 // on one box (Loom's Builder, #landing90, Nov 2). TestTimerMutantProductIsReproducible pins it, and
 // TestTimerMutantProductPinCatchesBareClang shows the pin goes red with the old bare clang.
-func (runtime timerRuntime) build(code, output string, options native.Options) error {
-	library, err := native.RuntimeLibrary(runtime.directory, options)
+func (runtime timerRuntime) build(code, output string, options native_runtime.Options) error {
+	library, err := native_runtime.RuntimeLibrary(runtime.directory, options)
 	if err != nil {
 		return err
 	}
@@ -185,13 +186,13 @@ func (runtime timerRuntime) build(code, output string, options native.Options) e
 
 // timerBuildBare is the probe build this file used before #landing90: the source written beside the output and compiled
 // by a bare clang. It stays only as the pin's mutant.
-func timerBuildBare(code, output string, options native.Options, library string) error {
+func timerBuildBare(code, output string, options native_runtime.Options, library string) error {
 	source := output + ".c"
 	if err := os.WriteFile(source, []byte(code), 0600); err != nil {
 		return err
 	}
 	args := append(native.LinkFlags(options), "-I", filepath.Dir(library), "-o", output, source)
-	args = append(args, native.RuntimeLinkFlags(library)...)
+	args = append(args, native_runtime.RuntimeLinkFlags(library)...)
 	args = append(args, "-lm")
 	result, err := exec.Command("clang", args...).CombinedOutput()
 	if err != nil {
@@ -208,9 +209,9 @@ func timerMutantTwice(t *testing.T, bare bool) ([]byte, []byte) {
 	if mutation.name != "unref-ignored" {
 		t.Fatalf("timerMutations[5] is %s, want unref-ignored", mutation.name)
 	}
-	options := native.Options{Sanitize: true, Count: true}
+	options := native_runtime.Options{Sanitize: true, Count: true}
 	runtime := timerMutant(t, mutation.file, mutation.before, mutation.after)
-	library, err := native.RuntimeLibrary(runtime.directory, options)
+	library, err := native_runtime.RuntimeLibrary(runtime.directory, options)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -306,7 +307,7 @@ func TestTimerMutants(t *testing.T) {
 	t.Parallel()
 	for _, mutant := range timerMutations {
 		t.Run(mutant.name, func(t *testing.T) {
-			binary := timerProduct(t, "mutant-"+mutant.name, native.Options{Sanitize: true, Count: true})
+			binary := timerProduct(t, "mutant-"+mutant.name, native_runtime.Options{Sanitize: true, Count: true})
 			if mutant.caught == "deadline" {
 				run, expired := timerRunWithin(timerPhaseDeadline, []string{"ASAN_OPTIONS=detect_leaks=0:halt_on_error=1", "UBSAN_OPTIONS=halt_on_error=1"}, binary, mutant.mode)
 				if !expired || bytes.Count(run.Stdout, []byte("interval\n")) < 2 || bytes.Contains(run.Stdout, []byte("host\n")) || len(run.Stderr) != 0 {
@@ -340,7 +341,7 @@ func TestTimerMutants(t *testing.T) {
 			if mutant.caught == "leak" {
 				report, err := leakcheck.Check(leakcheck.Program{C: code, Sanitized: binary, Counted: filepath.Join(t.TempDir(), "counted"),
 					BuildCounted: func(code, output string) error {
-						return copyTimerProduct(timerProduct(t, "counted-"+mutant.name, native.Options{Count: true}), output)
+						return copyTimerProduct(timerProduct(t, "counted-"+mutant.name, native_runtime.Options{Count: true}), output)
 					},
 					Arguments: func() []string { return []string{mutant.mode} }, Execute: timerRun})
 				if err != nil || (!strings.Contains(report, "LeakSanitizer: detected memory leaks") && !strings.Contains(report, "heap values leaked:")) {
@@ -374,9 +375,9 @@ func TestTimerMutants(t *testing.T) {
 
 // Products contain compiled probes only. Every comparison, sanitizer run and
 // mutant assertion still executes in the ordinary test on the runner.
-func timerProduct(t *testing.T, variant string, options native.Options) string {
+func timerProduct(t *testing.T, variant string, options native_runtime.Options) string {
 	t.Helper()
-	flags := append([]string{fmt.Sprintf("options=%+v", options)}, native.Flags(options)...)
+	flags := append([]string{fmt.Sprintf("options=%+v", options)}, native_runtime.Flags(options)...)
 	for _, variable := range []string{"ADAMIC_PROGRAM_REGION", "ADAMIC_NATIVE_SPLIT", "ADAMIC_NATIVE_JOBS", "CPATH", "C_INCLUDE_PATH", "SDKROOT", "MACOSX_DEPLOYMENT_TARGET"} {
 		value, set := os.LookupEnv(variable)
 		flags = append(flags, fmt.Sprintf("env:%s:set=%t:value=%s", variable, set, value))
@@ -409,63 +410,63 @@ func copyTimerProduct(source, destination string) error {
 }
 func TestProduct_TimersSanitized(t *testing.T) {
 	t.Parallel()
-	timerProduct(t, "sanitized", native.Options{Sanitize: true, Count: true})
+	timerProduct(t, "sanitized", native_runtime.Options{Sanitize: true, Count: true})
 }
 func TestProduct_TimersRelease(t *testing.T) {
 	t.Parallel()
-	timerProduct(t, "release", native.Options{Release: true})
+	timerProduct(t, "release", native_runtime.Options{Release: true})
 }
 func TestProduct_TimersCounted(t *testing.T) {
 	t.Parallel()
-	timerProduct(t, "counted", native.Options{Count: true})
+	timerProduct(t, "counted", native_runtime.Options{Count: true})
 }
 func TestProduct_TimerMutantReleasedBeforeLastFire(t *testing.T) {
 	t.Parallel()
-	timerProduct(t, "mutant-released-before-last-fire", native.Options{Sanitize: true, Count: true})
+	timerProduct(t, "mutant-released-before-last-fire", native_runtime.Options{Sanitize: true, Count: true})
 }
 func TestProduct_TimerMutantForeignCancellation(t *testing.T) {
 	t.Parallel()
-	timerProduct(t, "mutant-foreign-cancellation", native.Options{Sanitize: true, Count: true})
+	timerProduct(t, "mutant-foreign-cancellation", native_runtime.Options{Sanitize: true, Count: true})
 }
 func TestProduct_TimerMutantUnrefIgnored(t *testing.T) {
 	t.Parallel()
-	timerProduct(t, "mutant-unref-ignored", native.Options{Sanitize: true, Count: true})
+	timerProduct(t, "mutant-unref-ignored", native_runtime.Options{Sanitize: true, Count: true})
 }
 func TestProduct_TimerMutantCancelLeaksRegistration(t *testing.T) {
 	t.Parallel()
-	timerProduct(t, "mutant-cancel-leaks-registration", native.Options{Sanitize: true, Count: true})
+	timerProduct(t, "mutant-cancel-leaks-registration", native_runtime.Options{Sanitize: true, Count: true})
 }
 func TestProduct_TimerMutantCancelLeaksCounted(t *testing.T) {
 	t.Parallel()
-	timerProduct(t, "counted-cancel-leaks-registration", native.Options{Count: true})
+	timerProduct(t, "counted-cancel-leaks-registration", native_runtime.Options{Count: true})
 }
 func TestProduct_TimerMutantCancelFreesCallback(t *testing.T) {
 	t.Parallel()
-	timerProduct(t, "mutant-cancel-frees-running-callback", native.Options{Sanitize: true, Count: true})
+	timerProduct(t, "mutant-cancel-frees-running-callback", native_runtime.Options{Sanitize: true, Count: true})
 }
 func TestProduct_TimerMutantPromiseCheckpoint(t *testing.T) {
 	t.Parallel()
-	timerProduct(t, "mutant-promise-checkpoint-omitted", native.Options{Sanitize: true, Count: true})
+	timerProduct(t, "mutant-promise-checkpoint-omitted", native_runtime.Options{Sanitize: true, Count: true})
 }
 
 func TestProduct_TimerMutantCustomHooks(t *testing.T) {
 	t.Parallel()
-	timerProduct(t, "mutant-custom-hooks-admitted", native.Options{Sanitize: true, Count: true})
+	timerProduct(t, "mutant-custom-hooks-admitted", native_runtime.Options{Sanitize: true, Count: true})
 }
 
 func TestProduct_TimerMutantTurnPhase(t *testing.T) {
 	t.Parallel()
-	timerProduct(t, "mutant-turn-phase-never-yields", native.Options{Sanitize: true, Count: true})
+	timerProduct(t, "mutant-turn-phase-never-yields", native_runtime.Options{Sanitize: true, Count: true})
 }
 func TestProduct_TimerMutantCallbackUncaught(t *testing.T) {
 	t.Parallel()
-	timerProduct(t, "mutant-callback-uncaught-omitted", native.Options{Sanitize: true, Count: true})
+	timerProduct(t, "mutant-callback-uncaught-omitted", native_runtime.Options{Sanitize: true, Count: true})
 }
 func TestProduct_TimerMutantKnownInsertDropped(t *testing.T) {
 	t.Parallel()
-	timerProduct(t, "mutant-known-insert-dropped", native.Options{Sanitize: true, Count: true})
+	timerProduct(t, "mutant-known-insert-dropped", native_runtime.Options{Sanitize: true, Count: true})
 }
 func TestProduct_TimerMutantRefCountKeptAtRetire(t *testing.T) {
 	t.Parallel()
-	timerProduct(t, "mutant-ref-count-kept-at-retire", native.Options{Sanitize: true, Count: true})
+	timerProduct(t, "mutant-ref-count-kept-at-retire", native_runtime.Options{Sanitize: true, Count: true})
 }

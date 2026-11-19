@@ -18,6 +18,7 @@ import (
 	"github.com/system-inc/adamic/internal/javascript"
 	"github.com/system-inc/adamic/internal/lower"
 	"github.com/system-inc/adamic/internal/native"
+	"github.com/system-inc/adamic/internal/native_runtime"
 )
 
 // fsWatchFixtures are held to Node on native under the sanitizers and on the JavaScript backend
@@ -73,7 +74,7 @@ const (
 
 func fsWatchProduct(t *testing.T, fixture, variant string) string {
 	t.Helper()
-	flags := append(native.Flags(native.Options{Sanitize: true}), "explicit-child-environment", "fs-watch-v1")
+	flags := append(native_runtime.Flags(native_runtime.Options{Sanitize: true}), "explicit-child-environment", "fs-watch-v1")
 	for _, name := range []string{"ADAMIC_PROGRAM_REGION", "ADAMIC_NATIVE_SPLIT", "ADAMIC_NATIVE_JOBS", "CPATH", "C_INCLUDE_PATH", "SDKROOT", "MACOSX_DEPLOYMENT_TARGET"} {
 		value, set := os.LookupEnv(name)
 		flags = append(flags, fmt.Sprintf("env:%s:set=%t:value=%s", name, set, value))
@@ -90,9 +91,9 @@ func fsWatchProduct(t *testing.T, fixture, variant string) string {
 		if err := os.WriteFile(filepath.Join(directory, "program.mjs"), []byte(javascript.JavaScript(program)), 0600); err != nil {
 			return err
 		}
-		options := native.Options{Sanitize: true}
+		options := native_runtime.Options{Sanitize: true}
 		if variant == "control" {
-			if err := native.Build(source, filepath.Join(directory, "native-release"), native.Options{Release: true}); err != nil {
+			if err := native.Build(source, filepath.Join(directory, "native-release"), native_runtime.Options{Release: true}); err != nil {
 				return err
 			}
 			return native.Build(source, filepath.Join(directory, "native"), options)
@@ -137,7 +138,7 @@ func fsWatchProduct(t *testing.T, fixture, variant string) string {
 		if !found {
 			return fmt.Errorf("mutant %s names no runtime file %s", variant, mutation.file)
 		}
-		library, err := native.RuntimeLibraryForSource(runtimeDirectory, source, options)
+		library, err := native_runtime.RuntimeLibraryForSource(runtimeDirectory, source, options)
 		if err != nil {
 			return err
 		}

@@ -24,6 +24,7 @@ import (
 	"github.com/system-inc/adamic/internal/load"
 	"github.com/system-inc/adamic/internal/lower"
 	"github.com/system-inc/adamic/internal/native"
+	"github.com/system-inc/adamic/internal/native_runtime"
 	"github.com/system-inc/adamic/internal/toolchain"
 
 	"github.com/system-inc/adamic/stage1/cohere/yaml/oracles"
@@ -340,8 +341,8 @@ func formatterMutantsBuildProduct(t *testing.T, index, level int) (string, strin
 	if level == 1 {
 		return sources, lowered
 	}
-	options := native.Options{}
-	product := buildcache.Product(t, buildcache.Inputs{Name: "yaml-formatter-mutant-native", Files: files, Flags: append(flags, native.Flags(options)...), Toolchain: append(tools, buildcache.CompilerReport("clang"))}, func(directory string) error {
+	options := native_runtime.Options{}
+	product := buildcache.Product(t, buildcache.Inputs{Name: "yaml-formatter-mutant-native", Files: files, Flags: append(flags, native_runtime.Flags(options)...), Toolchain: append(tools, buildcache.CompilerReport("clang"))}, func(directory string) error {
 		code, err := os.ReadFile(filepath.Join(lowered, "mutant.c"))
 		if err != nil {
 			return err

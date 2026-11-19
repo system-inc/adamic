@@ -1,4 +1,4 @@
-package native
+package native_runtime
 
 import (
 	"os"

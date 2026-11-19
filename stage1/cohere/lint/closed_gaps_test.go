@@ -16,6 +16,7 @@ import (
 	"github.com/system-inc/adamic/internal/load"
 	"github.com/system-inc/adamic/internal/lower"
 	"github.com/system-inc/adamic/internal/native"
+	"github.com/system-inc/adamic/internal/native_runtime"
 )
 
 // closedComparatorGaps are the gaps compiler/area-next closed, each with what Node prints for it.
@@ -85,8 +86,8 @@ func TestProduct_ClosedComparatorGapLastIndexPosition(t *testing.T) {
 // compiler's paths (compilerinputs.Lowering) beside the gap and this file, which holds the build.
 func closedComparatorGapNative(t *testing.T, file string) string {
 	t.Helper()
-	options := native.Options{Sanitize: true}
-	flags := append([]string{"load.Load(" + file + ")", "lower.Lower", "native.C", fmt.Sprintf("options=%+v", options)}, native.Flags(options)...)
+	options := native_runtime.Options{Sanitize: true}
+	flags := append([]string{"load.Load(" + file + ")", "lower.Lower", "native.C", fmt.Sprintf("options=%+v", options)}, native_runtime.Flags(options)...)
 	// native.Build splits by ADAMIC_NATIVE_SPLIT when its options don't, so the switch is an input.
 	flags = append(flags, "ADAMIC_NATIVE_SPLIT="+os.Getenv("ADAMIC_NATIVE_SPLIT"))
 	inputs := buildcache.Inputs{

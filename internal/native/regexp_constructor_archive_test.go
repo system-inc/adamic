@@ -11,6 +11,7 @@ import (
 	"testing"
 	"time"
 
+	"github.com/system-inc/adamic/internal/native_runtime"
 	"github.com/system-inc/adamic/internal/toolchain"
 )
 
@@ -30,7 +31,7 @@ static void item(adamic_array *array,size_t i) {show(array==NULL?NULL:array->ele
 
 // Expected output is produced by live Node from the same counted patterns.
 // Native and wasm exercise the public constructor, not the parser test seam.
-func constructorArchiveNode(t *testing.T, options Options, family string) {
+func constructorArchiveNode(t *testing.T, options native_runtime.Options, family string) {
 	t.Helper()
 	var c, js strings.Builder
 	if family == "splitSource" {
@@ -144,51 +145,51 @@ func jsQuote(value string) string { return fmt.Sprintf("%q", value) }
 
 func TestRegExpConstructorSourceArchive(t *testing.T) {
 	t.Parallel()
-	constructorArchiveNode(t, Options{Sanitize: true}, "source")
+	constructorArchiveNode(t, native_runtime.Options{Sanitize: true}, "source")
 }
 func TestRegExpConstructorSourceArchiveWASM(t *testing.T) {
 	t.Parallel()
-	constructorArchiveNode(t, Options{Target: "wasm32-wasi"}, "source")
+	constructorArchiveNode(t, native_runtime.Options{Target: "wasm32-wasi"}, "source")
 }
 func TestRegExpConstructorSyntaxErrorsArchive(t *testing.T) {
 	t.Parallel()
-	constructorArchiveNode(t, Options{Sanitize: true}, "syntaxErrors")
+	constructorArchiveNode(t, native_runtime.Options{Sanitize: true}, "syntaxErrors")
 }
 func TestRegExpConstructorSyntaxBracketArchiveWASM(t *testing.T) {
 	t.Parallel()
-	constructorArchiveNode(t, Options{Target: "wasm32-wasi"}, "syntaxBracket")
+	constructorArchiveNode(t, native_runtime.Options{Target: "wasm32-wasi"}, "syntaxBracket")
 }
 func TestRegExpConstructorSyntaxEscapeArchiveWASM(t *testing.T) {
 	t.Parallel()
-	constructorArchiveNode(t, Options{Target: "wasm32-wasi"}, "syntaxEscape")
+	constructorArchiveNode(t, native_runtime.Options{Target: "wasm32-wasi"}, "syntaxEscape")
 }
 func TestRegExpConstructorSyntaxGroupArchiveWASM(t *testing.T) {
 	t.Parallel()
-	constructorArchiveNode(t, Options{Target: "wasm32-wasi"}, "syntaxGroup")
+	constructorArchiveNode(t, native_runtime.Options{Target: "wasm32-wasi"}, "syntaxGroup")
 }
 func TestRegExpConstructorOwnershipArchive(t *testing.T) {
 	t.Parallel()
-	constructorArchiveNode(t, Options{Sanitize: true}, "ownership")
+	constructorArchiveNode(t, native_runtime.Options{Sanitize: true}, "ownership")
 }
 func TestRegExpConstructorOwnershipArchiveWASM(t *testing.T) {
 	t.Parallel()
-	constructorArchiveNode(t, Options{Target: "wasm32-wasi"}, "ownership")
+	constructorArchiveNode(t, native_runtime.Options{Target: "wasm32-wasi"}, "ownership")
 }
 func TestRegExpConstructorSplitSourceArchive(t *testing.T) {
 	t.Parallel()
-	constructorArchiveNode(t, Options{Split: true, Jobs: 2, Sanitize: true}, "splitSource")
+	constructorArchiveNode(t, native_runtime.Options{Split: true, Jobs: 2, Sanitize: true}, "splitSource")
 }
 func TestRegExpConstructorSplitSourceArchiveWASM(t *testing.T) {
 	t.Parallel()
-	constructorArchiveNode(t, Options{Target: "wasm32-wasi"}, "splitSource")
+	constructorArchiveNode(t, native_runtime.Options{Target: "wasm32-wasi"}, "splitSource")
 }
 
 func TestRegExpConstructorFlagsArchive(t *testing.T) {
 	t.Parallel()
-	constructorArchiveNode(t, Options{Sanitize: true}, "flags")
+	constructorArchiveNode(t, native_runtime.Options{Sanitize: true}, "flags")
 }
 
-func compilerArchiveCache(t *testing.T, options Options) {
+func compilerArchiveCache(t *testing.T, options native_runtime.Options) {
 	t.Helper()
 	source := "#define ADAMIC_REGEXP_RUNTIME_COMPILER 1\n"
 	library, err := regexpCompilerLibrary(source, options)
@@ -199,11 +200,11 @@ func compilerArchiveCache(t *testing.T, options Options) {
 	if err != nil || reused != library {
 		t.Fatalf("archive reuse: %s %s %v", library, reused, err)
 	}
-	compiler, err := toolchain.Path(compilerName(options))
+	compiler, err := toolchain.Path(native_runtime.CompilerName(options))
 	if err != nil {
 		t.Fatal(err)
 	}
-	output, err := toolchain.Command(archiverName(compiler), "t", library).CombinedOutput()
+	output, err := toolchain.Command(native_runtime.ArchiverName(compiler), "t", library).CombinedOutput()
 	if err != nil {
 		t.Fatalf("archive members: %v %s", err, output)
 	}
@@ -222,11 +223,11 @@ func compilerArchiveCache(t *testing.T, options Options) {
 func TestRegExpConstructorUsesOrdinaryRuntime(t *testing.T) {
 	t.Parallel()
 	source := "#define ADAMIC_REGEXP_RUNTIME_COMPILER 1\n"
-	ordinary, err := RuntimeLibraryForSource("", source, Options{Sanitize: true})
+	ordinary, err := native_runtime.RuntimeLibraryForSource("", source, native_runtime.Options{Sanitize: true})
 	if err != nil {
 		t.Fatal(err)
 	}
-	plain, err := RuntimeLibrary("", Options{Sanitize: true})
+	plain, err := native_runtime.RuntimeLibrary("", native_runtime.Options{Sanitize: true})
 	if err != nil || ordinary != plain {
 		t.Fatalf("construction needs a second ordinary runtime: %s %s %v", ordinary, plain, err)
 	}
@@ -235,22 +236,22 @@ func TestRegExpConstructorUsesOrdinaryRuntime(t *testing.T) {
 
 func TestRegExpConstructorFlagsArchiveWASM(t *testing.T) {
 	t.Parallel()
-	constructorArchiveNode(t, Options{Target: "wasm32-wasi"}, "flags")
+	constructorArchiveNode(t, native_runtime.Options{Target: "wasm32-wasi"}, "flags")
 }
 
 func TestRegExpCompilerArchiveCache(t *testing.T) {
 	t.Parallel()
-	compilerArchiveCache(t, Options{Sanitize: true})
+	compilerArchiveCache(t, native_runtime.Options{Sanitize: true})
 }
 func TestRegExpCompilerArchiveCacheWASM(t *testing.T) {
 	t.Parallel()
-	compilerArchiveCache(t, Options{Target: "wasm32-wasi"})
+	compilerArchiveCache(t, native_runtime.Options{Target: "wasm32-wasi"})
 }
 func TestRegExpConstructorFlagErrorsArchive(t *testing.T) {
 	t.Parallel()
-	constructorArchiveNode(t, Options{Sanitize: true}, "flagErrors")
+	constructorArchiveNode(t, native_runtime.Options{Sanitize: true}, "flagErrors")
 }
 func TestRegExpConstructorFlagErrorsArchiveWASM(t *testing.T) {
 	t.Parallel()
-	constructorArchiveNode(t, Options{Target: "wasm32-wasi"}, "flagErrors")
+	constructorArchiveNode(t, native_runtime.Options{Target: "wasm32-wasi"}, "flagErrors")
 }

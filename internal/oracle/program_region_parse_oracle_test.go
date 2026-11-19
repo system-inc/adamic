@@ -3,6 +3,7 @@ package oracle
 import (
 	"encoding/json"
 	"github.com/system-inc/adamic/internal/native"
+	"github.com/system-inc/adamic/internal/native_runtime"
 	"os"
 	"path/filepath"
 	"runtime"
@@ -57,7 +58,7 @@ func TestProgramRegionParseWASIImports(t *testing.T) {
 		t.Fatal(err)
 	}
 	binary := filepath.Join(t.TempDir(), "parse.wasm")
-	if err := native.Build(string(code), binary, native.Options{Target: "wasm32-wasi"}); err != nil {
+	if err := native.Build(string(code), binary, native_runtime.Options{Target: "wasm32-wasi"}); err != nil {
 		t.Fatal(err)
 	}
 	inventory := execute(t, "node", "-e", `const fs=require('node:fs');const m=new WebAssembly.Module(fs.readFileSync(process.argv[1]));console.log(JSON.stringify(WebAssembly.Module.imports(m).filter(i=>i.module==='wasi_snapshot_preview1').map(i=>i.name).sort()));`, binary)

@@ -8,6 +8,7 @@ import (
 	"strings"
 	"testing"
 
+	"github.com/system-inc/adamic/internal/native_runtime"
 	"github.com/system-inc/adamic/stage1/cohere/tsprinter/oracles"
 
 	"github.com/system-inc/adamic/internal/buildcache"
@@ -103,8 +104,8 @@ func sourceSanitized(t *testing.T, source sanitizedSource) string {
 // no trace sees it read, so its paths are named (compilerinputs.Lowering) beside the sources and this file, with the
 // native options and flags, the environment native.Build and clang read, and clang's version.
 func sanitizedInputs(name string, sources ...string) buildcache.Inputs {
-	options := native.Options{Sanitize: true}
-	flags := append([]string{"load.Load", "lower.Lower", "native.C", fmt.Sprintf("options=%+v", options)}, native.Flags(options)...)
+	options := native_runtime.Options{Sanitize: true}
+	flags := append([]string{"load.Load", "lower.Lower", "native.C", fmt.Sprintf("options=%+v", options)}, native_runtime.Flags(options)...)
 	for _, variable := range []string{"ADAMIC_NATIVE_SPLIT", "CPATH", "C_INCLUDE_PATH", "LIBRARY_PATH", "SDKROOT", "MACOSX_DEPLOYMENT_TARGET"} {
 		value, set := os.LookupEnv(variable)
 		flags = append(flags, fmt.Sprintf("env:%s:set=%t:value=%s", variable, set, value))
@@ -124,7 +125,7 @@ func buildSanitized(entry, directory string) error {
 	if err != nil {
 		return err
 	}
-	return native.Build(native.C(program), filepath.Join(directory, "port"), native.Options{Sanitize: true})
+	return native.Build(native.C(program), filepath.Join(directory, "port"), native_runtime.Options{Sanitize: true})
 }
 
 // sanitizedRun runs a sanitized build with leak detection off, as the oracle does; leaks is its own run.

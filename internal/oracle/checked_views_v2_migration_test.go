@@ -8,6 +8,7 @@ import (
 	"github.com/system-inc/adamic/internal/load"
 	"github.com/system-inc/adamic/internal/lower"
 	"github.com/system-inc/adamic/internal/native"
+	"github.com/system-inc/adamic/internal/native_runtime"
 	"path/filepath"
 	"strings"
 	"testing"
@@ -119,7 +120,7 @@ func TestCheckedViewV2RepresentationMutants(t *testing.T) {
 			t.Parallel()
 			code := representationProbeC(sample.tag, sample.value, false)
 			binary := filepath.Join(t.TempDir(), "correct")
-			if err := native.Build(code, binary, native.Options{Sanitize: true}); err != nil {
+			if err := native.Build(code, binary, native_runtime.Options{Sanitize: true}); err != nil {
 				t.Fatal(err)
 			}
 			want := run{stdout: []byte(sample.kind + "\n")}
@@ -127,7 +128,7 @@ func TestCheckedViewV2RepresentationMutants(t *testing.T) {
 				t.Fatal(difference)
 			}
 			binary = filepath.Join(t.TempDir(), "old-layout")
-			if err := native.Build(representationProbeC(sample.tag, sample.value, true), binary, native.Options{Sanitize: true}); err != nil {
+			if err := native.Build(representationProbeC(sample.tag, sample.value, true), binary, native_runtime.Options{Sanitize: true}); err != nil {
 				t.Fatal(err)
 			}
 			got := execute(t, binary)

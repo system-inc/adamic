@@ -15,6 +15,7 @@ import (
 	"github.com/system-inc/adamic/internal/load"
 	"github.com/system-inc/adamic/internal/lower"
 	"github.com/system-inc/adamic/internal/native"
+	"github.com/system-inc/adamic/internal/native_runtime"
 	"github.com/system-inc/adamic/stage1/cohere/lint/registry"
 )
 
@@ -23,7 +24,7 @@ const compilerAgreementCheckerGroupCount = 28
 
 // Standalone checker.ts native CPU prices, rounded up to milliseconds: 6ef6b9dc,
 // Clang 20.1.8, -O1 -g -fsanitize=address,undefined -fno-sanitize-recover=all,
-// native.Options{Sanitize:true, Jobs:1}, Split=false, CPU 0, one core. The cut
+// native_runtime.Options{Sanitize:true, Jobs:1}, Split=false, CPU 0, one core. The cut
 // consumes these prices in production dispatch order; they are not group IDs.
 var compilerAgreementCheckerPrices = map[string]int{
 	// default-param-last: measured on this port over pinned checker.ts, CPU 0, Clang 20.1.8;
@@ -280,8 +281,8 @@ const compilerAgreementCombinedOutputFile = "rules/no-bitwise/rule.ts"
 
 func compilerAgreementCombinedOutputNative(t *testing.T) string {
 	t.Helper()
-	options := native.Options{Sanitize: true, Jobs: 1}
-	flags := append(native.Flags(options), "Split=false", "Jobs=1", compilerAgreementCombinedOutputFile, compilerAgreementCombinedOutputFrom, compilerAgreementCombinedOutputTo)
+	options := native_runtime.Options{Sanitize: true, Jobs: 1}
+	flags := append(native_runtime.Flags(options), "Split=false", "Jobs=1", compilerAgreementCombinedOutputFile, compilerAgreementCombinedOutputFrom, compilerAgreementCombinedOutputTo)
 	inputs := compilerAgreementInputs(t, "compiler-agreement-combined-output-mutant-v1", flags)
 	inputs.Files = append(append([]string(nil), inputs.Files...), "stage1/cohere/lint/compiler_stage1_combined_sanitized_test.go", "stage1/cohere/lint/lint_test.go")
 	product := compilerAgreementProduct(t, inputs, func(directory string) error {

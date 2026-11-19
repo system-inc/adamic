@@ -10,6 +10,7 @@ import (
 	"github.com/system-inc/adamic/internal/load"
 	"github.com/system-inc/adamic/internal/lower"
 	"github.com/system-inc/adamic/internal/native"
+	"github.com/system-inc/adamic/internal/native_runtime"
 )
 
 func processEnvironmentFixtureEnvironment(name string) []string {
@@ -49,7 +50,7 @@ func init() {
 			runs := countPortable(t, source, path) + "\nenvironment " + strings.Join(environment, "\n")
 			return runs, func() string {
 				binary := filepath.Join(t.TempDir(), "program")
-				if err := native.Build(source, binary, native.Options{Count: true}); err != nil {
+				if err := native.Build(source, binary, native_runtime.Options{Count: true}); err != nil {
 					t.Fatal(err)
 				}
 				got := processEnvironmentRun(t, environment, binary)

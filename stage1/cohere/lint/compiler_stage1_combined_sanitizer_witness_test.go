@@ -13,6 +13,7 @@ import (
 
 	"github.com/system-inc/adamic/internal/ir"
 	"github.com/system-inc/adamic/internal/native"
+	"github.com/system-inc/adamic/internal/native_runtime"
 	"github.com/system-inc/adamic/internal/testguard"
 )
 
@@ -47,8 +48,8 @@ const compilerAgreementHeapWitnessPlant = "\n\t{ volatile unsigned char *adamic_
 
 func compilerAgreementHeapWitnessNative(t *testing.T) string {
 	t.Helper()
-	options := native.Options{Sanitize: true, Jobs: 1}
-	flags := append(native.Flags(options), "Split=false", "Jobs=1", compilerAgreementHeapWitnessDefinition.String(), compilerAgreementHeapWitnessPlant)
+	options := native_runtime.Options{Sanitize: true, Jobs: 1}
+	flags := append(native_runtime.Flags(options), "Split=false", "Jobs=1", compilerAgreementHeapWitnessDefinition.String(), compilerAgreementHeapWitnessPlant)
 	inputs := compilerAgreementInputs(t, "compiler-agreement-checker-heap-witness-v1", flags)
 	inputs.Files = append(append([]string(nil), inputs.Files...), "stage1/cohere/lint/compiler_stage1_combined_sanitizer_witness_test.go")
 	product := compilerAgreementProduct(t, inputs, func(directory string) error {

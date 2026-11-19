@@ -21,6 +21,7 @@ import (
 	"sync/atomic"
 	"syscall"
 
+	"github.com/system-inc/adamic/internal/native_runtime"
 	"github.com/system-inc/adamic/internal/toolchain"
 )
 
@@ -92,7 +93,7 @@ func unitClang(compiler string, flags []string, environment []string) (*unitClan
 			identity = append(identity, fileIdentity(path))
 		}
 	}
-	value, _ := unitClangs.LoadOrStore(partsKey(append(append(identity, flags...), environment...)), &unitClangFacts{})
+	value, _ := unitClangs.LoadOrStore(native_runtime.PartsKey(append(append(identity, flags...), environment...)), &unitClangFacts{})
 	facts := value.(*unitClangFacts)
 	facts.once.Do(func() { facts.parts, facts.search, facts.err = readUnitClang(compiler, flags, environment) })
 	return facts, facts.err
@@ -314,14 +315,14 @@ var unitTime = regexp.MustCompile(`__(DATE|TIME|TIMESTAMP)__`)
 // header planted, removed or changed under any name a header asks for, in any place clang would look, moves the key,
 // whether clang found it, found it missing, or took the next. The probe is the build's one clang run before its units
 // compile, and common's own files are keyed by what they hold elsewhere (unitKeyParts).
-func unitHeaderParts(first string, common []runtimeFile, flags []string, compiler string, environment []string, search []searchDirectory) ([]string, error) {
+func unitHeaderParts(first string, common []native_runtime.RuntimeFile, flags []string, compiler string, environment []string, search []searchDirectory) ([]string, error) {
 	probe, err := os.MkdirTemp("", "adamic-units-headers-")
 	if err != nil {
 		return nil, err
 	}
 	defer os.RemoveAll(probe)
 	for _, file := range common {
-		if err := os.WriteFile(filepath.Join(probe, file.name), file.contents, 0o644); err != nil {
+		if err := os.WriteFile(filepath.Join(probe, file.Name), file.Contents, 0o644); err != nil {
 			return nil, err
 		}
 	}
@@ -358,7 +359,7 @@ func unitHeaderParts(first string, common []runtimeFile, flags []string, compile
 	}
 	var parts []string
 	closure := map[string]bool{}
-	for _, name := range dependencies(rules) {
+	for _, name := range native_runtime.Dependencies(rules) {
 		closure[place(name)] = true
 	}
 	candidates := map[string]bool{}
@@ -437,10 +438,10 @@ func unitHeaderParts(first string, common []runtimeFile, flags []string, compile
 }
 
 // ownDigest is the sha256 of the file named relative among common, or "absent".
-func ownDigest(common []runtimeFile, relative string) string {
+func ownDigest(common []native_runtime.RuntimeFile, relative string) string {
 	for _, file := range common {
-		if file.name == filepath.ToSlash(relative) {
-			return fmt.Sprintf("%x", sha256.Sum256(file.contents))
+		if file.Name == filepath.ToSlash(relative) {
+			return fmt.Sprintf("%x", sha256.Sum256(file.Contents))
 		}
 	}
 	return "absent"
@@ -504,7 +505,7 @@ func unitFlagsRefusal(flags []string) error {
 }
 
 // newUnitKeying reads a build's unitKeying, or errUncachedUnit naming what the key can't account for.
-func newUnitKeying(first string, common []runtimeFile, flags []string, compiler string, environment []string, sanitized bool) (*unitKeying, error) {
+func newUnitKeying(first string, common []native_runtime.RuntimeFile, flags []string, compiler string, environment []string, sanitized bool) (*unitKeying, error) {
 	if err := unitFlagsRefusal(flags); err != nil {
 		return nil, err
 	}
@@ -521,9 +522,9 @@ func newUnitKeying(first string, common []runtimeFile, flags []string, compiler 
 		return nil, err
 	}
 	// v4: keyed before clang runs, by the unit's bytes and its headers' resolution, never by its preprocessed bytes.
-	// v5: objects no longer carry where the compiler is installed or the sysroot sits (clangIn, #8wgk65j).
-	// The platform is the build's (buildPlatform), as its flags' --target names it, never this process's (#5xsd2ha).
-	goos, goarch := buildPlatform()
+	// v5: objects no longer carry where the compiler is installed or the sysroot sits (native_runtime.ClangIn, #8wgk65j).
+	// The platform is the build's (native_runtime.BuildPlatform), as its flags' --target names it, never this process's (#5xsd2ha).
+	goos, goarch := native_runtime.BuildPlatform()
 	parts := []string{"adamic-units-v5", "os " + goos, "arch " + goarch}
 	parts = append(parts, clang.parts...)
 	parts = append(parts, environmentParts...)
@@ -533,22 +534,22 @@ func newUnitKeying(first string, common []runtimeFile, flags []string, compiler 
 	parts = append(parts, "compile "+strings.Join(unitCompileArguments("<unit>", "<directory>", flags, sanitized), " "))
 	parts = append(parts, headers...)
 	files := slices.Clone(common)
-	sort.Slice(files, func(i, j int) bool { return files[i].name < files[j].name })
+	sort.Slice(files, func(i, j int) bool { return files[i].Name < files[j].Name })
 	for _, file := range files {
-		parts = append(parts, fmt.Sprintf("file %s %x", file.name, sha256.Sum256(file.contents)))
+		parts = append(parts, fmt.Sprintf("file %s %x", file.Name, sha256.Sum256(file.Contents)))
 	}
 	return &unitKeying{parts: parts, first: first, environment: environment}, nil
 }
 
 // key is unit's key under keying: its parts and the unit by name and contents.
 func (keying *unitKeying) key(unit compilationUnit) string {
-	return partsKey(append(slices.Clone(keying.parts), fmt.Sprintf("unit %s %x", unit.name, sha256.Sum256([]byte(unit.source)))))
+	return native_runtime.PartsKey(append(slices.Clone(keying.parts), fmt.Sprintf("unit %s %x", unit.name, sha256.Sum256([]byte(unit.source)))))
 }
 
 // unitCompileArguments are what follow a unit's flags when it compiles: the directory it compiles in mapped to one name
 // in everything the object records of a path, and the unit compiled to unit.o there.
 func unitCompileArguments(name string, directory string, flags []string, sanitized bool) []string {
-	arguments := prefixMaps(directory, "/adamic-units")
+	arguments := native_runtime.PrefixMaps(directory, "/adamic-units")
 	// A source-debug compile uses absolute generated paths so comp_dir cannot
 	// redirect C and header rows into the entry directory. Sanitizers keep the
 	// relative spelling recorded by ASan's metadata.

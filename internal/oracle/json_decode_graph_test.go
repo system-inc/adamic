@@ -10,6 +10,7 @@ import (
 	"github.com/system-inc/adamic/internal/leakcheck"
 	"github.com/system-inc/adamic/internal/lower"
 	"github.com/system-inc/adamic/internal/native"
+	"github.com/system-inc/adamic/internal/native_runtime"
 )
 
 // The decoder makes its objects and arrays in the runtime with no graph plan. In a graph program, a
@@ -95,7 +96,7 @@ console.log(result.kind === 'Error' ? result.message : ` + "`${result.value.name
 				t.Fatalf("native: %s; Node %q; native %q; stderr %q", difference, truth.stdout, got.stdout, got.stderr)
 			}
 			counted := filepath.Join(t.TempDir(), "counted")
-			if err := native.Build(native.C(program), counted, native.Options{Count: true}); err != nil {
+			if err := native.Build(native.C(program), counted, native_runtime.Options{Count: true}); err != nil {
 				t.Fatal(err)
 			}
 			ran := execute(t, counted)

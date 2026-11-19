@@ -9,6 +9,7 @@ import (
 	"testing"
 
 	"github.com/system-inc/adamic/internal/native"
+	"github.com/system-inc/adamic/internal/native_runtime"
 )
 
 // objectPrototypeHarness reads the key its argument names off an object by a run-time key. Given
@@ -49,7 +50,7 @@ int main(int count, char **arguments) {
 func TestObjectPrototypeClosuresStopWhenCalled(t *testing.T) {
 	t.Parallel()
 	binary := filepath.Join(t.TempDir(), "object-prototype")
-	if err := native.Build(objectPrototypeHarness, binary, native.Options{Sanitize: true}); err != nil {
+	if err := native.Build(objectPrototypeHarness, binary, native_runtime.Options{Sanitize: true}); err != nil {
 		t.Fatal(err)
 	}
 	for _, probe := range []struct{ key, object, message string }{

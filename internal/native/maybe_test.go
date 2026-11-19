@@ -7,6 +7,8 @@ import (
 	"path/filepath"
 	"strings"
 	"testing"
+
+	"github.com/system-inc/adamic/internal/native_runtime"
 )
 
 // maybeHarness packs number | undefined into one double and unpacks it, for values given as a present
@@ -72,7 +74,7 @@ func TestMaybeNumbersPackIntoOneDouble(t *testing.T) {
 		fmt.Fprintf(&input, "%d %016x\n", present, value.bits)
 	}
 	binary := filepath.Join(t.TempDir(), "harness")
-	if err := Build(maybeHarness, binary, Options{Sanitize: true}); err != nil {
+	if err := Build(maybeHarness, binary, native_runtime.Options{Sanitize: true}); err != nil {
 		t.Fatal(err)
 	}
 	lines := strings.Split(strings.TrimSuffix(runWithInput(t, input.String(), binary), "\n"), "\n")

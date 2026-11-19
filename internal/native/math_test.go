@@ -7,6 +7,8 @@ import (
 	"path/filepath"
 	"strings"
 	"testing"
+
+	"github.com/system-inc/adamic/internal/native_runtime"
 )
 
 // mathHarness applies one function per line: an operation, then operands as hexadecimal bits.
@@ -145,7 +147,7 @@ func TestMathAndToFixedMatchJavaScript(t *testing.T) {
 	}
 
 	binary := filepath.Join(t.TempDir(), "harness")
-	if err := Build(mathHarness, binary, Options{Sanitize: true}); err != nil {
+	if err := Build(mathHarness, binary, native_runtime.Options{Sanitize: true}); err != nil {
 		t.Fatal(err)
 	}
 	native := strings.Split(strings.TrimSuffix(runWithInput(t, input.String(), binary), "\n"), "\n")

@@ -9,6 +9,7 @@ import (
 	"github.com/system-inc/adamic/internal/load"
 	"github.com/system-inc/adamic/internal/lower"
 	"github.com/system-inc/adamic/internal/native"
+	"github.com/system-inc/adamic/internal/native_runtime"
 	"github.com/system-inc/adamic/internal/toolchain"
 	"github.com/system-inc/adamic/stage1/cohere/estree/oracles"
 	"go/ast"
@@ -225,7 +226,7 @@ func threePortNativeProduct(t *testing.T, mutation threePortMutation) string {
 		Flags:     []string{mutation.file, mutation.from, mutation.to, "repository=" + root(t)},
 		Toolchain: []string{runtime.Version(), runtime.GOOS, runtime.GOARCH}}
 	inputs.Flags = append(inputs.Flags, "split=true")
-	inputs.Flags = append(inputs.Flags, native.Flags(native.Options{Sanitize: true, Split: true})...)
+	inputs.Flags = append(inputs.Flags, native_runtime.Flags(native_runtime.Options{Sanitize: true, Split: true})...)
 	inputs.Flags = append(inputs.Flags, "ADAMIC_NATIVE_SPLIT="+os.Getenv("ADAMIC_NATIVE_SPLIT"))
 	inputs.Toolchain = append(inputs.Toolchain, buildcache.CompilerReport("clang"))
 	binary := buildcache.Product(t, inputs, func(dir string) error {
@@ -233,7 +234,7 @@ func threePortNativeProduct(t *testing.T, mutation threePortMutation) string {
 		if err != nil {
 			return err
 		}
-		return native.Build(string(c), filepath.Join(dir, "port"), native.Options{Sanitize: true, Split: true})
+		return native.Build(string(c), filepath.Join(dir, "port"), native_runtime.Options{Sanitize: true, Split: true})
 	})
 	return filepath.Join(binary, "port")
 }

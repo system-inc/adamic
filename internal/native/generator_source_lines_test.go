@@ -7,6 +7,8 @@ import (
 	"strconv"
 	"strings"
 	"testing"
+
+	"github.com/system-inc/adamic/internal/native_runtime"
 )
 
 // debugGeneratorFixture's generator has a statement on every line from 2 to 9: a yield at 3 and
@@ -45,7 +47,7 @@ func TestDebugGeneratorSourceLines(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	code := CWithOptions(program, Options{Debug: true})
+	code := CWithOptions(program, EmitOptions{Options: native_runtime.Options{Debug: true}})
 	start := strings.Index(code, "static void adamic_generator_resume_")
 	if start < 0 {
 		t.Fatal("no resume function")

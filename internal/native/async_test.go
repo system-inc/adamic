@@ -14,6 +14,7 @@ import (
 	"github.com/system-inc/adamic/internal/load"
 	"github.com/system-inc/adamic/internal/lower"
 	"github.com/system-inc/adamic/internal/native"
+	"github.com/system-inc/adamic/internal/native_runtime"
 )
 
 // Inline programs guard compiler integration without depending on piece 6's corpus.
@@ -92,7 +93,7 @@ func compilerConcurrencyMatchesNode(t *testing.T, name, source, expected string)
 	}
 	code := native.C(program)
 	binary := filepath.Join(directory, "sanitized")
-	if err := native.Build(code, binary, native.Options{Sanitize: true}); err != nil {
+	if err := native.Build(code, binary, native_runtime.Options{Sanitize: true}); err != nil {
 		t.Fatal(err)
 	}
 	got = run([]string{"ASAN_OPTIONS=detect_leaks=0"}, binary)

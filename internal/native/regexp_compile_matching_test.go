@@ -12,6 +12,8 @@ import (
 	"testing"
 	"time"
 	"unicode/utf16"
+
+	"github.com/system-inc/adamic/internal/native_runtime"
 )
 
 // Compile from counted source in C, then compare the matcher's capture spans
@@ -84,9 +86,9 @@ func runtimeCompilerMatching(t *testing.T, wasm bool) {
 		source.WriteString("}\n")
 	}
 	source.WriteString("return failures!=0;}\n")
-	options := Options{Sanitize: true}
+	options := native_runtime.Options{Sanitize: true}
 	if wasm {
-		options = Options{Target: "wasm32-wasi"}
+		options = native_runtime.Options{Target: "wasm32-wasi"}
 	}
 	runtimeDirectory := "../native_runtime/c"
 	if path := os.Getenv("ADAMIC_REGEX_COMPILER_TEST_RUNTIME"); path != "" {
@@ -96,7 +98,7 @@ func runtimeCompilerMatching(t *testing.T, wasm bool) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	flags := append(Flags(options), "-DADAMIC_REGEXP_RUNTIME_COMPILER=1", "-I", compilerHeaders)
+	flags := append(native_runtime.Flags(options), "-DADAMIC_REGEXP_RUNTIME_COMPILER=1", "-I", compilerHeaders)
 	if os.Getenv("ADAMIC_REGEX_COMPILER_TEST_RUNTIME") != "" {
 		for _, name := range []string{"parser", "properties", "sets", "bytecode", "v8"} {
 			path, err := filepath.Abs(filepath.Join(runtimeDirectory, "regexp_compile_"+name+".c"))

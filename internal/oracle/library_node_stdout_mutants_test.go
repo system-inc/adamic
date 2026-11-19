@@ -8,6 +8,7 @@ import (
 	"testing"
 
 	"github.com/system-inc/adamic/internal/native"
+	"github.com/system-inc/adamic/internal/native_runtime"
 )
 
 // Each changes the real raw writer in a private runtime archive. Compiling is
@@ -43,8 +44,8 @@ func stdoutRuntimeMutant(t *testing.T, fixture, before, after, catcher string, c
 			t.Fatal(err)
 		}
 	}
-	options := native.Options{Sanitize: true}
-	archive, err := native.RuntimeLibraryForSource(directory, source, options)
+	options := native_runtime.Options{Sanitize: true}
+	archive, err := native_runtime.RuntimeLibraryForSource(directory, source, options)
 	if err != nil {
 		t.Fatal(err)
 	}

@@ -13,7 +13,7 @@ import (
 )
 
 // Partition by build so the two worker counts and pointer guard share one binary.
-func parallelScaling(t *testing.T, options Options) {
+func parallelScaling(t *testing.T, options native_runtime.Options) {
 	t.Helper()
 	binary := parallelHarness(t, "scaling.c", options)
 	for _, threads := range []string{"1", "4"} {
@@ -34,22 +34,22 @@ func parallelScaling(t *testing.T, options Options) {
 
 func TestParallelScaling_asan(t *testing.T) {
 	t.Parallel()
-	parallelScaling(t, Options{Sanitize: true})
+	parallelScaling(t, native_runtime.Options{Sanitize: true})
 }
 
 func TestParallelScaling_asan_slabs(t *testing.T) {
 	t.Parallel()
-	parallelScaling(t, Options{Sanitize: true, slabs: true})
+	parallelScaling(t, native_runtime.Options{Sanitize: true, Slabs: true})
 }
 
 func TestParallelScaling_count(t *testing.T) {
 	t.Parallel()
-	parallelScaling(t, Options{Count: true})
+	parallelScaling(t, native_runtime.Options{Count: true})
 }
 
 func TestParallelScaling_release(t *testing.T) {
 	t.Parallel()
-	parallelScaling(t, Options{})
+	parallelScaling(t, native_runtime.Options{})
 }
 
 func TestParallelScaling_tsan(t *testing.T) {
@@ -57,12 +57,12 @@ func TestParallelScaling_tsan(t *testing.T) {
 	if !parallelTSan(t) {
 		t.Skip("TSan is unavailable on this platform; see capability probe")
 	}
-	parallelScaling(t, Options{ThreadSanitize: true})
+	parallelScaling(t, native_runtime.Options{ThreadSanitize: true})
 }
 
 // The snapshot hook stops every builder before publication, forcing the CAS
 // losing path without adding synchronization or instrumentation to the runtime.
-func scalingSnapshot(t *testing.T, harness, file string, rewrite func(string) string, options Options) string {
+func scalingSnapshot(t *testing.T, harness, file string, rewrite func(string) string, options native_runtime.Options) string {
 	t.Helper()
 	directory := t.TempDir()
 	files, err := fs.ReadDir(native_runtime.Sources, "c")
@@ -81,7 +81,7 @@ func scalingSnapshot(t *testing.T, harness, file string, rewrite func(string) st
 			t.Fatal(err)
 		}
 	}
-	library, err := RuntimeLibrary(directory, options)
+	library, err := native_runtime.RuntimeLibrary(directory, options)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -98,8 +98,8 @@ func scalingSnapshot(t *testing.T, harness, file string, rewrite func(string) st
 		name += "-tsan"
 	}
 	binary := filepath.Join(directory, name)
-	arguments := append(Flags(options), "-I", filepath.Dir(library), path, "-o", binary)
-	arguments = append(arguments, RuntimeLinkFlags(library)...)
+	arguments := append(native_runtime.Flags(options), "-I", filepath.Dir(library), path, "-o", binary)
+	arguments = append(arguments, native_runtime.RuntimeLinkFlags(library)...)
 	arguments = append(arguments, "-lm")
 	if output, err := exec.Command("clang", arguments...).CombinedOutput(); err != nil {
 		t.Fatalf("snapshot must compile: %v\n%s", err, output)
@@ -113,7 +113,7 @@ func cacheBuilderGate(source string) string {
 
 // One top-level test per build: each builds a whole runtime from an edited snapshot, uncached,
 // and all five in one leaf ran 60.7 s cold on a 4-CPU share.
-func parallelCachePublication(t *testing.T, options Options) {
+func parallelCachePublication(t *testing.T, options native_runtime.Options) {
 	binary := scalingSnapshot(t, "cache_race.c", "string_index.c", cacheBuilderGate, options)
 	output, _ := parallelRun(t, binary, "4")
 	if output != "cache publication clean\n" {
@@ -124,22 +124,22 @@ func parallelCachePublication(t *testing.T, options Options) {
 
 func TestParallelCachePublication_asan(t *testing.T) {
 	t.Parallel()
-	parallelCachePublication(t, Options{Sanitize: true})
+	parallelCachePublication(t, native_runtime.Options{Sanitize: true})
 }
 
 func TestParallelCachePublication_asan_slabs(t *testing.T) {
 	t.Parallel()
-	parallelCachePublication(t, Options{Sanitize: true, slabs: true})
+	parallelCachePublication(t, native_runtime.Options{Sanitize: true, Slabs: true})
 }
 
 func TestParallelCachePublication_count(t *testing.T) {
 	t.Parallel()
-	parallelCachePublication(t, Options{Count: true})
+	parallelCachePublication(t, native_runtime.Options{Count: true})
 }
 
 func TestParallelCachePublication_release(t *testing.T) {
 	t.Parallel()
-	parallelCachePublication(t, Options{})
+	parallelCachePublication(t, native_runtime.Options{})
 }
 
 func TestParallelCachePublication_tsan(t *testing.T) {
@@ -147,7 +147,7 @@ func TestParallelCachePublication_tsan(t *testing.T) {
 	if !parallelTSan(t) {
 		t.Skip("TSan is unavailable on this platform; see capability probe")
 	}
-	parallelCachePublication(t, Options{ThreadSanitize: true})
+	parallelCachePublication(t, native_runtime.Options{ThreadSanitize: true})
 }
 
 func TestParallelScalingGuardMutants(t *testing.T) {
@@ -155,7 +155,7 @@ func TestParallelScalingGuardMutants(t *testing.T) {
 	t.Run("pointer_guard", func(t *testing.T) {
 		binary := scalingSnapshot(t, "scaling.c", "object.c", func(source string) string {
 			return strings.Replace(source, "if ((pointer & ~ADAMIC_SLOT_SHAPE_MASK) != 0)", "if (false)", 1)
-		}, Options{})
+		}, native_runtime.Options{})
 		command := exec.Command(binary, "high_pointer")
 		command.Env = parallelEnvironment("1", false)
 		output, err := command.CombinedOutput()
@@ -171,7 +171,7 @@ func TestParallelScalingGuardMutants(t *testing.T) {
 		}
 		binary := scalingSnapshot(t, "cache_race.c", "string_index.c", func(source string) string {
 			return strings.Replace(cacheBuilderGate(source), "free(candidate->view);\n\tfree(candidate);", "/* mutant: leak the losing copy */", 1)
-		}, Options{Sanitize: true})
+		}, native_runtime.Options{Sanitize: true})
 		command := exec.Command(binary)
 		command.Env = parallelEnvironment("4", true)
 		output, err := command.CombinedOutput()
@@ -183,7 +183,7 @@ func TestParallelScalingGuardMutants(t *testing.T) {
 }
 
 // Each build retains the complete four-reader cache-pair stress test.
-func parallelSlotPairs(t *testing.T, options Options) {
+func parallelSlotPairs(t *testing.T, options native_runtime.Options) {
 	t.Helper()
 	binary := parallelHarness(t, "cache_pairs.c", options)
 	out, _ := parallelRun(t, binary, "4")
@@ -195,22 +195,22 @@ func parallelSlotPairs(t *testing.T, options Options) {
 
 func TestParallelSlotPairs_asan(t *testing.T) {
 	t.Parallel()
-	parallelSlotPairs(t, Options{Sanitize: true})
+	parallelSlotPairs(t, native_runtime.Options{Sanitize: true})
 }
 
 func TestParallelSlotPairs_asan_slabs(t *testing.T) {
 	t.Parallel()
-	parallelSlotPairs(t, Options{Sanitize: true, slabs: true})
+	parallelSlotPairs(t, native_runtime.Options{Sanitize: true, Slabs: true})
 }
 
 func TestParallelSlotPairs_count(t *testing.T) {
 	t.Parallel()
-	parallelSlotPairs(t, Options{Count: true})
+	parallelSlotPairs(t, native_runtime.Options{Count: true})
 }
 
 func TestParallelSlotPairs_release(t *testing.T) {
 	t.Parallel()
-	parallelSlotPairs(t, Options{})
+	parallelSlotPairs(t, native_runtime.Options{})
 }
 
 func TestParallelSlotPairs_tsan(t *testing.T) {
@@ -218,5 +218,5 @@ func TestParallelSlotPairs_tsan(t *testing.T) {
 	if !parallelTSan(t) {
 		t.Skip("TSan is unavailable on this platform; see capability probe")
 	}
-	parallelSlotPairs(t, Options{ThreadSanitize: true})
+	parallelSlotPairs(t, native_runtime.Options{ThreadSanitize: true})
 }

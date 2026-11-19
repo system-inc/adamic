@@ -5,6 +5,8 @@ import (
 	"path/filepath"
 	"strings"
 	"testing"
+
+	"github.com/system-inc/adamic/internal/native_runtime"
 )
 
 // BuildLean refuses a wasm32-wasi target before it reads anything, so the WASI_SYSROOT runtimeproducts'
@@ -22,7 +24,7 @@ func TestBuildLeanRefusesATargetFirst(t *testing.T) {
 		t.Fatal(err)
 	}
 	err := BuildLean(filepath.Join(directory, "absent-clang"), filepath.Join(directory, "absent.c"), filepath.Join(directory, "absent-archive"),
-		filepath.Join(output, "native"), Options{Target: "wasm32-wasi"}, nil)
+		filepath.Join(output, "native"), native_runtime.Options{Target: "wasm32-wasi"}, nil)
 	if err == nil || !strings.HasPrefix(err.Error(), "native: a lean build is one native translation unit, with no wasm32-wasi target") {
 		t.Fatalf("a wasm32-wasi lean build: %v, want BuildLean's refusal of a target", err)
 	}
@@ -44,7 +46,7 @@ func TestBuildLeanRefusesACompilerByName(t *testing.T) {
 	if err := os.Mkdir(output, 0o755); err != nil {
 		t.Fatal(err)
 	}
-	err := BuildLean("clang", filepath.Join(directory, "absent.c"), filepath.Join(directory, "absent-archive"), filepath.Join(output, "native"), Options{}, nil)
+	err := BuildLean("clang", filepath.Join(directory, "absent.c"), filepath.Join(directory, "absent-archive"), filepath.Join(output, "native"), native_runtime.Options{}, nil)
 	if err == nil || !strings.Contains(err.Error(), "runs the compiler it's handed by its absolute path") {
 		t.Fatalf("a lean build handed clang by name: %v, want its refusal", err)
 	}

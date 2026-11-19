@@ -14,6 +14,7 @@ import (
 
 	"github.com/system-inc/adamic/internal/lower"
 	"github.com/system-inc/adamic/internal/native"
+	"github.com/system-inc/adamic/internal/native_runtime"
 )
 
 // The wasmtime witness: the same artifacts on a second engine. It is opt-in
@@ -27,7 +28,7 @@ func requireWasmtime(t *testing.T) {
 	if _, err := exec.LookPath("wasmtime"); err != nil {
 		t.Fatal(err)
 	}
-	if err := native.ValidateOptions(native.Options{Target: "wasm32-wasi"}); err != nil {
+	if err := native_runtime.ValidateOptions(native_runtime.Options{Target: "wasm32-wasi"}); err != nil {
 		t.Fatal(err)
 	}
 }
@@ -328,7 +329,7 @@ func TestWasmtimeOracleCatchesMutants(t *testing.T) {
 	original := native.C(program)
 	probe := func(source string) run {
 		binary := filepath.Join(sharedDirectory(t), "mutant.wasm")
-		if err := native.Build(source, binary, native.Options{Target: "wasm32-wasi"}); err != nil {
+		if err := native.Build(source, binary, native_runtime.Options{Target: "wasm32-wasi"}); err != nil {
 			t.Fatal(err)
 		}
 		return onWasmtime(t, inputRun{}, binary)
@@ -377,7 +378,7 @@ func TestWasmtimeCheckedWitness(t *testing.T) {
 		t.Fatal("checked control must differ from raw source exit")
 	}
 	binary := filepath.Join(sharedDirectory(t), "checked.wasm")
-	if err := native.Build(native.C(program), binary, native.Options{Target: "wasm32-wasi"}); err != nil {
+	if err := native.Build(native.C(program), binary, native_runtime.Options{Target: "wasm32-wasi"}); err != nil {
 		t.Fatal(err)
 	}
 	if difference := disagreement(checked, onWasmtime(t, inputRun{}, binary)); difference != "" {
@@ -474,7 +475,7 @@ func TestWasmtimeReactorPerformanceNow(t *testing.T) {
 	}
 	binary := filepath.Join(t.TempDir(), "performance.wasm")
 	// Reuse the counted reactor runtime product already owned by the WASI shim tests.
-	if err := native.Build(source, binary, native.Options{Target: "wasm32-wasi", Request: true, Count: true}); err != nil {
+	if err := native.Build(source, binary, native_runtime.Options{Target: "wasm32-wasi", Request: true, Count: true}); err != nil {
 		t.Fatal(err)
 	}
 	for _, name := range []string{"now", "elapsed"} {

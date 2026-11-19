@@ -8,6 +8,8 @@ import (
 	"strings"
 	"testing"
 	"time"
+
+	"github.com/system-inc/adamic/internal/native_runtime"
 )
 
 // jsonObjectsRuntimeBinary builds testdata/json-objects-runtime/harness.c against runtime/json_objects.c, its entry
@@ -31,7 +33,7 @@ func jsonObjectsRuntimeBinary(t *testing.T, old, replacement string) string {
 		t.Fatal(err)
 	}
 	binary := filepath.Join(t.TempDir(), "objects")
-	if err := Build(source+"\n"+string(harness), binary, Options{Sanitize: true}); err != nil {
+	if err := Build(source+"\n"+string(harness), binary, native_runtime.Options{Sanitize: true}); err != nil {
 		t.Fatal(err)
 	}
 	return binary

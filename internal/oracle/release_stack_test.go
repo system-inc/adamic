@@ -8,7 +8,7 @@ import (
 	"testing"
 
 	"github.com/system-inc/adamic/internal/childguard"
-	"github.com/system-inc/adamic/internal/native"
+	"github.com/system-inc/adamic/internal/native_runtime"
 	"github.com/system-inc/adamic/internal/toolchain"
 )
 
@@ -28,7 +28,7 @@ func reservationProbe(t *testing.T, argv bool) {
 		t.Fatal(err)
 	}
 	// For the build's triple, as every native compile names it (#5xsd2ha).
-	target, err := native.ResolveTarget(native.Options{})
+	target, err := native_runtime.ResolveTarget(native_runtime.Options{})
 	if err != nil {
 		t.Fatal(err)
 	}

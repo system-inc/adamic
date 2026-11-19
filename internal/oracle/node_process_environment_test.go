@@ -8,6 +8,7 @@ import (
 
 	"github.com/system-inc/adamic/internal/ir"
 	"github.com/system-inc/adamic/internal/native"
+	"github.com/system-inc/adamic/internal/native_runtime"
 )
 
 // This is an independent runtime/backend proof with explicit typed IR.
@@ -93,8 +94,8 @@ func nodeProcessEnvironmentRuntime(t *testing.T, shard int) {
 				}
 			}
 			code := native.C(program)
-			options := native.Options{Sanitize: true}
-			archive, err := native.RuntimeLibraryForSource(directory, code, options)
+			options := native_runtime.Options{Sanitize: true}
+			archive, err := native_runtime.RuntimeLibraryForSource(directory, code, options)
 			if err != nil {
 				t.Fatal(err)
 			}

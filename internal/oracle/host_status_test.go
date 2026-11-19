@@ -17,6 +17,7 @@ import (
 	"github.com/system-inc/adamic/internal/load"
 	"github.com/system-inc/adamic/internal/lower"
 	"github.com/system-inc/adamic/internal/native"
+	"github.com/system-inc/adamic/internal/native_runtime"
 )
 
 var updateHostStatus = flag.Bool("update-host-status", false, "remeasure host stage0 after recorded/current Node and native/JavaScript agreement")
@@ -119,7 +120,7 @@ func hostStatusFile(t *testing.T, index int, wasiOnly bool, statusPath string) {
 		if !wasiOnly {
 			t.Run("native", func(t *testing.T) {
 				binary := filepath.Join(directory, "program")
-				if err := native.Build(code, binary, native.Options{Sanitize: true}); err != nil {
+				if err := native.Build(code, binary, native_runtime.Options{Sanitize: true}); err != nil {
 					t.Fatal(err)
 				}
 				actual := executeInput(t, inputRun{directory: repository}, []string{"ASAN_OPTIONS=detect_leaks=1"}, binary)
@@ -144,7 +145,7 @@ func hostStatusFile(t *testing.T, index int, wasiOnly bool, statusPath string) {
 		}
 		if wasiOnly {
 			wasm := filepath.Join(directory, "program.wasm")
-			if err := native.Build(code, wasm, native.Options{Target: "wasm32-wasi"}); err != nil {
+			if err := native.Build(code, wasm, native_runtime.Options{Target: "wasm32-wasi"}); err != nil {
 				var refused *native.TargetRefused
 				if !errors.As(err, &refused) {
 					t.Fatal(err)

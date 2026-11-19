@@ -8,6 +8,7 @@ import (
 	"testing"
 
 	"github.com/system-inc/adamic/internal/native"
+	"github.com/system-inc/adamic/internal/native_runtime"
 )
 
 func TestDateISOStringRuntimeMutantsAreCaught(t *testing.T) {
@@ -50,7 +51,7 @@ func TestDateISOStringRuntimeMutantsAreCaught(t *testing.T) {
 			code := strings.ReplaceAll(native.C(program), "adamic_date_to_iso_string(", "mutant_date_to_iso_string(")
 			code = strings.Replace(code, `#include "adamic.h"`, `#include "adamic.h"`+"\n"+source, 1)
 			binary := filepath.Join(t.TempDir(), "mutant")
-			if err := native.Build(code, binary, native.Options{Sanitize: true}); err != nil {
+			if err := native.Build(code, binary, native_runtime.Options{Sanitize: true}); err != nil {
 				t.Fatal(err)
 			}
 			got := execute(t, binary)

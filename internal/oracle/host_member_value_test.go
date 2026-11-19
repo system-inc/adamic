@@ -8,6 +8,7 @@ import (
 
 	"github.com/system-inc/adamic/internal/leakcheck"
 	"github.com/system-inc/adamic/internal/native"
+	"github.com/system-inc/adamic/internal/native_runtime"
 )
 
 // tsc saves a host interface's method before it patches it (program.ts:543, `const originalReadFile =
@@ -100,7 +101,7 @@ func TestHostMemberValueAgreesOrStops(t *testing.T) {
 			}
 			// Every admitted program is judged by the counted build too: allocations equal frees.
 			binary := filepath.Join(t.TempDir(), "counted")
-			if err := native.Build(native.C(program), binary, native.Options{Count: true}); err != nil {
+			if err := native.Build(native.C(program), binary, native_runtime.Options{Count: true}); err != nil {
 				t.Fatal(err)
 			}
 			command, args := pinnedStack(binary)

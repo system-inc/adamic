@@ -24,6 +24,7 @@ import (
 	"github.com/system-inc/adamic/internal/load"
 	"github.com/system-inc/adamic/internal/lower"
 	"github.com/system-inc/adamic/internal/native"
+	"github.com/system-inc/adamic/internal/native_runtime"
 	"github.com/system-inc/adamic/internal/toolchain"
 )
 
@@ -719,7 +720,7 @@ func leaks(t *testing.T, program *ir.Program, sanitized string) string {
 func releasedUncached(t *testing.T, program *ir.Program) run {
 	t.Helper()
 	binary := filepath.Join(t.TempDir(), "release")
-	if err := native.Build(native.C(program), binary, native.Options{}); err != nil {
+	if err := native.Build(native.C(program), binary, native_runtime.Options{}); err != nil {
 		t.Fatal(err)
 	}
 	return execute(t, binary)
@@ -728,7 +729,7 @@ func releasedUncached(t *testing.T, program *ir.Program) run {
 func nativelyUncached(t *testing.T, program *ir.Program) (run, string) {
 	t.Helper()
 	binary := filepath.Join(t.TempDir(), "program")
-	if err := native.Build(native.C(program), binary, native.Options{Sanitize: true}); err != nil {
+	if err := native.Build(native.C(program), binary, native_runtime.Options{Sanitize: true}); err != nil {
 		t.Fatal(err)
 	}
 	var environment []string
@@ -909,7 +910,7 @@ func nativelyCheckingLeaks(t *testing.T, program *ir.Program, checkLeaks bool) (
 	// The two observations natively and leaks would each count, made by one run.
 	identity(t).cache.misses[nativeResults].Add(2)
 	binary := filepath.Join(t.TempDir(), "program")
-	if err := native.Build(native.C(program), binary, native.Options{Sanitize: true}); err != nil {
+	if err := native.Build(native.C(program), binary, native_runtime.Options{Sanitize: true}); err != nil {
 		t.Fatal(err)
 	}
 	result = executeWith(t, []string{"ASAN_OPTIONS=detect_leaks=1"}, binary)

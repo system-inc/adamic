@@ -13,6 +13,7 @@ import (
 
 	"github.com/system-inc/adamic/internal/load"
 	"github.com/system-inc/adamic/internal/lower"
+	"github.com/system-inc/adamic/internal/native_runtime"
 )
 
 func TestShapeChecksUseDeclaredNames(t *testing.T) {
@@ -62,7 +63,7 @@ func checkUnallocatedShapeStartup(t *testing.T, source, kind string) {
 		t.Logf("declared %v; startup checked %v", names, checked)
 	}
 	binary := filepath.Join(t.TempDir(), "control")
-	if err := Build(code, binary, Options{Count: true}); err != nil {
+	if err := Build(code, binary, native_runtime.Options{Count: true}); err != nil {
 		t.Fatal(err)
 	}
 	control := inlineArrayRun(t, binary)
@@ -88,7 +89,7 @@ func checkUnallocatedShapeStartup(t *testing.T, source, kind string) {
 	}
 	code = strings.Replace(code, target, strings.Replace(target, before, after, 1), 1)
 	binary = filepath.Join(t.TempDir(), "bitmap-mutant")
-	if err := Build(code, binary, Options{Count: true}); err != nil {
+	if err := Build(code, binary, native_runtime.Options{Count: true}); err != nil {
 		t.Fatal("mutant must compile:", err)
 	}
 	mutant := inlineArrayRun(t, binary)

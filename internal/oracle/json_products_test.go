@@ -8,6 +8,7 @@ import (
 
 	"github.com/system-inc/adamic/internal/native"
 	"github.com/system-inc/adamic/internal/native/runtimeproducts"
+	"github.com/system-inc/adamic/internal/native_runtime"
 )
 
 // The JSON families share JSONTypes and these input-keyed archives. identity asks
@@ -32,7 +33,7 @@ func TestProduct_JSONOracleRuntimes(t *testing.T) {
 		if err != nil {
 			t.Fatal(err)
 		}
-		features := native.Features(native.C(program))
+		features := native_runtime.Features(native.C(program))
 		sets[strings.Join(features, ",")] = features
 	}
 	keys := make([]string, 0, len(sets))

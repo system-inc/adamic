@@ -43,7 +43,7 @@ func jsonReplacerDedupMutant(t *testing.T, fixture string) {
 		t.Fatal(err)
 	}
 	want := jsonReplacerRun(t, "node", "--disable-warning=ExperimentalWarning", runner, path)
-	files, err := readRuntime(native_runtime.Sources, "c")
+	files, err := native_runtime.ReadRuntime(native_runtime.Sources, "c")
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -51,18 +51,18 @@ func jsonReplacerDedupMutant(t *testing.T, fixture string) {
 	changed := false
 	kept := files[:0]
 	for _, file := range files {
-		if file.name == "node_host.c" && !strings.Contains(source, "#define ADAMIC_NODE_HOST 1\n") {
+		if file.Name == "node_host.c" && !strings.Contains(source, "#define ADAMIC_NODE_HOST 1\n") {
 			continue
 		}
-		if file.name == "regexp_replace.c" && !strings.Contains(source, "#define ADAMIC_REGEXP_REPLACE_CALLBACK 1\n") {
+		if file.Name == "regexp_replace.c" && !strings.Contains(source, "#define ADAMIC_REGEXP_REPLACE_CALLBACK 1\n") {
 			continue
 		}
-		if file.name == "json_stringify.c" {
-			content := string(file.contents)
+		if file.Name == "json_stringify.c" {
+			content := string(file.Contents)
 			if strings.Count(content, before) != 1 {
 				t.Fatal("dedup mutant needs exactly one site")
 			}
-			file.contents = []byte(strings.Replace(content, before, "if (false && adamic_string_equal(key, w->keys[previous]))", 1))
+			file.Contents = []byte(strings.Replace(content, before, "if (false && adamic_string_equal(key, w->keys[previous]))", 1))
 			changed = true
 		}
 		kept = append(kept, file)
@@ -82,8 +82,8 @@ func jsonReplacerDedupMutant(t *testing.T, fixture string) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	flags := sourceFlags(source, Options{Sanitize: true})
-	library, err := cachedRuntime(kept, flags, compiler, string(version), filepath.Join(cache, "adamic", "json-replacer-mutants"))
+	flags := native_runtime.SourceFlags(source, native_runtime.Options{Sanitize: true})
+	library, err := native_runtime.CachedRuntime(kept, flags, compiler, string(version), filepath.Join(cache, "adamic", "json-replacer-mutants"))
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -94,7 +94,7 @@ func jsonReplacerDedupMutant(t *testing.T, fixture string) {
 		t.Fatal(err)
 	}
 	arguments := append(append([]string{}, flags...), "-I", filepath.Dir(library), main, "-o", binary)
-	arguments = append(arguments, RuntimeLinkFlags(library)...)
+	arguments = append(arguments, native_runtime.RuntimeLinkFlags(library)...)
 	arguments = append(arguments, "-lm")
 	if output, err := exec.CommandContext(t.Context(), compiler, arguments...).CombinedOutput(); err != nil {
 		t.Fatalf("mutant compile: %v\n%s", err, output)

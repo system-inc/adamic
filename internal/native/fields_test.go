@@ -107,7 +107,7 @@ console.log((missing?.steady ?? -3).toString());
 	want := runWithInput(t, "", "node", "--disable-warning=ExperimentalWarning", path)
 	for _, sanitize := range []bool{false, true} {
 		binary := filepath.Join(directory, "fields")
-		if err := Build(generated, binary, Options{Sanitize: sanitize}); err != nil {
+		if err := Build(generated, binary, native_runtime.Options{Sanitize: sanitize}); err != nil {
 			t.Fatal(err)
 		}
 		if got := runWithInput(t, "", binary); got != want {
@@ -219,7 +219,7 @@ func TestRegexProgramsKeepCheckedFieldReads(t *testing.T) {
 	want := runWithInput(t, "", "node", "--disable-warning=ExperimentalWarning", path)
 	for _, sanitize := range []bool{false, true} {
 		binary := filepath.Join(directory, "regex-fields")
-		if err := Build(generated, binary, Options{Sanitize: sanitize}); err != nil {
+		if err := Build(generated, binary, native_runtime.Options{Sanitize: sanitize}); err != nil {
 			t.Fatal(err)
 		}
 		if got := runWithInput(t, "", binary); got != want {

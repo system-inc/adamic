@@ -15,12 +15,13 @@ import (
 	"github.com/system-inc/adamic/internal/load"
 	"github.com/system-inc/adamic/internal/lower"
 	"github.com/system-inc/adamic/internal/native"
+	"github.com/system-inc/adamic/internal/native_runtime"
 )
 
 func stableSplitProduct(t *testing.T, name string) string {
 	t.Helper()
 	path := "internal/oracle/testdata/" + name + ".a"
-	inputs := buildcache.Inputs{Name: "stable identity split " + name, Files: append(compilerinputs.Lowering(), "internal/native/names_split_test.go", "oracle/node.mjs", path), Flags: native.Flags(native.Options{Split: true, Sanitize: true, Count: true, Jobs: 2}), Toolchain: []string{buildcache.CompilerReport("clang")}}
+	inputs := buildcache.Inputs{Name: "stable identity split " + name, Files: append(compilerinputs.Lowering(), "internal/native/names_split_test.go", "oracle/node.mjs", path), Flags: native_runtime.Flags(native_runtime.Options{Split: true, Sanitize: true, Count: true, Jobs: 2}), Toolchain: []string{buildcache.CompilerReport("clang")}}
 	return buildcache.Product(t, inputs, func(directory string) error {
 		absolute, err := filepath.Abs(filepath.Join("../..", path))
 		if err != nil {
@@ -68,7 +69,7 @@ func stableSplitProduct(t *testing.T, name string) string {
 		if err := os.WriteFile(filepath.Join(directory, "program.mjs"), []byte(javascript.JavaScript(program)), 0600); err != nil {
 			return err
 		}
-		return native.Build(code, filepath.Join(directory, "program"), native.Options{Split: true, Sanitize: true, Count: true, Jobs: 2})
+		return native.Build(code, filepath.Join(directory, "program"), native_runtime.Options{Split: true, Sanitize: true, Count: true, Jobs: 2})
 	})
 }
 

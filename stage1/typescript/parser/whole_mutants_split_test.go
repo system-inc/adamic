@@ -21,6 +21,7 @@ import (
 	"github.com/system-inc/adamic/internal/load"
 	"github.com/system-inc/adamic/internal/lower"
 	"github.com/system-inc/adamic/internal/native"
+	"github.com/system-inc/adamic/internal/native_runtime"
 	"github.com/system-inc/adamic/internal/toolchain"
 	"github.com/system-inc/adamic/stage1/typescript/parser/oracles"
 )
@@ -114,8 +115,8 @@ func wholeMutantBuildPortProduct(t *testing.T, directory string, sanitize bool) 
 	if err != nil {
 		t.Fatal(err)
 	}
-	options := native.Options{Sanitize: sanitize}
-	nativeInputs := buildcache.Inputs{Name: "typescript-parser-native", Files: files, Flags: append(append(flags, native.Flags(options)...), fmt.Sprintf("C=%x", sha256.Sum256(source))), Toolchain: []string{runtime.Version(), buildcache.CompilerReport("clang")}}
+	options := native_runtime.Options{Sanitize: sanitize}
+	nativeInputs := buildcache.Inputs{Name: "typescript-parser-native", Files: files, Flags: append(append(flags, native_runtime.Flags(options)...), fmt.Sprintf("C=%x", sha256.Sum256(source))), Toolchain: []string{runtime.Version(), buildcache.CompilerReport("clang")}}
 	product := buildcache.Product(t, nativeInputs, func(dir string) error {
 		return native.Build(string(source), filepath.Join(dir, "scanner"), options)
 	})

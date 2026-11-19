@@ -13,6 +13,7 @@ import (
 	"github.com/system-inc/adamic/internal/load"
 	"github.com/system-inc/adamic/internal/lower"
 	"github.com/system-inc/adamic/internal/native"
+	"github.com/system-inc/adamic/internal/native_runtime"
 )
 
 func TestDelimiterExpressionMatchesNode(t *testing.T) {
@@ -58,8 +59,8 @@ func TestProduct_MarkdownInlineDelimiterExpressionSanitized(t *testing.T) {
 // native.Build and clang read, and clang's version.
 func delimiterExpressionSanitized(t *testing.T) string {
 	t.Helper()
-	options := native.Options{Sanitize: true}
-	flags := append([]string{"load.Load", "lower.Lower", "native.C", fmt.Sprintf("options=%+v", options)}, native.Flags(options)...)
+	options := native_runtime.Options{Sanitize: true}
+	flags := append([]string{"load.Load", "lower.Lower", "native.C", fmt.Sprintf("options=%+v", options)}, native_runtime.Flags(options)...)
 	for _, name := range []string{"ADAMIC_NATIVE_SPLIT", "CPATH", "C_INCLUDE_PATH", "LIBRARY_PATH", "SDKROOT", "MACOSX_DEPLOYMENT_TARGET"} {
 		value, set := os.LookupEnv(name)
 		flags = append(flags, fmt.Sprintf("env:%s:set=%t:value=%s", name, set, value))

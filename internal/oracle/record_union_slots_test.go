@@ -13,6 +13,7 @@ import (
 	"github.com/system-inc/adamic/internal/compilerinputs"
 	"github.com/system-inc/adamic/internal/leakcheck"
 	"github.com/system-inc/adamic/internal/native"
+	"github.com/system-inc/adamic/internal/native_runtime"
 )
 
 var recordUnionNullMutant = flag.Bool("record-union-null-mutant", false, "run the throwaway null-pointer record store")
@@ -33,10 +34,10 @@ func recordUnionSlotsProduct(t *testing.T) string {
 	inputs := buildcache.Inputs{Name: "record-union-slots", Files: compilerinputs.Lowering()}
 	variants := []struct {
 		name    string
-		options native.Options
-	}{{"sanitized", native.Options{Sanitize: true}}, {"release", native.Options{}}, {"counted", native.Options{Count: true}}}
+		options native_runtime.Options
+	}{{"sanitized", native_runtime.Options{Sanitize: true}}, {"release", native_runtime.Options{}}, {"counted", native_runtime.Options{Count: true}}}
 	for _, variant := range variants {
-		request, err := native.RuntimeRequestFor(variant.options)
+		request, err := native_runtime.RuntimeRequestFor(variant.options)
 		if err != nil {
 			t.Fatal(err)
 		}
@@ -66,7 +67,7 @@ func recordUnionSlotsProduct(t *testing.T) string {
 					return fmt.Errorf("expected one null store, found %d", strings.Count(code, store))
 				}
 				mutant := strings.Replace(code, store, " = NULL;", 1)
-				if err := native.Build(mutant, filepath.Join(directory, "null-mutant"), native.Options{Sanitize: true}); err != nil {
+				if err := native.Build(mutant, filepath.Join(directory, "null-mutant"), native_runtime.Options{Sanitize: true}); err != nil {
 					return err
 				}
 			}

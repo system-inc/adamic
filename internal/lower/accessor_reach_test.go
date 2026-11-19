@@ -13,6 +13,7 @@ import (
 	"github.com/system-inc/adamic/internal/ir"
 	"github.com/system-inc/adamic/internal/load"
 	"github.com/system-inc/adamic/internal/native"
+	"github.com/system-inc/adamic/internal/native_runtime"
 )
 
 // Accessor names are judged by what can reach what, never program-wide by name (Compiler and Lower,
@@ -143,7 +144,7 @@ console.log(String(decoder.pos) + " " + String(plain.pos));
 func accessorReachNative(t *testing.T, program *ir.Program, want string) {
 	t.Helper()
 	binary := filepath.Join(t.TempDir(), "native")
-	if err := native.Build(native.C(program), binary, native.Options{Sanitize: true}); err != nil {
+	if err := native.Build(native.C(program), binary, native_runtime.Options{Sanitize: true}); err != nil {
 		t.Fatal(err)
 	}
 	command := exec.Command(binary)

@@ -15,6 +15,7 @@ import (
 	"github.com/system-inc/adamic/internal/load"
 	"github.com/system-inc/adamic/internal/lower"
 	"github.com/system-inc/adamic/internal/native"
+	"github.com/system-inc/adamic/internal/native_runtime"
 	"github.com/system-inc/adamic/internal/split"
 )
 
@@ -76,7 +77,7 @@ func ordinaryOracle(t *testing.T, path string, program *ir.Program) {
 	if err := os.WriteFile(module, []byte(javascript.JavaScript(program)), 0644); err != nil {
 		t.Fatal(err)
 	}
-	if err := native.Build(native.C(program), binary, native.Options{Sanitize: true}); err != nil {
+	if err := native.Build(native.C(program), binary, native_runtime.Options{Sanitize: true}); err != nil {
 		t.Fatal(err)
 	}
 	for _, command := range []*exec.Cmd{exec.Command("node", "--disable-warning=ExperimentalWarning", runner, module), exec.Command(binary)} {

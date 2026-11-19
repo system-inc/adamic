@@ -5,6 +5,8 @@ import (
 	"path/filepath"
 	"strings"
 	"testing"
+
+	"github.com/system-inc/adamic/internal/native_runtime"
 )
 
 // V8's longest string is 536,870,888 UTF-16 units: a string that long is made, and one unit more is
@@ -34,7 +36,7 @@ int main(int count, char **arguments) {
 }
 `
 	binary := filepath.Join(t.TempDir(), "harness")
-	if err := Build(harness, binary, Options{Sanitize: true}); err != nil {
+	if err := Build(harness, binary, native_runtime.Options{Sanitize: true}); err != nil {
 		t.Fatal(err)
 	}
 	for _, check := range []struct {

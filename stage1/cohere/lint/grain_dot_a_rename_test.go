@@ -25,6 +25,7 @@ import (
 	"github.com/system-inc/adamic/internal/load"
 	"github.com/system-inc/adamic/internal/lower"
 	"github.com/system-inc/adamic/internal/native"
+	"github.com/system-inc/adamic/internal/native_runtime"
 )
 
 const testDotARenameShards = 2
@@ -152,8 +153,8 @@ func dotARenameNative(t *testing.T, renamed bool) string {
 		name, slot = "renamed", 5
 	}
 	lowered := dotARenameLowered(t, renamed)
-	options := native.Options{Sanitize: true, Split: true, Jobs: 4}
-	inputs := dotARenameInputs(t, name+"-native", append(native.Flags(options), name, "Split=true", "Jobs=4"))
+	options := native_runtime.Options{Sanitize: true, Split: true, Jobs: 4}
+	inputs := dotARenameInputs(t, name+"-native", append(native_runtime.Flags(options), name, "Split=true", "Jobs=4"))
 	return dotARenameProduct(t, slot, inputs, func(dir string) error {
 		data, err := os.ReadFile(filepath.Join(lowered, "lint.c"))
 		if err != nil {

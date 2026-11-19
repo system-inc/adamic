@@ -9,6 +9,7 @@ import (
 
 	"github.com/system-inc/adamic/internal/buildcache"
 	"github.com/system-inc/adamic/internal/native"
+	"github.com/system-inc/adamic/internal/native_runtime"
 )
 
 // TestProduct_Adamic declares the stage 0 compiler interfaceCastCountCases runs, so this package's units are handed it;
@@ -68,7 +69,7 @@ func interfaceCastCounted(t *testing.T, path string) (string, func() string) {
 func interfaceCastRun(t *testing.T, path string, source string) string {
 	t.Helper()
 	binary := filepath.Join(t.TempDir(), "counted")
-	if err := native.Build(source, binary, native.Options{Count: true}); err != nil {
+	if err := native.Build(source, binary, native_runtime.Options{Count: true}); err != nil {
 		t.Fatal(err)
 	}
 	name, arguments := pinnedStack(binary)

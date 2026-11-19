@@ -19,6 +19,7 @@ import (
 	"github.com/system-inc/adamic/internal/compilerinputs"
 	"github.com/system-inc/adamic/internal/javascript"
 	"github.com/system-inc/adamic/internal/native"
+	"github.com/system-inc/adamic/internal/native_runtime"
 	"github.com/system-inc/adamic/internal/toolchain"
 )
 
@@ -98,7 +99,7 @@ var watchFileMutations = []watchFileMutation{
 
 func watchFileProduct(t *testing.T, fixture, variant string) string {
 	t.Helper()
-	flags := append(native.Flags(native.Options{Sanitize: true}), "explicit-child-environment", "watch-file-v1")
+	flags := append(native_runtime.Flags(native_runtime.Options{Sanitize: true}), "explicit-child-environment", "watch-file-v1")
 	for _, name := range []string{"ADAMIC_PROGRAM_REGION", "ADAMIC_NATIVE_SPLIT", "ADAMIC_NATIVE_JOBS", "CPATH", "C_INCLUDE_PATH", "SDKROOT", "MACOSX_DEPLOYMENT_TARGET"} {
 		value, set := os.LookupEnv(name)
 		flags = append(flags, fmt.Sprintf("env:%s:set=%t:value=%s", name, set, value))
@@ -115,7 +116,7 @@ func watchFileProduct(t *testing.T, fixture, variant string) string {
 		if err := os.WriteFile(filepath.Join(directory, "program.mjs"), []byte(javascript.JavaScript(program)), 0600); err != nil {
 			return err
 		}
-		options := native.Options{Sanitize: true}
+		options := native_runtime.Options{Sanitize: true}
 		if variant == "control" {
 			return native.Build(source, filepath.Join(directory, "native"), options)
 		}
@@ -159,7 +160,7 @@ func watchFileProduct(t *testing.T, fixture, variant string) string {
 		if !matched {
 			return fmt.Errorf("mutant file not found")
 		}
-		library, err := native.RuntimeLibraryForSource(runtimeDirectory, source, options)
+		library, err := native_runtime.RuntimeLibraryForSource(runtimeDirectory, source, options)
 		if err != nil {
 			return err
 		}

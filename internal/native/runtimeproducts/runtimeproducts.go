@@ -6,8 +6,8 @@
 // #defines its C turns on) and its options, and an archive is about 56 C files. Compiled where a test first needed it,
 // that was 22 s of a 27 s test alone on one core, and 62 to 74 s at a 62-CPU share, where the program's own work is 5
 // (#sqmn7jk, lap 3's red): every unit compiled them all, since none was a product. So each archive is a buildcache
-// product the tree build builds ahead (Build, from a package's TestProduct_ tests), and native asks a process's
-// supplier for it (Supply), which a runner reads and never builds: one it lacks fails the build as not built.
+// product the tree build builds ahead (Build, from a package's TestProduct_ tests), and native_runtime asks a
+// process's supplier for it (Supply), which a runner reads and never builds: one it lacks fails the build as not built.
 //
 // A unit fetches only the products its own package's product tests touch, so each package whose tests read an archive
 // has a product test for it: internal/oracle builds every one (TestProduct_NativeRuntimes*, Build, and its program
@@ -27,10 +27,10 @@ import (
 
 	"github.com/system-inc/adamic/internal/buildcache"
 	"github.com/system-inc/adamic/internal/ccjobserver"
-	"github.com/system-inc/adamic/internal/native"
+	"github.com/system-inc/adamic/internal/native_runtime"
 )
 
-// A Set is one set of features some program the oracle builds turns on, in native's order (native.Features), and
+// A Set is one set of features some program the oracle builds turns on, in the runtime's order (native_runtime.Features), and
 // Witness, a program that turns on exactly these, which internal/oracle's TestRuntimeSetsAreEachUsed lowers so a set no
 // program needs any more can't stay in the table.
 type Set struct {
@@ -76,7 +76,7 @@ var Sets = []Set{
 // variants run only where Requires is set.
 type Variant struct {
 	Name     string
-	Options  native.Options
+	Options  native_runtime.Options
 	Requires string
 }
 
@@ -85,26 +85,26 @@ type Variant struct {
 const oracleWASI = "ADAMIC_ORACLE_WASI"
 
 var Variants = []Variant{
-	{"sanitized", native.Options{Sanitize: true}, ""},
-	{"release", native.Options{}, ""},
-	{"shipped", native.Options{Release: true}, ""},
-	{"counted", native.Options{Count: true}, ""},
-	{"wasm", native.Options{Target: "wasm32-wasi"}, oracleWASI},
-	{"wasm-request", native.Options{Target: "wasm32-wasi", Request: true, Count: true}, oracleWASI},
+	{"sanitized", native_runtime.Options{Sanitize: true}, ""},
+	{"release", native_runtime.Options{}, ""},
+	{"shipped", native_runtime.Options{Release: true}, ""},
+	{"counted", native_runtime.Options{Count: true}, ""},
+	{"wasm", native_runtime.Options{Target: "wasm32-wasi"}, oracleWASI},
+	{"wasm-request", native_runtime.Options{Target: "wasm32-wasi", Request: true, Count: true}, oracleWASI},
 }
 
 // ProgramVariants are the ways internal/oracle's program region tests build a program, each with its own archive
 // (ProgramArchive): a program region sanitized for the comparison and the leak check, released as a user's build, and
 // counted for the counts table, and the counted wasm build the host witness compares its default mode with
-// (TestProgramRegionHost14DefaultWASIAgreesWithNode), which a program region can't take (native.ValidateOptions) and
+// (TestProgramRegionHost14DefaultWASIAgreesWithNode), which a program region can't take (native_runtime.ValidateOptions) and
 // which runs only where Requires is set. They're a list apart from Variants, since Declared reads Variants: a program
 // region's options there would have Supply, which refuses any request Declared doesn't declare, build that archive
 // mid-test instead.
 var ProgramVariants = []Variant{
-	{"program-sanitized", native.Options{ProgramRegion: true, Sanitize: true}, ""},
-	{"program-release", native.Options{ProgramRegion: true}, ""},
-	{"program-counted", native.Options{ProgramRegion: true, Count: true}, ""},
-	{"wasm-counted", native.Options{Target: "wasm32-wasi", Count: true}, oracleWASI},
+	{"program-sanitized", native_runtime.Options{ProgramRegion: true, Sanitize: true}, ""},
+	{"program-release", native_runtime.Options{ProgramRegion: true}, ""},
+	{"program-counted", native_runtime.Options{ProgramRegion: true, Count: true}, ""},
+	{"wasm-counted", native_runtime.Options{Target: "wasm32-wasi", Count: true}, oracleWASI},
 }
 
 // CommandVariants are the ways cmd/adamic builds a program whose archive no other package builds, each with its own
@@ -112,15 +112,15 @@ var ProgramVariants = []Variant{
 // (TestProduct_CommandRuntimeDebug). They're a list apart from Variants, as ProgramVariants are, so Supply still
 // refuses them.
 var CommandVariants = []Variant{
-	{"debug", native.Options{Release: true, Debug: true}, ""},
+	{"debug", native_runtime.Options{Release: true, Debug: true}, ""},
 }
 
 // Groups is how many product tests each variant's archives are cut into.
 const Groups = 3
 
-// Supply gives native the archive a build asks for from its product: built here the first time on a machine that
+// Supply gives native_runtime the archive a build asks for from its product: built here the first time on a machine that
 // builds (one unit at a time, as a test waits on it), never on a runner, which reads it or fails as not built.
-func Supply(request native.RuntimeRequest) (string, error) {
+func Supply(request native_runtime.RuntimeRequest) (string, error) {
 	if err := Declared(request); err != nil {
 		return "", err
 	}
@@ -135,7 +135,7 @@ func Supply(request native.RuntimeRequest) (string, error) {
 }
 
 // Declared says why a request is for an archive the tree build doesn't build ahead, or nil when it is one.
-func Declared(request native.RuntimeRequest) error {
+func Declared(request native_runtime.RuntimeRequest) error {
 	setDeclared := slices.ContainsFunc(Sets, func(set Set) bool { return slices.Equal(set.Features, request.Features) })
 	// Split and Jobs govern generated program units, not runtime compilation.
 	options := request.Options
@@ -152,11 +152,11 @@ func Declared(request native.RuntimeRequest) error {
 
 // Inputs key an archive's product by everything its runtime cache key reads, as every machine spells it: the
 // platform, the system headers its compile reads, every flag (which holds the features and the options) and every
-// file of the runtime by what it holds (native.RuntimeRequest's Portable), and the compiler and archiver by what they
+// file of the runtime by what it holds (native_runtime.RuntimeRequest's Portable), and the compiler and archiver by what they
 // report (buildcache.Tool), never by where this machine reached them. Workshop's tree build reaches clang through
 // ~/.adamic-tools/bin and a runner through $ADAMIC_TOOLS/bin, and a key that named either would never be found by the
 // other (#94aa17s's class).
-func Inputs(request native.RuntimeRequest) buildcache.Inputs {
+func Inputs(request native_runtime.RuntimeRequest) buildcache.Inputs {
 	return buildcache.Inputs{
 		Name:      "native-runtime",
 		Files:     slices.Clone(runtimeFiles),
@@ -165,14 +165,15 @@ func Inputs(request native.RuntimeRequest) buildcache.Inputs {
 	}
 }
 
-// runtimeFiles are what an archive's build reads and runs of internal/native, which its lean set keys as files
-// (buildcache.LeanProduct, #earlycut): the runtime's sources (internal/native_runtime's C, and the Go file that embeds
-// it, named apart so no test beside them reaches an archive's key, TestRuntimeFilesHoldNoTest), and the files defining all the build reaches from native.RuntimeRequest.Build, which
-// TestTheRuntimeBuildReachesOnlyItsDeclaredFiles holds to them. Its lean recipe keys
-// the rest of internal/native too, the compiler with it, as it keys every package runtimeproducts imports (buildcache's
-// leanRecipeOf, Node's must 1 on #gr5y0yf item 1): a change to the tree outside that import closure leaves an archive's
-// key alone.
-var runtimeFiles = []string{"internal/native_runtime/c", "internal/native_runtime/native_runtime.go", "internal/native/jobserver.go", "internal/native/library.go", "internal/native/native.go", "internal/native/target.go"}
+// runtimeFiles are what an archive's build reads and runs, which its lean set keys as files (buildcache.LeanProduct,
+// #earlycut): internal/native_runtime's C and its Go files, each named apart so no test beside them reaches an
+// archive's key (TestRuntimeFilesHoldNoTest). The Go files define all the build reaches from
+// native_runtime.RuntimeRequest.Build, which TestTheRuntimeBuildReachesOnlyItsDeclaredFiles holds to them, and the
+// request's making and the runtime cache beside it. Its lean recipe keys the rest of runtimeproducts' import closure, as
+// it keys every package runtimeproducts imports (buildcache's leanRecipeOf, Node's must 1 on #gr5y0yf item 1), and that
+// closure holds no package of the compiler (#tb722h2 H2), so a change to internal/native, ir or flow leaves an
+// archive's key alone.
+var runtimeFiles = []string{"internal/native_runtime/c", "internal/native_runtime/jobserver.go", "internal/native_runtime/library.go", "internal/native_runtime/native_runtime.go", "internal/native_runtime/options.go", "internal/native_runtime/runtime_lock.go", "internal/native_runtime/runtime_lock_other.go", "internal/native_runtime/target.go"}
 
 // Build builds ahead the archives of the sets group owns (every third, from group) with the named variant's options,
 // one archive at a time, each compiling four units at once, the CPUs a product's unit is given (a traced build gives
@@ -187,7 +188,7 @@ func Build(t *testing.T, name string, group int) {
 		if index%Groups != group {
 			continue
 		}
-		request, err := native.RuntimeRequestFor(variant.Options, set.Features...)
+		request, err := native_runtime.RuntimeRequestFor(variant.Options, set.Features...)
 		if err != nil {
 			t.Fatal(err)
 		}
@@ -209,7 +210,7 @@ func Find(t *testing.T, name string, group int, owner string) {
 		if index%Groups != group {
 			continue
 		}
-		request, err := native.RuntimeRequestFor(variant.Options, set.Features...)
+		request, err := native_runtime.RuntimeRequestFor(variant.Options, set.Features...)
 		if err != nil {
 			t.Fatal(err)
 		}
@@ -241,7 +242,7 @@ func Archive(t testing.TB, name string, features []string, owners string, group 
 			"cloud/fast-gate/product-order.json: add %s%d to the caller's entry there, and ask for that group", variant.Name,
 			features, owners, index%Groups, owners, group, owners, index%Groups)
 	}
-	request, err := native.RuntimeRequestFor(variant.Options, Sets[index].Features...)
+	request, err := native_runtime.RuntimeRequestFor(variant.Options, Sets[index].Features...)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -258,7 +259,7 @@ func Archive(t testing.TB, name string, features []string, owners string, group 
 // build each ahead with it, and the builds of its tests that link one ask it the same way, so the two can't key one
 // archive apart. It's lean (leanArchive): built in oracle, it was keyed by oracle's whole test binary, its test files
 // with it, and every edit of an oracle test rebuilt all of them. One unit at a time, as a test waits on it.
-func ProgramArchive(t testing.TB, options native.Options, features []string) string {
+func ProgramArchive(t testing.TB, options native_runtime.Options, features []string) string {
 	t.Helper()
 	return leanArchive(t, "Program", ProgramVariants, "ProgramVariants", options, features, 1)
 }
@@ -268,7 +269,7 @@ func ProgramArchive(t testing.TB, options native.Options, features []string) str
 // the same Inputs and never builds it. It's lean (leanArchive): built in cmd/adamic, it was keyed by cmd/adamic's whole
 // test binary, the compiler with it, and nearly every compiler change rebuilt it. Four units at once, as Build
 // compiles.
-func CommandArchive(t testing.TB, options native.Options, features []string) string {
+func CommandArchive(t testing.TB, options native_runtime.Options, features []string) string {
 	t.Helper()
 	return leanArchive(t, "Command", CommandVariants, "CommandVariants", options, features, 4)
 }
@@ -279,7 +280,7 @@ func CommandArchive(t testing.TB, options native.Options, features []string) str
 // LeanProduct), never the test binary of the package asking for it. Options or a feature set it doesn't declare fail
 // the test, by kind, naming the list to add them to, before any request is made, and a variant whose setting isn't set
 // skips it.
-func leanArchive(t testing.TB, kind string, variants []Variant, list string, options native.Options, features []string, workers int) string {
+func leanArchive(t testing.TB, kind string, variants []Variant, list string, options native_runtime.Options, features []string, workers int) string {
 	t.Helper()
 	if !slices.ContainsFunc(Sets, func(set Set) bool { return slices.Equal(set.Features, features) }) {
 		t.Fatalf("runtimeproducts: undeclared %s runtime feature set: %v: add the set to Sets", kind, features)
@@ -289,7 +290,7 @@ func leanArchive(t testing.TB, kind string, variants []Variant, list string, opt
 		t.Fatalf("runtimeproducts: undeclared %s runtime options: %+v: add them to %s", kind, options, list)
 	}
 	skipUnlessSet(t, variants[index])
-	request, err := native.RuntimeRequestFor(options, features...)
+	request, err := native_runtime.RuntimeRequestFor(options, features...)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -300,15 +301,15 @@ func leanArchive(t testing.TB, kind string, variants []Variant, list string, opt
 	return buildcache.LeanProduct(t, Inputs(request), func(directory string) error { return request.Build(directory, workers, jobserver) })
 }
 
-// sameResolved says whether options and other are the same once each target is resolved (native.ResolveTarget): an
+// sameResolved says whether options and other are the same once each target is resolved (native_runtime.ResolveTarget): an
 // empty target is the build's own triple, so a variant's native options are the ones a request names that triple in.
 // A platform the triple table has no row for is no variant's.
-func sameResolved(options native.Options, other native.Options) bool {
-	resolved, err := native.ResolveTarget(options)
+func sameResolved(options native_runtime.Options, other native_runtime.Options) bool {
+	resolved, err := native_runtime.ResolveTarget(options)
 	if err != nil {
 		return false
 	}
-	resolvedOther, err := native.ResolveTarget(other)
+	resolvedOther, err := native_runtime.ResolveTarget(other)
 	return err == nil && resolved == resolvedOther
 }
 

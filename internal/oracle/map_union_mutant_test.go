@@ -9,6 +9,7 @@ import (
 	"github.com/system-inc/adamic/internal/ir"
 	"github.com/system-inc/adamic/internal/leakcheck"
 	"github.com/system-inc/adamic/internal/native"
+	"github.com/system-inc/adamic/internal/native_runtime"
 )
 
 // Each layout owns its Node comparison, ownership check and reference-slot
@@ -37,7 +38,7 @@ func checkMapUnionLayout(t *testing.T, name string) {
 	}
 	mutant := strings.ReplaceAll(source, old, "adamic_map_new(true, false)")
 	binary := filepath.Join(t.TempDir(), "mutant")
-	if err := native.Build(mutant, binary, native.Options{Sanitize: true}); err != nil {
+	if err := native.Build(mutant, binary, native_runtime.Options{Sanitize: true}); err != nil {
 		t.Fatalf("layout mutant must compile: %v", err)
 	}
 	got := executeWith(t, []string{"ASAN_OPTIONS=detect_leaks=0", "UBSAN_OPTIONS=halt_on_error=1"}, binary)
@@ -50,7 +51,7 @@ func checkMapUnionLayout(t *testing.T, name string) {
 		// Conservative leak scans may keep the mutant's stale pointers reachable.
 		// The counted ownership ledger must still see the references the Map lost.
 		countedBinary := filepath.Join(t.TempDir(), "mutant-counted")
-		if err := native.Build(mutant, countedBinary, native.Options{Count: true}); err != nil {
+		if err := native.Build(mutant, countedBinary, native_runtime.Options{Count: true}); err != nil {
 			t.Fatalf("counted layout mutant must compile: %v", err)
 		}
 		command, arguments := pinnedStack(countedBinary)
@@ -151,7 +152,7 @@ func TestMapUnionConstructorBoxingMutant(t *testing.T) {
  adamic_value unboxed = {.number = number};
  return unboxed.reference;
 }`)
-	for _, options := range []native.Options{{}, {Sanitize: true}} {
+	for _, options := range []native_runtime.Options{{}, {Sanitize: true}} {
 		binary := filepath.Join(t.TempDir(), "mutant")
 		if err := native.Build(mutant, binary, options); err != nil {
 			t.Fatalf("mutant must compile: %v", err)
@@ -180,7 +181,7 @@ func TestMapUnionEntriesRecordAlias(t *testing.T) {
 		t.Fatal(err)
 	}
 	binary := filepath.Join(t.TempDir(), "split")
-	if err := native.Build(native.C(program), binary, native.Options{Split: true, Sanitize: true}); err != nil {
+	if err := native.Build(native.C(program), binary, native_runtime.Options{Split: true, Sanitize: true}); err != nil {
 		t.Fatal(err)
 	}
 	got := executeWith(t, []string{"ASAN_OPTIONS=detect_leaks=1"}, binary)

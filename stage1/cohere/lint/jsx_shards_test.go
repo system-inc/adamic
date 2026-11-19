@@ -12,6 +12,7 @@ import (
 	"github.com/system-inc/adamic/internal/load"
 	"github.com/system-inc/adamic/internal/lower"
 	"github.com/system-inc/adamic/internal/native"
+	"github.com/system-inc/adamic/internal/native_runtime"
 	"github.com/system-inc/adamic/internal/toolchain"
 	"github.com/system-inc/adamic/stage1/cohere/lint/oracles"
 	"github.com/system-inc/adamic/stage1/cohere/lint/registry"
@@ -429,14 +430,14 @@ func jsxTreeNative(t *testing.T, entry string, sanitize bool) string {
 	inputs.Name = "jsx-tree-native"
 	inputs.Files = append(inputs.Files, jsxInputFiles(t, filepath.Join(repository, "internal/native_runtime/c"))...)
 	// native.Build splits by ADAMIC_NATIVE_SPLIT when its options don't, so the switch is an input.
-	inputs.Flags = append(native.Flags(native.Options{Sanitize: sanitize}), "ADAMIC_NATIVE_SPLIT="+os.Getenv("ADAMIC_NATIVE_SPLIT"))
+	inputs.Flags = append(native_runtime.Flags(native_runtime.Options{Sanitize: sanitize}), "ADAMIC_NATIVE_SPLIT="+os.Getenv("ADAMIC_NATIVE_SPLIT"))
 	inputs.Toolchain = []string{buildcache.CompilerReport("clang")}
 	built := jsxProduct(t, inputs, func(dir string) error {
 		data, err := os.ReadFile(source)
 		if err != nil {
 			return err
 		}
-		return native.Build(string(data), filepath.Join(dir, "native"), native.Options{Sanitize: sanitize})
+		return native.Build(string(data), filepath.Join(dir, "native"), native_runtime.Options{Sanitize: sanitize})
 	})
 	return filepath.Join(built, "native")
 }

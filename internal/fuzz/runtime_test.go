@@ -5,7 +5,7 @@ import (
 	"testing"
 
 	"github.com/system-inc/adamic/internal/buildcache"
-	"github.com/system-inc/adamic/internal/native"
+	"github.com/system-inc/adamic/internal/native_runtime"
 )
 
 func TestFuzzerSharesRuntimeLibrary(t *testing.T) {
@@ -19,11 +19,11 @@ func TestFuzzerSharesRuntimeLibrary(t *testing.T) {
 		t.Run(name, func(t *testing.T) {
 			t.Parallel()
 			if name == "library" {
-				library, err := native.RuntimeLibrary("", native.Options{Sanitize: true})
+				library, err := native_runtime.RuntimeLibrary("", native_runtime.Options{Sanitize: true})
 				if err != nil {
 					t.Fatal(err)
 				}
-				checkoutLibrary, err := native.RuntimeLibraryForSource(filepath.Join(checkout.Root, "internal", "native_runtime", "c"), "", native.Options{Sanitize: true})
+				checkoutLibrary, err := native_runtime.RuntimeLibraryForSource(filepath.Join(checkout.Root, "internal", "native_runtime", "c"), "", native_runtime.Options{Sanitize: true})
 				if err != nil {
 					t.Fatal(err)
 				}
