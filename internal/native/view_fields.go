@@ -57,10 +57,7 @@ func (e *emitter) viewFieldObject(property ir.Property, object string) string {
 	e.line("adamic_value %s = %s;", slot, read)
 	value := unslotted(property.Of, fmt.Sprintf("%s.%s", slot, member(property.Of)))
 	if len(property.ViewAllowed) != 0 {
-		tests := []string{}
-		for _, allowed := range property.ViewAllowed {
-			tests = append(tests, e.binary(ir.Equal, property.Of, value, e.value(allowed)))
-		}
+		tests := e.viewLiteralTests(property.Of, value, property.ViewAllowed)
 		if absent != "" {
 			e.line("if (!(%s) && !(%s)) adamic_view_literal_failure(%s, %s, %d, %s);", absent, strings.Join(tests, " || "), cString(property.View), cString(name), property.Of, slot)
 		} else {
