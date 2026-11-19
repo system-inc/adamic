@@ -154,22 +154,21 @@ func TestOptionsBaseUncheckedFieldStops(t *testing.T) {
 	}
 }
 
-// Language's must (08:38Z): a dictionary field, paths?: MapLike<string[]>, is never dropped, since the native
-// union-slot check read an honest MapLike written under it through the view as another member of the slot's union,
-// where Node and the JavaScript backend read it (paths_honest.ts, g5 p06). So each of Language's paths programs stops
-// not yet at the view, before its write: the honest one and the lies (g5 p01 to p05), which stopped at their reads.
-// Mutant: let dictionaries be dropped again, and they lower; paths_honest.ts then disagrees with Node natively, which
-// the failure shows.
-func TestOptionsBaseObjectFieldStops(t *testing.T) {
+// #6c4swvt's dictionary and fixed-object head: paths?: MapLike<string[]> and readonly configFile?:
+// TsConfigSourceFile are dropped by the view, since each one's named read out of the slot is a checked heap narrow
+// to the slot union's only member of its runtime class (recordReadHeapMember). Language's must (08:38Z), an honest
+// MapLike written under paths through the view read natively as another member, was the literal: { k: ["a"] } in a
+// union slot was built fixed. It's built as the union's one dictionary member the program declares now
+// (recordUnionDictionaryMember), so paths_honest.ts agrees with Node, and an honest TsConfigSourceFile, of its own
+// shape or a wider one, does too. Mutants: build the literal fixed again, and paths_honest.ts stops natively on its
+// honest value; take ir.Record and ir.Object out of droppedContractChecked, and every program here stops not yet at
+// the view.
+func TestOptionsBaseObjectFieldsDropped(t *testing.T) {
 	t.Parallel()
-	const want = "a CompilerOptions seen as OptionsBase (fixed objects and records have different storage; copy explicitly)"
 	for name, printed := range map[string]string{
-		"paths_honest.ts": "a\n",
-		"paths_string.ts": "undefined\n",
-		"paths_array.ts":  "string\n1\n",
-		"paths_number.ts": "after\n",
-		"paths_keys.ts":   "0,1\n",
-		"paths_mixed.ts":  "number\n",
+		"paths_honest.ts":  "a\n",
+		"config_honest.ts": "tsconfig.json:2\n",
+		"config_wider.ts":  "tsconfig.json:2\n",
 	} {
 		t.Run(name, func(t *testing.T) {
 			t.Parallel()
@@ -179,13 +178,56 @@ func TestOptionsBaseObjectFieldStops(t *testing.T) {
 				t.Fatalf("Node: %s", optionsBaseShown(node))
 			}
 			program, err := lowered(t, path)
-			if err == nil {
-				native, _ := natively(t, program)
-				t.Fatalf("lowered, want NotYet %q at :19:12; Node %s; native %s; javascript %s", want, optionsBaseShown(node), optionsBaseShown(native), optionsBaseShown(onJavaScriptBackend(t, program)))
+			if err != nil {
+				t.Fatalf("a dictionary or fixed-object member dropped by OptionsBase in .ts must lower: %v", err)
 			}
-			var notYet *lower.NotYet
-			if !errors.As(err, &notYet) || notYet.What != want || notYet.Where != path+":19:12" {
-				t.Fatalf("want NotYet %q at :19:12, got %v", want, err)
+			native, sanitized := natively(t, program)
+			for backend, got := range map[string]run{"native": native, "javascript": onJavaScriptBackend(t, program)} {
+				if difference := disagreement(node, got); difference != "" {
+					t.Fatalf("%s disagrees with Node (%s): Node %s; %s %s", backend, difference, optionsBaseShown(node), backend, optionsBaseShown(got))
+				}
+			}
+			if report := leaks(t, program, sanitized); report != "" {
+				t.Fatal(report)
+			}
+		})
+	}
+}
+
+// The lies those drops admit, each written through the view under a name its member declares, each caught at the
+// named read's narrow on both backends alike, before the line after it: Language's g5 p01 to p05 under paths (a
+// string, a string array, a number, a string read for its keys, a mixed array), and a dictionary and a string under
+// configFile. Node reads each one.
+func TestOptionsBaseObjectFieldLiesStop(t *testing.T) {
+	t.Parallel()
+	const paths = "adamic: panic: field read failed: options.paths is not a MapLike<string[]>; expected MapLike<string[]>, found another member of the index signature's union, which a computed-key or index-signature write may have stored\n"
+	const config = "adamic: panic: field read failed: options.configFile is not a TsConfigSourceFile; expected TsConfigSourceFile, found another member of the index signature's union, which a computed-key or index-signature write may have stored\n"
+	for name, stop := range map[string]struct{ node, stdout, stderr string }{
+		"paths_string.ts":   {node: "undefined\n", stderr: paths},
+		"paths_array.ts":    {node: "string\n1\n", stderr: paths},
+		"paths_number.ts":   {node: "after\n", stderr: paths},
+		"paths_keys.ts":     {node: "0,1\n", stderr: paths},
+		"paths_mixed.ts":    {node: "number\n", stderr: paths},
+		"config_maplike.ts": {node: "before\nundefined\n", stdout: "before\n", stderr: config},
+		"config_string.ts":  {node: "before\nundefined\n", stdout: "before\n", stderr: config},
+	} {
+		t.Run(name, func(t *testing.T) {
+			t.Parallel()
+			path := optionsBasePath(t, name)
+			node := onNode(t, path)
+			if node.exitCode != 0 || string(node.stdout) != stop.node {
+				t.Fatalf("Node: %s", optionsBaseShown(node))
+			}
+			program, err := lowered(t, path)
+			if err != nil {
+				t.Fatalf("must lower: %v", err)
+			}
+			native, _ := natively(t, program)
+			want := run{stdout: []byte(stop.stdout), stderr: []byte(stop.stderr), exitCode: 70}
+			for backend, got := range map[string]run{"native": native, "javascript": onJavaScriptBackend(t, program)} {
+				if difference := disagreement(want, got); difference != "" {
+					t.Fatalf("%s: %s: want %s; got %s", backend, difference, optionsBaseShown(want), optionsBaseShown(got))
+				}
 			}
 		})
 	}
