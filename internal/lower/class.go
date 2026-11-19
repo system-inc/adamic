@@ -555,7 +555,9 @@ func (l *lowering) absentOptionalWrite(target *ast.Node) error {
 // is the write, receiver its object's node, member the field's symbol and name its spelling, and present
 // whether a test of the same spelling proved a value there (presentBeforeWrite).
 func (l *lowering) absentOptionalFieldWrite(target, receiver *ast.Node, member *ast.Symbol, name string, present bool) error {
-	if member == nil || member.Flags&ast.SymbolFlagsOptional == 0 || isClassInstance(l.checker.GetTypeAtLocation(receiver)) {
+	// A class instance holds a slot for every field a class declares, but none for an optional member an
+	// interface merges into the class, so only a class-declared member is admitted here (#86cmqrp).
+	if member == nil || member.Flags&ast.SymbolFlagsOptional == 0 || isClassInstance(l.checker.GetTypeAtLocation(receiver)) && classDeclaresMember(member) {
 		return nil
 	}
 	if stored, _ := l.representation(l.checker.GetTypeOfSymbol(member)); stored == ir.Union {
@@ -680,12 +682,46 @@ func (l *lowering) noteOmittedOptionals(modules []*ast.SourceFile) {
 			l.noteOmittedOptionalsOf(node)
 		case ast.KindCallExpression:
 			l.noteDecodedOptionals(node)
+		case ast.KindClassDeclaration, ast.KindClassExpression:
+			l.noteMergedClassOptionals(node)
 		}
 		return node.ForEachChild(visit)
 	}
 	for _, module := range modules {
 		module.AsNode().ForEachChild(visit)
 	}
+}
+
+// noteMergedClassOptionals records every optional member a class's instances hold no slot for: one an
+// interface merges into the class or a base, which no class declares. Its instances leave that member out as
+// a literal leaves out an optional property, so a write of it is judged by what reaches it (#86cmqrp,
+// Language's attack on #w8nanzw: a merged member written through an interface lowered, and native panicked
+// where Node runs on).
+func (l *lowering) noteMergedClassOptionals(class *ast.Node) {
+	symbol := l.checker.GetSymbolOfDeclaration(class)
+	if symbol == nil {
+		return
+	}
+	instance := l.checker.GetDeclaredTypeOfSymbol(symbol)
+	if instance == nil {
+		return
+	}
+	for _, property := range l.checker.GetPropertiesOfType(instance) {
+		if property.Flags&ast.SymbolFlagsOptional != 0 && !classDeclaresMember(property) {
+			l.omittedOptionals[property.Name] = true
+		}
+	}
+}
+
+// classDeclaresMember is whether a class declares member, so its instances lay out a slot for it: some
+// declaration of it is a class's own member. An interface merged into the class declares it there alone.
+func classDeclaresMember(member *ast.Symbol) bool {
+	for _, declaration := range member.Declarations {
+		if declaration.Parent != nil && (declaration.Parent.Kind == ast.KindClassDeclaration || declaration.Parent.Kind == ast.KindClassExpression) {
+			return true
+		}
+	}
+	return false
 }
 
 func (l *lowering) noteOmittedOptionalsOf(literal *ast.Node) {

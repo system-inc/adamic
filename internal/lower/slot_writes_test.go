@@ -291,3 +291,29 @@ func TestSlotWritesHaveOneJudgment(t *testing.T) {
 		t.Errorf("absentOptionalFieldWrite makes %d NotYets, want 1, its Union field's: a write some literal leaves the field out of is checkSlotWrites' to stop", notYets["absentOptionalFieldWrite"])
 	}
 }
+
+// A member an interface merges into a class has no slot in the class's instances, which lay out only the fields a
+// class declares, so a write of it is judged by reach and stops, written through an interface or through the class's
+// own type (#86cmqrp, Language's attack on #w8nanzw: it lowered, and native panicked "a field the checker proved is
+// there is missing" where Node runs on). A member the class declares optional is written as before.
+func TestSlotWritesOfAMergedClassMember(t *testing.T) {
+	t.Parallel()
+	const merged = "class Merged { a = 1; }\ninterface Merged { f?: string; }\ninterface X { a: number; f?: string; }\n"
+	for _, row := range []struct{ name, source string }{
+		{"through an interface", merged + "function put(m: X): void { m.f = 'x'; }\nconst m = new Merged();\nput(m);\nconsole.log(String(m.f));\n"},
+		{"through the class", merged + "function put(m: Merged): void { m.f = 'x'; }\nconst m = new Merged();\nput(m);\nconsole.log(String(m.f));\n"},
+	} {
+		t.Run(row.name, func(t *testing.T) {
+			t.Parallel()
+			_, err := lowerSourceAs(t, row.source, ".ts")
+			var notYet *NotYet
+			if !errors.As(err, &notYet) || !strings.Contains(notYet.What, "an instance of Merged, whose class holds no f") {
+				t.Fatalf("want NotYet naming Merged's missing slot for f, got %v", err)
+			}
+		})
+	}
+	t.Run("declared by the class", func(t *testing.T) {
+		t.Parallel()
+		lowersAndAgreesWithNodeAs(t, "class Declared { a = 1; f?: string; }\ninterface X { a: number; f?: string; }\nfunction put(m: X): void { m.f = 'x'; }\nconst m = new Declared();\nput(m);\nconsole.log(String(m.f));\n", ".ts")
+	})
+}
