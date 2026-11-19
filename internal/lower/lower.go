@@ -253,6 +253,9 @@ func lowerWithElementKey(key *viewElementKey, program *load.Program, typeChecker
 	if err := lowering.checkBoundArguments(); err != nil {
 		return nil, err
 	}
+	if err := lowering.checkKindUnionWriteReach(); err != nil {
+		return nil, err
+	}
 	if err := lowering.checkCheckedPredicateParameters(modules); err != nil {
 		return nil, err
 	}
@@ -617,6 +620,15 @@ type lowering struct {
 	closedKindDeclared []closedKindSite
 	closedKindBuilt    []closedKindSite
 	closedKindNewOnly  map[*ast.Symbol]bool
+	// kindTagCarriers is every declared type carrying a literal on a tag field, by the field and the literal's
+	// runtime value, and kindTagFields the fields it holds (cast_kind_union_writes.go, #b5w3ycg head 2).
+	kindTagCarriers map[string][]*checker.Type
+	kindTagFields   map[string]bool
+	// kindUnionWriteRecords is each named write through a kind-checked cast's union the declared index didn't
+	// refuse, judged by reach once lowering is done (checkKindUnionWriteReach), and builtTypes the type each
+	// object literal is built at, by the id of its own type, its GraphTypes' first (noteBuiltType).
+	kindUnionWriteRecords []kindUnionWriteRecord
+	builtTypes            map[int]builtType
 	// crossFunctionWrites holds the first write to each binding from outside its own function.
 	crossFunctionWrites map[*ast.Symbol]*ast.Node
 	// propertyWrites is every property write in the program, by what it can reach (narrowed_nullish.go).

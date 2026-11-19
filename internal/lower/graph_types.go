@@ -10,13 +10,15 @@ import (
 // graphAllocation preserves both the allocation's concrete type and its contextual
 // view. Ownership is selected only after the whole program's cycle proof runs.
 func (l *lowering) graphAllocation(value ir.Expression, node *ast.Node) ir.Expression {
-	ids := []int{l.cycleTypeID(l.concrete(l.checker.GetTypeAtLocation(node)))}
+	own := l.concrete(l.checker.GetTypeAtLocation(node))
+	ids := []int{l.cycleTypeID(own)}
 	// Fresh literal identities may change across checker queries. The variable's
 	// widened allocation view is stable and is the type the cycle finder visits.
 	if node.Parent != nil && node.Parent.Kind == ast.KindVariableDeclaration && node.Parent.Name() != nil {
 		ids = append(ids, l.cycleTypeID(l.concrete(l.checker.GetTypeAtLocation(node.Parent.Name()))))
 	}
-	if contextual := l.slotType(node); contextual != nil {
+	contextual := l.slotType(node)
+	if contextual != nil {
 		ids = append(ids, l.cycleTypeID(l.concrete(contextual)))
 	}
 	switch value := value.(type) {
@@ -27,6 +29,7 @@ func (l *lowering) graphAllocation(value ir.Expression, node *ast.Node) ir.Expre
 		if value.Record {
 			l.graphDynamicSite = node
 		}
+		l.noteBuiltType(ids[0], own, contextual)
 		value.GraphTypes = ids
 		return value
 	case ir.ArrayLiteral:

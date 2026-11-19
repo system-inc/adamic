@@ -109,28 +109,6 @@ function target(node: Node): Node { return (node as Leaf | Other).parent; }
 	}
 }
 
-// A write through the kind cast's union stays NotYet (kindUnionWrites): Adamic ruled it as #b5w3ycg's head 2,
-// and this head keeps it waiting, written through the cast, through a local, through an alias of the union, and
-// as a compound assignment.
-func TestKindUnionCastWriteStaysNotYet(t *testing.T) {
-	t.Parallel()
-	for _, probe := range []struct{ name, write string }{
-		{"object field", "(node as PropertyAccessExpression | ElementAccessExpression).expression = id;\n"},
-		{"scalar field", "(node as PropertyAccessExpression | ElementAccessExpression).flags = 1;\n"},
-		{"through a local", "const access = node as PropertyAccessExpression | ElementAccessExpression;\naccess.expression = id;\n"},
-		{"through an alias", "type AccessExpression = PropertyAccessExpression | ElementAccessExpression;\nconst access = node as AccessExpression;\naccess.flags += 1;\n"},
-	} {
-		t.Run(probe.name, func(t *testing.T) {
-			t.Parallel()
-			_, err := lowerSourceAs(t, kindUnionWriteModel+probe.write, ".ts")
-			var notYet *NotYet
-			if !errors.As(err, &notYet) || !strings.Contains(err.Error(), "waits on #b5w3ycg head 2") {
-				t.Fatalf("want NotYet at the write, waiting on head 2, got %v", err)
-			}
-		})
-	}
-}
-
 // kindUnionWriteModel is kindUnionModel's shape with fields a write can reach.
 const kindUnionWriteModel = `enum SyntaxKind { Identifier = 80, PropertyAccessExpression = 211, ElementAccessExpression = 212 }
 interface Node { readonly kind: SyntaxKind; readonly pos: number }
@@ -204,7 +182,9 @@ console.log(describe(property));
 // other than a plain write through the union, and the getter-backed tag. Each is measured where it stops on main
 // (J-y4a6efa and J-gzyv3tp, the probes; J-9caypx8 for the shared-kind lie's narrowed write, which main's checked
 // write stops at the write with exit 70 on both backends, and which #b5w3ycg head 2 pins as an agreement witness).
-// A road that starts lowering turns its row red first, so whoever opens it reads this.
+// A road that starts lowering turns its row red first, so whoever opens it reads this. The increment's row went
+// when head 2 opened it: a named write, increments included, lowers and agrees with Node there
+// (cast_kind_union_writes_test.go's TestKindUnionWriteLowers).
 func TestKindUnionCastRoadsLowerAsked(t *testing.T) {
 	t.Parallel()
 	cast := "const access = node as PropertyAccessExpression | ElementAccessExpression;\n"
@@ -212,8 +192,7 @@ func TestKindUnionCastRoadsLowerAsked(t *testing.T) {
 		{"Object.assign of a scalar", kindUnionWriteModel + cast + "Object.assign(access, { flags: 5 });\nconsole.log(String(access.flags));\n", "Object.assign on a shape not proven"},
 		{"Object.assign of an object", kindUnionWriteModel + cast + "Object.assign(access, { expression: id });\nconsole.log(String(access.expression.kind));\n", "Object.assign on a shape not proven"},
 		{"destructuring assignment target", kindUnionWriteModel + cast + "const src: { a: Node } = { a: id };\n({ a: access.expression } = src);\nconsole.log(String(access.expression.kind));\n", "without its source-slot type certificate"},
-		{"for-of target", kindUnionWriteModel + cast + "const values: number[] = [1, 2];\nfor (access.flags of values) { console.log('x'); }\nconsole.log(String(access.flags));\n", "waits on #b5w3ycg head 2"},
-		{"increment", kindUnionWriteModel + cast + "access.flags++;\nconsole.log(String(access.flags));\n", "waits on #b5w3ycg head 2"},
+		{"for-of target", kindUnionWriteModel + cast + "const values: number[] = [1, 2];\nfor (access.flags of values) { console.log('x'); }\nconsole.log(String(access.flags));\n", "which #b5w3ycg head 2 leaves waiting"},
 		{"a method on the shared-kind lie", `enum SyntaxKind { Identifier = 80, PrivateIdentifier = 81, PropertyDeclaration = 172, MethodDeclaration = 174 }
 interface Node { readonly kind: SyntaxKind; readonly pos: number }
 interface Identifier extends Node { readonly kind: SyntaxKind.Identifier; readonly escapedText: string }
