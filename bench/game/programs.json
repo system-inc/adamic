@@ -289,6 +289,7 @@
 					"language": "go",
 					"bases": ["fastest"],
 					"threads": "several",
+					"pcre": true,
 					"buildLine": "/opt/src/go1.23.1/go/bin/go build -o regexredux.go-5.go_run regexredux.go-5.go",
 					"gameElapsed": 3.229,
 					"gameCpu": 5.416
@@ -298,6 +299,7 @@
 					"language": "rust",
 					"bases": ["fastest"],
 					"threads": "several",
+					"pcre": true,
 					"crates": ["libc", "pcre2-sys", "rayon"],
 					"buildLine": "/opt/src/rust-1.84.1/bin/rustc -C opt-level=3 -C target-cpu=ivybridge -C codegen-units=1 -L /opt/src/rust-libs --extern libc=/opt/src/rust-libs/liblibc-266a975e90b6fb1d.rlib regexredux.rs -o regexredux.rust-7.rust_run",
 					"gameElapsed": 0.784,
