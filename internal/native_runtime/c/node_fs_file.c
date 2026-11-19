@@ -352,27 +352,23 @@ adamic_string *adamic_fs_file_read_fd(double descriptor, const adamic_string *fl
     return read_file((int)descriptor, false);
 }
 
-static adamic_array *read_buffer(int descriptor, bool owned) {
+static adamic_typed_array *read_buffer(int descriptor, bool owned) {
     unsigned char *bytes = NULL;
     size_t length = 0;
     int error = adamic_fs_file_read_bytes(descriptor, &bytes, &length);
     if (owned) { close(descriptor); }
     if (error != 0) { system_error(error, "read", NULL); return NULL; }
-    adamic_array *result = adamic_array_make(length, adamic_ir_Number);
-    for (size_t i = 0; i < length; i++) {
-        adamic_value byte = {0};
-        byte.number = bytes[i];
-        adamic_array_push(result, byte);
-    }
+    adamic_typed_array *result = adamic_typed_array_make(adamic_typed_array_uint8, length);
+    if (length > 0) { memcpy(result->data, bytes, length); }
     free(bytes);
     return result;
 }
-adamic_array *adamic_fs_file_read_buffer(const adamic_string *path, const adamic_string *flag) {
+adamic_typed_array *adamic_fs_file_read_buffer(const adamic_string *path, const adamic_string *flag) {
     adamic_output_flush();
     int descriptor = open_file(path, flag, 0666);
     return descriptor < 0 ? NULL : read_buffer(descriptor, true);
 }
-adamic_array *adamic_fs_file_read_buffer_fd(double descriptor, const adamic_string *flag) {
+adamic_typed_array *adamic_fs_file_read_buffer_fd(double descriptor, const adamic_string *flag) {
     adamic_output_flush();
     (void)flag;
     if (!file_descriptor(descriptor)) { return NULL; }
@@ -386,7 +382,7 @@ double adamic_fs_file_close(double descriptor) {
     return 0;
 }
 
-double adamic_fs_file_read_sync(double descriptor, adamic_array *buffer, double offset, double length, double position) {
+double adamic_fs_file_read_sync(double descriptor, adamic_typed_array *buffer, double offset, double length, double position) {
     adamic_output_flush();
     if (!integer(&coded_error_shape, offset, 9007199254740991., "offset")) { return 0; }
     length = adamic_bitwise_or(length, 0);
@@ -402,13 +398,11 @@ double adamic_fs_file_read_sync(double descriptor, adamic_array *buffer, double 
         read_range(&coded_error_shape, "length", range, length); return 0;
     }
     if (!file_descriptor(descriptor)) { return 0; }
-    unsigned char *bytes = malloc((size_t)length);
-    if (bytes == NULL) { adamic_panic("out of memory", 13); }
+    // offset + length is within the Buffer (checked above), so the read lands straight in its bytes.
+    unsigned char *bytes = (unsigned char *)buffer->data + (size_t)offset;
     ssize_t count;
     do { count = position < 0 ? read((int)descriptor, bytes, (size_t)length) : pread((int)descriptor, bytes, (size_t)length, (off_t)position); } while (count < 0 && errno == EINTR);
-    if (count < 0) { free(bytes); system_error(errno, "read", NULL); return 0; }
-    for (size_t i = 0; i < (size_t)count; i++) { buffer->elements[(size_t)offset + i].number = bytes[i]; }
-    free(bytes);
+    if (count < 0) { system_error(errno, "read", NULL); return 0; }
     return (double)count;
 }
 
@@ -455,20 +449,15 @@ static double write_file(int descriptor, const adamic_string *string, bool owned
     free(buffer);
     return result;
 }
-static double write_buffer(int descriptor, const adamic_array *buffer, bool owned, bool flush) {
-    char *data = malloc(buffer->length == 0 ? 1 : buffer->length);
-    if (data == NULL) { adamic_panic("out of memory", 13); }
-    for (size_t i = 0; i < buffer->length; i++) { data[i] = (char)(unsigned char)buffer->elements[i].number; }
-    double result = write_data(descriptor, data, buffer->length, owned, flush);
-    free(data);
-    return result;
+static double write_buffer(int descriptor, const adamic_typed_array *buffer, bool owned, bool flush) {
+    return write_data(descriptor, buffer->data, buffer->length, owned, flush);
 }
-double adamic_fs_file_write_buffer(const adamic_string *path, const adamic_array *buffer, const adamic_string *flag, double mode, bool flush) {
+double adamic_fs_file_write_buffer(const adamic_string *path, const adamic_typed_array *buffer, const adamic_string *flag, double mode, bool flush) {
     adamic_output_flush();
     int descriptor = open_file(path, flag, mode);
     return descriptor < 0 ? 0 : write_buffer(descriptor, buffer, true, flush);
 }
-double adamic_fs_file_write_buffer_fd(double descriptor, const adamic_array *buffer, const adamic_string *flag, double mode, bool flush) {
+double adamic_fs_file_write_buffer_fd(double descriptor, const adamic_typed_array *buffer, const adamic_string *flag, double mode, bool flush) {
     adamic_output_flush();
     (void)flag; (void)mode;
     if (!file_descriptor(descriptor)) { return 0; }

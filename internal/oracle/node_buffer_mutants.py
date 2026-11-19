@@ -15,19 +15,20 @@ logs = Path('/tmp/host-buffer-mutants')
 logs.mkdir(exist_ok=True)
 buffer = 'internal/native_runtime/c/node_buffer.c'
 crypto = 'internal/native_runtime/c/node_crypto.c'
-lower = 'internal/lower/object.go'
+typed = 'internal/native_runtime/c/typed_array.c'
+lower = 'internal/lower/typed_arrays.go'
 mutants = [
     ('from_utf8_surrogate', buffer, '(unsigned)adamic_utf8_at(text, (double)at)', '(unsigned char)text->bytes[at]', 'encodings'),
-    ('from_numeric_bytes', buffer, 'return (unsigned)byte;', 'return (unsigned)byte ^ 1;', 'writes'),
+    ('from_numeric_bytes', typed, '((uint8_t *)array->data)[index] = (uint8_t)modulo;', '((uint8_t *)array->data)[index] = (uint8_t)modulo ^ 1;', 'writes'),
     ('utf8_reprocess', buffer, 'if (old != 12) { at--; }', 'if (old != 12) { at += 0; }', 'utf8'),
     ('utf16_surrogate', buffer, 'written += put_point((unsigned char *)text->bytes + written, point);', 'written += put_point((unsigned char *)text->bytes + written, point >= 0xd800 && point <= 0xdfff ? 0xfffd : point);', 'utf16'),
     ('utf16_odd_length', buffer, 'if (encoding == 1) {\n  adamic_string *text', 'if (encoding == 1 && length % 2 != 0) { return adamic_retain(&adamic_string_empty); }\n if (encoding == 1) {\n  adamic_string *text', 'utf16'),
     ('base64_padding', buffer, " : '=';", " : 'A';", 'encodings'),
     ('base64_whitespace', buffer, 'if (lo < 0) { continue; }', 'if (lo < 0) { break; }', 'encodings'),
     ('hex_case', buffer, 'static const char hex[] = "0123456789abcdef";', 'static const char hex[] = "0123456789ABCDEF";', 'encodings'),
-    ('byte_swap_store', buffer, 'if (slot != NULL) { slot->number = (double)byte_value(value); }', 'if (slot != NULL) { slot->number = slot->number + 0 * byte_value(value); }', 'bom'),
-    ('buffer_length', lower, 'return ir.Length{Array: object}, nil', 'if l.nodeBufferType(l.checker.GetTypeAtLocation(access.Expression), "Buffer") { return ir.Binary{Operator:ir.Add, Left:ir.Length{Array:object}, Right:ir.NumberConstant{Value:1}},nil }; return ir.Length{Array: object}, nil', 'utf16'),
-    ('buffer_index', lower, 'return ir.ArrayIndex{Array: object, Index: position, Element: element}, nil', 'if l.nodeBufferType(l.checker.GetTypeAtLocation(access.Expression), "Buffer") { position = ir.Binary{Operator:ir.Add,Left:position,Right:ir.NumberConstant{Value:1}} }; return ir.ArrayIndex{Array: object, Index: position, Element: element}, nil', 'writes'),
+    ('byte_swap_store', buffer, 'adamic_typed_array_write_converted(buffer, (size_t)index, value);', 'adamic_typed_array_write_converted(buffer, (size_t)index, ((uint8_t *)buffer->data)[(size_t)index]);', 'bom'),
+    ('buffer_length', lower, 'return ir.Length{Array: array, Optional: access.QuestionDotToken != nil}, true, nil', 'if l.nodeBufferType(receiver, "Buffer") { return ir.Binary{Operator:ir.Add, Left:ir.Length{Array:array}, Right:ir.NumberConstant{Value:1}}, true, nil }; return ir.Length{Array: array, Optional: access.QuestionDotToken != nil}, true, nil', 'utf16'),
+    ('buffer_index', lower, 'read := ir.Expression(ir.ArrayIndex{Array: array, Index: index, Element: ir.Number})', 'if l.nodeBufferType(l.checker.GetNonNullableType(l.checker.GetTypeAtLocation(access.Expression)), "Buffer") { index = ir.Binary{Operator:ir.Add,Left:index,Right:ir.NumberConstant{Value:1}} }; read := ir.Expression(ir.ArrayIndex{Array: array, Index: index, Element: ir.Number})', 'writes'),
     ('hash_initial_state', crypto, '0x6a09e667,0xbb67ae85', '0x6a09e666,0xbb67ae85', 'crypto'),
     ('hash_update_bytes', crypto, 'for (size_t i=0;i<input->length;i++)', 'for (size_t i=1;i<input->length;i++)', 'crypto'),
     ('hash_digest_hex', crypto, 'static const char hex[]="0123456789abcdef";', 'static const char hex[]="0123456789ABCDEF";', 'crypto'),

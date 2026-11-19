@@ -1,0 +1,31 @@
+import { Buffer } from 'node:buffer';
+// A Buffer is a Uint8Array natively: each road it crosses as a value, read and written.
+function sum(bytes: Buffer): number {
+ let total = 0;
+ for (const byte of bytes) { total += byte; }
+ return total;
+}
+function made(text: string): Buffer { return Buffer.from(text, 'hex'); }
+const first = made('00017f80ff');
+console.log(`${sum(first)} ${first.length}`);
+let maybe: Buffer | undefined;
+let none: Buffer | undefined;
+if (first.length > 2) { maybe = first; }
+if (first.length > 9) { none = first; }
+console.log(`${maybe?.length ?? -1} ${maybe?.[4] ?? -1}`);
+console.log(`${none?.length ?? -1} ${none?.[0] ?? -1}`);
+const held: { bytes: Buffer } = { bytes: made('6869') };
+console.log(held.bytes.toString('utf8'));
+held.bytes[0] = 0x48;
+console.log(held.bytes.toString('utf8'));
+const list: Buffer[] = [first, held.bytes, Buffer.from([1, 2, 3])];
+for (const item of list) { console.log(`${item.length}:${item[0] ?? -1}:${sum(item)}`); }
+const copy = Buffer.from(list[1] ?? first);
+copy[1] = 0x6f;
+console.log(`${copy.toString('utf8')} ${held.bytes.toString('utf8')}`);
+let index = 0;
+while (index < first.length) {
+ first[index] = (first[index] ?? 0) + 1;
+ index += 1;
+}
+console.log(first.toString('hex'));
