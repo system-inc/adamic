@@ -44,6 +44,7 @@
 package main
 
 import (
+	"bytes"
 	"encoding/json"
 	"fmt"
 	"io"
@@ -276,7 +277,7 @@ func compareCommits(request compareRequest) {
 	floor := program{name: "floor", source: floorSource}
 	floorBinaries := [2]string{filepath.Join(sides[0], "floor"), filepath.Join(sides[1], "floor")}
 	for index, adamic := range []string{baselineAdamic, candidateAdamic} {
-		if output, err := exec.Command(adamic, "build", floor.source, "-o", floorBinaries[index]).CombinedOutput(); err != nil {
+		if output, err := step("building the floor with the "+runnerNames[index]+"'s adamic", exec.Command(adamic, "build", floor.source, "-o", floorBinaries[index])); err != nil {
 			fail(fmt.Errorf("%s's adamic build %s: %v\n%s", runnerNames[index], floor.source, err, output))
 		}
 	}
@@ -304,9 +305,9 @@ func compareCommits(request compareRequest) {
 				fail(err)
 			}
 		}
-		if output, err := exec.Command(baselineAdamic, "build", entry.program.source, "-o", entry.baseline).CombinedOutput(); err != nil {
+		if output, err := step("building "+entry.program.name+" with the baseline's adamic", exec.Command(baselineAdamic, "build", entry.program.source, "-o", entry.baseline)); err != nil {
 			entry.failure = fmt.Sprintf("the baseline's build failed: %v %s", err, firstLine(string(output)))
-		} else if output, err := exec.Command(candidateAdamic, "build", candidateSource, "-o", entry.candidate).CombinedOutput(); err != nil {
+		} else if output, err := step("building "+entry.program.name+" with the candidate's adamic", exec.Command(candidateAdamic, "build", candidateSource, "-o", entry.candidate)); err != nil {
 			entry.failure = fmt.Sprintf("the candidate's build failed: %v %s", err, firstLine(string(output)))
 		}
 		built[entry.program.source] = *entry
@@ -811,7 +812,7 @@ func buildAdamicAt(root, commit, binary string) error {
 	}
 	build := exec.Command("go", "build", "-buildvcs=false", "-o", binary, "./cmd/adamic")
 	build.Dir = tree
-	if output, err := build.CombinedOutput(); err != nil {
+	if output, err := step("building adamic at "+commit, build); err != nil {
 		return fmt.Errorf("building adamic at %s: %v\n%s", commit, err, output)
 	}
 	return nil
@@ -875,7 +876,7 @@ func makeInput(directory, work, adamic string, input programInput, key string) (
 		return "", err
 	}
 	generator := filepath.Join(work, "inputs", key+".generator")
-	if output, err := exec.Command(adamic, "build", sources[0], "-o", generator).CombinedOutput(); err != nil {
+	if output, err := step("building the input generator "+input.Generator, exec.Command(adamic, "build", sources[0], "-o", generator)); err != nil {
 		return "", fmt.Errorf("building the input generator %s failed: %v %s", input.Generator, err, firstLine(string(output)))
 	}
 	path := filepath.Join(work, "inputs", key+".txt")
@@ -884,13 +885,45 @@ func makeInput(directory, work, adamic string, input programInput, key string) (
 		return "", err
 	}
 	defer file.Close()
-	var stderr strings.Builder
+	var stderr bytes.Buffer
 	command := exec.Command(generator, strconv.Itoa(input.Size))
 	command.Stdout, command.Stderr = file, &stderr
-	if err := command.Run(); err != nil {
+	if _, err := step(fmt.Sprintf("making the input with %s at size %d", input.Generator, input.Size), command); err != nil {
 		return "", fmt.Errorf("making the input with %s at size %d failed: %v %s", input.Generator, input.Size, err, firstLine(stderr.String()))
 	}
 	return path, nil
+}
+
+// stepLimit bounds each step a comparison takes before its first sample: building adamic at a commit,
+// building a program, and making an input. A sample's runs have -timeout; these had nothing, so a step
+// that never ended held the box until the job's own ceiling (J-6rff648 and J-dj0awxm each spent their
+// hour before a first sample, and said nothing of where).
+const stepLimit = 20 * time.Minute
+
+// step runs one such step: it says on stderr what it starts and how long it took, so a stalled run
+// shows the step it stalled in, and kills it at stepLimit, reported as an error. A command whose output
+// isn't already directed gives its combined output back, for the caller's message.
+func step(what string, command *exec.Cmd) ([]byte, error) {
+	fmt.Fprintf(os.Stderr, "bench: %s\n", what)
+	var output bytes.Buffer
+	if command.Stdout == nil {
+		command.Stdout = &output
+	}
+	if command.Stderr == nil {
+		command.Stderr = &output
+	}
+	start := time.Now()
+	if err := command.Start(); err != nil {
+		return nil, err
+	}
+	timer := time.AfterFunc(stepLimit, func() { _ = command.Process.Kill() })
+	err := command.Wait()
+	if !timer.Stop() && err != nil {
+		fmt.Fprintf(os.Stderr, "bench: %s didn't finish in %s\n", what, stepLimit)
+		return output.Bytes(), fmt.Errorf("didn't finish in %s", stepLimit)
+	}
+	fmt.Fprintf(os.Stderr, "bench: %s took %.1f s\n", what, time.Since(start).Seconds())
+	return output.Bytes(), err
 }
 
 // combined is one runner's runs in a sample as one measurement: the mean of their wall and of their

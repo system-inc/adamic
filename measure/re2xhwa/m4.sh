@@ -16,9 +16,10 @@ suite=$1
 shift
 # Every per-run line goes to the job's own log as it happens, stamped, so a run stopped at its ceiling
 # still says how far it got and what each run cost (J-6rff648 left nothing past its header).
-go run ./bench -compare "$HEAD" "$HEAD" -suite "$suite" -samples 15 "$@" > "$T/m4.log" 2> >(while IFS= read -r line; do echo "$(date -u +%H:%M:%S) $line"; done)
+# The report's own lines (stdout) go into the log as they're printed too, unstamped, so a stop also
+# keeps the header and every build and input line (J-dj0awxm kept neither).
+go run ./bench -compare "$HEAD" "$HEAD" -suite "$suite" -samples 15 "$@" > >(tee "$T/m4.log") 2> >(while IFS= read -r line; do echo "$(date -u +%H:%M:%S) $line"; done)
 status=$?
 wait
-cat "$T/m4.log"
 echo "load after $(cut -d' ' -f1-3 /proc/loadavg)"
 exit $status
