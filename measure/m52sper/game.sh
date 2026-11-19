@@ -1,0 +1,34 @@
+#!/bin/bash
+# #m52sper on Golem: the Benchmarks Game's Go and Rust entries against Adamic native and Node, from the
+# toolchains and offline sets Machines laid at /srv/loom-tools, each named by its sha256. The first
+# argument is -samples. Builds rust-deps' rlibs offline from the vendored crates, with pcre2-sys linked
+# against the laid libpcre2 (pkg-config with the laid prefix as its sysroot), points Go at the laid
+# module cache through a file proxy, then runs `go run ./bench -game`. Never lands.
+set -u
+samples=${1:-1}
+tools=/srv/loom-tools
+lock=43c9e2341c8abef912574aedb33b75ea2f5349489e4a5d71e5a63938edf38f12
+sum=0c6479bbb1d4a1d11622310552db0b5cc5176978d8d6c936134f76f7b7c67c06
+vendor=$tools/cargo-vendor/$lock
+modules=$tools/gomod-bench/$sum
+T=$(mktemp -d)
+trap 'rm -rf "$T"' EXIT
+echo "box $(hostname) $(nproc) cpus, $(uname -r), tree $(git rev-parse HEAD)"
+echo "perf_event_paranoid $(cat /proc/sys/kernel/perf_event_paranoid)"
+[ "$(sha256sum < bench/game/rust-deps/Cargo.lock | cut -c1-64)" = $lock ] && [ "$(sha256sum < bench/game/go.sum | cut -c1-64)" = $sum ] && echo "PASS the tree's Cargo.lock and go.sum are the laid sets'" || { echo "FAIL the tree's lockfiles aren't the laid sets'"; exit 1; }
+[ -d "$vendor" ] && [ -d "$modules/cache/download" ] && echo "PASS the offline sets are laid" || { echo "FAIL missing $vendor or $modules/cache/download"; exit 1; }
+"$tools/go1.23.1/bin/go" version && "$tools/rust-1.84.1/bin/rustc" --version || { echo "FAIL toolchains"; exit 1; }
+(
+	cd bench/game/rust-deps &&
+	PATH=$tools/rust-1.84.1/bin:$PATH CARGO_HOME=$T/cargo CARGO_TARGET_DIR=$T/target \
+	PKG_CONFIG_PATH=$tools/pcre/usr/lib/x86_64-linux-gnu/pkgconfig PKG_CONFIG_SYSROOT_DIR=$tools/pcre \
+	cargo build --release --locked --offline \
+		--config 'source.crates-io.replace-with="laid"' --config "source.laid.directory=\"$vendor\""
+) > "$T/crates.log" 2>&1 && echo "PASS rust-deps built offline: $(ls "$T"/target/release/deps/*.rlib | wc -l) rlibs" || { tail -40 "$T/crates.log"; echo "FAIL rust-deps"; exit 1; }
+echo "pcre2-sys linked: $(cat "$T"/target/release/build/pcre2-sys-*/output 2>/dev/null | grep -E 'rustc-link-(lib|search)' | tr '\n' ' ')"
+export GOPROXY="file://$modules/cache/download,https://proxy.golang.org" GOSUMDB=off
+echo "load before $(cut -d' ' -f1-3 /proc/loadavg); busy: $(ps -eo pcpu=,comm= | awk '$1 > 5 {printf "%s(%s) ", $2, $1}')"
+go run ./bench -game -go "$tools/go1.23.1/bin/go" -rustc "$tools/rust-1.84.1/bin/rustc" -crates "$T/target/release/deps" -pcre "$tools/pcre" -samples "$samples" -timeout 10m
+code=$?
+echo "load after $(cut -d' ' -f1-3 /proc/loadavg)"
+[ $code = 0 ] && echo "PASS game, $samples samples" || { echo "FAIL game exit $code"; exit 1; }
