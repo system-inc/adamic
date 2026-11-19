@@ -1139,6 +1139,37 @@ func lendsItself(value *ast.Node) bool {
 	return false
 }
 
+// freshObjectLiteral reports whether the literal's own slots can be built solely as its contextual
+// type. A member with a receiver of its own can expose the object at another type.
+func freshObjectLiteral(literal *ast.Node) bool {
+	for _, member := range literal.AsObjectLiteralExpression().Properties.Nodes {
+		switch member.Kind {
+		case ast.KindMethodDeclaration:
+		case ast.KindPropertyAssignment:
+			member = ast.SkipParentheses(member.AsPropertyAssignment().Initializer)
+			if member.Kind != ast.KindFunctionExpression {
+				continue
+			}
+		default:
+			continue
+		}
+		if ast.GetThisParameter(member) != nil {
+			return false
+		}
+		var readsReceiver ast.Visitor
+		readsReceiver = func(node *ast.Node) bool {
+			if node.Kind == ast.KindThisKeyword && !ast.IsPartOfTypeNode(node) {
+				return ast.GetThisContainer(node, false, true) == member
+			}
+			return node.ForEachChild(readsReceiver)
+		}
+		if body := member.Body(); body != nil && readsReceiver(body) {
+			return false
+		}
+	}
+	return true
+}
+
 // receivesThis reports whether a this keyword under node sits inside a function that isn't an arrow, or a
 // class, either of which binds this to what it's called on. bound is whether node is already inside one.
 func receivesThis(node *ast.Node, bound bool) bool {
@@ -1562,7 +1593,11 @@ func (l *lowering) freshOrWidened(node *ast.Node, own *checker.Type, contextual 
 		return nil
 	}
 	switch node.Kind {
-	case ast.KindObjectLiteralExpression, ast.KindArrayLiteralExpression:
+	case ast.KindObjectLiteralExpression:
+		if freshObjectLiteral(node) {
+			return nil
+		}
+	case ast.KindArrayLiteralExpression:
 		// Made as the type it's written into, held by nothing else: its own parts are sites.
 		return nil
 	case ast.KindArrowFunction, ast.KindFunctionExpression:
@@ -1722,6 +1757,9 @@ func (l *lowering) madeAtSiteWidened(value *ast.Node, target *checker.Type, visi
 		}
 		return nil
 	case ast.KindObjectLiteralExpression:
+		if !freshObjectLiteral(value) {
+			return l.widened(own, target, visited)
+		}
 		for _, member := range l.literalSlotMembers(value, target) {
 			var found *widening
 			if !l.structured(member) || len(l.checker.GetIndexInfosOfType(member)) > 0 {

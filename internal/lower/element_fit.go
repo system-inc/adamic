@@ -70,8 +70,8 @@ func (l *lowering) elementsHeldOtherwise(node *ast.Node, slot *checker.Type) str
 			return "a " + l.checker.TypeToString(l.checker.GetTypeAtLocation(node)) + " where " + l.checker.TypeToString(slot) + " goes, its elements stored in a way Adamic can't name here"
 		}
 		built = element
-	case node.Kind == ast.KindObjectLiteralExpression:
-		// An object literal's fields are values at their own slots, each judged there.
+	case node.Kind == ast.KindObjectLiteralExpression && freshObjectLiteral(node):
+		// A fresh object literal's fields are values at their own slots, each judged there.
 		return ""
 	}
 	if !l.slotSet(node) && patternInitializer(node) {
