@@ -45,7 +45,8 @@ int main(void) {
 		archive := library
 		if mutant {
 			name = "kind_check_removed"
-			archive = boundMethodRecordKindMutant(t, compiler, library, flags)
+			const guard = "\t\tconst adamic_heap *reference = slot->reference;\n\t\tif (reference->kind == adamic_kind_closure) { return slot->reference; }"
+			archive = objectSourceMutant(t, compiler, library, flags, guard, "\t\treturn slot->reference;")
 		}
 		t.Run(name, func(t *testing.T) {
 			binary := buildHarnessWithLibrary(t, harness, flags, compiler, archive)
@@ -67,25 +68,25 @@ int main(void) {
 	}
 }
 
-// Replace only object.c in the same sanitized runtime archive.
-func boundMethodRecordKindMutant(t *testing.T, compiler, library string, flags []string) string {
+// objectSourceMutant is the sanitized runtime archive with only object.c replaced, its one site
+// rewritten as replacement.
+func objectSourceMutant(t *testing.T, compiler, library string, flags []string, site, replacement string) string {
 	t.Helper()
 	source, err := native_runtime.Sources.ReadFile("c/object.c")
 	if err != nil {
 		t.Fatal(err)
 	}
-	const guard = "\t\tconst adamic_heap *reference = slot->reference;\n\t\tif (reference->kind == adamic_kind_closure) { return slot->reference; }"
-	if strings.Count(string(source), guard) != 1 {
-		t.Fatal("record callee kind-check mutation site moved")
+	if strings.Count(string(source), site) != 1 {
+		t.Fatalf("object.c mutation site moved: %q", site)
 	}
 	directory := t.TempDir()
 	path, object := filepath.Join(directory, "object.c"), filepath.Join(directory, "object.o")
-	if err := os.WriteFile(path, []byte(strings.Replace(string(source), guard, "\t\treturn slot->reference;", 1)), 0o644); err != nil {
+	if err := os.WriteFile(path, []byte(strings.Replace(string(source), site, replacement, 1)), 0o644); err != nil {
 		t.Fatal(err)
 	}
 	arguments := append(append([]string{}, flags...), "-c", path, "-o", object)
 	if output, err := productCompilerCommand(t, t.Context(), compiler, arguments...).CombinedOutput(); err != nil {
-		t.Fatalf("kind-check mutant must compile: %v\n%s", err, output)
+		t.Fatalf("object.c mutant must compile: %v\n%s", err, output)
 	}
 	data, err := os.ReadFile(library)
 	if err != nil {
@@ -96,7 +97,7 @@ func boundMethodRecordKindMutant(t *testing.T, compiler, library string, flags [
 		t.Fatal(err)
 	}
 	if output, err := exec.Command(native_runtime.ArchiverName(compiler), "rcs", archive, object).CombinedOutput(); err != nil {
-		t.Fatalf("kind-check mutant archive: %v\n%s", err, output)
+		t.Fatalf("object.c mutant archive: %v\n%s", err, output)
 	}
 	return archive
 }
