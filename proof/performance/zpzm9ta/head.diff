@@ -1,0 +1,116 @@
+diff --git a/internal/native/view_fields.go b/internal/native/view_fields.go
+index 92342b8692..5203cda5e4 100644
+--- a/internal/native/view_fields.go
++++ b/internal/native/view_fields.go
+@@ -57,10 +57,7 @@ func (e *emitter) viewFieldObject(property ir.Property, object string) string {
+ 	e.line("adamic_value %s = %s;", slot, read)
+ 	value := unslotted(property.Of, fmt.Sprintf("%s.%s", slot, member(property.Of)))
+ 	if len(property.ViewAllowed) != 0 {
+-		tests := []string{}
+-		for _, allowed := range property.ViewAllowed {
+-			tests = append(tests, e.binary(ir.Equal, property.Of, value, e.value(allowed)))
+-		}
++		tests := e.viewLiteralTests(property.Of, value, property.ViewAllowed)
+ 		if absent != "" {
+ 			e.line("if (!(%s) && !(%s)) adamic_view_literal_failure(%s, %s, %d, %s);", absent, strings.Join(tests, " || "), cString(property.View), cString(name), property.Of, slot)
+ 		} else {
+diff --git a/internal/native/view_literal_runs.go b/internal/native/view_literal_runs.go
+new file mode 100644
+index 0000000000..e0f0929034
+--- /dev/null
++++ b/internal/native/view_literal_runs.go
+@@ -0,0 +1,94 @@
++package native
++
++import (
++	"cmp"
++	"fmt"
++	"math"
++	"slices"
++
++	"github.com/system-inc/adamic/internal/ir"
++)
++
++// maximumSafeInteger is Number.MAX_SAFE_INTEGER. Within it every integer is a double and so is the one
++// after it, so two literals a step of one apart are consecutive integers, with no integer between them
++// the run test would let through.
++const maximumSafeInteger = 9007199254740991
++
++// viewLiteral is one of a checked view's allowed literals, its value beside the constant it was.
++type viewLiteral struct {
++	value    float64
++	constant ir.Expression
++}
++
++// viewLiteralTests are the tests a checked view's field read holds its value to, one of which is true
++// exactly when the value is one of allowed, for the read to join with ||. Each literal is an equality
++// test, in allowed's order, unless allowed is a number set of safe integers holding three or more
++// consecutive ones (#zpzm9ta): then the set is sorted, and each run of three or more consecutive
++// integers is one range test, since clang doesn't fold a chain of hundreds of equalities, and a
++// numeric enum such as tsc's SyntaxKind holds hundreds of consecutive members.
++//
++// A run test answers as the equalities it stands for do, adamic_same_number's C ==, which is
++// JavaScript's ===, for every double: NaN fails >= as it fails every equality; -0 passes a run holding
++// 0, as 0 === -0; a value between the bounds that isn't an integer fails the trunc test; and an
++// infinity fails one of the finite bounds. trunc is math.h's, which adamic.h includes.
++func (e *emitter) viewLiteralTests(of ir.Type, value string, allowed []ir.Expression) []string {
++	tests := []string{}
++	runs := viewLiteralRuns(of, allowed)
++	if runs == nil {
++		for _, constant := range allowed {
++			tests = append(tests, e.binary(ir.Equal, of, value, e.value(constant)))
++		}
++		return tests
++	}
++	for _, run := range runs {
++		if len(run) >= 3 {
++			tests = append(tests, fmt.Sprintf("(%s >= %s && %s <= %s && %s == trunc(%s))", value, cNumber(run[0].value), value, cNumber(run[len(run)-1].value), value, value))
++			continue
++		}
++		for _, literal := range run {
++			tests = append(tests, e.binary(ir.Equal, of, value, e.value(literal.constant)))
++		}
++	}
++	return tests
++}
++
++// viewLiteralRuns is allowed sorted, without repeats, as its maximal runs of consecutive integers,
++// or nil where no run of three or more forms or a literal isn't a safe integer's NumberConstant, so
++// the literals are tested one at a time, in their order.
++func viewLiteralRuns(of ir.Type, allowed []ir.Expression) [][]viewLiteral {
++	if of != ir.Number {
++		return nil
++	}
++	sorted := make([]viewLiteral, 0, len(allowed))
++	for _, constant := range allowed {
++		number, isNumber := constant.(ir.NumberConstant)
++		// NaN fails the trunc comparison and an infinity the bound, so neither is a safe integer.
++		if !isNumber || number.Value != math.Trunc(number.Value) || math.Abs(number.Value) > maximumSafeInteger {
++			return nil
++		}
++		sorted = append(sorted, viewLiteral{value: number.Value, constant: constant})
++	}
++	// cmp.Compare holds -0 and 0 equal, as the run and equality tests do, so one of them is a repeat.
++	slices.SortStableFunc(sorted, func(left, right viewLiteral) int { return cmp.Compare(left.value, right.value) })
++	runs := [][]viewLiteral{}
++	formed := false
++	for _, literal := range sorted {
++		if len(runs) != 0 {
++			run := runs[len(runs)-1]
++			last := run[len(run)-1].value
++			if literal.value == last {
++				continue
++			}
++			if literal.value == last+1 {
++				runs[len(runs)-1] = append(run, literal)
++				formed = formed || len(run)+1 >= 3
++				continue
++			}
++		}
++		runs = append(runs, []viewLiteral{literal})
++	}
++	if !formed {
++		return nil
++	}
++	return runs
++}
