@@ -2,6 +2,7 @@ package lower
 
 import (
 	"slices"
+	"strings"
 
 	"github.com/microsoft/TypeScript/tsc/shim/ast"
 	"github.com/microsoft/TypeScript/tsc/shim/checker"
@@ -633,7 +634,10 @@ func (l *lowering) refuseWidening(node *ast.Node) error {
 		}
 		source, target := l.checker.GetTypeAtLocation(as.Expression), l.checker.GetTypeAtLocation(node)
 		if l.checker.IsTypeAssignableTo(source, target) || l.checker.IsTypeAssignableTo(l.checker.GetWidenedType(source), target) {
-			if err := l.provenRelation(node, as.Expression, target); err != nil {
+			// Census prototype (#0b9xqhh): in .ts an optional-only upcast is castProof's, which takes the
+			// checked view, so it isn't refused here.
+			optionalOnly := census72 && !strings.HasSuffix(l.program.FileName(ast.GetSourceFileOfNode(node)), ".a") && l.optionalRelationFailure(source, target, as.Expression, map[[2]*checker.Type]bool{}) != "" && l.freshOrWidened(as.Expression, source, target) == nil
+			if err := l.provenRelation(node, as.Expression, target); err != nil && !optionalOnly {
 				return err
 			}
 		} else {
