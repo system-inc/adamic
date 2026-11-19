@@ -46,7 +46,7 @@ Each row gives the median of the per-sample ratios, candidate over baseline, and
 ## Against the Benchmarks Game's Go and Rust
 
 ```
-go run ./bench -game -go <Go 1.23.1's go> -rustc <rustc 1.84.1> -crates bench/game/rust-deps/target/release/deps [-samples 15] [-only fasta,nbody]
+go run ./bench -game -go <Go 1.23.1's go> -rustc <rustc 1.84.1> -crates bench/game/rust-deps/target/release/deps [-pcre <prefix>] [-samples 15] [-only fasta,nbody]
 ```
 
 `-game` measures Adamic native and Node against the game's own Go and Rust entries, vendored unchanged in [game/](game/README.md), all four on one box. Adamic and Node run the holdout ports and, for binarytrees, nbody and spectralnorm, the everyday sources, at the sizes those use; Go and Rust get the same n, built with the game's toolchains and flags, which the box holds and the flags name. Every runner's output must be Node's byte for byte before any time counts, or the row is a gap. Each program's runners run interleaved, in an order rotated and reversed so none always follows the same one, and each figure is its best of `-samples` runs: wall, user and system time, peak resident set, and instructions:u from perf where it can count.
