@@ -18,9 +18,10 @@ go test ./internal/lower -run 'TestRecordStorageNesting' -count=1 -v -timeout 60
 ```
 
 The red is Go's test timeout: `panic: test timed out after 1m0s`, with
-`TestRecordStorageNestingStopsAtTheView` and `TestRecordStorageNestingBoundsTheWalk` still running,
-since the walk over Own<number> seen as Deep<number> visits a fresh pair at every level again and
-never returns, as on main before the bound. `TestRecordStorageNestingControlLowers` walks two
+`TestRecordStorageNestingBoundsTheWalk` still running, since the walk over Own<number> seen as
+Deep<number> visits a fresh pair at every level again and never returns, as on main before the bound.
+`TestRecordStorageNestingStopsAtTheView` stays green: since #ykd89v9 the expansive-generic pre-pass
+stops its programs before the walk runs. `TestRecordStorageNestingControlLowers` walks two
 generics that don't grow, which ends by its visited pairs alone, so it passes before the timeout.
 The unmutated pins return in seconds.
 
