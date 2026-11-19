@@ -622,7 +622,7 @@ func (l *lowering) closedKindSourcesFitOf(of *checker.Type, field string, kind, 
 			return false
 		}
 		for _, literal := range literals {
-			if l.checker.IsTypeIdenticalTo(literal, kind) {
+			if checker.Checker_isTypeIdenticalTo(l.checker, literal, kind) {
 				return true
 			}
 		}
