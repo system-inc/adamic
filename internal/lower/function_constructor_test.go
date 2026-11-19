@@ -184,6 +184,7 @@ func TestFunctionConstructorIntersectionCastRidesTheRoad(t *testing.T) {
 		{"a third member", cast(`NodeObject as typeof NodeObject & ReturnType<Allocator["getNodeConstructor"]> & { tag?: number }`, "")},
 		{"a typeof of another function", strings.Replace(cast(`NodeObject as typeof OtherObject & ReturnType<Allocator["getNodeConstructor"]>`, ""), "const objectAllocator", other+"const objectAllocator", 1)},
 		{"a construct type that isn't the getter's return", cast(`NodeObject as typeof NodeObject & (new (kind: number, pos: number, end: number) => Nd & { tag?: number })`, "")},
+		{"an upcast intersection handing the constructor on", functionConstructorProgram(functionConstructorHonest, "", "const handed = NodeObject as typeof NodeObject & Function;\nconsole.log(typeof handed);\n")},
 		{"the form off the road", functionConstructorProgram(functionConstructorHonest, "", "const loose = NodeObject as typeof NodeObject & ReturnType<Allocator[\"getNodeConstructor\"]>;\nconsole.log(typeof loose);\n")},
 	} {
 		t.Run(probe.name, func(t *testing.T) {
