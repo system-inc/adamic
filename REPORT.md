@@ -11,11 +11,15 @@ Exact reason is “an object refinement using an open numeric enum as a literal 
 | --- | ---: | ---: | ---: | ---: |
 | Optimizer’s tsc probe | 759 reported | 726 reported | — | — |
 | Compiler directory | 587 | 557 | 764 | 730 |
-| tsc.ts entry | 587 | Pending | 764 | Pending |
+| tsc.ts entry | 587 | 557 | 764 | 730 |
 
 Raw counts retain distinct diagnostic renderings at each position. Distinct counts use `stage3/census/pair` to collapse a receiver’s contiguous access chain per reason. The directory pass loads the compiler sources as roots, and the entry pass loads the import closure of `src/tsc/tsc.ts`.
 
 The base directory and entry recordings have identical Family 1 positions.
+
+The head directory and entry recordings have identical Family 1 positions.
+
+The raw entry counts differ from Optimizer by +5 at base and +4 at head. Optimizer’s exact probe command and counting convention remain unverified.
 
 Optimizer also reported a cause-specific change from 51 to 8 for “type disagrees”. The standard streams report the family reason. The cause-specific totals are Optimizer’s.
 
@@ -45,9 +49,37 @@ The registry scan continues collecting findings. This view uses the first record
 
 - `tryGetPropertyAccessOrIdentifierToString` at `src/compiler/utilities.ts:7539:1`. **Base** `src/compiler/utilities.ts:7541:66` (Refused, refusal_scan) src/compiler/utilities.ts:7541:66: Adamic 0.1 refuses an object refinement using an open numeric enum as a literal tag; use a member-specific tag from a multi-member enum, a string enum, or a plain literal tag (adamic/enum-tag). **Head** `src/compiler/utilities.ts:7540:9` (NotYet, lowering) src/compiler/utilities.ts:7540:9: stage 0 can't lower checked predicate membership over an open tag domain yet.
 
+### tsc.ts entry
+
+Finding grades after pairing kind, phase, reason and message with positions stripped were 0 new, 34 gone, 0 changed, 0 reached.
+
+#### Units that now lower whole in the scoped measurement
+
+None.
+
+#### Units that reached a later stop
+
+None.
+
+#### Units that reached an earlier or different stop
+
+None.
+
+#### Unit stop changes including the refusal scan
+
+The registry scan continues collecting findings. This view uses the first recorded scan refusal for each unit, followed by its first measured lowering or tail stop when the scan is clear. A stop already present in the base stream can become the first effective stop at head without adding a finding.
+
+**Later effective stop**
+
+- `tryGetPropertyAccessOrIdentifierToString` at `src/compiler/utilities.ts:7539:1`. **Base** `src/compiler/utilities.ts:7541:66` (Refused, refusal_scan) src/compiler/utilities.ts:7541:66: Adamic 0.1 refuses an object refinement using an open numeric enum as a literal tag; use a member-specific tag from a multi-member enum, a string enum, or a plain literal tag (adamic/enum-tag). **Head** `src/compiler/utilities.ts:7540:9` (NotYet, lowering) src/compiler/utilities.ts:7540:9: stage 0 can't lower checked predicate membership over an open tag domain yet.
+
 ## 3. Regressions
 
 ### Compiler directory
+
+0 units that lowered at base and stop at head, 0 new findings, and 0 new panics.
+
+### tsc.ts entry
 
 0 units that lowered at base and stop at head, 0 new findings, and 0 new panics.
 
@@ -61,12 +93,17 @@ A separate head overlay logged the source whose `castAssignable` check failed, t
 - ClassLikeDeclarationBase at `types.ts:3543` still causes a refusal in `createGetSymbolAccessibilityDiagnosticForNode` at `src/compiler/transformers/declarations/diagnostics.ts:247:1`. The predicate is at `src/compiler/transformers/declarations/diagnostics.ts:576:13`. `src/compiler/transformers/declarations/diagnostics.ts:580:17` (Refused, refusal_scan) src/compiler/transformers/declarations/diagnostics.ts:580:17: Adamic 0.1 refuses an object refinement using an open numeric enum as a literal tag; use a member-specific tag from a multi-member enum, a string enum, or a plain literal tag (adamic/enum-tag). The first recorded scan refusal is `src/compiler/transformers/declarations/diagnostics.ts:470:30` (Refused, refusal_scan) src/compiler/transformers/declarations/diagnostics.ts:470:30: Adamic 0.1 refuses an object refinement using an open numeric enum as a literal tag; use a member-specific tag from a multi-member enum, a string enum, or a plain literal tag (adamic/enum-tag). It is the first recorded scan stop within the source span of `getHeritageClauseVisibilityError` at `src/compiler/transformers/declarations/diagnostics.ts:573:5`.
 - JsonSourceFile at `types.ts:4508` still causes a refusal in `transformDeclarations` at `src/compiler/transformers/declarations.ts:259:1`. The predicate is at `src/compiler/transformers/declarations.ts:974:40`. `src/compiler/transformers/declarations.ts:974:85` (Refused, refusal_scan) src/compiler/transformers/declarations.ts:974:85: Adamic 0.1 refuses an object refinement using an open numeric enum as a literal tag; use a member-specific tag from a multi-member enum, a string enum, or a plain literal tag (adamic/enum-tag). The first recorded scan refusal is `src/compiler/transformers/declarations.ts:389:74` (NotYet, refusal_scan) src/compiler/transformers/declarations.ts:389:74: stage 0 can't lower a read of errorFallbackNode narrowed to ExportAssignment where a call may have rewritten it (errorFallbackNode is assigned inside a function) yet. It is the first recorded scan stop within the source span of `transformAndReplaceLatePaintedStatements` at `src/compiler/transformers/declarations.ts:953:5`.
 
+### tsc.ts entry
+
+- Intersection of VariableDeclaration at `utilities.ts:5506`. Attribution to a unit’s first stop is unconfirmed. The standard census reports the refused read and its family reason. The source-fit route requires separate evidence.
+- ClassLikeDeclarationBase at `types.ts:3543`. Attribution to a unit’s first stop is unconfirmed. The standard census reports the refused read and its family reason. The source-fit route requires separate evidence.
+- JsonSourceFile at `types.ts:4508`. Attribution to a unit’s first stop is unconfirmed. The standard census reports the refused read and its family reason. The source-fit route requires separate evidence.
+
 ## 5. First stops across all 79 roots
 
 
 ## Incomplete evidence
 
-- tsc.ts entry pairing incomplete (waiting for entry-head.jsonl.gz).
 - Ordinary 79-root comparison incomplete (waiting for roots-base.jsonl.gz).
 - Scan-all comparison incomplete (waiting for scan-all-base.jsonl.gz).
 
