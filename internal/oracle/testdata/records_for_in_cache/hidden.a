@@ -1,0 +1,20 @@
+// A key Object.defineProperty hides stays in the record, so no key is added or deleted, but a for...in
+// stops listing it: the define lets go of the key list the record's table keeps (runtime record.c).
+function show(label: string, record: Record<string, number>): void {
+	const keys: string[] = [];
+	for (const key in record) {
+		keys.push(key);
+	}
+	console.log(label + ': ' + keys.join(','));
+}
+
+const r: Record<string, number> = { a: 1, b: 2, c: 3 };
+show('first', r);
+show('again', r);
+Object.defineProperty(r, 'b', { enumerable: false, writable: false, value: 2 });
+show('b hidden', r);
+console.log('b is ' + String(r['b']));
+Object.defineProperty(r, 'd', { enumerable: false, writable: false, value: 4 });
+show('d defined hidden', r);
+r['e'] = 5;
+show('e added', r);
