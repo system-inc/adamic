@@ -20,6 +20,11 @@ func typedArrayName(kind ir.Type) string {
 	return "typed array"
 }
 
+// typedArrayKind is a library typed array's kind, and 0 for a node:buffer Buffer. It stays
+// Buffer-blind on purpose: what asks it is what a Buffer doesn't share with a Uint8Array. Its
+// methods (toString, from libraryNodeBuffer), its writes (buffer_set, which drops a write out of
+// bounds as Node does, where a typed write panics) and every relation (sameKeeping), where a
+// Buffer and a Uint8Array are different objects at every depth though both are held as one.
 func (l *lowering) typedArrayKind(proven *checker.Type) ir.Type {
 	for _, kind := range []ir.Type{ir.Uint8Array, ir.Uint16Array, ir.Int32Array, ir.Float64Array} {
 		if l.isLibraryType(proven, typedArrayName(kind)) {
@@ -27,6 +32,16 @@ func (l *lowering) typedArrayKind(proven *checker.Type) ir.Type {
 		}
 	}
 	return 0
+}
+
+// typedArrayStorage is how a value's elements are held: a typed array's kind, and Uint8Array for a
+// Buffer, which is one natively as it is on Node. Element reads, length and for-of ask this, since
+// they read the storage alike; everything else asks typedArrayKind.
+func (l *lowering) typedArrayStorage(proven *checker.Type) ir.Type {
+	if l.nodeBufferType(proven, "Buffer") {
+		return ir.Uint8Array
+	}
+	return l.typedArrayKind(proven)
 }
 
 // Reject unsupported buffer facilities while their library identity is still visible.
@@ -118,8 +133,10 @@ func (l *lowering) typedArrayExpression(node *ast.Node) (ir.Expression, bool, er
 		}
 	case ast.KindPropertyAccessExpression:
 		access := node.AsPropertyAccessExpression()
-		kind := l.typedArrayKind(l.checker.GetNonNullableType(l.checker.GetTypeAtLocation(access.Expression)))
-		if kind == 0 {
+		receiver := l.checker.GetNonNullableType(l.checker.GetTypeAtLocation(access.Expression))
+		kind := l.typedArrayStorage(receiver)
+		if kind == 0 || (l.nodeBufferType(receiver, "Buffer") && access.Name().Text() != "length") {
+			// A Buffer's other members are its own (library_node_buffer.go).
 			break
 		}
 		if access.QuestionDotToken == nil && node.Flags&ast.NodeFlagsOptionalChain != 0 {
@@ -142,7 +159,7 @@ func (l *lowering) typedArrayExpression(node *ast.Node) (ir.Expression, bool, er
 		return ir.Length{Array: array, Optional: access.QuestionDotToken != nil}, true, nil
 	case ast.KindElementAccessExpression:
 		access := node.AsElementAccessExpression()
-		if l.typedArrayKind(l.checker.GetNonNullableType(l.checker.GetTypeAtLocation(access.Expression))) == 0 {
+		if l.typedArrayStorage(l.checker.GetNonNullableType(l.checker.GetTypeAtLocation(access.Expression))) == 0 {
 			break
 		}
 		if access.QuestionDotToken == nil && node.Flags&ast.NodeFlagsOptionalChain != 0 {
@@ -169,7 +186,11 @@ func (l *lowering) typedArrayExpression(node *ast.Node) (ir.Expression, bool, er
 			return nil, true, l.notYet(node, "a typed array index that isn't a number")
 		}
 		read := ir.Expression(ir.ArrayIndex{Array: array, Index: index, Element: ir.Number})
-		if held, _ := l.representation(l.checker.GetTypeAtLocation(node)); held == ir.Number && !l.acceptsUndefined(node) {
+		// A Buffer's read past its end is undefined, as on Node, and its read stays the one it had as a
+		// plain array, which defined leaves unchecked for a number: String(buffer[9]) prints undefined
+		// there, where the typed read's check would panic.
+		buffer := l.nodeBufferType(l.checker.GetNonNullableType(l.checker.GetTypeAtLocation(access.Expression)), "Buffer")
+		if held, _ := l.representation(l.checker.GetTypeAtLocation(node)); held == ir.Number && !buffer && !l.acceptsUndefined(node) {
 			read = ir.Unwrap{Value: read}
 		}
 		return read, true, nil
@@ -180,6 +201,7 @@ func (l *lowering) typedArrayExpression(node *ast.Node) (ir.Expression, bool, er
 			break
 		}
 		receiver := callee.AsPropertyAccessExpression().Expression
+		// Buffer-blind: a Buffer's calls are libraryNodeBuffer's.
 		kind := l.typedArrayKind(l.checker.GetNonNullableType(l.checker.GetTypeAtLocation(receiver)))
 		if kind == 0 {
 			break
@@ -250,6 +272,7 @@ func (l *lowering) typedArrayExpression(node *ast.Node) (ir.Expression, bool, er
 	return nil, false, nil
 }
 
+// typedArrayWrite is Buffer-blind: a Buffer's write is setIndex's buffer_set.
 func (l *lowering) typedArrayWrite(target, valueNode *ast.Node) ([]ir.Statement, bool, error) {
 	access := target.AsElementAccessExpression()
 	if l.typedArrayKind(l.checker.GetTypeAtLocation(access.Expression)) == 0 {
@@ -275,7 +298,7 @@ func (l *lowering) typedArrayWrite(target, valueNode *ast.Node) ([]ir.Statement,
 
 func (l *lowering) typedArrayForOf(node *ast.Node) ([]ir.Statement, bool, error) {
 	statement := node.AsForInOrOfStatement()
-	if l.typedArrayKind(l.checker.GetTypeAtLocation(statement.Expression)) == 0 {
+	if l.typedArrayStorage(l.checker.GetTypeAtLocation(statement.Expression)) == 0 {
 		return nil, false, nil
 	}
 	initializer := statement.Initializer
