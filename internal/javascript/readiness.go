@@ -25,11 +25,11 @@ const adamicPlaceholderNarrow = (value, type, message) => {
     return value;
 };
 const adamicViewTypeNames = Object.freeze({1: "number", 2: "boolean", 3: "string", 4: "object", 5: "array", 6: "Map"});
-const adamicReceiverKind = (value) => typeof value !== "object" ? typeof value : Array.isArray(value) ? "array" : value instanceof Map ? "Map" : "object";
-// A checked read's receiver as native reads one by name. Three kinds pass here that native names instead: a counted
-// build's closure (an AdamicClosure, "function" natively), a generator object and a typed array. No lie reaches a read
-// through them the way a string reaches one, so they're left.
-const adamicViewReceiver = (object) => object === undefined || object === null || adamicViewObject(object) || typeof object === "function" && typeof adamicClassIdentities !== "undefined" && (adamicClassIdentities.has(object) || adamicClassIdentities.has(Object.getPrototypeOf(object)));
+const adamicReceiverKind = (value) => typeof value !== "object" ? typeof value : value instanceof AdamicClosure ? "function" : Array.isArray(value) ? "array" : value instanceof Map ? "Map" : "object";
+// A checked read's receiver as native reads one by name. A closure is an AdamicClosure here, an object with an own
+// length, so it's stopped as the function native says it is. Two kinds pass here that native names instead, a
+// generator object and a typed array: each stops at the by-name read as found missing, so only the wording differs.
+const adamicViewReceiver = (object) => object === undefined || object === null || !(object instanceof AdamicClosure) && adamicViewObject(object) || typeof object === "function" && typeof adamicClassIdentities !== "undefined" && (adamicClassIdentities.has(object) || adamicClassIdentities.has(Object.getPrototypeOf(object)));
 const adamicViewField = (object, name, expression, type, expected = adamicViewTypeNames[type], allowed = []) => {
     // The receiver's own kind comes first, as native's adamic_object_view reads it: a string has own length and index
     // keys, so a lookup by name would read on where native stops. A class is a function here and an object there.
