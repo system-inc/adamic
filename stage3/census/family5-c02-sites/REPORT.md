@@ -32,4 +32,13 @@ The services routes follow from `setObjectAllocator(getServicesObjectAllocator()
 
 For S058 and S059 the scanner consumes the very field named by the refusal. Replacing its input with a view that exposes only the line map and text would erase a property the body actually uses. An overload that accepts bare `SourceFile` while the implementation still reads the optional member through `SourceFileLike` would leave that conversion unproved. A runtime check or an object projection would change the emitted JavaScript. Both sites are therefore left in the candidate.
 
-Stock acceptance and build results apply to the complete group of proposed edits and will be recorded with their exits. Neither unchanged call is an attempted annotation.
+Stock TypeScript 6.0.3 accepts every proposed annotation. Both 79-root configurations reported zero diagnostics at base and with all 12 site changes applied together. S058 and S059 were left as-is.
+
+| Proof | Base exit | Edited exit | Byte comparison exit |
+| --- | ---: | ---: | ---: |
+| Stock compiler project configuration, corrected JS emit | 0 | 0 | 0 |
+| Stock loader-strict configuration | 0 | 0 | 0 |
+| Public release build and `typescript.d.ts` | 0 | 0 | 0 |
+| Nine release JavaScript files | — | — | 0 |
+
+Each stock JavaScript comparison covers 79 emitted files. The public declaration SHA-256 is `65c210e9d7553165606df3ac67544ea7ddcbccf2c322ed924e8e8f4c4622c5fd` on both sides. The first edit attempt exited 1 before changing any bytes because it expected a pre-adaptation `getLineStarts` signature. The retry reuses main's existing `LineMapSource`. The first project emit commands exited 1 after zero checker diagnostics because they inherited `emitDeclarationOnly` and emitted no JavaScript. The corresponding comparison exited 2. The corrected emit disables declaration-only and isolated declaration emit settings. See `exits.tsv` and the logs for every measured exit.

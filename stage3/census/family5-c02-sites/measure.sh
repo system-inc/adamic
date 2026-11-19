@@ -20,7 +20,7 @@ for mode in project strict; do
     for side in base edit; do
         strict=0
         [[ $mode != strict ]] || strict=1
-        run "stock-$side-$mode" env FAMILY5_STOCK_STRICT=$strict node "$root/stock.cjs" "$root/$side" "$evidence/stock-$side-$mode.json"
+        run "stock-$side-$mode" env FAMILY5_STOCK_STRICT=$strict node "$evidence/stock.cjs" "$root/$side" "$evidence/stock-$side-$mode.json"
         mv "$evidence/stock-$side-$mode.json.js-tree" "$root/js-$side-$mode"
     done
     run "stock-js-cmp-$mode" diff -qr "$root/js-base-$mode" "$root/js-edit-$mode"
