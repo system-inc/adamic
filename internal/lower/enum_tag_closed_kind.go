@@ -536,6 +536,10 @@ func (l *lowering) closedKindJudgeUse(name *ast.Node) {
 	switch parent.Kind {
 	case ast.KindImportSpecifier, ast.KindExportSpecifier, ast.KindImportClause, ast.KindNamespaceImport, ast.KindImportEqualsDeclaration:
 		return
+	case ast.KindTypeQuery:
+		// `typeof F` reads F's type and hands no value on, though tsc counts its name as an expression rather than
+		// part of a type node (adaptation 41's `F as typeof F & ReturnType<...>`).
+		return
 	case ast.KindFunctionDeclaration:
 		if parent.Name() == name {
 			return
