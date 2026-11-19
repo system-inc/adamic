@@ -25,5 +25,10 @@ function merged(existing: MapLike<Value> | undefined, parsed: MapLike<Value> | u
 const watch = merged({ watchFile: 4 }, { excludeFiles: ["x.ts"] });
 if (watch) {
     const files = watch.excludeFiles;
-    console.log(String(watch.watchFile === WatchFileKind.UseFsEvents) + ":" + (files ? files.join(",") : "none"));
+    let shown = "none";
+    if (files) {
+        shown = "";
+        for (const file of files) shown += file;
+    }
+    console.log(String(watch.watchFile === WatchFileKind.UseFsEvents) + ":" + shown);
 }
