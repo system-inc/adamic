@@ -808,6 +808,9 @@ func (l *lowering) viewedField(node *ast.Node, property ir.Property) ir.Property
 		property.ViewReceiverTypeID = l.viewFieldReceiverTypeID(node, receiver)
 	}
 	if symbol := l.checker.GetSymbolAtLocation(node.Name()); symbol != nil {
+		if class := l.mergedFieldClass(symbol); class != nil {
+			property.View = mergedFieldView(node, class)
+		}
 		declared := l.checker.GetTypeOfSymbol(symbol)
 		if narrowed := l.checker.GetTypeAtLocation(node); narrowed.Id() != declared.Id() {
 			// A field read the checker narrowed, as a predicate narrows its argument (view_widened.go).
