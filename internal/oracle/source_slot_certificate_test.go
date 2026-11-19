@@ -59,8 +59,10 @@ func TestSourceSlotCertificate(t *testing.T) {
 		{file: "road_destructure_catch_any.ts", outcome: "notyet: 10:11: stage 0 can't lower throwing an object that isn't an Error", field: "child"},
 		{file: "road_destructure_nested.ts", outcome: "notyet: 9:9: stage 0 can't lower a nested destructuring pattern", field: "child"},
 		// child.other reads the slot's value through the binding's type, which no view checks, and was NotYet as #80cs7rz's
-		// widened read until #zpzm9ta checked it where it's made. It's no listed witness and has no repaired twin.
+		// widened read until #zpzm9ta checked it where it's made. Its stop is a ruled negative witness under
+		// rulings.md:19, and its repaired twin writes through raw, with no downcast, and agrees.
 		{file: "road_destructure_assignment.ts", outcome: "stops: adamic: panic: field read failed: child.other is not initialized", field: "child"},
+		{file: "road_destructure_assignment_repaired.ts", outcome: "agrees", field: "child"},
 		{file: "road_array_element.ts", outcome: "stops: adamic: panic: field read failed: first.child.other is not initialized", field: "child", checked: []int{8}},
 		{file: "road_array_element_repaired.ts", outcome: "agrees", field: "child", unchecked: []int{8}},
 		{file: "road_closure_later.ts", outcome: "stops: adamic: panic: field read failed: raw.child.other is not initialized", field: "child", checked: []int{8}},

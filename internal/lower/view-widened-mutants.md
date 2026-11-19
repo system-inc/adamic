@@ -14,12 +14,12 @@ NotYet, and four recorded outcomes paid for it. They come back:
 | internal/oracle/testdata/review/agree/9xam9ds_predicate_closed_enum_tag.a | review/refused, NotYet at 14:43 | review/agree |
 | internal/oracle/testdata/predicate_direction_uses/inferred_call.ts | NotYet at 46:66 | lowers, in TestPredicateDirectionUsesLower |
 
-Each mutant was applied alone in the change's tree at 095c5fdf (main 1b04d881) on a sealed Loom job, its tests run,
-then restored and checked with `cmp`. The control, the head as built, was green first in the same job.
+Each mutant was applied alone in the change's tree at 83b86296 (on Lower's #3jj9dzg, 30cdb2a6) on a sealed Loom job, its
+tests run, then restored and checked with `cmp`. The control, the head as built, was green first in the same job.
 
 M1 and M2 ran `go test ./internal/oracle -run 'TestViewWidened|TestIntersectionViewWidened|TestCheckedViewObjects|TestReviewProgramsRefuse|TestReviewProgramsAgree|TestHonestWidened|TestSourceSlotCertificate'`,
 `go test ./internal/lower -run 'WidenedReadIsChecked|KindReadIsChecked|KindUnionCastRecursiveReadIsChecked|ClosedRemainderWithNodeFieldsIsChecked|ViewWidenedReadKeyCollision'`
-and `go test ./stage3/fixtures -run TestFixturesPredicates` (J-haqbj7d).
+and `go test ./stage3/fixtures -run TestFixturesPredicates` (J-tpvb4mp).
 
 ## M1: CheckedRead stops answering for WidenedReads
 
@@ -28,9 +28,9 @@ read's view and the read is plain. Red:
 
 | Test | Failing |
 |---|---|
-| TestViewWidenedReadIsChecked | 23 roads |
+| TestViewWidenedReadIsChecked | 24 roads |
 | TestBrandedSupertypeWidenedReadIsChecked | 18 roads |
-| TestIntersectionViewWidenedReadIsChecked | 12 roads |
+| TestIntersectionViewWidenedReadIsChecked | 11 roads |
 | TestOverloadResultViewWidenedReadIsChecked | 4 |
 | TestBrandedSupertypeKindReadIsChecked | 3 |
 | TestKindUnionCastRecursiveReadIsChecked, TestClosedRemainderWithNodeFieldsIsChecked | each |
@@ -40,8 +40,14 @@ read's view and the read is plain. Red:
 ## M2: checkViewWidenedReads returns nil at once
 
 No read is weighed or marked. Red: every test M1 reds except TestViewWidenedReadKeyCollision and
-TestSourceSlotCertificate, with TestViewWidenedReadIsChecked at 24 roads (view_widened_nested.ts too), and TestViewWidenedRoadsHeld at
+TestSourceSlotCertificate, with TestViewWidenedReadIsChecked at 25 roads (view_widened_nested.ts too), and TestViewWidenedRoadsHeld at
 view_widened_held_getter.ts, whose getter-named read the pass alone keeps NotYet.
+
+Two pins stay green under both, each held by another check, so neither is this change's only proof:
+view_widened_generic.ts, whose read is made through T at Lit, so Lit's own view checks it; and
+TestIntersectionViewWidenedReadIsChecked's view_widened_map.ts, which on #3jj9dzg's base stops at its checked read
+without a mark (it went red under both at 095c5fdf, on main 1b04d881). Its own row in TestViewWidenedReadIsChecked
+still goes red under both.
 
 ## M3: 03_void_zero's status row back to NotYet
 

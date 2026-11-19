@@ -1,6 +1,7 @@
 package oracle
 
 import (
+	"encoding/json"
 	"errors"
 	"os"
 	"path/filepath"
@@ -396,5 +397,64 @@ func TestViewWholeValueReadNotYet(t *testing.T) {
 				t.Fatalf("want %q, got %v", what, err)
 			}
 		})
+	}
+}
+
+// The lies TestViewWidenedReadIsChecked stops are negative witnesses of the checked_boundary form under rulings.md:19
+// (#80cs7rz), each listed in cloud/admission-corpus/negative-witnesses.json, and each one's repair, its lying 5
+// stored as the string the view says, agrees with Node natively, sanitized and on JavaScript. A road added there
+// without its entry fails here, by the count. view_widened_generic.ts has none: its read is through T at Lit, so
+// Lit's own view checked it before #zpzm9ta, and the admission delta reads it accepted on both sides.
+func TestViewWidenedWitnessRepairsAgreeWithNode(t *testing.T) {
+	t.Parallel()
+	listing, err := os.ReadFile(filepath.Join(repository, "cloud/admission-corpus/negative-witnesses.json"))
+	if err != nil {
+		t.Fatal(err)
+	}
+	var document struct {
+		Witnesses map[string]struct {
+			RulingTask  string `json:"ruling_task"`
+			Declaration string `json:"declaration"`
+			RepairFrom  string `json:"repair_from"`
+			RepairTo    string `json:"repair_to"`
+		} `json:"witnesses"`
+	}
+	if err := json.Unmarshal(listing, &document); err != nil {
+		t.Fatal(err)
+	}
+	root, err := filepath.Abs(repository)
+	if err != nil {
+		t.Fatal(err)
+	}
+	directory := t.TempDir()
+	repaired := 0
+	for _, witness := range document.Witnesses {
+		file, _, _ := strings.Cut(witness.Declaration, ":")
+		if witness.RulingTask != "#80cs7rz" || !strings.HasPrefix(file, "internal/oracle/testdata/reland_refused/view_widened") {
+			continue
+		}
+		repaired++
+		t.Run(filepath.Base(file), func(t *testing.T) {
+			t.Parallel()
+			source, err := os.ReadFile(filepath.Join(repository, file))
+			if err != nil {
+				t.Fatal(err)
+			}
+			if strings.Count(string(source), witness.RepairFrom) != 1 {
+				t.Fatalf("%s holds %q %d times, want once", file, witness.RepairFrom, strings.Count(string(source), witness.RepairFrom))
+			}
+			path := filepath.Join(directory, filepath.Base(file))
+			if err := os.WriteFile(path, []byte(strings.Replace(string(source), witness.RepairFrom, witness.RepairTo, 1)), 0o644); err != nil {
+				t.Fatal(err)
+			}
+			relative, err := filepath.Rel(root, path)
+			if err != nil {
+				t.Fatal(err)
+			}
+			loomViewsDAgrees(t, relative)
+		})
+	}
+	if repaired != 24 {
+		t.Errorf("%d widened-read witnesses listed under #80cs7rz, want 24: every road TestViewWidenedReadIsChecked lowers that #80cs7rz held NotYet", repaired)
 	}
 }
