@@ -110,21 +110,37 @@ function hold(flow: Flow): Other | undefined { return flow; }
 // where xs reads a Flow (Lower's should on #hjkfhws).
 func TestInvarianceSameUnionViewStillJudgesContainerElement(t *testing.T) {
 	t.Parallel()
-	const source = sameUnionArms + `function hold(xs: Flow[]): number {
+	// Two roads to the element, from Language's probes a02 and a05 at J-6ep2aad: the array itself seen
+	// wider and pushed through, and an array reached through a view of the object that holds it, whose
+	// readonly field still holds a mutable array.
+	sources := map[string]string{
+		"direct": sameUnionArms + `function hold(xs: Flow[]): number {
 	const ys: (Flow | undefined)[] = xs;
+	ys.push(undefined);
 	return ys.length;
 }
 console.log(String(hold([])));
-`
-	for _, extension := range []string{".a", ".ts"} {
-		t.Run(extension[1:], func(t *testing.T) {
-			t.Parallel()
-			_, err := lowerSourceAs(t, source, extension)
-			var refusal *Refused
-			if !errors.As(err, &refusal) || !strings.Contains(refusal.What, "which can write") {
-				t.Fatalf("got %v, want the mutable element refusal", err)
-			}
-		})
+`,
+		"nested": sameUnionArms + `interface Branch { readonly antecedents: Flow[] }
+function hold(branch: Branch): number {
+	const view: { readonly antecedents: (Flow | undefined)[] } = branch;
+	view.antecedents.push(undefined);
+	return branch.antecedents.length;
+}
+console.log(String(hold({ antecedents: [] })));
+`,
+	}
+	for road, source := range sources {
+		for _, extension := range []string{".a", ".ts"} {
+			t.Run(road+extension, func(t *testing.T) {
+				t.Parallel()
+				_, err := lowerSourceAs(t, source, extension)
+				var refusal *Refused
+				if !errors.As(err, &refusal) || !strings.Contains(refusal.What, "which can write") {
+					t.Fatalf("%s: got %v, want the mutable element refusal", road, err)
+				}
+			})
+		}
 	}
 }
 
