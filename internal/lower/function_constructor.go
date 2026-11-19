@@ -211,17 +211,26 @@ func (l *lowering) allocatorGetterShape(cast *ast.Node) *ast.Node {
 // allocatorIntersectionCast is whether an intersection a getter's operand is cast to is exactly the two members
 // adaptation 41 writes in place of any, `typeof F & ReturnType<ObjectAllocator["getXConstructor"]>` (utilities.ts's
 // Symbol, Signature and SourceMapSource getters), in either order: the type of the operand's own symbol, and the
-// getter's declared return, each judged by the checker's type identity, never by spelling. It claims nothing the
-// road's reach proof doesn't show, so it rides the same road (Adamic's ruling on #837zjkt). A third member, a
-// typeof of another symbol, or any other second member keeps the cast's refusal.
+// getter's declared return, never judged by spelling: the typeof by the symbol its query resolves to, since two
+// functions of one shape have identical types, and the return by tsc's identity relation (identicalTypes). It
+// claims nothing the road's reach proof doesn't show, so it rides the same road (Adamic's ruling on #837zjkt). A
+// third member, a typeof of another symbol, or any other second member keeps the cast's refusal.
 func (l *lowering) allocatorIntersectionCast(intersection *ast.Node, symbol *ast.Symbol, made *checker.Type) bool {
 	members := intersection.AsIntersectionTypeNode().Types.Nodes
 	if len(members) != 2 {
 		return false
 	}
-	own := l.checker.GetTypeOfSymbol(symbol)
-	first, second := l.checker.GetTypeFromTypeNode(members[0]), l.checker.GetTypeFromTypeNode(members[1])
-	return (first == own && second == made) || (first == made && second == own)
+	ownQuery := func(member *ast.Node) bool {
+		if member.Kind != ast.KindTypeQuery {
+			return false
+		}
+		name := member.AsTypeQueryNode().ExprName
+		return ast.IsIdentifier(name) && l.valueSymbol(name) == symbol
+	}
+	returned := func(member *ast.Node) bool {
+		return identicalTypes(l.checker, l.checker.GetTypeFromTypeNode(member), made)
+	}
+	return (ownQuery(members[0]) && returned(members[1])) || (returned(members[0]) && ownQuery(members[1]))
 }
 
 // functionConstructorEligible is the function constructor a declaration lowers as, or nil when it isn't one:
