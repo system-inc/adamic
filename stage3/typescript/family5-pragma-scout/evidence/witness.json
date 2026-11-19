@@ -1,0 +1,59 @@
+[
+  {
+    "input": "/* @jsx",
+    "keys": []
+  },
+  {
+    "input": "/* @jsxfrag",
+    "keys": []
+  },
+  {
+    "input": "/* @jsxruntime",
+    "keys": []
+  },
+  {
+    "input": "/* @jsximportsource",
+    "keys": []
+  },
+  {
+    "input": "// @ts-check extra\n",
+    "keys": []
+  },
+  {
+    "input": "// @ts-nocheck extra\n",
+    "keys": []
+  },
+  {
+    "input": "/// <amd-dependency path='' />",
+    "ownKey": "path",
+    "value": "undefined"
+  },
+  {
+    "input": "/// <amd-module name='' />",
+    "ownKey": "name",
+    "value": "undefined"
+  },
+  {
+    "input": "/// <reference types='' />",
+    "error": "TypeError: Cannot read properties of undefined (reading 'length')"
+  },
+  {
+    "input": "/// <reference lib='' />",
+    "error": "TypeError: Cannot read properties of undefined (reading 'length')"
+  },
+  {
+    "input": "/// <reference path='' />",
+    "error": "TypeError: Cannot read properties of undefined (reading 'length')"
+  },
+  {
+    "foreignAttributeIgnored": true,
+    "path": {
+      "value": "a.ts",
+      "pos": 21,
+      "end": 25
+    }
+  },
+  {
+    "missingFactoryError": "TypeError: Cannot read properties of undefined (reading 'length')"
+  }
+]
