@@ -363,6 +363,48 @@ func TestPerfInstructionsReadsTheCountOrWhyNot(t *testing.T) {
 	}
 }
 
+// The entries that link PCRE are exactly those whose source imports go-pcre or that link pcre2-sys,
+// so -pcre reaches both regexredux entries and nothing else. With -pcre, a Go build of one looks in the
+// prefix's pkgconfig, headers and libraries, keeping cgo's -O2 -g, and its runs load the prefix's
+// libraries; without it, nothing is added and the system's are used.
+func TestPcreReachesTheEntriesThatLinkIt(t *testing.T) {
+	t.Parallel()
+	file := gameConfiguration(t)
+	linking := 0
+	for _, benchmark := range file.Programs {
+		for _, entry := range benchmark.Entries {
+			source, err := os.ReadFile(filepath.Join("game", filepath.FromSlash(entry.File)))
+			if err != nil {
+				t.Fatal(err)
+			}
+			links := strings.Contains(string(source), `"github.com/GRbit/go-pcre"`) || slices.Contains(entry.Crates, "pcre2-sys")
+			if entry.Pcre != links {
+				t.Errorf("%s says pcre %v, and its source and crates say %v", entry.File, entry.Pcre, links)
+			}
+			if entry.Pcre {
+				linking++
+			}
+		}
+	}
+	if linking != 2 {
+		t.Errorf("%d entries link PCRE; want regexredux's two", linking)
+	}
+	request := gameRequest{pcre: "/srv/loom-tools/pcre"}
+	if got, want := request.pcreBuild(), []string{
+		"PKG_CONFIG_PATH=/srv/loom-tools/pcre/usr/lib/x86_64-linux-gnu/pkgconfig",
+		"CGO_CFLAGS=-O2 -g -I/srv/loom-tools/pcre/usr/include",
+		"CGO_LDFLAGS=-O2 -g -L/srv/loom-tools/pcre/usr/lib/x86_64-linux-gnu",
+	}; !slices.Equal(got, want) {
+		t.Errorf("-pcre's build settings are %q; want %q", got, want)
+	}
+	if got := request.pcreRun(); !slices.Equal(got, []string{"LD_LIBRARY_PATH=/srv/loom-tools/pcre/usr/lib/x86_64-linux-gnu"}) {
+		t.Errorf("-pcre's run settings are %q", got)
+	}
+	if none := (gameRequest{}); none.pcreBuild() != nil || none.pcreRun() != nil || none.pcreLibraries() != "" {
+		t.Errorf("with no -pcre, the settings are %q and %q; want none", none.pcreBuild(), none.pcreRun())
+	}
+}
+
 // An entry's name is the game's: its file's name without the program's and the language's extension.
 func TestAnEntrysNameIsTheGames(t *testing.T) {
 	t.Parallel()
