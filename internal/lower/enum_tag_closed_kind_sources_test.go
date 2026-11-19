@@ -54,12 +54,13 @@ func TestClosedKindSourcesNarrowByThePredicate(t *testing.T) {
 	}
 }
 
-// A source only a type-only import declares is a source too (Compiler's third condition): lib.ts declares
-// WideIdent, an Ex at Ident's kind, imported by type alone. Without a name it doesn't relate to Ident, and
-// the narrowing keeps the refusal though nothing builds a WideIdent; with one it relates, and the program
-// lowers and prints what Node prints, natively under the sanitizers.
-// Mutant: the declared sources read from the program's own runnable files only (closedKindDeclaredTypes)
-// lowers the first row.
+// A source only a declaration file declares, imported by type alone, is a source too (Compiler's third
+// condition): lib.d.ts declares WideIdent, an Ex at Ident's kind. Without a name it doesn't relate to Ident,
+// and the narrowing keeps the refusal though nothing builds a WideIdent; with one it relates, and the program
+// lowers and prints what Node prints, natively under the sanitizers. A type-only import of a .ts file needs
+// no row: that file is one of the program's own, which K(S) reads already.
+// Mutant: the declared sources read from the program's own files only (closedKindDeclaredTypes), never its
+// declaration files, lowers the first row.
 func TestClosedKindSourcesReadTypeOnlyImports(t *testing.T) {
 	t.Parallel()
 	const exports = "export type { K, Ex, Ident };\nimport type { WideIdent } from './lib';\ntype Wide = WideIdent;\n"
@@ -73,7 +74,7 @@ func TestClosedKindSourcesReadTypeOnlyImports(t *testing.T) {
 		t.Run(probe.name, func(t *testing.T) {
 			t.Parallel()
 			main := writeAgreementSource(t, "main.ts", closedKindTypes+exports+closedKindSourcesNarrowing)
-			if err := os.WriteFile(filepath.Join(filepath.Dir(main), "lib.ts"), []byte(probe.lib), 0o644); err != nil {
+			if err := os.WriteFile(filepath.Join(filepath.Dir(main), "lib.d.ts"), []byte(probe.lib), 0o644); err != nil {
 				t.Fatal(err)
 			}
 			loaded, err := load.Load([]string{main})
