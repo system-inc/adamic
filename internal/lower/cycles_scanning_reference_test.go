@@ -1811,6 +1811,9 @@ func scanLowerWithElementKey(key *viewElementKey, program *load.Program, typeChe
 	if err := lowering.checkViewCopies(); err != nil {
 		return nil, err
 	}
+	if err := lowering.checkRelationViewsTaken(); err != nil {
+		return nil, err
+	}
 	if err := lowering.checkViewWidenedReads(); err != nil {
 		return nil, err
 	}

@@ -17,9 +17,14 @@ import (
 // A conditional arm holding a cast (s10), satisfies (s12), ! (s13, refused as ! in .a) and an angle
 // assertion (s15) had no gap and keep their stops. The controls lower and agree with Node on release,
 // sanitized native and the JavaScript backend: x as const, judged as its operand (c1), and a cast to the
-// slot's own type (c2). Each program's whole stop is pinned in its .stop file, or "lowers". Mutant: the
-// cast's own slot left unjudged turns s1 back into the native segfault, and every row the fix refuses
-// red.
+// slot's own type (c2). Each program's whole stop is pinned in its .stop file, or "lowers". In .ts the
+// hiding relation now crosses as a checked view (rulings.md:72, #0b9xqhh): every .ts twin but s10, whose
+// conditional arm stays refused, lowers and stops loudly at its read of name, exit 70 on every backend, where
+// Node prints the hidden number, its .stop file holding "panics" and the panic line's words
+// (panicsAtTheRead). s15's angle assertion, no longer refused first, stops as the construct stage 0 doesn't
+// lower. Every .a twin keeps the refusal. Mutants: the cast's own slot left unjudged turns s1.a back into the
+// native segfault, and every .a row the fix refuses red; rule 3300 refusing in .ts again
+// (internal/lower/relation_views.mutants.md) turns every moved .ts row red.
 func TestCastSlotHiding(t *testing.T) {
 	t.Parallel()
 	directory := "internal/oracle/testdata/cast_slot_hiding"
@@ -49,6 +54,13 @@ func TestCastSlotHiding(t *testing.T) {
 				t.Fatalf("source Node: exit %d stderr %q", truth.exitCode, truth.stderr)
 			}
 			program, err := lowered(t, absolute)
+			if words, panics := panicsStop(string(expected)); panics {
+				if err != nil {
+					t.Fatalf("Lower: %v, want it to lower and panic at the read with %q", err, words)
+				}
+				panicsAtTheRead(t, absolute, program, "", words)
+				return
+			}
 			if stop := strings.TrimSpace(string(expected)); stop != "lowers" {
 				if err == nil {
 					t.Fatalf("lowered, want %q", stop)
