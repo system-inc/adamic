@@ -203,7 +203,16 @@ func (l *lowering) widened(from *checker.Type, to *checker.Type, visited map[[2]
 		}
 	}
 	if source, target := l.recordElement(from), l.recordElement(to); source != nil && target != nil {
-		if !l.checker.IsTypeAssignableTo(target, source) {
+		// Nothing writes through a readonly index, so a record seen as a readonly record may widen what its
+		// values are read as (records_readonly.go), as a readonly array may widen its element. The way back
+		// is a widening whatever the two index types say: a readonly record may hold a narrower record (tsc's
+		// WatchOptions seen as Readonly<OptionsBase>), so seen as a writable record it could write what that
+		// record's own reads don't promise, and tsc, unlike for arrays, lets it.
+		fromReadonly, toReadonly := l.readonlyIndexType(l.concrete(from)), l.readonlyIndexType(l.concrete(to))
+		if fromReadonly && !toReadonly {
+			return &widening{source: from, target: to}
+		}
+		if !toReadonly && !l.checker.IsTypeAssignableTo(target, source) {
 			return &widening{source: source, target: target}
 		}
 		return l.widened(source, target, visited)
