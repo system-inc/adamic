@@ -91,11 +91,12 @@ type viewElementKey struct {
 	misses  []string
 }
 
-// collectViewedElements is the key's pre-pass. A view is made only at a cast or a type predicate
-// (a speculation's result is a cast too), or at a record's array member read out of its union slot
-// (recordReadSlotView, by the one test recordSlotArrayRead), so it reads every one in every module the
-// program loads, .a and .ts alike, and collects the element type of every array its target can hold,
-// through the edges viewContract builds contracts along. A target that names a type parameter is
+// walkViewedElements is the key's pre-pass, which collectViewedElements runs, or takes a copy of where a
+// latent census run already walked it (viewed_elements_cache.go, #hjspb3b). A view is made only at a cast
+// or a type predicate (a speculation's result is a cast too), or at a record's array member read out of
+// its union slot (recordReadSlotView, by the one test recordSlotArrayRead), so it reads every one in every
+// module the program loads, .a and .ts alike, and collects the element type of every array its target can
+// hold, through the edges viewContract builds contracts along. A target that names a type parameter is
 // instantiated where it lowers, past what the pre-pass can see, so it sets every.
 //
 // It's also where a view of a type that instantiates itself deeper at each step stops (#k031ey0): a
@@ -105,7 +106,10 @@ type viewElementKey struct {
 // typeNesting says it can't see to the end, the program stops here, at that view, and no later walk
 // meets the type. So it walks whether or not the key wants it, and records into the key only when one is
 // asked for and isn't already every.
-func (l *lowering) collectViewedElements(modules []*ast.SourceFile) error {
+func (l *lowering) walkViewedElements(modules []*ast.SourceFile) error {
+	if counter := viewedElementsWalks.Load(); counter != nil {
+		counter.Add(1)
+	}
 	key := l.elementKey
 	if key == nil || key.every {
 		key = &viewElementKey{} // walked for the stop alone; what it collects is dropped
