@@ -23,12 +23,9 @@ function serialize(options: Readonly<OptionsBase>): string {
     }
     return rows.join(",") + ":" + String(options["watchFile"] === 4);
 }
-function key(): string {
-    return "synchronous";
-}
 const watch: WatchOptions = { watchFile: 4 };
 watch.excludeFiles = ["a.ts"];
-watch[key()] = true;
+watch["synchronous"] = true;
 console.log(serialize(watch));
 watch.watchFile = 2;
 console.log(serialize(watch));
