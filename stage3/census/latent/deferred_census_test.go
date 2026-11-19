@@ -6,6 +6,7 @@ import (
 	"context"
 	"os"
 	"path/filepath"
+	"slices"
 	"strings"
 	"testing"
 
@@ -57,11 +58,11 @@ func TestLatentWrittenAnyDeferredCensusStopsZb0q0zd(t *testing.T) {
 				if len(observed.PassLedger) == 0 {
 					t.Fatalf("attempted unit has no pass ledger: %+v", observed)
 				}
-				whole := 0
+				var whole []string
 				for _, step := range observed.PassLedger {
 					if observed.Name == "ledgerBodySuccessPb47" {
 						if step.Status == "not_run_whole_program" {
-							whole++
+							whole = append(whole, step.Name)
 						} else if step.Status != "not_run_scoped" {
 							t.Fatalf("successful body: %+v", step)
 						}
@@ -69,8 +70,9 @@ func TestLatentWrittenAnyDeferredCensusStopsZb0q0zd(t *testing.T) {
 						t.Fatalf("stopped body: %+v", step)
 					}
 				}
-				if observed.Name == "ledgerBodySuccessPb47" && whole != 4 {
-					t.Fatalf("whole-program omissions: %d", whole)
+				wantWhole := []string{"checkRegExpServedValues", "findCycles", "programRegion", "applyProgramMetadata", "ownershipQuery"}
+				if observed.Name == "ledgerBodySuccessPb47" && !slices.Equal(whole, wantWhole) {
+					t.Fatalf("whole-program omissions: got %v, want %v", whole, wantWhole)
 				}
 			}
 
