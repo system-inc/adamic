@@ -1,0 +1,52 @@
+# Every crate the Benchmarks Game's vendored Rust entries name, each pinned to the newest release
+# published before 2025-02-01 that rustc 1.84.1 supports (bench/game/README.md says how each was
+# chosen). The library has no code of its own: building it leaves one rlib per crate in
+# target/release/deps, and `go run ./bench -game -crates <that directory>` links each entry against
+# them with --extern, as the game linked against its /opt/src/rust-libs. Build it with the game's
+# rustc, from this directory so .cargo/config.toml applies:
+#
+#	cargo build --release
+#
+# Cargo.lock is made by that first build on the box and committed after it.
+[package]
+name = "benchmarksgame-rust-deps"
+version = "0.0.0"
+edition = "2021"
+rust-version = "1.84.1"
+publish = false
+
+[lib]
+path = "src/lib.rs"
+
+[dependencies]
+# binarytrees.rust-5
+bumpalo = "=3.17.0"
+# knucleotide.rust-7 (the 0.1 line it's written for), and mandelbrot.rust-4's build line, which
+# passes it and never uses it
+futures = "=0.1.31"
+# knucleotide.rust-7
+hashbrown = "=0.15.2"
+# knucleotide.rust-7
+itertools = "=0.14.0"
+# regexredux.rust-7
+libc = "=0.2.169"
+# revcomp.rust
+memchr = "=2.7.4"
+# knucleotide.rust-7
+num = "=0.4.3"
+# fasta.rust-7, and fasta.rust-3's build line, which passes it and never uses it
+num_cpus = "=1.16.0"
+# regexredux.rust-7
+pcre2-sys = "=0.2.9"
+# binarytrees.rust-5, fannkuchredux.rust-4 and -6, mandelbrot.rust-4, regexredux.rust-7, revcomp.rust,
+# spectralnorm.rust-6
+rayon = "=1.10.0"
+# fasta.rust-7. 0.6.0 is the newest release before the cutoff that isn't yanked: 0.7.0 to 0.9.8 are.
+spin = "=0.6.0"
+# knucleotide.rust-7 (the 0.1 line it's written for)
+tokio-threadpool = "=0.1.18"
+
+# The entries' own flags, so a crate's code is built as the entry that calls it is.
+[profile.release]
+opt-level = 3
+codegen-units = 1
