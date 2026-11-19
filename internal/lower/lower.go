@@ -443,11 +443,14 @@ type lowering struct {
 	// #q1hyhzc).
 	// checkedFieldWrites counts, by field name, the CheckedFields keys markCheckedField added;
 	// viewSiteSeen is a name's count when view last judged its accesses, and viewSiteTrue the accesses
-	// it found checked, which stay checked since keys only grow.
+	// it found checked, which stay checked since keys only grow. viewSiteJudged is the refusal
+	// judgeViewAccess gave a checked access, nil for none, kept where no substitution is in force, so a
+	// later walk reads it instead of judging the access again (viewWalkIndexed, #715zjph).
 	viewSites          *viewSiteIndex
 	checkedFieldWrites map[string]int
 	viewSiteSeen       map[string]int
 	viewSiteTrue       map[*ast.Node]bool
+	viewSiteJudged     map[*ast.Node]error
 	// checkedFieldRecordFree says, per CheckedFields key markCheckedField added, whether every view that
 	// registered it was one no record can be read through (viewRecordFree): true while each was, false
 	// once one wasn't, absent for a key added another way. checkRecordGuardedReads stops a read only on a
