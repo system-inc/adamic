@@ -2,9 +2,11 @@
 //
 //	go run ./bench [-rounds 5] [-timeout 120s] [-only nbody,trees]
 //	go run ./bench -compare <baseline sha> <candidate sha> -suite everyday [-samples 15] [-seed n]
+//	go run ./bench -game -go <go> -rustc <rustc> -crates <dir> [-samples 15] [-only fasta,nbody]
 //
 // The second form compares two commits of Adamic on a suite of bench/suites.json, and is described
-// in compare.go; what follows is the first.
+// in compare.go; the third measures Adamic against the Benchmarks Game's own Go and Rust entries, and
+// is described in game.go; what follows is the first.
 //
 // Every program in bench/ is a fair one: the same source, as it stands, runs on all three, and all
 // three must print the same answer or the row says so. Each is built natively the way a user
@@ -60,10 +62,12 @@ type program struct {
 	adamic  bool
 }
 
-// A measurement is one run's wall time, user time and peak resident memory, or why there isn't one.
+// A measurement is one run's wall time, user and system time and peak resident memory, or why there
+// isn't one.
 type measurement struct {
 	elapsed time.Duration
 	user    time.Duration // CPU time in user mode, summed over every thread
+	system  time.Duration // CPU time in the kernel on its behalf, summed over every thread
 	peak    int64         // bytes
 	stdout  string
 	failure string
@@ -78,11 +82,29 @@ func main() {
 	threads := flag.String("threads", "", "comma-separated native thread counts, interleaved within each round (default: pool default)")
 	baseline := flag.String("compare", "", "compare two commits: -compare <baseline sha> <candidate sha> (see compare.go)")
 	suiteName := flag.String("suite", "everyday", "with -compare, the suite in bench/suites.json to compare on")
-	samples := flag.Int("samples", 15, "with -compare, how many interleaved samples; at least 6")
+	samples := flag.Int("samples", 15, "with -compare, how many interleaved samples, at least 6; with -game, how many interleaved runs each runner's best is taken from")
 	plant := flag.String("plant", "", "with -compare, \"candidate\" appends a fixed busy loop of -plant-ms to every candidate program, to prove the comparison can fail")
 	plantMs := flag.Int("plant-ms", 25, "with -plant candidate, the plant's milliseconds of busy CPU")
-	seed := flag.Uint64("seed", 0, "with -compare, the seed that draws every run's ADAMIC_BENCH_PAD length (default: the time)")
+	seed := flag.Uint64("seed", 0, "with -compare or -game, the seed that draws every run's ADAMIC_BENCH_PAD length (default: the time)")
+	game := flag.Bool("game", false, "measure Adamic against the Benchmarks Game's own Go and Rust entries in bench/game (see game.go)")
+	goBinary := flag.String("go", "", "with -game, the go binary that builds the Go entries: the game's Go 1.23.1, never guessed")
+	rustc := flag.String("rustc", "", "with -game, the rustc that builds the Rust entries: the game's 1.84.1, never guessed")
+	crates := flag.String("crates", "", "with -game, the rlibs bench/game/rust-deps builds with that rustc: its target/release/deps")
 	flag.Parse()
+
+	if *game {
+		if *baseline != "" {
+			fail(errors.New("-game and -compare are two different measurements; give one"))
+		}
+		if flag.NArg() > 0 {
+			fail(fmt.Errorf("-game takes no arguments, and these are left over: %s", strings.Join(flag.Args(), " ")))
+		}
+		if !flagGiven("seed") {
+			*seed = uint64(time.Now().UnixNano())
+		}
+		measureGame(gameRequest{goBinary: *goBinary, rustc: *rustc, crates: *crates, samples: *samples, only: *only, timeout: *timeout, seed: *seed})
+		return
+	}
 
 	if *baseline != "" {
 		// The candidate is the argument after the baseline, and flag stops at it, so the flags after it
@@ -97,15 +119,7 @@ func main() {
 		if flag.NArg() > 0 {
 			fail(fmt.Errorf("-compare takes two commits, and these are left over: %s", strings.Join(flag.Args(), " ")))
 		}
-		// The seed is the time unless -seed names one, and 0 is a seed like any other, so whether it was
-		// given is read from the flags set, in either parse.
-		seedGiven := false
-		flag.Visit(func(set *flag.Flag) {
-			if set.Name == "seed" {
-				seedGiven = true
-			}
-		})
-		if !seedGiven {
+		if !flagGiven("seed") {
 			*seed = uint64(time.Now().UnixNano())
 		}
 		compareCommits(compareRequest{baseline: *baseline, candidate: candidate, suite: *suiteName, samples: *samples, plant: *plant, plantMs: *plantMs, only: *only, timeout: *timeout, seed: *seed})
@@ -248,6 +262,19 @@ func main() {
 	fmt.Printf("\nload after: %s\n", loadAverage())
 }
 
+// flagGiven is whether a flag was set on the command line, in any parse so far. The seed is the time
+// unless -seed names one, and 0 is a seed like any other, so whether it was given can't be read from
+// its value.
+func flagGiven(name string) bool {
+	given := false
+	flag.Visit(func(set *flag.Flag) {
+		if set.Name == name {
+			given = true
+		}
+	})
+	return given
+}
+
 // benchDirectory is bench/ in the repository, from wherever go run was started inside it.
 func benchDirectory() (string, error) {
 	output, err := exec.Command("git", "rev-parse", "--show-toplevel").Output()
@@ -342,10 +369,24 @@ func nodeCommand(program program, root string) []string {
 
 // run runs a command to the end, and measures it.
 func run(command []string, timeout time.Duration, settings ...string) measurement {
+	return runFrom(command, "", timeout, settings...)
+}
+
+// runFrom is run with a file on standard input, as the Benchmarks Game hands a program its input
+// (`< input.txt`), or with none when input is empty.
+func runFrom(command []string, input string, timeout time.Duration, settings ...string) measurement {
 	ctx, cancel := context.WithTimeout(context.Background(), timeout)
 	defer cancel()
 	process := exec.CommandContext(ctx, command[0], command[1:]...)
 	process.Env = append(environment(), settings...)
+	if input != "" {
+		file, err := os.Open(input)
+		if err != nil {
+			return measurement{failure: fmt.Sprintf("its input can't be opened: %v", err)}
+		}
+		defer file.Close()
+		process.Stdin = file
+	}
 	var stdout, stderr bytes.Buffer
 	process.Stdout = &stdout
 	process.Stderr = &stderr
@@ -361,7 +402,7 @@ func run(command []string, timeout time.Duration, settings ...string) measuremen
 	if strings.TrimSpace(stdout.String()) == "" {
 		return measurement{failure: "printed nothing"}
 	}
-	return measurement{elapsed: elapsed, user: process.ProcessState.UserTime(), peak: peakResident(process.ProcessState), stdout: keptOutput(stdout.Bytes())}
+	return measurement{elapsed: elapsed, user: process.ProcessState.UserTime(), system: process.ProcessState.SystemTime(), peak: peakResident(process.ProcessState), stdout: keptOutput(stdout.Bytes())}
 }
 
 // outputKeptWhole is the most of a run's standard output kept as it was printed.

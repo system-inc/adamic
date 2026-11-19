@@ -478,11 +478,11 @@ func compareCommits(request compareRequest) {
 	}
 	fmt.Println()
 	fmt.Println("losses, where native at the candidate is slower than Node with the whole interval above 1.00 (on each program's judge):")
-	printList(losses)
+	printList(os.Stdout, losses)
 	fmt.Println("wins, where it is faster with the whole interval below 1.00:")
-	printList(wins)
+	printList(os.Stdout, wins)
 	fmt.Println("within the noise, where the interval holds 1.00, so neither is claimed:")
-	printList(ties)
+	printList(os.Stdout, ties)
 	if len(harnesses) > 0 {
 		fmt.Println("outside run.go, listed and not timed here:")
 		for _, harness := range harnesses {
@@ -1042,12 +1042,13 @@ func ordinal(number int) string {
 	return strconv.Itoa(number) + suffix
 }
 
-func printList(lines []string) {
+// printList writes each line, or "- none" when there are none, so an empty list still reads as looked at.
+func printList(out io.Writer, lines []string) {
 	if len(lines) == 0 {
-		fmt.Println("- none")
+		fmt.Fprintln(out, "- none")
 		return
 	}
 	for _, line := range lines {
-		fmt.Println(line)
+		fmt.Fprintln(out, line)
 	}
 }
