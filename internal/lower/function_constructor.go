@@ -438,6 +438,29 @@ func (l *lowering) functionConstructorCandidates(node *ast.Node, target *checker
 	return candidates, nil
 }
 
+// allocatorGetterCall is, for a call through an allocator's getter, `allocator.getX()` with no arguments, never
+// ?. or bound, the allocator's local and the index of the function constructor its getter's identity object is
+// of, by allocators' fields. The callee is taken apart by ir.MethodCallee, so a getter call a narrowing or a
+// non-null assertion checks is one too. It reads the callee's property spelling, never its targets: the graph
+// can't bound a call through a property (ClosureTargets is Unknown there), and the allocator's seal is what
+// names the getter that runs.
+func allocatorGetterCall(value ir.Expression, allocators map[int]map[string]int) (int, int, bool) {
+	call, isCall := value.(ir.CallClosure)
+	if !isCall || len(call.Arguments) != 0 || call.Optional || call.Bound {
+		return 0, 0, false
+	}
+	property, _, isMethod := ir.MethodCallee(call.Closure)
+	if !isMethod || property.Optional {
+		return 0, 0, false
+	}
+	read, isRead := property.Object.(ir.Read)
+	if !isRead {
+		return 0, 0, false
+	}
+	constructor, isField := allocators[read.Local][property.Name]
+	return read.Local, constructor, isField
+}
+
 // functionConstructorUnsealed is the NotYet a new through an allocator the program writes, aliases or hands on
 // takes: what reaches its constructor value isn't known.
 const functionConstructorUnsealed = "a new of a function constructor through an allocator the program writes, aliases or hands on, so what reaches its constructor isn't known"
@@ -525,20 +548,7 @@ func (l *lowering) checkFunctionConstructorRoads() error {
 		return true
 	})
 	getterCall := func(value ir.Expression) (int, int, bool) {
-		call, isCall := value.(ir.CallClosure)
-		if !isCall || len(call.Arguments) != 0 || call.Optional || call.Bound {
-			return 0, 0, false
-		}
-		property, isProperty := call.Closure.(ir.Property)
-		if !isProperty || property.Optional {
-			return 0, 0, false
-		}
-		read, isRead := property.Object.(ir.Read)
-		if !isRead {
-			return 0, 0, false
-		}
-		constructor, isField := allocators[read.Local][property.Name]
-		return read.Local, constructor, isField
+		return allocatorGetterCall(value, allocators)
 	}
 	declares, assigns, reads, calls := map[int]int{}, map[int]int{}, map[int]int{}, map[int]int{}
 	running(func(node any) bool {
@@ -574,9 +584,12 @@ func (l *lowering) checkFunctionConstructorRoads() error {
 	}
 	constructorValues := make([][]ir.Expression, len(l.functionConstructorNews))
 	running(func(node any) bool {
-		if call, isCall := node.(ir.Call); isCall {
-			if index, isDispatch := dispatches[call.Function]; isDispatch && len(call.Arguments) > 0 {
-				constructorValues[index] = append(constructorValues[index], call.Arguments[0])
+		if call, isCall := node.(ir.Call); isCall && len(call.Arguments) > 0 {
+			// A dispatch is a direct call, whose one target is its function.
+			if targets := l.result.CallTargets(call); len(targets) == 1 {
+				if index, isDispatch := dispatches[targets[0]]; isDispatch {
+					constructorValues[index] = append(constructorValues[index], call.Arguments[0])
+				}
 			}
 		}
 		return true

@@ -1,6 +1,7 @@
 package lower
 
 import (
+	"errors"
 	"os"
 	"path/filepath"
 	"strings"
@@ -81,15 +82,15 @@ func TestFunctionConstructorLieStopsAtTheRead(t *testing.T) {
 }
 
 // Every other road stops (#837zjkt). The premise pin: a program that writes, aliases or hands on the allocator,
-// each its own row, turns its new NotYet, since what reaches the new's constructor isn't known. A use of the
-// any's value other than as a new's constructor, a comparison or a pass of the cache or a pass of a getter's
-// result, gives back the cast's own refusal, as does a cast outside the getter's shape. A constructor whose
+// each its own row, turns its new NotYet, since what reaches the new's constructor isn't known. The write is a
+// store into a getter the allocator's type declares as a field, a plain field store no earlier rule stops; a
+// getter declared as a method stops at its own rule first (TestFunctionConstructorAllocatorWritesStopEarlier).
+// A use of the any's value other than as a new's constructor, a comparison or a pass of the cache or a pass of
+// a getter's result, gives back the cast's own refusal, as does a cast outside the getter's shape. A constructor whose
 // prototype the program reads, or that returns a value, reads this, hands this to a call or writes a field on
 // one path is no function constructor, so its getter's cast keeps its refusal. A new that may be a class or a
 // function constructor is NotYet. In .a the road stays refused at its cast.
 //
-// The assign and store rows are pinned by reading, not yet by a run: Object.assign and a method store may stop
-// at their own words before the new does, which is fail closed too, and the row then takes those words.
 // Mutants: m2, every allocator sealed, lowers the store, pass and alias rows; m3, the uses always admitted, lowers
 // the comparison, cache pass and getter pass rows; m4, a mixed dispatch admitted, lowers the mixed row's new.
 func TestFunctionConstructorOtherRoadsStop(t *testing.T) {
@@ -98,8 +99,7 @@ func TestFunctionConstructorOtherRoadsStop(t *testing.T) {
 	for _, probe := range []struct {
 		name, source, extension, words string
 	}{
-		{"Object.assign into the allocator", functionConstructorProgram(functionConstructorHonest, "const other: Allocator = {\n    getNodeConstructor: () => NodeObject as any,\n};\nfunction setObjectAllocator(alloc: Allocator): void {\n    Object.assign(objectAllocator, alloc);\n}\n", "setObjectAllocator(other);\n"), ".ts", functionConstructorUnsealed},
-		{"a store through the allocator", functionConstructorProgram(functionConstructorHonest, "", "objectAllocator.getNodeConstructor = objectAllocator.getNodeConstructor;\n"), ".ts", functionConstructorUnsealed},
+		{"a store into the allocator's getter field", strings.Replace(functionConstructorProgram(functionConstructorHonest, "const other: Allocator = {\n    getNodeConstructor: () => NodeObject as any,\n};\n", "objectAllocator.getNodeConstructor = other.getNodeConstructor;\n"), "getNodeConstructor(): new", "getNodeConstructor: () => new", 1), ".ts", functionConstructorUnsealed},
 		{"a pass of the allocator", functionConstructorProgram(functionConstructorHonest, "function patch(allocator: Allocator): Allocator {\n    return allocator;\n}\n", "patch(objectAllocator);\n"), ".ts", functionConstructorUnsealed},
 		{"an alias of the allocator", functionConstructorProgram(functionConstructorHonest, "", "const alias: Allocator = objectAllocator;\n"), ".ts", functionConstructorUnsealed},
 		{"a comparison of the cache", functionConstructorProgram(functionConstructorHonest, "", "console.log(String(NodeConstructor === undefined));\n"), ".ts", refused},
@@ -122,4 +122,31 @@ func TestFunctionConstructorOtherRoadsStop(t *testing.T) {
 			}
 		})
 	}
+}
+
+// Two writes of the allocator stop at their own rules before the new is judged, which is fail closed too (J-bw7kkp6):
+// Object.assign into it, as setObjectAllocator writes it, is NotYet at the allocator it assigns into, and a store
+// into a getter its type declares as a method is refused at the store, the host member write's stop main gives
+// once lowering stops before checkHostMemberWrites. The seal itself is pinned by the store, pass and alias rows of
+// TestFunctionConstructorOtherRoadsStop, which reach functionConstructorUnsealed.
+func TestFunctionConstructorAllocatorWritesStopEarlier(t *testing.T) {
+	t.Parallel()
+	t.Run("Object.assign into the allocator", func(t *testing.T) {
+		t.Parallel()
+		source := functionConstructorProgram(functionConstructorHonest, "const other: Allocator = {\n    getNodeConstructor: () => NodeObject as any,\n};\nfunction setObjectAllocator(alloc: Allocator): void {\n    Object.assign(objectAllocator, alloc);\n}\n", "setObjectAllocator(other);\n")
+		_, err := lowerSourceAs(t, source, ".ts")
+		var notYet *NotYet
+		if !errors.As(err, &notYet) || !strings.HasSuffix(notYet.Where, "main.ts:15:19") {
+			t.Fatalf("want a NotYet at main.ts:15:19, the allocator Object.assign writes, got %v", err)
+		}
+	})
+	t.Run("a store into a getter method", func(t *testing.T) {
+		t.Parallel()
+		source := functionConstructorProgram(functionConstructorHonest, "", "objectAllocator.getNodeConstructor = objectAllocator.getNodeConstructor;\n")
+		_, err := lowerSourceAs(t, source, ".ts")
+		var refused *Refused
+		if !errors.As(err, &refused) || !strings.HasSuffix(refused.Where, "main.ts:19:1") {
+			t.Fatalf("want a Refused at main.ts:19:1, the store, got %v", err)
+		}
+	})
 }
