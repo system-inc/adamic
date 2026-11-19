@@ -23,6 +23,14 @@ func panicIdentityShapes() *ir.Program {
 	}}}}
 }
 
+// panicIdentityClose is a function holding an iterable view's dispatch (ir.Block's Closes): its first
+// statement declares the local the block closes, and the rest returns.
+func panicIdentityClose() *ir.Program {
+	return &ir.Program{Source: "close.a", Locals: []ir.Local{{Name: "held", Type: ir.Object, Function: 0}}, Functions: []ir.Function{{Name: "close", Returns: ir.Number, Body: []ir.Statement{
+		ir.Block{Body: []ir.Statement{ir.Declare{Local: 0, Value: ir.NumberConstant{Value: 8}}, ir.Return{Value: ir.NumberConstant{Value: 9}}}, Closes: 1},
+	}}}}
+}
+
 // Every try asks the runtime's isPanic of what it caught, so a Worker's thrown AdamicPanic is never
 // the program's (docs/rulings.md): a catch throws it on, and a finally body is skipped while one
 // unwinds, by a flag of that try's own. The import has no fallback, so a runtime without isPanic
@@ -99,6 +107,41 @@ func TestEveryTryTestsPanicIdentity(t *testing.T) {
 		if declared[index][1] != set[index][1] || declared[index][1] != guarded[index][1] {
 			t.Fatalf("finally %d reads a flag its try did not declare or set:\n%s", index, body)
 		}
+	}
+	// An iterable view's close calls a generator's return(), which runs its finally, so it is skipped
+	// while a panic unwinds, by a flag of the block's own that a catch around the rest sets.
+	closing := JavaScript(panicIdentityClose())
+	if !strings.Contains(closing, "import { isPanic as adamicIsPanic } from 'adamic';\n") {
+		t.Fatalf("want an iterable view's close to import isPanic:\n%s", closing)
+	}
+	const closeHeader = "\nfunction function_0_close() {\n"
+	closeStart := strings.Index(closing, closeHeader)
+	if closeStart < 0 {
+		t.Fatalf("no function_0_close:\n%s", closing)
+	}
+	closeEnd := strings.Index(closing[closeStart+len(closeHeader):], "\n}\n")
+	if closeEnd < 0 {
+		t.Fatalf("function_0_close never closes:\n%s", closing)
+	}
+	closeBody := closing[closeStart+len(closeHeader) : closeStart+len(closeHeader)+closeEnd+1]
+	wantClose := "\t{\n" +
+		"\t\tlet local_0_held = (8);\n" +
+		"\t\tlet temporary_N = false;\n" +
+		"\t\ttry {\n" +
+		"\t\t\treturn (9);\n" +
+		"\t\t} catch (temporary_N) {\n" +
+		"\t\t\tif (adamicIsPanic(temporary_N)) temporary_N = true;\n" +
+		"\t\t\tthrow temporary_N;\n" +
+		"\t\t} finally {\n" +
+		"\t\t\tif (!temporary_N) adamicIteratorClose(local_0_held);\n" +
+		"\t\t}\n" +
+		"\t}\n"
+	if got := temporaryName.ReplaceAllString(closeBody, "temporary_N"); got != wantClose {
+		t.Fatalf("emitted iterable view close, temporaries as temporary_N:\ngot:\n%s\nwant:\n%s", got, wantClose)
+	}
+	closeFlag := regexp.MustCompile(`let (temporary_[0-9]+) = false;[\s\S]*\) (temporary_[0-9]+) = true;[\s\S]*if \(!(temporary_[0-9]+)\) adamicIteratorClose`).FindStringSubmatch(closeBody)
+	if closeFlag == nil || closeFlag[1] != closeFlag[2] || closeFlag[1] != closeFlag[3] {
+		t.Fatalf("the close reads a flag its block did not declare or set:\n%s", closeBody)
 	}
 	// A program with no try asks nothing of the runtime's isPanic.
 	plain := &ir.Program{Source: "plain.a", Functions: []ir.Function{{Name: "plain", Returns: ir.Number, Body: []ir.Statement{ir.Return{Value: ir.NumberConstant{Value: 1}}}}}}
