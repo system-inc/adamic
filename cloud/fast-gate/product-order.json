@@ -2872,6 +2872,14 @@
     ],
     "internal/worker TestProduct_WorkerPanicTrapMutant": [
       "internal/worker TestProduct_WorkerChecks"
-    ]
+    ],
+    "internal/lower TestProduct_KindSetDisjunctionMutant": [],
+    "internal/lower TestProduct_KindSetSwitchMutant": [],
+    "internal/lower TestProduct_KindSetSwitchTailMutant": [],
+    "internal/lower TestProduct_KindSetAliasMutant": [],
+    "internal/lower TestProduct_KindSetGuardMutant": [],
+    "internal/lower TestProduct_KindSetDoubleGuardMutant": [],
+    "internal/lower TestProduct_KindSetIfGuardMutant": [],
+    "internal/lower TestProduct_KindSetFalseSideMutant": []
   }
 }
