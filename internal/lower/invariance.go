@@ -1140,16 +1140,14 @@ func lendsItself(value *ast.Node) bool {
 }
 
 // freshObjectLiteral reports whether the literal's own slots can be built solely as its contextual
-// type. A member that isn't an arrow (a method, a getter or a setter, or a property holding a function
-// expression) is given the object as this, and can store it or read it at that type while a wider view
-// writes its fields. A member whose this is the literal's own type keeps it fresh: the literal's
-// contextual type, or its own type with or without its freshness. A narrower this, declared as a
-// parameter (#69vkn0j) or given by a contextual ThisType (#n7mgy3s), doesn't, and nor does a this the
-// checker types any other way, since it can't be shown to be the literal's own.
-func (l *lowering) freshObjectLiteral(literal *ast.Node) bool {
+// type. A member that declares a this parameter can expose the object at that narrower type (#69vkn0j),
+// so a literal holding one isn't fresh. A non-arrow member that reads this without declaring it, and a
+// getter under a contextual ThisType, can hand the object out the same way; both wait for their own
+// head, since their price on tsc isn't measured yet.
+func freshObjectLiteral(literal *ast.Node) bool {
 	for _, member := range literal.AsObjectLiteralExpression().Properties.Nodes {
 		switch member.Kind {
-		case ast.KindMethodDeclaration, ast.KindGetAccessor, ast.KindSetAccessor:
+		case ast.KindMethodDeclaration:
 		case ast.KindPropertyAssignment:
 			member = ast.SkipParentheses(member.AsPropertyAssignment().Initializer)
 			if member.Kind != ast.KindFunctionExpression {
@@ -1161,45 +1159,8 @@ func (l *lowering) freshObjectLiteral(literal *ast.Node) bool {
 		if ast.GetThisParameter(member) != nil {
 			return false
 		}
-		if keyword := boundThis(member); keyword != nil && !l.literalOwnThis(literal, l.checker.GetTypeAtLocation(keyword)) {
-			return false
-		}
 	}
 	return true
-}
-
-// literalOwnThis reports whether given, the type a member of literal is given as this, is the literal's own:
-// the literal's slot (slotType), or the literal's own type, fresh or regular. Only
-// identity counts, so a ThisType's narrower view, a union, or a type tsc made anew is never the literal's.
-func (l *lowering) literalOwnThis(literal *ast.Node, given *checker.Type) bool {
-	if given == l.slotType(literal) {
-		return true
-	}
-	own := l.checker.GetTypeAtLocation(literal)
-	return given == own || given == regularTypeOfObjectLiteral(l.checker, own)
-}
-
-// boundThis is the first this keyword in a literal's member that the member itself binds, or nil: not one
-// in its name, nor one inside a function under it that isn't an arrow, or a class, either of which binds
-// its own (receivesThis).
-func boundThis(member *ast.Node) *ast.Node {
-	var found *ast.Node
-	var visit ast.Visitor
-	visit = func(node *ast.Node) bool {
-		if node.Kind == ast.KindThisKeyword {
-			found = node
-			return true
-		}
-		if (ast.IsFunctionLike(node) && node.Kind != ast.KindArrowFunction) || ast.IsClassLike(node) {
-			return false
-		}
-		return node.ForEachChild(visit)
-	}
-	name := member.Name()
-	member.ForEachChild(func(child *ast.Node) bool {
-		return child != name && visit(child)
-	})
-	return found
 }
 
 // receivesThis reports whether a this keyword under node sits inside a function that isn't an arrow, or a
@@ -1626,7 +1587,7 @@ func (l *lowering) freshOrWidened(node *ast.Node, own *checker.Type, contextual 
 	}
 	switch node.Kind {
 	case ast.KindObjectLiteralExpression:
-		if l.freshObjectLiteral(node) {
+		if freshObjectLiteral(node) {
 			return nil
 		}
 	case ast.KindArrayLiteralExpression:
@@ -1789,7 +1750,7 @@ func (l *lowering) madeAtSiteWidened(value *ast.Node, target *checker.Type, visi
 		}
 		return nil
 	case ast.KindObjectLiteralExpression:
-		if !l.freshObjectLiteral(value) {
+		if !freshObjectLiteral(value) {
 			return l.widened(own, target, visited)
 		}
 		for _, member := range l.literalSlotMembers(value, target) {

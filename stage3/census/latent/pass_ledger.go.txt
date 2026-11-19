@@ -32,6 +32,12 @@ var latentPostLoweringSteps = []latent.PassStep{
 	// numbering its allocation sites where nothing has yet as checkBoundArguments does, and rewrites nothing
 	// else, so a body lowered on its own is recorded as not run, as checkBoundArguments is.
 	{Name: "checkKindUnionWriteReach"},
+	// checkFunctionConstructorRoads judges each admitted allocator getter road to a function constructor's new by
+	// its allocator's seal, its uses and the reach of each new's constructor value on the whole program's
+	// allocation graph (#837zjkt): it reads the IR, numbering its allocation sites where nothing has yet as
+	// checkBoundArguments does, and rewrites nothing else, so a body lowered on its own is recorded as not run, as
+	// checkBoundArguments is.
+	{Name: "checkFunctionConstructorRoads"},
 	// checkCheckedPredicateParameters stops a predicate parameter's checked closure that may call a function
 	// declaring more parameters than it passes, and an admitted parameter lowering passed another way, by
 	// the closure records and the lowered regions of the whole program (#jqf1drp): it reads the IR and

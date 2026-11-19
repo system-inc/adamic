@@ -1810,6 +1810,11 @@ func scanLowerWithElementKey(key *viewElementKey, program *load.Program, typeChe
 	if err := lowering.checkKindUnionWriteReach(); err != nil {
 		return nil, err
 	}
+	// As lowerWithElementKey does: an allocator getter's road to a function constructor's new is judged by its
+	// seal, its uses and its reach once the program is lowered, and refuses alike in both modes (#837zjkt).
+	if err := lowering.checkFunctionConstructorRoads(); err != nil {
+		return nil, err
+	}
 	// As lowerWithElementKey does: it numbers a copy of the program, never the program, and stops a
 	// presence test of an optional member alike in both modes (#p2n17c4 shape 1).
 	if err := lowering.checkOptionalMemberPresence(); err != nil {
