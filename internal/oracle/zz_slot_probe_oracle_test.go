@@ -37,13 +37,29 @@ rename(box);
 console.log(String(box.name));
 `},
 	// Q1: a fresh function's literal in a statement region, written with a reference by a consumer.
-	{"q1_region_plain_reference", `interface Box { kind: number; next?: Box }
+	{"q1_region_plain_reference", `interface Box { kind: number; next?: Box | undefined }
 function make(kind: number): Box { return { kind: kind, next: undefined }; }
 function consume(b: Box): number { b.next = { kind: b.kind + 1, next: undefined }; return b.kind; }
 const lone: Box = { kind: 0 };
 let total = 0;
 for (let index = 0; index < 300; index++) { total += consume(make(index)); }
 console.log(String(total) + " " + String(lone.next === undefined));
+`},
+	{"q1_region_omitted_stops", `interface Box { kind: number; next?: Box | undefined }
+function make(kind: number): Box { return { kind: kind }; }
+function consume(b: Box): number { b.next = { kind: b.kind + 1, next: undefined }; return b.kind; }
+let total = 0;
+for (let index = 0; index < 300; index++) { total += consume(make(index)); }
+console.log(String(total));
+`},
+	{"q1_region_view_string_twice", slotProbeElement + `interface Element extends Declaration { _elementBrand: undefined; tag?: string | undefined; label: string; }
+function isElement(n: Node): n is Element { return n.kind === 171; }
+interface Named extends Node { tag?: string | undefined; label: string; }
+function make(pos: number): Named { return { kind: 171, pos: pos, tag: undefined, label: "l" + String(pos) }; }
+function consume(n: Node): number { if (isElement(n)) { n.tag = "a" + String(n.pos); n.tag = "b" + String(n.pos); } return n.pos; }
+let total = 0;
+for (let index = 0; index < 300; index++) { total += consume(make(index)); }
+console.log(String(total));
 `},
 	{"q1_region_view_string", slotProbeElement + `interface Element extends Declaration { _elementBrand: undefined; tag?: string | undefined; label: string; }
 function isElement(n: Node): n is Element { return n.kind === 171; }
@@ -128,7 +144,7 @@ put(box, 5);
 console.log(String(box.count));
 `},
 	// Q3: graph programs, an object on a cycle with a never-written optional reference field written.
-	{"q3_graph_literal_plain", `interface Link { kind: number; next?: Link; other?: Link }
+	{"q3_graph_literal_plain", `interface Link { kind: number; next?: Link | undefined; other?: Link | undefined }
 function link(x: Link, y: Link): void { x.other = y; }
 function turn(index: number): number {
   const a: Link = { kind: index, next: undefined, other: undefined };
@@ -177,6 +193,43 @@ let total = 0;
 for (let index = 0; index < 1000; index++) { total += turn(index); }
 console.log(String(total) + " " + String(empty.other === undefined));
 `},
+	{"q3_graph_class_view_string", slotProbeElement + `interface Element extends Declaration { _elementBrand: undefined; name?: string; label: string; }
+function isElement(n: Node): n is Element { return n.kind === 171; }
+class Link { readonly kind = 171; readonly pos = 1; next?: Link; name?: string; label = "l"; }
+function rename(n: Node, to: string): void { if (isElement(n)) { n.name = to; } }
+function turn(index: number): number {
+  const a = new Link();
+  const b = new Link();
+  a.next = b;
+  b.next = a;
+  rename(a, "a" + String(index));
+  rename(a, "b" + String(index));
+  rename(b, "c" + String(index));
+  return String(a.name).length + String(b.name).length;
+}
+let total = 0;
+for (let index = 0; index < 1000; index++) { total += turn(index); }
+console.log(String(total));
+`},
+	{"q3_graph_class_plain_twice", `interface Linked { other?: Link }
+class Link { kind = 1; next?: Link; other?: Link; }
+function link(x: Linked, to: Link): void { x.other = to; }
+function turn(index: number): number {
+  const a = new Link();
+  const b = new Link();
+  const c = new Link();
+  a.next = b;
+  b.next = a;
+  link(a, c);
+  link(a, b);
+  link(c, c);
+  return a.other === b && c.other === c ? 1 : 0;
+}
+const empty: Linked = {};
+let total = 0;
+for (let index = 0; index < 1000; index++) { total += turn(index); }
+console.log(String(total) + " " + String(empty.other === undefined));
+`},
 	// Q4: a class declaring f?: T never assigned, written through a view of an interface declaring f? too.
 	{"q4_class_object_view", slotProbeElement + `class Holder { value = 1; }
 interface Element extends Declaration { _elementBrand: undefined; parent?: Holder; label: string; }
@@ -218,11 +271,39 @@ for (let index = 0; index < 200; index++) {
 }
 console.log(String(total));
 `},
+	{"q4_base_class_string_view", slotProbeElement + `interface Element extends Declaration { _elementBrand: undefined; name?: string; label: string; }
+function isElement(n: Node): n is Element { return n.kind === 171; }
+function rename(n: Node, to: string): void { if (isElement(n)) { n.name = to; } }
+class Base { readonly kind = 171; readonly pos = 1; name?: string; }
+class Derived extends Base { label = "l"; }
+let last = "";
+for (let index = 0; index < 200; index++) {
+  const derived = new Derived();
+  rename(derived, "a" + String(index));
+  rename(derived, "b" + String(index));
+  last = String(derived.name);
+}
+console.log(last);
+`},
+	{"q4_class_object_plain", `class Holder { value = 3; }
+interface HasParent { parent?: Holder }
+class Box { kind = 1; parent?: Holder; }
+function attach(x: HasParent, h: Holder): void { x.parent = h; }
+const empty: HasParent = {};
+let total = 0;
+for (let index = 0; index < 200; index++) {
+  const box = new Box();
+  attach(box, new Holder());
+  attach(box, new Holder());
+  total += box.parent === undefined ? 0 : box.parent.value;
+}
+console.log(String(total) + " " + String(empty.parent === undefined));
+`},
 }
 
 // slotProbeMarkers is the emitted C lines that say where a row's store goes: a checked view's write, a
 // region literal's unzeroed allocation, a construction, and every scalar slot store.
-var slotProbeMarkers = []string{"adamic_object_view_write(", "adamic_object_new_filled_in", "adamic_object_new_in(", "adamic_object_construct(", "->boolean = ", "->maybe_boolean = ", "adamic_region_end(", "adamic_object_new_graph"}
+var slotProbeMarkers = []string{"adamic_object_view_write(", "adamic_object_new_filled_in", "adamic_object_new_in(", "adamic_object_construct(", "->boolean = ", "->maybe_boolean = ", "adamic_region_end(", "adamic_object_new_graph", "adamic_graph_drop("}
 
 func slotProbeQuote(text []byte) string {
 	lines := strings.Split(strings.TrimRight(string(text), "\n"), "\n")
@@ -284,7 +365,14 @@ func TestZZSlotProbe(t *testing.T) {
 			}
 			counted := execute(t, binary)
 			report := leakcheck.Unbalanced(leakcheck.Run{Stdout: counted.stdout, Stderr: counted.stderr, ExitCode: counted.exitCode})
-			t.Logf("PROBE %s counted: exit %d stdout %q stderr %q unbalanced=%q", row.name, counted.exitCode, counted.stdout, slotProbeQuote(counted.stderr), report)
+			var kept []string
+			for _, line := range strings.Split(string(counted.stderr), "\n") {
+				if strings.HasPrefix(line, "adamic: graph region:") {
+					continue
+				}
+				kept = append(kept, line)
+			}
+			t.Logf("PROBE %s counted: exit %d stdout %q stderr %q unbalanced=%q", row.name, counted.exitCode, counted.stdout, strings.Join(kept, " | "), report)
 		})
 	}
 }
