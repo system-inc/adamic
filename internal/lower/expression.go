@@ -88,7 +88,8 @@ func (l *lowering) representationReason(proven *checker.Type) (ir.Type, bool, st
 		}
 	}
 	if l.nodeBufferType(proven, "Buffer") {
-		return ir.Array, true, ""
+		// A Buffer is a Uint8Array natively, as on Node; typedArrayKind stays Buffer-blind (typed_arrays.go).
+		return ir.Uint8Array, true, ""
 	}
 	if flags&checker.TypeFlagsObject != 0 && (l.enumerationRecordStorageType(proven) || l.enumerationReadonlyType(proven)) {
 		return ir.Object, true, ""
