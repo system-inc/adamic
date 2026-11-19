@@ -316,6 +316,13 @@ func generate(repository, lowerInput string) []byte {
 						// sharing the holder can't write into another lowering's answer, and the PlaceholderSources and
 						// PlaceholderViews it holds are deep copies with the rest of its IR.
 						expr = "value." + id.Name
+					} else if name == "lowering" && id.Name == "viewedElements" && printed(field.Type) == "*viewedElementsCache" {
+						// Shared on purpose, as placeholderSlots is: collectViewedElements' answer by checker and
+						// program, a function of the two alone for a fresh lowering, which any other neither reads nor
+						// fills (viewed_elements_cache.go, #hjspb3b). A lowering only ever takes copies out, so a copy
+						// sharing the holder can't write into another lowering's answer, and the fields a hit installs
+						// are deep copies with the rest of the lowering.
+						expr = "value." + id.Name
 					} else {
 						expr = g.copyField(name, id, field)
 					}
