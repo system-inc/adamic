@@ -1,0 +1,101 @@
+{
+  "checker_diagnostics": 0,
+  "units": 195,
+  "total_findings": 438,
+  "sites": [
+    {
+      "line": 1994,
+      "source": "i = parseOptionValue(args, i, watchOptionsDidYouMeanDiagnostics, watchOpt, watchOptions || (watchOptions = {}), errors);",
+      "findings": [
+        {
+          "where": "commandLineParser.ts:1994:100",
+          "unit": "commandLineParser.ts:1977:5",
+          "phase": "refusal_scan",
+          "kind": "Refused",
+          "reason": "a value of type WatchOptions seen as OptionsBase, which can write TsConfigSourceFile | CompilerOptionsValue where CompilerOptionsValue is read"
+        },
+        {
+          "where": "commandLineParser.ts:1994:100",
+          "unit": "commandLineParser.ts:1977:5",
+          "phase": "refusal_scan",
+          "kind": "Refused",
+          "reason": "a value of type WatchOptions | undefined seen as OptionsBase, which can write TsConfigSourceFile | CompilerOptionsValue where CompilerOptionsValue is read"
+        },
+        {
+          "where": "commandLineParser.ts:1994:117",
+          "unit": "commandLineParser.ts:1959:1",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "reason": "an assignment result with different storage"
+        },
+        {
+          "where": "commandLineParser.ts:1994:117",
+          "unit": "commandLineParser.ts:1977:5",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "reason": "an assignment result with different storage"
+        }
+      ]
+    },
+    {
+      "line": 2712,
+      "source": "assign(config.compilerOptions, optionMapToObject(serializeCompilerOptions(impliedCompilerOptions, pathOptions)));",
+      "findings": [
+        {
+          "where": "commandLineParser.ts:2712:79",
+          "unit": "commandLineParser.ts:2660:1",
+          "phase": "refusal_scan",
+          "kind": "NotYet",
+          "reason": "a Record<string, CompilerOptionsValue> seen as CompilerOptions (fixed objects and records have different storage; copy explicitly)"
+        },
+        {
+          "where": "commandLineParser.ts:2712:12",
+          "unit": "commandLineParser.ts:2660:1",
+          "phase": "lowering",
+          "kind": "NotYet",
+          "reason": "reading config"
+        }
+      ]
+    },
+    {
+      "line": 2792,
+      "source": "return serializeOptionBaseObject(options, getWatchOptionsNameMap());",
+      "findings": [
+        {
+          "where": "commandLineParser.ts:2792:38",
+          "unit": "commandLineParser.ts:2791:1",
+          "phase": "refusal_scan",
+          "kind": "Refused",
+          "reason": "a value of type WatchOptions seen as OptionsBase, which can write TsConfigSourceFile | CompilerOptionsValue where CompilerOptionsValue is read"
+        }
+      ]
+    },
+    {
+      "line": 3275,
+      "source": "return handleOptionConfigDirTemplateSubstitution(watchOptions, configDirTemplateSubstitutionWatchOptions, basePath) as WatchOptions | undefined;",
+      "findings": [
+        {
+          "where": "commandLineParser.ts:3275:12",
+          "unit": "commandLineParser.ts:3271:1",
+          "phase": "refusal_scan",
+          "kind": "Refused",
+          "reason": "a cast the runtime can't check"
+        },
+        {
+          "where": "commandLineParser.ts:3275:54",
+          "unit": "commandLineParser.ts:3271:1",
+          "phase": "refusal_scan",
+          "kind": "Refused",
+          "reason": "a value of type WatchOptions | undefined seen as OptionsBase | undefined, which can write TsConfigSourceFile | CompilerOptionsValue where CompilerOptionsValue is read"
+        },
+        {
+          "where": "commandLineParser.ts:3275:12",
+          "unit": "commandLineParser.ts:3271:1",
+          "phase": "lowering",
+          "kind": "Refused",
+          "reason": "a cast the runtime can't check"
+        }
+      ]
+    }
+  ]
+}
