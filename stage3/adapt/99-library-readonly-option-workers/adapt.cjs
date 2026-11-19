@@ -23,11 +23,9 @@ const relative = 'src/compiler/commandLineParser.ts';
 const fileName = path.join(tree, relative);
 const text = fs.readFileSync(fileName, 'utf8');
 const source = ts.createSourceFile(fileName, text, ts.ScriptTarget.Latest, true);
-// Each worker's options parameter as upstream writes it and as this leaves it, and the substitution worker's result.
+// Variant B (scratch): serializeOptionBaseObject alone.
 const workers = [
     { name: 'serializeOptionBaseObject', before: 'OptionsBase', after: 'Readonly<OptionsBase>' },
-    { name: 'handleOptionConfigDirTemplateSubstitution', before: 'OptionsBase | undefined', after: 'Readonly<OptionsBase> | undefined', result: 'Readonly<OptionsBase> | undefined' },
-    { name: 'serializeCompilerOptions', before: 'CompilerOptions', after: 'Readonly<CompilerOptions>' },
 ];
 const edits = [], report = [];
 for (const worker of workers) {
