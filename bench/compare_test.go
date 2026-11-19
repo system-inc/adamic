@@ -1,6 +1,7 @@
 package main
 
 import (
+	"slices"
 	"strings"
 	"testing"
 	"time"
@@ -395,5 +396,27 @@ func TestThePlantIsItsMilliseconds(t *testing.T) {
 	loop := plantLoop(95)
 	if !strings.Contains(loop, "< 95)") || strings.Contains(loop, "console") {
 		t.Fatalf("the plant for 95 ms was %q; want a 95 ms spin that prints nothing", loop)
+	}
+}
+
+// A large output is kept as its first line, its length and its sha256, so two runs that printed the
+// same bytes still compare equal, one byte apart compares unequal, and nothing near the output's size
+// is held per run.
+func TestALargeOutputIsKeptAsItsDigest(t *testing.T) {
+	t.Parallel()
+	large := []byte("first line\n" + strings.Repeat("x", outputKeptWhole))
+	other := slices.Clone(large)
+	other[len(other)-1] = 'y'
+	if keptOutput(large) != keptOutput(slices.Clone(large)) {
+		t.Fatal("the same large output kept two different ways")
+	}
+	if keptOutput(large) == keptOutput(other) {
+		t.Fatal("two large outputs one byte apart kept the same way")
+	}
+	if kept := keptOutput(large); len(kept) > 200 || firstLine(kept) != "first line" {
+		t.Fatalf("a large output kept as %d bytes with first line %q; want a short digest under its own first line", len(kept), firstLine(kept))
+	}
+	if small := "42\n"; keptOutput([]byte(small)) != small {
+		t.Fatalf("a small output kept as %q; want it whole", keptOutput([]byte(small)))
 	}
 }
