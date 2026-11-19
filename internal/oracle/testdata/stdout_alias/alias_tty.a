@@ -1,0 +1,6 @@
+// #1trc7d3: the alias's isTTY and columns read as process.stdout's do. The oracle pipes stdout, so neither is set.
+import process from 'node:process';
+
+const stdout = process.stdout;
+console.log(stdout.isTTY === true ? 'a terminal' : 'not a terminal');
+console.log(stdout.columns === undefined ? 'no columns' : 'columns');
