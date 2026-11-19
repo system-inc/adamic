@@ -16,25 +16,25 @@ go build -buildvcs=false -o "$T/adamic" ./cmd/adamic || { echo "FAIL adamic buil
 "$T/fasta" 1000000 > "$T/in.txt"
 mkdir -p bench/holdout/patterns
 operations=(
-	'base|'
-	'match|/agggtaaa|tttaccct/ig'
-	'match|/[cgt]gggtaaa|tttaccc[acg]/ig'
-	'match|/a[act]ggtaaa|tttacc[agt]t/ig'
-	'match|/ag[act]gtaaa|tttac[agt]ct/ig'
-	'match|/agg[act]taaa|ttta[agt]cct/ig'
-	'match|/aggg[acg]aaa|ttt[cgt]ccct/ig'
-	'match|/agggt[cgt]aa|tt[acg]accct/ig'
-	'match|/agggta[cgt]a|t[acg]taccct/ig'
-	'match|/agggtaa[cgt]|[acg]ttaccct/ig'
-	"replace|/tHa[Nt]/g|'<4>'"
-	"replace|/aND|caN|Ha[DS]|WaS/g|'<3>'"
-	"replace|/a[NSt]|BY/g|'<2>'"
-	"replace|/<[^>]*>/g|'|'"
-	"replace|/\\|[^|][^|]*\\|/g|'-'"
+	'base@@'
+	'match@@/agggtaaa|tttaccct/ig'
+	'match@@/[cgt]gggtaaa|tttaccc[acg]/ig'
+	'match@@/a[act]ggtaaa|tttacc[agt]t/ig'
+	'match@@/ag[act]gtaaa|tttac[agt]ct/ig'
+	'match@@/agg[act]taaa|ttta[agt]cct/ig'
+	'match@@/aggg[acg]aaa|ttt[cgt]ccct/ig'
+	'match@@/agggt[cgt]aa|tt[acg]accct/ig'
+	'match@@/agggta[cgt]a|t[acg]taccct/ig'
+	'match@@/agggtaa[cgt]|[acg]ttaccct/ig'
+	"replace@@/tHa[Nt]/g@@'<4>'"
+	"replace@@/aND|caN|Ha[DS]|WaS/g@@'<3>'"
+	"replace@@/a[NSt]|BY/g@@'<2>'"
+	"replace@@/<[^>]*>/g@@'|'"
+	"replace@@/\\|[^|][^|]*\\|/g@@'-'"
 )
 index=0
 for operation in "${operations[@]}"; do
-	kind=${operation%%|*}; rest=${operation#*|}
+	kind=${operation%%@@*}; rest=${operation#*@@}
 	source="bench/holdout/patterns/op$index.a"
 	{
 		echo "import { panic, programArguments, readTextFile } from 'adamic';"
@@ -44,7 +44,7 @@ for operation in "${operations[@]}"; do
 		case $kind in
 			base) echo "console.log(\`\${data.length}\`);" ;;
 			match) echo "const m = data.match($rest);"; echo "console.log(\`\${m ? m.length : 0}\`);" ;;
-			replace) pattern=${rest%|*}; with=${rest##*|}; echo "console.log(\`\${data.replace($pattern, $with).length}\`);" ;;
+			replace) pattern=${rest%@@*}; with=${rest##*@@}; echo "console.log(\`\${data.replace($pattern, $with).length}\`);" ;;
 		esac
 	} > "$source"
 	"$T/adamic" build "$source" -o "$T/op$index" > "$T/b$index.log" 2>&1 || { echo "FAIL build op$index ($operation): $(head -c 300 "$T/b$index.log")"; index=$((index + 1)); continue; }
