@@ -395,7 +395,44 @@ func (l *lowering) nodeRealpathValue(node *ast.Node) (ir.Expression, bool, error
 // is backpressure, while the native primitive reports blocking success. Never expose that value.
 func (l *lowering) nodeStdoutWriteMember(node *ast.Node) bool {
 	node = ast.SkipParentheses(node)
-	return node.Kind == ast.KindPropertyAccessExpression && l.nodeLibraryMember(node) == "node:net.Socket.write" && l.nodeLibraryMember(node.AsPropertyAccessExpression().Expression) == "node:process.Process.stdout"
+	return node.Kind == ast.KindPropertyAccessExpression && l.nodeLibraryMember(node) == "node:net.Socket.write" && l.nodeStdoutReceiver(node.AsPropertyAccessExpression().Expression)
+}
+
+// nodeStdoutReceiver reports whether node is stdout as a receiver: the library's process.stdout, or a
+// const alias of it (nodeStdoutAlias).
+func (l *lowering) nodeStdoutReceiver(node *ast.Node) bool {
+	return l.nodeLibraryMember(node) == "node:process.Process.stdout" || l.nodeStdoutAliasOf(node) != nil
+}
+
+// nodeStdoutAlias reports whether declaration is exactly const <name> = process.stdout: a const, an
+// identifier name, and an initializer that is the library's process.stdout through a plain property
+// access (#1trc7d3). Such a binding is stdout itself. It's lowered to nothing, each use of it is admitted
+// only as the receiver of write, isTTY or columns, as process.stdout's own are, and any other use stops by
+// name (nodeStdoutUseRefusal). A let, a destructuring, a parameter or a field isn't one, and keeps the stop
+// process.stdout read as a value has.
+func (l *lowering) nodeStdoutAlias(declaration *ast.Node) bool {
+	if declaration == nil || declaration.Kind != ast.KindVariableDeclaration || !ast.IsIdentifier(declaration.Name()) || declaration.Parent == nil || declaration.Parent.Flags&ast.NodeFlagsConst == 0 {
+		return false
+	}
+	initializer := declaration.Initializer()
+	if initializer == nil {
+		return false
+	}
+	initializer = ast.SkipParentheses(initializer)
+	return initializer.Kind == ast.KindPropertyAccessExpression && initializer.Flags&ast.NodeFlagsOptionalChain == 0 && l.nodeLibraryMember(initializer) == "node:process.Process.stdout"
+}
+
+// nodeStdoutAliasOf is the alias declaration (nodeStdoutAlias) an identifier names, or nil.
+func (l *lowering) nodeStdoutAliasOf(node *ast.Node) *ast.Node {
+	node = ast.SkipParentheses(node)
+	if !ast.IsIdentifier(node) {
+		return nil
+	}
+	symbol := l.symbol(node)
+	if symbol == nil || len(symbol.Declarations) != 1 || !l.nodeStdoutAlias(symbol.Declarations[0]) {
+		return nil
+	}
+	return symbol.Declarations[0]
 }
 
 func (l *lowering) nodeStdoutWriteRefusal(node *ast.Node) error {
@@ -446,12 +483,12 @@ func (l *lowering) nodeStdoutWrite(node *ast.Node) (ir.Expression, bool, error) 
 // Only stdout's library member is bound. Streams remain opaque values.
 func (l *lowering) nodeStdoutIsTTYMember(node *ast.Node) bool {
 	node = ast.SkipParentheses(node)
-	return node.Kind == ast.KindPropertyAccessExpression && l.nodeLibraryMember(node) == "node:tty.WriteStream.isTTY" && l.nodeLibraryMember(node.AsPropertyAccessExpression().Expression) == "node:process.Process.stdout"
+	return node.Kind == ast.KindPropertyAccessExpression && l.nodeLibraryMember(node) == "node:tty.WriteStream.isTTY" && l.nodeStdoutReceiver(node.AsPropertyAccessExpression().Expression)
 }
 
 func (l *lowering) nodeStdoutColumnsMember(node *ast.Node) bool {
 	node = ast.SkipParentheses(node)
-	return node.Kind == ast.KindPropertyAccessExpression && l.nodeLibraryMember(node) == "node:tty.WriteStream.columns" && l.nodeLibraryMember(node.AsPropertyAccessExpression().Expression) == "node:process.Process.stdout"
+	return node.Kind == ast.KindPropertyAccessExpression && l.nodeLibraryMember(node) == "node:tty.WriteStream.columns" && l.nodeStdoutReceiver(node.AsPropertyAccessExpression().Expression)
 }
 
 func (l *lowering) nodeStdoutTTYMember(node *ast.Node) bool {
@@ -517,6 +554,15 @@ func (l *lowering) nodeStdoutUseRefusal(node *ast.Node) (bool, error) {
 	if receiver.Parent != nil && l.nodeStdoutTTYMember(receiver.Parent) && ast.SkipParentheses(receiver.Parent.AsPropertyAccessExpression().Expression) == access {
 		return true, l.nodeStdoutIsTTYRefusal(receiver.Parent)
 	}
+	// A const alias of process.stdout is stdout itself (nodeStdoutAlias). As the receiver of write it's
+	// judged by the write's own rule when the access is visited; anywhere else it stops by name, so
+	// stdout stays a receiver and never a value (#yjh36rw's ruling).
+	if alias := l.nodeStdoutAliasOf(access); alias != nil && access != alias.Name() {
+		if receiver.Parent != nil && l.nodeStdoutWriteMember(receiver.Parent) && ast.SkipParentheses(receiver.Parent.AsPropertyAccessExpression().Expression) == access {
+			return false, nil
+		}
+		return true, l.notYet(access, "node:process.Process.stdout, bound to "+access.Text()+", used other than as the receiver of write, isTTY or columns")
+	}
 	name := l.nodeLibraryMember(access)
 	switch name {
 	case "node:tty.WriteStream.isTTY", "node:tty.ReadStream.isTTY":
@@ -543,6 +589,9 @@ func (l *lowering) nodeStdoutUseRefusal(node *ast.Node) (bool, error) {
 		}
 		if outer.Parent != nil && l.nodeStdoutTTYMember(outer.Parent) {
 			return true, l.nodeStdoutIsTTYRefusal(outer.Parent)
+		}
+		if outer.Parent != nil && l.nodeStdoutAlias(outer.Parent) && ast.SkipParentheses(outer.Parent.Initializer()) == access {
+			return true, nil // const stdout = process.stdout: each use of the name is judged where it stands
 		}
 		if outer.Parent == nil || !l.nodeStdoutWriteMember(outer.Parent) {
 			return true, l.notYet(access, "node:process.Process.stdout used as a value")

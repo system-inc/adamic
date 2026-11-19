@@ -1,0 +1,14 @@
+// #1trc7d3: const stdout = process.stdout is stdout itself, written to from the module and from a function, in
+// call order beside console.log.
+import process from 'node:process';
+
+const stdout = process.stdout;
+
+function line(text: string): void {
+	stdout.write(text + '\n');
+}
+
+stdout.write('a\n');
+line('b');
+console.log('c');
+stdout.write('d\n');
