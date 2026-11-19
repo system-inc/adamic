@@ -314,6 +314,9 @@ func (l *lowering) castProof(node *ast.Node) (castProof, error) {
 			}
 			return proof, err
 		}
+		if census72Optional {
+			target = census72ViewTarget(l, source, target)
+		}
 		from, fromKnown := l.representation(source)
 		to, toKnown := l.representation(target)
 		if source.Flags()&checker.TypeFlagsObject != 0 && target.Flags()&checker.TypeFlagsObject != 0 && fromKnown && toKnown && from == ir.Object && to == ir.Object && !isClassInstance(target) && (l.checker.IsTypeAssignableTo(target, source) || census72Optional) && l.widened(target, source, map[[2]*checker.Type]bool{}) == nil && len(l.checker.GetIndexInfosOfType(target)) == 0 {
@@ -516,3 +519,17 @@ func (l *lowering) checkedClassCast(node *ast.Node, value ir.Expression, targets
 
 // census72 switches on #0b9xqhh's census prototype (ADAMIC_CENSUS_72=1). It's a measurement head, never landed.
 var census72 = os.Getenv("ADAMIC_CENSUS_72") == "1"
+
+// census72ViewTarget is the object a value of source is viewed as in target: target itself, or, where target
+// is one object type beside undefined or null and source holds neither, that object type (a read through a
+// `T | undefined` slot of a value that's there reads T's fields). Census prototype only.
+func census72ViewTarget(l *lowering, source, target *checker.Type) *checker.Type {
+	if target.Flags()&checker.TypeFlagsUnion == 0 || l.includesUndefined(source) || l.includesNull(source) {
+		return target
+	}
+	present := l.checker.GetNonNullableType(target)
+	if present.Flags()&checker.TypeFlagsUnion != 0 || present.Flags()&checker.TypeFlagsObject == 0 {
+		return target
+	}
+	return present
+}

@@ -17,6 +17,9 @@ func viewInterfaceType(target *checker.Type) bool {
 // An untagged structural cast installs the same checked reads without a tag test.
 // Admission preserves nominal identity and the existing writable-slot restrictions.
 func (l *lowering) structuralViewCast(node *ast.Node, value ir.Expression, source, target *checker.Type) (ir.Expression, error) {
+	if census72 {
+		target = census72ViewTarget(l, source, target)
+	}
 	if value.Type() != ir.Object || source.Flags()&checker.TypeFlagsObject == 0 || target.Flags()&checker.TypeFlagsObject == 0 || isClassInstance(target) || !l.checker.IsTypeAssignableTo(target, source) && !(census72 && l.checker.IsTypeAssignableTo(source, target)) {
 		return nil, nil
 	}
