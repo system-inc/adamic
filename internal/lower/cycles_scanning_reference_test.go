@@ -1801,6 +1801,11 @@ func scanLowerWithElementKey(key *viewElementKey, program *load.Program, typeChe
 	if err := lowering.checkBoundArguments(); err != nil {
 		return nil, err
 	}
+	// As lowerWithElementKey does: a named write through a kind-checked cast's union is judged by reach once the
+	// program is lowered, and refuses alike in both modes (#b5w3ycg head 2).
+	if err := lowering.checkKindUnionWriteReach(); err != nil {
+		return nil, err
+	}
 	// As lowerWithElementKey does: it numbers a copy of the program, never the program, and stops a
 	// presence test of an optional member alike in both modes (#p2n17c4 shape 1).
 	if err := lowering.checkOptionalMemberPresence(); err != nil {
