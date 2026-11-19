@@ -140,9 +140,18 @@ func (l *lowering) checkLazyViewReads() error {
 	if err := l.checkViewArrays(); err != nil {
 		return err
 	}
+	return l.judgeCheckedViewReads(nil)
+}
+
+// judgeCheckedViewReads is checkLazyViewReads' rule for each checked read, and emission's
+// (unemittableCheckedViewRead): an unsupported contract family or a mutable array field where the
+// receiver may hold a viewed allocation, or a read emission can't express. Only, when set, says
+// which reads to judge: checkViewWidenedReads judges the reads it marked checked after findCycles
+// ran this over the rest.
+func (l *lowering) judgeCheckedViewReads(only func(ir.Property) bool) error {
 	program := l.result
 	if len(program.ViewOrigins) == 0 {
-		return unemittableCheckedViewRead(program)
+		return unemittableCheckedViewRead(program, only)
 	}
 	graph, viewed, unknown := l.viewedAllocations(program, true)
 	// Wider interfaces and instantiated helpers can give the same member a
@@ -171,7 +180,7 @@ func (l *lowering) checkLazyViewReads() error {
 
 		switch read := node.(type) {
 		case ir.Property:
-			if viewReadOf(program, read) != viewReadChecks {
+			if viewReadOf(program, read) != viewReadChecks || only != nil && !only(read) {
 				return true
 			}
 			if err := l.callableProducerViewRefusal(graph, read); err != nil {
@@ -227,7 +236,7 @@ func (l *lowering) checkLazyViewReads() error {
 	if refused != nil {
 		return refused
 	}
-	return unemittableCheckedViewRead(program)
+	return unemittableCheckedViewRead(program, only)
 }
 
 // viewedAllocations is every allocation a view origin can reach, through the
@@ -338,7 +347,12 @@ func (graph *allocationFlowGraph) viewedFromNoting(origins []ir.Expression, thro
 // its declared union holds undefined. A read through ?. reads undefined from an absent receiver
 // and checks a present one as any other read, through the adapter or in place. Neither carries a
 // callable's recorded signature.
-func unemittableCheckedViewRead(program *ir.Program) error {
+//
+// Only, when given and set, limits the judgment to the reads it says yes to (judgeCheckedViewReads).
+func unemittableCheckedViewRead(program *ir.Program, only ...func(ir.Property) bool) error {
+	judged := func(read ir.Property) bool {
+		return len(only) == 0 || only[0] == nil || only[0](read)
+	}
 	var refused error
 	inspect := func(node any) bool {
 		if refused != nil {
@@ -350,14 +364,14 @@ func unemittableCheckedViewRead(program *ir.Program) error {
 			// has no contract for a callable that may be missing (readUnionViewAt's).
 			// ir.MethodCallee, so a narrowed callee's read is judged too and never reaches the emitters'
 			// compiler-bug panic for an optional call through a checked view (#6na4x1b).
-			if read, _, isMethod := ir.MethodCallee(call.Closure); isMethod && read.View != "" && viewReadOf(program, read) == viewReadChecks {
+			if read, _, isMethod := ir.MethodCallee(call.Closure); isMethod && read.View != "" && viewReadOf(program, read) == viewReadChecks && judged(read) {
 				refused = &NotYet{Where: read.ViewWhere, What: "a checked view read of optional field " + read.Name + " of callable type " + read.ViewType}
 				return false
 			}
 			return true
 		}
 		read, isProperty := node.(ir.Property)
-		if !isProperty || read.View == "" || read.Method && !read.Absent || viewReadOf(program, read) != viewReadChecks {
+		if !isProperty || read.View == "" || read.Method && !read.Absent || viewReadOf(program, read) != viewReadChecks || !judged(read) {
 			return true
 		}
 		contract := emittedViewContract(program, read)
