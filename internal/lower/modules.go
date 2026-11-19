@@ -140,7 +140,7 @@ func (l *lowering) declareModule(statements []*ast.Node) error {
 					}
 					continue
 				}
-				if ast.IsIdentifier(declaration.Name()) {
+				if ast.IsIdentifier(declaration.Name()) && !l.nodeStdoutAlias(declaration) {
 					local, err := l.declareLocal(declaration.Name())
 					if err != nil {
 						return err
