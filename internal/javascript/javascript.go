@@ -710,12 +710,24 @@ func (e *emitter) statement(at *ir.Statement) {
 			// An iterable view's dispatch: its first statement declares the local it holds, and every
 			// way out of the rest closes what that holds, as a for-of's exit calls return().
 			e.nested(statement.Body[:1])
+			// The close calls a generator's return(), which runs the finally around the yield it is
+			// suspended at, once a yield may sit inside a try (#qk8rztp S5), so the close is skipped while
+			// a panic unwinds, as a try's finally body is (docs/rulings.md). A catch around the rest
+			// records in a flag of this block's own whether what it saw is a panic, by the value's
+			// identity and never module state, and throws it on. Under Node a panic exits where it
+			// stands and never unwinds, so the flag stays false and the close runs as it always did.
+			e.panicIdentityUsed = true
+			panicking, unwinding := e.temporary(), e.temporary()
+			e.line("\tlet %s = false;", panicking)
 			e.line("\ttry {")
 			e.indent++
 			e.nested(statement.Body[1:])
 			e.indent--
+			e.line("\t} catch (%s) {", unwinding)
+			e.line("\t\tif (adamicIsPanic(%s)) %s = true;", unwinding, panicking)
+			e.line("\t\tthrow %s;", unwinding)
 			e.line("\t} finally {")
-			e.line("\t\tadamicIteratorClose(%s);", e.value(ir.Read{Local: statement.Closes - 1, Of: ir.Object}))
+			e.line("\t\tif (!%s) adamicIteratorClose(%s);", panicking, e.value(ir.Read{Local: statement.Closes - 1, Of: ir.Object}))
 			e.line("\t}")
 		} else {
 			e.nested(statement.Body)
