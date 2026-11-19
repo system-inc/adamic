@@ -51,6 +51,10 @@ while (queue.length) {
         const specifier = imported.fileName;
         if (specifier.startsWith(".")) {
             const resolved = path.resolve(path.dirname(file), specifier.replace(/\.js$/, ".ts"));
+            // A declaration-only module (adaptation 99's ../recordreplay.d.ts, imported as `import type {}`) has nothing
+            // to build: transpiling erases the import, so it needs a .d.ts, not a .ts.
+            const declaration = path.resolve(path.dirname(file), specifier.replace(/\.js$/, ".d.ts"));
+            if (!fs.existsSync(resolved) && fs.existsSync(declaration)) continue;
             if (!fs.existsSync(resolved)) problems.push(`${path.relative(srcDir, file)}: ${specifier} has no .ts beside it`);
             else if (!seen.has(resolved)) {
                 seen.add(resolved);
