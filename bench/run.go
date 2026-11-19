@@ -28,6 +28,7 @@ package main
 import (
 	"bytes"
 	"context"
+	"crypto/sha256"
 	"errors"
 	"flag"
 	"fmt"
@@ -360,7 +361,22 @@ func run(command []string, timeout time.Duration, settings ...string) measuremen
 	if strings.TrimSpace(stdout.String()) == "" {
 		return measurement{failure: "printed nothing"}
 	}
-	return measurement{elapsed: elapsed, user: process.ProcessState.UserTime(), peak: peakResident(process.ProcessState), stdout: stdout.String()}
+	return measurement{elapsed: elapsed, user: process.ProcessState.UserTime(), peak: peakResident(process.ProcessState), stdout: keptOutput(stdout.Bytes())}
+}
+
+// outputKeptWhole is the most of a run's standard output kept as it was printed.
+const outputKeptWhole = 64 << 10
+
+// keptOutput is what a measurement keeps of a run's standard output, which is only ever compared for
+// equality and quoted by its first line: the output itself when it's small, and past outputKeptWhole
+// its first line, its length and its sha256, which compare equal exactly when the outputs do. A run
+// keeps every sample's measurements, and holdout/fasta prints 254 MB a run, so keeping it whole held
+// tens of gigabytes over one comparison.
+func keptOutput(output []byte) string {
+	if len(output) <= outputKeptWhole {
+		return string(output)
+	}
+	return fmt.Sprintf("%s\n(%d bytes in all, sha256 %x)\n", firstLine(string(output)), len(output), sha256.Sum256(output))
 }
 
 // environment is this process's, without what would change how a runtime runs: BUN_OPTIONS
