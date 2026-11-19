@@ -150,13 +150,14 @@ console.log(String(access.flags) + ' ' + String(built.flags));
 	}
 }
 
-// tsc's recursive describe, a child read out of the cast's view passed back as a Node and switched on by kind, stays
-// NotYet: the child's kind is then read through Node, which no view checks, and the child may be a value a view
-// checked (#80cs7rz's widened read, checkViewWidenedReads). Lower's #zpzm9ta makes that read a checked one, and
-// this pin goes when it lands. Until then the agreeing fixture, cast_kind_union.ts, prints a child through its view.
-func TestKindUnionCastRecursiveReadStaysNotYet(t *testing.T) {
+// tsc's recursive describe, a child read out of the cast's view passed back as a Node and switched on by kind: the
+// child's kind is then read through Node, which no view checks, and the child may be a value a view checked
+// (#80cs7rz's widened read, checkViewWidenedReads). It was NotYet there until #zpzm9ta made that read checked where
+// it's made, so it lowers now and agrees with Node, natively too. Mutant: readiness stripping a marked read's view
+// anyway, and widenedReadsOf fails it.
+func TestKindUnionCastRecursiveReadIsChecked(t *testing.T) {
 	t.Parallel()
-	_, err := lowerSourceAs(t, kindUnionModel+`function describe(node: Node): string {
+	program := lowersAndAgreesWithNodeAs(t, kindUnionModel+`function describe(node: Node): string {
 	switch (node.kind) {
 		case SyntaxKind.PropertyAccessExpression:
 		case SyntaxKind.ElementAccessExpression: {
@@ -172,9 +173,11 @@ const id: Identifier = { kind: SyntaxKind.Identifier, pos: 1, end: 2, text: 'a' 
 const property: PropertyAccessExpression = { kind: SyntaxKind.PropertyAccessExpression, pos: 0, end: 3, expression: id, name: id };
 console.log(describe(property));
 `, ".ts")
-	var notYet *NotYet
-	if !errors.As(err, &notYet) || !strings.Contains(err.Error(), "which may hold a checked view's value") {
-		t.Fatalf("want NotYet at the read through Node, which may hold a checked view's value, got %v", err)
+	if checked, _ := widenedReadsOf(t, program, "kind"); checked == 0 {
+		t.Fatal("describe's node.kind isn't a widened read checked where it's made")
+	}
+	if code, out, errs := brandedNative(t, program); code != 0 || out != "a.a\n" {
+		t.Fatalf("sanitized native exit %d, stdout %q, stderr %.300q; want a.a, as Node prints", code, out, errs)
 	}
 }
 
