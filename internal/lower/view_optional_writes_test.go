@@ -20,44 +20,51 @@ interface Element extends Declaration { _elementBrand: undefined; name?: string;
 function isElement(n: Node): n is Element { return n.kind === 171; }
 `
 
-// The reason checkViewOptionalWrites gives for name, which notYet ends with " yet".
-const viewOptionalWriteReason = "a write to optional field name through a checked view, whose slot a fixed shape can't add yet"
+// The opening of the NotYet checkSlotWrites gives a write of name through a checked view whose slot some
+// value reaching it lacks, reachHoldsSlot's words following.
+const viewOptionalWriteReason = "a write to optional field name through a checked view, where "
 
-// A write through a checked view to a field the view declares optional is NotYet at the write, whatever
-// its form, and whether or not the value holds the field, since its slot may be absent and the checked
-// write can't add one (#c7w6j0y; Adamic, Lower and Compiler on Language's v1, Nov 2). A required field
-// keeps its checked write and agrees with Node. Mutant: checkViewOptionalWrites off; with
-// ADAMIC_VIEW_OPTIONAL_WRITE_MUTANT=1 v1 must lower instead and its sanitized native must disagree with
-// Node, which prints w.
+// A write through a checked view to a field the view declares optional is admitted where every value reaching
+// it holds the field's slot, and NotYet at the write otherwise, whatever its form, since a value made without the
+// field has no slot and the checked write can't add one (#c7w6j0y; Adamic, Lower and Compiler on Language's v1,
+// Nov 2; #w8nanzw, Compiler's accept of Nov 19). fresh is made without name, so every write reaching it stops;
+// held is built with name and count at a type holding them as Element does, so its assignment, compound
+// assignment, increment and guarded write lower and agree with Node, natively too. A required field keeps its checked write and agrees with Node. Mutant:
+// reachHoldsSlot's slot test answering true; with ADAMIC_VIEW_OPTIONAL_WRITE_MUTANT=1 v1 must lower instead and
+// its sanitized native must disagree with Node, which prints w.
 func TestViewOptionalWriteIsNotYet(t *testing.T) {
 	t.Parallel()
 	const fresh = `const fresh: Node = { kind: 171, pos: 1, _declarationBrand: undefined, _elementBrand: undefined } as Node;
 `
-	const held = `const held: Node = { kind: 171, pos: 1, _declarationBrand: undefined, _elementBrand: undefined, name: "a", count: 1 } as Node;
+	// held is built at Named, whose name and count are typed as Element's, so its slots take Element's writes.
+	const held = `interface Named extends Node { name?: string; count?: number; }
+const named: Named = { kind: 171, pos: 1, name: "a", count: 1 };
+const held: Node = named;
 `
-	for _, probe := range []struct{ name, source, want string }{
+	// node is what Node prints for a row that lowers, and empty for one that stops with want.
+	for _, probe := range []struct{ name, source, want, node string }{
 		{"v1 assigned", fresh + `function rename(n: Node): void { if (isElement(n)) { n.name = "w"; console.log(String(n.name)); } }
-rename(fresh);`, viewOptionalWriteReason},
+rename(fresh);`, viewOptionalWriteReason, ""},
 		{"v2 present", held + `function rename(n: Node): void { if (isElement(n)) { n.name = "w"; console.log(String(n.name)); } }
-rename(held);`, viewOptionalWriteReason},
+rename(held);`, "", "w\n"},
 		{"v4 stored view", fresh + `function keep(n: Node): Element | undefined { return isElement(n) ? n : undefined; }
-const e = keep(fresh); if (e) { e.name = "w"; console.log(String(e.name)); }`, viewOptionalWriteReason},
+const e = keep(fresh); if (e) { e.name = "w"; console.log(String(e.name)); }`, viewOptionalWriteReason, ""},
 		{"compound", held + `function rename(n: Node): void { if (isElement(n)) { n.name += "x"; console.log(String(n.name)); } }
-rename(held);`, viewOptionalWriteReason},
+rename(held);`, "", "ax\n"},
 		{"nullish", fresh + `function rename(n: Node): void { if (isElement(n)) { n.name ??= "w"; console.log(String(n.name)); } }
-rename(fresh);`, viewOptionalWriteReason},
+rename(fresh);`, viewOptionalWriteReason, ""},
 		{"or", fresh + `function rename(n: Node): void { if (isElement(n)) { n.name ||= "w"; console.log(String(n.name)); } }
-rename(fresh);`, viewOptionalWriteReason},
+rename(fresh);`, viewOptionalWriteReason, ""},
 		{"increment", held + `function bump(n: Node): void { if (isElement(n)) { n.count!++; console.log(String(n.count)); } }
-bump(held);`, "a write to optional field count through a checked view, whose slot a fixed shape can't add yet"},
+bump(held);`, "", "2\n"},
 		// delete never reaches the view: every delete of a fixed object's field is Refused.
 		{"delete", held + `function drop(n: Node): void { if (isElement(n)) { delete n.name; console.log(String(n.name)); } }
-drop(held);`, "refuses delete; fixed objects cannot lose fields"},
+drop(held);`, "refuses delete; fixed objects cannot lose fields", ""},
 		{"guarded", held + `function rename(n: Node): void { if (isElement(n)) { if (n.name !== undefined) { n.name = "w"; } console.log(String(n.name)); } }
-rename(held);`, viewOptionalWriteReason},
+rename(held);`, "", "w\n"},
 		// A cast's view checks name as the predicate's does, so its write is held by the same rule.
 		{"v3 cast", fresh + `function rename(n: Node): void { const e = n as Element; e.name = "w"; console.log(String(e.name)); }
-rename(fresh);`, viewOptionalWriteReason},
+rename(fresh);`, viewOptionalWriteReason, ""},
 		// A class instance has a slot for each field the class declares, but none for an optional member
 		// an interface merges into it. Tagged's required merged name makes name checked under its bare name
 		// (mergedFieldRead), so Box's write to its merged optional name is a checked write too. Nothing reads
@@ -67,10 +74,20 @@ class Tagged { kind = 1; }
 function show(t: Tagged): void { console.log(String(t.name)); }
 interface Box { name?: string; }
 class Box { kind = 2; }
-const b = new Box(); b.name = "w"; console.log("written");`, viewOptionalWriteReason},
+const b = new Box(); b.name = "w"; console.log("written");`, viewOptionalWriteReason + "a value reaching it is an instance of Box, whose class holds no name", ""},
 	} {
 		t.Run(probe.name, func(t *testing.T) {
 			t.Parallel()
+			if probe.node != "" {
+				if os.Getenv("ADAMIC_VIEW_OPTIONAL_WRITE_MUTANT") == "1" {
+					t.Skip("the mutant is shown on v1")
+				}
+				program := lowersAndAgreesWithNodeAs(t, viewOptionalWritePrelude+probe.source, ".ts")
+				if code, out, errs := brandedNative(t, program); code != 0 || out != probe.node || errs != "" {
+					t.Fatalf("sanitized native exit %d, stdout %q, stderr %.300q where Node prints %q", code, out, errs, probe.node)
+				}
+				return
+			}
 			program, err := lowerTypeScriptAssertionSource(t, viewOptionalWritePrelude+probe.source)
 			if os.Getenv("ADAMIC_VIEW_OPTIONAL_WRITE_MUTANT") == "1" {
 				if probe.name != "v1 assigned" {
@@ -107,7 +124,7 @@ relabel(labelled);`, ".ts")
 var viewWriteProducers = []string{"increment", "fieldStore", "updateProperty", "logicalAssignment"}
 
 // Every SetProperty a view may check takes its ViewReceiverTypeID from viewWriteReceiverTypeID, so
-// checkViewOptionalWrites sees every write to an optional field (Lower's ruling, Nov 2). The test reads
+// checkSlotWrites sees every write to an optional field (Lower's ruling, Nov 2). The test reads
 // this package's source: an ir.SetProperty literal that sets ViewReceiverTypeID sets it to a call of the
 // helper, so a sixth producer can't skip it. Mutant: updateProperty given l.viewReceiverTypeID directly,
 // and it's named here.

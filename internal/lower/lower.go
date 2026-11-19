@@ -258,13 +258,10 @@ func lowerWithElementKey(key *viewElementKey, program *load.Program, typeChecker
 	if err := lowering.checkBoundArguments(); err != nil {
 		return nil, err
 	}
-	if err := lowering.checkKindUnionWriteReach(); err != nil {
+	if err := lowering.checkSlotWrites(); err != nil {
 		return nil, err
 	}
 	if err := lowering.checkCheckedPredicateParameters(modules); err != nil {
-		return nil, err
-	}
-	if err := lowering.checkViewOptionalWrites(); err != nil {
 		return nil, err
 	}
 	// After findCycles, whose lazy view rule keeps a checked view's read of an optional callable its own
@@ -500,9 +497,6 @@ type lowering struct {
 	// checkCheckedPredicateParameters holds alike once lowering is done (predicate_parameter_value.go).
 	predicateParametersAdmitted map[*ast.Node]bool
 	predicateParametersBuilt    map[*ast.Node]bool
-	// viewOptionalWrites are the writes to a field their receiver declares optional, judged once every
-	// view is in (view_optional_writes.go).
-	viewOptionalWrites []viewOptionalWrite
 	// optionalPresenceReads are the presence tests of an optional member lowering read off its slot,
 	// judged by what their receivers may hold once the program is lowered (optional_member_presence.go).
 	optionalPresenceReads []optionalPresenceRead
@@ -642,11 +636,13 @@ type lowering struct {
 	// runtime value, and kindTagFields the fields it holds (cast_kind_union_writes.go, #b5w3ycg head 2).
 	kindTagCarriers map[string][]*checker.Type
 	kindTagFields   map[string]bool
-	// kindUnionWriteRecords is each named write through a kind-checked cast's union the declared index didn't
-	// refuse, judged by reach once lowering is done (checkKindUnionWriteReach), and builtTypes the type each
-	// object literal is built at, by the id of its own type, its GraphTypes' first (noteBuiltType).
-	kindUnionWriteRecords []kindUnionWriteRecord
-	builtTypes            map[int]builtType
+	// slotWrites is each write admitted only where every allocation reaching it holds a slot for its field,
+	// judged once lowering is done (checkSlotWrites), slotWritesKept each kept, by its fields but its proof
+	// (recordSlotWrite), and builtTypes the type each object literal is built at, by the id of its own type, its
+	// GraphTypes' first (noteBuiltType).
+	slotWrites     []slotWrite
+	slotWritesKept map[slotWrite]bool
+	builtTypes     map[int]builtType
 	// crossFunctionWrites holds the first write to each binding from outside its own function.
 	crossFunctionWrites map[*ast.Symbol]*ast.Node
 	// propertyWrites is every property write in the program, by what it can reach (narrowed_nullish.go).
