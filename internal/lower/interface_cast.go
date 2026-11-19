@@ -2,6 +2,7 @@ package lower
 
 import (
 	"reflect"
+	"sync/atomic"
 
 	"github.com/microsoft/TypeScript/tsc/shim/ast"
 	"github.com/microsoft/TypeScript/tsc/shim/checker"
@@ -154,14 +155,23 @@ func (l *lowering) viewWalkWhole(modules []*ast.SourceFile, fields map[string]bo
 	return getters, nil
 }
 
+// judgeViewAccessCalls, when a test sets it, counts judgeViewAccess's calls, so a pin holds the indexed walk
+// to judging each checked access about once however many views a program makes. It's nil outside that test,
+// as viewSiteIndexBuilds is, so production's lowerings share no counter (#715zjph).
+var judgeViewAccessCalls atomic.Pointer[atomic.Int64]
+
 // judgeViewAccess is the one judgment both of view's walks make of a property access: whether a checked view
 // reaches it, and the refusal that carries, a write's stop where it keeps one overriding an accessor's at one
 // access. known is an access the indexed walk already found checked, which a check never stops being. Both walks
 // call it so a rule changed here changes in production's walk and the whole walk alike (Lower, #q1hyhzc). A
 // write is recorded for the source-slot certificate only at an access found checked, so the indexed walk's skip
 // of an access it found unchecked loses no write, and a known one asked again records nothing twice
-// (recordSourceSlotWrite finds its target).
+// (recordSourceSlotWrite finds its target). The indexed walk keeps a checked access's answer and reads it
+// back instead of asking again where nothing it reads can move (keepsViewJudgments, #715zjph).
 func (l *lowering) judgeViewAccess(part *ast.Node, known bool) (bool, error) {
+	if counter := judgeViewAccessCalls.Load(); counter != nil {
+		counter.Add(1)
+	}
 	access := part.AsPropertyAccessExpression()
 	if !known && !l.checkedViewReceiverField(part, l.checker.GetTypeAtLocation(access.Expression), part.Name().Text()) {
 		return false, nil
