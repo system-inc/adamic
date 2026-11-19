@@ -79,65 +79,67 @@ const v = { kind: 5, pos: 1, count: "s" }; bump(v); console.log(v.count);`, "ada
 }
 
 // S's view is the only one, so a value it admitted and then gave another type with no cast is read
-// through #80cs7rz's rule, NotYet at the read wherever the value may come from S's entry (road 2, ruled
-// Nov 1). That holds Language's assignment roads on 7f4b7030, a field-less restatement (s4), an alias of
-// S's shape (s5), an inline type of it (s6), a parameter (s7) and an array element (s8), and #80cs7rz's
-// twelve roads entered through the predicate instead of a cast, each reading name through a wider type.
-// Each lie prints 5 on Node. Mutants: a read through a subtype of a view's target passed by
-// checkViewWidenedReads, which turns s4 to s8 red; checkViewWidenedReads off, which turns every one red.
-// With ADAMIC_BRANDED_WIDENED_MUTANT=1 a probe must lower instead and its sanitized native must disagree
-// with Node, which shows what the rule holds back.
-func TestBrandedSupertypeWidenedReadIsNotYet(t *testing.T) {
+// through #80cs7rz's rule wherever the value may come from S's entry (road 2, ruled Nov 1), and that read
+// is checked where it's made (#zpzm9ta): it lowers, and a lie stops at it on sanitized native and the
+// JavaScript backend with the read's own located failure. That holds Language's assignment roads on
+// 7f4b7030, a field-less restatement (s4), an alias of S's shape (s5), an inline type of it (s6), a
+// parameter (s7) and an array element (s8), and #80cs7rz's twelve roads entered through the predicate
+// instead of a cast, each reading name through a wider type. Each lie prints 5 on Node. Mutants: a read
+// through a subtype of a view's target passed by checkViewWidenedReads, which turns s4 to s8 red;
+// checkViewWidenedReads off, or readiness stripping a marked read's view anyway, which turns every one red.
+// With ADAMIC_BRANDED_WIDENED_MUTANT=1 a probe's sanitized native must disagree with Node instead, which
+// shows what the check holds back.
+func TestBrandedSupertypeWidenedReadIsChecked(t *testing.T) {
 	t.Parallel()
 	const lie = `interface HasName { readonly name?: string; }
 interface Restated extends TypeElement {}
 const v = { kind: 80, pos: 2, escapedText: "e", name: 5 };
 `
-	for _, probe := range []struct{ name, source, through, node string }{
+	for _, probe := range []struct{ name, source, read, node string }{
 		{"s4 assigned to a restatement", `function show(n: Node): void { if (isTypeElementLie(n)) { const r: Restated = n; console.log(String(r.name)); } }
-show(v);`, "Restated", "5\n"},
+show(v);`, "r.name", "5\n"},
 		{"s5 assigned to an alias of its shape", `type Shape = { readonly kind: number; readonly pos: number; _declarationBrand: undefined; _typeElementBrand: undefined; readonly name?: string };
 function show(n: Node): void { if (isTypeElementLie(n)) { const r: Shape = n; console.log(String(r.name)); } }
-show(v);`, "Shape", "5\n"},
+show(v);`, "r.name", "5\n"},
 		{"s6 assigned to an inline type of its shape", `function show(n: Node): void { if (isTypeElementLie(n)) { const r: { readonly kind: number; readonly pos: number; _declarationBrand: undefined; _typeElementBrand: undefined; readonly name?: string } = n; console.log(String(r.name)); } }
-show(v);`, "{ readonly kind: number;", "5\n"},
+show(v);`, "r.name", "5\n"},
 		{"s7 passed as a restatement", `function nameOf(r: Restated): string { return String(r.name); }
 function show(n: Node): void { if (isTypeElementLie(n)) { console.log(nameOf(n)); } }
-show(v);`, "Restated", "5\n"},
+show(v);`, "r.name", "5\n"},
 		{"s8 stored as a restatement", `const kept: Restated[] = [];
 function show(n: Node): void { if (isTypeElementLie(n)) { kept.push(n); } }
 show(v);
-for (const r of kept) { console.log(String(r.name)); }`, "Restated", "5\n"},
+for (const r of kept) { console.log(String(r.name)); }`, "r.name", "5\n"},
 		{"widened", `function show(n: Node): void { if (isTypeElementLie(n)) { const h: HasName = n; console.log(String(h.name)); } }
-show(v);`, "HasName", "5\n"},
+show(v);`, "h.name", "5\n"},
 		{"array element", `function show(n: Node): void { if (isTypeElementLie(n)) { const xs: HasName[] = [n]; for (const x of xs) { console.log(String(x.name)); } } }
-show(v);`, "HasName", "5\n"},
+show(v);`, "x.name", "5\n"},
 		{"map value", `function show(n: Node): void { if (isTypeElementLie(n)) { const m = new Map<string, HasName>([["k", n]]); const g = m.get("k"); console.log(g === undefined ? "none" : String(g.name)); } }
-show(v);`, "HasName", "5\n"},
+show(v);`, "g.name", "5\n"},
 		{"closure", `function show(n: Node): () => string { if (isTypeElementLie(n)) { const h: HasName = n; return () => String(h.name); } return () => "no"; }
-console.log(show(v)());`, "HasName", "5\n"},
+console.log(show(v)());`, "h.name", "5\n"},
 		{"parameter", `function nameOf(x: HasName): string { return String(x.name); }
 function show(n: Node): void { if (isTypeElementLie(n)) { console.log(nameOf(n)); } }
-show(v);`, "HasName", "5\n"},
+show(v);`, "x.name", "5\n"},
 		{"return", `function view(n: Node): HasName | undefined { if (isTypeElementLie(n)) { return n; } return undefined; }
-const h = view(v); console.log(h === undefined ? "none" : String(h.name));`, "HasName", "5\n"},
+const h = view(v); console.log(h === undefined ? "none" : String(h.name));`, "h.name", "5\n"},
 		{"field", `interface Box { readonly item: HasName; }
 function show(n: Node): void { if (isTypeElementLie(n)) { const b: Box = { item: n }; console.log(String(b.item.name)); } }
-show(v);`, "HasName", "5\n"},
+show(v);`, "b.item.name", "5\n"},
 		{"destructure", `function show(n: Node): void { if (isTypeElementLie(n)) { const h: HasName = n; const { name } = h; console.log(String(name)); } }
-show(v);`, "HasName", "5\n"},
+show(v);`, "h.name", "5\n"},
 		{"template", `function show(n: Node): void { if (isTypeElementLie(n)) { const h: HasName = n; console.log(` + "`t=${String(h.name)}`" + `); } }
-show(v);`, "HasName", "t=5\n"},
+show(v);`, "h.name", "t=5\n"},
 		{"conditional", `const other: HasName = { name: "o" };
 function show(n: Node): void { if (isTypeElementLie(n)) { const h: HasName = kindOf(n) > 0 ? n : other; console.log(String(h.name)); } }
-show(v);`, "HasName", "5\n"},
+show(v);`, "h.name", "5\n"},
 		{"class field", `class Printer { readonly h: HasName; constructor(h: HasName) { this.h = h; } run(): void { console.log(String(this.h.name)); } }
 function show(n: Node): void { if (isTypeElementLie(n)) { new Printer(n).run(); } }
-show(v);`, "HasName", "5\n"},
+show(v);`, "this.h.name", "5\n"},
 		{"satisfies", `function show(n: Node): void { if (isTypeElementLie(n)) { const h: HasName = n satisfies HasName; console.log(String(h.name)); } }
-show(v);`, "HasName", "5\n"},
+show(v);`, "h.name", "5\n"},
 		{"optional chain", `function show(n: Node): void { if (isTypeElementLie(n)) { const h: HasName | undefined = n; console.log(String(h?.name)); } }
-show(v);`, "HasName", "5\n"},
+show(v);`, "h?.name", "5\n"},
 	} {
 		t.Run(probe.name, func(t *testing.T) {
 			t.Parallel()
@@ -147,17 +149,19 @@ show(v);`, "HasName", "5\n"},
 					t.Fatalf("the mutant must admit the program: %v", err)
 				}
 				code, out, errs := brandedNative(t, program)
-				if code == 0 && out == probe.node {
-					t.Fatalf("the mutant's sanitized native agrees with Node: %q", out)
+				if code == 0 && out == probe.node || strings.Contains(errs, "field read failed: "+probe.read) {
+					t.Fatalf("the mutant's sanitized native agrees with Node or still stops at the check: exit %d, stdout %q, stderr %.300q", code, out, errs)
 				}
 				t.Logf("the mutant admits it: sanitized native exit %d, stdout %q, stderr %.300q where Node prints %q", code, out, errs, probe.node)
 				return
 			}
-			what := "a read of field name through type " + probe.through
-			var pending *NotYet
-			if !errors.As(err, &pending) || !strings.Contains(err.Error(), what) || !strings.Contains(err.Error(), "which may hold a checked view's value") {
-				t.Fatalf("want NotYet at the read with %q, got %v", what, err)
+			if err != nil {
+				t.Fatalf("want %s lowered as a checked read, got %v", probe.read, err)
 			}
+			if checked, _ := widenedReadsOf(t, program, "name"); checked == 0 {
+				t.Fatalf("%s isn't a widened read checked where it's made", probe.read)
+			}
+			brandedStopsProgram(t, program, "adamic: panic: field read failed: "+probe.read+" matches no member of string | undefined")
 		})
 	}
 }
@@ -188,25 +192,6 @@ const v = { kind: 80, pos: 2, escapedText: "e", name: 5 }; show(v);`, "main.ts:1
 		{"class", `class Signature implements TypeElement { _declarationBrand: undefined; _typeElementBrand: undefined; kind = 171; pos = 1; }
 function show(n: Node): void { if (isTypeElement(n)) { console.log(String(n.pos)); } }
 show(new Signature());`, "a checked predicate target TypeElement that class Signature is assignable to"},
-		// A cast beside S's view registers a view of its own, and the prelude's kindOf reads n.kind through
-		// Node. Once these two views are in the program, #80cs7rz's rule finds that read may hold a viewed
-		// value it can't vouch for, and makes it NotYet before any leg runs (Lower asked each of these be
-		// named by the rule that holds it). These stopped at the read on 4a1fe092, before #80cs7rz;
-		// #zpzm9ta is where such reads become checked.
-		{"cast to a subtype", `function show(n: Node): void { if (isTypeElementLie(n) && n.kind === 171) { const p = n as PropertySignature; console.log(p.typeText); } }
-const v = { kind: 171, pos: 2 }; show(v);`, "a read of field kind through type Node, which may hold a checked view's value"},
-		{"passed as a subtype", `function read(p: PropertySignature): void { console.log(p.typeText); }
-function show(n: Node): void { if (isTypeElementLie(n) && n.kind === 171) { read(n as PropertySignature); } }
-const v = { kind: 171, pos: 2 }; show(v);`, "a read of field kind through type Node, which may hold a checked view's value"},
-		// An honest program, held by the same rule at the same read: the price #80cs7rz charges, which the
-		// subtype views paid too (177dcf9f stopped here as well).
-		{"refined field", `interface Computed extends Node { readonly kind: 167; readonly expressionText: string; }
-interface Plain extends Node { readonly kind: 80; readonly escapedText: string; }
-interface PropertyDeclaration extends Declaration { readonly kind: 172; readonly name: Computed | Plain; }
-interface LateBound extends Declaration { readonly name: Computed; }
-function isLate(d: Declaration): d is LateBound { const n = (d as PropertyDeclaration).name; return n.kind === 167; }
-function show(d: Declaration): void { if (isLate(d)) { console.log(d.name.expressionText); } }
-const p: PropertyDeclaration = { kind: 172, pos: 1, _declarationBrand: undefined, name: { kind: 167, pos: 2, expressionText: "Symbol.iterator" } }; show(p);`, "a read of field kind through type Node, which may hold a checked view's value"},
 		// A recursive alias ends the false side's walk on its second visit (Lower's must on 9abcbdca): Nodes'
 		// array holds Nodes, and no member is branded, so the walk would recurse forever without it.
 		{"recursive alias", `type Nodes = Identifier | Nodes[];
@@ -284,6 +269,53 @@ const v = { kind: 9, pos: 1, text: "x" }; show(v);`, "checked predicate overload
 			}
 		})
 	}
+}
+
+// A cast beside S's view registers a view of its own, and the prelude's kindOf reads n.kind through Node.
+// With these two views in the program, #80cs7rz's rule finds that read may hold a viewed value it can't
+// vouch for. It stopped these at compile time until #zpzm9ta made such a read checked where it's made, so
+// each now lowers with its widened read of kind checked. The two lies, a PropertySignature with no typeText, stop at
+// the cast's own checked read of typeText on sanitized native and the JavaScript backend, where Node prints
+// undefined. The honest program, the price #80cs7rz charged and the subtype views paid too (177dcf9f stopped
+// there as well), agrees with Node, natively too. Mutant: readiness stripping a marked read's view anyway,
+// and widenedReadsOf fails each.
+func TestBrandedSupertypeKindReadIsChecked(t *testing.T) {
+	t.Parallel()
+	for _, probe := range []struct{ name, source string }{
+		{"cast to a subtype", `function show(n: Node): void { if (isTypeElementLie(n) && n.kind === 171) { const p = n as PropertySignature; console.log(p.typeText); } }
+const v = { kind: 171, pos: 2 }; show(v);`},
+		{"passed as a subtype", `function read(p: PropertySignature): void { console.log(p.typeText); }
+function show(n: Node): void { if (isTypeElementLie(n) && n.kind === 171) { read(n as PropertySignature); } }
+const v = { kind: 171, pos: 2 }; show(v);`},
+	} {
+		t.Run(probe.name, func(t *testing.T) {
+			t.Parallel()
+			program, err := lowerTypeScriptAssertionSource(t, brandedPrelude+probe.source)
+			if err != nil {
+				t.Fatalf("want it lowered with its read of kind checked, got %v", err)
+			}
+			if checked, _ := widenedReadsOf(t, program, "kind"); checked == 0 {
+				t.Fatal("no read of kind is a widened read checked where it's made")
+			}
+			brandedStopsProgram(t, program, "adamic: panic: field read failed: p.typeText is not initialized; expected string, found missing")
+		})
+	}
+	t.Run("refined field", func(t *testing.T) {
+		t.Parallel()
+		program := lowersAndAgreesWithNodeAs(t, brandedPrelude+`interface Computed extends Node { readonly kind: 167; readonly expressionText: string; }
+interface Plain extends Node { readonly kind: 80; readonly escapedText: string; }
+interface PropertyDeclaration extends Declaration { readonly kind: 172; readonly name: Computed | Plain; }
+interface LateBound extends Declaration { readonly name: Computed; }
+function isLate(d: Declaration): d is LateBound { const n = (d as PropertyDeclaration).name; return n.kind === 167; }
+function show(d: Declaration): void { if (isLate(d)) { console.log(d.name.expressionText); } }
+const p: PropertyDeclaration = { kind: 172, pos: 1, _declarationBrand: undefined, name: { kind: 167, pos: 2, expressionText: "Symbol.iterator" } }; show(p);`, ".ts")
+		if checked, _ := widenedReadsOf(t, program, "kind"); checked == 0 {
+			t.Fatal("no read of kind is a widened read checked where it's made")
+		}
+		if code, out, errs := brandedNative(t, program); code != 0 || out != "Symbol.iterator\n" {
+			t.Fatalf("sanitized native exit %d, stdout %q, stderr %.300q; want Symbol.iterator, as Node prints", code, out, errs)
+		}
+	})
 }
 
 // The checker narrows a call's argument by the claim however the call reaches the predicate, and every
