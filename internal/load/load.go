@@ -195,6 +195,20 @@ func (p *Program) Files() []*ast.SourceFile {
 	return p.files
 }
 
+// SourceFiles is every source file the program holds but the prelude and the bundled library: its roots,
+// every module they import, and every file they only import types from, declaration files among them, which
+// Files and moduleOrder's runnable modules both leave out. A walk that must see every type the program
+// declares reads it (#b5w3ycg head 2's kind carriers, Lower's must).
+func (p *Program) SourceFiles() []*ast.SourceFile {
+	files := []*ast.SourceFile{}
+	for _, sourceFile := range p.compiler.GetSourceFiles() {
+		if !IsPrelude(sourceFile) && !IsLibrary(sourceFile) {
+			files = append(files, sourceFile)
+		}
+	}
+	return files
+}
+
 // AppleFiles is the program's binding files for Apple's frameworks: the apple/ modules it loaded.
 func (p *Program) AppleFiles() []*ast.SourceFile {
 	files := []*ast.SourceFile{}
