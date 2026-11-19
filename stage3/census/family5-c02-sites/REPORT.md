@@ -42,3 +42,21 @@ Stock TypeScript 6.0.3 accepts every proposed annotation. Both 79-root configura
 | Nine release JavaScript files | — | — | 0 |
 
 Each stock JavaScript comparison covers 79 emitted files. The public declaration SHA-256 is `65c210e9d7553165606df3ac67544ea7ddcbccf2c322ed924e8e8f4c4622c5fd` on both sides. The first edit attempt exited 1 before changing any bytes because it expected a pre-adaptation `getLineStarts` signature. The retry reuses main's existing `LineMapSource`. The first project emit commands exited 1 after zero checker diagnostics because they inherited `emitDeclarationOnly` and emitted no JavaScript. The corresponding comparison exited 2. The corrected emit disables declaration-only and isolated declaration emit settings. See `exits.tsv` and the logs for every measured exit.
+
+## Entry result and landing decision
+
+The `tsc.ts` passes ran serially on the same pinned Adamic binary with `LATENT_FULL=0`, `LATENT_TAIL=1`, `LATENT_ASSERT_NO_OUTPUT=1`, and `CommonJSBundle`. The baseline stream exited 0 in 1,382.691 seconds and was pushed as `3205bf42f` before the edit run started. The edited stream exited 0 in 1,397.010 seconds and was pushed as `bdd98df58`. Both programs were checker-clean.
+
+| Classification | Findings |
+| --- | ---: |
+| Baseline | 3,449 |
+| Edited | 3,437 |
+| Unchanged | 3,437 |
+| Gone | 12 |
+| New | 0 |
+| Changed | 0 |
+| Reached | 0 |
+
+Every gone finding is in G02. No finding outside G02 moved, including the independent `getFunctionFlags` finding. The exact comparison is in `comparison.json`. The comparison exited 1 because S058 and S059 remain at `program.ts:738:57` and `program.ts:739:76`.
+
+The clean gate failed. The landing adaptation, ledger entry, mutant, product test, and lane were skipped. The landing branch was not created or pushed.
