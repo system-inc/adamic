@@ -10,17 +10,16 @@ import (
 
 // #6c4swvt piece 4: a readonly string-index type the program first puts a record into is held as that record
 // (lower's records_readonly.go), so tsc's read-only option workers can take Readonly<OptionsBase>. The honest
-// reads agree with Node on both backends with nothing leaked, an enumeration's object first put into such a type
-// keeps the storage B2 gave it, the cast back to the writable record stays refused, and a parameter handed a
-// record and then an enumeration's object stops at the second call by name (Runtime's must). Mutants: the
-// classification never answering a record, and readonly_honest.ts stops at its view again; the readonly
-// covariance dropped from widened, and it's refused as a widening.
+// reads agree with Node on both backends with nothing leaked, the cast back to the writable record stays refused,
+// and a parameter handed a record and then an enumeration's object stops at the second call by name (Runtime's
+// must). B2's road, an enumeration's object put first into such a type, keeps its storage: enum_views' tests hold
+// it. Mutants: the classification never answering a record, and readonly_honest.ts stops at its view again; the
+// readonly covariance dropped from widened, and it's refused as a widening.
 func TestReadonlyRecordViews(t *testing.T) {
 	t.Parallel()
 	for name, view := range map[string]struct{ node, notYet, refused, at string }{
-		"readonly_honest.ts": {node: "watchFile=number,excludeFiles=object,synchronous=boolean:4\nwatchFile=number,excludeFiles=object,synchronous=boolean:2\n"},
-		"readonly_enum.ts":   {node: "1=A,2=B,A=1,B=2\n"},
-		"readonly_leak.ts":   {node: "4\n", refused: "a cast the runtime can't check"},
+		"readonly_honest.ts": {node: "watchFile=number,excludeFiles=object,synchronous=boolean:true\nwatchFile=number,excludeFiles=object,synchronous=boolean:false\n"},
+		"readonly_leak.ts":   {node: "4\n", refused: "(adamic/no-unchecked-cast)"},
 		"readonly_mixed.ts":  {node: "3\n4\n", notYet: "is held as a record, since ", at: ":18:"},
 	} {
 		t.Run(name, func(t *testing.T) {

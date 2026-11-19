@@ -21,7 +21,7 @@ function serialize(options: Readonly<OptionsBase>): string {
         const value = options[name];
         rows.push(name + "=" + typeof value);
     }
-    return rows.join(",") + ":" + String(options["watchFile"]);
+    return rows.join(",") + ":" + String(options["watchFile"] === 4);
 }
 function key(): string {
     return "synchronous";

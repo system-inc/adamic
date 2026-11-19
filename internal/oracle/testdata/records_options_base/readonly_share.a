@@ -6,7 +6,8 @@ function run(): void {
     const bag: Bag = {};
     bag["n"] = 1;
     const view: Readonly<Record<string, number>> = bag;
-    const results = parallelMap([1, 2], (task) => {
+    const tasks: readonly number[] = [1, 2];
+    const results = parallelMap(tasks, (task) => {
         if (task === 1) {
             return view["n"] ?? 0;
         }
