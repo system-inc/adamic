@@ -331,6 +331,12 @@ func generate(repository, lowerInput string) []byte {
 						// lowering's answer, and the derivedAncestors it holds is a deep copy with the rest of the
 						// lowering.
 						expr = "value." + id.Name
+					} else if name == "lowering" && id.Name == "accessorNamesHeld" && printed(field.Type) == "*accessorNamesCache" {
+						// Shared on purpose, as inheritance is: noteAccessorNames' answer by program, a function of
+						// the modules' syntax alone (accessor_names_cache.go, #hjspb3b). A lowering only ever clones
+						// accessorNames out, so a copy sharing the holder can't write into another lowering's answer,
+						// and the accessorNames it holds is a deep copy with the rest of the lowering.
+						expr = "value." + id.Name
 					} else {
 						expr = g.copyField(name, id, field)
 					}
