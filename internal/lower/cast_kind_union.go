@@ -116,7 +116,7 @@ func (l *lowering) kindUnionValue(node *ast.Node, value ir.Expression, source *c
 // members. The union's members are compared, not its identity, since an alias (AccessExpression) and the same
 // union written out are two checker types. A named write the program's declared types refuse is NotYet here
 // (kindUnionWriteHeld, #b5w3ycg head 2, cast_kind_union_writes.go), and one they don't is recorded, to go on
-// main's checked-write road only when every object reaching it holds its slot alike (checkKindUnionWriteReach); an element write and a destructuring's or a loop's target stay NotYet, since head 2 ruled a
+// main's checked-write road only when every object reaching it holds its slot alike (checkSlotWrites); an element write and a destructuring's or a loop's target stay NotYet, since head 2 ruled a
 // named write alone, and so would a delete, which refuse meets first. A write after narrowing to one member
 // (`if (a.kind === X) a.f = v`, receiver X) isn't judged here: it goes on main's checked-write road through X's
 // view, the road main's one-kind cast (interfaceCast) already admits. Views are keyed by type, so a write through a value of the union's type that
@@ -162,8 +162,9 @@ func (l *lowering) kindUnionWrites(proof *kindUnion) error {
 			return err
 		}
 		// The declared index refuses, never admits: what reaches the write is judged once the program is
-		// lowered (checkKindUnionWriteReach, Adamic's amendment of Nov 19).
-		l.recordKindUnionWrite(part, proof)
+		// lowered (checkSlotWrites, Adamic's amendment of Nov 19), the slot as every optional write's is.
+		name := part.Name().Text()
+		l.recordSlotWrite(slotWrite{part: part, receiver: part.AsPropertyAccessExpression().Expression, name: name, opening: "a write of " + name + " through a kind-checked cast's union", written: l.kindUnionWritten(proof, name), proof: proof})
 	}
 	return nil
 }

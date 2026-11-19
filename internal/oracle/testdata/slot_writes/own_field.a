@@ -1,0 +1,8 @@
+// A plain write to an optional own field empty leaves out: only held, which wrote name, reaches put, so the
+// write is admitted (#w8nanzw), in .a too, and agrees with Node.
+interface Mut { name?: string; }
+const empty: Mut = {};
+const held: Mut = { name: 'a' };
+function put(x: Mut): void { x.name = 'w'; }
+put(held);
+console.log(String(held.name) + ' ' + String(empty.name));

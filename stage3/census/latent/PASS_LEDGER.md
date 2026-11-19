@@ -5,10 +5,14 @@ The one ordered definition is `pass_ledger.go.txt`; `pass_ledger.go` constructs
 owned metadata entries from it. The 30-step audit inventory now has a 31st
 production step: `checkInspectorDoomedContracts`, after `voidDiscards`. A 32nd,
 `checkFlowLiveness`, follows it (#p2n17c4 H3). A 33rd, `checkOptionalMemberPresence`, runs
-after `checkViewOptionalWrites` (#p2n17c4 shape 1). A 34th,
+after `checkCheckedPredicateParameters` (#p2n17c4 shape 1). A 34th,
 `checkRegExpServedValues`, follows `checkLibrarySpreads` (#hxgbart): it judges by a
 flag any relation in the program sets, so a body alone can't measure it, and it's
-`not_run_whole_program`.
+`not_run_whole_program`. `checkSlotWrites`, after `checkBoundArguments`, judges by
+the whole program's allocation graph every write admitted only where each allocation
+reaching it holds its field's slot, the writes `checkViewOptionalWrites` and
+`checkKindUnionWriteReach` judged among them (#w8nanzw), so a body lowered on its own
+records it as not run.
 
 Each independently attempted unit gets `pass_ledger` beside its status and
 instantiation metadata in the census JSONL. First-error, full and speculative
