@@ -32,24 +32,28 @@ import (
 // part), so every value of it is NotYet already, and map_member_intersection pins that stop. Depth: a class implementing ReadonlyMap five fields down lowered on
 // main (native crashed, JavaScript printed false); the map slot is judged at any depth, so depth_5 stops
 // at its leaf and a real Map there (depth_5_real_map, a control) lowers. Six down the walk is past its
-// bound, where a generic pair fails closed and a non-generic one keeps walking (#zrnkpdz): depth_6 stops at its
-// leaf, and depth_6_real_map, a real Map six fields into a literal, lowers (it stopped at the bound before
-// #zrnkpdz), while depth_6_generic, a real Map in a Box<T> five fields down, still stops at the bound, the
-// cost of failing closed for a generic pair. It stops in the bound's own words (containerFitDepthStop), never
-// containerFit's, since no value there is going where a map is held (#rt5evf5). tsc's shape, a node narrowed
-// from Node walked against Node through its parent chain past the bound: parent_chain lowers, and
-// parent_chain_fake, whose fifth link holds a FakeMap where Node holds a ReadonlyMap, stops. A pair judged whole is kept program-wide, and a
-// fit that leaned on a pair still being judged is kept only once that pair fits: stale_yes_cycle's first
-// site walks V2 against T2 inside V1 against T1, which stops on its second field and is swallowed by a
-// union member that fits, so V2 against T2, assumed to fit while V1 against T1 was in progress, must stop
-// at the second site that meets it alone. The controls lower and agree with Node on sanitized, release and
-// JavaScript: a real Map seen as a ReadonlyMap, a real Set seen as a ReadonlySet, an array seen as a
-// ReadonlyArray, a real Map five fields down, and a real Map moved whole into the intersection slot.
+// bound, where a non-generic pair keeps walking (#zrnkpdz) and so does a generic one that can reach a map,
+// until a side is a generic growing deeper on the walk's path (typeNesting, #rt5evf5): depth_6 stops at its
+// leaf, depth_6_real_map, a real Map six fields into a literal, lowers (it stopped at the bound before
+// #zrnkpdz), and depth_6_generic, a real Map in a Box<T> five fields down, lowers (it stopped at the bound
+// before #rt5evf5 head 2). Growing generics are pinned where the walk is handed their types directly
+// (internal/lower's TestContainerFitBoundsGrowingGenerics), since a program built of them stops on another
+// wall first (#fzx0j5z). tsc's shape, a node narrowed from Node walked against Node through its parent chain
+// past the bound: parent_chain lowers, and parent_chain_fake, whose fifth link holds a FakeMap where Node
+// holds a ReadonlyMap, stops. A pair judged whole is kept program-wide, and a fit that leaned on a pair
+// still being judged is kept only once that pair fits: stale_yes_cycle's first site walks V2 against T2
+// inside V1 against T1, which stops on its second field and is swallowed by a union member that fits, so V2
+// against T2, assumed to fit while V1 against T1 was in progress, must stop at the second site that meets it
+// alone. The controls lower and agree with Node on sanitized, release and JavaScript: a real Map seen as a
+// ReadonlyMap, a real Set seen as a ReadonlySet, an array seen as a ReadonlyArray, a real Map five fields
+// down, a real Map in a Box<T> five fields down, and a real Map moved whole into the intersection slot.
 // Mutant: containerWhereOtherGoes answering "" lowers the probes that stop at it, each red; the two
 // pinned at their own stops stay green.
-// Mutants (#zrnkpdz): a held fit kept at once, before the pair it leaned on finished, reddens
-// stale_yes_cycle; containerFitGeneric answering false lowers depth_6_generic; and containerFitGeneric
-// answering true stops depth_6_real_map and parent_chain.
+// Mutant (#zrnkpdz): a held fit kept at once, before the pair it leaned on finished, reddens
+// stale_yes_cycle. Since #rt5evf5 head 2 a pair past the depth that can reach a map walks whether it's
+// generic or not, so containerFitGeneric's answer no longer moves these probes.
+// Mutant (#rt5evf5 head 2): the gate stopping every generic pair past the depth that can reach a map, as it
+// did before, stops depth_6_generic again, and yield_result_unwrap_test.go's own_symbol with it.
 func TestContainerInterfaceValueIsNotYetWhereAMapIsHeld(t *testing.T) {
 	t.Parallel()
 	const mapMembers = "\tget(key: string) { return backing.get(key); },\n" +
@@ -81,7 +85,6 @@ func TestContainerInterfaceValueIsNotYetWhereAMapIsHeld(t *testing.T) {
 	const readSet = "if (s !== undefined) {\n\tconsole.log(String(s.has(1)));\n}\n"
 	const eachSet = "for (const s of items) {\n\tconsole.log(String(s.has(1)));\n}\n"
 	const containerFit = "stage 0 can't lower a Map or Set interface implemented by a value that isn't a Map or Set yet"
-	const depthGate = "stage 0 can't lower a generic comparison deeper than 4 positions that can reach a Map yet"
 	const fakeMap = "class FakeMap implements ReadonlyMap<string, number> {\n" +
 		"\treadonly size = 1;\n" +
 		"\tget(key: string): number | undefined { return backing.get(key); }\n" +
@@ -118,7 +121,6 @@ func TestContainerInterfaceValueIsNotYetWhereAMapIsHeld(t *testing.T) {
 		{"depth_5", backing + fakeMap + "const v: { a: { b: { c: { d: { e: FakeMap } } } } } = { a: { b: { c: { d: { e: new FakeMap() } } } } };\nconst w: { readonly a: { readonly b: { readonly c: { readonly d: { readonly e: ReadonlyMap<string, number> } } } } } = v;\nconsole.log(String(w.a.b.c.d.e.has('a')));\n", ":13:120", containerFit},
 		{"depth_6", backing + fakeMap + "const v: { a: { b: { c: { d: { e: { f: FakeMap } } } } } } = { a: { b: { c: { d: { e: { f: new FakeMap() } } } } } };\nconst w: { readonly a: { readonly b: { readonly c: { readonly d: { readonly e: { readonly f: ReadonlyMap<string, number> } } } } } } = v;\nconsole.log(String(w.a.b.c.d.e.f.has('a')));\n", ":13:136", containerFit},
 		{"parent_chain_fake", "const backing = new Map<string, number>([['a', 1]]);\nclass FakeMap implements ReadonlyMap<string, number> {\n\treadonly size = 1;\n\tget(key: string): number | undefined { return backing.get(key); }\n\thas(key: string): boolean { return key === 'a'; }\n\tforEach(): void {}\n\tkeys() { return backing.keys(); }\n\tvalues() { return backing.values(); }\n\tentries() { return backing.entries(); }\n\t[Symbol.iterator]() { return backing.entries(); }\n}\ninterface Node {\n\treadonly kind: number;\n\treadonly parent: Node | undefined;\n\treadonly locals: ReadonlyMap<string, number> | undefined;\n}\ninterface L5 extends Node {\n\treadonly kind: 5;\n\treadonly locals: FakeMap | undefined;\n}\ninterface L4 extends Node {\n\treadonly kind: 4;\n\treadonly parent: L5;\n}\ninterface L3 extends Node {\n\treadonly kind: 3;\n\treadonly parent: L4;\n}\ninterface L2 extends Node {\n\treadonly kind: 2;\n\treadonly parent: L3;\n}\ninterface L1 extends Node {\n\treadonly kind: 1;\n\treadonly parent: L2;\n}\nfunction depthOf(node: Node): number {\n\tlet n = 0;\n\tfor (let at: Node | undefined = node; at !== undefined; at = at.parent) {\n\t\tn += 1;\n\t}\n\treturn n;\n}\nconst measure: (node: L1) => number = depthOf;\nconst l5: L5 = { kind: 5, parent: undefined, locals: new FakeMap() };\nconst l4: L4 = { kind: 4, parent: l5, locals: undefined };\nconst l3: L3 = { kind: 3, parent: l4, locals: undefined };\nconst l2: L2 = { kind: 2, parent: l3, locals: undefined };\nconst l1: L1 = { kind: 1, parent: l2, locals: undefined };\nconsole.log(String(measure(l1) === 5 && l5.locals !== undefined && l5.locals.has('a')));\n", ":44:39", containerFit},
-		{"depth_6_generic", "interface Box<T> {\n\treadonly v: T;\n}\nconst real = new Map<string, number>([['a', 1]]);\nconst box: Box<Map<string, number>> = { v: real };\nconst v: { a: { b: { c: { d: { e: Box<Map<string, number>> } } } } } = { a: { b: { c: { d: { e: box } } } } };\nconst w: { readonly a: { readonly b: { readonly c: { readonly d: { readonly e: Box<ReadonlyMap<string, number>> } } } } } = v;\nconsole.log(String(w.a.b.c.d.e.v.has('a')));\n", ":7:125", depthGate},
 		{"stale_yes_cycle", "const backing = new Map<string, number>([['a', 1]]);\nclass FakeMap implements ReadonlyMap<string, number> {\n\treadonly size = 1;\n\tget(key: string): number | undefined { return backing.get(key); }\n\thas(key: string): boolean { return key === 'a'; }\n\tforEach(): void {}\n\tkeys() { return backing.keys(); }\n\tvalues() { return backing.values(); }\n\tentries() { return backing.entries(); }\n\t[Symbol.iterator]() { return backing.entries(); }\n}\ninterface T1 {\n\treadonly next: T2;\n\treadonly m: ReadonlyMap<string, number>;\n}\ninterface T2 {\n\treadonly back: T1 | undefined;\n}\ninterface V1 {\n\tnext: V2;\n\tm: FakeMap;\n}\ninterface V2 {\n\tback: V1 | undefined;\n}\nconst v1: V1 = { next: { back: undefined }, m: new FakeMap() };\nv1.next.back = v1;\nconst either: T1 | { readonly next: unknown } = v1;\nconst v2: V2 = v1.next;\nconst t2: T2 = v2;\nconsole.log(String(t2.back !== undefined && t2.back.m.has('a')));\n", ":30:16", containerFit},
 		{"slot_intersection", shaped + "type Holder = { readonly m: ReadonlyMap<string, number> } & { readonly tag: 1 };\nconst inner = { m: shaped, tag: 1 as const };\nconst h: Holder = inner;\nconsole.log(String(h.m.has('a')));\n", ":14:19", containerFit},
 		{"value_intersection", backing + fakeMap + "const v: { m: FakeMap } & { tag: 1 } = { m: new FakeMap(), tag: 1 };\nconst w: { readonly m: ReadonlyMap<string, number> } = v;\nconsole.log(String(w.m.has('a')));\n", ":13:56", containerFit},
@@ -151,6 +153,7 @@ func TestContainerInterfaceValueIsNotYetWhereAMapIsHeld(t *testing.T) {
 		{"depth_5_real_map", "const real = new Map<string, number>([['a', 1]]);\nconst v: { a: { b: { c: { d: { e: Map<string, number> } } } } } = { a: { b: { c: { d: { e: real } } } } };\nconst w: { readonly a: { readonly b: { readonly c: { readonly d: { readonly e: ReadonlyMap<string, number> } } } } } = v;\nconsole.log(String(w.a.b.c.d.e.has('a')));\n", "true\n"},
 		{"depth_6_real_map", "const real = new Map<string, number>([['a', 1]]);\nconst v: { a: { b: { c: { d: { e: { f: Map<string, number> } } } } } } = { a: { b: { c: { d: { e: { f: real } } } } } };\nconst w: { readonly a: { readonly b: { readonly c: { readonly d: { readonly e: { readonly f: ReadonlyMap<string, number> } } } } } } = v;\nconsole.log(String(w.a.b.c.d.e.f.has('a')));\n", "true\n"},
 		{"parent_chain", "interface Node {\n\treadonly kind: number;\n\treadonly parent: Node | undefined;\n\treadonly locals: ReadonlyMap<string, number> | undefined;\n}\ninterface L5 extends Node {\n\treadonly kind: 5;\n}\ninterface L4 extends Node {\n\treadonly kind: 4;\n\treadonly parent: L5;\n}\ninterface L3 extends Node {\n\treadonly kind: 3;\n\treadonly parent: L4;\n}\ninterface L2 extends Node {\n\treadonly kind: 2;\n\treadonly parent: L3;\n}\ninterface L1 extends Node {\n\treadonly kind: 1;\n\treadonly parent: L2;\n}\nfunction depthOf(node: Node): number {\n\tlet n = 0;\n\tfor (let at: Node | undefined = node; at !== undefined; at = at.parent) {\n\t\tn += 1;\n\t}\n\treturn n;\n}\nconst measure: (node: L1) => number = depthOf;\nconst l5: L5 = { kind: 5, parent: undefined, locals: new Map<string, number>([['a', 1]]) };\nconst l4: L4 = { kind: 4, parent: l5, locals: undefined };\nconst l3: L3 = { kind: 3, parent: l4, locals: undefined };\nconst l2: L2 = { kind: 2, parent: l3, locals: undefined };\nconst l1: L1 = { kind: 1, parent: l2, locals: undefined };\nconsole.log(String(measure(l1)));\nconsole.log(String(l5.locals !== undefined && l5.locals.has('a')));\n", "5\ntrue\n"},
+		{"depth_6_generic", "interface Box<T> {\n\treadonly v: T;\n}\nconst real = new Map<string, number>([['a', 1]]);\nconst box: Box<Map<string, number>> = { v: real };\nconst v: { a: { b: { c: { d: { e: Box<Map<string, number>> } } } } } = { a: { b: { c: { d: { e: box } } } } };\nconst w: { readonly a: { readonly b: { readonly c: { readonly d: { readonly e: Box<ReadonlyMap<string, number>> } } } } } = v;\nconsole.log(String(w.a.b.c.d.e.v.has('a')));\n", "true\n"},
 		{"intersection_real_map", "const real = new Map<string, number>([['a', 1]]);\ntype Holder = { readonly m: ReadonlyMap<string, number> } & { readonly tag: 1 };\nconst inner = { m: real, tag: 1 as const };\nconst h: Holder = inner;\nconsole.log(String(h.m.has('a')));\n", "true\n"},
 		{"array", "const xs: ReadonlyArray<number> = [10, 20];\nlet total = 0;\nfor (const x of xs) {\n\ttotal += x;\n}\nconsole.log(String(total + xs.length));\n", "32\n"},
 	} {
