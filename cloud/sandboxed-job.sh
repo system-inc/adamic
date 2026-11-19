@@ -4,8 +4,6 @@
 #
 #   source /opt/adamic-block/environment.sh && source cloud/sandboxed-job.sh && <command>
 #
-# It was cloud/sealed-job.sh until #sbxadamic, Loom's rename of the sealed mode to sandboxed (#sandboxed).
-#
 # Sourced, never run: it changes only the caller's environment, never its shell options, and returns nonzero on any
 # step that fails, so the `&&` stops the job before its command. A rented machine runs the job in a laid tree with no
 # .git, an empty HOME at /tmp/home and a read-only /opt/adamic-block, so:
