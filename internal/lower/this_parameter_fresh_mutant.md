@@ -30,3 +30,20 @@ Using the same overlay, replace the body of `literalOwnThis` in `invariance.go` 
 | f1, f2-guarded, f3 | Refused at 2:57 | Refused at 2:57 |
 
 Exactly six subtests go red, g1, g2 and the read-only getter in each of .a and .ts, which is the hole as it stood on main: g1 and g2 are the evidence fixtures (stage3/meter/evidence/this-parameter-getter), accepted there. The f rows hold, since their refusal comes from the declared-this arm, which the mutant leaves alone.
+
+## Outer expression mutant (#rj9wg3b)
+
+Using the same overlay, restore `ast.SkipParentheses(member.AsPropertyAssignment().Initializer)` in `freshObjectLiteral` in place of `ast.SkipOuterExpressions(..., ast.OEKAll)`, and change nothing else. Run `go test -overlay=<scratch>/overlay.json ./internal/lower -run '^TestLiteral(WrappedReceiver|ThisType)Freshness' -count=1 -v`.
+
+| Row | Original | Mutant |
+| --- | --- | --- |
+| c02-satisfies, .a and .ts | Refused at 2:57 | Dynamic-receiver NotYet, test fails |
+| c03-as, .ts | Refused at 2:57 | Dynamic-receiver NotYet, test fails |
+| c04-non-null, .ts | Refused at 2:57 | Dynamic-receiver NotYet, test fails |
+| c09-bare, .a and .ts | Refused at 2:57 | Refused at 2:57 |
+| c01-parentheses, .ts | Refused at 2:57 | Refused at 2:57 |
+| c08-property, .ts | Refused at 3:48 | Refused at 3:48 |
+| c10-setter, .a and .ts | Refused at 3:48 | Refused at 3:48 |
+| c00 honest twin, .ts | Lowers | Lowers |
+
+Exactly four subtests go red: `TestLiteralWrappedReceiverFreshnessRejectsStoredReceiver/c02-satisfies.a`, `c02-satisfies.ts`, `c03-as.ts` and `c04-non-null.ts`. With only parentheses skipped, the wrapped function expression is never looked at, the literal stays fresh, and lowering stops later at "stage 0 can't lower a function expression with a this parameter (dynamic receivers are not implemented)", which hides the hole until dynamic receivers lower. The bare and parenthesized rows hold because parentheses are still skipped; c08 and c10 hold because their refusal comes from the contextual ThisType arm, which reads a bare function expression and a setter.
