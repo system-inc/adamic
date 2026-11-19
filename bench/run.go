@@ -2,7 +2,7 @@
 //
 //	go run ./bench [-rounds 5] [-timeout 120s] [-only nbody,trees]
 //	go run ./bench -compare <baseline sha> <candidate sha> -suite everyday [-samples 15] [-seed n]
-//	go run ./bench -game -go <go> -rustc <rustc> -crates <dir> [-samples 15] [-only fasta,nbody]
+//	go run ./bench -game -go <go> -rustc <rustc> -crates <dir> [-pcre <prefix>] [-samples 15] [-only fasta,nbody]
 //
 // The second form compares two commits of Adamic on a suite of bench/suites.json, and is described
 // in compare.go; the third measures Adamic against the Benchmarks Game's own Go and Rust entries, and
@@ -98,6 +98,7 @@ func main() {
 	goBinary := flag.String("go", "", "with -game, the go binary that builds the Go entries: the game's Go 1.23.1, never guessed")
 	rustc := flag.String("rustc", "", "with -game, the rustc that builds the Rust entries: the game's 1.84.1, never guessed")
 	crates := flag.String("crates", "", "with -game, the rlibs bench/game/rust-deps builds with that rustc: its target/release/deps")
+	pcre := flag.String("pcre", "", "with -game, the prefix libpcre and libpcre2 are unpacked under with dpkg -x, for the regexredux entries (default: the system's)")
 	flag.Parse()
 
 	if *game {
@@ -110,7 +111,7 @@ func main() {
 		if !flagGiven("seed") {
 			*seed = uint64(time.Now().UnixNano())
 		}
-		measureGame(gameRequest{goBinary: *goBinary, rustc: *rustc, crates: *crates, samples: *samples, only: *only, timeout: *timeout, seed: *seed})
+		measureGame(gameRequest{goBinary: *goBinary, rustc: *rustc, crates: *crates, pcre: *pcre, samples: *samples, only: *only, timeout: *timeout, seed: *seed})
 		return
 	}
 
