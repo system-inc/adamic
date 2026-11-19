@@ -766,8 +766,9 @@ type lowering struct {
 	// holds a declared property invariant against an index signature (records_declared_keys.go).
 	declaredKeys bool
 
-	// droppedContractsRead is set while recordStorageView judges a .ts module's view, where a record seen
-	// as a record may drop a named contract the reads hold (droppedContractRead, records_named.go).
+	// droppedContractsRead is set while recordStorageView, or the optional-widening rule, judges a .ts
+	// module's view, where a record seen as a record may drop or add a named contract the reads hold
+	// (droppedContractRead and addedContractRead, records_named.go).
 	droppedContractsRead bool
 
 	// looseInits is every literal field, element or entry lowering made into a slot typed unknown or

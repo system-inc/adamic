@@ -108,9 +108,11 @@ func TestRecordDeclaredKeysAreRefusedInA(t *testing.T) {
 // Options, and r21 at its Readonly<Options> view's storage gap, a line before its widening: both fail
 // closed. In .ts, a storage view that drops outFile lowers since #6c4swvt G3a (r03, r04, r07 to r09,
 // r17 to r20, r27): the write through the view lands, typeof observes the number as Node does, and a
-// named read of outFile stops on it (records_options_base). A storage view that adds outFile (r16) passes
-// the storage gate since #6c4swvt's addedContractRead, outFile's read being checked, and stops at the
-// optional widening, which judges it next. Every other road keeps the stop it had before the .a refusal:
+// named read of outFile stops on it (records_options_base). A view that adds outFile lowers in .ts since
+// #6c4swvt's addedContractRead and the optional-widening rule's recordAddedNameChecked, outFile's read
+// being checked: a Dict seen as Options (r16) and a Dict spread first into an Options literal (r05), where
+// typeof observes the number as Node does. r23's spread after a field now stops at the single-spread rule,
+// which judges it once the widening doesn't. Every other road keeps the stop it had before the .a refusal:
 // the named write and the optional widening stop where they did, and the type-argument roads too, whose
 // .a twins are refused. A binding is a relation site (#xywvn06), but it makes no slot and no view, so the
 // storage gap that stops each road's direct twin doesn't stop it; g03, a Dict bound to T extends Options,

@@ -500,8 +500,9 @@ func (l *lowering) droppedContractRead(t, held, seen *checker.Type) bool {
 // boolean, their literal unions and numeric enums), and an array as recordReadSlotView's view origin, which
 // checks every element it hands out and stops each other road at compile time (tsc's lib, types, typeRoots
 // and the other string[] options, #6c4swvt), and a dictionary or a fixed object by recordReadHeapMember's
-// checked narrow (tsc's paths and configFile). Both rest on its premise: every named read out of a slot boxed as a union is checked by the
-// declared type, whatever wrote the slot and through whatever view.
+// checked narrow (tsc's paths and configFile). All three of droppedContractRead, addedContractRead and
+// the optional-widening rule's recordAddedNameChecked rest on its premise: every named read out of a slot
+// boxed as a union is checked by the declared type, whatever wrote the slot and through whatever view.
 var droppedContractChecked = map[ir.Type]bool{ir.Number: true, ir.String: true, ir.Boolean: true, ir.Array: true, ir.Record: true, ir.Object: true}
 
 // parameterStorage is check run with droppedContractsRead cleared, then restored: a function's
