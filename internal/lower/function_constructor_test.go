@@ -150,3 +150,48 @@ func TestFunctionConstructorAllocatorWritesStopEarlier(t *testing.T) {
 		}
 	})
 }
+
+// The cast adaptation 41 writes in place of any, `typeof F & ReturnType<Allocator["getXConstructor"]>` (tsc's
+// Symbol, Signature and SourceMapSource getters), rides the same road (Adamic's ruling on #837zjkt). In either order,
+// and with its operand parenthesized, the program agrees with Node on the JavaScript backend and natively. Each
+// member is judged by type identity, never by spelling or by structure: a third member, a typeof of another function
+// of the same shape, a construct type written out in place of the getter's declared return, and the form off the
+// getter's road each keep the cast's refusal.
+// Mutant: m6, allocatorIntersectionCast taking two or more members, lowers the third member row.
+func TestFunctionConstructorIntersectionCastRidesTheRoad(t *testing.T) {
+	t.Parallel()
+	const getter = "getNodeConstructor: () => NodeObject as any,"
+	cast := func(form, extra string) string {
+		return strings.Replace(functionConstructorProgram(functionConstructorHonest, extra, ""), getter, "getNodeConstructor: () => "+form+",", 1)
+	}
+	for _, form := range []string{
+		`NodeObject as typeof NodeObject & ReturnType<Allocator["getNodeConstructor"]>`,
+		`NodeObject as ReturnType<Allocator["getNodeConstructor"]> & typeof NodeObject`,
+		`(NodeObject) as typeof NodeObject & ReturnType<Allocator["getNodeConstructor"]>`,
+	} {
+		t.Run(form, func(t *testing.T) {
+			t.Parallel()
+			program := lowersAndAgreesWithNodeAs(t, cast(form, ""), ".ts")
+			code, out, errs := brandedNative(t, program)
+			if code != 0 || out != "7 -1 -1\n9\n" {
+				t.Fatalf("native: exit %d stdout %q stderr %q; want exit 0 and Node's %q", code, out, errs, "7 -1 -1\n9\n")
+			}
+		})
+	}
+	const refused = "a cast the runtime can't check"
+	other := "function OtherObject(this: Nd, kind: number, pos: number, end: number): void {\n    this.pos = pos;\n    this.end = end;\n    this.kind = kind;\n}\n"
+	for _, probe := range []struct{ name, source string }{
+		{"a third member", cast(`NodeObject as typeof NodeObject & ReturnType<Allocator["getNodeConstructor"]> & { tag?: number }`, "")},
+		{"a typeof of another function", strings.Replace(cast(`NodeObject as typeof OtherObject & ReturnType<Allocator["getNodeConstructor"]>`, ""), "const objectAllocator", other+"const objectAllocator", 1)},
+		{"a construct type written out", cast(`NodeObject as typeof NodeObject & (new (kind: number, pos: number, end: number) => Nd)`, "")},
+		{"the form off the road", functionConstructorProgram(functionConstructorHonest, "", "const loose = NodeObject as typeof NodeObject & ReturnType<Allocator[\"getNodeConstructor\"]>;\nconsole.log(typeof loose);\n")},
+	} {
+		t.Run(probe.name, func(t *testing.T) {
+			t.Parallel()
+			_, err := lowerSourceAs(t, probe.source, ".ts")
+			if err == nil || !strings.Contains(err.Error(), refused) {
+				t.Fatalf("want a stop holding %q, got %v", refused, err)
+			}
+		})
+	}
+}
