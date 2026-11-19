@@ -1,6 +1,6 @@
 #!/bin/bash
 # #re2xhwa's three-set report: an A/A on this tree (main plus bench's landing) over one suite, the first
-# argument: regression (which includes everyday) or holdout. Both sides are the same commit, so every row
+# argument: regression (which includes everyday) or holdout; any further arguments go to bench (-only). Both sides are the same commit, so every row
 # is a control and the column that matters is native against Node, with its interval; the controls line
 # says whether the tool stayed clean on this box. A holdout row whose build stops says where. Never lands.
 set -u
@@ -10,12 +10,15 @@ case "${1:-}" in
 esac
 HEAD=$(git rev-parse HEAD)
 T=$(mktemp -d)
-echo "box $(hostname) $(nproc) cpus, $(uname -r), tree $HEAD, suite $1"
+echo "box $(hostname) $(nproc) cpus, $(uname -r), tree $HEAD, suite $1, extra flags: ${*:2}"
 echo "load before $(cut -d' ' -f1-3 /proc/loadavg); busy processes: $(ps -eo pcpu=,comm= | awk '$1 > 5 {printf "%s(%s) ", $2, $1}')"
-go run ./bench -compare "$HEAD" "$HEAD" -suite "$1" -samples 15 > "$T/m4.log" 2> "$T/m4.err"
+suite=$1
+shift
+# Every per-run line goes to the job's own log as it happens, stamped, so a run stopped at its ceiling
+# still says how far it got and what each run cost (J-6rff648 left nothing past its header).
+go run ./bench -compare "$HEAD" "$HEAD" -suite "$suite" -samples 15 "$@" > "$T/m4.log" 2> >(while IFS= read -r line; do echo "$(date -u +%H:%M:%S) $line"; done)
 status=$?
+wait
 cat "$T/m4.log"
-echo "-- its stderr, without the per-sample lines:"
-grep -v '^sample ' "$T/m4.err" | tail -30
 echo "load after $(cut -d' ' -f1-3 /proc/loadavg)"
 exit $status
