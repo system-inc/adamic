@@ -1,0 +1,568 @@
+{
+	"source": {
+		"archive": "public/download/benchmarksgame-sourcecode.zip",
+		"blob": "05648fc9a0d6220ad9427b99f3f6eee39eb2759f",
+		"sha256": "aabcf6726cdc14f0f45b99e5daba48584f94bbb48883fd3711a1d040474d1cb4",
+		"measurements": "public/data/data.csv, blob 23821120252e02479a2623efaf736e3c7331be8d",
+		"repository": "https://salsa.debian.org/benchmarksgame-team/benchmarksgame",
+		"commit": "40296663ed350d5fe4a6ab5e367bab61cb77c219",
+		"gameMachine": "the game's i5-3330, four cores, 64-bit Ubuntu"
+	},
+	"go": {
+		"version": "go1.23.1",
+		"environment": ["GOAMD64=v2"]
+	},
+	"rust": {
+		"version": "1.84.1",
+		"flags": ["-C", "opt-level=3", "-C", "target-cpu=ivybridge", "-C", "codegen-units=1"]
+	},
+	"crates": {
+		"bumpalo": "3.17.0",
+		"futures": "0.1.31",
+		"hashbrown": "0.15.2",
+		"itertools": "0.14.0",
+		"libc": "0.2.169",
+		"memchr": "2.7.4",
+		"num": "0.4.3",
+		"num_cpus": "1.16.0",
+		"pcre2-sys": "0.2.9",
+		"rayon": "1.10.0",
+		"spin": "0.6.0",
+		"tokio-threadpool": "0.1.18"
+	},
+	"programs": [
+		{
+			"name": "binarytrees",
+			"adamic": "trees",
+			"size": 18,
+			"gameSize": 21,
+			"ours": "bench/trees.ts's depth, 18, the everyday size; the game's is 21",
+			"entries": [
+				{
+					"file": "binarytrees/binarytrees.go-2.go",
+					"language": "go",
+					"bases": ["fastest"],
+					"threads": "several",
+					"buildLine": "/opt/src/go1.23.1/go/bin/go build -o binarytrees.go-2.go_run binarytrees.go-2.go",
+					"gameElapsed": 14.212,
+					"gameCpu": 56.533
+				},
+				{
+					"file": "binarytrees/binarytrees.go-6.go",
+					"language": "go",
+					"bases": ["one thread"],
+					"threads": "one",
+					"buildLine": "/opt/src/go1.23.1/go/bin/go build -o binarytrees.go-6.go_run binarytrees.go-6.go",
+					"gameElapsed": 27.93,
+					"gameCpu": 29.261
+				},
+				{
+					"file": "binarytrees/binarytrees.rust-5.rust",
+					"language": "rust",
+					"bases": ["fastest"],
+					"threads": "several",
+					"crates": ["bumpalo", "rayon"],
+					"buildLine": "/opt/src/rust-1.84.1/bin/rustc -C opt-level=3 -C target-cpu=ivybridge -C codegen-units=1 -L /opt/src/rust-libs binarytrees.rs -o binarytrees.rust-5.rust_run",
+					"gameElapsed": 1.065,
+					"gameCpu": 3.718
+				}
+			]
+		},
+		{
+			"name": "fannkuchredux",
+			"adamic": "holdout/fannkuchredux",
+			"size": 12,
+			"gameSize": 12,
+			"entries": [
+				{
+					"file": "fannkuchredux/fannkuchredux.go-3.go",
+					"language": "go",
+					"bases": ["fastest", "portable"],
+					"threads": "several",
+					"buildLine": "/opt/src/go1.23.1/go/bin/go build -o fannkuchredux.go-3.go_run fannkuchredux.go-3.go",
+					"gameElapsed": 8.355,
+					"gameCpu": 33.329
+				},
+				{
+					"file": "fannkuchredux/fannkuchredux.go-8.go",
+					"language": "go",
+					"bases": ["one thread"],
+					"threads": "one",
+					"buildLine": "/opt/src/go1.23.1/go/bin/go build -o fannkuchredux.go-8.go_run fannkuchredux.go-8.go",
+					"gameElapsed": 46.152,
+					"gameCpu": 46.265
+				},
+				{
+					"file": "fannkuchredux/fannkuchredux.rust-6.rust",
+					"language": "rust",
+					"bases": ["fastest"],
+					"threads": "several",
+					"instructionSet": "SSSE3",
+					"crates": ["rayon"],
+					"buildLine": "/opt/src/rust-1.84.1/bin/rustc -C opt-level=3 -C target-cpu=ivybridge -C codegen-units=1 -L /opt/src/rust-libs fannkuchredux.rs -o fannkuchredux.rust-6.rust_run",
+					"gameElapsed": 3.807,
+					"gameCpu": 15.054
+				},
+				{
+					"file": "fannkuchredux/fannkuchredux.rust-4.rust",
+					"language": "rust",
+					"bases": ["portable"],
+					"threads": "several",
+					"crates": ["rayon"],
+					"buildLine": "/opt/src/rust-1.84.1/bin/rustc -C opt-level=3 -C target-cpu=ivybridge -C codegen-units=1 -L /opt/src/rust-libs fannkuchredux.rs -o fannkuchredux.rust-4.rust_run",
+					"gameElapsed": 6.941,
+					"gameCpu": 27.119
+				}
+			]
+		},
+		{
+			"name": "fasta",
+			"adamic": "holdout/fasta",
+			"size": 25000000,
+			"gameSize": 25000000,
+			"entries": [
+				{
+					"file": "fasta/fasta.go-2.go",
+					"language": "go",
+					"bases": ["fastest"],
+					"threads": "several",
+					"buildLine": "/opt/src/go1.23.1/go/bin/go build -o fasta.go-2.go_run fasta.go-2.go",
+					"gameElapsed": 1.273,
+					"gameCpu": 4.073
+				},
+				{
+					"file": "fasta/fasta.go",
+					"language": "go",
+					"bases": ["one thread"],
+					"threads": "one",
+					"buildLine": "/opt/src/go1.23.1/go/bin/go build -o fasta.go_run fasta.go",
+					"gameElapsed": 3.743,
+					"gameCpu": 3.751
+				},
+				{
+					"file": "fasta/fasta.rust-7.rust",
+					"language": "rust",
+					"bases": ["fastest"],
+					"threads": "several",
+					"crates": ["num_cpus", "spin"],
+					"buildLine": "/opt/src/rust-1.84.1/bin/rustc -C opt-level=3 -C target-cpu=ivybridge -C codegen-units=1 -L /opt/src/rust-libs --extern num_cpus=/opt/src/rust-libs/libnum_cpus-91e93ce0bb9d8752.rlib fasta.rs -o fasta.rust-7.rust_run",
+					"gameElapsed": 0.778,
+					"gameCpu": 1.545
+				},
+				{
+					"file": "fasta/fasta.rust-3.rust",
+					"language": "rust",
+					"bases": ["one thread"],
+					"threads": "one",
+					"crates": ["num_cpus"],
+					"buildLine": "/opt/src/rust-1.84.1/bin/rustc -C opt-level=3 -C target-cpu=ivybridge -C codegen-units=1 -L /opt/src/rust-libs --extern num_cpus=/opt/src/rust-libs/libnum_cpus-24a145fc292277f3.rlib fasta.rs -o fasta.rust-3.rust_run",
+					"gameElapsed": 2.032,
+					"gameCpu": 2.029
+				}
+			]
+		},
+		{
+			"name": "knucleotide",
+			"adamic": "holdout/knucleotide",
+			"input": {
+				"generator": "holdout/fasta",
+				"size": 25000000
+			},
+			"gameSize": 25000000,
+			"entries": [
+				{
+					"file": "knucleotide/knucleotide.go-7.go",
+					"language": "go",
+					"bases": ["fastest"],
+					"threads": "several",
+					"buildLine": "/opt/src/go1.23.1/go/bin/go build -o knucleotide.go-7.go_run knucleotide.go-7.go",
+					"gameElapsed": 7.577,
+					"gameCpu": 28.881
+				},
+				{
+					"file": "knucleotide/knucleotide.go-8.go",
+					"language": "go",
+					"bases": ["one thread"],
+					"threads": "one",
+					"buildLine": "/opt/src/go1.23.1/go/bin/go build -o knucleotide.go-8.go_run knucleotide.go-8.go",
+					"gameElapsed": 61.378,
+					"gameCpu": 62.022
+				},
+				{
+					"file": "knucleotide/knucleotide.rust-7.rust",
+					"language": "rust",
+					"bases": ["fastest"],
+					"threads": "several",
+					"crates": ["futures", "hashbrown", "itertools", "num", "tokio-threadpool"],
+					"buildLine": "/opt/src/rust-1.84.1/bin/rustc -C opt-level=3 -C target-cpu=ivybridge -C codegen-units=1 -L /opt/src/rust-libs --extern futures=/opt/src/rust-libs/libfutures-b6d48ee8822a84bd.rlib --extern hashbrown=/opt/src/rust-libs/libhashbrown-997dd4ca7d2b21ff.rlib knucleotide.rs -o knucleotide.rust-7.rust_run",
+					"gameElapsed": 2.568,
+					"gameCpu": 8.011
+				}
+			]
+		},
+		{
+			"name": "mandelbrot",
+			"adamic": "holdout/mandelbrot",
+			"size": 16000,
+			"gameSize": 16000,
+			"entries": [
+				{
+					"file": "mandelbrot/mandelbrot.go-4.go",
+					"language": "go",
+					"bases": ["fastest"],
+					"threads": "several",
+					"buildLine": "/opt/src/go1.23.1/go/bin/go build -o mandelbrot.go-4.go_run mandelbrot.go-4.go",
+					"gameElapsed": 3.774,
+					"gameCpu": 15.009
+				},
+				{
+					"file": "mandelbrot/mandelbrot.go-8.go",
+					"language": "go",
+					"bases": ["one thread"],
+					"threads": "one",
+					"buildLine": "/opt/src/go1.23.1/go/bin/go build -o mandelbrot.go-8.go_run mandelbrot.go-8.go",
+					"gameElapsed": 26.695,
+					"gameCpu": 26.761
+				},
+				{
+					"file": "mandelbrot/mandelbrot.rust-4.rust",
+					"language": "rust",
+					"bases": ["fastest"],
+					"threads": "several",
+					"crates": ["futures", "rayon"],
+					"buildLine": "/opt/src/rust-1.84.1/bin/rustc -C opt-level=3 -C target-cpu=ivybridge -C codegen-units=1 -L /opt/src/rust-libs --extern futures=/opt/src/rust-libs/libfutures-ada39ec68f280726.rlib mandelbrot.rs -o mandelbrot.rust-4.rust_run",
+					"gameElapsed": 0.954,
+					"gameCpu": 3.777
+				}
+			]
+		},
+		{
+			"name": "nbody",
+			"adamic": "nbody",
+			"size": 1000000,
+			"gameSize": 50000000,
+			"ours": "bench/nbody.ts's 1,000,000 steps, the everyday size; the game's is 50,000,000",
+			"entries": [
+				{
+					"file": "nbody/nbody.go-3.go",
+					"language": "go",
+					"bases": ["fastest", "one thread", "portable"],
+					"threads": "one",
+					"buildLine": "/opt/src/go1.23.1/go/bin/go build -o nbody.go-3.go_run nbody.go-3.go",
+					"gameElapsed": 6.385,
+					"gameCpu": 6.4
+				},
+				{
+					"file": "nbody/nbody.rust-9.rust",
+					"language": "rust",
+					"bases": ["fastest", "one thread"],
+					"threads": "one",
+					"instructionSet": "AVX",
+					"crates": [],
+					"buildLine": "/opt/src/rust-1.84.1/bin/rustc -C opt-level=3 -C target-cpu=ivybridge -C codegen-units=1  nbody.rs -o nbody.rust-9.rust_run",
+					"gameElapsed": 2.192,
+					"gameCpu": 2.189
+				},
+				{
+					"file": "nbody/nbody.rust-3.rust",
+					"language": "rust",
+					"bases": ["portable"],
+					"threads": "one",
+					"crates": [],
+					"buildLine": "/opt/src/rust-1.84.1/bin/rustc -C opt-level=3 -C target-cpu=ivybridge -C codegen-units=1  nbody.rs -o nbody.rust-3.rust_run",
+					"gameElapsed": 3.461,
+					"gameCpu": 3.458
+				}
+			]
+		},
+		{
+			"name": "regexredux",
+			"adamic": "holdout/regexredux",
+			"input": {
+				"generator": "holdout/fasta",
+				"size": 5000000
+			},
+			"gameSize": 5000000,
+			"entries": [
+				{
+					"file": "regexredux/regexredux.go-5.go",
+					"language": "go",
+					"bases": ["fastest"],
+					"threads": "several",
+					"buildLine": "/opt/src/go1.23.1/go/bin/go build -o regexredux.go-5.go_run regexredux.go-5.go",
+					"gameElapsed": 3.229,
+					"gameCpu": 5.416
+				},
+				{
+					"file": "regexredux/regexredux.rust-7.rust",
+					"language": "rust",
+					"bases": ["fastest"],
+					"threads": "several",
+					"crates": ["libc", "pcre2-sys", "rayon"],
+					"buildLine": "/opt/src/rust-1.84.1/bin/rustc -C opt-level=3 -C target-cpu=ivybridge -C codegen-units=1 -L /opt/src/rust-libs --extern libc=/opt/src/rust-libs/liblibc-266a975e90b6fb1d.rlib regexredux.rs -o regexredux.rust-7.rust_run",
+					"gameElapsed": 0.784,
+					"gameCpu": 1.996
+				}
+			]
+		},
+		{
+			"name": "revcomp",
+			"adamic": "holdout/revcomp",
+			"input": {
+				"generator": "holdout/fasta",
+				"size": 25000000
+			},
+			"gameSize": 100000001,
+			"ours": "fasta's output for 25,000,000, the holdout suite's; the game's is for 100,000,000",
+			"entries": [
+				{
+					"file": "revcomp/revcomp.go-6.go",
+					"language": "go",
+					"bases": ["fastest"],
+					"threads": "several",
+					"buildLine": "/opt/src/go1.23.1/go/bin/go build -o revcomp.go-6.go_run revcomp.go-6.go",
+					"gameElapsed": 1.926,
+					"gameCpu": 3.434
+				},
+				{
+					"file": "revcomp/revcomp.go-2.go",
+					"language": "go",
+					"bases": ["one thread"],
+					"threads": "one",
+					"buildLine": "/opt/src/go1.23.1/go/bin/go build -o revcomp.go-2.go_run revcomp.go-2.go",
+					"gameElapsed": 2.219,
+					"gameCpu": 2.317
+				},
+				{
+					"file": "revcomp/revcomp.rust",
+					"language": "rust",
+					"bases": ["fastest"],
+					"threads": "several",
+					"crates": ["memchr", "rayon"],
+					"buildLine": "/opt/src/rust-1.84.1/bin/rustc -C opt-level=3 -C target-cpu=ivybridge -C codegen-units=1 -L /opt/src/rust-libs --extern memchr=/opt/src/rust-libs/libmemchr-02485c7c9e3968d9.rlib revcomp.rs -o revcomp.rust_run",
+					"gameElapsed": 0.549,
+					"gameCpu": 0.852
+				}
+			]
+		},
+		{
+			"name": "spectralnorm",
+			"adamic": "spectral_norm",
+			"size": 1500,
+			"gameSize": 5500,
+			"ours": "bench/spectral_norm.ts's n, 1,500, the everyday size; the game's is 5,500",
+			"entries": [
+				{
+					"file": "spectralnorm/spectralnorm.go-4.go",
+					"language": "go",
+					"bases": ["fastest"],
+					"threads": "several",
+					"buildLine": "/opt/src/go1.23.1/go/bin/go build -o spectralnorm.go-4.go_run spectralnorm.go-4.go",
+					"gameElapsed": 1.434,
+					"gameCpu": 5.691
+				},
+				{
+					"file": "spectralnorm/spectralnorm.go",
+					"language": "go",
+					"bases": ["one thread"],
+					"threads": "one",
+					"buildLine": "/opt/src/go1.23.1/go/bin/go build -o spectralnorm.go_run spectralnorm.go",
+					"gameElapsed": 5.341,
+					"gameCpu": 5.354
+				},
+				{
+					"file": "spectralnorm/spectralnorm.rust-6.rust",
+					"language": "rust",
+					"bases": ["fastest"],
+					"threads": "several",
+					"crates": ["rayon"],
+					"buildLine": "/opt/src/rust-1.84.1/bin/rustc -C opt-level=3 -C target-cpu=ivybridge -C codegen-units=1 -L /opt/src/rust-libs spectralnorm.rs -o spectralnorm.rust-6.rust_run",
+					"gameElapsed": 0.718,
+					"gameCpu": 2.849
+				}
+			]
+		}
+	],
+	"absent": [
+		{
+			"name": "devirtualize",
+			"why": "not a Benchmarks Game program, so there's no Go or Rust entry, and none is ported"
+		},
+		{
+			"name": "parallel_files",
+			"why": "not a Benchmarks Game program, so there's no Go or Rust entry, and none is ported"
+		},
+		{
+			"name": "sort",
+			"why": "not a Benchmarks Game program, so there's no Go or Rust entry, and none is ported"
+		},
+		{
+			"name": "tokenizer",
+			"why": "not a Benchmarks Game program, so there's no Go or Rust entry, and none is ported"
+		},
+		{
+			"name": "word_count",
+			"why": "not a Benchmarks Game program, so there's no Go or Rust entry, and none is ported"
+		}
+	],
+	"refused": [
+		{
+			"name": "pidigits",
+			"why": "it needs arbitrary-precision integers, and Adamic has no bigint yet (bench/holdout/pidigits.refused.md), so no side of it is timed"
+		}
+	],
+	"vendored": [
+		{
+			"path": "LICENSE",
+			"sha256": "5bb4ce0a63be9ab37cd2e162375e4075535d341c18b3ca18d5cf3e4e07b7d010"
+		},
+		{
+			"path": "binarytrees/LICENSE",
+			"sha256": "97dcdfb027430b29c73e6b2eadec75a0cb898050fe45770083db3e5207e2dcff"
+		},
+		{
+			"path": "binarytrees/binarytrees.go-2.go",
+			"sha256": "dc8aa53d7241d3c1b8e7985bc59ff8816421964d74486b2fb1d204a882253b4d"
+		},
+		{
+			"path": "binarytrees/binarytrees.go-6.go",
+			"sha256": "77c81c18bf4763b36d13ca6f4a2f6f61ace3e2e64d3316500917fbcd00b1a480"
+		},
+		{
+			"path": "binarytrees/binarytrees.rust-5.rust",
+			"sha256": "fa543ffd0409c90174d96d3cc237ac1ff84affaceef9f215553e953755ef33c4"
+		},
+		{
+			"path": "fannkuchredux/LICENSE",
+			"sha256": "97dcdfb027430b29c73e6b2eadec75a0cb898050fe45770083db3e5207e2dcff"
+		},
+		{
+			"path": "fannkuchredux/fannkuchredux.go-3.go",
+			"sha256": "5b88f512ae9878fdbc3aaa1d6f9be11d026606059ab014b8d80d467775da4ac3"
+		},
+		{
+			"path": "fannkuchredux/fannkuchredux.go-8.go",
+			"sha256": "b2f253a103bb797863b132e10b522034451f395bca02ec470a3e98c2031f742b"
+		},
+		{
+			"path": "fannkuchredux/fannkuchredux.rust-4.rust",
+			"sha256": "367a0a0187b3ee6744f9a455a170a5b7f0307046a4dd245d5f8678e89ccf2e33"
+		},
+		{
+			"path": "fannkuchredux/fannkuchredux.rust-6.rust",
+			"sha256": "b0fac82457e18fea7bd8b64dddb8a0d5266d4f5d84201a3b3970973c96349a38"
+		},
+		{
+			"path": "fasta/LICENSE",
+			"sha256": "97dcdfb027430b29c73e6b2eadec75a0cb898050fe45770083db3e5207e2dcff"
+		},
+		{
+			"path": "fasta/fasta.go",
+			"sha256": "b7a6d09683ec310b5d9f619383487d345a3435b1d17bf239443fed4ef84107db"
+		},
+		{
+			"path": "fasta/fasta.go-2.go",
+			"sha256": "49eb4e788bf353e59b1efcfce499d713a9bc453e05786e3afff3c3d8754fb047"
+		},
+		{
+			"path": "fasta/fasta.rust-3.rust",
+			"sha256": "d11d8ba1572a7ced89e97284a97ccd5b63795d32dcf7ca9e48c7c30a6fe5367c"
+		},
+		{
+			"path": "fasta/fasta.rust-7.rust",
+			"sha256": "20fe129fdda92dff4e951ac49236713d99e89cdfa0afaa596321886ca8e15ca2"
+		},
+		{
+			"path": "knucleotide/LICENSE",
+			"sha256": "97dcdfb027430b29c73e6b2eadec75a0cb898050fe45770083db3e5207e2dcff"
+		},
+		{
+			"path": "knucleotide/knucleotide.go-7.go",
+			"sha256": "5a7460f0e3300efa7aa74b1a57a9129c4ab5f678b4dd4e14f159631bd9f1783c"
+		},
+		{
+			"path": "knucleotide/knucleotide.go-8.go",
+			"sha256": "1e8082e5b4634de904bfe357aa58224160b0395fdc8fe1675c902bbc54454d4f"
+		},
+		{
+			"path": "knucleotide/knucleotide.rust-7.rust",
+			"sha256": "47548a02d18bbc68734b0ef2145e3bd89523f15fa779682031ddbd462dbf7851"
+		},
+		{
+			"path": "mandelbrot/LICENSE",
+			"sha256": "97dcdfb027430b29c73e6b2eadec75a0cb898050fe45770083db3e5207e2dcff"
+		},
+		{
+			"path": "mandelbrot/mandelbrot.go-4.go",
+			"sha256": "39914187a39ecbad8411e4960a0926432eb797f74931f0c0fb67dc00e88d8736"
+		},
+		{
+			"path": "mandelbrot/mandelbrot.go-8.go",
+			"sha256": "5c738174a4d392c995978c4d5121785c738b36347fb75608f70e52a8ca83c157"
+		},
+		{
+			"path": "mandelbrot/mandelbrot.rust-4.rust",
+			"sha256": "5d7cbf0a4536913670781be454d9fc95817e7f09cacd7082186b176bab08830c"
+		},
+		{
+			"path": "nbody/LICENSE",
+			"sha256": "97dcdfb027430b29c73e6b2eadec75a0cb898050fe45770083db3e5207e2dcff"
+		},
+		{
+			"path": "nbody/nbody.go-3.go",
+			"sha256": "229a0db157a1482f54575ceb4f2d4feb2dfbbaaacffa57eabdd98427e771745d"
+		},
+		{
+			"path": "nbody/nbody.rust-3.rust",
+			"sha256": "34c935a74f929712bf8864697763c7d37806eb97ffdbad5e987346f5e761c994"
+		},
+		{
+			"path": "nbody/nbody.rust-9.rust",
+			"sha256": "f6da9c5ef7e2b2f65f0bf29b55d19b62f4f8ac44f2abd78fc41da19ad086346d"
+		},
+		{
+			"path": "regexredux/LICENSE",
+			"sha256": "97dcdfb027430b29c73e6b2eadec75a0cb898050fe45770083db3e5207e2dcff"
+		},
+		{
+			"path": "regexredux/regexredux.go-5.go",
+			"sha256": "423e6c822bd1abb80bdf5bbf6e6419333c74b440ac6f74af892c7136c4206b9f"
+		},
+		{
+			"path": "regexredux/regexredux.rust-7.rust",
+			"sha256": "7120a448ec8b1b6a9ef0fe6576e66a2a4f40527a41a2679c4d0c3f374819dd67"
+		},
+		{
+			"path": "revcomp/LICENSE",
+			"sha256": "97dcdfb027430b29c73e6b2eadec75a0cb898050fe45770083db3e5207e2dcff"
+		},
+		{
+			"path": "revcomp/revcomp.go-2.go",
+			"sha256": "f1fb6d5a148e917fa5c5395b78ba6fc0734c28c54e8cdc0c09852273ef20d814"
+		},
+		{
+			"path": "revcomp/revcomp.go-6.go",
+			"sha256": "849c8d9a0fddee29347c529946d82bfb66082c2932d0c3a9335c436a8c4f8799"
+		},
+		{
+			"path": "revcomp/revcomp.rust",
+			"sha256": "4c2f8d1f74334d85f16d72cb03075b9888633183d1b82e9cdbb4eed2c805ec2f"
+		},
+		{
+			"path": "spectralnorm/LICENSE",
+			"sha256": "ccddb3b088a98bac79496da794178a265dca0fd6aa4befee753464872672f136"
+		},
+		{
+			"path": "spectralnorm/spectralnorm.go",
+			"sha256": "c090aa0518e8239e97a57322aeb577a8cfb94aae5a1b55604be82ac3a77dbbe9"
+		},
+		{
+			"path": "spectralnorm/spectralnorm.go-4.go",
+			"sha256": "bed1eaba75cc4fe09231497d1f2d3e2a6320f88dfee6f0a3b63ff1af5d8f465e"
+		},
+		{
+			"path": "spectralnorm/spectralnorm.rust-6.rust",
+			"sha256": "fd81731399d95833a369c0c0dbabc3e82467a2146e6a0175161ed23423dee1f4"
+		}
+	]
+}
