@@ -1,0 +1,66 @@
+--- before/src/compiler/parser.ts
++++ after/src/compiler/parser.ts
+@@ -304,0 +305,2 @@
++    type ParsedPragmaArguments,
++    type PragmaNamesWithKind,
+@@ -10696,0 +10699,8 @@
++type XmlPragmaName = PragmaNamesWithKind<PragmaKindFlags.TripleSlashXML>;
++type PositionalPragmaName = PragmaNamesWithKind<PragmaKindFlags.SingleLine | PragmaKindFlags.MultiLine>;
++type PragmaBuilder<T> = {
++    [K in (T extends unknown ? keyof T : never)]?: (T extends unknown ? K extends keyof T ? T[K] : never : never) | undefined;
++};
++type XmlPragmaBuilder = PragmaBuilder<ParsedPragmaArguments<XmlPragmaName>>;
++type PositionalPragmaBuilder = PragmaBuilder<ParsedPragmaArguments<PositionalPragmaName>>;
++
+@@ -10700 +10710 @@
+-        const name = tripleSlash[1]!.toLowerCase() as keyof PragmaPseudoMap; // Technically unsafe cast, but we do it so the below check to make it safe typechecks
++        const name = tripleSlash[1]!.toLowerCase() as XmlPragmaName; // Technically unsafe cast, but we do it so the below check to make it safe typechecks
+@@ -10706 +10716 @@
+-            const argument: { [index: string]: string | { value: string; pos: number; end: number; }; } = {};
++            const argument: XmlPragmaBuilder = {};
+@@ -10717 +10727 @@
+-                        argument[arg.name] = {
++                        argument[arg.name as "types" | "lib" | "path"] = {
+@@ -10724 +10734 @@
+-                        argument[arg.name] = value;
++                        argument[arg.name as "path" | "name" | "no-default-lib" | "resolution-mode" | "preserve"] = value;
+@@ -10728 +10738 @@
+-            pragmas.push({ name, args: { arguments: argument, range } } as PragmaPseudoMapEntry);
++            pragmas.push({ name, args: { arguments: argument as ParsedPragmaArguments<XmlPragmaName>, range } } as PragmaPseudoMapEntry);
+@@ -10752 +10762 @@
+-    const name = match[1]!.toLowerCase() as keyof PragmaPseudoMap; // Technically unsafe cast, but we do it so they below check to make it safe typechecks
++    const name = match[1]!.toLowerCase() as PositionalPragmaName; // Technically unsafe cast, but we do it so they below check to make it safe typechecks
+@@ -10760 +10770 @@
+-    pragmas.push({ name, args: { arguments: argument, range } } as PragmaPseudoMapEntry);
++    pragmas.push({ name, args: { arguments: argument as ParsedPragmaArguments<PositionalPragmaName>, range } } as PragmaPseudoMapEntry);
+@@ -10764 +10774 @@
+-function getNamedPragmaArguments(pragma: PragmaDefinition, text: string | undefined): { [index: string]: string | undefined; } | "fail" {
++function getNamedPragmaArguments(pragma: PragmaDefinition, text: string | undefined): PositionalPragmaBuilder | "fail" {
+@@ -10768 +10778 @@
+-    const argMap: { [index: string]: string | undefined; } = {};
++    const argMap: PositionalPragmaBuilder = {};
+@@ -10777 +10787 @@
+-        argMap[argument.name] = args[i];
++        argMap[argument.name as keyof PositionalPragmaBuilder] = args[i];
+--- before/src/compiler/types.ts
++++ after/src/compiler/types.ts
+@@ -10443 +10443,18 @@
+-export type PragmaPseudoMap = { [K in keyof ConcretePragmaSpecs]: { arguments: PragmaArgumentType<K>; range: CommentRange; }; };
++export type PragmaNamesWithKind<F extends PragmaKindFlags> = {
++    [K in keyof ConcretePragmaSpecs]: ConcretePragmaSpecs[K]["kind"] extends F ? K : never;
++}[keyof ConcretePragmaSpecs];
++
++/** @internal */
++export type ParsedPragmaArguments<K extends keyof ConcretePragmaSpecs> =
++    K extends "ts-check" | "ts-nocheck" ? Record<never, never> :
++    K extends "amd-dependency" ? { path: string | undefined; name?: string | undefined; } :
++    K extends "amd-module" ? { name: string | undefined; } :
++    K extends "reference" ? {
++        [P in keyof PragmaArgumentType<K>]: P extends "types" | "lib" | "path"
++            ? PragmaArgumentType<K>[P]
++            : PragmaArgumentType<K>[P] | undefined;
++    } :
++    { [P in keyof PragmaArgumentType<K>]?: PragmaArgumentType<K>[P]; };
++
++/** @internal */
++export type PragmaPseudoMap = { [K in keyof ConcretePragmaSpecs]: { arguments: ParsedPragmaArguments<K>; range: CommentRange; }; };

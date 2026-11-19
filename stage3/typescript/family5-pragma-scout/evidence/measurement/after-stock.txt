@@ -1,0 +1,11 @@
+src/compiler/checker.ts(2451,80): error TS2345: Argument of type 'string | undefined' is not assignable to parameter of type 'string'.
+  Type 'undefined' is not assignable to type 'string'.
+src/compiler/checker.ts(2497,60): error TS2345: Argument of type 'string | undefined' is not assignable to parameter of type 'string'.
+  Type 'undefined' is not assignable to type 'string'.
+src/compiler/checker.ts(51382,76): error TS2345: Argument of type 'string | undefined' is not assignable to parameter of type 'string'.
+  Type 'undefined' is not assignable to type 'string'.
+src/compiler/parser.ts(10641,17): error TS2322: Type '{ name: string | undefined; path: string | undefined; }[]' is not assignable to type 'AmdDependency[]'.
+  Type '{ name: string | undefined; path: string | undefined; }' is not assignable to type 'AmdDependency'.
+    Types of property 'path' are incompatible.
+      Type 'string | undefined' is not assignable to type 'string'.
+        Type 'undefined' is not assignable to type 'string'.

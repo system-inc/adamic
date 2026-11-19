@@ -1,0 +1,64 @@
+src/compiler/debug.ts(178,19): error TS2339: Property 'captureStackTrace' does not exist on type 'ErrorConstructor'.
+src/compiler/debug.ts(179,19): error TS2339: Property 'captureStackTrace' does not exist on type 'ErrorConstructor'.
+src/compiler/performanceCore.ts(2,28): error TS2591: Cannot find name 'node:perf_hooks'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.
+src/compiler/sys.ts(52,22): error TS2591: Cannot find name 'node:fs'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.
+src/compiler/sys.ts(53,24): error TS2591: Cannot find name 'node:path'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.
+src/compiler/sys.ts(54,22): error TS2591: Cannot find name 'node:os'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.
+src/compiler/sys.ts(55,26): error TS2591: Cannot find name 'node:crypto'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.
+src/compiler/sys.ts(80,15): error TS2339: Property 'stackTraceLimit' does not exist on type 'ErrorConstructor'.
+src/compiler/sys.ts(81,15): error TS2339: Property 'stackTraceLimit' does not exist on type 'ErrorConstructor'.
+src/compiler/sys.ts(1459,35): error TS2591: Cannot find name 'inspector'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.
+src/compiler/sys.ts(1462,25): error TS2591: Cannot find name 'process'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.
+src/compiler/sys.ts(1463,32): error TS2591: Cannot find name 'process'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.
+src/compiler/sys.ts(1469,56): error TS2591: Cannot find name 'process'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.
+src/compiler/sys.ts(1476,35): error TS2304: Cannot find name '__filename'.
+src/compiler/sys.ts(1476,92): error TS2304: Cannot find name '__dirname'.
+src/compiler/sys.ts(1476,121): error TS2304: Cannot find name '__filename'.
+src/compiler/sys.ts(1478,44): error TS2591: Cannot find name 'process'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.
+src/compiler/sys.ts(1479,51): error TS2591: Cannot find name 'process'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.
+src/compiler/sys.ts(1483,104): error TS2304: Cannot find name 'setTimeout'.
+src/compiler/sys.ts(1484,57): error TS2304: Cannot find name 'clearTimeout'.
+src/compiler/sys.ts(1484,86): error TS2304: Cannot find name 'clearTimeout'.
+src/compiler/sys.ts(1494,27): error TS2591: Cannot find name 'process'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.
+src/compiler/sys.ts(1495,38): error TS2591: Cannot find name 'process'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.
+src/compiler/sys.ts(1496,32): error TS2591: Cannot find name 'process'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.
+src/compiler/sys.ts(1526,19): error TS2591: Cannot find name 'process'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.
+src/compiler/sys.ts(1530,17): error TS2591: Cannot find name 'process'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.
+src/compiler/sys.ts(1533,24): error TS2591: Cannot find name 'process'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.
+src/compiler/sys.ts(1536,26): error TS2591: Cannot find name 'process'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.
+src/compiler/sys.ts(1568,24): error TS2591: Cannot find name 'process'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.
+src/compiler/sys.ts(1577,21): error TS2304: Cannot find name 'global'.
+src/compiler/sys.ts(1578,21): error TS2304: Cannot find name 'global'.
+src/compiler/sys.ts(1580,24): error TS2591: Cannot find name 'process'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.
+src/compiler/sys.ts(1590,42): error TS2591: Cannot find name 'process'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.
+src/compiler/sys.ts(1594,68): error TS2591: Cannot find name 'process'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.
+src/compiler/sys.ts(1594,112): error TS2591: Cannot find name 'process'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.
+src/compiler/sys.ts(1596,26): error TS2591: Cannot find name 'process'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.
+src/compiler/sys.ts(1596,62): error TS2591: Cannot find name 'process'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.
+src/compiler/sys.ts(1596,107): error TS2591: Cannot find name 'process'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.
+src/compiler/sys.ts(1596,180): error TS2345: Argument of type 'unknown' is not assignable to parameter of type 'string'.
+src/compiler/sys.ts(1596,191): error TS2591: Cannot find name 'process'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.
+src/compiler/sys.ts(1599,21): error TS2591: Cannot find name 'require'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.
+src/compiler/sys.ts(1605,104): error TS2304: Cannot find name 'setTimeout'.
+src/compiler/sys.ts(1606,57): error TS2304: Cannot find name 'clearTimeout'.
+src/compiler/sys.ts(1606,86): error TS2304: Cannot find name 'clearTimeout'.
+src/compiler/sys.ts(1608,17): error TS2591: Cannot find name 'process'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.
+src/compiler/sys.ts(1611,33): error TS2591: Cannot find name 'process'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.
+src/compiler/sys.ts(1616,36): error TS2591: Cannot find name 'Buffer'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.
+src/compiler/sys.ts(1617,36): error TS2591: Cannot find name 'Buffer'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.
+src/compiler/sys.ts(1632,38): error TS2591: Cannot find name 'require'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.
+src/compiler/sys.ts(1642,49): error TS2591: Cannot find name 'fs'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.
+src/compiler/sys.ts(1663,44): error TS2591: Cannot find name 'inspector'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.
+src/compiler/sys.ts(1663,59): error TS2591: Cannot find name 'require'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.
+src/compiler/sys.ts(1685,47): error TS2591: Cannot find name 'inspector'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.
+src/compiler/sys.ts(1709,54): error TS7006: Parameter 'err' implicitly has an 'any' type.
+src/compiler/sys.ts(1709,61): error TS7031: Binding element 'profile' implicitly has an 'any' type.
+src/compiler/sys.ts(1712,120): error TS2591: Cannot find name 'process'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.
+src/compiler/sys.ts(1741,41): error TS2304: Cannot find name '__filename'.
+src/compiler/sys.ts(1759,47): error TS2591: Cannot find name 'fs'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.
+src/compiler/sys.ts(1759,73): error TS2591: Cannot find name 'fs'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.
+src/compiler/sys.ts(1801,25): error TS2591: Cannot find name 'Buffer'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.
+src/compiler/sys.ts(1866,38): error TS2591: Cannot find name 'fs'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.
+src/compiler/sys.ts(1866,59): error TS2591: Cannot find name 'fs'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.
+src/compiler/sys.ts(1896,96): error TS2591: Cannot find name 'process'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.
+src/compiler/tracing.ts(27,21): error TS2591: Cannot find name 'node:fs'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.
