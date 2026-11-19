@@ -17,7 +17,7 @@ var kindSetMutations = []kindSetMutation{
 	{"Switch", "return r.switchBody(statements[0], len(statements) == 2)", "return false", "TestKindSetBodyGrammar/switch", "kind-set grammar switch"},
 	{"SwitchTail", "return hasDefault || tailFalse", "return hasDefault", "TestKindSetBodyGrammar/switch_tail", "kind-set grammar switch_tail"},
 	{"Alias", "r.alias = r.l.checker.GetSymbolAtLocation(d.Name())", "r.alias = nil", "TestKindSetBodyGrammar/alias", "kind-set grammar alias"},
-	{"Guard", "return r.guard(b.Left) && r.comparisons(b.Right)", "return false", "TestKindSetBodyGrammar/guard", "kind-set grammar guard"},
+	{"Guard", "return r.guard(b.Left) && r.comparisons(b.Right)", "_ = b; return false", "TestKindSetBodyGrammar/guard", "kind-set grammar guard"},
 	{"DoubleGuard", "if n.Kind == ast.KindPrefixUnaryExpression && n.AsPrefixUnaryExpression().Operator == ast.KindExclamationToken {", "if false && n.Kind == ast.KindPrefixUnaryExpression && n.AsPrefixUnaryExpression().Operator == ast.KindExclamationToken {", "TestKindSetBodyGrammar/double_guard", "kind-set grammar double_guard"},
 	{"IfGuard", "return test.ElseStatement == nil && test.ThenStatement.Kind == ast.KindBlock && r.guard(test.Expression) && r.body(test.ThenStatement)", "_ = test; return false", "TestKindSetBodyGrammar/if_guard_alias", "kind-set grammar if_guard_alias"},
 	{"FalseSide", "// Preserve the singleton rule exactly, including never (an empty K(S)).", "return l.kindSetMeets(tag, set) // mutant: drop any tag that meets the set", "TestKindSetFalseSideKeepsPartialTag", "kind-set partial tag was dropped from the false side"},
