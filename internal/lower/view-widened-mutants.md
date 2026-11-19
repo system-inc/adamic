@@ -1,49 +1,55 @@
-# The widened-read refusal: its mutants (#80cs7rz)
+# Widened reads checked where they're made: their mutants (#zpzm9ta head 1)
 
-checkViewWidenedReads (view_widened.go) makes a read of a field a view checks, through a receiver type that doesn't
-check it, NotYet when the receiver's value may come from a view. Four recorded outcomes move with it, ruled the price
-of failing closed:
+checkViewWidenedReads (view_widened.go) finds a read of a field a view checks, through a receiver type that doesn't
+check it, whose receiver's value may come from a view. It marks the read in Program.WidenedReads under WidenedReadKey
+(its CheckedFieldKey and its place), and Program.CheckedRead answers yes for a marked read, so readiness keeps the read's
+view and the read is checked: a lie stops at exit 70 with "field read failed", on native, sanitized native and the
+JavaScript backend alike. A method read and a getter-named read stay NotYet. Before this, #80cs7rz made every such read
+NotYet, and four recorded outcomes paid for it. They come back:
 
-| Program | Was | Now | Why |
-|---|---|---|---|
-| stage3/interface-downcasts/lane1/objects-good.ts | lowered, counted | NotYet at 4:92, its count row and file dropped | alias is view.child, a viewed value a checked read took out |
-| stage3/fixtures/predicates/03_void_zero.a | status.json `Compiles` | status.json `NotYet` at 23:12 | isNumericLiteral reads kind of node.expression, which a checked read took out |
-| internal/oracle/testdata/review/agree/9xam9ds_predicate_closed_enum_tag.a | review/agree | review/refused, NotYet at 14:43 | found.value reads through ir.Defined, which the allocation graph doesn't follow: an unknown reach |
-| internal/oracle/testdata/predicate_direction_uses/inferred_call.ts | TestPredicateDirectionUsesLower | NotYet at 46:66 | symbol.valueDeclaration.name reads through ir.Defined too: an unknown reach |
+| Program | Under #80cs7rz | Now |
+|---|---|---|
+| stage3/interface-downcasts/lane1/objects-good.ts | NotYet at 4:92, its count row dropped | lowered, its count row back at 5\|5\|5\|11\|4\|0 |
+| stage3/fixtures/predicates/03_void_zero.a | status.json `NotYet` at 23:12 | status.json `Compiles` |
+| internal/oracle/testdata/review/agree/9xam9ds_predicate_closed_enum_tag.a | review/refused, NotYet at 14:43 | review/agree |
+| internal/oracle/testdata/predicate_direction_uses/inferred_call.ts | NotYet at 46:66 | lowers, in TestPredicateDirectionUsesLower |
 
-Each mutant was applied alone to view_widened.go in the change's tree and run on a Linux cloud worker (Cloud), then
-restored and checked with `cmp`.
+Each mutant was applied alone in the change's tree at 095c5fdf (main 1b04d881) on a sealed Loom job, its tests run,
+then restored and checked with `cmp`. The control, the head as built, was green first in the same job.
 
-## Mutant 1: the pass returns nil at once
+M1 and M2 ran `go test ./internal/oracle -run 'TestViewWidened|TestIntersectionViewWidened|TestCheckedViewObjects|TestReviewProgramsRefuse|TestReviewProgramsAgree|TestHonestWidened|TestSourceSlotCertificate'`,
+`go test ./internal/lower -run 'WidenedReadIsChecked|KindReadIsChecked|KindUnionCastRecursiveReadIsChecked|ClosedRemainderWithNodeFieldsIsChecked|ViewWidenedReadKeyCollision'`
+and `go test ./stage3/fixtures -run TestFixturesPredicates` (J-haqbj7d).
 
-`go test ./internal/oracle -count=1 -run 'TestViewWidened|TestCheckedViewObjects|TestCheckedViewV2MovedStage3NotYet|TestReviewProgramsRefuse'`
-and `go test ./stage3/fixtures -count=1 -run TestFixturesPredicates`. Red:
+## M1: CheckedRead stops answering for WidenedReads
+
+The three lines at the top of Program.CheckedRead (internal/ir/views.go) are removed, so readiness strips each marked
+read's view and the read is plain. Red:
 
 | Test | Failing |
 |---|---|
-| TestViewWidenedReadNotYet | all 23 live roads |
-| TestViewWidenedPriceAccepted | 9xam9ds_predicate_closed_enum_tag.a, inferred_call.ts |
-| TestCheckedViewObjects | objects-good |
-| TestCheckedViewV2MovedStage3NotYet | 03_void_zero.a |
-| TestReviewProgramsRefuse | 9xam9ds_predicate_closed_enum_tag.a (an accepted program in refused/) |
-| TestFixturesPredicates | predicates/03_void_zero.a/stage0: `got {Outcome:Compiles}; recorded {Outcome:NotYet ...}` |
+| TestViewWidenedReadIsChecked | 23 roads |
+| TestBrandedSupertypeWidenedReadIsChecked | 18 roads |
+| TestIntersectionViewWidenedReadIsChecked | 12 roads |
+| TestOverloadResultViewWidenedReadIsChecked | 4 |
+| TestBrandedSupertypeKindReadIsChecked | 3 |
+| TestKindUnionCastRecursiveReadIsChecked, TestClosedRemainderWithNodeFieldsIsChecked | each |
+| TestViewWidenedReadKeyCollision | red |
+| TestSourceSlotCertificate | road_destructure_assignment.ts |
 
-With `ADAMIC_VIEW_WIDENED_MUTANT=1 ADAMIC_GATE_UNCACHED=1`, TestViewWidenedReadNotYet holds the mutant's admitted
-programs to Node and passes: each road disagrees with Node natively, release segfaulting and sanitized native dying in
-AddressSanitizer (`SEGV on unknown address ... #0 in adamic_write_line /adamic-runtime/adamic.c:323:29` for
-view_widened.ts).
+## M2: checkViewWidenedReads returns nil at once
 
-## Mutant 2: entries reduced to CheckedCast alone
+No read is weighed or marked. Red: every test M1 reds except TestViewWidenedReadKeyCollision and
+TestSourceSlotCertificate, with TestViewWidenedReadIsChecked at 24 roads (view_widened_nested.ts too), and TestViewWidenedRoadsHeld at
+view_widened_held_getter.ts, whose getter-named read the pass alone keeps NotYet.
 
-The structural cast and predicate local entries and the checked-read entry return no site
-(`if false && entryLocals[value.Local]`, `if false && l.result.CheckedFields[...] && viewAggregate(value)`).
-`go test ./internal/oracle -count=1 -run 'TestViewWidenedReadNotYet|TestCheckedViewObjects|TestCheckedViewV2MovedStage3NotYet'`.
-Red: TestViewWidenedReadNotYet, at the predicate's local, parameter, closure, field and inline type roads, which
-enter by narrowed reads alone.
+## M3: 03_void_zero's status row back to NotYet
 
-The rest stay caught under it. The predicate's array road has an element whose reach is unknown. The values a checked
-read takes out (view_widened_inner*.ts, objects-good.ts, 03_void_zero.a, so TestCheckedViewObjects and
-TestCheckedViewV2MovedStage3NotYet stay green) are caught again without the checked-read entry: inner's and
-objects-good's receivers are fields projected through a CheckedCast, which have no allocation behind them, so their
-reach is unknown, and 03_void_zero.a also has a predicate view the allocation fallback weighs. No pin is decided by
-the checked-read entry alone; it marks those values directly, where the projection would otherwise only fail closed.
+The row is put back to main's `NotYet` at 23:12, so the head's change to stage3/fixtures/predicates/status.json is
+what the fixture test reads. `go test ./stage3/fixtures -run TestFixturesPredicates`. Red: TestFixturesPredicates at
+predicates/03_void_zero.a/stage0 (J-nvgasnk).
+
+## Not caught here
+
+A read dispatched to a class getter (finishAccessors' dispatch, not an ir.Property) is never weighed, by this pass or
+by #80cs7rz's before it, so a viewed value read that way is read raw. That's #3jj9dzg, on main before this change.
