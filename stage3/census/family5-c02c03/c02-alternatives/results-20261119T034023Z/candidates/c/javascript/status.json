@@ -1,0 +1,20 @@
+{
+  "command": [
+    "node",
+    "/tmp/family5-c02-alternatives/javascript.cjs",
+    "/tmp/family5-base-tree",
+    "/workspace/family5-alt-c",
+    "/tmp/family5-c02-alternatives/candidates/c/javascript.json"
+  ],
+  "cwd": "/tmp/family5-land",
+  "environment": {
+    "ADAMIC_TOOLS": "/workspace/adamic-tools",
+    "ADAMIC_TYPESCRIPT_SOURCE": "/workspace/mapset-upstream",
+    "ADAMIC_BUILD_CACHE_DIR": "/workspace/family5-build-cache"
+  },
+  "inputs": null,
+  "started_utc": "2026-11-18T23:15:08.611840+00:00",
+  "ended_utc": "2026-11-18T23:15:18.061656+00:00",
+  "exit_code": 0,
+  "wall_seconds": 9.45
+}

@@ -1,0 +1,20 @@
+{
+  "command": [
+    "node",
+    "/tmp/family5-c02-alternatives/stock-node.cjs",
+    "/tmp/family5-base-tree",
+    "/tmp/family5-c02-alternatives/node-controls/base.json"
+  ],
+  "cwd": "/tmp/family5-land",
+  "environment": {
+    "ADAMIC_TOOLS": "/workspace/adamic-tools",
+    "ADAMIC_TYPESCRIPT_SOURCE": "/workspace/mapset-upstream",
+    "ADAMIC_BUILD_CACHE_DIR": "/workspace/family5-build-cache",
+    "FAMILY5_STOCK_PROJECT": "src/services/tsconfig.json"
+  },
+  "inputs": null,
+  "started_utc": "2026-11-19T03:37:47.550186+00:00",
+  "ended_utc": "2026-11-19T03:38:12.269941+00:00",
+  "exit_code": 0,
+  "wall_seconds": 24.72
+}

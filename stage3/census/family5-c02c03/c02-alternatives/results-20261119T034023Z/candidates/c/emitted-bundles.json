@@ -1,0 +1,172 @@
+{
+  "compared": 18,
+  "different": 0,
+  "baseline_only_not_built_by_local_task": [
+    "built/local/run.js"
+  ],
+  "candidate_only": [],
+  "rows": [
+    {
+      "file": "built/local/_tsc.js",
+      "before_bytes": 6232191,
+      "after_bytes": 6232191,
+      "before_sha256": "42871b5f3dd98be867fa8a1df49058b5c30f4214b5e43847d9dbddea945e0a82",
+      "after_sha256": "42871b5f3dd98be867fa8a1df49058b5c30f4214b5e43847d9dbddea945e0a82",
+      "byte_identical": true,
+      "first_difference_offset": null
+    },
+    {
+      "file": "built/local/_tsserver.js",
+      "before_bytes": 27889,
+      "after_bytes": 27889,
+      "before_sha256": "1992fc3518a4aa5443638a25794281995ec3ce84820692713296262997d5443b",
+      "after_sha256": "1992fc3518a4aa5443638a25794281995ec3ce84820692713296262997d5443b",
+      "byte_identical": true,
+      "first_difference_offset": null
+    },
+    {
+      "file": "built/local/_typingsInstaller.js",
+      "before_bytes": 10364,
+      "after_bytes": 10364,
+      "before_sha256": "71515c1c1aa29c8616309f7dea4d3a32eed662df3a4dbcf4345e7522ece56ac1",
+      "after_sha256": "71515c1c1aa29c8616309f7dea4d3a32eed662df3a4dbcf4345e7522ece56ac1",
+      "byte_identical": true,
+      "first_difference_offset": null
+    },
+    {
+      "file": "built/local/tsc.js",
+      "before_bytes": 267,
+      "after_bytes": 267,
+      "before_sha256": "2cffde0b8c6760dfb0b5b0382bbb7e00ba6a8b2d981b9205b256a700a481d983",
+      "after_sha256": "2cffde0b8c6760dfb0b5b0382bbb7e00ba6a8b2d981b9205b256a700a481d983",
+      "byte_identical": true,
+      "first_difference_offset": null
+    },
+    {
+      "file": "built/local/tsserver.js",
+      "before_bytes": 272,
+      "after_bytes": 272,
+      "before_sha256": "e3ccfeec65ec5c470b8ffc5611878a31182650c7e8a062c38a719f83b523edcb",
+      "after_sha256": "e3ccfeec65ec5c470b8ffc5611878a31182650c7e8a062c38a719f83b523edcb",
+      "byte_identical": true,
+      "first_difference_offset": null
+    },
+    {
+      "file": "built/local/tsserverlibrary.js",
+      "before_bytes": 1013,
+      "after_bytes": 1013,
+      "before_sha256": "6a0b343fa3a3f53cf198c83a18035c104b6990b2a260272654f9a6b2f2380fdf",
+      "after_sha256": "6a0b343fa3a3f53cf198c83a18035c104b6990b2a260272654f9a6b2f2380fdf",
+      "byte_identical": true,
+      "first_difference_offset": null
+    },
+    {
+      "file": "built/local/typescript.js",
+      "before_bytes": 9142558,
+      "after_bytes": 9142558,
+      "before_sha256": "81f0240d23861e6695631bedd4d43e252dff2c723dfb69ca1493023b3d722739",
+      "after_sha256": "81f0240d23861e6695631bedd4d43e252dff2c723dfb69ca1493023b3d722739",
+      "byte_identical": true,
+      "first_difference_offset": null
+    },
+    {
+      "file": "built/local/typingsInstaller.js",
+      "before_bytes": 280,
+      "after_bytes": 280,
+      "before_sha256": "2d48a038523ea7c626fa2796a30fa5fdc07612ea5fab83544423009d7683a213",
+      "after_sha256": "2d48a038523ea7c626fa2796a30fa5fdc07612ea5fab83544423009d7683a213",
+      "byte_identical": true,
+      "first_difference_offset": null
+    },
+    {
+      "file": "built/local/watchGuard.js",
+      "before_bytes": 2314,
+      "after_bytes": 2314,
+      "before_sha256": "008f2ceb504ee9b8c5d47054d43033e1ec3f2fef03f18d8aa1b2dd70cba6fc88",
+      "after_sha256": "008f2ceb504ee9b8c5d47054d43033e1ec3f2fef03f18d8aa1b2dd70cba6fc88",
+      "byte_identical": true,
+      "first_difference_offset": null
+    },
+    {
+      "file": "lib/_tsc.js",
+      "before_bytes": 6239091,
+      "after_bytes": 6239091,
+      "before_sha256": "1c59e77a54b186ec43fa7f3e0d3c4bb15ca5eb5ba43e96b1d3a267139eddd3e3",
+      "after_sha256": "1c59e77a54b186ec43fa7f3e0d3c4bb15ca5eb5ba43e96b1d3a267139eddd3e3",
+      "byte_identical": true,
+      "first_difference_offset": null
+    },
+    {
+      "file": "lib/_tsserver.js",
+      "before_bytes": 27889,
+      "after_bytes": 27889,
+      "before_sha256": "1992fc3518a4aa5443638a25794281995ec3ce84820692713296262997d5443b",
+      "after_sha256": "1992fc3518a4aa5443638a25794281995ec3ce84820692713296262997d5443b",
+      "byte_identical": true,
+      "first_difference_offset": null
+    },
+    {
+      "file": "lib/_typingsInstaller.js",
+      "before_bytes": 10364,
+      "after_bytes": 10364,
+      "before_sha256": "71515c1c1aa29c8616309f7dea4d3a32eed662df3a4dbcf4345e7522ece56ac1",
+      "after_sha256": "71515c1c1aa29c8616309f7dea4d3a32eed662df3a4dbcf4345e7522ece56ac1",
+      "byte_identical": true,
+      "first_difference_offset": null
+    },
+    {
+      "file": "lib/tsc.js",
+      "before_bytes": 267,
+      "after_bytes": 267,
+      "before_sha256": "2cffde0b8c6760dfb0b5b0382bbb7e00ba6a8b2d981b9205b256a700a481d983",
+      "after_sha256": "2cffde0b8c6760dfb0b5b0382bbb7e00ba6a8b2d981b9205b256a700a481d983",
+      "byte_identical": true,
+      "first_difference_offset": null
+    },
+    {
+      "file": "lib/tsserver.js",
+      "before_bytes": 272,
+      "after_bytes": 272,
+      "before_sha256": "e3ccfeec65ec5c470b8ffc5611878a31182650c7e8a062c38a719f83b523edcb",
+      "after_sha256": "e3ccfeec65ec5c470b8ffc5611878a31182650c7e8a062c38a719f83b523edcb",
+      "byte_identical": true,
+      "first_difference_offset": null
+    },
+    {
+      "file": "lib/tsserverlibrary.js",
+      "before_bytes": 1013,
+      "after_bytes": 1013,
+      "before_sha256": "6a0b343fa3a3f53cf198c83a18035c104b6990b2a260272654f9a6b2f2380fdf",
+      "after_sha256": "6a0b343fa3a3f53cf198c83a18035c104b6990b2a260272654f9a6b2f2380fdf",
+      "byte_identical": true,
+      "first_difference_offset": null
+    },
+    {
+      "file": "lib/typescript.js",
+      "before_bytes": 9144216,
+      "after_bytes": 9144216,
+      "before_sha256": "569177652966bd528c319171c7dd22860dbf72bde116cbc4f644f1d02bb12e39",
+      "after_sha256": "569177652966bd528c319171c7dd22860dbf72bde116cbc4f644f1d02bb12e39",
+      "byte_identical": true,
+      "first_difference_offset": null
+    },
+    {
+      "file": "lib/typingsInstaller.js",
+      "before_bytes": 280,
+      "after_bytes": 280,
+      "before_sha256": "2d48a038523ea7c626fa2796a30fa5fdc07612ea5fab83544423009d7683a213",
+      "after_sha256": "2d48a038523ea7c626fa2796a30fa5fdc07612ea5fab83544423009d7683a213",
+      "byte_identical": true,
+      "first_difference_offset": null
+    },
+    {
+      "file": "lib/watchGuard.js",
+      "before_bytes": 2314,
+      "after_bytes": 2314,
+      "before_sha256": "008f2ceb504ee9b8c5d47054d43033e1ec3f2fef03f18d8aa1b2dd70cba6fc88",
+      "after_sha256": "008f2ceb504ee9b8c5d47054d43033e1ec3f2fef03f18d8aa1b2dd70cba6fc88",
+      "byte_identical": true,
+      "first_difference_offset": null
+    }
+  ]
+}

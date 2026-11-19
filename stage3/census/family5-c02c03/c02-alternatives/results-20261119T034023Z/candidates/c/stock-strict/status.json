@@ -1,0 +1,20 @@
+{
+  "command": [
+    "node",
+    "/tmp/family5-c02-alternatives/stock.cjs",
+    "/workspace/family5-alt-c",
+    "/tmp/family5-c02-alternatives/candidates/c/stock-strict.json"
+  ],
+  "cwd": "/tmp/family5-land",
+  "environment": {
+    "ADAMIC_TOOLS": "/workspace/adamic-tools",
+    "ADAMIC_TYPESCRIPT_SOURCE": "/workspace/mapset-upstream",
+    "ADAMIC_BUILD_CACHE_DIR": "/workspace/family5-build-cache",
+    "FAMILY5_STOCK_STRICT": "1"
+  },
+  "inputs": null,
+  "started_utc": "2026-11-18T23:14:34.752882+00:00",
+  "ended_utc": "2026-11-18T23:14:50.021295+00:00",
+  "exit_code": 0,
+  "wall_seconds": 15.268
+}

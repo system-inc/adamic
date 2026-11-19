@@ -1,0 +1,9 @@
+Pairs use kind, phase, reason and message with positions stripped. Equal keys pair by mapped unit/site first, then remaining identical keys. Unmatched primary stops at one lowering unit may be changed even when the first-error stop moved within that unit; refusal_scan comparisons require the same mapped site. Candidate c positions are mapped from its exact recorded pure insertions; reconstructing all source bytes is asserted.
+
+Do not equate an earlier refusal_scan finding with a blocked lowering walk. The measurement overlay scans on fresh(), then separately lowers each unit on another fresh(). The unit can have executed its body and tail despite a G02 scan finding. Therefore a newly appearing lowering/prepass/registration/tail finding is not reached merely because the unit previously held G02.
+
+The deferred probe is explicitly suppressed by any unit refusal_scan/contract_scan finding (latentDeferredStop, internal_lower_latent_hook.go:581–590). A new deferred finding after clearing all G02 in that unit can be reached on that evidence. A same-comparison target stop replaced by another stop, or a prior lowering Boundary whose own diagnostic was the cleared target, can also establish reach. Unrelated Boundaries never establish it. Every changed/gone/new/reached record and its full words are retained for review.
+
+This refinement leaves the completed whole-entry grades unchanged: that pair had no reached findings.
+
+Candidate c uses the explicit-relation diagnostic `an unproven relation from SourceFile to SourceFileLike: optional field getPositionOfLineAndCharacter has no proven compatible presence/type`, tagged adamic/no-optional-widening. It is the same unresolved S/T/P fact, not a newly reached independent stop. Keep literal reasons separate for pairing (changed), but count both forms when testing whether G02 was resolved. Summary also labels differences at original target sites, so changed wording at G02 is not misreported as outside growth.

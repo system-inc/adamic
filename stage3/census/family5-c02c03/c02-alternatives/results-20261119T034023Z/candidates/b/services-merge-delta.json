@@ -1,0 +1,26 @@
+{
+  "baseline_diagnostic_count": 64,
+  "candidate_diagnostic_count": 68,
+  "introduced_diagnostics": [
+    [
+      2300,
+      "src/compiler/types.ts",
+      "Duplicate identifier 'getPositionOfLineAndCharacter'."
+    ],
+    [
+      2722,
+      "src/services/formatting/smartIndenter.ts",
+      "Cannot invoke an object which is possibly 'undefined'."
+    ],
+    [
+      18048,
+      "src/services/formatting/smartIndenter.ts",
+      "'sourceFile.getPositionOfLineAndCharacter' is possibly 'undefined'."
+    ],
+    [
+      2300,
+      "src/services/types.ts",
+      "Duplicate identifier 'getPositionOfLineAndCharacter'."
+    ]
+  ]
+}

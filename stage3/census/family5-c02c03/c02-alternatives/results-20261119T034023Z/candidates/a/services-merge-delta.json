@@ -1,0 +1,21 @@
+{
+  "baseline_diagnostic_count": 64,
+  "candidate_diagnostic_count": 67,
+  "introduced_diagnostics": [
+    [
+      2722,
+      "src/services/formatting/smartIndenter.ts",
+      "Cannot invoke an object which is possibly 'undefined'."
+    ],
+    [
+      18048,
+      "src/services/formatting/smartIndenter.ts",
+      "'sourceFile.getPositionOfLineAndCharacter' is possibly 'undefined'."
+    ],
+    [
+      2386,
+      "src/services/types.ts",
+      "Overload signatures must all be optional or required."
+    ]
+  ]
+}

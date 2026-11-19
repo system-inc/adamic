@@ -1,0 +1,18 @@
+{
+  "command": [
+    "node",
+    "/tmp/family5-land/stage3/typescript/node_modules/hereby/bin/hereby.js",
+    "local"
+  ],
+  "cwd": "/workspace/family5-alt-c",
+  "environment": {
+    "ADAMIC_TOOLS": "/workspace/adamic-tools",
+    "ADAMIC_TYPESCRIPT_SOURCE": "/workspace/mapset-upstream",
+    "ADAMIC_BUILD_CACHE_DIR": "/workspace/family5-build-cache"
+  },
+  "inputs": null,
+  "started_utc": "2026-11-18T23:15:18.062349+00:00",
+  "ended_utc": "2026-11-18T23:15:46.162338+00:00",
+  "exit_code": 0,
+  "wall_seconds": 28.1
+}

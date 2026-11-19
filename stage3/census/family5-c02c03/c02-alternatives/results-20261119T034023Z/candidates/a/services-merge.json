@@ -1,0 +1,679 @@
+{
+  "version": "6.0.3",
+  "roots": [
+    "src/services/breakpoints.ts",
+    "src/services/callHierarchy.ts",
+    "src/services/classifier.ts",
+    "src/services/classifier2020.ts",
+    "src/services/codeFixProvider.ts",
+    "src/services/completions.ts",
+    "src/services/documentHighlights.ts",
+    "src/services/documentRegistry.ts",
+    "src/services/exportInfoMap.ts",
+    "src/services/findAllReferences.ts",
+    "src/services/getEditsForFileRename.ts",
+    "src/services/goToDefinition.ts",
+    "src/services/importTracker.ts",
+    "src/services/inlayHints.ts",
+    "src/services/jsDoc.ts",
+    "src/services/mapCode.ts",
+    "src/services/navigateTo.ts",
+    "src/services/navigationBar.ts",
+    "src/services/organizeImports.ts",
+    "src/services/outliningElementsCollector.ts",
+    "src/services/pasteEdits.ts",
+    "src/services/patternMatcher.ts",
+    "src/services/preProcess.ts",
+    "src/services/preparePasteEdits.ts",
+    "src/services/refactorProvider.ts",
+    "src/services/rename.ts",
+    "src/services/services.ts",
+    "src/services/signatureHelp.ts",
+    "src/services/smartSelection.ts",
+    "src/services/sourcemaps.ts",
+    "src/services/stringCompletions.ts",
+    "src/services/suggestionDiagnostics.ts",
+    "src/services/symbolDisplay.ts",
+    "src/services/textChanges.ts",
+    "src/services/transform.ts",
+    "src/services/transpile.ts",
+    "src/services/types.ts",
+    "src/services/utilities.ts",
+    "src/services/_namespaces/ts.BreakpointResolver.ts",
+    "src/services/_namespaces/ts.CallHierarchy.ts",
+    "src/services/_namespaces/ts.Completions.StringCompletions.ts",
+    "src/services/_namespaces/ts.Completions.ts",
+    "src/services/_namespaces/ts.FindAllReferences.ts",
+    "src/services/_namespaces/ts.GoToDefinition.ts",
+    "src/services/_namespaces/ts.InlayHints.ts",
+    "src/services/_namespaces/ts.JsDoc.ts",
+    "src/services/_namespaces/ts.MapCode.ts",
+    "src/services/_namespaces/ts.NavigateTo.ts",
+    "src/services/_namespaces/ts.NavigationBar.ts",
+    "src/services/_namespaces/ts.OrganizeImports.ts",
+    "src/services/_namespaces/ts.OutliningElementsCollector.ts",
+    "src/services/_namespaces/ts.PasteEdits.ts",
+    "src/services/_namespaces/ts.Rename.ts",
+    "src/services/_namespaces/ts.SignatureHelp.ts",
+    "src/services/_namespaces/ts.SmartSelectionRange.ts",
+    "src/services/_namespaces/ts.SymbolDisplay.ts",
+    "src/services/_namespaces/ts.classifier.ts",
+    "src/services/_namespaces/ts.classifier.v2020.ts",
+    "src/services/_namespaces/ts.codefix.ts",
+    "src/services/_namespaces/ts.formatting.ts",
+    "src/services/_namespaces/ts.preparePasteEdits.ts",
+    "src/services/_namespaces/ts.refactor.addOrRemoveBracesToArrowFunction.ts",
+    "src/services/_namespaces/ts.refactor.convertArrowFunctionOrFunctionExpression.ts",
+    "src/services/_namespaces/ts.refactor.convertParamsToDestructuredObject.ts",
+    "src/services/_namespaces/ts.refactor.convertStringOrTemplateLiteral.ts",
+    "src/services/_namespaces/ts.refactor.convertToOptionalChainExpression.ts",
+    "src/services/_namespaces/ts.refactor.extractSymbol.ts",
+    "src/services/_namespaces/ts.refactor.generateGetAccessorAndSetAccessor.ts",
+    "src/services/_namespaces/ts.refactor.inferFunctionReturnType.ts",
+    "src/services/_namespaces/ts.refactor.ts",
+    "src/services/_namespaces/ts.textChanges.ts",
+    "src/services/_namespaces/ts.ts",
+    "src/services/codefixes/addConvertToUnknownForNonOverlappingTypes.ts",
+    "src/services/codefixes/addEmptyExportDeclaration.ts",
+    "src/services/codefixes/addMissingAsync.ts",
+    "src/services/codefixes/addMissingAwait.ts",
+    "src/services/codefixes/addMissingConst.ts",
+    "src/services/codefixes/addMissingDeclareProperty.ts",
+    "src/services/codefixes/addMissingInvocationForDecorator.ts",
+    "src/services/codefixes/addMissingResolutionModeImportAttribute.ts",
+    "src/services/codefixes/addNameToNamelessParameter.ts",
+    "src/services/codefixes/addOptionalPropertyUndefined.ts",
+    "src/services/codefixes/annotateWithTypeFromJSDoc.ts",
+    "src/services/codefixes/convertConstToLet.ts",
+    "src/services/codefixes/convertFunctionToEs6Class.ts",
+    "src/services/codefixes/convertLiteralTypeToMappedType.ts",
+    "src/services/codefixes/convertToAsyncFunction.ts",
+    "src/services/codefixes/convertToEsModule.ts",
+    "src/services/codefixes/convertToMappedObjectType.ts",
+    "src/services/codefixes/convertToTypeOnlyExport.ts",
+    "src/services/codefixes/convertToTypeOnlyImport.ts",
+    "src/services/codefixes/convertTypedefToType.ts",
+    "src/services/codefixes/correctQualifiedNameToIndexedAccessType.ts",
+    "src/services/codefixes/disableJsDiagnostics.ts",
+    "src/services/codefixes/fixAddMissingConstraint.ts",
+    "src/services/codefixes/fixAddMissingMember.ts",
+    "src/services/codefixes/fixAddMissingNewOperator.ts",
+    "src/services/codefixes/fixAddMissingParam.ts",
+    "src/services/codefixes/fixAddModuleReferTypeMissingTypeof.ts",
+    "src/services/codefixes/fixAddVoidToPromise.ts",
+    "src/services/codefixes/fixAwaitInSyncFunction.ts",
+    "src/services/codefixes/fixCannotFindModule.ts",
+    "src/services/codefixes/fixClassDoesntImplementInheritedAbstractMember.ts",
+    "src/services/codefixes/fixClassIncorrectlyImplementsInterface.ts",
+    "src/services/codefixes/fixClassSuperMustPrecedeThisAccess.ts",
+    "src/services/codefixes/fixConstructorForDerivedNeedSuperCall.ts",
+    "src/services/codefixes/fixEnableJsxFlag.ts",
+    "src/services/codefixes/fixExpectedComma.ts",
+    "src/services/codefixes/fixExtendsInterfaceBecomesImplements.ts",
+    "src/services/codefixes/fixForgottenThisPropertyAccess.ts",
+    "src/services/codefixes/fixImplicitThis.ts",
+    "src/services/codefixes/fixImportNonExportedMember.ts",
+    "src/services/codefixes/fixIncorrectNamedTupleSyntax.ts",
+    "src/services/codefixes/fixInvalidImportSyntax.ts",
+    "src/services/codefixes/fixInvalidJsxCharacters.ts",
+    "src/services/codefixes/fixJSDocTypes.ts",
+    "src/services/codefixes/fixMissingCallParentheses.ts",
+    "src/services/codefixes/fixMissingTypeAnnotationOnExports.ts",
+    "src/services/codefixes/fixModuleAndTargetOptions.ts",
+    "src/services/codefixes/fixNaNEquality.ts",
+    "src/services/codefixes/fixNoPropertyAccessFromIndexSignature.ts",
+    "src/services/codefixes/fixOverrideModifier.ts",
+    "src/services/codefixes/fixPropertyAssignment.ts",
+    "src/services/codefixes/fixPropertyOverrideAccessor.ts",
+    "src/services/codefixes/fixReturnTypeInAsyncFunction.ts",
+    "src/services/codefixes/fixSpelling.ts",
+    "src/services/codefixes/fixStrictClassInitialization.ts",
+    "src/services/codefixes/fixUnmatchedParameter.ts",
+    "src/services/codefixes/fixUnreachableCode.ts",
+    "src/services/codefixes/fixUnreferenceableDecoratorMetadata.ts",
+    "src/services/codefixes/fixUnusedIdentifier.ts",
+    "src/services/codefixes/fixUnusedLabel.ts",
+    "src/services/codefixes/generateAccessors.ts",
+    "src/services/codefixes/helpers.ts",
+    "src/services/codefixes/importFixes.ts",
+    "src/services/codefixes/inferFromUsage.ts",
+    "src/services/codefixes/removeAccidentalCallParentheses.ts",
+    "src/services/codefixes/removeUnnecessaryAwait.ts",
+    "src/services/codefixes/requireInTs.ts",
+    "src/services/codefixes/returnValueCorrect.ts",
+    "src/services/codefixes/splitTypeOnlyImport.ts",
+    "src/services/codefixes/useBigintLiteral.ts",
+    "src/services/codefixes/useDefaultImport.ts",
+    "src/services/codefixes/wrapDecoratorInParentheses.ts",
+    "src/services/codefixes/wrapJsxInFragment.ts",
+    "src/services/formatting/formatting.ts",
+    "src/services/formatting/formattingContext.ts",
+    "src/services/formatting/formattingScanner.ts",
+    "src/services/formatting/rule.ts",
+    "src/services/formatting/rules.ts",
+    "src/services/formatting/rulesMap.ts",
+    "src/services/formatting/smartIndenter.ts",
+    "src/services/refactors/addOrRemoveBracesToArrowFunction.ts",
+    "src/services/refactors/convertArrowFunctionOrFunctionExpression.ts",
+    "src/services/refactors/convertExport.ts",
+    "src/services/refactors/convertImport.ts",
+    "src/services/refactors/convertOverloadListToSingleSignature.ts",
+    "src/services/refactors/convertParamsToDestructuredObject.ts",
+    "src/services/refactors/convertStringOrTemplateLiteral.ts",
+    "src/services/refactors/convertToOptionalChainExpression.ts",
+    "src/services/refactors/extractSymbol.ts",
+    "src/services/refactors/extractType.ts",
+    "src/services/refactors/generateGetAccessorAndSetAccessor.ts",
+    "src/services/refactors/helpers.ts",
+    "src/services/refactors/inferFunctionReturnType.ts",
+    "src/services/refactors/inlineVariable.ts",
+    "src/services/refactors/moveToFile.ts",
+    "src/services/refactors/moveToNewFile.ts"
+  ],
+  "root_count": 168,
+  "options": {
+    "rootDir": "/workspace/family5-alt-a/src",
+    "outDir": "/workspace/family5-alt-a/built/local",
+    "pretty": true,
+    "lib": [
+      "lib.es2020.d.ts"
+    ],
+    "target": 7,
+    "module": 199,
+    "moduleResolution": 99,
+    "declaration": true,
+    "declarationMap": true,
+    "sourceMap": true,
+    "composite": false,
+    "emitDeclarationOnly": true,
+    "isolatedDeclarations": true,
+    "strict": true,
+    "strictBindCallApply": false,
+    "useUnknownInCatchVariables": false,
+    "noImplicitOverride": true,
+    "skipLibCheck": true,
+    "alwaysStrict": true,
+    "preserveConstEnums": true,
+    "newLine": 1,
+    "types": [],
+    "configFilePath": "/workspace/family5-alt-a/src/services/tsconfig.json",
+    "noEmit": true,
+    "typeRoots": [
+      "/tmp/family5-land/internal/load/node_types/node_modules/@types"
+    ],
+    "incremental": false
+  },
+  "diagnostic_count": 67,
+  "diagnostics": [
+    {
+      "code": 2339,
+      "file": "src/compiler/debug.ts",
+      "line": 178,
+      "column": 19,
+      "message": "Property 'captureStackTrace' does not exist on type 'ErrorConstructor'."
+    },
+    {
+      "code": 2339,
+      "file": "src/compiler/debug.ts",
+      "line": 179,
+      "column": 19,
+      "message": "Property 'captureStackTrace' does not exist on type 'ErrorConstructor'."
+    },
+    {
+      "code": 2591,
+      "file": "src/compiler/performanceCore.ts",
+      "line": 2,
+      "column": 28,
+      "message": "Cannot find name 'node:perf_hooks'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig."
+    },
+    {
+      "code": 2591,
+      "file": "src/compiler/sys.ts",
+      "line": 52,
+      "column": 22,
+      "message": "Cannot find name 'node:fs'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig."
+    },
+    {
+      "code": 2591,
+      "file": "src/compiler/sys.ts",
+      "line": 53,
+      "column": 24,
+      "message": "Cannot find name 'node:path'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig."
+    },
+    {
+      "code": 2591,
+      "file": "src/compiler/sys.ts",
+      "line": 54,
+      "column": 22,
+      "message": "Cannot find name 'node:os'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig."
+    },
+    {
+      "code": 2591,
+      "file": "src/compiler/sys.ts",
+      "line": 55,
+      "column": 26,
+      "message": "Cannot find name 'node:crypto'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig."
+    },
+    {
+      "code": 2339,
+      "file": "src/compiler/sys.ts",
+      "line": 80,
+      "column": 15,
+      "message": "Property 'stackTraceLimit' does not exist on type 'ErrorConstructor'."
+    },
+    {
+      "code": 2339,
+      "file": "src/compiler/sys.ts",
+      "line": 81,
+      "column": 15,
+      "message": "Property 'stackTraceLimit' does not exist on type 'ErrorConstructor'."
+    },
+    {
+      "code": 2591,
+      "file": "src/compiler/sys.ts",
+      "line": 1459,
+      "column": 35,
+      "message": "Cannot find name 'inspector'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig."
+    },
+    {
+      "code": 2591,
+      "file": "src/compiler/sys.ts",
+      "line": 1462,
+      "column": 25,
+      "message": "Cannot find name 'process'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig."
+    },
+    {
+      "code": 2591,
+      "file": "src/compiler/sys.ts",
+      "line": 1463,
+      "column": 32,
+      "message": "Cannot find name 'process'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig."
+    },
+    {
+      "code": 2591,
+      "file": "src/compiler/sys.ts",
+      "line": 1469,
+      "column": 56,
+      "message": "Cannot find name 'process'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig."
+    },
+    {
+      "code": 2304,
+      "file": "src/compiler/sys.ts",
+      "line": 1476,
+      "column": 35,
+      "message": "Cannot find name '__filename'."
+    },
+    {
+      "code": 2304,
+      "file": "src/compiler/sys.ts",
+      "line": 1476,
+      "column": 92,
+      "message": "Cannot find name '__dirname'."
+    },
+    {
+      "code": 2304,
+      "file": "src/compiler/sys.ts",
+      "line": 1476,
+      "column": 121,
+      "message": "Cannot find name '__filename'."
+    },
+    {
+      "code": 2591,
+      "file": "src/compiler/sys.ts",
+      "line": 1478,
+      "column": 44,
+      "message": "Cannot find name 'process'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig."
+    },
+    {
+      "code": 2591,
+      "file": "src/compiler/sys.ts",
+      "line": 1479,
+      "column": 51,
+      "message": "Cannot find name 'process'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig."
+    },
+    {
+      "code": 2304,
+      "file": "src/compiler/sys.ts",
+      "line": 1483,
+      "column": 104,
+      "message": "Cannot find name 'setTimeout'."
+    },
+    {
+      "code": 2304,
+      "file": "src/compiler/sys.ts",
+      "line": 1484,
+      "column": 57,
+      "message": "Cannot find name 'clearTimeout'."
+    },
+    {
+      "code": 2304,
+      "file": "src/compiler/sys.ts",
+      "line": 1484,
+      "column": 86,
+      "message": "Cannot find name 'clearTimeout'."
+    },
+    {
+      "code": 2591,
+      "file": "src/compiler/sys.ts",
+      "line": 1494,
+      "column": 27,
+      "message": "Cannot find name 'process'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig."
+    },
+    {
+      "code": 2591,
+      "file": "src/compiler/sys.ts",
+      "line": 1495,
+      "column": 38,
+      "message": "Cannot find name 'process'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig."
+    },
+    {
+      "code": 2591,
+      "file": "src/compiler/sys.ts",
+      "line": 1496,
+      "column": 32,
+      "message": "Cannot find name 'process'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig."
+    },
+    {
+      "code": 2591,
+      "file": "src/compiler/sys.ts",
+      "line": 1526,
+      "column": 19,
+      "message": "Cannot find name 'process'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig."
+    },
+    {
+      "code": 2591,
+      "file": "src/compiler/sys.ts",
+      "line": 1530,
+      "column": 17,
+      "message": "Cannot find name 'process'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig."
+    },
+    {
+      "code": 2591,
+      "file": "src/compiler/sys.ts",
+      "line": 1533,
+      "column": 24,
+      "message": "Cannot find name 'process'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig."
+    },
+    {
+      "code": 2591,
+      "file": "src/compiler/sys.ts",
+      "line": 1536,
+      "column": 26,
+      "message": "Cannot find name 'process'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig."
+    },
+    {
+      "code": 2591,
+      "file": "src/compiler/sys.ts",
+      "line": 1568,
+      "column": 24,
+      "message": "Cannot find name 'process'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig."
+    },
+    {
+      "code": 2304,
+      "file": "src/compiler/sys.ts",
+      "line": 1577,
+      "column": 21,
+      "message": "Cannot find name 'global'."
+    },
+    {
+      "code": 2304,
+      "file": "src/compiler/sys.ts",
+      "line": 1578,
+      "column": 21,
+      "message": "Cannot find name 'global'."
+    },
+    {
+      "code": 2591,
+      "file": "src/compiler/sys.ts",
+      "line": 1580,
+      "column": 24,
+      "message": "Cannot find name 'process'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig."
+    },
+    {
+      "code": 2591,
+      "file": "src/compiler/sys.ts",
+      "line": 1590,
+      "column": 42,
+      "message": "Cannot find name 'process'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig."
+    },
+    {
+      "code": 2591,
+      "file": "src/compiler/sys.ts",
+      "line": 1594,
+      "column": 68,
+      "message": "Cannot find name 'process'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig."
+    },
+    {
+      "code": 2591,
+      "file": "src/compiler/sys.ts",
+      "line": 1594,
+      "column": 112,
+      "message": "Cannot find name 'process'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig."
+    },
+    {
+      "code": 2591,
+      "file": "src/compiler/sys.ts",
+      "line": 1596,
+      "column": 26,
+      "message": "Cannot find name 'process'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig."
+    },
+    {
+      "code": 2591,
+      "file": "src/compiler/sys.ts",
+      "line": 1596,
+      "column": 62,
+      "message": "Cannot find name 'process'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig."
+    },
+    {
+      "code": 2591,
+      "file": "src/compiler/sys.ts",
+      "line": 1596,
+      "column": 107,
+      "message": "Cannot find name 'process'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig."
+    },
+    {
+      "code": 2345,
+      "file": "src/compiler/sys.ts",
+      "line": 1596,
+      "column": 180,
+      "message": "Argument of type 'unknown' is not assignable to parameter of type 'string'."
+    },
+    {
+      "code": 2591,
+      "file": "src/compiler/sys.ts",
+      "line": 1596,
+      "column": 191,
+      "message": "Cannot find name 'process'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig."
+    },
+    {
+      "code": 2591,
+      "file": "src/compiler/sys.ts",
+      "line": 1599,
+      "column": 21,
+      "message": "Cannot find name 'require'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig."
+    },
+    {
+      "code": 2304,
+      "file": "src/compiler/sys.ts",
+      "line": 1605,
+      "column": 104,
+      "message": "Cannot find name 'setTimeout'."
+    },
+    {
+      "code": 2304,
+      "file": "src/compiler/sys.ts",
+      "line": 1606,
+      "column": 57,
+      "message": "Cannot find name 'clearTimeout'."
+    },
+    {
+      "code": 2304,
+      "file": "src/compiler/sys.ts",
+      "line": 1606,
+      "column": 86,
+      "message": "Cannot find name 'clearTimeout'."
+    },
+    {
+      "code": 2591,
+      "file": "src/compiler/sys.ts",
+      "line": 1608,
+      "column": 17,
+      "message": "Cannot find name 'process'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig."
+    },
+    {
+      "code": 2591,
+      "file": "src/compiler/sys.ts",
+      "line": 1611,
+      "column": 33,
+      "message": "Cannot find name 'process'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig."
+    },
+    {
+      "code": 2591,
+      "file": "src/compiler/sys.ts",
+      "line": 1616,
+      "column": 36,
+      "message": "Cannot find name 'Buffer'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig."
+    },
+    {
+      "code": 2591,
+      "file": "src/compiler/sys.ts",
+      "line": 1617,
+      "column": 36,
+      "message": "Cannot find name 'Buffer'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig."
+    },
+    {
+      "code": 2591,
+      "file": "src/compiler/sys.ts",
+      "line": 1632,
+      "column": 38,
+      "message": "Cannot find name 'require'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig."
+    },
+    {
+      "code": 2591,
+      "file": "src/compiler/sys.ts",
+      "line": 1642,
+      "column": 49,
+      "message": "Cannot find name 'fs'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig."
+    },
+    {
+      "code": 2591,
+      "file": "src/compiler/sys.ts",
+      "line": 1663,
+      "column": 44,
+      "message": "Cannot find name 'inspector'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig."
+    },
+    {
+      "code": 2591,
+      "file": "src/compiler/sys.ts",
+      "line": 1663,
+      "column": 59,
+      "message": "Cannot find name 'require'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig."
+    },
+    {
+      "code": 2591,
+      "file": "src/compiler/sys.ts",
+      "line": 1685,
+      "column": 47,
+      "message": "Cannot find name 'inspector'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig."
+    },
+    {
+      "code": 7006,
+      "file": "src/compiler/sys.ts",
+      "line": 1709,
+      "column": 54,
+      "message": "Parameter 'err' implicitly has an 'any' type."
+    },
+    {
+      "code": 7031,
+      "file": "src/compiler/sys.ts",
+      "line": 1709,
+      "column": 61,
+      "message": "Binding element 'profile' implicitly has an 'any' type."
+    },
+    {
+      "code": 2591,
+      "file": "src/compiler/sys.ts",
+      "line": 1712,
+      "column": 120,
+      "message": "Cannot find name 'process'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig."
+    },
+    {
+      "code": 2304,
+      "file": "src/compiler/sys.ts",
+      "line": 1741,
+      "column": 41,
+      "message": "Cannot find name '__filename'."
+    },
+    {
+      "code": 2591,
+      "file": "src/compiler/sys.ts",
+      "line": 1759,
+      "column": 47,
+      "message": "Cannot find name 'fs'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig."
+    },
+    {
+      "code": 2591,
+      "file": "src/compiler/sys.ts",
+      "line": 1759,
+      "column": 73,
+      "message": "Cannot find name 'fs'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig."
+    },
+    {
+      "code": 2591,
+      "file": "src/compiler/sys.ts",
+      "line": 1801,
+      "column": 25,
+      "message": "Cannot find name 'Buffer'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig."
+    },
+    {
+      "code": 2591,
+      "file": "src/compiler/sys.ts",
+      "line": 1866,
+      "column": 38,
+      "message": "Cannot find name 'fs'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig."
+    },
+    {
+      "code": 2591,
+      "file": "src/compiler/sys.ts",
+      "line": 1866,
+      "column": 59,
+      "message": "Cannot find name 'fs'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig."
+    },
+    {
+      "code": 2591,
+      "file": "src/compiler/sys.ts",
+      "line": 1896,
+      "column": 96,
+      "message": "Cannot find name 'process'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig."
+    },
+    {
+      "code": 2591,
+      "file": "src/compiler/tracing.ts",
+      "line": 27,
+      "column": 21,
+      "message": "Cannot find name 'node:fs'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig."
+    },
+    {
+      "code": 2722,
+      "file": "src/services/formatting/smartIndenter.ts",
+      "line": 594,
+      "column": 27,
+      "message": "Cannot invoke an object which is possibly 'undefined'."
+    },
+    {
+      "code": 18048,
+      "file": "src/services/formatting/smartIndenter.ts",
+      "line": 594,
+      "column": 27,
+      "message": "'sourceFile.getPositionOfLineAndCharacter' is possibly 'undefined'."
+    },
+    {
+      "code": 2386,
+      "file": "src/services/types.ts",
+      "line": 172,
+      "column": 9,
+      "message": "Overload signatures must all be optional or required."
+    }
+  ],
+  "satisfies_views": []
+}

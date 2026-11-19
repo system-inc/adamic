@@ -1,0 +1,62 @@
+internal/lower/proven_relations.go
+1: package lower
+2: 
+3: import (
+4: 	"github.com/microsoft/TypeScript/tsc/shim/ast"
+5: 	"github.com/microsoft/TypeScript/tsc/shim/checker"
+6: )
+7: 
+8: // provenRelation holds satisfies and erased upcasts to the same writable-slot and nominal
+9: // proofs as assignments. Contextual typing may build a fresh literal at the target type;
+10: // values it contains are still checked at their own assignment sites by the refusal walk.
+11: func (l *lowering) provenRelation(where, expression *ast.Node, target *checker.Type) error {
+12: 	source := l.checker.GetTypeAtLocation(expression)
+13: 	refuse := func(part, fix string) error {
+14: 		return &Refused{Where: l.program.Where(where), What: "an unproven relation from " + l.checker.TypeToString(source) + " to " + l.checker.TypeToString(target) + ": " + part, Fix: fix}
+15: 	}
+16: 	if !l.checker.IsTypeAssignableTo(source, target) && !l.checker.IsTypeAssignableTo(l.checker.GetWidenedType(source), target) {
+17: 		return refuse("the source is not assignable to the target", "use a compatible type or narrow the value before using it")
+18: 	}
+19: 	if found := l.freshOrWidened(expression, source, target); found != nil {
+20: 		return l.wideningRefusal(where, source, target, found)
+21: 	}
+22: 	if field := l.optionalRelationFailure(source, target, expression, map[[2]*checker.Type]bool{}); field != "" {
+23: 		return refuse("optional field "+field+" has no proven compatible presence/type", "keep compatible optional fields in both views, or construct an object with explicitly compatible fields (adamic/no-optional-widening)")
+24: 	}
+25: 	if mismatch := l.nominalMismatch(source, target, map[[2]*checker.Type]bool{}); mismatch != nil {
+26: 		return refuse("nominal ancestry for "+l.checker.TypeToString(mismatch), "construct that class or a subclass; use an interface for structural values (adamic/nominal-class)")
+
+internal/lower/proven_relations.go
+149: 	for _, property := range l.checker.GetPropertiesOfType(to) {
+150: 		inside := l.checker.GetPropertyOfType(from, property.Name)
+151: 		if inside == nil {
+152: 			if property.Flags&ast.SymbolFlagsOptional != 0 && !exact {
+153: 				return property.Name
+154: 			}
+155: 			continue
+156: 		}
+157: 		if field := l.optionalRelationFailure(l.checker.GetTypeOfSymbol(inside), l.checker.GetTypeOfSymbol(property), relationFieldExpression(origin, property.Name), seen); field != "" {
+158: 			return property.Name + "." + field
+159: 		}
+160: 		if !fresh && !l.checker.IsReadonlySymbol(property) && property.Flags&ast.SymbolFlagsMethod == 0 && inside.Flags&ast.SymbolFlagsMethod == 0 {
+161: 			if field := l.optionalRelationFailure(l.checker.GetTypeOfSymbol(property), l.checker.GetTypeOfSymbol(inside), nil, seen); field != "" {
+162: 				return property.Name + "." + field
+163: 			}
+164: 		}
+165: 	}
+166: 	return ""
+
+internal/lower/expression.go
+1470: 	case ast.KindSatisfiesExpression:
+1471: 		satisfies := node.AsSatisfiesExpression()
+1472: 		if err := l.provenRelation(node, satisfies.Expression, l.checker.GetTypeAtLocation(satisfies.Type)); err != nil {
+1473: 			return nil, err
+1474: 		}
+1475: 		return l.expression(satisfies.Expression)
+
+internal/lower/invariance.go
+647: 	case node.Kind == ast.KindSatisfiesExpression:
+648: 		satisfies := node.AsSatisfiesExpression()
+649: 		if err := l.provenRelation(node, satisfies.Expression, l.checker.GetTypeAtLocation(satisfies.Type)); err != nil {
+650: 			return err
+651: 		}

@@ -1,0 +1,20 @@
+{
+  "command": [
+    "node",
+    "/tmp/family5-c02-alternatives/stock.cjs",
+    "/workspace/family5-alt-a",
+    "/tmp/family5-c02-alternatives/candidates/a/services-merge.json"
+  ],
+  "cwd": "/tmp/family5-land",
+  "environment": {
+    "ADAMIC_TOOLS": "/workspace/adamic-tools",
+    "ADAMIC_TYPESCRIPT_SOURCE": "/workspace/mapset-upstream",
+    "ADAMIC_BUILD_CACHE_DIR": "/workspace/family5-build-cache",
+    "FAMILY5_STOCK_PROJECT": "src/services/tsconfig.json"
+  },
+  "inputs": null,
+  "started_utc": "2026-11-18T23:12:07.357833+00:00",
+  "ended_utc": "2026-11-18T23:12:26.105049+00:00",
+  "exit_code": 1,
+  "wall_seconds": 18.747
+}

@@ -1,0 +1,28 @@
+{
+  "command": [
+    "/tmp/family5-c02-alternatives/tools/base-entry-census",
+    "/workspace/family5-alt-c/src/tsc/tsc.ts",
+    "/tmp/family5-c02-alternatives/full/c/program/latent.jsonl"
+  ],
+  "cwd": "/tmp/family5-land",
+  "environment": {
+    "ADAMIC_TOOLS": "/workspace/adamic-tools",
+    "ADAMIC_TYPESCRIPT_SOURCE": "/workspace/mapset-upstream",
+    "ADAMIC_BUILD_CACHE_DIR": "/workspace/family5-build-cache",
+    "LATENT_FULL": "1",
+    "LATENT_ASSERT_NO_OUTPUT": "1",
+    "LATENT_TAIL": "1",
+    "CENSUS_MODULE_FORMAT": "CommonJSBundle",
+    "LATENT_ONLY_FILE": "/workspace/family5-alt-c/src/compiler/program.ts",
+    "LATENT_TIMES": "/dev/stderr"
+  },
+  "inputs": {
+    "types_sha256": "7ae9a509881c3da4052e06388289a8e94c269576d38a8a808d9e08425c817239",
+    "file_sha256": "4af794152fad15323767b12ca5b8e016db94ef8b833f5f62d31d74f49286d4d3",
+    "tool_sha256": "72d8a88610618318705bf6661c9afab58e9a2bca39a1241e03726b34b26b1446"
+  },
+  "started_utc": "2026-11-19T02:25:04.275412+00:00",
+  "ended_utc": "2026-11-19T02:40:54.701025+00:00",
+  "exit_code": 0,
+  "wall_seconds": 950.426
+}

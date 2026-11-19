@@ -1,0 +1,21 @@
+{
+  "command": [
+    "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+    "/tmp/family5-c02-alternatives/compare.py",
+    "/tmp/family5-c02-alternatives/entry-pair-base",
+    "/tmp/family5-c02-alternatives/entry-pair-c02",
+    "/tmp/family5-c02-alternatives/comparisons/whole-entry/comparison.json",
+    "G02"
+  ],
+  "cwd": "/tmp/family5-land",
+  "environment": {
+    "ADAMIC_TOOLS": "/workspace/adamic-tools",
+    "ADAMIC_TYPESCRIPT_SOURCE": "/workspace/mapset-upstream",
+    "ADAMIC_BUILD_CACHE_DIR": "/workspace/family5-build-cache"
+  },
+  "inputs": null,
+  "started_utc": "2026-11-18T23:11:09.397803+00:00",
+  "ended_utc": "2026-11-18T23:11:10.523915+00:00",
+  "exit_code": 1,
+  "wall_seconds": 1.126
+}

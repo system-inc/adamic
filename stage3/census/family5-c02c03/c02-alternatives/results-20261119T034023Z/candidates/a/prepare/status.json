@@ -1,0 +1,19 @@
+{
+  "command": [
+    "node",
+    "/tmp/family5-c02-alternatives/make-candidates.cjs",
+    "/workspace/family5-alt-a",
+    "a"
+  ],
+  "cwd": "/tmp/family5-land",
+  "environment": {
+    "ADAMIC_TOOLS": "/workspace/adamic-tools",
+    "ADAMIC_TYPESCRIPT_SOURCE": "/workspace/mapset-upstream",
+    "ADAMIC_BUILD_CACHE_DIR": "/workspace/family5-build-cache"
+  },
+  "inputs": null,
+  "started_utc": "2026-11-18T23:11:36.255513+00:00",
+  "ended_utc": "2026-11-18T23:11:37.023528+00:00",
+  "exit_code": 0,
+  "wall_seconds": 0.768
+}

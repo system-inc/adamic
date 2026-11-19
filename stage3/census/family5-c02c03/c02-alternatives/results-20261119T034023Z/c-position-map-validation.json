@@ -1,0 +1,23 @@
+{
+  "validated_against": "stock TypeScript actual satisfies expression positions",
+  "original_sites": 14,
+  "mapped_sites": 14,
+  "exact_match": true,
+  "mapped_positions": [
+    "TREE/src/compiler/checker.ts:49348:52",
+    "TREE/src/compiler/parser.ts:10015:36",
+    "TREE/src/compiler/parser.ts:10015:48",
+    "TREE/src/compiler/parser.ts:10087:37",
+    "TREE/src/compiler/parser.ts:10244:42",
+    "TREE/src/compiler/program.ts:738:57",
+    "TREE/src/compiler/program.ts:739:76",
+    "TREE/src/compiler/utilities.ts:1261:24",
+    "TREE/src/compiler/utilities.ts:2532:70",
+    "TREE/src/compiler/utilities.ts:7945:37",
+    "TREE/src/compiler/utilities.ts:7950:37",
+    "TREE/src/compiler/utilities.ts:7960:37",
+    "TREE/src/compiler/utilities.ts:7972:37",
+    "TREE/src/compiler/utilities.ts:7978:37"
+  ],
+  "source_reconstruction_asserted": true
+}

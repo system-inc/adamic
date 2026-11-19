@@ -1,0 +1,55 @@
+411: 		func() {
+412: 			defer func() {
+413: 				if failure := recover(); failure != nil {
+414: 					latentFindings = append(latentFindings, LatentFinding{Measurement: LatentMeasurementLabel, Unit: latentFindingOwner, Phase: latentFindingPhase, Kind: "panic", Where: program.Where(file.AsNode()), Reason: fmt.Sprint(failure), Text: fmt.Sprint(failure)})
+415: 				}
+416: 			}()
+417: 			fresh().latentScan(file)
+418: 		}()
+419: 		for _, node := range file.Statements.Nodes {
+420: 			latentFindingOwner, latentFindingPhase = program.Where(node), "lowering"
+421: 			unit := LatentUnit{Measurement: LatentMeasurementLabel, Where: program.Where(node), Kind: node.Kind.String(), Status: "attempted", CheckerDiagnostics: []string{}}
+448: 				defer latentUnitTimer.Start(record.File, unit.Where)()
+449: 				defer func() {
+450: 					if failure := recover(); failure != nil {
+451: 						unit.Status = "panic"
+452: 						latentFindings = append(latentFindings, LatentFinding{Measurement: LatentMeasurementLabel, Unit: latentFindingOwner, Phase: latentFindingPhase, Kind: "panic", Where: program.Where(node), Reason: fmt.Sprint(failure), Text: fmt.Sprint(failure)})
+453: 					}
+454: 				}()
+455: 				l := fresh()
+456: 				if modules == nil {
+488: 					if node.Name() == nil {
+489: 						latentRecord(l.notYet(node, "an anonymous top-level function"))
+490: 						return
+491: 					}
+492: 					index, found := l.functions[l.symbol(node.Name())]
+493: 					if !found {
+494: 						index = len(l.result.Functions)
+495: 						l.result.Functions = append(l.result.Functions, ir.Function{Name: node.Name().Text()})
+496: 						l.functions[l.symbol(node.Name())] = index
+497: 					}
+498: 					// Nongeneric declarations lower directly; generic bodies are reached at calls.
+499: 					latentRecord(l.lowerFunction(index, node, -1))
+500: 				} else {
+501: 					body, err := l.statement(node)
+502: 					l.result.Main = body
+503: 					latentRecord(err)
+504: 				}
+505: 				latentRecord(l.unlowerable)
+506: 				l.latentFinishUnit(&unit, node)
+507: 			}()
+577: // Probe the production registry on an isolated snapshot: refusal state, IR checked
+578: // fields and other lowering-owned registrations cannot leak into the unit.
+579: // Immutable checker/AST identities and explicitly shared pure caches retain their
+580: // normal latentSnapshot policy.
+581: func (l *lowering) latentDeferredStop(node *ast.Node) error {
+582: 	for _, finding := range latentFindings {
+583: 		if (finding.Unit == latentFindingOwner || finding.Unit == l.program.Where(node)) && (finding.Phase == "refusal_scan" || finding.Phase == "contract_scan") && (finding.Kind == "Refused" || finding.Kind == "NotYet") {
+584: 			return nil
+585: 		}
+586: 	}
+587: 	probe := *l.latentSnapshot()
+588: 	probe.refusal = refusalPass{}
+589: 	ordinary := probe.refuseNode(node)
+590: 	return latent.DeferredStop(ordinary, probe.refusal.deferred)
+591: }

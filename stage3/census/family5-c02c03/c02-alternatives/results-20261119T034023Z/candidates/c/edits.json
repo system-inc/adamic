@@ -1,0 +1,142 @@
+[
+  {
+    "id": "S022",
+    "file": "src/compiler/checker.ts",
+    "line": 49348,
+    "column": 52,
+    "before": "sourceFile",
+    "after": "sourceFile satisfies SourceFileLike",
+    "typeOnly": true,
+    "sourceTypePreservedBySatisfies": true
+  },
+  {
+    "id": "S043",
+    "file": "src/compiler/parser.ts",
+    "line": 10015,
+    "column": 36,
+    "before": "sourceFile",
+    "after": "sourceFile satisfies SourceFileLike",
+    "typeOnly": true,
+    "sourceTypePreservedBySatisfies": true
+  },
+  {
+    "id": "S044",
+    "file": "src/compiler/parser.ts",
+    "line": 10015,
+    "column": 48,
+    "before": "result",
+    "after": "result satisfies SourceFileLike",
+    "typeOnly": true,
+    "sourceTypePreservedBySatisfies": true
+  },
+  {
+    "id": "S045",
+    "file": "src/compiler/parser.ts",
+    "line": 10087,
+    "column": 37,
+    "before": "origSourceFile",
+    "after": "origSourceFile satisfies SourceFileLike",
+    "typeOnly": true,
+    "sourceTypePreservedBySatisfies": true
+  },
+  {
+    "id": "S046",
+    "file": "src/compiler/parser.ts",
+    "line": 10244,
+    "column": 42,
+    "before": "sourceFile",
+    "after": "sourceFile satisfies SourceFileLike",
+    "typeOnly": true,
+    "sourceTypePreservedBySatisfies": true
+  },
+  {
+    "id": "S058",
+    "file": "src/compiler/program.ts",
+    "line": 738,
+    "column": 57,
+    "before": "file",
+    "after": "file satisfies SourceFileLike",
+    "typeOnly": true,
+    "sourceTypePreservedBySatisfies": true
+  },
+  {
+    "id": "S059",
+    "file": "src/compiler/program.ts",
+    "line": 739,
+    "column": 76,
+    "before": "file",
+    "after": "file satisfies SourceFileLike",
+    "typeOnly": true,
+    "sourceTypePreservedBySatisfies": true
+  },
+  {
+    "id": "S122",
+    "file": "src/compiler/utilities.ts",
+    "line": 1261,
+    "column": 24,
+    "before": "getSourceFileOfNode(node)",
+    "after": "getSourceFileOfNode(node) satisfies SourceFileLike",
+    "typeOnly": true,
+    "sourceTypePreservedBySatisfies": true
+  },
+  {
+    "id": "S123",
+    "file": "src/compiler/utilities.ts",
+    "line": 2532,
+    "column": 70,
+    "before": "sourceFile",
+    "after": "sourceFile satisfies SourceFileLike",
+    "typeOnly": true,
+    "sourceTypePreservedBySatisfies": true
+  },
+  {
+    "id": "S124",
+    "file": "src/compiler/utilities.ts",
+    "line": 7945,
+    "column": 37,
+    "before": "sourceFile",
+    "after": "sourceFile satisfies SourceFileLike",
+    "typeOnly": true,
+    "sourceTypePreservedBySatisfies": true
+  },
+  {
+    "id": "S125",
+    "file": "src/compiler/utilities.ts",
+    "line": 7950,
+    "column": 37,
+    "before": "sourceFile",
+    "after": "sourceFile satisfies SourceFileLike",
+    "typeOnly": true,
+    "sourceTypePreservedBySatisfies": true
+  },
+  {
+    "id": "S126",
+    "file": "src/compiler/utilities.ts",
+    "line": 7960,
+    "column": 37,
+    "before": "sourceFile",
+    "after": "sourceFile satisfies SourceFileLike",
+    "typeOnly": true,
+    "sourceTypePreservedBySatisfies": true
+  },
+  {
+    "id": "S127",
+    "file": "src/compiler/utilities.ts",
+    "line": 7972,
+    "column": 37,
+    "before": "sourceFile",
+    "after": "sourceFile satisfies SourceFileLike",
+    "typeOnly": true,
+    "sourceTypePreservedBySatisfies": true
+  },
+  {
+    "id": "S128",
+    "file": "src/compiler/utilities.ts",
+    "line": 7978,
+    "column": 37,
+    "before": "sourceFile",
+    "after": "sourceFile satisfies SourceFileLike",
+    "typeOnly": true,
+    "sourceTypePreservedBySatisfies": true
+  }
+]

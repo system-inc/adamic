@@ -1,0 +1,93 @@
+{
+  "version": "6.0.3",
+  "source_files_checked": 748,
+  "changed_sources": [
+    "src/compiler/checker.ts",
+    "src/compiler/parser.ts",
+    "src/compiler/program.ts",
+    "src/compiler/utilities.ts"
+  ],
+  "javascript_differences": 0,
+  "records": [
+    {
+      "file": "src/compiler/checker.ts",
+      "removeComments": false,
+      "before_sha256": "f422e1a99e4af17a7772868e654f2a2f36cb1304b8720a137138be96bc20791e",
+      "after_sha256": "f422e1a99e4af17a7772868e654f2a2f36cb1304b8720a137138be96bc20791e",
+      "before_bytes": 2893822,
+      "after_bytes": 2893822,
+      "byte_identical": true,
+      "first_difference_offset": null
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "removeComments": true,
+      "before_sha256": "15c8197ee00a2612427ddb8e5f967a4c25cef7f4d84878d058a3780924f6df89",
+      "after_sha256": "15c8197ee00a2612427ddb8e5f967a4c25cef7f4d84878d058a3780924f6df89",
+      "before_bytes": 2356119,
+      "after_bytes": 2356119,
+      "byte_identical": true,
+      "first_difference_offset": null
+    },
+    {
+      "file": "src/compiler/parser.ts",
+      "removeComments": false,
+      "before_sha256": "5f806a8badfdecf44a7c3f2c3f4d87f03f9ae0a4f1d8c9ffc0b0b5bc611edba3",
+      "after_sha256": "5f806a8badfdecf44a7c3f2c3f4d87f03f9ae0a4f1d8c9ffc0b0b5bc611edba3",
+      "before_bytes": 474715,
+      "after_bytes": 474715,
+      "byte_identical": true,
+      "first_difference_offset": null
+    },
+    {
+      "file": "src/compiler/parser.ts",
+      "removeComments": true,
+      "before_sha256": "75f3d2306141b69d2a2d064e48406019baecb4edb531d1d9459c9d772523075c",
+      "after_sha256": "75f3d2306141b69d2a2d064e48406019baecb4edb531d1d9459c9d772523075c",
+      "before_bytes": 368191,
+      "after_bytes": 368191,
+      "byte_identical": true,
+      "first_difference_offset": null
+    },
+    {
+      "file": "src/compiler/program.ts",
+      "removeComments": false,
+      "before_sha256": "ceb35bd9d56c333e478a3dccba7fc4050e9a15c7683eb494506fc80c1c7b161d",
+      "after_sha256": "ceb35bd9d56c333e478a3dccba7fc4050e9a15c7683eb494506fc80c1c7b161d",
+      "before_bytes": 231434,
+      "after_bytes": 231434,
+      "byte_identical": true,
+      "first_difference_offset": null
+    },
+    {
+      "file": "src/compiler/program.ts",
+      "removeComments": true,
+      "before_sha256": "1122ce1e6f298ae4ab23f6b311d9ee038f22406006aac0af36609ee967c6f41a",
+      "after_sha256": "1122ce1e6f298ae4ab23f6b311d9ee038f22406006aac0af36609ee967c6f41a",
+      "before_bytes": 198775,
+      "after_bytes": 198775,
+      "byte_identical": true,
+      "first_difference_offset": null
+    },
+    {
+      "file": "src/compiler/utilities.ts",
+      "removeComments": false,
+      "before_sha256": "93e544f6fd3ec6687b791195573e6ea98da444e62f34c01297714e1c225eaa06",
+      "after_sha256": "93e544f6fd3ec6687b791195573e6ea98da444e62f34c01297714e1c225eaa06",
+      "before_bytes": 423567,
+      "after_bytes": 423567,
+      "byte_identical": true,
+      "first_difference_offset": null
+    },
+    {
+      "file": "src/compiler/utilities.ts",
+      "removeComments": true,
+      "before_sha256": "e37afa4ecfece514cb6b046d92fadfc5e786b21fd3e36d98570af74ad716d3ce",
+      "after_sha256": "e37afa4ecfece514cb6b046d92fadfc5e786b21fd3e36d98570af74ad716d3ce",
+      "before_bytes": 345978,
+      "after_bytes": 345978,
+      "byte_identical": true,
+      "first_difference_offset": null
+    }
+  ]
+}

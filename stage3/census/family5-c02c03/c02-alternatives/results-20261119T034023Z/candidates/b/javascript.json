@@ -1,0 +1,30 @@
+{
+  "version": "6.0.3",
+  "source_files_checked": 748,
+  "changed_sources": [
+    "src/compiler/types.ts"
+  ],
+  "javascript_differences": 0,
+  "records": [
+    {
+      "file": "src/compiler/types.ts",
+      "removeComments": false,
+      "before_sha256": "4839bedc439cad06969bad2a3d805a7c0b480f06df73fcff62d2cd0957009fc3",
+      "after_sha256": "4839bedc439cad06969bad2a3d805a7c0b480f06df73fcff62d2cd0957009fc3",
+      "before_bytes": 139659,
+      "after_bytes": 139659,
+      "byte_identical": true,
+      "first_difference_offset": null
+    },
+    {
+      "file": "src/compiler/types.ts",
+      "removeComments": true,
+      "before_sha256": "f041d720cfda4ccb137ffc32198ec3d2fce46dbf13404df737dc637e21290639",
+      "after_sha256": "f041d720cfda4ccb137ffc32198ec3d2fce46dbf13404df737dc637e21290639",
+      "before_bytes": 121398,
+      "after_bytes": 121398,
+      "byte_identical": true,
+      "first_difference_offset": null
+    }
+  ]
+}

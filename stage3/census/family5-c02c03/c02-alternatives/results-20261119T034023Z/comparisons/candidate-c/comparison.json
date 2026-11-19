@@ -1,0 +1,1967 @@
+{
+  "files": {
+    "checker": {
+      "before_events": 8220,
+      "after_events": 8224,
+      "target_before_distinct_sites": 1,
+      "target_after_distinct_sites": 0,
+      "target_after_equivalent_fact_distinct_sites": 1,
+      "equivalent_relation_proof_distinct_sites": 1,
+      "after_target_mentions_all_kinds": 3,
+      "grades": {
+        "changed": 1,
+        "new": 4
+      }
+    },
+    "parser": {
+      "before_events": 2512,
+      "after_events": 2526,
+      "target_before_distinct_sites": 4,
+      "target_after_distinct_sites": 0,
+      "target_after_equivalent_fact_distinct_sites": 4,
+      "equivalent_relation_proof_distinct_sites": 4,
+      "after_target_mentions_all_kinds": 18,
+      "grades": {
+        "changed": 4,
+        "new": 14
+      }
+    },
+    "program": {
+      "before_events": 1473,
+      "after_events": 1493,
+      "target_before_distinct_sites": 2,
+      "target_after_distinct_sites": 0,
+      "target_after_equivalent_fact_distinct_sites": 2,
+      "equivalent_relation_proof_distinct_sites": 2,
+      "after_target_mentions_all_kinds": 6,
+      "grades": {
+        "changed": 2,
+        "new": 20
+      }
+    },
+    "utilities": {
+      "before_events": 1309,
+      "after_events": 1323,
+      "target_before_distinct_sites": 7,
+      "target_after_distinct_sites": 0,
+      "target_after_equivalent_fact_distinct_sites": 7,
+      "equivalent_relation_proof_distinct_sites": 7,
+      "after_target_mentions_all_kinds": 21,
+      "grades": {
+        "changed": 7,
+        "new": 14
+      }
+    }
+  },
+  "changes": [
+    {
+      "grade": "changed",
+      "before": {
+        "depth": 0,
+        "kind": "Refused",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "refusal_scan",
+        "reason": "optional property getPositionOfLineAndCharacter in SourceFileLike absent from structural source SourceFile, which can hide fields",
+        "root_kind": "",
+        "text": "/tmp/family5-base-tree/src/compiler/checker.ts:49348:52: Adamic 0.1 refuses optional property getPositionOfLineAndCharacter in SourceFileLike absent from structural source SourceFile, which can hide fields; declare getPositionOfLineAndCharacter on the source type, or build a fresh object with known fields (adamic/no-optional-widening)",
+        "unit": "/tmp/family5-base-tree/src/compiler/checker.ts:49295:5",
+        "where": "/tmp/family5-base-tree/src/compiler/checker.ts:49348:52"
+      },
+      "after": {
+        "depth": 0,
+        "kind": "Refused",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "refusal_scan",
+        "reason": "an unproven relation from SourceFile to SourceFileLike: optional field getPositionOfLineAndCharacter has no proven compatible presence/type",
+        "root_kind": "",
+        "text": "/workspace/family5-alt-c/src/compiler/checker.ts:49349:52: Adamic 0.1 refuses an unproven relation from SourceFile to SourceFileLike: optional field getPositionOfLineAndCharacter has no proven compatible presence/type; keep compatible optional fields in both views, or construct an object with explicitly compatible fields (adamic/no-optional-widening)",
+        "unit": "/workspace/family5-alt-c/src/compiler/checker.ts:49296:5",
+        "where": "/workspace/family5-alt-c/src/compiler/checker.ts:49349:52"
+      },
+      "previous_stop_cleared": false,
+      "file": "checker",
+      "within_original_target_sites": true
+    },
+    {
+      "grade": "new",
+      "after": {
+        "depth": 0,
+        "end": 2882314,
+        "kind": "Boundary",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "lowering",
+        "reason": "failed statement; state rolled back; continued at next statement or declaration",
+        "root_kind": "",
+        "start": 2882222,
+        "text": "/workspace/family5-alt-c/src/compiler/checker.ts:49349:52: Adamic 0.1 refuses an unproven relation from SourceFile to SourceFileLike: optional field getPositionOfLineAndCharacter has no proven compatible presence/type; keep compatible optional fields in both views, or construct an object with explicitly compatible fields (adamic/no-optional-widening)",
+        "unit": "/workspace/family5-alt-c/src/compiler/checker.ts:49296:5",
+        "where": "/workspace/family5-alt-c/src/compiler/checker.ts:49349:9"
+      },
+      "reach_proof": null,
+      "previously_blocked_unit": {
+        "depth": 0,
+        "kind": "Refused",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "refusal_scan",
+        "reason": "optional property getPositionOfLineAndCharacter in SourceFileLike absent from structural source SourceFile, which can hide fields",
+        "root_kind": "",
+        "text": "/tmp/family5-base-tree/src/compiler/checker.ts:49348:52: Adamic 0.1 refuses optional property getPositionOfLineAndCharacter in SourceFileLike absent from structural source SourceFile, which can hide fields; declare getPositionOfLineAndCharacter on the source type, or build a fresh object with known fields (adamic/no-optional-widening)",
+        "unit": "/tmp/family5-base-tree/src/compiler/checker.ts:49295:5",
+        "where": "/tmp/family5-base-tree/src/compiler/checker.ts:49348:52"
+      },
+      "file": "checker",
+      "within_original_target_sites": true
+    },
+    {
+      "grade": "new",
+      "after": {
+        "depth": 0,
+        "end": 2882494,
+        "kind": "Boundary",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "lowering",
+        "reason": "failed statement; state rolled back; continued at next statement or declaration",
+        "root_kind": "",
+        "start": 2882314,
+        "text": "/workspace/family5-alt-c/src/compiler/checker.ts:49350:111: stage 0 can't lower reading start yet",
+        "unit": "/workspace/family5-alt-c/src/compiler/checker.ts:49296:5",
+        "where": "/workspace/family5-alt-c/src/compiler/checker.ts:49350:9"
+      },
+      "reach_proof": null,
+      "previously_blocked_unit": {
+        "depth": 0,
+        "kind": "Refused",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "refusal_scan",
+        "reason": "optional property getPositionOfLineAndCharacter in SourceFileLike absent from structural source SourceFile, which can hide fields",
+        "root_kind": "",
+        "text": "/tmp/family5-base-tree/src/compiler/checker.ts:49348:52: Adamic 0.1 refuses optional property getPositionOfLineAndCharacter in SourceFileLike absent from structural source SourceFile, which can hide fields; declare getPositionOfLineAndCharacter on the source type, or build a fresh object with known fields (adamic/no-optional-widening)",
+        "unit": "/tmp/family5-base-tree/src/compiler/checker.ts:49295:5",
+        "where": "/tmp/family5-base-tree/src/compiler/checker.ts:49348:52"
+      },
+      "file": "checker",
+      "within_original_target_sites": false
+    },
+    {
+      "grade": "new",
+      "after": {
+        "depth": 0,
+        "kind": "NotYet",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "lowering",
+        "reason": "reading start",
+        "root_kind": "",
+        "text": "/workspace/family5-alt-c/src/compiler/checker.ts:49350:111: stage 0 can't lower reading start yet",
+        "unit": "/workspace/family5-alt-c/src/compiler/checker.ts:49296:5",
+        "where": "/workspace/family5-alt-c/src/compiler/checker.ts:49350:111"
+      },
+      "reach_proof": null,
+      "previously_blocked_unit": {
+        "depth": 0,
+        "kind": "Refused",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "refusal_scan",
+        "reason": "optional property getPositionOfLineAndCharacter in SourceFileLike absent from structural source SourceFile, which can hide fields",
+        "root_kind": "",
+        "text": "/tmp/family5-base-tree/src/compiler/checker.ts:49348:52: Adamic 0.1 refuses optional property getPositionOfLineAndCharacter in SourceFileLike absent from structural source SourceFile, which can hide fields; declare getPositionOfLineAndCharacter on the source type, or build a fresh object with known fields (adamic/no-optional-widening)",
+        "unit": "/tmp/family5-base-tree/src/compiler/checker.ts:49295:5",
+        "where": "/tmp/family5-base-tree/src/compiler/checker.ts:49348:52"
+      },
+      "file": "checker",
+      "within_original_target_sites": false
+    },
+    {
+      "grade": "new",
+      "after": {
+        "depth": 0,
+        "kind": "Refused",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "lowering",
+        "reason": "an unproven relation from SourceFile to SourceFileLike: optional field getPositionOfLineAndCharacter has no proven compatible presence/type",
+        "root_kind": "",
+        "text": "/workspace/family5-alt-c/src/compiler/checker.ts:49349:52: Adamic 0.1 refuses an unproven relation from SourceFile to SourceFileLike: optional field getPositionOfLineAndCharacter has no proven compatible presence/type; keep compatible optional fields in both views, or construct an object with explicitly compatible fields (adamic/no-optional-widening)",
+        "unit": "/workspace/family5-alt-c/src/compiler/checker.ts:49296:5",
+        "where": "/workspace/family5-alt-c/src/compiler/checker.ts:49349:52"
+      },
+      "reach_proof": null,
+      "previously_blocked_unit": {
+        "depth": 0,
+        "kind": "Refused",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "refusal_scan",
+        "reason": "optional property getPositionOfLineAndCharacter in SourceFileLike absent from structural source SourceFile, which can hide fields",
+        "root_kind": "",
+        "text": "/tmp/family5-base-tree/src/compiler/checker.ts:49348:52: Adamic 0.1 refuses optional property getPositionOfLineAndCharacter in SourceFileLike absent from structural source SourceFile, which can hide fields; declare getPositionOfLineAndCharacter on the source type, or build a fresh object with known fields (adamic/no-optional-widening)",
+        "unit": "/tmp/family5-base-tree/src/compiler/checker.ts:49295:5",
+        "where": "/tmp/family5-base-tree/src/compiler/checker.ts:49348:52"
+      },
+      "file": "checker",
+      "within_original_target_sites": true
+    },
+    {
+      "grade": "changed",
+      "before": {
+        "depth": 0,
+        "kind": "Refused",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "refusal_scan",
+        "reason": "optional property getPositionOfLineAndCharacter in SourceFileLike absent from structural source SourceFile, which can hide fields",
+        "root_kind": "",
+        "text": "/tmp/family5-base-tree/src/compiler/parser.ts:10015:36: Adamic 0.1 refuses optional property getPositionOfLineAndCharacter in SourceFileLike absent from structural source SourceFile, which can hide fields; declare getPositionOfLineAndCharacter on the source type, or build a fresh object with known fields (adamic/no-optional-widening)",
+        "unit": "/tmp/family5-base-tree/src/compiler/parser.ts:9930:5",
+        "where": "/tmp/family5-base-tree/src/compiler/parser.ts:10015:36"
+      },
+      "after": {
+        "depth": 0,
+        "kind": "Refused",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "refusal_scan",
+        "reason": "an unproven relation from SourceFile to SourceFileLike: optional field getPositionOfLineAndCharacter has no proven compatible presence/type",
+        "root_kind": "",
+        "text": "/workspace/family5-alt-c/src/compiler/parser.ts:10016:36: Adamic 0.1 refuses an unproven relation from SourceFile to SourceFileLike: optional field getPositionOfLineAndCharacter has no proven compatible presence/type; keep compatible optional fields in both views, or construct an object with explicitly compatible fields (adamic/no-optional-widening)",
+        "unit": "/workspace/family5-alt-c/src/compiler/parser.ts:9931:5",
+        "where": "/workspace/family5-alt-c/src/compiler/parser.ts:10016:36"
+      },
+      "previous_stop_cleared": false,
+      "file": "parser",
+      "within_original_target_sites": true
+    },
+    {
+      "grade": "changed",
+      "before": {
+        "depth": 0,
+        "kind": "Refused",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "refusal_scan",
+        "reason": "optional property getPositionOfLineAndCharacter in SourceFileLike absent from structural source SourceFile, which can hide fields",
+        "root_kind": "",
+        "text": "/tmp/family5-base-tree/src/compiler/parser.ts:10015:48: Adamic 0.1 refuses optional property getPositionOfLineAndCharacter in SourceFileLike absent from structural source SourceFile, which can hide fields; declare getPositionOfLineAndCharacter on the source type, or build a fresh object with known fields (adamic/no-optional-widening)",
+        "unit": "/tmp/family5-base-tree/src/compiler/parser.ts:9930:5",
+        "where": "/tmp/family5-base-tree/src/compiler/parser.ts:10015:48"
+      },
+      "after": {
+        "depth": 0,
+        "kind": "Refused",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "refusal_scan",
+        "reason": "an unproven relation from SourceFile to SourceFileLike: optional field getPositionOfLineAndCharacter has no proven compatible presence/type",
+        "root_kind": "",
+        "text": "/workspace/family5-alt-c/src/compiler/parser.ts:10016:73: Adamic 0.1 refuses an unproven relation from SourceFile to SourceFileLike: optional field getPositionOfLineAndCharacter has no proven compatible presence/type; keep compatible optional fields in both views, or construct an object with explicitly compatible fields (adamic/no-optional-widening)",
+        "unit": "/workspace/family5-alt-c/src/compiler/parser.ts:9931:5",
+        "where": "/workspace/family5-alt-c/src/compiler/parser.ts:10016:73"
+      },
+      "previous_stop_cleared": false,
+      "file": "parser",
+      "within_original_target_sites": true
+    },
+    {
+      "grade": "changed",
+      "before": {
+        "depth": 0,
+        "kind": "Refused",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "refusal_scan",
+        "reason": "optional property getPositionOfLineAndCharacter in SourceFileLike absent from structural source SourceFile, which can hide fields",
+        "root_kind": "",
+        "text": "/tmp/family5-base-tree/src/compiler/parser.ts:10087:37: Adamic 0.1 refuses optional property getPositionOfLineAndCharacter in SourceFileLike absent from structural source SourceFile, which can hide fields; declare getPositionOfLineAndCharacter on the source type, or build a fresh object with known fields (adamic/no-optional-widening)",
+        "unit": "/tmp/family5-base-tree/src/compiler/parser.ts:10079:9",
+        "where": "/tmp/family5-base-tree/src/compiler/parser.ts:10087:37"
+      },
+      "after": {
+        "depth": 0,
+        "kind": "Refused",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "refusal_scan",
+        "reason": "an unproven relation from SourceFile to SourceFileLike: optional field getPositionOfLineAndCharacter has no proven compatible presence/type",
+        "root_kind": "",
+        "text": "/workspace/family5-alt-c/src/compiler/parser.ts:10088:37: Adamic 0.1 refuses an unproven relation from SourceFile to SourceFileLike: optional field getPositionOfLineAndCharacter has no proven compatible presence/type; keep compatible optional fields in both views, or construct an object with explicitly compatible fields (adamic/no-optional-widening)",
+        "unit": "/workspace/family5-alt-c/src/compiler/parser.ts:10080:9",
+        "where": "/workspace/family5-alt-c/src/compiler/parser.ts:10088:37"
+      },
+      "previous_stop_cleared": false,
+      "file": "parser",
+      "within_original_target_sites": true
+    },
+    {
+      "grade": "changed",
+      "before": {
+        "depth": 0,
+        "kind": "Refused",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "refusal_scan",
+        "reason": "optional property getPositionOfLineAndCharacter in SourceFileLike absent from structural source SourceFile, which can hide fields",
+        "root_kind": "",
+        "text": "/tmp/family5-base-tree/src/compiler/parser.ts:10244:42: Adamic 0.1 refuses optional property getPositionOfLineAndCharacter in SourceFileLike absent from structural source SourceFile, which can hide fields; declare getPositionOfLineAndCharacter on the source type, or build a fresh object with known fields (adamic/no-optional-widening)",
+        "unit": "/tmp/family5-base-tree/src/compiler/parser.ts:10229:9",
+        "where": "/tmp/family5-base-tree/src/compiler/parser.ts:10244:42"
+      },
+      "after": {
+        "depth": 0,
+        "kind": "Refused",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "refusal_scan",
+        "reason": "an unproven relation from SourceFile to SourceFileLike: optional field getPositionOfLineAndCharacter has no proven compatible presence/type",
+        "root_kind": "",
+        "text": "/workspace/family5-alt-c/src/compiler/parser.ts:10245:42: Adamic 0.1 refuses an unproven relation from SourceFile to SourceFileLike: optional field getPositionOfLineAndCharacter has no proven compatible presence/type; keep compatible optional fields in both views, or construct an object with explicitly compatible fields (adamic/no-optional-widening)",
+        "unit": "/workspace/family5-alt-c/src/compiler/parser.ts:10230:9",
+        "where": "/workspace/family5-alt-c/src/compiler/parser.ts:10245:42"
+      },
+      "previous_stop_cleared": false,
+      "file": "parser",
+      "within_original_target_sites": true
+    },
+    {
+      "grade": "new",
+      "after": {
+        "depth": 0,
+        "end": 503693,
+        "kind": "Boundary",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "lowering",
+        "reason": "failed statement; state rolled back; continued at next statement or declaration",
+        "root_kind": "",
+        "start": 503586,
+        "text": "/workspace/family5-alt-c/src/compiler/parser.ts:10016:36: Adamic 0.1 refuses an unproven relation from SourceFile to SourceFileLike: optional field getPositionOfLineAndCharacter has no proven compatible presence/type; keep compatible optional fields in both views, or construct an object with explicitly compatible fields (adamic/no-optional-widening)",
+        "unit": "/workspace/family5-alt-c/src/compiler/parser.ts:9931:5",
+        "where": "/workspace/family5-alt-c/src/compiler/parser.ts:10016:9"
+      },
+      "reach_proof": null,
+      "previously_blocked_unit": {
+        "depth": 0,
+        "kind": "Refused",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "refusal_scan",
+        "reason": "optional property getPositionOfLineAndCharacter in SourceFileLike absent from structural source SourceFile, which can hide fields",
+        "root_kind": "",
+        "text": "/tmp/family5-base-tree/src/compiler/parser.ts:10015:36: Adamic 0.1 refuses optional property getPositionOfLineAndCharacter in SourceFileLike absent from structural source SourceFile, which can hide fields; declare getPositionOfLineAndCharacter on the source type, or build a fresh object with known fields (adamic/no-optional-widening)",
+        "unit": "/tmp/family5-base-tree/src/compiler/parser.ts:9930:5",
+        "where": "/tmp/family5-base-tree/src/compiler/parser.ts:10015:36"
+      },
+      "file": "parser",
+      "within_original_target_sites": true
+    },
+    {
+      "grade": "new",
+      "after": {
+        "depth": 0,
+        "end": 507023,
+        "kind": "Boundary",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "lowering",
+        "reason": "failed statement; state rolled back; continued at next statement or declaration",
+        "root_kind": "",
+        "start": 506814,
+        "text": "/workspace/family5-alt-c/src/compiler/parser.ts:10088:37: Adamic 0.1 refuses an unproven relation from SourceFile to SourceFileLike: optional field getPositionOfLineAndCharacter has no proven compatible presence/type; keep compatible optional fields in both views, or construct an object with explicitly compatible fields (adamic/no-optional-widening)",
+        "unit": "/workspace/family5-alt-c/src/compiler/parser.ts:10069:5",
+        "where": "/workspace/family5-alt-c/src/compiler/parser.ts:10088:13"
+      },
+      "reach_proof": null,
+      "previously_blocked_unit": {
+        "depth": 0,
+        "kind": "NotYet",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "lowering",
+        "reason": "a function returning T | undefined",
+        "root_kind": "",
+        "text": "/tmp/family5-base-tree/src/compiler/parser.ts:1249:17: stage 0 can't lower a function returning T | undefined yet",
+        "unit": "/tmp/family5-base-tree/src/compiler/parser.ts:10068:5",
+        "where": "/tmp/family5-base-tree/src/compiler/parser.ts:1249:17"
+      },
+      "file": "parser",
+      "within_original_target_sites": true
+    },
+    {
+      "grade": "new",
+      "after": {
+        "depth": 0,
+        "end": 507023,
+        "kind": "Boundary",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "lowering",
+        "reason": "failed statement; state rolled back; continued at next statement or declaration",
+        "root_kind": "",
+        "start": 506814,
+        "text": "/workspace/family5-alt-c/src/compiler/parser.ts:10088:37: Adamic 0.1 refuses an unproven relation from SourceFile to SourceFileLike: optional field getPositionOfLineAndCharacter has no proven compatible presence/type; keep compatible optional fields in both views, or construct an object with explicitly compatible fields (adamic/no-optional-widening)",
+        "unit": "/workspace/family5-alt-c/src/compiler/parser.ts:10070:5",
+        "where": "/workspace/family5-alt-c/src/compiler/parser.ts:10088:13"
+      },
+      "reach_proof": null,
+      "previously_blocked_unit": {
+        "depth": 0,
+        "kind": "NotYet",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "lowering",
+        "reason": "a function returning T | undefined",
+        "root_kind": "",
+        "text": "/tmp/family5-base-tree/src/compiler/parser.ts:1249:17: stage 0 can't lower a function returning T | undefined yet",
+        "unit": "/tmp/family5-base-tree/src/compiler/parser.ts:10069:5",
+        "where": "/tmp/family5-base-tree/src/compiler/parser.ts:1249:17"
+      },
+      "file": "parser",
+      "within_original_target_sites": true
+    },
+    {
+      "grade": "new",
+      "after": {
+        "depth": 0,
+        "end": 507023,
+        "kind": "Boundary",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "lowering",
+        "reason": "failed statement; state rolled back; continued at next statement or declaration",
+        "root_kind": "",
+        "start": 506814,
+        "text": "/workspace/family5-alt-c/src/compiler/parser.ts:10088:37: Adamic 0.1 refuses an unproven relation from SourceFile to SourceFileLike: optional field getPositionOfLineAndCharacter has no proven compatible presence/type; keep compatible optional fields in both views, or construct an object with explicitly compatible fields (adamic/no-optional-widening)",
+        "unit": "/workspace/family5-alt-c/src/compiler/parser.ts:10071:5",
+        "where": "/workspace/family5-alt-c/src/compiler/parser.ts:10088:13"
+      },
+      "reach_proof": null,
+      "previously_blocked_unit": {
+        "depth": 0,
+        "kind": "Refused",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "refusal_scan",
+        "reason": "a cast the runtime can't check",
+        "root_kind": "",
+        "text": "/tmp/family5-base-tree/src/compiler/parser.ts:10072:24: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+        "unit": "/tmp/family5-base-tree/src/compiler/parser.ts:10070:5",
+        "where": "/tmp/family5-base-tree/src/compiler/parser.ts:10072:24"
+      },
+      "file": "parser",
+      "within_original_target_sites": true
+    },
+    {
+      "grade": "new",
+      "after": {
+        "depth": 0,
+        "end": 507023,
+        "kind": "Boundary",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "lowering",
+        "reason": "failed statement; state rolled back; continued at next statement or declaration",
+        "root_kind": "",
+        "start": 506814,
+        "text": "/workspace/family5-alt-c/src/compiler/parser.ts:10088:37: Adamic 0.1 refuses an unproven relation from SourceFile to SourceFileLike: optional field getPositionOfLineAndCharacter has no proven compatible presence/type; keep compatible optional fields in both views, or construct an object with explicitly compatible fields (adamic/no-optional-widening)",
+        "unit": "/workspace/family5-alt-c/src/compiler/parser.ts:10080:9",
+        "where": "/workspace/family5-alt-c/src/compiler/parser.ts:10088:13"
+      },
+      "reach_proof": null,
+      "previously_blocked_unit": {
+        "depth": 0,
+        "kind": "Refused",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "refusal_scan",
+        "reason": "optional property getPositionOfLineAndCharacter in SourceFileLike absent from structural source SourceFile, which can hide fields",
+        "root_kind": "",
+        "text": "/tmp/family5-base-tree/src/compiler/parser.ts:10087:37: Adamic 0.1 refuses optional property getPositionOfLineAndCharacter in SourceFileLike absent from structural source SourceFile, which can hide fields; declare getPositionOfLineAndCharacter on the source type, or build a fresh object with known fields (adamic/no-optional-widening)",
+        "unit": "/tmp/family5-base-tree/src/compiler/parser.ts:10079:9",
+        "where": "/tmp/family5-base-tree/src/compiler/parser.ts:10087:37"
+      },
+      "file": "parser",
+      "within_original_target_sites": true
+    },
+    {
+      "grade": "new",
+      "after": {
+        "depth": 0,
+        "end": 514206,
+        "kind": "Boundary",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "lowering",
+        "reason": "failed statement; state rolled back; continued at next statement or declaration",
+        "root_kind": "",
+        "start": 514126,
+        "text": "/workspace/family5-alt-c/src/compiler/parser.ts:10245:42: Adamic 0.1 refuses an unproven relation from SourceFile to SourceFileLike: optional field getPositionOfLineAndCharacter has no proven compatible presence/type; keep compatible optional fields in both views, or construct an object with explicitly compatible fields (adamic/no-optional-widening)",
+        "unit": "/workspace/family5-alt-c/src/compiler/parser.ts:10217:5",
+        "where": "/workspace/family5-alt-c/src/compiler/parser.ts:10245:17"
+      },
+      "reach_proof": null,
+      "previously_blocked_unit": {
+        "depth": 0,
+        "kind": "NotYet",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "lowering",
+        "reason": "a function returning T | undefined",
+        "root_kind": "",
+        "text": "/tmp/family5-base-tree/src/compiler/parser.ts:1249:17: stage 0 can't lower a function returning T | undefined yet",
+        "unit": "/tmp/family5-base-tree/src/compiler/parser.ts:10216:5",
+        "where": "/tmp/family5-base-tree/src/compiler/parser.ts:1249:17"
+      },
+      "file": "parser",
+      "within_original_target_sites": true
+    },
+    {
+      "grade": "new",
+      "after": {
+        "depth": 0,
+        "end": 514206,
+        "kind": "Boundary",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "lowering",
+        "reason": "failed statement; state rolled back; continued at next statement or declaration",
+        "root_kind": "",
+        "start": 514126,
+        "text": "/workspace/family5-alt-c/src/compiler/parser.ts:10245:42: Adamic 0.1 refuses an unproven relation from SourceFile to SourceFileLike: optional field getPositionOfLineAndCharacter has no proven compatible presence/type; keep compatible optional fields in both views, or construct an object with explicitly compatible fields (adamic/no-optional-widening)",
+        "unit": "/workspace/family5-alt-c/src/compiler/parser.ts:10230:9",
+        "where": "/workspace/family5-alt-c/src/compiler/parser.ts:10245:17"
+      },
+      "reach_proof": null,
+      "previously_blocked_unit": {
+        "depth": 0,
+        "kind": "Refused",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "refusal_scan",
+        "reason": "optional property getPositionOfLineAndCharacter in SourceFileLike absent from structural source SourceFile, which can hide fields",
+        "root_kind": "",
+        "text": "/tmp/family5-base-tree/src/compiler/parser.ts:10244:42: Adamic 0.1 refuses optional property getPositionOfLineAndCharacter in SourceFileLike absent from structural source SourceFile, which can hide fields; declare getPositionOfLineAndCharacter on the source type, or build a fresh object with known fields (adamic/no-optional-widening)",
+        "unit": "/tmp/family5-base-tree/src/compiler/parser.ts:10229:9",
+        "where": "/tmp/family5-base-tree/src/compiler/parser.ts:10244:42"
+      },
+      "file": "parser",
+      "within_original_target_sites": true
+    },
+    {
+      "grade": "new",
+      "after": {
+        "depth": 0,
+        "kind": "Refused",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "lowering",
+        "reason": "an unproven relation from SourceFile to SourceFileLike: optional field getPositionOfLineAndCharacter has no proven compatible presence/type",
+        "root_kind": "",
+        "text": "/workspace/family5-alt-c/src/compiler/parser.ts:10016:36: Adamic 0.1 refuses an unproven relation from SourceFile to SourceFileLike: optional field getPositionOfLineAndCharacter has no proven compatible presence/type; keep compatible optional fields in both views, or construct an object with explicitly compatible fields (adamic/no-optional-widening)",
+        "unit": "/workspace/family5-alt-c/src/compiler/parser.ts:9931:5",
+        "where": "/workspace/family5-alt-c/src/compiler/parser.ts:10016:36"
+      },
+      "reach_proof": null,
+      "previously_blocked_unit": {
+        "depth": 0,
+        "kind": "Refused",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "refusal_scan",
+        "reason": "optional property getPositionOfLineAndCharacter in SourceFileLike absent from structural source SourceFile, which can hide fields",
+        "root_kind": "",
+        "text": "/tmp/family5-base-tree/src/compiler/parser.ts:10015:36: Adamic 0.1 refuses optional property getPositionOfLineAndCharacter in SourceFileLike absent from structural source SourceFile, which can hide fields; declare getPositionOfLineAndCharacter on the source type, or build a fresh object with known fields (adamic/no-optional-widening)",
+        "unit": "/tmp/family5-base-tree/src/compiler/parser.ts:9930:5",
+        "where": "/tmp/family5-base-tree/src/compiler/parser.ts:10015:36"
+      },
+      "file": "parser",
+      "within_original_target_sites": true
+    },
+    {
+      "grade": "new",
+      "after": {
+        "depth": 0,
+        "kind": "Refused",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "lowering",
+        "reason": "an unproven relation from SourceFile to SourceFileLike: optional field getPositionOfLineAndCharacter has no proven compatible presence/type",
+        "root_kind": "",
+        "text": "/workspace/family5-alt-c/src/compiler/parser.ts:10088:37: Adamic 0.1 refuses an unproven relation from SourceFile to SourceFileLike: optional field getPositionOfLineAndCharacter has no proven compatible presence/type; keep compatible optional fields in both views, or construct an object with explicitly compatible fields (adamic/no-optional-widening)",
+        "unit": "/workspace/family5-alt-c/src/compiler/parser.ts:10069:5",
+        "where": "/workspace/family5-alt-c/src/compiler/parser.ts:10088:37"
+      },
+      "reach_proof": null,
+      "previously_blocked_unit": {
+        "depth": 0,
+        "kind": "NotYet",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "lowering",
+        "reason": "a function returning T | undefined",
+        "root_kind": "",
+        "text": "/tmp/family5-base-tree/src/compiler/parser.ts:1249:17: stage 0 can't lower a function returning T | undefined yet",
+        "unit": "/tmp/family5-base-tree/src/compiler/parser.ts:10068:5",
+        "where": "/tmp/family5-base-tree/src/compiler/parser.ts:1249:17"
+      },
+      "file": "parser",
+      "within_original_target_sites": true
+    },
+    {
+      "grade": "new",
+      "after": {
+        "depth": 0,
+        "kind": "Refused",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "lowering",
+        "reason": "an unproven relation from SourceFile to SourceFileLike: optional field getPositionOfLineAndCharacter has no proven compatible presence/type",
+        "root_kind": "",
+        "text": "/workspace/family5-alt-c/src/compiler/parser.ts:10088:37: Adamic 0.1 refuses an unproven relation from SourceFile to SourceFileLike: optional field getPositionOfLineAndCharacter has no proven compatible presence/type; keep compatible optional fields in both views, or construct an object with explicitly compatible fields (adamic/no-optional-widening)",
+        "unit": "/workspace/family5-alt-c/src/compiler/parser.ts:10070:5",
+        "where": "/workspace/family5-alt-c/src/compiler/parser.ts:10088:37"
+      },
+      "reach_proof": null,
+      "previously_blocked_unit": {
+        "depth": 0,
+        "kind": "NotYet",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "lowering",
+        "reason": "a function returning T | undefined",
+        "root_kind": "",
+        "text": "/tmp/family5-base-tree/src/compiler/parser.ts:1249:17: stage 0 can't lower a function returning T | undefined yet",
+        "unit": "/tmp/family5-base-tree/src/compiler/parser.ts:10069:5",
+        "where": "/tmp/family5-base-tree/src/compiler/parser.ts:1249:17"
+      },
+      "file": "parser",
+      "within_original_target_sites": true
+    },
+    {
+      "grade": "new",
+      "after": {
+        "depth": 0,
+        "kind": "Refused",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "lowering",
+        "reason": "an unproven relation from SourceFile to SourceFileLike: optional field getPositionOfLineAndCharacter has no proven compatible presence/type",
+        "root_kind": "",
+        "text": "/workspace/family5-alt-c/src/compiler/parser.ts:10088:37: Adamic 0.1 refuses an unproven relation from SourceFile to SourceFileLike: optional field getPositionOfLineAndCharacter has no proven compatible presence/type; keep compatible optional fields in both views, or construct an object with explicitly compatible fields (adamic/no-optional-widening)",
+        "unit": "/workspace/family5-alt-c/src/compiler/parser.ts:10071:5",
+        "where": "/workspace/family5-alt-c/src/compiler/parser.ts:10088:37"
+      },
+      "reach_proof": null,
+      "previously_blocked_unit": {
+        "depth": 0,
+        "kind": "Refused",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "refusal_scan",
+        "reason": "a cast the runtime can't check",
+        "root_kind": "",
+        "text": "/tmp/family5-base-tree/src/compiler/parser.ts:10072:24: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+        "unit": "/tmp/family5-base-tree/src/compiler/parser.ts:10070:5",
+        "where": "/tmp/family5-base-tree/src/compiler/parser.ts:10072:24"
+      },
+      "file": "parser",
+      "within_original_target_sites": true
+    },
+    {
+      "grade": "new",
+      "after": {
+        "depth": 0,
+        "kind": "Refused",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "lowering",
+        "reason": "an unproven relation from SourceFile to SourceFileLike: optional field getPositionOfLineAndCharacter has no proven compatible presence/type",
+        "root_kind": "",
+        "text": "/workspace/family5-alt-c/src/compiler/parser.ts:10088:37: Adamic 0.1 refuses an unproven relation from SourceFile to SourceFileLike: optional field getPositionOfLineAndCharacter has no proven compatible presence/type; keep compatible optional fields in both views, or construct an object with explicitly compatible fields (adamic/no-optional-widening)",
+        "unit": "/workspace/family5-alt-c/src/compiler/parser.ts:10080:9",
+        "where": "/workspace/family5-alt-c/src/compiler/parser.ts:10088:37"
+      },
+      "reach_proof": null,
+      "previously_blocked_unit": {
+        "depth": 0,
+        "kind": "Refused",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "refusal_scan",
+        "reason": "optional property getPositionOfLineAndCharacter in SourceFileLike absent from structural source SourceFile, which can hide fields",
+        "root_kind": "",
+        "text": "/tmp/family5-base-tree/src/compiler/parser.ts:10087:37: Adamic 0.1 refuses optional property getPositionOfLineAndCharacter in SourceFileLike absent from structural source SourceFile, which can hide fields; declare getPositionOfLineAndCharacter on the source type, or build a fresh object with known fields (adamic/no-optional-widening)",
+        "unit": "/tmp/family5-base-tree/src/compiler/parser.ts:10079:9",
+        "where": "/tmp/family5-base-tree/src/compiler/parser.ts:10087:37"
+      },
+      "file": "parser",
+      "within_original_target_sites": true
+    },
+    {
+      "grade": "new",
+      "after": {
+        "depth": 0,
+        "kind": "Refused",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "lowering",
+        "reason": "an unproven relation from SourceFile to SourceFileLike: optional field getPositionOfLineAndCharacter has no proven compatible presence/type",
+        "root_kind": "",
+        "text": "/workspace/family5-alt-c/src/compiler/parser.ts:10245:42: Adamic 0.1 refuses an unproven relation from SourceFile to SourceFileLike: optional field getPositionOfLineAndCharacter has no proven compatible presence/type; keep compatible optional fields in both views, or construct an object with explicitly compatible fields (adamic/no-optional-widening)",
+        "unit": "/workspace/family5-alt-c/src/compiler/parser.ts:10217:5",
+        "where": "/workspace/family5-alt-c/src/compiler/parser.ts:10245:42"
+      },
+      "reach_proof": null,
+      "previously_blocked_unit": {
+        "depth": 0,
+        "kind": "NotYet",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "lowering",
+        "reason": "a function returning T | undefined",
+        "root_kind": "",
+        "text": "/tmp/family5-base-tree/src/compiler/parser.ts:1249:17: stage 0 can't lower a function returning T | undefined yet",
+        "unit": "/tmp/family5-base-tree/src/compiler/parser.ts:10216:5",
+        "where": "/tmp/family5-base-tree/src/compiler/parser.ts:1249:17"
+      },
+      "file": "parser",
+      "within_original_target_sites": true
+    },
+    {
+      "grade": "new",
+      "after": {
+        "depth": 0,
+        "kind": "Refused",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "lowering",
+        "reason": "an unproven relation from SourceFile to SourceFileLike: optional field getPositionOfLineAndCharacter has no proven compatible presence/type",
+        "root_kind": "",
+        "text": "/workspace/family5-alt-c/src/compiler/parser.ts:10245:42: Adamic 0.1 refuses an unproven relation from SourceFile to SourceFileLike: optional field getPositionOfLineAndCharacter has no proven compatible presence/type; keep compatible optional fields in both views, or construct an object with explicitly compatible fields (adamic/no-optional-widening)",
+        "unit": "/workspace/family5-alt-c/src/compiler/parser.ts:10230:9",
+        "where": "/workspace/family5-alt-c/src/compiler/parser.ts:10245:42"
+      },
+      "reach_proof": null,
+      "previously_blocked_unit": {
+        "depth": 0,
+        "kind": "Refused",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "refusal_scan",
+        "reason": "optional property getPositionOfLineAndCharacter in SourceFileLike absent from structural source SourceFile, which can hide fields",
+        "root_kind": "",
+        "text": "/tmp/family5-base-tree/src/compiler/parser.ts:10244:42: Adamic 0.1 refuses optional property getPositionOfLineAndCharacter in SourceFileLike absent from structural source SourceFile, which can hide fields; declare getPositionOfLineAndCharacter on the source type, or build a fresh object with known fields (adamic/no-optional-widening)",
+        "unit": "/tmp/family5-base-tree/src/compiler/parser.ts:10229:9",
+        "where": "/tmp/family5-base-tree/src/compiler/parser.ts:10244:42"
+      },
+      "file": "parser",
+      "within_original_target_sites": true
+    },
+    {
+      "grade": "changed",
+      "before": {
+        "depth": 0,
+        "kind": "Refused",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "refusal_scan",
+        "reason": "optional property getPositionOfLineAndCharacter in SourceFileLike absent from structural source SourceFile, which can hide fields",
+        "root_kind": "",
+        "text": "/tmp/family5-base-tree/src/compiler/program.ts:738:57: Adamic 0.1 refuses optional property getPositionOfLineAndCharacter in SourceFileLike absent from structural source SourceFile, which can hide fields; declare getPositionOfLineAndCharacter on the source type, or build a fresh object with known fields (adamic/no-optional-widening)",
+        "unit": "/tmp/family5-base-tree/src/compiler/program.ts:717:1",
+        "where": "/tmp/family5-base-tree/src/compiler/program.ts:738:57"
+      },
+      "after": {
+        "depth": 0,
+        "kind": "Refused",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "refusal_scan",
+        "reason": "an unproven relation from SourceFile to SourceFileLike: optional field getPositionOfLineAndCharacter has no proven compatible presence/type",
+        "root_kind": "",
+        "text": "/workspace/family5-alt-c/src/compiler/program.ts:739:57: Adamic 0.1 refuses an unproven relation from SourceFile to SourceFileLike: optional field getPositionOfLineAndCharacter has no proven compatible presence/type; keep compatible optional fields in both views, or construct an object with explicitly compatible fields (adamic/no-optional-widening)",
+        "unit": "/workspace/family5-alt-c/src/compiler/program.ts:718:1",
+        "where": "/workspace/family5-alt-c/src/compiler/program.ts:739:57"
+      },
+      "previous_stop_cleared": false,
+      "file": "program",
+      "within_original_target_sites": true
+    },
+    {
+      "grade": "changed",
+      "before": {
+        "depth": 0,
+        "kind": "Refused",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "refusal_scan",
+        "reason": "optional property getPositionOfLineAndCharacter in SourceFileLike absent from structural source SourceFile, which can hide fields",
+        "root_kind": "",
+        "text": "/tmp/family5-base-tree/src/compiler/program.ts:739:76: Adamic 0.1 refuses optional property getPositionOfLineAndCharacter in SourceFileLike absent from structural source SourceFile, which can hide fields; declare getPositionOfLineAndCharacter on the source type, or build a fresh object with known fields (adamic/no-optional-widening)",
+        "unit": "/tmp/family5-base-tree/src/compiler/program.ts:717:1",
+        "where": "/tmp/family5-base-tree/src/compiler/program.ts:739:76"
+      },
+      "after": {
+        "depth": 0,
+        "kind": "Refused",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "refusal_scan",
+        "reason": "an unproven relation from SourceFile to SourceFileLike: optional field getPositionOfLineAndCharacter has no proven compatible presence/type",
+        "root_kind": "",
+        "text": "/workspace/family5-alt-c/src/compiler/program.ts:740:76: Adamic 0.1 refuses an unproven relation from SourceFile to SourceFileLike: optional field getPositionOfLineAndCharacter has no proven compatible presence/type; keep compatible optional fields in both views, or construct an object with explicitly compatible fields (adamic/no-optional-widening)",
+        "unit": "/workspace/family5-alt-c/src/compiler/program.ts:718:1",
+        "where": "/workspace/family5-alt-c/src/compiler/program.ts:740:76"
+      },
+      "previous_stop_cleared": false,
+      "file": "program",
+      "within_original_target_sites": true
+    },
+    {
+      "grade": "new",
+      "after": {
+        "depth": 0,
+        "end": 27617,
+        "kind": "Boundary",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "lowering",
+        "reason": "failed statement; state rolled back; continued at next statement or declaration",
+        "root_kind": "",
+        "start": 27520,
+        "text": "/workspace/family5-alt-c/src/compiler/program.ts:739:57: Adamic 0.1 refuses an unproven relation from SourceFile to SourceFileLike: optional field getPositionOfLineAndCharacter has no proven compatible presence/type; keep compatible optional fields in both views, or construct an object with explicitly compatible fields (adamic/no-optional-widening)",
+        "unit": "/workspace/family5-alt-c/src/compiler/program.ts:718:1",
+        "where": "/workspace/family5-alt-c/src/compiler/program.ts:739:9"
+      },
+      "reach_proof": null,
+      "previously_blocked_unit": {
+        "depth": 0,
+        "kind": "Refused",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "refusal_scan",
+        "reason": "optional property getPositionOfLineAndCharacter in SourceFileLike absent from structural source SourceFile, which can hide fields",
+        "root_kind": "",
+        "text": "/tmp/family5-base-tree/src/compiler/program.ts:738:57: Adamic 0.1 refuses optional property getPositionOfLineAndCharacter in SourceFileLike absent from structural source SourceFile, which can hide fields; declare getPositionOfLineAndCharacter on the source type, or build a fresh object with known fields (adamic/no-optional-widening)",
+        "unit": "/tmp/family5-base-tree/src/compiler/program.ts:717:1",
+        "where": "/tmp/family5-base-tree/src/compiler/program.ts:738:57"
+      },
+      "file": "program",
+      "within_original_target_sites": true
+    },
+    {
+      "grade": "new",
+      "after": {
+        "depth": 0,
+        "end": 27754,
+        "kind": "Boundary",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "lowering",
+        "reason": "failed statement; state rolled back; continued at next statement or declaration",
+        "root_kind": "",
+        "start": 27617,
+        "text": "/workspace/family5-alt-c/src/compiler/program.ts:740:76: Adamic 0.1 refuses an unproven relation from SourceFile to SourceFileLike: optional field getPositionOfLineAndCharacter has no proven compatible presence/type; keep compatible optional fields in both views, or construct an object with explicitly compatible fields (adamic/no-optional-widening)",
+        "unit": "/workspace/family5-alt-c/src/compiler/program.ts:718:1",
+        "where": "/workspace/family5-alt-c/src/compiler/program.ts:740:9"
+      },
+      "reach_proof": null,
+      "previously_blocked_unit": {
+        "depth": 0,
+        "kind": "Refused",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "refusal_scan",
+        "reason": "optional property getPositionOfLineAndCharacter in SourceFileLike absent from structural source SourceFile, which can hide fields",
+        "root_kind": "",
+        "text": "/tmp/family5-base-tree/src/compiler/program.ts:738:57: Adamic 0.1 refuses optional property getPositionOfLineAndCharacter in SourceFileLike absent from structural source SourceFile, which can hide fields; declare getPositionOfLineAndCharacter on the source type, or build a fresh object with known fields (adamic/no-optional-widening)",
+        "unit": "/tmp/family5-base-tree/src/compiler/program.ts:717:1",
+        "where": "/tmp/family5-base-tree/src/compiler/program.ts:738:57"
+      },
+      "file": "program",
+      "within_original_target_sites": true
+    },
+    {
+      "grade": "new",
+      "after": {
+        "depth": 0,
+        "end": 27864,
+        "kind": "Boundary",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "lowering",
+        "reason": "failed statement; state rolled back; continued at next statement or declaration",
+        "root_kind": "",
+        "start": 27818,
+        "text": "/workspace/family5-alt-c/src/compiler/program.ts:742:9: stage 0 can't lower assigning to an Identifier yet",
+        "unit": "/workspace/family5-alt-c/src/compiler/program.ts:718:1",
+        "where": "/workspace/family5-alt-c/src/compiler/program.ts:742:9"
+      },
+      "reach_proof": null,
+      "previously_blocked_unit": {
+        "depth": 0,
+        "kind": "Refused",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "refusal_scan",
+        "reason": "optional property getPositionOfLineAndCharacter in SourceFileLike absent from structural source SourceFile, which can hide fields",
+        "root_kind": "",
+        "text": "/tmp/family5-base-tree/src/compiler/program.ts:738:57: Adamic 0.1 refuses optional property getPositionOfLineAndCharacter in SourceFileLike absent from structural source SourceFile, which can hide fields; declare getPositionOfLineAndCharacter on the source type, or build a fresh object with known fields (adamic/no-optional-widening)",
+        "unit": "/tmp/family5-base-tree/src/compiler/program.ts:717:1",
+        "where": "/tmp/family5-base-tree/src/compiler/program.ts:738:57"
+      },
+      "file": "program",
+      "within_original_target_sites": false
+    },
+    {
+      "grade": "new",
+      "after": {
+        "depth": 0,
+        "end": 27937,
+        "kind": "Boundary",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "lowering",
+        "reason": "failed statement; state rolled back; continued at next statement or declaration",
+        "root_kind": "",
+        "start": 27864,
+        "text": "/workspace/family5-alt-c/src/compiler/program.ts:743:9: stage 0 can't lower assigning to an Identifier yet",
+        "unit": "/workspace/family5-alt-c/src/compiler/program.ts:718:1",
+        "where": "/workspace/family5-alt-c/src/compiler/program.ts:743:9"
+      },
+      "reach_proof": null,
+      "previously_blocked_unit": {
+        "depth": 0,
+        "kind": "Refused",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "refusal_scan",
+        "reason": "optional property getPositionOfLineAndCharacter in SourceFileLike absent from structural source SourceFile, which can hide fields",
+        "root_kind": "",
+        "text": "/tmp/family5-base-tree/src/compiler/program.ts:738:57: Adamic 0.1 refuses optional property getPositionOfLineAndCharacter in SourceFileLike absent from structural source SourceFile, which can hide fields; declare getPositionOfLineAndCharacter on the source type, or build a fresh object with known fields (adamic/no-optional-widening)",
+        "unit": "/tmp/family5-base-tree/src/compiler/program.ts:717:1",
+        "where": "/tmp/family5-base-tree/src/compiler/program.ts:738:57"
+      },
+      "file": "program",
+      "within_original_target_sites": false
+    },
+    {
+      "grade": "new",
+      "after": {
+        "depth": 0,
+        "end": 28217,
+        "kind": "Boundary",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "lowering",
+        "reason": "failed statement; state rolled back; continued at next statement or declaration",
+        "root_kind": "",
+        "start": 28164,
+        "text": "/workspace/family5-alt-c/src/compiler/program.ts:747:20: stage 0 can't lower reading lineContent yet",
+        "unit": "/workspace/family5-alt-c/src/compiler/program.ts:718:1",
+        "where": "/workspace/family5-alt-c/src/compiler/program.ts:747:9"
+      },
+      "reach_proof": null,
+      "previously_blocked_unit": {
+        "depth": 0,
+        "kind": "Refused",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "refusal_scan",
+        "reason": "optional property getPositionOfLineAndCharacter in SourceFileLike absent from structural source SourceFile, which can hide fields",
+        "root_kind": "",
+        "text": "/tmp/family5-base-tree/src/compiler/program.ts:738:57: Adamic 0.1 refuses optional property getPositionOfLineAndCharacter in SourceFileLike absent from structural source SourceFile, which can hide fields; declare getPositionOfLineAndCharacter on the source type, or build a fresh object with known fields (adamic/no-optional-widening)",
+        "unit": "/tmp/family5-base-tree/src/compiler/program.ts:717:1",
+        "where": "/tmp/family5-base-tree/src/compiler/program.ts:738:57"
+      },
+      "file": "program",
+      "within_original_target_sites": false
+    },
+    {
+      "grade": "new",
+      "after": {
+        "depth": 0,
+        "end": 28838,
+        "kind": "Boundary",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "lowering",
+        "reason": "failed statement; state rolled back; continued at next statement or declaration",
+        "root_kind": "",
+        "start": 28755,
+        "text": "/workspace/family5-alt-c/src/compiler/program.ts:757:24: stage 0 can't lower reading lineContent yet",
+        "unit": "/workspace/family5-alt-c/src/compiler/program.ts:718:1",
+        "where": "/workspace/family5-alt-c/src/compiler/program.ts:757:13"
+      },
+      "reach_proof": null,
+      "previously_blocked_unit": {
+        "depth": 0,
+        "kind": "Refused",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "refusal_scan",
+        "reason": "optional property getPositionOfLineAndCharacter in SourceFileLike absent from structural source SourceFile, which can hide fields",
+        "root_kind": "",
+        "text": "/tmp/family5-base-tree/src/compiler/program.ts:738:57: Adamic 0.1 refuses optional property getPositionOfLineAndCharacter in SourceFileLike absent from structural source SourceFile, which can hide fields; declare getPositionOfLineAndCharacter on the source type, or build a fresh object with known fields (adamic/no-optional-widening)",
+        "unit": "/tmp/family5-base-tree/src/compiler/program.ts:717:1",
+        "where": "/tmp/family5-base-tree/src/compiler/program.ts:738:57"
+      },
+      "file": "program",
+      "within_original_target_sites": false
+    },
+    {
+      "grade": "new",
+      "after": {
+        "depth": 0,
+        "end": 28932,
+        "kind": "Boundary",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "lowering",
+        "reason": "failed statement; state rolled back; continued at next statement or declaration",
+        "root_kind": "",
+        "start": 28838,
+        "text": "/workspace/family5-alt-c/src/compiler/program.ts:758:24: stage 0 can't lower reading lineContent yet",
+        "unit": "/workspace/family5-alt-c/src/compiler/program.ts:718:1",
+        "where": "/workspace/family5-alt-c/src/compiler/program.ts:758:13"
+      },
+      "reach_proof": null,
+      "previously_blocked_unit": {
+        "depth": 0,
+        "kind": "Refused",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "refusal_scan",
+        "reason": "optional property getPositionOfLineAndCharacter in SourceFileLike absent from structural source SourceFile, which can hide fields",
+        "root_kind": "",
+        "text": "/tmp/family5-base-tree/src/compiler/program.ts:738:57: Adamic 0.1 refuses optional property getPositionOfLineAndCharacter in SourceFileLike absent from structural source SourceFile, which can hide fields; declare getPositionOfLineAndCharacter on the source type, or build a fresh object with known fields (adamic/no-optional-widening)",
+        "unit": "/tmp/family5-base-tree/src/compiler/program.ts:717:1",
+        "where": "/tmp/family5-base-tree/src/compiler/program.ts:738:57"
+      },
+      "file": "program",
+      "within_original_target_sites": false
+    },
+    {
+      "grade": "new",
+      "after": {
+        "depth": 0,
+        "end": 29058,
+        "kind": "Boundary",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "lowering",
+        "reason": "failed statement; state rolled back; continued at next statement or declaration",
+        "root_kind": "",
+        "start": 28979,
+        "text": "/workspace/family5-alt-c/src/compiler/program.ts:761:24: stage 0 can't lower reading lineContent yet",
+        "unit": "/workspace/family5-alt-c/src/compiler/program.ts:718:1",
+        "where": "/workspace/family5-alt-c/src/compiler/program.ts:761:13"
+      },
+      "reach_proof": null,
+      "previously_blocked_unit": {
+        "depth": 0,
+        "kind": "Refused",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "refusal_scan",
+        "reason": "optional property getPositionOfLineAndCharacter in SourceFileLike absent from structural source SourceFile, which can hide fields",
+        "root_kind": "",
+        "text": "/tmp/family5-base-tree/src/compiler/program.ts:738:57: Adamic 0.1 refuses optional property getPositionOfLineAndCharacter in SourceFileLike absent from structural source SourceFile, which can hide fields; declare getPositionOfLineAndCharacter on the source type, or build a fresh object with known fields (adamic/no-optional-widening)",
+        "unit": "/tmp/family5-base-tree/src/compiler/program.ts:717:1",
+        "where": "/tmp/family5-base-tree/src/compiler/program.ts:738:57"
+      },
+      "file": "program",
+      "within_original_target_sites": false
+    },
+    {
+      "grade": "new",
+      "after": {
+        "depth": 0,
+        "end": 29183,
+        "kind": "Boundary",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "lowering",
+        "reason": "failed statement; state rolled back; continued at next statement or declaration",
+        "root_kind": "",
+        "start": 29085,
+        "text": "/workspace/family5-alt-c/src/compiler/program.ts:765:24: stage 0 can't lower reading lineContent yet",
+        "unit": "/workspace/family5-alt-c/src/compiler/program.ts:718:1",
+        "where": "/workspace/family5-alt-c/src/compiler/program.ts:765:13"
+      },
+      "reach_proof": null,
+      "previously_blocked_unit": {
+        "depth": 0,
+        "kind": "Refused",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "refusal_scan",
+        "reason": "optional property getPositionOfLineAndCharacter in SourceFileLike absent from structural source SourceFile, which can hide fields",
+        "root_kind": "",
+        "text": "/tmp/family5-base-tree/src/compiler/program.ts:738:57: Adamic 0.1 refuses optional property getPositionOfLineAndCharacter in SourceFileLike absent from structural source SourceFile, which can hide fields; declare getPositionOfLineAndCharacter on the source type, or build a fresh object with known fields (adamic/no-optional-widening)",
+        "unit": "/tmp/family5-base-tree/src/compiler/program.ts:717:1",
+        "where": "/tmp/family5-base-tree/src/compiler/program.ts:738:57"
+      },
+      "file": "program",
+      "within_original_target_sites": false
+    },
+    {
+      "grade": "new",
+      "after": {
+        "depth": 0,
+        "end": 27818,
+        "kind": "Boundary",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "lowering",
+        "reason": "failed statement; state rolled back; continued at next statement or declaration",
+        "root_kind": "",
+        "start": 27754,
+        "text": "/workspace/family5-alt-c/src/compiler/program.ts:741:43: stage 0 can't lower reading lineStart yet",
+        "unit": "/workspace/family5-alt-c/src/compiler/program.ts:718:1",
+        "where": "/workspace/family5-alt-c/src/compiler/program.ts:741:9"
+      },
+      "reach_proof": null,
+      "previously_blocked_unit": {
+        "depth": 0,
+        "kind": "Refused",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "refusal_scan",
+        "reason": "optional property getPositionOfLineAndCharacter in SourceFileLike absent from structural source SourceFile, which can hide fields",
+        "root_kind": "",
+        "text": "/tmp/family5-base-tree/src/compiler/program.ts:738:57: Adamic 0.1 refuses optional property getPositionOfLineAndCharacter in SourceFileLike absent from structural source SourceFile, which can hide fields; declare getPositionOfLineAndCharacter on the source type, or build a fresh object with known fields (adamic/no-optional-widening)",
+        "unit": "/tmp/family5-base-tree/src/compiler/program.ts:717:1",
+        "where": "/tmp/family5-base-tree/src/compiler/program.ts:738:57"
+      },
+      "file": "program",
+      "within_original_target_sites": false
+    },
+    {
+      "grade": "new",
+      "after": {
+        "depth": 0,
+        "kind": "NotYet",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "lowering",
+        "reason": "assigning to an Identifier",
+        "root_kind": "",
+        "text": "/workspace/family5-alt-c/src/compiler/program.ts:742:9: stage 0 can't lower assigning to an Identifier yet",
+        "unit": "/workspace/family5-alt-c/src/compiler/program.ts:718:1",
+        "where": "/workspace/family5-alt-c/src/compiler/program.ts:742:9"
+      },
+      "reach_proof": null,
+      "previously_blocked_unit": {
+        "depth": 0,
+        "kind": "Refused",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "refusal_scan",
+        "reason": "optional property getPositionOfLineAndCharacter in SourceFileLike absent from structural source SourceFile, which can hide fields",
+        "root_kind": "",
+        "text": "/tmp/family5-base-tree/src/compiler/program.ts:738:57: Adamic 0.1 refuses optional property getPositionOfLineAndCharacter in SourceFileLike absent from structural source SourceFile, which can hide fields; declare getPositionOfLineAndCharacter on the source type, or build a fresh object with known fields (adamic/no-optional-widening)",
+        "unit": "/tmp/family5-base-tree/src/compiler/program.ts:717:1",
+        "where": "/tmp/family5-base-tree/src/compiler/program.ts:738:57"
+      },
+      "file": "program",
+      "within_original_target_sites": false
+    },
+    {
+      "grade": "new",
+      "after": {
+        "depth": 0,
+        "kind": "NotYet",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "lowering",
+        "reason": "assigning to an Identifier",
+        "root_kind": "",
+        "text": "/workspace/family5-alt-c/src/compiler/program.ts:743:9: stage 0 can't lower assigning to an Identifier yet",
+        "unit": "/workspace/family5-alt-c/src/compiler/program.ts:718:1",
+        "where": "/workspace/family5-alt-c/src/compiler/program.ts:743:9"
+      },
+      "reach_proof": null,
+      "previously_blocked_unit": {
+        "depth": 0,
+        "kind": "Refused",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "refusal_scan",
+        "reason": "optional property getPositionOfLineAndCharacter in SourceFileLike absent from structural source SourceFile, which can hide fields",
+        "root_kind": "",
+        "text": "/tmp/family5-base-tree/src/compiler/program.ts:738:57: Adamic 0.1 refuses optional property getPositionOfLineAndCharacter in SourceFileLike absent from structural source SourceFile, which can hide fields; declare getPositionOfLineAndCharacter on the source type, or build a fresh object with known fields (adamic/no-optional-widening)",
+        "unit": "/tmp/family5-base-tree/src/compiler/program.ts:717:1",
+        "where": "/tmp/family5-base-tree/src/compiler/program.ts:738:57"
+      },
+      "file": "program",
+      "within_original_target_sites": false
+    },
+    {
+      "grade": "new",
+      "after": {
+        "depth": 0,
+        "kind": "NotYet",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "lowering",
+        "reason": "reading lineContent",
+        "root_kind": "",
+        "text": "/workspace/family5-alt-c/src/compiler/program.ts:747:20: stage 0 can't lower reading lineContent yet",
+        "unit": "/workspace/family5-alt-c/src/compiler/program.ts:718:1",
+        "where": "/workspace/family5-alt-c/src/compiler/program.ts:747:20"
+      },
+      "reach_proof": null,
+      "previously_blocked_unit": {
+        "depth": 0,
+        "kind": "Refused",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "refusal_scan",
+        "reason": "optional property getPositionOfLineAndCharacter in SourceFileLike absent from structural source SourceFile, which can hide fields",
+        "root_kind": "",
+        "text": "/tmp/family5-base-tree/src/compiler/program.ts:738:57: Adamic 0.1 refuses optional property getPositionOfLineAndCharacter in SourceFileLike absent from structural source SourceFile, which can hide fields; declare getPositionOfLineAndCharacter on the source type, or build a fresh object with known fields (adamic/no-optional-widening)",
+        "unit": "/tmp/family5-base-tree/src/compiler/program.ts:717:1",
+        "where": "/tmp/family5-base-tree/src/compiler/program.ts:738:57"
+      },
+      "file": "program",
+      "within_original_target_sites": false
+    },
+    {
+      "grade": "new",
+      "after": {
+        "depth": 0,
+        "kind": "NotYet",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "lowering",
+        "reason": "reading lineContent",
+        "root_kind": "",
+        "text": "/workspace/family5-alt-c/src/compiler/program.ts:757:24: stage 0 can't lower reading lineContent yet",
+        "unit": "/workspace/family5-alt-c/src/compiler/program.ts:718:1",
+        "where": "/workspace/family5-alt-c/src/compiler/program.ts:757:24"
+      },
+      "reach_proof": null,
+      "previously_blocked_unit": {
+        "depth": 0,
+        "kind": "Refused",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "refusal_scan",
+        "reason": "optional property getPositionOfLineAndCharacter in SourceFileLike absent from structural source SourceFile, which can hide fields",
+        "root_kind": "",
+        "text": "/tmp/family5-base-tree/src/compiler/program.ts:738:57: Adamic 0.1 refuses optional property getPositionOfLineAndCharacter in SourceFileLike absent from structural source SourceFile, which can hide fields; declare getPositionOfLineAndCharacter on the source type, or build a fresh object with known fields (adamic/no-optional-widening)",
+        "unit": "/tmp/family5-base-tree/src/compiler/program.ts:717:1",
+        "where": "/tmp/family5-base-tree/src/compiler/program.ts:738:57"
+      },
+      "file": "program",
+      "within_original_target_sites": false
+    },
+    {
+      "grade": "new",
+      "after": {
+        "depth": 0,
+        "kind": "NotYet",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "lowering",
+        "reason": "reading lineContent",
+        "root_kind": "",
+        "text": "/workspace/family5-alt-c/src/compiler/program.ts:758:24: stage 0 can't lower reading lineContent yet",
+        "unit": "/workspace/family5-alt-c/src/compiler/program.ts:718:1",
+        "where": "/workspace/family5-alt-c/src/compiler/program.ts:758:24"
+      },
+      "reach_proof": null,
+      "previously_blocked_unit": {
+        "depth": 0,
+        "kind": "Refused",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "refusal_scan",
+        "reason": "optional property getPositionOfLineAndCharacter in SourceFileLike absent from structural source SourceFile, which can hide fields",
+        "root_kind": "",
+        "text": "/tmp/family5-base-tree/src/compiler/program.ts:738:57: Adamic 0.1 refuses optional property getPositionOfLineAndCharacter in SourceFileLike absent from structural source SourceFile, which can hide fields; declare getPositionOfLineAndCharacter on the source type, or build a fresh object with known fields (adamic/no-optional-widening)",
+        "unit": "/tmp/family5-base-tree/src/compiler/program.ts:717:1",
+        "where": "/tmp/family5-base-tree/src/compiler/program.ts:738:57"
+      },
+      "file": "program",
+      "within_original_target_sites": false
+    },
+    {
+      "grade": "new",
+      "after": {
+        "depth": 0,
+        "kind": "NotYet",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "lowering",
+        "reason": "reading lineContent",
+        "root_kind": "",
+        "text": "/workspace/family5-alt-c/src/compiler/program.ts:761:24: stage 0 can't lower reading lineContent yet",
+        "unit": "/workspace/family5-alt-c/src/compiler/program.ts:718:1",
+        "where": "/workspace/family5-alt-c/src/compiler/program.ts:761:24"
+      },
+      "reach_proof": null,
+      "previously_blocked_unit": {
+        "depth": 0,
+        "kind": "Refused",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "refusal_scan",
+        "reason": "optional property getPositionOfLineAndCharacter in SourceFileLike absent from structural source SourceFile, which can hide fields",
+        "root_kind": "",
+        "text": "/tmp/family5-base-tree/src/compiler/program.ts:738:57: Adamic 0.1 refuses optional property getPositionOfLineAndCharacter in SourceFileLike absent from structural source SourceFile, which can hide fields; declare getPositionOfLineAndCharacter on the source type, or build a fresh object with known fields (adamic/no-optional-widening)",
+        "unit": "/tmp/family5-base-tree/src/compiler/program.ts:717:1",
+        "where": "/tmp/family5-base-tree/src/compiler/program.ts:738:57"
+      },
+      "file": "program",
+      "within_original_target_sites": false
+    },
+    {
+      "grade": "new",
+      "after": {
+        "depth": 0,
+        "kind": "NotYet",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "lowering",
+        "reason": "reading lineContent",
+        "root_kind": "",
+        "text": "/workspace/family5-alt-c/src/compiler/program.ts:765:24: stage 0 can't lower reading lineContent yet",
+        "unit": "/workspace/family5-alt-c/src/compiler/program.ts:718:1",
+        "where": "/workspace/family5-alt-c/src/compiler/program.ts:765:24"
+      },
+      "reach_proof": null,
+      "previously_blocked_unit": {
+        "depth": 0,
+        "kind": "Refused",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "refusal_scan",
+        "reason": "optional property getPositionOfLineAndCharacter in SourceFileLike absent from structural source SourceFile, which can hide fields",
+        "root_kind": "",
+        "text": "/tmp/family5-base-tree/src/compiler/program.ts:738:57: Adamic 0.1 refuses optional property getPositionOfLineAndCharacter in SourceFileLike absent from structural source SourceFile, which can hide fields; declare getPositionOfLineAndCharacter on the source type, or build a fresh object with known fields (adamic/no-optional-widening)",
+        "unit": "/tmp/family5-base-tree/src/compiler/program.ts:717:1",
+        "where": "/tmp/family5-base-tree/src/compiler/program.ts:738:57"
+      },
+      "file": "program",
+      "within_original_target_sites": false
+    },
+    {
+      "grade": "new",
+      "after": {
+        "depth": 0,
+        "kind": "NotYet",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "lowering",
+        "reason": "reading lineStart",
+        "root_kind": "",
+        "text": "/workspace/family5-alt-c/src/compiler/program.ts:741:43: stage 0 can't lower reading lineStart yet",
+        "unit": "/workspace/family5-alt-c/src/compiler/program.ts:718:1",
+        "where": "/workspace/family5-alt-c/src/compiler/program.ts:741:43"
+      },
+      "reach_proof": null,
+      "previously_blocked_unit": {
+        "depth": 0,
+        "kind": "Refused",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "refusal_scan",
+        "reason": "optional property getPositionOfLineAndCharacter in SourceFileLike absent from structural source SourceFile, which can hide fields",
+        "root_kind": "",
+        "text": "/tmp/family5-base-tree/src/compiler/program.ts:738:57: Adamic 0.1 refuses optional property getPositionOfLineAndCharacter in SourceFileLike absent from structural source SourceFile, which can hide fields; declare getPositionOfLineAndCharacter on the source type, or build a fresh object with known fields (adamic/no-optional-widening)",
+        "unit": "/tmp/family5-base-tree/src/compiler/program.ts:717:1",
+        "where": "/tmp/family5-base-tree/src/compiler/program.ts:738:57"
+      },
+      "file": "program",
+      "within_original_target_sites": false
+    },
+    {
+      "grade": "new",
+      "after": {
+        "depth": 0,
+        "kind": "Refused",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "lowering",
+        "reason": "an unproven relation from SourceFile to SourceFileLike: optional field getPositionOfLineAndCharacter has no proven compatible presence/type",
+        "root_kind": "",
+        "text": "/workspace/family5-alt-c/src/compiler/program.ts:739:57: Adamic 0.1 refuses an unproven relation from SourceFile to SourceFileLike: optional field getPositionOfLineAndCharacter has no proven compatible presence/type; keep compatible optional fields in both views, or construct an object with explicitly compatible fields (adamic/no-optional-widening)",
+        "unit": "/workspace/family5-alt-c/src/compiler/program.ts:718:1",
+        "where": "/workspace/family5-alt-c/src/compiler/program.ts:739:57"
+      },
+      "reach_proof": null,
+      "previously_blocked_unit": {
+        "depth": 0,
+        "kind": "Refused",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "refusal_scan",
+        "reason": "optional property getPositionOfLineAndCharacter in SourceFileLike absent from structural source SourceFile, which can hide fields",
+        "root_kind": "",
+        "text": "/tmp/family5-base-tree/src/compiler/program.ts:738:57: Adamic 0.1 refuses optional property getPositionOfLineAndCharacter in SourceFileLike absent from structural source SourceFile, which can hide fields; declare getPositionOfLineAndCharacter on the source type, or build a fresh object with known fields (adamic/no-optional-widening)",
+        "unit": "/tmp/family5-base-tree/src/compiler/program.ts:717:1",
+        "where": "/tmp/family5-base-tree/src/compiler/program.ts:738:57"
+      },
+      "file": "program",
+      "within_original_target_sites": true
+    },
+    {
+      "grade": "new",
+      "after": {
+        "depth": 0,
+        "kind": "Refused",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "lowering",
+        "reason": "an unproven relation from SourceFile to SourceFileLike: optional field getPositionOfLineAndCharacter has no proven compatible presence/type",
+        "root_kind": "",
+        "text": "/workspace/family5-alt-c/src/compiler/program.ts:740:76: Adamic 0.1 refuses an unproven relation from SourceFile to SourceFileLike: optional field getPositionOfLineAndCharacter has no proven compatible presence/type; keep compatible optional fields in both views, or construct an object with explicitly compatible fields (adamic/no-optional-widening)",
+        "unit": "/workspace/family5-alt-c/src/compiler/program.ts:718:1",
+        "where": "/workspace/family5-alt-c/src/compiler/program.ts:740:76"
+      },
+      "reach_proof": null,
+      "previously_blocked_unit": {
+        "depth": 0,
+        "kind": "Refused",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "refusal_scan",
+        "reason": "optional property getPositionOfLineAndCharacter in SourceFileLike absent from structural source SourceFile, which can hide fields",
+        "root_kind": "",
+        "text": "/tmp/family5-base-tree/src/compiler/program.ts:738:57: Adamic 0.1 refuses optional property getPositionOfLineAndCharacter in SourceFileLike absent from structural source SourceFile, which can hide fields; declare getPositionOfLineAndCharacter on the source type, or build a fresh object with known fields (adamic/no-optional-widening)",
+        "unit": "/tmp/family5-base-tree/src/compiler/program.ts:717:1",
+        "where": "/tmp/family5-base-tree/src/compiler/program.ts:738:57"
+      },
+      "file": "program",
+      "within_original_target_sites": true
+    },
+    {
+      "grade": "changed",
+      "before": {
+        "depth": 0,
+        "kind": "Refused",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "refusal_scan",
+        "reason": "optional property getPositionOfLineAndCharacter in SourceFileLike absent from structural source SourceFile, which can hide fields",
+        "root_kind": "",
+        "text": "/tmp/family5-base-tree/src/compiler/utilities.ts:1261:24: Adamic 0.1 refuses optional property getPositionOfLineAndCharacter in SourceFileLike absent from structural source SourceFile, which can hide fields; declare getPositionOfLineAndCharacter on the source type, or build a fresh object with known fields (adamic/no-optional-widening)",
+        "unit": "/tmp/family5-base-tree/src/compiler/utilities.ts:1240:1",
+        "where": "/tmp/family5-base-tree/src/compiler/utilities.ts:1261:24"
+      },
+      "after": {
+        "depth": 0,
+        "kind": "Refused",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "refusal_scan",
+        "reason": "an unproven relation from SourceFile to SourceFileLike: optional field getPositionOfLineAndCharacter has no proven compatible presence/type",
+        "root_kind": "",
+        "text": "/workspace/family5-alt-c/src/compiler/utilities.ts:1261:24: Adamic 0.1 refuses an unproven relation from SourceFile to SourceFileLike: optional field getPositionOfLineAndCharacter has no proven compatible presence/type; keep compatible optional fields in both views, or construct an object with explicitly compatible fields (adamic/no-optional-widening)",
+        "unit": "/workspace/family5-alt-c/src/compiler/utilities.ts:1240:1",
+        "where": "/workspace/family5-alt-c/src/compiler/utilities.ts:1261:24"
+      },
+      "previous_stop_cleared": false,
+      "file": "utilities",
+      "within_original_target_sites": true
+    },
+    {
+      "grade": "changed",
+      "before": {
+        "depth": 0,
+        "kind": "Refused",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "refusal_scan",
+        "reason": "optional property getPositionOfLineAndCharacter in SourceFileLike absent from structural source SourceFile, which can hide fields",
+        "root_kind": "",
+        "text": "/tmp/family5-base-tree/src/compiler/utilities.ts:2532:70: Adamic 0.1 refuses optional property getPositionOfLineAndCharacter in SourceFileLike absent from structural source SourceFile, which can hide fields; declare getPositionOfLineAndCharacter on the source type, or build a fresh object with known fields (adamic/no-optional-widening)",
+        "unit": "/tmp/family5-base-tree/src/compiler/utilities.ts:2524:1",
+        "where": "/tmp/family5-base-tree/src/compiler/utilities.ts:2532:70"
+      },
+      "after": {
+        "depth": 0,
+        "kind": "Refused",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "refusal_scan",
+        "reason": "an unproven relation from SourceFile to SourceFileLike: optional field getPositionOfLineAndCharacter has no proven compatible presence/type",
+        "root_kind": "",
+        "text": "/workspace/family5-alt-c/src/compiler/utilities.ts:2532:70: Adamic 0.1 refuses an unproven relation from SourceFile to SourceFileLike: optional field getPositionOfLineAndCharacter has no proven compatible presence/type; keep compatible optional fields in both views, or construct an object with explicitly compatible fields (adamic/no-optional-widening)",
+        "unit": "/workspace/family5-alt-c/src/compiler/utilities.ts:2524:1",
+        "where": "/workspace/family5-alt-c/src/compiler/utilities.ts:2532:70"
+      },
+      "previous_stop_cleared": false,
+      "file": "utilities",
+      "within_original_target_sites": true
+    },
+    {
+      "grade": "changed",
+      "before": {
+        "depth": 0,
+        "kind": "Refused",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "refusal_scan",
+        "reason": "optional property getPositionOfLineAndCharacter in SourceFileLike absent from structural source SourceFile, which can hide fields",
+        "root_kind": "",
+        "text": "/tmp/family5-base-tree/src/compiler/utilities.ts:7945:37: Adamic 0.1 refuses optional property getPositionOfLineAndCharacter in SourceFileLike absent from structural source SourceFile, which can hide fields; declare getPositionOfLineAndCharacter on the source type, or build a fresh object with known fields (adamic/no-optional-widening)",
+        "unit": "/tmp/family5-base-tree/src/compiler/utilities.ts:7943:1",
+        "where": "/tmp/family5-base-tree/src/compiler/utilities.ts:7945:37"
+      },
+      "after": {
+        "depth": 0,
+        "kind": "Refused",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "refusal_scan",
+        "reason": "an unproven relation from SourceFile to SourceFileLike: optional field getPositionOfLineAndCharacter has no proven compatible presence/type",
+        "root_kind": "",
+        "text": "/workspace/family5-alt-c/src/compiler/utilities.ts:7945:37: Adamic 0.1 refuses an unproven relation from SourceFile to SourceFileLike: optional field getPositionOfLineAndCharacter has no proven compatible presence/type; keep compatible optional fields in both views, or construct an object with explicitly compatible fields (adamic/no-optional-widening)",
+        "unit": "/workspace/family5-alt-c/src/compiler/utilities.ts:7943:1",
+        "where": "/workspace/family5-alt-c/src/compiler/utilities.ts:7945:37"
+      },
+      "previous_stop_cleared": false,
+      "file": "utilities",
+      "within_original_target_sites": true
+    },
+    {
+      "grade": "changed",
+      "before": {
+        "depth": 0,
+        "kind": "Refused",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "refusal_scan",
+        "reason": "optional property getPositionOfLineAndCharacter in SourceFileLike absent from structural source SourceFile, which can hide fields",
+        "root_kind": "",
+        "text": "/tmp/family5-base-tree/src/compiler/utilities.ts:7950:37: Adamic 0.1 refuses optional property getPositionOfLineAndCharacter in SourceFileLike absent from structural source SourceFile, which can hide fields; declare getPositionOfLineAndCharacter on the source type, or build a fresh object with known fields (adamic/no-optional-widening)",
+        "unit": "/tmp/family5-base-tree/src/compiler/utilities.ts:7949:1",
+        "where": "/tmp/family5-base-tree/src/compiler/utilities.ts:7950:37"
+      },
+      "after": {
+        "depth": 0,
+        "kind": "Refused",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "refusal_scan",
+        "reason": "an unproven relation from SourceFile to SourceFileLike: optional field getPositionOfLineAndCharacter has no proven compatible presence/type",
+        "root_kind": "",
+        "text": "/workspace/family5-alt-c/src/compiler/utilities.ts:7950:37: Adamic 0.1 refuses an unproven relation from SourceFile to SourceFileLike: optional field getPositionOfLineAndCharacter has no proven compatible presence/type; keep compatible optional fields in both views, or construct an object with explicitly compatible fields (adamic/no-optional-widening)",
+        "unit": "/workspace/family5-alt-c/src/compiler/utilities.ts:7949:1",
+        "where": "/workspace/family5-alt-c/src/compiler/utilities.ts:7950:37"
+      },
+      "previous_stop_cleared": false,
+      "file": "utilities",
+      "within_original_target_sites": true
+    },
+    {
+      "grade": "changed",
+      "before": {
+        "depth": 0,
+        "kind": "Refused",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "refusal_scan",
+        "reason": "optional property getPositionOfLineAndCharacter in SourceFileLike absent from structural source SourceFile, which can hide fields",
+        "root_kind": "",
+        "text": "/tmp/family5-base-tree/src/compiler/utilities.ts:7960:37: Adamic 0.1 refuses optional property getPositionOfLineAndCharacter in SourceFileLike absent from structural source SourceFile, which can hide fields; declare getPositionOfLineAndCharacter on the source type, or build a fresh object with known fields (adamic/no-optional-widening)",
+        "unit": "/tmp/family5-base-tree/src/compiler/utilities.ts:7959:1",
+        "where": "/tmp/family5-base-tree/src/compiler/utilities.ts:7960:37"
+      },
+      "after": {
+        "depth": 0,
+        "kind": "Refused",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "refusal_scan",
+        "reason": "an unproven relation from SourceFile to SourceFileLike: optional field getPositionOfLineAndCharacter has no proven compatible presence/type",
+        "root_kind": "",
+        "text": "/workspace/family5-alt-c/src/compiler/utilities.ts:7960:37: Adamic 0.1 refuses an unproven relation from SourceFile to SourceFileLike: optional field getPositionOfLineAndCharacter has no proven compatible presence/type; keep compatible optional fields in both views, or construct an object with explicitly compatible fields (adamic/no-optional-widening)",
+        "unit": "/workspace/family5-alt-c/src/compiler/utilities.ts:7959:1",
+        "where": "/workspace/family5-alt-c/src/compiler/utilities.ts:7960:37"
+      },
+      "previous_stop_cleared": false,
+      "file": "utilities",
+      "within_original_target_sites": true
+    },
+    {
+      "grade": "changed",
+      "before": {
+        "depth": 0,
+        "kind": "Refused",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "refusal_scan",
+        "reason": "optional property getPositionOfLineAndCharacter in SourceFileLike absent from structural source SourceFile, which can hide fields",
+        "root_kind": "",
+        "text": "/tmp/family5-base-tree/src/compiler/utilities.ts:7972:37: Adamic 0.1 refuses optional property getPositionOfLineAndCharacter in SourceFileLike absent from structural source SourceFile, which can hide fields; declare getPositionOfLineAndCharacter on the source type, or build a fresh object with known fields (adamic/no-optional-widening)",
+        "unit": "/tmp/family5-base-tree/src/compiler/utilities.ts:7969:1",
+        "where": "/tmp/family5-base-tree/src/compiler/utilities.ts:7972:37"
+      },
+      "after": {
+        "depth": 0,
+        "kind": "Refused",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "refusal_scan",
+        "reason": "an unproven relation from SourceFile to SourceFileLike: optional field getPositionOfLineAndCharacter has no proven compatible presence/type",
+        "root_kind": "",
+        "text": "/workspace/family5-alt-c/src/compiler/utilities.ts:7972:37: Adamic 0.1 refuses an unproven relation from SourceFile to SourceFileLike: optional field getPositionOfLineAndCharacter has no proven compatible presence/type; keep compatible optional fields in both views, or construct an object with explicitly compatible fields (adamic/no-optional-widening)",
+        "unit": "/workspace/family5-alt-c/src/compiler/utilities.ts:7969:1",
+        "where": "/workspace/family5-alt-c/src/compiler/utilities.ts:7972:37"
+      },
+      "previous_stop_cleared": false,
+      "file": "utilities",
+      "within_original_target_sites": true
+    },
+    {
+      "grade": "changed",
+      "before": {
+        "depth": 0,
+        "kind": "Refused",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "refusal_scan",
+        "reason": "optional property getPositionOfLineAndCharacter in SourceFileLike absent from structural source SourceFile, which can hide fields",
+        "root_kind": "",
+        "text": "/tmp/family5-base-tree/src/compiler/utilities.ts:7978:37: Adamic 0.1 refuses optional property getPositionOfLineAndCharacter in SourceFileLike absent from structural source SourceFile, which can hide fields; declare getPositionOfLineAndCharacter on the source type, or build a fresh object with known fields (adamic/no-optional-widening)",
+        "unit": "/tmp/family5-base-tree/src/compiler/utilities.ts:7976:1",
+        "where": "/tmp/family5-base-tree/src/compiler/utilities.ts:7978:37"
+      },
+      "after": {
+        "depth": 0,
+        "kind": "Refused",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "refusal_scan",
+        "reason": "an unproven relation from SourceFile to SourceFileLike: optional field getPositionOfLineAndCharacter has no proven compatible presence/type",
+        "root_kind": "",
+        "text": "/workspace/family5-alt-c/src/compiler/utilities.ts:7978:37: Adamic 0.1 refuses an unproven relation from SourceFile to SourceFileLike: optional field getPositionOfLineAndCharacter has no proven compatible presence/type; keep compatible optional fields in both views, or construct an object with explicitly compatible fields (adamic/no-optional-widening)",
+        "unit": "/workspace/family5-alt-c/src/compiler/utilities.ts:7976:1",
+        "where": "/workspace/family5-alt-c/src/compiler/utilities.ts:7978:37"
+      },
+      "previous_stop_cleared": false,
+      "file": "utilities",
+      "within_original_target_sites": true
+    },
+    {
+      "grade": "new",
+      "after": {
+        "depth": 0,
+        "end": 44464,
+        "kind": "Boundary",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "lowering",
+        "reason": "failed statement; state rolled back; continued at next statement or declaration",
+        "root_kind": "",
+        "start": 44388,
+        "text": "/workspace/family5-alt-c/src/compiler/utilities.ts:1261:24: Adamic 0.1 refuses an unproven relation from SourceFile to SourceFileLike: optional field getPositionOfLineAndCharacter has no proven compatible presence/type; keep compatible optional fields in both views, or construct an object with explicitly compatible fields (adamic/no-optional-widening)",
+        "unit": "/workspace/family5-alt-c/src/compiler/utilities.ts:1240:1",
+        "where": "/workspace/family5-alt-c/src/compiler/utilities.ts:1261:9"
+      },
+      "reach_proof": null,
+      "previously_blocked_unit": {
+        "depth": 0,
+        "kind": "Refused",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "refusal_scan",
+        "reason": "optional property getPositionOfLineAndCharacter in SourceFileLike absent from structural source SourceFile, which can hide fields",
+        "root_kind": "",
+        "text": "/tmp/family5-base-tree/src/compiler/utilities.ts:1261:24: Adamic 0.1 refuses optional property getPositionOfLineAndCharacter in SourceFileLike absent from structural source SourceFile, which can hide fields; declare getPositionOfLineAndCharacter on the source type, or build a fresh object with known fields (adamic/no-optional-widening)",
+        "unit": "/tmp/family5-base-tree/src/compiler/utilities.ts:1240:1",
+        "where": "/tmp/family5-base-tree/src/compiler/utilities.ts:1261:24"
+      },
+      "file": "utilities",
+      "within_original_target_sites": true
+    },
+    {
+      "grade": "new",
+      "after": {
+        "depth": 0,
+        "end": 88582,
+        "kind": "Boundary",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "lowering",
+        "reason": "failed statement; state rolled back; continued at next statement or declaration",
+        "root_kind": "",
+        "start": 88340,
+        "text": "/workspace/family5-alt-c/src/compiler/utilities.ts:2532:70: Adamic 0.1 refuses an unproven relation from SourceFile to SourceFileLike: optional field getPositionOfLineAndCharacter has no proven compatible presence/type; keep compatible optional fields in both views, or construct an object with explicitly compatible fields (adamic/no-optional-widening)",
+        "unit": "/workspace/family5-alt-c/src/compiler/utilities.ts:2524:1",
+        "where": "/workspace/family5-alt-c/src/compiler/utilities.ts:2532:13"
+      },
+      "reach_proof": null,
+      "previously_blocked_unit": {
+        "depth": 0,
+        "kind": "Refused",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "refusal_scan",
+        "reason": "optional property getPositionOfLineAndCharacter in SourceFileLike absent from structural source SourceFile, which can hide fields",
+        "root_kind": "",
+        "text": "/tmp/family5-base-tree/src/compiler/utilities.ts:2532:70: Adamic 0.1 refuses optional property getPositionOfLineAndCharacter in SourceFileLike absent from structural source SourceFile, which can hide fields; declare getPositionOfLineAndCharacter on the source type, or build a fresh object with known fields (adamic/no-optional-widening)",
+        "unit": "/tmp/family5-base-tree/src/compiler/utilities.ts:2524:1",
+        "where": "/tmp/family5-base-tree/src/compiler/utilities.ts:2532:70"
+      },
+      "file": "utilities",
+      "within_original_target_sites": true
+    },
+    {
+      "grade": "new",
+      "after": {
+        "depth": 0,
+        "end": 313817,
+        "kind": "Boundary",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "lowering",
+        "reason": "failed statement; state rolled back; continued at next statement or declaration",
+        "root_kind": "",
+        "start": 313717,
+        "text": "/workspace/family5-alt-c/src/compiler/utilities.ts:7945:37: Adamic 0.1 refuses an unproven relation from SourceFile to SourceFileLike: optional field getPositionOfLineAndCharacter has no proven compatible presence/type; keep compatible optional fields in both views, or construct an object with explicitly compatible fields (adamic/no-optional-widening)",
+        "unit": "/workspace/family5-alt-c/src/compiler/utilities.ts:7943:1",
+        "where": "/workspace/family5-alt-c/src/compiler/utilities.ts:7945:5"
+      },
+      "reach_proof": null,
+      "previously_blocked_unit": {
+        "depth": 0,
+        "kind": "Refused",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "refusal_scan",
+        "reason": "optional property getPositionOfLineAndCharacter in SourceFileLike absent from structural source SourceFile, which can hide fields",
+        "root_kind": "",
+        "text": "/tmp/family5-base-tree/src/compiler/utilities.ts:7945:37: Adamic 0.1 refuses optional property getPositionOfLineAndCharacter in SourceFileLike absent from structural source SourceFile, which can hide fields; declare getPositionOfLineAndCharacter on the source type, or build a fresh object with known fields (adamic/no-optional-widening)",
+        "unit": "/tmp/family5-base-tree/src/compiler/utilities.ts:7943:1",
+        "where": "/tmp/family5-base-tree/src/compiler/utilities.ts:7945:37"
+      },
+      "file": "utilities",
+      "within_original_target_sites": true
+    },
+    {
+      "grade": "new",
+      "after": {
+        "depth": 0,
+        "end": 314093,
+        "kind": "Boundary",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "lowering",
+        "reason": "failed statement; state rolled back; continued at next statement or declaration",
+        "root_kind": "",
+        "start": 313994,
+        "text": "/workspace/family5-alt-c/src/compiler/utilities.ts:7950:37: Adamic 0.1 refuses an unproven relation from SourceFile to SourceFileLike: optional field getPositionOfLineAndCharacter has no proven compatible presence/type; keep compatible optional fields in both views, or construct an object with explicitly compatible fields (adamic/no-optional-widening)",
+        "unit": "/workspace/family5-alt-c/src/compiler/utilities.ts:7949:1",
+        "where": "/workspace/family5-alt-c/src/compiler/utilities.ts:7950:5"
+      },
+      "reach_proof": null,
+      "previously_blocked_unit": {
+        "depth": 0,
+        "kind": "Refused",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "refusal_scan",
+        "reason": "optional property getPositionOfLineAndCharacter in SourceFileLike absent from structural source SourceFile, which can hide fields",
+        "root_kind": "",
+        "text": "/tmp/family5-base-tree/src/compiler/utilities.ts:7950:37: Adamic 0.1 refuses optional property getPositionOfLineAndCharacter in SourceFileLike absent from structural source SourceFile, which can hide fields; declare getPositionOfLineAndCharacter on the source type, or build a fresh object with known fields (adamic/no-optional-widening)",
+        "unit": "/tmp/family5-base-tree/src/compiler/utilities.ts:7949:1",
+        "where": "/tmp/family5-base-tree/src/compiler/utilities.ts:7950:37"
+      },
+      "file": "utilities",
+      "within_original_target_sites": true
+    },
+    {
+      "grade": "new",
+      "after": {
+        "depth": 0,
+        "end": 314500,
+        "kind": "Boundary",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "lowering",
+        "reason": "failed statement; state rolled back; continued at next statement or declaration",
+        "root_kind": "",
+        "start": 314407,
+        "text": "/workspace/family5-alt-c/src/compiler/utilities.ts:7960:37: Adamic 0.1 refuses an unproven relation from SourceFile to SourceFileLike: optional field getPositionOfLineAndCharacter has no proven compatible presence/type; keep compatible optional fields in both views, or construct an object with explicitly compatible fields (adamic/no-optional-widening)",
+        "unit": "/workspace/family5-alt-c/src/compiler/utilities.ts:7959:1",
+        "where": "/workspace/family5-alt-c/src/compiler/utilities.ts:7960:5"
+      },
+      "reach_proof": null,
+      "previously_blocked_unit": {
+        "depth": 0,
+        "kind": "Refused",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "refusal_scan",
+        "reason": "optional property getPositionOfLineAndCharacter in SourceFileLike absent from structural source SourceFile, which can hide fields",
+        "root_kind": "",
+        "text": "/tmp/family5-base-tree/src/compiler/utilities.ts:7960:37: Adamic 0.1 refuses optional property getPositionOfLineAndCharacter in SourceFileLike absent from structural source SourceFile, which can hide fields; declare getPositionOfLineAndCharacter on the source type, or build a fresh object with known fields (adamic/no-optional-widening)",
+        "unit": "/tmp/family5-base-tree/src/compiler/utilities.ts:7959:1",
+        "where": "/tmp/family5-base-tree/src/compiler/utilities.ts:7960:37"
+      },
+      "file": "utilities",
+      "within_original_target_sites": true
+    },
+    {
+      "grade": "new",
+      "after": {
+        "depth": 0,
+        "end": 315286,
+        "kind": "Boundary",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "lowering",
+        "reason": "failed statement; state rolled back; continued at next statement or declaration",
+        "root_kind": "",
+        "start": 315181,
+        "text": "/workspace/family5-alt-c/src/compiler/utilities.ts:7972:37: Adamic 0.1 refuses an unproven relation from SourceFile to SourceFileLike: optional field getPositionOfLineAndCharacter has no proven compatible presence/type; keep compatible optional fields in both views, or construct an object with explicitly compatible fields (adamic/no-optional-widening)",
+        "unit": "/workspace/family5-alt-c/src/compiler/utilities.ts:7969:1",
+        "where": "/workspace/family5-alt-c/src/compiler/utilities.ts:7972:5"
+      },
+      "reach_proof": null,
+      "previously_blocked_unit": {
+        "depth": 0,
+        "kind": "Refused",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "refusal_scan",
+        "reason": "optional property getPositionOfLineAndCharacter in SourceFileLike absent from structural source SourceFile, which can hide fields",
+        "root_kind": "",
+        "text": "/tmp/family5-base-tree/src/compiler/utilities.ts:7972:37: Adamic 0.1 refuses optional property getPositionOfLineAndCharacter in SourceFileLike absent from structural source SourceFile, which can hide fields; declare getPositionOfLineAndCharacter on the source type, or build a fresh object with known fields (adamic/no-optional-widening)",
+        "unit": "/tmp/family5-base-tree/src/compiler/utilities.ts:7969:1",
+        "where": "/tmp/family5-base-tree/src/compiler/utilities.ts:7972:37"
+      },
+      "file": "utilities",
+      "within_original_target_sites": true
+    },
+    {
+      "grade": "new",
+      "after": {
+        "depth": 0,
+        "end": 315680,
+        "kind": "Boundary",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "lowering",
+        "reason": "failed statement; state rolled back; continued at next statement or declaration",
+        "root_kind": "",
+        "start": 315572,
+        "text": "/workspace/family5-alt-c/src/compiler/utilities.ts:7978:37: Adamic 0.1 refuses an unproven relation from SourceFile to SourceFileLike: optional field getPositionOfLineAndCharacter has no proven compatible presence/type; keep compatible optional fields in both views, or construct an object with explicitly compatible fields (adamic/no-optional-widening)",
+        "unit": "/workspace/family5-alt-c/src/compiler/utilities.ts:7976:1",
+        "where": "/workspace/family5-alt-c/src/compiler/utilities.ts:7978:5"
+      },
+      "reach_proof": null,
+      "previously_blocked_unit": {
+        "depth": 0,
+        "kind": "Refused",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "refusal_scan",
+        "reason": "optional property getPositionOfLineAndCharacter in SourceFileLike absent from structural source SourceFile, which can hide fields",
+        "root_kind": "",
+        "text": "/tmp/family5-base-tree/src/compiler/utilities.ts:7978:37: Adamic 0.1 refuses optional property getPositionOfLineAndCharacter in SourceFileLike absent from structural source SourceFile, which can hide fields; declare getPositionOfLineAndCharacter on the source type, or build a fresh object with known fields (adamic/no-optional-widening)",
+        "unit": "/tmp/family5-base-tree/src/compiler/utilities.ts:7976:1",
+        "where": "/tmp/family5-base-tree/src/compiler/utilities.ts:7978:37"
+      },
+      "file": "utilities",
+      "within_original_target_sites": true
+    },
+    {
+      "grade": "new",
+      "after": {
+        "depth": 0,
+        "kind": "Refused",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "lowering",
+        "reason": "an unproven relation from SourceFile to SourceFileLike: optional field getPositionOfLineAndCharacter has no proven compatible presence/type",
+        "root_kind": "",
+        "text": "/workspace/family5-alt-c/src/compiler/utilities.ts:1261:24: Adamic 0.1 refuses an unproven relation from SourceFile to SourceFileLike: optional field getPositionOfLineAndCharacter has no proven compatible presence/type; keep compatible optional fields in both views, or construct an object with explicitly compatible fields (adamic/no-optional-widening)",
+        "unit": "/workspace/family5-alt-c/src/compiler/utilities.ts:1240:1",
+        "where": "/workspace/family5-alt-c/src/compiler/utilities.ts:1261:24"
+      },
+      "reach_proof": null,
+      "previously_blocked_unit": {
+        "depth": 0,
+        "kind": "Refused",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "refusal_scan",
+        "reason": "optional property getPositionOfLineAndCharacter in SourceFileLike absent from structural source SourceFile, which can hide fields",
+        "root_kind": "",
+        "text": "/tmp/family5-base-tree/src/compiler/utilities.ts:1261:24: Adamic 0.1 refuses optional property getPositionOfLineAndCharacter in SourceFileLike absent from structural source SourceFile, which can hide fields; declare getPositionOfLineAndCharacter on the source type, or build a fresh object with known fields (adamic/no-optional-widening)",
+        "unit": "/tmp/family5-base-tree/src/compiler/utilities.ts:1240:1",
+        "where": "/tmp/family5-base-tree/src/compiler/utilities.ts:1261:24"
+      },
+      "file": "utilities",
+      "within_original_target_sites": true
+    },
+    {
+      "grade": "new",
+      "after": {
+        "depth": 0,
+        "kind": "Refused",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "lowering",
+        "reason": "an unproven relation from SourceFile to SourceFileLike: optional field getPositionOfLineAndCharacter has no proven compatible presence/type",
+        "root_kind": "",
+        "text": "/workspace/family5-alt-c/src/compiler/utilities.ts:2532:70: Adamic 0.1 refuses an unproven relation from SourceFile to SourceFileLike: optional field getPositionOfLineAndCharacter has no proven compatible presence/type; keep compatible optional fields in both views, or construct an object with explicitly compatible fields (adamic/no-optional-widening)",
+        "unit": "/workspace/family5-alt-c/src/compiler/utilities.ts:2524:1",
+        "where": "/workspace/family5-alt-c/src/compiler/utilities.ts:2532:70"
+      },
+      "reach_proof": null,
+      "previously_blocked_unit": {
+        "depth": 0,
+        "kind": "Refused",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "refusal_scan",
+        "reason": "optional property getPositionOfLineAndCharacter in SourceFileLike absent from structural source SourceFile, which can hide fields",
+        "root_kind": "",
+        "text": "/tmp/family5-base-tree/src/compiler/utilities.ts:2532:70: Adamic 0.1 refuses optional property getPositionOfLineAndCharacter in SourceFileLike absent from structural source SourceFile, which can hide fields; declare getPositionOfLineAndCharacter on the source type, or build a fresh object with known fields (adamic/no-optional-widening)",
+        "unit": "/tmp/family5-base-tree/src/compiler/utilities.ts:2524:1",
+        "where": "/tmp/family5-base-tree/src/compiler/utilities.ts:2532:70"
+      },
+      "file": "utilities",
+      "within_original_target_sites": true
+    },
+    {
+      "grade": "new",
+      "after": {
+        "depth": 0,
+        "kind": "Refused",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "lowering",
+        "reason": "an unproven relation from SourceFile to SourceFileLike: optional field getPositionOfLineAndCharacter has no proven compatible presence/type",
+        "root_kind": "",
+        "text": "/workspace/family5-alt-c/src/compiler/utilities.ts:7945:37: Adamic 0.1 refuses an unproven relation from SourceFile to SourceFileLike: optional field getPositionOfLineAndCharacter has no proven compatible presence/type; keep compatible optional fields in both views, or construct an object with explicitly compatible fields (adamic/no-optional-widening)",
+        "unit": "/workspace/family5-alt-c/src/compiler/utilities.ts:7943:1",
+        "where": "/workspace/family5-alt-c/src/compiler/utilities.ts:7945:37"
+      },
+      "reach_proof": null,
+      "previously_blocked_unit": {
+        "depth": 0,
+        "kind": "Refused",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "refusal_scan",
+        "reason": "optional property getPositionOfLineAndCharacter in SourceFileLike absent from structural source SourceFile, which can hide fields",
+        "root_kind": "",
+        "text": "/tmp/family5-base-tree/src/compiler/utilities.ts:7945:37: Adamic 0.1 refuses optional property getPositionOfLineAndCharacter in SourceFileLike absent from structural source SourceFile, which can hide fields; declare getPositionOfLineAndCharacter on the source type, or build a fresh object with known fields (adamic/no-optional-widening)",
+        "unit": "/tmp/family5-base-tree/src/compiler/utilities.ts:7943:1",
+        "where": "/tmp/family5-base-tree/src/compiler/utilities.ts:7945:37"
+      },
+      "file": "utilities",
+      "within_original_target_sites": true
+    },
+    {
+      "grade": "new",
+      "after": {
+        "depth": 0,
+        "kind": "Refused",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "lowering",
+        "reason": "an unproven relation from SourceFile to SourceFileLike: optional field getPositionOfLineAndCharacter has no proven compatible presence/type",
+        "root_kind": "",
+        "text": "/workspace/family5-alt-c/src/compiler/utilities.ts:7950:37: Adamic 0.1 refuses an unproven relation from SourceFile to SourceFileLike: optional field getPositionOfLineAndCharacter has no proven compatible presence/type; keep compatible optional fields in both views, or construct an object with explicitly compatible fields (adamic/no-optional-widening)",
+        "unit": "/workspace/family5-alt-c/src/compiler/utilities.ts:7949:1",
+        "where": "/workspace/family5-alt-c/src/compiler/utilities.ts:7950:37"
+      },
+      "reach_proof": null,
+      "previously_blocked_unit": {
+        "depth": 0,
+        "kind": "Refused",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "refusal_scan",
+        "reason": "optional property getPositionOfLineAndCharacter in SourceFileLike absent from structural source SourceFile, which can hide fields",
+        "root_kind": "",
+        "text": "/tmp/family5-base-tree/src/compiler/utilities.ts:7950:37: Adamic 0.1 refuses optional property getPositionOfLineAndCharacter in SourceFileLike absent from structural source SourceFile, which can hide fields; declare getPositionOfLineAndCharacter on the source type, or build a fresh object with known fields (adamic/no-optional-widening)",
+        "unit": "/tmp/family5-base-tree/src/compiler/utilities.ts:7949:1",
+        "where": "/tmp/family5-base-tree/src/compiler/utilities.ts:7950:37"
+      },
+      "file": "utilities",
+      "within_original_target_sites": true
+    },
+    {
+      "grade": "new",
+      "after": {
+        "depth": 0,
+        "kind": "Refused",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "lowering",
+        "reason": "an unproven relation from SourceFile to SourceFileLike: optional field getPositionOfLineAndCharacter has no proven compatible presence/type",
+        "root_kind": "",
+        "text": "/workspace/family5-alt-c/src/compiler/utilities.ts:7960:37: Adamic 0.1 refuses an unproven relation from SourceFile to SourceFileLike: optional field getPositionOfLineAndCharacter has no proven compatible presence/type; keep compatible optional fields in both views, or construct an object with explicitly compatible fields (adamic/no-optional-widening)",
+        "unit": "/workspace/family5-alt-c/src/compiler/utilities.ts:7959:1",
+        "where": "/workspace/family5-alt-c/src/compiler/utilities.ts:7960:37"
+      },
+      "reach_proof": null,
+      "previously_blocked_unit": {
+        "depth": 0,
+        "kind": "Refused",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "refusal_scan",
+        "reason": "optional property getPositionOfLineAndCharacter in SourceFileLike absent from structural source SourceFile, which can hide fields",
+        "root_kind": "",
+        "text": "/tmp/family5-base-tree/src/compiler/utilities.ts:7960:37: Adamic 0.1 refuses optional property getPositionOfLineAndCharacter in SourceFileLike absent from structural source SourceFile, which can hide fields; declare getPositionOfLineAndCharacter on the source type, or build a fresh object with known fields (adamic/no-optional-widening)",
+        "unit": "/tmp/family5-base-tree/src/compiler/utilities.ts:7959:1",
+        "where": "/tmp/family5-base-tree/src/compiler/utilities.ts:7960:37"
+      },
+      "file": "utilities",
+      "within_original_target_sites": true
+    },
+    {
+      "grade": "new",
+      "after": {
+        "depth": 0,
+        "kind": "Refused",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "lowering",
+        "reason": "an unproven relation from SourceFile to SourceFileLike: optional field getPositionOfLineAndCharacter has no proven compatible presence/type",
+        "root_kind": "",
+        "text": "/workspace/family5-alt-c/src/compiler/utilities.ts:7972:37: Adamic 0.1 refuses an unproven relation from SourceFile to SourceFileLike: optional field getPositionOfLineAndCharacter has no proven compatible presence/type; keep compatible optional fields in both views, or construct an object with explicitly compatible fields (adamic/no-optional-widening)",
+        "unit": "/workspace/family5-alt-c/src/compiler/utilities.ts:7969:1",
+        "where": "/workspace/family5-alt-c/src/compiler/utilities.ts:7972:37"
+      },
+      "reach_proof": null,
+      "previously_blocked_unit": {
+        "depth": 0,
+        "kind": "Refused",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "refusal_scan",
+        "reason": "optional property getPositionOfLineAndCharacter in SourceFileLike absent from structural source SourceFile, which can hide fields",
+        "root_kind": "",
+        "text": "/tmp/family5-base-tree/src/compiler/utilities.ts:7972:37: Adamic 0.1 refuses optional property getPositionOfLineAndCharacter in SourceFileLike absent from structural source SourceFile, which can hide fields; declare getPositionOfLineAndCharacter on the source type, or build a fresh object with known fields (adamic/no-optional-widening)",
+        "unit": "/tmp/family5-base-tree/src/compiler/utilities.ts:7969:1",
+        "where": "/tmp/family5-base-tree/src/compiler/utilities.ts:7972:37"
+      },
+      "file": "utilities",
+      "within_original_target_sites": true
+    },
+    {
+      "grade": "new",
+      "after": {
+        "depth": 0,
+        "kind": "Refused",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "lowering",
+        "reason": "an unproven relation from SourceFile to SourceFileLike: optional field getPositionOfLineAndCharacter has no proven compatible presence/type",
+        "root_kind": "",
+        "text": "/workspace/family5-alt-c/src/compiler/utilities.ts:7978:37: Adamic 0.1 refuses an unproven relation from SourceFile to SourceFileLike: optional field getPositionOfLineAndCharacter has no proven compatible presence/type; keep compatible optional fields in both views, or construct an object with explicitly compatible fields (adamic/no-optional-widening)",
+        "unit": "/workspace/family5-alt-c/src/compiler/utilities.ts:7976:1",
+        "where": "/workspace/family5-alt-c/src/compiler/utilities.ts:7978:37"
+      },
+      "reach_proof": null,
+      "previously_blocked_unit": {
+        "depth": 0,
+        "kind": "Refused",
+        "measurement": "measured on a checker-clean entry-root program",
+        "phase": "refusal_scan",
+        "reason": "optional property getPositionOfLineAndCharacter in SourceFileLike absent from structural source SourceFile, which can hide fields",
+        "root_kind": "",
+        "text": "/tmp/family5-base-tree/src/compiler/utilities.ts:7978:37: Adamic 0.1 refuses optional property getPositionOfLineAndCharacter in SourceFileLike absent from structural source SourceFile, which can hide fields; declare getPositionOfLineAndCharacter on the source type, or build a fresh object with known fields (adamic/no-optional-widening)",
+        "unit": "/tmp/family5-base-tree/src/compiler/utilities.ts:7976:1",
+        "where": "/tmp/family5-base-tree/src/compiler/utilities.ts:7978:37"
+      },
+      "file": "utilities",
+      "within_original_target_sites": true
+    }
+  ],
+  "groups": [
+    "G02"
+  ],
+  "target_reasons": [
+    "optional property getPositionOfLineAndCharacter in SourceFileLike absent from structural source SourceFile, which can hide fields"
+  ],
+  "equivalent_relation_proof_reasons": [
+    "an unproven relation from SourceFile to SourceFileLike: optional field getPositionOfLineAndCharacter has no proven compatible presence/type"
+  ]
+}

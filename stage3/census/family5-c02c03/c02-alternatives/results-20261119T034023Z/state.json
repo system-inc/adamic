@@ -1,0 +1,87 @@
+{
+  "main": "fbe5b72ba115a8f3060d4b5229fd578574f4505f",
+  "c02": "12b9e04184663f899acb76505043ad292966f236",
+  "entry_pushes": {
+    "base": "2c8ef70a7469d03a02d2fee51fb713ff9220c02c",
+    "c02": "0ea786e0eea609ee629911446db28b376f0237a7"
+  },
+  "candidates": {
+    "a": {
+      "stock_exit": 0,
+      "stock_strict_exit": 0,
+      "services_merge_exit": 1,
+      "introduced_services_diagnostics": 3,
+      "javascript_exit": 0,
+      "emitted_bundles_exit": 0,
+      "public_build_exit": 1,
+      "public": {
+        "produced": false,
+        "build_exit": 1,
+        "baseline_sha256": "65c210e9d7553165606df3ac67544ea7ddcbccf2c322ed924e8e8f4c4622c5fd"
+      },
+      "landing_prerequisites_green": false,
+      "eligible_for_full_census": false,
+      "services_merge_exit_node_control": 1,
+      "introduced_services_diagnostics_node_control": 3
+    },
+    "b": {
+      "stock_exit": 0,
+      "stock_strict_exit": 0,
+      "services_merge_exit": 1,
+      "introduced_services_diagnostics": 4,
+      "javascript_exit": 0,
+      "emitted_bundles_exit": 0,
+      "public_build_exit": 1,
+      "public": {
+        "produced": false,
+        "build_exit": 1,
+        "baseline_sha256": "65c210e9d7553165606df3ac67544ea7ddcbccf2c322ed924e8e8f4c4622c5fd"
+      },
+      "landing_prerequisites_green": false,
+      "eligible_for_full_census": true,
+      "services_merge_exit_node_control": 1,
+      "introduced_services_diagnostics_node_control": 4
+    },
+    "c": {
+      "stock_exit": 0,
+      "stock_strict_exit": 0,
+      "services_merge_exit": 1,
+      "introduced_services_diagnostics": 0,
+      "javascript_exit": 0,
+      "emitted_bundles_exit": 0,
+      "public_build_exit": 0,
+      "public": {
+        "produced": true,
+        "build_exit": 0,
+        "baseline_sha256": "65c210e9d7553165606df3ac67544ea7ddcbccf2c322ed924e8e8f4c4622c5fd",
+        "candidate_sha256": "65c210e9d7553165606df3ac67544ea7ddcbccf2c322ed924e8e8f4c4622c5fd",
+        "byte_identical": true
+      },
+      "landing_prerequisites_green": true,
+      "eligible_for_full_census": true,
+      "services_merge_exit_node_control": 0,
+      "introduced_services_diagnostics_node_control": 0
+    }
+  },
+  "entries_complete": true,
+  "alternatives_complete": true,
+  "node_controls": {
+    "base": {
+      "exit_code": 0,
+      "diagnostic_count": 0
+    },
+    "a": {
+      "exit_code": 1,
+      "diagnostic_count": 3
+    },
+    "b": {
+      "exit_code": 1,
+      "diagnostic_count": 4
+    },
+    "c": {
+      "exit_code": 0,
+      "diagnostic_count": 0
+    }
+  },
+  "node_controls_complete": true
+}
