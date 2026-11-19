@@ -9,3 +9,9 @@ Family 1's exact reason is “an object refinement using an open numeric enum as
 The head application produced the same files byte for byte. All 144 adaptation tree IDs matched, ending at `3060d86f19ae2f20899ff5d32275f8a16f3103cb`. Both sides use the base-generated tree. The compiler directory contains 79 TypeScript roots and three other files.
 
 The compiler-directory base pass started in CommonJSBundle first-error mode with the scoped tail after the independently built base and head tools were available.
+
+## Compiler-directory base
+
+The completed base stream contains **587 distinct Family 1 sites** and **764 raw findings** for the exact reason. Distinct sites use the access-chain normalization in `stage3/census/pair`. The head measurement is in progress.
+
+[Base stream](evidence/compiler-base.jsonl.gz) · [Unit timings](evidence/compiler-base-times.jsonl.gz)
