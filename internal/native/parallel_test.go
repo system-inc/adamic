@@ -137,6 +137,25 @@ func TestParallelSharedCursor(t *testing.T) {
 	}
 }
 
+// Two workers loop over one shared record's for...in keys at once, each list checked against the record's
+// own-key order (record.c's adamic_record_for_in_keys, #1hp4ww2). Before sharing, two loops read the one
+// list the record's table keeps; once shared, the table keeps none and every loop gets a list of its own,
+// which the harness checks after the join. Mutant: for_in_keys_shared (the shared bypass dropped, so the
+// workers fill and retain the table's list at once) is a TSan race.
+func TestParallelForInKeys(t *testing.T) {
+	t.Parallel()
+	for _, build := range parallelBuilds(t) {
+		t.Run(build.name, func(t *testing.T) {
+			binary := parallelHarness(t, "for_in_keys.c", build.options)
+			stdout, _ := parallelRun(t, binary, "4")
+			parallelLeaks(t, binary, build.options, "4")
+			if stdout != "for-in keys clean\n" {
+				t.Fatalf("got %q", stdout)
+			}
+		})
+	}
+}
+
 // Each build keeps both worker counts together for the output equality assertion.
 func parallelMapMode(t *testing.T, mode string, options native_runtime.Options) {
 	t.Helper()
@@ -198,6 +217,7 @@ func parallelCheckMutant(t *testing.T, name string) {
 		{"shared_cursor_id", "string_index.c", "} else if (shared_cursor.index == index && shared_cursor.id == index->id) {", "} else if (shared_cursor.index == index) {", "shared_cursor.c", "", "4", "unit 1001: offset", false},
 		{"shared_cursor_write", "string_index.c", "\tif (index != NULL && !shared) {\n\t\tindex->cursor_unit = start;", "\tif (index != NULL) {\n\t\tindex->cursor_unit = start;", "shared_cursor.c", "", "4", "WARNING: ThreadSanitizer: data race", true},
 		{"one_worker", "parallel.c", "if (thread_count == 1) { return; }", "if (thread_count == 1) { thread_count = 2; }", "map.c", "numbers", "1", "", false},
+		{"for_in_keys_shared", "record.c", "if (adamic_is_shared(&record->heap) || adamic_is_shared(&map->heap) || adamic_graph_is(record) || adamic_graph_is(map)) {", "if (adamic_graph_is(record) || adamic_graph_is(map)) {", "for_in_keys.c", "", "4", "WARNING: ThreadSanitizer: data race", true},
 	}
 	for _, mutant := range mutants {
 		if mutant.name != name {
@@ -466,6 +486,11 @@ func TestParallelMutant_fixed_grain(t *testing.T) {
 func TestParallelMutant_eager_strings(t *testing.T) {
 	t.Parallel()
 	parallelCheckMutant(t, "eager_strings")
+}
+
+func TestParallelMutant_for_in_keys_shared(t *testing.T) {
+	t.Parallel()
+	parallelCheckMutant(t, "for_in_keys_shared")
 }
 
 func TestParallelMutant_one_worker(t *testing.T) {

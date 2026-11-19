@@ -44,6 +44,10 @@ func (e *emitter) recordCall(call ir.RecordCall) string {
 		return e.snapshot(ir.Boolean, fmt.Sprintf("adamic_record_has_own(%s, %s)", args[0], args[1]))
 	case "keys":
 		return e.own(ir.Array, fmt.Sprintf("adamic_record_keys(%s)", args[0]))
+	case "forInKeys":
+		// A for...in's list, owned as keys' is, which the loop holds and lets go of at its end; it may be
+		// the one the record's table keeps for every loop, so it's only ever read.
+		return e.own(ir.Array, fmt.Sprintf("adamic_record_for_in_keys(%s)", args[0]))
 	case "values", "entries":
 		element := call.Element
 		if call.Method == "entries" {

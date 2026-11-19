@@ -36,6 +36,7 @@ static adamic_map *empty(adamic_map *map, bool string_keys, bool reference_value
 	map->maybe_number_keys = false;
 	map->reference_values = reference_values;
 	map->iterating = 0;
+	map->key_list = NULL;
 	return map;
 }
 
@@ -198,6 +199,17 @@ static void rebuild(adamic_map *map, size_t entries_needed) {
 	}
 }
 
+// adamic_map_forget_key_list lets go of the for...in key list a record's table keeps (record.c), before
+// a write changes the keys it lists. A loop still reading the list holds a count of its own and reads
+// on; the next loop gets a list made anew. No other map has one, so for them it's one test.
+void adamic_map_forget_key_list(adamic_map *map) {
+	adamic_array *list = map->key_list;
+	if (list != NULL) {
+		map->key_list = NULL;
+		adamic_release(list);
+	}
+}
+
 adamic_value *adamic_map_get(const adamic_map *map, adamic_value key) {
 	size_t index = find(map, key);
 	return index == SIZE_MAX ? NULL : &map->entries[index].value;
@@ -216,6 +228,9 @@ void adamic_map_set(adamic_map *map, adamic_value key, adamic_value value) {
 		map->entries[index].value = value;
 		return;
 	}
+	// A key it didn't have: a record's for...in list no longer names them all. A value written to a key
+	// it has, above, leaves the list as it is.
+	adamic_map_forget_key_list(map);
 	if (map->used == map->capacity) {
 		// Full: grow when most entries are live, and when most are tombstones, compact in place, unless
 		// an iteration is open, which needs every entry where it is.
@@ -249,6 +264,7 @@ bool adamic_map_delete(adamic_map *map, adamic_value key) {
 	if (index == SIZE_MAX) {
 		return false;
 	}
+	adamic_map_forget_key_list(map);
 	adamic_map_entry *entry = &map->entries[index];
 	entry->deleted = true;
 	if (map->reference_keys) {
@@ -262,6 +278,11 @@ bool adamic_map_delete(adamic_map *map, adamic_value key) {
 }
 
 void adamic_map_free_children(adamic_map *map, void (*let_go)(void *)) {
+	// A record table's for...in list is the map's to let go of, as its keys are, wherever the map ends:
+	// its last release, a graph region's free or the Program region's end, each through here.
+	if (map->key_list != NULL) {
+		let_go(map->key_list);
+	}
 	for (size_t index = 0; index < map->used; index++) {
 		if (map->entries[index].deleted) {
 			continue;
@@ -344,6 +365,7 @@ adamic_array *adamic_map_entries_planned(const adamic_map *map, const adamic_sha
 }
 
 void adamic_map_clear(adamic_map *map) {
+	adamic_map_forget_key_list(map);
 	for (size_t index = 0; index < map->used; index++) {
 		adamic_map_entry *entry = &map->entries[index];
 		if (entry->deleted) {

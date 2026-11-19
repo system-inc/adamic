@@ -232,7 +232,9 @@ bool adamic_record_define_hidden(adamic_record *record, adamic_string *key, adam
 	take_in(map, key, value);
 	if (slot != NULL) {
 		// Set finds the same entry and replaces its value there, so the key keeps its place, and it
-		// stays configurable, as the descriptor doesn't say otherwise.
+		// stays configurable, as the descriptor doesn't say otherwise. Hidden, it leaves the keys a
+		// for...in lists, which set's write of a value to a key the table has wouldn't let go of.
+		adamic_map_forget_key_list(map);
 		adamic_map_entry *entry = entry_of(slot);
 		entry->hidden = true;
 		entry->readonly = true;
@@ -394,6 +396,29 @@ adamic_array *adamic_record_keys(const adamic_record *record) {
 		}
 	}
 	return keys;
+}
+
+// A for...in only reads its list, so its table keeps the one keys made and hands every later loop a
+// count of it, until a write adds, deletes or hides a key and lets it go (map.c's
+// adamic_map_forget_key_list, define_hidden above). A loop holds its own count, so a key set changed
+// while it runs takes only the table's: the loop reads on through the list it began with, and its
+// hasOwn guard skips a key deleted since, as it did over a list of its own.
+//
+// A shared record, or a graph record, gets a list of its own every time, and its table's key_list is
+// never read or written. Shared, workers looping over it at once would race to fill key_list, and each
+// would retain a list another thread made with plain counts; adamic_share lets go of a table's list as
+// it marks the table, so a shared table has none. A graph record's table lives in graph storage, and a
+// list kept there would be a counted edge out of the region that neither the region's tallies nor its
+// members' children name (graph_regions.c).
+adamic_array *adamic_record_for_in_keys(const adamic_record *record) {
+	adamic_map *map = table(record);
+	if (adamic_is_shared(&record->heap) || adamic_is_shared(&map->heap) || adamic_graph_is(record) || adamic_graph_is(map)) {
+		return adamic_record_keys(record);
+	}
+	if (map->key_list == NULL) {
+		map->key_list = adamic_record_keys(record);
+	}
+	return adamic_retain(map->key_list);
 }
 
 adamic_record_iterator *adamic_record_iterate(adamic_record *record) {

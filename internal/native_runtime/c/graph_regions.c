@@ -711,6 +711,9 @@ static void children(void *value, void (*visit)(void *)) {
 	}
 	case adamic_kind_map: {
 		adamic_map *map = value;
+		// A record table's for...in key_list (record.c) isn't a child here, on purpose: a graph table never
+		// has one (adamic_record_for_in_keys bypasses it), and were an adopted table ever to hold one, it'd
+		// be a plain outside hold, never a member, that adamic_map_free_children lets go once at the free.
 		for (size_t i = 0; i < map->used; i++) {
 			if (map->entries[i].deleted) { continue; }
 			if (map->reference_keys) { visit(map->entries[i].key.reference); }
