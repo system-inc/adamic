@@ -1,2 +1,2 @@
-internal/oracle/testdata/logical_assignment_views/v07_hiding_nullish.ts:4:9
-Adamic 0.1 refuses optional property b
+panics
+adamic: panic: field read failed: opt.b matches no member of number | undefined; expected number | undefined, found string
