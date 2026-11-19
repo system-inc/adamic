@@ -223,6 +223,9 @@ func (l *lowering) widened(from *checker.Type, to *checker.Type, visited map[[2]
 		if !toReadonly && !l.checker.IsTypeAssignableTo(target, source) {
 			return &widening{source: source, target: target}
 		}
+		if !toReadonly && l.writeHidesField(target, source) {
+			return l.hidingWrite(source, target, visited)
+		}
 		return l.widened(source, target, visited)
 	}
 	fromSignatures := l.checker.GetSignaturesOfType(from, checker.SignatureKindCall)
@@ -316,7 +319,7 @@ func (l *lowering) widenedProperties(from *checker.Type, to *checker.Type, skip 
 			continue
 		}
 		source, target := l.checker.GetTypeOfSymbol(inside), l.checker.GetTypeOfSymbol(viewed)
-		if viewed.Flags&ast.SymbolFlagsMethod == 0 && inside.Flags&ast.SymbolFlagsMethod != 0 && !l.hostDeclaredSymbol(inside) && !fresh && !l.checker.IsReadonlySymbol(viewed) && (!l.enumAssignable(target, source) || !l.checker.IsTypeAssignableTo(target, source)) {
+		if viewed.Flags&ast.SymbolFlagsMethod == 0 && inside.Flags&ast.SymbolFlagsMethod != 0 && !l.hostDeclaredSymbol(inside) && !fresh && !l.checker.IsReadonlySymbol(viewed) && (!l.enumAssignable(target, source) || !l.checker.IsTypeAssignableTo(target, source) || l.writeHidesField(target, source)) {
 			// A method seen as a writable field is a slot the view writes: tsc admits
 			// `const view: { fail: () => void } = { fail(): never { ... } }`, and view.fail = () => {} then
 			// puts a returning function where the method's type promises never. A write to the method
@@ -375,6 +378,9 @@ func (l *lowering) widenedProperties(from *checker.Type, to *checker.Type, skip 
 		}
 		if !fresh && !l.checker.IsReadonlySymbol(viewed) && (!l.enumAssignable(target, source) || !l.checker.IsTypeAssignableTo(target, source)) {
 			return &widening{source: source, target: target}
+		}
+		if !fresh && !l.checker.IsReadonlySymbol(viewed) && l.writeHidesField(target, source) {
+			return l.hidingWrite(source, target, visited)
 		}
 		if found := l.widened(source, target, visited); found != nil {
 			return found
@@ -454,11 +460,45 @@ func (l *lowering) widenedArguments(from *checker.Type, to *checker.Type, mutabl
 		if mutable && (!l.enumAssignable(target, source) || !l.checker.IsTypeAssignableTo(target, source)) {
 			return &widening{source: source, target: target}
 		}
+		if mutable && l.writeHidesField(target, source) {
+			return l.hidingWrite(source, target, visited)
+		}
 		if found := l.widened(source, target, visited); found != nil {
 			return found
 		}
 	}
 	return nil
+}
+
+// writeHidesField says whether a write of a value of type written, into a slot whose readers read it as
+// read, can store a value hiding a field those readers expect (#4ysqm2m): tsc lets the write through, since
+// written is assignable to read, but written lacks a field read declares optional, or holds it only as a
+// library member the runtime's shape lacks. It's the hiding rule's walk (optionalWidened, rule 3300's) run in
+// the write direction, which no read site judges: the slot's own readers read what was stored as read, so a
+// Target[] seen as Source[] takes a Source whose hidden label a read through Target then takes as a string.
+// Each road the invariant-mutable rule judges a write by assignability asks it too: a mutable container's
+// element (widenedArguments), a writable field (widenedProperties), a method seen as a writable field, a
+// writable record's value, and a literal setter's parameter. It judges the type, never the value that flows,
+// so an honest Source is refused where a lying one would be, as the declared-keys rule judges (#npqr3sx).
+func (l *lowering) writeHidesField(written, read *checker.Type) bool {
+	return l.optionalWidened(written, read, nil, map[[2]*checker.Type]bool{}) != nil
+}
+
+// hidingWrite is the widening a write writeHidesField finds makes, a slot of type source written a target.
+// Where the declared-key rule is judging (l.declaredKeys, .a's recordDeclaredKeyRefusal, rule 1975), a
+// record's declared property the write's index signature can land under is the same hazard seen from the
+// record's side, and that rule refuses only a widening that names it (found.declaredKey): a plain one from
+// here would let it pass, and recordStorageView's storage stop name the view first (r09_array.a, #npqr3sx).
+// So the declared-key finding comes first where the walk below reaches one, and the plain widening
+// otherwise, which refuses at the invariant-mutable rule as before. It only picks which finding names the
+// hazard: a write writeHidesField found is refused either way.
+func (l *lowering) hidingWrite(source, target *checker.Type, visited map[[2]*checker.Type]bool) *widening {
+	if l.declaredKeys {
+		if found := l.widened(source, target, visited); found != nil && found.declaredKey != "" {
+			return found
+		}
+	}
+	return &widening{source: source, target: target}
 }
 
 // containers is a type's arrays, tuples, maps and sets: itself, or its members that are, when it's an
@@ -915,7 +955,7 @@ func (l *lowering) literalSetterRefusal(member *ast.Node) error {
 	}
 	takes := l.checker.GetTypeOfSymbol(parameters[0])
 	for _, slot := range slots {
-		if !l.enumAssignable(slot, takes) || !l.checker.IsTypeAssignableTo(slot, takes) {
+		if !l.enumAssignable(slot, takes) || !l.checker.IsTypeAssignableTo(slot, takes) || l.writeHidesField(slot, takes) {
 			return &Refused{Where: l.program.Where(member), What: "a setter of " + key + " taking " + l.checker.TypeToString(takes) + " seen as the property " + key + ": " + l.checker.TypeToString(slot) + ", so a write through it can hand the setter what it can't take", Fix: "take " + l.checker.TypeToString(slot) + " in the setter, or make " + key + " readonly in the type it's seen as, which can't write (adamic/invariant-mutable)"}
 		}
 		if found := l.widened(slot, takes, map[[2]*checker.Type]bool{}); found != nil {
