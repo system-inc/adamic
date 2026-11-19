@@ -160,15 +160,19 @@ func TestOptionsBaseUncheckedFieldStops(t *testing.T) {
 // MapLike written under paths through the view read natively as another member, was the literal: { k: ["a"] } in a
 // union slot was built fixed. It's built as the union's one dictionary member the program declares now
 // (recordUnionDictionaryMember), so paths_honest.ts agrees with Node, and an honest TsConfigSourceFile, of its own
-// shape or a wider one, does too. Mutants: build the literal fixed again, and paths_honest.ts stops natively on its
+// shape or a wider one, does too. Language's layout pins (J-jp1b3bx): the wider shape, the same fields in the
+// other order, and a class instance with a field of its own first each read fileName and text by name, which a
+// narrow reading TsConfigSourceFile's own offsets would get wrong silently. Mutants: build the literal fixed again, and paths_honest.ts stops natively on its
 // honest value; take ir.Record and ir.Object out of droppedContractChecked, and every program here stops not yet at
 // the view.
 func TestOptionsBaseObjectFieldsDropped(t *testing.T) {
 	t.Parallel()
 	for name, printed := range map[string]string{
-		"paths_honest.ts":  "a\n",
-		"config_honest.ts": "tsconfig.json:2\n",
-		"config_wider.ts":  "tsconfig.json:2\n",
+		"paths_honest.ts":     "a\n",
+		"config_honest.ts":    "tsconfig.json:2\n",
+		"config_wider.ts":     "tsconfig.json:2\n",
+		"config_reordered.ts": "f.json:7\n",
+		"config_class.ts":     "c.json:3\n",
 	} {
 		t.Run(name, func(t *testing.T) {
 			t.Parallel()
