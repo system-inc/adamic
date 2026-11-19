@@ -74,7 +74,7 @@ class Tagged { kind = 1; }
 function show(t: Tagged): void { console.log(String(t.name)); }
 interface Box { name?: string; }
 class Box { kind = 2; }
-const b = new Box(); b.name = "w"; console.log("written");`, viewOptionalWriteReason + "a value reaching it is an instance of Box, whose class holds no name", ""},
+const b = new Box(); b.name = "w"; console.log("written");`, "writing a possibly absent optional own field, where a value reaching it is an instance of Box, whose class holds no name", ""},
 	} {
 		t.Run(probe.name, func(t *testing.T) {
 			t.Parallel()
