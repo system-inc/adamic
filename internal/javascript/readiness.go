@@ -25,7 +25,12 @@ const adamicPlaceholderNarrow = (value, type, message) => {
     return value;
 };
 const adamicViewTypeNames = Object.freeze({1: "number", 2: "boolean", 3: "string", 4: "object", 5: "array", 6: "Map"});
+const adamicReceiverKind = (value) => typeof value !== "object" ? typeof value : Array.isArray(value) ? "array" : "Map";
+const adamicViewReceiver = (object) => object === undefined || object === null || adamicViewObject(object) || typeof object === "function" && typeof adamicClassIdentities !== "undefined" && (adamicClassIdentities.has(object) || adamicClassIdentities.has(Object.getPrototypeOf(object)));
 const adamicViewField = (object, name, expression, type, expected = adamicViewTypeNames[type], allowed = []) => {
+    // The receiver's own kind comes first, as native's adamic_object_view reads it: a string has own length and index
+    // keys, so a lookup by name would read on where native stops. A class is a function here and an object there.
+    if (!adamicViewReceiver(object)) panic("field read failed: " + expression + " is not a " + expected + "; expected " + expected + ", found " + adamicReceiverKind(object));
     const value = adamicReadField(object, name, expression, false, false, expected);
     const valid = type === 1 ? typeof value === "number" : type === 2 ? typeof value === "boolean" : type === 3 ? typeof value === "string" : type === 4 ? adamicViewObject(value) : type === 5 ? Array.isArray(value) : type === 6 ? value instanceof Map : false;
     if (!valid) panic("field read failed: " + expression + " is not a " + expected + "; expected " + expected + ", found " + (value === undefined ? "nullish" : value === null ? "nullish" : Array.isArray(value) ? "array" : value instanceof Map ? "Map" : typeof value));
