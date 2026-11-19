@@ -1057,6 +1057,11 @@ typedef struct adamic_map {
 	// iterating counts the iterations open over the map; while there are any, its entries keep their
 	// places (map.c).
 	_Atomic size_t iterating;
+	// key_list is a record table's for...in key list, one count the map's, or NULL: made on a loop's
+	// first ask and handed to every later loop until a write adds, deletes or hides a key, which lets
+	// it go first (record.c's adamic_record_for_in_keys, map.c's adamic_map_forget_key_list). Only an
+	// unshared table that's no graph member ever has one; every other map leaves it NULL.
+	adamic_array *key_list;
 } adamic_map;
 
 // adamic_map_iterator is one for...of over a map, in insertion order: entries added before it gets
@@ -1205,6 +1210,13 @@ size_t adamic_record_size(const adamic_record *record);
 // keys returns an owned array in own-key order: array indices ascending, then insertion order.
 // Hidden keys, the non-enumerable ones, are left out.
 adamic_array *adamic_record_keys(const adamic_record *record);
+// for_in_keys is keys for a for...in, which only reads the list: the same keys in the same order, one
+// count the caller's, but the array may be the one every loop over the record shares until its key set
+// changes, so nothing may write into it. A shared or graph record's is a new array each time.
+adamic_array *adamic_record_for_in_keys(const adamic_record *record);
+// adamic_map_forget_key_list lets go of a record table's for...in key list, when it has one, before a
+// write changes which keys it enumerates without adding or deleting one (record.c's define_hidden).
+void adamic_map_forget_key_list(adamic_map *map);
 // Iteration snapshots keys, holds record and keys, skips deleted keys, and reads current values.
 // New keys are not visited. next returns borrowed key/value pairs; release ends iteration.
 adamic_record_iterator *adamic_record_iterate(adamic_record *record);

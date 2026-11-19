@@ -151,10 +151,10 @@ var graphFlowRules = map[reflect.Type]graphFlowRule{
 		return graphFlowSources{}, false
 	}},
 	reflect.TypeFor[ir.BoundClosure](): {class: graphFlowPlanned, why: "a new closure over captured cells (ir.go:882)"},
-	reflect.TypeFor[ir.RecordCall](): {class: graphFlowPlanned, why: "values and entries make a new array (native emit_records.go:47); get is an entry, planned where it was stored; set is its value argument (native emit_records.go:25); keys is strings, and delete, has, hasOwn and defineHidden a boolean", sources: func(expression ir.Expression, _ *ir.Program) (graphFlowSources, bool) {
+	reflect.TypeFor[ir.RecordCall](): {class: graphFlowPlanned, why: "values and entries make a new array (native emit_records.go:47); get is an entry, planned where it was stored; set is its value argument (native emit_records.go:25); keys and forInKeys are strings, and delete, has, hasOwn and defineHidden a boolean", sources: func(expression ir.Expression, _ *ir.Program) (graphFlowSources, bool) {
 		call := expression.(ir.RecordCall)
 		switch call.Method {
-		case "values", "entries", "get", "keys", "delete", "has", "hasOwn", "defineHidden":
+		case "values", "entries", "get", "keys", "forInKeys", "delete", "has", "hasOwn", "defineHidden":
 			return graphFlowSources{}, true
 		case "set":
 			if len(call.Arguments) == 3 {

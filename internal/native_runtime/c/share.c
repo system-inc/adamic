@@ -116,6 +116,9 @@ void adamic_share(void *value) {
 		}
 		case adamic_kind_map: {
 			adamic_map *map = (adamic_map *)heap;
+			// A record table's for...in list (record.c) goes as the table is first marked, while it's still
+			// this thread's alone: a shared table never keeps one, so no worker reads it or fills it in.
+			if (!shared) { adamic_map_forget_key_list(map); }
 			for (size_t i = 0; i < map->used; i++) {
 				if (map->entries[i].deleted) { continue; }
 				if (map->reference_keys) { append(&pending, map->entries[i].key.reference); }

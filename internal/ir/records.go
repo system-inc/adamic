@@ -4,7 +4,9 @@ package ir
 // Element is the representation stored in each slot; Returns includes missing reads.
 // "defineHidden" is Object.defineProperty(record, key, { enumerable: false, writable: false, value })
 // with record, key and value its arguments: it returns false, storing nothing, when the key is hidden
-// already, for the caller to throw.
+// already, for the caller to throw. "forInKeys" is the own-key list a for...in iterates, the keys
+// "keys" (Object.keys) gives in the same order, but only ever a ForOf's iterable and only read: natively
+// it may be the one list the record keeps for every loop over it, so it's never a fresh array.
 type RecordCall struct {
 	// ElementNullish is the semantic null-pointer tag for an entries tuple value.
 	ElementNullish Type

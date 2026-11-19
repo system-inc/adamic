@@ -54,6 +54,9 @@ func (e *emitter) recordCall(c ir.RecordCall) string {
 		return "Object.entries(" + args + ").map(adamicTuple)"
 	case "hasOwn", "keys", "values":
 		return "Object." + c.Method + "(" + args + ")"
+	case "forInKeys":
+		// A for...in's own-key list, which native may share between loops; here each loop has its own.
+		return "Object.keys(" + args + ")"
 	}
 	panic("javascript: unknown record operation")
 }

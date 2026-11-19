@@ -22,6 +22,10 @@ func (a *analysis) recordCall(c ir.RecordCall) value {
 		return a.fresh(elementKey, a.fresh(anyField, a.load(args[0], elementKey)))
 	case "keys":
 		return a.fresh(elementKey, value{})
+	case "forInKeys":
+		// The list the record's table may keep for every for...in (runtime record.c), held there too, so
+		// it's never this function's alone.
+		return outsideValue()
 	}
 	return value{}
 }

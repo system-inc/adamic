@@ -40,7 +40,10 @@ func (l *lowering) forIn(node *ast.Node) ([]ir.Statement, error) {
 	if isRecord {
 		recordLocal = len(l.result.Locals)
 		l.result.Locals = append(l.result.Locals, ir.Local{Name: "record", Type: ir.Record, Function: l.functionIndex})
-		loop.Iterable = ir.RecordCall{Method: "keys", Arguments: []ir.Expression{ir.Read{Local: recordLocal, Of: ir.Record}}, Returns: ir.Array}
+		// forInKeys, not keys: the list is the loop's iterable and nothing else, never the program's to
+		// change, so natively every loop over the record may read the same one until its key set changes
+		// (runtime record.c's adamic_record_for_in_keys). Object.keys stays keys, a new array.
+		loop.Iterable = ir.RecordCall{Method: "forInKeys", Arguments: []ir.Expression{ir.Read{Local: recordLocal, Of: ir.Record}}, Returns: ir.Array}
 	}
 	initializer := statement.Initializer
 	var assignment ir.Statement
