@@ -4254,6 +4254,83 @@ func TestAHandedBuildsAbsoluteReadUnderItsPathsRefusesIt(t *testing.T) {
 	}
 }
 
+// A path is classed by the deepest of home and the temporary places that holds it, whichever way they nest (#e1wpvc7,
+// Loom's ruling): a sealed image's home is /tmp/home, under a temporary place, and a keeper box's job tmpdir is
+// ~/.cache/loom-keeper-tmp, a temporary place under home. With home under the test's temporary directory, a content read
+// in home refuses naming home, a handed build's lookup under a handed path in home refuses by its spelling, and a lean
+// build's lookup in home is kept as a home entry. With TMPDIR under home, a content read in it refuses as temp the run
+// didn't make, a lean build's lookup in it keeps no home entry, and a content read beside it in home refuses naming
+// home. Mutants that each fail it: the temporary places matched first, first match wins (home under a temporary
+// place); home matched first (the temporary place under home).
+// Not parallel: newRig, and it sets HOME and TMPDIR.
+func TestAPathIsClassedByTheDeepestOfHomeAndTheTemporaryPlaces(t *testing.T) {
+	keeper := filepath.Join(".cache", "loom-keeper-tmp")
+	// port built whole, lean, and lean handed a path in home.
+	whole := func(t *testing.T, _ string) { Product(t, port, building("built")) }
+	lean := func(t *testing.T, _ string) { LeanProduct(t, port, building("built")) }
+	handed := func(t *testing.T, home string) {
+		LeanProductOf(t, Handed{Inputs: port, Paths: []string{filepath.Join(home, "adamic-handed-e1wpvc7")}}, handedBuilding)
+	}
+	for _, each := range []struct {
+		name string
+		// temporary is TMPDIR, relative to home, or "" to leave TMPDIR as the run has it; path is the read, relative to
+		// home too.
+		temporary, path string
+		build           func(t *testing.T, home string)
+		read            func(r *rig, pid int, path string)
+		// refused is what the refusal names, followed by the read's path when it ends in ": " as a class's list does, or
+		// "" for a settled build, whose set holds entry when kept and doesn't when not.
+		refused, entry string
+		kept           bool
+	}{
+		{"home under a temporary place, its content read", "", ".adamic-not-keyable", whole, (*rig).open, "home: ", "", false},
+		{"home under a temporary place, a handed build's lookup", "", "adamic-handed-e1wpvc7/node_modules/missing.js", handed, (*rig).missing, "by its spelling", "", false},
+		{"home under a temporary place, a lean build's lookup", "", "adamic-e1wpvc7/missing.js", lean, (*rig).missing, "", "home ~/adamic-e1wpvc7/missing.js", true},
+		{"a temporary place under home, its content read", keeper, filepath.Join(keeper, "adamic-left-by-someone"), whole, (*rig).open, "temp not made by this run: ", "", false},
+		{"a temporary place under home, a lean build's lookup", keeper, filepath.Join(keeper, "adamic-e1wpvc7", "missing.js"), lean, (*rig).missing, "", "home ~/" + filepath.ToSlash(filepath.Join(keeper, "adamic-e1wpvc7", "missing.js")), false},
+		{"a temporary place under home, a content read beside it", keeper, filepath.Join(".cache", "adamic-not-keyable"), whole, (*rig).open, "home: ", "", false},
+	} {
+		t.Run(each.name, func(t *testing.T) {
+			r := newRig(t)
+			// Resolved, as the rig's root is: a read recorded through a link is classed as what it resolves to.
+			directory, err := filepath.EvalSymlinks(t.TempDir())
+			if err != nil {
+				t.Fatal(err)
+			}
+			home := filepath.Join(directory, "home")
+			if err := os.MkdirAll(filepath.Join(home, keeper), 0o755); err != nil {
+				t.Fatal(err)
+			}
+			each.build(t, home)
+			build := r.built(t)["port"]
+			path := filepath.Join(home, each.path)
+			r.window(build.Build, func() { each.read(r, r.pid, path) })
+			// Only the settle reads them: the build ran under the run's own home and temporary directory.
+			t.Setenv("HOME", home)
+			if each.temporary != "" {
+				t.Setenv("TMPDIR", filepath.Join(home, each.temporary))
+			}
+			settlement := r.settle(t)
+			if each.refused != "" {
+				want := each.refused
+				if strings.HasSuffix(want, ": ") {
+					want += path
+				}
+				if len(settlement.Refused) != 1 || !strings.Contains(settlement.Refused[0], want) || len(settlement.Settled) != 0 {
+					t.Fatalf("settled %q, refused %q; want a refusal naming %q", settlement.Settled, settlement.Refused, want)
+				}
+				return
+			}
+			if len(settlement.Settled) != 1 {
+				t.Fatalf("settled %q, refused %q; want it settled", settlement.Settled, settlement.Refused)
+			}
+			if entries := r.entries(t, build.NameKey); slices.Contains(entries, each.entry) != each.kept {
+				t.Fatalf("the read set %q holding %q is %v; want %v", entries, each.entry, !each.kept, each.kept)
+			}
+		})
+	}
+}
+
 // A LeanProductOf build's read of a file of the tree its Files don't name is keyed by its window (Tests' condition on
 // stage3/lane/adaptedtree): a lean caller's census holds what its Go code reaches, and no census sees what a process it
 // starts reads, as the adapted tree's python reads the adaptations beside apply.py. So a handed build whose child reads
