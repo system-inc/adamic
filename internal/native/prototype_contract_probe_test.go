@@ -19,6 +19,7 @@ import (
 	"github.com/system-inc/adamic/internal/load"
 	"github.com/system-inc/adamic/internal/lower"
 	"github.com/system-inc/adamic/internal/native"
+	"github.com/system-inc/adamic/internal/native_runtime"
 )
 
 // These are research probes, not a prototype implementation. The C model uses two ordinary
@@ -101,7 +102,7 @@ func TestPrototypeMixedCountedCycleProbe(t *testing.T) {
 	expected := prototypeNode(t, prototypeFixture(t, "mixed_set_cycle"))
 	directory := t.TempDir()
 	counted := filepath.Join(directory, "counted")
-	if err := native.Build(prototypeOwnershipModel, counted, native.Options{Count: true}); err != nil {
+	if err := native.Build(prototypeOwnershipModel, counted, native_runtime.Options{Count: true}); err != nil {
 		t.Fatal(err)
 	}
 	var stdout, stderr bytes.Buffer
@@ -117,7 +118,7 @@ func TestPrototypeMixedCountedCycleProbe(t *testing.T) {
 	t.Log(strings.TrimSpace(stderr.String()))
 
 	sanitized := filepath.Join(directory, "sanitized")
-	if err := native.Build(prototypeOwnershipModel, sanitized, native.Options{Sanitize: true}); err != nil {
+	if err := native.Build(prototypeOwnershipModel, sanitized, native_runtime.Options{Sanitize: true}); err != nil {
 		t.Fatal(err)
 	}
 	command = exec.Command(sanitized)
@@ -141,7 +142,7 @@ func TestPrototypeMixedCountedCycleProbe(t *testing.T) {
 	// and no compiler warning or crash can substitute for the leak check that must distinguish it.
 	mutant := strings.Replace(prototypeOwnershipModel, "prototype->slots[0].reference = adamic_retain(object);", "prototype->slots[0].reference = NULL;", 1)
 	binary := filepath.Join(directory, "no-back-edge")
-	if err := native.Build(mutant, binary, native.Options{Sanitize: true}); err != nil {
+	if err := native.Build(mutant, binary, native_runtime.Options{Sanitize: true}); err != nil {
 		t.Fatal(err)
 	}
 	if report := prototypeLeaks(t, mutant, binary); report != "" {
@@ -228,7 +229,7 @@ func prototypeBackendsPrint(t *testing.T, program *ir.Program, expected string) 
 		t.Fatal(err)
 	}
 	binary := filepath.Join(directory, "native")
-	if err := native.Build(native.C(program), binary, native.Options{Sanitize: true}); err != nil {
+	if err := native.Build(native.C(program), binary, native_runtime.Options{Sanitize: true}); err != nil {
 		t.Fatal(err)
 	}
 	for _, backend := range []struct {
@@ -291,7 +292,7 @@ func prototypeLeaks(t *testing.T, source, binary string) string {
 	t.Helper()
 	if runtime.GOOS == "darwin" {
 		counted := filepath.Join(t.TempDir(), "counted")
-		if err := native.Build(source, counted, native.Options{Count: true}); err != nil {
+		if err := native.Build(source, counted, native_runtime.Options{Count: true}); err != nil {
 			t.Fatal(err)
 		}
 		command := exec.Command(counted)

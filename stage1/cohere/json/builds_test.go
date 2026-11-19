@@ -18,6 +18,7 @@ import (
 	"github.com/system-inc/adamic/internal/load"
 	"github.com/system-inc/adamic/internal/lower"
 	"github.com/system-inc/adamic/internal/native"
+	"github.com/system-inc/adamic/internal/native_runtime"
 )
 
 // Build inputs use the shared cache API; no package-local disk cache.
@@ -78,12 +79,12 @@ func buildJSONLoweredPortMutation(dir string, mutation *printerMutation) error {
 }
 
 func jsonNativePortInputs(source string, sanitize bool, toolchain []string) jsonBuildInputs {
-	options := native.Options{Sanitize: sanitize}
+	options := native_runtime.Options{Sanitize: sanitize}
 	name := "json native release port"
 	if sanitize {
 		name = "json native ASan UBSan port"
 	}
-	flags := append([]string(nil), native.Flags(options)...)
+	flags := append([]string(nil), native_runtime.Flags(options)...)
 	// Generated C is a captured input, not a repository file. Its digest includes
 	// emitted feature defines; internal/ also covers runtime sources/link policy.
 	flags = append(flags, fmt.Sprintf("generated-C-sha256=%x", sha256.Sum256([]byte(source))), fmt.Sprintf("options=%+v", options), "-I=<runtime product>", "-o=<dir>/port", "-lm")
@@ -94,11 +95,13 @@ func jsonNativePortInputs(source string, sanitize bool, toolchain []string) json
 // Each factory returns the exact func(dir string) error accepted by buildcache.
 // Native.Build retains its existing compiler scratch/runtime action caches.
 func buildJSONReleasePort(source string) func(string) error {
-	return func(dir string) error { return native.Build(source, filepath.Join(dir, "port"), native.Options{}) }
+	return func(dir string) error {
+		return native.Build(source, filepath.Join(dir, "port"), native_runtime.Options{})
+	}
 }
 func buildJSONSanitizedPort(source string) func(string) error {
 	return func(dir string) error {
-		return native.Build(source, filepath.Join(dir, "port"), native.Options{Sanitize: true})
+		return native.Build(source, filepath.Join(dir, "port"), native_runtime.Options{Sanitize: true})
 	}
 }
 

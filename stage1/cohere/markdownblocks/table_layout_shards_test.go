@@ -20,6 +20,7 @@ import (
 	"github.com/system-inc/adamic/internal/ir"
 	"github.com/system-inc/adamic/internal/javascript"
 	"github.com/system-inc/adamic/internal/native"
+	"github.com/system-inc/adamic/internal/native_runtime"
 	"github.com/system-inc/adamic/stage1/cohere/markdownblocks/oracles"
 )
 
@@ -195,11 +196,11 @@ func tableLayoutBuildProduct(t *testing.T, target string) tableLayoutProducts {
 		modeInputs := inputs
 		modeInputs.Name = fmt.Sprintf("markdown table native %t", sanitize)
 		// native.Build splits by ADAMIC_NATIVE_SPLIT when its options don't, so the switch is an input.
-		modeInputs.Flags = append(native.Flags(native.Options{Sanitize: sanitize}), "ADAMIC_NATIVE_SPLIT="+os.Getenv("ADAMIC_NATIVE_SPLIT"))
+		modeInputs.Flags = append(native_runtime.Flags(native_runtime.Options{Sanitize: sanitize}), "ADAMIC_NATIVE_SPLIT="+os.Getenv("ADAMIC_NATIVE_SPLIT"))
 		modeInputs.Toolchain = []string{runtime.Version(), buildcache.CompilerReport("clang")}
 		builds = append(builds, startFixtureTask(&workers, func() (string, error) {
 			directory := buildcache.Product(t, modeInputs, func(directory string) error {
-				return native.Build(string(source), filepath.Join(directory, "program"), native.Options{Sanitize: sanitize})
+				return native.Build(string(source), filepath.Join(directory, "program"), native_runtime.Options{Sanitize: sanitize})
 			})
 			return filepath.Join(directory, "program"), nil
 		}))

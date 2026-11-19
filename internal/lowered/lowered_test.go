@@ -23,6 +23,7 @@ import (
 	"github.com/system-inc/adamic/internal/load"
 	"github.com/system-inc/adamic/internal/lower"
 	"github.com/system-inc/adamic/internal/native"
+	"github.com/system-inc/adamic/internal/native_runtime"
 )
 
 // corpus is a handful of the oracle's lowering corpus, by repository path, each program's entry first and then the files
@@ -78,7 +79,7 @@ func freshC(t *testing.T, entry string, options Options) string {
 	if err != nil {
 		t.Fatal(err)
 	}
-	return native.CWithOptions(lowering, native.Options{Debug: options.Lower.Debug})
+	return native.CWithOptions(lowering, native.EmitOptions{Options: native_runtime.Options{Debug: options.Lower.Debug}})
 }
 
 // sameC fails t when got isn't want, naming the first line they differ at.
@@ -231,8 +232,8 @@ func hitEmitsFreshC(t *testing.T, debug bool) {
 				t.Fatal("two reads served one decode: each emit needs its own")
 			}
 			want := freshC(t, paths[0], options)
-			sameC(t, "the build's decode", want, native.CWithOptions(missed, native.Options{Debug: debug}))
-			sameC(t, "a hit", want, native.CWithOptions(hit, native.Options{Debug: debug}))
+			sameC(t, "the build's decode", want, native.CWithOptions(missed, native.EmitOptions{Options: native_runtime.Options{Debug: debug}}))
+			sameC(t, "a hit", want, native.CWithOptions(hit, native.EmitOptions{Options: native_runtime.Options{Debug: debug}}))
 		})
 	}
 }

@@ -13,16 +13,22 @@ import (
 	"testing"
 )
 
-// nativeBuilds are internal/native's functions that run clang under the process's jobserver (native.UseJobserver).
-var nativeBuilds = []string{"Build", "BuildFlags", "BuildSharedProbe", "BuildTSGo", "BuildSplitTSGo", "RuntimeLibrary", "RuntimeLibraryForSource", "RuntimeRequestFor"}
+// nativeBuilds are the functions that run clang under the process's jobserver (native_runtime.UseJobserver), by the
+// package that holds them: internal/native's builds of a program, and internal/native_runtime's of its archive and the
+// header scan behind a request.
+var nativeBuilds = map[string][]string{
+	nativePath:  {"Build", "BuildFlags", "BuildSharedProbe", "BuildTSGo", "BuildSplitTSGo"},
+	runtimePath: {"RuntimeLibrary", "RuntimeLibraryForSource", "RuntimeRequestFor"},
+}
 
 const (
 	nativePath      = "github.com/system-inc/adamic/internal/native"
+	runtimePath     = "github.com/system-inc/adamic/internal/native_runtime"
 	ccjobserverPath = "github.com/system-inc/adamic/internal/ccjobserver"
 )
 
-// Every package that builds C through native imports internal/ccjobserver, so its builds compile under the jobserver
-// Loom names (#yzwm4rj): native reads no environment for it, so a package that calls a native build without the import
+// Every package that builds C through native or native_runtime imports internal/ccjobserver, so its builds compile
+// under the jobserver Loom names (#yzwm4rj): neither reads the environment for it, so a package that calls a native build without the import
 // would build unbounded under Loom. A call from a package's own code needs the import in its own code, since its
 // binary links no test file; a call from its tests needs it in any of its files. A package whose code imports a
 // package that imports it is bounded too, by that package's init, so only direct callers are held. Mutant: the
@@ -51,8 +57,9 @@ func TestEveryNativeBuildIsBoundedByTheProcessJobserver(t *testing.T) {
 			}
 			return nil
 		}
-		// native's own files build through its own functions, under the jobserver they're handed or the process's.
-		if !strings.HasSuffix(relative, ".go") || filepath.ToSlash(filepath.Dir(relative)) == "internal/native" {
+		// native's and native_runtime's own files build through their own functions, under the jobserver they're handed or
+		// the process's.
+		if !strings.HasSuffix(relative, ".go") || filepath.ToSlash(filepath.Dir(relative)) == "internal/native" || filepath.ToSlash(filepath.Dir(relative)) == "internal/native_runtime" {
 			return nil
 		}
 		files := token.NewFileSet()
@@ -66,7 +73,8 @@ func TestEveryNativeBuildIsBoundedByTheProcessJobserver(t *testing.T) {
 			directories[place] = &directory{}
 		}
 		found := directories[place]
-		nativeName := ""
+		// buildsNamed are the names this file imports a package of nativeBuilds under, each with that package's builds.
+		buildsNamed := map[string][]string{}
 		for _, imported := range parsed.Imports {
 			importPath, _ := strconv.Unquote(imported.Path.Value)
 			switch importPath {
@@ -76,14 +84,15 @@ func TestEveryNativeBuildIsBoundedByTheProcessJobserver(t *testing.T) {
 				} else {
 					found.importsCode = true
 				}
-			case nativePath:
-				nativeName = "native"
+			case nativePath, runtimePath:
+				name := strings.TrimPrefix(importPath, "github.com/system-inc/adamic/internal/")
 				if imported.Name != nil {
-					nativeName = imported.Name.Name
+					name = imported.Name.Name
 				}
+				buildsNamed[name] = nativeBuilds[importPath]
 			}
 		}
-		if nativeName == "" {
+		if len(buildsNamed) == 0 {
 			return nil
 		}
 		ast.Inspect(parsed, func(node ast.Node) bool {
@@ -91,9 +100,9 @@ func TestEveryNativeBuildIsBoundedByTheProcessJobserver(t *testing.T) {
 			if !ok {
 				return true
 			}
-			if name, ok := selector.X.(*ast.Ident); ok && name.Name == nativeName && slices.Contains(nativeBuilds, selector.Sel.Name) {
+			if name, ok := selector.X.(*ast.Ident); ok && slices.Contains(buildsNamed[name.Name], selector.Sel.Name) {
 				site := files.Position(selector.Pos()).String()
-				site = strings.TrimPrefix(site, root+string(filepath.Separator)) + " native." + selector.Sel.Name
+				site = strings.TrimPrefix(site, root+string(filepath.Separator)) + " " + name.Name + "." + selector.Sel.Name
 				if test {
 					found.callsTest = append(found.callsTest, site)
 				} else {

@@ -1,6 +1,6 @@
 //go:build linux || darwin
 
-package native
+package native_runtime
 
 import (
 	"errors"
@@ -12,8 +12,8 @@ import (
 )
 
 // The lock is a file of its own for the platforms whose syscall has flock; elsewhere runtime_lock_other.go's lockRuntime
-// takes none. Only cachedRuntime reaches it, never an archive's build (RuntimeRequest.Build), so it is no file
-// runtimeproducts' runtimeFiles declares.
+// takes none. Only CachedRuntime reaches it, never an archive's build (RuntimeRequest.Build); runtimeproducts'
+// runtimeFiles names it all the same, with every Go file of the package, so an archive's key holds the package whole.
 
 // runtimeLockWait is the longest a process waits on another building the runtime archive it wants (lockRuntime). A
 // build takes up to about a minute on a loaded tree builder, and a waiter waits only on the one build holding the lock,

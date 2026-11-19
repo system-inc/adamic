@@ -27,6 +27,7 @@ import (
 	"github.com/system-inc/adamic/internal/compilerinputs"
 	"github.com/system-inc/adamic/internal/javascript"
 	"github.com/system-inc/adamic/internal/native"
+	"github.com/system-inc/adamic/internal/native_runtime"
 	"github.com/system-inc/adamic/stage1/cohere/markdownblocks/oracles"
 )
 
@@ -706,11 +707,11 @@ func whitespaceLayoutPolicySetup(t *testing.T, ctx context.Context) whitespaceLa
 		products := whitespaceLayoutBuildProbe(t, ctx, root, "whitespace_probe.ts", false)
 		inputs := products.inputs
 		inputs.Name += "-native-sanitized"
-		inputs.Flags = append(append([]string{}, inputs.Flags...), native.Flags(native.Options{Sanitize: true, Split: true, Jobs: 2})...)
+		inputs.Flags = append(append([]string{}, inputs.Flags...), native_runtime.Flags(native_runtime.Options{Sanitize: true, Split: true, Jobs: 2})...)
 		inputs.Flags = append(inputs.Flags, "Split=true", "Jobs=2", "ADAMIC_NATIVE_SPLIT="+os.Getenv("ADAMIC_NATIVE_SPLIT"))
 		inputs.Toolchain = append(inputs.Toolchain, buildcache.CompilerReport("clang"))
 		dir := buildcache.Product(t, inputs, func(dir string) error {
-			return whitespaceLayoutNativeBuild(ctx, products.source, filepath.Join(dir, "port"), native.Options{Sanitize: true, Split: true, Jobs: 2})
+			return whitespaceLayoutNativeBuild(ctx, products.source, filepath.Join(dir, "port"), native_runtime.Options{Sanitize: true, Split: true, Jobs: 2})
 		})
 		products.sanitized = filepath.Join(dir, "port")
 		whitespaceLayoutPolicyProducts = products
@@ -1047,10 +1048,10 @@ func whitespaceLayoutNode(t *testing.T, ctx context.Context, path string, args .
 // a process group that the setup context can kill without changing native code.
 type whitespaceLayoutBuildRequest struct {
 	Source, Output string
-	Options        native.Options
+	Options        native_runtime.Options
 }
 
-func whitespaceLayoutNativeBuild(ctx context.Context, source, output string, options native.Options) error {
+func whitespaceLayoutNativeBuild(ctx context.Context, source, output string, options native_runtime.Options) error {
 	sourcePath := output + ".c"
 	if err := os.WriteFile(sourcePath, []byte(source), 0644); err != nil {
 		return err
@@ -1093,10 +1094,10 @@ func TestMarkdownWhitespaceLayoutBuildWorker(t *testing.T) {
 }
 
 func whitespaceLayoutNativeProduct(t *testing.T, ctx context.Context, products whitespaceLayoutProducts, sanitize bool) string {
-	options := native.Options{Sanitize: sanitize, Split: true, Jobs: 2}
+	options := native_runtime.Options{Sanitize: sanitize, Split: true, Jobs: 2}
 	nativeInputs := products.inputs
 	nativeInputs.Name = fmt.Sprintf("%s-native-%t", products.inputs.Name, sanitize)
-	nativeInputs.Flags = append(append([]string{}, products.inputs.Flags...), native.Flags(options)...)
+	nativeInputs.Flags = append(append([]string{}, products.inputs.Flags...), native_runtime.Flags(options)...)
 	nativeInputs.Flags = append(nativeInputs.Flags, "Split=true", "Jobs=2", "ADAMIC_NATIVE_SPLIT="+os.Getenv("ADAMIC_NATIVE_SPLIT"))
 	nativeInputs.Toolchain = append([]string{runtime.Version()}, buildcache.CompilerReport("clang"))
 	dir := buildcache.Product(t, nativeInputs, func(dir string) error {

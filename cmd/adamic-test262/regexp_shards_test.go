@@ -7,7 +7,7 @@ import (
 	"testing"
 	"time"
 
-	"github.com/system-inc/adamic/internal/native"
+	"github.com/system-inc/adamic/internal/native_runtime"
 )
 
 func regExpRunnerShard(t *testing.T, corpus, name string, want outcomeKind) {
@@ -80,14 +80,14 @@ func TestRegExpRunnerUtilitiesWASI(t *testing.T) {
 
 func regExpWASIAgrees(t testing.TB, e *engine, one classified) {
 	t.Helper()
-	options := native.Options{Target: "wasm32-wasi"}
+	options := native_runtime.Options{Target: "wasm32-wasi"}
 	directory, request := regExpRunnerRuntime(t, options)
 	source := filepath.Join(e.work, "program.a")
 	compiled := e.compiler.compile(source)
 	if compiled.Exit != 0 {
 		t.Fatalf("WASI lowering: %+v", compiled)
 	}
-	if features := native.Features(compiled.Stdout); len(features) != 0 {
+	if features := native_runtime.Features(compiled.Stdout); len(features) != 0 {
 		t.Fatalf("undeclared RegExp runner runtime features: %v", features)
 	}
 	cPath := filepath.Join(e.work, "program.c")
@@ -95,9 +95,9 @@ func regExpWASIAgrees(t testing.TB, e *engine, one classified) {
 		t.Fatal(err)
 	}
 	binary := filepath.Join(e.work, "program.wasm")
-	args := append(native.Flags(options), "-I", directory, cPath, "-o", binary)
-	args = append(args, native.RuntimeLinkFlags(filepath.Join(directory, "runtime.a"))...)
-	args = append(args, native.WASILinkFlags(options)...)
+	args := append(native_runtime.Flags(options), "-I", directory, cPath, "-o", binary)
+	args = append(args, native_runtime.RuntimeLinkFlags(filepath.Join(directory, "runtime.a"))...)
+	args = append(args, native_runtime.WASILinkFlags(options)...)
 	args = append(args, "-Wl,--export=__stack_low", "-lm")
 	linked := runCommand(20*time.Second, nil, request.Compiler, args...)
 	if linked.Exit != 0 {

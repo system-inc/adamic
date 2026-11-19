@@ -10,6 +10,7 @@ import (
 
 	"github.com/system-inc/adamic/internal/load"
 	"github.com/system-inc/adamic/internal/lower"
+	"github.com/system-inc/adamic/internal/native_runtime"
 )
 
 // Runtime-loaded operands and an FMA-capable target expose lost contraction protection.
@@ -45,7 +46,7 @@ func TestReleaseFixtureKeepsArithmeticUnfused(t *testing.T) {
 	if err := os.WriteFile(source, []byte(generated), 0o644); err != nil {
 		t.Fatal(err)
 	}
-	options := Options{Release: true, cpu: cpu}
+	options := native_runtime.Options{Release: true, CPU: cpu}
 	binary := filepath.Join(directory, "good")
 	if err := Build(generated, binary, options); err != nil {
 		t.Fatal(err)
@@ -53,14 +54,14 @@ func TestReleaseFixtureKeepsArithmeticUnfused(t *testing.T) {
 	if got := runWithInput(t, "", binary); got != string(want) {
 		t.Fatalf("ThinLTO fixture differs from Node: %q vs %q", got, want)
 	}
-	library, err := RuntimeLibrary("", options)
+	library, err := native_runtime.RuntimeLibrary("", options)
 	if err != nil {
 		t.Fatal(err)
 	}
 	mutant := filepath.Join(directory, "mutant")
 	flags := slices.DeleteFunc(LinkFlags(options), func(s string) bool { return s == "-ffp-contract=off" })
 	flags = append(flags, "-I", filepath.Dir(library), "-o", mutant, source)
-	flags = append(flags, RuntimeLinkFlags(library)...)
+	flags = append(flags, native_runtime.RuntimeLinkFlags(library)...)
 	flags = append(flags, "-lm")
 	if output, err := exec.Command("clang", flags...).CombinedOutput(); err != nil {
 		t.Fatalf("mutant compile: %v\n%s", err, output)
@@ -87,7 +88,7 @@ func TestReleaseSplitFixtureAgreesWithNode(t *testing.T) {
 		t.Fatal(err)
 	}
 	binary := filepath.Join(t.TempDir(), "split")
-	if err := Build(C(program), binary, Options{Release: true, Split: true}); err != nil {
+	if err := Build(C(program), binary, native_runtime.Options{Release: true, Split: true}); err != nil {
 		t.Fatal(err)
 	}
 	if got := runWithInput(t, "", binary); got != "0\n0\n0\n" {

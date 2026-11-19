@@ -2,6 +2,7 @@ package oracle
 
 import (
 	"github.com/system-inc/adamic/internal/native"
+	"github.com/system-inc/adamic/internal/native_runtime"
 	"os"
 	"path/filepath"
 	"testing"
@@ -104,7 +105,7 @@ func stdoutClosedPipe(t *testing.T, name string, arguments ...string) {
 func stdoutWASIClosedPipe(t *testing.T, source string) {
 	t.Helper()
 	wasm := filepath.Join(t.TempDir(), "closed.wasm")
-	if err := native.Build(source, wasm, native.Options{Target: "wasm32-wasi"}); err != nil {
+	if err := native.Build(source, wasm, native_runtime.Options{Target: "wasm32-wasi"}); err != nil {
 		t.Fatal(err)
 	}
 	stdoutClosedPipe(t, "node", "--disable-warning=ExperimentalWarning", filepath.Join(repository, "oracle/wasi.mjs"), wasm)

@@ -12,6 +12,7 @@ import (
 	"github.com/system-inc/adamic/internal/ir"
 	"github.com/system-inc/adamic/internal/javascript"
 	"github.com/system-inc/adamic/internal/native"
+	"github.com/system-inc/adamic/internal/native_runtime"
 )
 
 func typedArraySortFixture(t *testing.T) (*ir.Program, run) {
@@ -45,7 +46,7 @@ func TestTypedArraySortNativeCallMutant(t *testing.T) {
 	}
 	source = call.ReplaceAllString(source, "(void)($1);")
 	binary := filepath.Join(t.TempDir(), "without-sort")
-	if err := native.Build(source, binary, native.Options{Sanitize: true}); err != nil {
+	if err := native.Build(source, binary, native_runtime.Options{Sanitize: true}); err != nil {
 		t.Fatal("mutant must compile:", err)
 	}
 	leaks := "0"

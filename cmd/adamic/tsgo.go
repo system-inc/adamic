@@ -10,6 +10,7 @@ import (
 	"github.com/system-inc/adamic/internal/ir"
 	"github.com/system-inc/adamic/internal/lower"
 	"github.com/system-inc/adamic/internal/native"
+	"github.com/system-inc/adamic/internal/native_runtime"
 )
 
 func build(path, output string, arguments []string) int {
@@ -26,11 +27,11 @@ func buildWithExports(path, output string, arguments []string, entryFunctions bo
 	return buildWithNativeExports(path, output, arguments, native.Build, entryFunctions)
 }
 
-func buildWithNative(path, output string, arguments []string, buildNative func(string, string, native.Options) error) int {
+func buildWithNative(path, output string, arguments []string, buildNative func(string, string, native_runtime.Options) error) int {
 	return buildWithNativeExports(path, output, arguments, buildNative, false)
 }
 
-func buildWithNativeExports(path, output string, arguments []string, buildNative func(string, string, native.Options) error, entryFunctions bool) int {
+func buildWithNativeExports(path, output string, arguments []string, buildNative func(string, string, native_runtime.Options) error, entryFunctions bool) int {
 	// native links from inside its own temporary build directory and removes it, so a relative -o would name a path
 	// in there and the binary would go with it: the command exited 0 and left nothing (Language, Oct 26). Abs fails
 	// only when the working directory can't be read, which is the machine, so 3 (#z1ba56x's ruling).
@@ -40,7 +41,7 @@ func buildWithNativeExports(path, output string, arguments []string, buildNative
 		return 3
 	}
 	output = absoluteOutput
-	options := native.Options{Release: true, ProgramRegion: programRegionRequested()}
+	options := native_runtime.Options{Release: true, ProgramRegion: programRegionRequested()}
 	archive := ""
 	explain := false
 	reactor := false
@@ -123,7 +124,7 @@ func buildWithNativeExports(path, output string, arguments []string, buildNative
 		}
 		options.DebugDirectory = filepath.Dir(entry)
 	}
-	if err := native.ValidateOptions(options); err != nil {
+	if err := native_runtime.ValidateOptions(options); err != nil {
 		fmt.Fprintf(os.Stderr, "adamic: %v\n", err)
 		return compilerErrorExit(err)
 	}
@@ -172,7 +173,7 @@ func buildWithNativeExports(path, output string, arguments []string, buildNative
 				source, err = native.WASI(program, handler)
 			}
 		} else {
-			source = native.CWithOptions(program, options)
+			source = native.CWithOptions(program, native.EmitOptions{Options: options})
 		}
 		if err == nil {
 			err = buildNative(source, output, options)

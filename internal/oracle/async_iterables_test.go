@@ -5,6 +5,7 @@ import (
 	"github.com/system-inc/adamic/internal/ir"
 	"github.com/system-inc/adamic/internal/leakcheck"
 	"github.com/system-inc/adamic/internal/native"
+	"github.com/system-inc/adamic/internal/native_runtime"
 	"path/filepath"
 	"reflect"
 	"strings"
@@ -367,7 +368,7 @@ func asyncLiveWrongEntry(t *testing.T, name string) {
 	}
 	code := native.C(p)
 	binary := filepath.Join(t.TempDir(), "wrong-entry")
-	if err := native.Build(code, binary, native.Options{Sanitize: true}); err != nil {
+	if err := native.Build(code, binary, native_runtime.Options{Sanitize: true}); err != nil {
 		t.Fatal(err)
 	}
 	if report := leakcheck.Report(t, code, binary); report != "" {
@@ -650,7 +651,7 @@ func asyncLiveReleaseMutant(t *testing.T, name string) {
 	}
 	code = code[:begin] + strings.Replace(part, cleanup, "(void)0;", 1) + code[end:]
 	binary := filepath.Join(t.TempDir(), "leaked-iterator")
-	if err := native.Build(code, binary, native.Options{Sanitize: true}); err != nil {
+	if err := native.Build(code, binary, native_runtime.Options{Sanitize: true}); err != nil {
 		t.Fatal(err)
 	}
 	report := leakcheck.Report(t, code, binary)
@@ -658,7 +659,7 @@ func asyncLiveReleaseMutant(t *testing.T, name string) {
 		t.Fatalf("iterator cleanup mutant survived: %s", report)
 	}
 	counted := filepath.Join(t.TempDir(), "counted-iterator")
-	if err := native.Build(code, counted, native.Options{Count: true}); err != nil {
+	if err := native.Build(code, counted, native_runtime.Options{Count: true}); err != nil {
 		t.Fatal(err)
 	}
 	if report := leakcheck.Unbalanced(leakRun(execute(t, counted))); !strings.Contains(report, "heap values leaked:") {

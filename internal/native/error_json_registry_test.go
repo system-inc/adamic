@@ -3,6 +3,8 @@ package native
 import (
 	"path/filepath"
 	"testing"
+
+	"github.com/system-inc/adamic/internal/native_runtime"
 )
 
 // Empty own-key tables belong to both standard error allocations (#z4a9p9e).
@@ -26,7 +28,7 @@ int main(void) {
 }
 `
 	binary := filepath.Join(t.TempDir(), "error-json")
-	if err := Build(code, binary, Options{Sanitize: true}); err != nil {
+	if err := Build(code, binary, native_runtime.Options{Sanitize: true}); err != nil {
 		t.Fatal(err)
 	}
 	if got := runWithInput(t, "", binary); got != "{}\n{}\n{}\n" {

@@ -23,7 +23,7 @@ func typedArraySortInputs(t *testing.T, kind string) (string, []byte) {
 	return string(source), expected.stdout
 }
 
-func typedArraySortRun(t *testing.T, source, kind string, options Options) inlineArrayResult {
+func typedArraySortRun(t *testing.T, source, kind string, options native_runtime.Options) inlineArrayResult {
 	t.Helper()
 	binary := filepath.Join(t.TempDir(), "sort")
 	if err := Build(source, binary, options); err != nil {
@@ -35,7 +35,7 @@ func typedArraySortRun(t *testing.T, source, kind string, options Options) inlin
 func typedArraySortControl(t *testing.T, kind string) {
 	t.Helper()
 	source, expected := typedArraySortInputs(t, kind)
-	for _, options := range []Options{{Count: true}, {Count: true, Sanitize: true}} {
+	for _, options := range []native_runtime.Options{{Count: true}, {Count: true, Sanitize: true}} {
 		actual := typedArraySortRun(t, source, kind, options)
 		if actual.exit != 0 || !bytes.Equal(actual.stdout, expected) || !strings.HasPrefix(string(actual.stderr), "adamic: counts:") {
 			t.Fatalf("runtime differs from Node: sanitize=%t, exit=%d stdout=%q stderr=%q", options.Sanitize, actual.exit, actual.stdout, actual.stderr)
@@ -48,7 +48,7 @@ func typedArraySortControl(t *testing.T, kind string) {
 func typedArraySortMutation(t *testing.T, kind, before, after string) {
 	t.Helper()
 	source, expected := typedArraySortInputs(t, kind)
-	control := typedArraySortRun(t, source, kind, Options{Count: true, Sanitize: true})
+	control := typedArraySortRun(t, source, kind, native_runtime.Options{Count: true, Sanitize: true})
 	if control.exit != 0 || !bytes.Equal(control.stdout, expected) {
 		t.Fatalf("control differs from Node: %+v", control)
 	}
@@ -64,7 +64,7 @@ func typedArraySortMutation(t *testing.T, kind, before, after string) {
 	code = strings.ReplaceAll(code, "adamic_typed_array_sort(", "mutant_adamic_typed_array_sort(")
 	source = strings.ReplaceAll(source, "adamic_typed_array_sort(", "mutant_adamic_typed_array_sort(")
 	source = strings.Replace(source, "#include \"adamic.h\"", "#include \"adamic.h\"\n"+code, 1)
-	actual := typedArraySortRun(t, source, kind, Options{Count: true, Sanitize: true})
+	actual := typedArraySortRun(t, source, kind, native_runtime.Options{Count: true, Sanitize: true})
 	if actual.exit != 0 || bytes.Equal(actual.stdout, expected) || !strings.HasPrefix(string(actual.stderr), "adamic: counts:") {
 		t.Fatalf("mutant must finish and differ only in Node's output: %+v", actual)
 	}

@@ -200,9 +200,9 @@ func TestDebugTwoDirectories(t *testing.T) {
 	t.Parallel()
 	for _, mode := range []struct {
 		name    string
-		options Options
+		options native_runtime.Options
 	}{
-		{"release", Options{Release: true}}, {"sanitized", Options{Sanitize: true}}, {"debug", Options{Debug: true}},
+		{"release", native_runtime.Options{Release: true}}, {"sanitized", native_runtime.Options{Sanitize: true}}, {"debug", native_runtime.Options{Debug: true}},
 	} {
 		t.Run(mode.name, func(t *testing.T) {
 			var firstBinary []byte
@@ -225,7 +225,7 @@ func TestDebugTwoDirectories(t *testing.T) {
 				if err != nil {
 					t.Fatal(err)
 				}
-				source := CWithOptions(program, options)
+				source := CWithOptions(program, EmitOptions{Options: options})
 				binary := filepath.Join(filepath.Dir(path), "program")
 				if err := BuildWithRuntime(source, binary, options, debugArchiveProduct(t, options, false)); err != nil {
 					t.Fatal(err)
@@ -266,12 +266,12 @@ func TestDebugTwoDirectories(t *testing.T) {
 				if header != header2 || !reflect.DeepEqual(units, units2) {
 					t.Fatal("split unit bytes differ")
 				}
-				common, err := readRuntime(native_runtime.Sources, "c")
+				common, err := native_runtime.ReadRuntime(native_runtime.Sources, "c")
 				if err != nil {
 					t.Fatal(err)
 				}
-				common = append(common, runtimeFile{name: "units.h", contents: []byte(header)})
-				keying, err := newUnitKeying(unitFirst, common, append(SourceFlags(source, options), programDebugFlags(options)...), unitKeyCompiler(t), unitKeyEnvironment(), options.Sanitize || options.ThreadSanitize)
+				common = append(common, native_runtime.RuntimeFile{Name: "units.h", Contents: []byte(header)})
+				keying, err := newUnitKeying(unitFirst, common, append(native_runtime.SourceFlags(source, options), programDebugFlags(options)...), unitKeyCompiler(t), unitKeyEnvironment(), options.Sanitize || options.ThreadSanitize)
 				if err != nil {
 					t.Fatal(err)
 				}
@@ -320,7 +320,7 @@ func TestDebugCounterType(t *testing.T) {
 					t.Fatalf("debug=%t: counter lost integer proof", debug)
 				}
 				e := emitter{program: program}
-				if !strings.Contains(CWithOptions(program, Options{Debug: debug}), "int64_t "+e.localName(i)) {
+				if !strings.Contains(CWithOptions(program, EmitOptions{Options: native_runtime.Options{Debug: debug}}), "int64_t "+e.localName(i)) {
 					t.Fatal("no emitted integer counter")
 				}
 			}
@@ -427,7 +427,7 @@ func checkDebugByteIdentity(t *testing.T, path string) bool {
 			t.Fatalf("non-debug function %s contains SourceLine", function.Name)
 		}
 	}
-	plain, options := C(program), CWithOptions(program, Options{})
+	plain, options := C(program), CWithOptions(program, EmitOptions{})
 	if plain != options {
 		t.Fatal("C and CWithOptions without Debug differ")
 	}

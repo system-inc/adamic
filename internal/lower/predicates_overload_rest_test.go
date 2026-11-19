@@ -15,6 +15,7 @@ import (
 	"github.com/system-inc/adamic/internal/javascript"
 	"github.com/system-inc/adamic/internal/load"
 	"github.com/system-inc/adamic/internal/native"
+	"github.com/system-inc/adamic/internal/native_runtime"
 )
 
 // overloadRestNodes is a small node family in tsc's shape: tagged nodes on a parent chain, honest
@@ -112,7 +113,7 @@ func overloadRestStops(t *testing.T, program *ir.Program) {
 	t.Helper()
 	directory := t.TempDir()
 	binary := filepath.Join(directory, "native")
-	if err := native.Build(native.C(program), binary, native.Options{Sanitize: true}); err != nil {
+	if err := native.Build(native.C(program), binary, native_runtime.Options{Sanitize: true}); err != nil {
 		t.Fatal(err)
 	}
 	runner, err := filepath.Abs("../../oracle/node.mjs")

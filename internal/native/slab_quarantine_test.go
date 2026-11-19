@@ -39,7 +39,7 @@ int main(void) {
 }
 `
 	// The slab lane's build: sanitized, with the size classes kept on.
-	slabs := append(Flags(Options{Sanitize: true}), "-DADAMIC_SLABS")
+	slabs := append(native_runtime.Flags(native_runtime.Options{Sanitize: true}), "-DADAMIC_SLABS")
 	started := time.Now()
 	compiler, library := runtimeWithFlags(t, slabs)
 	t.Logf("shared slab runtime archive: %s", time.Since(started))
@@ -85,11 +85,11 @@ func buildWithFlags(t *testing.T, source string, flags []string) string {
 
 func runtimeWithFlags(t *testing.T, flags []string) (string, string) {
 	t.Helper()
-	files, err := readRuntime(native_runtime.Sources, "c")
+	files, err := native_runtime.ReadRuntime(native_runtime.Sources, "c")
 	if err != nil {
 		t.Fatal(err)
 	}
-	compiler, err := exec.LookPath(compilerName(Options{}))
+	compiler, err := exec.LookPath(native_runtime.CompilerName(native_runtime.Options{}))
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -101,7 +101,7 @@ func runtimeWithFlags(t *testing.T, flags []string) (string, string) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	library, err := cachedRuntime(files, flags, compiler, string(version), filepath.Join(cache, "adamic", "runtime"))
+	library, err := native_runtime.CachedRuntime(files, flags, compiler, string(version), filepath.Join(cache, "adamic", "runtime"))
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -112,7 +112,7 @@ func runtimeWithFlags(t *testing.T, flags []string) (string, string) {
 // other object from the exact same sanitized slab archive, including its headers.
 func slabQuarantineOffLibrary(t *testing.T, compiler, original string, flags []string) string {
 	t.Helper()
-	files, err := readRuntime(native_runtime.Sources, "c")
+	files, err := native_runtime.ReadRuntime(native_runtime.Sources, "c")
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -120,13 +120,13 @@ func slabQuarantineOffLibrary(t *testing.T, compiler, original string, flags []s
 	directory := t.TempDir()
 	var objects []string
 	for _, file := range files {
-		if !strings.HasSuffix(file.name, ".c") {
+		if !strings.HasSuffix(file.Name, ".c") {
 			continue
 		}
-		object := filepath.Join(root, strings.TrimSuffix(file.name, ".c")+".o")
-		if strings.Contains(string(file.contents), `#include "slab_quarantine.h"`) {
+		object := filepath.Join(root, strings.TrimSuffix(file.Name, ".c")+".o")
+		if strings.Contains(string(file.Contents), `#include "slab_quarantine.h"`) {
 			object = filepath.Join(directory, filepath.Base(object))
-			arguments := append(append([]string{}, flags...), "-I", root, "-c", filepath.Join(root, file.name), "-o", object)
+			arguments := append(append([]string{}, flags...), "-I", root, "-c", filepath.Join(root, file.Name), "-o", object)
 			if output, err := productCompilerCommand(t, context.Background(), compiler, arguments...).CombinedOutput(); err != nil {
 				t.Fatalf("quarantine mutant must compile: %v\n%s", err, output)
 			}
@@ -134,7 +134,7 @@ func slabQuarantineOffLibrary(t *testing.T, compiler, original string, flags []s
 		objects = append(objects, object)
 	}
 	library := filepath.Join(directory, "runtime.a")
-	if output, err := exec.Command(archiverName(compiler), append([]string{"rcs", library}, objects...)...).CombinedOutput(); err != nil {
+	if output, err := exec.Command(native_runtime.ArchiverName(compiler), append([]string{"rcs", library}, objects...)...).CombinedOutput(); err != nil {
 		t.Fatalf("quarantine mutant archive: %v\n%s", err, output)
 	}
 	return library
@@ -148,7 +148,7 @@ func buildHarnessWithLibrary(t *testing.T, source string, flags []string, compil
 		t.Fatal(err)
 	}
 	arguments := append(append([]string{}, flags...), "-I", filepath.Dir(library), "-o", binary, main)
-	arguments = append(append(arguments, RuntimeLinkFlags(library)...), "-lm")
+	arguments = append(append(arguments, native_runtime.RuntimeLinkFlags(library)...), "-lm")
 	if output, err := productCompilerCommand(t, context.Background(), compiler, arguments...).CombinedOutput(); err != nil {
 		t.Fatalf("clang: %v\n%s", err, output)
 	}
@@ -174,7 +174,7 @@ func TestQuarantineIsPerThreadUnderTSan(t *testing.T) {
 	if !parallelTSan(t) {
 		t.Skip("TSan is unavailable on this platform; see capability probe")
 	}
-	options := Options{ThreadSanitize: true, slabs: true}
+	options := native_runtime.Options{ThreadSanitize: true, Slabs: true}
 	t.Run("memory", func(t *testing.T) {
 		t.Parallel()
 		binary := parallelHarness(t, "memory.c", options)
@@ -214,7 +214,7 @@ func TestQuarantineIsPerThreadUnderTSan(t *testing.T) {
 				t.Fatal(err)
 			}
 		}
-		library, err := RuntimeLibrary(directory, options)
+		library, err := native_runtime.RuntimeLibrary(directory, options)
 		if err != nil {
 			t.Fatal(err)
 		}
@@ -226,8 +226,8 @@ func TestQuarantineIsPerThreadUnderTSan(t *testing.T) {
 		if err := os.WriteFile(main, []byte(parallelSource(string(source))), 0o600); err != nil {
 			t.Fatal(err)
 		}
-		arguments := append(Flags(options), "-I", filepath.Dir(library), main, "-o", binary)
-		arguments = append(append(arguments, RuntimeLinkFlags(library)...), "-lm")
+		arguments := append(native_runtime.Flags(options), "-I", filepath.Dir(library), main, "-o", binary)
+		arguments = append(append(arguments, native_runtime.RuntimeLinkFlags(library)...), "-lm")
 		if output, err := exec.Command("clang", arguments...).CombinedOutput(); err != nil {
 			t.Fatalf("mutant must compile: %v\n%s", err, output)
 		}

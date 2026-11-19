@@ -10,6 +10,7 @@ import (
 
 	"github.com/system-inc/adamic/bridge/tsgo/spec"
 	"github.com/system-inc/adamic/internal/ir"
+	"github.com/system-inc/adamic/internal/native_runtime"
 )
 
 func UsesTSGo(program *ir.Program) bool {
@@ -76,19 +77,19 @@ func TSGoC(program *ir.Program) (string, error) {
 // BuildTSGo is the native build with an explicitly selected checker archive.
 // The public ABI header is embedded beside the archive's source, never copied
 // from cgo's generated implementation header.
-func BuildTSGo(source, output, archive string, options Options) error {
+func BuildTSGo(source, output, archive string, options native_runtime.Options) error {
 	return buildTSGo(source, output, archive, options, false)
 }
 
 // buildTSGo compiles main.c to main.o and then links it, as linkOne does. oneCall has a build off macOS compile and link
 // it in one clang call instead, as it did before the split (#2r9xhqs), only so
 // TestACompiledThenLinkedCheckerIsTheOneCallChecker can hold the split's binary to the one call's bytes.
-func buildTSGo(source, output, archive string, options Options, oneCall bool) error {
+func buildTSGo(source, output, archive string, options native_runtime.Options, oneCall bool) error {
 	archive, err := checkerArchivePath(archive)
 	if err != nil {
 		return err
 	}
-	jobserver, err := defaultJobserver()
+	jobserver, err := native_runtime.DefaultJobserver()
 	if err != nil {
 		return err
 	}
@@ -115,34 +116,34 @@ func buildTSGo(source, output, archive string, options Options, oneCall bool) er
 	if err != nil {
 		return err
 	}
-	flags := append(append(tsgoFlags(source, options), prefixMaps(directory, "/adamic-build")...), prefixMaps(filepath.Dir(library), "/adamic-runtime")...)
+	flags := append(append(tsgoFlags(source, options), native_runtime.PrefixMaps(directory, "/adamic-build")...), native_runtime.PrefixMaps(filepath.Dir(library), "/adamic-runtime")...)
 	flags = append(flags, "-I", "runtime")
 	// main.c is compiled first and linked as main.o, for linkOne's reasons: on macOS so the debug map names it main.o
 	// alone, and elsewhere so the compile is a step of its own, the binary the one call's bytes.
 	program := "main.c"
-	if darwinBuild() || !oneCall {
-		compile := clangIn(directory, compilerName(options), append(compileOnlyFlags(flags), "-c", program, "-o", "main.o")...)
+	if native_runtime.DarwinBuild() || !oneCall {
+		compile := native_runtime.ClangIn(directory, native_runtime.CompilerName(options), append(compileOnlyFlags(flags), "-c", program, "-o", "main.o")...)
 		var combined []byte
 		var compiling time.Duration
 		if err := jobserver.Hold(func() error {
-			return timed(&compiling, func() (err error) { combined, err = compile.CombinedOutput(); return err })
+			return native_runtime.Timed(&compiling, func() (err error) { combined, err = compile.CombinedOutput(); return err })
 		}); err != nil {
 			return fmt.Errorf("native: clang with checker archive failed: %w\n%s", err, combined)
 		}
-		buildLog("cCompile", "main.c", "", "off", compiling)
+		native_runtime.BuildLog("cCompile", "main.c", "", "off", compiling)
 		if err := os.Chtimes(filepath.Join(directory, "main.o"), time.Unix(0, 0), time.Unix(0, 0)); err != nil {
 			return err
 		}
 		program = "main.o"
 	}
 	arguments := append(linkFlags(slices.Clone(flags), options), "-o", output, program)
-	arguments = append(arguments, RuntimeLinkFlags(filepath.Join("runtime", filepath.Base(library)))...)
+	arguments = append(arguments, native_runtime.RuntimeLinkFlags(filepath.Join("runtime", filepath.Base(library)))...)
 	arguments = append(append(arguments, checkerArchive, "-lm", "-lpthread", "-ldl"), objectPrefixFlags()...)
-	command := clangIn(directory, compilerName(options), arguments...)
+	command := native_runtime.ClangIn(directory, native_runtime.CompilerName(options), arguments...)
 	var combined []byte
 	var building time.Duration
 	if err := jobserver.Hold(func() error {
-		return timed(&building, func() (err error) { combined, err = command.CombinedOutput(); return err })
+		return native_runtime.Timed(&building, func() (err error) { combined, err = command.CombinedOutput(); return err })
 	}); err != nil {
 		return fmt.Errorf("native: clang with checker archive failed: %w\n%s", err, combined)
 	}
@@ -151,7 +152,7 @@ func buildTSGo(source, output, archive string, options Options, oneCall bool) er
 	if program == "main.o" {
 		kind = "cLink"
 	}
-	buildLog(kind, filepath.Base(output), "", "off", building)
+	native_runtime.BuildLog(kind, filepath.Base(output), "", "off", building)
 	return nil
 }
 
@@ -176,14 +177,14 @@ func checkerArchivePath(archive string) (string, error) {
 // tsgoFlags compiles the checker-archive build. tsgo_runtime.h, included first, brings adamic.h in
 // before main.c's own #defines, so the program's features come as flags, as they do for the runtime
 // library.
-func tsgoFlags(source string, options Options) []string {
-	return append(sourceFlags(source, options), "-DADAMIC_TSGO")
+func tsgoFlags(source string, options native_runtime.Options) []string {
+	return append(native_runtime.SourceFlags(source, options), "-DADAMIC_TSGO")
 }
 
 // The checker bridge has its own runtime key: its ABI header and ADAMIC_TSGO
 // change the objects, while the selected Go archive changes only the final link.
-func tsgoRuntimeLibrary(source string, options Options) (string, error) {
-	if err := ValidateOptions(options); err != nil {
+func tsgoRuntimeLibrary(source string, options native_runtime.Options) (string, error) {
+	if err := native_runtime.ValidateOptions(options); err != nil {
 		return "", err
 	}
 	return splitTSGoRuntime(source, options)

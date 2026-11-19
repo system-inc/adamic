@@ -5,6 +5,7 @@ import (
 	"github.com/system-inc/adamic/internal/buildcache"
 	"github.com/system-inc/adamic/internal/leakcheck"
 	"github.com/system-inc/adamic/internal/native"
+	"github.com/system-inc/adamic/internal/native_runtime"
 	"path/filepath"
 	"regexp"
 	"runtime"
@@ -25,7 +26,7 @@ func programMillionMeasured(t *testing.T, enabled, sanitized bool) string {
 			return fmt.Errorf("main return missing")
 		}
 		code = "#include <sys/resource.h>\n#include <stdio.h>\n" + code[:at] + "\tstruct rusage graph_usage; getrusage(RUSAGE_SELF, &graph_usage); printf(\"graph_peak_rss_kib %ld\\n\", graph_usage.ru_maxrss);\n" + code[at:]
-		options := native.Options{Count: !sanitized, Sanitize: sanitized, ProgramRegion: enabled}
+		options := native_runtime.Options{Count: !sanitized, Sanitize: sanitized, ProgramRegion: enabled}
 		return programRegionBuild(t, code, filepath.Join(directory, "million"), options)
 	})
 }

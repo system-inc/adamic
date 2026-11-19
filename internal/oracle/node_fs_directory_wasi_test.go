@@ -8,6 +8,7 @@ import (
 	"testing"
 
 	"github.com/system-inc/adamic/internal/native"
+	"github.com/system-inc/adamic/internal/native_runtime"
 )
 
 // Use the same cwd, arguments, credentials, and filesystem inputs as the source.
@@ -43,7 +44,7 @@ func TestNodeFSDirectoryWASIAgreement(t *testing.T) {
 				t.Fatalf("Node failed: %+v", truth)
 			}
 			binary := filepath.Join(shared, "program.wasm")
-			if err := native.Build(native.C(program), binary, native.Options{Target: "wasm32-wasi"}); err != nil {
+			if err := native.Build(native.C(program), binary, native_runtime.Options{Target: "wasm32-wasi"}); err != nil {
 				t.Fatal(err)
 			}
 			runner, err := filepath.Abs(filepath.Join(repository, "oracle/wasi.mjs"))
@@ -75,7 +76,7 @@ func TestNodeFSDirectoryWASICWDMutant(t *testing.T) {
 	}
 	shared := sharedDirectory(t)
 	binary := filepath.Join(shared, "program.wasm")
-	if err := native.Build(native.C(program), binary, native.Options{Target: "wasm32-wasi"}); err != nil {
+	if err := native.Build(native.C(program), binary, native_runtime.Options{Target: "wasm32-wasi"}); err != nil {
 		t.Fatal(err)
 	}
 	runner, err := os.ReadFile(filepath.Join(repository, "oracle/wasi.mjs"))

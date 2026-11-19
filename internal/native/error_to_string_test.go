@@ -5,6 +5,8 @@ import (
 	"path/filepath"
 	"strings"
 	"testing"
+
+	"github.com/system-inc/adamic/internal/native_runtime"
 )
 
 // adamic_error_to_string is Error.prototype.toString over an Error's name and message, held to Node's
@@ -40,7 +42,7 @@ int main(void) {
 		t.Fatalf("Node changed: %q", want)
 	}
 	binary := filepath.Join(t.TempDir(), "error-to-string")
-	if err := Build(source, binary, Options{Sanitize: true}); err != nil {
+	if err := Build(source, binary, native_runtime.Options{Sanitize: true}); err != nil {
 		t.Fatal(err)
 	}
 	if got := runWithInput(t, "", binary); got != want {
@@ -101,7 +103,7 @@ int main(void) {
 `
 	const want = "error true\nerror-without-message true\ndirectory true\ndirectory-coded true\nfile true\nfile-coded true\nrealpath true\nchdir true\nexit-code true\nplain false\n"
 	binary := filepath.Join(t.TempDir(), "error-is")
-	if err := Build(source, binary, Options{Sanitize: true}); err != nil {
+	if err := Build(source, binary, native_runtime.Options{Sanitize: true}); err != nil {
 		t.Fatal(err)
 	}
 	if got := runWithInput(t, "", binary); got != want {
@@ -179,7 +181,7 @@ int main(void) {
 		t.Fatalf("Node changed: %q", want)
 	}
 	binary := filepath.Join(t.TempDir(), "coded-error-to-string")
-	if err := Build(source, binary, Options{Sanitize: true}); err != nil {
+	if err := Build(source, binary, native_runtime.Options{Sanitize: true}); err != nil {
 		t.Fatal(err)
 	}
 	got, wanted := strings.Split(runWithInput(t, "", binary), "\n"), strings.Split(want, "\n")
@@ -248,7 +250,7 @@ int main(int argc, char **argv) {
 		t.Fatalf("Node changed: %q", want)
 	}
 	binary := filepath.Join(t.TempDir(), "string-too-long")
-	if err := Build(source, binary, Options{Sanitize: true}); err != nil {
+	if err := Build(source, binary, native_runtime.Options{Sanitize: true}); err != nil {
 		t.Fatal(err)
 	}
 	if got := runWithInput(t, "", binary, path); got != want {

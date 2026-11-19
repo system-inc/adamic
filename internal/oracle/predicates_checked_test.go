@@ -14,6 +14,7 @@ import (
 	"github.com/system-inc/adamic/internal/load"
 	"github.com/system-inc/adamic/internal/lower"
 	"github.com/system-inc/adamic/internal/native"
+	"github.com/system-inc/adamic/internal/native_runtime"
 )
 
 // guard, where given, is the native stderr of the removed-check mutant: it reads a field the false
@@ -124,7 +125,7 @@ func TestCheckedPredicateOracle(t *testing.T) {
 					t.Fatal(report)
 				}
 				countedBinary := filepath.Join(t.TempDir(), "counted")
-				if err = native.Build(native.C(program), countedBinary, native.Options{Count: true}); err != nil {
+				if err = native.Build(native.C(program), countedBinary, native_runtime.Options{Count: true}); err != nil {
 					t.Fatal(err)
 				}
 				if report := leakcheck.Unbalanced(leakRun(execute(t, countedBinary))); report != "" {

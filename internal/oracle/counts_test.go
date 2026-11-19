@@ -18,6 +18,7 @@ import (
 	"github.com/system-inc/adamic/internal/load"
 	"github.com/system-inc/adamic/internal/lower"
 	"github.com/system-inc/adamic/internal/native"
+	"github.com/system-inc/adamic/internal/native_runtime"
 	"github.com/system-inc/adamic/internal/toolchain"
 )
 
@@ -55,11 +56,11 @@ const countsHarness = "counts-harness-v1"
 // countsShared is what every row's digest reads besides the row's own: the harness, the runtime's sources and the
 // counted build's flags, none of them spelled by the machine.
 var countsShared = sync.OnceValues(func() (string, error) {
-	runtime, err := native.RuntimeSourceDigest()
+	runtime, err := native_runtime.RuntimeSourceDigest()
 	if err != nil {
 		return "", err
 	}
-	return cacheKey(countsHarness, runtime, strings.Join(native.Flags(native.Options{Count: true}), " ")), nil
+	return cacheKey(countsHarness, runtime, strings.Join(native_runtime.Flags(native_runtime.Options{Count: true}), " ")), nil
 })
 
 // countPortable is emitted C as every checkout spells it, for a row's digest: the TypeScript frontend names its source
@@ -222,7 +223,7 @@ func countedRun(t *testing.T, path string, absolute string, source string, input
 				how = fsFilePrepare(t, shared, "counted")
 			}
 			binary := filepath.Join(shared, "program")
-			if err := native.Build(source, binary, native.Options{Count: true}); err != nil {
+			if err := native.Build(source, binary, native_runtime.Options{Count: true}); err != nil {
 				t.Fatal(err)
 			}
 			name, pinned := pinnedStack(binary, how.arguments...)
@@ -232,7 +233,7 @@ func countedRun(t *testing.T, path string, absolute string, source string, input
 			}
 		} else {
 			binary := filepath.Join(t.TempDir(), "program")
-			if err := native.Build(source, binary, native.Options{Count: true}); err != nil {
+			if err := native.Build(source, binary, native_runtime.Options{Count: true}); err != nil {
 				t.Fatal(err)
 			}
 			name, pinned := pinnedStack(binary)

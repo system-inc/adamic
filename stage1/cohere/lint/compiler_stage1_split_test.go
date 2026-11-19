@@ -24,6 +24,7 @@ import (
 	"github.com/system-inc/adamic/internal/load"
 	"github.com/system-inc/adamic/internal/lower"
 	"github.com/system-inc/adamic/internal/native"
+	"github.com/system-inc/adamic/internal/native_runtime"
 	"github.com/system-inc/adamic/internal/tracked"
 )
 
@@ -249,8 +250,8 @@ func compilerAgreementLowered(t *testing.T) string {
 
 func compilerAgreementNative(t *testing.T, sanitize bool) string {
 	t.Helper()
-	options := native.Options{Sanitize: sanitize, Jobs: 1}
-	product := compilerAgreementProduct(t, compilerAgreementInputs(t, fmt.Sprintf("compiler-agreement-native-%t", sanitize), append(native.Flags(options), "Split=false", "Jobs=1")), func(directory string) error {
+	options := native_runtime.Options{Sanitize: sanitize, Jobs: 1}
+	product := compilerAgreementProduct(t, compilerAgreementInputs(t, fmt.Sprintf("compiler-agreement-native-%t", sanitize), append(native_runtime.Flags(options), "Split=false", "Jobs=1")), func(directory string) error {
 		lowered := compilerAgreementLowered(t)
 		c, err := os.ReadFile(filepath.Join(lowered, "lint.c"))
 		if err != nil {

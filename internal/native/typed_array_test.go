@@ -8,6 +8,7 @@ import (
 	"strings"
 	"testing"
 
+	"github.com/system-inc/adamic/internal/native_runtime"
 	"github.com/system-inc/adamic/internal/toolchain"
 )
 
@@ -28,7 +29,7 @@ func TestTypedArrayRuntime(t *testing.T) {
 		}
 		t.Run(name, func(t *testing.T) {
 			binary := filepath.Join(t.TempDir(), "typed-arrays")
-			if err := Build(string(source), binary, Options{Sanitize: sanitized, Count: true}); err != nil {
+			if err := Build(string(source), binary, native_runtime.Options{Sanitize: sanitized, Count: true}); err != nil {
 				t.Fatal(err)
 			}
 			command := exec.Command(binary)

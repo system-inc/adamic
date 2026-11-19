@@ -9,6 +9,7 @@ import (
 	"testing"
 
 	"github.com/system-inc/adamic/internal/native"
+	"github.com/system-inc/adamic/internal/native_runtime"
 )
 
 // Linux-specific descriptor, resource-limit and signal observations. Python's POSIX helpers
@@ -54,7 +55,7 @@ int main(int argc, char **argv) {
  return 0;
 }
 `
-	if err := native.Build(source, binary, native.Options{Sanitize: true}); err != nil {
+	if err := native.Build(source, binary, native_runtime.Options{Sanitize: true}); err != nil {
 		t.Fatal(err)
 	}
 	commands := [][]string{{"node", "--input-type=module", "-e", `for(let i=0;i<10;i++){console.log('line');await new Promise(r=>setTimeout(r,150));}`}, {binary}}
@@ -87,7 +88,7 @@ int main(int argc, char **argv) {
  return 0;
 }
 `
-	if err := native.Build(source, binary, native.Options{Sanitize: true}); err != nil {
+	if err := native.Build(source, binary, native_runtime.Options{Sanitize: true}); err != nil {
 		t.Fatal(err)
 	}
 	report := executeWith(t, []string{"ASAN_OPTIONS=detect_leaks=0:handle_segv=1"}, binary)

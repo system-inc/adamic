@@ -6,6 +6,7 @@ import (
 	"testing"
 
 	"github.com/system-inc/adamic/internal/native"
+	"github.com/system-inc/adamic/internal/native_runtime"
 )
 
 // A statement that hands a fresh function's object to a parameter that flows nowhere gets a region,
@@ -40,7 +41,7 @@ func regionIndexStoreAgrees(t *testing.T, name, want string) string {
 	}
 	code := native.C(program)
 	binary := filepath.Join(t.TempDir(), "program")
-	if err := native.Build(code, binary, native.Options{Sanitize: true}); err != nil {
+	if err := native.Build(code, binary, native_runtime.Options{Sanitize: true}); err != nil {
 		t.Fatal(err)
 	}
 	result := executeWith(t, []string{"ASAN_OPTIONS=detect_leaks=1"}, binary)

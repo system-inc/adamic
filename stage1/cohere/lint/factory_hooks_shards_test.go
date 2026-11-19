@@ -20,6 +20,7 @@ import (
 	"github.com/system-inc/adamic/internal/load"
 	"github.com/system-inc/adamic/internal/lower"
 	"github.com/system-inc/adamic/internal/native"
+	"github.com/system-inc/adamic/internal/native_runtime"
 	"github.com/system-inc/adamic/stage1/cohere/lint/registry"
 )
 
@@ -284,9 +285,9 @@ func factoryHooksNative(t *testing.T, ctx context.Context, javascript string) st
 		if err != nil {
 			t.Fatal(err)
 		}
-		options := native.Options{Sanitize: true}
+		options := native_runtime.Options{Sanitize: true}
 		inputs := buildcache.Inputs{Name: "factory-hooks-native", Files: []string{"internal/native", "internal/native_runtime", "cohere", "internal/load"},
-			Flags:     append(native.Flags(options), fmt.Sprintf("source=%x", sha256.Sum256(source)), "ADAMIC_NATIVE_SPLIT="+os.Getenv("ADAMIC_NATIVE_SPLIT")),
+			Flags:     append(native_runtime.Flags(options), fmt.Sprintf("source=%x", sha256.Sum256(source)), "ADAMIC_NATIVE_SPLIT="+os.Getenv("ADAMIC_NATIVE_SPLIT")),
 			Toolchain: []string{runtime.Version(), buildcache.CompilerReport("clang")}}
 		binary := buildcache.Product(t, inputs, func(destination string) error {
 			return factoryHooksBuildNative(ctx, filepath.Join(filepath.Dir(javascript), "lint.c"), filepath.Join(destination, "scanner"))
@@ -310,7 +311,7 @@ func TestFactoryHooks_NativeBuildWorker(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	if err := native.Build(string(source), os.Getenv("ADAMIC_FACTORY_HOOKS_NATIVE_OUTPUT"), native.Options{Sanitize: true}); err != nil {
+	if err := native.Build(string(source), os.Getenv("ADAMIC_FACTORY_HOOKS_NATIVE_OUTPUT"), native_runtime.Options{Sanitize: true}); err != nil {
 		t.Fatal(err)
 	}
 }

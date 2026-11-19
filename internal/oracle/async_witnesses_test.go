@@ -9,6 +9,7 @@ import (
 
 	"github.com/system-inc/adamic/internal/lower"
 	"github.com/system-inc/adamic/internal/native"
+	"github.com/system-inc/adamic/internal/native_runtime"
 )
 
 // Refused sources still run independently on Node. The frame ownership cycle is
@@ -96,7 +97,7 @@ func TestAsyncCapturedBindingSurvivesFinishMutant(t *testing.T) {
 		t.Fatal("no escaped captured binding to clear")
 	}
 	binary := filepath.Join(t.TempDir(), "mutant")
-	if err := native.Build(code, binary, native.Options{Sanitize: true}); err != nil {
+	if err := native.Build(code, binary, native_runtime.Options{Sanitize: true}); err != nil {
 		t.Fatal(err)
 	}
 	result := executeWith(t, []string{"ASAN_OPTIONS=detect_leaks=1"}, binary)

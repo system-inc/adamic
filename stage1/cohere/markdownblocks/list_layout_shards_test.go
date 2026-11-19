@@ -13,6 +13,7 @@ import (
 	"github.com/system-inc/adamic/internal/gatesample"
 	"github.com/system-inc/adamic/internal/javascript"
 	"github.com/system-inc/adamic/internal/native"
+	"github.com/system-inc/adamic/internal/native_runtime"
 	"github.com/system-inc/adamic/internal/tracked"
 	"os"
 	"os/exec"
@@ -384,14 +385,14 @@ func prepareListLayoutProducts(t *testing.T, root, dir string) listLayoutProduct
 		sum := sha256.Sum256(source)
 		// v3: built alone (#kfjqsnh), so a v2 set, which may hold a build that ran beside it, isn't one this reads; v2 was
 		// native.Build's, whose binary names no build directory, unlike v1's.
-		product := buildcache.Product(t, buildcache.Inputs{Name: name + "-v3", Files: nativeFiles, Flags: append(native.Flags(native.Options{Sanitize: sanitize}), fmt.Sprintf("source=%x", sum), "ADAMIC_NATIVE_SPLIT="+os.Getenv("ADAMIC_NATIVE_SPLIT")), Toolchain: []string{buildcache.CompilerReport("clang"), runtime.Version()}}, func(directory string) error {
+		product := buildcache.Product(t, buildcache.Inputs{Name: name + "-v3", Files: nativeFiles, Flags: append(native_runtime.Flags(native_runtime.Options{Sanitize: sanitize}), fmt.Sprintf("source=%x", sum), "ADAMIC_NATIVE_SPLIT="+os.Getenv("ADAMIC_NATIVE_SPLIT")), Toolchain: []string{buildcache.CompilerReport("clang"), runtime.Version()}}, func(directory string) error {
 			if err := os.WriteFile(filepath.Join(directory, "main.c"), source, 0644); err != nil {
 				return err
 			}
 			// native.Build compiles in a directory of its own and gives clang no absolute path, so the binary names no
 			// build directory: given <build directory>/main.c, a sanitized binary kept it in its globals' metadata, random
 			// per build (landable-14b's tree, Oct 11: markdown-list-layout-sanitized and -canary-sanitized).
-			if err := native.Build(string(source), filepath.Join(directory, "binary"), native.Options{Sanitize: sanitize}); err != nil {
+			if err := native.Build(string(source), filepath.Join(directory, "binary"), native_runtime.Options{Sanitize: sanitize}); err != nil {
 				return fmt.Errorf("native build: %w", err)
 			}
 			return nil
@@ -464,7 +465,7 @@ func prepareListLayoutProducts(t *testing.T, root, dir string) listLayoutProduct
 				t.Fatal(err)
 			}
 			sum := sha256.Sum256(source)
-			flags := native.Flags(native.Options{Sanitize: true})
+			flags := native_runtime.Flags(native_runtime.Options{Sanitize: true})
 			for index, flag := range flags {
 				if flag == "-O1" {
 					flags[index] = "-O0"
@@ -475,7 +476,7 @@ func prepareListLayoutProducts(t *testing.T, root, dir string) listLayoutProduct
 				if err := os.WriteFile(filepath.Join(directory, "main.c"), source, 0644); err != nil {
 					return err
 				}
-				if err := native.BuildFlags(string(source), filepath.Join(directory, "binary"), native.Options{Sanitize: true}, flags); err != nil {
+				if err := native.BuildFlags(string(source), filepath.Join(directory, "binary"), native_runtime.Options{Sanitize: true}, flags); err != nil {
 					return fmt.Errorf("mutant build: %w", err)
 				}
 				return nil

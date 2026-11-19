@@ -3,6 +3,7 @@ package native
 import (
 	"errors"
 	"fmt"
+	"github.com/system-inc/adamic/internal/native_runtime"
 	"github.com/system-inc/adamic/internal/platform"
 	"os"
 	"os/exec"
@@ -14,7 +15,7 @@ import (
 // Not parallel: PATH is process-wide; these fake-tool controls run serially.
 func TestBuildAppleMissingXcrun(t *testing.T) {
 	t.Setenv("PATH", t.TempDir())
-	err := BuildApple("int main(void) { return 0; }", filepath.Join(t.TempDir(), "program"), Options{})
+	err := BuildApple("int main(void) { return 0; }", filepath.Join(t.TempDir(), "program"), native_runtime.Options{})
 	var missing *platform.Missing
 	if !errors.As(err, &missing) || missing.Platform != "darwin" {
 		t.Fatalf("BuildApple: expected PlatformMissing, got %v", err)
@@ -28,7 +29,7 @@ func TestBuildAppleMissingSDK(t *testing.T) {
 		t.Fatal(err)
 	}
 	t.Setenv("PATH", dir)
-	err := BuildApple("", filepath.Join(dir, "program"), Options{})
+	err := BuildApple("", filepath.Join(dir, "program"), native_runtime.Options{})
 	var missing *platform.Missing
 	if !errors.As(err, &missing) {
 		t.Fatalf("SDK discovery: expected PlatformMissing, got %v", err)
@@ -83,7 +84,7 @@ func TestClangFailureIsNotPlatformMissing(t *testing.T) {
 	t.Setenv("PATH", dir)
 	t.Setenv("ADAMIC_TOOLS", "")
 	t.Setenv("ADAMIC_SANDBOX", "")
-	err = BuildApple("int main(void) { return 0; }", filepath.Join(dir, "program"), Options{})
+	err = BuildApple("int main(void) { return 0; }", filepath.Join(dir, "program"), native_runtime.Options{})
 	var missing *platform.Missing
 	if err == nil || errors.As(err, &missing) || !strings.Contains(err.Error(), "clang-rejected") {
 		t.Fatalf("compiler failure: %v", err)

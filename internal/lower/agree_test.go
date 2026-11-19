@@ -25,6 +25,7 @@ import (
 	"github.com/system-inc/adamic/internal/native"
 	"github.com/system-inc/adamic/internal/native/agreementproducts"
 	"github.com/system-inc/adamic/internal/native/runtimeproducts"
+	"github.com/system-inc/adamic/internal/native_runtime"
 	"github.com/system-inc/adamic/internal/toolchain"
 )
 
@@ -117,12 +118,12 @@ func TestNativeAgreementLeanBuildIsBuildsBytes(t *testing.T) {
 	if os.Getenv("ADAMIC_NATIVE_SPLIT") == "1" {
 		t.Skip("ADAMIC_NATIVE_SPLIT=1 splits native.Build, and a lean build is one translation unit")
 	}
-	options := native.Options{}
+	options := native_runtime.Options{}
 	compiler, err := toolchain.Path("clang")
 	if err != nil {
 		t.Fatal(err)
 	}
-	jobservers := map[int]*native.Jobserver{0: nil, 1: agreementJobserver(t, 1), 8: agreementJobserver(t, 8)}
+	jobservers := map[int]*native_runtime.Jobserver{0: nil, 1: agreementJobserver(t, 1), 8: agreementJobserver(t, 8)}
 	product := agreementC(t)
 	for _, name := range agreementproducts.Programs() {
 		source := filepath.Join(product, name, "main.c")
@@ -156,11 +157,11 @@ func TestNativeAgreementLeanBuildIsBuildsBytes(t *testing.T) {
 		if err != nil {
 			t.Fatal(err)
 		}
-		library, err := native.RuntimeLibraryForSource("", code, options)
+		library, err := native_runtime.RuntimeLibraryForSource("", code, options)
 		if err != nil {
 			t.Fatal(err)
 		}
-		archive := runtimeproducts.Archive(t, "release", native.Features(code), agreementArchiveOwners, agreementArchiveGroup)
+		archive := runtimeproducts.Archive(t, "release", native_runtime.Features(code), agreementArchiveOwners, agreementArchiveGroup)
 		same := true
 		for _, way := range []struct {
 			name, output, archive string
@@ -189,13 +190,13 @@ func TestNativeAgreementLeanBuildIsBuildsBytes(t *testing.T) {
 			}
 		}
 		if same {
-			t.Logf("%s, features %v: %d bytes, the same six ways", name, native.Features(code), len(built))
+			t.Logf("%s, features %v: %d bytes, the same six ways", name, native_runtime.Features(code), len(built))
 		}
 	}
 }
 
 // agreementJobserver is a compile jobserver holding tokens, a FIFO filled as Loom fills one.
-func agreementJobserver(t *testing.T, tokens int) *native.Jobserver {
+func agreementJobserver(t *testing.T, tokens int) *native_runtime.Jobserver {
 	t.Helper()
 	path := filepath.Join(t.TempDir(), "jobserver")
 	if err := syscall.Mkfifo(path, 0o600); err != nil {
@@ -210,7 +211,7 @@ func agreementJobserver(t *testing.T, tokens int) *native.Jobserver {
 	if _, err := filler.Write([]byte(strings.Repeat("+", tokens))); err != nil {
 		t.Fatal(err)
 	}
-	jobserver, err := native.OpenJobserver(path)
+	jobserver, err := native_runtime.OpenJobserver(path)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -271,7 +272,7 @@ func buildAgreementNative(t testing.TB, product, name string) string {
 	if err != nil {
 		t.Fatal(err)
 	}
-	archive := runtimeproducts.Archive(t, "release", native.Features(string(code)), agreementArchiveOwners, agreementArchiveGroup)
+	archive := runtimeproducts.Archive(t, "release", native_runtime.Features(string(code)), agreementArchiveOwners, agreementArchiveGroup)
 	return agreementproducts.Product(t, source, archive, os.Getenv("ADAMIC_NATIVE_SPLIT"))
 }
 

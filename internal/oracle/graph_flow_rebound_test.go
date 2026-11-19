@@ -7,6 +7,7 @@ import (
 
 	"github.com/system-inc/adamic/internal/leakcheck"
 	"github.com/system-inc/adamic/internal/native"
+	"github.com/system-inc/adamic/internal/native_runtime"
 )
 
 // p1 of #hny64km (Memory's): graphFlows' collect now stops at a demanded local some node writes with a
@@ -58,7 +59,7 @@ console.log(names + String(cells.length));
 				t.Fatalf("native: %s; Node %q; native %q; stderr %q", difference, truth.stdout, got.stdout, got.stderr)
 			}
 			counted := filepath.Join(t.TempDir(), "counted")
-			if err := native.Build(native.C(program), counted, native.Options{Count: true}); err != nil {
+			if err := native.Build(native.C(program), counted, native_runtime.Options{Count: true}); err != nil {
 				t.Fatal(err)
 			}
 			ran := execute(t, counted)

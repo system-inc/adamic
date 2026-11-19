@@ -9,7 +9,7 @@ import (
 	"testing"
 	"time"
 
-	"github.com/system-inc/adamic/internal/native"
+	"github.com/system-inc/adamic/internal/native_runtime"
 	"github.com/system-inc/adamic/stage1/cohere/markdownblocks/oracles"
 )
 
@@ -72,7 +72,7 @@ func TestMarkdownParserPrefixes(t *testing.T) {
 		t.Fatal(err)
 	}
 	program := lowered(t, main)
-	binary := filepath.Join(probeNative(t, prefixProbe, native.Options{Sanitize: true}), "port")
+	binary := filepath.Join(probeNative(t, prefixProbe, native_runtime.Options{Sanitize: true}), "port")
 	answer := sanitizedRun(t, binary, cases)
 	for _, side := range []struct {
 		name   string
@@ -127,7 +127,7 @@ func TestMarkdownParserPrefixes(t *testing.T) {
 			t.Logf("output-only source Node mutant caught in %q at byte %d", inputs[index].Name, offset)
 		})
 	}
-	fast := filepath.Join(probeNative(t, prefixProbe, native.Options{}), "port")
+	fast := filepath.Join(probeNative(t, prefixProbe, native_runtime.Options{}), "port")
 	runner := filepath.Join(root, "oracle/node.mjs")
 	for _, side := range []struct {
 		name, command string

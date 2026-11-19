@@ -4,7 +4,7 @@ import (
 	"path/filepath"
 	"testing"
 
-	"github.com/system-inc/adamic/internal/native"
+	"github.com/system-inc/adamic/internal/native_runtime"
 )
 
 // Library validation and runtime's entry-point status must share one exitCode word.
@@ -39,7 +39,7 @@ int main(int argc, char **argv) {
 		directory = hostProviderExitMutantDirectory(t)
 	}
 	binary := filepath.Join(t.TempDir(), "exit-state")
-	hostBuild(t, source, binary, directory, native.Options{Sanitize: true})
+	hostBuild(t, source, binary, directory, native_runtime.Options{Sanitize: true})
 	got := hostRun(t, nil, binary)
 	if got.ExitCode != truth.ExitCode || string(got.Stderr) != string(truth.Stderr) {
 		t.Fatalf("exit-state check failed outside Node stdout: %+v", got)
@@ -64,7 +64,7 @@ func hostProviderExitMutantDirectory(t *testing.T) string {
 
 func TestProduct_HostProviderExitStateMutant(t *testing.T) {
 	t.Parallel()
-	if _, err := native.RuntimeLibrary(hostProviderExitMutantDirectory(t), native.Options{Sanitize: true}); err != nil {
+	if _, err := native_runtime.RuntimeLibrary(hostProviderExitMutantDirectory(t), native_runtime.Options{Sanitize: true}); err != nil {
 		t.Fatal(err)
 	}
 }

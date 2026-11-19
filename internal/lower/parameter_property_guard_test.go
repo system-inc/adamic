@@ -9,6 +9,7 @@ import (
 	"time"
 
 	"github.com/system-inc/adamic/internal/native"
+	"github.com/system-inc/adamic/internal/native_runtime"
 )
 
 const parameterPropertyValueSource = "class C {constructor(public value:number){}} const c=new C(7); console.log(`${c.value}`);"
@@ -32,7 +33,7 @@ func TestParameterPropertyValueMatchesNode(t *testing.T) {
 	}
 	want := []byte("7\n")
 	binary := filepath.Join(directory, "native")
-	if err := native.Build(native.C(program), binary, native.Options{Sanitize: true}); err != nil {
+	if err := native.Build(native.C(program), binary, native_runtime.Options{Sanitize: true}); err != nil {
 		t.Fatal(err)
 	}
 	if got := run("native backend with ASan/UBSan", binary); !bytes.Equal(got, want) {

@@ -3,6 +3,7 @@ package native_test
 import (
 	"github.com/system-inc/adamic/internal/leakcheck"
 	"github.com/system-inc/adamic/internal/native"
+	"github.com/system-inc/adamic/internal/native_runtime"
 	"os/exec"
 	"path/filepath"
 	"strings"
@@ -46,7 +47,7 @@ int main(void) {
 }
 `
 	binary := filepath.Join(t.TempDir(), "mixed-region")
-	if err := native.Build(code, binary, native.Options{Sanitize: true, Count: true}); err != nil {
+	if err := native.Build(code, binary, native_runtime.Options{Sanitize: true, Count: true}); err != nil {
 		t.Fatal(err)
 	}
 	output, err := exec.Command(binary).CombinedOutput()

@@ -1,4 +1,4 @@
-package native
+package native_runtime
 
 import (
 	"bytes"
@@ -10,7 +10,7 @@ import (
 )
 
 // An object compiled with debug info names no part of where the compiler is installed: clang's own headers are among the
-// include directories it records (.debug_line_str), and clangIn maps their installation out, so a key, which never names
+// include directories it records (.debug_line_str), and ClangIn maps their installation out, so a key, which never names
 // where the tools sit, builds one set of bytes wherever they do (#8wgk65j). The same compile run without the maps is the
 // control: it must name the installation, or this box's clang records nothing the check could catch, and the test says
 // so and skips. Mutant: toolMaps returning nothing, red.
@@ -30,13 +30,13 @@ func TestAnObjectNamesNotWhereTheCompilerIsInstalled(t *testing.T) {
 	if err := os.WriteFile(filepath.Join(directory, "probe.c"), []byte(source), 0o644); err != nil {
 		t.Fatal(err)
 	}
-	arguments := append(Flags(Options{Sanitize: true}), prefixMaps(directory, "/adamic-probe")...)
+	arguments := append(Flags(Options{Sanitize: true}), PrefixMaps(directory, "/adamic-probe")...)
 	compile := func(object string, mapped bool) []byte {
 		t.Helper()
 		all := append(append([]string{}, arguments...), "-c", "probe.c", "-o", object)
 		command := toolchain.CommandIn(directory, compiler, all...)
 		if mapped {
-			command = clangIn(directory, compiler, all...)
+			command = ClangIn(directory, compiler, all...)
 		}
 		if output, err := command.CombinedOutput(); err != nil {
 			t.Fatalf("clang: %v\n%s", err, output)
@@ -93,8 +93,8 @@ func TestASanitizedObjectNamesNoHeadersDirectory(t *testing.T) {
 	}
 	// The headers' directory is mapped as the compiler's installation is, so its debug info names it no more: only UBSan's
 	// strings, which no map reaches, could still carry it.
-	arguments := append(append(append(Flags(Options{Sanitize: true}), prefixMaps(directory, "/adamic-probe")...), prefixMaps(headers, "/adamic-headers")...), "-I", headers, "-c", "probe.c", "-o", "probe.o")
-	if output, err := clangIn(directory, compiler, arguments...).CombinedOutput(); err != nil {
+	arguments := append(append(append(Flags(Options{Sanitize: true}), PrefixMaps(directory, "/adamic-probe")...), PrefixMaps(headers, "/adamic-headers")...), "-I", headers, "-c", "probe.c", "-o", "probe.o")
+	if output, err := ClangIn(directory, compiler, arguments...).CombinedOutput(); err != nil {
 		t.Fatalf("clang: %v\n%s", err, output)
 	}
 	object, err := os.ReadFile(filepath.Join(directory, "probe.o"))

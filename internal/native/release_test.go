@@ -36,16 +36,16 @@ func TestReleaseSharedValueAndUnsafeMutant(t *testing.T) {
 	}
 	for _, mutant := range []bool{false, true} {
 		directory := t.TempDir()
-		files, err := readRuntime(native_runtime.Sources, "c")
+		files, err := native_runtime.ReadRuntime(native_runtime.Sources, "c")
 		if err != nil {
 			t.Fatal(err)
 		}
 		for _, file := range files {
-			data := file.contents
-			if mutant && (file.name == "heap.c" || file.name == "adamic.h") {
+			data := file.Contents
+			if mutant && (file.Name == "heap.c" || file.Name == "adamic.h") {
 				// Route count two through the slow path, then wrongly free its remaining owner.
 				old, changed := "return count == 1 ? heap : NULL;", "return count <= 2 ? heap : NULL;"
-				if file.name == "adamic.h" {
+				if file.Name == "adamic.h" {
 					old, changed = "if (count > 1)", "if (count > 2)"
 				}
 				if strings.Count(string(data), old) != 1 {
@@ -53,11 +53,11 @@ func TestReleaseSharedValueAndUnsafeMutant(t *testing.T) {
 				}
 				data = []byte(strings.Replace(string(data), old, changed, 1))
 			}
-			if err := os.WriteFile(filepath.Join(directory, file.name), data, 0644); err != nil {
+			if err := os.WriteFile(filepath.Join(directory, file.Name), data, 0644); err != nil {
 				t.Fatal(err)
 			}
 		}
-		library, err := RuntimeLibrary(directory, Options{Sanitize: true})
+		library, err := native_runtime.RuntimeLibrary(directory, native_runtime.Options{Sanitize: true})
 		if err != nil {
 			t.Fatal(err)
 		}
@@ -66,8 +66,8 @@ func TestReleaseSharedValueAndUnsafeMutant(t *testing.T) {
 			t.Fatal(err)
 		}
 		binary := filepath.Join(directory, "program")
-		arguments := append(Flags(Options{Sanitize: true}), "-I", filepath.Dir(library), "-o", binary, main)
-		arguments = append(arguments, RuntimeLinkFlags(library)...)
+		arguments := append(native_runtime.Flags(native_runtime.Options{Sanitize: true}), "-I", filepath.Dir(library), "-o", binary, main)
+		arguments = append(arguments, native_runtime.RuntimeLinkFlags(library)...)
 		arguments = append(arguments, "-lm")
 		if output, err := exec.Command("clang", arguments...).CombinedOutput(); err != nil {
 			t.Fatalf("clang: %v %s", err, output)
@@ -91,13 +91,13 @@ func TestReleaseSharedValueAndUnsafeMutant(t *testing.T) {
 func TestOwnershipInlining(t *testing.T) {
 	t.Parallel()
 	directory := t.TempDir()
-	files, err := readRuntime(native_runtime.Sources, "c")
+	files, err := native_runtime.ReadRuntime(native_runtime.Sources, "c")
 	if err != nil {
 		t.Fatal(err)
 	}
 	for _, file := range files {
-		if strings.HasSuffix(file.name, ".h") {
-			if err := os.WriteFile(filepath.Join(directory, file.name), file.contents, 0600); err != nil {
+		if strings.HasSuffix(file.Name, ".h") {
+			if err := os.WriteFile(filepath.Join(directory, file.Name), file.Contents, 0600); err != nil {
 				t.Fatal(err)
 			}
 		}
@@ -109,9 +109,9 @@ void drop(void *value) { adamic_release(value); }
 `), 0600); err != nil {
 		t.Fatal(err)
 	}
-	for _, options := range []Options{{}, {Sanitize: true}, {Sanitize: true, Count: true}, {ThreadSanitize: true}} {
+	for _, options := range []native_runtime.Options{{}, {Sanitize: true}, {Sanitize: true, Count: true}, {ThreadSanitize: true}} {
 		ctx, cancel := context.WithTimeout(context.Background(), 20*time.Second)
-		arguments := append(Flags(options), "-S", "-emit-llvm", "-o", "-", source)
+		arguments := append(native_runtime.Flags(options), "-S", "-emit-llvm", "-o", "-", source)
 		output, err := exec.CommandContext(ctx, "clang", arguments...).CombinedOutput()
 		cancel()
 		if err != nil {

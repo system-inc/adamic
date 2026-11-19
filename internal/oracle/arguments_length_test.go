@@ -11,6 +11,7 @@ import (
 	"github.com/system-inc/adamic/internal/load"
 	"github.com/system-inc/adamic/internal/lower"
 	"github.com/system-inc/adamic/internal/native"
+	"github.com/system-inc/adamic/internal/native_runtime"
 )
 
 var argumentLengthFixtures = []string{
@@ -94,7 +95,7 @@ func TestArgumentsLengthWrongSlotMutant(t *testing.T) {
 		t.Run(name, func(t *testing.T) {
 			t.Parallel()
 			binary := filepath.Join(t.TempDir(), "mutant")
-			if err := native.Build(mutated, binary, native.Options{Sanitize: sanitize}); err != nil {
+			if err := native.Build(mutated, binary, native_runtime.Options{Sanitize: sanitize}); err != nil {
 				t.Fatal(err)
 			}
 			got := execute(t, binary)

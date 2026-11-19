@@ -14,6 +14,8 @@ import (
 	"strings"
 	"testing"
 	"unicode"
+
+	"github.com/system-inc/adamic/internal/native_runtime"
 )
 
 // Node's arm64 release is built by GCC 12, which contracts a * b + c into one fused multiply-add by
@@ -182,14 +184,14 @@ func writeFusion(t *testing.T, name, header string, audited, derived, pending []
 }
 
 // fusedTwin is, on arm64, what harness answers to input when built as Node's arm64 release is: with
-// contraction on (Options.contract). It's nil anywhere else, where Node can't have fused.
+// contraction on (native_runtime.Options.Contract). It's nil anywhere else, where Node can't have fused.
 func fusedTwin(t *testing.T, harness, input string) []string {
 	t.Helper()
 	if goruntime.GOARCH != "arm64" {
 		return nil
 	}
 	binary := filepath.Join(t.TempDir(), "fused")
-	if err := Build(harness, binary, Options{Sanitize: true, contract: true}); err != nil {
+	if err := Build(harness, binary, native_runtime.Options{Sanitize: true, Contract: true}); err != nil {
 		t.Fatal(err)
 	}
 	return strings.Split(strings.TrimSuffix(runWithInput(t, input, binary), "\n"), "\n")

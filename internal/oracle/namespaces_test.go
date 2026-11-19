@@ -6,6 +6,7 @@ import (
 
 	"github.com/system-inc/adamic/internal/ir"
 	"github.com/system-inc/adamic/internal/native"
+	"github.com/system-inc/adamic/internal/native_runtime"
 )
 
 func init() {
@@ -186,7 +187,7 @@ func TestNamespaceSemanticMutants(t *testing.T) {
 				t.Fatal("mutant changed no namespace binding")
 			}
 			binary := filepath.Join(t.TempDir(), "mutant")
-			if err := native.Build(native.C(program), binary, native.Options{Sanitize: true}); err != nil {
+			if err := native.Build(native.C(program), binary, native_runtime.Options{Sanitize: true}); err != nil {
 				t.Fatal(err)
 			}
 			result := executeWith(t, []string{"ASAN_OPTIONS=detect_leaks=0", "UBSAN_OPTIONS=halt_on_error=1"}, binary)
@@ -252,7 +253,7 @@ func TestNamespaceStateMutants(t *testing.T) {
 				t.Fatal("mutant changed nothing")
 			}
 			binary := filepath.Join(t.TempDir(), "mutant")
-			if err := native.Build(native.C(program), binary, native.Options{Sanitize: true}); err != nil {
+			if err := native.Build(native.C(program), binary, native_runtime.Options{Sanitize: true}); err != nil {
 				t.Fatal(err)
 			}
 			observed := executeWith(t, []string{"ASAN_OPTIONS=detect_leaks=0", "UBSAN_OPTIONS=halt_on_error=1"}, binary)

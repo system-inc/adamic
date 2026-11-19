@@ -7,6 +7,8 @@ import (
 	"path/filepath"
 	"strings"
 	"testing"
+
+	"github.com/system-inc/adamic/internal/native_runtime"
 )
 
 // hostGuardsHarness calls one of the runtime's readers by name directly on a Stats-shaped host object,
@@ -46,7 +48,7 @@ int main(int count, char **arguments) {
 func TestHostGuardsStopOnAStatsShape(t *testing.T) {
 	t.Parallel()
 	binary := filepath.Join(t.TempDir(), "host-guards")
-	if err := Build(hostGuardsHarness, binary, Options{Sanitize: true}); err != nil {
+	if err := Build(hostGuardsHarness, binary, native_runtime.Options{Sanitize: true}); err != nil {
 		t.Fatal(err)
 	}
 	for _, probe := range []struct{ reader, key string }{

@@ -7,6 +7,7 @@ import (
 	"time"
 
 	"github.com/system-inc/adamic/internal/boundedrun"
+	"github.com/system-inc/adamic/internal/native_runtime"
 )
 
 // mapSetRuntimeRun runs one mode of testdata/map_set/runtime.c, a one-entry map's values() stepped by
@@ -15,11 +16,11 @@ import (
 // shows in the counts on every platform.
 func mapSetRuntimeRun(t *testing.T, mode string) (exit int, stdout, stderr string) {
 	t.Helper()
-	files, flags, compiler, version, err := runtimeInputs("", Options{Sanitize: true, Count: true}, nil)
+	files, flags, compiler, version, err := native_runtime.RuntimeInputs("", native_runtime.Options{Sanitize: true, Count: true}, nil)
 	if err != nil {
 		t.Fatal(err)
 	}
-	cache, err := cacheDirectory("map-set-runtime")
+	cache, err := native_runtime.CacheDirectory("map-set-runtime")
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -27,7 +28,7 @@ func mapSetRuntimeRun(t *testing.T, mode string) (exit int, stdout, stderr strin
 	if err != nil {
 		t.Fatal(err)
 	}
-	library, err := cachedRuntime(files, flags, compiler, version, cache)
+	library, err := native_runtime.CachedRuntime(files, flags, compiler, version, cache)
 	if err != nil {
 		t.Fatal(err)
 	}

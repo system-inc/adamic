@@ -6,6 +6,7 @@ import (
 	"testing"
 
 	"github.com/system-inc/adamic/internal/native"
+	"github.com/system-inc/adamic/internal/native_runtime"
 )
 
 // These mutants remain valid C, finish normally, and change only answers. Sanitizers and the
@@ -38,7 +39,7 @@ func TestMathNumberOracleCatchesMutants(t *testing.T) {
 			}
 			source = strings.ReplaceAll(source, mutant.before, mutant.after)
 			binary := filepath.Join(t.TempDir(), "mutant")
-			if err := native.Build(source, binary, native.Options{Sanitize: true}); err != nil {
+			if err := native.Build(source, binary, native_runtime.Options{Sanitize: true}); err != nil {
 				t.Fatal(err)
 			}
 			result := execute(t, binary)

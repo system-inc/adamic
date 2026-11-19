@@ -9,6 +9,7 @@ import (
 
 	"github.com/system-inc/adamic/internal/leakcheck"
 	"github.com/system-inc/adamic/internal/native"
+	"github.com/system-inc/adamic/internal/native_runtime"
 )
 
 // A program with generators may have a Program region (#8xcz03h): a generator's call is an ir.Call, which
@@ -69,7 +70,7 @@ func TestProgramRegionGeneratorsNotAdopted(t *testing.T) {
 func programGeneratorsHold(t *testing.T, oracle run, checked, name string) {
 	t.Helper()
 	binary := filepath.Join(t.TempDir(), name)
-	if err := programRegionBuild(t, checked, binary, native.Options{ProgramRegion: true, Sanitize: true}); err != nil {
+	if err := programRegionBuild(t, checked, binary, native_runtime.Options{ProgramRegion: true, Sanitize: true}); err != nil {
 		t.Fatal(err)
 	}
 	result := executeWith(t, []string{"ASAN_OPTIONS=detect_leaks=1"}, binary)
@@ -79,7 +80,7 @@ func programGeneratorsHold(t *testing.T, oracle run, checked, name string) {
 	report, err := leakcheck.Check(leakcheck.Program{
 		C: checked, Sanitized: binary, Counted: filepath.Join(t.TempDir(), "counted"),
 		BuildCounted: func(code, output string) error {
-			return programRegionBuild(t, code, output, native.Options{ProgramRegion: true, Count: true})
+			return programRegionBuild(t, code, output, native_runtime.Options{ProgramRegion: true, Count: true})
 		},
 		Execute: func(environment []string, name string, args ...string) leakcheck.Run {
 			return leakRun(executeWith(t, environment, name, args...))
@@ -90,7 +91,7 @@ func programGeneratorsHold(t *testing.T, oracle run, checked, name string) {
 	}
 	// LeakSanitizer is the Linux leak proof; counters independently account for every member and frame.
 	countedBinary := filepath.Join(t.TempDir(), name+"-counts")
-	if err := programRegionBuild(t, checked, countedBinary, native.Options{ProgramRegion: true, Count: true}); err != nil {
+	if err := programRegionBuild(t, checked, countedBinary, native_runtime.Options{ProgramRegion: true, Count: true}); err != nil {
 		t.Fatal(err)
 	}
 	command, args := pinnedStack(countedBinary)

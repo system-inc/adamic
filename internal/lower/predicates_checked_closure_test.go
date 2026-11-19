@@ -11,6 +11,7 @@ import (
 
 	"github.com/system-inc/adamic/internal/javascript"
 	"github.com/system-inc/adamic/internal/native"
+	"github.com/system-inc/adamic/internal/native_runtime"
 )
 
 // An arrow or a function expression in .ts claiming a predicate its body doesn't prove is a checked
@@ -81,7 +82,7 @@ use(1); use("text");`, "number\nstring\n", "number\nstring\n", ""},
 				}
 			}
 			binary := filepath.Join(directory, "native")
-			if err := native.Build(native.C(program), binary, native.Options{Sanitize: true}); err != nil {
+			if err := native.Build(native.C(program), binary, native_runtime.Options{Sanitize: true}); err != nil {
 				t.Fatal(err)
 			}
 			command := exec.Command(binary)

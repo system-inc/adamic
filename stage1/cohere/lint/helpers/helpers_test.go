@@ -5,6 +5,7 @@ import (
 	"compress/gzip"
 	"context"
 	"encoding/json"
+	"github.com/system-inc/adamic/internal/native_runtime"
 	"github.com/system-inc/adamic/stage1/cohere/lint/helpers/oracles"
 
 	_ "github.com/system-inc/adamic/internal/ccjobserver"
@@ -70,7 +71,7 @@ func build(t *testing.T, directory string) string {
 		t.Fatal(err)
 	}
 	binary := filepath.Join(t.TempDir(), "helpers")
-	if err := native.Build(native.C(ir), binary, native.Options{Sanitize: true}); err != nil {
+	if err := native.Build(native.C(ir), binary, native_runtime.Options{Sanitize: true}); err != nil {
 		t.Fatal(err)
 	}
 	return binary

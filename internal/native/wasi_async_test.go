@@ -6,6 +6,7 @@ import (
 	"strings"
 	"testing"
 
+	"github.com/system-inc/adamic/internal/native_runtime"
 	"github.com/system-inc/adamic/internal/wasitest"
 )
 
@@ -44,7 +45,7 @@ int main(int argc, char **argv) {
 `
 	directory := t.TempDir()
 	module := filepath.Join(directory, "host.wasm")
-	if err := Build(code, module, Options{Target: "wasm32-wasi", Count: true}); err != nil {
+	if err := Build(code, module, native_runtime.Options{Target: "wasm32-wasi", Count: true}); err != nil {
 		t.Fatal(err)
 	}
 	repository, err := filepath.Abs("../..")
@@ -60,7 +61,7 @@ int main(int argc, char **argv) {
 	// Leave the owned promise behind: successful output still matches, while
 	// the independent counted build must expose its retained result graph.
 	mutant := filepath.Join(directory, "leak.wasm")
-	if err := Build(strings.Replace(code, "adamic_release(promise);", "/* missing release */", 1), mutant, Options{Target: "wasm32-wasi", Count: true}); err != nil {
+	if err := Build(strings.Replace(code, "adamic_release(promise);", "/* missing release */", 1), mutant, native_runtime.Options{Target: "wasm32-wasi", Count: true}); err != nil {
 		t.Fatal(err)
 	}
 	leaked := observeWASI(t, repository, "node", "--disable-warning=ExperimentalWarning", runner, mutant, "hooks")

@@ -10,12 +10,13 @@ import (
 	"testing"
 
 	"github.com/system-inc/adamic/internal/buildcache"
+	"github.com/system-inc/adamic/internal/native_runtime"
 	"github.com/system-inc/adamic/internal/toolchain"
 )
 
-var programCoreOptions = []Options{
+var programCoreOptions = []native_runtime.Options{
 	{ProgramRegion: true, Sanitize: true, Count: true},
-	{ProgramRegion: true, Sanitize: true, slabs: true, Count: true},
+	{ProgramRegion: true, Sanitize: true, Slabs: true, Count: true},
 	{ProgramRegion: true, Count: true},
 }
 
@@ -48,19 +49,19 @@ func ProgramCoreBinary(t *testing.T, index int, name string) string {
 func programCoreProduct(t *testing.T, index int) string {
 	t.Helper()
 	options := programCoreOptions[index]
-	files, flags, compiler, _, err := runtimeInputs("", options, []string{"-DADAMIC_CANONICAL_CLOSURES=1"})
+	files, flags, compiler, _, err := native_runtime.RuntimeInputs("", options, []string{"-DADAMIC_CANONICAL_CLOSURES=1"})
 	if err != nil {
 		t.Fatal(err)
 	}
-	headers, err := headersRead(files, flags, compiler)
+	headers, err := native_runtime.HeadersRead(files, flags, compiler)
 	if err != nil {
 		t.Fatal(err)
 	}
 	inputs := buildcache.Inputs{
 		Name:      fmt.Sprintf("program-region-core-%d", index),
-		Files:     []string{"internal/native_runtime/c", "internal/native/testdata/program_region", "internal/native/program_region_products_test.go", "internal/native/native.go", "internal/native/library.go", "internal/native/target.go", "internal/native/split_units_test.go", "internal/native/tsgo.go"},
-		Flags:     portableKeyParts(files, flags, compiler, headers),
-		Toolchain: []string{buildcache.CompilerReport(compiler), buildcache.Tool(archiverName(compiler), "--version")},
+		Files:     []string{"internal/native_runtime/c", "internal/native/testdata/program_region", "internal/native/program_region_products_test.go", "internal/native/native.go", "internal/native_runtime/options.go", "internal/native_runtime/library.go", "internal/native_runtime/target.go", "internal/native/split_units_test.go", "internal/native/tsgo.go"},
+		Flags:     native_runtime.PortableKeyParts(files, flags, compiler, headers),
+		Toolchain: []string{buildcache.CompilerReport(compiler), buildcache.Tool(native_runtime.ArchiverName(compiler), "--version")},
 	}
 	// Portable parts keep the product independent of a tool installation path.
 	for _, mutation := range programCoreMutations {
@@ -78,15 +79,15 @@ func programCoreProduct(t *testing.T, index int) string {
 		}
 		var sources []string
 		for _, file := range files {
-			if err := os.WriteFile(filepath.Join(within, file.name), file.contents, 0644); err != nil {
+			if err := os.WriteFile(filepath.Join(within, file.Name), file.Contents, 0644); err != nil {
 				return err
 			}
-			if strings.HasSuffix(file.name, ".c") {
-				sources = append(sources, file.name)
+			if strings.HasSuffix(file.Name, ".c") {
+				sources = append(sources, file.Name)
 			}
 		}
 		compile := func(root, source string) error {
-			args := append(slices.Clone(flags), prefixMaps(root, "/adamic-runtime")...)
+			args := append(slices.Clone(flags), native_runtime.PrefixMaps(root, "/adamic-runtime")...)
 			args = append(args, "-c", source, "-o", strings.TrimSuffix(source, ".c")+".o")
 			command := toolchain.CommandIn(root, compiler, args...)
 			if output, err := command.CombinedOutput(); err != nil {
@@ -101,7 +102,7 @@ func programCoreProduct(t *testing.T, index int) string {
 			if err := os.WriteFile(filepath.Join(scratch, "main.c"), []byte(source), 0644); err != nil {
 				return err
 			}
-			args := append(slices.Clone(flags), prefixMaps(scratch, "/adamic-build")...)
+			args := append(slices.Clone(flags), native_runtime.PrefixMaps(scratch, "/adamic-build")...)
 			args = append(args, "-I", "runtime", "-o", filepath.Join(directory, name), "main.c")
 			for _, file := range sources {
 				if file == changed {
@@ -142,17 +143,17 @@ func programCoreProduct(t *testing.T, index int) string {
 				return err
 			}
 			for _, file := range files {
-				if file.name != mutation.file && !strings.HasSuffix(file.name, ".h") {
+				if file.Name != mutation.file && !strings.HasSuffix(file.Name, ".h") {
 					continue
 				}
-				data := file.contents
-				if file.name == mutation.file {
+				data := file.Contents
+				if file.Name == mutation.file {
 					if strings.Count(string(data), mutation.before) != 1 {
 						return fmt.Errorf("ambiguous mutant %s", mutation.name)
 					}
 					data = []byte(strings.Replace(string(data), mutation.before, mutation.after, 1))
 				}
-				if err := os.WriteFile(filepath.Join(changed, file.name), data, 0644); err != nil {
+				if err := os.WriteFile(filepath.Join(changed, file.Name), data, 0644); err != nil {
 					return err
 				}
 			}

@@ -23,13 +23,15 @@ import (
 	"github.com/system-inc/adamic/internal/buildcache"
 	"github.com/system-inc/adamic/internal/ccjobserver"
 	"github.com/system-inc/adamic/internal/native"
+	"github.com/system-inc/adamic/internal/native_runtime"
 	"github.com/system-inc/adamic/internal/toolchain"
 )
 
-// NativeFiles are internal/native's files defining everything native.BuildLean reaches, which an agreement native's
-// lean recipe keys as files: runtimeproducts' TestTheLeanBuildReachesOnlyItsDeclaredFiles holds BuildLean to them, and
-// the rest of internal/native, the compiler, is no input of the binary. The runtime is keyed as the archive it's handed.
-var NativeFiles = []string{"internal/native/jobserver.go", "internal/native/lean_build.go", "internal/native/library.go", "internal/native/native.go", "internal/native/regexp_compiler_library.go", "internal/native/target.go"}
+// NativeFiles are internal/native's and internal/native_runtime's files defining everything native.BuildLean reaches,
+// which an agreement native's lean recipe keys as files: runtimeproducts' TestTheLeanBuildReachesOnlyItsDeclaredFiles
+// holds BuildLean to them, its reach into internal/native_runtime with it, and the rest of internal/native, the compiler,
+// is no input of the binary. The runtime is keyed as the archive it's handed.
+var NativeFiles = []string{"internal/native/lean_build.go", "internal/native/native.go", "internal/native/regexp_compiler_library.go", "internal/native_runtime/jobserver.go", "internal/native_runtime/library.go", "internal/native_runtime/options.go", "internal/native_runtime/target.go"}
 
 // Product is the directory holding the native agreement binary, native, that the C at source, a file of the lower
 // agreement C (FindC), builds, linked with the runtime archive in archive (a runtimeproducts product's directory).
@@ -63,7 +65,7 @@ func Product(t testing.TB, source string, archive string, split string) string {
 		t.Fatal(err)
 	}
 	// clang's report is read under the triple the binary is built for, which picks clang's config files (#5xsd2ha).
-	resolved, err := native.ResolveTarget(options())
+	resolved, err := native_runtime.ResolveTarget(options())
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -71,7 +73,7 @@ func Product(t testing.TB, source string, archive string, split string) string {
 		// v3: a lean build of what it's handed, keyed by its own window (#egjbcre).
 		Name:      "lower agreement native v3",
 		Files:     append(slices.Clone(NativeFiles), "internal/native/agreementproducts"),
-		Flags:     append(native.Flags(options()), fmt.Sprintf("C=%x", sha256.Sum256(code)), "archive="+digest, "ADAMIC_NATIVE_SPLIT="+split),
+		Flags:     append(native_runtime.Flags(options()), fmt.Sprintf("C=%x", sha256.Sum256(code)), "archive="+digest, "ADAMIC_NATIVE_SPLIT="+split),
 		Toolchain: append(platform(), buildcache.Tool(compiler, "--target="+resolved.Target, "--version")),
 	}
 	return buildcache.LeanProductOf(t, buildcache.Handed{Inputs: inputs, Paths: []string{source, archive, compiler}}, BuildAgreementNative)
@@ -102,8 +104,8 @@ func platform() []string {
 	return []string{goos, goarch}
 }
 
-func options() native.Options {
-	return native.Options{}
+func options() native_runtime.Options {
+	return native_runtime.Options{}
 }
 
 // archiveDigest is the sha256 of every file the archive's directory holds, each by its name and the sha256 of what it

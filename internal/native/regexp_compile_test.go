@@ -14,6 +14,7 @@ import (
 	"strings"
 	"testing"
 
+	"github.com/system-inc/adamic/internal/native_runtime"
 	"github.com/system-inc/adamic/internal/unicodeproperties"
 	cohere "github.com/system-inc/cohere/unicode_properties"
 )
@@ -197,7 +198,7 @@ func TestRegExpRuntimePropertyIdentity(t *testing.T) {
 		t.Fatal(err)
 	}
 	executable := filepath.Join(directory, "check")
-	arguments := append(Flags(Options{Sanitize: true}), "-DADAMIC_REGEXP_RUNTIME_COMPILER=1", "-I", runtimeDirectory, main, filepath.Join(runtimeDirectory, "regexp_compile_properties.c"), "-o", executable)
+	arguments := append(native_runtime.Flags(native_runtime.Options{Sanitize: true}), "-DADAMIC_REGEXP_RUNTIME_COMPILER=1", "-I", runtimeDirectory, main, filepath.Join(runtimeDirectory, "regexp_compile_properties.c"), "-o", executable)
 	command := exec.Command("clang", arguments...)
 	if output, err := command.CombinedOutput(); err != nil {
 		t.Fatalf("compile: %v\n%s", err, output)
@@ -239,7 +240,7 @@ func TestRegExpRuntimePropertiesWASI(t *testing.T) {
 func TestRegExpRuntimeCompilerNotLinked(t *testing.T) {
 	t.Parallel()
 	binary := filepath.Join(t.TempDir(), "empty")
-	if err := Build("#include \"adamic.h\"\nint main(void) { return 0; }\n", binary, Options{Sanitize: true}); err != nil {
+	if err := Build("#include \"adamic.h\"\nint main(void) { return 0; }\n", binary, native_runtime.Options{Sanitize: true}); err != nil {
 		t.Fatal(err)
 	}
 	if output, err := exec.Command(binary).CombinedOutput(); err != nil {

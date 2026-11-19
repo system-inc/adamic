@@ -11,6 +11,7 @@ import (
 
 	"github.com/system-inc/adamic/internal/javascript"
 	"github.com/system-inc/adamic/internal/native"
+	"github.com/system-inc/adamic/internal/native_runtime"
 )
 
 // A union's null is the runtime's static adamic_null, a bare header of kind object with nothing after
@@ -64,7 +65,7 @@ console.log(String(count([new Box(1), 2, "s", null], (value): value is Box | num
 	}
 	prefix := "adamic: panic: predicate an arrow, declared at "
 	binary := filepath.Join(directory, "native")
-	if err := native.Build(native.C(program), binary, native.Options{Sanitize: true}); err != nil {
+	if err := native.Build(native.C(program), binary, native_runtime.Options{Sanitize: true}); err != nil {
 		t.Fatal(err)
 	}
 	command := exec.Command(binary)

@@ -4,6 +4,8 @@ import (
 	"fmt"
 	"strings"
 	"text/scanner"
+
+	"github.com/system-inc/adamic/internal/native_runtime"
 )
 
 // TargetRefused distinguishes an unsupported host member from a broken WASI build.
@@ -41,8 +43,8 @@ var wasiHostRefusals = map[string]TargetRefused{
 	"adamic_fs_file_stats_birthtime":    {"fs.Stats.birthtime", "wasi preview1's filestat has no birth time"},
 }
 
-func validateBuild(source string, options Options) error {
-	if err := ValidateOptions(options); err != nil {
+func validateBuild(source string, options native_runtime.Options) error {
+	if err := native_runtime.ValidateOptions(options); err != nil {
 		return err
 	}
 	if options.Target != "wasm32-wasi" {

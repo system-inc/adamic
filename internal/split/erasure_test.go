@@ -4,6 +4,7 @@ import (
 	"context"
 	"github.com/system-inc/adamic/internal/javascript"
 	"github.com/system-inc/adamic/internal/native"
+	"github.com/system-inc/adamic/internal/native_runtime"
 	"os"
 	"os/exec"
 	"path/filepath"
@@ -58,7 +59,7 @@ func TestBoundaryPreservesErasedFacts(t *testing.T) {
 		if err != nil {
 			t.Fatalf("source oracle: %v: %s", err, truth)
 		}
-		if err := native.Build(native.C(program), binary, native.Options{Sanitize: true}); err != nil {
+		if err := native.Build(native.C(program), binary, native_runtime.Options{Sanitize: true}); err != nil {
 			t.Fatal(err)
 		}
 		for _, command := range []*exec.Cmd{exec.Command("node", "--disable-warning=ExperimentalWarning", runner, module), exec.Command(binary)} {

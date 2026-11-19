@@ -5,18 +5,20 @@ import (
 	"path/filepath"
 	"strings"
 	"testing"
+
+	"github.com/system-inc/adamic/internal/native_runtime"
 )
 
 // Main's record harness supplies a borrowed ordered slot view with no heap shape.
 // Compile a renamed copy of production C so the mutant never edits the checkout.
 func jsonEncoderRecordView(t *testing.T, wasm bool) {
 	t.Helper()
-	options := Options{Sanitize: !wasm, Count: true}
+	options := native_runtime.Options{Sanitize: !wasm, Count: true}
 	if wasm {
 		if os.Getenv("ADAMIC_ORACLE_WASI") != "1" {
 			t.Skip("set ADAMIC_ORACLE_WASI=1")
 		}
-		options = Options{Target: "wasm32-wasi", Count: true}
+		options = native_runtime.Options{Target: "wasm32-wasi", Count: true}
 	}
 	encoder, err := os.ReadFile("../native_runtime/c/json_stringify.c")
 	if err != nil {

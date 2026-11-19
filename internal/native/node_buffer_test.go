@@ -12,6 +12,7 @@ import (
 
 	"github.com/system-inc/adamic/internal/ir"
 	"github.com/system-inc/adamic/internal/javascript"
+	"github.com/system-inc/adamic/internal/native_runtime"
 )
 
 // Runtime evidence stays runnable while the separate @types/node loader lands.
@@ -88,7 +89,7 @@ func TestNodeBufferRuntimeWithoutDeclarations(t *testing.T) {
 	}
 	for _, sanitize := range []bool{false, true} {
 		binary := filepath.Join(directory, "native")
-		if err := Build(C(program), binary, Options{Sanitize: sanitize}); err != nil {
+		if err := Build(C(program), binary, native_runtime.Options{Sanitize: sanitize}); err != nil {
 			t.Fatal(err)
 		}
 		if got := runWithInput(t, "", binary); got != want {

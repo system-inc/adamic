@@ -12,6 +12,7 @@ import (
 
 	"github.com/system-inc/adamic/internal/load"
 	"github.com/system-inc/adamic/internal/lower"
+	"github.com/system-inc/adamic/internal/native_runtime"
 )
 
 // The planner currently refuses an escaping Weak, even though its runtime read becomes absent.
@@ -64,7 +65,7 @@ int main(void) {
 }
 `
 	binary := filepath.Join(t.TempDir(), "weak-region")
-	if err := Build(source, binary, Options{Sanitize: true}); err != nil {
+	if err := Build(source, binary, native_runtime.Options{Sanitize: true}); err != nil {
 		t.Fatal(err)
 	}
 	ctx, cancel := context.WithTimeout(context.Background(), 20*time.Second)
@@ -96,7 +97,7 @@ func TestRegionEndThrowInitialization(t *testing.T) {
 		t.Fatal(err)
 	}
 	binary := filepath.Join(t.TempDir(), "throw-initialization")
-	if err := Build(C(program), binary, Options{Sanitize: true}); err != nil {
+	if err := Build(C(program), binary, native_runtime.Options{Sanitize: true}); err != nil {
 		t.Fatal(err)
 	}
 	truth, err := exec.Command("node", "--disable-warning=ExperimentalWarning", "../../oracle/node.mjs", path).CombinedOutput()
@@ -195,7 +196,7 @@ int main(void) {
 }
 `
 	binary := filepath.Join(t.TempDir(), "region-weak-tsan")
-	if err := Build(source, binary, Options{ThreadSanitize: true}); err != nil {
+	if err := Build(source, binary, native_runtime.Options{ThreadSanitize: true}); err != nil {
 		t.Fatal(err)
 	}
 	ctx, cancel := context.WithTimeout(context.Background(), 20*time.Second)

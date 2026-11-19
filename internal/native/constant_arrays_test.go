@@ -5,6 +5,7 @@ import (
 	"context"
 	"fmt"
 	"github.com/system-inc/adamic/internal/ir"
+	"github.com/system-inc/adamic/internal/native_runtime"
 	"os"
 	"path/filepath"
 	"regexp"
@@ -111,7 +112,7 @@ func TestConstantArraysAgreeWithNode(t *testing.T) {
 func runConstantArrays(t *testing.T, code string) (string, string) {
 	t.Helper()
 	binary := filepath.Join(t.TempDir(), "tables")
-	if err := Build(code, binary, Options{Sanitize: true}); err != nil {
+	if err := Build(code, binary, native_runtime.Options{Sanitize: true}); err != nil {
 		t.Fatal(err)
 	}
 	ctx, cancel := context.WithTimeout(context.Background(), time.Minute)

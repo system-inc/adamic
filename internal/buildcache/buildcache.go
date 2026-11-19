@@ -177,7 +177,7 @@ func functionPackage(symbol string) string {
 // its build reaches nothing its key doesn't hold, which open the lean recipe to it (leanRecipeTaken, #gr5y0yf item 1,
 // Node's ruling: per caller, the census the gate, each test named and checked by
 // TestEveryLeanCallersCensusIsATestOfItsPackage). A caller naming none fails closed, to the whole recipe. runtimeproducts
-// alone names one: its archives' build is native.RuntimeRequest.Build, handed its jobserver as a value (#yzwm4rj), and
+// alone names one: its archives' build is native_runtime.RuntimeRequest.Build, handed its jobserver as a value (#yzwm4rj), and
 // everything that decides an archive's bytes is in its Inputs (runtimeproducts.Inputs: the runtime's files, every flag
 // and the IR's tags as the request's portable parts, the compiler and archiver by their reports). Its census is two
 // tests, each named, since each holds half of that: the build's reach to the files its key declares
@@ -1009,7 +1009,7 @@ func Tool(name string, arguments ...string) string {
 // "--target=<triple>", "--version"). clang picks its config files by target (`<triple>-clang.cfg`, `<triple>.cfg`), so
 // a bare --version reports only its default triple's, and a config that changes a cross build's compile would move no
 // key (Node's must on #5xsd2ha). The triple is toolchain.Triple of the build's platform, toolchain.Platform of this
-// process's environment, the one native.Flags names and cgo's compilers name (toolchain.Compilers). A build for another
+// process's environment, the one native_runtime.Flags names and cgo's compilers name (toolchain.Compilers). A build for another
 // target than its platform's, a wasm32 one, reads Tool(compiler, "--target=<its triple>", "--version") itself.
 func CompilerReport(compiler string) string {
 	return Tool(compiler, compilerReportArguments(os.Environ())...)

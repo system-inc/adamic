@@ -7,6 +7,7 @@ import (
 	"testing"
 
 	"github.com/system-inc/adamic/internal/native"
+	"github.com/system-inc/adamic/internal/native_runtime"
 )
 
 // A string past V8's longest throws Node's RangeError, "Invalid string length", and a catch takes it,
@@ -141,7 +142,7 @@ int main(void) {
 }
 `
 	binary := filepath.Join(t.TempDir(), "limit")
-	if err := native.Build(harness, binary, native.Options{}); err != nil {
+	if err := native.Build(harness, binary, native_runtime.Options{}); err != nil {
 		t.Fatal(err)
 	}
 	compiled := execute(t, binary)
@@ -186,7 +187,7 @@ func TestStringLengthJoinMemory(t *testing.T) {
 		}
 		code = "#include <stdio.h>\n" + code[:at] + "\tfprintf(stderr, \"join_capacity_bytes %zu\\n\", atomic_load_explicit(&adamic_counted.join_capacity_peak, memory_order_relaxed));\n" + code[at:]
 		binary := filepath.Join(t.TempDir(), "join")
-		if err := native.Build(code, binary, native.Options{Count: true}); err != nil {
+		if err := native.Build(code, binary, native_runtime.Options{Count: true}); err != nil {
 			t.Fatal(err)
 		}
 		got := execute(t, binary)

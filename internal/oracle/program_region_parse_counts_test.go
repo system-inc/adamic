@@ -8,7 +8,7 @@ import (
 	"testing"
 
 	"github.com/system-inc/adamic/internal/leakcheck"
-	"github.com/system-inc/adamic/internal/native"
+	"github.com/system-inc/adamic/internal/native_runtime"
 )
 
 func programParseCountRelative(enabled bool) string {
@@ -27,7 +27,7 @@ func init() {
 			if err != nil {
 				t.Fatal(err)
 			}
-			runs := string(code) + strings.Join(native.Flags(native.Options{Count: true, ProgramRegion: enabled}), " ") + string(manifest)
+			runs := string(code) + strings.Join(native_runtime.Flags(native_runtime.Options{Count: true, ProgramRegion: enabled}), " ") + string(manifest)
 			return countPortable(t, runs, ""), func() string {
 				binary := filepath.Join(programParseBuild(t, enabled), "parse")
 				name, args := pinnedStack(binary, programParseArguments(t)...)

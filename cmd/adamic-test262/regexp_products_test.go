@@ -9,15 +9,15 @@ import (
 	"testing"
 
 	"github.com/system-inc/adamic/internal/buildcache"
-	"github.com/system-inc/adamic/internal/native"
 	"github.com/system-inc/adamic/internal/native/runtimeproducts"
+	"github.com/system-inc/adamic/internal/native_runtime"
 )
 
 // Oracle owns these shared archives. The product units find them ahead;
 // runner shards only read them, lower their program and link it.
-func regExpRunnerRuntime(t testing.TB, options native.Options) (string, native.RuntimeRequest) {
+func regExpRunnerRuntime(t testing.TB, options native_runtime.Options) (string, native_runtime.RuntimeRequest) {
 	t.Helper()
-	request, err := native.RuntimeRequestFor(options)
+	request, err := native_runtime.RuntimeRequestFor(options)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -55,9 +55,9 @@ func regExpCompilerEngine(t testing.TB, corpus string) *engine {
 func regExpRunnerEngine(t testing.TB, corpus string) *engine {
 	t.Helper()
 	e := regExpCompilerEngine(t, corpus)
-	directory, _ := regExpRunnerRuntime(t, native.Options{Sanitize: true})
-	e.runtimeLibrary = func(source string, _ native.Options) (string, error) {
-		if features := native.Features(source); len(features) != 0 || strings.Contains(source, "#define ADAMIC_REGEXP_RUNTIME_COMPILER 1\n") {
+	directory, _ := regExpRunnerRuntime(t, native_runtime.Options{Sanitize: true})
+	e.runtimeLibrary = func(source string, _ native_runtime.Options) (string, error) {
+		if features := native_runtime.Features(source); len(features) != 0 || strings.Contains(source, "#define ADAMIC_REGEXP_RUNTIME_COMPILER 1\n") {
 			return "", fmt.Errorf("undeclared RegExp runner runtime features: %v", features)
 		}
 		return filepath.Join(directory, "runtime.a"), nil

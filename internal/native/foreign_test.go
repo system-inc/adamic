@@ -6,6 +6,7 @@ import (
 	"testing"
 
 	"github.com/system-inc/adamic/internal/ir"
+	"github.com/system-inc/adamic/internal/native_runtime"
 )
 
 // Foreign payload slots stay private to the bridge under main's object layout.
@@ -34,7 +35,7 @@ int main(void) {
 }
 `
 	binary := filepath.Join(t.TempDir(), "foreign")
-	if err := Build(source, binary, Options{Sanitize: true}); err != nil {
+	if err := Build(source, binary, native_runtime.Options{Sanitize: true}); err != nil {
 		t.Fatal(err)
 	}
 	if output, err := exec.Command(binary).CombinedOutput(); err != nil {

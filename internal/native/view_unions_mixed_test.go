@@ -6,6 +6,8 @@ import (
 	"path/filepath"
 	"strconv"
 	"testing"
+
+	"github.com/system-inc/adamic/internal/native_runtime"
 )
 
 func TestViewMixedUnionUnknownAndUnavailable(t *testing.T) {
@@ -30,7 +32,7 @@ int main(int argc,char **argv){
 	for _, sanitized := range []bool{false, true} {
 		t.Run(strconv.FormatBool(sanitized), func(t *testing.T) {
 			binary := filepath.Join(t.TempDir(), "mixed-union")
-			if err := Build(source+"\n", binary, Options{Sanitize: sanitized}); err != nil {
+			if err := Build(source+"\n", binary, native_runtime.Options{Sanitize: sanitized}); err != nil {
 				t.Fatal(err)
 			}
 			for _, sample := range []struct{ argument, declared, found string }{

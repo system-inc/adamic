@@ -3,6 +3,7 @@ package oracle
 import (
 	"github.com/system-inc/adamic/internal/ir"
 	"github.com/system-inc/adamic/internal/native"
+	"github.com/system-inc/adamic/internal/native_runtime"
 	"path/filepath"
 	"regexp"
 	"strings"
@@ -110,7 +111,7 @@ static adamic_array *array_mutant_reverse(adamic_array *array) { return array; }
 ` + mutant
 			}
 			binary := filepath.Join(t.TempDir(), "mutant")
-			if err := native.Build(mutant, binary, native.Options{Sanitize: true}); err != nil {
+			if err := native.Build(mutant, binary, native_runtime.Options{Sanitize: true}); err != nil {
 				t.Fatal(err)
 			}
 			if report := leakChecked(t, mutant, binary); report != "" {

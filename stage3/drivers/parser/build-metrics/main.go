@@ -11,6 +11,7 @@ import (
 
 	_ "github.com/system-inc/adamic/internal/ccjobserver"
 	"github.com/system-inc/adamic/internal/native"
+	"github.com/system-inc/adamic/internal/native_runtime"
 )
 
 func main() {
@@ -25,12 +26,12 @@ func main() {
 	if err != nil {
 		panic(err)
 	}
-	options := native.Options{Split: os.Args[3] != "unsplit", Jobs: jobs}
+	options := native_runtime.Options{Split: os.Args[3] != "unsplit", Jobs: jobs}
 	started := time.Now()
 	buildErr := native.Build(string(source), os.Args[2], options)
 	result := map[string]any{"mode": os.Args[3], "jobs": jobs,
 		"native_build_wall_seconds": time.Since(started).Seconds(),
-		"timing_scope":              "native.Build only: runtime preparation, splitting, preprocessing, object cache, clang compilation and linking; excludes checking, lowering and C emission", "flags": native.Flags(options)}
+		"timing_scope":              "native.Build only: runtime preparation, splitting, preprocessing, object cache, clang compilation and linking; excludes checking, lowering and C emission", "flags": native_runtime.Flags(options)}
 	if buildErr != nil {
 		result["error"] = buildErr.Error()
 	} else {

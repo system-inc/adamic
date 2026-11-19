@@ -9,6 +9,8 @@ import (
 	"strconv"
 	"strings"
 	"testing"
+
+	"github.com/system-inc/adamic/internal/native_runtime"
 )
 
 // A thread keeps the blocks its regions free, up to ADAMIC_REGION_BLOCK_CACHE, each a mapping of its
@@ -157,11 +159,11 @@ int main(int count, char **arguments) {
 func TestRegionBlockCache(t *testing.T) {
 	t.Parallel()
 	counted := filepath.Join(t.TempDir(), "counted")
-	if err := Build(regionBlockCacheHarness, counted, Options{Count: true}); err != nil {
+	if err := Build(regionBlockCacheHarness, counted, native_runtime.Options{Count: true}); err != nil {
 		t.Fatal(err)
 	}
 	sanitized := filepath.Join(t.TempDir(), "sanitized")
-	if err := Build(regionBlockCacheHarness, sanitized, Options{Sanitize: true}); err != nil {
+	if err := Build(regionBlockCacheHarness, sanitized, native_runtime.Options{Sanitize: true}); err != nil {
 		t.Fatal(err)
 	}
 	run := func(binary, mode, rounds string) (string, string, int) {

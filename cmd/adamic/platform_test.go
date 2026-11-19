@@ -10,7 +10,7 @@ import (
 	"testing"
 
 	"github.com/system-inc/adamic/internal/load"
-	"github.com/system-inc/adamic/internal/native"
+	"github.com/system-inc/adamic/internal/native_runtime"
 	"github.com/system-inc/adamic/internal/platform"
 )
 
@@ -51,7 +51,7 @@ func TestPlatformMissingCheckExit(t *testing.T) {
 
 func TestPlatformMissingBuildExit(t *testing.T) {
 	t.Parallel()
-	code := buildWithNative("testdata/build_target.a", filepath.Join(t.TempDir(), "program"), nil, func(string, string, native.Options) error {
+	code := buildWithNative("testdata/build_target.a", filepath.Join(t.TempDir(), "program"), nil, func(string, string, native_runtime.Options) error {
 		return fmt.Errorf("native: %w", &platform.Missing{Platform: "darwin", Requirement: "xcrun"})
 	})
 	if code != platform.MissingExitCode {

@@ -11,6 +11,7 @@ import (
 	"github.com/system-inc/adamic/internal/buildcache"
 	"github.com/system-inc/adamic/internal/leakcheck"
 	"github.com/system-inc/adamic/internal/native"
+	"github.com/system-inc/adamic/internal/native_runtime"
 )
 
 func programHostMeasuredBuild(t *testing.T, enabled bool) string {
@@ -27,9 +28,9 @@ func programHostMeasuredBuild(t *testing.T, enabled bool) string {
 		}
 		code = "#include <sys/resource.h>\n#include <stdio.h>\n" + code[:at] + "\tstruct rusage graph_usage; getrusage(RUSAGE_SELF, &graph_usage); printf(\"graph_peak_rss_kib %ld\\n\", graph_usage.ru_maxrss);\n" + code[at:]
 		if enabled {
-			return programRegionBuild(t, code, filepath.Join(directory, "host"), native.Options{ProgramRegion: true, Count: true})
+			return programRegionBuild(t, code, filepath.Join(directory, "host"), native_runtime.Options{ProgramRegion: true, Count: true})
 		}
-		return native.Build(code, filepath.Join(directory, "host"), native.Options{Count: true})
+		return native.Build(code, filepath.Join(directory, "host"), native_runtime.Options{Count: true})
 	})
 }
 func TestProduct_ProgramHostOn(t *testing.T) {

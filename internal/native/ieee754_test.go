@@ -236,7 +236,7 @@ func TestIeee754MatchesNodeBitForBit(t *testing.T) {
 	}
 
 	binary := filepath.Join(t.TempDir(), "harness")
-	if err := Build(ieee754Harness, binary, Options{Sanitize: true}); err != nil {
+	if err := Build(ieee754Harness, binary, native_runtime.Options{Sanitize: true}); err != nil {
 		t.Fatal(err)
 	}
 	native := strings.Split(strings.TrimSuffix(runWithInput(t, input.String(), binary), "\n"), "\n")

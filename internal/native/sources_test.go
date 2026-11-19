@@ -17,6 +17,7 @@ import (
 	"github.com/system-inc/adamic/internal/compilerinputs"
 	"github.com/system-inc/adamic/internal/leakcheck"
 	"github.com/system-inc/adamic/internal/native"
+	"github.com/system-inc/adamic/internal/native_runtime"
 )
 
 // The readiness source has no Adamic-program caller yet, so a C harness pins it, as the timer provider was pinned:
@@ -72,7 +73,7 @@ func sourceFinishes(binary, mode string) string {
 
 func sourcePin(t *testing.T, mode string) {
 	t.Helper()
-	if failure := sourceFinishes(sourceProduct(t, "release", native.Options{Release: true}), mode); failure != "" {
+	if failure := sourceFinishes(sourceProduct(t, "release", native_runtime.Options{Release: true}), mode); failure != "" {
 		t.Fatal(failure)
 	}
 }
@@ -107,8 +108,8 @@ func TestSourceDispatchIsAMacrotask(t *testing.T) {
 func TestReadinessSourceModesFinish(t *testing.T) {
 	t.Parallel()
 	code := sourceHarness(t)
-	binary := sourceProduct(t, "sanitized", native.Options{Sanitize: true, Count: true})
-	released := sourceProduct(t, "release", native.Options{Release: true})
+	binary := sourceProduct(t, "sanitized", native_runtime.Options{Sanitize: true, Count: true})
+	released := sourceProduct(t, "release", native_runtime.Options{Release: true})
 	for _, mode := range slices.Sorted(maps.Keys(sourceOutputs)) {
 		t.Run(mode, func(t *testing.T) {
 			run := timerRun(sourceSanitizers, binary, mode)
@@ -124,7 +125,7 @@ func TestReadinessSourceModesFinish(t *testing.T) {
 			report, err := leakcheck.Check(leakcheck.Program{C: code, Sanitized: binary, Counted: filepath.Join(t.TempDir(), "counted"),
 				Arguments: func() []string { return []string{mode} }, Execute: timerRun,
 				BuildCounted: func(_ string, output string) error {
-					return copyTimerProduct(sourceProduct(t, "counted", native.Options{Count: true}), output)
+					return copyTimerProduct(sourceProduct(t, "counted", native_runtime.Options{Count: true}), output)
 				}})
 			if err != nil || report != "" {
 				t.Fatalf("leakcheck: %v %s", err, report)
@@ -172,11 +173,11 @@ const sourceThrowMessage = "adamic: panic: Error: source dispatch failed\n"
 // A dispatch that leaves adamic_thrown reaches adamic_uncaught, as a timer callback's does.
 func TestSourceThrowIsUncaught(t *testing.T) {
 	t.Parallel()
-	released := timerRun(nil, sourceProduct(t, "release", native.Options{Release: true}), "throw")
+	released := timerRun(nil, sourceProduct(t, "release", native_runtime.Options{Release: true}), "throw")
 	if released.ExitCode != 70 || string(released.Stdout) != "prefix\n" || string(released.Stderr) != sourceThrowMessage {
 		t.Fatalf("uncaught dispatch: %+v", released)
 	}
-	checked := timerRun(sourceSanitizers, sourceProduct(t, "sanitized", native.Options{Sanitize: true, Count: true}), "throw")
+	checked := timerRun(sourceSanitizers, sourceProduct(t, "sanitized", native_runtime.Options{Sanitize: true, Count: true}), "throw")
 	if checked.ExitCode != 70 || !strings.HasPrefix(string(checked.Stderr), sourceThrowMessage) || strings.Contains(string(checked.Stderr), "Sanitizer") || strings.Contains(string(checked.Stderr), "runtime error:") {
 		t.Fatalf("sanitized uncaught dispatch: %+v", checked)
 	}
@@ -186,7 +187,7 @@ const sourceCustomHooksMessage = "adamic: panic: NotYet: readiness sources with 
 
 func TestSourceCustomHooksRefused(t *testing.T) {
 	t.Parallel()
-	run := timerRun(nil, sourceProduct(t, "release", native.Options{Release: true}), "custom-hooks")
+	run := timerRun(nil, sourceProduct(t, "release", native_runtime.Options{Release: true}), "custom-hooks")
 	if run.ExitCode != 70 || string(run.Stderr) != sourceCustomHooksMessage {
 		t.Fatalf("custom hooks must refuse with the exact provider NotYet: %+v", run)
 	}
@@ -195,7 +196,7 @@ func TestSourceCustomHooksRefused(t *testing.T) {
 // A blocking descriptor would stall the loop in its own dispatch, so registration stops loudly.
 func TestSourceBlockingDescriptorRefused(t *testing.T) {
 	t.Parallel()
-	run := timerRun(nil, sourceProduct(t, "release", native.Options{Release: true}), "blocking")
+	run := timerRun(nil, sourceProduct(t, "release", native_runtime.Options{Release: true}), "blocking")
 	if run.ExitCode == 0 || string(run.Stdout) != "prefix\n" || !strings.HasPrefix(string(run.Stderr), "adamic: readiness source descriptor must be non-blocking\n") {
 		t.Fatalf("a blocking descriptor must stop registration: %+v", run)
 	}
@@ -234,7 +235,7 @@ func TestSourceMutants(t *testing.T) {
 	t.Parallel()
 	for _, mutant := range sourceMutations {
 		t.Run(mutant.name, func(t *testing.T) {
-			failure := sourceFinishes(sourceProduct(t, "mutant-"+mutant.name, native.Options{Release: true}), mutant.mode)
+			failure := sourceFinishes(sourceProduct(t, "mutant-"+mutant.name, native_runtime.Options{Release: true}), mutant.mode)
 			if failure == "" {
 				t.Fatalf("%s did not catch the mutant", mutant.pin)
 			}
@@ -248,9 +249,9 @@ func TestSourceMutants(t *testing.T) {
 
 // Products contain compiled probes only. Every run, comparison and mutant assertion still executes in the ordinary
 // test on the runner. A mutant runtime is the timers' (timerMutant), linked through clangIn.
-func sourceProduct(t *testing.T, variant string, options native.Options) string {
+func sourceProduct(t *testing.T, variant string, options native_runtime.Options) string {
 	t.Helper()
-	flags := append([]string{fmt.Sprintf("options=%+v", options)}, native.Flags(options)...)
+	flags := append([]string{fmt.Sprintf("options=%+v", options)}, native_runtime.Flags(options)...)
 	for _, variable := range []string{"ADAMIC_PROGRAM_REGION", "ADAMIC_NATIVE_SPLIT", "ADAMIC_NATIVE_JOBS", "CPATH", "C_INCLUDE_PATH", "SDKROOT", "MACOSX_DEPLOYMENT_TARGET"} {
 		value, set := os.LookupEnv(variable)
 		flags = append(flags, fmt.Sprintf("env:%s:set=%t:value=%s", variable, set, value))
@@ -293,49 +294,49 @@ func TestSourceProductOrderIsCurrent(t *testing.T) {
 }
 func TestProduct_SourcesSanitized(t *testing.T) {
 	t.Parallel()
-	sourceProduct(t, "sanitized", native.Options{Sanitize: true, Count: true})
+	sourceProduct(t, "sanitized", native_runtime.Options{Sanitize: true, Count: true})
 }
 func TestProduct_SourcesRelease(t *testing.T) {
 	t.Parallel()
-	sourceProduct(t, "release", native.Options{Release: true})
+	sourceProduct(t, "release", native_runtime.Options{Release: true})
 }
 func TestProduct_SourcesCounted(t *testing.T) {
 	t.Parallel()
-	sourceProduct(t, "counted", native.Options{Count: true})
+	sourceProduct(t, "counted", native_runtime.Options{Count: true})
 }
 func TestProduct_SourceMutantPredicate(t *testing.T) {
 	t.Parallel()
-	sourceProduct(t, "mutant-predicate-ignores-sources", native.Options{Release: true})
+	sourceProduct(t, "mutant-predicate-ignores-sources", native_runtime.Options{Release: true})
 }
 func TestProduct_SourceMutantLiveness(t *testing.T) {
 	t.Parallel()
-	sourceProduct(t, "mutant-liveness-counts-unref", native.Options{Release: true})
+	sourceProduct(t, "mutant-liveness-counts-unref", native_runtime.Options{Release: true})
 }
 func TestProduct_SourceMutantReadinessLive(t *testing.T) {
 	t.Parallel()
-	sourceProduct(t, "mutant-readiness-read-live", native.Options{Release: true})
+	sourceProduct(t, "mutant-readiness-read-live", native_runtime.Options{Release: true})
 }
 func TestProduct_SourceMutantCheckpoint(t *testing.T) {
 	t.Parallel()
-	sourceProduct(t, "mutant-dispatch-checkpoint-omitted", native.Options{Release: true})
+	sourceProduct(t, "mutant-dispatch-checkpoint-omitted", native_runtime.Options{Release: true})
 }
 func TestProduct_SourceMutantCloseDoneAtOnce(t *testing.T) {
 	t.Parallel()
-	sourceProduct(t, "mutant-close-done-at-once", native.Options{Release: true})
+	sourceProduct(t, "mutant-close-done-at-once", native_runtime.Options{Release: true})
 }
 func TestProduct_SourceMutantPendingWaitTimeout(t *testing.T) {
 	t.Parallel()
-	sourceProduct(t, "mutant-pending-wait-default-timeout", native.Options{Release: true})
+	sourceProduct(t, "mutant-pending-wait-default-timeout", native_runtime.Options{Release: true})
 }
 func TestProduct_SourceMutantPendingUntilQuiet(t *testing.T) {
 	t.Parallel()
-	sourceProduct(t, "mutant-pending-until-quiet", native.Options{Release: true})
+	sourceProduct(t, "mutant-pending-until-quiet", native_runtime.Options{Release: true})
 }
 func TestProduct_SourceMutantRefPendsClose(t *testing.T) {
 	t.Parallel()
-	sourceProduct(t, "mutant-ref-pends-close", native.Options{Release: true})
+	sourceProduct(t, "mutant-ref-pends-close", native_runtime.Options{Release: true})
 }
 func TestProduct_SourceMutantRefStaleAdmitted(t *testing.T) {
 	t.Parallel()
-	sourceProduct(t, "mutant-ref-stale-admitted", native.Options{Release: true})
+	sourceProduct(t, "mutant-ref-stale-admitted", native_runtime.Options{Release: true})
 }

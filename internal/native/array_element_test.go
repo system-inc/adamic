@@ -18,6 +18,7 @@ import (
 	"github.com/system-inc/adamic/internal/load"
 	"github.com/system-inc/adamic/internal/lower"
 	"github.com/system-inc/adamic/internal/native"
+	"github.com/system-inc/adamic/internal/native_runtime"
 )
 
 // The element byte (adamic.h's adamic_array) is read natively from the arrays a program itself
@@ -104,7 +105,7 @@ func arrayElementWitness(t *testing.T, source string, instrument func(string) st
 		code = changed
 	}
 	binary := filepath.Join(directory, "native")
-	if err := native.Build(code, binary, native.Options{Sanitize: true}); err != nil {
+	if err := native.Build(code, binary, native_runtime.Options{Sanitize: true}); err != nil {
 		t.Fatal(err)
 	}
 	got, diagnostic, err = run([]string{"ASAN_OPTIONS=detect_leaks=1", "UBSAN_OPTIONS=halt_on_error=1"}, binary)
@@ -453,7 +454,7 @@ int main(int argc, char **argv) {
 }
 `
 	binary := filepath.Join(t.TempDir(), "scalar")
-	if err := native.Build(source, binary, native.Options{}); err != nil {
+	if err := native.Build(source, binary, native_runtime.Options{}); err != nil {
 		t.Fatal(err)
 	}
 	return binary

@@ -10,6 +10,7 @@ import (
 
 	"github.com/system-inc/adamic/internal/ir"
 	"github.com/system-inc/adamic/internal/native"
+	"github.com/system-inc/adamic/internal/native_runtime"
 )
 
 // An object intersection whose fields hold objects, arrays and boxed unions (Compiler's ruling on
@@ -151,7 +152,7 @@ var objectIntersectionGraphCounts = regexp.MustCompile(`(?m)^adamic: graph count
 func objectIntersectionGraph(t *testing.T, program *ir.Program) string {
 	t.Helper()
 	binary := filepath.Join(t.TempDir(), "counted")
-	if err := native.Build(native.C(program), binary, native.Options{Count: true}); err != nil {
+	if err := native.Build(native.C(program), binary, native_runtime.Options{Count: true}); err != nil {
 		t.Fatal(err)
 	}
 	name, arguments := pinnedStack(binary)

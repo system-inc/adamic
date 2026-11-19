@@ -7,6 +7,7 @@ import (
 	"runtime"
 	"testing"
 
+	"github.com/system-inc/adamic/internal/native_runtime"
 	"github.com/system-inc/adamic/stage1/cohere/tsprinter/oracles"
 
 	"github.com/system-inc/adamic/internal/buildcache"
@@ -65,8 +66,8 @@ func printerGateNative(t *testing.T, family string, sanitize bool) string {
 		if err != nil {
 			t.Fatal(err)
 		}
-		options := native.Options{Sanitize: sanitize, Split: true, Jobs: 4}
-		flags := append([]string{"C sha256=" + oracles.StatementBytesHash(source), "split=true", "jobs=4"}, native.Flags(options)...)
+		options := native_runtime.Options{Sanitize: sanitize, Split: true, Jobs: 4}
+		flags := append([]string{"C sha256=" + oracles.StatementBytesHash(source), "split=true", "jobs=4"}, native_runtime.Flags(options)...)
 		for _, variable := range []string{"ADAMIC_NATIVE_SPLIT", "CPATH", "C_INCLUDE_PATH", "LIBRARY_PATH", "SDKROOT", "MACOSX_DEPLOYMENT_TARGET"} {
 			flags = append(flags, variable+"="+os.Getenv(variable))
 		}

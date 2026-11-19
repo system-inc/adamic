@@ -6,7 +6,7 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/system-inc/adamic/internal/native"
+	"github.com/system-inc/adamic/internal/native_runtime"
 )
 
 // commonJSSource reads __filename and __dirname, which bind only in a .ts file of a build that declares one bundled
@@ -79,7 +79,7 @@ func TestModuleFormatReachesBuild(t *testing.T) {
 		{nil, 1},
 	} {
 		built := false
-		code := buildWithNative(path, filepath.Join(t.TempDir(), "out"), one.arguments, func(source, output string, options native.Options) error {
+		code := buildWithNative(path, filepath.Join(t.TempDir(), "out"), one.arguments, func(source, output string, options native_runtime.Options) error {
 			built = true
 			for _, function := range []string{"adamic_node_filename()", "adamic_node_dirname()"} {
 				if !strings.Contains(source, function) {

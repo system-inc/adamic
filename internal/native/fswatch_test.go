@@ -15,6 +15,7 @@ import (
 	"github.com/system-inc/adamic/internal/compilerinputs"
 	"github.com/system-inc/adamic/internal/leakcheck"
 	"github.com/system-inc/adamic/internal/native"
+	"github.com/system-inc/adamic/internal/native_runtime"
 )
 
 // fs.watch's programs are held to Node in internal/oracle (library_node_watch_test.go). This harness
@@ -46,9 +47,9 @@ var fsWatchSanitizers = []string{"ASAN_OPTIONS=detect_leaks=1:halt_on_error=1", 
 // its value counts balanced.
 var fsWatchVariants = []struct {
 	name    string
-	options native.Options
+	options native_runtime.Options
 	env     []string
-}{{"release", native.Options{Release: true}, nil}, {"sanitized", native.Options{Sanitize: true, Count: true}, fsWatchSanitizers}}
+}{{"release", native_runtime.Options{Release: true}, nil}, {"sanitized", native_runtime.Options{Sanitize: true, Count: true}, fsWatchSanitizers}}
 
 // fsWatchRun runs mode in a fresh TMPDIR, the harness's own deadline its failure.
 func fsWatchRun(t *testing.T, environment []string, binary, mode string) (leakcheck.Run, bool) {
@@ -132,7 +133,7 @@ func TestFSWatchDrainsJobsPerEvent(t *testing.T) {
 // before either job.
 func TestFSWatchMutantDrainDropped(t *testing.T) {
 	t.Parallel()
-	got, expired := fsWatchRun(t, nil, fsWatchProduct(t, "mutant-drain-dropped", native.Options{Release: true}), "drain")
+	got, expired := fsWatchRun(t, nil, fsWatchProduct(t, "mutant-drain-dropped", native_runtime.Options{Release: true}), "drain")
 	if expired || got.ExitCode != 0 || string(got.Stdout) != fsWatchDrainPending+"rename a\nrename b\nrename end\njob\njob\ndone\n" {
 		t.Fatalf("the mutant must run both jobs after every listener: expired %t, %+v", expired, got)
 	}
@@ -142,7 +143,7 @@ func TestFSWatchMutantDrainDropped(t *testing.T) {
 // An 'error' nobody listens for is thrown, as EventEmitter's emit throws it, and nothing catches it.
 func TestFSWatchErrorWithoutListenerIsUncaught(t *testing.T) {
 	t.Parallel()
-	got, expired := fsWatchRun(t, nil, fsWatchProduct(t, "release", native.Options{Release: true}), "error-uncaught")
+	got, expired := fsWatchRun(t, nil, fsWatchProduct(t, "release", native_runtime.Options{Release: true}), "error-uncaught")
 	if expired || got.ExitCode != 70 || len(got.Stdout) != 0 || string(got.Stderr) != fsWatchUncaught {
 		t.Fatalf("uncaught error: expired %t, %+v", expired, got)
 	}
@@ -151,7 +152,7 @@ func TestFSWatchErrorWithoutListenerIsUncaught(t *testing.T) {
 // Under custom host loop hooks the readiness source's own refusal applies.
 func TestFSWatchCustomHooksRefused(t *testing.T) {
 	t.Parallel()
-	got, _ := fsWatchRun(t, nil, fsWatchProduct(t, "release", native.Options{Release: true}), "custom-hooks")
+	got, _ := fsWatchRun(t, nil, fsWatchProduct(t, "release", native_runtime.Options{Release: true}), "custom-hooks")
 	if got.ExitCode != 70 || string(got.Stderr) != fsWatchCustomHooks {
 		t.Fatalf("custom hooks must refuse in the source's words: %+v", got)
 	}
@@ -161,7 +162,7 @@ func TestFSWatchCustomHooksRefused(t *testing.T) {
 // turn, and the loop spins past the pin's deadline.
 func TestFSWatchMutantErrorKeepsSource(t *testing.T) {
 	t.Parallel()
-	got, expired := fsWatchRun(t, nil, fsWatchProduct(t, "mutant-error-keeps-source", native.Options{Release: true}), "error")
+	got, expired := fsWatchRun(t, nil, fsWatchProduct(t, "mutant-error-keeps-source", native_runtime.Options{Release: true}), "error")
 	if !expired {
 		t.Fatalf("the mutant must spin past the deadline: %+v", got)
 	}
@@ -204,7 +205,7 @@ func TestFSWatchAddErrorCarriesNodeKeys(t *testing.T) {
 // field the checker proved is there and isn't.
 func TestFSWatchMutantAddErrorDropsSyscall(t *testing.T) {
 	t.Parallel()
-	got, expired := fsWatchRun(t, nil, fsWatchProduct(t, "mutant-add-error-drops-syscall", native.Options{Release: true}), "add-error")
+	got, expired := fsWatchRun(t, nil, fsWatchProduct(t, "mutant-add-error-drops-syscall", native_runtime.Options{Release: true}), "add-error")
 	const stdout = "keys name message errno code path filename\n" +
 		"name Error\n" +
 		"message ENOENT: no such file or directory, watch 'adamic-fswatch-missing'\n" +
@@ -235,9 +236,9 @@ const (
 
 // Products hold compiled probes only; every run and comparison happens in the tests above. A
 // mutant's runtime is a private copy, linked as the timers' mutants are (timerMutant).
-func fsWatchProduct(t *testing.T, variant string, options native.Options) string {
+func fsWatchProduct(t *testing.T, variant string, options native_runtime.Options) string {
 	t.Helper()
-	flags := append([]string{fmt.Sprintf("options=%+v", options)}, native.Flags(options)...)
+	flags := append([]string{fmt.Sprintf("options=%+v", options)}, native_runtime.Flags(options)...)
 	for _, variable := range []string{"ADAMIC_PROGRAM_REGION", "ADAMIC_NATIVE_SPLIT", "ADAMIC_NATIVE_JOBS", "CPATH", "C_INCLUDE_PATH", "SDKROOT", "MACOSX_DEPLOYMENT_TARGET"} {
 		value, set := os.LookupEnv(variable)
 		flags = append(flags, fmt.Sprintf("env:%s:set=%t:value=%s", variable, set, value))
@@ -263,21 +264,21 @@ func fsWatchProduct(t *testing.T, variant string, options native.Options) string
 			if err := os.WriteFile(header, data, 0600); err != nil {
 				return err
 			}
-			library, err := native.RuntimeLibraryForSource(changed.directory, code, options)
+			library, err := native_runtime.RuntimeLibraryForSource(changed.directory, code, options)
 			if err != nil {
 				return err
 			}
 			return native.BuildWithRuntime(code, output, options, library)
 		case "mutant-drain-dropped":
 			changed := timerMutant(t, "node_fs_watch_impl.h", fsWatchDrain, fsWatchDrainMutant)
-			library, err := native.RuntimeLibraryForSource(changed.directory, code, options)
+			library, err := native_runtime.RuntimeLibraryForSource(changed.directory, code, options)
 			if err != nil {
 				return err
 			}
 			return native.BuildWithRuntime(code, output, options, library)
 		case "mutant-add-error-drops-syscall":
 			changed := timerMutant(t, "node_fs_watch_impl.h", fsWatchAddErrorShape, fsWatchAddErrorMutant)
-			library, err := native.RuntimeLibraryForSource(changed.directory, code, options)
+			library, err := native_runtime.RuntimeLibraryForSource(changed.directory, code, options)
 			if err != nil {
 				return err
 			}
@@ -329,7 +330,7 @@ func fsWatchProduct(t *testing.T, variant string, options native.Options) string
 			if err := os.WriteFile(header, data, 0600); err != nil {
 				return err
 			}
-			library, err := native.RuntimeLibraryForSource(changed.directory, code, options)
+			library, err := native_runtime.RuntimeLibraryForSource(changed.directory, code, options)
 			if err != nil {
 				return err
 			}
@@ -343,23 +344,23 @@ func fsWatchProduct(t *testing.T, variant string, options native.Options) string
 
 func TestProduct_FSWatchHarnessRelease(t *testing.T) {
 	t.Parallel()
-	fsWatchProduct(t, "release", native.Options{Release: true})
+	fsWatchProduct(t, "release", native_runtime.Options{Release: true})
 }
 func TestProduct_FSWatchHarnessSanitized(t *testing.T) {
 	t.Parallel()
-	fsWatchProduct(t, "sanitized", native.Options{Sanitize: true, Count: true})
+	fsWatchProduct(t, "sanitized", native_runtime.Options{Sanitize: true, Count: true})
 }
 func TestProduct_FSWatchHarnessMutantErrorKeepsSource(t *testing.T) {
 	t.Parallel()
-	fsWatchProduct(t, "mutant-error-keeps-source", native.Options{Release: true})
+	fsWatchProduct(t, "mutant-error-keeps-source", native_runtime.Options{Release: true})
 }
 func TestProduct_FSWatchHarnessMutantAddErrorDropsSyscall(t *testing.T) {
 	t.Parallel()
-	fsWatchProduct(t, "mutant-add-error-drops-syscall", native.Options{Release: true})
+	fsWatchProduct(t, "mutant-add-error-drops-syscall", native_runtime.Options{Release: true})
 }
 func TestProduct_FSWatchHarnessMutantDrainDropped(t *testing.T) {
 	t.Parallel()
-	fsWatchProduct(t, "mutant-drain-dropped", native.Options{Release: true})
+	fsWatchProduct(t, "mutant-drain-dropped", native_runtime.Options{Release: true})
 }
 
 // The tree builds each product above ahead by its row in cloud/fast-gate/product-order.json, which
@@ -402,7 +403,7 @@ func fsWatchSharedNode(t *testing.T, mode string) leakcheck.Run {
 func fsWatchSharedAgreement(t *testing.T, mode string) {
 	t.Helper()
 	truth := fsWatchSharedNode(t, mode)
-	got, expired := fsWatchRun(t, fsWatchSanitizers, fsWatchProduct(t, "shared", native.Options{Sanitize: true, Count: true}), mode)
+	got, expired := fsWatchRun(t, fsWatchSanitizers, fsWatchProduct(t, "shared", native_runtime.Options{Sanitize: true, Count: true}), mode)
 	if expired || got.ExitCode != truth.ExitCode || string(got.Stdout) != string(truth.Stdout) {
 		t.Fatalf("%s: expired=%t native=%+v Node=%+v", mode, expired, got, truth)
 	}
@@ -424,7 +425,7 @@ func TestFSWatchSharedSourceUnrefMatchesNode(t *testing.T) {
 }
 func TestFSWatchFailureListenerReplacesWatcher(t *testing.T) {
 	t.Parallel()
-	got, expired := fsWatchRun(t, fsWatchSanitizers, fsWatchProduct(t, "shared", native.Options{Sanitize: true, Count: true}), "failure")
+	got, expired := fsWatchRun(t, fsWatchSanitizers, fsWatchProduct(t, "shared", native_runtime.Options{Sanitize: true, Count: true}), "failure")
 	if expired || got.ExitCode != 0 || string(got.Stdout) != "first error\nthird change\n" {
 		t.Fatalf("failure listener: expired=%t %+v", expired, got)
 	}
@@ -438,7 +439,7 @@ func TestFSWatchMutantPerWatcherDescriptorHitsCap(t *testing.T) {
 	if string(truth.Stdout) != "watch failure code=EMFILE message=EMFILE: too many open files, watch '<fixture-path>'\n" {
 		t.Fatalf("Node watch failure: %+v", truth)
 	}
-	got, expired := fsWatchRun(t, fsWatchSanitizers, fsWatchProduct(t, "shared-mutant-instances", native.Options{Sanitize: true, Count: true}), "cap")
+	got, expired := fsWatchRun(t, fsWatchSanitizers, fsWatchProduct(t, "shared-mutant-instances", native_runtime.Options{Sanitize: true, Count: true}), "cap")
 	if expired || got.ExitCode != fsWatchCapFailureStatus || string(got.Stdout) != string(truth.Stdout) {
 		t.Fatalf("per-watcher cap mutant: expired=%t %+v", expired, got)
 	}
@@ -456,7 +457,7 @@ func TestFSWatchMutantPerWatcherDescriptorHitsCap(t *testing.T) {
 }
 func TestFSWatchMutantRemovesSharedWatchTooSoon(t *testing.T) {
 	t.Parallel()
-	got, expired := fsWatchRun(t, fsWatchSanitizers, fsWatchProduct(t, "shared-mutant-remove", native.Options{Sanitize: true, Count: true}), "same")
+	got, expired := fsWatchRun(t, fsWatchSanitizers, fsWatchProduct(t, "shared-mutant-remove", native_runtime.Options{Sanitize: true, Count: true}), "same")
 	if !expired {
 		t.Fatalf("shared remove mutant must miss its own deadline: %+v", got)
 	}
@@ -464,7 +465,7 @@ func TestFSWatchMutantRemovesSharedWatchTooSoon(t *testing.T) {
 }
 func TestFSWatchMutantFailureUsesFreedRecord(t *testing.T) {
 	t.Parallel()
-	got, expired := fsWatchRun(t, fsWatchSanitizers, fsWatchProduct(t, "shared-mutant-identity", native.Options{Sanitize: true, Count: true}), "failure")
+	got, expired := fsWatchRun(t, fsWatchSanitizers, fsWatchProduct(t, "shared-mutant-identity", native_runtime.Options{Sanitize: true, Count: true}), "failure")
 	if expired || !strings.Contains(string(got.Stderr), "AddressSanitizer: heap-use-after-free") {
 		t.Fatalf("failure identity mutant: expired=%t %+v", expired, got)
 	}
@@ -472,25 +473,25 @@ func TestFSWatchMutantFailureUsesFreedRecord(t *testing.T) {
 }
 func TestProduct_FSWatchSharedHarness(t *testing.T) {
 	t.Parallel()
-	fsWatchProduct(t, "shared", native.Options{Sanitize: true, Count: true})
+	fsWatchProduct(t, "shared", native_runtime.Options{Sanitize: true, Count: true})
 }
 func TestProduct_FSWatchSharedMutantInstances(t *testing.T) {
 	t.Parallel()
-	fsWatchProduct(t, "shared-mutant-instances", native.Options{Sanitize: true, Count: true})
+	fsWatchProduct(t, "shared-mutant-instances", native_runtime.Options{Sanitize: true, Count: true})
 }
 func TestProduct_FSWatchSharedMutantRemove(t *testing.T) {
 	t.Parallel()
-	fsWatchProduct(t, "shared-mutant-remove", native.Options{Sanitize: true, Count: true})
+	fsWatchProduct(t, "shared-mutant-remove", native_runtime.Options{Sanitize: true, Count: true})
 }
 func TestProduct_FSWatchSharedMutantIdentity(t *testing.T) {
 	t.Parallel()
-	fsWatchProduct(t, "shared-mutant-identity", native.Options{Sanitize: true, Count: true})
+	fsWatchProduct(t, "shared-mutant-identity", native_runtime.Options{Sanitize: true, Count: true})
 }
 
 // This pin observes a refness flip before any logical watcher or source closes.
 func TestFSWatchRefnessFlipKeepsSourceAndNoPendingClose(t *testing.T) {
 	t.Parallel()
-	got, expired := fsWatchRun(t, fsWatchSanitizers, fsWatchProduct(t, "shared", native.Options{Sanitize: true, Count: true}), "refness")
+	got, expired := fsWatchRun(t, fsWatchSanitizers, fsWatchProduct(t, "shared", native_runtime.Options{Sanitize: true, Count: true}), "refness")
 	if expired || got.ExitCode != 0 || string(got.Stdout) != "refness source unchanged pending=0\n" {
 		t.Fatalf("refness flip: expired=%t %+v", expired, got)
 	}
@@ -500,7 +501,7 @@ func TestFSWatchRefnessFlipKeepsSourceAndNoPendingClose(t *testing.T) {
 }
 func TestFSWatchMutantRefnessClosesAndReregisters(t *testing.T) {
 	t.Parallel()
-	got, expired := fsWatchRun(t, fsWatchSanitizers, fsWatchProduct(t, "shared-mutant-refness", native.Options{Sanitize: true, Count: true}), "refness")
+	got, expired := fsWatchRun(t, fsWatchSanitizers, fsWatchProduct(t, "shared-mutant-refness", native_runtime.Options{Sanitize: true, Count: true}), "refness")
 	if expired || got.ExitCode != fsWatchRefnessFailureStatus || string(got.Stdout) != "refness source changed pending=1\n" {
 		t.Fatalf("refness mutant: expired=%t %+v", expired, got)
 	}
@@ -516,7 +517,7 @@ func TestFSWatchMutantRefnessClosesAndReregisters(t *testing.T) {
 }
 func TestProduct_FSWatchSharedMutantRefness(t *testing.T) {
 	t.Parallel()
-	fsWatchProduct(t, "shared-mutant-refness", native.Options{Sanitize: true, Count: true})
+	fsWatchProduct(t, "shared-mutant-refness", native_runtime.Options{Sanitize: true, Count: true})
 }
 
 func TestFSWatchMutantPersistentCountKeepsSource(t *testing.T) {
@@ -525,7 +526,7 @@ func TestFSWatchMutantPersistentCountKeepsSource(t *testing.T) {
 	if string(truth.Stdout) != "unref exits\n" {
 		t.Fatalf("Node unref: %+v", truth)
 	}
-	got, expired := fsWatchRun(t, fsWatchSanitizers, fsWatchProduct(t, "shared-mutant-persistent-count", native.Options{Sanitize: true, Count: true}), "unref")
+	got, expired := fsWatchRun(t, fsWatchSanitizers, fsWatchProduct(t, "shared-mutant-persistent-count", native_runtime.Options{Sanitize: true, Count: true}), "unref")
 	if !expired || len(got.Stdout) != 0 || len(got.Stderr) != 0 {
 		t.Fatalf("persistent-count mutant must keep the source referenced past its deadline: expired=%t %+v", expired, got)
 	}
@@ -533,5 +534,5 @@ func TestFSWatchMutantPersistentCountKeepsSource(t *testing.T) {
 }
 func TestProduct_FSWatchSharedMutantPersistentCount(t *testing.T) {
 	t.Parallel()
-	fsWatchProduct(t, "shared-mutant-persistent-count", native.Options{Sanitize: true, Count: true})
+	fsWatchProduct(t, "shared-mutant-persistent-count", native_runtime.Options{Sanitize: true, Count: true})
 }

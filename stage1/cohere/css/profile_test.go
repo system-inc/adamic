@@ -11,6 +11,7 @@ import (
 
 	"github.com/system-inc/adamic/internal/childguard"
 	"github.com/system-inc/adamic/internal/native"
+	"github.com/system-inc/adamic/internal/native_runtime"
 	"github.com/system-inc/adamic/stage1/cohere/css/oracles"
 )
 
@@ -98,8 +99,8 @@ func TestCSSProfileArtifacts(t *testing.T) {
 	}
 	for _, build := range []struct {
 		name    string
-		options native.Options
-	}{{"printer", native.Options{}}, {"counted", native.Options{Count: true}}} {
+		options native_runtime.Options
+	}{{"printer", native_runtime.Options{}}, {"counted", native_runtime.Options{Count: true}}} {
 		if err := native.Build(code, filepath.Join(directory, build.name), build.options); err != nil {
 			t.Fatal(err)
 		}
@@ -107,7 +108,7 @@ func TestCSSProfileArtifacts(t *testing.T) {
 	runtimeDir := filepath.Join(repo, "internal/native_runtime/c")
 	files, _ := filepath.Glob(filepath.Join(runtimeDir, "*.c"))
 	// The runtime's units are compiled with the program's features as flags, as main.c's #defines say.
-	args := append(native.SourceFlags(code, native.Options{}), "-g", "-I", runtimeDir, "-o", filepath.Join(directory, "profiled"), source)
+	args := append(native_runtime.SourceFlags(code, native_runtime.Options{}), "-g", "-I", runtimeDir, "-o", filepath.Join(directory, "profiled"), source)
 	args = append(args, files...)
 	args = append(args, "-lm")
 	result := execute(t, nil, "clang", args...)

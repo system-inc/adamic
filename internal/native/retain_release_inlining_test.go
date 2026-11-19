@@ -9,25 +9,26 @@ import (
 	"time"
 
 	"github.com/system-inc/adamic/internal/boundedrun"
+	"github.com/system-inc/adamic/internal/native_runtime"
 )
 
 func TestRetainReleaseInliningBoundary(t *testing.T) {
 	t.Parallel()
 	for _, profile := range []struct {
 		name    string
-		options Options
+		options native_runtime.Options
 	}{
-		{"ordinary", Options{}}, {"address", Options{Sanitize: true}}, {"thread", Options{ThreadSanitize: true}},
+		{"ordinary", native_runtime.Options{}}, {"address", native_runtime.Options{Sanitize: true}}, {"thread", native_runtime.Options{ThreadSanitize: true}},
 	} {
 		t.Run(profile.name, func(t *testing.T) {
 			directory := t.TempDir()
-			files, flags, compiler, _, err := runtimeInputs("", profile.options, nil)
+			files, flags, compiler, _, err := native_runtime.RuntimeInputs("", profile.options, nil)
 			if err != nil {
 				t.Fatal(err)
 			}
 			for _, file := range files {
-				if strings.HasSuffix(file.name, ".h") {
-					if err := os.WriteFile(filepath.Join(directory, file.name), file.contents, 0644); err != nil {
+				if strings.HasSuffix(file.Name, ".h") {
+					if err := os.WriteFile(filepath.Join(directory, file.Name), file.Contents, 0644); err != nil {
 						t.Fatal(err)
 					}
 				}

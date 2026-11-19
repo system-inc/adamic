@@ -7,6 +7,7 @@ import (
 	"testing"
 
 	"github.com/system-inc/adamic/internal/native"
+	"github.com/system-inc/adamic/internal/native_runtime"
 )
 
 // Exercise the shared syscall adapter and error formatter directly. The Node
@@ -64,7 +65,7 @@ int main(void) {
 		for _, target := range []string{"", "wasm32-wasi"}[index : index+1] {
 			t.Run("control/"+target, func(t *testing.T) {
 				binary := filepath.Join(t.TempDir(), "program")
-				if err := native.Build(source, binary, native.Options{Target: target}); err != nil {
+				if err := native.Build(source, binary, native_runtime.Options{Target: target}); err != nil {
 					t.Fatal(err)
 				}
 				var actual run
