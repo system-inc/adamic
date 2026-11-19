@@ -247,11 +247,11 @@ const other: { node: Node | undefined } = { node: parsed };
     return node;
 }
 `, shorthand},
-		{"shorthand write the test can run", `function getParseTreeNode(node: Node | undefined, nodeTest?: (node: Node) => boolean): Node | undefined {
+		{"shorthand write the test can run", `function getParseTreeNode(node: Node | undefined | null, nodeTest?: (node: Node) => boolean): Node | undefined {
     hook = () => {
         ({ node } = other);
     };
-    if (node === undefined) {
+    if (node === undefined || node === null) {
         return undefined;
     }
     return !nodeTest || nodeTest(node) ? node : undefined;
