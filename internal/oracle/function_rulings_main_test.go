@@ -69,7 +69,7 @@ func rulingRefusal(t *testing.T, file string, typescript bool, diagnostic string
 
 	positions := map[string]string{
 		"function_unused.a": "2:22", "function_length.a": "2:23", "function_call.a": "3:16",
-		"merge_unused.a": "2:1", "merge_missing.a": "2:1", "merge_missing_computed.a": "2:1", "merge_present.a": "2:1",
+		"merge_unused.a": "3:1", "merge_missing.a": "3:1", "merge_missing_computed.a": "3:1", "merge_present.a": "2:1",
 	}
 	if file == "function_call.a" && !typescript {
 		positions[file] = "2:10"
