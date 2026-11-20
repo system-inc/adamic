@@ -15,6 +15,9 @@ type kindSetBody struct {
 	field            string
 	enum             *ast.Symbol
 	members          []*checker.Type
+	scalar           bool
+	depth            int
+	active           map[*ast.Node]bool
 }
 
 func (l *lowering) kindPredicateBody(body, parameter *ast.Node) (string, []*checker.Type, bool) {
@@ -36,6 +39,9 @@ func (r *kindSetBody) read(n *ast.Node) bool {
 	n = ast.SkipParentheses(n)
 	if r.alias != nil {
 		return n.Kind == ast.KindIdentifier && r.l.checker.GetSymbolAtLocation(n) == r.alias
+	}
+	if r.scalar {
+		return r.parameterRead(n)
 	}
 	if n.Kind != ast.KindPropertyAccessExpression || n.Flags&ast.NodeFlagsOptionalChain != 0 {
 		return false
@@ -102,6 +108,9 @@ func (r *kindSetBody) guard(n *ast.Node) bool {
 }
 func (r *kindSetBody) comparisons(n *ast.Node) bool {
 	n = ast.SkipParentheses(n)
+	if n.Kind == ast.KindCallExpression {
+		return r.kindHelperCall(n)
+	}
 	if n.Kind != ast.KindBinaryExpression {
 		return false
 	}
