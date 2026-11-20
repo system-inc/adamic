@@ -10,3 +10,6 @@ This is the source-pin checkpoint. Measurements are pending.
 The family 1 reason is “an object refinement using an open numeric enum as a literal tag”. The head commit records Workers’ count of 110 sites at `dc9d089c`. The historical per-site probe inventory has not been recovered from the repository.
 
 The two latent comparisons use first-error mode with `CENSUS_MODULE_FORMAT=CommonJSBundle`, `LATENT_TAIL=1` and `LATENT_ASSERT_NO_OUTPUT=1`. The 79-root first-stop table uses the meter’s production census tool in CommonJSBundle mode.
+
+Both fresh stage3 adapts completed all source transformations. All 304 adaptation checkpoint hashes match, and both complete worktree snapshots hash to `fb481d75255cb26e120190f74804e8e51cf06d31`.
+The base apply reported a cache-archive error after writing the final patch table. The census uses the complete verified base working tree. The first compiler-directory pass is running.
