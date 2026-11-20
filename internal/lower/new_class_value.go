@@ -2,6 +2,7 @@ package lower
 
 import (
 	"sort"
+	"strings"
 
 	"github.com/microsoft/TypeScript/tsc/shim/ast"
 	"github.com/microsoft/TypeScript/tsc/shim/checker"
@@ -9,8 +10,10 @@ import (
 )
 
 // newClassValue dispatches through a kept class constructor, rather than assuming
-// that its result type identifies the runtime allocator. Ordinary function-based
-// constructors retain their existing unsupported receiver semantics.
+// that its result type identifies the runtime allocator. A function constructor an
+// allocator getter hands out is dispatched to as its synthesized class
+// (function_constructor.go); any other function-based constructor retains its
+// existing unsupported receiver semantics.
 func (l *lowering) newClassValue(node *ast.Node) (ir.Expression, bool, error) {
 	created := node.AsNewExpression()
 	target := l.concrete(l.checker.GetTypeAtLocation(created.Expression))
@@ -33,8 +36,21 @@ func (l *lowering) newClassValue(node *ast.Node) (ir.Expression, bool, error) {
 			declarations = append(declarations, declaration)
 		}
 	}
-	if len(declarations) == 0 {
+	// A function constructor an allocator getter's cast hands out is a candidate too (#837zjkt,
+	// function_constructor.go): built here, since function bodies lower before the module statement that holds
+	// the cast, and judged by reach once lowering is done.
+	synthesized, err := l.functionConstructorCandidates(node, target)
+	if err != nil {
+		return nil, true, err
+	}
+	if len(declarations) == 0 && len(synthesized) == 0 {
 		return nil, false, nil
+	}
+	if len(declarations) != 0 && len(synthesized) != 0 {
+		return nil, true, l.notYet(node, "a constructor value that may be a class or a function constructor")
+	}
+	if len(synthesized) != 0 && strings.HasSuffix(l.program.FileName(ast.GetSourceFileOfNode(node)), ".a") {
+		return nil, true, &Refused{Where: l.program.Where(node), What: "a new through a function constructor's allocator in .a", Fix: "move the file to .ts, where the new's object is born as a checked view"}
 	}
 	sort.Slice(declarations, func(i, j int) bool {
 		return l.program.Where(declarations[i]) < l.program.Where(declarations[j])
@@ -55,6 +71,9 @@ func (l *lowering) newClassValue(node *ast.Node) (ir.Expression, bool, error) {
 			return nil, true, err
 		}
 		candidates = append(candidates, candidate{identity: static.class, constructor: instance.constructor})
+	}
+	for _, built := range synthesized {
+		candidates = append(candidates, candidate{identity: built.static, constructor: built.constructor})
 	}
 	constructor, err := l.classConstructorValue(created.Expression)
 	if err != nil {
@@ -96,7 +115,26 @@ func (l *lowering) newClassValue(node *ast.Node) (ir.Expression, bool, error) {
 	}
 	// Never silently substitute a statically guessed allocator for an unknown value.
 	b.body = append(b.body, ir.Panic{Message: ir.StringConstant{Index: l.constant("a constructor value without a registered class allocator")}})
-	return b.finish("class_value_new", ir.Undefined{Of: ir.Object}), true, nil
+	dispatch := b.function
+	made := b.finish("class_value_new", ir.Undefined{Of: ir.Object})
+	if len(synthesized) == 0 {
+		return made, true, nil
+	}
+	// The road is judged once lowering is done (checkFunctionConstructorRoads), and the object is born as a
+	// checked view of the construct signature's result, so every read through it is checked. It's given no
+	// source type: a function constructor's declared this can claim a field its body never writes, so no
+	// type here names the layout, and a source that claimed one would let a read through a wider type skip
+	// its check (view_widened.go).
+	record := functionConstructorNew{node: node, dispatch: dispatch}
+	for _, built := range synthesized {
+		record.candidates = append(record.candidates, built.index)
+	}
+	l.functionConstructorNews = append(l.functionConstructorNews, record)
+	viewed, err := l.view(node, made, nil, l.concrete(l.checker.GetReturnTypeOfSignature(l.checker.GetSignaturesOfType(target, checker.SignatureKindConstruct)[0])))
+	if err != nil {
+		return nil, true, err
+	}
+	return viewed, true, nil
 }
 
 // Keep constructor-cache assignment inside the branch that initializes it. The
