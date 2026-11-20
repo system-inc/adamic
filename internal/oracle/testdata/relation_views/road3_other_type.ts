@@ -1,6 +1,7 @@
 // Language's road 3 on #0b9xqhh, read through a second type: the view's value comes out of a Map, a road the
 // flow can't follow, and is read as Seen, whose label no view checks. checkViewWidenedReads can't tell it from
-// a plain value, so the read is NotYet, never raw. Node prints one.
+// a plain value, so the read is checked where it's made (#zpzm9ta), never raw: the label is the string it says,
+// and it agrees with Node, which prints one.
 interface Source { readonly kind: number; }
 interface Target { readonly kind: number; readonly label?: string; }
 interface Seen { readonly kind: number; readonly label?: string; }

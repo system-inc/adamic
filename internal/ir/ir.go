@@ -56,6 +56,12 @@ type Program struct {
 	// doesn't check a read or write through them by a bare name (lower's plainReceiver, #9jnjwrw).
 	PlainReceivers SortedMap[int, bool]
 
+	// WidenedReads are the field reads through a type that doesn't check the field, made where the receiver may hold a
+	// value a checked view admitted (lower's checkViewWidenedReads, #zpzm9ta), each checked by name against its own
+	// declared type as a view member's read is. They're keyed per site by WidenedReadKey, so a read nothing demands stays
+	// plain. CheckedRead reads it.
+	WidenedReads SortedMap[string, bool]
+
 	// Source is the entry file's base name, as written, for the header of what the backends emit.
 	Source string
 

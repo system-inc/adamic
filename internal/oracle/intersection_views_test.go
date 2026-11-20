@@ -4,7 +4,6 @@ import (
 	"errors"
 	"os"
 	"path/filepath"
-	"strconv"
 	"strings"
 	"testing"
 
@@ -97,35 +96,34 @@ func TestIntersectionViewWitnessRepairsAgreeWithNode(t *testing.T) {
 // intersection's (Compiler's gate on #qqvq6n7). The intersection is entered as nested.ts enters one, a field
 // read out of an interface view: each cast road of view_widened_test.go is rewritten so Lit is
 // Node & { readonly kind: 9; readonly text: string }, held in Outer's inner, and the cast n as Lit becomes
-// (n as Outer).inner, which keeps every line and moves only what follows the cast on its line. Each is NotYet
-// at the same read with the same words. Mutants: checkViewWidenedReads returning nil at once admits every one;
-// intersectionViewFamily always "intersection" (the contract this change builds dropped) stops each at another
-// place, so the intersection's own contract is what these reach.
-func TestIntersectionViewWidenedReadNotYet(t *testing.T) {
+// (n as Outer).inner, which keeps every line and moves only what follows the cast on its line. #80cs7rz held
+// each NotYet at the read; #zpzm9ta checks it where it's made, so each lowers, and its lie stops at the same read
+// with the same located failure as view_widened_test.go's on sanitized native, release native and JavaScript, where
+// Node prints the field. Mutants: checkViewWidenedReads returning nil at once, or readiness stripping a marked
+// read's view, and every one reads the lie raw; intersectionViewFamily always "intersection" (the contract this
+// change builds dropped) stops each at another place, so the intersection's own contract is what these reach.
+func TestIntersectionViewWidenedReadIsChecked(t *testing.T) {
 	t.Parallel()
 	const declared = "interface Lit extends Node { readonly kind: 9; readonly text: string; }"
 	const nested = "interface Outer extends Node { readonly kind: 9; readonly inner: Lit; } type Lit = Node & { readonly kind: 9; readonly text: string };"
 	const lying = "const v = { kind: 9, pos: 1, text: 5 };"
 	const lyingInner = "const v = { kind: 9, pos: 1, inner: { kind: 9, pos: 1, text: 5 } };"
 	const cast, nestedCast = "n as Lit", "(n as Outer).inner"
-	for _, probe := range []struct {
-		file, through, node string
-		line, column        int
-	}{
-		{"view_widened.ts", "HasText", "5\n", 5, 106},
-		{"view_widened_array.ts", "HasText", "5\n", 5, 131},
-		{"view_widened_map.ts", "HasText", "5\n", 5, 181},
-		{"view_widened_closure.ts", "HasText", "5\n", 5, 118},
-		{"view_widened_parameter.ts", "HasText", "5\n", 5, 46},
-		{"view_widened_return.ts", "HasText", "5\n", 6, 90},
-		{"view_widened_field.ts", "HasText", "5\n", 6, 112},
-		{"view_widened_destructure.ts", "HasText", "5\n", 5, 102},
-		{"view_widened_template.ts", "HasText", "t=5\n", 5, 111},
-		{"view_widened_conditional.ts", "HasText", "5\n", 5, 166},
-		{"view_widened_class_field.ts", "HasText", "5\n", 5, 84},
-		{"view_widened_satisfies.ts", "HasText", "5\n", 5, 138},
-		{"view_widened_optional.ts", "HasText", "5\n", 5, 144},
-		{"view_widened_anonymous.ts", "{ readonly kind: 9; readonly pos: number; readonly text: string; }", "5\n", 5, 164},
+	for _, probe := range []struct{ file, read, node string }{
+		{"view_widened.ts", "h.text", "5\n"},
+		{"view_widened_array.ts", "h.text", "5\n"},
+		{"view_widened_map.ts", "h.text", "5\n"},
+		{"view_widened_closure.ts", "h.text", "5\n"},
+		{"view_widened_parameter.ts", "x.text", "5\n"},
+		{"view_widened_return.ts", "h.text", "5\n"},
+		{"view_widened_field.ts", "b.item.text", "5\n"},
+		{"view_widened_destructure.ts", "text (field text)", "5\n"},
+		{"view_widened_template.ts", "h.text", "t=5\n"},
+		{"view_widened_conditional.ts", "h.text", "5\n"},
+		{"view_widened_class_field.ts", "this.h.text", "5\n"},
+		{"view_widened_satisfies.ts", "h2.text", "5\n"},
+		{"view_widened_optional.ts", "h?.text", "5\n"},
+		{"view_widened_anonymous.ts", "r.text", "5\n"},
 	} {
 		t.Run(probe.file, func(t *testing.T) {
 			t.Parallel()
@@ -138,18 +136,13 @@ func TestIntersectionViewWidenedReadNotYet(t *testing.T) {
 				t.Fatalf("%s isn't the shape the rewrite expects: the rewrite would test nothing", probe.file)
 			}
 			lines[1], lines[3] = nested, lyingInner
-			line, column := probe.line, probe.column
 			casts := 0
 			for index, text := range lines {
-				at := strings.Index(text, cast)
-				if at < 0 {
+				if !strings.Contains(text, cast) {
 					continue
 				}
 				casts += strings.Count(text, cast)
 				lines[index] = strings.Replace(text, cast, nestedCast, 1)
-				if index+1 == line && at+1 < column {
-					column += len(nestedCast) - len(cast)
-				}
 			}
 			if casts != 1 {
 				t.Fatalf("%s has %d casts to Lit, want 1", probe.file, casts)
@@ -161,13 +154,11 @@ func TestIntersectionViewWidenedReadNotYet(t *testing.T) {
 			if truth := onNode(t, path); disagreement(run{stdout: []byte(probe.node)}, truth) != "" {
 				t.Fatalf("source Node: exit %d, stdout %q, stderr %q", truth.exitCode, truth.stdout, truth.stderr)
 			}
-			_, err = lowered(t, path)
-			at := probe.file + ":" + strconv.Itoa(line) + ":" + strconv.Itoa(column)
-			what := "a read of field text through type " + probe.through + ", which may hold a checked view's value"
-			var notYet *lower.NotYet
-			if !errors.As(err, &notYet) || !strings.Contains(err.Error(), at) || !strings.Contains(err.Error(), what) {
-				t.Fatalf("want the widened read NotYet at %s, got %v", at, err)
+			program, err := lowered(t, path)
+			if err != nil {
+				t.Fatalf("want the widened read lowered as a checked read, got %v", err)
 			}
+			stopsAtFieldRead(t, program, "", "field read failed: "+probe.read+" is not a string; expected string, found number")
 		})
 	}
 }
