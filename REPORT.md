@@ -1,6 +1,6 @@
 # Paired census for #s8gy89r, family 1, cause U1
 
-The compiler-directory pair is complete. The paired entry results and 79-root table are pending.
+The compiler-directory pair and base entry stream are complete. The head entry results and 79-root table are pending.
 
 Base is `6cb495cf2adcd359e59b9d8ead8e148a1593231b`, the sole parent of head `f5008927b8e29375220f16096c204d27c8250bcc`. The base is an ancestor of fetched `main` at `da83d772d470cc7b0660db3627d709c62febe086`. The two latent and scan-all binaries were built separately from their corresponding compiler checkouts.
 
@@ -17,10 +17,13 @@ Exact reason is “an object refinement using an open numeric enum as a literal 
 | Pass | Base distinct | Base raw | Head distinct | Head raw |
 | --- | ---: | ---: | ---: | ---: |
 | Compiler directory | 557 | 730 | 503 | 671 |
+| `tsc.ts` entry | 557 | 730 | Pending | Pending |
 
 - Compiler directory loses 54 distinct and 59 raw family 1 findings net. 50 distinct base reads lose all findings at that read. 4 distinct reason transitions retain another finding at the same read.
 
 Workers’ historical count is 110 at `dc9d089c`. GitHub could not resolve that abbreviated commit and the per-site inventory was unavailable. The number of sites in that specific cohort that clear or reach a later stop remains unverified. Section 4 lists the measured changes on the requested snapshots.
+
+The completed base entry stream has the same 730 family 1 positions as the base directory stream.
 
 ## 2. Units whose first stop moved
 
@@ -85,18 +88,18 @@ The changed reads below come from the measured pair. Calls were identified from 
 
 ### Compiler directory
 
-| Predicate | Cleared at read | Another finding at read | Unit first stop moved later |
-| --- | ---: | ---: | ---: |
-| isMemberName | 20 | 0 | 4 |
-| isPropertyNameLiteral | 0 | 0 | 0 |
-| isBindingPattern | 8 | 0 | 0 |
-| hasOnlyExpressionInitializer | 18 | 0 | 0 |
-| isClassLike | 1 | 0 | 0 |
-| canHaveLocals | 0 | 4 | 0 |
-| isPropertyName | 0 | 0 | 0 |
-| isAssignmentPattern | 1 | 0 | 0 |
-| supportsUnlabeledBreak | 2 | 0 | 0 |
-| Unresolved | 0 | 0 | 0 |
+| Predicate | Cleared at read | Another finding at read | Raw family 1 sites lost | Unit first stop moved later |
+| --- | ---: | ---: | ---: | ---: |
+| isMemberName | 20 | 0 | 20 | 4 |
+| isPropertyNameLiteral | 0 | 0 | 0 | 0 |
+| isBindingPattern | 8 | 0 | 12 | 0 |
+| hasOnlyExpressionInitializer | 18 | 0 | 18 | 0 |
+| isClassLike | 1 | 0 | 1 | 0 |
+| canHaveLocals | 0 | 4 | 4 | 0 |
+| isPropertyName | 0 | 0 | 0 | 0 |
+| isAssignmentPattern | 1 | 0 | 2 | 0 |
+| supportsUnlabeledBreak | 2 | 0 | 2 | 0 |
+| Unresolved | 0 | 0 | 0 | 0 |
 
 #### `isMemberName`
 
@@ -125,10 +128,10 @@ The changed reads below come from the measured pair. Calls were identified from 
 
 - `src/compiler/checker.ts:32006:79`. Cleared at this read. Candidate call locations are `isBindingPattern` at `src/compiler/checker.ts:32006:28`.
 - `src/compiler/checker.ts:32012:57`. Cleared at this read. Candidate call locations are `isBindingPattern` at `src/compiler/checker.ts:32006:28`.
-- `src/compiler/checker.ts:32040:110`. Cleared at this read. Candidate call locations are `isBindingPattern` at `src/compiler/checker.ts:32040:72`.
-- `src/compiler/checker.ts:32041:50`. Cleared at this read. Candidate call locations are `isBindingPattern` at `src/compiler/checker.ts:32040:72`.
-- `src/compiler/checker.ts:42262:48`. Cleared at this read. Candidate call locations are `isBindingPattern` at `src/compiler/checker.ts:42261:75`.
-- `src/compiler/checker.ts:42262:60`. Cleared at this read. Candidate call locations are `isBindingPattern` at `src/compiler/checker.ts:42261:75`.
+- `src/compiler/checker.ts:32040:110`. Cleared at this read. Additional raw positions are `src/compiler/checker.ts:32040:122`. Candidate call locations are `isBindingPattern` at `src/compiler/checker.ts:32040:72`.
+- `src/compiler/checker.ts:32041:50`. Cleared at this read. Additional raw positions are `src/compiler/checker.ts:32041:62`. Candidate call locations are `isBindingPattern` at `src/compiler/checker.ts:32040:72`.
+- `src/compiler/checker.ts:42262:48`. Cleared at this read. Additional raw positions are `src/compiler/checker.ts:42262:54`. Candidate call locations are `isBindingPattern` at `src/compiler/checker.ts:42261:75`.
+- `src/compiler/checker.ts:42262:60`. Cleared at this read. Additional raw positions are `src/compiler/checker.ts:42262:66`. Candidate call locations are `isBindingPattern` at `src/compiler/checker.ts:42261:75`.
 - `src/compiler/checker.ts:45125:65`. Cleared at this read. Candidate call locations are `isBindingPattern` at `src/compiler/checker.ts:45124:32`.
 - `src/compiler/emitter.ts:5450:31`. Cleared at this read. Candidate call locations are `isBindingPattern` at `src/compiler/emitter.ts:5449:22`.
 
@@ -166,7 +169,7 @@ The changed reads below come from the measured pair. Calls were identified from 
 
 #### `isAssignmentPattern`
 
-- `src/compiler/transformers/es2018.ts:732:81`. Cleared at this read. Candidate call locations are `isAssignmentPattern` at `src/compiler/transformers/es2018.ts:732:13`.
+- `src/compiler/transformers/es2018.ts:732:81`. Cleared at this read. Additional raw positions are `src/compiler/transformers/es2018.ts:732:86`. Candidate call locations are `isAssignmentPattern` at `src/compiler/transformers/es2018.ts:732:13`.
 
 #### `supportsUnlabeledBreak`
 
