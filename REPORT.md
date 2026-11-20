@@ -18,4 +18,57 @@ Fetched main at `df9d8ee60` and `apple/write-hides-field-4` at `71f6d8b1`. The f
 
 The factory helper is local with exactly one caller in the adapted source. Both arguments come from `EmitNode.tokenSourceMapRanges`, declared as `(SourceMapRange | undefined)[]` when present. The helper copies entries into the destination and returns the destination array. Adaptation 30 records two declined indexed-read sites in this helper.
 
-No adaptation or lane file was changed. The changed-tree emit, stock diagnostics, public declaration comparison, changed and mutant scans, second whole apply, adapted-tree product test, and whole lane tests were not run.
+## Two-site build
+
+Landing commit `ce20cd2be` on `df9d8ee60` adds only the guarded append and the local factory-helper signature. Adaptation 30's `sites.json` records declined indexed accesses. Its planner checks expression occurrence and assertion state and has no whole-function pin for this helper. Both owners retained their existing line endings, including the mixed endings in the factory file. A direct replay edited two files on the first invocation and zero files on the second.
+
+| Proof | Result |
+| --- | --- |
+| Stock 6.0.3 ES2024/ESNext JavaScript emit, comments retained | Identical for both files. `checker.ts` 2,893,847 bytes, SHA-256 `a14ae29295602e9c35e174bae3fffba2affdca2dfc3655a8f127cd2a13d1fc50`. `nodeFactory.ts` 272,883 bytes, SHA-256 `b072bccc113127b7409bc83c7db6a122696619c799a1af5dc175881e8724d669`. |
+| Stock 6.0.3 `tsc -b src/tsc --pretty false` | Both diagnostic logs empty. |
+| Public `built/local/typescript.d.ts` from upstream `hereby local` | Both 593,619 bytes and byte-identical, SHA-256 `65c210e9d7553165606df3ac67544ea7ddcbccf2c322ed924e8e8f4c4622c5fd`. |
+| Lane manifest | `generate_shards.py --check` passes. The runtime inputs and sanctioned API are identical. |
+
+## Read-only findings for the remaining checker sites
+
+### 16636:13 — createCanonicalSignature
+
+`map(signature.typeParameters, tp => tp.target && !getConstraintOfTypeParameter(tp.target) ? tp.target : tp)` is passed to `getSignatureInstantiation`'s `typeArguments: Type[] | undefined`. `Signature.typeParameters` is a readonly array of TypeParameter. For a defined input, core's `map` creates a fresh array and pushes each callback result. The callback yields either the original element or its TypeParameter target. The array cannot alias the input storage.
+
+The parameter's sole use is `fillMissingTypeArguments`. That function reads length, copies a supplied array via `slice()` before filling indices and setting length, and also returns a copy on the invalid-arity path when arguments are supplied. `getSignatureInstantiationWithoutFillingInTypeArguments` reads its returned copy for the cache key and passes it to the signature type mapper as readonly targets. The mapper retains or indexes read-only targets. Neither path writes to the mapped input array.
+
+An honest sink is `typeArguments: readonly Type[] | undefined`. Alternatively the allocating call can declare `map<TypeParameter, Type>`, widening each element into a fresh `Type[]`. The ownership search found no existing whole-owner pin or direct edit for `createCanonicalSignature` or `getSignatureInstantiation`.
+
+### 16975:70 — getTypeArguments
+
+`concatenate(type.target.outerTypeParameters, getEffectiveTypeArguments(node, type.target.localTypeParameters!))` feeds `const typeArguments: readonly Type[] | undefined`, then optionally `TypeReference.resolvedTypeArguments?: readonly Type[] | undefined`. The first operand is `TypeParameter[] | undefined`; the second admits ordinary `Type` values. The mutable mixed-array overload is available and exposes the first operand as writable even though this binding and cache consume a readonly view.
+
+The concatenate implementation can return either input. At this TypeReference-node arm, the first operand would be returned only if the second were empty or undefined. The closed-tree construction path creates a deferred TypeReferenceNode reference in `getTypeFromClassOrInterfaceReference` inside the `typeParameters` truthy guard. The class/interface producer creates a defined local list only after appending a real parameter. The other direct deferred-reference producer supplies array or tuple syntax; the instantiation call recreates a deferred reference with its existing target and node. For the TypeReference-node path, TypeScript arity failure previously returned `errorType`, and JavaScript filling permits arity recovery. Thus filling produces a nonempty second operand on those construction paths. The separate circular-resolution concatenations in this owner have their own fallback behavior.
+
+On successful resolution the array enters `resolvedTypeArguments` directly or after `instantiateTypes`. That helper reads the input, returns it when unchanged, and allocates a new list before pushing mapped replacements. The cache has whole-property assignments and can be shared by `cloneTypeReference`. Its consumers read it or use the readonly return from `getTypeArguments` for indexing, iteration, comparisons, mapping, constructing references, and slices. Tracing maps IDs. I found no push, splice, index assignment, or mutable handoff of the cached array.
+
+Keep the existing readonly binding and cache and select a readonly concatenate overload with a readonly first-operand view, for example by a typed local `readonly Type[] | undefined`. Instantiating the concatenate at `TypeParameter` would misdescribe the second operand. Amendments need to account for `99-correctness-axolotl-r`'s exact owner pin, `99-readonly-inferred-bindings`' later binding annotation, `95-checker-axolotl-b`'s earlier dependency hash, and `71-writable-views`' signature edit.
+
+### 17031:47 — getTypeFromClassOrInterfaceReference
+
+`concatenate(type.outerTypeParameters, fillMissingTypeArguments(typeArgumentsFromTypeReferenceNode(node), typeParameters, minTypeArgumentCount, isJs))` initializes the unannotated `const typeArguments`. The selected mutable overload infers `Type[] | undefined`; the next sink is `createTypeReference`'s declared `readonly Type[] | undefined` parameter.
+
+The helper could return the outer parameter array if its second input were empty or undefined. This site is inside the nonempty local-parameter path described above. Invalid TypeScript arities return early and JavaScript supplies the permissive fill mode. For those paths, the fill result has the nonzero local parameter count. Concatenate therefore returns the filled array or a fresh combined array. Filling writes only to a new array or a slice. `createTypeReference` reads the array for IDs and propagation flags and stores it in the same readonly `resolvedTypeArguments` cache traced above. There is no element writer in that chain.
+
+A readonly first-operand view selects the readonly overload, and an explicit `readonly Type[] | undefined` binding also documents the result. Annotating the result alone leaves overload selection at the call unchanged. `95-checker-axolotl-b` hashes the full owner as a dependency, so an amendment would also have to account for that pin.
+
+### 17098:38 — getTypeFromTypeAliasReference
+
+`aliasTypeArguments = getTypeArgumentsForAliasSymbol(newAliasSymbol)` writes to the local `let aliasTypeArguments: Type[] | undefined`. The helper delegates to `getLocalTypeParametersOfClassOrInterfaceOrTypeAlias`, which builds its own accumulator from undefined using `appendTypeParameters`. The result is the actual TypeParameter array created by that lookup. This path has no concatenate. The alternate branch can assign a `Type[]` built from syntax, an empty array, or undefined.
+
+The local is passed to the readonly alias-argument parameter of `getTypeAliasInstantiation`. The latter reads it for `getAliasId` and passes it through `instantiateTypeWithAlias`. Its alias propagation paths store or forward readonly arrays on `Type.aliasTypeArguments` and readonly helper parameters. Among the consumers, node serialization maps it to type nodes, comparison reads index/length or uses `fillMissingTypeArguments` which mutates its copy, tracing maps IDs, and go-to-definition reads the first element. I found no element writes or mutable handoff of this array.
+
+`let aliasTypeArguments: readonly Type[] | undefined` describes both producers and the read-only consumers. The ownership search found no existing whole-owner pin or direct edit in `getTypeFromTypeAliasReference`.
+
+### 19979:17 — getTypeFromConditionalTypeNode
+
+The shorthand `aliasTypeArguments` writes the inferred `TypeParameter[] | undefined` from `getTypeArgumentsForAliasSymbol(aliasSymbol)` into `ConditionalRoot.aliasTypeArguments?: Type[] | undefined`. It is the same accumulator produced by the lookup. This path has no concatenate. The local's other use tests whether alias arguments are present when choosing outer type parameters.
+
+The sole read of `root.aliasTypeArguments` is `instantiateTypes(root.aliasTypeArguments, mapper)` in `getConditionalType` when no overriding alias symbol was supplied. It shares unchanged input or writes to a newly allocated list as traced above. The result is stored in the readonly `Type.aliasTypeArguments` field and follows the alias readers described above. I found no index write, push, splice, or mutable handoff. Writes to `root.instantiations` concern the separate cache map.
+
+The field can honestly be `aliasTypeArguments?: readonly Type[] | undefined`. `ConditionalRoot` is exported, so this requires a public API comparison and a ruling on changing the array view. The ownership search found no existing whole-owner pin or direct edit in `getTypeFromConditionalTypeNode` or on this field.
