@@ -1,26 +1,62 @@
 # Paired Adamic census for #s8gy89r, family 1, cause U2
 
-The comparison uses base `1a6b689e009ad27575887a18c938a6342a6cf2ca` and its direct child `793e2b25d267969957ecbb7ebfb0a6d551bade13` from `platforms/enum-tag-kind-helper`. Both were verified after fetching that named branch and `main` at `a59db917a3a401bd6712a703b94c821ff4864440`.
+Base `1a6b689e009ad27575887a18c938a6342a6cf2ca` is the sole parent of head `793e2b25d267969957ecbb7ebfb0a6d551bade13` from `platforms/enum-tag-kind-helper`. The named `main` fetch resolved to `a59db917a3a401bd6712a703b94c821ff4864440`. The latent, entry, ordinary census and scan-all executables were built from their respective checkouts after recursive submodule initialization. The head also changes two fast-gate files.
 
-Stage 3 used TypeScript v6.0.3 at `050880ce59e30b356b686bd3144efe24f875ebc8`. Both checkouts initialized the same recursive submodule revisions. A file comparison of the applied directories, excluding Git metadata, was empty. The 312 adaptation checkpoint refs match, ending at tree `8f61e6699b44dd0e54523a760720a37acdd8cecb`. Both compilers read the base-applied tree.
+Stage 3 used TypeScript v6.0.3 at `050880ce59e30b356b686bd3144efe24f875ebc8`. Base and head applied the same keyed product after submodule initialization. A recursive file comparison outside Git metadata found zero differences, and all 312 checkpoint refs matched. The last checkpoint was tree `8f61e6699b44dd0e54523a760720a37acdd8cecb`. Both measurements use the base-applied tree.
 
-This report is in progress. The completed measurement streams are published in [evidence](evidence/) as the runs finish.
+The latent runs use `CENSUS_MODULE_FORMAT=CommonJSBundle`, `LATENT_FULL=0`, `LATENT_TAIL=1`, `LATENT_ASSERT_NO_OUTPUT=1` and `GOMAXPROCS=4`. [Evidence](evidence/) is pushed after each pass. The entry pair and root census are pending.
 
-## 1. Family 1 counts
+## 1. Family 1 site counts
 
-Family 1 uses the exact reason “an object refinement using an open numeric enum as a literal tag”. Counts use the site identities in `stage3/census/pair`.
+Exact reason is “an object refinement using an open numeric enum as a literal tag”. Raw positions and distinct TypeScript property-read identities come from `stage3/census/pair`.
 
 | Pass | Base distinct | Base raw | Head distinct | Head raw |
 | --- | ---: | ---: | ---: | ---: |
-| Compiler directory | 503 | 671 | Pending | Pending |
+| Compiler directory | 503 | 671 | 493 | 661 |
 | `tsc.ts` entry | Pending | Pending | Pending | Pending |
 
-The compiler-directory base recorded 2,983 findings across all reasons and zero panics. The historical 110-site cohort requires a per-site inventory to establish overlap.
+The compiler-directory pair has **10 cleared reads and zero reads that move to a later stop**. The 110-site historical count is recorded at `dc9d089c`. That abbreviated commit could not be resolved, and the per-site inventory was unavailable. Overlap with that exact cohort remains unverified. [U1 commit](https://github.com/system-inc/adamic/commit/faf9b5093cfbcf5f4c8e373a3285ffbd268c7fa5)
 
-## 5. Timing available so far
+## 2. Units whose first stop moved
+
+The compiler-directory pair has zero units that now lower whole, zero units that move to a later stop, and zero units that move to an earlier or different stop. This holds for both directly recorded unit stops and the first stop when the source-file refusal scan is attributed to the containing top-level unit.
+
+The grades use kind, phase, reason and message with message positions stripped, along with the paired source position. Reached is a later finding newly observed in a unit that already had a stop.
+
+| Pass | New | Gone | Changed | Reached |
+| --- | ---: | ---: | ---: | ---: |
+| Compiler directory | 0 | 10 | 0 | 0 |
+
+## 3. Regressions
+
+Compiler directory has zero units that lowered at base and stop at head, zero new findings under any reason, and zero new panics. Both sides recorded zero panics. Findings across all reasons fell from 2,983 to 2,973.
+
+## 4. Sites by predicate
+
+All positions below are in `src/compiler/checker.ts` and have zero remaining findings at the read. Each has the family-1 refusal at base during the refusal scan.
+
+| Predicate | Guard and containing function | Cleared read positions | Sites that move or new stops |
+| --- | --- | --- | --- |
+| `isFunctionLike` | `31507:13`, `tryGetThisTypeAt` | `31508:90`, `31510:53`, `31510:111`, `31514:67`, `31521:42` | 0 |
+| `isFunctionLike` | `31556:13`, `getExplicitThisType` | `31557:59` | 0 |
+| `isFunctionLike` | `34636:17`, contextual `this` | `34637:59` | 0 |
+| `isFunctionLike` | `34648:33`, `getThisParameterFromNodeContext` | `34648:82` | 0 |
+| `isFunctionLike` | `49994:17`, `isThisPropertyAndThisTyped` | `49995:70` | 0 |
+| `isFunctionLike` | `50285:21`, `ThisKeyword` arm | `50286:61` | 0 |
+
+`isFunctionLikeDeclaration` and every other predicate have zero measured site changes in the compiler-directory pair. Workers' probe count of 16 describes the helper-call class. The measured base-to-head delta is 10.
+
+## 5. Latent timing
+
+Wall time is monotonic process elapsed time. Total CPU is process user plus system CPU. Unit sums come from `LATENT_TIMES` and cover attempted units. Process totals also include loading, checking, source-file scans and stream output.
 
 | Pass | Side | Process wall (s) | Total CPU (s) | Unit wall sum (s) | Unit CPU sum (s) | Timed units |
 | --- | --- | ---: | ---: | ---: | ---: | ---: |
 | Compiler directory | Base | 1,133.808 | 1,333.805 | 717.301 | 832.893 | 4,057 |
+| Compiler directory | Head | 1,078.488 | 1,255.163 | 688.142 | 793.536 | 4,057 |
 
-The process counters include checking, the source-file scans and stream output. The unit stream covers each attempted unit. Both latent passes are configured for CommonJSBundle, first-error mode, the scoped tail, and the no-output assertion.
+The compiler-directory head used 55.320 s less wall time (4.9%) and 78.642 s less CPU (5.9%).
+
+## 6. First stops across the 79 roots
+
+Pending.
