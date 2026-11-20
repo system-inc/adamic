@@ -1,12 +1,12 @@
 # Paired census for #s8gy89r, family 1, cause U1
 
-Both latent pairs are complete. The ordinary 79-root table is pending.
+Base is `6cb495cf2adcd359e59b9d8ead8e148a1593231b`, the sole parent of head `f5008927b8e29375220f16096c204d27c8250bcc`. Fetched `main` was `da83d772d470cc7b0660db3627d709c62febe086` and contains the base. Every executable and overlay was built from the corresponding compiler checkout.
 
-Base is `6cb495cf2adcd359e59b9d8ead8e148a1593231b`, the sole parent of head `f5008927b8e29375220f16096c204d27c8250bcc`. Fetched `main` was `da83d772d470cc7b0660db3627d709c62febe086` and contains the base. Each executable and overlay was built from its corresponding compiler checkout.
+Stage3 used TypeScript v6.0.3 at `050880ce59e30b356b686bd3144efe24f875ebc8`. Both checkouts initialized the same recursive submodule revisions. The applies matched at every adaptation checkpoint and at the complete working-tree snapshot. Both passes ran against the base-applied tree.
 
-Both stage3 applies used TypeScript v6.0.3 at `050880ce59e30b356b686bd3144efe24f875ebc8`. All 304 adaptation checkpoint hashes match, and both final snapshots hash to `fb481d75255cb26e120190f74804e8e51cf06d31`. All measurements use the base-applied tree. Latent flags are `CENSUS_MODULE_FORMAT=CommonJSBundle`, `LATENT_FULL=0`, `LATENT_TAIL=1` and `LATENT_ASSERT_NO_OUTPUT=1`.
+Verified applied tree ID is `fb481d75255cb26e120190f74804e8e51cf06d31`.
 
-The analysis pairs normalized reads and exact reasons with `stage3/census/pair` and grades findings by kind, phase, reason and message with positions stripped from the message.
+Both latent passes used `CENSUS_MODULE_FORMAT=CommonJSBundle`, `LATENT_FULL=0`, `LATENT_TAIL=1` and `LATENT_ASSERT_NO_OUTPUT=1`. The Go process limit was `GOMAXPROCS=4`. Raw and distinct-read counts use `stage3/census/pair`. Finding grades use normalized kind, phase, reason and message with positions stripped from the message. A changed stop is classed as reached when it follows a removed first stop in the same already-blocked unit, in phase and source order.
 
 The base apply wrote the generated sources and final patch table, then reported a local cache-archive error when tar saw a changing Git pack. A recursive file comparison excluding Git metadata found identical outputs. The census used that directly verified base tree.
 
@@ -18,6 +18,7 @@ Exact reason is “an object refinement using an open numeric enum as a literal 
 | --- | ---: | ---: | ---: | ---: |
 | Compiler directory | 557 | 730 | 503 | 671 |
 | `tsc.ts` entry | 557 | 730 | 503 | 671 |
+| 79 ordinary root first stops | 0 | 0 | 0 | 0 |
 
 - Compiler directory loses 54 distinct and 59 raw family 1 findings net. 50 distinct base reads lose all findings at that read. 4 distinct reason transitions retain another finding at the same read.
 - `tsc.ts` entry loses 54 distinct and 59 raw family 1 findings net. 50 distinct base reads lose all findings at that read. 4 distinct reason transitions retain another finding at the same read.
@@ -102,6 +103,8 @@ Both latent passes have the same changed reads and predicate attributions.
 | supportsUnlabeledBreak | 2 | 0 | 2 | 0 |
 | Unresolved | 0 | 0 | 0 | 0 |
 
+The eight named predicates account for 52 measured distinct family 1 removals and 57 raw positions. 48 reads clear at the reported position and 4 carry another reason. 4 cleared reads were effective first stops in units that now stop later.
+
 #### `isMemberName`
 
 - `src/compiler/emitter.ts:5253:58`. Cleared at this read. Candidate call locations are `isMemberName` at `src/compiler/emitter.ts:5252:13`.
@@ -179,6 +182,18 @@ Both latent passes have the same changed reads and predicate attributions.
 
 ## 5. First stops across the 79 roots
 
-The base ordinary per-root run is in progress.
+0 of 79 ordinary per-root outcomes changed. The meter's CommonJSBundle production results are grouped below.
+
+| Side | Outcome | Roots |
+| --- | --- | ---: |
+| base | NotYet | 76 |
+| base | Refused | 1 |
+| base | accepted | 2 |
+| head | NotYet | 76 |
+| head | Refused | 1 |
+| head | accepted | 2 |
+
+
+The separately built scan-all binaries gave identical results on the `corePublic.ts` control.
 
 Raw streams, timing streams and paired results are under [evidence](evidence/).
