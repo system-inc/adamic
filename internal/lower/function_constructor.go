@@ -1,10 +1,12 @@
 package lower
 
 import (
+	"slices"
 	"strings"
 
 	"github.com/microsoft/TypeScript/tsc/shim/ast"
 	"github.com/microsoft/TypeScript/tsc/shim/checker"
+	"github.com/system-inc/adamic/internal/fresh"
 	"github.com/system-inc/adamic/internal/ir"
 )
 
@@ -30,6 +32,9 @@ import (
 //     (closedKindNewOnlyFunctions), so its cast keeps its refusal.
 //  6. The allocator is sealed: a program that writes, aliases or hands on the allocator object, as
 //     setObjectAllocator's Object.assign does when it's called, turns every such new NotYet.
+//  7. The instance's layout follows its construction window (layFunctionConstructorWindows, #w8nanzw (B)):
+//     a field every path writes before the object is seen stays present from the allocation, and a layout
+//     holding one some path skips reserves every field Absent, each an own key at its first write.
 
 // functionConstructor is a function declaration lowered as a synthesized class: its declaration, the type its
 // this is declared as, its this writes in body order, its place in functionConstructorRoads' order, and once
@@ -701,4 +706,85 @@ func (l *lowering) checkFunctionConstructorRoads() error {
 		}
 	}
 	return nil
+}
+
+// layFunctionConstructorWindows lays each built function constructor's instance by its construction window
+// (fresh.ConstructionWindow, #w8nanzw (B), rulings.md:78 applied): the window is F_new's body from the
+// allocation of this to the object's first escape, its return at the latest, and windowLayout reads it. It runs
+// once the program is lowered and its exceptions are known, never while F_new is built: the window's paths are
+// its flow graph's, whose throw edges exceptions() decides and whose virtual calls name the targets
+// finishClassCalls records, and a graph built before either would leave out a path that skips a write. Every
+// pass after it reads the layout it lays, readiness and the emitters among them, and checkSlotWrites before it
+// counts an Absent field as the slot it is (holdsSlot). A field the window never writes has no slot the rule
+// can give it, and is NotYet. It changes only the fields' Absent and Uninitialized, never their names, values,
+// order or count, and every reader of a field's presence runs after it (checkHostMemberWrites' hostMemberField,
+// readiness, the program region and both emitters, the native's choice of adamic_object_construct among them);
+// the readers before it (builtTypes, graphAllocation, findCycles, checkSlotWrites' holdsSlot, the flow graphs,
+// none cached) read names, values and types only, so laying presence here is what laying it in
+// buildFunctionConstructor would be (TestFunctionConstructorReorderedWindowConstructs).
+func (l *lowering) layFunctionConstructorWindows() error {
+	if l.functionConstructorScan == nil {
+		return nil
+	}
+	for _, constructor := range l.functionConstructorScan.ordered {
+		if constructor.constructor < 0 {
+			continue
+		}
+		body := l.result.Functions[constructor.constructor].Body
+		allocation := slices.IndexFunc(body, func(statement ir.Statement) bool {
+			declared, isDeclare := statement.(ir.Declare)
+			if !isDeclare {
+				return false
+			}
+			literal, isLiteral := declared.Value.(ir.ObjectLiteral)
+			return isLiteral && literal.Class == constructor.class
+		})
+		if allocation < 0 {
+			return l.notYet(constructor.declaration, "a function constructor whose allocation of this can't be found to lay its fields")
+		}
+		declared := body[allocation].(ir.Declare)
+		literal := declared.Value.(ir.ObjectLiteral)
+		laid, unwritten := windowLayout(literal.Fields, fresh.ConstructionWindow(l.result, constructor.constructor, &body[allocation]))
+		if unwritten != "" {
+			return l.notYet(constructor.declaration, "a function constructor whose object may be seen before it writes "+unwritten)
+		}
+		literal.Fields = laid
+		declared.Value = literal
+		body[allocation] = declared
+		l.result.Classes[constructor.class-1].Fields = laid
+	}
+	return nil
+}
+
+// windowLayout is a function constructor's instance fields laid by its construction window, and the first field
+// no write inside the window stores, empty when the window writes every one. The fields stay as built, each
+// present from the allocation, only where every path writes every field before the object is seen and in the
+// fields' own order: then nothing looks before the writes, and Object.keys reads the layout's order, which is
+// the first-write order every path took. Otherwise every field is reserved Absent (rulings.md:73 and :78), so
+// each becomes an own key as its first write runs, in the order the writes run, as V8's do, and a slot a path
+// skipped stays absent, invisible to keys, in, spread and JSON.stringify, and stops the checked view's read
+// where Node reads undefined. A field some path skips can't keep the present placeholder: a number slot's zero
+// would read where Node reads undefined, and in and Object.keys would see it. Every field goes Absent, not only
+// the skipped one, since a present slot is an own key from the allocation, ahead of a field written before it.
+func windowLayout(fields []ir.Field, window fresh.Window) ([]ir.Field, string) {
+	settled := window.Settled
+	names := make([]string, 0, len(fields))
+	for _, field := range fields {
+		switch window.Writes(field.Name) {
+		case fresh.WindowUnwritten:
+			return nil, field.Name
+		case fresh.WindowSomePaths:
+			settled = false
+		}
+		names = append(names, field.Name)
+	}
+	if settled && slices.Equal(names, window.Order) {
+		return fields, ""
+	}
+	laid := make([]ir.Field, 0, len(fields))
+	for _, field := range fields {
+		field.Absent, field.Uninitialized = true, true
+		laid = append(laid, field)
+	}
+	return laid, ""
 }

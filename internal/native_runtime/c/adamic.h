@@ -811,6 +811,9 @@ bool adamic_object_is_frozen(const adamic_heap *value);
 adamic_object *adamic_object_freeze(adamic_object *object);
 bool adamic_object_has_own(const adamic_object *object, const adamic_string *key);
 struct adamic_array *adamic_object_keys(const adamic_object *object);
+// An object's present public names in first-write order, the walk adamic_object_keys and a write-ordered
+// class instance's adamic_class_object_keys share.
+struct adamic_array *adamic_object_written_keys(const adamic_object *object);
 struct adamic_array *adamic_object_values(const adamic_object *object, enum adamic_ir_type element, bool entries);
 // A write to a frozen object, and Object.assign into one, set adamic_thrown to Node's TypeError and
 // write nothing: the caller tests it before writing (ir.Program's FrozenWriteMayThrow).
