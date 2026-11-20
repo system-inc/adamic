@@ -89,3 +89,17 @@ Compared by multiset of (kind, rule, relative site, words), the after tree remov
 > an unproven relation from Type to TypeParameter: optional field constraint has no proven compatible presence/type
 
 Restoring just the checker append returns both prior refusals at `19948:30` and `19948:37`, and removes that cast refusal. The factory delta is retained. This fails the requested no-new-refusal and exact single-refusal mutant conditions. The guarded helper `getDeclaredTypeOfTypeParameter(symbol)` already returns TypeParameter. Calling it directly would change the emitted JavaScript callee. That alternative needs a ruling if byte identity remains required.
+
+## Exact merged-head scan and whole applies
+
+The measured merge is `9c4cd905651e8175d8c8433baae69bd4e769af3b`, with parents `71f6d8b1` and `ce20cd2be`. Its Stage 3 diff against the fix has the landing patch ID. The two full applies on the landing commit had the same tracked Stage 3 inputs as this merge. The manually staged scan tree’s two edited files matched the independent full apply byte for byte. The probe built from the exact merge ran all three source variants. Each probe process exited 0 and reached the same first pipeline boundary, `lowering.declareModule`. For each variant the normalized event multiset matches the fix-only probe, including the checked-cast blocker.
+
+| Tree | Refusal-scan events | Total observations | Distinct observations | Raw stream SHA-256 (uncompressed) |
+| --- | ---: | ---: | ---: | --- |
+| before | 3,524 | 3,525 | 2,006 | `1846ae866b564166d36ad19b4002a8408142515ba4871188d102b570c69cedbb` |
+| after | 3,520 | 3,521 | 2,002 | `e3c73ef002b771fbac0ecb419bef81e58e5af38fcdae7dd7aacf0ab57d48201b` |
+| mutant | 3,521 | 3,522 | 2,003 | `5a54c0f535e49f56e470465bd472f6aec8e040b38cc93e9f5aced6d971704157` |
+
+The full streams are `scan-merged-before.json.gz`, `scan-merged-after.json.gz`, and `scan-merged-mutant.json.gz`. The comparison retains duplicate events and normalizes only the source root in observation locations.
+
+Two independent `stage3/apply.sh --build-product` runs with fresh output directories and separate caches both exited 0. All 81,506 working-tree file paths matched by content, mode, or link target as applicable (inventory SHA-256 `53edb9b7ea479936013d935d3e8801c06e9b1a685d6d4846fad9073f46067a91`). The Git refs matched separately. Git administrative metadata such as the index records build-specific timestamps and was excluded from the file comparison.
