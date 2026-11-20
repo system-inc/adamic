@@ -1,0 +1,17 @@
+{
+  "counts": {
+    "passing": 106366,
+    "failing": 1,
+    "pending": 0
+  },
+  "failed_tests": [
+    "unittests:: Public APIs for typescript.d.ts should be acknowledged when they change"
+  ],
+  "api": {
+    "reference_declarations": 28,
+    "composed_declarations": 283,
+    "sanctioned_declarations": 283,
+    "added_lines": 337,
+    "removed_lines": 255
+  }
+}
