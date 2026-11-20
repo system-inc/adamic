@@ -1,0 +1,51 @@
+// Compiled into both census drivers by the shared scratch overlay.
+package main
+
+import (
+	"bytes"
+	"io"
+	"os"
+)
+
+type witnessOutput struct {
+	path string
+	rows bytes.Buffer
+}
+
+func newWitnessOutput(censusPath string) witnessOutput {
+	if os.Getenv("LATENT_WITNESS") != "1" && os.Getenv("LATENT_MUTANT_WITNESS_DEFAULT") != "1" {
+		return witnessOutput{}
+	}
+	path := os.Getenv("LATENT_WITNESS_OUT")
+	if path == "" {
+		path = censusPath + ".witness.jsonl"
+	}
+	return witnessOutput{path: path}
+}
+
+func (output *witnessOutput) writer() io.Writer {
+	if output.path == "" {
+		return nil
+	}
+	return &output.rows
+}
+
+func (output *witnessOutput) publish() {
+	if output.path == "" {
+		return
+	}
+	// Publish after the census and timing streams have been written. Exclusive
+	// creation protects those streams even through symlinks or hard links.
+	stream, err := os.OpenFile(output.path, os.O_WRONLY|os.O_CREATE|os.O_EXCL, 0666)
+	if err != nil {
+		panic(err)
+	}
+	_, writeErr := output.rows.WriteTo(stream)
+	closeErr := stream.Close()
+	if writeErr != nil {
+		panic(writeErr)
+	}
+	if closeErr != nil {
+		panic(closeErr)
+	}
+}

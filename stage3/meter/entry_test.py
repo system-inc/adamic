@@ -248,5 +248,78 @@ class FullEntryCensusTests(unittest.TestCase):
                 self.assertEqual(mutant['lowering_census']['totals']['Refused'], 3)
 
 
+@unittest.skipUnless(os.environ.get('ENTRY_CENSUS_BINARY'), 'set ENTRY_CENSUS_BINARY to the meter entry tool')
+class EntryWitnessTests(unittest.TestCase):
+    def test_meter_entry_witness_forecast_and_stream_isolation(self):
+        with tempfile.TemporaryDirectory() as scratch:
+            root = Path(scratch)
+            entry = root / 'main.ts'
+            dependency = root / 'generic.ts'
+            entry.write_text(
+                'import { hidden } from "./generic.ts";\n'
+                'export function caller(value: number, unsupported: symbol): number {\n'
+                '    return hidden<number>(value);\n'
+                '}\n'
+            )
+            dependency.write_text('export function hidden<T>(value: T): T { return value; }\n')
+            env = {key: value for key, value in os.environ.items()
+                   if not key.startswith('LATENT_') or key == 'LATENT_MUTANT_ENTRY_DROP_WITNESS'}
+            env.update(LATENT_ASSERT_NO_OUTPUT='1', LATENT_FULL='1')
+
+            def run(name, *, binary=None, enabled=False, witness_path=None):
+                output = root / f'{name}.jsonl'
+                options = dict(env)
+                if enabled:
+                    options['LATENT_WITNESS'] = '1'
+                if witness_path is not None:
+                    options['LATENT_WITNESS_OUT'] = str(witness_path)
+                process = subprocess.run([binary or os.environ['ENTRY_CENSUS_BINARY'], entry, output],
+                                         env=options, capture_output=True, text=True, timeout=45)
+                return output, process
+
+            custom = root / 'custom.witness.jsonl'
+            off, process = run('off', witness_path=custom)
+            self.assertEqual(process.returncode, 0, process.stderr)
+            self.assertFalse(custom.exists())
+            self.assertFalse(off.with_suffix('.jsonl.witness.jsonl').exists())
+            baseline = os.environ.get('ENTRY_CENSUS_BASELINE_BINARY')
+            if baseline:
+                before, process = run('baseline', binary=baseline)
+                self.assertEqual(process.returncode, 0, process.stderr)
+                self.assertEqual(before.read_bytes(), off.read_bytes())
+
+            on, process = run('on', enabled=True)
+            self.assertEqual(process.returncode, 0, process.stderr)
+            self.assertEqual(off.read_bytes(), on.read_bytes())
+            default = on.with_suffix('.jsonl.witness.jsonl')
+            self.assertTrue(default.is_file(), 'entry tool did not publish its witness stream')
+            rows = [json.loads(line) for line in off.read_text().splitlines()]
+            self.assertFalse(rows[0]['checker_rejected'])
+            self.assertEqual(rows[0]['roots'], [str(entry)])
+            units = {unit.get('name'): unit for row in rows for unit in row.get('units', [])}
+            self.assertEqual(units['hidden']['status'], 'deferred_generic_instantiation')
+            self.assertFalse(units['hidden']['instantiated'])
+            self.assertTrue(any(finding['unit'] == units['caller']['where'] and
+                                finding['reason'].startswith('a value of type symbol')
+                                for row in rows for finding in row.get('findings', [])))
+            [forecast] = [json.loads(line) for line in default.read_text().splitlines()]
+            self.assertEqual(forecast, {
+                'file': str(dependency), 'where': units['hidden']['where'], 'name': 'hidden',
+                'status': 'forecast', 'call_count': 1, 'skipped_non_concrete': 0,
+                'caller': units['caller']['where'], 'call_site': f'{entry}:3:12',
+                'type_arguments': ['number'],
+            })
+
+            explicit, process = run('explicit', enabled=True, witness_path=custom)
+            self.assertEqual(process.returncode, 0, process.stderr)
+            self.assertEqual(off.read_bytes(), explicit.read_bytes())
+            self.assertEqual(default.read_bytes(), custom.read_bytes())
+            self.assertFalse(explicit.with_suffix('.jsonl.witness.jsonl').exists())
+            _, process = run('existing', enabled=True, witness_path=custom)
+            self.assertNotEqual(process.returncode, 0)
+            self.assertIn('file exists', process.stderr)
+            self.assertEqual(default.read_bytes(), custom.read_bytes())
+
+
 if __name__ == '__main__':
     unittest.main()
