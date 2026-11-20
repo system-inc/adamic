@@ -511,6 +511,109 @@ func TestARewrittenHeaderMovesAHeldScan(t *testing.T) {
 	}
 }
 
+// The header scan split into runs lists what one run over every source lists, byte for byte, for the embedded runtime
+// under the plain flags and under every feature: the headers part the archive's key reads, so splitting the scan moves
+// no key (#az92fg0). Mutant: the listing read from the last run's rules alone.
+func TestASplitHeaderScanListsWhatOneRunLists(t *testing.T) {
+	t.Parallel()
+	compiler, err := toolchain.Path("clang")
+	if err != nil {
+		t.Fatal(err)
+	}
+	files, err := ReadRuntime(Sources, "c")
+	if err != nil {
+		t.Fatal(err)
+	}
+	var everyFeature []string
+	for _, feature := range runtimeFeatures {
+		everyFeature = append(everyFeature, "-D"+feature+"=1")
+	}
+	for _, flags := range [][]string{Flags(Options{}), append(Flags(Options{}), everyFeature...)} {
+		one, err := scanHeadersIn(files, flags, compiler, 1, nil)
+		if err != nil {
+			t.Fatal(err)
+		}
+		if !strings.Contains(one, "\n") {
+			t.Fatalf("one run listed %q, want the C library's and the compiler's headers", one)
+		}
+		for _, runs := range []int{2, 7, len(files)} {
+			split, err := scanHeadersIn(files, flags, compiler, runs, nil)
+			if err != nil {
+				t.Fatal(err)
+			}
+			if split != one {
+				t.Fatalf("%d runs listed other headers than one run, flags %q:\none run:\n%s\n%d runs:\n%s", runs, flags, one, runs, split)
+			}
+		}
+	}
+}
+
+// The header scan's runs run at once: a stand-in compiler that waits until every run has started, as only runs at once
+// can, lists its sources' rules, and the scan lists its one header once, from 4 runs of 2 sources each. It scans under
+// no jobserver, so whatever the process's is, the runs are free to go at once and this proof runs. Mutants: the
+// runs waited on one by one (each waits alone and says so), the sources left in one run (one run of 8), and the runs'
+// rules joined with nothing between them (one run's last header fused with the next run's first rule).
+func TestTheHeaderScanRunsAtOnce(t *testing.T) {
+	t.Parallel()
+	directory, err := filepath.EvalSymlinks(t.TempDir())
+	if err != nil {
+		t.Fatal(err)
+	}
+	header := filepath.Join(directory, "stand_in.h")
+	if err := os.WriteFile(header, []byte("#define STAND_IN 1\n"), 0o644); err != nil {
+		t.Fatal(err)
+	}
+	const runs = 4
+	if err := os.WriteFile(filepath.Join(directory, "want"), []byte(strconv.Itoa(runs)), 0o644); err != nil {
+		t.Fatal(err)
+	}
+	// Each run logs how many sources it was given, waits up to 5 s for every run to have started, writes "alone" when it
+	// gave up waiting, and ends its rules without a newline, which the scan's join must give it.
+	script := `#!/bin/sh
+dir=` + directory + `
+count=0
+for argument in "$@"; do case "$argument" in *.c) count=$((count + 1)) ;; esac; done
+echo "$count" >> "$dir/runs"
+: > "$dir/started.$$"
+want=$(cat "$dir/want")
+waited=0
+while [ "$(ls "$dir" | grep -c '^started\.')" -lt "$want" ]; do
+	if [ "$waited" -ge 100 ]; then echo alone >> "$dir/alone"; break; fi
+	sleep 0.05
+	waited=$((waited + 1))
+done
+rules=""
+for argument in "$@"; do case "$argument" in *.c) rules="$rules${rules:+
+}${argument%.c}.o: $argument $dir/stand_in.h" ;; esac; done
+printf '%s' "$rules"
+`
+	compiler := filepath.Join(directory, "clang")
+	if err := os.WriteFile(compiler, []byte(script), 0o755); err != nil {
+		t.Fatal(err)
+	}
+	var files []RuntimeFile
+	for index := range 8 {
+		files = append(files, RuntimeFile{fmt.Sprintf("unit%d.c", index), []byte("int unit(void);\n")})
+	}
+	headers, err := scanHeadersIn(files, nil, compiler, runs, nil)
+	if err != nil {
+		t.Fatal(err)
+	}
+	if want := fmt.Sprintf("%s %x", header, sha256.Sum256([]byte("#define STAND_IN 1\n"))); headers != want {
+		t.Fatalf("the scan listed %q, want its one header once: %q", headers, want)
+	}
+	logged, err := os.ReadFile(filepath.Join(directory, "runs"))
+	if err != nil {
+		t.Fatal(err)
+	}
+	if got := strings.Fields(string(logged)); strings.Join(got, " ") != "2 2 2 2" {
+		t.Fatalf("the scan's runs were given %q sources, want 4 runs of 2", got)
+	}
+	if alone, err := os.ReadFile(filepath.Join(directory, "alone")); err == nil {
+		t.Fatalf("%d of the scan's runs waited alone for the others to start, want them run at once", strings.Count(string(alone), "alone"))
+	}
+}
+
 // clang -M writes make rules: a backslash continues a line and escapes a space inside a path.
 func TestDependenciesReadClangsRules(t *testing.T) {
 	t.Parallel()
