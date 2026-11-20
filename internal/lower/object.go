@@ -687,7 +687,9 @@ func (l *lowering) property(node *ast.Node) (ir.Expression, error) {
 				return nil, &Refused{Where: l.program.Where(node), What: "a narrowed accessor reread, which can return a different value", Fix: "read the getter into a local once, then narrow and use that local"}
 			}
 		}
-		if differs := l.unionFieldStorageDiffers(l.checker.GetTypeAtLocation(access.Expression), name); differs != "" {
+		// An iterator result's done and value are read through iteratorResultField's one rule, whatever the
+		// members' declared storage (#5t28afa).
+		if differs := l.unionFieldStorageDiffers(l.checker.GetTypeAtLocation(access.Expression), name); differs != "" && !l.iteratorResultField(access.Expression, l.memberSymbol(node)) {
 			return nil, l.notYet(node, "a field read through a union whose members store ."+name+" in different representations ("+differs+")")
 		}
 		of, err := l.typeOf(node)
