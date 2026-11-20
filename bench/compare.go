@@ -238,6 +238,9 @@ func compareCommits(request compareRequest) {
 		fail(err)
 	}
 	defer os.RemoveAll(work)
+	if reaper, err = buildReaper(directory, work); err != nil {
+		fail(err)
+	}
 
 	describeMachine([]runtimeKind{{name: runnerNames[baselineRunner]}, {name: runnerNames[candidateRunner]}, {name: runnerNames[nodeRunner]}})
 	fmt.Printf("baseline: %s\ncandidate: %s\n", baselineCommit, candidateCommit)
