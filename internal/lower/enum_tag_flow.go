@@ -295,11 +295,11 @@ func (w *enumTagWalk) predicateProves(at *ast.Node, call kindCall) bool {
 }
 
 // kindCall is a direct call to an exact kind predicate whose argument is the reference: the
-// comparison `reference.field === member` its body makes, and whether a `!` turns it around.
+// comparisons `reference.field === member` its body makes, and whether a `!` turns it around.
 type kindCall struct {
 	call    *ast.Node
 	field   string
-	member  *checker.Type
+	members []*checker.Type
 	negated bool
 }
 
@@ -308,7 +308,7 @@ type kindCall struct {
 // exact by its body alone: a function declaration, or a const arrow, that the checker's symbol for
 // the callee resolves to (so a shadowing local never qualifies), with one declaration (so not
 // overloaded), whose declared return is `p is T` on its first parameter p after any `this`, and
-// whose body is only `return p.f === E.M`, either order, E.M an enum member. An asserts predicate,
+// whose whole body kindPredicateBody recognizes as comparisons on one field and enum. An asserts predicate,
 // an inferred one and a const with an annotation don't count. The callee is a bare name, so never a
 // method, a namespace member or a value read off an object, and an import or re-export under another
 // name resolves to the one declaration. The reference must be the argument at p, as the checker
@@ -400,61 +400,21 @@ func (w *enumTagWalk) exactKindCall(node *ast.Node) (kindCall, bool) {
 	if body == nil {
 		return kindCall{}, false
 	}
-	compared := body
-	if body.Kind == ast.KindBlock {
-		statements := body.AsBlock().Statements.Nodes
-		if len(statements) != 1 || statements[0].Kind != ast.KindReturnStatement || statements[0].AsReturnStatement().Expression == nil {
-			return kindCall{}, false
-		}
-		compared = statements[0].AsReturnStatement().Expression
-	}
-	compared = ast.SkipParentheses(compared)
-	if compared.Kind != ast.KindBinaryExpression {
+	field, members, recognized := w.l.kindPredicateBody(body, parameter)
+	if !recognized {
 		return kindCall{}, false
 	}
-	binary := compared.AsBinaryExpression()
-	if binary.OperatorToken.Kind != ast.KindEqualsEqualsEqualsToken {
-		return kindCall{}, false
-	}
-	parameterSymbol := w.l.checker.GetSymbolAtLocation(parameters[0].Name())
-	read := func(side *ast.Node) string {
-		side = ast.SkipParentheses(side)
-		if side.Kind != ast.KindPropertyAccessExpression || side.Flags&ast.NodeFlagsOptionalChain != 0 {
-			return ""
-		}
-		access := side.AsPropertyAccessExpression()
-		object := ast.SkipParentheses(access.Expression)
-		if access.QuestionDotToken != nil || object.Kind != ast.KindIdentifier || parameterSymbol == nil || w.l.checker.GetSymbolAtLocation(object) != parameterSymbol {
-			return ""
-		}
-		return access.Name().Text()
-	}
-	member := func(side *ast.Node) *checker.Type {
-		side = ast.SkipParentheses(side)
-		constant := w.l.symbol(side)
-		if constant == nil || constant.Flags&ast.SymbolFlagsEnumMember == 0 {
-			return nil
-		}
-		return w.l.checker.GetTypeAtLocation(side)
-	}
-	field, constant := read(binary.Left), member(binary.Right)
-	if field == "" || constant == nil {
-		field, constant = read(binary.Right), member(binary.Left)
-	}
-	if field == "" || constant == nil {
-		return kindCall{}, false
-	}
-	return kindCall{call: node, field: field, member: constant, negated: negated}, true
+	return kindCall{call: node, field: field, members: members, negated: negated}, true
 }
 
-// kindPredicateStep judges an exact kind predicate's call as the comparison its body makes. It
+// kindPredicateStep judges a kind predicate's call as the finite comparisons its body makes. It
 // passes only when that comparison would: the field is read directly off every object member
 // flowing in (no accessor), and it can't lie there (enumTagWalkHazardOf, as step asks of a comparison).
 // The checker narrows a predicate's call by the predicate's declared type, not by its body, so the
 // step also passes only when that narrowing is identical to the comparison's on the side this path
 // takes: a predicate whose type disagrees with its own body proves nothing here. A closed member's tag
-// is its kind domain K(S) (enumTagClosedTag): the true side keeps it only when the compared member is in
-// K(S), and the false side drops it only when K(S) is that member alone. On the true side, a closed S whose
+// is its kind domain K(S) (enumTagClosedTag): the true side keeps it when K(S) meets the compared set;
+// the false side drops it only when all of K(S) is in the set. On the true side, a closed S whose
 // every source of the compared kind relates to the predicate's type (closedKindSourcesFit) is replaced by
 // that type, as the checker narrows it: a value of S carrying the kind was built at a type the predicate
 // names (Adamic's ruling on #x2cjvy9 cause A, Nov 19). Otherwise S is kept whole where the predicate's type
@@ -505,14 +465,28 @@ func (w *enumTagWalk) kindPredicateStep(flow *ast.FlowNode, call kindCall) bool 
 			tag = kinds
 		}
 		if taken {
-			if checker.Checker_isTypeAssignableTo(w.l.checker, call.member, tag) {
-				if kinds != nil && claimed != nil && w.l.closedKindSourcesFit(member, call.field, call.member, claimed) {
+			if w.l.kindSetMeets(tag, call.members) {
+				fit := kinds != nil && claimed != nil
+				// Every selected kind in K(S) must fit the claim separately. Kinds
+				// outside K(S) have no source of S to check; the cache is per kind.
+				if fit {
+					for _, kind := range call.members {
+						if !checker.Checker_isTypeAssignableTo(w.l.checker, kind, kinds) {
+							continue
+						}
+						if !w.l.closedKindSourcesFit(member, call.field, kind, claimed) {
+							fit = false
+							break
+						}
+					}
+				}
+				if fit {
 					kept = append(kept, claimed)
 				} else {
 					kept = append(kept, member)
 				}
 			}
-		} else if !checker.Checker_isTypeIdenticalTo(w.l.checker, tag, call.member) {
+		} else if !w.l.kindSetInside(tag, call.members) {
 			kept = append(kept, member)
 		}
 	}
