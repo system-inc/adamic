@@ -18,6 +18,8 @@ func (e *emitter) nodeBufferCall(call ir.NodeBufferCall) string {
 		return "(" + args[0] + "[" + args[1] + "] = " + args[2] + ")"
 	case "buffer_copy":
 		return "Buffer.from(" + args[0] + ")"
+	case "buffer_alloc_unsafe":
+		return "Buffer.allocUnsafe(" + args[0] + ")"
 	case "buffer_string":
 		return fmt.Sprintf("(%s).toString(%s, %s, %s)", args[0], quote(encoding), args[1], args[2])
 	case "hash_new":
