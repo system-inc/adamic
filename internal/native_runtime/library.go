@@ -1,6 +1,7 @@
 package native_runtime
 
 import (
+	"bytes"
 	"crypto/sha256"
 	"errors"
 	"fmt"
@@ -9,6 +10,7 @@ import (
 	"os/exec"
 	"path"
 	"path/filepath"
+	"runtime"
 	"slices"
 	"sort"
 	"strings"
@@ -669,7 +671,18 @@ func headersHold(headers string) bool {
 	return true
 }
 
+// scanHeaders is HeadersRead's scan: clang -M over the runtime's sources, split into as many runs as this machine has
+// CPUs (scanHeadersIn).
 func scanHeaders(files []RuntimeFile, flags []string, compiler string) (string, error) {
+	return scanHeadersIn(files, flags, compiler, runtime.NumCPU())
+}
+
+// scanHeadersIn lists the headers as scanHeaders does, its sources split into at most runs groups in their order, each
+// group one clang -M run holding a token of the jobserver, the runs at once. One clang run over every source runs their
+// scans one after another, 87 of about 15 ms each on every build that keys the archive (#az92fg0: 1.27 s of a warm
+// hello world's 1.46 s). Each run passes the same flags, so each source's scan is the one a single run makes of it, and
+// the headers are listed by path, sorted and once each, so how the sources were split reaches nothing listed.
+func scanHeadersIn(files []RuntimeFile, flags []string, compiler string, runs int) (string, error) {
 	directory, err := os.MkdirTemp("", "adamic-runtime-headers-")
 	if err != nil {
 		return "", fmt.Errorf("native: runtime headers: %w", err)
@@ -691,19 +704,32 @@ func scanHeaders(files []RuntimeFile, flags []string, compiler string) (string, 
 	if err != nil {
 		return "", err
 	}
-	command := ClangIn(directory, compiler, append(append(append([]string{}, flags...), "-M"), sources...)...)
-	var rules []byte
-	err = jobserver.Hold(func() (err error) { rules, err = command.Output(); return err })
-	if err != nil {
-		var exit *exec.ExitError
-		if errors.As(err, &exit) {
-			return "", fmt.Errorf("native: listing the runtime's headers: %w\n%s", err, exit.Stderr)
-		}
-		return "", fmt.Errorf("native: listing the runtime's headers: %w", err)
+	runs = min(max(1, runs), len(sources))
+	outputs := make([][]byte, runs)
+	failures := make([]error, runs)
+	var scans sync.WaitGroup
+	for run := range runs {
+		group := sources[run*len(sources)/runs : (run+1)*len(sources)/runs]
+		scans.Go(func() {
+			command := ClangIn(directory, compiler, append(append(append([]string{}, flags...), "-M"), group...)...)
+			err := jobserver.Hold(func() (err error) { outputs[run], err = command.Output(); return err })
+			if err != nil {
+				var exit *exec.ExitError
+				if errors.As(err, &exit) {
+					failures[run] = fmt.Errorf("native: listing the runtime's headers: %w\n%s", err, exit.Stderr)
+				} else {
+					failures[run] = fmt.Errorf("native: listing the runtime's headers: %w", err)
+				}
+			}
+		})
+	}
+	scans.Wait()
+	if err := errors.Join(failures...); err != nil {
+		return "", err
 	}
 	seen := map[string]bool{}
 	var headers []string
-	for _, name := range Dependencies(rules) {
+	for _, name := range Dependencies(bytes.Join(outputs, nil)) {
 		if !filepath.IsAbs(name) {
 			name = filepath.Join(directory, name)
 		}
