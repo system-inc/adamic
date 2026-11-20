@@ -22,13 +22,17 @@ echo "perf_event_paranoid $(cat /proc/sys/kernel/perf_event_paranoid)"
 	cd bench/game/rust-deps &&
 	PATH=$tools/rust-1.84.1/bin:$PATH CARGO_HOME=$T/cargo CARGO_TARGET_DIR=$T/target \
 	PKG_CONFIG_PATH=$tools/pcre/usr/lib/x86_64-linux-gnu/pkgconfig PKG_CONFIG_SYSROOT_DIR=$tools/pcre \
-	cargo build --release --locked --offline \
+	cargo build --release --locked --offline --target x86_64-unknown-linux-gnu \
 		--config 'source.crates-io.replace-with="laid"' --config "source.laid.directory=\"$vendor\""
-) > "$T/crates.log" 2>&1 && echo "PASS rust-deps built offline: $(ls "$T"/target/release/deps/*.rlib | wc -l) rlibs" || { tail -40 "$T/crates.log"; echo "FAIL rust-deps"; exit 1; }
-echo "pcre2-sys linked: $(cat "$T"/target/release/build/pcre2-sys-*/output 2>/dev/null | grep -E 'rustc-link-(lib|search)' | tr '\n' ' ')"
+) > "$T/crates.log" 2>&1 && echo "PASS rust-deps built offline: $(ls "$T"/target/x86_64-unknown-linux-gnu/release/deps/*.rlib | wc -l) rlibs for the target, build scripts' crates kept apart" || { tail -40 "$T/crates.log"; echo "FAIL rust-deps"; exit 1; }
+crates=$T/target/x86_64-unknown-linux-gnu/release/deps
+echo "libc rlibs the entries link from: $(ls "$crates"/liblibc-*.rlib | wc -l)"
+echo "pcre2-sys linked: $(cat "$T"/target/x86_64-unknown-linux-gnu/release/build/pcre2-sys-*/output 2>/dev/null | grep -E 'rustc-link-(lib|search)' | tr '\n' ' ')"
 export GOPROXY="file://$modules/cache/download,https://proxy.golang.org" GOSUMDB=off
+echo "go-pcre alone, every line: GOMODCACHE=$(go env GOMODCACHE), HOME=$HOME"
+(cd bench/game && GOWORK=off GOTOOLCHAIN=local GOFLAGS= GOAMD64=v2 CGO_CFLAGS="-I$tools/pcre/usr/include" CGO_LDFLAGS="-L$tools/pcre/usr/lib/x86_64-linux-gnu" PKG_CONFIG_PATH=$tools/pcre/usr/lib/x86_64-linux-gnu/pkgconfig PKG_CONFIG_SYSROOT_DIR=$tools/pcre "$tools/go1.23.1/bin/go" build -o "$T/go5" ./regexredux/regexredux.go-5.go) > "$T/go5.log" 2>&1 && echo "PASS regexredux go-5 builds alone" || { cat "$T/go5.log"; echo "NOTE regexredux go-5 doesn't build alone, the lines above"; }
 echo "load before $(cut -d' ' -f1-3 /proc/loadavg); busy: $(ps -eo pcpu=,comm= | awk '$1 > 5 {printf "%s(%s) ", $2, $1}')"
-go run ./bench -game -go "$tools/go1.23.1/bin/go" -rustc "$tools/rust-1.84.1/bin/rustc" -crates "$T/target/release/deps" -pcre "$tools/pcre" -samples "$samples" -timeout 10m
+go run ./bench -game -go "$tools/go1.23.1/bin/go" -rustc "$tools/rust-1.84.1/bin/rustc" -crates "$crates" -pcre "$tools/pcre" -samples "$samples" -timeout 10m
 code=$?
 echo "load after $(cut -d' ' -f1-3 /proc/loadavg)"
 [ $code = 0 ] && echo "PASS game, $samples samples" || { echo "FAIL game exit $code"; exit 1; }
