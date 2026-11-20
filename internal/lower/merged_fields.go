@@ -94,6 +94,23 @@ type classMemberSlot struct {
 	holds, declared bool
 	merge           *ast.Node
 	of              ir.Type
+	// known says a merge's member has a representation, so a merge that holds no slot was refused one
+	// because it can point onward (mergedLeaf), not because its storage is unknown.
+	known bool
+}
+
+// mergedLeaf reports whether a merged member's slot holds nothing that points onward. A merged slot is
+// reserved Absent, which sends the class's construction down emit_objects.go's constructionFields, and a
+// construction object is never adopted into a graph region: that was sound while construction slots held
+// only scalars (construction.go's reserveFactoryFields), and it stays sound only while a merged slot can't
+// reach another object, since a cycle through it would never be freed (rulings.md's no collector, Language's
+// c01 on #86cmqrp). A string is immutable, so it's a leaf; a union may hold an object, so it isn't.
+func mergedLeaf(of ir.Type) bool {
+	switch of {
+	case ir.Number, ir.Boolean, ir.String, ir.MaybeNumber, ir.MaybeBoolean, ir.NullRepresentation, ir.UndefinedRepresentation:
+		return true
+	}
+	return false
 }
 
 func (l *lowering) classSlot(class *checker.Type, name string) classMemberSlot {
@@ -147,7 +164,7 @@ func (l *lowering) classSlot(class *checker.Type, name string) classMemberSlot {
 			continue
 		}
 		of, known := l.representation(l.checker.GetTypeOfSymbol(field))
-		return classMemberSlot{holds: known, merge: declaration, of: of}
+		return classMemberSlot{holds: known && mergedLeaf(of), merge: declaration, of: of, known: known}
 	}
 	return classMemberSlot{}
 }
@@ -168,13 +185,13 @@ func (l *lowering) reserveMergedFields(declaration *ast.Node, fields []ir.Field)
 		}
 		if !slot.holds {
 			if l.missingMergedSlots == nil {
-				l.missingMergedSlots = map[int]map[string]*ast.Node{}
+				l.missingMergedSlots = map[int]map[string]string{}
 			}
 			class := l.instance.class
 			if l.missingMergedSlots[class] == nil {
-				l.missingMergedSlots[class] = map[string]*ast.Node{}
+				l.missingMergedSlots[class] = map[string]string{}
 			}
-			l.missingMergedSlots[class][field.Name] = declaration
+			l.missingMergedSlots[class][field.Name] = missingMergedSlot(declaration, field.Name, slot.known)
 			continue
 		}
 		value := zeroValue(slot.of)
@@ -186,7 +203,14 @@ func (l *lowering) reserveMergedFields(declaration *ast.Node, fields []ir.Field)
 	return fields
 }
 
-func missingMergedSlot(class *ast.Node, name string) string {
+// missingMergedSlot is the stop for a merged member the class's layout holds no slot for: one whose storage
+// is unknown, or one that can point onward (mergedLeaf), which the member declared on the class can hold.
+func missingMergedSlot(class *ast.Node, name string, known bool) string {
+	if known {
+		return "accessing " + name + " from the interface merge of class " + class.Name().Text() +
+			", whose slot could hold a reference to another object, and a merged slot can't hold one yet, since a cycle through it would never be freed; declare " +
+			name + " on class " + class.Name().Text() + " itself"
+	}
 	return "accessing " + name + " from the interface merge of class " + class.Name().Text() + " without a known slot representation"
 }
 
@@ -239,7 +263,7 @@ func (l *lowering) mergedFieldRead(node *ast.Node) error {
 		return nil
 	}
 	if !slot.holds {
-		return l.notYet(node, missingMergedSlot(slot.merge, field.Name))
+		return l.notYet(node, missingMergedSlot(slot.merge, field.Name, slot.known))
 	}
 	if field.Flags&ast.SymbolFlagsOptional != 0 {
 		return nil
