@@ -1,0 +1,51 @@
+# #az92fg0, the parallel header scan: vet, internal/native_runtime whole, its three mutants, runtimeproducts whole, then
+# base against head on this one box: the runtime archive's key and bytes, and warm hello-world builds alternated, best
+# of 7 each. base.library.go is main's library.go, carried so no history is read. Run after environment.sh and
+# sandboxed-job.sh. Never merged.
+set -u
+W=$(pwd); K=$W/proof/performance/az92fg0-parallel; T=$(mktemp -d "${TMPDIR:-/tmp}/parallel.XXXXXX")
+L=internal/native_runtime/library.go
+echo "on $(hostname), $(nproc) cores, load $(cut -d' ' -f1-3 /proc/loadavg); $(clang --version | head -1)"
+fail=0
+step() { name=$1; shift; if "$@" > "$T/$name.log" 2>&1; then echo "PASS $name"; else echo "FAIL $name"; grep -E -- '--- FAIL|FAIL|panic|\.go:[0-9]+' "$T/$name.log" | head -30; fail=1; fi; }
+step vet go vet ./internal/native_runtime/
+step native_runtime go test -count=1 ./internal/native_runtime/
+cp $L "$T/head.go"
+mutant() { # name, test, perl program
+  cp "$T/head.go" $L; perl -0pi -e "$3" $L
+  if cmp -s $L "$T/head.go"; then echo "FAIL mutant $1: did not apply"; fail=1; return; fi
+  go test -count=1 -run "^$2\$" ./internal/native_runtime/ > "$T/m-$1.log" 2>&1; code=$?
+  if grep -qE 'build failed|not used|\[setup failed\]' "$T/m-$1.log"; then echo "FAIL mutant $1: did not compile"; tail -5 "$T/m-$1.log"; fail=1
+  elif [ $code = 0 ]; then echo "FAIL mutant $1 survived $2"; fail=1
+  else echo "PASS mutant $1 red: $(grep -m1 -E 'want|listed' "$T/m-$1.log" | cut -c1-220)"; fi
+}
+mutant last-run TestASplitHeaderScanListsWhatOneRunLists 's/Dependencies\(bytes\.Join\(outputs, nil\)\)/Dependencies(bytes.Join(outputs[runs-1:], nil))/'
+mutant serial TestTheHeaderScanRunsAtOnce 's/(\t\t\}\)\n)(\t\}\n\tscans\.Wait\(\))/$1\t\tscans.Wait()\n$2/'
+mutant one-run TestTheHeaderScanRunsAtOnce 's/runs = min\(max\(1, runs\), len\(sources\)\)/runs = min(1, len(sources))/'
+cp "$T/head.go" $L
+products() { sandboxed_products ./internal/native/runtimeproducts && go test -count=1 ./internal/native/runtimeproducts/; }
+step runtimeproducts products
+go build -o "$T/head" ./cmd/adamic || { echo "FAIL build head"; exit 1; }
+cp "$K/base.library.go" $L; go build -o "$T/base" ./cmd/adamic || { echo "FAIL build base"; exit 1; }; cp "$T/head.go" $L
+mkdir -p "$T/hello"; printf 'console.log("hello, world");\n' > "$T/hello/hello.a"
+ms() { echo $(( ($2 - $1) / 1000000 )); }
+archive() { awk '$1=="cArchive"{print $3, $4}' "$1" | sort -u | tr '\n' ' '; }
+for side in base head; do
+  export XDG_CACHE_HOME="$T/xdg-$side" ADAMIC_BUILD_CACHE_DIR="$T/cache-$side"; mkdir -p "$XDG_CACHE_HOME" "$ADAMIC_BUILD_CACHE_DIR"
+  (cd "$T/hello" && ADAMIC_BUILD_LOG="$T/cold-$side.log" "$T/$side" build hello.a -o "$T/out-$side") > "$T/cold-$side.out" 2>&1 || { echo "FAIL cold $side: $(head -3 "$T/cold-$side.out")"; fail=1; }
+  echo "$side cold: archive $(archive "$T/cold-$side.log"); runtime.a $(find "$ADAMIC_BUILD_CACHE_DIR" -name runtime.a -exec sha256sum {} \; | cut -c1-16 | sort -u | tr '\n' ' ')"
+done
+bk=$(archive "$T/cold-base.log" | cut -d' ' -f1); hk=$(archive "$T/cold-head.log" | cut -d' ' -f1)
+ba=$(find "$T/cache-base" -name runtime.a -exec sha256sum {} \; | cut -d' ' -f1 | sort -u); ha=$(find "$T/cache-head" -name runtime.a -exec sha256sum {} \; | cut -d' ' -f1 | sort -u)
+if [ -n "$bk" ] && [ "$bk" = "$hk" ] && [ -n "$ba" ] && [ "$ba" = "$ha" ]; then echo "PASS archive: key $bk and bytes ${ba:0:16} the same at base and head"; else echo "FAIL archive: keys $bk / $hk, bytes $ba / $ha"; fail=1; fi
+cmp -s "$T/out-base" "$T/out-head" && echo "PASS hello binary byte-identical" || { echo "FAIL hello binaries differ"; fail=1; }
+for side in base head; do eval "best_$side=999999; walls_$side="; done
+for i in 1 2 3 4 5 6 7; do for side in base head; do
+  export XDG_CACHE_HOME="$T/xdg-$side" ADAMIC_BUILD_CACHE_DIR="$T/cache-$side"
+  s=$(date +%s%N); (cd "$T/hello" && ADAMIC_BUILD_LOG="$T/warm-$side-$i.log" "$T/$side" build hello.a -o "$T/out-$side") > /dev/null 2>&1; e=$(date +%s%N); t=$(ms $s $e)
+  eval "walls_$side=\"\$walls_$side $t\"; [ $t -lt \$best_$side ] && best_$side=$t"
+  grep -q 'cArchive runtime.a [0-9a-f]* hit' "$T/warm-$side-$i.log" || { echo "FAIL warm $side $i: no archive hit"; fail=1; }
+done; done
+echo "warm hello world, best of 7 alternated: base ${best_base} ms (${walls_base# }), head ${best_head} ms (${walls_head# })"
+echo "load at end $(cut -d' ' -f1-3 /proc/loadavg)"
+[ $fail = 0 ] && echo "VERDICT OK" || echo "VERDICT FAIL"
