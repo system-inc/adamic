@@ -8,13 +8,7 @@
 _Static_assert(sizeof(double) == 8, "Float64Array requires 8-byte doubles");
 
 static size_t width(enum adamic_typed_array_kind kind) {
-	switch (kind) {
-	case adamic_typed_array_uint8: return 1;
-	case adamic_typed_array_uint16: return 2;
-	case adamic_typed_array_int32: return 4;
-	case adamic_typed_array_float64: return 8;
-	}
-	adamic_unreachable();
+	return adamic_typed_array_width(kind);
 }
 
 static void range_error(void) {
