@@ -429,6 +429,11 @@ func (l *lowering) setProperty(target *ast.Node, valueNode *ast.Node) ([]ir.Stat
 	if statements, handled, err := l.foreignSetProperty(target, valueNode); handled {
 		return statements, err
 	}
+	// A tuple is an object of fields "0", "1" and on, with no length field to store into; its length is
+	// written by tupleLengthWrite, as it's read by tupleLength (#87dwc5c).
+	if target.Name().Text() == "length" && checker.IsTupleType(l.checker.GetTypeAtLocation(target.AsPropertyAccessExpression().Expression)) {
+		return l.tupleLengthWrite(target, valueNode)
+	}
 	if l.uninitializedInitializer(valueNode) {
 		if err := l.absentOptionalWrite(target); err != nil {
 			return nil, err
