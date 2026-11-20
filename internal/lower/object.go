@@ -687,6 +687,9 @@ func (l *lowering) property(node *ast.Node) (ir.Expression, error) {
 				return nil, &Refused{Where: l.program.Where(node), What: "a narrowed accessor reread, which can return a different value", Fix: "read the getter into a local once, then narrow and use that local"}
 			}
 		}
+		if differs := l.unionFieldStorageDiffers(l.checker.GetTypeAtLocation(access.Expression), name); differs != "" {
+			return nil, l.notYet(node, "a field read through a union whose members store ."+name+" in different representations ("+differs+")")
+		}
 		of, err := l.typeOf(node)
 		if err != nil && l.checker.GetTypeAtLocation(node).Flags()&checker.TypeFlagsUndefined != 0 {
 			// Narrowed to undefined (just assigned it): read as the field is declared.
