@@ -107,6 +107,21 @@ func (l *lowering) widened(from *checker.Type, to *checker.Type, visited map[[2]
 			return l.widened(constraint, to, visited)
 		}
 	}
+	if from.Flags()&checker.TypeFlagsIndexedAccess != 0 && typeParameterAccess(from) && !slices.ContainsFunc(l.definedMembers(to), func(member *checker.Type) bool {
+		return member.Flags()&(checker.TypeFlagsTypeParameter|checker.TypeFlagsIndexedAccess) != 0
+	}) {
+		// An indexed access over a type parameter, T["kind"] with T extends Node, is read at its base constraint
+		// as the type parameter is above, Node's kind, and judged by every arm below as a value of that type is:
+		// tsc's createMissingNode hands its T["kind"] to createToken<TKind extends SyntaxKind>, and finishNode's
+		// Token<T["kind"]> relates it to Node's kind, each refused by the open enum arm as an unproven value
+		// (Adamic's c5 ruling, docs/rulings.md:125, applied by Compiler to an indexed access on #snypn8c c5').
+		// Everything else fails closed to the arms below as on main: an access over anything but a bare type
+		// parameter, a constraint that is missing or generic (accessConstraint), and a slot that is, or names, a
+		// type variable, so T["kind"] seen as U["kind"], or as T, is judged by its own name.
+		if constraint := l.accessConstraint(from); constraint != nil {
+			return l.widened(constraint, to, visited)
+		}
+	}
 	if l.openNumericEnumType(to) {
 		for _, member := range l.definedMembers(from) {
 			if !l.enumAssignable(member, to) {
@@ -283,6 +298,32 @@ func (l *lowering) widened(from *checker.Type, to *checker.Type, visited map[[2]
 	}
 	return l.widenedProperties(from, to, nil, false, visited)
 }
+
+// typeParameterAccess reports whether an indexed access's object is a bare type parameter, T in T["kind"]. A
+// this type is a type parameter to the checker, but no signature declares it, so an access over it fails closed.
+func typeParameterAccess(access *checker.Type) bool {
+	object := access.AsIndexedAccessType().ObjectType()
+	return object.Flags()&checker.TypeFlagsTypeParameter != 0 && !object.AsTypeParameter().IsThisType()
+}
+
+// accessConstraint is the base constraint widened reads an indexed access over a type parameter at, or nil where
+// the read fails closed: no constraint, or a generic one. A constraint is generic when it could still hold a type
+// variable, as the checker asks before it instantiates a type (couldContainTypeVariables). That's asked of the
+// access's own constraint, one step up, which T extends { kind: U } gives as U: the base constraint reads on
+// through U to U's own constraint, so it no longer names U, and an own constraint that holds no type variable is
+// its own base constraint already.
+func (l *lowering) accessConstraint(access *checker.Type) *checker.Type {
+	if own := constraintOfIndexedAccess(l.checker, access); own == nil || couldContainTypeVariables(l.checker, own) {
+		return nil
+	}
+	return l.checker.GetBaseConstraintOfType(access)
+}
+
+//go:linkname constraintOfIndexedAccess github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).getConstraintOfIndexedAccess
+func constraintOfIndexedAccess(receiver *checker.Checker, access *checker.Type) *checker.Type
+
+//go:linkname couldContainTypeVariables github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).couldContainTypeVariablesWorker
+func couldContainTypeVariables(receiver *checker.Checker, proven *checker.Type) bool
 
 // widenedParameters is the half of widened's signature relation that judges what a function is handed:
 // each of from's parameters seen as taking to's at the same position. A literal's method judges its
