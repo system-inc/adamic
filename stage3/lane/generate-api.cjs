@@ -61,6 +61,7 @@ const edits = [];
 const owners = [];
 const claimed = new Set();
 const insertionEdits = new Map();
+const optionalTypeEdits = new Map();
 // Index the pristine AST once; every proof still filters by its required node kind.
 const byOwnerPath = new Map();
 for (const node of nodes(source, () => true)) {
@@ -68,7 +69,7 @@ for (const node of nodes(source, () => true)) {
     if (!byOwnerPath.has(key)) byOwnerPath.set(key, []);
     byOwnerPath.get(key).push(node);
 }
-function owned(record, select, adaptation, repeatInsert = false) {
+function owned(record, select, adaptation, repeat = () => false) {
     const hasLine = Object.hasOwn(record, 'line');
     assert(!hasLine || (Number.isInteger(record.line) && record.line > 0),
         `invalid proof owner line ${adaptation}: ${record.path} line ${record.line}; expected a positive integer`);
@@ -79,7 +80,7 @@ function owned(record, select, adaptation, repeatInsert = false) {
         `ambiguous or missing proof owner ${adaptation}: ${record.path}${hasLine ? ' line ' + record.line : ''}`);
     const node = matches[0];
     const line = source.getLineAndCharacterOfPosition(node.getStart(source)).line + 1;
-    assert(!claimed.has(node) || (repeatInsert && insertionEdits.has(node)), `already claimed proof owner ${adaptation}: ${record.path}`);
+    assert(!claimed.has(node) || repeat(node), `already claimed proof owner ${adaptation}: ${record.path}`);
     claimed.add(node);
     owners.push({ adaptation, path: record.path, line });
     return node;
@@ -90,7 +91,9 @@ for (const record of attribution.owners) {
     assert(node.questionToken && node.type, 'sanctioned optional property');
     const wrap = ts.isFunctionTypeNode(node.type) || ts.isConstructorTypeNode(node.type) || ts.isConditionalTypeNode(node.type);
     if (wrap) edits.push({ at: node.type.getStart(source), text: '(' });
-    edits.push({ at: node.type.end, text: (wrap ? ')' : '') + ' | undefined' });
+    const suffix = { at: node.type.end, text: (wrap ? ')' : '') + ' | undefined' };
+    edits.push(suffix);
+    if (!wrap) optionalTypeEdits.set(node, suffix);
 }
 // Resolve the reviewed source brands exactly as adaptation 30's composed proof does.
 const brandPaths = new Set();
@@ -258,7 +261,7 @@ function insertDeclarations(row, label) {
     assert(anchorKinds.has(row.kind) && row.insert === 'after' &&
         !Object.hasOwn(row, 'before') && !Object.hasOwn(row, 'replace') &&
         typeof row.text === 'string', `${label}: invalid insert sanction`);
-    const anchor = owned(row, node => ts.SyntaxKind[node.kind] === row.kind, label, true);
+    const anchor = owned(row, node => ts.SyntaxKind[node.kind] === row.kind, label, node => insertionEdits.has(node));
     assert(ts.isSourceFile(anchor.parent) || ts.isModuleBlock(anchor.parent), `${label}: insert anchor must be namespace-level`);
     const fragment = ts.createSourceFile('insert.d.ts', row.text, ts.ScriptTarget.Latest, true);
     assert(fragment.parseDiagnostics.length === 0 && fragment.statements.length > 0 &&
@@ -296,11 +299,23 @@ for (const directory of fs.readdirSync(path.join(stage, 'adapt'), { withFileType
         }
         assert(sanctionKinds.has(row.kind) && (!Object.hasOwn(row, 'replace') || row.replace === 'member') &&
             typeof row.before === 'string' && typeof row.after === 'string', `${label}: invalid sanction`);
-        const node = owned(row, node => ts.SyntaxKind[node.kind] === row.kind, label);
+        assert(!Object.hasOwn(row, 'afterOptional') || (row.afterOptional === true &&
+            row.kind === 'PropertySignature' && !Object.hasOwn(row, 'replace')), `${label}: invalid optional composition`);
+        const node = owned(row, node => ts.SyntaxKind[node.kind] === row.kind, label,
+            candidate => row.afterOptional && optionalTypeEdits.has(candidate));
         const target = row.replace === 'member' ? node : node.type;
         assert(target, `${label}: owner has no type`);
-        assert.equal(target.getText(source), row.before,
-            `${label}: upstream text ${JSON.stringify(target.getText(source))}; before ${JSON.stringify(row.before)}`);
+        let before = target.getText(source);
+        if (row.afterOptional) {
+            const suffix = optionalTypeEdits.get(node);
+            assert(suffix, `${label}: expected adaptation 20's optional suffix`);
+            before += suffix.text;
+            assert(row.after.endsWith(suffix.text), `${label}: missing optional suffix`);
+            edits.splice(edits.indexOf(suffix), 1);
+            optionalTypeEdits.delete(node);
+        }
+        assert.equal(before, row.before,
+            `${label}: ${row.afterOptional ? "type after adaptation 20" : "upstream text"} ${JSON.stringify(before)}; before ${JSON.stringify(row.before)}`);
         const edit = { at: target.getStart(source), end: target.end, text: row.after };
         sanctionEdits.push(edit);
         edits.push(edit);

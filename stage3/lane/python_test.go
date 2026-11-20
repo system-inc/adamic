@@ -161,6 +161,15 @@ func TestLaneCheckPython(t *testing.T) {
 // Keep each group below 25 seconds on one processor, including cases that invoke
 // the generator more than once. Every case retains its own proof tree and process.
 var generateApiPythonGroups = map[string][]string{
+	"TestLaneGenerateApiAfterOptionalCompositionPython": {
+		"test_generate_api.ApiSanctionGeneratorTests.test_api_sanction_after_optional_composes_and_guard_accepts",
+		"test_generate_api.ApiSanctionGeneratorTests.test_api_sanction_after_optional_requires_adaptation_20_suffix",
+	},
+	"TestLaneGenerateApiAfterOptionalRejectionsPython": {
+		"test_generate_api.ApiSanctionGeneratorTests.test_api_sanction_after_optional_preserves_suffix",
+		"test_generate_api.ApiSanctionGeneratorTests.test_api_sanction_after_optional_requires_property_signature",
+		"test_generate_api.ApiSanctionGeneratorTests.test_api_sanction_after_optional_rejects_replace",
+	},
 	"TestLaneGenerateApiPropertyGuardsPython": {
 		"test_generate_api.ApiSanctionGeneratorTests.test_api_sanction_line_applied_and_guard_accepts",
 		"test_generate_api.ApiSanctionGeneratorTests.test_api_sanction_applied_and_guard_accepts",
@@ -199,6 +208,16 @@ var generateApiPythonGroups = map[string][]string{
 	"TestLaneGenerateApiInsertFieldRejectionsPython": {
 		"test_generate_api.ApiSanctionGeneratorTests.test_api_sanction_insert_invalid_fields_are_rejected",
 	},
+}
+
+func TestLaneGenerateApiAfterOptionalCompositionPython(t *testing.T) {
+	t.Parallel()
+	runPython(t, "stage3/lane", "test_generate_api")
+}
+
+func TestLaneGenerateApiAfterOptionalRejectionsPython(t *testing.T) {
+	t.Parallel()
+	runPython(t, "stage3/lane", "test_generate_api")
 }
 
 func TestLaneGenerateApiPropertyGuardsPython(t *testing.T) {
