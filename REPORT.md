@@ -8,7 +8,7 @@ The latent runs use `CENSUS_MODULE_FORMAT=CommonJSBundle`, `LATENT_FULL=0`, `LAT
 
 ## 1. Family 1 site counts
 
-Exact reason is “an object refinement using an open numeric enum as a literal tag”. Raw positions and distinct TypeScript property-read identities come from `stage3/census/pair`.
+Exact reason is “an object refinement using an open numeric enum as a literal tag”. Raw positions and distinct AST-normalized read identities come from `stage3/census/pair`.
 
 | Pass | Base distinct | Base raw | Head distinct | Head raw |
 | --- | ---: | ---: | ---: | ---: |
@@ -86,4 +86,4 @@ The five slowest entry-head units by wall time follow. The largest per-unit wall
 | `types.ts` | 1 | NotYet at `diagnosticInformationMap.generated.ts:13:45`. An enum is read before its runtime initialization. |
 | `corePublic.ts`, `hostErrors.ts` | 2 | Lowered whole. |
 
-The [paired root table](evidence/ordinary-root-table.json.gz) records every root individually. The raw streams retain the meter's three ancillary entries and whole-program row. A separate scan-all comparison of the same 79 roots is in progress.
+The [paired root table](evidence/ordinary-root-table.json.gz) records every root individually. The raw streams retain the meter's three ancillary entries and whole-program row. The separate scan-all control on `corePublic.ts` completed with zero stops on both revisions and gave byte-identical JSON. The broader scan-all sweep was stopped after the ordinary 79-root table was complete because the continuation runs were substantially longer. [Scan-all base](evidence/scan-all-corePublic-base.jsonl.gz) · [Scan-all head](evidence/scan-all-corePublic-head.jsonl.gz)
