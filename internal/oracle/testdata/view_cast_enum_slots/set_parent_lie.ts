@@ -16,5 +16,5 @@ function owner(node: Node): Kind {
 const root: Node = { kind: Kind.Root, parent: undefined };
 const doc: Node = { kind: Kind.Doc, parent: root };
 const draft: Draft = { kind: Kind.Param, parent: undefined };
-console.log(owner(setParent(draft, doc)));
-console.log(owner(setParent(draft, root)));
+console.log(`${owner(setParent(draft, doc))}`);
+console.log(`${owner(setParent(draft, root))}`);

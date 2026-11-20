@@ -14,4 +14,4 @@ function late(node: Declaration): Kind {
 const expression: Node = { kind: Kind.Name, parent: undefined };
 const computed: Name = { kind: Kind.Computed, parent: undefined, expression };
 const declaration: Declaration = { kind: Kind.Prop, parent: undefined, name: computed };
-console.log(late(declaration));
+console.log(`${late(declaration)}`);
