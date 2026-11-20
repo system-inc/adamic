@@ -439,3 +439,15 @@ func TestAStoppedBuildsGapLineIsItsError(t *testing.T) {
 		}
 	}
 }
+
+// -go-modules reaches the Go entries' builds alone, read offline: a sealed job's own cache is the image's,
+// read-only, and go-pcre isn't in it (J-deptcta's regexredux go-5 gap).
+func TestGoModulesReachOnlyTheGoEntriesBuilds(t *testing.T) {
+	if got := (gameRequest{}).goModulesBuild(); got != nil {
+		t.Errorf("without -go-modules, a Go build's settings are %q; want none", got)
+	}
+	request := gameRequest{goModules: "/srv/loom-tools/gomod-bench/0c6479bb"}
+	if got, want := request.goModulesBuild(), []string{"GOMODCACHE=/srv/loom-tools/gomod-bench/0c6479bb", "GOPROXY=off", "GOSUMDB=off"}; !slices.Equal(got, want) {
+		t.Errorf("-go-modules' build settings are %q; want %q", got, want)
+	}
+}
