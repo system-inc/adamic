@@ -8,7 +8,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-adamic_heap adamic_null = {0, adamic_kind_object, 0};
+adamic_heap adamic_null = {0, adamic_kind_null, 0};
 
 adamic_boolean_box adamic_box_true = {{0, adamic_kind_boolean, 0}, true};
 adamic_boolean_box adamic_box_false = {{0, adamic_kind_boolean, 0}, false};

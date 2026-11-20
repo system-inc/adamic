@@ -14,12 +14,13 @@ import (
 	"github.com/system-inc/adamic/internal/native_runtime"
 )
 
-// A union's null is the runtime's static adamic_null, a bare header of kind object with nothing after
-// it. adamic_instanceof trusted the kind and read ->class past its end (#hy1sanv, J-vyd1ex8: ASan's
-// global-buffer-overflow at class_inheritance.c:8). Here a checked claim of Box | number returns true
-// for null, so the check at the call tests the Box member on the sentinel: it must stop with exit 70 at
+// A union's null is the runtime's static adamic_null, a bare header with nothing after it. Its kind was
+// object, so adamic_instanceof trusted the kind and read ->class past its end (#hy1sanv, J-vyd1ex8:
+// ASan's global-buffer-overflow at class_inheritance.c:8). Its kind is now adamic_kind_null, its own,
+// and no reader tests its address (#ch0xvam). Here a checked claim of Box | number returns true for
+// null, so the check at the call tests the Box member on the sentinel: it must stop with exit 70 at
 // that check, on sanitized native and on the JavaScript backend, where Node counts 3. Mutant: the
-// sentinel test dropped from adamic_instanceof, which brings the overflow back.
+// sentinel's kind put back to object, which brings the overflow back.
 func TestNullSentinelIsNoClassInstance(t *testing.T) {
 	t.Parallel()
 	source := `class Box {
@@ -94,6 +95,72 @@ for (const value of values) { console.log(show(value)); }
 `
 	program := lowersAndAgreesWithNodeAs(t, source, ".ts")
 	if code, stdout, stderr := brandedNative(t, program); code != 0 || stdout != "box\nother\nother\n" {
+		t.Fatalf("native: exit %d, stdout %q, stderr %q", code, stdout, stderr)
+	}
+}
+
+// Each class of reader of a union slot holding null answers as Node does, and reads nothing past the
+// sentinel, now that its kind is its own (#ch0xvam): an early return on an object's kind
+// (adamic_instanceof) through a class's field, an if test (adamic_object_is_frozen, where null joins
+// the primitives that answer true), and the switches that test the sentinel's address before its kind
+// (typeof, truthiness, JSON.stringify). Mutant: the sentinel's kind put back to object, with the
+// #hy1sanv guards gone, which overflows the first two under ASan; the switches keep their address test.
+func TestNullSentinelFieldInstanceofIsFalse(t *testing.T) {
+	t.Parallel()
+	source := `class Box {
+  readonly size: number;
+  constructor(size: number) { this.size = size; }
+}
+class Holder {
+  value: Box | number | null;
+  constructor(value: Box | number | null) { this.value = value; }
+}
+function show(holder: Holder): string { return holder.value instanceof Box ? "box" : "other"; }
+const holders: Holder[] = [new Holder(new Box(1)), new Holder(null), new Holder(2)];
+for (const holder of holders) { console.log(show(holder)); }
+`
+	program := lowersAndAgreesWithNodeAs(t, source, ".ts")
+	if code, stdout, stderr := brandedNative(t, program); code != 0 || stdout != "box\nother\nother\n" {
+		t.Fatalf("native: exit %d, stdout %q, stderr %q", code, stdout, stderr)
+	}
+}
+
+// Object.isFrozen of a union holding null is true, as Node's is for every primitive and null.
+func TestNullSentinelIsFrozenIsTrue(t *testing.T) {
+	t.Parallel()
+	source := `class Box {
+  readonly size: number;
+  constructor(size: number) { this.size = size; }
+}
+const values: (Box | number | null)[] = [];
+values.push(new Box(1));
+values.push(null);
+values.push(2);
+for (const value of values) { console.log(Object.isFrozen(value) ? "frozen" : "open"); }
+`
+	program := lowersAndAgreesWithNodeAs(t, source, ".ts")
+	if code, stdout, stderr := brandedNative(t, program); code != 0 || stdout != "open\nfrozen\nfrozen\n" {
+		t.Fatalf("native: exit %d, stdout %q, stderr %q", code, stdout, stderr)
+	}
+}
+
+// typeof, truthiness and JSON.stringify of a union holding null give Node's "object", false and "null".
+func TestNullSentinelSwitchesAnswerNull(t *testing.T) {
+	t.Parallel()
+	source := `const values: (string | number | boolean | null)[] = [];
+values.push("s");
+values.push(null);
+values.push(0);
+values.push(true);
+for (const value of values) {
+  console.log(typeof value);
+  console.log(value ? "truthy" : "falsy");
+  console.log(JSON.stringify(value));
+}
+`
+	program := lowersAndAgreesWithNodeAs(t, source, ".ts")
+	want := "string\ntruthy\n\"s\"\nobject\nfalsy\nnull\nnumber\nfalsy\n0\nboolean\ntruthy\ntrue\n"
+	if code, stdout, stderr := brandedNative(t, program); code != 0 || stdout != want {
 		t.Fatalf("native: exit %d, stdout %q, stderr %q", code, stdout, stderr)
 	}
 }
