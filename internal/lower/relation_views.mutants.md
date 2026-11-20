@@ -3,8 +3,8 @@
 Described, not run. Each names the check that must turn red, and why no other check catches it.
 The fixtures are in `internal/oracle/testdata/relation_views/`, held by
 `TestRelationViewsAgreeWithNode`, `TestRelationViewsPanicAtTheRead` and `TestRelationViewsStop` in
-`internal/oracle/relation_views_test.go`. Mutants (a) to (d) each turn a row of `TestRelationViewsStop`
-red; (e) to (g) say why no row can.
+`internal/oracle/relation_views_test.go`. Mutants (a), (c) and (d) each turn a row of `TestRelationViewsStop`
+red, and (b) a row of `TestRelationViewsPanicAtTheRead`; (e) to (g) say why no row can.
 
 ## (a) The post-pass removed
 
@@ -33,8 +33,9 @@ Red: `lowered_twice.ts`'s row. `admit<Tag>` holds the relation `const target: Ta
 lowered once per instantiation, `admit<number>` and then `admit<string>`. The first lowering views
 `source` and deletes the entry; the second finds none, so its value crosses with no view and its local
 is no view entry. `second` comes only from the second instantiation, and its flow reaches no entry,
-so `checkViewWidenedReads` doesn't weigh the read of `seen.label` through `Seen`: the program lowers,
-and the read takes the number 5 raw as a string. The row wants the NotYet naming that read.
+so `checkViewWidenedReads` doesn't weigh the read of `seen.label` through `Seen`, and the read takes the
+number 5 raw as a string. Since #zpzm9ta the row wants the program to stop at that read, checked where it's
+made, with exit 70 on every backend; under the mutant it never stops there.
 
 Why only that row: the post-pass sees the deleted entry as gone, not untaken, so it stays silent. The
 reads through `Target` stay checked, since view registers `Target:label` program-wide on the first
@@ -73,8 +74,8 @@ panic at the read").
   refused at 5:18. The other .ts rows are refused by constraintRelationRefusal (rule 3360) at the
   binding, in the same words, which this mutant doesn't touch.
 - `TestRelationViewsAgreeWithNode` and `TestRelationViewsPanicAtTheRead` (every row), and
-  `TestRelationViewsStop`'s road1_getter.ts, road2_wider_alias.ts, road3_other_type.ts and
-  lowered_twice.ts, which want stops lowering reaches only past the relation.
+  `TestRelationViewsStop`'s road1_getter.ts and road2_wider_alias.ts, which want stops lowering reaches
+  only past the relation.
 
 Why only these: each is a .ts program whose first stop on main was rule 3300's at a relation this slice
 records. A pin refused by another rule first, or in .a, has the same outcome with the slice and without.
