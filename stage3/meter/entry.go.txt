@@ -2,10 +2,10 @@
 package main
 
 import (
- "github.com/system-inc/adamic/stage3/census/moduleformat"
 	"context"
 	"encoding/json"
 	"fmt"
+	"github.com/system-inc/adamic/stage3/census/moduleformat"
 	"os"
 	"path/filepath"
 	"sort"
@@ -96,7 +96,11 @@ func main() {
 	if err := stream.Sync(); err != nil {
 		panic(err)
 	}
-	relations := lower.Latent(context.Background(), program, func(record lower.LatentFile) {
+	var witness witnessOutput
+	if os.Getenv("LATENT_MUTANT_ENTRY_DROP_WITNESS") != "1" {
+		witness = newWitnessOutput(os.Args[2])
+	}
+	relations := lower.LatentWithWitness(context.Background(), program, func(record lower.LatentFile) {
 		data, err := json.Marshal(record)
 		if err != nil {
 			panic(err)
@@ -110,7 +114,7 @@ func main() {
 			panic(err)
 		}
 		fmt.Fprintln(os.Stderr, record.File, len(record.Findings), entryMeasurement)
-	})
+	}, witness.writer())
 	data, err := json.Marshal(map[string]any{"module_format": moduleformat.Name(), "measurement": entryMeasurement, "status": "relation_report", "relation_overflow": relations, "findings": relations.Findings})
 	if err != nil {
 		panic(err)
@@ -126,4 +130,5 @@ func main() {
 	if err := stream.Sync(); err != nil {
 		panic(err)
 	}
+	witness.publish()
 }

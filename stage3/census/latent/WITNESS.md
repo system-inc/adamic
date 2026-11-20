@@ -26,8 +26,9 @@ LATENT_WITNESS=1 LATENT_WITNESS_OUT=/tmp/witness.jsonl \
   /tmp/latent-census /path/to/sources /tmp/latent.jsonl
 ```
 
-Use a fresh witness output path. The witness pass runs after the directory
-census fixes its reach flags. Bodyless signatures have no forecast row.
+Use a fresh witness output path. The directory and meter entry drivers accept
+the same witness settings. The witness pass runs after the census fixes its
+reach flags. Bodyless signatures have no forecast row.
 The witness pass uses the checker mapper even for a binder absent from the
 parameter and result types.
 
@@ -59,3 +60,19 @@ parked on Loom's side (#hcxsh1k, chg_9ezc1c6q).
 The tail-on fixture checks that scoped passes executed and compares the census
 bytes after removing their `pass_ledger[].wall_seconds` readings. The ordinary
 fixture compares the raw census bytes.
+
+### Meter entry fixture
+
+Build the meter entry binary from the same scratch census overlay, then run
+the fixture with the prebuilt entry binary. For a byte comparison with main,
+build the entry baseline from the pre-witness checkout in the same way and set
+`ENTRY_CENSUS_BASELINE_BINARY`.
+
+```sh
+python3 stage3/meter/entry_overlay.py /tmp/latent-witness-overlay /tmp/latent-entry-overlay
+gofmt -w /tmp/latent-entry-overlay/*.go
+go build -buildvcs=false -overlay=/tmp/latent-entry-overlay/overlay.json \
+  -o /tmp/latent-entry-census ./stage3/census/latent/tool
+entry_suite=stage3/meter/entry
+ENTRY_CENSUS_BINARY=/tmp/latent-entry-census python3 "${entry_suite}_test.py" EntryWitnessTests
+```

@@ -14,3 +14,4 @@ mutation variables unset.
 | Reset the caller at every function-like node | `WITNESS_TEST_MUTANT=LATENT_MUTANT_WITNESS_RESET_OWNER` | `test_latent_witness_uses_nearest_enclosing_census_unit` |
 | Append a witness finding during a tail-on census | `WITNESS_TEST_MUTANT=LATENT_MUTANT_WITNESS_FINDING` | `test_latent_witness_preserves_scoped_tail_ledger` |
 | Remove the exact generic argument selection anchor | Source reshape in the overlay anchor guard | `TestMakeOverlayTextEditsNameAReshape` |
+| Drop the meter entry driver’s witness handling | `LATENT_MUTANT_ENTRY_DROP_WITNESS=1` | `test_meter_entry_witness_forecast_and_stream_isolation` |

@@ -190,6 +190,7 @@ if (repository / 'internal/lower/enums.go').exists():
         }""")
 overlay('internal/lower/latent_hook.go', hook)
 overlay('stage3/census/latent/tool/main.go', (territory / 'main.go.txt').read_text())
+overlay('stage3/census/latent/tool/witness_output.go', (territory / 'witness_output.go.txt').read_text())
 overlay('stage3/census/latent/replay/worker/main.go', (territory / 'replay/main.go.txt').read_text())
 # Main resolves signature returns inside signature rather than signatureReturn.
 # Adapt the scratch hook while leaving production source unchanged.
