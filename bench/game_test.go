@@ -391,7 +391,8 @@ func TestPcreReachesTheEntriesThatLinkIt(t *testing.T) {
 	}
 	request := gameRequest{pcre: "/srv/loom-tools/pcre"}
 	if got, want := request.pcreBuild(), []string{
-		"PKG_CONFIG_PATH=/srv/loom-tools/pcre/usr/lib/x86_64-linux-gnu/pkgconfig",
+		"PKG_CONFIG_LIBDIR=/srv/loom-tools/pcre/usr/lib/x86_64-linux-gnu/pkgconfig",
+		"PKG_CONFIG_SYSROOT_DIR=/srv/loom-tools/pcre",
 		"CGO_CFLAGS=-O2 -g -I/srv/loom-tools/pcre/usr/include",
 		"CGO_LDFLAGS=-O2 -g -L/srv/loom-tools/pcre/usr/lib/x86_64-linux-gnu",
 	}; !slices.Equal(got, want) {
