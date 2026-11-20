@@ -569,6 +569,9 @@ type freshness struct {
 	// direct is each function only ever called by ir.Call, with no parameter a closure captures:
 	// its parameters are placeholders, and what it can't prove is judged where it's called.
 	direct map[int]bool
+
+	// window is the construction window ConstructionWindow watches, nil for every other proof.
+	window *windowWatch
 }
 
 // originKey is where an object was first made: a function, an instruction there, and which of the
@@ -630,6 +633,12 @@ type analysis struct {
 	// deferred is each write this function couldn't prove that its callers will judge: the write, and
 	// the holder and value it may have, joined over every time it runs.
 	deferred map[writeKey]*deferral
+
+	// window is the proof's construction window, kept as the judging pass meets it. statementWrite is
+	// set while a SetProperty statement stores, the one write that runs whenever its instruction does:
+	// a store inside an expression (a short circuit's, a logical assignment's) may not.
+	window         *windowWatch
+	statementWrite bool
 }
 
 // term is a placeholder: parameter param itself (level 0), what it holds in field (level 1), or
@@ -723,7 +732,7 @@ func (a *analysis) everything(from value) value {
 
 // analyze interprets a function to its fixed point, judges its writes, and returns its summary.
 func (proof *freshness) analyze(function int, graph *flow.Function) *summary {
-	a := &analysis{proof: proof, function: function, graph: graph, sites: map[siteKey]int{}, sitesOf: map[flow.InstructionId][]int{}, iterables: map[*ir.Statement]int{}, termObjects: map[term]object{}, deferred: map[writeKey]*deferral{}}
+	a := &analysis{proof: proof, function: function, graph: graph, sites: map[siteKey]int{}, sitesOf: map[flow.InstructionId][]int{}, iterables: map[*ir.Statement]int{}, termObjects: map[term]object{}, deferred: map[writeKey]*deferral{}, window: proof.window}
 	if proof.ownership {
 		a.graphSites = map[int]bool{}
 		a.classifiedSites = map[int]bool{}
@@ -814,12 +823,18 @@ func (a *analysis) flowOut(block *flow.BasicBlock, before *state, after *state, 
 // block interprets a block from its state on entry: the state before its last instruction, and after.
 func (a *analysis) block(block *flow.BasicBlock, entry *state) (*state, *state) {
 	a.state = entry.copy()
+	if a.window != nil {
+		a.window.entered(a, block.Id)
+	}
 	before := a.state
 	for index, id := range block.Instructions {
 		if index == len(block.Instructions)-1 {
 			before = a.state.copy()
 		}
 		a.run(id)
+		if a.window != nil {
+			a.window.ran(a, id)
+		}
 	}
 	if flow.Suspends(block.Terminal) {
 		// The environment owns these values, but confinement across queued work is unproved.
@@ -827,6 +842,9 @@ func (a *analysis) block(block *flow.BasicBlock, entry *state) (*state, *state) 
 			a.state.escape(held)
 		}
 		a.state.clobbered = true
+	}
+	if a.window != nil {
+		a.window.left(a, block.Id)
 	}
 	return before, a.state
 }
@@ -842,7 +860,9 @@ func (a *analysis) run(id flow.InstructionId) {
 	case ir.SetProperty:
 		holder := a.value(statement.Object)
 		held := a.value(statement.Value)
+		a.statementWrite = true
 		a.write(WriteField, statement.Site, statement.Name, holder, held, statement.Name)
+		a.statementWrite = false
 	case ir.SetIndex:
 		holder := a.value(statement.Array)
 		a.value(statement.Index)
@@ -926,6 +946,9 @@ func (a *analysis) write(kind WriteKind, site int, name string, holder value, he
 		write := Write{Kind: kind, Site: site, Name: name, Function: a.function, Proven: true}
 		a.proof.record(key, write)
 		a.judge(key, write, holder, held, "", a.state.exposed)
+		if a.window != nil && kind == WriteField {
+			a.window.stored(a, name, holder)
+		}
 	}
 	for o := range holder.strong {
 		a.state.storeInto(o, field, held)
