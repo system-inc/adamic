@@ -158,3 +158,22 @@ Upstream TypeScript 6.0.3 `hereby local` produced the following complete diff.
      interface ConditionalType extends InstantiableType {
          root: ConditionalRoot;
 ```
+
+## Split refusal scans and mutants
+
+The fix is `71f6d8b1`. The independent measurement merges are `36091025ff13882766d6c7a6bbdbb57be4a86a6b` (A) and `7fc73c54eae2e312a1de4536abae6f09a0a0d4a6` (B). Their compiler and census sources match the common fix-plus-main probe at `3082cdd0`. Each variant ran the instrumented CommonJSBundle probe rooted at `src/tsc/tsc.ts`. It reached the same first pipeline observation in every stream. The baseline includes the recent main compiler update. Its count supersedes the historical two-site measurement for this comparison.
+
+The comparison strips each absolute source root and subtracts one from factory line numbers after the added type-only import at line 403. It compares the full observation multiset, keeping repetitions.
+
+| Variant | Refusal events | All observations | Distinct observations | Raw SHA-256 (uncompressed) |
+| --- | ---: | ---: | ---: | --- |
+| before | 3,490 | 3,491 | 1,972 | `44372ef8865638281db197f6dfc79851e10f35fece38cfa43f41d9bfb0e90623` |
+| a | 3,487 | 3,488 | 1,969 | `391d0f6a23eb9c5e3694b0d7a46db66278b7dc5c0cdf8ba0870a6ead1692391f` |
+| a-mutant | 3,490 | 3,491 | 1,972 | `5bb78e15e260724c5bb4f2aee1adc927fc4e94e23b612372c7850a368dd7f36e` |
+| b | 3,488 | 3,489 | 1,970 | `5194c94fbb914d358c546355efe29746d897bc31b65abd63ed7f80a52aaf95df` |
+
+A removes exactly `factory/nodeFactory.ts:7490:45`, `:71`, and `:93` in baseline coordinates. Its mutant keeps the import and restores the old signature. That restores exactly those three observations, yielding the same normalized multiset as the baseline.
+
+B removes exactly `checker.ts:19948:30` and `:37`. The checker mutant restores the original callee. Its entire source inventory then matches the unadapted tree, so its run also serves as the shared baseline. The restored stream includes the `:37` array refusal and the `:30` optional-field refusal. Both adaptations add zero observations across all rules.
+
+Raw streams are `scan-split-before.json.gz`, `scan-split-a.json.gz`, `scan-split-a-mutant.json.gz`, and `scan-split-b.json.gz`.
