@@ -1,0 +1,23 @@
+// This adapter is compiled only into the scratch census checker.
+package checker
+
+// LatentResolvedTypeArguments reads the selected signature's actual mapper,
+// including defaults and arguments that do not appear in parameters or results.
+func (c *Checker) LatentResolvedTypeArguments(resolved *Signature) []*Type {
+	if resolved == nil || resolved.target == nil || resolved.mapper == nil || len(resolved.typeParameters) != 0 {
+		return nil
+	}
+	parameters := c.getTypeParametersForMapper(resolved.target)
+	arguments := make([]*Type, len(parameters))
+	for index, parameter := range parameters {
+		arguments[index] = getMappedType(parameter, resolved.mapper)
+	}
+	return arguments
+}
+
+// LatentWitnessTypeIsUnresolved catches error recovery and mapped types whose
+// unresolved key domain may leave their property and index lists empty.
+func (c *Checker) LatentWitnessTypeIsUnresolved(argument *Type) bool {
+	return argument == nil || c.isErrorType(argument) ||
+		argument.flags&TypeFlagsObject != 0 && c.isGenericMappedType(argument)
+}

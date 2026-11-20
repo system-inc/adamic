@@ -1,0 +1,10 @@
+import { blocked } from "./z-body.a";
+
+export function first(): number {
+    var callerStop = 1;
+    return blocked<number>(2);
+}
+
+export function later(): number {
+    return blocked<number>(3);
+}
