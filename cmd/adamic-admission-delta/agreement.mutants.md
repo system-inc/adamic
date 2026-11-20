@@ -1,0 +1,12 @@
+# Mutants for the agreement mode
+
+The agreement mode runs every program head accepts, with no base, and judges each through the delta's own runner (judge.go). Each mutant is one edit, to be run on a Linux box against cmd/adamic-admission-delta, then put back. None has been run yet: each row's red is the one the test must show, to be replaced by the run's own words, job and revision once it has.
+
+| Mutant | Edit | Red |
+|---|---|---|
+| The comparison dropped | agreement.go, runAgreement's tally: `case *record.Agree:` made `case true:`, so every accepted program counts as agreeing | TestAgreementCountsEachJudgment: exit 0 with agreeing 3, ruled 0 and disagreeing 0, where exit 1 and one of each is wanted. TestAgreementMemoryUnsafe: agreeing 2, disagreeing 0, memory-unsafe 0 |
+| The shared comparison dropped | judge.go, judgeProgram: `agree := outputsAgree(*record.Node, *record.JavaScript, *record.Native)` made `agree := true` | TestAgreementCountsEachJudgment and TestAgreementMemoryUnsafe as above, since a ruled exception is only read off a disagreement; the delta's TestNewAdmissionMismatch, "missed mismatch, or charged it as other than a red" |
+| The sanitizers dropped | agreement.go, runAgreement: `nativeFlags: []string{"--sanitize"}` made `nativeFlags: nil` | TestAgreementCountsEachJudgment: agreementCompiler fails an unsanitized native build, so agree.a and ruled.a disagree too, disagreeing 3 |
+| A signal not read as memory-unsafe | agreement.go, memoryUnsafe: `if native.Error == "crash" {` made `if false {` | TestAgreementMemoryUnsafe: memory-unsafe 1, and signal.a "isn't flagged memory-unsafe" |
+| The leak detection left on | agreement.go, runAgreement: `nativeEnv: []string{"ASAN_OPTIONS=detect_leaks=0"}` made `nativeEnv: nil` | TestAgreementNativeRunsWithoutLeakDetection: leaks.a's native reports a leak and exits 23, so the run exits 1 with agreeing 0 and disagreeing 1. A box whose own environment already sets ASAN_OPTIONS=detect_leaks=0 can't show this red |
+| Disagreements collected as workers finish | agreement.go, runAgreement: the worker, after judgeProgram, appends the program's path to result.Disagreements under a mutex when `record.disagrees() && record.VoidReason == ""`, and the tally's own append is deleted | TestAgreementWorkersKeepManifestOrder: with --workers 4, z.a's sleeping native finishes last, so the disagreements read m, b, z where --workers 1 reads z, m, b |

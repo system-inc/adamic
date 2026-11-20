@@ -365,3 +365,60 @@ could move. Counted, never hidden: JSON records `ruled_backend_divergences`,
 `ruled_backend_divergence_paths`, `backend_divergence_count` (the list's size)
 and each program's `ruled_backend_divergence`, with `agree` false, and every run
 prints `ruled backend divergences: N` to stderr after the run-time stops line.
+
+## Agreement mode
+
+The delta runs only what head newly accepts, so a wrong answer already on main,
+a native segfault where Node prints a value, is invisible to every head's gate.
+`--agreement` needs no base and runs every program head accepts:
+
+```sh
+go run ./cmd/adamic-admission-delta --agreement --head HEAD \
+  --manifest /tmp/manifest.json --shard 1/4 --json
+```
+
+It takes `--head` and `--manifest`, both required, refuses `--base`, and
+refuses every flag it wouldn't read (`--base-binary`, `--corpus`,
+`--corpus-filter`, `--budget`, `--seed` and the generator's two). Head's
+compiler is built or supplied as the delta's is. Each program of the manifest is
+classified by head's lowering alone: one head refuses is counted as refused and
+never run, and one head's compiler crashes on, fails on with an unrecognized
+diagnostic or times out on is named on a `compiler failure` line and in
+`compiler_failures`. Every accepted program runs on Node, the JavaScript backend
+and a native build under the address and undefined-behavior sanitizers
+(`build <file> -o <out> --sanitize`), through the same runner as the delta's
+newly accepted programs, with the same one retry after a runtime timeout, and
+is judged by the same rules: it agrees, or it is a listed negative witness, a
+listed run-time stop or a ruled backend divergence, each exactly as ruled, or it
+disagrees. Accepted programs run `--workers` at once (default available CPUs),
+and the lines and the report follow the manifest's order whatever order they
+finish in. The native program runs with `ASAN_OPTIONS=detect_leaks=0`, as the
+oracle's comparison run does: a program that stops with exit 70 still holds
+what it held, and a leak report would break every ruled stop's exact stderr. A
+disagreement is memory-unsafe when the native run's stderr names
+AddressSanitizer or UndefinedBehaviorSanitizer, or the native process died on a
+signal.
+
+`--shard k/n` here keeps the programs whose position in the manifest's order,
+each path counted once at its first listing, is `k-1` modulo `n`, so the shards
+are disjoint and together cover the manifest. There is no diff corpus to keep
+whole. A shard alone reads `partial` when it otherwise passes.
+
+Each disagreement is one stderr line: `disagreeing <path>: exit node <n>,
+javascript <n>, native <n>`, then, for stdout and for stderr where the three
+differ, the first line at which they do, as each has it, and `; memory-unsafe`
+when it is. The last stderr line is the summary:
+
+```text
+agreement: compared N, agreeing A, ruled R, disagreeing D, memory-unsafe U, refused F
+```
+
+`compared` is agreeing, ruled and disagreeing together; a void program is in
+none of them. `--json` prints the report: those counts, `disagreements` (each
+with its path, Node's, JavaScript's and native's observations, both compiles
+and `memory_unsafe`), `compiler_failures`, `stale_runtime_stops`, every program
+with its judgment, and `verdict`. Exit codes are the delta's: a disagreement, a
+compiler failure or a listed run-time stop that now agrees exits 1, a run that
+proved nothing (a compile timeout, a runtime timeout that held after its retry,
+or no clang) exits 3 as `void`, and anything else exits 0. A usage error exits 1,
+as every usage error of the command does.
