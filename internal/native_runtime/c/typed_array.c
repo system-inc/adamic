@@ -163,3 +163,7 @@ bool adamic_typed_array_iterator_next(adamic_typed_array_iterator *iterator, dou
 	*value = read_element(iterator->array, iterator->next++);
 	return true;
 }
+
+size_t adamic_typed_array_width(enum adamic_typed_array_kind kind) {
+	return width(kind);
+}

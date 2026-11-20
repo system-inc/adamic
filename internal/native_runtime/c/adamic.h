@@ -889,6 +889,9 @@ void adamic_typed_array_check_write(const adamic_typed_array *array, double inde
 void adamic_typed_array_set_slow(adamic_typed_array *array, double index, double value);
 // Converts the value at an index whose bounds the caller has already checked.
 void adamic_typed_array_write_converted(adamic_typed_array *array, size_t index, double value);
+// width is a kind's bytes an element, the one table every owner's backing count is added and dropped by,
+// so an owner's free (heap.c) takes back exactly what its make added (#3wfes07).
+size_t adamic_typed_array_width(enum adamic_typed_array_kind kind);
 
 // Element reads and writes are inline, as adamic_array_at is, so a loop over a typed array is a
 // load or a store, not a call. The index test is adamic_array_at's: past the bounds,

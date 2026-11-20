@@ -601,8 +601,9 @@ void adamic_heap_free_children(void *value, void (*let_go)(void *)) {
 		if (array->owner != NULL) {
 			let_go(array->owner);
 		} else {
-			size_t width = array->kind == adamic_typed_array_uint8 ? 1 : array->kind == adamic_typed_array_int32 ? 4 : 8;
-			adamic_host_backing_drop(array->length * width);
+			// The width make added by, typed_array.c's own table: a Uint16Array's 2 bytes an element, where
+			// a table of its own here once dropped 8 and wrapped the count (#3wfes07).
+			adamic_host_backing_drop(array->length * adamic_typed_array_width(array->kind));
 			free(array->data);
 		}
 		break;
