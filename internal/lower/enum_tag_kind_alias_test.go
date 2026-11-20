@@ -155,25 +155,49 @@ func TestKindAliasKeepsRule3350(t *testing.T) {
 	}
 }
 
-// Language's a01: a closure in a parameter default rebinds the parameter, and is called between the
-// alias and the switch. No name in that range writes node, so the alias is recognized; tsc narrows node
-// to A and Node throws reading .a of the B. Rule 3350 alone holds it, in .ts and .a.
-func TestKindAliasParameterDefaultRebindKeepsRule3350(t *testing.T) {
+// A closure that rebinds the reference, called between the alias and the switch: no name in that range
+// writes it, so the alias is recognized, and tsc narrows the reference by the switch. Language's a01
+// declares the closure in a parameter default, and Node throws reading .a of the B; Optimizer's two
+// declare it before the alias, over a parameter and over a let. Rule 3350 alone holds each, in .ts and
+// .a, and the never-rebound control lowers and prints yes natively.
+func TestKindAliasClosureRebindKeepsRule3350(t *testing.T) {
 	t.Parallel()
-	const source = kindPredicateTypes + kindAliasValues + "function show(node: N, swap = (): void => { node = b; }): string { const kind = node.kind; swap(); switch (kind) { case K.A: return node.a.toFixed(0); default: return 'other'; } }\nconsole.log(show(a));\n"
-	if observed := runAgreementNode(t, writeAgreementSource(t, "main.ts", source)); observed.code == 0 || !strings.Contains(string(observed.stderr), "TypeError") {
-		t.Fatalf("kind-alias a01 Node: %+v", observed)
-	}
-	if field := kindAliasRecognized(t, source); field != "kind" {
-		t.Fatalf("kind-alias a01: recognized %q", field)
-	}
-	for _, extension := range []string{".ts", ".a"} {
-		t.Run(extension, func(t *testing.T) {
+	const types = `enum K { A = 1, B = 2, C = 3 }
+interface Node { readonly kind: K }
+interface NA extends Node { readonly kind: K.A; readonly a: string }
+interface NB extends Node { readonly kind: K.B; readonly b: number }
+const na: NA = { kind: K.A, a: 'yes' };
+const nb: NB = { kind: K.B, b: 7 };
+`
+	const body = "const kind = node.kind; reset(); switch (kind) { case K.A: return node.a; default: return 'x'; } }\nconsole.log(f(na, nb));\n"
+	for _, p := range []struct{ name, source, node, stop string }{
+		{"default_parameter", kindPredicateTypes + kindAliasValues + "function show(node: N, swap = (): void => { node = b; }): string { const kind = node.kind; swap(); switch (kind) { case K.A: return node.a.toFixed(0); default: return 'other'; } }\nconsole.log(show(a));\n", "TypeError", "a read of node narrowed to A where a call may have rewritten it (node is assigned inside a function)"},
+		{"parameter", types + "function f(node: NA | NB, other: NA | NB): string { const reset = () => { node = other; }; " + body, "undefined\n", "a read of node narrowed to NA where a call may have rewritten it (node is assigned inside a function)"},
+		{"let", types + "function f(start: NA | NB, other: NA | NB): string { let node = start; const reset = () => { node = other; }; " + body, "undefined\n", "a read of node narrowed to NA where a call may have rewritten it (node is assigned inside a function)"},
+		{"control", types + "function f(node: NA | NB): string { const kind = node.kind; switch (kind) { case K.A: return node.a; default: return 'x'; } }\nconsole.log(f(na));\n", "yes\n", ""},
+	} {
+		t.Run(p.name, func(t *testing.T) {
 			t.Parallel()
-			_, err := lowerSourceAs(t, source, extension)
-			var stop *NotYet
-			if !errors.As(err, &stop) || stop.What != "a read of node narrowed to A where a call may have rewritten it (node is assigned inside a function)" {
-				t.Fatalf("kind-alias a01 rule 3350 %s: %v", extension, err)
+			observed := runAgreementNode(t, writeAgreementSource(t, "main.ts", p.source))
+			if p.node == "TypeError" && (observed.code == 0 || !strings.Contains(string(observed.stderr), "TypeError")) || p.node != "TypeError" && (observed.code != 0 || string(observed.stdout) != p.node) {
+				t.Fatalf("kind-alias closure rebind %s Node: %+v", p.name, observed)
+			}
+			if field := kindAliasRecognized(t, p.source); field != "kind" {
+				t.Fatalf("kind-alias closure rebind %s: recognized %q", p.name, field)
+			}
+			for _, extension := range []string{".ts", ".a"} {
+				if p.stop == "" {
+					program := lowersAndAgreesWithNodeAs(t, p.source, extension)
+					if code, out, errs := brandedNative(t, program); code != 0 || out != "yes\n" {
+						t.Fatalf("kind-alias closure rebind control %s native: exit=%d stdout=%q stderr=%q", extension, code, out, errs)
+					}
+					continue
+				}
+				_, err := lowerSourceAs(t, p.source, extension)
+				var stop *NotYet
+				if !errors.As(err, &stop) || stop.What != p.stop {
+					t.Fatalf("kind-alias closure rebind %s rule 3350 %s: %v", p.name, extension, err)
+				}
 			}
 		})
 	}
