@@ -293,10 +293,8 @@ func TestSlotWritesHaveOneJudgment(t *testing.T) {
 	}
 }
 
-// A member an interface merges into a class has no slot in the class's instances, which lay out only the fields a
-// class declares, so a write of it is judged by reach and stops, written through an interface or through the class's
-// own type (#86cmqrp, Language's attack on #w8nanzw: it lowered, and native panicked "a field the checker proved is
-// there is missing" where Node runs on). A member the class declares optional is written as before.
+// A TypeScript merge reserves f in the instance layout, so a named write can
+// fill its slot through either the class type or a structural interface.
 func TestSlotWritesOfAMergedClassMember(t *testing.T) {
 	t.Parallel()
 	const merged = "class Merged { a = 1; }\ninterface Merged { f?: string; }\ninterface X { a: number; f?: string; }\n"
@@ -306,11 +304,7 @@ func TestSlotWritesOfAMergedClassMember(t *testing.T) {
 	} {
 		t.Run(row.name, func(t *testing.T) {
 			t.Parallel()
-			_, err := lowerSourceAs(t, row.source, ".ts")
-			var notYet *NotYet
-			if !errors.As(err, &notYet) || !strings.Contains(notYet.What, "an instance of Merged, whose class holds no f") {
-				t.Fatalf("want NotYet naming Merged's missing slot for f, got %v", err)
-			}
+			lowersAndAgreesWithNodeAs(t, row.source, ".ts")
 		})
 	}
 	t.Run("declared by the class", func(t *testing.T) {

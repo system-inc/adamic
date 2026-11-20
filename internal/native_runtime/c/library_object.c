@@ -109,7 +109,8 @@ adamic_array *adamic_object_keys(const adamic_object *object) {
  adamic_host_stop_keys(&object->heap);
  // Class descriptors hide private storage and track static own-property presence.
  if (adamic_record_is(object)) return adamic_record_keys(object);
- if (object->class != NULL) return adamic_class_object_keys(object);
+ // A construction-backed class already uses the presence and order of its actual slots.
+ if (object->class != NULL && object->write_order == NULL) return adamic_class_object_keys(object);
  size_t *indices = adamic_object_ordered(object);
  adamic_array *keys = adamic_array_make(object->shape->count, adamic_ir_Union);
  for (size_t at = 0; at < object->shape->count; at++) {
