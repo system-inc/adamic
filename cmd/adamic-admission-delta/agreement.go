@@ -9,6 +9,7 @@ import (
 	"strconv"
 	"strings"
 	"sync"
+	"sync/atomic"
 	"time"
 
 	"github.com/system-inc/adamic/internal/toolchain"
@@ -115,6 +116,12 @@ func agreementUsage(given map[string]bool, manifestPath, shard string) error {
 // does; a run that proved nothing for a timeout or a missing clang exits 3, as the delta's void does.
 func runAgreement(agreement agreementRun) error {
 	result := agreementReport{Shard: agreement.shard, Verdict: "pass", Disagreements: []agreementDisagreement{}, CompilerFailures: []agreementCompilerFailure{}, StaleRuntimeStops: []string{}, Programs: []agreementProgram{}}
+	// progress says on stderr where a run is, with its seconds so far, as it goes: a whole corpus takes a box many
+	// minutes, and a run its job's ceiling stops would otherwise end with nothing said about where its time went.
+	started := time.Now()
+	progress := func(format string, arguments ...any) {
+		fmt.Fprintf(os.Stderr, "agreement: %.0f s: %s\n", time.Since(started).Seconds(), fmt.Sprintf(format, arguments...))
+	}
 	var err error
 	result.Head, err = git(agreement.root, "rev-parse", agreement.head+"^{commit}")
 	if err != nil {
@@ -178,7 +185,15 @@ func runAgreement(agreement agreementRun) error {
 	}
 	// Head lowers each program once: with one compiler given as both, a program's class is accepted-by-both,
 	// refused-by-both, or a compiler failure.
+	progress("head's compiler is built; classifying %d programs on %d workers", len(programs), agreement.workers)
 	classifyPrograms(headTree, lower, lower, programs, agreement.workers, agreement.compileLimit)
+	accepted := 0
+	for _, record := range programs {
+		if record.Class == "accepted-by-both" {
+			accepted++
+		}
+	}
+	progress("classified: %d accepted of %d", accepted, len(programs))
 	var voids []string
 	// The native build resolves clang as toolchain.Path does; without it every native observation would be a
 	// compilation failure head didn't cause, so nothing runs and the run is void, as in the delta.
@@ -199,6 +214,7 @@ func runAgreement(agreement agreementRun) error {
 	// workers finish in. A timed-out run's retry here runs beside the other workers' runs, never wholly alone.
 	stale := make([]bool, len(programs))
 	failed := make([]error, len(programs))
+	var finished atomic.Int64
 	jobs := make(chan int)
 	var group sync.WaitGroup
 	for worker := 0; worker < agreement.workers; worker++ {
@@ -214,6 +230,9 @@ func runAgreement(agreement agreementRun) error {
 					continue
 				}
 				stale[index], failed[index] = runner.judgeProgram(record, index, still)
+				if done := finished.Add(1); done%250 == 0 {
+					progress("%d of %d accepted programs run", done, accepted)
+				}
 			}
 		}()
 	}
@@ -224,6 +243,7 @@ func runAgreement(agreement agreementRun) error {
 	}
 	close(jobs)
 	group.Wait()
+	progress("every accepted program run: %d", finished.Load())
 	for index := range programs {
 		if failed[index] != nil {
 			return failed[index]
