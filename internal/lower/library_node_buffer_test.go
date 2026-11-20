@@ -3,6 +3,8 @@ package lower
 import (
 	"strings"
 	"testing"
+
+	"github.com/system-inc/adamic/internal/ir"
 )
 
 func TestNodeBufferRefusals(t *testing.T) {
@@ -22,6 +24,7 @@ func TestNodeBufferRefusals(t *testing.T) {
 		{"detached", "import { createHash } from 'node:crypto'; const hash = createHash('sha256'); const update = hash.update;", "Hash.update"},
 		{"typed array view", "import { Buffer } from 'node:buffer'; const bytes: Uint8Array = Buffer.from('abc'); console.log(`${bytes.length}`);", "another object type"},
 		{"structural hash view", "import { createHash } from 'node:crypto'; const hash: { digest: (encoding: 'hex') => string } = createHash('sha256'); console.log(hash.digest('hex'));", "another object type"},
+		{"allocUnsafe spread", "import { Buffer } from 'node:buffer'; const sizes: [number] = [2]; console.log(`${Buffer.allocUnsafe(...sizes).length}`);", "Buffer.allocUnsafe outside allocUnsafe(size)"},
 	} {
 		t.Run(probe.name, func(t *testing.T) {
 			t.Parallel()
@@ -81,5 +84,34 @@ func TestNodeBufferStaysApartFromUint8Array(t *testing.T) {
 				t.Fatalf("want it lowered, got %v", err)
 			}
 		})
+	}
+}
+
+// Buffer.allocUnsafe(size) of a number is buffer_alloc_unsafe, which makes a Buffer, a Uint8Array as
+// Buffer.from's are, and can throw: Node's RangeError for a size out of range or one it can't allocate,
+// so the function holding it is one a throw can leave.
+func TestNodeBufferAllocUnsafeLowers(t *testing.T) {
+	t.Parallel()
+	program, err := lowerSource(t, "import { Buffer } from 'node:buffer';\nfunction make(size: number): number { return Buffer.allocUnsafe(size).length; }\nconsole.log(`${make((16000 + 16000 / 61) | 0)}`);")
+	if err != nil {
+		t.Fatal(err)
+	}
+	found := 0
+	for _, function := range program.Functions {
+		walk(function.Body, func(node any) bool {
+			if call, isCall := node.(ir.NodeBufferCall); isCall {
+				found++
+				if call.Function != "buffer_alloc_unsafe" || call.Returns != ir.Uint8Array || len(call.Arguments) != 1 || call.Arguments[0].Type() != ir.Number {
+					t.Errorf("Buffer.allocUnsafe lowered to %+v", call)
+				}
+				if !function.MayThrow {
+					t.Errorf("%s holds Buffer.allocUnsafe and isn't marked as able to throw", function.Name)
+				}
+			}
+			return true
+		})
+	}
+	if found != 1 {
+		t.Fatalf("want one buffer_alloc_unsafe in a function, found %d", found)
 	}
 }

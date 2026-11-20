@@ -25,5 +25,11 @@ func (e *emitter) nodeBufferCall(call ir.NodeBufferCall) string {
 	if !call.Returns.IsReference() {
 		return e.snapshot(call.Returns, code)
 	}
-	return e.own(call.Returns, code)
+	result := e.own(call.Returns, code)
+	// Buffer.allocUnsafe's size out of range, or one it can't allocate, leaves Node's RangeError
+	// pending and makes no Buffer: the NULL it owns is let go of on the way to the catch.
+	if call.MayThrow() {
+		e.checkThrown()
+	}
+	return result
 }
