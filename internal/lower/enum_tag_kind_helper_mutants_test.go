@@ -33,6 +33,7 @@ var kindHelperMutations = []kindHelperMutation{
 	{"Let", "internal/lower/enum_tag_kind_helper.go", "function.Parent.Flags&ast.NodeFlagsConst == 0", "false", "TestKindHelperFallbacksRejectWholeBody/let_helper", "kind-helper fallback let_helper", []string{}},
 	{"AliasArgument", "internal/lower/enum_tag_kind_helper.go", "if r.alias != nil {\n\t\treturn false\n\t}", "if false && r.alias != nil {\n\t\treturn false\n\t}", "TestKindHelperFallbacksRejectWholeBody/alias_argument", "kind-helper fallback alias_argument", []string{}},
 	{"MixedDisjunction", "internal/lower/enum_tag_kind_set.go", "return r.comparisons(b.Left) && r.comparisons(b.Right)", "return r.comparisons(b.Left)", "TestKindHelperFallbacksRejectWholeBody/mixed_disjunction", "kind-helper fallback mixed_disjunction", []string{}},
+	{"DuplicateCase", "internal/lower/enum_tag_kind_helper.go", "if checker.Checker_isTypeIdenticalTo(r.l.checker, held, kind) {", "if false && checker.Checker_isTypeIdenticalTo(r.l.checker, held, kind) {", "TestKindHelperFallbacksRejectWholeBody/h05", "kind-helper fallback h05", []string{}},
 }
 
 func kindHelperMutantBinary(t *testing.T, m kindHelperMutation) string {
@@ -110,6 +111,11 @@ func TestProduct_KindHelperAliasArgumentMutant(t *testing.T) {
 func TestProduct_KindHelperMixedDisjunctionMutant(t *testing.T) {
 	t.Parallel()
 	kindHelperMutantBinary(t, kindHelperMutations[17])
+}
+
+func TestProduct_KindHelperDuplicateCaseMutant(t *testing.T) {
+	t.Parallel()
+	kindHelperMutantBinary(t, kindHelperMutations[18])
 }
 
 func TestKindHelperMutantsAreCaught(t *testing.T) {

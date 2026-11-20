@@ -15,11 +15,11 @@ rows also run in TestKindHelperShapesAgreeWithNode and the whole lower suite.
 
 | Mutant | Catching test | Catch line in enum_tag_kind_helper_test.go |
 | --- | --- | --- |
-| Depth | TestKindHelperFallbacksRejectWholeBody/depth | 118 |
-| Cycle | TestKindHelperFallbacksRejectWholeBody/cycle | 118 |
-| NonHelper | TestKindHelperFallbacksRejectWholeBody/(non_helper|other_read) | 118 |
-| WrittenParameter | TestKindHelperFallbacksRejectWholeBody/written_parameter | 118 |
-| WrongArgument | TestKindHelperFallbacksRejectWholeBody/(wrong_field|arithmetic_argument) | 118 |
+| Depth | TestKindHelperFallbacksRejectWholeBody/depth | 123 |
+| Cycle | TestKindHelperFallbacksRejectWholeBody/cycle | 123 |
+| NonHelper | TestKindHelperFallbacksRejectWholeBody/(non_helper|other_read) | 123 |
+| WrittenParameter | TestKindHelperFallbacksRejectWholeBody/written_parameter | 123 |
+| WrongArgument | TestKindHelperFallbacksRejectWholeBody/(wrong_field|arithmetic_argument) | 123 |
 | Call | TestKindHelperShapesAgreeWithNode/default_chain | 45 |
 | Scalar | TestKindHelperShapesAgreeWithNode/default_chain | 45 |
 | Default | TestKindHelperShapesAgreeWithNode/default_chain | 45 |
@@ -27,12 +27,13 @@ rows also run in TestKindHelperShapesAgreeWithNode and the whole lower suite.
 | ReturnBody | TestKindHelperShapesAgreeWithNode/return_chain | 45 |
 | Arrow | TestKindHelperShapesAgreeWithNode/arrow | 45 |
 | DefaultMask | TestKindHelperDefaultExcludesExplicitFalse | 72 |
-| DefaultParameter | TestKindHelperFallbacksRejectWholeBody/default_parameter | 118 |
-| Enum | TestKindHelperFallbacksRejectWholeBody/two_enums | 118 |
-| Overload | TestKindHelperFallbacksRejectWholeBody/overload | 118 |
-| Let | TestKindHelperFallbacksRejectWholeBody/let_helper | 118 |
-| AliasArgument | TestKindHelperFallbacksRejectWholeBody/alias_argument | 118 |
-| MixedDisjunction | TestKindHelperFallbacksRejectWholeBody/mixed_disjunction | 118 |
+| DefaultParameter | TestKindHelperFallbacksRejectWholeBody/default_parameter | 123 |
+| Enum | TestKindHelperFallbacksRejectWholeBody/two_enums | 123 |
+| Overload | TestKindHelperFallbacksRejectWholeBody/overload | 123 |
+| Let | TestKindHelperFallbacksRejectWholeBody/let_helper | 123 |
+| AliasArgument | TestKindHelperFallbacksRejectWholeBody/alias_argument | 123 |
+| MixedDisjunction | TestKindHelperFallbacksRejectWholeBody/mixed_disjunction | 123 |
+| DuplicateCase | TestKindHelperFallbacksRejectWholeBody/h05 | 123 |
 
 Depth disables the limit and admits a finite nine-helper chain. Cycle treats a
 back edge as an empty successful contribution (the partial-set memo bug), rather
@@ -59,3 +60,12 @@ TestKindHelperLieStopsAtCheckedRead holds the lying predicate to exit 70 on
 JavaScript and sanitized native at `field read failed: n.a is not a string`.
 The two isExpression/isStatement fallback rows also keep the family 1 refusal
 through full Lower, not just the direct recognizer.
+
+
+Language h05 pins a helper switch with A = 1 and D = 1 under distinct names:
+`case K.A: return true; case K.D: return false; default: return false`, called
+as `n && kinds(n.kind)`. The checker interns both labels as one literal type;
+the unchanged helper switch rejects the complete body. DuplicateCase drops
+only kindHelperSwitch's duplicate-label guard and makes h05 recognized,
+reddening the direct fallback at enum_tag_kind_helper_test.go:123. Its producer
+is TestProduct_KindHelperDuplicateCaseMutant. No production code changes.
