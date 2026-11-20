@@ -79,3 +79,13 @@ The field can honestly be `aliasTypeArguments?: readonly Type[] | undefined`. `C
 The original fix head `71f6d8b1` scanned the baseline at `src/tsc/tsc.ts` with the instrumented CommonJSBundle probe. It reported **3,524 refusal-scan events**, **2,005 distinct refusal triples**, and 1 first pipeline observation, for **3,525 total observations**. Its boundary was `production abort at lowering.declareModule`.
 
 Raw stream `scan-before.json.gz`. Uncompressed SHA-256 `1846ae866b564166d36ad19b4002a8408142515ba4871188d102b570c69cedbb`.
+
+## Fix-only paired scan and checker mutant
+
+The original fix binary, used unchanged for both source variants, produced 3,525 total observations before, 3,521 after, and 3,522 for the restoring mutant. Each total includes one unchanged `lowering.declareModule` observation. The distinct counts including that observation were 2,006, 2,002, and 2,003. Raw streams are `scan-fix-only-after.json.gz` and `scan-fix-only-mutant.json.gz`.
+
+Compared by multiset of (kind, rule, relative site, words), the after tree removes the three requested array refusals. It also removes the existing factory optional-field refusal at `7490:45` (TextRange lacks SourceMapRange's optional `source`) and the checker optional-field refusal at `19948:30` (Type lacks TypeParameter's optional `constraint`). It adds `castRefusal` at `checker.ts:19948:60` with these words:
+
+> an unproven relation from Type to TypeParameter: optional field constraint has no proven compatible presence/type
+
+Restoring just the checker append returns both prior refusals at `19948:30` and `19948:37`, and removes that cast refusal. The factory delta is retained. This fails the requested no-new-refusal and exact single-refusal mutant conditions. The guarded helper `getDeclaredTypeOfTypeParameter(symbol)` already returns TypeParameter. Calling it directly would change the emitted JavaScript callee. That alternative needs a ruling if byte identity remains required.
