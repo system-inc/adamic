@@ -32,8 +32,9 @@ func (w *enumTagWalk) switchField(statement *ast.Node) string {
 // kindAliasRewritten guards the reference's binding, never the saved field: a write to the tag through
 // another name between the alias and the switch would leave the alias stale where a direct switch rereads
 // it. The road stands on a refusal elsewhere: each member's tag is one literal, so a write that changes it
-// needs a view whose tag is wider, and family 3 refuses such a view (a readonly field made writable is
-// family 4's). If family 3's rule is ever narrowed, this road opens, and
+// needs a writable view whose tag is wider: over a readonly tag that's a readonly field made writable,
+// refused at the call (family 4), and over a mutable one a wider view that can write, family 3's. If
+// either rule is ever narrowed, this road opens, and
 // TestKindAliasTagWriteThroughWiderViewIsRefused is where it shows first.
 func (w *enumTagWalk) kindAliasField(statement *ast.Node) string {
 	name := ast.SkipParentheses(statement.AsSwitchStatement().Expression)
