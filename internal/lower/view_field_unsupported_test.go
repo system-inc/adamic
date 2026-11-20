@@ -107,22 +107,33 @@ func TestUnbuiltFieldSpreadStops(t *testing.T) {
 // (checkSlotWrites) lets it through to this one. Where raw was built without locals, that older rule
 // answers first, at the same place, in words of its own. A write to the tuple whose program never
 // reads the view again lowered before this rule and trapped at run time on every backend, "<write>.pair
-// is not initialized", where Node prints done (J-vktzq8t). Mutant: the write stop dropped, and the
-// tuple's writes lower.
+// is not initialized", where Node prints done (J-vktzq8t). Two writes stop today at older rules that
+// answer first, each held only to a NotYet on the write's line, so each keeps a stop when that rule lifts
+// (Language, J-3z6n90v): a destructuring assignment into the field, at "destructuring a value made in the
+// assignment itself", and Object.assign onto the view, at "Object.assign on a shape not proven by a plain
+// literal". Mutant: the write stop dropped, and the tuple's writes lower.
 func TestUnbuiltFieldWriteIsNotYet(t *testing.T) {
 	t.Parallel()
-	for _, probe := range []struct{ name, declared, rawFields, write, field string }{
-		{"optional map", "locals?: Map<string, Nd>", "size: 7, locals: new Map<string, Nd>()", "view.locals = new Map(); console.log(String(view.size));", "locals"},
-		{"optional map without its slot", "locals?: Map<string, Nd>", "size: 7", "view.locals = new Map(); console.log(String(view.size));", ""},
-		{"variable tuple", "pair: readonly [number, ...string[]]", "size: 7", "view.pair = [1, 'a']; console.log(String(view.size));", "pair"},
-		{"variable tuple then done", "pair: readonly [number, ...string[]]", "size: 7", "view.pair = [1, 'a']; console.log('done');", "pair"},
+	for _, probe := range []struct{ name, declared, rawFields, write, at, field string }{
+		{"optional map", "locals?: Map<string, Nd>", "size: 7, locals: new Map<string, Nd>()", "view.locals = new Map(); console.log(String(view.size));", "6:1", "locals"},
+		{"optional map without its slot", "locals?: Map<string, Nd>", "size: 7", "view.locals = new Map(); console.log(String(view.size));", "6:1", ""},
+		{"optional map destructured", "locals?: Map<string, Nd>", "size: 7, locals: new Map<string, Nd>()", "({ locals: view.locals } = { locals: new Map<string, Nd>() }); console.log(String(view.size));", "6", ""},
+		{"optional map assigned onto", "locals?: Map<string, Nd>", "size: 7, locals: new Map<string, Nd>()", "Object.assign(view, { locals: new Map<string, Nd>() }); console.log(String(view.size));", "6", ""},
+		{"variable tuple", "pair: readonly [number, ...string[]]", "size: 7", "view.pair = [1, 'a']; console.log(String(view.size));", "6:1", "pair"},
+		{"variable tuple then done", "pair: readonly [number, ...string[]]", "size: 7", "view.pair = [1, 'a']; console.log('done');", "6:1", "pair"},
 	} {
 		t.Run(probe.name, func(t *testing.T) {
 			t.Parallel()
 			_, err := lowerSourceAs(t, unbuiltFieldSource(probe.declared, probe.rawFields, probe.write), ".ts")
+			// at is a line and column, held exactly, or a line alone.
+			where := "main.ts:" + probe.at
 			var notYet *NotYet
-			if !errors.As(err, &notYet) || !strings.HasSuffix(notYet.Where, "main.ts:6:1") || probe.field != "" && !strings.Contains(notYet.What, "field "+probe.field+" whose contract isn't built") {
-				t.Fatalf("want a NotYet at main.ts:6:1 naming field %q, got %v", probe.field, err)
+			if !errors.As(err, &notYet) {
+				t.Fatalf("want a NotYet at %s, got %v", where, err)
+			}
+			placed := strings.HasSuffix(notYet.Where, where) || !strings.Contains(probe.at, ":") && strings.Contains(notYet.Where, where+":")
+			if !placed || probe.field != "" && !strings.Contains(notYet.What, "field "+probe.field+" whose contract isn't built") {
+				t.Fatalf("want a NotYet at %s naming field %q, got %v", where, probe.field, err)
 			}
 		})
 	}
