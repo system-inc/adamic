@@ -297,7 +297,7 @@ func (l *lowering) judgeBoundObject(literal *ast.Node, target *checker.Type) err
 					}
 				}
 				from := l.checker.GetTypeAtLocation(spread)
-				if found := l.widenedProperties(from, member, skip, true, map[[2]*checker.Type]bool{}); found != nil {
+				if found := l.widenedProperties(from, member, skip, nil, true, map[[2]*checker.Type]bool{}); found != nil {
 					return l.wideningRefusal(property, from, member, found)
 				}
 				if hidden := l.optionalWidened(from, member, skip, map[[2]*checker.Type]bool{}); hidden != nil {
