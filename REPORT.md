@@ -72,3 +72,9 @@ The shorthand `aliasTypeArguments` writes the inferred `TypeParameter[] | undefi
 The sole read of `root.aliasTypeArguments` is `instantiateTypes(root.aliasTypeArguments, mapper)` in `getConditionalType` when no overriding alias symbol was supplied. It shares unchanged input or writes to a newly allocated list as traced above. The result is stored in the readonly `Type.aliasTypeArguments` field and follows the alias readers described above. I found no index write, push, splice, or mutable handoff. Writes to `root.instantiations` concern the separate cache map.
 
 The field can honestly be `aliasTypeArguments?: readonly Type[] | undefined`. `ConditionalRoot` is exported, so this requires a public API comparison and a ruling on changing the array view. The ownership search found no existing whole-owner pin or direct edit in `getTypeFromConditionalTypeNode` or on this field.
+
+## First refusal stream
+
+The original fix head `71f6d8b1` scanned the baseline at `src/tsc/tsc.ts` with the instrumented CommonJSBundle probe. It reported **3,524 refusal-scan events**, **2,005 distinct refusal triples**, and 1 first pipeline observation. Its boundary was `production abort at lowering.declareModule`.
+
+Raw stream `scan-before.json.gz`. Uncompressed SHA-256 `1846ae866b564166d36ad19b4002a8408142515ba4871188d102b570c69cedbb`.
