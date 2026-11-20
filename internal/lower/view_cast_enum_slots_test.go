@@ -56,7 +56,7 @@ func TestViewCastMemberSlotsLower(t *testing.T) {
 // typed as a whole enum, here a one-member enum's, which holds any number (mutant M2, every slot walked past,
 // turns it red); a slot typed as a whole object type, the enum's object, rather than a member; a member slot
 // whose holder the view has no contract for, a callable one, so nothing would check it at the read; and a
-// number, no enum's open value, in a member slot.
+// number, no enum's open value, in a member slot, which stops at the target's own kind before its parent's.
 func TestViewCastSlotsStayRefused(t *testing.T) {
 	t.Parallel()
 	for _, probe := range []struct{ name, source, want string }{
@@ -91,7 +91,7 @@ func TestViewCastSlotsStayRefused(t *testing.T) {
 			"interface CountedDoc extends Counted { readonly kind: Kind.Doc; } " +
 			"interface CountedTag extends Counted { readonly kind: Kind.Param | Kind.Prop; readonly parent: CountedDoc; } " +
 			"function f(node: Counted): Kind { return (node as CountedTag).parent.kind; }",
-			"Kind.Doc"},
+			"enum member slot Kind.Param"},
 	} {
 		t.Run(probe.name, func(t *testing.T) {
 			t.Parallel()
