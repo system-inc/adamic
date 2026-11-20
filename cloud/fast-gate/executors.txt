@@ -1,0 +1,7 @@
+# The untagged latent census test generates its overlay using these sibling packages and templates.
+reads stage3/census/latent stage3/census/latent/importclean/*.go
+reads stage3/census/latent stage3/census/latent/refusalrewrite/*.go
+reads stage3/census/latent stage3/census/latent/replay/main.go.txt
+reads stage3/census/latent stage3/census/latent/statecopy/*.go
+reads stage3/census/latent stage3/census/latent/statementrewrite/*.go
+reads stage3/census/latent stage3/census/latent/timing/timing.go
