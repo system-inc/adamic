@@ -4,7 +4,7 @@
 // function returns in src/compiler get an explicit readonly array annotation, so a value that can be tsc's shared
 // emptyArray, typed never[], lands in a read-only view of it rather than in the mutable type tsc infers. Adamic ruled
 // it; README.md says why, which binding was left out, and how it is proved. Every binding is local and no annotated
-// function is exported, so the published declaration files do not change and no api-sanctions.json is needed. Through
+// function is exported, so these 16 annotations leave published declarations unchanged. Through
 // the stock AST the edit inserts `: <annotation>` after each binding's name, or after a function's parameter list,
 // refuses before any write unless every slot is unannotated with upstream's text or already carries exactly its
 // annotation, and changes nothing on a second run. It sorts after 99-correctness-binding-views, which pins the whole
@@ -108,6 +108,9 @@ const files = [...new Set(slots.map(slot => slot.file))].map(file => {
     const text = fs.readFileSync(fileName, 'utf8');
     return { file, fileName, text, source: ts.createSourceFile(fileName, text, ts.ScriptTarget.Latest, true) };
 });
+const types = 'src/compiler/types.ts';
+const typesName = path.join(tree, types);
+files.push({ file: types, fileName: typesName, text: fs.readFileSync(typesName, 'utf8') });
 const edits = [];
 for (const slot of slots) {
     const { source } = files.find(file => file.file === slot.file);
@@ -128,14 +131,24 @@ for (const slot of slots) {
         throw new Error(`unexpected slot ${record.slot} at ${record.where}: ${nodeText.split('\n')[0]}`);
     edits.push({ ...record, edited: true, file: slot.file, at });
 }
-// Every slot passed: only now is anything written.
-for (const { file, fileName, text } of files) {
+const planned = new Map();
+for (const { file, text } of files) {
     let adapted = text;
     for (const edit of edits.filter(edit => edit.edited && edit.file === file).sort((a, b) => b.at - a.at))
         adapted = adapted.slice(0, edit.at) + `: ${edit.annotation}` + adapted.slice(edit.at);
-    if (adapted === text) continue;
+    planned.set(file, adapted);
+}
+const views = new Map([checker, types].map(file => [file, planned.get(file)]));
+require('./type-argument-views.cjs').adapt(views);
+for (const [file, text] of views) planned.set(file, text);
+
+// Every owner passed. Check each input before writing either set of changes.
+for (const { fileName, text } of files) {
     if (fs.readFileSync(fileName, 'utf8') !== text) throw new Error(`source changed during adaptation: ${fileName}`);
-    fs.writeFileSync(fileName, adapted);
+}
+for (const { file, fileName, text } of files) {
+    const adapted = planned.get(file);
+    if (adapted !== text) fs.writeFileSync(fileName, adapted);
 }
 console.log(JSON.stringify({ typescript: ts.version, task: '#r11wppy', classes: [1, 4], change: 'internal',
     slots: edits.map(({ file, at, ...edit }) => edit) }, null, 2));
