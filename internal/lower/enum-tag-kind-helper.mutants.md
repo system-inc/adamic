@@ -34,6 +34,7 @@ rows also run in TestKindHelperShapesAgreeWithNode and the whole lower suite.
 | AliasArgument | TestKindHelperFallbacksRejectWholeBody/alias_argument | 123 |
 | MixedDisjunction | TestKindHelperFallbacksRejectWholeBody/mixed_disjunction | 123 |
 | DuplicateCase | TestKindHelperFallbacksRejectWholeBody/h05 | 123 |
+| EmptyDefaultTail | TestKindHelperEmptyDefaultTailRoutes/empty_false | 209 |
 
 Depth disables the limit and admits a finite nine-helper chain. Cycle treats a
 back edge as an empty successful contribution (the partial-set memo bug), rather
@@ -69,3 +70,15 @@ the unchanged helper switch rejects the complete body. DuplicateCase drops
 only kindHelperSwitch's duplicate-label guard and makes h05 recognized,
 reddening the direct fallback at enum_tag_kind_helper_test.go:123. Its producer
 is TestProduct_KindHelperDuplicateCaseMutant. No production code changes.
+
+
+Empty-default follow-up: kindHelperSwitch must set fallback to dynamic after
+reading any default clause, even an empty one. An empty default falling into a
+literal false case makes the following helper tail unreachable; its true set is
+empty, so the existing nonempty-set gate refuses the outer predicate. Full
+Lower keeps the family 1 refusal, and Node's kind-B value takes the false side.
+The true-returning twin also stays refused. A default last in the switch still
+reaches the tail and agrees with Node on JavaScript and sanitized native.
+EmptyDefaultTail drops only the new fallback assignment. The false-default
+row then reports a resurrected tail with one member at line 209. Its standalone
+producer is TestProduct_KindHelperEmptyDefaultTailMutant.

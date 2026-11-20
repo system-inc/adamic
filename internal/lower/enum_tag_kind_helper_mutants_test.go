@@ -34,6 +34,7 @@ var kindHelperMutations = []kindHelperMutation{
 	{"AliasArgument", "internal/lower/enum_tag_kind_helper.go", "if r.alias != nil {\n\t\treturn false\n\t}", "if false && r.alias != nil {\n\t\treturn false\n\t}", "TestKindHelperFallbacksRejectWholeBody/alias_argument", "kind-helper fallback alias_argument", []string{}},
 	{"MixedDisjunction", "internal/lower/enum_tag_kind_set.go", "return r.comparisons(b.Left) && r.comparisons(b.Right)", "return r.comparisons(b.Left)", "TestKindHelperFallbacksRejectWholeBody/mixed_disjunction", "kind-helper fallback mixed_disjunction", []string{}},
 	{"DuplicateCase", "internal/lower/enum_tag_kind_helper.go", "if checker.Checker_isTypeIdenticalTo(r.l.checker, held, kind) {", "if false && checker.Checker_isTypeIdenticalTo(r.l.checker, held, kind) {", "TestKindHelperFallbacksRejectWholeBody/h05", "kind-helper fallback h05", []string{}},
+	{"EmptyDefaultTail", "internal/lower/enum_tag_kind_helper.go", "fallback = dynamic // An empty default inherits its successor, not the tail.", "// mutant: an empty default retains the unreachable tail", "TestKindHelperEmptyDefaultTailRoutes/empty_false", "kind-helper empty default resurrected an unreachable tail", []string{}},
 }
 
 func kindHelperMutantBinary(t *testing.T, m kindHelperMutation) string {
@@ -116,6 +117,11 @@ func TestProduct_KindHelperMixedDisjunctionMutant(t *testing.T) {
 func TestProduct_KindHelperDuplicateCaseMutant(t *testing.T) {
 	t.Parallel()
 	kindHelperMutantBinary(t, kindHelperMutations[18])
+}
+
+func TestProduct_KindHelperEmptyDefaultTailMutant(t *testing.T) {
+	t.Parallel()
+	kindHelperMutantBinary(t, kindHelperMutations[19])
 }
 
 func TestKindHelperMutantsAreCaught(t *testing.T) {

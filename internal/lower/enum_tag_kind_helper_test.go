@@ -178,3 +178,50 @@ func TestKindHelperDepthBoundaryRecognizes(t *testing.T) {
 		t.Fatalf("kind-helper depth boundary: recognized=%v members=%d", ok, count)
 	}
 }
+
+// An empty default participates in fallthrough just like a nonempty one. It
+// must replace the tail's fallback even when its inherited outcome is false.
+func TestKindHelperEmptyDefaultTailRoutes(t *testing.T) {
+	t.Parallel()
+	for _, p := range []struct {
+		name, body, node string
+		recognized       bool
+	}{
+		{"empty_false", "switch(k) {default:case K.A:return false;} return leaf(k);", "undefined\n", false},
+		{"empty_true", "switch(k) {default:case K.A:return true;} return leaf(k);", "true\n", false},
+		{"default_last", "switch(k) {case K.A:return true;default:} return leaf(k);", "alpha\n7\nfalse\n", true},
+	} {
+		t.Run(p.name, func(t *testing.T) {
+			t.Parallel()
+			helpers := "function leaf(k:K):boolean {return k===K.B;}\nfunction kinds(k:K):boolean {" + p.body + "}\n"
+			source := kindSetTypes + helpers + "function isAB(n:N):n is A|B {return n && kinds(n.kind); }\n" + kindSetShow + kindSetValues
+			if !p.recognized {
+				types := strings.Replace(kindSetTypes, "readonly a: string", "readonly a: string; readonly c: boolean", 1)
+				source = types + helpers + "function isAB(n:N):n is B {return n && kinds(n.kind); }\nfunction show(n:N):string {if(isAB(n))return 'true';return String(n.c);}\nconst b:B={kind:K.B,b:7}; console.log(show(b));\n"
+			}
+			observed := runAgreementNode(t, writeAgreementSource(t, "main.ts", source))
+			if observed.code != 0 || string(observed.stdout) != p.node {
+				t.Fatalf("empty default %s Node: %+v", p.name, observed)
+			}
+			ok, count := kindHelperRecognized(t, source)
+			if !p.recognized {
+				if ok {
+					t.Fatalf("kind-helper empty default resurrected an unreachable tail: %s members=%d", p.name, count)
+				}
+				_, err := lowerSourceAs(t, source, ".ts")
+				var refused *Refused
+				if !errors.As(err, &refused) || refused.What != kindPredicateRefusal {
+					t.Fatalf("empty default %s must refuse at the narrowing: %v", p.name, err)
+				}
+				return
+			}
+			if !ok || count != 2 {
+				t.Fatalf("empty default reaching tail lost its kind set: recognized=%v members=%d", ok, count)
+			}
+			program := lowersAndAgreesWithNodeAs(t, source, ".ts")
+			if code, out, errs := brandedNative(t, program); code != 0 || out != p.node {
+				t.Fatalf("empty default tail: exit=%d stdout=%q stderr=%q", code, out, errs)
+			}
+		})
+	}
+}
