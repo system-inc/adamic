@@ -1,38 +1,72 @@
 # Paired stage3 census for #ad161ms
 
-Interim report. The head entry stream is complete. The base entry, compiler-directory, and 79-root comparisons are in progress.
+Interim report. The results below cover completed pairs. The remaining measurements are in progress.
+
+Base `b8f6109bf1bc284de5b3dd0b446c26b2053cadfd`. Head `bc7e1a3940326bfc6b67f6068147e9ef6e1fc76a`.
 
 ## 1. New findings under any reason
 
-The head entry pass has 10 refusal-scan findings on lines introduced by the adaptation. The zero-new criterion fails at these sites. The complete paired count and the compiler-directory count are pending.
+### Entry pass
 
-- `src/compiler/transformers/esDecorators.ts:298:1`, finding at `src/compiler/transformers/esDecorators.ts:1302:38` (Refused, refusal_scan). src/compiler/transformers/esDecorators.ts:1302:38: Adamic 0.1 refuses an object refinement using an open numeric enum as a literal tag; use a member-specific tag from a multi-member enum, a string enum, or a plain literal tag (adamic/enum-tag)
-- `src/compiler/transformers/esDecorators.ts:298:1`, finding at `src/compiler/transformers/esDecorators.ts:1302:45` (Refused, refusal_scan). src/compiler/transformers/esDecorators.ts:1302:45: Adamic 0.1 refuses an object refinement using an open numeric enum as a literal tag; use a member-specific tag from a multi-member enum, a string enum, or a plain literal tag (adamic/enum-tag)
-- `src/compiler/transformers/esDecorators.ts:298:1`, finding at `src/compiler/transformers/esDecorators.ts:1303:102` (Refused, refusal_scan). src/compiler/transformers/esDecorators.ts:1303:102: Adamic 0.1 refuses an object refinement using an open numeric enum as a literal tag; use a member-specific tag from a multi-member enum, a string enum, or a plain literal tag (adamic/enum-tag)
-- `src/compiler/transformers/esDecorators.ts:298:1`, finding at `src/compiler/transformers/esDecorators.ts:1303:109` (Refused, refusal_scan). src/compiler/transformers/esDecorators.ts:1303:109: Adamic 0.1 refuses an object refinement using an open numeric enum as a literal tag; use a member-specific tag from a multi-member enum, a string enum, or a plain literal tag (adamic/enum-tag)
-- `src/compiler/transformers/esDecorators.ts:298:1`, finding at `src/compiler/transformers/esDecorators.ts:1939:29` (Refused, refusal_scan). src/compiler/transformers/esDecorators.ts:1939:29: Adamic 0.1 refuses an object refinement using an open numeric enum as a literal tag; use a member-specific tag from a multi-member enum, a string enum, or a plain literal tag (adamic/enum-tag)
-- `src/compiler/transformers/esDecorators.ts:298:1`, finding at `src/compiler/transformers/esDecorators.ts:1940:82` (Refused, refusal_scan). src/compiler/transformers/esDecorators.ts:1940:82: Adamic 0.1 refuses an object refinement using an open numeric enum as a literal tag; use a member-specific tag from a multi-member enum, a string enum, or a plain literal tag (adamic/enum-tag)
-- `src/compiler/transformers/esDecorators.ts:298:1`, finding at `src/compiler/transformers/esDecorators.ts:1941:44` (Refused, refusal_scan). src/compiler/transformers/esDecorators.ts:1941:44: Adamic 0.1 refuses an object refinement using an open numeric enum as a literal tag; use a member-specific tag from a multi-member enum, a string enum, or a plain literal tag (adamic/enum-tag)
-- `src/compiler/transformers/namedEvaluation.ts:69:1`, finding at `src/compiler/transformers/namedEvaluation.ts:81:25` (Refused, refusal_scan). src/compiler/transformers/namedEvaluation.ts:81:25: Adamic 0.1 refuses an object refinement using an open numeric enum as a literal tag; use a member-specific tag from a multi-member enum, a string enum, or a plain literal tag (adamic/enum-tag)
-- `src/compiler/transformers/namedEvaluation.ts:69:1`, finding at `src/compiler/transformers/namedEvaluation.ts:82:76` (Refused, refusal_scan). src/compiler/transformers/namedEvaluation.ts:82:76: Adamic 0.1 refuses an object refinement using an open numeric enum as a literal tag; use a member-specific tag from a multi-member enum, a string enum, or a plain literal tag (adamic/enum-tag)
-- `src/compiler/transformers/namedEvaluation.ts:69:1`, finding at `src/compiler/transformers/namedEvaluation.ts:83:32` (Refused, refusal_scan). src/compiler/transformers/namedEvaluation.ts:83:32: Adamic 0.1 refuses an object refinement using an open numeric enum as a literal tag; use a member-specific tag from a multi-member enum, a string enum, or a plain literal tag (adamic/enum-tag)
+11 head-only findings, including 10 graded new, 1 graded changed, and 0 graded reached.
+
+- **New**. `src/compiler/transformers/esDecorators.ts:298:1`, finding at `src/compiler/transformers/esDecorators.ts:1302:38` (Refused, refusal_scan). src/compiler/transformers/esDecorators.ts:1302:38: Adamic 0.1 refuses an object refinement using an open numeric enum as a literal tag; use a member-specific tag from a multi-member enum, a string enum, or a plain literal tag (adamic/enum-tag)
+- **New**. `src/compiler/transformers/esDecorators.ts:298:1`, finding at `src/compiler/transformers/esDecorators.ts:1302:45` (Refused, refusal_scan). src/compiler/transformers/esDecorators.ts:1302:45: Adamic 0.1 refuses an object refinement using an open numeric enum as a literal tag; use a member-specific tag from a multi-member enum, a string enum, or a plain literal tag (adamic/enum-tag)
+- **New**. `src/compiler/transformers/esDecorators.ts:298:1`, finding at `src/compiler/transformers/esDecorators.ts:1303:102` (Refused, refusal_scan). src/compiler/transformers/esDecorators.ts:1303:102: Adamic 0.1 refuses an object refinement using an open numeric enum as a literal tag; use a member-specific tag from a multi-member enum, a string enum, or a plain literal tag (adamic/enum-tag)
+- **New**. `src/compiler/transformers/esDecorators.ts:298:1`, finding at `src/compiler/transformers/esDecorators.ts:1303:109` (Refused, refusal_scan). src/compiler/transformers/esDecorators.ts:1303:109: Adamic 0.1 refuses an object refinement using an open numeric enum as a literal tag; use a member-specific tag from a multi-member enum, a string enum, or a plain literal tag (adamic/enum-tag)
+- **New**. `src/compiler/transformers/esDecorators.ts:298:1`, finding at `src/compiler/transformers/esDecorators.ts:1939:29` (Refused, refusal_scan). src/compiler/transformers/esDecorators.ts:1939:29: Adamic 0.1 refuses an object refinement using an open numeric enum as a literal tag; use a member-specific tag from a multi-member enum, a string enum, or a plain literal tag (adamic/enum-tag)
+- **New**. `src/compiler/transformers/esDecorators.ts:298:1`, finding at `src/compiler/transformers/esDecorators.ts:1940:82` (Refused, refusal_scan). src/compiler/transformers/esDecorators.ts:1940:82: Adamic 0.1 refuses an object refinement using an open numeric enum as a literal tag; use a member-specific tag from a multi-member enum, a string enum, or a plain literal tag (adamic/enum-tag)
+- **New**. `src/compiler/transformers/esDecorators.ts:298:1`, finding at `src/compiler/transformers/esDecorators.ts:1941:44` (Refused, refusal_scan). src/compiler/transformers/esDecorators.ts:1941:44: Adamic 0.1 refuses an object refinement using an open numeric enum as a literal tag; use a member-specific tag from a multi-member enum, a string enum, or a plain literal tag (adamic/enum-tag)
+- **New**. `src/compiler/transformers/namedEvaluation.ts:69:1`, finding at `src/compiler/transformers/namedEvaluation.ts:81:25` (Refused, refusal_scan). src/compiler/transformers/namedEvaluation.ts:81:25: Adamic 0.1 refuses an object refinement using an open numeric enum as a literal tag; use a member-specific tag from a multi-member enum, a string enum, or a plain literal tag (adamic/enum-tag)
+- **New**. `src/compiler/transformers/namedEvaluation.ts:69:1`, finding at `src/compiler/transformers/namedEvaluation.ts:82:76` (Refused, refusal_scan). src/compiler/transformers/namedEvaluation.ts:82:76: Adamic 0.1 refuses an object refinement using an open numeric enum as a literal tag; use a member-specific tag from a multi-member enum, a string enum, or a plain literal tag (adamic/enum-tag)
+- **New**. `src/compiler/transformers/namedEvaluation.ts:69:1`, finding at `src/compiler/transformers/namedEvaluation.ts:83:32` (Refused, refusal_scan). src/compiler/transformers/namedEvaluation.ts:83:32: Adamic 0.1 refuses an object refinement using an open numeric enum as a literal tag; use a member-specific tag from a multi-member enum, a string enum, or a plain literal tag (adamic/enum-tag)
+- **Changed**. `src/compiler/transformers/esDecorators.ts:298:1`, finding at `src/compiler/transformers/esDecorators.ts:1312:49` (Refused, refusal_scan). src/compiler/transformers/esDecorators.ts:1312:49: Adamic 0.1 refuses a value of type { referencedName: StringLiteral; name: ComputedPropertyName | Identifier | NumericLiteral | PrivateIdentifier | StringLiteral; } | ... | ... seen as { referencedName: Expression | undefined; name: PropertyName | undefined; }, which can write Expression | undefined where StringLiteral is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)
+
+### Compiler pass
+
+Pair in progress.
 
 ## 2. Gone and changed findings
 
-The head entry pass has 740 distinct family-1 findings. The paired gone and changed inventory and the remaining family-1 counts are pending.
+| Pass | Family 1 base | Family 1 head | Gone | Changed |
+| --- | ---: | ---: | ---: | ---: |
+| Entry | 730 | 740 | 0 | 1 |
+
+Family 1 is the reason “an object refinement using an open numeric enum as a literal tag.”
+
+### Entry pass
+
+- **Changed**. Base `src/compiler/transformers/esDecorators.ts:296:1`, finding at `src/compiler/transformers/esDecorators.ts:1307:49` (Refused, refusal_scan). src/compiler/transformers/esDecorators.ts:1307:49: Adamic 0.1 refuses a value of type { referencedName: StringLiteral; name: ComputedPropertyName | Identifier | NumericLiteral | PrivateIdentifier | StringLiteral; } | ... seen as { referencedName: Expression | undefined; name: PropertyName | undefined; }, which can write Expression | undefined where StringLiteral is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable) Head `src/compiler/transformers/esDecorators.ts:298:1`, finding at `src/compiler/transformers/esDecorators.ts:1312:49` (Refused, refusal_scan). src/compiler/transformers/esDecorators.ts:1312:49: Adamic 0.1 refuses a value of type { referencedName: StringLiteral; name: ComputedPropertyName | Identifier | NumericLiteral | PrivateIdentifier | StringLiteral; } | ... | ... seen as { referencedName: Expression | undefined; name: PropertyName | undefined; }, which can write Expression | undefined where StringLiteral is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)
 
 ## 3. Units that lowered at base and stop at head, and new panics
 
-Pending the paired latent streams.
+- Entry pass. 0 such units and 0 new panics.
 
 ## 4. First stop by root
 
-At this checkpoint, 0 first stops moved across 5 completed root pairs out of 79.
+0 of 10 paired roots have a different first stop after the refusal scan or a different preparation outcome. The full census covers 79 roots per tree.
+
+| Root | Base | Head | Moved |
+| --- | --- | --- | --- |
+| `_namespaces/ts.moduleSpecifiers.ts` | `src/compiler/core.ts:261:1` (lowering.declareModule). overload 1 of filter result U[] cannot be served by implementation result readonly T[] \| undefined | `src/compiler/core.ts:261:1` (lowering.declareModule). overload 1 of filter result U[] cannot be served by implementation result readonly T[] \| undefined | No |
+| `_namespaces/ts.performance.ts` | `src/compiler/core.ts:261:1` (lowering.declareModule). overload 1 of filter result U[] cannot be served by implementation result readonly T[] \| undefined | `src/compiler/core.ts:261:1` (lowering.declareModule). overload 1 of filter result U[] cannot be served by implementation result readonly T[] \| undefined | No |
+| `_namespaces/ts.ts` | `src/compiler/core.ts:261:1` (lowering.declareModule). overload 1 of filter result U[] cannot be served by implementation result readonly T[] \| undefined | `src/compiler/core.ts:261:1` (lowering.declareModule). overload 1 of filter result U[] cannot be served by implementation result readonly T[] \| undefined | No |
+| `binder.ts` | `src/compiler/core.ts:261:1` (lowering.declareModule). overload 1 of filter result U[] cannot be served by implementation result readonly T[] \| undefined | `src/compiler/core.ts:261:1` (lowering.declareModule). overload 1 of filter result U[] cannot be served by implementation result readonly T[] \| undefined | No |
+| `builder.ts` | `src/compiler/core.ts:261:1` (lowering.declareModule). overload 1 of filter result U[] cannot be served by implementation result readonly T[] \| undefined | `src/compiler/core.ts:261:1` (lowering.declareModule). overload 1 of filter result U[] cannot be served by implementation result readonly T[] \| undefined | No |
+| `builderPublic.ts` | `src/compiler/core.ts:261:1` (lowering.declareModule). overload 1 of filter result U[] cannot be served by implementation result readonly T[] \| undefined | `src/compiler/core.ts:261:1` (lowering.declareModule). overload 1 of filter result U[] cannot be served by implementation result readonly T[] \| undefined | No |
+| `builderState.ts` | `src/compiler/core.ts:261:1` (lowering.declareModule). overload 1 of filter result U[] cannot be served by implementation result readonly T[] \| undefined | `src/compiler/core.ts:261:1` (lowering.declareModule). overload 1 of filter result U[] cannot be served by implementation result readonly T[] \| undefined | No |
+| `builderStatePublic.ts` | `src/compiler/core.ts:261:1` (lowering.declareModule). overload 1 of filter result U[] cannot be served by implementation result readonly T[] \| undefined | `src/compiler/core.ts:261:1` (lowering.declareModule). overload 1 of filter result U[] cannot be served by implementation result readonly T[] \| undefined | No |
+| `checker.ts` | `src/compiler/core.ts:261:1` (lowering.declareModule). overload 1 of filter result U[] cannot be served by implementation result readonly T[] \| undefined | `src/compiler/core.ts:261:1` (lowering.declareModule). overload 1 of filter result U[] cannot be served by implementation result readonly T[] \| undefined | No |
+| `commandLineParser.ts` | `src/compiler/core.ts:261:1` (lowering.declareModule). overload 1 of filter result U[] cannot be served by implementation result readonly T[] \| undefined | `src/compiler/core.ts:261:1` (lowering.declareModule). overload 1 of filter result U[] cannot be served by implementation result readonly T[] \| undefined | No |
 
 ## Inputs and evidence
 
-Base `b8f6109bf1bc284de5b3dd0b446c26b2053cadfd`. Head `bc7e1a3940326bfc6b67f6068147e9ef6e1fc76a`. Both were fetched by branch name. Both used their own `stage3/apply.sh` with TypeScript v6.0.3 at `050880ce59e30b356b686bd3144efe24f875ebc8` after recursive submodule initialization.
+Both branches were fetched by name. Head is the direct child of base. Both checkouts initialized recursive submodules and ran their own `stage3/apply.sh` against TypeScript v6.0.3 at `050880ce59e30b356b686bd3144efe24f875ebc8`.
 
-The source trees differ only in `src/compiler/utilities.ts`, `src/compiler/transformers/esDecorators.ts`, and `src/compiler/transformers/namedEvaluation.ts`. The generated patch summary also differs. All three tools were built from base.
+The adapted TypeScript files differ only in `src/compiler/utilities.ts`, `src/compiler/transformers/esDecorators.ts`, and `src/compiler/transformers/namedEvaluation.ts`. The generated `patch-set.md` records the extra adaptation.
 
-Both latent passes use first-error mode with CommonJSBundle and the scoped tail. [Head entry stream](evidence/head-entry.jsonl.gz) and [adapted tree comparison](evidence/tree-diff.txt).
+All three instruments were built from base. Both latent passes used first-error mode, `CENSUS_MODULE_FORMAT=CommonJSBundle`, `LATENT_TAIL=1`, and the meter’s no-output guard. The entry pass starts at `src/tsc/tsc.ts`. The directory pass starts at `src/compiler`. The next-stop tool uses CommonJSBundle on each compiler root.
+
+Raw streams and paired deltas are in [evidence](evidence/). The paired analysis applies the stock TypeScript location resolver from `stage3/census/pair` to each tree separately. It pairs findings by aligned unit and site, kind, phase, reason, and message with positions stripped. The source diff aligns positions across edits. An unmatched base finding is gone. An unmatched head finding at the same aligned site as a removed finding is changed. An unmatched head lowering or scoped tail finding after a removed earlier stop in the same unit is reached. Other unmatched head findings are new. The head-only total includes all three head-side grades.
+
+The next-stop table records the first declaration, body or tail stop the scan-all tool reaches after traversing the refusal scan. Preparation failures are recorded as boundaries.
