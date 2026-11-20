@@ -5,6 +5,11 @@
       "fixture": "internal/oracle/testdata/d96d304_try_stack.a",
       "ruling": "@system_adamic, task #z1vjxxd, chain step 24",
       "reason": "Native stack guards name the exhausted function; JavaScript preserves V8's unnamed overflow diagnostic. Both stops are terminal.",
+      "node": {
+        "stdout": "caught the overflow\nafter\n",
+        "stderr": "",
+        "exit_code": 0
+      },
       "native": {
         "stdout": "",
         "stderr": "adamic: panic: RangeError: Maximum call stack size exceeded in depth\n",
