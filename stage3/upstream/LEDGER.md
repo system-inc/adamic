@@ -918,3 +918,5 @@ mutants restore their sites, every JavaScript hunk stays inside dumpTypes, and
 - **Type-only, #6c4swvt piece 4 (Library, Nov 19, 2026):** 99-library-readonly-option-workers: `@internal` serializeOptionBaseObject takes its options as `Readonly<OptionsBase>` (1 site, commandLineParser.ts:2796), on Correctness's trace that it only enumerates and reads them. It stands on piece 4's readonly record views (library/readonly-record-views). Evidence: J-6v01r07, J-yk06v4v. No JavaScript and no published API changes.
 
 - **Type-only (#dt55mtb):** 99-correctness-token-source-map-ranges preserves the SourceMapRange element type at the token source-map merge. Evidence: typescript/type-parameter-appends-evidence.
+
+- **JavaScript-changing, value-identical (#dt55mtb):** 99-correctness-infer-type-parameter-append calls getDeclaredTypeOfTypeParameter directly under the TypeParameter flag guard. The whole oracle counted 9,810 calls and zero unequal return values. Evidence: typescript/type-parameter-appends-evidence.
