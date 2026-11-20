@@ -920,3 +920,5 @@ mutants restore their sites, every JavaScript hunk stays inside dumpTypes, and
 - **Type-only (#dt55mtb):** 99-correctness-token-source-map-ranges preserves the SourceMapRange element type at the token source-map merge. Evidence: typescript/type-parameter-appends-evidence.
 
 - **JavaScript-changing, value-identical (#dt55mtb):** 99-correctness-infer-type-parameter-append calls getDeclaredTypeOfTypeParameter directly under the TypeParameter flag guard. The whole oracle counted 9,810 calls and zero unequal return values. Evidence: typescript/type-parameter-appends-evidence.
+
+- **Type-only, #dt55mtb (Adamic's ruling):** 99-readonly-inferred-bindings gives five checker paths their actual type argument views, including the published readonly array type of `ConditionalRoot.aliasTypeArguments`. No JavaScript changes. Evidence: typescript/type-parameter-appends-evidence.
