@@ -223,7 +223,7 @@ func (w *enumTagWalk) visit(flow *ast.FlowNode) bool {
 			flow = flow.Antecedent
 		case flow.Flags&ast.FlowFlagsSwitchClause != 0:
 			data := flow.Node.AsFlowSwitchClauseData()
-			if !w.stepAt(flow, nil, w.directField(data.SwitchStatement.AsSwitchStatement().Expression)) {
+			if !w.stepAt(flow, nil, w.switchField(data.SwitchStatement)) {
 				return false
 			}
 			flow = flow.Antecedent
