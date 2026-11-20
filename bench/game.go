@@ -60,11 +60,14 @@ type gameRequest struct {
 	crates   string // the directory of rlibs the Rust entries link against, as an absolute path
 	// pcre is the prefix libpcre and libpcre2 are unpacked under (dpkg -x), as an absolute path, or
 	// empty, when the regexredux entries build and run against the system's.
-	pcre    string
-	samples int
-	only    string
-	timeout time.Duration
-	seed    uint64 // ADAMIC_BENCH_PAD's lengths are drawn from it
+	pcre string
+	// goModules is a module cache holding every module the Go entries import, as an absolute path, which
+	// their builds read offline, or empty, when they use -go's own cache and proxy.
+	goModules string
+	samples   int
+	only      string
+	timeout   time.Duration
+	seed      uint64 // ADAMIC_BENCH_PAD's lengths are drawn from it
 }
 
 // gameFile is bench/game/programs.json.
@@ -254,6 +257,9 @@ func measureGame(request gameRequest) {
 		fail(err)
 	}
 	if request.pcre, err = absoluteDirectory(request.pcre, "pcre"); err != nil {
+		fail(err)
+	}
+	if request.goModules, err = absoluteDirectory(request.goModules, "go-modules"); err != nil {
 		fail(err)
 	}
 	directory, err := benchDirectory()
@@ -488,6 +494,17 @@ func (request gameRequest) pcreBuild() []string {
 		"CGO_CFLAGS=-O2 -g -I" + filepath.Join(request.pcre, "usr", "include"),
 		"CGO_LDFLAGS=-O2 -g -L" + request.pcreLibraries(),
 	}
+}
+
+// goModulesBuild is what a Go entry's build adds to its environment with -go-modules: that cache, read
+// with the proxy off, so the build fetches nothing and writes no module. Bench's own build of adamic keeps
+// the process's cache: a sealed job's is the image's, read-only, where go-pcre isn't (J-deptcta). Nothing
+// without -go-modules.
+func (request gameRequest) goModulesBuild() []string {
+	if request.goModules == "" {
+		return nil
+	}
+	return []string{"GOMODCACHE=" + request.goModules, "GOPROXY=off", "GOSUMDB=off"}
 }
 
 // pcreRun is what every run of an entry that links PCRE adds to its environment, so the dynamic
@@ -789,6 +806,7 @@ func (builder gameBuilder) buildGo(what, directory, source, binary string, pcre 
 	command := exec.Command(builder.request.goBinary, "build", "-o", binary, source)
 	command.Dir = directory
 	command.Env = append(append(environment(), builder.file.Go.Environment...), "GOTOOLCHAIN=local", "GOWORK=off", "GOFLAGS=")
+	command.Env = append(command.Env, builder.request.goModulesBuild()...)
 	if pcre {
 		command.Env = append(command.Env, builder.request.pcreBuild()...)
 	}
