@@ -311,3 +311,8 @@ process each side. It also records a failed single-file composition check: defer
 generic `instantiated` metadata is census-wide, so utilities-only and multi-file
 records differ even on unchanged main. Do not treat separate-process file records
 as interchangeable with multi-file records without accounting for that witness scope.
+
+## Deferred generic witness mode
+
+[WITNESS.md](WITNESS.md) describes the opt-in forecast for deferred declarations
+and its separate output stream.
