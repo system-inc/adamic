@@ -77,6 +77,22 @@ type widening struct {
 // widened finds the first mutable slot at which a value of type from, seen as type to, could be
 // written something it can't hold, or returns nil.
 func (l *lowering) widened(from *checker.Type, to *checker.Type, visited map[[2]*checker.Type]bool) *widening {
+	return l.widenedPast(from, to, nil, visited)
+}
+
+// viewCastSlot names one field of one holder type, as widenedProperties visits it: the holder is the type the
+// field is read on, after undefined is taken out and a union is split into its members.
+type viewCastSlot struct {
+	holder *checker.Type
+	field  string
+}
+
+// widenedPast is widened, but walking past each field visit past names (viewCastEnumSlots): a view cast's
+// member-literal slots, checked at every read through the view, so the walk judges everything else. It's
+// threaded only where the walk relates parts of the same value (a union's members, a type parameter's
+// constraint, a container's elements, a field's value), and every arm judges as it always has; a nil past
+// is widened.
+func (l *lowering) widenedPast(from *checker.Type, to *checker.Type, past map[viewCastSlot]bool, visited map[[2]*checker.Type]bool) *widening {
 	// #bv59a0r: undefined and null enter a union through their own member, not through a
 	// writable type parameter left after withoutUndefined removes the undefined member.
 	if (from.Flags() == checker.TypeFlagsUndefined || from.Flags() == checker.TypeFlagsNull) && to.Flags()&checker.TypeFlagsUnion != 0 {
@@ -109,7 +125,7 @@ func (l *lowering) widened(from *checker.Type, to *checker.Type, visited map[[2]
 		// one (T | null), is left to the arms that judge it, which relate the source by its own name: Narrow
 		// seen as T is a view of T's slot, which reading Narrow at its constraint would no longer name.
 		if constraint := l.checker.GetBaseConstraintOfType(from); constraint != nil {
-			return l.widened(constraint, to, visited)
+			return l.widenedPast(constraint, to, past, visited)
 		}
 	}
 	if from.Flags()&checker.TypeFlagsIndexedAccess != 0 && typeParameterAccess(from) && !slices.ContainsFunc(l.definedMembers(to), func(member *checker.Type) bool {
@@ -141,7 +157,7 @@ func (l *lowering) widened(from *checker.Type, to *checker.Type, visited map[[2]
 	if members := l.definedMembers(from); len(members) > 1 {
 		// A union is any one of its members, each seen as the target.
 		for _, member := range members {
-			if found := l.widened(member, to, visited); found != nil {
+			if found := l.widenedPast(member, to, past, visited); found != nil {
 				return found
 			}
 		}
@@ -172,7 +188,7 @@ func (l *lowering) widened(from *checker.Type, to *checker.Type, visited map[[2]
 				continue
 			}
 			taken = true
-			if found := l.widened(from, member, visited); found != nil {
+			if found := l.widenedPast(from, member, past, visited); found != nil {
 				return found
 			}
 		}
@@ -186,7 +202,7 @@ func (l *lowering) widened(from *checker.Type, to *checker.Type, visited map[[2]
 				}
 				for _, viewed := range l.checker.GetPropertiesOfType(member) {
 					inside := l.checker.GetPropertyOfType(from, viewed.Name)
-					if inside == nil {
+					if inside == nil || past[viewCastSlot{member, viewed.Name}] {
 						continue
 					}
 					source, slot := l.checker.GetTypeOfSymbol(inside), l.checker.GetNonNullableType(l.checker.GetTypeOfSymbol(viewed))
@@ -215,7 +231,7 @@ func (l *lowering) widened(from *checker.Type, to *checker.Type, visited map[[2]
 		if constraint == nil {
 			return nil
 		}
-		return l.widened(constraint, to, visited)
+		return l.widenedPast(constraint, to, past, visited)
 	}
 	if !l.enumAssignable(from, to) {
 		return &widening{source: from, target: to, enum: true}
@@ -293,7 +309,7 @@ func (l *lowering) widened(from *checker.Type, to *checker.Type, visited map[[2]
 			if !l.sameContainer(inside, viewed) {
 				continue
 			}
-			if found := l.widenedElements(inside, viewed, visited); found != nil {
+			if found := l.widenedElements(inside, viewed, past, visited); found != nil {
 				return found
 			}
 			break
@@ -304,7 +320,7 @@ func (l *lowering) widened(from *checker.Type, to *checker.Type, visited map[[2]
 		// size) are numbers on both sides.
 		return nil
 	}
-	return l.widenedProperties(from, to, nil, false, visited)
+	return l.widenedProperties(from, to, nil, past, false, visited)
 }
 
 // typeParameterAccess reports whether an indexed access's object is a bare type parameter, T in T["kind"]. A
@@ -355,13 +371,14 @@ func (l *lowering) widenedParameters(from *checker.Signature, to *checker.Signat
 	return nil
 }
 
-// widenedProperties walks to's properties against from's, but those skip names: each field a slot
-// to can write unless it's readonly, and each method a function view of its own. A copy's fields
-// (fresh) are slots of their own, which nothing else writes, so only what they hold is walked.
-func (l *lowering) widenedProperties(from *checker.Type, to *checker.Type, skip map[string]bool, fresh bool, visited map[[2]*checker.Type]bool) *widening {
+// widenedProperties walks to's properties against from's, but those skip names and those past names on to
+// (widenedPast): each field a slot to can write unless it's readonly, and each method a function view of its
+// own. A copy's fields (fresh) are slots of their own, which nothing else writes, so only what they hold is
+// walked.
+func (l *lowering) widenedProperties(from *checker.Type, to *checker.Type, skip map[string]bool, past map[viewCastSlot]bool, fresh bool, visited map[[2]*checker.Type]bool) *widening {
 	for _, viewed := range l.checker.GetPropertiesOfType(to) {
 		inside := l.checker.GetPropertyOfType(from, viewed.Name)
-		if inside == nil || skip[viewed.Name] {
+		if inside == nil || skip[viewed.Name] || past[viewCastSlot{to, viewed.Name}] {
 			continue
 		}
 		source, target := l.checker.GetTypeOfSymbol(inside), l.checker.GetTypeOfSymbol(viewed)
@@ -428,7 +445,7 @@ func (l *lowering) widenedProperties(from *checker.Type, to *checker.Type, skip 
 		if !fresh && !l.checker.IsReadonlySymbol(viewed) && l.writeHidesField(target, source) {
 			return l.hidingWrite(source, target, visited)
 		}
-		if found := l.widened(source, target, visited); found != nil {
+		if found := l.widenedPast(source, target, past, visited); found != nil {
 			return found
 		}
 	}
@@ -484,14 +501,18 @@ func (l *lowering) generic(proven *checker.Type) bool {
 
 // widenedElements walks an array's, a tuple's, a map's or a set's type arguments in from against
 // to's, each a slot to can write unless it's read only.
-func (l *lowering) widenedElements(from *checker.Type, to *checker.Type, visited map[[2]*checker.Type]bool) *widening {
-	mutable := !l.isLibraryType(to, "ReadonlyArray", "ReadonlyMap", "ReadonlySet") && !(checker.IsTupleType(to) && to.TargetTupleType().IsReadonly())
-	return l.widenedArguments(from, to, mutable, visited)
+func (l *lowering) widenedElements(from *checker.Type, to *checker.Type, past map[viewCastSlot]bool, visited map[[2]*checker.Type]bool) *widening {
+	return l.widenedArguments(from, to, l.mutableContainer(to), past, visited)
+}
+
+// mutableContainer is whether a container's own slots, its elements, can be written through it.
+func (l *lowering) mutableContainer(container *checker.Type) bool {
+	return !l.isLibraryType(container, "ReadonlyArray", "ReadonlyMap", "ReadonlySet") && !(checker.IsTupleType(container) && container.TargetTupleType().IsReadonly())
 }
 
 // widenedArguments is widenedElements with whether to's own slots can be written given: a fresh
 // container's can't be written through anything else (freshValue).
-func (l *lowering) widenedArguments(from *checker.Type, to *checker.Type, mutable bool, visited map[[2]*checker.Type]bool) *widening {
+func (l *lowering) widenedArguments(from *checker.Type, to *checker.Type, mutable bool, past map[viewCastSlot]bool, visited map[[2]*checker.Type]bool) *widening {
 	fromArguments, toArguments := l.checker.GetTypeArguments(from), l.checker.GetTypeArguments(to)
 	if checker.IsTupleType(from) && !checker.IsTupleType(to) && len(toArguments) == 1 {
 		// A tuple seen as an array: every element of it is seen as the array's element.
@@ -509,7 +530,7 @@ func (l *lowering) widenedArguments(from *checker.Type, to *checker.Type, mutabl
 		if mutable && l.writeHidesField(target, source) {
 			return l.hidingWrite(source, target, visited)
 		}
-		if found := l.widened(source, target, visited); found != nil {
+		if found := l.widenedPast(source, target, past, visited); found != nil {
 			return found
 		}
 	}
@@ -859,7 +880,7 @@ func (l *lowering) refuseWidening(node *ast.Node) error {
 				found = l.declaredKeyWidened(own, member, skip, true)
 			}
 			if found == nil {
-				found = l.widenedProperties(own, member, skip, true, map[[2]*checker.Type]bool{})
+				found = l.widenedProperties(own, member, skip, nil, true, map[[2]*checker.Type]bool{})
 			}
 			if found != nil {
 				break
@@ -1580,7 +1601,7 @@ func (l *lowering) readWidened(node *ast.Node, own *checker.Type, contextual *ch
 	for _, viewed := range l.containers(target) {
 		for _, inside := range l.containers(source) {
 			if l.sameContainer(inside, viewed) {
-				return l.widenedArguments(inside, viewed, false, map[[2]*checker.Type]bool{})
+				return l.widenedArguments(inside, viewed, false, nil, map[[2]*checker.Type]bool{})
 			}
 		}
 	}
@@ -1873,7 +1894,7 @@ func (l *lowering) freshContainerWidened(own *checker.Type, contextual *checker.
 			if !l.sameContainer(inside, viewed) {
 				continue
 			}
-			if mapped != nil && !checker.IsTupleType(viewed) && len(l.checker.GetTypeArguments(viewed)) == 1 && l.widenedArguments(inside, viewed, false, map[[2]*checker.Type]bool{}) != nil {
+			if mapped != nil && !checker.IsTupleType(viewed) && len(l.checker.GetTypeArguments(viewed)) == 1 && l.widenedArguments(inside, viewed, false, nil, map[[2]*checker.Type]bool{}) != nil {
 				// Only where today's walk of the copy's elements refuses, so a copy it already lets through
 				// is judged as before.
 				element := l.checker.GetTypeArguments(viewed)[0]
@@ -1884,7 +1905,7 @@ func (l *lowering) freshContainerWidened(own *checker.Type, contextual *checker.
 				}
 				return nil
 			}
-			return l.widenedArguments(inside, viewed, false, visited)
+			return l.widenedArguments(inside, viewed, false, nil, visited)
 		}
 	}
 	return l.widened(own, contextual, visited)
@@ -1940,7 +1961,7 @@ func (l *lowering) madeAtSiteWidened(value *ast.Node, target *checker.Type, visi
 			if !l.structured(member) || len(l.checker.GetIndexInfosOfType(member)) > 0 {
 				found = l.widened(own, member, visited)
 			} else {
-				found = l.widenedProperties(own, member, nil, true, visited)
+				found = l.widenedProperties(own, member, nil, nil, true, visited)
 			}
 			if found != nil {
 				return found

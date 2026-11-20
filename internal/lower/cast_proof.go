@@ -164,7 +164,8 @@ func castMembers(proven *checker.Type) []*checker.Type {
 }
 
 // castRefusal refuses a cast the runtime can't check, and records a checked one in
-// l.refusal.checkedCasts for stringWideningRefusal (3100).
+// l.refusal.checkedCasts, and an overlap or structural view in l.refusal.viewCasts, for
+// stringWideningRefusal (3100).
 func (l *lowering) castRefusal(node *ast.Node) error {
 	// An allocator getter's cast to any is admitted only as a road to a new's callee, which only the lowered
 	// program shows: its refusal is kept, and given back where checkFunctionConstructorRoads finds the road
@@ -192,6 +193,12 @@ func (l *lowering) castRefusal(node *ast.Node) error {
 				l.refusal.checkedCasts = map[*ast.Node]bool{}
 			}
 			l.refusal.checkedCasts[node] = true
+		}
+		if proof.overlap || proof.structuralView {
+			if l.refusal.viewCasts == nil {
+				l.refusal.viewCasts = map[*ast.Node]bool{}
+			}
+			l.refusal.viewCasts[node] = true
 		}
 	}
 	return nil
