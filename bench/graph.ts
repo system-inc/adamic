@@ -6,6 +6,7 @@
 // region (ring.ts is the ring, for its count line).
 import 'node:timers';
 import { readFileSync } from 'node:fs';
+import process from 'node:process';
 
 interface Node {
 	readonly value: number;
@@ -53,6 +54,11 @@ for (let round = 0; round < 10; round += 1) {
 }
 console.log(`graph checksum ${checksum}`);
 console.error(`vmrss last ${resident()}`);
-setTimeout(() => {
-	console.error(`vmrss quiet ${resident()}`);
-}, 400);
+// The resident set after an idle wait, only when asked (ADAMIC_BENCH_QUIET=1): bench never sets it,
+// so a timed run never includes the 400 ms sleep, which it did on both native's and Node's wall
+// (#dqfvqff, J-h66sxf2). A read of what a thread keeps idle sets it.
+if (process.env['ADAMIC_BENCH_QUIET'] === '1') {
+	setTimeout(() => {
+		console.error(`vmrss quiet ${resident()}`);
+	}, 400);
+}
