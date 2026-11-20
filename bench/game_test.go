@@ -58,7 +58,7 @@ func TestTheGameConfigurationNamesOnlyVendoredFilesThatExist(t *testing.T) {
 	if !vendored["LICENSE"] {
 		t.Error("the game's root LICENSE isn't vendored")
 	}
-	ours := []string{"README.md", "programs.json", "go.mod", "go.sum"}
+	ours := []string{"README.md", "programs.json", "go.mod", "go.sum", ".gitattributes"}
 	err := filepath.WalkDir("game", func(path string, entry fs.DirEntry, err error) error {
 		if err != nil {
 			return err
