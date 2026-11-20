@@ -17,6 +17,11 @@
       "after": "[\"FunctionDeclaration\",[\"Identifier\",\"convertTypeAcquisitionFromJson\"],[\"Parameter\",[\"Identifier\",\"jsonOptions\"],[\"UnknownKeyword\"]],[\"Parameter\",[\"Identifier\",\"basePath\"],[\"StringKeyword\"]],[\"Parameter\",[\"Identifier\",\"configFileName\"],[\"QuestionToken\"],[\"StringKeyword\"]],[\"TypeLiteral\",[\"PropertySignature\",[\"Identifier\",\"options\"],[\"TypeReference\",[\"Identifier\",\"TypeAcquisition\"]]],[\"PropertySignature\",[\"Identifier\",\"errors\"],[\"ArrayType\",[\"TypeReference\",[\"Identifier\",\"Diagnostic\"]]]]]]"
     },
     {
+      "declaration": "FunctionDeclaration:[\"ts\",\"isPropertyName\"]#0",
+      "before": "[\"FunctionDeclaration\",[\"Identifier\",\"isPropertyName\"],[\"Parameter\",[\"Identifier\",\"node\"],[\"TypeReference\",[\"Identifier\",\"Node\"]]],[\"FirstTypeNode\",[\"Identifier\",\"node\"],[\"TypeReference\",[\"Identifier\",\"PropertyName\"]]]]",
+      "after": "[\"FunctionDeclaration\",[\"Identifier\",\"isPropertyName\"],[\"Parameter\",[\"Identifier\",\"node\"],[\"TypeReference\",[\"Identifier\",\"Node\"]]],[\"FirstTypeNode\",[\"Identifier\",\"node\"],[\"UnionType\",[\"TypeReference\",[\"Identifier\",\"Identifier\"]],[\"TypeReference\",[\"Identifier\",\"PrivateIdentifier\"]],[\"TypeReference\",[\"Identifier\",\"StringLiteral\"]],[\"TypeReference\",[\"Identifier\",\"NumericLiteral\"]],[\"TypeReference\",[\"Identifier\",\"ComputedPropertyName\"]]]]]"
+    },
+    {
       "declaration": "FunctionDeclaration:[\"ts\",\"parseConfigFileTextToJson\"]#0",
       "before": "[\"FunctionDeclaration\",[\"Identifier\",\"parseConfigFileTextToJson\"],[\"Parameter\",[\"Identifier\",\"fileName\"],[\"StringKeyword\"]],[\"Parameter\",[\"Identifier\",\"jsonText\"],[\"StringKeyword\"]],[\"TypeLiteral\",[\"PropertySignature\",[\"Identifier\",\"config\"],[\"QuestionToken\"],[\"AnyKeyword\"]],[\"PropertySignature\",[\"Identifier\",\"error\"],[\"QuestionToken\"],[\"TypeReference\",[\"Identifier\",\"Diagnostic\"]]]]]",
       "after": "[\"FunctionDeclaration\",[\"Identifier\",\"parseConfigFileTextToJson\"],[\"Parameter\",[\"Identifier\",\"fileName\"],[\"StringKeyword\"]],[\"Parameter\",[\"Identifier\",\"jsonText\"],[\"StringKeyword\"]],[\"TypeLiteral\",[\"PropertySignature\",[\"Identifier\",\"config\"],[\"QuestionToken\"],[\"AnyKeyword\"]],[\"PropertySignature\",[\"Identifier\",\"error\"],[\"QuestionToken\"],[\"UnionType\",[\"TypeReference\",[\"Identifier\",\"Diagnostic\"]],[\"UndefinedKeyword\"]]]]]"
@@ -3639,6 +3644,13 @@
       "line": 6987
     },
     {
+      "adaptation": "adapt/99-correctness-property-name-claim/api-sanctions.json row 1 {\"path\":[\"isPropertyName\"],\"kind\":\"FunctionDeclaration\",\"before\":\"node is PropertyName\",\"after\":\"node is Identifier | PrivateIdentifier | StringLiteral | NumericLiteral | ComputedPropertyName\",\"why\":\"Adamic, task ad161ms: the predicate claims the five kinds its body accepts, never a NoSubstitutionTemplateLiteral or a BigIntLiteral.\"}",
+      "path": [
+        "isPropertyName"
+      ],
+      "line": 8806
+    },
+    {
       "adaptation": "adapt/99-correctness-timer-closures/api-sanctions.json row 1 {\"path\":[\"System\",\"setTimeout\"],\"kind\":\"MethodSignature\",\"replace\":\"member\",\"before\":\"setTimeout?(callback: (...args: any[]) => void, ms: number, ...args: any[]): any;\",\"after\":\"setTimeout?(callback: (label?: unknown) => void, ms: number, label?: unknown): unknown;\",\"why\":\"Adamic, task 995spev, Nov 13 05:07Z, 05:31Z and 05:48Z: concrete timer slots retain one optional label. Extra arguments beyond the label no longer type-check; a variadic implementer still fits.\"}",
       "path": [
         "System",
@@ -3837,6 +3849,10 @@
     {
       "file": "stage3/adapt/99-correctness-axolotl-c/api-sanctions.json",
       "sha256": "00373a533e7b6436402c35f67d6b7148a7ade064b453cc5cb40950b743156432"
+    },
+    {
+      "file": "stage3/adapt/99-correctness-property-name-claim/api-sanctions.json",
+      "sha256": "90c3e6be4fbb0cf29dfd87f548024589e539c5c3bf4d4b7fcce80889bbc22cfd"
     },
     {
       "file": "stage3/adapt/99-correctness-timer-closures/api-sanctions.json",
@@ -5244,6 +5260,15 @@
     "     interface Scanner {\n",
     "         /** @deprecated use {@link getTokenFullStart} */\n",
     "         getStartPos(): number;\n",
+    "@@ -8803,7 +8801,7 @@\n",
+    "     function isImportAttributeName(node: Node): node is ImportAttributeName;\n",
+    "     function isModifier(node: Node): node is Modifier;\n",
+    "     function isEntityName(node: Node): node is EntityName;\n",
+    "-    function isPropertyName(node: Node): node is PropertyName;\n",
+    "+    function isPropertyName(node: Node): node is Identifier | PrivateIdentifier | StringLiteral | NumericLiteral | ComputedPropertyName;\n",
+    "     function isBindingName(node: Node): node is BindingName;\n",
+    "     function isFunctionLike(node: Node | undefined): node is SignatureDeclaration;\n",
+    "     function isClassElement(node: Node): node is ClassElement;\n",
     "@@ -9182,7 +9180,7 @@\n",
     "     function isQuestionOrPlusOrMinusToken(node: Node): node is QuestionToken | PlusToken | MinusToken;\n",
     "     function isModuleName(node: Node): node is ModuleName;\n",
