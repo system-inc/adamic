@@ -7,6 +7,7 @@ import (
 	"github.com/microsoft/TypeScript/tsc/shim/ast"
 	"github.com/microsoft/TypeScript/tsc/shim/checker"
 	"github.com/system-inc/adamic/internal/ir"
+	"github.com/system-inc/adamic/internal/load"
 )
 
 // The merged symbol exposes interface promises, not evidence of runtime storage.
@@ -135,8 +136,14 @@ func (l *lowering) classSlot(class *checker.Type, name string) classMemberSlot {
 		}
 	}
 	for _, declaration := range symbol.Declarations {
-		if declaration.Kind != ast.KindClassDeclaration || l.mergedClass(declaration) == nil ||
-			!strings.HasSuffix(l.program.FileName(ast.GetSourceFileOfNode(declaration)), ".ts") {
+		if declaration.Kind != ast.KindClassDeclaration {
+			continue
+		}
+		file := ast.GetSourceFileOfNode(declaration)
+		// A library class's declaration merge describes host storage. Only a
+		// program-owned class has an instance layout that can reserve a slot.
+		if load.IsLibrary(file) || load.IsNodeLibrary(file) ||
+			!strings.HasSuffix(l.program.FileName(file), ".ts") || l.mergedClass(declaration) == nil {
 			continue
 		}
 		of, known := l.representation(l.checker.GetTypeOfSymbol(field))

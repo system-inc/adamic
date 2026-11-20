@@ -113,12 +113,9 @@ console.log(String(m.f) + m.g);
 	})
 	t.Run("typescript", func(t *testing.T) {
 		t.Parallel()
-		_, err := lowerSourceAs(t, classMergeWriteSource, ".ts")
-		var notYet *NotYet
-		if !errors.As(err, &notYet) || notYet.What != "writing a possibly absent optional own field, where a value reaching it is an instance of Merged, whose class holds no f" {
-			t.Fatalf("want the existing optional-write NotYet, got %v", err)
-		}
-		t.Log(notYet.Error())
+		// The TypeScript merge reserves f on Merged, so a write through X
+		// reaches a slot even before the instance has an own property for f.
+		lowersAndAgreesWithNodeAs(t, classMergeWriteSource, ".ts")
 	})
 	for _, probe := range []struct {
 		name, source string
