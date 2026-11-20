@@ -91,6 +91,7 @@ func kindHelperDepthChain(count int) string {
 func TestKindHelperFallbacksRejectWholeBody(t *testing.T) {
 	t.Parallel()
 	for _, p := range []struct{ name, helpers, body string }{
+		{"h05", "function kinds(k:K):boolean {switch(k) {case K.A:return true;case K.D:return false;default:return false;}}\n", "return n && kinds(n.kind);"},
 		{"other_read", "const flag=true; function kinds(k:K):boolean {return k===K.A || flag;}\n", "return kinds(n.kind);"},
 		{"non_helper", "function other(k:K):boolean {return k>0;} function kinds(k:K):boolean {return k===K.A || other(k);}\n", "return kinds(n.kind);"},
 		{"written_parameter", "function kinds(k:K):boolean {k=K.A;return k===K.A;}\n", "return kinds(n.kind);"},
@@ -110,6 +111,10 @@ func TestKindHelperFallbacksRejectWholeBody(t *testing.T) {
 		t.Run(p.name, func(t *testing.T) {
 			t.Parallel()
 			types := kindSetTypes
+			if p.name == "h05" {
+				types = strings.Replace(types, "C=3", "D=1", 1)
+				types = strings.Replace(types, "readonly kind: K.C", "readonly kind: K.B", 1)
+			}
 			if p.name == "wrong_field" {
 				types = strings.ReplaceAll(types, "readonly kind:", "readonly other:K; readonly kind:")
 			}
