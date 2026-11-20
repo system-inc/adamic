@@ -39,14 +39,16 @@ func TestViewCastEnumSlotsHonestAgreeWithNode(t *testing.T) {
 }
 
 // Each lie stops at the located read with the view's literal failure and exit 70, after the honest call has
-// printed what Node prints. The lie's nested kind isn't the member, and it reaches the read through the cast.
+// printed what Node prints. The lie's nested kind isn't the member, and it reaches the read through the cast. A union
+// nested parent stops one step sooner, at the parent itself: its kind is how the union contract tells which member
+// it holds, so a kind that is no member's matches none (the same check, said where the union is read).
 // Node, without the checks, prints on.
 func TestViewCastEnumSlotsLiesStopAtTheRead(t *testing.T) {
 	t.Parallel()
 	for _, stop := range []struct{ name, node, stdout, stderr string }{
 		{"nested_parent_lie.ts", "size 1\nsize 8\n", "size 1\n", "field read failed: tag.parent.kind expected Kind.Doc, found number 8"},
 		{"own_kind_lie.ts", "5 size\n8 width\n", "5 size\n", "field read failed: named.kind expected Kind.Name, found number 8"},
-		{"union_parent_lie.ts", "1\n8\n", "1\n", "field read failed: tag.parent.kind expected Kind.Doc | Kind.Literal, found number 8"},
+		{"union_parent_lie.ts", "1\n8\n", "1\n", "field read failed: tag.parent matches no member of Doc | TypeLiteral; expected Doc | TypeLiteral, found object"},
 		{"two_level_lie.ts", "5\n8\n", "5\n", "field read failed: declaration.name.expression.kind expected Kind.Name, found number 8"},
 	} {
 		t.Run(stop.name, func(t *testing.T) {
@@ -77,11 +79,11 @@ func TestViewCastEnumSlotsLiesStopAtTheRead(t *testing.T) {
 // literal failure; one that doesn't lower must be refused or not yet, at its honest program and its lie alike.
 func TestViewCastEnumSlotsRiskRowsAgreeOrStop(t *testing.T) {
 	t.Parallel()
-	for _, row := range []struct{ name, node, stdout, read string }{
-		{"contracts", "1 0\n1 8\n", "1 0\n", "tag.parent.parent.kind"},
-		{"union_parent", "1\n8\n", "1\n", "tag.parent.kind"},
-		{"set_parent", "1\n0\n", "1\n", "tag.parent.kind"},
-		{"two_level", "5\n8\n", "5\n", "declaration.name.expression.kind"},
+	for _, row := range []struct{ name, node, stdout, stop string }{
+		{"contracts", "1 0\n1 8\n", "1 0\n", "tag.parent.parent.kind expected "},
+		{"union_parent", "1\n8\n", "1\n", "tag.parent matches no member of Doc | TypeLiteral; "},
+		{"set_parent", "1\n0\n", "1\n", "tag.parent.kind expected "},
+		{"two_level", "5\n8\n", "5\n", "declaration.name.expression.kind expected "},
 	} {
 		t.Run(row.name, func(t *testing.T) {
 			t.Parallel()
@@ -103,7 +105,7 @@ func TestViewCastEnumSlotsRiskRowsAgreeOrStop(t *testing.T) {
 				return
 			}
 			loomViewsDAgrees(t, viewCastEnumSlotsDirectory+row.name+".ts")
-			prefix := "adamic: panic: field read failed: " + row.read + " expected "
+			prefix := "adamic: panic: field read failed: " + row.stop
 			sanitized, _ := nativelyUncached(t, lieProgram)
 			for backend, got := range map[string]run{"native": releasedUncached(t, lieProgram), "sanitized": sanitized, "javascript": onJavaScriptBackend(t, lieProgram)} {
 				if got.exitCode != 70 || string(got.stdout) != row.stdout || !strings.HasPrefix(string(got.stderr), prefix) {
