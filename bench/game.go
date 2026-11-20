@@ -1,7 +1,7 @@
 // Game measures Adamic against the Computer Language Benchmarks Game's own Go and Rust entries,
 // vendored unchanged in bench/game, all four languages on one box.
 //
-//	go run ./bench -game -go <Go 1.23.1's go> -rustc <rustc 1.84.1> -crates <rust-deps' target/release/deps> [-pcre <prefix>] [-samples 15] [-only fasta,nbody] [-seed n]
+//	go run ./bench -game -go <Go 1.23.1's go> -rustc <rustc 1.84.1> -crates <rust-deps' target/x86_64-unknown-linux-gnu/release/deps> [-pcre <prefix>] [-samples 15] [-only fasta,nbody] [-seed n]
 //
 // bench/game/programs.json names each program's runners: Adamic native, built by this checkout's
 // adamic from the holdout port or the everyday source, Node running the same source, and the game's
@@ -272,7 +272,7 @@ func measureGame(request gameRequest) {
 	for _, benchmark := range benchmarks {
 		for _, entry := range benchmark.Entries {
 			if len(entry.Crates) > 0 && request.crates == "" {
-				fail(fmt.Errorf("%s's %s links against crates, so -game takes -crates <directory>: the rlibs `cargo build --release` leaves in bench/game/rust-deps/target/release/deps, built with -rustc's toolchain", benchmark.Name, entryName(entry)))
+				fail(fmt.Errorf("%s's %s links against crates, so -game takes -crates <directory>: the rlibs `cargo build --release --target x86_64-unknown-linux-gnu` leaves in bench/game/rust-deps/target/x86_64-unknown-linux-gnu/release/deps, built with -rustc's toolchain", benchmark.Name, entryName(entry)))
 			}
 		}
 	}
@@ -289,6 +289,11 @@ func measureGame(request gameRequest) {
 		fail(err)
 	}
 	defer os.RemoveAll(work)
+	// Every runner, Go and Rust's as much as Adamic's, is measured through the reaper, so each peak is its
+	// own and never bench's, which here holds the inputs (J-wme5jp2 read 1321.4 MB for every runner).
+	if reaper, err = buildReaper(directory, work); err != nil {
+		fail(err)
+	}
 
 	describeMachine([]runtimeKind{{name: adamicLanguage}, {name: nodeLanguage}, {name: goLanguage}, {name: rustLanguage}})
 	if commit, err := exec.Command("git", "rev-parse", "HEAD").Output(); err == nil {
