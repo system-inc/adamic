@@ -322,6 +322,9 @@ func (l *lowering) returnStatement(node *ast.Node) ([]ir.Statement, error) {
 		// return panic('why'): panic never returns, so there is nothing to return, and it is the panic.
 		return l.expressionStatement(expression)
 	}
+	if raw := l.checker.GetTypeAtLocation(expression); expression.Kind == ast.KindIdentifier {
+		println("TRACE return", expression.Text(), "raw", l.checker.TypeToString(raw), "concrete", l.checker.TypeToString(l.concrete(raw)), "flags", int(l.concrete(raw).Flags()), "isNever", l.isNever(expression), "returns", int(l.function.BodyReturns()))
+	}
 	if l.function.BodyReturns() != 0 && l.isNever(expression) {
 		// return fail(), fail returning never: its effects run, and the placeholder after them is held
 		// as the function returns (a number's 0, a string's null pointer), never as the call's own
