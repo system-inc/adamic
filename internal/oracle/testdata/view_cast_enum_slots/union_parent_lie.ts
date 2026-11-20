@@ -14,5 +14,5 @@ const doc: Node = { kind: Kind.Doc, parent: root };
 const other: Node = { kind: Kind.Other, parent: root };
 const documented: Node = { kind: Kind.Tag, parent: doc };
 const lying: Node = { kind: Kind.Tag, parent: other };
-console.log(owner(documented));
-console.log(owner(lying));
+console.log(`${owner(documented)}`);
+console.log(`${owner(lying)}`);
