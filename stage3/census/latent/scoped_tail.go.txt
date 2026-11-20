@@ -70,7 +70,12 @@ func (l *lowering) latentScopedTail(node *ast.Node) (ledger []latent.PassEntry, 
 		}
 		active = i
 		start := time.Now()
-		err := probe.latentScopedStep(step.Name, node)
+		var err error
+		if latentTailTestStop(step.Name, node) {
+			err = &NotYet{Where: probe.program.Where(node), What: latentTailTestStopReason}
+		} else {
+			err = probe.latentScopedStep(step.Name, node)
+		}
 		ledger[i].WallSeconds = time.Since(start).Seconds()
 		ledger[i].Status = "executed_scoped"
 		if err != nil {
@@ -94,6 +99,21 @@ func (l *lowering) latentScopedTail(node *ast.Node) (ledger []latent.PassEntry, 
 		}
 	}
 	return
+}
+
+// latentTailTestStopReason is what an injected stop reports. A census test that pins the tail's recording uses it
+// instead of a production refusal: production's passes keep changing what they refuse, and twice a probe pinned to
+// one of them stopped stopping (#hcxsh1k), while what the census owns is only how a scoped stop is recorded.
+const latentTailTestStopReason = "a stop the census test injects"
+
+// latentTailTestStop reports whether LATENT_TAIL_TEST_STOP, as <pass>@<unit name>, names this step of this unit.
+// It's unset in every real run, and the census overlay is the only build that holds it.
+func latentTailTestStop(pass string, node *ast.Node) bool {
+	want := os.Getenv("LATENT_TAIL_TEST_STOP")
+	if want == "" || node.Name() == nil {
+		return false
+	}
+	return want == pass+"@"+node.Name().Text()
 }
 
 // Calls follow the sole ordered ledger table; omitted production operations never
