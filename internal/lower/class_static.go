@@ -16,8 +16,8 @@ func (l *lowering) staticBase(declaration *ast.Node) *ast.Node {
 		}
 		for _, node := range clause.AsHeritageClause().Types.Nodes {
 			symbol := l.symbol(ast.SkipParentheses(node.AsExpressionWithTypeArguments().Expression))
-			if symbol != nil && len(symbol.Declarations) == 1 && symbol.Declarations[0].Kind == ast.KindClassDeclaration {
-				return symbol.Declarations[0]
+			if base := l.classBaseDeclaration(symbol); base != nil {
+				return base
 			}
 		}
 	}

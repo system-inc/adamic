@@ -26,19 +26,44 @@ func (l *lowering) baseInstance(declaration *ast.Node, classType *checker.Type) 
 			return nil, l.notYet(clause, "a class base whose type isn't known")
 		}
 		baseType := bases[0]
-		symbol := baseType.Symbol()
-		if symbol == nil || len(symbol.Declarations) != 1 || symbol.Declarations[0].Kind != ast.KindClassDeclaration {
+		base := l.classBaseDeclaration(baseType.Symbol())
+		if base == nil {
 			// class ... extends Error stops here. Lifting this stop reopens a road into a catch, which the catch
 			// narrowing stands on (looseCaughtRoad, loose_slots.go).
 			return nil, l.notYet(clause, "a base that isn't a declared class")
 		}
-		if err := l.extendsApple(clause, symbol); err != nil {
+		if err := l.extendsApple(clause, baseType.Symbol()); err != nil {
 			return nil, err
 		}
-		base := symbol.Declarations[0]
 		return l.instantiate(base, baseType, clause)
 	}
 	return nil, nil
+}
+
+// A TypeScript interface merge adds instance type declarations to the
+// symbol of a base class. Both static and instance inheritance need the
+// runtime class declaration from that symbol.
+func (l *lowering) classBaseDeclaration(symbol *ast.Symbol) *ast.Node {
+	if symbol == nil {
+		return nil
+	}
+	var class *ast.Node
+	for _, declaration := range symbol.Declarations {
+		switch declaration.Kind {
+		case ast.KindClassDeclaration:
+			if class != nil {
+				return nil
+			}
+			class = declaration
+		case ast.KindInterfaceDeclaration:
+		default:
+			return nil
+		}
+	}
+	if class != nil && (len(symbol.Declarations) == 1 || strings.HasSuffix(l.program.FileName(ast.GetSourceFileOfNode(class)), ".ts")) {
+		return class
+	}
+	return nil
 }
 
 // classOverrideRefusal checks a class declaration's overrides against its bases.
@@ -306,6 +331,7 @@ func (l *lowering) inheritanceConstructor(index int, declaration *ast.Node) erro
 			fields = append(fields, field)
 		}
 	}
+	fields = l.reserveMergedFields(declaration, fields)
 	l.result.Classes[instance.class-1].Fields = fields
 	if instance.base == nil {
 		initialized, err := l.fieldInitializers(declaration, this)
