@@ -1,13 +1,15 @@
 # Every crate the Benchmarks Game's vendored Rust entries name, each pinned to the newest release
 # published before 2025-02-01 that rustc 1.84.1 supports (bench/game/README.md says how each was
 # chosen). The library has no code of its own: building it leaves one rlib per crate in
-# target/release/deps, and `go run ./bench -game -crates <that directory>` links each entry against
-# them with --extern, as the game linked against its /opt/src/rust-libs. Build it with the game's
-# rustc, from this directory so .cargo/config.toml applies:
+# target/x86_64-unknown-linux-gnu/release/deps, and `go run ./bench -game -crates <that directory>`
+# links each entry against them with --extern, as the game linked against its /opt/src/rust-libs.
+# Build it with the game's rustc, from this directory so .cargo/config.toml applies, for the target
+# by name so build scripts' crates stay apart (bench/game/README.md says why):
 #
-#	cargo build --release
+#	cargo build --release --target x86_64-unknown-linux-gnu
 #
-# Cargo.lock is made by that first build on the box and committed after it.
+# Cargo.lock was made on Golem with rustc 1.84.1's cargo, each crate pinned to its newest release
+# before 2025-02-01 (J-hd0wssn).
 [package]
 name = "benchmarksgame-rust-deps"
 version = "0.0.0"
