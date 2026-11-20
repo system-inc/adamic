@@ -41,13 +41,14 @@ import (
 //
 //   - A write through the this of a function declaration whose this is a declared parameter, when every use
 //     of that function is a new callee or the operand of a cast to any (closedKindNewOnlyFunctions). Lowering
-//     refuses every cast to any, so no compiled program reaches the function by another road; a call,
+//     refuses every cast to any but one road, so no compiled program reaches the function by another; a call,
 //     .call, .apply, .bind, storage, return or argument could write a run-time kind onto an object built
-//     elsewhere at a literal one, so any of them keeps the write a build. New of a function constructor is
-//     NotYet today (TestClosedKindFunctionConstructorNewStops holds it), so nothing is built this way yet.
-//     The allocator's getters need an escape proof before the `as any` in tsc's objectAllocator is adapted:
-//     a getter returning the function, read only into variables read only as a new callee, fails this
-//     proof today, so S opens and Node's 55 come back as hazards.
+//     elsewhere at a literal one, so any of them keeps the write a build. The one road is the allocator escape
+//     proof Adamic's ruling on #837zjkt admits (function_constructor.go): an allocator getter's `F as any`,
+//     whose value goes only to a new's callee, through a cache and the || that fills it, proven by the
+//     allocator's seal and the new's reach once lowering is done. Its new is the synthesized class's, born as
+//     a checked view. Every other new of a function constructor stops at the cast that reaches it
+//     (TestClosedKindFunctionConstructorNewStops holds it).
 //   - A new whose callee isn't a class (closedKindNewOfClass), seen through a construct signature: such a
 //     value is a class, whose declaration is a build counted here, a function constructor, the case above,
 //     or a declared value with no body, which doesn't lower. So a class installed by setObjectAllocator, as
