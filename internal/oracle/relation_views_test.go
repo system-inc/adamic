@@ -16,16 +16,17 @@ import (
 //
 //   - agrees: it lowers, and release native, sanitized native and the JavaScript backend print what Node
 //     prints: the four relation sites (argument, initializer, return, assignment), each reading an absent and
-//     a present field, Language's road 3 read through Target, road 4's Target | undefined widening, and the
-//     honest twin of each of Compiler's probes;
+//     a present field, Language's road 3 read through Target and through a second type (a read #zpzm9ta
+//     checks where it's made), road 4's Target | undefined widening, and the honest twin of each of Compiler's
+//     probes;
 //   - panics: it lowers, prints what Node prints up to a checked read the lie fails, and stops there with exit
 //     70 and the read's message on every backend, where Node prints on: Language's roads 2 (with the alias's
 //     label required) and 5, Lower's nested union row, Compiler's probes (a generic body read through Target
 //     for both instantiations, an optional chain's operand, an optional method's argument, a template span's
-//     call and a nested call), and Compiler's two fields hidden at two depths;
+//     call and a nested call), Compiler's two fields hidden at two depths, and the generic body lowered twice,
+//     whose second instantiation's read through a second type #zpzm9ta checks;
 //   - stops: it doesn't lower, and the stop holds text: Language's road 1 (the getter, stopped before any read),
-//     road 2 with the alias's label optional (its write NotYet, waiting on :73),
-//     road 3 through a second type and the generic body lowered twice (both NotYet, never raw), road 4's lie
+//     road 2 with the alias's label optional (its write NotYet, waiting on :73), road 4's lie
 //     (refused at the alias that writes it), the shorthand this slice can't view (refused by shorthand itself in
 //     rule 3300's words), the relation no lowering meets (refused by the post-pass in those words) and the .a
 //     twin (refused by rule 3300 as before).
@@ -33,8 +34,8 @@ import (
 // The fixtures sit in a directory of their own, since the flow and fresh corpora lower every program at
 // testdata's top level. Mutants (internal/lower/relation_views.mutants.md): checkRelationViewsTaken removed
 // lowers never_lowered.ts, and with shorthand's own refusal removed too, lowers shorthand.ts and reads its
-// label raw; the entry deleted when it's taken lowers lowered_twice.ts with the second instantiation
-// unviewed; the .ts condition dropped lowers adamic_twin.a. Each turns its row red.
+// label raw; the entry deleted when it's taken leaves lowered_twice.ts's second instantiation unviewed, so its
+// read through Seen is raw and never stops; the .ts condition dropped lowers adamic_twin.a. Each turns its row red.
 // The rows are three tests, one a kind, so no one test builds every program on three backends.
 const relationViewsDirectory = "internal/oracle/testdata/relation_views"
 
@@ -46,6 +47,7 @@ var relationViewRows = map[string]relationViewRow{
 	"return.ts":                {kind: "agrees"},
 	"assignment.ts":            {kind: "agrees"},
 	"road3_containers.ts":      {kind: "agrees"},
+	"road3_other_type.ts":      {kind: "agrees"},
 	"road4_undefined_slot.ts":  {kind: "agrees"},
 	"road2_required_alias.ts":  {kind: "panics", stdout: "first\n", detail: "adamic: panic: field read failed: target.label"},
 	"road5_nested_two_deep.ts": {kind: "panics", stdout: "absent\ntwo\n", detail: "adamic: panic: field read failed: target.inner"},
@@ -65,11 +67,11 @@ var relationViewRows = map[string]relationViewRow{
 	// is its first, and its panic names the read through inner.
 	"two_hidden_depths.ts":        {kind: "panics", stdout: "first\none\na\n", detail: "adamic: panic: field read failed: target.inner"},
 	"two_hidden_depths_honest.ts": {kind: "agrees"},
-	"road1_getter.ts":             {kind: "stops", detail: "stage 0 can't lower a getter in a checked field contract yet"},
+	// The second instantiation's lie, read through Seen, stops at that read, checked where it's made (#zpzm9ta).
+	"lowered_twice.ts": {kind: "panics", stdout: "absent\n", detail: "adamic: panic: field read failed: seen.label"},
+	"road1_getter.ts":  {kind: "stops", detail: "stage 0 can't lower a getter in a checked field contract yet"},
 	// Waits on :73 (#x0nd1mh): the wider alias's optional label can't be written until its certificate covers it.
 	"road2_wider_alias.ts":   {kind: "stops", detail: relationViewsDirectory + "/road2_wider_alias.ts:15:23: stage 0 can't lower writing a possibly absent optional own field yet"},
-	"road3_other_type.ts":    {kind: "stops", detail: "stage 0 can't lower a read of field label through type Seen, which may hold a checked view's value yet"},
-	"lowered_twice.ts":       {kind: "stops", detail: "stage 0 can't lower a read of field label through type Seen, which may hold a checked view's value yet"},
 	"road4_undefined_lie.ts": {kind: "stops", detail: "Adamic 0.1 refuses a value of type Holder seen as LooseHolder, which can write"},
 	"shorthand.ts":           {kind: "stops", detail: relationViewsDirectory + "/shorthand.ts:14:20: Adamic 0.1 refuses optional property label in Target absent from structural source Source, which can hide fields; declare label on the source type, or build a fresh object with known fields (adamic/no-optional-widening)"},
 	"never_lowered.ts":       {kind: "stops", detail: relationViewsDirectory + "/never_lowered.ts:9:28: Adamic 0.1 refuses optional property label in Target absent from structural source Source, which can hide fields; declare label on the source type, or build a fresh object with known fields (adamic/no-optional-widening)"},

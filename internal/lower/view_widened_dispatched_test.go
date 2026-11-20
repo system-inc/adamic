@@ -27,30 +27,31 @@ func dispatchedViewProgram(text string, shout bool) string {
 
 // A checked view's value read through an interface a class getter also satisfies goes through the getter's
 // dispatcher, whose fallback reads the slot unchecked: on main this program built and its sanitized native died
-// in adamic_retain, where Node prints 5 and loud (#3jj9dzg, CLI's J-qcmzfvd). The read is weighed as a Property
-// read is (#80cs7rz), so it stops NotYet at h.text, in the same words as its twin without Shout, whose read was
-// never dispatched. Mutant: checkViewWidenedReads skipping dispatchedReads, and the Shout row lowers.
+// in adamic_retain, where Node prints 5 and loud (#3jj9dzg, CLI's J-qcmzfvd). The dispatched read is weighed as a
+// Property read is, and a getter answers its name, so it stops NotYet in the getter's words: a checked read looks
+// only at data slots (#zpzm9ta). Mutant: checkViewWidenedReads skipping dispatchedReads, and this lowers.
 func TestDispatchedReadOfAViewedValueStops(t *testing.T) {
 	t.Parallel()
-	for _, row := range []struct {
-		name  string
-		shout bool
-	}{{"through a getter's dispatcher", true}, {"its twin without the getter", false}} {
-		t.Run(row.name, func(t *testing.T) {
-			t.Parallel()
-			_, err := lowerSourceAs(t, dispatchedViewProgram("5", row.shout), ".ts")
-			var notYet *NotYet
-			// textOf's line, which Shout's declaration moves down by one.
-			line := "main.ts:5:"
-			if row.shout {
-				line = "main.ts:6:"
-			}
-			if !errors.As(err, &notYet) || !strings.Contains(notYet.Where, line) || !strings.Contains(notYet.What, "a read of field text through type HasText, which may hold a checked view's value") {
-				t.Fatalf("want NotYet at textOf's h.text (%s) as a read that may hold a checked view's value, got %v", line, err)
-			}
-			t.Logf("stops at %s: %s", notYet.Where[strings.LastIndex(notYet.Where, "main.ts"):], notYet.What)
-		})
+	_, err := lowerSourceAs(t, dispatchedViewProgram("5", true), ".ts")
+	var notYet *NotYet
+	// textOf's line, below Shout's declaration.
+	if !errors.As(err, &notYet) || !strings.Contains(notYet.Where, "main.ts:6:") || !strings.Contains(notYet.What, "a read of field text through type HasText, which may hold a checked view's value, where a getter named text may answer it") {
+		t.Fatalf("want NotYet at textOf's h.text (main.ts:6:) in the getter's words, got %v", err)
 	}
+}
+
+// The twin without Shout: h.text is never dispatched, so it's a widened read checked where it's made (#zpzm9ta),
+// and the lie stops loud at it, exit 70 on sanitized native and the JavaScript backend, where Node prints 5.
+func TestUndispatchedTwinOfAViewedValueIsChecked(t *testing.T) {
+	t.Parallel()
+	program, err := lowerSourceAs(t, dispatchedViewProgram("5", false), ".ts")
+	if err != nil {
+		t.Fatalf("want it lowered with its read of text checked, got %v", err)
+	}
+	if checked, _ := widenedReadsOf(t, program, "text"); checked == 0 {
+		t.Fatal("no read of text is a widened read checked where it's made")
+	}
+	brandedStopsProgram(t, program, "adamic: panic: field read failed: h.text is not a string; expected string, found number")
 }
 
 // The control: with no view in the program, the same getter dispatch lowers and agrees with Node, so the
