@@ -1,0 +1,268 @@
+// Witness forecasts exist only in the guarded scratch overlay.
+package lower
+
+import (
+	"context"
+	"encoding/json"
+	"fmt"
+	"io"
+	"os"
+
+	"github.com/microsoft/TypeScript/tsc/shim/ast"
+	"github.com/microsoft/TypeScript/tsc/shim/checker"
+	"github.com/system-inc/adamic/internal/ir"
+	"github.com/system-inc/adamic/internal/load"
+)
+
+type latentWitnessRecord struct {
+	File               string             `json:"file"`
+	Name               string             `json:"name"`
+	Where              string             `json:"where"`
+	Status             string             `json:"status"`
+	CallCount          int                `json:"call_count"`
+	SkippedNonConcrete int                `json:"skipped_non_concrete"`
+	Caller             string             `json:"caller,omitempty"`
+	CallSite           string             `json:"call_site,omitempty"`
+	TypeArguments      []string           `json:"type_arguments,omitempty"`
+	Stop               *latentWitnessStop `json:"stop,omitempty"`
+}
+
+type latentWitnessStop struct {
+	Kind   string `json:"kind"`
+	Where  string `json:"where"`
+	Reason string `json:"reason"`
+	Text   string `json:"text"`
+}
+
+func latentWriteWitnesses(ctx context.Context, program *load.Program, records []LatentFile, output io.Writer) {
+	// A finished census supplies the unit inventory and the unmodified reach ledger.
+	units := map[string]bool{}
+	targets := map[string]*latentWitnessRecord{}
+	var ordered []*latentWitnessRecord
+	for _, record := range records {
+		for _, unit := range record.Units {
+			units[unit.Where] = true
+			if unit.Status != "deferred_generic_instantiation" || unit.Instantiated || unit.BodyEnd <= unit.BodyStart {
+				continue
+			}
+			row := &latentWitnessRecord{File: record.File, Name: unit.Name, Where: unit.Where, Status: "no-concrete-witness"}
+			targets[unit.Where] = row
+			ordered = append(ordered, row)
+		}
+	}
+	if len(ordered) == 0 {
+		return
+	}
+	var facts *latentProgramFacts
+	files := program.Files()
+	for _, file := range files {
+		func() {
+			checked, release := program.Checker(ctx, file)
+			defer release()
+			base := &lowering{program: program, checker: checked, result: &ir.Program{}, this: -1, functionIndex: -1}
+			registered := false
+			observe := func(call *ast.Node, owner string) {
+				resolved := checked.GetResolvedSignature(call)
+				if resolved == nil || resolved.Declaration() == nil {
+					return
+				}
+				// The signature retains the declaration through import aliases.
+				// Resolve an overload signature to the symbol's executable body.
+				declaration := base.censusImplementation(resolved.Declaration())
+				if declaration == nil {
+					return
+				}
+				row := targets[program.Where(declaration)]
+				if row == nil {
+					return
+				}
+				row.CallCount++
+				arguments := checked.LatentResolvedTypeArguments(resolved)
+				parameters := declaration.TypeParameters()
+				if !latentConcreteWitnessArguments(checked, parameters, arguments) {
+					row.SkippedNonConcrete++
+					return
+				}
+				if row.CallSite != "" {
+					return
+				}
+				row.Caller, row.CallSite = owner, program.Where(call)
+				mapping := make(map[*checker.Type]*checker.Type, len(arguments))
+				for index, argument := range arguments {
+					row.TypeArguments = append(row.TypeArguments, checked.TypeToString(argument))
+					mapping[checked.GetTypeAtLocation(parameters[index].Name())] = argument
+				}
+				if !registered {
+					base.noteInheritance(files)
+					base.noteAccessorNames(files)
+					base.latentRegister(files)
+					if latentFullEnabled() {
+						base.latentRegisterNested(files)
+					}
+					base.latentUseProgramFacts(&facts)
+					registered = true
+				}
+				row.Status = "forecast"
+				row.Stop = base.latentProbeWitness(call, declaration, resolved, mapping)
+			}
+			var visit func(*ast.Node, string)
+			visit = func(node *ast.Node, owner string) {
+				// Calls in a nested function belong to that function's census unit.
+				if ast.IsFunctionLike(node) {
+					owner = ""
+				}
+				if node.Parent == file.AsNode() || node.Kind == ast.KindFunctionDeclaration {
+					where := program.Where(node)
+					if units[where] {
+						owner = where
+					}
+				}
+				if node.Kind == ast.KindCallExpression && owner != "" {
+					observe(node, owner)
+				}
+				node.ForEachChild(func(child *ast.Node) bool { visit(child, owner); return false })
+			}
+			for _, node := range file.Statements.Nodes {
+				visit(node, "")
+			}
+		}()
+	}
+	encoder := json.NewEncoder(output)
+	for _, row := range ordered {
+		if err := encoder.Encode(row); err != nil {
+			panic(err)
+		}
+	}
+	latentWitnessLeakMutants(records, ordered)
+}
+
+func latentConcreteWitnessArguments(checked *checker.Checker, parameters []*ast.Node, arguments []*checker.Type) bool {
+	if len(parameters) == 0 || len(arguments) != len(parameters) {
+		return false
+	}
+	if os.Getenv("LATENT_MUTANT_WITNESS_OPEN_TYPE") == "1" {
+		return true
+	}
+	seen := map[*checker.Type]bool{}
+	for _, argument := range arguments {
+		if latentOpenWitnessType(checked, argument, seen) {
+			return false
+		}
+	}
+	return true
+}
+
+func latentOpenWitnessType(checked *checker.Checker, argument *checker.Type, seen map[*checker.Type]bool) bool {
+	if seen[argument] {
+		return false
+	}
+	seen[argument] = true
+	if checked.LatentWitnessTypeIsUnresolved(argument) {
+		return true
+	}
+	open := func(types []*checker.Type) bool {
+		for _, child := range types {
+			if latentOpenWitnessType(checked, child, seen) {
+				return true
+			}
+		}
+		return false
+	}
+	if alias := argument.Alias(); alias != nil && open(alias.TypeArguments()) {
+		return true
+	}
+	switch flags := argument.Flags(); {
+	case flags&(checker.TypeFlagsUnionOrIntersection|checker.TypeFlagsTemplateLiteral) != 0:
+		return open(argument.Types())
+	case flags&checker.TypeFlagsStringMapping != 0:
+		return latentOpenWitnessType(checked, argument.Target(), seen)
+	case flags&checker.TypeFlagsInstantiable != 0:
+		return true
+	case flags&checker.TypeFlagsObject == 0:
+		return false
+	}
+	if argument.ObjectFlags()&checker.ObjectFlagsReference != 0 {
+		return open(checked.GetTypeArguments(argument))
+	}
+	for _, property := range checked.GetPropertiesOfType(argument) {
+		if latentOpenWitnessType(checked, checked.GetTypeOfSymbol(property), seen) {
+			return true
+		}
+	}
+	for _, info := range checked.GetIndexInfosOfType(argument) {
+		if open([]*checker.Type{info.KeyType(), info.ValueType()}) {
+			return true
+		}
+	}
+	for _, kind := range []checker.SignatureKind{checker.SignatureKindCall, checker.SignatureKindConstruct} {
+		for _, signature := range checked.GetSignaturesOfType(argument, kind) {
+			if len(signature.TypeParameters()) != 0 || latentOpenWitnessType(checked, checked.GetReturnTypeOfSignature(signature), seen) {
+				return true
+			}
+			if receiver := signature.ThisParameter(); receiver != nil && latentOpenWitnessType(checked, checked.GetTypeOfSymbol(receiver), seen) {
+				return true
+			}
+			for _, parameter := range signature.Parameters() {
+				if latentOpenWitnessType(checked, checked.GetTypeOfSymbol(parameter), seen) {
+					return true
+				}
+			}
+		}
+	}
+	return false
+}
+
+func (l *lowering) latentProbeWitness(call, declaration *ast.Node, resolved *checker.Signature, arguments map[*checker.Type]*checker.Type) (stop *latentWitnessStop) {
+	savedFindings, savedInstantiated := latentFindings, latentInstantiated
+	latentFindings, latentInstantiated = nil, nil
+	defer func() {
+		latentFindings, latentInstantiated = savedFindings, savedInstantiated
+		if failure := recover(); failure != nil {
+			message := fmt.Sprint(failure)
+			stop = &latentWitnessStop{Kind: "panic", Where: l.program.Where(declaration), Reason: message, Text: message}
+		}
+	}()
+	probe := l
+	if os.Getenv("LATENT_MUTANT_WITNESS_SHARED_STATE") != "1" {
+		probe = l.latentSnapshot()
+	}
+	_, err := probe.instantiateFunctionWithArguments(call, declaration, resolved, arguments)
+	latentRecord(err)
+	latentRecord(probe.unlowerable)
+	if len(latentFindings) == 0 {
+		return nil
+	}
+	finding := latentFindings[0]
+	return &latentWitnessStop{Kind: finding.Kind, Where: finding.Where, Reason: finding.Reason, Text: finding.Text}
+}
+
+func latentWitnessLeakMutants(records []LatentFile, witnesses []*latentWitnessRecord) {
+	findings := os.Getenv("LATENT_MUTANT_WITNESS_FINDING") == "1"
+	timing := os.Getenv("LATENT_MUTANT_WITNESS_TIMING") == "1"
+	if !findings && !timing {
+		return
+	}
+	for _, witness := range witnesses {
+		if witness.Stop == nil {
+			continue
+		}
+		if timing && latentUnitTimer != nil {
+			if err := latentUnitTimer.encoder.Encode(UnitTime{File: witness.File, Where: witness.Where}); err != nil {
+				panic(err)
+			}
+		}
+		if findings {
+			for index := range records {
+				if records[index].File == witness.File {
+					stop := witness.Stop
+					records[index].Findings = append(records[index].Findings, LatentFinding{
+						Measurement: LatentMeasurementLabel, Unit: witness.Caller, Phase: "lowering",
+						Kind: stop.Kind, Where: stop.Where, Reason: stop.Reason, Text: stop.Text,
+					})
+					break
+				}
+			}
+		}
+		return
+	}
+}

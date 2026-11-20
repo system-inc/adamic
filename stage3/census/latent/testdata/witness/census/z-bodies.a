@@ -1,0 +1,16 @@
+export function blocked<T>(value: T): T {
+    var bodyStop = 1;
+    return value;
+}
+
+export function clean<Tag, Result = number>(value: Result): Result {
+    return value;
+}
+
+export function open<T>(value: T): T {
+    return value;
+}
+
+export function rejected(): number {
+    return "checker-rejected program";
+}

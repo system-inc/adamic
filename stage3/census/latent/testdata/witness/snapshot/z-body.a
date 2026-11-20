@@ -1,0 +1,4 @@
+export function blocked<T>(value: T): T {
+    var bodyStop = 1;
+    return value;
+}

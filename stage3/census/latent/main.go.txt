@@ -1,11 +1,13 @@
 package main
 
 import (
+	"bytes"
 	"context"
 	"encoding/json"
 	"fmt"
 	"github.com/system-inc/adamic/internal/load"
 	"github.com/system-inc/adamic/internal/lower"
+	"io"
 	"os"
 	"path/filepath"
 	"sort"
@@ -29,6 +31,16 @@ func main() {
 		panic(err)
 	}
 	sort.Strings(paths)
+	var witness io.Writer
+	var witnessRows bytes.Buffer
+	var witnessPath string
+	if os.Getenv("LATENT_WITNESS") == "1" || os.Getenv("LATENT_MUTANT_WITNESS_DEFAULT") == "1" {
+		witnessPath = os.Getenv("LATENT_WITNESS_OUT")
+		if witnessPath == "" {
+			witnessPath = os.Args[2] + ".witness.jsonl"
+		}
+		witness = &witnessRows
+	}
 	output, err := os.Create(os.Args[2])
 	if err != nil {
 		panic(err)
@@ -56,14 +68,31 @@ func main() {
 	if err := encoder.Encode(map[string]any{"measurement": lower.LatentMeasurementLabel, "status": "measurement", "latent_mode": censusMode(), "checker_rejected": len(diagnostics) > 0, "diagnostics": diagnostics, "diagnostic_sites": program.LatentDiagnosticSites()}); err != nil {
 		panic(err)
 	}
-	lower.Latent(context.Background(), program, func(record lower.LatentFile) {
+	lower.LatentWithWitness(context.Background(), program, func(record lower.LatentFile) {
 		if err := encoder.Encode(record); err != nil {
 			panic(err)
 		}
-		if err := output.Sync(); err != nil { panic(err) }
+		if err := output.Sync(); err != nil {
+			panic(err)
+		}
 		fmt.Fprintln(os.Stderr, record.File, len(record.Units), len(record.Findings), lower.LatentMeasurementLabel)
-	})
-
+	}, witness)
+	if witness != nil {
+		// The census and timing streams already exist. Exclusive creation also
+		// protects them if their paths resolve through symlinks or hard links.
+		stream, err := os.OpenFile(witnessPath, os.O_WRONLY|os.O_CREATE|os.O_EXCL, 0666)
+		if err != nil {
+			panic(err)
+		}
+		_, writeErr := witnessRows.WriteTo(stream)
+		closeErr := stream.Close()
+		if writeErr != nil {
+			panic(writeErr)
+		}
+		if closeErr != nil {
+			panic(closeErr)
+		}
+	}
 }
 
 func censusMode() string {

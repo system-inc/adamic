@@ -61,6 +61,14 @@ subprocess.run(['go', 'run', str(territory / 'statementrewrite'),
 replace[str(repository / 'internal/lower/statements.go')] = str(statement_output)
 overlay('internal/lower/latent_full.go', (territory / 'full.go.txt').read_text())
 overlay('internal/lower/latent_units.go', (territory / 'units.go.txt').read_text())
+overlay('internal/lower/latent_witness.go', (territory / 'witness.go.txt').read_text())
+overlay('cohere/TypeScript/tsc/internal/checker/latent_witness.go', (territory / 'witness_checker.go.txt').read_text())
+if '--witness-tests' in sys.argv[3:]:
+    # The production tests use private entry points removed by the guarded overlay.
+    # Select the in-process witness test only for this scratch test configuration.
+    for test in (repository / 'internal/lower').glob('*_test.go'):
+        replace[str(test)] = ''
+    overlay('internal/lower/latent_witness_test.go', (territory / 'witness_test.go.txt').read_text())
 # Compile the tested recorder into the overlay, including per-ref source snapshots.
 overlay('internal/lower/latent_timing.go', (territory / 'timing/timing.go').read_text().replace('package timing', 'package lower', 1))
 overlay('internal/lower/latent_replay.go', (territory / 'replay.go.txt').read_text())
@@ -117,6 +125,24 @@ functions = functions.replace(needle, needle + '\n if !latentSpeculativeEnabled(
 functions = functions.replace(needle, needle + '\n if latentConcreteCallDepth > 0 && latentInstantiated != nil { latentInstantiated[l.program.Where(declaration)] = true }')
 overlay('internal/lower/functions.go', functions)
 generic = (repository / 'internal/lower/generic.go').read_text()
+# Give the same instantiation path the checker's actual vector for a witness.
+# Ordinary calls retain production's readback and all subsequent checks.
+signature = 'func (l *lowering) instantiateFunctionSignature(call *ast.Node, declaration *ast.Node, resolved *checker.Signature) (int, error) {'
+assert generic.count(signature) == 1
+generic = generic.replace(signature, signature + """
+ return l.instantiateFunctionWithArguments(call, declaration, resolved, nil)
+}
+func (l *lowering) instantiateFunctionWithArguments(call *ast.Node, declaration *ast.Node, resolved *checker.Signature, concreteTypes map[*checker.Type]*checker.Type) (int, error) {
+""")
+start = generic.index('concreteTypes := map[*checker.Type]*checker.Type{}', generic.index(signature))
+end = generic.index('\n\t// An explicit type argument', start)
+inference = generic[start:end]
+parameters = 'declared, given := target.Parameters(), resolved.Parameters()'
+assert inference.count(parameters) == 1
+inference = inference.replace('concreteTypes :=', 'concreteTypes =', 1)
+inference = inference.replace(parameters, 'declared := target.Parameters()')
+generic = (generic[:start] + 'given := resolved.Parameters()\nif concreteTypes == nil {\n' +
+           inference + '\n}\n' + generic[end:])
 needle = 'if err := l.lowerFunction(index, declaration, -1); err != nil {'
 assert generic.count(needle) == 1, 'generic body entry hook'
 generic = generic.replace(needle, '''concreteWitness := len(concreteTypes) == len(declaration.TypeParameters())
@@ -185,7 +211,7 @@ overlay('internal/lower/latent_speculative.go', (territory / 'speculative.go.txt
 
 # Clean imports after every rewrite, including files subsequently extended above.
 subprocess.run(['go', 'run', str(territory / 'importclean'),
-                *sorted(set(replace.values()))], check=True, cwd=territory)
+                *sorted(set(replace.values()) - {''})], check=True, cwd=territory)
 
 (scratch / 'overlay.json').write_text(json.dumps({'Replace': replace}, indent=2) + '\n')
 print(scratch / 'overlay.json')
