@@ -12,7 +12,7 @@ go run ./bench -only parallel_files -threads 1,2,4,8,16 -rounds 5
 
 The runs are interleaved round by round to spread changes in machine load across runtimes, and the best round is reported. Time is wall clock; memory is the process's peak resident set. The counted table comes from `adamic build --count`, run once, untimed: it reports allocations and reference-count calls alongside the timings. The machine, the versions and the load before and after print with the numbers, and numbers without them aren't worth quoting.
 
-On Linux every program runs through `reaper/reaper.c`, a small C process bench builds with clang, which forks the program, waits for it, and hands bench its user time and peak resident set. Started directly, a program's peak was never its own: Go starts a child with `clone(CLONE_VFORK|CLONE_VM)`, and Linux's exec folds the starting memory's high-water resident set into the program's, so every program read at least bench's own (a bench holding 250 MB of inputs read 1321.4 MB for a C program that only prints, J-wme5jp2). Through the reaper, all that can carry over is the reaper's few hundred kilobytes. `TestPeakIsTheProgramsOwn` proves both halves. The reaper costs every timed run one more fork, a fraction of a millisecond: a paired comparison carries it on both sides alike, but an absolute wall time on a very short program carries it too. Peaks measured before the reaper include bench's own; the correction under the Cloud table says which of its cells that touched.
+On Linux every program runs through `reaper/reaper.c`, a small C process bench builds with clang, which forks the program, waits for it, and hands bench its user time and peak resident set. Started directly, a program's peak was never its own: Go starts a child with `clone(CLONE_VFORK|CLONE_VM)`, and Linux's exec folds the starting memory's high-water resident set into the program's, so every program read at least bench's own (a bench holding 250 MB of inputs read 1321.4 MB for a C program that only prints, J-wme5jp2). Through the reaper, all that can carry over is the reaper's few hundred kilobytes. `TestPeakIsTheProgramsOwn` proves both halves. The reaper costs every timed run one more fork, a fraction of a millisecond: a paired comparison carries it on both sides alike, but an absolute wall time on a very short program carries it too. Every peak in the record below was read through it.
 
 | Program | What it exercises |
 |---|---|
@@ -57,36 +57,48 @@ The source batch's reported time was 82 seconds. Its full 4,096-file program now
 
 On the piece 6 Linux worker (four quota-limited CPUs, `nproc` 5), the one-thread units took 11.02, 19.02 and 15.18 seconds; the default-pool units took 10.39, 10.22 and 13.81 seconds. These are whole test-unit timings, including build and oracle work, from `go test -count=1 -v -timeout 90s ./internal/oracle -run 'Async|Parallel|Concurrency'`. The 82-second figure is supplied historical evidence, not a before measurement on this worker; the split establishes bounded units, not a speedup.
 
-## Cloud, October 22, 2026
+## Golem, November 20, 2026
 
-The record, until the next rerun. Cloud, a house box: AMD Ryzen Threadripper 3970X, 64 logical CPUs, Linux 6.18.40.1 under WSL2, its Loom serve stood down and inactive before and after the run. Adamic `f9d746475`, clang 20.1.8, Node 24.19.0, Bun 1.2.20. Load **0.36/0.23/0.13** before and **0.96/0.50/0.24** after (1, 5, 15 minutes). `go run ./bench -rounds 5 -timeout 120s`, best of five interleaved rounds, all answers matching. Time is wall clock and user is CPU time in user mode summed over every thread, both from the operating system for the waited process; memory is peak resident set. Instructions are not counted: WSL2 can't read the hardware counters, so that column waits for a run on Adam or Eve.
+The record, until the next rerun. Golem, a house box: Intel Core i7-4770S, 8 logical CPUs, Linux 6.8.0-147, in a sealed Loom measure job alone on the box (J-vpa5442). Adamic `9233213075`, clang 20.1.8, Node 24.19.0; Bun isn't on Golem, so it has no column. The job waited until the one-minute load was under 0.5 and timed nothing otherwise: load **0.48/1.44/1.74** before and **1.59/2.62/2.29** after (1, 5, 15 minutes), with no process over 5% CPU at the start. `go run ./bench -rounds 5 -timeout 120s`, best of five interleaved rounds, all answers matching. Time is wall clock and user is CPU time in user mode summed over every thread; memory is each program's own peak resident set, read through the reaper. This table doesn't count instructions: run.go reads none yet, though Golem's counters can, which `-game` uses.
 
-| Benchmark | native | Node | Bun | native vs Node |
-|---|---|---|---|---|
-| devirtualize | 0.044 s, user 0.044 s, 4.1 MB, bench's own (below) | 0.128 s, user 0.117 s, 73.8 MB | 0.054 s, user 0.064 s, 48.7 MB | 0.34x |
-| nbody | 0.200 s, user 0.200 s, 5.1 MB, bench's own (below) | 0.777 s, user 0.751 s, 71.7 MB | 0.142 s, user 0.144 s, 43.6 MB | 0.26x |
-| parallel_files | 0.156 s, user 0.911 s, 57.6 MB | 0.698 s, user 0.634 s, 245.2 MB | 0.913 s, user 0.810 s, 220.3 MB | 0.22x |
-| sort | 0.225 s, user 0.209 s, 24.4 MB | 0.815 s, user 0.743 s, 194.8 MB | 0.873 s, user 0.856 s, 89.8 MB | 0.28x |
-| spectral_norm | 0.137 s, user 0.136 s, 5.1 MB, bench's own (below) | 0.232 s, user 0.224 s, 69.3 MB | 0.210 s, user 0.217 s, 45.0 MB | 0.59x |
-| tokenizer | 0.150 s, user 0.130 s, 32.4 MB | 0.232 s, user 0.197 s, 137.4 MB | 0.434 s, user 0.454 s, 93.5 MB | 0.65x |
-| trees | 2.459 s, user 1.515 s, 161.5 MB | 1.298 s, user 1.595 s, 326.7 MB | 0.895 s, user 0.934 s, 192.5 MB | 1.89x, slower |
-| word_count | 0.175 s, user 0.122 s, 109.6 MB | 0.293 s, user 0.246 s, 159.1 MB | 0.604 s, user 0.588 s, 81.7 MB | 0.60x |
+| Benchmark | native | Node | native vs Node |
+|---|---|---|---|
+| copy | 0.932 s, user 0.386 s, 48.0 MB | 0.809 s, user 0.517 s, 210.9 MB | 1.15x, slower |
+| devirtualize | 0.484 s, user 0.482 s, 2.1 MB | 0.590 s, user 0.600 s, 76.3 MB | 0.82x |
+| environment | 0.316 s, user 0.313 s, 2.1 MB | 0.134 s, user 0.143 s, 74.8 MB | 2.35x, slower |
+| graph | 0.850 s, user 0.346 s, 115.9 MB | 0.777 s, user 0.485 s, 275.6 MB | 1.09x, slower |
+| nbody | 0.198 s, user 0.196 s, 2.2 MB | 0.948 s, user 0.952 s, 73.3 MB | 0.21x |
+| parallel_files | 0.311 s, user 1.658 s, 65.5 MB | 0.701 s, user 0.703 s, 246.6 MB | 0.44x |
+| primes | 0.120 s, user 0.116 s, 4.1 MB | 0.177 s, user 0.189 s, 88.6 MB | 0.68x |
+| primes_5m | 0.031 s, user 0.026 s, 6.6 MB | 0.111 s, user 0.111 s, 76.3 MB | 0.28x |
+| sort | 0.226 s, user 0.215 s, 24.8 MB | 0.685 s, user 0.649 s, 207.7 MB | 0.33x |
+| spectral_norm | 0.330 s, user 0.328 s, 2.2 MB | 0.407 s, user 0.415 s, 70.4 MB | 0.81x |
+| timer_burst | 0.165 s, user 0.162 s, 5.8 MB | 0.341 s, user 0.353 s, 145.1 MB | 0.48x |
+| timer_dispatch | 0.453 s, user 0.451 s, 2.4 MB | 0.540 s, user 0.545 s, 75.6 MB | 0.84x |
+| tokenizer | 0.181 s, user 0.167 s, 33.1 MB | 0.227 s, user 0.231 s, 139.3 MB | 0.80x |
+| trees | 1.608 s, user 1.301 s, 196.4 MB | 1.504 s, user 2.032 s, 342.1 MB | 1.07x, slower |
+| word_count | 0.208 s, user 0.165 s, 110.4 MB | 0.288 s, user 0.270 s, 152.2 MB | 0.72x |
 
 | Benchmark | allocations | frees | retains | releases | peak live | in regions |
 |---|---:|---:|---:|---:|---:|---:|
-| devirtualize | 772 | 771 | 12,800,513 | 12,800,517 | 772 | 1 |
+| copy | 10,200,138 | 200,138 | 400,055 | 400,065 | 400,002 | 10,000,000 |
+| devirtualize | 772 | 771 | 102,400,513 | 102,400,517 | 772 | 1 |
+| environment | 5,000,001 | 5,000,001 | 31,000,000 | 11,000,001 | 5 | 0 |
+| graph | 10,485,886 | 136 | 55 | 61 | 1,048,575 | 10,485,750 |
 | nbody | 8 | 8 | 10 | 14 | 7 | 0 |
 | parallel_files | 3,952,651 | 3,952,651 | 8,151,045 | 8,654,930 | 8,839 | 0 |
+| primes | 12 | 12 | 0 | 12 | 2 | 0 |
+| primes_5m | 3 | 3 | 0 | 3 | 2 | 0 |
 | sort | 6 | 6 | 2,000,002 | 2,000,010 | 4 | 0 |
 | spectral_norm | 4 | 4 | 0 | 7 | 4 | 0 |
+| timer_burst | 800,045 | 800,045 | 1,600,080 | 2,400,127 | 5 | 0 |
+| timer_dispatch | 2,409 | 2,409 | 4,806 | 7,217 | 6 | 0 |
 | tokenizer | 526,266 | 526,266 | 3,298,050 | 2,624,293 | 151,005 | 0 |
 | trees | 68,332,244 | 1,572,900 | 0 | 42 | 2,097,149 | 66,759,344 |
 | word_count | 1,020,129 | 1,020,129 | 6,100,370 | 5,100,427 | 1,020,006 | 0 |
 
-Native was faster than Node in seven of eight rows, from 0.22x (parallel_files) to 0.65x (tokenizer), and slower in one: trees, 1.89x. Against Bun it was faster in six and slower in two: nbody (0.200 s against 0.142 s, 1.41x) and trees (2.459 s against 0.895 s, 2.75x). Native's peak resident memory was the lowest in seven rows; in word_count Bun's was lower (81.7 MB against 109.6 MB). Where native's cell is its own, Node's peak was 1.5 times native's (word_count) to 8.0 times (sort); the larger ratios on devirtualize, nbody and spectral_norm divided by bench's own floor, not the programs', so they're not claimed.
+Native was faster than Node in eleven of fifteen rows, from 0.21x (nbody) to 0.84x (timer_dispatch), and slower in four: environment 2.35x, copy 1.15x, graph 1.09x and trees 1.07x. Native's peak resident memory was the lower in every row, Node's 1.4 times native's (word_count) to 36 times (devirtualize).
 
-**A correction, November 20, 2026.** Three native peaks above, devirtualize's 4.1 MB and nbody's and spectral_norm's 5.1 MB, are bench's own resident set, not the programs'. bench started each program itself, and Linux's exec carries the starting process's high-water mark into the program's, so a program smaller than bench read bench (the reaper paragraph above says how). Measured on Golem (Intel i7-4770S, 8 logical CPUs, Linux 6.8.0-147, Node 24.19.0, clang 20.1.8), the same table run twice in one job (J-c135mm9, `go run ./bench -rounds 5 -timeout 120s`, all answers matching): at main `a59db917`, through the reaper, devirtualize, nbody and spectral_norm read 2.1, 2.2 and 2.2 MB, and environment, primes and timer_dispatch 2.1, 4.1 and 2.4 MB; at its parent `4a5022db`, started directly, the same six read 6.2, 5.9, 6.4, 6.8, 7.2 and 6.4 MB, bench's own floor. Every native peak above about 6.5 MB read the same either way (primes_5m 6.6 MB, copy 48.0, sort 24.8, tokenizer 33.1, trees 196.4, word_count 110.4), as did every Node peak, Node being larger than bench. The Cloud cells keep the numbers that run printed, marked; Golem's are a different machine, so they don't replace them. Load was 6.07 before the reaper's run and 1.39 before the direct one, so its times aren't a record; its peaks are what it was run for.
-
-Across the five rounds, native's times on a program spread 1.5% to 6.8%, except trees at 38.8% (2.459 s to 3.413 s). Node's spread up to 24.4% (sort) and Bun's up to 74.1% (devirtualize, a 0.05-second program). parallel_files used the pool's default threads: 0.156 s of wall bought 0.911 s of user time across them. trees is the row where wall exceeds user by most, about 0.9 seconds of a single-threaded run spent outside user mode, and 66.8 million of its 68.3 million allocations end in regions; that gap is the next thing profiled, not a cause found by this table.
+Across the five rounds, native's times on a program spread 0.0% to 5.7%, except tokenizer at 14.9% (0.181 s to 0.208 s); Node's spread up to 10.0% (graph), and 12.9% on the floor. parallel_files used the pool's default threads: 0.311 s of wall bought 1.658 s of user time across them. trees spends about 0.3 s of its 1.608 s outside user mode, where the October run on Cloud spent about 0.9 s: 66.8 million of its 68.3 million allocations end in regions, and since region blocks became huge pages (#cgn2cwt, `10f8f6b4`) they fault far less: on Golem that took trees from 2.01 s to 1.64 s and its faults from 626,554 to 124,024 (J-6sv2t7d).
 
 The tokenizer generator uses a fixed Park-Miller seed with exact integer arithmetic below 2^53. Its intended mix is about 3/8 identifiers, 1/4 numbers, 1/4 punctuation and 1/8 quoted strings, separated by spaces, tabs and newlines. `go test ./bench -run '^TestTokenizer' -timeout 60s` checks the scanned identifier share stays at least 25% and proves the check catches the former overflowing generator. This is a workload check, not a new performance measurement.
