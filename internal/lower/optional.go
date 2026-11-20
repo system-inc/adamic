@@ -32,9 +32,10 @@ func (l *lowering) orDefault(node *ast.Node, value ir.Expression, fallback strin
 	return ir.Coalesce{Value: value, Fallback: ir.StringConstant{Index: l.constant(fallback)}, Of: ir.String}
 }
 
-// mayBeUndefined reports whether the checker's type for a node includes undefined.
+// mayBeUndefined reports whether the checker's type for a node includes undefined, read as the instance
+// being lowered makes it: a value typed T, given string | undefined, may be undefined (#sq84qqh).
 func (l *lowering) mayBeUndefined(node *ast.Node) bool {
-	proven := l.checker.GetTypeAtLocation(node)
+	proven := l.concrete(l.checker.GetTypeAtLocation(node))
 	if proven.Flags()&checker.TypeFlagsUndefined != 0 {
 		return true
 	}
