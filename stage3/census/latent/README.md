@@ -502,3 +502,7 @@ is the sole known setting exception, tracked by a fixed list that cannot grow
 without redding the guard; its separate task remains open. Per-attempt program/checker/entry/plan context is outside this comparison.
 
 View-target prepass errors are recorded with phase `prepass`, both at file scope and for each affected eligible unit. Such units are not lowered and cannot pass the scoped tail or pass ledger. Deferred generic bodies remain unexamined.
+
+## Deferred generic witness mode
+
+[WITNESS.md](WITNESS.md) describes the opt-in forecast and its separate output stream.

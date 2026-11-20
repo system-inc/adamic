@@ -1,0 +1,38 @@
+import { blocked as viaImport, clean, open, arrowTarget, nestedTarget } from "./z-bodies.a";
+
+export function first(): number {
+    var callerStop = 1;
+    return viaImport<number>(2);
+}
+
+export function second(): string {
+    var callerStop = 1;
+    return viaImport<string>("other");
+}
+
+export function third(): number {
+    var callerStop = 1;
+    return clean<string>(2);
+}
+
+export function genericCaller<T>(value: T): T[] {
+    return open<T[]>([value]);
+}
+
+export function later(): number {
+    return 7;
+}
+
+export function arrowOwner(): number[] {
+    var callerStop = 1;
+    return [2].map(value => arrowTarget<number>(value));
+}
+
+export function nestedOwner(): string {
+    var callerStop = 1;
+    function nested(): string {
+        var nestedStop = 1;
+        return nestedTarget<string>("inside");
+    }
+    return nested();
+}
