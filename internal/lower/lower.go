@@ -265,6 +265,11 @@ func lowerWithElementKey(key *viewElementKey, program *load.Program, typeChecker
 	if err := lowering.checkFunctionConstructorRoads(); err != nil {
 		return nil, err
 	}
+	// Each built function constructor's instance laid by its construction window, once the program's exceptions
+	// are known (#w8nanzw (B)).
+	if err := lowering.layFunctionConstructorWindows(); err != nil {
+		return nil, err
+	}
 	if err := lowering.checkCheckedPredicateParameters(modules); err != nil {
 		return nil, err
 	}

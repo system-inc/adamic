@@ -39,6 +39,10 @@ var latentPostLoweringSteps = []latent.PassStep{
 	// checkBoundArguments does, and rewrites nothing else, so a body lowered on its own is recorded as not run, as
 	// checkBoundArguments is.
 	{Name: "checkFunctionConstructorRoads"},
+	// layFunctionConstructorWindows lays each built function constructor's instance by its construction window
+	// (#w8nanzw (B)): it rewrites only the instance literal F_new allocates and its class's fields, which a body
+	// lowered on its own never builds, so it's recorded as not run, as checkFunctionConstructorRoads is.
+	{Name: "layFunctionConstructorWindows"},
 	// checkCheckedPredicateParameters stops a predicate parameter's checked closure that may call a function
 	// declaring more parameters than it passes, and an admitted parameter lowering passed another way, by
 	// the closure records and the lowered regions of the whole program (#jqf1drp): it reads the IR and

@@ -1816,6 +1816,11 @@ func scanLowerWithElementKey(key *viewElementKey, program *load.Program, typeChe
 	if err := lowering.checkFunctionConstructorRoads(); err != nil {
 		return nil, err
 	}
+	// As lowerWithElementKey does: each built function constructor's instance is laid by its construction window,
+	// and a field the window never writes stops alike in both modes (#w8nanzw (B)).
+	if err := lowering.layFunctionConstructorWindows(); err != nil {
+		return nil, err
+	}
 	// As lowerWithElementKey does: it numbers a copy of the program, never the program, and stops a
 	// presence test of an optional member alike in both modes (#p2n17c4 shape 1).
 	if err := lowering.checkOptionalMemberPresence(); err != nil {
