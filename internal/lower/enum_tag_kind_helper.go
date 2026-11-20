@@ -202,6 +202,9 @@ func (r *kindSetBody) kindHelperSwitch(node *ast.Node, tail bool, tailSet []*che
 			}
 			falls = false
 		}
+		if c.Kind == ast.KindDefaultClause {
+			fallback = dynamic // An empty default inherits its successor, not the tail.
+		}
 		if falls || c.Kind == ast.KindDefaultClause && outcome {
 			return false
 		}
