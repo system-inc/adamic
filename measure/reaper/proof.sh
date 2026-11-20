@@ -11,8 +11,8 @@ GIT_DIR=/nonexistent go test -count=1 -v -run '^TestPeakIsTheProgramsOwn$' ./ben
 go test -count=1 ./bench/ > "$TMPDIR/bench.log" 2>&1 && echo "PASS ./bench/ whole" || { tail -40 "$TMPDIR/bench.log"; echo "FAIL ./bench/ whole"; exit 1; }
 python3 -I - <<'PY' || { echo "FAIL the mutant didn't apply"; exit 1; }
 path = "bench/run.go"
-old = '\tif runtime.GOOS != "linux" {\n\t\treturn "", nil\n\t}\n\tdirectory, err := benchDirectory()'
-new = '\tif runtime.GOOS != "" {\n\t\treturn "", nil\n\t}\n\tdirectory, err := benchDirectory()'
+old = '\tif runtime.GOOS != "linux" {\n\t\treturn "", nil\n\t}\n\tbinary := '
+new = '\tif runtime.GOOS != "" {\n\t\treturn "", nil\n\t}\n\tbinary := '
 text = open(path).read()
 assert text.count(old) == 1, "buildReaper's guard isn't where the head put it"
 open(path, "w").write(text.replace(old, new))
