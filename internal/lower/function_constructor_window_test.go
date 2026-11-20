@@ -31,8 +31,8 @@ func typeConstructorProgram(constructor, extra, tail string) string {
 // An optional field a function constructor writes on every path is laid present, as slice 1 lays every field,
 // in first-write order, and agrees with Node on the JavaScript backend and natively: Object.keys reads the
 // writes' order, never Tp's declaration order, JSON.stringify writes the same, and in sees the field (#w8nanzw
-// (B)). The Absent half, a field one path skips, waits on #837zjkt's slice 2, whose eligibility admits the if;
-// no program lowers to it until then (TestWindowLayout pins the layout itself).
+// (B)). The Absent half, a field one path skips, is #837zjkt's slice 2's, whose eligibility admits the if
+// (TestFunctionConstructorOnePathSkippedKeysAgree; TestWindowLayout pins the layout itself).
 func TestFunctionConstructorOptionalFieldAgrees(t *testing.T) {
 	t.Parallel()
 	constructor := "function TypeObject(this: Tp, flags: number, checker: number): void {\n" +
@@ -103,8 +103,8 @@ func windowLayoutWindow(between ...ir.Statement) fresh.Window {
 	return fresh.ConstructionWindow(program, 0, &program.Functions[0].Body[0])
 }
 
-// The layout a function constructor's window lays (windowLayout, #w8nanzw (B)), pinned on the window itself
-// until #837zjkt's slice 2 lowers a constructor that writes on one path: every path writing every field in the
+// The layout a function constructor's window lays (windowLayout, #w8nanzw (B)), pinned on the window itself,
+// beside #837zjkt's slice 2's constructors that write on one path: every path writing every field in the
 // layout's order keeps the fields present as built; every path writing them in another order, or one path
 // skipping checker, reserves every field Absent, so each is an own key at its first write, in the order the
 // writes run; a write after the object is handed to a call is no write in the window, and names the field.
