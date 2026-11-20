@@ -20,12 +20,13 @@ The factory helper is local with exactly one caller in the adapted source. Both 
 
 ## Two-site build
 
-Landing commit `ce20cd2be` on `df9d8ee60` adds only the guarded append and the local factory-helper signature. Adaptation 30's `sites.json` records declined indexed accesses. Its planner checks expression occurrence and assertion state and has no whole-function pin for this helper. Both owners retained their existing line endings, including the mixed endings in the factory file. A direct replay edited two files on the first invocation and zero files on the second.
+Landing commit `ce20cd2be` on `df9d8ee60` adds only the guarded append and the local factory-helper signature. Adaptation 30's `sites.json` records declined indexed accesses. Its planner checks expression occurrence and assertion state and has no whole-function pin for this helper. Both owners retained their existing line endings, including the mixed endings in the factory file. A direct replay edited two files on the first invocation and zero files on the second. Running it against the checker-restoring mutant refused the partially adapted tree and retained both original file hashes.
 
 | Proof | Result |
 | --- | --- |
 | Stock 6.0.3 ES2024/ESNext JavaScript emit, comments retained | Identical for both files. `checker.ts` 2,893,847 bytes, SHA-256 `a14ae29295602e9c35e174bae3fffba2affdca2dfc3655a8f127cd2a13d1fc50`. `nodeFactory.ts` 272,883 bytes, SHA-256 `b072bccc113127b7409bc83c7db6a122696619c799a1af5dc175881e8724d669`. |
-| Stock 6.0.3 `tsc -b src/tsc --pretty false` | Both diagnostic logs empty. |
+| Stock 6.0.3 `tsc -b src --force --pretty false` | All upstream source projects exited 0 before and after, both diagnostic logs empty. |
+| Stock 6.0.3 compiler-project JavaScript emit with declaration and source-map output disabled | Identical. `checker.js` 3,048,140 bytes, SHA-256 `bc69c18843ee545c444fb74f70f8dfda3a4c6247ec5c06ef74e82c67a5bcc9e0`. `factory/nodeFactory.js` 281,751 bytes, SHA-256 `c6b1a7dc8c6676eaced02837d4e2a9b1499e62478b58549a476c1ab862de13cf`. |
 | Public `built/local/typescript.d.ts` from upstream `hereby local` | Both 593,619 bytes and byte-identical, SHA-256 `65c210e9d7553165606df3ac67544ea7ddcbccf2c322ed924e8e8f4c4622c5fd`. |
 | Lane manifest | `generate_shards.py --check` passes. The runtime inputs and sanctioned API are identical. |
 
@@ -71,10 +72,10 @@ The shorthand `aliasTypeArguments` writes the inferred `TypeParameter[] | undefi
 
 The sole read of `root.aliasTypeArguments` is `instantiateTypes(root.aliasTypeArguments, mapper)` in `getConditionalType` when no overriding alias symbol was supplied. It shares unchanged input or writes to a newly allocated list as traced above. The result is stored in the readonly `Type.aliasTypeArguments` field and follows the alias readers described above. I found no index write, push, splice, or mutable handoff. Writes to `root.instantiations` concern the separate cache map.
 
-The field can honestly be `aliasTypeArguments?: readonly Type[] | undefined`. `ConditionalRoot` is exported, so this requires a public API comparison and a ruling on changing the array view. The ownership search found no existing whole-owner pin or direct edit in `getTypeFromConditionalTypeNode` or on this field.
+The field can honestly be `aliasTypeArguments?: readonly Type[] | undefined`. `ConditionalRoot` is exported, so this requires a public API comparison and a ruling on changing the array view. The ownership search found no existing whole-owner pin or direct edit in `getTypeFromConditionalTypeNode`. The apply snapshots show that adaptation 20 (`20-optional-declarations`) adds the explicit `| undefined` to the field. Adaptation 47 records that declaration in its evidence. A field amendment must preserve the optional contract from adaptation 20.
 
 ## First refusal stream
 
-The original fix head `71f6d8b1` scanned the baseline at `src/tsc/tsc.ts` with the instrumented CommonJSBundle probe. It reported **3,524 refusal-scan events**, **2,005 distinct refusal triples**, and 1 first pipeline observation. Its boundary was `production abort at lowering.declareModule`.
+The original fix head `71f6d8b1` scanned the baseline at `src/tsc/tsc.ts` with the instrumented CommonJSBundle probe. It reported **3,524 refusal-scan events**, **2,005 distinct refusal triples**, and 1 first pipeline observation, for **3,525 total observations**. Its boundary was `production abort at lowering.declareModule`.
 
 Raw stream `scan-before.json.gz`. Uncompressed SHA-256 `1846ae866b564166d36ad19b4002a8408142515ba4871188d102b570c69cedbb`.
