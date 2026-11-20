@@ -11,7 +11,8 @@ import (
 
 // relationView is a relation rulings.md:72 lets cross as an untagged checked view of its slot's type
 // instead of refusing it (#0b9xqhh): source is the type of the value entering the slot, target the type
-// it's viewed as there, refused the node rule 3300 judged and would have refused, hidden what that
+// it's viewed as there (relationViewPair: for a container both are arrays, and where both sides are
+// nullable both are the object arms), refused the node rule 3300 judged and would have refused, hidden what that
 // refusal names, the first absent optional field and the types it was found between, and fields every
 // field the walk finds hidden there, hidden's first, each of which the view must check.
 //
@@ -36,13 +37,13 @@ type relationView struct {
 //   - the relation is one value entering one slot (site), and a value judged against a second slot
 //     (refuseInSlot, which runs while lowering) is no longer one: its entry would be viewed as one slot's
 //     type alone;
-//   - the source and the slot's type are open to no field the checker never names (relationViewOpen,
-//     below), and the source isn't a registered Node host object (nodeHostObject);
+//   - a call's argument is judged against a slot that holds no type parameter at any depth
+//     (relationSlotGeneric, below);
+//   - the relation is one of the shapes relationViewPair admits, each of whose pairs is open to no field
+//     the checker never names (relationViewOpen, below) and has no registered Node host object for its
+//     source (nodeHostObject);
 //   - every field the walk finds hidden, found and each one after it (optionalWidenings), is one a view
-//     can check (relationViewAdmits);
-//   - the type viewed is one plain object type: the slot's type, or its one object member where the slot
-//     adds undefined or null to it and the source holds neither (the T | undefined widening). A union of
-//     objects would be legacyView's, which holds only scalar fields and no optional one, so it's refused.
+//     can check (relationViewAdmits).
 //
 // A failure found below the top of the relation (a field's own type) is admitted here and judged once the
 // view is made: relationViewValue refuses it unless the view registered that field checked through the
@@ -54,15 +55,23 @@ func (l *lowering) recordRelationView(node *ast.Node, found *optionalWidening, s
 	if !strings.HasSuffix(l.program.FileName(ast.GetSourceFileOfNode(node)), ".ts") {
 		return false
 	}
-	source := l.checker.GetTypeAtLocation(site.value)
-	if l.relationViewOpen(source) || l.relationViewOpen(site.target) {
+	// A call's argument is judged against the slot slotType gives it, the checker's contextual type, which
+	// for an argument is the call's resolved signature's instantiated parameter at that position
+	// (getContextualTypeForArgumentAtIndex reads getResolvedSignature, then getTypeAtPosition), so inference
+	// from every argument is in it and the callee's declaration isn't. The view stands only where that slot
+	// holds no type parameter: in a generic body the resolved signature still names the body's own type
+	// parameters, and a relation there is refused, never viewed as one instantiation's type under the type
+	// mapper (Lower's hook 2 on #0b9xqhh).
+	if relationArgument(site.value) && l.relationSlotGeneric(site.target, map[*checker.Type]bool{}) {
 		return false
 	}
-	if _, host := l.nodeHostObject(source); host {
+	source := l.checker.GetTypeAtLocation(site.value)
+	viewedSource, target, admitted := l.relationViewPair(source, site.target)
+	if !admitted {
 		return false
 	}
 	// found is the first field of this same walk, so the walk run whole names it first and every field
-	// after it, each of which the view lets cross too.
+	// after it, each of which the view lets cross too. For an array the walk goes through the element pair.
 	fields := l.optionalWidenings(source, site.target, site.skip)
 	if len(fields) == 0 {
 		return false
@@ -72,22 +81,209 @@ func (l *lowering) recordRelationView(node *ast.Node, found *optionalWidening, s
 			return false
 		}
 	}
-	target := site.target
-	if target.Flags()&checker.TypeFlagsUnion != 0 && !l.includesUndefined(source) && !l.includesNull(source) {
-		target = l.checker.GetNonNullableType(target)
-	}
-	if target.Flags()&checker.TypeFlagsObject == 0 || l.isArrayType(target) || checker.IsTupleType(target) {
-		return false
-	}
 	key := ast.SkipParentheses(site.value)
-	if recorded, known := l.relationViews[key]; known && (recorded.source != source || recorded.target != target) {
+	if recorded, known := l.relationViews[key]; known && (recorded.source != viewedSource || recorded.target != target) {
 		return false
 	}
 	if l.relationViews == nil {
 		l.relationViews = map[*ast.Node]relationView{}
 	}
-	l.relationViews[key] = relationView{source: source, target: target, refused: node, hidden: *found, fields: fields}
+	l.relationViews[key] = relationView{source: viewedSource, target: target, refused: node, hidden: *found, fields: fields}
 	return true
+}
+
+// relationViewPair is the pair a value of type source entering a slot of type slot is viewed as, and says
+// whether the relation is one of the shapes rulings.md:72 admits:
+//
+//   - one value into one plain object type, the slot's type, or its one object member where the slot adds
+//     undefined or null to it and the source holds neither (the T | undefined widening). A union of
+//     objects would be legacyView's, which holds only scalar fields and no optional one, so it's refused;
+//   - nullable on both sides: each side is one plain object type with undefined or null beside it, and
+//     both are held as one nullable pointer (l.representation says Object for each), so a value crosses
+//     with no conversion. The view is the two object arms', and the nullish arm crosses unchanged. A side
+//     boxed as a union (T | null | undefined) is another representation, and refused;
+//   - a container (relationViewContainer, below).
+//
+// A pair is open to no field the checker never names and to no value that isn't a structural object the
+// program declares (relationViewOpen), and its source isn't a registered Node host object.
+func (l *lowering) relationViewPair(source, slot *checker.Type) (*checker.Type, *checker.Type, bool) {
+	if l.isArrayType(source) || l.isArrayType(slot) || checker.IsTupleType(source) || checker.IsTupleType(slot) {
+		return l.relationViewContainer(source, slot)
+	}
+	if l.relationViewOpen(source) || l.relationViewOpen(slot) {
+		return nil, nil, false
+	}
+	if _, host := l.nodeHostObject(source); host {
+		return nil, nil, false
+	}
+	target := slot
+	if slot.Flags()&checker.TypeFlagsUnion != 0 {
+		if l.includesUndefined(source) || l.includesNull(source) {
+			if !l.relationViewNullablePointer(source) || !l.relationViewNullablePointer(slot) {
+				return nil, nil, false
+			}
+			source = l.checker.GetNonNullableType(source)
+		}
+		target = l.checker.GetNonNullableType(slot)
+	}
+	if target.Flags()&checker.TypeFlagsObject == 0 || l.isArrayType(target) || checker.IsTupleType(target) {
+		return nil, nil, false
+	}
+	return source, target, true
+}
+
+// relationViewNullablePointer says whether a type is one plain object type with undefined or null beside
+// it, held as one nullable pointer.
+func (l *lowering) relationViewNullablePointer(nullable *checker.Type) bool {
+	present := l.checker.GetNonNullableType(nullable)
+	if present == nullable || present.Flags()&checker.TypeFlagsObject == 0 || l.isArrayType(present) || checker.IsTupleType(present) {
+		return false
+	}
+	of, known := l.representation(nullable)
+	return known && of == ir.Object
+}
+
+// relationViewContainer is the pair an array entering a readonly array slot is viewed as: the arrays
+// themselves, whose view (view's) builds the array's contract with its element's inside, so the element
+// pair registers its checked fields at the element type's id as any viewed pair does, with no entry of
+// its own for the container (Lower's condition 1 on #0b9xqhh). It admits only:
+//
+//   - an array or readonly array source, never a tuple, going into readonly T[] or ReadonlyArray<T>. A
+//     mutable target array keeps the refusal: a T written into storage typed S[] is the invariant-mutable
+//     hazard, whatever tsc accepts (condition 3);
+//   - one representation on both sides, element storage included (condition 4): both arrays held as
+//     arrays, each with the program's plain layout (no NodeArray layout and no phantom brand, whose storage
+//     this doesn't read), and both elements held as objects;
+//   - an element target that's one plain object type, and an element pair open to nothing
+//     (relationViewOpen) whose source isn't a registered Node host object.
+func (l *lowering) relationViewContainer(source, slot *checker.Type) (*checker.Type, *checker.Type, bool) {
+	if !l.isArrayType(source) || !l.isArrayType(slot) || checker.IsTupleType(source) || checker.IsTupleType(slot) || !l.isLibraryType(slot, "ReadonlyArray") {
+		return nil, nil, false
+	}
+	if l.unbranded(source) != source || l.unbranded(slot) != slot {
+		return nil, nil, false
+	}
+	if _, _, layout := l.nodeArrayLayoutOf(source); layout {
+		return nil, nil, false
+	}
+	if _, _, layout := l.nodeArrayLayoutOf(slot); layout {
+		return nil, nil, false
+	}
+	held, seen := l.elementTypeOfArray(source), l.elementTypeOfArray(slot)
+	if held == nil || seen == nil || seen.Flags()&checker.TypeFlagsObject == 0 || l.isArrayType(seen) || checker.IsTupleType(seen) {
+		return nil, nil, false
+	}
+	if l.relationViewOpen(held) || l.relationViewOpen(seen) {
+		return nil, nil, false
+	}
+	if _, host := l.nodeHostObject(held); host {
+		return nil, nil, false
+	}
+	array, arrayKnown := l.representation(source)
+	slotArray, slotKnown := l.representation(slot)
+	element, elementKnown := l.representation(held)
+	slotElement, slotElementKnown := l.representation(seen)
+	if !arrayKnown || !slotKnown || !elementKnown || !slotElementKnown || array != ir.Array || slotArray != ir.Array || element != ir.Object || slotElement != ir.Object {
+		return nil, nil, false
+	}
+	return source, slot, true
+}
+
+// relationArgument says whether value, its parentheses aside, is an argument of a call or a new
+// expression.
+func relationArgument(value *ast.Node) bool {
+	child := value
+	for child.Parent != nil && child.Parent.Kind == ast.KindParenthesizedExpression {
+		child = child.Parent
+	}
+	switch parent := child.Parent; {
+	case parent == nil:
+		return false
+	case parent.Kind == ast.KindCallExpression:
+		return parent.AsCallExpression().Expression != child
+	case parent.Kind == ast.KindNewExpression:
+		return parent.AsNewExpression().Expression != child
+	}
+	return false
+}
+
+// relationSlotGeneric says whether a slot's type holds a free type parameter at any depth: itself, a union
+// or intersection member, an alias's or a reference's type argument, or, for an anonymous object type (a
+// type literal or a function type, which a generic body instantiates with its own parameters), a
+// property's type, an index signature's value, or a call or construct signature's parameter or result. A
+// signature's own type parameters are bound inside it, so they aren't free there. An interface's or a
+// class's members name only its own type parameters, bound by its type arguments, and an outer one a
+// local declaration captures is one of those arguments too, so a reference is judged by its arguments.
+// Any other instantiable type (an indexed access, a conditional, keyof), and a mapped type, holds one,
+// failing closed.
+func (l *lowering) relationSlotGeneric(slot *checker.Type, visited map[*checker.Type]bool) bool {
+	return l.relationSlotHolds(slot, map[*checker.Type]bool{}, visited)
+}
+
+// relationSlotHolds is relationSlotGeneric's walk, with bound the type parameters the signatures it's
+// inside declare.
+func (l *lowering) relationSlotHolds(slot *checker.Type, bound, visited map[*checker.Type]bool) bool {
+	if slot == nil {
+		return false
+	}
+	if slot.Flags()&checker.TypeFlagsTypeParameter != 0 {
+		return !bound[slot]
+	}
+	if slot.Flags()&checker.TypeFlagsInstantiable != 0 || slot.ObjectFlags()&checker.ObjectFlagsMapped != 0 {
+		return true
+	}
+	if visited[slot] {
+		return false
+	}
+	visited[slot] = true
+	var parts []*checker.Type
+	if slot.Flags()&(checker.TypeFlagsUnion|checker.TypeFlagsIntersection) != 0 {
+		parts = append(parts, slot.Types()...)
+	}
+	if alias := slot.Alias(); alias != nil {
+		parts = append(parts, alias.TypeArguments()...)
+	}
+	if slot.Flags()&checker.TypeFlagsObject != 0 {
+		if slot.ObjectFlags()&checker.ObjectFlagsReference != 0 {
+			parts = append(parts, l.checker.GetTypeArguments(slot)...)
+		}
+		if slot.ObjectFlags()&checker.ObjectFlagsAnonymous != 0 {
+			for _, property := range l.checker.GetPropertiesOfType(slot) {
+				parts = append(parts, l.checker.GetTypeOfSymbol(property))
+			}
+			for _, info := range l.checker.GetIndexInfosOfType(slot) {
+				parts = append(parts, info.ValueType())
+			}
+			for _, kind := range []checker.SignatureKind{checker.SignatureKindCall, checker.SignatureKindConstruct} {
+				for _, signature := range l.checker.GetSignaturesOfType(slot, kind) {
+					inside := bound
+					if declared := signature.TypeParameters(); len(declared) != 0 {
+						inside = map[*checker.Type]bool{}
+						for parameter := range bound {
+							inside[parameter] = true
+						}
+						for _, parameter := range declared {
+							inside[parameter] = true
+						}
+					}
+					for _, parameter := range signature.Parameters() {
+						if l.relationSlotHolds(l.checker.GetTypeOfSymbol(parameter), inside, visited) {
+							return true
+						}
+					}
+					if l.relationSlotHolds(l.checker.GetReturnTypeOfSignature(signature), inside, visited) {
+						return true
+					}
+				}
+			}
+		}
+	}
+	for _, part := range parts {
+		if l.relationSlotHolds(part, bound, visited) {
+			return true
+		}
+	}
+	return false
 }
 
 // relationViewAdmits says whether a view can check field, a field the hiding rule's walk found hidden:
@@ -167,9 +363,10 @@ func (l *lowering) relationViewWeak(declared *checker.Type) bool {
 // one, a speculative copy), so every lowering views it: the entry is never deleted, and relationViewsTaken
 // marks that some lowering did. The view is view's, as structuralViewCast's is, without the cast's
 // requirement that the target be assignable to the source; it sits where a cast's view sits, inside
-// value and before expression's graphAllocation. A value held other than as an object, or a view that
-// didn't register each absent field checked through the type it was found on, refuses in rule 3300's
-// words.
+// value and before expression's graphAllocation. A value held other than as an object (an array, for a
+// container's view), or a view that didn't register each absent field checked through the type it was
+// found on, refuses in rule 3300's words. A container's view is kept among relationContainerOrigins, the
+// values whose elements a whole-object reader stops on (checkViewArrays).
 //
 // Each field is asserted, not only the first. viewSchema registers every field of every contract it
 // reaches (interface_cast.go:332), but the hiding rule's walk reaches types no contract holds: a call
@@ -181,7 +378,8 @@ func (l *lowering) relationViewValue(node *ast.Node, value ir.Expression) (ir.Ex
 	if !recorded {
 		return value, nil
 	}
-	if value.Type() != ir.Object {
+	container := l.isArrayType(entry.target)
+	if held := value.Type(); held != ir.Object && !(container && held == ir.Array) {
 		return nil, l.optionalWideningRefusal(entry.refused, &entry.hidden)
 	}
 	viewed, err := l.view(node, value, l.concrete(entry.source), l.concrete(entry.target))
@@ -192,6 +390,9 @@ func (l *lowering) relationViewValue(node *ast.Node, value ir.Expression) (ir.Ex
 		if !l.result.CheckedFields[ir.CheckedFieldKey(int(l.concrete(field.target).Id()), field.property)] {
 			return nil, l.optionalWideningRefusal(entry.refused, &entry.hidden)
 		}
+	}
+	if container {
+		l.relationContainerOrigins = append(l.relationContainerOrigins, value)
 	}
 	if l.relationViewsTaken == nil {
 		l.relationViewsTaken = map[*ast.Node]bool{}

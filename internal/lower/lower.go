@@ -546,6 +546,10 @@ type lowering struct {
 	// to once lowering is done (relation_views.go).
 	relationViews      map[*ast.Node]relationView
 	relationViewsTaken map[*ast.Node]bool
+	// relationContainerOrigins are the arrays a relation view views as a readonly array (rulings.md:72's
+	// containers), each where its value enters the view, whose elements checkViewArrays holds every
+	// Object.keys, values and entries operand away from.
+	relationContainerOrigins []ir.Expression
 	// narrowedReads are, for each local, the types the checker narrowed a read of it to, and
 	// narrowedFields the types it narrowed a field read to: where a predicate's view takes its
 	// value (view_widened.go).
