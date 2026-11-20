@@ -161,11 +161,11 @@ Upstream TypeScript 6.0.3 `hereby local` produced the following complete diff.
 
 ### Adapter order and type-only checks
 
-The adaptation commit is `72d60b06ec024eaa8a51064099fe89705e7c220e` on main at
+The adaptation commit is `ad1db310553aa7a8986d5117991870939a7bd1fb` on main at
 `f30d8927bb9153edde283f8f18a2a3f64054c3a5`. The fetched fix is
 `71f6d8b170f9197cc565cd79d4327ac1bd9f493b`. Their Stage 3 inputs match before
-this adaptation. The measurement merge is
-`971bfdb7085bca0feaae4e268992d116b0294ea4`, with the fix as its first parent
+this adaptation. The final measurement merge is
+`61842112fe42fc27afae25822ff25efd7350bf56`, with the fix as its first parent
 and the adaptation commit as its second.
 
 `apply.sh` delegates to `apply.py`, which sorts adapter directories by name.
@@ -208,8 +208,13 @@ declarations and source maps disabled matched byte for byte.
 
 ### Merged-head refusal scan and restoring mutant
 
-The instrumented scan-all probe built at the measurement merge used
-CommonJSBundle with `src/tsc/tsc.ts` as its root in each run. The before
+The instrumented scan-all probe used CommonJSBundle with
+`src/tsc/tsc.ts` as its root in each run. The streams were collected at
+`971bfdb7085bca0feaae4e268992d116b0294ea4`. The final merge differed
+only in the lane API generator's insertion guard. Its adapter, apply
+inputs, and compiler sources were byte-identical. The final merge's
+probe product resolved to the same key and binary bytes
+(SHA-256 `e5a6fbbd31dd3a6630d94cd46092886822b9d47e29dc3920365d8fa40ebc0404`). The before
 source came from a full apply of the unmodified fix. The after source
 matches the independent full apply byte for byte. The mutant changes one
 line of that source, restoring `let aliasTypeArguments: Type[] | undefined`
@@ -257,6 +262,18 @@ pinned source and locked dependencies. The product's public
 `typescript.d.ts` matched the after snapshot above byte for byte
 (SHA-256 `f2dbe93552eeb8954d4385b7bbfa5549297ab1a9f6785c9891166c144602d3a0`).
 
+
+### Lane generator correction
+
+The initial whole-lane run passed 428 tests and found two failures in the
+existing declaration insertion tests. The generator's ownership helper
+now expects a predicate for repeated claims. Its insertion caller had
+retained the boolean argument. The amended commit passes the predicate
+that checks whether the insertion anchor already owns a pending edit.
+The two affected test groups and sanctioned-API freshness passed on the
+amended commit. Regeneration produced the same sanctioned manifest, and
+the adapted-tree product reverified under the same key. A whole-lane
+rerun on the amended commit is in progress.
 
 ## Split refusal scans and mutants
 
