@@ -18,7 +18,9 @@ import (
 // kind to createToken<TKind extends SyntaxKind>, then relates finishNode's Token<T["kind"]> to Node: the open enum
 // arm asked enumAssignable of T["kind"] itself, which isn't a number, and refused both as an unproven value. The
 // read fails closed for an access over anything but a bare type parameter and for a constraint that is still
-// generic, and a mapped source is no indexed access, so nodeFactory's update over Mutable<T> stays refused. Mutants
+// generic, and a mapped source is no indexed access, so nodeFactory's update over Mutable<T> stays refused. A value
+// of type T["kind"] has no lowering yet, a NotYet of its own, so the two shapes the read admits are held to that
+// NotYet, which lowering reaches only once the refusal pass lets them through. Mutants
 // (enum_indexed_access_source.mutants.md): the read removed; the object's type parameter guard dropped; the
 // generic constraint guard dropped.
 
@@ -80,8 +82,9 @@ func refusedIntoEnumSlot(err error, where string, members ...string) bool {
 	if !errors.As(err, &refused) {
 		return false
 	}
-	slot, found := strings.CutPrefix(err.Error(), where+": Adamic 0.1 refuses an unproven value assigned to a numeric literal or enum member slot ")
-	if !found {
+	// Where may name the file by its whole path, so the message is read from where's own name on.
+	path, slot, found := strings.Cut(err.Error(), where+": Adamic 0.1 refuses an unproven value assigned to a numeric literal or enum member slot ")
+	if !found || path != "" && !strings.HasSuffix(path, "/") {
 		return false
 	}
 	if slot, found = strings.CutSuffix(slot, "; compare with this literal and return that constant, or widen the slot to the whole numeric enum or number (adamic/enum-literal)"); !found {
@@ -116,10 +119,22 @@ func namedStatement(statements []*ast.Node, kind ast.Kind, name string) *ast.Nod
 	return nil
 }
 
-// The token shape lowers and agrees with Node: make's T["kind"] bound to token's K extends E is read at E.
+// passesTheRefusalPass fails t unless lowering source stops at the NotYet want ends with, which lowering meets only
+// after the refusal pass, and never at the unproven value refusal the read lifts.
+func passesTheRefusalPass(t *testing.T, source, want string) {
+	t.Helper()
+	_, err := lowerSource(t, source)
+	var notYet *NotYet
+	if !errors.As(err, &notYet) || !strings.HasSuffix(err.Error(), want) || strings.Contains(err.Error(), "enum member slot") {
+		t.Fatalf("got %v, want the not yet ending %q", err, want)
+	}
+}
+
+// The token shape passes the refusal pass: make's T["kind"] bound to token's K extends E is read at E, so make stops
+// only where lowering meets a function returning T["kind"], which it can't lower yet.
 func TestIndexedAccessSourceIntoWholeEnumSlotLowers(t *testing.T) {
 	t.Parallel()
-	lowersAndAgreesWithNode(t, accessTokenSource)
+	passesTheRefusalPass(t, accessTokenSource, "main.a:11:10: stage 0 can't lower a function returning T[\"kind\"] yet")
 }
 
 // The relation the token shape reaches, asked of widened itself: T["kind"] seen as E passes, and the open enum
@@ -144,11 +159,12 @@ func TestIndexedAccessSourceIsReadAtItsConstraint(t *testing.T) {
 	})
 }
 
-// The finishNode shape lowers and agrees with Node: the union holding Token<T["kind"]> is related to SyntaxNode
-// member by member, and Token's kind is read at E.
+// The finishNode shape passes the refusal pass: the union holding Token<T["kind"]> is related to SyntaxNode member
+// by member, and Token's kind is read at E, so missing stops only where lowering meets its parameter of type
+// T["kind"], which it can't lower yet.
 func TestIndexedAccessSourceInUnionMemberLowers(t *testing.T) {
 	t.Parallel()
-	lowersAndAgreesWithNode(t, accessUnionSource)
+	passesTheRefusalPass(t, accessUnionSource, "main.a:22:40: stage 0 can't lower a value of type T[\"kind\"], an unresolved indexed access yet")
 }
 
 // The union's own road, asked of widened: the result's union holds a member whose kind is an indexed access over
@@ -202,10 +218,12 @@ func TestIndexedAccessSourceIntoMemberSlotIsRefusedAsItsConstraint(t *testing.T)
 	}
 }
 
-// nodeFactory's update<T extends Node>(updated: Mutable<T>, original: T) stays refused. Its walk of Mutable<T> seen
-// as SyntaxNode reaches T["kind"] as the mapped type's template, and beside it the writable original, which the
-// view can write what T["original"] can't hold, and it returns Mutable<T> as T, which another ruling owes. The pin
-// holds that the shape stays refused, whichever of those stops it first, and logs the words it stops with.
+// nodeFactory's finishUpdateBaseSignatureDeclaration<T>(updated: Mutable<T>, original: T) stays refused where it
+// hands its Mutable<T> to update<T extends Node>(updated: T, original: T), as stage3's
+// 99-memory-factory-update-view leaves update. The walk of Mutable<T> seen as SyntaxNode reaches T["kind"] as the
+// mapped type's template, which the read now admits, and beside it the writable original, and the argument is
+// Mutable<T> seen as T, a type parameter whose constraint can be written, which another ruling owes. The pin holds
+// that the shape stays refused, whichever of those stops it first, and logs the words it stops with.
 func TestIndexedAccessSourceThroughMappedTypeStaysRefused(t *testing.T) {
 	t.Parallel()
 	source := `enum E { A, B, C }
@@ -214,12 +232,11 @@ interface SyntaxNode {
 	original?: SyntaxNode;
 }
 type Mutable<T> = { -readonly [K in keyof T]: T[K] };
-function setOriginal<T extends SyntaxNode>(node: T, original: SyntaxNode): T {
-	return node;
+function update<T extends SyntaxNode>(updated: T, original: T): T {
+	return updated === original ? original : updated;
 }
-function update<T extends SyntaxNode>(updated: Mutable<T>, original: T): T {
-	setOriginal(updated, original);
-	return updated;
+function finishUpdate<T extends SyntaxNode>(updated: Mutable<T>, original: T): T {
+	return update(updated, original);
 }
 `
 	_, err := lowerSourceAs(t, source, ".ts")
@@ -227,7 +244,7 @@ function update<T extends SyntaxNode>(updated: Mutable<T>, original: T): T {
 	if !errors.As(err, &refused) {
 		t.Fatalf("got %v, want a refusal", err)
 	}
-	t.Logf("update stops with: %v", err)
+	t.Logf("finishUpdate stops with: %v", err)
 }
 
 // A constraint that is itself generic fails closed: T extends { kind: U } gives T["kind"] the constraint U, so
