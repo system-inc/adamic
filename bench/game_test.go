@@ -478,6 +478,7 @@ func TestAnEntrysNameIsTheGames(t *testing.T) {
 // A stopped build's gap line is the line that says why, never go's progress line above it: J-wme5jp2's
 // regexredux go-5 gap read only "go: downloading github.com/GRbit/go-pcre v1.0.0".
 func TestAStoppedBuildsGapLineIsItsError(t *testing.T) {
+	t.Parallel()
 	for _, each := range []struct{ output, want string }{
 		{"go: downloading github.com/GRbit/go-pcre v1.0.0\nregexredux.go-5.go:9:2: no required module provides package\n", "regexredux.go-5.go:9:2: no required module provides package"},
 		{"# command-line-arguments\n./x.go:3:1: syntax error\n", "./x.go:3:1: syntax error"},
@@ -492,6 +493,7 @@ func TestAStoppedBuildsGapLineIsItsError(t *testing.T) {
 // -go-modules reaches the Go entries' builds alone, read offline: a sealed job's own cache is the image's,
 // read-only, and go-pcre isn't in it (J-deptcta's regexredux go-5 gap).
 func TestGoModulesReachOnlyTheGoEntriesBuilds(t *testing.T) {
+	t.Parallel()
 	if got := (gameRequest{}).goModulesBuild(); got != nil {
 		t.Errorf("without -go-modules, a Go build's settings are %q; want none", got)
 	}
