@@ -1,0 +1,51 @@
+import { Buffer } from 'node:buffer';
+// Buffer.allocUnsafe(size): its length, its writes and reads, every throw caught, and one Buffer from it
+// held through a function, a field and an array. Its bytes are unspecified on Node, so none is read
+// before it's written.
+function errorCode(error: unknown): string | undefined {
+	return typeof error === 'object' && error !== null && 'code' in error && typeof error.code === 'string' ? error.code : undefined;
+}
+for (const size of [0, -0, 1, 1.5, 2.9, (64 + 64 / 61) | 0]) {
+	console.log(`${size}: ${Buffer.allocUnsafe(size).length}`);
+}
+// A store converts with ToUint8, a fractional index is dropped, and a read past the end is undefined.
+const bytes = Buffer.allocUnsafe(4);
+bytes[0] = 300;
+bytes[1] = -1;
+bytes[2] = 7.9;
+bytes[3] = 0x41;
+bytes[1.5] = 9;
+bytes[4] = 1;
+console.log(`${bytes[0]} ${bytes[1]} ${bytes[2]} ${bytes[3]} ${String(bytes[4])} ${bytes.length} ${bytes.toString('hex')}`);
+// The size is checked before it's truncated, so -0.5 throws. An integer past 2^32 in magnitude is
+// written with Node's numeric separators, exponent notation included; any other number plainly. Only
+// ERR_OUT_OF_RANGE's String brackets its code: ERR_MEMORY_ALLOCATION_FAILED comes from Node's C++.
+// 2^53 - 1 is in range, and no box can allocate it.
+for (const size of [-1, -0.5, NaN, Infinity, -Infinity, -4294967296, -4294967297, -12345678901.5, 9007199254740992, 1e300, -1e21, 9007199254740991]) {
+	const label = `allocUnsafe(${size})`;
+	try {
+		const made = Buffer.allocUnsafe(size);
+		console.log(`${label} made ${made.length}`);
+	} catch (error) {
+		if (error instanceof Error) {
+			console.log(`${label} ${error.name} ${errorCode(error)}`);
+			console.log(error.message);
+			console.log(String(error));
+		}
+	}
+}
+// One Buffer through a parameter and a return, an object's field and an array's element, written
+// whole before it's read.
+function written(target: Buffer, first: number): Buffer {
+	for (let index = 0; index < target.length; index += 1) {
+		target[index] = first + index * 17;
+	}
+	return target;
+}
+const shared = Buffer.allocUnsafe(6);
+const holder: { bytes: Buffer } = { bytes: shared };
+const list: Buffer[] = [holder.bytes];
+for (const item of list) {
+	console.log(written(item, 250).toString('hex'));
+}
+console.log(`${shared.toString('hex')} ${holder.bytes.length} ${list.length}`);

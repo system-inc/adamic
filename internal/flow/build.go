@@ -541,6 +541,9 @@ func canThrow(program *ir.Program, instruction *Instruction, lengths bool) bool 
 			if call, ok := value.Interface().(ir.NodeFSFile); ok && call.MayThrow() {
 				throws = true
 			}
+			if call, ok := value.Interface().(ir.NodeBufferCall); ok && call.MayThrow() {
+				throws = true
+			}
 			if call, ok := value.Interface().(ir.ToFixed); ok && call.MayThrow() {
 				throws = true
 			}
