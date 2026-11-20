@@ -424,3 +424,17 @@ func TestAnEntrysNameIsTheGames(t *testing.T) {
 		}
 	}
 }
+
+// A stopped build's gap line is the line that says why, never go's progress line above it: J-wme5jp2's
+// regexredux go-5 gap read only "go: downloading github.com/GRbit/go-pcre v1.0.0".
+func TestAStoppedBuildsGapLineIsItsError(t *testing.T) {
+	for _, each := range []struct{ output, want string }{
+		{"go: downloading github.com/GRbit/go-pcre v1.0.0\nregexredux.go-5.go:9:2: no required module provides package\n", "regexredux.go-5.go:9:2: no required module provides package"},
+		{"# command-line-arguments\n./x.go:3:1: syntax error\n", "./x.go:3:1: syntax error"},
+		{"warning: unused variable\nerror[E0425]: cannot find value\n", "error[E0425]: cannot find value"},
+	} {
+		if got := stopLine(each.output); got != each.want {
+			t.Errorf("stopLine(%q) = %q, want %q", each.output, got, each.want)
+		}
+	}
+}
