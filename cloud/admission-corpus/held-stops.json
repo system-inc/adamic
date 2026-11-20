@@ -1,0 +1,4 @@
+{
+  "_comment": "Adding a row is a ruling. A row names a program whose both-stop a test already holds: the JavaScript backend and native stop alike, exit 70, with the same stdout and stderr, where Node runs the program to the end, exit 0. The agreement mode of cmd/adamic-admission-delta counts such a program as a checked stop, not as a disagreement, only when its path is listed here and the backends' stderr is the row's byte for byte. Schema: stops is an array of rows, each with path (the program's repository path, listed once), stderr (the backends' exact stderr) and test (the test that holds the stop, as <file>_test.go: <TestName>). A row without its test is refused.",
+  "stops": []
+}
