@@ -4,7 +4,7 @@ Base `1a6b689e009ad27575887a18c938a6342a6cf2ca` is the sole parent of head `793e
 
 Stage 3 used TypeScript v6.0.3 at `050880ce59e30b356b686bd3144efe24f875ebc8`. Base and head applied the same keyed product after submodule initialization. A recursive file comparison outside Git metadata found zero differences, and all 312 checkpoint refs matched. The last checkpoint was tree `8f61e6699b44dd0e54523a760720a37acdd8cecb`. Both measurements use the base-applied tree.
 
-The latent runs use `CENSUS_MODULE_FORMAT=CommonJSBundle`, `LATENT_FULL=0`, `LATENT_TAIL=1`, `LATENT_ASSERT_NO_OUTPUT=1` and `GOMAXPROCS=4`. [Evidence](evidence/) is pushed after each pass. The entry pair and root census are pending.
+The latent runs use `CENSUS_MODULE_FORMAT=CommonJSBundle`, `LATENT_FULL=0`, `LATENT_TAIL=1`, `LATENT_ASSERT_NO_OUTPUT=1` and `GOMAXPROCS=4`. [Evidence](evidence/) is pushed after each pass. The entry head and root census are pending.
 
 ## 1. Family 1 site counts
 
@@ -13,13 +13,15 @@ Exact reason is “an object refinement using an open numeric enum as a literal 
 | Pass | Base distinct | Base raw | Head distinct | Head raw |
 | --- | ---: | ---: | ---: | ---: |
 | Compiler directory | 503 | 671 | 493 | 661 |
-| `tsc.ts` entry | Pending | Pending | Pending | Pending |
+| `tsc.ts` entry | 503 | 671 | Pending | Pending |
 
 The compiler-directory pair has **10 cleared reads and zero reads that move to a later stop**. The 110-site historical count is recorded at `dc9d089c`. That abbreviated commit could not be resolved, and the per-site inventory was unavailable. Overlap with that exact cohort remains unverified. [U1 commit](https://github.com/system-inc/adamic/commit/faf9b5093cfbcf5f4c8e373a3285ffbd268c7fa5)
 
 ## 2. Units whose first stop moved
 
 The compiler-directory pair has zero units that now lower whole, zero units that move to a later stop, and zero units that move to an earlier or different stop. This holds for both directly recorded unit stops and the first stop when the source-file refusal scan is attributed to the containing top-level unit.
+
+All ten removed reads belong to `createTypeChecker` at `src/compiler/checker.ts:1490:1`. Its first scan stop stays at `src/compiler/checker.ts:1712:51`. Adamic 0.1 refuses an unproven predicate argument for parameter nodeTest (argument "isExportSpecifier"). Its direct body stop stays at `src/compiler/checker.ts:2972:55`. Stage 0 cannot lower a value of type ParameterPropertyDeclaration, an intersection whose field jsDoc has no representation because the union member JSDocArray is an array with its own member jsDocCache.
 
 The grades use kind, phase, reason and message with message positions stripped, along with the paired source position. Reached is a later finding newly observed in a unit that already had a stop.
 
@@ -39,7 +41,7 @@ All positions below are in `src/compiler/checker.ts` and have zero remaining fin
 | --- | --- | --- | --- |
 | `isFunctionLike` | `31507:13`, `tryGetThisTypeAt` | `31508:90`, `31510:53`, `31510:111`, `31514:67`, `31521:42` | 0 |
 | `isFunctionLike` | `31556:13`, `getExplicitThisType` | `31557:59` | 0 |
-| `isFunctionLike` | `34636:17`, contextual `this` | `34637:59` | 0 |
+| `isFunctionLike` | `34636:17`, `getEnclosingClassFromThisParameter` | `34637:59` | 0 |
 | `isFunctionLike` | `34648:33`, `getThisParameterFromNodeContext` | `34648:82` | 0 |
 | `isFunctionLike` | `49994:17`, `isThisPropertyAndThisTyped` | `49995:70` | 0 |
 | `isFunctionLike` | `50285:21`, `ThisKeyword` arm | `50286:61` | 0 |
@@ -54,6 +56,7 @@ Wall time is monotonic process elapsed time. Total CPU is process user plus syst
 | --- | --- | ---: | ---: | ---: | ---: | ---: |
 | Compiler directory | Base | 1,133.808 | 1,333.805 | 717.301 | 832.893 | 4,057 |
 | Compiler directory | Head | 1,078.488 | 1,255.163 | 688.142 | 793.536 | 4,057 |
+| `tsc.ts` entry | Base | 1,024.967 | 1,191.870 | 659.234 | 757.217 | 4,064 |
 
 The compiler-directory head used 55.320 s less wall time (4.9%) and 78.642 s less CPU (5.9%).
 
