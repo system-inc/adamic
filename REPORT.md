@@ -32,6 +32,11 @@ Landing commit `ce20cd2be` on `df9d8ee60` adds only the guarded append and the l
 
 ## Read-only findings for the remaining checker sites
 
+Comparing AST-extracted owner text with the pinned upstream source, with line
+endings normalized, confirmed that only `getTypeArguments` among the remaining
+checker owners has an existing textual change. The exact dependency hash for
+`getTypeFromClassOrInterfaceReference` still makes it an owned proof input.
+
 ### 16636:13 — createCanonicalSignature
 
 `map(signature.typeParameters, tp => tp.target && !getConstraintOfTypeParameter(tp.target) ? tp.target : tp)` is passed to `getSignatureInstantiation`'s `typeArguments: Type[] | undefined`. `Signature.typeParameters` is a readonly array of TypeParameter. For a defined input, core's `map` creates a fresh array and pushes each callback result. The callback yields either the original element or its TypeParameter target. The array cannot alias the input storage.
@@ -88,7 +93,7 @@ Compared by multiset of (kind, rule, relative site, words), the after tree remov
 
 > an unproven relation from Type to TypeParameter: optional field constraint has no proven compatible presence/type
 
-Restoring just the checker append returns both prior refusals at `19948:30` and `19948:37`, and removes that cast refusal. The factory delta is retained. This fails the requested no-new-refusal and exact single-refusal mutant conditions. The guarded helper `getDeclaredTypeOfTypeParameter(symbol)` already returns TypeParameter. Calling it directly would change the emitted JavaScript callee. That alternative needs a ruling if byte identity remains required.
+Restoring just the checker append returns both prior refusals at `19948:30` and `19948:37`, and removes that cast refusal. The factory delta is retained. Within the array-widening rule, exactly the requested checker refusal returns. Across all rules this fails the requested no-new-refusal and exact single-refusal mutant conditions. The guarded helper `getDeclaredTypeOfTypeParameter(symbol)` already returns TypeParameter. Calling it directly would change the emitted JavaScript callee. That alternative needs a ruling if byte identity remains required.
 
 ## Exact merged-head scan and whole applies
 
@@ -103,3 +108,7 @@ The measured merge is `9c4cd905651e8175d8c8433baae69bd4e769af3b`, with parents `
 The full streams are `scan-merged-before.json.gz`, `scan-merged-after.json.gz`, and `scan-merged-mutant.json.gz`. The comparison retains duplicate events and normalizes only the source root in observation locations.
 
 Two independent `stage3/apply.sh --build-product` runs with fresh output directories and separate caches both exited 0. All 81,506 working-tree file paths matched by content, mode, or link target as applicable (inventory SHA-256 `53edb9b7ea479936013d935d3e8801c06e9b1a685d6d4846fad9073f46067a91`). The Git refs matched separately. Git administrative metadata such as the index records build-specific timestamps and was excluded from the file comparison.
+
+## Adapted-tree product
+
+`go test -v -timeout 30m ./stage3/lane/adaptedtree -run '^TestProduct_Stage3AdaptedTree$'` passed on the landing commit with the locked package installs, pinned upstream checkout, and Go 1.27.1. It independently built the upstream compiler and test harness from the adapted tree. The whole lane uses that product from the local cache.
