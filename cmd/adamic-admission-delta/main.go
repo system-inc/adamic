@@ -127,6 +127,12 @@ type report struct {
 }
 
 func execute(dir string, limit time.Duration, name string, args ...string) observation {
+	return executeWith(dir, limit, nil, name, args...)
+}
+
+// executeWith is execute with env appended to the command's environment, the process's own when the command has no
+// other. exec keeps the last of two values for one name, so an env entry wins over the process's.
+func executeWith(dir string, limit time.Duration, env []string, name string, args ...string) observation {
 	ctx, cancel := context.WithTimeout(context.Background(), limit)
 	defer cancel()
 	command := exec.CommandContext(ctx, name, args...)
@@ -139,6 +145,12 @@ func execute(dir string, limit time.Duration, name string, args ...string) obser
 	}
 	if len(args) > 0 && args[0] == "admission-lower" {
 		command.Env = append(os.Environ(), "GOMAXPROCS=1")
+	}
+	if len(env) > 0 {
+		if command.Env == nil {
+			command.Env = os.Environ()
+		}
+		command.Env = append(command.Env, env...)
 	}
 	// Capture runs it in its own process group, kills the group when ctx ends or the command exits, and reads each
 	// stream to its end, so no timer decides when the output is whole (#n3gk22h).
@@ -257,6 +269,7 @@ func run(args []string) error {
 	negativePath := flags.String("negative-witnesses", "cloud/admission-corpus/negative-witnesses.json", "ruled content-hash negative witnesses")
 	runtimeNotYetPath := flags.String("runtime-notyet-stops", "cloud/admission-corpus/runtime-notyet-stops.json", "ruled content-hash run-time NotYet stops")
 	backendDivergencesPath := flags.String("backend-divergences", "internal/oracle/testdata/backend_divergences.json", "ruled backend divergences, the rows internal/oracle pins")
+	heldStopsPath := flags.String("held-stops", "cloud/admission-corpus/held-stops.json", "both-stops a test holds, by exact path and stderr, which --agreement counts as checked stops")
 	manifestPath := flags.String("manifest", "", "pinned JSON corpus manifest")
 	generator := flags.String("manifest-generator", "", "generator path at head")
 	generatorRevision := flags.String("manifest-generator-revision", "", "generator source revision, defaults to head")
@@ -269,10 +282,17 @@ func run(args []string) error {
 	workers := flags.Int("workers", runtime.GOMAXPROCS(0), "parallel classification workers")
 	compileLimit := flags.Duration("compile-timeout", 45*time.Second, "per-program compiler timeout")
 	givenSeed := flags.String("seed", "", "hex sampling seed, at least 8 bytes, in place of head's SHA-256")
+	agreement := flags.Bool("agreement", false, "run every program head accepts on Node and both backends, sanitized, with no base; --shard is then k/n by manifest order")
 	if err := flags.Parse(args); err != nil {
 		return err
 	}
-	if *base == "" {
+	given := map[string]bool{}
+	flags.Visit(func(f *flag.Flag) { given[f.Name] = true })
+	if *agreement {
+		if err := agreementUsage(given, *manifestPath, *shard); err != nil {
+			return err
+		}
+	} else if *base == "" {
 		return fmt.Errorf("--base is required")
 	}
 	if *budget < 0 {
@@ -311,6 +331,16 @@ func run(args []string) error {
 	divergences, err := readRuledBackendDivergences(*backendDivergencesPath)
 	if err != nil {
 		return err
+	}
+	if *agreement {
+		// Only the agreement mode reads the held stops: the ruling that made the list is how it judges, and the delta
+		// judges a newly accepted program as it did before.
+		heldStops, err := readHeldStops(*heldStopsPath)
+		if err != nil {
+			return err
+		}
+		fmt.Fprintf(os.Stderr, "held stops: %d\n", len(heldStops.Stops))
+		return runAgreement(agreementRun{root: root, head: *head, headBinary: *headBinary, headLowerBinary: *headLowerBinary, manifestPath: *manifestPath, shard: *shard, asJSON: *asJSON, limit: *limit, compileLimit: *compileLimit, workers: *workers, negatives: negatives, runtimeStops: runtimeStops, divergences: divergences, heldStops: heldStops})
 	}
 	startedAll := time.Now()
 	result := report{Programs: []entry{}, RuledRuntimeStopPaths: []string{}, StaleRuntimeStops: []string{}, PendingRuntimeStops: []string{}, RuledBackendDivergencePaths: []string{}, Verdict: "pass", Phases: map[string]float64{}, Workers: *workers, Classification: "lowering-only"}
@@ -485,45 +515,12 @@ func run(args []string) error {
 	result.BudgetSeconds = *budget
 	result.CompileTimeoutSeconds = compileLimit.Seconds()
 	result.RuntimeTimeoutSeconds = limit.Seconds()
-	seen := map[string]string{}
 	// held is every program's content hash, so a listed stop no program holds is seen after the run.
-	held := map[string]bool{}
-	for _, c := range m.Corpora {
-		for _, p := range c.Programs {
-			clean := filepath.ToSlash(filepath.Clean(p.Path))
-			if filepath.IsAbs(p.Path) || clean == ".." || strings.HasPrefix(clean, "../") {
-				return fmt.Errorf("unsafe program path %q", p.Path)
-			}
-			info, e := os.Lstat(filepath.Join(headTree, p.Path))
-			if e != nil {
-				return e
-			}
-			if !info.Mode().IsRegular() {
-				return fmt.Errorf("program is not a regular file: %s", p.Path)
-			}
-			blob, e := git(root, "rev-parse", result.Head+":"+p.Path)
-			if e != nil {
-				return e
-			}
-			if blob != p.Blob {
-				return fmt.Errorf("blob mismatch for %s: manifest %s head %s", p.Path, p.Blob, blob)
-			}
-			if previous, exists := seen[p.Path]; exists {
-				if previous != p.Blob {
-					return fmt.Errorf("conflicting blob for %s", p.Path)
-				}
-				continue
-			}
-			seen[p.Path] = p.Blob
-			source, e := os.ReadFile(filepath.Join(headTree, p.Path))
-			if e != nil {
-				return e
-			}
-			held[contentHash(source)] = true
-			result.Programs = append(result.Programs, entry{program: p, Corpus: c.Name, NegativeRelated: negativeRelated(p.Path, source, negatives), NotYetRelated: runtimeNotYetRelated(p.Path, source, runtimeStops)})
-		}
+	var held map[string]bool
+	result.Programs, held, err = verifyPrograms(root, headTree, result.Head, m.Corpora, negatives, runtimeStops)
+	if err != nil {
+		return err
 	}
-
 	result.Phases["manifest_and_verification"] = time.Since(phaseStarted).Seconds()
 	phaseStarted = time.Now()
 	classifyPrograms(headTree, baseLower, headLower, result.Programs, *workers, *compileLimit)
@@ -577,78 +574,15 @@ func run(args []string) error {
 		result.Verdict = "sampled"
 	}
 	started := time.Now()
-	// observe runs one program, a path in head or an absolute one, on Node and both backends, its outputs
-	// named by name in scratch.
-	observe := func(name, path string) (node, jsCompile, javascript, nativeCompile, native observation, err error) {
-		source := path
-		if !filepath.IsAbs(source) {
-			source = filepath.Join(headTree, path)
-		}
-		node = execute(headTree, *limit, "node", "--disable-warning=ExperimentalWarning", filepath.Join(headTree, "oracle/node.mjs"), source)
-		jsCompile = execute(headTree, *limit, h, "js", path)
-		jsPath := filepath.Join(scratch, name+".mjs")
-		javascript = observation{Exit: -1, Error: "JavaScript compilation failed"}
-		if jsCompile.Exit == 0 && jsCompile.Error == "" {
-			if err = os.WriteFile(jsPath, []byte(jsCompile.Stdout), 0600); err != nil {
-				return
-			}
-			javascript = execute(headTree, *limit, "node", "--disable-warning=ExperimentalWarning", filepath.Join(headTree, "oracle/node.mjs"), jsPath)
-		}
-		jsCompile.Stdout = ""
-		nativePath := filepath.Join(scratch, name)
-		nativeCompile = execute(headTree, *limit, h, "build", path, "-o", nativePath)
-		native = observation{Exit: -1, Error: "native compilation failed"}
-		if nativeCompile.Exit == 0 && nativeCompile.Error == "" {
-			native = execute(headTree, *limit, nativePath)
-		}
-		return
-	}
-	// observeAlone is observe with one retry: a run that hit a runtime timeout under the gate's load runs once more,
-	// alone, before its timeout counts, so a load timeout never reads as a red (#pajbaba). still names every command
-	// that timed out again; first names every one that timed out the first time.
-	observeAlone := func(name, path string) (node, jsCompile, javascript, nativeCompile, native observation, first, still []string, err error) {
-		node, jsCompile, javascript, nativeCompile, native, err = observe(name, path)
-		if err != nil {
-			return
-		}
-		if platformStopped(nativeCompile) {
-			return
-		}
-		first = timedOut(node, jsCompile, javascript, nativeCompile, native)
-		if len(first) == 0 {
-			return
-		}
-		result.TimedOutRuns++
-		result.RetriedRuns++
-		node, jsCompile, javascript, nativeCompile, native, err = observe(name+"-alone", path)
-		if err != nil {
-			return
-		}
-		still = timedOut(node, jsCompile, javascript, nativeCompile, native)
-		if len(still) > 0 {
-			result.StillTimedOutRuns++
-		}
-		return
-	}
+	runner := &programRunner{headTree: headTree, scratch: scratch, compiler: h, limit: *limit, negatives: negatives, runtimeStops: runtimeStops, divergences: divergences}
 	for _, index := range selected {
 		record := &result.Programs[index]
 		record.Sampled = true
-		source := filepath.Join(headTree, record.Path)
-		node, jsCompile, javascript, nativeCompile, native, first, still, e := observeAlone(fmt.Sprintf("program-%d", index), record.Path)
-		if e != nil {
-			return e
+		still, err := runner.runProgram(record, fmt.Sprintf("program-%d", index))
+		if err != nil {
+			return err
 		}
-		record.TimedOut = append(record.TimedOut, first...)
-		record.Retried = len(first) > 0
-		// repairStill is every repair command that timed out again: the witness is then unjudged, so the program is
-		// void, never charged as a red.
-		var repairStill []string
-		record.Node = &node
-		record.JavaScriptCompile = &jsCompile
-		record.JavaScript = &javascript
-		record.NativeCompile = &nativeCompile
-		record.Native = &native
-		stopped, err := judge.stop(record, nativeCompile, func() observation {
+		stopped, err := judge.stop(record, *record.NativeCompile, func() observation {
 			output := filepath.Join(scratch, fmt.Sprintf("base-native-%d", index))
 			return execute(headTree, *limit, b, "build", record.Path, "-o", output)
 		})
@@ -661,81 +595,37 @@ func run(args []string) error {
 			}
 			continue
 		}
-		data, e := os.ReadFile(source)
-		if e != nil {
-			return e
+		stale, err := runner.judgeProgram(record, index, still)
+		if err != nil {
+			return err
 		}
-		witness, listed := negatives.Witnesses[contentHash(data)]
-		agree := outputsAgree(node, javascript, native)
-		if agree {
+		if *record.Agree {
 			result.NodeAgreements++
 		}
-		if listed {
-			if e := validateWitnessSource(data, witness); e != nil {
-				return fmt.Errorf("%s: %w", record.Path, e)
-			}
-			if witness.Form == castFailedForm && filepath.Ext(record.Path) != ".ts" {
-				return fmt.Errorf("%s: a cast_failed witness is .ts alone; in .a its cast is refused", record.Path)
-			}
-			record.NegativeWitness = !agree && acceptsNegativeWitness(witness, headTree, node, javascript, native)
-			if record.NegativeWitness && repairRuns(witness.Form) {
-				// The repair is the stop's mutant: storing a value of the declared type, it agrees with Node. It keeps
-				// the witness's extension, so it compiles in the witness's own mode: a .ts witness's repair as .ts.
-				repairPath := filepath.Join(scratch, fmt.Sprintf("repair-%d%s", index, filepath.Ext(source)))
-				if e := os.WriteFile(repairPath, repairedSource(data, witness), 0600); e != nil {
-					return e
-				}
-				repairNode, _, repairJavaScript, _, repairNative, repairFirst, repairTimedOut, e := observeAlone(fmt.Sprintf("repair-%d", index), repairPath)
-				if e != nil {
-					return e
-				}
-				for _, command := range repairFirst {
-					record.TimedOut = append(record.TimedOut, "repair "+command)
-				}
-				record.Retried = record.Retried || len(repairFirst) > 0
-				repairStill = repairTimedOut
-				repairAgree := outputsAgree(repairNode, repairJavaScript, repairNative)
-				record.RepairAgree = &repairAgree
-				record.NegativeWitness = repairAgree
-			}
-			if record.NegativeWitness {
-				result.AcceptedWitnesses++
-			}
+		if record.NegativeWitness {
+			result.AcceptedWitnesses++
 		}
-		if stop, ruled := runtimeStops.Stops[contentHash(data)]; ruled {
-			// A listed program that now runs to the end and agrees with Node is stale: it fails, so its entry
-			// leaves the list. Otherwise it passes only as the very stop it was ruled.
-			if agree {
-				result.StaleRuntimeStops = append(result.StaleRuntimeStops, record.Path)
-				result.Verdict = "fail"
-			} else if acceptsRuntimeNotYet(stop, node, javascript, native) {
-				record.RuledRuntimeStop = true
-				result.RuledRuntimeStops++
-				result.RuledRuntimeStopPaths = append(result.RuledRuntimeStopPaths, record.Path)
-			}
+		if stale {
+			result.StaleRuntimeStops = append(result.StaleRuntimeStops, record.Path)
+			result.Verdict = "fail"
 		}
-		// A program at a ruled divergence's fixture passes as that divergence only when its run is exactly the
-		// row's (#tqm95v6); anything else disagreeing still fails.
-		if !agree && !record.NegativeWitness && !record.RuledRuntimeStop && acceptsRuledBackendDivergence(record.Path, divergences, node, javascript, native) {
-			record.RuledBackendDivergence = true
+		if record.RuledRuntimeStop {
+			result.RuledRuntimeStops++
+			result.RuledRuntimeStopPaths = append(result.RuledRuntimeStopPaths, record.Path)
+		}
+		if record.RuledBackendDivergence {
 			result.RuledBackendDivergences++
 			result.RuledBackendDivergencePaths = append(result.RuledBackendDivergencePaths, record.Path)
 		}
-		record.Agree = &agree
-		if !agree && !record.NegativeWitness && !record.RuledRuntimeStop && !record.RuledBackendDivergence {
-			var reasons []string
-			reasons = append(reasons, still...)
-			for _, command := range repairStill {
-				reasons = append(reasons, "repair "+command)
-			}
-			if len(reasons) > 0 {
-				record.VoidReason = strings.Join(reasons, ", ") + " timeout"
+		if record.disagrees() {
+			if record.VoidReason != "" {
 				voids = append(voids, record.Path+": "+record.VoidReason)
 			} else {
 				result.Verdict = "fail"
 			}
 		}
 	}
+	result.TimedOutRuns, result.RetriedRuns, result.StillTimedOutRuns = runner.timedOutRuns, runner.retriedRuns, runner.stillTimedOutRuns
 	// A listed stop no program held is judged only in a run that holds every corpus. Its path holding other
 	// bytes at head is an edit, stale as an agreeing stop is; a path absent at head is a program not landed
 	// yet, said as pending.
@@ -847,6 +737,51 @@ func run(args []string) error {
 		return fmt.Errorf("%w: %s", errVoid, result.VoidReason)
 	}
 	return nil
+}
+
+// verifyPrograms holds every program of corpora, in their order, to head: a path outside the checkout, a program
+// that isn't a regular file, or a blob that isn't head's refuses the run. Each path makes one entry, its first
+// listing's, and a path listed twice with two blobs refuses the run. held is every program's content hash.
+func verifyPrograms(root, headTree, head string, corpora []corpus, negatives negativeWitnessList, runtimeStops runtimeNotYetStopList) ([]entry, map[string]bool, error) {
+	programs := []entry{}
+	seen := map[string]string{}
+	held := map[string]bool{}
+	for _, c := range corpora {
+		for _, p := range c.Programs {
+			clean := filepath.ToSlash(filepath.Clean(p.Path))
+			if filepath.IsAbs(p.Path) || clean == ".." || strings.HasPrefix(clean, "../") {
+				return nil, nil, fmt.Errorf("unsafe program path %q", p.Path)
+			}
+			info, err := os.Lstat(filepath.Join(headTree, p.Path))
+			if err != nil {
+				return nil, nil, err
+			}
+			if !info.Mode().IsRegular() {
+				return nil, nil, fmt.Errorf("program is not a regular file: %s", p.Path)
+			}
+			blob, err := git(root, "rev-parse", head+":"+p.Path)
+			if err != nil {
+				return nil, nil, err
+			}
+			if blob != p.Blob {
+				return nil, nil, fmt.Errorf("blob mismatch for %s: manifest %s head %s", p.Path, p.Blob, blob)
+			}
+			if previous, exists := seen[p.Path]; exists {
+				if previous != p.Blob {
+					return nil, nil, fmt.Errorf("conflicting blob for %s", p.Path)
+				}
+				continue
+			}
+			seen[p.Path] = p.Blob
+			source, err := os.ReadFile(filepath.Join(headTree, p.Path))
+			if err != nil {
+				return nil, nil, err
+			}
+			held[contentHash(source)] = true
+			programs = append(programs, entry{program: p, Corpus: c.Name, NegativeRelated: negativeRelated(p.Path, source, negatives), NotYetRelated: runtimeNotYetRelated(p.Path, source, runtimeStops)})
+		}
+	}
+	return programs, held, nil
 }
 
 // admittedJudgment says in words how an admitted program was judged: agreeing with Node, passing as a ruled
