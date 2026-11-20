@@ -288,7 +288,11 @@ func (l *lowering) isLibraryType(proven *checker.Type, names ...string) bool {
 // void | undefined to void, so the void is the only undefined it shows. Held as one pointer, its null and
 // its undefined were the same NULL, and x === undefined folded to false. Void alone isn't asked here: a
 // value typed exactly void is a discarded result, whose reads H2 refuses (void_reads.go).
+// The type is read as the instance being lowered makes it (concrete), as mayHoldNull reads it: inside a
+// generic instance a value's own type is its type parameter T, and T given string | undefined holds
+// undefined though T itself carries no undefined flag (#sq84qqh).
 func (l *lowering) includesUndefined(proven *checker.Type) bool {
+	proven = l.concrete(proven)
 	if proven.Flags()&checker.TypeFlagsUnion == 0 {
 		return proven.Flags()&checker.TypeFlagsUndefined != 0 || l.phantomUndefined(proven)
 	}
@@ -300,7 +304,9 @@ func (l *lowering) includesUndefined(proven *checker.Type) bool {
 	return false
 }
 
+// includesNull reads the type as the instance makes it, as includesUndefined does (#sq84qqh).
 func (l *lowering) includesNull(proven *checker.Type) bool {
+	proven = l.concrete(proven)
 	if proven.Flags()&checker.TypeFlagsUnion == 0 {
 		return proven.Flags()&checker.TypeFlagsNull != 0
 	}
