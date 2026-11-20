@@ -186,7 +186,11 @@ func (e *emitter) objectLiteral(literal ir.ObjectLiteral) string {
 		}
 	}
 	object := ""
-	if constructionFields(literal.Fields) {
+	if constructionFields(literal.Fields) && region {
+		// A region version's caller holds what it returns as the region's, so a heap object here
+		// would be released at the constructor's end and read after (#kg38qe5).
+		object = e.regionValue(fmt.Sprintf("adamic_object_construct_in(region, &%s)", e.literalShape(literal)))
+	} else if constructionFields(literal.Fields) {
 		object = e.own(ir.Object, fmt.Sprintf("adamic_object_construct(&%s)", e.literalShape(literal)))
 	} else if region {
 		allocator := "adamic_object_new_filled_in"

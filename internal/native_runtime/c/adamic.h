@@ -580,6 +580,9 @@ bool adamic_object_present(const adamic_object *object, size_t index);
 void adamic_object_publish(adamic_object *object, size_t index);
 size_t *adamic_object_ordered(const adamic_object *object);
 adamic_object *adamic_object_construct(const adamic_shape *shape);
+// A construction object's bytes, write order included, and its start: every slot absent, its order unwritten.
+size_t adamic_object_construction_size(const adamic_shape *shape);
+void adamic_object_construction_start(adamic_object *object, const adamic_shape *shape);
 // An object's allocation size as adamic_object_new or adamic_object_construct made it, the second longer by its write order.
 size_t adamic_object_allocation_size(const adamic_object *object);
 
@@ -694,6 +697,8 @@ typedef struct adamic_region {
 } adamic_region;
 #define ADAMIC_REGION {NULL, 0, false}
 adamic_object *adamic_object_new_in(adamic_region *region, const adamic_shape *shape);
+// construct_in is adamic_object_construct in a region, for a constructor's region version (on the heap for a NULL region).
+adamic_object *adamic_object_construct_in(adamic_region *region, const adamic_shape *shape);
 // filled_in is only for a literal that fills every slot without a throwing operation or
 // publication between allocation and completion. Constructors use the zeroed allocator above.
 adamic_object *adamic_object_new_filled_in(adamic_region *region, const adamic_shape *shape);
