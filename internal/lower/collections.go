@@ -410,6 +410,30 @@ func (l *lowering) tupleLength(node *ast.Node, tuple *ast.Node) (ir.Expression, 
 	return l.numericLiteral(node)
 }
 
+// tupleLengthWrite is tuple.length = value for a tuple of fixed length, written with that length as a
+// literal: it stores nothing. Node sets an array's length to the length it has and nothing changes, and
+// a literal has no effects to keep. Each condition fails closed, since a write let through here is a
+// write that stores nothing, and a wrong admission is a silent miscompile. The tuple is a plain local,
+// as tupleLength reads it, so not reading it changes nothing. The length's type is one number literal,
+// since a tuple with optional or rest elements has a length of several values (1 | 2 for
+// [number, number?]), and writing one of them could shorten it. The value is that literal itself,
+// judged here rather than trusted to adamic/enum-literal's refusal of every other value.
+func (l *lowering) tupleLengthWrite(target *ast.Node, valueNode *ast.Node) ([]ir.Statement, error) {
+	tuple := ast.SkipParentheses(target.AsPropertyAccessExpression().Expression)
+	local, isLocal := l.local(tuple)
+	if !ast.IsIdentifier(tuple) || !isLocal || l.checked(local) {
+		return nil, l.notYet(target, "writing the length of a tuple that isn't a plain local")
+	}
+	length := l.checker.GetTypeAtLocation(target)
+	if length.Flags()&checker.TypeFlagsNumberLiteral == 0 {
+		return nil, l.notYet(target, "writing the length of a tuple with optional or rest elements")
+	}
+	if value := ast.SkipParentheses(valueNode); !ast.IsNumericLiteral(value) || value.Text() != l.checker.TypeToString(length) {
+		return nil, l.notYet(valueNode, "writing a tuple's length with a value that isn't its own length, written as a literal")
+	}
+	return []ir.Statement{}, nil
+}
+
 // destructure lowers const [a, b] = tuple and const { x, y } = object, and let: what's destructured
 // is held in a local of its own, made here, and each name is declared from its field, in order, as
 // JavaScript reads them.
