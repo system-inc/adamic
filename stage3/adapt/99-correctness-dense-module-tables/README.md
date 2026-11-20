@@ -78,10 +78,17 @@ its whole text, as it arrives or as this leaves it: `createBracketsMap`,
 `getOpeningBracket`, `getClosingBracket`, the three `arrayToNumericMap`
 declarations, and the `noRegexTable` statement. As it arrives, the two bracket
 readers carry adaptation 33's `!` on both reads, and arrayToNumericMap carries
-adaptation 30's `array[i]!`. Any other text, a parse error, mixed line endings,
-and a partly adapted tree are refused before any write. A second run writes
-nothing. `rewrite(tree, { restore: true })` is the mutant: every owner back as
-it arrived.
+adaptation 30's `array[i]!`. Any other text, a parse error, a bare CR, an owner
+that mixes line endings, and a partly adapted tree are refused before any write.
+A second run writes nothing. `rewrite(tree, { restore: true })` is the mutant:
+every owner back as it arrived.
+
+Line endings are judged per owner, not per file. emitter.ts arrives with one
+ending, but adapters after this one write lines into it in the other, so the
+finished tree's emitter.ts mixes the two outside these owners. A file-wide
+check passed inside the chain and refused the second run and the restore mutant
+over the finished tree (J-1hv0x7d). Each owner keeps the ending it arrived in,
+and every byte outside the owners is kept as it is.
 
 This directory sorts after 30-indexed-reads, 33-indexed-reads-emit and
 99-correctness-core-*, the adapters before it that touch these files. No

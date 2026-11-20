@@ -139,9 +139,13 @@ function owners(source, pin) {
             && ts.isIdentifier(node.declarationList.declarations[0].name) && node.declarationList.declarations[0].name.text === pin.name);
 }
 
-// One file's owners, each read as 'before' or 'after', and the edits that bring each to `wanted`.
-function read(file, text, wanted) {
-    const source = parse(file, text);
+// One file's owners, each read as 'before' or 'after', and the edits that bring each to `wanted`. Line endings are
+// judged per owner, never per file: emitter.ts arrives here with one ending, but adapters after this one write lines
+// into it in the other, so the finished tree's emitter.ts mixes the two outside these owners (J-1hv0x7d), and a second
+// run or the restore mutant over that tree must still read it. Each owner is compared with its endings made LF, and
+// its replacement is written in the ending the owner arrived in. An owner that mixes them is refused.
+function read(file, raw, wanted) {
+    const source = parse(file, raw);
     const states = [];
     const edits = [];
     for (const pin of pins.filter(pin => pin.file === file)) {
@@ -149,27 +153,27 @@ function read(file, text, wanted) {
         assert.equal(found.length, pin.declarations, `${file}: ${pin.name} declaration count drift (${found.length})`);
         const start = found[0].getStart(source);
         const end = found[found.length - 1].end;
-        const current = text.slice(start, end);
+        const span = raw.slice(start, end);
+        assert(!(span.includes('\r\n') && /(?<!\r)\n/.test(span)), `${file}: ${pin.name}: mixed line endings`);
+        const crlf = span.includes('\r\n');
+        const current = span.replaceAll('\r\n', '\n');
         assert([pin.before, pin.after].includes(current), `${file}: ${pin.name} drift or partial adaptation, found ${JSON.stringify(current)}`);
         const state = current === pin.after ? 'after' : 'before';
         states.push({ file, name: pin.name, state });
-        if (state !== wanted) edits.push({ start, end, text: pin[wanted] });
+        if (state !== wanted) edits.push({ start, end, text: crlf ? pin[wanted].replaceAll('\n', '\r\n') : pin[wanted] });
     }
     return { states, edits };
 }
 
-// One file as it should be, from its raw text.
+// One file as it should be, from its raw text, every byte outside the owners kept.
 function planFile(file, raw, wanted) {
     assert(!/\r(?!\n)/.test(raw), `${file}: bare CR`);
-    assert(!(raw.includes('\r\n') && /(?<!\r)\n/.test(raw)), `${file}: mixed line endings`);
-    const crlf = raw.includes('\r\n');
-    const text = raw.replaceAll('\r\n', '\n');
-    const { states, edits } = read(file, text, wanted);
-    let output = text;
+    const { states, edits } = read(file, raw, wanted);
+    let output = raw;
     edits.sort((a, b) => b.start - a.start);
     for (const edit of edits) output = output.slice(0, edit.start) + edit.text + output.slice(edit.end);
-    if (output !== text) parse(file, output);
-    return { states, output: crlf ? output.replaceAll('\n', '\r\n') : output, edits: edits.length };
+    if (output !== raw) parse(file, output);
+    return { states, output, edits: edits.length };
 }
 
 // The tree's files as they should be. Every owner must read as it arrived, or every one as adapted.
