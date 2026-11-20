@@ -23,6 +23,8 @@ var compilerNames = []string{"clang", "clang++", "cc", "gcc"}
 // reason (versionQuery).
 var compilerSites = map[string]string{
 	"bench/apple/run.go:main":                                                    "compiles the Objective-C benchmark witness into a scratch directory; Adamic products use native.BuildApple",
+	"bench/run.go:buildReaper":                                                   "compiles bench's reaper, the process it measures every program through, for the host's triple into a scratch directory; a measuring tool that must carry none of native's runtime or flags, never a product",
+	"bench/run_test.go:TestPeakIsTheProgramsOwn":                                 "checks clang is installed before calling buildReaper, which names its target; compiles nothing itself",
 	"cmd/adamic-apple-bindings/main.go:run":                                      "selects clang for SDK header inspection and binding generation; builds no executable product",
 	"internal/apple/generate/generate_test.go:clangPath":                         "finds clang for fixture header syntax and AST inspection; builds no executable product",
 	"internal/apple/generate/sdk.go:FromSDK":                                     "resolves the SDK clang for header AST inspection and binding generation; builds no executable product",
@@ -161,6 +163,7 @@ func TestEveryCCompilerRunsThroughNative(t *testing.T) {
 // resolve it, or native_runtime.ResolveTarget for a --target of its own, and a WASI module's by its literal --target=wasm32-wasi.
 var targetedSites = []string{
 	"bench/apple/run.go:main",
+	"bench/run.go:buildReaper",
 	"internal/apple/witness_test.go:TestProgramsAgreeWithTheirWitnesses",
 	"internal/oracle/release_stack_test.go:reservationProbe",
 	"cmd/adamic-test262/run.go:attempt",
