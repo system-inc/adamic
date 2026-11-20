@@ -130,8 +130,10 @@ func (l *lowering) libraryString(node *ast.Node) (ir.Expression, bool, error) {
 			if len(written) == 0 {
 				return nil, true, l.notYet(node, "String.prototype."+method+".call without a present receiver")
 			}
-			proven := l.checker.GetTypeAtLocation(written[0])
-			if l.mayBeUndefined(written[0]) || proven.Flags()&checker.TypeFlagsNull != 0 {
+			// Read as the instance makes it, and null asked of every member: a receiver typed T given
+			// string | null, or a string | null union, may be null (#sq84qqh).
+			proven := l.concrete(l.checker.GetTypeAtLocation(written[0]))
+			if l.mayBeUndefined(written[0]) || l.includesNull(proven) {
 				return nil, true, l.notYet(node, "String prototype call on null or undefined (its TypeError is not catchable natively yet)")
 			}
 			if method == "toString" || method == "valueOf" {
