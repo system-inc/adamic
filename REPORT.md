@@ -1,24 +1,180 @@
 # Paired census for #s8gy89r, family 1, cause U1
 
-The base compiler-directory stream is complete. The paired head, entry and per-root results are pending.
+The compiler-directory pair is complete. The paired entry results and 79-root table are pending.
 
-- Base `6cb495cf2adcd359e59b9d8ead8e148a1593231b`, the head's sole parent and an ancestor of fetched `main` at `da83d772d470cc7b0660db3627d709c62febe086`.
-- Head `f5008927b8e29375220f16096c204d27c8250bcc` from `platforms/enum-tag-kind-set-2`.
-- Stage3 input TypeScript v6.0.3 at `050880ce59e30b356b686bd3144efe24f875ebc8`.
-- Recursive submodules at both commits were Cohere `5360753e19e4417675a90e92a1823bea66b13918` and its TypeScript `d92d9bfee114c80be2c375d72edae966176e3a4f`.
+Base is `6cb495cf2adcd359e59b9d8ead8e148a1593231b`, the sole parent of head `f5008927b8e29375220f16096c204d27c8250bcc`. The base is an ancestor of fetched `main` at `da83d772d470cc7b0660db3627d709c62febe086`. The two latent and scan-all binaries were built separately from their corresponding compiler checkouts.
 
-The family 1 reason is “an object refinement using an open numeric enum as a literal tag”. The head commit records Workers’ count of 110 sites at `dc9d089c`. The historical per-site probe inventory has not been recovered from the repository.
+Both stage3 applies used TypeScript v6.0.3 at `050880ce59e30b356b686bd3144efe24f875ebc8`. All 304 adaptation checkpoint hashes match, and both final snapshots hash to `fb481d75255cb26e120190f74804e8e51cf06d31`. Both measurements use the base-applied tree. Latent flags are `CENSUS_MODULE_FORMAT=CommonJSBundle`, `LATENT_FULL=0`, `LATENT_TAIL=1` and `LATENT_ASSERT_NO_OUTPUT=1`.
 
-The two latent comparisons use first-error mode with `CENSUS_MODULE_FORMAT=CommonJSBundle`, `LATENT_TAIL=1` and `LATENT_ASSERT_NO_OUTPUT=1`. The 79-root first-stop table uses the meter’s production census tool in CommonJSBundle mode.
+The analysis pairs normalized reads and exact reasons with `stage3/census/pair` and grades findings by kind, phase, reason and message with positions stripped from the message. The first-stop table names the phases so that changes in refusal-scan order can be read alongside body and scoped-tail stops.
 
-Both fresh stage3 adapts completed all source transformations. All 304 adaptation checkpoint hashes match, and both complete worktree snapshots hash to `fb481d75255cb26e120190f74804e8e51cf06d31`.
-The base apply reported a cache-archive error after writing the final patch table. The census uses the complete verified base working tree. The head compiler-directory pass is running against the same input.
+The base apply wrote the generated sources and final patch table, then reported a local cache-archive error when tar saw a changing Git pack. A recursive file comparison excluding Git metadata found identical outputs. The census used that directly verified base tree.
 
 ## 1. Family 1 site counts
 
+Exact reason is “an object refinement using an open numeric enum as a literal tag”.
+
 | Pass | Base distinct | Base raw | Head distinct | Head raw |
 | --- | ---: | ---: | ---: | ---: |
-| Compiler directory | 557 | 730 | Pending | Pending |
-| `tsc.ts` entry | Pending | Pending | Pending | Pending |
+| Compiler directory | 557 | 730 | 503 | 671 |
 
-The base counts use the raw and access-chain-normalized views in `stage3/census/pair`. The completed base findings and timing streams are in [evidence](evidence/). The run header recorded first-error mode, CommonJSBundle, and zero checker diagnostics.
+- Compiler directory loses 54 distinct and 59 raw family 1 findings net. 50 distinct base reads lose all findings at that read. 4 distinct reason transitions retain another finding at the same read.
+
+Workers’ historical count is 110 at `dc9d089c`. GitHub could not resolve that abbreviated commit and the per-site inventory was unavailable. The number of sites in that specific cohort that clear or reach a later stop remains unverified. Section 4 lists the measured changes on the requested snapshots.
+
+## 2. Units whose first stop moved
+
+### Compiler directory
+
+Raw finding grades across all reasons are 0 new, 55 gone, 4 changed, 0 reached.
+
+#### Now lower whole in the scoped measurement
+
+None.
+
+#### Reached a later stop
+
+None.
+
+#### Moved to an earlier or different stop
+
+None.
+
+#### Previously clean units that now stop
+
+None.
+
+### Including each unit’s first recorded refusal-scan stop
+
+#### Now lower whole in the scoped measurement
+
+None.
+
+#### Reached a later stop
+
+- `createMemberAccessForPropertyName` at `src/compiler/factory/utilities.ts:189:1`. **Base** `src/compiler/factory/utilities.ts:196:66` (Refused, refusal_scan) src/compiler/factory/utilities.ts:196:66: Adamic 0.1 refuses an object refinement using an open numeric enum as a literal tag; use a member-specific tag from a multi-member enum, a string enum, or a plain literal tag (adamic/enum-tag). **Head** `src/compiler/binder.ts:1106:17` (NotYet, lowering) src/compiler/binder.ts:1106:17: stage 0 can't lower writing a checked object field that may hold undefined or null, whose checked write can't change the representation its slot holds yet.
+- `IdentifierNameMap` at `src/compiler/transformers/utilities.ts:391:1`. **Base** `src/compiler/transformers/utilities.ts:428:56` (Refused, refusal_scan) src/compiler/transformers/utilities.ts:428:56: Adamic 0.1 refuses an object refinement using an open numeric enum as a literal tag; use a member-specific tag from a multi-member enum, a string enum, or a plain literal tag (adamic/enum-tag). **Head** `src/compiler/transformers/utilities.ts:429:119` (Refused, refusal_scan) src/compiler/transformers/utilities.ts:429:119: Adamic 0.1 refuses a method read as a value (toKey would lose its object, and this with it); call it in an arrow that keeps the object: (name) => IdentifierNameMap.toKey(name) (unbound-method).
+- `getTextOfIdentifierOrLiteral` at `src/compiler/utilities.ts:5438:1`. **Base** `src/compiler/utilities.ts:5439:40` (Refused, refusal_scan) src/compiler/utilities.ts:5439:40: Adamic 0.1 refuses an object refinement using an open numeric enum as a literal tag; use a member-specific tag from a multi-member enum, a string enum, or a plain literal tag (adamic/enum-tag). **Head** `src/compiler/binder.ts:1106:17` (NotYet, lowering) src/compiler/binder.ts:1106:17: stage 0 can't lower writing a checked object field that may hold undefined or null, whose checked write can't change the representation its slot holds yet.
+- `getEscapedTextOfIdentifierOrLiteral` at `src/compiler/utilities.ts:5443:1`. **Base** `src/compiler/utilities.ts:5444:33` (Refused, refusal_scan) src/compiler/utilities.ts:5444:33: Adamic 0.1 refuses an object refinement using an open numeric enum as a literal tag; use a member-specific tag from a multi-member enum, a string enum, or a plain literal tag (adamic/enum-tag). **Head** `src/compiler/binder.ts:1106:17` (NotYet, lowering) src/compiler/binder.ts:1106:17: stage 0 can't lower writing a checked object field that may hold undefined or null, whose checked write can't change the representation its slot holds yet.
+
+#### Moved to an earlier or different stop
+
+None.
+
+#### Previously clean units that now stop
+
+None.
+
+## 3. Regressions
+
+### Compiler directory
+
+- Previously clean measured units now stopped: 0.
+- New independent findings: 0.
+- Different findings at existing sites: 4. The head diagnoses below are newly recorded under their reasons and have the grade changed.
+  - **Base** `src/compiler/binder.ts:916:51` (Refused, refusal_scan) src/compiler/binder.ts:916:51: Adamic 0.1 refuses an object refinement using an open numeric enum as a literal tag; use a member-specific tag from a multi-member enum, a string enum, or a plain literal tag (adamic/enum-tag). **Head** `src/compiler/binder.ts:916:51` (NotYet, refusal_scan) src/compiler/binder.ts:916:51: stage 0 can't lower a read of container narrowed to ArrowFunction | CallSignatureDeclaration | ClassStaticBlockDeclaration | ConstructSignatureDeclaration | ... 15 more ... | TypeAliasDeclaration where a call may have rewritten it (container is assigned inside bindSourceFile) yet.
+  - **Base** `src/compiler/binder.ts:920:45` (Refused, refusal_scan) src/compiler/binder.ts:920:45: Adamic 0.1 refuses an object refinement using an open numeric enum as a literal tag; use a member-specific tag from a multi-member enum, a string enum, or a plain literal tag (adamic/enum-tag). **Head** `src/compiler/binder.ts:920:45` (NotYet, refusal_scan) src/compiler/binder.ts:920:45: stage 0 can't lower a read of container narrowed to ArrowFunction | CallSignatureDeclaration | ClassStaticBlockDeclaration | ConstructSignatureDeclaration | ... 15 more ... | TypeAliasDeclaration where a call may have rewritten it (container is assigned inside bindSourceFile) yet.
+  - **Base** `src/compiler/binder.ts:921:52` (Refused, refusal_scan) src/compiler/binder.ts:921:52: Adamic 0.1 refuses an object refinement using an open numeric enum as a literal tag; use a member-specific tag from a multi-member enum, a string enum, or a plain literal tag (adamic/enum-tag). **Head** `src/compiler/binder.ts:921:52` (NotYet, refusal_scan) src/compiler/binder.ts:921:52: stage 0 can't lower a read of container narrowed to ArrowFunction | CallSignatureDeclaration | ClassStaticBlockDeclaration | ConstructSignatureDeclaration | ... 15 more ... | TypeAliasDeclaration where a call may have rewritten it (container is assigned inside bindSourceFile) yet.
+  - **Base** `src/compiler/binder.ts:921:79` (Refused, refusal_scan) src/compiler/binder.ts:921:79: Adamic 0.1 refuses an object refinement using an open numeric enum as a literal tag; use a member-specific tag from a multi-member enum, a string enum, or a plain literal tag (adamic/enum-tag). **Head** `src/compiler/binder.ts:921:79` (NotYet, refusal_scan) src/compiler/binder.ts:921:79: stage 0 can't lower a read of container narrowed to ArrowFunction | CallSignatureDeclaration | ClassStaticBlockDeclaration | ConstructSignatureDeclaration | ... 15 more ... | TypeAliasDeclaration where a call may have rewritten it (container is assigned inside bindSourceFile) yet.
+- Newly reached findings: 0.
+- New panics: 0.
+
+## 4. Changes by predicate
+
+The changed reads below come from the measured pair. Calls were identified from the stock TypeScript control-flow graph and checked against the adapted source. At the two checker reads of `declaration` at lines 11961 and 11968, the checker narrows the variable and leaves the accessed fields at their declared types. Two other reads clear under `supportsUnlabeledBreak`, which also compares a finite set of kinds. The historical probe’s per-site list is needed to match the original 110-site population one by one.
+
+### Compiler directory
+
+| Predicate | Cleared at read | Another finding at read | Unit first stop moved later |
+| --- | ---: | ---: | ---: |
+| isMemberName | 20 | 0 | 4 |
+| isPropertyNameLiteral | 0 | 0 | 0 |
+| isBindingPattern | 8 | 0 | 0 |
+| hasOnlyExpressionInitializer | 18 | 0 | 0 |
+| isClassLike | 1 | 0 | 0 |
+| canHaveLocals | 0 | 4 | 0 |
+| isPropertyName | 0 | 0 | 0 |
+| isAssignmentPattern | 1 | 0 | 0 |
+| supportsUnlabeledBreak | 2 | 0 | 0 |
+| Unresolved | 0 | 0 | 0 |
+
+#### `isMemberName`
+
+- `src/compiler/emitter.ts:5253:58`. Cleared at this read. Candidate call locations are `isMemberName` at `src/compiler/emitter.ts:5252:13`.
+- `src/compiler/emitter.ts:5254:31`. Cleared at this read. Candidate call locations are `isMemberName` at `src/compiler/emitter.ts:5252:13`.
+- `src/compiler/emitter.ts:5257:38`. Cleared at this read. Candidate call locations are `isMemberName` at `src/compiler/emitter.ts:5252:13`.
+- `src/compiler/emitter.ts:5258:58`. Cleared at this read. Candidate call locations are `isMemberName` at `src/compiler/emitter.ts:5252:13`.
+- `src/compiler/emitter.ts:5259:51`. Cleared at this read. Candidate call locations are `isMemberName` at `src/compiler/emitter.ts:5252:13`.
+- `src/compiler/emitter.ts:5263:30`. Cleared at this read. Candidate call locations are `isMemberName` at `src/compiler/emitter.ts:5252:13`.
+- `src/compiler/emitter.ts:5265:24`. Cleared at this read. Candidate call locations are `isMemberName` at `src/compiler/emitter.ts:5252:13`.
+- `src/compiler/factory/utilities.ts:196:66`. Cleared at this read. The unit’s next recorded stop is `src/compiler/binder.ts:1106:17` (NotYet, lowering) src/compiler/binder.ts:1106:17: stage 0 can't lower writing a checked object field that may hold undefined or null, whose checked write can't change the representation its slot holds yet. Candidate call locations are `isMemberName` at `src/compiler/factory/utilities.ts:195:13`.
+- `src/compiler/factory/utilities.ts:197:65`. Cleared at this read. Candidate call locations are `isMemberName` at `src/compiler/factory/utilities.ts:195:13`.
+- `src/compiler/transformers/utilities.ts:428:56`. Cleared at this read. The unit’s next recorded stop is `src/compiler/transformers/utilities.ts:429:119` (Refused, refusal_scan) src/compiler/transformers/utilities.ts:429:119: Adamic 0.1 refuses a method read as a value (toKey would lose its object, and this with it); call it in an arrow that keeps the object: (name) => IdentifierNameMap.toKey(name) (unbound-method). Candidate call locations are `isMemberName` at `src/compiler/transformers/utilities.ts:428:34`.
+- `src/compiler/transformers/utilities.ts:428:96`. Cleared at this read. Candidate call locations are `isMemberName` at `src/compiler/transformers/utilities.ts:428:34`.
+- `src/compiler/transformers/utilities.ts:428:128`. Cleared at this read. Candidate call locations are `isMemberName` at `src/compiler/transformers/utilities.ts:428:34`.
+- `src/compiler/utilities.ts:5439:40`. Cleared at this read. The unit’s next recorded stop is `src/compiler/binder.ts:1106:17` (NotYet, lowering) src/compiler/binder.ts:1106:17: stage 0 can't lower writing a checked object field that may hold undefined or null, whose checked write can't change the representation its slot holds yet. Candidate call locations are `isMemberName` at `src/compiler/utilities.ts:5439:12`.
+- `src/compiler/utilities.ts:5439:68`. Cleared at this read. Candidate call locations are `isMemberName` at `src/compiler/utilities.ts:5439:12`.
+- `src/compiler/utilities.ts:5439:103`. Cleared at this read. Candidate call locations are `isMemberName` at `src/compiler/utilities.ts:5439:12`.
+- `src/compiler/utilities.ts:5439:111`. Cleared at this read. Candidate call locations are `isMemberName` at `src/compiler/utilities.ts:5439:12`.
+- `src/compiler/utilities.ts:5444:33`. Cleared at this read. The unit’s next recorded stop is `src/compiler/binder.ts:1106:17` (NotYet, lowering) src/compiler/binder.ts:1106:17: stage 0 can't lower writing a checked object field that may hold undefined or null, whose checked write can't change the representation its slot holds yet. Candidate call locations are `isMemberName` at `src/compiler/utilities.ts:5444:12`.
+- `src/compiler/utilities.ts:5444:72`. Cleared at this read. Candidate call locations are `isMemberName` at `src/compiler/utilities.ts:5444:12`.
+- `src/compiler/utilities.ts:5444:114`. Cleared at this read. Candidate call locations are `isMemberName` at `src/compiler/utilities.ts:5444:12`.
+- `src/compiler/utilities.ts:5444:147`. Cleared at this read. Candidate call locations are `isMemberName` at `src/compiler/utilities.ts:5444:12`.
+
+#### `isBindingPattern`
+
+- `src/compiler/checker.ts:32006:79`. Cleared at this read. Candidate call locations are `isBindingPattern` at `src/compiler/checker.ts:32006:28`.
+- `src/compiler/checker.ts:32012:57`. Cleared at this read. Candidate call locations are `isBindingPattern` at `src/compiler/checker.ts:32006:28`.
+- `src/compiler/checker.ts:32040:110`. Cleared at this read. Candidate call locations are `isBindingPattern` at `src/compiler/checker.ts:32040:72`.
+- `src/compiler/checker.ts:32041:50`. Cleared at this read. Candidate call locations are `isBindingPattern` at `src/compiler/checker.ts:32040:72`.
+- `src/compiler/checker.ts:42262:48`. Cleared at this read. Candidate call locations are `isBindingPattern` at `src/compiler/checker.ts:42261:75`.
+- `src/compiler/checker.ts:42262:60`. Cleared at this read. Candidate call locations are `isBindingPattern` at `src/compiler/checker.ts:42261:75`.
+- `src/compiler/checker.ts:45125:65`. Cleared at this read. Candidate call locations are `isBindingPattern` at `src/compiler/checker.ts:45124:32`.
+- `src/compiler/emitter.ts:5450:31`. Cleared at this read. Candidate call locations are `isBindingPattern` at `src/compiler/emitter.ts:5449:22`.
+
+#### `hasOnlyExpressionInitializer`
+
+- `src/compiler/checker.ts:11946:60`. Cleared at this read. Candidate call locations are `hasOnlyExpressionInitializer` at `src/compiler/checker.ts:11946:13`.
+- `src/compiler/checker.ts:11947:28`. Cleared at this read. Candidate call locations are `hasOnlyExpressionInitializer` at `src/compiler/checker.ts:11946:13`.
+- `src/compiler/checker.ts:11947:57`. Cleared at this read. Candidate call locations are `hasOnlyExpressionInitializer` at `src/compiler/checker.ts:11946:13`.
+- `src/compiler/checker.ts:11948:70`. Cleared at this read. Candidate call locations are `hasOnlyExpressionInitializer` at `src/compiler/checker.ts:11946:13`.
+- `src/compiler/checker.ts:11948:106`. Cleared at this read. Candidate call locations are `hasOnlyExpressionInitializer` at `src/compiler/checker.ts:11946:13`.
+- `src/compiler/checker.ts:11948:150`. Cleared at this read. Candidate call locations are `hasOnlyExpressionInitializer` at `src/compiler/checker.ts:11946:13`.
+- `src/compiler/checker.ts:11953:59`. Cleared at this read. Candidate call locations are `hasOnlyExpressionInitializer` at `src/compiler/checker.ts:11946:13`.
+- `src/compiler/checker.ts:11953:100`. Cleared at this read. Candidate call locations are `hasOnlyExpressionInitializer` at `src/compiler/checker.ts:11946:13`.
+- `src/compiler/checker.ts:11957:80`. Cleared at this read. Candidate call locations are `hasOnlyExpressionInitializer` at `src/compiler/checker.ts:11946:13`.
+- `src/compiler/checker.ts:11960:36`. Cleared at this read. Candidate call locations are `hasOnlyExpressionInitializer` at `src/compiler/checker.ts:11946:13`.
+- `src/compiler/checker.ts:11961:64`. Cleared at this read. Candidate call locations are `hasOnlyExpressionInitializer` at `src/compiler/checker.ts:11946:13`.
+- `src/compiler/checker.ts:11962:69`. Cleared at this read. Candidate call locations are `hasOnlyExpressionInitializer` at `src/compiler/checker.ts:11946:13`.
+- `src/compiler/checker.ts:11963:47`. Cleared at this read. Candidate call locations are `hasOnlyExpressionInitializer` at `src/compiler/checker.ts:11946:13`.
+- `src/compiler/checker.ts:11963:115`. Cleared at this read. Candidate call locations are `hasOnlyExpressionInitializer` at `src/compiler/checker.ts:11946:13`.
+- `src/compiler/checker.ts:11968:45`. Cleared at this read. Candidate call locations are `hasOnlyExpressionInitializer` at `src/compiler/checker.ts:11946:13`.
+- `src/compiler/checker.ts:11969:78`. Cleared at this read. Candidate call locations are `hasOnlyExpressionInitializer` at `src/compiler/checker.ts:11946:13`.
+- `src/compiler/checker.ts:11970:47`. Cleared at this read. Candidate call locations are `hasOnlyExpressionInitializer` at `src/compiler/checker.ts:11946:13`.
+- `src/compiler/checker.ts:11970:115`. Cleared at this read. Candidate call locations are `hasOnlyExpressionInitializer` at `src/compiler/checker.ts:11946:13`.
+
+#### `isClassLike`
+
+- `src/compiler/checker.ts:20379:47`. Cleared at this read. Candidate call locations are `isClassLike` at `src/compiler/checker.ts:20379:24`.
+
+#### `canHaveLocals`
+
+- `src/compiler/binder.ts:916:51`. Remaining stops at this read include `src/compiler/binder.ts:916:51` (NotYet, refusal_scan) src/compiler/binder.ts:916:51: stage 0 can't lower a read of container narrowed to ArrowFunction | CallSignatureDeclaration | ClassStaticBlockDeclaration | ConstructSignatureDeclaration | ... 15 more ... | TypeAliasDeclaration where a call may have rewritten it (container is assigned inside bindSourceFile) yet. Candidate call locations are `canHaveLocals` at `src/compiler/binder.ts:916:22`.
+- `src/compiler/binder.ts:920:45`. Remaining stops at this read include `src/compiler/binder.ts:920:45` (NotYet, refusal_scan) src/compiler/binder.ts:920:45: stage 0 can't lower a read of container narrowed to ArrowFunction | CallSignatureDeclaration | ClassStaticBlockDeclaration | ConstructSignatureDeclaration | ... 15 more ... | TypeAliasDeclaration where a call may have rewritten it (container is assigned inside bindSourceFile) yet. Candidate call locations are `canHaveLocals` at `src/compiler/binder.ts:916:22`.
+- `src/compiler/binder.ts:921:52`. Remaining stops at this read include `src/compiler/binder.ts:921:52` (NotYet, refusal_scan) src/compiler/binder.ts:921:52: stage 0 can't lower a read of container narrowed to ArrowFunction | CallSignatureDeclaration | ClassStaticBlockDeclaration | ConstructSignatureDeclaration | ... 15 more ... | TypeAliasDeclaration where a call may have rewritten it (container is assigned inside bindSourceFile) yet. Candidate call locations are `canHaveLocals` at `src/compiler/binder.ts:916:22`.
+- `src/compiler/binder.ts:921:79`. Remaining stops at this read include `src/compiler/binder.ts:921:79` (NotYet, refusal_scan) src/compiler/binder.ts:921:79: stage 0 can't lower a read of container narrowed to ArrowFunction | CallSignatureDeclaration | ClassStaticBlockDeclaration | ConstructSignatureDeclaration | ... 15 more ... | TypeAliasDeclaration where a call may have rewritten it (container is assigned inside bindSourceFile) yet. Candidate call locations are `canHaveLocals` at `src/compiler/binder.ts:916:22`.
+
+#### `isAssignmentPattern`
+
+- `src/compiler/transformers/es2018.ts:732:81`. Cleared at this read. Candidate call locations are `isAssignmentPattern` at `src/compiler/transformers/es2018.ts:732:13`.
+
+#### `supportsUnlabeledBreak`
+
+- `src/compiler/transformers/generators.ts:2472:32`. Cleared at this read. Candidate call locations are `supportsUnlabeledBreak` at `src/compiler/transformers/generators.ts:2471:30`.
+- `src/compiler/transformers/generators.ts:2480:32`. Cleared at this read. Candidate call locations are `supportsUnlabeledBreak` at `src/compiler/transformers/generators.ts:2479:25`.
+
+## 5. First stops across the 79 roots
+
+Pending. The ordinary per-root measurements follow the entry pair.
+
+The completed streams and paired directory evidence are under [evidence](evidence/).
