@@ -4,7 +4,7 @@ Base `1a6b689e009ad27575887a18c938a6342a6cf2ca` is the sole parent of head `793e
 
 Stage 3 used TypeScript v6.0.3 at `050880ce59e30b356b686bd3144efe24f875ebc8`. Base and head applied the same keyed product after submodule initialization. A recursive file comparison outside Git metadata found zero differences, and all 312 checkpoint refs matched. The last checkpoint was tree `8f61e6699b44dd0e54523a760720a37acdd8cecb`. Both measurements use the base-applied tree.
 
-The latent runs use `CENSUS_MODULE_FORMAT=CommonJSBundle`, `LATENT_FULL=0`, `LATENT_TAIL=1`, `LATENT_ASSERT_NO_OUTPUT=1` and `GOMAXPROCS=4`. [Evidence](evidence/) is pushed after each pass. Both latent pairs are complete. The root census is pending.
+The latent runs use `CENSUS_MODULE_FORMAT=CommonJSBundle`, `LATENT_FULL=0`, `LATENT_TAIL=1`, `LATENT_ASSERT_NO_OUTPUT=1` and `GOMAXPROCS=4`. [Evidence](evidence/) is pushed after each pass. Both latent pairs and the ordinary 79-root census are complete.
 
 ## 1. Family 1 site counts
 
@@ -14,6 +14,7 @@ Exact reason is “an object refinement using an open numeric enum as a literal 
 | --- | ---: | ---: | ---: | ---: |
 | Compiler directory | 503 | 671 | 493 | 661 |
 | `tsc.ts` entry | 503 | 671 | 493 | 661 |
+| Ordinary per-root first stops | 0 | 0 | 0 | 0 |
 
 Both pairs have the same **10 cleared reads and zero reads that move to a later stop**. The 110-site historical count is recorded at `dc9d089c`. That abbreviated commit could not be resolved, and the per-site inventory was unavailable. Overlap with that exact cohort remains unverified. [U1 commit](https://github.com/system-inc/adamic/commit/faf9b5093cfbcf5f4c8e373a3285ffbd268c7fa5)
 
@@ -32,7 +33,7 @@ The grades use kind, phase, reason and message with message positions stripped, 
 
 ## 3. Regressions
 
-Each latent pair has zero regressions. Zero units lowered at base and stop at head, zero new findings appeared under any reason, and zero new panics appeared. Every stream recorded zero panics. Findings across all reasons fell from 2,983 to 2,973 in each pair.
+Each latent pair has zero regressions. Zero units lowered at base and stop at head, zero new findings appeared under any reason, and zero new panics appeared. Every latent stream recorded zero panics. The ordinary root census also shows zero regressions. Findings across all reasons fell from 2,983 to 2,973 in each pair.
 
 ## 4. Sites by predicate
 
@@ -74,4 +75,15 @@ The five slowest entry-head units by wall time follow. The largest per-unit wall
 
 ## 6. First stops across the 79 roots
 
-Pending.
+**0 of 79 roots moved.** This uses the meter's ordinary CommonJSBundle census. Each side records 76 NotYet, one Refused and two accepted outcomes. The accepted roots are `corePublic.ts` and `hostErrors.ts`. No root's first stop used the family-1 reason. Paths in the table are relative to `src/compiler/`.
+
+| Roots | Count on each side | First stop or outcome |
+| --- | ---: | --- |
+| All other roots | 73 | NotYet at `tracing.ts:76:15`. A read of `mode` narrowed to `"project" \| "server"` where a call may have rewritten it, because `mode` is assigned inside `startTracing`. |
+| `debug.ts` | 1 | NotYet at `semver.ts:71:9`. A namespace is read before runtime initialization, directly or through a reachable call. |
+| `diagnosticInformationMap.generated.ts` | 1 | NotYet at `commandLineParser.ts:293:35`. An enum is read before its runtime initialization. |
+| `tracing.ts` | 1 | Refused at `utilitiesPublic.ts:779:16`. A cast the runtime cannot check. |
+| `types.ts` | 1 | NotYet at `diagnosticInformationMap.generated.ts:13:45`. An enum is read before its runtime initialization. |
+| `corePublic.ts`, `hostErrors.ts` | 2 | Lowered whole. |
+
+The [paired root table](evidence/ordinary-root-table.json.gz) records every root individually. The raw streams retain the meter's three ancillary entries and whole-program row. A separate scan-all comparison of the same 79 roots is in progress.
