@@ -12,6 +12,8 @@ go run ./bench -only parallel_files -threads 1,2,4,8,16 -rounds 5
 
 The runs are interleaved round by round to spread changes in machine load across runtimes, and the best round is reported. Time is wall clock; memory is the process's peak resident set. The counted table comes from `adamic build --count`, run once, untimed: it reports allocations and reference-count calls alongside the timings. The machine, the versions and the load before and after print with the numbers, and numbers without them aren't worth quoting.
 
+On Linux every program runs through `reaper/reaper.c`, a small C process bench builds with clang, which forks the program, waits for it, and hands bench its user time and peak resident set. Started directly, a program's peak was never its own: Go starts a child with `clone(CLONE_VFORK|CLONE_VM)`, and Linux's exec folds the starting memory's high-water resident set into the program's, so every program read at least bench's own (a bench holding 250 MB of inputs read 1321.4 MB for a C program that only prints, J-wme5jp2). Through the reaper, all that can carry over is the reaper's few hundred kilobytes. `TestPeakIsTheProgramsOwn` proves both halves. Peaks measured before the reaper, the tables below among them, include bench's own.
+
 | Program | What it exercises |
 |---|---|
 | `nbody.ts` | floating point on the fields of five objects, 1,000,000 steps |
