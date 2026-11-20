@@ -2,6 +2,7 @@ package lower
 
 import (
 	"errors"
+	"strconv"
 	"strings"
 	"testing"
 
@@ -203,6 +204,27 @@ const nb: NB = { kind: K.B, b: 7 };
 				if !errors.As(err, &stop) || stop.What != p.stop {
 					t.Fatalf("kind-alias closure rebind %s rule 3350 %s: %v", p.name, extension, err)
 				}
+			}
+		})
+	}
+}
+
+// Platforms' premise pin. kindAliasRewritten guards the reference's binding, never the saved tag, so a
+// write to node.kind between the alias and the switch would leave the alias stale. No program makes that
+// write without a view whose tag is wider than the member's literal, and family 3 refuses that view at
+// the call that hands node over. If family 3's rule is ever narrowed, the alias road opens here first.
+func TestKindAliasTagWriteThroughWiderViewIsRefused(t *testing.T) {
+	t.Parallel()
+	const show = "function retag(target: { kind: K }): void { target.kind = K.B; }\nfunction show(node: N): string {\nconst kind = node.kind;\nretag(node);\nswitch (kind) { case K.A: return node.a.toFixed(0); default: return 'other'; } }\nconsole.log(show(a));\n"
+	source := kindPredicateTypes + kindAliasValues + show
+	line := strconv.Itoa(strings.Count(source[:strings.Index(source, "retag(node);")], "\n") + 1)
+	for _, extension := range []string{".ts", ".a"} {
+		t.Run(extension, func(t *testing.T) {
+			t.Parallel()
+			_, err := lowerSourceAs(t, source, extension)
+			var refused *Refused
+			if !errors.As(err, &refused) || !strings.Contains(refused.What, ", which can write ") || !strings.Contains(refused.Where, ":"+line+":") {
+				t.Fatalf("kind-alias tag write %s: want family 3's refusal at the retag call on line %s, got %v", extension, line, err)
 			}
 		})
 	}

@@ -66,3 +66,7 @@ lowers in .ts and .a, agrees with Node and prints yes on sanitized native.
 default_parameter, parameter_open and let_open use kindPredicateTypes' open
 tag, so they reach the walk; parameter and let use closed tags and only show
 3350.
+
+The family 3 premise pin: TestKindAliasTagWriteThroughWiderViewIsRefused writes the
+tag through a wider view `{ kind: K }` between the alias and the switch, and must be
+refused at that call. The road rests on that refusal, not on its own walk.
