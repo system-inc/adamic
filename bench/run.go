@@ -15,8 +15,9 @@
 // reported, the run least disturbed by everything else on the machine. Beside its wall time, each
 // run reports its user time, the CPU time it spent in user mode across every thread, so a parallel
 // program shows what its speed cost. Peak memory is the process's maximum resident set, from the
-// operating system. The machine and its load, before and after, are printed with the numbers,
-// because numbers without them aren't worth reading.
+// operating system, read on Linux through bench/reaper/reaper.c (buildReaper says why). The machine
+// and its load, before and after, are printed with the numbers, because numbers without them aren't
+// worth reading.
 //
 // A run that measured nothing is refused, and its cell says why instead of giving a number: one
 // that exited nonzero or printed nothing, one at or below the wall clock's resolution, and one no
@@ -32,6 +33,7 @@ import (
 	"errors"
 	"flag"
 	"fmt"
+	"io"
 	"os"
 	"os/exec"
 	"path/filepath"
@@ -68,6 +70,10 @@ type measurement struct {
 	stdout  string
 	failure string
 }
+
+// reaper is bench/reaper/reaper.c built, which run starts every program through, or empty when there
+// is none and run starts the program itself.
+var reaper string
 
 var countsLine = regexp.MustCompile(`adamic: counts: allocations (\d+) frees (\d+) retains (\d+) releases (\d+) peak (\d+) regions (\d+)`)
 
@@ -121,6 +127,9 @@ func main() {
 		fail(err)
 	}
 	defer os.RemoveAll(work)
+	if reaper, err = buildReaper(work); err != nil {
+		fail(err)
+	}
 
 	programs, err := findPrograms(directory, *only)
 	if err != nil {
@@ -340,17 +349,61 @@ func nodeCommand(program program, root string) []string {
 	return []string{"node", program.source}
 }
 
-// run runs a command to the end, and measures it.
+// buildReaper builds bench/reaper/reaper.c into work, on Linux, for run to start every program through.
+// Go starts a child with clone(CLONE_VFORK|CLONE_VM), and Linux's exec folds the old memory's high-water
+// resident set into the new program's maximum (fs/exec.c, exec_mmap), so bench's own resident set was a
+// floor under every program's peak: a bench holding 250 MB of inputs read 1321.4 MB for every program,
+// one in C that only prints among them (J-wme5jp2). Through the reaper, the old memory is the reaper's,
+// a few hundred kilobytes. The fold is Linux's exec, so elsewhere it builds nothing and run starts the
+// program itself, its peak read by peakResident as always.
+func buildReaper(work string) (string, error) {
+	if runtime.GOOS != "linux" {
+		return "", nil
+	}
+	directory, err := benchDirectory()
+	if err != nil {
+		return "", err
+	}
+	binary := filepath.Join(work, "reaper")
+	if output, err := exec.Command("clang", "-O2", "-o", binary, filepath.Join(directory, "reaper", "reaper.c")).CombinedOutput(); err != nil {
+		return "", fmt.Errorf("building bench/reaper/reaper.c: %v\n%s", err, output)
+	}
+	return binary, nil
+}
+
+// run runs a command to the end, and measures it. With a reaper, the command runs through it, and its
+// user time and peak come from the line the reaper writes to descriptor 3; the wall time is always
+// bench's own clock, and a timeout kills the reaper, which takes the program with it.
 func run(command []string, timeout time.Duration, settings ...string) measurement {
 	ctx, cancel := context.WithTimeout(context.Background(), timeout)
 	defer cancel()
+	var usageRead, usageWrite *os.File
+	if reaper != "" {
+		var err error
+		usageRead, usageWrite, err = os.Pipe()
+		if err != nil {
+			return measurement{failure: fmt.Sprintf("failed: a pipe for the reaper: %v", err)}
+		}
+		defer usageRead.Close()
+		command = append([]string{reaper, "3"}, command...)
+	}
 	process := exec.CommandContext(ctx, command[0], command[1:]...)
 	process.Env = append(environment(), settings...)
 	var stdout, stderr bytes.Buffer
 	process.Stdout = &stdout
 	process.Stderr = &stderr
+	if usageWrite != nil {
+		process.ExtraFiles = []*os.File{usageWrite}
+	}
 	start := time.Now()
-	err := process.Run()
+	err := process.Start()
+	if usageWrite != nil {
+		// The reaper has its own copy now; with this one closed, the pipe ends when the reaper does.
+		usageWrite.Close()
+	}
+	if err == nil {
+		err = process.Wait()
+	}
 	elapsed := time.Since(start)
 	if ctx.Err() != nil {
 		return measurement{failure: "did not finish in " + timeout.String()}
@@ -361,7 +414,40 @@ func run(command []string, timeout time.Duration, settings ...string) measuremen
 	if strings.TrimSpace(stdout.String()) == "" {
 		return measurement{failure: "printed nothing"}
 	}
-	return measurement{elapsed: elapsed, user: process.ProcessState.UserTime(), peak: peakResident(process.ProcessState), stdout: keptOutput(stdout.Bytes())}
+	if usageRead == nil {
+		return measurement{elapsed: elapsed, user: process.ProcessState.UserTime(), peak: peakResident(process.ProcessState), stdout: keptOutput(stdout.Bytes())}
+	}
+	line, err := io.ReadAll(usageRead)
+	if err != nil {
+		return measurement{failure: fmt.Sprintf("failed: reading the reaper's usage line: %v", err)}
+	}
+	user, peak, err := reaped(string(line))
+	if err != nil {
+		return measurement{failure: "failed: " + err.Error()}
+	}
+	return measurement{elapsed: elapsed, user: user, peak: peak, stdout: keptOutput(stdout.Bytes())}
+}
+
+// reaped reads the reaper's line, "<user microseconds> <system microseconds> <maxrss kilobytes>\n", as
+// the program's user time and its peak resident set in bytes. The system time must read as a number too,
+// though a measurement has nowhere to keep it. A line missing or cut short is an error, never a zero.
+func reaped(line string) (time.Duration, int64, error) {
+	if line == "" {
+		return 0, 0, errors.New("the reaper wrote no usage line")
+	}
+	fields := strings.Fields(line)
+	if len(fields) != 3 || !strings.HasSuffix(line, "\n") {
+		return 0, 0, fmt.Errorf("the reaper's usage line %q isn't three numbers and a newline", line)
+	}
+	numbers := [3]int64{}
+	for index, field := range fields {
+		number, err := strconv.ParseInt(field, 10, 64)
+		if err != nil || number < 0 {
+			return 0, 0, fmt.Errorf("the reaper's usage line %q has %q, which isn't a count", line, field)
+		}
+		numbers[index] = number
+	}
+	return time.Duration(numbers[0]) * time.Microsecond, numbers[2] * 1024, nil
 }
 
 // outputKeptWhole is the most of a run's standard output kept as it was printed.
