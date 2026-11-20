@@ -206,6 +206,58 @@ declarations and source maps disabled matched byte for byte.
 | `types.js` | 143,574 | `2d9c56f3aa77cf1043b35d6278002533471872ef706f54fdb51ffac215dee5c1` |
 
 
+### Merged-head refusal scan and restoring mutant
+
+The instrumented scan-all probe built at the measurement merge used
+CommonJSBundle with `src/tsc/tsc.ts` as its root in each run. The before
+source came from a full apply of the unmodified fix. The after source
+matches the independent full apply byte for byte. The mutant changes one
+line of that source, restoring `let aliasTypeArguments: Type[] | undefined`
+in `getTypeFromTypeAliasReference`. All three streams reached the first
+pipeline boundary `production abort at lowering.declareModule`.
+
+| Tree | Refusal-scan events | All observations | Distinct observations | Raw stream SHA-256 |
+| --- | ---: | ---: | ---: | --- |
+| Before | 3,490 | 3,491 | 1,972 | `012e5902e4f0c6d1c633b76150be3461f70ffd8901360271ba17e42279eaf6c2` |
+| After | 3,485 | 3,486 | 1,967 | `2b37432f671ee4c6144d122ebeec32aaa4b26af9b816b48364f3144ff0e21f2c` |
+| Mutant | 3,486 | 3,487 | 1,968 | `394d31c5fa6b6fe15b01e871b961937216f9ab2b249c89ed1f95bdab872ece38` |
+
+The multiset comparison retains repetitions and strips each absolute source
+root. Each row gives the multiplicity delta and the full
+`(kind, rule, site, words)` key.
+
+```text
+Before -> after
+-1 ("scan stop", "refusal_scan/stringWideningRefusal", "src/compiler/checker.ts:16636:13", "a value of type TypeParameter[] | undefined seen as Type[] | undefined, which can write Type where TypeParameter is read")
+-1 ("scan stop", "refusal_scan/stringWideningRefusal", "src/compiler/checker.ts:16975:70", "a value of type TypeParameter[] | undefined seen as Type[] | undefined, which can write Type where TypeParameter is read")
+-1 ("scan stop", "refusal_scan/stringWideningRefusal", "src/compiler/checker.ts:17031:47", "a value of type TypeParameter[] | undefined seen as Type[] | undefined, which can write Type where TypeParameter is read")
+-1 ("scan stop", "refusal_scan/stringWideningRefusal", "src/compiler/checker.ts:17098:38", "a value of type TypeParameter[] | undefined seen as Type[] | undefined, which can write Type where TypeParameter is read")
+-1 ("scan stop", "refusal_scan/stringWideningRefusal", "src/compiler/checker.ts:19979:17", "a value of type TypeParameter[] | undefined seen as Type[] | undefined, which can write Type where TypeParameter is read")
+
+After -> mutant
++1 ("scan stop", "refusal_scan/stringWideningRefusal", "src/compiler/checker.ts:17098:38", "a value of type TypeParameter[] | undefined seen as Type[] | undefined, which can write Type where TypeParameter is read")
+```
+
+The adaptation adds zero observations under any rule. The mutant removes
+zero observations and adds exactly the restored stop.
+
+### Full applies and adapted-tree product
+
+Two independent `stage3/apply.sh --build-product` runs into fresh
+directories exited 0. All 84,339 working-tree paths matched by bytes, mode,
+or symlink target, and the Git snapshot refs matched separately. The file
+inventory SHA-256 was
+`365ebbbe428bc0c561e7531519af2b826c99a152cc35544105b274a0dd772321`.
+`checker.ts` and `types.ts` are the only source files that differ between
+the unmodified fix apply and the adaptation apply.
+
+`go test -v -timeout 30m ./stage3/lane/adaptedtree -run '^TestProduct_Stage3AdaptedTree$'`
+passed with Go 1.27.1. Its upstream compiler and test harness built from the
+pinned source and locked dependencies. The product's public
+`typescript.d.ts` matched the after snapshot above byte for byte
+(SHA-256 `f2dbe93552eeb8954d4385b7bbfa5549297ab1a9f6785c9891166c144602d3a0`).
+
+
 ## Split refusal scans and mutants
 
 The fix is `71f6d8b1`. The independent measurement merges are `36091025ff13882766d6c7a6bbdbb57be4a86a6b` (A) and `7fc73c54eae2e312a1de4536abae6f09a0a0d4a6` (B). Their compiler and census sources match the common fix-plus-main probe at `3082cdd0`. Each variant ran the instrumented CommonJSBundle probe rooted at `src/tsc/tsc.ts`. It reached the same first pipeline observation in every stream. The baseline includes the recent main compiler update. Its count supersedes the historical two-site measurement for this comparison.
