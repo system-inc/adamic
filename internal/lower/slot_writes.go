@@ -177,8 +177,8 @@ func (l *lowering) reachHoldsSlot(reach *slotReach, name string, reaches ir.Allo
 		holds := holdsSlot(literal.Fields, name)
 		if !holds && literal.Class != 0 && (literal.Class > len(l.result.Classes) || !l.result.Classes[literal.Class-1].Literal) {
 			for class := literal.Class; class > 0 && class <= len(l.result.Classes); class = l.result.Classes[class-1].Base {
-				if declaration := l.missingMergedSlots[class][name]; declaration != nil {
-					return ", " + missingMergedSlot(declaration, name)
+				if words := l.missingMergedSlots[class][name]; words != "" {
+					return ", " + words
 				}
 			}
 			class := "a class"

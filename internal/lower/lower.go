@@ -726,8 +726,9 @@ type lowering struct {
 	// a view of it through any type naming the field reaches the same object (class.go's
 	// absentOptionalWrite).
 	omittedOptionals map[string]bool
-	// A concrete class layout can omit a merged field whose type has no storage.
-	missingMergedSlots map[int]map[string]*ast.Node
+	// A concrete class layout can omit a merged field whose type has no storage, or whose slot could
+	// point onward (mergedLeaf): each class's omitted names, with the words a read or write of one stops in.
+	missingMergedSlots map[int]map[string]string
 	classes            map[*ast.Symbol]*ast.Node
 	statics            map[*ast.Symbol]*instance
 	staticGlobals      map[*ast.Symbol]int

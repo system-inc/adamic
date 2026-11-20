@@ -31,3 +31,15 @@ twin prints `6` on Node. With the reservation removed, both Adamic backends exit
 ```text
 adamic: panic: field read failed: <write>.b is not initialized; expected number, found missing
 ```
+
+## Merged reference slots (Language's c01 on #86cmqrp, Memory's road)
+
+A merged member whose representation can point onward gets no slot (`mergedLeaf` in
+internal/lower/merged_fields.go), because a class with an Absent slot is built down constructionFields,
+whose object is never adopted into a graph region, so a cycle through the slot would never be freed.
+
+| Mutant | Edit | Red test and failure |
+|---|---|---|
+| Leaf check dropped | In `classSlot`, `holds: known && mergedLeaf(of)` becomes `holds: known`. | `TestMergedSlotCycleStops` (cycle, second instance, read) lowers instead of stopping. The cycle then builds with one allocation and no frees, counted. |
+
+The record of the run is the Loom job named in the head's commit message.
