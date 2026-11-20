@@ -1,12 +1,12 @@
 package main
 
 import (
- "github.com/system-inc/adamic/stage3/census/moduleformat"
 	"context"
 	"encoding/json"
 	"fmt"
 	"github.com/system-inc/adamic/internal/load"
 	"github.com/system-inc/adamic/internal/lower"
+	"github.com/system-inc/adamic/stage3/census/moduleformat"
 	"os"
 	"path/filepath"
 	"sort"
@@ -30,6 +30,7 @@ func main() {
 		panic(err)
 	}
 	sort.Strings(paths)
+	witness := newWitnessOutput(os.Args[2])
 	output, err := os.Create(os.Args[2])
 	if err != nil {
 		panic(err)
@@ -56,12 +57,12 @@ func main() {
 	}
 	header := map[string]any{"module_format": moduleformat.Name(), "measurement": lower.LatentMeasurementLabel, "status": "measurement", "latent_mode": censusMode(), "checker_rejected": len(diagnostics) > 0, "diagnostics": diagnostics, "diagnostic_sites": program.LatentDiagnosticSites()}
 	writeLatentStream(encoder, header, output.Sync, func(emit func(lower.LatentFile)) lower.LatentRelationReport {
-		return lower.Latent(context.Background(), program, func(record lower.LatentFile) {
+		return lower.LatentWithWitness(context.Background(), program, func(record lower.LatentFile) {
 			emit(record)
 			fmt.Fprintln(os.Stderr, record.File, len(record.Units), len(record.Findings), lower.LatentMeasurementLabel)
-		})
+		}, witness.writer())
 	})
-
+	witness.publish()
 }
 
 // Flush the header before any lowering. A cutoff cannot manufacture an end

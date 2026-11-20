@@ -68,6 +68,14 @@ overlay('internal/lower/latent_scoped_tail_test.go', (territory / 'scoped_tail_t
 overlay('internal/lower/latent_pass_ledger.go', (territory / 'pass_ledger.go.txt').read_text())
 overlay('internal/lower/latent_full.go', (territory / 'full.go.txt').read_text())
 overlay('internal/lower/latent_units.go', (territory / 'units.go.txt').read_text())
+overlay('internal/lower/latent_witness.go', (territory / 'witness.go.txt').read_text())
+overlay('cohere/TypeScript/tsc/internal/checker/latent_witness.go', (territory / 'witness_checker.go.txt').read_text())
+if '--witness-tests' in sys.argv[3:]:
+    # Production lower tests exercise entry points removed by the guarded overlay.
+    # Keep main's overlaid tests and add the in-process witness test.
+    for test in (repository / 'internal/lower').glob('*_test.go'):
+        replace[str(test)] = ''
+    overlay('internal/lower/latent_witness_test.go', (territory / 'witness_test.go.txt').read_text())
 # Execute the deferred-probe guard against main's real preflight and state copier.
 overlay('internal/lower/latent_deferred_probe_test.go', (territory / 'deferred_probe_test.go.txt').read_text())
 # Compile the tested recorder into the overlay, including per-ref source snapshots.
@@ -128,8 +136,18 @@ functions = functions.replace(needle, needle + '\n if latentConcreteCallDepth > 
 overlay('internal/lower/functions.go', functions)
 generic = (repository / 'internal/lower/generic.go').read_text()
 request_entry = 'func (l *lowering) instantiateFunctionSignature(call *ast.Node, declaration *ast.Node, resolved *checker.Signature) (int, error) {'
-assert generic.count(request_entry) == 1
-generic = generic.replace(request_entry, request_entry + '\n l.latentInstantiationRequest(call, declaration)')
+assert generic.count(request_entry) == 1, request_entry
+generic = generic.replace(request_entry, request_entry + '''
+ return l.instantiateFunctionWithArguments(call, declaration, resolved, nil)
+}
+func (l *lowering) instantiateFunctionWithArguments(call *ast.Node, declaration *ast.Node, resolved *checker.Signature, override map[*checker.Type]*checker.Type) (int, error) {
+ l.latentInstantiationRequest(call, declaration)''')
+instance_types = '\tconcreteTypes := l.instanceTypes(declaration, target, resolved)'
+assert generic.count(instance_types) == 1, instance_types
+generic = generic.replace(instance_types, ''' concreteTypes := override
+ if concreteTypes == nil {
+  concreteTypes = l.instanceTypes(declaration, target, resolved)
+ }''')
 
 needle = 'if err := l.lowerFunction(index, declaration, -1); err != nil {'
 assert generic.count(needle) == 1, 'generic body entry hook'
@@ -172,6 +190,7 @@ if (repository / 'internal/lower/enums.go').exists():
         }""")
 overlay('internal/lower/latent_hook.go', hook)
 overlay('stage3/census/latent/tool/main.go', (territory / 'main.go.txt').read_text())
+overlay('stage3/census/latent/tool/witness_output.go', (territory / 'witness_output.go.txt').read_text())
 overlay('stage3/census/latent/replay/worker/main.go', (territory / 'replay/main.go.txt').read_text())
 # Main resolves signature returns inside signature rather than signatureReturn.
 # Adapt the scratch hook while leaving production source unchanged.
@@ -214,7 +233,7 @@ overlay('internal/lower/latent_speculative.go', (territory / 'speculative.go.txt
 
 # Clean imports after every rewrite, including files subsequently extended above.
 subprocess.run(['go', 'run', str(territory / 'importclean'),
-                *sorted(set(replace.values()))], check=True, cwd=territory)
+                *sorted(set(replace.values()) - {''})], check=True, cwd=territory)
 
 (scratch / 'overlay.json').write_text(json.dumps({'Replace': replace}, indent=2) + '\n')
 print(scratch / 'overlay.json')

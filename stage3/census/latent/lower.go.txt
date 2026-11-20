@@ -9,6 +9,7 @@ import (
 	"github.com/system-inc/adamic/stage3/census/latent"
 	"errors"
 	"fmt"
+	"io"
 	"github.com/microsoft/TypeScript/tsc/shim/ast"
 	"github.com/microsoft/TypeScript/tsc/shim/checker"
 	"github.com/system-inc/adamic/internal/ir"
@@ -245,6 +246,7 @@ var latentInstantiationEntries map[string][]latentRawInstantiation
 // Optional separate stream for distinguishing a stopped caller from a request
 // that reached generic inference but never entered a concrete body.
 func (l *lowering) latentInstantiationRequest(call, declaration *ast.Node) {
+ if latentWitnessProbing { return }
  path := os.Getenv("LATENT_INSTANTIATION_REQUESTS"); if path == "" { return }
  output, err := os.OpenFile(path, os.O_CREATE|os.O_APPEND|os.O_WRONLY, 0600); if err != nil { panic(err) }
  err = json.NewEncoder(output).Encode(struct { Unit string `json:"unit"`; CallSite string `json:"call_site"`; Target string `json:"target"` }{latentFindingOwner,l.program.Where(call),l.program.Where(declaration)})
@@ -282,6 +284,14 @@ func Latent(ctx context.Context, program *load.Program, emit func(LatentFile)) L
 
 // Explicit measurement mode keeps tests parallel without process-wide environment changes.
 func LatentWithRelationChecks(ctx context.Context, program *load.Program, perUnit bool, emit func(LatentFile)) LatentRelationReport {
+    return latentWithWitness(ctx, program, perUnit, emit, nil)
+}
+
+func LatentWithWitness(ctx context.Context, program *load.Program, emit func(LatentFile), output io.Writer) LatentRelationReport {
+    return latentWithWitness(ctx, program, os.Getenv("LATENT_RELATION_PER_UNIT") == "1", emit, output)
+}
+
+func latentWithWitness(ctx context.Context, program *load.Program, perUnit bool, emit func(LatentFile), output io.Writer) LatentRelationReport {
     outerRelationPerUnit := latentRelationPerUnit
     latentRelationPerUnit = perUnit
     defer func() { latentRelationPerUnit = outerRelationPerUnit }()
@@ -304,7 +314,8 @@ func LatentWithRelationChecks(ctx context.Context, program *load.Program, perUni
     relations.CacheSizes = latentRelationCacheSizes(ctx, program)
     relations.Complete(records)
     witnesses := latentFormatInstantiations()
-    for _, record := range records {
+    for i := range records {
+        record := &records[i]
         for index := range record.Units {
             unit := &record.Units[index]
             if unit.Status == "deferred_generic_instantiation" {
@@ -312,8 +323,18 @@ func LatentWithRelationChecks(ctx context.Context, program *load.Program, perUni
                 unit.InstantiatedBy = witnesses[unit.Where]
             }
         }
-        latentAttachPassLedger(&record)
+        latentAttachPassLedger(record)
+    }
+    // Complete the relation and pass reports before any witness can query the checker.
+    if output != nil && os.Getenv("LATENT_MUTANT_WITNESS_FINDING") == "1" {
+        latentWriteWitnesses(ctx, program, records, output)
+        output = nil
+    }
+    for _, record := range records {
         emit(record)
+    }
+    if output != nil {
+        latentWriteWitnesses(ctx, program, records, output)
     }
     return relations
 }

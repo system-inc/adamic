@@ -1,0 +1,64 @@
+// Compiled by the --witness-tests scratch overlay.
+package lower
+
+import (
+	"context"
+	"errors"
+	"path/filepath"
+	"testing"
+
+	"github.com/microsoft/TypeScript/tsc/shim/ast"
+	"github.com/microsoft/TypeScript/tsc/shim/checker"
+	"github.com/system-inc/adamic/internal/ir"
+	"github.com/system-inc/adamic/internal/load"
+)
+
+func TestLatentWitnessSnapshotPreservesLaterCallResult(t *testing.T) {
+	// Not parallel: the census probe temporarily owns the shared finding and reach sinks.
+	ctx := context.Background()
+	fixture := filepath.Join("..", "..", "stage3", "census", "latent", "testdata", "witness", "snapshot")
+	program, err := load.LatentLoad([]string{filepath.Join(fixture, "a-caller.a"), filepath.Join(fixture, "z-body.a")})
+	if err != nil {
+		t.Fatal(err)
+	}
+	files := program.Files()
+	checked, release := program.Checker(ctx, files[0])
+	defer release()
+	base := &lowering{program: program, checker: checked, result: &ir.Program{}, this: -1, functionIndex: -1}
+	base.noteInheritance(files)
+	base.noteAccessorNames(files)
+	base.latentRegister(files)
+
+	first := files[0].Statements.Nodes[1]
+	later := files[0].Statements.Nodes[2]
+	body := files[1].Statements.Nodes[0]
+	var findCall ast.Visitor
+	var call *ast.Node
+	findCall = func(node *ast.Node) bool {
+		if node.Kind == ast.KindCallExpression {
+			call = node
+			return true
+		}
+		return node.ForEachChild(findCall)
+	}
+	first.ForEachChild(findCall)
+	if call == nil {
+		t.Fatal("fixture has no first call")
+	}
+	resolved := checked.GetResolvedSignature(call)
+	arguments := checked.LatentResolvedTypeArguments(resolved)
+	if len(arguments) != 1 {
+		t.Fatalf("fixture call has %d resolved type arguments", len(arguments))
+	}
+	parameter := checked.GetTypeAtLocation(body.TypeParameters()[0].Name())
+	stop := base.latentProbeWitness(call, body, resolved, map[*checker.Type]*checker.Type{parameter: arguments[0]})
+	if stop == nil || stop.Kind != "Refused" || stop.Reason != "var" {
+		t.Fatalf("witness stop = %+v, want var refusal", stop)
+	}
+	laterIndex := base.functions[base.symbol(later.Name())]
+	var refused *Refused
+	err = base.lowerFunction(laterIndex, later, -1)
+	if !errors.As(err, &refused) || refused.What != "var" || refused.Where != stop.Where {
+		t.Fatalf("later unit = %v, want the same var refusal at %s", err, stop.Where)
+	}
+}

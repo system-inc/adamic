@@ -32,6 +32,8 @@ var overlayAnchors = []overlayAnchor{
 	{"expression.go", "func (l *lowering) functionValue(node *ast.Node, target int) (ir.Expression, error) {", false, "73-75"},
 	{"functions.go", "l.signed[index] = signed{this: this, defaults: defaults, patterns: patterns}", false, "78-80"},
 	{"functions.go", "func (l *lowering) lowerFunction(index int, declaration *ast.Node, this int) error {", false, "82-86"},
+	{"generic.go", "func (l *lowering) instantiateFunctionSignature(call *ast.Node, declaration *ast.Node, resolved *checker.Signature) (int, error) {", true, "138-140"},
+	{"generic.go", "\tconcreteTypes := l.instanceTypes(declaration, target, resolved)", true, "145-147"},
 	{"generic.go", "if err := l.lowerFunction(index, declaration, -1); err != nil {", true, "89-90"},
 	{"locals.go", "local, isLocal := l.locals[symbol]", true, "99-100"},
 	{"locals.go", "func (l *lowering) declareLocal(name *ast.Node) (int, error) {", true, "129, 135"},
@@ -128,6 +130,9 @@ func TestMakeOverlayTextEditsNameAReshape(t *testing.T) {
 		{"signature twice", "functions.go", "func (l *lowering) signature(index int, declaration *ast.Node, this int) error {",
 			"func (l *lowering) signature(index int, declaration *ast.Node, this int) error {\n// func (l *lowering) signature(index int, declaration *ast.Node, this int) error {",
 			[]string{`functions.go "func (l *lowering) signature(index int, declaration *ast.Node, this int) error {" (make_overlay.py line 121-122): found 2, want 1`}},
+		{"instanceTypes anchor gone", "generic.go", "\tconcreteTypes := l.instanceTypes(declaration, target, resolved)",
+			"\tconcreteTypes := l.instanceTypes(declaration, target, resolvedSignature)",
+			[]string{`generic.go "\tconcreteTypes := l.instanceTypes(declaration, target, resolved)" (make_overlay.py line 145-147): found 0, want 1`}},
 		{"lowering struct gone", "lower.go", "\ntype lowering struct {", "\ntype lowered struct {",
 			[]string{
 				`lower.go "type lowering struct {" (make_overlay.py line 22): found 0, want at least 1`,
