@@ -62,8 +62,10 @@ Each entry is linked with `--extern` against every crate it names, those its bui
 On the box, once:
 
 ```
-cd bench/game/rust-deps && cargo build --release    # with rustc 1.84.1's cargo; commit the Cargo.lock it makes
-go run ./bench -game -go <Go 1.23.1's go> -rustc <rustc 1.84.1> -crates bench/game/rust-deps/target/release/deps -pcre <prefix>
+cd bench/game/rust-deps && cargo build --release --target x86_64-unknown-linux-gnu    # with rustc 1.84.1's cargo
+go run ./bench -game -go <Go 1.23.1's go> -rustc <rustc 1.84.1> -crates bench/game/rust-deps/target/x86_64-unknown-linux-gnu/release/deps -pcre <prefix>
 ```
+
+The `--target` keeps the crates the entries link apart from those cargo builds for build scripts: without it both land in one directory, and a crate both need, such as libc, is there twice at one version with different features (J-wme5jp2), which the runner refuses to guess between. pcre2-sys links -pcre's libpcre2 only when pkg-config finds it, and otherwise builds its bundled copy without a word: build rust-deps with pkg-config on `PATH`, `PKG_CONFIG_LIBDIR` at -pcre's `usr/lib/x86_64-linux-gnu/pkgconfig` and `PKG_CONFIG_SYSROOT_DIR` at -pcre, as the runner sets them for the Go entry.
 
 The runner finds each crate's rlib by the `.d` file cargo writes beside it, which names the crate's version, so two versions of one crate are told apart.
