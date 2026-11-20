@@ -2,6 +2,7 @@ package lower
 
 import (
 	"github.com/microsoft/TypeScript/tsc/shim/ast"
+	"github.com/microsoft/TypeScript/tsc/shim/checker"
 	"github.com/system-inc/adamic/internal/ir"
 )
 
@@ -52,7 +53,8 @@ func (l *lowering) defined(node *ast.Node, value ir.Expression) ir.Expression {
 	if node.Kind == ast.KindPropertyAccessExpression {
 		at = node.Name()
 	}
-	if symbol := l.checker.GetSymbolAtLocation(at); symbol != nil {
+	symbol := l.checker.GetSymbolAtLocation(at)
+	if symbol != nil {
 		null = l.includesNull(l.checker.GetTypeOfSymbol(symbol))
 	}
 	absent := "undefined"
@@ -78,7 +80,33 @@ func (l *lowering) defined(node *ast.Node, value ir.Expression) ir.Expression {
 			message = "TypeError: Cannot read properties of " + absent + " (reading '" + key.Text() + "')"
 		}
 	}
-	return ir.Defined{Value: value, Message: message, Null: null}
+	checked := ir.Defined{Value: value, Message: message, Null: null}
+	if symbol != nil && l.onlyAbsent(l.checker.GetTypeOfSymbol(symbol)) {
+		// In a generic instance whose T holds only undefined or null, the checker still narrowed T by its
+		// constraint (T extends string | undefined is a string past === undefined), so the read is never
+		// here: the check always stops, and what follows it is held as the narrowed type, never as the
+		// missing object the declaration is (#rnbvya6), which C would refuse to return from a string
+		// function.
+		if narrowed, known := l.representation(l.checker.GetTypeAtLocation(node)); known && narrowed != value.Type() && narrowed != ir.Union {
+			return ir.Comma{Left: checked, Right: unreachablePlaceholder(narrowed)}
+		}
+	}
+	return checked
+}
+
+// onlyAbsent reports whether declared, as this instance makes it, holds no value but undefined or null.
+func (l *lowering) onlyAbsent(declared *checker.Type) bool {
+	declared = l.concrete(declared)
+	members := []*checker.Type{declared}
+	if declared.Flags()&checker.TypeFlagsUnion != 0 {
+		members = declared.Types()
+	}
+	for _, member := range members {
+		if member.Flags()&(checker.TypeFlagsUndefined|checker.TypeFlagsNull|checker.TypeFlagsVoid) == 0 {
+			return false
+		}
+	}
+	return true
 }
 
 // comparedWithUndefined reports whether node is one side of === or !== with undefined on the other:
