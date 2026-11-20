@@ -33,6 +33,9 @@ mutants = [
     ('hash_update_bytes', crypto, 'for (size_t i=0;i<input->length;i++)', 'for (size_t i=1;i<input->length;i++)', 'crypto'),
     ('hash_digest_hex', crypto, 'static const char hex[]="0123456789abcdef";', 'static const char hex[]="0123456789ABCDEF";', 'crypto'),
     ('hash_finalization', crypto, 'if (hash->slots[1].number != 0)', 'if (hash->slots[1].number == -1)', 'finalized'),
+    ('alloc_unsafe_truncate_first', buffer, 'if (!(size >= 0) || size > 9007199254740991.0) {', 'size = trunc(size); if (!(size >= 0) || size > 9007199254740991.0) {', 'alloc_unsafe'),
+    ('alloc_unsafe_separator', buffer, 'bool grouped = isfinite(value) &&', 'bool grouped = false && isfinite(value) &&', 'alloc_unsafe'),
+    ('alloc_unsafe_failure_panics', buffer, 'adamic_throw_coded("RangeError", "ERR_MEMORY_ALLOCATION_FAILED",', 'adamic_panic(message, sizeof message - 1); adamic_throw_coded("RangeError", "ERR_MEMORY_ALLOCATION_FAILED",', 'alloc_unsafe'),
 ]
 selection = sys.argv[1:]
 summary = []
