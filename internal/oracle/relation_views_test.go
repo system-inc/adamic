@@ -31,6 +31,16 @@ import (
 //     rule 3300's words), the relation no lowering meets (refused by the post-pass in those words) and the .a
 //     twin (refused by rule 3300 as before).
 //
+// The second slice adds three shapes, each with its rows: an array going into a readonly array, viewed by its
+// element pair (agreeing, an absent read, a lie and its twin; spread, JSON.stringify, Object.keys, values and
+// entries, String, a template and for...in of an element each stopping; the in operator and hasOwnProperty,
+// which test presence, agreeing with the lie in place; and a mutable target array still refused in rule
+// 3300's words); a generic call's
+// argument judged at the call's resolved slot (an explicit append<Target>'s lie, a T inferred from the
+// argument alone, a relation in a generic body, refused; checker.ts:19948's inferred append, whose T is
+// Source, is #4ysqm2m's write, pinned in generic_slot_hiding); and nullable on both sides
+// (moduleNameResolver.ts:140's shape, its lie, and a control whose sides are held differently, refused).
+//
 // The fixtures sit in a directory of their own, since the flow and fresh corpora lower every program at
 // testdata's top level. Mutants (internal/lower/relation_views.mutants.md): checkRelationViewsTaken removed
 // lowers never_lowered.ts, and with shorthand's own refusal removed too, lowers shorthand.ts and reads its
@@ -76,6 +86,36 @@ var relationViewRows = map[string]relationViewRow{
 	"shorthand.ts":           {kind: "stops", detail: relationViewsDirectory + "/shorthand.ts:14:20: Adamic 0.1 refuses optional property label in Target absent from structural source Source, which can hide fields; declare label on the source type, or build a fresh object with known fields (adamic/no-optional-widening)"},
 	"never_lowered.ts":       {kind: "stops", detail: relationViewsDirectory + "/never_lowered.ts:9:28: Adamic 0.1 refuses optional property label in Target absent from structural source Source, which can hide fields; declare label on the source type, or build a fresh object with known fields (adamic/no-optional-widening)"},
 	"adamic_twin.a":          {kind: "stops", detail: relationViewsDirectory + "/adamic_twin.a:12:22: Adamic 0.1 refuses optional property label in Target absent from structural source Source, which can hide fields; declare label on the source type, or build a fresh object with known fields (adamic/no-optional-widening)"},
+	// The second slice (internal/lower/relation_views.mutants.md, mutants (h) to (j)). Containers: an array
+	// going into a readonly array is viewed by its element pair, and a whole-object reader of an element stops.
+	"container_readonly.ts":   {kind: "agrees"},
+	"container_absent.ts":     {kind: "agrees"},
+	"container_lie.ts":        {kind: "panics", stdout: "one\n", detail: "adamic: panic: field read failed: target.label"},
+	"container_lie_honest.ts": {kind: "agrees"},
+	"container_spread.ts":     {kind: "stops", detail: "stage 0 can't lower a whole-object copy of a value of checked view type Target yet"},
+	"container_stringify.ts":  {kind: "stops", detail: "stage 0 can't lower a checked view's array read through JSON.stringify (not checked yet) yet"},
+	"container_keys.ts":       {kind: "stops", detail: "stage 0 can't lower a checked view's array read through Object.keys (not checked yet) yet"},
+	"container_mutable.ts":    {kind: "stops", detail: relationViewsDirectory + "/container_mutable.ts:11:26: Adamic 0.1 refuses optional property label in Target absent from structural source Source, which can hide fields; declare label on the source type, or build a fresh object with known fields (adamic/no-optional-widening)"},
+	// A generic call's argument, judged at the call's resolved slot.
+	"generic_explicit_lie.ts":   {kind: "panics", stdout: "absent\n", detail: "adamic: panic: field read failed: target.label"},
+	"generic_inferred_value.ts": {kind: "panics", stdout: "one\n", detail: "adamic: panic: field read failed: target.label"},
+	"generic_inferred_alone.ts": {kind: "agrees"},
+	"generic_called.ts":         {kind: "stops", detail: relationViewsDirectory + "/generic_called.ts:13:17: Adamic 0.1 refuses optional property label in Box<Tag> absent from structural source Plain<Tag>, which can hide fields; declare label on the source type, or build a fresh object with known fields (adamic/no-optional-widening)"},
+	"generic_deferred.ts":       {kind: "stops", detail: relationViewsDirectory + "/generic_deferred.ts:12:17: Adamic 0.1 refuses optional property label in Box<Tag> absent from structural source Plain<Tag>, which can hide fields; declare label on the source type, or build a fresh object with known fields (adamic/no-optional-widening)"},
+	// Nullable on both sides, each held as one nullable pointer.
+	"nullable_both.ts":     {kind: "agrees"},
+	"nullable_both_lie.ts": {kind: "panics", stdout: "none\none\n", detail: "adamic: panic: field read failed: target.label"},
+	"nullable_control.ts":  {kind: "stops", detail: relationViewsDirectory + "/nullable_control.ts:17:18: Adamic 0.1 refuses optional property label in Target absent from structural source Source, which can hide fields; declare label on the source type, or build a fresh object with known fields (adamic/no-optional-widening)"},
+	// Lower's condition 2, the rest of the whole-object readers of an element of a relation-viewed array
+	// (relation_views.mutants.md's table): each stops, but the in operator and hasOwnProperty, which read
+	// the element's own presence and no field's value, so they print what Node prints, the lie included.
+	"element_template.ts": {kind: "stops", detail: relationViewsDirectory + "/element_template.ts:13:20: stage 0 can't lower a template interpolating an object, an array, a map, a function or undefined yet"},
+	"element_string.ts":   {kind: "stops", detail: relationViewsDirectory + "/element_string.ts:13:24: stage 0 can't lower String conversion of an object, array, map or function (ToPrimitive is not lowered) yet"},
+	"element_for_in.ts":   {kind: "stops", detail: relationViewsDirectory + "/element_for_in.ts:13:23: stage 0 can't lower for...in without a proven fixed plain-object origin (arrays, prototypes and absent synthetic fields cannot be enumerated soundly) yet"},
+	"element_values.ts":   {kind: "stops", detail: relationViewsDirectory + "/element_values.ts:13:24: Adamic 0.1 refuses Object.values; tsc's result must have one homogeneous number, string or boolean value type; any and widened field views are unsound"},
+	"element_entries.ts":  {kind: "stops", detail: relationViewsDirectory + "/element_entries.ts:13:24: Adamic 0.1 refuses Object.entries; tsc's result must have one homogeneous number, string or boolean value type; any and widened field views are unsound"},
+	"element_in.ts":       {kind: "agrees"},
+	"element_has_own.ts":  {kind: "agrees"},
 }
 
 func TestRelationViewsAgreeWithNode(t *testing.T) {
