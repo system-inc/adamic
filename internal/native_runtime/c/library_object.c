@@ -110,6 +110,14 @@ adamic_array *adamic_object_keys(const adamic_object *object) {
  // Class descriptors hide private storage and track static own-property presence.
  if (adamic_record_is(object)) return adamic_record_keys(object);
  if (object->class != NULL) return adamic_class_object_keys(object);
+ return adamic_object_written_keys(object);
+}
+
+adamic_array *adamic_object_written_keys(const adamic_object *object) {
+ // The one first-write-order rule, a plain object's and a write-ordered class instance's alike: no
+ // private name, no slot not yet present. Both adamic_object_keys and adamic_class_object_keys end
+ // here, so neither calls the other for an instance with both a class and a write order (#w8nanzw).
+ adamic_host_stop_keys(&object->heap);
  size_t *indices = adamic_object_ordered(object);
  adamic_array *keys = adamic_array_make(object->shape->count, adamic_ir_Union);
  for (size_t at = 0; at < object->shape->count; at++) {
