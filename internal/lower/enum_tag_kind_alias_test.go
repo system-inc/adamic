@@ -180,7 +180,7 @@ const nb: NB = { kind: K.B, b: 7 };
 		{"let", types + "function f(start: NA | NB, other: NA | NB): string { let node = start; const reset = () => { node = other; }; " + body, "undefined\n", "a read of node narrowed to NA where a call may have rewritten it (node is assigned inside a function)"},
 		{"parameter_open", kindPredicateTypes + kindAliasValues + "function show(node: N, other: N): string { const reset = (): void => { node = other; }; " + openBody, "TypeError", "a read of node narrowed to A where a call may have rewritten it (node is assigned inside a function)"},
 		{"let_open", kindPredicateTypes + kindAliasValues + "function show(start: N, other: N): string { let node = start; const reset = (): void => { node = other; }; " + openBody, "TypeError", "a read of node narrowed to A where a call may have rewritten it (node is assigned inside a function)"},
-		{"control", types +"function f(node: NA | NB): string { const kind = node.kind; switch (kind) { case K.A: return node.a; default: return 'x'; } }\nconsole.log(f(na));\n", "yes\n", ""},
+		{"control", types + "function f(node: NA | NB): string { const kind = node.kind; switch (kind) { case K.A: return node.a; default: return 'x'; } }\nconsole.log(f(na));\n", "yes\n", ""},
 	} {
 		t.Run(p.name, func(t *testing.T) {
 			t.Parallel()
