@@ -148,3 +148,98 @@ only through `value`; the shorthand's name never does, and now refuses on its ow
 | Conditional arms, logical operands | expression.go:1992, :2232, :2271, never_branch.go, host_bindings.go | Yes | `expression`; a never arm is `neverValue`'s, never keyed |
 | Casts, `satisfies`, `!` | expression.go:1528, :1534, `nonNull` | Yes (the cast or the `!` itself) | Reached only through `value`, which views the node; the operand inside is no view site |
 | `refuseInSlot` while lowering | records_named.go:404, records_define.go:135, library_method_values.go:434, element_access_fields.go:189 | It records entries, not lowers them | The value is lowered right after through `expression`. A second slot for the same value refuses (mutant (g)) |
+
+# The second slice (rulings.md:72's containers, a generic call's slot, nullable on both sides)
+
+Described, not run, as above. The rows are in the same three tests. Mutants (h) to (j) each turn one row
+red; (k) and (l) say what holds the code they remove.
+
+## (h) The readonly test removed
+
+`relationViewContainer` no longer asks `isLibraryType(slot, "ReadonlyArray")`, so a mutable target array
+is viewed as a readonly one is.
+
+Red: `container_mutable.ts`'s row, which wants rule 3300's refusal at 11:26 and gets a lowered program.
+`view` builds the `Target[]` contract as a mutable array (`unionAggregateContract` marks it Unsupported
+"mutable array"), registers `Target:label` through its element all the same, and the CheckedFields
+assertion passes. No readonly array contract is in the program, so `checkViewArrays` demands nothing of
+the for...of, and the read of `label` through `Target` is a checked one: the program lowers and prints
+what Node prints, honest values on both sides.
+
+Why only that row: every other container fixture's slot is `readonly Target[]`, so it passes the test
+with the mutant or without; no other fixture holds a mutable target array.
+
+## (i) The generic slot read from the declaration
+
+For a call's argument, `site.target` is the callee's declared parameter type rather than `slotType`'s.
+`slotType` is the checker's contextual type, which for an argument is
+`getContextualTypeForArgumentAtIndex`: `getResolvedSignature` at the call, then `getTypeAtPosition`, the
+instantiated parameter with inference from every argument in it. So reading the resolved signature needed
+no new code; the mutant is the one way to break it.
+
+Red: `generic_explicit_lie.ts`'s row. `append<Target>` fixes T, so the resolved value slot is
+`Target | undefined`. Read from the declaration it's `T | undefined`, which `Source` isn't assignable to,
+so the hiding walk returns at its first test and finds no field: rule 3300 neither refuses nor records a
+view, and nothing registers `Target:label`. The program lowers, and the read of the lie's label through
+`Target` is a raw one, which takes the number 5 as a string where the row wants exit 70 and the field
+read's panic.
+
+The inferred append, `append(held, hidden)` with no type argument, is no witness: tsc infers its T from
+both arguments at one priority, so T is `Source` and no slot hides a field on a read, resolved or declared.
+Its hiding is a write into `held`, which main's invariant-mutable fix refuses (#4ysqm2m, pinned in
+`internal/oracle/testdata/generic_slot_hiding/`, `infers_source.ts` holding tsc to T being `Source`).
+`generic_deferred.ts` doesn't admit under the mutant either: `show`'s declared slot is `Box<Tag>`, a type
+parameter still in it, so `relationSlotGeneric` refuses it, as the post-pass would.
+
+## (j) The representation-family test removed
+
+`relationViewNullablePointer` no longer asks `representation` for `Object`, only that the type is one
+plain object type with undefined or null beside it.
+
+Red: `nullable_control.ts`'s row, which wants rule 3300's refusal at 17:18 and gets a lowered program.
+`Source | undefined` is a nullable pointer and `Target | null | undefined` a boxed union; with the test
+gone the object arms are viewed, the pointer is boxed as it enters `show`'s parameter, and the checked read
+of `label` prints `two` as Node does.
+
+Why only that row: `nullable_both.ts` and `nullable_both_lie.ts` pass the test with the mutant or without,
+since each of their sides is a nullable pointer.
+
+## (k) The type parameter condition removed
+
+`recordRelationView` no longer asks `relationSlotGeneric` for an argument.
+
+Red: `generic_called.ts`'s row, which wants rule 3300's refusal at 13:17 and gets a lowered program. The
+rule judges `admit`'s body as the checker types it, where `show(plain)`'s resolved slot is `Box<Tag>`. The
+walk reaches `label` through no constraint, so `constrained` doesn't refuse it, and without the condition
+the relation is recorded. `admit<number>` lowers the body, `relationViewValue` views the argument as
+`l.concrete(Box<Tag>)`, `Box<number>`, the view the ruling forbids, and the post-pass is satisfied. Its values
+are honest, so it prints `absent` as Node does.
+
+`generic_deferred.ts` stays green: nothing calls its `admit`, so `checkRelationViewsTaken` refuses it in
+the same words at the same node (12:17). An append-like slot, `T | undefined` with `T` the enclosing
+function's, can't witness (k): the walk reaches the field through `T`'s constraint, so `relationViewAdmits`
+refuses it through `constrained` with the condition or without it. Only a slot that holds the parameter
+beside the hidden field, as `Box<Tag>` holds `Tag`, depends on (k).
+
+## (l) The Object.keys element stop removed
+
+`checkViewArrays` no longer asks `elementDemanded` of `Object.keys`, values and entries. Red:
+`container_keys.ts`'s row, which then lowers and prints 2, as Node does: nothing else judges `Object.keys`
+of a fixed object.
+
+## Whole-object readers of an element of a viewed array (Lower's condition 2)
+
+| Reader | Stopped before this slice? | By what |
+| --- | --- | --- |
+| Object spread, `{ ...element }` | Yes | object.go records a whole-object copy; `checkViewCopies` stops a copy of a checked view's type (Target), and a copy through another type naming a checked field whose value may reach a viewed allocation (the array's elements are reached through its origin). `container_spread.ts` |
+| `Object.assign(target, element)` | Yes | `objectCallArguments` refuses any source not proven by a literal or its const binding (`exactObject`), which an element never is |
+| `JSON.stringify(element)` | Yes | `jsonCall` records a whole use (`recordWholeViewArrayUse`); `checkViewArrays` stops it where it may reach a viewed allocation. `container_stringify.ts` |
+| `encodeJson(element)` | Yes | The same whole use, and `checkViewWidenedReads` weighs it as a whole-value reader |
+| `Object.keys(element)` | No | Lowered as an `ObjectCall` (or `ObjectKeys` for a decoded result) with no view judgment. Closed: `checkViewArrays` stops it where its operand may reach an element of a relation view's array (`relationContainerOrigins`), failing closed on an unknown reach. `container_keys.ts` |
+| `Object.values`, `Object.entries` | Yes | `objectCallArguments` refuses an operand with an optional field, which a relation view's element always has (its hidden field), and now the same `checkViewArrays` stop as keys |
+| `structuredClone(element)` | Yes | The library Adamic checks against doesn't declare it, so the program doesn't type-check |
+| A rest binding, `const { ...rest } = element` | Yes | Destructuring refuses a rest before it lowers (`destructureFrom`) |
+| The array whole: `[...array]`, `concat`, `slice`, `JSON.stringify(array)` | Yes | `checkViewArrays`' existing roads: spread, concat and every road that's neither a handout nor reads no element stop where the array may hold a viewed allocation |
+
+`refuseViewElementReads` isn't one of these roads: it stops a read of a viewed field name by a literal key,
+`element["label"]`, wherever the object is, and so it stops one through an element too.

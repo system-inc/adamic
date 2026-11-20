@@ -1068,6 +1068,42 @@
       "type_correct_sha256": "8cce7b4f2b24e548e3530393cbea5085c7d508d296002fa92d6b1505ae7d8258",
       "exit": 70,
       "stderr": "adamic: panic: field read failed: target.label matches no member of string | undefined; expected string | undefined, found number\n"
+    },
+    "59f725313e95d9f73345667aaf2d9051e65ef34f566ff1a53bbb6a85ea7e6299": {
+      "form": "checked_boundary",
+      "ruling_task": "#0b9xqhh",
+      "ruling": "Adamic, Nov 19: admitted by the relation at internal/oracle/testdata/relation_views/container_lie.ts:16:35",
+      "declaration": "internal/oracle/testdata/relation_views/container_lie.ts:6",
+      "declared_type": "string | undefined",
+      "repair_from": "label: 5",
+      "repair_to": "label: \"5\"",
+      "type_correct_sha256": "9c661a61ba3fb670cfe1abd16bc34eb5e0959d4feb0a2845986e33bb216a51ee",
+      "exit": 70,
+      "stderr": "adamic: panic: field read failed: target.label matches no member of string | undefined; expected string | undefined, found number\n"
+    },
+    "ce3d1dbf9409c571c3e090986e8e7fb17ed1c539a5b5be8b28b7f6578837bafb": {
+      "form": "checked_boundary",
+      "ruling_task": "#0b9xqhh",
+      "ruling": "Adamic, Nov 19: admitted by the relation at internal/oracle/testdata/relation_views/generic_inferred_value.ts:20:33",
+      "declaration": "internal/oracle/testdata/relation_views/generic_inferred_value.ts:7",
+      "declared_type": "string | undefined",
+      "repair_from": "label: 5",
+      "repair_to": "label: \"5\"",
+      "type_correct_sha256": "5c5d4ce285a19421f89597014b7d2c9899dd7524722fd2343f97c72a30491cf6",
+      "exit": 70,
+      "stderr": "adamic: panic: field read failed: target.label matches no member of string | undefined; expected string | undefined, found number\n"
+    },
+    "1e4b0eb03570d1109bd76190b5576d08375c4ea39986cfc752bdbddcd260ecaa": {
+      "form": "checked_boundary",
+      "ruling_task": "#0b9xqhh",
+      "ruling": "Adamic, Nov 19: admitted by the relation at internal/oracle/testdata/relation_views/nullable_both_lie.ts:10:12",
+      "declaration": "internal/oracle/testdata/relation_views/nullable_both_lie.ts:6",
+      "declared_type": "string | undefined",
+      "repair_from": "label: 5",
+      "repair_to": "label: \"5\"",
+      "type_correct_sha256": "3b2bd3056dfca6d741c881e2bacf9d6abe55187700915a8a8c191fecc435ef54",
+      "exit": 70,
+      "stderr": "adamic: panic: field read failed: target.label matches no member of string | undefined; expected string | undefined, found number\n"
     }
   }
 }
