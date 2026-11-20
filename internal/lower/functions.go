@@ -77,7 +77,10 @@ func (l *lowering) signature(index int, declaration *ast.Node, this int) error {
 	source := ast.GetSourceFileOfNode(name)
 	line, column := scanner.GetLineAndCharacterOfPosition(source, scanner.GetTokenPosOfNode(name, source, false))
 	function.Position = ir.SourcePosition{File: l.program.FileName(source), Line: line + 1, Column: column + 1}
-	if this >= 0 && declaration.Kind != ast.KindConstructor {
+	// A function constructor makes its this, as a class's constructor does, and its declared this parameter
+	// takes no argument (#837zjkt, function_constructor.go).
+	constructs := l.functionConstructorAt(index, declaration)
+	if this >= 0 && declaration.Kind != ast.KindConstructor && !constructs {
 		// A method receives this; a constructor makes it.
 		function.Parameters = append(function.Parameters, this)
 		function.Boundary.Parameters = append(function.Boundary.Parameters, ir.BoundaryParameter{})
@@ -99,6 +102,10 @@ func (l *lowering) signature(index int, declaration *ast.Node, this int) error {
 		if err := l.generatorSignature(&function, declaration); err != nil {
 			return err
 		}
+	} else if l.allocatorGetterArrow(declaration) != nil {
+		// An allocator getter's result is its function constructor's identity object, whatever the any its
+		// cast is typed (#837zjkt, function_constructor.go).
+		function.Returns = ir.Object
 	} else if declaration.Kind != ast.KindConstructor {
 		signature := l.checker.GetSignatureFromDeclaration(declaration)
 		returns := l.concrete(l.checker.GetReturnTypeOfSignature(signature))
@@ -164,6 +171,9 @@ func (l *lowering) signature(index int, declaration *ast.Node, this int) error {
 	// and its names are declared from it before the body runs.
 	patterns := []patterned{}
 	for position, parameter := range declaration.Parameters() {
+		if constructs && position == 0 {
+			continue
+		}
 		declared := parameter.AsParameterDeclaration()
 		function.Boundary.Parameters = append(function.Boundary.Parameters, ir.BoundaryParameter{Schema: l.boundarySchema(parameter, l.checker.GetTypeAtLocation(parameter))})
 		if name := parameter.Name(); (name.Kind == ast.KindArrayBindingPattern || name.Kind == ast.KindObjectBindingPattern) && declared.DotDotDotToken == nil && declared.Initializer == nil && declared.QuestionToken == nil {
@@ -260,7 +270,14 @@ func (l *lowering) signature(index int, declaration *ast.Node, this int) error {
 	if function.Receiver {
 		offset = 1
 	}
+	if constructs {
+		// The declared this has no parameter of its own.
+		offset = -1
+	}
 	for i, node := range declaration.Parameters() {
+		if constructs && i == 0 {
+			continue
+		}
 		parameter := node.AsParameterDeclaration()
 		if parameter.QuestionToken != nil || parameter.Initializer != nil {
 			function.OptionalParameters[function.Parameters[i+offset]] = true
@@ -270,7 +287,7 @@ func (l *lowering) signature(index int, declaration *ast.Node, this int) error {
 		function.Source = l.functionSource(declaration)
 	}
 	l.result.Functions[index] = function
-	if !function.Closure && declaration.Kind != ast.KindConstructor && declaration.Name() != nil {
+	if !function.Closure && declaration.Kind != ast.KindConstructor && !constructs && declaration.Name() != nil {
 		l.closureRecords = append(l.closureRecords, closureRecord{proven: l.concrete(l.checker.GetTypeAtLocation(declaration.Name())), function: index, node: declaration})
 	}
 	// A declared constructor also supplies the public allocator's signature.
@@ -408,7 +425,9 @@ func (l *lowering) lowerBody(index int, declaration *ast.Node, this int, default
 	if err != nil {
 		return err
 	}
-	if body.Kind == ast.KindBlock && declaration.Kind != ast.KindConstructor && declaration.Flags&ast.NodeFlagsHasImplicitReturn != 0 && l.permitsImplicitReturn(declaration) {
+	// A function constructor's body ends where its object is returned (buildFunctionConstructor), as a class's
+	// constructor's does.
+	if body.Kind == ast.KindBlock && declaration.Kind != ast.KindConstructor && !l.functionConstructorAt(index, declaration) && declaration.Flags&ast.NodeFlagsHasImplicitReturn != 0 && l.permitsImplicitReturn(declaration) {
 		// The checker permits an end that is reachable only when the result can be undefined
 		// (or void). Put that exit in the IR so every backend and ownership pass sees it.
 		returned := ir.Return{}

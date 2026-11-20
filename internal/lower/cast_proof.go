@@ -166,6 +166,19 @@ func castMembers(proven *checker.Type) []*checker.Type {
 // castRefusal refuses a cast the runtime can't check, and records a checked one in
 // l.refusal.checkedCasts for stringWideningRefusal (3100).
 func (l *lowering) castRefusal(node *ast.Node) error {
+	// An allocator getter's cast to any is admitted only as a road to a new's callee, which only the lowered
+	// program shows: its refusal is kept, and given back where checkFunctionConstructorRoads finds the road
+	// doesn't close (#837zjkt, function_constructor.go).
+	if node.Kind == ast.KindAsExpression && l.allocatorGetterCast(node) != nil {
+		stop := l.erasedWritableViewCast(node)
+		if stop == nil {
+			_, stop = l.castProof(node)
+		}
+		if stop != nil {
+			l.deferAnyRoad(node, stop, true)
+		}
+		return nil
+	}
 	if node.Kind == ast.KindAsExpression && l.processPath(node.AsAsExpression().Expression) == "" {
 		if err := l.erasedWritableViewCast(node); err != nil {
 			return err

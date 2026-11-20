@@ -54,6 +54,10 @@ func (l *lowering) typeOf(node *ast.Node) (ir.Type, error) {
 		return valueType, nil
 	}
 	if proven.Flags()&checker.TypeFlagsAny != 0 {
+		// An allocator getter's admitted cast holds its function constructor's identity object (#837zjkt).
+		if l.allocatorGetterCast(ast.SkipParentheses(node)) != nil {
+			return ir.Object, nil
+		}
 		return 0, l.refuseAnyValue(node)
 	}
 	return 0, l.notYet(node, "a value of type "+l.checker.TypeToString(proven)+", "+reason)
@@ -322,6 +326,13 @@ func (l *lowering) mayHoldNull(proven *checker.Type) bool {
 // expression lowers a value. What's kept weakly (a Weak<Target> variable, field, element or map value)
 // is read here as its target, so no value of a Weak type goes further; keeping one is fit's WeakOf.
 func (l *lowering) expression(node *ast.Node) (ir.Expression, error) {
+	// An allocator getter's admitted cast is its function constructor's identity object, before any slot
+	// judgment reads the any it's typed (#837zjkt, function_constructor.go).
+	if node.Kind == ast.KindAsExpression || node.Kind == ast.KindParenthesizedExpression {
+		if constructor := l.allocatorGetterCast(ast.SkipParentheses(node)); constructor != nil {
+			return l.functionConstructorIdentity(constructor)
+		}
+	}
 	if err := l.neverExpression(node); err != nil {
 		return nil, err
 	}
