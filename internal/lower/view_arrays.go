@@ -471,6 +471,32 @@ func (l *lowering) checkViewArrays() error {
 		}
 	}
 
+	// A relation view's array (rulings.md:72's containers, #0b9xqhh) hands out elements whose hidden fields
+	// only a read through the element's view checks, so a reader of a whole element must stop wherever its
+	// operand may be one (Lower's condition 2). Spread and Object.assign are checkViewCopies' and
+	// objectCall's exact-shape refusal, JSON.stringify and encodeJson the whole road below; Object.keys,
+	// values and entries read from no type, so this holds them, failing closed where the reach is unknown.
+	// It's asked only of a program holding such a view, which no program lowered before that slice could.
+	var elementViewed map[int]bool
+	elementUnknown := false
+	if len(l.relationContainerOrigins) != 0 {
+		elementViewed, elementUnknown = graph.viewedFrom(l.relationContainerOrigins, true)
+	}
+	elementDemanded := func(value ir.Expression) bool {
+		if elementViewed == nil || !viewArrayAggregate(value) {
+			return false
+		}
+		reaches := graph.ReachingAllocations(value)
+		if elementUnknown || reaches.Unknown {
+			return true
+		}
+		for _, site := range reaches.Sites {
+			if elementViewed[site] {
+				return true
+			}
+		}
+		return false
+	}
 	var refused error
 	stop := func(where, member string) {
 		if refused == nil {
@@ -576,6 +602,17 @@ func (l *lowering) checkViewArrays() error {
 						stop(program.Source, "Object."+value.Method)
 					}
 				}
+			}
+			if value.Method == "keys" || value.Method == "values" || value.Method == "entries" {
+				for _, arg := range value.Arguments {
+					if elementDemanded(arg) {
+						stop(program.Source, "Object."+value.Method)
+					}
+				}
+			}
+		case ir.ObjectKeys:
+			if elementDemanded(value.Object) {
+				stop(program.Source, "Object.keys")
 			}
 		case ir.ArrayLiteral:
 			for i, item := range value.Elements {
