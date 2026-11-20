@@ -128,6 +128,10 @@ void adamic_output_flush(void) {
 	pthread_mutex_unlock(&output_lock);
 }
 
+#ifndef ADAMIC_TARGET_WASI
+#include "inherited_signals_impl.h"
+#endif
+
 // The handler only forwards a byte to a nonblocking pipe. Descriptors are initialized before
 // installing handlers and remain open and unchanged until process death, including during exit.
 // The normal signal thread can wait for a writer's lock without deadlocking an interrupted writer.
@@ -270,17 +274,7 @@ void adamic_start(int count, char **values) {
 	sigemptyset(&default_action.sa_mask);
 	// Node resets every signal its parent ignored (under nohup, or as a background job) to its
 	// default at startup, so the program still stops on them; it then sets its own below.
-#if defined(SIGRTMAX)
-	int last = SIGRTMAX;
-#else
-	int last = 31;
-#endif
-	for (int signal_number = 1; signal_number <= last; signal_number++) {
-		struct sigaction current;
-		if (signal_number != SIGKILL && signal_number != SIGSTOP && sigaction(signal_number, NULL, &current) == 0 && current.sa_handler == SIG_IGN) {
-			(void)sigaction(signal_number, &default_action, NULL);
-		}
-	}
+	inherited_ignores_reset("/proc/self/status", &default_action);
 	// Node ignores SIGPIPE, and a write to a pipe nobody reads is a failed write, not a killed process.
 	signal(SIGPIPE, SIG_IGN);
 	// Node also ignores file-size-limit signals: writes report EFBIG instead.
