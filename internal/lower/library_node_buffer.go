@@ -91,7 +91,7 @@ func (l *lowering) nodeBufferUnsupportedUse(node *ast.Node) error {
 	if node.Kind == ast.KindIdentifier || node.Kind == ast.KindPropertyAccessExpression || node.Kind == ast.KindElementAccessExpression {
 		symbol := l.symbol(node)
 		if module := nodeBufferModule(symbol); module != "" {
-			if symbol.Name == "Buffer" && node.Parent != nil && node.Parent.Kind == ast.KindPropertyAccessExpression && node.Parent.Name().Text() == "from" && called(node.Parent) {
+			if symbol.Name == "Buffer" && node.Parent != nil && node.Parent.Kind == ast.KindPropertyAccessExpression && (node.Parent.Name().Text() == "from" || node.Parent.Name().Text() == "allocUnsafe") && called(node.Parent) {
 				return nil
 			}
 			return l.notYet(node, module+"."+symbol.Name+" read as a value")
@@ -168,6 +168,8 @@ func (l *lowering) libraryNodeBuffer(node *ast.Node) (ir.Expression, bool, error
 	access := callee.AsPropertyAccessExpression()
 	name := callee.Name().Text()
 	switch {
+	case l.nodeBufferSymbol(access.Expression, "Buffer") && name == "allocUnsafe":
+		return l.nodeBufferAllocUnsafe(node)
 	case l.nodeBufferSymbol(access.Expression, "Buffer"):
 		if name != "from" || len(args) < 1 || len(args) > 2 {
 			return nil, true, l.notYet(node, "Buffer."+name+" outside from(input, encoding)")
@@ -268,4 +270,23 @@ func (l *lowering) libraryNodeBuffer(node *ast.Node) (ir.Expression, bool, error
 		}
 	}
 	return ir.NodeBufferCall{Function: operation, Arguments: values, Encoding: encoding, Returns: result}, true, nil
+}
+
+// nodeBufferAllocUnsafe lowers Buffer.allocUnsafe(size) of one number to a Buffer of that many bytes.
+// Node checks the size before it truncates it, so -0.5 throws ERR_OUT_OF_RANGE, and a size it can't
+// allocate throws ERR_MEMORY_ALLOCATION_FAILED: both are the runtime's (node_buffer.c), and the call is
+// one that can throw (ir.NodeBufferCall's MayThrow). Its bytes are unspecified on Node, and zero natively.
+func (l *lowering) nodeBufferAllocUnsafe(node *ast.Node) (ir.Expression, bool, error) {
+	args := node.AsCallExpression().Arguments.Nodes
+	if len(args) != 1 || args[0].Kind == ast.KindSpreadElement {
+		return nil, true, l.notYet(node, "Buffer.allocUnsafe outside allocUnsafe(size)")
+	}
+	size, err := l.expression(args[0])
+	if err != nil {
+		return nil, true, err
+	}
+	if size.Type() != ir.Number {
+		return nil, true, l.notYet(node, "Buffer.allocUnsafe of a size that isn't a number")
+	}
+	return ir.NodeBufferCall{Function: "buffer_alloc_unsafe", Arguments: []ir.Expression{size}, Returns: ir.Uint8Array}, true, nil
 }

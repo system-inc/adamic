@@ -8,4 +8,7 @@ adamic_string *adamic_node_buffer_string(const adamic_typed_array *buffer,
 										 double start, double end,
 										 int encoding);
 double adamic_node_buffer_set(adamic_typed_array *buffer, double index, double value);
+// Buffer.allocUnsafe(size): an owned Buffer, or NULL with Node's coded
+// RangeError pending for a size out of range or one that can't be allocated.
+adamic_typed_array *adamic_node_buffer_alloc_unsafe(double size);
 #endif

@@ -97,6 +97,44 @@ void adamic_throw_kind(const char *name, size_t name_length, const char *message
 	adamic_release(text);
 }
 
+// Node-coded errors a library call throws, code their one enumerable own key. One Node builds with
+// makeNodeErrorWithCode has a toString that brackets the code (error_text); one its C++ throws with a
+// code, Buffer's ERR_MEMORY_ALLOCATION_FAILED among them, has Error's, `name: message` (Node v24.19.0,
+// measured).
+static const char *const coded_error_names[] = {"name", "message", "code"};
+static const bool coded_error_references[] = {true, true, true};
+static const adamic_field_kind coded_error_kinds[] = {adamic_field_reference, adamic_field_reference, adamic_field_reference};
+static const adamic_shape coded_error_shape = {3, coded_error_names, coded_error_references, &adamic_coded_error_methods, coded_error_kinds};
+static const adamic_shape plain_coded_error_shape = {3, coded_error_names, coded_error_references, &adamic_error_methods, coded_error_kinds};
+static const char *const coded_error_keys[] = {"code"};
+static adamic_error_json coded_error_shape_json = {&coded_error_shape, coded_error_keys, 1, NULL, false};
+static adamic_error_json plain_coded_error_shape_json = {&plain_coded_error_shape, coded_error_keys, 1, NULL, false};
+
+static adamic_string *ascii(const char *bytes, size_t length) {
+	adamic_string *text = adamic_string_allocate(length);
+	memcpy((char *)text->bytes, bytes, length);
+	return text;
+}
+
+// adamic_throw_coded leaves a Node-coded error on the pending word, its name, code and message given
+// as ASCII, its toString bracketing the code when bracketed: how a library failure throws one of
+// Node's ERR_ codes (node_buffer.c).
+void adamic_throw_coded(const char *name, const char *code, const char *message, size_t message_length, bool bracketed) {
+	adamic_object *error;
+	if (bracketed) {
+		adamic_register_error_json(&coded_error_shape_json);
+		error = adamic_object_new(&coded_error_shape);
+	} else {
+		adamic_register_error_json(&plain_coded_error_shape_json);
+		error = adamic_object_new(&plain_coded_error_shape);
+	}
+	error->slots[0].reference = ascii(name, strlen(name));
+	error->slots[1].reference = ascii(message, message_length);
+	error->slots[2].reference = ascii(code, strlen(code));
+	adamic_object_field_types(error)[2] = adamic_ir_String;
+	adamic_thrown = error;
+}
+
 // Get must stay inside the loop: the first method or getter can change the second.
 adamic_primitive adamic_ordinary_to_primitive(adamic_heap *receiver, enum adamic_primitive_hint hint, adamic_primitive_get get) {
 	adamic_primitive empty = {adamic_primitive_undefined, {.reference = NULL}};
