@@ -1,6 +1,6 @@
 # Mutants for the agreement mode
 
-The agreement mode runs every program head accepts, with no base, and judges each through the delta's own runner (judge.go). Each mutant is one edit, to be run on a Linux box against cmd/adamic-admission-delta, then put back. None has been run yet: each row's red is the one the test must show, to be replaced by the run's own words, job and revision once it has.
+The agreement mode runs every program head accepts, with no base, and judges each through the delta's own runner (judge.go). Each mutant is one edit, run on a Linux box against cmd/adamic-admission-delta, then put back and checked with `cmp`. The first five rows ran on Loom job J-xg6zazr at e1e344c4 (main aee67a6c), each red at the test its row names, after the package whole was green and with the box's own ASAN_OPTIONS unset. The last row is described, not run: its edit moves the collection into the worker, which a one-line substitution can't make.
 
 | Mutant | Edit | Red |
 |---|---|---|
