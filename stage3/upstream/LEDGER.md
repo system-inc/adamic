@@ -922,3 +922,5 @@ mutants restore their sites, every JavaScript hunk stays inside dumpTypes, and
 - **JavaScript-changing, value-identical (#dt55mtb):** 99-correctness-infer-type-parameter-append calls getDeclaredTypeOfTypeParameter directly under the TypeParameter flag guard. The whole oracle counted 9,810 calls and zero unequal return values. Evidence: typescript/type-parameter-appends-evidence.
 
 - **Type-only, #dt55mtb (Adamic's ruling):** 99-readonly-inferred-bindings gives five checker paths their actual type argument views, including the published readonly array type of `ConditionalRoot.aliasTypeArguments`. No JavaScript changes. Evidence: typescript/type-parameter-appends-evidence.
+
+- **Type-only, #ad161ms (Adamic's ruling):** 99-correctness-property-name-claim makes `isPropertyName` claim the five kinds its body accepts in place of `PropertyName`, which also holds `NoSubstitutionTemplateLiteral` and `BigIntLiteral`, so the published predicate in `typescript.d.ts` names them. No JavaScript changes. Evidence: typescript/property-name-claim-1.
