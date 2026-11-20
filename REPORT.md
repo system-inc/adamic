@@ -138,3 +138,23 @@ The checker-only candidate is `3b721657e`. In a private copy of the full baselin
 The unfiltered oracle used all runners and eight workers. It recorded **9,810 calls**, all with full flags **262144** (`SymbolFlags.TypeParameter`), and **zero identity differences**. No observed symbol carried an earlier dispatch flag. One planted equal pair and one planted unequal pair used the same recorder and were each captured once. The controls are outside the 9,810 calls. The Node witness also tested cold allocation independently on each implementation, so the count's original-first order does not stand in for a cold-start witness.
 
 The oracle completed with 106,366 passing, the one sanctioned public API comparison failure, and zero pending. The lane's count and failed-title parsing matched the platform expectations. Its API checker independently verified the recorded diff against the actual reference and local snapshots and the exact sanctioned changes. The split count changes no public API or lane file. See `infer-parameter-counts.json.gz` for the per-process raw records and `infer-parameter-oracle-verification.json` for the verified suite and API summary.
+
+## Readonly type argument views (#dt55mtb)
+
+### Public declaration diff
+
+Upstream TypeScript 6.0.3 `hereby local` produced the following complete diff.
+
+```diff
+--- a/built/local/typescript.d.ts
++++ b/built/local/typescript.d.ts
+@@ -6825,7 +6825,7 @@
+         outerTypeParameters?: TypeParameter[] | undefined;
+         instantiations?: Map<string, Type> | undefined;
+         aliasSymbol?: Symbol | undefined;
+-        aliasTypeArguments?: Type[] | undefined;
++        aliasTypeArguments?: readonly Type[] | undefined;
+     }
+     interface ConditionalType extends InstantiableType {
+         root: ConditionalRoot;
+```
