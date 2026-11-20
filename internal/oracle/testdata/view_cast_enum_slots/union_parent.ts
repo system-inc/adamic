@@ -14,5 +14,5 @@ const doc: Node = { kind: Kind.Doc, parent: root };
 const literal: Node = { kind: Kind.Literal, parent: root };
 const documented: Node = { kind: Kind.Tag, parent: doc };
 const typed: Node = { kind: Kind.Param, parent: literal };
-console.log(owner(documented));
-console.log(owner(typed));
+console.log(`${owner(documented)}`);
+console.log(`${owner(typed)}`);

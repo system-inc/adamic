@@ -17,5 +17,5 @@ const honest: Name = { kind: Kind.Computed, parent: undefined, expression: entit
 const lyingName: Name = { kind: Kind.Computed, parent: undefined, expression: other };
 const declaration: Declaration = { kind: Kind.Prop, parent: undefined, name: honest };
 const lying: Declaration = { kind: Kind.Prop, parent: undefined, name: lyingName };
-console.log(late(declaration));
-console.log(late(lying));
+console.log(`${late(declaration)}`);
+console.log(`${late(lying)}`);
