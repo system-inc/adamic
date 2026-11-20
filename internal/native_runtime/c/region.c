@@ -8,6 +8,11 @@
 // its blocks. The blocks are ordinary malloc blocks, so a use after the region ended (an escape the
 // compiler missed) is a use after free to AddressSanitizer.
 //
+// A region holds complete objects (new_in), construction objects (construct_in, a constructor's region
+// version making a class literal with an Absent field), whose write order trails their slots, and,
+// under canonical closures, environments. The end walks a block from one to the next by each one's
+// own size.
+//
 // A thread keeps the blocks its regions free, up to ADAMIC_REGION_BLOCK_CACHE bytes, and the next
 // region it opens takes them back before mapping new ones (#yecmp1d, Adamic's ruling): malloc handed
 // out pages the kernel faulted in again for every region, a third of bench/trees' time in the kernel.
@@ -47,12 +52,23 @@ struct adamic_region_block {
 	_Alignas(16) unsigned char bytes[];
 };
 
-// ALIGN is every object's alignment in a block, and object_size an object's place in one, rounded
-// up to it, so the end can walk a block from object to object.
+// ALIGN is every object's alignment in a block, and object_size a complete object's place in one,
+// rounded up to it, so the end can walk a block from object to object.
 #define ALIGN 16
 
 static size_t object_size(size_t count) {
 	size_t size = adamic_object_size(count);
+	return (size + ALIGN - 1) & ~(size_t)(ALIGN - 1);
+}
+
+// place is any object's place in a block. A construction object's is its construction size, rounded:
+// adamic_object_size reserves the order words too, so today the two round alike, but the walk steps
+// by what construct_in took rather than lean on that. A complete object pays one test and no call.
+static inline size_t place(const adamic_object *object) {
+	if (object->write_order == NULL) {
+		return object_size(object->shape->count);
+	}
+	size_t size = adamic_object_construction_size(object->shape);
 	return (size + ALIGN - 1) & ~(size_t)(ALIGN - 1);
 }
 
@@ -299,6 +315,24 @@ adamic_object *adamic_object_new_filled_in(adamic_region *region, const adamic_s
 	return object_new(region, shape, false);
 }
 
+// A constructor's region version making a class literal with an Absent field makes it here: on the
+// heap, its caller would hold it as the region's while the constructor's end released it (#kg38qe5).
+adamic_object *adamic_object_construct_in(adamic_region *region, const adamic_shape *shape) {
+	adamic_shape_check(shape);
+	if (region == NULL) {
+		return adamic_object_construct(shape);
+	}
+	size_t size = adamic_object_construction_size(shape);
+	adamic_object *object = allocate_in(region, (size + ALIGN - 1) & ~(size_t)(ALIGN - 1));
+	object->heap.references = 0;
+	object->heap.kind = adamic_kind_object;
+	object->heap.slab = ADAMIC_REGION_VALUE;
+	adamic_object_construction_start(object, shape);
+	// A constructor's writes may store outside children, as object_new's zeroed objects may.
+	region->holds_outside = true;
+	return object;
+}
+
 #ifdef ADAMIC_CANONICAL_CLOSURES
 adamic_environment *adamic_environment_new_in(adamic_region *region, size_t count) {
  size_t size = sizeof(adamic_environment) + count * sizeof(adamic_cell);
@@ -347,7 +381,7 @@ void adamic_region_end(adamic_region *region) {
 #endif
                 adamic_object *object = (adamic_object *)value;
                 adamic_object_free_children(object, adamic_release);
-                offset += object_size(object->shape->count);
+                offset += place(object);
 			}
 		}
 	}

@@ -4,7 +4,8 @@
 #include <stdlib.h>
 #include <string.h>
 
-static size_t construction_size(const adamic_shape *shape) {
+// Size and start are shared with region.c, whose adamic_object_construct_in lays the same storage in a region.
+size_t adamic_object_construction_size(const adamic_shape *shape) {
  size_t per_field = sizeof(adamic_value) + 2 + sizeof(size_t);
  if (shape->count > (SIZE_MAX - sizeof(adamic_object) - _Alignof(size_t)) / per_field) {
   adamic_panic("out of memory", sizeof "out of memory" - 1);
@@ -14,7 +15,7 @@ static size_t construction_size(const adamic_shape *shape) {
  return aligned + shape->count * sizeof(size_t);
 }
 
-static void construction_start(adamic_object *object, const adamic_shape *shape) {
+void adamic_object_construction_start(adamic_object *object, const adamic_shape *shape) {
  object->shape = shape;
  object->class = NULL;
  object->frozen = false;
@@ -22,7 +23,7 @@ static void construction_start(adamic_object *object, const adamic_shape *shape)
  memset(object->slots, 0, shape->count * sizeof(adamic_value));
  memset(adamic_object_initialized(object), 0, shape->count);
  memset(adamic_object_field_types(object), 0, shape->count);
- size_t order_offset = construction_size(shape) - shape->count * sizeof(size_t);
+ size_t order_offset = adamic_object_construction_size(shape) - shape->count * sizeof(size_t);
  object->write_order = (size_t *)(void *)((unsigned char *)object + order_offset);
  for (size_t index = 0; index < shape->count; index++) object->write_order[index] = SIZE_MAX;
 }
@@ -41,17 +42,17 @@ void adamic_object_publish(adamic_object *object, size_t index) {
 }
 
 adamic_object *adamic_object_construct(const adamic_shape *shape) {
- adamic_object *object = adamic_allocate(construction_size(shape), adamic_kind_object);
- construction_start(object, shape);
+ adamic_object *object = adamic_allocate(adamic_object_construction_size(shape), adamic_kind_object);
+ adamic_object_construction_start(object, shape);
  return object;
 }
 
 size_t adamic_object_allocation_size(const adamic_object *object) {
- return object->write_order == NULL ? adamic_object_size(object->shape->count) : construction_size(object->shape);
+ return object->write_order == NULL ? adamic_object_size(object->shape->count) : adamic_object_construction_size(object->shape);
 }
 
 adamic_array *adamic_node_array_make(size_t capacity, enum adamic_ir_type element, const adamic_shape *extras) {
- size_t metadata_size = construction_size(extras);
+ size_t metadata_size = adamic_object_construction_size(extras);
  if (metadata_size > SIZE_MAX - sizeof(adamic_array) || capacity > SIZE_MAX / sizeof(adamic_value)) {
   adamic_panic("out of memory", sizeof "out of memory" - 1);
  }
@@ -66,7 +67,7 @@ adamic_array *adamic_node_array_make(size_t capacity, enum adamic_ir_type elemen
  array->metadata = (adamic_object *)(void *)(array + 1);
  // Interior storage is not independently retained or freed. The array releases its children.
  array->metadata->heap = (adamic_heap){0, adamic_kind_object, 0};
- construction_start(array->metadata, extras);
+ adamic_object_construction_start(array->metadata, extras);
  return array;
 }
 
