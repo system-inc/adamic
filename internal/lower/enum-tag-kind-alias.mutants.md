@@ -51,3 +51,12 @@ Native's crash there is #svtsk2x, another owner's; no U7 test pins it.
 TestKindAliasKeepsRule3350: a module-level let written by swap(), called
 between the alias and the read, is recognized by the alias and then stopped
 with 3350's NotYet words, as the direct switch is on main.
+
+TestKindAliasParameterDefaultRebindKeepsRule3350, Language's a01: a closure in
+a parameter default rebinds the parameter, and is called between the alias and
+the switch. tsc narrows node to A; Node throws reading .a of the B. No name in
+the alias-to-switch range writes node, so kindAliasRewritten passes and the
+alias is recognized. Rule 3350 alone holds this program: Lower stops in .ts and
+.a with `a read of node narrowed to A where a call may have rewritten it (node
+is assigned inside a function)`. No mutant here covers it; it is 3350's row,
+not kindAliasRewritten's.

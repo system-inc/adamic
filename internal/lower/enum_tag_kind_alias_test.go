@@ -154,3 +154,27 @@ func TestKindAliasKeepsRule3350(t *testing.T) {
 		t.Fatalf("kind-alias rule 3350: %v", err)
 	}
 }
+
+// Language's a01: a closure in a parameter default rebinds the parameter, and is called between the
+// alias and the switch. No name in that range writes node, so the alias is recognized; tsc narrows node
+// to A and Node throws reading .a of the B. Rule 3350 alone holds it, in .ts and .a.
+func TestKindAliasParameterDefaultRebindKeepsRule3350(t *testing.T) {
+	t.Parallel()
+	const source = kindPredicateTypes + kindAliasValues + "function show(node: N, swap = (): void => { node = b; }): string { const kind = node.kind; swap(); switch (kind) { case K.A: return node.a.toFixed(0); default: return 'other'; } }\nconsole.log(show(a));\n"
+	if observed := runAgreementNode(t, writeAgreementSource(t, "main.ts", source)); observed.code == 0 || !strings.Contains(string(observed.stderr), "TypeError") {
+		t.Fatalf("kind-alias a01 Node: %+v", observed)
+	}
+	if field := kindAliasRecognized(t, source); field != "kind" {
+		t.Fatalf("kind-alias a01: recognized %q", field)
+	}
+	for _, extension := range []string{".ts", ".a"} {
+		t.Run(extension, func(t *testing.T) {
+			t.Parallel()
+			_, err := lowerSourceAs(t, source, extension)
+			var stop *NotYet
+			if !errors.As(err, &stop) || stop.What != "a read of node narrowed to A where a call may have rewritten it (node is assigned inside a function)" {
+				t.Fatalf("kind-alias a01 rule 3350 %s: %v", extension, err)
+			}
+		})
+	}
+}
