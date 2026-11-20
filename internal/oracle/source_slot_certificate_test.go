@@ -36,6 +36,7 @@ func TestSourceSlotCertificate(t *testing.T) {
 	const nullableWrite = "stage 0 can't lower writing a checked object field that may hold undefined or null"
 	const uncheckedCast = "Adamic 0.1 refuses a cast the runtime can't check"
 	const certificateStop = "stage 0 can't lower writing a checked object field without its source-slot type certificate"
+	const scalarNullishWrite = "stage 0 can't lower writing undefined or null into a checked field"
 	directory := "internal/oracle/testdata/source_slot_certificate/"
 	for _, pin := range []struct {
 		file, outcome, field string
@@ -83,6 +84,17 @@ func TestSourceSlotCertificate(t *testing.T) {
 		{file: "road_to_primitive_to_string.ts", outcome: "notyet: 7:1: " + certificateStop, field: "toString"},
 		{file: "road_to_primitive_value_of.ts", outcome: "notyet: 7:1: " + certificateStop, field: "valueOf"},
 		{file: "road_getter_dispatcher.ts", outcome: "notyet: 17:24: stage 0 can't lower a checked view read whose receiver may own an accessor of the same name", field: "child"},
+		// Rule C's scalar arm (#f95gkw2): a write that can store undefined or null into a checked field held other than as an
+		// object, which the plain checked write can't take, is NotYet; a string the slot holds writes as before.
+		{file: "scalar_undefined.ts", outcome: "notyet: 9:1: " + scalarNullishWrite, field: "note"},
+		{file: "scalar_string.ts", outcome: "agrees", field: "note"},
+		{file: "scalar_stored_undefined.ts", outcome: "notyet: 10:1: " + scalarNullishWrite, field: "note"},
+		{file: "scalar_optional.ts", outcome: "notyet: 7:1: " + scalarNullishWrite, field: "note"},
+		{file: "scalar_number.ts", outcome: "notyet: 7:1: " + scalarNullishWrite, field: "count"},
+		{file: "scalar_maybe_value.ts", outcome: "notyet: 10:1: " + scalarNullishWrite, field: "note"},
+		{file: "scalar_null.ts", outcome: "notyet: 7:1: " + scalarNullishWrite, field: "note"},
+		{file: "scalar_keyed.ts", outcome: "notyet: 8:1: " + scalarNullishWrite, field: "note"},
+		{file: "scalar_logical_assign.ts", outcome: "notyet: 8:1: " + scalarNullishWrite, field: "note"},
 	} {
 		t.Run(pin.file, func(t *testing.T) {
 			t.Parallel()
