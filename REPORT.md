@@ -130,3 +130,23 @@ The stock 6.0.3 compiler-project JavaScript emit for `factory/nodeFactory.js` wa
 In the pinned checker, `getDeclaredTypeOfSymbol` returns `tryGetDeclaredTypeOfSymbol(symbol) || errorType`. The dispatcher first tests `Class | Interface` and calls `getDeclaredTypeOfClassOrInterface`. Then it tests `TypeAlias` and calls `getDeclaredTypeOfTypeAlias`. These are the only earlier flag checks. `TypeParameter` is next and calls `getDeclaredTypeOfTypeParameter`, which returns the cached object or creates and caches it. The later checks, in order, are `Enum`, `EnumMember`, and `Alias`, followed by an undefined return. Later flags cannot preempt the TypeParameter branch. The binder uses `TypeParameterExcludes = Type & ~TypeParameter`, and ordinary merging checks the exclusion mask. The checker also has an assignment merge exception. The dispatch order therefore identifies the flag overlap that needs to be measured instead of treating a bit test as an exact flag value.
 
 The Node witness extracts the two actual `getInferTypeParameters` implementations, the pinned dispatcher and specialized helper, and core's `append`. It provides a fresh symbol-links cache and an instrumented type allocator. Both versions return undefined with absent locals or only nonparameter locals. For TypeParameter and TypeParameter|Transient, both versions return the same two object identities in order. The next call reuses those objects with no further allocator calls. See `infer-parameter-witness.cjs` and its output `infer-parameter-witness.json`.
+
+## Readonly type argument views (#dt55mtb)
+
+### Public declaration diff
+
+Upstream TypeScript 6.0.3 `hereby local` produced the following complete diff.
+
+```diff
+--- a/built/local/typescript.d.ts
++++ b/built/local/typescript.d.ts
+@@ -6825,7 +6825,7 @@
+         outerTypeParameters?: TypeParameter[] | undefined;
+         instantiations?: Map<string, Type> | undefined;
+         aliasSymbol?: Symbol | undefined;
+-        aliasTypeArguments?: Type[] | undefined;
++        aliasTypeArguments?: readonly Type[] | undefined;
+     }
+     interface ConditionalType extends InstantiableType {
+         root: ConditionalRoot;
+```
