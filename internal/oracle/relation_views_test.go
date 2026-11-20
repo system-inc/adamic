@@ -102,6 +102,15 @@ var relationViewRows = map[string]relationViewRow{
 	"nullable_both.ts":     {kind: "agrees"},
 	"nullable_both_lie.ts": {kind: "panics", stdout: "none\none\n", detail: "adamic: panic: field read failed: target.label"},
 	"nullable_control.ts":  {kind: "stops", detail: relationViewsDirectory + "/nullable_control.ts:17:18: Adamic 0.1 refuses optional property label in Target absent from structural source Source, which can hide fields; declare label on the source type, or build a fresh object with known fields (adamic/no-optional-widening)"},
+	"element_in.ts": {kind: "stops", detail: "PROBE"},
+	"element_has_own.ts": {kind: "stops", detail: "PROBE"},
+	"element_console_log.ts": {kind: "stops", detail: "PROBE"},
+	"element_string.ts": {kind: "stops", detail: "PROBE"},
+	"element_template.ts": {kind: "stops", detail: "PROBE"},
+	"element_structured_clone.ts": {kind: "stops", detail: "PROBE"},
+	"element_for_in.ts": {kind: "stops", detail: "PROBE"},
+	"element_values.ts": {kind: "stops", detail: "PROBE"},
+	"element_entries.ts": {kind: "stops", detail: "PROBE"},
 }
 
 func TestRelationViewsAgreeWithNode(t *testing.T) {
