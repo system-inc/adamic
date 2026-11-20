@@ -159,6 +159,53 @@ Upstream TypeScript 6.0.3 `hereby local` produced the following complete diff.
          root: ConditionalRoot;
 ```
 
+### Adapter order and type-only checks
+
+The adaptation commit is `72d60b06ec024eaa8a51064099fe89705e7c220e` on main at
+`f30d8927bb9153edde283f8f18a2a3f64054c3a5`. The fetched fix is
+`71f6d8b170f9197cc565cd79d4327ac1bd9f493b`. Their Stage 3 inputs match before
+this adaptation. The measurement merge is
+`971bfdb7085bca0feaae4e268992d116b0294ea4`, with the fix as its first parent
+and the adaptation commit as its second.
+
+`apply.sh` delegates to `apply.py`, which sorts adapter directories by name.
+Adaptation 20 adds the explicit `undefined` to `ConditionalRoot.aliasTypeArguments`,
+and 47 records its upstream declaration. Adaptation 71 edits the
+`getTypeArguments` signature. Adaptation 95 hashes `getTypeArguments` and
+`getTypeFromClassOrInterfaceReference`. Adaptation 99-correctness-axolotl-r
+pins `getTypeArguments` before and after its edit. The proposed
+`99-correctness-readonly-type-argument-views` directory would run before
+`99-readonly-inferred-bindings`, which still edits that owner's binding. The
+five changes therefore run at the end of `99-readonly-inferred-bindings` and
+pin that owner's text with the binding annotation already planned. The
+three subsequent adapters handle ScriptTarget entries, generated-name
+emit-node interfaces, and Node-system crypto imports. Their owners exclude
+all five edited declarations.
+
+The two concatenate calls use type-only views of the existing outer
+`TypeParameter[] | undefined` operands. Stock overload resolution selects
+the readonly overload with `Type` elements. The canonical signature's
+`map<TypeParameter, Type>` produces a fresh `Type[]`. The alias binding and
+the public field expose readonly views of the existing argument arrays.
+The API generator composes the field's sanction with adaptation 20's
+optional-type edit. The normalized manifest still has one entry for this
+public member.
+
+The adapter replay preserved all six input files byte for byte. Restoring
+only the alias binding produced a mixed tree, which the adapter rejected
+before writing. The sanctioned-API freshness test and
+`generate_shards.py --check` passed.
+
+Stock TypeScript 6.0.3 `tsc -b src --force --pretty false` produced no
+diagnostics before or after. The compiler-project JavaScript emit with
+declarations and source maps disabled matched byte for byte.
+
+| File | Bytes | SHA-256 |
+| --- | ---: | --- |
+| `checker.js` | 3,048,140 | `bc69c18843ee545c444fb74f70f8dfda3a4c6247ec5c06ef74e82c67a5bcc9e0` |
+| `types.js` | 143,574 | `2d9c56f3aa77cf1043b35d6278002533471872ef706f54fdb51ffac215dee5c1` |
+
+
 ## Split refusal scans and mutants
 
 The fix is `71f6d8b1`. The independent measurement merges are `36091025ff13882766d6c7a6bbdbb57be4a86a6b` (A) and `7fc73c54eae2e312a1de4536abae6f09a0a0d4a6` (B). Their compiler and census sources match the common fix-plus-main probe at `3082cdd0`. Each variant ran the instrumented CommonJSBundle probe rooted at `src/tsc/tsc.ts`. It reached the same first pipeline observation in every stream. The baseline includes the recent main compiler update. Its count supersedes the historical two-site measurement for this comparison.
