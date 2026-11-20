@@ -126,6 +126,46 @@ class ApiSanctionGeneratorTests(unittest.TestCase):
         self.assertTrue(any('missing sanctioned API declaration' in error and
                             'TypeReferenceNode' in error for error in errors), errors)
 
+    def after_optional_row(self):
+        self.row = dict(path=['ConditionalRoot', 'aliasSymbol'], kind='PropertySignature',
+                        afterOptional=True, before='Symbol | undefined',
+                        after='Readonly<Symbol> | undefined',
+                        why='Fixture readonly view of an adaptation 20 property')
+
+    def test_api_sanction_after_optional_composes_and_guard_accepts(self):
+        self.after_optional_row()
+        proof = self.generated()
+        self.assertIn('aliasSymbol?: Symbol;', proof['original'])
+        self.assertIn('aliasSymbol?: Readonly<Symbol> | undefined;', proof['expected'])
+        self.assertEqual(self.guard(proof, proof['expected']), [])
+
+    def test_api_sanction_after_optional_requires_adaptation_20_suffix(self):
+        self.row.update(afterOptional=True, before='EntityName | undefined')
+        result = self.generate()
+        self.assertNotEqual(result.returncode, 0)
+        self.assertIn("expected adaptation 20's optional suffix", result.stderr)
+
+    def test_api_sanction_after_optional_preserves_suffix(self):
+        self.after_optional_row()
+        self.row['after'] = 'Readonly<Symbol>'
+        result = self.generate()
+        self.assertNotEqual(result.returncode, 0)
+        self.assertIn('missing optional suffix', result.stderr)
+
+    def test_api_sanction_after_optional_requires_property_signature(self):
+        self.after_optional_row()
+        self.row['kind'] = 'MethodSignature'
+        result = self.generate()
+        self.assertNotEqual(result.returncode, 0)
+        self.assertIn('invalid optional composition', result.stderr)
+
+    def test_api_sanction_after_optional_rejects_replace(self):
+        self.after_optional_row()
+        self.row['replace'] = 'member'
+        result = self.generate()
+        self.assertNotEqual(result.returncode, 0)
+        self.assertIn('invalid optional composition', result.stderr)
+
     def member_row(self):
         self.row = dict(path=['ModuleResolutionHost', 'getCurrentDirectory'], kind='MethodSignature',
                         replace='member', before='getCurrentDirectory?(): string;',

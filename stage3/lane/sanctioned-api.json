@@ -264,7 +264,7 @@
     {
       "declaration": "member:[\"ts\",\"ConditionalRoot\",\"aliasTypeArguments\"]#0",
       "before": "[\"PropertySignature\",[\"Identifier\",\"aliasTypeArguments\"],[\"QuestionToken\"],[\"ArrayType\",[\"TypeReference\",[\"Identifier\",\"Type\"]]]]",
-      "after": "[\"PropertySignature\",[\"Identifier\",\"aliasTypeArguments\"],[\"QuestionToken\"],[\"UnionType\",[\"ArrayType\",[\"TypeReference\",[\"Identifier\",\"Type\"]]],[\"UndefinedKeyword\"]]]"
+      "after": "[\"PropertySignature\",[\"Identifier\",\"aliasTypeArguments\"],[\"QuestionToken\"],[\"UnionType\",[\"TypeOperator\",[\"ArrayType\",[\"TypeReference\",[\"Identifier\",\"Type\"]]]],[\"UndefinedKeyword\"]]]"
     },
     {
       "declaration": "member:[\"ts\",\"ConditionalRoot\",\"inferTypeParameters\"]#0",
@@ -3689,6 +3689,14 @@
       "line": 2719
     },
     {
+      "adaptation": "adapt/99-readonly-inferred-bindings/api-sanctions.json row 1 {\"path\":[\"ConditionalRoot\",\"aliasTypeArguments\"],\"kind\":\"PropertySignature\",\"afterOptional\":true,\"before\":\"Type[] | undefined\",\"after\":\"readonly Type[] | undefined\",\"why\":\"Adamic, task dt55mtb. ConditionalRoot shares the alias arguments with readers that never write to the array.\"}",
+      "path": [
+        "ConditionalRoot",
+        "aliasTypeArguments"
+      ],
+      "line": 6826
+    },
+    {
       "adaptation": "75",
       "path": [
         "JsonSourceFile",
@@ -3833,6 +3841,10 @@
     {
       "file": "stage3/adapt/99-correctness-timer-closures/api-sanctions.json",
       "sha256": "abd191d026f96adb68cc23122087d3218a30bc3621f6d60c559cfe350c2780c2"
+    },
+    {
+      "file": "stage3/adapt/99-readonly-inferred-bindings/api-sanctions.json",
+      "sha256": "7d04faceffc7b6dda82fa5a3f161a3cbf74280eb313a6c37f2ad8f3a3dadd46a"
     }
   ],
   "baseline_diffs": [
@@ -4943,7 +4955,7 @@
     "+        outerTypeParameters?: TypeParameter[] | undefined;\n",
     "+        instantiations?: Map<string, Type> | undefined;\n",
     "+        aliasSymbol?: Symbol | undefined;\n",
-    "+        aliasTypeArguments?: Type[] | undefined;\n",
+    "+        aliasTypeArguments?: readonly Type[] | undefined;\n",
     "     }\n",
     "     interface ConditionalType extends InstantiableType {\n",
     "         root: ConditionalRoot;\n",

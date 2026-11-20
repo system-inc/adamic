@@ -1,0 +1,10 @@
+[
+  {
+    "path": ["ConditionalRoot", "aliasTypeArguments"],
+    "kind": "PropertySignature",
+    "afterOptional": true,
+    "before": "Type[] | undefined",
+    "after": "readonly Type[] | undefined",
+    "why": "Adamic, task dt55mtb. ConditionalRoot shares the alias arguments with readers that never write to the array."
+  }
+]
