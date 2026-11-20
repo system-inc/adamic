@@ -69,3 +69,38 @@ go run ./bench -game -go <Go 1.23.1's go> -rustc <rustc 1.84.1> -crates bench/ga
 The `--target` keeps the crates the entries link apart from those cargo builds for build scripts: without it both land in one directory, and a crate both need, such as libc, is there twice at one version with different features (J-wme5jp2), which the runner refuses to guess between. pcre2-sys links -pcre's libpcre2 only when pkg-config finds it, and otherwise builds its bundled copy without a word: build rust-deps with pkg-config on `PATH`, `PKG_CONFIG_LIBDIR` at -pcre's `usr/lib/x86_64-linux-gnu/pkgconfig` and `PKG_CONFIG_SYSROOT_DIR` at -pcre, as the runner sets them for the Go entry.
 
 The runner finds each crate's rlib by the `.d` file cargo writes beside it, which names the crate's version, so two versions of one crate are told apart.
+
+## Golem, November 20, 2026
+
+The first record (#m52sper). J-1ee69rp, a Loom measure job alone on Golem: Intel Core i7-4770S, 8 logical CPUs, Linux 6.8.0-147, Node 24.19.0, clang 20.1.8, the game's go1.23.1 and rustc 1.84.1 with its flags, the crates in rust-deps/Cargo.lock and libpcre3 and libpcre2 from noble. Adamic `8dc0d123`, which is main `9233213` with this runner. Load was 3.07/1.87/1.68 before, mostly bench's own build of adamic, and 1.40/1.54/1.57 after. `go run ./bench -game ... -samples 15 -timeout 10m`, 15 interleaved samples, every runner's output Node's byte for byte on every run, every peak the runner's own through the reaper, instructions:u the median of 3 untimed runs. The run's whole log is attached to #m52sper. The calls below are the rule above, read from that log's 15 runs a runner; the run itself printed spectralnorm against Go as a win, under the best-against-best rule this replaces.
+
+**One thread against one thread, the headline.** Each cell is the runner's fastest to slowest wall time of 15.
+
+| program | Adamic | Go, one thread | Rust, one thread | Node |
+|---|---|---|---|---|
+| binarytrees, depth 18 | 1.610 to 1.704 s | go-6 2.542 to 2.636 s: **faster**, 0.63x | no entry | 1.472 to 1.546 s: slower, 1.09x |
+| spectralnorm, 1,500 | 0.328 to 0.330 s | go 0.328 to 0.330 s: **within the noise**, 1.00x | no entry | 0.408 to 0.436 s: faster, 0.80x |
+| nbody, 1,000,000 | 0.197 to 0.210 s | go-3 0.099 to 0.103 s: slower, 1.99x | rust-9 0.038 to 0.057 s, which needs AVX: slower, 5.21x; rust-3 0.059 to 0.067 s: slower, 3.34x | 0.947 to 0.996 s: faster, 0.21x |
+| mandelbrot, 16,000 | 50.476 to 51.568 s | go-8 21.144 to 21.331 s: slower, 2.39x | no entry | 66.080 to 68.504 s: faster, 0.76x |
+| fannkuchredux, 12 | 113.892 to 116.629 s | go-8 34.600 to 35.066 s: slower, 3.29x | no entry | 27.934 to 28.093 s: slower, 4.08x |
+| fasta, 25,000,000 | 19.026 to 19.459 s | go 3.408 to 3.642 s: slower, 5.58x | rust-3 1.883 to 2.088 s: slower, 10.11x | 21.875 to 23.189 s: faster, 0.87x |
+
+Against Go's one-thread entries Adamic is faster on 1 of 6 (binarytrees), within the noise on 1 (spectralnorm) and slower on 4. Against Rust's it's slower on all 3. So on day one Adamic isn't faster than Go or Rust.
+
+**The fastest entries, several threads, never headlined.** Adamic runs one thread, and each entry runs on all 8 CPUs. Adamic's best is 1.27x (binarytrees) to 18.4x (mandelbrot) Go's fastest entry's, and 5.2x (nbody) to 68.7x (mandelbrot) Rust's.
+
+**The instructions say where the work is.**
+- fannkuchredux runs 1,152 billion instructions:u, against go-8's 314 billion and Node's 267 billion: its flip loop keeps its counters as doubles (#k8vkmns).
+- fasta runs 211 billion, against Go's 10.9 billion; for-in over a record still builds and walks its key list (#a9pr809).
+- regexredux runs 435 billion against Node's 25 billion, 11.8x Node's wall: global match and replace don't use the lazy automaton (#sxg8hfd).
+- nbody runs 1.76 billion, against go-3's 0.74 billion and rust-9's 0.20 billion.
+
+**Memory.** Adamic's peak was 2.0 to 2.1 MB on every number program, 196 MB on binarytrees and 790 MB on regexredux. Node's was 70 MB to 900 MB, Go's 1.6 MB to 511 MB and Rust's 1.8 MB to 130 MB.
+
+**Gaps.**
+- knucleotide doesn't build natively: a conditional expression as a statement (#z880rwy).
+- revcomp doesn't build natively: `Buffer.allocUnsafe`, which Library holds.
+- pidigits is refused: it needs a bigint.
+- The game has no one-thread Rust entry for seven programs, and no one-thread Go entry for regexredux.
+
+**A lead, not yet a finding:** mandelbrot spends 15.96 s of its wall in the kernel natively and 19.11 s on Node, against Go's 0.03 s (#bnq3dr5).
