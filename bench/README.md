@@ -63,10 +63,10 @@ The record, until the next rerun. Golem, a house box: Intel Core i7-4770S, 8 log
 
 | Benchmark | native | Node | native vs Node |
 |---|---|---|---|
-| copy | 0.932 s, user 0.386 s, 48.0 MB | 0.809 s, user 0.517 s, 210.9 MB | 1.15x, slower |
+| copy | 0.534 s, user 0.393 s, 48.0 MB | 0.406 s, user 0.498 s, 212.4 MB | 1.32x, slower |
 | devirtualize | 0.484 s, user 0.482 s, 2.1 MB | 0.590 s, user 0.600 s, 76.3 MB | 0.82x |
 | environment | 0.316 s, user 0.313 s, 2.1 MB | 0.134 s, user 0.143 s, 74.8 MB | 2.35x, slower |
-| graph | 0.850 s, user 0.346 s, 115.9 MB | 0.777 s, user 0.485 s, 275.6 MB | 1.09x, slower |
+| graph | 0.455 s, user 0.356 s, 116.0 MB | 0.408 s, user 0.493 s, 297.7 MB | 1.11x, slower |
 | nbody | 0.198 s, user 0.196 s, 2.2 MB | 0.948 s, user 0.952 s, 73.3 MB | 0.21x |
 | parallel_files | 0.311 s, user 1.658 s, 65.5 MB | 0.701 s, user 0.703 s, 246.6 MB | 0.44x |
 | primes | 0.120 s, user 0.116 s, 4.1 MB | 0.177 s, user 0.189 s, 88.6 MB | 0.68x |
@@ -81,10 +81,10 @@ The record, until the next rerun. Golem, a house box: Intel Core i7-4770S, 8 log
 
 | Benchmark | allocations | frees | retains | releases | peak live | in regions |
 |---|---:|---:|---:|---:|---:|---:|
-| copy | 10,200,138 | 200,138 | 400,055 | 400,065 | 400,002 | 10,000,000 |
+| copy | 10,200,070 | 200,070 | 400,027 | 400,035 | 400,002 | 10,000,000 |
 | devirtualize | 772 | 771 | 102,400,513 | 102,400,517 | 772 | 1 |
 | environment | 5,000,001 | 5,000,001 | 31,000,000 | 11,000,001 | 5 | 0 |
-| graph | 10,485,886 | 136 | 55 | 61 | 1,048,575 | 10,485,750 |
+| graph | 10,485,818 | 68 | 27 | 31 | 1,048,575 | 10,485,750 |
 | nbody | 8 | 8 | 10 | 14 | 7 | 0 |
 | parallel_files | 3,952,651 | 3,952,651 | 8,151,045 | 8,654,930 | 8,839 | 0 |
 | primes | 12 | 12 | 0 | 12 | 2 | 0 |
@@ -97,8 +97,10 @@ The record, until the next rerun. Golem, a house box: Intel Core i7-4770S, 8 log
 | trees | 68,332,244 | 1,572,900 | 0 | 42 | 2,097,149 | 66,759,344 |
 | word_count | 1,020,129 | 1,020,129 | 6,100,370 | 5,100,427 | 1,020,006 | 0 |
 
-Native was faster than Node in eleven of fifteen rows, from 0.21x (nbody) to 0.84x (timer_dispatch), and slower in four: environment 2.35x, copy 1.15x, graph 1.09x and trees 1.07x. Native's peak resident memory was the lower in every row, Node's 1.4 times native's (word_count) to 36 times (devirtualize).
+Native was faster than Node in eleven of fifteen rows, from 0.21x (nbody) to 0.84x (timer_dispatch), and slower in four: environment 2.35x, copy 1.32x, graph 1.11x and trees 1.07x. Native's peak resident memory was the lower in every row, Node's 1.4 times native's (word_count) to 36 times (devirtualize).
 
-Across the five rounds, native's times on a program spread 0.0% to 5.7%, except tokenizer at 14.9% (0.181 s to 0.208 s); Node's spread up to 10.0% (graph), and 12.9% on the floor. parallel_files used the pool's default threads: 0.311 s of wall bought 1.658 s of user time across them. trees spends about 0.3 s of its 1.608 s outside user mode, where the October run on Cloud spent about 0.9 s: 66.8 million of its 68.3 million allocations end in regions, and since region blocks became huge pages (#cgn2cwt, `10f8f6b4`) they fault far less: on Golem that took trees from 2.01 s to 1.64 s and its faults from 626,554 to 124,024 (J-6sv2t7d).
+The copy and graph rows are from a later run, J-68bfbtq on the same Golem at `eef9fd9a` (load 0.49/2.11/1.83 before, 0.80/2.01/1.80 after, nothing over 5% CPU, `go run ./bench -only copy,graph -rounds 5`, answers matching). Both programs used to end with a 400 ms timer before reading their idle resident set, and every timed run, native's and Node's alike, carried that sleep: J-vpa5442 read copy at 0.932 s against 0.809 s (1.15x) and graph at 0.850 s against 0.777 s (1.09x), each 0.4 s longer than its work (#dqfvqff, J-h66sxf2). The wait now runs only when `ADAMIC_BENCH_QUIET=1` asks for the idle read, which bench never sets. Their counted rows moved with it: the timer's closure is gone.
+
+Across the five rounds, native's times on a program spread 0.0% to 5.7%, except tokenizer at 14.9% (0.181 s to 0.208 s) and graph at 17.1% (0.455 s to 0.533 s, J-68bfbtq); Node's spread up to 18.9% (graph, the same run), and 12.9% on the floor. parallel_files used the pool's default threads: 0.311 s of wall bought 1.658 s of user time across them. trees spends about 0.3 s of its 1.608 s outside user mode, where the October run on Cloud spent about 0.9 s: 66.8 million of its 68.3 million allocations end in regions, and since region blocks became huge pages (#cgn2cwt, `10f8f6b4`) they fault far less: on Golem that took trees from 2.01 s to 1.64 s and its faults from 626,554 to 124,024 (J-6sv2t7d).
 
 The tokenizer generator uses a fixed Park-Miller seed with exact integer arithmetic below 2^53. Its intended mix is about 3/8 identifiers, 1/4 numbers, 1/4 punctuation and 1/8 quoted strings, separated by spaces, tabs and newlines. `go test ./bench -run '^TestTokenizer' -timeout 60s` checks the scanned identifier share stays at least 25% and proves the check catches the former overflowing generator. This is a workload check, not a new performance measurement.
