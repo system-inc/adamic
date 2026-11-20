@@ -467,16 +467,19 @@ func (request gameRequest) pcreLibraries() string {
 	return filepath.Join(request.pcre, "usr", "lib", "x86_64-linux-gnu")
 }
 
-// pcreBuild is what a Go build of an entry that links PCRE adds to its environment: pkg-config looks
-// in -pcre's pkgconfig directory, and cgo's compiler and linker in its headers and libraries. The
-// .pc files dpkg -x unpacks still say /usr, so the flags name the prefix's directories outright. cgo's
-// own -O2 -g stay, which setting CGO_CFLAGS or CGO_LDFLAGS would otherwise drop. Nothing without -pcre.
+// pcreBuild is what a Go build of an entry that links PCRE adds to its environment: pkg-config reads
+// -pcre's pkgconfig directory in place of its default search (PKG_CONFIG_LIBDIR, so no host .pc file is
+// ever read), with -pcre as its sysroot, since the .pc files dpkg -x unpacks still say /usr; and cgo's
+// compiler and linker look in its headers and libraries outright too. cgo's own -O2 -g stay, which
+// setting CGO_CFLAGS or CGO_LDFLAGS would otherwise drop. The pkg-config on PATH is the caller's (J-q175xd8
+// found Golem had none). Nothing without -pcre.
 func (request gameRequest) pcreBuild() []string {
 	if request.pcre == "" {
 		return nil
 	}
 	return []string{
-		"PKG_CONFIG_PATH=" + filepath.Join(request.pcreLibraries(), "pkgconfig"),
+		"PKG_CONFIG_LIBDIR=" + filepath.Join(request.pcreLibraries(), "pkgconfig"),
+		"PKG_CONFIG_SYSROOT_DIR=" + request.pcre,
 		"CGO_CFLAGS=-O2 -g -I" + filepath.Join(request.pcre, "usr", "include"),
 		"CGO_LDFLAGS=-O2 -g -L" + request.pcreLibraries(),
 	}
