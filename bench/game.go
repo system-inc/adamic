@@ -785,6 +785,7 @@ func (builder gameBuilder) buildGo(what, directory, source, binary string, pcre 
 		command.Env = append(command.Env, builder.request.pcreBuild()...)
 	}
 	if output, err := step("building "+what+" with "+builder.request.goBinary, command); err != nil {
+		printStopped(what, output)
 		return fmt.Errorf("go build stopped: %v %s", err, stopLine(string(output)))
 	}
 	return nil
@@ -812,6 +813,7 @@ func (builder gameBuilder) buildRust(what, directory, source, binary string, cra
 	command := exec.Command(builder.request.rustc, arguments...)
 	command.Dir = directory
 	if output, err := step("building "+what+" with "+builder.request.rustc, command); err != nil {
+		printStopped(what, output)
 		return fmt.Errorf("rustc stopped: %v %s", err, stopLine(string(output)))
 	}
 	return nil
@@ -845,9 +847,16 @@ func crateLibrary(directory, crate, version string) (string, error) {
 	return found[0], nil
 }
 
+// printStopped prints a stopped build's whole output to the run's log, where the gap below the tables
+// quotes one line of it: a toolchain's first line is often a progress line ("go: downloading ...") and
+// the error that stopped it comes after (J-wme5jp2, regexredux go-5).
+func printStopped(what string, output []byte) {
+	fmt.Printf("bench: %s stopped, its whole output:\n%s\n", what, strings.TrimRight(string(output), "\n"))
+}
+
 // stopLine is the line of a build's output that says why it stopped: the first that begins with
 // "error" when there is one, since rustc prints its warnings first, and otherwise the first that isn't
-// a "#" heading, which go build prints above its errors.
+// a "#" heading, which go build prints above its errors, or go's "go: downloading" progress line.
 func stopLine(output string) string {
 	lines := strings.Split(strings.TrimSpace(output), "\n")
 	for _, line := range lines {
@@ -856,7 +865,7 @@ func stopLine(output string) string {
 		}
 	}
 	for _, line := range lines {
-		if line != "" && !strings.HasPrefix(line, "#") {
+		if line != "" && !strings.HasPrefix(line, "#") && !strings.HasPrefix(line, "go: downloading ") {
 			return line
 		}
 	}
