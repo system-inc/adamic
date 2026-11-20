@@ -23,32 +23,34 @@ func TestMergedSlotRegionConstruction(t *testing.T) {
 	t.Parallel()
 	const source = `class Merged { a = 1; }
 interface Merged { f?: string; }
-function make(n: number): Merged {
-    const m = new Merged();
-    m.a = n;
-    return m;
-}
-function weigh(n: number): number {
-    const m = make(n);
+function weigh(m: Merged): number {
     return m.a + (m.f === undefined ? 10 : 20);
 }
-function fill(n: number): string {
-    const m = new Merged();
-    m.a = n;
-    m.f = "x" + String(n);
+function keys(m: Merged): string {
+    return Object.keys(m).join(",");
+}
+function filled(m: Merged): string {
+    m.f = "x";
     return String(m.f) + ":" + Object.keys(m).join(",");
 }
-console.log(String(weigh(3)));
-console.log(fill(4));
-console.log(Object.keys(make(5)).join(","));
+console.log(String(weigh(new Merged())));
+console.log(keys(new Merged()));
+console.log(filled(new Merged()));
 `
 	program := lowersAndAgreesWithNodeAs(t, source, ".ts")
 	code := native.C(program)
-	version := regexp.MustCompile(`adamic_\w*Merged\w*_in\b|adamic_region `)
+	version := regexp.MustCompile(`adamic_\w*Merged_allocate_[0-9a-f]{32}_in\b`)
+	called := false
 	for _, line := range strings.Split(code, "\n") {
-		if version.MatchString(line) || strings.Contains(line, "adamic_object_construct") {
+		if version.MatchString(line) || strings.Contains(line, "adamic_region") {
 			t.Logf("C: %s", strings.TrimSpace(line))
 		}
+		if version.MatchString(line) && !strings.HasPrefix(strings.TrimSpace(line), "static ") {
+			called = true
+		}
+	}
+	if !called {
+		t.Fatal("no caller reaches Merged's region version, so this probe can't see the construction hazard")
 	}
 	binary := filepath.Join(t.TempDir(), "native")
 	if err := native.Build(code, binary, native_runtime.Options{Sanitize: true}); err != nil {
@@ -64,7 +66,7 @@ console.log(Object.keys(make(5)).join(","));
 			t.Fatal(err)
 		}
 	}
-	const want = "13\nx4:a,f\na\n"
+	const want = "11\na\nx:a,f\n"
 	if out.String() != want || errs.Len() != 0 {
 		t.Fatalf("native under the sanitizers: stdout %q stderr %q; want Node's %q", out.String(), errs.String(), want)
 	}
