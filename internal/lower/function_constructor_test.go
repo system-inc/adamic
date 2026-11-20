@@ -87,8 +87,9 @@ func TestFunctionConstructorLieStopsAtTheRead(t *testing.T) {
 // getter declared as a method stops at its own rule first (TestFunctionConstructorAllocatorWritesStopEarlier).
 // A use of the any's value other than as a new's constructor, a comparison or a pass of the cache or a pass of
 // a getter's result, gives back the cast's own refusal, as does a cast outside the getter's shape. A constructor whose
-// prototype the program reads, or that returns a value, reads this, hands this to a call or writes a field on
-// one path is no function constructor, so its getter's cast keeps its refusal. A new that may be a class or a
+// prototype the program reads, or that returns a value, reads this or hands this to a call is no function
+// constructor, so its getter's cast keeps its refusal; one writing a field on one path is, since slice 2
+// (TestFunctionConstructorBranchesAgree). A new that may be a class or a
 // function constructor is NotYet. In .a the road stays refused at its cast.
 //
 // Mutants: m2, every allocator sealed, lowers the store, pass and alias rows; m3, the uses always admitted, lowers
@@ -110,7 +111,6 @@ func TestFunctionConstructorOtherRoadsStop(t *testing.T) {
 		{"a constructor returning a value", functionConstructorProgram("function NodeObject(this: Nd, kind: number, pos: number, end: number): Nd {\n    this.pos = pos;\n    this.end = end;\n    this.kind = kind;\n    return this;\n}\n", "", ""), ".ts", refused},
 		{"a constructor reading this", functionConstructorProgram("function NodeObject(this: Nd, kind: number, pos: number, end: number): void {\n    this.pos = pos;\n    this.end = this.pos;\n    this.kind = kind;\n}\n", "", ""), ".ts", refused},
 		{"a constructor handing this to a call", functionConstructorProgram("function kindOf(node: Nd): number {\n    return node.pos;\n}\nfunction NodeObject(this: Nd, kind: number, pos: number, end: number): void {\n    this.pos = pos;\n    this.end = end;\n    this.kind = kindOf(this);\n}\n", "", ""), ".ts", refused},
-		{"a constructor writing on one path", functionConstructorProgram("function NodeObject(this: Nd, kind: number, pos: number, end: number): void {\n    this.pos = pos;\n    this.end = end;\n    if (kind > 0) {\n        this.kind = kind;\n    } else {\n        this.kind = 0;\n    }\n}\n", "", ""), ".ts", refused},
 		{"a new that may be a class", functionConstructorProgram(functionConstructorHonest, "class Real {\n    static readonly label = 'real';\n    kind: number;\n    pos: number;\n    end: number;\n    constructor(kind: number, pos: number, end: number) {\n        this.kind = kind;\n        this.pos = pos;\n        this.end = end;\n    }\n}\n", "console.log(Real.label);\n"), ".ts", "a constructor value that may be a class or a function constructor"},
 		{"in .a", functionConstructorProgram(functionConstructorHonest, "", ""), ".a", refused},
 	} {

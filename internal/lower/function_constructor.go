@@ -241,17 +241,21 @@ func (l *lowering) allocatorIntersectionCast(intersection *ast.Node, symbol *ast
 // functionConstructorEligible is the function constructor a declaration lowers as, or nil when it isn't one:
 // its this is a declared parameter, every use of it is a new callee or a cast to any (closedKindNewOnlyFunctions,
 // so a read or write of its prototype rules it out), it isn't generic, async or a generator, its other
-// parameters are plain required names, it returns void, and its body is nothing but `this.name = value`
-// statements whose values don't hold this.
+// parameters are plain required names, it returns void, and its body is nothing but writes
+// (functionConstructorWrites): `this.name = value` statements whose values don't hold this, and ifs whose
+// conditions don't hold this, each branch a block of such statements or one of them.
 //
 // That's stricter than the ruling, which asks only that the body never read this before writing it and never
-// pass this to a call. Slice 1 refuses every read of this and every write but a top-level one: a read after a
-// write, or a write on one path, needs the slot's state at that point proven (an Absent slot for a field one
-// path leaves unwritten, #837zjkt's slice 2), and a body that only writes needs no such proof, since nothing in
-// it can see a slot before its write. A default, optional or rest parameter is refused for the same cause and
-// one more, never because it's unsound: a default's initializer runs before the body's first write and may read
-// this, and the dispatch maps a new's arguments onto the parameters one to one, by equal arity (Language's f09;
-// tsc's constructors take none).
+// pass this to a call. Eligibility refuses every read of this and every write but a statement's own: a read
+// after a write needs the slot's state at that point proven, and a body that only writes needs no such proof,
+// since nothing in it can see a slot before its write. A write on one path is admitted (#837zjkt's slice 2)
+// because eligibility doesn't decide presence: the construction window does (layFunctionConstructorWindows),
+// reserving every field Absent when some path skips one, and the object is born a checked view, so a read of a
+// slot a path left Absent stops loudly where Node reads undefined. A write inside an expression, a loop, a
+// return, a switch or a try stays refused. A default, optional or rest parameter is refused for the first cause
+// and one more, never because it's unsound: a default's initializer runs before the body's first write and may
+// read this, and the dispatch maps a new's arguments onto the parameters one to one, by equal arity (Language's
+// f09; tsc's constructors take none).
 func (l *lowering) functionConstructorEligible(declaration *ast.Node, symbol *ast.Symbol) *functionConstructor {
 	if symbol == nil || declaration.Name() == nil || !closedKindDeclaresThis(declaration) || !l.closedKindNewOnlyFunctions()[symbol] {
 		return nil
@@ -273,25 +277,57 @@ func (l *lowering) functionConstructorEligible(declaration *ast.Node, symbol *as
 	if returns := l.checker.GetReturnTypeOfSignature(l.checker.GetSignatureFromDeclaration(declaration)); returns.Flags()&checker.TypeFlagsVoid == 0 {
 		return nil
 	}
-	writes := []*ast.Node{}
-	for _, statement := range body.AsBlock().Statements.Nodes {
-		if statement.Kind != ast.KindExpressionStatement {
-			return nil
-		}
-		assignment := ast.SkipParentheses(statement.AsExpressionStatement().Expression)
-		if assignment.Kind != ast.KindBinaryExpression || assignment.AsBinaryExpression().OperatorToken.Kind != ast.KindEqualsToken {
-			return nil
-		}
-		target := ast.SkipParentheses(assignment.AsBinaryExpression().Left)
-		if target.Kind != ast.KindPropertyAccessExpression || ast.SkipParentheses(target.AsPropertyAccessExpression().Expression).Kind != ast.KindThisKeyword || !ast.IsIdentifier(target.Name()) {
-			return nil
-		}
-		if containsThis(assignment.AsBinaryExpression().Right) {
-			return nil
-		}
-		writes = append(writes, target)
+	writes, admitted := functionConstructorWrites(body.AsBlock().Statements.Nodes, nil)
+	if !admitted {
+		return nil
 	}
 	return &functionConstructor{declaration: declaration, thisType: l.checker.GetTypeAtLocation(parameters[0].Name()), writes: writes, constructor: -1}
+}
+
+// functionConstructorWrites appends to writes every `this.name` target a function constructor's statements
+// write, in source order across every branch, and is false when a statement is one eligibility refuses. It
+// admits a `this.name = value` whose value doesn't hold this, and an if whose condition doesn't hold this, each
+// branch a block of such statements or one of them. buildFunctionConstructor keeps each field's first write,
+// and the window lays the order a path runs them in.
+func functionConstructorWrites(statements []*ast.Node, writes []*ast.Node) ([]*ast.Node, bool) {
+	for _, statement := range statements {
+		switch statement.Kind {
+		case ast.KindExpressionStatement:
+			assignment := ast.SkipParentheses(statement.AsExpressionStatement().Expression)
+			if assignment.Kind != ast.KindBinaryExpression || assignment.AsBinaryExpression().OperatorToken.Kind != ast.KindEqualsToken {
+				return nil, false
+			}
+			target := ast.SkipParentheses(assignment.AsBinaryExpression().Left)
+			if target.Kind != ast.KindPropertyAccessExpression || ast.SkipParentheses(target.AsPropertyAccessExpression().Expression).Kind != ast.KindThisKeyword || !ast.IsIdentifier(target.Name()) {
+				return nil, false
+			}
+			if containsThis(assignment.AsBinaryExpression().Right) {
+				return nil, false
+			}
+			writes = append(writes, target)
+		case ast.KindIfStatement:
+			branching := statement.AsIfStatement()
+			if containsThis(branching.Expression) {
+				return nil, false
+			}
+			for _, branch := range []*ast.Node{branching.ThenStatement, branching.ElseStatement} {
+				if branch == nil {
+					continue
+				}
+				inside := []*ast.Node{branch}
+				if branch.Kind == ast.KindBlock {
+					inside = branch.AsBlock().Statements.Nodes
+				}
+				var admitted bool
+				if writes, admitted = functionConstructorWrites(inside, writes); !admitted {
+					return nil, false
+				}
+			}
+		default:
+			return nil, false
+		}
+	}
+	return writes, true
 }
 
 // allocatorGetterCast is the function constructor an admitted cast names, nil for any other node.
