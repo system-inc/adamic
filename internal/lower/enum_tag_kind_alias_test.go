@@ -158,8 +158,10 @@ func TestKindAliasKeepsRule3350(t *testing.T) {
 // A closure that rebinds the reference, called between the alias and the switch: no name in that range
 // writes it, so the alias is recognized, and tsc narrows the reference by the switch. Language's a01
 // declares the closure in a parameter default, and Node throws reading .a of the B; Optimizer's two
-// declare it before the alias, over a parameter and over a let. Rule 3350 alone holds each, in .ts and
-// .a, and the never-rebound control lowers and prints yes natively.
+// declare it before the alias, over a parameter and over a let. Over kindPredicateTypes' open tag
+// (default_parameter, parameter_open, let_open) each read reaches the walk; over the closed NA | NB
+// (parameter, let) only 3350 is asked. Rule 3350 alone holds each, in .ts and .a, and the never-rebound
+// control lowers and prints yes natively.
 func TestKindAliasClosureRebindKeepsRule3350(t *testing.T) {
 	t.Parallel()
 	const types = `enum K { A = 1, B = 2, C = 3 }
@@ -170,11 +172,14 @@ const na: NA = { kind: K.A, a: 'yes' };
 const nb: NB = { kind: K.B, b: 7 };
 `
 	const body = "const kind = node.kind; reset(); switch (kind) { case K.A: return node.a; default: return 'x'; } }\nconsole.log(f(na, nb));\n"
+	const openBody = "const kind = node.kind; reset(); switch (kind) { case K.A: return node.a.toFixed(0); default: return 'other'; } }\nconsole.log(show(a, b));\n"
 	for _, p := range []struct{ name, source, node, stop string }{
 		{"default_parameter", kindPredicateTypes + kindAliasValues + "function show(node: N, swap = (): void => { node = b; }): string { const kind = node.kind; swap(); switch (kind) { case K.A: return node.a.toFixed(0); default: return 'other'; } }\nconsole.log(show(a));\n", "TypeError", "a read of node narrowed to A where a call may have rewritten it (node is assigned inside a function)"},
 		{"parameter", types + "function f(node: NA | NB, other: NA | NB): string { const reset = () => { node = other; }; " + body, "undefined\n", "a read of node narrowed to NA where a call may have rewritten it (node is assigned inside a function)"},
 		{"let", types + "function f(start: NA | NB, other: NA | NB): string { let node = start; const reset = () => { node = other; }; " + body, "undefined\n", "a read of node narrowed to NA where a call may have rewritten it (node is assigned inside a function)"},
-		{"control", types + "function f(node: NA | NB): string { const kind = node.kind; switch (kind) { case K.A: return node.a; default: return 'x'; } }\nconsole.log(f(na));\n", "yes\n", ""},
+		{"parameter_open", kindPredicateTypes + kindAliasValues + "function show(node: N, other: N): string { const reset = (): void => { node = other; }; " + openBody, "TypeError", "a read of node narrowed to A where a call may have rewritten it (node is assigned inside a function)"},
+		{"let_open", kindPredicateTypes + kindAliasValues + "function show(start: N, other: N): string { let node = start; const reset = (): void => { node = other; }; " + openBody, "TypeError", "a read of node narrowed to A where a call may have rewritten it (node is assigned inside a function)"},
+		{"control", types +"function f(node: NA | NB): string { const kind = node.kind; switch (kind) { case K.A: return node.a; default: return 'x'; } }\nconsole.log(f(na));\n", "yes\n", ""},
 	} {
 		t.Run(p.name, func(t *testing.T) {
 			t.Parallel()
