@@ -31,9 +31,12 @@ func buildUnionReadContract(l *lowering, node *ast.Node, target *checker.Type, b
 	}
 	if contract.Of == ir.Object {
 		for _, field := range l.checker.GetPropertiesOfType(target) {
+			// As strictViewContract's field loop: a field whose contract can't be built is the field's own.
 			child, err := build(l.checker.GetTypeOfSymbol(field))
 			if err != nil {
-				return 0, err
+				if child, err = l.unbuiltFieldContract(l.checker.GetTypeOfSymbol(field), err); err != nil {
+					return 0, err
+				}
 			}
 			contract.Fields = append(contract.Fields, ir.ViewFieldContract{Name: field.Name, Contract: child, Optional: field.Flags&ast.SymbolFlagsOptional != 0, Readonly: l.checker.IsReadonlySymbol(field)})
 		}
