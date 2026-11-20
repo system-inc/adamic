@@ -67,6 +67,7 @@ default_parameter, parameter_open and let_open use kindPredicateTypes' open
 tag, so they reach the walk; parameter and let use closed tags and only show
 3350.
 
-The family 3 premise pin: TestKindAliasTagWriteThroughWiderViewIsRefused writes the
+The premise pin: TestKindAliasTagWriteThroughWiderViewIsRefused writes the readonly
 tag through a wider view `{ kind: K }` between the alias and the switch, and must be
-refused at that call. The road rests on that refusal, not on its own walk.
+refused at that call as a readonly field made writable (family 4; family 3 holds a
+mutable tag). The road rests on those refusals, not on its own walk.
